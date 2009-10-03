@@ -1232,7 +1232,8 @@ namespace OpenBabel
     rotor = rl.BeginRotor(ri);
     for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) // foreach rotor
       rotorKeys.AddRotor(rotor->GetResolution().size());
-    
+
+    rotamers.AddRotamer(rotorKeys.GetKey());
     while (rotorKeys.Next()) 
       rotamers.AddRotamer(rotorKeys.GetKey());
 

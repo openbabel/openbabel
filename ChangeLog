@@ -1,3 +1,11 @@
+2009-10-03  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* src/builder.cpp: Update handling of stereochemistry to use new
+	stereochemistry objects. For tetrahedral centres, stereochemistry is
+	currently not corrected if there are three ring bonds on the centre.
+	* src/forcefield.cpp: Fixed bug where the SystematicRotorSearch was
+	missing the angle 0.
+
 2009-07-31  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* NEWS: Bump for 2.2.3 release.

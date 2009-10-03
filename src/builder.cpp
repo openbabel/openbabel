@@ -33,6 +33,8 @@ GNU General Public License for more details.
 
 
 #include <openbabel/stereo/stereo.h>
+#include <openbabel/stereo/cistrans.h>
+#include <openbabel/stereo/tetrahedral.h>
 
 /* OBBuilder::GetNewBondVector():
  * - is based on OBAtom::GetNewBondVector()
@@ -907,130 +909,105 @@ namespace OpenBabel
 
   void OBBuilder::CorrectStereoBonds(OBMol &mol)
   {
-    /*
-    cerr << "bond IsUp IsDown" << endl;
-    FOR_BONDS_OF_MOL (bond, mol) {
-      cerr << bond->GetIdx() << ": " << bond->IsUp() << " " << bond->IsDown() << " (" 
-           << bond->GetBeginAtomIdx() << "-" << bond->GetEndAtomIdx() << ")" << endl;
-    }
-    */
- 
+    // Get CisTransStereos and make a vector of corresponding StereogenicUnits
+    std::vector<OBCisTransStereo*> cistrans, newcistrans;
+    std::vector<StereogenicUnit> sgunits;
+    std::vector<OBGenericData*> vdata = mol.GetAllData(OBGenericDataType::StereoData);
+    OBStereo::Ref bond_id;
+    for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data)
+      if (((OBStereoBase*)*data)->GetType() == OBStereo::CisTrans) {
+        OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
+        cistrans.push_back(ct);
+        bond_id = mol.GetBond(mol.GetAtomById(ct->GetConfig().begin),
+                              mol.GetAtomById(ct->GetConfig().end))->GetId();
+        sgunits.push_back(StereogenicUnit(OBStereo::CisTrans, bond_id));
+      }
+
+    // Perceive CisTransStereos
+    newcistrans = CisTransFrom3D(&mol, sgunits, false);
+
+    // Compare and correct if necessary
+    double newangle;
     OBAtom *a, *b, *c, *d;
-    OBBond *ab, *bc, *cd;
-    vector<int> done;
+    std::vector<OBCisTransStereo*>::iterator origct, newct;
+    for (origct=cistrans.begin(), newct=newcistrans.begin(); origct!=cistrans.end(); ++origct, ++newct) {
+      OBCisTransStereo::Config config = (*newct)->GetConfig(OBStereo::ShapeU);
+      if ((*origct)->GetConfig(OBStereo::ShapeU) != config) { // Wrong cis/trans stereochemistry
 
-    mol.DeleteData(OBGenericDataType::TorsionData); // bug #1954233
-    FOR_TORSIONS_OF_MOL(t, mol) {
-      a = mol.GetAtom((*t)[0] + 1);
-      b = mol.GetAtom((*t)[1] + 1);
-      c = mol.GetAtom((*t)[2] + 1);
-      d = mol.GetAtom((*t)[3] + 1);
+        // refs[0]            refs[3]
+        //        \          /
+        //         begin==end
+        //        /          \
+        // refs[1]            refs[2]
 
-      ab = a->GetBond(b);
-      bc = b->GetBond(c);
-      cd = c->GetBond(d);
-
-      if (bc->IsAromatic() || !bc->IsDouble())
-        continue;
-
-      if (!(ab->IsUp() || ab->IsDown()) || !(cd->IsUp() || cd->IsDown())) {
-        //cerr << "no double bond stereochemistry set for bond " << bc->GetIdx() << endl;
-        continue;
+        a = mol.GetAtomById(config.refs[0]);
+        b = mol.GetAtomById(config.begin);
+        c = mol.GetAtomById(config.end);
+        if (config.refs[3] != OBStereo::ImplicitRef) {  
+          d = mol.GetAtomById(config.refs[3]);
+          newangle = 0.0; // Currently 180 (trans), but should be cis
+        }
+        else {
+          d = mol.GetAtomById(config.refs[2]);
+          newangle = M_PI; // Currently 0 (cis), but should be trans
+        }
+        mol.SetTorsion(a, b, c, d, newangle);
       }
-
-      for (unsigned int i = 0; i < done.size(); ++i)
-        if (done[i] == bc->GetIdx())
-          continue;
-
-      // Check if atom a is double bonded to an atom.
-      // If so, also check if we have visited the bond.
-      // This is the case in 
-      //      
-      //        +---- this bond should be trans, the smiles parser assigns
-      //        |     both C/C bonds up. So we have to invert it
-      // F/C=C/C=C/C
-      //  d   u   u   (down/up)
-      //
-      // F/C=C/C/C=C/C  
-      //  d   u d   u
-      //
-      // See src/formats/smilesformat.cpp for details on OB's up/down implementation.
-      //
-      bool invert = false;
-      FOR_BONDS_OF_ATOM (bond, a) {
-        if (bond->IsDouble())
-          for (unsigned int i = 0; i < done.size(); ++i)
-            if (done[i] == bond->GetIdx())
-              invert = true;
-      }
-
-      //cerr << a->GetIdx() << "-" << b->GetIdx() << "-" << c->GetIdx() << "-" << d->GetIdx() << endl;
-
-      double angle;
-      if (ab->IsUp() && cd->IsUp())
-        angle = 0.0;
-      if (ab->IsUp() && cd->IsDown())
-        angle = M_PI;
-      if (ab->IsDown() && cd->IsUp())
-        angle = M_PI;
-      if (ab->IsDown() && cd->IsDown())
-        angle = 0.0;
-
-      if  (invert)
-        mol.SetTorsion(a, b, c, d, angle + M_PI);
-      else
-        mol.SetTorsion(a, b, c, d, angle);
-
-      done.push_back(bc->GetIdx());
     }
-
   }
 
-  // @todo
   void OBBuilder::CorrectStereoAtoms(OBMol &mol)
   {
-    /*
-    FOR_ATOMS_OF_MOL (center, mol) {
-      if (center->HasData(OBGenericDataType::ChiralData)) {
-        OBChiralData *cd = (OBChiralData*) center->GetData(OBGenericDataType::ChiralData);
-        vector<unsigned int> refs = cd->GetAtom4Refs(input);
-		if (refs.size() < 4)
-          continue;
-        // We look along the refs[0]-center bond.
-        //
-        //  1                     1
-        //   \        eye        /
-        //    0--2    -->   0---C-<2
-        //   /                   \
-        //  3                     3
-        //
-        //  fig 1             fig2
-        OBAtom *a = mol.GetAtom(refs[0]);
-        OBAtom *b = mol.GetAtom(refs[1]);
-        OBAtom *c = mol.GetAtom(refs[2]);
-        OBAtom *d = mol.GetAtom(refs[3]);
+    // Get TetrahedralStereos and make a vector of corresponding StereogenicUnits
+    std::vector<OBTetrahedralStereo*> tetra, newtetra;
+    std::vector<StereogenicUnit> sgunits;
+    std::vector<OBGenericData*> vdata = mol.GetAllData(OBGenericDataType::StereoData);
+    OBStereo::Ref atom_id;
+    for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data)
+      if (((OBStereoBase*)*data)->GetType() == OBStereo::Tetrahedral) {
+        OBTetrahedralStereo *th = dynamic_cast<OBTetrahedralStereo*>(*data);
+        tetra.push_back(th);
+        atom_id = th->GetConfig().center;
+        sgunits.push_back(StereogenicUnit(OBStereo::Tetrahedral, atom_id));
+      }
 
-		double angbc = mol.GetTorsion(b, a, &*center, c); // angle 1-0-2 in fig 1
-        double angbd = mol.GetTorsion(b, a, &*center, d); // angle 1-0-3 in fig 1
+    // Perceive TetrahedralStereos
+    newtetra = TetrahedralFrom3D(&mol, sgunits, false);
 
-        // this should not never happen if the molecule was build using OBBuilder...
-        if ((angbc < 0.0) == (angbd < 0.0))
-          continue;
+    // Compare and correct if necessary
+    //OBAtom *c, *d;
+    int i, j;
+    OBAtom *a, *b, *center;
+    std::vector<OBTetrahedralStereo*>::iterator origth, newth;
+    for (origth=tetra.begin(), newth=newtetra.begin(); origth!=tetra.end(); ++origth, ++newth) {
+      OBTetrahedralStereo::Config config = (*newth)->GetConfig(OBStereo::Clockwise, OBStereo::ViewFrom);
+      if ((*origth)->GetConfig(OBStereo::Clockwise, OBStereo::ViewFrom) != config) {
+        // Wrong tetrahedral stereochemistry, so swap two bonds
 
-        // invert chirality if needed
-        if (angbc > 0.0) {
-          if (center->IsAntiClockwise()) {
-            Swap(mol, center->GetIdx(), a->GetIdx(), center->GetIdx(), b->GetIdx());
+        // Currently, the code only handles swapping two bonds that 
+        // are not in rings
+        center = mol.GetAtomById(config.center);
+        a = mol.GetAtomById(config.from);
+        i = -1;
+        if (mol.GetBond(a, center)->IsInRing()) {
+          for (i=0; i<2; i++) {
+            a = mol.GetAtomById(config.refs[i]);
+            if (!mol.GetBond(a, center)->IsInRing()) break;
           }
-        } else  {
-          if (center->IsClockwise()) {
-            Swap(mol, center->GetIdx(), a->GetIdx(), center->GetIdx(), b->GetIdx());
-          }
+          // At this point either i==2 or the bond is not in a ring
+          if (i==2) continue; // At least 3 bonds in rings
         }
-
-      } // HasData
-    } // FOR_ATOMS_OF_MOL
-*/
+        
+        for (j=i+1; j<3; j++) {
+          b = mol.GetAtomById(config.refs[j]);
+          if (!mol.GetBond(b, center)->IsInRing()) break;
+        }
+        // At this point either j==3 or the bond is not in a ring
+        if (j==3) continue; // Cannot find two bonds not in rings
+        
+        Swap(mol, center->GetIdx(), a->GetIdx(), center->GetIdx(), b->GetIdx());
+      }
+    }
   }
 
 } // end namespace OpenBabel
