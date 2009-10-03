@@ -130,6 +130,11 @@ set_target_properties(${BABEL_LIBRARY} PROPERTIES
                                        SOVERSION ${SOVERSION}
                                        DEFINE_SYMBOL MAKE_OBDLL
                       )
+if(MSVC)
+    set_target_properties(${BABEL_LIBRARY} PROPERTIES
+                  RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+endif(MSVC)
+
 install(TARGETS ${BABEL_LIBRARY}
                 RUNTIME DESTINATION ${BIN_INSTALL_DIR}
                 LIBRARY DESTINATION ${LIB_INSTALL_DIR}

@@ -1,5 +1,11 @@
 2009-10-03  Noel O'Boyle  <baoilleach@gmail.com>
 
+	* Update Windows build to use the InChI dll, and to build everything
+	to the same folder (e.g. Release or Debug). Tests can be run in Debug
+	build.
+
+2009-10-03  Noel O'Boyle  <baoilleach@gmail.com>
+
 	* src/builder.cpp: Update handling of stereochemistry to use new
 	stereochemistry objects. For tetrahedral centres, stereochemistry is
 	currently not corrected if there are three ring bonds on the centre.

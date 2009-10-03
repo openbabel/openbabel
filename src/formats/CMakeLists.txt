@@ -92,14 +92,18 @@ else(MINIMAL_BUILD)
 
   if(WITH_INCHI)
     add_definitions(-DINCHI_LINK_AS_DLL)
-    add_subdirectory(inchi102)
-    include_directories(${CMAKE_SOURCE_DIR}/include/inchi102)
+    if(NOT MSVC)
+      add_subdirectory(inchi102)
+      include_directories(${CMAKE_SOURCE_DIR}/include/inchi102)
+      set(libs ${libs} inchi)
+    else(NOT MSVC)
+      set(libs ${libs} ${CMAKE_SOURCE_DIR}/windows-vc2005/libstdinchi.lib)
+    endif(NOT MSVC)
+    set(inchiformat_additional_sources getinchi.cpp)
     set(formats
       ${formats}
       inchiformat
     )
-    set(libs ${libs} inchi)
-    set(inchiformat_additional_sources getinchi.cpp)
   endif(WITH_INCHI)
 
   if(LIBXML2_FOUND)
@@ -159,7 +163,7 @@ foreach(format ${formats})
                         SUFFIX ${MODULE_EXTENSION})
   if(MSVC)
     set_target_properties(${format} PROPERTIES
-                  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/src)
+                  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
   endif(MSVC)
 endforeach(format)
 
