@@ -1,3 +1,9 @@
+2009-10-04  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* For Windows build, enable tests to be run in either Debug or Release
+	build. Make the default solution file include the tests. Add a target
+	for a minimal build.
+
 2009-10-03  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* Update Windows build to use the InChI dll, and to build everything
