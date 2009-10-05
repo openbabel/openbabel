@@ -1086,7 +1086,7 @@ namespace OpenBabel
     */
 
     //Copy conformer information
-    if (_mol.NumConformers() > 1) {
+    if (_mol.NumConformers() > 0) {
       int k,l;
       vector<double*> conf;
       double* xyz = NULL;

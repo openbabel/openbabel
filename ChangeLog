@@ -1,3 +1,8 @@
+2009-10-05  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* src/forcefield.cpp: In ff.GetConformers(mol) if only a single
+	conformer was generated it was not being copied.
+
 2009-10-04  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* For Windows build, enable tests to be run in either Debug or Release
