@@ -40,7 +40,7 @@ set(old_tests
     cansmi
     cmlreadfile
     conversion
-    data
+    datatest
     ffghemical
     ffmmff94
     ffuff
