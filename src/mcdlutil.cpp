@@ -24,7 +24,10 @@ GNU General Public License for more details.
 #include <openbabel/data.h>
 #include <openbabel/obconversion.h>
 
-#if !defined(WIN32) || defined(__MINGW32__)
+#ifndef WIN32 
+#include <cmath>
+#endif
+#ifdef __MINGW32__
 #include <cmath>
 #endif
 
