@@ -14,7 +14,7 @@
   #define OB_EXPORT __attribute__ ((visibility("default")))
   #define OB_IMPORT __attribute__ ((visibility("default")))
   #define OB_HIDDEN __attribute__ ((visibility("hidden")))
-#elif defined(WIN32)
+#elif defined(WIN32) && !defined(__MINGW32__)
  #define OB_EXPORT __declspec(dllexport)
  #define OB_IMPORT __declspec(dllimport)
  #define OB_HIDDEN

@@ -117,7 +117,16 @@
 2009-09-17  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* src/parsmart.cpp: Handle ring-closure bonds involved in
-	stereochemistry.
+
+2009-09-17  Tim Vandermeersch <tim.vandermeersch@gmail.com>
+
+	* CMakeLists.txt: Don't attempt to use GCC visibility support on WIN32. 
+        Doesn't work with MinGW and produces lots of warnings.
+
+        * src/mcdlutil.cpp: include cmath for MinGW builds.
+
+        * src/config.h.cmake: Don't use dllimport/dllexport for MinGW build. GCC's
+        auto-import feature will handle this automatically.
 
 2009-09-16  Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
