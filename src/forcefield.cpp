@@ -2635,17 +2635,16 @@ namespace OpenBabel
  
   void OBForceField::SteepestDescent(int steps, double econv, int method) 
   {
-    if (!_validSetup)
-      return;
- 
-    SteepestDescentInitialize(steps, econv, method);
-    SteepestDescentTakeNSteps(steps);
+    if (steps > 0) {
+      SteepestDescentInitialize(steps, econv, method);
+      SteepestDescentTakeNSteps(steps);
+    }
   }
 
   void OBForceField::ConjugateGradientsInitialize(int steps, double econv, 
                                                   int method)
   {
-    if (!_validSetup)
+    if (!_validSetup || steps==0)
       return;
  
     double e_n2, alpha;
@@ -2840,7 +2839,8 @@ namespace OpenBabel
   void OBForceField::ConjugateGradients(int steps, double econv, int method)
   {
     ConjugateGradientsInitialize(steps, econv, method);
-    ConjugateGradientsTakeNSteps(steps); // ConjugateGradientsInitialize takes the first step
+    if (steps > 1) // ConjugateGradientsInitialize takes the first step
+      ConjugateGradientsTakeNSteps(steps);
   }
   
   //  

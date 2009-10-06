@@ -1,3 +1,8 @@
+2009-10-06  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* src/forcefield.cpp: Correctly handle SteepestDescent and Conjugate
+	Gradients where nsteps is 0 or 1
+
 2009-10-05  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* src/forcefield.cpp: In ff.GetConformers(mol) if only a single
