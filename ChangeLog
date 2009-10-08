@@ -1,3 +1,7 @@
+2009-10-08  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* src/builder.cpp: Don't attempt to fix stereochemistry if unspecified.
+
 2009-10-06  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* src/forcefield.cpp: Correctly handle SteepestDescent and Conjugate

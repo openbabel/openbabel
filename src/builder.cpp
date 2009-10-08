@@ -917,10 +917,12 @@ namespace OpenBabel
     for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data)
       if (((OBStereoBase*)*data)->GetType() == OBStereo::CisTrans) {
         OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
-        cistrans.push_back(ct);
-        bond_id = mol.GetBond(mol.GetAtomById(ct->GetConfig().begin),
-                              mol.GetAtomById(ct->GetConfig().end))->GetId();
-        sgunits.push_back(StereogenicUnit(OBStereo::CisTrans, bond_id));
+        if (ct->GetConfig().specified) {
+          cistrans.push_back(ct);
+          bond_id = mol.GetBond(mol.GetAtomById(ct->GetConfig().begin),
+                                mol.GetAtomById(ct->GetConfig().end))->GetId();
+          sgunits.push_back(StereogenicUnit(OBStereo::CisTrans, bond_id));
+        }
       }
 
     // Perceive CisTransStereos
@@ -966,9 +968,11 @@ namespace OpenBabel
     for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data)
       if (((OBStereoBase*)*data)->GetType() == OBStereo::Tetrahedral) {
         OBTetrahedralStereo *th = dynamic_cast<OBTetrahedralStereo*>(*data);
-        tetra.push_back(th);
-        atom_id = th->GetConfig().center;
-        sgunits.push_back(StereogenicUnit(OBStereo::Tetrahedral, atom_id));
+        if (th->GetConfig().specified) {
+          tetra.push_back(th);
+          atom_id = th->GetConfig().center;
+          sgunits.push_back(StereogenicUnit(OBStereo::Tetrahedral, atom_id));
+        }
       }
 
     // Perceive TetrahedralStereos
