@@ -745,6 +745,11 @@ namespace OpenBabel
       return true;
     }
 
+    if (mol.NumAtoms() == 0) {
+      mol.SetDimension(3);
+      return true; // nothing to do -- it's an empty molecule
+    }
+
     // How many ring atoms are there?
     int ratoms = 0;
     FOR_ATOMS_OF_MOL(a, mol)

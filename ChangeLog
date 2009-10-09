@@ -1,3 +1,15 @@
+2009-10-09  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefields/forcefielduff.cpp: Fix for Avogadro 1.0. Handle
+	5-coordinate atoms by tracking axial and equatorial atoms
+	separately. Also handle formal charges when determining
+	coordination.
+
+	* src/forcefield.cpp: Backport from Noel's bug-fix. Make sure to
+	add all rotamers when doing systematic conformer searching.
+
+	* src/builder.cpp: If no atoms are present, exit early.
+
 2009-08-19  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* Windows Python build: Bump version to 1.5 and add support for Python

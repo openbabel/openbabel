@@ -35,6 +35,10 @@ using namespace std;
 // As well, the main UFF paper:
 // Rappe, A. K., et. al.; J. Am. Chem. Soc. (1992) 114(25) p. 10024-10035.
 
+// Used when determining angles around 5-coordinate molecules
+#define UFF_AXIAL_ATOM 16384
+#define UFF_EQUATORIAL_ATOM 16385
+
 namespace OpenBabel {
 
   template<bool gradients>
@@ -814,6 +818,7 @@ namespace OpenBabel {
       if (valenceElectrons) {
         // calculate the number of lone pairs
         // e.g. for IF3 => "T-shaped"
+        valenceElectrons += b->GetFormalCharge(); // make sure to look for I+F4 -> see-saw
         double lonePairs = (valenceElectrons - b->BOSum()) / 2.0;
         // we actually need to round up here -- single e- take room too.
         int sites = (int)ceil(lonePairs);
@@ -847,18 +852,42 @@ namespace OpenBabel {
         currentTheta =  a->GetAngle(&*b, &*c);
 
         anglecalc.c0 = 1.0;
-        if (currentTheta >= 150.0) { // axial ligands = linear
+        if (currentTheta >= 140.0 && !b->HasData("UFF_AXIAL_ATOM")) { // axial ligands = linear
           anglecalc.coord = 1; // like sp
           anglecalc.theta0 = 180.0;
           anglecalc.c1 = 1.0;
-        } else if (currentTheta < 150.0 && currentTheta >= 100.0) { // equatorial
-          anglecalc.coord = 2; // like sp2
-          anglecalc.theta0 = 120.0;
-          anglecalc.c1 = -1.0;
-        } else if (currentTheta < 100.0) { // axial-equatorial ligands
+          // mark these atoms as axial
+          OBPairData *label = new OBPairData;
+          label->SetAttribute("UFF_AXIAL_ATOM");
+          label->SetValue("True");
+          a->SetData(label);
+          label = new OBPairData;
+          label->SetAttribute("UFF_AXIAL_ATOM");
+          label->SetValue("True");
+          b->SetData(label); // mark the center atom, so we don't have another set of axial-axial
+          label = new OBPairData;
+          label->SetAttribute("UFF_AXIAL_ATOM");
+          label->SetValue("True");
+          c->SetData(label);
+        } else if (currentTheta < 100.0 &&
+                   ((a->HasData("UFF_AXIAL_ATOM") && !c->HasData("UFF_AXIAL_ATOM"))
+                    || (c->HasData("UFF_AXIAL_ATOM") && !a->HasData("UFF_AXIAL_ATOM")))) { // axial-equatorial ligands
           anglecalc.coord = 4; // like sq. planar or octahedral
           anglecalc.theta0 = 90.0;
           anglecalc.c1 = 1.0;
+        } else { // equatorial - equatorial
+          anglecalc.coord = 2; // like sp2
+          anglecalc.theta0 = 120.0;
+          anglecalc.c1 = -1.0;
+          // mark these atoms as equatorial
+          OBPairData *label = new OBPairData;
+          label->SetAttribute("UFF_EQUATORIAL_ATOM");
+          label->SetValue("True");
+          a->SetData(label);
+          label = new OBPairData;
+          label->SetAttribute("UFF_EQUATORIAL_ATOM");
+          label->SetValue("True");
+          c->SetData(label);
         }
         anglecalc.c2 = 0.0;
 

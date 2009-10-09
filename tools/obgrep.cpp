@@ -164,7 +164,12 @@ int main(int argc,char **argv)
         }
     }
 
-  if (! conv.SetInAndOutFormats(pFormat, pFormat))
+  if (name_only && !conv.SetInFormat(pFormat))
+    {
+      cerr << program_name << ": cannot read or write to this file format" << endl;
+      return (-1);
+    }
+  if (!name_only && !conv.SetInAndOutFormats(pFormat, pFormat))
     {
       cerr << program_name << ": cannot read or write to this file format" << endl;
       return (-1);
@@ -205,7 +210,7 @@ int main(int argc,char **argv)
               if (!count)
                 {
                   if ( name_only )
-                    cout << mol.GetTitle() << endl;
+                    cout << FileIn << ": " << mol.GetTitle() << endl;
                   else
                     conv.Write(&mol, &cout);
                 }
@@ -248,8 +253,10 @@ int main(int argc,char **argv)
             {      // do something only when invert flag is off
               if (!count)
                 {
-                  if ( name_only )
-                    cout << mol.GetTitle() << endl;
+                  if ( name_only ) {
+                    maplist = sp.GetUMapList();
+                    cout << FileIn << ": " << mol.GetTitle() << maplist.size() << endl;
+                  }
                   else
                     conv.Write(&mol, &cout);
                 }
@@ -265,7 +272,7 @@ int main(int argc,char **argv)
               if (!count)
                 {
                   if ( name_only )
-                    cout << mol.GetTitle() << endl;
+                    cout << FileIn << ": " << mol.GetTitle() << endl;
                   else
                     conv.Write(&mol, &cout);
                 }
