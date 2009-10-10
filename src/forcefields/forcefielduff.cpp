@@ -35,10 +35,6 @@ using namespace std;
 // As well, the main UFF paper:
 // Rappe, A. K., et. al.; J. Am. Chem. Soc. (1992) 114(25) p. 10024-10035.
 
-// Used when determining angles around 5-coordinate molecules
-#define UFF_AXIAL_ATOM 16384
-#define UFF_EQUATORIAL_ATOM 16385
-
 namespace OpenBabel {
 
   template<bool gradients>
@@ -97,8 +93,8 @@ namespace OpenBabel {
       
       IF_OBFF_LOGLVL_HIGH {
         snprintf(_logbuf, BUFF_SIZE, "%-5s %-5s  %4.2f%8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n",
-                (*i).a->GetType(), (*i).b->GetType(), 
-                (*i).bt, (*i).rab, (*i).r0, (*i).kb, (*i).delta, (*i).energy);
+                 (*i).a->GetType(), (*i).b->GetType(), 
+                 (*i).bt, (*i).rab, (*i).r0, (*i).kb, (*i).delta, (*i).energy);
         OBFFLog(_logbuf);
       }
     }
@@ -205,7 +201,7 @@ namespace OpenBabel {
 
       IF_OBFF_LOGLVL_HIGH {
         snprintf(_logbuf, BUFF_SIZE, "%-5s %-5s %-5s%8.3f  %8.3f     %8.3f   %8.3f   %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
-                (*i).c->GetType(), (*i).theta * RAD_TO_DEG, (*i).theta0, (*i).ka, (*i).delta, (*i).energy);
+                 (*i).c->GetType(), (*i).theta * RAD_TO_DEG, (*i).theta0, (*i).ka, (*i).delta, (*i).energy);
         OBFFLog(_logbuf);
       }
     }
@@ -299,9 +295,9 @@ namespace OpenBabel {
  
       IF_OBFF_LOGLVL_HIGH {
         snprintf(_logbuf, BUFF_SIZE, "%-5s %-5s %-5s %-5s%6.3f       %8.3f     %8.3f\n",
-                (*i).a->GetType(), (*i).b->GetType(), 
-                (*i).c->GetType(), (*i).d->GetType(), (*i).V, 
-                (*i).tor * RAD_TO_DEG, (*i).energy);
+                 (*i).a->GetType(), (*i).b->GetType(), 
+                 (*i).c->GetType(), (*i).d->GetType(), (*i).V, 
+                 (*i).tor * RAD_TO_DEG, (*i).energy);
         OBFFLog(_logbuf);
       }
     }
@@ -364,17 +360,17 @@ namespace OpenBabel {
   template<bool gradients>
   double OBForceFieldUFF::E_OOP() 
   {
-     vector<OBFFOOPCalculationUFF>::iterator i;
-     double energy = 0.0;
+    vector<OBFFOOPCalculationUFF>::iterator i;
+    double energy = 0.0;
     
-     IF_OBFF_LOGLVL_HIGH {
-       OBFFLog("\nO U T - O F - P L A N E   B E N D I N G\n\n");
-       OBFFLog("ATOM TYPES                 OOP     FORCE \n");
-       OBFFLog(" I    J     K     L       ANGLE   CONSTANT     ENERGY\n");
-       OBFFLog("----------------------------------------------------------\n");
-     }
+    IF_OBFF_LOGLVL_HIGH {
+      OBFFLog("\nO U T - O F - P L A N E   B E N D I N G\n\n");
+      OBFFLog("ATOM TYPES                 OOP     FORCE \n");
+      OBFFLog(" I    J     K     L       ANGLE   CONSTANT     ENERGY\n");
+      OBFFLog("----------------------------------------------------------\n");
+    }
 
-     for (i = _oopcalculations.begin(); i != _oopcalculations.end(); ++i) {
+    for (i = _oopcalculations.begin(); i != _oopcalculations.end(); ++i) {
       i->template Compute<gradients>();
       energy += i->energy;
       
@@ -386,17 +382,17 @@ namespace OpenBabel {
       }
  
       IF_OBFF_LOGLVL_HIGH {
-         snprintf(_logbuf, BUFF_SIZE, "%-5s %-5s %-5s %-5s%8.3f   %8.3f     %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), (*i).c->GetType(), (*i).d->GetType(), 
+        snprintf(_logbuf, BUFF_SIZE, "%-5s %-5s %-5s %-5s%8.3f   %8.3f     %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), (*i).c->GetType(), (*i).d->GetType(), 
                  (*i).angle * RAD_TO_DEG, (*i).koop, (*i).energy);
-         OBFFLog(_logbuf);
-       }
-     }
+        OBFFLog(_logbuf);
+      }
+    }
 
-     IF_OBFF_LOGLVL_HIGH {
-       snprintf(_logbuf, BUFF_SIZE, "     TOTAL OUT-OF-PLANE BENDING ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
-       OBFFLog(_logbuf);
-     }
-     return energy;
+    IF_OBFF_LOGLVL_HIGH {
+      snprintf(_logbuf, BUFF_SIZE, "     TOTAL OUT-OF-PLANE BENDING ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
+      OBFFLog(_logbuf);
+    }
+    return energy;
   }
 
   template<bool gradients>
@@ -470,7 +466,7 @@ namespace OpenBabel {
       
       IF_OBFF_LOGLVL_HIGH {
         snprintf(_logbuf, BUFF_SIZE, "%-5s %-5s %8.3f  %8.3f  %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
-                (*i).rab, (*i).kab, (*i).energy);
+                 (*i).rab, (*i).kab, (*i).energy);
         OBFFLog(_logbuf);
       }
     }
@@ -547,7 +543,7 @@ namespace OpenBabel {
       
       IF_OBFF_LOGLVL_HIGH {
         snprintf(_logbuf, BUFF_SIZE, "%-5s %-5s   %8.3f  %8.3f  %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
-                (*i).rab, (*i).qq, (*i).energy);
+                 (*i).rab, (*i).qq, (*i).energy);
         OBFFLog(_logbuf);
       }
     }
@@ -616,7 +612,7 @@ namespace OpenBabel {
     if (parameterA == NULL || parameterB == NULL) { 
       IF_OBFF_LOGLVL_LOW {
         snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR VDW INTERACTION %d-%d (IDX)...\n", 
-            a->GetIdx(), b->GetIdx());
+                 a->GetIdx(), b->GetIdx());
         OBFFLog(_logbuf);
       }
       return false;
@@ -707,7 +703,7 @@ namespace OpenBabel {
       if (parameterA == NULL || parameterB == NULL) { 
         IF_OBFF_LOGLVL_LOW {
           snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR BOND %d-%d (IDX)...\n", 
-              a->GetIdx(), b->GetIdx());
+                   a->GetIdx(), b->GetIdx());
           OBFFLog(_logbuf);
         }
         continue;
@@ -718,7 +714,7 @@ namespace OpenBabel {
       // here we fold the 1/2 into the kij from equation 1a
       // Otherwise, this is equation 6 from the UFF paper.
       bondcalc.kb = (0.5 * KCAL_TO_KJ * 664.12 
-        * parameterA->_dpar[5] * parameterB->_dpar[5])
+                     * parameterA->_dpar[5] * parameterB->_dpar[5])
         / (bondcalc.r0 * bondcalc.r0 * bondcalc.r0);
 
       bondcalc.SetupPointers();
@@ -770,7 +766,7 @@ namespace OpenBabel {
       if (parameterA == NULL || parameterB == NULL || parameterC == NULL) { 
         IF_OBFF_LOGLVL_LOW {
           snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR ANGLE %d-%d-%d (IDX)...\n", 
-              a->GetIdx(), b->GetIdx(), c->GetIdx());
+                   a->GetIdx(), b->GetIdx(), c->GetIdx());
           OBFFLog(_logbuf);
         }
         return false;
@@ -818,7 +814,7 @@ namespace OpenBabel {
       if (valenceElectrons) {
         // calculate the number of lone pairs
         // e.g. for IF3 => "T-shaped"
-        valenceElectrons += b->GetFormalCharge(); // make sure to look for I+F4 -> see-saw
+        valenceElectrons -= b->GetFormalCharge(); // make sure to look for I+F4 -> see-saw
         double lonePairs = (valenceElectrons - b->BOSum()) / 2.0;
         // we actually need to round up here -- single e- take room too.
         int sites = (int)ceil(lonePairs);
@@ -888,6 +884,7 @@ namespace OpenBabel {
           label->SetAttribute("UFF_EQUATORIAL_ATOM");
           label->SetValue("True");
           c->SetData(label);
+          parameterB->c += 1;
         }
         anglecalc.c2 = 0.0;
 
@@ -895,38 +892,38 @@ namespace OpenBabel {
         if (SetupVDWCalculation(a, c, vdwcalc)) {
           _vdwcalculations.push_back(vdwcalc);
         }
-      // This section is commented out.
-      // If you want to try to tackle 7-coordinate species, give this a try
-      // and change the first conditional above to >7, not >=7
-      // This doesn't work so well because it's hard to classify between
-      // axial-equatorial (90 degrees) and proximal equatorial (~72 degrees).
-//     }  else if (coordination == 7) { // pentagonal bipyramidal
-//         currentTheta =  a->GetAngle(&*b, &*c);
+        // This section is commented out.
+        // If you want to try to tackle 7-coordinate species, give this a try
+        // and change the first conditional above to >7, not >=7
+        // This doesn't work so well because it's hard to classify between
+        // axial-equatorial (90 degrees) and proximal equatorial (~72 degrees).
+        //     }  else if (coordination == 7) { // pentagonal bipyramidal
+        //         currentTheta =  a->GetAngle(&*b, &*c);
 
-//         anglecalc.c0 = 1.0;
-//         if (currentTheta >= 155.0) { // axial ligands = linear
-//           anglecalc.coord = 1; // like sp
-//           anglecalc.theta0 = 180.0;
-//           anglecalc.c1 = 1.0;
-//         } else if (currentTheta < 155.0 && currentTheta >= 110.0) { // distal equatorial
-//           anglecalc.coord = 3; // like sp3
-//           anglecalc.theta0 = 144.0;
-//           anglecalc.c1 = -1.0;
-//         } else if (currentTheta < 110.0 && currentTheta >= 85.0) { // axial-equatorial
-//           anglecalc.coord = 4; // like sq. planar or octahedral
-//           anglecalc.theta0 = 90.0;
-//           anglecalc.c1 = 1.0;
-//         } else if (currentTheta < 85.0) { // proximal equatorial
-//           anglecalc.coord = 3; // general case (i.e., like sp3)
-//           anglecalc.theta0 = 72.0;
-//           anglecalc.c1 = -1.0;
-//         }
-//         anglecalc.c2 = 0.0;
+        //         anglecalc.c0 = 1.0;
+        //         if (currentTheta >= 155.0) { // axial ligands = linear
+        //           anglecalc.coord = 1; // like sp
+        //           anglecalc.theta0 = 180.0;
+        //           anglecalc.c1 = 1.0;
+        //         } else if (currentTheta < 155.0 && currentTheta >= 110.0) { // distal equatorial
+        //           anglecalc.coord = 3; // like sp3
+        //           anglecalc.theta0 = 144.0;
+        //           anglecalc.c1 = -1.0;
+        //         } else if (currentTheta < 110.0 && currentTheta >= 85.0) { // axial-equatorial
+        //           anglecalc.coord = 4; // like sq. planar or octahedral
+        //           anglecalc.theta0 = 90.0;
+        //           anglecalc.c1 = 1.0;
+        //         } else if (currentTheta < 85.0) { // proximal equatorial
+        //           anglecalc.coord = 3; // general case (i.e., like sp3)
+        //           anglecalc.theta0 = 72.0;
+        //           anglecalc.c1 = -1.0;
+        //         }
+        //         anglecalc.c2 = 0.0;
 
-//         // Also add a VDW 1-3 interaction to distort slightly
-//         if (SetupVDWCalculation(a, c, vdwcalc)) {
-//           _vdwcalculations.push_back(vdwcalc);
-//         }
+        //         // Also add a VDW 1-3 interaction to distort slightly
+        //         if (SetupVDWCalculation(a, c, vdwcalc)) {
+        //           _vdwcalculations.push_back(vdwcalc);
+        //         }
       } else { // normal coordination: sp, sp2, sp3, square planar, octahedral
         anglecalc.coord = coordination;
         anglecalc.theta0 = parameterB->_dpar[1];
@@ -1020,7 +1017,7 @@ namespace OpenBabel {
       if (parameterB == NULL || parameterC == NULL) { 
         IF_OBFF_LOGLVL_LOW {
           snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR TORSION X-%d-%d-X (IDX)...\n", 
-              b->GetIdx(), c->GetIdx());
+                   b->GetIdx(), c->GetIdx());
           OBFFLog(_logbuf);
         }
         return false;
@@ -1408,6 +1405,9 @@ namespace OpenBabel {
         parameter._dpar.push_back(atof(vs[11].c_str())); // Hard
         parameter._dpar.push_back(atof(vs[12].c_str())); // Radius
 
+        parameter.b = 0; // used for tracking number of angles in 5-coordinate
+        parameter.c = 0;
+
         char coord = vs[1][2]; // 3rd character of atom type
         switch (coord) {
         case '1': // linear
@@ -1430,8 +1430,8 @@ namespace OpenBabel {
           parameter._ipar.push_back(6);
           break;
         case '7': // pentagonal bipyramidal -- not actually in parameterization
-            parameter._ipar.push_back(7);
-            break;
+          parameter._ipar.push_back(7);
+          break;
         default: // general case (unknown coordination)
           // These atoms appear to generally be linear coordination like Cl
           parameter._ipar.push_back(1);
@@ -1576,7 +1576,7 @@ namespace OpenBabel {
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "%2d       (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", a->GetIdx(), numgrad.x(), numgrad.y(), numgrad.z(), 
-              anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
+               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
       
       // OBFF_EBOND
@@ -1587,7 +1587,7 @@ namespace OpenBabel {
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    bond    (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
-              anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
+               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
       if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
         passed = false;
@@ -1600,7 +1600,7 @@ namespace OpenBabel {
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    angle   (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
-              anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
+               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
       if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
         passed = false;
@@ -1613,7 +1613,7 @@ namespace OpenBabel {
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    torsion (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
-              anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
+               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
       // 8% tolerance here because some 180 torsions cause numerical instability
       if (err.x() > 8.0 || err.y() > 8.0 || err.z() > 8.0)
@@ -1627,10 +1627,10 @@ namespace OpenBabel {
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    oop     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
-              anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
+               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
-//      if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
-//        passed = false;
+      //      if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
+      //        passed = false;
         
       // OBFF_EVDW
       numgrad = NumericalDerivative(&*a, OBFF_EVDW);
@@ -1640,7 +1640,7 @@ namespace OpenBabel {
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    vdw     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
-              anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
+               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
       if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
         passed = false;
@@ -1653,7 +1653,7 @@ namespace OpenBabel {
       err = ValidateGradientError(numgrad, anagrad);
 
       snprintf(_logbuf, BUFF_SIZE, "    electro (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
-              anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
+               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
       if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
         passed = false;
