@@ -109,12 +109,16 @@ namespace OpenBabel
        *
        */  
       //bool Insert(OBMol &mol, int a, int b, std::string smiles, int c, int d);
-      /*! Currently only corrects double bond chemistry comming from smiles. (OBBond::IsUp() / OBBond::IsDown())
+      /*! Correct double bond stereochemistry
        */ 
       static void CorrectStereoBonds(OBMol &mol);
-      /*! Currently only corrects atom chirality comming from smiles. (OBAtom::IsClockwize() / OBBond::IsAntiClockwise())
+      /*! Correct stereochemistry at tetrahedral atoms with at least two non-ring
+       * bonds. It also works for spiro atoms.
        */ 
       static void CorrectStereoAtoms(OBMol &mol);
+      /*! Does this atom connect two rings which are not otherwise connected?
+      */
+      static bool IsSpiroAtom(unsigned int idx, OBMol &mol);
       /*! Get the fragment to which this atom belongs.
        *  \param atom Atom in the fragment.
        *  \returns The OBBitVec defining the fragment to which a belongs.
@@ -125,6 +129,12 @@ namespace OpenBabel
     private:
       //! used to hold the fragments loaded in the constructor
       static std::vector<std::pair<OBSmartsPattern*, std::vector<vector3> > > _fragments;
+      //! Connect a ring fragment to an already matched fragment. Currently only
+      //  supports the case where the fragments overlap at a spiro atom only.
+      static void ConnectFrags(OBMol &mol, OBMol &workmol, std::vector<int> match, std::vector<vector3> coords,
+                               std::vector<int> pivot);
+      //! Rotate one of the spiro rings 180 degrees
+      static void FlipSpiro(OBMol &mol, int idx);
   }; // class OBBuilder
 
 }// namespace OpenBabel

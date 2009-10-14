@@ -30,6 +30,7 @@ GNU General Public License for more details.
 #include <openbabel/rotor.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/locale.h>
+//#include <assert.h>
 
 
 #include <openbabel/stereo/stereo.h>
@@ -598,10 +599,6 @@ namespace OpenBabel
     OBBond *bond1 = mol.GetBond(idxA, idxB);
     OBBond *bond2 = mol.GetBond(idxC, idxD);
 
-    // save the original bond orders
-    int bondOrder1 = bond1->GetBondOrder();
-    int bondOrder2 = bond2->GetBondOrder();
-
     // make sure a-b and c-d are connected
     if (bond1 == NULL || bond2 == NULL)
       return false;
@@ -609,19 +606,27 @@ namespace OpenBabel
     // make sure the bonds are not in a ring 
     if (bond1->IsInRing() || bond2->IsInRing())
       return false;
+    
+    // save the original bond orders
+    int bondOrder1 = bond1->GetBondOrder();
+    int bondOrder2 = bond2->GetBondOrder();
 
     // delete the bonds
     mol.DeleteBond(bond1);
     mol.DeleteBond(bond2);
 
-    // save the original positions
-    vector3 posB = b->GetVector();
-    vector3 posD = d->GetVector();
+    // Get the bond vectors
+    vector3 bondB = b->GetVector() - a->GetVector();
+    vector3 bondD = d->GetVector() - c->GetVector();
+
+    // Get the new positions for B and D
+    vector3 newB = c->GetVector() + bondB.length() * (bondD/bondD.length());
+    vector3 newD = a->GetVector() + bondD.length() * (bondB/bondB.length());
 
     // connect the fragments
-    if (!Connect(mol, idxA, idxD, posB, bondOrder2))
+    if (!Connect(mol, idxA, idxD, newD, bondOrder2))
       return false;
-    if (!Connect(mol, idxC, idxB, posD, bondOrder2))
+    if (!Connect(mol, idxC, idxB, newB, bondOrder1))
       return false;
     
     return true;
@@ -756,7 +761,7 @@ namespace OpenBabel
     FOR_ATOMS_OF_MOL(a, mol)
       if (a->IsInRing())
         ratoms++;
-
+    
     // delete all bonds in the working molecule
     // we will add them back at the end
     while (workMol.NumBonds())
@@ -784,34 +789,45 @@ namespace OpenBabel
             
           for (j = mlist.begin();j != mlist.end();++j) { // for all matches
 
-            // Has any atom of this match already been added?
-            bool alreadydone = false;
-            for (k = j->begin(); k != j->end(); ++k) { // for all atoms of the fragment
+            // Have any atoms of this match already been added?
+            int alreadydone = 0;
+            int match_idx;
+            for (k = j->begin(); k != j->end(); ++k) // for all atoms of the fragment
               if (vfrag.BitIsSet(*k)) {
-                alreadydone = true;
-                break;
+                alreadydone += 1;
+                if (alreadydone > 1) break;
+                match_idx = *k;
               }
-            }
-            if (alreadydone) // the found match is already added
+            bool spiro = false;
+            if (alreadydone > 1) // At least two atoms of the found match have already been added
               continue;
+            else if (alreadydone == 1) {
+              spiro = IsSpiroAtom(match_idx, mol);
+              if (!spiro) continue;
+            }
 
-            int index, index2, counter = 0;
-            for (k = j->begin(); k != j->end(); ++k) { // for all atoms of the fragment
-              index = *k;     
-              vfrag.SetBitOn(index); // set vfrag for all atoms of fragment
-              if (mol.GetAtom(index)->IsInRing())
-                ratoms--;
-              
-              // set coordinates for atoms
-              OBAtom *atom = workMol.GetAtom(index);
-              atom->SetVector(i->second[counter]);
-              counter++;
+            ratoms += alreadydone - j->size(); // Update the number of available ring atoms
+            for (k = j->begin(); k != j->end(); ++k)
+              vfrag.SetBitOn(*k); // Set vfrag for all atoms of fragment
+
+            if (spiro) {
+              vector<int> match_indices(1); // In future, it could be of longer length
+              match_indices[0] = match_idx;
+              ConnectFrags(mol, workMol, *j, i->second, match_indices);
+            }
+            else { 
+              int counter;
+              for (k = j->begin(), counter=0; k != j->end(); ++k, ++counter) { // for all atoms of the fragment
+                // set coordinates for atoms
+                OBAtom *atom = workMol.GetAtom(*k);
+                atom->SetVector(i->second[counter]);
+              }
             }
 
             // add the bonds for the fragment
+            int index2;
             for (k = j->begin(); k != j->end(); ++k) {
-              index = *k;
-              OBAtom *atom1 = mol.GetAtom(index);
+              OBAtom *atom1 = mol.GetAtom(*k);
                 
               for (k2 = j->begin(); k2 != j->end(); ++k2) {
                 index2 = *k2;
@@ -839,7 +855,7 @@ namespace OpenBabel
           prev = &*nbr;
       }
  
-      if (vfrag.BitIsSet(a->GetIdx())) { // continue if the atom is already added
+      if (vfrag.BitIsSet(a->GetIdx())) { // Is this atom part of a fragment?
         if (prev != NULL) { // if we have a previous atom, translate/rotate the fragment and connect it
           Connect(workMol, prev->GetIdx(), a->GetIdx(), mol.GetBond(prev, &*a)->GetBondOrder());
           // set the correct bond order
@@ -907,6 +923,110 @@ namespace OpenBabel
     return true;
   }
 
+  void OBBuilder::ConnectFrags(OBMol &mol, OBMol &workMol, vector<int> match, vector<vector3> coords,
+                    vector<int> pivot)
+  {
+    if (pivot.size() != 1) // Only handle spiro at the moment
+      return;
+    
+    OBAtom* p = workMol.GetAtom(pivot[0]); 
+    OBBitVec frag = GetFragment(p); // The existing fragment
+    vector3 posp = p->GetVector();
+
+    // Set coords of new fragment to place the pivot at the origin
+    vector3 posp_new; 
+    vector<int>::iterator match_it;
+    int counter;
+    for (match_it=match.begin(), counter=0; match_it!=match.end(); ++match_it, ++counter)
+      if (*match_it == pivot[0]) {
+        posp_new = coords[counter];
+        break;
+      }
+    counter = 0;
+    for (match_it=match.begin(), counter=0; match_it!=match.end(); ++match_it, ++counter)
+        workMol.GetAtom(*match_it)->SetVector( coords[counter] - posp_new );
+
+    // Find vector that bisects existing angles at the pivot in each fragment
+    // and align them
+    //                                        \   /
+    //  \        \   /    bisect  \             P    align   \                /
+    //   P  and    P       --->    P--v1  and   |    --->     P--v1  and v2--P
+    //  /                         /             v2           /                \
+    
+    // Get v1 (from the existing fragment)
+    vector3 bond1, bond2, bond3, bond4, v1;
+    bond1 = VZero;
+    OBAtom atom1, atom2;
+    FOR_NBORS_OF_ATOM(nbr, p) {
+      if (bond1 == VZero) {
+        atom1 = *nbr;
+        bond1 = posp - atom1.GetVector();
+      }
+      else {
+        atom2 = *nbr;
+        bond2 = posp - atom2.GetVector();
+      }
+    }
+    bond1 = bond1.normalize();
+    bond2 = bond2.normalize();
+    v1 = bond1 + bond2;
+    v1 = v1.normalize();
+
+    // Get v2 (from the new fragment)
+    vector3 v2;
+    vector<int> nbrs;
+    vector<vector3> nbr_pos;
+    FOR_NBORS_OF_ATOM(nbr, mol.GetAtom(pivot[0]))
+      if (nbr->GetIdx() != atom1.GetIdx() && nbr->GetIdx() != atom2.GetIdx()) {
+        nbrs.push_back(nbr->GetIdx());
+        nbr_pos.push_back(workMol.GetAtom(nbr->GetIdx())->GetVector());
+      }
+    //assert(nbrs.size()==2);
+    bond3 = nbr_pos[0] - VZero; // The pivot is at the origin, hence VZero
+    bond4 = nbr_pos[1] - VZero;
+    bond3 = bond3.normalize();
+    bond4 = bond4.normalize();
+    v2 = bond3 + bond4;
+    v2 = v2.normalize();
+
+    // Set up matrix to rotate around v1 x v2 by the angle between them
+    double ang = vectorAngle(v1, v2);
+    vector3 cp = cross(v1, v2);
+    matrix3x3 mat;
+    mat.RotAboutAxisByAngle(cp, ang);
+
+    // Apply rotation
+    vector3 tmpvec;
+    for (match_it=match.begin(); match_it!=match.end(); ++match_it) {
+      tmpvec = workMol.GetAtom(*match_it)->GetVector();
+      tmpvec *= mat;
+      workMol.GetAtom(*match_it)->SetVector( tmpvec );
+    }
+
+    // Rotate the new fragment 90 degrees to make a tetrahedron
+    tmpvec = cross(bond1, bond2); // The normal to the ring
+    v1 = cross(tmpvec, v1); // In the plane of the ring, orthogonal to tmpvec and the original v1
+    v2 = cross(bond3, bond4); // The normal to ring2 - we want to align v2 to v1
+    ang = vectorAngle(v1, v2); // Should be 90
+    cp = cross(v1, v2);
+    mat.RotAboutAxisByAngle(cp, ang);
+    for (match_it=match.begin(); match_it!=match.end(); ++match_it) {
+      tmpvec = workMol.GetAtom(*match_it)->GetVector();
+      tmpvec *= mat;
+      workMol.GetAtom(*match_it)->SetVector( tmpvec );
+    }
+
+    // Translate to existing pivot location
+    for (match_it=match.begin(); match_it!=match.end(); ++match_it)
+      workMol.GetAtom(*match_it)->SetVector( workMol.GetAtom(*match_it)->GetVector() + posp );
+
+    // Create the bonds between the two fragments
+    for (vector<int>::iterator nbr_id=nbrs.begin(); nbr_id!=nbrs.end(); ++nbr_id)
+      workMol.AddBond(p->GetIdx(), *nbr_id, 1, mol.GetBond(p->GetIdx(), *nbr_id)->GetFlags());
+
+    return;
+  }
+
   void OBBuilder::CorrectStereoBonds(OBMol &mol)
   {
     // Get CisTransStereos and make a vector of corresponding StereogenicUnits
@@ -958,6 +1078,87 @@ namespace OpenBabel
     }
   }
 
+  bool OBBuilder::IsSpiroAtom(unsigned int idx, OBMol &mol)
+  {
+    OBMol workmol = mol; // Make a copy
+    OBAtom* watom = workmol.GetAtom(idx);
+    if (watom->GetHvyValence() != 4) // QUESTION: Do I need to restrict it further?
+      return false;
+    
+    std::vector <OBBond*> bonds;
+    std::vector <OBBond*>::iterator bond_it;
+    FOR_BONDS_OF_ATOM(b, watom) {
+      if (!b->IsInRing())
+        return false;
+      else
+        bonds.push_back(&(*b));
+    }
+    // Removing the four bonds should partition the molecule into 3 fragments
+    // ASSUMPTION: Molecule is a contiguous fragment to begin with
+    for(bond_it=bonds.begin(); bond_it != bonds.end(); ++bond_it)
+      workmol.DeleteBond(*bond_it);
+    if (workmol.Separate().size() != 3)
+      return false;
+
+    return true;
+  }
+
+  void OBBuilder::FlipSpiro(OBMol &mol, int idx)
+  {
+    OBAtom *p = mol.GetAtom(idx); // The pivot atom
+
+    // Find two of the four bonds that are in the same ring
+    vector<int> nbrs;
+    FOR_NBORS_OF_ATOM(nbr, p)
+      nbrs.push_back(nbr->GetIdx());
+    //assert(nbrs.size() == 4);
+
+    // Which neighbour is in the same ring as nbrs[0]? The answer is 'ringnbr'.
+    vector<int> children;
+    mol.FindChildren(children, idx, nbrs[0]);
+    int ringnbr = -1;
+    for (vector<int>::iterator nbr=nbrs.begin() + 1; nbr!=nbrs.end(); ++nbr)
+      if (find(children.begin(), children.end(), *nbr) != children.end()) {
+        ringnbr = *nbr;
+        break;
+      } 
+    //assert (ringnbr != -1);
+
+    // Split into a fragment to be flipped
+    OBMol workMol = mol;
+    workMol.DeleteBond(workMol.GetBond(idx, nbrs[0]));
+    workMol.DeleteBond(workMol.GetBond(idx, ringnbr));
+    OBBitVec fragment = GetFragment(workMol.GetAtom(nbrs[0]));
+
+    // Translate fragment to origin
+    vector3 posP = p->GetVector();
+    for (unsigned int i = 1; i <= workMol.NumAtoms(); ++i)
+      if (fragment.BitIsSet(i))
+        workMol.GetAtom(i)->SetVector(workMol.GetAtom(i)->GetVector() - posP);
+
+    // Rotate 180 deg around the bisector of nbrs[0]--p--ringnbr
+    vector3 bond1 = posP - mol.GetAtom(nbrs[0])->GetVector();
+    vector3 bond2 = posP - mol.GetAtom(ringnbr)->GetVector();
+    bond1.normalize();
+    bond2.normalize();
+    vector3 axis = bond1 + bond2; // The bisector of bond1 and bond2
+
+    matrix3x3 mat;
+    mat.RotAboutAxisByAngle(axis, 180);
+    vector3 tmpvec;
+    for (unsigned int i = 1; i <= workMol.NumAtoms(); ++i)
+      if (fragment.BitIsSet(i)) {
+        tmpvec = workMol.GetAtom(i)->GetVector();
+        tmpvec *= mat;
+        workMol.GetAtom(i)->SetVector( tmpvec );
+      }
+
+    // Set the coordinates of the original molecule using those of workmol
+    for (unsigned int i = 1; i <= workMol.NumAtoms(); ++i)
+      if (fragment.BitIsSet(i))
+        mol.GetAtom(i)->SetVector(workMol.GetAtom(i)->GetVector() + posP);
+  }
+
   void OBBuilder::CorrectStereoAtoms(OBMol &mol)
   {
     // Get TetrahedralStereos and make a vector of corresponding StereogenicUnits
@@ -979,37 +1180,38 @@ namespace OpenBabel
     newtetra = TetrahedralFrom3D(&mol, sgunits, false);
 
     // Compare and correct if necessary
-    //OBAtom *c, *d;
-    int i, j;
-    OBAtom *a, *b, *center;
     std::vector<OBTetrahedralStereo*>::iterator origth, newth;
     for (origth=tetra.begin(), newth=newtetra.begin(); origth!=tetra.end(); ++origth, ++newth) {
       OBTetrahedralStereo::Config config = (*newth)->GetConfig(OBStereo::Clockwise, OBStereo::ViewFrom);
       if ((*origth)->GetConfig(OBStereo::Clockwise, OBStereo::ViewFrom) != config) {
         // Wrong tetrahedral stereochemistry, so swap two bonds
+        // (or, in the case of spiro, rotate around central axis)
 
-        // Currently, the code only handles swapping two bonds that 
-        // are not in rings
-        center = mol.GetAtomById(config.center);
-        a = mol.GetAtomById(config.from);
-        i = -1;
-        if (mol.GetBond(a, center)->IsInRing()) {
-          for (i=0; i<2; i++) {
-            a = mol.GetAtomById(config.refs[i]);
-            if (!mol.GetBond(a, center)->IsInRing()) break;
-          }
-          // At this point either i==2 or the bond is not in a ring
-          if (i==2) continue; // At least 3 bonds in rings
+        OBAtom* center = mol.GetAtomById(config.center);
+        vector<OBAtom*> corners;
+        corners.push_back(mol.GetAtomById(config.from));
+        for (OBStereo::RefIter ref=config.refs.begin(); ref!=config.refs.end(); ++ref)
+          corners.push_back(mol.GetAtomById(*ref));
+
+        vector<unsigned int> idxs;
+        OBBond* bond;
+        for(vector<OBAtom*>::iterator atom=corners.begin(); atom!=corners.end(); ++atom) {
+          bond = mol.GetBond(center, *atom);
+          if (!bond->IsInRing())
+            idxs.push_back((*atom)->GetIdx());
         }
-        
-        for (j=i+1; j<3; j++) {
-          b = mol.GetAtomById(config.refs[j]);
-          if (!mol.GetBond(b, center)->IsInRing()) break;
+        // We can handle two non-ring bonds, or a spiro atom
+        bool spiro = false;
+        if (idxs.size() < 2) {
+          if (idxs.size() == 0 && OBBuilder::IsSpiroAtom(center->GetIdx(), mol))
+            spiro = true;
+          else
+            continue; // Just need to skip it
         }
-        // At this point either j==3 or the bond is not in a ring
-        if (j==3) continue; // Cannot find two bonds not in rings
-        
-        Swap(mol, center->GetIdx(), a->GetIdx(), center->GetIdx(), b->GetIdx());
+        if (!spiro)
+          Swap(mol, center->GetIdx(), idxs[0], center->GetIdx(), idxs[1]);
+        else
+          FlipSpiro(mol, center->GetIdx());
       }
     }
   }
