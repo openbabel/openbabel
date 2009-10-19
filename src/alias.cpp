@@ -60,10 +60,16 @@ namespace OpenBabel
     char* txt = new char[_alias.size()+1];
     strcpy(txt, _alias.c_str());
 
-      if(*txt=='?') //Assume that it is harmless to ignore this alias
+    if(*txt=='?') //Assume that it is harmless to ignore this alias
+    {
+      delete[] txt;
       return true;
+    }
     if(!isalpha(*txt)) //first char is the element that replaces atomindex
+    {
       return false;
+      delete[] txt;
+    }
     //Swaps any leading H isotope with the first non-H atom
     if(*txt=='H' || *txt=='D' || *txt=='T')
     {

@@ -1,6 +1,9 @@
 2009-10-08  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* src/builder.cpp: Don't attempt to fix stereochemistry if unspecified.
+2009-10-19  Chris Morley
+
+	* src/alias.cpp: Correct small memory leak as suggested by dcb #2881605
 
 2009-10-06  Noel O'Boyle  <baoilleach@gmail.com>
 
