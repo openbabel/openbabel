@@ -642,6 +642,65 @@ namespace OpenBabel {
     return true;
   }
 
+  int GetCoordination(OBAtom *b, int ipar)
+  {
+    int coordination;
+
+    // Work out coordination
+    // including possible hypervalent compounds
+    int valenceElectrons = 0;
+    switch(b->GetAtomicNum())
+      {
+      case 15:
+      case 33:
+      case 51:
+      case 83:
+        // old "group 5": P, As, Sb, Bi
+        valenceElectrons = 5;
+        break;
+      case 16:
+      case 34:
+      case 52:
+      case 84:
+        // old "group 6": S, Se, Te, Po
+        valenceElectrons = 6;
+        break;
+      case 35:
+      case 53:
+      case 85:
+        // old "group 7": Br, I, At
+        valenceElectrons = 7;
+        break;
+      case 36:
+      case 54:
+      case 86:
+        // hypervalent noble gases (Kr, Xe, Rn)
+        valenceElectrons = 8;
+        break;
+      }
+    if (valenceElectrons) {
+      // calculate the number of lone pairs
+      // e.g. for IF3 => "T-shaped"
+      valenceElectrons -= b->GetFormalCharge(); // make sure to look for I+F4 -> see-saw
+      double lonePairs = (valenceElectrons - b->BOSum()) / 2.0;
+      // we actually need to round up here -- single e- take room too.
+      int sites = (int)ceil(lonePairs);
+      coordination = b->GetValence() + sites;
+      if (coordination <= 4) { // normal valency
+        coordination = ipar;
+      }
+    } else {
+      coordination = ipar; // coordination of central atom
+      // Check to see if coordination is really correct
+      // if not (e.g., 5- or 7- or 8-coord...)
+      // then create approximate angle bending terms
+      if (b->GetValence() > 4) {
+        coordination = b->GetValence();
+      }
+    }
+    return coordination;
+  }
+
   bool OBForceFieldUFF::SetupCalculations()
   {
     OBFFParameter *parameterA, *parameterB, *parameterC;
@@ -662,6 +721,57 @@ namespace OpenBabel {
     _torsioncalculations.clear();
     _oopcalculations.clear();
     _vdwcalculations.clear();
+
+    // Clear and reset any 5-coordinate axial/equatorial marks (i.e., strange coordination)
+    // Now should fit standard VSEPR rules
+    int coordination;
+    FOR_ATOMS_OF_MOL(atom, _mol) {
+      // remove any previous designation
+      atom->DeleteData("UFF_AXIAL_ATOM");
+      atom->DeleteData("UFF_CENTRAL_ATOM");
+
+      parameterB = GetParameterUFF(atom->GetType(), _ffparams);
+      if (GetCoordination(&*atom, parameterB->_ipar[0]) == 5) { // we need to do work for trigonal-bipy!
+        // First, find the two largest neighbors
+        OBAtom *largestNbr, *current, *secondLargestNbr = 0;
+        double largestRadius;
+        OBBondIterator i;
+        largestNbr = atom->BeginNbrAtom(i);
+        // work out the radius
+        parameterA = GetParameterUFF(largestNbr->GetType(), _ffparams);
+        largestRadius = parameterA->_dpar[0];
+
+        for (current = atom->NextNbrAtom(i); current; current = atom->NextNbrAtom(i)) {
+          parameterA = GetParameterUFF(current->GetType(), _ffparams);
+          if (parameterA->_dpar[0] > largestRadius) {
+            // New largest neighbor
+            secondLargestNbr = largestNbr;
+            largestRadius = parameterA->_dpar[0];
+            largestNbr = current;
+          }
+          if (secondLargestNbr == 0) {
+            // save this atom
+            secondLargestNbr = current;
+          }
+        }
+
+        // OK, now we tag the central atom
+        OBPairData *label = new OBPairData;
+        label->SetAttribute("UFF_CENTRAL_ATOM");
+        label->SetValue("True"); // doesn't really matter
+        atom->SetData(label);
+        // And tag the axial substituents
+        label = new OBPairData;
+        label->SetAttribute("UFF_AXIAL_ATOM");
+        label->SetValue("True");
+        largestNbr->SetData(label);
+        label = new OBPairData;
+        label->SetAttribute("UFF_AXIAL_ATOM");
+        label->SetValue("True");
+        secondLargestNbr->SetData(label);
+
+      } // end work for 5-coordinate angles
+    } // end loop through atoms
 
     // 
     // Bond Calculations
@@ -730,7 +840,6 @@ namespace OpenBabel {
     double sinT0;
 		double rab, rbc, rac;
 		OBBond *bondPtr;
-    int coordination;
     FOR_ANGLES_OF_MOL(angle, _mol) {
       b = _mol.GetAtom((*angle)[0] + 1);
       a = _mol.GetAtom((*angle)[1] + 1);
@@ -771,58 +880,8 @@ namespace OpenBabel {
         }
         return false;
       }
- 
 
-      coordination = parameterB->_ipar[0]; // coordination of central atom
-      // Check to see if coordination is really correct
-      // if not (e.g., 5- or 7- or 8-coord...)
-      // then create approximate angle bending terms
-      if (b->GetValence() > 4) {
-        coordination = b->GetValence();
-      }
-      // Possible hypervalent compounds
-      int valenceElectrons = 0;
-      switch(b->GetAtomicNum())
-        {
-        case 15:
-        case 33:
-        case 51:
-        case 83:
-          // old "group 5": P, As, Sb, Bi
-          valenceElectrons = 5;
-          break;
-        case 16:
-        case 34:
-        case 52:
-        case 84:
-          // old "group 6": S, Se, Te, Po
-          valenceElectrons = 6;
-          break;
-        case 35:
-        case 53:
-        case 85:
-          // old "group 7": Br, I, At
-          valenceElectrons = 7;
-          break;
-        case 36:
-        case 54:
-        case 86:
-          // hypervalent noble gases (Kr, Xe, Rn)
-          valenceElectrons = 8;
-          break;
-        }
-      if (valenceElectrons) {
-        // calculate the number of lone pairs
-        // e.g. for IF3 => "T-shaped"
-        valenceElectrons -= b->GetFormalCharge(); // make sure to look for I+F4 -> see-saw
-        double lonePairs = (valenceElectrons - b->BOSum()) / 2.0;
-        // we actually need to round up here -- single e- take room too.
-        int sites = (int)ceil(lonePairs);
-        coordination = b->GetValence() + sites;
-        if (coordination <= 4) { // normal valency
-          coordination = parameterB->_ipar[0];
-        }
-      }
+      coordination = GetCoordination(b, parameterB->_ipar[0]);
 
       if (coordination != parameterB->_ipar[0]) {
         IF_OBFF_LOGLVL_LOW {
@@ -845,29 +904,17 @@ namespace OpenBabel {
         continue;
 
       } else if (coordination == 5) { // trigonal bipyramidal
-        currentTheta =  a->GetAngle(&*b, &*c);
 
         anglecalc.c0 = 1.0;
-        if (currentTheta >= 140.0 && !b->HasData("UFF_AXIAL_ATOM")) { // axial ligands = linear
+        // We've already done some of our work above -- look for axial markings
+        if (b->HasData("UFF_CENTRAL_ATOM")
+            && a->HasData("UFF_AXIAL_ATOM")
+            && c->HasData("UFF_AXIAL_ATOM")) { // axial ligands = linear
           anglecalc.coord = 1; // like sp
           anglecalc.theta0 = 180.0;
           anglecalc.c1 = 1.0;
-          // mark these atoms as axial
-          OBPairData *label = new OBPairData;
-          label->SetAttribute("UFF_AXIAL_ATOM");
-          label->SetValue("True");
-          a->SetData(label);
-          label = new OBPairData;
-          label->SetAttribute("UFF_AXIAL_ATOM");
-          label->SetValue("True");
-          b->SetData(label); // mark the center atom, so we don't have another set of axial-axial
-          label = new OBPairData;
-          label->SetAttribute("UFF_AXIAL_ATOM");
-          label->SetValue("True");
-          c->SetData(label);
-        } else if (currentTheta < 100.0 &&
-                   ((a->HasData("UFF_AXIAL_ATOM") && !c->HasData("UFF_AXIAL_ATOM"))
-                    || (c->HasData("UFF_AXIAL_ATOM") && !a->HasData("UFF_AXIAL_ATOM")))) { // axial-equatorial ligands
+        } else if ( (a->HasData("UFF_AXIAL_ATOM") && !c->HasData("UFF_AXIAL_ATOM"))
+                   || (c->HasData("UFF_AXIAL_ATOM") && !a->HasData("UFF_AXIAL_ATOM")) ) { // axial-equatorial ligands
           anglecalc.coord = 4; // like sq. planar or octahedral
           anglecalc.theta0 = 90.0;
           anglecalc.c1 = 1.0;
@@ -875,28 +922,16 @@ namespace OpenBabel {
           anglecalc.coord = 2; // like sp2
           anglecalc.theta0 = 120.0;
           anglecalc.c1 = -1.0;
-          // mark these atoms as equatorial
-          OBPairData *label = new OBPairData;
-          label->SetAttribute("UFF_EQUATORIAL_ATOM");
-          label->SetValue("True");
-          a->SetData(label);
-          label = new OBPairData;
-          label->SetAttribute("UFF_EQUATORIAL_ATOM");
-          label->SetValue("True");
-          c->SetData(label);
-          parameterB->c += 1;
         }
         anglecalc.c2 = 0.0;
-
-        // Also add a VDW 1-3 interaction to distort slightly
-        if (SetupVDWCalculation(a, c, vdwcalc)) {
-          _vdwcalculations.push_back(vdwcalc);
-        }
+      }
         // This section is commented out.
         // If you want to try to tackle 7-coordinate species, give this a try
         // and change the first conditional above to >7, not >=7
         // This doesn't work so well because it's hard to classify between
         // axial-equatorial (90 degrees) and proximal equatorial (~72 degrees).
+        // You'll probably have to do something like the pre-evaluation of 5-coordinate atoms at the top of this method
+        //
         //     }  else if (coordination == 7) { // pentagonal bipyramidal
         //         currentTheta =  a->GetAngle(&*b, &*c);
 
@@ -924,7 +959,7 @@ namespace OpenBabel {
         //         if (SetupVDWCalculation(a, c, vdwcalc)) {
         //           _vdwcalculations.push_back(vdwcalc);
         //         }
-      } else { // normal coordination: sp, sp2, sp3, square planar, octahedral
+      else { // normal coordination: sp, sp2, sp3, square planar, octahedral
         anglecalc.coord = coordination;
         anglecalc.theta0 = parameterB->_dpar[1];
         anglecalc.cosT0 = cos(anglecalc.theta0 * DEG_TO_RAD);
