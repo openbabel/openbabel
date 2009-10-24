@@ -148,6 +148,7 @@ namespace OpenBabel
     BondSpec *bond;
     int parts;
     bool hasExplicitH;
+    std::vector<int> bond_parse_order; // Used to recover the order in which bonds were parsed
   }
   Pattern;
 #else

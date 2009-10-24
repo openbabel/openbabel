@@ -184,7 +184,7 @@ namespace OpenBabel
   static int CreateAtom(Pattern*,AtomExpr*,int,int vb=0);
   
   // The following are used to recover stereochemistry involving ring closures:
-  static std::vector<int> bond_parse_order; // - the order in which bonds were parsed
+  // Pattern.bond_parse_order;              // - the order in which bonds were parsed
   static int N_parsed_bonds;                // - the number of bonds parsed to date
   
 
@@ -1527,7 +1527,7 @@ namespace OpenBabel
               { // Ring opening
                 stat->closord[index] = bexpr;
                 stat->closure[index] = prev;
-                bond_parse_order.push_back(-1); // Place-holder
+                pat->bond_parse_order.push_back(-1); // Place-holder
                 bexpr = (BondExpr*)0;
               }
             else if( stat->closure[index] != prev )
@@ -1542,7 +1542,7 @@ namespace OpenBabel
                   return ParseSMARTSError(pat,bexpr);
                 
                 CreateBond(pat,bexpr,prev,stat->closure[index]);
-                bond_parse_order[stat->closure[index]] = N_parsed_bonds;
+                pat->bond_parse_order[stat->closure[index]] = N_parsed_bonds;
                 N_parsed_bonds++;
                 stat->closure[index] = -1;
                 bexpr = (BondExpr*)0;
@@ -1570,7 +1570,7 @@ namespace OpenBabel
                 if( !bexpr )
                   bexpr = GenerateDefaultBond();
                 CreateBond(pat,bexpr,prev,index);
-                bond_parse_order.push_back(N_parsed_bonds);
+                pat->bond_parse_order.push_back(N_parsed_bonds);
                 N_parsed_bonds++;
                 bexpr = (BondExpr*)0;
               }
@@ -1589,7 +1589,7 @@ namespace OpenBabel
                 if( !bexpr )
                   bexpr = GenerateDefaultBond();
                 CreateBond(pat,bexpr,prev,index);
-                bond_parse_order.push_back(N_parsed_bonds);
+                pat->bond_parse_order.push_back(N_parsed_bonds);
                 N_parsed_bonds++;
                 bexpr = (BondExpr*)0;
               }
@@ -1709,7 +1709,7 @@ namespace OpenBabel
     auto ParseState stat;
     int i,flag;
   
-    bond_parse_order.clear();
+    result->bond_parse_order.clear();
     N_parsed_bonds = 0;
     for( i=0; i<100; i++ )
       stat.closure[i] = -1;
@@ -2653,7 +2653,7 @@ namespace OpenBabel
             // Iterate over the bonds in the order in which they were parsed.
             // In other words, ring closure bonds will be handled in the order
             // of their corresponding ring opening. This is important for stereo.
-            bs = pat->bond[bond_parse_order[k]];
+            bs = pat->bond[pat->bond_parse_order[k]];
             if (bs.dst == j)
               nbrs.push_back(bs.src);
             else if (bs.src == j)

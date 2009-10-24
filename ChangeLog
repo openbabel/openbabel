@@ -1,3 +1,10 @@
+2009-10-24  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* src/parsmart.cpp, include/openbabel/parsmart.h: Make
+	bond_parse_order an instance variable rather than a class variable.
+	Fixes bug where multiple SMARTS patterns are parsed before being used
+	to Match.
+
 2009-10-08  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* src/builder.cpp: Don't attempt to fix stereochemistry if unspecified.
