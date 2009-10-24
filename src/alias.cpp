@@ -15,23 +15,22 @@ GNU General Public License for more details.
 #include <sstream>
 #include <string>
 #include <openbabel/alias.h>
+#include <openbabel/obconversion.h>
 
+using namespace std;
 namespace OpenBabel
 {
 
   bool AliasData::Expand(OBMol& mol, const unsigned int atomindex)
   {
     /*
-    Interprets the alias text and adds atom as appropriate to mol.
+    Interprets the alias text and adds atom(s) as appropriate to mol.
     Tries the following in turn until one is sucessful:
-    1) Looks up alias in fragments.txt (not implemented yet)
-    2) if starts with number treat as isotope+element e.g. 2H
+    1) If starts with number treat as isotope+element e.g. 2H
+    2) Looks up alias in superatom.txt e.g. COOH Pr
     3) Parse as simple formula
     Returns false if none are successful.
     */
-
-    //Look up alias name here, add atoms as appropriate and return true if successful
-    //else...
 
     //parse as isotopic atom
     if(isdigit(_alias[0]))
@@ -40,13 +39,19 @@ namespace OpenBabel
       int iso;
       std::string el;
       ss >> iso >>el;
-      OBAtom* pAtom = mol.GetAtom(atomindex);
-      if(!pAtom)
-        return false;
-      pAtom->SetIsotope(iso);
-      pAtom->SetAtomicNum(etab.GetAtomicNum(el.c_str(),iso));
-      return true;
+      if(etab.GetAtomicNum(el.c_str())>0)
+      {
+        OBAtom* pAtom = mol.GetAtom(atomindex);
+        if(!pAtom)
+          return false;
+        pAtom->SetIsotope(iso);
+        pAtom->SetAtomicNum(etab.GetAtomicNum(el.c_str(),iso));
+        return true;
+      }
     }
+
+    if(FromNameLookup(mol, atomindex))
+      return true;
 
     //Crude implementation of formula parse
     //This should really not alter the molecule until the parsing has been
@@ -128,6 +133,81 @@ namespace OpenBabel
     return true;
   }
 
+bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
+{
+  OBAtom* Xxatom = mol.GetAtom(atomindex);
+  if(Xxatom->NumBonds()>1)
+  {
+    obErrorLog.ThrowError(__FUNCTION__, _alias + " is multivalent, which is currently not supported.", obError);
+    return false;
+  }
+
+  static std::map<std::string, std::string> table;
+  if(table.empty())
+    LoadFile(table);
+  
+  map<std::string, std::string>::iterator pos = table.find(_alias);
+  if(pos==table.end())
+  {
+    obErrorLog.ThrowError(__FUNCTION__, "Alias " + _alias + " was not recognized.\n Output may not be correct.", obError, onceOnly);
+    return false;
+  }
+
+  //Convert SMILES of alias
+  OBConversion conv;
+  OBMol obAlias;
+  obAlias.SetIsPatternStructure();
+  if(conv.SetInFormat("smi"))
+    conv.ReadString(&obAlias, pos->second);
+  
+  
+  //Find index of atom to which XxAtom is attached, and the eventual index of first atom in fragment
+  OBBondIterator bi;
+  unsigned mainAttachIdx = (Xxatom->BeginNbrAtom(bi))->GetIdx();
+  unsigned    aliasindex = mol.NumAtoms()+1;
+
+ //Combine with main molecule 
+  mol += obAlias;
+
+  //remove trailing _ which += operator has added
+  string title(mol.GetTitle());
+  if(title[title.size()-1]=='_')
+  {
+    title.erase(title.size()-1);  
+    mol.SetTitle(title);
+  }
+
+  //Remove bond to Xx atom
+  mol.DeleteBond(*Xxatom->BeginBonds());
+
+  //Connect to SMILES fragment
+  mol.AddBond(mainAttachIdx, aliasindex, 1);
+
+  //delete original Xx atom
+  mol.DeleteAtom(Xxatom); 
+
+  return true;
+}
+
+bool AliasData::LoadFile(std::map<std::string, std::string>& table)
+{
+  ifstream ifs;
+  if (OpenDatafile(ifs, "superatom.txt").length() == 0)
+  {
+    obErrorLog.ThrowError(__FUNCTION__, "Cannot open superatom.txt", obError);
+    return false;
+  }
+  string ln;
+  while(getline(ifs, ln))
+  {
+    if (ln[0]=='#' || ln.empty())
+      continue;
+    std::vector<string> vec;
+    if(tokenize(vec, ln) && vec.size()>=2)
+      table[ vec[0] ] = vec[1];
+  }
+  return true;
+}
 }//namespace
 
 //! \file alias.cpp

@@ -1,3 +1,15 @@
+2009-10-19  Chris Morley
+
+	* include/openbabel/alias.h, src/alias.cpp: To convert an alias name
+	(like Ph) to real chemistry, look up in a table, convert the SMILES
+	of the fragment and add it in. 
+	
+	* data/superatom.txt: the datafile from http://cactus.nci.nih.gov/osra/
+	It could do with more entries, which are easy to add.
+	
+	* src/formats/mdlformat.cpp: Reinstate the code reading  aliases which
+	seems to have got mangled during a merge. Example in test/files/alias.mol
+
 2009-10-24  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* src/parsmart.cpp, include/openbabel/parsmart.h: Make

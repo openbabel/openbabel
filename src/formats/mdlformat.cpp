@@ -160,11 +160,12 @@ namespace OpenBabel
     string clearError; // empty string to clear the warning buffer
 
     int i, natoms, nbonds;
-    char buffer[BUFF_SIZE];
+    //char buffer[BUFF_SIZE];
     string comment;
     string r1, r2;
     map<OBBond*, OBStereo::BondDirection> updown;
     vector<Parity> parities;
+    vector<pair<AliasData*,OBAtom*> > aliases;
 
     // Attempting to read past the end of the file -- don't bother
     if ( !ifs.good() || ifs.peek() == EOF ) 
@@ -189,7 +190,7 @@ namespace OpenBabel
     //          0...1    I = user's initials
     //          2...9    P = program name
     //         10..19    M/D/Y,H:m = date/time
-    //         20..21    d = dimentional code
+    //         20..21    d = dimensional code
     //         22..23    S = scaling factor
     //         24..33    s = scaling facter (double format 10.5)
     //         34..45    E = energy
@@ -426,7 +427,7 @@ namespace OpenBabel
       }
 
       // 
-      // Properties Block (currently only M RAD and M CHG M ISO)
+      // Properties Block 
       //
       bool foundISO = false, foundCHG = false;
       while (std::getline(ifs, line)) {
@@ -440,28 +441,25 @@ namespace OpenBabel
             if (ifs.good()) // check for EOL, suggested by Dalke
               std::getline(ifs, line);
         }
+
         if (line.substr(0, 3) == "A  " && line.size() > 3) { //alias
-
-// This code is commented out because it is plainly wrong. (For example, it
-// uses the variable i which is not initialized, to randomly skip a number
-// of lines of the SD file.)  It needs to be rewritten to the MDL spec, but
-// the spec is difficult to understand.  -- CJ
-
-//           int atomnum = ReadUIntField((line.substr(2, line.size() - 2)).c_str());
-//           for(; i > 0; --i)
-// 	    std::getline(ifs, line);
-//           if(line.at(0) != '?' && line.at(0) != '*') {
-//             AliasData* ad = new AliasData();
-//             ad->SetAlias(line);
-//             ad->SetOrigin(fileformatInput);
-//             OBAtom* at = mol.GetAtom(atomnum);
-//             if (at) {
-//               at->SetData(ad);
-//               at->SetAtomicNum(0);
-//               //The alias has now been added as a dummy atom with a AliasData object.
-//               ad->Expand(mol, atomnum); //Make chemically meaningful, if possible.
-//             }
-//           }
+          int atomnum = ReadUIntField((line.substr(2, line.size() - 2)).c_str());
+          //MDL documentation just has alias text here( x... ). A single line is assumed,
+          //and its contents ignored if it starts with ? or * .
+          std::getline(ifs, line);
+          if(line.at(0) != '?' && line.at(0) != '*') {
+            AliasData* ad = new AliasData();
+            ad->SetAlias(line);
+            ad->SetOrigin(fileformatInput);
+            OBAtom* at = mol.GetAtom(atomnum);
+            if (at) {
+              at->SetData(ad);
+              at->SetAtomicNum(0);
+              //The alias has now been added as a dummy atom with a AliasData object.
+              //Delay the chemical interpretation until the rest of the molecule has been built
+              aliases.push_back(make_pair(ad, at));
+            }
+          }
           continue;
         }
 
@@ -511,6 +509,7 @@ namespace OpenBabel
           if (massDifference)
             a->SetIsotope((int)(etab.GetMass(a->GetAtomicNum()) + massDifference));
         }
+
       // if no 'M  CHG' or 'M  RAD' properties are found, use the charges from the atom block
       if (!foundCHG)
         FOR_ATOMS_OF_MOL (a, mol) {
@@ -525,6 +524,14 @@ namespace OpenBabel
             case 7: a->SetFormalCharge(-3); break;
           }
         }
+    }
+
+    //Expand aliases
+    for(vector<pair<AliasData*,OBAtom*> >::iterator iter=aliases.begin();iter!=aliases.end();++iter)
+    {
+      AliasData* ad = (*iter).first;
+      unsigned atomnum = (*iter).second->GetIdx();
+      ad->Expand(mol, atomnum); //Make chemically meaningful, if possible.
     }
 
     mol.AssignSpinMultiplicity();
