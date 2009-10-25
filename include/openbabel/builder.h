@@ -28,6 +28,7 @@ GNU General Public License for more details.
 #include <set>
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
+#include <openbabel/stereo/stereo.h>
 
 namespace OpenBabel
 {
@@ -118,7 +119,7 @@ namespace OpenBabel
       static void CorrectStereoAtoms(OBMol &mol);
       /*! Does this atom connect two rings which are not otherwise connected?
       */
-      static bool IsSpiroAtom(unsigned int idx, OBMol &mol);
+      static bool IsSpiroAtom(OBStereo::Ref atomId, OBMol &mol);
       /*! Get the fragment to which this atom belongs.
        *  \param atom Atom in the fragment.
        *  \returns The OBBitVec defining the fragment to which a belongs.
@@ -135,6 +136,9 @@ namespace OpenBabel
                                std::vector<int> pivot);
       //! Rotate one of the spiro rings 180 degrees
       static void FlipSpiro(OBMol &mol, int idx);
+      static bool FixRingStereo(std::vector<std::pair<OBStereo::Ref, bool> > atomIds,
+                                OBMol &mol, OBStereo::Refs &unfixedcenters);
+      static void AddRingNbrs(OBBitVec &fragment, OBAtom *atom, OBMol &mol);
   }; // class OBBuilder
 
 }// namespace OpenBabel

@@ -1,3 +1,8 @@
+2009-10-25  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* builder.h, .cpp: Add code to fix ring stereochemistry if possible 
+	by inverting the coordinates of a ring system.
+
 2009-10-25  Chris Morley
 
 	* include/openbabel/src/alias.cpp: Add warning that the current implementation

@@ -30,7 +30,7 @@ GNU General Public License for more details.
 #include <openbabel/rotor.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/locale.h>
-//#include <assert.h>
+#include <assert.h>
 
 
 #include <openbabel/stereo/stereo.h>
@@ -802,7 +802,7 @@ namespace OpenBabel
             if (alreadydone > 1) // At least two atoms of the found match have already been added
               continue;
             else if (alreadydone == 1) {
-              spiro = IsSpiroAtom(match_idx, mol);
+              spiro = IsSpiroAtom(mol.GetAtom(match_idx)->GetId(), mol);
               if (!spiro) continue;
             }
 
@@ -1078,10 +1078,10 @@ namespace OpenBabel
     }
   }
 
-  bool OBBuilder::IsSpiroAtom(unsigned int idx, OBMol &mol)
+  bool OBBuilder::IsSpiroAtom(OBStereo::Ref atomId, OBMol &mol)
   {
     OBMol workmol = mol; // Make a copy
-    OBAtom* watom = workmol.GetAtom(idx);
+    OBAtom* watom = workmol.GetAtomById(atomId);
     if (watom->GetHvyValence() != 4) // QUESTION: Do I need to restrict it further?
       return false;
     
@@ -1179,39 +1179,154 @@ namespace OpenBabel
     // Perceive TetrahedralStereos
     newtetra = TetrahedralFrom3D(&mol, sgunits, false);
 
-    // Compare and correct if necessary
+    // Identify any ring stereochemistry and whether it is right or wrong
+    // - ring stereo involves 3 ring bonds, or 4 ring bonds but the
+    //   atom must not be spiro
+    OBAtom* center;
+    bool existswrongstereo = false; // Is there at least one wrong ring stereo?
+    typedef std::pair<OBStereo::Ref, bool> IsThisStereoRight;
+    std::vector<IsThisStereoRight> ringstereo;
+    std::vector<OBTetrahedralStereo*> nonringtetra, nonringnewtetra;
     std::vector<OBTetrahedralStereo*>::iterator origth, newth;
     for (origth=tetra.begin(), newth=newtetra.begin(); origth!=tetra.end(); ++origth, ++newth) {
       OBTetrahedralStereo::Config config = (*newth)->GetConfig(OBStereo::Clockwise, OBStereo::ViewFrom);
+      
+      center = mol.GetAtomById(config.center);
+      int ringbonds = 0;
+      FOR_BONDS_OF_ATOM(b, center)
+        if (b->IsInRing())
+          ringbonds++;
+      
+      if (ringbonds == 3 || (ringbonds==4 && !OBBuilder::IsSpiroAtom(config.center, mol))) {
+        bool rightstereo = (*origth)->GetConfig(OBStereo::Clockwise, OBStereo::ViewFrom) == config;
+        ringstereo.push_back(IsThisStereoRight(config.center, rightstereo));
+        if (!rightstereo)
+          existswrongstereo = true;
+      }
+      else { // A non-ring stereocenter
+        nonringtetra.push_back(*origth);
+        nonringnewtetra.push_back(*newth);
+      }
+    }
+    
+    if (existswrongstereo) {
+      // Fix ring stereo
+      OBStereo::Refs unfixed;
+      bool inversion = FixRingStereo(ringstereo, mol, unfixed);
+
+      // Output warning message if necessary
+      if (unfixed.size() > 0) {
+        stringstream errorMsg;
+        errorMsg << "Could not correct " << unfixed.size() << " stereocenter(s) in this molecule";
+        errorMsg << std::endl << "  with Atom Ids as follows:";
+        for (OBStereo::RefIter ref=unfixed.begin(); ref!=unfixed.end(); ++ref) 
+          errorMsg << " " << *ref;
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+      }
+
+      // Reperceive non-ring TetrahedralStereos if an inversion occured
+      if (inversion) {
+        sgunits.clear();
+        for (origth = nonringtetra.begin(); origth != nonringtetra.end(); ++origth)
+          sgunits.push_back(StereogenicUnit(OBStereo::Tetrahedral, (*origth)->GetConfig().center));
+        nonringnewtetra = TetrahedralFrom3D(&mol, sgunits, false);
+      }
+    }
+
+    // Correct the non-ring stereo
+    for (origth=nonringtetra.begin(), newth=nonringnewtetra.begin(); origth!=nonringtetra.end(); ++origth, ++newth) {
+      OBTetrahedralStereo::Config config = (*newth)->GetConfig(OBStereo::Clockwise, OBStereo::ViewFrom);
       if ((*origth)->GetConfig(OBStereo::Clockwise, OBStereo::ViewFrom) != config) {
-        // Wrong tetrahedral stereochemistry, so swap two bonds
-        // (or, in the case of spiro, rotate around central axis)
+        // Wrong tetrahedral stereochemistry
 
-        OBAtom* center = mol.GetAtomById(config.center);
-        vector<OBAtom*> corners;
-        corners.push_back(mol.GetAtomById(config.from));
-        for (OBStereo::RefIter ref=config.refs.begin(); ref!=config.refs.end(); ++ref)
-          corners.push_back(mol.GetAtomById(*ref));
-
+        // Try to find two non-ring bonds
+        center = mol.GetAtomById(config.center);
         vector<unsigned int> idxs;
-        OBBond* bond;
-        for(vector<OBAtom*>::iterator atom=corners.begin(); atom!=corners.end(); ++atom) {
-          bond = mol.GetBond(center, *atom);
-          if (!bond->IsInRing())
-            idxs.push_back((*atom)->GetIdx());
-        }
-        // We can handle two non-ring bonds, or a spiro atom
-        bool spiro = false;
-        if (idxs.size() < 2) {
-          if (idxs.size() == 0 && OBBuilder::IsSpiroAtom(center->GetIdx(), mol))
-            spiro = true;
-          else
-            continue; // Just need to skip it
-        }
-        if (!spiro)
+        FOR_BONDS_OF_ATOM(b, center)
+          if (!b->IsInRing())
+            idxs.push_back(b->GetNbrAtom(center)->GetIdx());
+        
+        if (idxs.size() == 0 && OBBuilder::IsSpiroAtom(config.center, mol))
+          FlipSpiro(mol, center->GetIdx());
+        else if (idxs.size() >= 2)
           Swap(mol, center->GetIdx(), idxs[0], center->GetIdx(), idxs[1]);
         else
-          FlipSpiro(mol, center->GetIdx());
+          assert(false); // It should never reach here!
+          ;
+      }
+    }
+  }
+
+  bool OBBuilder::FixRingStereo(std::vector<std::pair<OBStereo::Ref, bool>> atomIds, OBMol &mol,
+                                          OBStereo::Refs &unfixedcenters)
+  {
+    bool inversion = false;
+    if (atomIds.size() == 0) return inversion;
+
+    // Have we dealt with a particular ring stereo? (Indexed by Id)
+    OBBitVec seen;
+   
+    for(int n=0; n<atomIds.size(); ++n) {
+      // Keep looping until you come to an unseen wrong stereo
+      if (seen.BitIsSet(atomIds[n].first) || atomIds[n].second) continue; 
+
+      OBBitVec fragment; // Indexed by Id
+      AddRingNbrs(fragment, mol.GetAtomById(atomIds[n].first), mol);
+      
+      // Which ring stereos does this fragment contain, and
+      // are the majority of them right or wrong?
+      OBStereo::Refs wrong, right;
+      for (int i=0; i<atomIds.size(); ++i)
+        if (fragment.BitIsSet(atomIds[i].first)) {
+          if (atomIds[i].second)
+            right.push_back(atomIds[i].first);
+          else
+            wrong.push_back(atomIds[i].first);
+          seen.SetBitOn(atomIds[i].first);
+        }
+
+      if (right > wrong) { // Inverting would make things worse!
+        unfixedcenters.insert(unfixedcenters.end(), wrong.begin(), wrong.end());
+        continue;
+      }
+      unfixedcenters.insert(unfixedcenters.end(), right.begin(), right.end());
+
+      // Invert the coordinates (QUESTION: should I invert relative to the centroid?)
+      inversion = true;
+      FOR_ATOMS_OF_MOL(a, mol)
+        if (fragment.BitIsSet(a->GetId()))
+          a->SetVector( - a->GetVector());
+
+      // Add neighbouring bonds back onto the fragment
+      // TODO: Handle spiro
+      std::vector<OBBond*> reconnect;
+      FOR_ATOMS_OF_MOL(a, mol)
+        if (fragment.BitIsSet(a->GetId()))
+          FOR_BONDS_OF_ATOM(b, &*a)
+            if (!b->IsInRing())
+              reconnect.push_back(&*b);
+
+      for (std::vector<OBBond*>::iterator bi=reconnect.begin(); bi!=reconnect.end(); ++bi) {
+        OBBond* b = *bi;
+        int bo = b->GetBondOrder();
+        int begin = b->GetBeginAtomIdx();
+        int end = b->GetEndAtomIdx();
+        mol.DeleteBond(b);
+        OBBuilder::Connect(mol, begin, end, bo);
+      }
+    }
+
+    return inversion;
+  }
+
+  void OBBuilder::AddRingNbrs(OBBitVec &fragment, OBAtom *atom, OBMol &mol)
+  {
+    // Add the nbrs to the fragment, but don't add the neighbours of a spiro atom.
+    FOR_NBORS_OF_ATOM (nbr, atom) {
+      if (mol.GetBond(&*nbr, atom)->IsInRing() && !fragment.BitIsSet(nbr->GetId())
+          && !OBBuilder::IsSpiroAtom(atom->GetId(), mol)) {
+        fragment.SetBitOn(nbr->GetId());
+        AddRingNbrs(fragment, &*nbr, mol);
       }
     }
   }
