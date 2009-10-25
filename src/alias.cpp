@@ -152,6 +152,11 @@ bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
     obErrorLog.ThrowError(__FUNCTION__, "Alias " + _alias + " was not recognized.\n Output may not be correct.", obError, onceOnly);
     return false;
   }
+  else if(mol.Has2D())//mol.GetDimension()>=2)
+    obErrorLog.ThrowError(__FUNCTION__,
+    "The current implementation does not assign coordinates to the "
+    "atoms in the expanded alias, and so is usable only for 0D molecules", obWarning, onceOnly);
+
 
   //Convert SMILES of alias
   OBConversion conv;

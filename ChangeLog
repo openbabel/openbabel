@@ -1,8 +1,13 @@
-2009-10-19  Chris Morley
+2009-10-25  Chris Morley
+
+	* include/openbabel/src/alias.cpp: Add warning that the current implementation
+	does not add atom coordinates when it expands a superatom.
+		
+2009-10-24  Chris Morley
 
 	* include/openbabel/alias.h, src/alias.cpp: To convert an alias name
 	(like Ph) to real chemistry, look up in a table, convert the SMILES
-	of the fragment and add it in. 
+	of the fragment and add it in. No coordinate generation yet.
 	
 	* data/superatom.txt: the datafile from http://cactus.nci.nih.gov/osra/
 	It could do with more entries, which are easy to add.
