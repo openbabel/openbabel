@@ -1,3 +1,8 @@
+2009-10-29  Michael Banck  <mbanck@gmx.net>
+
+	* src/formats/outformat.cpp: Applied patch #2888693 to add support for
+	PC-GAMESS/Firefly.  Addresses PR#2884618.
+
 2009-10-25  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* builder.h, .cpp: Add code to fix ring stereochemistry if possible 

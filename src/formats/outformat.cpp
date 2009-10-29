@@ -79,7 +79,8 @@ namespace OpenBabel
     // the detection strings are from the Chemical MIME project
     // http://chemical-mime.sourceforge.net/chemical-mime-data.html
     while (ifs.getline(buffer,BUFF_SIZE)) {
-      if (strstr(buffer,"GAMESS execution script") != NULL) {
+      if ((strstr(buffer,"GAMESS execution script") != NULL) ||
+          (strstr(buffer,"PC GAMESS") != NULL)) {
         // GAMESS output
         pFormat = pConv->FindFormat("gamout");
         break;
