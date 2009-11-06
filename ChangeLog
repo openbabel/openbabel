@@ -1,3 +1,9 @@
+2009-11-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/xml/xml.cpp (OpenBabel): Defensive programming for
+	issue reported by Matt Sprague -- access violation when
+	reading/writing xml formats.
+
 2009-10-29  Michael Banck  <mbanck@gmx.net>
 
 	* src/formats/outformat.cpp: Applied patch #2888693 to add support for

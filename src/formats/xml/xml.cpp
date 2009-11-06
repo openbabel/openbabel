@@ -98,11 +98,15 @@ namespace OpenBabel
 
   XMLConversion::~XMLConversion()
   {
-    if(_reader)
+    if(_reader) {
       xmlFreeTextReader(_reader);
-    if(_writer)
+      _reader = NULL;
+    }
+    if(_writer) {
 //      xmlTextWriterEndDocument(_writer); //if hasn't been called ealier
         xmlFreeTextWriter(_writer);// was crashing
+        _writer = NULL;
+    }
     //xmlBufferFree(_buf);
   }
 
