@@ -145,7 +145,17 @@ namespace OpenBabel
                 atom->SetVector(x,y,z); //set coordinates
 
                 //set atomic number
-                atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
+                int n;
+                atom->SetAtomicNum(0);
+                while (vs[1].length()!=0) { // recognize name with number
+                    n = etab.GetAtomicNum(vs[1].c_str());
+                  if (n!=0) {
+                    atom->SetAtomicNum(n);
+                    break;
+                  } else {
+                    vs[1].erase(vs[1].end()-1,vs[1].end());
+                  }
+                }
 
                 if (!ifs.getline(buffer,BUFF_SIZE))
                   break;
