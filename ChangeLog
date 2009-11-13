@@ -1,3 +1,9 @@
+2009-11-13  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* src/formats/inchiformat.cpp (WriteMolecule): Don't create
+	stereo objects to pass to the InChI code if the stereo is unspecified.
+	This avoids an InChI warning reported by Chris.
+
 2009-10-29  Michael Banck  <mbanck@gmx.net>
 
 	* src/formats/molproformat.cpp (ReadMolecule): Applied patch #2893477

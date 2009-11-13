@@ -462,23 +462,21 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
         OBTetrahedralStereo::Config config = ts->GetConfig();
 
-        inchi_Stereo0D stereo;         
-        stereo.type = INCHI_StereoType_Tetrahedral;
-        stereo.central_atom = config.center;
-        stereo.neighbor[0] = config.from;
-        for(int i=0; i<3; ++i)
-          stereo.neighbor[i + 1] = config.refs[i];
-        
         if (config.specified) {
+          inchi_Stereo0D stereo;         
+          stereo.type = INCHI_StereoType_Tetrahedral;
+          stereo.central_atom = config.center;
+          stereo.neighbor[0] = config.from;
+          for(int i=0; i<3; ++i)
+            stereo.neighbor[i + 1] = config.refs[i];
+          
           if (config.winding == OBStereo::Clockwise)
             stereo.parity = INCHI_PARITY_EVEN;
           else
             stereo.parity = INCHI_PARITY_ODD;
-        }
-        else
-          stereo.parity = INCHI_PARITY_UNKNOWN;
 
-        stereoVec.push_back(stereo);
+          stereoVec.push_back(stereo);
+        }
       }
     }
         
@@ -489,32 +487,30 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         OBCisTransStereo *ts = dynamic_cast<OBCisTransStereo*>(*data);
         OBCisTransStereo::Config config = ts->GetConfig();
 
-        inchi_Stereo0D stereo;
-        stereo.central_atom = NO_ATOM;
-        stereo.type = INCHI_StereoType_DoubleBond;
-        OBStereo::Refs refs = config.refs;
-        unsigned long start = refs[0];
-        if (refs[0]==OBStereo::ImplicitRef)
-          start = refs[1];
-        unsigned long end = refs[3];
-        if (refs[3]==OBStereo::ImplicitRef)
-          end = refs[2];
- 
-        stereo.neighbor[0] = start;
-        stereo.neighbor[1] = config.begin;
-        stereo.neighbor[2] = config.end;
-        stereo.neighbor[3] = end;
-
         if (config.specified) {
+          inchi_Stereo0D stereo;
+          stereo.central_atom = NO_ATOM;
+          stereo.type = INCHI_StereoType_DoubleBond;
+          OBStereo::Refs refs = config.refs;
+          unsigned long start = refs[0];
+          if (refs[0]==OBStereo::ImplicitRef)
+            start = refs[1];
+          unsigned long end = refs[3];
+          if (refs[3]==OBStereo::ImplicitRef)
+            end = refs[2];
+   
+          stereo.neighbor[0] = start;
+          stereo.neighbor[1] = config.begin;
+          stereo.neighbor[2] = config.end;
+          stereo.neighbor[3] = end;
+
           if (ts->IsTrans(start, end))
             stereo.parity = INCHI_PARITY_EVEN;
           else
             stereo.parity = INCHI_PARITY_ODD;
+          
+          stereoVec.push_back(stereo);
         }
-        else
-          stereo.parity = INCHI_PARITY_UNKNOWN;
-        
-        stereoVec.push_back(stereo);
       }
     }
   }
