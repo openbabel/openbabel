@@ -1,3 +1,7 @@
+2009-11-17  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* include/openbabel/src/alias.cpp: Correct error
+
 2009-11-13  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* src/formats/inchiformat.cpp (WriteMolecule): Don't create

@@ -136,7 +136,7 @@ namespace OpenBabel
 bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
 {
   OBAtom* Xxatom = mol.GetAtom(atomindex);
-  if(Xxatom->NumBonds()>1)
+  if(Xxatom->GetValence()>1)
   {
     obErrorLog.ThrowError(__FUNCTION__, _alias + " is multivalent, which is currently not supported.", obError);
     return false;
