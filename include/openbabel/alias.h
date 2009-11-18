@@ -45,7 +45,7 @@ information or as a hint for an alternative representation, for example to
 a chemical drawing program. The _expandedatoms vector would then contains
 the indices of the atoms to which the alias is an alternative.
 */
-class AliasData : public OBGenericData
+class OBAPI AliasData : public OBGenericData
 {
 protected:
   std::string _alias;

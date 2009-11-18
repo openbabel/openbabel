@@ -1,3 +1,7 @@
+2009-11-18  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* include/openbabel/alias.h: Add OBAPI
+
 2009-11-17  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* include/openbabel/src/alias.cpp: Correct error
