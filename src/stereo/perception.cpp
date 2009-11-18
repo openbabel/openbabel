@@ -434,9 +434,36 @@ namespace OpenBabel {
             int classification = classifyTetrahedralNbrSymClasses(symClasses, atom);
             switch (classification) {
               case T1123:
-                // easy :-)
-                centersInRing++;
-                newAtoms.push_back((*u).id);
+                {
+                  // find the two ligands with identical symmetry classes
+                  OBAtom *ligandAtom1 = 0;
+                  OBAtom *ligandAtom2 = 0;
+
+                  std::vector<unsigned int> nbrClasses;
+                  FOR_NBORS_OF_ATOM (nbr, atom)
+                    nbrClasses.push_back(symClasses.at(nbr->GetIndex()));
+
+                  unsigned int duplicatedSymmetryClass;
+                  std::sort(nbrClasses.begin(), nbrClasses.end());
+                  for (unsigned int i = 0; i < nbrClasses.size()-1; ++i)
+                    if (nbrClasses.at(i) == nbrClasses.at(i+1))
+                      duplicatedSymmetryClass = nbrClasses.at(i);
+ 
+                  FOR_NBORS_OF_ATOM (nbr, atom) {
+                    if (symClasses.at(nbr->GetIndex()) == duplicatedSymmetryClass) {
+                      if (!ligandAtom1)
+                        ligandAtom1 = &*nbr;
+                      else
+                        ligandAtom2 = &*nbr;
+                    }
+                  }
+
+                  // if the two identical symmetry classes are in a ring, this center is stereogenic
+                  if (mergedRings[s].BitIsOn(ligandAtom1->GetIdx()) && mergedRings[s].BitIsOn(ligandAtom1->GetIdx())) {
+                    centersInRing++;
+                    newAtoms.push_back((*u).id);
+                  }
+                }
                 break;
               case T1122:
                 {
