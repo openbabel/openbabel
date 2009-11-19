@@ -1257,7 +1257,7 @@ namespace OpenBabel
     }
   }
 
-  bool OBBuilder::FixRingStereo(std::vector<std::pair<OBStereo::Ref, bool>> atomIds, OBMol &mol,
+  bool OBBuilder::FixRingStereo(std::vector<std::pair<OBStereo::Ref, bool> > atomIds, OBMol &mol,
                                           OBStereo::Refs &unfixedcenters)
   {
     bool inversion = false;
