@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 2004 by Chris Morley for template
-Copyright (C) 2004 by David C. Lonie for VASP
+Copyright (C) 2009 by David C. Lonie for VASP
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
