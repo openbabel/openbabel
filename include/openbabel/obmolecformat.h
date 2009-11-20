@@ -26,6 +26,9 @@ GNU General Public License for more details.
 #include <typeinfo>
 
 #include <openbabel/mol.h>
+#ifdef HAVE_SHARED_POINTER
+  #include <openbabel/reaction.h>
+#endif
 #include <openbabel/babelconfig.h>
 #include <openbabel/obconversion.h>
 #include <typeinfo>
@@ -138,6 +141,12 @@ public:
   
   //!Stores each molecule and after the last one outputs them all in an order decided by the descriptor. 
   static bool Sort(OBMol* pmol, const char* DescID,  OBConversion* pConv, OBFormat* pF );
+
+#ifdef HAVE_SHARED_POINTER
+  //!When sent an OBReaction object, output all the constituent molecules
+  static bool OBMoleculeFormat::OutputMolsFromReaction
+    (OBReaction* pReact, OBConversion* pConv, OBFormat* pFormat);
+#endif
 
 #ifdef _MSC_VER
   typedef stdext::hash_map<std::string, unsigned> NameIndexType;

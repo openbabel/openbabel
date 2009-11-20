@@ -1,4 +1,10 @@
 2009-11-20  Chris Morley
+	
+	* include/openbabel/obmolecformat.h, src/obmolecformat.cpp:
+	When sent an OBReaction object, outputs the molecules, as requested
+	by Charlie Zhu
+
+2009-11-20  Chris Morley
 
     * include/openbabel/reaction.h: includes for std::tr1::shared_ptr modified.
       In <memory> for VC2008 SP11 and GCC 4.3 but in <tr1/memory> for earlier GCC    

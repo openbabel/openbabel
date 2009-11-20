@@ -22,7 +22,6 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel
 {
-  //static variable initialializations
   bool OBMoleculeFormat::OptionsRegistered=false;
   std::map<std::string, OBMol*> OBMoleculeFormat::IMols;
   OBMol* OBMoleculeFormat::_jmol;
@@ -36,7 +35,7 @@ namespace OpenBabel
   bool OBMoleculeFormat::ReadChemObjectImpl(OBConversion* pConv, OBFormat* pFormat)
   {
     std::istream &ifs = *pConv->GetInStream();
-    if (!ifs.good()) //Possible to omit? ifs.peek() == EOF || 
+    if (!ifs.good())
       return false;
 
     OBMol* pmol = new OBMol;
@@ -180,7 +179,14 @@ namespace OpenBabel
         
         ret=pFormat->WriteMolecule(pmol,pConv);
       }
-    delete pOb; //move so that non-OBMol objects are deleted 9March2006
+    
+#ifdef HAVE_SHARED_POINTER
+    //If sent a OBReaction* (rather than a OBMol*) output the consituent molecules
+    OBReaction* pReact = dynamic_cast<OBReaction*> (pOb);   
+    if(pReact)
+      ret = OutputMolsFromReaction(pReact, pConv, pFormat);
+#endif
+    delete pOb;
     return ret;
   }
 
@@ -401,6 +407,50 @@ namespace OpenBabel
     return false;
   }
 
+  ///////////////////////////////////////////////////////////////////
+#ifdef HAVE_SHARED_POINTER
+  bool OBMoleculeFormat::OutputMolsFromReaction
+    (OBReaction* pReact, OBConversion* pConv, OBFormat* pFormat)
+  {
+    //Output all the constituent molecules of the reaction    
+    
+    //Collect the molecules first, just for convenience 
+    vector<shared_ptr<OBMol> > mols;
+    unsigned i;
+    for(i=0;i<pReact->NumReactants();i++)
+      mols.push_back(pReact->GetReactant(i));
+    for(i=0;i<pReact->NumProducts();i++)
+      mols.push_back(pReact->GetProduct(i));
+   
+    if(pReact->GetAgent())
+      mols.push_back(pReact->GetAgent());
+    if(pReact->GetTransitionState())
+      mols.push_back(pReact->GetTransitionState());
+   
+    pConv->SetOutputIndex(pConv->GetOutputIndex() - 1); // The OBReaction object is not output
+    if((pFormat->Flags() & WRITEONEONLY) && mols.size()>1)
+    {
+      stringstream ss;
+      ss << "There are " << mols.size() << " molecules to be output,"
+         << "but this format is for single molecules only";
+      obErrorLog.ThrowError(__FUNCTION__, ss.str(), obWarning);
+      mols.resize(1);
+    }
+    bool ok = true;
+    for(i=0;i<mols.size() && ok;++i)
+    {
+      if(mols[i])
+      {
+        //Have to do set these manually because not using "Convert" interface
+        pConv->SetLast(i==mols.size()-1);
+        pConv->SetOutputIndex(pConv->GetOutputIndex()+1);
+        ok = pFormat->WriteMolecule(
+          mols[i]->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)), pConv);
+      }      
+    }
+    return ok;
+  }
+#endif
   //////////////////////////////////////////////////////////////////
   /** Attempts to read the index file datafilename.obindx successively
       from the following directories:
