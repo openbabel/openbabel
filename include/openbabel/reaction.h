@@ -24,11 +24,13 @@ GNU General Public License for more details.
 
 #ifdef USE_BOOST
   #include <boost/shared_ptr.hpp>
-  //namespace std{ namespace tr1=::boost; }
   #define shared_ptr boost::shared_ptr
 #else
-  #include <tr1/memory>
-  #define shared_ptr std::tr1::shared_ptr
+  #include <memory>
+  #if __GNUC__ == 4 && __GNUC_MINOR__ < 3
+    #include <tr1/memory>
+  #endif
+  using std::tr1::shared_ptr;
 #endif
 
 namespace OpenBabel

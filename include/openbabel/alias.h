@@ -23,8 +23,8 @@ namespace OpenBabel
 {
 // This macro is used in DLL builds. If it has not
 // been set in babelconfig.h, define it as nothing.
-#ifndef OBAPI
-  #define OBAPI
+#ifndef OBCOMMON
+  #define OBCOMMON
 #endif
 
 const unsigned int AliasDataType = 0x7883;
@@ -45,7 +45,7 @@ information or as a hint for an alternative representation, for example to
 a chemical drawing program. The _expandedatoms vector would then contains
 the indices of the atoms to which the alias is an alternative.
 */
-class OBAPI AliasData : public OBGenericData
+class OBCOMMON AliasData : public OBGenericData
 {
 protected:
   std::string _alias;
