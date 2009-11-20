@@ -1,3 +1,38 @@
+2009-11-20  Chris Morley
+
+    * include/openbabel/reaction.h: includes for std::tr1::shared_ptr modified.
+      In <memory> for VC2008 SP11 and GCC 4.3 but in <tr1/memory> for earlier GCC    
+	
+	* src/dlhandler_win32.cpp: add another way of getting Module Handle for
+	  CMake build.
+	  
+	* include/openbabel/alias.h: replace OBAPI by OBCOMMON.
+      Goes in a different DLL in OBF build.
+    
+    * Added project files for VC9 with the original OBF Windows build.
+      (windows-vc2008 is for the CMake build.) 
+      
+2009-11-20  Chris Morley
+	
+	* src/mol.cpp(operator+=):no underscore if added title empty.
+	(Has3D) removed test which prevented the function being used before
+	EndModify()
+	
+	* src/obconversion.cpp(SetOutFormat):test for NULL param
+	(OpenInAndOutFiles):test for empty name
+	
+	* src/ops/loader.cpp: delete all instances when global instance
+	deleted at end to avoid (pseudo) memory leaks warning.
+	
+	* include/openbabel/phmodel.h: added missing OBAPI so is exported.
+	* include/openbabel/text.h: Extra parameter on GetText()
+	* include/openbabel/xml.h: Simplify namespaces map.
+	* src/descriptor.cpp: remove commented out code.
+	* src/forcefields/forcefielduff.cpp: comment out unused variable
+	* src/formats/chemdrawcdx.cpp: comment out unnecessary switch statements
+	* src/formats/copyformat.cpp: increase buffer size by 1
+	* src/GUI/optswx.cpp: make all editboxes same size
+	
 2009-11-18  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* include/openbabel/alias.h: Add OBAPI

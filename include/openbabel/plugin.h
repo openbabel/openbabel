@@ -178,7 +178,7 @@ static BaseClass*& Default(){static BaseClass* d;return d;}\
  {_id=ID;if(ID&&*ID){if(IsDefault || Map().empty()) Default() = this;\
  Map()[ID]=this;PluginMap()[TypeID()] =this;}}\
 static BaseClass* FindType(const char* ID)\
- {if(!ID || *ID==0) return Default();\
+ {if(!ID || *ID==0 && *ID!=' ') return Default();\
  return static_cast<BaseClass*>(BaseFindType(Map(),ID));}
 
 #endif // __CYGWIN__ || __MINGW32__
@@ -300,7 +300,7 @@ public:
   YourBaseClass(const char* ID, bool IsDefault=false)
   {
     _id = ID;
-    if(ID && *ID) //do not register if ID is empty
+    if(ID && *ID && *ID!=' ') //do not register if ID is empty or starts with a space
     {
       if(IsDefault || Map().empty())
         Default() = this;

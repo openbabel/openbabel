@@ -103,17 +103,33 @@ public:
         obErrorLog.ThrowError(__FUNCTION__, "Failed to make an instance " + textlines[0], obError);
       textlines.clear();
     }
+   
     
     // return the locale to the original one
     obLocale.RestoreLocale();
   }
 
+
+  virtual ~OBDefine()
+  {
+    std::vector<OBPlugin*>::iterator iter;
+    for(iter=_instances.begin();iter!=_instances.end();++iter)
+      delete *iter;
+  }
+
   virtual const char* Description(){ return "Makes plugin classes from a datafile"; }
 
-   virtual OBDefine* MakeInstance(const std::vector<std::string>& textlines)
-   {
-     return new OBDefine(textlines[1].c_str(),textlines[2].c_str());
-   }
+  virtual OBDefine* MakeInstance(const std::vector<std::string>& textlines)
+  {
+    OBDefine* pdef = new OBDefine(textlines[1].c_str(),textlines[2].c_str());
+
+    //The following line links the new instance to its parent, and eventually
+    //the dummy global instance. When the global instance is deleted at the end,
+    //all the other instances are too, avoiding (pseudo) memory leaks. Versions
+    //for other OBPlugin classes don't do this.
+    _instances.push_back(pdef);
+    return pdef;
+  }
 
 private:
   ///Returns the address of an instance of a plugin class that

@@ -34,6 +34,7 @@ namespace OpenBabel
   //Forward declaration of the base class for OBMol OBReaction, OBAtom, etc.
   //Declaration later in this file.
 class OBBase;
+class OBConversion; //used only as pointer
 
   //! \brief Classification of data stored via OBGenericData class and subclasses.
   //!
@@ -248,7 +249,7 @@ class OBBase;
       virtual OBBase* DoTransformations(const std::map<std::string,std::string>* /*pOptions*/)
         {
           return this;
-        } 
+        }
 
       //Base type does nothing
       //! \return A list of descriptions of command-line options for DoTransformations()

@@ -1354,7 +1354,9 @@ namespace OpenBabel
 
     int prevatms = NumAtoms();
 
-    _title += "_" + string(src.GetTitle());
+    string extitle(src.GetTitle());
+    if(!extitle.empty())
+      _title += "_" + extitle;
 
     // First, handle atoms and bonds
     for (atom = src.BeginAtom(i) ; atom ; atom = src.NextAtom(i)) {
@@ -3188,8 +3190,8 @@ namespace OpenBabel
     vector<OBAtom*>::iterator i;
 
     hasX = hasY = hasZ = false;
-    if (this->_c == NULL)
-      return(false);
+//    if (this->_c == NULL) **Test removed** Prevented function use during molecule construction
+//      return(false);
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       {
         if (!hasX && !IsNearZero(atom->x()))

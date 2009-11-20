@@ -749,10 +749,12 @@ puts("found name");
           {
             READ_INT16 (*ifs, size);
             //			printf("Tag: %04X\tSize: %04X\n", tag, size);
-            switch(tag)
-              {
-              default: ifs->seekg(size, ios_base::cur); break;
-              }
+            //switch(tag)
+            //  {
+              //default:
+              ifs->seekg(size, ios_base::cur);
+              //break;
+            //  }
           }
         if(depth < 1)
           return 0;
@@ -1081,12 +1083,12 @@ puts("found name");
 
             snprintf(errorMsg, BUFF_SIZE, "Generic Tag: %04X\tSize: %04X\n", tag, size);
             obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-            switch(tag)
-              {
-              default:
+            //switch(tag)
+            //  {
+            //  default:
                 ifs->seekg(size, ios_base::cur); 
-                break;
-              }
+            //   break;
+            //  }
           }
         if(depth < 1) // matched begin and end tags, so we're good
           {

@@ -57,8 +57,8 @@ at the start or end and so may no longer be well formed.";
       if(ifs.eof())
         ifs.clear();
       ifs.seekg(startpos);
-      
-      char* buf = new char[len];
+
+      char* buf = new char[len+1];
       ifs.read(buf,len);
       ofs.write(buf,len);
       delete[] buf;

@@ -40,8 +40,10 @@ public:
   /**\return text from position \param pos up to, but not including,
   the line containing the next occurrence of "OPENBABEL_INSERT".
   \param pos is updated to the start of the next line.
-  If "OPENBABEL_INSERT" is not found, the text up to the end of the file is returned
-  and pos is set to 0.
+  If "OPENBABEL_INSERT" is not found, and \param ToInsertOnly is false
+  the text up to the end of the file is returned and \param pos is set to 0.
+  If "OPENBABEL_INSERT" is not found, and \param ToInsertOnly is true
+  an empty string is return and \param pos is unchaged.
   
   Inserting OpenBabel output into boilerplate text.
   Suppose you wanted to insert XML output from OB into into a template XML document
@@ -62,12 +64,14 @@ public:
       }
   </code> 
   **/
-  std::string GetText(std::string::size_type& pos) const
+  std::string GetText(std::string::size_type& pos, bool ToInsertOnly=false) const
   {
     std::string::size_type oldpos = pos;
     std::string::size_type newpos = txt.find("OPENBABEL_INSERT", pos);
     if(newpos== std::string::npos)//not found: return rest of txt
     {
+      if(ToInsertOnly)
+        return("");
       pos = 0;
       return txt.substr(oldpos);
     }

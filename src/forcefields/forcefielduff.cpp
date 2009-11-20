@@ -891,7 +891,7 @@ namespace OpenBabel {
         }
       }
 
-      double currentTheta;
+      //double currentTheta;
       if (coordination >= 7) {
         // large coordination sphere (e.g., [ReH9]-2 or [Ce(NO3)6]-2)
         // just resort to using VDW 1-3 interactions to push atoms into place

@@ -72,10 +72,13 @@ namespace OpenBabel
       ///Avoids "static initialization order fiasco"
       static NsMapType& Namespaces()
         {
-          static NsMapType* nsm = NULL;
-          if (!nsm)
-            nsm = new NsMapType;
-          return *nsm;
+          static NsMapType ns;
+          return ns;
+
+          //static NsMapType* nsm = NULL;
+          //if (!nsm)
+          //  nsm = new NsMapType;
+          //return *nsm;
         };
 
       static void RegisterXMLFormat(XMLBaseFormat* pFormat,

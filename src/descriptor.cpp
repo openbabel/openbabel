@@ -69,9 +69,7 @@ bool OBDescriptor::Compare(OBBase* pOb, istream& optionText, bool noEval)
 }
 
   /** The default implementation here of this virtual function is suitable
-      for OBDescriptor classes which return a double value.
-      Does not use a cache, so may not be appropriate if evaluation of the 
-      descriptor is lengthy.
+      for OBDescriptor classes which return a double value. 
   **/
   bool OBDescriptor::LessThan(OBBase* pOb1, OBBase* pOb2)
   {
@@ -488,33 +486,6 @@ void OBDescriptor::DeleteProperties(OBBase* pOb, const string& DescrList)
     }
     return false;
   }
-
-/*Not currently part of base descriptor class. Possible issues with use of a static member variable. 
-void OBDescriptor::GetCachedValue(OBBase* pOb, string& s)
-{
-  map<OBBase*, string>::iterator itr;
-  itr = cache.find(pOb);
-  if(itr!=cache.end())
-    s = itr->second;
-  else
-  {
-    GetStringValue(pOb, s);
-    cache[pOb] =s;
-  }
-}
-void OBDescriptor::GetCachedValue(OBBase* pOb, double& val)
-{
-  map<OBBase*, double>::iterator itr;
-  itr = cache.find(pOb);
-  if(itr!=cache.end())
-    val = itr->second;
-  else
-  {
-    val = Predict(pOb);
-    cache[pOb] =val;
-  }
-}
-*/
 
 bool OBDescriptor::Display(std::string&txt, const char* param, const char* ID)
 {

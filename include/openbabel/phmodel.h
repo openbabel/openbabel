@@ -104,7 +104,7 @@ public:
  *  The transformations are all applied (if needed at the specified pH value) in 
  *  the same order they are found in data/phmodel.txt.
  */
-class OBPhModel : public OBGlobalDataBase
+class OBAPI OBPhModel : public OBGlobalDataBase
 {
     std::vector<std::vector<int> >                      _mlist;
     std::vector<OBChemTsfm*>                            _vtsfm;

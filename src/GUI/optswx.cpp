@@ -216,7 +216,7 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
         OptionMap.push_back(std::make_pair(wxString(),pEdCaption));//string is empty for a caption: not an option
 
         //Edit boxes for multicharacter options are larger
-        const int EDWIDTH = oname.size()>1? 60 : 40;
+        const int EDWIDTH = 60; //now all are the same size. oname.size()>1? 60 : 40;
         wxTextCtrl* pEd;
 
         //Make a large edit box on the next line if last char is of the caption is :

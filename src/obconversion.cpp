@@ -357,7 +357,7 @@ namespace OpenBabel {
   bool OBConversion::SetOutFormat(OBFormat* pOut)
   {
     pOutFormat=pOut;
-    return !(pOutFormat->Flags() & NOTWRITABLE);
+    return pOut && !(pOutFormat->Flags() & NOTWRITABLE);
   }
   //////////////////////////////////////////////////////
   bool OBConversion::SetInFormat(const char* inID)
@@ -589,7 +589,8 @@ namespace OpenBabel {
         if(Count==(int)EndNumber)
           ReadyToInput=false; //stops any more objects being read
 
-        rInlen = pInStream->tellg() - rInpos;
+        rInlen = (pInStream->tellg() - rInpos); 
+         // - (pLineEndBuf ? pLineEndBuf->getCorrection() : 0); //correction for CRLF
 
         if(pOb)
           {
@@ -945,6 +946,8 @@ namespace OpenBabel {
     pInStream = ifs;
     InFilename = infilepath;
 
+    if(outfilepath.empty())//Don't open an outfile with an empty name.
+      return true;
     ofstream *ofs = new ofstream;
     NeedToFreeOutStream = true; // make sure we clean this up later
     ofs->open(outfilepath.c_str(),ios_base::out|ios_base::binary);//always open in binary mode
