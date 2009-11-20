@@ -40,6 +40,7 @@ else(MINIMAL_BUILD)
       gausscubeformat
       gausszmatformat
       ghemicalformat
+      gulpformat
       gromos96format
       hinformat
       jaguarformat
