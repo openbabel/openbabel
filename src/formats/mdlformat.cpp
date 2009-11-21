@@ -52,7 +52,8 @@ namespace OpenBabel
             /* " 2  output V2000 (default) or\n" */
                " 3  output V3000 not V2000 (used for >999 atoms/bonds) \n"
                " m  write no properties\n"
-               " s  determine stereochemistry from atom flags\n";
+               " s  determine stereochemistry from atom flags\n"
+               " A  output in Alias form, e.g. Ph, if present\n\n"; 
       }
 
       virtual const char* SpecificationURL()
@@ -627,6 +628,9 @@ namespace OpenBabel
     if(mol.GetDimension()==3)
       dimension = "3D";
 
+    if(pConv->IsOption("A"))
+      AliasData::RevertToAliasForm(mol);
+
     // line 1: molecule name
     ofs << mol.GetTitle() <<  endl;
 
@@ -709,10 +713,16 @@ namespace OpenBabel
         Parity stereo = NotStereo;
         if (parity.find(atom) != parity.end())
           stereo = parity[atom];
-        snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d",
-                 atom->GetX(), atom->GetY(), atom->GetZ(),
-                 atom->GetAtomicNum() ? etab.GetSymbol(atom->GetAtomicNum()) : "* ",
-                 0, charge, stereo, 0, 0);    
+
+        snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d",
+          atom->GetX(), atom->GetY(), atom->GetZ(),
+          atom->GetAtomicNum() ? etab.GetSymbol(atom->GetAtomicNum()) : "* ",
+          0,charge,stereo,0,0,0,0,0,0,0,0,0);
+
+//       snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d",
+//                 atom->GetX(), atom->GetY(), atom->GetZ(),
+//                 atom->GetAtomicNum() ? etab.GetSymbol(atom->GetAtomicNum()) : "* ",
+//                 0, charge, stereo, 0, 0);    
           ofs << buff << endl;
         }
 
@@ -746,7 +756,7 @@ namespace OpenBabel
               ofs << setw(3) << bond->GetEndAtomIdx(); // end atom number
               ofs << setw(3) << bond->GetBO(); // bond type
               ofs << setw(3) << stereo; // bond stereo
-              ofs << "  0  0" << endl;
+              ofs << "  0  0  0" << endl;
             }
         }
 
@@ -765,7 +775,7 @@ namespace OpenBabel
             {
               AliasData* ad = static_cast<AliasData*>(atom->GetData(AliasDataType));
               if(!ad->IsExpanded()) //do nothing with an expanded alias
-                ofs << "A  " << atom->GetIdx() << '\n' << ad->GetAlias() << endl;
+                ofs << "A  " << setw(3) << atom->GetIdx() << '\n' << ad->GetAlias() << endl;
             }
 
           }

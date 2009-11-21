@@ -1,3 +1,21 @@
+2009-11-21  Chris Morley
+
+	* include/openbabel/alias.h, src/alias.cpp: extensively revised.
+	Expanded aliases on 2D or 3D molecules have coordinates generated
+	by builder. (Nitro group not quite right.) Can revert to alias form for
+	output and display. Can also generate an alias form from normal molecule;
+	not sure how useful this is. 
+	 
+	* data/superatom.txt: changed format; now also stores a right-connected
+	form and color.
+	
+	* src/formats/mdlformat.cpp: add option for output in alias form.	
+	Output extra zeros in atom and bond blocks, as pointed out by Ernst-Georg
+	Schmidt bug #2897107, and CharlieZhu.
+	
+	* src/format/gulpformat.cpp: replaced the 'uint' by 'unsigned'.
+	'uint' doesn't compile on Visual C++.
+
 2009-11-20  Chris Morley
 	
 	* include/openbabel/obmolecformat.h, src/obmolecformat.cpp:

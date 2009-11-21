@@ -136,7 +136,7 @@ namespace OpenBabel {
           // it's not so straight-forward to parse them...
           x = y = z = 0;
           int set = 0;
-          for (uint i = 3; i < size; i++) {
+          for (unsigned i = 3; i < size; i++) {
             if (strstr(vs[i].c_str(), "*")) continue; // Skip "*" in output
             // Else assign x,y,z based on how many coords have been
             // set already. These are currently fractional, we'll

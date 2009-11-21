@@ -15,6 +15,16 @@ GNU General Public License for more details.
 #ifndef OB_ALIAS_H
 #define OB_ALIAS_H
 
+#ifdef USE_BOOST
+  #include <boost/shared_ptr.hpp>
+  #define shared_ptr boost::shared_ptr
+#else
+  #include <memory>
+  #if __GNUC__ == 4 && __GNUC_MINOR__ < 3
+    #include <tr1/memory>
+  #endif
+  using std::tr1::shared_ptr;
+#endif
 
 #include <vector>
 #include <openbabel/mol.h>
@@ -34,22 +44,25 @@ const unsigned int AliasDataType = 0x7883;
   \since version 2.2
 
 An object of this class can be attached to an OBAtom if it is considered
-to be a placeholder for an alias, such as Ph, Ser, etc. 
+to be a placeholder for an alias, such as Ph, COOH, etc. 
 
-If the alias has not been interpreted chemically, the element type of the
+If the alias has not been interpreted chemically (expanded), the element type of the
 placeholder atom should be set to Xx so that the molecule is not interpreted 
 incorrectly by formats which do not consider this class.
 
-If the alias has been interpreted chemically, the alias may remain as extra
+If the alias has been interpreted chemically (which formats, etc. should
+normally do immediately), the alias may remain as extra
 information or as a hint for an alternative representation, for example to
 a chemical drawing program. The _expandedatoms vector would then contains
-the indices of the atoms to which the alias is an alternative.
+the ids of the atoms to which the alias is an alternative.
 */
 class OBCOMMON AliasData : public OBGenericData
 {
 protected:
   std::string _alias;
-  std::vector<unsigned int> _expandedatoms;
+  std::string _right_form;
+  std::vector<unsigned long> _expandedatoms; //atom ids (not idxs)
+  std::string _color;
 public:
 
   AliasData(): OBGenericData("Alias", AliasDataType){ }
@@ -60,22 +73,58 @@ public:
   void SetAlias(const std::string& alias) {_alias = alias;}
   void SetAlias(const char* alias) {_alias = alias;}
 
-  /// Return value of alias
-  std::string GetAlias()const { return _alias; }
+  /// /return value of alias or its version intended to be connected at its right hand end. 
+  std::string GetAlias(bool rightAligned = false) const;
 
-  /// Add the indices of the atoms that could or do replace the alias 
-  void SetExpandedAtoms(std::vector<unsigned int>& atoms){ _expandedatoms = atoms; }
+  /// Return the color which has been assigned to this alias 
+  std::string GetColor() const { return _color; }
 
-  /// Return the indices of the atoms that the alias could or does replace
-  std::vector<unsigned int> GetExpandedAtoms()const { return _expandedatoms; }
+  /// Assign a color to this alias
+  void SetColor(std::string color){ _color = color; }
 
   bool IsExpanded()const { return !_expandedatoms.empty(); }
 
-  
+  ///Converts all the expanded aliases in a molecule to the alias form.
+  ///Note that this deletes atoms and bonds. Use only as a preparation for display. 
+  static void RevertToAliasForm(OBMol& mol);
+
+  ///Interprets the alias text and adds atoms as appropriate to mol.
   bool Expand(OBMol& mol, const unsigned int atomindex);
+
+ #ifdef HAVE_SHARED_POINTER
+ ///Matches univalent fragments in the molecule and adds AliasData to provide an alternative representation.
+  ///The molecule remains a respectable OBMol. Data in superatoms.txt decides what aliases are added.
+  static bool AddAliases(OBMol* pmol);
+ #endif
+
 private:
-  bool FromNameLookup(OBMol& mol, const unsigned int atomindex);
-  bool LoadFile(std::map<std::string, std::string>& table);
+  /// Add one of the atoms that can replace the alias
+  void AddExpandedAtom(int id);
+
+  /// Delete the atoms that replace the alias
+  void DeleteExpandedAtoms(OBMol& mol);
+  
+  struct AliasItem
+  {
+    std::string right_form;
+    std::string smiles;
+    std::string color;
+  };
+  typedef std::map<std::string, AliasItem> SuperAtomTable; //key=alias left-form
+
+  static bool LoadFile(SuperAtomTable& table);
+  static SuperAtomTable& table()
+  {
+    static SuperAtomTable t;
+    if(t.empty())
+      LoadFile(t);
+    return t;
+  }
+  bool        FromNameLookup(OBMol& mol, const unsigned int atomindex);
+#ifdef HAVE_SHARED_POINTER  
+  typedef std::vector< std::pair<std::string, shared_ptr<OBSmartsPattern> > > SmartsTable;
+  static bool LoadFile(SmartsTable& smtable);
+#endif
 };
 } //namespace
 

@@ -353,6 +353,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\formats\gulpformat.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\formats\hinformat.cpp"
 				>
 			</File>
