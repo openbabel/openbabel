@@ -35,6 +35,7 @@ set(formats
     gausscubeformat
     gausszmatformat
     ghemicalformat
+    gulpformat
     gromos96format
     hinformat
     jaguarformat
