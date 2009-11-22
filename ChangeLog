@@ -1,3 +1,13 @@
+2009-11-22  Chris Morley
+
+	* data/element.txt, data/svgformat.script, include/openbabel/depict,
+	include/openbabel/depict/depict.h, include/openbabel/depict/painter.h,
+	include/openbabel/depict/svgpainter.h, src/depict/depict.cpp,
+	src/depict/svgpainter.cpp, src/formats/svgformat.cpp: new files
+	Add tweaked versions of Tim's OBDepiction and OBPainter classes with
+	a new SVGPainter class using no external libraries. SVGFormat displays
+	multiple molecules in a table, designed to be viewed in Firefox.
+
 2009-11-21  Chris Morley
 
 	* include/openbabel/alias.h, src/alias.cpp: extensively revised.

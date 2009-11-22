@@ -1,6 +1,6 @@
 ##############################################################################
 #                                                                            #
-#	                Open Babel file: element.txt                               #
+#	                Open Babel file: element.txt                         #
 #                                                                            #
 #  Some portions Copyright (c) 2001-2009 Geoffrey R. Hutchison               #
 #  Part of the Open Babel package, under the GNU General Public License (GPL)#
@@ -15,40 +15,40 @@
 #                                                                            #
 #  Columns represent:  (used by data.cpp:OBElementTable and OBElement)       #
 #   - atomic number (used as an index to the vector as well)                 #
-#   - elemental symbol							                                         #
-#   - Allred and Rochow electronegativity  0.0 if unknown		                 #
-#   - covalent radii (in Angstrom)         1.6 if unknown		                 #
+#   - elemental symbol							     #
+#   - Allred and Rochow electronegativity  0.0 if unknown		     #
+#   - covalent radii (in Angstrom)         1.6 if unknown		     #
 #       from http://dx.doi.org/10.1039/b801115j                              #
 #   - "bond order" radii -- ignored, but included for compatibility          #
-#   - van der Waals radii (in Angstrom)    2.0 if unknown                    #
+#   - van der Waals radii (in Angstrom)	   2.0 if unknown		     #
 #       from http://dx.doi.org/10.1021/jp8111556                             #
-#   - maximum bond valence                   6 if unknown                    #
-#   - IUPAC recommended atomic masses (in amu)                               #
-#   - Pauling electronegativity            0.0 if unknown                    #
+#   - maximum bond valence		   6 if unknown			     #
+#   - IUPAC recommended atomic masses (in amu)				     #
+#   - Pauling electronegativity		   0.0 if unknown		     #
 #   - ionization potential (in eV)         0.0 if unknown                    #
 #   - electron affinity (in eV)            0.0 if unknown                    #
-#   - RGB values (defaults for visualization)                                #
-#   - element name (in English)                                     		     #
+#   - RGB values (defaults for visualization)				     #
+#   - element name (in English)						     #
 #                                                                            #
 ##############################################################################
 #Num	Symb	ARENeg	RCov	RBO	RVdW	MaxBnd	Mass	ElNeg.	Ionization	ElAffinity	Red	Green	Blue	Name
 0	Xx	0.00	0.00	0.00	0.00	0	0	0.00	0	0	0.07	0.50	0.70	Dummy
-1	H	2.20	0.31	0.31	1.10	1	1.00794	2.20	13.5984	0.75420375	1.00	1.00	1.00	Hydrogen
+1	H	2.20	0.31	0.31	1.10	1	1.00794	2.20	13.5984	0.75420375	0.75	0.75	0.75	Hydrogen
 2	He	0.00	0.28	0.28	1.40	0	4.002602	0.00	24.5874	0	0.85	1.00	1.00	Helium
 3	Li	0.97	1.28	1.28	1.81	1	6.941	0.98	5.3917	0.618049	0.80	0.50	1.00	Lithium
 4	Be	1.47	0.96	0.96	1.53	2	9.012182	1.57	9.3227	0	0.76	1.00	0.00	Beryllium
 5	B	2.01	0.84	0.84	1.92	4	10.811	2.04	8.298	0.279723	1.00	0.71	0.71	Boron
-6	C	2.50	0.76	0.76	1.70	4	12.0107	2.55	11.2603	1.262118	0.50	0.50	0.50	Carbon
+6	C	2.50	0.76	0.76	1.70	4	12.0107	2.55	11.2603	1.262118	0.40	0.40	0.40	Carbon
 7	N	3.07	0.71	0.71	1.55	4	14.0067	3.04	14.5341	-0.07	0.05	0.05	1.00	Nitrogen
 8	O	3.50	0.66	0.66	1.52	2	15.9994	3.44	13.6181	1.461112	1.00	0.05	0.05	Oxygen
-9	F	4.10	0.57	0.57	1.47	1	18.9984032	3.98	17.4228	3.4011887	0.70	1.00	1.00	Fluorine
+9	F	4.10	0.57	0.57	1.47	1	18.9984032	3.98	17.4228	3.4011887	0.50	0.70	1.00	Fluorine
 10	Ne	0.00	0.58	0.58	1.54	0	20.1797	0.00	21.5645	0	0.70	0.89	0.96	Neon
 11	Na	1.01	1.66	1.66	2.27	1	22.98977	0.93	5.1391	0.547926	0.67	0.36	0.95	Sodium
 12	Mg	1.23	1.41	1.41	1.73	2	24.3050	1.31	7.6462	0	0.54	1.00	0.00	Magnesium
 13	Al	1.47	1.21	1.21	1.84	6	26.981538	1.61	5.9858	0.43283	0.75	0.65	0.65	Aluminium
 14	Si	1.74	1.11	1.11	2.10	6	28.0855	1.90	8.1517	1.389521	0.50	0.60	0.60	Silicon
 15	P	2.06	1.07	1.07	1.80	6	30.973761	2.19	10.4867	0.7465	1.00	0.50	0.00	Phosphorus
-16	S	2.44	1.05	1.05	1.80	6	32.065	2.58	10.36	2.0771029	1.00	1.00	0.19	Sulfur
+16	S	2.44	1.05	1.05	1.80	6	32.065	2.58	10.36	2.0771029	0.70	0.70	0.00	Sulfur
 17	Cl	2.83	1.02	1.02	1.75	1	35.453	3.16	12.9676	3.612724	0.12	0.94	0.12	Chlorine
 18	Ar	0.00	1.06	1.06	1.88	0	39.948	0.00	15.7596	0	0.50	0.82	0.89	Argon
 19	K	0.91	2.03	2.03	2.75	1	39.0983	0.82	4.3407	0.501459	0.56	0.25	0.83	Potassium

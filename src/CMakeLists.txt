@@ -48,6 +48,11 @@ set(stereo_srcs
     stereo/facade.cpp
 )
 
+set(depict_srcs
+    depict/depict.cpp
+    depict/svgpainter.cpp
+)
+
 set(openbabel_srcs
     alias.cpp
     atom.cpp
@@ -116,6 +121,7 @@ add_library(${BABEL_LIBRARY} ${BUILD_TYPE}
                 ${math_srcs}
                 ${ops_srcs}
                 ${stereo_srcs}
+                ${depict_srcs}
                 ${headers}
                 "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h"
 )

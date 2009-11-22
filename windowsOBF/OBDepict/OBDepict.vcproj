@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="OBUtilFormats"
-	ProjectGUID="{B76458D3-9486-4C7A-9F95-18DB50E46CE6}"
-	RootNamespace="OBUtilFormats"
+	Name="OBDepict"
+	ProjectGUID="{8BC4AFB1-3C43-4F0A-9767-FBD8442CC1EB}"
+	RootNamespace="OBFRT"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -45,7 +45,7 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Debug/OBUtilFormats.tlb"
+				TypeLibraryName=".\Debug/OBDLL.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
@@ -53,12 +53,12 @@
 				UseUnicodeResponseFiles="false"
 				Optimization="0"
 				AdditionalIncludeDirectories="../../include"
-				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;_USRDLL;INCHI_LINK_AS_DLL;USING_OBDLL;HAVE_CONFIG_H;USING_DYNAMIC_LIBS;OBUTIL_EXPORTS"
+				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;_USRDLL;USING_DYNAMIC_LIBS;OBDEPICT_EXPORTS;HAVE_CONFIG_H"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=""
+				PrecompiledHeaderFile=".\Debug/OBDepict.pch"
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
 				ProgramDataBaseFileName=".\Debug/"
@@ -80,17 +80,19 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="false"
-				AdditionalDependencies="obconvD.lib obdllD.lib OBErrorD.lib obcommonD.lib zdll.lib obdepictD.lib"
-				OutputFile="..\Debug/OBUtilD.obf"
+				AdditionalDependencies="oberrorD.lib OBDLLD.lib obconvD.lib obcommonD.lib"
+				OutputFile="..\Debug/OBDepictD.obf"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="..\debug,.."
+				AdditionalLibraryDirectories="..\debug"
+				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\Debug/OBUtilD.pdb"
+				ProgramDatabaseFile=".\Debug/OBDepict.pdb"
+				GenerateMapFile="false"
+				MapFileName=""
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
-				ImportLibrary="..\Debug/OBTilD.lib"
+				ImportLibrary="..\Debug/OBDepictD.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -105,7 +107,7 @@
 			<Tool
 				Name="VCBscMakeTool"
 				SuppressStartupBanner="true"
-				OutputFile=".\Debug/OBTil.bsc"
+				OutputFile=".\Debug/OBDLL.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -115,7 +117,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -126,7 +127,7 @@
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
-			CharacterSet="0"
+			CharacterSet="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -148,19 +149,17 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Release/OBUtilFormats.tlb"
+				TypeLibraryName=".\Release/OBDLL.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
-				InlineFunctionExpansion="1"
+				Optimization="4"
 				AdditionalIncludeDirectories="../../include"
-				PreprocessorDefinitions="NDEBUG;USING_DYNAMIC_LIBS;WIN32;_WINDOWS;_USRDLL;INCHI_LINK_AS_DLL;HAVE_CONFIG_H;OBUTIL_EXPORTS"
-				StringPooling="true"
+				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_USRDLL;USING_DYNAMIC_LIBS;OBDEPICT_EXPORTS;HAVE_CONFIG_H"
 				RuntimeLibrary="2"
-				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="true"
+				PrecompiledHeaderFile=""
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
 				ProgramDataBaseFileName=".\Release/"
@@ -180,16 +179,15 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="true"
-				AdditionalDependencies="obconv.lib obdll.lib oberror.lib obcommon.lib zdll.lib obdepict.lib"
-				OutputFile="..\OBUtil.obf"
+				AdditionalDependencies="OBError.lib OBDLL.lib obconv.lib obcommon.lib"
+				OutputFile="..\OBDepict.obf"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories=".."
-				ProgramDatabaseFile=".\Release/OBUtil.pdb"
+				ProgramDatabaseFile=".\Release/OBDepict.pdb"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
-				ImportLibrary="../OBUtil.lib"
+				ImportLibrary="../OBDepict.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -204,7 +202,7 @@
 			<Tool
 				Name="VCBscMakeTool"
 				SuppressStartupBanner="true"
-				OutputFile=".\Release/OBUtil.bsc"
+				OutputFile=".\Release/OBDLL.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -225,65 +223,31 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-				RelativePath="..\..\src\formats\copyformat.cpp"
+				RelativePath="..\..\src\depict\depict.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\formats\molreport.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\formats\pngformat.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						WarningLevel="3"
-						WarnAsError="false"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\src\formats\povrayformat.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\formats\reportformat.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\formats\svgformat.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\formats\textformat.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\formats\titleformat.cpp"
+				RelativePath="..\..\src\depict\svgpainter.cpp"
 				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl"
 			>
 			<File
 				RelativePath="..\..\include\openbabel\babelconfig.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\openbabel\mol.h"
+				RelativePath="..\..\include\openbabel\depict\depict.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\openbabel\obconversion.h"
+				RelativePath="..\..\include\openbabel\depict\painter.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\openbabel\obmolecformat.h"
+				RelativePath="..\..\include\openbabel\depict\svgpainter.h"
 				>
 			</File>
 		</Filter>
