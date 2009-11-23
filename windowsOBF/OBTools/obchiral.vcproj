@@ -225,7 +225,7 @@
 			Filter="h;hpp;hxx;hm;inl"
 			>
 			<File
-				RelativePath="..\babelconfig.h"
+				RelativePath="..\..\include\openbabel\babelconfig.h"
 				>
 			</File>
 			<File
@@ -233,7 +233,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\obconversion.h"
+				RelativePath="..\..\include\openbabel\obconversion.h"
 				>
 			</File>
 			<File

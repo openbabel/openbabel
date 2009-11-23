@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="nbabel"
-	ProjectGUID="{34CDCBDF-2089-4B81-B149-B0C792E52831}"
-	RootNamespace="nbabel"
+	Name="svgdepict"
+	ProjectGUID="{4F7E8246-9E33-4B73-B405-3D2514B766BE}"
+	RootNamespace="svgdepict"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -41,7 +41,7 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				TypeLibraryName=".\Release/nbabel.tlb"
+				TypeLibraryName=".\Release/svgdepict.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
@@ -74,7 +74,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="obconv.lib oberror.lib"
+				AdditionalDependencies="obconv.lib oberror.lib OBDLL.lib obdepict.lib "
 				OutputFile="..\$(ProjectName).exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -97,7 +97,7 @@
 			<Tool
 				Name="VCBscMakeTool"
 				SuppressStartupBanner="true"
-				OutputFile=".\Release/nbabel.bsc"
+				OutputFile=".\Release/svgdepict.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -136,7 +136,7 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				TypeLibraryName=".\Debug/nbabel.tlb"
+				TypeLibraryName=".\Debug/svgdepict.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
@@ -148,7 +148,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\Debug/nbabel.pch"
+				PrecompiledHeaderFile=".\Debug/svgdepict.pch"
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
 				ProgramDataBaseFileName=".\Debug/"
@@ -170,7 +170,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="obconvd.lib oberrorD.lib"
+				AdditionalDependencies="obconvd.lib oberrorD.lib OBDLLD.lib obdepictD.lib"
 				OutputFile="..\debug/$(ProjectName).exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -194,7 +194,7 @@
 			<Tool
 				Name="VCBscMakeTool"
 				SuppressStartupBanner="true"
-				OutputFile=".\Debug/nbabel.bsc"
+				OutputFile=".\Debug/svgdepict.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -216,7 +216,7 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-				RelativePath="..\..\tools\nbabel.cpp"
+				RelativePath="..\..\tools\svgdepict.cpp"
 				>
 			</File>
 		</Filter>
@@ -225,11 +225,15 @@
 			Filter="h;hpp;hxx;hm;inl"
 			>
 			<File
-				RelativePath="..\babelconfig.h"
+				RelativePath="..\..\include\openbabel\babelconfig.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\dlhandler.h"
+				RelativePath="..\..\include\openbabel\depict\depict.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\openbabel\mol.h"
 				>
 			</File>
 			<File
@@ -238,6 +242,10 @@
 			</File>
 			<File
 				RelativePath="..\..\include\openbabel\oberror.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\openbabel\depict\svgpainter.h"
 				>
 			</File>
 		</Filter>

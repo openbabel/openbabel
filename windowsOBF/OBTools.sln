@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual C++ Express 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "nbabel", "OBTools\nbabel.vcproj", "{34CDCBDF-2089-4B81-B149-B0C792E52831}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "obminimize", "OBTools\obminimize.vcproj", "{303CA5CC-7378-4F2B-9058-384E21622E9F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "obenergy", "OBTools\obenergy.vcproj", "{9CD1BA74-63DD-4F06-AC54-14CA72993C81}"
@@ -27,16 +25,16 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "obconformer", "OBTools\obco
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "obprop", "OBTools\obprop.vcproj", "{52A90E6C-440D-4476-8512-0E5E758ED9E4}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "svgdepict", "OBTools\svgdepict.vcproj", "{4F7E8246-9E33-4B73-B405-3D2514B766BE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "obabel", "OBTools\obabel.vcproj", "{34CDCBDF-2089-4B81-B149-B0C792E52831}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{34CDCBDF-2089-4B81-B149-B0C792E52831}.Debug|Win32.ActiveCfg = Debug|Win32
-		{34CDCBDF-2089-4B81-B149-B0C792E52831}.Debug|Win32.Build.0 = Debug|Win32
-		{34CDCBDF-2089-4B81-B149-B0C792E52831}.Release|Win32.ActiveCfg = Release|Win32
-		{34CDCBDF-2089-4B81-B149-B0C792E52831}.Release|Win32.Build.0 = Release|Win32
 		{303CA5CC-7378-4F2B-9058-384E21622E9F}.Debug|Win32.ActiveCfg = Debug|Win32
 		{303CA5CC-7378-4F2B-9058-384E21622E9F}.Debug|Win32.Build.0 = Debug|Win32
 		{303CA5CC-7378-4F2B-9058-384E21622E9F}.Release|Win32.ActiveCfg = Release|Win32
@@ -85,6 +83,14 @@ Global
 		{52A90E6C-440D-4476-8512-0E5E758ED9E4}.Debug|Win32.Build.0 = Debug|Win32
 		{52A90E6C-440D-4476-8512-0E5E758ED9E4}.Release|Win32.ActiveCfg = Release|Win32
 		{52A90E6C-440D-4476-8512-0E5E758ED9E4}.Release|Win32.Build.0 = Release|Win32
+		{4F7E8246-9E33-4B73-B405-3D2514B766BE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4F7E8246-9E33-4B73-B405-3D2514B766BE}.Debug|Win32.Build.0 = Debug|Win32
+		{4F7E8246-9E33-4B73-B405-3D2514B766BE}.Release|Win32.ActiveCfg = Release|Win32
+		{4F7E8246-9E33-4B73-B405-3D2514B766BE}.Release|Win32.Build.0 = Release|Win32
+		{34CDCBDF-2089-4B81-B149-B0C792E52831}.Debug|Win32.ActiveCfg = Debug|Win32
+		{34CDCBDF-2089-4B81-B149-B0C792E52831}.Debug|Win32.Build.0 = Debug|Win32
+		{34CDCBDF-2089-4B81-B149-B0C792E52831}.Release|Win32.ActiveCfg = Release|Win32
+		{34CDCBDF-2089-4B81-B149-B0C792E52831}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

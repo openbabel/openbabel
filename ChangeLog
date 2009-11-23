@@ -1,3 +1,13 @@
+2009-11-23  Chris Morley
+
+	* tools/nbabel: Renamed as obabel. This is an alternative commandline
+	interface, e.g.   obabel in.smi -O out.sdf
+
+	* tools/svgdepict.cpp: demo program producing a file for each molecule.
+	
+	Tidied WindowsOBF Tools project files.
+	CMakefiles not updated.
+
 2009-11-22  Chris Morley
 
 	* data/element.txt, data/svgformat.script, include/openbabel/depict,

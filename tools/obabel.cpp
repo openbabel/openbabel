@@ -421,13 +421,13 @@ void help()
   cout << "-L \"BaseType\" Lists plugin classes of this type, e.g. L \"fingerprints\""<< endl;
   cout << "   Use  -L \"plugins\", or just -L, for a list of BaseTypes" << endl; 
   cout << "-m Produces multiple output files, to allow:" <<endl;
-  cout << "    Splitting: e.g.        " << program_name << " infile.mol new.smi -m" <<endl;
+  cout << "    Splitting: e.g.        " << program_name << " infile.mol -O new.smi -m" <<endl;
   cout << "      puts each molecule into new1.smi new2.smi etc" <<endl;
   cout << "    Batch conversion: e.g. " << program_name << " *.mol -osmi -m" <<endl;
   cout << "      converts each input file to a .smi file" << endl;
 #ifdef _WIN32
   cout << "   In Windows these can also be done using the forms" <<endl;
-  cout << "     " << program_name << " infile.mol new*.smi and " << program_name << " *.mol *.smi respectively.\n" <<endl;
+  cout << "     " << program_name << " infile.mol -O new*.smi and " << program_name << " *.mol -O *.smi respectively.\n" <<endl;
 #endif
   
   OBFormat* pDefault = OBConversion::GetDefaultFormat();
