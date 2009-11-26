@@ -143,10 +143,10 @@ namespace OpenBabel
       {
         string title(GetTitle());
         title += OBDescriptor::GetValues(this, itr->second);
+        if(ispunct(title[0]))
+          title[0]=' ';//a leading punct char is used only as a separator, not at start
         SetTitle(Trim(title).c_str());
       }
-
-
     
       //Filter using OBDescriptor comparison and (older) SMARTS tests
     //Continue only if previous test was true.

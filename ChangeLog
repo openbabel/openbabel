@@ -1,3 +1,19 @@
+2009-11-26  Chris Morley
+
+	* src/transform.cpp:Avoid leading separators with --append
+
+	* data/plugindefines.txt: comment out less useful examples
+
+2009-11-23  Chris Morley
+
+	* src/formats/fastsearchformat.cpp: Gives an estimate of the expected
+	indexing time.
+	When searching, can use [#6] etc. in -s option target to find both
+	aromatic and non-aromatic atoms in second SMARTS stage. With
+	the existing FP2 the change makes a marginal difference - e.g. biphenyl
+	with 
+	
+
 2009-11-23  Chris Morley
 
 	* tools/nbabel: Renamed as obabel. This is an alternative commandline
