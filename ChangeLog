@@ -1,5 +1,18 @@
 2009-11-27  Chris Morley
 
+	* src/formats/fastsearchformat.cpp: Give an estimate of the expected
+	indexing time.
+	When searching, can use [#6] etc. in -s option target to find both
+	aromatic and non-aromatic atoms in second SMARTS stage. Also use ~ bond
+	to match both aromatic and non-aromatic bonds in fastsearch stage.
+	Moves some way towards allowing behaviour expected in #2828279.
+	
+	* src/formats/xml/cmlformat.cpp: Accept T for triple bond. Fixes
+	#2903926
+ 
+	
+2009-11-27  Chris Morley
+
 	* src/formats/smilesformat.cpp: add sread and write support for $
 	quadruple bond.
 

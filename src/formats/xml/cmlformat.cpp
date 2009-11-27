@@ -745,6 +745,8 @@ namespace OpenBabel
                   ord=1;
                 else if(bo=='D')
                   ord=2;
+                else if(bo=='T')
+                  ord=3;
                 else if(bo=='A')
                   ord=5;
                 else {
