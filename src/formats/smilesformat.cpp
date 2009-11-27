@@ -399,6 +399,9 @@ namespace OpenBabel {
             case '#':
               _order = 3;
               break;
+            case '$':
+              _order = 4;
+              break;
             case ':':
               _order = 5;
               break;
@@ -1809,6 +1812,10 @@ namespace OpenBabel {
         _order = 3;
         _ptr++;
         break;
+      case '$':
+        _order = 4;
+        _ptr++;
+        break;
       case ';':
         _order = 5;
         _ptr++;
@@ -2617,6 +2624,8 @@ namespace OpenBabel {
                 strcat(symbol,":");
               if (bond->GetBO() == 3)
                 strcat(symbol,"#");
+              if (bond->GetBO() == 4)
+                strcat(symbol,"$");
               sprintf(symbol+strlen(symbol),"%d",externalBond->first);
               break;
             }
@@ -3158,6 +3167,7 @@ namespace OpenBabel {
           {
             if (bci->bond->GetBO() == 2 && !bci->bond->IsAromatic())  strcat(buffer,"=");
             if (bci->bond->GetBO() == 3)                              strcat(buffer,"#");
+            if (bci->bond->GetBO() == 4)                              strcat(buffer,"$");
           }
         }
         else
@@ -3194,6 +3204,8 @@ namespace OpenBabel {
         strcat(buffer,"=");
       else if (bond->GetBO() == 3)
         strcat(buffer,"#");
+      else if (bond->GetBO() == 4)
+        strcat(buffer,"$");
 
       ToCansmilesString(node->GetChildNode(i),buffer, frag_atoms, symmetry_classes, canonical_order, isomeric);
       if (i+1 < node->Size()) strcat(buffer,")");
