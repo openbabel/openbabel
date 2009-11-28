@@ -1891,9 +1891,10 @@ namespace OpenBabel
     vector<OBGenericData*> vdata = mol.GetData();
     for (k = vdata.begin();k != vdata.end();k++)
       {
-        if ((*k)->GetDataType() == OBGenericDataType::PairData
-          && (*k)->GetAttribute()!="InChI" //InChI is output in <identifier>
-          && (*k)->GetAttribute()!="PartialCharges")//annotation not needed since partial charges are not output in this format
+        if  ((*k)->GetDataType() == OBGenericDataType::PairData
+          && (*k)->GetOrigin()   != local //internal OBPairData is not written
+          && (*k)->GetAttribute()!= "InChI" //InChI is output in <identifier>
+          && (*k)->GetAttribute()!= "PartialCharges")//annotation not needed since partial charges are not output in this format
           {
             if(!propertyListWritten)
               {

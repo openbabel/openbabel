@@ -93,6 +93,7 @@ namespace OpenBabel
       bool ReadAtomBlock(istream& ifs,OBMol& mol, OBConversion* pConv);
       bool ReadBondBlock(istream& ifs,OBMol& mol, OBConversion* pConv);
       bool ReadCollectionBlock(istream& ifs,OBMol& mol, OBConversion* pConv);
+      bool ReadRGroupBlock(istream& ifs,OBMol& mol, OBConversion* pConv);
       bool WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv);
     private:
       enum Parity {
@@ -823,7 +824,8 @@ namespace OpenBabel
         vector<OBGenericData*> vdata = mol.GetData();
         for (k = vdata.begin();k != vdata.end();k++)
           {
-            if ((*k)->GetDataType() == OBGenericDataType::PairData)
+            if ((*k)->GetDataType() == OBGenericDataType::PairData
+                && (*k)->GetOrigin()!=local) //internal OBPairData is not written
               {
                 HasProperties = true;
                 //Since partial charges are not output
@@ -851,9 +853,11 @@ namespace OpenBabel
   //////////////////////////////////////////////////////
   bool MDLFormat::ReadV3000Block(istream& ifs, OBMol& mol, OBConversion* pConv,bool DoMany)
   {
+    bool ret;
     do
       {
         if(!ReadV3000Line(ifs,vs)) return false;
+        if(vs[1]=="END") return true;
         if(vs[2]=="LINKNODE"){continue;} //not implemented
         if(vs[2]!="BEGIN") return false;
 
@@ -867,25 +871,25 @@ namespace OpenBabel
             mol.ReserveAtoms(natoms);
 
             ReadV3000Block(ifs,mol,pConv,true);//go for contained blocks        
-            if(!ReadV3000Line(ifs,vs) || (vs[1]!="END" && vs[3]!="CTAB")) return false;
-            return true;
+            if(vs[2]!="END" && vs[3]!="CTAB") return false;
+            ret= true;
           }
         else if(vs[3]=="ATOM")
-          ReadAtomBlock(ifs,mol,pConv);
+          ret = ReadAtomBlock(ifs,mol,pConv);
         else if(vs[3]=="BOND")
-          ReadBondBlock(ifs,mol,pConv);
+          ret = ReadBondBlock(ifs,mol,pConv);
         else if(vs[3]=="COLLECTION")
-          ReadCollectionBlock(ifs,mol,pConv);
+          ret = ReadCollectionBlock(ifs,mol,pConv);
+        else if(vs[3]=="RGROUP")
+          ret = ReadRGroupBlock(ifs,mol,pConv);         
           
         /*
           else if(vs[3]=="3D")
           //not currently implemented
           else if(vs[3]=="SGROUP")
           //not currently implemented
-          else if(vs[3]=="RGROUP")
-          //not currently implemented
         */
-      }while(DoMany && ifs.good());
+      }while(ret && ifs.good());
     //  if(is3D){mol.SetDimension(3);cout<<"SetDim to 3"<<endl;}
     //  else if(is2D){mol.SetDimension(2);cout<<"SetDim to 2"<<endl;}
     return true;
@@ -928,51 +932,61 @@ namespace OpenBabel
         //      if(abs(atof(vs[5].c_str()))>0)is2D=true;
         char type[5];
         strncpy(type,vs[3].c_str(),4);
-        int iso=0;
-        atom.SetAtomicNum(etab.GetAtomicNum(type,iso));
-        if(iso)
-          atom.SetIsotope(iso);
-        atom.SetType(type); //takes a char not a const char!
-        //mapping vs[7] not implemented
-                
-        //Atom properties
-        vector<string>::iterator itr;
-        for(itr=vs.begin()+8;itr!=vs.end();itr++)
+        if(!strcmp(type, "R#"))
           {
-            string::size_type pos = (*itr).find('=');
-            if (pos==string::npos) return false;
-            int val = ReadIntField((*itr).substr(pos+1).c_str());
-
-            if((*itr).substr(0,pos)=="CHG")
-              {
-                atom.SetFormalCharge(val);
-              }
-            else if((*itr).substr(0,pos)=="RAD")
-              {
-                atom.SetSpinMultiplicity(val);
-              }
-            else if((*itr).substr(0,pos)=="CFG")
-              {
-                //Stereo configuration: 0 none; 1 odd parity; 2 even parity; (3 either parity)
-                //Reversed 12Aug05 as advised by Nick England
-               /* @todo
-                if(val==2) atom.SetAntiClockwiseStereo();
-                else if(val==1) atom.SetClockwiseStereo();
-                else if(val==3) atom.SetChiral();
-                chiralWatch=true;
-                */
-              }
-            else if((*itr).substr(0,pos)=="MASS")
-              {
-                if(val) atom.SetIsotope(val);
-              }
-            else if((*itr).substr(0,pos)=="VAL")
-              {
-                //@todo Abnormal valence: 0 normal;-1 zero
-              }
-            //Several query properties unimplemented
-            //Unknown properties ignored
+          obErrorLog.ThrowError(__FUNCTION__, 
+            "A molecule contains an R group which are not currently implemented"
+            , obWarning, onceOnly);
+          atom.SetAtomicNum(0);
           }
+        else
+          {
+          int iso=0;
+          atom.SetAtomicNum(etab.GetAtomicNum(type,iso));
+          if(iso)
+            atom.SetIsotope(iso);
+          atom.SetType(type); //takes a char not a const char!
+          //mapping vs[7] not implemented
+                  
+          //Atom properties
+          vector<string>::iterator itr;
+          for(itr=vs.begin()+8;itr!=vs.end();itr++)
+            {
+              string::size_type pos = (*itr).find('=');
+              if (pos==string::npos) return false;
+              int val = ReadIntField((*itr).substr(pos+1).c_str());
+
+              if((*itr).substr(0,pos)=="CHG")
+                {
+                  atom.SetFormalCharge(val);
+                }
+              else if((*itr).substr(0,pos)=="RAD")
+                {
+                  atom.SetSpinMultiplicity(val);
+                }
+              else if((*itr).substr(0,pos)=="CFG")
+                {
+                  //Stereo configuration: 0 none; 1 odd parity; 2 even parity; (3 either parity)
+                  //Reversed 12Aug05 as advised by Nick England
+                 /* @todo
+                  if(val==2) atom.SetAntiClockwiseStereo();
+                  else if(val==1) atom.SetClockwiseStereo();
+                  else if(val==3) atom.SetChiral();
+                  chiralWatch=true;
+                  */
+                }
+              else if((*itr).substr(0,pos)=="MASS")
+                {
+                  if(val) atom.SetIsotope(val);
+                }
+              else if((*itr).substr(0,pos)=="VAL")
+                {
+                  //@todo Abnormal valence: 0 normal;-1 zero
+                }
+              //Several query properties unimplemented
+              //Unknown properties ignored
+            }
+          }        
         if(!mol.AddAtom(atom)) return false;
         /*
         if(chiralWatch)
@@ -1047,12 +1061,29 @@ namespace OpenBabel
   {
     //Not currently implemented
     obErrorLog.ThrowError(__FUNCTION__, 
-      "COLLECTION blocks are not currently implemented and their contents ae ignored.", obWarning);
+      "COLLECTION blocks are not currently implemented and their contents are ignored.", obWarning, onceOnly);
     for(;;)
     {
       if(!ReadV3000Line(ifs,vs))
         return false;
       if(vs[2]=="END")
+        break;
+    }
+    return true;
+  }
+
+////////////////////////////////////////////////////////////
+  bool MDLFormat::ReadRGroupBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
+  {
+    //Not currently implemented
+    obErrorLog.ThrowError(__FUNCTION__, 
+      "RGROUP and RLOGIC blocks are not currently implemented and their contents are ignored.",
+      obWarning, onceOnly);
+    for(;;)
+    {
+      if(!ReadV3000Line(ifs,vs))
+        return false;
+      if(vs[2]=="END" && vs[3]=="RGROUP")
         break;
     }
     return true;

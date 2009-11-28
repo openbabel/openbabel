@@ -168,7 +168,8 @@ class OBConversion; //used only as pointer
     fileformatInput,     //!< Read from an input file
     userInput,           //!< Added by the user
     perceived,           //!< Perceived by Open Babel library methods
-    external             //!< Added by an external program
+    external,            //!< Added by an external program
+    local                //!< Not for routine external use (e.g. in sdf or cml properties)
   };
 
   //! \brief Base class for generic data
