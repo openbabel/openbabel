@@ -88,33 +88,37 @@ namespace OpenBabel {
 
     while (ifs.getline(buffer,BUFF_SIZE)) {
       // Unit cell info
-      if (strstr(buffer, "Final Cartesian lattice vectors (Angstroms) :")) {
+      if (strstr(buffer, "Final cell parameters and derivatives :")) {
         ifs.getline(buffer,BUFF_SIZE); // Blank
+        ifs.getline(buffer,BUFF_SIZE); // -----
 
-        ifs.getline(buffer,BUFF_SIZE); // X_Vec vector
+        ifs.getline(buffer,BUFF_SIZE); // a
         tokenize(vs, buffer);
-        x = atof(vs.at(0).c_str());
-        y = atof(vs.at(1).c_str());
-        z = atof(vs.at(2).c_str());
-        vector3 x_vec (x,y,z);
+        a = atof(vs.at(1).c_str());
 
-        ifs.getline(buffer,BUFF_SIZE); // Y_Vec vector
+        ifs.getline(buffer,BUFF_SIZE); // b
         tokenize(vs, buffer);
-        x = atof(vs.at(0).c_str());
-        y = atof(vs.at(1).c_str());
-        z = atof(vs.at(2).c_str());
-        vector3 y_vec (x,y,z);
+        b = atof(vs.at(1).c_str());
 
-        ifs.getline(buffer,BUFF_SIZE); // Z_Vec vector
+        ifs.getline(buffer,BUFF_SIZE); // c
         tokenize(vs, buffer);
-        x = atof(vs.at(0).c_str());
-        y = atof(vs.at(1).c_str());
-        z = atof(vs.at(2).c_str());
-        vector3 z_vec (x,y,z);
+        c = atof(vs.at(1).c_str());
+
+        ifs.getline(buffer,BUFF_SIZE); // alpha
+        tokenize(vs, buffer);
+        alpha = atof(vs.at(1).c_str());
+
+        ifs.getline(buffer,BUFF_SIZE); // beta
+        tokenize(vs, buffer);
+        beta = atof(vs.at(1).c_str());
+
+        ifs.getline(buffer,BUFF_SIZE); // gamma
+        tokenize(vs, buffer);
+        gamma = atof(vs.at(1).c_str());
 
         // Build unit cell
         OBUnitCell *cell = new OBUnitCell;
-        cell->SetData(x_vec, y_vec, z_vec);
+        cell->SetData(a, b, c, alpha, beta, gamma);
         pmol->SetData(cell);
       }
 
@@ -229,8 +233,8 @@ namespace OpenBabel {
     ortho = ((OBUnitCell*)pmol->GetData("UnitCell"))->GetOrthoMatrix();
 
     FOR_ATOMS_OF_MOL(atom, pmol) {
-        atom->SetVector(ortho * atom->GetVector());
-      }
+      atom->SetVector(ortho * atom->GetVector());
+    }
 
 
     pmol->EndModify();
