@@ -1,7 +1,13 @@
 2009-11-28  Chris Morley
 
+	* include/openbabel/depict/painter.h: add default #define of OBDEPICT
+	
+	* src/formats/fastsearchformat.cpp: correct declaration of AddPattern
+
+2009-11-28  Chris Morley
+
 	Avoid the OBPairData "OpenBabel Symmetry Classes" appearing
-	as a property in sdf and cml output files.  
+	as a property in sdf and cml output.  
 	* include/openbabel/base.h(OBGenericData):add 'local' to enum DataOrigin
 	* src/graphsym.cpp: SetOrigin "OpenBabel Symmetry Classes" to 'local'
 	* src/formats/mdlformat.cpp, src/formats/xml/cmlformat.cpp:

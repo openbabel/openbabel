@@ -89,7 +89,7 @@ namespace OpenBabel {
 
   private:
     bool ObtainTarget(OBConversion* pConv, vector<OBMol>& patternMols, const string& indexname);
-    void FastSearchFormat::AddPattern(vector<OBMol>& patternMols, OBMol patternMol, int idx);
+    void AddPattern(vector<OBMol>& patternMols, OBMol patternMol, int idx);
 
   private:
     ///big data structure which will remain in memory after it is loaded

@@ -22,6 +22,9 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <string>
 #include <vector>
+#ifndef OBDEPICT
+  #define OBDEPICT
+#endif
 
 namespace OpenBabel
 {
