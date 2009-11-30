@@ -68,7 +68,7 @@ else(MINIMAL_BUILD)
       reportformat
       shelxformat
       smilesformat
-      svgformat
+#      svgformat
       thermoformat
       tinkerformat
       titleformat
