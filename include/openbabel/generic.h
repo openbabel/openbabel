@@ -755,9 +755,9 @@ namespace OpenBabel
     
     OBVibrationData & operator=(const OBVibrationData &);
     
-    void SetData(const std::vector< std::vector< vector3 > > &,
-                 const std::vector<double> &,
-                 const std::vector<double> &);
+    void SetData(const std::vector< std::vector< vector3 > > & lx,
+                 const std::vector<double> & frequencies,
+                 const std::vector<double> & intensities);
     
     std::vector< std::vector< vector3 > > GetLx() const
       { return this->_vLx; }
@@ -837,8 +837,8 @@ namespace OpenBabel
     
     OBElectronicTransitionData & operator=(const OBElectronicTransitionData &);
     
-    void SetData(const std::vector<double> &,
-                 const std::vector<double> &);
+    void SetData(const std::vector<double> & wavelengths,
+                 const std::vector<double> & forces);
 
     void SetEDipole(const std::vector<double> &);
     void SetRotatoryStrengthsVelocity(const std::vector<double> &);
