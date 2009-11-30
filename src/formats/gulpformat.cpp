@@ -83,7 +83,7 @@ namespace OpenBabel {
     vector<string> vs;
     matrix3x3 ortho;
     int atomicNum;
-
+    OBUnitCell *cell = new OBUnitCell();
     pmol->BeginModify();
 
     while (ifs.getline(buffer,BUFF_SIZE)) {
@@ -117,9 +117,30 @@ namespace OpenBabel {
         gamma = atof(vs.at(1).c_str());
 
         // Build unit cell
-        OBUnitCell *cell = new OBUnitCell;
         cell->SetData(a, b, c, alpha, beta, gamma);
-        pmol->SetData(cell);
+      }
+
+      // Unit cell info
+      if (strstr(buffer, "Cell parameters (Angstroms/Degrees):")) {
+        ifs.getline(buffer,BUFF_SIZE); // Blank
+
+        ifs.getline(buffer,BUFF_SIZE); // a
+        tokenize(vs, buffer);
+        a = atof(vs.at(2).c_str());
+        alpha = atof(vs.at(5).c_str());
+
+        ifs.getline(buffer,BUFF_SIZE); // b
+        tokenize(vs, buffer);
+        b = atof(vs.at(2).c_str());
+        beta = atof(vs.at(5).c_str());
+
+        ifs.getline(buffer,BUFF_SIZE); // c
+        tokenize(vs, buffer);
+        c = atof(vs.at(2).c_str());
+        gamma = atof(vs.at(5).c_str());
+
+        // Build unit cell
+        cell->SetData(a, b, c, alpha, beta, gamma);
       }
 
       // Atoms info
@@ -228,6 +249,9 @@ namespace OpenBabel {
           pmol->SetEnergy(en - pv);
       }
     }
+
+    // set final unit cell
+    pmol->SetData(cell);
 
     // Convert all atom positions to cartesian:
     ortho = ((OBUnitCell*)pmol->GetData("UnitCell"))->GetOrthoMatrix();
