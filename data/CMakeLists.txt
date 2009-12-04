@@ -12,6 +12,7 @@ set(to_install
     isotope-small.txt
     isotope.txt
     logp.txt
+    MACCS.txt
     mmff94.ff
     mmff94s.ff
     mmffang.par
@@ -37,6 +38,8 @@ set(to_install
     ringtyp.txt
     SMARTS_InteLigand.txt
     space-groups.txt
+    superatom.txt
+    svgformat.script
     torlib.txt
     types.txt
     UFF.prm

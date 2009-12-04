@@ -2,6 +2,11 @@
 set(SOVERSION 4)
 set(LIBRARY_VERSION 4.0.0)
 
+set(depict_srcs
+    depict/depict.cpp
+    depict/svgpainter.cpp
+)
+
 set(descriptors_srcs
   descriptors/cmpdfilter.cpp
   descriptors/groupcontrib.cpp
@@ -46,11 +51,6 @@ set(stereo_srcs
     stereo/tetrahedral.cpp
     stereo/perception.cpp
     stereo/facade.cpp
-)
-
-set(depict_srcs
-    depict/depict.cpp
-    depict/svgpainter.cpp
 )
 
 set(openbabel_srcs
@@ -115,13 +115,13 @@ endif(BUILD_SHARED)
 
 add_library(${BABEL_LIBRARY} ${BUILD_TYPE}
                 ${openbabel_srcs}
+                ${depict_srcs}
                 ${descriptors_srcs}
                 ${fingerprints_srcs}
                 ${forcefields_srcs}
                 ${math_srcs}
                 ${ops_srcs}
                 ${stereo_srcs}
-                ${depict_srcs}
                 ${headers}
                 "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h"
 )

@@ -50,6 +50,9 @@
  #ifndef OBMCDL
   #define OBMCDL   OB_EXPORT
  #endif
+ #ifndef OBDEPICT
+  #define OBDEPICT OB_EXPORT
+ #endif
 
 #else   // defined(MAKE_OBDLL)
 
@@ -75,7 +78,11 @@
   #define OBFPTR   OB_IMPORT
  #endif
  #ifndef OBMCDL
-  #define OBMCDL   OB_IMPORT
+ #define OBMCDL    OB_IMPORT
+  #ifndef OBDEPICT
+ #define OBDEPICT  OB_IMPORT
+ #endif
+ 
  #endif
 
 #endif
