@@ -1,3 +1,12 @@
+2009-12-04  Chris Morley
+
+	* src/formats/gaussformat.cpp: Rotational constants were sometimes
+	being missed because of a warning message.
+
+	* src/depict/depict.cpp, src/formats/svgformat.cpp: avaoid errors with
+	molcules with one atom.
+
+
 2009-11-28  Chris Morley
 
 	* include/openbabel/depict/painter.h: add default #define of OBDEPICT

@@ -211,7 +211,7 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   ostream &ofs = *pConv->GetOutStream();
 
   //*** Coordinate generation ***
-  //Generate coordinates only if no existing 2D coordinates; always with -y; never with -n
+  //Generate coordinates only if no existing 2D coordinates; always with -xy; never with -xn
   if( (pConv->IsOption("y") || !pmol->Has2D(true)) && !pConv->IsOption("n") )
   {
     OBOp* pOp = OBOp::FindType("gen2D");
@@ -226,7 +226,7 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       return false;
     }
   }
-  if(!pmol->Has2D())
+  if(!pmol->Has2D() && pmol->NumAtoms()>1)//allows 3D coordinates (if passed by -xn above)
   {
     string mes("Molecule ");
     mes += pmol->GetTitle();

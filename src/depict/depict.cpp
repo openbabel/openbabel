@@ -262,7 +262,7 @@ namespace OpenBabel
     for (OBBond *bond = mol->BeginBond(j); bond; bond = mol->NextBond(j))
       bondLengthSum += bond->GetLength();
     const double averageBondLength = bondLengthSum / mol->NumBonds();
-    const double f = d->bondLength / averageBondLength;
+    const double f = mol->NumBonds() ? d->bondLength / averageBondLength : 1.0;
     for (atom = mol->BeginAtom(i); atom; atom = mol->NextAtom(i))
       atom->SetVector(atom->GetX() * f, atom->GetY() * f, 0.0);
 

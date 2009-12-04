@@ -443,8 +443,10 @@ namespace OpenBabel
           ifs.getline(buffer,BUFF_SIZE); //symmetry number
           tokenize(vs, buffer);
           RotSymNum = atoi(vs[3].c_str());
-          ifs.getline(buffer,BUFF_SIZE); //Rot temperatures
-          ifs.getline(buffer,BUFF_SIZE); //Rot consts
+          do
+          {
+            ifs.getline(buffer,BUFF_SIZE);
+          }while(!strstr(buffer, "Rotational constants"));
           tokenize(vs, buffer);
           for(int i=3; i<vs.size(); ++i)
             RotConsts[i-3] = atof(vs[i].c_str());
