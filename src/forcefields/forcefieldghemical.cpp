@@ -256,18 +256,17 @@ namespace OpenBabel
       rab = OBForceField::VectorDistance(pos_a, pos_b);
     }
 
-    const double term = rab / ka;
+    const double term_a = rab / sigma12;
+    const double term_b = rab / sigma6;
+    const double term12 = pow(term_a, 12);
+    const double term6 = pow(term_b, 6);
 
-    double term6 = term * term * term; // ^3
-    term6 = term6 * term6; // ^6
-    const double term12 = term6 * term6; // ^12
-   
     energy = (1.0 / term12) - (1.0 / term6);
     
     if (gradients) { 
-      const double term13 = term * term12; // ^13
-      const double term7 = term * term6; // ^7
-      const double dE = - (12.0 / ka) * (1.0 / term13) + (6.0 / ka) * (1.0 / term7);
+      const double term13 = term_a * term12; // ^13
+      const double term7 = term_b * term6; // ^7
+      const double dE = - (12.0 / sigma12) * (1.0 / term13) + (6.0 / sigma6) * (1.0 / term7);
       OBForceField::VectorSelfMultiply(force_a, dE);
       OBForceField::VectorSelfMultiply(force_b, dE);
     }
@@ -765,8 +764,8 @@ namespace OpenBabel
         vdwcalc.samering = false;
       */
 
-      vdwcalc.ka = (vdwcalc.Ra + vdwcalc.Rb) * pow(1.0 * vdwcalc.kab , 1.0 / 12.0);
-      vdwcalc.kb = (vdwcalc.Ra + vdwcalc.Rb) * pow(2.0 * vdwcalc.kab , 1.0 / 6.0);
+      vdwcalc.sigma12 = (vdwcalc.Ra + vdwcalc.Rb) * pow(1.0 * vdwcalc.kab , 1.0 / 12.0);
+      vdwcalc.sigma6 = (vdwcalc.Ra + vdwcalc.Rb) * pow(2.0 * vdwcalc.kab , 1.0 / 6.0);
       vdwcalc.SetupPointers();
 
       _vdwcalculations.push_back(vdwcalc);
