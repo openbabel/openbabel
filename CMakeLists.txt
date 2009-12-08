@@ -219,8 +219,13 @@ add_subdirectory(doc)
 add_subdirectory(src)
 add_subdirectory(tools)
 
-# Should we build the GUI? Default is yes.
+# Should we build the GUI? Default is yes on Linux or Windows, not Mac.
+if (APPLE)
+option(BUILD_GUI "Build the GUI" OFF)
+elseif (APPLE)
 option(BUILD_GUI "Build the GUI" ON)
+endif(APPLE)
+
 if(BUILD_GUI)
   message("Attempting to build the GUI")
   if(wxWidgets_FOUND)
