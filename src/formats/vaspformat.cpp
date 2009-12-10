@@ -274,9 +274,11 @@ namespace OpenBabel {
       ifs_dos.getline(buffer,BUFF_SIZE); // Junk
 
       // Get fermi level
-      ifs_dos.getline(buffer,BUFF_SIZE); // startE endE res fermi ???
-      tokenize(vs, buffer);
-      double fermi = atof(vs[3].c_str());
+      double fermi;
+      if (ifs_dos.getline(buffer,BUFF_SIZE)) { // startE endE res fermi ???
+        tokenize(vs, buffer);
+        fermi = atof(vs[3].c_str());
+      }
 
       // Start pulling out energies and densities
       std::vector<double> energies;
@@ -289,8 +291,10 @@ namespace OpenBabel {
         integration.push_back(atof(vs[2].c_str()));
       }
 
-      dos->SetData(fermi, energies, densities, integration);
-      pmol->SetData(dos);
+      if (energies.size() != 0) {
+        dos->SetData(fermi, energies, densities, integration);
+        pmol->SetData(dos);
+      }
     }
 
     ifs_dos.close();
