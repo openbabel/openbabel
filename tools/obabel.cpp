@@ -159,6 +159,15 @@ int main(int argc,char *argv[])
                     const char* param=NULL;
                     if(argc>arg+1)
                       param = argv[arg+2];
+                    //First assume first arg is a plugin ID, like babel -L cml  
+                    if(OBPlugin* plugin = OBPlugin::GetPlugin(NULL, argv[arg+1]))
+                    {
+                      string txt;
+                      plugin->Display(txt, "verbose", argv[arg+1]);
+                      cout << "One of the " << plugin->TypeID() << '\n' << txt << endl;
+                      return 0;
+                    }
+                    //...otherwise assume it is a plugin type, like babel -L forcefields
                     OBPlugin::List(argv[arg+1], param);
                     return 0;
                   }

@@ -62,6 +62,9 @@ public:
   ///Required description of a sub-type
   virtual const char* Description() { return NULL;} ;
 
+  ///Redefined by each plugin type: "formats", "fingerprints", etc.
+  virtual const char* TypeID(){ return "plugins"; }
+
   ///Write information on a plugin class to the string txt.
   ///Return false if not written.
   ///The default implementation outputs:
@@ -79,9 +82,9 @@ public:
   ///The default version does nothing.
   virtual void Init(){};
 
-  ///Get a pointer to a plugin from its type and ID. Return NULL if not found. Not cast to Type*
-  static OBPlugin* GetPlugin(const char* Type, const char* ID)
-  { return BaseFindType(GetTypeMap(Type), ID); }
+  ///Get a pointer to a plugin from its type and ID. Return NULL if not found.
+  ///If Type is NULL, search all types. Not cast to Type*
+  static OBPlugin* GetPlugin(const char* Type, const char* ID);
 
   ///Return the ID of the sub-type instance.
   const char* GetID()const{return _id;};
@@ -131,15 +134,8 @@ protected:
   static PluginMapType& GetTypeMap(const char* PluginID);
 
   ///\brief Returns the type with the specified ID, or NULL if not found.
-  ///Will be cast to the appropriate class in the calling routine.
-  static OBPlugin* BaseFindType(PluginMapType& Map, const char* ID)
-  {
-    PluginMapType::iterator itr = Map.find(ID);
-    if(itr==Map.end())
-      return NULL;
-    else
-      return itr->second;
-  }
+  ///Needs to be cast to the appropriate class in the calling routine.
+  static OBPlugin* BaseFindType(PluginMapType& Map, const char* ID);
 
 protected:
   const char* _id;

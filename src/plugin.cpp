@@ -25,13 +25,40 @@ using namespace std;
 namespace OpenBabel
 {
 
-  OBPlugin::PluginMapType& OBPlugin::GetTypeMap(const char* PluginID)
+OBPlugin::PluginMapType& OBPlugin::GetTypeMap(const char* PluginID)
 {
   PluginMapType::iterator itr;
   itr = PluginMap().find(PluginID);
   if(itr!=PluginMap().end())
     return itr->second->GetMap();
   return PluginMap();//error: type not found; return plugins map
+}
+
+OBPlugin* OBPlugin::BaseFindType(PluginMapType& Map, const char* ID)
+{
+  if(!ID || !*ID)
+    return NULL;
+  PluginMapType::iterator itr = Map.find(ID);
+  if(itr==Map.end())
+    return NULL;
+  else
+    return itr->second;
+}
+
+OBPlugin* OBPlugin::GetPlugin(const char* Type, const char* ID)
+{
+  if(Type!=NULL)
+    return BaseFindType(GetTypeMap(Type), ID);
+  
+  //When Type==NULL, search all types for matching ID and stop when found
+  PluginMapType::iterator itr;
+  for(itr=PluginMap().begin();itr!= PluginMap().end();++itr)
+  {
+    OBPlugin* result = BaseFindType(itr->second->GetMap(), ID);
+    if(result)
+      return result;
+  }
+  return NULL; //not found
 }
 
 bool OBPlugin::ListAsVector(const char* PluginID, const char* param, vector<string>& vlist)

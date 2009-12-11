@@ -1,3 +1,14 @@
+2009-12-11  Chris Morley
+
+	* include/openbabel/plugin.h, src/plugin.cpp: Make TypeID() virtual in
+	base class. Move definitions of	BaseFindType and GetPlugin() to cpp file
+	and make GetPlugin search all plugin types for an ID.
+	 
+	* tools/babel.cpp, tools/obabel.cpp: now get verbose description of any
+	plugin with e.g. -L gen3D
+	
+	* src/GUI/OBGUI.cpp: above facility from the menu.	
+
 2009-12-04  Chris Morley
 
 	* src/formats/gaussformat.cpp: Rotational constants were sometimes

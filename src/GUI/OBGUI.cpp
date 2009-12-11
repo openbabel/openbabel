@@ -943,7 +943,7 @@ void OBGUIFrame::MakePluginsMenu()
 //    std::vector<std::string> verbosevec;
     OBPlugin::ListAsVector(topvec[itop].c_str(), NULL, subvec);//get each format, etc as single line
 //    OBPlugin::ListAsVector(topvec[itop].c_str(), "verbose", verbosevec);//get full description of each format
-    subMenu->Append(ID_HINT,_T("     (Click item to copy its ID to clipboard)"));
+    subMenu->Append(ID_HINT,_T("     (Click to see details and to copy ID to clipboard)"));
     for(int isub=0; isub < subvec.size(); ++isub)
     {
 //      wxMenu* subsubMenu = new wxMenu();
@@ -958,12 +958,21 @@ void OBGUIFrame::MakePluginsMenu()
 
 void OBGUIFrame::OnClickPlugin(wxCommandEvent& event)
 {
-  //Puts ID on clipboard
-  if (wxTheClipboard->Open())
-  {
+  //Display message box with info on plugin class
     int nID = event.GetId();
     wxMenuItem* item = listMenu->FindItem(nID);
     if(item)
+    {
+    wxString id = item->GetText().BeforeFirst(' ');
+    OBPlugin* plugin = OBPlugin::GetPlugin(NULL, id.c_str());
+    if(plugin)
+    {    
+      std::string txt;
+      plugin->Display(txt, "verbose", id.c_str());
+      wxMessageBox(_T(txt.c_str()), _T("Plugin details"), wxOK | wxICON_INFORMATION | wxCENTER, this);     
+    }
+    //And also put ID on clipboard
+    if (wxTheClipboard->Open())
     {
       wxString itemText = item->GetText();
       wxTheClipboard->SetData( new wxTextDataObject(itemText.BeforeFirst(' ')) );
