@@ -964,12 +964,12 @@ void OBGUIFrame::OnClickPlugin(wxCommandEvent& event)
     if(item)
     {
     wxString id = item->GetText().BeforeFirst(' ');
-    OBPlugin* plugin = OBPlugin::GetPlugin(NULL, id.c_str());
+    OBPlugin* plugin = OBPlugin::GetPlugin(NULL, id.mb_str());
     if(plugin)
     {    
       std::string txt;
-      plugin->Display(txt, "verbose", id.c_str());
-      wxMessageBox(_T(txt.c_str()), _T("Plugin details"), wxOK | wxICON_INFORMATION | wxCENTER, this);     
+      plugin->Display(txt, "verbose", id.mb_str());
+      wxMessageBox(wxString(txt.c_str(), wxConvUTF8), _T("Plugin details"), wxOK | wxICON_INFORMATION | wxCENTER, this);     
     }
     //And also put ID on clipboard
     if (wxTheClipboard->Open())
