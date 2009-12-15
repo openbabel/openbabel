@@ -1,3 +1,10 @@
+2009-12-15  Noel O'Boyle
+
+	* src/formats/smilesformat.cpp: Create OBPairData of "SMILES Atom
+	Order" whenever creating a SMILES string (not just for canonical
+	SMILES). Set to "local" so that it won't be written out to an SDF
+	file.
+
 2009-12-15  Chris Morley
 
 	* include/openbabel/parsmart.h, src/parsmart.cpp: add support for

@@ -3527,10 +3527,12 @@ namespace OpenBabel {
     }
 
     // Could also save canonical bond order if anyone desires
-    if (canonical && !mol.HasData("Canonical Atom Order")) {
+    if (!mol.HasData("SMILES Atom Order")) {
+      // This atom order data is useful not just for canonical SMILES
       OBPairData *canData = new OBPairData;
-      canData->SetAttribute("Canonical Atom Order");
+      canData->SetAttribute("SMILES Atom Order");
       canData->SetValue(m2s.GetOutputOrder());
+      canData->SetOrigin(OpenBabel::local);
       mol.SetData(canData);
     }
   }
@@ -3600,9 +3602,9 @@ namespace OpenBabel {
       if(!pConv->IsOption("n"))
         ofs << '\t' <<  mol.GetTitle();
 
-      if (pConv->IsOption("x") && mol.HasData("Canonical Atom Order")) {
+      if (pConv->IsOption("x") && mol.HasData("SMILES Atom Order")) {
         vector<string> vs;
-        string canorder = mol.GetData("Canonical Atom Order")->GetValue();
+        string canorder = mol.GetData("SMILES Atom Order")->GetValue();
         tokenize(vs, canorder);
         ofs << '\t';
         for (int i = 0; i < vs.size(); i++) {
