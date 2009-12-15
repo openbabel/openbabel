@@ -179,8 +179,6 @@ namespace OpenBabel {
     //Input format is currently fs; set it appropriately
     if(!pConv->SetInAndOutFormats(pConv->FormatFromExt(datafilename.c_str()),pConv->GetOutFormat()))
 			return false;
-    pConv->AddOption("b",OBConversion::GENOPTIONS);
-
 
     //Now do searching
     const char* p = pConv->IsOption("t",OBConversion::INOPTIONS);
@@ -505,9 +503,10 @@ namespace OpenBabel {
         }
       }
       
-      //Need to find ~ bonds and make a versions with a single and aromatic bonds
+      //Find ~ bonds and make a versions with a single and aromatic bonds
       //To avoid having to parse the SMILES here, replace ~ by $ (quadruple bond)
       //and then replace this in patternMol. Check first that there are no $ already
+      //Sadly, isocynanides may have $ bonds.
       bool hasTildeBond;
       if(hasTildeBond = (txt.find('~')!=string::npos))
         replace(txt.begin(),txt.end(), '~' , '$');
@@ -528,7 +527,7 @@ namespace OpenBabel {
       
       if(hasTildeBond)
       {
-        patternMol.ConvertDativeBonds();//use standard form for dative bonds
+        //patternMol.ConvertDativeBonds();//use standard form for dative bonds
         AddPattern(patternMols, patternMol, 0); //recursively add all combinations of tilde bond values
         return true;
       }
@@ -587,8 +586,6 @@ namespace OpenBabel {
         obErrorLog.ThrowError(__FUNCTION__, "Cannot derive a molecule from the -s or -S options", obWarning);
         return false;
       }
-    patternMol.ConvertDativeBonds();//use standard form for dative bonds
-    patternMols.push_back(patternMol);
 
     //If the -s option is not already present, generate one by converting to SMILES
     if(!pConv->IsOption("s",OBConversion::GENOPTIONS))
@@ -606,6 +603,9 @@ namespace OpenBabel {
         smilesstr = smilesstr.substr(0,pos);
       pConv->AddOption("s", OBConversion::GENOPTIONS, smilesstr.c_str());
     }
+    //Only the patternMol, not the SMARTS for the second stage, uses de-dative form
+    patternMol.ConvertDativeBonds();//use standard form for dative bonds
+    patternMols.push_back(patternMol);
 
     return true;
   }

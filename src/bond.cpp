@@ -108,6 +108,8 @@ namespace OpenBabel
           SetKDouble();
         else if (order == 3)
           SetKTriple();
+        else
+          UnsetFlag(OB_KSINGLE_BOND | OB_KDOUBLE_BOND | OB_KTRIPLE_BOND);
 
         UnsetAromatic();
       }

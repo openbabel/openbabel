@@ -1307,6 +1307,7 @@ namespace OpenBabel
       case('-'):  return BuildBondLeaf(BL_TYPE,BT_SINGLE);
       case('='):  return BuildBondLeaf(BL_TYPE,BT_DOUBLE);
       case('#'):  return BuildBondLeaf(BL_TYPE,BT_TRIPLE);
+      case('$'):  return BuildBondLeaf(BL_TYPE,BT_QUAD);
       case(':'):  return BuildBondLeaf(BL_TYPE,BT_AROM);
       case('@'):  return BuildBondLeaf(BL_TYPE,BT_RING);
       case('~'):  return BuildBondLeaf(BL_CONST,true);
@@ -1434,7 +1435,7 @@ namespace OpenBabel
             prev = -1;
             break;
 
-          case('-'):  case('='):  case('#'):
+          case('-'):  case('='):  case('#'): case('$'):
           case(':'):  case('~'):  case('@'):
           case('/'):  case('\\'): case('!'):
             LexPtr--;
@@ -2850,6 +2851,8 @@ namespace OpenBabel
                 return(bond->GetBO()==2 && !bond->IsAromatic());
               case BT_TRIPLE:
                 return(bond->GetBO()==3);
+              case BT_QUAD:
+                return(bond->GetBO()==4);
               case BT_RING:
                 return(bond->IsInRing());
               case BT_UP:
@@ -3034,6 +3037,7 @@ namespace OpenBabel
               case(BT_SINGLE):    return(1);
               case(BT_DOUBLE):    return(2);
               case(BT_TRIPLE):    return(3);
+              case(BT_QUAD):      return(4);
               case(BT_AROM):      return(5);
               default:
                 lftest = true;

@@ -87,6 +87,7 @@ namespace OpenBabel
 #define BT_UPUNSPEC   0x07
 #define BT_DOWNUNSPEC 0x08
 #define BT_RING       0x09
+#define BT_QUAD       0x0A //quadruple bond $
 
   //! \union _BondExpr parsmart.h <openbabel/parsmart.h>
   //! \brief An internal (SMARTS parser) bond expression

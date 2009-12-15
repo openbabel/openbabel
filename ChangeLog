@@ -1,3 +1,14 @@
+2009-12-15  Chris Morley
+
+	* include/openbabel/parsmart.h, src/parsmart.cpp: add support for
+	$ as quadruple bond to SMARTS. (Already in SMILES.)
+	
+	* src/bond.cpp: reset OB_KTRIPLE_BOND, etc when changing bond order.
+	Fixes corruption of isonitriles in #2913204
+
+	* src/formats/fastsearchformat.cpp: adjust application of 
+	ConvertDativeBonds() to fix #2913204
+
 2009-12-14  Noel O'Boyle
 
 	* src/GUI/OBGUI.cpp: Fix compilation on Linux.
