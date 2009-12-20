@@ -16,16 +16,14 @@ set(tests
     stereoperception
    )
 
+set(TEST_PATH ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+
 foreach(test ${tests})
   add_executable(${test}test ${test}test.cpp)
   target_link_libraries(${test}test ${BABEL_LIBRARY})
-  if(NOT MSVC)
-    add_test(${test}_Test ${CMAKE_BINARY_DIR}/test/${test}test)
-  else(NOT MSVC)
-    add_test(${test}_Test ${CMAKE_COMMAND} -E chdir ${CMAKE_BINARY_DIR}/$(ConfigurationName) ${test}test)
-  endif(NOT MSVC)
-  set_target_properties(${test}test PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
-  set_tests_properties(${test}_Test PROPERTIES FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed")
+  add_test(${test}_Test ${TEST_PATH}/${test}test)
+  set_tests_properties(${test}_Test PROPERTIES
+    FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed")
 endforeach(test ${tests})
 
  
@@ -67,13 +65,9 @@ set(old_tests
 foreach(test ${old_tests})
   add_executable(${test} ${test}.cpp)
   target_link_libraries(${test} ${BABEL_LIBRARY})
-  if(NOT MSVC)
-    add_test(${test}_Test ${CMAKE_BINARY_DIR}/test/${test})
-  else(NOT MSVC)
-    add_test(${test}_Test ${CMAKE_COMMAND} -E chdir ${CMAKE_BINARY_DIR}/$(ConfigurationName) ${test})
-  endif(NOT MSVC)
-  set_target_properties(${test} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
-  set_tests_properties(${test}_Test PROPERTIES FAIL_REGULAR_EXPRESSION "not ok")
+  add_test(${test}_Test ${TEST_PATH}/${test})
+  set_tests_properties(${test}_Test PROPERTIES
+    FAIL_REGULAR_EXPRESSION "not ok")
 endforeach(test ${old_tests})
 
 ############################################################  

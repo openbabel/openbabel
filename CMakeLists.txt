@@ -253,7 +253,6 @@ endif(BUILD_GUI)
 
 # Do we want to build the tests?
 option(ENABLE_TESTS "Enable unit tests" OFF)
-option(SUBMIT_TESTS "Submit tests to dashboard" OFF)
 if(ENABLE_TESTS)
   include(CTest)
   enable_testing()
