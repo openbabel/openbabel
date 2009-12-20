@@ -1,6 +1,8 @@
+# Please ensure that any changes remain compliant with 2.4.8.
+cmake_minimum_required(VERSION 2.4.8)
+
 project(openbabel)
 set(CMAKE_MODULE_PATH ${openbabel_SOURCE_DIR}/cmake/modules)
-cmake_minimum_required(VERSION 2.4.8)
 
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
@@ -14,6 +16,9 @@ include (MacroEnsureVersion)
 set(BABEL_MAJ_VER   2)
 set(BABEL_MIN_VER   2)
 set(BABEL_PATCH_VER 99)
+
+# Why is this so? Do we want to keep using a different name for the Windows
+# DLL? On the one hand it has been this way for a while...
 if(WIN32)
   set(BABEL_LIBRARY   openbabel-2)
 else(WIN32)
@@ -55,6 +60,14 @@ else(UNIX) # Windows - bin dir = lib dir to load libraries
     endif(ENABLE_VERSIONED_FORMATS)
   endif(MSVC)
 endif(UNIX)
+
+# Place binaries and libraries in the root of the build directory
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+  CACHE STRING "Binary build output directory")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
+  CACHE STRING "Library build output directory")
+mark_as_advanced(CMAKE_LIBRARY_OUTPUT_DIRECTORY
+  CMAKE_RUNTIME_OUTPUT_DIRECTORY)
 
 option(WITH_INCHI   "build inchi lib" ON)
 option(BUILD_SHARED "enable shared build support" ON)
@@ -241,17 +254,11 @@ endif(BUILD_GUI)
 # Do we want to build the tests?
 option(ENABLE_TESTS "Enable unit tests" OFF)
 option(SUBMIT_TESTS "Submit tests to dashboard" OFF)
-if(SUBMIT_TESTS)
+if(ENABLE_TESTS)
   include(CTest)
   enable_testing()
   add_subdirectory(test)
-else(SUBMIT_TESTS)
-  if(ENABLE_TESTS)
-    enable_testing()
-    add_subdirectory(test)
-  endif(ENABLE_TESTS)
-endif(SUBMIT_TESTS)
-
+endif()
 
 # Should Python bindings be built?
 option(ENABLE_PYTHON "Enable Python bindings" OFF)
