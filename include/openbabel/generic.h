@@ -745,7 +745,9 @@ namespace OpenBabel
     
     //! Infrared absorption intensities in KM/Mole
     std::vector<double>  _vIntensities;
-    
+
+    //! Raman activities  
+    std::vector<double>  _vRamanActivities;
 
   public:
     OBVibrationData(): OBGenericData("VibrationData", OBGenericDataType::VibrationData){};
@@ -758,6 +760,10 @@ namespace OpenBabel
     void SetData(const std::vector< std::vector< vector3 > > & lx,
                  const std::vector<double> & frequencies,
                  const std::vector<double> & intensities);
+    void SetData(const std::vector< std::vector< vector3 > > &,
+                 const std::vector<double> &,
+                 const std::vector<double> &,
+                 const std::vector<double> &);
     
     std::vector< std::vector< vector3 > > GetLx() const
       { return this->_vLx; }
@@ -765,6 +771,8 @@ namespace OpenBabel
       { return this->_vFrequencies; }
     std::vector<double> GetIntensities() const
       { return this->_vIntensities; }
+    std::vector<double> GetRamanActivities() const
+      { return this->_vRamanActivities; }
 
     unsigned int GetNumberOfFrequencies() const;
 };

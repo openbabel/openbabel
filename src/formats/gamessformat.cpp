@@ -223,7 +223,7 @@ namespace OpenBabel
     int HOMO = 0;
     vector<double> orbitals;
 
-    vector<double> frequencies, intensities;
+    vector<double> frequencies, intensities, raman_intensities;
     vector< vector<vector3> > displacements;
     int lowFreqModesBegin; // the number of the first low frequency mode
     int lowFreqModesEnd; // the number of the last low frequency mode
@@ -461,7 +461,16 @@ namespace OpenBabel
               if (numIntens < lowFreqModesBegin || numIntens > lowFreqModesEnd)
                 intensities.push_back(atof(vs[i].c_str()));
             }
-            ifs.getline(buffer, BUFF_SIZE); // blank
+            ifs.getline(buffer, BUFF_SIZE); // blank or Raman activitie
+            if (strstr(buffer,"RAMAN") != NULL) {
+              tokenize(vs, buffer);
+              for (unsigned int i = 2; i < vs.size(); ++i) {              	
+                if (numIntens < lowFreqModesBegin || numIntens > lowFreqModesEnd) 
+                  raman_intensities.push_back(atof(vs[i].c_str()));
+              }
+              ifs.getline(buffer, BUFF_SIZE); // DEPOLARIZATION
+              ifs.getline(buffer, BUFF_SIZE); // blank
+            }
 
             // now real work -- read displacements
             int prevModeCount = displacements.size();
@@ -665,7 +674,7 @@ namespace OpenBabel
             if(pd)
               {
                 string value = pd->GetValue();
-                if(value == "GRADIENT" || value == "HESSIAN" || value == "OPTIMIZE" || value == "SADPOINT")
+                if(value == "GRADIENT" || value == "HESSIAN" || value == "RAMAN" || value == "OPTIMIZE" || value == "SADPOINT")
                   {
                     method = pd->GetValue();
                     transform(method.begin(), method.end(), method.begin(), ::tolower);
@@ -763,7 +772,7 @@ namespace OpenBabel
     }
     if (frequencies.size() != 0) { // we found some vibrations
       OBVibrationData *vd = new OBVibrationData;
-      vd->SetData(displacements, frequencies, intensities);
+      vd->SetData(displacements, frequencies, intensities, raman_intensities);
       vd->SetOrigin(fileformatInput);
       mol.SetData(vd);
     }

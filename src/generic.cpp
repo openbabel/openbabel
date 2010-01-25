@@ -1511,6 +1511,25 @@ void OBVibrationData::SetData(const std::vector< std::vector< vector3 > > & vLx,
 }
 
 /*!
+**\brief Assign the data
+**\param vLx Normal modes in 1/sqrt(a.u.)
+**\param vFrequencies Harmonic frequencies in inverse centimeters
+**\param vIntensities Infrared absorption intensities in KM/Mole
+**\param vRamanActivities Raman activities
+*/
+void OBVibrationData::SetData(const std::vector< std::vector< vector3 > > & vLx,
+                              const std::vector<double> & vFrequencies,
+                              const std::vector<double> & vIntensities,
+                              const std::vector<double> & vRamanActivities)
+{
+  this->_vLx = vLx;
+  this->_vFrequencies = vFrequencies;
+  this->_vIntensities = vIntensities;
+  this->_vRamanActivities = vRamanActivities;
+}
+
+
+/*!
 **\brief Get the number of frequencies
 */
 unsigned int OBVibrationData::GetNumberOfFrequencies() const
