@@ -32,6 +32,7 @@ extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 using namespace std;
 using namespace OpenBabel;
@@ -166,7 +167,7 @@ int main(int argc,char *argv[])
               order = atoi(canonical_order[index].c_str());
               atom = fragments[i].GetAtom(order);
               
-              snprintf(buffer, BUFF_SIZE, "C%8.3f%8.3f%8.3f\n",
+              snprintf(buffer, BUFF_SIZE, "%8.3f%8.3f%8.3f\n",
                        atom->x(), atom->y(), atom->z());
               cout << buffer;
             }
@@ -247,9 +248,22 @@ string RewriteSMILES(const string smiles)
   FindAndReplace(fragment, "o", "a");
   FindAndReplace(fragment, "p", "a");
   FindAndReplace(fragment, "s", "a");
-  
+
   // There are probably other elements which might be ignored, but these are rare
   // (i.e., unlikely to be top ring fragment hits)
-  
-  return fragment;
+
+  // OK, we need to add ~ for bonds too.
+  FindAndReplace(fragment, "=", "~");
+  FindAndReplace(fragment, "#", "~");
+
+  // Add ~ where missing bonds (i.e., rather than single vs. aromatic)
+  string::iterator j;
+  stringstream result;
+  for (j = fragment.begin(); j != fragment.end(); ++j) {
+    if (*j == 'a' || *j == 'A' || *j == '~')
+      result << *j;
+    result << '~';
+  }
+
+  return result.str();
 }
