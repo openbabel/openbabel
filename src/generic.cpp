@@ -289,7 +289,38 @@ namespace OpenBabel
     return(*this);
   }
 
-	/*!
+  /*!
+  **\brief Sets the vectors and angles of the unitcell
+  **\param a The length a
+  **\param b The length b
+  **\param c The length c
+  **\param alpha The angle alpha
+  **\param beta The angle beta
+  **\param gamma The angle gamma
+  */
+  void OBUnitCell::SetData(const double a, const double b, const double c,
+               const double alpha, const double beta, const double gamma)
+  {
+    _a = a;
+    _b = b;
+    _c = c;
+    _alpha = alpha;
+    _beta = beta;
+    _gamma = gamma;
+
+    // Update vectors
+    vector3 temp;
+    matrix3x3 m = GetOrthoMatrix();
+
+    temp = vector3(1.0, 0.0, 0.0);
+    _v1 = m * temp;
+    temp = vector3(0.0, 1.0, 0.0);
+    _v2 = m * temp;
+    temp = vector3(0.0, 0.0, 1.0);
+    _v3 = m * temp;
+  }
+
+  /*!
   ** The angles and lengths of the unitcell will be calculated from the
   ** vectors @p v1, @p v2 and @p v3. Those vectors will as well be
   ** stored internally.

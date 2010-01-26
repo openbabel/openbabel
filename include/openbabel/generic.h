@@ -314,19 +314,8 @@ namespace OpenBabel
 
     OBUnitCell &operator=(const OBUnitCell &);
 
-    /*!
-    **\brief Sets the vectors and angles of the unitcell
-    **\param a The length a
-    **\param b The length b
-    **\param c The length c
-    **\param alpha The angle alpha
-    **\param beta The angle beta
-    **\param gamma The angle gamma
-    */
     void SetData(const double a, const double b, const double c,
-                 const double alpha, const double beta, const double gamma)
-    {   _a = a; _b = b; _c = c;
-      _alpha = alpha; _beta = beta; _gamma = gamma; }
+                 const double alpha, const double beta, const double gamma);
     void SetData(const vector3 v1, const vector3 v2, const vector3 v3);
 
     //! Set the offset to the origin to @p v1
