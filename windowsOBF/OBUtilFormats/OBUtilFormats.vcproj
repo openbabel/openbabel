@@ -229,6 +229,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\formats\MNAformat.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\formats\molreport.cpp"
 				>
 			</File>

@@ -1,3 +1,9 @@
+2010-01-26  Chris Morley
+
+	* src/formats/MNAformat.cpp: added new format from Jeremy Murphy
+	* src/formats/CMakeLists.txt,
+	  windowsOBF/OBUtilFormats/OBUtilFormats.vcproj: build files
+
 2009-12-15  Noel O'Boyle
 
 	* src/formats/smilesformat.cpp: Create OBPairData of "SMILES Atom

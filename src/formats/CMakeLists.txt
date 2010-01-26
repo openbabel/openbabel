@@ -9,6 +9,7 @@ else(MINIMAL_BUILD)
       CSRformat
       PQSformat
       MCDLformat
+      MNAformat
       alchemyformat
       adfformat
       acrformat
