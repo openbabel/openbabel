@@ -20,7 +20,7 @@ GNU General Public License for more details.
   #define shared_ptr boost::shared_ptr
 #else
   #include <memory>
-  #if __GNUC__ == 4 && __GNUC_MINOR__ < 3
+  #if __GNUC__ == 4  //&& __GNUC_MINOR__ < 3  removed at the suggestion of Konstantin Tokarev
     #include <tr1/memory>
   #endif
   using std::tr1::shared_ptr;
