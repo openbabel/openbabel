@@ -148,7 +148,7 @@
       
       castMethodName = string.Format("{0}{1}","To",derivedType);
       
-      System.Reflection.MethodInfo castMethod = typeof(OBGenericData).GetMethod(castMethodName);
+      System.Reflection.MethodInfo castMethod = typeof(OBGenericData).GetMethod(castMethodName, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
       
       if(castMethod == null)
         throw new InvalidCastException("No explicit downcast is defined for " + derivedType);
@@ -633,6 +633,7 @@ using System.Runtime.InteropServices;
 #include <openbabel/format.h>
 
 #include <openbabel/forcefield.h>
+#include <openbabel/builder.h>
 #include <openbabel/op.h>
 
 #include <openbabel/bitvec.h>
@@ -848,6 +849,7 @@ CAST_GENERICDATA_TO(VirtualBond);
 %include <openbabel/descriptor.h>
 %include <openbabel/forcefield.h>
 
+%include <openbabel/builder.h>
 %include <openbabel/op.h>
 
 %include <openbabel/bitvec.h>
