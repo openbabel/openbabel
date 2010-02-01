@@ -9,7 +9,7 @@
 
 #SmartsDescriptor
 #nHal             # name of descriptor. Use for example --filter "nHal<3" 
-#F,Cl,Br,I,At     # SMARTS defining the descriptor
+#[F,Cl,Br,I,At]   # SMARTS defining the descriptor
 #Number of halogen atoms\n      #This comment has two lines because of \n at the end.
 #count fluorine, chlorine, etc. #When listing plugins, use verbose option to see lines after the first
 
