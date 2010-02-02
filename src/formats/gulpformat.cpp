@@ -145,6 +145,14 @@ namespace OpenBabel {
 
       // Atoms info
       if (strstr(buffer, "Final fractional coordinates of atoms :")) {
+        // Clear old atoms from pmol
+        vector<OBAtom*> toDelete;
+        FOR_ATOMS_OF_MOL(a, *pmol)
+          toDelete.push_back(&*a);
+        for (int i = 0; i < toDelete.size(); i++)
+          pmol->DeleteAtom(toDelete.at(i));
+
+        // Load new atoms from molecule
         ifs.getline(buffer,BUFF_SIZE); // Blank
         ifs.getline(buffer,BUFF_SIZE); // Header
         ifs.getline(buffer,BUFF_SIZE); // Header
