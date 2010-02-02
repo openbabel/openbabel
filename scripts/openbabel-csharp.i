@@ -43,7 +43,20 @@
 %typemap(csclassmodifiers) OpenBabel::OBBond "public partial class"
 %typemap(csclassmodifiers) OpenBabel::OBRing "public partial class"
 
-
+// Replace a C array-based method with a vector-based method
+%ignore OpenBabel::OBGridData::GetNumberOfSteps(int steps[3]) const;
+%extend OpenBabel::OBGridData {
+  std::vector<int> GetNumberOfSteps() const
+  {
+    int steparr[3];
+    self->GetNumberOfSteps(steparr);
+    
+    std::vector<int> stepvec(3);
+    for(int i=0; i<3; ++i)
+		stepvec[i] = steparr[i];
+    return stepvec;
+  }
+};
 
 //adds the ignored operators back into the OBVector3 class
 //with companion methods for use by .Net languages that don't support operator

@@ -1,3 +1,8 @@
+2010-02-02  Noel O'Boyle  <baoilleach@gmail.com>
+
+	* scripts/openbabelcsharp.i: Replace
+	OBGridData::GetNumberOfSteps(int[3]) with a vector-based method
+
 2010-01-31  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/openbabelcsharp.i: Add OBBuilder and fix bug in Downcast<>
