@@ -171,6 +171,10 @@ namespace OpenBabel
       //! or 0 if not defined. For 'D' or 'T' hydrogen isotopes, will return
       //! a value in the second argument
       int   GetAtomicNum(const char *, int &iso);
+      //! \return the atomic number matching the element IUPAC name (first 5 symbols)
+      //! or symbol passed or 0 if not defined. For 'Deuterium' or 'Tritium'
+      //! hydrogen isotopes, will return a value in the second argument
+      int   GetAtomicNum(std::string name, int &iso);
       //! \return the element symbol matching the atomic number passed
       const char *GetSymbol(int);
       //! \return the van der Waals radius for this atomic number
