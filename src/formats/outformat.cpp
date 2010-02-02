@@ -84,7 +84,7 @@ namespace OpenBabel
         // GAMESS output
         pFormat = pConv->FindFormat("gamout");
         break;
-      } else if (strstr(buffer,"Entering Gaussian System, Link 0=") != NULL) {
+      } else if (strstr(buffer,"Gaussian, Inc") != NULL) {
         // Gaussian output
         pFormat = pConv->FindFormat("g03");
         break;
