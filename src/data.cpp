@@ -313,21 +313,30 @@ namespace OpenBabel
     return GetAtomicNum(sym, temp);
   }
 
-  int OBElementTable::GetAtomicNum(const char *sym, int &iso)
+  int OBElementTable::GetAtomicNum(const char *identifier, int &iso)
   {
     if (!_init)
       Init();
 
+    // Compare to symbol
     vector<OBElement*>::iterator i;
     for (i = _element.begin();i != _element.end();++i)
-      if (!strncasecmp(sym,(*i)->GetSymbol(),3))
+      if (!strncasecmp(identifier,(*i)->GetSymbol(),3))
         return((*i)->GetAtomicNum());
-    if (strcasecmp(sym, "D") == 0)
+
+    // Compare to IUPAC name
+    for (i = _element.begin();i != _element.end();++i)
+      if (strncasecmp(identifier,(*i)->GetName().c_str(),5) == 0)
+        return((*i)->GetAtomicNum());
+      
+    if (strcasecmp(identifier, "D") == 0 ||
+        (strcasecmp(identifier, "Deuterium") == 0) )
       {
         iso = 2;
         return(1);
       }
-    else if (strcasecmp(sym, "T") == 0)
+    else if (strcasecmp(identifier, "T") == 0 ||
+             (!strcasecmp(identifier, "Tritium") == 0) )
       {
         iso = 3;
         return(1);
@@ -339,28 +348,7 @@ namespace OpenBabel
   
   int OBElementTable::GetAtomicNum(string name, int &iso)
   {
-    int n = GetAtomicNum(name.c_str(), iso);
-    if (iso != 0)
-      return 0;  // "D" ot "T"
-    if (n != 0)
-      return n;  // other element symbols
-
-    // not match => we've got IUPAC name
-
-    vector<OBElement*>::iterator i;
-    for (i = _element.begin();i != _element.end();++i)
-      if (strncasecmp(name.c_str(),(*i)->GetName().c_str(),5) == 0)
-        return((*i)->GetAtomicNum());
-      
-    if (strcasecmp(name.c_str(), "Deuterium") == 0) {
-        iso = 2;
-        return(1);
-    } else if (!strcasecmp(name.c_str(), "Tritium") == 0) {
-        iso = 3;
-        return(1);
-    } else
-      iso = 0;
-    return(0);
+    return GetAtomicNum(name.c_str(), iso);
   }
 
   /** \class OBIsotopeTable data.h <openbabel/data.h>

@@ -167,13 +167,11 @@ namespace OpenBabel
 
       //! \deprecated Does not properly handle 'D' or 'T' hydrogen isotopes
       int   GetAtomicNum(const char *);
-      //! \return the atomic number matching the element symbol passed
-      //! or 0 if not defined. For 'D' or 'T' hydrogen isotopes, will return
-      //! a value in the second argument
+      //! \return the atomic number matching the element symbol or IUPAC name
+      //! passed or 0 if not defined. For 'D' or 'T' hydrogen isotopes, will
+      //! return a value in the second argument
       int   GetAtomicNum(const char *, int &iso);
-      //! \return the atomic number matching the element IUPAC name (first 5 symbols)
-      //! or symbol passed or 0 if not defined. For 'Deuterium' or 'Tritium'
-      //! hydrogen isotopes, will return a value in the second argument
+      //! Overloads GetAtomicNum(const char *, int &iso)
       int   GetAtomicNum(std::string name, int &iso);
       //! \return the element symbol matching the atomic number passed
       const char *GetSymbol(int);
