@@ -318,6 +318,13 @@ namespace OpenBabel
                  const double alpha, const double beta, const double gamma);
     void SetData(const vector3 v1, const vector3 v2, const vector3 v3);
 
+    //! Reset lattice and spacegroup information.
+    //! Is called automatically by the OBUnitCell::SetData
+    //! functions, and should be called when changing atomic
+    //! information in the associated OBMol
+    void DataChanged() {_spaceGroup = NULL; _spaceGroupName = ""; _lattice = Undefined;};
+
+
     //! Set the offset to the origin to @p v1
     void SetOffset(const vector3 v1) { _offset = v1; }
 
