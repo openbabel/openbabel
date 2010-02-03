@@ -312,12 +312,12 @@ namespace OpenBabel
     vector3 temp;
     matrix3x3 m = GetOrthoMatrix();
 
-    temp = vector3(1.0, 0.0, 0.0);
-    _v1 = m * temp;
-    temp = vector3(0.0, 1.0, 0.0);
-    _v2 = m * temp;
-    temp = vector3(0.0, 0.0, 1.0);
-    _v3 = m * temp;
+    _v1 = m.GetColumn(0);
+    _v2 = m.GetColumn(1);
+    _v3 = m.GetColumn(2);
+
+    // reset Lattice and SpaceGroup, since they've probably changed.
+    DataChanged();
   }
 
   /*!
@@ -364,6 +364,9 @@ namespace OpenBabel
     _alpha = vectorAngle(_v2, _v3);
     _beta =  vectorAngle(_v1, _v3);
     _gamma = vectorAngle(_v1, _v2);
+
+    // reset Lattice and SpaceGroup, since they've probably changed.
+    DataChanged();
   }
 
   //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#convertNotionalIntoCartesianCoordinates">blue-obelisk:convertNotionalIntoCartesianCoordinates</a>
@@ -380,12 +383,9 @@ namespace OpenBabel
         vector3 temp;
         matrix3x3 m = GetOrthoMatrix();
 
-        temp = vector3(1.0, 0.0, 0.0);
-        v.push_back(m * temp);
-        temp = vector3(0.0, 1.0, 0.0);
-        v.push_back(m * temp);
-        temp = vector3(0.0, 0.0, 1.0);
-        v.push_back(m * temp);
+        v.push_back(m.GetColumn(0));
+        v.push_back(m.GetColumn(1));
+        v.push_back(m.GetColumn(2));
       }
     else
       {
