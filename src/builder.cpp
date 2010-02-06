@@ -1080,8 +1080,8 @@ namespace OpenBabel
 
   bool OBBuilder::IsSpiroAtom(OBStereo::Ref atomId, OBMol &mol)
   {
-    OBMol workmol = mol; // Make a copy
-    OBAtom* watom = workmol.GetAtomById(atomId);
+    OBMol workmol = mol; // Make a copy (this invalidates Ids, but not Idxs)
+    OBAtom* watom = workmol.GetAtom(mol.GetAtomById(atomId)->GetIdx());
     if (watom->GetHvyValence() != 4) // QUESTION: Do I need to restrict it further?
       return false;
     

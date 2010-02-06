@@ -1,3 +1,8 @@
+2010-02-06  Noel O'Boyle
+
+	* src/builder.cpp: IsSpiroAtom assumed that Ids were preserved on
+	copying a molecule. Not true.
+
 2010-01-26  Chris Morley
 
 	* src/formats/MNAformat.cpp: added new format from Jeremy Murphy
