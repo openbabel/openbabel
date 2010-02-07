@@ -1078,7 +1078,7 @@ namespace OpenBabel
     }
   }
 
-  bool OBBuilder::IsSpiroAtom(OBStereo::Ref atomId, OBMol &mol)
+  bool OBBuilder::IsSpiroAtom(unsigned long atomId, OBMol &mol)
   {
     OBMol workmol = mol; // Make a copy (this invalidates Ids, but not Idxs)
     OBAtom* watom = workmol.GetAtom(mol.GetAtomById(atomId)->GetIdx());

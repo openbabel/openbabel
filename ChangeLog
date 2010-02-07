@@ -1,3 +1,8 @@
+2010-02-07  Noel O'Boyle
+
+	* src/builder.h, cpp: Make things easier by referring to unsigned long
+	instead of OBStereo::Ref. Fixes problem compiling Python bindings.
+
 2010-02-06  Noel O'Boyle
 
 	* src/builder.cpp: IsSpiroAtom assumed that Ids were preserved on

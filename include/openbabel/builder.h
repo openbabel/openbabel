@@ -119,7 +119,7 @@ namespace OpenBabel
       static void CorrectStereoAtoms(OBMol &mol);
       /*! Does this atom connect two rings which are not otherwise connected?
       */
-      static bool IsSpiroAtom(OBStereo::Ref atomId, OBMol &mol);
+      static bool IsSpiroAtom(unsigned long atomId, OBMol &mol);
       /*! Get the fragment to which this atom belongs.
        *  \param atom Atom in the fragment.
        *  \returns The OBBitVec defining the fragment to which a belongs.
