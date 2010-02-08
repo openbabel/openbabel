@@ -17,9 +17,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <vector>
-#ifdef HAVE_SSTREAM
 #include <sstream>
-#endif
 #include <openbabel/base.h>
 
 namespace OpenBabel

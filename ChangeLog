@@ -1,3 +1,8 @@
+2010-02-08  Noel O'Boyle
+
+	* src/formats/inchiformat.cpp, smilesformat.cpp, xml/cmlformat.cpp:
+	Removal of references to strstream (legacy from GCC 2.x).
+
 2010-02-07  Noel O'Boyle
 
 	* src/builder.h, cpp: Make things easier by referring to unsigned long

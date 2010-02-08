@@ -21,11 +21,7 @@ GNU General Public License for more details.
 #include <openbabel/obmolecformat.h>
 
 #include "inchi_api.h"
-#ifdef HAVE_SSTREAM
 #include <sstream>
-#else
-#include <strstream>
-#endif
 #include <set>
 #include <vector>
 #include <openbabel/stereo/tetrahedral.h>
@@ -818,11 +814,7 @@ bool TestFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
 
   const char* pTargetExt = pConv->IsOption("O");
-#ifdef HAVE_SSTREAM
   stringstream errorMsg;
-#else
-  strstream errorMsg;
-#endif
   if(pTargetExt)
   {
     OBFormat* pTargetFormat = OBConversion::FindFormat(pTargetExt);

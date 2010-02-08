@@ -3464,11 +3464,7 @@ namespace OpenBabel {
     // This is a hack to prevent recursion problems.
     //  we still need to fix the underlying problem -GRH
     if (mol.NumAtoms() > 1000) {
-#ifdef HAVE_SSTREAM
       stringstream errorMsg;
-#else
-      strstream errorMsg;
-#endif
       errorMsg <<
         "SMILES Conversion failed: Molecule is too large to convert."
         "Open Babel is currently limited to 1000 atoms." << endl;
@@ -3559,11 +3555,7 @@ namespace OpenBabel {
     // This is a hack to prevent recursion problems.
     //  we still need to fix the underlying problem (mainly chiral centers) -GRH
     if (mol.NumAtoms() > 1000) {
-#ifdef HAVE_SSTREAM
       stringstream errorMsg;
-#else
-      strstream errorMsg;
-#endif
       errorMsg <<
         "SMILES Conversion failed: Molecule is too large to convert."
         "Open Babel is currently limited to 1000 atoms." << endl;

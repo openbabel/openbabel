@@ -29,11 +29,7 @@ GNU General Public License for more details.
 #ifdef WIN32
 #pragma warning (disable : 4800)
 #endif
-#ifdef HAVE_SSTREAM
 #include <sstream>
-#else
-#include <strstream>
-#endif
 
 using namespace std;
 namespace OpenBabel
@@ -1304,11 +1300,8 @@ namespace OpenBabel
 
             MakeAtomIds(mol, atomIds);//Pre-construct to take into account atom class data
 
-#ifdef HAVE_SSTREAM
+
             stringstream id, eltyp, iso, chg, spn, hct, x, y, z;
-#else
-            strstream id, eltyp, iso, chg, spn, hct, x, y, z;
-#endif
             bool anyChg=false, anySpin=false, anyIsotope=false;
             double X, Y, Z; //atom coordinates
 
@@ -1564,12 +1557,7 @@ namespace OpenBabel
       {
         xmlTextWriterStartElementNS(writer(), prefix, C_BONDARRAY, NULL);
 
-#ifdef HAVE_SSTREAM
         stringstream ord;
-#else
-        strstream ord;
-#endif
-        
         string ref1, ref2;
         OBBond *pbond;
         vector<OBBond*>::iterator ib;
