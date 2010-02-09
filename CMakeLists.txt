@@ -252,7 +252,7 @@ elseif(BUILD_GUI)
 endif(BUILD_GUI)
 
 # Do we want to build the tests?
-option(ENABLE_TESTS "Enable unit tests" OFF)
+option(ENABLE_TESTS "Enable unit tests" ON)
 if(ENABLE_TESTS)
   include(CTest)
   enable_testing()
