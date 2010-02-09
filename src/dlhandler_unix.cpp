@@ -146,8 +146,8 @@ bool DLHandler::openLib(const string& lib_name)
   bool success = (dlopen(lib_name.c_str(), RTLD_LAZY | RTLD_GLOBAL) != 0);
   if (!success) {
     char buffer[BUFF_SIZE];
-    snprintf(buffer, BUFF_SIZE, "%s did not load properly.\n Error: %s",
-             lib_name.c_str(), dlerror());
+    sprintf(buffer, "%s did not load properly.\n Error: %s",
+              lib_name.c_str(), dlerror());
     OpenBabel::obErrorLog.ThrowError(__FUNCTION__, buffer, OpenBabel::obError);
   }
   return success;
