@@ -1388,7 +1388,7 @@ namespace OpenBabel
     char *end;
     if (s == NULL) return 0;
     int n = strtol(s, &end, 10);
-    if (*end != '\0') return 0;
+    if (*end != '\0' && *end != ' ') return 0;
     return n;
   }
 
@@ -1397,7 +1397,7 @@ namespace OpenBabel
     char *end;
     if (s == NULL) return 0;
     int n = strtoul(s, &end, 10);
-    if (*end != '\0') return 0;
+    if (*end != '\0' && *end != ' ') return 0;
     return n;
   }
 }

@@ -1,3 +1,8 @@
+2010-02-10  Chris Morley
+
+	* src/formats/mdlformat.cpp: allow numbers to be other than right
+	justified. (As provided by Craig.)
+
 2010-02-08  Noel O'Boyle
 
 	* src/formats/inchiformat.cpp, smilesformat.cpp, xml/cmlformat.cpp:
