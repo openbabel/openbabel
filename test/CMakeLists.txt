@@ -21,9 +21,17 @@ set(TEST_PATH ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 foreach(test ${tests})
   add_executable(${test}test ${test}test.cpp)
   target_link_libraries(${test}test ${BABEL_LIBRARY})
-  add_test(${test}_Test ${TEST_PATH}/${test}test)
+  if(MSVC)
+    add_test(${test}_Test ${CMAKE_BINARY_DIR}/${test}test)
+  else(MSVC)
+    add_test(${test}_Test ${TEST_PATH}/${test}test)
+  endif(MSVC)
   set_tests_properties(${test}_Test PROPERTIES
     FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed")
+  if(MSVC)
+    set_target_properties(${test}test PROPERTIES
+      RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+  endif(MSVC)
 endforeach(test ${tests})
 
  
@@ -65,9 +73,17 @@ set(old_tests
 foreach(test ${old_tests})
   add_executable(${test} ${test}.cpp)
   target_link_libraries(${test} ${BABEL_LIBRARY})
-  add_test(${test}_Test ${TEST_PATH}/${test})
+  if(MSVC)
+    add_test(${test}_Test ${CMAKE_BINARY_DIR}/${test})
+  else(MSVC)
+    add_test(${test}_Test ${TEST_PATH}/${test})
+  endif(MSVC)
   set_tests_properties(${test}_Test PROPERTIES
     FAIL_REGULAR_EXPRESSION "not ok")
+  if(MSVC)
+    set_target_properties(${test} PROPERTIES
+      RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+  endif(MSVC)
 endforeach(test ${old_tests})
 
 ############################################################  

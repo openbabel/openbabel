@@ -1,3 +1,8 @@
+2010-02-11  Noel O'Boyle
+	
+	* test/CMakeLists.txt: On Windows, put the test executables along with
+	the compiled DLLs.
+
 2010-02-10  Chris Morley
 
 	* src/formats/mdlformat.cpp: allow numbers to be other than right
