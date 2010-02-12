@@ -110,7 +110,9 @@ else(MINIMAL_BUILD)
   endif(WITH_INCHI)
 
   if(LIBXML2_FOUND)
-    include_directories(${LIBXML2_INCLUDE_DIR})
+    if(NOT MSVC)
+      include_directories(${LIBXML2_INCLUDE_DIR})
+    endif(NOT MSVC)
     set(xml_formats
       cdxmlformat
       cmlformat
@@ -183,7 +185,7 @@ foreach(format ${xml_formats})
                         SUFFIX ${MODULE_EXTENSION})
   if(MSVC)
     set_target_properties(${format} PROPERTIES
-                  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/src)
+                  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
   endif(MSVC)
 endforeach(format)
 

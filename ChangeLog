@@ -1,3 +1,9 @@
+2010-02-12  Noel O'Boyle
+	
+	* src/formats/CMakeLists.txt: On Windows, make sure that the XML
+	formats compile to the correct location. Also no need to have
+	XML_INCLUDE on Windows.
+
 2010-02-11  Noel O'Boyle
 	
 	* test/CMakeLists.txt: On Windows, put the test executables along with
