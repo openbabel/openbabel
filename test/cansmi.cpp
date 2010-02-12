@@ -43,6 +43,12 @@ int main(int argc,char *argv[])
   // turn off slow sync with C-style output (we don't use it anyway).
   std::ios::sync_with_stdio(false);
 
+  #ifdef FORMATDIR
+    char env[BUFF_SIZE];
+    snprintf(env, BUFF_SIZE, "BABEL_LIBDIR=%s", FORMATDIR);
+    putenv(env);
+  #endif
+
   if (argc != 1)
     {
       cout << "Usage: cansmih\n";

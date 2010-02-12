@@ -44,10 +44,16 @@ int main()
   cout << endl << "# Testing aromaticity perception...  " << endl;
  
   #ifdef TESTDATADIR
-    string testdatadir = TESTDATADIR;
+    string testdatadir(TESTDATADIR);
     string filename = testdatadir + "aromatics.smi";
   #else
     string filename = "files/aromatics.smi";
+  #endif
+
+  #ifdef FORMATDIR
+    char env[BUFF_SIZE];
+    snprintf(env, BUFF_SIZE, "BABEL_LIBDIR=%s", FORMATDIR);
+    putenv(env);
   #endif
 
   ifstream ifs(filename.c_str());

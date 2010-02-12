@@ -53,6 +53,13 @@ int main(int argc,char *argv[])
   // turn off slow sync with C-style output (we don't use it anyway).
   std::ios::sync_with_stdio(false);
 
+  // Define location of file formats for testing
+  #ifdef FORMATDIR
+    char env[BUFF_SIZE];
+    snprintf(env, BUFF_SIZE, "BABEL_LIBDIR=%s", FORMATDIR);
+    putenv(env);
+  #endif
+
   if (argc != 1)
     {
       if (strncmp(argv[1], "-g", 2))

@@ -290,6 +290,13 @@ void test_StereoPerception()
 
 int main()
 {
+  // Define location of file formats for testing
+  #ifdef FORMATDIR
+    char env[BUFF_SIZE];
+    snprintf(env, BUFF_SIZE, "BABEL_LIBDIR=%s", FORMATDIR);
+    putenv(env);
+  #endif
+
   test_MakeRefs();
   test_ContainsSameRefs();
   test_NumInversions();

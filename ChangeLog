@@ -1,3 +1,10 @@
+2010-02-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* test/CMakeLists.txt: Add FORMATDIR to point tests at appropriate
+	format location.
+
+	* test/*: Use it.
+
 2010-02-12  Noel O'Boyle
 	
 	* src/formats/CMakeLists.txt: On Windows, make sure that the XML
