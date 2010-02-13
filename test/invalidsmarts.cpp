@@ -26,12 +26,7 @@ GNU General Public License for more details.
 #include <fstream>
 
 #include <openbabel/mol.h>
-
-namespace OpenBabel
-{
-bool SafeOpen(std::ifstream &fs, const char *filename);
-bool SafeOpen(std::ofstream &fs, const char *filename);
-}
+#include <openbabel/obutil.h>
 
 using namespace std;
 using namespace OpenBabel;

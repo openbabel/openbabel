@@ -131,7 +131,7 @@ int main(int argc,char *argv[])
   
   // test bond insertion (PR#1665649)
   OBMol doubleBondMol;
-  OBAtom *a1, *a2, *a3;
+  OBAtom *a1, *a2;
   OBBond *b;
   doubleBondMol.BeginModify();
   a1 = doubleBondMol.NewAtom();

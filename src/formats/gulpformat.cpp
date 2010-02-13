@@ -79,7 +79,6 @@ namespace OpenBabel {
 
     char buffer[BUFF_SIZE], tag[BUFF_SIZE];
     double x,y,z,a,b,c,alpha,beta,gamma;
-    OBAtom *atom;
     vector<string> vs;
     matrix3x3 ortho;
     int atomicNum;
@@ -228,8 +227,8 @@ namespace OpenBabel {
         while (strstr(buffer, "kJ/(mole unit cells)") == 0) {
           if (strstr(buffer, "Pressure*volume")) {
             tokenize(vs, buffer);
-            float pv_eV = atof(vs[2].c_str());
-            float pv = pv_eV * EV_TO_KCAL_PER_MOL;
+            pv_eV = static_cast<float> (atof(vs[2].c_str()));
+            pv = static_cast<float> (pv_eV * EV_TO_KCAL_PER_MOL);
             snprintf(tag, BUFF_SIZE, "%f", pv);
             enthalpy_pv->SetValue(tag);
             snprintf(tag, BUFF_SIZE, "%f", pv_eV);
@@ -241,8 +240,8 @@ namespace OpenBabel {
 
           if (strstr(buffer, "Total lattice enthalpy")) {
             tokenize(vs, buffer);
-            float en_eV = atof(vs[4].c_str());
-            float en = en_eV * EV_TO_KCAL_PER_MOL;
+            en_eV = static_cast<float> (atof(vs[4].c_str()));
+            en = static_cast<float> (en_eV * EV_TO_KCAL_PER_MOL);
             snprintf(tag, BUFF_SIZE, "%f", en);
             enthalpy->SetValue(tag);
             snprintf(tag, BUFF_SIZE, "%f", en_eV);

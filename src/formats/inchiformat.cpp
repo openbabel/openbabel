@@ -461,10 +461,10 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         if (config.specified) {
           inchi_Stereo0D stereo;         
           stereo.type = INCHI_StereoType_Tetrahedral;
-          stereo.central_atom = config.center;
-          stereo.neighbor[0] = config.from;
+          stereo.central_atom = static_cast<AT_NUM> (config.center);
+          stereo.neighbor[0] = static_cast<AT_NUM> (config.from);
           for(int i=0; i<3; ++i)
-            stereo.neighbor[i + 1] = config.refs[i];
+            stereo.neighbor[i + 1] = static_cast<AT_NUM> (config.refs[i]);
           
           if (config.winding == OBStereo::Clockwise)
             stereo.parity = INCHI_PARITY_EVEN;
@@ -495,10 +495,10 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
           if (refs[3]==OBStereo::ImplicitRef)
             end = refs[2];
    
-          stereo.neighbor[0] = start;
-          stereo.neighbor[1] = config.begin;
-          stereo.neighbor[2] = config.end;
-          stereo.neighbor[3] = end;
+          stereo.neighbor[0] = static_cast<AT_NUM> (start);
+          stereo.neighbor[1] = static_cast<AT_NUM> (config.begin);
+          stereo.neighbor[2] = static_cast<AT_NUM> (config.end);
+          stereo.neighbor[3] = static_cast<AT_NUM> (end);
 
           if (ts->IsTrans(start, end))
             stereo.parity = INCHI_PARITY_EVEN;

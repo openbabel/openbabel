@@ -1,3 +1,9 @@
+2010-02-13  Noel O'Boyle
+	
+	* test/*: Avoid SafeOpen warnings by including obutil.h
+	* formats/gulpformat.cpp, inchiformat.cpp: Add some dynamic casts to
+	avoid warnings
+
 2010-02-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* test/CMakeLists.txt: Add FORMATDIR to point tests at appropriate
