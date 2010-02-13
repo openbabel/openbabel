@@ -1,5 +1,9 @@
 2010-02-13  Noel O'Boyle
 	
+	* src/forcefieldgaff.cpp: Fix warnings.
+
+2010-02-13  Noel O'Boyle
+	
 	* test/*: Avoid SafeOpen warnings by including obutil.h
 	* formats/gulpformat.cpp, inchiformat.cpp: Add some dynamic casts to
 	avoid warnings
