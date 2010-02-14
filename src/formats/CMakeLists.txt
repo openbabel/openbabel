@@ -84,6 +84,61 @@ set(misc_formats
       yasaraformat
       )
 
+if(Boost_FOUND)
+  set(misc_formats
+    ${misc_formats}
+    rxnformat
+    chemdrawcdx
+    chemkinformat
+    rsmiformat
+  )
+endif(Boost_FOUND)
+
+if(WITH_INCHI)
+  add_definitions(-DINCHI_LINK_AS_DLL)
+  if(NOT MSVC)
+    add_subdirectory(inchi102)
+    include_directories(${CMAKE_SOURCE_DIR}/include/inchi102)
+    set(libs ${libs} inchi)
+  else(NOT MSVC)
+    set(libs ${libs} ${CMAKE_SOURCE_DIR}/windows-vc2005/libstdinchi.lib)
+  endif(NOT MSVC)
+  set(inchiformat_additional_sources getinchi.cpp)
+  set(common_formats
+    ${common_formats}
+    inchiformat
+  )
+endif(WITH_INCHI)
+
+if(LIBXML2_FOUND)
+  if(NOT MSVC)
+    include_directories(${LIBXML2_INCLUDE_DIR})
+  endif(NOT MSVC)
+  set(xml_formats
+    cdxmlformat
+    cmlformat
+    pubchem
+    xmlformat
+  )
+  if(Boost_FOUND)
+    set(xml_formats
+        ${xml_formats}
+        cmlreactformat
+    )
+  endif(Boost_FOUND)
+endif(LIBXML2_FOUND)
+
+if(NOT WIN32)
+  set(compchem_formats
+    ${compchem_formats}
+    gamessukformat
+  )
+  set(misc_formats
+    ${misc_formats}
+    xtcformat
+  )
+endif(NOT WIN32)
+
 if(MINIMAL_BUILD)
   set(formats
     ${common_formats}
@@ -95,59 +150,6 @@ else(MINIMAL_BUILD)
       ${compchem_formats}
       ${misc_formats}
   )
-
-  if(Boost_FOUND)
-    set(formats
-      ${formats}
-      rxnformat
-      chemdrawcdx
-      chemkinformat
-      rsmiformat
-    )
-  endif(Boost_FOUND)
-
-  if(WITH_INCHI)
-    add_definitions(-DINCHI_LINK_AS_DLL)
-    if(NOT MSVC)
-      add_subdirectory(inchi102)
-      include_directories(${CMAKE_SOURCE_DIR}/include/inchi102)
-      set(libs ${libs} inchi)
-    else(NOT MSVC)
-      set(libs ${libs} ${CMAKE_SOURCE_DIR}/windows-vc2005/libstdinchi.lib)
-    endif(NOT MSVC)
-    set(inchiformat_additional_sources getinchi.cpp)
-    set(formats
-      ${formats}
-      inchiformat
-    )
-  endif(WITH_INCHI)
-
-  if(LIBXML2_FOUND)
-    if(NOT MSVC)
-      include_directories(${LIBXML2_INCLUDE_DIR})
-    endif(NOT MSVC)
-    set(xml_formats
-      cdxmlformat
-      cmlformat
-      pubchem
-      xmlformat
-    )
-    if(Boost_FOUND)
-      set(xml_formats
-          ${xml_formats}
-          cmlreactformat
-      )
-    endif(Boost_FOUND)
-  endif(LIBXML2_FOUND)
-
-  if(NOT WIN32)
-    set(formats
-      ${formats}
-      gamessukformat
-      xtcformat
-    )
-  endif(NOT WIN32)
-
 endif(MINIMAL_BUILD)
 
 if(NOT WIN32)
@@ -170,7 +172,7 @@ if(MSVC)
   foreach(formatgroup common_formats utility_formats compchem_formats misc_formats)
     set(formatsources "")
     foreach(format ${${formatgroup}})
-      set(formatsources ${formatsources} ${format}.cpp)
+      set(formatsources ${formatsources} ${format}.cpp ${${format}_additional_sources})
     endforeach(format)
     add_library(${formatgroup} ${PLUGIN_TYPE} ${formatsources}
         "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h")
@@ -230,10 +232,6 @@ foreach(format ${xml_formats})
                         OUTPUT_NAME ${format}
                         PREFIX ""
                         SUFFIX ${MODULE_EXTENSION})
-  if(MSVC)
-    set_target_properties(${format} PROPERTIES
-                  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-  endif(MSVC)
 endforeach(format)
 endif(MSVC)
 

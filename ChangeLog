@@ -1,5 +1,10 @@
 2010-02-14  Noel O'Boyle
 
+	* src/formats/CMakeLists.txt: Tidy up, and ensure that formats that
+	formats with dependencies are included in the Windows build too.
+
+2010-02-14  Noel O'Boyle
+
 	* src/formats/CMakeLists.txt: Group formats into four different OBF
 	files
 
