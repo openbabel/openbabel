@@ -1,3 +1,15 @@
+2010-02-14  Noel O'Boyle
+	
+	* test/*: Avoid SafeOpen warnings by including obutil.h
+	* src/stereo/perception.cpp: Added default to switch statement to
+	avoid compiler warning about "not all paths return a value"
+	* src/formats/gausscubeformat.cpp, cifformat.cpp: Added some static
+	casts to avoid warnings
+	* src/formats/gaussformat.cpp: Added explicit comparison against NULL
+	to avoid warning
+	* src/formats/cifformat.cpp: Disabled warning 4503 about very long
+	decorated name being truncated. 
+
 2010-02-13  Noel O'Boyle
 	
 	* src/forcefieldgaff.cpp: Fix warnings.

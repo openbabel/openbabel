@@ -26,6 +26,16 @@ GNU General Public License for more details.
 #include <map>
 #include <set>
 
+#ifdef _MSC_VER
+ #pragma warning( disable : 4503 )
+ // The decorated name was longer than the compiler limit (4096), and was truncated.
+ // This is due to the use of templates specialized on templates repeatedly.
+ // The correctness of the program, however, is unaffected by the truncated name,
+ // but if you get link time errors on a truncated symbol, it will be more difficult
+ // to determine the type of the symbol in the error. Debugging will also be more difficult;
+ // the debugger will also have difficultly mapping symbol name to type name. 
+#endif
+
 using namespace std;
 namespace OpenBabel
 {
@@ -299,9 +309,9 @@ namespace OpenBabel
           mvLatticePar[5]=CIFNumeric2Float(positem->second);
         if(verbose) cout<<"Found Lattice parameters:" <<mvLatticePar[0]<<" , "<<mvLatticePar[1]<<" , "<<mvLatticePar[2]
                         <<" , "<<mvLatticePar[3]<<" , "<<mvLatticePar[4]<<" , "<<mvLatticePar[5]<<endl;
-        mvLatticePar[3]*=DEG_TO_RAD;// pi/180
-        mvLatticePar[4]*=DEG_TO_RAD;
-        mvLatticePar[5]*=DEG_TO_RAD;
+        mvLatticePar[3] = static_cast<float> (mvLatticePar[3] * DEG_TO_RAD);// pi/180
+		mvLatticePar[4] = static_cast<float> (mvLatticePar[4] * DEG_TO_RAD);
+		mvLatticePar[5] = static_cast<float> (mvLatticePar[5] * DEG_TO_RAD);
         this->CalcMatrices();
       }
   }

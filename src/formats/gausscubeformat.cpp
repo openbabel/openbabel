@@ -574,7 +574,7 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     gd->GetOriginVector(origin);
 
     // line 3: number of atoms, origin x y z
-    snprintf(buffer, BUFF_SIZE,"%5d%12.6f%12.6f%12.6f", -mol.NumAtoms(),
+    snprintf(buffer, BUFF_SIZE,"%5d%12.6f%12.6f%12.6f", - static_cast<signed int> (mol.NumAtoms()),
         origin[0]*ANGSTROM_TO_BOHR, origin[1]*ANGSTROM_TO_BOHR, origin[2]*ANGSTROM_TO_BOHR);
     ofs << buffer << endl;
 

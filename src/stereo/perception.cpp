@@ -89,6 +89,7 @@ namespace OpenBabel {
         else
           return T1112; // e.g. 1 1 1 2
       case 1:
+	  default:
         return T1111; // e.g. 1 1 1 1
     }
   }
