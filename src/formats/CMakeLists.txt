@@ -1,17 +1,45 @@
-if(MINIMAL_BUILD)
-  set(formats
-    smilesformat
-    mdlformat
+set(common_formats
+  smilesformat
+  mdlformat
+  mol2format
+  pdbformat
   )
-else(MINIMAL_BUILD)
-  set(formats
+set(utility_formats
+  copyformat
+  MNAformat
+  molreport
+  pngformat
+  povrayformat
+  reportformat
+  svgformat
+  textformat
+  titleformat
+  )
+set(compchem_formats
+      adfformat
+      dmolformat
+      fchkformat
+      gamessformat
+      gaussformat
+      gausscubeformat
+      gausszmatformat
+      gulpformat
+      hinformat
+      jaguarformat
+      molproformat
+      mopacformat
+      nwchemformat
+      qchemformat
+      turbomoleformat
+      vaspformat
+      zindoformat
+      )
+set(misc_formats
       APIInterface
       CSRformat
       PQSformat
       MCDLformat
-      MNAformat
       alchemyformat
-      adfformat
       acrformat
       amberformat
       balstformat
@@ -25,62 +53,47 @@ else(MINIMAL_BUILD)
       chemdrawct
       chemtoolformat
       cifformat
-      copyformat
       crkformat
       cssrformat
-      dmolformat
       fastsearchformat
       fastaformat
-      fchkformat
       featformat
       fhformat
       fingerprintformat
       freefracformat
-      gamessformat
-      gaussformat
-      gausscubeformat
-      gausszmatformat
       ghemicalformat
-      gulpformat
       gromos96format
-      hinformat
-      jaguarformat
-      mdlformat
       mmcifformat
       mmodformat
-      mol2format
       moldenformat
-      molproformat
-      molreport
-      mopacformat
       mpdformat
       mpqcformat
       msiformat
       msmsformat
-      nwchemformat
       opendxformat
       outformat
       pcmodelformat
-      pdbformat
-      pngformat
-      povrayformat
       pqrformat
-      qchemformat
-      reportformat
       shelxformat
-      smilesformat
-      svgformat
       thermoformat
       tinkerformat
-      titleformat
-      turbomoleformat
       unichemformat
-      vaspformat
       viewmolformat
       xedformat
       xyzformat
       yasaraformat
-      zindoformat
+      )
+
+if(MINIMAL_BUILD)
+  set(formats
+    ${common_formats}
+  )
+else(MINIMAL_BUILD)
+  set(formats
+      ${common_formats}
+      ${utility_formats}
+      ${compchem_formats}
+      ${misc_formats}
   )
 
   if(Boost_FOUND)
@@ -153,6 +166,26 @@ if(BUILD_SHARED)
   endif(WIN32)
 endif(BUILD_SHARED)
 
+if(MSVC)
+  foreach(formatgroup common_formats utility_formats compchem_formats misc_formats)
+    set(formatsources "")
+    foreach(format ${${formatgroup}})
+      set(formatsources ${formatsources} ${format}.cpp)
+    endforeach(format)
+    add_library(${formatgroup} ${PLUGIN_TYPE} ${formatsources}
+        "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h")
+    target_link_libraries(${formatgroup} ${libs} ${BABEL_LIBRARY})
+    install(TARGETS ${formatgroup}
+                  RUNTIME DESTINATION ${BIN_INSTALL_DIR}
+                  LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
+                  ARCHIVE DESTINATION ${OB_PLUGIN_INSTALL_DIR})
+    set_target_properties(${formatgroup} PROPERTIES
+                  OUTPUT_NAME ${formatgroup}
+                  PREFIX ""
+                  SUFFIX ${MODULE_EXTENSION}
+                  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+  endforeach(formatgroup)
+else(MSVC)
 foreach(format ${formats})
   add_library(${format} ${PLUGIN_TYPE} ${format}.cpp
     ${${format}_additional_sources}
@@ -166,12 +199,26 @@ foreach(format ${formats})
                         OUTPUT_NAME ${format}
                         PREFIX ""
                         SUFFIX ${MODULE_EXTENSION})
-  if(MSVC)
-    set_target_properties(${format} PROPERTIES
-                  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-  endif(MSVC)
 endforeach(format)
+endif(MSVC)
 
+if(MSVC)
+  set(xmlsources "")
+  foreach(format ${xml_formats})
+    set(xmlsources ${xmlsources} xml/${format}.cpp)
+  endforeach(format)
+  add_library(xml_formats ${PLUGIN_TYPE} ${xmlsources} xml/xml.cpp)
+  target_link_libraries(xml_formats ${libs} ${BABEL_LIBRARY})
+  install(TARGETS xml_formats
+                  RUNTIME DESTINATION ${BIN_INSTALL_DIR}
+                  LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
+                  ARCHIVE DESTINATION ${OB_PLUGIN_INSTALL_DIR})
+  set_target_properties(xml_formats PROPERTIES
+                  OUTPUT_NAME xml_formats
+                  PREFIX ""
+                  SUFFIX ${MODULE_EXTENSION}
+                  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+else(MSVC)
 foreach(format ${xml_formats})
   add_library(${format} ${PLUGIN_TYPE} xml/${format}.cpp xml/xml.cpp)
   target_link_libraries(${format} ${libs} ${BABEL_LIBRARY})
@@ -188,4 +235,5 @@ foreach(format ${xml_formats})
                   LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
   endif(MSVC)
 endforeach(format)
+endif(MSVC)
 

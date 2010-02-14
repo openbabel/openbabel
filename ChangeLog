@@ -1,4 +1,9 @@
 2010-02-14  Noel O'Boyle
+
+	* src/formats/CMakeLists.txt: Group formats into four different OBF
+	files
+
+2010-02-14  Noel O'Boyle
 	
 	* test/*: Avoid SafeOpen warnings by including obutil.h
 	* src/stereo/perception.cpp: Added default to switch statement to
