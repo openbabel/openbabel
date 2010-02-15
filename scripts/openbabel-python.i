@@ -39,9 +39,8 @@
 #include <openbabel/atomclass.h>
 
 #include <openbabel/kinetics.h>
+#include <openbabel/rotor.h>
 #include <openbabel/rotamer.h>
-
-
 
 %}
 
@@ -150,6 +149,8 @@ CAST_GENERICDATA_TO(VirtualBond)
 // This method is renamed to a valid Python method name, as otherwise
 // it cannot be used from Python
 %rename(inc)   *::operator++;
+%ignore *::operator=;
+%ignore *::operator[];
 
 %import <openbabel/babelconfig.h>
 
@@ -157,6 +158,7 @@ CAST_GENERICDATA_TO(VirtualBond)
 %include <openbabel/rand.h>
 %include <openbabel/obutil.h>
 %include <openbabel/math/vector3.h>
+%warnfilter(503) OpenBabel::matrix3x3; // Not wrapping any of the overloaded operators
 %include <openbabel/math/matrix3x3.h>
 
 %import <openbabel/math/spacegroup.h>
@@ -164,15 +166,24 @@ CAST_GENERICDATA_TO(VirtualBond)
 # CloneData should be used instead of the following method
 %ignore OpenBabel::OBBase::SetData;
 %include <openbabel/base.h>
+
 %include <openbabel/generic.h>
 %include <openbabel/griddata.h> // Needs to come after generic.h
 
 %import <openbabel/chains.h>
-//# %import <openbabel/bitvec.h>
 %import <openbabel/typer.h>
 
+// To avoid warning in oberror.h about "Nothing known about std::stringbuf"
+namespace std { 
+        template <T1, T2, T3>
+        class binary_function {}; 
+}
+%template(dummy) std::binary_function <const char *, const char *, bool>;
 %include <openbabel/plugin.h>
 
+// To avoid warning in oberror.h about "Nothing known about std::stringbuf"
+namespace std { class stringbuf {}; }
+%warnfilter(503) OpenBabel::OBError; // Not wrapping any of the overloaded operators
 %include <openbabel/oberror.h>
 %include <openbabel/format.h>
 %include <openbabel/obconversion.h>
@@ -181,10 +192,33 @@ CAST_GENERICDATA_TO(VirtualBond)
 %include <openbabel/atom.h>
 %include <openbabel/bond.h>
 
+// Remove C++ iterators
+%pythoncode %{
+def exceptionIter(*args):
+    raise Exception("""\nThis method can only be used from C++. To iterate from Python
+use the Iter classes (OBMolAtomIter, etc.) as described at
+http://openbabel.org/wiki/Using_OpenBabel_from_Python#Using_iterators""")
+%}
+%define IGNORE_ITER(parent, iteree)
+%ignore OpenBabel::parent::Begin ## iteree ## s;
+%ignore OpenBabel::parent::End ## iteree ## s;
+%ignore OpenBabel::parent::Begin ## iteree;
+%ignore OpenBabel::parent::Next ## iteree;
+%enddef
+IGNORE_ITER(OBMol, Bond)
+IGNORE_ITER(OBMol, Atom)
+IGNORE_ITER(OBMol, Residue)
 %include <openbabel/mol.h>
+%pythoncode %{
+OBMol.BeginAtoms = OBMol.EndAtoms = OBMol.BeginAtom = OBMol.EndAtom = exceptionIter
+OBMol.BeginBonds = OBMol.EndBonds = OBMol.BeginBond = OBMol.EndBond = exceptionIter
+OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue = exceptionIter
+%}
 
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
+// To avoid warning in alias.h about "Nothing known about std::tr1::shared_ptr"
+namespace std::tr1 { class shared_ptr {}; }
 %include <openbabel/alias.h>
 %include <openbabel/atomclass.h>
 
@@ -199,7 +233,11 @@ CAST_GENERICDATA_TO(VirtualBond)
 %include <openbabel/builder.h>
 %include <openbabel/op.h>
 
+%warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
 %include <openbabel/bitvec.h>
+%include <openbabel/rotor.h>
+%ignore OpenBabel::Swab;
+%include <openbabel/rotamer.h>
 
 # The following %ignores avoid warning messages due to shadowed classes.
 # This does not imply a loss of functionality as (in this case)
@@ -218,6 +256,8 @@ CAST_GENERICDATA_TO(VirtualBond)
 %ignore OBMolAtomBFSIter(OBMol &, int);
 %ignore OBMolAtomDFSIter(OBMol &, int);
 %ignore OBMolBondIter(OBMol &);
+%ignore OBMolBondBFSIter(OBMol &);
+%ignore OBMolBondBFSIter(OBMol &, int);
 %ignore OBMolPairIter(OBMol &);
 %ignore OBMolRingIter(OBMol &);
 %ignore OBMolTorsionIter(OBMol &);
@@ -242,7 +282,6 @@ CAST_GENERICDATA_TO(VirtualBond)
 %rename(_OBResidueAtomIter) OpenBabel::OBResidueAtomIter;
 %rename(_OBFingerprintIter) OpenBabel::PluginIter<OBFingerprint>;
 
-%ignore *::operator=;
 
 %include <openbabel/obiter.h>
 
@@ -360,6 +399,15 @@ aromtyper = cvar.aromtyper
     self->SetLogFile(&std::cerr);
   }
 };
+
+%extend OpenBabel::OBMol {
+  void SetTorsion(int i, int j, int k, int l, double ang) 
+  {
+    self->SetTorsion(self->GetAtom(i), self->GetAtom(j),
+                     self->GetAtom(k), self->GetAtom(l), ang);
+  }
+};
+
 
 %pythoncode %{
 def exception(*args):

@@ -1,3 +1,9 @@
+2010-02-15  Noel O'Boyle
+
+	* scripts/openbabel-python.i: Get rid of warnings. Allow access to
+	rotors. Tidy up the interface a bit (prevent people calling C++
+	iterators, for instance)
+
 2010-02-14  Noel O'Boyle
 
 	* src/formats/CMakeLists.txt: Tidy up, and ensure that formats that
