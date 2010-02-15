@@ -15,6 +15,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/obmolecformat.h>
+#include <openbabel/forcefield.h>
 
 using namespace std;
 namespace OpenBabel
@@ -66,13 +67,24 @@ bool TinkerFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
+    bool mmffTypes = pConv->IsOption("m",OBConversion::OUTOPTIONS);
 
     unsigned int i;
     char buffer[BUFF_SIZE];
     OBBond *bond;
     vector<OBBond*>::iterator j;
 
-    snprintf(buffer, BUFF_SIZE, "%6d %-20s   MM2 parameters\n",mol.NumAtoms(),mol.GetTitle());
+    // Before we try output of MMFF94 atom types, check if it works
+    OBForceField *ff = OpenBabel::OBForceField::FindForceField("MMFF94");
+    if (ff && ff->Setup(mol))
+      mmffTypes = ff->GetAtomTypes(mol);
+    else
+      mmffTypes = false; // either the force field isn't available, or it doesn't work
+
+    if (!mmffTypes)
+      snprintf(buffer, BUFF_SIZE, "%6d %-20s   MM2 parameters\n",mol.NumAtoms(),mol.GetTitle());
+    else
+      snprintf(buffer, BUFF_SIZE, "%6d %-20s   MMFF94 parameters\n",mol.NumAtoms(),mol.GetTitle());
     ofs << buffer;
 
     ttab.SetFromType("INT");
@@ -85,6 +97,14 @@ bool TinkerFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         str = atom->GetType();
         ttab.SetToType("MM2");
         ttab.Translate(str1,str);
+
+        if (mmffTypes) {
+          // Override the MM2 typing
+          OBPairData *type = (OpenBabel::OBPairData*)atom->GetData("FFAtomType");
+          if (type)
+            str1 = type->GetValue().c_str();
+        }
+
         snprintf(buffer, BUFF_SIZE, "%6d %2s  %12.6f%12.6f%12.6f %5d",
                 i,
                 etab.GetSymbol(atom->GetAtomicNum()),
