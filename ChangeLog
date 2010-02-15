@@ -1,3 +1,8 @@
+2010-02-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/tinkerformat.cpp (OpenBabel): Add support for MMFF94
+	atom typing with "-xm" flag. Fix warning from previous revision.
+
 2010-02-15  Noel O'Boyle
 
 	* scripts/openbabel-python.i: Get rid of warnings. Allow access to
@@ -9,12 +14,8 @@
 	* src/formats/CMakeLists.txt: Tidy up, and ensure that formats that
 	formats with dependencies are included in the Windows build too.
 
-2010-02-14  Noel O'Boyle
-
 	* src/formats/CMakeLists.txt: Group formats into four different OBF
 	files
-
-2010-02-14  Noel O'Boyle
 	
 	* test/*: Avoid SafeOpen warnings by including obutil.h
 	* src/stereo/perception.cpp: Added default to switch statement to

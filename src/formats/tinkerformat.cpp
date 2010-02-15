@@ -67,7 +67,7 @@ bool TinkerFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
-    bool mmffTypes = pConv->IsOption("m",OBConversion::OUTOPTIONS);
+    bool mmffTypes = pConv->IsOption("m",OBConversion::OUTOPTIONS) != NULL;
 
     unsigned int i;
     char buffer[BUFF_SIZE];
@@ -76,7 +76,7 @@ bool TinkerFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     // Before we try output of MMFF94 atom types, check if it works
     OBForceField *ff = OpenBabel::OBForceField::FindForceField("MMFF94");
-    if (ff && ff->Setup(mol))
+    if (mmffTypes && ff && ff->Setup(mol))
       mmffTypes = ff->GetAtomTypes(mol);
     else
       mmffTypes = false; // either the force field isn't available, or it doesn't work
