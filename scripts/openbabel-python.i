@@ -173,7 +173,7 @@ CAST_GENERICDATA_TO(VirtualBond)
 %import <openbabel/chains.h>
 %import <openbabel/typer.h>
 
-// To avoid warning in oberror.h about "Nothing known about std::stringbuf"
+// To avoid warning in oberror.h about "Nothing known about std::binary_function"
 namespace std { 
         template <T1, T2, T3>
         class binary_function {}; 
@@ -217,8 +217,6 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
-// To avoid warning in alias.h about "Nothing known about std::tr1::shared_ptr"
-namespace std::tr1 { class shared_ptr {}; }
 %include <openbabel/alias.h>
 %include <openbabel/atomclass.h>
 
