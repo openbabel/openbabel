@@ -1,3 +1,12 @@
+2010-02-16  Chris Morley
+
+	* tools/CMakeLists.txt: build obabel
+	* src/formats/CMakeLists.txt: rename the format obf files to formats_...
+	so they appear together in Visual Studio.
+	* src/formats/nulformat.cpp: exciting new format
+	* windows-vc2008/default_build.bat, windowsOBF/OpenBabelOBF.sln:
+	compile GUI but not tests.
+
 2010-02-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/tinkerformat.cpp (OpenBabel): Add support for MMFF94

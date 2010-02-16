@@ -1,13 +1,14 @@
-set(common_formats
+set(formats_common
   smilesformat
   mdlformat
   mol2format
   pdbformat
   )
-set(utility_formats
+set(formats_utility
   copyformat
   MNAformat
   molreport
+  nulformat
   pngformat
   povrayformat
   reportformat
@@ -15,7 +16,7 @@ set(utility_formats
   textformat
   titleformat
   )
-set(compchem_formats
+set(formats_compchem
       adfformat
       dmolformat
       fchkformat
@@ -34,7 +35,7 @@ set(compchem_formats
       vaspformat
       zindoformat
       )
-set(misc_formats
+set(formats_misc
       APIInterface
       CSRformat
       PQSformat
@@ -85,8 +86,8 @@ set(misc_formats
       )
 
 if(Boost_FOUND)
-  set(misc_formats
-    ${misc_formats}
+  set(formats_misc
+    ${formats_misc}
     rxnformat
     chemdrawcdx
     chemkinformat
@@ -104,8 +105,8 @@ if(WITH_INCHI)
     set(libs ${libs} ${CMAKE_SOURCE_DIR}/windows-vc2005/libstdinchi.lib)
   endif(NOT MSVC)
   set(inchiformat_additional_sources getinchi.cpp)
-  set(common_formats
-    ${common_formats}
+  set(formats_common
+    ${formats_common}
     inchiformat
   )
 endif(WITH_INCHI)
@@ -114,41 +115,41 @@ if(LIBXML2_FOUND)
   if(NOT MSVC)
     include_directories(${LIBXML2_INCLUDE_DIR})
   endif(NOT MSVC)
-  set(xml_formats
+  set(formats_xml
     cdxmlformat
     cmlformat
     pubchem
     xmlformat
   )
   if(Boost_FOUND)
-    set(xml_formats
-        ${xml_formats}
+    set(formats_xml
+        ${formats_xml}
         cmlreactformat
     )
   endif(Boost_FOUND)
 endif(LIBXML2_FOUND)
 
 if(NOT WIN32)
-  set(compchem_formats
-    ${compchem_formats}
+  set(formats_compchem
+    ${formats_compchem}
     gamessukformat
   )
-  set(misc_formats
-    ${misc_formats}
+  set(formats_misc
+    ${formats_misc}
     xtcformat
   )
 endif(NOT WIN32)
 
 if(MINIMAL_BUILD)
   set(formats
-    ${common_formats}
+    ${formats_common}
   )
 else(MINIMAL_BUILD)
   set(formats
-      ${common_formats}
-      ${utility_formats}
-      ${compchem_formats}
-      ${misc_formats}
+      ${formats_common}
+      ${formats_utility}
+      ${formats_compchem}
+      ${formats_misc}
   )
 endif(MINIMAL_BUILD)
 
@@ -169,7 +170,7 @@ if(BUILD_SHARED)
 endif(BUILD_SHARED)
 
 if(MSVC)
-  foreach(formatgroup common_formats utility_formats compchem_formats misc_formats)
+  foreach(formatgroup formats_common formats_utility formats_compchem formats_misc)
     set(formatsources "")
     foreach(format ${${formatgroup}})
       set(formatsources ${formatsources} ${format}.cpp ${${format}_additional_sources})
@@ -206,22 +207,22 @@ endif(MSVC)
 
 if(MSVC)
   set(xmlsources "")
-  foreach(format ${xml_formats})
+  foreach(format ${formats_xml})
     set(xmlsources ${xmlsources} xml/${format}.cpp)
   endforeach(format)
-  add_library(xml_formats ${PLUGIN_TYPE} ${xmlsources} xml/xml.cpp)
-  target_link_libraries(xml_formats ${libs} ${BABEL_LIBRARY})
-  install(TARGETS xml_formats
+  add_library(formats_xml ${PLUGIN_TYPE} ${xmlsources} xml/xml.cpp)
+  target_link_libraries(formats_xml ${libs} ${BABEL_LIBRARY})
+  install(TARGETS formats_xml
                   RUNTIME DESTINATION ${BIN_INSTALL_DIR}
                   LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
                   ARCHIVE DESTINATION ${OB_PLUGIN_INSTALL_DIR})
-  set_target_properties(xml_formats PROPERTIES
-                  OUTPUT_NAME xml_formats
+  set_target_properties(formats_xml PROPERTIES
+                  OUTPUT_NAME formats_xml
                   PREFIX ""
                   SUFFIX ${MODULE_EXTENSION}
                   LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 else(MSVC)
-foreach(format ${xml_formats})
+foreach(format ${formats_xml})
   add_library(${format} ${PLUGIN_TYPE} xml/${format}.cpp xml/xml.cpp)
   target_link_libraries(${format} ${libs} ${BABEL_LIBRARY})
   install(TARGETS ${format}
