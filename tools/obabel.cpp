@@ -34,6 +34,7 @@ GNU General Public License for more details.
 #if HAVE_CONIO_H
 	#include <conio.h>
 #endif
+#include <cstdlib> // for exit() on Linux
 
 #if !HAVE_STRNCASECMP
 extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);

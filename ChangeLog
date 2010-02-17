@@ -1,3 +1,8 @@
+2010-02-17  Noel O'Boyle
+
+	* tools/obabel.cpp: Include cstdlib header to enable compilation
+	on Linux (due to missing exit())
+
 2010-02-16  Chris Morley
 
 	* tools/CMakeLists.txt: build obabel
