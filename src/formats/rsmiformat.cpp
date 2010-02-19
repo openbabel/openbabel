@@ -79,10 +79,14 @@ namespace OpenBabel
           obAuditMsg);
 
       if(ret) //Do transformation and return molecule
-        return pConv->AddChemObject(pReact)!=0;
+        return pConv->AddChemObject(pReact->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS),pConv))!=0;
       else
+      {
         pConv->AddChemObject(NULL);
-      return false;
+        delete pReact;
+        pReact=NULL;
+        return false;
+      }
     }
 
     virtual bool WriteChemObject(OBConversion* pConv)
@@ -135,21 +139,21 @@ namespace OpenBabel
         return false;
 
     //Get title
-    if(getline(ifs, ln))
+    if(!getline(ifs, ln))
+      return false;
+    pos = ln.find_first_of(" \t");
+    if(pos!=string::npos)
     {
-      pos = ln.find_first_of(" \t");
-      if(pos!=string::npos)
-      {
-        rsmiles = ln.substr(0,pos);
-        title = ln.substr(pos+1);
-        Trim(title);
-        pReact->SetTitle(title);
-      }
-      else
-        rsmiles = ln;
+      rsmiles = ln.substr(0,pos);
+      title = ln.substr(pos+1);
+      Trim(title);
+      pReact->SetTitle(title);
     }
+    else
+      rsmiles = ln;
+
     //Check for illegal characters
-    pos= rsmiles.find_first_of(",<\"\'!^&_|{}");
+    pos = rsmiles.find_first_of(",<\"\'!^&_|{}");
     if(pos!=string::npos)
     {
       obErrorLog.ThrowError(__FUNCTION__, 
@@ -257,8 +261,8 @@ namespace OpenBabel
     if(!pSmiFormat->WriteMolecule(&jProducts, pConv))
       return false;
 
-    if(!pReact->GetComment().empty())
-      ofs << '\t' << pReact->GetComment();
+    if(!pReact->GetTitle().empty())
+      ofs << '\t' << pReact->GetTitle();
 
     ofs << endl;
 

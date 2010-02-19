@@ -27,6 +27,7 @@ General Public License for more details.
 
 namespace OpenBabel
 {
+  class OBConversion; //used only as a pointer
 
 // Class introduction below
 class OBAPI OBOp : public OBPlugin
@@ -40,10 +41,14 @@ public:
   virtual const char* TypeID(){ return "ops"; }
 
   ///Required function that does the work. Normally return true, unless object is not to be output.
-  virtual bool Do(OBBase* pOb, OpMap* pOptions=NULL, const char* OptionText=NULL)=0;
+  //NOTE: the parameters were changed in r3532
+  virtual bool Do(OBBase* pOb, const char* OptionText=NULL, OpMap* pOptions=NULL, OBConversion* pConv=NULL)=0;
 
   /// \return true if this op is designed to work with the class of pOb, e.g. OBMol
   virtual bool WorksWith(OBBase* pOb)const=0;
+
+  /// Do something with an array of objects. Used a a callback routine in OpSort, etc.
+  virtual bool ProcessVec(std::vector<OBBase*>& vec){ return false; }
 
   /// \return string describing options, for display with -H and to make checkboxes in GUI
   static std::string OpOptions(OBBase* pOb)
@@ -72,14 +77,14 @@ public:
   ///The key is the option name and the value, if any, is text which follows the option name.
   /// In some cases, there may be several parameters, space separated)
   /// \return false indicating object should not be output, if any Do() returns false
-  static bool DoOps(OBBase* pOb, OpMap* pOptions)
+  static bool DoOps(OBBase* pOb, OpMap* pOptions, OBConversion* pConv)
   {
     OpMap::const_iterator itr;
     for(itr=pOptions->begin();itr!=pOptions->end();++itr)
     {
       OBOp* pOp = FindType(itr->first.c_str());
       if(pOp)
-        if(!pOp->Do(pOb, pOptions, itr->second.c_str()))
+        if(!pOp->Do(pOb, itr->second.c_str(), pOptions, pConv))
           return false; //Op has decided molecule should not be output
     }
     return true;

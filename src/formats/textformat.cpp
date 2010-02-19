@@ -50,7 +50,7 @@ public:
               obAuditMsg);
 
     if(ret) //Do transformation and return molecule
-      return pConv->AddChemObject(pReact->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)))!=0;
+      return pConv->AddChemObject(pReact->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS),pConv))!=0;
     else
         pConv->AddChemObject(NULL);
     return false;

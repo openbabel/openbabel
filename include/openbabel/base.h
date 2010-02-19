@@ -247,7 +247,8 @@ class OBConversion; //used only as pointer
       //!
       //! Typically these are program options to filter or modify an object
       //! For example, see OBMol::DoTransformations() and OBMol::ClassDescription()
-      virtual OBBase* DoTransformations(const std::map<std::string,std::string>* /*pOptions*/)
+      virtual OBBase* DoTransformations(const std::map<std::string,std::string>* /*pOptions*/,
+                                        OBConversion* /*pConv*/)
         {
           return this;
         }

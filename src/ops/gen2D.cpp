@@ -38,14 +38,14 @@ public:
     "Molecules, 2006, 11, 219-231"; }
 
   virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
-  virtual bool Do(OBBase* pOb, OpMap* pmap, const char* OptionText);
+  virtual bool Do(OBBase* pOb, const char* OptionText=NULL, OpMap* pOptions=NULL, OBConversion* pConv=NULL);
 };
 
 /////////////////////////////////////////////////////////////////
 OpGen2D theOpGen2D("gen2D"); //Global instance
 
 /////////////////////////////////////////////////////////////////
-bool OpGen2D::Do(OBBase* pOb, OpMap* pmap, const char* OptionText)
+bool OpGen2D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConversion* pConv)
 {
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   if(!pmol)

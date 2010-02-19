@@ -299,7 +299,7 @@ namespace OpenBabel {
         pmol->SetTitle(title);
         pmol2->SetDimension(0);
         if(pConv->AddChemObject(
-          pmol1->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)))<0)//using Read or ReadString or ReadFile
+          pmol1->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS),pConv))<0)//using Read or ReadString or ReadFile
         {
           obErrorLog.ThrowError(__FUNCTION__, smiles + 
             " SmilesFormat accepts reactions only with the \"Convert\" (commandline) interface", obError);
@@ -308,7 +308,7 @@ namespace OpenBabel {
         }
         if(pmol2->NumAtoms())
            pConv->AddChemObject(
-             pmol2->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)));
+             pmol2->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS),pConv));
         return true; //valid reaction return
       }
     }

@@ -60,6 +60,7 @@ namespace OpenBabel
   class OBAtom;
   class OBBond;
   class OBInternalCoord;
+  class OBConversion; //used only as a pointer
 
   // Class OBMol
   //MOL Property Macros (flags) -- 32+ bits
@@ -407,7 +408,7 @@ namespace OpenBabel
     //! \name Molecule modification methods
     //@{
     // Description in transform.cpp (command-line transformations to this molecule)
-    virtual OBBase*    DoTransformations(const std::map<std::string,std::string>* pOptions);
+    virtual OBBase*    DoTransformations(const std::map<std::string,std::string>* pOptions,OBConversion* pConv);
     // Ditto (documentation on transformation options)
     static const char* ClassDescription();
     //! Clear all information from a molecule except OB_PATTERN_STRUCTURE left unchanged

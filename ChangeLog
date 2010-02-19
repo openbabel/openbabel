@@ -1,3 +1,31 @@
+2010-02-19  Chris Morley
+
+	* Changed the parameters of Do() in OBOp to include an OBConversion
+	object and so allow a wider range of operations. A change in the
+	order of parameters means that it is not code compatible. But all
+	except the first have defaults and most, if not all, public ops use
+	only the first and it is unlikely that any have been written external
+	to OB.
+	* include/openbabel/op.h, include/openbabel/optransform.h,
+	src/ops/addpolarh.cpp,src/ops/fillUC.cpp,src/ops/gen2D.cpp,
+	src/ops/gen3d.cpp,src/ops/optransform.cpp: Do() changed.
+	
+	* include/openbabel/base.h,include/openbabel/mol.h,
+	src/formats/chemkinformat.cpp,src/formats/rsmiformat.cpp,
+	src/formats/rxnformat.cpp,src/formats/xml/cmlreactformat.cpp,
+	src/obmolecformat.cpp,src/formats/smilesformat.cpp,
+	src/formats/textformat.cpp,: DoTransformations() also has 
+	OBConversion* added.
+	
+	* src/formats/rxnformat.cpp, src/formats/rsmiformat.cpp:
+	Ensure deletion of reaction if ReadMolecule returns false.
+
+2010-02-19  Chris Morley
+
+	* CMakeLists.txt: define HAVE_SHARED_POINTER
+	* src/formats/CMakeLists.txt: narrow MSVC to MSVC90 for shard_ptr
+	  support. (Still not narrow enough.) 
+
 2010-02-19  Noel O'Boyle
 
 	* src/formats/gausscubeformat.cpp: Add cast to a long to enable size_t

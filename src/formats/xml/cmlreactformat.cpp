@@ -44,8 +44,7 @@ public:
 "Minimal implementation\n"
 "This implementation uses libxml2.\n"
 "Write options (e.g. -x1a)\n"
-"1  output CML V1.0  or\n"
-"2  output CML V2.0 (default)\n"
+"1  output CML1 (rather than CML2)\n"
 "a  output array format for atoms and bonds\n"
 "l  molecules NOT in MoleculeList\n"
 "h  use hydrogenCount for all hydrogens\n"
@@ -127,7 +126,7 @@ bool CMLReactFormat::ReadChemObject(OBConversion* pConv)
 
    //Do transformation and return reaction, if it has either reactants or products 
   if(ret && (pReact->NumReactants()!=0 || pReact->NumProducts()!=0)) //Do transformation and return molecule
-    return pConv->AddChemObject(pReact->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)))!=0;
+    return pConv->AddChemObject(pReact->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS),pConv))!=0;
   else
   {
     delete pReact;

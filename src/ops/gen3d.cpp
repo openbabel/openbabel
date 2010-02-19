@@ -32,14 +32,14 @@ public:
   const char* Description(){ return "Generate 3D coordinates"; }
 
   virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
-  virtual bool Do(OBBase* pOb, OpMap* pmap, const char* OptionText);
+  virtual bool Do(OBBase* pOb, const char* OptionText=NULL, OpMap* pOptions=NULL, OBConversion* pConv=NULL);
 };
 
 /////////////////////////////////////////////////////////////////
 OpGen3D theOpGen3D("gen3D"); //Global instance
 
 /////////////////////////////////////////////////////////////////
-bool OpGen3D::Do(OBBase* pOb, OpMap* pmap, const char* OptionText)
+bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConversion* pConv)
 {
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   if(!pmol)

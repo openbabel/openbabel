@@ -92,7 +92,7 @@ namespace OpenBabel
        OBMol* pMolCopy = new OBMol( MolArray.back());
        MolArray.pop_back();
        ret = pConv->AddChemObject(
-           pMolCopy->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)))!=0;
+           pMolCopy->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS), pConv))!=0;
      }
      if(!ret)
        StoredMolsReady = false;
@@ -108,7 +108,7 @@ namespace OpenBabel
     //or the format allows zero-atom molecules and it has a title
     if(ret && (pmol->NumAtoms() > 0 || (pFormat->Flags()&ZEROATOMSOK && *pmol->GetTitle())))
     {
-      ptmol = static_cast<OBMol*>(pmol->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)));
+      ptmol = static_cast<OBMol*>(pmol->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS),pConv));
       if(ptmol && (pConv->IsOption("j",OBConversion::GENOPTIONS) 
                 || pConv->IsOption("join",OBConversion::GENOPTIONS)))
       {
@@ -374,7 +374,7 @@ namespace OpenBabel
     pConv->SetOneObjectOnly(false);
     for(itr=IMols.begin();itr!=IMols.end();++itr,++i)
       {
-        if(!(itr->second)->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)))
+        if(!(itr->second)->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS),pConv))
           continue;
         pConv->SetOutputIndex(i);
         if(itr==lastitr)
@@ -445,7 +445,7 @@ namespace OpenBabel
         pConv->SetLast(i==mols.size()-1);
         pConv->SetOutputIndex(pConv->GetOutputIndex()+1);
         ok = pFormat->WriteMolecule(
-          mols[i]->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)), pConv);
+          mols[i]->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS), pConv),pConv);
       }      
     }
     return ok;
@@ -586,7 +586,7 @@ bool OBMoleculeFormat::Sort(OBMol* pmol, const char* DescID, OBConversion* pConv
   if(ok)
   {
     //Do any manipulation, filtering, application of ops, etc, before storing
-    if(!pmol->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)))
+    if(!pmol->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS),pConv))
       return true; //i.e. ignore molecule
 
     _mols.push_back(pmol); //Temporarily store the molecule

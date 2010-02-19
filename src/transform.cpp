@@ -24,8 +24,9 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel
 {
+  class OBConversion; //used only as a pointer
 
-  OBBase* OBMol::DoTransformations(const std::map<std::string, std::string>* pOptions)
+  OBBase* OBMol::DoTransformations(const std::map<std::string, std::string>* pOptions, OBConversion* pConv)
   {
     // Perform any requested transformations
     // on a OBMol
@@ -49,8 +50,11 @@ namespace OpenBabel
     // DoOps calls Do() for each of the plugin options in the map
     // It normally returns true, even if there are no options but
     // can return false if one of the options decides that the 
-    // molecule should not be output
-    bool fmatch = OBOp::DoOps(this, pOptions); 
+    // molecule should not be output. If it is a filtering op, it
+    // should delete the molecule itself (unlike the -s, --filter options,
+    // which delete it in this function).
+    if(!OBOp::DoOps(this, pOptions, pConv))
+      return false;
 
     bool ret=true;
 
@@ -147,9 +151,12 @@ namespace OpenBabel
           title[0]=' ';//a leading punct char is used only as a separator, not at start
         SetTitle(Trim(title).c_str());
       }
+
+
     
       //Filter using OBDescriptor comparison and (older) SMARTS tests
     //Continue only if previous test was true.
+    bool fmatch = true;
     itr = pOptions->find("filter");
     if(itr!=pOptions->end())
       {
@@ -222,18 +229,16 @@ namespace OpenBabel
 "-c Center Coordinates\n"
 "-C Combine mols in first file with others having same name\n"
 "--filter <filterstring> Filter: convert only when tests are true:\n"
-"--sort <descr> Sort by value of descriptor, largest first\n"
-"--revsort <descr> Sort by value of descriptor, smallest first\n"
-"--add <list> Add properties from descriptors:\n"
-"--delete <list> Delete properties in list:\n"
-"--append <list> Append properties or descriptors in list to title:\n"
+"--add <list> Add properties from descriptors\n"
+"--delete <list> Delete properties in list\n"
+"--append <list> Appends properties or descriptors in list to title\n"
 "-s\"smarts\" Convert only molecules matching SMARTS:\n"
 "-v\"smarts\" Convert only molecules NOT matching SMARTS:\n"
 "--join Join all input molecules into a single output molecule\n"
 "--separate Output disconnected fragments separately\n"
 "--property <attrib> <value> add or replace a property (SDF)\n"
 "--title <title> Add or replace molecule title\n"
-"--addtotitle <text> Append text to title\n"
+"--addtotitle <text> Append to title\n"
 "--addformula Append formula to title\n" ;
 
     //Append lines from OBOp plugins that work with OBMol

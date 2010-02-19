@@ -388,16 +388,14 @@ public:
   const char* Description(){ return "Generate aliases as an alternative representation."; }
 
   virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
-  virtual bool Do(OBBase* pOb, OpMap* pmap, const char* OptionText);
-//  virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*);
+  virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*);
 };
 
 /////////////////////////////////////////////////////////////////
 OpGenAlias theOpGenAlias("genalias"); //Global instance
 
 /////////////////////////////////////////////////////////////////
-//bool OpGenAlias::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*)
-bool OpGenAlias::Do(OBBase* pOb, OpMap* pmap, const char* OptionText)
+bool OpGenAlias::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*)
 {
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   if(!pmol)

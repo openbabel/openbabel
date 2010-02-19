@@ -77,11 +77,15 @@ public:
               obAuditMsg);
 
     if(ret) //Do transformation and return molecule
-      return pConv->AddChemObject(pReact->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS)))!=0;
+      return pConv->AddChemObject(pReact->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS),pConv))!=0;
     else
-        pConv->AddChemObject(NULL);
-    return false;
-  };
+    {
+      pConv->AddChemObject(NULL);
+      delete pReact;
+      pReact=NULL;
+      return false;
+    }
+};
 
   virtual bool WriteChemObject(OBConversion* pConv)
   {

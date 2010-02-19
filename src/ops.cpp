@@ -35,7 +35,7 @@ namespace OpenBabel
     virtual const char* Description(){ return "Centers coordinates around (0,0,0)"; }
     virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
 
-    virtual bool Do(OBBase* pOb, OpMap*, const char*)
+    virtual bool Do(OBBase* pOb, const char* OptionText=NULL, OpMap* pOptions=NULL, OBConversion* pConv=NULL)
     {
       OBMol* pmol = dynamic_cast<OBMol*>(pOb);
       if(pmol)
@@ -46,31 +46,6 @@ namespace OpenBabel
 
   //////////////////////////////////////////////////////
   OpCenter theOpCenter("center"); //Global instance
-
-  //*************************************************************
-
-  /* This class is another example -- use the FROG code to generate 3D coords.
-  class OpFrog : public OBOp
-  {
-  public:
-    OpFrog(const char* ID) : OBOp(ID, false){};
-    virtual const char* Description()
-    { return "Adds 3D coordinates using the FROG code"; }
-    virtual bool WorksWith(OBBase* pOb)const
-    { return dynamic_cast<OBMol*>(pOb)!=NULL; }
-
-    virtual bool Do(OBBase* pOb, OpMap*, const char*);
-  };
-
-  ///////////////////////////////////////////////////////
-  //Global instance with option name used 
-  // e.g. babel infile.xxx -O outfile.yyy --3Dfrog
-  OpFrog theOpFrog("3Dfrog"); 
-
-  //////////////////////////////////////////////////////
-  bool OpFrog::Do(OBBase* pOb, OpMap*, const char*)
-  { return true; }
-  */
 
 }//namespace
 

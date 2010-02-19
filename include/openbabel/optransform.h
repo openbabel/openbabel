@@ -43,7 +43,7 @@ public:
   virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
 
   //! Carries out the transform
-  virtual bool Do(OBBase* pOb, OpMap* pOptions=NULL, const char* OptionText=NULL);
+  virtual bool Do(OBBase* pOb, const char* OptionText=NULL, OpMap* pOptions=NULL, OBConversion* pConv=NULL);
 
   virtual OpTransform* MakeInstance(const std::vector<std::string>& textlines)
 {

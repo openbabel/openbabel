@@ -30,14 +30,14 @@ public:
   const char* Description(){ return "Adds hydrogen to polar atoms only"; }
 
   virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
-  virtual bool Do(OBBase* pOb, OpMap* pmap, const char* OptionText);
+  virtual bool Do(OBBase* pOb, const char* OptionText=NULL, OpMap* pOptions=NULL, OBConversion* pConv=NULL);
 };
 
 /////////////////////////////////////////////////////////////////
 OpAddPolarH theOpAddPolarH("AddPolarH"); //Global instance
 
 /////////////////////////////////////////////////////////////////
-bool OpAddPolarH::Do(OBBase* pOb, OpMap* pmap, const char* OptionText)
+bool OpAddPolarH::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConversion* pConv)
 {
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   if(!pmol)

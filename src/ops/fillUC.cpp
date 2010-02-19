@@ -42,7 +42,7 @@ public:
     "   keepconnect (fill the unit cell but keep the original connectivity => use \"--fillUC keepconnect\""; }
 
   virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
-  virtual bool Do(OBBase* pOb, OpMap* pmap, const char* OptionText);
+  virtual bool Do(OBBase* pOb, const char* OptionText=NULL, OpMap* pOptions=NULL, OBConversion* pConv=NULL);
 };
 
 /////////////////////////////////////////////////////////////////
@@ -73,7 +73,7 @@ vector3 transformedFractionalCoordinate2(vector3 originalCoordinate)
 }
 
 /////////////////////////////////////////////////////////////////
-bool OpFillUC::Do(OBBase* pOb, OpMap* pmap, const char* OptionText)
+bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConversion* pConv)
 {
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   if(!pmol)
