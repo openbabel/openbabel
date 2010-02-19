@@ -91,14 +91,6 @@ int main(int argc,char *argv[])
   else
     cout << "not ok 7\n";
 
-  // PR#143577
-  obConversion.SetInFormat("mdl");
-  obConversion.ReadFile(&obMol, "test.mdl");
-  if ( remove("test.mdl") != -1)
-    cout << "ok 8\n";
-  else
-    cout << "not ok 8\n";
-  
   // gzip input
   // gzip output
 
@@ -155,7 +147,7 @@ int main(int argc,char *argv[])
   // nasty tests
   obConversion.ReadString(&obMol, "");
   obConversion.Read(&obMol);
-  cout << "ok 9\n";
+  cout << "ok 8\n";
 
   return(0);
 }
