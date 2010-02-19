@@ -1,5 +1,12 @@
 2010-02-19  Noel O'Boyle
 
+	* src/formats/gausscubeformat.cpp: Add cast to a long to enable size_t
+	value to be printed out (gets rid of warning on Mac + Intel Compiler)
+	* src/descriptor.cpp: Using string::npos instead of -1 to get rid of
+	warning
+
+2010-02-19  Noel O'Boyle
+
 	* src/CMakeLists.txt: Create plugin OBFs on Windows
 	* tests/CMakeLists.txt: Rename test targets to test_*, to make them
 	cluster together alphabetically in an IDE (e.g. MSVC)

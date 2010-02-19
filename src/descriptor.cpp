@@ -475,7 +475,7 @@ void OBDescriptor::DeleteProperties(OBBase* pOb, const string& DescrList)
     if(s.find('_')==string::npos)
       return false;
     string temp(s);
-    string::size_type pos=-1;
+    string::size_type pos = string::npos;
     //replace all underscores by spaces
     while((pos=temp.find('_', ++pos))!=string::npos)
       temp[pos]=' ';
