@@ -7,19 +7,19 @@ set(depict_srcs
     depict/svgpainter.cpp
 )
 
-set(descriptors_srcs
+set(descriptors
   descriptors/cmpdfilter.cpp
   descriptors/groupcontrib.cpp
   descriptors/filters.cpp
   descriptors/smartsdescriptors.cpp
 )
 
-set(fingerprints_srcs
+set(fingerprints
     fingerprints/finger2.cpp
     fingerprints/finger3.cpp
 )
 
-set(forcefields_srcs
+set(forcefields
     forcefields/forcefieldgaff.cpp
     forcefields/forcefieldghemical.cpp
     forcefields/forcefieldmmff94.cpp
@@ -33,7 +33,7 @@ set(math_srcs
     math/vector3.cpp
 )
 
-set(ops_srcs
+set(ops
   ops/addpolarh.cpp
   ops/gen2D.cpp
   ops/fillUC.cpp
@@ -113,17 +113,25 @@ if(BUILD_SHARED)
   endif(WIN32)
 endif(BUILD_SHARED)
 
-add_library(${BABEL_LIBRARY} ${BUILD_TYPE}
+set(openbabel_library_srcs
                 ${openbabel_srcs}
                 ${depict_srcs}
-                ${descriptors_srcs}
-                ${fingerprints_srcs}
-                ${forcefields_srcs}
                 ${math_srcs}
-                ${ops_srcs}
                 ${stereo_srcs}
                 ${headers}
                 "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h"
+		)
+if(NOT MSVC)
+   set(openbabel_library_srcs
+	   ${openbabel_library_srcs}
+	   ${descriptors}
+	   ${fingerprints}
+           ${forcefields}
+           ${ops}
+	   )
+endif(NOT MSVC)
+add_library(${BABEL_LIBRARY} ${BUILD_TYPE}
+                ${openbabel_library_srcs}
 )
 
 if(NOT WIN32)
@@ -146,5 +154,22 @@ install(TARGETS ${BABEL_LIBRARY}
                 LIBRARY DESTINATION ${LIB_INSTALL_DIR}
                 ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
 )
+
+if(MSVC)
+  foreach(plugingroup descriptors fingerprints forcefields ops)
+    add_library(plugin_${plugingroup} ${PLUGIN_TYPE} ${${plugingroup}}
+        "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h")
+    target_link_libraries(plugin_${plugingroup} ${libs} ${BABEL_LIBRARY})
+    install(TARGETS plugin_${plugingroup}
+                  RUNTIME DESTINATION ${BIN_INSTALL_DIR}
+                  LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
+                  ARCHIVE DESTINATION ${OB_PLUGIN_INSTALL_DIR})
+    set_target_properties(plugin_${plugingroup} PROPERTIES
+                  OUTPUT_NAME plugin_${plugingroup}
+                  PREFIX ""
+                  SUFFIX ${MODULE_EXTENSION}
+                  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+  endforeach(plugingroup)
+endif(MSVC)
 
 add_subdirectory(formats)

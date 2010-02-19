@@ -1,3 +1,17 @@
+2010-02-19  Noel O'Boyle
+
+	* src/CMakeLists.txt: Create plugin OBFs on Windows
+	* tests/CMakeLists.txt: Rename test targets to test_*, to make them
+	cluster together alphabetically in an IDE (e.g. MSVC)
+
+2010-02-19  Noel O'Boyle
+
+	* tests/conversion.cpp: Remove former test 8 as it was failing on
+	Windows because of the open file handle.
+	* src/formats/CMakeLists.txt: Build shared_ptr dependent formats on
+	Windows. Really, the IF statements need to be changed to test for
+	shared_ptr rather than BOOST per se.
+
 2010-02-17  Noel O'Boyle
 
 	* tools/obabel.cpp: Include cstdlib header to enable compilation
