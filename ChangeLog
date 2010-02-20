@@ -1,5 +1,10 @@
 2010-02-20  Noel O'Boyle
 
+	* src/CMakeLists.txt: Remove LIBXML2 as a dependency of the openbabel
+	DLL
+
+2010-02-20  Noel O'Boyle
+
 	* include/openbabel/obmolecformat.h: Error compiling on some platforms
 	due to extra qualification on member name
 

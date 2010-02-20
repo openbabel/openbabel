@@ -138,7 +138,7 @@ if(NOT WIN32)
   set(libs ${libs} m dl)
 endif(NOT WIN32)
 
-target_link_libraries(${BABEL_LIBRARY} ${libs} ${LIBXML2_LIBRARIES} ${ZLIB_LIBRARY})
+target_link_libraries(${BABEL_LIBRARY} ${libs} ${ZLIB_LIBRARY})
 set_target_properties(${BABEL_LIBRARY} PROPERTIES
                                        VERSION ${LIBRARY_VERSION}
                                        SOVERSION ${SOVERSION}
