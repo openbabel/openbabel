@@ -144,7 +144,7 @@ public:
 
 #ifdef HAVE_SHARED_POINTER
   //!When sent an OBReaction object, output all the constituent molecules
-  static bool OBMoleculeFormat::OutputMolsFromReaction
+  static bool OutputMolsFromReaction
     (OBReaction* pReact, OBConversion* pConv, OBFormat* pFormat);
 #endif
 

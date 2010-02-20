@@ -1,3 +1,8 @@
+2010-02-20  Noel O'Boyle
+
+	* include/openbabel/obmolecformat.h: Error compiling on some platforms
+	due to extra qualification on member name
+
 2010-02-19  Chris Morley
 
 	* Changed the parameters of Do() in OBOp to include an OBConversion
