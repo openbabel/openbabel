@@ -1,5 +1,10 @@
 2010-02-21  Noel O'Boyle
 
+	* src/formats/gausscubeformat.cpp: Revert of change made in r3534. It
+	just changed the warning to a different warning.
+
+2010-02-21  Noel O'Boyle
+
 	* src/CMakeLists.txt: Add LIBXML2 as a dependency of the XML formats
 
 2010-02-20  Noel O'Boyle
