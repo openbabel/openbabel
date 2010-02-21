@@ -255,9 +255,16 @@ namespace OpenBabel {
      */
     bool ischiral;
     for (atom = mol->BeginAtom(ia); atom; atom = mol->NextAtom(ia)) {
-      // skip N, P, S
-      if (atom->IsNitrogen() || atom->IsPhosphorus() || atom->IsSulfur())
-        continue;
+      // skip non-chiral N
+      if (atom->IsNitrogen()) {
+        int nbrRingAtomCount = 0;
+        FOR_NBORS_OF_ATOM (nbr, atom) {
+          if (nbr->IsInRing())
+            nbrRingAtomCount++;        
+        }
+        if (nbrRingAtomCount < 3)
+          continue;
+      }
       if (atom->GetHyb() == 3 && atom->GetHvyValence() >= 3) {
         // list containing neighbor symmetry classes
         std::vector<unsigned int> tlist; 
@@ -808,6 +815,9 @@ namespace OpenBabel {
             FOR_NBORS_OF_ATOM (nbr, atom)
               if (symClasses.at(nbr->GetIndex()) == duplicatedSymClass)
                 ligandAtom = &*nbr;
+
+            if (!ligandAtom)
+              break;
 
             // check if ligand contains at least:
             // - 2 true-stereocenter

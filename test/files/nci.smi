@@ -371,7 +371,7 @@ C(=C\c1ccccc1)(/[N+](=O)[O-])c1ccccc1	385
 C(=O)(O)c1c2c(nc3c1cccc3)cccc2	386
 C([C@@H](CC(=O)c1ccccc1)N1CCC(C)CC1)(=O)c1ccccc1	387
 N([C@H]([C@@H](O)c1ccc(Cl)cc1)c1ccc(Cl)cc1)CCO	389
-C([C@@H](CC(=O)c1ccccc1)[N@@]1[C@@H](C)CCCC1)(=O)c1ccccc1	390
+C([C@@H](CC(=O)c1ccccc1)N1[C@@H](C)CCCC1)(=O)c1ccccc1	390
 C([C@@H](NCCO)c1ccc(Cl)cc1)(=O)c1ccc(Cl)cc1	391
 S(C)c1nc(SC)nc(n1)C	392
 N(=O)(=O)N1C(=O)CCC1=O	393
@@ -774,7 +774,7 @@ B(Oc1ccccc1)(Oc1ccccc1)Oc1ccccc1	806
 B(Oc1c(C)cccc1)(Oc1c(C)cccc1)Oc1c(C)cccc1	807
 B(Oc1c(Cl)cccc1)(Oc1c(Cl)cccc1)Oc1c(Cl)cccc1	808
 C(CCCCCCCCCCCCCCCCCC)(CO)CO	809
-C[N@]1[C@@H](CCC1)[C@@H]1CCCNC1	811
+CN1[C@@H](CCC1)[C@@H]1CCCNC1	811
 C([C@@H](CCc1ccccc1)C(C)=O)(OCC)=O	812
 C(CC(C)=O)c1ccccc1	813
 C(CCCCCC)CCCCCS	814

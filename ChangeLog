@@ -1,3 +1,11 @@
+2010-02-21  Tim Vandermeersch
+
+        * src/stereo/perception.cpp: Allow S, P and bridgehead N atoms to be 
+        chiral. These "filters" may still need some work though.
+
+        * test/files/nci.smi: Make N atom non-chiral in 2 smiles. The 
+        smilesmatch unittest now passes.
+
 2010-02-21  Noel O'Boyle
 
 	* src/formats/gausscubeformat.cpp: Revert of change made in r3534. It
