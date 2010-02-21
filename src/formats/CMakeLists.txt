@@ -211,7 +211,7 @@ if(MSVC)
     set(xmlsources ${xmlsources} xml/${format}.cpp)
   endforeach(format)
   add_library(formats_xml ${PLUGIN_TYPE} ${xmlsources} xml/xml.cpp)
-  target_link_libraries(formats_xml ${libs} ${BABEL_LIBRARY})
+  target_link_libraries(formats_xml ${libs} ${LIBXML2_LIBRARIES} ${BABEL_LIBRARY})
   install(TARGETS formats_xml
                   RUNTIME DESTINATION ${BIN_INSTALL_DIR}
                   LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
@@ -224,7 +224,7 @@ if(MSVC)
 else(MSVC)
 foreach(format ${formats_xml})
   add_library(${format} ${PLUGIN_TYPE} xml/${format}.cpp xml/xml.cpp)
-  target_link_libraries(${format} ${libs} ${BABEL_LIBRARY})
+  target_link_libraries(${format} ${libs} ${LIBXML2_LIBRARIES} ${BABEL_LIBRARY})
   install(TARGETS ${format}
                   RUNTIME DESTINATION ${BIN_INSTALL_DIR}
                   LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
