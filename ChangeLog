@@ -1,3 +1,11 @@
+2010-02-22  Noel O'Boyle
+
+	Enable testing of OpenBabel executables from Python
+	* test/testbabel.py: Initial checkin of tests for the Babel executable
+	* test/CMakeLists.txt: Add testbabel.py
+	* cmake/modules/UsePythonTest.cmake: Add a CMake module for adding
+	Python tests (BSD License) from Mathieu Malaterre
+
 2010-02-21  Tim Vandermeersch
 
         * src/stereo/perception.cpp: Allow S, P and bridgehead N atoms to be 

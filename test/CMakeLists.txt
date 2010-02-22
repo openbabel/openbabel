@@ -101,3 +101,10 @@ install(TARGETS roundtrip
                 LIBRARY DESTINATION lib
                 ARCHIVE DESTINATION lib
 )
+
+###########################
+# Tests wrapped in Python #
+###########################
+
+include(UsePythonTest)
+ADD_PYTHON_TEST(testpy_babel testbabel.py)
