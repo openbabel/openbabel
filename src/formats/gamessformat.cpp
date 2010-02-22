@@ -459,7 +459,7 @@ namespace OpenBabel
             for (unsigned int i = 2; i < vs.size(); ++i) {
               ++numIntens;
               if (numIntens < lowFreqModesBegin || numIntens > lowFreqModesEnd)
-                intensities.push_back(atof(vs[i].c_str()));
+                intensities.push_back(atof(vs[i].c_str()) * 42.255); // conver to km/mol
             }
             ifs.getline(buffer, BUFF_SIZE); // blank or Raman activitie
             if (strstr(buffer,"RAMAN") != NULL) {
