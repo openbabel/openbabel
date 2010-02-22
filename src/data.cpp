@@ -336,7 +336,7 @@ namespace OpenBabel
         return(1);
       }
     else if (strcasecmp(identifier, "T") == 0 ||
-             (!strcasecmp(identifier, "Tritium") == 0) )
+             (strcasecmp(identifier, "Tritium") == 0) )
       {
         iso = 3;
         return(1);
