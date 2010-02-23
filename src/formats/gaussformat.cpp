@@ -1,6 +1,6 @@
 /**********************************************************************
 Copyright (C) 2000 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2010 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
  
 This program is free software; you can redistribute it and/or modify
@@ -31,7 +31,7 @@ namespace OpenBabel
       OBConversion::RegisterFormat("g94",this);
       OBConversion::RegisterFormat("g98",this);
       OBConversion::RegisterFormat("g03",this);
-      OBConversion::RegisterFormat("g09",this); // Not tested, but should work
+      OBConversion::RegisterFormat("g09",this);
     }
 
     virtual const char* Description() //required
@@ -282,6 +282,20 @@ namespace OpenBabel
     unsigned int spin = 1;
     bool hasPartialCharges = false;
 
+    // coordinates of all steps
+    // Set conformers to all coordinates we adopted
+    std::vector<double*> vconf; // index of all frames/conformers
+    std::vector<double> coordinates; // coordinates in each frame
+    int natoms = 0; // number of atoms -- ensure we don't go to a new job with a different molecule
+
+    // OBConformerData stores information about multiple steps
+    // we can change attribute later if needed (e.g., IRC)
+    OBConformerData *confData = new OBConformerData();
+    confData->SetOrigin(fileformatInput);
+    std::vector<unsigned short> confDimensions = confData->GetDimension(); // to be fair, set these all to 3D
+    std::vector<double>         confEnergies   = confData->GetEnergies();
+
+
     //Vibrational data
     std::vector< std::vector< vector3 > > Lx;
     std::vector<double> Frequencies, Intensities;
@@ -315,10 +329,7 @@ namespace OpenBabel
           }
         else if(strstr(buffer,"Coordinates (Angstroms)") != NULL)
           {
-            // mol.EndModify();
-            mol.Clear();
             numTranslationVectors = 0; // ignore old translationVectors
-            mol.BeginModify();
             ifs.getline(buffer,BUFF_SIZE);	// column headings
             ifs.getline(buffer,BUFF_SIZE);	// ---------------
             ifs.getline(buffer,BUFF_SIZE);
@@ -328,21 +339,35 @@ namespace OpenBabel
                 x = atof((char*)vs[3].c_str());
                 y = atof((char*)vs[4].c_str());
                 z = atof((char*)vs[5].c_str());
-
                 int atomicNum = atoi((char*)vs[1].c_str());
+
                 if (atomicNum > 0) // translation vectors are "-2"
                   {
-                    atom = mol.NewAtom();
-                    atom->SetAtomicNum(atoi((char*)vs[1].c_str()));
-                    atom->SetVector(x,y,z);
+                    if (natoms == 0) { // first time reading the molecule, create each atom
+                      atom = mol.NewAtom();
+                      atom->SetAtomicNum(atoi((char*)vs[1].c_str()));
+                    }
+                    coordinates.push_back(x);
+                    coordinates.push_back(y);
+                    coordinates.push_back(z);
                   }
                 else {
                   translationVectors[numTranslationVectors++].Set(x, y, z);
                 }
 		
-                if (!ifs.getline(buffer,BUFF_SIZE)) break;
+                if (!ifs.getline(buffer,BUFF_SIZE)) {
+                  break;
+                }
                 tokenize(vs,buffer);
               }
+            // done with reading atoms
+            natoms = mol.NumAtoms();
+            // malloc / memcpy
+            double *tmpCoords = new double [(natoms)*3];
+            memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
+            vconf.push_back(tmpCoords);
+            coordinates.clear();
+            confDimensions.push_back(3); // always 3D -- OBConformerData allows mixing 2D and 3D structures
           }
         else if(strstr(buffer,"Dipole moment") != NULL)
             {
@@ -521,7 +546,10 @@ namespace OpenBabel
 #define HARTREE_TO_KCAL 627.509
             tokenize(vs,buffer);
             mol.SetEnergy(atof(vs[4].c_str()) * HARTREE_TO_KCAL);
+            confEnergies.push_back(mol.GetEnergy());
           }
+
+        // MP2 energies also use a different syntax
 
         // PM3 energies use a different syntax
         else if(strstr(buffer,"E (Thermal)") != NULL)
@@ -530,6 +558,7 @@ namespace OpenBabel
             ifs.getline(buffer,BUFF_SIZE); //Total energy; what we want
             tokenize(vs,buffer);
             mol.SetEnergy(atof(vs[1].c_str()));
+            confEnergies.push_back(mol.GetEnergy());
           }
 
       } // end while
@@ -538,7 +567,14 @@ namespace OpenBabel
       mol.EndModify();
       return false;
     }
+
+    mol.EndModify();
     
+    // Set conformers to all coordinates we adopted
+    mol.SetConformers(vconf);
+    mol.SetConformer(mol.NumConformers() - 1);
+    cout << " conformers: " << vconf.size() << endl;
+
     //Attach vibrational data, if there is any, to molecule
     if(Frequencies.size()>0)
     {
@@ -582,7 +618,6 @@ namespace OpenBabel
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
 
-    mol.EndModify();
     if (hasPartialCharges) {
       mol.SetPartialChargesPerceived();
 

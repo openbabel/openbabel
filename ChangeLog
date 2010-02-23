@@ -1,3 +1,8 @@
+2010-02-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/gaussformat.cpp: Add support for reading multiple
+	conformers (e.g., geometry optimization) including energy for each step.
+
 2010-02-22  Noel O'Boyle
 
 	Enable testing of OpenBabel executables from Python
