@@ -1,3 +1,10 @@
+2010-02-23  Noel O'Boyle
+
+	* src/builder.cpp: Fix bug where a sp2-hybridised atom could be added
+	at 180 deg instead of 120 if a particular corner case arose. The test
+	case was "c1c2c(=O)[nH]c(=O)c2c(c2c1c(=O)[nH]c2=O)C#CC=C" where the
+	final C=C was added in line with the C#C.
+
 2010-02-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/gaussformat.cpp: Add support for reading multiple

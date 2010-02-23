@@ -211,6 +211,8 @@ namespace OpenBabel
         if (bond2 == VZero) {
           // there is no a-2 atom
           v1 = cross(bond1, VY);
+		  if (v1 == VZero) // This corner-case happened to me, where bond1 was -VY (Noel)
+			  v1 = cross(bond1, VX);
           v2 = cross(bond1, v1);
         } else {
           v1 = cross(bond1, bond2);
