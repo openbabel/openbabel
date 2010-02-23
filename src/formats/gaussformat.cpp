@@ -294,7 +294,7 @@ namespace OpenBabel
     confData->SetOrigin(fileformatInput);
     std::vector<unsigned short> confDimensions = confData->GetDimension(); // to be fair, set these all to 3D
     std::vector<double>         confEnergies   = confData->GetEnergies();
-
+    std::vector< std::vector< vector3 > > confForces = confData->GetForces();
 
     //Vibrational data
     std::vector< std::vector< vector3 > > Lx;
@@ -525,6 +525,13 @@ namespace OpenBabel
           }
         }
         
+        else if (strstr(buffer, "Forces (Hartrees/Bohr)"))
+          {
+            ifs.getline(buffer, BUFF_SIZE); // column headers
+            ifs.getline(buffer, BUFF_SIZE); // ------
+            ifs.getline(buffer, BUFF_SIZE); // real data
+          }
+
         else if (strstr(buffer, "Isotropic = ")) // NMR shifts
           {
             tokenize(vs, buffer);
@@ -571,9 +578,15 @@ namespace OpenBabel
     mol.EndModify();
     
     // Set conformers to all coordinates we adopted
+    // but remove last geometry -- it's a duplicate
+    vconf.pop_back();
     mol.SetConformers(vconf);
     mol.SetConformer(mol.NumConformers() - 1);
-    cout << " conformers: " << vconf.size() << endl;
+    // Copy the conformer data too
+    confData->SetDimension(confDimensions);
+    confData->SetEnergies(confEnergies);
+    confData->SetForces(confForces);
+    mol.SetData(confData);
 
     //Attach vibrational data, if there is any, to molecule
     if(Frequencies.size()>0)
