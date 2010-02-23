@@ -268,7 +268,7 @@ namespace OpenBabel
 
   //############################## CIF CLASSES CODE ####################################################
   CIFData::CIFAtom::CIFAtom():
-    mLabel(""),mSymbol(""),mOccupancy(1.0)
+    mLabel(""),mSymbol(""),mOccupancy(1.0f)
   {}
    
   CIFData::CIFData()

@@ -180,7 +180,7 @@ namespace OpenBabel {
 
   unsigned int OBGraphSym::GetHvyBondSum(OBAtom *atom)
   {
-    float count = 0.0;
+    float count = 0.0f;
     OBBond *bond;
     OBAtom *nbr;
 
@@ -188,9 +188,9 @@ namespace OpenBabel {
     for (bond = atom->BeginBond(bi); bond; bond = atom->NextBond(bi)) {
       nbr = bond->GetNbrAtom(atom);
       if (_frag_atoms->BitIsSet(nbr->GetIdx()) && !(nbr->IsHydrogen())) {
-        if (bond->IsSingle())        count += 1.0;
-        else if (bond->IsDouble())   count += 2.0;
-        else if (bond->IsTriple())   count += 3.0;
+        if (bond->IsSingle())        count += 1.0f;
+        else if (bond->IsDouble())   count += 2.0f;
+        else if (bond->IsTriple())   count += 3.0f;
         else if (bond->IsAromatic()) count += 1.6f;
       }
     }

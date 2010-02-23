@@ -174,7 +174,7 @@ static unsigned int GetHvyValence(OBAtom *atom, OBBitVec &frag_atoms)
 
 static unsigned int GetHvyBondSum(OBAtom *atom, OBBitVec &frag_atoms)
 {
-  float count = 0.0;
+  float count = 0.0f;
   OBBond *bond;
   OBAtom *nbr;
 
@@ -182,9 +182,9 @@ static unsigned int GetHvyBondSum(OBAtom *atom, OBBitVec &frag_atoms)
   for (bond = atom->BeginBond(bi); bond; bond = atom->NextBond(bi)) {
     nbr = bond->GetNbrAtom(atom);
     if (frag_atoms.BitIsSet(nbr->GetIdx()) && !(nbr->IsHydrogen())) {
-      if (bond->IsSingle())        count += 1.0;
-      else if (bond->IsDouble())   count += 2.0;
-      else if (bond->IsTriple())   count += 3.0;
+      if (bond->IsSingle())        count += 1.0f;
+      else if (bond->IsDouble())   count += 2.0f;
+      else if (bond->IsTriple())   count += 3.0f;
       else if (bond->IsAromatic()) count += 1.6f;
     }
   }
