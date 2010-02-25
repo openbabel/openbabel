@@ -18,6 +18,7 @@ GNU General Public License for more details.
 
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/kinetics.h>
+#include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/atomclass.h>
 #include <openbabel/xml.h>
 #include <float.h>
@@ -465,6 +466,8 @@ namespace OpenBabel
         DoAtoms();
         DoBonds();
         DoMolWideData();
+        if (_pmol->GetDimension()==0)
+          StereoFrom0D(_pmol); // Remove any spurious stereos (due to symmetry)
 
         //Use formula only if nothing else provided
         if(_pmol->NumAtoms()==0 && !RawFormula.empty())
@@ -612,25 +615,22 @@ namespace OpenBabel
             else if(attrname=="spinMultiplicity")
               pAtom->SetSpinMultiplicity(atoi(value.c_str()));
 
-            else if(attrname=="atomRefs4")//from atomParity element
+            /*else if(attrname=="atomRefs4")//from atomParity element (but there is no such thing!)
               {
                 vector<string> ids;
-                tokenize(ids,value);
-                // Have 4 atoms defining the parity
-                // but don't currently use them @todo
-                //Simply use parity as given to set clockwise/anticlockwise
+                tokenize(ids, value);
 
-                attrname = (++AttributeIter)->first;
-                /* @todo
-                if(attrname=="parity")
-                  {
-                    value = AttributeIter->second;
-                    int parity = atoi(value.c_str());
-                    if(parity>0) pAtom->SetClockwiseStereo();
-                    if(parity<0) pAtom->SetAntiClockwiseStereo();
-                  }
-                  */
-              }
+                const xmlChar* pvalue = xmlTextReaderConstValue(reader());
+                int parity = 0;
+                if (pvalue)
+                  parity = atoi((const char*)pvalue);
+                if (parity != 0) { // Should be +1 or -1
+                  TetSym ts;
+                  ts.atomrefs = ids;
+                  ts.parity = parity;
+                  tetsyms.push_back(ts);
+                }
+              }*/
 
             else if(attrname=="radical") //Marvin extension
               {
@@ -801,25 +801,33 @@ namespace OpenBabel
             int Idx = atoi(AttributeIter->second.c_str());
             if(name=="atomParity")
               {
-                int parity =atoi(value.c_str());
-                //We now have for the parity for the atom of index AtIdx
-                //calculated using the atoms in AtomRefIdx.
-                //Need now to adjust the parity to match the standard order
-                // ...
                 OBAtom* patom = _pmol->GetAtom(Idx);
                 if(!patom)
                   return false;
-                /* @todo
-                if(parity>0)
-                  patom->SetClockwiseStereo();
-                else if(parity<0)
-                  patom->SetAntiClockwiseStereo();
-                */
-                OBChiralData* cd = new OBChiralData;
-                cd->Clear();
-                cd->SetAtom4Refs(AtomRefIdx, input);
-                patom->SetData(cd);
 
+                
+                OBStereo::Ref from = _pmol->GetAtom(AtomRefIdx[0])->GetId();
+                
+                OBStereo::Refs refs;
+                vector<unsigned int>::const_iterator idx_cit=AtomRefIdx.begin();
+                ++idx_cit;
+                for (; idx_cit!=AtomRefIdx.end(); ++idx_cit)
+                  refs.push_back(_pmol->GetAtom(*idx_cit)->GetId());
+                
+                OBStereo::Ref center = patom->GetId();
+                
+                int parity = atoi(value.c_str());
+                OBStereo::Winding winding = OBStereo::Clockwise; // parity > 0
+                if (parity < 0)
+                  winding = OBStereo::AntiClockwise;
+                else if (parity == 0) // What to do with parity of 0?
+                  return false;
+
+                OBTetrahedralStereo::Config cfg = OBTetrahedralStereo::Config(
+                                                        center, from, refs, winding, OBStereo::ViewFrom);
+                OBTetrahedralStereo *th = new OBTetrahedralStereo(_pmol);
+                th->SetConfig(cfg);
+                _pmol->SetData(th);
               }
             else //bondStereo
               {
@@ -1287,8 +1295,22 @@ namespace OpenBabel
 
     WriteInChI(mol);
 
-    vector<string> atomIds; 
-
+    std::map<unsigned int, OBTetrahedralStereo::Config > tetStereos;
+    std::map<unsigned int, OBTetrahedralStereo::Config >::const_iterator tetStereo_cit;
+    if (mol.GetDimension()!=3) {
+      std::vector<OBGenericData*> vdata = mol.GetAllData(OBGenericDataType::StereoData);
+      for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data)
+        if (((OBStereoBase*)*data)->GetType() == OBStereo::Tetrahedral) {
+          OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
+          // Always get the clockwise version (it's the default anyway) as this has
+          // a positive signed volume (i.e. CML atomParity of 1)
+          OBTetrahedralStereo::Config cfg = ts->GetConfig(OBStereo::Clockwise);
+          if(cfg.specified)
+            tetStereos[cfg.center] = cfg;
+        }
+    }
+    
+    vector<string> atomIds;
     if(mol.NumAtoms()>0)
       {
         //if molecule has no bonds and atoms doesn't have coordinates, just output formula
@@ -1304,11 +1326,6 @@ namespace OpenBabel
             stringstream id, eltyp, iso, chg, spn, hct, x, y, z;
             bool anyChg=false, anySpin=false, anyIsotope=false;
             double X, Y, Z; //atom coordinates
-
-            /* @todo
-            if(mol.GetDimension()!=3)
-              mol.FindChiralCenters();
-            */
 
             OBAtom *patom;
             vector<OBAtom*>::iterator i;
@@ -1392,31 +1409,25 @@ namespace OpenBabel
                             xmlTextWriterWriteFormatAttribute(writer(), C_Y3orFRACT,"%f", Y);
                             xmlTextWriterWriteFormatAttribute(writer(), C_Z3orFRACT,"%f", Z);
                           }
-                        int cfg=0;
-                        /* @todo
-                        if((patom->IsPositiveStereo() || patom->IsClockwise()))
-                          cfg=1;
-                        else if(patom->IsNegativeStereo() || patom->IsAntiClockwise())
-                          cfg=-1;
-                        if(cfg)
+                        
+                        if( (tetStereo_cit=tetStereos.find(patom->GetId())) != tetStereos.end() )
                           {
-                            OBChiralData* cd=(OBChiralData*)patom->GetData(OBGenericDataType::ChiralData);
-                            if(cfg && cd)
-                              {
-                                //UseAtom4Refs from OBChiralData
-                                vector<unsigned int> ref = cd->GetAtom4Refs(input);
-                                while (ref.size()<4)
-                                  ref.push_back(patom->GetIdx());
-                                xmlTextWriterStartElementNS(writer(), prefix, C_ATOMPARITY, NULL);
-                                xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS4, "%s %s %s %s",
-//                                                     "a%d a%d a%d a%d", ref[0], ref[1], ref[2], ref[3]);
-                                    atomIds[ref[0]].c_str(), atomIds[ref[1]].c_str(),
-                                    atomIds[ref[2]].c_str(), atomIds[ref[3]].c_str());
-                                xmlTextWriterWriteFormatString(writer(),"%d", cfg);
-                                xmlTextWriterEndElement(writer());//atomParity
-                              }
+                            OBTetrahedralStereo::Config cfg = tetStereo_cit->second;
+                            OBStereo::Refs refs = cfg.refs;
+                            vector<string> atomrefs;
+                            atomrefs.push_back(atomIds[mol.GetAtomById(cfg.from)->GetIdx()]);
+                            for (OBStereo::RefIter ref = refs.begin(); ref!=refs.end(); ++ref)
+                              atomrefs.push_back(atomIds[mol.GetAtomById(*ref)->GetIdx()]);
+
+                            xmlTextWriterStartElementNS(writer(), prefix, C_ATOMPARITY, NULL);
+                            xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS4, "%s %s %s %s",
+                              atomrefs[0].c_str(), atomrefs[1].c_str(),
+                              atomrefs[2].c_str(), atomrefs[3].c_str());
+                            // Set the atomParity - this is always 1 as the atomRefs are arranged
+                            // to make this so
+                            xmlTextWriterWriteFormatString(writer(), "%d", 1); 
+                            xmlTextWriterEndElement(writer());//atomParity
                           }
-                          */
                       }
                     else
                       {

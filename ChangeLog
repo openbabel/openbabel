@@ -1,3 +1,7 @@
+2010-02-25  Noel O'Boyle
+
+	* src/xml/cmlformat.cpp: Add support for 0D tetrahedral stereochem
+
 2010-02-23  Noel O'Boyle
 
 	* src/builder.cpp: Fix bug where a sp2-hybridised atom could be added
