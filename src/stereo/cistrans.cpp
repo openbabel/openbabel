@@ -172,37 +172,7 @@ namespace OpenBabel {
     return false;
   }
 
-  unsigned long OBCisTransStereo::GetTransRef(unsigned long id) const
-  {
-    if (!IsValid())
-      return OBStereo::NoRef;
-
-    if (id == OBStereo::ImplicitRef)
-      return OBStereo::NoRef;
-
-    // find id1
-    for (int i = 0; i < 4; ++i) {
-      if (m_cfg.refs.at(i) == id) {
-        // use it's index to compare id2 with the opposite reference id
-        int j = (i > 1) ? i - 2 : i + 2;
-        // make sure they are not bonded to the same atom
-        unsigned long transId = m_cfg.refs.at(j);
-        if (transId == OBStereo::ImplicitRef)
-          return OBStereo::ImplicitRef;
-        if (IsOnSameAtom(id, transId)) {
-          obErrorLog.ThrowError(__FUNCTION__, 
-              "OBCisTransStereo::GetTransRef : References don't match bond orientation", obError);
-          return OBStereo::NoRef;
-        }
-        return transId;
-      }
-    }
-
-    // id not found
-    return OBStereo::NoRef;
-  }
-
-  unsigned long OBCisTransStereo::GetCisRef(unsigned long id) const
+  unsigned long OBCisTransStereo::GetCisOrTransRef(unsigned long id, bool getcisref) const
   {
     if (!IsValid())
       return OBStereo::NoRef;
@@ -213,29 +183,38 @@ namespace OpenBabel {
     // find id
     for (int i = 0; i < 4; ++i) {
       if (m_cfg.refs.at(i) == id) {
-        // use it's index to get the left/right reference ids
-        int j = (i > 0) ? i - 1 : 3;
-        int k = (i < 3) ? i + 1 : 0;
+        // Use its index to find the index of the cis (or trans) atom
+        int j;
+        if (getcisref) // GetCisRef
+          j = 3 - i; // Convert 0 to 3, and 3 to 0
+        else // GetTransRef
+          j = (i > 1) ? i - 2 : i + 2;
+        
+        unsigned long refId = m_cfg.refs.at(j);
+        if (refId == OBStereo::ImplicitRef)
+          return OBStereo::ImplicitRef;
         // make sure they are not bonded to the same atom
-        if (m_cfg.refs.at(j) != OBStereo::ImplicitRef)
-          if (!IsOnSameAtom(id, m_cfg.refs.at(j)))
-            return m_cfg.refs.at(j);
-        if (m_cfg.refs.at(k) != OBStereo::ImplicitRef)
-          if (!IsOnSameAtom(id, m_cfg.refs.at(k)))
-            return m_cfg.refs.at(k);
-
-        if ((m_cfg.refs.at(j) == OBStereo::ImplicitRef) && (m_cfg.refs.at(k) == OBStereo::ImplicitRef)) {
-          return OBStereo::ImplicitRef;       
+        if (IsOnSameAtom(id, refId)) {
+          obErrorLog.ThrowError(__FUNCTION__, 
+            "OBCisTransStereo::GetCisOrTransRef : References don't match bond orientation", obError);
+          return OBStereo::NoRef;
         }
-
-        obErrorLog.ThrowError(__FUNCTION__, 
-            "OBCisTransStereo::GetTransRef : References don't match bond orientation", obError);
-        return OBStereo::NoRef;
+        return refId;
       }
     }
 
     // id not found
     return OBStereo::NoRef;
+  }
+
+  unsigned long OBCisTransStereo::GetTransRef(unsigned long id) const
+  {
+    return GetCisOrTransRef(id, false);
+  }
+
+  unsigned long OBCisTransStereo::GetCisRef(unsigned long id) const
+  {
+    return GetCisOrTransRef(id, true);
   }
     
   bool OBCisTransStereo::IsOnSameAtom(unsigned long id1, unsigned long id2) const

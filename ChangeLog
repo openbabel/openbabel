@@ -1,5 +1,11 @@
 2010-02-26  Noel O'Boyle
 
+	* src/stereo/cistrans.cpp, include/openbabel/stereo/cistrans.h: Fix
+	bug in GetCisRef, and unify implementations of GetCisRef and
+	GetTransRef
+
+2010-02-26  Noel O'Boyle
+
 	* test/testsym.py: Add a test for 0D tetrahedral symmetry across SMI,
 	InChI, SDF and XML
 

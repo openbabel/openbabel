@@ -296,7 +296,9 @@ class OBAPI OBCisTransStereo : public OBTetraPlanarStereo
     //@}
  
   private:
-    Config m_cfg; //!< internal configuration 
+    Config m_cfg; //!< internal configuration
+    // The following function sits behind GetCisRef and GetTransRef
+    unsigned long GetCisOrTransRef(unsigned long id, bool getcisref) const;
 };
 
 } // namespace OpenBabel
