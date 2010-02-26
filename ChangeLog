@@ -1,3 +1,10 @@
+2010-02-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/chains.cpp: Apply patch from Juergen Wieferink: PR#2948548.
+
+	* CMakeLists.txt: Add option for disabling boost detection -- can
+	cause problems compiling.
+
 2010-02-26  Noel O'Boyle
 
 	* src/formats/xml/cmlformat.cpp: Add support for 0D cistrans symmetry

@@ -41,16 +41,17 @@ using namespace std;
 
 //! The first available index for actual residues
 //! 0, 1, 2 reserved for UNK, HOH, LIG
-#define RESIDMIN       3
+#define RESIDMIN       4
 //! The maximum number of residue IDs for this code
-#define RESIDMAX       32
+#define RESIDMAX       64
 
 //! An index of the residue names perceived during a run
 //! 0, 1, and 2 reserved for UNK, HOH, LIG
 static char ChainsResName[RESIDMAX][4] = {
   /*0*/ "UNK",  
   /*1*/ "HOH",  
-  /*2*/ "LIG"
+  /*2*/ "LIG",
+  /*3*/ "ACE"
 };
 
 #define ATOMMINAMINO   4
@@ -154,8 +155,7 @@ namespace OpenBabel
     int n2;          //!< mask 2 used by ConstrainBackbone() and MatchConstraint()
     int n3;          //!< mask 3 used by ConstrainBackbone() and MatchConstraint()
     int n4;          //!< mask 4 used by ConstrainBackbone() and MatchConstraint()
-  }
-    Template;
+  }    Template;
 
   /** 
    * Generic template for peptide residue backbone. \n
@@ -285,8 +285,7 @@ namespace OpenBabel
   {
     const char *name; //!< Residue name, standardized by PDB
     const char *data; //!< pseudo-SMILES definition of side-chain
-  }
-    ResidType;
+  }    ResidType;
 
   /** 
    * Side chains for recognized amino acids using a pseudo-SMARTS syntax
@@ -341,23 +340,20 @@ namespace OpenBabel
     int atomid,elem;
     int bcount;
     int index;
-  }
-    MonoAtomType;
+  } MonoAtomType;
 
   typedef struct
   {
     int src,dst;
     int index;
     int flag;
-  }
-    MonoBondType;
+  } MonoBondType;
 
   typedef struct
   {
     int type;
     union _ByteCode *next;
-  }
-    MonOpStruct;
+  } MonOpStruct;
 
   typedef struct
   {
@@ -365,8 +361,7 @@ namespace OpenBabel
     int value;
     union _ByteCode *tcond;
     union _ByteCode *fcond;
-  }
-    BinOpStruct;
+  } BinOpStruct;
 
   //! Output array -- residue id, atom id, bond flags, etc.
   typedef struct
@@ -375,8 +370,7 @@ namespace OpenBabel
     int resid;
     int *atomid;
     int *bflags;
-  }
-    AssignStruct;
+  } AssignStruct;
 
   //! Chemical graph matching virtual machine
   typedef union _ByteCode
@@ -394,8 +388,7 @@ namespace OpenBabel
   {
     int atom,bond;
     int prev;
-  }
-    StackType;
+  } StackType;
 
   static MonoAtomType MonoAtom[MaxMonoAtom];
   static MonoBondType MonoBond[MaxMonoBond];
@@ -983,17 +976,24 @@ namespace OpenBabel
           FOR_NBORS_OF_ATOM (nbr, &*atom) {
             unsigned int idx2 = nbr->GetIdx() - 1;
             if (resids[idx2] != 0) { // !UNK
-              resnos[idx] = resnos[idx2];
-              resids[idx] = resids[idx2];
-              changed = true;
-	      
-              bool addResidue = true;
-              for (unsigned int i = 0; i < invalidResidues.size(); ++i)
-                if ( (invalidResidues[i].first == chains[idx2]) && 
-                     (invalidResidues[i].second == resnos[idx2]) )
-                  addResidue = false;
-              if (addResidue)
-                invalidResidues.push_back(pair<char,short>(chains[idx2], resnos[idx2]));
+	      if (atomids[idx2] == AI_N || atomids[idx2] == AI_C) {
+		// bound to backbone-N/C
+		hetflags[idx] = true;
+		resids[idx] = 3; // ACE
+		atomids[idx] = -1;
+	      } else {
+		resnos[idx] = resnos[idx2];
+		resids[idx] = resids[idx2];
+		changed = true;
+
+		bool addResidue = true;
+		for (unsigned int i = 0; i < invalidResidues.size(); ++i)
+		  if ( (invalidResidues[i].first == chains[idx2]) && 
+		       (invalidResidues[i].second == resnos[idx2]) )
+		    addResidue = false;
+		if (addResidue)
+		  invalidResidues.push_back(pair<char,short>(chains[idx2], resnos[idx2]));
+	      }
             }
           }
         }
