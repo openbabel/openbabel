@@ -89,6 +89,11 @@ endif(WIN32)
 
 # configure checks
 find_package(LibXml2)
+
+option(ENABLE_BOOST
+  "Enable searching for Boost C++ library" ON)
+
+if(ENABLE_BOOST)
 find_package(Boost)
 if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
@@ -98,6 +103,7 @@ if(MSVC90)
   # To be added: AND SP1  OR gcc>4.0
   add_definitions(-DHAVE_SHARED_POINTER)
 endif(MSVC90)
+endif(ENABLE_BOOST)
 
 find_package(ZLIB)
 if(ZLIB_FOUND)
