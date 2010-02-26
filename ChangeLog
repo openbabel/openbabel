@@ -1,3 +1,9 @@
+2010-02-26  Noel O'Boyle
+
+	* src/formats/xml/cmlformat.cpp: Add support for 0D cistrans symmetry
+	* test/testsym.py: Add tests for 0D cistrans symmetry across SMI,
+	InChI, SDF and CML
+
 2010-02-26  Chris Morley
 
 	* src/obconversion.cpp:

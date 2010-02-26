@@ -19,6 +19,7 @@ GNU General Public License for more details.
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/kinetics.h>
 #include <openbabel/stereo/tetrahedral.h>
+#include <openbabel/stereo/cistrans.h>
 #include <openbabel/atomclass.h>
 #include <openbabel/xml.h>
 #include <float.h>
@@ -833,7 +834,7 @@ namespace OpenBabel
               {
                 OBBond* pbond1=NULL;
                 OBBond* pbond2=NULL;
-                if(atrefsvalue.empty())
+                if(atrefsvalue.empty()) // ToDo
                   {
                     OBBond* pDBond = _pmol->GetBond(Idx);
                     //With no atomRefs4, the specification is either W, H,
@@ -874,49 +875,39 @@ namespace OpenBabel
 
                 if(!pbond1 || !pbond2)
                   continue;
-                //Congugated double bonds are a special case see OBMol2Smi::GetCisTransBondSymbol()
-                //Feb07 C/C=C/C=C/C=C/C  trans/trans/trans has OB_TORUP_BOND and OB_TORDOWN in OBMol as
-                //       d   u   u   u
-                if(pbond1->IsUp() || pbond1->IsDown()) 
-                  {
-                    if((pbond1->IsUp() && (value=="T")) || (pbond1->IsDown() && value=="C"))
-                      pbond2->SetUp(); 
-                    else
-                      pbond2->SetDown();
-                  }
 
-/*                else if(pbond2->IsUp() || pbond2->IsDown()) //congugated double bonds
-                  {
-                    if((pbond2->IsUp() && (value=="T")) || (pbond2->IsDown() && value=="C"))
-                      pbond1->SetUp();
-                    else
-                      pbond1->SetDown();
+                // Create the list of 4 atomrefs
+                OBStereo::Ref begin, end;
+                begin = _pmol->GetAtom(AtomRefIdx[1])->GetId();
+                end =   _pmol->GetAtom(AtomRefIdx[2])->GetId();
+                OBStereo::Refs refs(4);
+                refs[0] = _pmol->GetAtom(AtomRefIdx[0])->GetId();
+                refs[1] = OBStereo::ImplicitRef;
+                FOR_NBORS_OF_ATOM(nbr, _pmol->GetAtomById(begin))
+                  if (nbr->GetId()!=end && nbr->GetId()!=refs[0]) {
+                    refs[1] = nbr->GetId();
+                    break;
                   }
-*/
-                else
-                  {
-                    pbond1->SetDown();
-                    if(value=="C")
-                      pbond2->SetDown();
-                    else if(value=="T")
-                      pbond2->SetUp();
+                OBStereo::Ref tmpref = _pmol->GetAtom(AtomRefIdx[3])->GetId();
+                OBStereo::Ref finalref = OBStereo::ImplicitRef;
+                FOR_NBORS_OF_ATOM(nbr, _pmol->GetAtomById(end))
+                  if (nbr->GetId()!=begin && nbr->GetId()!=tmpref) {
+                    finalref = nbr->GetId();
+                    break;
                   }
-                
-                //Need to mark direction of the other bond also, in case
-                // it is part of a conjugated chain (when u/d is reversed see above)
-                OBAtom* pAtom2 = _pmol->GetAtom(AtomRefIdx[2]); //end of double bond
-                FOR_BONDS_OF_ATOM(b, pAtom2)
-                {
-                  if(&*b==pbond2 || b->IsDouble()) continue;
-                  if((b->GetNbrAtom(pAtom2))->GetAtomicNum()==6)
-                  {
-                    if(pbond2->IsUp())
-                      b->SetDown();
-                    else
-                      b->SetUp();
-                  }
+                if (value=="C") { // for Cis (tmpref and refs[0] on same side)
+                  refs[2] = finalref; refs[3] = tmpref;
+                }
+                else { // for Trans
+                  refs[2] = tmpref; refs[3] = finalref;
                 }
 
+                // Create the new stereo object
+                OBCisTransStereo::Config ct_cfg = OBCisTransStereo::Config(
+                                                       begin, end, refs, OBStereo::ShapeU);
+                OBCisTransStereo *ct = new OBCisTransStereo(_pmol);
+                ct->SetConfig(ct_cfg);
+                _pmol->SetData(ct);
               }
           }
       }
@@ -1140,7 +1131,7 @@ namespace OpenBabel
     // static const xmlChar C_TITLE[]      = "title";
     static const xmlChar C_NAME[]       = "name";
     static const xmlChar C_ATOMPARITY[] = "atomParity";
-    //	static const xmlChar C_BONDSTEREO[] = "bondStereo";
+    static const xmlChar C_BONDSTEREO[] = "bondStereo";
 
     static const xmlChar C_X2[]               = "x2";
     static const xmlChar C_Y2[]               = "y2";
@@ -1295,6 +1286,7 @@ namespace OpenBabel
 
     WriteInChI(mol);
 
+    // Create map (tetStereos) from atom Ids to tetstereos
     std::map<unsigned int, OBTetrahedralStereo::Config > tetStereos;
     std::map<unsigned int, OBTetrahedralStereo::Config >::const_iterator tetStereo_cit;
     if (mol.GetDimension()!=3) {
@@ -1564,6 +1556,22 @@ namespace OpenBabel
           }
       }
 
+    // Create map (ctStereos) from bond Idxs to cistrans stereos
+    std::map<unsigned int, OBCisTransStereo* > ctStereos;
+    std::map<unsigned int, OBCisTransStereo* >::const_iterator ctStereo_cit;
+    if (mol.GetDimension()!=3) {
+      std::vector<OBGenericData*> vdata = mol.GetAllData(OBGenericDataType::StereoData);
+      for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data)
+        if (((OBStereoBase*)*data)->GetType() == OBStereo::CisTrans) {
+          OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
+          if(ct->GetConfig().specified) {
+            unsigned int dblbond = mol.GetBond(mol.GetAtomById(ct->GetConfig().begin),
+                                               mol.GetAtomById(ct->GetConfig().end  ))->GetIdx();
+            ctStereos[dblbond] = ct;
+          }
+        }
+    }
+
     if(mol.NumBonds()>0)
       {
         xmlTextWriterStartElementNS(writer(), prefix, C_BONDARRAY, NULL);
@@ -1592,9 +1600,33 @@ namespace OpenBabel
                     xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS2,"%s %s",
                           ref1.c_str(), ref2.c_str());
                     xmlTextWriterWriteFormatAttribute(writer(), C_ORDER,"%s", ord.str().c_str());
-					
-                    if(bo==2 || pbond->IsWedge() || pbond->IsHash())
-                      WriteBondStereo(pbond, atomIds);
+
+                    if( (ctStereo_cit=ctStereos.find(pbond->GetIdx())) != ctStereos.end() )
+                      {
+                        OBCisTransStereo *ct = ctStereo_cit->second;
+                        OBCisTransStereo::Config ct_cfg = ct->GetConfig();
+
+                        // Find a non-implicit ref at either end of the dbl bond
+                        OBStereo::Ref beginref, endref;
+                        beginref = (ct_cfg.refs[0] == OBStereo::ImplicitRef) ? ct_cfg.refs[1] : ct_cfg.refs[0];
+                        endref =   (ct_cfg.refs[2] == OBStereo::ImplicitRef) ? ct_cfg.refs[3] : ct_cfg.refs[2];
+                        char cis_or_trans = ct->IsCis(beginref, endref) ? 'C' : 'T';
+
+                        // Prepare the "atomrefs4"
+                        vector<string> atomrefs(4);
+                        atomrefs[0] = atomIds[mol.GetAtomById(beginref)->GetIdx()];
+                        atomrefs[1] = atomIds[mol.GetAtomById(ct_cfg.begin)->GetIdx()];
+                        atomrefs[2] = atomIds[mol.GetAtomById(ct_cfg.end)->GetIdx()];
+                        atomrefs[3] = atomIds[mol.GetAtomById(endref)->GetIdx()];
+
+                        // Create the XML tags
+                        xmlTextWriterStartElementNS(writer(), prefix, C_BONDSTEREO, NULL);
+                        xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS4, "%s %s %s %s",
+                              atomrefs[0].c_str(), atomrefs[1].c_str(),
+                              atomrefs[2].c_str(), atomrefs[3].c_str());
+                        xmlTextWriterWriteFormatString(writer(),"%c", cis_or_trans);
+                        xmlTextWriterEndElement(writer());//bondStereo
+                      }
                   }
                 else
                   {

@@ -18,8 +18,42 @@ import unittest
 
 from testbabel import run_exec, executable, log, BaseTest
 
-class testSym(BaseTest):
-    """A series of tests relating to symmetry"""
+class TestSym(BaseTest):
+    """Base class for a series of tests relating to symmetry"""
+
+    def testInChItoSMI(self):
+        """Verify that the InChI is read correctly"""
+        output, error = run_exec(self.inchi, "babel -iinchi -ocan")
+        self.assertEqual(output.rstrip(), self.cansmi)
+
+    def testSMItoInChI(self):
+        """Verify that all molecules give the same InChI"""
+        for smi in self.smiles:
+            output, error = run_exec(smi, "babel -ismi -oinchi")
+            self.assertEqual(output.rstrip(), self.inchi)
+
+    def testSMItoCAN(self):
+        """Verify that all molecules give the same cansmi"""
+        for smi in self.smiles:
+            output, error = run_exec(smi, "babel -ismi -ocan")
+            self.assertEqual(output.rstrip(), self.cansmi)            
+
+    def testSMIthruSDF(self):
+        """Verify that roundtripping through SDF preserves stereo"""
+        for smi in self.smiles:
+            output, error = run_exec(smi, "babel -ismi -osdf")
+            output, error = run_exec(output.rstrip(), "babel -isdf -ocan")
+            self.assertEqual(output.rstrip(), self.cansmi)
+
+    def testSMIthruXML(self):
+        """Verify that roundtripping through CML preserves stereo"""
+        for smi in self.smiles:
+            output, error = run_exec(smi, "babel -ismi -ocml")
+            output, error = run_exec(output.rstrip(), "babel -icml -ocan")
+            self.assertEqual(output.rstrip(), self.cansmi)
+
+class TestTetSym(TestSym):
+    """A series of tests relating to tetrahedral symmetry"""
 
     def setUp(self):
         self.canFindExecutable("babel")
@@ -54,36 +88,28 @@ class testSym(BaseTest):
              'F[C@@](Br)(Cl)C'
              ]
 
-    def testInChItoSMI(self):
-        """Verify that the InChI is read correctly"""
-        output, error = run_exec(self.inchi, "babel -iinchi -ocan")
-        self.assertEqual(output.rstrip(), self.cansmi)
 
-    def testSMItoInChI(self):
-        """Verify that all molecules give the same InChI"""
-        for smi in self.smiles:
-            output, error = run_exec(smi, "babel -ismi -oinchi")
-            self.assertEqual(output.rstrip(), self.inchi)
+class TestCisTransSym(TestSym):
+    """A series of tests relating to cistrans symmetry"""
 
-    def testSMItoCAN(self):
-        """Verify that all molecules give the same cansmi"""
-        for smi in self.smiles:
-            output, error = run_exec(smi, "babel -ismi -ocan")
-            self.assertEqual(output.rstrip(), self.cansmi)            
+    def setUp(self):
+        self.canFindExecutable("babel")
 
-    def testSMIthruSDF(self):
-        """Verify that roundtripping through SDF preserves stereo"""
-        for smi in self.smiles:
-            output, error = run_exec(smi, "babel -ismi -osdf")
-            output, error = run_exec(output.rstrip(), "babel -isdf -ocan")
-            self.assertEqual(output.rstrip(), self.cansmi)
-
-    def testSMIthruXML(self):
-        """Verify that roundtripping through CML preserves stereo"""
-        for smi in self.smiles:
-            output, error = run_exec(smi, "babel -ismi -ocml")
-            output, error = run_exec(output.rstrip(), "babel -icml -ocan")
-            self.assertEqual(output.rstrip(), self.cansmi)
+        # The following all represent the same molecule
+        self.cansmi = "Cl/C=C/C=C\Br"
+        self.inchi = "InChI=1S/C4H4BrCl/c5-3-1-2-4-6/h1-4H/b3-1-,4-2+"
+        self.smiles = [
+                "C(=C\C=C/Br)/Cl",
+                "Cl/C=C/C=C\Br", 
+                "Br/C=C\C=C\Cl",
+                "C(=C\Cl)/C=C\Br",
+                "C(=C\C=C\Cl)\Br",
+                "C(=C\Br)\C=C\Cl"
+                ]
 
 if __name__ == "__main__":
-    unittest.main()
+    testsuite = []
+    for myclass in [TestCisTransSym, TestTetSym]:
+        suite = unittest.TestLoader().loadTestsFromTestCase(myclass)
+        testsuite.append(suite)
+    unittest.TextTestRunner().run(unittest.TestSuite(testsuite))
