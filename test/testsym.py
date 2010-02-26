@@ -69,6 +69,7 @@ class testSym(BaseTest):
         """Verify that all molecules give the same cansmi"""
         for smi in self.smiles:
             output, error = run_exec(smi, "babel -ismi -ocan")
+            self.assertEqual(output.rstrip(), self.cansmi)            
 
     def testSMIthruSDF(self):
         """Verify that roundtripping through SDF preserves stereo"""
