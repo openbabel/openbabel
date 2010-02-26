@@ -149,6 +149,9 @@ struct OBFPRT FptIndex
   std::vector<unsigned int> fptdata;
   std::vector<unsigned int> seekdata;
   bool Read(std::istream* pIndexstream);
+  bool ReadIndex(std::istream* pIndexstream);
+  bool ReadHeader(std::istream* pIndexstream);
+    
   /// \return A pointer to FP used or NULL and an error message
   OBFingerprint* CheckFP();
 };
