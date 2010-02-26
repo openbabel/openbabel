@@ -1,3 +1,15 @@
+2010-02-26  Chris Morley
+
+	* src/obconversion.cpp:
+	Set MAKE_ALL_READS_BINARY by default in the code. (CMake build had
+	omitted to do that.) If not set on MSVC, seekg() returns incorrect
+	values with UNIX files.
+	
+	* src/fingerprint.cpp:
+	Do the binary read and write of each header variable separately
+	rather than as a struct, to reduce possiblity of problems on other
+	platforms which may lay out struct differently.	 
+
 2010-02-26  Noel O'Boyle
 
 	* src/stereo/cistrans.cpp, include/openbabel/stereo/cistrans.h: Fix

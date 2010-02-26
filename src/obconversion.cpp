@@ -1363,6 +1363,9 @@ namespace OpenBabel {
           }
       }
 
+#ifndef ALL_READS_BINARY 
+  #define ALL_READS_BINARY //now the default
+#endif
     ios_base::openmode imode;
 #ifdef ALL_READS_BINARY //Makes unix files compatible with VC++6
     imode = ios_base::in|ios_base::binary;

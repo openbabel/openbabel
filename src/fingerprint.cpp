@@ -314,9 +314,10 @@ namespace OpenBabel
   //////////////////////////////////////////////////////////
   bool FptIndex::Read(istream* pIndexstream)
   {
-    pIndexstream->read((char*)&(header), sizeof(FptIndexHeader));
-    pIndexstream->seekg(header.headerlength);//allows header length to be changed
-    if(pIndexstream->fail() || header.headerlength != sizeof(FptIndexHeader))
+//    pIndexstream->read((char*)&(header), sizeof(FptIndexHeader));
+//    pIndexstream->seekg(header.headerlength);//allows header length to be changed
+
+    if(!ReadHeader(pIndexstream))
       {
         *(header.datafilename) = '\0';
         return false;
@@ -336,6 +337,17 @@ namespace OpenBabel
       }
     return true;
   }
+
+  //////////////////////////////////////////////////////////
+  bool FptIndex::ReadHeader(istream* pIndexstream)
+  {
+    pIndexstream->read( (char*)&header.headerlength, sizeof(unsigned) );
+    pIndexstream->read( (char*)&header.nEntries,     sizeof(unsigned) );
+    pIndexstream->read( (char*)&header.words,        sizeof(unsigned) );
+    pIndexstream->read( (char*)&header.fpid,         sizeof(header.fpid) );
+    pIndexstream->read( (char*)&header.datafilename, sizeof(header.datafilename) );
+    return !pIndexstream->fail();
+ }
 
   //////////////////////////////////////////////////////////
   OBFingerprint* FptIndex::CheckFP()
@@ -360,7 +372,8 @@ namespace OpenBabel
     _indexstream = os;
     _nbits=FptBits;
     _pindex= new FptIndex;
-    _pindex->header.headerlength = sizeof(FptIndexHeader);
+    _pindex->header.headerlength = 3*sizeof(unsigned)+sizeof(_pindex->header.fpid)
+                                    +sizeof(_pindex->header.datafilename);
     strncpy(_pindex->header.fpid,fpid.c_str(),15);
     _pindex->header.fpid[15]='\0'; //ensure fpid is terminated at 15 characters.
     strncpy(_pindex->header.datafilename, datafilename.c_str(), 255);
@@ -369,7 +382,9 @@ namespace OpenBabel
     _pindex->header.nEntries = nmols;
 
     //check that fingerprint type is available
-    _pFP = _pindex->CheckFP();	
+    _pFP = _pindex->CheckFP();
+    if(fpid.empty()) // add id of default FP
+      strcpy(_pindex->header.fpid, _pFP->GetID());
   }
 
   /////////////////////////////////////////////////////////////
@@ -391,8 +406,16 @@ namespace OpenBabel
   FastSearchIndexer::~FastSearchIndexer()
   {
     ///Saves index file
-    _pindex->header.nEntries = _pindex->seekdata.size();
-    _indexstream->write((const char*)&_pindex->header, sizeof(FptIndexHeader));
+    FptIndexHeader& hdr = _pindex->header;
+    hdr.nEntries = _pindex->seekdata.size();
+    //Write header
+    //_indexstream->write((const char*)&hdr, sizeof(FptIndexHeader));
+    _indexstream->write( (const char*)&hdr.headerlength, sizeof(unsigned) );
+    _indexstream->write( (const char*)&hdr.nEntries,     sizeof(unsigned) );
+    _indexstream->write( (const char*)&hdr.words,        sizeof(unsigned) );
+    _indexstream->write( (const char*)&hdr.fpid,         sizeof(hdr.fpid) );
+    _indexstream->write( (const char*)&hdr.datafilename, sizeof(hdr.datafilename) );
+      
     _indexstream->write((const char*)&_pindex->fptdata[0], _pindex->fptdata.size()*sizeof(unsigned int));
     _indexstream->write((const char*)&_pindex->seekdata[0], _pindex->seekdata.size()*sizeof(unsigned int));
     if(!_indexstream)
