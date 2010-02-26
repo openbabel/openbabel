@@ -1,3 +1,8 @@
+2010-02-26  Noel O'Boyle
+
+	* test/testsym.py: Add a test for 0D tetrahedral symmetry across SMI,
+	InChI, SDF and XML
+
 2010-02-25  Noel O'Boyle
 
 	* src/xml/cmlformat.cpp: Add support for 0D tetrahedral stereochem

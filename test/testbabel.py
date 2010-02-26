@@ -5,7 +5,7 @@ Note: Python bindings not used
 On Windows or Linux, you can run these tests at the commandline
 in the build folder with:
 "C:\Program Files\CMake 2.6\bin\ctest.exe" -C CTestTestfile.cmake
-                                           -R testpy -VV
+                                           -R pytest -VV
 
 You could also "chdir" into build/test and run the test file directly:
 python ../../test/testbabel.py
@@ -52,13 +52,14 @@ def log(text):
     print >> output, text
     output.close()
 
-class testBabel(unittest.TestCase):
-    """A series of tests relating to the Babel executable"""
-
+class BaseTest(unittest.TestCase):
     def canFindExecutable(self, name):
         fullpath = executable(name)
         self.assertTrue(os.path.isfile(fullpath),
                         "'%s' executable not found at %s" % (name, fullpath))
+
+class testBabel(BaseTest):
+    """A series of tests relating to the Babel executable"""
         
     def testSMItoInChI(self):
         self.canFindExecutable("babel")

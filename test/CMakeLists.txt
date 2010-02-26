@@ -107,4 +107,5 @@ install(TARGETS roundtrip
 ###########################
 
 include(UsePythonTest)
-ADD_PYTHON_TEST(testpy_babel testbabel.py)
+ADD_PYTHON_TEST(pytest_babel testbabel.py)
+ADD_PYTHON_TEST(pytest_sym testsym.py)
