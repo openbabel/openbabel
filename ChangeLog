@@ -1,3 +1,9 @@
+2010-02-27  Noel O'Boyle
+
+	* test/CMakelists.txt, test/testfastsearch.py, test/testbabel.py:
+	Added a new test for fastsearch functionality plus some convenience
+	methods.
+
 2010-02-27  Chris Morley
 	
 	* include/openbabel/base.h: Make GetTitle() and SetTitle() virtual

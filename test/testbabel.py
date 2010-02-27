@@ -15,23 +15,40 @@ and so you can quickly develop the tests and try them out.
 """
 
 import os
+import re
 import sys
 import unittest
 
 from subprocess import Popen, PIPE
 
-def run_exec(text, commandline):
-    """Pipe from stdin to an executable
+def run_exec(*args):
+    """Run one of OpenBabel's executables
+
+    With two arguments (stdin, commandline) it pipes
+    the stdin through the executable.
 
     Example: run_exec("CC(=O)Cl", "babel -ismi -oinchi")
 
     Return a tuple (stdout, stderr)
     """
+    if len(args) == 2:
+        text, commandline = args
+    elif len(args) == 1:
+        text, commandline = "", args[0]
+    else:
+        raise Exception, "One or two arguments expected"
+    
     broken = commandline.split()
     exe = executable(broken[0])
-    p = Popen([exe] + broken[1:], 
-              stdin=PIPE, stdout=PIPE, stderr=PIPE)
-    stdout, stderr = p.communicate(text)
+    if text:
+        p = Popen([exe] + broken[1:], 
+                  stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        stdout, stderr = p.communicate(text)
+    else:
+        p = Popen([exe] + broken[1:], 
+                  stdout=PIPE, stderr=PIPE)
+        stdout, stderr = p.communicate()
+    
     return stdout, stderr
 
 def executable(name):
@@ -53,10 +70,29 @@ def log(text):
     output.close()
 
 class BaseTest(unittest.TestCase):
+    """A base class for test classes that adds additional
+    test methods"""
+    
     def canFindExecutable(self, name):
         fullpath = executable(name)
         self.assertTrue(os.path.isfile(fullpath),
                         "'%s' executable not found at %s" % (name, fullpath))
+        
+    def canFindFile(self, filename):
+        self.assertTrue(os.path.isfile(filename),
+                        "Cannot find the file '%s'" % filename)
+
+    def assertConverted(self, stderr, N):
+        """Assert that N molecules were converted."""
+        pat = "(-?\d.*) molecule(?:s?) converted"
+        lines = stderr.split("\n")
+        convertedline =  [line for line in lines if re.match(pat, line)]
+        if len(convertedline) == 0:
+            self.fail("Cannot find the number of molecules converted")
+        conversion_no = int(re.findall(pat, convertedline[0])[0])
+        self.assertEqual(N, conversion_no,
+                         "Number of molecules converted is %d "
+                         "but should be %d" % (conversion_no, N))        
 
 class testBabel(BaseTest):
     """A series of tests relating to the Babel executable"""
