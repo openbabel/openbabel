@@ -109,7 +109,7 @@ public:
   // "a6b" (or "a06b") is less than "a15b"
   // and "CH4" is less than "C2H6"
   // and "CH4" is less than "ClH" (hydrogen chloride)
-  static struct InchiLess
+  struct InchiLess
     : public binary_function<const string&, const string&, bool>
   {
     bool operator()(const string& s1, const string& s2) const
