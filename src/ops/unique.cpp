@@ -21,7 +21,7 @@ GNU General Public License for more details.
 #include <openbabel/obconversion.h>
 #include <openbabel/descriptor.h>
 #include <openbabel/inchiformat.h>
-#include <unordered_map>
+#include <tr1/unordered_map>
 
 using namespace std;
 using std::tr1::unordered_map;
