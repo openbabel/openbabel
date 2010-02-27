@@ -223,6 +223,19 @@ namespace OpenBabel
     int HOMO = 0;
     vector<double> orbitals;
 
+    // coordinates of all steps
+    // Set conformers to all coordinates we adopted
+    std::vector<double*> vconf; // index of all frames/conformers
+    std::vector<double> coordinates; // coordinates in each frame
+    int natoms = 0; 
+
+    // OBConformerData stores information about multiple steps
+    OBConformerData *confData = new OBConformerData();
+    confData->SetOrigin(fileformatInput);
+    std::vector<unsigned short> confDimensions = confData->GetDimension(); // to be fair, set these all to 3D
+    std::vector<double>         confEnergies   = confData->GetEnergies();
+    std::vector< std::vector< vector3 > > confForces = confData->GetForces();
+    
     vector<double> frequencies, intensities, raman_intensities;
     vector< vector<vector3> > displacements;
     int lowFreqModesBegin; // the number of the first low frequency mode
@@ -240,29 +253,49 @@ namespace OpenBabel
       {
         if(strstr(buffer,"ATOMIC                      COORDINATES (BOHR)") != NULL)
           {
-            mol.Clear();
-            mol.BeginModify();
+            //mol.Clear();
+            //mol.BeginModify();
 
             ifs.getline(buffer,BUFF_SIZE);	// column headings
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
             while (vs.size() == 5)
               {
-                atom = mol.NewAtom();
-                atom->SetAtomicNum(atoi(vs[1].c_str())); // Parse the current one
+                //atom = mol.NewAtom();
+                //atom->SetAtomicNum(atoi(vs[1].c_str())); // Parse the current one
+                int atomicNum = atoi(vs[1].c_str());
                 x = atof((char*)vs[2].c_str()) * BOHR_TO_ANGSTROM;
                 y = atof((char*)vs[3].c_str()) * BOHR_TO_ANGSTROM;
                 z = atof((char*)vs[4].c_str()) * BOHR_TO_ANGSTROM;
-                atom->SetVector(x,y,z);
-                vs[1].erase(vs[1].size() - 2, 2);
+                //atom->SetVector(x,y,z);
+                //vs[1].erase(vs[1].size() - 2, 2);
+                if (natoms == 0) // first time reading the molecule, create each atom
+                  {
+                    atom = mol.NewAtom();
+                    atom->SetAtomicNum(atomicNum);
+                  }
+                coordinates.push_back(x);
+                coordinates.push_back(y);
+                coordinates.push_back(z);
+                cerr << x << "  " << y << "  " << z << endl;
 
                 if (!ifs.getline(buffer,BUFF_SIZE))
                   break;
                 tokenize(vs,buffer);
               }
+            // done with reading atoms
+            natoms = mol.NumAtoms();
+            // malloc / memcpy
+            double *tmpCoords = new double [(natoms)*3];
+            memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
+            vconf.push_back(tmpCoords);
+            coordinates.clear();
+            confDimensions.push_back(3); // always 3D -- OBConformerData allows mixing 2D and 3D structures
+            cerr << "New conformer!" << endl;
           }
         else if(strstr(buffer,"MULTIPOLE COORDINATES, ELECTRONIC AND NUCLEAR CHARGES") != NULL)
           {
+              cerr << "went here\n";
             /*This set of EFP coordinates belongs only to the
              * conformer directly above this (ATOMIC   COORDINATES (BOHR))
              */
@@ -278,6 +311,7 @@ namespace OpenBabel
                  * or have a non-zero nuclear charge
                  */
                 if (atof((char*)vs[5].c_str()) > 0.0) {
+                    cerr << "here!" << endl;
                   atom = mol.NewAtom();
                   atomicNum=etab.GetAtomicNum(vs[0].substr(0,1).c_str()); 
                   atom->SetAtomicNum(atomicNum);
@@ -305,8 +339,8 @@ namespace OpenBabel
 
         else if(strstr(buffer,"COORDINATES OF ALL ATOMS ARE (ANGS)") != NULL)
           {
-            mol.Clear();
-            mol.BeginModify();
+            //mol.Clear();
+            //mol.BeginModify();
 
             ifs.getline(buffer,BUFF_SIZE);	// column headings
             ifs.getline(buffer,BUFF_SIZE);	// ---------------
@@ -314,18 +348,38 @@ namespace OpenBabel
             tokenize(vs,buffer);
             while (vs.size() == 5)
               {
-                atom = mol.NewAtom();
-                atom->SetAtomicNum(atoi(vs[1].c_str())); // Parse the current one
+                //atom = mol.NewAtom();
+                //atom->SetAtomicNum(atoi(vs[1].c_str())); // Parse the current one
+                int atomicNum = atoi(vs[1].c_str());
                 x = atof((char*)vs[2].c_str());
                 y = atof((char*)vs[3].c_str());
                 z = atof((char*)vs[4].c_str());
-                atom->SetVector(x,y,z);
-                vs[1].erase(vs[1].size() - 2, 2);
+                //atom->SetVector(x,y,z);
+                //vs[1].erase(vs[1].size() - 2, 2);
+                if (natoms == 0) // first time reading the molecule, create each atom
+                  {
+                    atom = mol.NewAtom();
+                    atom->SetAtomicNum(atomicNum);
+                  }
+                coordinates.push_back(x);
+                coordinates.push_back(y);
+                coordinates.push_back(z);
+                cerr << x << "  " << y << "  " << z << endl;
 
                 if (!ifs.getline(buffer,BUFF_SIZE))
                   break;
                 tokenize(vs,buffer);
               }
+            // done with reading atoms
+            natoms = mol.NumAtoms();
+            // malloc / memcpy
+            double *tmpCoords = new double [(natoms)*3];
+            memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
+            vconf.push_back(tmpCoords);
+            coordinates.clear();
+            confDimensions.push_back(3); // always 3D -- OBConformerData allows mixing 2D and 3D structures
+            cerr << "New conformer!" << endl;
+            
             if(strstr(buffer,"COORDINATES OF FRAGMENT") != NULL)
               {
                 ifs.getline(buffer,BUFF_SIZE);      // column headings
@@ -363,6 +417,13 @@ namespace OpenBabel
                   tokenize(vs,buffer);
                 }
               }
+          }
+        else if((strstr(buffer,"NSERCH=") != NULL) && (strstr(buffer,"ENERGY=") != NULL))
+          {            
+            tokenize(vs, buffer);
+            if (vs.size() == 4)
+                confEnergies.push_back(atof((char*)vs[3].c_str()));
+            cerr << "Energy=" << atof((char*)vs[3].c_str()) << endl;
           }
         else if(strstr(buffer,"ELECTROSTATIC MOMENTS") != NULL)
           {
@@ -754,12 +815,26 @@ namespace OpenBabel
         */
       }
 
+    mol.EndModify();
+
+    // Set conformers to all coordinates we adopted
+    // but remove last geometry -- it's a duplicate
+    cerr << vconf.size();
+    if (vconf.size() > 1)
+      vconf.pop_back();
+    mol.SetConformers(vconf);
+    mol.SetConformer(mol.NumConformers() - 1);
+    // Copy the conformer data too
+    confData->SetDimension(confDimensions);
+    confData->SetEnergies(confEnergies);
+    confData->SetForces(confForces);
+    mol.SetData(confData);
+
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
-
-    mol.EndModify();
+    
     if (hasPartialCharges) {
       mol.SetPartialChargesPerceived();
 
