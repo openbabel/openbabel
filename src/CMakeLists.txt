@@ -43,6 +43,7 @@ set(ops
   ops/loader.cpp
   ops/optransform.cpp
   ops/sort.cpp
+  ops/unique.cpp
 )
 
 set(stereo_srcs
