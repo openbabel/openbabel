@@ -294,7 +294,6 @@ namespace OpenBabel {
   bool FastSearchFormat::WriteChemObject(OBConversion* pConv)
   {
     //Prepares or updates an index file. Called for each molecule indexed
-
     bool update = pConv->IsOption("u")!=NULL;
 
     static ostream* pOs;
@@ -426,7 +425,6 @@ namespace OpenBabel {
     if(!update || seekpos>LastSeekpos) 
     {
       fsi->Add(pOb, seekpos );
-
       if(pConv->GetOutputIndex()==400 && nmols>1000)
       {
         clog << " Estimated completion time ";
@@ -552,7 +550,8 @@ namespace OpenBabel {
            << " molecules. The fingerprint type is " << id << " with "
            << OBFingerprint::Getbitsperint() * header.words << " bits.\n"
            << "Typical usage for a substructure search:\n"
-           << "babel indexfile.fs -osmi -sSMILES" << endl;
+           << "babel indexfile.fs -osmi -sSMILES\n"
+           << "(-s option in GUI is 'Convert only molecules matching SMARTS')" << endl;
       return false;
     }
 

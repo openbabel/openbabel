@@ -56,8 +56,10 @@ class OBAPI OBDescriptor : public OBPlugin
   virtual bool Display(std::string&txt, const char* param, const char* ID=NULL);
 
   /// Comparison of the values of the descriptor. Used in sorting.
-  virtual bool LessThan(OBBase* pOb1, OBBase* pOb2);
-
+  /// Descriptors may use more complicated ordering than this default (e.g.InChIFilter)
+//  virtual bool LessThan(OBBase* pOb1, OBBase* pOb2);
+  virtual bool Order(double p1, double p2){ return p1<p2; }
+  virtual bool Order(std::string s1, std::string s2){ return s1<s2; }
 
   /// Interprets the --filter option string and returns the combined result of all the comparisons it contains  
   static bool FilterCompare(OBBase* pOb, std::istream& ss, bool noEval);

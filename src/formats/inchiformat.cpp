@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #include <sstream>
 #include <set>
 #include <vector>
+#include <openbabel/inchiformat.h>
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
 
@@ -31,119 +32,6 @@ using namespace std;
 namespace OpenBabel
 {
 extern string GetInChI(istream& is);
-
-class InChIFormat : public OBMoleculeFormat
-{
-public:
-  InChIFormat()
-  {
-    OBConversion::RegisterFormat("inchi",this);
-    OBConversion::RegisterOptionParam("n", this, 0, OBConversion::INOPTIONS);
-    OBConversion::RegisterOptionParam("t", this);
-    OBConversion::RegisterOptionParam("l", this);
-    OBConversion::RegisterOptionParam("X", this, 1, OBConversion::OUTOPTIONS);
-    OBConversion::RegisterOptionParam("K", this, 0, OBConversion::OUTOPTIONS);
-    OBConversion::RegisterOptionParam("F", this, 0, OBConversion::OUTOPTIONS);
-    OBConversion::RegisterOptionParam("M", this, 0, OBConversion::OUTOPTIONS);
-    OBConversion::RegisterOptionParam("X", this, 1, OBConversion::INOPTIONS);
-  }
-
-  virtual const char* Description()
-  {
-    return 
-    "InChI format\n"
-    "IUPAC/NIST molecular identifier\n"
-    "Write options, e.g. -xat\n"
-    //" n do not use 'recommended' InChI options\n"
-    " X <Option string> List of additional InChI options\n"
-    //" F include fixed hydrogen layer\n"
-    //" M include bonds to metal\n"
-    " t add molecule name\n"
-    " a output auxiliary information\n"
-    " K output InChIKey\n"
-    " w don't warn on undef stereo or charge rearrangement\n"
-    " l display InChI log\n"
-    " u output only unique molecules\n"
-    " U output only unique molecules and sort them\n"
-    " e compare first molecule to others\n\n"
-
-    "Input options, e.g. -at\n"
-    " X <Option string> List of InChI options\n"
-    " n molecule name follows InChI on same line\n"
-    " a add InChI string to molecule name\n\n"
-    " The InChI options should be space delimited in a single quoted string.\n"
-    " See InChI documentation for possible options.\n\n" ;
-  };
-
-  virtual const char* SpecificationURL()
-  { return "http://www.iupac.org/inchi/";};
-
-  virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-  virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-  virtual int  SkipObjects(int n, OBConversion* pConv);
-
-  static char   CompareInchi(const char* Inchi1, const char* Inchi2);
-  static string InChIErrorMessage(const char ch);
-
-private:
-  OBAtom* GetCommonAtom(OBBond* pb1, OBBond* pb2);
-  char* GetInChIOptions(OBConversion* pConv, bool Reading);
-
-  ///Compare std::strings with embedded numbers so that 
-  // "a6b" (or "a06b") is less than "a15b"
-  // and "CH4" is less than "C2H6"
-  // and "CH4" is less than "ClH" (hydrogen chloride)
-  struct InchiLess
-    : public binary_function<const string&, const string&, bool>
-  {
-    bool operator()(const string& s1, const string& s2) const
-    {
-      string::const_iterator p1, p2;
-      p1=s1.begin(); p2=s2.begin();
-      while( p1!=s1.end() && p2!=s2.end() )
-      {
-        if(iscntrl(*p1) || iscntrl(*p2) || isspace(*p1) || isspace(*p2))
-          return false; //stop comparison at whitespace. Identical up to here 
-        int n1=-1,n2=-1;
-        if(isdigit(*p1))
-          {
-            n1 = atoi(&*p1);
-            //skip over number
-            while(p1!=s1.end() && isdigit(*p1++)); --p1;
-          }
-        if(isdigit(*p2))
-          {
-            n2 = atoi(&*p2);
-            while(p2!=s2.end() && isdigit(*p2++)); --p2;
-          }
-        if(n1<0 && n2 < 0)
-          {
-            //neither numbers
-            if(*p1 != *p2)
-        return *p1 < *p2;
-          }
-        else if(n1>=0 && n2>0)
-          {
-            //both numbers
-            if(n1!=n2)
-        return n1 < n2;
-          }
-        else if(n1>0)
-          return islower(*p2)!=0;
-        else if(n2>0)
-          return !islower(*p1);
-
-        ++p1; ++p2; // iterate
-      } // while loop
-      return false; //identical
-    }
-  };
-
-  typedef	set<string, InchiLess> nSet;
-  nSet allInchi;
-  string firstInchi;
-  string firstID;
-};
 
 //Make an instance of the format class
 InChIFormat theInChIFormat;
@@ -351,7 +239,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
   //Although the OBMol may be altered, it is restored before exit.
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-  if(pmol==NULL) return false;
+  if(pmol==NULL || pmol->NumAtoms()==0) return false;
   
   OBMol& mol = *pmol;
 
@@ -458,14 +346,14 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
         OBTetrahedralStereo::Config config = ts->GetConfig();
 
-        if (config.specified) {
+        if(config.specified) {
           inchi_Stereo0D stereo;         
           stereo.type = INCHI_StereoType_Tetrahedral;
           stereo.central_atom = static_cast<AT_NUM> (config.center);
           stereo.neighbor[0] = static_cast<AT_NUM> (config.from);
           for(int i=0; i<3; ++i)
             stereo.neighbor[i + 1] = static_cast<AT_NUM> (config.refs[i]);
-          
+        
           if (config.winding == OBStereo::Clockwise)
             stereo.parity = INCHI_PARITY_EVEN;
           else
@@ -483,7 +371,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         OBCisTransStereo *ts = dynamic_cast<OBCisTransStereo*>(*data);
         OBCisTransStereo::Config config = ts->GetConfig();
 
-        if (config.specified) {
+        if(config.specified) {
           inchi_Stereo0D stereo;
           stereo.central_atom = NO_ATOM;
           stereo.type = INCHI_StereoType_DoubleBond;
@@ -504,7 +392,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
             stereo.parity = INCHI_PARITY_EVEN;
           else
             stereo.parity = INCHI_PARITY_ODD;
-          
+      
           stereoVec.push_back(stereo);
         }
       }
@@ -533,11 +421,12 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       if(pConv->IsOption("w")) 
       {
         string::size_type pos;
-        string targ[3];
+        string targ[4];
         targ[0] = "Omitted undefined stereo";
         targ[1] = "Charges were rearranged";
         targ[2] = "Proton(s) added/removed";
-        for(int i=0;i<3;++i)
+        targ[3] = "Metal was disconnected";
+        for(int i=0;i<4;++i)
         {
           pos = mes.find(targ[i]);
           if(pos!=string::npos)
@@ -562,12 +451,22 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   }
   
   string ostring = inout.szInChI;
+  
+  //Truncate the InChI if requested
+  const char* truncspec = pConv->IsOption("T");
+  if(truncspec)
+  {
+    string trunc(truncspec);
+    EditInchi(ostring, trunc);
+  }
+
   if(pConv->IsOption("K")) //Generate InChIKey and add after InChI on same line
   {
     char szINCHIKey[28];
     GetStdINCHIKeyFromStdINCHI(inout.szInChI, szINCHIKey);
     ostring = szINCHIKey;
   }
+
   if(pConv->IsOption("t"))
   {
     ostring += ' ';
@@ -624,12 +523,22 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 }
 
 //////////////////////////////////////////////////////////
-char InChIFormat::CompareInchi(const char* Inchi1, const char* Inchi2)
+char InChIFormat::CompareInchi(const string& Inchi1, const string& Inchi2)
 {
   //Returns 0 if identical or an char identifying the layer where they first differed
   string s1(Inchi1), s2(Inchi2);
-
-  //Remove anything after the end of the Inchi
+  
+  if(s1.size()<s2.size())
+    s1.swap(s2);
+  string::size_type pos;
+  for(pos=0;pos<s1.size();++pos)
+  {
+    if(pos==s2.size() || s1[pos]!=s2[pos])
+      return s1[s1.rfind('/',pos)+1];
+  }
+  return 0;
+  
+/*  //Remove anything after the end of the Inchi
   string::size_type pos;
   pos = s1.find_first_of(" \t\n");
   if(pos!=string::npos)
@@ -659,6 +568,7 @@ char InChIFormat::CompareInchi(const char* Inchi1, const char* Inchi2)
     return 0;
   else
     return layers1[i][0];
+*/
 }
 
 string InChIFormat::InChIErrorMessage(const char ch)
@@ -711,176 +621,6 @@ OBAtom* InChIFormat::GetCommonAtom(OBBond* pb1, OBBond* pb2)
   return NULL; //not adjacent bonds
 }
 
-//******************************************************
-class InChICompareFormat : public OBMoleculeFormat
-{
-public:
-  InChICompareFormat()
-  {
-      OBConversion::RegisterFormat("k",this);
-  }
-
-  virtual const char* Description() //required
-  {
-      return 
-"Compare molecules using InChI\n"
-"The first molecule is compared with the rest\n"
-"e.g. babel first.smi second.mol third.cml -ok\n"
-"Same as  -oinchi -xet  and can take the same options as InChI format.\n"
-;
-  };
-  
-  virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv)
-  {
-    pConv->AddOption("e",OBConversion::OUTOPTIONS);
-    pConv->AddOption("t",OBConversion::OUTOPTIONS);
-    return theInChIFormat.WriteMolecule(pOb,pConv);
-  };
-  
-  virtual unsigned int Flags() { return NOTREADABLE;};
-};
-
-InChICompareFormat theInChICompareFormat;
-
-//*********************************************************
-class TestFormat : public OBMoleculeFormat
-{
-public:
-  //Register this format type ID
-  TestFormat() 
-  {
-    OBConversion::RegisterFormat("test",this);
-    OBConversion::RegisterOptionParam("O", this, 1);
-    OBConversion::RegisterOptionParam("m", this);
-  }
-
-  virtual const char* Description()
-  { return
-"Test format\n"
-"Does a round trip conversion and compares before and after using InChI.\n"
-"Uses the input format unless -xO set\n"
-"Read/Write Option e.g. -xOsmi\n"
-" O<ext> Test the format that has the specified ID\n"
-" m      Output message for each successful molecule\n"
-" X <Option string> List of InChI options:\n\n"
-
-"You can also use commandline options appropriate for the target format.\n\n"
-
-"InputFormat => OBMol => SpecifiedFormat => OBMol\n"
-"Compare InChIs generated from each of the OBMols\n"
-;
-  };
-
-  virtual unsigned int Flags() { return NOTREADABLE;}
-  virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-
-};
-/////////////////////////////////////////////////////////////////
-TestFormat theTestFormat;
-/////////////////////////////////////////////////////////////////
-bool TestFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
-{
-  OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-
-  ostream &ofs = *pConv->GetOutStream();
-  OBMol &mol = *pmol;
-  istream* origInStream = pConv->GetInStream(); 
-  ostream* origOutStream = pConv->GetOutStream(); 
-  stringstream ssinchi1, ssinchi2;
-  
-  static int nMols;
-  static int nFailures;
-  if(pConv->GetOutputIndex()==1)
-    nMols=nFailures=0;
-  nMols++;
-
-  //mol has already been input using the input format
-
-  //Send its InChI to a stringstream
-  OBFormat* pInchi = OBConversion::FindFormat("inchi");
-  if(!pInchi)
-  {	
-    obErrorLog.ThrowError(__FUNCTION__, "InChIFormat needs to be installed to use TestFormat", obWarning);
-    return false;
-  }
-  pConv->AddOption("w",OBConversion::OUTOPTIONS);//no trivial warnings
-  pConv->SetOutFormat(pInchi);
-  if(!pConv->Write(pmol,&ssinchi1))
-    return false;
-
-  //Use a new OBConversion to write and then read using the target format
-  //(Using the same OBConversion gave problems with CMLFormat)
-  OBConversion NewConv(*pConv); //copy
-
-
-  const char* pTargetExt = pConv->IsOption("O");
-  stringstream errorMsg;
-  if(pTargetExt)
-  {
-    OBFormat* pTargetFormat = OBConversion::FindFormat(pTargetExt);
-    if(!pTargetFormat)
-    {
-      errorMsg << pTargetExt <<  " format is not available" << endl;
-      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
-      return false;
-    }
-    if(!NewConv.SetInFormat(pTargetFormat))
-    {
-      errorMsg << pTargetExt << " format being tested needs to be readable" << endl;
-      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
-      return false;
-    }
-  }
-
-  if(!NewConv.SetOutFormat(NewConv.GetInFormat()))
-  {
-    errorMsg << "The input format being tested needs also to be writeable" << endl;
-    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
-    return false;
-  }
-  //Output with the target format to a stringstream ss
-  stringstream ss;
-  NewConv.SetOneObjectOnly();
-  NewConv.SetInStream(&ss); //Quirk in CMLFormat: needs to haveinput stream set before writing
-  if(!NewConv.Write(pmol,&ss))
-    return false;
-
-  //Read it back in again using the target format
-  OBMol Remol;
-  if(!NewConv.Read(&Remol))
-    return false;
-
-  //Take the InChI of the reconverted molecule
-  pConv->SetOutFormat(pInchi);
-  if(!pConv->Write(&Remol,&ssinchi2))
-    return false;
-  
-  pConv->SetInStream(origInStream);
-  pConv->SetOutStream(origOutStream);
-  pConv->SetOutFormat(this);
-
-  char ch = InChIFormat::CompareInchi(ssinchi1.str().c_str(), ssinchi2.str().c_str());
-
-  if(ch || pConv->IsOption("m"))//On failure, or anyway if specified
-  {
-    stringstream molID;
-    if(strlen(mol.GetTitle())==0)
-      molID << "Mol #" << nMols;
-    else
-      molID << mol.GetTitle();
-    ofs << molID.str() << " in " << pConv->GetInFilename();
-    ofs << " and its conversion" << InChIFormat::InChIErrorMessage(ch) << endl;
-    if(ch)
-      ++nFailures;
-  }
-
-  if(pConv->IsLast())
-  {
-   char s = nFailures==1 ? ' ' : 's';
-   ofs << '\n' << nFailures << " failure" << s << endl;
-  }
-  return true;
-}
 
 //Returns pointer to InChI options string, which needs to be deleted with delete[]
 //If there are no options returns an empty string
@@ -934,6 +674,71 @@ char* InChIFormat::GetInChIOptions(OBConversion* pConv, bool Reading)
   opts = new char[1];
   *opts = '\0';
   return opts;
+}
+
+bool InChIFormat::EditInchi(std::string& inchi, std::string& spec)
+{
+  std::vector<std::string> vec;
+  std::vector<std::string>::iterator itr;
+  tokenize(vec, spec, " \t/");
+  for(itr=vec.begin();itr!=vec.end();++itr)
+  {
+    if(*itr=="formula")
+    {
+      std::string::size_type pos = inchi.find('/', inchi.find('/')+1); //2nd /
+      if(pos!=string::npos)
+        inchi.erase(pos);
+    }
+    else if(*itr=="connect")
+      RemoveLayer(inchi,"/h",true);
+    else if(*itr=="nochg")
+    {
+      RemoveLayer(inchi,"/p");
+      RemoveLayer(inchi,"/q");
+    }
+    else if(*itr=="nosp3")
+    {
+      RemoveLayer(inchi,"/t");
+      RemoveLayer(inchi,"/m");
+      RemoveLayer(inchi,"/s");
+    }
+    else if(*itr=="noEZ")
+      RemoveLayer(inchi,"/b");
+    else if(*itr=="noiso")
+      RemoveLayer(inchi,"/i");
+    else if(*itr=="nostereo")
+    {
+      RemoveLayer(inchi,"/t");
+      RemoveLayer(inchi,"/m");
+      RemoveLayer(inchi,"/s");
+      RemoveLayer(inchi,"/b");
+    }
+    else if(!(*itr).empty())
+    {
+      obErrorLog.ThrowError(__FUNCTION__, 
+      spec + " not recognized as a truncation specification",obError, onceOnly);
+      return false;
+    }
+  }
+  return true;
+}
+
+void InChIFormat::RemoveLayer (std::string& inchi, const std::string& str, bool all)
+{
+  std::string::size_type pos = inchi.find(str);
+  if(pos!=string::npos)
+    inchi.erase(pos, (all ? string::npos : inchi.find('/', pos+1) - pos));
+}
+
+
+//************************************************************************
+InChICompareFormat theInChICompareFormat;
+
+bool InChICompareFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+{
+  pConv->AddOption("e",OBConversion::OUTOPTIONS);
+  pConv->AddOption("t",OBConversion::OUTOPTIONS);
+  return theInChIFormat.WriteMolecule(pOb,pConv);
 }
 
 }//namespace OpenBabel

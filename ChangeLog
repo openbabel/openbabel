@@ -1,3 +1,36 @@
+2010-02-27  Chris Morley
+	
+	* include/openbabel/base.h: Make GetTitle() and SetTitle() virtual
+	  but do nothing in base class. Avoids the need for dynamic_casts
+	  when OBBase* pointers are used in ops, etc.
+
+	* src/formats/inchiformat.cpp, include/openbabel/inchiformat.h:
+	  remove (unused) testformat and move declarations to a header
+	  file which can be used by...
+	  
+	* src/descriptors/filters.cpp,src/descriptors/inchidescriptor.cpp:
+	  move inchi descriptor
+	  
+	* src/descriptors/cansmidescriptor.cpp: add new descriptor
+	
+	* include/openbabel/obmolecformat.h,src/obmolecformat.cpp: remove old
+	  implementation of --sort to a more natural home in an op...
+	
+	* src/ops/sort.cpp: with added features (see wiki page)
+
+	* include/openbabel/descriptor.h, src/descriptor.cpp: change the
+	  comparison functions
+
+	* src/ops/unique.cpp: new op for removing duplicate molecules
+	
+	* src/CMakeLists.txt, src/formats/CMakeLists.txt: for new files.
+	  unique.cpp is in format_common rather than plugin_ops because linking
+	  is easier.
+	  
+	* src/formats/fastsearchformat.cpp: line in message
+	
+	* src/formats/mol2format.cpp: Provide a SkipObjects function
+
 2010-02-26  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/chains.cpp: Apply patch from Juergen Wieferink: PR#2948548.
@@ -11,7 +44,6 @@
 	* test/testsym.py: Add tests for 0D cistrans symmetry across SMI,
 	InChI, SDF and CML
 
-2010-02-26  Chris Morley
 
 	* src/obconversion.cpp:
 	Set MAKE_ALL_READS_BINARY by default in the code. (CMake build had

@@ -8,9 +8,11 @@ set(depict_srcs
 )
 
 set(descriptors
+  descriptors/cansmidescriptor.cpp
   descriptors/cmpdfilter.cpp
   descriptors/groupcontrib.cpp
   descriptors/filters.cpp
+  descriptors/inchidescriptor.cpp
   descriptors/smartsdescriptors.cpp
 )
 
@@ -40,6 +42,7 @@ set(ops
   ops/gen3d.cpp
   ops/loader.cpp
   ops/optransform.cpp
+  ops/sort.cpp
 )
 
 set(stereo_srcs

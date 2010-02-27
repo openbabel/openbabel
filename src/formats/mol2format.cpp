@@ -52,6 +52,8 @@ namespace OpenBabel
     virtual const char* GetMIMEType() 
     { return "chemical/x-mol2"; };
 
+    virtual int SkipObjects(int n, OBConversion* pConv);
+
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
@@ -461,6 +463,24 @@ namespace OpenBabel
     //    ofs << endl;
 
     return(true);
+  }
+
+  int MOL2Format::SkipObjects(int n, OBConversion* pConv)
+  {
+    const char txt[] = "@<TRIPOS>MOLECULE";
+    istream& ifs = *pConv->GetInStream();
+    if(!ifs)
+      return -1;
+    if(n>0 && ifs.peek()==txt[0])
+      ifs.ignore(); // move past '@' so that next mol will be found
+    do {
+      ignore(ifs, txt);
+    } while(ifs && (--n)>0);
+    
+    if(!ifs.eof())
+      ifs.seekg(1-sizeof(txt), ios::cur);//1 for '/0'
+    char ch = ifs.peek();
+   return 1;
   }
 
 } //namespace OpenBabel

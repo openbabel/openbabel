@@ -27,10 +27,6 @@ namespace OpenBabel
   OBMol* OBMoleculeFormat::_jmol;
   std::vector<OBMol> OBMoleculeFormat::MolArray;
   bool OBMoleculeFormat::StoredMolsReady=false;
-  std::vector<OBBase*> OBMoleculeFormat::_mols;
-  OBDescriptor* OBMoleculeFormat::_pDesc;
-
-////////////////////////////////////////////////////////////////
 
   bool OBMoleculeFormat::ReadChemObjectImpl(OBConversion* pConv, OBFormat* pFormat)
   {
@@ -51,13 +47,6 @@ namespace OpenBabel
       return DeferMolOutput(pmol, pConv, pFormat);
 
     bool ret;
-
-   const char* descID = pConv->IsOption("revsort",OBConversion::GENOPTIONS);
-   if(!descID)
-     descID = pConv->IsOption("sort",OBConversion::GENOPTIONS);
-   if(descID)
-     return Sort(pmol, descID, pConv, pFormat);
-
    if(pConv->IsOption("separate",OBConversion::GENOPTIONS))
    {
      //On first call, separate molecule and put fragments in MolArray.
@@ -136,10 +125,6 @@ namespace OpenBabel
   {
     if(pConv->IsOption("C",OBConversion::GENOPTIONS))
       return OutputDeferredMols(pConv);
-
-    if(pConv->IsOption("OutputAtEnd",OBConversion::GENOPTIONS))
-      return OutputSortedMols(pConv);
-
     if(pConv->IsOption("j",OBConversion::GENOPTIONS)
         || pConv->IsOption("join",OBConversion::GENOPTIONS))
       {
@@ -211,9 +196,6 @@ namespace OpenBabel
       {
         IsFirstFile=true;
         IMols.clear();
-
-        //This ensures OBConversion calls WriteChemObject at the end of the input
-        pConv->AddOption("OutputAtEnd", OBConversion::GENOPTIONS);
       }
     else 
       {
@@ -374,7 +356,7 @@ namespace OpenBabel
     pConv->SetOneObjectOnly(false);
     for(itr=IMols.begin();itr!=IMols.end();++itr,++i)
       {
-        if(!(itr->second)->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS),pConv))
+        if(!(itr->second)->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS), pConv))
           continue;
         pConv->SetOutputIndex(i);
         if(itr==lastitr)
@@ -478,6 +460,7 @@ namespace OpenBabel
       this routine and could possibly be improved. Currently re-hashing is done 
       every time the index is read.
   **/
+
   bool OBMoleculeFormat::ReadNameIndex(NameIndexType& index,
                                        const string& datafilename, OBFormat* pInFormat)
   {
@@ -553,72 +536,6 @@ namespace OpenBabel
       }
     return true;
   }
-
-bool OBMoleculeFormat::Sort(OBMol* pmol, const char* DescID, OBConversion* pConv, OBFormat* pF )
-{
-  //Stores each molecule as it is received in a vector. After the last one is received,
-  // sorts them and outputs them. Sorting can be by any descriptor, which can provide its
-  //own vitual function LessThan for sorting. The values of the descriptor are recalculated
-  //everytime they are needed during the sorting, except for inchi filter where they are cached.
-  //If necessary other descriptors could have caches. 
-  //Sorting is done after ops like --filter, and also after fastsearching.
-
-  if(pConv->IsFirstInput())
-  {
-    //Check descriptor is known
-    _pDesc = OBDescriptor::FindType(DescID);
-    if(!_pDesc)
-    {
-      obErrorLog.ThrowError(__FUNCTION__, 
-                              string("Unknown descriptor ") + DescID, obError);
-      return false;
-    }
-
-    _mols.clear();
-    _pDesc->Init(); //clears any caches eg. in inchi
-
-    //These ensure OBConversion calls WriteChemObject at the end of the input
-    pConv->AddOption("OutputAtEnd", OBConversion::GENOPTIONS);
-    pConv->AddChemObject(pmol); //Dummy object 
-  }
-  
-  bool ok = pF->ReadMolecule(pmol,pConv);
-  if(ok)
-  {
-    //Do any manipulation, filtering, application of ops, etc, before storing
-    if(!pmol->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS),pConv))
-      return true; //i.e. ignore molecule
-
-    _mols.push_back(pmol); //Temporarily store the molecule
-  }
-  else
-    delete pmol;
-  return ok;
-}
-
-
-bool OBMoleculeFormat::OutputSortedMols(OBConversion* pConv)
-{
-  bool rev = pConv->IsOption("revsort", OBConversion::GENOPTIONS)!=NULL;
-  sort(_mols.begin(), _mols.end(), LessThan(_pDesc, rev));
-
-  //Since the normal output loop in OBConversion is not being used,
-  // we have to set some parameters manually.
-  bool ok=true;
-  pConv->SetLast(false); 
-  int n = 1;//output index
-  vector<OBBase*>::iterator itr, lastitr = _mols.end();
-  --lastitr;
-  for(itr=_mols.begin(); ok && itr!=_mols.end();++itr, n++)
-  {
-    pConv->SetOutputIndex(n);
-    if(itr==lastitr)
-      pConv->SetLast(true);
-    ok = (pConv->GetOutFormat())->WriteMolecule(*itr, pConv);
-    delete *itr; //delete the OBMol that was made in ReadChemObjectImpl
-  }
-  return ok;
-}
 
 } //namespace OpenBabel
 

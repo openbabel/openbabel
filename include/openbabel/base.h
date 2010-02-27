@@ -247,13 +247,13 @@ class OBConversion; //used only as pointer
       //!
       //! Typically these are program options to filter or modify an object
       //! For example, see OBMol::DoTransformations() and OBMol::ClassDescription()
+      //! Base type does nothing
       virtual OBBase* DoTransformations(const std::map<std::string,std::string>* /*pOptions*/,
                                         OBConversion* /*pConv*/)
         {
           return this;
         }
 
-      //Base type does nothing
       //! \return A list of descriptions of command-line options for DoTransformations()
       static const char* ClassDescription()
         {
@@ -270,6 +270,11 @@ class OBConversion; //used only as pointer
           return pOb;
         }
 
+      //! \brief  Base type does nothing
+      //! Made virtual around r3535 to simplify code which passes around OBBase*.
+      //Currently no title data member in base class.
+      virtual const char  *GetTitle(bool replaceNewlines = true) const { return "";}
+      virtual void  SetTitle(const char *title){}
 
       //! \name Generic data handling methods (via OBGenericData)
       //@{

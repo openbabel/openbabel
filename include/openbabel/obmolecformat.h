@@ -57,19 +57,6 @@ namespace OpenBabel {
     of ReadMolecule() or WriteMolecule(), as for example in CMLFormat
 **/
 
-class LessThan : public std::binary_function<OBBase*, OBBase*, bool>
-{
-  //Work is done by the LessThan function in the descriptor that was provide to this function's constructor 
-public:
-  LessThan(OBDescriptor* pDesc, bool rev) : _pDesc(pDesc), _rev(rev){}
-  bool operator()(OBBase* pOb1 , OBBase* pOb2) const
-  {
-     return _rev ? _pDesc->LessThan(pOb1, pOb2) : _pDesc->LessThan(pOb2, pOb1);
-  }
-private:
-  OBDescriptor* _pDesc;
-  bool _rev;
-};
 //////////////////////////////////////////////////////////////////////
 
 class OBCOMMON OBMoleculeFormat : public OBFormat
@@ -90,8 +77,6 @@ public:
       OBConversion::RegisterOptionParam("j",         this, 0, OBConversion::GENOPTIONS);
       OBConversion::RegisterOptionParam("join",      this, 0, OBConversion::GENOPTIONS);
       OBConversion::RegisterOptionParam("separate",  this, 0, OBConversion::GENOPTIONS);
-      OBConversion::RegisterOptionParam("sort",      this, 1, OBConversion::GENOPTIONS);
-      OBConversion::RegisterOptionParam("revsort",   this, 1, OBConversion::GENOPTIONS);
 
       //The follow are OBMol options, which should not be in OBConversion.
       //But here isn't entirely appropriate either, since one could have
@@ -140,7 +125,6 @@ public:
   //@}
   
   //!Stores each molecule and after the last one outputs them all in an order decided by the descriptor. 
-  static bool Sort(OBMol* pmol, const char* DescID,  OBConversion* pConv, OBFormat* pF );
 
 #ifdef HAVE_SHARED_POINTER
   //!When sent an OBReaction object, output all the constituent molecules
@@ -165,15 +149,12 @@ public:
   }
 
 private:
-  //For sorting
-  static bool OutputSortedMols(OBConversion* pConv);
 
   static bool OptionsRegistered;
   static std::map<std::string, OBMol*> IMols;
   static OBMol* _jmol; //!< Accumulates molecules with the -j option
   static std::vector<OBMol> MolArray; //!< Used in --separate option
   static bool StoredMolsReady; //!< Used in --separate option
-  static std::vector<OBBase*> _mols;//!< Used in --sort option
   static OBDescriptor* _pDesc;
 
 };

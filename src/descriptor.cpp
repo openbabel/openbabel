@@ -68,14 +68,6 @@ bool OBDescriptor::Compare(OBBase* pOb, istream& optionText, bool noEval)
   return false;
 }
 
-  /** The default implementation here of this virtual function is suitable
-      for OBDescriptor classes which return a double value. 
-  **/
-  bool OBDescriptor::LessThan(OBBase* pOb1, OBBase* pOb2)
-  {
-     return Predict(pOb1) < Predict(pOb2);
-  }
-
 /// Interprets the --filter option string and returns the combined result of all the comparisons it contains  
 /**
     The string has the form:
