@@ -221,6 +221,7 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 %include <openbabel/atomclass.h>
 
 %include <openbabel/fingerprint.h>
+%ignore OpenBabel::OBDescriptor::LessThan;
 %include <openbabel/descriptor.h>
 
 # Ignore shadowed methods
