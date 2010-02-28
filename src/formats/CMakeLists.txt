@@ -30,6 +30,7 @@ set(formats_compchem
       molproformat
       mopacformat
       nwchemformat
+      pwscfformat
       qchemformat
       turbomoleformat
       vaspformat

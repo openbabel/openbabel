@@ -22,7 +22,7 @@ namespace OpenBabel
 {
 
   // The ".out" format:
-  // Detect GAMESS, Q-Chem, Gaussian, or MOPAC output files
+  // Detect GAMESS, Q-Chem, PWSCF, Gaussian, or MOPAC output files
   class OutputFormat : public OBMoleculeFormat
   {
   public:
@@ -39,7 +39,7 @@ namespace OpenBabel
     {
       return
         "Generic Output file format\n"
-        "Read ADF, Gaussian, GAMESS, Q-Chem, MOPAC, etc. file.out"
+        "Read ADF, Gaussian, GAMESS, PWSCF, Q-Chem, MOPAC, etc. file.out"
         "files by detecting contents\n"
         "Read Options e.g. -as\n"
         "   s  Output single bonds only\n"
@@ -94,6 +94,10 @@ namespace OpenBabel
       } else if (strstr(buffer,"MOPAC") != NULL) {
         // MOPAC output
         pFormat = pConv->FindFormat("mopout");
+        break;
+      } else if (strstr(buffer,"Program PWSCF") != NULL) {
+        // PWSCF
+        pFormat = pConv->FindFormat("pwscf");
         break;
       } else if (strstr(buffer,"Welcome to Q-Chem") != NULL) {
         // Q-Chem output
