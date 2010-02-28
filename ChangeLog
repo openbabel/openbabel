@@ -1,3 +1,8 @@
+2010-02-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/gaussformat.cpp: Fix crash with reading Gaussian
+	files with only one geometry.
+
 2010-02-28  Noel O'Boyle
 
 	* test/testunique.py: Implement Chris' tests for --unique
@@ -6,9 +11,9 @@
 
 2010-02-28  Chris Morley
 
-    * src/ops/unique.cpp: Make header file for unordered_map
-    conditional: <unordered_map> for MSVC; <tr1/unordered map>
-    otherwise. 
+	* src/ops/unique.cpp: Make header file for unordered_map
+	conditional: <unordered_map> for MSVC; <tr1/unordered map>
+	otherwise. 
 	Simplify mesaage reporting duplicates.
 	
 	* test/files/dupset.smi; datafile for a test (but no test yet).

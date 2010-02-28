@@ -579,7 +579,8 @@ namespace OpenBabel
     
     // Set conformers to all coordinates we adopted
     // but remove last geometry -- it's a duplicate
-    vconf.pop_back();
+    if (vconf.size() > 1)
+      vconf.pop_back();
     mol.SetConformers(vconf);
     mol.SetConformer(mol.NumConformers() - 1);
     // Copy the conformer data too
