@@ -3,6 +3,7 @@
   Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
   Some portions Copyright (C) 2004 by Chris Morley
   Some portions Copyright (C) 2006 by Donald E. Curtis
+  Some portions Copyright (C) 2009-2010 by Konstantin L. Tokarev
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -248,6 +249,8 @@ namespace OpenBabel
     gmsset->SetAttribute("gamess");
     gmsset->SetOrigin(fileformatInput);
 
+    cerr << "read gamess" << endl;
+
     mol.BeginModify();
     while (ifs.getline(buffer,BUFF_SIZE))
       {
@@ -277,7 +280,6 @@ namespace OpenBabel
                 coordinates.push_back(x);
                 coordinates.push_back(y);
                 coordinates.push_back(z);
-                cerr << x << "  " << y << "  " << z << endl;
 
                 if (!ifs.getline(buffer,BUFF_SIZE))
                   break;
@@ -364,22 +366,12 @@ namespace OpenBabel
                 coordinates.push_back(x);
                 coordinates.push_back(y);
                 coordinates.push_back(z);
-                cerr << x << "  " << y << "  " << z << endl;
 
                 if (!ifs.getline(buffer,BUFF_SIZE))
                   break;
                 tokenize(vs,buffer);
               }
-            // done with reading atoms
-            natoms = mol.NumAtoms();
-            // malloc / memcpy
-            double *tmpCoords = new double [(natoms)*3];
-            memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
-            vconf.push_back(tmpCoords);
-            coordinates.clear();
-            confDimensions.push_back(3); // always 3D -- OBConformerData allows mixing 2D and 3D structures
-            cerr << "New conformer!" << endl;
-            
+           
             if(strstr(buffer,"COORDINATES OF FRAGMENT") != NULL)
               {
                 ifs.getline(buffer,BUFF_SIZE);      // column headings
@@ -395,7 +387,7 @@ namespace OpenBabel
                     tokenize(vs2,buffer,delim);
                   }
                   else {
-                    atom = mol.NewAtom();
+                    //atom = mol.NewAtom();
                     /* For the included EFP1 potentials,
                      * the atom name may start with "Z"
                      */
@@ -404,26 +396,44 @@ namespace OpenBabel
                       atomicNum=etab.GetAtomicNum(vs[0].substr(1,1).c_str()); 
                     else 
                       atomicNum=etab.GetAtomicNum(vs[0].substr(0,1).c_str()); 
-                    atom->SetAtomicNum(atomicNum);
+                    //atom->SetAtomicNum(atomicNum);
+                    if (natoms == 0) // first time reading the molecule, create each atom
+                      {
+                        atom = mol.NewAtom();
+                        atom->SetAtomicNum(atomicNum);
+                      }
                     x = atof((char*)vs[1].c_str());
                     y = atof((char*)vs[2].c_str());
                     z = atof((char*)vs[3].c_str());
-                    atom->SetVector(x,y,z);
-                  }
-			    
+                    //atom->SetVector(x,y,z);
+                    coordinates.push_back(x);
+                    coordinates.push_back(y);
+                    coordinates.push_back(z);
+                  }			    
 
                   if (!ifs.getline(buffer,BUFF_SIZE))
                     break;
                   tokenize(vs,buffer);
                 }
               }
+
+            // done with reading atoms
+            natoms = mol.NumAtoms();
+            // malloc / memcpy
+            double *tmpCoords = new double [(natoms)*3];
+            memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
+            vconf.push_back(tmpCoords);
+            coordinates.clear();
+            confDimensions.push_back(3); // always 3D -- OBConformerData allows mixing 2D and 3D structures
+            cerr << "New conformer!" << endl;
+
           }
         else if((strstr(buffer,"NSERCH=") != NULL) && (strstr(buffer,"ENERGY=") != NULL))
           {            
             tokenize(vs, buffer);
             if (vs.size() == 4)
                 confEnergies.push_back(atof((char*)vs[3].c_str()));
-            cerr << "Energy=" << atof((char*)vs[3].c_str()) << endl;
+            cerr << buffer << endl;
           }
         else if(strstr(buffer,"ELECTROSTATIC MOMENTS") != NULL)
           {
