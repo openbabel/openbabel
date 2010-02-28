@@ -97,7 +97,7 @@ bool OpUnique::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion
     _pDesc->Init();
     _inchimap.clear();
 
-    _reportDup = true; //always reoprt duplicates
+    _reportDup = true; //always report duplicates
   }
 
   if(!_pDesc)

@@ -3,6 +3,9 @@
 	* src/formats/gaussformat.cpp: Fix crash with reading Gaussian
 	files with only one geometry.
 
+	* src/formats/CMakeLists.txt: Fix to allow compile of InChI with
+	ops/unique.cpp correctly.
+
 2010-02-28  Noel O'Boyle
 
 	* test/testunique.py: Implement Chris' tests for --unique

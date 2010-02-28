@@ -3,8 +3,7 @@ set(formats_common
   mdlformat
   mol2format
   pdbformat
-  ../ops/unique
-  )
+ )
 set(formats_utility
   copyformat
   MNAformat
@@ -105,7 +104,7 @@ if(WITH_INCHI)
   else(NOT MSVC)
     set(libs ${libs} ${CMAKE_SOURCE_DIR}/windows-vc2005/libstdinchi.lib)
   endif(NOT MSVC)
-  set(inchiformat_additional_sources getinchi.cpp)
+  set(inchiformat_additional_sources getinchi.cpp ../ops/unique.cpp)
   set(formats_common
     ${formats_common}
     inchiformat
