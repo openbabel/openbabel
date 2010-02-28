@@ -49,7 +49,7 @@ C([2H])([2H])([2H])[2H]	deuteromethane"""
                   ("cansmi", 13), ("cansmiNS", 7)]
 
         for param in params:
-            output, error = run_exec(smiles,
+            output, error = run_exec(self.smiles,
                                      "babel -ismi -osmi --unique %s" % param[0])
             self.assertConverted(error, param[1])
         
