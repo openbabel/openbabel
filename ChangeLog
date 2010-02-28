@@ -1,3 +1,12 @@
+2010-02-28  Chris Morley
+
+    * src/ops/unique.cpp: Make header file for unordered_map
+    conditional: <unordered_map> for MSVC; <tr1/unordered map>
+    otherwise. 
+	Simplify mesaage reporting duplicates.
+	
+	* test/files/dupset.smi; datafile for a test (but no test yet).
+	 
 2010-02-27  Noel O'Boyle
 
 	* test/CMakelists.txt, test/testfastsearch.py, test/testbabel.py:

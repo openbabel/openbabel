@@ -21,7 +21,11 @@ GNU General Public License for more details.
 #include <openbabel/obconversion.h>
 #include <openbabel/descriptor.h>
 #include <openbabel/inchiformat.h>
-#include <tr1/unordered_map>
+#ifdef _MSC_VER
+  #include <unordered_map>
+#else
+  #include <tr1/unordered_map>
+#endif
 
 using namespace std;
 using std::tr1::unordered_map;
@@ -110,12 +114,8 @@ bool OpUnique::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion
     // InChI is already present in set
     ++_ndups;
     if(_reportDup)
-    {
-      std::stringstream ss;
-      ss << "Removed " << pmol->GetTitle() << " - a duplicate of " << result.first->second
-         << " (#" << _ndups << ")";
-      obErrorLog.ThrowError(pConv->GetInFilename(), ss.str(), obWarning);
-    }
+      clog << "Removed " << pmol->GetTitle() << " - a duplicate of " << result.first->second
+         << " (#" << _ndups << ")" << endl;
     delete pOb;
     ret = false; //filtered out
   }
@@ -142,7 +142,7 @@ causes the molecule not to be output.
 
 InChI trucation values. param can be a concatination of these e.g. /nochg/noiso
 /formula  formula only
-/connnect formula and connectivity only
+/connect formula and connectivity only
 /nostereo ignore E/Z and sp3 stereochemistry
 /nosp3    ignore sp3 stereochemistry
 /noEZ     ignore E/Z steroeochemistry
