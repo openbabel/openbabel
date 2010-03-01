@@ -171,12 +171,21 @@ int main(int argc,char *argv[])
   if (testMolH2.NumAtoms() == 5) {
     cout << "ok 11" << endl;
   } else {
-    cout << "not ok 11" << endl;
+    cout << "not ok 11 # hydrogen additions" << endl;
   }
   
-  // the total number of tests for "prove"
-  // update when you add more tests!
-  cout << "1..11\n";
+  // Attempt to write an empty InChI (PR#2864334)
+  pFormat = conv.FindFormat("InChI");
+  if ( pFormat != NULL && conv.SetOutFormat(pFormat))
+    {
+      if (conv.Write(&emptyMol))
+        cout << "ok 12" << endl;
+      else
+        cout << "not ok 12 # failed empty InChI" << endl;
+      cout << "1..12\n";
+    }
+  else
+    cout << "1..11\n"; // total number of tests for Perl's "prove" tool
 
   return(0);
 }

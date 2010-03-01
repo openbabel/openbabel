@@ -239,7 +239,8 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
   //Although the OBMol may be altered, it is restored before exit.
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-  if(pmol==NULL || pmol->NumAtoms()==0) return false;
+  if(pmol==NULL) return false;
+  if(pmol->NumAtoms()==0) return true; // PR#2864334
   
   OBMol& mol = *pmol;
 
