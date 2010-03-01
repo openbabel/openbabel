@@ -1,9 +1,9 @@
 /**********************************************************************
-Copyright (C) 2009 by Jeremy W. Murphy
+Copyright (C) 2010 by Jeremy W. Murphy
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
-the Free Software Foundation version 2 of the License.
+the Free Software Foundation version 2 or later of the License.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -38,7 +38,7 @@ using namespace std;
 
 typedef enum
 {
-	MNAZ_ERROR, MNAZ_H, MNAZ_C, MNAZ_N, MNAZ_O, MNAZ_F, MNAZ_Si, MNAZ_P, MNAZ_S, MNAZ_Cl, MNAZ_Ca, MNAZ_As, MNAZ_Se, MNAZ_Br, MNAZ_Li, MNAZ_B, MNAZ_Mg, MNAZ_Sn, MNAZ_Te, MNAZ_I, MNAZ_Os, MNAZ_Sc, MNAZ_Fe, MNAZ_Co, MNAZ_Sr, MNAZ_Pd, MNAZ_Be, MNAZ_K, MNAZ_V, MNAZ_Ni, MNAZ_In, MNAZ_Al, MNAZ_R
+	MNAZ_ERROR, MNAZ_H, MNAZ_C, MNAZ_N, MNAZ_O, MNAZ_F, MNAZ_Si, MNAZ_P, MNAZ_S, MNAZ_Cl, MNAZ_Ca, MNAZ_As, MNAZ_Se, MNAZ_Br, MNAZ_Li, MNAZ_B, MNAZ_Mg, MNAZ_Sn, MNAZ_Te, MNAZ_I, MNAZ_Os, MNAZ_Sc, MNAZ_Fe, MNAZ_Co, MNAZ_Sr, MNAZ_Pd, MNAZ_Be, MNAZ_K, MNAZ_V, MNAZ_Ni, MNAZ_In, MNAZ_Al
 } MNAZ;
 
 
@@ -46,51 +46,41 @@ namespace OpenBabel
 {
 
 	class MNAFormat : public OBMoleculeFormat
-				// Derive directly from OBFormat for objects which are not molecules.
 	{
 		public:
-			//Register this format type ID in the constructor
 			MNAFormat()
 			{
 				OBConversion::RegisterFormat("mna", this);
 				OBConversion::RegisterOptionParam(levels_option, this, 1);
 			}
 
-			virtual const char* Description() //required
+			virtual const char* Description()
 			{
 				stringstream ss;
 
-				ss << "Multilevel Neighbourhoods of Atoms (MNA)\n"
+				ss << "Multilevel Neighborhoods of Atoms (MNA)\n"
 				"Iteratively generated 2D descriptors suitable for QSAR\n"
 				"\n"
 				"Write Options e.g. -x" << levels_option << "1 \n"
-				"  " << levels_option << "# MNA Levels default " << levels << "\n";
+				"  " << levels_option << "#  Levels (default = " << levels << ")\n";
 
 				static const string s(ss.str());
 
 				return s.c_str();
 			};
 
-			//Optional URL where the file format is specified
 			virtual const char* SpecificationURL()
 			{
-				return "http://pubs.acs.org/doi/abs/10.1021/ci980335o\n"
-               "http://ebook.rsc.org/?DOI=10.1039/9781847558879";
+				return "http://openbabel.org/wiki/Multilevel_Neighborhoods_of_Atoms";
 			};
-
 
 			virtual unsigned int Flags()
 			{
 				return NOTREADABLE;	// possibly WRITEONEONLY??
 			};
 
-
-			////////////////////////////////////////////////////
-			/// Declarations for the "API" interface functions. Definitions are below
-			// virtual bool ReadMolecule ( OBBase* pOb, OBConversion* pConv );
 			virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 			static MNAZ Z2MNAZ(unsigned);
-
 
 		private:
 			string MNAize(OBAtom * const, unsigned);
@@ -107,10 +97,8 @@ namespace OpenBabel
 	string const MNAFormat::open_nbor_list = "(";
 	string const MNAFormat::close_nbor_list = ")";
 	const char * const MNAFormat::levels_option = "L";
-	unsigned MNAFormat::levels = 2; //default
-	////////////////////////////////////////////////////
+	unsigned MNAFormat::levels = 2; // default
 
-	//Make an instance of the format class
 	MNAFormat theMNAFormat;
 
 	////////////////////////////////////////////////////////////////
@@ -127,51 +115,68 @@ namespace OpenBabel
 
 		ostream& ofs = *pConv->GetOutStream();
 
-		/** Write the representation of the OBMol molecule to the output stream **/
-
-		// To find out whether this is the first molecule to be output...
-
 		if (pConv->GetOutputIndex() == 1)
 			ofs << "# The contents of this file were derived from " << pConv->GetInFilename() << endl;
 
-		//To use an output option
-		if (!pConv->IsOption("n"))      //OBConversion::OUTOPTIONS is the default
+		if (!pConv->IsOption("n"))
 			ofs << "# Title = " << pmol->GetTitle() << endl;
 
-		const char * const p = pConv->IsOption(levels_option, OBConversion::OUTOPTIONS);
+		const char * const p = pConv->IsOption(levels_option);
 
 		if (p)
 		{
-			stringstream ss(p);
+			stringstream ss(p), error_msg;
 
-			ss >> levels;	// 0 on error
 
-			if (levels > 10000)
+			ss >> levels;
+
+			if (!(ss.rdstate() & (stringstream::failbit | stringstream::badbit)))
 			{
-				cerr << "Levels = " << levels << " will almost certainly crash and was probably a mistake." << endl;
-				return false;
+
+
+				if (levels > 10000)
+				{
+					error_msg << "Levels = " << levels << " will almost certainly crash and was probably a mistake." << endl;
+					obErrorLog.ThrowError(__FUNCTION__, error_msg.str(), obError);
+					return false;
+				}
+				else
+					if (levels > 10)
+					{
+						error_msg << "Levels > 10 is probably not very useful.  (If it is, let me know!)" << endl;
+						obErrorLog.ThrowError(__FUNCTION__, error_msg.str(), obWarning);
+					}
 			}
 			else
-				if (levels > 10)
-					cerr << "Levels > 10 is probably not very useful.  (If it is, let me know!)" << endl;
+			{
+				error_msg << "Error reading levels value: " << ss.str() << endl;
+				obErrorLog.ThrowError(__FUNCTION__, error_msg.str(), obError);
+				return false;
+			}
 		}
 
 		OBMol &mol = *pmol;
 
 		vector<OBAtom*>::iterator i;
 		OBAtom *atom;
-		mol.AddHydrogens();
+
+		if (pConv->IsOption("d", OBConversion::GENOPTIONS))
+		{
+			if (pConv->GetOutputIndex() == 1)
+				cerr << "MNA includes hydrogens by definition, just be aware of that." << endl;
+			ofs << "# Hydrogens deleted explicitly." << endl;
+			mol.DeleteHydrogens();
+		}
+		else
+			mol.AddHydrogens();
 
 		for (atom = mol.BeginAtom(i); atom; atom = mol.NextAtom(i))
 			ofs << MNAize(atom, levels) << endl;
 
-		ofs << endl;
-
-		// ... or the last
 		if (!pConv->IsLast())
 			ofs << "$$$$" << endl;
 
-		return true; //or false to stop converting
+		return true;
 	}
 
 
@@ -241,7 +246,6 @@ namespace OpenBabel
 
 
 	// Big, boring look-up table to establish the MNA type.
-	// It should also be noted that in their article, Filimonov et al refer to element Jl, which is Jolotium, a former name for Dubnium.
 	MNAZ MNAFormat::Z2MNAZ(unsigned int Z)
 	{
 		MNAZ type;
@@ -250,7 +254,7 @@ namespace OpenBabel
 		{
 			case 0: type = MNAZ_ERROR; break;
 			case 1: type = MNAZ_H; break;
-			case 2: type = MNAZ_R; break;
+			case 2: type = MNAZ_ERROR; break;
 			case 3: type = MNAZ_Li; break;
 			case 4: type = MNAZ_Be; break;
 			case 5: type = MNAZ_B; break;
@@ -258,7 +262,7 @@ namespace OpenBabel
 			case 7: type = MNAZ_N; break;
 			case 8: type = MNAZ_O; break;
 			case 9: type = MNAZ_F; break;
-			case 10: type = MNAZ_R; break;
+			case 10: type = MNAZ_ERROR; break;
 			case 11: type = MNAZ_Li; break;
 			case 12: type = MNAZ_Mg; break;
 			case 13: type = MNAZ_Al; break;
@@ -266,7 +270,7 @@ namespace OpenBabel
 			case 15: type = MNAZ_P; break;
 			case 16: type = MNAZ_S; break;
 			case 17: type = MNAZ_Cl; break;
-			case 18: type = MNAZ_R; break;
+			case 18: type = MNAZ_ERROR; break;
 			case 19: type = MNAZ_K; break;
 			case 20: type = MNAZ_Ca; break;
 			case 21: type = MNAZ_Sc; break;
@@ -284,7 +288,7 @@ namespace OpenBabel
 			case 33: type = MNAZ_As; break;
 			case 34: type = MNAZ_Se; break;
 			case 35: type = MNAZ_Br; break;
-			case 36: type = MNAZ_R; break;
+			case 36: type = MNAZ_ERROR; break;
 			case 37: type = MNAZ_K; break;
 			case 38: type = MNAZ_Sr; break;
 			case 39: type = MNAZ_Al; break;
@@ -302,7 +306,7 @@ namespace OpenBabel
 			case 51: type = MNAZ_Co; break;
 			case 52: type = MNAZ_Te; break;
 			case 53: type = MNAZ_I; break;
-			case 54: type = MNAZ_R; break;
+			case 54: type = MNAZ_ERROR; break;
 			case 55: type = MNAZ_K; break;
 			case 56: type = MNAZ_Sr; break;
 			case 57: type = MNAZ_In; break;
@@ -334,27 +338,27 @@ namespace OpenBabel
 			case 83: type = MNAZ_Ni; break;
 			case 84: type = MNAZ_Te; break;
 			case 85: type = MNAZ_I; break;
-			case 86: type = MNAZ_R; break;
+			case 86: type = MNAZ_ERROR; break;
 			case 87: type = MNAZ_K; break;
 			case 88: type = MNAZ_Sr; break;
-			case 89: type = MNAZ_R; break;
-			case 90: type = MNAZ_R; break;
-			case 91: type = MNAZ_R; break;
-			case 92: type = MNAZ_R; break;
-			case 93: type = MNAZ_R; break;
-			case 94: type = MNAZ_R; break;
-			case 95: type = MNAZ_R; break;
-			case 96: type = MNAZ_R; break;
-			case 97: type = MNAZ_R; break;
-			case 98: type = MNAZ_R; break;
-			case 99: type = MNAZ_R; break;
-			case 100: type = MNAZ_R; break;
-			case 101: type = MNAZ_R; break;
-			case 102: type = MNAZ_R; break;
-			case 103: type = MNAZ_R; break;
+			case 89: type = MNAZ_ERROR; break;
+			case 90: type = MNAZ_ERROR; break;
+			case 91: type = MNAZ_ERROR; break;
+			case 92: type = MNAZ_ERROR; break;
+			case 93: type = MNAZ_ERROR; break;
+			case 94: type = MNAZ_ERROR; break;
+			case 95: type = MNAZ_ERROR; break;
+			case 96: type = MNAZ_ERROR; break;
+			case 97: type = MNAZ_ERROR; break;
+			case 98: type = MNAZ_ERROR; break;
+			case 99: type = MNAZ_ERROR; break;
+			case 100: type = MNAZ_ERROR; break;
+			case 101: type = MNAZ_ERROR; break;
+			case 102: type = MNAZ_ERROR; break;
+			case 103: type = MNAZ_ERROR; break;
 			case 104: type = MNAZ_ERROR; break;
-			case 105: type = MNAZ_R; break;
-			case 106: type = MNAZ_R; break;
+			case 105: type = MNAZ_ERROR; break;
+			case 106: type = MNAZ_ERROR; break;
 			default: type = MNAZ_ERROR; break;
 		}
 
