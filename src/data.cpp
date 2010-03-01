@@ -695,6 +695,8 @@ namespace OpenBabel
               break;
             if (r1->GetName() != r2->GetName())
               break;
+            if (r1->GetChain() != r2->GetChain())
+              break; // Fixes PR#2889763 - Fabian
 
             if ((bo = LookupBO(r1->GetAtomID(a1),r2->GetAtomID(a2))))
               {
