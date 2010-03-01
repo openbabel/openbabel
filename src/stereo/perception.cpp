@@ -27,6 +27,8 @@
 #include <openbabel/graphsym.h>
 #include <openbabel/oberror.h>
 
+#include <limits>
+
 namespace OpenBabel {
  
   ////////////////////////////////////////////////////////////////////////////
@@ -673,7 +675,7 @@ namespace OpenBabel {
           // rule 2a with 1 pair
           {
             // find the duplicated symmetry class
-            unsigned int duplicatedSymClass;
+            unsigned int duplicatedSymClass = std::numeric_limits<unsigned int>::max();
             std::vector<unsigned int> nbrSymClasses;
             FOR_NBORS_OF_ATOM (nbr, atom) {
               nbrSymClasses.push_back(symClasses.at(nbr->GetIndex()));
@@ -684,6 +686,9 @@ namespace OpenBabel {
                 break;
               }
             }
+            if (duplicatedSymClass == std::numeric_limits<unsigned int>::max())
+              continue;
+
             // find the ligand atom
             OBAtom *ligandAtom = 0;
             FOR_NBORS_OF_ATOM (nbr, atom)
@@ -799,7 +804,7 @@ namespace OpenBabel {
           // rule 2b with 3 identical
           {
             // find the duplicated symmetry class
-            unsigned int duplicatedSymClass;
+            unsigned int duplicatedSymClass = std::numeric_limits<unsigned int>::max();
             std::vector<unsigned int> nbrSymClasses;
             FOR_NBORS_OF_ATOM (nbr, atom) {
               nbrSymClasses.push_back(symClasses.at(nbr->GetIndex()));
@@ -810,6 +815,9 @@ namespace OpenBabel {
                 break;
               }
             }
+            if (duplicatedSymClass == std::numeric_limits<unsigned int>::max())
+              continue;
+
             // find the ligand atom
             OBAtom *ligandAtom = 0;
             FOR_NBORS_OF_ATOM (nbr, atom)

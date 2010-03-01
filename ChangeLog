@@ -6,6 +6,10 @@
 	* src/data.cpp: Fix for PR#2889763 from Fabian -- make
 	sure to check chain numbers as well -- or bond between chains!
 
+2010-03-01  Tim Vandermeersch
+
+        * src/stereo/perception.cpp: Add some more safety logic. (Fixes #2897750)
+
 2010-03-01  Noel O'Boyle
 
 	* src/perception.cpp: Fixed error for perception of stereo from 2D for
