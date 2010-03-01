@@ -134,6 +134,37 @@ namespace OpenBabel {
                       vector3(v31,v32,v33));
       }
 
+      // Unit cell info (for non-variable cell calcs)
+      if (strstr(buffer, "crystal axes: (cart. coord. in units of a_0)")) {
+        double conv = alat * BOHR_TO_ANGSTROM;
+        double v11, v12, v13,
+          v21, v22, v23,
+          v31, v32, v33;
+
+        ifs.getline(buffer,BUFF_SIZE); // v1
+        tokenize(vs, buffer);
+        v11 = atof(vs.at(3).c_str()) * conv;
+        v12 = atof(vs.at(4).c_str()) * conv;
+        v13 = atof(vs.at(5).c_str()) * conv;
+
+        ifs.getline(buffer,BUFF_SIZE); // v2
+        tokenize(vs, buffer);
+        v21 = atof(vs.at(3).c_str()) * conv;
+        v22 = atof(vs.at(4).c_str()) * conv;
+        v23 = atof(vs.at(5).c_str()) * conv;
+
+        ifs.getline(buffer,BUFF_SIZE); // v3
+        tokenize(vs, buffer);
+        v31 = atof(vs.at(3).c_str()) * conv;
+        v32 = atof(vs.at(4).c_str()) * conv;
+        v33 = atof(vs.at(5).c_str()) * conv;
+
+        // Build unit cell
+        cell->SetData(vector3(v11,v12,v13),
+                      vector3(v21,v22,v23),
+                      vector3(v31,v32,v33));
+      }
+
       // Atoms info
       if (strstr(buffer, "ATOMIC_POSITIONS")) {
         // Clear old atoms from pmol
