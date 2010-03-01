@@ -1,3 +1,15 @@
+2010-03-01  Noel O'Boyle
+
+	* src/perception.cpp: Fixed error for perception of stereo from 2D for
+	3 in-plane bond + one wedge/dash. Also unified code for the wedge and
+	dash cases.
+	* src/formats/mdlformat.cpp: Add support for writing of 2D
+	stereochemistry. The wedges/dashes read from input (or otherwise
+	calculated) will be used unless the 'w' option is given, in which case
+	the tetstereo objects will be used to work out the wedges/dashes. This
+	is required because the wedges/dashes often contain information beyond
+	the stereochemistry and it would be unwise to just forget it.
+
 2010-02-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/gaussformat.cpp: Fix crash with reading Gaussian

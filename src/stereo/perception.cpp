@@ -1579,29 +1579,24 @@ namespace OpenBabel {
           success = false;
         }
       } else if (planeAtoms.size() == 3) {
-        if (hashAtoms.size() == 1 && wedgeAtoms.size() == 0) {
-          // plane1 + plane2 + plane3, hash
-          config.towards = hashAtoms[0]->GetId();
-          config.view = OBStereo::ViewTowards;
+        if ( (hashAtoms.size() + wedgeAtoms.size()) == 1) {
+          // Either: plane1 + plane2 + plane3, hash
+          //     or: plane1 + plane2 + plane3, wedge
+          if (hashAtoms.size() == 1) {
+            config.towards = hashAtoms[0]->GetId();
+            config.view = OBStereo::ViewTowards;
+          }
+          else { // wedgeAtoms.size() == 1
+            config.from = wedgeAtoms[0]->GetId();
+            config.view = OBStereo::ViewFrom;
+          }
           config.refs.resize(3);
           config.refs[0] = planeAtoms[0]->GetId();
           config.refs[1] = planeAtoms[1]->GetId();
           config.refs[2] = planeAtoms[2]->GetId();
           double sign = TriangleSign(planeAtoms[0]->GetVector(), 
               planeAtoms[1]->GetVector(), planeAtoms[2]->GetVector());
-          if (sign < 0.0)
-            config.winding = OBStereo::AntiClockwise;
-        } else if (hashAtoms.size() == 0 && wedgeAtoms.size() == 1) {
-          // plane1 + plane2, wedge
-          config.from = wedgeAtoms[0]->GetId();
-          config.view = OBStereo::ViewFrom;
-          config.refs.resize(3);
-          config.refs[0] = planeAtoms[0]->GetId();
-          config.refs[1] = planeAtoms[1]->GetId();
-          config.refs[2] = planeAtoms[2]->GetId();
-          double sign = TriangleSign(planeAtoms[0]->GetVector(), 
-              planeAtoms[1]->GetVector(), planeAtoms[2]->GetVector());
-          if (sign < 0.0)
+          if (sign > 0.0)
             config.winding = OBStereo::AntiClockwise;
         } else {
           success = false;
