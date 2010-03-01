@@ -40,13 +40,15 @@ def run_exec(*args):
     
     broken = commandline.split()
     exe = executable(broken[0])
+    # Note that bufsize = -1 means default buffering
+    # Without this, it's unbuffered and it takes 10x longer on MacOSX
     if text:
         p = Popen([exe] + broken[1:], 
-                  stdin=PIPE, stdout=PIPE, stderr=PIPE)
+                  stdin=PIPE, stdout=PIPE, stderr=PIPE, bufsize=-1)
         stdout, stderr = p.communicate(text)
     else:
         p = Popen([exe] + broken[1:], 
-                  stdout=PIPE, stderr=PIPE)
+                  stdout=PIPE, stderr=PIPE, bufsize=-1)
         stdout, stderr = p.communicate()
     
     return stdout, stderr
