@@ -923,8 +923,10 @@ namespace OpenBabel
     /* residue sequence number */
     string resnum = sbuf.substr(16,4);
     OBResidue *res  = (mol.NumResidues() > 0) ? mol.GetResidue(mol.NumResidues()-1) : NULL;
-    if (res == NULL || res->GetName() != resname 
-        || res->GetNumString() != resnum)
+    if (res == NULL 
+        || res->GetName() != resname 
+        || res->GetNumString() != resnum
+        || res->GetChain() != chain)
       {
         vector<OBResidue*>::iterator ri;
         for (res = mol.BeginResidue(ri) ; res ; res = mol.NextResidue(ri))

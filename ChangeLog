@@ -1,5 +1,8 @@
 2010-03-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/formats/pdbformat.cpp: Fix for PR#2866659 from Fabian. Check
+	for chain numbers when assigning sequence numbers.
+
 	* src/data.cpp: Fix for PR#2889763 from Fabian -- make
 	sure to check chain numbers as well -- or bond between chains!
 
