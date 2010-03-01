@@ -290,7 +290,7 @@ namespace OpenBabel
           atom->SetImplicitValence(2 + atom->GetFormalCharge());
         } else {
           if (atom->GetImplicitValence() == 2)
-          atom->SetImplicitValence(3 + atom->GetFormalCharge());
+            atom->SetImplicitValence(3 + atom->GetFormalCharge());
         }
       }
     }
@@ -306,11 +306,11 @@ namespace OpenBabel
     typing is not usually used directly as ring typing is done
     automatically when the ring type is requested of rings:
     \code
-      vector<OBRing*>::iterator i;
-      vector<OBRing*> rlist = mol.GetSSSR();
+    vector<OBRing*>::iterator i;
+    vector<OBRing*> rlist = mol.GetSSSR();
       
-      for (i = rlist.begin();i != rlist.end();++i)
-        cout << "ring type = " << (*i)->GetType() << endl;
+    for (i = rlist.begin();i != rlist.end();++i)
+    cout << "ring type = " << (*i)->GetType() << endl;
     \endcode
   */
   OBRingTyper::OBRingTyper()
@@ -350,8 +350,8 @@ namespace OpenBabel
   {
     vector<pair<OBSmartsPattern*,string> >::iterator i;
     for (i = _ringtyp.begin();i != _ringtyp.end();++i) {
-        delete i->first;
-        i->first = NULL;
+      delete i->first;
+      i->first = NULL;
     }
   }
 
@@ -382,14 +382,14 @@ namespace OpenBabel
             member_count = 0;
             
             for(j = j2->begin(); j != j2->end(); ++j) { // for each atom in the match
-	      if ((*i)->IsMember(mol.GetAtom(*j))) 
-	        member_count++;
-	    }
+              if ((*i)->IsMember(mol.GetAtom(*j))) 
+                member_count++;
+            }
 	    
-	    if ((*i)->Size() == member_count)
+            if ((*i)->Size() == member_count)
               (*i)->SetType(i2->second);
-	  }
-	}
+          }
+        }
       }
     }
   }
@@ -569,7 +569,7 @@ namespace OpenBabel
       pi electrons for each atom. At the end (e.g., when @p atom == @p root)
       the Huekel 4n+2 rule is checked to see if there is a possible electronic
       configuration which corresponds to aromaticity.
-   **/
+  **/
   bool OBAromaticTyper::TraverseCycle(OBAtom *root, OBAtom *atom, OBBond *prev, 
                                       std::pair<int,int> &er,int depth)
   {
@@ -665,6 +665,7 @@ namespace OpenBabel
    * OBAromaticTyper::TraverseCycle() method.
    *
    * Ported from JOELib, copyright Joerg Wegner, 2003 under the GPL version 2
+   * Improved by Fabian (fab5) in 2009 -- PR#2889708
    *
    * @param mol the molecule
    * @param avoidInnerRingAtoms inner closure ring atoms with more than 2 neighbours will be avoided
@@ -679,7 +680,7 @@ namespace OpenBabel
     vector<OBBond*>::iterator j, l, nbr2Iter;
     vector<OBRing*> sssRings = mol.GetSSSR();
     vector<OBRing*>::iterator k;
-
+    
     int rootAtom;
     int ringNbrs;
     int heavyNbrs;
@@ -687,135 +688,165 @@ namespace OpenBabel
     vector<int> tmpRootAtoms;
     vector<int> tmp;
 
+    vector<OBBond*> cbonds;
+    vector< vector<OBRing*> > ringAtoms; // store ring pointers on an atom basis
+    
+    //generate list of closure bonds 
     for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
-      if (bond->IsClosure())
-        tmpRootAtoms.push_back(bond->GetBeginAtomIdx());
+      {
+        if( bond->IsClosure() )
+          {
+            cbonds.push_back(bond);
+            if(avoidInnerRingAtoms)
+              {
+                tmpRootAtoms.push_back(bond->GetBeginAtomIdx());
+              }
+          }
+      }
+    
+    if(avoidInnerRingAtoms)
+      {
+        //for every atom fill vector with ring pointer it's associated with
+        ringAtoms.resize(mol.NumAtoms()+1);
+        for (k = sssRings.begin();k != sssRings.end();++k)
+          {
+            tmp = (*k)->_path;
+            for (unsigned int j (0),j_end(tmp.size()); j < j_end; ++j)
+              {
+                ringAtoms[tmp[j]].push_back(*k);
+              }
+          }
+      }
+    
+    
+    //loop over closure bonds
+    for(OBBondIterator bd(cbonds.begin()),bd_end(cbonds.end());bd!=bd_end;++bd)
+      {
+        bond = *bd;
 
-    for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
-      if (bond->IsClosure())
-        {
-          // BASIC APPROACH
-          // pick beginning atom at closure bond
-          // this is really ready, isn't it ! ;-)
-          rootAtom = bond->GetBeginAtomIdx();
-          _root[rootAtom] = true;
-
-          // EXTENDED APPROACH
-          if (avoidInnerRingAtoms)
-            {
-              // count the number of neighbor ring atoms
-              atom = mol.GetAtom(rootAtom);
-              ringNbrs = heavyNbrs = 0;
-
-              for (nbr = atom->BeginNbrAtom(l);nbr;nbr = atom->NextNbrAtom(l))
-                {
-                  // we can get this from atom->GetHvyValence()
-                  // but we need to find neighbors in rings too
-                  // so let's save some time
-                  if (!nbr->IsHydrogen())
-                    {
-                      heavyNbrs++;
-                      if (nbr->IsInRing())
-                        ringNbrs++;
-                    }
-
-                  // if this atom has more than 2 neighbor ring atoms
-                  // we could get trapped later when traversing cycles
-                  // which can cause aromaticity false detection
-                  newRoot = -1;
-
-                  if (ringNbrs > 2)
-                    {
-                      // try to find another root atom
-                      for (k = sssRings.begin();k != sssRings.end();++k)
-                        {
-                          ring = (*k);
-                          tmp = ring->_path;
-
-                          bool checkThisRing = false;
-                          int rootAtomNumber=0;
-                          int idx=0;
-                          // avoiding two root atoms in one ring !
-                          for (unsigned int j = 0; j < tmpRootAtoms.size(); ++j)
-                            {
-                              idx= tmpRootAtoms[j];
-                              if(ring->IsInRing(idx))
-                                {
-                                  rootAtomNumber++;
-                                  if(rootAtomNumber>=2)
-                                    break;
-                                }
-                            }
-                          if(rootAtomNumber<2)
-                            {
-                              for (unsigned int j = 0; j < tmp.size(); ++j)
-                                {
-                                  // find critical ring
-                                  if (tmp[j] == rootAtom)
-                                    {
-                                      checkThisRing = true;
-                                    }
-                                  else
-                                    {
-                                      // second root atom in this ring ?
-                                      if (_root[tmp[j]] == true)
-                                        {
-                                          // when there is a second root
-                                          // atom this ring can not be
-                                          // used for getting an other
-                                          // root atom
-                                          checkThisRing = false;
-
-                                          break;
-                                        }
-                                    }
-                                }
-                            }
-
-                          // check ring for getting another
-                          // root atom to avoid aromaticity typer problems
-                          if (checkThisRing)
-                            {
-                              // check if we can find another root atom
-                              for (unsigned int m = 0; m < tmp.size(); ++m)
-                                {
-                                  ringNbrs = heavyNbrs = 0;
-                                  for (nbr2 = (mol.GetAtom(tmp[m]))->BeginNbrAtom(nbr2Iter);
-                                       nbr2;nbr2 = (mol.GetAtom(tmp[m]))->NextNbrAtom(nbr2Iter))
-                                    {
-                                      if (!nbr2->IsHydrogen())
-                                        {
-                                          heavyNbrs++;
-
-                                          if (nbr2->IsInRing())
-                                            ringNbrs++;
-                                        }
-                                    }
-
-                                  // if the number of neighboured heavy atoms is also
-                                  // the number of neighboured ring atoms, the aromaticity
-                                  // typer could be stuck in a local traversing trap
-                                  if (ringNbrs <= 2 && ring->IsInRing((mol.GetAtom(tmp[m])->GetIdx())))
-                                    {
-                                      newRoot = tmp[m];
-                                    }
-                                }
-                            }
-                        }
-
-                      if ((newRoot != -1) && (rootAtom != newRoot))
-                        {
-                          // unset root atom
-                          _root[rootAtom] = false;
-
-                          // pick new root atom
-                          _root[newRoot] = true;
-                        }
-                    } // if (ringNbrs > 2)
-
-                } // end for
-            } // if (avoid)
-        } // if (bond.IsClosure())
+        // BASIC APPROACH
+        // pick beginning atom at closure bond
+        // this is really ready, isn't it ! ;-)
+        rootAtom = bond->GetBeginAtomIdx();
+        _root[rootAtom] = true;
+	
+        // EXTENDED APPROACH
+        if (avoidInnerRingAtoms)
+          {
+            // count the number of neighbor ring atoms
+            atom = mol.GetAtom(rootAtom);
+            ringNbrs = heavyNbrs = 0;
+	    
+            for (nbr = atom->BeginNbrAtom(l);nbr;nbr = atom->NextNbrAtom(l))
+              {
+                // we can get this from atom->GetHvyValence()
+                // but we need to find neighbors in rings too
+                // so let's save some time
+                if (!nbr->IsHydrogen())
+                  {
+                    heavyNbrs++;
+                    if (nbr->IsInRing())
+                      ringNbrs++;
+                  }
+		
+                // if this atom has more than 2 neighbor ring atoms
+                // we could get trapped later when traversing cycles
+                // which can cause aromaticity false detection
+                newRoot = -1;
+		
+                if (ringNbrs > 2)
+                  {
+                    // try to find another root atom
+                    // only loop over rings which contain rootAtom
+                    for(k = ringAtoms[rootAtom].begin() ; k != ringAtoms[rootAtom].end(); ++k)
+                      {
+                        ring = (*k);
+                        tmp = ring->_path;
+			
+                        bool checkThisRing = false;
+                        int rootAtomNumber=0;
+                        int idx=0;
+                        // avoiding two root atoms in one ring !
+                        for (unsigned int j = 0; j < tmpRootAtoms.size(); ++j)
+                          {
+                            idx= tmpRootAtoms[j];
+                            if(ring->IsInRing(idx))
+                              {
+                                rootAtomNumber++;
+                                if(rootAtomNumber>=2)
+                                  break;
+                              }
+                          }
+                        if(rootAtomNumber<2)
+                          {
+                            for (unsigned int j = 0; j < tmp.size(); ++j)
+                              {
+                                // find critical ring
+                                if (tmp[j] == rootAtom)
+                                  {
+                                    checkThisRing = true;
+                                  }
+                                else
+                                  {
+                                    // second root atom in this ring ?
+                                    if (_root[tmp[j]] == true)
+                                      {
+                                        // when there is a second root
+                                        // atom this ring can not be
+                                        // used for getting an other
+                                        // root atom
+                                        checkThisRing = false;
+					
+                                        break;
+                                      }
+                                  }
+                              }
+                          }
+			
+                        // check ring for getting another
+                        // root atom to avoid aromaticity typer problems
+                        if (checkThisRing)
+                          {
+                            // check if we can find another root atom
+                            for (unsigned int m = 0; m < tmp.size(); ++m)
+                              {
+                                ringNbrs = heavyNbrs = 0;
+                                for (nbr2 = (mol.GetAtom(tmp[m]))->BeginNbrAtom(nbr2Iter);
+                                     nbr2;nbr2 = (mol.GetAtom(tmp[m]))->NextNbrAtom(nbr2Iter))
+                                  {
+                                    if (!nbr2->IsHydrogen())
+                                      {
+                                        heavyNbrs++;
+					
+                                        if (nbr2->IsInRing())
+                                          ringNbrs++;
+                                      }
+                                  }
+				
+                                // if the number of neighboured heavy atoms is also
+                                // the number of neighboured ring atoms, the aromaticity
+                                // typer could be stuck in a local traversing trap
+                                if (ringNbrs <= 2 && ring->IsInRing((mol.GetAtom(tmp[m])->GetIdx())))
+                                  {
+                                    newRoot = tmp[m];
+                                  }
+                              }
+                          }
+                      }
+		    
+                    if ((newRoot != -1) && (rootAtom != newRoot))
+                      {
+                        // unset root atom
+                        _root[rootAtom] = false;
+			
+                        // pick new root atom
+                        _root[newRoot] = true;
+                      }
+                  } // if (ringNbrs > 2)
+		
+              } // end for
+          } // if (avoid)
+      } // end for(closure bonds)
   }
 
   void OBAromaticTyper::ExcludeSmallRing(OBMol &mol)
