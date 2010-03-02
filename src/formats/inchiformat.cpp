@@ -139,7 +139,7 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     }
   }
 
-  //***@todo 0D stereo, implicit H isotopes
+  //***@todo implicit H isotopes
   //Stereochemistry
   for(i=0;i<out.num_stereo0D;++i)
   {
@@ -254,23 +254,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   inchi_Input inp;
   memset(&inp,0,sizeof(inchi_Input));
-  bool Is0D=true;
-  if(mol.GetDimension()!=3)
-  {
-    //mol.FindChiralCenters();
-    if(mol.GetDimension()==2)
-    {
-      //Add pseudo z coordinates for wedge and hash bonds
-      FOR_ATOMS_OF_MOL(a,mol)
-      {
-        /* @todo
-        if(a->IsChiral())
-          CalcSignedVolume(mol, &*a, false);
-        */
-      }
-    }
-  }
-
+  
   OBAtom* patom;
   vector<inchi_Atom> inchiAtoms(mol.NumAtoms());
   vector<OBNodeBase*>::iterator itr;
@@ -283,22 +267,30 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     iat.x = patom->GetX();
     iat.y = patom->GetY();
     iat.z = patom->GetZ();
-    if(iat.x!=0 || iat.y!=0 || iat.z!=0)
-      Is0D=false;
     
     int nbonds = 0;
     vector<OBEdgeBase*>::iterator itr;
     OBBond *pbond;
     for (pbond = patom->BeginBond(itr);pbond;pbond = patom->NextBond(itr))
     {
-      // do each bond only once. Seems necessary to avoid problems with stereo
-      if(pbond->GetNbrAtomIdx(patom)<patom->GetIdx()) continue;
+      // Do each bond only once. Also, in order for the wedges/hashes in the
+      // 2D data to be pointing in the right direction, we need to make sure
+      // that patom is the BeginAtom of the bond. 
+      if(pbond->GetBeginAtomIdx() != patom->GetIdx()) continue;
       iat.neighbor[nbonds]      = pbond->GetNbrAtomIdx(patom)-1;
       int bo = pbond->GetBO();
       if(bo==5)
         bo=4;
       iat.bond_type[nbonds]     = bo;
-      iat.bond_stereo[nbonds++] = INCHI_BOND_STEREO_NONE; //not used
+      inchi_BondStereo2D bondstereo2D = INCHI_BOND_STEREO_NONE;
+      if (mol.GetDimension() == 2) {
+        if (pbond->IsWedge())
+          bondstereo2D = INCHI_BOND_STEREO_SINGLE_1UP;
+        else if (pbond->IsHash())
+          bondstereo2D = INCHI_BOND_STEREO_SINGLE_1DOWN;
+      }
+      iat.bond_stereo[nbonds] = bondstereo2D;
+      nbonds++;
     }
   
     strcpy(iat.elname,etab.GetSymbol(patom->GetAtomicNum()));
@@ -324,22 +316,10 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   
   inp.atom = &inchiAtoms[0];
 
-  //Restore zero z coordinate which may have ben modified for chiral 2D molecules
-  if(mol.GetDimension()==2)
-  {
-    FOR_ATOMS_OF_MOL(a,mol)
-    {
-      a->SetVector(a->x(), a->y(), 0.0);
-    }
-  }
-
   vector<inchi_Stereo0D> stereoVec;
   
-  if(Is0D)
+  if(mol.GetDimension()==0)
   {
-    //Tetrahedral stereo
-    //vector<OBNodeBase*>::iterator itr;
-    
     std::vector<OBGenericData*>::iterator data;
     std::vector<OBGenericData*> stereoData = mol.GetAllData(OBGenericDataType::StereoData);
     for (data = stereoData.begin(); data != stereoData.end(); ++data) {
@@ -365,7 +345,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       }
     }
         
-    //Double bond stereo
+    //Double bond stereo (still inside 0D section)
     //Currently does not handle cumulenes
     for (data = stereoData.begin(); data != stereoData.end(); ++data) {
       if (static_cast<OBStereoBase*>(*data)->GetType() == OBStereo::CisTrans) {

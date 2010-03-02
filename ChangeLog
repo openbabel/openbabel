@@ -1,5 +1,8 @@
 2010-03-02  Noel O'Boyle
 
+	* src/formats/inchiformat.cpp: Add support for setting wedge/hash
+	bonds for 2D data
+
 	* src/perception.cpp: Unified code for the wedge and
 	dash cases where there are two in-plane bonds.
 	* src/formats/mdlformat.cpp: Improve support for writing of 2D.
