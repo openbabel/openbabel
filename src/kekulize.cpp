@@ -427,7 +427,7 @@ namespace OpenBabel
       return has_no_leftover_electrons(atomState);
 
     // Get the bond and its atoms
-    OBBond *bond = this->GetBondById(bond_idx);
+    OBBond *bond = this->GetBond(bond_idx);
     OBAtom *atom1 = bond->GetBeginAtom();
     OBAtom *atom2 = bond->GetEndAtom();
     int idx1 = atom1->GetIdx();

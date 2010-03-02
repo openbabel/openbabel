@@ -1,3 +1,9 @@
+2010-03-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/kekulize.cpp (expand_kekulize): Fix crashing bug -- looking
+	for GetBond, not GetBondById -- the code iterates by bond indexes,
+	not unique ids (which may have gaps, etc.). Fixes PR#2956135.
+
 2010-03-01  Tim Vandermeersch
 
         * tests/smilestest.cpp: Remove the 2 failing test cases for now. I 
