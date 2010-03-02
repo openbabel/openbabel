@@ -1,3 +1,16 @@
+2010-03-01  Tim Vandermeersch
+
+        * tests/smilestest.cpp: Remove the 2 failing test cases for now. I 
+        believe they were the result from parsing +100000 molecules. I've added
+        some more realistic examples. When I have time I'll try to find out why 
+        the 2 cases are failing.
+
+        * test/graphsymtest.cpp: In the process, I've added a unit test for 
+        symmetry class assignment. It's very basic but there are some disabled,
+        failing molecules there two. One of the failing molecules overlaps with
+        the smilestest and ths might be the source of the problem, for that 
+        molecule at least.
+
 2010-03-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* CMakeLists.txt, src/CMakeLists.txt, src/formats/CMakeLists.txt:
