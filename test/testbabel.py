@@ -44,7 +44,7 @@ def run_exec(*args):
     # Without this, it's unbuffered and it takes 10x longer on MacOSX
     if text:
         p = Popen([exe] + broken[1:], 
-                  stdin=PIPE, stdout=PIPE, stderr=PIPE, bufsize=-1)
+                  stdin=PIPE, stdout=PIPE, stderr=PIPE, bufsize=1)
         stdout, stderr = p.communicate(text)
     else:
         p = Popen([exe] + broken[1:], 

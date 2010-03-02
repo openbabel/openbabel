@@ -4,7 +4,7 @@ add_definitions(-DTESTDATADIR="\\"${CMAKE_SOURCE_DIR}/test/files/\\"")
 # define FORMATDIR for location of format plugin binaries
 add_definitions(-DFORMATDIR="\\"${openbabel_BINARY_DIR}/lib/\\"")
 
-############################################################
+###########################################################
 #  new tests using obtest.h
 ############################################################
 
@@ -83,7 +83,9 @@ foreach(test ${old_tests})
     add_test(${test}_Test ${TEST_PATH}/test_${test})
   endif(MSVC)
   set_tests_properties(${test}_Test PROPERTIES
-    FAIL_REGULAR_EXPRESSION "not ok")
+    FAIL_REGULAR_EXPRESSION "not ok"
+    ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data"
+  )
   if(MSVC)
     set_target_properties(test_${test} PROPERTIES
       RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
@@ -111,3 +113,9 @@ ADD_PYTHON_TEST(pytest_babel testbabel.py)
 ADD_PYTHON_TEST(pytest_sym testsym.py)
 ADD_PYTHON_TEST(pytest_fastsearch testfastsearch.py)
 ADD_PYTHON_TEST(pytest_unique testunique.py)
+foreach(pytest babel sym fastsearch unique)
+  set_property(TEST pytest_${pytest} PROPERTY
+       ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
+  )
+endforeach(pytest babel sym fastsearch unique)
+

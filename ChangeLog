@@ -1,5 +1,10 @@
 2010-03-02  Noel O'Boyle
 
+	* test/CMakeLists.txt: Set required environment variables for
+	"make test". Only works with CMake 2.8 though.
+	* test/testbabel.py: Previous buffer fix didn't improve matters. Trying
+	a second time.
+
 	* src/formats/inchiformat.cpp: Add support for setting wedge/hash
 	bonds for 2D data
 
