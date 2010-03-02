@@ -9,6 +9,9 @@
 	* src/typer.cpp: Fix for PR#2889708 -- another patch from Fabian
 	to improve performance of SelectRootAtoms.
 
+	* CMakeLists.txt: Don't use -fvisibility=hidden for
+	Mac/gcc-4.2. This feature appears buggy.
+
 2010-03-01  Tim Vandermeersch
 
         * src/stereo/perception.cpp: Add some more safety logic. (Fixes #2897750)

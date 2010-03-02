@@ -158,7 +158,7 @@ if(NOT WIN32)
 
   # Add some visibility support when using GCC
   # note: Altough MinGW g++ 4.4 passes this test, visibility can't be used
-  if (CMAKE_COMPILER_IS_GNUCXX)
+  if (CMAKE_COMPILER_IS_GNUCXX AND NOT APPLE)
     if (CMAKE_SYSTEM_NAME MATCHES Linux)
       set (CMAKE_SHARED_LINKER_FLAGS "-Wl,--fatal-warnings -Wl,--no-undefined -lc ${CMAKE_SHARED_LINKER_FLAGS}")
       set (CMAKE_SHARED_LINKER_FLAGS "-Wl,--enable-new-dtags ${CMAKE_SHARED_LINKER_FLAGS}")
@@ -193,7 +193,7 @@ if(NOT WIN32)
         set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility-inlines-hidden")
       endif (GCC_IS_NEWER_THAN_4_2)
     endif (HAVE_GCC_VISIBILITY AND GCC_IS_NEWER_THAN_4_1 AND NOT _GCC_COMPILED_WITH_BAD_ALLOCATOR)
-  endif (CMAKE_COMPILER_IS_GNUCXX)
+  endif (CMAKE_COMPILER_IS_GNUCXX AND NOT APPLE)
 endif(NOT WIN32)
 
 # Some rpath handling for Linux and Mac
