@@ -1560,27 +1560,25 @@ namespace OpenBabel {
               planeAtoms[1]->GetVector(), hashAtoms[0]->GetVector());
           if (sign > 0.0)
             config.winding = OBStereo::AntiClockwise;
-        } else if (hashAtoms.size() == 1 && wedgeAtoms.size() == 0) {
-          // plane1 + plane2, hash
-          config.from = OBStereo::ImplicitRef;
+        } else if ((hashAtoms.size() + wedgeAtoms.size()) == 1) {
+          // Either: plane1 + plane2 + hash *or* plane1 + plane2 + wedge
+          OBAtom* stereoAtom;
+          if (hashAtoms.size() == 1) {
+            config.from = OBStereo::ImplicitRef;
+            config.view = OBStereo::ViewFrom;
+            stereoAtom = hashAtoms[0];
+          }
+          else { // wedgeAtoms.size() == 1
+            config.towards = OBStereo::ImplicitRef;
+            config.view = OBStereo::ViewTowards;
+            stereoAtom = wedgeAtoms[0];
+          }
           config.refs.resize(3);
           config.refs[0] = planeAtoms[0]->GetId();
           config.refs[1] = planeAtoms[1]->GetId();
-          config.refs[2] = hashAtoms[0]->GetId();
+          config.refs[2] = stereoAtom->GetId();
           double sign = TriangleSign(planeAtoms[0]->GetVector(), 
-              planeAtoms[1]->GetVector(), hashAtoms[0]->GetVector());
-          if (sign > 0.0)
-            config.winding = OBStereo::AntiClockwise;
-        } else if (hashAtoms.size() == 0 && wedgeAtoms.size() == 1) {
-          // plane1 + plane2, wedge
-          config.towards = OBStereo::ImplicitRef;
-          config.view = OBStereo::ViewTowards;
-          config.refs.resize(3);
-          config.refs[0] = planeAtoms[0]->GetId();
-          config.refs[1] = planeAtoms[1]->GetId();
-          config.refs[2] = wedgeAtoms[0]->GetId();
-          double sign = TriangleSign(planeAtoms[0]->GetVector(), 
-              planeAtoms[1]->GetVector(), wedgeAtoms[0]->GetVector());
+              planeAtoms[1]->GetVector(), stereoAtom->GetVector());
           if (sign > 0.0)
             config.winding = OBStereo::AntiClockwise;
         } else {

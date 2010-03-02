@@ -1,3 +1,9 @@
+2010-03-02  Noel O'Boyle
+
+	* src/perception.cpp: Unified code for the wedge and
+	dash cases where there are two in-plane bonds.
+	* src/formats/mdlformat.cpp: Improve support for writing of 2D.
+
 2010-03-01  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/pdbformat.cpp: Fix for PR#2866659 from Fabian. Check

@@ -744,10 +744,11 @@ namespace OpenBabel
           for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j)) {
             bond = (OBBond*) *j;
             from_cit = from.find(bond);
-            // If the bond has stereodirectionality, ensure that the start point
-            // is at the 'from' atom. Otherwise, ensure that the start point is
-            // at the atom with the lower bondIdx.
-            if ( (from_cit==from.end() && atom->GetIdx() < nbr->GetIdx()) ||
+            // If the bond has *calculated* stereodirectionality, ensure that the start point
+            // is at the 'from' atom. Otherwise, just ensure that the start atom
+            // is the 'begin atom' of the bond (so that stereodirectionality that was
+            // read in [rather than calculated] will be correct).
+            if ( (from_cit==from.end() && atom->GetIdx()==bond->GetBeginAtomIdx()) ||
                  (from_cit!=from.end() && from_cit->second == atom->GetId()) ) {
               int stereo = 0;
               if(mol.GetDimension() == 2 && !pConv->IsOption("w", pConv->OUTOPTIONS)) {
@@ -1427,24 +1428,31 @@ namespace OpenBabel
           alreadyset.insert(chosen);
           
           // Determine whether this bond should be set hash or wedge
-          // (Code adapted from perception.cpp, TetrahedralFrom2D: plane1 + plane2 + plane3, wedge)
-          OBTetrahedralStereo::Config test_cfg;
-          OBAtom* chosen_nbr = chosen->GetNbrAtom(center);
-          test_cfg.center = cfg.center;
-          test_cfg.from = chosen_nbr->GetId();
-          test_cfg.view = OBStereo::ViewFrom;
-          test_cfg.refs.empty();
-          FOR_NBORS_OF_ATOM(a, center)
-            if (a->GetId() != chosen_nbr->GetId())
-              test_cfg.refs.push_back(a->GetId());
+          // (Code inspired by perception.cpp, TetrahedralFrom2D: plane1 + plane2 + plane3, wedge)
+          OBTetrahedralStereo::Config test_cfg = cfg;
+           
+          // If there is an implicit ref; let's make that the 'from' atom
+          // otherwise use the atom on the chosen bond
+          bool implicit = true;
+          if (test_cfg.from != OBStereo::ImplicitRef) {
+            OBStereo::RefIter ri = find(test_cfg.refs.begin(), test_cfg.refs.end(), OBStereo::ImplicitRef);
+            if (ri!=test_cfg.refs.end())
+              test_cfg = OBTetrahedralStereo::ToConfig(test_cfg, OBStereo::ImplicitRef);
+            else {
+              test_cfg = OBTetrahedralStereo::ToConfig(test_cfg, chosen->GetNbrAtom(center)->GetId());
+              implicit = false;
+            }
+          }
+          // -ve sign implies clockwise
           double sign = TriangleSign(mol.GetAtomById(test_cfg.refs[0])->GetVector(), 
               mol.GetAtomById(test_cfg.refs[1])->GetVector(), mol.GetAtomById(test_cfg.refs[2])->GetVector());
-          if (sign > 0.0)
-            test_cfg.winding = OBStereo::AntiClockwise;
-          
-          OBStereo::BondDirection bonddir = OBStereo::UpBond; // i.e. filled wedge from cfg.center to chosen_nbr
-          if (cfg != test_cfg)
-            bonddir = OBStereo::DownBond;  // i.e. hash bond from cfg.center to chosen_nbr
+
+          // Things are inverted from the point of view of the ImplicitH which we
+          // assume to be of opposite stereochemistry to the wedge/hash
+          bool useup = !implicit;
+          if (sign > 0) useup = !useup;
+          // Set to UpBond (filled wedge from cfg.center to chosen_nbr) or DownBond
+          OBStereo::BondDirection bonddir = useup ? OBStereo::UpBond : OBStereo::DownBond;
           updown[chosen] = bonddir;
           from[chosen] = cfg.center;
         }
