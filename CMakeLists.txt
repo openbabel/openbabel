@@ -109,6 +109,8 @@ find_package(ZLIB)
 if(ZLIB_FOUND)
   add_definitions(-DHAVE_LIBZ)
   include_directories(${ZLIB_INCLUDE_DIR})
+else(ZLIB_FOUND)
+  set(ZLIB_LIBRARY "")
 endif(ZLIB_FOUND)
 # wxWidgets instructions based on http://wiki.wxwidgets.org/CMake
 #find_package(wxWidgets COMPONENTS base core REQUIRED)
