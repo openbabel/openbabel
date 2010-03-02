@@ -103,7 +103,7 @@ namespace OpenBabel
       };
       bool  HasProperties;
       string GetTimeDate();
-      void GetUpDown(OBMol& mol, map<OBBond*, OBStereo::BondDirection> &updown, set<OBBond*> &stereodbl);
+      set<OBBond*> GetUnspecifiedCisTrans(OBMol& mol);
       void GetParity(OBMol& mol, map<OBAtom*, Parity> &parity,
            map<OBBond*, OBStereo::BondDirection> &updown,
            map<OBBond*, OBStereo::Ref> &from,
@@ -679,16 +679,13 @@ namespace OpenBabel
           break;
         }
       }
-      // Store updown information for 0D (cis/trans) and 2D (chirality)
-      map<OBBond*, OBStereo::BondDirection> updown;
-      set<OBBond*> stereodbl;
-      // Calculate up/downness of cis/trans bonds for 0D
-      if (mol.GetDimension() == 0)
-        GetUpDown(mol, updown, stereodbl);
+      // Find which double bonds have unspecified chirality
+      set<OBBond*> unspec_ctstereo = GetUnspecifiedCisTrans(mol);
 
       // Calculate parity of atoms and up/down bond for chiral centers (see Appendix A of ctfile.pdf)
-      // The latter is only calculated if pConv->IsOption("w", pConv->OUTOPTIONS)). Otherwise
-      // the IsWedge/IsHash bond designations are retained.
+      // The latter is only calculated for 2D if pConv->IsOption("w", pConv->OUTOPTIONS)). Otherwise
+      // the IsWedge/IsHash bond designations are used. For 3D it is always calculated. For 0D never.
+      map<OBBond*, OBStereo::BondDirection> updown;
       map<OBAtom*, Parity> parity;
       map<OBBond*, OBStereo::Ref> from;
       map<OBBond*, OBStereo::Ref>::const_iterator from_cit;
@@ -760,16 +757,10 @@ namespace OpenBabel
                   stereo = 4;
               }
 
-              // For Cis/Trans double bonds, set the stereo...
-              // The spec is a bit murky here. stereodbl will be non-empty only for 0D.
-              // I set the stereo of the dbl bond to 3, and the stereo of the attached
-              // bonds to the same value for cis, or opposite values for trans. The specific
-              // value used has nothing to do with wedge/hash but everything to do with
-              // consistency across conjugated double bonds.
-              if (stereodbl.find(bond) != stereodbl.end())
+              // For unspecified Cis/Trans double bonds, set the stereo to 3...
+              if (unspec_ctstereo.find(bond) != unspec_ctstereo.end())
                 stereo = 3;
-              // For 0D, set the stereo for cis/trans bonds.
-              // If 2D, this will be empty unless the "w" output option is used to recalculate the stereoes
+              // For 3D (and 2D if "w" output option), see the stereo of the chiral centers.
               if (updown.find(bond) != updown.end())
                 stereo = updown[bond];
 
@@ -1251,95 +1242,21 @@ namespace OpenBabel
     return string(td);
   }
 
-  void MDLFormat::GetUpDown(OBMol& mol, map<OBBond*, OBStereo::BondDirection> &updown,
-                            set<OBBond*> &stereodbl)
+  set<OBBond*> MDLFormat::GetUnspecifiedCisTrans(OBMol& mol)
   {
-    // IMPROVEME: rewrite to loop over double bonds only
-
-    // Get CisTransStereos
-    std::vector<OBCisTransStereo*> cistrans, unvisited_cistrans;
+    // Get double bonds with unspecified CisTransStereo
+    set<OBBond*> unspec_ctstereo;
     std::vector<OBGenericData*> vdata = mol.GetAllData(OBGenericDataType::StereoData);
     for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data)
       if (((OBStereoBase*)*data)->GetType() == OBStereo::CisTrans) {
         OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
-        cistrans.push_back(ct);
-      }
-    unvisited_cistrans = cistrans;
-
-    // Initialise two opposite configurations for up/downness
-    bool use_alt_config;
-    vector<OBStereo::BondDirection> config(4), alt_config(4);
-    config[0] = OBStereo::UpBond;   config[3] = config[0];
-    config[1] = OBStereo::DownBond; config[2] = config[1];
-    alt_config[0] = config[1]; alt_config[3] = alt_config[0];
-    alt_config[1] = config[0]; alt_config[2] = alt_config[1];
-
-    // Find bonds in a BFS manner and set their up/downness
-    vector<OBCisTransStereo*>::iterator ChiralSearch;
-    vector<unsigned long>::iterator lookup; 
-    FOR_BONDBFS_OF_MOL(b, mol) {
-      if (updown.find(&(*b)) == updown.end()) 
-      { // This bond has not yet been set
-        vector<OBAtom*> bond_atoms(2);
-        bond_atoms[0] = b->GetBeginAtom();
-        bond_atoms[1] = b->GetEndAtom();
-        // Is this a stereo bond?
-        for (vector<OBAtom*>::iterator bond_atom = bond_atoms.begin(); bond_atom!=bond_atoms.end(); ++bond_atom)
-        {
-          for (ChiralSearch = unvisited_cistrans.begin(); ChiralSearch != unvisited_cistrans.end(); ChiralSearch++)
-          {
-            OBCisTransStereo::Config cfg = (*ChiralSearch)->GetConfig(OBStereo::ShapeU);
-            lookup = std::find(cfg.refs.begin(), cfg.refs.end(), (*bond_atom)->GetId());
-            if (lookup != cfg.refs.end() && (cfg.begin == b->GetNbrAtom(*bond_atom)->GetId() ||
-                                               cfg.end == b->GetNbrAtom(*bond_atom)->GetId()) )
-            { // We have a stereo bond. Now get the five bonds involved...
-              OBBond* dbl_bond = mol.GetBond(mol.GetAtomById(cfg.begin), mol.GetAtomById(cfg.end));
-              std::vector<OBBond *> refbonds(4, (OBBond*)NULL);
-              if (cfg.refs[0] != OBStereo::ImplicitRef) // Could be a hydrogen
-                refbonds[0] = mol.GetBond(mol.GetAtomById(cfg.refs[0]), mol.GetAtomById(cfg.begin));
-              if (cfg.refs[1] != OBStereo::ImplicitRef) // Could be a hydrogen
-                refbonds[1] = mol.GetBond(mol.GetAtomById(cfg.refs[1]), mol.GetAtomById(cfg.begin));
-              
-              if (cfg.refs[2] != OBStereo::ImplicitRef) // Could be a hydrogen
-                refbonds[2] = mol.GetBond(mol.GetAtomById(cfg.refs[2]), mol.GetAtomById(cfg.end));
-              if (cfg.refs[3] != OBStereo::ImplicitRef) // Could be a hydrogen
-                refbonds[3] = mol.GetBond(mol.GetAtomById(cfg.refs[3]), mol.GetAtomById(cfg.end));              
-              
-
-              if (cfg.specified) {
-
-                // If any of the bonds have been previously set, now set them all
-                // in agreement
-                use_alt_config = false;
-                for (int i=0; i<4; ++i)
-                  if (updown.find(refbonds[i]) != updown.end()) // We have already set this one (conjugated bond)
-                    if (updown[refbonds[i]] != config[i])
-                    {
-                      use_alt_config = true;
-                      break;
-                    }
-              }
-              
-              // Set the configuration
-              stereodbl.insert(dbl_bond);
-              if (cfg.specified) {
-                for(int i=0;i<4;i++)
-                  if (refbonds[i] != NULL)
-                    updown[refbonds[i]] = use_alt_config ? alt_config[i] : config[i];
-              }
-              else { // Cis/Trans unknown
-                for(int i=0;i<4;++i)
-                  if (updown.find(refbonds[i]) == updown.end())
-                    updown[refbonds[i]] = OBStereo::UnknownDir;
-              }
-
-              unvisited_cistrans.erase(ChiralSearch);
-              break; // Break out of the ChiralSearch (could break out of the outer loop too...let's see)
-            }
-          }
+        OBCisTransStereo::Config cfg = ct->GetConfig();
+        if (!cfg.specified) {
+          OBBond* dbl_bond = mol.GetBond(mol.GetAtomById(cfg.begin), mol.GetAtomById(cfg.end));
+          unspec_ctstereo.insert(dbl_bond);
         }
       }
-    }
+    return unspec_ctstereo;
   }
   void MDLFormat::GetParity(OBMol& mol, map<OBAtom*, MDLFormat::Parity> &parity,
     map<OBBond*, OBStereo::BondDirection> &updown, map<OBBond*, OBStereo::Ref> &from,
@@ -1377,8 +1294,8 @@ namespace OpenBabel
         parity[mol.GetAtomById(cfg.center)] = atomparity;
       }
     
-    // The rest of this function applies only to 2D and only if the "w" output option was specified
-    if (mol.GetDimension() != 2 || !recalculate_wedges)
+    // The rest of this function applies to 3D, or to 2D if the "w" output option was specified.
+    if (mol.GetDimension() == 0 || (mol.GetDimension()==2 && !recalculate_wedges))
       return;
         
     // This loop sets one bond of each tet stereo to up or to down (2D only)
@@ -1387,47 +1304,49 @@ namespace OpenBabel
       if (((OBStereoBase*)*data)->GetType() == OBStereo::Tetrahedral) {
         OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
         OBTetrahedralStereo::Config cfg = ts->GetConfig();
-        if (cfg.specified) {
-          OBBond* chosen = (OBBond*) NULL;
-          OBAtom* center = mol.GetAtomById(cfg.center);
-          bool nottet_flag = false;
-          bool acyclic_flag = false;
-          // Find the best candidate bond to set to up/down
-          // 1. **Should not already be set**
-          // 2. Should not be connected to a 2nd tet center
-          // (this is acceptable, as the wedge is only at one end, but will only confuse things)
-          // 3. Preferably is not in a cycle
-          // 4. Preferably is a terminal H
-          FOR_BONDS_OF_ATOM(b, center) {
-            if (alreadyset.find(&*b) == alreadyset.end()) {
-              if (chosen==NULL) chosen = &*b;
-              OBAtom* nbr = chosen->GetNbrAtom(center);
-              if (tetcenters.find(nbr->GetId()) == tetcenters.end()) { // Not a tetcenter
-                if (nottet_flag==false) {
+
+        OBBond* chosen = (OBBond*) NULL;
+        OBAtom* center = mol.GetAtomById(cfg.center);
+        bool nottet_flag = false;
+        bool acyclic_flag = false;
+        // Find the best candidate bond to set to up/down
+        // 1. **Should not already be set**
+        // 2. Should not be connected to a 2nd tet center
+        // (this is acceptable, as the wedge is only at one end, but will only confuse things)
+        // 3. Preferably is not in a cycle
+        // 4. Preferably is a terminal H
+        FOR_BONDS_OF_ATOM(b, center) {
+          if (alreadyset.find(&*b) == alreadyset.end()) {
+            if (chosen==NULL) chosen = &*b;
+            OBAtom* nbr = chosen->GetNbrAtom(center);
+            if (tetcenters.find(nbr->GetId()) == tetcenters.end()) { // Not a tetcenter
+              if (nottet_flag==false) {
+                chosen = &*b;
+                nottet_flag = true;
+              }
+              if (!b->IsInRing()) {
+                if (acyclic_flag==false) {
                   chosen = &*b;
-                  nottet_flag = true;
+                  acyclic_flag = true;
                 }
-                if (!b->IsInRing()) {
-                  if (acyclic_flag==false) {
-                    chosen = &*b;
-                    acyclic_flag = true;
-                  }
-                  if (nbr->IsHydrogen()) {
-                    chosen = &*b;
-                    break;
-                  }
+                if (nbr->IsHydrogen()) {
+                  chosen = &*b;
+                  break;
                 }
               }
             }
           }
-          if (chosen==NULL) { // There is a remote possibility of this but let's worry about 99.9% of cases first
-            obErrorLog.ThrowError(__FUNCTION__, 
-              "Failed to set stereochemistry as unable to find an available bond", obError);
-            return;
-          }
-          alreadyset.insert(chosen);
-          
-          // Determine whether this bond should be set hash or wedge
+        }
+        if (chosen==NULL) { // There is a remote possibility of this but let's worry about 99.9% of cases first
+          obErrorLog.ThrowError(__FUNCTION__, 
+            "Failed to set stereochemistry as unable to find an available bond", obError);
+          return;
+        }
+        alreadyset.insert(chosen);
+        
+        OBStereo::BondDirection bonddir = OBStereo::UnknownDir;
+        if (cfg.specified) {
+          // Determine whether this bond should be set hash or wedge (or indeed unknown)
           // (Code inspired by perception.cpp, TetrahedralFrom2D: plane1 + plane2 + plane3, wedge)
           OBTetrahedralStereo::Config test_cfg = cfg;
            
@@ -1452,10 +1371,10 @@ namespace OpenBabel
           bool useup = !implicit;
           if (sign > 0) useup = !useup;
           // Set to UpBond (filled wedge from cfg.center to chosen_nbr) or DownBond
-          OBStereo::BondDirection bonddir = useup ? OBStereo::UpBond : OBStereo::DownBond;
-          updown[chosen] = bonddir;
-          from[chosen] = cfg.center;
+          bonddir = useup ? OBStereo::UpBond : OBStereo::DownBond;
         }
+        updown[chosen] = bonddir;
+        from[chosen] = cfg.center;
       }
   }
 

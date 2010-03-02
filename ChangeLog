@@ -31,6 +31,9 @@
 
 2010-03-02  Noel O'Boyle
 
+	* src/formats/mdlformat.cpp: Obey MDL stereo guidelines as described
+	by Greg Landrum on BO mailing list. Test cases to follow.
+
 	* test/testsym.py: Added test for PR#2101034
 
 	* test/CMakeLists.txt: Set required environment variables for
