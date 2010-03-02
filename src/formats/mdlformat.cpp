@@ -1435,7 +1435,7 @@ namespace OpenBabel
           // otherwise use the atom on the chosen bond
           bool implicit = true;
           if (test_cfg.from != OBStereo::ImplicitRef) {
-            OBStereo::RefIter ri = find(test_cfg.refs.begin(), test_cfg.refs.end(), OBStereo::ImplicitRef);
+            OBStereo::RefIter ri = std::find(test_cfg.refs.begin(), test_cfg.refs.end(), (unsigned long) OBStereo::ImplicitRef);
             if (ri!=test_cfg.refs.end())
               test_cfg = OBTetrahedralStereo::ToConfig(test_cfg, OBStereo::ImplicitRef);
             else {
