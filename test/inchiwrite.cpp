@@ -45,6 +45,14 @@ int main(int argc, char* argv[])
     "It can contain other text interspersed." << endl;
     return 1;
   }
+
+  // Define location of file formats for testing
+  #ifdef FORMATDIR
+    char env[BUFF_SIZE];
+    snprintf(env, BUFF_SIZE, "BABEL_LIBDIR=%s", FORMATDIR);
+    putenv(env);
+  #endif
+
   ifstream ifs(argv[1]);
   if(!ifs) { 
     cout << "# Cannot open " << argv[1];
