@@ -41,7 +41,7 @@ endforeach(test ${tests})
 
  
 ############################################################
-#  old tests using "not ok"
+#  old-style tests using "not ok"
 ############################################################
 
 set(old_tests
@@ -58,7 +58,6 @@ set(old_tests
     formalcharge
     format
     formula
-#    inchiwrite
     internalcoord
     invalidsmarts
     invalidsmiles
@@ -70,13 +69,22 @@ set(old_tests
     residue
     ringtest
     smartstest
+#    smartsparse
     smilesmatch
     unitcell
    )
-                
+
+# TODO: forgot that inchiwrite requires arguments -- it compiles now, but
+#   doesn't run a test
+#if(WITH_INCHI)
+#  set(inchiwrite_additional_sources ../src/formats/getinchi.cpp)
+#  set(old_tests ${old_tests}
+#    inchiwrite
+#    )
+#endif(WITH_INCHI)
 
 foreach(test ${old_tests})
-  add_executable(test_${test} ${test}.cpp)
+  add_executable(test_${test} ${test}.cpp ${${test}_additional_sources})
   target_link_libraries(test_${test} ${BABEL_LIBRARY})
   if(MSVC)
     add_test(${test}_Test ${CMAKE_BINARY_DIR}/test_${test})
@@ -86,7 +94,7 @@ foreach(test ${old_tests})
   set_tests_properties(${test}_Test PROPERTIES
     FAIL_REGULAR_EXPRESSION "not ok"
     ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data"
-  )
+ )
   if(MSVC)
     set_target_properties(test_${test} PROPERTIES
       RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
@@ -114,6 +122,7 @@ ADD_PYTHON_TEST(pytest_babel testbabel.py)
 ADD_PYTHON_TEST(pytest_sym testsym.py)
 ADD_PYTHON_TEST(pytest_fastsearch testfastsearch.py)
 ADD_PYTHON_TEST(pytest_unique testunique.py)
+ADD_PYTHON_TEST(pytest_kekule testkekule.py)
 foreach(pytest babel sym fastsearch unique)
   set_property(TEST pytest_${pytest} PROPERTY
        ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"

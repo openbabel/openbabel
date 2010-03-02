@@ -16,6 +16,19 @@
 	* CMakeLists.txt, src/CMakeLists.txt, src/formats/CMakeLists.txt:
 	Updates to ensure ZLIB is not required PR#2947452.
 
+	* test/testkekule.py: Added test for PR#1842055 with
+	canonicalization and isotopes.
+
+	* test/CMakeLists.txt: Added test smartsparse -- currently unused
+	(failing) to track SMARTS parsing on valid patterns.
+
+	* test/smartsparse.cpp, files/validsmarts.txt: Testing patterns
+	from Daylight's webpages.
+
+	* test/inchiwrite.cpp: Fixed to compile. Probably needs a python
+	wrapper to call with appropriate arguments (e.g., inchi/Sample.sdf
+	inchi/Sample.txt). Hint, Hint.
+
 2010-03-02  Noel O'Boyle
 
 	* test/testsym.py: Added test for PR#2101034
