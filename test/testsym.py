@@ -107,9 +107,23 @@ class TestCisTransSym(TestSym):
                 "C(=C\Br)\C=C\Cl"
                 ]
 
+class TestStereoConversion(BaseTest):
+    """Random tests relating to roundtripping stereochemistry"""
+    def setUp(self):
+        self.canFindExecutable("babel")
+    def testInChIToSMILES_Bug(self):
+        """PR#2101034- InChI <-> SMILES conv misrepresents stereo"""
+        test_inchi = 'InChI=1S/C10H10/c1-2-3-7-10-8-5-4-6-9-10/h2-9H,1H2/b7-3+'
+        output, error = run_exec(test_inchi, "babel -iinchi -ocan")
+        self.assertEqual(output.rstrip(), "C=C/C=C/c1ccccc1")
+        
+        test_smiles = "C=C\C=C/c1ccccc1"
+        output, error = run_exec(test_smiles, "babel -ismi -oinchi")
+        self.assertEqual(output.rstrip(), "InChI=1S/C10H10/c1-2-3-7-10-8-5-4-6-9-10/h2-9H,1H2/b7-3-")
+        
 if __name__ == "__main__":
     testsuite = []
-    for myclass in [TestCisTransSym, TestTetSym]:
+    for myclass in [TestCisTransSym, TestTetSym, TestStereoConversion]:
         suite = unittest.TestLoader().loadTestsFromTestCase(myclass)
         testsuite.append(suite)
     unittest.TextTestRunner().run(unittest.TestSuite(testsuite))
