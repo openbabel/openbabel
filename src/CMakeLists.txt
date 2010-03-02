@@ -141,7 +141,11 @@ if(NOT WIN32)
   set(libs ${libs} m dl)
 endif(NOT WIN32)
 
+if(ZLIB_FOUND)
 target_link_libraries(${BABEL_LIBRARY} ${libs} ${ZLIB_LIBRARY})
+else(ZLIB_FOUND) # omit zlib reference
+target_link_libraries(${BABEL_LIBRARY} ${libs})
+endif(ZLIB_FOUND)
 set_target_properties(${BABEL_LIBRARY} PROPERTIES
                                        VERSION ${LIBRARY_VERSION}
                                        SOVERSION ${SOVERSION}

@@ -1,3 +1,8 @@
+2010-03-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* CMakeLists.txt, src/CMakeLists.txt, src/formats/CMakeLists.txt:
+	Updates to ensure ZLIB is not required PR#2947452.
+
 2010-03-02  Noel O'Boyle
 
 	* test/testsym.py: Added test for PR#2101034

@@ -9,7 +9,6 @@ set(formats_utility
   MNAformat
   molreport
   nulformat
-  pngformat
   povrayformat
   reportformat
   svgformat
@@ -111,6 +110,13 @@ if(WITH_INCHI)
     inchiformat
   )
 endif(WITH_INCHI)
+
+if(ZLIB_FOUND)
+ set(formats_utility
+ ${formats_utility}
+  pngformat
+)
+endif(ZLIB_FOUND)
 
 if(LIBXML2_FOUND)
   if(NOT MSVC)
