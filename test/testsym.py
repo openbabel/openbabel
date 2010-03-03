@@ -38,13 +38,6 @@ class TestSym(BaseTest):
             output, error = run_exec(smi, "babel -ismi -ocan")
             self.assertEqual(output.rstrip(), self.cansmi)            
 
-    def testSMIthruSDF(self):
-        """Verify that roundtripping through SDF preserves stereo"""
-        for smi in self.smiles:
-            output, error = run_exec(smi, "babel -ismi -osdf")
-            output, error = run_exec(output.rstrip(), "babel -isdf -ocan")
-            self.assertEqual(output.rstrip(), self.cansmi)
-
     def testSMIthruXML(self):
         """Verify that roundtripping through CML preserves stereo"""
         for smi in self.smiles:
