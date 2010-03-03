@@ -165,8 +165,7 @@ int main(int argc,char *argv[])
     //    cout << v6 << endl;
 
     v9 = vector3(1.0f, 1.0f, 1.0f);
-    matrix3x3 m = cell2.GetOrthoMatrix();
-    v9 *= m;
+    v9 = cell2.FractionalToCartesian(v9);
     //    cout << v9 << endl;
 
     cout << "# cell volume " << cell.GetCellVolume() << endl;

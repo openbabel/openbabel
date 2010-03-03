@@ -666,7 +666,7 @@ namespace OpenBabel
               //Coordinates are fractional
               vector3 v;
               v.Set(x, y, z);
-              v *= pUnitCell->GetOrthoMatrix();
+              v = pUnitCell->FractionalToCartesian(v);
               pAtom->SetVector(v);
             }
           else
@@ -1340,7 +1340,7 @@ namespace OpenBabel
                   {
                     //Convert to fractional coordinates
                     vector3 v = patom->GetVector();
-                    v *= pUnitCell->GetFractionalMatrix();
+                    v = pUnitCell->CartesianToFractional(v);
                     X = v.x();
                     Y = v.y();
                     Z = v.z();

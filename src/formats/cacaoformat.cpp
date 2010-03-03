@@ -105,7 +105,6 @@ namespace OpenBabel
     uc->SetData(A, B, C, Alpha, Beta, Gamma);
     uc->SetOrigin(fileformatInput);
     mol.SetData(uc);
-    m = uc->GetOrthoMatrix();
 
     int i;
     double x,y,z;
@@ -127,7 +126,7 @@ namespace OpenBabel
         y = atof((char*)vs[2].c_str());
         z = atof((char*)vs[3].c_str());
         v.Set(x,y,z);
-        v *= m;
+        v = uc->FractionalToCartesian(v);
 
         atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
         atom->SetVector(v);

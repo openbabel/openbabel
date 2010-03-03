@@ -298,9 +298,9 @@ namespace OpenBabel
 
 
   protected:
-    double _a, _b, _c, _alpha, _beta, _gamma;
-    vector3 _offset; //!< offset for origin
-    vector3 _v1, _v2, _v3; //!< translation vectors
+    matrix3x3 _mOrtho;// Orthogonal matrix of column vectors 
+    matrix3x3 _mOrient;// Orientation matrix
+    vector3 _offset;
     std::string _spaceGroupName;
     const SpaceGroup* _spaceGroup;
     LatticeType _lattice;
@@ -314,19 +314,35 @@ namespace OpenBabel
 
     OBUnitCell &operator=(const OBUnitCell &);
 
+    /*!
+    **\brief Constructs the cell matrix in lower triangular form from the values supplied
+    **\param a The length a
+    **\param b The length b
+    **\param c The length c
+    **\param alpha The angle alpha
+    **\param beta The angle beta
+    **\param gamma The angle gamma
+    */
     void SetData(const double a, const double b, const double c,
                  const double alpha, const double beta, const double gamma);
+    /*!
+    **\brief Constructs the cell matrix using the supplied row vectors
+    **\param v1 The x-vector
+    **\param v2 The y-vector
+    **\param v3 The z-vector
+    **\see OBUnitCell::GetCellVectors
+    */
     void SetData(const vector3 v1, const vector3 v2, const vector3 v3);
 
-    //! Reset lattice and spacegroup information.
-    //! Is called automatically by the OBUnitCell::SetData
-    //! functions, and should be called when changing atomic
-    //! information in the associated OBMol
-    void DataChanged() {_spaceGroup = NULL; _spaceGroupName = ""; _lattice = Undefined;};
-
+    /*!
+    **\brief Sets the unit cell matrix
+    **\param m The unit cell matrix (row vectors)
+    **\see OBUnitCell::GetCellMatrix
+    */
+    void SetData(const matrix3x3 m);
 
     //! Set the offset to the origin to @p v1
-    void SetOffset(const vector3 v1) { _offset = v1; }
+    void SetOffset(const vector3 v1);
 
     //! Set the space group for this unit cell.
     //! Does not create an OBSymmetryData entry
@@ -353,19 +369,19 @@ namespace OpenBabel
     void FillUnitCell(OBMol *);
 
     //! \return vector a
-    double GetA()    { return(_a);    }
+    double GetA();
     //! \return vector b
-    double GetB()    { return(_b);    }
+    double GetB();
     //! \return vector c
-    double GetC()    { return(_c);    }
+    double GetC();
     //! \return angle alpha
-    double GetAlpha(){ return(_alpha);}
+    double GetAlpha();
     //! \return angle beta
-    double GetBeta() { return(_beta); }
+    double GetBeta();
     //! \return angle gamma
-    double GetGamma(){ return(_gamma);}
+    double GetGamma();
     //! \return any offset in the origin of the periodic boundaries
-    vector3 GetOffset() { return(_offset); }
+    vector3 GetOffset();
 
     //! \return the text representation of the space group for this unit cell
     const SpaceGroup* GetSpaceGroup() { return(_spaceGroup); }
@@ -381,12 +397,63 @@ namespace OpenBabel
 
     //! \return v1, v2, v3 cell vectors
     std::vector<vector3> GetCellVectors();
-    //! \return v1, v2, v3 cell vectors as a 3x3 matrix
+    //! Access to the cell matrix as row vectors, useful for writing input files.
+    //! Equivalent to the transpose of GetOrientationMatrix() * GetOrthoMatrix()
+    //! \return The cell matrix with row vectors.
+    //! \see OBUnitCell::GetOrthoMatrix
+    //! \see OBUnitCell::GetFractionalMatrix
+    //! \see OBUnitCell::GetOrientationMatrix
+    //! \see OBUnitCell::FractionalToCartesian
+    //! \see OBUnitCell::CartesianToFractional
     matrix3x3	GetCellMatrix();
     //! \return The orthogonalization matrix, used for converting from fractional to Cartesian coords.
+    //! \see OBUnitCell::GetCellMatrix
+    //! \see OBUnitCell::GetFractionalMatrix
+    //! \see OBUnitCell::GetOrientationMatrix
+    //! \see OBUnitCell::FractionalToCartesian
+    //! \see OBUnitCell::CartesianToFractional
     matrix3x3 GetOrthoMatrix();
+    //! Used to convert fractional and cartesian coordinates if the
+    //! cell is not oriented in standard form (a parallel to x axis,
+    //! b in xy plane)
+    //! \return The orientation matrix
+    //! \see OBUnitCell::GetOrthoMatrix
+    //! \see OBUnitCell::GetCellMatrix
+    //! \see OBUnitCell::GetFractionalMatrix
+    //! \see OBUnitCell::FractionalToCartesian
+    //! \see OBUnitCell::CartesianToFractional
+    matrix3x3 GetOrientationMatrix();
     //! \return The fractionalization matrix, used for converting from Cartesian to fractional coords.
+    //! \see OBUnitCell::GetOrthoMatrix
+    //! \see OBUnitCell::GetCellMatrix
+    //! \see OBUnitCell::GetOrientationMatrix
+    //! \see OBUnitCell::FractionalToCartesian
+    //! \see OBUnitCell::CartesianToFractional
     matrix3x3 GetFractionalMatrix();
+
+    //! Convenience function to convert fractional coordinates to 
+    //! cartesian coordinates. Returns
+    //! 
+    //! GetOrientationMatrix() * GetOrthoMatrix() * frac + GetOffset()
+    //! \param frac Vector of fractional coordinates
+    //! \return Cartesian coordinates
+    vector3 FractionalToCartesian(vector3 frac);
+    //! Convenience function to convert cartesian coordinates to 
+    //! fractional coordinates. Returns
+    //! 
+    //! GetFractionalMatrix() * GetOrientationMatrix().inverse() * (cart - GetOffset())
+    //! \param cart Vector of cartesian coordinates
+    //! \return Fractional coordinates
+    vector3 CartesianToFractional(vector3 cart);
+
+    //! Wraps cartesian coordinate to fall within the unit cell.
+    //! \param cart Vector of cartesian coordinates
+    //! \return Cartesian coordinates within cell boundaries.
+    vector3 WrapCartesianCoordinate(vector3 cart);
+    //! Wraps fractional coordinate to fall within the unit cell.
+    //! \param frac Vector of fractional coordinates
+    //! \return Fractional coordinates within cell boundaries (between 0 and 1).
+    vector3 WrapFractionalCoordinate(vector3 frac);
 
     //! \return The numeric value of the given spacegroup
     int GetSpaceGroupNumber( std::string name = "" );

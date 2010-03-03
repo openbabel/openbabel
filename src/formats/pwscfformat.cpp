@@ -183,7 +183,8 @@ namespace OpenBabel {
           conv *= (alat * BOHR_TO_ANGSTROM);
         } 
         else if (strstr(vs[1].c_str(), "crystal")) {
-          conv = cell->GetOrthoMatrix();
+          // Set to the zero matrix and test below.
+          conv = matrix3x3 (0.0);
         } 
         // Add others if needed
 
@@ -200,7 +201,12 @@ namespace OpenBabel {
           OBAtom *atom = pmol->NewAtom();
           atom->SetAtomicNum(atomicNum);
           vector3 coords (x,y,z);
-          atom->SetVector(conv * coords);
+          if (conv.determinant() == 0.0) { // Fractional coords
+            atom->SetVector(cell->FractionalToCartesian(coords));
+          }
+          else {
+            atom->SetVector(conv * coords);
+          }
 
           // Reset vars
           ifs.getline(buffer,BUFF_SIZE); // First entry

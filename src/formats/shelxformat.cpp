@@ -103,7 +103,6 @@ namespace OpenBabel
     uc->SetOrigin(fileformatInput);
     uc->SetData(A, B, C, Alpha, Beta, Gamma);
     mol.SetData(uc);
-    m = uc->GetOrthoMatrix();
 
     //  int i; CM
     double x,y,z;
@@ -131,7 +130,7 @@ namespace OpenBabel
         y = atof((char*)vs[3].c_str());
         z = atof((char*)vs[4].c_str());
         v.Set(x,y,z);
-        v *= m;
+        v = uc->FractionalToCartesian(v);
 
         strncpy(type,vs[0].c_str(), sizeof(type));
         type[sizeof(type) - 1] = '\0';

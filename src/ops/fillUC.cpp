@@ -106,7 +106,7 @@ bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConver
   for(std::map<OBAtom*,std::vector<vector3> >:: iterator atom=vatoms.begin();
       atom!=vatoms.end();++atom){
     vector3 orig = atom->first->GetVector();
-    orig *= pUC->GetFractionalMatrix();// To fractionnal coordinates
+    orig = pUC->CartesianToFractional(orig);// To fractionnal coordinates
     
     // Loop over symmetry operators
     transform3dIterator ti;
@@ -145,7 +145,7 @@ bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConver
         if(!foundDuplicate){
           OBAtom *newAtom = pmol->NewAtom();
           newAtom->Duplicate(atom->first);
-          newAtom->SetVector( pUC->GetOrthoMatrix() * atom->second[i]);
+          newAtom->SetVector( pUC->FractionalToCartesian(atom->second[i]));
         }
       }
     }
@@ -170,7 +170,7 @@ bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConver
         if(!foundDuplicate){
           OBAtom *newAtom = pmol->NewAtom();
           newAtom->Duplicate(atom->first);
-          newAtom->SetVector( pUC->GetOrthoMatrix() * atom->second[i]);
+          newAtom->SetVector( pUC->FractionalToCartesian(atom->second[i]));
         }
       }
     }
@@ -196,7 +196,7 @@ bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConver
     list<OBAtom*>::iterator i;
     for (i = atoms.begin(); i != atoms.end(); ++i) {
       uniqueV = (*i)->GetVector();
-      uniqueV *= GetFractionalMatrix();
+      uniqueV = CartesianToFractional(uniqueV);
       uniqueV = transformedFractionalCoordinate(uniqueV);
       coordinates.push_back(uniqueV);
   
@@ -222,9 +222,9 @@ bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConver
         coordinates.push_back(updatedCoordinate); // make sure to check the new atom for dupes
         newAtom = mol->NewAtom();
         newAtom->Duplicate(*i);
-        newAtom->SetVector(GetOrthoMatrix() * updatedCoordinate);
+        newAtom->SetVector(FractionalToCartesian(updatedCoordinate));
       } // end loop of transformed atoms
-      (*i)->SetVector(GetOrthoMatrix() * uniqueV);
+      (*i)->SetVector(FractionalToCartesian(uniqueV));
     } // end loop of atoms
 */
   return true;

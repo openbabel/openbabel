@@ -3,6 +3,7 @@ generic.cpp - Handle OBGenericData classes.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2010 by David Lonie
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -247,21 +248,19 @@ namespace OpenBabel
   //
   OBUnitCell::OBUnitCell():
     OBGenericData("UnitCell", OBGenericDataType::UnitCell),
-    _a(0.0), _b(0.0), _c(0.0), _alpha(0.0), _beta(0.0), _gamma(0.0),
-    _spaceGroup( NULL ), _lattice(Undefined)
-  {  
-    // We should default to P1 space group unless we know differently
-    SetSpaceGroup(1);
-  }
+    _mOrtho(matrix3x3()),
+    _mOrient(matrix3x3()),
+    _offset(vector3()),
+    _spaceGroupName(""), _spaceGroup( NULL ),
+    _lattice(Undefined)
+  {  }
 
   OBUnitCell::OBUnitCell(const OBUnitCell &src) :
     OBGenericData("UnitCell", OBGenericDataType::UnitCell),
-    _a(src._a), _b(src._b), _c(src._c), 
-    _alpha(src._alpha), _beta(src._beta), _gamma(src._gamma),
+    _mOrtho(src._mOrtho),
+    _mOrient(src._mOrient),
     _offset(src._offset),
-    _v1(src._v1), _v2(src._v2), _v3(src._v3),
-    _spaceGroupName(src._spaceGroupName),
-    _spaceGroup(src._spaceGroup),
+    _spaceGroupName(src._spaceGroupName), _spaceGroup(src._spaceGroup),
     _lattice(src._lattice)
   {  }
 
@@ -270,17 +269,9 @@ namespace OpenBabel
     if(this == &src)
       return(*this);
 
-    _a = src._a;
-    _b = src._b;
-    _c = src._c;
-    _alpha = src._alpha;
-    _beta = src._beta;
-    _gamma = src._gamma;
+    _mOrtho = src._mOrtho;
+    _mOrient = src._mOrient;
     _offset = src._offset;
-
-    _v1 = src._v1;
-    _v2 = src._v2;
-    _v3 = src._v3;
 
     _spaceGroup = src._spaceGroup;
     _spaceGroupName = src._spaceGroupName;
@@ -289,84 +280,42 @@ namespace OpenBabel
     return(*this);
   }
 
-  /*!
-  **\brief Sets the vectors and angles of the unitcell
-  **\param a The length a
-  **\param b The length b
-  **\param c The length c
-  **\param alpha The angle alpha
-  **\param beta The angle beta
-  **\param gamma The angle gamma
-  */
+  //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#calculateOrthogonalisationMatrix">blue-obelisk:calculateOrthogonalisationMatrix</a>
   void OBUnitCell::SetData(const double a, const double b, const double c,
-               const double alpha, const double beta, const double gamma)
+                           const double alpha, const double beta, const double gamma)
   {
-    _a = a;
-    _b = b;
-    _c = c;
-    _alpha = alpha;
-    _beta = beta;
-    _gamma = gamma;
-
-    // Update vectors
-    vector3 temp;
-    matrix3x3 m = GetOrthoMatrix();
-
-    _v1 = m.GetColumn(0);
-    _v2 = m.GetColumn(1);
-    _v3 = m.GetColumn(2);
-
-    // reset Lattice and SpaceGroup, since they've probably changed.
-    DataChanged();
+    _mOrtho.FillOrth(alpha, beta, gamma, a, b, c);
+    _mOrient = matrix3x3(1);
+    _spaceGroup = NULL;
+    _spaceGroupName = "";
+    _lattice = OBUnitCell::Undefined;
   }
 
-  /*!
-  ** The angles and lengths of the unitcell will be calculated from the
-  ** vectors @p v1, @p v2 and @p v3. Those vectors will as well be
-  ** stored internally.
-  **Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#convertCartesianIntoNotionalCoordinates">blue-obelisk:convertCartesianIntoNotionalCoordinates</a>
-  **\brief Sets the vectors, angles and lengths of the unitcell
-  **\param v1 The x-vector
-  **\param v2 The y-vector
-  **\param v3 The z-vector
-  **\see OBUnitCell::GetCellVectors
-  */
+  //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#calculateOrthogonalisationMatrix">blue-obelisk:calculateOrthogonalisationMatrix</a>
   void OBUnitCell::SetData(const vector3 v1, const vector3 v2, const vector3 v3)
   {
-    _v1 = v1;
-    _v2 = v2;
-    _v3 = v3;
+    matrix3x3 m (v1, v2, v3);
+    _mOrtho.FillOrth(vectorAngle(v2,v3), // alpha
+                     vectorAngle(v1,v3), // beta
+                     vectorAngle(v1,v2), // gamma
+                     v1.length(),        // a
+                     v2.length(),        // b
+                     v3.length());       // c
+    _mOrient = m.transpose() * _mOrtho.inverse();
+    _spaceGroup = NULL;
+    _spaceGroupName = "";
+    _lattice = OBUnitCell::Undefined;
+  }
 
-    _a = _v1.length();
-    _b = _v2.length();
-    _c = _v3.length();
+  //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#calculateOrthogonalisationMatrix">blue-obelisk:calculateOrthogonalisationMatrix</a>
+  void OBUnitCell::SetData(const matrix3x3 m)
+  {
+    SetData(m.GetRow(0), m.GetRow(1), m.GetRow(2));
+  }
 
-    // For PR#1961604 -- somewhat contrived example
-    if (IsNearZero(_a) && !IsNearZero(_c)) {
-      _v1 = _v3; // we'll reset _v3 below
-      _a = _c;
-      _c = 0.0;
-    }
-
-    // Sanity checks for 1D or 2D translation
-    if (IsNearZero(_b)) { // 1D
-      _v2.Set(v1.y(), -v1.x(), v1.z()); // rotate base vector by 90 degrees
-      _b = 999.999;
-      _v2 = _b * _v2.normalize(); // set to a large displacement
-    }
-
-    if (IsNearZero(_c)) { // 2D or 1D
-      _v3 = cross(_v1, _v2);
-      _c = 999.999;
-      _v3 = _c * _v3.normalize(); // set to a large displacement
-    }
-    
-    _alpha = vectorAngle(_v2, _v3);
-    _beta =  vectorAngle(_v1, _v3);
-    _gamma = vectorAngle(_v1, _v2);
-
-    // reset Lattice and SpaceGroup, since they've probably changed.
-    DataChanged();
+  void OBUnitCell::SetOffset(const vector3 v1)
+  {
+    _offset = v1;
   }
 
   //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#convertNotionalIntoCartesianCoordinates">blue-obelisk:convertNotionalIntoCartesianCoordinates</a>
@@ -375,147 +324,110 @@ namespace OpenBabel
     vector<vector3> v;
     v.reserve(3);
 
-    // no unit cell vectors
-    if (IsNegligible(_v1.length(), 1.0, 1.0e-9) &&
-        IsNegligible(_v2.length(), 1.0, 1.0e-9) &&
-        IsNegligible(_v3.length(), 1.0, 1.0e-9))
-      {
-        vector3 temp;
-        matrix3x3 m = GetOrthoMatrix();
+    matrix3x3 m = GetCellMatrix();
 
-        v.push_back(m.GetColumn(0));
-        v.push_back(m.GetColumn(1));
-        v.push_back(m.GetColumn(2));
-      }
-    else
-      {
-        v.push_back(_v1);
-        // we set these above in case we had a 1D or 2D translation vector system
-        if (fabs(_b - 999.999) > 1.0e-1)
-          v.push_back(_v2);
-        if (fabs(_c - 999.999) > 1.0e-1)
-          v.push_back(_v3);
-      }
+    v.push_back(m.GetRow(0));
+    v.push_back(m.GetRow(1));
+    v.push_back(m.GetRow(2));
 
     return v;
   }
 
   matrix3x3 OBUnitCell::GetCellMatrix()
   {
-    matrix3x3 m;
-
-    if (IsNegligible(_v1.length(), 1.0, 1.0e-9) &&
-        IsNegligible(_v2.length(), 1.0, 1.0e-9) &&
-        IsNegligible(_v3.length(), 1.0, 1.0e-9))
-      {
-        m = GetOrthoMatrix();
-      }
-    else
-      {
-        vector3 v1, v2, v3;
-        v1 = _v1;
-        v2 = _v2;
-        v3 = _v3;
-        m = matrix3x3(v1,v2,v3);
-      }
-    return m;
+    return (_mOrient * _mOrtho).transpose();
   }
 
-  // Convert from fractional to Cartesian
-  //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#calculateOrthogonalisationMatrix">blue-obelisk:calculateOrthogonalisationMatrix</a>
   matrix3x3 OBUnitCell::GetOrthoMatrix()
   {
-    matrix3x3 m;
-    if (IsNearZero(_c) || IsNearZero(_b)) {
-      // 1D or 2D unit cell
-    }
-
-    // already here, let's not duplicate the work
-    m.FillOrth(_alpha, _beta, _gamma, _a, _b, _c);
-
-    return m;
+    return _mOrtho;
   }
 
-  // Based on code in PyMMLib: http://pymmlib.sf.net/
-  //! Matrix to convert from Cartesian to fractional
-  //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#convertCartesianIntoFractionalCoordinates">blue-obelisk:convertCartesianIntoFractionalCoordinates</a> 
+  matrix3x3 OBUnitCell::GetOrientationMatrix()
+  {
+    return _mOrient;
+  }
+
   matrix3x3 OBUnitCell::GetFractionalMatrix()
   {
-    matrix3x3 m;
-    double sinAlpha, sinBeta, sinGamma;
-    double cosAlpha, cosBeta, cosGamma;
-    double v;
+    return _mOrtho.inverse();
+  }
 
-    sinAlpha = sin(_alpha * DEG_TO_RAD);
-    sinBeta = sin(_beta * DEG_TO_RAD);
-    sinGamma = sin(_gamma * DEG_TO_RAD);
-    cosAlpha = cos(_alpha * DEG_TO_RAD);
-    cosBeta = cos(_beta * DEG_TO_RAD);
-    cosGamma = cos(_gamma * DEG_TO_RAD);
+  vector3 OBUnitCell::FractionalToCartesian(vector3 frac)
+  {
+    return _mOrient * _mOrtho * frac + _offset;
+  }
 
-    v = sqrt(1 - SQUARE(cosAlpha) - SQUARE(cosBeta) - SQUARE(cosGamma) +
-             2 * cosAlpha*cosBeta*cosGamma);
+  vector3 OBUnitCell::CartesianToFractional(vector3 cart)
+  {
+    return _mOrtho.inverse() * _mOrient.inverse() * (cart - _offset);
+  }
 
-    m.Set(0,0,  1.0 / _a);
-    m.Set(0,1,  -cosGamma / (_a * sinGamma) );
-    m.Set(0,2,  (cosGamma * cosAlpha - cosBeta) / (_a * v * sinGamma) );
-    m.Set(1,0,  0.0);
-    m.Set(1,1,  1.0 / (_b * sinGamma) );
-    m.Set(1,2,  (cosGamma * cosBeta - cosAlpha) / (_b * v * sinGamma) );
-    m.Set(2,0,  0.0);
-    m.Set(2,1,  0.0);
-    m.Set(2,2,  sinGamma / (_c * v) );
+  vector3 OBUnitCell::WrapCartesianCoordinate(vector3 cart)
+  {
+    vector3 v = CartesianToFractional(cart);
+    v = WrapFractionalCoordinate(v);
+    return FractionalToCartesian(v);
+  }
 
-    return m;
+  vector3 OBUnitCell::WrapFractionalCoordinate(vector3 frac)
+  {
+    double x = fmod(frac.x(), 1);
+    double y = fmod(frac.y(), 1);
+    double z = fmod(frac.z(), 1);
+    if (x < 0) x += 1;
+    if (y < 0) y += 1;
+    if (z < 0) z += 1;
+    return vector3(x, y, z);
   }
 
   OBUnitCell::LatticeType OBUnitCell::GetLatticeType( int spacegroup )
   {
-	  //	1-2 	Triclinic
-	  //	3-15 	Monoclinic
-	  //	16-74	Orthorhombic
-	  //	75-142 	Tetragonal
-	  //	143-167 Rhombohedral
-	  //	168-194 Hexagonal
-	  //	195-230 Cubic
+    //	1-2 	Triclinic
+    //	3-15 	Monoclinic
+    //	16-74	Orthorhombic
+    //	75-142 	Tetragonal
+    //	143-167 Rhombohedral
+    //	168-194 Hexagonal
+    //	195-230 Cubic
 
-      if ( spacegroup == 0  && _spaceGroup)
-          spacegroup = _spaceGroup->GetId();
+    if ( spacegroup == 0  && _spaceGroup)
+      spacegroup = _spaceGroup->GetId();
 	  
-	  if ( spacegroup <= 0 )
-		  return OBUnitCell::Undefined;
+    if ( spacegroup <= 0 )
+      return OBUnitCell::Undefined;
 
-	  else if ( spacegroup == 1 ||
+    else if ( spacegroup == 1 ||
               spacegroup == 2 )
-		  return OBUnitCell::Triclinic;
+      return OBUnitCell::Triclinic;
 	  
-	  else if ( spacegroup >= 3 &&
+    else if ( spacegroup >= 3 &&
               spacegroup <= 15 )
-		  return OBUnitCell::Monoclinic;
+      return OBUnitCell::Monoclinic;
 	  
-	  else if ( spacegroup >= 16 &&
+    else if ( spacegroup >= 16 &&
               spacegroup <= 74 )
-		  return OBUnitCell::Orthorhombic;
+      return OBUnitCell::Orthorhombic;
 	  
-	  else if ( spacegroup >= 75 &&
+    else if ( spacegroup >= 75 &&
               spacegroup <= 142 )
-		  return OBUnitCell::Tetragonal;
+      return OBUnitCell::Tetragonal;
 	  
-	  else if ( spacegroup >= 143 &&
+    else if ( spacegroup >= 143 &&
               spacegroup <= 167 )
-		  return OBUnitCell::Rhombohedral;
+      return OBUnitCell::Rhombohedral;
 	  
-	  else if ( spacegroup >= 168 &&
+    else if ( spacegroup >= 168 &&
               spacegroup <= 194 )
-		  return OBUnitCell::Hexagonal;
+      return OBUnitCell::Hexagonal;
 	  
-	  else if ( spacegroup >= 195 &&
+    else if ( spacegroup >= 195 &&
               spacegroup <= 230 )
-		  return OBUnitCell::Cubic;
+      return OBUnitCell::Cubic;
 
-	  //just to be extra sure
-	  else // ( spacegroup > 230 )
-		  return OBUnitCell::Undefined;
+    //just to be extra sure
+    else // ( spacegroup > 230 )
+      return OBUnitCell::Undefined;
   }
   
   OBUnitCell::LatticeType OBUnitCell::GetLatticeType()
@@ -525,32 +437,39 @@ namespace OpenBabel
     else if (_spaceGroup != NULL)
       return GetLatticeType(_spaceGroup->GetId());
 
+    double a = GetA();
+    double b = GetB();
+    double c = GetC();
+    double alpha = GetAlpha();
+    double beta  = GetBeta();
+    double gamma = GetGamma();
+
     unsigned int rightAngles = 0;
-    if (IsApprox(_alpha, 90.0, 1.0e-3)) rightAngles++;
-    if (IsApprox(_beta,  90.0, 1.0e-3)) rightAngles++;
-    if (IsApprox(_gamma, 90.0, 1.0e-3)) rightAngles++;
+    if (IsApprox(alpha, 90.0, 1.0e-3)) rightAngles++;
+    if (IsApprox(beta,  90.0, 1.0e-3)) rightAngles++;
+    if (IsApprox(gamma, 90.0, 1.0e-3)) rightAngles++;
 
     switch (rightAngles)
       {
       case 3:
-        if (IsApprox(_a, _b, 1.0e-4) && IsApprox(_b, _c, 1.0e-4))
+        if (IsApprox(a, b, 1.0e-4) && IsApprox(b, c, 1.0e-4))
           _lattice = Cubic;
-        else if (IsApprox(_a, _b, 1.0e-4) || IsApprox(_b, _c, 1.0e-4))
+        else if (IsApprox(a, b, 1.0e-4) || IsApprox(b, c, 1.0e-4))
           _lattice = Tetragonal;
         else
           _lattice = Orthorhombic;
         break;
       case 2:
-        if ( (IsApprox(_alpha, 120.0, 1.0e-3) 
-              || IsApprox(_beta, 120.0, 1.0e-3) 
-              || IsApprox(_gamma, 120.0f, 1.0e-3))
-             && (IsApprox(_a, _b, 1.0e-4) || IsApprox(_b, _c, 1.0e-4)) )
+        if ( (IsApprox(alpha, 120.0, 1.0e-3) 
+              || IsApprox(beta, 120.0, 1.0e-3) 
+              || IsApprox(gamma, 120.0f, 1.0e-3))
+             && (IsApprox(a, b, 1.0e-4) || IsApprox(b, c, 1.0e-4)) )
           _lattice = Hexagonal;
         else
           _lattice = Monoclinic;
         break;
       default:
-        if (IsApprox(_a, _b, 1.0e-4) && IsApprox(_b, _c, 1.0e-4))
+        if (IsApprox(a, b, 1.0e-4) && IsApprox(b, c, 1.0e-4))
           _lattice = Rhombohedral;
         else
           _lattice = Triclinic;
@@ -650,7 +569,7 @@ namespace OpenBabel
     list<OBAtom*>::iterator i;
     for (i = atoms.begin(); i != atoms.end(); ++i) {
       uniqueV = (*i)->GetVector();
-      uniqueV *= GetFractionalMatrix();
+      uniqueV = CartesianToFractional(uniqueV);
       uniqueV = transformedFractionalCoordinate(uniqueV);
       coordinates.push_back(uniqueV);
   
@@ -676,52 +595,93 @@ namespace OpenBabel
         coordinates.push_back(updatedCoordinate); // make sure to check the new atom for dupes
         newAtom = mol->NewAtom();
         newAtom->Duplicate(*i);
-        newAtom->SetVector(GetOrthoMatrix() * updatedCoordinate);
+        newAtom->SetVector(FractionalToCartesian(updatedCoordinate));
       } // end loop of transformed atoms
-      (*i)->SetVector(GetOrthoMatrix() * uniqueV); // move the atom back into the unit cell
+      (*i)->SetVector(FractionalToCartesian(uniqueV)); // move the atom back into the unit cell
     } // end loop of atoms
 
     SetSpaceGroup(1); // We've now applied the symmetry, so we should act like a P1 unit cell
   }
-  
+
+  double OBUnitCell::GetA()
+  {
+    return _mOrtho.GetColumn(0).length();
+  }
+
+  double OBUnitCell::GetB()
+  {
+    return _mOrtho.GetColumn(1).length();
+  }
+
+  double OBUnitCell::GetC()
+  {
+    return _mOrtho.GetColumn(2).length();
+  }
+
+  double OBUnitCell::GetAlpha()
+  {
+    return vectorAngle(_mOrtho.GetColumn(1), _mOrtho.GetColumn(2));
+  }
+
+  double OBUnitCell::GetBeta()
+  {
+    return vectorAngle(_mOrtho.GetColumn(0), _mOrtho.GetColumn(2));
+  }
+
+  double OBUnitCell::GetGamma()
+  {
+    return vectorAngle(_mOrtho.GetColumn(0), _mOrtho.GetColumn(1));
+  }
+
+  vector3 OBUnitCell::GetOffset()
+  {
+    return _offset;
+  }
+
   double OBUnitCell::GetCellVolume()
   {
+    double a = GetA();
+    double b = GetB();
+    double c = GetC();
+    double alpha = GetAlpha();
+    double beta  = GetBeta();
+    double gamma = GetGamma();
     double result = 0.0;
     
     switch ( GetLatticeType() )
       {
       case Triclinic:
-        result = _a * _b * _c 
+        result = a * b * c 
           * sqrt(1
-                 - SQUARE(cos( _alpha * DEG_TO_RAD ))
-                 - SQUARE(cos( _beta * DEG_TO_RAD ))
-                 - SQUARE(cos( _gamma * DEG_TO_RAD ))
-                 + 2 * cos( _alpha * DEG_TO_RAD ) * cos( _beta * DEG_TO_RAD ) * cos( _gamma * DEG_TO_RAD )
+                 - SQUARE(cos( alpha * DEG_TO_RAD ))
+                 - SQUARE(cos( beta * DEG_TO_RAD ))
+                 - SQUARE(cos( gamma * DEG_TO_RAD ))
+                 + 2 * cos( alpha * DEG_TO_RAD ) * cos( beta * DEG_TO_RAD ) * cos( gamma * DEG_TO_RAD )
                  );
         break;
       case Monoclinic:
-        result = _a * _b * _c * sin( _beta * DEG_TO_RAD );
+        result = a * b * c * sin( beta * DEG_TO_RAD );
         break;
       case Orthorhombic:
-        result = _a * _b * _c;
+        result = a * b * c;
         break;
       case Tetragonal:
-        result = _a * _a * _c;
+        result = a * a * c;
         break;
       case Rhombohedral:
-        result = _a * _a * _a
+        result = a * a * a
           * sqrt(1
-                 - SQUARE(cos( _alpha * DEG_TO_RAD ))
-                 - SQUARE(cos( _beta * DEG_TO_RAD ))
-                 - SQUARE(cos( _gamma * DEG_TO_RAD ))
-                 + 2 * cos( _alpha * DEG_TO_RAD ) * cos( _beta * DEG_TO_RAD ) * cos( _gamma * DEG_TO_RAD )
+                 - SQUARE(cos( alpha * DEG_TO_RAD ))
+                 - SQUARE(cos( beta * DEG_TO_RAD ))
+                 - SQUARE(cos( gamma * DEG_TO_RAD ))
+                 + 2 * cos( alpha * DEG_TO_RAD ) * cos( beta * DEG_TO_RAD ) * cos( gamma * DEG_TO_RAD )
                  );
         break;
       case Hexagonal:
-        result = pow( 3.0, 0.333333333 ) * _a * _a * _c / 2;
+        result = pow( 3.0, 0.333333333 ) * a * a * c / 2;
         break;
       case Cubic:
-        result = _a * _a * _a;
+        result = a * a * a;
         break;
       default:
         result = 0.0;

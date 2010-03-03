@@ -253,7 +253,7 @@ namespace OpenBabel {
       z = atof((char*)vs[2].c_str());
       vector3 coords (x,y,z);
       if (!cartesian)
-        coords = cell->GetOrthoMatrix() * coords;
+        coords = cell->FractionalToCartesian( coords );
       atom->SetVector(coords);
       atomCount++;
     };

@@ -257,16 +257,13 @@ namespace OpenBabel {
       }
     }
 
-    // set final unit cell
-    pmol->SetData(cell);
-
-    // Convert all atom positions to cartesian:
-    ortho = ((OBUnitCell*)pmol->GetData("UnitCell"))->GetOrthoMatrix();
-
+    // Convert coords to cartesian
     FOR_ATOMS_OF_MOL(atom, pmol) {
-      atom->SetVector(ortho * atom->GetVector());
+      atom->SetVector(cell->FractionalToCartesian(atom->GetVector()));
     }
 
+    // set final unit cell
+    pmol->SetData(cell);
 
     pmol->EndModify();
 

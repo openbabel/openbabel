@@ -115,7 +115,6 @@ namespace OpenBabel
     uc->SetOrigin(fileformatInput);
     uc->SetData(A, B, C, Alpha, Beta, Gamma);
     mol.SetData(uc);
-    matrix3x3 m = uc->GetOrthoMatrix();
 
     mol.BeginModify();
 
@@ -154,7 +153,7 @@ namespace OpenBabel
             z = atof(vs[3].c_str());
           }
         v.Set(x, y, z);
-        v *= m;	// get cartesian coordinates -- multiply by orthogonalization matrix
+        v = uc->FractionalToCartesian(v);
         atom->SetVector(v);
 
         atom->SetAtomicNum(atomicNum);
@@ -209,7 +208,7 @@ namespace OpenBabel
       {
         v = atom->GetVector();
         if (uc != NULL)
-          v *= uc->GetFractionalMatrix();
+          v = uc->CartesianToFractional(v);
 
         snprintf(buffer, BUFF_SIZE, "%s %10.5f%10.5f%10.5f",
                  etab.GetSymbol(atom->GetAtomicNum()),
