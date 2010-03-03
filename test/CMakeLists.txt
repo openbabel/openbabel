@@ -15,7 +15,7 @@ set(tests
     tetrahedral
     tetranonplanar
     tetraplanar
-#    squareplanar
+#    squareplanar # uses BOOST tests, not converted yet
     cistrans
     stereoperception
     graphsym
@@ -69,7 +69,7 @@ set(old_tests
     residue
     ringtest
     smartstest
-#    smartsparse
+    smartsparse
     smilesmatch
     unitcell
    )
