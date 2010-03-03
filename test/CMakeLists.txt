@@ -15,7 +15,7 @@ set(tests
     tetrahedral
     tetranonplanar
     tetraplanar
-#    squareplanar # uses BOOST tests, not converted yet
+    squareplanar
     cistrans
     stereoperception
     graphsym
