@@ -1,3 +1,19 @@
+2010-03-03  Tim Vandermeersch
+
+        * include/openbabel/stereo/cistrans.h: Doc update.
+        
+        * include/openbabel/stereo/squareplanar.h: Update OBSquarePlanarStereo 
+        class to work with Config struct like tetrahedral and cis/trans stereo
+        objects.
+
+        * src/stereo/squareplanar.cpp: implementation...
+
+        * test/CMakeLists.txt: small changes to the way add_test is used to work 
+        with CMake 2.6.
+
+        * test/squareplanartest.cpp: Update the unit test for the OBSquarePlanar 
+        class to use Config structs.
+
 2010-03-03  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* test/CMakeLists.txt: Add back test for inchwrite and check

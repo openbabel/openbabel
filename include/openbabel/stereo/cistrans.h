@@ -310,7 +310,7 @@ namespace std {
 ///@{
 /**
  * @code
- * OBTetrahedralStereo::Config cfg;
+ * OBCisTransStereo::Config cfg;
  * cfg.begin = 0;
  * cfg.end = 1;
  * cfg.refs = OBStereo::MakeRefs(2, 3, 4, 5);

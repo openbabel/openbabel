@@ -87,17 +87,18 @@ if(WITH_INCHI)
   set(inchitests Samples SamplesTechMan)
   set(inchidata ${CMAKE_SOURCE_DIR}/test/inchi)
   foreach(test ${inchitests})
-	  if(MSVC)
-	    add_test(NAME inchi${test}_Test 
-							COMMAND ${CMAKE_BINARY_DIR}/test_inchiwrite ${inchidata}/${test}.sdf ${inchidata}/${test}.txt)
-	  else(MSVC)
-	    add_test(NAME inchi${test}_Test 
-							COMMAND ${TEST_PATH}/test_inchiwrite ${inchidata}/${test}.sdf ${inchidata}/${test}.txt)
+    if(MSVC)
+      add_test(inchi${test}_Test 
+               ${CMAKE_BINARY_DIR}/test_inchiwrite ${inchidata}/${test}.sdf ${inchidata}/${test}.txt)
+    else(MSVC)
+      add_test(inchi${test}_Test 
+              ${TEST_PATH}/test_inchiwrite ${inchidata}/${test}.sdf ${inchidata}/${test}.txt)
     endif(MSVC)
-	  set_tests_properties(inchi${test}_Test PROPERTIES
-		  FAIL_REGULAR_EXPRESSION "Not ok"
-			ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data"
-	 	)
+  
+    set_tests_properties(inchi${test}_Test PROPERTIES
+                         FAIL_REGULAR_EXPRESSION "Not ok"
+                         ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data"
+	 	        )
   endforeach(test ${inchitests})
 endif(WITH_INCHI)
 
