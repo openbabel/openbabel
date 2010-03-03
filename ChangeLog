@@ -1,3 +1,9 @@
+2010-03-03  Noel O'Boyle
+
+	* src/formats/mdlformat.cpp, src/stereo/perception.cpp, 
+	include/openbabel/stereo/stereo.h, src/formats/inchiformat.cpp: More
+	work on 2D stereo. Tests to follow.
+
 2010-03-03  Tim Vandermeersch
 
         * include/openbabel/stereo/cistrans.h: Doc update.

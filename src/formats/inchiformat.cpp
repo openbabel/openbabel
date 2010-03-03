@@ -254,7 +254,19 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   inchi_Input inp;
   memset(&inp,0,sizeof(inchi_Input));
-  
+
+  if (mol.GetDimension())
+    obErrorLog.ThrowError(__FUNCTION__, "No 2D or 3D coordinates exist. Any stereochemical information will"
+    " be lost. To generate 2D or 3D coordinates use --gen2D or --gen3d.", obWarning, onceOnly);
+
+  // Prepare stereo information for 2D, 3D
+  map<OBBond*, OBStereo::BondDirection> updown;
+  map<OBBond*, OBStereo::Ref> from;
+  map<OBBond*, OBStereo::Ref>::const_iterator from_cit;
+  if (mol.GetDimension() != 0)
+    TetStereoTo0D(mol, updown, from);
+  set<OBBond*> unspec_ctstereo = GetUnspecifiedCisTrans(mol);
+
   OBAtom* patom;
   vector<inchi_Atom> inchiAtoms(mol.NumAtoms());
   vector<OBNodeBase*>::iterator itr;
@@ -273,23 +285,40 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     OBBond *pbond;
     for (pbond = patom->BeginBond(itr);pbond;pbond = patom->NextBond(itr))
     {
-      // Do each bond only once. Also, in order for the wedges/hashes in the
-      // 2D data to be pointing in the right direction, we need to make sure
-      // that patom is the BeginAtom of the bond. 
-      if(pbond->GetBeginAtomIdx() != patom->GetIdx()) continue;
+      from_cit = from.find(pbond);
+      // Do each bond only once. If the bond is a stereobond
+      // ensure that the BeginAtom is the 'from' atom. 
+      if( (from_cit==from.end() && patom->GetIdx() != pbond->GetBeginAtomIdx()) ||
+          (from_cit!=from.end() && from_cit->second != patom->GetId()) )
+        continue;
+
       iat.neighbor[nbonds]      = pbond->GetNbrAtomIdx(patom)-1;
       int bo = pbond->GetBO();
       if(bo==5)
         bo=4;
       iat.bond_type[nbonds]     = bo;
-      inchi_BondStereo2D bondstereo2D = INCHI_BOND_STEREO_NONE;
-      if (mol.GetDimension() == 2) {
-        if (pbond->IsWedge())
-          bondstereo2D = INCHI_BOND_STEREO_SINGLE_1UP;
-        else if (pbond->IsHash())
-          bondstereo2D = INCHI_BOND_STEREO_SINGLE_1DOWN;
+      if (mol.GetDimension() != 0) {
+        inchi_BondStereo2D bondstereo2D = INCHI_BOND_STEREO_NONE;
+        if (from_cit!=from.end()) { // It's a stereobond
+          switch (updown[pbond]) {
+            case OBStereo::UpBond:
+              bondstereo2D = INCHI_BOND_STEREO_SINGLE_1UP;
+              break;
+            case OBStereo::DownBond:
+              bondstereo2D = INCHI_BOND_STEREO_SINGLE_1DOWN;
+              break;
+            case OBStereo::UnknownDir:
+              bondstereo2D = INCHI_BOND_STEREO_SINGLE_1EITHER;
+              break;
+            default:
+              ; // INCHI_BOND_STEREO_NONE
+          }
+        }
+        // Is it a double bond with unspecified stereochemistry?
+        if (unspec_ctstereo.find(pbond)!=unspec_ctstereo.end())
+          bondstereo2D = INCHI_BOND_STEREO_DOUBLE_EITHER;
+        iat.bond_stereo[nbonds] = bondstereo2D;
       }
-      iat.bond_stereo[nbonds] = bondstereo2D;
       nbonds++;
     }
   

@@ -27,6 +27,7 @@
 #include <openbabel/base.h> // OBGenericData
 #include <vector>
 #include <map>
+#include <set>
 #include <climits> // UINT_MAX
 
 namespace OpenBabel {
@@ -457,7 +458,8 @@ namespace OpenBabel {
    *
    * @sa StereoFrom3D StereoFrom0D PerceiveStereo
    */
-  OBAPI void StereoFrom2D(OBMol *mol, bool tetfrom0D = false, bool force = false);
+  OBAPI void StereoFrom2D(OBMol *mol, 
+    std::map<OBBond*, enum OBStereo::BondDirection> *updown = NULL, bool force = false);
   /**
    * Convert the 3D coordinates of molecule @p mol to OBStereo objects. This
    * function makes use of the lower level functions TetrahedralFrom3D(),
@@ -489,8 +491,7 @@ namespace OpenBabel {
    *
    * @sa StereoFrom3D StereoFrom2D PerceiveStereo
    */
-  OBAPI void StereoFrom0D(OBMol *mol,
-      std::map<OBBond*, enum OBStereo::BondDirection> *updown = NULL);
+  OBAPI void StereoFrom0D(OBMol *mol);
   ///@}
 
   ///@name Low level functions
@@ -664,7 +665,14 @@ namespace OpenBabel {
    * @sa StereoFrom2D FindCisTransBonds
    */
   OBAPI std::vector<OBCisTransStereo*> CisTransFrom2D(OBMol *mol, 
-      const std::vector<StereogenicUnit> &stereoUnits, bool addToMol = true);
+      const std::vector<StereogenicUnit> &stereoUnits, 
+      const std::map<OBBond*, enum OBStereo::BondDirection> *updown = NULL, bool addToMol = true);
+  // TODO DOCS (HASSLE NOEL ABOUT THIS!!)
+  OBAPI void TetStereoTo0D(OBMol &mol, 
+      std::map<OBBond*, enum OBStereo::BondDirection> &updown,
+      std::map<OBBond*, OBStereo::Ref> &from);
+  // TODO DOCS (HASSLE NOEL ABOUT THIS!!)
+  OBAPI std::set<OBBond*> GetUnspecifiedCisTrans(OBMol& mol);
   /**
    * Get a vector with all OBCisTransStereo objects for the molecule. This 
    * function is used by StereoFrom0D() with the @p addToMol parameter is set 
@@ -685,7 +693,6 @@ namespace OpenBabel {
    */
   OBAPI std::vector<OBCisTransStereo*> CisTransFrom0D(OBMol *mol, 
       const std::vector<StereogenicUnit> &stereoUnits,
-      std::map<OBBond*, OBStereo::BondDirection> *updown = NULL,
       bool addToMol = true);
   ///@}
 
@@ -695,22 +702,6 @@ namespace OpenBabel {
   OBAPI std::vector<StereogenicUnit> FindStereogenicUnits(OBMol *mol, 
       const std::vector<unsigned int> &symClasses);
   ///@}
- 
-  /**
-   * Create and fill OBCisTransStereo objects using the specified
-   * @p ctbonds (bond ids) and map containing directions 
-   * (OBStereo::BondDirection). This function is intended to be used
-   * by 0D formats. The OBCisTransStereo objects will be stored in the 
-   * OBMol.
-   *
-   * @param mol The molecule.
-   * @param ctbonds std::vector containing bond ids for cis/trans bonds
-   * @param updown std::map containing up to four bond directions per bond 
-   *        id in @p ctbonds.
-   */
-  OBAPI void CisTransFromUpDown(OBMol *mol,
-      const std::vector<unsigned long> &ctbonds,
-      std::map<OBBond*, OBStereo::BondDirection> *updown);
 
   /**
    * @page Stereochemistry
