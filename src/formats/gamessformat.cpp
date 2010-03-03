@@ -228,7 +228,8 @@ namespace OpenBabel
     // Set conformers to all coordinates we adopted
     std::vector<double*> vconf; // index of all frames/conformers
     std::vector<double> coordinates; // coordinates in each frame
-    int natoms = 0; 
+    int natoms = 0;
+    int ndummyatoms = 0;
 
     // OBConformerData stores information about multiple steps
     OBConformerData *confData = new OBConformerData();
@@ -249,8 +250,7 @@ namespace OpenBabel
     gmsset->SetAttribute("gamess");
     gmsset->SetOrigin(fileformatInput);
 
-    cerr << "read gamess" << endl;
-
+    mol.Clear();
     mol.BeginModify();
     while (ifs.getline(buffer,BUFF_SIZE))
       {
@@ -293,14 +293,17 @@ namespace OpenBabel
             vconf.push_back(tmpCoords);
             coordinates.clear();
             confDimensions.push_back(3); // always 3D -- OBConformerData allows mixing 2D and 3D structures
-            cerr << "New conformer!" << endl;
           }
         else if(strstr(buffer,"MULTIPOLE COORDINATES, ELECTRONIC AND NUCLEAR CHARGES") != NULL)
           {
-              cerr << "went here\n";
             /*This set of EFP coordinates belongs only to the
              * conformer directly above this (ATOMIC   COORDINATES (BOHR))
-             */
+             */            
+            double *tmpCoords = vconf.at(0);
+            //memcpy(&coordinates[0], tmpCoords, sizeof(double)*natoms*3);
+            for (int i=0; i<natoms*3; i++)
+              coordinates.push_back(tmpCoords[i]);
+            
             ifs.getline(buffer,BUFF_SIZE);      // column headings
             ifs.getline(buffer,BUFF_SIZE);
             ifs.getline(buffer,BUFF_SIZE);
@@ -313,30 +316,44 @@ namespace OpenBabel
                  * or have a non-zero nuclear charge
                  */
                 if (atof((char*)vs[5].c_str()) > 0.0) {
-                    cerr << "here!" << endl;
-                  atom = mol.NewAtom();
+                  //atom = mol.NewAtom();
                   atomicNum=etab.GetAtomicNum(vs[0].substr(0,1).c_str()); 
-                  atom->SetAtomicNum(atomicNum);
+                  //atom->SetAtomicNum(atomicNum);
+                  if (natoms == 0) // first time reading the molecule, create each atom
+                  {
+                    atom = mol.NewAtom();
+                    atom->SetAtomicNum(atomicNum);
+                  }
                   x = atof((char*)vs[1].c_str())* BOHR_TO_ANGSTROM;
                   y = atof((char*)vs[2].c_str())* BOHR_TO_ANGSTROM;
                   z = atof((char*)vs[3].c_str())* BOHR_TO_ANGSTROM;
-                  atom->SetVector(x,y,z);
-
+                  //atom->SetVector(x,y,z);
+                  coordinates.push_back(x);
+                  coordinates.push_back(y);
+                  coordinates.push_back(z);
                 }
                 else if (vs[0].substr(0,1) == "Z") {
-                  atom = mol.NewAtom();
+                  //atom = mol.NewAtom();
                   atomicNum=etab.GetAtomicNum(vs[0].substr(1,1).c_str());
-                  atom->SetAtomicNum(atomicNum);
+                  //atom->SetAtomicNum(atomicNum);
                   x = atof((char*)vs[1].c_str())* BOHR_TO_ANGSTROM;
                   y = atof((char*)vs[2].c_str())* BOHR_TO_ANGSTROM;
                   z = atof((char*)vs[3].c_str())* BOHR_TO_ANGSTROM;
-                  atom->SetVector(x,y,z);
-
+                  //atom->SetVector(x,y,z);
+                  coordinates.push_back(x);
+                  coordinates.push_back(y);
+                  coordinates.push_back(z);
                 }
                 if (!ifs.getline(buffer,BUFF_SIZE))
                   break;
-                tokenize(vs,buffer);
+                tokenize(vs,buffer); 
               }
+            // done with reading atoms
+            ndummyatoms = mol.NumAtoms();
+            // malloc / memcpy
+            memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
+            vconf[0] = tmpCoords;
+            coordinates.clear();
           }
 
         else if(strstr(buffer,"COORDINATES OF ALL ATOMS ARE (ANGS)") != NULL)
@@ -429,11 +446,21 @@ namespace OpenBabel
 
           }
         else if((strstr(buffer,"NSERCH=") != NULL) && (strstr(buffer,"ENERGY=") != NULL))
-          {            
-            tokenize(vs, buffer);
-            if (vs.size() == 4)
-                confEnergies.push_back(atof((char*)vs[3].c_str()));
-            cerr << buffer << endl;
+          {    
+            char *tok = strtok (buffer," ="); // my tokenize
+            int n=0;
+            while (true)
+              {                
+                tok = strtok (NULL, " =");
+                if (tok == NULL)
+                  break;
+                n++;
+                if (n == 3)
+                  {
+                    confEnergies.push_back(atof(tok));
+                    break;
+                  }
+              }
           }
         else if(strstr(buffer,"ELECTROSTATIC MOMENTS") != NULL)
           {
@@ -829,7 +856,6 @@ namespace OpenBabel
 
     // Set conformers to all coordinates we adopted
     // but remove last geometry -- it's a duplicate
-    cerr << vconf.size();
     if (vconf.size() > 1)
       vconf.pop_back();
     mol.SetConformers(vconf);
