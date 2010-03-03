@@ -36,7 +36,10 @@ namespace OpenBabel {
       return false;
     if ((refs.size() != 3) || (other.refs.size() != 3))
       return false;
-    
+    // return true if either is unspecified (i.e. accidental)
+    if (!specified || !other.specified)
+      return true;
+
     Config thisConfig = (from == OBStereo::ImplicitRef) ? 
         OBTetraNonPlanarStereo::ToConfig(*this, refs[0], winding, view) : *this;
     // convert the other Config's refs to same from, winding and view

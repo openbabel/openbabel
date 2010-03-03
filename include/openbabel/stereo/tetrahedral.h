@@ -114,6 +114,9 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
        * - One of the Refs lists does not contain 3 elements.
        * - 2 or more OBStereo::ImplicitRef values in a single Config struct 
        *
+       * When either Config struct is unspecified (i.e. the stereochemistry
+       * implied is accidental), true is returned. 
+       *
        * It doesn't matter if the two Config structs use the same view, same 
        * from/towards Ref or the same winding. All needed conversions will be
        * carried out automatically (see OBTetraNonPlanerStereo::ToConfig). These 
@@ -138,7 +141,7 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
        * that the value of 1 Ref can actually be ignored. It's position in the 
        * sequence (or the winding) is defined by the two explicit Ref values. 
        *
-       * @return True if both Config structs represent the stereochemistry.
+       * @return True if both Config structs represent the same stereochemistry.
        */
       bool operator==(const Config &other) const;
       /**

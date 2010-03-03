@@ -1,3 +1,17 @@
+2010-03-03  Tim Vandermeersch
+
+        * include/openbabel/stereo/tetrahedral.h, src/stereo/tetrahedral.cpp: When
+        comparing Config structs' stereochemistry, return true if either of the 
+        Config structs are unspecified (i.e. accidental). The smiles test was failing
+        because it compared stereocenters that were unspecified. The documentation
+        is also updated.
+
+        * test/smilestest.cpp: Add the test case back. Now passes.
+
+        * test/graphsymtest.cpp: There are still some cases were this test fails. However,
+        it mainly has to do with N atoms becoming aromatic and getting an extra H atom.
+        I'm not sure what's the best solution here...
+
 2010-03-02  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/kekulize.cpp (expand_kekulize): Fix crashing bug -- looking

@@ -54,6 +54,8 @@ void genericGraphSymTest(const std::string &smiles)
   std::vector<unsigned int>::iterator end2 = std::unique(symclassesCopy2.begin(), symclassesCopy2.end());
   unsigned int unique2 = end2 - symclassesCopy2.begin();
 
+  std::cout << "unique1 = " << unique1 << std::endl;
+  std::cout << "unique2 = " << unique2 << std::endl;
   OB_ASSERT( unique1 == unique2 );
 
   FOR_ATOMS_OF_MOL (a1, mol1) {
@@ -102,8 +104,12 @@ int main()
   genericGraphSymTest("CCC[C@@H]1C[C@H](N(C1)C)C(=O)NC([C@@H]2[C@@H]([C@@H]([C@H]([C@H](O2)SC)OP(=O)(O)O)O)O)C(C)Cl");
   
   // FAILING:
+
+  // ring gets converted to aromatic ring, adding H on n (i.e. N -> [nH])
   //genericGraphSymTest("CC1=CN(C(=O)NC1=O)[C@H]2C[C@@H]([C@H](O2)CNCC3=CC=CC=C3)O");
+
   //genericGraphSymTest("CC(C)[C@H]1CC[C@]([C@@H]2[C@@H]1C=C(COC2=O)C(=O)O)(CCl)O");
+  
   //genericGraphSymTest("CC(C)[C@@]12C[C@@H]1[C@@H](C)C(=O)C2");
 
   cout << "end" << endl;
