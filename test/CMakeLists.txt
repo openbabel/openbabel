@@ -76,15 +76,33 @@ set(old_tests
 
 # TODO: forgot that inchiwrite requires arguments -- it compiles now, but
 #   doesn't run a test
-#if(WITH_INCHI)
-#  set(inchiwrite_additional_sources ../src/formats/getinchi.cpp)
-#  set(old_tests ${old_tests}
-#    inchiwrite
-#    )
-#endif(WITH_INCHI)
+if(WITH_INCHI)
+  add_executable(test_inchiwrite inchiwrite.cpp ../src/formats/getinchi.cpp)
+  target_link_libraries(test_inchiwrite ${BABEL_LIBRARY})
+  if(MSVC)
+    set_target_properties(test_inchiwrite PROPERTIES
+      RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+  endif(MSVC)
+  # files in test/inchi -- both .sdf and .txt
+  set(inchitests Samples SamplesTechMan)
+  set(inchidata ${CMAKE_SOURCE_DIR}/test/inchi)
+  foreach(test ${inchitests})
+	  if(MSVC)
+	    add_test(NAME inchi${test}_Test 
+							COMMAND ${CMAKE_BINARY_DIR}/test_inchiwrite ${inchidata}/${test}.sdf ${inchidata}/${test}.txt)
+	  else(MSVC)
+	    add_test(NAME inchi${test}_Test 
+							COMMAND ${TEST_PATH}/test_inchiwrite ${inchidata}/${test}.sdf ${inchidata}/${test}.txt)
+    endif(MSVC)
+	  set_tests_properties(inchi${test}_Test PROPERTIES
+		  FAIL_REGULAR_EXPRESSION "Not ok"
+			ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data"
+	 	)
+  endforeach(test ${inchitests})
+endif(WITH_INCHI)
 
 foreach(test ${old_tests})
-  add_executable(test_${test} ${test}.cpp ${${test}_additional_sources})
+  add_executable(test_${test} ${test}.cpp)
   target_link_libraries(test_${test} ${BABEL_LIBRARY})
   if(MSVC)
     add_test(${test}_Test ${CMAKE_BINARY_DIR}/test_${test})
@@ -104,7 +122,7 @@ endforeach(test ${old_tests})
 ############################################################  
 #  roundtrip 
 ############################################################  
-  
+
 add_executable(roundtrip roundtrip.cpp)
 target_link_libraries(roundtrip ${BABEL_LIBRARY})
 install(TARGETS roundtrip
@@ -124,7 +142,9 @@ ADD_PYTHON_TEST(pytest_fastsearch testfastsearch.py)
 ADD_PYTHON_TEST(pytest_unique testunique.py)
 ADD_PYTHON_TEST(pytest_kekule testkekule.py)
 foreach(pytest babel sym fastsearch unique)
-  set_property(TEST pytest_${pytest} PROPERTY
+
+  set_tests_properties(pytest_${pytest} PROPERTIES
+       FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
        ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
   )
 endforeach(pytest babel sym fastsearch unique)
