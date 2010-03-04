@@ -22,6 +22,27 @@
         * test/smilestest.cpp: Add unit tests for smiles square-planar 
         reading/writing.
 
+2010-03-03  David Lonie  <loniedavid@gmail.com>
+
+	* src/generic.cpp, include/openbabel/generic.h:
+	Changes to OBUnitCell to handle data more consistently. Note that
+	this depreciates the use of GetOrthoMatrix and GetFractionalMatrix
+	for conversions to/from fractional and cartesian
+	coordinates. Simply multiplying by these matricies may no longer
+	correctly convert coordinates since an orientation matrix has been
+	introduced in order to handle cells that don't follow a standard
+	alignment. Use
+
+	vector3 OBUnitCell::FractionalToCartesian(vector3) and
+	vector3 OBUnitCell::CartesianToFractional(vector3)
+
+	instead. There are also two new convenience functions,
+
+	vector3 OBUnitCell::WrapCartesianCoordinate(vector3) and
+	vector3 OBUnitCell::WrapFractionalCoordinate(vector3)
+
+	to move a set of coordinates into the unit cell.
+
 2010-03-03  Noel O'Boyle
 
 	* src/formats/mdlformat.cpp, src/stereo/perception.cpp, 
