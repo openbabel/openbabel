@@ -141,9 +141,9 @@ class TestConversions(BaseTest):
     def testSMILESto3DMDL(self):
         """Test interconversion between SMILES and 3D MDL"""
         data = [
-('ClC=CF', 'FC=CCl', [0, 0, 0, 0], [0, 0, 3]),
-('Cl/C=C/F', 'F/C=C/Cl', [0, 0, 0, 0], [0, 0, 0]),
-('Cl/C=C\\F', 'F/C=C\\Cl', [0, 0, 0, 0], [0, 0, 0]), 
+('ClC=CF', 'FC=CCl', [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 3]),
+('Cl/C=C/F', 'F/C=C/Cl', [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0]),
+('Cl/C=C\\F', 'F/C=C\\Cl', [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0]), 
 ('Cl[C@@](Br)(F)I', 'F[C@@](Cl)(Br)I', [0, 0, 0, 0, 1], [0, 0, 0, 1]),
 ('Cl[C@](Br)(F)I', 'F[C@](Cl)(Br)I', [0, 0, 0, 0, 2], [0, 0, 0, 6]),
 ('ClC(Br)(F)I', 'FC(Cl)(Br)I', [0, 0, 0, 0, 3], [0, 0, 0, 4])
