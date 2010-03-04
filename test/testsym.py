@@ -106,7 +106,7 @@ class TestConversions(BaseTest):
     def setUp(self):
         self.canFindExecutable("babel")
         
-    def notestSMILEStoInChI(self):
+    def testSMILEStoInChI(self):
         # Tests interconversions between the SMILES on the left versus
         # the InChI on the right.
         # The canonical smiles (in the middle) were derived from the SMILES.
@@ -138,7 +138,7 @@ class TestConversions(BaseTest):
             bonds.append({'stereo':int(broken[3])})
         return atoms, bonds
         
-    def notestSMILESto3DMDL(self):
+    def testSMILESto3DMDL(self):
         """Test interconversion between SMILES and 3D MDL"""
         data = [
 ('ClC=CF', 'FC=CCl', [0, 0, 0, 0], [0, 0, 3]),
