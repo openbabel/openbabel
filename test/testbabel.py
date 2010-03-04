@@ -84,6 +84,12 @@ class BaseTest(unittest.TestCase):
         self.assertTrue(os.path.isfile(filename),
                         "Cannot find the file '%s'" % filename)
 
+    def getTestFile(self, filename):
+        here = sys.path[0]
+        fullpath = os.path.join(here, "files", filename)
+        self.canFindFile(fullpath)
+        return fullpath
+
     def assertConverted(self, stderr, N):
         """Assert that N molecules were converted."""
         pat = "(-?\d.*) molecule(?:s?) converted"

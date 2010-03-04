@@ -1307,12 +1307,20 @@ namespace OpenBabel {
       bool use_central_atom = false;
            
       // Create a vector with the coordinates of the neighbor atoms
+      // and check for a bond that indicates unspecified stereochemistry
       std::vector<vector3> nbrCoords;
       OBAtom *from = mol->GetAtomById(config.from);
+      OBBond *bond = mol->GetBond(from, center);
+      if (bond->IsWedgeOrHash() && bond->GetBeginAtom()==center)
+        config.specified = false;
+
       nbrCoords.push_back(from->GetVector());
       for (OBStereo::RefIter id = config.refs.begin(); id != config.refs.end(); ++id) {
         OBAtom *nbr = mol->GetAtomById(*id);
         nbrCoords.push_back(nbr->GetVector());
+        OBBond *bond = mol->GetBond(nbr, center);
+        if (bond->IsWedgeOrHash() && bond->GetBeginAtom()==center)
+          config.specified = false;
       }
     
         // Checks for a neighbour having 0 co-ords (added hydrogen etc)

@@ -1,3 +1,14 @@
+2010-03-04  Noel O'Boyle
+
+	* src/stereo/perception.cpp: In TetrahedralFrom3D, if a bond to the
+	chiral center IsWedgeOrHash then make the stereo object unspecified.
+	* src/builder.cpp: Fix logic when correcting cistrans stereo
+	* test/testsym.py: The long-promised stereo tests that flushed out
+	the two bugs above. Also, since it seems that each call to 'babel' is
+	quite slow, I've bundled multiple SMILES into each call.
+	* test/CMakeLists.txt: Simplified the logic surrounding the Python tests
+	* test/testbabel.py: Added convenience function for finding test files
+
 2010-03-04  Tim Vandermeersch
 
         * include/openbabel/stereo/stereo.h, src/stereo/facade.cpp: Add support

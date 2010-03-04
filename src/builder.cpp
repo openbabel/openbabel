@@ -1051,7 +1051,7 @@ namespace OpenBabel
     newcistrans = CisTransFrom3D(&mol, sgunits, false);
 
     // Compare and correct if necessary
-    double newangle;
+    double newangle, angle;
     OBAtom *a, *b, *c, *d;
     std::vector<OBCisTransStereo*>::iterator origct, newct;
     for (origct=cistrans.begin(), newct=newcistrans.begin(); origct!=cistrans.end(); ++origct, ++newct) {
@@ -1067,15 +1067,13 @@ namespace OpenBabel
         a = mol.GetAtomById(config.refs[0]);
         b = mol.GetAtomById(config.begin);
         c = mol.GetAtomById(config.end);
-        if (config.refs[3] != OBStereo::ImplicitRef) {  
+        if (config.refs[3] != OBStereo::ImplicitRef)
           d = mol.GetAtomById(config.refs[3]);
-          newangle = 0.0; // Currently 180 (trans), but should be cis
-        }
-        else {
+        else
           d = mol.GetAtomById(config.refs[2]);
-          newangle = M_PI; // Currently 0 (cis), but should be trans
-        }
-        mol.SetTorsion(a, b, c, d, newangle);
+        angle = mol.GetTorsion(a, b, c, d); // In degrees
+        newangle = angle * DEG_TO_RAD + M_PI; // flip the bond by 180 deg (PI radians)
+        mol.SetTorsion(a, b, c, d, newangle); // In radians
       }
     }
   }

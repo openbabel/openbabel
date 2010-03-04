@@ -137,13 +137,8 @@ install(TARGETS roundtrip
 ###########################
 
 include(UsePythonTest)
-ADD_PYTHON_TEST(pytest_babel testbabel.py)
-ADD_PYTHON_TEST(pytest_sym testsym.py)
-ADD_PYTHON_TEST(pytest_fastsearch testfastsearch.py)
-ADD_PYTHON_TEST(pytest_unique testunique.py)
-ADD_PYTHON_TEST(pytest_kekule testkekule.py)
-foreach(pytest babel sym fastsearch unique)
-
+foreach(pytest babel sym fastsearch unique kekule)
+  ADD_PYTHON_TEST(pytest_${pytest} test${pytest}.py)
   set_tests_properties(pytest_${pytest} PROPERTIES
        FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
        ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
