@@ -23,6 +23,7 @@
  **********************************************************************/
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
+#include <openbabel/stereo/squareplanar.h>
 #include <openbabel/mol.h>
 
 namespace OpenBabel {
@@ -38,6 +39,12 @@ namespace OpenBabel {
     EnsureInit();
     return m_cistransMap.size();
   }
+ 
+  unsigned int OBStereoFacade::NumSquarePlanarStereo() 
+  {
+    EnsureInit();
+    return m_squarePlanarMap.size();
+  }
   
   bool OBStereoFacade::HasTetrahedralStereo(unsigned long atomId)
   {
@@ -51,6 +58,14 @@ namespace OpenBabel {
   {
     EnsureInit();
     if (m_cistransMap.find(bondId) != m_cistransMap.end())
+      return true;
+    return false;  
+  }
+ 
+  bool OBStereoFacade::HasSquarePlanarStereo(unsigned long atomId)
+  {
+    EnsureInit();
+    if (m_squarePlanarMap.find(atomId) != m_squarePlanarMap.end())
       return true;
     return false;  
   }
@@ -69,6 +84,13 @@ namespace OpenBabel {
     return m_cistransMap[bondId];
   }
 
+  OBSquarePlanarStereo* OBStereoFacade::GetSquarePlanarStereo(unsigned long atomId)
+  {
+    if (!HasSquarePlanarStereo(atomId))
+      return 0;
+    return m_squarePlanarMap[atomId];
+  }
+
   void OBStereoFacade::InitMaps()
   {
     if (m_perceive && !m_mol->HasChiralityPerceived())
@@ -85,6 +107,13 @@ namespace OpenBabel {
         if (config.center == OBStereo::NoRef)
           continue;
         m_tetrahedralMap[config.center] = ts;
+      } else
+      if (type == OBStereo::SquarePlanar) {
+        OBSquarePlanarStereo *sp = dynamic_cast<OBSquarePlanarStereo*>(*data);
+        OBSquarePlanarStereo::Config config = sp->GetConfig();
+        if (config.center == OBStereo::NoRef)
+          continue;
+        m_squarePlanarMap[config.center] = sp;
       } else
       if (type == OBStereo::CisTrans) {
         OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);

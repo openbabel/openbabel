@@ -1,3 +1,14 @@
+2010-03-04  Tim Vandermeersch
+
+        * include/openbabel/stereo/stereo.h, src/stereo/facade.cpp: Add support
+        for square-planar stereochemistry to OBStereoFacade.
+
+        * src/formats/smilesformat.cpp: Add support for reading/writing 
+        square-planar stereochemistry (@SP1, @SP2, @SP3).
+
+        * test/smilestest.cpp: Add unit tests for smiles square-planar 
+        reading/writing.
+
 2010-03-03  Noel O'Boyle
 
 	* src/formats/mdlformat.cpp, src/stereo/perception.cpp, 

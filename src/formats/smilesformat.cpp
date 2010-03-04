@@ -25,6 +25,7 @@ GNU General Public License for more details.
 
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
+#include <openbabel/stereo/squareplanar.h>
 #include <openbabel/stereo/stereo.h>
 
 #include <openbabel/graphsym.h>
@@ -204,9 +205,11 @@ namespace OpenBabel {
     vector<OBBond*> _bcbonds; // Remember which bonds are bond closure bonds
     
     // stereochimistry
-    bool chiralWatch; // set when a chiral atom is read
+    bool chiralWatch; // set when a tetrahedral atom is read
     map<OBAtom*, OBTetrahedralStereo::Config*> _tetrahedralMap; // map of tetrahedral atoms and their data
     map<OBBond*, char> _upDownMap; // store the '/' & '\' as they occured in smiles
+    bool squarePlanarWatch; // set when a square planar atom is read
+    map<OBAtom*, OBSquarePlanarStereo::Config*> _squarePlanarMap;
 
   public:
 
@@ -225,7 +228,8 @@ namespace OpenBabel {
     void FindOrphanAromaticAtoms(OBMol &mol); //CM 18 Sept 2003
     int NumConnections(OBAtom *);
     void CreateCisTrans(OBMol &mol);
-    void InsertStereoRef(OBMol &mol, unsigned long id);
+    void InsertTetrahedralRef(OBMol &mol, unsigned long id);
+    void InsertSquarePlanarRef(OBMol &mol, unsigned long id);
 
     bool IsUp(OBBond*);
     bool IsDown(OBBond*);
@@ -327,6 +331,7 @@ namespace OpenBabel {
     _rclose.clear();
     _prev=0;
     chiralWatch=false;
+    squarePlanarWatch = false;
 
     if (!ParseSmiles(mol) || mol.NumAtoms() == 0)
       {
@@ -335,9 +340,14 @@ namespace OpenBabel {
       }
 
     map<OBAtom*, OBTetrahedralStereo::Config*>::iterator i;
-    for (i = _tetrahedralMap.begin(); i != _tetrahedralMap.end(); i++)
+    for (i = _tetrahedralMap.begin(); i != _tetrahedralMap.end(); ++i)
       delete i->second;
     _tetrahedralMap.clear();
+
+    map<OBAtom*, OBSquarePlanarStereo::Config*>::iterator j;
+    for (j = _squarePlanarMap.begin(); j != _squarePlanarMap.end(); ++j)
+      delete j->second;
+    _squarePlanarMap.clear();
 
     mol.SetAutomaticFormalCharge(false);
 
@@ -464,7 +474,7 @@ namespace OpenBabel {
           }
       }
     
-    //NE add the OBChiralData stored inside the _mapcd to the atoms now after end
+    // Add the data stored inside the _tetrahedralMap to the atoms now after end
     // modify so they don't get lost.
     if(_tetrahedralMap.size() > 0) {
       OBAtom* atom;
@@ -483,6 +493,27 @@ namespace OpenBabel {
         mol.SetData(obts);
       }
     }
+
+    // Add the data stored inside the _squarePlanarMap to the atoms now after end
+    // modify so they don't get lost.
+    if(_squarePlanarMap.size() > 0) {
+      OBAtom* atom;
+      map<OBAtom*, OBSquarePlanarStereo::Config*>::iterator ChiralSearch;
+      for(ChiralSearch = _squarePlanarMap.begin(); ChiralSearch != _squarePlanarMap.end(); ChiralSearch++) {
+        atom = ChiralSearch->first;
+        OBSquarePlanarStereo::Config *sp = ChiralSearch->second;
+        if (!sp) 
+          continue;
+        if (sp->refs.size() != 4)
+          continue;
+
+        // cout << "*ts = " << *ts << endl;
+        OBSquarePlanarStereo *obsp = new OBSquarePlanarStereo(&mol);
+        obsp->SetConfig(*sp);
+        mol.SetData(obsp);
+      }
+    }
+ 
     CreateCisTrans(mol);
     StereoFrom0D(&mol);
 
@@ -675,7 +706,7 @@ namespace OpenBabel {
       }
   }
 
-  void OBSmilesParser::InsertStereoRef(OBMol &mol, unsigned long id)
+  void OBSmilesParser::InsertTetrahedralRef(OBMol &mol, unsigned long id)
   {
     map<OBAtom*, OBTetrahedralStereo::Config*>::iterator ChiralSearch;
     ChiralSearch = _tetrahedralMap.find(mol.GetAtom(_prev));
@@ -697,6 +728,30 @@ namespace OpenBabel {
       }
     }
   }
+
+  void OBSmilesParser::InsertSquarePlanarRef(OBMol &mol, unsigned long id)
+  {
+    map<OBAtom*, OBSquarePlanarStereo::Config*>::iterator ChiralSearch;
+    ChiralSearch = _squarePlanarMap.find(mol.GetAtom(_prev));
+    if (ChiralSearch != _squarePlanarMap.end() && ChiralSearch->second != NULL)
+    {
+      int insertpos = NumConnections(ChiralSearch->first) - 1;
+      if (insertpos < 0) {
+        if (ChiralSearch->second->refs[0] != OBStereo::NoRef)
+          obErrorLog.ThrowError(__FUNCTION__, "Error: Overwriting previous from reference id.", obError);
+      
+        (ChiralSearch->second)->refs[0] = id;
+        //cerr << "Adding " << id << " at Config.refs[0] to " << ChiralSearch->second << endl;
+      } else {
+        if (ChiralSearch->second->refs[insertpos] != OBStereo::NoRef)
+          obErrorLog.ThrowError(__FUNCTION__, "Error: Overwriting previously set reference id.", obError);
+
+        (ChiralSearch->second)->refs[insertpos] = id;
+        //cerr << "Adding " << id << " at " << insertpos << " to " << ChiralSearch->second << endl;
+      }
+    }
+  }
+
 
 
   bool OBSmilesParser::ParseSimple(OBMol &mol)
@@ -868,7 +923,8 @@ namespace OpenBabel {
         if (_updown == BondUpChar || _updown == BondDownChar)
           _upDownMap[mol.GetBond(_prev, mol.NumAtoms())] = _updown;       
        
-        InsertStereoRef(mol, mol.NumAtoms() - 1);
+        InsertTetrahedralRef(mol, mol.NumAtoms() - 1);
+        InsertSquarePlanarRef(mol, mol.NumAtoms() - 1);
       }
 
     //set values
@@ -1605,17 +1661,33 @@ namespace OpenBabel {
           {
           case '@':
             _ptr++;
-            chiralWatch=true;
-            _tetrahedralMap[atom] = new OBTetrahedralStereo::Config;
-            _tetrahedralMap[atom]->refs = OBStereo::Refs(3, OBStereo::NoRef);
-            _tetrahedralMap[atom]->center = atom->GetId();
-            if (*_ptr == '@') {
-              _tetrahedralMap[atom]->winding = OBStereo::Clockwise;
-            } else if (*_ptr == '?') {
-              _tetrahedralMap[atom]->specified = false;
+            if (*_ptr == 'S') {
+              // square planar atom found
+              squarePlanarWatch = true;
+              _squarePlanarMap[atom] = new OBSquarePlanarStereo::Config;
+              _squarePlanarMap[atom]->refs = OBStereo::Refs(4, OBStereo::NoRef);
+              _squarePlanarMap[atom]->center = atom->GetId();
+              _ptr += 2;
+              if (*_ptr == '1')
+                _squarePlanarMap[atom]->shape = OBStereo::ShapeU;
+              if (*_ptr == '2')
+                _squarePlanarMap[atom]->shape = OBStereo::Shape4;
+              if (*_ptr == '3')
+                _squarePlanarMap[atom]->shape = OBStereo::ShapeZ;
             } else {
-              _tetrahedralMap[atom]->winding = OBStereo::AntiClockwise;
-              _ptr--;
+              // tetrahedral atom found
+              chiralWatch=true;
+              _tetrahedralMap[atom] = new OBTetrahedralStereo::Config;
+              _tetrahedralMap[atom]->refs = OBStereo::Refs(3, OBStereo::NoRef);
+              _tetrahedralMap[atom]->center = atom->GetId();
+              if (*_ptr == '@') {
+                _tetrahedralMap[atom]->winding = OBStereo::Clockwise;
+              } else if (*_ptr == '?') {
+                _tetrahedralMap[atom]->specified = false;
+              } else {
+                _tetrahedralMap[atom]->winding = OBStereo::AntiClockwise;
+                _ptr--;
+              }
             }
             break;
           case '-':
@@ -1720,11 +1792,17 @@ namespace OpenBabel {
         if (_updown == BondUpChar || _updown == BondDownChar)
           _upDownMap[mol.GetBond(_prev, mol.NumAtoms())] = _updown;
        
-        if(chiralWatch) { // if chiral atom, set previous as from atom
+        if(chiralWatch) { // if tetrahedral atom, set previous as from atom
           _tetrahedralMap[atom]->from = mol.GetAtom(_prev)->GetId();
           //cerr <<"NB7: line 1622: Added atom ref "<<_prev<<" at " << 0 << " to "<<_mapcd[atom]<<endl;
         }
-        InsertStereoRef(mol, atom->GetId());
+        if (squarePlanarWatch) { // if squareplanar atom, set previous atom as first ref
+          _squarePlanarMap[atom]->refs[0] = mol.GetAtom(_prev)->GetId();
+          //cerr <<"TV7: line 1748: Added atom ref " << mol.GetAtom(_prev)->GetId() 
+          //     << " at " << 0 << " to " << _squarePlanarMap[atom] << endl;
+        }
+        InsertTetrahedralRef(mol, atom->GetId());
+        InsertSquarePlanarRef(mol, atom->GetId());
       }          
 
     //set values
@@ -1747,9 +1825,12 @@ namespace OpenBabel {
           _upDownMap[mol.GetBond(_prev, mol.NumAtoms())] = _updown;
 
         if(chiralWatch)
-          InsertStereoRef(mol, atom->GetId());
+          InsertTetrahedralRef(mol, atom->GetId());
+        if (squarePlanarWatch)
+          InsertSquarePlanarRef(mol, atom->GetId());
       }
     chiralWatch=false;
+    squarePlanarWatch = false;
     return(true);
   }
 
@@ -1864,7 +1945,8 @@ namespace OpenBabel {
    
         // after adding a bond to atom "_prev"
         // search to see if atom is bonded to a chiral atom
-        InsertStereoRef(mol, bond->prev - 1);
+        InsertTetrahedralRef(mol, bond->prev - 1);
+        InsertSquarePlanarRef(mol, bond->prev - 1);
             
         _extbond.erase(bond);
         _updown = ' ';
@@ -1937,8 +2019,10 @@ namespace OpenBabel {
         // after adding a bond to atom "_prev"
         // search to see if atom is bonded to a chiral atom
         // need to check both _prev and bond->prev as closure is direction independent
-        InsertStereoRef(mol, bond->prev - 1);
-        
+        InsertTetrahedralRef(mol, bond->prev - 1);
+        InsertSquarePlanarRef(mol, bond->prev - 1);
+       
+        // FIXME: needed for squreplanar too??
         map<OBAtom*, OBTetrahedralStereo::Config*>::iterator ChiralSearch;
         ChiralSearch = _tetrahedralMap.find(mol.GetAtom(bond->prev));  
         if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL) {
@@ -2153,10 +2237,14 @@ namespace OpenBabel {
                                 OBCanSmiNode *node);
     void         CorrectAromaticAmineCharge(OBMol&);
     void         CreateFragCansmiString(OBMol&, OBBitVec&, bool, char *);
-    bool         GetChiralStereo(OBCanSmiNode*,
-                                 vector<OBAtom*>&chiral_neighbors,
-                                 vector<unsigned int> &symmetry_classes,
-                                 char*);
+    bool         GetTetrahedralStereo(OBCanSmiNode*,
+                                      vector<OBAtom*>&chiral_neighbors,
+                                      vector<unsigned int> &symmetry_classes,
+                                      char*);
+    bool         GetSquarePlanarStereo(OBCanSmiNode*,
+                                       vector<OBAtom*>&chiral_neighbors,
+                                       vector<unsigned int> &symmetry_classes,
+                                       char*);
     bool         GetSmilesElement(OBCanSmiNode*,
                                   vector<OBAtom*>&chiral_neighbors,
                                   vector<unsigned int> &symmetry_classes,
@@ -2549,7 +2637,9 @@ namespace OpenBabel {
 
     char stereo[5] = "";
     if (GetSmilesValence(atom) > 2 && isomeric) {
-      if (GetChiralStereo(node, chiral_neighbors, symmetry_classes, stereo))
+      if (GetTetrahedralStereo(node, chiral_neighbors, symmetry_classes, stereo))
+        strcat(buffer,stereo);
+      if (GetSquarePlanarStereo(node, chiral_neighbors, symmetry_classes, stereo))
         strcat(buffer,stereo);
     }
     if (stereo[0] != '\0') 
@@ -2742,17 +2832,17 @@ namespace OpenBabel {
   }
 
   /***************************************************************************
-   * FUNCTION: GetChiralStereo
+   * FUNCTION: GetTetrahedralStereo
    *
    * DESCRIPTION:
    *       If the atom is chiral, fills in the string with either '@', '@@' 
    *       or '@?' and returns true, otherwise returns false.
    ***************************************************************************/
 
-  bool OBMol2Cansmi::GetChiralStereo(OBCanSmiNode *node,
-                                     vector<OBAtom*> &chiral_neighbors,
-                                     vector<unsigned int> &symmetry_classes,
-                                     char *stereo)
+  bool OBMol2Cansmi::GetTetrahedralStereo(OBCanSmiNode *node,
+                                          vector<OBAtom*> &chiral_neighbors,
+                                          vector<unsigned int> &symmetry_classes,
+                                          char *stereo)
   {
     OBAtom *atom = node->GetAtom();
     OBMol *mol = (OBMol*) atom->GetParent();
@@ -2797,6 +2887,75 @@ namespace OpenBabel {
     return true;
   }
 
+  /***************************************************************************
+   * FUNCTION: GetSquarePlanarStereo
+   *
+   * DESCRIPTION:
+   *       If the atom is chiral, fills in the string with either '@', '@@' 
+   *       or '@?' and returns true, otherwise returns false.
+   ***************************************************************************/
+
+  bool OBMol2Cansmi::GetSquarePlanarStereo(OBCanSmiNode *node,
+                                           vector<OBAtom*> &chiral_neighbors,
+                                           vector<unsigned int> &symmetry_classes,
+                                           char *stereo)
+  {
+    OBAtom *atom = node->GetAtom();
+    OBMol *mol = (OBMol*) atom->GetParent();
+  
+    // If no chiral neighbors were passed in, we're done
+    if (chiral_neighbors.size() < 4)
+      return false;
+
+    // OBStereoFacade will run symmetry analysis & stereo perception if needed    
+    OBStereoFacade stereoFacade(mol);
+    OBSquarePlanarStereo *sp = stereoFacade.GetSquarePlanarStereo(atom->GetId());
+    // If atom is not a square-planar center, we're done
+    if (!sp)
+      return false;
+
+    // get the Config struct defining the stereochemistry
+    OBSquarePlanarStereo::Config atomConfig = sp->GetConfig();
+    
+    if (!atomConfig.specified) {
+      // write '@?' for unspecified (unknown) stereochemistry
+      // strcpy(stereo, "@?");
+      //return true;
+      return false;
+    }
+
+    // create a Config struct with the chiral_neighbors in canonical output order
+    OBStereo::Refs canonRefs = OBStereo::MakeRefs(chiral_neighbors[0]->GetId(), 
+        chiral_neighbors[1]->GetId(), chiral_neighbors[2]->GetId(), chiral_neighbors[3]->GetId());
+    OBSquarePlanarStereo::Config canConfig;
+    canConfig.center = atom->GetId();
+    canConfig.refs = canonRefs;
+
+    //cout << "atomConfig = " << atomConfig << endl;
+    //cout << "canConfig = " << canConfig << endl;
+
+    // canConfig is U shape
+    if (atomConfig == canConfig) {
+      strcpy(stereo, "@SP1");
+      return true;
+    }
+
+    canConfig.shape = OBStereo::Shape4;
+    //cout << "canConfig = " << canConfig << endl;
+    if (atomConfig == canConfig) {
+      strcpy(stereo, "@SP2");
+      return true;
+    }
+ 
+    canConfig.shape = OBStereo::ShapeZ;
+    //cout << "canConfig = " << canConfig << endl;
+    if (atomConfig == canConfig) {
+      strcpy(stereo, "@SP3");
+      return true;
+    }
+    
+    return false;
+  }
 
   /***************************************************************************
    * FUNCTION: BuildCanonTree

@@ -334,6 +334,7 @@ namespace OpenBabel {
   // fwd decl
   class OBTetrahedralStereo;
   class OBCisTransStereo;
+  class OBSquarePlanarStereo;
   /**
    * @brief Facade to simplify retrieval of OBStereoBase derived objects.
    *
@@ -391,12 +392,32 @@ namespace OpenBabel {
        */
       bool HasCisTransStereo(unsigned long bondId);
       /**
-       * Get the OBTetrahedralStereo object with @p atomId as center. This 
-       * function returns 0 if there is no OBTetrahedralStereo object found 
-       * with the specified center.
+       * Get the OBTetrahedralStereo object with @p bondId as double bond. 
+       * This function returns 0 if there is no OBCisTransStereo object found 
+       * with the specified bond.
        */
       OBCisTransStereo* GetCisTransStereo(unsigned long bondId);
       ///@}
+
+      ///@name SquarePlanar stereochemistry
+      ///@{
+      /**
+       * Get the number of square-planar stereocenters.
+       */
+      unsigned int NumSquarePlanarStereo();
+      /**
+       * Check if atom with @p id is a stereogenic square-planar atom. 
+       * @return True if the atom with @p id has square-planar stereochemistry.
+       */
+      bool HasSquarePlanarStereo(unsigned long atomId);
+      /**
+       * Get the OBSquarePlanarStereo object with @p atomId as center. This 
+       * function returns 0 if there is no OBSquarePlanarStereo object found 
+       * with the specified center.
+       */
+      OBSquarePlanarStereo* GetSquarePlanarStereo(unsigned long atomId);
+      ///@}
+
 
     private:
       /**
@@ -415,6 +436,7 @@ namespace OpenBabel {
       bool m_perceive;
       std::map<unsigned long, OBTetrahedralStereo*> m_tetrahedralMap;
       std::map<unsigned long, OBCisTransStereo*> m_cistransMap;
+      std::map<unsigned long, OBSquarePlanarStereo*> m_squarePlanarMap;
   };
 
   // fwd decl
