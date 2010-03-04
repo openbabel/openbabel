@@ -1,5 +1,7 @@
 2010-03-04  Noel O'Boyle
 
+	* test/files/testsym_2Dtests.sdf: Forgot to add test file
+
 	* src/stereo/perception.cpp: In TetrahedralFrom3D, if a bond to the
 	chiral center IsWedgeOrHash then make the stereo object unspecified.
 	* src/builder.cpp: Fix logic when correcting cistrans stereo
