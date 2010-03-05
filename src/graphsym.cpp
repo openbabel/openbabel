@@ -1010,7 +1010,11 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
       cout << symmetry_classes[i].first->GetIndex() << " (" << symmetry_classes[i].first->GetType() 
       << "): " << symmetry_classes[i].second << endl;
       }*/
+    } else {
+      CreateNewClassVector(symmetry_classes, tmp_classes);
+      CountAndRenumberClasses(tmp_classes, nclasses2);
     }
+
 
     if (nclasses1 != nclasses2) {
       symmetry_classes = tmp_classes;
