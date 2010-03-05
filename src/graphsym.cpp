@@ -968,7 +968,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 * RETURNS: The number of distinct symmetry classes found.
 ***************************************************************************/
 
-  int OBGraphSym::ExtendInvariants(vector<pair<OBAtom*, unsigned int> > &symmetry_classes)
+  int OBGraphSym::ExtendInvariants(vector<pair<OBAtom*, unsigned int> > &symmetry_classes, bool breakChiralTies)
   {
     unsigned int nclasses1, nclasses2;
     vector<pair<OBAtom*,unsigned int> > tmp_classes;
@@ -995,24 +995,26 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
       }
     }
 
+    if (breakChiralTies) {
     /*cout << "BEFORE BreakChiralTies, nclasses1 = " << nclasses1 << endl;
       for (int i = 0; i < symmetry_classes.size(); i++) {
       cout << symmetry_classes[i].first->GetIndex() << ": " << symmetry_classes[i].second << endl;
       }*/
 
-    BreakChiralTies(symmetry_classes);
-    CreateNewClassVector(symmetry_classes, tmp_classes);
-    CountAndRenumberClasses(tmp_classes, nclasses2);
+      BreakChiralTies(symmetry_classes);
+      CreateNewClassVector(symmetry_classes, tmp_classes);
+      CountAndRenumberClasses(tmp_classes, nclasses2);
 
     /*cout << "AFTER BreakChiralTies, nclasses2 = " << nclasses2 << endl;
       for (int i = 0; i < symmetry_classes.size(); i++) {
       cout << symmetry_classes[i].first->GetIndex() << " (" << symmetry_classes[i].first->GetType() 
       << "): " << symmetry_classes[i].second << endl;
       }*/
+    }
 
     if (nclasses1 != nclasses2) {
       symmetry_classes = tmp_classes;
-      return ExtendInvariants(symmetry_classes);
+      return ExtendInvariants(symmetry_classes, breakChiralTies);
     }
 
     return nclasses1;
@@ -1036,7 +1038,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 *       only part that exists.
 ***************************************************************************/
   
-  int OBGraphSym::CalculateSymmetry(vector<unsigned int> &atom_sym_classes)
+  int OBGraphSym::CalculateSymmetry(vector<unsigned int> &atom_sym_classes, bool breakChiralTies)
   {
     vector<unsigned int> vgi;
     vector<OBNodeBase*>::iterator j;
@@ -1055,7 +1057,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 
     // The heart of the matter: Do extended sum-of-invariants until no further
     // changes are noted. 
-    int nclasses = ExtendInvariants(symmetry_classes);
+    int nclasses = ExtendInvariants(symmetry_classes, breakChiralTies);
 
     // Convert to a vector indexed by Index
     // Atoms not in the fragment will have a value of OBGraphSym::NoSymmetryClass
@@ -1082,7 +1084,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     return nclasses;
   }
 
-  int OBGraphSym::GetSymmetry(vector<unsigned int> &symmetry_classes)
+  int OBGraphSym::GetSymmetry(vector<unsigned int> &symmetry_classes, bool breakChiralTies)
   {
     ClearSymmetry(); // For the moment just recalculate the symmetry classes
 
@@ -1091,7 +1093,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 
     int nclasses = 0;
     if (!pd) {
-      nclasses = CalculateSymmetry(symmetry_classes);
+      nclasses = CalculateSymmetry(symmetry_classes, breakChiralTies);
     } else {
       istringstream iss(pd->GetValue());
       symmetry_classes.clear();

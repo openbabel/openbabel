@@ -56,9 +56,9 @@ namespace OpenBabel {
       void GetGIVector(std::vector<unsigned int> &vid);
       bool GetGTDVector(std::vector<int> &gtd);
       void CountAndRenumberClasses(std::vector<std::pair<OBAtom*,unsigned int> > &vp, unsigned int &count);
-      int ExtendInvariants(std::vector<std::pair<OBAtom*, unsigned int> > &symmetry_classes);
+      int ExtendInvariants(std::vector<std::pair<OBAtom*, unsigned int> > &symmetry_classes, bool breakChiralTies);
                            
-      int CalculateSymmetry(std::vector<unsigned int> &symmetry_classes);
+      int CalculateSymmetry(std::vector<unsigned int> &symmetry_classes, bool breakChiralTies);
       void BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_classes);
     public:
       //! Constructor
@@ -78,7 +78,7 @@ namespace OpenBabel {
        *
        * @return The number of symmetry classes.
        */
-      int GetSymmetry(vector<unsigned int> &symmetry_classes);
+      int GetSymmetry(vector<unsigned int> &symmetry_classes, bool breakChiralTies = true);
       void ClearSymmetry();
       /**
        * Calculate the canonical labels for the molecule. The result will be 
