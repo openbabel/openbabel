@@ -1,3 +1,7 @@
+2010-03-05  Noel O'Boyle
+
+	* CMakeLists.txt: Require GCC >=4.2 for visibility support
+
 2010-03-04  Noel O'Boyle
 
 	* test/files/testsym_2Dtests.sdf: Forgot to add test file
