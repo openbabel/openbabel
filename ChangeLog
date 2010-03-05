@@ -1,3 +1,17 @@
+2010-03-05  Tim Vandermeersch
+
+        * test/files/stereo/*: Add test structures from Razinger paper.
+
+        * include/openbabel/graphsym.h, src/graphsym.cpp: Add parameter for 
+        NOT taking stereochemistry into account.
+
+        * test/graphsymtest.cpp: Use added files for unit testing (i.e. check 
+        if the right number of symmetry classes are found). Also, the unit 
+        test was using std::unique wrong (without sorting first), the two 
+        failing test cases now pass. The is a new failing test though:
+        test/files/stereo/razinger_fig7_1.mol All atoms get the same symmetry 
+        class, it is a very simple structure though...
+
 2010-03-05  Noel O'Boyle
 
 	* CMakeLists.txt: Require GCC >=4.2 for visibility support
