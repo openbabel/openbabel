@@ -1,3 +1,8 @@
+2010-03-06  Noel O'Boyle
+
+	* src/formats/inchiformat.cpp, mdlformat.cpp: Moved warning about 0D
+	from InChI to MDL where it should have been in the first place.
+
 2010-03-05  Tim Vandermeersch
 
         * test/files/stereo/*: Add test structures from Razinger paper.

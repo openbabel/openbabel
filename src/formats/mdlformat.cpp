@@ -596,6 +596,11 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
+    // Recommend using --gen2D or --gen3D
+    if (mol.GetDimension()==0)
+      obErrorLog.ThrowError(__FUNCTION__, "No 2D or 3D coordinates exist. Any stereochemical information will"
+      " be lost. To generate 2D or 3D coordinates use --gen2D or --gen3d.", obWarning, onceOnly);
+
     if (pConv->GetOutputIndex()==1)
       HasProperties = false;
 

@@ -255,10 +255,6 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   inchi_Input inp;
   memset(&inp,0,sizeof(inchi_Input));
 
-  if (mol.GetDimension())
-    obErrorLog.ThrowError(__FUNCTION__, "No 2D or 3D coordinates exist. Any stereochemical information will"
-    " be lost. To generate 2D or 3D coordinates use --gen2D or --gen3d.", obWarning, onceOnly);
-
   // Prepare stereo information for 2D, 3D
   map<OBBond*, OBStereo::BondDirection> updown;
   map<OBBond*, OBStereo::Ref> from;
