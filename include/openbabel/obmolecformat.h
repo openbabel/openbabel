@@ -23,6 +23,10 @@ GNU General Public License for more details.
   #include <hash_map>
 #endif
 
+#if __GNUC__ == 4
+  #include <tr1/unordered_map>
+#endif
+
 #include <typeinfo>
 
 #include <openbabel/mol.h>
@@ -134,6 +138,8 @@ public:
 
 #ifdef _MSC_VER
   typedef stdext::hash_map<std::string, unsigned> NameIndexType;
+#elif __GNUC__ == 4
+  typedef std::tr1::unordered_map<std::string, unsigned> NameIndexType;
 #else
   typedef std::map<std::string, unsigned> NameIndexType;
 #endif

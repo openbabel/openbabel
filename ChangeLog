@@ -1,3 +1,8 @@
+2010-03-06  Konstantin Tokarev
+
+	* include/openbabel/obmolecformat.h: use tr1::unordered_map instead 
+	of map when compiling with GCC 4.x
+
 2010-03-06  Noel O'Boyle
 
 	* src/formats/inchiformat.cpp, mdlformat.cpp: Moved warning about 0D
