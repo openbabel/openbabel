@@ -157,21 +157,18 @@ namespace OpenBabel
 
 		OBMol &mol = *pmol;
 
-		vector<OBAtom*>::iterator i;
-		OBAtom *atom;
-
 		if (pConv->IsOption("d", OBConversion::GENOPTIONS))
 		{
 			if (pConv->GetOutputIndex() == 1)
-				cerr << "MNA includes hydrogens by definition, just be aware of that." << endl;
+				obErrorLog.ThrowError(__FUNCTION__, "MNA includes hydrogens by definition, just be aware of that.", obInfo);
 			ofs << "# Hydrogens deleted explicitly." << endl;
 			mol.DeleteHydrogens();
 		}
 		else
 			mol.AddHydrogens();
 
-		for (atom = mol.BeginAtom(i); atom; atom = mol.NextAtom(i))
-			ofs << MNAize(atom, levels) << endl;
+		FOR_ATOMS_OF_MOL(atom, mol)
+			ofs << MNAize(&*atom, levels) << endl;
 
 		if (!pConv->IsLast())
 			ofs << "$$$$" << endl;
