@@ -23,7 +23,7 @@ GNU General Public License for more details.
   #include <hash_map>
 #endif
 
-#if __GNUC__ == 4
+#if __GNUC__ == 4 && __GNUC_MINOR__ >= 1
   #include <tr1/unordered_map>
 #endif
 
@@ -138,7 +138,7 @@ public:
 
 #ifdef _MSC_VER
   typedef stdext::hash_map<std::string, unsigned> NameIndexType;
-#elif __GNUC__ == 4
+#elif __GNUC__ == 4 && __GNUC_MINOR__ >= 1
   typedef std::tr1::unordered_map<std::string, unsigned> NameIndexType;
 #else
   typedef std::map<std::string, unsigned> NameIndexType;
