@@ -213,7 +213,7 @@ namespace OpenBabel
               if (orden < bestorden) {
                 bestorden = orden;
                 bestatom = j;
-		if (DEBUG) {cout << "atom " << cycle[j]->GetIdx() << ", bestorden =" << orden << endl;}
+                if (DEBUG) {cout << "atom " << cycle[j]->GetIdx() << ", bestorden =" << orden << endl;}
               }
             }
           }
@@ -225,7 +225,7 @@ namespace OpenBabel
           else {
             electron[bestatom] += 1;
             minde--;
-	    if (DEBUG) {cout << "electron[atom:" << cycle[bestatom]->GetIdx() << "] = " << electron[bestatom] << endl;}
+            if (DEBUG) {cout << "electron[atom:" << cycle[bestatom]->GetIdx() << "] = " << electron[bestatom] << endl;}
           }
         }
 
@@ -257,16 +257,16 @@ namespace OpenBabel
         }
 
         /*
-        cout << "minde after:" << minde <<endl;
-        cout << "atom: ";
-        for(j=0; j < cycle.size(); ++j) {
-        OBAtom *cycleAtom = cycle[j];
-        cout << "\t" << cycleAtom->GetIdx();
-        }
-        cout << endl;
+          cout << "minde after:" << minde <<endl;
+          cout << "atom: ";
+          for(j=0; j < cycle.size(); ++j) {
+          OBAtom *cycleAtom = cycle[j];
+          cout << "\t" << cycleAtom->GetIdx();
+          }
+          cout << endl;
 
-        cout << "atom: ";
-        for(j=0; j < electron.size(); ++j) {
+          cout << "atom: ";
+          for(j=0; j < electron.size(); ++j) {
         	cout << "\t" << electron[j];
         	}
         	cout << endl;
@@ -346,6 +346,12 @@ namespace OpenBabel
       } else {
         initAtomState[Idx] = DOUBLE_PROHIBITED;	// No electrons to contribute to aromatic system
       }
+
+      if (atom->GetAtomicNum() == 7 && atom->GetFormalCharge() == 0 && atom->GetValence() >= 3) {
+        // Correct N with three explict bonds
+        initAtomState[Idx] = DOUBLE_PROHIBITED;
+        if (DEBUG) { cout << "atom " << Idx << " rejected NR3 double bonds " << endl; }
+      }
       atomState[Idx] = initAtomState[Idx];	// initialize atoms' current state too
       if (DEBUG) {cout << "atom " << Idx << ": initial state = " << initAtomState[Idx] << endl;}
     }
@@ -368,7 +374,7 @@ namespace OpenBabel
       if (DEBUG) { std::cout << "  bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << " ";}
       if (bond->GetBO()==5 && bondState[i] == DOUBLE) {
         if (   bond->GetBeginAtom()->IsSulfur()
-	    && bond->GetEndAtom()->IsSulfur()) {
+               && bond->GetEndAtom()->IsSulfur()) {
           // no double bonds between aromatic sulfur atoms -- PR#1504089
           continue;
         }
@@ -378,7 +384,7 @@ namespace OpenBabel
         if (DEBUG) {std::cout << "double\n";}
       }
       else {
-	if (DEBUG) {std::cout << "single\n";}
+        if (DEBUG) {std::cout << "single\n";}
       }
     }
 
@@ -417,8 +423,8 @@ namespace OpenBabel
   // into account.
 
   bool OBMol::expand_kekulize(int bond_idx,
-			      std::vector<int> &atomState,
-			      std::vector<int> &bondState)
+                              std::vector<int> &atomState,
+                              std::vector<int> &bondState)
   {
     // If all bonds are assigned, check that this is a sensible combination.
     // This is the "end of the line" for the recursion: Did this bond assignment
@@ -454,7 +460,7 @@ namespace OpenBabel
 
       // Recursively try the next bond
       if (expand_kekulize(bond_idx + 1, atomState, bondState))
-	return true;
+        return true;
 
       // If the double bond didn't work, roll back the changes and try a single bond.
       atomState = previousState;
@@ -478,14 +484,14 @@ namespace OpenBabel
   // to make sure all of the 4n+2 electrons that were available for bonding in the
   // aromatic ring system were actually used during the assignment of single
   // and double bonds.
-
   bool OBMol::has_no_leftover_electrons(std::vector<int> &atomState)
   {
     FOR_ATOMS_OF_MOL(a, this) {
       int idx = a->GetIdx();
-      if (atomState[idx] == DOUBLE_ALLOWED) {
-	if (DEBUG) {cout << "  failure, extra electron on atom " << idx << endl;}
-	return false;
+      if (atomState[idx] == DOUBLE_ALLOWED && !a->IsNitrogen()) {
+        // nitrogen failures are OK -- could be an 'n' which needs to be 'nH'
+        if (DEBUG) {cout << "  failure, extra electron on atom " << idx << endl;}
+        return false;
       }
     }
     return true;	// no extra electrons found
@@ -565,7 +571,7 @@ namespace OpenBabel
         }
 
         if (avisit[natom] && natom != rootIdx) {
-            continue; // skip this path, we should try to get to the root again
+          continue; // skip this path, we should try to get to the root again
         }
 
         if (natom == rootIdx) {

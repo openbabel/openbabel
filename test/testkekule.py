@@ -21,6 +21,39 @@ from testbabel import run_exec, executable, log, BaseTest
 class TestKekuleIsotope(BaseTest):
     """A series of tests relating to aromaticity/kekule"""
 
+    def testSMItoSMI(self):
+        """
+        PR#2705497 aromatic - kekule conversion issue
+        PR#1445453 SMILES aromaticity fails on 4-valent N+ atoms
+        PR#1814248 Aromaticity munged by SMILES input
+        PR#1761638 Error in Aromaticity / Kekulize
+        PR#2948661 Trunk fails aromaticity
+        """
+        self.canFindExecutable("babel")
+
+        # A series of aromatic strings, which should convert to themselves
+        self.smiles = [
+            'c12c3c(cc(N)cc3)Cc1cccc2',
+            'c1(=O)n(c2c(c(=O)o1)cccc2)CC(=O)OCC',
+            'c1n[nH]c(=S)[nH]1',
+            'O=c1[nH]ccc2nc3oc4ccccc4c(=O)c3cc12',
+            'c1nc2sccn2c1',
+            'c1[n+]cnc2[nH]cnc12',
+            'c1onc(c2ccccc2Cl)c1',
+            'c1ccc2[nH]c3ccc4cc[n+]cc4c3c2c1',
+            '[nH]1c2ccccc2c2c3C(=O)NCc3c3c4ccccc4[nH]c3c12',
+            'c1c(C)c2C=c3[n-]c(=Cc4[nH]c(C=c5[n-]c(=Cc1[nH]2)c(C)c5C=C)c(C)c4CCC(=O)O)c(CCC(=O)O)c3',
+            'C1=C2CCC(=Cc3ccc([nH]3)C=c3ccc(=Cc4ccc1[nH]4)[nH]3)N2',
+            'c1(NC(=O)C2CC2)nc2c3c(cccc3)CCc2cn1',
+            'O=C1N(CCCC)C(=O)NC2C1C1N(N2)CCN1',
+            'Cn1cccnc1=O'
+            'O=c1n(C)c(=O)nc2c1c1n([nH]2)cc[nH]1'
+#            'Cn1ccn2c1nc1c2c(=O)n(C)c(=O)n1C', # this one is questionable, may change/break in the future
+            ]
+        for i in range(0, len(self.smiles)):
+            output, error = run_exec(self.smiles[i], "babel -ismi -osmi")
+            self.assertEqual(output.rstrip(), self.smiles[i])
+
     def testSMItoCAN(self):
         """PR#1842055- bad isotope canonicalization"""
         self.canFindExecutable("babel")
