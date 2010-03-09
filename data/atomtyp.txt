@@ -96,7 +96,7 @@ IMPVAL  [ND1^1]                   1
 IMPVAL  [ND2^1]                   2
 IMPVAL  [$(N([OD1])*)]            3
 IMPVAL  [$(NC=O)]                 3
-IMPVAL  [$(n(c=O)c=O)]            3 # aromatic diimide
+#IMPVAL  [$(n(c=O)c=O)]            3 # aromatic diimide
 IMPVAL  [$(N(~[OD1])~[OD1])]      3
 IMPVAL  [$([Nr0]C=[Nr0])]         3
 IMPVAL  [$(N=*)]                  2

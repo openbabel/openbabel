@@ -18,7 +18,7 @@ import unittest
 
 from testbabel import run_exec, executable, log, BaseTest
 
-class TestKekuleIsotope(BaseTest):
+class TestKekuleAssignment(BaseTest):
     """A series of tests relating to aromaticity/kekule"""
 
     def testSMItoSMI(self):
@@ -46,13 +46,16 @@ class TestKekuleIsotope(BaseTest):
             'C1=C2CCC(=Cc3ccc([nH]3)C=c3ccc(=Cc4ccc1[nH]4)[nH]3)N2',
             'c1(NC(=O)C2CC2)nc2c3c(cccc3)CCc2cn1',
             'O=C1N(CCCC)C(=O)NC2C1C1N(N2)CCN1',
-            'Cn1cccnc1=O'
-            'O=c1n(C)c(=O)nc2c1c1n([nH]2)cc[nH]1'
-#            'Cn1ccn2c1nc1c2c(=O)n(C)c(=O)n1C', # this one is questionable, may change/break in the future
+            'Cn1cccnc1=O',
+            'O=c1n(C)c(=O)nc2c1c1n([nH]2)cc[nH]1',
+            'Cn1ccn2c1nc1c2c(=O)n(C)c(=O)n1C'
             ]
         for i in range(0, len(self.smiles)):
             output, error = run_exec(self.smiles[i], "babel -ismi -osmi")
             self.assertEqual(output.rstrip(), self.smiles[i])
+
+class TestKekuleIsotope(BaseTest):
+    """A series of tests relating to aromaticity/kekule"""
 
     def testSMItoCAN(self):
         """PR#1842055- bad isotope canonicalization"""
@@ -80,6 +83,9 @@ class TestKekuleIsotope(BaseTest):
         for i in range(0, len(self.smiles)):
             output, error = run_exec(self.smiles[i], "babel -ismi -ocan")
             self.assertEqual(output.rstrip(), self.cansmis[i])
+
+class TestKekuleCrashers(BaseTest):
+    """A series of tests which caused crashes"""
 
     def testXYZtoXYZ(self):
         """PR#2956135- crash in kekulize"""
@@ -133,7 +139,7 @@ H          0.78936        0.80651        5.29109
 
 if __name__ == "__main__":
     testsuite = []
-    for myclass in [TestKekuleIsotope]:
+    for myclass in [TestKekuleAssignment, TestKekuleIsotope, TestKekuleCrashers]:
         suite = unittest.TestLoader().loadTestsFromTestCase(myclass)
         testsuite.append(suite)
     unittest.TextTestRunner().run(unittest.TestSuite(testsuite))
