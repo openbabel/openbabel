@@ -271,7 +271,7 @@ namespace OpenBabel
       //
       // Atom Block
       //
-      int massdiff, charge, stereo;
+      int massdiff, charge, stereo, isotope;
       vector<int> massDiffs, charges;
       Parity parity;
       for (i = 0; i < natoms; ++i) {
@@ -305,8 +305,12 @@ namespace OpenBabel
         atom.SetVector(x, y, z);
         // symbol & isotope
         symbol = line.substr(31, 3);
+        // cout << " atom: " << symbol << endl;
         Trim(symbol);
-        atom.SetAtomicNum(etab.GetAtomicNum(symbol.c_str()));
+        isotope = 0;
+        atom.SetAtomicNum(etab.GetAtomicNum(symbol, isotope));
+        if (isotope != 0) // e.g. 'D' or 'T' atom symbol
+          atom.SetIsotope(isotope);
         // mass difference
         if (line.size() >= 35)
           massdiff = ReadIntField(line.substr(34, 2).c_str());
