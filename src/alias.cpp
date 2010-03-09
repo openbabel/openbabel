@@ -155,14 +155,14 @@ bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
   OBAtom* XxAtom = mol.GetAtom(atomindex);
   if(XxAtom->GetValence()>1)
   {
-    obErrorLog.ThrowError(__FUNCTION__, _alias + " is multivalent, which is currently not supported.", obError);
+    obErrorLog.ThrowError(__FUNCTION__, _alias + " is multivalent, which is currently not supported.", obWarning);
     return false;
   }
 
   SuperAtomTable::iterator pos = table().find(_alias);
   if(pos==table().end())
   {
-    obErrorLog.ThrowError(__FUNCTION__, "Alias " + _alias + " was not recognized.\n Output may not be correct.", obError, onceOnly);
+    obErrorLog.ThrowError(__FUNCTION__, "Alias " + _alias + " was not recognized.\n Output may not be correct.", obWarning, onceOnly);
     return false;
   }
 

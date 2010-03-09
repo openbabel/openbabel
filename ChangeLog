@@ -1,3 +1,10 @@
+2010-03-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/mdlformat.cpp: Check atom symbols for isotopes like
+	'D' or 'T'. Solves some inchiwrite failures.
+
+	* src/alias.cpp: Downgrade errors over superatom.txt to warnings.
+
 2010-03-06  Konstantin Tokarev
 
 	* include/openbabel/obmolecformat.h: use tr1::unordered_map instead 
