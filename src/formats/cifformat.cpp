@@ -375,45 +375,45 @@ namespace OpenBabel
             if(verbose) cout<<"Found spacegroup Hermann-Mauguin symbol (with OBSOLETE CIF #1.0 TAG):"<<mSpacegroupHermannMauguin<<endl;
           }
       }
-    if (mSpacegroupSymbolHall.length() > 0)
-      mSpaceGroup = SpaceGroup::GetSpaceGroup(mSpacegroupSymbolHall);
-    else
-      mSpaceGroup=NULL;
-    if (!mSpaceGroup && mSpacegroupHermannMauguin.length() > 0)
-      mSpaceGroup = SpaceGroup::GetSpaceGroup(mSpacegroupHermannMauguin);
-    if (!mSpaceGroup)
+    mSpaceGroup=NULL;
+    if (mSpacegroupNumberIT != 0) {
       mSpaceGroup = SpaceGroup::GetSpaceGroup(mSpacegroupNumberIT);
-    SpaceGroup *sg = new SpaceGroup();
-    if (mSpacegroupSymbolHall.length() > 0)
-      sg->SetHallName(mSpacegroupSymbolHall);
-    if (mSpacegroupHermannMauguin.length() > 0)
-      sg->SetHMName(mSpacegroupHermannMauguin);
-    if (mSpacegroupNumberIT > 0)
-      sg->SetId(mSpacegroupNumberIT);
-    positem=mvItem.find("_symmetry_equiv_pos_as_xyz");
-    if(positem!=mvItem.end())
-      {
-        sg->AddTransform (positem->second);
-        found = true;
-      }
-    else for(map<set<ci_string>,map<ci_string,vector<string> > >::const_iterator loop=mvLoop.begin();
-      loop!=mvLoop.end();++loop)
-      {
-        map<ci_string,vector<string> >::const_iterator pos;
-        unsigned i, nb;
-        pos=loop->second.find("_symmetry_equiv_pos_as_xyz");
-        if (pos!=loop->second.end())
-          {
-            nb=pos->second.size();
-            found = true;
-            for (i = 0; i < nb; i++)
-              sg->AddTransform(pos->second[i]);
-            break; // found the transforms, so we have done with them
-          }
     }
-    if (found)
-      mSpaceGroup = SpaceGroup::Find(sg);
-    delete sg;
+    else if (mSpacegroupSymbolHall.length() > 0) {
+      mSpaceGroup = SpaceGroup::GetSpaceGroup(mSpacegroupSymbolHall);
+    }
+    else if (mSpacegroupHermannMauguin.length() > 0) {
+      mSpaceGroup = SpaceGroup::GetSpaceGroup(mSpacegroupHermannMauguin);
+    }
+    else {
+      SpaceGroup *sg = new SpaceGroup();
+      positem=mvItem.find("_symmetry_equiv_pos_as_xyz");
+      if(positem!=mvItem.end())
+        {
+          sg->AddTransform (positem->second);
+          found = true;
+        }
+      else {
+        for(map<set<ci_string>,map<ci_string,vector<string> > >::const_iterator loop=mvLoop.begin();
+            loop!=mvLoop.end();++loop)
+          {
+            map<ci_string,vector<string> >::const_iterator pos;
+            unsigned i, nb;
+            pos=loop->second.find("_symmetry_equiv_pos_as_xyz");
+            if (pos!=loop->second.end())
+              {
+                nb=pos->second.size();
+                found = true;
+                for (i = 0; i < nb; i++)
+                  sg->AddTransform(pos->second[i]);
+                break; // found the transforms, so we have done with them
+              }
+          }
+        if (found)
+          mSpaceGroup = SpaceGroup::Find(sg);
+        delete sg;
+      }
+    }
     if (mSpaceGroup != NULL)
       // set the space group name to Hall symbol
       mSpacegroupSymbolHall = mSpaceGroup->GetHallName();
