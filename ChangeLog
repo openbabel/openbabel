@@ -1,3 +1,8 @@
+2010-03-10  Matt Sprague  <mesprague@gmail.com>
+
+	* src/formats/xml/xml.cpp: Add call to xmlInitParser() to support
+	the use of xml formats in multithreaded environments.
+
 2010-03-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/mdlformat.cpp: Check atom symbols for isotopes like

@@ -37,6 +37,10 @@ namespace OpenBabel
     if(_reader)
       return true; //do not need to make a new reader
 
+	//setup libxml2 for use in a potentially multithreaded
+	//environment
+	xmlInitParser();
+
     //If the inputstream is not at the start (probably arising in fastsearch),
     //save its position and rewind so that the reader initialization is ok.
     //(Getting the requested object is handled in ReadXML(), when the format is known.) 
