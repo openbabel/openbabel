@@ -24,7 +24,11 @@ GNU General Public License for more details.
 #ifdef _MSC_VER
   #include <unordered_map>
 #else
-  #include <tr1/unordered_map>
+  #ifdef USE_BOOST
+    #include <boost/tr1/unordered_map.hpp>
+  #else
+    #include <tr1/unordered_map>
+  #endif
 #endif
 
 using namespace std;

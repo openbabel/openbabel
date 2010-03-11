@@ -1,3 +1,8 @@
+2010-03-11  Noel O'Boyle
+
+	* src/ops/unique.cpp: Enable compilation with the help of Boost on
+	GCC 3.4. Note to self, don't compile if Boost not found.
+
 2010-03-10  Matt Sprague  <mesprague@gmail.com>
 
 	* src/formats/xml/xml.cpp: Add call to xmlInitParser() to support
