@@ -90,20 +90,6 @@ endif(WIN32)
 # configure checks
 find_package(LibXml2)
 
-option(ENABLE_BOOST
-  "Enable searching for Boost C++ library" ON)
-
-if(ENABLE_BOOST)
-find_package(Boost)
-if(Boost_FOUND)
-  include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
-  add_definitions(-DUSE_BOOST -DHAVE_SHARED_POINTER)
-endif(Boost_FOUND)
-if(MSVC90)
-  # To be added: AND SP1  OR gcc>4.0
-  add_definitions(-DHAVE_SHARED_POINTER)
-endif(MSVC90)
-endif(ENABLE_BOOST)
 
 find_package(ZLIB)
 if(ZLIB_FOUND)
@@ -140,6 +126,20 @@ check_symbol_exists(strncasecmp   "string.h"   HAVE_STRNCASECMP)
 set(CMAKE_EXTRA_INCLUDE_FILES time.h)
 check_type_size(clock_t CLOCK_T)
 
+# Get the GCC version - from KDE4 cmake files
+if(CMAKE_COMPILER_IS_GNUCXX)
+    exec_program(${CMAKE_C_COMPILER} ARGS --version OUTPUT_VARIABLE _gcc_version_info)
+    string (REGEX MATCH "[345]\\.[0-9]\\.[0-9]" _gcc_version "${_gcc_version_info}")
+    # gcc on mac just reports: "gcc (GCC) 3.3 20030304 ..." without the
+    # patch level, handle this here:
+    if (NOT _gcc_version)
+      string (REGEX REPLACE ".*\\(GCC\\).* ([34]\\.[0-9]) .*" "\\1.0" _gcc_version "${_gcc_version_info}")
+    endif (NOT _gcc_version)
+    macro_ensure_version("4.0.0" "${_gcc_version}" GCC_IS_NEWER_THAN_4_0)
+    macro_ensure_version("4.1.0" "${_gcc_version}" GCC_IS_NEWER_THAN_4_1)
+    macro_ensure_version("4.2.0" "${_gcc_version}" GCC_IS_NEWER_THAN_4_2)
+endif(CMAKE_COMPILER_IS_GNUCXX)
+
 if(NOT WIN32)
   SET(CMAKE_REQUIRED_FLAGS -Werror)
   check_c_source_compiles("
@@ -168,18 +168,8 @@ if(NOT WIN32)
       set (CMAKE_EXE_LINKER_FLAGS "-Wl,--enable-new-dtags ${CMAKE_EXE_LINKER_FLAGS}")
     endif (CMAKE_SYSTEM_NAME MATCHES Linux)
     # Now check if we can use visibility to selectively export symbols
-    # Get the GCC version - from KDE4 cmake files
-    exec_program(${CMAKE_C_COMPILER} ARGS --version OUTPUT_VARIABLE _gcc_version_info)
-    string (REGEX MATCH "[345]\\.[0-9]\\.[0-9]" _gcc_version "${_gcc_version_info}")
-    # gcc on mac just reports: "gcc (GCC) 3.3 20030304 ..." without the
-    # patch level, handle this here:
-    if (NOT _gcc_version)
-      string (REGEX REPLACE ".*\\(GCC\\).* ([34]\\.[0-9]) .*" "\\1.0" _gcc_version "${_gcc_version_info}")
-    endif (NOT _gcc_version)
     check_cxx_compiler_flag(-fvisibility=hidden HAVE_GCC_VISIBILITY)
     set(HAVE_GCC_VISIBILITY ${HAVE_GCC_VISIBILITY} CACHE BOOL "GCC support for hidden visibility")
-    macro_ensure_version("4.1.0" "${_gcc_version}" GCC_IS_NEWER_THAN_4_1)
-    macro_ensure_version("4.2.0" "${_gcc_version}" GCC_IS_NEWER_THAN_4_2)
     set(_GCC_COMPILED_WITH_BAD_ALLOCATOR FALSE)
     if (GCC_IS_NEWER_THAN_4_1)
       exec_program(${CMAKE_C_COMPILER} ARGS -v OUTPUT_VARIABLE _gcc_alloc_info)
@@ -193,6 +183,23 @@ if(NOT WIN32)
     endif (HAVE_GCC_VISIBILITY AND GCC_IS_NEWER_THAN_4_2 AND NOT _GCC_COMPILED_WITH_BAD_ALLOCATOR)
   endif (CMAKE_COMPILER_IS_GNUCXX AND NOT APPLE)
 endif(NOT WIN32)
+
+if(CMAKE_COMPILER_IS_GNUCXX)
+  if(NOT GCC_IS_NEWER_THAN_4_0) # GCC 3.x
+    find_package(Boost)
+    if(Boost_FOUND)
+      include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
+      add_definitions(-DUSE_BOOST -DHAVE_SHARED_POINTER)
+    else(Boost_FOUND)
+      message(FATAL_ERROR "Boost is required to compile OpenBabel with GCC 3.x")
+    endif(Boost_FOUND)
+  endif(NOT GCC_IS_NEWER_THAN_4_0)
+endif(CMAKE_COMPILER_IS_GNUCXX)
+
+if(MSVC90)
+  # To be added: AND SP1  OR gcc>4.0
+  add_definitions(-DHAVE_SHARED_POINTER)
+endif(MSVC90)
 
 # Some rpath handling for Linux and Mac
 if(UNIX)

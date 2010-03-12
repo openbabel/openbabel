@@ -1,3 +1,8 @@
+2010-03-12  Noel O'Boyle
+
+	* CMakeLists.txt: Require BOOST for compilation with GCC3.x. Don't
+	check for or use BOOST otherwise.
+
 2010-03-11  Noel O'Boyle
 
 	* src/ops/unique.cpp: Enable compilation with the help of Boost on
