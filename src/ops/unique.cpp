@@ -23,11 +23,14 @@ GNU General Public License for more details.
 #include <openbabel/inchiformat.h>
 #ifdef _MSC_VER
   #include <unordered_map>
+#elif (__GNUC__ == 4 && __GNUC_MINOR__ >= 1)
+  #include <tr1/unordered_map>
 #else
   #ifdef USE_BOOST
     #include <boost/tr1/unordered_map.hpp>
   #else
-    #include <tr1/unordered_map>
+    #define NO_UNORDERED_MAP
+    #include <map>
   #endif
 #endif
 

@@ -25,6 +25,8 @@ GNU General Public License for more details.
 
 #if __GNUC__ == 4 && __GNUC_MINOR__ >= 1
   #include <tr1/unordered_map>
+#elif defined(USE_BOOST)
+  #include <boost/tr1/unordered_map.hpp>
 #endif
 
 #include <typeinfo>
@@ -138,7 +140,7 @@ public:
 
 #ifdef _MSC_VER
   typedef stdext::hash_map<std::string, unsigned> NameIndexType;
-#elif __GNUC__ == 4 && __GNUC_MINOR__ >= 1
+#elif (__GNUC__ == 4 && __GNUC_MINOR__ >= 1) || defined (USE_BOOST)
   typedef std::tr1::unordered_map<std::string, unsigned> NameIndexType;
 #else
   typedef std::map<std::string, unsigned> NameIndexType;
