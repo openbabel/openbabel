@@ -69,8 +69,12 @@ else(NOT WIN32)
     add_library(_openbabel MODULE openbabel-python.cpp)
     target_link_libraries(_openbabel ${PYTHON_LIBRARIES} ${BABEL_LIBRARY})
     set_target_properties(_openbabel PROPERTIES
+	LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
         OUTPUT_NAME _openbabel
         PREFIX ""
         SUFFIX .pyd )
+    add_custom_command(TARGET _openbabel POST_BUILD 
+      COMMAND ${CMAKE_COMMAND} -E copy openbabel.py ${CMAKE_BINARY_DIR}/${CMAKE_CFG_INTDIR}
+      )
 endif(NOT WIN32)
 
