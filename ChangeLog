@@ -1,3 +1,8 @@
+2010-03-13  Noel O'Boyle
+
+	* scripts/CMakeLists.txt, scripts/python/setup.py: Compile the
+	SWIG bindings manually.
+
 2010-03-12  Noel O'Boyle
 
 	* CMakeLists.txt: Require BOOST for compilation with GCC3.x. Don't

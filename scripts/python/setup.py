@@ -11,62 +11,18 @@ materials, biochemistry, or related areas. It provides a broad base of
 chemical functionality for custom development.
 """
 
-def find_likely_directory():
-    """Find (guess!) where Open Babel is installed.
+srcdir = os.path.dirname(__file__)
 
-    Order of precedence is:
-      $OPENBABEL_INSTALL > ../../src > /usr/local > /usr
-    """
-    includedir, libdir = None, None
-    name = os.environ.get("OPENBABEL_INSTALL")
-    if name: # OPENBABEL_INSTALL is set
-        sys.stderr.write("INFO: Using the value of $OPENBABEL_INSTALL (%s)\n" % name)
-        if not os.path.isdir(name):
-            sys.stderr.write("ERROR: $OPENBABEL_INSTALL (%s) is not a directory\n" % name)
-        else:
-            includedir = [name+"/include/openbabel-2.0"]
-            libdir = [name+"/lib"]
+obExtension = Extension('_openbabel', ["openbabel-python.cpp"],
+                 include_dirs=[os.path.join(srcdir, "..", "..", "include"),
+                               os.path.join("..", "include")],
+                 library_dirs=[os.path.join("..", "lib")],
+                 libraries=['openbabel']
+                 )
 
-    else: # OPENBABEL_INSTALL is not set
-        sys.stderr.write("WARNING: Environment variable OPENBABEL_INSTALL is not set\n")
-        sys.stderr.write("INFO: Looking for library and include files in ../../src and ../../include\n")
-        if os.path.isfile("../../include/openbabel/atom.h"):
-            includedir = ["../../include"]
-        if os.path.isfile("../../src/.libs/libopenbabel.so") or os.path.isfile("../../src/.libs/libopenbabel.dylib"):
-            libdir = ["../../src/.libs"]
-        elif os.path.isfile("../../src/libopenbabel.so"):
-            libdir = ["../../src"]
-
-        if not (libdir and includedir):
-            for dirname in ["/usr/local","/usr"]:
-# Look for each of these directories in turn
-# for the directory include/openbabel-2.0
-# (This is version specific, so I may do as
-# Andrew Dalke did for PyDaylight and use
-# a regular expression to find the latest version of openbabel)
-                if os.path.isdir(dirname+"/include/openbabel-2.0"):
-                    sys.stderr.write("INFO: Setting OPENBABEL_INSTALL to %s\n" % dirname)
-                    includedir = [dirname+"/include/openbabel-2.0"]
-                    libdir = [dirname+"/lib"]
-                    break
-                
-    if not (libdir and includedir):
-        sys.stderr.write("ERROR: Cannot find Open Babel include or library directory\n")
-    return (includedir, libdir)
-
-
-
-
-OBinclude,OBlibrary = find_likely_directory()
-
-obExtension = Extension('_openbabel',
-                        ['openbabel_python.cpp'],
-                        include_dirs=OBinclude,
-                        library_dirs=OBlibrary,
-                        libraries=['openbabel']
-                        )
-
-shutil.copyfile("pybel_py%d.x.py" % sys.version_info[0], "pybel.py")
+if "build" in sys.argv:
+    shutil.copyfile(os.path.join(srcdir, "pybel_py%d.x.py" % sys.version_info[0]),
+                "pybel.py")
 
 setup(name='openbabel',
       version='1.5',
@@ -99,5 +55,3 @@ setup(name='openbabel',
       ],
       long_description = about,
       )
-
-os.remove("pybel.py")
