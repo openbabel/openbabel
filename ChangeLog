@@ -3,6 +3,13 @@
 	* src/ops/unique.cpp: Fix #ifdefs to compile on GCC 4.0
 	(i.e. without Boost or unordered_map support).
 
+	* src/formats/gaussformat.cpp: Patch from Louis Ricard to improve
+	support of reading Gaussian coordinates from geometry
+	optimizations, etc.
+
+	* src/formats/hinformat.cpp: Patch from George Tu through SF
+	tracker to ignore HIN comment lines. PR#2969340.
+
 2010-03-13  Noel O'Boyle
 
 	* scripts/CMakeLists.txt, scripts/python/setup.py: Compile the

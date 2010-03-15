@@ -313,7 +313,7 @@ namespace OpenBabel
       RotatoryStrengthsVelocity, RotatoryStrengthsLength;
 
     mol.BeginModify();
-    
+    bool have_coords = 0;    
     while (ifs.getline(buffer,BUFF_SIZE))
       {
         if (strstr(buffer,"Multiplicity") != NULL)
@@ -327,9 +327,13 @@ namespace OpenBabel
 	    
             ifs.getline(buffer,BUFF_SIZE);
           }
-        else if(strstr(buffer,"Coordinates (Angstroms)") != NULL)
+        else if((strstr(buffer,"Input orientation:") != NULL) || ((strstr(buffer,"Standard orientation:") != NULL) && (!have_coords)))
           {
+	    if (strstr(buffer,"Input orientation:") != NULL)
+		have_coords = 1; // if we came here from "Input orientation", disable reading "Standard orientation"
             numTranslationVectors = 0; // ignore old translationVectors
+            ifs.getline(buffer,BUFF_SIZE);      // ---------------
+            ifs.getline(buffer,BUFF_SIZE);      // column headings
             ifs.getline(buffer,BUFF_SIZE);	// column headings
             ifs.getline(buffer,BUFF_SIZE);	// ---------------
             ifs.getline(buffer,BUFF_SIZE);
