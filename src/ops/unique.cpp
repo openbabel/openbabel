@@ -25,6 +25,7 @@ GNU General Public License for more details.
   #include <unordered_map>
 #elif (__GNUC__ == 4 && __GNUC_MINOR__ >= 1)
   #include <tr1/unordered_map>
+  using std::tr1::unordered_map;
 #else
   #ifdef USE_BOOST
     #include <boost/tr1/unordered_map.hpp>
@@ -35,7 +36,6 @@ GNU General Public License for more details.
 #endif
 
 using namespace std;
-using std::tr1::unordered_map;
 namespace OpenBabel
 {
 
@@ -69,7 +69,12 @@ private:  bool _reportDup;
   OBDescriptor* _pDesc;
   unsigned _ndups;
 
+#ifdef NO_UNORDERED_MAP
+  typedef map<std::string, std::string> UMap;
+#else
   typedef unordered_map<std::string, std::string> UMap;
+#endif
+
   //key is descriptor text(usually inchi) value is molecule title
   UMap _inchimap;
 };

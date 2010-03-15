@@ -1,3 +1,8 @@
+2010-03-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/ops/unique.cpp: Fix #ifdefs to compile on GCC 4.0
+	(i.e. without Boost or unordered_map support).
+
 2010-03-13  Noel O'Boyle
 
 	* scripts/CMakeLists.txt, scripts/python/setup.py: Compile the
