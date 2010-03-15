@@ -75,7 +75,7 @@ namespace OpenBabel
     vector<string> vs;
 
     ifs.getline(buffer, BUFF_SIZE);
-    while (ifs.good() && strstr(buffer,"mol") == NULL)
+    while (ifs.good() && (strstr(buffer,"mol") == NULL || buffer[0]==';') ) //The "mol" in comment line should be ignored.
       {
         ifs.getline(buffer, BUFF_SIZE);
         if (ifs.peek() == EOF || !ifs.good())
@@ -88,6 +88,11 @@ namespace OpenBabel
     mol.BeginModify();
     while (ifs.good() && strstr(buffer,"endmol") == NULL)
       {
+	if(buffer[0]==';'){
+		 ifs.getline(buffer, BUFF_SIZE);
+		 continue; //The comment Line in HIN should be ignored.
+	}
+
         tokenize(vs,buffer); // Don't really know how long it'll be
         if (vs.size() < 11)
           {
