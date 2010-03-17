@@ -729,7 +729,9 @@ namespace OpenBabel {
       // remove any previous designation
       atom->DeleteData("UFF_AXIAL_ATOM");
       atom->DeleteData("UFF_CENTRAL_ATOM");
+    }
 
+    FOR_ATOMS_OF_MOL(atom, _mol) {
       parameterB = GetParameterUFF(atom->GetType(), _ffparams);
       if (GetCoordination(&*atom, parameterB->_ipar[0]) == 5) { // we need to do work for trigonal-bipy!
         // First, find the two largest neighbors
