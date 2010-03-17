@@ -688,6 +688,10 @@ namespace OpenBabel {
       coordination = b->GetValence() + sites;
       if (coordination <= 4) { // normal valency
         coordination = ipar;
+      } else if (b->IsSulfur() && b->CountFreeOxygens() == 3) { 
+        // SO3, should be planar
+        // PR#2971473, thanks to Philipp Rumpf <prumpf@gmail.com>
+        coordination = 2; // i.e., sp2
       }
     } else {
       coordination = ipar; // coordination of central atom
@@ -723,7 +727,7 @@ namespace OpenBabel {
     _vdwcalculations.clear();
 
     // Clear and reset any 5-coordinate axial/equatorial marks (i.e., strange coordination)
-    // Now should fit standard VSEPR rules
+    // Now should fit standard VSEPR rules, although we can't easily handle lone pairs
     int coordination;
     FOR_ATOMS_OF_MOL(atom, _mol) {
       // remove any previous designation
@@ -901,8 +905,9 @@ namespace OpenBabel {
         if (SetupVDWCalculation(a, c, vdwcalc)) {
           _vdwcalculations.push_back(vdwcalc);
         }
-        // we're not installing an angle term for this set
-        // we can't even approximate one
+        // We're not installing an angle term for this set
+        // We can't even approximate one.
+        // The downside is that we can't easily handle lone pairs.
         continue;
 
       } else if (coordination == 5) { // trigonal bipyramidal
@@ -927,40 +932,43 @@ namespace OpenBabel {
         }
         anglecalc.c2 = 0.0;
       }
-        // This section is commented out.
-        // If you want to try to tackle 7-coordinate species, give this a try
-        // and change the first conditional above to >7, not >=7
-        // This doesn't work so well because it's hard to classify between
-        // axial-equatorial (90 degrees) and proximal equatorial (~72 degrees).
-        // You'll probably have to do something like the pre-evaluation of 5-coordinate atoms at the top of this method
-        //
-        //     }  else if (coordination == 7) { // pentagonal bipyramidal
-        //         currentTheta =  a->GetAngle(&*b, &*c);
+      /*
+        This section is commented out.
+        If you want to try to tackle 7-coordinate species, give this a try
+        and change the first conditional above to >7, not >=7
+        This doesn't work so well because it's hard to classify between
+        axial-equatorial (90 degrees) and proximal equatorial (~72 degrees).
+        You'll probably have to do something like the pre-evaluation of 5-coordinate atoms at the top of this method
+        Honestly, it's just easier to use VDW pushing to get the job done.
+        
+            }  else if (coordination == 7) { // pentagonal bipyramidal
+                currentTheta =  a->GetAngle(&*b, &*c);
 
-        //         anglecalc.c0 = 1.0;
-        //         if (currentTheta >= 155.0) { // axial ligands = linear
-        //           anglecalc.coord = 1; // like sp
-        //           anglecalc.theta0 = 180.0;
-        //           anglecalc.c1 = 1.0;
-        //         } else if (currentTheta < 155.0 && currentTheta >= 110.0) { // distal equatorial
-        //           anglecalc.coord = 3; // like sp3
-        //           anglecalc.theta0 = 144.0;
-        //           anglecalc.c1 = -1.0;
-        //         } else if (currentTheta < 110.0 && currentTheta >= 85.0) { // axial-equatorial
-        //           anglecalc.coord = 4; // like sq. planar or octahedral
-        //           anglecalc.theta0 = 90.0;
-        //           anglecalc.c1 = 1.0;
-        //         } else if (currentTheta < 85.0) { // proximal equatorial
-        //           anglecalc.coord = 3; // general case (i.e., like sp3)
-        //           anglecalc.theta0 = 72.0;
-        //           anglecalc.c1 = -1.0;
-        //         }
-        //         anglecalc.c2 = 0.0;
+                anglecalc.c0 = 1.0;
+                if (currentTheta >= 155.0) { // axial ligands = linear
+                  anglecalc.coord = 1; // like sp
+                  anglecalc.theta0 = 180.0;
+                  anglecalc.c1 = 1.0;
+                } else if (currentTheta < 155.0 && currentTheta >= 110.0) { // distal equatorial
+                  anglecalc.coord = 3; // like sp3
+                  anglecalc.theta0 = 144.0;
+                  anglecalc.c1 = -1.0;
+                } else if (currentTheta < 110.0 && currentTheta >= 85.0) { // axial-equatorial
+                  anglecalc.coord = 4; // like sq. planar or octahedral
+                  anglecalc.theta0 = 90.0;
+                  anglecalc.c1 = 1.0;
+                } else if (currentTheta < 85.0) { // proximal equatorial
+                  anglecalc.coord = 3; // general case (i.e., like sp3)
+                  anglecalc.theta0 = 72.0;
+                  anglecalc.c1 = -1.0;
+                }
+                anglecalc.c2 = 0.0;
 
-        //         // Also add a VDW 1-3 interaction to distort slightly
-        //         if (SetupVDWCalculation(a, c, vdwcalc)) {
-        //           _vdwcalculations.push_back(vdwcalc);
-        //         }
+                // Also add a VDW 1-3 interaction to distort slightly
+                if (SetupVDWCalculation(a, c, vdwcalc)) {
+                  _vdwcalculations.push_back(vdwcalc);
+                }
+      */
       else { // normal coordination: sp, sp2, sp3, square planar, octahedral
         anglecalc.coord = coordination;
         anglecalc.theta0 = parameterB->_dpar[1];

@@ -1,3 +1,9 @@
+2010-03-17  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefields/forcefielduff.cpp: Patch from Philipp Rumpf to
+	fix 5-coordinate axial atom detection. Also fix PR##2971473 for
+	planar SO3 molecules.
+
 2010-03-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/ops/unique.cpp: Fix #ifdefs to compile on GCC 4.0
