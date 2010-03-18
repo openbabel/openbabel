@@ -1,3 +1,9 @@
+2010-03-18  David Lonie  <loniedavid@gmail.com>
+
+	* test/unitcell.cpp, test/files/unitcell.txt,
+	test/files/unitcell_results.txt: Added coordinate transformations
+	tests to unit cell tests.
+
 2010-03-17  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefields/forcefielduff.cpp: Patch from Philipp Rumpf to
@@ -17,7 +23,7 @@
 	hybridizations. Also added code to assign random vectors for
 	undefined cases -- this is better than using VZero, since at least
 	atoms will have unique locations.
-	
+
 2010-03-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/ops/unique.cpp: Fix #ifdefs to compile on GCC 4.0

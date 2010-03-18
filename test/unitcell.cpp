@@ -51,6 +51,7 @@ int main(int argc,char *argv[])
 
     double a, b, c, alpha, beta, gamma;
     vector3 v1, v2, v3, v4, v5, v6, v7, v8, v9;
+    vector3 coords1, coords2, tmpcoords;
     double x = 0.0, y = 0.0, z = 0.0;
     char buffer[BUFF_SIZE];
     std::ifstream ifs, results;
@@ -70,6 +71,7 @@ int main(int argc,char *argv[])
         return(-1);
       }
 
+    // Get cell vectors
     ifs.getline(buffer,BUFF_SIZE);
     sscanf(buffer,"%lf %lf %lf",&x, &y, &z);
     v1.Set(x, y, z);
@@ -84,6 +86,20 @@ int main(int argc,char *argv[])
 
     cell.SetData(v1, v2, v3);
 
+    // Get test coordinates
+    ifs.getline(buffer,BUFF_SIZE); // blank
+
+    // Cartesian, outside of uc
+    ifs.getline(buffer,BUFF_SIZE);
+    sscanf(buffer,"%lf %lf %lf",&x, &y, &z);
+    coords1.Set(x, y, z);
+
+    // Fractional, outside of uc
+    ifs.getline(buffer,BUFF_SIZE);
+    sscanf(buffer,"%lf %lf %lf",&x, &y, &z);
+    coords2.Set(x, y, z);
+
+    // Test
     a = cell.GetA();
     b = cell.GetB();
     c = cell.GetC();
@@ -167,6 +183,106 @@ int main(int argc,char *argv[])
     v9 = vector3(1.0f, 1.0f, 1.0f);
     v9 = cell2.FractionalToCartesian(v9);
     //    cout << v9 << endl;
+
+    cout << "# Testing unit cell coordinate functions ..." << endl;
+    cout << "13..24" << endl;
+
+    // Cartesian wrapping
+    results.getline(buffer,BUFF_SIZE);
+    tokenize(vs,buffer);
+    if (vs.size() != 3)
+      {
+	cout << "Bail out! Cannot parse results file 'unitcell_results.txt'" 
+	     << endl;
+	return(-1);
+      }
+
+    tmpcoords = cell2.WrapCartesianCoordinate(coords1);
+    // cout << "Wrapped cartesian : " << tmpcoords << endl;
+    if ( IsNear(tmpcoords[0], atof(vs[0].c_str()), 1.0e-3) )
+      cout << "ok " << currTest++ << " # wrapped cartesian x" << endl;
+    else
+      cout << "not ok " << currTest++ << " # wrapped cartesian x" << endl;
+    if ( IsNear(tmpcoords[1], atof(vs[1].c_str()), 1.0e-3) )
+      cout << "ok " << currTest++ << " # wrapped cartesian y" << endl;
+    else
+      cout << "not ok " << currTest++ << " # wrapped cartesian y" << endl;
+    if ( IsNear(tmpcoords[2], atof(vs[2].c_str()), 1.0e-3) )
+      cout << "ok " << currTest++ << " # wrapped cartesian z" << endl;
+    else
+      cout << "not ok " << currTest++ << " # wrapped cartesian z" << endl;
+
+    // Fractional wrapping
+    results.getline(buffer,BUFF_SIZE);
+    tokenize(vs,buffer);
+    if (vs.size() != 3)
+      {
+	cout << "Bail out! Cannot parse results file 'unitcell_results.txt'" 
+	     << endl;
+	return(-1);
+      }
+    tmpcoords = cell2.WrapFractionalCoordinate(coords2);
+    // cout << "Wrapped fractional: " << tmpcoords << endl;
+    if ( IsNear(tmpcoords[0], atof(vs[0].c_str()), 1.0e-3) )
+      cout << "ok " << currTest++ << " # wrapped fractional x" << endl;
+    else
+      cout << "not ok " << currTest++ << " # wrapped fractional x" << endl;
+    if ( IsNear(tmpcoords[1], atof(vs[1].c_str()), 1.0e-3) )
+      cout << "ok " << currTest++ << " # wrapped fractional y" << endl;
+    else
+      cout << "not ok " << currTest++ << " # wrapped fractional y" << endl;
+    if ( IsNear(tmpcoords[2], atof(vs[2].c_str()), 1.0e-3) )
+      cout << "ok " << currTest++ << " # wrapped fractional z" << endl;
+    else
+      cout << "not ok " << currTest++ << " # wrapped fractional z" << endl;
+
+    // cart2frac
+    results.getline(buffer,BUFF_SIZE);
+    tokenize(vs,buffer);
+    if (vs.size() != 3)
+      {
+	cout << "Bail out! Cannot parse results file 'unitcell_results.txt'" 
+	     << endl;
+	return(-1);
+      }
+    tmpcoords = cell2.CartesianToFractional(coords1);
+    // cout << "cart2frac: " << tmpcoords << endl;
+    if ( IsNear(tmpcoords[0], atof(vs[0].c_str()), 1.0e-3) )
+      cout << "ok " << currTest++ << " # cart2frac x" << endl;
+    else
+      cout << "not ok " << currTest++ << " # cart2frac x" << endl;
+    if ( IsNear(tmpcoords[1], atof(vs[1].c_str()), 1.0e-3) )
+      cout << "ok " << currTest++ << " # cart2frac y" << endl;
+    else
+      cout << "not ok " << currTest++ << " # cart2frac y" << endl;
+    if ( IsNear(tmpcoords[2], atof(vs[2].c_str()), 1.0e-3) )
+      cout << "ok " << currTest++ << " # cart2frac z" << endl;
+    else
+      cout << "not ok " << currTest++ << " # cart2frac z" << endl;
+
+    // frac2cart
+    results.getline(buffer,BUFF_SIZE);
+    tokenize(vs,buffer);
+    if (vs.size() != 3)
+      {
+	cout << "Bail out! Cannot parse results file 'unitcell_results.txt'" 
+	     << endl;
+	return(-1);
+      }
+    tmpcoords = cell2.FractionalToCartesian(coords1);
+    // cout << "frac2cart: " << tmpcoords << endl;
+    if ( IsNear(tmpcoords[0], atof(vs[0].c_str()), 1.0e-3) )
+      cout << "ok " << currTest++ << " # frac2cart x" << endl;
+    else
+      cout << "not ok " << currTest++ << " # frac2cart x" << endl;
+    if ( IsNear(tmpcoords[1], atof(vs[1].c_str()), 1.0e-3) )
+      cout << "ok " << currTest++ << " # frac2cart y" << endl;
+    else
+      cout << "not ok " << currTest++ << " # frac2cart y" << endl;
+    if ( IsNear(tmpcoords[2], atof(vs[2].c_str()), 1.0e-3) )
+      cout << "ok " << currTest++ << " # frac2cart z" << endl;
+    else
+      cout << "not ok " << currTest++ << " # frac2cart z" << endl;
 
     cout << "# cell volume " << cell.GetCellVolume() << endl;
     cout << "# lattice type " << cell.GetLatticeType() << endl;
