@@ -372,6 +372,8 @@ namespace OpenBabel
         // MMFF94_CHARGES, USER_CHARGES
       if (dp->GetValue() == "Mulliken")
         ofs << "MULLIKEN_CHARGES" << endl;
+      else if (dp->GetValue() == "ESP")
+        ofs << "USER_CHARGES" << endl;
       else // should pick from the Tripos types
         ofs << "GASTEIGER" << endl;
     }

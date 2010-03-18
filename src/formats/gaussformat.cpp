@@ -281,6 +281,7 @@ namespace OpenBabel
     int charge = 0;
     unsigned int spin = 1;
     bool hasPartialCharges = false;
+    string chargeModel; // descriptor for charges (e.g. "Mulliken")
 
     // coordinates of all steps
     // Set conformers to all coordinates we adopted
@@ -395,6 +396,7 @@ namespace OpenBabel
                 strstr(buffer,"Mulliken atomic charges") != NULL)
           {
             hasPartialCharges = true;
+            chargeModel = "Mulliken";
             ifs.getline(buffer,BUFF_SIZE);	// column headings
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
@@ -410,7 +412,26 @@ namespace OpenBabel
                 tokenize(vs,buffer);
               }
           }
-
+        else if (strstr(buffer, "Charges from ESP fit") != NULL)
+          {
+            hasPartialCharges = true;
+            chargeModel = "ESP";
+            ifs.getline(buffer,BUFF_SIZE);	// Charge / dipole line
+            ifs.getline(buffer,BUFF_SIZE); // column header
+            ifs.getline(buffer,BUFF_SIZE); // real charges
+            tokenize(vs,buffer);
+            while (vs.size() >= 3 && 
+                   strstr(buffer,"-----") == NULL)
+              {
+                atom = mol.GetAtom(atoi(vs[0].c_str()));
+                if (!atom)
+                  break;
+                atom->SetPartialCharge(atof(vs[2].c_str()));
+		
+                if (!ifs.getline(buffer,BUFF_SIZE)) break;
+                tokenize(vs,buffer);
+              }
+          }
         else if(strstr(buffer, " Frequencies -- ")) //vibrational frequencies
         {
           //The info should appear only once as several blocks starting with this line
@@ -642,7 +663,7 @@ namespace OpenBabel
       // Annotate that partial charges come from Mulliken
       OBPairData *dp = new OBPairData;
       dp->SetAttribute("PartialCharges");
-      dp->SetValue("Mulliken");
+      dp->SetValue(chargeModel); // Mulliken, ESP, etc.
       dp->SetOrigin(fileformatInput);
       mol.SetData(dp);
     }
