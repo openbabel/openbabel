@@ -1,9 +1,23 @@
 2010-03-17  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefields/forcefielduff.cpp: Patch from Philipp Rumpf to
-	fix 5-coordinate axial atom detection. Also fix PR##2971473 for
-	planar SO3 molecules.
+	fix 5-coordinate axial atom detection. Also fix PR#2971473 for
+	planar SO3 molecules. Additional fixes to handle other hypervalent
+	cases, including 7-coordinate pentagonal bipyramidal.
 
+	* include/openbabel/atom.h: Explain new hybridization values
+	(4 = sq. planar, 5 = trig. bipy, 6 = octahedral).
+
+	* data/atomtype.txt: Add generic rules for hypervalent hybridizations.
+
+	* src/atom.cpp (GetNewBondVector): Use OBBuilder as a
+	replacement, to decrease duplicated code.
+
+	* src/builder.cpp: Patch from Philipp to address hypervalent
+	hybridizations. Also added code to assign random vectors for
+	undefined cases -- this is better than using VZero, since at least
+	atoms will have unique locations.
+	
 2010-03-15  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/ops/unique.cpp: Fix #ifdefs to compile on GCC 4.0

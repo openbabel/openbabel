@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/molchrg.h>
 #include <openbabel/phmodel.h>
+#include <openbabel/builder.h>
 
 #include <openbabel/math/matrix3x3.h>
 
@@ -1108,153 +1109,7 @@ namespace OpenBabel
 
   bool OBAtom::GetNewBondVector(vector3 &v,double length)
   {
-    // ***experimental code***
-
-    OBAtom *atom;
-    OBBondIterator i,j;
-    v = VZero;
-
-    if (GetValence() == 0)
-      {
-        v = VX;
-        v *= length;
-        v += GetVector();
-        // Check that the vector is still finite before returning
-        if (!isfinite(v.x()) || !isfinite(v.y()) || !isfinite(v.z()))
-          v.Set(0.0, 0.0, 0.0);
-        return(true);
-      }
-
-    if (GetValence() == 1)
-      {
-        vector3 vtmp,v1,v2;
-        atom = BeginNbrAtom(i);
-        if (atom)
-          vtmp = GetVector() - atom->GetVector();
-
-        if (GetHyb() == 2 || (IsOxygen() && HasAlphaBetaUnsat()))
-          {
-            bool quit = false;
-            OBAtom *a1,*a2;
-            v2 = VZero;
-            for (a1 = BeginNbrAtom(i);a1 && !quit;a1 = NextNbrAtom(i))
-              for (a2 = a1->BeginNbrAtom(j);a2 && !quit;a2 = a1->NextNbrAtom(j))
-                if (a1 && a2 && a2 != this)
-                  {
-                    v2 = a1->GetVector() - a2->GetVector();
-                    quit = true;
-                  }
-
-            if (v2.IsApprox(VZero, 1.0e-8))
-              {
-                v1 = cross(vtmp,VX);
-                v2 = cross(vtmp,VY);
-                if (v1.length() < v2.length())
-                  v1 = v2;
-              }
-            else
-              v1 = cross(vtmp,v2);
-
-            matrix3x3 m;
-            m.RotAboutAxisByAngle(v1,60.0);
-            v = m*vtmp;
-            v.normalize();
-          }
-        else if (GetHyb() == 3)
-          {
-            v1 = cross(vtmp,VX);
-            v2 = cross(vtmp,VY);
-            if (v1.length() < v2.length())
-              v1 = v2;
-            matrix3x3 m;
-            m.RotAboutAxisByAngle(v1,70.5);
-            v = m*vtmp;
-            v.normalize();
-          }
-        if (GetHyb() == 1)
-          v = vtmp;
-
-        v *= length;
-        v += GetVector();
-        // Check that the vector is still finite before returning
-        if (!isfinite(v.x()) || !isfinite(v.y()) || !isfinite(v.z()))
-          v.Set(0.0, 0.0, 0.0);
-        return(true);
-      }
-
-    if (GetValence() == 2)
-      {
-        vector3 v1,v2,vtmp,vsum,vnorm;
-        atom = BeginNbrAtom(i);
-        if (!atom)
-          return(false);
-        v1 = GetVector() - atom->GetVector();
-        atom = NextNbrAtom(i);
-        if (!atom)
-          return(false);
-        v2 = GetVector() - atom->GetVector();
-        v1.normalize();
-        v2.normalize();
-        vsum = v1+v2;
-        vsum.normalize();
-
-        if (GetHyb() == 2)
-          v = vsum;
-        else if (GetHyb() == 3)
-          {
-            vnorm = cross(v2,v1);
-            vnorm.normalize();
-
-#ifndef ONE_OVER_SQRT3
-#define ONE_OVER_SQRT3  0.57735026918962576451
-#endif //SQRT_TWO_THIRDS
-#ifndef SQRT_TWO_THIRDS
-#define SQRT_TWO_THIRDS 0.81649658092772603272
-#endif //ONE_OVER_SQRT3
-
-            vsum *= ONE_OVER_SQRT3;
-            vnorm *= SQRT_TWO_THIRDS;
-
-            v = vsum + vnorm;
-          }
-
-        v *= length;
-
-        v += GetVector();
-        // Check that the vector is still finite before returning
-        if (!isfinite(v.x()) || !isfinite(v.y()) || !isfinite(v.z()))
-          v.Set(0.0, 0.0, 0.0);
-        return(true);
-      }
-
-    if (GetValence() == 3)
-      {
-        vector3 vtmp,vsum;
-        OBAtom *atom;
-        OBBondIterator i;
-        for (atom = BeginNbrAtom(i);atom;atom = NextNbrAtom(i))
-          {
-            vtmp = GetVector() - atom->GetVector();
-            if (vtmp.length_2() < 0.1) { // atoms are nearly on top of each other
-              // Move the other atom a small random distance apart
-              vtmp.randomUnitVector();
-              vtmp *= length;
-              atom->SetVector(vtmp + GetVector());
-            } // Now this should be a real distance, not a zero vector
-            vtmp.normalize();
-            vtmp /= 3.0;
-            vsum += vtmp;
-          }
-        vsum.normalize();
-        v = vsum;
-        v *= length;
-        v += GetVector();
-        // Check that the vector is still finite before returning
-        if (!isfinite(v.x()) || !isfinite(v.y()) || !isfinite(v.z()))
-          v.Set(0.0, 0.0, 0.0);
-        return(true);
-      }
-
+    v = OBBuilder::GetNewBondVector(this, length);
     return(true);
   }
 
@@ -1328,6 +1183,7 @@ namespace OpenBabel
 
   }
 
+  //! \deprecated This will be removed in future versions of Open Babel
   bool OBAtom::SetHybAndGeom(int hyb)
   {
     obErrorLog.ThrowError(__FUNCTION__,
@@ -1525,6 +1381,12 @@ namespace OpenBabel
                 s.normalize();
                 n = cross(v1,v2);
                 n.normalize();
+#ifndef ONE_OVER_SQRT3
+#define ONE_OVER_SQRT3  0.57735026918962576451
+#endif //SQRT_TWO_THIRDS
+#ifndef SQRT_TWO_THIRDS
+#define SQRT_TWO_THIRDS 0.81649658092772603272
+#endif //ONE_OVER_SQRT3
                 s *= ONE_OVER_SQRT3; //1/sqrt(3)
                 n *= SQRT_TWO_THIRDS; //sqrt(2/3)
                 s += n;

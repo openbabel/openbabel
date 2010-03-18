@@ -221,8 +221,8 @@ namespace OpenBabel
       // Fix the binding pocket atoms
       OBFFConstraints constraints;
       FOR_ATOMS_OF_MOL (a, mol) {
-        if (pocket.BitIsOn(a->GetIdx())
-          constraints.AddAtomConstraint(a->GetIdx());
+      if (pocket.BitIsOn(a->GetIdx())
+      constraints.AddAtomConstraint(a->GetIdx());
       }
 
       // Specify the interacting groups. The pocket atoms are fixed, so there
@@ -234,7 +234,7 @@ namespace OpenBabel
 
       // We pass the constraints as argument for Setup()
       if (!pFF->Setup(mol, constraints)) {
-        cerr << "ERROR: could not setup force field." << endl;
+      cerr << "ERROR: could not setup force field." << endl;
       }
       
       // Perform the actual minimization, maximum 1000 steps 
@@ -273,7 +273,7 @@ namespace OpenBabel
   }
   
   OBFFParameter* OBForceField::GetParameter(int a, int b, int c, int d, 
-      vector<OBFFParameter> &parameter)
+                                            vector<OBFFParameter> &parameter)
   {
     OBFFParameter *par;
 
@@ -313,7 +313,7 @@ namespace OpenBabel
   }
   
   OBFFParameter* OBForceField::GetParameter(const char* a, const char* b, const char* c, 
-      const char* d, vector<OBFFParameter> &parameter)
+                                            const char* d, vector<OBFFParameter> &parameter)
   {
     OBFFParameter *par;
     if (a == NULL)
@@ -822,7 +822,7 @@ namespace OpenBabel
       
       FOR_ATOMS_OF_MOL (a, _mol) {
         snprintf(_logbuf, BUFF_SIZE, "%d\t<%8.3f, %8.3f, %8.3f>\n", a->GetIdx(), _velocityPtr[a->GetIdx()], 
-            _velocityPtr[a->GetIdx()+1], _velocityPtr[a->GetIdx()+2]);
+                 _velocityPtr[a->GetIdx()+1], _velocityPtr[a->GetIdx()+2]);
         OBFFLog(_logbuf);
       }
     }
@@ -1002,11 +1002,11 @@ namespace OpenBabel
       
       if (extAtom->HasData("FFAtomType")) {
         OBPairData *data = (OBPairData*) extAtom->GetData("FFAtomType");
-	data->SetValue(intAtom->GetType());
+        data->SetValue(intAtom->GetType());
       } else {
         OBPairData *data = new OBPairData();
        	data->SetAttribute("FFAtomType");
-	data->SetValue(intAtom->GetType());
+        data->SetValue(intAtom->GetType());
         extAtom->SetData(data);
       }
     }
@@ -1027,11 +1027,11 @@ namespace OpenBabel
       out << intAtom->GetPartialCharge();
       if (extAtom->HasData("FFPartialCharge")) {
         OBPairData *data = (OBPairData*) extAtom->GetData("FFPartialCharge");
-	data->SetValue(out.str());
+        data->SetValue(out.str());
       } else {
         OBPairData *data = new OBPairData();
        	data->SetAttribute("FFPartialCharge");
-	data->SetValue(out.str());
+        data->SetValue(out.str());
         extAtom->SetData(data);
       }
     }
@@ -1063,7 +1063,7 @@ namespace OpenBabel
     for (unsigned int i = 0; i < _mol.NumAtoms(); ++i) {
       const int coordIdx = i * 3;
       forces.push_back(vector3(_gradientPtr[coordIdx], 
-          _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]));
+                               _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]));
     }
     confForces.push_back(forces);
     cd->SetForces(confForces);
@@ -1073,7 +1073,7 @@ namespace OpenBabel
   
   bool OBForceField::GetConformers(OBMol &mol)
   { 
-//    OBAtom *atom;
+    //    OBAtom *atom;
 
     if (_mol.NumAtoms() != mol.NumAtoms())
       return false;
@@ -1421,7 +1421,7 @@ namespace OpenBabel
   }
 
   void Reweight(std::vector< std::vector <double> > &rotorWeights, 
-      std::vector<int> rotorKey, double bonus)
+                std::vector<int> rotorKey, double bonus)
   {
     double fraction, minWeight, maxWeight;
     bool improve = (bonus > 0.0);
@@ -1538,7 +1538,7 @@ namespace OpenBabel
     
     rotor = rl.BeginRotor(ri);
     int confCount = 0;
-//    int settings;
+    //    int settings;
     for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
       // foreach rotor
       energies.clear();
@@ -1587,7 +1587,7 @@ namespace OpenBabel
     }
 
     int best_conformer;
-//    double penalty; // for poor performance
+    //    double penalty; // for poor performance
     double randFloat; // generated random number -- used to pick a rotor
     double total; // used to calculate the total probability 
     double *bestCoordPtr = new double [_mol.NumAtoms() * 3]; // coordinates for best conformer
@@ -1665,7 +1665,7 @@ namespace OpenBabel
 
     IF_OBFF_LOGLVL_LOW {
       snprintf(_logbuf, BUFF_SIZE, "\n  LOWEST ENERGY: %8.3f\n\n",
-              bestE);
+               bestE);
       OBFFLog(_logbuf);
     }
 
@@ -2038,11 +2038,11 @@ namespace OpenBabel
       i++;  
     }
     /* 
-    IF_OBFF_LOGLVL_LOW {
-      snprintf(_logbuf, BUFF_SIZE, "UPDATE VDW PAIRS: %d --> %d (VDW), %d (ELE) \n", i+1, 
-          _vdwpairs.CountBits(), _elepairs.CountBits());
-      OBFFLog(_logbuf);
-    }
+       IF_OBFF_LOGLVL_LOW {
+       snprintf(_logbuf, BUFF_SIZE, "UPDATE VDW PAIRS: %d --> %d (VDW), %d (ELE) \n", i+1, 
+       _vdwpairs.CountBits(), _elepairs.CountBits());
+       OBFFLog(_logbuf);
+       }
     */
   }
   
@@ -2597,13 +2597,13 @@ namespace OpenBabel
       }
       // perform a linesearch
       switch (_linesearch) {
-        case LineSearchType::Newton2Num:
-          alpha = Newton2NumLineSearch(_gradientPtr);
-          break;
-        default:
-        case LineSearchType::Simple:
-          alpha = LineSearch(_mol.GetCoordinates(), _gradientPtr);
-          break;
+      case LineSearchType::Newton2Num:
+        alpha = Newton2NumLineSearch(_gradientPtr);
+        break;
+      default:
+      case LineSearchType::Simple:
+        alpha = LineSearch(_mol.GetCoordinates(), _gradientPtr);
+        break;
       }
       e_n2 = Energy() + _constraints.GetConstraintEnergy();
       
@@ -2710,13 +2710,13 @@ namespace OpenBabel
     }
     // perform a linesearch
     switch (_linesearch) {
-      case LineSearchType::Newton2Num:
-        alpha = Newton2NumLineSearch(_gradientPtr);
-        break;
-      default:
-      case LineSearchType::Simple:
-        alpha = LineSearch(_mol.GetCoordinates(), _gradientPtr);
-        break;
+    case LineSearchType::Newton2Num:
+      alpha = Newton2NumLineSearch(_gradientPtr);
+      break;
+    default:
+    case LineSearchType::Simple:
+      alpha = LineSearch(_mol.GetCoordinates(), _gradientPtr);
+      break;
     }
     e_n2 = Energy() + _constraints.GetConstraintEnergy();
       
@@ -2795,13 +2795,13 @@ namespace OpenBabel
       }
       // perform a linesearch
       switch (_linesearch) {
-        case LineSearchType::Newton2Num:
-          alpha = Newton2NumLineSearch(_grad1);
-          break;
-        default:
-        case LineSearchType::Simple:
-          alpha = LineSearch(_mol.GetCoordinates(), _grad1);
-          break;
+      case LineSearchType::Newton2Num:
+        alpha = Newton2NumLineSearch(_grad1);
+        break;
+      default:
+      case LineSearchType::Simple:
+        alpha = LineSearch(_mol.GetCoordinates(), _grad1);
+        break;
       }
       // save the direction
       memcpy(_grad1, _gradientPtr, sizeof(double)*_ncoords);
@@ -4157,27 +4157,27 @@ namespace OpenBabel
       for (unsigned int j = 0; j < yDim; ++j) {
         coord.SetY(min[1] + j * step);
         for (unsigned int k = 0; k < zDim; ++k)
-        {
-          coord.SetZ(min[2] + k * step);
-          minDistance = 1.0E+10;
-	  FOR_ATOMS_OF_MOL (a, _mol) {
-            if (a->GetIdx() == atom->GetIdx())
-	      continue;
-	    if (a->IsHydrogen())
-	      continue;
+          {
+            coord.SetZ(min[2] + k * step);
+            minDistance = 1.0E+10;
+            FOR_ATOMS_OF_MOL (a, _mol) {
+              if (a->GetIdx() == atom->GetIdx())
+                continue;
+              if (a->IsHydrogen())
+                continue;
 
-	    distance = sqrt(coord.distSq(a->GetVector()));
+              distance = sqrt(coord.distSq(a->GetVector()));
 
-            if (distance < minDistance)
-              minDistance = distance;
-          } // end checking atoms
-          // negative = away from molecule, 0 = vdw surface, positive = inside
-          if (minDistance > 1.0) {
-	    grid->SetValue(i, j, k, 0.0); // outside the molecule
-	  } else {
-	    grid->SetValue(i, j, k, 10e99); // inside the molecule
-	  }
-        } // z-axis
+              if (distance < minDistance)
+                minDistance = distance;
+            } // end checking atoms
+            // negative = away from molecule, 0 = vdw surface, positive = inside
+            if (minDistance > 1.0) {
+              grid->SetValue(i, j, k, 0.0); // outside the molecule
+            } else {
+              grid->SetValue(i, j, k, 10e99); // inside the molecule
+            }
+          } // z-axis
       } // y-axis
     } // x-axis
 
@@ -4188,21 +4188,21 @@ namespace OpenBabel
       for (unsigned int j = 0; j < yDim; ++j) {
         coord.SetY(min[1] + j * step);
         for (unsigned int k = 0; k < zDim; ++k)
-        {
-	  coord.SetZ(min[2] + k * step);
+          {
+            coord.SetZ(min[2] + k * step);
           
-          count++;
-          cout << "\r" << count << "/" << xyzDim;
+            count++;
+            cout << "\r" << count << "/" << xyzDim;
 
-	  if (grid->GetValue(i, j, k) == 0.0) {
-	    pos[0] = coord.x();
-	    pos[1] = coord.y();
-	    pos[2] = coord.z();
-	    evdw = E_VDW(false);
-	    eele = E_Electrostatic(false);
-            grid->SetValue(i, j, k, evdw + eele);
-	  }
-        } // z-axis
+            if (grid->GetValue(i, j, k) == 0.0) {
+              pos[0] = coord.x();
+              pos[1] = coord.y();
+              pos[2] = coord.z();
+              evdw = E_VDW(false);
+              eele = E_Electrostatic(false);
+              grid->SetValue(i, j, k, evdw + eele);
+            }
+          } // z-axis
       } // y-axis
     } // x-axis
 

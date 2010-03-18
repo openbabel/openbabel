@@ -1483,14 +1483,14 @@ namespace OpenBabel
       return;
 
     if (nukePerceivedData)
-    {
-      _flags = 0;
-      OBBond *bond;
-      vector<OBBond*>::iterator k;
-      for (bond = BeginBond(k);bond;bond = NextBond(k))
-        bond->SetInRing(false);
-      //bond->UnsetAromatic(); should probably also be done
-    }
+      {
+        _flags = 0;
+        OBBond *bond;
+        vector<OBBond*>::iterator k;
+        for (bond = BeginBond(k);bond;bond = NextBond(k))
+          bond->SetInRing(false);
+        //bond->UnsetAromatic(); should probably also be done
+      }
     _c = NULL;
 
     if (Empty())
@@ -1717,16 +1717,16 @@ namespace OpenBabel
     obatom->SetParent(this);
 
     /*
-    if (id >= _atomIds.size()) {
+      if (id >= _atomIds.size()) {
       unsigned int size = _atomIds.size();
       for (unsigned long i = size; i < id; ++i)
-        _atomIds.push_back((OBAtom*)NULL);
+      _atomIds.push_back((OBAtom*)NULL);
       obatom->SetId(id);
       _atomIds.push_back(obatom); // _atomIds[id]
-    } else {
+      } else {
     */
-      obatom->SetId(_atomIds.size());
-      _atomIds.push_back(obatom);
+    obatom->SetId(_atomIds.size());
+    _atomIds.push_back(obatom);
     //}
     
 #define OBAtomIncrement 100
@@ -2096,7 +2096,7 @@ namespace OpenBabel
                   {
                     // Ensure that add hydrogens only returns finite coords
                     //atom->GetNewBondVector(v,bondlen);
-		    v = OBBuilder::GetNewBondVector(atom,bondlen);
+                    v = OBBuilder::GetNewBondVector(atom,bondlen);
                     if (isfinite(v.x()) || isfinite(v.y()) || isfinite(v.z())) {
                       _c[(NumAtoms())*3]   = v.x();
                       _c[(NumAtoms())*3+1] = v.y();
@@ -3178,8 +3178,8 @@ namespace OpenBabel
         if(Not3D && atom->z())
           return false;
       }
-      if (hasX || hasY) //was && but this excluded vertically or horizontally aligned linear mols 
-          return(true);
+    if (hasX || hasY) //was && but this excluded vertically or horizontally aligned linear mols 
+      return(true);
     return(false);
   }
 
@@ -3190,8 +3190,8 @@ namespace OpenBabel
     vector<OBAtom*>::iterator i;
 
     hasX = hasY = hasZ = false;
-//    if (this->_c == NULL) **Test removed** Prevented function use during molecule construction
-//      return(false);
+    //    if (this->_c == NULL) **Test removed** Prevented function use during molecule construction
+    //      return(false);
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       {
         if (!hasX && !IsNearZero(atom->x()))

@@ -121,6 +121,15 @@ namespace OpenBabel {
       da = a->GetVector();
       db = b->GetVector();
       dc = c->GetVector();
+
+      // Detect superimposed atoms and nudge them apart
+      double angle = a->GetAngle(b, c);
+      if (angle < 2.5 || angle > 355.0) {
+        vector3 v1;
+        v1.randomUnitVector();
+        da = da + 0.1*v1;
+      }
+
       theta = OBForceField::VectorAngleDerivative(da, db, dc) * DEG_TO_RAD;
     } else {
       theta = a->GetAngle(b, c) * DEG_TO_RAD;
@@ -144,6 +153,14 @@ namespace OpenBabel {
       // Rappe form: (1 - cos 4*theta) -- minima at 0, 360 (bad...)
       energy = ka * (1.0 + cosT)*cosT*cosT;
       break;
+    case 7: // IF7.
+      /* theta = 1/5 * 2 pi.  cosT = .30901699
+       * theta = 2/5 * 2 pi.  cosT = -.80901699
+       * theta = 3/5 * 2 pi.  cosT = -.80901699
+       * theta = 4/5 * 2 pi.  cosT = .30901699
+       */
+      energy = ka * c1 * (cosT - .30901699) * (cosT - .30906199) * (cosT + .80901699) * (cosT + .8091699);
+      break;
     default: // general (sp3) coordination
       energy = ka*(c0 + c1*cosT + c2*(2.0*cosT*cosT - 1.0)); // use cos 2t = (2cos^2 - 1)
     }
@@ -161,6 +178,12 @@ namespace OpenBabel {
       case 4: // square planar
       case 6: // octahedral
         dE = -ka * cosT * (2.0 + 3.0 * cosT) * sinT;
+        break;
+      case 7: // pentagonal bipyramidal
+        dE =  
+          c1 * -ka * (2 * sinT * (cosT - .30906199) * (cosT + .80901699) * (cosT + .8091699) +
+                      2 * sinT * (cosT - .30901699) * (cosT - .30906199) * (cosT + .8091699));
+        //dE = -ka * c1 * sin(5*theta) * 5;
         break;
       default: // general (sp3) coordination
         dE = -ka * (c1*sinT + 2.0 * c2*sin(2.0 * theta));
@@ -690,17 +713,24 @@ namespace OpenBabel {
         coordination = ipar;
       } else if (b->IsSulfur() && b->CountFreeOxygens() == 3) { 
         // SO3, should be planar
-        // PR#2971473, thanks to Philipp Rumpf <prumpf@gmail.com>
+        // PR#2971473, thanks to Philipp Rumpf
         coordination = 2; // i.e., sp2
       }
-    } else {
-      coordination = ipar; // coordination of central atom
+      /* planar coordination of hexavalent molecules.*/
+      if (lonePairs == 0 && b->GetValence() == 3 && b->BOSum() == 6) {
+        coordination = 2;
+      }
+      if (lonePairs == 0 && b->GetValence() == 7) {
+        coordination = 7;
+      }
       // Check to see if coordination is really correct
       // if not (e.g., 5- or 7- or 8-coord...)
       // then create approximate angle bending terms
-      if (b->GetValence() > 4) {
-        coordination = b->GetValence();
-      }
+    } else {
+      coordination = ipar; // coordination of central atom
+    }
+    if (b->GetValence() > 4) {
+      coordination = b->GetValence();
     }
     return coordination;
   }
@@ -777,6 +807,46 @@ namespace OpenBabel {
         secondLargestNbr->SetData(label);
 
       } // end work for 5-coordinate angles
+      if (GetCoordination(&*atom, parameterB->_ipar[0]) == 7) {
+        // First, find the two largest neighbors
+        OBAtom *largestNbr, *current, *secondLargestNbr = 0;
+        double largestRadius;
+        OBBondIterator i;
+        largestNbr = atom->BeginNbrAtom(i);
+        // work out the radius
+        parameterA = GetParameterUFF(largestNbr->GetType(), _ffparams);
+        largestRadius = parameterA->_dpar[0];
+
+        for (current = atom->NextNbrAtom(i); current; current = atom->NextNbrAtom(i)) {
+          parameterA = GetParameterUFF(current->GetType(), _ffparams);
+          if (parameterA->_dpar[0] > largestRadius) {
+            // New largest neighbor
+            secondLargestNbr = largestNbr;
+            largestRadius = parameterA->_dpar[0];
+            largestNbr = current;
+          }
+          if (secondLargestNbr == 0) {
+            // save this atom
+            secondLargestNbr = current;
+          }
+        }
+
+        // OK, now we tag the central atom
+        OBPairData *label = new OBPairData;
+        label->SetAttribute("UFF_CENTRAL_ATOM");
+        label->SetValue("True"); // doesn't really matter
+        atom->SetData(label);
+        // And tag the axial substituents
+        label = new OBPairData;
+        label->SetAttribute("UFF_AXIAL_ATOM");
+        label->SetValue("True");
+        largestNbr->SetData(label);
+        label = new OBPairData;
+        label->SetAttribute("UFF_AXIAL_ATOM");
+        label->SetValue("True");
+        secondLargestNbr->SetData(label);
+
+      }
     } // end loop through atoms
 
     // 
@@ -898,10 +968,11 @@ namespace OpenBabel {
       }
 
       //double currentTheta;
-      if (coordination >= 7) {
+      if (coordination > 7) {
         // large coordination sphere (e.g., [ReH9]-2 or [Ce(NO3)6]-2)
         // just resort to using VDW 1-3 interactions to push atoms into place
         // there's not much else we can do without real parameters
+        // wait, what?  We can handle IF7 fine.
         if (SetupVDWCalculation(a, c, vdwcalc)) {
           _vdwcalculations.push_back(vdwcalc);
         }
@@ -910,8 +981,64 @@ namespace OpenBabel {
         // The downside is that we can't easily handle lone pairs.
         continue;
 
-      } else if (coordination == 5) { // trigonal bipyramidal
+      } else if (coordination == 7) { // pentagonal bipyramidal
+        // This section is commented out.
+        // If you want to try to tackle 7-coordinate species, give this a try
+        // and change the first conditional above to >7, not >=7
+        // This doesn't work so well because it's hard to classify between
+        // axial-equatorial (90 degrees) and proximal equatorial (~72 degrees).
+        // You'll probably have to do something like the pre-evaluation of 5-coordinate atoms at the top of this method (this is what I did)
+        //
+        //     }  else if (coordination == 7) { // pentagonal bipyramidal
+        double currentTheta;
+        currentTheta =  a->GetAngle(&*b, &*c);
 
+        anglecalc.c0 = 1.0;
+        if (0) {
+          if (currentTheta >= 155.0) { // axial ligands = linear
+            anglecalc.coord = 1; // like sp
+            anglecalc.theta0 = 180.0;
+            anglecalc.c1 = 1.0;
+          } else if (currentTheta < 155.0 && currentTheta >= 110.0) { // distal equatorial
+            anglecalc.coord = 7; // like sp3
+            anglecalc.theta0 = 144.0;
+            anglecalc.c1 = 1.0;
+          } else if (currentTheta < 110.0 && currentTheta >= 85.0) { // axial-equatorial
+            anglecalc.coord = 4; // like sq. planar or octahedral
+            anglecalc.theta0 = 90.0;
+            anglecalc.c1 = 1.0;
+          } else if (currentTheta < 85.0) { // proximal equatorial
+            anglecalc.coord = 7; // general case (i.e., like sp3)
+            anglecalc.theta0 = 72.0;
+            anglecalc.c1 = 1.0;
+          }
+          anglecalc.c2 = 0.0;
+	  
+          //         // Also add a VDW 1-3 interaction to distort slightly
+          //         if (SetupVDWCalculation(a, c, vdwcalc)) {
+          //           _vdwcalculations.push_back(vdwcalc);
+          //         }
+        } else {
+          if (b->HasData("UFF_CENTRAL_ATOM")
+              && a->HasData("UFF_AXIAL_ATOM")
+              && c->HasData("UFF_AXIAL_ATOM")) { // axial ligands = linear
+            anglecalc.coord = 1; // like sp
+            anglecalc.theta0 = 180.0;
+            anglecalc.c1 = 1.0;
+          } else if ( (a->HasData("UFF_AXIAL_ATOM") && !c->HasData("UFF_AXIAL_ATOM"))
+                      || (c->HasData("UFF_AXIAL_ATOM") && !a->HasData("UFF_AXIAL_ATOM")) ) { // axial-equatorial ligands
+            anglecalc.coord = 4; // like sq. planar or octahedral
+            anglecalc.theta0 = 90.0;
+            anglecalc.c1 = 1.0;
+          } else { // equatorial - equatorial
+            anglecalc.coord = 7; // unlike anything else, as theta0 is ignored.
+            anglecalc.theta0 = (currentTheta > 108.0 ? 144.0 : 72.0);
+            anglecalc.c1 = 1.0;
+          }
+          anglecalc.c2 = 0.0;
+        }
+
+      } else if (coordination == 5) { // trigonal bipyramidal
         anglecalc.c0 = 1.0;
         // We've already done some of our work above -- look for axial markings
         if (b->HasData("UFF_CENTRAL_ATOM")
@@ -921,7 +1048,7 @@ namespace OpenBabel {
           anglecalc.theta0 = 180.0;
           anglecalc.c1 = 1.0;
         } else if ( (a->HasData("UFF_AXIAL_ATOM") && !c->HasData("UFF_AXIAL_ATOM"))
-                   || (c->HasData("UFF_AXIAL_ATOM") && !a->HasData("UFF_AXIAL_ATOM")) ) { // axial-equatorial ligands
+                    || (c->HasData("UFF_AXIAL_ATOM") && !a->HasData("UFF_AXIAL_ATOM")) ) { // axial-equatorial ligands
           anglecalc.coord = 4; // like sq. planar or octahedral
           anglecalc.theta0 = 90.0;
           anglecalc.c1 = 1.0;
@@ -932,43 +1059,6 @@ namespace OpenBabel {
         }
         anglecalc.c2 = 0.0;
       }
-      /*
-        This section is commented out.
-        If you want to try to tackle 7-coordinate species, give this a try
-        and change the first conditional above to >7, not >=7
-        This doesn't work so well because it's hard to classify between
-        axial-equatorial (90 degrees) and proximal equatorial (~72 degrees).
-        You'll probably have to do something like the pre-evaluation of 5-coordinate atoms at the top of this method
-        Honestly, it's just easier to use VDW pushing to get the job done.
-        
-            }  else if (coordination == 7) { // pentagonal bipyramidal
-                currentTheta =  a->GetAngle(&*b, &*c);
-
-                anglecalc.c0 = 1.0;
-                if (currentTheta >= 155.0) { // axial ligands = linear
-                  anglecalc.coord = 1; // like sp
-                  anglecalc.theta0 = 180.0;
-                  anglecalc.c1 = 1.0;
-                } else if (currentTheta < 155.0 && currentTheta >= 110.0) { // distal equatorial
-                  anglecalc.coord = 3; // like sp3
-                  anglecalc.theta0 = 144.0;
-                  anglecalc.c1 = -1.0;
-                } else if (currentTheta < 110.0 && currentTheta >= 85.0) { // axial-equatorial
-                  anglecalc.coord = 4; // like sq. planar or octahedral
-                  anglecalc.theta0 = 90.0;
-                  anglecalc.c1 = 1.0;
-                } else if (currentTheta < 85.0) { // proximal equatorial
-                  anglecalc.coord = 3; // general case (i.e., like sp3)
-                  anglecalc.theta0 = 72.0;
-                  anglecalc.c1 = -1.0;
-                }
-                anglecalc.c2 = 0.0;
-
-                // Also add a VDW 1-3 interaction to distort slightly
-                if (SetupVDWCalculation(a, c, vdwcalc)) {
-                  _vdwcalculations.push_back(vdwcalc);
-                }
-      */
       else { // normal coordination: sp, sp2, sp3, square planar, octahedral
         anglecalc.coord = coordination;
         anglecalc.theta0 = parameterB->_dpar[1];
@@ -982,7 +1072,6 @@ namespace OpenBabel {
       anglecalc.cosT0 = cos(anglecalc.theta0 * DEG_TO_RAD);
       anglecalc.zi = parameterA->_dpar[5];
       anglecalc.zk = parameterC->_dpar[5];
-
 			// Precompute the force constant
 			bondPtr = _mol.GetBond(a,b);
 			bondorder = bondPtr->GetBondOrder(); 
