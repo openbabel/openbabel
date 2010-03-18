@@ -1,6 +1,7 @@
 ##############################################################################
 #                                                                            #
-#                   Open Babel file: atomtyp.txt                             # #                                                                            #
+#                   Open Babel file: atomtyp.txt                             #
+#                                                                            #
 #                                                                            #
 #  Copyright (c) 1998-2001 by OpenEye Scientific Software, Inc.              #
 #  Some portions Copyright (c) 2001-2008 Geoffrey R. Hutchison               #
@@ -20,7 +21,9 @@
 #                                                                            #
 ##############################################################################
 
-INTHYB  [D4]                      3       #any 4 valent atom
+INTHYB  [D4]                      3       #any 4-valent atom -- tetrahedral
+INTHYB  [D5]                      5       #any 5-valent atom -- trigbipy
+INTHYB  [D6]                      6       #any 6-valent atom -- oct
 INTHYB  [C]                       3       #sp3 carbon
 INTHYB  [c,$(C=*)]                2       #sp2 carbon
 INTHYB  [$([#6]([#8D1])[#8D1])]   2       #sp2 carbon
@@ -38,8 +41,11 @@ INTHYB  [$(O#*)]                  1       #sp  oxygen
 
 INTHYB  [P]                       3       #sp3 phosphorus
 INTHYB  [#15;$([PD1]=*)]          2       #sp2 phosphorus
+INTHYB  [PD5]			  5	  #sp3d phosphorus, as in PF5
+INTHYB  [Pv5]			  5	  #sp3d phosphorus, as in H3PO4
 INTHYB  [S]                       3       #sp3 sulfur
 INTHYB  [#16;s,$([SD1]=*)]        2       #sp2 sulfur
+INTHYB  [SD6]			  6	  #sp3d2 sulfur, as in SF6
 INTHYB  [B]                       2       #sp2 boron
 INTHYB  [BD4]                     3       #sp3 boron
 
@@ -220,6 +226,10 @@ EXTTYP  [#5D4]          B3
 
 ######################## Add Extra Definitions Here ##########################
 
+#INTHYB  [U]                      3
+#INTHYB  [W]                      3
+#INTHYB  [Mo]			  6 # for development
+#INTHYB  [Cr]			  5 # for development
 
 ############################# End Extra Definitions ##########################
 

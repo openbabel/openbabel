@@ -233,7 +233,7 @@ namespace OpenBabel
         {
           return((_vbond.empty()) ? 0 : _vbond.size());
         }
-      //! \return The hybridization of this atom (i.e. 1 for sp, 2 for sp2, 3 for sp3)
+      //! \return The hybridization of this atom: 1 for sp, 2 for sp2, 3 for sp3, 4 for sq. planar, 5 for trig. bipy, 6 for octahedral
       unsigned int GetHyb()             const;
       //! \return The implicit valence of this atom type (i.e. maximum number of connections expected)
       unsigned int GetImplicitValence() const;
