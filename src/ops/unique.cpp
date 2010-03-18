@@ -25,7 +25,6 @@ GNU General Public License for more details.
   #include <unordered_map>
 #elif (__GNUC__ == 4 && __GNUC_MINOR__ >= 1)
   #include <tr1/unordered_map>
-  using std::tr1::unordered_map;
 #else
   #ifdef USE_BOOST
     #include <boost/tr1/unordered_map.hpp>
@@ -36,6 +35,7 @@ GNU General Public License for more details.
 #endif
 
 using namespace std;
+using std::tr1::unordered_map;
 namespace OpenBabel
 {
 
@@ -64,7 +64,9 @@ public:
   virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
   virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* pConv);
   
-private:  bool _reportDup;
+private:
+
+  bool _reportDup;
   std::string _trunc;
   OBDescriptor* _pDesc;
   unsigned _ndups;

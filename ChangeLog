@@ -1,3 +1,12 @@
+2010-03-18 Chris Morley
+
+	* src/atom.cpp (GetImplicitValence): add [H] as a special case.
+	Cannot use IMPVAL [H] 1 in atomtyp.txt because there is an infinite
+	loop.	Fixes #2972355.
+
+    * src/ops/unique.cpp: using std::tr1::unordered_map; is needed for 
+    Visual studio build also.
+
 2010-03-18  David Lonie  <loniedavid@gmail.com>
 
 	* test/unitcell.cpp, test/files/unitcell.txt,
