@@ -23,7 +23,7 @@ GNU General Public License for more details.
 #include <openbabel/inchiformat.h>
 #ifdef _MSC_VER
   #include <unordered_map>
-#elif (__GNUC__ == 4 && __GNUC_MINOR__ >= 1)
+#elif (__GNUC__ == 4 && __GNUC_MINOR__ >= 1 && !defined(__APPLE_CC__))
   #include <tr1/unordered_map>
 #else
   #ifdef USE_BOOST

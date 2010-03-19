@@ -1,11 +1,22 @@
+2010-03-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/obmolecformat.h, src/ops/unique.cpp: Fix
+	unordered_map compile problems on Mac. Even Apple's GCC-4.2 has
+	strange errors. For now, use regular std::map with APPLE_GCC.
+
+2010-03-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/gaussformat.cpp: Use ESP charges if available from
+	the calculation. Fixes PR#2871242 as suggested by Tapani Kinnunen.
+
 2010-03-18 Chris Morley
 
 	* src/atom.cpp (GetImplicitValence): add [H] as a special case.
 	Cannot use IMPVAL [H] 1 in atomtyp.txt because there is an infinite
-	loop.	Fixes #2972355.
+	loop. Fixes #2972355.
 
-    * src/ops/unique.cpp: using std::tr1::unordered_map; is needed for 
-    Visual studio build also.
+	* src/ops/unique.cpp: using std::tr1::unordered_map; is needed for 
+	Visual Studio build also.
 
 2010-03-18  David Lonie  <loniedavid@gmail.com>
 

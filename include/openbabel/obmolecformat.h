@@ -140,7 +140,7 @@ public:
 
 #ifdef _MSC_VER
   typedef stdext::hash_map<std::string, unsigned> NameIndexType;
-#elif (__GNUC__ == 4 && __GNUC_MINOR__ >= 1) || defined (USE_BOOST)
+#elif (__GNUC__ == 4 && __GNUC_MINOR__ >= 1 && !defined(__APPLE_CC__)) || defined (USE_BOOST)
   typedef std::tr1::unordered_map<std::string, unsigned> NameIndexType;
 #else
   typedef std::map<std::string, unsigned> NameIndexType;
