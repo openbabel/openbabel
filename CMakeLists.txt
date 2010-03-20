@@ -196,6 +196,44 @@ if(CMAKE_COMPILER_IS_GNUCXX)
   endif(NOT GCC_IS_NEWER_THAN_4_0)
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
+# Intel C++ Compiler
+# Note: Windows version uses different options!
+if(${CMAKE_CXX_COMPILER_ID} MATCHES Intel AND UNIX)
+  add_definitions (-D_BSD_SOURCE)
+  # Set some linker flags
+  if(CMAKE_SYSTEM_NAME MATCHES Linux)
+    set(CMAKE_SHARED_LINKER_FLAGS
+      "-lc ${CMAKE_SHARED_LINKER_FLAGS}")
+    set(CMAKE_MODULE_LINKER_FLAGS
+      "-lc ${CMAKE_MODULE_LINKER_FLAGS}")
+    set (CMAKE_EXE_LINKER_FLAGS
+      "-lc ${CMAKE_EXE_LINKER_FLAGS}")
+  endif (CMAKE_SYSTEM_NAME MATCHES Linux)
+  check_cxx_compiler_flag(-fvisibility=hidden HAVE_INTEL_VISIBILITY)
+  set(HAVE_INTEL_VISIBILITY ${HAVE_INTEL_VISIBILITY} CACHE BOOL "Intel Compiler support for hidden visibility")
+  if(HAVE_INTEL_VISIBILITY)
+    add_definitions(-DHAVE_GCC_VISIBILITY)
+	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
+	check_cxx_compiler_flag(-fvisibility-inlines-hidden
+HAVE_INTEL_VISIBILITY_INLINES)
+	set(HAVE_INTEL_VISIBILITY_INLINES ${HAVE_INTEL_VISIBILITY_INLINES}
+CACHE BOOL "Intel Compiler support for -fvisibility-inlines-hidden")
+	if(HAVE_INTEL_VISIBILITY_INLINES)
+	  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility-inlines-hidden")
+	endif(HAVE_INTEL_VISIBILITY_INLINES)
+  endif(HAVE_INTEL_VISIBILITY)
+  
+  set(CMAKE_C_FLAGS_RELEASE "-O3 -ipo -DNDEBUG -DQT_NO_DEBUG_OUTPUT")
+  set(CMAKE_CXX_FLAGS_RELEASE "-O3 -ipo -DNDEBUG -DQT_NO_DEBUG_OUTPUT")
+  
+  # define WITH_SSE2 to enable the SSE2 instruction set.
+  # Available on Pentium 4, Athlon 64, and newer CPUs.
+  if((CMAKE_SIZEOF_VOID_P EQUAL 8) OR WITH_SSE2)
+    message(STATUS "Enabling the SSE2 instruction set")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse2")
+  endif((CMAKE_SIZEOF_VOID_P EQUAL 8) OR WITH_SSE2)
+endif(${CMAKE_CXX_COMPILER_ID} MATCHES Intel AND UNIX)
+
 if(MSVC90)
   # To be added: AND SP1  OR gcc>4.0
   add_definitions(-DHAVE_SHARED_POINTER)
