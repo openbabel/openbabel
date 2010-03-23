@@ -48,13 +48,13 @@ namespace OpenBabel
       { 
         return "MDL MOL format\n"
                "Reads and writes V2000 and V3000 versions\n"
-               "Read Options, e.g. -ts\n"
-               " s  determine stereochemistry from atom flags\n"
+               "Read Options, e.g. -as\n"
+               " s  determine stereochemistry from atom flags\n\n"
                "Write Options, e.g. -x3\n"
             /* " 2  output V2000 (default) or\n" */
                " 3  output V3000 not V2000 (used for >999 atoms/bonds) \n"
                " m  write no properties\n"
-               " w  recalculate wedge and hash bonds (applies to 2D structures only)\n"
+               " w  recalculate wedge and hash bonds(2D structures only)\n"
                " A  output in Alias form, e.g. Ph, if present\n\n"; 
       }
 

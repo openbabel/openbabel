@@ -1,3 +1,16 @@
+2010-03-23 Chris Morley
+	
+	Segregate the molecules that failed inchiwrite so that there are
+	no failures using Samples.txt but all fail with SamplesFail.txt.
+	Similarly with SamplesTechManFail.txt. The majority of failures
+	are stereochemistry.
+	 
+	* include/openbabel/alias.h, src/alias.cpp: reorganize the error
+	messages in ExpandAlias. 
+
+	* src/formats/mdlformat.cpp: changes in description so GUI displays
+	options better.
+
 2010-03-19  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/obmolecformat.h, src/ops/unique.cpp: Fix

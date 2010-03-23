@@ -63,14 +63,24 @@ namespace OpenBabel
     if(FromNameLookup(mol, atomindex))
       return true;
 
-    //Crude implementation of formula parse
-    //This should really not alter the molecule until the parsing has been
-    //seen to be successful - another method may be better. But at present
-    //there is no other method.
-    //Only single character element symbols are handled
-    //Atom which replaces atomindex is the first non-H 
-    //Will parse ND2 DS CH-
+    if(!FormulaParse(mol, atomindex))
+    {
+      obErrorLog.ThrowError(__FUNCTION__, "Alias " + _alias + " Could not be interpreted.\n Output may not be correct.", obWarning, onceOnly);
+      return false;
+    }
+    return true;
+  }
 
+
+  //Crude implementation of formula parse
+  //This should really not alter the molecule until the parsing has been
+  //seen to be successful - another method may be better. But at present
+  //there is no other method.
+  //Only single character element symbols are handled
+  //Atom which replaces atomindex is the first non-H 
+  //Will parse ND2 DS CH-
+  bool AliasData::FormulaParse(OBMol& mol,const unsigned atomindex)
+  {
     //(Adapt to use old code)
     char* txt = new char[_alias.size()+1];
     strcpy(txt, _alias.c_str());
@@ -153,16 +163,16 @@ bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
   */
 
   OBAtom* XxAtom = mol.GetAtom(atomindex);
-  if(XxAtom->GetValence()>1)
+/*  if(XxAtom->GetValence()>1)
   {
     obErrorLog.ThrowError(__FUNCTION__, _alias + " is multivalent, which is currently not supported.", obWarning);
     return false;
   }
-
+*/
   SuperAtomTable::iterator pos = table().find(_alias);
   if(pos==table().end())
   {
-    obErrorLog.ThrowError(__FUNCTION__, "Alias " + _alias + " was not recognized.\n Output may not be correct.", obWarning, onceOnly);
+//    obErrorLog.ThrowError(__FUNCTION__, "Alias " + _alias + " was not recognized.\n Output may not be correct.", obWarning, onceOnly);
     return false;
   }
 

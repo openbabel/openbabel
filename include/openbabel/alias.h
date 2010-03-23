@@ -98,6 +98,9 @@ public:
  #endif
 
 private:
+  /// Interpret the alias as a formula
+  bool FormulaParse(OBMol& mol, const unsigned atomindex);
+
   /// Add one of the atoms that can replace the alias
   void AddExpandedAtom(int id);
 
