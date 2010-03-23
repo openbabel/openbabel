@@ -7,8 +7,11 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include <ctime>
 
 #include "obtest.h"
+
+static bool headerWritten = false;
 
 class BenchmarkLoop 
 {
@@ -30,15 +33,33 @@ class BenchmarkLoop
       if (!m_name.empty()) {
         std::cout << "Benchmark: " << m_name << std::endl;
 
+        // create header
+        std::time_t now;
+        std::time(&now);
+        std::string dateStr = std::ctime(&now);
+        if (dateStr[dateStr.size()-1] == '\n')
+          dateStr = dateStr.substr(0, dateStr.size()-1);
+        std::string header = "\"" + dateStr + "\"";
+
         // write time to a file so progress can be monitored
         std::ofstream ofs;
         ofs.open("benchmark.txt.new");
  
+        // read the current benchmark.txt, update lines and write to .new file
         std::ifstream ifs;
         ifs.open("benchmark.txt");
         std::string line;
-        bool foundBenchmark = false;
+        bool foundBenchmark = false, foundHeader = false;
+        if (headerWritten)
+          foundHeader = true;
         while (std::getline(ifs, line)) {
+          if (line.substr(0, 10) == "__Header__" && !headerWritten) {
+            foundHeader = true;
+            headerWritten = true;
+            std::stringstream ss;
+            ss << line << " " << header;
+            line = ss.str();          
+          }
           if (line.substr(0, m_name.size()) == m_name) {
             foundBenchmark = true;
             std::stringstream ss;
@@ -52,11 +73,17 @@ class BenchmarkLoop
         ofs.close();
 
         if (!foundBenchmark) {
-          ofs.open("benchmark.txt", std::ios::out | std::ios::app);        
+          // benchmark not found, append the new line
+          ofs.open("benchmark.txt", std::ios::out | std::ios::app);
+          if (!foundHeader)
+            ofs << "__Header__ " << header << std::endl;
           ofs << m_name << " " << milliSecsPerIter << std::endl;
         } else {
-          ifs.open("benchmark.txt.new", std::ios::binary);
-          ofs.open("benchmark.txt", std::ios::binary);
+          // benchmark found and updated .new file, copy it now
+          ifs.open("benchmark.txt.new");
+          ofs.open("benchmark.txt");
+          if (!foundHeader)
+            ofs << "__Header__" << header << std::endl;
           ofs << ifs.rdbuf();
         }
      }
