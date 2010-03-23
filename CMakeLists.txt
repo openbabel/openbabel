@@ -228,10 +228,10 @@ CACHE BOOL "Intel Compiler support for -fvisibility-inlines-hidden")
   
   # define WITH_SSE2 to enable the SSE2 instruction set.
   # Available on Pentium 4, Athlon 64, and newer CPUs.
-  if((CMAKE_SIZEOF_VOID_P EQUAL 8) OR WITH_SSE2)
+  if(CMAKE_SIZEOF_VOID_P EQUAL 8 OR WITH_SSE2)
     message(STATUS "Enabling the SSE2 instruction set")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse2")
-  endif((CMAKE_SIZEOF_VOID_P EQUAL 8) OR WITH_SSE2)
+  endif(CMAKE_SIZEOF_VOID_P EQUAL 8 OR WITH_SSE2)
 endif(${CMAKE_CXX_COMPILER_ID} MATCHES Intel AND UNIX)
 
 if(MSVC90)
