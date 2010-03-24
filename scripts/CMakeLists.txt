@@ -40,15 +40,15 @@ include_directories(
 )
 
 add_custom_command(OUTPUT openbabel-python.cpp openbabel.py
-    COMMAND ${SWIG_EXECUTABLE} -python -c++ -small -O -templatereduce -naturalvar -I${CMAKE_SOURCE_DIR}/include -I${CMAKE_BINARY_DIR}/include -o openbabel-python.cpp ${CMAKE_SOURCE_DIR}/scripts/openbabel-python.i
+    COMMAND ${SWIG_EXECUTABLE} -python -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
     MAIN_DEPENDENCY openbabel-python.i
 )
 
 if(NOT WIN32)
     add_custom_target(_openbabel ALL
-        COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/python/setup.py build
+        COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py build
         DEPENDS openbabel-python.cpp
-        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/scripts
+        WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts
     )
     add_custom_command(TARGET _openbabel POST_BUILD 
         COMMAND ${CMAKE_COMMAND} -E echo "import sys" > ob.py
@@ -63,18 +63,18 @@ if(NOT WIN32)
         COMMAND ${CMAKE_COMMAND} -E remove ob.py
         VERBATIM)
 
-    install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/python/setup.py install --prefix=${CMAKE_INSTALL_PREFIX} WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/scripts)")
+    install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --prefix=${CMAKE_INSTALL_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
 
 else(NOT WIN32)
     add_library(_openbabel MODULE openbabel-python.cpp)
     target_link_libraries(_openbabel ${PYTHON_LIBRARIES} ${BABEL_LIBRARY})
     set_target_properties(_openbabel PROPERTIES
-	LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+	LIBRARY_OUTPUT_DIRECTORY ${openbabel_BINARY_DIR}
         OUTPUT_NAME _openbabel
         PREFIX ""
         SUFFIX .pyd )
     add_custom_command(TARGET _openbabel POST_BUILD 
-      COMMAND ${CMAKE_COMMAND} -E copy openbabel.py ${CMAKE_BINARY_DIR}/${CMAKE_CFG_INTDIR}
+      COMMAND ${CMAKE_COMMAND} -E copy openbabel.py ${openbabel_BINARY_DIR}/${CMAKE_CFG_INTDIR}
       )
 endif(NOT WIN32)
 
