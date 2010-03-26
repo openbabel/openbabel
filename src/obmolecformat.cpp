@@ -46,7 +46,7 @@ namespace OpenBabel
     if(pConv->IsOption("C",OBConversion::GENOPTIONS))
       return DeferMolOutput(pmol, pConv, pFormat);
 
-    bool ret;
+    bool ret=true;
    if(pConv->IsOption("separate",OBConversion::GENOPTIONS))
    {
      //On first call, separate molecule and put fragments in MolArray.
@@ -54,16 +54,27 @@ namespace OpenBabel
      //Done this way so that each fragment can be written to its own file (with -m option)
      if(!StoredMolsReady)
      {
-       ret = pFormat->ReadMolecule(pmol,pConv); 
-       if(ret && (pmol->NumAtoms() > 0 || (pFormat->Flags()&ZEROATOMSOK)))
-         MolArray = pmol->Separate(); //use un-transformed molecule
-       //Add an appropriate title to each fragment
-       for(int i=0;i<MolArray.size();++i)
+       while(ret) //do all the molecules in the file
        {
-         stringstream ss;
-         ss << pmol->GetTitle() << '#' << i+1;
-         string title = ss.str();
-         MolArray[i].SetTitle(title);
+         ret = pFormat->ReadMolecule(pmol,pConv); 
+         
+         if(ret && (pmol->NumAtoms() > 0 || (pFormat->Flags()&ZEROATOMSOK)))
+         {
+           vector<OBMol> SepArray = pmol->Separate(); //use un-transformed molecule
+           //Add an appropriate title to each fragment
+           if(SepArray.size()>1)
+             for(int i=0;i<SepArray.size();++i)
+             {
+               stringstream ss;
+               ss << pmol->GetTitle() << '#' << i+1;
+               string title = ss.str();
+               SepArray[i].SetTitle(title);
+             }
+           else
+              SepArray[0].SetTitle(pmol->GetTitle());
+
+           copy(SepArray.begin(),SepArray.end(),back_inserter(MolArray));            
+         }
        }
        reverse(MolArray.begin(),MolArray.end());
        StoredMolsReady = true;

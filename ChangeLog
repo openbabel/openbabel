@@ -1,3 +1,8 @@
+2010-03-26 Chris Morley
+
+	* src/obmolecformat.cpp: Make --separate work with multiple input
+	  molecules. Fixes #2961144
+
 2010-03-23 Chris Morley
 	
 	Segregate the molecules that failed inchiwrite so that there are
