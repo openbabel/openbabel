@@ -242,7 +242,7 @@ S(N)(N)(=O)=O	252
 NN.O(B1OB(O)O1)B1OB(O)O1	253
 P(NC1CCCCC1)(Oc1ccccc1)(Oc1ccccc1)=O	254
 P(OCCCC)(=O)(N1CCOCC1)N1CCOCC1	255
-O([P@@](N)(=O)c1ccccc1)CC	256
+O([P](N)(=O)c1ccccc1)CC	256
 Cc1nc(N)nc(n1)N	257
 P(NN)(NN)(=S)c1ccccc1	258
 N(NC(NN)=S)c1ccccc1	259
@@ -396,7 +396,7 @@ C(=N/[C@@H](CC/N=C/c1c(O)cccc1)C)/c1c(O)cccc1	412
 C(C)O.S(CC)c1nc(C=O)cc(n1)O	413
 C(CNCCc1sc(C)nc1C)c1sc(C)nc1C	414
 C(NN)(=O)C1C(C(NN)=O)C1C(NN)=O	415
-O([P@@](N(C(C)C)C(C)C)(=O)c1ccc([N+](=O)[O-])cc1)[P@@](N(C(C)C)C(C)C)(=O)c1ccc([N+](=O)[O-])cc1	416
+O([P](N(C(C)C)C(C)C)(=O)c1ccc([N+](=O)[O-])cc1)[P](N(C(C)C)C(C)C)(=O)c1ccc([N+](=O)[O-])cc1	416
 P(=O)(O)(O)c1ccc(N)cc1	417
 C[C@@H]1N[C@@H](C)SC(S1)C	418
 P(=O)(O)(O)c1cc([N+](=O)[O-])ccc1	419
