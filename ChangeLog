@@ -1,3 +1,7 @@
+2010-03-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/base.h: Fix "unused parameter" warnings for GCC.
+
 2010-03-26 Chris Morley
 
 	* src/obmolecformat.cpp: Make --separate work with multiple input
