@@ -1,3 +1,9 @@
+2010-03-29  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/mol.cpp (SetCoordinates): Fix bug in SetCoordinates -- copy
+	from externally-supplied double* to _c. Renamed parameter to avoid
+	this problem. Fixes PR#2975148. Thanks to Paul Mortenson.
+
 2010-03-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/base.h: Fix "unused parameter" warnings for GCC.

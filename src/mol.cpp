@@ -3220,21 +3220,22 @@ namespace OpenBabel
   }
 
   
-  void OBMol::SetCoordinates(double *c)
+  void OBMol::SetCoordinates(double *newCoords)
   {
     bool noCptr = (_c == NULL); // did we previously have a coordinate ptr
     if (noCptr) {
       _c = new double [NumAtoms()*3];
     }
 
-    memcpy((char*)c,(char*)_c,sizeof(double)*3*NumAtoms());
+    // copy from external to internal
+    memcpy((char*)_c, (char*)newCoords, sizeof(double)*3*NumAtoms());
 
     if (noCptr) {
       OBAtom *atom;
       vector<OBAtom*>::iterator i;
       for (atom = BeginAtom(i);atom;atom = NextAtom(i))
         atom->SetCoordPtr(&_c);
-      _vconf.push_back(c);
+      _vconf.push_back(newCoords);
     }
   }
 
