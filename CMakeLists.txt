@@ -217,16 +217,15 @@ if(${CMAKE_CXX_COMPILER_ID} MATCHES Intel AND UNIX)
   set(HAVE_INTEL_VISIBILITY ${HAVE_INTEL_VISIBILITY} CACHE BOOL "Intel Compiler support for hidden visibility")
   if(HAVE_INTEL_VISIBILITY)
     add_definitions(-DHAVE_GCC_VISIBILITY)
-	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
+#    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
 	check_cxx_compiler_flag(-fvisibility-inlines-hidden
 HAVE_INTEL_VISIBILITY_INLINES)
-	set(HAVE_INTEL_VISIBILITY_INLINES ${HAVE_INTEL_VISIBILITY_INLINES}
-CACHE BOOL "Intel Compiler support for -fvisibility-inlines-hidden")
+	set(HAVE_INTEL_VISIBILITY_INLINES ${HAVE_INTEL_VISIBILITY_INLINES} CACHE BOOL "Intel Compiler support for -fvisibility-inlines-hidden")
 	if(HAVE_INTEL_VISIBILITY_INLINES)
 	  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility-inlines-hidden")
 	endif(HAVE_INTEL_VISIBILITY_INLINES)
   endif(HAVE_INTEL_VISIBILITY)
-  
+
   set(CMAKE_C_FLAGS_RELEASE "-O3 -ipo -DNDEBUG -DQT_NO_DEBUG_OUTPUT")
   set(CMAKE_CXX_FLAGS_RELEASE "-O3 -ipo -DNDEBUG -DQT_NO_DEBUG_OUTPUT")
   
