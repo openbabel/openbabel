@@ -1,3 +1,5 @@
+add_custom_target(formats)
+
 set(formats_common
   smilesformat
   mdlformat

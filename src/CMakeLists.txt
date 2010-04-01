@@ -180,3 +180,4 @@ if(MSVC)
 endif(MSVC)
 
 add_subdirectory(formats)
+add_dependencies(formats ${BABEL_LIBRARY})
