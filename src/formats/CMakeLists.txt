@@ -104,7 +104,7 @@ if(WITH_INCHI)
     include_directories(${CMAKE_SOURCE_DIR}/include/inchi102)
     set(libs ${libs} inchi)
   else(NOT MSVC)
-    set(libs ${libs} ${CMAKE_SOURCE_DIR}/windows-vc2005/libstdinchi.lib)
+    set(libs ${libs} ${CMAKE_SOURCE_DIR}/windows-vc2008/libstdinchi.lib)
   endif(NOT MSVC)
   set(inchiformat_additional_sources getinchi.cpp ../ops/unique.cpp)
   set(formats_common

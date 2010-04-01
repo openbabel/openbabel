@@ -1,3 +1,11 @@
+2010-04-01 Chris Morley
+
+	* windows-vc2008: Add new Distribution folder and copy the external
+	dlls and libs. Rewrite Windows installer for CMake VC2008 build.
+	Uses more wild cards and so should be less prone to omissions.
+	Folders windows-vc2005 and windowsOBF will be deleted, but have not
+	been yet.	
+
 2010-03-29  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/mol.cpp (SetCoordinates): Fix bug in SetCoordinates -- copy
