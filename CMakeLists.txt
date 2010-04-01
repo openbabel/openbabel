@@ -1,5 +1,7 @@
 # Please ensure that any changes remain compliant with 2.4.8.
-cmake_minimum_required(VERSION 2.4.8)
+if (NOT EMBED_OPENBABEL)
+  cmake_minimum_required(VERSION 2.4.8)
+endif (NOT EMBED_OPENBABEL)
 
 project(openbabel)
 set(CMAKE_MODULE_PATH ${openbabel_SOURCE_DIR}/cmake/modules)
@@ -213,11 +215,11 @@ if(${CMAKE_CXX_COMPILER_ID} MATCHES Intel AND UNIX)
     set (CMAKE_EXE_LINKER_FLAGS
       "-lc ${CMAKE_EXE_LINKER_FLAGS}")
   endif (CMAKE_SYSTEM_NAME MATCHES Linux)
-  check_cxx_compiler_flag(-fvisibility=hidden HAVE_INTEL_VISIBILITY)
+  check_cxx_compiler_flag(-fvisibility=protected HAVE_INTEL_VISIBILITY)
   set(HAVE_INTEL_VISIBILITY ${HAVE_INTEL_VISIBILITY} CACHE BOOL "Intel Compiler support for hidden visibility")
   if(HAVE_INTEL_VISIBILITY)
     add_definitions(-DHAVE_GCC_VISIBILITY)
-#    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=protected")
 	check_cxx_compiler_flag(-fvisibility-inlines-hidden
 HAVE_INTEL_VISIBILITY_INLINES)
 	set(HAVE_INTEL_VISIBILITY_INLINES ${HAVE_INTEL_VISIBILITY_INLINES} CACHE BOOL "Intel Compiler support for -fvisibility-inlines-hidden")
