@@ -1,6 +1,6 @@
 prefix=@CMAKE_INSTALL_PREFIX@
 exec_prefix=${prefix}
-libdir=${exec_prefix}/@LIB@
+libdir=${exec_prefix}/@LIB_INSTALL_DIR@
 includedir=${prefix}/include
 pkgincludedir=${includedir}/openbabel-2.0
 
