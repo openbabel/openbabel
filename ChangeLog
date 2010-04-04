@@ -1,3 +1,9 @@
+2010-04-04 Chris Morley
+
+	* src/GUI/OBGUI.cpp,src/GUI/OBGUI.h: add a scrollbar on the options
+	panel, so that the GUI can be used with wide, shallow windows (an
+	unfortunate current fashion).
+
 2010-04-01 Chris Morley
 
 	* windows-vc2008: Add new Distribution folder and copy the external

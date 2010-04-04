@@ -130,10 +130,12 @@ private:
 	DynOptionswx* m_pConvOptsPanel;
 	DynOptionswx* m_pInOptsPanel;
 	DynOptionswx* m_pOutOptsPanel;
-	
+  wxScrolledWindow* m_pOptsWindow;
+
 	wxBoxSizer *topSizer;
 	wxBoxSizer *InSizer;
 	wxBoxSizer *OutSizer;
+	wxBoxSizer* CenterSizer;
 	wxBoxSizer* OptionsSizer;
 
 	wxString InputFilterString, OutputFilterString;

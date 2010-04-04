@@ -180,7 +180,10 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
 //******************************************************
 //**************** Controls (in tab order)**************
 
-  wxPanel* panel = new wxPanel(this, wxID_ANY);
+  wxPanel* panel= new wxPanel(this, wxID_ANY);
+  m_pOptsWindow = 
+    new wxScrolledWindow(panel, wxID_ANY,wxDefaultPosition,wxDefaultSize,wxVSCROLL | wxNO_BORDER);
+  m_pOptsWindow->SetScrollRate(0,10);
 
   m_pInFormat    = new wxChoice(panel,ID_INFORMAT,	wxDefaultPosition,wxDefaultSize,
     0, static_cast<wxString*> (NULL));
@@ -220,7 +223,7 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
   //Output windows: splitter with messages(clog) and output text(cout) 
   m_pSplitter = new wxSplitterWindow(panel,wxID_ANY,wxDefaultPosition,wxSize(1955,200));
   m_pMessages = new wxTextCtrl(m_pSplitter,ID_MESSAGES,wxEmptyString,
-    wxDefaultPosition,wxDefaultSize,wxTE_MULTILINE|wxTE_READONLY|wxNO_BORDER);
+    wxDefaultPosition,wxDefaultSize,wxTE_MULTILINE|wxTE_READONLY);
   m_pMessages->SetToolTip(_T("Message window. Drag the divider down to make bigger"));
   m_pfixedFont = new wxFont(
     8, //int pointSize
@@ -230,7 +233,7 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
   m_pMessages->SetFont(*m_pfixedFont);
   
   m_pOutText = new wxTextCtrl(m_pSplitter, ID_OUTTEXT, _T(""),
-        wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY|notwrapped|wxNO_BORDER);
+        wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY|notwrapped);
 
   m_pSplitter->SplitHorizontally(m_pMessages, m_pOutText, 20);
   m_pSplitter->SetMinimumPaneSize(20);
@@ -244,13 +247,13 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
   topSizer		 = new wxBoxSizer(wxHORIZONTAL);
   InSizer      = new wxBoxSizer(wxVERTICAL);
   OutSizer     = new wxBoxSizer(wxVERTICAL);
+  CenterSizer  = new wxBoxSizer(wxVERTICAL);
   OptionsSizer = new wxBoxSizer(wxVERTICAL);
   wxBoxSizer *InFilesSizer = new wxBoxSizer(wxHORIZONTAL);
   wxBoxSizer *OutFilesSizer = new wxBoxSizer(wxHORIZONTAL);
   wxBoxSizer *InFormatSizer = new wxBoxSizer(wxHORIZONTAL);
   wxBoxSizer *OutFormatSizer = new wxBoxSizer(wxHORIZONTAL);
     
-
   InFormatSizer->Add(m_pInFormat,1,wxEXPAND);
   InFormatSizer->Add(m_pInInfo,0,wxLEFT,5);
   
@@ -276,12 +279,14 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
       wxALL,    // and make border all around
       5 );     // set border width
 
-  m_pGenOptsPanel = new DynOptionswx(panel, OptionsSizer);
-  m_pAPIOptsPanel = new DynOptionswx(panel, OptionsSizer);
-  m_pConvOptsPanel = new DynOptionswx(panel, OptionsSizer);
-  m_pInOptsPanel = new DynOptionswx(panel, OptionsSizer);
-  m_pOutOptsPanel = new DynOptionswx(panel, OptionsSizer);
+  m_pGenOptsPanel = new DynOptionswx(m_pOptsWindow, OptionsSizer);
+  m_pAPIOptsPanel = new DynOptionswx(m_pOptsWindow, OptionsSizer);
+  m_pConvOptsPanel = new DynOptionswx(m_pOptsWindow, OptionsSizer);
+  m_pInOptsPanel = new DynOptionswx(m_pOptsWindow, OptionsSizer);
+  m_pOutOptsPanel = new DynOptionswx(m_pOptsWindow, OptionsSizer);
 
+  m_pOptsWindow->SetSizer(OptionsSizer);
+ 
   pStatic = new wxStaticText(panel,wxID_STATIC,wxT("        ---- OUTPUT FORMAT ----"));
   MakeBold(pStatic);
   OutSizer->Add(pStatic);
@@ -297,11 +302,12 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
   OutSizer->Add(m_pNoOutFile,0, wxLEFT|wxBOTTOM,5);
   OutSizer->Add(m_pSplitter, 1, wxEXPAND | wxALL, 5 );
 
-  OptionsSizer->Add(m_pConvert, 0, wxALL|wxALIGN_CENTER_HORIZONTAL,10);
-  OptionsSizer->Add(new wxStaticLine(panel),0,wxBOTTOM|wxEXPAND,5);
+  CenterSizer->Add(m_pConvert, 0, wxALL|wxALIGN_CENTER_HORIZONTAL,10);
+  CenterSizer->Add(new wxStaticLine(panel),0,wxBOTTOM|wxEXPAND,5);
+  CenterSizer->Add(m_pOptsWindow,1);  
 
   topSizer->Add(InSizer,1,wxEXPAND);
-  topSizer->Add(OptionsSizer,0.3,wxEXPAND);
+  topSizer->Add(CenterSizer,0.3,wxEXPAND);
   topSizer->Add(OutSizer,1,wxEXPAND);
   
   panel->SetSizer( topSizer );     // use the sizer for layout
@@ -701,6 +707,9 @@ void OBGUIFrame::OnChangeFormat(wxCommandEvent& WXUNUSED(event))
     if(pOutFormat && !m_pOutOptsPanel->Construct(pOutFormat->Description(),"output"))
       m_pOutOptsPanel->Construct(pOutFormat->Description(), "write");//try again
   }
+
+  CenterSizer->Fit(m_pOptsWindow);
+  CenterSizer->Layout(); 
   topSizer->Layout();
 }
 
