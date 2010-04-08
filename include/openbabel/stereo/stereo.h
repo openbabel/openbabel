@@ -116,7 +116,7 @@ namespace OpenBabel {
     enum View
     {
       ViewFrom = 1, //!< view from the atom (id parameter) towards the center atom
-      ViewTowards = 2, //!< view from center atom towards the atom (id paramater)
+      ViewTowards = 2 //!< view from center atom towards the atom (id paramater)
     };
 
     /**
@@ -126,7 +126,7 @@ namespace OpenBabel {
      */
     enum Winding {
       Clockwise = 1,     //!< Clockwise winding
-      AntiClockwise = 2  //!< AntiClockiwe winding (or CounterClockwise
+      AntiClockwise = 2  //!< AntiClockwise winding (or CounterClockwise)
     };
 
     ///@name Ref & Refs types 

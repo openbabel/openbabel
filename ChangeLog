@@ -1,3 +1,9 @@
+2010-04-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/dlhandler_unix.cpp (findFiles): Don't split on tabs or
+	spaces. These are legal characters for directories. (This causes
+	problems with Mac users in particular.)
+
 2010-04-04 Chris Morley
 
 	* src/GUI/OBGUI.cpp,src/GUI/OBGUI.h: add a scrollbar on the options
@@ -18,6 +24,7 @@
 	from externally-supplied double* to _c. Renamed parameter to avoid
 	this problem. Fixes PR#2975148. Thanks to Paul Mortenson.
 
+>>>>>>> .r3669
 2010-03-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/base.h: Fix "unused parameter" warnings for GCC.
