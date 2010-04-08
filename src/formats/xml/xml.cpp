@@ -1,4 +1,4 @@
-/**********************************************************************
+cd /**********************************************************************
 Copyright (C) 2005-2006 by Chris Morley
 Some portions Copyright (C) 2006 by Geoffrey R. Hutchison
  
@@ -36,6 +36,8 @@ namespace OpenBabel
   {
     if(_reader)
       return true; //do not need to make a new reader
+
+    xmlInitParser(); 
 
     //If the inputstream is not at the start (probably arising in fastsearch),
     //save its position and rewind so that the reader initialization is ok.

@@ -1,3 +1,9 @@
+2010-04-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
+ 
+ 	* src/dlhandler_unix.cpp (findFiles): Don't split on tabs or
+ 	spaces. These are legal characters for directories. (This causes
+ 	problems with Mac users in particular.)
+ 
 2010-02-02  Noel O'Boyle  <baoilleach@gmail.com>
 
 	* scripts/openbabelcsharp.i: Replace

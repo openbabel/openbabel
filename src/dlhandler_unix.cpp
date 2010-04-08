@@ -29,6 +29,8 @@ GNU General Public License for more details.
 #include <cstdlib>
 #include <cstdio>
 
+#include <iostream>
+
 using namespace std;
 
 namespace OpenBabel {
@@ -83,12 +85,13 @@ int DLHandler::findFiles (std::vector <std::string>& file_list,
       // add a trailing NULL just in case
       buffer[BUFF_SIZE - 1] = '\0';
       
-      OpenBabel::tokenize(vs, buffer, "\r\n\t :");
+      OpenBabel::tokenize(vs, buffer, "\r\n:");
       
       if (!vs.empty())
         {
-          for (unsigned int i = 0; i < vs.size(); ++i)
+          for (unsigned int i = 0; i < vs.size(); ++i) {
             paths.push_back(vs[i]);
+          }
         }
     }
   
