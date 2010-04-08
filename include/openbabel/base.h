@@ -28,7 +28,7 @@ GNU General Public License for more details.
 #include <iostream>
 #include <openbabel/tokenst.h>
 
-#ifndef UNUSED(expr)
+#ifndef UNUSED
 #define UNUSED(expr) { (void)(expr); }
 #endif
 
