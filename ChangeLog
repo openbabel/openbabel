@@ -1,3 +1,8 @@
+2010-04-07  Chris Morley
+
+	* src/formats/fingerprintformat.cpp: add option to output
+	hexadecimal fingerprints only, as requested by Francesco Napolitano. 
+
 2010-04-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/dlhandler_unix.cpp (findFiles): Don't split on tabs or

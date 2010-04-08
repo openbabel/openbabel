@@ -39,6 +39,7 @@ namespace OpenBabel
       " f<id> fingerprint type\n"
       " N# fold to specified number of bits, 32, 64, 128, etc.\n"
       " h  hex output when multiple molecules\n"
+      " o  hex output only\n"
       " s  describe each set bit\n"
       " u  describe each unset bit\n"
 ;
@@ -51,6 +52,7 @@ namespace OpenBabel
     vector<unsigned int> firstfp;
     string firstname;
     bool IsPossibleSubstructure(vector<unsigned int>Mol, vector<unsigned int>Frag);
+    bool WriteHex(ostream &ofs, vector<unsigned int> fptvec);
   };
 
   ////////////////////////////////////////////////////
@@ -94,7 +96,10 @@ namespace OpenBabel
     vector<unsigned int> fptvec;
     if(!pFP->GetFingerprint(pOb, fptvec, nbits))
       return false;
-	
+
+    if(pConv->IsOption("o"))
+      return WriteHex(ofs, fptvec);
+ 	
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol)
       ofs << ">" << pmol->GetTitle();
@@ -148,17 +153,10 @@ namespace OpenBabel
       }
     ofs << endl;
 	
-    int i;
-
     if(hexoutput)
       {
-        for(i=fptvec.size()-1;i>=0;i--)
-          {
-            ofs << hex << setfill('0') << setw(8) << fptvec[i] << " " ;
-            if((fptvec.size()-i)%6==0)
-              ofs <<endl;
-          }
-        ofs << dec << endl;
+        WriteHex(ofs, fptvec);
+        ofs << endl;
       }
     return true;
   }
@@ -172,4 +170,15 @@ namespace OpenBabel
     return true;
   }
 
+  bool FingerprintFormat::WriteHex(ostream &ofs, vector<unsigned int> fptvec)
+  {
+    for(int i=fptvec.size()-1;i>=0;i--)
+    {
+      ofs << hex << setfill('0') << setw(8) << fptvec[i] << " " ;
+      if((fptvec.size()-i)%6==0)
+        ofs <<endl;
+    }
+    ofs << dec << flush;
+    return true;
+  }
 } //namespace OpenBabel
