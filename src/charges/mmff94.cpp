@@ -43,6 +43,13 @@ MMFF94Charges theMMFF94Charges("mmff94"); //Global instance
   {
     mol.SetPartialChargesPerceived();
 
+    // Annotate that partial charges come from MMFF94
+    OBPairData *dp = new OBPairData;
+    dp->SetAttribute("PartialCharges");
+    dp->SetValue("MMFF94");
+    dp->SetOrigin(perceived);
+    mol.SetData(dp);
+
     OBForceField* pFF = OBForceField::FindForceField("MMFF94");
     if (!pFF || !pFF->Setup(mol))
       return false;
