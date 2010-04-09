@@ -880,6 +880,17 @@ namespace OpenBabel
       { return this->_vIntegration; }
 };
 
+  //! \class OBOrbitalEnergyData generic.h <openbabel/generic.h>
+  //! \brief Used to hold information about orbital energies
+  class OBAPI OBOrbitalEnergyData: public OBGenericData
+  {
+  protected:
+    std::vector<double> _alphaEigenvalues;
+    std::vector<double> _betaEigenvalues;
+    std::vector<std::string> _alphaMullikenSymbols;
+    std::vector<std::string> _betaMullikenSymbols;
+  };
+
   //! \class OBElectronicTransitionData generic.h <openbabel/generic.h>
   //! \brief Used to hold information about electronic transitions
  class OBAPI OBElectronicTransitionData: public OBGenericData

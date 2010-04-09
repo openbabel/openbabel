@@ -1,3 +1,9 @@
+2010-04-09  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/partialcharge.h, src/partialcharges.cpp,
+	src/charges/: New plugin type to assign partial charges. First
+	examples are MMFF94 and Gasteiger. Nothing new, but more to come.
+
 2010-04-07  Chris Morley
 
 	* src/formats/fingerprintformat.cpp: add option to output
@@ -29,7 +35,6 @@
 	from externally-supplied double* to _c. Renamed parameter to avoid
 	this problem. Fixes PR#2975148. Thanks to Paul Mortenson.
 
->>>>>>> .r3669
 2010-03-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/base.h: Fix "unused parameter" warnings for GCC.

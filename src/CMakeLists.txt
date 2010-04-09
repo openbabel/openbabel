@@ -2,6 +2,11 @@
 set(SOVERSION 4)
 set(LIBRARY_VERSION 4.0.0)
 
+set(charges
+        charges/gasteiger.cpp
+        charges/mmff94.cpp
+)
+
 set(depict_srcs
     depict/depict.cpp
     depict/svgpainter.cpp
@@ -89,6 +94,7 @@ set(openbabel_srcs
     op.cpp
     ops.cpp
     parsmart.cpp
+    partialcharge.cpp
     patty.cpp
     phmodel.cpp
     plugin.cpp
@@ -127,10 +133,11 @@ set(openbabel_library_srcs
 if(NOT MSVC)
    set(openbabel_library_srcs
 	   ${openbabel_library_srcs}
+     ${charges}
 	   ${descriptors}
 	   ${fingerprints}
-           ${forcefields}
-           ${ops}
+     ${forcefields}
+     ${ops}
 	   )
 endif(NOT MSVC)
 add_library(${BABEL_LIBRARY} ${BUILD_TYPE}
