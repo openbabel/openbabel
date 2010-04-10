@@ -456,7 +456,7 @@ FunctionEnd
 ;General
 
   ;OpenBabel version
-  !define OBVersion 2.3.0s1
+  !define OBVersion 2.3.0s2
 
   ;Name and file
   Name "OpenBabel ${OBVERSION}"
@@ -515,33 +515,37 @@ FunctionEnd
 
 Section "Dummy Section" SecDummy
 
-  SetOutPath "$INSTDIR\examples"
-  File /r /x .svn ExampleFiles\*.*
-
   SetOutPath "$INSTDIR\data"
-  File /r /x .svn ..\..\data\*.*
+  File /r /x .svn /x *.h ..\..\data\*.*
 
-
+  SetOutPath "$INSTDIR\doc"
+  File ..\..\doc\OpenBabelGUI.html
+  File ToolsPrograms.txt
+  
   SetOutPath "$INSTDIR"
   File /oname=License.txt ..\..\COPYING
+  File ..\sdf.bat
+  File ..\obdepict.bat
   File ..\*.dll
   
   File /r /x test_*.* ..\build\Release\*.exe
   File /r ..\build\Release\*.obf
   File ..\build\Release\openbabel-2.dll
   
-  File ToolsPrograms.txt
-  File ..\..\src\GUI\OpenBabelGUI.html
   File vcredist_x86.exe
 
 ;  File ..\OBJava\openbabel.jar
 ;  File ..\OBJava\openbabel_java.dll
+
+  SetOutPath "$INSTDIR\examples"
+  File /r /x .svn ExampleFiles\*.*
   
   ;Store installation folder
   WriteRegStr HKCU "Software\OpenBabel ${OBVERSION}" "" $INSTDIR
   
   ;Install VC++ 2008 redistributable
   ExecWait '"$INSTDIR/vcredist_x86.exe" /q:a'
+  Delete "$INSTDIR\vcredist_x86.exe"
 
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
@@ -568,7 +572,19 @@ Section "Dummy Section" SecDummy
   Push "BABEL_DATADIR"
   Push $INSTDIR\data
   Call AddToEnvVar
+  
+  ;Add Firefox to PATH so GUI can use it for displaying structures
+  EnumRegKey $6 HKLM "SOFTWARE\Mozilla\Mozilla Firefox" 0
+  ReadRegStr $7 HKLM "SOFTWARE\Mozilla\Mozilla Firefox\$6\Main" "Install Directory"
+  Push $7
+  Call AddToPath
 
+  ;Put OBDepict.bat in context menu
+  WriteRegStr HKCR "*\shell\OBDepict\command" "" "$INSTDIR\obdepict.bat %1"
+  
+  ; Convenience shortcut to OBDepict
+  CreateShortCut "$INSTDIR\OBDepict.lnk" "$INSTDIR\obdepict.bat" "" "" 0 SW_SHOWMINIMIZED 
+   
 SectionEnd
 
 ;--------------------------------
@@ -589,12 +605,14 @@ Section "Uninstall"
 
   RMDir /r "$INSTDIR\data"
   RMDir /r "$INSTDIR\examples"
+  RMDir /r "$INSTDIR\doc"
 
-  ;ADD YOUR OWN FILES HERE...
   Delete "$INSTDIR\ob*.exe"
   Delete "$INSTDIR\babel.exe"
+  Delete "$INSTDIR\obdepict.bat"
+  Delete "$INSTDIR\OBDepict.lnk"
+  Delete "$INSTDIR\sdf.bat"
   Delete "$INSTDIR\*.obf"
-  Delete "$INSTDIR\ToolsPrograms.txt"
   
   Delete "$INSTDIR\openbabel-2.dll"
   Delete "$INSTDIR\iconv.dll"
@@ -607,7 +625,6 @@ Section "Uninstall"
 ;  Delete "$INSTDIR\openbabel.jar"
 ;  Delete "$INSTDIR\openbabel_java.dll"
   Delete "$INSTDIR\Uninstall.exe"
-  Delete "$INSTDIR\vcredist_x86.exe"
 
   RMDir "$INSTDIR"
   !insertmacro MUI_STARTMENU_GETFOLDER Application $MUI_TEMP
@@ -636,11 +653,14 @@ Section "Uninstall"
 
   DeleteRegKey /ifempty HKCU "Software\OpenBabel ${OBVERSION}"
   DeleteRegKey          HKCU "Software\OpenBabelGUI"
+  DeleteRegKey          HKCR "*\shell\OBDepict"
 
   ; Remove env var
   push "BABEL_DATADIR"
   push $INSTDIR
   Call un.RemoveFromEnvVar
   DeleteRegValue        HKCU "Environment" "BABEL_DATADIR"
+  
+  Delete "$SENDTO\OBDepict.lnk"
 
 SectionEnd

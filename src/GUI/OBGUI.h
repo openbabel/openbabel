@@ -90,6 +90,7 @@ public:
 	void OnMouseWheel(wxMouseEvent& event);
 	void OnSelectFormats(wxCommandEvent& event);
 	void OnRestrictFormats(wxCommandEvent& event);
+  void OnSetDisplayFile(wxCommandEvent& event);
 	void OnClickPlugin(wxCommandEvent& event);
 
 	void DisplayInFile(wxString filename);
@@ -112,6 +113,7 @@ private:
 	wxChoice*   m_pOutFormat;
 	wxCheckBox* m_pForceInFormat;
 	wxCheckBox* m_pNoOutFile;
+	wxCheckBox* m_pDisplay;
 	wxCheckBox* m_pInputHere;
 	wxButton*   m_pInFiles;
 	wxButton*   m_pOutFiles;
@@ -140,6 +142,7 @@ private:
 
 	wxString InputFilterString, OutputFilterString;
 	wxString    m_InFileBasePath;
+  wxString    m_DisplayFile, m_DisplayCmd;
 	wxFont* m_pfixedFont;
 	ActiveFormats m_ActiveFormats;
 
@@ -199,7 +202,7 @@ enum
 		ID_INFORCEFORMAT,ID_OUTFORCEFORMAT,ID_NOOUTFILE,ID_CONVERT,
 		ID_MESSAGES,ID_INPUTHERE,ID_RESTRICTFORMATS,ID_SELFORMATS,
     ID_COPYTOINPUT,ID_HINT,
-    ID_PLUGINS
+    ID_PLUGINS,ID_DISPLAY,ID_SETDISPLAYFILE
 };
 
 #endif

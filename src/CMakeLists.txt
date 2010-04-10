@@ -48,6 +48,7 @@ set(ops
   ops/loader.cpp
   ops/optransform.cpp
   ops/sort.cpp
+  ops/xout.cpp
 )
 
 set(stereo_srcs
@@ -92,7 +93,6 @@ set(openbabel_srcs
     obiter.cpp
     obutil.cpp
     op.cpp
-    ops.cpp
     parsmart.cpp
     partialcharge.cpp
     patty.cpp
@@ -170,7 +170,7 @@ install(TARGETS ${BABEL_LIBRARY}
 )
 
 if(MSVC)
-  foreach(plugingroup descriptors fingerprints forcefields ops)
+  foreach(plugingroup descriptors fingerprints forcefields ops charges)
     add_library(plugin_${plugingroup} ${PLUGIN_TYPE} ${${plugingroup}}
         "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h")
     target_link_libraries(plugin_${plugingroup} ${libs} ${BABEL_LIBRARY})

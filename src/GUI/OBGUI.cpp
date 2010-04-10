@@ -17,6 +17,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 #include <stdwx.h>
+#include <wx/file.h>
 #include <sstream>
 #include <openbabel/plugin.h>
 #include <openbabel/obconversion.h>
@@ -47,6 +48,7 @@ BEGIN_EVENT_TABLE(OBGUIFrame, wxFrame)
   EVT_MENU(ID_COPYTOINPUT,  OBGUIFrame::OnCopyToInput)
   EVT_MENU(ID_SELFORMATS,  OBGUIFrame::OnSelectFormats)
   EVT_MENU(ID_RESTRICTFORMATS,  OBGUIFrame::OnRestrictFormats)
+  EVT_MENU(ID_SETDISPLAYFILE,  OBGUIFrame::OnSetDisplayFile)
   EVT_MENU_RANGE(ID_PLUGINS,ID_PLUGINS+1000, OBGUIFrame::OnClickPlugin)
   EVT_MENU_RANGE(ID_SHOWCONVOPTIONS,ID_SHOWOUTOPTIONS, OBGUIFrame::OnChangeFormat)
   EVT_MENU(wxID_ABOUT, OBGUIFrame::OnAbout)
@@ -83,14 +85,16 @@ bool OBGUIApp::OnInit()
   wxConfig config(_T("OpenBabelGUI"));
   wxSize size;
   size.SetWidth(config.Read(_T("Width"),1020));
-  size.SetHeight(config.Read(_T("Height"),570));
+  size.SetHeight(config.Read(_T("Height"),918));
   wxPoint position;
-  position.x = config.Read(_T("Left"),10);
-  position.y = config.Read(_T("Top"),30);
+  position.x = config.Read(_T("Left"),2);
+  position.y = config.Read(_T("Top"),2);
 
-  //Save the full path of the help file - assumed to be in the starting working directory
   wxFileName help(_T("OpenBabelGUI.html"));
-  help.MakeAbsolute();
+  const char* pHelp = getenv(_T("BABEL_DATADIR"));
+  help.MakeAbsolute(pHelp);
+  help.RemoveLastDir();
+  help.AppendDir(_T("doc"));
   HelpFile = help.GetFullPath();
 
   // create the main application window
@@ -122,6 +126,8 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
   helpMenu = new wxMenu;
   viewMenu->AppendCheckItem(ID_RESTRICTFORMATS, _T("Use &restricted set of formats"));
   viewMenu->Append(ID_SELFORMATS, _T("&Select set of formats"));
+  viewMenu->AppendSeparator();
+  viewMenu->Append(ID_SETDISPLAYFILE, _T("Configure stucture display"));
   viewMenu->AppendSeparator();
   viewMenu->AppendCheckItem(ID_SHOWAPIOPTIONS, _T("&API Options"),_T("e.g. errorlevel"));
   viewMenu->AppendCheckItem(ID_SHOWCONVOPTIONS, _T("&Conversion Options"));
@@ -163,6 +169,8 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
   viewMenu->Check(ID_INWRAPPED,chk);
   config.Read(_T("OutWrapped"),&chk,true);
   viewMenu->Check(ID_OUTWRAPPED,chk);
+  m_DisplayFile = config.Read(_T("DisplayFile"), wxFileName::GetTempDir()+"/gui.svg");
+  m_DisplayCmd  = config.Read(_T("DisplayCmd"), _T("firefox file:///"));
 
   chk = m_ActiveFormats.ReadConfig(config);
   viewMenu->Check(ID_RESTRICTFORMATS,chk);
@@ -180,7 +188,7 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
 //******************************************************
 //**************** Controls (in tab order)**************
 
-  wxPanel* panel= new wxPanel(this, wxID_ANY);
+  wxPanel* panel = new wxPanel(this, wxID_ANY);
   m_pOptsWindow = 
     new wxScrolledWindow(panel, wxID_ANY,wxDefaultPosition,wxDefaultSize,wxVSCROLL | wxNO_BORDER);
   m_pOptsWindow->SetScrollRate(0,10);
@@ -218,6 +226,7 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
         wxDefaultPosition,wxSize(35,20));
   m_pNoOutFile   = new wxCheckBox(panel,ID_NOOUTFILE,
         wxT("Output below only (no output file)"));
+  m_pDisplay     = new wxCheckBox(panel,ID_DISPLAY, wxT("Display in " + m_DisplayCmd.BeforeFirst(' ')));
   notwrapped = viewMenu->IsChecked(ID_OUTWRAPPED) ? 0 : wxTE_DONTWRAP;
 
   //Output windows: splitter with messages(clog) and output text(cout) 
@@ -238,7 +247,7 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
   m_pSplitter->SplitHorizontally(m_pMessages, m_pOutText, 20);
   m_pSplitter->SetMinimumPaneSize(20);
   int messize;
-  config.Read(_T("MessageWindowSize"),&messize,20);
+  config.Read(_T("MessageWindowSize"),&messize,40);
   m_pSplitter->SetSashPosition(messize);	
 
 //******************************************************
@@ -251,6 +260,7 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
   OptionsSizer = new wxBoxSizer(wxVERTICAL);
   wxBoxSizer *InFilesSizer = new wxBoxSizer(wxHORIZONTAL);
   wxBoxSizer *OutFilesSizer = new wxBoxSizer(wxHORIZONTAL);
+  wxBoxSizer *OutAuxSizer    = new wxBoxSizer(wxHORIZONTAL);
   wxBoxSizer *InFormatSizer = new wxBoxSizer(wxHORIZONTAL);
   wxBoxSizer *OutFormatSizer = new wxBoxSizer(wxHORIZONTAL);
     
@@ -262,6 +272,12 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
 
   OutFilesSizer->Add(m_pOutFilename,1,wxEXPAND);
   OutFilesSizer->Add(m_pOutFiles,0,wxLEFT,5);
+
+  OutAuxSizer->Add(m_pNoOutFile,0, wxLEFT|wxBOTTOM,5);
+#ifndef __WXMAC__
+  if(OBPlugin::GetPlugin(NULL, "xout")) //display checkbox only if extra output capability is present 
+    OutAuxSizer->Add(m_pDisplay,0,wxLEFT|wxBOTTOM,5);
+#endif
 
   OutFormatSizer->Add(m_pOutFormat,1,wxEXPAND);
   OutFormatSizer->Add(m_pOutInfo,0,wxLEFT,5);
@@ -299,7 +315,7 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
 
   OutSizer->Add(new wxStaticText(panel,wxID_STATIC,wxT("Output file")),0,wxLEFT|wxTOP,5);
   OutSizer->Add(OutFilesSizer,0,wxEXPAND|wxALL,5);
-  OutSizer->Add(m_pNoOutFile,0, wxLEFT|wxBOTTOM,5);
+  OutSizer->Add(OutAuxSizer,0, wxLEFT|wxBOTTOM,5);
   OutSizer->Add(m_pSplitter, 1, wxEXPAND | wxALL, 5 );
 
   CenterSizer->Add(m_pConvert, 0, wxALL|wxALIGN_CENTER_HORIZONTAL,10);
@@ -359,6 +375,8 @@ void OBGUIFrame::OnClose(wxCloseEvent& event)
   ext = m_pOutFormat->GetStringSelection();
   pos = ext.find_first_of(_T(" \t-"));
   config.Write(_T("OutExt"), ext.substr(0,pos));
+  config.Write(_T("DisplayFile"), m_DisplayFile);
+  config.Write(_T("DisplayCmd"), m_DisplayCmd);
 
   config.Write(_T("ShowConvOptions"),viewMenu->IsChecked(ID_SHOWCONVOPTIONS));
   config.Write(_T("ShowAPIOptions"),viewMenu->IsChecked(ID_SHOWAPIOPTIONS));
@@ -460,6 +478,19 @@ void OBGUIFrame::OnRestrictFormats(wxCommandEvent& event)
 {
   GetAvailableFormats();
 }
+void OBGUIFrame::OnSetDisplayFile(wxCommandEvent& event)
+{
+  wxTextEntryDialog dialog(this, _T("Enter display command and temporary display file on separate lines"),
+    _T("Parameters for structure display"), _T(m_DisplayCmd + '\n' + m_DisplayFile),
+    wxTE_MULTILINE | wxOK | wxCANCEL);
+  if (dialog.ShowModal() == wxID_OK)
+  {
+    m_DisplayCmd  = dialog.GetValue().BeforeFirst('\n');
+    m_DisplayFile = dialog.GetValue().AfterFirst('\n');
+    m_pDisplay->SetLabel(_T("Display in ") + m_DisplayCmd.BeforeFirst(' '));
+  }
+}
+
 void OBGUIFrame::OnConvert(wxCommandEvent& WXUNUSED(event))
 {
   wxBusyCursor cw;
@@ -525,6 +556,10 @@ with the output format.\nDo you wish to continue the conversion?"),
 
 //	m_pOutText->Freeze();//Otherwise seems to be redrawn after each char from cout
   
+  //2D depiction in svg (or other) format automatically sent to file
+  if(m_pDisplay->IsChecked() && !m_DisplayFile.empty())
+    Conv.AddOption("xout", OBConversion::GENOPTIONS, m_DisplayFile.c_str());
+
   int count = Conv.FullConvert(FileList, stdOutputFileName, OutputFileList);
   
 //	m_pOutText->Thaw();
@@ -552,6 +587,13 @@ with the output format.\nDo you wish to continue the conversion?"),
       m_pOutText->SetInsertionPoint(0);
     }
   }
+#ifndef __WXMAC__
+  //Call Firefox to display the 2D structure
+  if(m_pDisplay->IsChecked() && wxFile::Exists(m_DisplayFile))
+  {
+    wxExecute(_T(m_DisplayCmd + m_DisplayFile));
+  }
+#endif
 }
 
 ///////////////////////////////////////////

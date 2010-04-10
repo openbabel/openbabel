@@ -101,6 +101,10 @@ find_package(ZLIB)
 if(ZLIB_FOUND)
   add_definitions(-DHAVE_LIBZ)
   include_directories(${ZLIB_INCLUDE_DIR})
+  # Longstanding unsolved problem with compression under Windows
+  if(WIN32)
+    add_definitions(-DDISABLE_WRITE_COMPRESSION)
+  endif(WIN32)
 endif(ZLIB_FOUND)
 # wxWidgets instructions based on http://wiki.wxwidgets.org/CMake
 #find_package(wxWidgets COMPONENTS base core REQUIRED)

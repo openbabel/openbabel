@@ -1,3 +1,23 @@
+2010-04-10  Chris Morley
+
+	* CMakeLists.txt: ensure output compression not enabled for MSVC
+	(as for previous build system).
+
+	* src/CMakeLists.txt: remove ops.cpp (which had nothing useful left
+	in it) and add xout.cpp. Add plugin_charges obf project for MSVC.
+	
+	* windows-vc2008/Distribution/NSISScriptToCreateInstaller.nsi:
+	add doc folder; delete MS distributables installer when it has been
+	run; add sdf.bat; add obdepict.bat and put on context menu;
+	add firefox	to path so GUI and obdepict can use it.
+	
+	* src/GUI/OBGUI.cpp,src/GUI/OBGUI.h: add optional display of
+	chemical structures in firefox (or other external program),
+	using a new op xout.
+
+	* windows-vc2008/Distribution/NSISScriptToCreateInstallerOBF.nsi
+	deleted
+	
 2010-04-09  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/partialcharge.h, src/partialcharges.cpp,
