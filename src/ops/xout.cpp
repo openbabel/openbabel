@@ -123,7 +123,7 @@ public:
 };
 
 /////////////////////////////////////////////////////////////////
-OpExtraOut theOpSort("xout"); //Global instance
+OpExtraOut theOpExtraOut("xout"); //Global instance
 
 /////////////////////////////////////////////////////////////////
 bool OpExtraOut::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* pConv)
