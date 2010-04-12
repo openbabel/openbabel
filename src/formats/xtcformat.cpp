@@ -669,6 +669,7 @@ namespace OpenBabel
         buf = (int *)malloc(bufsize * sizeof(*buf));
         if (buf == NULL) {
           fprintf(stderr,"malloc failed\n");
+          delete ip; // ip allocation didn't fail. Found by cppcheck
           return 0;
         }
         oldsize = *size;

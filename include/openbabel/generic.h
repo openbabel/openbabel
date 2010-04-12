@@ -220,6 +220,7 @@ namespace OpenBabel
           {
             delete *i;
             _vdata.erase(i);
+            break; // Done, don't do anything more, since iterator is invalid
           }
     }
 

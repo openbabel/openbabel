@@ -357,6 +357,8 @@ namespace OpenBabel {
                 stringstream errorMsg;
                 errorMsg << "Trouble opening or reading " << indexname << endl;
                 obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+                pOs->close();
+                delete pOs;
                 return false;
               }
             NewOstreamUsed=true;

@@ -71,6 +71,11 @@ namespace OpenBabel
   {
     public:
       /**
+       * Virtual destructor to be inhereted by subclasses
+       */
+      virtual void ~OBPainter() {}
+
+      /**
        * Create a new canvas to paint on with size @p width x @p height. 
        * OBDepict will always call NewCanvas before performing any drawing
        * operations. Painters that are capable of drawing on a previously

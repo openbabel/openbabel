@@ -1,5 +1,19 @@
 2010-04-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* include/openbabel/generic.h: Remove dangerous loop iterator
+	after calling erase(), found by cppcheck.
+
+	* include/openbabel/depict/painter.h: Add virtual destructor to
+	remove warning.
+
+	* src/formats/xtcformat.cpp: Remove minor memory leak found by
+	cppcheck.
+
+	* src/formats/fastsearchformat.cpp: Remove minor memory leak found
+	by cppcheck.
+
+	* src/ops/sort.cpp: Remove minor compile warning by GCC.
+
 	* data/element.h, data/atomtyp.h: Regenerate. Need to add CMake
 	targets for these.
 
