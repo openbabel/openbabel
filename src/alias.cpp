@@ -42,8 +42,6 @@ namespace OpenBabel
     Returns false if none are successful.
     */
 
-    obErrorLog.ThrowError(__FUNCTION__, "Alias " + _alias + "Parsing Alias.", obError);
-
     //parse as isotopic atom
     if(isdigit(_alias[0]))
     {
@@ -64,8 +62,6 @@ namespace OpenBabel
 
     if(FromNameLookup(mol, atomindex))
       return true;
-
-    obErrorLog.ThrowError(__FUNCTION__, "Alias " + _alias + " Trying formula parsing.", obWarning, onceOnly);
 
     if(!FormulaParse(mol, atomindex))
     {
