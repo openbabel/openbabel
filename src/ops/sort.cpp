@@ -63,7 +63,8 @@ public:
           //Now output the processed vector
           pConv->SetInAndOutFormats(this, _pRealOutFormat);
 
-          pConv->SetInStream(&std::ifstream());//Not used, but Convert checks it is ok
+          std::ifstream ifs; // get rid of gcc warning
+          pConv->SetInStream(&ifs);//Not used, but Convert checks it is ok
           pConv->GetInStream()->clear();
 
           //clear the options - they have already been applied

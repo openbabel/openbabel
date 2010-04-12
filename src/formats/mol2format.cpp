@@ -376,8 +376,10 @@ namespace OpenBabel
         ofs << "MMFF94_CHARGES" << endl;
       else if (dp->GetValue() == "ESP")
         ofs << "USER_CHARGES" << endl;
-      else // should pick from the Tripos types
+      else if (dp->GetValue() == "GASTEIGER")
         ofs << "GASTEIGER" << endl;
+      else // ideally, code should pick from the Tripos types
+        ofs << "USER_CHARGES" << endl;
     }
     else { // No idea what these charges are... all our code sets "PartialCharges"
         ofs << "GASTEIGER" << endl;
