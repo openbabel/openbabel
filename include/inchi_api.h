@@ -1,16 +1,18 @@
 /*
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.02
- * November 30, 2008
- * Developed at NIST
+ * Software version 1.03
+ * March 06, 2010
+ *
+ * Originally developed at NIST
+ * Modifications and additions by IUPAC and the InChI Trust
  *
  * The InChI library and programs are free software developed under the
  * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
  * you can redistribute this software and/or modify it under the terms of 
  * the GNU Lesser General Public License as published by the Free Software 
  * Foundation:
- * http://www.opensource.org/licenses/lgpl-license.php
+ * http://www.opensource.org/licenses/lgpl-2.1.php
  */
 
 
@@ -69,7 +71,8 @@ typedef enum tagINCHIBondStereo2D {
  * The only exception is INCHI_BOND_STEREO_SINGLE_?EITHER marking which  *
  * always assigns to the atom an "unknown" parity (u).                   *
  *                                                                       *
- * Note that the -NEWPS InChI option changes 2D stereo interpretation:   *
+ * Note the behavior which is default for InChI software v. 1.03/1.02std *
+ * (at -NEWPSOFF option is not supplied) 2D stereo interpretation:       *
  * only bonds that have sharp end pointing to the stereogenic atom are   *
  * considered as being out of plane and only sharp ends of               *
  * INCHI_BOND_STEREO_SINGLE_?EITHER bonds are considered to determine    *
@@ -422,13 +425,8 @@ typedef enum tagINCHIStereoParity0D {
    INCHI_PARITY_NONE      = 0,
    INCHI_PARITY_ODD       = 1,  /* 'o' */
    INCHI_PARITY_EVEN      = 2,  /* 'e' */
-/*^^^^ */
-#ifndef TREAT_UNKNOWN_STEREO_AS_UNDEFINED
-INCHI_PARITY_UNKNOWN   = 3,  /* 'u' */
-#else
-INCHI_PARITY_UNKNOWN   = 4,  /* same as undefined */
-#endif
-
+   INCHI_PARITY_UNKNOWN   = 3,  /* 'u' */ /* (see also readinch.c)
+                                          used in: Extract0DParities, INChITo_Atom  */
    INCHI_PARITY_UNDEFINED = 4   /* '?' -- should not be used; however, see Note above */
 } inchi_StereoParity0D;
 
@@ -463,7 +461,7 @@ typedef struct tagINCHIStereo0D {
  *************************************************/
 
 
-/* Structure -> InChI, GetStdINCHI() */
+/* Structure -> InChI, GetINCHI() / GetStdINCHI() */
 typedef struct tagINCHI_Input {
     /* the caller is responsible for the data allocation and deallocation */
     inchi_Atom     *atom;         /* array of num_atoms elements */
@@ -474,7 +472,7 @@ typedef struct tagINCHI_Input {
     AT_NUM          num_stereo0D; /* number of 0D stereo elements */
 }inchi_Input;
 
-/* InChI -> Structure, GetStructFromStdINCHI() */
+/* InChI -> Structure, GetStructFromINCHI()/GetStructFromStdINCHI() */
 typedef struct tagINCHI_InputINCHI {
     /* the caller is responsible for the data allocation and deallocation */
     char *szInChI;     /* InChI ASCIIZ string to be converted to a strucure */
@@ -504,8 +502,8 @@ typedef struct tagINCHI_Output {
 
 /* InChI -> Structure */
 typedef struct tagINCHI_OutputStruct {
-    /* 4 pointers are allocated by GetStructFromStdINCHI()     */
-    /* to deallocate all of them call FreeStructFromStdINCHI() */
+    /* 4 pointers are allocated by GetStructFromINCHI()/GetStructFromStdINCHI()     */
+    /* to deallocate all of them call FreeStructFromStdINCHI()/FreeStructFromStdINCHI() */
     inchi_Atom     *atom;         /* array of num_atoms elements */
     inchi_Stereo0D *stereo0D;     /* array of num_stereo0D 0D stereo elements or NULL */
     AT_NUM          num_atoms;    /* number of atoms in the structure < 1024 */
@@ -552,11 +550,13 @@ typedef struct tagINCHI_OutputStruct {
     #define INCHI_DECL
 #endif
 
-
-/* GetStdINCHI(...) and Get_std_inchi_Input_FromAuxInfo(...) return values: */
-
+/*^^^ Return codes for 
+        GetINCHI 
+        GetStdINCHI 
+        Get_inchi_Input_FromAuxInfo 
+        Get_std_inchi_Input_FromAuxInfo 
+*/
 typedef enum tagRetValGetINCHI {
- 
     inchi_Ret_SKIP    = -2, /* not used in InChI library */
     inchi_Ret_EOF     = -1, /* no structural data has been provided */
     inchi_Ret_OKAY    =  0, /* Success; no errors or warnings */
@@ -568,6 +568,20 @@ typedef enum tagRetValGetINCHI {
 
 } RetValGetINCHI;
 
+/*^^^ Return codes for CheckINCHI */
+typedef enum tagRetValCheckINCHI 
+{
+    INCHI_VALID_STANDARD     =   0,
+    INCHI_VALID_NON_STANDARD =  -1,    
+    INCHI_INVALID_PREFIX     =   1,
+    INCHI_INVALID_VERSION    =   2,
+    INCHI_INVALID_LAYOUT     =   3,
+    INCHI_FAIL_I2I           =   4
+    
+} RetValCheckINCHI;
+
+
+
 /* to compile all InChI code as a C++ code #define INCHI_ALL_CPP */
 #ifndef INCHI_ALL_CPP
 #ifdef __cplusplus
@@ -576,57 +590,135 @@ extern "C" {
 #endif
 
 
-/*^^^ Exported functions */
+/*^^^ InChI PREFIX */
+#define INCHI_STRING_PREFIX "InChI="
+#define LEN_INCHI_STRING_PREFIX 6
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Format:
+    
+    Standard InChI starts with: InChI=1S/
+    Non-standard one with:      InChI=1/
+    Empty std InChI:            InChI=1S//
+    Empty InChI:                InChI=1//
+                                AuxInfo=1//
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
 
-/* inchi_Input is created by the user; strings in inchi_Output are allocated and deallocated by InChI */
-/* inchi_Output does not need to be initilized out to zeroes; see FreeSTDINCHI() on how to deallocate it */
+
+
+/* EXPORTED FUNCTIONS */
+
+
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+GetINCHI / GetStdINCHI
+
+
+    inchi_Input is created by the user; strings in inchi_Output are allocated and deallocated by InChI
+    inchi_Output does not need to be initilized out to zeroes; see FreeNCHI()/FreeSTDINCHI() on how to deallocate it
+
+
+    Valid options for GetINCHI:
+    (use - instead of / for O.S. other than MS Windows)
+
+    Structure perception (compatible with stdInChI)                     
+        /NEWPSOFF   /DoNotAddH   /SNon
+    Stereo interpretation (lead to generation of non-standard InChI)
+        /SRel /SRac /SUCF /ChiralFlagON /ChiralFlagOFF
+    InChI creation options (lead to generation of non-standard InChI)
+        /SUU /SLUUD   /FixedH  /RecMet  /KET /15T
+
+    
+    GetINCHI produces standard InChI if no InChI creation/stereo modification options 
+    are specified. Inveresely, if any of SUU/SLUUD/RecMet/FixedH/Ket/15T/SRel/SRac/SUCF 
+    options are specified, generated InChI will be non-standard one. 
+ 
+    
+    GetStdINCHI produces standard InChI only. 
+    The valid structure perception options are:
+        /NEWPSOFF   /DoNotAddH   /SNon
+
+    
+    Other options are:    
+        /AuxNone    Omit auxiliary information (default: Include)
+        /Wnumber    Set time-out per structure in seconds; W0 means unlimited
+                    In InChI library the default value is unlimited
+        /OutputSDF  Output SDfile instead of InChI
+        /WarnOnEmptyStructure 
+                    Warn and produce empty InChI for empty structure
+        /SaveOpt    Save custom InChI creation options (non-standard InChI)
+
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetINCHI( inchi_Input *inp, inchi_Output *out );
 EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetStdINCHI( inchi_Input *inp, inchi_Output *out );
 
 
 
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FreeINCHI / FreeStdINCHI
 
-/* FreeStdINCHI() should be called to deallocate char* pointers obtained from each GetStdINCHI() call */
+    should be called to deallocate char* pointers 
+    obtained from each GetINCHI /GetStdINCHI call                         
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+EXPIMP_TEMPLATE INCHI_API void INCHI_DECL FreeINCHI ( inchi_Output *out );
 EXPIMP_TEMPLATE INCHI_API void INCHI_DECL FreeStdINCHI ( inchi_Output *out );
 
 
-/* helper: get string length */
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+GetStringLength
+    
+    helper: get string length
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetStringLength( char *p );
 
-/* inchi_Inputinchi_InputINCHI is created by the user; pointers in inchi_OutputStruct are allocated and deallocated by InChI */
-/* inchi_OutputStruct does not need to be initilized out to zeroes; see FreeStructFromStdINCHI() on how to deallocate it  */
-/* Option /Inchi2Struct is not needed for GetStructFromStdINCHI(...) */
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+GetStructFromINCHI / GetStructFromStdINCHI
+
+    inchi_Inputinchi_InputINCHI is created by the user; pointers in inchi_OutputStruct are allocated and deallocated by InChI 
+    inchi_OutputStruct does not need to be initilized out to zeroes; see FreeStructFromStdINCHI() on how to deallocate it 
+    Option /Inchi2Struct is not needed for GetStructFromINCHI()/GetStructFromStdINCHI()
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetStructFromINCHI( inchi_InputINCHI *inpInChI, inchi_OutputStruct *outStruct );
 EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetStructFromStdINCHI( inchi_InputINCHI *inpInChI, inchi_OutputStruct *outStruct );
 
-/* FreeStructFromStdINCHI( ) should be called to deallocate pointers obtained from each GetStdINCHI()GetStructFromStdINCHI() call */
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FreeStructFromINCHI / FreeStructFromStdINCHI
+
+    should be called to deallocate pointers obtained from each 
+    GetStructFromStdINCHI / GetStructFromINCHI
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+EXPIMP_TEMPLATE INCHI_API void INCHI_DECL FreeStructFromINCHI( inchi_OutputStruct *out );
 EXPIMP_TEMPLATE INCHI_API void INCHI_DECL FreeStructFromStdINCHI( inchi_OutputStruct *out );
 
 
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+GetINCHIfromINCHI
+
+    GetINCHIfromINCHI does same as -InChI2InChI option: converts InChI into InChI for validation purposes    
+    It may also be used to filter out specific layers. For instance, /Snon would remove stereochemical layer 
+    Omitting /FixedH and/or /RecMet would remove Fixed-H or Reconnected layers                               
+    To keep all InChI layers use options string "/FixedH /RecMet"; option /InChI2InChI is not needed         
+    inchi_InputINCHI is created by the user; strings in inchi_Output are allocated and deallocated by InChI  
+    inchi_Output does not need to be initilized out to zeroes; see FreeINCHI() on how to deallocate it  
+                                                                                                        
+    Note: there is no explicit tool to conversion from/to standard InChI                                   
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetINCHIfromINCHI( inchi_InputINCHI *inpInChI, inchi_Output *out );
 
 #ifndef INCHI_ALL_CPP
 #ifdef __cplusplus
 }
 #endif
 #endif
-
- /******************************************************************
-     Using inchi_Input::szOptions available for standard InChI API
-  ******************************************************************
-  Awailable options (use - instead of / for O.S. other than MS Windows):
-    /SNon        Exclude stereo (Default: Include Absolute stereo)
-
-    /NEWPSOFF    Both ends of wedge point to stereocenter (default: a narrow one)
-    /DoNotAddH   Overrides inchi_Atom::num_iso_H[0] == -1
-    /AuxNone     Omit auxiliary information (default: Include)
-    /Wnumber     Set time-out per structure in seconds; W0 means unlimited
-                 In InChI library the default value is unlimited
-    /OutputSDF   Output SDfile instead of InChI
-    /WarnOnEmptyStructure Warn and produce empty InChI for empty structure
-
-
-    Empty InChI format:   InChI=1S//
-                          AuxInfo=1//
-*/
 
 
 /*****************************************************************
@@ -654,28 +746,66 @@ extern "C" {
 #endif
 #endif
 
-/*  Input
-    -----
+
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Get_inchi_Input_FromAuxInfo / Get_std_inchi_Input_FromAuxInfo
+
+Input:
     szInchiAuxInfo: contains ASCIIZ string of InChI output for a single
                    structure or only the AuxInfo line
     bDoNotAddH:    if 0 then InChI will be allowed to add implicit H
+    bDiffUnkUndfStereo
+                   if not 0, use different labels for unknown and undefined stereo
     pInchiInp:     should have a valid pointer pInchiInp->pInp to an empty 
                    (all members = 0) inchi_Input structure 
 
-    Output
-    ------
+Output:
     pInchiInp:     The following members of pInp may be filled during the call:
                    atom, num_atoms, stereo0D, num_stereo0D
     Return value:  see RetValGetINCHI
-*/
-EXPIMP_TEMPLATE INCHI_API int INCHI_DECL Get_std_inchi_Input_FromAuxInfo
-             ( char *szInchiAuxInfo, int bDoNotAddH, InchiInpData *pInchiInp );
 
-/*
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL Get_inchi_Input_FromAuxInfo( 
+                                                        char *szInchiAuxInfo, 
+                                                        int bDoNotAddH, 
+                                                        int bDiffUnkUndfStereo,
+                                                        InchiInpData *pInchiInp );
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL Get_std_inchi_Input_FromAuxInfo( char *szInchiAuxInfo, 
+                                                        int bDoNotAddH, 
+                                                        InchiInpData *pInchiInp );
+
+
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Free_inchi_Input / Free_std_inchi_Input
+
     To deallocate and write zeroes into the changed members of pInchiInp->pInp call
     Free_std_inchi_Input( inchi_Input *pInp )
-*/
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+EXPIMP_TEMPLATE INCHI_API void INCHI_DECL Free_inchi_Input( inchi_Input *pInp );
 EXPIMP_TEMPLATE INCHI_API void INCHI_DECL Free_std_inchi_Input( inchi_Input *pInp );
+
+
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+CheckINCHI
+
+Check if the string represents valid InChI/standard InChI.          
+Input:
+    szINCHI     source InChI
+    strict      if 0, just briefly check for proper layout (prefix, version, etc.)
+                The result may not be strict.
+                If not 0, try to perform InChI2InChI conversion and 
+                returns success if a resulting InChI string exactly match source.
+                The result may be 'false alarm' due to imperfectness of conversion.
+Returns:
+    success/errors codes
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL CheckINCHI(const char *szINCHI, const int strict);    
+
 
 #ifndef INCHI_ALL_CPP
 #ifdef __cplusplus
@@ -683,90 +813,22 @@ EXPIMP_TEMPLATE INCHI_API void INCHI_DECL Free_std_inchi_Input( inchi_Input *pIn
 #endif
 #endif
 
-/*
-
-=======================================================================
-============= prototypes for C calling conventions: ===================
-=======================================================================
-int  GetStdINCHI( inchi_Input *inp, inchi_Output *out );
-void FreeStdINCHI( inchi_Output *out );
-
-int  GetStringLength( char *p );
-
-int  Get_std_inchi_Input_FromAuxInfo
-     ( char *szInchiAuxInfo, int bDoNotAddH, InchiInpData *pInchiInp );
-void Free_std_inchi_Input( inchi_Input *pInp );
-
-int GetStructFromStdINCHI( inchi_InputINCHI *inpInChI, inchi_OutputStruct *outStruct );
-void FreeStructFromStdINCHI( inchi_OutputStruct *out );
-
-======================================================================
-Win32 Dumpbin export information
-======================================================================  
-Ordinal  Hint        Entry point
-
-
-    ordinal hint RVA      name
-cdecl 
-          1    0 0008F460 FreeStdINCHI
-          2    2 0008F4A0 Free_std_inchi_Input
-          3    3 0008F450 GetStdINCHI
-          4    5 0008F470 GetStringLength
-          5    7 0008F480 Get_std_inchi_Input_FromAuxInfo
-          6    6 0008F4B0 GetStructFromStdINCHI
-          7    1 0008F4C0 FreeStructFromStdINCHI
-         10    4 0008CE20 GetStdINCHIKeyFromStdINCHI
-         11    8 00090810 STDINCHIGEN_Create
-         12    E 00090820 STDINCHIGEN_Setup
-         13    B 00090840 STDINCHIGEN_DoNormalization
-         14    A 00090850 STDINCHIGEN_DoCanonicalization
-         15    C 00090860 STDINCHIGEN_DoSerialization
-         16    D 00090880 STDINCHIGEN_Reset
-         17    9 000908A0 STDINCHIGEN_Destroy
-__stdcall or PASCAL
-          8    F 0008CF30 _FreeStdINCHI@4
-          9   10 0008CF90 _FreeStructFromStdINCHI@4
-         18   11 00020D10 _Free_std_inchi_Input@4
-         19   12 0008D000 _GetStdINCHI@8
-         20   13 0008C820 _GetStdINCHIKeyFromStdINCHI@8
-         21   14 0008EF80 _GetStringLength@4
-         22   15 0008EFA0 _GetStructFromStdINCHI@8
-         23   16 00020B50 _Get_std_inchi_Input_FromAuxInfo@12
-         24   17 0008F4D0 _STDINCHIGEN_Create@0
-         25   18 000907B0 _STDINCHIGEN_Destroy@4
-         26   19 0008FC40 _STDINCHIGEN_DoCanonicalization@8
-         27   1A 0008F8D0 _STDINCHIGEN_DoNormalization@8
-         28   1B 0008FE70 _STDINCHIGEN_DoSerialization@12
-         29   1C 00090410 _STDINCHIGEN_Reset@12
-         30   1D 0008F5D0 _STDINCHIGEN_Setup@12
-
-=======================================================================
-
-
-*/
-
-/* Currently there is no callback function for aborting, progress, etc. */
-
-
-
 
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     
-                                InChIKey API part
-                                =================
-
-
+                                InChIKey API
+                                
 
     InChIKey description
 
 
 
     The InChIKey is a character signature based on a hash code of the InChI string.        
-    
-    Standard InChIKey is produced out of dtandard InChI:
+    Standard InChIKey is produced out of standard InChI.
+    Non-standard InChIKey is produced out of non-standard InChI.
            
-           AAAAAAAAAAAAAA-BBBBBBBBCD-P
+                    AAAAAAAAAAAAAA-BBBBBBBBCD-P
 
 
     InChIKey layout is as follows:
@@ -778,9 +840,10 @@ __stdcall or PASCAL
     BBBBBBBB
         Second block (8 letters)
         Encodes tautomers, stereochemistry, isotopomers, reconnected layer 
-    S
+    C
         'S' for standard
-    A
+        'N' for non-standard
+    D
         InChI version ('A' for 1)
     P - (de)protonation flag
         Protonization encoding:
@@ -790,36 +853,36 @@ __stdcall or PASCAL
         A < -12 or > +12
 
 
-    All symbols except delimiter (dash, that is, minus) are uppercase English letters representing a 
-    "base 26" encoding.
-
+    All symbols except delimiter (dash, that is, minus) are uppercase English 
+    letters representing a "base 26" encoding.
     
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
 
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Return codes for key generation procedure 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-
+/*^^^ Return codes for key generation procedure */
 #define INCHIKEY_OK 0
 #define INCHIKEY_UNKNOWN_ERROR 1
 #define INCHIKEY_EMPTY_INPUT 2
-#define INCHIKEY_NOT_INCHI_INPUT 3
+#define INCHIKEY_INVALID_INCHI_PREFIX 3
 #define INCHIKEY_NOT_ENOUGH_MEMORY 4
-#define INCHIKEY_ERROR_IN_FLAG_CHAR 5
-#define INCHIKEY_INCHI_REVERSAL_FAIL 10
-#define INCHIKEY_INCHI_REVERSED_NOT_THE_SAME 11
+#define INCHIKEY_INVALID_INCHI 20
 #define INCHIKEY_INVALID_STD_INCHI 21
 
 
+/*^^^ Return codes for CheckINCHIKey */
+typedef enum tagRetValGetINCHIKey
+{
+    INCHIKEY_VALID_STANDARD     =   0,
+    INCHIKEY_VALID_NON_STANDARD =  -1,
+    INCHIKEY_INVALID_LENGTH     =   1,
+    INCHIKEY_INVALID_LAYOUT     =   2,
+    INCHIKEY_INVALID_VERSION    =   3
+} RetValCheckINCHIKeyv;
 
 
 
+/* EXPORTED FUNCTIONS */
 
-
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                            EXPORTED FUNCTIONS
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
 
 /* To compile all InChI code as a C++ code #define INCHI_ALL_CPP */
@@ -831,28 +894,69 @@ extern "C" {
 #endif
 
 
+
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Calculate standard InChIKey by standard InChI string. 
+GetINCHIKeyFromINCHI
+
+Calculate InChIKey by InChI string. 
 
 Input:
         szINCHISource
             source InChI string 
+        xtra1
+            =1 calculate hash extension (up to 256 bits; 1st block)
+        xtra2
+            =1 calculate hash extension (up to 256 bits; 2nd block)
 
 Output:
         szINCHIKey
             InChIKey string 
-            Caller should allocate space for 25 characters + trailing NULL
+            The user-supplied buffer szINCHIKey should be at least 28 bytes long.
+        szXtra1
+            hash extension (up to 256 bits; 1st block) string 
+            Caller should allocate space for 64 characters + trailing NULL
+        szXtra2
+            hash extension (up to 256 bits; 2nd block) string 
+            Caller should allocate space for 64 characters + trailing NULL
 
 Returns:
         success/errors codes
-*/
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetINCHIKeyFromINCHI(const char* szINCHISource, 
+                                                              const int xtra1,
+                                                              const int xtra2,
+                                                              char* szINCHIKey, 
+                                                              char* szXtra1, 
+                                                              char* szXtra2);
+
+
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+GetStdINCHIKeyFromStdINCHI
+
+    "Standard" counterpart
+
+    For compatibility with v. 1.02std, no extra hash calculation is allowed.
+    To calculate extra hash(es), use GetINCHIKeyFromINCHI with stdInChI as input.
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetStdINCHIKeyFromStdINCHI(const char* szINCHISource, 
-                                                                 char* szINCHIKey);
+                                                                    char* szINCHIKey);
 
 
-    
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+CheckINCHIKey
 
+Check if the string represents valid InChIKey.          
+Input:
+        szINCHIKey
+            source InChIKey string 
+Returns:
+        success/errors codes
 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL CheckINCHIKey(const char *szINCHIKey);    
 
 #ifndef INCHI_ALL_CPP
 #ifdef __cplusplus
@@ -864,8 +968,12 @@ EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetStdINCHIKeyFromStdINCHI(const char* 
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     
-                                Modularized InChI generation API part
-                                =====================================
+                          Modularized InChI generation API
+
+
+
+    Note. Functions with STDINCHIGEN prefix are 
+    retained for compatibility with v. 1.02std
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
@@ -994,11 +1102,7 @@ typedef void* INCHIGEN_HANDLE;
 
 
 
-
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                            EXPORTED FUNCTIONS
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-
+/* EXPORTED FUNCTIONS */
 
 
 
@@ -1011,55 +1115,86 @@ extern "C" {
 
 
 
-
-
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-InChI Generator: create generator
-Returns handle of generator object or NULL on failure
+INCHIGEN_Create / STDINCHIGEN_Create
+
+    InChI Generator: create generator
+    Returns handle of generator object or NULL on failure
+
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+EXPIMP_TEMPLATE INCHI_API 
+INCHIGEN_HANDLE INCHI_DECL INCHIGEN_Create(void);
 EXPIMP_TEMPLATE INCHI_API 
 INCHIGEN_HANDLE INCHI_DECL STDINCHIGEN_Create(void);
 
 
 
-EXPIMP_TEMPLATE INCHI_API 
-int INCHI_DECL STDINCHIGEN_Setup(INCHIGEN_HANDLE HGen, 
-                                 INCHIGEN_DATA * pGenData, 
-                                 inchi_Input * pInp);
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INCHIGEN_Setup / STDINCHIGEN_Setup
+
+    InChI Generator: setup
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL INCHIGEN_Setup(INCHIGEN_HANDLE HGen, 
+                                                        INCHIGEN_DATA * pGenData, 
+                                                        inchi_Input * pInp);
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL STDINCHIGEN_Setup(INCHIGEN_HANDLE HGen, 
+                                                           INCHIGEN_DATA * pGenData, 
+                                                           inchi_Input * pInp);
 
 
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-InChI Generator: structure normalization stage
+INCHIGEN_DoNormalization / STDINCHIGEN_DoNormalization
+
+    InChI Generator: structure normalization stage
+
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-EXPIMP_TEMPLATE INCHI_API 
-int INCHI_DECL STDINCHIGEN_DoNormalization(INCHIGEN_HANDLE HGen, 
-                                        INCHIGEN_DATA * pGenData);
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL INCHIGEN_DoNormalization(INCHIGEN_HANDLE HGen, 
+                                                                     INCHIGEN_DATA * pGenData);
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL STDINCHIGEN_DoNormalization(INCHIGEN_HANDLE HGen, 
+                                                                     INCHIGEN_DATA * pGenData);
 
 
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-InChI Generator: structure canonicalization stage
+INCHIGEN_DoCanonicalization / STDINCHIGEN_DoCanonicalization
+
+    InChI Generator: structure canonicalization stage
+
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-EXPIMP_TEMPLATE INCHI_API 
-int INCHI_DECL STDINCHIGEN_DoCanonicalization(INCHIGEN_HANDLE HGen, 
-                                           INCHIGEN_DATA * pGenData);
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL INCHIGEN_DoCanonicalization
+                                (INCHIGEN_HANDLE HGen, INCHIGEN_DATA * pGenData);
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL STDINCHIGEN_DoCanonicalization
+                                (INCHIGEN_HANDLE HGen, INCHIGEN_DATA * pGenData);
 
 
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-InChI Generator: InChI serialization stage
+INCHIGEN_DoSerialization / STDINCHIGEN_DoSerialization
+
+    InChI Generator: InChI serialization stage
+
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-EXPIMP_TEMPLATE INCHI_API 
-int INCHI_DECL STDINCHIGEN_DoSerialization(INCHIGEN_HANDLE HGen, 
-                                        INCHIGEN_DATA * pGenData, 
-                                        inchi_Output * pResults);
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL INCHIGEN_DoSerialization(INCHIGEN_HANDLE HGen, 
+                                                                  INCHIGEN_DATA * pGenData, 
+                                                                  inchi_Output * pResults);
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL STDINCHIGEN_DoSerialization(INCHIGEN_HANDLE HGen, 
+                                                                     INCHIGEN_DATA * pGenData, 
+                                                                     inchi_Output * pResults);
 
 
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-InChI Generator: reset stage (use before get next structure)
+INCHIGEN_DoSerialization / STDINCHIGEN_DoSerialization
+
+    InChI Generator: reset stage (use before get next structure)
+
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+EXPIMP_TEMPLATE INCHI_API 
+void INCHI_DECL INCHIGEN_Reset(INCHIGEN_HANDLE HGen, 
+                               INCHIGEN_DATA * pGenData, 
+                               inchi_Output * pResults);
 EXPIMP_TEMPLATE INCHI_API 
 void INCHI_DECL STDINCHIGEN_Reset(INCHIGEN_HANDLE HGen, 
                                INCHIGEN_DATA * pGenData, 
@@ -1068,10 +1203,13 @@ void INCHI_DECL STDINCHIGEN_Reset(INCHIGEN_HANDLE HGen,
 
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-InChI Generator: destroy generator
+INCHIGEN_DoSerialization / STDINCHIGEN_DoSerialization
+
+    InChI Generator: destroy generator
+
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-EXPIMP_TEMPLATE INCHI_API 
-void INCHI_DECL STDINCHIGEN_Destroy(INCHIGEN_HANDLE HGen);
+EXPIMP_TEMPLATE INCHI_API void INCHI_DECL INCHIGEN_Destroy(INCHIGEN_HANDLE HGen);
+EXPIMP_TEMPLATE INCHI_API void INCHI_DECL STDINCHIGEN_Destroy(INCHIGEN_HANDLE HGen);
 
 
 
@@ -1084,5 +1222,104 @@ void INCHI_DECL STDINCHIGEN_Destroy(INCHIGEN_HANDLE HGen);
 #endif
 
 
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Prototypes for C calling conventions:
+
+    int  GetINCHI( inchi_Input *inp, inchi_Output *out );
+    int  GetStdINCHI( inchi_Input *inp, inchi_Output *out );
+    void FreeINCHI( inchi_Output *out );
+    void FreeStdINCHI( inchi_Output *out );
+    int  GetStringLength( char *p );
+    int  Get_inchi_Input_FromAuxInfo
+     ( char *szInchiAuxInfo, int bDoNotAddH, int bDiffUnkUndfStereo, InchiInpData *pInchiInp );
+    int  Get_std_inchi_Input_FromAuxInfo
+     ( char *szInchiAuxInfo, int bDoNotAddH, int bDiffUnkUndfStereo,InchiInpData *pInchiInp );
+    void Free_inchi_Input( inchi_Input *pInp );
+    void Free_std_inchi_Input( inchi_Input *pInp );
+    int GetStructFromINCHI( inchi_InputINCHI *inpInChI, inchi_OutputStruct *outStruct );
+    int GetStructFromStdINCHI( inchi_InputINCHI *inpInChI, inchi_OutputStruct *outStruct );
+    void FreeStructFromStdINCHI( inchi_OutputStruct *out );
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Win32 Dumpbin export information
+
+    ordinal hint RVA      name
+cdecl 
+          1    0 000B7EAB CheckINCHI
+          2    1 000B7221 CheckINCHIKey
+          3    2 000B7C62 FreeINCHI
+          4    3 000B7B04 FreeStdINCHI
+          5    4 000B72B7 FreeStructFromINCHI
+          6    5 000B7BC2 FreeStructFromStdINCHI
+          7    6 000B7E33 Free_inchi_Input
+          8    7 000B7C58 Free_std_inchi_Input
+          9    8 000B727B GetINCHI
+         10    9 000B75B4 GetINCHIKeyFromINCHI
+         11    A 000B757D GetINCHIfromINCHI
+         12    B 000B8211 GetStdINCHI
+         13    C 000B7F0A GetStdINCHIKeyFromStdINCHI
+         14    D 000B77CB GetStringLength
+         15    E 000B7CA3 GetStructFromINCHI
+         16    F 000B778A GetStructFromStdINCHI
+         17   10 000B7DAC Get_inchi_Input_FromAuxInfo
+         18   11 000B7D6B Get_std_inchi_Input_FromAuxInfo
+         19   12 000B7D6B INCHIGEN_Create
+         20   13 000B7F2D INCHIGEN_Destroy
+         21   14 000B7F23 INCHIGEN_DoCanonicalization
+         22   15 000B7F23 INCHIGEN_DoNormalization
+         23   16 000B714A INCHIGEN_DoSerialization
+         24   17 000B7FCD INCHIGEN_Reset
+         25   18 000B7FCD INCHIGEN_Setup
+         26   19 000B7EA6 STDINCHIGEN_Create
+         27   1A 000B7EA6 STDINCHIGEN_Destroy
+         28   1B 000B711D STDINCHIGEN_DoCanonicalization
+         29   1C 000B7073 STDINCHIGEN_DoNormalization
+         30   1D 000B7FC3 STDINCHIGEN_DoSerialization
+         31   1E 000B7668 STDINCHIGEN_Reset
+         32   1F 000B7438 STDINCHIGEN_Setup
+__stdcall or PASCAL
+         33   20 000B7DFC _CheckINCHI@8
+         34   21 000B7802 _CheckINCHIKey@4
+         35   22 000B7F73 _FreeINCHI@4
+         36   23 000B7F82 _FreeStdINCHI@4
+         37   24 000B75E1 _FreeStructFromINCHI@4
+         38   25 000B7B81 _FreeStructFromStdINCHI@4
+         39   26 000B7B86 _Free_inchi_Input@4
+         40   27 000B7A96 _Free_std_inchi_Input@4
+         41   28 000B7B5E _GetINCHI@8
+         42   29 000B7285 _GetINCHIKeyFromINCHI@24
+         43   2A 000B758C _GetINCHIfromINCHI@8
+         44   2B 000B7CDA _GetStdINCHI@8
+         45   2C 000B7979 _GetStdINCHIKeyFromStdINCHI@8
+         46   2D 000B7BA4 _GetStringLength@4
+         47   2E 000B70A5 _GetStructFromINCHI@8
+         48   2F 000B79B0 _GetStructFromStdINCHI@8
+         49   30 000B8022 _Get_inchi_Input_FromAuxInfo@16
+         50   31 000B76E0 _Get_std_inchi_Input_FromAuxInfo@12
+         51   32 000B7230 _INCHIGEN_Create@0
+         52   33 000B760E _INCHIGEN_Destroy@4
+         53   34 000B7087 _INCHIGEN_DoCanonicalization@8
+         54   35 000B70B4 _INCHIGEN_DoNormalization@8
+         55   36 000B72D5 _INCHIGEN_DoSerialization@12
+         56   37 000B7FE1 _INCHIGEN_Reset@12
+         57   38 000B7163 _INCHIGEN_Setup@12
+         58   39 000B7159 _STDINCHIGEN_Create@0
+         59   3A 000B78A7 _STDINCHIGEN_Destroy@4
+         60   3B 000B72F3 _STDINCHIGEN_DoCanonicalization@8
+         61   3C 000B737A _STDINCHIGEN_DoNormalization@8
+         62   3D 000B7B72 _STDINCHIGEN_DoSerialization@12
+         63   3E 000B7654 _STDINCHIGEN_Reset@12
+         64   3F 000B75FF _STDINCHIGEN_Setup@12
+
+
+    Note. Currently there is no callback function for aborting, progress, etc.
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
 #endif /* __INHCH_API_H__ */

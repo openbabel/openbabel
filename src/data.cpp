@@ -907,6 +907,8 @@ namespace OpenBabel
       // If all else fails, use the compiled in values
       if (_dataptr)
         {
+          obErrorLog.ThrowError(__FUNCTION__, "Cannot open " + _filename + " defaulting to compiled data.", obWarning);
+
           const char *p1,*p2;
           for (p1 = p2 = _dataptr;*p2 != '\0';++p2)
             if (*p2 == '\n')
