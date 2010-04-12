@@ -73,7 +73,7 @@ namespace OpenBabel
       /**
        * Virtual destructor to be inhereted by subclasses
        */
-      virtual void ~OBPainter() {}
+      virtual ~OBPainter() {}
 
       /**
        * Create a new canvas to paint on with size @p width x @p height. 
