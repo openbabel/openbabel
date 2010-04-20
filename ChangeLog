@@ -1,3 +1,8 @@
+2010-04-20  Noel O'Boyle
+
+	* scripts/CMakeLists.txt: Handle local and global Python installs
+	in a (to me) sensible way
+
 2010-04-20  Chris Morley
 
 	* src/ops/loader.cpp: parse of plugindefines.txt  to allow # as

@@ -64,7 +64,15 @@ if(NOT WIN32)
         COMMAND ${CMAKE_COMMAND} -E remove ob.py
         VERBATIM)
 
-    install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --prefix=${CMAKE_INSTALL_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
+    if (${PYTHON_PREFIX})
+        install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/python/setup.py install --prefix=${PYTHON_PREFIX} WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/scripts)")
+    else (${PYTHON_PREFIX})
+        if (${CMAKE_INSTALL_PREFIX} EQUAL "/usr/local")
+            install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/python/setup.py install WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/scripts)")
+        else (${CMAKE_INSTALL_PREFIX} EQUAL "/usr/local")
+            install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/python/setup.py install --prefix=${CMAKE_INSTALL_PREFIX} WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/scripts)")
+        endif (${CMAKE_INSTALL_PREFIX} EQUAL "/usr/local")
+    endif (${PYTHON_PREFIX})
 
 else(NOT WIN32)
     add_library(_openbabel MODULE openbabel-python.cpp)
