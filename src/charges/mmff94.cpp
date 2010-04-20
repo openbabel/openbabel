@@ -60,6 +60,7 @@ MMFF94Charges theMMFF94Charges("mmff94"); //Global instance
       if (chg)
         atom->SetPartialCharge(atof(chg->GetValue().c_str()));
     }
+    return true;
   }
 
 }//namespace
