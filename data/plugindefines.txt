@@ -1,6 +1,7 @@
 # Data file for OBDefinable class.
-# A # and the rest of the characters on a line are ignored
-# and white space is trimmed from its front and back.
+# A # in the first column or a # followed by whitespace introduces a comment and
+#   the rest of the characters on a line are ignored.
+# White space is trimmed from the front and back of the line.
 #   
 # There can be any number of lines containing only whitespace and 
 #   comment between objects, but none within an object.
@@ -30,5 +31,37 @@ HBD<5 HBA1<10 MW<500 logP<5  # definition in terms of other descriptors or prope
 Lipinski Rule of Five        # description
 
 PatternFP
-MACCS          #ID of this fingerprint type
-MACCS.txt      #File containing the SMARTS patterns
+MACCS          # ID of this fingerprint type
+MACCS.txt      # File containing the SMARTS patterns
+
+SmartsDescriptor
+sbonds
+*-*
+Number of single bonds
+
+SmartsDescriptor
+dbonds
+*=*
+Number of double bonds
+
+SmartsDescriptor
+tbonds
+*#*
+Number of triple bonds
+
+SmartsDescriptor
+abonds
+*:*
+Number of aromatic bonds
+
+SmartsDescriptor
+bonds
+*~*
+Number of bonds\n
+Add or remove hydrogens to count total or bonds between heavy atoms
+
+SmartsDescriptor
+atoms
+*
+Number of atoms\n
+Add or remove hydrogens to count total or heavy atoms

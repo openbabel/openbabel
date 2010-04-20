@@ -1,3 +1,10 @@
+2010-04-20  Chris Morley
+
+	* src/ops/loader.cpp: parse of plugindefines.txt  to allow # as
+	a comment and # in a SMARTS string to coexist.
+	
+	* data/plugindefines.txt: add some simple SmartsDescriptors.
+	
 2010-04-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/generic.h: Remove dangerous loop iterator

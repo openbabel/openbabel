@@ -75,12 +75,8 @@ public:
       while(ifs && !ReadLine(ifs, textlines[0], true)); //get first non-blank line
       if(!ifs)
         break;
-      int linecount=0;
-      //Remove comments only from first 4 lines of an entry
-      //because SMARTS patterns can contain the # character.
-      while(ReadLine(ifs, ln, ++linecount<=4 )) //get subsequent lines
+      while(ReadLine(ifs, ln, true )) //get subsequent lines with comments removed
       {
-
         //Concatenate with next line if ends with "\n". Otherwise each in separate string
         if(ln.size()>=2 && ln.substr(ln.size()-2)=="\\n")
           ln.replace(ln.size()-2, 2,"\n");//replace "\n" by '\n'
@@ -164,8 +160,9 @@ OBDefine placeholderOBDefine;
     {
       if(removeComments)
       {
+        //Remove rest of line after # in first column or # followed by whitespace
         string::size_type pos = ln.find('#');
-        if(pos!=string::npos)
+        if(pos!=string::npos && (pos==0 || isspace(ln[pos+1])))
           ln.erase(pos);
       }
       Trim(ln);
