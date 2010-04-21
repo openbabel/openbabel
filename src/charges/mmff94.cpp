@@ -1,5 +1,5 @@
 /**********************************************************************
-mmff94.cpp - A OBPartialCharge model to assign MMFF94 partial charges
+mmff94.cpp - A OBChargeModel to assign MMFF94 partial charges
 
 Copyright (C) 2010 by Geoffrey R. Hutchison
  
@@ -17,21 +17,21 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <openbabel/babelconfig.h>
-#include <openbabel/partialcharge.h>
+#include <openbabel/chargemodel.h>
 #include <openbabel/mol.h>
 #include <openbabel/forcefield.h>
 
 namespace OpenBabel
 {
 
-class MMFF94Charges : public OBPartialCharge
+class MMFF94Charges : public OBChargeModel
 {
 public:
   MMFF94Charges(const char* ID) : OBPartialCharge(ID, false){};
   const char* Description(){ return "   Assign MMFF94 partial charges"; }
 
   /// \return whether partial charges were successfully assigned to this molecule
-  bool AssignPartialCharges(OBMol &mol);
+  bool ComputeCharges(OBMol &mol);
 };
 
 /////////////////////////////////////////////////////////////////
@@ -39,7 +39,7 @@ MMFF94Charges theMMFF94Charges("mmff94"); //Global instance
 
 /////////////////////////////////////////////////////////////////
 
-  bool MMFF94Charges::AssignPartialCharges(OBMol &mol)
+  bool MMFF94Charges::ComputeCharges(OBMol &mol)
   {
     mol.SetPartialChargesPerceived();
 
@@ -55,10 +55,16 @@ MMFF94Charges theMMFF94Charges("mmff94"); //Global instance
       return false;
 
     pFF->GetPartialCharges(mol);
+    m_partialCharges.clear();
+    m_partialCharges.reserve(mol.NumAtoms());
+    m_formalCharges.clear();
+    m_formalCharges.reserve(mol.NumAtoms());
     FOR_ATOMS_OF_MOL(atom, mol) {
       OBPairData *chg = (OpenBabel::OBPairData*) atom->GetData("FFPartialCharge");
       if (chg)
         atom->SetPartialCharge(atof(chg->GetValue().c_str()));
+      m_partialCharges.push_back(atom->GetPartialCharge());
+      m_formalCharges.push_back(atom->GetFormalCharge());
     }
     return true;
   }

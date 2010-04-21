@@ -1,8 +1,8 @@
 /**********************************************************************
-gasteiger.cpp - A OBPartialCharge model to handle Gasteiger sigma charges
+gasteiger.cpp - A OBChargeModel to handle Gasteiger sigma charges
 
 Copyright (C) 2010 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
  
@@ -15,22 +15,23 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
 #include <openbabel/babelconfig.h>
-#include <openbabel/partialcharge.h>
+#include <openbabel/chargemodel.h>
 #include <openbabel/mol.h>
 #include <openbabel/molchrg.h>
 
 namespace OpenBabel
 {
 
-class GasteigerCharges : public OBPartialCharge
+class GasteigerCharges : public OBChargeModel
 {
 public:
   GasteigerCharges(const char* ID) : OBPartialCharge(ID, false){};
   const char* Description(){ return "Assign Gasteiger-Marsili sigma partial charges"; }
 
   /// \return whether partial charges were successfully assigned to this molecule
-  bool AssignPartialCharges(OBMol &mol);
+  bool ComputeCharges(OBMol &mol);
 };
 
 /////////////////////////////////////////////////////////////////
@@ -38,12 +39,16 @@ GasteigerCharges theGasteigerCharges("gasteiger"); //Global instance
 
 /////////////////////////////////////////////////////////////////
 
-  bool GasteigerCharges::AssignPartialCharges(OBMol &mol)
+  bool GasteigerCharges::ComputeCharges(OBMol &mol)
   {
     mol.SetPartialChargesPerceived();
 
     OBGastChrg gc;
-    return gc.AssignPartialCharges(mol);
+    bool returnValue = gc.AssignPartialCharges(mol);
+    
+    ChargeModel::FillChargeVectors(mol);
+
+    return returnValue;
   }
 
 }//namespace

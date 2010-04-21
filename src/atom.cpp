@@ -28,6 +28,11 @@ GNU General Public License for more details.
 
 #include <openbabel/math/matrix3x3.h>
 
+// jiahao@mit.edu
+//#include <charges/qeq.h>
+//#include <charges/qtpie.h>
+// end jiahao
+
 #if !HAVE_STRNCASECMP
 extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
 #endif
@@ -564,6 +569,12 @@ namespace OpenBabel
         phmodel.AssignSeedPartialCharge(*((OBMol*)GetParent()));
         OBGastChrg gc;
         gc.AssignPartialCharges(*((OBMol*)GetParent()));
+	
+	/* jiahao@mit.edu - force use of QTPIE
+	obErrorLog.ThrowError(__FUNCTION__, "Force use of QTPIE", obInfo);
+	QTPIECharges charge;
+	charge.AssignPartialCharges(*mol);
+	/* end jiahao */
       }
 
     return(_pcharge);

@@ -1,8 +1,9 @@
 /**********************************************************************
-partialcharge.cpp - Base class for partial charge models
+chargemodel.cpp - Base class for partial charge models
  
 Copyright (C) 2010 Geoffrey Hutchison
- 
+Some portions Copyright (C) 2009 by Frank Peters
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
  
@@ -17,17 +18,35 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <openbabel/babelconfig.h>
-#include <openbabel/partialcharge.h>
+#include <openbabel/chargemodel.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
 
 using namespace std;
 namespace OpenBabel
 {
 #if defined(__CYGWIN__) || defined(__MINGW32__)
   // macro to implement static OBPlugin::PluginMapType& Map()
-  PLUGIN_CPP_FILE(OBPartialCharge)
+  PLUGIN_CPP_FILE(OBChargeModel)
 #endif
+
+  void OBChargeModel::FillChargeVectors(OBMol &mol)
+  {
+    OBAtom *atom;
+    vector<OBAtom*>::iterator itr;
+    m_partialCharges.clear();
+    m_partialCharges.reserve(mol.NumAtoms());
+    m_formalCharges.clear();
+    m_formalCharges.reserve(mol.NumAtoms());
+    
+    for (atom = mol.BeginAtom(itr);atom;atom = mol.NextAtom(itr))
+      {
+        m_partialCharges.push_back(atom->GetPartialCharge());
+        m_formalCharges.push_back((double)(atom->GetFormalCharge()));
+      }
+  }
+
 }
 
-
-//! \file partialcharge.cpp
+//! \file chargemodel.cpp
 //! \brief Base class for molecular partial charge models

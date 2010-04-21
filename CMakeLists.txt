@@ -289,6 +289,14 @@ include_directories(${openbabel_BINARY_DIR}/include
                     ${openbabel_SOURCE_DIR}/include
 )
 
+#cjh
+find_package(Eigen2) # find and setup Eigen2
+if (EIGEN2_FOUND)
+add_definitions (-DHAVE_EIGEN2)
+include_directories(${EIGEN2_INCLUDE_DIR})
+endif(EIGEN2_FOUND)
+#cjh
+
 add_subdirectory(include)
 add_subdirectory(data)
 add_subdirectory(doc)
@@ -330,3 +338,4 @@ endif(ENABLE_PYTHON)
 
 # A minimal build with just two formats (SMI, SDF) useful for developers
 option(MINIMAL_BUILD "Disable full build" OFF)
+

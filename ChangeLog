@@ -1,3 +1,21 @@
+2010-04-20  Jiahao Chen <jiahao@mit.edu>
+
+        * src/charges/qeq.h, src/charges/qeq.cpp:
+	Added implementation of QEq charge model (Rappe and Goddard, 1991) 
+
+        * src/charges/qtpie.h, src/charges/qtpie.cpp:
+	Added implementation of QTPIE charge model (Chen and Martinez, 2007;
+	2008)
+
+        * src/atom.cpp: added comments to show how these new charge models can
+	be called from within current OpenBabel code
+		
+        * CMakeLists.txt: added charge models and compile flags for Eigen2
+	library (variables copied from Avogadro source tree)
+        
+	* cmake/modules/FindEigen2.cmake: CMake module to configure Eigen2
+	(copied from Avogadro source tree)
+
 2010-04-20  Noel O'Boyle
 
 	* scripts/CMakeLists.txt: Handle local and global Python installs

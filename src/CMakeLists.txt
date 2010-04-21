@@ -7,6 +7,14 @@ set(charges
         charges/mmff94.cpp
 )
 
+if (EIGEN2_FOUND)
+# if eigen is available, compile QEq and QTPIE charge models
+set(charges charges
+        charges/qeq.cpp
+        charges/qtpie.cpp
+)
+endif(EIGEN2_FOUND)
+
 set(depict_srcs
     depict/depict.cpp
     depict/svgpainter.cpp
@@ -72,6 +80,7 @@ set(openbabel_srcs
     builder.cpp
     canon.cpp
     chains.cpp
+    chargemodel.cpp
     chiral.cpp
     data.cpp
     descriptor.cpp
@@ -94,7 +103,6 @@ set(openbabel_srcs
     obutil.cpp
     op.cpp
     parsmart.cpp
-    partialcharge.cpp
     patty.cpp
     phmodel.cpp
     plugin.cpp
