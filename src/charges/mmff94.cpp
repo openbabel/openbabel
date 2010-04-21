@@ -27,7 +27,7 @@ namespace OpenBabel
 class MMFF94Charges : public OBChargeModel
 {
 public:
-  MMFF94Charges(const char* ID) : OBPartialCharge(ID, false){};
+  MMFF94Charges(const char* ID) : OBChargeModel(ID, false){};
   const char* Description(){ return "   Assign MMFF94 partial charges"; }
 
   /// \return whether partial charges were successfully assigned to this molecule

@@ -1,3 +1,8 @@
+2010-04-20  Jiahao Chen <jiahao@mit.edu>
+
+        * src/charges/mmff94.cpp, src/charges/gasteiger.cpp: Fixed leftover
+	references to OBPartialCharge (now OBChargeModel)
+
 2010-04-21  Noel O'Boyle
 
 	* scripts/CMakeLists.txt: Edit variables to correspond to Konstantin's

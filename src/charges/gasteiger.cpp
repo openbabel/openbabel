@@ -27,7 +27,7 @@ namespace OpenBabel
 class GasteigerCharges : public OBChargeModel
 {
 public:
-  GasteigerCharges(const char* ID) : OBPartialCharge(ID, false){};
+  GasteigerCharges(const char* ID) : OBChargeModel(ID, false){};
   const char* Description(){ return "Assign Gasteiger-Marsili sigma partial charges"; }
 
   /// \return whether partial charges were successfully assigned to this molecule
@@ -46,7 +46,7 @@ GasteigerCharges theGasteigerCharges("gasteiger"); //Global instance
     OBGastChrg gc;
     bool returnValue = gc.AssignPartialCharges(mol);
     
-    ChargeModel::FillChargeVectors(mol);
+    OBChargeModel::FillChargeVectors(mol);
 
     return returnValue;
   }
