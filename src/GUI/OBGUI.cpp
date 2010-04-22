@@ -91,7 +91,8 @@ bool OBGUIApp::OnInit()
   position.y = config.Read(_T("Top"),2);
 
   wxFileName help(_T("OpenBabelGUI.html"));
-  const char* pHelp = getenv(_T("BABEL_DATADIR"));
+  wxString pHelp;
+  wxGetEnv(_T("BABEL_DATADIR"), &pHelp);
   help.MakeAbsolute(pHelp);
   help.RemoveLastDir();
   help.AppendDir(_T("doc"));
@@ -169,7 +170,7 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
   viewMenu->Check(ID_INWRAPPED,chk);
   config.Read(_T("OutWrapped"),&chk,true);
   viewMenu->Check(ID_OUTWRAPPED,chk);
-  m_DisplayFile = config.Read(_T("DisplayFile"), wxFileName::GetTempDir()+"/gui.svg");
+  m_DisplayFile = config.Read(_T("DisplayFile"), wxFileName::GetTempDir()+_T("/gui.svg"));
   m_DisplayCmd  = config.Read(_T("DisplayCmd"), _T("firefox file:///"));
 
   chk = m_ActiveFormats.ReadConfig(config);
@@ -481,7 +482,7 @@ void OBGUIFrame::OnRestrictFormats(wxCommandEvent& event)
 void OBGUIFrame::OnSetDisplayFile(wxCommandEvent& event)
 {
   wxTextEntryDialog dialog(this, _T("Enter display command and temporary display file on separate lines"),
-    _T("Parameters for structure display"), _T(m_DisplayCmd + '\n' + m_DisplayFile),
+    _T("Parameters for structure display"), m_DisplayCmd + _T('\n') + m_DisplayFile,
     wxTE_MULTILINE | wxOK | wxCANCEL);
   if (dialog.ShowModal() == wxID_OK)
   {
@@ -558,7 +559,7 @@ with the output format.\nDo you wish to continue the conversion?"),
   
   //2D depiction in svg (or other) format automatically sent to file
   if(m_pDisplay->IsChecked() && !m_DisplayFile.empty())
-    Conv.AddOption("xout", OBConversion::GENOPTIONS, m_DisplayFile.c_str());
+    Conv.AddOption("xout", OBConversion::GENOPTIONS, m_DisplayFile.mb_str());
 
   int count = Conv.FullConvert(FileList, stdOutputFileName, OutputFileList);
   
@@ -591,7 +592,7 @@ with the output format.\nDo you wish to continue the conversion?"),
   //Call Firefox to display the 2D structure
   if(m_pDisplay->IsChecked() && wxFile::Exists(m_DisplayFile))
   {
-    wxExecute(_T(m_DisplayCmd + m_DisplayFile));
+    wxExecute(m_DisplayCmd + m_DisplayFile);
   }
 #endif
 }

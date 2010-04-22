@@ -1,3 +1,8 @@
+2010-04-22  Noel O'Boyle
+
+	* src/GUI/OBGUI.cpp: Fixes for Unicode build. Now have SVG depiction
+	on Linux also!
+
 2010-04-20  Jiahao Chen <jiahao@mit.edu>
 
         * src/charges/mmff94.cpp, src/charges/gasteiger.cpp: Fixed leftover
