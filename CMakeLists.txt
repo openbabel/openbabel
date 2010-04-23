@@ -223,9 +223,8 @@ if(${CMAKE_CXX_COMPILER_ID} MATCHES Intel AND UNIX)
   set(HAVE_INTEL_VISIBILITY ${HAVE_INTEL_VISIBILITY} CACHE BOOL "Intel Compiler support for hidden visibility")
   if(HAVE_INTEL_VISIBILITY)
     add_definitions(-DHAVE_GCC_VISIBILITY)
-#    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=protected")
-	check_cxx_compiler_flag(-fvisibility-inlines-hidden
-HAVE_INTEL_VISIBILITY_INLINES)
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
+	check_cxx_compiler_flag(-fvisibility-inlines-hidden HAVE_INTEL_VISIBILITY_INLINES)
 	set(HAVE_INTEL_VISIBILITY_INLINES ${HAVE_INTEL_VISIBILITY_INLINES} CACHE BOOL "Intel Compiler support for -fvisibility-inlines-hidden")
 	if(HAVE_INTEL_VISIBILITY_INLINES)
 	  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility-inlines-hidden")
@@ -331,10 +330,10 @@ if(ENABLE_TESTS)
 endif()
 
 # Should Python bindings be built?
-option(ENABLE_PYTHON "Enable Python bindings" OFF)
-if(ENABLE_PYTHON)
+option(PYTHON_BINDINGS "Enable Python bindings" OFF)
+if(PYTHON_BINDINGS)
   add_subdirectory(scripts)
-endif(ENABLE_PYTHON)
+endif(PYTHON_BINDINGS)
 
 # A minimal build with just two formats (SMI, SDF) useful for developers
 option(MINIMAL_BUILD "Disable full build" OFF)
