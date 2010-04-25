@@ -17,7 +17,12 @@ import re
 import sys
 import unittest
 
-modulelocation = os.path.join("..", "Release")
+here = sys.path[0]
+
+if sys.platform.startswith("win"):
+    modulelocation = os.path.join("..", "Release")
+else:
+    modulelocation = os.path.join("..", "lib")
 sys.path = [modulelocation] + sys.path
 
 try:
@@ -37,8 +42,11 @@ class PythonBindings(unittest.TestCase):
         conv.SetInFormat("smi")
         conv.ReadString(mol, "CC(=O)Cl")
         self.assertAlmostEqual(mol.GetMolWt(), 78.5, 1)
-    
-pybellocation = os.path.join("..", "..", "..", "scripts", "python")
+
+if sys.platform.startswith("win"):
+    pybellocation = os.path.join("..", "..", "..", "scripts", "python")
+else:
+    pybellocation = os.path.join("..", "scripts")
 sys.path = [pybellocation] + sys.path
 
 try:
@@ -52,7 +60,7 @@ class PybelWrapper(unittest.TestCase):
         self.assertTrue(os.path.isfile(os.path.join(
             pybellocation, "pybel.py")), "Pybel module not found")
    
-testlocation = os.path.join("..", "..", "..", "scripts", "python", "examples")
+testlocation = os.path.join(here, "..", "scripts", "python", "examples")
 sys.path = [testlocation] + sys.path
 
 try:

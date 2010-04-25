@@ -151,7 +151,7 @@ endforeach(pytest ${pytests})
 # Tests using Python bindings #
 ###############################
 
-if (PYTHON_BINDINGS AND MSVC)
+if (PYTHON_BINDINGS)
   set(pybindtests
       bindings example)
   foreach(pybindtest ${pybindtests})
@@ -161,5 +161,5 @@ if (PYTHON_BINDINGS AND MSVC)
          ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
     )
   endforeach(pybindtest ${pybindtests})
-endif (PYTHON_BINDINGS AND MSVC)
+endif (PYTHON_BINDINGS)
 
