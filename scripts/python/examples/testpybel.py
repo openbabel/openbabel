@@ -2,6 +2,8 @@ import os
 import sys
 import unittest
 
+here = os.path.split(__file__)[0]
+
 ## In Python 3.x, generators have a __next__() method
 ## instead of a next() method
 nextmethod = "next"
@@ -55,7 +57,7 @@ class TestToolkit(myTestCase):
     def setUp(self):
         self.mols = [self.toolkit.readstring("smi", "CCCC"),
                      self.toolkit.readstring("smi", "CCCN")]
-        self.head = list(self.toolkit.readfile("sdf", "head.sdf"))
+        self.head = list(self.toolkit.readfile("sdf", os.path.join(here, "head.sdf")))
         self.atom = self.head[0].atoms[1]
 
     def testattributes(self):
@@ -336,7 +338,7 @@ class TestPybel(TestToolkit):
     tpsaname = "TPSA"
     Nbits = 3
     Nfpbits = 32
-    datakeys = ['NSC', 'Comment']
+    datakeys = ['NSC', 'Comment', 'OpenBabel Symmetry Classes']
 
     def testFP_FP3(self):
         "Checking the results from FP3"
@@ -345,7 +347,7 @@ class TestPybel(TestToolkit):
 
     def testunitcell(self):
         """Testing unit cell access"""
-        mol = getattr(self.toolkit.readfile("cif", "hashizume.cif"), nextmethod)()
+        mol = getattr(self.toolkit.readfile("cif", os.path.join(here, "hashizume.cif")), nextmethod)()
         cell = mol.unitcell
         self.assertAlmostEqual(cell.GetAlpha(), 92.9, 1)
 

@@ -137,11 +137,29 @@ install(TARGETS roundtrip
 ###########################
 
 include(UsePythonTest)
-foreach(pytest babel sym fastsearch unique kekule)
+set(pytests
+    babel sym fastsearch unique kekule)
+foreach(pytest ${pytests})
   ADD_PYTHON_TEST(pytest_${pytest} test${pytest}.py)
   set_tests_properties(pytest_${pytest} PROPERTIES
        FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
        ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
   )
-endforeach(pytest babel sym fastsearch unique)
+endforeach(pytest ${pytests})
+
+###############################
+# Tests using Python bindings #
+###############################
+
+if (PYTHON_BINDINGS AND MSVC)
+  set(pybindtests
+      bindings example)
+  foreach(pybindtest ${pybindtests})
+    ADD_PYTHON_TEST(pybindtest_${pybindtest} test${pybindtest}.py)
+    set_tests_properties(pybindtest_${pybindtest} PROPERTIES
+         FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
+         ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
+    )
+  endforeach(pybindtest ${pybindtests})
+endif (PYTHON_BINDINGS AND MSVC)
 
