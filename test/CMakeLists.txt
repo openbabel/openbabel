@@ -153,7 +153,7 @@ endforeach(pytest ${pytests})
 
 if (PYTHON_BINDINGS)
   set(pybindtests
-      bindings example)
+      bindings _pybel example)
   foreach(pybindtest ${pybindtests})
     ADD_PYTHON_TEST(pybindtest_${pybindtest} test${pybindtest}.py)
     set_tests_properties(pybindtest_${pybindtest} PROPERTIES

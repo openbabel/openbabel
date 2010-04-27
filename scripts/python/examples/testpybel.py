@@ -25,11 +25,10 @@ except AttributeError:
     from cinfony import cdk
     pybel = rdkit = obpybel = None
 
-# For compatability with Python2.3
 try:
+    set
+except NameError:
     from sets import Set as set
-except ImportError:
-    pass
 
 class myTestCase(unittest.TestCase):
     """Additional methods not present in Jython 2.2"""
@@ -362,21 +361,6 @@ class TestPybel(TestToolkit):
     def importtest(self):
         self.mols[0].draw(show=True, usecoords=True)
 
-    def testDrawdependencies(self):
-        "Testing the draw dependencies"
-        t = self.toolkit.tk
-        self.toolkit.tk = None
-        self.mols[0].draw(show=False, usecoords=True,
-                          filename="%s_b.png" % self.toolkit.__name__)
-        self.assertRaises(ImportError,
-                          self.importtest)
-        self.toolkit.tk = t
-
-        t = self.toolkit.oasa
-        self.toolkit.oasa = None
-        self.assertRaises(ImportError,
-                          self.importtest)
-
     def testRSconversiontoMOL2(self):
         """Convert to mol2"""
         as_mol2 = self.mols[0].write("mol2")
@@ -413,6 +397,29 @@ Energy = 0
 
 class TestOBPybel(TestPybel):
     toolkit = obpybel
+
+class TestOBPybelNoDraw(TestOBPybel):
+    def testDraw(self):
+       """No drawing done"""
+       pass
+
+class TestPybelWithDraw(TestPybel):
+
+    def testDrawdependencies(self):
+        "Testing the draw dependencies"
+        t = self.toolkit.tk
+        self.toolkit.tk = None
+        self.mols[0].draw(show=False, usecoords=True,
+                          filename="%s_b.png" % self.toolkit.__name__)
+        self.assertRaises(ImportError,
+                          self.importtest)
+        self.toolkit.tk = t
+
+        t = self.toolkit.oasa
+        self.toolkit.oasa = None
+        self.assertRaises(ImportError,
+                          self.importtest)
+
 
 class TestRDKit(TestToolkit):
     toolkit = rdkit

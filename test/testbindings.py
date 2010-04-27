@@ -22,7 +22,7 @@ here = sys.path[0]
 if sys.platform.startswith("win"):
     modulelocation = os.path.join("..", "Release")
 else:
-    modulelocation = os.path.join("..", "lib")
+    modulelocation = os.path.join("..", "scripts", "pybuild")
 sys.path = [modulelocation] + sys.path
 
 try:
@@ -30,18 +30,6 @@ try:
     # We check later to make sure we have imported the right module
 except ImportError:
     ob = None
-
-class PythonBindings(unittest.TestCase):
-    def setUp(self):
-        self.assertTrue(ob is not None, "Failed to import the openbabel module")
-        self.assertTrue(os.path.isfile(os.path.join(
-            modulelocation, "openbabel.py")), "openbabel module not found")
-    def testSimple(self):
-        mol = ob.OBMol()
-        conv = ob.OBConversion()
-        conv.SetInFormat("smi")
-        conv.ReadString(mol, "CC(=O)Cl")
-        self.assertAlmostEqual(mol.GetMolWt(), 78.5, 1)
 
 if sys.platform.startswith("win"):
     pybellocation = os.path.join("..", "..", "..", "scripts", "python")
@@ -53,29 +41,27 @@ try:
     import pybel
 except ImportError:
     pybel = None
+
+class PythonBindings(unittest.TestCase):
+    def setUp(self):
+        self.assertTrue(ob is not None, "Failed to import the openbabel module")
+        self.assertTrue(os.path.isfile(os.path.join(
+            modulelocation, "openbabel.py")), "openbabel module not found")
+
+class TestPythonBindings(PythonBindings):
+    def testSimple(self):
+        mol = ob.OBMol()
+        conv = ob.OBConversion()
+        conv.SetInFormat("smi")
+        conv.ReadString(mol, "CC(=O)Cl")
+        self.assertAlmostEqual(mol.GetMolWt(), 78.5, 1)
+
     
-class PybelWrapper(unittest.TestCase):
+class PybelWrapper(PythonBindings):
     def testDummy(self):
         self.assertTrue(pybel is not None, "Failed to import the Pybel module")
         self.assertTrue(os.path.isfile(os.path.join(
             pybellocation, "pybel.py")), "Pybel module not found")
    
-testlocation = os.path.join(here, "..", "scripts", "python", "examples")
-sys.path = [testlocation] + sys.path
-
-try:
-    import testpybel
-except ImportError:
-    testpybel = None
-
-def gettests():
-    testsuite = []
-    for myclass in [PybelWrapper, PythonBindings]:
-        suite = unittest.TestLoader().loadTestsFromTestCase(myclass)
-        testsuite.append(suite)
-    suite = unittest.TestLoader().loadTestsFromName("TestOBPybel", testpybel)
-    testsuite.append(suite)
-    return testsuite
-
 if __name__ == "__main__":
-    unittest.TextTestRunner().run(unittest.TestSuite(gettests()))
+    unittest.main()

@@ -1,3 +1,14 @@
+2010-04-26  Noel O'Boyle
+
+	* test/CMakeLists.txt, test/testbindings.py, test/test_pybel.py:
+	Separate the pybel tests from the Python binding tests
+	* scripts/python/examples/testpybel.py: Get the Pybel tests to pass on
+	Linux
+	* scripts/CMakeLists.txt: Force the Python build to output to
+	scripts/pybuild. Otherwise it created a temporary folder whose name
+	differed from platform to platform (e.g. lib.linux-x86_64.2.6) which
+	made it difficult to handle automatically.
+
 2010-04-25  Noel O'Boyle
 
 	* test\CMakeLists.txt, test\testbindings.py, test\testexample.py:

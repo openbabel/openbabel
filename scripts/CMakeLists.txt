@@ -47,7 +47,7 @@ add_custom_command(OUTPUT openbabel-python.cpp openbabel.py
 if(NOT WIN32)
     add_custom_target(_openbabel ALL
         COMMAND ${CMAKE_COMMAND} -E create_symlink ${openbabel_SOURCE_DIR}/scripts/python ${openbabel_BINARY_DIR}/scripts/python
-        COMMAND ${PYTHON_EXECUTABLE} ${openbabel_BINARY_DIR}/scripts/python/setup.py build
+        COMMAND ${PYTHON_EXECUTABLE} ${openbabel_BINARY_DIR}/scripts/python/setup.py build --build-lib=pybuild
         DEPENDS openbabel-python.cpp
         WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts
     )
