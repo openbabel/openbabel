@@ -55,6 +55,7 @@ set(ops
   ops/gen3d.cpp
   ops/loader.cpp
   ops/optransform.cpp
+  ops/partialcharges.cpp
   ops/sort.cpp
   ops/xout.cpp
 )

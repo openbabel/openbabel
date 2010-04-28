@@ -1,3 +1,10 @@
+2010-04-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/ops/partialcharges.cpp: Add operation to calculate partial
+	charges using any charge method, e.g., --partialcharge qeq.
+
+	* src/CMakeLists.txt: Add it.
+
 2010-04-26  Noel O'Boyle
 
 	* test/CMakeLists.txt, test/testbindings.py, test/test_pybel.py:
