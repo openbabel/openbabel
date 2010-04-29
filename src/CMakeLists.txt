@@ -9,7 +9,7 @@ set(charges
 
 if (EIGEN2_FOUND)
 # if eigen is available, compile QEq and QTPIE charge models
-set(charges charges
+set(charges ${charges}
         charges/qeq.cpp
         charges/qtpie.cpp
 )
