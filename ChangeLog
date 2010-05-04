@@ -1,3 +1,8 @@
+2010-05-04  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* data/space-groups.txt: updated after group 205 Hall name fix.
+	* src/math/scpaegroup.cpp: fixed group search for duplicate Hall names (grroups 3 and 68).
+
 2010-04-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/ops/partialcharges.cpp: Add operation to calculate partial

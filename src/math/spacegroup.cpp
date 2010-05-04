@@ -424,10 +424,18 @@ namespace OpenBabel
         if (!found)
           obErrorLog.ThrowError(__FUNCTION__, "Unknown space group (Hall symbol:"+group->m_Hall+") error, please file a bug report.", obError);
         if (group->m_transforms.size() && *found  != *group)
-          obErrorLog.ThrowError(__FUNCTION__, "Space group error (Hall symbol and list of transforms do not match), please file a bug report.", obWarning);
+          {
+            unsigned id = group->GetId();
+            if (id != 3 && id != 68) // these groups have duplicates
+              {
+                obErrorLog.ThrowError(__FUNCTION__, "Space group error (Hall symbol and list of transforms do not match), please file a bug report.", obWarning);
+                return found;
+              }
+          }
+        else         
         /* even if there is an error (this should not occur) return the found group, since
            Hall names are secure */
-        return found;
+          return found;
       }
     // Identify from the HM symbol, after removing all whitespaces or underscore (which are valid separators in
     // old CIF files)
