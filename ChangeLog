@@ -1,3 +1,11 @@
+2010-05-04  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/data.cpp: Add check for empty isotope rows (PR#2996661).
+
+	* data/isotope.txt: Add some default isotopes for heavy elements
+	up to element 118. Will need updates after next atomic mass
+	evaluation.
+
 2010-05-04  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* data/space-groups.txt: updated after group 205 Hall name fix.

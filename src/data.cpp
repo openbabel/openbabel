@@ -401,6 +401,8 @@ namespace OpenBabel
 
     if (ele > _isotopes.size())
       return 0.0;
+    if (_isotopes[ele].size() == 0)
+      return 0.0; // PR#2996661
 
     unsigned int iso;
     for (iso = 0; iso < _isotopes[ele].size(); ++iso)
