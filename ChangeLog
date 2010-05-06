@@ -1,3 +1,7 @@
+2010-05-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/tokenst.h: Add missing <sstream> header.
+
 2010-05-06  Chris Morley
 
 	* include/openbabel/tokenst.h: Add utility function toString()

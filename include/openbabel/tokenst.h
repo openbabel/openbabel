@@ -21,7 +21,9 @@ GNU General Public License for more details.
 #define OB_TOKENST_H
 
 #include <openbabel/babelconfig.h>
+
 #include <vector>
+#include <sstream>
 #include <string>
 #include <fstream>
 
