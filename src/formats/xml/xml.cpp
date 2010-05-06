@@ -144,16 +144,17 @@ namespace OpenBabel
 
     if(ForReading)
       {
-        pxmlConv->SetupReader();
-        if(pConv->GetInStream()->tellg() < pxmlConv->_lastpos)
+        streampos pos = pConv->GetInStream()->tellg();
+        if(pos < pxmlConv->_lastpos || pxmlConv->_lastpos<0)
           {
             //Probably a new file; copy some member vars and renew the current reader
+            xmlFreeTextReader(pxmlConv->_reader); //need a new reader to read files with <?xml?>
+            pxmlConv->_reader = NULL;
             pxmlConv->InFilename = pConv->GetInFilename();
             pxmlConv->pInFormat = pConv->GetInFormat();
-
-            if(xmlReaderNewIO( pxmlConv->_reader, ReadStream, NULL, pxmlConv, "", NULL, 0)==-1)
-              return false;
+            
           }
+        pxmlConv->SetupReader();
       }
     else
     {

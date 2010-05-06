@@ -33,6 +33,15 @@ namespace OpenBabel
   //! Remove leading and trailing whitespace from a string (docs in tokenst.cpp)
   OBERROR std::string& Trim(std::string& txt);
 
+  // \return a string representation of a variable
+  template<typename T>
+  std::string toString(T val)
+  {
+    std::ostringstream s;
+    s << val;
+    return s.str();
+  }
+
   //!Read and discard all characters from input stream up to, and including, a string
   OBERROR std::istream& ignore(std::istream& ifs, const std::string& txt);
 

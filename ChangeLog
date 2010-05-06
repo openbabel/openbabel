@@ -1,3 +1,13 @@
+2010-05-06  Chris Morley
+
+	* include/openbabel/tokenst.h: Add utility function toString()
+	
+	* src/formats/xml/xml.cpp: Use new reader when the input file
+	changes, rather than resuing the old one. Was not working with
+	input files with <?xml?> elements.
+	
+	* delete windows-vc2005 and windowsOBF which did not use CMake.
+	  
 2010-05-04  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/data.cpp: Add check for empty isotope rows (PR#2996661).
