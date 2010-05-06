@@ -1,3 +1,9 @@
+2010-05-06  Noel O'Boyle
+
+	* scripts/CMakeLists.txt: Place the SWIG-generated files in the
+	source directory (TODO: Require -DRUN_SWIG for developers). Correct
+	EQUAL to STREQUAL. Remove unnecessary soft link.
+
 2010-05-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/tokenst.h: Add missing <sstream> header.

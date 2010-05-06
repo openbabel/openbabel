@@ -13,10 +13,10 @@ if (NOT SWIG_FOUND)
   return()
 endif (NOT SWIG_FOUND)
 message(STATUS "SWIG version is ${SWIG_VERSION}")
-if (NOT ${SWIG_VERSION} EQUAL "1.3.40")
+if (NOT ${SWIG_VERSION} STREQUAL "1.3.40")
   message(STATUS "SWIG version 1.3.40 exactly is required")
   return()
-endif (NOT ${SWIG_VERSION} EQUAL "1.3.40")
+endif (NOT ${SWIG_VERSION} STREQUAL "1.3.40")
 
 
 ###################
@@ -39,16 +39,15 @@ include_directories(
     ${PYTHON_INCLUDE_PATH}
 )
 
-add_custom_command(OUTPUT openbabel-python.cpp openbabel.py
-    COMMAND ${SWIG_EXECUTABLE} -python -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
+add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp openbabel.py
+    COMMAND ${SWIG_EXECUTABLE} -python -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
     MAIN_DEPENDENCY openbabel-python.i
 )
 
 if(NOT WIN32)
     add_custom_target(_openbabel ALL
-        COMMAND ${CMAKE_COMMAND} -E create_symlink ${openbabel_SOURCE_DIR}/scripts/python ${openbabel_BINARY_DIR}/scripts/python
-        COMMAND ${PYTHON_EXECUTABLE} ${openbabel_BINARY_DIR}/scripts/python/setup.py build --build-lib=pybuild
-        DEPENDS openbabel-python.cpp
+        COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py build --build-lib=${openbabel_BINARY_DIR}/scripts/pybuild
+        DEPENDS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp
         WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts
     )
     add_custom_command(TARGET _openbabel POST_BUILD 
