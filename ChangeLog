@@ -1,3 +1,9 @@
+2010-05-07  Chris Morley
+
+	* src/transform.cpp: Add option suggested by Noel:
+	-r Remove all but the largest contiguous fragment
+	(StripSalts)
+	
 2010-05-07  Noel O'Boyle
 
 	* src/builder.cpp: Treat 2D structures like 0D structures.

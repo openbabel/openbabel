@@ -72,6 +72,10 @@ namespace OpenBabel
       if(!AddHydrogens(false, false))
         ret=false;
 
+    if(pOptions->find("r")!=pOptions->end())
+      if(!StripSalts())
+        ret=false;
+
     itr = pOptions->find("p");
     if(itr!=pOptions->end()) {
       double pH = strtod(itr->second.c_str(), 0);
@@ -226,6 +230,7 @@ namespace OpenBabel
 "-h Add hydrogens (make explicit)\n"
 "-p <pH> Add hydrogens appropriate for this pH\n"
 "-b Convert dative bonds e.g.[N+]([O-])=O to N(=O)=O\n"
+"-r Remove all but the largest contiguous fragment\n" 
 "-c Center Coordinates\n"
 "-C Combine mols in first file with others having same name\n"
 "--filter <filterstring> Filter: convert only when tests are true:\n"
