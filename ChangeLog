@@ -1,5 +1,9 @@
 2010-05-07  Noel O'Boyle
 
+	* src/builder.cpp: Treat 2D structures like 0D structures.
+
+2010-05-07  Noel O'Boyle
+
 	* src/mol.cpp, include/openbabel/mol.h: Change OBMol::StripSalts() to
 	remove all but the largest fragment if threshold is 0. Updated the
 	docs.
