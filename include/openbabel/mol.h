@@ -465,8 +465,10 @@ namespace OpenBabel
     //! Add only polar hydrogens (i.e., attached to polar atoms, not C)
     bool AddPolarHydrogens();
 
-    //! Delete any fragments with fewer than @p threshold atoms
-    bool StripSalts(int threshold);
+    //! If @p threshold is not specified or is zero, remove all but the largest
+    //! contiguous fragment. If @p threshold is non-zero, remove any fragments with fewer
+    //! than @p threshold atoms.
+    bool StripSalts(int threshold=0);
     //! Copies each disconnected fragment as a separate OBMol
     std::vector<OBMol> Separate(int StartIndex=1);
     //! Iterative component of Separate to copy one fragment at a time
