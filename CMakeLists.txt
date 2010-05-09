@@ -329,11 +329,13 @@ if(ENABLE_TESTS)
   add_subdirectory(test)
 endif()
 
+# Should the language bindings be regenereted?
+option(RUN_SWIG "Generate language bindings with SWIG" OFF)
+
 # Should Python bindings be built?
-option(PYTHON_BINDINGS "Enable Python bindings" OFF)
-if(PYTHON_BINDINGS)
-  add_subdirectory(scripts)
-endif(PYTHON_BINDINGS)
+option(PYTHON_BINDINGS "Build Python bindings" OFF)
+
+add_subdirectory(scripts)
 
 # A minimal build with just two formats (SMI, SDF) useful for developers
 option(MINIMAL_BUILD "Disable full build" OFF)
