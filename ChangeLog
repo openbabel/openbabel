@@ -1,3 +1,11 @@
+2010-05-09  Noel O'Boyle
+
+	* CMakeLists.txt, scripts/CMakeLists.txt: The final step in getting the
+	Python bindings ready for release - separating the running of SWIG from
+	the compiling of the bindings. -DRUN_SWIG and -DPYTHON_BINDINGS are the
+	relevant variables. If you try to compile the bindings and they are not
+	present, the warning message recommends you use -DRUN_SWIG.
+
 2010-05-07  Chris Morley
 
 	* src/transform.cpp: Add option suggested by Noel:
