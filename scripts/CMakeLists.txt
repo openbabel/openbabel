@@ -39,8 +39,8 @@ include_directories(
     ${PYTHON_INCLUDE_PATH}
 )
 
-add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp openbabel.py
-    COMMAND ${SWIG_EXECUTABLE} -python -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
+add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
+    COMMAND ${SWIG_EXECUTABLE} -python -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp -outdir ${openbabel_SOURCE_DIR}/scripts/python ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
     MAIN_DEPENDENCY openbabel-python.i
 )
 
@@ -58,8 +58,8 @@ if(NOT WIN32)
         COMMAND ${CMAKE_COMMAND} -E echo "  except ImportError:" >> ob.py
         COMMAND ${CMAKE_COMMAND} -E echo "    import DLFCN as dl" >> ob.py
         COMMAND ${CMAKE_COMMAND} -E echo "  sys.setdlopenflags(sys.getdlopenflags() | dl.RTLD_GLOBAL)" >> ob.py
-        COMMAND cat openbabel.py >> ob.py
-        COMMAND ${CMAKE_COMMAND} -E copy ob.py openbabel.py
+        COMMAND cat ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py >> ob.py
+        COMMAND ${CMAKE_COMMAND} -E copy ob.py ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
         COMMAND ${CMAKE_COMMAND} -E remove ob.py
         VERBATIM)
 
@@ -74,7 +74,7 @@ if(NOT WIN32)
     endif (${PYTHON_PREFIX})
 
 else(NOT WIN32)
-    add_library(_openbabel MODULE openbabel-python.cpp)
+    add_library(_openbabel MODULE ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp)
     target_link_libraries(_openbabel ${PYTHON_LIBRARIES} ${BABEL_LIBRARY})
     set_target_properties(_openbabel PROPERTIES
 	LIBRARY_OUTPUT_DIRECTORY ${openbabel_BINARY_DIR}
@@ -82,7 +82,7 @@ else(NOT WIN32)
         PREFIX ""
         SUFFIX .pyd )
     add_custom_command(TARGET _openbabel POST_BUILD 
-      COMMAND ${CMAKE_COMMAND} -E copy openbabel.py ${openbabel_BINARY_DIR}/${CMAKE_CFG_INTDIR}
+      COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py ${openbabel_BINARY_DIR}/${CMAKE_CFG_INTDIR}
       )
 endif(NOT WIN32)
 
