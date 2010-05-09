@@ -13,7 +13,8 @@ chemical functionality for custom development.
 
 srcdir = os.path.dirname(__file__)
 
-obExtension = Extension('_openbabel', ["openbabel-python.cpp"],
+obExtension = Extension('_openbabel',
+                 [os.path.join(srcdir, "openbabel-python.cpp")],
                  include_dirs=[os.path.join(srcdir, "..", "..", "include"),
                                os.path.join("..", "include")],
                  library_dirs=[os.path.join("..", "lib")],
