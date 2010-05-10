@@ -56,7 +56,7 @@ public:
       "Write options e.g. -xnc for single letter options)\n"
       "A display aliases\n"
       "b black background\n"
-      "C draw terminal carbon atoms explicitly\n"
+      "C do not draw terminal carbon atoms explicitly\n"
       "d do not display molecule name\n"
       "e embed molecule as CML\n"
       "p# scale to bondlength in pixels(single mol only)\n"
@@ -294,8 +294,8 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     SVGPainter painter(*pConv->GetOutStream(), true, cellsize,cellsize,innerX,innerY);
     OBDepict depictor(&painter);
 
-    if(pConv->IsOption("C"))
-      depictor.SetDrawingTerminalCarbon(true);
+    depictor.SetDrawingTerminalCarbon(!pConv->IsOption("C")); //on by default
+
     if(pConv->IsOption("A"))
     {
       AliasData::RevertToAliasForm(*pmol);
@@ -332,8 +332,7 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       depictor.SetBondSpacing(depictor.GetBondSpacing() * factor);
       depictor.SetFontSize((int)(depictor.GetFontSize() * factor));
     }
-    if(pConv->IsOption("C"))
-      depictor.SetDrawingTerminalCarbon(true);
+    depictor.SetDrawingTerminalCarbon(!pConv->IsOption("C")); //on by default
     if(pConv->IsOption("A"))
     {
       AliasData::RevertToAliasForm(*pmol);
@@ -411,6 +410,7 @@ bool SVGFormat::EmbedCML(OBMol* pmol, OBConversion* pConv)
   }
   CMLConv.AddOption("MolsNotStandalone",OBConversion::OUTOPTIONS);
   CMLConv.AddOption("N",OBConversion::OUTOPTIONS,"cml");
+  CMLConv.AddOption("p",OBConversion::OUTOPTIONS); //include properties
 //  CMLConv.AddOption("x",OBConversion::OUTOPTIONS);
   return CMLConv.Write(pmol);
 }

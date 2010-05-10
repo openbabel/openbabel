@@ -1,3 +1,12 @@
+2010-05-10  Chris Morley
+
+	* src/formats/svgformat.cpp: draw terminal C atoms explicitly by default.
+	
+	* src/formats/xml/cmlformat.cpp: hack to allow CML in molpro output to
+	  be read.
+	  No implict H or spinmultiplicity assignment if any bonds have zero
+	  order.
+	
 2010-05-09  Noel O'Boyle
 
 	* CMakeLists.txt, scripts/CMakeLists.txt: The final step in getting the

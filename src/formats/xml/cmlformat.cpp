@@ -180,7 +180,7 @@ namespace OpenBabel
         if(IsEmpty==1)
           BondArray.push_back(cmlBondOrAtom);
       }
-    else if(name=="molecule")
+    else if(name=="molecule" || name=="jobstep")
       {
         //Ignore atoms with "ref" attributes
         if(xmlTextReaderGetAttribute(reader(), BAD_CAST "ref"))
@@ -462,7 +462,7 @@ namespace OpenBabel
       }
     else if(name=="formula")
       inFormula=false;
-    else if(name=="molecule")
+    else if(name=="molecule" || name=="jobstep")
       {
         DoAtoms();
         DoBonds();
@@ -761,7 +761,11 @@ namespace OpenBabel
                 return false;
               }
             if(ord==0) //Bonds are single if order is not specified
+            {
               ord=1;
+              //But unspecied bond order means cannot assign spinmultiplicity
+              _pmol->SetIsPatternStructure();
+            }
             _pmol->AddBond(indx1,indx2,ord,0);
           }
       }
