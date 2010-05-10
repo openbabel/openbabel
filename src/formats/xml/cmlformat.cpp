@@ -180,7 +180,7 @@ namespace OpenBabel
         if(IsEmpty==1)
           BondArray.push_back(cmlBondOrAtom);
       }
-    else if(name=="molecule" || name=="jobstep")
+    else if(name=="molecule" || name=="jobstep") //hack for molpro
       {
         //Ignore atoms with "ref" attributes
         if(xmlTextReaderGetAttribute(reader(), BAD_CAST "ref"))
@@ -462,7 +462,7 @@ namespace OpenBabel
       }
     else if(name=="formula")
       inFormula=false;
-    else if(name=="molecule" || name=="jobstep")
+    else if(name=="molecule" || name=="jobstep") //hack for molpro
       {
         DoAtoms();
         DoBonds();
