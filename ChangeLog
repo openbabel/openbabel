@@ -1,3 +1,10 @@
+2010-05-11  Noel O'Boyle
+
+	* windows-vc2008/libs, x64_default_build.bat: Adding libraries and
+	cmake bat for x64 build. Move i386 libraries to libs/i386 to keep
+	things symmetrical.
+	* src/formats/CMakeLists.txt: Update for new location of libstdinchi.
+
 2010-05-10  Chris Morley
 
 	* src/formats/svgformat.cpp: draw terminal C atoms explicitly by default.
