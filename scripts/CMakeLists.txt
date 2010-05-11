@@ -108,7 +108,7 @@ if (JAVA_BINDINGS)
 
     find_package(JNI)
     if (NOT JNI_INCLUDE_DIRS)
-      message(STATUS "Java JNI include files NOT found")
+      message(STATUS "Java JNI include files NOT found. Java bindings will NOT be compiled.")
       return()
     endif (NOT JNI_INCLUDE_DIRS)
     include_directories(
@@ -134,11 +134,11 @@ if (JAVA_BINDINGS)
     add_library(bindings_java MODULE ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp)
     target_link_libraries(bindings_java ${JNI_LIBRARIES} ${BABEL_LIBRARY})
     set_target_properties(bindings_java PROPERTIES
-        LIBRARY_OUTPUT_DIRECTORY ${openbabel_BINARY_DIR}
         OUTPUT_NAME openbabel_java )
-    #add_custom_command(TARGET bindings_java POST_BUILD 
-    #  COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py ${openbabel_BINARY_DIR}/${CMAKE_CFG_INTDIR}
-    #  )
+    if(MSVC)
+        set_target_properties(bindings_java PROPERTIES
+            LIBRARY_OUTPUT_DIRECTORY ${openbabel_BINARY_DIR})
+    endif(MSVC)
 
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp OR
       RUN_SWIG)
