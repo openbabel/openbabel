@@ -80,21 +80,69 @@ if (PYTHON_BINDINGS)
         endif (${PYTHON_PREFIX})
 
     else(NOT WIN32)
-        add_library(_openbabel MODULE ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp)
-        target_link_libraries(_openbabel ${PYTHON_LIBRARIES} ${BABEL_LIBRARY})
-        set_target_properties(_openbabel PROPERTIES
-      LIBRARY_OUTPUT_DIRECTORY ${openbabel_BINARY_DIR}
+        add_library(bindings_python MODULE ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp)
+        target_link_libraries(bindings_python ${PYTHON_LIBRARIES} ${BABEL_LIBRARY})
+        set_target_properties(bindings_python PROPERTIES
+            LIBRARY_OUTPUT_DIRECTORY ${openbabel_BINARY_DIR}
             OUTPUT_NAME _openbabel
             PREFIX ""
             SUFFIX .pyd )
-        add_custom_command(TARGET _openbabel POST_BUILD 
+        add_custom_command(TARGET bindings_python POST_BUILD 
           COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py ${openbabel_BINARY_DIR}/${CMAKE_CFG_INTDIR}
           )
     endif(NOT WIN32)
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR
       RUN_SWIG)
-    message(STATUS "Warning: Python bindings not found. Generate using -DRUN_SWIG.")
+    message(STATUS "Warning: Python bindings NOT found. Generate using -DRUN_SWIG.")
   endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR
       RUN_SWIG)
 endif (PYTHON_BINDINGS)
 
+###################
+# Java
+###################
+
+if (JAVA_BINDINGS)
+  if (EXISTS ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp OR
+      RUN_SWIG)
+
+    find_package(JNI)
+    if (NOT JNI_INCLUDE_DIRS)
+      message(STATUS "Java JNI include files NOT found")
+      return()
+    endif (NOT JNI_INCLUDE_DIRS)
+    include_directories(
+        ${JNI_INCLUDE_DIRS}
+    )
+
+    if (RUN_SWIG)
+      find_package(Java)
+      if (NOT JAVA_COMPILE)
+        message(STATUS "Java compiler NOT found. Java bindings will NOT be generated.")
+        return()
+      endif (NOT JAVA_COMPILE)
+      add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp # ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
+          COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_SOURCE_DIR}/scripts/java/org/openbabel
+          COMMAND ${SWIG_EXECUTABLE} -java -package org.openbabel -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp -outdir ${openbabel_SOURCE_DIR}/scripts/java/org/openbabel ${openbabel_SOURCE_DIR}/scripts/openbabel-java.i
+          COMMAND ${JAVA_COMPILE} ${openbabel_SOURCE_DIR}/scripts/java/org/openbabel/*.java
+          COMMAND ${CMAKE_COMMAND} -E chdir ${openbabel_SOURCE_DIR}/scripts/java ${JAVA_ARCHIVE} cf openbabel.jar org
+          COMMAND ${CMAKE_COMMAND} -E remove_directory ${openbabel_SOURCE_DIR}/scripts/java/org
+          MAIN_DEPENDENCY openbabel-java.i
+      )
+    endif (RUN_SWIG)
+
+    add_library(bindings_java MODULE ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp)
+    target_link_libraries(bindings_java ${JNI_LIBRARIES} ${BABEL_LIBRARY})
+    set_target_properties(bindings_java PROPERTIES
+        LIBRARY_OUTPUT_DIRECTORY ${openbabel_BINARY_DIR}
+        OUTPUT_NAME openbabel_java )
+    #add_custom_command(TARGET bindings_java POST_BUILD 
+    #  COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py ${openbabel_BINARY_DIR}/${CMAKE_CFG_INTDIR}
+    #  )
+
+  else (EXISTS ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp OR
+      RUN_SWIG)
+    message(STATUS "Warning: Java bindings NOT found. Generate using -DRUN_SWIG.")
+  endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp OR
+      RUN_SWIG)
+endif (JAVA_BINDINGS)

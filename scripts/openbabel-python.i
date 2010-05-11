@@ -12,6 +12,7 @@
 #include <openbabel/math/vector3.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/generic.h>
+#include <openbabel/griddata.h>
 
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
