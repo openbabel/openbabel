@@ -1501,6 +1501,14 @@ namespace OpenBabel
       OBFFLog(_logbuf);
     }
 
+    // Remove all conformers (e.g. from previous conformer generators) except for current conformer
+    double *initialCoord = new double [_mol.NumAtoms() * 3]; // initial state
+    memcpy((char*)initialCoord,(char*)_mol.GetCoordinates(),sizeof(double)*3*_mol.NumAtoms());
+    vector<double *> newConfs(1, initialCoord);
+    _mol.SetConformers(newConfs);
+
+    _energies.clear(); // Wipe any energies from previous conformer generators
+
     if (!rl.Size()) { // only one conformer
       IF_OBFF_LOGLVL_LOW
         OBFFLog("  GENERATED ONLY ONE CONFORMER\n\n");
@@ -1508,12 +1516,12 @@ namespace OpenBabel
       _loglvl = OBFF_LOGLVL_NONE;
       ConjugateGradients(geomSteps); // energy minimization for conformer
       _loglvl = origLogLevel;
+      _energies.push_back(Energy(false));
 
       return;
     }
 
-    double *initialCoord = new double [_mol.NumAtoms() * 3]; // initial state
-    memcpy((char*)initialCoord,(char*)_mol.GetCoordinates(),sizeof(double)*3*_mol.NumAtoms());
+    _energies.push_back(Energy(false)); // Store the energy of the original conf
 
     // key for generating particular conformers
     std::vector<int> rotorKey(rl.Size() + 1, 0); // indexed from 1
@@ -1586,16 +1594,13 @@ namespace OpenBabel
       rotorWeights.push_back(weightSet);
     }
 
-    int best_conformer;
+    int best_conformer=0;
     //    double penalty; // for poor performance
     double randFloat; // generated random number -- used to pick a rotor
     double total; // used to calculate the total probability 
-    double *bestCoordPtr = new double [_mol.NumAtoms() * 3]; // coordinates for best conformer
-    
+        
     // Start with the current coordinates
     bestE = worstE = Energy(false);
-    // We're later going to add this back to the molecule as a new conformer
-    memcpy((char*)bestCoordPtr,(char*)_mol.GetCoordinates(),sizeof(double)*3*_mol.NumAtoms());    
     
     // Now we actually test some weightings
     IF_OBFF_LOGLVL_LOW {
@@ -1636,6 +1641,10 @@ namespace OpenBabel
       SteepestDescent(geomSteps); // energy minimization for conformer
       _loglvl = origLogLevel;
       currentE = Energy(false);
+      _energies.push_back(currentE);
+      double *confCoord = new double [_mol.NumAtoms() * 3]; // initial state
+      memcpy((char*)confCoord,(char*)_mol.GetCoordinates(),sizeof(double)*3*_mol.NumAtoms());
+      _mol.AddConformer(confCoord);
 
       IF_OBFF_LOGLVL_LOW {
         snprintf(_logbuf, BUFF_SIZE, "   %3d      %8.3f\n", c + 1, currentE);
@@ -1647,7 +1656,6 @@ namespace OpenBabel
 
       if (currentE < bestE) {
         bestE = currentE;
-        memcpy((char*)bestCoordPtr,(char*)_mol.GetCoordinates(),sizeof(double)*3*_mol.NumAtoms());
         best_conformer = c;
 
         // improve this rotorKey
@@ -1683,8 +1691,7 @@ namespace OpenBabel
       }
     }
 
-    _mol.AddConformer(bestCoordPtr);
-    _current_conformer = _mol.NumConformers() - 1;
+    _current_conformer = best_conformer + 1; // Initial coords are stored in _vconf[0]
     _mol.SetConformer(_current_conformer);
     SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
   }

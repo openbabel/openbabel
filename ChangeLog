@@ -1,3 +1,9 @@
+2010-05-12  Noel O'Boyle
+
+	* src/forcefield.cpp: Change WeightedRotorSearch to behave more like
+	SystematicRotorSearch in that it now clears existing conformers,
+	and stores conformers and energies found during the search.
+
 2010-05-11  Noel O'Boyle
 
 	* scripts/CMakeLists.txt, openbabel-java.i, openbabel-python.i: Bring
