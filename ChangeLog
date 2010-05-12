@@ -1,5 +1,12 @@
 2010-05-12  Noel O'Boyle
 
+	* src/charges/qtpie.cpp, qeq.cpp: Replace isnan with IsNan for
+	cross-platform (i.e. MSVC) compatability. Still won't compile on
+	Windows as is missing "erf" function (there is an implementation in
+	boost which can probably be used).
+
+2010-05-12  Noel O'Boyle
+
 	* src/forcefield.cpp: Change WeightedRotorSearch to behave more like
 	SystematicRotorSearch in that it now clears existing conformers,
 	and stores conformers and energies found during the search.

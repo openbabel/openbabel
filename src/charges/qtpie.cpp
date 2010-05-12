@@ -257,12 +257,12 @@ bool QTPIECharges::solver(MatrixXd A, VectorXd b, VectorXd &x, const double Norm
 	
 	VectorXd resid = A*x - b;
 	double resnorm = resid.norm();
-	if (isnan(resnorm) || resnorm > NormThreshold || !SolverOK)
+	if (IsNan(resnorm) || resnorm > NormThreshold || !SolverOK)
 	{
 		stringstream msg;
 		msg << "Warning, LU solver failed." << endl;
 		if (!SolverOK) msg << "Solver returned error." << endl;
-		if (isnan(resnorm)) msg << "NaNs were returned" << endl;
+		if (IsNan(resnorm)) msg << "NaNs were returned" << endl;
 		if (resnorm > NormThreshold) msg << "Residual has norm " << resnorm
 		       << " which exceeds the recommended threshold of " << NormThreshold
 		       << endl;
@@ -274,7 +274,7 @@ bool QTPIECharges::solver(MatrixXd A, VectorXd b, VectorXd &x, const double Norm
 		resid = A*x - b;
 		resnorm = resid.norm();
 		
-		if (isnan(resnorm) || !SolverOK)
+		if (IsNan(resnorm) || !SolverOK)
 		{
 			obErrorLog.ThrowError(__FUNCTION__, "SVD solver returned an error. Charges may not be reliable!", obError);
 			return false;
