@@ -95,8 +95,10 @@ namespace OpenBabel
           break;
       }
 
+    // OK, just read MOLECULE line
     int lcount;
     int natoms,nbonds;
+    bool hasPartialCharges = true;
     for (lcount=0;;lcount++)
       {
         if (!ifs.getline(buffer,BUFF_SIZE))
@@ -115,7 +117,19 @@ namespace OpenBabel
           }
         else if (lcount == 1)
           sscanf(buffer,"%d%d",&natoms,&nbonds);
-        else if (lcount == 4) //energy
+        else if (lcount == 3) // charge descriptions
+          {
+            // Annotate origin of partial charges
+            OBPairData *dp = new OBPairData;
+            dp->SetAttribute("PartialCharges");
+            dp->SetValue(buffer);
+            dp->SetOrigin(fileformatInput);
+            mol.SetData(dp);
+
+            if (strncasecmp(buffer, "NO_CHARGES", 10) == 0)
+              hasPartialCharges = false;
+          }
+        else if (lcount == 4) //energy (?)
           {
             tokenize(vstr,buffer);
             if (!vstr.empty() && vstr.size() == 3)
@@ -151,7 +165,6 @@ namespace OpenBabel
     int i;
     vector3 v;
     OBAtom atom;
-    bool hasPartialCharges=false;
     double x,y,z,pcharge;
     char temp_type[BUFF_SIZE], resname[BUFF_SIZE], atmid[BUFF_SIZE];
     int elemno, resnum = -1;
@@ -238,8 +251,7 @@ namespace OpenBabel
                 vector<OBResidue*>::iterator ri;
                 for (res = mol.BeginResidue(ri) ; res ; res = mol.NextResidue(ri))
                   if (res->GetName() == resname &&
-                      static_cast<int>(res->GetNum())
-                      == resnum)
+                      static_cast<int>(res->GetNum()) == resnum)
                     break;
 
                 if (res == NULL)
@@ -362,7 +374,7 @@ namespace OpenBabel
 
     snprintf(buffer, BUFF_SIZE," %d %d 0 0 0", mol.NumAtoms(),mol.NumBonds());
     ofs << buffer << endl;
-    ofs << "SMALL" << endl;
+    ofs << "SMALL" << endl; // TODO: detect if we have protein, biopolymer, etc.
 
     OBPairData *dp = (OBPairData*)mol.GetData("PartialCharges");
     if (dp != NULL) {
@@ -370,13 +382,13 @@ namespace OpenBabel
         // NO_CHARGES, DEL_RE, GASTEIGER, GAST_HUCK, HUCKEL, PULLMAN, 
         // GAUSS80_CHARGES, AMPAC_CHARGES, MULLIKEN_CHARGES, DICT_ CHARGES,
         // MMFF94_CHARGES, USER_CHARGES
-      if (dp->GetValue() == "Mulliken")
+      if (strcasecmp(dp->GetValue().c_str(),"Mulliken") == 0)
         ofs << "MULLIKEN_CHARGES" << endl;
-      else if (dp->GetValue() == "MMFF94")
+      else if (strcasecmp(dp->GetValue().c_str(),"MMFF94") == 0)
         ofs << "MMFF94_CHARGES" << endl;
-      else if (dp->GetValue() == "ESP")
+      else if (strcasecmp(dp->GetValue().c_str(),"ESP") == 0)
         ofs << "USER_CHARGES" << endl;
-      else if (dp->GetValue() == "GASTEIGER")
+      else if (strcasecmp(dp->GetValue().c_str(),"Gasteiger") == 0)
         ofs << "GASTEIGER" << endl;
       else // ideally, code should pick from the Tripos types
         ofs << "USER_CHARGES" << endl;
@@ -385,10 +397,11 @@ namespace OpenBabel
         ofs << "GASTEIGER" << endl;
     }
 
-    ofs << "Energy = " << mol.GetEnergy() << endl;
+    //    ofs << "Energy = " << mol.GetEnergy() << endl;
 
     if (mol.HasData(OBGenericDataType::CommentData))
       {
+        ofs << "****\n"; // comment line printed, so we need to add "no status bits set"
         OBCommentData *cd = (OBCommentData*)mol.GetData(OBGenericDataType::CommentData);
         ofs << cd->GetData();
       }

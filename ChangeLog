@@ -1,3 +1,9 @@
+2010-05-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/mol2format.cpp: Add support for reading charge model
+	descriptors from mol2 files. Should now allow round-tripping
+	between mol2 -> mol2.
+
 2010-05-12  Noel O'Boyle
 
 	* src/charges/qtpie.cpp, qeq.cpp: Replace isnan with IsNan for
@@ -27,7 +33,7 @@
 2010-05-10  Chris Morley
 
 	* src/formats/svgformat.cpp: draw terminal C atoms explicitly by default.
-	
+
 	* src/formats/xml/cmlformat.cpp: hack to allow CML in molpro output to
 	  be read.
 	  No implict H or spinmultiplicity assignment if any bonds have zero
