@@ -121,3 +121,4 @@ install(TARGETS ${BABEL_LIBRARY}
 )
 
 add_subdirectory(formats)
+add_dependencies(formats ${BABEL_LIBRARY})

@@ -1,3 +1,4 @@
+add_custom_target(formats)
 
 set(formats
     APIInterface
