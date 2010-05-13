@@ -57,6 +57,14 @@ else(UNIX) # Windows - bin dir = lib dir to load libraries
   endif(ENABLE_VERSIONED_FORMATS)
 endif(UNIX)
 
+# Place binaries and libraries in the root of the build directory
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+  CACHE STRING "Binary build output directory")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
+  CACHE STRING "Library build output directory")
+mark_as_advanced(CMAKE_LIBRARY_OUTPUT_DIRECTORY
+  CMAKE_RUNTIME_OUTPUT_DIRECTORY)
+
 option(WITH_INCHI   "build inchi lib" ON)
 option(BUILD_SHARED "enable shared build support" ON)
 if(BUILD_SHARED)
