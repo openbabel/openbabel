@@ -1,4 +1,4 @@
-cd /**********************************************************************
+/**********************************************************************
 Copyright (C) 2005-2006 by Chris Morley
 Some portions Copyright (C) 2006 by Geoffrey R. Hutchison
  
@@ -261,7 +261,7 @@ namespace OpenBabel
     while((result = xmlTextReaderRead(_reader))==1)
       {
         if(xmlTextReaderNodeType(_reader)==targettyp
-           && !xmlStrcmp(xmlTextReaderConstLocalName(_reader), BAD_CAST	tag.c_str()))
+           && !xmlStrcmp(xmlTextReaderConstLocalName(_reader), BAD_CAST tag.c_str()))
           break;
       }
     return result;
@@ -320,7 +320,7 @@ namespace OpenBabel
     istream* ifs = pConv->GetInStream();
     if(!ifs->good() || ifs->eof())
       return 0;
-	
+    
     ifs->get(buffer, len+1, '>');
     streamsize count = strlen(buffer);
 
@@ -331,10 +331,10 @@ namespace OpenBabel
         buffer[++count] = '\0';
       }
 
-		if (ifs->peek() == '\n' || ifs->peek() == '\r')
-			{
-				ifs->get(); // remove any trailing endlines
-			}
+        if (ifs->peek() == '\n' || ifs->peek() == '\r')
+            {
+                ifs->get(); // remove any trailing endlines
+            }
     return count;
   }
 
