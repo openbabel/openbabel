@@ -1,6 +1,8 @@
 project(openbabel)
 set(CMAKE_MODULE_PATH ${openbabel_SOURCE_DIR}/cmake/modules)
-cmake_minimum_required(VERSION 2.4.8)
+if (NOT EMBED_OPENBABEL)
+  cmake_minimum_required(VERSION 2.4.8)
+endif (NOT EMBED_OPENBABEL)
 
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
@@ -21,7 +23,11 @@ if(WIN32)
 else(WIN32)
   set(BABEL_LIBRARY   openbabel)
 endif(WIN32)
-set(BABEL_VERSION  "${BABEL_MAJ_VER}.${BABEL_MIN_VER}.${BABEL_PATCH_VER}")
+if(EMBED_OPENBABEL)
+  set(BABEL_VERSION  "${BABEL_MAJ_VER}.${BABEL_MIN_VER}.${BABEL_PATCH_VER}" PARENT_SCOPE)
+else(EMBED_OPENBABEL)
+  set(BABEL_VERSION  "${BABEL_MAJ_VER}.${BABEL_MIN_VER}.${BABEL_PATCH_VER}")  
+endif(EMBED_OPENBABEL)
 set(BABEL_DATADIR  "${CMAKE_INSTALL_PREFIX}/share/openbabel")
 
 option(ENABLE_VERSIONED_FORMATS
