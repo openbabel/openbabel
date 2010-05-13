@@ -6,6 +6,11 @@
     
     * CMakeLists.txt, src/CMakeLists.txt, src/formats/CMakeLists.txt: 
     Backported some build system changes from trunk
+    
+    * src/formats/outformat.cpp: Backported PC Gamess support from trunk
+    
+    * src/formats/molproformat.cpp (ReadMolecule): Applied patch 
+    #2893477 to support numbered atoms.
 
 2010-04-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
  

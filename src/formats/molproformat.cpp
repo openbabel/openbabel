@@ -124,16 +124,16 @@ namespace OpenBabel
     vector<string> vs;
 
     mol.BeginModify();
-    while	(ifs.getline(buffer,BUFF_SIZE))
+    while   (ifs.getline(buffer,BUFF_SIZE))
       {
         if(strstr(buffer,"ATOMIC COORDINATES") != NULL)
           {
             // mol.EndModify();
             mol.Clear();
             mol.BeginModify();
-            ifs.getline(buffer,BUFF_SIZE);	// blank
-            ifs.getline(buffer,BUFF_SIZE);	// column headings
-            ifs.getline(buffer,BUFF_SIZE);	// blank
+            ifs.getline(buffer,BUFF_SIZE);  // blank
+            ifs.getline(buffer,BUFF_SIZE);  // column headings
+            ifs.getline(buffer,BUFF_SIZE);  // blank
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
             while (vs.size() == 6)
@@ -145,7 +145,17 @@ namespace OpenBabel
                 atom->SetVector(x,y,z); //set coordinates
 
                 //set atomic number
-                atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
+                int n;
+                atom->SetAtomicNum(0);
+                while (vs[1].length()!=0) { // recognize name with number
+                    n = etab.GetAtomicNum(vs[1].c_str());
+                  if (n!=0) {
+                    atom->SetAtomicNum(n);
+                    break;
+                  } else {
+                    vs[1].erase(vs[1].end()-1,vs[1].end());
+                  }
+                }
 
                 if (!ifs.getline(buffer,BUFF_SIZE))
                   break;
@@ -180,17 +190,17 @@ namespace OpenBabel
                 } else {
                   freq.push_back(atof(vs[i].c_str()));
                 }
-	    }
+        }
 
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
             for(unsigned int i=2; i<vs.size(); ++i) {
                 intens.push_back(atof(vs[i].c_str()));
-	    }
+        }
             ifs.getline(buffer,BUFF_SIZE); // relative intensities
             ifs.getline(buffer,BUFF_SIZE); 
             tokenize(vs,buffer);
-	    while(vs.size() > 1) {
+        while(vs.size() > 1) {
               vector<double> x, y, z;
               for (unsigned int i = 1; i < vs.size(); i++)
                 x.push_back(atof(vs[i].c_str()));
@@ -210,7 +220,7 @@ namespace OpenBabel
               tokenize(vs,buffer);
             } // while
             for (unsigned int i = 0; i < freq.size(); i++) {
-	      Frequencies.push_back(freq[i]);
+          Frequencies.push_back(freq[i]);
               Intensities.push_back(intens[i]);
               Lx.push_back(vib[i]);
             }  
