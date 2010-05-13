@@ -9,8 +9,6 @@ if(COMMAND cmake_policy)
   cmake_policy(SET CMP0005 OLD) # add_definitions need updating to set to NEW
 endif(COMMAND cmake_policy)
 
-ENABLE_TESTING()
-
 include (CheckCXXCompilerFlag)
 include (MacroEnsureVersion)
 
@@ -245,8 +243,15 @@ add_subdirectory(include)
 add_subdirectory(data)
 add_subdirectory(doc)
 add_subdirectory(src)
-add_subdirectory(test)
 add_subdirectory(tools)
+
+# Do we want to build the tests?
+option(ENABLE_TESTS "Enable unit tests" ON)
+if(ENABLE_TESTS)
+  include(CTest)
+  enable_testing()
+  add_subdirectory(test)
+endif()
 
 # Should Python bindings be built?
 option(ENABLE_PYTHON "Enable Python bindings" OFF)
