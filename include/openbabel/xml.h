@@ -13,6 +13,9 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
+#ifndef OB_XML_H
+#define OB_XML_H
+
 #include <typeinfo>
 
 #include <openbabel/mol.h>
@@ -52,7 +55,7 @@ namespace OpenBabel
     public:
       ///Existing OBConversion instance copied
       XMLConversion(OBConversion* pConv);
-		
+        
       ///Frees reader and writer if necessary
       ~XMLConversion();
 
@@ -96,10 +99,10 @@ namespace OpenBabel
 
 
       xmlTextReaderPtr GetReader() const
-        { return _reader;	};
+        { return _reader;   };
 
       xmlTextWriterPtr GetWriter() const
-        { return _writer;	};
+        { return _writer;   };
 
       void OutputToStream()
         {
@@ -135,9 +138,9 @@ namespace OpenBabel
       xmlTextReaderPtr _reader;
       xmlTextWriterPtr _writer;
       xmlOutputBufferPtr _buf;
-      //	xmlBufferPtr _buf;
+      //    xmlBufferPtr _buf;
       bool _LookingForNamespace;
-    public:	
+    public: 
       bool _SkipNextRead;
     };
 
@@ -148,7 +151,7 @@ namespace OpenBabel
     {
     protected:
       XMLConversion* _pxmlConv;
-	
+    
       //formating for output
       std::string _prefix;
       int baseindent, ind;
@@ -162,7 +165,7 @@ namespace OpenBabel
       virtual bool EndElement(const std::string& ElName){return false;};
       /// The tag at the end of the chemical object e.g. "/molecule>"
       virtual const char* EndTag(){return ">";};
-	
+    
     protected:
       xmlTextReaderPtr reader() const
         {
@@ -173,12 +176,12 @@ namespace OpenBabel
         {
           return _pxmlConv->GetWriter();
         }
-	
+    
       void OutputToStream()
         {
           _pxmlConv->OutputToStream();
         }
-	
+    
       ///Skip past first n objects in input stream (or current one with n=0)
       /// Returns 1 on success, -1 on error and 0 if not implemented 
       virtual int SkipObjects(int n, OBConversion* pConv)
@@ -194,13 +197,13 @@ namespace OpenBabel
 
           //always find the end of at least 1 object
           if(n==0)++n;
-		
+        
           //Skip n objects, returning -1 if not successful
           int i;
           for(i=0; i<n; ++i)
             if(_pxmlConv->SkipXML(EndTag())!=1)
               return -1;
-		
+        
           return 1;       
         }
 
@@ -252,3 +255,5 @@ namespace OpenBabel
 //! \file
 //! \brief Declaration of XMLConversion, 
 //!  declaration and definition of XMLBaseFormat and XMLMoleculeFormat
+
+#endif
