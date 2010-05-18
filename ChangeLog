@@ -1,3 +1,8 @@
+2010-05-18  Konstantin Tokarev  <annulen@yandex.ru>
+
+    * src/formats/xml/cmlformat.cpp: Add support for reading and writing
+    of custom labels, colors, and radii of atoms
+
 2010-05-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/mol2format.cpp: Add support for reading charge model

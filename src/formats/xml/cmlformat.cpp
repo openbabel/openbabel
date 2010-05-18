@@ -613,6 +613,30 @@ namespace OpenBabel
             else if(attrname=="formalCharge") 
               pAtom->SetFormalCharge(atoi(value.c_str()));
 
+            else if(attrname=="label")
+              {
+                OBPairData *label = new OBPairData();
+                label->SetAttribute("label");
+                label->SetValue(value.c_str());
+                pAtom->SetData(label);
+              }
+
+            else if(attrname=="color")
+              {
+                OBPairData *color = new OBPairData();
+                color->SetAttribute("color");
+                color->SetValue(value.c_str());
+                pAtom->SetData(color);
+              }
+
+            else if(attrname=="radius")
+              {
+                OBPairData *radius = new OBPairData();
+                radius->SetAttribute("radius");
+                radius->SetValue(value.c_str());
+                pAtom->SetData(radius);
+              }
+
             else if(attrname=="spinMultiplicity")
               pAtom->SetSpinMultiplicity(atoi(value.c_str()));
 
@@ -1163,6 +1187,9 @@ namespace OpenBabel
        static const xmlChar C_PROPERTY[] = "property";
        static const xmlChar C_SCALAR[] = "scalar";
     */
+    static const xmlChar C_LABEL[] = "label";
+    static const xmlChar C_COLOR[] = "color";
+    static const xmlChar C_RADIUS[] = "radius";
     //CML1
     static const xmlChar C_STRING[]       = "string";
     static const xmlChar C_INTEGER[]      = "integer";
@@ -1340,6 +1367,7 @@ namespace OpenBabel
                 X = patom->GetX();
                 Y = patom->GetY();
                 Z = patom->GetZ();
+
                 if(pUnitCell)
                   {
                     //Convert to fractional coordinates
@@ -1393,6 +1421,18 @@ namespace OpenBabel
 
                         if(UseHydrogenCount && hcount)
                           xmlTextWriterWriteFormatAttribute(writer(), C_HYDROGENCOUNT,"%d", hcount);
+                          
+                        if(patom->HasData("label"))
+                            xmlTextWriterWriteFormatAttribute(writer(), C_LABEL,"%s",
+                            patom->GetData("label")->GetValue().c_str());
+                            
+                        if(patom->HasData("color"))
+                          xmlTextWriterWriteFormatAttribute(writer(), C_COLOR,"%s",
+                          patom->GetData("color")->GetValue().c_str());
+                          
+                        if(patom->HasData("radius"))
+                          xmlTextWriterWriteFormatAttribute(writer(), C_RADIUS,"%s",
+                          patom->GetData("radius")->GetValue().c_str());
 
                         if(dim==2)
                           {
