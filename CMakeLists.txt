@@ -200,9 +200,12 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     if(Boost_FOUND)
       include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
       add_definitions(-DUSE_BOOST -DHAVE_SHARED_POINTER)
+      set(SHARED_POINTER true)
     else(Boost_FOUND)
       message(FATAL_ERROR "Boost is required to compile OpenBabel with GCC 3.x")
     endif(Boost_FOUND)
+  else(NOT GCC_IS_NEWER_THAN_4_0)
+    set(SHARED_POINTER true)
   endif(NOT GCC_IS_NEWER_THAN_4_0)
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
@@ -245,6 +248,7 @@ endif(${CMAKE_CXX_COMPILER_ID} MATCHES Intel AND UNIX)
 if(MSVC90)
   # To be added: AND SP1  OR gcc>4.0
   add_definitions(-DHAVE_SHARED_POINTER)
+  set(SHARED_POINTER true)
 endif(MSVC90)
 
 # Some rpath handling for Linux and Mac

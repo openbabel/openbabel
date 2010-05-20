@@ -87,7 +87,7 @@ set(formats_misc
       yasaraformat
       )
 
-if(MSVC90 OR Boost_FOUND)
+if(SHARED_POINTER)
   set(formats_misc
     ${formats_misc}
     rxnformat
@@ -95,7 +95,7 @@ if(MSVC90 OR Boost_FOUND)
     chemkinformat
     rsmiformat
   )
-endif(MSVC90 OR Boost_FOUND)
+endif(SHARED_POINTER)
 
 if(WITH_INCHI)
   add_definitions(-DINCHI_LINK_AS_DLL)
@@ -130,12 +130,12 @@ if(LIBXML2_FOUND)
     pubchem
     xmlformat
   )
-  if(MSVC90 OR Boost_FOUND)
+  if(SHARED_POINTER)
     set(formats_xml
         ${formats_xml}
         cmlreactformat
     )
-  endif(MSVC90 OR Boost_FOUND)
+  endif(SHARED_POINTER)
 endif(LIBXML2_FOUND)
 
 if(NOT WIN32)

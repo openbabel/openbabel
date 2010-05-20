@@ -1,3 +1,12 @@
+2010-05-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* CMakeLists.txt, src/formats/CMakeLists.txt: Fix support for
+	formats using shared pointers and GCC-4.x without boost.
+
+	* include/openbabel/mol.h, src/mol.cpp: Add revised RenumberAtoms
+	method which uses integer atom indexes for use in scripting
+	bindings.
+
 2010-05-18  Konstantin Tokarev  <annulen@yandex.ru>
 
     * src/formats/xml/cmlformat.cpp: Add support for reading and writing
