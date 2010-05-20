@@ -415,6 +415,8 @@ namespace OpenBabel
     bool Clear();
     //! Renumber the atoms of this molecule according to the order in the supplied vector
     void RenumberAtoms(std::vector<OBAtom*>&);
+    //! Renumber the atoms of this molecule using the initial indexes in the supplied vector
+    void RenumberAtoms(std::vector<int>);
     //! Set the coordinates for all atoms in this conformer.
     //! \sa OBMol::GetCoordinates()
     void SetCoordinates(double *c);

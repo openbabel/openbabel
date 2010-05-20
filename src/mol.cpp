@@ -3239,6 +3239,28 @@ namespace OpenBabel
     }
   }
 
+  //! Renumber the atoms according to the order of indexes in the supplied vector
+  //! This with assemble an atom vector and call RenumberAtoms(vector<OBAtom*>)
+  //! It will return without action if the supplied vector is empty or does not
+  //! have the same number of atoms as the molecule.
+  //!
+  //! \since version 2.3
+  void OBMol::RenumberAtoms(vector<int> v)
+  {
+    if (Empty() || v.empty() || v.size() != NumAtoms())
+      return;
+
+    OBAtom *atom;
+    vector <OBAtom*> va;
+    va.reserve(NumAtoms());
+
+    vector<int>::iterator i;
+    for (i = v.begin(); i != v.end(); ++i)
+      va.push_back( GetAtom(*i) );
+
+    this->RenumberAtoms(va);
+  }
+
   //! Renumber the atoms in this molecule according to the order in the supplied
   //! vector. This will return without action if the supplied vector is empty or
   //! does not have the same number of atoms as the molecule.
