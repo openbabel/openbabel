@@ -150,7 +150,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     macro_ensure_version("4.2.0" "${_gcc_version}" GCC_IS_NEWER_THAN_4_2)
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
-if(NOT WIN32)
+if(NOT MSVC)
   SET(CMAKE_REQUIRED_FLAGS -Werror)
   check_c_source_compiles("
    #include <sys/types.h>
@@ -192,7 +192,7 @@ if(NOT WIN32)
       set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility-inlines-hidden")
     endif (HAVE_GCC_VISIBILITY AND GCC_IS_NEWER_THAN_4_2 AND NOT _GCC_COMPILED_WITH_BAD_ALLOCATOR)
   endif (CMAKE_COMPILER_IS_GNUCXX AND NOT APPLE)
-endif(NOT WIN32)
+endif(NOT MSVC)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
   if(NOT GCC_IS_NEWER_THAN_4_0) # GCC 3.x

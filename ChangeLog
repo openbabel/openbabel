@@ -1,3 +1,10 @@
+2010-05-22  Noel O'Boyle
+
+	* CMakeLists.txt, src/CMakeLists.txt: Re-enable support for Cygwin. I
+	just needed to change Cygwin to use dlhandler_unix.cpp instead of
+	dlhandler_win32.cpp. (Note to self: need to sort out Mingw now, and
+	then remove Cygwin specific code from dlhandler_win32.cpp)
+
 2010-05-20  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* CMakeLists.txt, src/formats/CMakeLists.txt: Fix support for

@@ -120,15 +120,15 @@ set(openbabel_srcs
 )
 
 if(BUILD_SHARED)
-  if(WIN32)
+  if(MSVC)
     set(openbabel_srcs ${openbabel_srcs}
         dlhandler_win32.cpp
         )
-  else(WIN32)
+  else(MSVC)
     set(openbabel_srcs ${openbabel_srcs}
         dlhandler_unix.cpp
         )
-  endif(WIN32)
+  endif(MSVC)
 endif(BUILD_SHARED)
 
 set(openbabel_library_srcs
