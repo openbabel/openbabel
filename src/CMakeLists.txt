@@ -175,6 +175,9 @@ if(MSVC)
     OUTPUT_NAME openbabel-2)
 endif(MSVC)
 
+# Export the openbabel target, for use in other projects
+export(TARGETS openbabel APPEND FILE "${OB_EXPORTS_FILE}")
+
 install(TARGETS openbabel
   RUNTIME DESTINATION ${BIN_INSTALL_DIR}
   LIBRARY DESTINATION ${LIB_INSTALL_DIR}

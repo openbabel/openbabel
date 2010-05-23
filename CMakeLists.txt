@@ -19,13 +19,10 @@ set(BABEL_MAJ_VER   2)
 set(BABEL_MIN_VER   2)
 set(BABEL_PATCH_VER 99)
 
-# Why is this so? Do we want to keep using a different name for the Windows
-# DLL? On the one hand it has been this way for a while...
-if(WIN32)
-  set(BABEL_LIBRARY   openbabel-2)
-else(WIN32)
-  set(BABEL_LIBRARY   openbabel)
-endif(WIN32)
+# This should be phased out in preference for just using the target name
+set(BABEL_LIBRARY openbabel)
+
+# This would be better handled with external projects...
 if(EMBED_OPENBABEL)
   set(BABEL_VERSION  "${BABEL_MAJ_VER}.${BABEL_MIN_VER}.${BABEL_PATCH_VER}" PARENT_SCOPE)
 else(EMBED_OPENBABEL)
@@ -66,6 +63,10 @@ else(UNIX) # Windows - bin dir = lib dir to load libraries
     endif(ENABLE_VERSIONED_FORMATS)
   endif(MSVC)
 endif(UNIX)
+set(OB_INCLUDE_DIRS "include/openbabel-2.0")
+set(OB_EXPORTS_FILE "${openbabel_BINARY_DIR}/OpenBabel2_EXPORTS.cmake")
+# Ensure a fresh file is made each time CMake is run
+file(REMOVE "${OB_EXPORTS_FILE}")
 
 # Place binaries and libraries in the root of the build directory
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
@@ -280,11 +281,15 @@ if (CMAKE_COMPILER_IS_GNUCXX)
 endif (CMAKE_COMPILER_IS_GNUCXX)
 
 file(GLOB_RECURSE headers include/openbabel/*.h)
-configure_file(${openbabel_SOURCE_DIR}/src/config.h.cmake ${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h)
-install(FILES ${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h DESTINATION include/openbabel-2.0/openbabel)
+configure_file(${openbabel_SOURCE_DIR}/src/config.h.cmake
+  ${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h)
+install(FILES ${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h
+  DESTINATION include/openbabel-2.0/openbabel)
 if(NOT MSVC)
-  configure_file(${openbabel_SOURCE_DIR}/openbabel-2.0.pc.cmake ${openbabel_BINARY_DIR}/openbabel-2.0.pc @ONLY)
-  install(FILES ${openbabel_BINARY_DIR}/openbabel-2.0.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig)
+  configure_file(${openbabel_SOURCE_DIR}/openbabel-2.0.pc.cmake
+    ${openbabel_BINARY_DIR}/openbabel-2.0.pc @ONLY)
+  install(FILES ${openbabel_BINARY_DIR}/openbabel-2.0.pc
+    DESTINATION ${LIB_INSTALL_DIR}/pkgconfig)
 endif(NOT MSVC)
 
 include_directories(${openbabel_BINARY_DIR}/include
@@ -344,3 +349,13 @@ add_subdirectory(scripts)
 # A minimal build with just two formats (SMI, SDF) useful for developers
 option(MINIMAL_BUILD "Disable full build" OFF)
 
+# Create the Config and ConfigVersion files in the build directory, useful to
+# build against an uninstalled OpenBabel build. Simply set OpenBabel2_DIR to
+# point at the build directory and call find_package(OpenBabel2)
+set(OpenBabel2_INCLUDE_DIRS
+  "${openbabel_SOURCE_DIR}/include"
+  "${openbabel_BINARY_DIR}/include")
+configure_file("${openbabel_SOURCE_DIR}/OpenBabel2Config.cmake.in"
+  "${openbabel_BINARY_DIR}/OpenBabel2Config.cmake" @ONLY)
+configure_file("${openbabel_SOURCE_DIR}/OpenBabel2ConfigVersion.cmake.in"
+  "${openbabel_BINARY_DIR}/OpenBabel2ConfigVersion.cmake" @ONLY)
