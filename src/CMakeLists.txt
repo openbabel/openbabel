@@ -132,68 +132,68 @@ if(BUILD_SHARED)
 endif(BUILD_SHARED)
 
 set(openbabel_library_srcs
-                ${openbabel_srcs}
-                ${depict_srcs}
-                ${math_srcs}
-                ${stereo_srcs}
-                ${headers}
-                "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h"
-		)
+  ${openbabel_srcs}
+  ${depict_srcs}
+  ${math_srcs}
+  ${stereo_srcs}
+  ${headers}
+  "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h"
+  )
 if(NOT MSVC)
-   set(openbabel_library_srcs
-	   ${openbabel_library_srcs}
-     ${charges}
-	   ${descriptors}
-	   ${fingerprints}
-     ${forcefields}
-     ${ops}
-	   )
+  set(openbabel_library_srcs
+    ${openbabel_library_srcs}
+    ${charges}
+    ${descriptors}
+    ${fingerprints}
+    ${forcefields}
+    ${ops}
+    )
 endif(NOT MSVC)
-add_library(${BABEL_LIBRARY} ${BUILD_TYPE}
-                ${openbabel_library_srcs}
-)
+
+add_library(openbabel ${BUILD_TYPE}
+  ${openbabel_library_srcs}
+  )
 
 if(NOT WIN32)
   set(libs ${libs} m dl)
 endif(NOT WIN32)
 
 if(ZLIB_FOUND)
-target_link_libraries(${BABEL_LIBRARY} ${libs} ${ZLIB_LIBRARY})
+  target_link_libraries(openbabel ${libs} ${ZLIB_LIBRARY})
 else(ZLIB_FOUND) # omit zlib reference
-target_link_libraries(${BABEL_LIBRARY} ${libs})
+  target_link_libraries(openbabel ${libs})
 endif(ZLIB_FOUND)
-set_target_properties(${BABEL_LIBRARY} PROPERTIES
+set_target_properties(openbabel PROPERTIES
                                        VERSION ${LIBRARY_VERSION}
                                        SOVERSION ${SOVERSION}
                                        DEFINE_SYMBOL MAKE_OBDLL
                       )
 if(MSVC)
-    set_target_properties(${BABEL_LIBRARY} PROPERTIES
-                  RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+  set_target_properties(openbabel PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 endif(MSVC)
 
-install(TARGETS ${BABEL_LIBRARY}
-                RUNTIME DESTINATION ${BIN_INSTALL_DIR}
-                LIBRARY DESTINATION ${LIB_INSTALL_DIR}
-                ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
+install(TARGETS openbabel
+  RUNTIME DESTINATION ${BIN_INSTALL_DIR}
+  LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+  ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
 )
 
 if(MSVC)
   foreach(plugingroup descriptors fingerprints forcefields ops charges)
     add_library(plugin_${plugingroup} ${PLUGIN_TYPE} ${${plugingroup}}
-        "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h")
-    target_link_libraries(plugin_${plugingroup} ${libs} ${BABEL_LIBRARY})
+      "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h")
+    target_link_libraries(plugin_${plugingroup} ${libs} openbabel)
     install(TARGETS plugin_${plugingroup}
-                  RUNTIME DESTINATION ${BIN_INSTALL_DIR}
-                  LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
-                  ARCHIVE DESTINATION ${OB_PLUGIN_INSTALL_DIR})
+      RUNTIME DESTINATION ${BIN_INSTALL_DIR}
+      LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
+      ARCHIVE DESTINATION ${OB_PLUGIN_INSTALL_DIR})
     set_target_properties(plugin_${plugingroup} PROPERTIES
-                  OUTPUT_NAME plugin_${plugingroup}
-                  PREFIX ""
-                  SUFFIX ${MODULE_EXTENSION}
-                  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+      OUTPUT_NAME plugin_${plugingroup}
+      PREFIX ""
+      SUFFIX ${MODULE_EXTENSION}
+      LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
   endforeach(plugingroup)
 endif(MSVC)
 
 add_subdirectory(formats)
-add_dependencies(formats ${BABEL_LIBRARY})
