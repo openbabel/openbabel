@@ -1,5 +1,3 @@
-add_custom_target(formats)
-
 set(formats_common
   smilesformat
   mdlformat
@@ -186,7 +184,7 @@ if(MSVC)
     endforeach(format)
     add_library(${formatgroup} ${PLUGIN_TYPE} ${formatsources}
         "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h")
-    target_link_libraries(${formatgroup} ${libs} ${BABEL_LIBRARY})
+    target_link_libraries(${formatgroup} ${libs} openbabel)
     install(TARGETS ${formatgroup}
                   RUNTIME DESTINATION ${BIN_INSTALL_DIR}
                   LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
@@ -202,7 +200,7 @@ foreach(format ${formats})
   add_library(${format} ${PLUGIN_TYPE} ${format}.cpp
     ${${format}_additional_sources}
     "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h")
-  target_link_libraries(${format} ${libs} ${BABEL_LIBRARY})
+  target_link_libraries(${format} ${libs} openbabel)
   install(TARGETS ${format}
                   RUNTIME DESTINATION ${BIN_INSTALL_DIR}
                   LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
@@ -220,7 +218,7 @@ if(MSVC)
     set(xmlsources ${xmlsources} xml/${format}.cpp)
   endforeach(format)
   add_library(formats_xml ${PLUGIN_TYPE} ${xmlsources} xml/xml.cpp)
-  target_link_libraries(formats_xml ${libs} ${LIBXML2_LIBRARIES} ${BABEL_LIBRARY})
+  target_link_libraries(formats_xml ${libs} ${LIBXML2_LIBRARIES} openbabel)
   install(TARGETS formats_xml
                   RUNTIME DESTINATION ${BIN_INSTALL_DIR}
                   LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
@@ -233,7 +231,7 @@ if(MSVC)
 else(MSVC)
 foreach(format ${formats_xml})
   add_library(${format} ${PLUGIN_TYPE} xml/${format}.cpp xml/xml.cpp)
-  target_link_libraries(${format} ${libs} ${LIBXML2_LIBRARIES} ${BABEL_LIBRARY})
+  target_link_libraries(${format} ${libs} ${LIBXML2_LIBRARIES} openbabel)
   install(TARGETS ${format}
                   RUNTIME DESTINATION ${BIN_INSTALL_DIR}
                   LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
@@ -244,4 +242,3 @@ foreach(format ${formats_xml})
                         SUFFIX ${MODULE_EXTENSION})
 endforeach(format)
 endif(MSVC)
-
