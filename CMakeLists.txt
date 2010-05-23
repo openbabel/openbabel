@@ -359,3 +359,27 @@ configure_file("${openbabel_SOURCE_DIR}/OpenBabel2Config.cmake.in"
   "${openbabel_BINARY_DIR}/OpenBabel2Config.cmake" @ONLY)
 configure_file("${openbabel_SOURCE_DIR}/OpenBabel2ConfigVersion.cmake.in"
   "${openbabel_BINARY_DIR}/OpenBabel2ConfigVersion.cmake" @ONLY)
+
+# Now to configure the installed config file.
+set(OB_CONFIG_DIR "${LIB_INSTALL_DIR}/openbabel")
+set(OpenBabel2_INCLUDE_DIRS "\${OpenBabel2_INSTALL_PREFIX}/${OB_INCLUDE_DIRS}")
+set(OB_EXPORTS_FILE
+  "\${OpenBabel2_INSTALL_PREFIX}/${OB_CONFIG_DIR}/OpenBabel2_EXPORTS.cmake")
+set(REL_REF)
+if(NOT WIN32)
+  set(REL_REF "/../..")
+endif(NOT WIN32)
+configure_file("${openbabel_SOURCE_DIR}/OpenBabel2Config.cmake.in"
+  "${openbabel_BINARY_DIR}/OpenBabel2ConfigInstall.cmake" @ONLY)
+
+install(EXPORT openbabel-targets
+  DESTINATION "${OB_CONFIG_DIR}"
+  FILE OpenBabel2_EXPORTS.cmake
+  COMPONENT Development)
+install(FILES "${openbabel_BINARY_DIR}/OpenBabel2ConfigInstall.cmake"
+  DESTINATION ${OB_CONFIG_DIR}
+  COMPONENT Development
+  RENAME OpenBabel2Config.cmake)
+install(FILES "${openbabel_BINARY_DIR}/OpenBabel2ConfigVersion.cmake"
+  DESTINATION ${OB_CONFIG_DIR}
+  COMPONENT Development)

@@ -1,5 +1,9 @@
 2010-05-23  Marcus D. Hanwell <marcus@cryos.org>
 
+	* CMakeLists.txt, OpenBabel2Config.cmake.in, src/CMakeLists.txt,
+	src/formats/inchi103/CMakeLists.txt: Make and configure a config file
+	suitable for installation too.
+
 	* include/openbabel/reaction.h: Fixed a compilation failure I
 	was hitting with GCC 4.5, std::tr1::shared_ptr was not found.
 

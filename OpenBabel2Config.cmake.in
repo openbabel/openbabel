@@ -1,4 +1,6 @@
 # The OpenBabel2 config file. To get the targets include the exports file.
+get_filename_component(OpenBabel2_INSTALL_PREFIX "${OpenBabel2_DIR}@REL_REF@"
+  ABSOLUTE)
 
 set(OpenBabel2_INSTALL_PREFIX  "@OB_INSTALL_PREFIX@")
 set(OpenBabel2_VERSION_MAJOR   "@BABEL_MAJ_VER@")

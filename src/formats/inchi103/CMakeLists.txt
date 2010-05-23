@@ -20,6 +20,7 @@ set_target_properties(inchi PROPERTIES
 export(TARGETS inchi APPEND FILE "${OB_EXPORTS_FILE}")
 
 install(TARGETS inchi
+                EXPORT openbabel-targets
                 RUNTIME DESTINATION ${BIN_INSTALL_DIR}
                 LIBRARY DESTINATION ${LIB_INSTALL_DIR}
                 ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
