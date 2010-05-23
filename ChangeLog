@@ -1,3 +1,16 @@
+2010-05-23  Marcus D. Hanwell <marcus@cryos.org>
+
+	* include/openbabel/reaction.h: Fixed a compilation failure I
+	was hitting with GCC 4.5, std::tr1::shared_ptr was not found.
+
+	* CMakeLists.txt, include/CMakeLists.txt, src/CMakeLists.txt,
+	src/formats/CMakeLists.txt, src/formats/inchi103/CMakeLists.txt,
+	OpenBabel2Config.cmake.in, OpenBabel2ConfigVersion.cmake.in:
+	Refactored some parts of the build system, added my first pass
+	at an OpenBabel2Config file and friends. This currently supports
+	building against a build treee, installation tree logic later.
+
+
 2010-05-22  Noel O'Boyle
 
 	* CMakeLists.txt, src/CMakeLists.txt: Re-enable support for Cygwin. I
