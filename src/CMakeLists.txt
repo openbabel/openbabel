@@ -164,13 +164,15 @@ else(ZLIB_FOUND) # omit zlib reference
   target_link_libraries(openbabel ${libs})
 endif(ZLIB_FOUND)
 set_target_properties(openbabel PROPERTIES
-                                       VERSION ${LIBRARY_VERSION}
-                                       SOVERSION ${SOVERSION}
-                                       DEFINE_SYMBOL MAKE_OBDLL
-                      )
+  VERSION ${LIBRARY_VERSION}
+  SOVERSION ${SOVERSION}
+  DEFINE_SYMBOL MAKE_OBDLL
+  )
 if(MSVC)
+  # Set the output name to openbabel-2 (preserves old behaviour). Is this desired?
   set_target_properties(openbabel PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+    OUTPUT_NAME openbabel-2)
 endif(MSVC)
 
 install(TARGETS openbabel
