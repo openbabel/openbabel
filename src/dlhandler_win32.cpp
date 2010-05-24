@@ -39,10 +39,7 @@ namespace OpenBabel {
 bool DLHandler::getConvDirectory(string& convPath)
 {
     char path[MAX_PATH+1];
-#if defined(__CYGWIN__) || defined(__MINGW32__)
-    HMODULE handle = GetModuleHandle(NULL); // get handle to exe file module
-#else
-  //(MSVC build) Get handle to this module in order to determine the path to .obf files.
+  // Get handle to this module in order to determine the path to .obf files.
   //  The exe file may be elsewhere if OpenBabel is being used as a library
   //  rather than through its own user interface.
   #if defined(_DEBUG)
@@ -54,7 +51,6 @@ bool DLHandler::getConvDirectory(string& convPath)
     handle = GetModuleHandle("openbabel-2.dll");//CMake/VC++2008 build will use this.
   if(!handle)   
     handle = GetModuleHandle(NULL); // If all else fails try the exe file module
-#endif
   if (!handle)
     return false;
 
@@ -68,11 +64,6 @@ bool DLHandler::getConvDirectory(string& convPath)
       return false;
 
     convPath = convPath.substr(0, p+1);
-#if defined(__CYGWIN__) || defined(__MINGW32__)
-    convPath += "..\\lib\\openbabel\\";
-    convPath += BABEL_VERSION;
-    convPath += "\\";
-#endif
 
     return true;
 }
@@ -100,29 +91,6 @@ int DLHandler :: findFiles (std::vector<std::string>& file_list,const std::strin
   if (!path.empty())
     paths.push_back(path);
  
-  /*
-  if (getenv("BABEL_LIBDIR") != NULL) 
-  {
-    char buffer[BUFF_SIZE];
-    // environment variable should override built-in path
-    paths.clear();
-      
-    strncpy(buffer,getenv("BABEL_LIBDIR"), BUFF_SIZE - 1);
-    // add a trailing NULL just in case
-    buffer[BUFF_SIZE - 1] = '\0';
-      
-    OpenBabel::tokenize(vs, buffer, "\r\n\t :");
-      
-    if (!vs.empty())
-    {
-      for (unsigned int i = 0; i < vs.size(); ++i) {
-        paths.push_back(vs[i]);
-	  cout << "path[" << i << "] = " << paths[i] << endl;
-      }
-    }
-  }
-  */
-  
   if (paths.empty())
     paths.push_back("./"); // defaults to current directory
   

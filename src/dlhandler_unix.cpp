@@ -17,6 +17,12 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
+#ifdef __MINGW32__
+ #include <windows.h>
+#else
+ #include <dlfcn.h>
+#endif
+
 #include <openbabel/dlhandler.h>
 #include <openbabel/babelconfig.h>
 #include <openbabel/oberror.h>
@@ -24,7 +30,6 @@ GNU General Public License for more details.
 #include <unistd.h>
 #include <dirent.h>
 #include <sys/stat.h>
-#include <dlfcn.h>
 #include <cstring>
 #include <cstdlib>
 #include <cstdio>
@@ -144,6 +149,17 @@ int DLHandler::findFiles (std::vector<std::string>& file_list,
     return findFiles(file_list,filename, "");
 }
 
+#ifdef __MINGW32__
+bool DLHandler :: openLib(const string& lib_name)
+{
+
+    if(LoadLibrary(lib_name.c_str()))
+        return true;
+
+    unsigned long err = GetLastError();
+    return false;
+}
+#else
 bool DLHandler::openLib(const string& lib_name)
 {
   bool success = (dlopen(lib_name.c_str(), RTLD_LAZY | RTLD_GLOBAL) != 0);
@@ -155,6 +171,7 @@ bool DLHandler::openLib(const string& lib_name)
   }
   return success;
 }
+#endif
 
 const char* DLHandler::getFormatFilePattern()
 {

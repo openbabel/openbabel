@@ -1,3 +1,11 @@
+2010-05-24  Noel O'Boyle
+
+	* src/dlhandler_unix.cpp: Added code for MinGW. Now can find formats,
+	even when run from build tree (set BABEL_LIBDIR).
+	* src/dlhandler_win32.cpp: Removed code for Cygwin and MinGW, and a
+	commented out section
+	* src/formats/CMakeLists.txt: Removed XML formats from MINIMAL_BUILD
+
 2010-05-23  Marcus D. Hanwell <marcus@cryos.org>
 
 	* CMakeLists.txt, OpenBabel2Config.cmake.in, src/CMakeLists.txt,
