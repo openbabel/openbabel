@@ -1,5 +1,11 @@
 2010-05-24  Noel O'Boyle
 
+	* test/testsym.py: Change CML roundtrip test to use temporary file to
+	avoid problems on Linux (bug submitted). I notice that a new problem
+	has arisen, which I need to sort out.
+
+2010-05-24  Noel O'Boyle
+
 	* src/dlhandler_unix.cpp: Added code for MinGW. Now can find formats,
 	even when run from build tree (set BABEL_LIBDIR).
 	* src/dlhandler_win32.cpp: Removed code for Cygwin and MinGW, and a

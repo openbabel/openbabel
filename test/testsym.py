@@ -14,6 +14,7 @@ In both cases, the test file is run directly from the source folder,
 and so you can quickly develop the tests and try them out.
 """
 
+import os
 import unittest
 
 from testbabel import run_exec, executable, log, BaseTest
@@ -40,10 +41,11 @@ class TestSym(BaseTest):
 
     def testSMIthruXML(self):
         """Verify that roundtripping through CML preserves stereo"""
-        output, error = run_exec("\n".join(self.smiles), "babel -ismi -ocml")
-        output, error = run_exec(output.rstrip(), "babel -icml -ocan")
+        output, error = run_exec("\n".join(self.smiles), "babel -ismi -ocml tmp.cml")
+        output, error = run_exec(output.rstrip(), "babel -icml tmp.cml -ocan")
         output = "\n".join([x.rstrip() for x in output.split("\n")])
         self.assertEqual(output.rstrip(), "\n".join([self.cansmi] * len(self.smiles)))
+	os.remove("tmp.cml")
 
 class TestTetSym(TestSym):
     """A series of tests relating to tetrahedral symmetry"""
