@@ -240,7 +240,7 @@ namespace OpenBabel {
         snprintf(tag, BUFF_SIZE, "%f", en);
         enthalpy->SetValue(tag);
 
-        pv = en - pmol->GetEnergy();
+        pv = static_cast<float> (en - pmol->GetEnergy());
         snprintf(tag, BUFF_SIZE, "%f", pv);
         enthalpy_pv->SetValue(tag);
       }

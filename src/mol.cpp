@@ -3250,7 +3250,6 @@ namespace OpenBabel
     if (Empty() || v.empty() || v.size() != NumAtoms())
       return;
 
-    OBAtom *atom;
     vector <OBAtom*> va;
     va.reserve(NumAtoms());
 
