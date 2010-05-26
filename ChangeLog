@@ -1,5 +1,15 @@
 2010-05-26  Noel O'Boyle
 
+	* Lots of files: 'Fix' warnings with 64-bit Windows relating to size_t
+	and unsigned ints. I either:
+	(a) changed unsigned int to size_t where the function was GetSize() or
+	Size() or something
+	or...in every other case...
+	(b) static_cast<unsigned int> the size_t value (for example, no-one
+	expects NumResidues() to be size_t, or GetValence())
+
+2010-05-26  Noel O'Boyle
+
 	* src/formats/CMakeLists.txt: Require -DINCHI_LIBRARY for MSVC builds.
 	This allows the x64 or i386 inchi .lib to be selected depending on the
 	build platform.

@@ -116,7 +116,7 @@ public:
 
     void ParseLine(const char*);
     //! \return the number of chemical transformations
-    unsigned int GetSize()                 { return _vtsfm.size();}
+    size_t GetSize()                 { return _vtsfm.size();}
     void AssignSeedPartialCharge(OBMol&);
     //void CorrectForPH(OBMol&);
     void CorrectForPH(OBMol&, double pH  = 7.4 );

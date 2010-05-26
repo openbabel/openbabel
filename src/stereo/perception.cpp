@@ -421,7 +421,7 @@ namespace OpenBabel {
      */
     std::vector<OBBitVec> mergedRings = mergeRings(mol);
     std::vector<std::vector<StereogenicUnit> > sortedParas = sortParaCentersByMergedRings(mol, mergedRings, paraAtoms, paraBonds);
-    unsigned int lastSize = units.size();
+    size_t lastSize = units.size();
     while (true) {
       // iterate over the merged rings
       for (unsigned int s = 0; s < sortedParas.size(); ++s) {

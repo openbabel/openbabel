@@ -100,7 +100,7 @@ namespace OpenBabel
   
     void ParseLine(const char*);
     //! \return the number of rotor rules
-    unsigned int GetSize()                 { return _vr.size();}
+    size_t GetSize()                 { return _vr.size();}
 
     //! Set the filename to be used for the database. Default = torlib.txt
     void SetFilename(std::string &s)       { _filename = s;    }
@@ -138,9 +138,9 @@ namespace OpenBabel
         if (_rotatoms)
           delete [] _rotatoms;
       }
-    int     Size()
+    size_t     Size()
     {
-      return((_res.empty())?0:_res.size());
+      return((_res.empty())?(size_t)0:_res.size());
     }
     int     GetIdx() const
     {
@@ -280,9 +280,9 @@ namespace OpenBabel
     void   Clear();
 
     //! \return the number of rotors in this list
-    int    Size()
+    size_t    Size()
     {
-      return((_rotor.empty()) ? 0: _rotor.size());
+      return((_rotor.empty()) ? (size_t)0: _rotor.size());
     }
     //! Intialize the private OBRotorRules database from a specific file
     void   Init(std::string &fname)

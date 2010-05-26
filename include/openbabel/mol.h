@@ -270,7 +270,7 @@ namespace OpenBabel
     //! \return the number of non-hydrogen atoms
     unsigned int NumHvyAtoms();
     //! \return the number of residues (i.e. OBResidue substituents)
-    unsigned int NumResidues() const      { return(_residue.size()); }
+    unsigned int NumResidues() const      { return(static_cast<unsigned int> (_residue.size())); }
     //! \return the number of rotatble bonds. See OBBond::IsRotor() for details
     unsigned int NumRotors();
     
@@ -583,7 +583,7 @@ namespace OpenBabel
     //! \name Multiple conformer member functions
     //@{
     //! \return the number of conformers in this molecule
-    int     NumConformers()    { return((_vconf.empty())?0:_vconf.size()); }
+    int     NumConformers()    { return((_vconf.empty())?0:static_cast<int> (_vconf.size())); }
     //! Set the entire set of conformers for this molecule to @p v
     void    SetConformers(std::vector<double*> &v);
     //! Add a new set of coordinates @p f as a new conformer

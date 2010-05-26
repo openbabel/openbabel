@@ -64,7 +64,7 @@ namespace OpenBabel
       //! Read in the data file, falling back as needed
       void  Init();
       //! \return the size of the database (for error checking)
-      virtual unsigned int GetSize()                 { return 0;}
+      virtual size_t GetSize()                 { return 0;}
       //! Set the directory before calling Init()
       void  SetReadDirectory(char *dir)            { _dir = dir;    }
       //! Set the environment variable to use before calling Init()
@@ -163,7 +163,7 @@ namespace OpenBabel
       //! \return the number of elements in the periodic table
       unsigned int		GetNumberOfElements();
       //! \return the number of elements in the periodic table
-      unsigned int    GetSize() { return GetNumberOfElements(); }
+      size_t    GetSize() { return GetNumberOfElements(); }
 
       //! \deprecated Does not properly handle 'D' or 'T' hydrogen isotopes
       int   GetAtomicNum(const char *);
@@ -215,7 +215,7 @@ namespace OpenBabel
       ~OBIsotopeTable()    {}
 
       //! \return the number of elements in the isotope table
-      unsigned int GetSize() { return _isotopes.size(); }
+      size_t GetSize() { return _isotopes.size(); }
 
       void	ParseLine(const char*);
       //! \return the exact masss of the isotope
@@ -241,7 +241,7 @@ namespace OpenBabel
       void ParseLine(const char*);
 
       //! \return the number of atom types in the translation table
-      unsigned int GetSize() { return _table.size(); }
+      size_t GetSize() { return _table.size(); }
 
       //! Set the initial atom type to be translated
       bool SetFromType(const char*);
@@ -283,7 +283,7 @@ namespace OpenBabel
       void ParseLine(const char*);
 
       //! \return the number of residues in the table
-      unsigned int GetSize() { return _resname.size(); }
+      size_t GetSize() { return _resname.size(); }
 
       //! Sets the table to access the residue information for a specified
       //!  residue name

@@ -478,7 +478,7 @@ namespace OpenBabel
     struct headertype
     {
       char filename[256];
-      unsigned size;
+      size_t size;
     } header;
 
     NameIndexType::iterator itr;
@@ -523,7 +523,7 @@ namespace OpenBabel
         for(itr=index.begin();itr!=index.end();++itr)
           {
             //#chars; chars;  ofset(4bytes).
-            const char n = itr->first.size();
+            const char n = static_cast<char> (itr->first.size());
             dofs.put(n);
             dofs.write(itr->first.c_str(),n);
             dofs.write((const char*)&itr->second,sizeof(unsigned));

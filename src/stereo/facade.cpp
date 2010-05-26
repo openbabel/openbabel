@@ -31,19 +31,19 @@ namespace OpenBabel {
   unsigned int OBStereoFacade::NumTetrahedralStereo()
   {
     EnsureInit();
-    return m_tetrahedralMap.size();
+    return static_cast<unsigned int> (m_tetrahedralMap.size());
   }
 
   unsigned int OBStereoFacade::NumCisTransStereo() 
   {
     EnsureInit();
-    return m_cistransMap.size();
+    return static_cast<unsigned int> (m_cistransMap.size());
   }
  
   unsigned int OBStereoFacade::NumSquarePlanarStereo() 
   {
     EnsureInit();
-    return m_squarePlanarMap.size();
+    return static_cast<unsigned int> (m_squarePlanarMap.size());
   }
   
   bool OBStereoFacade::HasTetrahedralStereo(unsigned long atomId)

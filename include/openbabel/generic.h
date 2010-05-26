@@ -575,7 +575,7 @@ namespace OpenBabel
     //! Gets the bond index of the central bond
     //! \return int bond index
     unsigned int GetBondIdx();
-    unsigned int GetSize() const    {      return _ads.size();    }
+    size_t GetSize() const    {      return _ads.size();    }
 
     //! Gets the two central atoms of ABCD torsion
     //!   \return pair<OBAtom*,OBAtom*>
@@ -625,7 +625,7 @@ namespace OpenBabel
       
     //! Gets the number of torsion structs
     //! \return integer count of the number of torsions
-    unsigned int      GetSize() const
+    size_t      GetSize() const
     {
       return _torsions.size();
     }
@@ -718,7 +718,7 @@ namespace OpenBabel
     void         SetData(OBAngle &);
     //! Gets the number of angles stored
     //! \return integer count of the number of angles
-    unsigned int GetSize() const
+    size_t GetSize() const
     {
       return _angles.size();
     }

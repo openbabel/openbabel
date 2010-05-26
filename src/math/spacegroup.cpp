@@ -53,7 +53,7 @@ namespace OpenBabel
     virtual ~SpaceGroups();
 
 		void ParseLine(const char*);
-    unsigned int GetSize() { return sgs.size();}
+    size_t GetSize() { return sgs.size();}
     bool Inited() { return _init;}
 
     map<string, const SpaceGroup*> sgbn;
@@ -158,7 +158,8 @@ namespace OpenBabel
     if (s.find(',') != string::npos)
       {
         string row;
-        size_t i, j;
+        int i;
+        size_t j;
         bool neg;
         for (i = 0; i < 3; i++)
           {

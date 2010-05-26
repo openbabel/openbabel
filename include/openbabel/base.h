@@ -305,7 +305,7 @@ class OBConversion; //used only as pointer
       //! \since version 2.2
       void                              CloneData(OBGenericData *d);
       //! \return the number of OBGenericData items attached to this molecule.
-      unsigned int                      DataSize() const 
+      size_t                      DataSize() const 
         { return(_vdata.size()); }
       //! \return the first matching data for a given type from OBGenericDataType
       //!    or NULL if nothing matches

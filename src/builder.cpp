@@ -907,7 +907,7 @@ namespace OpenBabel
               if (!spiro) continue;
             }
 
-            ratoms += alreadydone - j->size(); // Update the number of available ring atoms
+            ratoms += alreadydone - static_cast<int> (j->size()); // Update the number of available ring atoms
             for (k = j->begin(); k != j->end(); ++k)
               vfrag.SetBitOn(*k); // Set vfrag for all atoms of fragment
 

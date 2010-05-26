@@ -57,10 +57,10 @@ namespace OpenBabel
     //member functions
 
     //! \return the size of this ring (i.e., how many atoms in the cycle)
-    int    Size()     const  {    return(_path.size());  }
+    size_t    Size()     const  {    return(_path.size());  }
     //! \return the size of this ring (i.e., how many atoms in the cycle)
     //! \deprecated Use Size() instead
-    int    PathSize() const  {    return(_path.size());  }
+    size_t    PathSize() const  {    return(_path.size());  }
 
     //! \return whether this ring is aromatic 
     //! If all atoms in this ring are aromatic, the ring will be considered aromatic

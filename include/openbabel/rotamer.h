@@ -133,7 +133,7 @@ namespace OpenBabel
     //! \return The number of "base" coordinate sets (i.e., the number of conformers in the base OBMol)
     unsigned int NumBaseCoordinateSets() const
     {
-      return _c.size();
+      return static_cast<unsigned int> (_c.size());
     }
 
     //! Get a pointer to a specific base pointer (i.e., specific conformer)

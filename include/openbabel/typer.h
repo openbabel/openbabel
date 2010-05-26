@@ -49,7 +49,7 @@ public:
 
     void ParseLine(const char*);
     //! \return the number of implicit valence rules
-    unsigned int GetSize()                 { return _vimpval.size();}
+    size_t GetSize()                 { return _vimpval.size();}
 
     //! Assign atomic hybridization (1 = sp, 2 = sp2, 3 = sp3...)
     void AssignHyb(OBMol&);
@@ -77,7 +77,7 @@ public:
     ~OBAromaticTyper();
 
     //! \return the number of SMARTS patterns
-    unsigned int GetSize()                 { return _vsp.size();}
+    size_t GetSize()                 { return _vsp.size();}
 
     void ParseLine(const char*);
     //! Assign aromaticity flag to atoms and bonds
@@ -108,7 +108,7 @@ public:
 
     void ParseLine(const char*);
     //! \return the number of SMARTS patterns
-    unsigned int GetSize()                 { return _ringtyp.size();}
+    size_t GetSize()                 { return _ringtyp.size();}
 
     //! Assign external atomic types (ringtyp.txt)
     void AssignTypes(OBMol&);

@@ -57,10 +57,10 @@ public:
   {}
 
   int NumReactants() const
-  { return _reactants.size(); }
+  { return static_cast<int> (_reactants.size()); }
 
   int NumProducts()const
-  { return _products.size(); }
+  { return static_cast<int> (_products.size()); }
   
   void AddReactant(const shared_ptr<OBMol> sp)
   { _reactants.push_back(sp); }

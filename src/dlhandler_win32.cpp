@@ -116,7 +116,7 @@ int DLHandler :: findFiles (std::vector<std::string>& file_list,const std::strin
       return 0;// couldn't close search handle
   }
 
-  return file_list.size();
+  return static_cast<int> (file_list.size());
 }
 
 const char* DLHandler::getFormatFilePattern()
