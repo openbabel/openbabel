@@ -95,21 +95,34 @@ if(MSVC90 OR Boost_FOUND)
   )
 endif(MSVC90 OR Boost_FOUND)
 
+set(ADD_INCHI_FORMAT FALSE)
 if(WITH_INCHI)
+  if (NOT MSVC)
+    set(ADD_INCHI_FORMAT TRUE)
+  else (NOT MSVC)
+    if (EXISTS ${INCHI_LIBRARY})
+      set(ADD_INCHI_FORMAT TRUE)
+    else (EXISTS ${INCHI_LIBRARY})
+      message("WARNING: INCHI_LIBRARY not set, or does not exist.\n....InChI format will NOT be compiled.")
+    endif (EXISTS ${INCHI_LIBRARY})
+  endif (NOT MSVC)
+endif(WITH_INCHI)
+
+if(ADD_INCHI_FORMAT)
   add_definitions(-DINCHI_LINK_AS_DLL)
   if(NOT MSVC)
     add_subdirectory(inchi103)
     include_directories(${CMAKE_SOURCE_DIR}/include/inchi103)
     set(libs ${libs} inchi)
   else(NOT MSVC)
-    set(libs ${libs} ${CMAKE_SOURCE_DIR}/windows-vc2008/libs/i386/libstdinchi.lib)
+    set(libs ${libs} ${INCHI_LIBRARY})
   endif(NOT MSVC)
   set(inchiformat_additional_sources getinchi.cpp ../ops/unique.cpp)
   set(formats_common
     ${formats_common}
     inchiformat
   )
-endif(WITH_INCHI)
+endif(ADD_INCHI_FORMAT)
 
 if(ZLIB_FOUND)
  set(formats_utility

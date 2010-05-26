@@ -1,3 +1,11 @@
+2010-05-26  Noel O'Boyle
+
+	* src/formats/CMakeLists.txt: Require -DINCHI_LIBRARY for MSVC builds.
+	This allows the x64 or i386 inchi .lib to be selected depending on the
+	build platform.
+	* windows-vc2008/default_build.bat, x64_default_build.bat:
+	Corresponding changes to the build batch files.
+
 2010-05-26  Chris Morley
 
 	* src/GUI/OBGUI.cpp: minor change to remove compiler warning
