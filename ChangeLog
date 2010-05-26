@@ -1,5 +1,6 @@
 2010-05-26  Chris Morley
 
+	* src/GUI/OBGUI.cpp: minor change to remove compiler warning
 
 2010-05-24  Noel O'Boyle
 
