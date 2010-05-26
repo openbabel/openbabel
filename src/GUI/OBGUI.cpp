@@ -324,7 +324,7 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
   CenterSizer->Add(m_pOptsWindow,1);  
 
   topSizer->Add(InSizer,1,wxEXPAND);
-  topSizer->Add(CenterSizer,0.3,wxEXPAND);
+  topSizer->Add(CenterSizer,0,wxEXPAND);
   topSizer->Add(OutSizer,1,wxEXPAND);
   
   panel->SetSizer( topSizer );     // use the sizer for layout
