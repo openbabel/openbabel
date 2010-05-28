@@ -1,5 +1,6 @@
 /**********************************************************************
 Copyright (C) 2006 by Geoff Hutchison
+Portions Copyright (C) 2010 by Joerg Kurt Wegner
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -94,6 +95,12 @@ bool ChemDrawXMLFormat::DoElement(const string& name)
 
     _pmol->SetDimension(2);
     _pmol->BeginModify();
+    
+    buf = _pxmlConv->GetAttribute("id");
+    if (buf.length())
+    {
+      _pmol->SetTitle(buf);
+    }
   }
   else if(name=="n")
   {
@@ -105,7 +112,7 @@ bool ChemDrawXMLFormat::DoElement(const string& name)
       {
         cerr << "CDXML Format: Node type \"" << buf <<
                   "\" is not currently supported." << endl;
-        return false; // @todo: use as many types as possible
+        return false; // FIXME: use as many types as possible
 	  }
     }
     _tempAtom.SetAtomicNum(6); // default is carbon
@@ -130,8 +137,8 @@ bool ChemDrawXMLFormat::DoElement(const string& name)
   else if(name=="b")
   {
     EnsureEndElement();
-	bool invert_ends = false;
-	Begin = End = Flag = 0;
+	  bool invert_ends = false;
+	  Begin = End = Flag = 0;
     buf = _pxmlConv->GetAttribute("Order");
     if (buf.length())
       Order = atoi(buf.c_str());
@@ -140,20 +147,24 @@ bool ChemDrawXMLFormat::DoElement(const string& name)
     buf = _pxmlConv->GetAttribute("Display");
     if (buf.length())
     {
-	  if (buf == "WedgeEnd")
+      if (buf == "WedgeEnd")
       {
         invert_ends = true;
-        Flag = OB_WEDGE_BOND;
-	  }
+        Flag = OB_HASH_BOND;
+      }
       else if (buf == "WedgeBegin")
+      {
+        Flag = OB_HASH_BOND;
+      }
+      else if (buf == "Hash" ||buf == "WedgedHashBegin")
+      {
         Flag = OB_WEDGE_BOND;
-      else if (buf == "WedgedHashBegin")
+      }
+      else if (buf == "WedgedHashEnd")
       {
         invert_ends = true;
-        Flag = OB_HASH_BOND;
-	  }
-      else if (buf == "Hash" || buf == "WedgedHashEnd")
-        Flag = OB_HASH_BOND;
+        Flag = OB_WEDGE_BOND;
+      }
     }
     buf = _pxmlConv->GetAttribute("B");
     if (buf.length())
@@ -172,7 +183,24 @@ bool ChemDrawXMLFormat::DoElement(const string& name)
         End = atoms[atoi(buf.c_str())];
     }
   }
-
+  /*
+  // Forget that, the fragment, aka molecule, is in another XML hierachy tree than the data.
+  // Parsing has already stopped before ever getting to this point
+  else if(name=="tags")
+  {
+  	buf = _pxmlConv->GetAttribute("ID");
+    if (buf.length())
+    {
+    }
+  }
+  else if(name=="tableCell")
+  {
+  	buf = _pxmlConv->GetAttribute("value");
+    if (buf.length())
+    {
+    }
+  }
+  */
   return true;
 }
 
@@ -194,9 +222,39 @@ bool ChemDrawXMLFormat::EndElement(const string& name)
   {
     EnsureEndElement();
     _pmol->EndModify();
+
+    // This alone will already store the "Formula" property in the molecule property block
+    // The "Formula" is required for older ChemDraw generations allowing to match molecules to reaction properties
+    string MolFormula=_pmol->GetFormula();
+    
+    // additional adding of "Formula" property is not required, as described above
+    //OBPairData *dp = new OBPairData;
+    //dp->SetAttribute("MolecularFormula");
+    //dp->SetValue(MolFormula);
+    //dp->SetOrigin(fileformatInput);
+    //_pmol->SetData(dp);
+
+    // alternative is using the molecular title, but a test is needed for preventing overwriting given titles, aka molecule ID
+    //_pmol->SetTitle(MolFormula);
+    
     atoms.clear();
     return false;//means stop parsing
   }
+  /*
+  // Forget that, the fragment, aka molecule, is in another XML hierachy tree than the data.
+  // Parsing has already stopped before ever getting to this point
+  else if(name=="tags")
+  {
+  }
+  else if(name=="tableCell")
+  {
+    //OBPairData *dp = new OBPairData;
+    //dp->SetAttribute(attr);
+    //dp->SetValue(buff);
+    //dp->SetOrigin(fileformatInput);
+    //mol.SetData(dp);
+  }*/
+  
   return true;
 }	
 
@@ -260,7 +318,7 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       _scale /= mol.NumBonds();
 	}
     else
-      _scale = 1.; // @todo: what happens if the molecule has no bond?
+      _scale = 1.; // FIXME: what happens if the molecule has no bond?
     _scale = 30. / _scale;
     _offset = 0;
   }
@@ -301,15 +359,17 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     {
       xmlTextWriterWriteFormatAttribute(writer(), C_ORDER , "%d", n);
     }
-    if (pbond->IsWedge())
+    if (pbond->IsHash())
       xmlTextWriterWriteFormatAttribute(writer(), C_DISPLAY , "WedgeBegin");
-    else if (pbond->IsHash())
+    else if (pbond->IsWedge())
       xmlTextWriterWriteFormatAttribute(writer(), C_DISPLAY , "WedgedHashEnd");
     xmlTextWriterEndElement(writer());
   }
   _offset += mol.NumAtoms ();
 
   xmlTextWriterEndElement(writer());//molecule
+  
+  //TODO: Writing property block
 
   if(_pxmlConv->IsLast())
   {
