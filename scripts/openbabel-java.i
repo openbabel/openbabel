@@ -149,6 +149,10 @@ CAST_GENERICDATA_TO(VibrationData)
 CAST_GENERICDATA_TO(VirtualBond)
 
 %ignore *::operator=;
+%ignore *::operator==;
+%ignore *::operator!=;
+%ignore *::operator<<;
+%ignore *::operator();
 %ignore *::operator*;
 %ignore *::operator*=;
 %ignore *::operator+;
@@ -164,24 +168,43 @@ CAST_GENERICDATA_TO(VirtualBond)
 
 %import <openbabel/babelconfig.h>
 
+%warnfilter(516) OpenBabel::OBElementTable; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/data.h>
 %include <openbabel/rand.h>
 %include <openbabel/obutil.h>
+%warnfilter(516) OpenBabel::vector3; // Using the const x(), y() and z() in favour of the non-const
 %include <openbabel/math/vector3.h>
 %warnfilter(503) OpenBabel::matrix3x3; // Not wrapping any of the overloaded operators
 %include <openbabel/math/matrix3x3.h>
 %include <openbabel/math/transform3d.h>
+%warnfilter(516) OpenBabel::SpaceGroup; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/math/spacegroup.h>
 
+# CloneData should be used instead of the following method
+%ignore OpenBabel::OBBase::SetData;
+%warnfilter(516) OpenBabel::OBBase; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/base.h>
+
+%warnfilter(516) OpenBabel::OBPairData; // Ignoring std::string methods in favour of char* ones
+%warnfilter(516) OpenBabel::OBSetData;
+%warnfilter(516) OpenBabel::OBCommentData;
 %include <openbabel/generic.h>
 %include <openbabel/griddata.h>
 
 %include <openbabel/chains.h>
 %include <openbabel/typer.h>
 
+// To avoid warning in plugin.h about "Nothing known about std::binary_function"
+namespace std { 
+        template <T1, T2, T3>
+        class binary_function {}; 
+}
+%template(dummy) std::binary_function <const char *, const char *, bool>;
 %include <openbabel/plugin.h>
 
+// To avoid warning in oberror.h about "Nothing known about std::stringbuf"
+namespace std { class stringbuf {}; }
+%warnfilter(503) OpenBabel::OBError; // Not wrapping any of the overloaded operators
 %include <openbabel/oberror.h>
 %include <openbabel/format.h>
 %include <openbabel/obconversion.h>
@@ -194,11 +217,24 @@ CAST_GENERICDATA_TO(VirtualBond)
     public void SetCurrentDepth(int d) {currentDepth = d;}
     public int GetCurrentDepth() {return currentDepth;}
 %}
+%warnfilter(516) OpenBabel::OBAtom; // Using non-const version of GetVector
 %include <openbabel/atom.h>
+%warnfilter(516) OpenBabel::OBBond; // Using non-const versions of GetBeginAtom, GetEndAtom
 %include <openbabel/bond.h>
+%define IGNORE_ITER(parent, iteree)
+%ignore OpenBabel::parent::Begin ## iteree ## s;
+%ignore OpenBabel::parent::End ## iteree ## s;
+%ignore OpenBabel::parent::Begin ## iteree;
+%ignore OpenBabel::parent::Next ## iteree;
+%enddef
+IGNORE_ITER(OBMol, Bond)
+IGNORE_ITER(OBMol, Atom)
+IGNORE_ITER(OBMol, Residue)
 %include <openbabel/mol.h>
 %include <openbabel/ring.h>
+%warnfilter(516) OpenBabel::OBSmartsPattern; // Using non-const versions of GetSMARTS
 %include <openbabel/parsmart.h>
+%warnfilter(516) OpenBabel::AliasData; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/alias.h>
 %include <openbabel/atomclass.h>
 %ignore OpenBabel::FptIndex;
@@ -209,6 +245,7 @@ CAST_GENERICDATA_TO(VirtualBond)
 # Ignore shadowed methods
 %ignore OpenBabel::OBForceField::VectorSubtract(const double *const, const double *const, double *);
 %ignore OpenBabel::OBForceField::VectorMultiply(const double *const, const double, double *);
+%warnfilter(516) OpenBabel::OBForceField; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/forcefield.h>
 
 %include <openbabel/builder.h>
@@ -229,11 +266,13 @@ CAST_GENERICDATA_TO(VirtualBond)
 %ignore OBAtomBondIter(OBAtom &);
 %ignore OBMolAngleIter(OBMol &);
 %ignore OBMolAtomIter(OBMol &);
-%ignore OBMolAtomBFSIter(OBMol &, int);
 %ignore OBMolAtomBFSIter(OBMol &);
-%ignore OBMolAtomDFSIter(OBMol &, int);
 %ignore OBMolAtomDFSIter(OBMol &);
+%ignore OBMolAtomBFSIter(OBMol &, int);
+%ignore OBMolAtomDFSIter(OBMol &, int);
 %ignore OBMolBondIter(OBMol &);
+%ignore OBMolBondBFSIter(OBMol &);
+%ignore OBMolBondBFSIter(OBMol &, int);
 %ignore OBMolPairIter(OBMol &);
 %ignore OBMolRingIter(OBMol &);
 %ignore OBMolTorsionIter(OBMol &);
