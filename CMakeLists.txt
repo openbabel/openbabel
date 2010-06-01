@@ -195,6 +195,11 @@ if(NOT MSVC)
   endif (CMAKE_COMPILER_IS_GNUCXX AND NOT APPLE)
 endif(NOT MSVC)
 
+# To avoid warnings when linking the plugins
+if(MINGW)
+  set (CMAKE_MODULE_LINKER_FLAGS "-Wl,--enable-auto-import ${CMAKE_MODULE_LINKER_FLAGS}")
+endif(MINGW)
+
 if(CMAKE_COMPILER_IS_GNUCXX)
   if(NOT GCC_IS_NEWER_THAN_4_0) # GCC 3.x
     find_package(Boost)
