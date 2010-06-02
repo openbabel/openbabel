@@ -1,3 +1,8 @@
+2010-06-02  Noel O'Boyle
+
+	* scripts/CMakeLists.txt: Perl bindings re-enabled. Still can't get to
+	work for MSVC+ActiveState Perl though.
+
 2010-05-26  Noel O'Boyle
 
 	* Lots of files: 'Fix' warnings with 64-bit Windows relating to size_t

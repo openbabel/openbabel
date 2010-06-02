@@ -146,3 +146,51 @@ if (JAVA_BINDINGS)
   endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp OR
       RUN_SWIG)
 endif (JAVA_BINDINGS)
+
+###################
+# Perl
+###################
+
+if (PERL_BINDINGS)
+  if (EXISTS ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp OR
+      RUN_SWIG)
+
+    find_package(PerlLibs)
+    if (NOT PERL_LIBRARY)
+      message(STATUS "Perl library files NOT found. Perl bindings will NOT be compiled.")
+      return()
+    endif (NOT PERL_LIBRARY)
+    include_directories(
+        ${PERL_INCLUDE_PATH}
+    )
+
+    if (RUN_SWIG)
+      add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp
+          COMMAND ${SWIG_EXECUTABLE} -perl5 -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp -outdir ${openbabel_SOURCE_DIR}/scripts/perl ${openbabel_SOURCE_DIR}/scripts/openbabel-perl.i
+          MAIN_DEPENDENCY openbabel-perl.i
+      )
+      if (NOT WIN32)
+        add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.pm
+          COMMAND sed -e "s/^@EXPORT.*/& sub dl_load_flags { 0x01 }/" <${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.pm >${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.new
+          COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.new ${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.pm
+          COMMAND ${CMAKE_COMMAND} -E remove ${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.new
+          MAIN_DEPENDENCY ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp
+        )
+      endif (NOT WIN32)
+    endif (RUN_SWIG)
+
+    add_library(bindings_perl MODULE ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp)
+    target_link_libraries(bindings_perl ${PERL_LIBRARY} ${BABEL_LIBRARY})
+    set_target_properties(bindings_perl PROPERTIES
+        OUTPUT_NAME openbabel_perl )
+    if(MSVC)
+        set_target_properties(bindings_perl PROPERTIES
+            LIBRARY_OUTPUT_DIRECTORY ${openbabel_BINARY_DIR})
+    endif(MSVC)
+
+  else (EXISTS ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp OR
+      RUN_SWIG)
+    message(STATUS "Warning: Perl bindings NOT found. Generate using -DRUN_SWIG.")
+  endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp OR
+      RUN_SWIG)
+endif (PERL_BINDINGS)
