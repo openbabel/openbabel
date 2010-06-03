@@ -1,3 +1,7 @@
+2010-06-03  Noel O'Boyle
+
+	* Set svn:eol-style to native for all text files.
+
 2010-06-02  Noel O'Boyle
 
 	* scripts/CMakeLists.txt: Perl bindings re-enabled. Still can't get to
