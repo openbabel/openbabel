@@ -271,6 +271,8 @@ namespace OpenBabel {
       pOutStream=NULL;
       NeedToFreeOutStream = false;
     }
+    delete pLineEndBuf;
+    pLineEndBuf=NULL;
   }
   //////////////////////////////////////////////////////
 
