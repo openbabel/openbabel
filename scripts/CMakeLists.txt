@@ -171,7 +171,7 @@ if (PERL_BINDINGS)
       )
       if (NOT WIN32)
         add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.pm
-          COMMAND sed -e "s/^@EXPORT.*/& sub dl_load_flags { 0x01 }/" <${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.pm >${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.new
+          COMMAND sed -e \"s/^@EXPORT.*/& sub dl_load_flags { 0x01 }/\" <${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.pm >${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.new
           COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.new ${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.pm
           COMMAND ${CMAKE_COMMAND} -E remove ${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.new
           MAIN_DEPENDENCY ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp
@@ -179,14 +179,20 @@ if (PERL_BINDINGS)
       endif (NOT WIN32)
     endif (RUN_SWIG)
 
-    add_library(bindings_perl MODULE ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp)
-    target_link_libraries(bindings_perl ${PERL_LIBRARY} ${BABEL_LIBRARY})
-    set_target_properties(bindings_perl PROPERTIES
-        OUTPUT_NAME openbabel_perl )
-    if(MSVC)
-        set_target_properties(bindings_perl PROPERTIES
-            LIBRARY_OUTPUT_DIRECTORY ${openbabel_BINARY_DIR})
-    endif(MSVC)
+    if (NOT MSVC)
+      add_custom_target(bindings_perl ALL
+        COMMAND ${PERL_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/perl/Makefile.PL
+            DEPENDS ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp
+            WORKING_DIRECTORY ${openbabel_SOURCE_DIR}/scripts
+        )
+    
+    else (NOT MSVC)
+      add_library(bindings_perl MODULE ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp)
+      target_link_libraries(bindings_perl ${PERL_LIBRARY} ${BABEL_LIBRARY})
+      set_target_properties(bindings_perl PROPERTIES
+          LIBRARY_OUTPUT_DIRECTORY ${openbabel_BINARY_DIR}
+          OUTPUT_NAME openbabel_perl )
+    endif(NOT MSVC)
 
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp OR
       RUN_SWIG)

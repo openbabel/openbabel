@@ -1,3 +1,8 @@
+2010-06-06  Noel O'Boyle
+
+	* scripts/CMakeLists.txt: Perl binding support on Linux. Needs more
+	work on the Makefile.PL side.
+
 2010-06-04  Chris Morley
 
 	* src/obconversion.cpp(~OBConversion): corrected memory leak caused by
