@@ -1,5 +1,9 @@
 2010-06-06  Noel O'Boyle
 
+	* scripts/CMakeLists.txt, scripts/perl/Makefile.PL: Now perl bindings seem to 'make' correctly.
+
+2010-06-06  Noel O'Boyle
+
 	* scripts/CMakeLists.txt, scripts/openbabel-ruby.i, scripts/ruby/extconf.rb: Ruby binding support.
 
 2010-06-06  Noel O'Boyle

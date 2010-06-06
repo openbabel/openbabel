@@ -18,6 +18,8 @@ $ldfrom = "\$(OBJECT) -L$srcdir/.libs -lopenbabel -lz"
 $ldfrom = "\$(OBJECT) -L$srcdir/.libs -lopenbabel -lz"
     if (-r "$srcdir/.libs/libopenbabel.so") and (-s _) and (-B _);
 
+$cmake_src_dir = @ENV{"SRC_DIR"};
+
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
 WriteMakefile(
@@ -27,6 +29,6 @@ WriteMakefile(
     'LDFROM'    => $ldfrom,
     'CC'        => $CC,
     'LD'        => '$(CC) -shared',
-    'INC'       => '-I../../include',
-    'OBJECT'    => 'openbabel_perl.o'
+    'INC'       => '-I../include -I'.$cmake_src_dir.'/include',
+    'OBJECT'    => 'openbabel-perl.o'
 );

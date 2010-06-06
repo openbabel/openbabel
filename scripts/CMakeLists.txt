@@ -181,7 +181,10 @@ if (PERL_BINDINGS)
 
     if (NOT MSVC)
       add_custom_target(bindings_perl ALL
-        COMMAND ${PERL_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/perl/Makefile.PL
+	COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/perl/Makefile.PL ${openbabel_BINARY_DIR}/scripts
+	COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp ${openbabel_BINARY_DIR}/scripts/openbabel-perl.cpp
+        COMMAND PERL5LIB=${openbabel_SOURCE_DIR}/scripts/perl/inc SRC_DIR=${openbabel_SOURCE_DIR} ${PERL_EXECUTABLE} ${openbabel_BINARY_DIR}/scripts/Makefile.PL
+        COMMAND PERL5LIB=${openbabel_SOURCE_DIR}/scripts/perl/inc make 
             DEPENDS ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp
             WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts
         )
