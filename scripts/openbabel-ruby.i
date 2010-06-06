@@ -58,31 +58,101 @@
 %include "std_string.i"
 
 namespace std {
-%template (VectorInt)		  vector<int>;
-%template (VectorUnsignedInt)     vector<unsigned int>;
-%template (VVInt)		      vector< vector<int> >;
-%template (VectorDouble) 	vector<double>;
-%template (VectorString)		  vector<std::string>;
-%template (VVector3)		  vector<OpenBabel::vector3>;
 
-%template (VectorMol)		  vector<OpenBabel::OBMol>;
-%template (VectorBond)		vector<OpenBabel::OBBond>;
-%template (VectorResidue)	vector<OpenBabel::OBResidue>;
-%template (VectorRing)		vector<OpenBabel::OBRing>;
-%template (VectorpRing)		vector<OpenBabel::OBRing*>;
-%template (VectorGenericData)    vector<OpenBabel::OBGenericData*>;
+%define VVTEMPLATE_WRAP(name, T) 
+%feature("ignore") vector< vector<T> >::append;
+%feature("ignore") vector< vector<T> >::assign;
+%feature("ignore") vector< vector<T> >::back;
+%feature("ignore") vector< vector<T> >::begin;
+%feature("ignore") vector< vector<T> >::capacity;
+%feature("ignore") vector< vector<T> >::clear;
+%feature("ignore") vector< vector<T> >::empty;
+%feature("ignore") vector< vector<T> >::end;
+%feature("ignore") vector< vector<T> >::erase;
+%feature("ignore") vector< vector<T> >::front;
+%feature("ignore") vector< vector<T> >::get_allocator;
+%feature("ignore") vector< vector<T> >::insert;
+%feature("ignore") vector< vector<T> >::pop;
+%feature("ignore") vector< vector<T> >::pop_back;
+%feature("ignore") vector< vector<T> >::push_back;
+%feature("ignore") vector< vector<T> >::rbegin;
+%feature("ignore") vector< vector<T> >::rend;
+%feature("ignore") vector< vector<T> >::reserve;
+%feature("ignore") vector< vector<T> >::resize;
+%feature("ignore") vector< vector<T> >::size;
+%feature("ignore") vector< vector<T> >::swap;
+%template(VectorV ## name) vector< vector<T> >;
+%enddef
+
+%define VECTORTEMPLATE_WRAP(vectorname, T) 
+%feature("ignore") vector<T>::append;
+%feature("ignore") vector<T>::assign;
+%feature("ignore") vector<T>::back;
+%feature("ignore") vector<T>::begin;
+%feature("ignore") vector<T>::capacity;
+%feature("ignore") vector<T>::clear;
+%feature("ignore") vector<T>::empty;
+%feature("ignore") vector<T>::end;
+%feature("ignore") vector<T>::erase;
+%feature("ignore") vector<T>::front;
+%feature("ignore") vector<T>::get_allocator;
+%feature("ignore") vector<T>::insert;
+%feature("ignore") vector<T>::pop;
+%feature("ignore") vector<T>::pop_back;
+%feature("ignore") vector<T>::push_back;
+%feature("ignore") vector<T>::rbegin;
+%feature("ignore") vector<T>::rend;
+%feature("ignore") vector<T>::reserve;
+%feature("ignore") vector<T>::resize;
+%feature("ignore") vector<T>::size;
+%feature("ignore") vector<T>::swap;
+%template(Vector ## vectorname) vector<T>;
+%enddef
+
+VECTORTEMPLATE_WRAP(Int, int)
+VECTORTEMPLATE_WRAP(UnsignedInt, unsigned int)
+VVTEMPLATE_WRAP(Int, int)
+VECTORTEMPLATE_WRAP(Double, double)
+VECTORTEMPLATE_WRAP(String, std::string)
+VECTORTEMPLATE_WRAP(Vector3, OpenBabel::vector3)
+VECTORTEMPLATE_WRAP(OBMol, OpenBabel::OBMol)
+VECTORTEMPLATE_WRAP(OBBond, OpenBabel::OBBond)
+VECTORTEMPLATE_WRAP(OBResidue, OpenBabel::OBResidue)
+VECTORTEMPLATE_WRAP(OBRing, OpenBabel::OBRing)
+VECTORTEMPLATE_WRAP(pOBRing, OpenBabel::OBRing*)
+VECTORTEMPLATE_WRAP(pOBGenericData, OpenBabel::OBGenericData*)
+
 }
 
-
+%define CAST_GENERICDATA_TO(subclass)
 %inline %{
-OpenBabel::OBPairData *toPairData(OpenBabel::OBGenericData *data) {
-	return (OpenBabel::OBPairData *) data;
-}
-
-OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
-	return (OpenBabel::OBUnitCell *) data;
+OpenBabel::OB ## subclass *to ## subclass(OpenBabel::OBGenericData *data) {
+    return (OpenBabel::OB ## subclass *) data;
 }
 %}
+%enddef
+CAST_GENERICDATA_TO(AngleData)
+CAST_GENERICDATA_TO(AtomClassData)
+CAST_GENERICDATA_TO(ChiralData)
+CAST_GENERICDATA_TO(CommentData)
+CAST_GENERICDATA_TO(ConformerData)
+CAST_GENERICDATA_TO(ExternalBondData)
+CAST_GENERICDATA_TO(GridData)
+CAST_GENERICDATA_TO(MatrixData)
+CAST_GENERICDATA_TO(NasaThermoData)
+CAST_GENERICDATA_TO(PairData)
+// CAST_GENERICDATA_TO(PairTemplate)
+CAST_GENERICDATA_TO(RateData)
+CAST_GENERICDATA_TO(RotamerList)
+CAST_GENERICDATA_TO(RotationData)
+CAST_GENERICDATA_TO(SerialNums)
+CAST_GENERICDATA_TO(SetData)
+CAST_GENERICDATA_TO(SymmetryData)
+CAST_GENERICDATA_TO(TorsionData)
+CAST_GENERICDATA_TO(UnitCell)
+CAST_GENERICDATA_TO(VectorData)
+CAST_GENERICDATA_TO(VibrationData)
+CAST_GENERICDATA_TO(VirtualBond)
 
 // These methods are renamed to valid method names
 %rename(inc)   *::operator++;
@@ -96,6 +166,9 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %ignore *::operator/=;
 %ignore *::operator-=;
 %ignore *::operator!=;
+%ignore *::operator&=;
+%ignore *::operator^=;
+%ignore *::operator|=;
 
 %import <openbabel/babelconfig.h>
 
@@ -150,7 +223,14 @@ namespace std { class stringbuf {}; }
 %ignore OpenBabel::OBForceField::VectorMultiply(const double *const, const double, double *);
 %include <openbabel/forcefield.h>
 
+%include <openbabel/builder.h>
 %include <openbabel/op.h>
+
+%warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
+%include <openbabel/bitvec.h>
+%include <openbabel/rotor.h>
+%ignore OpenBabel::Swab;
+%include <openbabel/rotamer.h>
 
 # The following %ignores avoid warning messages due to shadowed classes.
 # This does not imply a loss of functionality as (in this case)
