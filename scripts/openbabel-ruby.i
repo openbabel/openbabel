@@ -19,8 +19,8 @@
 #include <openbabel/rand.h>
 #include <openbabel/math/vector3.h>
 #include <openbabel/math/matrix3x3.h>
-#include <openbabel/griddata.h>
 #include <openbabel/generic.h>
+#include <openbabel/griddata.h>
 
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
@@ -38,10 +38,19 @@
 #include <openbabel/format.h>
 
 #include <openbabel/forcefield.h>
+#include <openbabel/builder.h>
 #include <openbabel/op.h>
 
+#include <openbabel/bitvec.h>
 #include <openbabel/data.h>
 #include <openbabel/parsmart.h>
+#include <openbabel/alias.h>
+#include <openbabel/atomclass.h>
+
+#include <openbabel/kinetics.h>
+#include <openbabel/rotor.h>
+#include <openbabel/rotamer.h>
+
 %}
 
 %include "std_map.i"
@@ -79,16 +88,28 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %rename(inc)   *::operator++;
 %rename(good)  *::operator bool;
 %rename(deref) *::operator->;
+%rename(add)  *::operator+=;
+%rename(idx)  *::operator[];
 %ignore *::DescribeBits;
+%ignore *::operator=;
+%ignore *::operator*=;
+%ignore *::operator/=;
+%ignore *::operator-=;
+%ignore *::operator!=;
+
 %import <openbabel/babelconfig.h>
 
 %include <openbabel/data.h>
 %include <openbabel/rand.h>
 %include <openbabel/obutil.h>
 %include <openbabel/math/vector3.h>
-%import <openbabel/math/matrix3x3.h>
+%warnfilter(503) OpenBabel::matrix3x3; // Not wrapping any of the overloaded operators
+%include <openbabel/math/matrix3x3.h>
 
 %import <openbabel/math/spacegroup.h>
+
+# CloneData should be used instead of the following method
+%ignore OpenBabel::OBBase::SetData;
 %include <openbabel/base.h>
 %include <openbabel/generic.h>
 %include <openbabel/griddata.h>
@@ -97,8 +118,17 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 //# %import <openbabel/bitvec.h>
 %import <openbabel/typer.h>
 
+// To avoid warning in oberror.h about "Nothing known about std::binary_function"
+namespace std { 
+        template <T1, T2, T3>
+        class binary_function {}; 
+}
+%template(Dummy) std::binary_function <const char *, const char *, bool>;
 %include <openbabel/plugin.h>
 
+// To avoid warning in oberror.h about "Nothing known about std::stringbuf"
+namespace std { class stringbuf {}; }
+%warnfilter(503) OpenBabel::OBError; // Not wrapping any of the overloaded operators
 %include <openbabel/oberror.h>
 %include <openbabel/format.h>
 %include <openbabel/obconversion.h>
@@ -109,9 +139,15 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %include <openbabel/mol.h>
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
-
+%include <openbabel/alias.h>
+%include <openbabel/atomclass.h>
+%ignore OpenBabel::FptIndex;
 %include <openbabel/fingerprint.h>
 %include <openbabel/descriptor.h>
+
+# Ignore shadowed methods
+%ignore OpenBabel::OBForceField::VectorSubtract(const double *const, const double *const, double *);
+%ignore OpenBabel::OBForceField::VectorMultiply(const double *const, const double, double *);
 %include <openbabel/forcefield.h>
 
 %include <openbabel/op.h>
@@ -128,9 +164,13 @@ OpenBabel::OBUnitCell *toUnitCell(OpenBabel::OBGenericData *data) {
 %ignore OBAtomBondIter(OBAtom &);
 %ignore OBMolAngleIter(OBMol &);
 %ignore OBMolAtomIter(OBMol &);
-%ignore OBMolAtomBFSIter;
-%ignore OBMolAtomDFSIter;
+%ignore OBMolAtomBFSIter(OBMol &);
+%ignore OBMolAtomDFSIter(OBMol &);
+%ignore OBMolAtomBFSIter(OBMol &, int);
+%ignore OBMolAtomDFSIter(OBMol &, int);
 %ignore OBMolBondIter(OBMol &);
+%ignore OBMolBondBFSIter(OBMol &);
+%ignore OBMolBondBFSIter(OBMol &, int);
 %ignore OBMolPairIter(OBMol &);
 %ignore OBMolRingIter(OBMol &);
 %ignore OBMolTorsionIter(OBMol &);

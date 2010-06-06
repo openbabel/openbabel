@@ -1,5 +1,9 @@
 2010-06-06  Noel O'Boyle
 
+	* scripts/CMakeLists.txt, scripts/openbabel-ruby.i, scripts/ruby/extconf.rb: Ruby binding support.
+
+2010-06-06  Noel O'Boyle
+
 	* scripts/CMakeLists.txt: Perl binding support on Linux. Needs more
 	work on the Makefile.PL side.
 

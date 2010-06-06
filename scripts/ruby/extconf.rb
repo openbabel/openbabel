@@ -16,7 +16,8 @@ dir_config('openbabel')
 
 # Find a trivial header in order to add the proper include path
 # to the build flags.
-find_header('inchi_api.h', '../../include')
+here = File.dirname(__FILE__)
+find_header('inchi_api.h', here + '/../../include')
 
 # Prevent Ruby 1.8.x from trying to compile and link the extension
 # using gcc.
@@ -36,8 +37,8 @@ end
 
 if have_library('openbabel')
   with_ldflags("#$LDFLAGS -dynamic -flat_namespace") do #Enables cc to handle linking better.
-    create_makefile('openbabel')
-  end
+  create_makefile('openbabel')
+end
 else
   puts "Install Open Babel first. If you've already compiled and installed Open Babel, you may need to run ldconfig."
 end
