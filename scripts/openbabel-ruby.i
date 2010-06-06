@@ -188,7 +188,6 @@ CAST_GENERICDATA_TO(VirtualBond)
 %include <openbabel/griddata.h>
 
 %import <openbabel/chains.h>
-//# %import <openbabel/bitvec.h>
 %import <openbabel/typer.h>
 
 // To avoid warning in oberror.h about "Nothing known about std::binary_function"
