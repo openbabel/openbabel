@@ -1,5 +1,11 @@
 2010-06-07  Noel O'Boyle
 
+	* scripts/CMakeLists.txt, scripts/openbabel-csharp.i,
+	windows-vc2008/Distribution/*obdotnet*: Enable the CSharp bindings to
+	be compiled (at least on windows so far).
+
+2010-06-07  Noel O'Boyle
+
 	* scripts/CMakeLists.txt, scripts/perl/Makefile.PL: Now perl bindings
 	seem to 'make install' correctly.
 

@@ -633,6 +633,7 @@ using System.Runtime.InteropServices;
 #include <openbabel/format.h>
 
 #include <openbabel/forcefield.h>
+#include <openbabel/builder.h>
 #include <openbabel/op.h>
 
 #include <openbabel/bitvec.h>
@@ -659,8 +660,13 @@ using System.Runtime.InteropServices;
 %ignore *::operator <<;
 %ignore *::operator==;
 %ignore *::operator-;
-//%ignore *::operator*;
+%ignore *::operator*;
 %ignore *::operator !=;
+%ignore *::operator ++;
+%ignore *::operator bool;
+%ignore *::operator [];
+%ignore *::operator /;
+%ignore *::operator +;
 
 %include "std_string.i"
 %include "std_vector.i"
@@ -681,69 +687,63 @@ using System.Runtime.InteropServices;
 %}
 
 %template (VectorInt)             std::vector<int>;
-SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(VectorInt, std::vector<int>);
 // Note that the following line will fail if the space between 
 // the two greater-than signs is removed!
 %template (VectorVecInt)     std::vector<std::vector<int> >;
 %template (VectorUInt)            std::vector<unsigned int>;
-SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(VectorUInt,std::vector<unsigned int>);
 %template (VectorVecUInt)         std::vector<std::vector<unsigned int> >;
 %template (VectorUShort)	      std::vector<unsigned short>;
 %template (VectorDouble)          std::vector<double>;
-SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(VectorDouble,std::vector<double>);
 %template (VectorVecDouble)		  std::vector<std::vector<double> >;
 %template (VectorString)          std::vector<std::string>;
-SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBVector3,OpenBabel::vector3);
 %template (VectorOBVector3)              std::vector<OpenBabel::vector3>;
-SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(VectorOBVector3,std::vector<OpenBabel::vector3>);
 %template (VectorVecOBVector3)    std::vector<std::vector<OpenBabel::vector3> >;
 
-SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBExternalBond,OpenBabel::OBExternalBond);
 %template (VectorOBExternalBond)	std::vector<OpenBabel::OBExternalBond>;
-SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBMol, OpenBabel::OBMol);
 %template (VectorMol)     std::vector<OpenBabel::OBMol>;
-SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBBond, OpenBabel::OBBond);
 %template (VectorBond)    std::vector<OpenBabel::OBBond>;
-SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBResidue, OpenBabel::OBResidue);
 %template (VectorResidue) std::vector<OpenBabel::OBResidue>;
-SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBRing, OpenBabel::OBRing);
 %template (VectorRing)    std::vector<OpenBabel::OBRing>;
-SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBTorsion, OpenBabel::OBTorsion);
 %template (VectorTorsion)     std::vector<OpenBabel::OBTorsion>;
 
 
 // Note that vectors of pointers need slightly different syntax
-SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBRing, OpenBabel::OBRing*);
 %template (VectorpRing)   std::vector<OpenBabel::OBRing*>;
-SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBGenericData, OpenBabel::OBGenericData*);
 %template (VectorpData)    std::vector<OpenBabel::OBGenericData*>;
-SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBInternalCoord, OpenBabel::OBInternalCoord*);
 %template (VectorpInternalCoord)		std::vector<OpenBabel::OBInternalCoord*>;
-SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBAtom, OpenBabel::OBAtom*);
 %template (VectorpAtom)		std::vector<OpenBabel::OBAtom*>;
-SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBBond, OpenBabel::OBBond*);
 %template (VectorpBond)		std::vector<OpenBabel::OBBond*>;
-SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBRotor, OpenBabel::OBRotor*);
 %template (VectorpRotor)		std::vector<OpenBabel::OBRotor*>;
 
 //the typemap for wrapping std::vector<double*> is going to need
 //some customization to work with the CDoubleArray type.
-//SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(CDoubleArray,double*);
 //%template (VectorpDouble)		  std::vector<double*>;
 
 %import <openbabel/babelconfig.h>
 
+%warnfilter(516) OpenBabel::OBElementTable; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/data.h>
 %include <openbabel/rand.h>
 %include <openbabel/obutil.h>
+%warnfilter(516) OpenBabel::vector3; // Using the const x(), y() and z() in favour of the non-const
 %include <openbabel/math/vector3.h>
+%warnfilter(503) OpenBabel::matrix3x3; // Not wrapping any of the overloaded operators
 %include <openbabel/math/matrix3x3.h>
 %include <openbabel/math/transform3d.h>
+%warnfilter(516) OpenBabel::SpaceGroup; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/math/spacegroup.h>
+
+# CloneData should be used instead of the following method
+%ignore OpenBabel::OBBase::SetData;
+%warnfilter(516) OpenBabel::OBBase; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/base.h>
 
+%warnfilter(516) OpenBabel::OBPairData; // Ignoring std::string methods in favour of char* ones
+%warnfilter(516) OpenBabel::OBSetData;
+%warnfilter(516) OpenBabel::OBCommentData;
 
 //replacement for method return unsupported std::pair
+%ignore OpenBabel::OBTorsion::GetBC;
 %extend OpenBabel::OBTorsion
 {
 	std::vector<OpenBabel::OBAtom*> GetBC()
@@ -762,6 +762,7 @@ SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBRotor, OpenBabel::OBRotor*);
 
 //extending typemap to work around
 //lack of support for void*
+%ignore OpenBabel::OBRotor::GetRotAtoms;
 %extend OpenBabel::OBRotor
 {
 	int* GetRotAtoms()
@@ -822,35 +823,55 @@ CAST_GENERICDATA_TO(VirtualBond);
 %include <openbabel/griddata.h> // Needs to come after generic.h
 
 %include <openbabel/chains.h>
-//# %import <openbabel/bitvec.h>
 %include <openbabel/typer.h>
 
+// To avoid warning in plugin.h about "Nothing known about std::binary_function"
+namespace std { 
+        template <T1, T2, T3>
+        class binary_function {}; 
+}
+%template(dummy) std::binary_function <const char *, const char *, bool>;
 %include <openbabel/plugin.h>
 
+// To avoid warning in oberror.h about "Nothing known about std::stringbuf"
+namespace std { class stringbuf {}; }
+%warnfilter(503) OpenBabel::OBError; // Not wrapping any of the overloaded operators
 %include <openbabel/oberror.h>
 %include <openbabel/format.h>
 %include <openbabel/obconversion.h>
 %include <openbabel/residue.h>
 %include <openbabel/internalcoord.h>
+%warnfilter(516) OpenBabel::OBAtom; // Using non-const version of GetVector
 %include <openbabel/atom.h>
+%warnfilter(516) OpenBabel::OBBond; // Using non-const versions of GetBeginAtom, GetEndAtom
 %include <openbabel/bond.h>
 %ignore OpenBabel::OBMol::SetData;
 %include <openbabel/mol.h>
 %include <openbabel/ring.h>
+%warnfilter(516) OpenBabel::OBSmartsPattern; // Using non-const versions of GetSMARTS
 %include <openbabel/parsmart.h>
-%include <openbabel/kinetics.h>
-%include <openbabel/rotor.h>
-%include <openbabel/rotamer.h>
+%warnfilter(516) OpenBabel::AliasData; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/alias.h>
 %include <openbabel/atomclass.h>
-
+%ignore OpenBabel::FptIndex;
 %include <openbabel/fingerprint.h>
 %include <openbabel/descriptor.h>
+
+# Ignore shadowed methods
+%ignore OpenBabel::OBForceField::VectorSubtract(const double *const, const double *const, double *);
+%ignore OpenBabel::OBForceField::VectorMultiply(const double *const, const double, double *);
+%warnfilter(516) OpenBabel::OBForceField; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/forcefield.h>
 
+%include <openbabel/builder.h>
 %include <openbabel/op.h>
 
+%warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
 %include <openbabel/bitvec.h>
+
+%include <openbabel/rotor.h>
+%ignore OpenBabel::Swab;
+%include <openbabel/rotamer.h>
 
 //wrapping boost::shared_ptr
 //this does not work yet
@@ -877,6 +898,8 @@ CAST_GENERICDATA_TO(VirtualBond);
 %ignore OBMolAtomBFSIter(OBMol &, int);
 %ignore OBMolAtomDFSIter(OBMol &, int);
 %ignore OBMolBondIter(OBMol &);
+%ignore OBMolBondBFSIter(OBMol &);
+%ignore OBMolBondBFSIter(OBMol &, int);
 %ignore OBMolPairIter(OBMol &);
 %ignore OBMolRingIter(OBMol &);
 %ignore OBMolTorsionIter(OBMol &);
@@ -947,6 +970,7 @@ WRAPITERATOR(OBMolAtomIter,OpenBabel::OBMolAtomIter,OBAtom);
 WRAPITERATOR(OBMolAtomDFSIter,OpenBabel::OBMolAtomDFSIter,OBAtom);
 WRAPITERATOR(OBMolAtomBFSIter,OpenBabel::OBMolAtomBFSIter,OBAtom);
 WRAPITERATOR(OBMolBondIter,OpenBabel::OBMolBondIter,OBBond);
+WRAPITERATOR(OBMolBondBFSIter,OpenBabel::OBMolBondBFSIter,OBBond);
 WRAPITERATOR(OBMolAngleIter,OpenBabel::OBMolAngleIter,VectorUInt);
 WRAPITERATOR(OBAtomAtomIter,OpenBabel::OBAtomAtomIter,OBAtom)
 WRAPITERATOR(OBAtomBondIter,OpenBabel::OBAtomBondIter,OBBond);

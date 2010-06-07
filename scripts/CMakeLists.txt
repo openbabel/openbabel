@@ -283,3 +283,41 @@ if (RUBY_BINDINGS)
       RUN_SWIG)
 endif (RUBY_BINDINGS)
 
+###################
+# CSharp
+###################
+
+if (CSHARP_BINDINGS)
+  if (EXISTS ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp OR
+      RUN_SWIG)
+
+    if (NOT CSHARP_EXECUTABLE)
+      message(STATUS "CSHARP_EXECUTABLE NOT defined. .NET bindings will NOT be created.")
+      return()
+    endif (NOT CSHARP_EXECUTABLE)
+
+    if (RUN_SWIG)
+      add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp
+          COMMAND ${CMAKE_COMMAND} -E remove_directory ${openbabel_BINARY_DIR}/scripts/csharp
+          COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_BINARY_DIR}/scripts/csharp
+          COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/windows-vc2008/Distribution/OBDotNetAssemblyInfo.cs ${openbabel_BINARY_DIR}/scripts/csharp
+          COMMAND ${SWIG_EXECUTABLE} -csharp -c++ -small -O -templatereduce -namespace OpenBabel -outdir ${openbabel_BINARY_DIR}/scripts/csharp -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp ${openbabel_SOURCE_DIR}/scripts/openbabel-csharp.i
+          COMMAND ${CSHARP_EXECUTABLE} /target:library /keyfile:${openbabel_SOURCE_DIR}/windows-vc2008/Distribution/obdotnet.snk /optimize /out:${openbabel_SOURCE_DIR}/scripts/csharp/OBDotNet.dll *.cs WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/csharp
+          MAIN_DEPENDENCY openbabel-csharp.i
+      )
+    endif (RUN_SWIG)
+
+    add_library(bindings_csharp MODULE ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp)
+    target_link_libraries(bindings_csharp ${BABEL_LIBRARY})
+    set_target_properties(bindings_csharp PROPERTIES
+        OUTPUT_NAME openbabel_csharp )
+        set_target_properties(bindings_csharp PROPERTIES
+            LIBRARY_OUTPUT_DIRECTORY ${openbabel_BINARY_DIR})
+
+  else (EXISTS ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp OR
+      RUN_SWIG)
+    message(STATUS "Warning: Ruby bindings NOT found. Generate using -DRUN_SWIG.")
+  endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp OR
+      RUN_SWIG)
+endif (CSHARP_BINDINGS)
+
