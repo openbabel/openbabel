@@ -179,15 +179,32 @@ if (PERL_BINDINGS)
       endif (NOT WIN32)
     endif (RUN_SWIG)
 
+    set(PERL_PREFIX_TEXT "")
+    if (PERL_PREFIX)
+      set(PERL_PREFIX_TEXT "PREFIX=${PERL_PREFIX}")
+    else (PERL_PREFIX)
+      if (NOT ${CMAKE_INSTALL_PREFIX} EQUAL "/usr/local")
+        set(PERL_PREFIX_TEXT "PREFIX=${CMAKE_INSTALL_PREFIX}")
+      endif (NOT ${CMAKE_INSTALL_PREFIX} EQUAL "/usr/local")
+    endif (PERL_PREFIX)
+    message(STATUS "PERL_PREFIX is ${PERL_PREFIX_TEXT}")
+
     if (NOT MSVC)
+      add_custom_target(pre_bindings_perl ALL
+        # Create the scripts/perl directory; we cannot do this inside
+        # bindings_perl as the WORKING_DIRECTORY needs to already exist!
+        COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_BINARY_DIR}/scripts/perl
+        )
       add_custom_target(bindings_perl ALL
-	COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/perl/Makefile.PL ${openbabel_BINARY_DIR}/scripts
-	COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp ${openbabel_BINARY_DIR}/scripts/openbabel-perl.cpp
-        COMMAND PERL5LIB=${openbabel_SOURCE_DIR}/scripts/perl/inc SRC_DIR=${openbabel_SOURCE_DIR} ${PERL_EXECUTABLE} ${openbabel_BINARY_DIR}/scripts/Makefile.PL
+        COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/perl/Makefile.PL ${openbabel_BINARY_DIR}/scripts/perl
+        COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp ${openbabel_BINARY_DIR}/scripts/perl
+        COMMAND PERL5LIB=${openbabel_SOURCE_DIR}/scripts/perl/inc SRC_DIR=${openbabel_SOURCE_DIR} ${PERL_EXECUTABLE} ${openbabel_BINARY_DIR}/scripts/perl/Makefile.PL ${PERL_PREFIX_TEXT}
         COMMAND PERL5LIB=${openbabel_SOURCE_DIR}/scripts/perl/inc make 
             DEPENDS ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp
-            WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts
+            WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/perl
         )
+      add_dependencies(bindings_perl pre_bindings_perl)
+      install(CODE "execute_process(COMMAND make install WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/perl)")
     
     else (NOT MSVC)
       add_library(bindings_perl MODULE ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp)

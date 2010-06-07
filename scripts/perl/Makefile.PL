@@ -29,6 +29,6 @@ WriteMakefile(
     'LDFROM'    => $ldfrom,
     'CC'        => $CC,
     'LD'        => '$(CC) -shared',
-    'INC'       => '-I../include -I'.$cmake_src_dir.'/include',
+    'INC'       => '-I../../include -I'.$cmake_src_dir.'/include',
     'OBJECT'    => 'openbabel-perl.o'
 );

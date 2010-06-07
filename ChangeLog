@@ -1,3 +1,8 @@
+2010-06-07  Noel O'Boyle
+
+	* scripts/CMakeLists.txt, scripts/perl/Makefile.PL: Now perl bindings
+	seem to 'make install' correctly.
+
 2010-06-06  Noel O'Boyle
 
 	* scripts/CMakeLists.txt, scripts/perl/Makefile.PL: Now perl bindings seem to 'make' correctly.
