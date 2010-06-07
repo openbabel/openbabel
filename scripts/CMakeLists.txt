@@ -187,7 +187,6 @@ if (PERL_BINDINGS)
         set(PERL_PREFIX_TEXT "PREFIX=${CMAKE_INSTALL_PREFIX}")
       endif (NOT ${CMAKE_INSTALL_PREFIX} EQUAL "/usr/local")
     endif (PERL_PREFIX)
-    message(STATUS "PERL_PREFIX is ${PERL_PREFIX_TEXT}")
 
     if (NOT MSVC)
       add_custom_target(pre_bindings_perl ALL
