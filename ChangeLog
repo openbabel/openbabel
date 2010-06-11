@@ -1,3 +1,16 @@
+2010-06-11  Chris Morley
+
+	* src/descriptor.cpp(ParsePredicate): Before doing a numeric comparison,
+	ensure the the filter string contains a number only. Fixes #3014398
+	
+	* src/formats/mdlformat.cpp: Added an option to read only the title
+	and the format to produce molecules with zero atoms.
+	Useful for fast selection by title from a sd file(UNIX line endings only):
+	  babel all-sdf.sdf -ocopy out.sdf --filter "title=1str*" -at
+	  
+	* src/GUI/OBGUI.cpp: In open and save file dialogs add gz compressed
+	files to filter	string. So, as well as *.sdf, *.sdf.gz files are shown. 
+
 2010-06-07  Noel O'Boyle
 
 	* scripts/CMakeLists.txt, scripts/openbabel-csharp.i,

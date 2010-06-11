@@ -796,7 +796,8 @@ wxString OBGUIFrame::GetFilter(wxChoice* pChoice)
   wxString  txt = pChoice->GetStringSelection();
   int pos1 = txt.find(_T(" "));
   int pos2 = txt.find_first_not_of( _T(" :-\t"), pos1);
-  return txt.substr(pos2) + _T(" (*.") + txt.substr(0, pos1) + _T(")|*.") + txt.substr(0, pos1) + _T("|");
+  return txt.substr(pos2) + _T(" (*.") + txt.substr(0, pos1) + _T(")|*.")
+    + txt.substr(0, pos1) + _T(";*.") + txt.substr(0, pos1) + _T(".gz|");
 }
 /////////////////////////////////////////////////////
 wxString OBGUIFrame::ShortenedPath(const wxString& path, const wxWindow& wnd, int wndwidth)
