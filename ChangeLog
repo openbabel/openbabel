@@ -1,5 +1,10 @@
 2010-06-11  Noel O'Boyle
 
+	* windows-vc2008/*default_build.bat: Add quotation marks around %CD%
+	to handle case where path to current directory contains a space.
+
+2010-06-11  Noel O'Boyle
+
 	* src/graphsym.cpp: Fix memory leak (use of 'new' without
 	corresponding 'delete')
 
