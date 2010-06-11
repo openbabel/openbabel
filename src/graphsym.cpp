@@ -90,7 +90,7 @@ namespace OpenBabel {
   // Destructor
   OBGraphSym::~OBGraphSym()
   {
-    // Nothing to free as we only hold pointers
+    delete _frag_atoms; // Created with new
   }
 
   const unsigned int OBGraphSym::NoSymmetryClass = 0x7FFFFFFF;

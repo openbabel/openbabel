@@ -1,3 +1,8 @@
+2010-06-11  Noel O'Boyle
+
+	* src/graphsym.cpp: Fix memory leak (use of 'new' without
+	corresponding 'delete')
+
 2010-06-11  Chris Morley
 
 	* src/descriptor.cpp(ParsePredicate): Before doing a numeric comparison,
