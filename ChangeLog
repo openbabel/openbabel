@@ -1,3 +1,7 @@
+2010-06-13  Noel O'Boyle
+
+	* src/obconversion.cpp: Applying Tim's patch to fix memory leak
+
 2010-06-13  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* src/math/spacegroup.cpp: make import more flexible.

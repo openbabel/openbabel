@@ -1432,7 +1432,7 @@ namespace OpenBabel {
 
   OBConversion::OPAMapType& OBConversion::OptionParamArray(Option_type typ)
   {
-    static OPAMapType* opa = new OPAMapType[3];
+    static OPAMapType opa[3];
     return opa[typ];
   }
 
