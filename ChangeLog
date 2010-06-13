@@ -1,3 +1,7 @@
+2010-06-13  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* src/math/spacegroup.cpp: make import more flexible.
+
 2010-06-11  Noel O'Boyle
 
 	* windows-vc2008/*default_build.bat: Add quotation marks around %CD%

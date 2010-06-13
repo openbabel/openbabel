@@ -161,6 +161,7 @@ namespace OpenBabel
         int i;
         size_t j;
         bool neg;
+        double *t;
         for (i = 0; i < 3; i++)
           {
             getline(iss, row, ',');
@@ -170,6 +171,28 @@ namespace OpenBabel
               {
                 switch (row[j])
                   {
+                  case '0':
+                  case '.': // anticipating something like 0.5 or .3333
+                    {
+                      char *end;
+                      switch (i)
+                        {
+                        case 0:
+                          t = &v.x();
+                          break;
+                        case 1:
+                          t = &v.y();
+                          break;
+                        case 2:
+                          t = &v.z();
+                          break;
+                        }
+                      *t = strtod(row.c_str() + j, &end);
+                      j = end - row.c_str() - 1;
+                      if (neg)
+                        *t = - *t;
+                      break;
+                    }
                   case '1':
                   case '2':
                   case '3':
@@ -191,6 +214,8 @@ namespace OpenBabel
                             break;
                           }
                         *t = ((double) (row[j] - '0')) / (row[j+2] - '0');
+                        if (neg)
+                          *t = - *t;
                       }
                     j +=2;
                     break;
