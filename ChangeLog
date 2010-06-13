@@ -1,5 +1,11 @@
 2010-06-13  Noel O'Boyle
 
+	* src/formats/pdbformat.cpp: Applying Richard Hall's patch to fix
+	handling of CONECT records where bond order was split over two lines.
+	This can occur, for example, with the sulfur in RS(=O)(=O)R'.
+
+2010-06-13  Noel O'Boyle
+
 	* src/obconversion.cpp: Applying Tim's patch to fix memory leak
 
 2010-06-13  Jean Brefort  <jean.brefort@normalesup.org>

@@ -444,7 +444,18 @@ namespace OpenBabel
         k += order;
 	
         // Generate the bond
-        mol.AddBond(firstAtom->GetIdx(), connectedAtom->GetIdx(), order+1);
+        if (firstAtom->GetIdx() < connectedAtom->GetIdx()) { // record the bond 'in one direction' only
+          OBBond *bond = mol.GetBond(firstAtom, connectedAtom);
+          if (!bond)
+            mol.AddBond(firstAtom->GetIdx(), connectedAtom->GetIdx(), order+1);
+          else // An additional CONECT record with the same firstAtom that references
+               // a bond created in the previous CONECT record.
+               // For example, the 1136->1138 double bond in the following:
+               //   CONECT 1136 1128 1137 1137 1138
+               //   CONECT 1136 1138 1139
+            bond->SetBondOrder(bond->GetBondOrder() + order+1);
+        }
+	
       }
     return(true);
   }
