@@ -1,3 +1,9 @@
+2010-06-14  Noel O'Boyle
+
+	* Add target "make docs" to make the Doyxgen docs: $ROOT/doc/Doxyfile.in
+	is converted to $ROOT/Doxyfile by substituting the $BABEL_VERSION and
+	the PATH to Dot.
+
 2010-06-13  Noel O'Boyle
 
 	* src/formats/pdbformat.cpp: Applying Richard Hall's patch to fix
