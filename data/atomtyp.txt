@@ -81,15 +81,15 @@ INTHYB  [Ra]                      1
 #IMPVAL  [#4,#12,#20,#38,#56,#88]  2 # Alkaline earth
 
 IMPVAL  [#5]                      3 # Generic boron
-IMPVAL [$([#6+]=*)]		2
-IMPVAL [$([#6+]#*)]		1 # just for InChI C2
+IMPVAL [$([#6+]=*)]		          2
+IMPVAL [$([#6+]#*)]		          1 # just for InChI C2
 
 IMPVAL  [#6^3]                    4
 IMPVAL  [#6^2]                    3
 IMPVAL  [#6^1]                    2
 IMPVAL  [#6^3-]                   3
 IMPVAL  [#6^2-]                   2
-IMPVAL  [#6^1-]                   1 #CM for isocyanides
+IMPVAL  [#6^1-]                   1 # isocyanides, CO (valence=1, bond order=3)
 IMPVAL  [c+]                      2
 
 IMPVAL  [$([#7-]=*)]              1
@@ -102,7 +102,7 @@ IMPVAL  [ND1^1]                   1
 IMPVAL  [ND2^1]                   2
 IMPVAL  [$(N([OD1])*)]            3
 IMPVAL  [$(NC=O)]                 3
-#IMPVAL  [$(n(c=O)c=O)]            3 # aromatic diimide
+#IMPVAL  [$(n(c=O)c=O)]           3 # aromatic diimide
 IMPVAL  [$(N(~[OD1])~[OD1])]      3
 IMPVAL  [$([Nr0]C=[Nr0])]         3
 IMPVAL  [$(N=*)]                  2
@@ -122,11 +122,12 @@ IMPVAL [#8-]                      1
 IMPVAL [#8-2]                     0
 IMPVAL [#8+]                      3
 IMPVAL [$([#8]=*)]                1
+IMPVAL [#8^1+]                    1 # carbon monoxide
 
 IMPVAL  [#9D0]                    1
 IMPVAL  [#9D0-]                   0 #[F-]
-IMPVAL  [$([#14+]#*)]		  1 # just for InChI Si2
-IMPVAL  [$([#14-]#*)]		  1 # just for InChI Si2
+IMPVAL  [$([#14+]#*)]		      1 # just for InChI Si2
+IMPVAL  [$([#14-]#*)]		      1 # just for InChI Si2
 
 IMPVAL  [#13]                     3 # generic Al
 IMPVAL  [#14]                     4 # regular sp3 Si

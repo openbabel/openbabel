@@ -40,7 +40,8 @@ namespace OpenBabel
   class CMLFormat : public XMLMoleculeFormat
   {
   private:
-    const char* CML1NamespaceURI()const{return "http://www.xml-cml.org/dtd/cml_1_0_1.dtd";}
+    const char* CML1NamespaceURI()const
+      {return "http://cml.sourceforge.net/schema/cmlCore/HTMLDOCS/cmlCore.pdf";}
     const char* CML2NamespaceURI()const{return "http://www.xml-cml.org/schema/cml2/core";}
 
   public:
@@ -68,7 +69,7 @@ namespace OpenBabel
     {
       return
         "Chemical Markup Language\n"
-        "XML format. This implementation uses libxml2.\n"
+        "An XML format.\n"
         "Write options for CML: -x[flags] (e.g. -x1ac)\n"
         "  1  output CML1 (rather than CML2)\n"
         "  a  output array format for atoms and bonds\n"
@@ -80,7 +81,11 @@ namespace OpenBabel
         "  p  output properties\n"
         "  N<prefix> add namespace prefix to elements\n\n"
         "Input options, e.g. -a2\n"
-        "  2  input 2D rather than 3D coordinates if both provided\n\n";
+        "  2  input 2D rather than 3D coordinates if both provided\n\n"
+        "In the absence of hydrogenCount and any explicit hydrogen on\n"
+        "an atom, implicit hydrogen is assumed to be present appropriate\n"
+        "to the radical or spinMultiplicity attributes on the atom or\n"
+        "its normal valency if they are not present.\n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -106,6 +111,7 @@ namespace OpenBabel
     bool TransferElement(cmlArray& arr);
     bool DoAtoms();
     bool DoBonds();
+    bool DoHCounts();
     bool DoMolWideData();
     bool ParseFormula(string& formula, OBMol* pmol);
     void ReadNasaThermo();
@@ -130,6 +136,7 @@ namespace OpenBabel
     map<string,int> AtomMap; //key=atom id, value= ob atom index
     cmlArray AtomArray;
     cmlArray BondArray;
+    map<int, int> HCounts;
     vector< pair<string,string> > cmlBondOrAtom; //for cml1 only
     vector< pair<string,string> > molWideData;
     bool inBondArray; //for cml1 only
@@ -188,6 +195,7 @@ namespace OpenBabel
         _pmol->Clear();
         AtomArray.clear();
         BondArray.clear();
+        HCounts.clear();
         inBondArray = false;
         inFormula = false;
         RawFormula.erase();
@@ -464,9 +472,9 @@ namespace OpenBabel
       inFormula=false;
     else if(name=="molecule" || name=="jobstep") //hack for molpro
       {
-        DoAtoms();
-        DoBonds();
-        DoMolWideData();
+        if(!DoAtoms() || !DoBonds() || !DoHCounts() || !DoMolWideData())
+          return false;
+        
         if (_pmol->GetDimension()==0)
           StereoFrom0D(_pmol); // Remove any spurious stereos (due to symmetry)
 
@@ -598,16 +606,21 @@ namespace OpenBabel
 
             if(attrname=="hydrogenCount")
               {
-                int nhvy = nAtoms;
-                int i;
-                for(i=0;i<atoi(value.c_str());++i)
-                  {
-                    OBAtom* hatom = _pmol->NewAtom();
-                    hatom->SetAtomicNum(1);
-                    hatom->SetType("H");
-                    _pmol->AddBond(nhvy,_pmol->NumAtoms(),1);
-                    ++nAtoms;
-                  }
+                //Actually adding H atoms to the structure is deferred until the explicit
+                //structure is complete, because hydrogenCount may include explicit H, bug#3014855
+                HCounts[nAtoms] = atoi(value.c_str());
+
+               /* int nhvy = nAtoms;
+                  int i;
+                  for(i=0;i<atoi(value.c_str());++i)
+                    {
+                      OBAtom* hatom = _pmol->NewAtom();
+                      hatom->SetAtomicNum(1);
+                      hatom->SetType("H");
+                      _pmol->AddBond(nhvy,_pmol->NumAtoms(),1);
+                      ++nAtoms;
+                    }
+               */
               }
 
             else if(attrname=="formalCharge") 
@@ -798,6 +811,44 @@ namespace OpenBabel
   }
 
   /////////////////////////////////////////////////////////////////
+  bool CMLFormat::DoHCounts()
+  {
+    //Add extra H atoms so that each atom has the value of its attribute hydrogenCount
+    map<int,int>::iterator iter;
+    for(iter=HCounts.begin();iter!=HCounts.end();++iter)
+    {
+      int idx = iter->first;
+      int explH = _pmol->GetAtom(idx)->ExplicitHydrogenCount(false); //excludes H isotopes
+      if(explH > iter->second)
+      {
+        map<string,int>::iterator it;
+        for(it=AtomMap.begin();it!=AtomMap.end();++it)
+          if(it->second == idx)
+            break;
+        stringstream ss;
+        ss << "In atom " << it->first << " the number of explicit hydrogens exceeds the hydrogenCount attribute.";
+          obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
+          return false;
+      }
+
+      if(iter->second == 0)
+        //ensure no Hs are ever added
+        _pmol->GetAtom(idx)->ForceNoH();
+      
+      else
+      {
+        //add extra hydrogens 
+        for(unsigned i=0;i<iter->second - explH;++i)
+        {
+          OBAtom* hatom = _pmol->NewAtom();
+          hatom->SetAtomicNum(1);
+          hatom->SetType("H");
+          _pmol->AddBond(idx, _pmol->NumAtoms(), 1);
+        }
+      }
+    }
+    return true;
+  }
 
   bool CMLFormat::DoMolWideData()
   {

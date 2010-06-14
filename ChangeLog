@@ -1,3 +1,19 @@
+2010-06-14  Chris Morley
+	
+	* data/atomtyp.txt: add IMPVAL for triply bonded O+ (for carbon
+	monoxide). 
+	
+	* src/formats/xml/cmlformat.cpp(ReadMolecule): leave processing
+	of hydrogenCount attributes until the structure is complete, so
+	that explict H can count towards them. Also now handles 
+	hydrogenCount=0. Fixes bug #3014855 (Daniel Lowe).
+	
+	Change specification URI. Clarify implicit H behaviour in description.
+	
+	* src/obconversion.cpp: temporarily reintroduce the lineend
+	memory leak. It was crashing with CML input, which doesn't
+	even use the line end buffer!
+
 2010-06-14  Noel O'Boyle
 
 	* src/graphsym.cpp: Fix my fix to memory leak (get rid of 'new')
