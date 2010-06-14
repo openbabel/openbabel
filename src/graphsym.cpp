@@ -76,11 +76,11 @@ namespace OpenBabel {
   {
     _pmol = pmol;
     if (frag_atoms) {
-      _frag_atoms = frag_atoms;
+      _frag_atoms = *frag_atoms;
     } else {
-      _frag_atoms = new OBBitVec(_pmol->NumAtoms());
+      _frag_atoms.Resize(_pmol->NumAtoms());
       FOR_ATOMS_OF_MOL(a, _pmol)
-        _frag_atoms->SetBitOn(a->GetIdx());
+        _frag_atoms.SetBitOn(a->GetIdx());
     }
   }
  
@@ -90,7 +90,7 @@ namespace OpenBabel {
   // Destructor
   OBGraphSym::~OBGraphSym()
   {
-    delete _frag_atoms; // Created with new
+    // Nothing to do
   }
 
   const unsigned int OBGraphSym::NoSymmetryClass = 0x7FFFFFFF;
@@ -133,7 +133,7 @@ namespace OpenBabel {
     vector<OBEdgeBase*>::iterator bi;
     for (bond = atom->BeginBond(bi); bond; bond = atom->NextBond(bi)) {
       nbr = bond->GetNbrAtom(atom);
-      if (_frag_atoms->BitIsSet(nbr->GetIdx()))
+      if (_frag_atoms.BitIsSet(nbr->GetIdx()))
         count++;
     }
     return(count);
@@ -156,7 +156,7 @@ namespace OpenBabel {
     vector<OBEdgeBase*>::iterator bi;
     for (bond = atom->BeginBond(bi); bond; bond = atom->NextBond(bi)) {
       nbr = bond->GetNbrAtom(atom);
-      if (_frag_atoms->BitIsSet(nbr->GetIdx()) && !(nbr->IsHydrogen()))
+      if (_frag_atoms.BitIsSet(nbr->GetIdx()) && !(nbr->IsHydrogen()))
         count++;
     }
     
@@ -187,7 +187,7 @@ namespace OpenBabel {
     vector<OBEdgeBase*>::iterator bi;
     for (bond = atom->BeginBond(bi); bond; bond = atom->NextBond(bi)) {
       nbr = bond->GetNbrAtom(atom);
-      if (_frag_atoms->BitIsSet(nbr->GetIdx()) && !(nbr->IsHydrogen())) {
+      if (_frag_atoms.BitIsSet(nbr->GetIdx()) && !(nbr->IsHydrogen())) {
         if (bond->IsSingle())        count += 1.0f;
         else if (bond->IsDouble())   count += 2.0f;
         else if (bond->IsTriple())   count += 3.0f;
@@ -239,7 +239,7 @@ namespace OpenBabel {
   for (atom = _pmol->BeginAtom(ai); atom; atom = _pmol->NextAtom(ai)) {
 
     int idx = atom->GetIdx();
-    if (!_frag_atoms->BitIsOn(idx)) {     // Not in this fragment?
+    if (!_frag_atoms.BitIsOn(idx)) {     // Not in this fragment?
       gtd[idx-1] = 0;
       continue;
     }
@@ -253,11 +253,11 @@ namespace OpenBabel {
       next.Clear();
       for (natom = curr.NextBit(-1);natom != curr.EndBit();natom = curr.NextBit(natom)) {
         atom1 = _pmol->GetAtom(natom);
-        if (!_frag_atoms->BitIsOn(atom1->GetIdx()))
+        if (!_frag_atoms.BitIsOn(atom1->GetIdx()))
           continue;
         for (bond = atom1->BeginBond(j);bond;bond = atom1->NextBond(j)) {
           int nbr_idx = bond->GetNbrAtomIdx(atom1);
-          if (   _frag_atoms->BitIsOn(nbr_idx)
+          if (   _frag_atoms.BitIsOn(nbr_idx)
               && !used.BitIsOn(nbr_idx)
               && !curr.BitIsOn(nbr_idx)
               && !(bond->GetNbrAtom(atom1))->IsHydrogen())
@@ -297,7 +297,7 @@ namespace OpenBabel {
   sssRings = _pmol->GetSSSR();
   for (ri = sssRings.begin(); ri != sssRings.end(); ri++) {
     OBRing *ring = *ri;
-    OBBitVec bvtmp = *_frag_atoms & ring->_pathset;       // intersection: fragment and ring
+    OBBitVec bvtmp = _frag_atoms & ring->_pathset;       // intersection: fragment and ring
     if (bvtmp == ring->_pathset)                        // all ring atoms in fragment?
       ring_atoms |= ring->_pathset;                     //   yes - add this ring's atoms 
   }
@@ -343,7 +343,7 @@ namespace OpenBabel {
   vector<OBNodeBase*>::iterator ai;
   for (i=0, atom = _pmol->BeginAtom(ai); atom; atom = _pmol->NextAtom(ai)) {
     vid[i] = 0;
-    if (_frag_atoms->BitIsOn(atom->GetIdx())) {
+    if (_frag_atoms.BitIsOn(atom->GetIdx())) {
       vid[i] = 
         v[i]                                                    // 10 bits: graph-theoretical distance
         | (GetHvyValence(atom)                <<10)  //  4 bits: heavy valence
@@ -476,7 +476,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     OBAtom *atom1 = _pmol->GetAtomById(id1);
     int index1 = atom1->GetIndex();
     // We only want: unused and part of this fragment.
-    if (!(*_frag_atoms)[index1+1])
+    if (!(_frag_atoms)[index1+1])
       continue;
     if (used_atoms[index1])
       continue;
@@ -685,7 +685,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     unsigned int end1 = bond1->GetEndAtom()->GetIndex();
     
     // We only want: unused and part of this fragment.
-    if (!(*_frag_atoms)[begin1+1] || !(*_frag_atoms)[end1+1])
+    if (!(_frag_atoms)[begin1+1] || !(_frag_atoms)[end1+1])
       continue;
     if (used_atoms[begin1] || used_atoms[end1])
       continue;
@@ -901,7 +901,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     vector<unsigned int> vtmp;
     for (nbr = atom->BeginNbrAtom(nbr_iter); nbr; nbr = atom->NextNbrAtom(nbr_iter)) {
       int idx = nbr->GetIdx();
-      if (_frag_atoms->BitIsOn(idx))
+      if (_frag_atoms.BitIsOn(idx))
         vtmp.push_back(vp1[idx2index[idx]].second);
     }
 
@@ -977,7 +977,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     CountAndRenumberClasses(symmetry_classes, nclasses1);
 
     int natoms = _pmol->NumAtoms();
-    int nfragatoms = _frag_atoms->CountBits();
+    int nfragatoms = _frag_atoms.CountBits();
 
     // LOOP: Do extended sum-of-invarients until no further changes are
     // noted.  (Note: This is inefficient, as it re-computes extended sums
@@ -1055,7 +1055,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     std::vector<std::pair<OBAtom*, unsigned int> > symmetry_classes;
     for (atom = _pmol->BeginAtom(j); atom; atom = _pmol->NextAtom(j)) {
       int idx = atom->GetIdx();
-      if (_frag_atoms->BitIsOn(idx))
+      if (_frag_atoms.BitIsOn(idx))
         symmetry_classes.push_back(pair<OBAtom*, unsigned int> (atom, vgi[idx-1]));
     }
 
@@ -1154,7 +1154,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     unsigned int nclass1, nclass2; //number of classes
     int i;
 
-    int nfragatoms = _frag_atoms->CountBits();
+    int nfragatoms = _frag_atoms.CountBits();
     int natoms = _pmol->NumAtoms();
 
     std::vector<unsigned int> symmetry_classes;

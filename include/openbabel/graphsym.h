@@ -38,7 +38,7 @@ namespace OpenBabel {
 
   class OBAPI OBGraphSym {
     private:
-      OBBitVec* _frag_atoms;
+      OBBitVec _frag_atoms;
       OBMol* _pmol;
 
       static bool CompareUnsigned(const unsigned int &a,const unsigned int &b);

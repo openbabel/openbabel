@@ -1,5 +1,9 @@
 2010-06-14  Noel O'Boyle
 
+	* src/graphsym.cpp: Fix my fix to memory leak (get rid of 'new')
+
+2010-06-14  Noel O'Boyle
+
 	* Add target "make docs" to make the Doyxgen docs: $ROOT/doc/Doxyfile.in
 	is converted to $ROOT/Doxyfile by substituting the $BABEL_VERSION and
 	the PATH to Dot.
