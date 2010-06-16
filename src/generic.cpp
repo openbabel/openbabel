@@ -640,65 +640,18 @@ namespace OpenBabel
 
   double OBUnitCell::GetCellVolume()
   {
-    double a = GetA();
-    double b = GetB();
-    double c = GetC();
-    double alpha = GetAlpha();
-    double beta  = GetBeta();
-    double gamma = GetGamma();
-    double result = 0.0;
-    
-    switch ( GetLatticeType() )
-      {
-      case Triclinic:
-        result = a * b * c 
-          * sqrt(1
-                 - SQUARE(cos( alpha * DEG_TO_RAD ))
-                 - SQUARE(cos( beta * DEG_TO_RAD ))
-                 - SQUARE(cos( gamma * DEG_TO_RAD ))
-                 + 2 * cos( alpha * DEG_TO_RAD ) * cos( beta * DEG_TO_RAD ) * cos( gamma * DEG_TO_RAD )
-                 );
-        break;
-      case Monoclinic:
-        result = a * b * c * sin( beta * DEG_TO_RAD );
-        break;
-      case Orthorhombic:
-        result = a * b * c;
-        break;
-      case Tetragonal:
-        result = a * a * c;
-        break;
-      case Rhombohedral:
-        result = a * a * a
-          * sqrt(1
-                 - SQUARE(cos( alpha * DEG_TO_RAD ))
-                 - SQUARE(cos( beta * DEG_TO_RAD ))
-                 - SQUARE(cos( gamma * DEG_TO_RAD ))
-                 + 2 * cos( alpha * DEG_TO_RAD ) * cos( beta * DEG_TO_RAD ) * cos( gamma * DEG_TO_RAD )
-                 );
-        break;
-      case Hexagonal:
-        result = pow( 3.0, 0.333333333 ) * a * a * c / 2;
-        break;
-      case Cubic:
-        result = a * a * a;
-        break;
-      default:
-        result = 0.0;
-      }
-    
-    return result;
+    return GetCellMatrix().determinant();
   }
-  
+
   //
   // member functions for OBSymmetryData class
   //
-  OBSymmetryData::OBSymmetryData(): 
+  OBSymmetryData::OBSymmetryData():
     OBGenericData("Symmetry", OBGenericDataType::SymmetryData)
   { }
 
   OBSymmetryData::OBSymmetryData(const OBSymmetryData &src) :
-    OBGenericData(src._attr, src._type, src._source), 
+    OBGenericData(src._attr, src._type, src._source),
     _pointGroup(src._pointGroup), _spaceGroup(src._spaceGroup)
   {  }
 
