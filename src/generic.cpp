@@ -640,7 +640,7 @@ namespace OpenBabel
 
   double OBUnitCell::GetCellVolume()
   {
-    return GetCellMatrix().determinant();
+    return fabs(GetCellMatrix().determinant());
   }
 
   //
