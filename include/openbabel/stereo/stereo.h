@@ -698,7 +698,7 @@ namespace OpenBabel {
   /**
    * Convert any reference to atomId in a stereo object to an OBStereo::ImplicitRef.
    * This function is called from OBMol::DeleteHydrogens()
-   * (via OBMol:DeleteHydrogen()) to remove any explicit references to a
+   * (via OBMol::DeleteHydrogen()) to remove any explicit references to a
    * hydrogen atom that has been deleted. However, the code is not specific
    * to hydrogen atoms and could be used for other atoms.
    *
