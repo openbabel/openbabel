@@ -1,5 +1,9 @@
 2010-06-17  Noel O'Boyle
 
+	* src/stereo/perception.cpp: Fix to previous commit for Linux.
+
+2010-06-17  Noel O'Boyle
+
 	* src/mol.cpp(DeleteHydrogen), src/stereo/perception.cpp,
 	include/openbabel/stereo/stereo.h: If a hydrogen is deleted, it is now
 	converted to an ImplicitRef in any stereo objects that reference it.
