@@ -1,3 +1,9 @@
+2010-06-17  Noel O'Boyle
+
+	* src/mol.cpp(DeleteHydrogen), src/stereo/perception.cpp,
+	include/openbabel/stereo/stereo.h: If a hydrogen is deleted, it is now
+	converted to an ImplicitRef in any stereo objects that reference it.
+
 2010-06-14  Chris Morley
 	
 	* data/atomtyp.txt: add IMPVAL for triply bonded O+ (for carbon

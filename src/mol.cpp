@@ -1977,7 +1977,13 @@ namespace OpenBabel
 
       }
 
-    _atomIds[atom->GetId()] = (OBAtom*)NULL;
+    // Deleting hydrogens does not invalidate the stereo objects
+    // - however, any explicit refs to the hydrogen atom must be
+    //   converted to implicit refs
+    OBStereo::Ref id = atom->GetId();
+    StereoRefToImplicit(*this, id);
+
+    _atomIds[id] = (OBAtom*)NULL;
     _vatom.erase(_vatom.begin()+(atom->GetIdx()-1));
     _natoms--;
 

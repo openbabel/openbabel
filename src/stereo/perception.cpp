@@ -1829,5 +1829,36 @@ namespace OpenBabel {
       }
     return unspec_ctstereo;
   }
+  void StereoRefToImplicit(OBMol& mol, OBStereo::Ref atomId) {
+    // The following is for use in replace_if(...) below
+    const std::binder1st<std::equal_to<OBStereo::Ref> > equal_to_atomId = std::bind1st (equal_to<OBStereo::Ref>(), atomId);
+
+    std::vector<OBGenericData*> vdata = mol.GetAllData(OBGenericDataType::StereoData);
+    for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data) {
+      OBStereo::Type datatype = ((OBStereoBase*)*data)->GetType();
+
+      if (datatype != OBStereo::CisTrans && datatype != OBStereo::Tetrahedral) {
+        // Maybe I should just unset the stereochemistry if this happens?
+        obErrorLog.ThrowError(__FUNCTION__, 
+            "This function should be updated to handle additional stereo types.\nSome stereochemistry objects may contain explicit refs to hydrogens which have been removed.", obWarning);
+        continue;
+      }
+
+      // Replace any references to atomId with ImplicitRef
+      if (datatype == OBStereo::CisTrans) {
+        OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
+        OBCisTransStereo::Config ct_cfg = ct->GetConfig();
+        replace_if(ct_cfg.refs.begin(), ct_cfg.refs.end(), equal_to_atomId, OBStereo::ImplicitRef);
+        ct->SetConfig(ct_cfg);
+      }
+      else if (datatype == OBStereo::Tetrahedral) {
+        OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
+        OBTetrahedralStereo::Config ts_cfg = ts->GetConfig();
+        if (ts_cfg.from == atomId) ts_cfg.from = OBStereo::ImplicitRef;
+        replace_if(ts_cfg.refs.begin(), ts_cfg.refs.end(), equal_to_atomId, OBStereo::ImplicitRef);
+        ts->SetConfig(ts_cfg);
+      }
+    }
+  }
 }
 
