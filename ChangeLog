@@ -1,3 +1,10 @@
+2010-06-18  Noel O'Boyle
+
+	* doc/Doxyfile.in: Update to Doxygen 1.7.0 and turn SEARCHENGINE on.
+	* doc/api-style.css (removed), doc/api-header.html: Old style file
+	removed as out-of-date with respect to
+	Doxygen 1.7.0 (instead, the automatically generated doxygen.css is used)
+
 2010-06-17  Noel O'Boyle
 
 	* src/stereo/perception.cpp: Fix to previous commit for Linux.
