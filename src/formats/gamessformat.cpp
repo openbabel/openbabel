@@ -23,7 +23,7 @@
 using namespace std;
 namespace Gamess
 {
-} 
+}
 
 namespace OpenBabel
 {
@@ -54,7 +54,7 @@ namespace OpenBabel
     virtual const char* SpecificationURL()
     { return "http://www.msg.ameslab.gov/GAMESS/doc.menu.html";}; //optional
 
-    virtual const char* GetMIMEType() 
+    virtual const char* GetMIMEType()
     { return "chemical/x-gamess-output"; };
 
     //Flags() can return be any the following combined by | or be omitted if none apply
@@ -107,7 +107,7 @@ namespace OpenBabel
     virtual const char* SpecificationURL()
     {return "http://www.msg.ameslab.gov/GAMESS/doc.menu.html";}; //optional
 
-    virtual const char* GetMIMEType() 
+    virtual const char* GetMIMEType()
     { return "chemical/x-gamess-input"; };
 
     //Flags() can return be any the following combined by | or be omitted if none apply
@@ -237,7 +237,7 @@ namespace OpenBabel
     std::vector<unsigned short> confDimensions = confData->GetDimension(); // to be fair, set these all to 3D
     std::vector<double>         confEnergies   = confData->GetEnergies();
     std::vector< std::vector< vector3 > > confForces = confData->GetForces();
-    
+
     vector<double> frequencies, intensities, raman_intensities;
     vector< vector<vector3> > displacements;
     int lowFreqModesBegin; // the number of the first low frequency mode
@@ -298,12 +298,12 @@ namespace OpenBabel
           {
             /*This set of EFP coordinates belongs only to the
              * conformer directly above this (ATOMIC   COORDINATES (BOHR))
-             */            
+             */
             double *tmpCoords = vconf.at(0);
             //memcpy(&coordinates[0], tmpCoords, sizeof(double)*natoms*3);
             for (int i=0; i<natoms*3; i++)
               coordinates.push_back(tmpCoords[i]);
-            
+
             ifs.getline(buffer,BUFF_SIZE);      // column headings
             ifs.getline(buffer,BUFF_SIZE);
             ifs.getline(buffer,BUFF_SIZE);
@@ -317,7 +317,7 @@ namespace OpenBabel
                  */
                 if (atof((char*)vs[5].c_str()) > 0.0) {
                   //atom = mol.NewAtom();
-                  atomicNum=etab.GetAtomicNum(vs[0].substr(0,1).c_str()); 
+                  atomicNum=etab.GetAtomicNum(vs[0].substr(0,1).c_str());
                   //atom->SetAtomicNum(atomicNum);
                   if (natoms == 0) // first time reading the molecule, create each atom
                   {
@@ -346,7 +346,7 @@ namespace OpenBabel
                 }
                 if (!ifs.getline(buffer,BUFF_SIZE))
                   break;
-                tokenize(vs,buffer); 
+                tokenize(vs,buffer);
               }
             // done with reading atoms
             ndummyatoms = mol.NumAtoms();
@@ -388,7 +388,7 @@ namespace OpenBabel
                   break;
                 tokenize(vs,buffer);
               }
-           
+
             if(strstr(buffer,"COORDINATES OF FRAGMENT") != NULL)
               {
                 ifs.getline(buffer,BUFF_SIZE);      // column headings
@@ -409,10 +409,10 @@ namespace OpenBabel
                      * the atom name may start with "Z"
                      */
                     int atomicNum;
-                    if ( vs[0].substr(0,1) == "Z" ) 
-                      atomicNum=etab.GetAtomicNum(vs[0].substr(1,1).c_str()); 
-                    else 
-                      atomicNum=etab.GetAtomicNum(vs[0].substr(0,1).c_str()); 
+                    if ( vs[0].substr(0,1) == "Z" )
+                      atomicNum=etab.GetAtomicNum(vs[0].substr(1,1).c_str());
+                    else
+                      atomicNum=etab.GetAtomicNum(vs[0].substr(0,1).c_str());
                     //atom->SetAtomicNum(atomicNum);
                     if (natoms == 0) // first time reading the molecule, create each atom
                       {
@@ -426,7 +426,7 @@ namespace OpenBabel
                     coordinates.push_back(x);
                     coordinates.push_back(y);
                     coordinates.push_back(z);
-                  }			    
+                  }
 
                   if (!ifs.getline(buffer,BUFF_SIZE))
                     break;
@@ -446,11 +446,11 @@ namespace OpenBabel
 
           }
         else if((strstr(buffer,"NSERCH=") != NULL) && (strstr(buffer,"ENERGY=") != NULL))
-          {    
+          {
             char *tok = strtok (buffer," ="); // my tokenize
             int n=0;
             while (true)
-              {                
+              {
                 tok = strtok (NULL, " =");
                 if (tok == NULL)
                   break;
@@ -470,7 +470,7 @@ namespace OpenBabel
             ifs.getline(buffer,BUFF_SIZE); // point charges @todo
             ifs.getline(buffer,BUFF_SIZE);	// column headings dipole moment
             ifs.getline(buffer,BUFF_SIZE);
-            
+
             tokenize(vs, buffer);
             if (vs.size() == 4) {
               OBVectorData *dipoleMoment = new OBVectorData;
@@ -482,7 +482,7 @@ namespace OpenBabel
               dipoleMoment->SetData(x, y, z);
               dipoleMoment->SetOrigin(fileformatInput);
               mol.SetData(dipoleMoment);
-            } 
+            }
           }
         else if(strstr(buffer,"MOPAC CHARGES") != NULL)
           {
@@ -562,8 +562,8 @@ namespace OpenBabel
             ifs.getline(buffer, BUFF_SIZE); // blank or Raman activitie
             if (strstr(buffer,"RAMAN") != NULL) {
               tokenize(vs, buffer);
-              for (unsigned int i = 2; i < vs.size(); ++i) {              	
-                if (numIntens < lowFreqModesBegin || numIntens > lowFreqModesEnd) 
+              for (unsigned int i = 2; i < vs.size(); ++i) {
+                if (numIntens < lowFreqModesBegin || numIntens > lowFreqModesEnd)
                   raman_intensities.push_back(atof(vs[i].c_str()));
               }
               ifs.getline(buffer, BUFF_SIZE); // DEPOLARIZATION
@@ -599,7 +599,7 @@ namespace OpenBabel
               for (unsigned int i = 1; i < vs.size(); ++i) {
                 y.push_back(massNormalization * atof(vs[i].c_str()));
               }
-              
+
               z.clear();
               ifs.getline(buffer, BUFF_SIZE);
               tokenize(vs, buffer);
@@ -613,7 +613,7 @@ namespace OpenBabel
                 for (unsigned int i = 0; i < modeCount;  ++i) {
                   if (i >= modeCount - newModes){
                     displacements[numDisp++].push_back(vector3(x[i], y[i], z[i]));
-		  }
+                  }
                 }
               }
 
@@ -643,7 +643,7 @@ namespace OpenBabel
                 ifs.getline(buffer,BUFF_SIZE); // symmetries
                 // orbital coefficients
                 while (ifs.getline(buffer,BUFF_SIZE) && strlen(buffer)
-                       && strstr(buffer,"END") == NULL 
+                       && strstr(buffer,"END") == NULL
                        && strstr(buffer, "---") == NULL)
                   { }
                 if (!ifs.good())
@@ -870,7 +870,7 @@ namespace OpenBabel
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
-    
+
     if (hasPartialCharges) {
       mol.SetPartialChargesPerceived();
 
@@ -927,7 +927,7 @@ namespace OpenBabel
             while (strstr(buffer, "$END") == NULL)
               {
                 tokenize(vs,buffer);
-                if(vs.size() == 5) 
+                if(vs.size() == 5)
                   {
                     atom = mol.NewAtom();
                     atom->SetAtomicNum(atoi(vs[1].c_str())); // Parse the current one
@@ -959,7 +959,7 @@ namespace OpenBabel
                   {
                     atom = mol.NewAtom();
                     int atomicNum;
-                    if( vs[0].substr(0,1) == "Z" || vs[0].substr(0,1) == "z" ) 
+                    if( vs[0].substr(0,1) == "Z" || vs[0].substr(0,1) == "z" )
                       atomicNum=etab.GetAtomicNum(vs[0].substr(1,1).c_str());
                     else
                       atomicNum=etab.GetAtomicNum(vs[0].substr(0,1).c_str());
