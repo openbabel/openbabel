@@ -442,7 +442,6 @@ namespace OpenBabel
             vconf.push_back(tmpCoords);
             coordinates.clear();
             confDimensions.push_back(3); // always 3D -- OBConformerData allows mixing 2D and 3D structures
-            cerr << "New conformer!" << endl;
 
           }
         else if((strstr(buffer,"NSERCH=") != NULL) && (strstr(buffer,"ENERGY=") != NULL))
