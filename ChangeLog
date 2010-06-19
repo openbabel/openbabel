@@ -1,3 +1,8 @@
+2010-06-19  Chris Morley
+
+	* src/formats/mdlformat.cpp: Added warning message when reading
+	misformed files with too many atoms or bonds. Bug #2971865
+
 2010-06-18  Noel O'Boyle
 
 	* doc/Doxyfile.in: Update to Doxygen 1.7.0 and turn SEARCHENGINE on.

@@ -262,6 +262,12 @@ namespace OpenBabel
     natoms = ReadUIntField((line.substr(0, 3)).c_str());
     nbonds = ReadUIntField((line.substr(3, 3)).c_str());
 
+    if(ReadUIntField((line.substr(6, 3)).c_str())>0)
+      obErrorLog.ThrowError(__FUNCTION__,
+        "Either the file contains Atom Lists, which are not currently supported and are ignored\n"
+        "or the atom or bond count is >999, which is not allowed in V2000 MDL files.",
+        obWarning);
+
     mol.BeginModify();
     if(line.find("V3000") != string::npos) {
       // V3000
