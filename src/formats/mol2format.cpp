@@ -295,25 +295,6 @@ namespace OpenBabel
         mol.AddBond(start,end,order);
       }
 
- 
-    // update neighbour bonds information for each atom.
-    vector<OBAtom*>::iterator apos;
-    vector<OBBond*>::iterator bpos;
-    OBAtom* patom;
-    OBBond* pbond;
-    
-    for (patom = mol.BeginAtom(apos); patom; patom = mol.NextAtom(apos))
-      {
-        patom->ClearBond();
-        for (pbond = mol.BeginBond(bpos); pbond; pbond = mol.NextBond(bpos))
-          {
-            if (patom == pbond->GetBeginAtom() || patom == pbond->GetEndAtom())
-              {
-                patom->AddBond(pbond);
-              }
-          }
-      }
-
     // Suggestion by Liu Zhiguo 2008-01-26
     // Mol2 files define atom types -- there is no need to re-perceive
     mol.SetAtomTypesPerceived();
