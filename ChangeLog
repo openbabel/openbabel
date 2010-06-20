@@ -1,5 +1,10 @@
 2010-06-20  Noel O'Boyle
 
+	* src/formats/pdbformat.cpp: the_res not NULL-terminated. Resulted in
+	junk output after residue name in PDB files.
+
+2010-06-20  Noel O'Boyle
+
 	* src/formats/mol2format.cpp: Removed obsolete code that was causing
 	performance problems on large files (e.g. proteins). Fixes
 	bug #3018188

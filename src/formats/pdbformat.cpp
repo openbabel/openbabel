@@ -611,6 +611,7 @@ namespace OpenBabel
           {
             het = res->IsHetAtom(atom);
             snprintf(the_res,4,"%s",(char*)res->GetName().c_str());
+            the_res[4] = '\0';
             snprintf(type_name,5,"%s",(char*)res->GetAtomID(atom).c_str());
             the_chain = res->GetChain();
 
@@ -642,6 +643,7 @@ namespace OpenBabel
         else
           {
             strcpy(the_res,"UNK");
+            the_res[3] = '\0';
             snprintf(padded_name,sizeof(padded_name), "%s",type_name);
             strncpy(type_name,padded_name,4);
             type_name[4] = '\0';
