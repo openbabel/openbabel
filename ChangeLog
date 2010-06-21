@@ -1,3 +1,8 @@
+2010-06-21  Noel O'Boyle
+
+	* src/builder.cpp: Fix bug when correcting tet stereo where there is
+	an Implicit H
+
 2010-06-20  Noel O'Boyle
 
 	* src/formats/pdbformat.cpp: the_res not NULL-terminated. Resulted in

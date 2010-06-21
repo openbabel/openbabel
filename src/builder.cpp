@@ -1348,10 +1348,19 @@ namespace OpenBabel
         if (idxs.size() == 0 && OBBuilder::IsSpiroAtom(config.center, mol))
           FlipSpiro(mol, center->GetIdx());
         else if (idxs.size() >= 2)
-          Swap(mol, center->GetIdx(), idxs[0], center->GetIdx(), idxs[1]);
-        else
-          assert(false); // It should never reach here!
-        ;
+          Swap(mol, center->GetIdx(), idxs.at(0), center->GetIdx(), idxs.at(1));
+        else {
+          // It will only reach here if it can only find one non-ring bond
+          // -- this is the case if the other non-ring bond is an implicit H
+          // Solution: make the H explicit, repeat the original procedure, then remove the H
+          mol.AddHydrogens(center);
+          idxs.clear();
+          FOR_BONDS_OF_ATOM(b, center)
+            if (!b->IsInRing())
+              idxs.push_back(b->GetNbrAtom(center)->GetIdx());
+          Swap(mol, center->GetIdx(), idxs.at(0), center->GetIdx(), idxs.at(1));
+          mol.DeleteHydrogens(center);
+        }
       }
     }
   }
