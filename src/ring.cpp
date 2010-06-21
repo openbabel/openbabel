@@ -190,6 +190,10 @@ namespace OpenBabel
             break;
           }
 
+    // exit if we already have frj rings 
+    if (_rlist.size() == (unsigned)frj)
+      return;
+
     //make sure tmp is the same size as the rings
     for (j = 0;j < (signed)_rlist.size();++j)
       tmp = (_rlist[j])->_pathset;
