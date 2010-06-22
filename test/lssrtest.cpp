@@ -132,6 +132,9 @@ int main(int argc, char **argv)
   OB_ASSERT( doShuffleTestMultiFile("rings/cubane.mdl") );
   OB_ASSERT( doShuffleTestMultiFile("rings/octahedron.mdl") );
   OB_ASSERT( doShuffleTestMultiFile("rings/bridged1.mdl") );
+  
+  OB_ASSERT( doShuffleTestMultiFile("rings/fullerene20.mdl") );
+  OB_ASSERT( doShuffleTestMultiFile("rings/fullerene60.mdl") );
 
   //OB_ASSERT( doShuffleTest("") );
 
