@@ -347,17 +347,17 @@ namespace OpenBabel
       if (DEBUG) {cout << "atom " << idx << ": initial state = " << atomState[idx] << endl;}
     }
 
-    // Get the SSSR, and find all rings that are completely in cycle[], that
+    // Get the LSSR, and find all rings that are completely in cycle[], that
     // is, every atom in the ring is in this aromatic ring system.
 
-    std::vector<OBRing*> sssr_tmp = GetSSSR();
-    std::vector<OBRing*> sssr;
+    std::vector<OBRing*> lssr_tmp = GetLSSR();
+    std::vector<OBRing*> lssr;
     std::vector<bool>atom_in_cycle(NumAtoms()+1);
     for (int i = 0; i <= NumAtoms(); i++)
       atom_in_cycle[i] = false;
     for (std::vector<OBAtom*>::iterator ai = cycle.begin(); ai != cycle.end(); ai++)
       atom_in_cycle[(*ai)->GetIdx()] = true;
-    for (std::vector<OBRing*>::iterator ri = sssr_tmp.begin(); ri != sssr_tmp.end(); ri++) {
+    for (std::vector<OBRing*>::iterator ri = lssr_tmp.begin(); ri != lssr_tmp.end(); ri++) {
       OBRing *ring = *ri;
       bool ok = true;
       for (std::vector<int>::iterator pi = ring->_path.begin(); pi != ring->_path.end(); pi++) {
@@ -367,15 +367,15 @@ namespace OpenBabel
 	}
       }
       if (ok)
-	sssr.push_back(ring);
-      if (DEBUG) {cout << "ring " << (ri - sssr_tmp.begin()) << (ok ? " is" : " is not") << " in cycle" << endl;}
+	lssr.push_back(ring);
+      if (DEBUG) {cout << "ring " << (ri - lssr_tmp.begin()) << (ok ? " is" : " is not") << " in cycle" << endl;}
     }
 
     // Initialize the "ring is assigned" vector
-    std::vector<bool> sssrAssigned;
-    sssrAssigned.resize(sssr.size());
-    for (int i = 0; i < sssr.size(); i++)
-      sssrAssigned[i] = false;
+    std::vector<bool> lssrAssigned;
+    lssrAssigned.resize(lssr.size());
+    for (int i = 0; i < lssr.size(); i++)
+      lssrAssigned[i] = false;
 
     // Initialize an empty vector that expand_kekulize2() uses.
     std::vector<OBBond*> bondsThisRing;
@@ -383,7 +383,7 @@ namespace OpenBabel
 
     // Do a recursive walk across the aromatic system, and see if we can find
     // an assignment of double/single bonds that works.
-    if (!expand_kekulize2(atomState, bondState, sssr, sssrAssigned, bondsThisRing)) {
+    if (!expand_kekulize2(atomState, bondState, lssr, lssrAssigned, bondsThisRing)) {
       stringstream errorMsg;
       errorMsg << "Kekulize Error for molecule " << GetTitle() << endl;
       obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
@@ -438,9 +438,9 @@ namespace OpenBabel
   // To avoid this, three strategies are used.
   //
   // 1. The algorithm proceeds by assigning bonds to each complete ring
-  //    from the SSSR, rather than treating the whole aromatic system.
+  //    from the LSSR, rather than treating the whole aromatic system.
   //    That reduces the complexity to roughly O(2^R) where R is the number
-  //    of rings in the SSSR.
+  //    of rings in the LSSR.
   //
   // 2. Each time a ring is completed (a trial assignment of
   //    single/double), the whole tentative assignment is checked for
@@ -471,8 +471,8 @@ namespace OpenBabel
 
   bool OBMol::expand_kekulize2(std::vector<int> &atomState,
 			      std::vector<int> &bondState,
-			      std::vector<OBRing*> &sssr,
-			      std::vector<bool> &sssrAssigned,
+			      std::vector<OBRing*> &lssr,
+			      std::vector<bool> &lssrAssigned,
 			      std::vector<OBBond *> &bondsThisRing)
   {
     OBBond *bond = NULL;
@@ -512,7 +512,7 @@ namespace OpenBabel
 	if (DEBUG) {std::cout << "bond " << bond_idx << " (atoms " << idx1 << " to " << idx2 << ") double" << endl;}
 
 	// Recursively try the next bond
-	if (expand_kekulize2(atomState, bondState, sssr, sssrAssigned, bondsThisRing))
+	if (expand_kekulize2(atomState, bondState, lssr, lssrAssigned, bondsThisRing))
 	  return true;
 
 	// If the double bond didn't work, roll back the changes and try a single bond.
@@ -526,7 +526,7 @@ namespace OpenBabel
       if (DEBUG) {cout << "bond " << bond_idx << " (atoms " << idx1 << " to " << idx2 << ") single" << endl;}
 
       // Recursively try the next bond
-      if (expand_kekulize2(atomState, bondState, sssr, sssrAssigned, bondsThisRing))
+      if (expand_kekulize2(atomState, bondState, lssr, lssrAssigned, bondsThisRing))
 	return true;
 
       // If it didn't work, roll back the changes we made and return failure.
@@ -562,12 +562,12 @@ namespace OpenBabel
     int best_nbonds_assigned = -1;
     std::vector<OBBond *> best_bondsThisRing;
 
-    if (DEBUG) {cout << "Select next ring: " << sssr.size() << " rings to try" << endl;}
+    if (DEBUG) {cout << "Select next ring: " << lssr.size() << " rings to try" << endl;}
 
-    for (int rnum = 0; rnum < sssr.size(); rnum++) {
-      if (sssrAssigned[rnum])
+    for (int rnum = 0; rnum < lssr.size(); rnum++) {
+      if (lssrAssigned[rnum])
 	continue;
-      OBRing *ring = sssr[rnum];
+      OBRing *ring = lssr[rnum];
       get_bonds_of_ring(ring, bondsThisRing);
       int nbonds_assigned = count_assigned_bonds(bondsThisRing, bondState);
       if (DEBUG) {cout << "Trying ring " << rnum << ": " << nbonds_assigned << " bonds assigned" << endl;}
@@ -587,9 +587,9 @@ namespace OpenBabel
     }
 
     // We found a new ring to assign.  Recursive call to assign its bonds.
-    sssrAssigned[best_rnum] = true;
-    if (!expand_kekulize2(atomState, bondState, sssr, sssrAssigned, best_bondsThisRing)) {
-      sssrAssigned[best_rnum] = false;
+    lssrAssigned[best_rnum] = true;
+    if (!expand_kekulize2(atomState, bondState, lssr, lssrAssigned, best_bondsThisRing)) {
+      lssrAssigned[best_rnum] = false;
       return false;
     } else {
       return true;
