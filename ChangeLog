@@ -1,3 +1,19 @@
+2010-06-22  Tim Vandermeersch
+
+        * include/openbabel/mol.h, src/mol.cpp: Add LSSR, add aromaticity 
+        changes from Craig.
+
+        * src/ring.cpp: Add LSSR (FindLSSR, GetLSSR, ...)
+
+        * src/kekulize.cpp: Changes to aromaticity from Craig James. Still
+        uses SSSR.
+
+        * test/CMakeLists.txt, test/lssrtest.cpp: Add unit test for LSSR. 
+        The test reorders the atoms and checks if the same rings are found.
+        Currently used aromatics.smi, attype.00.smi and nci.smi. All 1327
+        test cases pass. (old ring & aromatics test still pass. py_kelule
+        test fails though.)
+
 2010-06-21  Noel O'Boyle
 
 	* src/builder.cpp: Fix bug when correcting tet stereo where there is

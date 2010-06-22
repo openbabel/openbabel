@@ -925,10 +925,31 @@ namespace OpenBabel
     if (!HasSSSRPerceived())
       FindSSSR();
 
-    if (!HasData(OBGenericDataType::RingData))
-      SetData(new OBRingData);
+    OBRingData *rd = 0;
+    if (!HasData("SSSR")) {
+      rd = new OBRingData();
+      rd->SetAttribute("SSSR");
+      SetData(rd);
+    }
 
-    OBRingData *rd = (OBRingData *) GetData(OBGenericDataType::RingData);
+    rd = (OBRingData *) GetData("SSSR");
+    rd->SetOrigin(perceived);
+    return(rd->GetData());
+  }
+
+  vector<OBRing*> &OBMol::GetLSSR()
+  {
+    if (!HasLSSRPerceived())
+      FindLSSR();
+
+    OBRingData *rd = 0;
+    if (!HasData("LSSR")) {
+      rd = new OBRingData();
+      rd->SetAttribute("LSSR");
+      SetData(rd);
+    }
+
+    rd = (OBRingData *) GetData("LSSR");
     rd->SetOrigin(perceived);
     return(rd->GetData());
   }

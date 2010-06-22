@@ -90,8 +90,8 @@ namespace OpenBabel
     // Delete any old data before we start finding new rings
     // The following procedure is slow
     // So if client code is multi-threaded, we don't want to make them wait
-    if (HasData(OBGenericDataType::RingData)) {
-      DeleteData(OBGenericDataType::RingData);
+    if (HasData("SSSR")) {
+      DeleteData("SSSR");
     }
 
     OBRing *ring;
@@ -138,6 +138,71 @@ namespace OpenBabel
         SetData(new OBRingData);
         OBRingData *rd = (OBRingData*)GetData(OBGenericDataType::RingData);
         rd->SetOrigin(perceived); // to separate from user or file input
+        rd->SetAttribute("SSSR");
+        rd->SetData(vr);
+      }
+  }
+
+  void OBMol::FindLSSR()
+  {
+    if (HasLSSRPerceived())
+      return;
+    SetLSSRPerceived();
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::FindLSSR", obAuditMsg);
+
+    // Delete any old data before we start finding new rings
+    // The following procedure is slow
+    // So if client code is multi-threaded, we don't want to make them wait
+    if (HasData("LSSR")) {
+      DeleteData("LSSR");
+    }
+
+    OBRing *ring;
+    vector<OBRing*>::iterator j;
+
+    //get frerejaque taking int account multiple possible spanning graphs
+    int frj = DetermineFRJ(*this);
+    if (frj)
+      {
+        vector<OBRing*> vr;
+        FindRingAtomsAndBonds();
+
+        OBBond *bond;
+        vector<OBBond*> cbonds;
+        vector<OBBond*>::iterator k;
+
+        //restrict search for rings around closure bonds
+        for (bond = BeginBond(k);bond;bond = NextBond(k))
+          if (bond->IsClosure())
+            cbonds.push_back(bond);
+
+        if (!cbonds.empty())
+          {
+            OBRingSearch rs;
+            //search for all rings about closures
+            vector<OBBond*>::iterator i;
+
+            for (i = cbonds.begin();i != cbonds.end();++i)
+              rs.AddRingFromClosure(*this,(OBBond*)*i);
+
+            rs.SortRings();
+            rs.RemoveRedundant(-1); // -1 means LSSR
+            //store the SSSR set
+
+            for (j = rs.BeginRings();j != rs.EndRings();++j)
+              {
+                ring = new OBRing ((*j)->_path,NumAtoms()+1);
+                ring->SetParent(this);
+                vr.push_back(ring);
+              }
+            //rs.WriteRings();
+          }
+        
+        SetData(new OBRingData);
+        OBRingData *rd = (OBRingData*)GetData(OBGenericDataType::RingData);
+        rd->SetOrigin(perceived); // to separate from user or file input
+        rd->SetAttribute("LSSR");
         rd->SetData(vr);
       }
   }
@@ -203,8 +268,15 @@ namespace OpenBabel
       {
         tmp.Clear();
         for (j = 0;j < (signed)_rlist.size();++j)
-          if ((_rlist[j])->_path.size() <= (_rlist[i])->_path.size() && i != j)
-            tmp |= (_rlist[j])->_pathset;
+          if (frj > 0) {
+            // SSSR
+            if ((_rlist[j])->_path.size() <= (_rlist[i])->_path.size() && i != j)
+              tmp |= (_rlist[j])->_pathset;
+          } else {
+            // LSSR
+            if ((_rlist[j])->_path.size() < (_rlist[i])->_path.size() && i != j)
+              tmp |= (_rlist[j])->_pathset;
+          }
 
         tmp = tmp & (_rlist[i])->_pathset;
 

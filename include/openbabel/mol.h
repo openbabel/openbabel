@@ -100,7 +100,9 @@ namespace OpenBabel
 #define OB_RINGTYPES_MOL         (1<<18)
   //! A pattern, not a complete molecule.
 #define OB_PATTERN_STRUCTURE     (1<<19)
-  // flags 19-32 unspecified
+  //! Largest Set of Smallest Rings (LSSR) done. See OBRing and OBMol::FindLSSR
+#define OB_LSSR_MOL              (1<<20)
+  // flags 21-32 unspecified
 #define OB_CURRENT_CONFORMER	 -1
 
   // class introduction in mol.cpp
@@ -133,8 +135,19 @@ namespace OpenBabel
     //! \name Internal Kekulization routines -- see kekulize.cpp and NewPerceiveKekuleBonds()
     //@{
     void start_kekulize(std::vector <OBAtom*> &cycle, std::vector<int> &electron);
+    //! deprecated
     bool expand_kekulize(int bond_idx, std::vector<int> &atomState, std::vector<int> &bondState);
+    //! deprecated
     bool has_no_leftover_electrons(std::vector<int> &atomState);
+
+    bool expand_kekulize2(std::vector<int> &atomState,
+	 	  	 std::vector<int> &bondState,
+			 std::vector<OBRing*> &sssr,
+			 std::vector<bool> &sssrAssigned,
+			 std::vector<OBBond *> &bondsThisRing);
+    bool has_leftover_electrons(std::vector<int> &atomState, std::vector<int> &bondState);
+    bool get_bonds_of_ring(OBRing *ring, std::vector<OBBond *> &ring_bonds);
+    int count_assigned_bonds(std::vector<OBBond *> &bondsThisRing, std::vector<int> &bondState);
     int getorden(OBAtom *atom);
     bool expandcycle(OBAtom *atom, OBBitVec &avisit, OBAtom *first = NULL, int depth = 0);
     //@}
@@ -328,8 +341,10 @@ namespace OpenBabel
     unsigned short int GetDimension() const { return _dimension; }
     //! \return the set of all atomic coordinates. See OBAtom::GetCoordPtr for more
     double      *GetCoordinates() { return(_c); }
-    //! \return the Smallest Set of Smallest Rings has been run (see OBRing class
+    //! \return the Smallest Set of Smallest Rings has been run (see OBRing class)
     std::vector<OBRing*> &GetSSSR();
+    //! \return the Largest Set of Smallest Rings has been run (see OBRing class)
+    std::vector<OBRing*> &GetLSSR();
     //! Get the current flag for whether formal charges are set with pH correction
     bool AutomaticFormalCharge()   { return(_autoFormalCharge);  }
     //! Get the current flag for whether partial charges are auto-determined
@@ -369,6 +384,8 @@ namespace OpenBabel
     void   SetAromaticPerceived()    { SetFlag(OB_AROMATIC_MOL);    }
     //! Mark that Smallest Set of Smallest Rings has been run (see OBRing class)
     void   SetSSSRPerceived()        { SetFlag(OB_SSSR_MOL);        }
+    //! Mark that Largest Set of Smallest Rings has been run (see OBRing class)
+    void   SetLSSRPerceived()        { SetFlag(OB_LSSR_MOL);        }
     //! Mark that rings have been perceived (see OBRing class for details)
     void   SetRingAtomsAndBondsPerceived(){SetFlag(OB_RINGFLAGS_MOL);}
     //! Mark that atom types have been perceived (see OBAtomTyper for details)
@@ -500,6 +517,8 @@ namespace OpenBabel
     //@{
     //! Find Smallest Set of Smallest Rings (see OBRing class for more details)
     void FindSSSR();
+    //! Find Largest Set of Smallest Rings
+    void FindLSSR();
     //! Find all ring atoms and bonds. Does not need to call FindSSSR().
     void FindRingAtomsAndBonds();
     //! Find all chiral atom centers. See OBAtom::IsChiral() for more details
@@ -546,6 +565,8 @@ namespace OpenBabel
     bool HasAromaticPerceived()     { return(HasFlag(OB_AROMATIC_MOL)); }
     //! Has the smallest set of smallest rings (FindSSSR) been performed?
     bool HasSSSRPerceived()         { return(HasFlag(OB_SSSR_MOL));     }
+    //! Has the largest set of smallest rings (FindLSSR) been performed?
+    bool HasLSSRPerceived()         { return(HasFlag(OB_LSSR_MOL));     }
     //! Have ring atoms and bonds been assigned?
     bool HasRingAtomsAndBondsPerceived(){return(HasFlag(OB_RINGFLAGS_MOL));}
     //! Have atom types been assigned by OBAtomTyper?
