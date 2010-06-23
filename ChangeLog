@@ -1,3 +1,18 @@
+2010-06-23  Tim Vandermeersch
+
+        * src/ring.cpp: LSSR selection seems to work now. It is based on
+        lemma 1 from the Vismara paper. (See source for complete reference)
+
+        * src/obiter.cpp, src/ring.cpp: Ring sets should no longer be 
+        acquired using OBMol::GetData(OBGenericDataType::RingData). Ring 
+        sets now have the correct "SSSR"/"LSSR" attribute set. 
+
+        * src/kekulize.cpp: Use LSSR.
+
+        * test/lssrtest.cpp: Add tests for LSSR composition. All unit tests 
+        pass except for smarts (was broken before) and py_kekulize. I'm not 
+        sure why the last test fails but the stored results might need updating?
+
 2010-06-22  Tim Vandermeersch
 
         * include/openbabel/mol.h, src/mol.cpp: Add LSSR, add aromaticity 

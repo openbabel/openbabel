@@ -121,6 +121,85 @@ bool doShuffleTestMultiFile(const std::string &filename)
   return result;
 }
 
+class LSSR 
+{
+  public:
+    struct Size_Count 
+    {
+      Size_Count(int _ringSize, int _ringCount) : ringSize(_ringSize), ringCount(_ringCount) {}
+      int ringSize;
+      int ringCount;
+    };
+
+    std::vector<Size_Count> size_count;
+  
+    LSSR(const Size_Count &g1) 
+    {
+      size_count.push_back(g1);
+    }
+    LSSR(const Size_Count &g1, const Size_Count g2) 
+    {
+      size_count.push_back(g1);
+      size_count.push_back(g2);
+    }
+    LSSR(const Size_Count &g1, const Size_Count g2, const Size_Count &g3)
+    {
+      size_count.push_back(g1);
+      size_count.push_back(g2);
+      size_count.push_back(g3);
+    }
+
+
+};
+
+bool verifyLSSR(const std::string &filename, const LSSR &ref)
+{
+  cout << "Verify LSSR: " << filename << endl;
+  std::string file = GetFilename(filename);
+  // read a smiles string
+  OBMol mol;
+  OBConversion conv;
+  OBFormat *format = conv.FormatFromExt(file.c_str());
+  OB_REQUIRE( format );
+  OB_REQUIRE( conv.SetInFormat(format) );
+
+  testCount++;
+
+  std::ifstream ifs;
+  ifs.open(file.c_str());
+  OB_REQUIRE( ifs );
+  OB_REQUIRE( conv.Read(&mol, &ifs) );
+
+  std::vector<int> ringSizeCount(20, 0); 
+  std::vector<OBRing*> lssr = mol.GetLSSR();
+
+  for (unsigned int i = 0; i < lssr.size(); ++i) {
+    ringSizeCount[lssr[i]->_path.size()]++;
+  }
+
+  /*
+  cout << "ringSize: ringCount" << endl;
+  cout << "3: " << ringSizeCount[3] << endl;
+  cout << "4: " << ringSizeCount[4] << endl;
+  cout << "5: " << ringSizeCount[5] << endl;
+  cout << "6: " << ringSizeCount[6] << endl;
+  */
+
+  bool fail = false;
+  for (unsigned int i = 0; i < ref.size_count.size(); ++i) {
+    const LSSR::Size_Count &size_count = ref.size_count[i];
+    OB_ASSERT( ringSizeCount[size_count.ringSize] == size_count.ringCount );
+    if (ringSizeCount[size_count.ringSize] != size_count.ringCount)
+      fail = true;
+  }
+
+  testCount++;
+  if (fail)
+    failed++;
+
+  return true;
+}
+
 int main(int argc, char **argv)
 {
 
@@ -130,11 +209,25 @@ int main(int argc, char **argv)
   
   OB_ASSERT( doShuffleTestMultiFile("rings/tetrahedron.mdl") );
   OB_ASSERT( doShuffleTestMultiFile("rings/cubane.mdl") );
+  OB_ASSERT( doShuffleTestMultiFile("rings/cubane2.mdl") );
   OB_ASSERT( doShuffleTestMultiFile("rings/octahedron.mdl") );
   OB_ASSERT( doShuffleTestMultiFile("rings/bridged1.mdl") );
-  
   OB_ASSERT( doShuffleTestMultiFile("rings/fullerene20.mdl") );
   OB_ASSERT( doShuffleTestMultiFile("rings/fullerene60.mdl") );
+  
+  // 4x 3-ring, 1x 5-ring
+  OB_ASSERT( verifyLSSR("rings/tetrahedron.mdl", LSSR(LSSR::Size_Count(3, 4), LSSR::Size_Count(5, 1))) );
+  // 6x 4-ring, 1x 6-ring
+  OB_ASSERT( verifyLSSR("rings/cubane.mdl", LSSR(LSSR::Size_Count(4, 6), LSSR::Size_Count(6, 1))) );
+  OB_ASSERT( verifyLSSR("rings/cubane2.mdl", LSSR(LSSR::Size_Count(4, 6), LSSR::Size_Count(6, 1))) );
+  // 8x 3-ring
+  OB_ASSERT( verifyLSSR("rings/octahedron.mdl", LSSR(LSSR::Size_Count(3, 8))) );
+  // 3x 6-ring
+  OB_ASSERT( verifyLSSR("rings/bridged1.mdl", LSSR(LSSR::Size_Count(6, 3))) );
+  // 12x 5-ring
+  OB_ASSERT( verifyLSSR("rings/fullerene20.mdl", LSSR(LSSR::Size_Count(5, 12))) );
+  // 12x 5-ring, 20x 6-ring
+  OB_ASSERT( verifyLSSR("rings/fullerene60.mdl", LSSR(LSSR::Size_Count(5, 12), LSSR::Size_Count(6, 20))) );
 
   //OB_ASSERT( doShuffleTest("") );
 

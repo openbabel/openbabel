@@ -135,13 +135,97 @@ namespace OpenBabel
             //rs.WriteRings();
           }
         
-        SetData(new OBRingData);
-        OBRingData *rd = (OBRingData*)GetData(OBGenericDataType::RingData);
+        OBRingData *rd = new OBRingData();
         rd->SetOrigin(perceived); // to separate from user or file input
         rd->SetAttribute("SSSR");
         rd->SetData(vr);
+        SetData(rd);
       }
   }
+
+  std::vector<unsigned int> atomRingToBondRing(OBMol *mol, const std::vector<int> &atoms)
+  {
+    std::vector<unsigned int> bonds;
+    for (unsigned int i = 0; i < atoms.size() - 1; ++i) {
+      unsigned int beginIndex = atoms[i];
+      unsigned int endIndex = atoms[i+1];
+      unsigned int index = mol->GetBond(beginIndex, endIndex)->GetIdx();
+      bonds.push_back(index);
+    }
+    bonds.push_back(mol->GetBond(atoms[0], atoms[atoms.size()-1])->GetIdx());
+    return bonds;
+  }
+
+  /**
+   * This function finds the LSSR containing all relevant cycles. A cycle is 
+   * relevant if it belongs to at least one minimum cycle basis. Another 
+   * description is more useful though:
+   *
+   * A cycle (C) is relevant if: 
+   * - no smaller cycles C_i, ..., C_k exist such that C = C_1 + ... + C_k
+   * - both bonds & atoms are checked
+   *
+   * This is based on lemma 1 from:
+   *
+   * P. Vismara, Union of all the minimum cycle bases of a graph, The electronic
+   * journal of combinatorics, Vol. 4, 1997 
+   * http://www.emis.de/journals/EJC/Volume_4/PostScriptfiles/v4i1r9.ps
+   */
+  void visitRing(OBMol *mol, OBRing *ring, std::vector<OBRing*> &rlist, std::vector<OBRing*> &rignored)
+  {
+    const std::vector<int> &atoms = ring->_path;
+    OBBitVec mask;
+    // Make sure mask is the same size as the maximum ring atom/bond index.
+    mask.SetBitOn(mol->NumAtoms());
+    mask.SetBitOn(mol->NumBonds());
+
+    //
+    // Remove larger rings that cover the same atoms as smaller rings.
+    //
+    mask.Clear();
+    for (unsigned int j = 0; j < rlist.size(); ++j)
+      // Here we select only smaller rings.
+      if (rlist[j]->_path.size() < ring->_path.size())
+        mask |= rlist[j]->_pathset;
+
+    mask = mask & ring->_pathset;
+
+    bool containsSmallerAtomRing = (mask == ring->_pathset) ? true : false;
+
+    // Translate ring atom indexes to ring bond indexes.
+    std::vector<unsigned int> bonds = atomRingToBondRing(mol, ring->_path);
+    OBBitVec bondset;
+    for (unsigned int i = 0; i < bonds.size(); ++i)
+      bondset.SetBitOn(bonds[i]);
+ 
+    //
+    // Remove larger rings that cover the same bonds as smaller rings.
+    //
+    mask.Clear();
+    for (unsigned int j = 0; j < rlist.size(); ++j) {
+      std::vector<unsigned int> otherBonds = atomRingToBondRing(mol, rlist[j]->_path);
+      OBBitVec bs;
+      for (unsigned int i = 0; i < otherBonds.size(); ++i)
+        bs.SetBitOn(otherBonds[i]);
+
+      // Here we select only smaller rings.
+      if (otherBonds.size() < bonds.size())
+        mask |= bs;
+    }
+
+    mask = mask & bondset;
+
+    bool containsSmallerBondRing = (mask == bondset) ? true : false;
+
+    // The ring is part of the LSSR if all it's atoms and bonds are not
+    // found in smaller rings.
+    if (!containsSmallerAtomRing || !containsSmallerBondRing) {
+      rlist.push_back(ring);
+    } else {
+      rignored.push_back(ring);
+    }
+  }
+
 
   void OBMol::FindLSSR()
   {
@@ -188,6 +272,7 @@ namespace OpenBabel
 
             rs.SortRings();
             rs.RemoveRedundant(-1); // -1 means LSSR
+
             //store the SSSR set
 
             for (j = rs.BeginRings();j != rs.EndRings();++j)
@@ -199,11 +284,11 @@ namespace OpenBabel
             //rs.WriteRings();
           }
         
-        SetData(new OBRingData);
-        OBRingData *rd = (OBRingData*)GetData(OBGenericDataType::RingData);
+        OBRingData *rd = new OBRingData();
         rd->SetOrigin(perceived); // to separate from user or file input
         rd->SetAttribute("LSSR");
         rd->SetData(vr);
+        SetData(rd);
       }
   }
 
@@ -242,7 +327,6 @@ namespace OpenBabel
 
   void OBRingSearch::RemoveRedundant(int frj)
   {
-    OBBitVec tmp;
     int i,j;
 
     //remove identical rings
@@ -255,11 +339,25 @@ namespace OpenBabel
             break;
           }
 
+    // handle LSSR
+    if (frj < 0) {
+      OBMol *mol = _rlist[0]->GetParent();
+      std::vector<OBRing*> rlist, rignored;
+      for (unsigned int i = 0; i < _rlist.size(); ++i) {
+        visitRing(mol, _rlist[i], rlist, rignored);
+      }
+      for (unsigned int i = 0; i < rignored.size(); ++i)
+        delete rignored[i];
+      _rlist = rlist;
+      return;
+    }
+
     // exit if we already have frj rings 
     if (_rlist.size() == (unsigned)frj)
       return;
 
     //make sure tmp is the same size as the rings
+    OBBitVec tmp;
     for (j = 0;j < (signed)_rlist.size();++j)
       tmp = (_rlist[j])->_pathset;
 
@@ -268,15 +366,8 @@ namespace OpenBabel
       {
         tmp.Clear();
         for (j = 0;j < (signed)_rlist.size();++j)
-          if (frj > 0) {
-            // SSSR
-            if ((_rlist[j])->_path.size() <= (_rlist[i])->_path.size() && i != j)
-              tmp |= (_rlist[j])->_pathset;
-          } else {
-            // LSSR
-            if ((_rlist[j])->_path.size() < (_rlist[i])->_path.size() && i != j)
-              tmp |= (_rlist[j])->_pathset;
-          }
+          if ((_rlist[j])->_path.size() <= (_rlist[i])->_path.size() && i != j)
+            tmp |= (_rlist[j])->_pathset;
 
         tmp = tmp & (_rlist[i])->_pathset;
 
@@ -357,6 +448,10 @@ namespace OpenBabel
     for (i = t2.begin();i != t2.end();++i)
       if (*i)
         delete *i;
+
+    // set parent for all rings
+    for (unsigned int j = 0; j < _rlist.size(); ++j)
+      _rlist[j]->SetParent(&mol);
   }
 
   bool OBRingSearch::SaveUniqueRing(deque<int> &d1,deque<int> &d2)

@@ -350,7 +350,7 @@ namespace OpenBabel
     // Get the LSSR, and find all rings that are completely in cycle[], that
     // is, every atom in the ring is in this aromatic ring system.
 
-    std::vector<OBRing*> lssr_tmp = GetSSSR();
+    std::vector<OBRing*> lssr_tmp = GetLSSR();
     std::vector<OBRing*> lssr;
     std::vector<bool>atom_in_cycle(NumAtoms()+1);
     for (int i = 0; i <= NumAtoms(); i++)
