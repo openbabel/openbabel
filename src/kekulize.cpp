@@ -418,14 +418,6 @@ namespace OpenBabel
     return;
   }
 
-
-  // deprecated!!
-  bool OBMol::expand_kekulize(int bond_idx,
-                              std::vector<int> &atomState,
-                              std::vector<int> &bondState) {}
-  // deprecated!!
-  bool OBMol::has_no_leftover_electrons(std::vector<int> &atomState) {}
-
   /////////////////////////////////////////////////////////////////////////////////////////
   //! \brief Recursive function to find a sensible kekule assignment of
   //! single and double bonds for an aromatic ring system.
@@ -660,19 +652,21 @@ namespace OpenBabel
     OBAtom *atom2 = start_atom;
     OBAtom *atom;
     do {
-      atom = atom2;				// move to the next atom in the ring
-      FOR_BONDS_OF_ATOM(b, &(*atom)) {		// loop over its bonds to find the next atom...
-	int bond_idx = b->GetIdx();
-	if (used_bonds[bond_idx])		// is this the previous neighbor atom?
-	  continue;				//    skip it ... already done.
-	atom2 = b->GetNbrAtom(atom);
-	if (!ring->IsMember(atom2))		// is this neighbor in the ring?
-	  continue;				//    not in aromatic system, ignore it
-	ring_bonds.push_back(&(*b));		// found the bond we want
-	used_bonds[bond_idx] = true;
-	break;
+      atom = atom2;                   // move to the next atom in the ring
+      FOR_BONDS_OF_ATOM(b, &(*atom)) {// loop over its bonds to find the next atom...
+        int bond_idx = b->GetIdx();
+        if (used_bonds[bond_idx])     // is this the previous neighbor atom?
+          continue;                   //    skip it ... already done.
+        atom2 = b->GetNbrAtom(atom);
+        if (!ring->IsMember(atom2))		// is this neighbor in the ring?
+          continue;                   //    not in aromatic system, ignore it
+        ring_bonds.push_back(&(*b));  // found the bond we want
+        used_bonds[bond_idx] = true;
+        break;
       }
     } while (atom2 && atom2 != start_atom);
+
+  return true; // Always true!
   }
 
   ////////////////////////////////////////////////////////////////////////////////

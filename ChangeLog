@@ -1,3 +1,8 @@
+2010-06-23  Noel O'Boyle
+
+	* src/kekulize.cpp, include/openbabel/mol.h: Fix compilation errors
+	with MSVC (and replace some Tabs with whitespace)
+
 2010-06-23  Tim Vandermeersch
 
         * src/ring.cpp: LSSR selection seems to work now. It is based on
