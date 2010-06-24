@@ -186,6 +186,12 @@ namespace OpenBabel
       obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
       return(false);
     }
+    
+    //Do not interpret a single (usually blank) line at end of file as
+    //another molecule giving an unnecessary error message.
+    if ( !ifs.good() || ifs.peek() == EOF ) 
+      return false;
+
     mol.SetTitle(line);
 
     if(pConv->IsOption("t",OBConversion::INOPTIONS))

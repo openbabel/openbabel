@@ -1,3 +1,8 @@
+2010-06-24 Chris Morley
+
+	* src/formats/mdlformat.cpp:Prevent unnecessary error message with
+	blank line at end of SDF file.
+
 2010-06-23  Noel O'Boyle
 
 	* src/kekulize.cpp, include/openbabel/mol.h: Fix compilation errors
@@ -128,7 +133,7 @@
 	ensure the the filter string contains a number only. Fixes #3014398
 	
 	* src/formats/mdlformat.cpp: Added an option to read only the title
-	and the format to produce molecules with zero atoms.
+	and change the format to produce molecules with zero atoms.
 	Useful for fast selection by title from a sd file(UNIX line endings only):
 	  babel all-sdf.sdf -ocopy out.sdf --filter "title=1str*" -at
 	  
