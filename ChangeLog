@@ -1,4 +1,14 @@
 2010-0628 Chris Morley
+
+	* include/openbabel/depict/depict.h, src/depict/depict.cpp:
+	Use a bitset for options like drawTerminalC, so that extendable
+	while binary compatible. Add a few more options display options. 
+	
+	* src/formats/svgformat.cpp: add a few more display options.
+	Augment Description() as a possible prototype for Noel's more
+	formatted documentation.	
+
+2010-0628 Chris Morley
 	
 	* src/GUI/optswx.cpp: when using Description() strings to construct
 	GUI option checkboxes, ignore lines with 4 or more leading spaces

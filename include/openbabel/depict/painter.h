@@ -52,7 +52,8 @@ namespace OpenBabel
         *this = OBColor(0.0, 0.0, 1.0);
       else if (color == "yellow")
         *this = OBColor(1.0, 1.0, 0.0);
-
+      else if (color == "gray")
+        *this = OBColor(0.3, 0.3, 0.3);
     }
     
     OBColor(std::vector<double> vec) : red(vec[0]), green(vec[1]), blue(vec[2]), alpha(1.0){}

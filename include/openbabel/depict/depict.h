@@ -44,6 +44,12 @@ namespace OpenBabel
         AtomTetrahedralStereo
       };
 
+      enum OptionType{
+        bwAtoms       = 0x0001,
+        drawTermC     = 0x0002,
+        drawAllC      = 0x0004
+      };
+
       /**
        * Constructor.
        */
@@ -73,8 +79,12 @@ namespace OpenBabel
       void SetBondWidth(double width); 
       double GetBondWidth() const;
 
-      void SetDrawingTerminalCarbon(bool enabled);
-      bool GetDrawingTerminalCarbon() const;
+      //void SetDrawingTerminalCarbon(bool enabled);
+      //bool GetDrawingTerminalCarbon() const;
+
+      void SetOption(unsigned opts); //extendable with binary compatibility 
+      unsigned GetOptions() const;
+      void ClearOptions();
 
       void SetFontFamily(const std::string &family); 
       const std::string& GetFontFamily() const;

@@ -45,8 +45,8 @@ namespace OpenBabel
   {
     public:
       OBDepictPrivate() : mol(0), painter(0), bondLength(40.0), penWidth(2.0),
-          bondSpacing(6.0), bondWidth(8.0), drawTerminalC(false), fontSize(16), 
-          subscriptSize(13), aliasMode(false), bondColor("black"){}
+          bondSpacing(6.0), bondWidth(8.0), fontSize(16), subscriptSize(13),
+          aliasMode(false), bondColor("black"), options(0){}
 
       void DrawSimpleBond(OBAtom *beginAtom, OBAtom *endAtom, int order);
       void DrawWedge(OBAtom *beginAtom, OBAtom *endAtom);
@@ -62,11 +62,12 @@ namespace OpenBabel
       double     penWidth;
       double     bondSpacing;
       double     bondWidth;
-      bool       drawTerminalC;
+      //bool       drawTerminalC;
       int        fontSize, subscriptSize;
       bool       aliasMode;
       std::string fontFamily;
       OBColor    bondColor;
+      unsigned   options;
   };
 
   OBDepict::OBDepict(OBPainter *painter) : d(new OBDepictPrivate)
@@ -115,14 +116,28 @@ namespace OpenBabel
     return d->bondWidth; 
   }
   
-  void OBDepict::SetDrawingTerminalCarbon(bool enabled) 
+/*  void OBDepict::SetDrawingTerminalCarbon(bool enabled) 
   { 
     d->drawTerminalC = enabled; 
   }
-  
+
   bool OBDepict::GetDrawingTerminalCarbon() const 
   { 
     return d->drawTerminalC; 
+  }
+*/
+  void OBDepict::SetOption(unsigned opts)
+  {
+    d->options |= opts;
+  }
+  
+  unsigned OBDepict::GetOptions() const 
+  { 
+    return d->options; 
+  }
+  void OBDepict::ClearOptions()
+  {
+    d->options = 0;
   }
 
   void OBDepict::SetFontFamily(const std::string &family)
@@ -225,6 +240,7 @@ namespace OpenBabel
   {
     d->painter->SetPenColor(OBColor("red"));
     d->painter->SetFillColor(OBColor("red"));
+    d->painter->SetFontSize((int)(GetFontSize() * 0.8));// smaller text
     OBAtomIterator i;
     for (OBAtom *atom = d->mol->BeginAtom(i); atom; atom = d->mol->NextAtom(i)) {
       vector3 pos(atom->GetVector());
@@ -238,6 +254,11 @@ namespace OpenBabel
           ss << GetAtomSymClass(atom);
           d->painter->DrawText(pos.x(), pos.y(), ss.str());
           break;
+        case AtomIndex:
+          ss << atom->GetIdx();
+          d->painter->DrawText(pos.x(), pos.y(), ss.str());
+          break;
+
         default:
           break;
       }
@@ -351,9 +372,12 @@ namespace OpenBabel
           break;
       }
 
-      d->painter->SetPenColor(OBColor(etab.GetRGB(atom->GetAtomicNum())));
+      if(d->options & bwAtoms)
+        d->painter->SetPenColor(d->bondColor);
+      else
+        d->painter->SetPenColor(OBColor(etab.GetRGB(atom->GetAtomicNum())));
 
-      //charge and radical NEEDS REVISION
+      //charge and radical
       int charge = atom->GetFormalCharge();
       int spin = atom->GetSpinMultiplicity();
       if(charge || spin) {
@@ -384,10 +408,13 @@ namespace OpenBabel
       }
  
       if (atom->IsCarbon()) { 
-        if (atom->GetValence() > 1)
-          continue;
-        if ((atom->GetValence() == 1) && !d->drawTerminalC)
-          continue;
+        if(!(d->options & drawAllC))
+        {
+          if (atom->GetValence() > 1)
+            continue;
+          if ((atom->GetValence() == 1) && !(d->options & drawTermC))//!d->drawTerminalC)
+            continue;
+        }
       }
 
       stringstream ss;
@@ -630,7 +657,7 @@ namespace OpenBabel
   {
     if (!atom->IsCarbon())
       return true;
-    if (drawTerminalC && (atom->GetValence() == 1))
+    if ((options & OBDepict::drawAllC) || ((options & OBDepict::drawTermC) && (atom->GetValence() == 1)))
       return true;
     return false;
   }

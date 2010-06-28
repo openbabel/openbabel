@@ -38,36 +38,78 @@ public:
       "SVG depiction\n"
       "Scalable Vector Graphics 2D rendering of molecular structure.\n\n"
 
+      "Single molecules are displayed at a fixed scale, as in normal diagrams,\n"
+      "but multiple molecules are displayed in a table which expands to fill\n"
+      "the containing element, such as a browser window.\n\n"
+
       "Multiple molecules are displayed in a grid of dimensions specified by\n"
       "the -xr and -xc options (number of rows and columns respectively).\n"
-      "There is javascript support for zooming (with the mouse wheel)\n"
+      "When displayed in an appropriate program, e.g. Firefox, there is\n"
+      "javascript support for zooming (with the mouse wheel)\n"
       "and panning (by dragging with the left mouse button).\n\n"
       
       "If both -xr and -xc are specified, they define the maximum number of\n"
       "molecules that are displayed.\n"    
-      "If only one of them is displayed, then the other is calculated so that ALL \n"
-      "the molecules are displayed.\n"
-      "If neither are specified, all the molecules are output in an approximately\n"
-      "square table.\n\n"
+      "If only one of them is displayed, then the other is calculated so that\n"
+      "ALL the molecules are displayed.\n"
+      "If neither are specified, all the molecules are output in an\n"
+      "approximately square table.\n\n"
 
-      "By default, 2D atom coordinates are generated (using gen2D) unless they are\n"
-      "already present.\n"
+      "By default, 2D atom coordinates are generated (using gen2D) unless they\n"
+      "are already present. This can be slow with a large number of molecules.\n"
+      "(3D coordinates are ignored.) Include --gen2D explicitly if you wish\n"
+      "any existing 2D coordinates to be recalculated.\n\n"
       
-      "Write options e.g. -xnc for single letter options)\n"
-      "A display aliases\n"
-      "b black background\n"
-      "C do not draw terminal carbon atoms explicitly\n"
-      "d do not display molecule name\n"
-      "e embed molecule as CML\n"
-      "p# scale to bondlength in pixels(single mol only)\n"
-      "c# number of columns in table\n"
-      "r# number of rows in table\n"
-      "N# max number objects to be output\n"
-      "l draw grid lines\n"
-      "j do not embed javascript\n"
-      "x omit XML declaration\n"
-      //"y generate 2D coordinates even if already present\n"
-      //"n never generate coordinates\n"
+      "Write options e.g. -xu\n"
+      " u no element-specific atom coloring\n"
+      "    Use this option to produce a black and white diagram\n"
+      " b black background\n"
+      "    The default is white. The atom colors work with both.\n"
+      " C do not draw terminal carbon atoms explicitly\n"
+      "    The default is to draw all hetero atoms and terminal C explicitly.\n"
+      " a draw all carbon atoms\n"
+      "    So propane would display as H3C-CH2-CH3\n"
+      " d do not display molecule name\n"
+      " e embed molecule as CML\n"
+      "    OpenBabel can read the resulting svg file as a cml file.\n" 
+      " p# scale to bondlength in pixels(single mol only)\n"
+      " c# number of columns in table\n"
+      " r# number of rows in table\n"
+      " N# max number objects to be output\n"
+      " l draw grid lines\n"
+      " i add index to each atom\n"
+      "    These indices are those in sd or mol files and correspond to the\n"
+      "    order of atoms in a SMILES string.\n"
+      " j do not embed javascript\n"
+      "    Javascript is not usually embedded if there is one one molecule,\n"
+      "    but it is if the rows and columns have been specified as 1: -xr1 -xc1\n"
+      " A display aliases, if present\n"
+      "    This applies to structures which have an alternative, usually\n"
+      "    shorter, representation already present. This might have been input\n"
+      "    from an A or S superatom entry in an sd or mol file, or can be\n"
+      "    generated using the --genalias option. For example:\n"
+      "      echo \"c1cc(C=O)ccc1C(=O)O\" | babel -ismi out.svg --genalias -xA\n"
+      "    would add a aliases COOH and CHO to represent the carboxyl and\n"
+      "    aldehyde groups and would display them as such in the svg diagram.\n"
+      "    The aliases which are recognized are in data/superatom.txt, which\n"
+      "    can be edited.\n\n" 
+      "Additional option(not displayed in GUI)\n"
+      " x omit XML declaration\n"
+      "    Useful if the output is to be embedded in another xml file.\n\n"
+
+      "If the input molecule(s) contain explicit hydrogen, you could consider\n"
+      "improving the appearance of the diagram by adding an option -d to make\n"
+      "it implicit. Hydrogen on hetero atoms and on explicitly drawn C is\n"
+      "always shown.\n"
+
+      "For example, if input.smi had 10 molecules:\n"
+      "      babel input.smi out.svg -xbCe\n"
+      "would produce a svg file with a black background, with no explict\n"
+      "terminal carbon, and with an embedded cml representation of each\n"
+      "molecule. The structures would be in two rows of four and one row\n"
+      "of two. Not that it is possible to concatinate multiple single-\n"
+      "letter options (with a single preceding -x).\n\n"
+
     ;
   }
 
@@ -123,6 +165,7 @@ bool SVGFormat::WriteChemObject(OBConversion* pConv)
     if(pmax)
       _nmax = atoi(pmax);
 
+/*
     _ptext = dynamic_cast<OBText*>(pOb);
     if(_ptext)
     {
@@ -130,6 +173,7 @@ bool SVGFormat::WriteChemObject(OBConversion* pConv)
       _textpos = 0;
       return true;
     }
+*/  
   }   
 
   //save molecule
@@ -140,35 +184,35 @@ bool SVGFormat::WriteChemObject(OBConversion* pConv)
   bool nomore = _nmax && (_objects.size()==_nmax);
   if((pConv->IsLast() || nomore))
   {
-    //Set table properties according to the options and the number of molecules to be output (when >1)
-    if(!_nrows || !_ncols) //ignore this block if both specified
+    int nmols = _objects.size();
+    //Set table properties according to the options and the number of molecules to be output
+    if(!(nmols==0 ||                      //ignore this block if there is no input or
+         (_nrows && _ncols) ||            //if the user has specified both rows and columns or
+         (!_nrows && !_ncols) && nmols==1)//if neither is specified and there is one output molecule
+      )
     {
-      int nmols = _objects.size();
-      if(nmols!=0)
+      if(!_nrows && !_ncols ) //neither specified
       {
-        if(!_nrows && !_ncols ) //neither specified
-        {
-          //assign cols/rows in square
-          _ncols = (int)ceil(sqrt(((double)nmols)));
-        }
-
-        if(_nrows)
-          _ncols = (nmols-1) / _nrows + 1; //rounds up
-        else if(_ncols)
-          _nrows = (nmols-1) / _ncols + 1;
+        //assign cols/rows in square
+        _ncols = (int)ceil(sqrt(((double)nmols)));
       }
+
+      if(_nrows)
+        _ncols = (nmols-1) / _nrows + 1; //rounds up
+      else if(_ncols)
+        _nrows = (nmols-1) / _ncols + 1;
     }
-    if(_objects.size()==1)
-      _nrows=_ncols=0; //no table with single molecule
 
     //output all collected molecules
     int n=0;
+/*
     if(_ptext)
     {
       _textpos =0;
       //Output the text up to the first insertion point, or all of it if there is no insertion point.
       *pConv->GetOutStream() << _ptext->GetText(_textpos);
     }
+*/
     vector<OBBase*>::iterator iter;
     for(iter=_objects.begin(); ret && iter!=_objects.end(); ++iter)
     {
@@ -177,16 +221,18 @@ bool SVGFormat::WriteChemObject(OBConversion* pConv)
       pConv->SetLast(n==_objects.size());
       
       ret=WriteMolecule(*iter, pConv);
-
+/*
       //If there is a subsequent insertion point, output text up to it and update _textpos.
       //If there is not, do nothing.
       if(_ptext)
         *pConv->GetOutStream() << _ptext->GetText(_textpos, true);
+*/
     }
+/*    
     //Output remaining text
     if(_ptext)
       *pConv->GetOutStream() << _ptext->GetText(_textpos);
-
+*/
     //delete all the molecules
     for(iter=_objects.begin();iter!=_objects.end(); ++iter)
       delete *iter;
@@ -211,7 +257,7 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   ostream &ofs = *pConv->GetOutStream();
 
   //*** Coordinate generation ***
-  //Generate coordinates only if no existing 2D coordinates; always with -xy; never with -xn
+  //Generate coordinates only if no existing 2D coordinates
   if( (pConv->IsOption("y") || !pmol->Has2D(true)) && !pConv->IsOption("n") )
   {
     OBOp* pOp = OBOp::FindType("gen2D");
@@ -294,7 +340,11 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     SVGPainter painter(*pConv->GetOutStream(), true, cellsize,cellsize,innerX,innerY);
     OBDepict depictor(&painter);
 
-    depictor.SetDrawingTerminalCarbon(!pConv->IsOption("C")); //on by default
+    
+    if(!pConv->IsOption("C"))
+      depictor.SetOption(OBDepict::drawTermC);// on by default
+    if(pConv->IsOption("a"))
+      depictor.SetOption(OBDepict::drawAllC);
 
     if(pConv->IsOption("A"))
     {
@@ -306,7 +356,15 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     depictor.SetBondColor(bondcolor);
     painter.SetPenWidth(2);
 
+    //No element-specific atom coloring if requested
+    if(pConv->IsOption("u"))
+      depictor.SetOption(OBDepict::bwAtoms);
+
     depictor.DrawMolecule(pmol);
+
+    //Draw atom indices if requested
+    if(pConv->IsOption("i"))
+      depictor.AddAtomLabels(OBDepict::AtomIndex);
 
     //Embed CML of molecule if requested
     if(pConv->IsOption("e"))
@@ -332,7 +390,12 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       depictor.SetBondSpacing(depictor.GetBondSpacing() * factor);
       depictor.SetFontSize((int)(depictor.GetFontSize() * factor));
     }
-    depictor.SetDrawingTerminalCarbon(!pConv->IsOption("C")); //on by default
+    
+    if(!pConv->IsOption("C"))
+      depictor.SetOption(OBDepict::drawTermC);// on by default
+    if(pConv->IsOption("a"))
+      depictor.SetOption(OBDepict::drawAllC);
+
     if(pConv->IsOption("A"))
     {
       AliasData::RevertToAliasForm(*pmol);
@@ -345,9 +408,16 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     painter.SetFillColor(OBColor(background));
     painter.SetPenWidth(1);
 
+    //No element-specific atom coloring if requested
+    if(pConv->IsOption("u"))
+      depictor.SetOption(OBDepict::bwAtoms);
+
     depictor.DrawMolecule(pmol);
 
-    //depictor.AddAtomLabels(OBDepict::AtomSymmetryClass);
+    //Draw atom indices if requested
+    if(pConv->IsOption("i"))
+      depictor.AddAtomLabels(OBDepict::AtomIndex);
+
 
     //*** Write molecule name ***
     if(!pConv->IsOption("d"))
@@ -419,8 +489,7 @@ bool SVGFormat::EmbedCML(OBMol* pmol, OBConversion* pConv)
 The script below was originally (and still could be) in data/svgformat.script,
 the whole of which is embedded into the output. 
 It works adequately in Firefox 3 to zoom with the mouse wheel and pan by dragging,
-but will probably need modification for other SVG viewers because the function
-names are different.
+but may need modification for other SVG viewers. (It works in Opera.)
 
 <script type="text/ecmascript">
   <![CDATA[
@@ -431,12 +500,12 @@ names are different.
       var vb = new Array(4);
       var vbtext = svgEl.getAttributeNS(null,"viewBox");
       vb = vbtext.split(" ");
-      var zoom = (evt.detail>0)? 1.25 : 0.8;
-      var dwidth = parseFloat(vb[2]) * (1-zoom);
-      vb[0] = parseFloat(vb[0]) + dwidth * evt.clientX/innerWidth;
-      vb[1] = parseFloat(vb[1]) + dwidth * evt.clientY/innerHeight;
+      var zoom = (evt.detail>0)? 1.41 : 0.71;
+      //var dwidth = parseFloat(Math.max(vb[2],vb[3])) * (1-zoom);
+      vb[0] = parseFloat(vb[0]) + parseFloat(vb[2])*(1-zoom) * evt.clientX/innerWidth;
+      vb[1] = parseFloat(vb[1]) + parseFloat(vb[3])*(1-zoom) * evt.clientY/innerHeight;
       vb[2] = parseFloat(vb[2]) * zoom;
-      vb[3] = vb[2];
+      vb[3] = parseFloat(vb[3]) * zoom;
       svgEl.setAttributeNS(null, "viewBox", vb.join(" "));
     }
     var startx=0;
@@ -446,12 +515,14 @@ names are different.
       starty = evt.clientY;
     }
     onmousemove=function(evt) {
-      if(startx!=0 && starty!=0)
+      if(startx!=0 && starty!=0 
+        && ((evt.clientX - startx)*(evt.clientX - startx)+(evt.clientY - starty)*(evt.clientY - starty)>100))
       {
         var vbtext = svgEl.getAttributeNS(null,"viewBox");
         vb = vbtext.split(" ");
-        vb[0] = parseFloat(vb[0]) - (evt.clientX - startx)*parseFloat(vb[2])/innerWidth;
-        vb[1] = parseFloat(vb[1]) - (evt.clientY - starty)*parseFloat(vb[3])/innerHeight;
+        var maxwh = Math.max(parseFloat(vb[2]),parseFloat(vb[3]));
+        vb[0] = parseFloat(vb[0]) - (evt.clientX - startx)*maxwh/innerWidth;
+        vb[1] = parseFloat(vb[1]) - (evt.clientY - starty)*maxwh/innerHeight;
         svgEl.setAttributeNS(null, "viewBox", vb.join(" "));
         startx = evt.clientX;
         starty = evt.clientY;
@@ -469,15 +540,6 @@ Alternatively, svgformat.script could contain:
 <script type="text/ecmascript" xlink:href="morescript.js" />
 
 with the real script in morescript.js.
-*/
-
-/* TODO
-Placing and length of double bonds in rings
-H placing on hetero atoms (NH in pyrrole)
-Wedge and hash bonds
-Isotopes
-Better margins - too little with one mol, too big in table
-Center the molecules
 */
 
 }//namespace
