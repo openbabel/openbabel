@@ -35,8 +35,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Chemtool format\n \
-            No comments yet\n";
+        "Chemtool format\n"
+        "No comments yet\n";
     };
 
     virtual const char* SpecificationURL()

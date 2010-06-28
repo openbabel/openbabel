@@ -31,8 +31,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "PCModel Format\n \
-       No comments yet\n";
+        "PCModel Format\n"
+        "No comments yet\n";
     };
 
     //Flags() can return be any the following combined by | or be omitted if none apply

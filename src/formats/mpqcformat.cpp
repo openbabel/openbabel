@@ -33,10 +33,10 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "MPQC output format\n \
-       Read Options e.g. -as\n\
-        s  Output single bonds only\n\
-        b  Disable bonding entirely\n\n";
+        "MPQC output format\n"
+        "Read Options e.g. -as\n"
+        " s  Output single bonds only\n"
+        " b  Disable bonding entirely\n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -71,8 +71,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "MPQC simplified input format\n \
-            No comments yet\n";
+        "MPQC simplified input format\n"
+        "No comments yet\n";
     };
 
     virtual const char* SpecificationURL()

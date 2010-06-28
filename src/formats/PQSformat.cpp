@@ -37,8 +37,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Parallel Quantum Solutions format\n \
-       No comments yet";
+        "Parallel Quantum Solutions format\n"
+        "No comments yet\n";
     };
 
     virtual const char* SpecificationURL()

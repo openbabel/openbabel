@@ -32,8 +32,8 @@ public:
     virtual const char* Description() //required
     {
         return
-            "XED format\n \
-            No comments yet\n";
+          "XED format\n"
+          "No comments yet\n";
     };
 
   virtual const char* SpecificationURL()

@@ -38,11 +38,10 @@ public:
 	virtual const char* NamespaceURI()const{return "http://www.cambridgesoft.com/xml/cdxml.dtd";}
   virtual const char* Description()
   {
-      return " \
-ChemDraw CDXML format \n \
-Minimal support of chemical structure information only.\n \
-\n";
-};
+    return 
+      "ChemDraw CDXML format\n"
+      "Minimal support of chemical structure information only.\n\n";
+  }
 
   virtual const char* GetMIMEType() 
   { return "chemical/x-cdxml"; };

@@ -38,8 +38,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Open Babel report format\n \
-            No comments yet\n";
+        "Open Babel report format\n"
+        "No comments yet\n";
     };
 
     virtual const char* SpecificationURL()

@@ -45,12 +45,12 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Sybyl descriptor format\n \
-            [Molec_name]\\t[atomtype];[layer]-[frequency]-[neighbour_type];\
-            Options: e.g. -xnc\n \
-            n prefix molecule names with name of file \n \
-            c use XML style separators instead \n \
-            i use IDX atom types of babel internal \n";
+        "Sybyl descriptor format\n"
+           " [Molec_name]\\t[atomtype];[layer]-[frequency]-[neighbour_type];\n"
+           " Options: e.g. -xnc\n"
+           "  n prefix molecule names with name of file \n"
+           "  c use XML style separators instead \n"
+           "  i use IDX atom types of babel internal \n\n";
     };
 
     virtual const char* SpecificationURL()

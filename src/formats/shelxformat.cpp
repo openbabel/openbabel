@@ -34,10 +34,10 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "ShelX format\n \
-       Read Options e.g. -as\n\
-        s  Output single bonds only\n\
-        b  Disable bonding entirely\n\n";
+        "ShelX format\n"
+        "Read Options e.g. -as\n"
+        " s  Output single bonds only\n"
+        " b  Disable bonding entirely\n\n";
     };
 
     virtual const char* SpecificationURL()

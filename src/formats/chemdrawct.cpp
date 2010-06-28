@@ -31,8 +31,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "ChemDraw Connection Table format \n \
-            No comments yet\n";
+        "ChemDraw Connection Table format\n"
+        "No comments yet\n";
     };
 
     virtual const char* SpecificationURL()

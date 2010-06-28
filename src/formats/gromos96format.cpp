@@ -69,9 +69,9 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "GROMOS96 format\n \
-       Write Options e.g. -xn\n\
-        n output nm (not Angstroms)\n";
+        "GROMOS96 format\n"
+        "Write Options e.g. -xn\n"
+        " n output nm (not Angstroms)\n";
     };
 
     virtual const char* SpecificationURL()

@@ -108,6 +108,7 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
   //Looks for "options" (case-insensitive)
   //If StartText is not NULL it must precede "options" on the same line and 
   //not be part of a longer word
+  const int MAXLEADINGSPACES = 3; //not an option line if more 
   const int ONE=1;
   const int FOUR=4;
   bool NextIsRadio=false;
@@ -138,7 +139,16 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
     {
       int ProvideEditCtl=0;
       bool ProvideExtraCheckbox=false;
+      
+      char* plinestart = p;
       while(*p && !isalnum(*(p++))); //skip space and punctuation
+      //Ignore lines which start with more than MAXLEADINGSPACES whitespace chars(tab is 1 char!)  
+      if(p - plinestart > MAXLEADINGSPACES)
+      {
+        p = strchr(p,'\n')+1;
+        continue;
+      }
+
       if(!(*p--)) break;
       wxString oname;
       while(isalnum(*p))

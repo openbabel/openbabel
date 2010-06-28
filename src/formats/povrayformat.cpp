@@ -76,8 +76,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "POV-Ray input format\n \
-            No comments yet\n";
+        "POV-Ray input format\n"
+        "No comments yet\n";
     };
 
     virtual const char* SpecificationURL()

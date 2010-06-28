@@ -32,8 +32,8 @@ public:
   virtual const char* Description() //required
   {
     return
-      "Dock 3.5 Box format\n \
-            No comments yet\n";
+      "Dock 3.5 Box format\n"
+      "No comments yet\n";
   };
 
   virtual const char* SpecificationURL()

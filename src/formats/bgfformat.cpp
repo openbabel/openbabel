@@ -32,8 +32,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "MSI BGF format\n \
-            No comments yet\n";
+        "MSI BGF format\n"
+        "No comments yet\n";
     };
 
     virtual const char* SpecificationURL()

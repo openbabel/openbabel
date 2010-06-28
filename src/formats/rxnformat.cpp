@@ -38,8 +38,7 @@ public:
   virtual const char* Description()
   {
       return
-          "MDL RXN format\n \
-          \n";
+        "MDL RXN format\n\n";
   };
 
   virtual const char* GetMIMEType() 

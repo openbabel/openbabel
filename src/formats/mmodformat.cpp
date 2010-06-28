@@ -33,8 +33,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "MacroModel format\n \
-            No comments yet\n";
+        "MacroModel format\n"
+        "No comments yet\n";
     };
 
     virtual const char* SpecificationURL()

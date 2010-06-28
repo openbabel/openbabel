@@ -32,8 +32,8 @@ public:
     virtual const char* Description() //required
     {
         return
-            "Fenske-Hall Z-Matrix format\n \
-            No comments yet\n";
+          "Fenske-Hall Z-Matrix format\n"
+          "No comments yet\n";
     };
 
   virtual const char* SpecificationURL()

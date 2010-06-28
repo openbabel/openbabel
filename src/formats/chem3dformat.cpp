@@ -33,8 +33,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Chem3D Cartesian 1 format\n \
-            No comments yet\n";
+        "Chem3D Cartesian 1 format\n"
+        "No comments yet\n";
     };
 
     virtual const char* SpecificationURL()
@@ -106,8 +106,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Chem3D Cartesian 2 format\n \
-            No comments yet\n";
+        "Chem3D Cartesian 2 format\n"
+        "No comments yet\n";
     };
 
     virtual const char* SpecificationURL()

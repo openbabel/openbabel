@@ -31,9 +31,9 @@ public:
 
   virtual const char* Description() //required
   {
-      return
-"Title format\n \
-Displays and reads molecule titles\n";
+    return
+      "Title format\n"
+      "Displays and reads molecule titles\n";
   }
 	virtual unsigned int Flags() { return ZEROATOMSOK; }
 

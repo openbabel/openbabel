@@ -319,9 +319,8 @@ public:
     virtual const char* Description() //required
     {
         return
-            "YASARA.org YOB format\n \
-            No comments yet\n \
-            ";
+            "YASARA.org YOB format\n"
+            "No comments yet\n";
     };
 
     virtual const char* SpecificationURL(){return

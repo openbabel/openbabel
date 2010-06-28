@@ -39,21 +39,21 @@ public:
 
   const char* Description()
   {
-      return 
-"CML Reaction format\n"
-"Minimal implementation\n"
-"This implementation uses libxml2.\n"
-"Write options (e.g. -x1a)\n"
-"1  output CML1 (rather than CML2)\n"
-"a  output array format for atoms and bonds\n"
-"l  molecules NOT in MoleculeList\n"
-"h  use hydrogenCount for all hydrogens\n"
-"x  omit XML declaration\n"
-"r  omit rate constant data\n"
-"N<prefix> add namespace prefix to elements\n"
-"M  add obr prefix on non-CMLReact elements\n"
-"p  add properties to molecules\n"
-"\n";
+    return 
+      "CML Reaction format\n"
+      "Minimal implementation\n"
+      "This implementation uses libxml2.\n"
+      "Write options (e.g. -x1a)\n"
+      " 1  output CML1 (rather than CML2)\n"
+      " a  output array format for atoms and bonds\n"
+      " l  molecules NOT in MoleculeList\n"
+      " h  use hydrogenCount for all hydrogens\n"
+      " x  omit XML declaration\n"
+      " r  omit rate constant data\n"
+      " N<prefix> add namespace prefix to elements\n"
+      " M  add obr prefix on non-CMLReact elements\n"
+      " p  add properties to molecules\n"
+      "\n";
   }
 
   virtual const char* TargetClassDescription()

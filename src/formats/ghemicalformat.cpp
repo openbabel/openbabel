@@ -34,8 +34,8 @@ namespace OpenBabel
       virtual const char* Description() //required
       {
         return
-          "Ghemical format\n \
-          Open source molecular modelling\n";
+          "Ghemical format\n"
+          "Open source molecular modelling\n";
       };
 
       virtual const char* SpecificationURL()

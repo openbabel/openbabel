@@ -33,7 +33,7 @@ namespace OpenBabel
     {
       return
         "Alchemy format\n"
-        "    No comments yet\n";
+        "No comments yet\n";
     };
 
     virtual const char* SpecificationURL()

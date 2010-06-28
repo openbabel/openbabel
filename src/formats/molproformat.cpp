@@ -36,10 +36,10 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Molpro output format\n \
-       Read Options e.g. -as\n\
-        s  Output single bonds only\n\
-        b  Disable bonding entirely\n\n";
+        "Molpro output format\n"
+        "Read Options e.g. -as\n"
+        " s  Output single bonds only\n"
+        " b  Disable bonding entirely\n\n";
     };
 
 //TODO    virtual const char* SpecificationURL()
@@ -72,8 +72,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Molpro input format\n \
-            No comments yet\n";
+        "Molpro input format\n"
+        "No comments yet\n";
     };
 
 //TODO    virtual const char* SpecificationURL()

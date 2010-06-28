@@ -33,8 +33,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Chemical Resource Kit diagram(2D)\n \
-            No comments yet\n";
+        "Chemical Resource Kit diagram(2D)\n"
+        "No comments yet\n";
     };
 
     virtual const char* SpecificationURL()
@@ -136,8 +136,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Chemical Resource Kit 3D format\n \
-            No comments yet\n";
+        "Chemical Resource Kit 3D format\n"
+        "No comments yet\n";
     };
 
     virtual const char* SpecificationURL()

@@ -37,13 +37,13 @@ public:
   virtual const char* Description() //required
   {
     return
-      "TurboMole Coordinate format\n \
-       Write options e.g.-xa\n\
-        a  Output Angstroms\n\n\
-       Read Options e.g. -as\n\
-        s  Output single bonds only\n\
-        b  Disable bonding entirely\n\
-        a  Input in Angstroms\n\n" ;
+      "TurboMole Coordinate format\n"
+      "Write options e.g.-xa\n"
+      " a  Output Angstroms\n\n"
+      "Read Options e.g. -as\n"
+      " s  Output single bonds only\n"
+      " b  Disable bonding entirely\n"
+      " a  Input in Angstroms\n\n" ;
   };
 
   virtual const char* SpecificationURL()

@@ -35,11 +35,10 @@ public:
 	virtual const char* NamespaceURI()const{return "http://www.ncbi.nlm.nih.gov";}
   virtual const char* Description()
   {
-      return " \
-PubChem format \n \
-Minimal extraction of chemical structure information only.\n \
-\n";
-};
+    return 
+      "PubChem format\n"
+      "Minimal extraction of chemical structure information only.\n\n";
+  }
 
   virtual const char* SpecificationURL()
   {return "ftp://ftp.ncbi.nlm.nih.gov/pubchem/data_spec/pubchem.xsd";};

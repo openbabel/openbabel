@@ -36,8 +36,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Open Babel molecule report\n \
-            No comments yet\n";
+        "Open Babel molecule report\n"
+        "No comments yet\n";
     };
 
     virtual const char* SpecificationURL()

@@ -1,3 +1,13 @@
+2010-0628 Chris Morley
+	
+	* src/GUI/optswx.cpp: when using Description() strings to construct
+	GUI option checkboxes, ignore lines with 4 or more leading spaces
+	within each option list. Allows better formatted documentation, as
+	proposed by Noel.
+	
+	* src/formats/*format.cpp: remove remaining continuation characters
+	in Description()s and replace by concatinated ""..." ""..."	
+
 2010-06-24 Chris Morley
 
 	* src/formats/mdlformat.cpp:Prevent unnecessary error message with

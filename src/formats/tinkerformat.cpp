@@ -33,8 +33,8 @@ public:
     virtual const char* Description() //required
     {
         return
-            "Tinker MM2 format\n \
-            No comments yet\n";
+            "Tinker MM2 format\n"
+            "No comments yet\n";
     };
 
   virtual const char* SpecificationURL()

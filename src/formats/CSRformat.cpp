@@ -32,8 +32,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Accelrys/MSI Quanta CSR format\n \
-            No comments yet\n";
+        "Accelrys/MSI Quanta CSR format\n"
+        "No comments yet\n";
     };
 
     virtual const char* SpecificationURL()

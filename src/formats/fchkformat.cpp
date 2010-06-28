@@ -48,10 +48,10 @@ namespace OpenBabel
 
     virtual const char * Description()
     {
-      return "Gaussian formatted checkpoint file format\n \
-                  Read options e.g. -as\n\
-                    s  Single bonds only\n\
-                    b  No bond perception\n\n";
+      return "Gaussian formatted checkpoint file format\n"
+             "Read options e.g. -as\n"
+             " s  Single bonds only\n"
+             " b  No bond perception\n\n";
       // Vibrational analysis not yet supported in OB-2.1.
       //                    v  Do not perform the vibrational analysis\n\n";
     };

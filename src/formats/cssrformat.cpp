@@ -32,8 +32,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "CSD CSSR format\n \
-            No comments yet\n";
+        "CSD CSSR format\n"
+        "No comments yet\n";
     };
 
     virtual const char* SpecificationURL()

@@ -28,14 +28,13 @@ public:
 
   const char* Description()
   {
-      return " \
-General XML format\n \
-Calls a particular XML format depending on the XML namespace,\n \
-or the default format (which is probably CML).\n \
-This implementation uses libxml2.\n \
-Read option, e.g. -an\n \
-n  Read objects of first namespace only\n \
-\n";
+    return
+      "General XML format\n"
+      "Calls a particular XML format depending on the XML namespace,\n"
+      "or the default format (which is probably CML).\n"
+      "This implementation uses libxml2.\n"
+      "Read option, e.g. -an\n"
+      " n  Read objects of first namespace only\n\n";
   }
 
   const char* NamespaceURI()const{return "Undefined";};

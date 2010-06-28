@@ -32,8 +32,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "CAChe MolStruct format\n \
-            No comments yet\n";
+        "CAChe MolStruct format\n"
+        "No comments yet\n";
     };
 
     virtual const char* SpecificationURL()

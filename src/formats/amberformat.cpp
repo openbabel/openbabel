@@ -32,10 +32,10 @@ public:
   virtual const char* Description() //required
   {
     return
-      "Amber Prep format\n \
-       Read Options e.g. -as\n\
-        s  Output single bonds only\n\
-        b  Disable bonding entirely\n\n";
+      "Amber Prep format\n"
+      " Read Options e.g. -as\n"
+      " s  Output single bonds only\n"
+      " b  Disable bonding entirely\n\n";
   };
 
   virtual const char* SpecificationURL()

@@ -41,6 +41,7 @@ public:
       "Thermo format\n"
       "Reads and writes old-style NASA polynomials in original fixed format\n"
       "Read Options e.g. -ae\n"
+      "    This line is not an option!\n"
       " -e Terminate on \"END\"\n\n";
   }
 

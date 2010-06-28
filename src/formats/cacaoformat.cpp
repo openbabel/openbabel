@@ -282,9 +282,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Cacao Internal format\n \
-            No comments yet\n \
-            ";
+        "Cacao Internal format\n"
+        "No comments yet\n";
     };
 
     virtual const char* SpecificationURL(){return

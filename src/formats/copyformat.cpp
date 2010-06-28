@@ -28,12 +28,13 @@ public:
   virtual const char* Description() //required
   {
     return
-"Copies raw text\n \
-Objects can be chemically filtered without the risk\n \
-of losing any additional information they contain,\n \
-since no format conversion is done.\n \
-Note that XML files may be missing non-object elements\n \
-at the start or end and so may no longer be well formed.";
+"Copies raw text\n"
+"Objects can be chemically filtered without the risk\n"
+"of losing any additional information they contain,\n"
+"since no format conversion is done.\n"
+"*** CURRENTLY NOT WORKING CORRECTLY FOR FILES WITH WINDOWS LINE ENDINGS\n"
+"Note that XML files may be missing non-object elements\n"
+"at the start or end and so may no longer be well formed.\n\n";
   };
 
   virtual unsigned int Flags()

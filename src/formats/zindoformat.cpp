@@ -31,8 +31,8 @@ public:
     virtual const char* Description() //required
     {
         return
-            "ZINDO input format\n \
-            No comments yet\n";
+            "ZINDO input format\n"
+            "No comments yet\n";
     };
 
   virtual const char* SpecificationURL()

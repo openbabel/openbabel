@@ -34,13 +34,12 @@ namespace OpenBabel {
     virtual const char* Description()
     {
       return
-        "VASP format\n \
-        Reads in data from POTCAR and CONTCAR to obtain information from VASP calculations.\n \
-        Due to limitations in OB's file handling, reading in VASP files can be a bit tricky:\n \
-        \tThe client that is using OpenBabel must use OBConversion::ReadFile() to begin the conversion.\n \
-        \tThis change is usually trivial, ask the package mantainer to look into it. Also, the complete\n \
-        \tpath to the CONTCAR file must be provided, otherwise the other files need won't be found.\n \
-                ";
+        "VASP format\n"
+        "Reads in data from POTCAR and CONTCAR to obtain information from VASP calculations.\n"
+        "Due to limitations in OB's file handling, reading in VASP files can be a bit tricky:\n"
+        "\tThe client that is using OpenBabel must use OBConversion::ReadFile() to begin the conversion.\n"
+        "\tThis change is usually trivial, ask the package mantainer to look into it. Also, the complete\n"
+        "\tpath to the CONTCAR file must be provided, otherwise the other files need won't be found.\n";
     };
 
     virtual const char* SpecificationURL(){return "http://cms.mpi.univie.ac.at/vasp/vasp/vasp.html";};

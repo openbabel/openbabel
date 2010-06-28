@@ -32,10 +32,10 @@ public:
   virtual const char* Description() //required
   {
     return
-      "ViewMol format\n \
-       Read Options e.g. -as\n\
-        s  Output single bonds only\n\
-        b  Disable bonding entirely\n\n";
+      "ViewMol format\n"
+      "Read Options e.g. -as\n"
+      " s  Output single bonds only\n"
+      " b  Disable bonding entirely\n\n";
   };
 
   virtual const char* SpecificationURL() //optional
