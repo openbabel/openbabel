@@ -19,6 +19,7 @@ GNU General Public License for more details.
 #ifdef HAVE_EIGEN2
 
 #include "qtpie.h"
+#include <openbabel/locale.h>
 
 using namespace std;
 
@@ -29,6 +30,36 @@ QTPIECharges theQTPIECharges("qtpie"); //Global instance
 
 /////////////////////////////////////////////////////////////////
 
+  void QTPIECharges::ParseParamFile()
+  {
+    vector<string> vs;
+    char buffer[BUFF_SIZE];
+    
+    // open data/qeq.txt
+    ifstream ifs;
+    if (OpenDatafile(ifs, "qeq.txt").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open qeq.txt", obError);
+      return;
+    }
+
+    // Set the locale for number parsing to avoid locale issues: PR#1785463
+    obLocale.SetLocale();
+    Vector3d P;
+
+    while (ifs.getline(buffer, BUFF_SIZE)) {
+      if (buffer[0] == '#')
+        continue;
+
+      tokenize(vs, buffer);
+      if (vs.size() < 6)
+        continue;
+
+      // Element, n, Xi, Hardness, Slater, Gaussian
+      P << atof(vs[2].c_str())*eV, atof(vs[3].c_str())*eV*2, atof(vs[5].c_str());
+      cerr << vs[2] << " " << vs[3] << " " << vs[5] << endl;
+      _parameters.push_back(P);
+    }
+  }
 
   Vector3d QTPIECharges::GetParameters(unsigned int Z, int Q)
   {
@@ -36,25 +67,14 @@ QTPIECharges theQTPIECharges("qtpie"); //Global instance
 
     Vector3d P;
     //For now, completely ignore the formal charge
-    switch(Z) {
-	case  1: P<<4.528*eV,	13.890*eV,	0.534337523756312; break;
-	case  3: P<<3.006*eV,	 4.772*eV,	0.166838519142176; break;
-	case  6: P<<5.343*eV,	10.126*eV,	0.206883838259186; break;
-	case  7: P<<7.139*eV,	12.844*eV,	0.221439796025873; break;
-	case  8: P<<8.741*eV,	13.364*eV,	0.223967308625516; break;
-	case  9: P<<10.87*eV,	14.948*eV,	0.231257590182828; break;
-	case 11: P<<2.843*eV,	 4.592*eV,	0.095892938712585; break;
-	case 14: P<<4.168*eV,	 6.974*eV,	0.105219608142377; break;
-	case 15: P<<5.463*eV,	 8.000*eV,	0.108476721661715; break;
-	case 16: P<<6.084*eV,	10.660*eV,	0.115618357843499; break;
-	case 17: P<<8.564*eV,	 9.892*eV,	0.113714050615107; break;
-	case 19: P<<2.421*eV,	 3.840*eV,	0.060223294377778; break;
-	case 35: P<<7.790*eV,	 8.850*eV,	0.070087547802259; break;
-	case 37: P<<2.331*eV,	 3.692*eV,	0.041999054745368; break;
-	case 53: P<<6.822*eV,	 7.524*eV,	0.068562697575073; break;
-	case 55: P<<2.183*eV,	 3.422*eV,	0.030719481189777; break;
-	default: P<<0., 1.e10, 1.e10; //Magic value
+    if (_parameters.size() == 0)
+      ParseParamFile();
+
+    if (Z > 0 && Z < _parameters.size()-1) {
+      return _parameters[Z - 1];
     }
+
+    P<<0., 1.e10, 1.e10; //Magic value
     return P;
   }
 

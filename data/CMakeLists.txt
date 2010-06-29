@@ -34,6 +34,7 @@ set(to_install
     phmodel.txt
     plugindefines.txt
     psa.txt
+    qeq.txt
     resdata.txt
     ringtyp.txt
     SMARTS_InteLigand.txt

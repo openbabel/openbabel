@@ -1,3 +1,11 @@
+2010-06-29  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/charges/qeq* src/charges/qtpie* data/qeq.txt: Move QEq and
+	QTPIE parameters to the data file. Parameters are possibly suspect
+	for non-standard elements.  Jiahao Chen will send revised versions later.
+
+	* data/UFF.prm: Remove QEq parameters -- not used by UFF.
+
 2010-06-29 Noel O'Boyle
 
 	* CMakeLists.txt: Avoid warnings with MinGW when compiling the exes
@@ -17,21 +25,21 @@
 
 	* include/openbabel/depict/depict.h, src/depict/depict.cpp:
 	Use a bitset for options like drawTerminalC, so that extendable
-	while binary compatible. Add a few more options display options. 
-	
+	while binary compatible. Add a few more options display options.
+
 	* src/formats/svgformat.cpp: add a few more display options.
 	Augment Description() as a possible prototype for Noel's more
-	formatted documentation.	
+	formatted documentation.
 
 2010-0628 Chris Morley
-	
+
 	* src/GUI/optswx.cpp: when using Description() strings to construct
 	GUI option checkboxes, ignore lines with 4 or more leading spaces
 	within each option list. Allows better formatted documentation, as
 	proposed by Noel.
-	
+
 	* src/formats/*format.cpp: remove remaining continuation characters
-	in Description()s and replace by concatinated ""..." ""..."	
+	in Description()s and replace by concatinated ""..." ""..."
 
 2010-06-24 Chris Morley
 
@@ -48,19 +56,19 @@
         * src/ring.cpp: LSSR selection seems to work now. It is based on
         lemma 1 from the Vismara paper. (See source for complete reference)
 
-        * src/obiter.cpp, src/ring.cpp: Ring sets should no longer be 
-        acquired using OBMol::GetData(OBGenericDataType::RingData). Ring 
-        sets now have the correct "SSSR"/"LSSR" attribute set. 
+        * src/obiter.cpp, src/ring.cpp: Ring sets should no longer be
+        acquired using OBMol::GetData(OBGenericDataType::RingData). Ring
+        sets now have the correct "SSSR"/"LSSR" attribute set.
 
         * src/kekulize.cpp: Use LSSR.
 
-        * test/lssrtest.cpp: Add tests for LSSR composition. All unit tests 
-        pass except for smarts (was broken before) and py_kekulize. I'm not 
+        * test/lssrtest.cpp: Add tests for LSSR composition. All unit tests
+        pass except for smarts (was broken before) and py_kekulize. I'm not
         sure why the last test fails but the stored results might need updating?
 
 2010-06-22  Tim Vandermeersch
 
-        * include/openbabel/mol.h, src/mol.cpp: Add LSSR, add aromaticity 
+        * include/openbabel/mol.h, src/mol.cpp: Add LSSR, add aromaticity
         changes from Craig.
 
         * src/ring.cpp: Add LSSR (FindLSSR, GetLSSR, ...)
@@ -428,7 +436,7 @@
 2010-04-20  Jiahao Chen <jiahao@mit.edu>
 
         * src/charges/qeq.h, src/charges/qeq.cpp:
-	Added implementation of QEq charge model (Rappe and Goddard, 1991) 
+	Added implementation of QEq charge model (Rappe and Goddard, 1991)
 
         * src/charges/qtpie.h, src/charges/qtpie.cpp:
 	Added implementation of QTPIE charge model (Chen and Martinez, 2007;
@@ -436,10 +444,10 @@
 
         * src/atom.cpp: added comments to show how these new charge models can
 	be called from within current OpenBabel code
-		
+
         * CMakeLists.txt: added charge models and compile flags for Eigen2
 	library (variables copied from Avogadro source tree)
-        
+
 	* cmake/modules/FindEigen2.cmake: CMake module to configure Eigen2
 	(copied from Avogadro source tree)
 

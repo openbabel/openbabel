@@ -1520,7 +1520,7 @@ namespace OpenBabel {
 
     while (ifs.getline(buffer, BUFF_SIZE)) {
       tokenize(vs, buffer);
-      if (vs.size() < 13)
+      if (vs.size() < 10)
         continue;
       
       if (EQn(buffer, "param", 5)) {
@@ -1535,9 +1535,9 @@ namespace OpenBabel {
         parameter._dpar.push_back(atof(vs[7].c_str())); // Z1
         parameter._dpar.push_back(atof(vs[8].c_str())); // Vi
         parameter._dpar.push_back(atof(vs[9].c_str())); // Uj
-        parameter._dpar.push_back(atof(vs[10].c_str())); // Xi
-        parameter._dpar.push_back(atof(vs[11].c_str())); // Hard
-        parameter._dpar.push_back(atof(vs[12].c_str())); // Radius
+        //        parameter._dpar.push_back(atof(vs[10].c_str())); // Xi
+        //        parameter._dpar.push_back(atof(vs[11].c_str())); // Hard
+        //        parameter._dpar.push_back(atof(vs[12].c_str())); // Radius
 
         parameter.b = 0; // used for tracking number of angles in 5-coordinate
         parameter.c = 0;

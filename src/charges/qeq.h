@@ -44,7 +44,6 @@ const double CoulombThreshold = 1.e-9;
 namespace OpenBabel
 {
 
-
 class QEqCharges : public OBChargeModel
 {
 public:
@@ -63,7 +62,11 @@ private:
   MatrixXd Hardness; ///The hardness matrix
   VectorXd Electronegativity, Voltage, Charge;
   double ChemicalPotential;
+
+  std::vector< Vector3d > _parameters;
+  void ParseParamFile();
 };
+
 }; //namespace OpenBabel
 #endif //HAVE_EIGEN2
 #endif //__QEQ_H__

@@ -68,6 +68,9 @@ private:
   MatrixXd Hardness; ///The hardness matrix
   VectorXd Electronegativity, Voltage, Charge;
   double ChemicalPotential;
+
+  std::vector< Vector3d > _parameters;
+  void ParseParamFile();
 };
 }; //namespace OpenBabel
 #endif //HAVE_EIGEN2
