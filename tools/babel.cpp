@@ -149,16 +149,6 @@ int main(int argc,char *argv[])
                     }
                   break;
 				
-                /*case 'F':
-                  if(!Conv.SetOutFormat("fpt"))
-                    cout << "FingerprintFormat needs to be loaded" << endl;
-                  else
-                    {
-                      Conv.AddOption("F",OBConversion::OUTOPTIONS);
-                      Conv.Write(NULL);
-                    }
-                  return 0;
-				        */
                 case 'L': //display a list of plugin type or classes
                   {
                     const char* param=NULL;
@@ -433,11 +423,10 @@ void help()
   cout << "wildcard chars (* and ?).The molecules are aggregated in the output file.\n" << endl;
   cout << OBConversion::Description(); // Conversion options
   cout << "-H Outputs this help text" << endl;
-  cout << "-Hxxx (xxx is file format ID e.g. -Hcml) gives format info" <<endl; 
-  cout << "-Hall Outputs details of all formats" <<endl; 
   cout << "-V Outputs version number" <<endl; 
-  cout << "-L <BaseType> Lists plugin classes of this type" << endl;
-  cout << "    e.g. <fingerprints>, or <plugins> for a list of BaseTypes" << endl; 
+  cout << "-L <category> Lists plugin classes of this category, e.g. <formats>" << endl;
+  cout << "   Use just -L for a list of plugin categories." << endl; 
+  cout << "   Use -L <ID> e.g. -L sdf for details of a format or other plugin." << endl; 
   cout << "-m Produces multiple output files, to allow:" <<endl;
   cout << "   Splitting: e.g.        " << program_name << " infile.mol new.smi -m" <<endl;
   cout << "     puts each molecule into new1.smi new2.smi etc" <<endl;
@@ -456,9 +445,12 @@ void help()
   if(pAPI)
     cout << pAPI->Description();
   
-  cout << "The following file formats are recognized:" << endl;
-  OBPlugin::List("formats");
-  cout << "\nSee further specific info and options using -H<format-type>, e.g. -Hcml" << endl;
+  cout << "To see a list of recognized file formats use\n  babel -L formats\n"
+       << "To see details and specific options for a particular format, e.g CML, use\n  babel -L cml\n"
+       << endl;
+  //cout << "The following file formats are recognized:" << endl;
+  //OBPlugin::List("formats");
+  //cout << "\nSee further specific info and options using -H<format-type>, e.g. -Hcml" << endl;
 }
 
 /* OpenBabel man page*/

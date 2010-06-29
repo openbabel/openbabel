@@ -1,3 +1,13 @@
+2010-06029 Chris Morley
+
+	* tools/babel.cpp, tools/obabel.cpp: -H no longer lists all formats
+	  (As suggested by Noel)
+	
+	* include/openbabel/plugin.h: correct small error causing warning
+	
+	* src/format.cpp, src/plugin.cpp: small formatting changes in List
+	output.
+
 2010-06-29  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/charges/qeq* src/charges/qtpie* data/qeq.txt: Move QEq and

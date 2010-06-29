@@ -3,7 +3,7 @@ main.cpp - Main conversion program, command-line handling.
 
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
-Some portions Copyright (C) 2004-2007 by Chris Morley
+Some portions Copyright (C) 2004-2010 by Chris Morley
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -67,8 +67,8 @@ int main(int argc,char *argv[])
   bool gotInType = false, gotOutType = false;
   bool SplitOrBatch=false;
 
-  char *oext;
-  char *iext;
+  char *oext = NULL;
+  char *iext = NULL;
 
   //Save name of program without its path (and .exe)
   string pn(argv[0]);
@@ -127,7 +127,7 @@ int main(int argc,char *argv[])
                   break;
 
                 case 'o':
-                  //Parameter is the ouput format which overrides any file extension
+                  //Parameter is the output format which overrides any file extension
                   gotOutType = true;
                   oext = argv[arg] + 2;
                   if(!*oext)
@@ -203,7 +203,7 @@ int main(int argc,char *argv[])
                     help();
                   return 0;
 
-                case '-': //long option --nam text
+                case '-': //long option --name text
                   {
                     //Option's text is in the next and subsequent args, until one starts with -
                     char* nam = argv[arg]+2;
@@ -428,8 +428,9 @@ void help()
   cout << "-Hxxx (xxx is file format ID e.g. -Hcml) gives format info" <<endl; 
   cout << "-Hall Outputs details of all formats" <<endl; 
   cout << "-V Outputs version number" <<endl; 
-  cout << "-L \"BaseType\" Lists plugin classes of this type, e.g. L \"fingerprints\""<< endl;
-  cout << "   Use  -L \"plugins\", or just -L, for a list of BaseTypes" << endl; 
+  cout << "-L <category> Lists plugin classes of this category, e.g. <formats>" << endl;
+  cout << "   Use just -L for a list of plugin categories." << endl; 
+  cout << "   Use -L <ID> e.g. -L sdf for details of a format or other plugin." << endl; 
   cout << "-m Produces multiple output files, to allow:" <<endl;
   cout << "    Splitting: e.g.        " << program_name << " infile.mol -O new.smi -m" <<endl;
   cout << "      puts each molecule into new1.smi new2.smi etc" <<endl;
@@ -447,12 +448,13 @@ void help()
   OBFormat* pAPI= OBConversion::FindFormat("obapi");
   if(pAPI)
     cout << pAPI->Description();
-
-  cout << "The following file formats are recognized:" << endl;
-  OBPlugin::List("formats");
-  cout << "\nFormats can have their own options; they start with -a or -x " <<endl;
-  cout << " for input and output formats respectively." << endl;
-  cout << "See further specific info and options using -H<format-type>, e.g. -Hcml" << endl;
+  
+  cout << "To see a list of recognized file formats use\n  babel -L formats\n"
+       << "To see details and specific options for a particular format, e.g CML, use\n  babel -L cml\n"
+       << endl;
+  //cout << "The following file formats are recognized:" << endl;
+  //OBPlugin::List("formats");
+  //cout << "\nSee further specific info and options using -H<format-type>, e.g. -Hcml" << endl;
 }
 
 /* OpenBabel man page*/
