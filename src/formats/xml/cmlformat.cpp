@@ -1503,8 +1503,15 @@ namespace OpenBabel
                             OBStereo::Refs refs = cfg.refs;
                             vector<string> atomrefs;
                             atomrefs.push_back(atomIds[mol.GetAtomById(cfg.from)->GetIdx()]);
-                            for (OBStereo::RefIter ref = refs.begin(); ref!=refs.end(); ++ref)
-                              atomrefs.push_back(atomIds[mol.GetAtomById(*ref)->GetIdx()]);
+                            for (OBStereo::RefIter ref = refs.begin(); ref!=refs.end(); ++ref) {
+                              // According to http://cml.sourceforge.net/schema/cmlCore/HTMLDOCS/cmlCore.pdf,
+                              // "if there are only 3 ligands, the current atom should be included
+                              //  in the 4 atomRefs.".
+                              if ( (OBStereo::Ref)*ref == OBStereo::ImplicitRef) // e.g. for [N@@](C1)(C2)C(C2)CC1
+                                atomrefs.push_back(atomIds[mol.GetAtomById(cfg.center)->GetIdx()]); // Add the from atom again
+                              else                                
+                                atomrefs.push_back(atomIds[mol.GetAtomById(*ref)->GetIdx()]);
+                            }
 
                             xmlTextWriterStartElementNS(writer(), prefix, C_ATOMPARITY, NULL);
                             xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS4, "%s %s %s %s",
