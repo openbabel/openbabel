@@ -195,9 +195,10 @@ if(NOT MSVC)
   endif (CMAKE_COMPILER_IS_GNUCXX AND NOT APPLE)
 endif(NOT MSVC)
 
-# To avoid warnings when linking the plugins
+# To avoid warnings when linking the plugins and exes
 if(MINGW)
   set (CMAKE_MODULE_LINKER_FLAGS "-Wl,--enable-auto-import ${CMAKE_MODULE_LINKER_FLAGS}")
+  set (CMAKE_EXE_LINKER_FLAGS "-Wl,--enable-auto-import ${CMAKE_EXE_LINKER_FLAGS}")
 endif(MINGW)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
