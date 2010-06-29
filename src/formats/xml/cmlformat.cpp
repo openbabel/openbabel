@@ -70,7 +70,7 @@ namespace OpenBabel
       return
         "Chemical Markup Language\n"
         "An XML format.\n"
-        "Write options for CML: -x[flags] (e.g. -x1ac)\n"
+        "Write Options for CML: -x[flags] (e.g. -x1ac)\n"
         "  1  output CML1 (rather than CML2)\n"
         "  a  output array format for atoms and bonds\n"
         "  A  write aromatic bonds as such, not Kekule form\n"
@@ -80,7 +80,7 @@ namespace OpenBabel
         "  c  continuous output: no formatting\n"
         "  p  output properties\n"
         "  N<prefix> add namespace prefix to elements\n\n"
-        "Input options, e.g. -a2\n"
+        "Read Options, e.g. -a2\n"
         "  2  input 2D rather than 3D coordinates if both provided\n\n"
         "In the absence of hydrogenCount and any explicit hydrogen on\n"
         "an atom, implicit hydrogen is assumed to be present appropriate\n"

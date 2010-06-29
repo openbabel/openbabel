@@ -1,5 +1,11 @@
 2010-06-29 Noel O'Boyle
 
+	* src/formats/*format.cpp, src/formats/xml/*format.cpp: Edit some
+	Descriptions() to replace Input with Read and Output with Write. Also
+	uppercased any "options" to "Options".
+
+2010-06-29 Noel O'Boyle
+
 	* src/formats/xml/cmlformat.cpp: Partial fix for chiral N problems.
 	See PR#3022295.
 

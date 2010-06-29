@@ -60,7 +60,7 @@ public:
       "(3D coordinates are ignored.) Include --gen2D explicitly if you wish\n"
       "any existing 2D coordinates to be recalculated.\n\n"
       
-      "Write options e.g. -xu\n"
+      "Write Options e.g. -xu\n"
       " u no element-specific atom coloring\n"
       "    Use this option to produce a black and white diagram\n"
       " b black background\n"

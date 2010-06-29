@@ -50,12 +50,12 @@ public:
   {
       return
 "ChemKin format\n"
-"Input Options e.g. -aL\n"
+"Read Options e.g. -aL\n"
 "f <file> File with standard thermo data: default therm.dat\n"
 "z Use standard thermo only\n"
 "L Reactions have labels (Usually optional)\n"
 "\n"
-"Output options e.g. -xs\n"
+"Write Options e.g. -xs\n"
 "s Simple output: reactions only\n"
 "t Do not include species thermo data\n"
 "0 Omit reactions with zero rates\n"

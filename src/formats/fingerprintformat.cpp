@@ -35,7 +35,7 @@ namespace OpenBabel
       "Fingerprint format\n"
       "Constructs and displays fingerprints and (for multiple input objects)\n"
       "the Tanimoto coefficient and whether a superstructure of the first object\n"
-      "Output options e.g. -xfFP3 -xN128\n"
+      "Write Options e.g. -xfFP3 -xN128\n"
       " f<id> fingerprint type\n"
       " N# fold to specified number of bits, 32, 64, 128, etc.\n"
       " h  hex output when multiple molecules\n"

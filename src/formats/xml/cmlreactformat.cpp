@@ -43,7 +43,7 @@ public:
       "CML Reaction format\n"
       "Minimal implementation\n"
       "This implementation uses libxml2.\n"
-      "Write options (e.g. -x1a)\n"
+      "Write Options (e.g. -x1a)\n"
       " 1  output CML1 (rather than CML2)\n"
       " a  output array format for atoms and bonds\n"
       " l  molecules NOT in MoleculeList\n"
