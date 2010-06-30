@@ -1201,6 +1201,8 @@ namespace OpenBabel
 
     _origLogLevel = _loglvl;
 
+    OBBitVec fixed = _constraints.GetFixedBitVec();
+    rl.SetFixAtoms(fixed);
     rl.Setup(_mol);
     rotamers.SetBaseCoordinateSets(_mol);
     rotamers.Setup(_mol, rl);
@@ -1318,6 +1320,8 @@ namespace OpenBabel
     if (_mol.GetCoordinates() == NULL)
       return;
 
+    OBBitVec fixed = _constraints.GetFixedBitVec();
+    rl.SetFixAtoms(fixed);
     rl.Setup(_mol);
     rotamers.SetBaseCoordinateSets(_mol);
     rotamers.Setup(_mol, rl);
@@ -1483,6 +1487,8 @@ namespace OpenBabel
     if (_mol.GetCoordinates() == NULL)
       return;
 
+    OBBitVec fixed = _constraints.GetFixedBitVec();
+    rl.SetFixAtoms(fixed);
     rl.Setup(_mol);
     rotamers.SetBaseCoordinateSets(_mol);
     rotamers.Setup(_mol, rl);

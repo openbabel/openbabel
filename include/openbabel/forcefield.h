@@ -396,6 +396,9 @@ namespace OpenBabel
     //! OBForceField::Setup() to determine if a call to 
     //! OBForceField::SetupCalculations() is needed)
     OBBitVec GetIgnoredBitVec() { return _ignored; }
+    //! \return the fixed atom indexes as bitvec. (used in 
+    //! OBForceField::SystematicRotorSearch() and similar)
+    OBBitVec GetFixedBitVec() { return _fixed; }
     //@}
  
   private:
