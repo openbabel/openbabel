@@ -590,10 +590,20 @@ namespace OpenBabel
     used.ToVecInt(children);
   }
 
-  /*!
-  **\brief Calculates the graph theoretical distance of each atom.
-  ** Vector is indexed from zero
-  */
+  /*! \brief Calculates the graph theoretical distance (GTD) of each atom.
+   *
+   * Creates a vector (indexed from zero) containing, for each atom
+   * in the molecule, the number of bonds plus one to the most 
+   * distant non-H atom.
+   *
+   * For example, for the molecule H3CC(=O)Cl the GTD value for C1
+   * would be 3, as the most distant non-H atom (either Cl or O) is
+   * 2 bonds away.
+   * 
+   * Since the GTD measures the distance to non-H atoms, the GTD values
+   * for terminal H atoms tend to be larger than for non-H terminal atoms.
+   * In the example above, the GTD values for the H atoms are all 4.
+   */
   bool OBMol::GetGTDVector(vector<int> &gtd)
   //calculates the graph theoretical distance for every atom
   //and puts it into gtd
