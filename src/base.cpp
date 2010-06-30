@@ -26,6 +26,11 @@ using namespace std;
 namespace OpenBabel
 {
 
+  std::string OBReleaseVersion()
+  {
+    return std::string(BABEL_VERSION); // defined in babelconfig.h
+  }
+
   /** \class OBBase base.h <openbabel/base.h>
  
   The various classes (Atom, Bond, Molecule) inherit from base classes--

@@ -40,6 +40,9 @@ namespace OpenBabel
 class OBBase;
 class OBConversion; //used only as pointer
 
+//! \return the version of the Open Babel library for feature-detection (e.g. "2.3.1")
+  std::string OBReleaseVersion();
+
   //! \brief Classification of data stored via OBGenericData class and subclasses.
   //!
   //! OBGenericDataType can be used as a faster, direct access to a particular category

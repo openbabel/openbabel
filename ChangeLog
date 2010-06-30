@@ -1,4 +1,14 @@
-2010-06029 Chris Morley
+2010-06-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefield.cpp: Set fixed atom constraints on rotor rules
+	during rotamer/conformer searching, from Chris Wassman.
+
+	* include/openbabel/base.h, src/base.cpp: Add OBReleaseVersion()
+	global function, as suggested by Tobias Schmidt for code detection
+	of versions and features. (Most useful from scripting interfaces,
+	which won't have BABEL_VERSION as a macro.)
+
+2010-06-29 Chris Morley
 
 	* tools/babel.cpp, tools/obabel.cpp: -H no longer lists all formats
 	  (As suggested by Noel)
