@@ -6,6 +6,13 @@
 /* The version of Open Babel */
 #define BABEL_VERSION "@BABEL_VERSION@"
 
+/* Version check macro
+   Can be used like #if (OB_VERSION >= OB_VERSION_CHECK(2, 2, 99)) */
+#define OB_VERSION_CHECK(major, minor, patch) ((major<<16)|(minor<<8)|(patch))
+
+/* OB_VERSION is (major << 16) + (minor << 8) + patch */
+#define OB_VERSION OB_VERSION_CHECK(@BABEL_MAJ_VER@, @BABEL_MIN_VER@, @BABEL_PATCH_VER@)
+
 /* The file extension used for shared modules */
 #define MODULE_EXTENSION "@MODULE_EXTENSION@"
 

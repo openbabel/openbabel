@@ -1,3 +1,6 @@
+2010-07-01  Konstantin Tokarev <annulen@yandex.ru>
+	* src/confi.h.cmake: Added macros OB_VERSION_CHECK and OB_VERSION
+
 2010-06-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefield.cpp: Set fixed atom constraints on rotor rules
