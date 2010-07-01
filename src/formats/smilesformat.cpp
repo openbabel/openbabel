@@ -145,18 +145,23 @@ namespace OpenBabel {
 
     virtual const char* Description() {
       return
-        "Canonical SMILES format.\n"
-        "A linear text format which can describe the connectivity\n"
-        "and chirality of a molecule, and has a single 'canonical'\n"
-        "form for any particular molecule.\n"
+        "Canonical SMILES format\n"
+	"A canonical form of the SMILES linear text format\n"
+        "The SMILES format is a linear text format which can describe the\n"
+       	"connectivity "
+        "and chirality of a molecule. Canonical SMILES gives a single\n"
+       	"'canonical' form for any particular molecule.\n\n"
+
         "Write Options e.g. -xt\n"
         "  a  Output atomclass like [C:2], if available\n"
         "  h  Output explicit hydrogens as such\n"
         "  i  Do not include isotopic or chiral markings\n"
         "  n  No molecule name\n"
         "  r  Radicals lower case eg ethyl is Cc\n"
-        "  t  Molecule name only\n"
-        "\n";
+        "  t  Molecule name only\n\n"
+
+        "See also, the \"regular\" SMILES format, which results in faster\n"
+        "output, since no canonical numbering is performed.\n\n"; 
     };
 
   };

@@ -1,3 +1,9 @@
+2010-07-01  Noel O'Boyle
+	
+	* src/formats/*format.cpp: Added text from wiki formats [A-F] to their
+	Descriptions in the .cpp file. I added some markup to CML and
+	Fastsearch.
+
 2010-07-01  Konstantin Tokarev <annulen@yandex.ru>
 	* src/confi.h.cmake: Added macros OB_VERSION_CHECK and OB_VERSION
 

@@ -41,7 +41,7 @@ public:
   {
     return 
       "CML Reaction format\n"
-      "Minimal implementation\n"
+      "A minimal implementation of the CML Reaction format\n"
       "This implementation uses libxml2.\n"
       "Write Options (e.g. -x1a)\n"
       " 1  output CML1 (rather than CML2)\n"
@@ -52,8 +52,21 @@ public:
       " r  omit rate constant data\n"
       " N<prefix> add namespace prefix to elements\n"
       " M  add obr prefix on non-CMLReact elements\n"
-      " p  add properties to molecules\n"
-      "\n";
+      " p  add properties to molecules\n\n"
+
+      "The implementation of this format which reads and writes to and from\n"
+      "OBReaction objects is fairly minimal at present. (Currently the only\n"
+      "other reaction format in OpenBabel is RXN.) During reading, only the\n"
+      "elements <reaction>, <reactant>, <product> and <molecule>  are acted\n"
+      "upon (the last through CML). The molecules can be collected together\n"
+      "in a list at the start of the file and referenced in the reactant and\n"
+      "product via e.g. <molecule ref=\"mol1\">.\n\n"
+
+      "On writing, the list format can be specified with the -xl option. The\n"
+      "list containers are <moleculeList> and <reactionList> and the overall\n"
+      "wrapper is <mechanism>. These are non-standard CMLReact element names\n"
+      "and would have to be changed (in the code) to <list>,<list> and <cml>\n"
+      "if this was unacceptable.\n\n";
   }
 
   virtual const char* TargetClassDescription()

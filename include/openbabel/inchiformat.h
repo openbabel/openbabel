@@ -56,7 +56,7 @@ public:
     return 
     "InChI format\n"
     "IUPAC/NIST molecular identifier\n"
-    "Write options, e.g. -xat\n"
+    "Write Options, e.g. -xat\n"
     //" n do not use 'recommended' InChI options\n"
     " X <Option string> List of additional InChI options\n"
     //" F include fixed hydrogen layer\n"
@@ -71,7 +71,7 @@ public:
     " e compare first molecule to others\n"
     " T <param> truncate InChI, /nostereo etc.\n\n"
 
-    "Input options, e.g. -an\n"
+    "Read Options, e.g. -an\n"
     " X <Option string> List of InChI options\n"
     " n molecule name follows InChI on same line\n"
     " a add InChI string to molecule name\n\n"
