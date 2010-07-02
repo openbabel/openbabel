@@ -1,3 +1,22 @@
+2010-07-03  Chris Morley
+
+	* src/GUI/optswx.cpp: can use "not displayed in GUI" in option
+	list in Description()
+	
+	* include/openbabel/depict/painter.h add operator += for OBColor
+	
+	* include/openbabel/depict/depict.h,svgpainter.h,
+	  src/depict/depict.cpp, src/depict/svgpainter.cpp: add option
+	  for internalColor on atoms and bonds (by OBPairData)
+      
+    * src/formats/svgformat.cpp:add option to display internalColor
+    Remove "Additional Option" in Description
+    
+	* src/formats/xml/cmlformat.cpp: read and write color on bonds
+
+	* src/ops/substructdata.cpp:add new op --ss which is like -s but
+	colors the substructure
+
 2010-07-02  Noel O'Boyle
 
 	* include/openbabel/base.h: Add OBAPI declaration to new global

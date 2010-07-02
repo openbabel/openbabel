@@ -59,6 +59,7 @@ namespace OpenBabel
       bool m_withViewBox;
       double m_width, m_height, m_x, m_y;
       OBColor m_Pencolor;
+      OBColor m_OrigBondcolor;
       OBColor m_Fillcolor;
       double m_PenWidth;
       int m_fontPointSize;

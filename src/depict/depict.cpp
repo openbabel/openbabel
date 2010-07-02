@@ -318,6 +318,11 @@ namespace OpenBabel
       OBAtom *begin = bond->GetBeginAtom();
       OBAtom *end = bond->GetEndAtom();
 
+      if((d->options & internalColor) && bond->HasData("color"))
+        d->painter->SetPenColor(OBColor(bond->GetData("color")->GetValue()));
+      else
+        d->painter->SetPenColor(d->bondColor);
+
       if (bond->IsWedge()) {
         d->DrawWedge(begin, end);
       } else if (bond->IsHash()) {
@@ -350,6 +355,12 @@ namespace OpenBabel
         OBBond *ringBond = mol->GetBond(begin, end);
         if (drawnBonds.BitIsSet(ringBond->GetId()))
           continue;
+
+        if((d->options & internalColor) && ringBond->HasData("color"))
+          d->painter->SetPenColor(OBColor(ringBond->GetData("color")->GetValue()));
+        else
+          d->painter->SetPenColor(d->bondColor);
+
         d->DrawRingBond(begin, end, center, ringBond->GetBO());
         drawnBonds.SetBitOn(ringBond->GetId());
       }
@@ -372,7 +383,9 @@ namespace OpenBabel
           break;
       }
 
-      if(d->options & bwAtoms)
+      if((d->options & internalColor) && atom->HasData("color"))
+        d->painter->SetPenColor(OBColor(atom->GetData("color")->GetValue()));
+      else if(d->options & bwAtoms)
         d->painter->SetPenColor(d->bondColor);
       else
         d->painter->SetPenColor(OBColor(etab.GetRGB(atom->GetAtomicNum())));

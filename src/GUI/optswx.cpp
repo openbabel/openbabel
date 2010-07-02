@@ -117,23 +117,15 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
   char* p = pNewStr;
   
   bool OptionsFound=false;
-  char* lineend = NULL;
   
+  std::string qualifiedOptions;
   if(StartText)
-  {
-    do
-    {
-      p=strcasestr(p,StartText);//locate StartText
-      if(!p) break;
-      p += strlen(StartText);
-    }while(isalpha(*p));//next char is not a letter or number
-    if(p)
-      lineend=strchr(p,'\n');
-  }
-  if(p && (p=strcasestr(p,"option")) && (!lineend  || p<lineend))
+    qualifiedOptions = StartText; 
+  qualifiedOptions += " options";
+  p = strcasestr(p, qualifiedOptions.c_str());
+  if(p)
   {
     OptionsFound=true;
-
     p = strchr(p,'\n')+1; //options start on next line		
     while(p && p-1 && *p && *p!='\n') //loop for all options until blank line
     {
@@ -148,6 +140,19 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
         p = strchr(p,'\n')+1;
         continue;
       }
+      //Ignore lines containing "not displayed in GUI"
+      char* lineend = strchr(p, '\n');
+      if(p)
+      {
+        *lineend = '\0';
+        char* pw = strstr(p, "not displayed in GUI");
+        *lineend = '\n';
+        if(pw)
+        {
+          p = lineend+1;
+          continue;
+        }
+      }      
 
       if(!(*p--)) break;
       wxString oname;

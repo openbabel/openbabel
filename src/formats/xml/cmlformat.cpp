@@ -101,18 +101,18 @@ namespace OpenBabel
         "  - On <bond>: atomRefs2, order, CML1: atomRef, atomRef1, atomRef2\n\n"
 
         "Write Options for CML: -x[flags] (e.g. -x1ac)\n"
-        "  1  output CML1 (rather than CML2)\n"
-        "  a  output array format for atoms and bonds\n"
+        "  1  write CML1 (rather than CML2)\n"
+        "  a  write array format for atoms and bonds\n"
         "  A  write aromatic bonds as such, not Kekule form\n"
         "  h  use hydrogenCount for all hydrogens\n"
-        "  m  output metadata\n"
+        "  m  write metadata\n"
         "  x  omit XML and namespace declarations\n"
         "  c  continuous output: no formatting\n"
-        "  p  output properties\n"
+        "  p  write properties\n"
         "  N<prefix> add namespace prefix to elements\n\n"
 
         "Read Options, e.g. -a2\n"
-        "  2  input 2D rather than 3D coordinates if both provided\n\n"
+        "  2  read 2D rather than 3D coordinates if both provided\n\n"
 
         "In the absence of hydrogenCount and any explicit hydrogen on\n"
         "an atom, implicit hydrogen is assumed to be present appropriate\n"
@@ -774,6 +774,7 @@ namespace OpenBabel
       {
         int indx1=0,indx2=0, ord=0;
         string bondstereo, BondStereoRefs;
+        string colour;
         bool PossibleBond = false;
 
         for(AttributeIter=BondIter->begin();AttributeIter!=BondIter->end();++AttributeIter)
@@ -834,6 +835,9 @@ namespace OpenBabel
                   ord = strtol(value.c_str(), &endptr, 10);
                 }
               }
+
+            else if(attrname=="color")
+              colour=value[0];
           }
 
         if(PossibleBond)
@@ -844,12 +848,20 @@ namespace OpenBabel
                 return false;
               }
             if(ord==0) //Bonds are single if order is not specified
-            {
-              ord=1;
-              //But unspecied bond order means cannot assign spinmultiplicity
-              _pmol->SetIsPatternStructure();
-            }
+              {
+                ord=1;
+                //But unspecied bond order means cannot assign spinmultiplicity
+                _pmol->SetIsPatternStructure();
+              }
             _pmol->AddBond(indx1,indx2,ord,0);
+
+            if(!colour.empty())
+              {
+                OBPairData *dp = new OBPairData();
+                dp->SetAttribute("color");
+                dp->SetValue(colour.c_str());
+                _pmol->GetBond(_pmol->NumBonds()-1)->SetData(dp);
+              }
           }
       }
 
@@ -1748,6 +1760,10 @@ namespace OpenBabel
                     xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS2,"%s %s",
                           ref1.c_str(), ref2.c_str());
                     xmlTextWriterWriteFormatAttribute(writer(), C_ORDER,"%s", ord.str().c_str());
+                    
+                    if(pbond->HasData("color"))
+                      xmlTextWriterWriteFormatAttribute(writer(), C_COLOR,"%s",
+                          pbond->GetData("color")->GetValue().c_str());
 
                     if( (ctStereo_cit=ctStereos.find(pbond->GetIdx())) != ctStereos.end() )
                       {

@@ -58,6 +58,11 @@ namespace OpenBabel
     
     OBColor(std::vector<double> vec) : red(vec[0]), green(vec[1]), blue(vec[2]), alpha(1.0){}
 
+    bool operator !=(const OBColor& other)
+    {
+      return red!=other.red || green!=other.green || blue!=other.blue;
+    }
+
     double red, green, blue, alpha;
   };
 
