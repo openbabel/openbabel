@@ -1,3 +1,8 @@
+2010-07-02  Noel O'Boyle
+
+	* include/openbabel/base.h: Add OBAPI declaration to new global
+	function OBReleaseVersion()
+
 2010-07-01  Noel O'Boyle
 	
 	* src/formats/*format.cpp: Added text from wiki formats [A-F] to their
