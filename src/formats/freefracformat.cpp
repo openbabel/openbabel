@@ -32,10 +32,55 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Free Form Fractional format\n"
-        "Read Options e.g. -as\n"
-        "  s  Output single bonds only\n"
-        "  b  Disable bonding entirely\n\n";
+"Free Form Fractional format\n"
+"General purpose crystallographic format\n"
+"The \"free-form\" fractional format attempts to allow for input from a\n"
+"range of fractional / crystallography file formats. As such, it has only\n"
+"a few restrictions on input:\n\n"
+
+"- Line one of the file contains a title or comment.\n"
+"- Line two of the file contains the unit cell parameters separated by\n"
+"  whitespace and/or commas (i.e. \"a b c alpha beta gamma\").\n"
+"- Any remaining lines are parsed for atom information. Lines start with\n"
+"  the element symbol, followed by fractional X, Y, and Z coordinates\n"
+"  (in angstroms) separated by whitespace.\n\n"
+
+"Any numeric input (i.e., unit cell parameters, XYZ coordinates) can include\n"
+"designations of errors, although this is currently ignored. For example::\n\n"
+
+"  C 1.00067(3) 2.75(2) 3.0678(12)\n\n"
+
+"will be parsed as::\n\n"
+
+"  C 1.00067 2.75 3.0678\n\n"
+
+"When used as an **output** format, The first line written is the title of the\n"
+"molecule or the filename if no title is defined. If a molecule has a defined\n"
+"unit cell, then the second line will be formatted as::\n\n"
+
+"  a b c alpha beta gamma\n\n"
+
+"where a, b, c are the unit cell vector lengths, and alpha, beta, and gamma are\n"
+"the angles between them. These numbers are formatted as \"10.5\", which means that\n"
+"5 decimal places will be output for all numbers. In the case where no unit cell\n"
+"is defined for the molecule, the vector lengths will be defined as 1.0, and the\n"
+"angles to 90.0 degrees.\n\n"
+
+"Remaining lines define the atoms in the file. The first column is the atomic\n"
+"symbol, followed by the XYZ coordinates in 10.5 format (in angstroms).\n\n"
+
+"Here is an example file::\n\n"
+
+" ZnO test file\n"
+" 3.14 3.24 5.18 90.0 90.0 120.0\n"
+" O 0.66667  0.33333  0.3750\n"
+" O 0.33333  0.66667  0.8750\n"
+" Zn 0.66667  0.33333  0.0000\n"
+" Zn 0.33333  0.66667  0.5000\n\n"
+
+"Read Options e.g. -as\n"
+"  s  Output single bonds only\n"
+"  b  Disable bonding entirely\n\n";
     };
 
     virtual const char* SpecificationURL()

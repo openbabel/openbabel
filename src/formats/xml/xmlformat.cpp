@@ -30,10 +30,20 @@ public:
   {
     return
       "General XML format\n"
-      "Calls a particular XML format depending on the XML namespace,\n"
-      "or the default format (which is probably CML).\n"
-      "This implementation uses libxml2.\n"
-      "Read option, e.g. -an\n"
+      "Calls a particular XML format depending on the XML namespace.\n"
+      "This is a general XML \"format\" which reads a generic XML file and infers\n"
+      "its format from the namespace as given in a xmlns attribute on an element.\n"
+      "If a namespace is recognised as associated with one of the XML formats in\n"
+      "OpenBabel, and the type of the object (e.g. a molecule) is appropriate to\n"
+      "the output format then this is used to input a single object. If no namespace\n"
+      "declaration is found the default format (currently CML) is used.\n\n"
+
+      "The process is repeated for any subsequent input so that it is possible to\n"
+      "input objects written in several different schemas from the same document.\n"
+      "The file CMLandPubChem.xml illustrates this and contains molecules in both\n"
+      "CML and PubChem formats.\n\n"
+      "This implementation uses libxml2.\n\n"
+      "Read Options, e.g. -an\n"
       " n  Read objects of first namespace only\n\n";
   }
 

@@ -84,7 +84,7 @@ namespace OpenBabel {
 " a  Add Tanimoto coeff to title in similarity search\n"
 " l# Maximum number of candidates. Default<4000>\n"
 " e  Exact match\n"
-" S\"filename\"  Structure spec in a file:\n"
+" S\"filename\"  Structure spec in a file\n"
 " n  No further SMARTS filtering after fingerprint phase\n"
 " h  SMARTS uses explicit H in pattern file\n\n"
 ;

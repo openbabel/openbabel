@@ -28,13 +28,26 @@ public:
   virtual const char* Description() //required
   {
     return
-"Copies raw text\n"
-"Objects can be chemically filtered without the risk\n"
-"of losing any additional information they contain,\n"
-"since no format conversion is done.\n"
-"*** CURRENTLY NOT WORKING CORRECTLY FOR FILES WITH WINDOWS LINE ENDINGS\n"
-"Note that XML files may be missing non-object elements\n"
-"at the start or end and so may no longer be well formed.\n\n";
+"Copy raw text\n"
+"A utility format for exactly copying the text of a chemical file format\n"
+"This format allows you to filter molecules from multimolecule files\n"
+"without the risk of losing any additional information they contain,\n"
+"since no format conversion is carried out.\n\n"
+
+".. warning::\n\n"
+" Currently not working correctly for files with Windows line endings.\n\n"
+
+"Example:\n\n"
+
+"  Extract only structures that include at least one aromatic carbon\n"
+"  (by matching the SMARTS pattern `[c]`)::\n\n"
+
+"   babel -s '[c]' database.sdf -ocopy new.sd\n\n"
+
+".. note::\n\n"
+" XML files may be missing non-object elements\n"
+" at the start or end and so may no longer be well formed.\n\n"
+;
   };
 
   virtual unsigned int Flags()

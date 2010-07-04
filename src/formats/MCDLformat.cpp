@@ -39,7 +39,8 @@ public:
   {
     return
     "MCDL format\n"
-    "Gakh A.A., Burnett M.N.,\n"
+    "Modular Chemical Descriptor Language\n"
+    "As described in Gakh A.A., Burnett M.N.,\n"
     "Modular Chemical Descriptor Language (MCDL):\n"
     "Composition, Connectivity and Supplementary Modules\n"
     "J.Chem.Inf.Comput.Sci, 2001, 41, 1494-1499"; 

@@ -56,13 +56,87 @@ namespace OpenBabel
 
 			virtual const char* Description()
 			{
-				stringstream ss;
+        stringstream ss;
+				ss <<
 
-				ss << "Multilevel Neighborhoods of Atoms (MNA)\n"
-				"Iteratively generated 2D descriptors suitable for QSAR\n"
-				"\n"
-				"Write Options e.g. -x" << levels_option << "1 \n"
-				"  " << levels_option << "#  Levels (default = " << levels << ")\n";
+"Multilevel Neighborhoods of Atoms (MNA)\n"
+"Iteratively generated 2D descriptors suitable for QSAR\n"
+"Multilevel Neighborhoods of Atoms (MNA) descriptors are\n"
+"2D molecular fragments suitable for use in QSAR modelling [fpbg99]_.\n"
+"The format outputs a complete descriptor fingerprint per\n"
+"molecule. Thus, a 27-atom (including hydrogen) molecule would\n"
+"result in 27 descriptors, one per line.\n\n"
+
+"MNA descriptors are generated recursively. Starting at the origin,\n"
+"each atom is appended to the descriptor immediately followed by a\n"
+"parenthesized list of its neighbours. This process iterates until the\n"
+"specified distance from the origin, also known as the depth of the\n"
+"descriptor.\n\n"
+
+"Elements are simplified into 32 groups. Each group has a representative\n"
+"symbol used to stand for any element in that group:\n\n"
+
+"==== ========\n"
+"Type Elements\n"
+"==== ========\n"
+"H    H\n"
+"C    C\n"
+"N    N\n"
+"O    O\n"
+"F    F\n"
+"Si   Si\n"
+"P    P\n"
+"S    S\n"
+"Cl   Cl\n"
+"Ca   Ca\n"
+"As   As\n"
+"Se   Se\n"
+"Br   Br\n"
+"Li   Li, Na\n"
+"B    B, Re\n"
+"Mg   Mg, Mn\n"
+"Sn   Sn, Pb\n"
+"Te   Te, Po\n"
+"I    I, At\n"
+"Os   Os, Ir\n"
+"Sc   Sc, Ti, Zr\n"
+"Fe   Fe, Hf, Ta\n"
+"Co   Co, Sb, W\n"
+"Sr   Sr, Ba, Ra\n"
+"Pd   Pd, Pt, Au\n"
+"Be   Be, Zn, Cd, Hg\n"
+"K    K, Rb, Cs, Fr\n"
+"V    V, Cr, Nb, Mo, Tc\n"
+"Ni   Ni, Cu, Ge, Ru, Rh, Ag, Bi\n"
+"In   In, La, Ce, Pr, Nd, Pm, Sm, Eu\n"
+"Al   Al, Ga, Y, Gd, Tb, Dy, Ho, Er, Tm, Yb, Lu, Tl\n"
+"R    R, He, Ne, Ar, Kr, Xe, Rn, Ac, Th, Pa, U, Np, Pu, Am, Cm, Bk, Cf, Es, Fm, Md, No, Lr, Db, Jl\n"
+"==== ========\n\n"
+
+"Acyclic atoms are preceded by a hyphen \"-\" mark.\n\n"
+
+"Here's the multi-level neighborhood for the molecule\n"
+"represented by the SMILES string CC(=O)Cl::\n\n"
+
+" # The contents of this file were derived from\n"
+" # Title = acid chloride\n"
+" -C(-H(-C)-H(-C)-H(-C)-C(-C-O-Cl))\n"
+" -C(-C(-H-H-H-C)-O(-C)-Cl(-C))\n"
+" -O(-C(-C-O-Cl))\n"
+" -Cl(-C(-C-O-Cl))\n"
+" -H(-C(-H-H-H-C))\n"
+" -H(-C(-H-H-H-C))\n"
+" -H(-C(-H-H-H-C))\n\n"
+
+".. [fpbg99] Dmitrii Filimonov, Vladimir Poroikov, Yulia Borodina, and\n"
+"            Tatyana Gloriozova. **Chemical Similarity Assessment through\n"
+"            Multilevel Neighborhoods of Atoms: Definition and Comparison with\n" 
+"            the Other Descriptors.** *J. Chem. Inf. Comput. Sci.* **1999**, *39*, 666-670.\n"
+"            [`Link <http://dx.doi.org/10.1021/ci980335o>`_]\n\n"
+
+        "Write Options e.g. -x" << levels_option << "1 \n"
+				"  " << levels_option << "#  Levels (default = " << levels << ")\n\n"
+        ;
 
 				static const string s(ss.str());
 

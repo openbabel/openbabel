@@ -56,6 +56,9 @@ public:
     return 
     "InChI format\n"
     "IUPAC/NIST molecular identifier\n"
+    "Experimental InChI read support was added in version 2.1,\n"
+    "although this does not always support stereochemistry.\n\n"
+
     "Write Options, e.g. -xat\n"
     //" n do not use 'recommended' InChI options\n"
     " X <Option string> List of additional InChI options\n"
@@ -75,19 +78,20 @@ public:
     " X <Option string> List of InChI options\n"
     " n molecule name follows InChI on same line\n"
     " a add InChI string to molecule name\n\n"
-    "Currently the output is standard InChI only."
-    "InChI options may be reintroduced later."
-    " The InChI options should be space delimited in a single quoted string.\n"
-    " See InChI documentation for possible options.\n\n"
+    "Currently the output is standard InChI only. InChI options may be\n"
+    "reintroduced later.\n\n"
 
-    " Truncation parameters used with -xT\n"
-    "/formula  formula only\n"
-    "/connect  formula and connectivity only\n"
-    "/nostereo ignore E/Z and sp3 stereochemistry\n"
-    "/sp3      ignore sp3 stereochemistry\n"
-    "/noEZ     ignore E/Z steroeochemistry\n"
-    "/nochg    ignore charge and protonation\n"
-    "/noiso    ignore isotopes\n\n"
+    "The InChI options should be space delimited in a single quoted string.\n"
+    "See InChI documentation for possible options.\n\n"
+
+    "Truncation parameters used with -xT:\n\n"
+    "/formula   formula only\n"
+    "/connect   formula and connectivity only\n"
+    "/nostereo  ignore E/Z and sp3 stereochemistry\n"
+    "/sp3       ignore sp3 stereochemistry\n"
+    "/noEZ      ignore E/Z steroeochemistry\n"
+    "/nochg     ignore charge and protonation\n"
+    "/noiso     ignore isotopes\n\n"
 ;
   };
 

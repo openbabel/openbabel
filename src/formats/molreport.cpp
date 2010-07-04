@@ -37,7 +37,34 @@ namespace OpenBabel
     {
       return
         "Open Babel molecule report\n"
-        "No comments yet\n";
+        "Generates a summary of the atoms and bonds in a molecule\n"
+        "Example output::\n\n"
+        " TITLE: Ethanol.mopout\n"
+" FORMULA: C2H6O\n"
+" MASS: 46.0684\n"
+" ATOM:         1   C TYPE: C3     HYB:  3 CHARGE:  -0.2151\n"
+" ATOM:         2   C TYPE: C3     HYB:  3 CHARGE:  -0.0192\n"
+" ATOM:         3   O TYPE: O3     HYB:  3 CHARGE:  -0.3295\n"
+" ATOM:         4   H TYPE: HC     HYB:  0 CHARGE:   0.0771\n"
+" ATOM:         5   H TYPE: HC     HYB:  0 CHARGE:   0.0873\n"
+" ATOM:         6   H TYPE: HC     HYB:  0 CHARGE:   0.0874\n"
+" ATOM:         7   H TYPE: HC     HYB:  0 CHARGE:   0.0577\n"
+" ATOM:         8   H TYPE: HC     HYB:  0 CHARGE:   0.0577\n"
+" ATOM:         9   H TYPE: HC     HYB:  0 CHARGE:   0.1966\n"
+" BOND:         0 START:         8 END:         2 ORDER:   1\n"
+" BOND:         1 START:         6 END:         1 ORDER:   1\n"
+" BOND:         2 START:         1 END:         2 ORDER:   1\n"
+" BOND:         3 START:         1 END:         4 ORDER:   1\n"
+" BOND:         4 START:         1 END:         5 ORDER:   1\n"
+" BOND:         5 START:         2 END:         3 ORDER:   1\n"
+" BOND:         6 START:         2 END:         7 ORDER:   1\n"
+" BOND:         7 START:         3 END:         9 ORDER:   1\n\n"
+
+".. seealso::\n\n"
+
+" :ref:`Open_Babel_report_format`\n\n"
+
+;
     };
 
     virtual const char* SpecificationURL()

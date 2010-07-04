@@ -43,12 +43,12 @@ public:
       "the containing element, such as a browser window.\n\n"
 
       "Multiple molecules are displayed in a grid of dimensions specified by\n"
-      "the -xr and -xc options (number of rows and columns respectively).\n"
+      "the `-xr` and `-xc` options (number of rows and columns respectively).\n"
       "When displayed in an appropriate program, e.g. Firefox, there is\n"
       "javascript support for zooming (with the mouse wheel)\n"
       "and panning (by dragging with the left mouse button).\n\n"
       
-      "If both -xr and -xc are specified, they define the maximum number of\n"
+      "If both `-xr` and `-xc` are specified, they define the maximum number of\n"
       "molecules that are displayed.\n"    
       "If only one of them is displayed, then the other is calculated so that\n"
       "ALL the molecules are displayed.\n"
@@ -57,7 +57,7 @@ public:
 
       "By default, 2D atom coordinates are generated (using gen2D) unless they\n"
       "are already present. This can be slow with a large number of molecules.\n"
-      "(3D coordinates are ignored.) Include --gen2D explicitly if you wish\n"
+      "(3D coordinates are ignored.) Include `--gen2D` explicitly if you wish\n"
       "any existing 2D coordinates to be recalculated.\n\n"
       
       "Write Options e.g. -xu\n"
@@ -90,8 +90,10 @@ public:
       "    This applies to structures which have an alternative, usually\n"
       "    shorter, representation already present. This might have been input\n"
       "    from an A or S superatom entry in an sd or mol file, or can be\n"
-      "    generated using the --genalias option. For example:\n"
-      "      echo \"c1cc(C=O)ccc1C(=O)O\" | babel -ismi out.svg --genalias -xA\n"
+      "    generated using the --genalias option. For example::\n\n"
+
+      "      echo \"c1cc(C=O)ccc1C(=O)O\" | babel -ismi out.svg --genalias -xA\n\n"
+
       "    would add a aliases COOH and CHO to represent the carboxyl and\n"
       "    aldehyde groups and would display them as such in the svg diagram.\n"
       "    The aliases which are recognized are in data/superatom.txt, which\n"
@@ -100,12 +102,14 @@ public:
       "    Useful if the output is to be embedded in another xml file.\n\n"
 
       "If the input molecule(s) contain explicit hydrogen, you could consider\n"
-      "improving the appearance of the diagram by adding an option -d to make\n"
+      "improving the appearance of the diagram by adding an option `-d` to make\n"
       "it implicit. Hydrogen on hetero atoms and on explicitly drawn C is\n"
       "always shown.\n"
 
-      "For example, if input.smi had 10 molecules:\n"
-      "      babel input.smi out.svg -xbCe\n"
+      "For example, if input.smi had 10 molecules::\n\n"
+
+      "      babel input.smi out.svg -xbCe\n\n"
+
       "would produce a svg file with a black background, with no explict\n"
       "terminal carbon, and with an embedded cml representation of each\n"
       "molecule. The structures would be in two rows of four and one row\n"

@@ -37,7 +37,13 @@ public:
   {
     return 
       "PubChem format\n"
-      "Minimal extraction of chemical structure information only.\n\n";
+      "An XML format containing information on PubChem entries.\n"
+      "`PubChem <http://pubchem.ncbi.nlm.nih.gov/>`_ is a freely-available\n"
+      "database of chemical compounds and their properties.\n\n"
+      "OpenBabel only extracts the chemical structure information, and the\n"
+      "potentially large amount of other information is currently ignored.\n"
+      "The format seems to handle multiple conformers, but only one is read\n"
+      "(this needs testing).\n\n";
   }
 
   virtual const char* SpecificationURL()

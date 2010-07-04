@@ -320,7 +320,7 @@ public:
     {
         return
             "YASARA.org YOB format\n"
-            "No comments yet\n";
+            "The native YASARA format.\n";
     };
 
     virtual const char* SpecificationURL(){return

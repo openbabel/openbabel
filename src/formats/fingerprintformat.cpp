@@ -33,8 +33,46 @@ namespace OpenBabel
     virtual const char* Description() //required
     { return
       "Fingerprint format\n"
-      "Constructs and displays fingerprints and (for multiple input objects)\n"
-      "the Tanimoto coefficient and whether a superstructure of the first object\n"
+      "Generate or display molecular fingerprints.\n" 
+      "This format constructs and displays fingerprints and (for multiple input objects)\n"
+      "the Tanimoto coefficient and whether a superstructure of the first object.\n\n"
+
+"A list of available fingerprint types can be obtained by::\n\n"
+
+"  babel -L fingerprints\n\n"
+
+"The current default type FP2 is is of the Daylight type, indexing a molecule\n"
+"based on the occurrence of linear fragment up to 7 atoms in length. To use a\n"
+"fingerprint type other than the default, use the -xf option, for example::\n\n"
+
+"  babel infile.xxx -ofpt -xfFP3\n\n"
+
+"For a single molecule the fingerprint is output in hexadecimal form\n"
+"(intended mainly for debugging).\n\n"
+
+"With multiple molecules the hexadecimal form is output only if the -xh\n"
+"option is specified. But in addition the Tanimoto coefficient between the\n"
+"first molecule and each of the subsequent ones is displayed. If the first\n"
+"molecule is a substructure of the target molecule a note saying this is\n"
+"also displayed.\n\n"
+
+"The Tanimoto coefficient is defined as::\n\n"
+
+" Number of bits set in (patternFP & targetFP) / Number of bits in (patternFP | targetFP)\n\n"
+
+"where the boolean operations between the fingerprints are bitwise.\n\n"
+
+"The Tanimoto coefficient has no absolute meaning and depends on the design of the fingerprint.\n\n"
+
+"In Fingerprint FP4 each bit corresponds to a particular chemical feature,\n"
+"which are specified as SMARTS patterns in SMARTS_InteLigand.txt. Use the -xs\n"
+"option to output a tab separated list of the features in a molecule. For\n"
+"instance a well-known molecule gives::\n\n"
+
+" Primary_carbon: Carboxylic_acid: Carboxylic_ester: Carboxylic_acid_derivative:\n"
+" Vinylogous_carbonyl_or_carboxyl_derivative: Vinylogous_ester: Aromatic:\n"
+" Conjugated_double_bond: C_ONS_bond: 1,3-Tautomerizable: Rotatable_bond: CH-acidic:\n\n"
+
       "Write Options e.g. -xfFP3 -xN128\n"
       " f<id> fingerprint type\n"
       " N# fold to specified number of bits, 32, 64, 128, etc.\n"

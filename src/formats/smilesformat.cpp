@@ -103,8 +103,11 @@ namespace OpenBabel {
     {
       return
         "SMILES format\n"
-        "A linear text format which can describe the connectivity\n"
-        "and chirality of a molecule\n"
+        "A linear text format which can describe the connectivity and chirality of a molecule\n"
+        "OpenBabel implements the `OpenSMILES specification <http://opensmiles.org>`_.\n\n"
+
+        "It also implements an extension to this specification for radicals.\n\n"
+
         "Write Options e.g. -xt\n"
         "  a  Output atomclass like [C:2], if available\n"
         "  c  Output in canonical form\n"

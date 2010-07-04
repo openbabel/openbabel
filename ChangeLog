@@ -1,3 +1,8 @@
+2010-07-04  Noel O'Boyle
+	
+	* src/formats/*format.cpp: Added text from wiki formats [F-Z] to their
+	Descriptions in the .cpp file.
+
 2010-07-03  Chris Morley
 
 	* src/GUI/optswx.cpp: can use "not displayed in GUI" in option

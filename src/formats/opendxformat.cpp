@@ -46,7 +46,9 @@ namespace OpenBabel
     {
         return
         "OpenDX cube format for APBS\n"
-          "Read Only.\n";
+        "A volume data format for IBM's Open Source visualization software\n"
+          "The OpenDX support is currently designed to read the OpenDX cube\n"
+          "files from APBS. \n\n";
     }
 
     // Return a specification url, not really a specification since

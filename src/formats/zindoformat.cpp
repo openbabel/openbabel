@@ -32,7 +32,7 @@ public:
     {
         return
             "ZINDO input format\n"
-            "No comments yet\n";
+            "The input format for the semiempirical quantum-mechanics program ZINDO.\n";
     };
 
   virtual const char* SpecificationURL()

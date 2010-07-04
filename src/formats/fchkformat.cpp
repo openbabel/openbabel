@@ -49,6 +49,9 @@ namespace OpenBabel
     virtual const char * Description()
     {
       return "Gaussian formatted checkpoint file format\n"
+             "A formatted text file containing the results of a Gaussian calculation\n"
+             "Currently supports reading molecular geometries from fchk files. More to come.\n\n"
+
              "Read options e.g. -as\n"
              " s  Single bonds only\n"
              " b  No bond perception\n\n";

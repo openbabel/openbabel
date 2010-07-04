@@ -45,9 +45,23 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Sybyl descriptor format\n"
-           " [Molec_name]\\t[atomtype];[layer]-[frequency]-[neighbour_type];\n"
-           " Options: e.g. -xnc\n"
+        "MolPrint2D format\n"
+        "An implementation of the circular fingerprint MolPrint2D\n"
+        "MolPrint2D is an atom-environment fingerprint developed by Bender et al [bmg2004]_\n"
+        "which has been used in QSAR studies and for measuring molecular similarity.\n\n"
+
+        "  The format of the output is as follows::\n\n"
+        "   [Molec_name]\\t[atomtype];[layer]-[frequency]-[neighbour_type];\n\n"
+        "  Example for the SMILES string `CC(=O)Cl`::\n\n"
+        "   acid chloride   1;1-1-2;2-1-9;2-1-15;   2;1-1-1;1-1-9;1-1-15;   9;1-1-2;2-1-1;2-1-15;   15;1-1-2;2-1-1;2-1-9;\n\n" 
+
+".. [bmg2004] Andreas Bender, Hamse Y. Mussa, and Robert C. Glen. **Molecular\n"
+"             Similarity Searching Using Atom Environments, Information-Based Feature\n"
+"             Selection, and a Naive Bayesian Classifier.**\n"
+"             *J. Chem. Inf. Comput. Sci.* **2004**, *44*, 170-178.\n"
+"             [`Link <http://dx.doi.org/10.1021/ci034207y>`_]\n\n"
+
+           " Write Options: e.g. -xnc\n"
            "  n prefix molecule names with name of file \n"
            "  c use XML style separators instead \n"
            "  i use IDX atom types of babel internal \n\n";
