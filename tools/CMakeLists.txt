@@ -16,6 +16,7 @@ else(MINIMAL_BUILD)
         obprop
         obrotamer
         obrotate
+        obspectrophore
   )
 
   # no getopt on windows

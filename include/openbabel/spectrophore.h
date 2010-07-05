@@ -295,7 +295,7 @@ should be taken into account to differentiate between molecules, unnormalized
 Spectrophores&tm; are recommended.
 </P>
 */
-   class OBSpectrophore
+   class OBAPI OBSpectrophore
    {
       public:
       

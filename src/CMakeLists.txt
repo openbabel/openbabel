@@ -113,6 +113,7 @@ set(openbabel_srcs
     ring.cpp
     rotamer.cpp
     rotor.cpp
+    spectrophore.cpp
     tokenst.cpp
     transform.cpp
     typer.cpp
