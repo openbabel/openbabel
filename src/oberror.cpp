@@ -147,6 +147,7 @@ namespace OpenBabel
   {
     _messageCount[0] = _messageCount[1] = _messageCount[2] = 0;
     _messageCount[3] = _messageCount[4] = 0;
+    _filterStreamBuf = _inWrapStreamBuf = NULL;
     //  StartErrorWrap(); // (don't turn on error wrapping by default)
   }
 

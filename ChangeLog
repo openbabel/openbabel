@@ -7,6 +7,9 @@
 	autoconf anymore). Generate ob.tag file for projects generating
 	doxygen documentation with Open Babel symbols (e.g., Avogadro).
 
+	* src/oberror.cpp: Fix from Seth Alves to initialize stream
+	buffers (from Valgrind).
+
 2010-07-05  Konstantin Tokarev <annulen@yandex.ru>
 
 	* THANKS, authors.txt: Added myself to contributors
