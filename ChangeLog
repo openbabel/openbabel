@@ -1,9 +1,14 @@
+2010-07-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/forcefields/forcefielduff.cpp: Revert changes and parse
+	extra parameters for now.
+
 2010-07-05  Konstantin Tokarev <annulen@yandex.ru>
 
 	* THANKS, authors.txt: Added myself to contributors
 
 2010-07-04  Noel O'Boyle
-	
+
 	* src/formats/*format.cpp: Added text from wiki formats [F-Z] to their
 	Descriptions in the .cpp file.
 
@@ -11,16 +16,16 @@
 
 	* src/GUI/optswx.cpp: can use "not displayed in GUI" in option
 	list in Description()
-	
+
 	* include/openbabel/depict/painter.h add operator += for OBColor
-	
+
 	* include/openbabel/depict/depict.h,svgpainter.h,
 	  src/depict/depict.cpp, src/depict/svgpainter.cpp: add option
 	  for internalColor on atoms and bonds (by OBPairData)
-      
-    * src/formats/svgformat.cpp:add option to display internalColor
-    Remove "Additional Option" in Description
-    
+
+	* src/formats/svgformat.cpp:add option to display internalColor
+	Remove "Additional Option" in Description
+
 	* src/formats/xml/cmlformat.cpp: read and write color on bonds
 
 	* src/ops/substructdata.cpp:add new op --ss which is like -s but
@@ -32,12 +37,13 @@
 	function OBReleaseVersion()
 
 2010-07-01  Noel O'Boyle
-	
+
 	* src/formats/*format.cpp: Added text from wiki formats [A-F] to their
 	Descriptions in the .cpp file. I added some markup to CML and
 	Fastsearch.
 
 2010-07-01  Konstantin Tokarev <annulen@yandex.ru>
+
 	* src/confi.h.cmake: Added macros OB_VERSION_CHECK and OB_VERSION
 
 2010-06-30  Geoffrey Hutchison  <babel@geoffhutchison.net>
@@ -54,9 +60,9 @@
 
 	* tools/babel.cpp, tools/obabel.cpp: -H no longer lists all formats
 	  (As suggested by Noel)
-	
+
 	* include/openbabel/plugin.h: correct small error causing warning
-	
+
 	* src/format.cpp, src/plugin.cpp: small formatting changes in List
 	output.
 
