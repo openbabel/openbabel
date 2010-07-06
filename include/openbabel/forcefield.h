@@ -592,6 +592,10 @@ namespace OpenBabel
         delete [] _grad1;
         _grad1 = NULL;
       }
+      if (_gradientPtr != NULL) {
+        delete [] _gradientPtr;
+	_gradientPtr = NULL;
+      }
     }
 
     //! \return Plugin type ("forcefields")

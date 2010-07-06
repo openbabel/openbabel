@@ -1,3 +1,7 @@
+2010-07-06  Noel O'Boyle
+
+	* include/openbabel/forcefield.h: Fix memory leak identified by VLD
+
 2010-07-05  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/forcefields/forcefielduff.cpp: Revert changes and parse
