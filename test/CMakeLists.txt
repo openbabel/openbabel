@@ -20,6 +20,7 @@ set(tests
     stereoperception
     graphsym
     lssr
+    spectrophore
    )
 
 set(TEST_PATH ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
