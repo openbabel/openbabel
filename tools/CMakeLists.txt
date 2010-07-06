@@ -16,7 +16,6 @@ else(MINIMAL_BUILD)
         obprop
         obrotamer
         obrotate
-        obspectrophore
   )
 
   # no getopt on windows
@@ -42,3 +41,16 @@ foreach(tool ${tools})
                   ARCHIVE DESTINATION lib
   )
 endforeach(tool)
+
+# obspectrophore -- requires getopt
+add_executable(obspectrophore obspectrophore.cpp getopt.c)
+target_link_libraries(obspectrophore ${BABEL_LIBRARY})
+if(MSVC)
+  set_target_properties(obspectrophore PROPERTIES
+	RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+endif(MSVC)
+install(TARGETS obspectrophore
+                RUNTIME DESTINATION bin
+                LIBRARY DESTINATION lib
+                ARCHIVE DESTINATION lib
+)

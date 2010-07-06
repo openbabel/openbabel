@@ -257,13 +257,13 @@ OBSpectrophore::GetSpectrophore(OpenBabel::OBMol* mol)
    
    // Calculate the first spectrum to initiate values
    unsigned int sphoreSize(N_PROPERTIES * _numberOfProbes);
-   double ENERGY[sphoreSize];
-   double SPHORE[sphoreSize];
+   std::vector<double> ENERGY(sphoreSize);
+   std::vector<double> SPHORE(sphoreSize);
     
    // Properties
    _getBox(_oricoor);
-   _getEnergies(_oricoor, ENERGY);
-   _initiateSpectrophore(ENERGY, SPHORE);
+   _getEnergies(_oricoor, &(ENERGY[0]));
+   _initiateSpectrophore(&(ENERGY[0]), &(SPHORE[0]));
     
    // Rotate
    double psi;
@@ -303,8 +303,8 @@ OBSpectrophore::GetSpectrophore(OpenBabel::OBMol* mol)
             
                // Calculate energies
                _getBox(_coor);
-               _getEnergies(_coor, ENERGY);
-               _updateSpectrophore(ENERGY, SPHORE);
+               _getEnergies(_coor, &(ENERGY[0]));
+               _updateSpectrophore(&(ENERGY[0]), &(SPHORE[0]));
             }
          }
       }
@@ -358,7 +358,7 @@ OBSpectrophore::GetSpectrophore(OpenBabel::OBMol* mol)
       std[i] /= 11.0;
       std[i] = sqrt(std[i]);
    }
-   if ((_normalization == OBSpectrophore::NormalizationTowardsZeroMean) or 
+   if ((_normalization == OBSpectrophore::NormalizationTowardsZeroMean) ||
        (_normalization == OBSpectrophore::NormalizationTowardsZeroMeanAndUnitStd))
    {
       for (unsigned int i(0); i < N_PROPERTIES; ++i)
@@ -370,7 +370,7 @@ OBSpectrophore::GetSpectrophore(OpenBabel::OBMol* mol)
          }
       }
    }
-   if ((_normalization == OBSpectrophore::NormalizationTowardsUnitStd) or 
+   if ((_normalization == OBSpectrophore::NormalizationTowardsUnitStd) ||
        (_normalization == OBSpectrophore::NormalizationTowardsZeroMeanAndUnitStd))
    {
       for (unsigned int i(0); i < N_PROPERTIES; ++i)
@@ -690,7 +690,7 @@ OBSpectrophore::_orient(void)
 
     // Determine atom that is furthest away from origin
     double maxDistance(0.0);
-    int	maxAtom(0);
+    int maxAtom(0);
     double d;
     for (unsigned int i = 0; i < _nAtoms; ++i)
     {
@@ -1463,7 +1463,7 @@ OBSpectrophore::_calculateProperties(OpenBabel::OBMol* mol)
    
    // CHI and ETA
    unsigned int dim(_nAtoms + 1);
-   double CHI[dim];
+   std::vector<double> CHI(dim);
    double** ETA = new double*[dim];
    double** ETA2 = new double*[dim];      // A copy for the electrophilicity later on
    for (unsigned int i = 0; i < dim; ++i)
@@ -1610,7 +1610,7 @@ OBSpectrophore::_calculateProperties(OpenBabel::OBMol* mol)
    }
         
    // Solve the matrix equation
-   _solveMatrix(ETA, CHI, dim);    // CHI will contain the values
+   _solveMatrix(ETA, &(CHI[0]), dim);    // CHI will contain the values
     
    // Add values to property matrix
    for (unsigned int i = 0; i < _nAtoms; ++i)
@@ -1715,7 +1715,7 @@ OBSpectrophore::_calculateProperties(OpenBabel::OBMol* mol)
    }
     
    // Shift molecules to COG and calculate individual distances
-   double distance[_nAtoms];
+   std::vector<double> distance(_nAtoms);
    double averageDistance(0.0);
    for (unsigned int a(0); a < _nAtoms; ++a)
    {
@@ -1764,7 +1764,7 @@ OBSpectrophore::_calculateProperties(OpenBabel::OBMol* mol)
    ETA2[_nAtoms][_nAtoms] = -1.0;
    
    // Solve the matrix equation
-   _solveMatrix(ETA2, CHI, dim);    // CHI will contain the values
+   _solveMatrix(ETA2, &(CHI[0]), dim);    // CHI will contain the values
     
    // Add values to property matrix
    for (unsigned int i = 0; i < _nAtoms; ++i)
@@ -1817,65 +1817,65 @@ OBSpectrophore::_luDecompose(double** A, std::vector<int>& I, unsigned int dim)
          {
             maxVal = dummy;
          }
-		}
-		if (maxVal == 0) 
+      }
+      if (maxVal == 0)
       {
          std::cerr << "OBSpectrophore: Warning singular matrix..." << std::endl;
       }
-		
-		vScales[i] = 1.0 / maxVal;
-	}
 
-	double colJ[dim]; // variable to store local copy of column
-	
-	// loop over columns 
-	for (j = 0; j < dim; ++j)
-	{
-		// make a local copy of column j
-		for (i = 0; i < dim; ++i) colJ[i] = A[i][j];
-		for (i = 0; i < dim; ++i)
-		{
-			pRowi = A[i];
-			dummy = pRowi[j];
-			kMax = i < j ? i : j;
-			for (k = 0; k < kMax; ++k) dummy -= pRowi[k] * colJ[k];
-			colJ[i] = dummy;
-			pRowi[j] = colJ[i];
-		}
-		
-		// search largest pivot element
-		maxVal = 0.0;
-		iMax = j;
-		for (i = j + 1; i < dim; ++i)
-		{
-			if ((dummy = fabs(colJ[i]) * vScales[i]) >= maxVal)
-			{
-				maxVal = dummy;
-				iMax = i;
-			}
-		}
+      vScales[i] = 1.0 / maxVal;
+   }
 
-		// check if we need to interchange rows
-		if (j != iMax) // if current column index is not the maximal row index we need to interchange
-		{
-			// std::cerr << "Swap rows: " << iMax << " <-> " << j << std::endl;
+   std::vector<double> colJ(dim); // variable to store local copy of column
+
+   // loop over columns
+   for (j = 0; j < dim; ++j)
+   {
+      // make a local copy of column j
+      for (i = 0; i < dim; ++i) colJ[i] = A[i][j];
+      for (i = 0; i < dim; ++i)
+      {
+         pRowi = A[i];
+         dummy = pRowi[j];
+         kMax = i < j ? i : j;
+         for (k = 0; k < kMax; ++k) dummy -= pRowi[k] * colJ[k];
+         colJ[i] = dummy;
+         pRowi[j] = colJ[i];
+      }
+
+      // search largest pivot element
+      maxVal = 0.0;
+      iMax = j;
+      for (i = j + 1; i < dim; ++i)
+      {
+         if ((dummy = fabs(colJ[i]) * vScales[i]) >= maxVal)
+         {
+            maxVal = dummy;
+            iMax = i;
+         }
+      }
+
+      // check if we need to interchange rows
+      if (j != iMax) // if current column index is not the maximal row index we need to interchange
+      {
+         // std::cerr << "Swap rows: " << iMax << " <-> " << j << std::endl;
          _swapRows(A, iMax, j, dim);
-			vScales[iMax] = vScales[j];
-		}
-		// store row index in I
-		I[j] = iMax;
-		
-		// finally divide by the pivot element
-		if (j != dim - 1)
-		{
-			dummy = 1.0 / A[j][j]; // A.GetValueAt(j,j);
-			for (i = j + 1; i < dim; ++i) A[i][j] *= dummy;
-		}
+         vScales[iMax] = vScales[j];
+      }
+      // store row index in I
+      I[j] = iMax;
+
+      // finally divide by the pivot element
+      if (j != dim - 1)
+      {
+         dummy = 1.0 / A[j][j]; // A.GetValueAt(j,j);
+         for (i = j + 1; i < dim; ++i) A[i][j] *= dummy;
+      }
 
 
-	} // next column
+   } // next column
 
-	return;
+   return;
 }
 
 
@@ -1883,30 +1883,30 @@ OBSpectrophore::_luDecompose(double** A, std::vector<int>& I, unsigned int dim)
 void 
 OBSpectrophore::_luSolve(double** A, std::vector<int>& I, double* B, unsigned int dim)
 {
-	int i, k;
+   int i, k;
 
-	for (int i = 0; i < dim; ++i) _swapRows(B, i, I[i]);
-	
-	// forward substitution pass
-	for (k = 0; k < dim; ++k)
+   for (int i = 0; i < dim; ++i) _swapRows(B, i, I[i]);
+
+   // forward substitution pass
+   for (k = 0; k < dim; ++k)
    {
-		for (i = k+1; i < dim; ++i)
+      for (i = k+1; i < dim; ++i)
       {
          B[i] -= A[i][k] * B[k];
       }
    }
 
-	// do the backsubstitution
-	for (i = dim - 1; i >= 0; --i)
-	{
+   // do the backsubstitution
+   for (i = dim - 1; i >= 0; --i)
+   {
       B[i] /= A[i][i]; 
-		for (k = 0; k < i; ++k)
+      for (k = 0; k < i; ++k)
       {
-         B[k] -= A[k][i] * B[i];	
+         B[k] -= A[k][i] * B[i];
       }
-	}
-	
-	return;
+   }
+
+   return;
 }
 
 

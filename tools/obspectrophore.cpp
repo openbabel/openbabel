@@ -1,5 +1,10 @@
 #include <iostream>
+
+#ifdef WIN32
+#include "getopt.h"
+#else
 #include <unistd.h>  // For the getopt() function
+#endif
 
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
@@ -109,10 +114,10 @@ int main(int argc,char **argv)
             break;
 
          case '?':
-            if ((optopt == 'i') or 
-                (optopt == 'n') or 
-                (optopt == 'a') or 
-                (optopt == 's') or 
+            if ((optopt == 'i') || 
+                (optopt == 'n') || 
+                (optopt == 'a') || 
+                (optopt == 's') || 
                 (optopt == 'r'))
             {
                msg = "Option -";
@@ -207,32 +212,32 @@ isValidValue(const char c, char* v)
          if (o.empty()) return false;
          else return true;
       case 'n':
-         if ((!o.compare("NO")) or
-             (!o.compare("ZEROMEAN")) or
-             (!o.compare("UNITSTD")) or
+         if ((!o.compare("NO")) ||
+             (!o.compare("ZEROMEAN")) ||
+             (!o.compare("UNITSTD")) ||
              (!o.compare("ZEROMEANANDUNITSTD"))) return true;
          else return false;
       case 'a':
-         if ((!o.compare("1")) or
-             (!o.compare("2")) or
-             (!o.compare("5")) or
-             (!o.compare("10")) or
-             (!o.compare("15")) or
-             (!o.compare("20")) or
-             (!o.compare("30")) or
-             (!o.compare("36")) or
-             (!o.compare("45")) or
+         if ((!o.compare("1")) ||
+             (!o.compare("2")) ||
+             (!o.compare("5")) ||
+             (!o.compare("10")) ||
+             (!o.compare("15")) ||
+             (!o.compare("20")) ||
+             (!o.compare("30")) ||
+             (!o.compare("36")) ||
+             (!o.compare("45")) ||
              (!o.compare("60"))) return true;
          else return false;
       case 's':
-         if ((!o.compare("NO")) or
-             (!o.compare("UNIQUE")) or
-             (!o.compare("MIRROR")) or
+         if ((!o.compare("NO")) ||
+             (!o.compare("UNIQUE")) ||
+             (!o.compare("MIRROR")) ||
              (!o.compare("ALL"))) return true;
          else return false;
       case 'r':
          // Check if real positive number
-         if (o.empty() or (o[0] == '-')) return false;
+         if (o.empty() || (o[0] == '-')) return false;
          else
          {
             // Remove '+'as first character
