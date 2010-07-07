@@ -31,7 +31,7 @@ PROJECT_NAME           = "Open Babel"
 # This could be handy for archiving the generated documentation or
 # if some version control system is used.
 
-PROJECT_NUMBER         = 2.3.0
+PROJECT_NUMBER         = ${BABEL_VERSION}
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute)
 # base path where the generated documentation will be put.
@@ -1413,7 +1413,7 @@ TAGFILES               =
 # When a file name is specified after GENERATE_TAGFILE, doxygen will create
 # a tag file that is based on the input files it reads.
 
-GENERATE_TAGFILE       = ob-doc.tag
+GENERATE_TAGFILE       =
 
 # If the ALLEXTERNALS tag is set to YES all external classes will be listed
 # in the class index. If set to NO only the inherited external classes
@@ -1465,7 +1465,7 @@ HIDE_UNDOC_RELATIONS   = YES
 # toolkit from AT&T and Lucent Bell Labs. The other options in this section
 # have no effect if this option is set to NO (the default)
 
-HAVE_DOT               = YES
+HAVE_DOT               = ${HAVE_DOT}
 
 # The DOT_NUM_THREADS specifies the number of dot invocations doxygen is
 # allowed to run in parallel. When set to 0 (the default) doxygen will
@@ -1579,7 +1579,7 @@ DOT_IMAGE_FORMAT       = png
 # The tag DOT_PATH can be used to specify the path where the dot tool can be
 # found. If left blank, it is assumed the dot tool can be found in the path.
 
-DOT_PATH               = 
+DOT_PATH               = ${DOXYGEN_DOT_PATH}
 
 # The DOTFILE_DIRS tag can be used to specify one or more directories that
 # contain dot files that are included in the documentation (see the
