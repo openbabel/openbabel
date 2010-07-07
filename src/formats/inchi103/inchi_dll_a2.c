@@ -2,7 +2,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.03
- * March 06, 2010
+ * May 9, 2010
  *
  * Originally developed at NIST
  * Modifications and additions by IUPAC and the InChI Trust
@@ -159,8 +159,6 @@ NORM_CANON_FLAGS *pncFlags = &(genctl->ncFlags);
     
 
 INP_ATOM_DATA *inp_cur_data = NULL;
-PINChI2     *pINChI     = NULL;
-PINChI_Aux2 *pINChI_Aux = NULL;
 
 long num_inp = genctl->num_inp;
 char *pStr = genctl->pStr;
@@ -292,8 +290,6 @@ inchiTime      ulTStart;
         sd->nErrorType = _IS_FATAL;
         goto exit_function;
     }
-    pINChI     = pINChI2[iINChI];
-    pINChI_Aux = pINChI_Aux2[iINChI];
 
 
     /*^^^ Allocate */
@@ -431,9 +427,6 @@ ORIG_ATOM_DATA *prep_inp_data = &(genctl->PrepInpData[0]);
 PINChI2 **pINChI2 = genctl->pINChI; 
 PINChI_Aux2 **pINChI_Aux2 = genctl->pINChI_Aux;
 
-PINChI2     *pINChI     = NULL;
-PINChI_Aux2 *pINChI_Aux = NULL;
-
 long num_inp = genctl->num_inp;
 char *pStr = genctl->pStr;
 int nStrLen = PSTR_BUFFER_SIZE;
@@ -449,9 +442,6 @@ int nStrLen = PSTR_BUFFER_SIZE;
     inchiTime      ulTStart;
 
     inchi_ios_init(prb_file, INCHI_IOSTREAM_FILE, NULL);
-
-    pINChI     = pINChI2[iINChI];
-    pINChI_Aux = pINChI_Aux2[iINChI];
 
     for (i = 0; i < TAUT_NUM; i ++) /* initialize in case no InChI to generate 2008-12-23 DT */
         inp_norm_data[i]=NULL;
@@ -812,7 +802,6 @@ NORM_CANON_FLAGS *pncFlags = &(genctl->ncFlags);
 
     inchiTime     ulTStart, ulTEnd, *pulTEnd = NULL;
     int           k, num_at, ret = 0;
-    int           bOrigCoord;
     INChI       *cur_INChI[TAUT_NUM];
     INChI_Aux   *cur_INChI_Aux[TAUT_NUM];
     long          lElapsedTime;
@@ -843,7 +832,6 @@ COMPONENT_TREAT_INFO *cti = NULL;
     pINChI_Aux = pINChI_Aux2[iINChI];
 
     InchiTimeGet( &ulTStart );
-    bOrigCoord = !(ip->bINChIOutputOptions & (INCHI_OUT_NO_AUX_INFO | INCHI_OUT_SHORT_AUX_INFO));
 
     for ( k = 0; k < TAUT_NUM; k ++ ) 
     {

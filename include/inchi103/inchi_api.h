@@ -2,7 +2,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.03
- * March 06, 2010
+ * May 9, 2010
  *
  * Originally developed at NIST
  * Modifications and additions by IUPAC and the InChI Trust
@@ -555,6 +555,8 @@ typedef struct tagINCHI_OutputStruct {
         GetStdINCHI 
         Get_inchi_Input_FromAuxInfo 
         Get_std_inchi_Input_FromAuxInfo 
+		GetStructFromINCHI
+		GetStructFromStdINCHI
 */
 typedef enum tagRetValGetINCHI {
     inchi_Ret_SKIP    = -2, /* not used in InChI library */

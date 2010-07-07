@@ -2,7 +2,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.03
- * March 06, 2010
+ * May 9, 2010
  *
  * Originally developed at NIST
  * Modifications and additions by IUPAC and the InChI Trust

@@ -2,7 +2,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.03
- * March 06, 2010
+ * May 9, 2010
  *
  * Originally developed at NIST
  * Modifications and additions by IUPAC and the InChI Trust
@@ -60,8 +60,8 @@ int SetBondProperties( inp_ATOM *at, inchi_Atom *ati, int a1, int j,
 int SetAtomAndBondProperties( inp_ATOM *at, inchi_Atom *ati, int a1,
                               int bDoNotAddH, char *pStrErr, int *err );
 void SetNumImplicitH(inp_ATOM* at, int num_atoms);
-int Extract0DParities( inp_ATOM *at, int nNumAtoms, inchi_Stereo0D *stereo0D,
-                       int num_stereo0D, char *pStrErr, int *err );
+int Extract0DParities(inp_ATOM *at, int nNumAtoms, inchi_Stereo0D *stereo0D,
+                       int num_stereo0D, char *pStrErr, int *err, int vABParityUnknown);
 int parse_options_string ( char *cmd, const char *argv[], int maxargs );
 
 int InpAtom0DToInchiAtom( inp_ATOM *at, int num_atoms, inchi_OutputStruct *outStruct );
@@ -447,10 +447,10 @@ repeat:
         nRet = inchi_max(nRet, nRet1);
         switch ( nRet ) {
         case _IS_FATAL:
-            num_err ++;
+            /* num_err ++; */
             goto exit_function;
         case _IS_ERROR:
-            num_err ++;
+            ; /* num_err ++; */
 #ifndef INCHI_LIBRARY
             continue;
 #endif
@@ -673,7 +673,6 @@ char pp;
             goto fin; 
         }
 
-        slen = strlen(str);
         inchi_inp.szInChI = str;
 		opts[0] = opts[8] = opts[16] = opts[21] = INCHI_OPTION_PREFX;
 		inchi_inp.szOptions  = opts;
@@ -1588,6 +1587,16 @@ int ExtractOneStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
     int       nNumAtoms = 0;
     int       a1, j, valence, nDim, nNumBonds, nRet = 0;
 
+    /* vABParityUnknown holds actual value of an internal constant signifying       */
+    /* unknown parity: either the same as for undefined parity (default==standard)  */
+    /*  or a specific one (non-std; requested by SLUUD switch).                     */
+    int vABParityUnknown = AB_PARITY_UNDF;
+    if ( 0 != ( ip->nMode & REQ_MODE_DIFF_UU_STEREO) ) 
+    {
+        /* Make labels for unknown and undefined stereo different */
+        vABParityUnknown = AB_PARITY_UNKN;
+    }
+
     /********************************************************
      *
      *   Extract the structure
@@ -1618,6 +1627,8 @@ int ExtractOneStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
         *err = -1;
         goto err_exit;
     }
+
+
     /********************************************************
      *
      *   Extract typical for Molfile structural data
@@ -1663,7 +1674,9 @@ int ExtractOneStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
      *   Extract the 0D parities (typical for CML)
      *
      ********************************************************/
-    Extract0DParities( at, nNumAtoms, inp->stereo0D, inp->num_stereo0D, pStrErr, err );
+    Extract0DParities(at, nNumAtoms, inp->stereo0D, inp->num_stereo0D, 
+					   pStrErr, err, vABParityUnknown);
+
     if ( *err ) {
         goto err_exit;
     }
@@ -2025,7 +2038,16 @@ translate_RetVal:
 
 EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetStructFromStdINCHI( inchi_InputINCHI *inpInChI, inchi_OutputStruct *outStruct )
 {
-    return GetStructFromINCHI( inpInChI, outStruct );
+	if ( ( inpInChI ) && 
+		 ( inpInChI->szInChI ) &&
+		 ( strlen(inpInChI->szInChI) >= LEN_INCHI_STRING_PREFIX+3 ) &&
+		 ( inpInChI->szInChI[LEN_INCHI_STRING_PREFIX+1] == 'S' ) 
+	   ) 
+		/* brief check indicated valid std input (more checks in GetStructFromINCHI) */
+		return GetStructFromINCHI( inpInChI, outStruct );
+	else
+		/* non-std or just invalid input */
+		return inchi_Ret_ERROR;
 }
 
 

@@ -2,7 +2,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.03
- * March 06, 2010
+ * May 9, 2010
  *
  * Originally developed at NIST
  * Modifications and additions by IUPAC and the InChI Trust
@@ -451,9 +451,12 @@ ret:switch (retcode)
         default         : retcode = inchi_Ret_UNKNOWN; break;   /* Unlnown program error */
     }
 
-    strcpy(pGenData->pStrErrStruct, sd->pStrErrStruct);
-    for (p=0; p < INCHI_NUM; p++)  
-        pGenData->num_components[p] = sd->num_components[p];
+	if (!pGenData)
+	{
+		strcpy(pGenData->pStrErrStruct, sd->pStrErrStruct);
+		for (p=0; p < INCHI_NUM; p++)  
+			pGenData->num_components[p] = sd->num_components[p];
+	}
 
     return retcode;
 }
@@ -1299,10 +1302,10 @@ INCHIGEN_CONTROL * HGen = (INCHIGEN_CONTROL *)_HGen;
         memset(HGen->pINChI,     0, sizeof(HGen->pINChI) );
         memset(HGen->pINChI_Aux, 0, sizeof(HGen->pINChI_Aux) );
         
+		HGen->szTitle[0] = '\0';
     }
 
-    memset(&(HGen->StructData), 0, sizeof(STRUCT_DATA) );
-    HGen->szTitle[0] = '\0';
+    memset(&(HGen->StructData), 0, sizeof(STRUCT_DATA) );    
 
     memset( pResults, 0, sizeof(*pResults) );
     memset( pGenData , 0, sizeof(*pGenData) );

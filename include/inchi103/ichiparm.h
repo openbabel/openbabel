@@ -2,7 +2,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.03
- * March 06, 2010
+ * May 9, 2010
  *
  * Originally developed at NIST
  * Modifications and additions by IUPAC and the InChI Trust
@@ -957,7 +957,6 @@ int ReadCommandLineParms(int argc, const char *argv[], INPUT_PARMS *ip,
             else if ( !stricmp( pArg, "NEWPSOFF" ) ) 
             {
                  bPointedEdgeStereo = 0;
-                 bStdFormat = 0;
             } 
             else if ( !stricmp( pArg, "DONOTADDH" ) ) 
             {
@@ -2376,16 +2375,16 @@ int OpenFiles( FILE **inp_file, FILE **output_file, FILE **log_file, FILE **prb_
 */
     /*  logfile -- open as early as possible */
     if ( !ip->path[2] || !ip->path[2][0] ) {
-        fprintf2( stderr, "%s version %s%s%s\n", INCHI_NAME, INCHI_VERSION, BUILD_INFO, bRELEASE_VERSION? "":" (Pre-release, for evaluation purposes only)" );
+        fprintf2( stderr, "%s version %s%s%s\n", INCHI_NAME, INCHI_VERSION, BUILD_INFO, bRELEASE_VERSION? "":""); /* (Pre-release, for evaluation purposes only)" ); */
         fprintf2( stderr, "Log file not specified. Using standard error output.\n");
         *log_file = stderr;
     } else
     if ( !(*log_file = fopen( ip->path[2], "w" ) ) ) {
-        fprintf2( stderr, "%s version %s%s%s\n", INCHI_NAME, INCHI_VERSION, BUILD_INFO, bRELEASE_VERSION? "":" (Pre-release, for evaluation purposes only)" );
+        fprintf2( stderr, "%s version %s%s%s\n", INCHI_NAME, INCHI_VERSION, BUILD_INFO, bRELEASE_VERSION? "":""); /* (Pre-release, for evaluation purposes only)" );*/
         fprintf2( stderr, "Cannot open log file '%s'. Using standard error output.\n", ip->path[2] );
         *log_file = stderr;
     } else {
-        fprintf2( *log_file, "%s version %s%s%s\n", INCHI_NAME, INCHI_VERSION, BUILD_INFO, bRELEASE_VERSION? "":" (Pre-release, for evaluation purposes only)" );
+        fprintf2( *log_file, "%s version %s%s%s\n", INCHI_NAME, INCHI_VERSION, BUILD_INFO, bRELEASE_VERSION? "":""); /* (Pre-release, for evaluation purposes only)" );*/
         fprintf2( *log_file, "Opened log file '%s'\n", ip->path[2] );
     }
     /* input file */

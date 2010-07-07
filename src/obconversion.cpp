@@ -271,7 +271,8 @@ namespace OpenBabel {
       pOutStream=NULL;
       NeedToFreeOutStream = false;
     }
-    //delete pLineEndBuf; TEMPORARY until the reason for a unassigned mySource is found
+    if (pLineEndBuf)
+      delete pLineEndBuf; // TEMPORARY until the reason for a unassigned mySource is found
     pLineEndBuf=NULL;
   }
   //////////////////////////////////////////////////////

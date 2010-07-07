@@ -2,7 +2,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.03
- * March 06, 2010
+ * May 9, 2010
  *
  * Originally developed at NIST
  * Modifications and additions by IUPAC and the InChI Trust
@@ -71,7 +71,7 @@ INCHI_LIB           wInChI
 
 
 /* Uncomment to show engineering options in help screen */
-#define ENABLE_ENGINEERING_OPTIONS 1
+/* #define ENABLE_ENGINEERING_OPTIONS 1 */
 
 /* uncomment to unconditionally force ANSI-89 C, no Win32 specific code */
 /* #define INCHI_ANSI_ONLY */
@@ -87,7 +87,7 @@ INCHI_LIB           wInChI
 #endif
 #endif
 
-/* #define INCHI_ALL_CPP */   /* uncomment to allow C++ compilation/linkage of functions prototyped in .h files */
+/*#define INCHI_ALL_CPP*/    /* uncomment to allow C++ compilation/linkage of functions prototyped in .h files */
 
 #ifdef _MSC_VER
 /*
@@ -106,7 +106,7 @@ INCHI_LIB           wInChI
 #endif
 
 
-#define BUILD_INFO ", Software version 1.03 Pre-release, for evaluation purposes only"
+#define BUILD_INFO ", Software version 1.03"
 
 
 #define bRELEASE_VERSION  1    /* 1=> release version; comment out to disable */
@@ -202,7 +202,7 @@ INCHI_LIB           wInChI
 #define I2S_MODIFY_OUTPUT             0  /* 0=> Always */
 #endif
 
-/* #define FIX_NP_MINUS_BUG  1*/         /* 2010-03-11 DCh */ 
+#define FIX_NP_MINUS_BUG  1              /* 2010-03-11 DCh */ 
 
 /**************************/
 /* additions to v1.00     */
