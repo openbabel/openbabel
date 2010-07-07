@@ -1,5 +1,19 @@
 2010-07-07  Noel O'Boyle
 
+	* windows-vc2008/include/*, windows-vc2008/libs/i386/*: Add include
+	files and compiled libraries from bsd-xdr (required for xtcformat.cpp
+	under MSVC). BSD license.
+	* src/formats/CMakeLists.txt: Use the xdr library when compiling with
+	MSVC
+	* windows-vc2008/default_build.bat: Set the location of the xdr
+	library
+	* CMakeLists.txt: Ensure that the cmake configure finds the xdr
+	include files under MSVC
+	* src/formats/xtcformat.cpp: Rename 'small' to 'small_' as small is a
+	typedef for 'char' under MSVC (or something like this)
+
+2010-07-07  Noel O'Boyle
+
 	* CMakeLists.txt, src/formats/xtcformat.cpp,
 	src/formats/CMakeLists.txt: Check for rpc/xdr.h and conditionally
 	compile xtcformat.cpp. (In preparation for MSVC support...)

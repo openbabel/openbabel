@@ -194,7 +194,7 @@ if(MSVC)
     endforeach(format)
     add_library(${formatgroup} ${PLUGIN_TYPE} ${formatsources}
         "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h")
-    target_link_libraries(${formatgroup} ${libs} openbabel)
+    target_link_libraries(${formatgroup} ${libs} ${XDR_LIBRARY} openbabel)
     install(TARGETS ${formatgroup}
                   RUNTIME DESTINATION ${BIN_INSTALL_DIR}
                   LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}

@@ -617,7 +617,8 @@ namespace OpenBabel
     int minidx, maxidx;
     unsigned sizeint[3], sizesmall[3], bitsizeint[3], size3, *luip;
     int flag, k;
-    int small, smaller, larger, i, is_small, is_smaller, run, prevrun;
+    int small_, smaller, larger, i; 
+    int is_small, is_smaller, run, prevrun;
     float *lfp, lf;
     int tmp, *thiscoord,  prevcoord[3];
     unsigned int tmpcoord[30];
@@ -776,7 +777,7 @@ namespace OpenBabel
       maxidx = MIN(LASTIDX, smallidx + 8) ;
       minidx = maxidx - 8; /* often this equal smallidx */
       smaller = magicints[MAX(FIRSTIDX, smallidx-1)] / 2;
-      small = magicints[smallidx] / 2;
+      small_ = magicints[smallidx] / 2;
       sizesmall[0] = sizesmall[1] = sizesmall[2] = magicints[smallidx];
       larger = magicints[maxidx] / 2;
       i = 0;
@@ -794,9 +795,9 @@ namespace OpenBabel
           is_smaller = 0;
         }
         if (i + 1 < *size) {
-          if (abs(thiscoord[0] - thiscoord[3]) < small &&
-              abs(thiscoord[1] - thiscoord[4]) < small &&
-              abs(thiscoord[2] - thiscoord[5]) < small) {
+          if (abs(thiscoord[0] - thiscoord[3]) < small_ &&
+              abs(thiscoord[1] - thiscoord[4]) < small_ &&
+              abs(thiscoord[2] - thiscoord[5]) < small_) {
             /* interchange first with second atom for better
              * compression of water molecules
              */
@@ -837,9 +838,9 @@ namespace OpenBabel
             is_smaller = 0;
           }
 
-          tmpcoord[run++] = thiscoord[0] - prevcoord[0] + small;
-          tmpcoord[run++] = thiscoord[1] - prevcoord[1] + small;
-          tmpcoord[run++] = thiscoord[2] - prevcoord[2] + small;
+          tmpcoord[run++] = thiscoord[0] - prevcoord[0] + small_;
+          tmpcoord[run++] = thiscoord[1] - prevcoord[1] + small_;
+          tmpcoord[run++] = thiscoord[2] - prevcoord[2] + small_;
 		
           prevcoord[0] = thiscoord[0];
           prevcoord[1] = thiscoord[1];
@@ -849,9 +850,9 @@ namespace OpenBabel
           thiscoord = thiscoord + 3;
           is_small = 0;
           if (i < *size &&
-              abs(thiscoord[0] - prevcoord[0]) < small &&
-              abs(thiscoord[1] - prevcoord[1]) < small &&
-              abs(thiscoord[2] - prevcoord[2]) < small) {
+              abs(thiscoord[0] - prevcoord[0]) < small_ &&
+              abs(thiscoord[1] - prevcoord[1]) < small_ &&
+              abs(thiscoord[2] - prevcoord[2]) < small_) {
             is_small = 1;
           }
         }
@@ -868,11 +869,11 @@ namespace OpenBabel
         if (is_smaller != 0) {
           smallidx += is_smaller;
           if (is_smaller < 0) {
-            small = smaller;
+            small_ = smaller;
             smaller = magicints[smallidx-1] / 2;
           } else {
-            smaller = small;
-            small = magicints[smallidx] / 2;
+            smaller = small_;
+            small_ = magicints[smallidx] / 2;
           }
           sizesmall[0] = sizesmall[1] = sizesmall[2] = magicints[smallidx];
         }
@@ -952,7 +953,7 @@ namespace OpenBabel
       maxidx = MIN(LASTIDX, smallidx + 8) ;
       minidx = maxidx - 8; /* often this equal smallidx */
       smaller = magicints[MAX(FIRSTIDX, smallidx-1)] / 2;
-      small = magicints[smallidx] / 2;
+      small_ = magicints[smallidx] / 2;
       sizesmall[0] = sizesmall[1] = sizesmall[2] = magicints[smallidx] ;
       larger = magicints[maxidx];
 
@@ -1003,9 +1004,9 @@ namespace OpenBabel
           for (k = 0; k < run; k+=3) {
             receiveints(buf, 3, smallidx, sizesmall, thiscoord);
             i++;
-            thiscoord[0] += prevcoord[0] - small;
-            thiscoord[1] += prevcoord[1] - small;
-            thiscoord[2] += prevcoord[2] - small;
+            thiscoord[0] += prevcoord[0] - small_;
+            thiscoord[1] += prevcoord[1] - small_;
+            thiscoord[2] += prevcoord[2] - small_;
             if (k == 0) {
               /* interchange first with second atom for better
                * compression of water molecules
@@ -1035,15 +1036,15 @@ namespace OpenBabel
         }
         smallidx += is_smaller;
         if (is_smaller < 0) {
-          small = smaller;
+          small_ = smaller;
           if (smallidx > FIRSTIDX) {
             smaller = magicints[smallidx - 1] /2;
           } else {
             smaller = 0;
           }
         } else if (is_smaller > 0) {
-          smaller = small;
-          small = magicints[smallidx] / 2;
+          smaller = small_;
+          small_ = magicints[smallidx] / 2;
         }
         sizesmall[0] = sizesmall[1] = sizesmall[2] = magicints[smallidx] ;
       }
