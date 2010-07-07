@@ -113,7 +113,7 @@ public:
       "would produce a svg file with a black background, with no explict\n"
       "terminal carbon, and with an embedded cml representation of each\n"
       "molecule. The structures would be in two rows of four and one row\n"
-      "of two. Not that it is possible to concatinate multiple single-\n"
+      "of two. Note that it is possible to concatinate multiple single-\n"
       "letter options (with a single preceding -x).\n\n"
 
     ;

@@ -1,3 +1,20 @@
+2010-07-07  Chris Morley
+
+	* include/openbabel/descriptor.h, src/descriptor.cpp:
+	Allow descriptors to have a parameter. External code which 
+	defines new descriptors will need modifying (an extra parameter
+	on three functions. External code which just uses descriptors
+	is compatible.
+	
+	* include/openbabel/groupcontrib.h,src/descriptors/groupcontrib.cpp,
+	src/descriptors/cansmidescriptor.cpp,src/descriptors/inchidescriptor.cpp,
+	src/descriptors/smartsdescriptors.cpp:	make compatible.
+	
+ 	* src/ops/sort.cpp: mods so that a parameter will be recognised
+ 	
+	* src/descriptors/filters.cpp: make compatible and add a useless example
+	(commented out) which uses a parameter.	
+	
 2010-07-07  Noel O'Boyle
 
 	* windows-vc2008/include/*, windows-vc2008/libs/i386/*: Add include

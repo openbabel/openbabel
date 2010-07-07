@@ -63,7 +63,7 @@ public:
   }
 
 
-  virtual double Predict(OBBase* pOb); 
+  virtual double Predict(OBBase* pOb, std::string* param=NULL); 
 
  private:
   bool ParseFile();

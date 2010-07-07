@@ -32,8 +32,8 @@ class InChIFilter : public OBDescriptor
 public:
   InChIFilter(const char* ID) : OBDescriptor(ID){};
   virtual const char* Description(){return "IUPAC InChI identifier";};
-  virtual bool Compare(OBBase* pOb, istream& optionText, bool noEval);
-  virtual double GetStringValue(OBBase* pOb, std::string& svalue);
+  virtual bool Compare(OBBase* pOb, istream& optionText, bool noEval, std::string* param=NULL);
+  virtual double GetStringValue(OBBase* pOb, std::string& svalue, std::string* param=NULL);
 //  virtual bool LessThan(OBBase* pOb1, OBBase* pOb2);
 //  virtual void Init(){cache.clear();}
 //  void GetCachedValue(OBBase* pOb, string& s);
@@ -46,7 +46,7 @@ private:
   map<OBBase*, string> cache;
 };
 
-double InChIFilter::GetStringValue(OBBase* pOb, std::string& svalue)
+double InChIFilter::GetStringValue(OBBase* pOb, std::string& svalue, std::string*)
 {
   OBConversion conv;
   conv.AddOption("w");//suppress trivial warnings
@@ -60,7 +60,7 @@ double InChIFilter::GetStringValue(OBBase* pOb, std::string& svalue)
   return std::numeric_limits<double>::quiet_NaN();
 }
 
-bool InChIFilter::Compare(OBBase* pOb, istream& optionText, bool noEval)
+bool InChIFilter::Compare(OBBase* pOb, istream& optionText, bool noEval, std::string*)
 {
   string InchiFilterString, inchi;
   string::size_type filterpos=0, inchipos, len;

@@ -34,7 +34,7 @@ public:
     return _noStereo ? "Canonical SMILES without isotopes or stereo" : "Canonical SMILES";
   };
   virtual bool Compare(OBBase* pOb, istream& optionText, bool noEval);
-  virtual double GetStringValue(OBBase* pOb, std::string& svalue);
+  virtual double GetStringValue(OBBase* pOb, std::string& svalue, std::string* = NULL);
 private:
   bool _noStereo;
 };
@@ -46,7 +46,7 @@ bool CanSmiles::Compare(OBBase* pOb, istream& optionText, bool noEval)
   return CompareStringWithFilter(optionText, can, noEval);
 }
 
-double CanSmiles::GetStringValue(OBBase* pOb, std::string& svalue)
+double CanSmiles::GetStringValue(OBBase* pOb, std::string& svalue, std::string*)
 {
   OBConversion conv;
   conv.AddOption("n"); //no name

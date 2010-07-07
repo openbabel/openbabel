@@ -101,7 +101,7 @@ namespace OpenBabel
   }
   
  
-  double OBGroupContrib::Predict(OBBase* pOb)
+  double OBGroupContrib::Predict(OBBase* pOb, string* param)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(!pmol)

@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/descriptor.h>
+#include <openbabel/fingerprint.h>
 
 using namespace std;
 namespace OpenBabel
@@ -32,7 +33,7 @@ namespace OpenBabel
 public:
   MWFilter(const char* ID) : OBDescriptor(ID){};
   virtual const char* Description(){return "Molecular Weight filter";};
-  double Predict(OBBase* pOb)
+  virtual double Predict(OBBase* pOb, string* param=NULL)
   {
     OBMol* pmol = dynamic_cast<OBMol*> (pOb);
     if(!pmol)
@@ -51,7 +52,7 @@ class SmartsFilter : public OBDescriptor
 public:
   SmartsFilter(const char* ID) : OBDescriptor(ID){};
   virtual const char* Description(){return "SMARTS filter";};
-  virtual bool Compare(OBBase* pOb, istream& optionText, bool noEval);
+  virtual bool Compare(OBBase* pOb, istream& optionText, bool noEval, std::string* param=NULL);
 
 }; 
 
@@ -63,7 +64,7 @@ public:
     To return true for a mismatch the operator is !=
     A space or tab should follow the SMARTS string.
  **/      
-bool SmartsFilter::Compare(OBBase* pOb, istream& optionText, bool noEval)
+bool SmartsFilter::Compare(OBBase* pOb, istream& optionText, bool noEval, std::string*)
 {
   OBMol* pmol = dynamic_cast<OBMol*> (pOb);
   if(!pmol)
@@ -93,12 +94,12 @@ class TitleFilter : public OBDescriptor
 public:
   TitleFilter(const char* ID) : OBDescriptor(ID){};
   virtual const char* Description(){return "For comparing a molecule's title";};
-  virtual bool Compare(OBBase* pOb, istream& optionText, bool noEval);
-  virtual double GetStringValue(OBBase* pOb, std::string& svalue);
+  virtual bool Compare(OBBase* pOb, istream& optionText, bool noEval, std::string* param=NULL);
+  virtual double GetStringValue(OBBase* pOb, std::string& svalue, std::string* param=NULL);
   virtual bool LessThan(OBBase* pOb1, OBBase* pOb2);
 };
 
-bool TitleFilter::Compare(OBBase* pOb, istream& optionText, bool noEval)
+bool TitleFilter::Compare(OBBase* pOb, istream& optionText, bool noEval, std::string*)
 {
   OBMol* pmol = dynamic_cast<OBMol*> (pOb);
   if(!pmol)
@@ -108,7 +109,7 @@ bool TitleFilter::Compare(OBBase* pOb, istream& optionText, bool noEval)
   return CompareStringWithFilter(optionText, title, noEval);
 }
 
-double TitleFilter::GetStringValue(OBBase* pOb, std::string& svalue)
+double TitleFilter::GetStringValue(OBBase* pOb, std::string& svalue,std::string*)
 {
   OBMol* pmol = dynamic_cast<OBMol*> (pOb);
   if(pmol)
@@ -126,6 +127,42 @@ bool TitleFilter::LessThan(OBBase* pOb1, OBBase* pOb2)
 //Make a global instance
 TitleFilter theTitleFilter("title");
 
+//**************************************************************
+/* This descriptor uses a parameter, e.g. popcount(FP4)
+class FPCount : public OBDescriptor
+{ 
+public:
+  FPCount(const char* ID) : OBDescriptor(ID){};
+  virtual const char* Description(){return "Count bits set in fingerprint whose ID is in the parameter";};
+  virtual double Predict(OBBase* pOb, string* param=NULL)
+  {
+    OBMol* pmol = dynamic_cast<OBMol*> (pOb);
+    if(!pmol)
+      return std::numeric_limits<double>::quiet_NaN();
+
+    Trim(*param);
+    OBFingerprint* pFP = OBFingerprint::FindFingerprint(param ? param->c_str() : NULL);
+    if(!pFP)
+    {
+      obErrorLog.ThrowError(__FUNCTION__, "Fingerprint type not available", obError, onceOnly);
+      return std::numeric_limits<double>::quiet_NaN();
+    }
+    vector<unsigned> FP;
+    pFP->GetFingerprint(pmol,FP);
+    int count=0;
+    for (unsigned i=0;i<FP.size();++i)
+    {
+      int w = FP[i];
+      for(;w;w=w<<1)
+        if(w<0)
+          ++count;
+    }
+    return count;
+  }
+};
+//Make a global instance
+FPCount theFPCount("popcount");
+*/
 //**************************************************************
 }//namespace
 

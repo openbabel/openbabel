@@ -42,7 +42,7 @@ namespace OpenBabel
      If noEval is true, the parsing is as normal but Predict is not called
      and the function returns false.
  **/
-bool OBDescriptor::Compare(OBBase* pOb, istream& optionText, bool noEval)
+bool OBDescriptor::Compare(OBBase* pOb, istream& optionText, bool noEval, string* param)
 {
   //Get comparison operator
   char ch1=0, ch2=0;
@@ -59,7 +59,7 @@ bool OBDescriptor::Compare(OBBase* pOb, istream& optionText, bool noEval)
     if(noEval)
       return false;
     
-    val = Predict(pOb);
+    val = Predict(pOb, param);
 
     return DoComparison(ch1, ch2, val, filterval);
   }
@@ -126,7 +126,9 @@ bool OBDescriptor::FilterCompare(OBBase* pOb, std::istream& optionText, bool noE
         return false;
       }
 
-      string descID = GetIdentifier(optionText);
+      pair<string,string> spair = GetIdentifier(optionText);
+      string descID = spair.first;
+      string param  = spair.second;  
       if(descID.empty())
       {
         optionText.setstate(std::ios::badbit); //shows error
@@ -134,7 +136,7 @@ bool OBDescriptor::FilterCompare(OBBase* pOb, std::istream& optionText, bool noE
       }
       
       //If there is existing OBPairData use that
-      if(MatchPairData(pOb, descID))
+      if(param.empty() && MatchPairData(pOb, descID))
       {
         string value = pOb->GetData(descID)->GetValue();
         retFromCompare = CompareStringWithFilter(optionText, value, noEval, true);
@@ -144,7 +146,7 @@ bool OBDescriptor::FilterCompare(OBBase* pOb, std::istream& optionText, bool noE
         //if no existing data see if it is an OBDescriptor
         OBDescriptor* pDesc = OBDescriptor::FindType(descID.c_str());
         if(pDesc && !noEval)
-          retFromCompare = pDesc->Compare(pOb, optionText, noEval);
+          retFromCompare = pDesc->Compare(pOb, optionText, noEval, &param);
         else
         {
           //just parse
@@ -192,27 +194,37 @@ bool OBDescriptor::FilterCompare(OBBase* pOb, std::istream& optionText, bool noE
 }
 
 //////////////////////////////////////////////////////////////
-string OBDescriptor::GetIdentifier(istream& optionText)
+pair<string,string> OBDescriptor::GetIdentifier(istream& optionText)
 {
-  string descID;
+  string descID, param;
   descID.clear();
   char ch;
   optionText >> ch; //ignore leading white space
   optionText.unsetf(ios::skipws);
   for(;;)
   {
-    if(!optionText || isspace(ch))
+    if(!optionText || isspace(ch) || ch==',')
       break;
-    if(ispunctU(ch))
+    if(ch=='(') // the parameter is in parentheses
+    {
+      if(!getline(optionText, param, ')'))
+      {
+        obErrorLog.ThrowError(__FUNCTION__, "Missing ')' in descriptor parameter", obError, onceOnly);
+        descID.clear();
+        return make_pair(descID, descID);//both empty
+      }
+    }
+    else if(ispunctU(ch))
     {
       optionText.unget(); //put back char after ID
       break;
     }
-    descID.push_back(ch);
+    else
+      descID.push_back(ch);
     optionText >> ch;
   }
   optionText.setf(ios::skipws);
-  return descID;
+  return make_pair(descID, param);
 }
 
 
@@ -312,11 +324,11 @@ bool OBDescriptor::ReadStringFromFilter(istream& optionText, string& result)
   return ret;
 }
 
-double OBDescriptor::PredictAndSave(OBBase* pOb)
+double OBDescriptor::PredictAndSave(OBBase* pOb, string* param)
 {
   string attr = GetID();
   string svalue;
-  double val = GetStringValue(pOb, svalue);
+  double val = GetStringValue(pOb,svalue, param );
 
   OBPairData *dp = static_cast<OBPairData *> (pOb->GetData(attr));
   bool PreviouslySet = true;
@@ -334,15 +346,12 @@ double OBDescriptor::PredictAndSave(OBBase* pOb)
 }
 
 /// This default version provides a string representation of the numeric value
-double OBDescriptor::GetStringValue(OBBase* pOb, string& svalue)
+double OBDescriptor::GetStringValue(OBBase* pOb, string& svalue, string* param)
 {
-  double val = Predict(pOb);
-  if(val!=std::numeric_limits<double>::quiet_NaN())
-  {
-    stringstream ss;
-    ss << val;
-    svalue = ss.str();
-  }
+  double val = Predict(pOb, param);
+  stringstream ss;
+  ss << val;
+  svalue = ss.str();
   return val;
 }
 
@@ -398,16 +407,15 @@ bool OBDescriptor::CompareStringWithFilter(istream& optionText, string& sval, bo
 
 void OBDescriptor::AddProperties(OBBase* pOb, const string& DescrList)
 {
-  vector<string> vs;
-  tokenize(vs, DescrList.c_str(), " \t\r\n,/-*&;:|%+");
-  vector<string>::iterator itr;
-  for(itr=vs.begin();itr!=vs.end();++itr)
+  stringstream ss(DescrList);
+  OBDescriptor* pDescr;
+  while(ss)
   {
-    OBDescriptor* pDescr = OBDescriptor::FindType(itr->c_str());
-    if(pDescr)
-      pDescr->PredictAndSave(pOb);
+    pair<string,string> spair = GetIdentifier(ss);
+    if(pDescr = OBDescriptor::FindType(spair.first.c_str()))
+      pDescr->PredictAndSave(pOb, &spair.second);
     else
-      obErrorLog.ThrowError(__FUNCTION__, *itr + " not recognized as a descriptor", obError, onceOnly);
+      obErrorLog.ThrowError(__FUNCTION__, spair.first + " not recognized as a descriptor", obError, onceOnly);
   }
 }
 
@@ -424,35 +432,38 @@ void OBDescriptor::DeleteProperties(OBBase* pOb, const string& DescrList)
 }
 
   //Reads list of descriptor IDs and OBPairData names and returns a list of values
-  //each precede by a space or the first character in the list if it is whitespace or punctuation.
+  //each preceded by a space or the first character in the list if it is whitespace or punctuation.
   //Used in OBMol::Transform() to append to title , but that is not done here to avoid
   //having to #include mol.h in this file.
   string OBDescriptor::GetValues(OBBase* pOb, const std::string& DescrList)
   {
-    vector<string> vs;
+    stringstream ss(DescrList);
     char delim = DescrList[0];
-    delim = isspace(delim)||ispunctU(delim) ? delim : ' ';
+    if(isspace(delim)||ispunctU(delim))
+      ss.ignore();//skip delim char
+    else
+      delim = ' ';
 
-    tokenize(vs, DescrList.c_str(), " \t\r\n,/-*&;:|%+");
-    vector<string>::iterator itr;
     string values;
-    for(itr=vs.begin();itr!=vs.end();++itr)
+    OBDescriptor* pDescr;
+    while(ss)
     {
       string thisvalue;
+      pair<string,string> spair = GetIdentifier(ss);
+
       //If there is existing OBPairData use that
-      if(MatchPairData(pOb,*itr))
-        thisvalue = pOb->GetData(*itr)->GetValue();
+      if(MatchPairData(pOb, spair.first))
+        thisvalue = pOb->GetData(spair.first)->GetValue();
       else
       {
-        //if it is an OBDescriptor
-        OBDescriptor* pDesc = OBDescriptor::FindType(itr->c_str());
-        if(!pDesc) 
+        if(pDescr = OBDescriptor::FindType(spair.first.c_str()))
+          pDescr->GetStringValue(pOb, thisvalue, &spair.second);
+        else
         {
           obErrorLog.ThrowError(__FUNCTION__, 
-            *itr + " not recognized as either a property or a descriptor", obError, onceOnly);
-          return values;
-        }
-        pDesc->GetStringValue(pOb, thisvalue);
+            spair.first + " not recognized as a property or a descriptor", obError, onceOnly);
+          thisvalue = "??";
+        }    
       }
       values += delim + thisvalue;
     }
@@ -550,22 +561,31 @@ that are reasonable.
 The base class, OBDescriptor, uses pointers to OBBase in its functions,
 like OBFormat, to improve extendability - reactions could have
 features too. It does mean that a dynamic_cast is needed at the start of the
-Predict(OBBase* pOb) functions.
+Predict(OBBase* pOb, string*) functions.
 
 To use a particular descriptor, like logP, when programming with the API, use
 code like the following:
 \code
   OBDescriptor* pDescr = OBDecriptor::FindType("logP");
   if(pDescr)
-    double val = pDescr->Predict(mol);
+    double val = pDescr->Predict(mol, param);
 \endcode
 To add the descriptor ID and the predicted data to OBPairData attached to
 the object, use PredictAndSave().
 
+Descriptors can have a string parameter, which each descriptor can interpret
+as it wants, maybe, for instance as multiple numeric values. The parameter
+is in brackets after the descriptor name, e.g. popcount(FP4). In the above
+programming example param is a pointer to a std::string which has a default
+value of NULL, meaning no parameter. GetStringValue() and Compare() are similar.
+
+To parse a string for descriptors use GetIdentifier(), which returns both
+the ID and the parameter, if there is one.
+
 This facility can be called from the command line.Use the option
 --add "descriptor list", which will add the requested descriptors to the 
 molecule.  They are then visible as properties in SDF and CML formats. 
-The IDs in the list can be separated by spaces or punctuation characters.
+The IDs in the list can be separated by spaces or commas.
 All Descriptors will provide an output value as a string through a  virtual
 function GetStringValue((OBBase* pOb, string& svalue)) which
 assigns the value of a string descriptor(like inchi) to svalue or a string

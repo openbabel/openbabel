@@ -44,7 +44,7 @@ public:
     return txt.c_str();
   }
 
-  double Predict(OBBase* pOb)
+  double Predict(OBBase* pOb, string* param=NULL)
   {
     OBMol* pmol = dynamic_cast<OBMol*> (pOb);
     if(!pmol)
@@ -53,8 +53,7 @@ public:
     OBSmartsPattern sp;
     sp.Init(_smarts);
     sp.Match(*pmol);
-      return sp.GetUMapList().size();
-  
+      return sp.GetUMapList().size();  
   }
    virtual SmartsDescriptor* MakeInstance(const std::vector<std::string>& textlines)
    {

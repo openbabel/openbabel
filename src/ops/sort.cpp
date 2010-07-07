@@ -115,6 +115,7 @@ public:
   virtual bool ProcessVec(std::vector<OBBase*>& vec);
 private:
   OBDescriptor* _pDesc;
+  std::string _pDescOption;
   bool _rev;
   bool _addDescToTitle;
 };
@@ -139,13 +140,15 @@ bool OpSort::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
     if(_addDescToTitle)
       *const_cast<char*>(pLast)='\0';
 
-    _pDesc = OBDescriptor::FindType(OptionText);
+    std::pair<std::string,std::string> spair = OBDescriptor::GetIdentifier(std::stringstream(OptionText));
+    _pDesc = OBDescriptor::FindType(spair.first.c_str());
     if(!_pDesc)
     {
      obErrorLog.ThrowError(__FUNCTION__, 
               std::string("Unknown descriptor ") + OptionText, obError, onceOnly);
      return false;
     }
+    _pDescOption = spair.second;
     _pDesc->Init();//needed  to clear cache of InChIFilter
 
 
@@ -159,7 +162,7 @@ bool OpSort::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
 bool OpSort::ProcessVec(std::vector<OBBase*>& vec)
 {
   // Make a vector containing both the OBBase* and the descriptor value and the sort it
-  if(!IsNan(_pDesc->Predict(vec[0])))
+  if(!IsNan(_pDesc->Predict(vec[0], &_pDescOption)))
   {
     //a numerical descriptor
     //Copy into a pair vector
@@ -167,7 +170,7 @@ bool OpSort::ProcessVec(std::vector<OBBase*>& vec)
     valvec.reserve(vec.size());
     std::vector<OBBase*>::iterator iter;
     for(iter=vec.begin();iter!=vec.end();++iter)
-      valvec.push_back(std::make_pair<OBBase*,double>(*iter, _pDesc->Predict(*iter)));
+      valvec.push_back(std::make_pair<OBBase*,double>(*iter, _pDesc->Predict(*iter, &_pDescOption)));
 
     //Sort
     std::sort(valvec.begin(),valvec.end(), Order<double>(_pDesc, _rev));
@@ -196,7 +199,7 @@ bool OpSort::ProcessVec(std::vector<OBBase*>& vec)
     std::string s;
     for(iter=vec.begin();iter!=vec.end();++iter)
     {
-      _pDesc->GetStringValue(*iter, s);
+      _pDesc->GetStringValue(*iter, s, &_pDescOption);
       valvec.push_back(std::make_pair<OBBase*,std::string>(*iter, s));
     }
 

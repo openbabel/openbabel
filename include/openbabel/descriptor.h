@@ -35,29 +35,29 @@ class OBAPI OBDescriptor : public OBPlugin
 {
   MAKE_PLUGIN(OBDescriptor)
 
-  public:
-    const char* TypeID(){return "descriptors";};
+public:
+  const char* TypeID(){return "descriptors";};
 
   /// \return the value of a numeric descriptor
-  virtual double Predict(OBBase* pOb){return std::numeric_limits<double>::quiet_NaN();}
+  virtual double Predict(OBBase* pOb, std::string* param=NULL)
+  {return std::numeric_limits<double>::quiet_NaN();}
 
   /// \return the value of the descriptor and adds it to the object's OBPairData
-  double PredictAndSave(OBBase* pOb);
+  double PredictAndSave(OBBase* pOb, std::string* param=NULL);
 
   ///Provides a string value for non-numeric descriptors and returns NaN, or a string representation and returns a numeric value
-  virtual double GetStringValue(OBBase* pOb, std::string& svalue);
+  virtual double GetStringValue(OBBase* pOb, std::string& svalue, std::string* param=NULL);
 
   ///Parses the filter stream for a relational expression and returns its result when applied to the chemical object
-  virtual bool Compare(OBBase* pOb, std::istream& ss, bool noEval);
+  virtual bool Compare(OBBase* pOb, std::istream& ss, bool noEval, std::string* param=NULL);
   
   ///Write information on a plugin class to the string txt.
   ///If the parameter is a descriptor ID, displays the verbose description for that descriptor only
   /// e.g. babel -L descriptors HBA1
-  virtual bool Display(std::string&txt, const char* param, const char* ID=NULL);
+  virtual bool Display(std::string& txt, const char* param, const char* ID=NULL);
 
   /// Comparison of the values of the descriptor. Used in sorting.
   /// Descriptors may use more complicated ordering than this default (e.g.InChIFilter)
-//  virtual bool LessThan(OBBase* pOb1, OBBase* pOb2);
   virtual bool Order(double p1, double p2){ return p1<p2; }
   virtual bool Order(std::string s1, std::string s2){ return s1<s2; }
 
@@ -74,9 +74,10 @@ class OBAPI OBDescriptor : public OBPlugin
   ///each precede by a space or the first character in the list if it is whitespace or punctuation.
   static std::string GetValues(OBBase* pOb, const std::string& DescrList);
 
+  ///Read an identifier and its parameter from the filter string.
+  static std::pair<std::string, std::string> GetIdentifier(std::istream& optionText);
+
 protected:
-  ///Read an identifier from the filter string
-  static std::string GetIdentifier(std::istream& optionText);
 
   static double ParsePredicate(std::istream& optionText, char& ch1, char& ch2, std::string& svalue);
 
