@@ -150,12 +150,12 @@ if(LIBXML2_FOUND)
   endif(MSVC90 OR Boost_FOUND)
 endif(LIBXML2_FOUND)
 
-if(NOT WIN32)
+if(HAVE_RPC_XDR_H)
   set(formats_misc
     ${formats_misc}
     xtcformat
   )
-endif(NOT WIN32)
+endif(HAVE_RPC_XDR_H)
 
 if(MINIMAL_BUILD)
   set(formats

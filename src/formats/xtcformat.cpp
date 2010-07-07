@@ -20,16 +20,9 @@
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
 
-#if HAVE_RPC_XDR_H
-//#include <limits.h>
-//#include <malloc.h>
-//#include <math.h>
-//#include <rpc/rpc.h>
 #include <rpc/types.h>
 #include <rpc/xdr.h>
 #include <vector>
-//#include <stdio.h>
-//#include <stdlib.h>
 
 #define MAXID 20
 #define MAXABS INT_MAX-2
@@ -1060,5 +1053,3 @@ namespace OpenBabel
 
 } //namespace OpenBabel
 
-// end HAVE_RPC_XDR_H
-#endif

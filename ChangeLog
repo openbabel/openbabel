@@ -1,3 +1,9 @@
+2010-07-07  Noel O'Boyle
+
+	* CMakeLists.txt, src/formats/xtcformat.cpp,
+	src/formats/CMakeLists.txt: Check for rpc/xdr.h and conditionally
+	compile xtcformat.cpp. (In preparation for MSVC support...)
+
 2010-07-06  Noel O'Boyle
 
 	* src/formats/gamessukformat.cpp, CMakeLists.txt: Enable GAMESS-UK
