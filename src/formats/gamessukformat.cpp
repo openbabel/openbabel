@@ -740,7 +740,7 @@ GAMESSUKInputFormat theGAMESSUKInputFormat;
       }
 #else
       regex_t *myregex = new regex_t;
-			iok = regcomp(myregex, pattern, REG_EXTENDED | REG_NOSUB)==0;
+			iok = regcomp(myregex, pattern.c_str(), REG_EXTENDED | REG_NOSUB)==0;
 #endif
 			if (!iok) cerr << "Error compiling regex in GUK OUTPUT!\n";
 			
