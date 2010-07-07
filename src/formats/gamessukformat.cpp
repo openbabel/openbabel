@@ -18,7 +18,11 @@
 
 #include <algorithm>
 
-#include <regex.h>
+#ifdef _MSC_VER
+  #include <regex>
+#else
+  #include <regex.h>
+#endif
 
 using namespace std;
 
@@ -409,7 +413,7 @@ bool GAMESSUKFormat::ReadVariables(istream &ifs, double factor, string stopstr)
 		Trim(line);
 
 		// Check for end of variables
-		if (line.length()==0 and stopstr.length()==0) break;
+		if (line.length()==0 && stopstr.length()==0) break;
 		if (stopstr.length()>0 && line.compare(0, stopstr.length(), stopstr)==0) break;
 		
 		// Check for commas & split with that as the separator if necessary
@@ -721,13 +725,24 @@ GAMESSUKInputFormat theGAMESSUKInputFormat;
 			ifs.getline(buffer, BUFF_SIZE);
 			
 			// Create regex for the coords
-			regex_t *myregex = new regex_t;
-			int iok;
-			iok = regcomp( myregex,
-					//     ------label--------   -------charge-------- < seems enough for a match
-					" *\\* *[a-zA-Z]{1,2}[0-9]* *[0-9]{1,3}\\.[0-9]{1}",
-					REG_EXTENDED | REG_NOSUB);
-			if (iok !=0) cerr << "Error compiling regex in GUK OUTPUT!\n";
+      //                     ------label--------   -------charge-------- < seems enough for a match
+      string pattern(" *\\* *[a-zA-Z]{1,2}[0-9]* *[0-9]{1,3}\\.[0-9]{1}");
+      bool iok;
+#ifdef _MSC_VER      
+      std::tr1::regex myregex;
+      try {
+        myregex.assign(pattern,
+                      std::tr1::regex_constants::extended |
+                      std::tr1::regex_constants::nosubs);
+        iok = true;
+      } catch (std::tr1::regex_error ex) {
+        iok = false;
+      }
+#else
+      regex_t *myregex = new regex_t;
+			iok = regcomp(myregex, pattern, REG_EXTENDED | REG_NOSUB)==0;
+#endif
+			if (!iok) cerr << "Error compiling regex in GUK OUTPUT!\n";
 			
 			// Read in the coordinates - we process them directly rather 
 			// then use ReadGeometry as we probably should do...
@@ -736,8 +751,11 @@ GAMESSUKInputFormat theGAMESSUKInputFormat;
 				
 				// End of geometry block
 				if (strstr(buffer,"*************************")!=NULL)break;
-				
-				if (regexec( myregex, buffer, 0, 0, 0)==0) {
+#ifdef _MSC_VER				
+        if (std::tr1::regex_search(buffer, myregex)) {
+#else
+        if (regexec(myregex, buffer, 0, 0, 0)==0) {
+#endif
 					//cerr << "Got Coord line: " << buffer << endl;
 					OBAtom *atom = mol.NewAtom();
 					tokenize(tokens,buffer," ");
@@ -749,7 +767,9 @@ GAMESSUKInputFormat theGAMESSUKInputFormat;
 				}
 			}
 			mol.EndModify();			
+#ifndef _MSC_VER
 			regfree(myregex);
+#endif
 			
 		} // End Read Cartesian Coords
 		

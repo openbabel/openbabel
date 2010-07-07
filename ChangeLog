@@ -1,3 +1,8 @@
+2010-07-06  Noel O'Boyle
+
+	* src/formats/gamessukformat.cpp, CMakeLists.txt: Enable GAMESS-UK
+	format under MSVC (uses std::tr1::regex instead of regex.h)
+
 2010-07-06  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/inchi103, src/formats/inchi103: Import final InChI 1.03

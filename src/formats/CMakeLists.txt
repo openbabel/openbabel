@@ -20,6 +20,7 @@ set(formats_compchem
       dmolformat
       fchkformat
       gamessformat
+      gamessukformat
       gaussformat
       gausscubeformat
       gausszmatformat
@@ -150,10 +151,6 @@ if(LIBXML2_FOUND)
 endif(LIBXML2_FOUND)
 
 if(NOT WIN32)
-  set(formats_compchem
-    ${formats_compchem}
-    gamessukformat
-  )
   set(formats_misc
     ${formats_misc}
     xtcformat
