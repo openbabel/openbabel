@@ -899,7 +899,6 @@ namespace OpenBabel
           }
         } else {
           snprintf(buffer, BUFF_SIZE, "H%.2s", ChainsAtomName[atomids[i]]+2);
-          cout << " no hcounts " << endl;
         }
       } else
         snprintf(buffer, BUFF_SIZE, "%.4s", ChainsAtomName[atomids[i]]);
