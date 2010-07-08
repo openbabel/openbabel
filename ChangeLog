@@ -1,3 +1,9 @@
+2010-07-08  Chris Morley
+
+	* src/ops/sort.cpp(Do): replace stringstream by istringstream.
+	A reference to stringstream is apparently not a reference to istream
+	in g++, although is is in MSVC. 
+
 2010-07-07  Chris Morley
 
 	* include/openbabel/descriptor.h, src/descriptor.cpp:
