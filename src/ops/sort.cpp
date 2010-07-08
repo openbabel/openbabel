@@ -140,8 +140,8 @@ bool OpSort::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
     if(_addDescToTitle)
       *const_cast<char*>(pLast)='\0';
 
-    std::pair<std::string,std::string> spair
-             = OBDescriptor::GetIdentifier(std::istringstream(OptionText));
+    std::istringstream optionStream(OptionText);
+    std::pair<std::string,std::string> spair = OBDescriptor::GetIdentifier(optionStream);
     _pDesc = OBDescriptor::FindType(spair.first.c_str());
     if(!_pDesc)
     {
