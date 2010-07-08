@@ -9,19 +9,20 @@ add_definitions(-DFORMATDIR="\\"${openbabel_BINARY_DIR}/lib/\\"")
 ############################################################
 
 set(tests
-    uniqueid
+    builder
+    cistrans
+    graphsym
+    lssr
     smiles
+    spectrophore
+    squareplanar
     stereo
+    stereoperception
     tetrahedral
     tetranonplanar
     tetraplanar
-    squareplanar
-    cistrans
-    stereoperception
-    graphsym
-    lssr
-    spectrophore
-   )
+    uniqueid
+  )
 
 set(TEST_PATH ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
@@ -41,7 +42,7 @@ foreach(test ${tests})
   endif(MSVC)
 endforeach(test ${tests})
 
- 
+
 ############################################################
 #  old-style tests using "not ok"
 ############################################################
@@ -96,7 +97,7 @@ if(WITH_INCHI)
       add_test(inchi${test}_Test 
               ${TEST_PATH}/test_inchiwrite ${inchidata}/${test}.sdf ${inchidata}/${test}.txt)
     endif(MSVC)
-  
+
     set_tests_properties(inchi${test}_Test PROPERTIES
                          FAIL_REGULAR_EXPRESSION "Not ok"
                          ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data"
