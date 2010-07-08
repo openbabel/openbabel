@@ -202,6 +202,12 @@ bool verifyLSSR(const std::string &filename, const LSSR &ref)
 
 int main(int argc, char **argv)
 {
+  // Define location of file formats for testing
+  #ifdef FORMATDIR
+    char env[BUFF_SIZE];
+    snprintf(env, BUFF_SIZE, "BABEL_LIBDIR=%s", FORMATDIR);
+    putenv(env);
+  #endif
 
   OB_ASSERT( doShuffleTestMultiFile("aromatics.smi") );
   OB_ASSERT( doShuffleTestMultiFile("nci.smi") );
