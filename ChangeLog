@@ -1,3 +1,17 @@
+2010-07-10 Chris Morley
+
+	* include/openbabel/math/erf.h: local implementation of erf, because
+	not present in MSVC library. 
+	
+	* src/charges/qtpie.cpp, src/charges/qeq.cpp: use the above for MSVC
+	builds only, instead of boost.
+	
+	* CMakeLists.txt: remove MSVC test for boost, which is not used
+	
+	* windows-vc2008/default_build.bat: Remove absolute path for cmake;
+	it has to be in PATH now.
+	Add option for eigen. Eigen directory has to be in a env var. 
+
 2010-07-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* test/buildertest.cpp: Test for Noel's builder/ring.cpp

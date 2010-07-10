@@ -16,7 +16,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#if (defined(HAVE_EIGEN2) && defined(HAVE_ERF))
+#if (defined(HAVE_EIGEN2))
 
 #include "qeq.h"
 #include <openbabel/locale.h>
@@ -24,9 +24,9 @@ GNU General Public License for more details.
 using namespace std;
 
 #ifdef _MSC_VER
-// MSVC doesn't have error function erf, use boost
-#include <boost/math/special_functions/erf.hpp>
-using boost::math::erf;
+// MSVC doesn't have error function erf, use local implementation
+#include <openbabel/math/erf.h>
+using temperf::erf;
 #endif
 
 namespace OpenBabel

@@ -224,20 +224,6 @@ if(CMAKE_COMPILER_IS_GNUCXX)
   endif(NOT GCC_IS_NEWER_THAN_4_0)
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
-# MSVC doesn't have error functions (erf, used by qeq.cpp and qtie.cpp)
-if(MSVC)
-  find_package(Boost)
-  if(Boost_FOUND)
-    include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
-    add_definitions(-DHAVE_ERF)
-  else(Boost_FOUND)
-    message(STATUS "MSVC does not have error function erf, qeq and qtie charge models disabled")
-  endif(Boost_FOUND)
-else(MSVC)
-  add_definitions(-DHAVE_ERF)
-endif(MSVC)
-
-
 # Intel C++ Compiler
 # Note: Windows version uses different options!
 if(${CMAKE_CXX_COMPILER_ID} MATCHES Intel AND UNIX)
