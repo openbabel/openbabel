@@ -27,66 +27,8 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel
 {
-/*
-  void OBMol::FindChiralCenters()
-  {
-    if (HasChiralityPerceived())
-      return;
-    SetChiralityPerceived();
 
-    obErrorLog.ThrowError(__FUNCTION__,
-                          "Ran OpenBabel::FindChiralCenters", obAuditMsg);
-
-    //do quick test to see if there are any possible chiral centers
-    bool mayHaveChiralCenter=false;
-    OBAtom *atom,*nbr;
-    vector<OBAtom*>::iterator i;
-    for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if (atom->GetHyb() == 3 && atom->GetHvyValence() >= 3)
-        {
-          mayHaveChiralCenter=true;
-          break;
-        }
-
-    if (!mayHaveChiralCenter)
-      return;
-
-    OBBond *bond;
-    vector<OBBond*>::iterator j;
-    for (bond = BeginBond(j);bond;bond = NextBond(j))
-      if (bond->IsWedge() || bond->IsHash())
-        (bond->GetBeginAtom())->SetChiral();
-
-    vector<unsigned int> vgid;
-    GetGIDVector(vgid);
-    vector<unsigned int> tlist;
-    vector<unsigned int>::iterator k;
-
-    bool ischiral;
-    for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if (atom->GetHyb() == 3 && atom->GetHvyValence() >= 3 && !atom->IsChiral())
-        {
-          tlist.clear();
-          ischiral = true;
-
-          for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
-            {
-              for (k = tlist.begin();k != tlist.end();++k)
-                if (vgid[nbr->GetIdx()-1] == *k)
-                  ischiral = false;
-
-              if (ischiral)
-                tlist.push_back(vgid[nbr->GetIdx()-1]);
-
-              else
-                break;
-            }
-
-          if (ischiral)
-            atom->SetChiral();
-        }
-  }
-
+  /*
   // Seems to make a vector chirality become filled with array of +/- 1 for chiral atoms.
   void GetChirality(OBMol &mol, std::vector<int> &chirality)
   {

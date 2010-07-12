@@ -511,7 +511,8 @@ namespace OpenBabel
     //! Find all ring atoms and bonds. Does not need to call FindSSSR().
     void FindRingAtomsAndBonds();
     //! Find all chiral atom centers. See OBAtom::IsChiral() for more details
-    //void FindChiralCenters();
+    //! \deprecated See FindStereogenicUnits
+    void FindChiralCenters() { IsChiral(); }
     // documented in mol.cpp -- locates all atom indexes which can reach 'end'
     void FindChildren(std::vector<int> & children,int bgnIdx,int endIdx);
     // documented in mol.cpp -- locates all atoms which can reach 'end'
@@ -634,7 +635,7 @@ namespace OpenBabel
     //! \return An atom iterator pointing to the beginning of the atom list
     OBAtomIterator BeginAtoms()   { return _vatom.begin(); }
     //! \return An atom iterator pointing to the end of the atom list
-     OBAtomIterator EndAtoms()    { return _vatom.begin() + NumAtoms() ; }
+    OBAtomIterator EndAtoms()    { return _vatom.begin() + NumAtoms() ; }
     //! \return A bond iterator pointing to the beginning of the bond list
     OBBondIterator BeginBonds()   { return _vbond.begin(); }
     //! \return A bond iterator pointing to the end of the bond list
