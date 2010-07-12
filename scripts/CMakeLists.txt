@@ -14,10 +14,10 @@ if (RUN_SWIG)
     return()
   endif (NOT SWIG_FOUND)
   message(STATUS "SWIG version is ${SWIG_VERSION}")
-  if (NOT ${SWIG_VERSION} STREQUAL "1.3.40")
-    message(STATUS "SWIG version 1.3.40 exactly is required")
+  if (NOT ${SWIG_VERSION} STREQUAL "2.0.0")
+    message(STATUS "SWIG version 2.0.0 exactly is required")
     return()
-  endif (NOT ${SWIG_VERSION} STREQUAL "1.3.40")
+  endif (NOT ${SWIG_VERSION} STREQUAL "2.0.0")
 endif (RUN_SWIG)
 
 ###################

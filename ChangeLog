@@ -1,3 +1,19 @@
+2010-07-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* test/buildertest.cpp, src/mol.cpp: Clear flags for SSSR and
+	Aromaticity after adding hydrogens, as detected by the builder
+	test. Don't clear these flags in the test anymore.
+
+	* test/automorphismtest.cpp, test/aligntest.cpp: Find formats
+	correctly on UNIX.
+
+	* include/openbabel/mol.h: Return FindChiralCenters() to use new
+	IsChiral().
+
+	* scripts/CMakeLists.cpp: Require SWIG 2.0.0.
+
+	* src/chiral.cpp: Remove FindChiralCenters().
+
 2010-07-12  Tim Vandermeersch
 
 	* Add OBConformerSearch class
@@ -8,23 +24,23 @@
 
 	* Add OpConformer to do conformer searching with (o)babel
 
-	* Add OpEnergy and OpMinimize 
+	* Add OpEnergy and OpMinimize
 
 	* Many documentation updates + add examples code (see cmake BUILD_EXAMPLES)
 
 2010-07-10 Chris Morley
 
 	* include/openbabel/math/erf.h: local implementation of erf, because
-	not present in MSVC library. 
-	
+	not present in MSVC library.
+
 	* src/charges/qtpie.cpp, src/charges/qeq.cpp: use the above for MSVC
 	builds only, instead of boost.
-	
+
 	* CMakeLists.txt: remove MSVC test for boost, which is not used
-	
+
 	* windows-vc2008/default_build.bat: Remove absolute path for cmake;
 	it has to be in PATH now.
-	Add option for eigen. Eigen directory has to be in a env var. 
+	Add option for eigen. Eigen directory has to be in a env var.
 
 2010-07-08  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
