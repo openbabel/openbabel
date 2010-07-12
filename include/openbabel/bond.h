@@ -294,12 +294,12 @@ namespace OpenBabel
       /**
        * @return True if this bond is either a wedge or hash.
        * @note: This is a seperate bond type
-       * @since 3.0
+       * @since version 2.3
        */
       bool IsWedgeOrHash() const { return(HasFlag(WedgeOrHash)); }
       /**
        * @return True if this bond is either a cis or trans.
-       * @since 3.0
+       * @since version 2.3
        */
       bool IsCisOrTrans() const { return(HasFlag(CisOrTrans)); }
  

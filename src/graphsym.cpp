@@ -65,6 +65,10 @@ using namespace std;
 
 namespace OpenBabel {
 
+  class OBGraphSymPrivate
+  {
+  };
+
 /***************************************************************************
 * FUNCTION: CompareXXX
 *
@@ -72,7 +76,7 @@ namespace OpenBabel {
 *       Three functions for use by the sort() method of a vector.
 ***************************************************************************/
 
-  OBGraphSym::OBGraphSym(OBMol* pmol, OBBitVec* frag_atoms)
+  OBGraphSym::OBGraphSym(OBMol* pmol, OBBitVec* frag_atoms) : d(new OBGraphSymPrivate)
   {
     _pmol = pmol;
     if (frag_atoms) {

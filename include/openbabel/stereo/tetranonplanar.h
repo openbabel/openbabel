@@ -85,6 +85,8 @@ namespace OpenBabel {
    * Switching between viewing from and viewing towards reverses the winding.
    *
    * Like all stereo classes, errors, warnings or info is reported using OBMessageHandler.
+   *
+   * @since version 2.3
    */
   class OBAPI OBTetraNonPlanarStereo : public OBStereoBase
   {

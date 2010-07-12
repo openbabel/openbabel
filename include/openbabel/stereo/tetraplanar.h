@@ -76,6 +76,8 @@ namespace OpenBabel {
    *
    * @note U shaped ordering can also be considered circular and is the only shape 
    * that can be rotated lexicographically.
+   *
+   * @since version 2.3
    */
 
   class OBAPI OBTetraPlanarStereo : public OBStereoBase

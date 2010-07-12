@@ -35,9 +35,14 @@ namespace OpenBabel {
   class OBAtom;
   class OBBond;
   class OBMol;
+  class OBGraphSymPrivate;
 
+  /**
+   * @since version 2.3
+   */
   class OBAPI OBGraphSym {
     private:
+      OBGraphSymPrivate * const d;
       OBBitVec _frag_atoms;
       OBMol* _pmol;
 

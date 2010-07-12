@@ -49,6 +49,7 @@ namespace OpenBabel {
  *
  *
  *
+ * @since version 2.3
  */
 class OBAPI OBCisTransStereo : public OBTetraPlanarStereo
 ///@}

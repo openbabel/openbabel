@@ -52,7 +52,9 @@ namespace OpenBabel {
   OBMCDL int alternate(const std::vector<int> aPosition,const std::vector<int> aCharge, 
       const std::vector<int> aRad,const std::vector<int> nHydr, const std::vector<int> iA1,
       const std::vector<int> iA2, std::vector<int> & bondOrders, int nAtoms, int nBonds);
-
+  /**
+   * @since version 2.3
+   */
   //Diagram generation overloaded methods
   OBMCDL void generateDiagram(OBMol * pmol);
   //Zero-based atomic numeration should be in connection matrix arrays iA1 and iA2-so first atom has indez zero

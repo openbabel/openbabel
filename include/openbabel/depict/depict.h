@@ -33,6 +33,9 @@ namespace OpenBabel
     #define OBDEPICT
   #endif
 
+  /**
+   * @since version 2.3
+   */
   class OBDEPICT OBDepict
   {
     public:

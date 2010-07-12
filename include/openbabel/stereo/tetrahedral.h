@@ -53,6 +53,7 @@ namespace OpenBabel {
  * Like all stereo classes, errors, warnings or info is reported using OBMessageHandler.
  *
  * @sa OBStereo OBStereoBase OBTetraNonPlanarStereo OBStereoFacade
+ * @since version 2.3
  */
 class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
 ///@}

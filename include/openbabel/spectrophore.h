@@ -294,6 +294,8 @@ should be normalized towards zero mean. However, if absolute charge differences
 should be taken into account to differentiate between molecules, unnormalized 
 Spectrophores&tm; are recommended.
 </P>
+
+@since version 2.3
 */
    class OBAPI OBSpectrophore
    {

@@ -28,6 +28,9 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
+  /**
+   * @since version 2.3
+   */
   struct OBDEPICT OBColor
   {
     OBColor()
@@ -66,6 +69,9 @@ namespace OpenBabel
     double red, green, blue, alpha;
   };
 
+  /**
+   * @since version 2.3
+   */
   struct OBDEPICT OBFontMetrics
   {
     int    fontSize;
@@ -73,6 +79,9 @@ namespace OpenBabel
     double width, height;
   };
 
+  /**
+   * @since version 2.3
+   */
   class OBDEPICT OBPainter 
   {
     public:
