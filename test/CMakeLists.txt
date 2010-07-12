@@ -9,6 +9,7 @@ add_definitions(-DFORMATDIR="\\"${openbabel_BINARY_DIR}/lib/\\"")
 ############################################################
 
 set(tests
+    align
     automorphism
     builder
     cistrans

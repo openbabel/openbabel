@@ -414,6 +414,7 @@ namespace OpenBabel
       bool HasResidue()    { return(_residue != NULL);    }
       //! \return Is the atom hydrogen?
       bool IsHydrogen()    { return(GetAtomicNum() == 1); }
+      bool IsHydrogen() const { return(GetAtomicNum() == 1); }
       //! \return Is the atom carbon?
       bool IsCarbon()      { return(GetAtomicNum() == 6); }
       //! \return Is the atom nitrogen?

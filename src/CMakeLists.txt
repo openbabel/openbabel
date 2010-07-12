@@ -42,6 +42,7 @@ set(forcefields
 )
 
 set(math_srcs
+    math/align.cpp
     math/matrix3x3.cpp
     math/spacegroup.cpp
     math/transform3d.cpp
