@@ -51,6 +51,7 @@ set(math_srcs
 
 set(ops
   ops/addpolarh.cpp
+  ops/conformer.cpp
   ops/gen2D.cpp
   ops/fillUC.cpp
   ops/forcefield.cpp
