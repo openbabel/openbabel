@@ -1209,7 +1209,7 @@ namespace OpenBabel
     
     IF_OBFF_LOGLVL_LOW {
       OBFFLog("\nS Y S T E M A T I C   R O T O R   S E A R C H\n\n");
-      snprintf(_logbuf, BUFF_SIZE, "  NUMBER OF ROTATABLE BONDS: %d\n", rl.Size());
+      snprintf(_logbuf, BUFF_SIZE, "  NUMBER OF ROTATABLE BONDS: %lu\n", (unsigned long)rl.Size());
       OBFFLog(_logbuf);
 
       unsigned long int combinations = 1;
@@ -1328,7 +1328,7 @@ namespace OpenBabel
     
     IF_OBFF_LOGLVL_LOW {
       OBFFLog("\nR A N D O M   R O T O R   S E A R C H\n\n");
-      snprintf(_logbuf, BUFF_SIZE, "  NUMBER OF ROTATABLE BONDS: %d\n", rl.Size());
+      snprintf(_logbuf, BUFF_SIZE, "  NUMBER OF ROTATABLE BONDS: %lu\n", (unsigned long)rl.Size());
       OBFFLog(_logbuf);
 
       unsigned long int combinations = 1;
@@ -1495,7 +1495,7 @@ namespace OpenBabel
     
     IF_OBFF_LOGLVL_LOW {
       OBFFLog("\nW E I G H T E D   R O T O R   S E A R C H\n\n");
-      snprintf(_logbuf, BUFF_SIZE, "  NUMBER OF ROTATABLE BONDS: %d\n", rl.Size());
+      snprintf(_logbuf, BUFF_SIZE, "  NUMBER OF ROTATABLE BONDS: %lu\n", (unsigned long)rl.Size());
       OBFFLog(_logbuf);
 
       unsigned long int combinations = 1;
