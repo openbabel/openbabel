@@ -143,7 +143,7 @@ namespace OpenBabel {
   {
     public:
       Preferred GetPreferred() { return HighScore; }
-      Convergence GetConvergence() { return Sum; }
+      Convergence GetConvergence() { return Average; }
       double Score(OBMol &mol, unsigned int index, const RotorKeys &keys, 
           const std::vector<double*> &conformers);
   };
