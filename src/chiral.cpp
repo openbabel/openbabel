@@ -27,8 +27,7 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel
 {
-
-  /*
+  // DEPRECATED
   // Seems to make a vector chirality become filled with array of +/- 1 for chiral atoms.
   void GetChirality(OBMol &mol, std::vector<int> &chirality)
   {
@@ -64,6 +63,7 @@ namespace OpenBabel
         }
   }
 
+  // DEPRECATED
   int GetParity4Ref(vector<unsigned int> pref) 
   {
     if(pref.size()!=4)return(-1); // should be given a vector of size 4.
@@ -84,6 +84,7 @@ namespace OpenBabel
     return(parity%2);
   }
 
+  // DEPRECATED
   bool CorrectChirality(OBMol &mol, OBAtom *atm, atomreftype i, atomreftype o)
   {
     if (!atm->HasChiralitySpecified()) // if no chirality defined can't do any more for 0D
@@ -94,7 +95,6 @@ namespace OpenBabel
     if ((cd->GetAtom4Refs(input)).size()!=4)return(false); // must have 4 refs
     parityI=GetParity4Ref(cd->GetAtom4Refs(i)); // Gets Atom4Refs used to define the chirality
     parityO=GetParity4Ref(cd->GetAtom4Refs(o));//GetsOutput parity.        
-    */
     /* switch (CHTYPE)
        {
        case SMILES: // SMILES always uses 1234 atom refs
@@ -124,7 +124,6 @@ namespace OpenBabel
        default:
        parityO=0;                               
        }*/
-    /*
     if (parityO==parityI)
       {//cout << "Parity is the same"<<endl;
         return(true);
@@ -142,6 +141,7 @@ namespace OpenBabel
     return false;
   }
 
+  // DEPRECATED
   //! Calculate the signed volume for an atom.  If the atom has a valence of 3
   //! the coordinates of an attached hydrogen are calculated
   //! Puts attached Hydrogen last at the moment, like mol V3000 format.
@@ -213,7 +213,6 @@ namespace OpenBabel
         OBAtom *tmp_atm = mol.GetAtom(nbr_atms[i]);
         nbr_crds.push_back(tmp_atm->GetVector());
       }
-    */
     /*
     // If we have three heavy atoms we need to calculate the position of the fourth
     if (atm->GetHvyValence() == 3)
@@ -223,7 +222,6 @@ namespace OpenBabel
     nbr_crds.push_back(tmp_crd);
     }
     */
-    /*
     for(unsigned int j=0;j < nbr_crds.size();++j) // Checks for a neighbour having 0 co-ords (added hydrogen etc)
       {
         // are the coordinates zero to 6 or more significant figures
@@ -268,6 +266,7 @@ namespace OpenBabel
     return(signed_volume(nbr_crds[0],nbr_crds[1],nbr_crds[2],nbr_crds[3]));
   }
 
+  // DEPRECATED
   //! Calculate a signed volume given a set of 4 coordinates
   double signed_volume(const vector3 &a, const vector3 &b, const vector3 &c, const vector3 &d)
   {
@@ -278,7 +277,6 @@ namespace OpenBabel
     matrix3x3 m(A,B,C);
     return(m.determinant());
   }
-*/
 
   //! \brief Calculate the Graph Potentials of a molecule
   //! 
