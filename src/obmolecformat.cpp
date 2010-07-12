@@ -173,7 +173,16 @@ namespace OpenBabel
                               auditMsg,
                               obAuditMsg);
         
-        ret=pFormat->WriteMolecule(pmol,pConv);
+        if(pConv->IsOption("write-conformers", OBConversion::GENOPTIONS)) {
+          for (unsigned int c = 0; c < pmol->NumConformers(); ++c) {
+            pmol->SetConformer(c);
+            ret = pFormat->WriteMolecule(pmol, pConv);
+            if (!ret)
+              break;
+          }
+        } else {
+          ret=pFormat->WriteMolecule(pmol,pConv);
+        }
       }
     
 #ifdef HAVE_SHARED_POINTER
