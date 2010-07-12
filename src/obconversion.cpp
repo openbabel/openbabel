@@ -43,6 +43,7 @@ GNU General Public License for more details.
 #include <stdlib.h>
 
 #include <openbabel/obconversion.h>
+#include <openbabel/mol.h>
 #include <openbabel/locale.h>
 
 #ifdef HAVE_LIBZ
@@ -482,6 +483,33 @@ namespace OpenBabel {
         try
           {
             ret = pInFormat->ReadChemObject(this);
+            if (ret && IsOption("read-conformers", GENOPTIONS)) {
+              std::streampos pos = pInStream->tellg();
+              OBMol nextMol;
+              OBConversion conv;
+              conv.SetOutFormat("smi");
+              std::string ref_smiles = conv.WriteString(pOb1);
+              while (pInStream->good()) {
+                if (!pInFormat->ReadMolecule(&nextMol, this))
+                  break;
+                std::string smiles = conv.WriteString(&nextMol);
+                if (smiles == ref_smiles) {
+                  OBMol *pmol = dynamic_cast<OBMol*>(pOb1);
+                  if (!pmol)
+                    break;
+                  unsigned int numCoords = nextMol.NumAtoms() * 3;
+                  double *coords = nextMol.GetCoordinates();
+                  double *conformer = new double [numCoords];
+                  for (unsigned int i = 0; i < numCoords; ++i)
+                    conformer[i] = coords[i];
+                  pmol->AddConformer(conformer);
+                  pos = pInStream->tellg();
+                } else {
+                  break;
+                }
+              }
+              pInStream->seekg(pos, std::ios::beg);
+            }
             SetFirstInput(false);
           }		
         catch(...)
@@ -748,6 +776,33 @@ namespace OpenBabel {
     pInStream->imbue(cNumericLocale);
 
     bool success = pInFormat->ReadMolecule(pOb, this);
+    if (success && IsOption("read-conformers", GENOPTIONS)) {
+      std::streampos pos = pInStream->tellg();
+      OBMol nextMol;
+      OBConversion conv;
+      conv.SetOutFormat("smi");
+      std::string ref_smiles = conv.WriteString(pOb1);
+      while (pInStream->good()) {
+        if (!pInFormat->ReadMolecule(&nextMol, this))
+          break;
+        std::string smiles = conv.WriteString(&nextMol);
+        if (smiles == ref_smiles) {
+          OBMol *pmol = dynamic_cast<OBMol*>(pOb1);
+          if (!pmol)
+            break;
+          unsigned int numCoords = nextMol.NumAtoms() * 3;
+          double *coords = nextMol.GetCoordinates();
+          double *conformer = new double [numCoords];
+          for (unsigned int i = 0; i < numCoords; ++i)
+            conformer[i] = coords[i];
+          pmol->AddConformer(conformer);
+          pos = pInStream->tellg();
+        } else {
+          break;
+        }
+      }
+      pInStream->seekg(pos, std::ios::beg);
+    }
 
     // return the C locale to the original one
     obLocale.RestoreLocale();
