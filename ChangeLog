@@ -1,3 +1,17 @@
+2010-07-12  Tim Vandermeersch
+
+	* Add OBConformerSearch class
+
+	* Add OBIsomorphismMapper and OBQuery
+
+	* Add --write-conformers option to (o)babel
+
+	* Add OpConformer to do conformer searching with (o)babel
+
+	* Add OpEnergy and OpMinimize 
+
+	* Many documentation updates + add examples code (see cmake BUILD_EXAMPLES)
+
 2010-07-10 Chris Morley
 
 	* include/openbabel/math/erf.h: local implementation of erf, because
