@@ -30,6 +30,9 @@ namespace OpenBabel {
 
   class OBQueryBond;
 
+  ///@addtogroup substructure Substructure Searching
+  ///@{
+
   /**
    * The OBQueryAtom class defines an interface for query atoms. The class provides
    * some general methods and properties to access the topology information. The Matches
@@ -210,6 +213,7 @@ namespace OpenBabel {
    */
   OBAPI OBQuery* CompileSmilesQuery(const std::string &smiles);
 
+  ///@}
 }
 
 
