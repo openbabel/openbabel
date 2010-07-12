@@ -52,6 +52,7 @@ set(ops
   ops/addpolarh.cpp
   ops/gen2D.cpp
   ops/fillUC.cpp
+  ops/forcefield.cpp
   ops/gen3d.cpp
   ops/loader.cpp
   ops/optransform.cpp
@@ -92,6 +93,7 @@ set(openbabel_srcs
     graphsym.cpp
     grid.cpp
     griddata.cpp
+    isomorphism.cpp
     kekulize.cpp
     locale.cpp
     matrix.cpp
@@ -108,6 +110,7 @@ set(openbabel_srcs
     phmodel.cpp
     plugin.cpp
     pointgroup.cpp
+    query.cpp
     rand.cpp
     residue.cpp
     ring.cpp

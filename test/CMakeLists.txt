@@ -9,10 +9,12 @@ add_definitions(-DFORMATDIR="\\"${openbabel_BINARY_DIR}/lib/\\"")
 ############################################################
 
 set(tests
+    automorphism
     builder
     cistrans
     graphsym
     lssr
+    isomorphism
     smiles
     spectrophore
     squareplanar
