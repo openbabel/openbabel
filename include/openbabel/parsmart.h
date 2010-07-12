@@ -158,6 +158,9 @@ namespace OpenBabel
   struct Pattern;
 #endif
 
+  ///@addtogroup substructure Substructure Searching
+  ///@{
+
   // class introduction in parsmart.cpp
   //! \brief SMARTS (SMiles ARbitrary Target Specification) substructure searching
   class OBAPI OBSmartsPattern
@@ -289,6 +292,8 @@ namespace OpenBabel
     //! Debugging -- write a list of matches to the output stream
     void         WriteMapList(std::ostream&);
   };
+
+  ///@}
 
   //! \class OBSSMatch parsmart.h <openbabel/parsmart.h>
   //! \brief Internal class: performs fast, exhaustive matching used to find 
