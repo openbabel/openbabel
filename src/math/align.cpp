@@ -23,7 +23,6 @@ GNU General Public License for more details.
 
 #include <openbabel/math/align.h>
 #include <openbabel/graphsym.h>
-#include <openbabel/isomorphism.h>
 #include <openbabel/math/vector3.h>
 
 #include <Eigen/Dense>
@@ -106,6 +105,7 @@ namespace OpenBabel
         _refmol_coords.push_back(atom->GetVector());
     }
     SetRef(_refmol_coords);
+    _aut = FindAutomorphisms((OBMol*)&refmol);
   }
 
   void OBAlign::SetTargetMol(const OBMol &targetmol) {
@@ -185,11 +185,10 @@ namespace OpenBabel
         Eigen::MatrixXd result, rotMatrix;
 
         // Try all of the symmetry-allowed permutations
-        OBIsomorphismMapper::Mappings G = FindAutomorphisms(&workmol);
         OBIsomorphismMapper::Mappings::const_iterator cit;
         Eigen::MatrixXd mtarget(_mtarget.rows(), _mtarget.cols());
         
-        for (int k = 0; k < G.size(); ++k) {
+        for (int k = 0; k < _aut.size(); ++k) {
           
           // Generate a mapping from the permutation map to the index of
           // correct column in _mtarget. Need to handle the fact that the
@@ -212,7 +211,7 @@ namespace OpenBabel
           int i=0;
           for (int j=1; j<=workmol.NumAtoms(); ++j) {
             if (frag_atoms.BitIsSet(j)) {
-              mtarget.col(i) = _mtarget.col(newidx.at(G[k][j-1]));
+              mtarget.col(i) = _mtarget.col(newidx.at(_aut[k][j-1]));
               i++;
             }
           }

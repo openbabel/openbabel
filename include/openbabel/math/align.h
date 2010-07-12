@@ -22,6 +22,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/math/vector3.h>
 #include <openbabel/math/matrix3x3.h>
+#include <openbabel/isomorphism.h>
 #include <Eigen/Core>
 
 using namespace std;
@@ -55,6 +56,7 @@ namespace OpenBabel
     bool _symmetry;
     bool _includeH;
     double _rmsd;
+    OBIsomorphismMapper::Mappings _aut;
     const OBMol* _prefmol;
     const OBMol* _ptargetmol;
     Eigen::MatrixXd _rotMatrix;
