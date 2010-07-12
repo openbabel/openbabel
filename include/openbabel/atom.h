@@ -175,16 +175,15 @@ namespace OpenBabel
       void SetAromatic()                  { SetFlag(OB_AROMATIC_ATOM); }
       //! Clear aromatic information from the atom
       void UnsetAromatic()                { _flags &= (~(OB_AROMATIC_ATOM)); }
-      //! Mark atom as having SMILES clockwise stereochemistry (i.e., "@@")
-      //void SetClockwiseStereo()           { SetFlag(OB_CSTEREO_ATOM|OB_CHIRAL_ATOM); }
-      //! Mark atom as having SMILES anticlockwise stereochemistry (i.e., "@")
-      //void SetAntiClockwiseStereo()       { SetFlag(OB_ACSTEREO_ATOM|OB_CHIRAL_ATOM); }
-      //! Mark an atom as having + chiral volume
-      //void SetPositiveStereo() { SetFlag(OB_POS_CHIRAL_ATOM|OB_CHIRAL_ATOM); }
-      //! Mark an atom as having - chiral volume
-      //void SetNegativeStereo() { SetFlag(OB_NEG_CHIRAL_ATOM|OB_CHIRAL_ATOM); }
-      //! Clear all stereochemistry information
-      /*
+      //! \deprecated
+      void SetClockwiseStereo()           { SetFlag(OB_CSTEREO_ATOM|OB_CHIRAL_ATOM); }
+      //! \deprecated
+      void SetAntiClockwiseStereo()       { SetFlag(OB_ACSTEREO_ATOM|OB_CHIRAL_ATOM); }
+      //! \deprecated
+      void SetPositiveStereo() { SetFlag(OB_POS_CHIRAL_ATOM|OB_CHIRAL_ATOM); }
+      //! \deprecated
+      void SetNegativeStereo() { SetFlag(OB_NEG_CHIRAL_ATOM|OB_CHIRAL_ATOM); }
+      //! \deprecated
       void UnsetStereo()
         {
           _flags &= ~(OB_ACSTEREO_ATOM);
@@ -193,7 +192,6 @@ namespace OpenBabel
           _flags &= ~(OB_NEG_CHIRAL_ATOM);
           _flags &= ~(OB_CHIRAL_ATOM);
         }
-        */
       //! Mark an atom as belonging to at least one ring
       void SetInRing()         { SetFlag(OB_RING_ATOM); }
       //! Mark an atom as being chiral with unknown stereochemistry
@@ -467,20 +465,18 @@ namespace OpenBabel
       bool IsChiral();
       //! \return Is this atom an axial atom in a ring
       bool IsAxial();
-      //! \return Does this atom have SMILES-specified clockwise "@@" stereochemistry?
-      //bool IsClockwise()         { return(HasFlag(OB_CSTEREO_ATOM));  }
-      //! \return Does this atom have SMILES-specified anticlockwise "@" stereochemistry?
-      //bool IsAntiClockwise()     { return(HasFlag(OB_ACSTEREO_ATOM)); }
-      //! \return Does this atom have a positive chiral volume?
-      //bool IsPositiveStereo() { return(HasFlag(OB_POS_CHIRAL_ATOM)); }
-      //! \return Does this atom have a negative chiral volume?
-      //bool IsNegativeStereo() { return(HasFlag(OB_NEG_CHIRAL_ATOM)); }
-      //! \return Does this atom have SMILES-specified stereochemistry?
-      //bool HasChiralitySpecified()
-      //  { return(HasFlag(OB_CSTEREO_ATOM|OB_ACSTEREO_ATOM)); }
-      //! \return Does this atom have a specified chiral volume?
-      //bool HasChiralVolume()
-      //  { return(HasFlag(OB_POS_CHIRAL_ATOM|OB_NEG_CHIRAL_ATOM)); }
+      //! \deprecated
+      bool IsClockwise()         { return(HasFlag(OB_CSTEREO_ATOM));  }
+      //! \deprecated
+      bool IsAntiClockwise()     { return(HasFlag(OB_ACSTEREO_ATOM)); }
+      //! \deprecated
+      bool IsPositiveStereo() { return(HasFlag(OB_POS_CHIRAL_ATOM)); }
+      //! \deprecated
+      bool IsNegativeStereo() { return(HasFlag(OB_NEG_CHIRAL_ATOM)); }
+      //! \deprecated
+      bool HasChiralitySpecified() { return(HasFlag(OB_CSTEREO_ATOM|OB_ACSTEREO_ATOM)); }
+      //! \deprecated
+      bool HasChiralVolume() { return(HasFlag(OB_POS_CHIRAL_ATOM|OB_NEG_CHIRAL_ATOM)); }
       //! \return Is this atom a hydrogen-bond acceptor (receptor)?
       bool IsHbondAcceptor();
       //! \return Is this atom a hydrogen-bond donor?
