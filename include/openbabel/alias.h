@@ -15,18 +15,8 @@ GNU General Public License for more details.
 #ifndef OB_ALIAS_H
 #define OB_ALIAS_H
 
-#ifdef USE_BOOST
-  #include <boost/shared_ptr.hpp>
-  #define shared_ptr boost::shared_ptr
-#else
-  #include <memory>
-  #if __GNUC__ == 4  //&& __GNUC_MINOR__ < 3  removed at the suggestion of Konstantin Tokarev
-    #include <tr1/memory>
-  #endif
-  using std::tr1::shared_ptr;
-#endif
-
 #include <vector>
+#include <openbabel/shared_ptr.h>
 #include <openbabel/mol.h>
 
 namespace OpenBabel

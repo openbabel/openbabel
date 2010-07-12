@@ -20,18 +20,8 @@ GNU General Public License for more details.
 #define OB_REACT_H
 
 #include <vector>
+#include <openbabel/shared_ptr.h>
 #include <openbabel/mol.h>
-
-#ifdef USE_BOOST
-  #include <boost/shared_ptr.hpp>
-  #define shared_ptr boost::shared_ptr
-#else
-  #include <memory>
-  #if __GNUC__ == 4 && __GNUC_MINOR__ < 6
-    #include <tr1/memory>
-  #endif
-  using std::tr1::shared_ptr;
-#endif
 
 namespace OpenBabel
 {
