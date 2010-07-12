@@ -84,8 +84,8 @@ namespace OpenBabel
         bool IsValid() const;
 
       private:
-        /** Hermann-Mauguin Symbol, long version
-         * \example: "I m m a", "P 1 21 1"
+        /** 
+         * Hermann-Mauguin Symbol, long version (e.g. "I m m a", "P 1 21 1")
          */
         std::string m_HM;
         std::string m_Hall;
