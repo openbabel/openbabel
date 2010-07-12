@@ -27,3 +27,8 @@ IF(BUILD_DOCS)
         WORKING_DIRECTORY ${openbabel_SOURCE_DIR}
     )
 ENDIF(BUILD_DOCS)
+
+OPTION(BUILD_EXAMPLES "Build Open Babel examples" OFF)
+IF(BUILD_EXAMPLES)
+   add_subdirectory(examples)
+ENDIF(BUILD_EXAMPLES)

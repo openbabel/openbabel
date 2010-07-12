@@ -1600,6 +1600,17 @@ namespace OpenBabel {
     return true;
   }
 
+  /**
+   * @example obconversion_readstring.cpp
+   * Reading a smiles string.
+   */
+
+  /**
+   * @example obconversion_readstring.py
+   * Reading a smiles string in python.
+   */
+
+
 }//namespace OpenBabel
 
 //! \file obconversion.cpp

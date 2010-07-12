@@ -4228,6 +4228,11 @@ namespace OpenBabel
     return grid;
   }
 
+  /**
+   * @example obforcefield_energy.cpp
+   * Example showing how to compute the enrgy for a molecule.
+   */
+
 } // end namespace OpenBabel
 
 
