@@ -379,19 +379,13 @@ namespace OpenBabel {
   void OBConformerSearch::GetConformers(OBMol &mol)
   {
     OBRotamerList rotamers;
-    rotamers.SetBaseCoordinateSets(m_mol);
-    rotamers.Setup(m_mol, m_rotorList);
+    rotamers.SetBaseCoordinateSets(mol);
+    rotamers.Setup(mol, m_rotorList);
 
     std::cout << "GetConformers:" << std::endl;
     // Add all (parent + children) unique rotor keys
-    RotorKeys added;
     for (unsigned int i = 0; i < m_rotorKeys.size(); ++i) {
-      if (!IsUniqueKey(added, m_rotorKeys[i]))
-        continue;
-      if (!IsGood(m_rotorKeys[i]))
-        continue;
       rotamers.AddRotamer(m_rotorKeys[i]);
-      added.push_back(m_rotorKeys[i]);
 
       for (unsigned int j = 1; j < m_rotorKeys[i].size(); ++j)
         std::cout << m_rotorKeys[i][j] << " "; 
@@ -399,7 +393,9 @@ namespace OpenBabel {
     }
 
     // Get conformers for the rotor keys
-    rotamers.ExpandConformerList(mol, mol.GetConformers());
+    std::vector<double*> conformers;
+    rotamers.ExpandConformerList(mol, conformers);
+    mol.SetConformers(conformers);
   }
      
   bool OBConformerSearch::IsUniqueKey(const RotorKeys &keys, const RotorKey &key) const
