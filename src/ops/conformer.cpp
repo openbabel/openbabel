@@ -160,9 +160,10 @@ namespace OpenBabel
       if (score == "energy")
         cs.SetScore(new OBEnergyConformerScore);
 
-      cs.Setup(*pmol, numConformers, numChildren, mutability, convergence);
-      cs.Search();
-      cs.GetConformers(*pmol);    
+      if (cs.Setup(*pmol, numConformers, numChildren, mutability, convergence)) {
+        cs.Search();
+        cs.GetConformers(*pmol);
+      }
     }
 
     return true;

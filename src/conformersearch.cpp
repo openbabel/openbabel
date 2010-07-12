@@ -395,7 +395,8 @@ namespace OpenBabel {
     // Get conformers for the rotor keys
     std::vector<double*> conformers;
     rotamers.ExpandConformerList(mol, conformers);
-    mol.SetConformers(conformers);
+    if (conformers.size())
+      mol.SetConformers(conformers);
   }
      
   bool OBConformerSearch::IsUniqueKey(const RotorKeys &keys, const RotorKey &key) const
