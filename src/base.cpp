@@ -253,6 +253,8 @@ namespace OpenBabel
   }
 
 
+  /// @addtogroup main Getting Started
+  ///@{
 
   /*! \mainpage API Documentation
 
@@ -272,22 +274,10 @@ namespace OpenBabel
   href="mailto:openbabel-discuss@lists.sourceforge.net">openbabel-discuss</a>
   mailing list.
 
-  - \ref intro "General Introduction" \n
-     (history, design, and rationale, ...)
   - \ref start "Getting Started" \n
      (where to begin, example code, using Open Babel in real life, ...)
-  - \ref main "Main Classes" \n
-     (the most important, widely-used public classes)
   - <a href="annotated.shtml" class="el">All Classes</a> \n
      (all classes with brief descriptions)
-  - \ref changes23 "What's New in Version 2.3" \n
-     (changes since 2.2 releases)
-  - \ref changes22 "What's New in Version 2.2" \n
-     (changes since 2.1 releases)
-  - \ref changes21 "What's New in Version 2.1" \n
-     (changes since 2.0 releases)
-  - \ref other "Further Information" \n
-     (other resources, tutorials, mailing lists, ...)
 
   \page intro Introduction to Open Babel API
 
@@ -376,7 +366,9 @@ namespace OpenBabel
 
   All of the \ref main "main classes", including OBMol and
   OBConversion, include example code designed to facilitate using the
-  Open Babel code in real-world chemistry.
+  Open Babel code in real-world chemistry. Complete examples are provided
+  in the doc/examples directory and <a href="examples.shtml">all these examples are included in
+  the documentation</a>.
 
   For a further list of example code, see the 
   <a
@@ -523,6 +515,8 @@ namespace OpenBabel
   - <a href="http://sourceforge.net/tracker/?group_id=40728&atid=428743">Mailing lists and archives</a>
   
   */
+
+  ///@}
 
 } // namespace OpenBabel
 
