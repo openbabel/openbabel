@@ -57,7 +57,7 @@ public:
           *
           * Windows cygwin: Uses windows' GetModuleHandle to get a handle to the
           * application module. From this, the applications path can be extracted.
-          * The appname.exe is removed and ..\lib\openbabel\BABEL_VERSION\ is appended.
+          * The appname.exe is removed and ..\\lib\\openbabel\\BABEL_VERSION\\ is appended.
           *
           * Windows MSVC: Uses windows' GetModuleHandle to get a handle to the
           * OBError dll module. From this, the dll's path can be extracted.

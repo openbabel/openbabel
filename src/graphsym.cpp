@@ -104,17 +104,17 @@ namespace OpenBabel {
     return(a<b);
   }
 
-  bool OBGraphSym::ComparePairFirst(const pair<OBAtom*,unsigned int> &a,const pair<OBAtom*,unsigned int> &b)
+  bool OBGraphSym::ComparePairFirst(const std::pair<OBAtom*,unsigned int> &a,const std::pair<OBAtom*,unsigned int> &b)
   {
     return(a.first->GetIdx() < b.first->GetIdx());
   }
 
-  bool OBGraphSym::ComparePairSecond(const pair<OBAtom*,unsigned int> &a,const pair<OBAtom*,unsigned int> &b)
+  bool OBGraphSym::ComparePairSecond(const std::pair<OBAtom*,unsigned int> &a,const std::pair<OBAtom*,unsigned int> &b)
   {
     return(a.second < b.second);
   }
 
-  bool OBGraphSym::CompareBondPairSecond(const pair<OBBond*,unsigned int> &a,const pair<OBBond*,unsigned int> &b)
+  bool OBGraphSym::CompareBondPairSecond(const std::pair<OBBond*,unsigned int> &a,const std::pair<OBBond*,unsigned int> &b)
   {
     return(a.second < b.second);
   }
@@ -866,8 +866,8 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 *       corresponding primes.
 ***************************************************************************/
 
-  void OBGraphSym::CreateNewClassVector(vector<pair<OBAtom*,unsigned int> > &vp1,
-                                        vector<pair<OBAtom*,unsigned int> > &vp2)
+  void OBGraphSym::CreateNewClassVector(std::vector<std::pair<OBAtom*,unsigned int> > &vp1,
+                                        std::vector<std::pair<OBAtom*,unsigned int> > &vp2)
 {
   int m,id;
   OBAtom *atom, *nbr;
@@ -935,7 +935,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 *       class IDs it creates.  These are replaced by lower, sequential numbers here.)
 ***************************************************************************/
 
-  void OBGraphSym::CountAndRenumberClasses(vector<pair<OBAtom*,unsigned int> > &vp,
+  void OBGraphSym::CountAndRenumberClasses(std::vector<std::pair<OBAtom*,unsigned int> > &vp,
                                            unsigned int &count)
   {
     count = 1;
@@ -972,7 +972,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 * RETURNS: The number of distinct symmetry classes found.
 ***************************************************************************/
 
-  int OBGraphSym::ExtendInvariants(vector<pair<OBAtom*, unsigned int> > &symmetry_classes, bool breakChiralTies)
+  int OBGraphSym::ExtendInvariants(std::vector<std::pair<OBAtom*, unsigned int> > &symmetry_classes, bool breakChiralTies)
   {
     unsigned int nclasses1, nclasses2;
     vector<pair<OBAtom*,unsigned int> > tmp_classes;
@@ -1046,7 +1046,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 *       only part that exists.
 ***************************************************************************/
   
-  int OBGraphSym::CalculateSymmetry(vector<unsigned int> &atom_sym_classes, bool breakChiralTies)
+  int OBGraphSym::CalculateSymmetry(std::vector<unsigned int> &atom_sym_classes, bool breakChiralTies)
   {
     vector<unsigned int> vgi;
     vector<OBNodeBase*>::iterator j;
@@ -1092,7 +1092,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     return nclasses;
   }
 
-  int OBGraphSym::GetSymmetry(vector<unsigned int> &symmetry_classes, bool breakChiralTies)
+  int OBGraphSym::GetSymmetry(std::vector<unsigned int> &symmetry_classes, bool breakChiralTies)
   {
     ClearSymmetry(); // For the moment just recalculate the symmetry classes
 
@@ -1151,7 +1151,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 *       canonical_labels - a vector indexed by [ OBAtom::GetIdx() - 1].
 ***************************************************************************/
 
-  void OBGraphSym::CanonicalLabels(vector<unsigned int> &canonical_labels)
+  void OBGraphSym::CanonicalLabels(std::vector<unsigned int> &canonical_labels)
   {
     vector<pair<OBAtom*,unsigned int> > vp1, vp2;
     vector<OBNodeBase*>::iterator j;

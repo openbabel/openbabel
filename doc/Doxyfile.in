@@ -581,7 +581,8 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories
 # with spaces.
 
-INPUT                  = include/openbabel \
+INPUT                  = doc/modules.h \
+                         include/openbabel \
                          include/openbabel/math \
                          include/openbabel/stereo \
                          src/ \

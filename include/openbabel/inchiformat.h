@@ -105,8 +105,9 @@ public:
   static char   CompareInchi(const string& Inchi1, const string& Inchi2);
   static string InChIErrorMessage(const char ch);
 
-  ///Removes layers or truncates InChi, according to\param spec
+  ///Removes layers or truncates InChi, according to \param spec
   ///which can contain any number of:/formula /connect /nostereo /nosp3 /noEZ /nochg /noiso
+  /// @param inchi The inchi string
   static bool EditInchi(std::string& inchi, std::string& spec);
 
   ///Compare std::strings with embedded numbers so that 

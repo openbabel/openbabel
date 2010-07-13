@@ -480,6 +480,7 @@ namespace OpenBabel {
      @endverbatim
    *
    * @param mol The molecule containing 2D coordinates.
+   * @param updown A map of OBStereo::BondDirection for cis/trans bonds
    * @param force Force to run the perception even if the results are cached.
    *
    * @sa StereoFrom3D StereoFrom0D PerceiveStereo
@@ -515,7 +516,6 @@ namespace OpenBabel {
    * second tetrahedral atom and add an OBTetrahedralStereo object to the molecule.
    *
    * @param mol The molecule.
-   * @param updown A map of OBStereo::BondDirection for cis/trans bonds
    *
    * @sa StereoFrom3D StereoFrom2D PerceiveStereo
    * @since version 2.3
@@ -556,7 +556,7 @@ namespace OpenBabel {
    * false and the returned objects will need to be deleted explicitly.
    *
    * @param mol The molecule.
-   * @param symClasses The symmetry classes to use.
+   * @param stereoUnits The stereogenic units.
    * @param addToMol If true, the OBTetrahedralStereo objects will be added 
    * to the molecule using OBBase::SetData().
    *
@@ -602,7 +602,7 @@ namespace OpenBabel {
      @endverbatim
    *
    * @param mol The molecule.
-   * @param symClasses The symmetry classes to use.
+   * @param stereoUnits The stereogenic units.
    * @param addToMol If true, the OBTetrahedralStereo objects will be added 
    * to the molecule using OBBase::SetData().
    *
@@ -623,7 +623,7 @@ namespace OpenBabel {
    * false and the returned objects will need to be deleted explicitly.
    *
    * @param mol The molecule.
-   * @param symClasses The symmetry classes to use.
+   * @param stereoUnits The stereogenic units.
    * @param addToMol If true, the OBTetrahedralStereo objects will be added 
    * to the molecule using OBBase::SetData().
    *
@@ -660,7 +660,7 @@ namespace OpenBabel {
    * false and the returned objects will need to be deleted explicitly.
    *
    * @param mol The molecule.
-   * @param symClasses The symmetry classes to use.
+   * @param stereoUnits The stereogenic units.
    * @param addToMol If true, the OBCisTransStereo objects will be added 
    * to the molecule using OBBase::SetData().
    *
@@ -691,7 +691,8 @@ namespace OpenBabel {
    @endverbatim
    *
    * @param mol The molecule.
-   * @param symClasses The symmetry classes to use.
+   * @param stereoUnits The stereogenic units.
+   * @param updown A map of OBStereo::BondDirection for cis/trans bonds
    * @param addToMol If true, the OBCisTransStereo objects will be added 
    * to the molecule using OBBase::SetData().
    *
@@ -731,7 +732,7 @@ namespace OpenBabel {
    * false and the returned objects will need to be deleted explicitly.
    *
    * @param mol The molecule.
-   * @param symClasses The symmetry classes to use.
+   * @param stereoUnits The stereogenic units.
    * @param addToMol If true, the OBCisTransStereo objects will be added 
    * to the molecule using OBBase::SetData().
    *

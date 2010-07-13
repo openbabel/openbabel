@@ -94,6 +94,16 @@ namespace OpenBabel {
    * The second is CompileSmilesQuery and converts a smiles string to an OBQuery
    * object.
    * 
+   * @code
+   * OBMol *mol = new OBMol;
+   *
+   * // ... read molecule ...
+   *
+   * OBQuery *query;
+   * query = CompileMoleculeQuery(mol);
+   * query = CompileSmilesQuery("c1ccccc1CC(=O)O");
+   * @endcode
+   *
    * @section mapping Mapping Isomorphisms
    * The OBIsomorphismMapper class defined an interface for mapping queries to
    * target molecules. Multiple implementations can be added but they all do the

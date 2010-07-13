@@ -149,8 +149,10 @@ namespace OpenBabel
   }
 
   //!Read and discard all characters from input stream upto the occurence of a string
-  //! \param txt (which is also discarded), or the end of the stream. \returns the stream. 
-  istream& ignore(istream& ifs, const string& txt)
+  //! \param ifs The input file stream.
+  //! \param txt (which is also discarded), or the end of the stream.
+  //! \returns the stream.
+  std::istream& ignore(std::istream& ifs, const std::string& txt)
   {
     while(ifs)
     {

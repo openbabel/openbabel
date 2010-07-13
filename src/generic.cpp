@@ -1419,7 +1419,7 @@ void OBElectronicTransitionData::SetEDipole(const std::vector<double> & vEDipole
 
 /*!
 **\brief Assign the rotatory strengths (velocity)
-**\param vRotatorStrengthsVelocity Vector containing the rotatory strengths
+**\param vRotatoryStrengthsVelocity Vector containing the rotatory strengths
 */
 void OBElectronicTransitionData::SetRotatoryStrengthsVelocity(const std::vector<double> & vRotatoryStrengthsVelocity)
 {
@@ -1428,7 +1428,7 @@ void OBElectronicTransitionData::SetRotatoryStrengthsVelocity(const std::vector<
 
 /*!
 **\brief Assign the rotatory strengths (length)
-**\param vRotatorStrengthsLength Vector containing the rotatory strengths
+**\param vRotatoryStrengthsLength Vector containing the rotatory strengths
 */
 void OBElectronicTransitionData::SetRotatoryStrengthsLength(const std::vector<double> & vRotatoryStrengthsLength)
 {

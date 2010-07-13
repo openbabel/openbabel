@@ -178,8 +178,9 @@ namespace OpenBabel {
        * @param numChildren When a new generation is generated, for each of the 
        *        numConformers conformers, numChildren children are created.
        * @param mutability The mutability determines how frequent a permutation occurs
-       *        when generating the next generation. 
-
+       *        when generating the next generation.
+       * @param convergence The number of identical generations before considering
+       *        the process converged.
        */
       bool Setup(const OBMol &mol, int numConformers = 30, int numChildren = 5, 
           int mutability = 5, int convergence = 25);

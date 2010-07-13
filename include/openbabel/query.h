@@ -144,7 +144,7 @@ namespace OpenBabel {
        * bond orders otherwise. Reimplement this method in a subclass for more 
        * advances matching.
        * This method is used by OBIsomorphismMapper implementations.
-       * @param atom The OBBond object to compare this OBQueryBond with.
+       * @param bond The OBBond object to compare this OBQueryBond with.
        */
       virtual bool Matches(const OBBond *bond) const
       {

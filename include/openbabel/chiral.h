@@ -29,15 +29,15 @@ OBAPI void GraphPotentials(OBMol &mol, std::vector<double> &pot);
 OBAPI void construct_g_matrix(OBMol &mol, std::vector<std::vector<double> > &m);
 OBAPI void construct_c_matrix(OBMol &mol, std::vector<std::vector<double > > &m);
 
-//! @deprecated Use new @ref stereochemistry "Stereochemistry" classes.
+//! @deprecated Use new @ref stereo classes.
 OBAPI double CalcSignedVolume(OBMol &mol,OBAtom*,bool ReZeroZ=true);
-//! @deprecated Use new @ref stereochemistry "Stereochemistry" classes.
+//! @deprecated Use new @ref stereo classes.
 OBAPI double signed_volume(const vector3 &a, const vector3 &b, const vector3 &c, const vector3 &d);
-//! @deprecated Use new @ref stereochemistry "Stereochemistry" classes.
+//! @deprecated Use new @ref stereo classes.
 OBAPI void GetChirality(OBMol &mol, std::vector<int> &chirality);
-//! @deprecated Use new @ref stereochemistry "Stereochemistry" classes.
+//! @deprecated Use new @ref stereo classes.
 OBAPI int GetParity4Ref(std::vector<unsigned int> pref);
-//! @deprecated Use new @ref stereochemistry "Stereochemistry" classes.
+//! @deprecated Use new @ref stereo classes.
 OBAPI bool CorrectChirality(OBMol &mol, OBAtom *atm, atomreftype i=input, atomreftype o=output);
 
 }

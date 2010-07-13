@@ -276,6 +276,14 @@ namespace OpenBabel
 
   - \ref start "Getting Started" \n
      (where to begin, example code, using Open Babel in real life, ...)
+  - \ref overview "Classes Overview" \n
+     (overview the most important classes ordered by category)
+  - \ref changes23 "What's New in Version 2.3" \n
+     (Changes since 2.2 releases)
+  - \ref changes22 "What's New in Version 2.2" \n
+     (Changes since 2.1 releases)
+  - \ref changes21 "What's New in Version 2.1" \n
+     (Changes since 2.0 releases)
   - <a href="annotated.shtml" class="el">All Classes</a> \n
      (all classes with brief descriptions)
 
@@ -295,6 +303,7 @@ namespace OpenBabel
   designed to store the basic information
   in a molecule and to perceive information about a molecule.
 
+  \section Lazy Evaluzation
   One of the key philosophies in the code is that transformations and
   automatic perception of properties are performed in a <a href="http://en.wikipedia.org/wiki/Lazy_evaluation">"lazy"</a>
   manner. That is, until you call for partial atomic charges, no
@@ -304,6 +313,7 @@ namespace OpenBabel
   routines are called, and a "flag" is set (e.g., via OBMol::SetFlag
   or OBAtom::SetFlag etc.) so that the code is only run once.
 
+  \section Arbitrary Data
   Arbitrary custom data and text descriptors can be stored in any atom,
   bond, molecule, or residue using the \link OpenBabel::OBGenericData
   OBGenericData\endlink or \link OpenBabel::OBPairData
@@ -383,14 +393,45 @@ namespace OpenBabel
   Please e-mail the openbabel-discuss@lists.sourceforge.net mailing list
   if you have more questions!
 
-  \page main Main Classes
+  \page other Further Information
+
+  Open Babel is a community project. In addition to this API documentation,
+  the website offers a variety of up-to-date and useful information for
+  developing with the library.
+
+  Open Babel homepage:
+  - <a href="http://openbabel.org/wiki/Develop">Developing with Open Babel</a>
+  - <a href="http://openbabel.org/wiki/Developer:Tutorial">Developer
+  tutorials</a>
+  - <a href="http://openbabel.org/wiki/Contribute">Contributing
+  to the Open Babel project</a>
+
+  SourceForge project pages:
+  - <a href="http://sourceforge.net/projects/openbabel/">Open Babel project page</a>
+  - <a href="http://sourceforge.net/tracker/?group_id=40728&atid=428740">Bug reporter</a>
+  - <a href="http://sourceforge.net/tracker/?group_id=40728&atid=428743">Feature requests</a>
+  - <a href="http://sourceforge.net/tracker/?group_id=40728&atid=447448">File format requests</a>
+  - <a href="http://sourceforge.net/tracker/?group_id=40728&atid=428743">Mailing lists and archives</a>
+
+  */
+
+  ///@}
+
+  ///@addtogroup overview Classes Overview
+  ///@{
+  /**
+  \page overview_page Classes Overview
 
   Chemical Storage and Manipulation:
-  - OBMol - Central molecule class, properties, ...
-  - OBAtom - Central atom class, properties, coordinates, ...
-  - OBBond - Bond connection between two OBAtom, properties, bond orders, ...
-  - OBResidue - Biomolecule residues (amino acids, nucleic acids)
-  - OBRing - Ring cycle perception, Smallest Set of Smallest Rings (SSSR)
+  - OBBase - General base class of OBAtom, OBMol, OBResidue, etc. for storing generic, arbitrary custom data
+    - OBMol - Central molecule class, properties, ...
+    - OBAtom - Central atom class, properties, coordinates, ...
+    - OBBond - Bond connection between two OBAtom, properties, bond orders, ...
+    - OBResidue - Biomolecule residues (amino acids, nucleic acids)
+    - OBReaction - Used to store chemical reactions (i.e., reactants -> products)
+    - OBGrid - A base grid class
+    - OBText - An object containing just text
+  - OBRing - Ring cycle perception, Smallest Set of Smallest Rings (SSSR), Largest Set of Smallest Rings (LSSR)
 
   Import / Export:
   - OBConversion - Conversion between file formats. Interface for import or export
@@ -398,30 +439,76 @@ namespace OpenBabel
 
   Chemical Utilities:
   - OBFingerprint - Generating molecular fingerprints for databases and similarity searches
-  - OBSmartsPattern - Parsing SMARTS chemical search patterns and matching against OBMol objects
   - OBForceField - Molecular mechanics force fields for energy evaluation, conformational searching, coordinate generation, etc.
+  - OBChemTsfm - SMARTS based structural modification (chemical transformation)
+
+  Substructure Searching:
+  - OBSmartsPattern - Parsing SMARTS chemical search patterns and matching against OBMol objects
+  - OBQuery
+  - OBQueryAtom
+  - OBQueryBond
+  - OBIsomorphismMapper
 
   Utility Classes:
   - OBBitVec - Efficient bit vector (e.g., for marking visit to atoms)
   - OBMessageHandler - Error and warning handling, filtering, and logging
+  - OBRandom - Random number generator
+  - OBStopwatch - Stopwatch class used for timing length of execution
+  - OBSqrtTbl - Square Root lookup table - given a distance squared returns distance
+
+  Coordinate Manipulation:
+  - OBBuilder - 3D structure generation
+  - OBAlign - Kabsch alignment
+  - OBInternalCoord - Internal coordinates
+  - OBConformerSearch - Conformer searching using genetic algorithm
+  - OBRotorList - Class for detecting rotatable bonds
+  - OBRotamerList - Supports a set of rotamer coordinate sets for some number of potentially rotatable bonds
+
+  Stereochemistry:
+  - OBStereo
+  - OBStereoBase
+    - OBTetraNonPlanarStereo
+      - OBTetrahedralStereo
+    - OBTetraPlanarStereo
+      - OBCisTransStereo
+      - OBSquarePlanarStereo
+  - OBStereoFacade
 
   Arbitrary Data:
-  - OBBase - General base class of OBAtom, OBMol, OBResidue, etc. for storing generic, arbitrary custom data
   - OBGenericData - General base class for arbitrary data types
-  - OBPairData - Arbitrary text key/value data for all atoms, bonds, residues, or molecules
-  - OBUnitCell - Storage and manipulation of crystal structure / reciprocal unit cells
+    - OBPairData - Arbitrary text key/value data for all atoms, bonds, residues, or molecules
+    - OBUnitCell - Storage and manipulation of crystal structure / reciprocal unit cells
+    - AliasData, OBAngleData, OBAtomClassData, OBChiralData, OBCommentData, OBConformerData, OBDOSData, OBElectronicTransitionData,
+      OBExternalBondData, OBGridData, OBMatrixData, OBNasaThermoData, OBOrbitalEnergyData, OBPairData, OBPairTemplate, OBRateData,
+      OBRingData, OBRotamerList, OBRotationData, OBSerialNums, OBSetData, OBStereoBase, OBSymmetryData, OBTorsionData, OBUnitCell,
+      OBVectorData, OBVibrationData, OBVirtualBond
+
+  Plugins:
+  - OBPlugin
+    - OBChargeModel
+    - OBDescriptor
+    - OBFingerprint
+    - OBForceField
+    - OBFormat
+    - OBOp
 
   Math Utilities:
   - matrix3x3 - Square 3x3 matrices for 3D transformations and rotations
   - vector3 - 3D vector class for translations and planes
+  */
+  ///@}
 
+  /**
   \page changes23 What's New in Version 2.3
 
   Throughout the API documentation, new classes and methods are
   indicated with a disclaimer "Since: version 2.2."
 
   Several new classes and features have been introduced, notably
-  - New @ref Stereochemistry classes
+  - New @ref stereo classes
+  - New @ref substructure classes
+  - Improved @ref conformer
+  - OBChargeModel
   - OBGraphSym - Cleaner interface for computing the symmetry classes
   - OBSpectrophore - A new powerful descriptor for screening bioactive molecules
   - OBDepict - 2D depcition
@@ -493,30 +580,7 @@ namespace OpenBabel
   - OBSetData - Hierarchical sets of generic data.
   - LineEndingExtractor - New class to correct DOS and Classic Mac line endings
      to UNIX-style newline characters.
-
-  \page other Further Information
-
-  Open Babel is a community project. In addition to this API documentation,
-  the website offers a variety of up-to-date and useful information for
-  developing with the library.
-
-  Open Babel homepage:
-  - <a href="http://openbabel.org/wiki/Develop">Developing with Open Babel</a>
-  - <a href="http://openbabel.org/wiki/Developer:Tutorial">Developer
-  tutorials</a>
-  - <a href="http://openbabel.org/wiki/Contribute">Contributing
-  to the Open Babel project</a>
-
-  SourceForge project pages:
-  - <a href="http://sourceforge.net/projects/openbabel/">Open Babel project page</a> 
-  - <a href="http://sourceforge.net/tracker/?group_id=40728&atid=428740">Bug reporter</a>
-  - <a href="http://sourceforge.net/tracker/?group_id=40728&atid=428743">Feature requests</a>
-  - <a href="http://sourceforge.net/tracker/?group_id=40728&atid=447448">File format requests</a>
-  - <a href="http://sourceforge.net/tracker/?group_id=40728&atid=428743">Mailing lists and archives</a>
-  
   */
-
-  ///@}
 
 } // namespace OpenBabel
 

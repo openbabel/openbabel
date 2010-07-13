@@ -7349,5 +7349,5 @@ void implementBondStereo(const std::vector<int> iA1, const std::vector<int> iA2,
 } // namespace OpenBabel
 
 //! \file mcdlutil.cpp
-//! \utilities for mcdl format, might be useful for another
+//! utilities for mcdl format, might be useful for another
 
