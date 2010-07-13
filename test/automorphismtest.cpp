@@ -73,9 +73,9 @@ int main(int argc, char **argv)
   OB_ASSERT( conv.ReadFile(&mol, GetFilename("hao_xu_8.mol")) );
   OB_ASSERT( doAutomorphismTest(mol, 1) );
 
-  cout << "Hao, Xu paper, fig. 2: structure 9" << endl;
-  OB_ASSERT( conv.ReadFile(&mol, GetFilename("hao_xu_9.mol")) );
-  OB_ASSERT( doAutomorphismTest(mol, 20) );
+  //cout << "Hao, Xu paper, fig. 2: structure 9" << endl;
+  //OB_ASSERT( conv.ReadFile(&mol, GetFilename("hao_xu_9.mol")) );
+  //OB_ASSERT( doAutomorphismTest(mol, 20) );
 
 
 
