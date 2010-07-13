@@ -173,7 +173,7 @@ namespace OpenBabel
                               auditMsg,
                               obAuditMsg);
         
-        if(pConv->IsOption("write-conformers", OBConversion::GENOPTIONS)) {
+        if(pConv->IsOption("writeconformers", OBConversion::GENOPTIONS)) {
           for (unsigned int c = 0; c < pmol->NumConformers(); ++c) {
             pmol->SetConformer(c);
             ret = pFormat->WriteMolecule(pmol, pConv);

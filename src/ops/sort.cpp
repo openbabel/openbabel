@@ -20,70 +20,13 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/descriptor.h>
+#include "deferred.h"
 #include <set>
+#include <algorithm>
 
 namespace OpenBabel
 {
 
-class DeferredFormat : public OBFormat
-{
-public:
-  DeferredFormat(OBConversion* pConv, OBOp* pOp=NULL)
-  {
-    _pRealOutFormat = pConv->GetOutFormat();
-    pConv->SetOutFormat(this);
-    _pOp = pOp;
-  }
-  virtual const char* Description() { return "Read and write an OBBase* array"; }
-  virtual bool ReadChemObject(OBConversion* pConv)
-  {
-    if(_obvec.empty())
-    {
-      delete this;//self destruction; was made in new in an OBOp
-      return false;
-    }
-    //returned in reverse order, because its easier with a vector
-    pConv->AddChemObject(_obvec.back());
-    _obvec.pop_back();
-    return true;
-  }
-
-  virtual bool WriteChemObject(OBConversion* pConv)
-  {
-    //Store the object pointer.
-    //Unlike most formats, no deletion of object here or object constuction in ReadChemObject.
-    _obvec.push_back(pConv->GetChemObject());
-    if(pConv->IsLast())
-    {
-      //At the end, sort, or whatever, the vector
-      if(_pOp)
-      {
-        if(_pOp->ProcessVec(_obvec))
-        {
-          //Now output the processed vector
-          pConv->SetInAndOutFormats(this, _pRealOutFormat);
-
-          std::ifstream ifs; // get rid of gcc warning
-          pConv->SetInStream(&ifs);//Not used, but Convert checks it is ok
-          pConv->GetInStream()->clear();
-
-          //clear the options - they have already been applied
-          pConv->SetOptions("",OBConversion::GENOPTIONS);
-          pConv->SetOutputIndex(0);
-          pConv->Convert();
-        }
-      }
-    }
-    return true;
-  }
-private:
-  OBFormat* _pRealOutFormat;
-  std::vector<OBBase*> _obvec;
-  public:
-  OBOp* _pOp;
-};
-
-//*****************************************************************
 template<class T>
 struct Order : public std::binary_function<std::pair<OBBase*,T>, std::pair<OBBase*,T>, bool>
 {
@@ -91,8 +34,8 @@ struct Order : public std::binary_function<std::pair<OBBase*,T>, std::pair<OBBas
   bool operator()(std::pair<OBBase*,T> p1, std::pair<OBBase*,T> p2) const
   {
     return _rev ? 
-      _pDesc->Order(p1.second, p2.second) : 
-      _pDesc->Order(p2.second, p1.second);
+      _pDesc->Order(p2.second, p1.second) :
+      _pDesc->Order(p1.second, p2.second); 
   }
   OBDescriptor* _pDesc;
   bool _rev;
@@ -235,4 +178,5 @@ vector, which stores numbers or strings and the code is extensively duplicated
 because of this. But using templates was not much shorter because four templated
 functions were needed, and the code more difficult to understand.
 */
+
 }//namespace

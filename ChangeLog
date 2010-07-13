@@ -1,5 +1,23 @@
 2010-07-13 Chris Morley
 
+	Alternative method for read-conformers which maintains
+	code segregation (no chemistry in OBConversion)
+	
+	* src/ops/readconformers.cpp: new OBOp to combine multiple conformers
+	into a single molecule.
+	
+	* src/obconversion.cpp,src/transform.cpp:comment out read-conformers
+	code; minor doc mods
+	
+	* src/obmolecformat.cpp: Change option name from "write-conformers"
+	to "writeconformers". The - was causing parsing problems in the GUI.
+	
+	* src/ops/deferred.h,src/ops/sort.cpp: put DeferredFormat in
+	a new file.
+	
+
+2010-07-13 Chris Morley
+
 	* include/openbabel/op.h(OpOptions): ignore ops with
 	"not displayed in GUI" in the first line of their Descriptions()
 	 

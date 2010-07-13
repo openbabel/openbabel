@@ -59,6 +59,7 @@ set(ops
   ops/loader.cpp
   ops/optransform.cpp
   ops/partialcharges.cpp
+  ops/readconformers.cpp
   ops/sort.cpp
   ops/xout.cpp
 )

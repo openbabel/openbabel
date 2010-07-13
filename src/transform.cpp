@@ -241,12 +241,11 @@ namespace OpenBabel
 "-v\"smarts\" Convert only molecules NOT matching SMARTS:\n"
 "--join Join all input molecules into a single output molecule\n"
 "--separate Output disconnected fragments separately\n"
-"--read-conformers Read conformers\n"
-"--write-conformers Output all conformers\n"
 "--property <attrib> <value> add or replace a property (SDF)\n"
 "--title <title> Add or replace molecule title\n"
 "--addtotitle <text> Append to title\n"
-"--addformula Append formula to title\n" ;
+"--addformula Append formula to title\n"
+"--writeconformers Output multiple conformers separately\n" ;
 
     //Append lines from OBOp plugins that work with OBMol
     OBMol dummymol; //just needed to carry class type information; messy!

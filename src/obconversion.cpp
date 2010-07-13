@@ -43,7 +43,7 @@ GNU General Public License for more details.
 #include <stdlib.h>
 
 #include <openbabel/obconversion.h>
-#include <openbabel/mol.h>
+//#include <openbabel/mol.h>
 #include <openbabel/locale.h>
 
 #ifdef HAVE_LIBZ
@@ -138,9 +138,9 @@ namespace OpenBabel {
       A two stage construction is used to allow error handling
       if the format ID is not recognized. This is necessary now that the
       formats are dynamic and errors are not caught at compile time.
-      OBConversion::Read() is a templated function so that objects derived
-      from OBBase can also be handled, in addition to OBMol, if the format
-      routines are written appropriately.
+      OBConversion::Read() uses a pointer to OBBase, so that, in addition
+      to OBMol, other kinds of objects, such as reactions, can also be handled
+      if the format routines are written appropriately.
 
       <b>To make a molecule from a SMILES string.</b>
       @code
@@ -190,11 +190,6 @@ namespace OpenBabel {
 
       ...Carry on with original code using pIn
       @endcode
-
-      In certain Windows builds, a degree of independence from OpenBabel can be
-      achieved using DLLs. This code would be linked with obconv.lib.
-      At runtime the following DLLs would be in the executable directory:
-      obconv.dll, obdll.dll, one or more *.obf format files.
   */
     
   int OBConversion::FormatFilesLoaded = 0;
@@ -483,7 +478,7 @@ namespace OpenBabel {
         try
           {
             ret = pInFormat->ReadChemObject(this);
-            if (ret && IsOption("read-conformers", GENOPTIONS)) {
+/*            if (ret && IsOption("readconformers", GENOPTIONS)) {
               std::streampos pos = pInStream->tellg();
               OBMol nextMol;
               OBConversion conv;
@@ -510,6 +505,7 @@ namespace OpenBabel {
               }
               pInStream->seekg(pos, std::ios::beg);
             }
+*/
             SetFirstInput(false);
           }		
         catch(...)
@@ -776,7 +772,7 @@ namespace OpenBabel {
     pInStream->imbue(cNumericLocale);
 
     bool success = pInFormat->ReadMolecule(pOb, this);
-    if (success && IsOption("read-conformers", GENOPTIONS)) {
+/*    if (success && IsOption("readconformers", GENOPTIONS)) {
       std::streampos pos = pInStream->tellg();
       OBMol nextMol;
       OBConversion conv;
@@ -803,7 +799,7 @@ namespace OpenBabel {
       }
       pInStream->seekg(pos, std::ios::beg);
     }
-
+*/
     // return the C locale to the original one
     obLocale.RestoreLocale();
     // Restore the original C++ locale as well
