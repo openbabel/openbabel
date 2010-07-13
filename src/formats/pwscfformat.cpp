@@ -230,19 +230,22 @@ namespace OpenBabel {
       // Enthalphy
       if (strstr(buffer, "Final enthalpy =")) {
         float en, pv;
-        OBPairData *enthalpy = new OBPairData();
-        OBPairData *enthalpy_pv = new OBPairData();
-        enthalpy->SetAttribute("Enthalpy (kcal/mol)");
-        enthalpy_pv->SetAttribute("Enthalpy PV term (kcal/mol)");
-
         tokenize(vs, buffer);
+
+        OBPairData *enthalpy = new OBPairData();
+        enthalpy->SetAttribute("Enthalpy (kcal/mol)");
         en = static_cast<float> (atof(vs.at(3).c_str()) * RYDBERG_TO_KCAL_PER_MOL);
         snprintf(tag, BUFF_SIZE, "%f", en);
         enthalpy->SetValue(tag);
+        pmol->SetData(enthalpy);
 
+        OBPairData *enthalpy_pv = new OBPairData();
+        enthalpy_pv->SetAttribute("Enthalpy PV term (kcal/mol)");
         pv = static_cast<float> (en - pmol->GetEnergy());
         snprintf(tag, BUFF_SIZE, "%f", pv);
         enthalpy_pv->SetValue(tag);
+        pmol->SetData(enthalpy_pv);
+
       }
     }
 
