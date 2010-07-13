@@ -57,9 +57,11 @@ public:
     OBPlugin::PluginIterator itr;
     for(itr=OBPlugin::Begin("ops");itr!=OBPlugin::End("ops");++itr)
     {
-      if(*(itr->first)=='_')//ignore ops with IDs that begin with '_'
-        continue;
       OBOp* pOp = dynamic_cast<OBOp*>(itr->second);
+       //ignore ops with IDs that begin with '_' or have "not displayed in GUI" in their first line of description
+      if(*(itr->first)=='_'
+        || OBPlugin::FirstLine(pOp->Description()).find("not displayed in GUI")!=std::string::npos)       
+        continue;
       if(pOp && pOp->WorksWith(pOb))
       {
         s += "--";

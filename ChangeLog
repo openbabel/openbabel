@@ -1,3 +1,14 @@
+2010-07-13 Chris Morley
+
+	* include/openbabel/op.h(OpOptions): ignore ops with
+	"not displayed in GUI" in the first line of their Descriptions()
+	 
+	* src/ops/conformer.cpp,src/ops/forcefield.cpp,tools/obgrep.cpp:
+	Add "not displayed in GUI" to some ops which use multiple extra options
+	that the GUI cannot yet display.
+	
+	* tools/obgrep.cpp: fix so compiles in MSVC
+
 2010-07-12  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* test/buildertest.cpp, src/mol.cpp: Clear flags for SSSR and

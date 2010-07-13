@@ -49,7 +49,7 @@ namespace OpenBabel
 
       const char* Description()
       {
-        return "ForceField Energy Evaluation\n"
+        return "ForceField Energy Evaluation (not displayed in GUI)\n"
           "Typical usage: obabel infile.xxx -O outfile.yy --energy --log\n"
           " options:         description\n"
           " --log        output a log of the energies (default = no log)\n"
@@ -124,7 +124,7 @@ namespace OpenBabel
       
       const char* Description()
       { 
-        return "ForceField Energy Minimization\n"
+        return "ForceField Energy Minimization (not displayed in GUI)\n"
           "Typical usage: obabel infile.xxx -O outfile.yyy --minimize --steps 1500 --sd\n"
           " options:         description:\n"
           " --log        output a log of the minimization process(default= no log)\n"

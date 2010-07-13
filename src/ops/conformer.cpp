@@ -1,5 +1,5 @@
 /**********************************************************************
-forcefield.cpp - A OBOp to calculate and minimize the energy using a 
+conformer.cpp - A OBOp to calculate and minimize the energy using a 
                  forcefield (re-wrap of obminimize and obenergy)
 
 Copyright (C) 2010 by Tim Vandermeersch
@@ -49,7 +49,7 @@ namespace OpenBabel
 
       const char* Description()
       {
-        return "Conformer Searching\n"
+        return "Conformer Searching (not displayed in GUI)\n"
           "Typical usage: obabel infile.xxx -O outfile.yy --conformer --nconf\n"
           " options:             description\n"
           " --log            output a log of the energies (default = no log)\n"
