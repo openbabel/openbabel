@@ -42,12 +42,18 @@ set(forcefields
 )
 
 set(math_srcs
-    math/align.cpp
     math/matrix3x3.cpp
     math/spacegroup.cpp
     math/transform3d.cpp
     math/vector3.cpp
 )
+
+if (EIGEN2_FOUND)
+set(math_srcs
+        ${math_srcs}
+        math/align.cpp
+)
+endif (EIGEN2_FOUND)
 
 set(ops
   ops/addpolarh.cpp

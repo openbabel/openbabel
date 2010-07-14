@@ -9,7 +9,6 @@ add_definitions(-DFORMATDIR="\\"${openbabel_BINARY_DIR}/lib/\\"")
 ############################################################
 
 set(tests
-    align
     automorphism
     builder
     cistrans
@@ -26,6 +25,13 @@ set(tests
     tetraplanar
     uniqueid
   )
+
+if (EIGEN2_FOUND)
+set(tests
+        align
+        ${tests}
+)
+endif (EIGEN2_FOUND)
 
 set(TEST_PATH ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
