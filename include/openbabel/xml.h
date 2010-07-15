@@ -234,7 +234,6 @@ namespace OpenBabel
           _pmol = dynamic_cast<OBMol*>(pOb);
           if(!_pmol)
             return false;
-
           _pxmlConv = XMLConversion::GetDerived(pConv,true);
           if(!_pxmlConv)
             return false;

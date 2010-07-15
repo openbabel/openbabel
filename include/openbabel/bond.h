@@ -255,13 +255,19 @@ namespace OpenBabel
            For more detailed rotor detection, check the OBRotorList and 
            OBRotorRules classes **/
       bool IsRotor();
-      //! \return Is the bond an amide link (i.e., between a carbonyl C and a N)
+      /** \return Is the bond an amide link (i.e., between a carbonyl C and a N)?
+           No distinction is made between primary, secondary, and tertiary amides. **/
       bool IsAmide();
-      //! \return Is the bond an amide (i.e., between carbonyl C and a NH group)
+      /** \return Is the bond a primary amide (i.e., between carbonyl C and a NH2)?
+           In versions prior to 2.3, this function incorrectly identified secondary amides. **/
       bool IsPrimaryAmide();
-      //! \return Is the bond an amide between a carbonyl C and a N with no hydrogens
+      /** \return Is the bond a secondary amide (i.e., between a carbonyl C and a NH1)?
+           In versions prior to 2.3, this function incorrectly identified tertiary amides. **/
       bool IsSecondaryAmide();
-      //! \return Is the bond an ester link (i.e., between a carbonyl C and an O)
+      /** \return Is the bond a teriary amide (i.e., between a carbonyl C and a NH0)?
+           This function is new since release 2.3.**/
+      bool IsTertiaryAmide();
+      //! \return Is the bond an ester link (i.e., between a carbonyl C and an O)?
       bool IsEster();
       //! \return Is the bond a carbonyl C=O?
       bool IsCarbonyl();
