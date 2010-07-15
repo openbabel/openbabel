@@ -179,6 +179,141 @@ namespace OpenBabel
            _end->GetHyb() != 1);
   }
 
+   bool OBBond::IsAmide()
+   {
+      OBAtom *c,*n;
+      c = n = NULL;
+
+      // Look for C-N bond
+      if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 7)
+      {
+         c = (OBAtom*)_bgn;
+         n = (OBAtom*)_end;
+      }
+      if (_bgn->GetAtomicNum() == 7 && _end->GetAtomicNum() == 6)
+      {
+         c = (OBAtom*)_end;
+         n = (OBAtom*)_bgn;
+      }
+      if (!c || !n) return(false);
+      if (GetBondOrder() != 1) return(false);
+      if (n->GetImplicitValence() != 3) return(false);
+
+      // Make sure C is attached to =O
+      OBBond *bond;
+      vector<OBBond*>::iterator i;
+      for (bond = c->BeginBond(i); bond; bond = c->NextBond(i))
+      {
+         if (bond->IsCarbonyl()) return(true);
+      }
+
+      // Return
+      return(false);
+   }
+   
+   bool OBBond::IsPrimaryAmide()
+   {
+      OBAtom *c,*n;
+      c = n = NULL;
+
+      // Look for C-N bond
+      if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 7)
+      {
+         c = (OBAtom*)_bgn;
+         n = (OBAtom*)_end;
+      }
+      if (_bgn->GetAtomicNum() == 7 && _end->GetAtomicNum() == 6)
+      {
+         c = (OBAtom*)_end;
+         n = (OBAtom*)_bgn;
+      }
+      if (!c || !n) return(false);
+      if (GetBondOrder() != 1) return(false);
+      if (n->GetImplicitValence() != 3) return(false);
+
+      // Make sure that N is connected to one non-H
+      if (n->GetHvyValence() != 1) return(false);
+      
+      // Make sure C is attached to =O
+      OBBond *bond;
+      vector<OBBond*>::iterator i;
+      for (bond = c->BeginBond(i); bond; bond = c->NextBond(i))
+      {
+         if (bond->IsCarbonyl()) return(true);
+      }
+
+      return(false);
+   }
+   
+   bool OBBond::IsSecondaryAmide()
+   {
+      OBAtom *c,*n;
+      c = n = NULL;
+
+      // Look for C-N bond
+      if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 7)
+      {
+         c = (OBAtom*)_bgn;
+         n = (OBAtom*)_end;
+      }
+      if (_bgn->GetAtomicNum() == 7 && _end->GetAtomicNum() == 6)
+      {
+         c = (OBAtom*)_end;
+         n = (OBAtom*)_bgn;
+      }
+      if (!c || !n) return(false);
+      if (GetBondOrder() != 1) return(false);
+      if (n->GetImplicitValence() != 3) return(false);
+
+      // Make sure that N is connected to two non-H atoms
+      if (n->GetHvyValence() != 2) return(false);
+      
+      // Make sure C is attached to =O
+      OBBond *bond;
+      vector<OBBond*>::iterator i;
+      for (bond = c->BeginBond(i); bond; bond = c->NextBond(i))
+      {
+         if (bond->IsCarbonyl()) return(true);
+      }
+
+      return(false);
+   }
+   
+   bool OBBond::IsTertiaryAmide()
+   {
+      OBAtom *c,*n;
+      c = n = NULL;
+
+      // Look for C-N bond
+      if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 7)
+      {
+         c = (OBAtom*)_bgn;
+         n = (OBAtom*)_end;
+      }
+      if (_bgn->GetAtomicNum() == 7 && _end->GetAtomicNum() == 6)
+      {
+         c = (OBAtom*)_end;
+         n = (OBAtom*)_bgn;
+      }
+      if (!c || !n) return(false);
+      if (GetBondOrder() != 1) return(false);
+      if (n->GetImplicitValence() != 3) return(false);
+
+      // Make sure that N is connected to three non-H atoms
+      if (n->GetHvyValence() != 3) return(false);
+      
+      // Make sure C is attached to =O
+      OBBond *bond;
+      vector<OBBond*>::iterator i;
+      for (bond = c->BeginBond(i); bond; bond = c->NextBond(i))
+      {
+         if (bond->IsCarbonyl()) return(true);
+      }
+
+      return(false);
+   }
+
+/*  
   bool OBBond::IsAmide()
   {
     OBAtom *a1,*a2;
@@ -242,7 +377,6 @@ namespace OpenBabel
     return(false);
   }
 
-
   bool OBBond::IsSecondaryAmide()
   {
     OBAtom *a1,*a2;
@@ -274,6 +408,7 @@ namespace OpenBabel
 
     return(false);
   }
+*/
 
   bool OBBond::IsEster()
   {
