@@ -775,6 +775,7 @@ namespace OpenBabel
         int indx1=0,indx2=0, ord=0;
         string bondstereo, BondStereoRefs;
         string colour;
+        string label;
         bool PossibleBond = false;
 
         for(AttributeIter=BondIter->begin();AttributeIter!=BondIter->end();++AttributeIter)
@@ -838,6 +839,9 @@ namespace OpenBabel
 
             else if(attrname=="color")
               colour=value[0];
+
+            else if(attrname=="label")
+              label = value;
           }
 
         if(PossibleBond)
@@ -860,6 +864,13 @@ namespace OpenBabel
                 OBPairData *dp = new OBPairData();
                 dp->SetAttribute("color");
                 dp->SetValue(colour.c_str());
+                _pmol->GetBond(_pmol->NumBonds()-1)->SetData(dp);
+              }
+            if(!label.empty())
+              {
+                OBPairData *dp = new OBPairData();
+                dp->SetAttribute("label");
+                dp->SetValue(label.c_str());
                 _pmol->GetBond(_pmol->NumBonds()-1)->SetData(dp);
               }
           }
@@ -1764,6 +1775,10 @@ namespace OpenBabel
                     if(pbond->HasData("color"))
                       xmlTextWriterWriteFormatAttribute(writer(), C_COLOR,"%s",
                           pbond->GetData("color")->GetValue().c_str());
+
+                    if(pbond->HasData("label"))
+                      xmlTextWriterWriteFormatAttribute(writer(), C_LABEL,"%s",
+                          pbond->GetData("label")->GetValue().c_str());
 
                     if( (ctStereo_cit=ctStereos.find(pbond->GetIdx())) != ctStereos.end() )
                       {

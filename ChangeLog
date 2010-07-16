@@ -1,3 +1,11 @@
+2010-07-16 Konstantin Tokarev
+	* New INSTALL file
+
+	* include/openbabel/plugin.h: Deobfuscated MAKE_PLUGIN macro
+
+	* src/formats/xml/cmlformat.cpp: Save and load bond labels in 
+	CML format
+
 2010-07-13 Chris Morley
 
 	Alternative method for read-conformers which maintains
