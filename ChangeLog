@@ -1,3 +1,17 @@
+2010-07-19 Chris Morley
+
+	* include/openbabel/plugin.h: reverted the last change. Something
+	seems to have gone wrong with the deobfuscation of the	MAKE_PLUGIN
+	macro and was causing a crash in the GUI when formats were changed.
+	I did not find out the precise cause, but it seemed to be around the
+	default op. The difficulty of debugging	this illustrates that using a
+	macro here is is not nice; we could do with a more C++ way of making
+	a plugin. Tim has suggested a possible approach
+	http://openbabel.org/wiki/Plugins
+	
+	There is already an annotated version of the contents of the macro
+	at the end of the op.h, but it might not be up to date. 
+	
 2010-07-16 Konstantin Tokarev
 	* New INSTALL file
 
