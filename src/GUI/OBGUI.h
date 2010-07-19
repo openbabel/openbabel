@@ -92,6 +92,7 @@ public:
 	void OnRestrictFormats(wxCommandEvent& event);
   void OnSetDisplayFile(wxCommandEvent& event);
 	void OnClickPlugin(wxCommandEvent& event);
+  void OnSetMinSize(wxCommandEvent& event);
 
 	void DisplayInFile(wxString filename);
 	wxString GetInFileBasePath(){ return m_InFileBasePath;}
@@ -202,7 +203,7 @@ enum
 		ID_INFORCEFORMAT,ID_OUTFORCEFORMAT,ID_NOOUTFILE,ID_CONVERT,
 		ID_MESSAGES,ID_INPUTHERE,ID_RESTRICTFORMATS,ID_SELFORMATS,
     ID_COPYTOINPUT,ID_HINT,
-    ID_PLUGINS,ID_DISPLAY,ID_SETDISPLAYFILE
+    ID_PLUGINS,ID_DISPLAY,ID_SETDISPLAYFILE,ID_MINSIZE
 };
 
 #endif

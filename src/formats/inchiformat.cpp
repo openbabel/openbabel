@@ -416,7 +416,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   inchi_Output inout;
   memset(&inout,0,sizeof(inchi_Output));
 
-  int ret = GetStdINCHI(&inp, &inout);
+  int ret = GetINCHI(&inp, &inout);
 
   delete[] opts;
   if(ret!=inchi_Ret_OKAY)
@@ -649,7 +649,6 @@ char* InChIFormat::GetInChIOptions(OBConversion* pConv, bool Reading)
     copy(useropts.begin(), useropts.end(), back_inserter(optsvec));
   }
 
-  /* In Standard InChI these are not used
   //Add a couple InChI options built in to OB
   if(opttyp==OBConversion::OUTOPTIONS)
   {
@@ -664,7 +663,7 @@ char* InChIFormat::GetInChIOptions(OBConversion* pConv, bool Reading)
       optsvec.push_back(tmp2);
     }
   }
-  */
+  
 
 #ifdef WIN32
     string ch(" /");

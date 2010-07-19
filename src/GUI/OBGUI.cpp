@@ -49,6 +49,7 @@ BEGIN_EVENT_TABLE(OBGUIFrame, wxFrame)
   EVT_MENU(ID_SELFORMATS,  OBGUIFrame::OnSelectFormats)
   EVT_MENU(ID_RESTRICTFORMATS,  OBGUIFrame::OnRestrictFormats)
   EVT_MENU(ID_SETDISPLAYFILE,  OBGUIFrame::OnSetDisplayFile)
+  EVT_MENU(ID_MINSIZE,  OBGUIFrame::OnSetMinSize)
   EVT_MENU_RANGE(ID_PLUGINS,ID_PLUGINS+1000, OBGUIFrame::OnClickPlugin)
   EVT_MENU_RANGE(ID_SHOWCONVOPTIONS,ID_SHOWOUTOPTIONS, OBGUIFrame::OnChangeFormat)
   EVT_MENU(wxID_ABOUT, OBGUIFrame::OnAbout)
@@ -141,6 +142,9 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
   viewMenu->AppendSeparator();
   viewMenu->AppendCheckItem(ID_INWRAPPED, _T("Wrap input text (on restart)"));
   viewMenu->AppendCheckItem(ID_OUTWRAPPED, _T("Wrap output text (on restart)"));
+  viewMenu->AppendSeparator();
+  viewMenu->Append(ID_MINSIZE, _T("Reduce window to minimum useful size"));
+
   fileMenu->Append(ID_CONVERT, _T("&Convert"));
   fileMenu->Append(wxID_SAVE, _T("&Save Input Text As...\tCtrl+S"),
     _T("Brings up Save dialog"));
@@ -490,6 +494,11 @@ void OBGUIFrame::OnSetDisplayFile(wxCommandEvent& event)
     m_DisplayFile = dialog.GetValue().AfterFirst('\n');
     m_pDisplay->SetLabel(_T("Display in ") + m_DisplayCmd.BeforeFirst(' '));
   }
+}
+
+void OBGUIFrame::OnSetMinSize(wxCommandEvent& event)
+{
+  SetSize(872, 249);
 }
 
 void OBGUIFrame::OnConvert(wxCommandEvent& WXUNUSED(event))

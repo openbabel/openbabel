@@ -1,5 +1,22 @@
 2010-07-19 Chris Morley
 
+	* src/formats/inchiformat.cpp: make suitable for InChI 1.03.
+	Allow InChI options and re-enable -M and -F options for non-
+	standard InChI.
+	
+	* include/openbabel/inchiformat.h: improve Description()
+	
+	* windows-vc2008/libs/i386/libinchi.dll, libinchi.lib: add
+	* windows-vc2008/libs/i386/libstdinchi.dll, libstdinchi.lib: remove
+	
+	* windows-vc2008/default_build.bat: change from libstdinchi.lib
+	 to libinchi
+
+	* src/GUI/OBGUI.cpp,src/GUI/OBGUI.h: add menu item to shrink
+	window to minimum useful size.
+
+2010-07-19 Chris Morley
+
 	* include/openbabel/plugin.h: reverted the last change. Something
 	seems to have gone wrong with the deobfuscation of the	MAKE_PLUGIN
 	macro and was causing a crash in the GUI when formats were changed.
