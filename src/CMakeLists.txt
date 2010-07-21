@@ -57,7 +57,6 @@ endif (EIGEN2_FOUND)
 
 set(ops
   ops/addpolarh.cpp
-  ops/conformer.cpp
   ops/gen2D.cpp
   ops/fillUC.cpp
   ops/forcefield.cpp
@@ -69,6 +68,12 @@ set(ops
   ops/sort.cpp
   ops/xout.cpp
 )
+if (EIGEN2_FOUND)
+set(ops
+        ${ops}
+        ops/conformer.cpp
+)
+endif (EIGEN2_FOUND)
 
 set(stereo_srcs
     stereo/stereo.cpp
@@ -93,7 +98,6 @@ set(openbabel_srcs
     chains.cpp
     chargemodel.cpp
     chiral.cpp
-    conformersearch.cpp
     data.cpp
     descriptor.cpp
     fingerprint.cpp
@@ -132,6 +136,12 @@ set(openbabel_srcs
     typer.cpp
     obmolecformat.cpp
 )
+if (EIGEN2_FOUND)
+set(openbabel_srcs
+        ${openbabel_srcs}
+        conformersearch.cpp
+)
+endif (EIGEN2_FOUND)
 
 if(BUILD_SHARED)
   if(MSVC)

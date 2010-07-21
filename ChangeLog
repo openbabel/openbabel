@@ -1,3 +1,8 @@
+2010-07-21  Noel O'Boyle
+
+	* src/CMakeLists.txt: Only compile ops/conformer.cpp and 
+	src/conformersearch.cpp if Eigen2 is found
+
 2010-07-19 Chris Morley
 
 	* src/formats/inchiformat.cpp: make suitable for InChI 1.03.
