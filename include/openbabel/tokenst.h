@@ -44,6 +44,13 @@ namespace OpenBabel
     return s.str();
   }
 
+  //!Functor for delting containers of pointers. Scott Meyers, Effective STL, Item 7
+  struct DeleteObject
+  {
+    template<typename T>
+    void operator()(const T* ptr)const { delete ptr; }
+  };
+
   //!Read and discard all characters from input stream up to, and including, a string
   OBERROR std::istream& ignore(std::istream& ifs, const std::string& txt);
 

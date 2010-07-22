@@ -792,7 +792,7 @@ namespace OpenBabel
             {
               AliasData* ad = static_cast<AliasData*>(atom->GetData(AliasDataType));
               if(!ad->IsExpanded()) //do nothing with an expanded alias
-                ofs << "A  " << setw(3) << atom->GetIdx() << '\n' << ad->GetAlias() << endl;
+                ofs << "A  " << setw(3) << right << atom->GetIdx() << '\n' << ad->GetAlias() << endl;
             }
 
           }

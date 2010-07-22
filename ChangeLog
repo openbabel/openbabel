@@ -1,3 +1,11 @@
+2010-07-22 Chris Morley
+
+	*src/formats/mdlformat.cpp: right align atom numbers in A line, as
+	prompted by Igor Filippov.
+	
+	* include/openbabel/tokenst.h: add functor to help withr deleting
+	containers of pointers.
+
 2010-07-21  Noel O'Boyle
 
 	* include/openbabel/math/align.h: Add Doxygen docs. Update the default
