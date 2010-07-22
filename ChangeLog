@@ -1,5 +1,11 @@
 2010-07-21  Noel O'Boyle
 
+	* include/openbabel/math/align.h: Add Doxygen docs. Update the default
+	constructor.
+	* src/math/align.cpp: Update the default constructor.
+
+2010-07-21  Noel O'Boyle
+
 	* src/formats/povrayformat.cpp: POV-ray format has been neglected for
 	a long time. Based on Steven Wathen's comments on openbabel-discuss
 	(28/11/2009), I have gotten it to work. I also added options for
