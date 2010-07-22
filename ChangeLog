@@ -1,5 +1,12 @@
 2010-07-21  Noel O'Boyle
 
+	* src/formats/povrayformat.cpp: POV-ray format has been neglected for
+	a long time. Based on Steven Wathen's comments on openbabel-discuss
+	(28/11/2009), I have gotten it to work. I also added options for
+	checkerboard, a mirror sphere and sky.
+
+2010-07-21  Noel O'Boyle
+
 	* src/CMakeLists.txt: Only compile ops/conformer.cpp and 
 	src/conformersearch.cpp if Eigen2 is found
 
