@@ -108,7 +108,7 @@ namespace OpenBabel
       "Write Options e.g. -xt\n"
       " c Add a black and white checkerboard\n"
       " f Add a mirror sphere\n"
-      " m <model-type> ``BAS`` (ball-and-stick), ``SPF`` (space-fill) or ``CST`` (capped sticks) \n"
+      " m <model-type> BAS (ball-and-stick), SPF (space-fill) or CST (capped sticks) \n"
       "    The default option is ball-and-stick. To choose space-fill, you would use the following command line::\n\n"
       "      obabel aspirin.mol -O aspirin.pov -xm SPF\n\n"
       " s Add a sky (with clouds)\n"

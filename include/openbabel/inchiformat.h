@@ -78,7 +78,7 @@ public:
     " T <param> truncate InChI, /nostereo etc.\n"
     "    See below for possible truncation parameters.\n"
     "    These can be combined, e.g. /nochg/noiso\n"
-    " X <Option string>Additional InChI options\n"
+    " X <Option string> Additional InChI options\n"
     "    See InChI documentation.\n"
     "    These options should be space delimited in a single quoted string.\n"
     "    Structure perception (compatible with stdInChI)\n"                     
