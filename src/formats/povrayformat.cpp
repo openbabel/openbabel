@@ -761,7 +761,8 @@ namespace OpenBabel
     const char* tmp = pConv->IsOption("m");
     if (tmp) {
       model_type = string(tmp);
-      std::transform(model_type.begin(), model_type.end(), model_type.begin(), std::toupper);
+      // Convert to uppercase
+      std::transform(model_type.begin(), model_type.end(), model_type.begin(), static_cast< int(*)(int) >(std::toupper));
       if (model_type != "BAS" && model_type != "SPF" && model_type != "CST") {
         obErrorLog.ThrowError(__FUNCTION__, "Unknown model type specified. Using the default instead (\"BAS\", ball-and-stick).\n",obWarning);
         model_type = "BAS";
