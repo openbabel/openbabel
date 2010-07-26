@@ -1,3 +1,8 @@
+2010-07-26  Noel O'Boyle
+
+	* scripts/CMakeLists.txt, openbabel-python.i: Pass -DHAVE_EIGEN2 to swig
+	and conditionally generate bindings for conformersearch.h.
+
 2010-07-22 Chris Morley
 
 	*src/formats/mdlformat.cpp: right align atom numbers in A line, as

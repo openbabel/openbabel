@@ -241,7 +241,9 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 %ignore OpenBabel::Swab;
 %include <openbabel/rotamer.h>
 %include <openbabel/spectrophore.h>
+#ifdef HAVE_EIGEN2
 %include <openbabel/conformersearch.h>
+#endif
 
 # The following %ignores avoid warning messages due to shadowed classes.
 # This does not imply a loss of functionality as (in this case)
