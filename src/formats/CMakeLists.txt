@@ -20,7 +20,6 @@ set(formats_compchem
       dmolformat
       fchkformat
       gamessformat
-      gamessukformat
       gaussformat
       gausscubeformat
       gausszmatformat
@@ -35,7 +34,14 @@ set(formats_compchem
       turbomoleformat
       vaspformat
       zindoformat
-      )
+  )
+
+if(MSVC OR HAVE_REGEX_H)
+  set(formats_compchem
+      ${formats_compchem} gamessukformat
+  )
+endif(MSVC OR HAVE_REGEX_H)
+
 set(formats_misc
       APIInterface
       CSRformat
