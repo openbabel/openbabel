@@ -1,4 +1,6 @@
 //
+// Copyright (C) 2010 David C. Lonie
+//
 // Molekel - Molecular Visualization Program
 // Copyright (C) 2006, 2007 Swiss National Supercomputing Centre (CSCS)
 //
@@ -29,11 +31,12 @@
 #include <sstream>
 #include <cstring>
 
-
 #include <openbabel/obconversion.h>
 #include <openbabel/obmolecformat.h>
 
 #include <openbabel/griddata.h>
+
+#define EV_TO_KCAL_PER_MOL 23.060538
 
 using namespace std;
 using namespace OpenBabel;
@@ -115,7 +118,7 @@ namespace OpenBabel {
             ifs.getline(buffer,BUFF_SIZE);  // Column headings (Atom, etc.)
             ifs.getline(buffer,BUFF_SIZE);  // Column headings 2nd line (X Y Z)
             ifs.getline(buffer,BUFF_SIZE);  // ---------
-            
+
             ifs.getline(buffer,BUFF_SIZE);  // actual data
             tokenize(vs,buffer);
             while (strstr(buffer, "----") == NULL && vs.size() == 8)
@@ -136,10 +139,10 @@ namespace OpenBabel {
         else if(strstr(buffer,"Dipole Moment  ***") != NULL)
           {
             ifs.getline(buffer,BUFF_SIZE);	// =========
-            ifs.getline(buffer,BUFF_SIZE);	// blank line            
+            ifs.getline(buffer,BUFF_SIZE);	// blank line
             ifs.getline(buffer,BUFF_SIZE); // actual components  Vector: ###  #### ###
             tokenize(vs,buffer);
-            if (vs.size() >= 5) 
+            if (vs.size() >= 5)
               {
                 OBVectorData *dipoleMoment = new OBVectorData;
                 dipoleMoment->SetAttribute("Dipole Moment");
@@ -161,10 +164,10 @@ namespace OpenBabel {
               ifs.getline(buffer,BUFF_SIZE);	// a)
               ifs.getline(buffer,BUFF_SIZE);	// b)
               ifs.getline(buffer,BUFF_SIZE);	// c)
-              ifs.getline(buffer,BUFF_SIZE);	// 
+              ifs.getline(buffer,BUFF_SIZE);	//
               ifs.getline(buffer,BUFF_SIZE);	// Atom (column headings)
               ifs.getline(buffer,BUFF_SIZE);  // ---
-              
+
               ifs.getline(buffer,BUFF_SIZE); // Actual data!
               tokenize(vs,buffer);
               while (vs.size() >= 3)
@@ -188,6 +191,32 @@ namespace OpenBabel {
                 charge = atoi(vs[2].c_str());
               }
           }
+        else if (strstr(buffer,"Bond Energy") != NULL)
+          {
+            double energy = 0;
+            for (;;) {
+              if (strstr(buffer, "a.u.")) {
+                ifs.getline(buffer,BUFF_SIZE);
+                continue;
+              }
+              else if (strstr(buffer, "eV")) {
+                tokenize(vs, buffer);
+                // The energies have a variable number of
+                // prefixes...rather than check each possible case,
+                // just try to convert tokens 1 thru vs.size() to
+                // double and keep the last one that works.
+                for (int i = 1; i < vs.size(); i++) {
+                  if (double d = atof(vs.at(i).c_str())) {
+                    energy = d;
+                  }
+                }
+                ifs.getline(buffer,BUFF_SIZE);
+              }
+              else break;
+            }
+            mol.SetEnergy(energy * EV_TO_KCAL_PER_MOL);
+          }
+
       } // end while
 
     if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
@@ -245,7 +274,7 @@ namespace OpenBabel {
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv)
       { return false; }
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-    
+
     virtual unsigned int Flags()
     {
       return NOTREADABLE | WRITEONEONLY;
@@ -255,7 +284,7 @@ namespace OpenBabel {
 
   //Make an instance of the format class
   ADFInputFormat theADFInputFormat;
-  
+
   bool ADFInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
@@ -274,7 +303,7 @@ namespace OpenBabel {
     // Output CHARGE and spin
     // Note that ADF expects the spin parameter to be the # of unpaired spins
     // (i.e., singlet = 0, doublet = 1, etc.)
-    snprintf(buffer, BUFF_SIZE, "CHARGE %d  %d\n\n", 
+    snprintf(buffer, BUFF_SIZE, "CHARGE %d  %d\n\n",
              mol.GetTotalCharge(),
              mol.GetTotalSpinMultiplicity() - 1);
     ofs << buffer;
@@ -282,7 +311,7 @@ namespace OpenBabel {
     // Cartesian input -- change this if you want a z-matrix format
     snprintf(buffer, BUFF_SIZE, "Number of atoms\n %d\n\n", mol.NumAtoms());
     ofs << buffer;
-    
+
     ofs << "ATOMS Cartesian\n";
     FOR_ATOMS_OF_MOL(atom, mol)
       {
@@ -294,11 +323,11 @@ namespace OpenBabel {
         ofs << buffer;
       }
     ofs << "End\n\n";
-    
+
     // command-line keywords (-xk "blah")
     const char *keywords = pConv->IsOption("k",OBConversion::OUTOPTIONS);
     const char *keywordFile = pConv->IsOption("f",OBConversion::OUTOPTIONS);
-    
+
     // If the user specified a full file, pick that over anything else
     if (keywordFile) {
         ifstream kfstream(keywordFile);
@@ -315,7 +344,7 @@ namespace OpenBabel {
     else {
       ofs << "Basis\n";
       ofs << "End\n\n";
-    
+
       ofs << "Geometry\n";
       ofs << "End\n\n";
     }
@@ -324,7 +353,7 @@ namespace OpenBabel {
 
     return true;
   }
-  
+
 
 class OBT41Format : public OBMoleculeFormat
 {
@@ -344,10 +373,10 @@ public:
         "Read Options e.g. -as\n"
         "  s  Output single bonds only\n"
         "  b  Disable bonding entirely\n\n"
-	
-	"Currently the ADF Tape41 support reads grids from\n"
-       	"TAPE41 text files. To generate an ASCII version from\n"
-       	"the default binary, use the dmpkf program.\n\n";
+
+        "Currently the ADF Tape41 support reads grids from\n"
+        "TAPE41 text files. To generate an ASCII version from\n"
+        "the default binary, use the dmpkf program.\n\n";
     }
 
     /// Return a specification url, not really a specification since
@@ -371,7 +400,7 @@ public:
 
     /// Read.
     virtual bool ReadMolecule( OBBase* pOb, OBConversion* pConv );
-    
+
     bool ReadASCII( OBBase* pOb, OBConversion* pConv);
     bool ReadBinary( OBBase* pOb, OBConversion* pConv);
 
@@ -457,14 +486,14 @@ private:
 
     ///Read SCF grids.
     bool ReadSCFGrid( istream& is, OBGridData& t41Data ) const;
-    
+
     ///Read SCF orbital grids.
     bool ReadSCFOrbitalGrid( istream& is, OBGridData& t41Data ) const;
 
     ///Read SumFrag grids.
     bool ReadSumFragGrid( istream& is, OBGridData& t41Data ) const;
 
-		OBGridData *NewData(const GridData &gd);
+                OBGridData *NewData(const GridData &gd);
 };
 
 //------------------------------------------------------------------------------
@@ -482,13 +511,13 @@ namespace
 
 OBGridData *OBT41Format::NewData(const T41GridData &gd)
 {
-	OBGridData *t41Data = new OBGridData;
+        OBGridData *t41Data = new OBGridData;
   t41Data->SetNumberOfPoints( gd.numPoints[ 0 ], gd.numPoints[ 1 ], gd.numPoints[ 2 ] );
-	t41Data->SetLimits( gd.startPoint, gd.xAxis, gd.yAxis, gd.zAxis );
+        t41Data->SetLimits( gd.startPoint, gd.xAxis, gd.yAxis, gd.zAxis );
   t41Data->SetUnrestricted( gd.unrestricted );
   t41Data->SetNumSymmetries( gd.numSymmetries );
 
-	return t41Data;
+        return t41Data;
 }
 
 //------------------------------------------------------------------------------
@@ -527,7 +556,7 @@ bool OBT41Format::ReadASCII( OBBase* pOb, OBConversion* pConv )
          // We create new data for each grid
          // If we don't find any legitimate data, we'll end and still have "OBGridData"
          // rather than a legitimate label
-   			 t41Data = NewData(gd);
+                         t41Data = NewData(gd);
          while( ReadSCFOrbitalGrid( ifs, *t41Data ) );
          if (t41Data->GetAttribute() == "GridData") {
            delete t41Data;
@@ -537,7 +566,7 @@ bool OBT41Format::ReadASCII( OBBase* pOb, OBConversion* pConv )
          ifs.clear();
          ifs.seekg( current, ios::beg );
 
-   			 t41Data = NewData(gd);
+                         t41Data = NewData(gd);
          while( ReadSCFGrid( ifs, *t41Data ) );
          if (t41Data->GetAttribute() == "GridData") {
            delete t41Data;
@@ -547,7 +576,7 @@ bool OBT41Format::ReadASCII( OBBase* pOb, OBConversion* pConv )
          ifs.clear();
          ifs.seekg( current, ios::beg );
 
-   			 t41Data = NewData(gd);
+                         t41Data = NewData(gd);
          while( ReadSumFragGrid( ifs, *t41Data ) );
          if (t41Data->GetAttribute() == "GridData") {
            delete t41Data;
@@ -634,7 +663,7 @@ bool OBT41Format::ReadASCII( OBBase* pOb, OBConversion* pConv )
       }
       eol( ifs );
       double scale = 1.0;
-      ifs >> scale; 
+      ifs >> scale;
       /// @todo multply coordinates by axis length;
       for( int i = 0; i != numAtoms; ++i )
       {
@@ -843,18 +872,18 @@ bool OBT41Format::ReadSCFOrbitalGrid( istream& is, OBGridData& t41Data ) const
       for (int j = 0; j < voxels[1]; ++j)
         for (int i = 0; i < voxels[0]; ++i)
           {
-            t41Data.SetValue(i, j, k, 
+            t41Data.SetValue(i, j, k,
                              grid[k*voxels[0]*voxels[1] + j*voxels[0] + i]);
           }
 
-		t41Data.SetAttribute( label );
+                t41Data.SetAttribute( label );
     return true;
 }
 
 //------------------------------------------------------------------------------
 bool OBT41Format::ReadSCFGrid( istream& is, OBGridData& t41Data ) const
 {
-	if( !is ) return false;
+        if( !is ) return false;
     string buf;
     while( is >> buf ) if( buf.find( "SCF", 0 ) == 0 && buf.size() == 3 ) break;
     if( !is ) return false;
@@ -880,12 +909,12 @@ bool OBT41Format::ReadSCFGrid( istream& is, OBGridData& t41Data ) const
       for (int j = 0; j < voxels[1]; ++j)
         for (int i = 0; i < voxels[0]; ++i)
           {
-            t41Data.SetValue(i, j, k, 
+            t41Data.SetValue(i, j, k,
                              grid[k*voxels[0]*voxels[1] + j*voxels[0] + i]);
           }
 
-		t41Data.SetAttribute( label );
-    return true;   
+                t41Data.SetAttribute( label );
+    return true;
 }
 
 
@@ -914,11 +943,11 @@ bool OBT41Format::ReadSumFragGrid( istream& is, OBGridData& t41Data ) const
       for (int j = 0; j < voxels[1]; ++j)
         for (int i = 0; i < voxels[0]; ++i)
           {
-            t41Data.SetValue(i, j, k, 
+            t41Data.SetValue(i, j, k,
                              grid[k*voxels[0]*voxels[1] + j*voxels[0] + i]);
           }
 
-		t41Data.SetAttribute( label );
+                t41Data.SetAttribute( label );
     return true;
 }
 
