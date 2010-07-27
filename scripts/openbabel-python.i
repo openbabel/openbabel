@@ -45,6 +45,8 @@
 #include <openbabel/spectrophore.h>
 #include <openbabel/conformersearch.h>
 
+#include <openbabel/chargemodel.h>
+
 %}
 
 %include "std_list.i"
@@ -234,6 +236,8 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 
 %include <openbabel/builder.h>
 %include <openbabel/op.h>
+
+%include <openbabel/chargemodel.h>
 
 %warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
 %include <openbabel/bitvec.h>
