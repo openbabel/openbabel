@@ -6,6 +6,12 @@
 
 	* scripts/openbabel-python.i: Add chargemodel to Python bindings.
 
+	* src/mol.cpp (AddHydrogens): Fix crashes exposed by
+	buildertest. Make sure to clear flags even if we don't
+	actually add hydrogens.
+
+	* test/buildertest.cpp: Add asserts to ensure perception flags are cleared.
+
 2010-07-26  Noel O'Boyle
 
 	* CMakeLists.txt, src/formats/CMakeLists.txt: Conditionally compile

@@ -45,6 +45,8 @@ bool doBuildMoleculeTest(OBMol &mol)
   // Does not need clearMolFlags -- crash still happens if you clear here
   // and not after AddHydrogens()
   OB_REQUIRE(mol.AddHydrogens());
+  OB_REQUIRE(mol.HasAromaticPerceived() == 0);
+  OB_REQUIRE(mol.HasSSSRPerceived() == 0);
   //  clearMolFlags(mol); // must clear here or you crash
   // Should now be handled by AddHydrogens()
 

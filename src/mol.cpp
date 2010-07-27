@@ -2096,8 +2096,11 @@ namespace OpenBabel
           }
       }
 
-    if (count == 0)
+    if (count == 0) {
+      // Make sure to clear SSSR and aromatic flags we may have tripped above
+      _flags &= (~(OB_SSSR_MOL|OB_AROMATIC_MOL));
       return(true);
+    }
     bool hasCoords = HasNonZeroCoords();
 
     //realloc memory in coordinate arrays for new hydrogens
