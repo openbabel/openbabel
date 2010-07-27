@@ -121,7 +121,7 @@ namespace OpenBabel {
 
             ifs.getline(buffer,BUFF_SIZE);  // actual data
             tokenize(vs,buffer);
-            while (strstr(buffer, "----") == NULL && vs.size() == 8)
+            while (strstr(buffer, "----") == NULL && vs.size() >= 8)
               {
                 atom = mol.NewAtom();
                 atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str())); // atom number, then symbol
