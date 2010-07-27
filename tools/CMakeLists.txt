@@ -19,6 +19,10 @@ else(MINIMAL_BUILD)
   )
 endif(MINIMAL_BUILD)
 
+INCLUDE(CheckFunctionExists)
+SET(GETOPT getopt)
+CHECK_FUNCTION_EXISTS(${GETOPT} GETOPT_FOUND)
+
 foreach(tool ${tools})
   add_executable(${tool} ${tool}.cpp)
   target_link_libraries(${tool} ${BABEL_LIBRARY})
@@ -35,7 +39,11 @@ endforeach(tool)
 
 if(NOT MINIMAL_BUILD)
   # obspectrophore -- requires getopt
+if (NOT GETOPT_FOUND)
   add_executable(obspectrophore obspectrophore.cpp getopt.c)
+else(NOT GETOPT_FOUND)
+  add_executable(obspectrophore obspectrophore.cpp)
+endif(NOT GETOPT_FOUND)
   target_link_libraries(obspectrophore ${BABEL_LIBRARY})
   if(MSVC)
     set_target_properties(obspectrophore PROPERTIES
@@ -48,7 +56,11 @@ if(NOT MINIMAL_BUILD)
   )
 
   # obgrep -- requires getopt
+if (NOT GETOPT_FOUND)
   add_executable(obgrep obgrep.cpp getopt.c)
+else(NOT GETOPT_FOUND)
+  add_executable(obgrep obgrep.cpp)
+endif(NOT GETOPT_FOUND)
   target_link_libraries(obgrep ${BABEL_LIBRARY})
   if(MSVC)
     set_target_properties(obgrep PROPERTIES

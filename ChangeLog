@@ -1,3 +1,11 @@
+2010-07-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* tools/CMakeLists.txt: Only link getopt.c if needed. Removes
+	warnings from Clang and GCC about strlen on non-glibc platforms
+	(e.g. Mac).
+
+	* scripts/openbabel-python.i: Add chargemodel to Python bindings.
+
 2010-07-26  Noel O'Boyle
 
 	* CMakeLists.txt, src/formats/CMakeLists.txt: Conditionally compile
@@ -11,9 +19,9 @@
 
 2010-07-22 Chris Morley
 
-	*src/formats/mdlformat.cpp: right align atom numbers in A line, as
+	* src/formats/mdlformat.cpp: right align atom numbers in A line, as
 	prompted by Igor Filippov.
-	
+
 	* include/openbabel/tokenst.h: add functor to help withr deleting
 	containers of pointers.
 
@@ -32,7 +40,7 @@
 
 2010-07-21  Noel O'Boyle
 
-	* src/CMakeLists.txt: Only compile ops/conformer.cpp and 
+	* src/CMakeLists.txt: Only compile ops/conformer.cpp and
 	src/conformersearch.cpp if Eigen2 is found
 
 2010-07-19 Chris Morley
@@ -40,9 +48,9 @@
 	* src/formats/inchiformat.cpp: make suitable for InChI 1.03.
 	Allow InChI options and re-enable -M and -F options for non-
 	standard InChI.
-	
+
 	* include/openbabel/inchiformat.h: improve Description()
-	
+
 	* windows-vc2008/libs/i386/libinchi.dll, libinchi.lib: add
 	* windows-vc2008/libs/i386/libstdinchi.dll, libstdinchi.lib: remove
 	
