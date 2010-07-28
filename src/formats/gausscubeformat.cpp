@@ -606,7 +606,7 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     }
 
     vector<OBGenericData*> grids = pmol->GetAllData(OBGenericDataType::GridData);
-    snprintf(buffer, BUFF_SIZE," %5d", grids.size());
+    snprintf(buffer, BUFF_SIZE," %5lu", (unsigned long)grids.size());
     ofs << buffer << flush;
     for (unsigned int l = 1; l <= grids.size(); ++l)
     {
