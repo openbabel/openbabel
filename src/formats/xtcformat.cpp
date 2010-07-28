@@ -659,7 +659,7 @@ namespace OpenBabel
           fprintf(stderr,"malloc failed\n");
           return 0;
         }
-        bufsize = size3 * 1.2;
+        bufsize = static_cast<int> (size3 * 1.2);
         buf = (int *)malloc(bufsize * sizeof(*buf));
         if (buf == NULL) {
           fprintf(stderr,"malloc failed\n");
@@ -673,7 +673,7 @@ namespace OpenBabel
           fprintf(stderr,"malloc failed\n");
           return 0;
         }
-        bufsize = size3 * 1.2;
+        bufsize = static_cast<int> (size3 * 1.2);
         buf = (int *)realloc(buf, bufsize * sizeof(*buf));
         if (buf == NULL) {
           fprintf(stderr,"malloc failed\n");
@@ -693,40 +693,40 @@ namespace OpenBabel
       while(lfp < fp + size3 ) {
         /* find nearest integer */
         if (*lfp >= 0.0)
-          lf = *lfp * *precision + 0.5;
+          lf = *lfp * *precision + 0.5f;
         else
-          lf = *lfp * *precision - 0.5;
+          lf = *lfp * *precision - 0.5f;
         if (fabs(lf) > MAXABS) {
           /* scaling would cause overflow */
           errval = 0;
         }
-        lint1 = lf;
+        lint1 = static_cast<int> (lf);
         if (lint1 < minint[0]) minint[0] = lint1;
         if (lint1 > maxint[0]) maxint[0] = lint1;
         *lip++ = lint1;
         lfp++;
         if (*lfp >= 0.0)
-          lf = *lfp * *precision + 0.5;
+          lf = *lfp * *precision + 0.5f;
         else
-          lf = *lfp * *precision - 0.5;
+          lf = *lfp * *precision - 0.5f;
         if (fabs(lf) > MAXABS) {
           /* scaling would cause overflow */
           errval = 0;
         }
-        lint2 = lf;
+        lint2 = static_cast<int> (lf);
         if (lint2 < minint[1]) minint[1] = lint2;
         if (lint2 > maxint[1]) maxint[1] = lint2;
         *lip++ = lint2;
         lfp++;
         if (*lfp >= 0.0)
-          lf = *lfp * *precision + 0.5;
+          lf = *lfp * *precision + 0.5f;
         else
-          lf = *lfp * *precision - 0.5;
+          lf = *lfp * *precision - 0.5f;
         if (fabs(lf) > MAXABS) {
           /* scaling would cause overflow */
           errval = 0;
         }
-        lint3 = lf;
+        lint3 = static_cast<int> (lf);
         if (lint3 < minint[2]) minint[2] = lint3;
         if (lint3 > maxint[2]) maxint[2] = lint3;
         *lip++ = lint3;
@@ -904,7 +904,7 @@ namespace OpenBabel
           fprintf(stderr,"malloc failed\n");
           return 0;
         }
-        bufsize = size3 * 1.2;
+        bufsize = static_cast<int> (size3 * 1.2);
         buf = (int *)malloc(bufsize * sizeof(*buf));
         if (buf == NULL) {
           fprintf(stderr,"malloc failed\n");
@@ -917,7 +917,7 @@ namespace OpenBabel
           fprintf(stderr,"malloc failed\n");
           return 0;
         }
-        bufsize = size3 * 1.2;
+        bufsize = static_cast<int> (size3 * 1.2);
         buf = (int *)realloc(buf, bufsize * sizeof(*buf));
         if (buf == NULL) {
           fprintf(stderr,"malloc failed\n");
@@ -966,7 +966,7 @@ namespace OpenBabel
       buf[0] = buf[1] = buf[2] = 0;
 	
       lfp = fp;
-      inv_precision = 1.0 / * precision;
+      inv_precision = 1.0f / * precision;
       run = 0;
       i = 0;
       lip = ip;
