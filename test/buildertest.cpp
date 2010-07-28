@@ -82,6 +82,24 @@ bool doMultiMoleculeFile(const std::string &filename)
   return result;
 }
 
+bool doSMILESBuilderTest(string smiles)
+{
+  cout << " SMILES " << smiles << endl;
+
+  testCount++;
+
+  OBMol mol;
+  OBConversion conv;
+  OBFormat *smilesFormat = conv.FindFormat("smi");
+  OB_REQUIRE(smilesFormat);
+  OB_REQUIRE(conv.SetInFormat(smilesFormat));
+
+  OB_REQUIRE(conv.ReadString(&mol, smiles));
+
+  OBBuilder builder;
+  OB_REQUIRE(builder.Build(mol));
+  return mol.Has3D();
+}
 
 int main(int argc, char **argv)
 {
@@ -101,6 +119,9 @@ int main(int argc, char **argv)
   //  OB_ASSERT( doMultiMoleculeFile("nci.smi") );
   // fails because of "organometallic" entries
   //  OB_ASSERT( doMultiMoleculeFile("attype.00.smi") );
+
+  // from Martin Guetlein to mailing list on July 14, 2010
+  OB_ASSERT( doSMILESBuilderTest("OC1=CC3=C([C@@]2([H])CC[C@@]4(C)[C@](CC[C@@H]4O)([H])[C@@]([H])2[C@H](CCCCCCCCCS(CCCC(F)(F)C(F)(F)F)=O)C3)C=C1") );
 
   cout << "PASSED TESTS: " << testCount - failed << "/" << testCount << endl;
 
