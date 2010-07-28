@@ -275,17 +275,25 @@ int main()
     putenv(env);
   #endif  
 
-  test_simpleAlign();
-  
-  test_RMSD();
+    cout << "Simple Align " << endl;
+    test_simpleAlign();
+    cout << "   done." << endl;
 
-  test_alignMol();
-
-  test_alignMolWithSym();
+    cout << "RMSD" << endl;
+    test_RMSD();
+    cout << "   done." << endl;
+    
+    cout << "Align " << endl;
+    test_alignMol();
+    cout << "   done." << endl;
+    
+    cout << "Align With Symmetry " << endl;
+    test_alignMolWithSym();
+    cout << "   done." << endl;
 
 //  test_alignWithoutHydrogens();
 
-  test_alignWithSymWithoutHydrogens();
+//  test_alignWithSymWithoutHydrogens();
 
   return 0;
 }
