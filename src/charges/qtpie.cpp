@@ -62,7 +62,6 @@ QTPIECharges theQTPIECharges("qtpie"); //Global instance
 
       // Element, n, Xi, Hardness, Slater, Gaussian
       P << atof(vs[2].c_str())*eV, atof(vs[3].c_str())*eV*2, atof(vs[5].c_str());
-      cerr << vs[2] << " " << vs[3] << " " << vs[5] << endl;
       _parameters.push_back(P);
     }
   }

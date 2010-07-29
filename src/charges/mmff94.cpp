@@ -32,6 +32,8 @@ public:
 
   /// \return whether partial charges were successfully assigned to this molecule
   bool ComputeCharges(OBMol &mol);
+
+  double DipoleScalingFactor() { return 2.778; } // fit from regression across MMFF94 validation set
 };
 
 /////////////////////////////////////////////////////////////////

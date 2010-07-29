@@ -46,6 +46,20 @@ namespace OpenBabel
       }
   }
 
+  vector3 OBChargeModel::GetDipoleMoment(OBMol &mol)
+  {
+    vector3 dipoleMoment = VZero;
+
+    if (this->ComputeCharges(mol)) {
+      FOR_ATOMS_OF_MOL(a, mol) {
+        dipoleMoment += a->GetVector() * a->GetPartialCharge();
+      }
+    }
+
+    // adjust by scaling factor
+    return dipoleMoment * this->DipoleScalingFactor();
+  }
+
 }
 
 //! \file chargemodel.cpp

@@ -4,6 +4,12 @@
 	"bracket" elements, e.g., [n] for a fall-back. Fixes one failure
 	from sdfcansmi unit test.
 
+	* include/openbabel/chargemodel.h: Improved documentation, added
+	method to retrieve dipole moment (with scaling).
+
+	* src/charges/*: Add scaling factors calculated from regression
+	across NCI, Zinc, and other subsets (~1000 molecules).
+
 2010-07-29  Noel O'Boyle
 
 	* include/openbabel/rotor.h: Fix memory leak in AddRotor
