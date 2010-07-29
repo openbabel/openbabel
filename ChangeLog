@@ -1,3 +1,9 @@
+2010-07-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* test/sdfcansmitest.cpp: Added new unit test suggested by TJ
+	O'Donnell to check for canonical SMILES consistency from a
+	SDFile. Currently shows 4 / 48 failures.
+
 2010-07-27  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* tools/CMakeLists.txt: Only link getopt.c if needed. Removes

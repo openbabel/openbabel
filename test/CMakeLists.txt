@@ -16,6 +16,7 @@ set(tests
     lssr
     isomorphism
     smiles
+    sdfcansmi
     spectrophore
     squareplanar
     stereo
