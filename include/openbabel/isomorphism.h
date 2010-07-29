@@ -46,9 +46,9 @@ namespace OpenBabel {
 
       static OBIsomorphismMapper* GetInstance(OBQuery *query, const std::string &algorithm = std::string("bfs"));
 
-      virtual Mapping MapFirst(const OBMol *queried) = 0;
-      virtual Mappings MapUnique(const OBMol *queried) = 0;
-      virtual Mappings MapAll(const OBMol *queried) = 0;
+      virtual Mapping MapFirst(const OBMol *queried, const OBBitVec &mask = OBBitVec()) = 0;
+      virtual Mappings MapUnique(const OBMol *queried, const OBBitVec &mask = OBBitVec()) = 0;
+      virtual Mappings MapAll(const OBMol *queried, const OBBitVec &mask = OBBitVec()) = 0;
     protected:
       OBQuery *m_query;
   };
@@ -58,7 +58,7 @@ namespace OpenBabel {
    * Find the automorphisms of a molecule by using a OBIsomorphismMapper.
    * @since version 2.3
    */
-  OBAPI OBIsomorphismMapper::Mappings FindAutomorphisms(OBMol *mol);
+  OBAPI OBIsomorphismMapper::Mappings FindAutomorphisms(OBMol *mol, const OBBitVec &mask = OBBitVec());
 
 
   /**

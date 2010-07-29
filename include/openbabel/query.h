@@ -206,12 +206,12 @@ namespace OpenBabel {
   /**
    * @since version 2.3
    */
-  OBAPI OBQuery* CompileMoleculeQuery(OBMol *mol);
+  OBAPI OBQuery* CompileMoleculeQuery(OBMol *mol, const OBBitVec &mask = OBBitVec());
   
   /**
    * @since version 2.3
    */
-  OBAPI OBQuery* CompileSmilesQuery(const std::string &smiles);
+  OBAPI OBQuery* CompileSmilesQuery(const std::string &smiles, const OBBitVec &mask = OBBitVec());
 
   ///@}
 }

@@ -8,6 +8,12 @@
 using namespace std;
 using namespace OpenBabel;
 
+std::string GetFilename(const std::string &filename)
+{
+  string path = TESTDATADIR + filename;
+  return path;
+}
+
 void testIsomorphism1()
 {
   OBMol mol;
@@ -54,6 +60,52 @@ void testIsomorphism2()
   delete mapper;
 }
 
+void testIsomorphismMask()
+{
+  // read file: 3 6-rings
+  //
+  //     /\ /\ /\
+  //    |  |  |  |
+  //     \/ \/ \/
+  //
+  OBMol mol;
+  OBConversion conv;
+  conv.SetInFormat("cml");
+  std::ifstream ifs(GetFilename("isomorphism1.cml").c_str());
+  OB_REQUIRE( ifs );
+/*
+  conv.Read(&mol, &ifs);
+
+  OBQuery *query = CompileSmilesQuery("C1CCCCC1");
+  OBIsomorphismMapper *mapper = OBIsomorphismMapper::GetInstance(query);
+  
+  // no mask
+  OBIsomorphismMapper::Mappings maps = mapper->MapUnique(&mol);
+  cout << maps.size() << endl;
+  OB_ASSERT( maps.size() == 3 );
+
+  // mask first ring
+  OBBitVec mask;
+  for (int i = 0; i < 6; ++i)
+    mask.SetBitOn(i);
+  maps = mapper->MapUnique(&mol, mask);
+  cout << maps.size() << endl;
+  OB_ASSERT( maps.size() == 1 );
+
+  // mask second ring also
+  for (int i = 6; i < 10; ++i)
+    mask.SetBitOn(i);
+  maps = mapper->MapUnique(&mol, mask);
+  cout << maps.size() << endl;
+  OB_ASSERT( maps.size() == 2 );
+
+
+  delete query;
+  delete mapper;
+*/
+}
+
+
 int main() 
 {
   // Define location of file formats for testing
@@ -63,8 +115,9 @@ int main()
     putenv(env);
   #endif  
 
-//  testIsomorphism1();
+  testIsomorphism1();
   testIsomorphism2();
+  testIsomorphismMask();
 
   return 0;
 }
