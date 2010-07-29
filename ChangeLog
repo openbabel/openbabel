@@ -1,3 +1,9 @@
+2010-07-29  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/formats/smilesformat.cpp: Add detection for single-character
+	"bracket" elements, e.g., [n] for a fall-back. Fixes one failure
+	from sdfcansmi unit test.
+
 2010-07-29  Noel O'Boyle
 
 	* include/openbabel/rotor.h: Fix memory leak in AddRotor

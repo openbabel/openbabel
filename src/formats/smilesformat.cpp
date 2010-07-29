@@ -2583,6 +2583,7 @@ namespace OpenBabel {
                                       bool isomeric)
   {
     char symbol[10];
+    char bracketBuffer[32];
     bool bracketElement = false;
     bool normalValence = true;
     bool writeExplicitHydrogen = false;
@@ -2738,12 +2739,11 @@ namespace OpenBabel {
     }
 
     // Bracketed atoms, e.g. [Pb], [OH-], [C@]
-
-    strcpy(buffer, "[");
+    bracketBuffer[0] = '\0';
     if (isomeric && atom->GetIsotope()) {
       char iso[4];
       sprintf(iso,"%d",atom->GetIsotope());
-      strcat(buffer,iso);
+      strcat(bracketBuffer,iso);
     }
     if (!atom->GetAtomicNum())
       strcpy(symbol,"*");
@@ -2752,11 +2752,11 @@ namespace OpenBabel {
       if (atom->IsAromatic())
         symbol[0] = tolower(symbol[0]);
     }
-    strcat(buffer,symbol);
+    strcat(bracketBuffer,symbol);
 
     // If chiral, append '@' or '@@'
     if (stereo[0] != '\0')
-      strcat(buffer, stereo);
+      strcat(bracketBuffer, stereo);
 
     // Add extra hydrogens.  If this is a bracket-atom *only* because the
     // "-xh" option was specified, then we're writing a SMARTS, so we
@@ -2770,11 +2770,11 @@ namespace OpenBabel {
         // if "isomeric", doesn't count isotopic H
         hcount = atom->ImplicitHydrogenCount() + atom->ExplicitHydrogenCount(isomeric);
       if (hcount != 0) {
-        strcat(buffer,"H");
+        strcat(bracketBuffer,"H");
         if (hcount > 1) {
           char tcount[10];
           sprintf(tcount,"%d", hcount);
-          strcat(buffer,tcount);
+          strcat(bracketBuffer,tcount);
         }
       }
     }
@@ -2782,19 +2782,25 @@ namespace OpenBabel {
     // Append charge to the end
     if (atom->GetFormalCharge() != 0) {
       if (atom->GetFormalCharge() > 0)
-        strcat(buffer,"+");
+        strcat(bracketBuffer,"+");
       else
-        strcat(buffer,"-");
+        strcat(bracketBuffer,"-");
 
       if (abs(atom->GetFormalCharge()) > 1)
-        sprintf(buffer+strlen(buffer), "%d", abs(atom->GetFormalCharge()));
+        sprintf(bracketBuffer+strlen(bracketBuffer), "%d", abs(atom->GetFormalCharge()));
     }
     
     //atom class e.g. [C:2]
     if (_pac)
-      strcat(buffer, _pac->GetClassString(atom->GetIdx()).c_str());
+      strcat(bracketBuffer, _pac->GetClassString(atom->GetIdx()).c_str());
 
-    strcat(buffer,"]");
+    if (strlen(bracketBuffer) > 1) {
+      strcpy(buffer, "[");
+      strcat(buffer, bracketBuffer);
+      strcat(buffer,"]");
+    } else {
+      strcpy(buffer, bracketBuffer);
+    }
 
     return(true);
   }
