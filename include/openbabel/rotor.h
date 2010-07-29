@@ -487,9 +487,8 @@ namespace OpenBabel
       //! \param size the rotor resolution
       void AddRotor(unsigned int size)
       {
-        rotor_digit *rd;
-        rd = new rotor_digit(size);
-        _vr.push_back(*rd);
+        rotor_digit rd(size);
+        _vr.push_back(rd);
       }
       
       //! Select the next rotor key

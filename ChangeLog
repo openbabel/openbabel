@@ -1,3 +1,7 @@
+2010-07-29  Noel O'Boyle
+
+	* include/openbabel/rotor.h: Fix memory leak in AddRotor
+
 2010-07-28  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* test/sdfcansmitest.cpp: Added new unit test suggested by TJ
