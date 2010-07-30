@@ -1,3 +1,8 @@
+2010-07-30  Noel O'Boyle
+
+	* scripts/openbabel-python.i: Revert of r3914 (presumably it was a
+	mistake to include this file in the commit)
+
 2010-07-29  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/smilesformat.cpp: Add detection for single-character

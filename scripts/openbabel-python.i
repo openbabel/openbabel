@@ -45,6 +45,8 @@
 #include <openbabel/spectrophore.h>
 #include <openbabel/conformersearch.h>
 
+#include <openbabel/chargemodel.h>
+
 %}
 
 %include "std_list.i"
@@ -235,13 +237,17 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 %include <openbabel/builder.h>
 %include <openbabel/op.h>
 
+%include <openbabel/chargemodel.h>
+
 %warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
 %include <openbabel/bitvec.h>
 %include <openbabel/rotor.h>
 %ignore OpenBabel::Swab;
 %include <openbabel/rotamer.h>
 %include <openbabel/spectrophore.h>
+#ifdef HAVE_EIGEN2
 %include <openbabel/conformersearch.h>
+#endif
 
 # The following %ignores avoid warning messages due to shadowed classes.
 # This does not imply a loss of functionality as (in this case)
