@@ -125,6 +125,7 @@ endif(MSVC)
 include(CheckIncludeFile)
 include(CheckIncludeFileCXX)
 include(CheckSymbolExists)
+include(CheckLibraryExists)
 include(CheckTypeSize)
 include(CheckCSourceCompiles)
 
@@ -141,6 +142,9 @@ check_symbol_exists(snprintf      "stdio.h"    HAVE_SNPRINTF)
 check_symbol_exists(sranddev      "stdlib.h"   HAVE_SRANDDEV)
 check_symbol_exists(strcasecmp    "string.h"   HAVE_STRCASECMP)
 check_symbol_exists(strncasecmp   "string.h"   HAVE_STRNCASECMP)
+
+# BSDs don't link against libdl, but rather libc
+check_library_exists(dl dlopen "" HAVE_LIBDL)
 
 set(CMAKE_EXTRA_INCLUDE_FILES time.h)
 check_type_size(clock_t CLOCK_T)

@@ -1,5 +1,11 @@
 2010-07-30  Noel O'Boyle
 
+	* CMakeLists.txt, src/CMakeLists.txt: Add test for libdl. Now compiles
+	under FreeBSD (and hopefully the others too). Thanks to Florian Nigsch
+	for a build machine.
+
+2010-07-30  Noel O'Boyle
+
 	* scripts/openbabel-python.i: Revert of r3914 (presumably it was a
 	mistake to include this file in the commit)
 
