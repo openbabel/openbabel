@@ -1021,12 +1021,27 @@ void OBGUIFrame::MakePluginsMenu()
 void OBGUIFrame::OnClickPlugin(wxCommandEvent& event)
 {
   //Display message box with info on plugin class
-    int nID = event.GetId();
-    wxMenuItem* item = listMenu->FindItem(nID);
-    if(item)
+  int nID = event.GetId();
+  wxString plugintype;
+  wxMenu* parent;
+  wxMenuItem* item = listMenu->FindItem(nID, &parent);
+  if(item)
+  {
+    //Find the name of the plugin type. It seems difficult to go up a menu hierarchy.
+    wxwxMenuItemListNode *node = listMenu->GetMenuItems().GetFirst();
+    while (node)
     {
+      wxMenuItem* itemm = node->GetData();
+      if(itemm->GetSubMenu()==parent)
+      {
+        plugintype = itemm->GetText();
+        break;
+      }
+      node = node->GetNext();
+    }
+    
     wxString id = item->GetText().BeforeFirst(' ');
-    OBPlugin* plugin = OBPlugin::GetPlugin(NULL, id.mb_str());
+    OBPlugin* plugin = OBPlugin::GetPlugin(plugintype.c_str(), id.mb_str());
     if(plugin)
     {    
       std::string txt;

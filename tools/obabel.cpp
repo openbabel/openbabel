@@ -160,18 +160,27 @@ int main(int argc,char *argv[])
                     const char* param=NULL;
                     if(argc>arg+1)
                       param = argv[arg+2];
-                    //First assume first arg is a plugin ID, like babel -L cml  
-                    if(OBPlugin* plugin = OBPlugin::GetPlugin(NULL, argv[arg+1]))
+
+                    // First assume first arg is a plugin type and
+                    // param is a subtype, like babel -L ops gen3D
+                    // or first arg is a plugin ID, like babel -L cml
+                    OBPlugin* plugin;
+                    if(OBPlugin::GetPlugin("plugins", argv[arg+1])
+                      && (plugin = OBPlugin::GetPlugin(argv[arg+1], param))
+                      || (plugin = OBPlugin::GetPlugin(NULL, argv[arg+1])))
                     {
+                      //Output details of subtype
                       string txt;
                       plugin->Display(txt, "verbose", argv[arg+1]);
                       cout << "One of the " << plugin->TypeID() << '\n' << txt << endl;
                       return 0;
                     }
                     //...otherwise assume it is a plugin type, like babel -L forcefields
+                    //Output list of subtypes
                     OBPlugin::List(argv[arg+1], param);
                     return 0;
                   }
+
                 case '?':
                 case 'H':
                   if(isalnum(argv[arg][2]) || arg==argc-2)

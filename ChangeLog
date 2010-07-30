@@ -1,3 +1,12 @@
+2010-07-30 Chris Morley
+
+	* tools/obabel.cpp, tools/babel.cpp: allow e.g. '-L formats cml'
+	in addition to '-L cml' to handle cases where the same name is used
+	for two plugins	of different types.
+	 
+	* src/GUI/OBGUI.cpp: now menu always returns details of plugin of
+	the correct type.
+
 2010-07-30  Noel O'Boyle
 
 	* CMakeLists.txt, src/CMakeLists.txt: Add test for libdl. Now compiles
