@@ -476,10 +476,11 @@ namespace OpenBabel
 
   Arbitrary Data:
   - OBGenericData - General base class for arbitrary data types
-    - OBPairData - Arbitrary text key/value data for all atoms, bonds, residues, or molecules
+    - OBPairData - Arbitrary text key/value data
+    - OBPairTemplate - Arbitrary T key/value data
     - OBUnitCell - Storage and manipulation of crystal structure / reciprocal unit cells
     - AliasData, OBAngleData, OBAtomClassData, OBChiralData, OBCommentData, OBConformerData, OBDOSData, OBElectronicTransitionData,
-      OBExternalBondData, OBGridData, OBMatrixData, OBNasaThermoData, OBOrbitalEnergyData, OBPairData, OBPairTemplate, OBRateData,
+      OBExternalBondData, OBGridData, OBMatrixData, OBNasaThermoData, OBOrbitalEnergyData, OBPairData, OBRateData,
       OBRingData, OBRotamerList, OBRotationData, OBSerialNums, OBSetData, OBStereoBase, OBSymmetryData, OBTorsionData, OBUnitCell,
       OBVectorData, OBVibrationData, OBVirtualBond
 
