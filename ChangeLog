@@ -1,3 +1,11 @@
+2010-08-01 Chris Morley
+	
+	* data/svgformat.script: make zoom work with Chrome
+
+	* src/formats/svgformat.cpp: Make using internal color data the
+	default.
+	Use "sans-serif" as the font. Improves appearance in Opera.
+
 2010-07-30 Chris Morley
 
 	* tools/obabel.cpp, tools/babel.cpp: allow e.g. '-L formats cml'

@@ -44,7 +44,7 @@ namespace OpenBabel
     return s.str();
   }
 
-  //!Functor for delting containers of pointers. Scott Meyers, Effective STL, Item 7
+  //!Functor for deleting containers of pointers. Scott Meyers, Effective STL, Item 7
   struct DeleteObject
   {
     template<typename T>

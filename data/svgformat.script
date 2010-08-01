@@ -3,11 +3,15 @@
     addEventListener('DOMMouseScroll', wheel, false);
     onmousewheel = wheel;
     var svgEl = document.getElementById("topsvg");
+    var startx=0;
+    var starty=0;
     function wheel(evt){
+      evt = evt ? evt : window.event;
+      var normal = evt.detail ? evt.detail * -1 : evt.wheelDelta / 40;
       var vb = new Array(4);
       var vbtext = svgEl.getAttributeNS(null,"viewBox");
       vb = vbtext.split(" ");
-      var zoom = (evt.detail>0)? 1.41 : 0.71;
+      var zoom = (normal<0)? 1.41 : 0.71;
       //var dwidth = parseFloat(Math.max(vb[2],vb[3])) * (1-zoom);
       vb[0] = parseFloat(vb[0]) + parseFloat(vb[2])*(1-zoom) * evt.clientX/innerWidth;
       vb[1] = parseFloat(vb[1]) + parseFloat(vb[3])*(1-zoom) * evt.clientY/innerHeight;
@@ -15,8 +19,6 @@
       vb[3] = parseFloat(vb[3]) * zoom;
       svgEl.setAttributeNS(null, "viewBox", vb.join(" "));
     }
-    var startx=0;
-    var starty=0;
     onmousedown = function(evt) {
       startx = evt.clientX;
       starty = evt.clientY;
