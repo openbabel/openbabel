@@ -1,5 +1,13 @@
 2010-08-02 Chris Morley
 
+	* include/openbabel/obmolecformat.h,src/obmolecformat.cpp
+	(WriteChemObjectImpl) move the option implementation to a
+	separate function so that it can be used externally...
+
+	* src/formats/svgformat.cpp: ...like here. 
+
+2010-08-02 Chris Morley
+
 	* src/descriptors/filters.cpp: add new formula descriptor
 
 	* src/transform.cpp: remove --addformula, use --append formula

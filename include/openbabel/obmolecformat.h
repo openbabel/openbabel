@@ -116,6 +116,9 @@ public:
   /// The "Convert" interface for writing a new molecule
   virtual bool WriteChemObject(OBConversion* pConv)
   { return WriteChemObjectImpl(pConv, this);}
+  
+  ///Applies output options to molecule. Returns false to terminate output.
+  static bool OBMoleculeFormat::DoOutputOptions(OBBase* pOb, OBConversion* pConv);
 
   /// \name Routines to handle the -C option for combining data from several OBMols
   //@{
@@ -130,8 +133,6 @@ public:
   static OBMol* MakeCombinedMolecule(OBMol* pFirst, OBMol* pSecond);
   //@}
   
-  //!Stores each molecule and after the last one outputs them all in an order decided by the descriptor. 
-
 #ifdef HAVE_SHARED_POINTER
   //!When sent an OBReaction object, output all the constituent molecules
   static bool OutputMolsFromReaction

@@ -152,12 +152,6 @@ namespace OpenBabel
     //Retrieve the target OBMol
     OBBase* pOb = pConv->GetChemObject();
 
-    if(pConv->IsOption("addindex", OBConversion::GENOPTIONS)) {
-      stringstream ss;
-      ss << pOb->GetTitle() << " #" << pConv->GetOutputIndex();
-      pOb->SetTitle(ss.str().c_str());
-    }
-
     OBMol* pmol = dynamic_cast<OBMol*> (pOb);
     bool ret=false;
     if(pmol)
@@ -179,18 +173,12 @@ namespace OpenBabel
         obErrorLog.ThrowError(__FUNCTION__,
                               auditMsg,
                               obAuditMsg);
+
+        ret = DoOutputOptions(pOb, pConv);
         
-        if(pConv->IsOption("writeconformers", OBConversion::GENOPTIONS)) {
-          for (unsigned int c = 0; c < pmol->NumConformers(); ++c) {
-            pmol->SetConformer(c);
-            ret = pFormat->WriteMolecule(pmol, pConv);
-            if (!ret)
-              break;
-          }
-        } else {
-          ret=pFormat->WriteMolecule(pmol,pConv);
-        }
-      }
+        if(ret)
+          ret = pFormat->WriteMolecule(pmol,pConv);
+    }
     
 #ifdef HAVE_SHARED_POINTER
     //If sent a OBReaction* (rather than a OBMol*) output the consituent molecules
@@ -200,6 +188,31 @@ namespace OpenBabel
 #endif
     delete pOb;
     return ret;
+  }
+
+  bool OBMoleculeFormat::DoOutputOptions(OBBase* pOb, OBConversion* pConv)
+  {
+    if(pConv->IsOption("addindex", OBConversion::GENOPTIONS)) {
+      stringstream ss;
+      ss << pOb->GetTitle() << " " << pConv->GetOutputIndex();
+      pOb->SetTitle(ss.str().c_str());
+    }
+
+    OBMol* pmol = dynamic_cast<OBMol*> (pOb);
+    bool ret=false;
+    if(pmol) {
+      if(pConv->IsOption("writeconformers", OBConversion::GENOPTIONS)) {
+        //The last conformer is written in the calling function 
+        unsigned int c = 0;
+        for (; c < pmol->NumConformers()-1; ++c) {
+          pmol->SetConformer(c);
+          if(!pConv->GetOutFormat()->WriteMolecule(pmol, pConv))
+            break;
+        }
+        pmol->SetConformer(c);
+      }
+    }
+    return true;
   }
 
   /*! Instead of sending molecules for output via AddChemObject(), they are
