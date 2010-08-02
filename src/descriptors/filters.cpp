@@ -128,6 +128,32 @@ bool TitleFilter::LessThan(OBBase* pOb1, OBBase* pOb2)
 TitleFilter theTitleFilter("title");
 
 //**************************************************************
+class FormulaDescriptor : public OBDescriptor
+{
+public:
+  FormulaDescriptor(const char* ID) : OBDescriptor(ID){};
+  virtual const char* Description(){return "Chemical formula";};
+
+  virtual double GetStringValue(OBBase* pOb, std::string& svalue, std::string* param=NULL)
+  {
+    OBMol* pmol = dynamic_cast<OBMol*> (pOb);
+    if(pmol)
+      svalue = pmol->GetSpacedFormula(1,"");//actually unspaced
+    return std::numeric_limits<double>::quiet_NaN();
+  }
+
+  virtual bool Compare(OBBase* pOb, istream& optionText, bool noEval, std::string*)
+  {
+    string svalue;
+    GetStringValue(pOb,svalue);
+    return CompareStringWithFilter(optionText, svalue, noEval);
+  }
+
+}; 
+
+FormulaDescriptor TheFormulaDescriptor("formula");
+
+//******************************************************************
 /* This descriptor uses a parameter, e.g. popcount(FP4)
 class FPCount : public OBDescriptor
 { 

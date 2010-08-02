@@ -151,6 +151,13 @@ namespace OpenBabel
 
     //Retrieve the target OBMol
     OBBase* pOb = pConv->GetChemObject();
+
+    if(pConv->IsOption("addindex", OBConversion::GENOPTIONS)) {
+      stringstream ss;
+      ss << pOb->GetTitle() << " #" << pConv->GetOutputIndex();
+      pOb->SetTitle(ss.str().c_str());
+    }
+
     OBMol* pmol = dynamic_cast<OBMol*> (pOb);
     bool ret=false;
     if(pmol)

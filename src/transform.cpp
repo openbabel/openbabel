@@ -98,14 +98,14 @@ namespace OpenBabel
         SetTitle(title.c_str());
       }
 
-    itr = pOptions->find("addformula"); //Appends tab + formula to title
+/*    itr = pOptions->find("addformula"); //Appends tab + formula to title
     if(itr!=pOptions->end())
       {
         string title(GetTitle());
         title += '\t' + GetSpacedFormula(1,"");//actually unspaced
         SetTitle(title.c_str());
       }
-
+*/
     //Add an extra property to the molecule.
     //Parameter has atrribute and value separated by a space
     itr = pOptions->find("property");
@@ -182,7 +182,7 @@ namespace OpenBabel
     if(fmatch)
     {
       itr = pOptions->find("s");
-      if(itr!=pOptions->end())
+      if(itr!=pOptions->end() && !itr->second.empty())
         {
           //SMARTS filter
           //If exactmatch option set (probably in fastsearchformat) the
@@ -192,12 +192,12 @@ namespace OpenBabel
           if(itr2!=pOptions->end() && NumHvyAtoms()!=atoi(itr2->second.c_str()))
             fmatch=false;
           else
-          {
-            //match quoted SMARTS string which follows
-            OBSmartsPattern sp;
-            sp.Init(itr->second.c_str());
-            fmatch = sp.Match(*this); //(*pmol) ;
-          }
+            {
+              //match quoted SMARTS string which follows
+              OBSmartsPattern sp;
+                sp.Init(itr->second.c_str());
+                fmatch = sp.Match(*this);
+            }
         }
     }
 
@@ -236,16 +236,16 @@ namespace OpenBabel
 "--filter <filterstring> Filter: convert only when tests are true:\n"
 "--add <list> Add properties from descriptors\n"
 "--delete <list> Delete properties in list\n"
-"--append <list> Appends properties or descriptors in list to title\n"
+"--append <list> Append properties or descriptors in list to title:\n"
 "-s\"smarts\" Convert only molecules matching SMARTS:\n"
-"-v\"smarts\" Convert only molecules NOT matching SMARTS:\n"
+"-v\"smarts\" Convert only molecules NOT matching SMARTS: (not displayed in GUI)\n"
 "--join Join all input molecules into a single output molecule\n"
 "--separate Output disconnected fragments separately\n"
 "--property <attrib> <value> add or replace a property (SDF)\n"
 "--title <title> Add or replace molecule title\n"
 "--addtotitle <text> Append to title\n"
-"--addformula Append formula to title\n"
-"--writeconformers Output multiple conformers separately\n" ;
+"--writeconformers Output multiple conformers separately\n"
+"--addindex Append output index to title\n" ;
 
     //Append lines from OBOp plugins that work with OBMol
     OBMol dummymol; //just needed to carry class type information; messy!

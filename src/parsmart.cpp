@@ -624,7 +624,7 @@ namespace OpenBabel
     stringstream errorMsg;
     errorMsg << "SMARTS Error:\n" << MainPtr << endl;
     errorMsg << setw(LexPtr-MainPtr+1) << '^' << endl;
-    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError, onceOnly);
  
     FreePattern(pat);
     return (Pattern*)0;

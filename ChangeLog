@@ -1,4 +1,15 @@
 2010-08-02 Chris Morley
+
+	* src/descriptors/filters.cpp: add new formula descriptor
+
+	* src/transform.cpp: remove --addformula, use --append formula
+	  Make -s option do nothing if parameter is empty.
+	
+	* src/obmolecformat.cpp: add --addindex
+
+	* src/parsmart.cpp:add onceOnly to SMARTS error
+
+2010-08-02 Chris Morley
 	
 	* include/openbabel/obconversion.h,include/openbabel/op.h,
 	include/openbabel/plugin.h,src/plugin.cpp,src/obconversion.cpp:
