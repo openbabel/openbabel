@@ -1438,6 +1438,31 @@ namespace OpenBabel {
   }
 
   ///////////////////////////////////////////////
+/**<pre>
+Built-in options for conversion of molecules
+Additional options :
+-d Delete hydrogens (make implicit)
+-h Add hydrogens (make explicit)
+-p <pH> Add hydrogens appropriate for this pH
+-b Convert dative bonds e.g.[N+]([O-])=O to N(=O)=O
+-r Remove all but the largest contiguous fragment 
+-c Center Coordinates
+-C Combine mols in first file with others having same name
+--filter <filterstring> Filter: convert only when tests are true:\n
+--add <list> Add properties from descriptors\n
+--delete <list> Delete properties in list\n
+--append <list> Append properties or descriptors in list to title:\n
+-s\smarts\ Convert only molecules matching SMARTS:\n
+-v\smarts\ Convert only molecules NOT matching SMARTS: (not displayed in GUI)\n
+--join Join all input molecules into a single output molecule
+--separate Output disconnected fragments separately
+--property <attrib> <value> add or replace a property (SDF)
+--title <title> Add or replace molecule title
+--addtotitle <text> Append to title
+--writeconformers Output multiple conformers separately
+--addindex Append output index to title
+</pre>
+**/
   void OBConversion::AddOption(const char* opt, Option_type opttyp, const char* txt)
   {
     //Also updates an option

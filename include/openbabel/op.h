@@ -75,7 +75,7 @@ public:
   }
 
   ///Call Do() of all the OBOps whose ID is a key in the map.
-  ///Called from Transform(). The map has general options like -x or --multicharoption
+  ///Called from DoTransformations(). The map has general options like -x or --multicharoption
   ///The key is the option name and the value, if any, is text which follows the option name.
   /// In some cases, there may be several parameters, space separated)
   /// \return false indicating object should not be output, if any Do() returns false

@@ -33,6 +33,8 @@ General Public License for more details.
 
 namespace OpenBabel
 {
+///@addtogroup plugins Plugin
+///@{
 
 /// @brief Case insensitive string comparison for PluginMapType key.
 struct OBERROR CharPtrLess : public std::binary_function<const char*,const char*, bool>
@@ -315,6 +317,7 @@ public:
   }
 \endcode
 */
+/*\@}*/
 
 } // end namespce
 

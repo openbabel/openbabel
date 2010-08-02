@@ -134,7 +134,42 @@ namespace OpenBabel {
       OBConversion* GetAuxConv() const {return pAuxConv;};
       void          SetAuxConv(OBConversion* pConv) {pAuxConv=pConv;};
       //@}
-      /// @name Option handling
+      /** @name Option handling
+       Three types of Option provide information and control instructions to the
+       conversion process, INOPTIONS, OUTOPTIONS, GENOPTIONS, and are stored in each
+       OBConversion object in separate maps. Each option has an id and an optional
+       text string. They are set individually by AddOption() or (rarely) collectively
+       in SetOptions(). Options cannot be altered but can be replaced with AddOption()
+       and deleted with RemoveOption(), which, however, should be used in an op derived
+       from OBOp (because of iterator invalidation). 
+
+       If the "Convert" interface is used, the GENOPTIONS are acted upon in the
+       OBBase::DoTransformations() functions (currently only OBMol has one). This
+       happens after the object has been input but before it has been output. 
+       All the options are available to input and output formats, etc. via the IsOption()
+       function, and the interpretation of any text string needs to be done subsequently.
+       
+       In the commandline interface, options with single character ids are are indicated
+       like -s, and those with multiple character ids like --gen3D. An option may have
+       one or more parameters which appear, space separated, in the option's text string.
+       With babel, unless the option is at the end of the command, it is necessary for
+       the number of its parameters to be exactly that specified in RegisterOptionParam().
+       The default is 0, but if it is more, and babel is likely to be used, this function
+       should be called in the constructor of a format or op.
+       With obabel (or the GUI), it is not necessary to call RegisterOptionParam().
+
+       New GENOPTIONS can be defined (as plugins) using the class OBOp.
+
+       It is customary for a format or op to document any INOPTIONS or OUTPTIONS it
+       uses in its Description() function. As well as providing documentation during
+       use, this is also parsed by the GUI to construct its checkboxes,etc., so it is
+       advisable to give new Descriptions the same form as existing ones.
+
+       Some conversion options, such as -f, -l, -m, are unlikely to be used in
+       programming, but are listed in OBConversion::Description().  The built-in
+       GENOPTIONS for OBMol objects are listed in OBMol::ClassDescription() which
+       is in transform.cpp and also in this documentation under AddOption(). 
+       */
       //@{
       ///@brief Three types of options set on the the command line by -a? , -x? , or -?
       enum Option_type { INOPTIONS, OUTOPTIONS, GENOPTIONS, ALL };

@@ -1,3 +1,16 @@
+2010-08-02 Chris Morley
+	
+	* include/openbabel/obconversion.h,include/openbabel/op.h,
+	include/openbabel/plugin.h,src/plugin.cpp,src/obconversion.cpp:
+	added some extra documentation on the OBPlugin concept and options
+	as suggested by Hans deWinter
+	
+	* doc/examples/obfingerprint_getfingerprint.cpp: added an
+	example file
+	
+	I haven't got doxygen working yet on my computer (do we really need
+	latex?)	so the formatting of the above may need attention.
+
 2010-08-01 Chris Morley
 	
 	* data/svgformat.script: make zoom work with Chrome
