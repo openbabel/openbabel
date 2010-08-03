@@ -398,14 +398,14 @@ WRAP_ARRAY(unsigned int, CUIntArray);
 %}
 
 //make the module class static
-%pragma(csharp) modulemodifiers="public static class"
+%pragma(csharp) moduleclassmodifiers="public static class"
 
 //Ignore these global constants to streamline the
 //imclass and avoid using unmanaged function calls 
 //to retrieve global variables with constant values. 
 //Use moduleclass.ElemDesc.Count to get the same value. 
 //If these are desired later add them to the module class
-//as const values using pragmas.
+//as const values using pragmas
 %ignore OpenBabel::ElemNo;
 %ignore OpenBabel::ResNo;
 
