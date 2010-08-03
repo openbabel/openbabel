@@ -1041,7 +1041,7 @@ void OBGUIFrame::OnClickPlugin(wxCommandEvent& event)
     }
     
     wxString id = item->GetText().BeforeFirst(' ');
-    OBPlugin* plugin = OBPlugin::GetPlugin(plugintype.c_str(), id.mb_str());
+    OBPlugin* plugin = OBPlugin::GetPlugin(plugintype.mb_str(), id.mb_str());
     if(plugin)
     {    
       std::string txt;
