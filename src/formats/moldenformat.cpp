@@ -51,6 +51,7 @@ public:
     {
         OBConversion::RegisterFormat( "molden", this );
         OBConversion::RegisterFormat( "mold", this );
+        OBConversion::RegisterFormat( "molf", this );
     }
 
     /// Return description.

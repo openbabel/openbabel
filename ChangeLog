@@ -3,6 +3,12 @@
 	* scripts/CMakeLists.txt: Patch from Wayne Volkmuth to fix use of
 	PYTHON_PREFIX PR#3038634.
 
+	* scripts/openbabel-csharp.i: Fixed moduleclass error broken with
+	upgrade to SWIG 2.0.0.
+
+	* src/formats/moldenformat.cpp: Add "molf" extension found with
+	some example files.
+
 2010-08-03 Chris Morley
 
 	* src/ops/opisomorph.cpp:-s replacement. Is used instead of
