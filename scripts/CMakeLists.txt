@@ -321,7 +321,7 @@ if (CSHARP_BINDINGS)
 
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp OR
       RUN_SWIG)
-    message(STATUS "Warning: Ruby bindings NOT found. Generate using -DRUN_SWIG.")
+    message(STATUS "Warning: Csharp bindings NOT found. Generate using -DRUN_SWIG.")
   endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp OR
       RUN_SWIG)
 endif (CSHARP_BINDINGS)
