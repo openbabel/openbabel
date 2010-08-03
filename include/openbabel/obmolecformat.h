@@ -118,7 +118,7 @@ public:
   { return WriteChemObjectImpl(pConv, this);}
   
   ///Applies output options to molecule. Returns false to terminate output.
-  static bool OBMoleculeFormat::DoOutputOptions(OBBase* pOb, OBConversion* pConv);
+  static bool DoOutputOptions(OBBase* pOb, OBConversion* pConv);
 
   /// \name Routines to handle the -C option for combining data from several OBMols
   //@{
