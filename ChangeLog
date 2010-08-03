@@ -1,4 +1,14 @@
 2010-08-03 Chris Morley
+	* src/ops/opisomorph.cpp:-s replacement. Is used instead of
+	original in transform.cpp. Takes a SMARTS string as before,
+	but also a molecule file when the matching is done by Tim's
+	new isomorphism code which is less restrictive, e.g. bug#3029478
+	Also will color the substructure, mainly for svgformat.
+	 
+	* src/CMakeLists.txt: add the above file
+	
+	* src/formats/fastsearchformat.cpp: rearraged to use the new -s
+	as the main target specification.
 
 2010-08-03  Noel O'Boyle
 
