@@ -11,7 +11,7 @@ $CC = 'g++';
 $cmake_src_dir = @ENV{"SRC_DIR"};
 $cmake_bin_dir = @ENV{"OBJ_DIR"};
 
-$ldfrom = "\$(OBJECT) -lopenbabel -lz"
+$ldfrom = "\$(OBJECT) -lopenbabel -lz";
 $ldfrom = "\$(OBJECT) -L$(cmake_bin_dir)/lib -lopenbabel -lz"
     if (-r "$(cmake_bin_dir)/lib/libopenbabel.dylib") and (-s _) and (-B _);
 $ldfrom = "\$(OBJECT) -L$(cmake_bin_dir)/lib -lopenbabel -lz"
@@ -25,7 +25,7 @@ WriteMakefile(
     'VERSION'   => '1.4.0',
     'LDFROM'    => $ldfrom,
     'CC'        => $CC,
-    'LD'        => '$(CC) -shared',
+    'LD'        => '$(CC)',
     'INC'       => '-I../../include -I'.$cmake_src_dir.'/include',
     'OBJECT'    => 'openbabel-perl.o'
 );
