@@ -1,3 +1,5 @@
+2010-08-03 Chris Morley
+
 2010-08-03  Noel O'Boyle
 
 	* include/openbabel/generic.h: Don't clone OBRingData when copying a

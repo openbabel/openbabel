@@ -66,6 +66,7 @@ set(ops
   ops/partialcharges.cpp
   ops/readconformers.cpp
   ops/sort.cpp
+  ops/opisomorph.cpp
   ops/xout.cpp
 )
 if (EIGEN2_FOUND)

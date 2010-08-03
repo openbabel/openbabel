@@ -24,80 +24,80 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel {
 
-  /// \brief Prepares and searches of fingerprint-based index files. See FastSearch class for details
-  class FastSearchFormat : public OBFormat
-  {
-  public:
-    //Register this format type ID
-    FastSearchFormat() : fsi(NULL) 
-    {
-      OBConversion::RegisterFormat("fs",this);
-      //Specify the number of option taken by options
-      OBConversion::RegisterOptionParam("S", this, 1, OBConversion::GENOPTIONS);
-      OBConversion::RegisterOptionParam("S", this, 1, OBConversion::INOPTIONS);
-      OBConversion::RegisterOptionParam("f", this, 1);
-      OBConversion::RegisterOptionParam("N", this, 1);
-      OBConversion::RegisterOptionParam("u", this, 0);
-      OBConversion::RegisterOptionParam("t", this, 1, OBConversion::INOPTIONS);
-      OBConversion::RegisterOptionParam("l", this, 1, OBConversion::INOPTIONS);
-      OBConversion::RegisterOptionParam("a", this, 0, OBConversion::INOPTIONS);
-      OBConversion::RegisterOptionParam("e", this, 0, OBConversion::INOPTIONS);
-    }
-	
-    virtual const char* Description() //required
-    { return
-"FastSearching\n"
-"Uses molecular fingerprints in an index file.\n"
-"This format uses molecular fingerprints to prepare and search\n"
-"an index of a multi-molecule datafile. It allows fast substructure\n"
-"and structural similarity searching. The indexing is a slow process\n"
-"(~30 minutes for a 250,000 molecule file). The subsequent seaching\n"
-"is much faster, a few seconds, and so can be done interactively.\n\n"
+/// \brief Prepares and searches of fingerprint-based index files. See FastSearch class for details
+class FastSearchFormat : public OBFormat
+{
+public:
+//Register this format type ID
+FastSearchFormat() : fsi(NULL) 
+{
+  OBConversion::RegisterFormat("fs",this);
+  //Specify the number of option taken by options
+  OBConversion::RegisterOptionParam("S", this, 1, OBConversion::GENOPTIONS);
+  OBConversion::RegisterOptionParam("S", this, 1, OBConversion::INOPTIONS);
+  OBConversion::RegisterOptionParam("f", this, 1);
+  OBConversion::RegisterOptionParam("N", this, 1);
+  OBConversion::RegisterOptionParam("u", this, 0);
+  OBConversion::RegisterOptionParam("t", this, 1, OBConversion::INOPTIONS);
+  OBConversion::RegisterOptionParam("l", this, 1, OBConversion::INOPTIONS);
+  OBConversion::RegisterOptionParam("a", this, 0, OBConversion::INOPTIONS);
+  OBConversion::RegisterOptionParam("e", this, 0, OBConversion::INOPTIONS);
+}
 
-"Writing to the fs format makes an index (a very slow process)::\n\n"
-"  babel datafile.xxx index.fs\n\n"
-"Reading from the fs format does a fast search for:\n\n"
-"- Identical molecule::\n\n"
-"    babel index.fs -sSMILES outfile.yyy -ae  or\n"
-"    babel datafile.xxx -ifs -sSMILES outfile.yyy -ae\n\n"
-"- Substructure::\n\n"
-"    babel index.fs -sSMILES outfile.yyy   or\n"
-"    babel datafile.xxx -ifs -sSMILES outfile.yyy\n\n"
-"- Molecular similarity based on Tanimoto coefficient::\n\n"
-"    babel index.fs -sSMILES outfile.yyy -at0.7  (Tanimoto >0.7)\n"
-"    babel index.fs -sSMILES outfile.yyy -at0.7,0.9  (Tanimoto >0.7 && Tanimoto < 0.9)\n"
-"    babel index.fs -sSMILES outfile.yyy -at15   (best 15 molecules)\n\n"
-"  The structure spec can be a molecule from a file: -Spatternfile.zzz\n\n"
-"Note that the parameter of the -s option needs to be a valid SMILES\n"
-"molecule when using fastsearch. You can use the more versatile SMARTS\n"
-"in a normal substructure search.\n\n"
+virtual const char* Description() //required
+{ return
+  "Fastsearch format\n"
+  "Fingerprint-aided substructure and similarity searching\n\n"
 
-"For more information on using the FastSearch index format, see\n"
-"the user's tutorial.\n\n"
+  "Writing to the fs format makes an index of a multi-molecule datafile:\n"
+  "      babel dataset.sdf -ofs\n"
+  "This prepares an index dataset.fs with default parameters, and is slow\n"
+  "(~30 minutes for a 250,000 molecule file).\n\n"
 
-"Write Options (when making index) e.g. -xfFP3\n"
-" f# Fingerprint type\n"
-" N# Fold fingerprint to # bits\n"
-" u  Update an existing index\n\n"
-"Read Options (when searching) e.g. -at0.7\n"
-" t# Do similarity search: #mols or # as min Tanimoto\n"
-" a  Add Tanimoto coeff to title in similarity search\n"
-" l# Maximum number of candidates. Default<4000>\n"
-" e  Exact match\n"
-" S\"filename\"  Structure spec in a file\n"
-" n  No further SMARTS filtering after fingerprint phase\n"
-" h  SMARTS uses explicit H in pattern file\n\n"
-;
-    };
+  "Reading from the fs format searches and is much faster, a few seconds,\n"
+  "and so can be done interactively.\n\n"
+  "The search target is the parameter of the -s option and can be\n"
+  "slightly extended SMILES (with [#n] atoms and ~ bonds) or\n"
+  "the name of a file containing a molecule.\n\n"
 
-    virtual unsigned int Flags(){return READBINARY | READONEONLY | WRITEBINARY;};
+  "Several types of searches are possible:\n"
+  "- Identical molecule::\n"
+  "      babel index.fs outfile.yyy -s SMILES exact\n"
+  "- Substructure::\n"
+  "      babel index.fs outfile.yyy  -s SMILES   or\n"
+  "      babel index.fs outfile.yyy  -s filename.xxx\n"
+  "   where xxx is a format id known to OpenBabel, e.g. sdf\n"
+  "- Molecular similarity based on Tanimoto coefficient::\n"
+  "      babel index.fs outfile.yyy -at15  -sSMILES (best 15 molecules)\n"
+  "      babel index.fs outfile.yyy -at0.7 -sSMILES  (Tanimoto >0.7)\n"
+  "      babel index.fs outfile.yyy -at0.7,0.9 -sSMILES\n"
+  "   (Tanimoto >0.7 && Tanimoto < 0.9)\n"
+  "The datafile plus the -ifs option can be used instead of the index file.\n\n"
+
+  "Write Options (when making index) e.g. -xfFP3\n"
+  " f# Fingerprint type\n"
+  "     If not specified, the default fingerprint (currently FP2) is used\n"
+  " N# Fold fingerprint to # bits\n"
+  " u  Update an existing index\n\n"
+
+  "Read Options (when searching) e.g. -at0.7\n"
+  " t# Do similarity search: #mols or # as min Tanimoto\n"
+  " a  Add Tanimoto coeff to title in similarity search\n"
+  " l# Maximum number of candidates. Default<4000>\n"
+  " e  Exact match\n"
+  "     Alternative to using exact in -s parameter, see above\n"  
+  " n  No further SMARTS filtering after fingerprint phase\n\n"
+  ;
+};
+
+  virtual unsigned int Flags(){return READBINARY | READONEONLY | WRITEBINARY;};
 
   public:
     virtual bool ReadChemObject(OBConversion* pConv);
     virtual bool WriteChemObject(OBConversion* pConv);
 
   private:
-    bool ObtainTarget(OBConversion* pConv, vector<OBMol>& patternMols, const string& indexname);
+    bool ObtainTarget(OBConversion* pConv, std::vector<OBMol>& patternMols, const std::string& indexname);
     void AddPattern(vector<OBMol>& patternMols, OBMol patternMol, int idx);
 
   private:
@@ -157,14 +157,10 @@ namespace OpenBabel {
       }
     
     vector<OBMol> patternMols;
-    bool doSubset = pConv->IsOption("s",OBConversion::INOPTIONS)!=NULL;// -as option
+    if(!ObtainTarget(pConv, patternMols, indexname))
+      return false;
+
     bool exactmatch = pConv->IsOption("e",OBConversion::INOPTIONS)!=NULL;// -ae option
-    if(!doSubset)
-    {
-      //Similarity or substructure
-      if(!ObtainTarget(pConv, patternMols, indexname))
-        return false;
-    }
     
     //Open the datafile and put it in pConv
     //datafile name derived from index file probably won't have a file path
@@ -477,76 +473,108 @@ namespace OpenBabel {
 ///////////////////////////////////////////////////////////////
   bool FastSearchFormat::ObtainTarget(OBConversion* pConv, vector<OBMol>& patternMols, const string& indexname)
   {
-    //Obtains an OBMol (or more if the s option contains '~' - a tildbond)
-    //   either from the SMARTS string in the -s option
-    //   or by converting the file in the -S option
-    //or, if neither option is provided, displays information on the index file.
-
-    stringstream smiles(stringstream::out);
-    ifstream patternstream;
-    OBConversion PatternConv(&patternstream,&smiles);
+    //Obtains an OBMol from:
+    // the filename in the -s option or
+    // the SMARTS string in the -s option or
+    // by converting the file in the -S or -aS options (deprecated).
+    // If there is no -s -S or -aS option, information on the index file is displayed.
 
     OBMol patternMol;
+    patternMol.SetIsPatternStructure();
+
     const char* p = pConv->IsOption("s",OBConversion::GENOPTIONS);
-    if(p) 
+    
+    bool OldSOption=false;
+    //If no -s option, make OBMol from file in -S option or -aS option (both deprecated)
+    if(!p)
     {
-      // Use the -s option
-      //With the -s option (not -S or -aS) replace [#6] by C, etc. before converting to patternMol.
-      //The SMARTS used in the second stage filtering is as entered (with [#6] etc., if present) .
-      //When used with FP1, allows aromaticity to be specified in some cases.
-      string::size_type pos1, pos2;
-      string txt(p);
-      for(;;)
-      {
-        pos1 = txt.find("[#");
-        if(pos1==string::npos)
-          break;
-        pos2 = txt.find(']');
-        int atno;
-        if(pos2!=string::npos &&  (atno = atoi(txt.substr(pos1+2, pos2-pos1-2).c_str())) && atno>0)
-          txt.replace(pos1, pos2-pos1+1, etab.GetSymbol(atno));
-        else
-        {
-          obErrorLog.ThrowError(__FUNCTION__,"Ill-formed [#n] atom in SMARTS", obError);
-          return false;
-        }
-      }
-      
-      //Find ~ bonds and make a versions with a single and aromatic bonds
-      //To avoid having to parse the SMILES here, replace ~ by $ (quadruple bond)
-      //and then replace this in patternMol. Check first that there are no $ already
-      //Sadly, isocynanides may have $ bonds.
-      bool hasTildeBond;
-      if(hasTildeBond = (txt.find('~')!=string::npos))
-        replace(txt.begin(),txt.end(), '~' , '$');
-
-      stringstream smarts(txt, stringstream::in);		
-      OBConversion Convsm(&smarts);
-      if(!Convsm.SetInFormat("smi")) return false;
-      Convsm.Read(&patternMol);
-
-      if(patternMol.Empty())
-      {
-        obErrorLog.ThrowError(__FUNCTION__, 
-          "Could not make a molecule from " + smarts.str()
-          + "\nThis needs to be valid SMILES when using fastsearch."
-          "You can use the more versatile SMARTS in a normal substructure search." , obError);
-          return false;
-      }
-      
-      if(hasTildeBond)
-      {
-        //patternMol.ConvertDativeBonds();//use standard form for dative bonds
-        AddPattern(patternMols, patternMol, 0); //recursively add all combinations of tilde bond values
-        return true;
-      }
-    }
-    else
-    {
-      // or Make OBMol from file in -S option or -aS option	
       p = pConv->IsOption("S",OBConversion::GENOPTIONS);
       if(!p)
         p = pConv->IsOption("S",OBConversion::INOPTIONS);//for GUI mainly
+      OldSOption = true; 
+    }
+    if(p) 
+    {
+      vector<string> vec;
+      tokenize(vec, p);
+      
+      //ignore leading ~ (not relevant to fastsearch)
+      if(vec[0][0]=='~')
+        vec[0].erase(0,1);
+
+      if(vec.size()>1 && vec[1]=="exact")
+        pConv->AddOption("e", OBConversion::INOPTIONS);
+
+      OBConversion patternConv;
+      OBFormat* pFormat;
+      //Interpret as a filename if possible
+      string filename(p);
+      if( filename.empty() ||
+          filename.find('.')==string::npos ||
+          !(pFormat = patternConv.FormatFromExt(filename.c_str())) ||
+          !patternConv.SetInFormat(pFormat) ||
+          !patternConv.ReadFile(&patternMol, filename) ||
+          patternMol.NumAtoms()==0)
+        //if false, have a valid patternMol from a file
+      {
+        //is SMARTS/SMILES
+        //Replace e.g. [#6] in SMARTS by C so that it can be converted as SMILES
+        //for the fingerprint phase, but allow more generality in the SMARTS phase.
+        string& txt =vec [0];
+        for(;;)
+        {
+          string::size_type pos1, pos2;
+          pos1 = txt.find("[#");
+          if(pos1==string::npos)
+            break;
+          pos2 = txt.find(']');
+          int atno;
+          if(pos2!=string::npos &&  (atno = atoi(txt.substr(pos1+2, pos2-pos1-2).c_str())) && atno>0)
+            txt.replace(pos1, pos2-pos1+1, etab.GetSymbol(atno));
+          else
+          {
+            obErrorLog.ThrowError(__FUNCTION__,"Ill-formed [#n] atom in SMARTS", obError);
+            return false;
+          }
+        }
+
+        bool hasTildeBond;
+        if(hasTildeBond = (txt.find('~')!=string::npos))
+        {
+          //Find ~ bonds and make versions of query molecule with a single and aromatic bonds
+          //To avoid having to parse the SMILES here, replace ~ by $ (quadruple bond)
+          //and then replace this in patternMol. Check first that there are no $ already
+          //Sadly, isocynanides may have $ bonds.
+          if(txt.find('$')!=string::npos)
+          {
+            obErrorLog.ThrowError(__FUNCTION__,
+              "Cannot use ~ bonds in patterns with $ (quadruple) bonds.)", obError);
+            return false;
+          }
+          replace(txt.begin(),txt.end(), '~' , '$');
+        }
+
+        //read as standard SMILES
+        patternConv.SetInFormat("smi");
+        patternConv.ReadString(&patternMol, vec[0]);
+
+        if(hasTildeBond)
+        {
+          AddPattern(patternMols, patternMol, 0); //recursively add all combinations of tilde bond values
+          return true;
+        }
+      }
+    }
+
+    if(OldSOption) //only when using deprecated -S and -aS options
+    {
+      //make -s option for later SMARTS test
+      OBConversion conv;
+      if(conv.SetOutFormat("smi"))
+      {
+        string optiontext = conv.WriteString(&patternMol, true);
+        pConv->AddOption("s", OBConversion::GENOPTIONS, optiontext.c_str());
+      }
     }
 
     if(!p)
@@ -566,57 +594,7 @@ namespace OpenBabel {
       return false;
     }
 
-    if(p && patternMol.Empty())
-    {
-      string txt(p);
-      string::size_type pos = txt.find_last_of('.');
-      if(pos==string::npos)
-        {
-          obErrorLog.ThrowError(__FUNCTION__, "Filename of pattern molecule in -S option must\n"
-            "have an extension to define its format.", obError);
-          return false;
-        }
-      patternstream.open(txt.c_str());
-      if(!patternstream)
-        {
-          stringstream errorMsg;
-	  
-          errorMsg << "Cannot open " << txt << endl;
-          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
-          return false;
-        }
-
-      PatternConv.SetOneObjectOnly();
-      if(PatternConv.SetInFormat(txt.substr(pos+1).c_str()))
-        PatternConv.Read(&patternMol);
-    }
-
-    if(patternMol.Empty())
-      {
-        obErrorLog.ThrowError(__FUNCTION__, "Cannot derive a molecule from the -s or -S options", obWarning);
-        return false;
-      }
-
-    //If the -s option is not already present, generate one by converting to SMILES
-    if(!pConv->IsOption("s",OBConversion::GENOPTIONS))
-    {
-      if(!PatternConv.SetOutFormat("smi"))
-        return false;
-      //if -ah option ensure explicit H remains as such in SMARTS phase
-      if(pConv->IsOption("h",OBConversion::INOPTIONS))
-        PatternConv.AddOption("h",OBConversion::OUTOPTIONS);
-      PatternConv.Write(&patternMol);
-      //remove name to leave smiles string
-      string smilesstr(smiles.str());
-      string::size_type pos = smilesstr.find_first_of(" \t\r\n");
-      if(pos!=string::npos)
-        smilesstr = smilesstr.substr(0,pos);
-      pConv->AddOption("s", OBConversion::GENOPTIONS, smilesstr.c_str());
-    }
-    //Only the patternMol, not the SMARTS for the second stage, uses de-dative form
-    patternMol.ConvertDativeBonds();//use standard form for dative bonds
     patternMols.push_back(patternMol);
-
     return true;
   }
 

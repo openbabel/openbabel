@@ -25,6 +25,7 @@
 #define OB_QUERY_H
 
 #include <openbabel/mol.h>
+#include <openbabel/tokenst.h>
 
 namespace OpenBabel {
 
@@ -165,6 +166,11 @@ namespace OpenBabel {
   class OBAPI OBQuery
   {
     public:
+      ~OBQuery()
+      {
+        std::for_each(m_atoms.begin(),m_atoms.end(), DeleteObject());
+        std::for_each(m_bonds.begin(),m_bonds.end(), DeleteObject());
+      }
       unsigned int NumAtoms() const 
       { 
         return m_atoms.size();
