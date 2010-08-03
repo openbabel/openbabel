@@ -53,7 +53,9 @@ namespace OpenBabel
 /**
 \class  OBSpectrophore
 \brief  Class to compute Spectrophores&tm;
+\since  Version 2.3
 <P>
+<H3>Introduction</H3>
 Spectrophores&tm; are one-dimensional descriptors generated from the property
 fields surrounding the molecules. The technology allows the accurate description
 of molecules in terms of their surface properties or fields. Comparison of
