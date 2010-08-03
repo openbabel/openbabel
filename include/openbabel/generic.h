@@ -2,7 +2,7 @@
 generic.h - Handle generic data classes. Custom data for atoms, bonds, etc.
  
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
-Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001-2010 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -737,6 +737,7 @@ namespace OpenBabel
 
   //! \class OBChiralData generic.h <openbabel/generic.h>
   //! \brief Used to hold chiral inforamtion about the atom as OBGenericData
+  //! \deprecated Used OBStereoFacade instead
  class OBAPI OBChiralData : public OBGenericData
   {
     friend class OBMol;
@@ -884,17 +885,45 @@ namespace OpenBabel
       { return this->_vDensities; }
     std::vector<double> GetIntegration() const
       { return this->_vIntegration; }
-};
+  };
 
-  //! \class OBOrbitalEnergyData generic.h <openbabel/generic.h>
-  //! \brief Used to hold information about orbital energies
-  class OBAPI OBOrbitalEnergyData: public OBGenericData
+  //! \class OBOrbital generic.h <openbabel/generic.h>
+  //! \brief Used to store energy, occupation, and orbital symmetry of a particular orbital
+  //! \sa OBOrbitalData
+  class OBAPI OBOrbital
   {
+    friend class OBOrbitalData;
   protected:
-    std::vector<double> _alphaEigenvalues;
-    std::vector<double> _betaEigenvalues;
-    std::vector<std::string> _alphaMullikenSymbols;
-    std::vector<std::string> _betaMullikenSymbols;
+    double       _energy;         //!< in electron volts
+    double       _occupation;     //!< usually 0, 1, or 2, but can be fractional (e.g., solid-state calcs)
+    std::string  _mullikenSymbol; //!< symmetry designation
+  public:
+    void SetData(double energy, double occupation = 2.0, std::string symbol = "A")
+    { _energy = energy; _occupation = occupation; _mullikenSymbol = symbol; }
+
+    double GetEnergy() const        { return _energy; }
+    double GetOccupation() const    { return _occupation; }
+    std::string GetSymbol() const   { return _mullikenSymbol; }
+  };
+
+  //! \class OBOrbitalData generic.h <openbabel/generic.h>
+  //! \brief Used to hold information about orbital energies
+  class OBAPI OBOrbitalData: public OBGenericData
+  {
+  public:
+    OBOrbitalData(): OBGenericData("OrbitalData", OBGenericDataType::ElectronicData){};
+    virtual ~OBOrbitalData() {}
+    virtual OBGenericData* Clone(OBBase*) const
+         {return new OBOrbitalData(*this);}
+    
+    OBOrbitalData & operator=(const OBOrbitalData &);
+
+  protected:
+    std::vector<OBOrbital> _alphaOrbitals; //!< List of orbitals. In case of unrestricted calculations, this contains the alpha spin-orbitals
+    std::vector<OBOrbital> _betaOrbitals;  //!< Only used if needed (e.g., unrestricted calculations)
+    int _alphaHOMO;                        //!< Highest occupied molecular orbital for _alphaOrbitals
+    int _betaHOMO;                         //!< Highest occupied for _betaOrbitals (if needed)
+    bool _openShell;                       //!< Whether we store both alpha and beta spin-orbitals (i.e., a restricted open-shell or unrestricted calc.)
   };
 
   //! \class OBElectronicTransitionData generic.h <openbabel/generic.h>

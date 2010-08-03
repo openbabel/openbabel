@@ -109,7 +109,7 @@ class OBConversion; //used only as pointer
       //! Arbitrary chiral information (atom, bond, molecule, etc.) i.e., OBChiralData
       ChiralData =        16,
 
-      //! Atomic and molecular occupation data
+      //! Atomic and molecular occupation data (e.g., for crystal structures)
       OccupationData =    17,
 
       //! Density (cube) data and surfaces
@@ -145,9 +145,8 @@ class OBConversion; //used only as pointer
       //! Density of States data (fermi energy and energy vs. density data)
       DOSData =           28,
 
-      //! Electronic transition data
-      ElectronicTransitionData =
-                          29,
+      //! Electronic transition data (e.g., UV/Vis, excitation energies, etc.)
+      ElectronicTransitionData = 29,
 
       // space for up to 2^14 more entries...
 
