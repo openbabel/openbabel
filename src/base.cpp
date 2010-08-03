@@ -276,7 +276,7 @@ namespace OpenBabel
 
   - \ref start "Getting Started" \n
      (where to begin, example code, using Open Babel in real life, ...)
-  - \ref overview "Classes Overview" \n
+  - \ref mainclasses "Classes Overview" \n
      (overview the most important classes ordered by category)
   - \ref changes23 "What's New in Version 2.3" \n
      (Changes since 2.2 releases)
@@ -303,7 +303,7 @@ namespace OpenBabel
   designed to store the basic information
   in a molecule and to perceive information about a molecule.
 
-  \section Lazy Evaluzation
+  \section Lazy Evaluation
   One of the key philosophies in the code is that transformations and
   automatic perception of properties are performed in a <a href="http://en.wikipedia.org/wiki/Lazy_evaluation">"lazy"</a>
   manner. That is, until you call for partial atomic charges, no
@@ -374,7 +374,7 @@ namespace OpenBabel
       }
   \endcode
 
-  All of the \ref main "main classes", including OBMol and
+  All of the \ref mainclasses "main classes", including OBMol and
   OBConversion, include example code designed to facilitate using the
   Open Babel code in real-world chemistry. Complete examples are provided
   in the doc/examples directory and <a href="examples.shtml">all these examples are included in
@@ -384,7 +384,7 @@ namespace OpenBabel
   <a
   href="http://openbabel.org/wiki/Developer:Tutorial">developer
   tutorials</a>. This section includes examples in C++, Perl, Python,
-  and other porgramming languages.
+  and other programming languages.
 
   Also, the <code>tools</code> directory of the Open Babel source
   releases include a variety of programs which are intended to be more
@@ -417,10 +417,8 @@ namespace OpenBabel
 
   ///@}
 
-  ///@addtogroup overview Classes Overview
-  ///@{
   /**
-  \page overview_page Classes Overview
+  \page mainclasses Classes Overview
 
   Chemical Storage and Manipulation:
   - OBBase - General base class of OBAtom, OBMol, OBResidue, etc. for storing generic, arbitrary custom data
@@ -429,7 +427,7 @@ namespace OpenBabel
     - OBBond - Bond connection between two OBAtom, properties, bond orders, ...
     - OBResidue - Biomolecule residues (amino acids, nucleic acids)
     - OBReaction - Used to store chemical reactions (i.e., reactants -> products)
-    - OBGrid - A base grid class
+    - OBGrid - A base grid class (e.g., 3D functions like electrostatic potential, evaluated on a grid)
     - OBText - An object containing just text
   - OBRing - Ring cycle perception, Smallest Set of Smallest Rings (SSSR), Largest Set of Smallest Rings (LSSR)
 
@@ -486,33 +484,36 @@ namespace OpenBabel
 
   Plugins:
   - OBPlugin
-    - OBChargeModel
-    - OBDescriptor
-    - OBFingerprint
-    - OBForceField
-    - OBFormat
-    - OBOp
+    - OBChargeModel - assign partial (and formal) charges to a molecule
+    - OBDescriptor - molecular properties, descriptors or features for filtering or searching
+    - OBFingerprint - condensed representations of molecules as a set of bits
+    - OBForceField - implementation of molecular mechanics force field methods
+    - OBFormat - file formats for chemical data
+    - OBOp - operation for modifying a molecule or file (e.g., adding hydrogens)
 
   Math Utilities:
   - matrix3x3 - Square 3x3 matrices for 3D transformations and rotations
   - vector3 - 3D vector class for translations and planes
   */
-  ///@}
 
   /**
   \page changes23 What's New in Version 2.3
 
   Throughout the API documentation, new classes and methods are
-  indicated with a disclaimer "Since: version 2.2."
+  indicated with a disclaimer "Since: version 2.3."
 
   Several new classes and features have been introduced, notably
   - New @ref stereo classes
   - New @ref substructure classes
-  - Improved @ref conformer
-  - OBChargeModel
-  - OBGraphSym - Cleaner interface for computing the symmetry classes
+  - Improved @ref conformer searching
+  - OBChargeModel - Cleaner interface for assigning partial charges using different models
+  - OBGraphSym - Cleaner interface for computing the stereochemical symmetry classes
   - OBSpectrophore - A new powerful descriptor for screening bioactive molecules
-  - OBDepict - 2D depcition
+  - OBDepict - 2D depiction
+
+  In addition, a wide variety of new plugins are available, including
+  MMFF94, QEq, and QTPIE partial charges, "diverse" conformer
+  searching, etc.
 
   \page changes22 What's New in Version 2.2
 
