@@ -1,3 +1,11 @@
+2010-08-03  Noel O'Boyle
+
+	* include/openbabel/generic.h: Don't clone OBRingData when copying a
+	molecule. If you do, you'll end up with two RingDatas because one will
+	already exist due to Kekulize() in EndModify() in operator= in OBMol.
+	Having more than one RingData causes problems as one can become
+	invalid.
+
 2010-08-02 Chris Morley
 
 	* include/openbabel/obmolecformat.h,src/obmolecformat.cpp

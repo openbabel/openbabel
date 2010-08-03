@@ -255,7 +255,12 @@ namespace OpenBabel
   public:
     OBRingData();
     OBRingData(const OBRingData &);
-    virtual OBGenericData* Clone(OBBase* /*parent*/) const{return new OBRingData(*this);}
+    // When copying a molecule, don't copy the RingData. Why not? Well,
+    // if you do, you'll end up with two RingDatas because one will already
+    // exist due to Kekulize() in EndModify() in operator= in OBMol. Having
+    // more than one RingData causes problems as one of them can become invalid
+    // and cause segfaults.
+    virtual OBGenericData* Clone(OBBase* /*parent*/) const{return NULL;}
     ~OBRingData();
 
     OBRingData &operator=(const OBRingData &);
