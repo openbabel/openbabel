@@ -363,6 +363,26 @@ option(RUN_SWIG "Generate language bindings with SWIG" OFF)
 # Should Python bindings be built?
 option(PYTHON_BINDINGS "Build Python bindings" OFF)
 
+# Should Ruby bindings be built?
+option(RUBY_BINDINGS "Build Ruby bindings" OFF)
+
+# Should Perl bindings be built?
+option(PERL_BINDINGS "Build Perl bindings" OFF)
+
+# Should Java bindings be built?
+option(JAVA_BINDINGS "Build Java bindings" OFF)
+
+# Should CSharp bindings be built?
+option(CSHARP_BINDINGS "Build Csharp bindings" OFF)
+
+if (RUN_SWIG)
+  set(PYTHON_BINDINGS ON)
+  set(RUBY_BINDINGS ON)
+  set(PERL_BINDINGS ON)
+  set(JAVA_BINDINGS ON)
+  set(CSHARP_BINDINGS ON)
+endif (RUN_SWIG)
+
 add_subdirectory(scripts)
 
 # A minimal build with just two formats (SMI, SDF) useful for developers
