@@ -221,7 +221,7 @@ namespace OpenBabel {
           for (unsigned int j = 0; j < queriedNbrs.size(); ++j) {
             OBAtom *queriedNbr = queriedNbrs[j];
             // skip atoms not in the mask
-            if (!state.queriedMask.BitIsSet(queriedNbr->GetIndex()))
+            if (!state.queriedMask.BitIsSet(queriedNbr->GetIndex() + 1))
               continue;
             if (queryNbr->Matches(queriedNbr))
               candidates.push_back(Candidate(queryAtom, queryNbr, queriedAtom, queriedNbr));
@@ -282,12 +282,12 @@ namespace OpenBabel {
         OBBitVec queriedMask = mask;
         if (!queriedMask.CountBits())
           for (unsigned int i = 0; i < queried->NumAtoms(); ++i)
-            queriedMask.SetBitOn(i);
+            queriedMask.SetBitOn(i + 1);
 
         Mappings maps;
         OBQueryAtom *queryAtom = m_query->GetAtoms()[0];
         for (unsigned int i = 0; i < queried->NumAtoms(); ++i) {
-          if (!queriedMask.BitIsSet(i))
+          if (!queriedMask.BitIsSet(i + 1))
             continue;
           State state(MapFirstType, m_query, queried, queriedMask);
 
@@ -324,12 +324,12 @@ namespace OpenBabel {
         OBBitVec queriedMask = mask;
         if (!queriedMask.CountBits())
           for (unsigned int i = 0; i < queried->NumAtoms(); ++i)
-            queriedMask.SetBitOn(i);
+            queriedMask.SetBitOn(i + 1);
 
         Mappings maps;
         OBQueryAtom *queryAtom = m_query->GetAtoms()[0];
         for (unsigned int i = 0; i < queried->NumAtoms(); ++i) {
-          if (!queriedMask.BitIsSet(i))
+          if (!queriedMask.BitIsSet(i + 1))
             continue;
           State state(MapUniqueType, m_query, queried, queriedMask);
           
@@ -373,13 +373,13 @@ namespace OpenBabel {
         OBBitVec queriedMask = mask;
         if (!queriedMask.CountBits())
           for (unsigned int i = 0; i < queried->NumAtoms(); ++i)
-            queriedMask.SetBitOn(i);
+            queriedMask.SetBitOn(i + 1);
 
         Mappings maps;
         for (unsigned int j = 0; j < m_query->NumAtoms(); ++j) {
           OBQueryAtom *queryAtom = m_query->GetAtoms()[j];
           for (unsigned int i = 0; i < queried->NumAtoms(); ++i) {
-            if (!queriedMask.BitIsSet(i))
+            if (!queriedMask.BitIsSet(i + 1))
               continue;
             State state(MapAllType, m_query, queried, queriedMask);
             OBAtom *queriedAtom = queried->GetAtom(i+1);
@@ -444,7 +444,7 @@ namespace OpenBabel {
     std::vector<unsigned int> symClasses, maskedSymClasses;
     gs.GetSymmetry(symClasses);
     FOR_ATOMS_OF_MOL (obatom, mol) {
-      if (mask.BitIsSet(obatom->GetIndex()))
+      if (mask.BitIsSet(obatom->GetIndex() + 1))
         maskedSymClasses.push_back(symClasses[obatom->GetIndex()]);
     }
 
@@ -454,14 +454,14 @@ namespace OpenBabel {
 
     OBQuery *query = new OBQuery;
     FOR_ATOMS_OF_MOL (obatom, mol) {
-      if (!mask.BitIsSet(obatom->GetIndex()))
+      if (!mask.BitIsSet(obatom->GetIndex() + 1))
         continue;
       query->AddAtom(new OBAutomorphismQueryAtom(symClasses[obatom->GetIndex()], maskedSymClasses));
     }
     FOR_BONDS_OF_MOL (obbond, mol) {
       unsigned int beginIndex = obbond->GetBeginAtom()->GetIndex();
       unsigned int endIndex = obbond->GetEndAtom()->GetIndex();
-      if (!mask.BitIsSet(beginIndex) || !mask.BitIsSet(endIndex))
+      if (!mask.BitIsSet(beginIndex + 1) || !mask.BitIsSet(endIndex + 1))
         continue;
       query->AddBond(new OBQueryBond(query->GetAtoms()[beginIndex], query->GetAtoms()[endIndex],
             obbond->GetBondOrder(), obbond->IsAromatic()));
@@ -476,7 +476,7 @@ namespace OpenBabel {
     OBBitVec queriedMask = mask;
     if (!queriedMask.CountBits())
       for (unsigned int i = 0; i < mol->NumAtoms(); ++i)
-        queriedMask.SetBitOn(i);
+        queriedMask.SetBitOn(i + 1);
 
     OBQuery *query = CompileAutomorphismQuery(mol, queriedMask);
     OBIsomorphismMapper *mapper = OBIsomorphismMapper::GetInstance(query);

@@ -279,7 +279,7 @@ int main()
   
   test_RMSD();
 
-  test_alignMol();
+//  test_alignMol();
 
   test_alignMolWithSym();
 

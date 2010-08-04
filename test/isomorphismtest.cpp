@@ -73,7 +73,6 @@ void testIsomorphismMask()
   conv.SetInFormat("cml");
   std::ifstream ifs(GetFilename("isomorphism1.cml").c_str());
   OB_REQUIRE( ifs );
-/*
   conv.Read(&mol, &ifs);
 
   OBQuery *query = CompileSmilesQuery("C1CCCCC1");
@@ -87,14 +86,14 @@ void testIsomorphismMask()
   // mask first ring
   OBBitVec mask;
   for (int i = 0; i < 6; ++i)
-    mask.SetBitOn(i);
+    mask.SetBitOn(i+1);
   maps = mapper->MapUnique(&mol, mask);
   cout << maps.size() << endl;
   OB_ASSERT( maps.size() == 1 );
 
   // mask second ring also
   for (int i = 6; i < 10; ++i)
-    mask.SetBitOn(i);
+    mask.SetBitOn(i+1);
   maps = mapper->MapUnique(&mol, mask);
   cout << maps.size() << endl;
   OB_ASSERT( maps.size() == 2 );
@@ -102,7 +101,6 @@ void testIsomorphismMask()
 
   delete query;
   delete mapper;
-*/
 }
 
 

@@ -11,18 +11,18 @@ namespace OpenBabel {
     OBBitVec mask2 = mask;
     if (!mask2.CountBits())
       for (unsigned int i = 0; i < mol->NumAtoms(); ++i)
-        mask2.SetBitOn(i);
+        mask2.SetBitOn(i + 1);
 
     OBQuery *query = new OBQuery;
     FOR_ATOMS_OF_MOL (obatom, mol) {
-      if (!mask2.BitIsSet(obatom->GetIndex()))
+      if (!mask2.BitIsSet(obatom->GetIndex() + 1))
         continue;
       query->AddAtom(new OBQueryAtom(obatom->GetAtomicNum()));
     }
     FOR_BONDS_OF_MOL (obbond, mol) {
       unsigned int beginIndex = obbond->GetBeginAtom()->GetIndex();
       unsigned int endIndex = obbond->GetEndAtom()->GetIndex();
-      if (!mask2.BitIsSet(beginIndex) || !mask2.BitIsSet(endIndex))
+      if (!mask2.BitIsSet(beginIndex + 1) || !mask2.BitIsSet(endIndex + 1))
         continue;
  
       query->AddBond(new OBQueryBond(query->GetAtoms()[beginIndex], query->GetAtoms()[endIndex],
