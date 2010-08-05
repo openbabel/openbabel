@@ -438,6 +438,39 @@ namespace OpenBabel {
       std::vector<unsigned int> symClasses;
   };
 
+  OBQuery* CompileAutomorphismQuery(OBMol *mol, const OBBitVec &mask)
+  {
+    OBGraphSym gs(mol, (OBBitVec*)&mask);
+    std::vector<unsigned int> symClasses;
+    gs.GetSymmetry(symClasses);
+
+    if (DEBUG)
+    for (unsigned int i = 0; i < symClasses.size(); ++i)
+      cout << i << ": " << symClasses[i] << endl;
+
+    OBQuery *query = new OBQuery;
+    unsigned int offset = 0;
+    std::vector<unsigned int> indexes;
+    FOR_ATOMS_OF_MOL (obatom, mol) {
+      indexes.push_back(obatom->GetIndex() - offset);
+      if (!mask.BitIsSet(obatom->GetIndex() + 1)) {
+        offset++;
+        continue;
+      }
+      query->AddAtom(new OBAutomorphismQueryAtom(symClasses[obatom->GetIndex()], symClasses));
+    }
+    FOR_BONDS_OF_MOL (obbond, mol) {
+      unsigned int beginIndex = obbond->GetBeginAtom()->GetIndex();
+      unsigned int endIndex = obbond->GetEndAtom()->GetIndex();
+      if (!mask.BitIsSet(beginIndex + 1) || !mask.BitIsSet(endIndex + 1))
+        continue;
+      query->AddBond(new OBQueryBond(query->GetAtoms()[indexes[beginIndex]], query->GetAtoms()[indexes[endIndex]],
+            obbond->GetBondOrder(), obbond->IsAromatic()));
+    }
+
+    return query;
+  }
+
   OBIsomorphismMapper::Mappings FindAutomorphisms(OBMol *mol, const OBBitVec &mask)
   {
     // set all atoms to 1 if the mask is empty
@@ -446,7 +479,7 @@ namespace OpenBabel {
       for (unsigned int i = 0; i < mol->NumAtoms(); ++i)
         queriedMask.SetBitOn(i + 1);
 
-    OBQuery *query = CompileMoleculeQuery(mol, queriedMask);
+    OBQuery *query = CompileAutomorphismQuery(mol, queriedMask);
     OBIsomorphismMapper *mapper = OBIsomorphismMapper::GetInstance(query);
     OBIsomorphismMapper::Mappings maps = mapper->MapAll(mol, queriedMask);
     delete mapper;
