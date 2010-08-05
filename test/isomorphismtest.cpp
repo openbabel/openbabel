@@ -132,14 +132,20 @@ void testAutomorphismMask() {
   cout << maps.size() << endl;
   OB_ASSERT( maps.size() == 4 );
 
-  // Now, let's remove the bridge (atomIds 6, 9) of the central ring. There should still
-  // be the same 4 isomorphisms.
+  // Now, let's remove the bridge (atomId 6) of the central ring.
+  //
+  //     /\ /\ /\
+  //    |  |  |  |
+  //     \/    \/
+  // both rings can be flipped around exocyclic bond, the whole molecule can be mirrored
+  // horizontally, this results in 2 x 2 x 2 = 8 automorphisms
   OBBitVec mask;
   mask.SetRangeOn(1, mol.NumAtoms());
-  mask.SetBitOff(6+1); mask.SetBitOff(9+1);
+  mask.SetBitOff(6+1);
   maps = FindAutomorphisms(&mol, mask);
   cout << maps.size() << endl;
-  OB_ASSERT( maps.size() == 4 );
+  OB_ASSERT( maps.size() == 8 );
+
 }
 
 int main() 

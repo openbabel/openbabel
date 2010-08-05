@@ -14,9 +14,14 @@ namespace OpenBabel {
         mask2.SetBitOn(i + 1);
 
     OBQuery *query = new OBQuery;
+    unsigned int offset = 0;
+    std::vector<unsigned int> indexes;
     FOR_ATOMS_OF_MOL (obatom, mol) {
-      if (!mask2.BitIsSet(obatom->GetIndex() + 1))
+      indexes.push_back(obatom->GetIndex() - offset);
+      if (!mask2.BitIsSet(obatom->GetIndex() + 1)) {
+        offset++;
         continue;
+      }
       query->AddAtom(new OBQueryAtom(obatom->GetAtomicNum()));
     }
     FOR_BONDS_OF_MOL (obbond, mol) {
@@ -25,7 +30,7 @@ namespace OpenBabel {
       if (!mask2.BitIsSet(beginIndex + 1) || !mask2.BitIsSet(endIndex + 1))
         continue;
  
-      query->AddBond(new OBQueryBond(query->GetAtoms()[beginIndex], query->GetAtoms()[endIndex],
+      query->AddBond(new OBQueryBond(query->GetAtoms()[indexes[beginIndex]], query->GetAtoms()[indexes[endIndex]],
             obbond->GetBondOrder(), obbond->IsAromatic()));
     }
 
