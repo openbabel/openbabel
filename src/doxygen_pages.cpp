@@ -33,8 +33,8 @@ namespace OpenBabel {
  *
  * Below is a minimal but working example of a project. For simplicity,
  * only one CMakeLists.txt file and one source file is used. This can be
- * used as a template to get started. The @link http://www.cmake.org/cmake/help/documentation.html 
- * cmake documentation @endlink can be consultated as your project becomes more
+ * used as a template to get started. The <a href="http://www.cmake.org/cmake/help/documentation.html">
+ * cmake documentation</a> can be consultated as your project becomes more
  * complex.
  * 
  * @b CMakeLists.txt
