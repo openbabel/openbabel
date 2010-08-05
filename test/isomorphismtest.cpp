@@ -111,6 +111,36 @@ void testIsomorphismMask()
   delete mapper;
 }
 
+void testAutomorphismMask() {
+  // read file: 3 6-rings
+  //
+  //     /\ /\ /\
+  //    |  |  |  |
+  //     \/ \/ \/
+  //
+  cout <<  "testAutomorphismMask" << endl;
+  OBMol mol;
+  OBConversion conv;
+  conv.SetInFormat("cml");
+  std::ifstream ifs(GetFilename("isomorphism1.cml").c_str());
+  OB_REQUIRE( ifs );
+  conv.Read(&mol, &ifs);
+
+  // First of all, how many automorphisms are there without any mask?
+  // This takes about 20 seconds, so you may want to comment this out while debugging
+  OBIsomorphismMapper::Mappings maps = FindAutomorphisms(&mol);
+  cout << maps.size() << endl;
+  OB_ASSERT( maps.size() == 4 );
+
+  // Now, let's remove the bridge (atomIds 6, 9) of the central ring. There should still
+  // be the same 4 isomorphisms.
+  OBBitVec mask;
+  mask.SetRangeOn(1, mol.NumAtoms());
+  mask.SetBitOff(6+1); mask.SetBitOff(9+1);
+  maps = FindAutomorphisms(&mol, mask);
+  cout << maps.size() << endl;
+  OB_ASSERT( maps.size() == 4 );
+}
 
 int main() 
 {
@@ -124,6 +154,7 @@ int main()
   testIsomorphism1();
   testIsomorphism2();
   testIsomorphismMask();
+  testAutomorphismMask(); 
 
   return 0;
 }
