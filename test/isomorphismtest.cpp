@@ -98,10 +98,11 @@ void testIsomorphismMask()
   cout << maps.size() << endl;
   OB_ASSERT( maps.size() == 2 );
 
-  // just mask last ring
+  // just mask last ring (atomIds 7-8, 10-13)
   mask.Clear();
-  for (int i = 12; i < 18; ++i)
+  for (int i = 10; i < 14; ++i)
     mask.SetBitOn(i+1);
+  mask.SetBitOn(7 + 1); mask.SetBitOn(8 + 1);
   maps = mapper->MapUnique(&mol, mask);
   cout << maps.size() << endl;
   OB_ASSERT( maps.size() == 1 ); // Should be same result as masking just the first ring
