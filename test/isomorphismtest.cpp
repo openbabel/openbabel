@@ -98,6 +98,13 @@ void testIsomorphismMask()
   cout << maps.size() << endl;
   OB_ASSERT( maps.size() == 2 );
 
+  // just mask last ring
+  mask.Clear();
+  for (int i = 12; i < 18; ++i)
+    mask.SetBitOn(i+1);
+  maps = mapper->MapUnique(&mol, mask);
+  cout << maps.size() << endl;
+  OB_ASSERT( maps.size() == 1 ); // Should be same result as masking just the first ring
 
   delete query;
   delete mapper;
