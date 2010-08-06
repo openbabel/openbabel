@@ -126,9 +126,11 @@ void testAutomorphismMask() {
   OB_REQUIRE( ifs );
   conv.Read(&mol, &ifs);
 
+  OBIsomorphismMapper::Mappings maps; 
+
   // First of all, how many automorphisms are there without any mask?
   // This takes about 20 seconds, so you may want to comment this out while debugging
-  OBIsomorphismMapper::Mappings maps = FindAutomorphisms(&mol);
+  maps = FindAutomorphisms(&mol);
   cout << maps.size() << endl;
   OB_ASSERT( maps.size() == 4 );
 
@@ -146,6 +148,14 @@ void testAutomorphismMask() {
   cout << maps.size() << endl;
   OB_ASSERT( maps.size() == 8 );
 
+  // Verify that atom Id 6 does not occur anywhere in the mappings
+  OBIsomorphismMapper::Mappings::const_iterator a;
+  OBIsomorphismMapper::Mapping::const_iterator b;
+  for (a = maps.begin(); a != maps.end(); ++a)
+    for (b = a->begin(); b!= a->end(); ++b) {
+      OB_ASSERT( b->first != 6 );
+      OB_ASSERT( b->second != 6 );
+    }
 }
 
 int main() 
