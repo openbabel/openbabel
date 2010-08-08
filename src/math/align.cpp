@@ -37,6 +37,7 @@ namespace OpenBabel
     _ready = false;
     _symmetry = symmetry;
     _includeH = includeH;
+    _prefmol = 0;
   }
 
   OBAlign::OBAlign(const vector<vector3> &ref, const vector<vector3> &target)
@@ -44,6 +45,7 @@ namespace OpenBabel
     SetRef(ref);
     SetTarget(target);
     _symmetry = false;
+    _prefmol = 0;
   }
 
   OBAlign::OBAlign(const OBMol &refmol, const OBMol &targetmol, bool includeH, bool symmetry) {
