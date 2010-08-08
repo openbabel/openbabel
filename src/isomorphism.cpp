@@ -484,6 +484,26 @@ namespace OpenBabel {
     OBIsomorphismMapper::Mappings maps = mapper->MapAll(mol, queriedMask);
     delete mapper;
     delete query;
+
+    // translate the query indexes if a mask is used
+    if (mask.CountBits()) {
+      std::vector<unsigned int> indexes;
+      unsigned int offset = 0;
+      for (unsigned int i = 0; i < mol->NumAtoms(); ++i)
+        if (queriedMask.BitIsSet(i + 1))
+          indexes.push_back(i);
+
+      OBIsomorphismMapper::Mappings translatedMaps;
+      for (OBIsomorphismMapper::Mappings::iterator map = maps.begin(); map != maps.end(); map++) {
+        OBIsomorphismMapper::Mapping m;
+        for (OBIsomorphismMapper::Mapping::iterator i = map->begin(); i != map->end(); i++)
+          m[indexes[i->first]] = i->second;
+        translatedMaps.push_back(m);
+      }
+
+      return translatedMaps;
+    }
+
     return maps;
   }
 
