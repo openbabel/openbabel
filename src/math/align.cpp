@@ -136,7 +136,7 @@ namespace OpenBabel
     SetTarget(_targetmol_coords);
   }
 
-  void OBAlign::SimpleAlign(Eigen::MatrixXd &mtarget)
+  void OBAlign::SimpleAlign(const Eigen::MatrixXd &mtarget)
   {
     // Covariance matrix C = X times Y(t)
     Eigen::Matrix3d C = _mref * mtarget.transpose();

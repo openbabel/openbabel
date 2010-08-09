@@ -162,7 +162,7 @@ namespace OpenBabel
     Eigen::MatrixXd _mref, _mtarget;
     void VectorsToMatrix(const vector<vector3> *pcoords, Eigen::MatrixXd &coords);
     Eigen::Vector3d MoveToOrigin(Eigen::MatrixXd &coords);
-    void SimpleAlign(Eigen::MatrixXd &mtarget);
+    void SimpleAlign(const Eigen::MatrixXd &mtarget);
     // Generate a mapping from the permutation map to the index of
     // correct column in _mtarget. Need to handle the fact that the
     // permutation group contains non-fragment atoms.
