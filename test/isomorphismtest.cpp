@@ -158,6 +158,31 @@ void testAutomorphismMask() {
     }
 }
 
+void testAutomorphismMask2()
+{
+  // This is suspiciously slow for a molecule with a single automorphism
+  // The test molecule is progesterone, a steroid (four fused non-planar rings)
+
+  cout <<  "testAutomorphismMask2" << endl;
+  OBMol mol;
+  OBConversion conv;
+
+  conv.SetInFormat("sdf");
+  std::ifstream ifs(GetFilename("progesterone.sdf").c_str());
+  OB_REQUIRE( ifs );
+  OB_REQUIRE( conv.Read(&mol, &ifs) );
+  
+  vector<map<unsigned int, unsigned int> > _aut;
+  OBBitVec _frag_atoms;
+  FOR_ATOMS_OF_MOL(a, mol) {
+    if(!(a->IsHydrogen()))
+      _frag_atoms.SetBitOn(a->GetIndex());
+  }
+  _aut = FindAutomorphisms((OBMol*)&mol, _frag_atoms);
+  OB_ASSERT( _aut.size() == 1 );
+
+}
+
 int main() 
 {
   // Define location of file formats for testing
@@ -170,7 +195,8 @@ int main()
   testIsomorphism1();
   testIsomorphism2();
   testIsomorphismMask();
-  testAutomorphismMask(); 
+  testAutomorphismMask();
+  testAutomorphismMask2(); 
 
   return 0;
 }
