@@ -1,3 +1,8 @@
+2010-08-09 Chris Morley
+
+	* src/mcdlutil.cpp: fix to bug #3041650 (2D coordinates with
+	disconnected molecules), provided by Sergei Trepalin.
+
 2010-08-09  Noel O'Boyle
 
 	* test/aligntest.cpp: Enable all parts of the alignment test

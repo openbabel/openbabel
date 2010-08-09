@@ -5810,6 +5810,8 @@ void TemplateRedraw::redrawFine(TSimpleMolecule& smIn) {
   for (i=0; i<smCopy.nAtoms(); i++) smCopy.getAtom(i)->anum=intToStr(i);
   
   for (i=0; i<smCopy.nAtoms(); i++) atomTested[i]=0;
+
+  bool testSingleAtom=false;
   for (i=0; i<smCopy.nAtoms(); i++) if (atomTested[i] == 0) {
     smCopy.makeFragment(w,atomList,i,-1);
     for (j=0; j<w; j++) {
@@ -5818,9 +5820,25 @@ void TemplateRedraw::redrawFine(TSimpleMolecule& smIn) {
     };
     sm=smCopy.extractFragment(i,NULL);
     sm->defineAtomConn();
+	if ((i == 0) && (sm->nAtoms() == 1)) testSingleAtom=true;
     molList.push_back(sm);
   };
-
+  //Bug conversion reported by Chris 08.08.2010-Illegal Atomic Coordinates. Reason-zero bond length for single atom
+  if (testSingleAtom  && (molList.size() > 1)) {
+    n=-1;
+	for (frCount=0; frCount<molList.size(); frCount++) {
+      sm=(TEditedMolecule *)molList[frCount];
+	  if (sm->nAtoms() > 1) {
+        n=frCount;
+		break;
+	  };
+	};
+	if (n > 0) {
+      sm=(TEditedMolecule *)molList[n];
+      molList[n]=molList[0];
+	  molList[0]=sm;
+	};
+  };
 
   int qq=0;
 
@@ -7350,4 +7368,5 @@ void implementBondStereo(const std::vector<int> iA1, const std::vector<int> iA2,
 
 //! \file mcdlutil.cpp
 //! utilities for mcdl format, might be useful for another
+
 
