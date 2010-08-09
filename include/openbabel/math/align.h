@@ -147,7 +147,9 @@ namespace OpenBabel
     bool _symmetry;
     bool _includeH;
     double _rmsd;
-    OBIsomorphismMapper::Mappings _aut;
+    OBBitVec _frag_atoms;
+    // OBIsomorphismMapper::Mappings _aut;
+    vector<map<unsigned int, unsigned int> > _aut;
     const OBMol* _prefmol;
     const OBMol* _ptargetmol;
     Eigen::MatrixXd _rotMatrix;
@@ -161,6 +163,13 @@ namespace OpenBabel
     void VectorsToMatrix(const vector<vector3> *pcoords, Eigen::MatrixXd &coords);
     Eigen::Vector3d MoveToOrigin(Eigen::MatrixXd &coords);
     void SimpleAlign(Eigen::MatrixXd &mtarget);
+    // Generate a mapping from the permutation map to the index of
+    // correct column in _mtarget. Need to handle the fact that the
+    // permutation group contains non-fragment atoms.
+    // For example, map(213465) will be converted to newidx(102354).
+    // If the atom with Idx=3 is not in the fragment, it will be
+    // converted to newidx(10X243) instead.
+    vector<unsigned int> _newidx;
   };
 }
 

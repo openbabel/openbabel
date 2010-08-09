@@ -1,3 +1,11 @@
+2010-08-09  Noel O'Boyle
+
+	* test/aligntest.cpp: Enable all parts of the alignment test
+	* src/math/align.cpp, include/openbabel/math/align.h: Use Tim's work
+	on masked isomorphisms. Small speedups in caching and matrix code.
+
+	All of the alignment tests now pass and do so quickly.
+
 2010-08-03  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* scripts/CMakeLists.txt: Patch from Wayne Volkmuth to fix use of

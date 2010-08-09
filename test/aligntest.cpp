@@ -37,6 +37,7 @@ void test_simpleAlign()
   // Align dc to dc
   target[0] = d; target[1] = c;
   OBAlign align(ref, target);
+
   align.Align();
   result = align.GetAlignment();
   OB_ASSERT( result[0].IsApprox(ref[0], 1.0E-08) );
@@ -226,7 +227,6 @@ void test_alignWithoutHydrogens() {
   result = align.GetAlignment();
   OB_ASSERT( result.size() == mol.NumAtoms() );
   OB_ASSERT( result.at(0).IsApprox( mol.GetAtom(1)->GetVector(), 1.0E-8 ) );
-
 }
 
 void test_alignWithSymWithoutHydrogens() {
@@ -276,14 +276,14 @@ int main()
   #endif  
 
   test_simpleAlign();
-  
+
   test_RMSD();
 
-//  test_alignMol();
+  test_alignMol();
 
   test_alignMolWithSym();
 
-//  test_alignWithoutHydrogens();
+  test_alignWithoutHydrogens();
 
   test_alignWithSymWithoutHydrogens();
 
