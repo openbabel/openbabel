@@ -94,7 +94,7 @@ namespace OpenBabel {
   // Destructor
   OBGraphSym::~OBGraphSym()
   {
-    // Nothing to do
+    delete d;
   }
 
   const unsigned int OBGraphSym::NoSymmetryClass = 0x7FFFFFFF;
