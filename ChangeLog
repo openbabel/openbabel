@@ -1,3 +1,10 @@
+2010-08-10  Noel O'Boyle
+
+	* src/builder.cpp, include/openbabel/builder.h: Add a Set/Unset method
+	for keeprings. This allows the user to keep the ring conformation from
+	the input molecule (this only makes sense if it's a 3D structure to
+	begin with). 
+
 2010-08-09 Chris Morley
 
 	* src/mcdlutil.cpp: fix to bug #3041650 (2D coordinates with

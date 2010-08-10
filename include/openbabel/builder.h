@@ -37,6 +37,33 @@ namespace OpenBabel
   class OBAPI OBBuilder {
     public:
 
+      OBBuilder(): _keeprings(false) {}
+
+      ///@name Call the build algorithm
+      //@{
+      /*! The mol object contains all connectivity information (atomic numbers, bonds, bond orders, ..) 
+       *  but no 3D coordinates. Build generates these coordinates and assigns them.
+       *  \param mol Molecule with the connectivity (from smiles for example). The coordinates are also
+       *         changed in this mol.
+       */    
+      bool Build(OBMol &mol);
+      //@}
+
+      ///@name Setup build parameters
+      //@{
+      /*! If the molecule already contains 3D coordinates, if you set KeepRings to true it will use
+       *  retain the 3D coordinates of the rings. By default KeepRings is false, and ring conformations
+       *  are obtained by lookup in a library of ring conformers. However, since the ring conformer library
+       *  is not exhaustive, if the ring system is not found in the library, the resulting 3D structure can
+       *  be poor, and require geometry optimisation before it is reasonable. If your starting point is
+       *  a 3D structure, you can set KeepRings to true, and the conformation will be taken from the input.
+       *  The remaining (acyclic) bonds will still all be built by the builder.
+       */
+      void SetKeepRings() { _keeprings = true; }
+      void UnsetKeepRings() { _keeprings = false; }
+      //@}
+
+
       //! Load fragment info from file, if is it has not already been done
       void LoadFragments();
 
@@ -46,12 +73,7 @@ namespace OpenBabel
        */  
       static vector3 GetNewBondVector(OBAtom *atom);
       static vector3 GetNewBondVector(OBAtom *atom, double length);
-      /*! The mol object contains all connectivity information (atomic numbers, bonds, bond orders, ..) 
-       *  but no 3D coordinates. Build generates these coordinates and assigns them.
-       *  \param mol Molecule with the connectivity (from smiles for example). The coordinates are also
-       *         changed in this mol.
-       */    
-      bool Build(OBMol &mol);
+
       /*! Atoms a and b are part of two fragments that are not connected in mol.
        *  Connect will translate and rotate the fragment that contains b so that
        *  a and b are seperated by a bond. This bond is also added.
@@ -139,6 +161,7 @@ namespace OpenBabel
       static bool FixRingStereo(std::vector<std::pair<OBStereo::Ref, bool> > atomIds,
                                 OBMol &mol, OBStereo::Refs &unfixedcenters);
       static void AddRingNbrs(OBBitVec &fragment, OBAtom *atom, OBMol &mol);
+      bool _keeprings;
   }; // class OBBuilder
 
 }// namespace OpenBabel

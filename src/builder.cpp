@@ -857,20 +857,34 @@ namespace OpenBabel
     if (workMol.GetDimension() == 2)
       workMol.SetDimension(0);
 
-    // How many ring atoms are there?
+    // Count the number of ring atoms.
     int ratoms = 0;
     FOR_ATOMS_OF_MOL(a, mol)
-      if (a->IsInRing())
+      if (a->IsInRing()) {
         ratoms++;
+        if (_keeprings) // Mark these as fragments
+          vfrag.SetBitOn(a->GetIdx());
+      }
     
-    // delete all bonds in the working molecule
-    // we will add them back at the end
-    while (workMol.NumBonds())
-      workMol.DeleteBond(workMol.GetBond(0));
+    if (_keeprings) {
+      // Delete all non-ring bonds
+      std::vector<OBBond*> for_deletion;
+      FOR_BONDS_OF_MOL(b, workMol)
+        if (!b->IsInRing())
+          for_deletion.push_back(&(*b));
+      for(std::vector<OBBond*>::iterator it=for_deletion.begin(); it!=for_deletion.end(); ++it) {
+        workMol.DeleteBond(*it);
+      }
+    }
+    else
+      // Delete all bonds in the working molecule
+      // (we will add them back at the end)
+      while (workMol.NumBonds())
+        workMol.DeleteBond(workMol.GetBond(0));
     
     workMol.SetHybridizationPerceived();
-    
-    if (ratoms) {
+
+    if (ratoms && !_keeprings) {
       //datafile is read only on first use of Build()
       if(_fragments.empty())
         LoadFragments();
