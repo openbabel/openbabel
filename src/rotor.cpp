@@ -42,10 +42,12 @@ namespace OpenBabel
   bool OBRotorList::Setup(OBMol &mol)
   {
     Clear();
+    // find the rotatable bonds
     FindRotors(mol);
     if (!Size())
       return(false);
 
+    // set the atoms that should be evaluated when this rotor changes
     SetEvalAtoms(mol);
     AssignTorVals(mol);
 
@@ -67,58 +69,81 @@ namespace OpenBabel
 
   bool OBRotorList::FindRotors(OBMol &mol)
   {
+    // Find ring atoms & bonds, ring bonds are not rotatable
+    // and will be ignored.
+    // This function will set OBBond::IsRotor().
     mol.FindRingAtomsAndBonds();
-    vector<int> gtd;
-    mol.GetGTDVector(gtd);
 
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::FindRotors", obAuditMsg);
 
-    OBBond *bond;
+    //
+    // Score the bonds using the graph theoretical distance (GTD).
+    // The GTD is the distance from atom i to every other atom j.
+    // Atoms on the "inside" of the molecule will have a lower GTD
+    // value than atoms on the "outside"
+    //
+    // The scoring will rank "inside" bonds first.
+    //
+    vector<int> gtd;
+    mol.GetGTDVector(gtd);
+    // compute the scores
     vector<OBBond*>::iterator i;
     vector<pair<OBBond*,int> > vtmp;
+    for (OBBond *bond = mol.BeginBond(i);bond;bond = mol.NextBond(i)) {
+      // check if the bond is in a ring
+      if (bond->IsRotor()) {
+        // check if the bond is fixed (using deprecated fixed atoms or new fixed bonds)
+        if ((HasFixedAtoms() || HasFixedBonds()) && IsFixedBond(bond))
+          continue;
+        // compute the GTD bond score as sum of atom GTD scores
+        int score = gtd[bond->GetBeginAtomIdx()-1] + gtd[bond->GetEndAtomIdx()-1];
+        vtmp.push_back(pair<OBBond*,int> (bond,score));
+      }
+    }
 
-    int score;
-    for (bond = mol.BeginBond(i);bond;bond = mol.NextBond(i))
-      if (bond->IsRotor())
-        {
-          if (HasFixedAtoms() && IsFixedBond(bond))
-            continue;
-          score = gtd[bond->GetBeginAtomIdx()-1] +
-            gtd[bond->GetEndAtomIdx()-1];
-          vtmp.push_back(pair<OBBond*,int> (bond,score));
-        }
-
+    // sort the rotatable bonds by GTD score
     sort(vtmp.begin(),vtmp.end(),CompareRotor);
 
-    OBRotor *rotor;
-    int count;
+    // create rotors for the bonds
+    int count = 0;
     vector<pair<OBBond*,int> >::iterator j;
-    for (j = vtmp.begin(),count=0;j != vtmp.end();++j,++count)
-      {
-        rotor = new OBRotor;
-        rotor->SetBond((*j).first);
-        rotor->SetIdx(count);
-        rotor->SetNumCoords(mol.NumAtoms()*3);
-        _rotor.push_back(rotor);
-      }
+    for (j = vtmp.begin(); j != vtmp.end(); ++j, ++count) {
+      OBRotor *rotor = new OBRotor;
+      rotor->SetBond((*j).first);
+      rotor->SetIdx(count);
+      rotor->SetNumCoords(mol.NumAtoms()*3);
+      _rotor.push_back(rotor);
+    }
 
-    return(true);
+    return true;
   }
 
   bool OBRotorList::IsFixedBond(OBBond *bond)
   {
+    if (_fixedatoms.Empty() && _fixedbonds.Empty())
+      return false;
+
+    // new fixed bonds
+    if (!_fixedbonds.Empty()) {
+      return _fixedbonds.BitIsSet(bond->GetIdx());
+    }
+
+    if (_fixedatoms.Empty())
+      return false;
+
+    // deprecated fixed atoms
     OBAtom *a1,*a2,*a3;
     vector<OBBond*>::iterator i;
 
     a1 = bond->GetBeginAtom();
     a2 = bond->GetEndAtom();
-    if (!_fix[a1->GetIdx()] || !_fix[a2->GetIdx()])
+    if (!_fixedatoms[a1->GetIdx()] || !_fixedatoms[a2->GetIdx()])
       return(false);
 
     bool isfixed=false;
     for (a3 = a1->BeginNbrAtom(i);a3;a3 = a1->NextNbrAtom(i))
-      if (a3 != a2 && _fix[a3->GetIdx()])
+      if (a3 != a2 && _fixedatoms[a3->GetIdx()])
         {
           isfixed = true;
           break;
@@ -129,7 +154,7 @@ namespace OpenBabel
 
     isfixed = false;
     for (a3 = a2->BeginNbrAtom(i);a3;a3 = a2->NextNbrAtom(i))
-      if (a3 != a1 && _fix[a3->GetIdx()])
+      if (a3 != a1 && _fixedatoms[a3->GetIdx()])
         {
           isfixed = true;
           break;
@@ -377,7 +402,7 @@ namespace OpenBabel
                 a1 = mol.GetAtom(j);
                 for (a2 = a1->BeginNbrAtom(k);a2;a2 = a1->NextNbrAtom(k))
                   if (!eval[a2->GetIdx()])
-                    if (!((OBBond*)*k)->IsRotor()||(HasFixedAtoms()&&IsFixedBond((OBBond*)*k)))
+                    if (!((OBBond*)*k)->IsRotor()||((HasFixedAtoms()||HasFixedBonds())&&IsFixedBond((OBBond*)*k)))
                       {
                         next.SetBitOn(a2->GetIdx());
                         eval.SetBitOn(a2->GetIdx());
@@ -403,56 +428,58 @@ namespace OpenBabel
 
   bool OBRotorList::AssignTorVals(OBMol &mol)
   {
-    OBBond *bond;
-    OBRotor *rotor;
     vector<OBRotor*>::iterator i;
+    for (i = _rotor.begin(); i != _rotor.end(); ++i) {
+      OBRotor *rotor = *i;
+      OBBond *bond = rotor->GetBond();
 
-    int ref[4];
-    double delta;
-    vector<double> res;
-    vector<int> itmp1;
-    vector<int>::iterator j;
-    for (i = _rotor.begin();i != _rotor.end();++i)
-      {
-        rotor=*i;
-        bond = rotor->GetBond();
-        _rr.GetRotorIncrements(mol,bond,ref,res,delta);
-        rotor->SetTorsionValues(res);
-        rotor->SetDelta(delta);
+      // query the rotor database
+      int ref[4];
+      vector<double> angles;
+      double delta;
+      _rr.GetRotorIncrements(mol, bond, ref, angles, delta);
+      rotor->SetTorsionValues(angles);
+      rotor->SetDelta(delta);
 
-        mol.FindChildren(itmp1,ref[1],ref[2]);
-        if (itmp1.size()+1 > mol.NumAtoms()/2)
-          {
-            itmp1.clear();
-            mol.FindChildren(itmp1,ref[2],ref[1]);
-            swap(ref[0],ref[3]);
-            swap(ref[1],ref[2]);
-          }
-
-        for (j = itmp1.begin();j != itmp1.end();++j)
-          *j = ((*j)-1)*3;
-        rotor->SetRotAtoms(itmp1);
-        rotor->SetDihedralAtoms(ref);
+      // Find the smallest set of atoms to rotate. There are two candidate sets,
+      // one on either side of the bond. If the first tried set size plus one is
+      // larger than half of the number of atoms, the other set is smaller and the
+      // rotor atom indexes are inverted (.i.e. a-b-c-d -> d-c-b-a).
+      vector<int> atoms;
+      vector<int>::iterator j;
+      // find all atoms for which there is a path to ref[2] without goinf through ref[1]
+      mol.FindChildren(atoms, ref[1], ref[2]);
+      if (atoms.size() + 1 > mol.NumAtoms() / 2) {
+        atoms.clear();
+        // select the other smaller set
+        mol.FindChildren(atoms, ref[2], ref[1]);
+        // invert the rotor
+        swap(ref[0],ref[3]);
+        swap(ref[1],ref[2]);
       }
 
-    return(true);
+      // translate the rotate atom indexes to coordinate indexes (i.e. from 0, multiplied by 3)
+      for (j = atoms.begin(); j != atoms.end(); ++j)
+        *j = ((*j) - 1) * 3;
+      // set the rotate atoms and dihedral atom indexes
+      rotor->SetRotAtoms(atoms);
+      rotor->SetDihedralAtoms(ref);
+    }
+
+    return true;
   }
 
   bool OBRotorList::SetRotAtoms(OBMol &mol)
   {
     OBRotor *rotor;
-    vector<int> rotatoms,dihed;
+    vector<int> rotatoms;
     vector<OBRotor*>::iterator i;
 
     int ref[4];
     vector<int>::iterator j;
     for (rotor = BeginRotor(i);rotor;rotor = NextRotor(i))
       {
-        dihed = rotor->GetDihedralAtoms();
-        ref[0] = dihed[0]/3+1;
-        ref[1] = dihed[1]/3+1;
-        ref[2] = dihed[2]/3+1;
-        ref[3] = dihed[3]/3+1;
+        rotor->GetDihedralAtoms(ref);
 
         mol.FindChildren(rotatoms,ref[1],ref[2]);
         if (rotatoms.size()+1 > mol.NumAtoms()/2)
@@ -476,24 +503,20 @@ namespace OpenBabel
   {
     int ref[4];
     OBRotor *rotor;
-    vector<int> rotatoms,dihed;
+    vector<int> rotatoms;
     vector<int>::iterator j;
     vector<OBRotor*>::iterator i;
 
-    GetDFFVector(mol,_dffv,_fix);
+    GetDFFVector(mol,_dffv,_fixedatoms);
 
     for (rotor = BeginRotor(i);rotor;rotor = NextRotor(i))
       {
         rotatoms.clear();
-        dihed = rotor->GetDihedralAtoms();
-        ref[0] = dihed[0]/3+1;
-        ref[1] = dihed[1]/3+1;
-        ref[2] = dihed[2]/3+1;
-        ref[3] = dihed[3]/3+1;
+        rotor->GetDihedralAtoms(ref);
 
-        if (_fix[ref[1]] && _fix[ref[2]])
+        if (_fixedatoms[ref[1]] && _fixedatoms[ref[2]])
           {
-            if (!_fix[ref[0]])
+            if (!_fixedatoms[ref[0]])
               {
                 swap(ref[0],ref[3]);
                 swap(ref[1],ref[2]);
@@ -577,8 +600,6 @@ namespace OpenBabel
 
   OBRotor::OBRotor()
   {
-    _delta = 10.0;
-    _rotatoms = NULL;
   }
 
   double OBRotor::CalcTorsion(double *c)
@@ -632,40 +653,13 @@ namespace OpenBabel
 
   double OBRotor::CalcBondLength(double *c)
   {
-    double dx,dy,dz;
-
-    dx = c[_torsion[1]] - c[_torsion[2]];
+    // compute the difference
+    double dx, dy, dz;
+    dx = c[_torsion[1]  ] - c[_torsion[2]  ];
     dy = c[_torsion[1]+1] - c[_torsion[2]+1];
     dz = c[_torsion[1]+2] - c[_torsion[2]+2];
-    return(sqrt(SQUARE(dx)+SQUARE(dy)+SQUARE(dz)));
-  }
-
-  void OBRotor::Precalc(vector<double*> &cv)
-  {
-    double *c,ang;
-    vector<double*>::iterator i;
-    vector<double>::iterator j;
-    vector<double> cs,sn,t;
-    for (i = cv.begin();i != cv.end();++i)
-      {
-        c = *i;
-        cs.clear();
-        sn.clear();
-        t.clear();
-        ang = CalcTorsion(c);
-
-        for (j = _res.begin();j != _res.end();++j)
-          {
-            cs.push_back(cos(*j-ang));
-            sn.push_back(sin(*j-ang));
-            t.push_back(1 - cos(*j-ang));
-          }
-
-        _cs.push_back(cs);
-        _sn.push_back(sn);
-        _t.push_back(t);
-        _invmag.push_back(1.0/CalcBondLength(c));
-      }
+    // compute the length
+    return sqrt(SQUARE(dx) + SQUARE(dy) + SQUARE(dz));
   }
 
 
@@ -674,9 +668,9 @@ namespace OpenBabel
     double ang,sn,cs,t,dx,dy,dz,mag;
 
     if (prev == -1)
-      ang = _res[idx] - CalcTorsion(c);
+      ang = _torsionAngles[idx] - CalcTorsion(c);
     else
-      ang = _res[idx] - _res[prev];
+      ang = _torsionAngles[idx] - _torsionAngles[prev];
 
     sn = sin(ang);
     cs = cos(ang);
@@ -690,37 +684,38 @@ namespace OpenBabel
     Set(c,sn,cs,t,1.0/mag);
   }
 
-  void OBRotor::Precompute(double *c)
+  // used in combination with Set(double *coordinates, int idx)
+  void OBRotor::Precompute(double *coordinates)
   {
-    double dx,dy,dz;
-    dx = c[_torsion[1]]   - c[_torsion[2]];
-    dy = c[_torsion[1]+1] - c[_torsion[2]+1];
-    dz = c[_torsion[1]+2] - c[_torsion[2]+2];
-    _imag = 1.0/sqrt(SQUARE(dx) + SQUARE(dy) + SQUARE(dz));
-
-    _refang = CalcTorsion(c);
+    _imag = 1.0 / CalcBondLength(coordinates);
+    _refang = CalcTorsion(coordinates);
   }
 
-  void OBRotor::Set(double *c,int idx)
+  // used in combination with Precompute(double *coordinates)
+  void OBRotor::Set(double *coordinates, int idx)
   {
     double ang,sn,cs,t;
 
-    ang = _res[idx] - _refang;
+    // compute the rotation angle
+    ang = _torsionAngles[idx] - _refang;
+    // compute some values for the rotation matrix
     sn = sin(ang);
     cs = cos(ang);
-    t = 1-cs;
+    t = 1 - cs;
 
     double x,y,z,tx,ty,tz,m[9];
 
-    x = c[_torsion[1]]   - c[_torsion[2]];
-    y = c[_torsion[1]+1] - c[_torsion[2]+1];
-    z = c[_torsion[1]+2] - c[_torsion[2]+2];
+    // compute the bond vector
+    x = coordinates[_torsion[1]]   - coordinates[_torsion[2]];
+    y = coordinates[_torsion[1]+1] - coordinates[_torsion[2]+1];
+    z = coordinates[_torsion[1]+2] - coordinates[_torsion[2]+2];
 
+    // normalize the bond vector
     x *= _imag;
     y *= _imag;
-    z *= _imag; //normalize the rotation vector
+    z *= _imag;
 
-    //set up the rotation matrix
+    // set up the rotation matrix
     tx = t*x;
     ty = t*y;
     tz = t*z;
@@ -737,24 +732,54 @@ namespace OpenBabel
     //
     //now the matrix is set - time to rotate the atoms
     //
-    tx = c[_torsion[1]];
-    ty = c[_torsion[1]+1];
-    tz = c[_torsion[1]+2];
+    tx = coordinates[_torsion[1]];
+    ty = coordinates[_torsion[1]+1];
+    tz = coordinates[_torsion[1]+2];
     int i,j;
-    for (i = 0;i < _size;++i)
+    for (i = 0; i < _rotatoms.size(); ++i)
       {
         j = _rotatoms[i];
-        c[j] -= tx;
-        c[j+1] -= ty;
-        c[j+2]-= tz;
-        x = c[j]*m[0] + c[j+1]*m[1] + c[j+2]*m[2];
-        y = c[j]*m[3] + c[j+1]*m[4] + c[j+2]*m[5];
-        z = c[j]*m[6] + c[j+1]*m[7] + c[j+2]*m[8];
-        c[j] = x+tx;
-        c[j+1] = y+ty;
-        c[j+2] = z+tz;
+        coordinates[j] -= tx;
+        coordinates[j+1] -= ty;
+        coordinates[j+2]-= tz;
+        x = coordinates[j]*m[0] + coordinates[j+1]*m[1] + coordinates[j+2]*m[2];
+        y = coordinates[j]*m[3] + coordinates[j+1]*m[4] + coordinates[j+2]*m[5];
+        z = coordinates[j]*m[6] + coordinates[j+1]*m[7] + coordinates[j+2]*m[8];
+        coordinates[j] = x+tx;
+        coordinates[j+1] = y+ty;
+        coordinates[j+2] = z+tz;
       }
   }
+
+  // used in combination with Set
+  void OBRotor::Precalc(vector<double*> &cv)
+  {
+    double *c,ang;
+    vector<double*>::iterator i;
+    vector<double>::iterator j;
+    vector<double> cs,sn,t;
+    for (i = cv.begin();i != cv.end();++i)
+      {
+        c = *i;
+        cs.clear();
+        sn.clear();
+        t.clear();
+        ang = CalcTorsion(c);
+
+        for (j = _torsionAngles.begin();j != _torsionAngles.end();++j)
+          {
+            cs.push_back(cos(*j-ang));
+            sn.push_back(sin(*j-ang));
+            t.push_back(1 - cos(*j-ang));
+          }
+
+        _cs.push_back(cs);
+        _sn.push_back(sn);
+        _t.push_back(t);
+        _invmag.push_back(1.0/CalcBondLength(c));
+      }
+  }
+
 
   void OBRotor::Set(double *c,double sn,double cs,double t,double invmag)
   {
@@ -791,7 +816,7 @@ namespace OpenBabel
     ty = c[_torsion[1]+1];
     tz = c[_torsion[1]+2];
     int i,j;
-    for (i = 0;i < _size;++i)
+    for (i = 0; i < _rotatoms.size(); ++i)
       {
         j = _rotatoms[i];
         c[j] -= tx;
@@ -810,10 +835,10 @@ namespace OpenBabel
   {
     vector<double>::iterator i;
     vector<double> tv;
-    if (_res.size() == 1)
+    if (_torsionAngles.size() == 1)
       return;
 
-    for (i = _res.begin();i != _res.end();++i)
+    for (i = _torsionAngles.begin();i != _torsionAngles.end();++i)
       if (*i >= 0.0)
         {
           if (fold == 2 && *i < DEG_TO_RAD*180.0)
@@ -824,14 +849,33 @@ namespace OpenBabel
 
     if (tv.empty())
       return;
-    _res = tv;
+    _torsionAngles = tv;
+  }
+
+  void OBRotor::SetDihedralAtoms(std::vector<int> &ref)
+  {
+    if (ref.size() != 4)
+      return;
+    // copy indexes starting from 1
+    _ref.resize(4);
+    for (int i = 0;i < 4;++i)
+      _ref[i] = ref[i];
+    _torsion.resize(4);
+    // convert the indexes (start from 0, multiplied by 3) for easy access to coordinates
+    _torsion[0] = (ref[0]-1)*3;
+    _torsion[1] = (ref[1]-1)*3;
+    _torsion[2] = (ref[2]-1)*3;
+    _torsion[3] = (ref[3]-1)*3;
   }
 
   void OBRotor::SetDihedralAtoms(int ref[4])
   {
+    // copy indexes starting from 1
+    _ref.resize(4);
     for (int i = 0;i < 4;++i)
       _ref[i] = ref[i];
     _torsion.resize(4);
+    // convert the indexes (start from 0, multiplied by 3) for easy access to coordinates
     _torsion[0] = (ref[0]-1)*3;
     _torsion[1] = (ref[1]-1)*3;
     _torsion[2] = (ref[2]-1)*3;
@@ -840,11 +884,7 @@ namespace OpenBabel
 
   void OBRotor::SetRotAtoms(vector<int> &vi)
   {
-    if (_rotatoms)
-      delete [] _rotatoms;
-    _rotatoms = new int [vi.size()];
-    copy(vi.begin(),vi.end(),_rotatoms);
-    _size = vi.size();
+    _rotatoms = vi;
   }
 
   //***************************************

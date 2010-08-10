@@ -184,6 +184,28 @@ namespace OpenBabel {
        */
       bool Setup(const OBMol &mol, int numConformers = 30, int numChildren = 5, 
           int mutability = 5, int convergence = 25);
+      /**
+       * Set the number of conformers.
+       */
+      void SetNumConformers(int numConformers) { m_numConformers = numConformers; }
+      /**
+       * Set the number of children generated for each parent.
+       */
+      void SetNumChildren(int numChildren) { m_numChildren = numChildren; }
+      /**
+       * Set the mutability.
+       */
+      void SetMutability(int mutability) { m_mutability = mutability; }
+      /**
+       * Set the convergence (i.e. number of generations that did not change the score
+       * before considering the iteration converged).
+       */
+      void SetConvergence(int convergence) { m_convergence = convergence; }
+      /**
+       * Set the bonds to be fixed.
+       */
+      void SetFixedBonds(const OBBitVec &fixedBonds) { m_fixedBonds = fixedBonds; }
+
 
       /**
        * Set the filter method used to check if a newly generated is acceptable. Typical
@@ -247,6 +269,7 @@ namespace OpenBabel {
       int m_mutability; //!< The mutability for generating the next generation
       int m_convergence; //!< Number of generations that remain unchanged before quiting
 
+      OBBitVec      m_fixedBonds; //!< Bonds that are fixed
       OBMol         m_mol; //!< The molecule with starting coordinates
       OBRotorList   m_rotorList; //!< The OBRotorList for the molecule
       RotorKeys     m_rotorKeys; //!< The current population

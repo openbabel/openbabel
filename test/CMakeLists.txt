@@ -15,6 +15,7 @@ set(tests
     graphsym
     lssr
     isomorphism
+    rotor
     smiles
     sdfcansmi
     spectrophore

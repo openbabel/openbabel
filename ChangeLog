@@ -1,3 +1,13 @@
+2010-08-10 Tim Vandermeersch
+
+	* include/openbabel/rotor.h, src/rotor.cpp: Add method to fix bonds 
+	and mark fix atoms as deprecated. Update documentation.
+
+	* include/openbabel/conformersearch.h, src/conformersearch.cpp: Use
+	OBAlign with symmetry and update documentation.
+
+	* test/rotortest.cpp: Some OBRotor and OBRotorList unit tests.
+
 2010-08-10  Noel O'Boyle
 
 	* src/builder.cpp, include/openbabel/builder.h: Add a Set/Unset method

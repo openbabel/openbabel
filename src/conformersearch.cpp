@@ -31,9 +31,9 @@ namespace OpenBabel {
         if (mol.GetAtom(a1+1)->IsConnected(mol.GetAtom(a2+1)))
           continue;
         // compute the distance
-        double dx = conformer[a1*3  ] - conformer[a2*3  ]; 
-        double dy = conformer[a1*3+1] - conformer[a2*3+1]; 
-        double dz = conformer[a1*3+2] - conformer[a2*3+2]; 
+        double dx = conformer[a1*3  ] - conformer[a2*3  ];
+        double dy = conformer[a1*3+1] - conformer[a2*3+1];
+        double dz = conformer[a1*3+2] - conformer[a2*3+2];
         double distance = sqrt(dx*dx + dy*dy + dz*dz);
         // check distance
         if (distance < m_cutoff)
@@ -50,7 +50,7 @@ namespace OpenBabel {
   //
   //////////////////////////////////////////////////////////
 
-  double OBRMSDConformerScore::Score(OBMol &mol, unsigned int index, 
+  double OBRMSDConformerScore::Score(OBMol &mol, unsigned int index,
       const RotorKeys &keys, const std::vector<double*> &conformers)
   {
     unsigned int numAtoms = mol.NumAtoms();
@@ -61,7 +61,7 @@ namespace OpenBabel {
     for (unsigned int a = 0; a < numAtoms; ++a)
       vi.push_back(vector3(conformer_i[a*3], conformer_i[a*3+1], conformer_i[a*3+2]));
 
-    OBAlign align;
+    OBAlign align(mol, mol, false, false);
     align.SetRef(vi);
 
     double score_min = 10e10;
@@ -85,11 +85,11 @@ namespace OpenBabel {
         score_min = rmsd;
     }
 
-    // return the lowest RMSD 
+    // return the lowest RMSD
     return score_min;
   }
 
-  double OBEnergyConformerScore::Score(OBMol &mol, unsigned int index, 
+  double OBEnergyConformerScore::Score(OBMol &mol, unsigned int index,
       const RotorKeys &keys, const std::vector<double*> &conformers)
   {
     double *origCoords = mol.GetCoordinates();
@@ -128,15 +128,15 @@ namespace OpenBabel {
     //m_score = static_cast<OBConformerScore*>(new OBEnergyConformerScore());
     m_numConformers = 30;
     m_numChildren = 5;
-    m_mutability = 10; 
+    m_mutability = 10;
   }
-  
+
   OBConformerSearch::~OBConformerSearch()
   {
     delete m_filter;
-    delete m_score;  
+    delete m_score;
   }
- 
+
 
 
 
@@ -154,6 +154,7 @@ namespace OpenBabel {
       return false;
 
     // Initialize the OBRotorList
+    m_rotorList.SetFixedBonds(m_fixedBonds);
     m_rotorList.Setup(m_mol);
     if (!m_rotorList.Size()) { // only one conformer
       return false;
@@ -215,7 +216,7 @@ namespace OpenBabel {
         int tries = 0;
         while (!foundKey) {
           tries++;
-          if (tries > 1000) 
+          if (tries > 1000)
             foundKey = true;
           RotorKey rotorKey = m_rotorKeys[c]; // copy parent gene
           // perform random mutation(s)
@@ -277,7 +278,7 @@ namespace OpenBabel {
       double score = m_score->Score(m_mol, i, m_rotorKeys, conformers);
       conformer_scores.push_back(ConformerScore(m_rotorKeys[i], score));
     }
-    
+
     // delete the conformers
     for (unsigned int i = 0; i < conformers.size(); ++i) {
       delete [] conformers[i];
@@ -331,7 +332,7 @@ namespace OpenBabel {
 
 
 
-  void OBConformerSearch::Search() 
+  void OBConformerSearch::Search()
   {
     int identicalGenerations = 0;
     double last_score = 0.0;
@@ -345,12 +346,12 @@ namespace OpenBabel {
       double score = MakeSelection();
 
       if (IsNear(last_score, score)) {
-        identicalGenerations++;      
+        identicalGenerations++;
         last_score = score;
       } else {
         if (score < last_score) {
           m_rotorKeys = rotorKeys;
-          identicalGenerations++;      
+          identicalGenerations++;
         } else {
           last_score = score;
           identicalGenerations = 0;
@@ -388,7 +389,7 @@ namespace OpenBabel {
       rotamers.AddRotamer(m_rotorKeys[i]);
 
       for (unsigned int j = 1; j < m_rotorKeys[i].size(); ++j)
-        std::cout << m_rotorKeys[i][j] << " "; 
+        std::cout << m_rotorKeys[i][j] << " ";
       std::cout << std::endl;
     }
 
@@ -398,7 +399,7 @@ namespace OpenBabel {
     if (conformers.size())
       mol.SetConformers(conformers);
   }
-     
+
   bool OBConformerSearch::IsUniqueKey(const RotorKeys &keys, const RotorKey &key) const
   {
     for (unsigned int i = 0; i < keys.size(); ++i)
@@ -406,7 +407,7 @@ namespace OpenBabel {
         return false;
     return true;
   }
- 
+
   bool OBConformerSearch::IsGood(const RotorKey &key)
   {
     // Setup OBRotamerList
@@ -419,17 +420,17 @@ namespace OpenBabel {
     std::vector<double*> conformers;
     rotamers.ExpandConformerList(m_mol, conformers);
     double *conformer = conformers[0];
- 
+
     // Execute filter(s)
     bool result = m_filter->IsGood(m_mol, key, conformer);
 
     delete [] conformer;
-    
+
     return result;
   }
 
 
-  /** 
+  /**
    * @example obconformersearch_default.cpp
    *
    */
