@@ -160,9 +160,7 @@ void testAutomorphismMask() {
 
 void testAutomorphismMask2()
 {
-  // This is suspiciously slow for a molecule with a single automorphism
   // The test molecule is progesterone, a steroid (four fused non-planar rings)
-
   cout <<  "testAutomorphismMask2" << endl;
   OBMol mol;
   OBConversion conv;
@@ -176,11 +174,25 @@ void testAutomorphismMask2()
   OBBitVec _frag_atoms;
   FOR_ATOMS_OF_MOL(a, mol) {
     if(!(a->IsHydrogen()))
-      _frag_atoms.SetBitOn(a->GetIndex());
+      _frag_atoms.SetBitOn(a->GetIdx());
   }
   _aut = FindAutomorphisms((OBMol*)&mol, _frag_atoms);
   OB_ASSERT( _aut.size() == 1 );
 
+}
+
+void testAutomorphismPreMapping()
+{
+  cout <<  "testAutomorphismPreMapping" << endl;
+  OBMol mol;
+  OBConversion conv;
+  conv.SetInFormat("smi");
+  conv.ReadString(&mol, "c1(C)c(C)c(C)c(C)c(C)c1");
+
+  vector<map<unsigned int, unsigned int> > aut;
+  aut = FindAutomorphisms((OBMol*)&mol);
+  cout << aut.size() << endl;
+  OB_ASSERT( aut.size() == 2 );
 }
 
 int main() 
@@ -197,6 +209,7 @@ int main()
   testIsomorphismMask();
   testAutomorphismMask();
   testAutomorphismMask2(); 
+  testAutomorphismPreMapping();
 
   return 0;
 }

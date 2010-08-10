@@ -438,16 +438,8 @@ namespace OpenBabel {
       std::vector<unsigned int> symClasses;
   };
 
-  OBQuery* CompileAutomorphismQuery(OBMol *mol, const OBBitVec &mask)
+  OBQuery* CompileAutomorphismQuery(OBMol *mol, const OBBitVec &mask, const std::vector<unsigned int> &symClasses)
   {
-    OBGraphSym gs(mol, (OBBitVec*)&mask);
-    std::vector<unsigned int> symClasses;
-    gs.GetSymmetry(symClasses);
-
-    if (DEBUG)
-    for (unsigned int i = 0; i < symClasses.size(); ++i)
-      cout << i << ": " << symClasses[i] << endl;
-
     OBQuery *query = new OBQuery;
     unsigned int offset = 0;
     std::vector<unsigned int> indexes;
@@ -479,11 +471,47 @@ namespace OpenBabel {
       for (unsigned int i = 0; i < mol->NumAtoms(); ++i)
         queriedMask.SetBitOn(i + 1);
 
-    OBQuery *query = CompileAutomorphismQuery(mol, queriedMask);
-    OBIsomorphismMapper *mapper = OBIsomorphismMapper::GetInstance(query);
-    OBIsomorphismMapper::Mappings maps = mapper->MapAll(mol, queriedMask);
-    delete mapper;
-    delete query;
+    // get the symmetry classes
+    OBGraphSym gs(mol, &queriedMask);
+    std::vector<unsigned int> symClasses;
+    gs.GetSymmetry(symClasses);
+
+    if (DEBUG)
+    for (unsigned int i = 0; i < symClasses.size(); ++i)
+      cout << i << ": " << symClasses[i] << endl;
+
+    // count the symmetry classes
+    std::vector<int> symClassCounts(symClasses.size() + 1, 0);
+    for (unsigned int i = 0; i < symClasses.size(); ++i) {
+      if (!queriedMask.BitIsSet(i + 1))
+        continue;
+      unsigned int symClass = symClasses[i];
+      symClassCounts[symClass]++;
+    }
+    // construct the premap
+    OBIsomorphismMapper::Mapping premap;
+    unsigned int offset = 0;
+    for (unsigned int i = 0; i < symClasses.size(); ++i) {
+      if (!queriedMask.BitIsSet(i + 1)) {
+        offset++;
+        continue;
+      }
+
+      if (symClassCounts[symClasses[i]] == 1)
+        premap[i-offset] = i;
+    }
+
+    OBIsomorphismMapper::Mappings maps;
+    if (premap.size() < queriedMask.CountBits()) {
+      OBQuery *query = CompileAutomorphismQuery(mol, queriedMask, symClasses);
+      OBIsomorphismMapper *mapper = OBIsomorphismMapper::GetInstance(query);
+
+      maps = mapper->MapAll(mol, queriedMask);
+      delete mapper;
+      delete query;
+    } else {
+      maps.push_back(premap);
+    }
 
     // translate the query indexes if a mask is used
     if (mask.CountBits()) {
