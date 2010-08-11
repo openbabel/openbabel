@@ -369,7 +369,6 @@ class TestPybel(TestToolkit):
  4 3 0 0 0
 SMALL
 GASTEIGER
-Energy = 0
 
 @<TRIPOS>ATOM
       1 C           0.0000    0.0000    0.0000 C.3     1  LIG1        0.0000

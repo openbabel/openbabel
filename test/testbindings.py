@@ -32,7 +32,7 @@ except ImportError:
     ob = None
 
 if sys.platform.startswith("win"):
-    pybellocation = os.path.join("..", "..", "..", "scripts", "python")
+    pybellocation = os.path.join(here, "..", "scripts", "python")
 else:
     pybellocation = os.path.join("..", "scripts")
 sys.path = [pybellocation] + sys.path
@@ -61,7 +61,7 @@ class PybelWrapper(PythonBindings):
     def testDummy(self):
         self.assertTrue(pybel is not None, "Failed to import the Pybel module")
         self.assertTrue(os.path.isfile(os.path.join(
-            pybellocation, "pybel.py")), "Pybel module not found")
+            pybellocation, "pybel.py")), "Pybel module not found at %s" % pybellocation)
    
 if __name__ == "__main__":
     unittest.main()
