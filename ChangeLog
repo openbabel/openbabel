@@ -1,3 +1,10 @@
+2010-08-09 Chris Morley
+
+	* src/formats/gaussformat.cpp:Comment out inconsistent use of
+	OBMol::SetEnergy(double).
+	
+	The use of this needs to be agreed.
+	
 2010-08-10 Tim Vandermeersch
 
 	* include/openbabel/rotor.h, src/rotor.cpp: Add method to fix bonds 

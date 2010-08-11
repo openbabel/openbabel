@@ -580,7 +580,7 @@ namespace OpenBabel
             mol.SetEnergy(atof(vs[4].c_str()) * HARTREE_TO_KCAL);
             confEnergies.push_back(mol.GetEnergy());
           }
-
+/* Temporarily commented out until the handling of energy in OBMol is sorted out
         // MP2 energies also use a different syntax
 
         // PM3 energies use a different syntax
@@ -592,7 +592,7 @@ namespace OpenBabel
             mol.SetEnergy(atof(vs[1].c_str()));
             confEnergies.push_back(mol.GetEnergy());
           }
-
+*/
       } // end while
 
     if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
