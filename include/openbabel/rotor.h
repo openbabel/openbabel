@@ -201,7 +201,7 @@ namespace OpenBabel
      */
     inline void SetToAngle(double *coordinates, double setang)
     {
-      double dx,dy,dz,sn,cs,t,ang,mag;
+      double /*dx,dy,dz,*/ sn,cs,t,ang,mag;
       // compute the angle to rotate (radians)
       ang = setang - CalcTorsion(coordinates);
       // if the angle to rotate is too small, we're done
@@ -414,7 +414,7 @@ namespace OpenBabel
     /** @deprecated See SetFixedBonds */
     void SetFixedAtoms(OBBitVec &bv) { _fixedatoms = bv; }
     /** @deprecated */
-    OBBitVec &GetEvalAtoms() { _evalatoms; }
+    OBBitVec &GetEvalAtoms() { return _evalatoms; }
     /** @deprecated */
     void SetEvalAtoms(OBBitVec &bv) { _evalatoms = bv; }
     /** @deprecated */
