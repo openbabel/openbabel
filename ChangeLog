@@ -1,3 +1,19 @@
+2010-08-12 Chris Morley
+
+	* src/ops/opisomorph.cpp: make more robust to errors like a missing
+	file.
+	
+	* src/descriptor.cpp: allow descripor parameters to be in quotes.
+	
+	* src/formats/mdlformat.cpp: change the new -at option to -aT
+	because	FastSearchFormat already uses -at.
+	
+	* src/ops/xout.cpp, src/GUI/OBGUI.cpp: change the name of the op
+	xout to 0xout so that it is executed before other ops.
+	
+	* src/GUI/optswx.cpp(SetOptions): ignore entries with both
+	checkbox and editboxes unless checked.
+
 2010-08-12 Noel O'Boyle
 
 	* src/stereo/perception.cpp: CisTransFrom3D was not able to handle

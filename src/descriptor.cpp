@@ -207,7 +207,18 @@ pair<string,string> OBDescriptor::GetIdentifier(istream& optionText)
       break;
     if(ch=='(') // the parameter is in parentheses
     {
-      if(!getline(optionText, param, ')'))
+      ch = optionText.peek();
+      if(ch=='\"' || ch=='\'')
+      {
+        //parameter is in quotes
+        optionText.ignore(); // skip " or '
+        getline(optionText, param, ch);
+        optionText.ignore(numeric_limits<streamsize>::max(),')');
+      }
+      else
+        getline(optionText, param, ')');
+
+      if(!optionText)
       {
         obErrorLog.ThrowError(__FUNCTION__, "Missing ')' in descriptor parameter", obError, onceOnly);
         descID.clear();

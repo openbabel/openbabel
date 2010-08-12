@@ -280,7 +280,7 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
 
   OutAuxSizer->Add(m_pNoOutFile,0, wxLEFT|wxBOTTOM,5);
 #ifndef __WXMAC__
-  if(OBPlugin::GetPlugin(NULL, "xout")) //display checkbox only if extra output capability is present 
+  if(OBPlugin::GetPlugin(NULL, "0xout")) //display checkbox only if extra output capability is present 
     OutAuxSizer->Add(m_pDisplay,0,wxLEFT|wxBOTTOM,5);
 #endif
 
@@ -568,7 +568,7 @@ with the output format.\nDo you wish to continue the conversion?"),
   
   //2D depiction in svg (or other) format automatically sent to file
   if(m_pDisplay->IsChecked() && !m_DisplayFile.empty())
-    Conv.AddOption("xout", OBConversion::GENOPTIONS, m_DisplayFile.mb_str());
+    Conv.AddOption("0xout", OBConversion::GENOPTIONS, m_DisplayFile.mb_str());
 
   int count = Conv.FullConvert(FileList, stdOutputFileName, OutputFileList);
   

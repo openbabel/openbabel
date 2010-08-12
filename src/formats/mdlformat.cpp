@@ -50,7 +50,7 @@ namespace OpenBabel
                "Reads and writes V2000 and V3000 versions\n"
                "Read Options, e.g. -as\n"
                " s  determine stereochemistry from atom flags\n"
-               " t  read title only\n\n"
+               " T  read title only\n\n"
                "Write Options, e.g. -x3\n"
             /* " 2  output V2000 (default) or\n" */
                " 3  output V3000 not V2000 (used for >999 atoms/bonds) \n"
@@ -194,7 +194,7 @@ namespace OpenBabel
 
     mol.SetTitle(line);
 
-    if(pConv->IsOption("t",OBConversion::INOPTIONS))
+    if(pConv->IsOption("T",OBConversion::INOPTIONS))
     {
       //Read title only
       SkipObjects(0, pConv);

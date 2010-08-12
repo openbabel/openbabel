@@ -338,7 +338,12 @@ int DynOptionswx::SetOptions(OpenBabel::OBConversion& Conv, OpenBabel::OBConvers
     if(pChk)
     {	
       if(!pChk->IsChecked())
+      {
+        // if a checkbox is not checked, ignore the subsidiary editboxes also
+        while((++itr)->first[0]==' ');
+        --itr;
         continue;
+      }
     }
     else
     {

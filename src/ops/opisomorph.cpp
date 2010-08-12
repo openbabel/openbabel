@@ -166,7 +166,9 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
         {
           obErrorLog.ThrowError(__FUNCTION__, "Cannot read the parameter of -s option, "
           "which has to be valid SMILES when the exact option is used.", obError, onceOnly);
-           return false;
+          delete pmol;
+          pConv->SetOneObjectOnly(); //stop conversion
+          return false;
         }
         nPatternAtoms = patmol.NumHvyAtoms();   
       }
@@ -215,6 +217,8 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
         "that contains a pattern molecule.";
       obErrorLog.ThrowError(__FUNCTION__, msg, obError, onceOnly);
       delete pmol;
+      pmol = NULL;
+      pConv->SetOneObjectOnly(); //stop conversion
       return false;
     }
 
@@ -226,6 +230,7 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
   {
     //delete a non-matching mol
     delete pmol;
+    pmol = NULL;
     return false; 
   }
 
