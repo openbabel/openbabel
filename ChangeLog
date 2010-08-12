@@ -1,5 +1,15 @@
 2010-08-12 Noel O'Boyle
 
+	* src/stereo/perception.cpp: CisTransFrom3D was not able to handle
+	deviations from ideal angles. Replaced existing method with one based
+	on the signed distance to the plane through the double bond at right
+	angles to the stereo unit.
+	* src/math/vector3.cpp, vector3.h: Move body of Point2Plane into new
+	function Point2PlaneSigned. Point2Plane now just returns
+	fabs(Point2PlaneSigned).
+
+2010-08-12 Noel O'Boyle
+
 	* src/obiter.cpp: GetAtom() was being called for a non-existent atom
 	due to _notVisited having more Bits set than there were atoms in the
 	molecule. This is due to the behaviour of OBBitVec::Negate() which
