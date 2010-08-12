@@ -1,3 +1,13 @@
+2010-08-12 Noel O'Boyle
+
+	* src/obiter.cpp: GetAtom() was being called for a non-existent atom
+	due to _notVisited having more Bits set than there were atoms in the
+	molecule. This is due to the behaviour of OBBitVec::Negate() which
+	sets all bits in OBBitVec to 1, including those bits that are just
+	padding at an end of the OBBitVec.
+
+	Also removed duplicate "if (!ptr) return" statements
+
 2010-08-09 Chris Morley
 
 	* src/formats/gaussformat.cpp:Comment out inconsistent use of
