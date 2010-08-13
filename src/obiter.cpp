@@ -146,7 +146,7 @@ namespace OpenBabel
     _parent(mol), _ptr(_parent->GetAtom(StartIndex))
   {
     _notVisited.Resize(_parent->NumAtoms());
-    _notVisited.Negate(); // all on
+    _notVisited.SetRangeOn(0, _parent->NumAtoms() - 1);
     if (!_ptr) return;
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
@@ -164,7 +164,7 @@ namespace OpenBabel
     _parent(&mol), _ptr(_parent->GetAtom(StartIndex))
   {
     _notVisited.Resize(_parent->NumAtoms());
-    _notVisited.Negate(); // all on
+    _notVisited.SetRangeOn(0, _parent->NumAtoms() - 1);
     if (!_ptr) return;
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
@@ -284,9 +284,8 @@ namespace OpenBabel
     _parent(mol), _ptr(_parent->GetAtom(StartIndex))
   {
     _notVisited.Resize(_parent->NumAtoms());
-    if (!_ptr)
-      return;
-    _notVisited.Negate(); // all on
+    _notVisited.SetRangeOn(0, _parent->NumAtoms() - 1);
+
     if (!_ptr) return;
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
@@ -309,9 +308,8 @@ namespace OpenBabel
     _parent(&mol), _ptr(_parent->GetAtom(StartIndex))
   {
     _notVisited.Resize(_parent->NumAtoms());
-    if (!_ptr)
-      return;
-    _notVisited.Negate(); // all on
+    _notVisited.SetRangeOn(0, _parent->NumAtoms() - 1);
+
     if (!_ptr) return;
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
@@ -449,9 +447,8 @@ namespace OpenBabel
     _parent(mol), _ptr(_parent->GetBond(StartIndex))
   {
     _notVisited.Resize(_parent->NumBonds());
-    if (!_ptr)
-      return;
-    _notVisited.Negate(); // all on
+    _notVisited.SetRangeOn(0, _parent->NumBonds() - 1);
+
     if (!_ptr) return;
     _notVisited.SetBitOff(_ptr->GetIdx());
 
@@ -481,7 +478,8 @@ namespace OpenBabel
     _parent(&mol), _ptr(_parent->GetBond(StartIndex))
   {
     _notVisited.Resize(_parent->NumBonds());
-    _notVisited.Negate(); // all on
+    _notVisited.SetRangeOn(0, _parent->NumBonds() - 1);
+
     if (!_ptr) return;
     _notVisited.SetBitOff(_ptr->GetIdx());
     
