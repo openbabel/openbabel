@@ -1412,15 +1412,23 @@ namespace OpenBabel {
         bondVecs.push_back(pos - end->GetVector());
       }
 
-      // 0      3       0   3
-      //  \    /         \ /      angle 0-*-3 & 1-*-2: 60 degrees (cis)
-      //   C==C    -->    *       angle 0-*-1 & 2-*-3: 120 degrees (same bond atom)
-      //  /    \         / \      angle 0-*-2 & 1-*-3: 180 degrees (trans)
-      // 1      2       1   2
-      double angle = vectorAngle(bondVecs[0], bondVecs[2]);
-      if (IsNear(angle, 60.0, 10.0))
+      // 0      3     Get signed distance of 0 and 2 to the plane
+      //  \    /      that goes through the double bond and is at
+      //   C==C       right angles to the stereo bonds. 
+      //  /    \      
+      // 1      2     If the two signed distances have the same sign
+      //              then they are cis; if not, then trans.
+
+      vector3 dbl_bond = end->GetVector() - begin->GetVector();
+      vector3 above_plane = cross(dbl_bond, bondVecs[0]);
+      double d0 = Point2PlaneSigned( mol->GetAtomById(config.refs[0])->GetVector(),
+                               begin->GetVector(), end->GetVector(), above_plane);
+      double d2 = Point2PlaneSigned( mol->GetAtomById(config.refs[2])->GetVector(),
+                               begin->GetVector(), end->GetVector(), above_plane);
+
+      if ((d0 > 0 && d2 > 0) || (d0 < 0 && d2 < 0))
         config.shape = OBStereo::ShapeZ;
-      if (IsNear(angle, 180.0, 10.0))
+      else
         config.shape = OBStereo::ShapeU;
 
       OBCisTransStereo *ct = new OBCisTransStereo(mol);
