@@ -1,4 +1,10 @@
 2010-08-13 Noel O'Boyle
+
+	* src/mol.cpp: HasHydrogens() never returned True as the flag was
+	being cleared in AddHydrogens(). Reported by Alex Henderson on 
+	openbabel-devel. Now fixed.
+
+2010-08-13 Noel O'Boyle
 	
 	* src/forcefield.cpp: Fixed a problem with invalid pointers in
 	WeightedRotorSearch that was resulting in weird geometries. I think I

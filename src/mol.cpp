@@ -2039,8 +2039,6 @@ namespace OpenBabel
 
     if (HasHydrogensAdded())
       return(true);
-    SetHydrogensAdded();
-   
     /*
     //
     // This was causing bug #1892844 in avogadro. We also want to add hydrogens if the molecule has no bonds.
@@ -2065,6 +2063,8 @@ namespace OpenBabel
       EndModify();
     }
     
+    SetHydrogensAdded(); // This must come after EndModify() as EndModify() wipes the flags
+   
     //count up number of hydrogens to add
     OBAtom *atom,*h;
     int hcount,count=0;
