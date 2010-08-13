@@ -1487,6 +1487,14 @@ namespace OpenBabel
     if (_mol.GetCoordinates() == NULL)
       return;
 
+    double *initialCoord = new double [_mol.NumAtoms() * 3]; // initial state
+    memcpy((double*)initialCoord,(double*)_mol.GetCoordinates(),sizeof(double)*3*_mol.NumAtoms());
+    vector<double *> newConfs(1, initialCoord);
+    _mol.SetConformers(newConfs);
+    _current_conformer = 0;
+    _mol.SetConformer(_current_conformer);
+    SetupPointers();
+
     OBBitVec fixed = _constraints.GetFixedBitVec();
     rl.SetFixAtoms(fixed);
     rl.Setup(_mol);
@@ -1507,18 +1515,13 @@ namespace OpenBabel
       OBFFLog(_logbuf);
     }
 
-    // Remove all conformers (e.g. from previous conformer generators) except for current conformer
-    double *initialCoord = new double [_mol.NumAtoms() * 3]; // initial state
-    memcpy((char*)initialCoord,(char*)_mol.GetCoordinates(),sizeof(double)*3*_mol.NumAtoms());
-    vector<double *> newConfs(1, initialCoord);
-    _mol.SetConformers(newConfs);
 
     _energies.clear(); // Wipe any energies from previous conformer generators
 
     if (!rl.Size()) { // only one conformer
       IF_OBFF_LOGLVL_LOW
         OBFFLog("  GENERATED ONLY ONE CONFORMER\n\n");
- 
+
       _loglvl = OBFF_LOGLVL_NONE;
       ConjugateGradients(geomSteps); // energy minimization for conformer
       _loglvl = origLogLevel;
@@ -1600,7 +1603,7 @@ namespace OpenBabel
       rotorWeights.push_back(weightSet);
     }
 
-    int best_conformer=0;
+    int best_conformer=-1;
     //    double penalty; // for poor performance
     double randFloat; // generated random number -- used to pick a rotor
     double total; // used to calculate the total probability 

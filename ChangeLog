@@ -1,3 +1,11 @@
+2010-08-13 Noel O'Boyle
+	
+	* src/forcefield.cpp: Fixed a problem with invalid pointers in
+	WeightedRotorSearch that was resulting in weird geometries. I think I
+	introduced this problem back in May. Also noticed that the final
+	conformer returned had an off-by-one error. I think I also introduced
+	this problem at the same time.
+
 2010-08-12 Chris Morley
 
 	* src/ops/opisomorph.cpp: make more robust to errors like a missing
