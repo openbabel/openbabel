@@ -1,3 +1,9 @@
+2010-08-13 Chris Morley
+
+	* src/formats/inchiformat.cpp(ReadMolecule):Use GetStructFromINCHI
+	and not GetStructFromStdINCHI so can read both standard and
+	non-standard InChIs. Make error handling more robust.
+
 2010-08-13 Noel O'Boyle
 
 	* src/mol.cpp: HasHydrogens() never returned True as the flag was

@@ -62,16 +62,20 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   inp.szInChI = strcpy(nonconstinchi, inchi.c_str());
 
   inchi_OutputStruct out;
+  memset(&out, 0, sizeof(out));
 
   //Call the conversion routine in InChI code
-  int ret = GetStructFromStdINCHI( &inp, &out );
+  int ret = GetStructFromINCHI( &inp, &out );
 
   if (ret!=inchi_Ret_OKAY)
   {
-    obErrorLog.ThrowError("InChI code", out.szMessage, obWarning);
+    string mes = out.szMessage ? out.szMessage : "Conversion failed"; 
+    obErrorLog.ThrowError("InChI code", mes + '\n' + inchi, obWarning);
   }
   delete[] nonconstinchi;
   delete[] opts;
+  if(ret)
+    return false;
 
   //Read name if requested e.g InChI=1/CH4/h1H4 methane 
   //OR InChI=1/CH4/h1H4 "First alkane"  Quote can be any punct char and
@@ -217,7 +221,7 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   StereoFrom0D(pmol);
 
   pmol->EndModify();
-  FreeStructFromStdINCHI( &out );
+  FreeStructFromINCHI( &out );
   return true;
 }
 
