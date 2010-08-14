@@ -377,25 +377,22 @@ int main(int argc,char *argv[])
 void DoOption(const char* p, OBConversion& Conv,
 	      OBConversion::Option_type typ, int& arg, int argc, char *argv[]) 
 {
-  while(p && *p) //can have multiple concatenated single char options
+  //Unlike babel, cannot have multiple concatenated single char options
+  //accepts: -sCCC -s CCC -s"CCC" -s CCC red -sCCC red
+  char ch[2]="?";
+  *ch = *p++;
+  std::string txt;
+  //Get the option text
+  if(*p)
+    txt = p; //use text immediately following the option letter, and keep looking
+
+  while(arg<argc-1 && *argv[arg+1]!='-')
   {
-    char ch[2]="?";
-    *ch = *p++;
-    std::string txt;
-    //Get the option text
-    if(*p)
-    {
-      txt = p; //use text immediately following the option letter
-      p=NULL; //no more single char options
-    }
-    else while(arg<argc-1 && *argv[arg+1]!='-')
-    {
-      //use text from subsequent args
-      if(!txt.empty())txt += ' '; //..space separated if more than one
-      txt += argv[++arg]; 
-    }
-    Conv.AddOption(ch, typ, txt.c_str());
+    //use text from subsequent args
+    if(!txt.empty())txt += ' '; //..space separated if more than one
+    txt += argv[++arg]; 
   }
+  Conv.AddOption(ch, typ, txt.c_str());
 }
 
 void usage()

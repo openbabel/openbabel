@@ -556,8 +556,11 @@ virtual const char* Description() //required
 
         //read as standard SMILES
         patternConv.SetInFormat("smi");
-        patternConv.ReadString(&patternMol, vec[0]);
-
+        if(!patternConv.ReadString(&patternMol, vec[0]))
+        {
+          obErrorLog.ThrowError(__FUNCTION__,"Cannot read the SMILES string",obError);
+          return false;
+        }
         if(hasTildeBond)
         {
           AddPattern(patternMols, patternMol, 0); //recursively add all combinations of tilde bond values

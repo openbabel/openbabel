@@ -1,4 +1,12 @@
 2010-08-13 Chris Morley
+	
+	* tools/obabel.cpp: by its design obabel cannot use multiple
+	concatenated single-character options. Ensure single ones with
+	an unregistered number of parameters work correctly.
+	
+	* src/formats/fastsearchformat.cpp: extra error handling
+
+2010-08-13 Chris Morley
 
 	* src/formats/inchiformat.cpp(ReadMolecule):Use GetStructFromINCHI
 	and not GetStructFromStdINCHI so can read both standard and
