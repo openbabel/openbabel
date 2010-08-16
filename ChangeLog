@@ -1,5 +1,14 @@
 2010-08-16 Chris Morley
 
+	* include/openbabel/math/vector3.h,src/math/vector3.cpp: add new
+	function, Point2Line()
+	
+	* windows-vc2008/Distribution/NSISScriptToCreateInstaller.nsi: mods
+	to make help file local, add java bindings. Version 2.3.0rc	
+	
+	* doc/OpenBabelGUI.html, windows-vc2008/Distribution/ToolsPrograms.txt,
+      src/ops/xout.cpp,src/ops/partialcharges.cpp: documentation updates
+
 2010-08-16 Noel O'Boyle
 
 	* include/openbabel/math/vector3.h: The components of a vector3 were
