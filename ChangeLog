@@ -1,3 +1,10 @@
+2010-08-16 Noel O'Boyle
+
+	* include/openbabel/math/vector3.h: The components of a vector3 were
+	unaccessible from Python, so I've added GetX(), GetY() and GetZ(). The
+	exisintg x() method returns a reference to _vx (i.e. a pointer) and so
+	couldn't be used from Python.
+
 2010-08-13 Chris Morley
 	
 	* tools/obabel.cpp: by its design obabel cannot use multiple

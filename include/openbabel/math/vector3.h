@@ -77,20 +77,35 @@ namespace OpenBabel
       _vy = c[1];
       _vz = c[2];
     }
-    //! Access function to get the x-coordinate of the vector
+    //! Access function to set the x-coordinate of the vector
     void SetX(const double inX)
     {
       _vx = inX;
     }
-    //! Access function to get the y-coordinate of the vector
+    //! Access function to set the y-coordinate of the vector
     void SetY(const double inY)
     {
       _vy = inY;
     }
-    //! Access function to get the z-coordinate of the vector
+    //! Access function to set the z-coordinate of the vector
     void SetZ(const double inZ)
     {
       _vz = inZ;
+    }
+    //! Access function to get the x-coordinate of the vector
+    double GetX() const
+    {
+      return _vx;
+    }
+    //! Access function to get the y-coordinate of the vector
+    double GetY() const
+    {
+      return _vy;
+    }
+    //! Access function to get the z-coordinate of the vector
+    double GetZ() const
+    {
+      return _vz;
     }
     //! \brief Set c[0]..c[2] to the components of the vector
     //! \warning No error checking is performed
