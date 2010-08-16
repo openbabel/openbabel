@@ -18,6 +18,7 @@
 #include <openbabel/mol.h>
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
+#include <openbabel/reaction.h>
 #include <openbabel/residue.h>
 #include <openbabel/internalcoord.h>
 
@@ -196,6 +197,7 @@ namespace std { class stringbuf {}; }
 %include <openbabel/internalcoord.h>
 %include <openbabel/atom.h>
 %include <openbabel/bond.h>
+%include <openbabel/reaction.h>
 
 // Remove C++ iterators
 %pythoncode %{
@@ -241,6 +243,8 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 
 %warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
 %include <openbabel/bitvec.h>
+# Ignore shadowed method
+%ignore OpenBabel::OBRotor::GetRotAtoms() const;
 %include <openbabel/rotor.h>
 %ignore OpenBabel::Swab;
 %include <openbabel/rotamer.h>
