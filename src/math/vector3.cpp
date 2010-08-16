@@ -348,7 +348,7 @@ namespace OpenBabel
     //http://mathworld.wolfram.com/Point-LineDistance3-Dimensional.html
     vector3 v_cb = c-b;
     vector3 v_normal = cross(a-b, a-c);
-    return abs(v_normal.length() / v_cb.length() );
+    return fabs(v_normal.length() / v_cb.length() );
   }
 
 } // namespace OpenBabel
