@@ -343,6 +343,14 @@ namespace OpenBabel
     return angle;
   }
 
+  double Point2Line(const vector3& a, const vector3& b, const vector3& c)
+  {
+    //http://mathworld.wolfram.com/Point-LineDistance3-Dimensional.html
+    vector3 v_cb = c-b;
+    vector3 v_normal = cross(a-b, a-c);
+    return abs(v_normal.length() / v_cb.length() );
+  }
+
 } // namespace OpenBabel
 
 //! \file vector3.cpp

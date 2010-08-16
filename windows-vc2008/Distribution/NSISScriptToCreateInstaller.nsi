@@ -456,7 +456,7 @@ FunctionEnd
 ;General
 
   ;OpenBabel version
-  !define OBVersion 2.3.0s2
+  !define OBVersion 2.3.0rc
 
   ;Name and file
   Name "OpenBabel ${OBVERSION}"
@@ -484,7 +484,7 @@ FunctionEnd
   !define MUI_HEADERIMAGE_BITMAP "logo_small.bmp"
   !define MUI_WELCOMEFINISHPAGE_BITMAP "logo_big.bmp"
   !define MUI_FINISHPAGE_RUN "$INSTDIR/OBGUI.exe"
-  !define MUI_FINISHPAGE_SHOWREADME "http://openbabel.sourceforge.net/wiki/OpenBabelGUI"
+;  !define MUI_FINISHPAGE_SHOWREADME "http://openbabel.sourceforge.net/wiki/OpenBabelGUI"
 
 ;--------------------------------
 ;Pages
@@ -526,7 +526,6 @@ Section "Dummy Section" SecDummy
   File /oname=License.txt ..\..\COPYING
   File ..\sdf.bat
   File ..\obdepict.bat
-  File ..\*.dll
   
   File /r /x test_*.* ..\build\Release\*.exe
   File /r ..\build\Release\*.obf
@@ -534,8 +533,8 @@ Section "Dummy Section" SecDummy
   
   File vcredist_x86.exe
 
-;  File ..\OBJava\openbabel.jar
-;  File ..\OBJava\openbabel_java.dll
+  File ..\..\scripts\java\openbabel.jar
+  File ..\build\Release\openbabel_java.dll
 
   SetOutPath "$INSTDIR\examples"
   File /r /x .svn ExampleFiles\*.*
@@ -553,8 +552,9 @@ Section "Dummy Section" SecDummy
   ;Create shortcuts
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
+    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Open Babel Folder.lnk" "$INSTDIR"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Open Babel GUI.lnk" "$INSTDIR\OBGUI.exe"
-    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using Open Babel GUI (web).lnk" "http://openbabel.sourceforge.net/wiki/OpenBabelGUI" "" "$SYSDIR\winhlp32.exe" 
+    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using Open Babel GUI.lnk" "$INSTDIR\doc\OpenBabelGUI.html"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using babel (web).lnk" "http://openbabel.sourceforge.net/wiki/Tutorial:Basic_Usage" "" "$SYSDIR\winhlp32.exe"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
   !insertmacro MUI_STARTMENU_WRITE_END
@@ -622,8 +622,8 @@ Section "Uninstall"
   Delete "$INSTDIR\License.txt"
   Delete "$INSTDIR\OBGUI.exe"
   Delete "$INSTDIR\OpenBabelGUI.html"
-;  Delete "$INSTDIR\openbabel.jar"
-;  Delete "$INSTDIR\openbabel_java.dll"
+  Delete "$INSTDIR\openbabel.jar"
+  Delete "$INSTDIR\openbabel_java.dll"
   Delete "$INSTDIR\Uninstall.exe"
 
   RMDir "$INSTDIR"
@@ -633,6 +633,7 @@ Section "Uninstall"
   Delete "$SMPROGRAMS\$MUI_TEMP\Open Babel GUI.lnk"
   Delete "$SMPROGRAMS\$MUI_TEMP\Guide to using Open Babel GUI (web).lnk"
   Delete "$SMPROGRAMS\$MUI_TEMP\Guide to using babel (web).lnk"
+  Delete "$SMPROGRAMS\$MUI_TEMP\Open Babel Folder.lnk"
 
   ;Remove from PATH
   push $INSTDIR

@@ -116,7 +116,9 @@ class OpExtraOut : public OBOp
 public:
   OpExtraOut(const char* ID) : OBOp(ID, false){};
   const char* Description(){ return "<file.xxx> Additional file output\n"
-       "Mainly intended to be used to generate svg files for display from the GUI"; }
+       "Mainly intended to be used to generate svg files for display from the GUI,\n"
+       "but can also be used to output to two different formats:\n"
+       "      obabel infile.sdf  -osmi  -0xout secondout.svg"; }
 
   virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
   virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* pConv);
