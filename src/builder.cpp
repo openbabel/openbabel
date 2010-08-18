@@ -211,10 +211,10 @@ namespace OpenBabel
 
         bond1 = bond1.normalize();
         if (bond2 == VZero) {
+          vector3 vrand;
+          vrand.randomUnitVector();
           // there is no a-2 atom
-          v1 = cross(bond1, VY);
-          if (v1 == VZero) // This corner-case happened to me, where bond1 was -VY (Noel)
-            v1 = cross(bond1, VX);
+          v1 = cross(bond1, vrand);
           v2 = cross(bond1, v1);
         } else {
           v1 = cross(bond1, bond2);
@@ -270,9 +270,9 @@ namespace OpenBabel
           /* add the first equatorial atom, orthogonally to bond1 (and bond2 = -bond1) */
           /* is atom order correct?  I don't think it matters, but I might have to ask a chemist
            * whether PClF4 would be more likely to have an equatorial or axial Cl-P bond */
-          v1 = cross(bond1, VY);
-          if (v1 == VZero) // This corner-case happened to me, where bond1 was -VY (Noel)
-            v1 = cross(bond1, VX);
+          vector3 vrand;
+          vrand.randomUnitVector();
+          v1 = cross(bond1, vrand);
           v1 = v1.normalize();
           newbond = v1;
         }
