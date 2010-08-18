@@ -203,7 +203,7 @@ namespace OpenBabel
         }
 
         atom->SetAtomicNum(atomicNum);
-        if (atomicNum == 0) // still strange
+        if (atomicNum == 0) // still strange, try using an atom type
           atom->SetType(vs[0]);
 
         // Read the atom coordinates
@@ -245,6 +245,16 @@ namespace OpenBabel
             return(false);
           }
         atom->SetVector(x,y,z); //set coordinates
+
+        // OK, sometimes there's sym x y z charge -- accepted by Jmol
+        if (vs.size() > 5) {
+          string::size_type decimal = vs[4].find('.');
+          if (decimal !=string::npos) { // period found
+            double charge = strtod((char*)vs[4].c_str(),&endptr);
+            if (endptr != (char*)vs[4].c_str())
+              atom->SetPartialCharge(charge);              
+          }
+        } // attempt to parse charges
       }
 
     // clean out any remaining blank lines
