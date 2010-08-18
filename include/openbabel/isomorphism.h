@@ -100,7 +100,7 @@ namespace OpenBabel {
        * @return OBIsomorphismMapper instance or 0 if there is no subclass implementing
        * the specified @p algorithm.
        */
-      static OBIsomorphismMapper* GetInstance(OBQuery *query, const std::string &algorithm = std::string("bfs"));
+      static OBIsomorphismMapper* GetInstance(OBQuery *query, const std::string &algorithm = std::string("VF2"));
 
       /**
        * Find a single mapping in @p queried.

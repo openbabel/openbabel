@@ -2,7 +2,7 @@
   query.h - OBQuery, OBQueryAtom & OBQueryBond classes
 
   Copyright (C) 2010 by Tim Vandermeersch
- 
+
   This file is part of the Open Babel project.
   For more information, see <http://openbabel.sourceforge.net/>
 
@@ -53,12 +53,13 @@ namespace OpenBabel {
        * Constructor.
        * @param atomicNum The atomic number for this query atom.
        */
-      OBQueryAtom(int atomicNum = 6) : m_atomicNum(atomicNum) {}
+      OBQueryAtom(int atomicNum = 6, bool isInRing = false, bool isAromatic = false) :
+        m_atomicNum(atomicNum), m_isInRing(isInRing), m_isAromatic(isAromatic) {}
       /**
        * Get the index for this query atom. Atoms are indexed starting from 0.
        * This method is used by OBIsomorphismMapper implementations.
        */
-      unsigned int GetIndex() const 
+      unsigned int GetIndex() const
       {
         return m_index;
       }
@@ -89,11 +90,17 @@ namespace OpenBabel {
       {
         if (atom->GetAtomicNum() != m_atomicNum)
           return false;
+        if (atom->IsAromatic() != m_isAromatic)
+          return false;
+        if (m_isInRing)
+          if (!atom->IsInRing())
+            return false;
         return true;
       }
     protected:
       unsigned int m_index;
       int m_atomicNum;
+      bool m_isInRing, m_isAromatic;
       std::vector<OBQueryBond*> m_bonds;
       std::vector<OBQueryAtom*> m_nbrs;
   };
@@ -116,8 +123,8 @@ namespace OpenBabel {
       /**
        * Constructor.
        */
-      OBQueryBond(OBQueryAtom *begin, OBQueryAtom *end, int order = 1, bool aromatic = false) : 
-          m_begin(begin), m_end(end), m_order(order), m_aromatic(aromatic) 
+      OBQueryBond(OBQueryAtom *begin, OBQueryAtom *end, int order = 1, bool aromatic = false) :
+          m_begin(begin), m_end(end), m_order(order), m_aromatic(aromatic)
       {
         m_begin->m_bonds.push_back(this);
         m_end->m_bonds.push_back(this);
@@ -127,7 +134,7 @@ namespace OpenBabel {
       /**
        * Get the index for this query bonds. Query bonds are indexed starting from 0.
        */
-      unsigned int GetIndex() const 
+      unsigned int GetIndex() const
       {
         return m_index;
       }
@@ -141,8 +148,8 @@ namespace OpenBabel {
       OBQueryAtom* GetEndAtom() const { return m_end; }
       /**
        * This is the match method to verify if an OBQueryBond and OBBond class match.
-       * The default implementation checks if both bonds are aromatic and compares the 
-       * bond orders otherwise. Reimplement this method in a subclass for more 
+       * The default implementation checks if both bonds are aromatic and compares the
+       * bond orders otherwise. Reimplement this method in a subclass for more
        * advances matching.
        * This method is used by OBIsomorphismMapper implementations.
        * @param bond The OBBond object to compare this OBQueryBond with.
@@ -151,7 +158,7 @@ namespace OpenBabel {
       {
         if (m_aromatic)
           return bond->IsAromatic();
-        return bond->GetBondOrder() == m_order;      
+        return bond->GetBondOrder() == m_order;
       }
     protected:
       unsigned int m_index;
@@ -171,15 +178,15 @@ namespace OpenBabel {
         std::for_each(m_atoms.begin(),m_atoms.end(), DeleteObject());
         std::for_each(m_bonds.begin(),m_bonds.end(), DeleteObject());
       }
-      unsigned int NumAtoms() const 
-      { 
+      unsigned int NumAtoms() const
+      {
         return m_atoms.size();
       }
       unsigned int NumBonds() const
       {
         return m_bonds.size();
       }
-      const std::vector<OBQueryAtom*>& GetAtoms() const 
+      const std::vector<OBQueryAtom*>& GetAtoms() const
       {
         return m_atoms;
       }
@@ -191,7 +198,7 @@ namespace OpenBabel {
       {
         for (unsigned int i = 0; i < begin->GetBonds().size(); ++i)
           if (begin->GetNbrs()[i] == end)
-            return begin->GetBonds()[i];        
+            return begin->GetBonds()[i];
         return 0;
       }
       void AddAtom(OBQueryAtom *atom)
@@ -208,12 +215,12 @@ namespace OpenBabel {
       std::vector<OBQueryAtom*> m_atoms;
       std::vector<OBQueryBond*> m_bonds;
   };
-  
+
   /**
    * @since version 2.3
    */
   OBAPI OBQuery* CompileMoleculeQuery(OBMol *mol, const OBBitVec &mask = OBBitVec());
-  
+
   /**
    * @since version 2.3
    */

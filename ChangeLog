@@ -1,3 +1,16 @@
+2010-08-18 Tim Vandermeersch
+
+        * include/openbabel/isomorphism.h, src/isomorphism.cpp: Use VF2 
+        algortihm for finding isomorphisms and set this as default algorithm.
+        The class performes good enough for general purpose now and is 
+        comparable in speed with the current smarts matching algortihm.
+
+        * include/openbabel/query.h, src/query.cpp: Make sure aromaticity is
+        handled correctly.
+
+        * test/automorphismtest.cpp, test/isomorphismtest.cpp: Add some more
+        tests.
+
 2010-08-16 Chris Morley
 
 	* include/openbabel/math/vector3.h,src/math/vector3.cpp: add new

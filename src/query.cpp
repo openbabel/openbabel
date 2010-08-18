@@ -22,7 +22,7 @@ namespace OpenBabel {
         offset++;
         continue;
       }
-      query->AddAtom(new OBQueryAtom(obatom->GetAtomicNum()));
+      query->AddAtom(new OBQueryAtom(obatom->GetAtomicNum(), obatom->IsInRing(), obatom->IsAromatic()));
     }
     FOR_BONDS_OF_MOL (obbond, mol) {
       unsigned int beginIndex = obbond->GetBeginAtom()->GetIndex();

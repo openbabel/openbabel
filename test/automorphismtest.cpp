@@ -20,6 +20,21 @@ bool doAutomorphismTest(OBMol &mol, int numAutomorphisms)
   return (G.size() == numAutomorphisms);
 }
 
+void testAutomorphisms()
+{
+  cout <<  "testAutomorphisms" << endl;
+  OBMol mol;
+  OBConversion conv;
+  conv.SetInFormat("smi");
+  conv.ReadString(&mol, "C1C(CC2CC2)C1");
+
+  vector<map<unsigned int, unsigned int> > aut;
+//  for (int i = 0; i < 100; ++i)
+  aut = FindAutomorphisms((OBMol*)&mol);
+  cout << aut.size() << endl;
+  OB_ASSERT( aut.size() == 8 );
+}
+
 /**
  * Test detection of stereoisomers
  */
@@ -31,6 +46,8 @@ int main(int argc, char **argv)
     snprintf(env, BUFF_SIZE, "BABEL_LIBDIR=%s", FORMATDIR);
     putenv(env);
   #endif  
+
+  testAutomorphisms();
 
   OBMol mol;
   OBConversion conv;
@@ -73,9 +90,9 @@ int main(int argc, char **argv)
   OB_ASSERT( conv.ReadFile(&mol, GetFilename("hao_xu_8.mol")) );
   OB_ASSERT( doAutomorphismTest(mol, 1) );
 
-  //cout << "Hao, Xu paper, fig. 2: structure 9" << endl;
-  //OB_ASSERT( conv.ReadFile(&mol, GetFilename("hao_xu_9.mol")) );
-  //OB_ASSERT( doAutomorphismTest(mol, 20) );
+  cout << "Hao, Xu paper, fig. 2: structure 9" << endl;
+  OB_ASSERT( conv.ReadFile(&mol, GetFilename("hao_xu_9.mol")) );
+  OB_ASSERT( doAutomorphismTest(mol, 20) );
 
 
 

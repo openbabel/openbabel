@@ -43,18 +43,59 @@ void testIsomorphism1()
 
 void testIsomorphism2()
 {
+  cout << "testIsomorphism2" << endl;
   OBMol mol;
   OBConversion conv;
   conv.SetInFormat("smi");
   conv.ReadString(&mol, "Cc1ccc(C)cc1");
 
-  OBQuery *query = CompileSmilesQuery("C1=CC=CC=C1");
+  OBQuery *query = CompileSmilesQuery("c1ccccc1");
   OBIsomorphismMapper *mapper = OBIsomorphismMapper::GetInstance(query);
   OBIsomorphismMapper::Mappings maps = mapper->MapUnique(&mol);
 
   cout << maps.size() << endl;
 
   OB_ASSERT( maps.size() == 1 );
+
+  delete query;
+  delete mapper;
+}
+
+void testIsomorphism3()
+{
+  cout << "testIsomorphism3" << endl;
+  OBMol mol;
+  OBConversion conv;
+  conv.SetInFormat("smi");
+  conv.ReadString(&mol, "C1CC1CC1CC1");
+
+  OBQuery *query = CompileSmilesQuery("C1CC1");
+  OBIsomorphismMapper *mapper = OBIsomorphismMapper::GetInstance(query);
+  OBIsomorphismMapper::Mappings maps = mapper->MapUnique(&mol);
+
+  cout << maps.size() << endl;
+
+  OB_ASSERT( maps.size() == 2 );
+
+  delete query;
+  delete mapper;
+}
+
+void testIsomorphism4()
+{
+  cout << "testIsomorphism4" << endl;
+  OBMol mol;
+  OBConversion conv;
+  conv.SetInFormat("smi");
+  conv.ReadString(&mol, "C12C(C2)C1");
+
+  OBQuery *query = CompileSmilesQuery("C1CC1");
+  OBIsomorphismMapper *mapper = OBIsomorphismMapper::GetInstance(query);
+  OBIsomorphismMapper::Mappings maps = mapper->MapUnique(&mol);
+
+  cout << maps.size() << endl;
+
+  OB_ASSERT( maps.size() == 2 );
 
   delete query;
   delete mapper;
@@ -146,6 +187,12 @@ void testAutomorphismMask() {
   mask.SetBitOff(6+1);
   maps = FindAutomorphisms(&mol, mask);
   cout << maps.size() << endl;
+  for (unsigned int i = 0; i < maps.size(); ++i) {
+    OBIsomorphismMapper::Mapping::const_iterator j;
+    for (j = maps[i].begin(); j != maps[i].end(); ++j)
+      cout << j->second << " ";
+    cout << endl;
+  }
   OB_ASSERT( maps.size() == 8 );
 
   // Verify that atom Id 6 does not occur anywhere in the mappings
@@ -206,6 +253,8 @@ int main()
 
   testIsomorphism1();
   testIsomorphism2();
+  testIsomorphism3();
+  testIsomorphism4();
   testIsomorphismMask();
   testAutomorphismMask();
   testAutomorphismMask2(); 
