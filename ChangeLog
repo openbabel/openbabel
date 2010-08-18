@@ -1,3 +1,14 @@
+2010-08-18 Chris Morley
+
+	* src/formats/fastsearchformat.cpp: make work with deprecated -S option
+	(-s is now an op and op names are case insensitive).
+    
+	* tools/obabel.cpp: catch error when output specification missing
+	Remove messageSummary, which is really needed only when debugging.
+	Still in babel.
+	 
+    * src/formats/svgformat.cpp: small description change
+
 2010-08-18  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/xyzformat.cpp (OpenBabel): Add parsing of 5th column

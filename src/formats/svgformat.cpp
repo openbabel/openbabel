@@ -113,11 +113,9 @@ public:
       "would produce a svg file with a black background, with no explict\n"
       "terminal carbon, and with an embedded cml representation of each\n"
       "molecule. The structures would be in two rows of four and one row\n"
-      "of two. Not that it is possible to concatenate multiple\n"
-      "single-letter options (with a single preceding ``-x``).\n\n"
-      "of two. Note that it is possible to concatinate multiple single-\n"
-      "letter options (with a single preceding -x).\n\n"
-
+      "of two. Note that in babel (but not obabel) it is possible to\n"
+      "concatenate multiple single-letter options (with a single preceding\n"
+      "``-x``).\n\n"
     ;
   }
 

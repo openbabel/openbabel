@@ -207,14 +207,13 @@ virtual const char* Description() //required
               MaxTani = atof( txt.substr( pos + 1 ).c_str() );
             }
             double MinTani = atof( txt.substr( 0, pos ).c_str() );
-//            if(doSubset)
-//              fs.FindSubset(SeekposMap, MinTani);
-//            else
             fs.FindSimilar(&patternMols[0], SeekposMap, MinTani, MaxTani);
           }
 		
         //Don't want to filter through SMARTS filter
         pConv->RemoveOption("s", OBConversion::GENOPTIONS);
+        //also because op names are case independent
+        pConv->RemoveOption("S", OBConversion::GENOPTIONS);
 		
         multimap<double, unsigned int>::reverse_iterator itr;
         for(itr=SeekposMap.rbegin();itr!=SeekposMap.rend();++itr)
@@ -508,19 +507,18 @@ virtual const char* Description() //required
       OBConversion patternConv;
       OBFormat* pFormat;
       //Interpret as a filename if possible
-      string filename(p);
-      if( filename.empty() ||
-          filename.find('.')==string::npos ||
-          !(pFormat = patternConv.FormatFromExt(filename.c_str())) ||
+      string& txt =vec [0];
+      if( txt.empty() ||
+          txt.find('.')==string::npos ||
+          !(pFormat = patternConv.FormatFromExt(txt.c_str())) ||
           !patternConv.SetInFormat(pFormat) ||
-          !patternConv.ReadFile(&patternMol, filename) ||
+          !patternConv.ReadFile(&patternMol, txt) ||
           patternMol.NumAtoms()==0)
         //if false, have a valid patternMol from a file
       {
         //is SMARTS/SMILES
         //Replace e.g. [#6] in SMARTS by C so that it can be converted as SMILES
         //for the fingerprint phase, but allow more generality in the SMARTS phase.
-        string& txt =vec [0];
         for(;;)
         {
           string::size_type pos1, pos2;

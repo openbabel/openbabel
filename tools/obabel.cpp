@@ -309,7 +309,7 @@ int main(int argc,char *argv[])
     {
       //check there is a valid output format, but the extension will be re-interpreted in OBConversion
       pOutFormat = Conv.FormatFromExt(OutputFileName.c_str());
-      if(pOutFormat==NULL)
+      if(OutputFileName.empty() || pOutFormat==NULL)
         {
           cerr << "Missing or unknown output file or format spec or possibly a misplaced option.\n"
             "Options, other than -i -o -O -m, must come after the input files.\n" <<endl;
@@ -359,11 +359,11 @@ int main(int argc,char *argv[])
       clog << OutputFileList.size() << " files output. The first is " << OutputFileList[0] <<endl;
     }
 
-  std::string messageSummary = obErrorLog.GetMessageSummary();
-  if (messageSummary.size())
-    {
-      clog << messageSummary << endl;
-    }
+  //std::string messageSummary = obErrorLog.GetMessageSummary();
+  //if (messageSummary.size())
+  //  {
+  //    clog << messageSummary << endl;
+  //  }
 
 #ifdef _DEBUG
   //CM keep window open
@@ -455,7 +455,7 @@ void help()
   if(pAPI)
     cout << pAPI->Description();
   
-  cout << "To see a list of recognized file formats use\n  babel -L formats\n"
+  cout << "To see a list of recognized file formats use\n  babel -L formats [read] [write]\n"
        << "To see details and specific options for a particular format, e.g CML, use\n  babel -L cml\n"
        << endl;
   //cout << "The following file formats are recognized:" << endl;
@@ -469,7 +469,7 @@ void help()
 * \n
 * \par SYNOPSIS
 *
-* \b babel [-H<help-options>] [-V] [-m] [-d] [-h] [-p] [-s<SMARTS-pattern>] [-v<SMARTS-pattern>] [-f<#> -l<#>] [-c] [-x<format-options>] [-i<input-type>] \<infile\> [-o<output-type>] \<outfile\>
+* \b babel [-H<help-options>] [-V] [-m] [-d] [-h] [-p] [-s<SMARTS-pattern>] [-v<SMARTS-pattern>] [-f<#> -l<#>] [-c] [-x<format-options>] [-i<input-type>] \<infile\> [-o<output-type>] -O\<outfile\>
 *
 * \par DESCRIPTION
 *
