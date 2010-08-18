@@ -11,13 +11,13 @@ add_definitions(-DFORMATDIR="\\"${openbabel_BINARY_DIR}/lib/\\"")
 set(tests
     automorphism
     builder
+    canonconsistent
     cistrans
     graphsym
     lssr
     isomorphism
     rotor
     smiles
-    sdfcansmi
     spectrophore
     squareplanar
     stereo

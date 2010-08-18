@@ -74,6 +74,7 @@ int main(int argc, char **argv)
   OB_ASSERT( doMultiMoleculeFile("forcefield.sdf") );
   OB_ASSERT( doMultiMoleculeFile("filterset.sdf") );
   OB_ASSERT( doMultiMoleculeFile("cantest.sdf") );
+  OB_ASSERT( doMultiMoleculeFile("cansmi-roundtrip.smi") );
 
   cout << "PASSED TESTS: " << testCount - failed << "/" << testCount << endl;
 
