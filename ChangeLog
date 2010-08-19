@@ -1,3 +1,15 @@
+2010-08-19 Noel O'Boyle
+
+	* scripts/CMakeLists.txt: Get rid of return() statements by
+	reorganising logic. The way it was, if there was a problem
+	with the Python bindings, it would never make it to the
+	Java bindings, etc.
+
+	Now each set of bindings has two 'if'
+	statements: the first decides whether or not to try to 
+	compile the bindings; the second actually does it (running
+	SWIG if requested beforehand).
+
 2010-08-19 Chris Morley
 
 	* windows-vc2008/Distribution/NSISScriptToCreateInstaller.nsi:

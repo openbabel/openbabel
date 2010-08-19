@@ -25,19 +25,29 @@ endif (RUN_SWIG)
 ###################
 
 if (PYTHON_BINDINGS)
-  if (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR
-      RUN_SWIG)
+  if (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR RUN_SWIG)
     find_package(PythonLibs)
     if (NOT PYTHONLIBS_FOUND)
       message(STATUS "Python libraries NOT found")
-      return()
     endif (NOT PYTHONLIBS_FOUND)
 
     find_package(PythonInterp)
     if (NOT PYTHONINTERP_FOUND)
       message(STATUS "Python interpreter NOT found")
-      return()
     endif (NOT PYTHONINTERP_FOUND)
+
+    if(PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND)
+      set(DO_PYTHON_BINDINGS ON BOOL)
+      message(STATUS "Python bindings will be compiled")
+    endif(PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND)
+
+  else (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR RUN_SWIG)
+    message(STATUS "Warning: Python bindings NOT found. Generate using -DRUN_SWIG.")
+
+  endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR RUN_SWIG)
+endif (PYTHON_BINDINGS)
+
+if (DO_PYTHON_BINDINGS)
 
     include_directories(
         ${PYTHON_INCLUDE_PATH}
@@ -95,36 +105,46 @@ if (PYTHON_BINDINGS)
           COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py ${openbabel_BINARY_DIR}/${CMAKE_CFG_INTDIR}
           )
     endif(NOT WIN32)
-  else (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR
-      RUN_SWIG)
-    message(STATUS "Warning: Python bindings NOT found. Generate using -DRUN_SWIG.")
-  endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR
-      RUN_SWIG)
-endif (PYTHON_BINDINGS)
+endif (DO_PYTHON_BINDINGS)
 
 ###################
 # Java
 ###################
 
 if (JAVA_BINDINGS)
-  if (EXISTS ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp OR
-      RUN_SWIG)
+  if (EXISTS ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp OR RUN_SWIG)
 
     find_package(JNI)
     if (NOT JNI_INCLUDE_DIRS)
       message(STATUS "Java JNI include files NOT found. Java bindings will NOT be compiled.")
-      return()
     endif (NOT JNI_INCLUDE_DIRS)
-    include_directories(
-        ${JNI_INCLUDE_DIRS}
-    )
 
     if (RUN_SWIG)
       find_package(Java)
       if (NOT JAVA_COMPILE)
         message(STATUS "Java compiler NOT found. Java bindings will NOT be generated.")
-        return()
+        set(JAVAC_FAIL ON BOOL)
       endif (NOT JAVA_COMPILE)
+    endif (RUN_SWIG)
+
+    if(JNI_INCLUDE_DIRS AND NOT JAVAC_FAIL)
+      set(DO_JAVA_BINDINGS ON BOOL)
+      message(STATUS "Java bindings will be compiled")
+    endif(JNI_INCLUDE_DIRS AND NOT JAVAC_FAIL)
+
+  else (EXISTS ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp OR RUN_SWIG)
+    message(STATUS "Warning: Java bindings NOT found. Generate using -DRUN_SWIG.")
+
+  endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp OR RUN_SWIG)
+endif (JAVA_BINDINGS)
+
+if (DO_JAVA_BINDINGS)
+
+    include_directories(
+        ${JNI_INCLUDE_DIRS}
+    )
+
+    if (RUN_SWIG)
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp # ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
           COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_SOURCE_DIR}/scripts/java/org/openbabel
           COMMAND ${SWIG_EXECUTABLE} -java -package org.openbabel -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp -outdir ${openbabel_SOURCE_DIR}/scripts/java/org/openbabel ${openbabel_SOURCE_DIR}/scripts/openbabel-java.i
@@ -144,26 +164,32 @@ if (JAVA_BINDINGS)
             LIBRARY_OUTPUT_DIRECTORY ${openbabel_BINARY_DIR})
     endif(MSVC)
 
-  else (EXISTS ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp OR
-      RUN_SWIG)
-    message(STATUS "Warning: Java bindings NOT found. Generate using -DRUN_SWIG.")
-  endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp OR
-      RUN_SWIG)
-endif (JAVA_BINDINGS)
+endif (DO_JAVA_BINDINGS)
 
 ###################
 # Perl
 ###################
 
 if (PERL_BINDINGS)
-  if (EXISTS ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp OR
-      RUN_SWIG)
+  if (EXISTS ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp OR RUN_SWIG)
 
     find_package(PerlLibs)
     if (NOT PERL_LIBRARY)
       message(STATUS "Perl library files NOT found. Perl bindings will NOT be compiled.")
-      return()
     endif (NOT PERL_LIBRARY)
+
+    if(PERL_LIBRARY)
+      set(DO_PERL_BINDINGS ON BOOL)
+      message(STATUS "Perl bindings will be compiled")
+    endif(PERL_LIBRARY)
+
+  else (EXISTS ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp OR RUN_SWIG)
+    message(STATUS "Warning: Perl bindings NOT found. Generate using -DRUN_SWIG.")
+
+  endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp OR RUN_SWIG)
+endif (PERL_BINDINGS)
+
+if (DO_PERL_BINDINGS)
     include_directories(
         ${PERL_INCLUDE_PATH}
     )
@@ -217,20 +243,31 @@ if (PERL_BINDINGS)
           OUTPUT_NAME openbabel_perl )
     endif(NOT MSVC)
 
-  else (EXISTS ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp OR
-      RUN_SWIG)
-    message(STATUS "Warning: Perl bindings NOT found. Generate using -DRUN_SWIG.")
-  endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp OR
-      RUN_SWIG)
-endif (PERL_BINDINGS)
+endif (DO_PERL_BINDINGS)
 
 ###################
 # Ruby
 ###################
 
 if (RUBY_BINDINGS)
-  if (EXISTS ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp OR
-      RUN_SWIG)
+  if (EXISTS ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp OR RUN_SWIG)
+    find_package(Ruby)
+    if (NOT RUBY_LIBRARY)
+      message(STATUS "Ruby library files NOT found. Ruby bindings will NOT be compiled.")
+    endif (NOT RUBY_LIBRARY)
+
+    if (RUBY_LIBRARY)
+      set(DO_RUBY_BINDINGS ON BOOL)
+      message(STATUS "Ruby bindings will be compiled")
+    endif (RUBY_LIBRARY)
+
+  else (EXISTS ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp OR RUN_SWIG)
+    message(STATUS "Warning: Ruby bindings NOT found. Generate using -DRUN_SWIG.")
+
+  endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp OR RUN_SWIG)
+endif (RUBY_BINDINGS)
+
+if (DO_RUBY_BINDINGS)
 
     if (RUN_SWIG)
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp
@@ -239,11 +276,6 @@ if (RUBY_BINDINGS)
       )
     endif (RUN_SWIG)
 
-    find_package(Ruby)
-    if (NOT RUBY_LIBRARY)
-      message(STATUS "Ruby library files NOT found. Ruby bindings will NOT be compiled.")
-      return()
-    endif (NOT RUBY_LIBRARY)
     include_directories(
         ${RUBY_INCLUDE_PATH}
     )
@@ -280,25 +312,29 @@ if (RUBY_BINDINGS)
               LIBRARY_OUTPUT_DIRECTORY ${openbabel_BINARY_DIR})
     endif(NOT MSVC)
 
-  else (EXISTS ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp OR
-      RUN_SWIG)
-    message(STATUS "Warning: Ruby bindings NOT found. Generate using -DRUN_SWIG.")
-  endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp OR
-      RUN_SWIG)
-endif (RUBY_BINDINGS)
+endif (DO_RUBY_BINDINGS)
 
 ###################
 # CSharp
 ###################
 
 if (CSHARP_BINDINGS)
-  if (EXISTS ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp OR
-      RUN_SWIG)
-
+  if (EXISTS ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp OR RUN_SWIG)
     if (NOT CSHARP_EXECUTABLE)
       message(STATUS "CSHARP_EXECUTABLE NOT defined. .NET bindings will NOT be created.")
-      return()
     endif (NOT CSHARP_EXECUTABLE)
+
+    if (CSHARP_LIBRARY)
+      set(DO_CSHARP_BINDINGS ON BOOL)
+      message(STATUS "CSharp bindings will be compiled")
+    endif (CSHARP_LIBRARY)
+
+  else (EXISTS ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp OR RUN_SWIG)
+    message(STATUS "Warning: Csharp bindings NOT found. Generate using -DRUN_SWIG.")
+  endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp OR RUN_SWIG)
+endif (CSHARP_BINDINGS)
+
+if (DO_CSHARP_BINDINGS)
 
     if (RUN_SWIG)
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp ${openbabel_SOURCE_DIR}/scripts/csharp/OBDotNet.dll
@@ -319,10 +355,5 @@ if (CSHARP_BINDINGS)
         set_target_properties(bindings_csharp PROPERTIES
             LIBRARY_OUTPUT_DIRECTORY ${openbabel_BINARY_DIR})
 
-  else (EXISTS ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp OR
-      RUN_SWIG)
-    message(STATUS "Warning: Csharp bindings NOT found. Generate using -DRUN_SWIG.")
-  endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp OR
-      RUN_SWIG)
-endif (CSHARP_BINDINGS)
+endif (DO_CSHARP_BINDINGS)
 
