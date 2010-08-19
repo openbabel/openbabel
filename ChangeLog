@@ -1,3 +1,5 @@
+2010-08-19 Chris Morley
+
 2010-08-18 Chris Morley
 
 	* src/formats/fastsearchformat.cpp: make work with deprecated -S option

@@ -535,6 +535,8 @@ Section "Dummy Section" SecDummy
 
   File ..\..\scripts\java\openbabel.jar
   File ..\build\Release\openbabel_java.dll
+  
+  File ..\libs\i386\*.dll
 
   SetOutPath "$INSTDIR\examples"
   File /r /x .svn ExampleFiles\*.*
@@ -616,9 +618,10 @@ Section "Uninstall"
   
   Delete "$INSTDIR\openbabel-2.dll"
   Delete "$INSTDIR\iconv.dll"
-  Delete "$INSTDIR\libstdinchi.dll"
+  Delete "$INSTDIR\libinchi.dll"
   Delete "$INSTDIR\libxml2.dll"
   Delete "$INSTDIR\zlib1.dll"
+  Delete "$INSTDIR\xdr-0.dll"
   Delete "$INSTDIR\License.txt"
   Delete "$INSTDIR\OBGUI.exe"
   Delete "$INSTDIR\OpenBabelGUI.html"
@@ -629,11 +632,7 @@ Section "Uninstall"
   RMDir "$INSTDIR"
   !insertmacro MUI_STARTMENU_GETFOLDER Application $MUI_TEMP
     
-  Delete "$SMPROGRAMS\$MUI_TEMP\Uninstall.lnk"
-  Delete "$SMPROGRAMS\$MUI_TEMP\Open Babel GUI.lnk"
-  Delete "$SMPROGRAMS\$MUI_TEMP\Guide to using Open Babel GUI (web).lnk"
-  Delete "$SMPROGRAMS\$MUI_TEMP\Guide to using babel (web).lnk"
-  Delete "$SMPROGRAMS\$MUI_TEMP\Open Babel Folder.lnk"
+  Delete "$SMPROGRAMS\$MUI_TEMP\*.lnk"
 
   ;Remove from PATH
   push $INSTDIR
