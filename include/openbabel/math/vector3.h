@@ -354,7 +354,7 @@ namespace OpenBabel
   OBAPI double Point2PlaneAngle(const vector3 a, const vector3 b, const vector3 c, const vector3 d);
 
   //! Calculate the distance of a point a to a line determined by b and c
-  double Point2Line(const vector3& a, const vector3& b, const vector3& c);
+  OBAPI double Point2Line(const vector3& a, const vector3& b, const vector3& c);
 
   //  The global constant vector3 objects
   //! The zero vector: <0.0, 0.0, 0.0>
