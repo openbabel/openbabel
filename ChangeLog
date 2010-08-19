@@ -1,5 +1,9 @@
 2010-08-19 Chris Morley
 
+	* windows-vc2008/Distribution/NSISScriptToCreateInstaller.nsi:
+	add the forgotten DLLs. Seems ok on XP but uninstall leaves some
+	folders in Windows 7.
+
 2010-08-18 Chris Morley
 
 	* src/formats/fastsearchformat.cpp: make work with deprecated -S option
