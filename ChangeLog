@@ -1,3 +1,9 @@
+2010-08-22 Noel O'Boyle
+
+	* scripts/CMakeLists.txt: Should have been using STREQUAL
+	not EQUAL when comparing strings. The Ruby bindings (among
+	others) were not being installed to the correct location.
+
 2010-08-22 Chris Morley
 	
 	It's a bit late for new features but the value of this one
