@@ -336,7 +336,7 @@ protected:
       typedef std::map<std::string,int> OPAMapType;
       static OPAMapType& OptionParamArray(Option_type typ);
       static int       LoadFormatFiles();
-      bool             OpenAndSetFormat(bool SetFormat, std::ifstream* is);
+      bool             OpenAndSetFormat(bool SetFormat, std::ifstream* is, std::stringstream* ss=NULL);
 
       std::string	  InFilename;
       std::istream*     pInStream;

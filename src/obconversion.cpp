@@ -267,9 +267,8 @@ namespace OpenBabel {
       pOutStream=NULL;
       NeedToFreeOutStream = false;
     }
-    if (pLineEndBuf)
-      delete pLineEndBuf; // TEMPORARY until the reason for a unassigned mySource is found
-    pLineEndBuf=NULL;
+//    delete pLineEndBuf;
+//   pLineEndBuf=NULL;
   }
   //////////////////////////////////////////////////////
 
@@ -825,6 +824,7 @@ namespace OpenBabel {
     if(pInFormat && !(pInFormat->Flags() & (READBINARY | READXML)) && pInStream->rdbuf()!=pLineEndBuf)
     {
       delete pLineEndBuf;
+      pLineEndBuf = NULL;
       pLineEndBuf = new LErdbuf(pInStream->rdbuf());
       pInStream->rdbuf(pLineEndBuf);
     }
@@ -1167,7 +1167,7 @@ namespace OpenBabel {
     ostream* pOs=NULL;
     ifstream is;
     ofstream os;
-    stringstream ssOut;
+    stringstream ssOut, ssIn;
     bool HasMultipleOutputFiles=false;
     int Count=0;
     SetFirstInput();
@@ -1194,6 +1194,7 @@ namespace OpenBabel {
                   {
                     if(*itr==OutputFileName)
                       {
+
                         pOs = &ssOut;
                         break;
                       }
@@ -1261,8 +1262,15 @@ namespace OpenBabel {
                   {
                     InFilename = *itr;
                     ifstream ifs;
-                    if(!OpenAndSetFormat(CommonInFormat, &ifs))
+                    if(!OpenAndSetFormat(CommonInFormat, &ifs, &ssIn))
                       continue;
+                    if(ifs)
+                      pIs = &ifs;
+                    else
+                      pIs = &ssIn;
+
+                    //pIs = ifs ? &ifs : &ssIn;
+
 
                     if(HasMultipleOutputFiles)
                       {
@@ -1284,13 +1292,13 @@ namespace OpenBabel {
                           }
                         OutputFileList.push_back(batchfile);
                         SetOutputIndex(0); //reset for new file
-                        Count += Convert(&ifs,&ofs);					
+                        Count += Convert(pIs,&ofs);					
                       }
                     else
                       {
                         //Aggregation
                         if(itr!=tempitr) SetMoreFilesToCome();
-                        Count = Convert(&ifs,pOs);					
+                        Count = Convert(pIs,pOs);					
                       }
                   }
 
@@ -1311,9 +1319,12 @@ namespace OpenBabel {
               {			
                 //Single input file
                 InFilename = FileList[0];
-                if(!OpenAndSetFormat(CommonInFormat, &is))
+                if(!OpenAndSetFormat(CommonInFormat, &is, &ssIn))
                   return 0;
-                pIs=&is;
+                if(is)
+                  pIs =&is;
+                else
+                  pIs = &ssIn;
 
                 if(HasMultipleOutputFiles)
                   {
@@ -1399,10 +1410,22 @@ namespace OpenBabel {
     return Count;
   }
 
-  bool OBConversion::OpenAndSetFormat(bool SetFormat, ifstream* is)
+  bool OBConversion::OpenAndSetFormat(bool SetFormat, ifstream* is, stringstream* ss)
   {
     //Opens file using InFilename and sets pInFormat if requested
-    if(!SetFormat)
+    if(ss && InFilename[0]=='-')
+      {
+        //InFilename is actually  -:SMILES
+        is->setstate(ios::failbit); // do not use the input filestream...
+        InFilename.erase(0, 2);
+        if(SetFormat || SetInFormat("smi"))
+          {
+            ss->clear();
+            ss->str(InFilename); //...use the stringstream instead
+            return true;
+          }      
+      }
+      else if(!SetFormat)
       {
         pInFormat = FormatFromExt(InFilename.c_str());
         if(pInFormat==NULL)

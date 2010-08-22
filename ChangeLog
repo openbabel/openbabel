@@ -1,3 +1,19 @@
+2010-08-22 Chris Morley
+	
+	It's a bit late for new features but the value of this one
+	shows up when writing command-line documentation.
+	* include/openbabel/obconversion.h, src/obconversion.cpp
+	(FullConvert,OpenAndSetFormat):	When file name starts with -:
+	it is treated as SMILES and put in a stringstream rather being
+	used to open a ifstream.
+	
+	* tools/obabel.cpp: pass through files starting with "-:", e.g.
+	    obabel -:CN2C(=O)N(C)C(=O)C1=C2N=CN1C -ocan
+	Multiple use also possible. Not enabled in babel, but could be.
+	
+	* src/obconversion.cpp: Comment out line end buffer deletion,
+	so cml conversion works but still have memory leak.
+
 2010-08-19 Noel O'Boyle
 
 	* scripts/CMakeLists.txt: Get rid of return() statements by

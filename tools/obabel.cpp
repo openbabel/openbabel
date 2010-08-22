@@ -274,6 +274,11 @@ int main(int argc,char *argv[])
                     p = argv[++arg]; //space left after -f: use next argument
                   Conv.AddOption(opchar, OBConversion::GENOPTIONS, p);
                   break;
+                
+                case ':':
+                  //e.g. -:c1ccccc1. SMILES passed as a file name and handled in OBConversion
+                  FileList.push_back(argv[arg]);
+                  break;
 
                 default: //single character general option
                   p = argv[arg]+1;
