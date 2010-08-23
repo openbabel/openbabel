@@ -54,7 +54,10 @@ bool doMultiMoleculeFile(const std::string &filename)
     if (roundtrip != output) {
       failed++;
       result = false;
-      cout << "Failed roundtrip: \n  " << output << " -> \n  " << roundtrip << endl;
+      if (strcasecmp(output.c_str(), roundtrip.c_str()) != 0)
+        cout << "Failed roundtrip: \n  " << output << " -> \n  " << roundtrip << "\n";
+      else
+        cout << "Failed aromaticity: \n " << output << "\n";
     }
   }
 

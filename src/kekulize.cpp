@@ -48,7 +48,7 @@ namespace OpenBabel
   // This method essentially does a modified depth-first search to find
   //  large aromatic cycles
   int expand_cycle (OBMol *mol, OBAtom *atom, OBBitVec &avisit, OBBitVec &cvisit, 
-                    int rootIdx, int prevAtomIdx = -1, int depth = 19);
+                    int rootIdx, int prevAtomIdx = -1, int depth = 31);
 
   ///////////////////////////////////////////////////////////////////////////////
   //! \brief Kekulize aromatic rings without using implicit valence

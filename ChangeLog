@@ -1,3 +1,14 @@
+2010-08-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* src/kekulize.cpp: Add deeper recursion for aromaticity/kekule
+	determination. Solves a number of semi-rare molecules with 6+
+	fused 6-membered rings.
+
+	* test/files/forcefield.sdf: Fix Esomeprazole molecule -- not
+	protonated. This caused an impossible aromatization issue.
+
+	* test/files/*results.txt: Regenerate forcefield results.
+
 2010-08-22 Noel O'Boyle
 
 	* scripts/CMakeLists.txt: Should have been using STREQUAL
@@ -5,18 +16,18 @@
 	others) were not being installed to the correct location.
 
 2010-08-22 Chris Morley
-	
+
 	It's a bit late for new features but the value of this one
 	shows up when writing command-line documentation.
 	* include/openbabel/obconversion.h, src/obconversion.cpp
 	(FullConvert,OpenAndSetFormat):	When file name starts with -:
 	it is treated as SMILES and put in a stringstream rather being
 	used to open a ifstream.
-	
+
 	* tools/obabel.cpp: pass through files starting with "-:", e.g.
 	    obabel -:CN2C(=O)N(C)C(=O)C1=C2N=CN1C -ocan
 	Multiple use also possible. Not enabled in babel, but could be.
-	
+
 	* src/obconversion.cpp: Comment out line end buffer deletion,
 	so cml conversion works but still have memory leak.
 
@@ -27,10 +38,9 @@
 	with the Python bindings, it would never make it to the
 	Java bindings, etc.
 
-	Now each set of bindings has two 'if'
-	statements: the first decides whether or not to try to 
-	compile the bindings; the second actually does it (running
-	SWIG if requested beforehand).
+	Now each set of bindings has two 'if' statements: the first
+	decides whether or not to try to compile the bindings; the second
+	actually does it (running SWIG if requested beforehand).
 
 2010-08-19 Chris Morley
 
