@@ -81,7 +81,7 @@ namespace OpenBabel
     while (ifs.getline(buffer,BUFF_SIZE)) {
       if ((strstr(buffer,"GAMESS execution script") != NULL) ||
           (strstr(buffer,"PC GAMESS") != NULL) ||
-          (strstr(buffer,"GAMESS VERSION")) {
+          (strstr(buffer,"GAMESS VERSION") != NULL)) {
         // GAMESS output
         pFormat = pConv->FindFormat("gamout");
         break;
