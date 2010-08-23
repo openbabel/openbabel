@@ -639,19 +639,21 @@ namespace OpenBabel {
    * to true.
    *
    * The algorithm to convert the 3D coordinates to OBCisTransStereo objects
-   * uses the angles between the single bonds connected to the double bond. 
-   * These angles can have 3 values in the ideal case. 60 degrees for cis atoms,
-   * 120 degrees for atoms on the same side of the double bond and 180 degrees
-   * for trans atoms. A tolerance of 10 degrees is used when comparing these
-   * angles. Missing atom coordinates (OBStereo::ImplicitRef) and their bond 
+   * considers the signed distance between the attached atoms and the plane
+   * through the double bond at right angles to the plane of the attached
+   * atoms. Bonds on the same side (cis) will share the same sign for the
+   * signed distance.
+   *
+   * Missing atom coordinates (OBStereo::ImplicitRef) and their bond 
    * vectors will be computed if needed.
    *
    @verbatim
-     0      3       0   3
-      \    /         \ /      angle 0-*-3 & 1-*-2: 60 degrees (cis)
-       C==C    -->    *       angle 0-*-1 & 2-*-3: 120 degrees (same bond atom)
-      /    \         / \      angle 0-*-2 & 1-*-3: 180 degrees (trans)
-     1      2       1   2
+         0      3     Get signed distance of 0 and 2 to the plane
+          \    /      that goes through the double bond and is at
+           C==C       right angles to the stereo bonds. 
+          /    \      
+         1      2     If the two signed distances have the same sign
+                      then they are cis; if not, then trans.
    @endverbatim 
    *
    * This function is also used for symmetry analysis to handle cases where 
@@ -703,13 +705,13 @@ namespace OpenBabel {
       const std::vector<StereogenicUnit> &stereoUnits, 
       const std::map<OBBond*, enum OBStereo::BondDirection> *updown = NULL, bool addToMol = true);
   /**
-   * Convert a molecule's Tetrahedral Stereo objects to a series of hash or
+   * Convert a molecule's OBTetrahedralStereo objects to a series of hash or
    * wedge bonds. Note that the molecule itself is not modified; the result
    * is returned in the maps @p updown and @p from, which indicate
    * the origin and direction of each hash or wedge bond.
    *
    * When converting, the following guidelines are followed when trying to
-   * find the best candidate bond to set up/down for each tetrahedral stereo
+   * find the best candidate bond to set up/down for each OBTetrahedralStereo
    * object:
    * -# Should not already be set
    * -# Should not be connected to a 2nd tet center
@@ -718,23 +720,33 @@ namespace OpenBabel {
    * -# Preferably is not in a cycle
    * -# Preferably is a terminal H
    *
-   * If no bond can be found that matches all of these rules (and there is
-   * a slim possibility of this at the moment) then an error message is logged
-   * and the function returns false.
+   * If no bond can be found that matches rules 1 and 2 (and in theory this is possible)
+   * then an error message is logged and the function returns false. (If you find an
+   * example where this occurs, please file a bug.)
    *
    * @param mol The molecule.
    * @param updown A map of OBStereo::BondDirection for each hash/wedge bond
    * @param from A map of OBStereo::Ref indicating the origin of each hash/wedge bond
-   * @return True or False depending on whether the conversion was successful (please file a bug if it was not successful)
+   * @return True or False depending on whether the conversion was successful
    * @since version 2.3
    */
   OBAPI bool TetStereoTo0D(OBMol &mol, 
       std::map<OBBond*, enum OBStereo::BondDirection> &updown,
       std::map<OBBond*, OBStereo::Ref> &from);
-  // TODO DOCS (HASSLE NOEL ABOUT THIS!!)
+  /**
+   * Return a set of double bonds corresponding to the OBCisTransStereo objects
+   * for which the stereochemistry is undefined.
+   *
+   * Note that this functions just iterates over the existing OBCisTransStereo
+   * objects - it does not try to identify new ones.
+   *
+   * @param mol The molecule
+   * @return A set of bonds with unspecified cis/trans stereochemistry
+   * @since version 2.3
+   */
   OBAPI std::set<OBBond*> GetUnspecifiedCisTrans(OBMol& mol);
   /**
-   * Convert any reference to atomId in a stereo object to an OBStereo::ImplicitRef.
+   * Convert any reference to @p atomId in a stereo object to an OBStereo::ImplicitRef.
    * This function is called from OBMol::DeleteHydrogens()
    * (via OBMol::DeleteHydrogen()) to remove any explicit references to a
    * hydrogen atom that has been deleted. However, the code is not specific
