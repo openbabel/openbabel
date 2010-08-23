@@ -80,7 +80,8 @@ namespace OpenBabel
     // http://chemical-mime.sourceforge.net/chemical-mime-data.html
     while (ifs.getline(buffer,BUFF_SIZE)) {
       if ((strstr(buffer,"GAMESS execution script") != NULL) ||
-          (strstr(buffer,"PC GAMESS") != NULL)) {
+          (strstr(buffer,"PC GAMESS") != NULL) ||
+          (strstr(buffer,"GAMESS VERSION")) {
         // GAMESS output
         pFormat = pConv->FindFormat("gamout");
         break;

@@ -1,5 +1,8 @@
 2010-08-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/formats/outformat.cpp: Handle new GAMESS-US/WinGAMESS output
+	files.
+
 	* src/kekulize.cpp: Add deeper recursion for aromaticity/kekule
 	determination. Solves a number of semi-rare molecules with 6+
 	fused 6-membered rings.
