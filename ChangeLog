@@ -5,6 +5,9 @@
 
 2010-08-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/parsmart.cpp, include/openbabel/parsmart.h: Add thread-safe
+	SMARTS matching API, PR#3949927, thanks to David Koes.
+
 	* src/formats/mol2format.cpp: Disable tellg/seekg forwarding,
 	which is very slow with gzip-compressed mol2.gz
 	files. PR#3048758.

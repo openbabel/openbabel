@@ -152,6 +152,14 @@ namespace OpenBabel
     std::vector<int> bond_parse_order; // Used to recover the order in which bonds were parsed
   }
   Pattern;
+
+  typedef struct
+   {
+     BondExpr *closord[100];
+     int       closure[100];
+     int       closindex;
+   } ParseState;
+
 #else
   // for SWIG, just forward declare that we have some Pattern struct
   // (but this is private and not wrapped for scripting languages)
@@ -171,23 +179,50 @@ namespace OpenBabel
     Pattern                        *_pat;      //!< The parsed SMARTS pattern
     std::string				              _str;      //!< The string of the SMARTS expression
 
+    char *_buffer;
+    char *LexPtr;
+    char *MainPtr;
+
+    Pattern *ParseSMARTSPattern( void );
+    Pattern *ParseSMARTSPart( Pattern*, int );
+    Pattern *SMARTSError( Pattern *pat );
+    Pattern *ParseSMARTSError( Pattern *pat, BondExpr *expr );
+    AtomExpr *ParseSimpleAtomPrimitive( void );
+    AtomExpr *ParseComplexAtomPrimitive( void );
+    AtomExpr *ParseAtomExpr( int level );
+    BondExpr *ParseBondPrimitive( void );
+    BondExpr *ParseBondExpr( int level );
+    Pattern *ParseSMARTSString( char *ptr );
+    Pattern *ParseSMARTSRecord( char *ptr );
+    int GetVectorBinding();
+    Pattern *SMARTSParser( Pattern *pat, ParseState *stat,
+                                  int prev, int part );
+
   public:
-    OBSmartsPattern() : _pat(NULL) { }
+    OBSmartsPattern() : _pat(NULL), _buffer(NULL), LexPtr(NULL), MainPtr(NULL) { }
     virtual ~OBSmartsPattern();
 
-  OBSmartsPattern(const OBSmartsPattern& cp): _pat(NULL)
-      {
-        *this = cp;
-      }
+    OBSmartsPattern(const OBSmartsPattern& cp): _pat(NULL), _buffer(NULL), LexPtr(NULL), MainPtr(NULL)
+    {
+    	*this = cp;
+    }
+
     OBSmartsPattern& operator=(const OBSmartsPattern& cp)
-      {
-        if (_pat)
-          delete [] _pat;
-        _pat = NULL;
-        std::string s = cp._str;
-        Init(s);
-        return (*this);
-      }
+	{
+		if (this == &cp)
+			return *this;
+
+		if (_pat)
+			delete[] _pat;
+		if (_buffer)
+			delete[] _buffer;
+		_buffer = NULL;
+		_pat = NULL;
+		std::string s = cp._str;
+		Init(s);
+		return (*this);
+	}
+
     
     //! \name Initialization Methods
     //@{
@@ -240,6 +275,9 @@ namespace OpenBabel
     }
     //@}
 
+    // number and kind of matches to return
+    enum MatchType {All, Single, AllUnique};
+
     //! \name Matching methods (SMARTS on a specific OBMol)
     //@{
     //! Perform SMARTS matching for the pattern specified using Init().
@@ -247,6 +285,24 @@ namespace OpenBabel
     //! \param single Whether only a single match is required (faster). Default is false.
     //! \return Whether matches occurred
     bool Match(OBMol &mol, bool single=false);
+
+    //! \name Matching methods (SMARTS on a specific OBMol)
+    //@{
+    //! Perform SMARTS matching for the pattern specified using Init().
+    //! This version is (more) thread safe.
+    //! \param mol The molecule to use for matching
+    //! \param mlist The resulting match list
+    //! \param single Whether only a single match is required (faster). Default is false.
+    //! \param unique Whether only unique matches should be returned. Default is false.
+    //! \return Whether matches occurred
+    bool Match(OBMol &mol, std::vector<std::vector<int> > & mlist, MatchType mtype = All) const;
+
+    //! \name Matching methods (SMARTS on a specific OBMol)
+    //@{
+    //! Thread safe check for any SMARTS match
+    //! \param mol The molecule to use for matching
+    //! \return Whether there exists any match
+    bool HasMatch(OBMol &mol) const;
 
     bool RestrictedMatch(OBMol &mol, std::vector<std::pair<int,int> > &pairs, bool single=false);
 
@@ -295,19 +351,51 @@ namespace OpenBabel
 
   ///@}
 
+  //! \class OBSmartsMatcher parsmart.h <openbabel/parsmart.h>
+  //! \brief Internal class: performs matching; a wrapper around previous
+  //! C matching code to make it thread safe.
+  class OBAPI OBSmartsMatcher
+  {
+  protected:
+	  //recursive smarts cache
+	  std::vector<std::pair<const Pattern*,std::vector<bool> > > RSCACHE;
+	  // list of fragment patterns (e.g., (*).(*)
+	  std::vector<const Pattern*> Fragments;
+/*
+	  bool EvalAtomExpr(AtomExpr *expr,OBAtom *atom);
+	  bool EvalBondExpr(BondExpr *expr,OBBond *bond);
+	  int GetVectorBinding();
+	  int CreateAtom(Pattern*,AtomExpr*,int,int vb=0);
+*/
+	bool EvalAtomExpr(AtomExpr *expr,OBAtom *atom);
+	bool EvalBondExpr(BondExpr *expr,OBBond *bond);
+    void SetupAtomMatchTable(std::vector<std::vector<bool> > &ttab,
+	                           const Pattern *pat, OBMol &mol);
+    void FastSingleMatch(OBMol &mol,const Pattern *pat,
+                                std::vector<std::vector<int> > &mlist);
+
+	friend class OBSSMatch;
+  public:
+    OBSmartsMatcher() {}
+    virtual ~OBSmartsMatcher() {}
+
+	 bool match(OBMol &mol, const Pattern *pat,std::vector<std::vector<int> > &mlist,bool single=false);
+
+  };
+
   //! \class OBSSMatch parsmart.h <openbabel/parsmart.h>
-  //! \brief Internal class: performs fast, exhaustive matching used to find 
+  //! \brief Internal class: performs fast, exhaustive matching used to find
   //! just a single match in match() using recursion and explicit stack handling.
   class OBAPI OBSSMatch
   {
   protected:
     bool        *_uatoms;
     OBMol       *_mol;
-    Pattern     *_pat;
+    const Pattern     *_pat;
     std::vector<int>  _map;
 
   public:
-    OBSSMatch(OBMol&,Pattern*);
+    OBSSMatch(OBMol&,const Pattern*);
     ~OBSSMatch();
     void Match(std::vector<std::vector<int> > &v, int bidx=-1);
   };

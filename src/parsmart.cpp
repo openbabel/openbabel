@@ -100,12 +100,6 @@ namespace OpenBabel
 
 #define ELEMMAX  104
 
-  typedef struct
-  {
-    BondExpr *closord[100];
-    int       closure[100];
-    int       closindex;
-  } ParseState;
 
 #define ATOMEXPRPOOL  1
 #define BONDEXPRPOOL  1
@@ -167,19 +161,6 @@ namespace OpenBabel
 #define AL_ANTICLOCKWISE  2
 #define AL_UNSPECIFIED    0
 
-  static char *MainPtr;
-  static char *LexPtr;
-
-  static char Buffer[BUFF_SIZE];
-  static char Descr[BUFF_SIZE];
-  //recursive smarts cache
-  std::vector<std::pair<Pattern*,std::vector<bool> > > RSCACHE;
-  // list of fragment patterns (e.g., (*).(*)
-  std::vector<Pattern*> Fragments;
-
-  static bool match(OBMol &mol,Pattern *pat,std::vector<std::vector<int> > &mlist,bool single=false);
-  static bool EvalAtomExpr(AtomExpr *expr,OBAtom *atom);
-  static bool EvalBondExpr(BondExpr *expr,OBBond *bond);
   static int GetVectorBinding();
   static int CreateAtom(Pattern*,AtomExpr*,int,int vb=0);
   
@@ -616,10 +597,8 @@ namespace OpenBabel
   /*  SMARTS Syntax Parsing  */
   /*=========================*/
 
-  static Pattern *ParseSMARTSPattern( void );
-  static Pattern *ParseSMARTSPart( Pattern*, int );
 
-  static Pattern *SMARTSError( Pattern *pat )
+  Pattern *OBSmartsPattern::SMARTSError( Pattern *pat )
   {
     stringstream errorMsg;
     errorMsg << "SMARTS Error:\n" << MainPtr << endl;
@@ -630,7 +609,7 @@ namespace OpenBabel
     return (Pattern*)0;
   }
 
-  static AtomExpr *ParseSimpleAtomPrimitive( void )
+  AtomExpr *OBSmartsPattern::ParseSimpleAtomPrimitive( void )
   {
     switch( *LexPtr++ )
       {
@@ -691,7 +670,7 @@ namespace OpenBabel
     return (AtomExpr*)0;
   }
 
-  static AtomExpr *ParseComplexAtomPrimitive( void )
+  AtomExpr *OBSmartsPattern::ParseComplexAtomPrimitive( void )
   {
     register Pattern *pat;
     register int index;
@@ -1214,7 +1193,7 @@ namespace OpenBabel
     return (AtomExpr*)0;
   }
 
-  static AtomExpr *ParseAtomExpr( int level )
+  AtomExpr *OBSmartsPattern::ParseAtomExpr( int level )
   {
     register AtomExpr *expr1;
     register AtomExpr *expr2;
@@ -1291,7 +1270,7 @@ namespace OpenBabel
     return (AtomExpr*)0;
   }
 
-  static BondExpr *ParseBondPrimitive( void )
+  BondExpr *OBSmartsPattern::ParseBondPrimitive( void )
   {
     char bsym    = *LexPtr++;
 
@@ -1316,7 +1295,7 @@ namespace OpenBabel
     return (BondExpr*)0;
   }
 
-  static BondExpr *ParseBondExpr( int level )
+  BondExpr *OBSmartsPattern::ParseBondExpr( int level )
   {
     register BondExpr *expr1;
     register BondExpr *expr2;
@@ -1393,7 +1372,7 @@ namespace OpenBabel
     return (BondExpr*)0;
   }
 
-  static int GetVectorBinding()
+  int OBSmartsPattern::GetVectorBinding()
   {
     int vb=0;
   
@@ -1408,14 +1387,14 @@ namespace OpenBabel
     return(vb);
   }
 
-  static Pattern *ParseSMARTSError( Pattern *pat, BondExpr *expr )
+  Pattern *OBSmartsPattern::ParseSMARTSError( Pattern *pat, BondExpr *expr )
   {
     if( expr )
       FreeBondExpr(expr);
     return SMARTSError(pat);
   }
 
-  static Pattern *SMARTSParser( Pattern *pat, ParseState *stat,
+  Pattern *OBSmartsPattern::SMARTSParser( Pattern *pat, ParseState *stat,
                                 int prev, int part )
   {
     int vb = 0;
@@ -1705,9 +1684,9 @@ namespace OpenBabel
     return((int)false);
   }
 
-  static Pattern *ParseSMARTSPart( Pattern *result, int part )
+  Pattern *OBSmartsPattern::ParseSMARTSPart( Pattern *result, int part )
   {
-    auto ParseState stat;
+    ParseState stat;
     int i,flag;
   
     result->bond_parse_order.clear();
@@ -1747,7 +1726,7 @@ namespace OpenBabel
   }
 
 
-  static Pattern *ParseSMARTSPattern( void )
+  Pattern *OBSmartsPattern::ParseSMARTSPattern( void )
   {
     Pattern *result;
     result = AllocPattern();
@@ -1778,7 +1757,7 @@ namespace OpenBabel
     return ParseSMARTSPart(result,0);
   }
 
-  static Pattern *ParseSMARTSString( char *ptr )
+  Pattern *OBSmartsPattern::ParseSMARTSString( char *ptr )
   {
     register Pattern *result;
   
@@ -1792,7 +1771,7 @@ namespace OpenBabel
     return result;
   }
 
-  Pattern *ParseSMARTSRecord( char *ptr )
+  Pattern *OBSmartsPattern::ParseSMARTSRecord( char *ptr )
   {
     register char *src,*dst;
   
@@ -1806,22 +1785,8 @@ namespace OpenBabel
         while( isspace(*src) )
           src++;
       }
-  
-    dst = Descr;
-    while( *src && (dst<Descr+78) )
-      {
-        if( isspace(*src) )
-          {
-            *dst++ = ' ';
-            while( isspace(*src) )
-              src++;
-          }
-        else
-          *dst++ = *src++;
-      }
-    *dst = '\0';
-  
-    return ParseSMARTSString(Buffer);
+
+    return ParseSMARTSString(ptr);
   }
 
   /*============================*/
@@ -2380,46 +2345,109 @@ namespace OpenBabel
 
   bool OBSmartsPattern::Init(const char *buffer)
   {
-    strncpy(Buffer,buffer, sizeof(Buffer) - 1);
-    Buffer[sizeof(Buffer) - 1] = '\0';
+	  if (_buffer != NULL)
+		  delete[] _buffer;
+	  _buffer = new char[strlen(buffer) + 1];
+    strcpy(_buffer,buffer);
   
-    _pat = ParseSMARTSRecord(Buffer);
-    _str = buffer;
+    _pat = ParseSMARTSRecord(_buffer);
+    _str = _buffer;
   
     return(_pat != (Pattern*)NULL);
   }
 
   bool OBSmartsPattern::Init(const std::string &s)
   {
-    strncpy(Buffer, s.c_str(), sizeof(Buffer) - 1);
-    Buffer[sizeof(Buffer) - 1] = '\0';
-  
-    _pat = ParseSMARTSRecord(Buffer);
-    _str = s;
-  
-    return(_pat != (Pattern*)NULL);
+	if (_buffer != NULL)
+		delete[] _buffer;
+	_buffer = new char[s.length() + 1];
+	strcpy(_buffer, s.c_str());
+
+	_pat = ParseSMARTSRecord(_buffer);
+	_str = s;
+
+	return (_pat != (Pattern*) NULL);
   }
 
   OBSmartsPattern::~OBSmartsPattern()
   {
     if (_pat)
       FreePattern(_pat);
+    if(_buffer)
+    	delete [] _buffer;
   }
 
   bool OBSmartsPattern::Match(OBMol &mol,bool single)
   {
-    RSCACHE.clear();
-    if(_pat == NULL)
+	OBSmartsMatcher matcher;
+	if(_pat == NULL)
       return false;
     if(_pat->hasExplicitH) //The SMARTS pattern contains [H]
       {
         //Do matching on a copy of mol with explict hydrogens
         OBMol tmol = mol;
         tmol.AddHydrogens(false,false);
-        return(match(tmol,_pat,_mlist,single));
+        return(matcher.match(tmol,_pat,_mlist,single));
       }
-    return(match(mol,_pat,_mlist,single));
+    return(matcher.match(mol,_pat,_mlist,single));
   }
+
+  bool OBSmartsPattern::HasMatch(OBMol &mol) const
+  {
+	  //a convenience function
+	  std::vector<std::vector<int> > dummy;
+	  return Match(mol, dummy, Single);
+  }
+
+  bool OBSmartsPattern::Match(OBMol &mol, std::vector<std::vector<int> > & mlist,
+		  MatchType mtype /*=All*/) const
+  {
+	OBSmartsMatcher matcher;
+	mlist.clear();
+	if(_pat == NULL)
+      return false;
+    if(_pat->hasExplicitH) //The SMARTS pattern contains [H]
+      {
+        //Do matching on a copy of mol with explict hydrogens
+        OBMol tmol = mol;
+        tmol.AddHydrogens(false,false);
+        if(!matcher.match(tmol,_pat,mlist,mtype == Single))
+        	return false;
+      }
+    else if(!matcher.match(mol,_pat,mlist,mtype == Single))
+    	return false;
+
+    if((mtype == AllUnique) && mlist.size() > 1)
+    {
+    	//uniquify
+         bool ok;
+        OBBitVec bv;
+        std::vector<OBBitVec> vbv;
+        std::vector<std::vector<int> > ulist;
+        std::vector<std::vector<int> >::iterator i;
+        std::vector<OBBitVec>::iterator j;
+
+        for (i = mlist.begin();i != mlist.end();++i)
+          {
+            ok = true;
+            bv.Clear();
+            bv.FromVecInt(*i);
+            for (j = vbv.begin();j != vbv.end() && ok;++j)
+              if ((*j) == bv)
+                ok = false;
+
+            if (ok)
+              {
+                ulist.push_back(*i);
+                vbv.push_back(bv);
+              }
+          }
+
+        mlist = ulist;
+    }
+    return true;
+  }
+
 
   bool OBSmartsPattern::RestrictedMatch(OBMol &mol,
                                         std::vector<std::pair<int,int> > &pr,
@@ -2430,8 +2458,8 @@ namespace OpenBabel
     std::vector<std::vector<int> >::iterator i;
     std::vector<std::pair<int,int> >::iterator j;
   
-    RSCACHE.clear();
-    match(mol,_pat,mlist);
+    OBSmartsMatcher matcher;
+    matcher.match(mol,_pat,mlist);
     _mlist.clear();
     if (mlist.empty())
       return(false);
@@ -2459,8 +2487,8 @@ namespace OpenBabel
     std::vector<std::vector<int> > mlist;
     std::vector<std::vector<int> >::iterator i;
   
-    RSCACHE.clear();
-    match(mol,_pat,mlist);
+    OBSmartsMatcher matcher;
+    matcher.match(mol,_pat,mlist);
   
     _mlist.clear();
     if (mlist.empty())
@@ -2486,8 +2514,8 @@ namespace OpenBabel
     return((_mlist.empty()) ? false:true);
   }
 
-  void SetupAtomMatchTable(std::vector<std::vector<bool> > &ttab,
-                           Pattern *pat, OBMol &mol)
+  void OBSmartsMatcher::SetupAtomMatchTable(std::vector<std::vector<bool> > &ttab,
+                           const Pattern *pat, OBMol &mol)
   {
     int i;
   
@@ -2503,7 +2531,7 @@ namespace OpenBabel
           ttab[i][atom->GetIdx()] = true;
   }
 
-  static void FastSingleMatch(OBMol &mol,Pattern *pat,
+  void OBSmartsMatcher::FastSingleMatch(OBMol &mol, const Pattern *pat,
                               std::vector<std::vector<int> > &mlist)
   {
     OBAtom *atom,*a1,*nbr;
@@ -2596,7 +2624,7 @@ namespace OpenBabel
   }
 
 
-  static bool match(OBMol &mol,Pattern *pat,
+  bool OBSmartsMatcher::match(OBMol &mol, const Pattern *pat,
                     std::vector<std::vector<int> > &mlist,bool single)
   {
     mlist.clear();
@@ -2719,7 +2747,7 @@ namespace OpenBabel
     return(!mlist.empty());
   }
 
-  static bool EvalAtomExpr(AtomExpr *expr,OBAtom *atom)
+  bool OBSmartsMatcher::EvalAtomExpr(AtomExpr *expr,OBAtom *atom)
   {
     for (;;)
       switch (expr->type)
@@ -2805,7 +2833,7 @@ namespace OpenBabel
         case AE_RECUR:
           {
             //see if pattern has been matched
-            std::vector<std::pair<Pattern*,std::vector<bool> > >::iterator i;
+            std::vector<std::pair<const Pattern*,std::vector<bool> > >::iterator i;
             for (i = RSCACHE.begin();i != RSCACHE.end();++i)
               if (i->first == (Pattern*)expr->recur.recur)
                 return(i->second[atom->GetIdx()]);
@@ -2819,8 +2847,8 @@ namespace OpenBabel
               for (j = mlist.begin();j != mlist.end();++j)
                 vb[(*j)[0]] = true;
 	  
-            RSCACHE.push_back(std::pair<Pattern*,
-                              std::vector<bool> > ((Pattern*)expr->recur.recur,
+            RSCACHE.push_back(std::pair<const Pattern*,
+                              std::vector<bool> > ((const Pattern*)expr->recur.recur,
                                                    vb));
 	  
             return(vb[atom->GetIdx()]);
@@ -2831,7 +2859,7 @@ namespace OpenBabel
         }
   }
 
-  static bool EvalBondExpr(BondExpr *expr,OBBond *bond)
+  bool OBSmartsMatcher::EvalBondExpr(BondExpr *expr,OBBond *bond)
   {
     for (;;)
       switch( expr->type )
@@ -2938,7 +2966,7 @@ namespace OpenBabel
   //  match()
   //*******************************************************************
 
-  OBSSMatch::OBSSMatch(OBMol &mol,Pattern *pat)
+  OBSSMatch::OBSSMatch(OBMol &mol, const Pattern *pat)
   {
     _mol = &mol;
     _pat = pat;
@@ -2961,12 +2989,13 @@ namespace OpenBabel
 
   void OBSSMatch::Match(std::vector<std::vector<int> > &mlist,int bidx)
   {
+	  OBSmartsMatcher matcher;
     if (bidx == -1)
       {
         OBAtom *atom;
         std::vector<OBAtom*>::iterator i;
         for (atom = _mol->BeginAtom(i);atom;atom = _mol->NextAtom(i))
-          if (EvalAtomExpr(_pat->atom[0].expr,atom))
+          if (matcher.EvalAtomExpr(_pat->atom[0].expr,atom))
             {
               _map[0] = atom->GetIdx();
               _uatoms[atom->GetIdx()] = true;
@@ -2998,8 +3027,8 @@ namespace OpenBabel
       
         atom = _mol->GetAtom(_map[src]);
         for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
-          if (!_uatoms[nbr->GetIdx()] && EvalAtomExpr(aexpr,nbr) &&
-              EvalBondExpr(bexpr,((OBBond*) *i)))
+          if (!_uatoms[nbr->GetIdx()] && matcher.EvalAtomExpr(aexpr,nbr) &&
+        		  matcher.EvalBondExpr(bexpr,((OBBond*) *i)))
             {
               _map[dst] = nbr->GetIdx();
               _uatoms[nbr->GetIdx()] = true;
@@ -3012,7 +3041,7 @@ namespace OpenBabel
       {
         OBBond *bond = _mol->GetBond(_map[_pat->bond[bidx].src],
                                      _map[_pat->bond[bidx].dst]);
-        if (bond && EvalBondExpr(_pat->bond[bidx].expr,bond))
+        if (bond && matcher.EvalBondExpr(_pat->bond[bidx].expr,bond))
           Match(mlist,bidx+1);
       }
   }
