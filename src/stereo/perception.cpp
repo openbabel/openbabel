@@ -1728,7 +1728,7 @@ namespace OpenBabel {
     return configs;
   }
 
-  void TetStereoTo0D(OBMol &mol, 
+  bool TetStereoTo0D(OBMol &mol, 
       std::map<OBBond*, enum OBStereo::BondDirection> &updown,
       std::map<OBBond*, OBStereo::Ref> &from)
   {
@@ -1784,7 +1784,7 @@ namespace OpenBabel {
         if (chosen==NULL) { // There is a remote possibility of this but let's worry about 99.9% of cases first
           obErrorLog.ThrowError(__FUNCTION__, 
             "Failed to set stereochemistry as unable to find an available bond", obError);
-          return;
+          return false;
         }
         alreadyset.insert(chosen);
         
@@ -1820,6 +1820,7 @@ namespace OpenBabel {
         updown[chosen] = bonddir;
         from[chosen] = cfg.center;
       }
+      return true;
   }
   set<OBBond*> GetUnspecifiedCisTrans(OBMol& mol)
   {

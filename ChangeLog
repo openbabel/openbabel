@@ -1,3 +1,8 @@
+2010-08-23 Noel O'Boyle
+
+	* include/openbabel/stereo/stereo.h, perception.cpp: Add doxygen docs
+	for TetStereoTo0D and change return value to bool.
+
 2010-08-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* src/formats/outformat.cpp: Handle new GAMESS-US/WinGAMESS output

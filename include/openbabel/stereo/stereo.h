@@ -702,8 +702,33 @@ namespace OpenBabel {
   OBAPI std::vector<OBCisTransStereo*> CisTransFrom2D(OBMol *mol, 
       const std::vector<StereogenicUnit> &stereoUnits, 
       const std::map<OBBond*, enum OBStereo::BondDirection> *updown = NULL, bool addToMol = true);
-  // TODO DOCS (HASSLE NOEL ABOUT THIS!!)
-  OBAPI void TetStereoTo0D(OBMol &mol, 
+  /**
+   * Convert a molecule's Tetrahedral Stereo objects to a series of hash or
+   * wedge bonds. Note that the molecule itself is not modified; the result
+   * is returned in the maps @p updown and @p from, which indicate
+   * the origin and direction of each hash or wedge bond.
+   *
+   * When converting, the following guidelines are followed when trying to
+   * find the best candidate bond to set up/down for each tetrahedral stereo
+   * object:
+   * -# Should not already be set
+   * -# Should not be connected to a 2nd tet center
+   *    (this is acceptable in theory as the wedge is only at one end, but
+   *     in practice it may cause confusion and thus we avoid it)
+   * -# Preferably is not in a cycle
+   * -# Preferably is a terminal H
+   *
+   * If no bond can be found that matches all of these rules (and there is
+   * a slim possibility of this at the moment) then an error message is logged
+   * and the function returns false.
+   *
+   * @param mol The molecule.
+   * @param updown A map of OBStereo::BondDirection for each hash/wedge bond
+   * @param from A map of OBStereo::Ref indicating the origin of each hash/wedge bond
+   * @return True or False depending on whether the conversion was successful (please file a bug if it was not successful)
+   * @since version 2.3
+   */
+  OBAPI bool TetStereoTo0D(OBMol &mol, 
       std::map<OBBond*, enum OBStereo::BondDirection> &updown,
       std::map<OBBond*, OBStereo::Ref> &from);
   // TODO DOCS (HASSLE NOEL ABOUT THIS!!)
