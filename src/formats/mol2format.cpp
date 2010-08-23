@@ -313,6 +313,7 @@ namespace OpenBabel
     if (hasPartialCharges)
       mol.SetPartialChargesPerceived();
 
+    /* Disabled due to PR#3048758 -- seekg is very slow with gzipped mol2
     // continue untill EOF or untill next molecule record
     streampos pos;
     for(;;)
@@ -325,6 +326,7 @@ namespace OpenBabel
       }
 
     ifs.seekg(pos); // go back to the end of the molecule
+    */
     return(true);
   }
 
