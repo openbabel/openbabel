@@ -49,7 +49,11 @@ namespace OpenBabel
         return "MDL MOL format\n"
                "Reads and writes V2000 and V3000 versions\n"
                "Read Options, e.g. -as\n"
-               " s  determine stereochemistry from atom flags\n"
+               " s  determine chirality from atom parity flags\n"
+               "       This is valid only for 0D information. Atom\n"
+               "       parity is always ignored on reading for MOL files\n"
+               "       containing 2D or 3D information.\n\n"
+
                " T  read title only\n\n"
                "Write Options, e.g. -x3\n"
             /* " 2  output V2000 (default) or\n" */
@@ -168,6 +172,7 @@ namespace OpenBabel
     string comment;
     string r1, r2;
     map<OBBond*, OBStereo::BondDirection> updown;
+    vector<Parity> parities;
     vector<pair<AliasData*,OBAtom*> > aliases;
 
     // Attempting to read past the end of the file -- don't bother
@@ -339,6 +344,25 @@ namespace OpenBabel
         if (line.size() >= 38)
           charge = ReadIntField(line.substr(36, 3).c_str());
         charges.push_back(charge);
+        // stereo parity
+        if (line.size() >= 41) {
+          stereo = ReadUIntField(line.substr(39, 3).c_str());
+          switch (stereo) {
+            case 1:
+              parity = Clockwise;
+              break;
+            case 2:
+              parity = AntiClockwise;
+              break;
+            case 3:
+              parity = Unknown;
+              break;
+            default:
+              parity = NotStereo;
+              break;
+          }
+        }
+        parities.push_back(parity);
 
         if (!mol.AddAtom(atom))
           return false;
@@ -604,7 +628,11 @@ namespace OpenBabel
     } else { // 0D
       if (!setDimension)
         mol.SetDimension(0);
-      // The 0D format does not store stereochemistry
+      // The 0D format is not considered to store stereochemistry, but
+      // if you specify the "s" option, then atom parities from the
+      // MOL file will be used to create tetrahedral stereochemistry
+     	if (pConv->IsOption("s"))
+        TetStereoFromParity(mol, parities);
       StereoFrom0D(&mol);
     }
 
@@ -1278,7 +1306,7 @@ namespace OpenBabel
   }
 
   void MDLFormat::TetStereoFromParity(OBMol& mol, vector<MDLFormat::Parity> &parity)
-  { // Not used...
+  {
     for (unsigned long i=0;i<parity.size();i++) {
       if (parity[i] == NotStereo)
         continue;

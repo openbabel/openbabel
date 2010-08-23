@@ -1,5 +1,12 @@
 2010-08-23 Noel O'Boyle
 
+	* src/formats/mdlformat.cpp: Make the "s" option work by resurrecting
+	some old code I had written and then subsequently removed. Atom
+	parities will now be used for 0D structures, but only if "s" is
+	specified.
+
+2010-08-23 Noel O'Boyle
+
 	* include/openbabel/stereo/stereo.h, perception.cpp: Add doxygen docs
 	for TetStereoTo0D and change return value to bool.
 
