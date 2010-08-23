@@ -19,6 +19,7 @@ set(formats_compchem
       adfformat
       dmolformat
       fchkformat
+      fhiaimsformat
       gamessformat
       gaussformat
       gausscubeformat
