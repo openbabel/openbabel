@@ -12,6 +12,9 @@
 
 2010-08-23  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
+	* src/data.cpp (GetAtomicNum): Handle "Hl" hydrogen label from CIF
+	PR#3048959. Add warning when an unknown element label is provided.
+
 	* src/parsmart.cpp, include/openbabel/parsmart.h: Add thread-safe
 	SMARTS matching API, PR#3949927, thanks to David Koes.
 

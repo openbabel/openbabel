@@ -318,6 +318,8 @@ namespace OpenBabel
     if (!_init)
       Init();
 
+    char buffer[BUFF_SIZE]; // error buffer
+
     // Compare to symbol
     vector<OBElement*>::iterator i;
     for (i = _element.begin();i != _element.end();++i)
@@ -341,8 +343,17 @@ namespace OpenBabel
         iso = 3;
         return(1);
       }
+    else if (strcasecmp(identifier, "Hl") == 0) // ligand hydrogen -- found in some CIF PR#3048959.
+      {
+        snprintf(buffer, BUFF_SIZE, "Cannot understand the element label %s. Guessing it's hydrogen.", identifier);
+        obErrorLog.ThrowError(__FUNCTION__, buffer, obWarning);
+        return(1);
+      }
     else
       iso = 0;
+
+    snprintf(buffer, BUFF_SIZE, "Cannot understand the element label %s.", identifier);
+    obErrorLog.ThrowError(__FUNCTION__, buffer, obWarning);
     return(0);
   }
   
