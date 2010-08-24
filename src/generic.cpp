@@ -1392,6 +1392,97 @@ void OBDOSData::SetData(double fermi,
   this->_vDensities = vDensities;
 }
 
+  // member functions for OBOrbitalData
+
+  void OBOrbitalData::LoadClosedShellOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, int alphaHOMO)
+  {
+    if (energies.size() < symmetries.size())
+      return; // something is very weird -- it's OK to pass no symmetries (we'll assume "A")
+    if (energies.size() == 0)
+      return;
+    if (alphaHOMO > energies.size())
+      return;
+
+    _alphaHOMO = alphaHOMO;
+    _alphaOrbitals.clear();
+    _betaHOMO = 0;
+    _betaOrbitals.clear();
+    _openShell = false;
+
+    if (symmetries.size() < energies.size()) // pad with "A" symmetry
+      for (unsigned int i = symmetries.size(); i < energies.size(); ++i)
+        symmetries.push_back("A");
+
+    OBOrbital currentOrbital;
+    for (unsigned int i = 0; i < energies.size(); ++i)
+      {
+        if (i < alphaHOMO)
+          currentOrbital.SetData(energies[i], 2.0, symmetries[i]);
+        else
+          currentOrbital.SetData(energies[i], 0.0, symmetries[i]);
+
+        _alphaOrbitals.push_back(currentOrbital);
+      }
+  }
+
+  void OBOrbitalData::LoadAlphaOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, int alphaHOMO)
+  {
+    if (energies.size() < symmetries.size())
+      return; // something is very weird -- it's OK to pass no symmetries (we'll assume "A")
+    if (energies.size() == 0)
+      return;
+    if (alphaHOMO > energies.size())
+      return;
+
+    _alphaHOMO = alphaHOMO;
+    _alphaOrbitals.clear();
+    _openShell = true;
+
+    if (symmetries.size() < energies.size()) // pad with "A" symmetry
+      for (unsigned int i = symmetries.size(); i < energies.size(); ++i)
+        symmetries.push_back("A");
+
+    OBOrbital currentOrbital;
+    for (unsigned int i = 0; i < energies.size(); ++i)
+      {
+        if (i < alphaHOMO)
+          currentOrbital.SetData(energies[i], 2.0, symmetries[i]);
+        else
+          currentOrbital.SetData(energies[i], 0.0, symmetries[i]);
+
+        _alphaOrbitals.push_back(currentOrbital);
+      }
+  }
+
+  void OBOrbitalData::LoadBetaOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, int betaHOMO)
+  {
+    if (energies.size() < symmetries.size())
+      return; // something is very weird -- it's OK to pass no symmetries (we'll assume "A")
+    if (energies.size() == 0)
+      return;
+    if (betaHOMO > energies.size())
+      return;
+
+    _betaHOMO = betaHOMO;
+    _betaOrbitals.clear();
+    _openShell = true;
+
+    if (symmetries.size() < energies.size()) // pad with "A" symmetry
+      for (unsigned int i = symmetries.size(); i < energies.size(); ++i)
+        symmetries.push_back("A");
+
+    OBOrbital currentOrbital;
+    for (unsigned int i = 0; i < energies.size(); ++i)
+      {
+        if (i < betaHOMO)
+          currentOrbital.SetData(energies[i], 2.0, symmetries[i]);
+        else
+          currentOrbital.SetData(energies[i], 0.0, symmetries[i]);
+
+        _betaOrbitals.push_back(currentOrbital);
+      }
+  }
+
 //
 //member functions for OBElectronicTransitionData class
 //

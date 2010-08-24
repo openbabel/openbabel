@@ -221,8 +221,9 @@ namespace OpenBabel
     OBAtom *atom;
     vector<string> vs;
     bool hasPartialCharges = false;
-    int HOMO = 0;
+    int aHOMO, bHOMO = 0;
     vector<double> orbitals;
+    vector<std::string> symmetries;
 
     // coordinates of all steps
     // Set conformers to all coordinates we adopted
@@ -520,9 +521,9 @@ namespace OpenBabel
           {
             tokenize(vs, buffer);
             if (vs.size() == 7) // alpha
-              HOMO = atoi(vs[6].c_str());
+              aHOMO = atoi(vs[6].c_str());
             else if (vs.size() == 8) //beta
-              HOMO = atoi(vs[7].c_str());
+              bHOMO = atoi(vs[7].c_str());
           }
         else if (strstr(buffer, "TAKEN AS ROTATIONS AND TRANSLATIONS") != NULL)
           {
@@ -628,6 +629,7 @@ namespace OpenBabel
             ifs.getline(buffer,BUFF_SIZE); // ------ line
             ifs.getline(buffer,BUFF_SIZE); // blank
             orbitals.clear();
+            symmetries.clear();
 
             while (strstr(buffer,"END OF RHF CALCULATION") == NULL &&
                    strstr(buffer,"-------") == NULL)
@@ -636,10 +638,14 @@ namespace OpenBabel
                 ifs.getline(buffer,BUFF_SIZE); // orbitals!
                 ifs.getline(buffer,BUFF_SIZE); // energies in hartree
                 tokenize(vs, buffer);
-                for (unsigned int i = 0; i < vs.size(); i++)
+                for (unsigned int i = 0; i < vs.size(); ++i)
                   orbitals.push_back(27.21 * atof(vs[i].c_str()));
 
                 ifs.getline(buffer,BUFF_SIZE); // symmetries
+                tokenize(vs, buffer);
+                for (unsigned int i = 0; i < vs.size(); ++i)
+                  symmetries.push_back(vs[i]);
+
                 // orbital coefficients
                 while (ifs.getline(buffer,BUFF_SIZE) && strlen(buffer)
                        && strstr(buffer,"END") == NULL
@@ -708,12 +714,19 @@ namespace OpenBabel
           }
         */
       }
-    //    cerr << " HOMO " << HOMO - 1 << " LUMO " << HOMO << " size: " << orbitals.size() << endl;
-    //    cerr << title << " " << HOMO << " " << orbitals[HOMO - 1] << " " << orbitals[HOMO] << endl;
-
     if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
       mol.EndModify();
       return false;
+    }
+
+    if (orbitals.size() > 0) { // add OBOrbitalData
+      OBOrbitalData *od = new OBOrbitalData();
+
+      if (aHOMO == bHOMO) {
+        od->LoadClosedShellOrbitals(orbitals, symmetries, aHOMO);
+      }
+      od->SetOrigin(fileformatInput);
+      mol.SetData(od);
     }
 
     const char *keywordsEnable = pConv->IsOption("k",OBConversion::GENOPTIONS);

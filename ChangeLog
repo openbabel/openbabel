@@ -1,3 +1,11 @@
+2010-08-24  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/generic.h, src/generic.cpp: Improve on
+	functionality for OBOrbitalData -- including convenience functions
+	for loading lists of orbital energies.
+
+	* src/formats/gamessformat.cpp: Use it.
+
 2010-08-24 Chris Morley
 
 	* src/format/mdlformat.cpp: add -aP format to read only title
@@ -24,6 +32,7 @@
     for the time being
 
 
+>>>>>>> .r4007
 2010-08-23 Noel O'Boyle
 
 	* src/formats/mdlformat.cpp: Make the "s" option work by resurrecting

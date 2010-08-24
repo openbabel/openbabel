@@ -911,18 +911,43 @@ namespace OpenBabel
   class OBAPI OBOrbitalData: public OBGenericData
   {
   public:
-    OBOrbitalData(): OBGenericData("OrbitalData", OBGenericDataType::ElectronicData){};
+    OBOrbitalData(): OBGenericData("OrbitalData", OBGenericDataType::ElectronicData),
+      _alphaHOMO(0), _betaHOMO(0), _openShell(false) {};
     virtual ~OBOrbitalData() {}
     virtual OBGenericData* Clone(OBBase*) const
          {return new OBOrbitalData(*this);}
     
     OBOrbitalData & operator=(const OBOrbitalData &);
 
+    void SetAlphaOrbitals(std::vector<OBOrbital> orbitalList)
+    { _alphaOrbitals = orbitalList; }
+    void SetBetaOrbitals(std::vector<OBOrbital> orbitalList)
+    { _betaOrbitals = orbitalList; }
+    void SetHOMO(int alpha, int beta = 0)
+    { _alphaHOMO = alpha; _betaHOMO = beta; }
+    void SetOpenShell(bool openShell)
+    { _openShell = openShell; }
+
+    bool IsOpenShell() { return _openShell; }
+    
+    unsigned int GetAlphaHOMO() { return _alphaHOMO; }
+    unsigned int GetBetaHOMO() { return _betaHOMO; }
+    std::vector<OBOrbital> GetAlphaOrbitals() { return _alphaOrbitals; }
+    std::vector<OBOrbital> GetBetaOrbitals() { return _betaOrbitals; }
+
+    //! \brief Convenience function for common cases of closed-shell calculations -- pass the energies and symmetries
+    //! This method will fill the OBOrbital objects for you
+    void LoadClosedShellOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, int alphaHOMO);
+    //! \brief Convenience function to load alpha orbitals in an open-shell calculation
+    void LoadAlphaOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, int alphaHOMO);
+    //! \brief Convenience function to load beta orbitals in an open-shell calculation
+    void LoadBetaOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, int betaHOMO);
+
   protected:
     std::vector<OBOrbital> _alphaOrbitals; //!< List of orbitals. In case of unrestricted calculations, this contains the alpha spin-orbitals
     std::vector<OBOrbital> _betaOrbitals;  //!< Only used if needed (e.g., unrestricted calculations)
-    int _alphaHOMO;                        //!< Highest occupied molecular orbital for _alphaOrbitals
-    int _betaHOMO;                         //!< Highest occupied for _betaOrbitals (if needed)
+    unsigned int _alphaHOMO;               //!< Highest occupied molecular orbital for _alphaOrbitals
+    unsigned int _betaHOMO;                //!< Highest occupied for _betaOrbitals (if needed)
     bool _openShell;                       //!< Whether we store both alpha and beta spin-orbitals (i.e., a restricted open-shell or unrestricted calc.)
   };
 
