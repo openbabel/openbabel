@@ -66,6 +66,19 @@ bool AddDataToSubstruct(OBMol* pmol,
   return true;
 }
 
+/**
+@since version 2.3
+Deletes all atoms except those in @p atomIndxs
+**/
+bool ExtractSubstruct(OBMol* pmol, const std::vector<int>& atomIdxs)
+{
+  //Erase from the top to avoid invalidating the remaining ones
+  for(int i = pmol->NumAtoms(); i; --i) 
+    if(find(atomIdxs.begin(),atomIdxs.end(), i)==atomIdxs.end())
+      pmol->DeleteAtom(pmol->GetAtom(i));
+  return true;
+}
+
 //*****************************************************
 
 OBQuery* MakeQueryFromMolInFile(const std::string& filename, int* pnAtoms)
@@ -139,7 +152,7 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
   string txt(pmap->find("s")->second);
   static vector<string> vec;
   static bool inv;
-  static int nPatternAtoms;
+  static int nPatternAtoms; //non-zero for exact matches
   static OBQuery* query;
   if(!txt.empty())
   {
@@ -234,9 +247,18 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
     return false; 
   }
 
-  if(!inv && vec.size()>=2 && !vec[1].empty()) // color the substructure
+  if(!inv && vec.size()>=2 && !vec[1].empty() && !nPatternAtoms)
   {
     vector<vector<int> >::iterator iter;
+
+    if(vec[1]=="extract")
+    {
+      //Delete all unmatched atoms. Use only the first match
+      ExtractSubstruct(pmol, *pMappedAtoms->begin());
+      return true;
+    }
+
+    // color the substructure if there is a second parameter which is not "exact" or "extract"
     for(iter=pMappedAtoms->begin();iter!=pMappedAtoms->end();++iter)//each match
        AddDataToSubstruct(pmol, *iter, "color", vec[1]);
     return true;

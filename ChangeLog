@@ -1,4 +1,14 @@
 2010-08-24 Chris Morley
+
+	* src/format/mdlformat.cpp: add -aP format to read only title
+	and properties only. Speeds up filtering of sdf datasets based on
+	their properties.
+	 
+	* src/ops/opisomorph.cpp: "extract" parameter on -s option to
+	retain only matched atoms. Useful for preparing templates for
+	--gen2D
+
+2010-08-24 Chris Morley
 	
 	* src/alias.cpp(FormulaParse): return false when lower case letter
 	encountered. Reduce chance of misinterpretation in this backstop
