@@ -443,6 +443,12 @@ namespace OpenBabel
           d->painter->SetPenColor(aliasColor);
       }
       else {
+        const char* atomSymbol;
+        if(atom->IsHydrogen() && atom->GetIsotope()>1)
+          atomSymbol = atom->GetIsotope()==2 ? "D" : "T";
+        else
+          atomSymbol = etab.GetSymbol(atom->GetAtomicNum());
+
         unsigned int hCount = atom->ImplicitHydrogenCount();
         // rightAligned:  
         //   false  CH3
@@ -451,7 +457,7 @@ namespace OpenBabel
           ss << "H";
         if ((hCount > 1) && rightAligned)
           ss << hCount;
-        ss << etab.GetSymbol(atom->GetAtomicNum());
+        ss << atomSymbol;
         if (hCount && !rightAligned)
           ss << "H";
         if ((hCount > 1) && !rightAligned)

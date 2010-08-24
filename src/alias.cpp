@@ -104,6 +104,8 @@ namespace OpenBabel
         std::swap(*p, *txt);
     }
     char symb[2];
+    if(islower(*txt)) //Formula parse should not given lower case characters
+      return false;
     symb[0]=*(txt++);
     symb[1]='\0';
     OBAtom* pAtom = mol.GetAtom(atomindex);

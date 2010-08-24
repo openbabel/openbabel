@@ -1,3 +1,19 @@
+2010-08-24 Chris Morley
+	
+	* src/alias.cpp(FormulaParse): return false when lower case letter
+	encountered. Reduce chance of misinterpretation in this backstop
+	function.
+	
+	* src/depict/depict.cpp: output D and T
+	
+	* src/formats/gaussformat.cpp: fix bug with diatomics looking for
+	"Rotational Constants" when ther is only one.
+	
+	* windows-vc2008/Distribution/NSISScriptToCreateInstaller.nsi:
+	put shortcut to babel guide to http://baoilleach.webfactional.com
+    for the time being
+
+
 2010-08-23 Noel O'Boyle
 
 	* src/formats/mdlformat.cpp: Make the "s" option work by resurrecting

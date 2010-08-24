@@ -496,7 +496,7 @@ namespace OpenBabel
           do
           {
             ifs.getline(buffer,BUFF_SIZE);
-          }while(!strstr(buffer, "Rotational constants"));
+          }while(ifs && !strstr(buffer, "Rotational constant"));
           tokenize(vs, buffer);
           for(int i=3; i<vs.size(); ++i)
             RotConsts[i-3] = atof(vs[i].c_str());

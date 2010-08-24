@@ -557,7 +557,7 @@ Section "Dummy Section" SecDummy
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Open Babel Folder.lnk" "$INSTDIR"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Open Babel GUI.lnk" "$INSTDIR\OBGUI.exe"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using Open Babel GUI.lnk" "$INSTDIR\doc\OpenBabelGUI.html"
-    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using babel (web).lnk" "http://openbabel.sourceforge.net/wiki/Tutorial:Basic_Usage" "" "$SYSDIR\winhlp32.exe"
+    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using babel (web).lnk" "http://baoilleach.webfactional.com/site_media/ob-docs/index.html"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
   !insertmacro MUI_STARTMENU_WRITE_END
 
