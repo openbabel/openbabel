@@ -52,11 +52,13 @@ namespace OpenBabel
                " s  determine chirality from atom parity flags\n"
                "       This is valid only for 0D information. Atom\n"
                "       parity is always ignored on reading for MOL files\n"
-               "       containing 2D or 3D information.\n\n"
-
-               " T  read title only\n\n"
+               "       containing 2D or 3D information.\n"
+               " T  read title only\n"
+               " P  read title and properties only\n\n"
+               "       When filtering an sdf file on title or properties\n" 
+               "       only, avoid lengthy chemical interpretation by\n"
+               "       using the T or P option together with copy format.\n"
                "Write Options, e.g. -x3\n"
-            /* " 2  output V2000 (default) or\n" */
                " 3  output V3000 not V2000 (used for >999 atoms/bonds) \n"
                " m  write no properties\n"
                " w  recalculate wedge and hash bonds(2D structures only)\n"
@@ -102,6 +104,7 @@ namespace OpenBabel
       bool ReadCollectionBlock(istream& ifs,OBMol& mol, OBConversion* pConv);
       bool ReadRGroupBlock(istream& ifs,OBMol& mol, OBConversion* pConv);
       bool WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv);
+      void ReadPropertyLines(istream& ifs, OBMol& mol);
     private:
       enum Parity {
         NotStereo, Clockwise, AntiClockwise, Unknown
@@ -203,6 +206,15 @@ namespace OpenBabel
     {
       //Read title only
       SkipObjects(0, pConv);
+      return true;
+    }
+
+    if(pConv->IsOption("P",OBConversion::INOPTIONS))
+    {
+      //Read Title and Property lines only
+      ignore(ifs, "M  END"); 
+      ifs.ignore(100,'\n');
+      ReadPropertyLines(ifs, mol);//also reads $$$$
       return true;
     }
 
@@ -581,39 +593,8 @@ namespace OpenBabel
     }
         
     //Get property lines
-    while (std::getline(ifs, line)) {
-      if (line.find("<") != string::npos) {
-        size_t lt = line.find("<")+1;
-        size_t rt = line.find_last_of(">");
-        string attr = line.substr(lt, rt - lt);
-
-        // sometimes we can hit more data than BUFF_SIZE, so we'll use a std::string
-        string buff;
-        while (std::getline(ifs, line)) {
-          Trim(line);
-          if (line.size()) {
-            buff.append(line);
-            buff += "\n";
-          } else
-            break;
-        }
-        Trim(buff);
-
-        OBPairData *dp = new OBPairData;
-        dp->SetAttribute(attr);
-        dp->SetValue(buff);
-        dp->SetOrigin(fileformatInput);
-        mol.SetData(dp);
-            
-        if(!strcasecmp(attr.c_str(),"NAME") && *mol.GetTitle()=='\0')
-          mol.SetTitle(buff);
-      }
-      if (line.substr(0, 4) ==  "$$$$") 
-        break;
-      if (line.substr(0, 4) == "$MOL") 
-        break;
-    }
-
+    ReadPropertyLines(ifs, mol);
+    
     if (mol.Has3D()) {
       if (!setDimension)
         mol.SetDimension(3);
@@ -1349,6 +1330,43 @@ namespace OpenBabel
     int n = strtoul(s, &end, 10);
     if (*end != '\0' && *end != ' ') return 0;
     return n;
+  }
+
+  void MDLFormat::ReadPropertyLines(istream& ifs, OBMol& mol)
+  {
+    string line;
+    while (std::getline(ifs, line)) {
+      if (line.find("<") != string::npos) {
+        size_t lt = line.find("<")+1;
+        size_t rt = line.find_last_of(">");
+        string attr = line.substr(lt, rt - lt);
+
+        // sometimes we can hit more data than BUFF_SIZE, so we'll use a std::string
+        string buff;
+        while (std::getline(ifs, line)) {
+          Trim(line);
+          if (line.size()) {
+            buff.append(line);
+            buff += "\n";
+          } else
+            break;
+        }
+        Trim(buff);
+
+        OBPairData *dp = new OBPairData;
+        dp->SetAttribute(attr);
+        dp->SetValue(buff);
+        dp->SetOrigin(fileformatInput);
+        mol.SetData(dp);
+            
+        if(!strcasecmp(attr.c_str(),"NAME") && *mol.GetTitle()=='\0')
+          mol.SetTitle(buff);
+      }
+      if (line.substr(0, 4) ==  "$$$$") 
+        break;
+      if (line.substr(0, 4) == "$MOL") 
+        break;
+    }
   }
 
   //! Calculate the "sign of a triangle" given by a set of 3 2D coordinates
