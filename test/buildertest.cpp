@@ -53,6 +53,9 @@ bool doBuildMoleculeTest(OBMol &mol)
   OBForceField* pff = OBForceField::FindType("mmff94");
   cout << mol.GetTitle() << endl;
   OB_REQUIRE(pff->Setup(mol));
+  // Check for explosions -- PR#3016479
+  pff->SteepestDescent(100);
+  OB_REQUIRE(!pff->DetectExplosion()); // no explosions please!
 
   return true;
 }
@@ -122,6 +125,8 @@ int main(int argc, char **argv)
 
   // from Martin Guetlein to mailing list on July 14, 2010
   OB_ASSERT( doSMILESBuilderTest("OC1=CC3=C([C@@]2([H])CC[C@@]4(C)[C@](CC[C@@H]4O)([H])[C@@]([H])2[C@H](CCCCCCCCCS(CCCC(F)(F)C(F)(F)F)=O)C3)C=C1") );
+  // from Thomas Womack -- PR#3016479
+  OB_ASSERT( doSMILESBuilderTest("O1C[C@H]2O[C@H]2c2ccc(Oc3c(O)ccc(CCC1=O)c3)cc2") );
 
   cout << "PASSED TESTS: " << testCount - failed << "/" << testCount << endl;
 
