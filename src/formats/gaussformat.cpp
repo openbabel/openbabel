@@ -313,6 +313,11 @@ namespace OpenBabel
     std::vector<double> Forces, Wavelengths, EDipole, 
       RotatoryStrengthsVelocity, RotatoryStrengthsLength;
 
+    // Orbital data
+    std::vector<double> orbitals;
+    std::vector<std::string> symmetries;
+    int aHOMO, bHOMO;
+
     mol.BeginModify();
     bool have_coords = 0;    
     while (ifs.getline(buffer,BUFF_SIZE))
@@ -328,10 +333,12 @@ namespace OpenBabel
 	    
             ifs.getline(buffer,BUFF_SIZE);
           }
-        else if((strstr(buffer,"Input orientation:") != NULL) || ((strstr(buffer,"Standard orientation:") != NULL) && (!have_coords)))
+        else if((strstr(buffer,"Input orientation:") != NULL) 
+                || ((strstr(buffer,"Standard orientation:") != NULL) && (!have_coords))
+                || ((strstr(buffer,"Z-Matrix orientation:") != NULL) && (!have_coords)))
           {
-	    if (strstr(buffer,"Input orientation:") != NULL)
-		have_coords = 1; // if we came here from "Input orientation", disable reading "Standard orientation"
+            if (strstr(buffer,"Input orientation:") != NULL)
+              have_coords = 1; // if we came here from "Input orientation", disable reading "Standard orientation"
             numTranslationVectors = 0; // ignore old translationVectors
             ifs.getline(buffer,BUFF_SIZE);      // ---------------
             ifs.getline(buffer,BUFF_SIZE);      // column headings
@@ -502,7 +509,56 @@ namespace OpenBabel
             RotConsts[i-3] = atof(vs[i].c_str());
          
         }
+        else if(strstr(buffer, "alpha electrons")) // # of electrons / orbital
+        {
+          tokenize(vs, buffer);
+          if (vs.size() == 6) {
+            // # alpha electrons # beta electrons
+            aHOMO = atoi(vs[0].c_str());
+            bHOMO = atoi(vs[3].c_str());
+          }
+        }
+        else if(strstr(buffer, "rbital symmetries")) // orbital symmetries
+          {
+            symmetries.clear();
+            std::string label; // used as a temporary to remove "(" and ")" from labels
+            int offset = 0;
 
+            ifs.getline(buffer, BUFF_SIZE);
+            tokenize(vs, buffer); // parse first line "Occupied" ...
+            for (unsigned int i = 1; i < vs.size(); ++i) {
+              label = vs[i].substr(1, vs[i].length() - 2);
+              symmetries.push_back(label);
+            } 
+            ifs.getline(buffer, BUFF_SIZE);
+
+            // Parse remaining lines
+            while (strstr(buffer, "(")) {
+              tokenize(vs, buffer);
+              if (strstr(buffer, "Virtual")) {
+                offset = 1; // skip first token
+              } else {
+                offset = 0;
+              }
+              for (unsigned int i = offset; i < vs.size(); ++i) {
+                label = vs[i].substr(1, vs[i].length() - 2);
+                symmetries.push_back(label);
+              }
+              ifs.getline(buffer, BUFF_SIZE); // get next line
+            } // end parsing symmetry labels
+          }
+        else if (strstr(buffer, "Alpha") && strstr(buffer, ". eigenvalues --")) {
+          orbitals.clear();
+          while (strstr(buffer, ". eigenvalues --")) {
+            tokenize(vs, buffer);
+            if (vs.size() < 4)
+              break;
+            for (unsigned int i = 4; i < vs.size(); ++i) {
+              orbitals.push_back(atof(vs[i].c_str()));
+            }
+            ifs.getline(buffer, BUFF_SIZE);
+          }
+        }
         else if(strstr(buffer, " Excited State")) // Force and wavelength data
         {
           // The above line appears for each state, so just append the info to the vectors
@@ -613,6 +669,17 @@ namespace OpenBabel
     confData->SetEnergies(confEnergies);
     confData->SetForces(confForces);
     mol.SetData(confData);
+
+    // Attach orbital data, if there is any
+    if (orbitals.size() > 0)
+      {
+        OBOrbitalData *od = new OBOrbitalData;
+        if (aHOMO = bHOMO) {
+          od->LoadClosedShellOrbitals(orbitals, symmetries, aHOMO);
+        }
+        od->SetOrigin(fileformatInput);
+        mol.SetData(od);
+      }
 
     //Attach vibrational data, if there is any, to molecule
     if(Frequencies.size()>0)
