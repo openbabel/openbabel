@@ -25,7 +25,9 @@ GNU General Public License for more details.
 #include <openbabel/graphsym.h>
 #include <openbabel/math/vector3.h>
 
-#include <Eigen/Dense>
+#include <Eigen/Core>
+#include <Eigen/Geometry>
+#include <Eigen/SVD>
 
 using namespace std;
 
