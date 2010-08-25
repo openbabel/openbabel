@@ -28,6 +28,7 @@ GNU General Public License for more details.
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 #include <Eigen/SVD>
+#include <Eigen/LU>
 
 using namespace std;
 
