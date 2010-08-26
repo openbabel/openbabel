@@ -145,9 +145,10 @@ class TestConversions(BaseTest):
         data = [
 ('ClC=CF', 'FC=CCl', [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 3]),
 ('Cl/C=C/F', 'F/C=C/Cl', [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0]),
-('Cl/C=C\\F', 'F/C=C\\Cl', [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0]), 
-('Cl[C@@](Br)(F)I', 'F[C@@](Cl)(Br)I', [0, 0, 0, 0, 1], [0, 0, 0, 1]),
-('Cl[C@](Br)(F)I', 'F[C@](Cl)(Br)I', [0, 0, 0, 0, 2], [0, 0, 0, 6]),
+('Cl/C=C\\F', 'F/C=C\\Cl', [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0]),
+# The bond parities are irrelevant/meaningless for the next two
+('Cl[C@@](Br)(F)I', 'F[C@@](Cl)(Br)I', [0, 0, 0, 0, 1], []),
+('Cl[C@](Br)(F)I', 'F[C@](Cl)(Br)I', [0, 0, 0, 0, 2], []),
 ('ClC(Br)(F)I', 'FC(Cl)(Br)I', [0, 0, 0, 0, 3], [0, 0, 0, 4])
 ]
         for smiles, can, atompar, bondstereo in data:
@@ -158,7 +159,8 @@ class TestConversions(BaseTest):
             stereos = [bond['stereo'] for bond in bonds]
             stereos.sort()
             self.assertEqual(atompar, parities)
-            self.assertEqual(bondstereo, stereos)
+            if bondstereo:
+                self.assertEqual(bondstereo, stereos)
             output, error = run_exec(output, "babel -isdf -ocan")
             self.assertEqual(output.rstrip(), can)
 
@@ -182,6 +184,26 @@ class TestConversions(BaseTest):
         output, error = run_exec("babel -isdf %s -oinchi" % filename)
         for i, inchi in enumerate(output.rstrip().split("\n")):
             self.assertEqual(inchi.rstrip(), data[i][2])
+
+    def testSMILESto0DMDL(self):
+        """Test interconversion between SMILES and 0D MDL"""
+        data = [
+('Cl[C@@](Br)(F)I', 'F[C@@](Cl)(Br)I', [0, 0, 0, 0, 1], [0, 0, 0, 0]),
+('Cl[C@](Br)(F)I', 'F[C@](Cl)(Br)I', [0, 0, 0, 0, 2], [0, 0, 0, 0]),
+('ClC(Br)(F)I', 'FC(Cl)(Br)I', [0, 0, 0, 0, 3], [0, 0, 0, 0])
+]
+        for smiles, can, atompar, bondstereo in data:
+            output, error = run_exec(smiles, "babel -ismi -osdf")
+            atoms, bonds = self.parseMDL(output)
+            parities = [atom['parity'] for atom in atoms]
+            parities.sort()
+            stereos = [bond['stereo'] for bond in bonds]
+            stereos.sort()
+            self.assertEqual(atompar, parities)
+            self.assertEqual(bondstereo, stereos)
+            output, error = run_exec(output, "babel -isdf -as -ocan")
+            self.assertEqual(output.rstrip(), can)
+
 
 class TestStereoConversion(BaseTest):
     """Random tests relating to roundtripping stereochemistry"""

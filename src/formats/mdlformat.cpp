@@ -617,6 +617,22 @@ namespace OpenBabel
       StereoFrom0D(&mol);
     }
 
+    // For unspecified cis/trans stereos, set their Configs to unspecified
+    map<OBBond*, OBStereo::BondDirection>::const_iterator bd_it;
+    OpenBabel::OBStereoFacade facade(&mol);
+    for(bd_it=updown.begin(); bd_it!=updown.end(); ++bd_it) {
+      OBBond* bond = bd_it->first;
+      if (bond->GetBondOrder()!=2 || bd_it->second != OBStereo::UnknownDir)
+        continue; // Only continue for those double bonds with UnknownDir
+
+      OBCisTransStereo* ct = facade.GetCisTransStereo(bond->GetId());
+      if (ct) {
+        OBCisTransStereo::Config config = ct->GetConfig();
+        config.specified = false;
+        ct->SetConfig(config);
+      }
+    }
+
     return true;
   }
 

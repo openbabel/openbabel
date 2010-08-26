@@ -1,3 +1,10 @@
+2010-08-26 Noel O'Boyle
+
+	* src/formats/mdlformat.cpp: Chris beat me to one fix (see below), but
+	I also added code to handle unspecified cis/trans stereo
+	* test/testsym.cpp: Correct test results and add some new ones for the
+	-as option (with 0D MDL).
+
 2010-08-26 Chris Morley
 
 	* src/depict/depict.cpp(DrawMolecule): fix so works with empty molecules
