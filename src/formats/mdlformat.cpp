@@ -612,7 +612,7 @@ namespace OpenBabel
       // The 0D format is not considered to store stereochemistry, but
       // if you specify the "s" option, then atom parities from the
       // MOL file will be used to create tetrahedral stereochemistry
-     	if (pConv->IsOption("s"))
+      if (pConv->IsOption("s", OBConversion::INOPTIONS))
         TetStereoFromParity(mol, parities);
       StereoFrom0D(&mol);
     }

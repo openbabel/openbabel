@@ -274,43 +274,48 @@ namespace OpenBabel
 
     d->mol = mol;
 
+    double width=0.0, height=0.0;
+
     OBAtom *atom;
     OBBondIterator j;
     OBAtomIterator i;
 
-    // scale bond lengths
-    double bondLengthSum = 0.0;
-    for (OBBond *bond = mol->BeginBond(j); bond; bond = mol->NextBond(j))
-      bondLengthSum += bond->GetLength();
-    const double averageBondLength = bondLengthSum / mol->NumBonds();
-    const double f = mol->NumBonds() ? d->bondLength / averageBondLength : 1.0;
-    for (atom = mol->BeginAtom(i); atom; atom = mol->NextAtom(i))
-      atom->SetVector(atom->GetX() * f, atom->GetY() * f, 0.0);
+    if(mol->NumAtoms()>0) {
+      // scale bond lengths
+      double bondLengthSum = 0.0;
+      for (OBBond *bond = mol->BeginBond(j); bond; bond = mol->NextBond(j))
+        bondLengthSum += bond->GetLength();
+      const double averageBondLength = bondLengthSum / mol->NumBonds();
+      const double f = mol->NumBonds() ? d->bondLength / averageBondLength : 1.0;
+      for (atom = mol->BeginAtom(i); atom; atom = mol->NextAtom(i))
+        atom->SetVector(atom->GetX() * f, atom->GetY() * f, 0.0);
 
-    // find min/max values
-    double min_x, max_x;
-    double min_y, max_y;
-    atom = mol->BeginAtom(i);
-    min_x = max_x = atom->GetX();
-    min_y = max_y = atom->GetY();
-    for (atom = mol->NextAtom(i); atom; atom = mol->NextAtom(i)) {
-      min_x = std::min(min_x, atom->GetX());
-      max_x = std::max(max_x, atom->GetX());
-      min_y = std::min(min_y, atom->GetY());
-      max_y = std::max(max_y, atom->GetY());
+      // find min/max values
+      double min_x, max_x;
+      double min_y, max_y;
+      atom = mol->BeginAtom(i);
+      min_x = max_x = atom->GetX();
+      min_y = max_y = atom->GetY();
+      for (atom = mol->NextAtom(i); atom; atom = mol->NextAtom(i)) {
+        min_x = std::min(min_x, atom->GetX());
+        max_x = std::max(max_x, atom->GetX());
+        min_y = std::min(min_y, atom->GetY());
+        max_y = std::max(max_y, atom->GetY());
+      }
+
+      const double margin = 40.0;
+      // translate all atoms so the bottom-left atom is at margin,margin
+      for (atom = mol->BeginAtom(i); atom; atom = mol->NextAtom(i))
+        atom->SetVector(atom->GetX() - min_x + margin, atom->GetY() - min_y + margin, 0.0);
+
+      width  = max_x - min_x + 2*margin;
+      height = max_y - min_y + 2*margin;
+      
+      //d->painter->SetPenWidth(d->penWidth);
+      //d->painter->SetPenColor(d->pen));
+      //d->painter->SetFillColor(OBColor("black"));
     }
 
-    const double margin = 40.0;
-    // translate all atoms so the bottom-left atom is at margin,margin
-    for (atom = mol->BeginAtom(i); atom; atom = mol->NextAtom(i))
-      atom->SetVector(atom->GetX() - min_x + margin, atom->GetY() - min_y + margin, 0.0);
-
-    double width = max_x - min_x + 2*margin;
-    double height = max_y - min_y + 2*margin;
-    
-    //d->painter->SetPenWidth(d->penWidth);
-    //d->painter->SetPenColor(d->pen));
-    //d->painter->SetFillColor(OBColor("black"));
     d->painter->NewCanvas(width, height);
     
     // draw bonds

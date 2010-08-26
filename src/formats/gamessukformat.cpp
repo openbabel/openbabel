@@ -232,7 +232,7 @@ namespace OpenBabel
 
     if (Z==0){
       // Check if it's an x (dummy) atom
-      if(  label.substr(0,1) != "x" and label.substr(0,1) != "X" )
+      if(  label.substr(0,1) != "x" && label.substr(0,1) != "X" )
         {
           // Houston...
           errorMsg << "LabelToAtomicNumber got bad Label: " << label << std::endl;

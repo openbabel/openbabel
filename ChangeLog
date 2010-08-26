@@ -1,3 +1,10 @@
+2010-08-26 Chris Morley
+
+	* src/depict/depict.cpp(DrawMolecule): fix so works with empty molecules
+	* src/formats/gamessukformat.cpp: fix typo
+	* src/formats/mdlformat.cpp: -as needs OBConversion::INOPTIONS
+	* src/obmolecformat.cpp: make -C option work again
+
 2010-08-24  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/generic.h, src/generic.cpp: Improve on

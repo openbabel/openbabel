@@ -236,6 +236,7 @@ namespace OpenBabel
       {
         IsFirstFile=true;
         IMols.clear();
+        pConv->AddOption("OutputAtEnd", OBConversion::GENOPTIONS);
       }
     else 
       {
