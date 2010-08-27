@@ -30,7 +30,9 @@ namespace OpenBabel {
 
     virtual const char* Description()
     {
-      return "GULP format\n\n";
+      return 
+        "GULP format\n"
+        "The format used by GULP (General Utility Lattice Program).\n\n";
     };
 
     virtual const char* SpecificationURL(){return "http://cms.mpi.univie.ac.at/vasp/vasp/vasp.html";};

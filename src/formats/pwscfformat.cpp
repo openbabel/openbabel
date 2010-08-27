@@ -32,7 +32,8 @@ namespace OpenBabel {
 
     virtual const char* Description()
     {
-      return "PWscf format\n\n";
+      return "PWscf format\n"
+             "The format used by PWscf, part of Quantum Espresso.\n\n";
     };
 
     virtual const char* SpecificationURL(){return "http://www.quantum-espresso.org";};

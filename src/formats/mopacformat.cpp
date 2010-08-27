@@ -322,7 +322,7 @@ namespace OpenBabel
         "MOPAC Cartesian format\n"
         "Read Options e.g. -as\n"
         "  s  Output single bonds only\n"
-        "  b  Disable bonding entirely\n"
+        "  b  Disable bonding entirely\n\n"
         "Write Options e.g. -xk\n"
         "  k  \"keywords\" Use the specified keywords for input\n"
         "  f    <file>     Read the file specified for input keywords\n"

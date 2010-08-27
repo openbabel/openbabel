@@ -51,7 +51,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Crystallographic Information File\n\n"
+        "Crystallographic Information File\n"
+        "The CIF file format is the standard interchange format for small-molecule chemical structures\n\n"
         "Read Options e.g. -b:\n"
         "  v  Verbose CIF conversion\n"
         "  s  Output single bonds only\n"

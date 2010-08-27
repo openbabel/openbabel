@@ -54,10 +54,11 @@ namespace OpenBabel
                "       parity is always ignored on reading for MOL files\n"
                "       containing 2D or 3D information.\n"
                " T  read title only\n"
-               " P  read title and properties only\n\n"
+               " P  read title and properties only\n"
                "       When filtering an sdf file on title or properties\n" 
                "       only, avoid lengthy chemical interpretation by\n"
-               "       using the T or P option together with copy format.\n"
+               "       using the T or P option together with copy format.\n\n"
+
                "Write Options, e.g. -x3\n"
                " 3  output V3000 not V2000 (used for >999 atoms/bonds) \n"
                " m  write no properties\n"
