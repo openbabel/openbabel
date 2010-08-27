@@ -69,12 +69,12 @@ public:
     "    \'Metal was disconnected\'\n"
     " a output auxilliary information\n"
     " l display InChI log\n"
-    "    Uniqueness options. See also --unique and --sort which are more vesatile.\n"
+    "    **Uniqueness options** (see also ``--unique`` and ``--sort`` which are more versatile)\n"
     " u output only unique molecules\n"
     " U output only unique molecules and sort them\n"
     " e compare first molecule to others\n"
-    "    This can also be done with InChICompare format\n"
-    "      babel first.smi second.mol third.cml -ok\n"
+    "    This can also be done with :ref:`InChICompare format <Compare_molecules_using_InChI>`::\n\n"
+    "      babel first.smi second.mol third.cml -ok\n\n"
     " T <param> truncate InChI, /nostereo etc.\n"
     "    See below for possible truncation parameters.\n"
     "    These can be combined, e.g. /nochg/noiso\n"
@@ -97,7 +97,7 @@ public:
     " n molecule name follows InChI on same line\n"
     " a add InChI string to molecule name\n\n"
 
-    "Truncation parameters used with -xT:\n\n"
+    "Truncation parameters used with ``-xT``:\n\n"
     "/formula   formula only\n"
     "/connect   formula and connectivity only\n"
     "/nostereo  ignore E/Z and sp3 stereochemistry\n"
@@ -199,9 +199,13 @@ public:
   {
     return 
       "Compare molecules using InChI\n"
-      "The first molecule is compared with the rest\n"
-      "e.g. babel first.smi second.mol third.cml -ok\n"
-      "Same as  -oinchi -xet  and can take the same options as InChI format.\n";
+      "A utility format that allows you to compare molecules using their InChIs\n"
+      "The first molecule is compared with the rest, e.g.::\n\n"
+
+      "  babel first.smi second.mol third.cml -ok\n\n"
+
+      "This is the same as using ``-oinchi -xet`` and can take the same options as InChI format\n"
+      "(see :ref:`InChI_format`).\n";
   }
   virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
   virtual unsigned int Flags() { return NOTREADABLE;};

@@ -76,8 +76,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "XTC format\n \
-          Portable format for trajectories (gromacs)\n";
+        "XTC format\n"
+        "A portable format for trajectories (gromacs)\n";
     };
 
     virtual const char* SpecificationURL()
