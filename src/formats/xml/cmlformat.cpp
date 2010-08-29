@@ -49,6 +49,7 @@ namespace OpenBabel
     CMLFormat() 
     {
       OBConversion::RegisterFormat("cml", this, "chemical/x-cml");
+      OBConversion::RegisterFormat("mrv", this); //subset of Marvin only
 			OBConversion::RegisterOptionParam("1", this);
 			OBConversion::RegisterOptionParam("a", this);
 			OBConversion::RegisterOptionParam("N", this, 1);
@@ -2351,7 +2352,5 @@ namespace OpenBabel
     delete pOb;
     return ret;
   }
-
-
 
 }//namespace

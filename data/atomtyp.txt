@@ -110,7 +110,7 @@ IMPVAL  [$(N=*)]                  2
 IMPVAL  [$([Nr0]=C[Nr0])]         2
 IMPVAL  [$([N+r0]=C[Nr0])]        3 # patch from Steve Constable
 IMPVAL  [$([#7D1-]=*)]            1
-IMPVAL  [N-]                      2
+IMPVAL  [N^1-]                    1 # N2O [N-]=[N+]=O (valence=1, bondorder=2)
 IMPVAL  [n]                       2
 IMPVAL  [n-]                      2
 IMPVAL  [n+]                      3
