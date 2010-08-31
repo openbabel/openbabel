@@ -594,6 +594,10 @@ namespace OpenBabel
       mol.EndModify();
       return false;
     } else {
+      if (!pConv->IsOption("b",OBConversion::INOPTIONS))
+        mol.ConnectTheDots();
+      if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
+        mol.PerceiveBondOrders();
       return ok;
     }
 
@@ -887,6 +891,10 @@ namespace OpenBabel
           mol.EndModify();
           return false;
         } else {
+          if (!pConv->IsOption("b",OBConversion::INOPTIONS))
+            mol.ConnectTheDots();
+          if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
+            mol.PerceiveBondOrders();
           return true;
         }
       }
@@ -932,7 +940,8 @@ namespace OpenBabel
               }
 
               mol.EndModify();
-              return true;
+              break;
+              //return true;
 
 
             } else if (RunType==OPTZMAT || RunType==SADDLE) {
@@ -965,7 +974,8 @@ namespace OpenBabel
               }
 
               mol.EndModify();
-              return true;
+              break;
+              //return true;
 
 
               /*
@@ -998,7 +1008,17 @@ namespace OpenBabel
 
       } // End Second Reading loop
 
-      return true;
+
+      if (mol.NumAtoms() == 0) { // Something went wrong
+        mol.EndModify();
+        return false;
+      } else {
+        if (!pConv->IsOption("b",OBConversion::INOPTIONS))
+          mol.ConnectTheDots();
+        if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
+          mol.PerceiveBondOrders();
+        return true;
+      }
 
     } // End GAMESSUKOutputFormat::ReadMolecule
 
