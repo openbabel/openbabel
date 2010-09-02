@@ -111,6 +111,7 @@ IMPVAL  [$([Nr0]=C[Nr0])]         2
 IMPVAL  [$([N+r0]=C[Nr0])]        3 # patch from Steve Constable
 IMPVAL  [$([#7D1-]=*)]            1
 IMPVAL  [N^1-]                    1 # N2O [N-]=[N+]=O (valence=1, bondorder=2)
+IMPVAL  [N-]                      2
 IMPVAL  [n]                       2
 IMPVAL  [n-]                      2
 IMPVAL  [n+]                      3
@@ -131,6 +132,7 @@ IMPVAL  [$([#14-]#*)]		      1 # just for InChI Si2
 
 IMPVAL  [#13]                     3 # generic Al
 IMPVAL  [#14]                     4 # regular sp3 Si
+IMPVAL  [#14^2]                   2 # silylenes
 
 IMPVAL  [#15D4]                   4
 IMPVAL  [#15D3]                   3
