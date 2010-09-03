@@ -64,6 +64,7 @@ set(formats_misc
       cifformat
       crkformat
       cssrformat
+      dlpolyformat
       fastsearchformat
       fastaformat
       featformat
