@@ -1180,6 +1180,17 @@ getopt (argc, argv, optstring)
                            0);
 }
 
+int
+getopt_long (int ___argc, char *const *___argv,
+                        const char *__shortopts,
+                        const struct option *__longopts, int *__longind)
+{
+  return _getopt_internal (___argc, ___argv,
+                            __shortopts,
+                            __longopts, __longind,
+                            0);
+}
+
 #endif  /* Not ELIDE_CODE.  */
 
 
