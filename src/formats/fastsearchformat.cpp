@@ -367,6 +367,7 @@ virtual const char* Description() //required
                 obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
                 static_cast<ofstream *>(pOs)->close(); // close the file before quitting
                 delete pOs;
+                if (pidx) delete pidx; // remove possible memory leak
                 return false;
               }
             NewOstreamUsed=true;

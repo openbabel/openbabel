@@ -2583,6 +2583,7 @@ namespace OpenBabel {
                                       bool isomeric)
   {
     char symbol[10];
+    symbol[0] = '\0'; // make sure to initialize for all paths below
     char bracketBuffer[32];
     bool bracketElement = false;
     bool normalValence = true;
