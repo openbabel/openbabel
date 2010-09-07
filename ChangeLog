@@ -1,3 +1,19 @@
+2010-09-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
+
+	* include/openbabel/base.h: Add new UNUSED() macro for unused
+	parameters.
+
+	* include/openbabel/forcefield.h: Use it.
+
+	* src/kekulize.cpp: Decrease recursion level from 31 to
+	24. Prevents some crashing / "infinite" loops on large fused-ring
+	systems.
+
+	* src/formats/pdbqtformat.cpp: Add new format from Stuart
+	Armstrong, InHiBOx.
+
+	* src/formats/CMakeLists.txt: Ditto.
+
 2010-08-26 Noel O'Boyle
 
 	* src/formats/mdlformat.cpp: Chris beat me to one fix (see below), but

@@ -83,6 +83,7 @@ set(formats_misc
       opendxformat
       outformat
       pcmodelformat
+      pdbqtformat
       pqrformat
       shelxformat
       thermoformat
