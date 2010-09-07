@@ -1,11 +1,11 @@
 /**********************************************************************
 Copyright (C) 2005-2006 by Chris Morley
 Some portions Copyright (C) 2006 by Geoffrey R. Hutchison
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -28,7 +28,7 @@ namespace OpenBabel
       _LookingForNamespace(false), _SkipNextRead(false)
   {
     _pConv = pConv;
-    pConv->SetAuxConv(this);//marks original OBConversion object as having been extended 
+    pConv->SetAuxConv(this);//marks original OBConversion object as having been extended
     SetAuxConv(this);//marks this new object as extended (for use with OBConversion pointer)
   }
 
@@ -43,14 +43,14 @@ namespace OpenBabel
 
     //If the inputstream is not at the start (probably arising in fastsearch),
     //save its position and rewind so that the reader initialization is ok.
-    //(Getting the requested object is handled in ReadXML(), when the format is known.) 
+    //(Getting the requested object is handled in ReadXML(), when the format is known.)
     _requestedpos = GetInStream()->tellg();
     if(_requestedpos < 0)
       _requestedpos = 0;
     if(_requestedpos)
       GetInStream()->seekg(0);
 
-    //Set up a parser from an input stream 
+    //Set up a parser from an input stream
     _reader = xmlReaderForIO(
                              ReadStream, //xmlInputReadCallback (static member function)
                              NULL,//xmlInputCloseCallback (static member function)
@@ -75,9 +75,9 @@ namespace OpenBabel
     //Set up XML writer if one does not already exist
     if(_writer)
       return true;
-  
+
     _buf = xmlOutputBufferCreateIO  (
-                                     WriteStream, //xmlOutputWriteCallback 
+                                     WriteStream, //xmlOutputWriteCallback
                                      NULL,         //xmlOutputCloseCallback
                                      this,        //context
                                      NULL);        //xmlCharEncodingHandlerPtr
@@ -95,7 +95,7 @@ namespace OpenBabel
     else
       {
         ret = xmlTextWriterSetIndent(_writer,1);
-        ret = xmlTextWriterSetIndentString(_writer, BAD_CAST " "); 
+        ret = xmlTextWriterSetIndentString(_writer, BAD_CAST " ");
       }
     return ret==0;
   }
@@ -135,7 +135,7 @@ namespace OpenBabel
       pxmlConv =  new XMLConversion(pConv);
     else
       {
-        //pConv has already had an extended copy made 
+        //pConv has already had an extended copy made
         *pConv->GetAuxConv() = *pConv; //ensure they have the same OBConversion data
         pxmlConv = dynamic_cast<XMLConversion*>(pConv->GetAuxConv());
         if (!pxmlConv)
@@ -152,7 +152,7 @@ namespace OpenBabel
             pxmlConv->_reader = NULL;
             pxmlConv->InFilename = pConv->GetInFilename();
             pxmlConv->pInFormat = pConv->GetInFormat();
-            
+
           }
         pxmlConv->SetupReader();
       }
@@ -166,7 +166,7 @@ namespace OpenBabel
 
 
   bool XMLConversion::ReadXML(XMLBaseFormat* pFormat, OBBase* pOb)
-  { 
+  {
     if(_requestedpos)
       {
         //The initial stream position was not at the start, probably because of fastsearch
@@ -174,7 +174,7 @@ namespace OpenBabel
         //then continue getting the requested object.
         //Assumes the objects are all at the same level in the DOM tree.
         SetOneObjectOnly(); //probably already set
-        streampos SavedReqestedPos = _requestedpos; 
+        streampos SavedReqestedPos = _requestedpos;
         _requestedpos=0;//don't do this again
         ReadXML(pFormat,pOb);
         GetInStream()->seekg(SavedReqestedPos);
@@ -197,7 +197,7 @@ namespace OpenBabel
             if(nsiter!=Namespaces().end())
               {
                 XMLBaseFormat* pNewFormat = nsiter->second;
-                //Must have same target, e.g. OBMol, as current format 
+                //Must have same target, e.g. OBMol, as current format
                 if(pNewFormat->GetType() == pFormat->GetType())
                   {
                     _LookingForNamespace=false;
@@ -222,7 +222,7 @@ namespace OpenBabel
         ret= pFormat->DoElement(ElName);
       else if(typ==XML_READER_TYPE_END_ELEMENT)
         ret= pFormat->EndElement(ElName);
-      else 
+      else
         continue;
       _lastpos = GetInStream()->tellg();
 
@@ -328,7 +328,7 @@ namespace OpenBabel
     istream* ifs = pConv->GetInStream();
     if(!ifs->good() || ifs->eof())
       return 0;
-	
+
     ifs->get(buffer, len+1, '>');
     streamsize count = strlen(buffer);
 
@@ -371,7 +371,7 @@ So that there would be no limitation of file sizes, the libxml2
 reader was chosen. Rather than build a whole xml tree internally
 as a DOM parser does, this provides callbacks when each element,
 etc. is encountered (like SAX). Nevertheless it is aware of the
-XML structure and will fail if it enounters irregular input. It 
+XML structure and will fail if it enounters irregular input. It
 is therefore necessary to use a single instance of the reader for
 each conversion process, rather than one for each object as would
 have been more natural in OB (see below). This input process can
@@ -380,48 +380,48 @@ object - in particular the reader object is destroyed at the same
 time as the OBConversion object. But it is not as simple as using
 an extended OBConversion derived from the base class, because the
 base OBConversion object has been constructed before the XML format
-has been called. It might have been possible to have the reader as a 
+has been called. It might have been possible to have the reader as a
 member variable in OBConversion, but that would make an undesirable
-dependency for obconversion.cpp on the XML formats. 
+dependency for obconversion.cpp on the XML formats.
 
 The way it has been done maintains generality and no dependency.
 OBConversion is given a member variable pAuxConv which is a pointer
 to an OBConversion object. This is deleted in the OBConversion
-destructor. By default pAuxConv is NULL. 
+destructor. By default pAuxConv is NULL.
 XMLConversion is a class derived from OBConversion and
 contains the interfacing with libxml2 for both reading and writing.
 When a conversion involves an XML format, an instance of it is made
 and pAuxConv in the original OBConversion is set to point to it.
 This process is potentially extendable to allow other, as yet
 unwritten, OBConversion extensions by having a chain of pointers
-to derived OBConversion objects through their pAuxConv members, 
-with the last one being NULL.  
+to derived OBConversion objects through their pAuxConv members,
+with the last one being NULL.
 
 The design has to make sure that multi-object files are handled
 in a way consistent with the rest of OpenBabel. This is based on
 formats such as SMILES and MDL mol where the objects are just
 concatenated. OpenBabel converts by reading one object at a time
-from the input stream. The position in the input stream (obtained 
+from the input stream. The position in the input stream (obtained
 from tellg) is also used to skip objects and as the index in fast
 searching. These depend on input file position being left between
 objects ready to read the next one.
 
 This causes some difficulty when using libxml2 as the XML parser
-because it is a C application and does not have C++ input streams. 
+because it is a C application and does not have C++ input streams.
 xmlReaderForIO is used which requests input data from the callback
 routine XMLConversion::ReadStream(). This inputs chunks of characters
-up to and including '>'. This ensures that the input stream is between 
-objects after an object has been parsed, ready for the next one. 
+up to and including '>'. This ensures that the input stream is between
+objects after an object has been parsed, ready for the next one.
 
 Parsing XML
 At the start and end of each element the DoElement() and EndElement()
 routines respectively in the format are called. The name of the element
 is passed as a parameter and up to now it has been considered sufficient
-to find the appropriate code using a set of if else statements. Only 
+to find the appropriate code using a set of if else statements. Only
 those of interest need be handled. The attributes and content of the
 element are found by calling libxml2 routines from within the format class.
 Parsing is stopped and an object returned to OBConversion when false is
-returned from DoElement or (more usually) from EndElement.  
+returned from DoElement or (more usually) from EndElement.
 
 Namespaces
 XMLConversion class keeps a static map of xml namespaces and the classes
@@ -434,14 +434,14 @@ all the molecules in a CMLReact file.
 
 When ReadChemObject() of the base class XMLFormat is the one called (e.g for files
 with extension .xml), the initial current format is the default format(see below)
-providing it handles the same chemical object type as the output format. The 
+providing it handles the same chemical object type as the output format. The
 ReadChemObject() of the default format is called and processing is as if the
 default format was called, except that the first explicit namespace declaration
 in the xml file that appears in the map can switch the handling to its associated
 format.
- 
+
 The default format is either the first class to register or one which identifies
-itself as the default when calling RegisterXMLFormat(). 
+itself as the default when calling RegisterXMLFormat().
 
 */
 

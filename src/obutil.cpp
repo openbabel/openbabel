@@ -1,16 +1,16 @@
 /**********************************************************************
 obutil.cpp - Various utility methods.
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -82,7 +82,7 @@ namespace OpenBabel
   {
     return (fabs(a) < epsilon);
   }
-  
+
   //! Comparison for nan (not a number)
   bool IsNan(const double &a)
   {
@@ -119,7 +119,7 @@ namespace OpenBabel
   }
 
   //! \return the geometric centroid to an array of coordinates in double* format
-  //!  and center the coordinates to the origin. Operates on the first "size" 
+  //!  and center the coordinates to the origin. Operates on the first "size"
   //!  coordinates in the array.
   vector3 center_coords(double *c, unsigned int size)
   {
@@ -127,7 +127,7 @@ namespace OpenBabel
       {
         return(VZero);
       }
-		unsigned int i; 
+		unsigned int i;
     double x=0.0, y=0.0, z=0.0;
     for (i = 0;i < size;++i)
       {
@@ -323,7 +323,7 @@ namespace OpenBabel
 #endif
 
       fs.open(filename);
-    
+
     if (!fs)
       {
         string error = "Unable to open file \'";
@@ -332,7 +332,7 @@ namespace OpenBabel
         obErrorLog.ThrowError(__FUNCTION__, error, obError);
         return(false);
       }
-    
+
     return(true);
   }
 
@@ -633,7 +633,7 @@ namespace OpenBabel
               ang = fabs(vectorAngle(v1,v2));
               if (ang < 5.0 || ang > 175.0)
                 continue;
-                
+
               // Also check length considerations -- don't bother if the length > 10.0 Angstroms
               if (v1.length_2() > 99.999)
                 continue;

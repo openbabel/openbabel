@@ -1,16 +1,16 @@
 /**********************************************************************
 transform3d.h - Handle 3D transformations in space groups.
- 
+
 Copyright (C) 2007 by Jean Bréfort
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
-This program is free software; you can redistribute it and/or 
-modify it under the terms of the GNU General Public License as 
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
 published by the Free Software Foundation; either version 2 of the
 License, or (at your option) any later version.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -26,7 +26,7 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
-  
+
   /** \class transform3d transform3d.h <openbabel/math/transform3d.h>
       \brief Handle 3D transformations, such as space group definitions
       \since version 2.2
@@ -43,7 +43,7 @@ namespace OpenBabel
         {
           Normalize();
         }
-        
+
       transform3d(double s): matrix3x3(s), vector3()
         {
         }
@@ -71,12 +71,12 @@ namespace OpenBabel
 
       void Normalize();
 	};
-    
+
   typedef std::list<transform3d*>::const_iterator transform3dIterator;
 
 }
 
 #endif // OB_TRANSFORM_3D_H
 
-//! \file transform3d.h 
+//! \file transform3d.h
 //! \brief Handle 3D transformations in space groups.

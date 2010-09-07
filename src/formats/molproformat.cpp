@@ -5,11 +5,11 @@ Based on nwchemformat.cpp,
 Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
 Some portions Copyright (C) 2009 by Michael Banck
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -113,7 +113,7 @@ namespace OpenBabel
     std::vector< std::vector< vector3 > > Lx;
     std::vector<double> Frequencies, Intensities;
 
-    // 0 for no vibrations, 1 for regular vibrations, 2 for imaginary 
+    // 0 for no vibrations, 1 for regular vibrations, 2 for imaginary
     // vibrations, 3 for low/zero vibrations
     int vibration_state = 0;
 
@@ -176,7 +176,7 @@ namespace OpenBabel
         }
         if(strstr(buffer,"Wavenumbers [cm-1]") != NULL && vibration_state < 3)
           {
-            // freq, intens and vib are auxiliary vectors which hold the data 
+            // freq, intens and vib are auxiliary vectors which hold the data
             // for every block of 5 vibrations.
             vector<double> freq;
             vector<double> intens;
@@ -198,7 +198,7 @@ namespace OpenBabel
                 intens.push_back(atof(vs[i].c_str()));
 	    }
             ifs.getline(buffer,BUFF_SIZE); // relative intensities
-            ifs.getline(buffer,BUFF_SIZE); 
+            ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
 	    while(vs.size() > 1) {
               vector<double> x, y, z;
@@ -223,7 +223,7 @@ namespace OpenBabel
 	      Frequencies.push_back(freq[i]);
               Intensities.push_back(intens[i]);
               Lx.push_back(vib[i]);
-            }  
+            }
           } // if "Normal Modes"
         if(strstr(buffer,"STATE") != NULL && strstr(buffer,"DIPOLE MOMENT") != NULL)
           {
@@ -238,7 +238,7 @@ namespace OpenBabel
               dipoleMoment->SetData(x, y, z);
               dipoleMoment->SetOrigin(fileformatInput);
               mol.SetData(dipoleMoment);
-            } 
+            }
           } // "STATE" && "DIPOLE MOMENT"
       } // while
 

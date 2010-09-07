@@ -7,11 +7,11 @@ Code translation from Java
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -43,16 +43,16 @@ public:
     "As described in Gakh A.A., Burnett M.N.,\n"
     "Modular Chemical Descriptor Language (MCDL):\n"
     "Composition, Connectivity and Supplementary Modules\n"
-    "J.Chem.Inf.Comput.Sci, 2001, 41, 1494-1499"; 
+    "J.Chem.Inf.Comput.Sci, 2001, 41, 1494-1499";
   }
 
   virtual const char* SpecificationURL(){return
      "http://pubs.acs.org/cgi-bin/abstract.cgi/jcisd8/2001/41/i06/abs/ci000108y.html";}
 
-  virtual const char* GetMIMEType() 
+  virtual const char* GetMIMEType()
   { return "chemical/x-MCDL"; }
 
-  /* Flags() can return be any of the following combined by | 
+  /* Flags() can return be any of the following combined by |
      or be omitted if none apply
      NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY  DEFAULTFORMAT
      READBINARY  WRITEBINARY  READXML  ZEROATOMSOK*/
@@ -70,7 +70,7 @@ public:
           if(ifs.good())
             getline(ifs, temp);
         }while(ifs.good() && --n);
-      return ifs.good() ? 1 : -1;       
+      return ifs.good() ? 1 : -1;
   }
 
   ////////////////////////////////////////////////////
@@ -101,7 +101,7 @@ private:
   int ntatoms;
   int nbonds;
   string  finalstr;
-  
+
   int qx [MAXFRAGS];
   int qa [MAXBONDS][4];
 //  int HVal[NELEMMAX];
@@ -115,8 +115,8 @@ private:
   string getMCDL(OBMol* pmol, bool includeCoordinates);
   void restoreFullMCDL(string value, OBMol* pmol);
   void setMCDL(const string lineToParse, OBMol* pmol, string & sout);
-  void assignCharges(const std::vector <int> aPosition, const std::vector <int> iA1, 
-    const std::vector <int> iA2, std::vector <int>& aCharges, std::vector <int>& charges, 
+  void assignCharges(const std::vector <int> aPosition, const std::vector <int> iA1,
+    const std::vector <int> iA2, std::vector <int>& aCharges, std::vector <int>& charges,
     std::vector <int>& bondOrder, int aPos, int nPrev, int nt, int acount, int bcount);
   int indexOf(const string instring, const string substring, int fromPos=0);
   int lastIndexOf(const string instring, const string substring);
@@ -149,11 +149,11 @@ private:
 
     maxdepth=0;
     kflag=0;
- 
+
     ntatoms=0;
     nbonds=0;
     finalstr="";
-  
+
   for (i=0; i<MAXFRAGS; i++) {
     qx[i]=0;
     for (j=0; j<4; j++) qa[i][j]=0;
@@ -172,7 +172,7 @@ private:
 
     result="[";
     semis[0] = '\0';
-    
+
     for (i=0; i<ntatoms; i++)
     {
         if (i > 0)
@@ -192,7 +192,7 @@ private:
                         icons[j] = icons[k];
                         icons[k] = nn;
                     }
-                        
+
         }
         comma = 0;
         for (j=0; j<n; j++)
@@ -275,7 +275,7 @@ private:
             nt = 1;
             ktype = 1;
             iflag = false;
-    
+
            while (nt <= ntypes && jflag)
            {
             for (j=0; j<ntatoms; j++)
@@ -315,8 +315,8 @@ private:
             if (nn > 1)
             {
             iflag = true;
-            
-            // sort strings 
+
+            // sort strings
             for (i=0; i<nn-1; i++)
                 for (j=i+1; j<nn; j++)
                     if (strcmp(strngs[j],strngs[i]) > 0)
@@ -357,7 +357,7 @@ private:
         if (ntypes < ntatoms)
         {
             for (j=0; j<ntypes; j++)
-            { 
+            {
             numdups = 0;
             for (i=0; i<ntatoms; i++)
                 if (ix[i] == j+1)
@@ -379,7 +379,7 @@ private:
             {
                 for (i=0; i<ntatoms; i++)
                     ix[i] = cx[i];
-            
+
             dupnum = 0;
                 for (i=0; i<ntatoms; i++)
             {
@@ -406,7 +406,7 @@ private:
             }
         }
     }
-    
+
     if (ntypes == ntatoms)
     {
             //if (true) fprintf(o_verbose,"%s\n",constring(conntab,tstr));
@@ -550,7 +550,7 @@ private:
 //Here FRAGCON conversion...
   pmol->DeleteHydrogens();
   createStereoLists(pmol,bondStereoList,atomStereoList,eqList);
-//    return "started"; //passed	
+//    return "started"; //passed
   naStore=pmol->NumAtoms();
   nbStore=pmol->NumBonds();
   for (i=1; i<=naStore; i++) {
@@ -633,7 +633,7 @@ private:
     }
 
     ltypes=ntypes;
-// order fragment types in ASCII order 
+// order fragment types in ASCII order
     for (i=0; i<ntypes-1; i++) for (j=i+1; j<ntypes; j++) if (fragment[j] < fragment[i]) {
       frag=fragment[i];
       fragment[i]=fragment[j];
@@ -642,8 +642,8 @@ private:
       ifragnum[i] = ifragnum[j];
       ifragnum[j] = k;
     }
-// reread the fragments 
-// ix[i]: fragment type of fragment i 
+// reread the fragments
+// ix[i]: fragment type of fragment i
     for (i=1; i<=ntatoms; i++) {
       frag=aSymb[i-1];
       j=nHydr[i-1];
@@ -654,8 +654,8 @@ private:
     }
 
 //FRAGCON format atoms conversion
-// read in the connections 
-// ia[i][0]: from fragment; ia[i][1]: to fragment of connection i 
+// read in the connections
+// ia[i][0]: from fragment; ia[i][1]: to fragment of connection i
     nbonds = 0;
     for (i=1; i<=nbStore; i++) {
       // Possible, DRAGON format can contains multiply bonds between 2 atoms. Bond order?
@@ -699,7 +699,7 @@ private:
 //bond stereo getting
     bstereo=getBondMCDL(pmol,nbStore,ntatoms,ix,aNumber,bonds,bondStereoList,eqList);
 
-    // original and final fragment numbers 
+    // original and final fragment numbers
     if (chgflag != 0) for (i=0; i<ntatoms; i++) nchg[ix[i]] = aCharge[i];
     if (radicalflag != 0) for (i=0; i<ntatoms; i++) nrad[ix[i]] = aRadical[i];
 
@@ -723,7 +723,7 @@ private:
       data=data+fragment[i];
     }
     constr="[";
-    // connectivity portion of linear descriptor 
+    // connectivity portion of linear descriptor
     semis="";
     nt = 1;
     for (i=0; i<ntatoms; i++) {
@@ -1048,9 +1048,9 @@ private:
       };
     };
   };
-  
+
   //stereo string extraction
-  
+
   n1=indexOf(value,fsastart);
   if (n1>=0) {
     n2=indexOf(value,"}",n1);
@@ -1102,14 +1102,14 @@ private:
   test=true;
   nt=0;
   nelements=0;
-  
+
 
   while (test) {
     n1=indexOf(value,";");
     n2=indexOf(value,"[");
 
     if (n1<0) {
-      n1=n2; 
+      n1=n2;
     } else {
       if ((n2<n1) && (n2>=0)) n1=n2;
     };
@@ -1240,7 +1240,7 @@ private:
           fragIndex[acount]=nt+1;//sa.fragIndex=fragNo;  //Do not increment!
           nHydr[acount]=0;//special[acount]=0;
           aPosition[acount]=k;
-          acount++; 
+          acount++;
 
           kk=hydrogenValency(k);//HVal[k];
           if (kk == 0) kk=1;
@@ -1254,7 +1254,7 @@ private:
         //length analizing-extracting and addition of other atoms...
       };
       //charges analizing and restore
-    
+
     if (charges[nt-1] != 0) {      //search for appropriate atom to put charge..
     if (nPrev == acount) {
       aCharge[nt-1]=charges[nt-1];
@@ -1345,12 +1345,12 @@ private:
   };
 };
 
-  void MCDLFormat::assignCharges(const std::vector <int> aPosition, const std::vector <int> iA1, 
-  const std::vector <int> iA2, std::vector <int>& aCharges, std::vector <int>& charges, 
+  void MCDLFormat::assignCharges(const std::vector <int> aPosition, const std::vector <int> iA1,
+  const std::vector <int> iA2, std::vector <int>& aCharges, std::vector <int>& charges,
   std::vector <int>& bondOrder, int aPos, int nPrev, int nt, int acount, int bcount){
   //set negative charges
     int k,j,n;
-    
+
   //return;
 
   for (k=nPrev; k<acount; k++) {
@@ -1374,7 +1374,7 @@ private:
 
   int MCDLFormat::indexOf(const string instring, const string substring, int fromPos) {
     int result=instring.find(substring,fromPos);
-    if (result == string::npos) result=-1; 
+    if (result == string::npos) result=-1;
     if (result >= instring.length()) result=-1;
       return result;
   };
@@ -1388,8 +1388,8 @@ private:
   n=-1;
   while (test) {
     n=instring.find(substring,n+1);
-    if (n == string::npos) 
-      test=false; 
+    if (n == string::npos)
+      test=false;
     else {
         result=n;
     };
@@ -1407,7 +1407,7 @@ bool MCDLFormat::parseFormula(const string formulaString, std::vector <int>& enu
   bool test;
   string asym;
   string value=formulaString;
-    
+
   for (i=0; i<etab.GetNumberOfElements(); i++) enumber[i]=0;
 
   for (i=1; i<etab.GetNumberOfElements(); i++) if (strlen(etab.GetSymbol(i))==2) {
@@ -1500,7 +1500,7 @@ bool MCDLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   string molTitle=getMolTitle(line);
 
   if (molTitle.length() > 0) pmol->SetTitle(molTitle.c_str());
-  if (line.length() > 0) setMCDL(line,pmol,molTitle);    
+  if (line.length() > 0) setMCDL(line,pmol,molTitle);
 
   pmol->EndModify();
 

@@ -2,11 +2,11 @@
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -44,7 +44,7 @@ namespace OpenBabel
       return NOTWRITABLE;
     };
 
-    virtual const char* GetMIMEType() 
+    virtual const char* GetMIMEType()
     { return "chemical/x-mopac-out"; };
 
     /// The "API" interface functions
@@ -203,7 +203,7 @@ namespace OpenBabel
             vector<vector3> displacement;
             for (unsigned int i = 0; i < newModes; ++i) {
               displacements.push_back(displacement);
-            } 
+            }
 
             ifs.getline(buffer, BUFF_SIZE);
             tokenize(vs, buffer);
@@ -220,7 +220,7 @@ namespace OpenBabel
               for (unsigned int i = 1; i < modeCount; ++i) {
                 y.push_back(atof(vs[i].c_str()));
               }
-              
+
               z.clear();
               ifs.getline(buffer, BUFF_SIZE);
               tokenize(vs, buffer);
@@ -258,7 +258,7 @@ namespace OpenBabel
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
-    if (!pConv->IsOption("s",OBConversion::INOPTIONS) 
+    if (!pConv->IsOption("s",OBConversion::INOPTIONS)
         && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
 
@@ -329,7 +329,7 @@ namespace OpenBabel
         "  u               Write the crystallographic unit cell, if present.\n\n";
     };
 
-    virtual const char* GetMIMEType() 
+    virtual const char* GetMIMEType()
     { return "chemical/x-mopac-input"; };
 
     /// The "API" interface functions
@@ -487,7 +487,7 @@ namespace OpenBabel
         "  f    <file>     Read the file specified for input keywords\n\n";
     };
 
-    virtual const char* GetMIMEType() 
+    virtual const char* GetMIMEType()
     { return "chemical/x-mopac-input"; };
 
     ////////////////////////////////////////////////////
@@ -513,15 +513,15 @@ namespace OpenBabel
     char buffer[BUFF_SIZE];
     OBAtom *atom;
     vector<string> vs;
-    
+
     vector<OBInternalCoord*> vic;
     vector<int> indices;
     vic.push_back((OBInternalCoord*)NULL);
-    
+
     ifs.getline(buffer,BUFF_SIZE); // keywords
     ifs.getline(buffer,BUFF_SIZE); // filename
     ifs.getline(buffer,BUFF_SIZE); // title (currently ignored)
-    
+
     mol.BeginModify();
 
     while (ifs.getline(buffer,BUFF_SIZE)) {
@@ -531,7 +531,7 @@ namespace OpenBabel
       else if (vs.size() < 10)
         return false;
       atom = mol.NewAtom();
-        
+
       OBInternalCoord *coord = new OBInternalCoord;
       //vic[atom->GetIdx()]->_dst = atof(vs[1].c_str());
       //vic[atom->GetIdx()]->_ang = atof(vs[3].c_str());
@@ -544,17 +544,17 @@ namespace OpenBabel
       indices.push_back(atoi(vs[7].c_str()));
       indices.push_back(atoi(vs[8].c_str()));
       indices.push_back(atoi(vs[9].c_str()));
- 
+
       atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
     }
-    
+
     int idx = 0;
     FOR_ATOMS_OF_MOL (a, mol) {
       if ((indices[idx] > 0) && (indices[idx] <= mol.NumAtoms()))
         vic[a->GetIdx()]->_a = mol.GetAtom(indices[idx]);
       else
         vic[a->GetIdx()]->_a = NULL;
-      
+
       if ((indices[idx+1] > 0) && (indices[idx+1] <= mol.NumAtoms()))
         vic[a->GetIdx()]->_b = mol.GetAtom(indices[idx+1]);
       else
@@ -564,16 +564,16 @@ namespace OpenBabel
         vic[a->GetIdx()]->_c = mol.GetAtom(indices[idx+2]);
       else
         vic[a->GetIdx()]->_c = NULL;
-      
+
       idx += 3;
     }
 
-    /* 
+    /*
        vector<OBInternalCoord*>::iterator j;
        for (j = vic.begin(); j != vic.end(); j++) {
        cout << (*j)->_dst << " " << (*j)->_ang << " " << (*j)->_tor << " ";
        if ((*j)->_a)
-       cout << (*j)->_a->GetIdx() << " "; 
+       cout << (*j)->_a->GetIdx() << " ";
        if ((*j)->_b)
        cout << (*j)->_b->GetIdx() << " ";
        if ((*j)->_c)
@@ -606,7 +606,7 @@ namespace OpenBabel
 
     vector<OBInternalCoord*> vic;
     vic.push_back((OBInternalCoord*)NULL);
-    
+
     for (unsigned int i = 0; i<mol.NumAtoms(); i++)
       vic.push_back(new OBInternalCoord);
 
@@ -645,7 +645,7 @@ namespace OpenBabel
       r = vic[atom->GetIdx()]->_dst;
       w = vic[atom->GetIdx()]->_ang;
       t = vic[atom->GetIdx()]->_tor;
-	
+
       strncpy(type, etab.GetSymbol(atom->GetAtomicNum()), 16);
       type[15] = '\0';
 
@@ -653,13 +653,13 @@ namespace OpenBabel
         t += 360;
       snprintf(buffer, BUFF_SIZE, "%-2s %10.6f  1  %10.6f  1  %10.6f  1  ", type, r, w, t);
       ofs << buffer;
-      if (atom->GetIdx() == 1) 
+      if (atom->GetIdx() == 1)
         snprintf(buffer, BUFF_SIZE, "%4d%4d%4d\n", 0, 0, 0);
-      if (atom->GetIdx() == 2) 
+      if (atom->GetIdx() == 2)
         snprintf(buffer, BUFF_SIZE, "%4d%4d%4d\n", a->GetIdx(), 0, 0);
-      if (atom->GetIdx() == 3) 
+      if (atom->GetIdx() == 3)
         snprintf(buffer, BUFF_SIZE, "%4d%4d%4d\n", a->GetIdx(), b->GetIdx(), 0);
-      if (atom->GetIdx() >= 4) 
+      if (atom->GetIdx() >= 4)
         snprintf(buffer, BUFF_SIZE, "%4d%4d%4d\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
       ofs << buffer;
     }

@@ -1,15 +1,15 @@
 /**********************************************************************
 op.h - plugin options or operations
- 
+
 Copyright (C) 2007 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -60,7 +60,7 @@ public:
       OBOp* pOp = dynamic_cast<OBOp*>(itr->second);
        //ignore ops with IDs that begin with '_' or have "not displayed in GUI" in their first line of description
       if(*(itr->first)=='_'
-        || OBPlugin::FirstLine(pOp->Description()).find("not displayed in GUI")!=std::string::npos)       
+        || OBPlugin::FirstLine(pOp->Description()).find("not displayed in GUI")!=std::string::npos)
         continue;
       if(pOp && pOp->WorksWith(pOb))
       {
@@ -103,9 +103,9 @@ modification on the molecule(or reaction) after it has been input, but before
 it is output. An example is the --center option implemented in the OpCenter class
 in ops.cpp, which is a duplicate of the built in -c option for centering coordinates.
 
-The advantage of plugin classes is that no existing code has to be modified 
-when a new class is added. You can list those that are present by 
-babel -L ops 
+The advantage of plugin classes is that no existing code has to be modified
+when a new class is added. You can list those that are present by
+babel -L ops
 or from a menu item in the GUI.
 
 Any OBOp derived class has to have a constructor, a function returning a short description,

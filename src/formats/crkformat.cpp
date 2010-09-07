@@ -1,11 +1,11 @@
 /**********************************************************************
 Copyright (C) 2002-2006 by Dr. Alex M. Clark and Geoffrey Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -40,7 +40,7 @@ namespace OpenBabel
     virtual const char* SpecificationURL()
     {return "http://crk.sourceforge.net/";}; //optional
 
-    virtual const char* GetMIMEType() 
+    virtual const char* GetMIMEType()
     { return "chemical/x-crk2d"; };
 
     //Flags() can return be any the following combined by | or be omitted if none apply
@@ -142,8 +142,8 @@ namespace OpenBabel
 
     virtual const char* SpecificationURL()
     {return "http://crk.sourceforge.net/";}; //optional
-  
-    virtual const char* GetMIMEType() 
+
+    virtual const char* GetMIMEType()
     { return "chemical/x-crk3d"; };
 
     //Flags() can return be any the following combined by | or be omitted if none apply
@@ -393,9 +393,9 @@ namespace OpenBabel
         else
           {
             stringstream errorMsg;
-            errorMsg << "Unassigned bond ID (" << stbondFrom[n] 
+            errorMsg << "Unassigned bond ID (" << stbondFrom[n]
                      << " " << stbondTo[n] << "), source may be invalid.";
-            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning); 
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
             return false;
           }
       }
@@ -409,7 +409,7 @@ namespace OpenBabel
         if (strstr(buffer,"</Property>") == 0)
           return false; // something messed up
       }
-    
+
     return foundClass;
   }
 

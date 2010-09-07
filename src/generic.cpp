@@ -1,17 +1,17 @@
 /**********************************************************************
 generic.cpp - Handle OBGenericData classes.
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2010 by David Lonie
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -48,11 +48,11 @@ namespace OpenBabel
       the developer wiki:
       http://openbabel.sourceforge.net/wiki/Generic_Data
 
-      For your own custom data, either define a custom subclass using 
-      an id from the OBGenericDataType::CustomData0 to 
+      For your own custom data, either define a custom subclass using
+      an id from the OBGenericDataType::CustomData0 to
       OBGenericDataType::CustomData15 slots,
       or store your data as a string and use OBPairData for key/value access.
-      The latter is <strong>highly</strong> recommended for various text 
+      The latter is <strong>highly</strong> recommended for various text
       descriptors
       e.g., in QSAR, atom or bond labels, or other textual data.
 
@@ -68,7 +68,7 @@ namespace OpenBabel
       in OBBase, allowing you to separate data read in from a file,
       added by a user, or assigned by Open Babel internally.
 
-      While the library and import routines will set DataOrigin correctly, 
+      While the library and import routines will set DataOrigin correctly,
       you should try to annotate data added by your code. Typically this would
       either be userAdded or external. The former refers to something the
       user requested as an annotation, while the latter refers to annotations
@@ -99,7 +99,7 @@ namespace OpenBabel
          }
       @endcode
 
-      Similar code also works for OBGenericData stored in an OBAtom or 
+      Similar code also works for OBGenericData stored in an OBAtom or
       OBBond or OBResidue. These examples show use of DataOrigin outside
       of the Open Babel library.
 
@@ -127,27 +127,27 @@ namespace OpenBabel
       }
       @endcode
 
-      When designing a class derived from OBGenericData you must add a 
-      Clone() function. For classes used with OBMol this is used when 
+      When designing a class derived from OBGenericData you must add a
+      Clone() function. For classes used with OBMol this is used when
       an OBMol object is copied. If your class member variables contain
       pointers to atoms or bonds then it will be necessary to ensure
       that these are updated in Clone() to refer to the new molecule. Without
-      these and similar pointers it is more likely that the very simple 
+      these and similar pointers it is more likely that the very simple
       clone function
       @code
       virtual OBGenericData* Clone(OBBase* parent) const
          {return new MyNewClass(*this);}
       @endcode
-      and the compiler generated copy constructor would be sufficient. 
+      and the compiler generated copy constructor would be sufficient.
 
       It is recommended that, if possible, OBGenericData classes do not
       store atom and bond pointers. Using atom and bond indices instead
-      would allow the simple version of Clone() above. See 
+      would allow the simple version of Clone() above. See
       OBRotameterData::Clone for an example of a more complicated version.
-      For classes which are not intended to support copying, Clone() can 
-      return NULL 
+      For classes which are not intended to support copying, Clone() can
+      return NULL
       @code
-      virtual OBGenericData* Clone(OBBase* parent) const 
+      virtual OBGenericData* Clone(OBBase* parent) const
          {return NULL;}
       @endcode
       Clone() is a pure virtual function so that you need to decide what
@@ -393,34 +393,34 @@ namespace OpenBabel
 
     if ( spacegroup == 0  && _spaceGroup)
       spacegroup = _spaceGroup->GetId();
-	  
+
     if ( spacegroup <= 0 )
       return OBUnitCell::Undefined;
 
     else if ( spacegroup == 1 ||
               spacegroup == 2 )
       return OBUnitCell::Triclinic;
-	  
+
     else if ( spacegroup >= 3 &&
               spacegroup <= 15 )
       return OBUnitCell::Monoclinic;
-	  
+
     else if ( spacegroup >= 16 &&
               spacegroup <= 74 )
       return OBUnitCell::Orthorhombic;
-	  
+
     else if ( spacegroup >= 75 &&
               spacegroup <= 142 )
       return OBUnitCell::Tetragonal;
-	  
+
     else if ( spacegroup >= 143 &&
               spacegroup <= 167 )
       return OBUnitCell::Rhombohedral;
-	  
+
     else if ( spacegroup >= 168 &&
               spacegroup <= 194 )
       return OBUnitCell::Hexagonal;
-	  
+
     else if ( spacegroup >= 195 &&
               spacegroup <= 230 )
       return OBUnitCell::Cubic;
@@ -429,7 +429,7 @@ namespace OpenBabel
     else // ( spacegroup > 230 )
       return OBUnitCell::Undefined;
   }
-  
+
   OBUnitCell::LatticeType OBUnitCell::GetLatticeType()
   {
     if (_lattice != Undefined)
@@ -460,8 +460,8 @@ namespace OpenBabel
           _lattice = Orthorhombic;
         break;
       case 2:
-        if ( (IsApprox(alpha, 120.0, 1.0e-3) 
-              || IsApprox(beta, 120.0, 1.0e-3) 
+        if ( (IsApprox(alpha, 120.0, 1.0e-3)
+              || IsApprox(beta, 120.0, 1.0e-3)
               || IsApprox(gamma, 120.0f, 1.0e-3))
              && (IsApprox(a, b, 1.0e-4) || IsApprox(b, c, 1.0e-4)) )
           _lattice = Hexagonal;
@@ -480,25 +480,25 @@ namespace OpenBabel
 
   int OBUnitCell::GetSpaceGroupNumber( std::string name)
   {
-    static const char * const spacegroups[] = { 
-      "P1", "P-1", "P2", "P2(1)", "C2", "Pm", "Pc", "Cm", "Cc", "P2/m", 
-      "P2(1)/m", "C2/m", "P2/c", "P2(1)/c", "C2/c", "P222", "P222(1)", 
-      "P2(1)2(1)2", "P2(1)2(1)2(1)", "C222(1)", "C222", "F222", "I222", 
-      "I2(1)2(1)2(1)", "Pmm2", "Pmc2(1)", "Pcc2", "Pma2", "Pca2(1)", "Pnc2", 
-      "Pmn2(1)", "Pba2", "Pna2(1)", "Pnn2", "Cmm2", "Cmc2(1)", "Ccc2", "Amm2", 
-      "Abm2", "Ama2", "Aba2", "Fmm2", "Fdd2", "Imm2", "Iba2", "Ima2", "Pmmm", 
-      "Pnnn", "Pccm", "Pban", "Pmma", "Pnna", "Pmna", "Pcca", "Pbam", "Pccn", 
-      "Pbcm", "Pnnm", "Pmmn", "Pbcn", "Pbca", "Pnma", "Cmcm", "Cmca", "Cmmm", 
-      "Cccm", "Cmma", "Ccca", "Fmmm", "Fddd", "Immm", "Ibam", "Ibca", "Imma", 
-      "P4", "P4(1)", "P4(2)", "P4(3)", "I4", "I4(1)", "P-4", "I-4", "P4/m", 
-      "P4(2)/m", "P4/n", "P4(2)/n", "I4/m", "I4(1)/a", "P422", "P42(1)2", 
+    static const char * const spacegroups[] = {
+      "P1", "P-1", "P2", "P2(1)", "C2", "Pm", "Pc", "Cm", "Cc", "P2/m",
+      "P2(1)/m", "C2/m", "P2/c", "P2(1)/c", "C2/c", "P222", "P222(1)",
+      "P2(1)2(1)2", "P2(1)2(1)2(1)", "C222(1)", "C222", "F222", "I222",
+      "I2(1)2(1)2(1)", "Pmm2", "Pmc2(1)", "Pcc2", "Pma2", "Pca2(1)", "Pnc2",
+      "Pmn2(1)", "Pba2", "Pna2(1)", "Pnn2", "Cmm2", "Cmc2(1)", "Ccc2", "Amm2",
+      "Abm2", "Ama2", "Aba2", "Fmm2", "Fdd2", "Imm2", "Iba2", "Ima2", "Pmmm",
+      "Pnnn", "Pccm", "Pban", "Pmma", "Pnna", "Pmna", "Pcca", "Pbam", "Pccn",
+      "Pbcm", "Pnnm", "Pmmn", "Pbcn", "Pbca", "Pnma", "Cmcm", "Cmca", "Cmmm",
+      "Cccm", "Cmma", "Ccca", "Fmmm", "Fddd", "Immm", "Ibam", "Ibca", "Imma",
+      "P4", "P4(1)", "P4(2)", "P4(3)", "I4", "I4(1)", "P-4", "I-4", "P4/m",
+      "P4(2)/m", "P4/n", "P4(2)/n", "I4/m", "I4(1)/a", "P422", "P42(1)2",
       "P4(1)22", "P4(1)2(1)2", "P4(2)22", "P4(2)2(1)2", "P4(3)22", "P4(3)2(1)2",
       "I422", "I4(1)22", "P4mm", "P4bm", "P4(2)cm", "P4(2)nm", "P4cc", "P4nc",
-      "P4(2)mc", "P4(2)bc", "I4mm", "I4cm", "I4(1)md", "I4(1)cd", "P-42m", 
-      "P-42c", "P-42(1)m", "P-42(1)c", "P-4m2", "P-4c2", "P-4b2", "P-4n2", 
+      "P4(2)mc", "P4(2)bc", "I4mm", "I4cm", "I4(1)md", "I4(1)cd", "P-42m",
+      "P-42c", "P-42(1)m", "P-42(1)c", "P-4m2", "P-4c2", "P-4b2", "P-4n2",
       "I-4m2", "I-4c2", "I-42m", "I-42d", "P4/mmm", "P4/mcc", "P4/nbm",
-      "P4/nnc", "P4/mbm", "P4/mnc", "P4/nmm", "P4/ncc", "P4(2)/mmc", 
-      "P4(2)/mcm", "P4(2)/nbc", "P4(2)/nnm", "P4(2)/mbc", "P4(2)/mnm", 
+      "P4/nnc", "P4/mbm", "P4/mnc", "P4/nmm", "P4/ncc", "P4(2)/mmc",
+      "P4(2)/mcm", "P4(2)/nbc", "P4(2)/nnm", "P4(2)/mbc", "P4(2)/mnm",
       "P4(2)/nmc", "P4(2)/ncm", "I4/mmm", "I4/mcm", "I4(1)/amd", "I4(1)/acd",
       "P3", "P3(1)", "P3(2)", "R3", "P-3", "R-3", "P312", "P321", "P3(1)12",
       "P3(1)21", "P3(2)12", "P3(2)21", "R32", "P3m1", "P31m", "P3c1", "P31c",
@@ -510,7 +510,7 @@ namespace OpenBabel
       "P2(1)3", "I2(1)3", "Pm-3", "Pn-3", "Fm-3", "Fd-3", "Im-3", "Pa-3",
       "Ia-3", "P432", "P4(2)32", "F432", "F4(1)32", "I432", "P4(3)32",
       "P4(1)32", "I4(1)32", "P-43m", "F4-3m", "I-43m", "P-43n", "F-43c",
-      "I-43d", "Pm-3m", "Pn-3n", "Pm-3n", "Pn-3m", "Fm-3m", "Fm-3c", 
+      "I-43d", "Pm-3m", "Pn-3n", "Pm-3n", "Pn-3m", "Fm-3m", "Fm-3c",
       "Fd-3m", "Fd-3c", "Im-3m", "Ia-3d"
     };
 
@@ -554,7 +554,7 @@ namespace OpenBabel
   void OBUnitCell::FillUnitCell(OBMol *mol)
   {
     const SpaceGroup *sg = GetSpaceGroup(); // the actual space group and transformations for this unit cell
-    
+
     // For each atom, we loop through: convert the coords back to inverse space, apply the transformations and create new atoms
     vector3 uniqueV, newV, updatedCoordinate;
     list<vector3> transformedVectors; // list of symmetry-defined copies of the atom
@@ -572,7 +572,7 @@ namespace OpenBabel
       uniqueV = CartesianToFractional(uniqueV);
       uniqueV = transformedFractionalCoordinate(uniqueV);
       coordinates.push_back(uniqueV);
-  
+
       transformedVectors = sg->Transform(uniqueV);
       for (transformIterator = transformedVectors.begin();
            transformIterator != transformedVectors.end(); ++transformIterator) {
@@ -591,7 +591,7 @@ namespace OpenBabel
         }
         if (foundDuplicate)
           continue;
-        
+
         coordinates.push_back(updatedCoordinate); // make sure to check the new atom for dupes
         newAtom = mol->NewAtom();
         newAtom->Duplicate(*i);
@@ -683,7 +683,7 @@ namespace OpenBabel
   {
     if(this == &src)
       return(*this);
-    
+
     _source = src._source;
 
     _vDimension = src._vDimension;
@@ -870,7 +870,7 @@ namespace OpenBabel
 
   /*!
   **\brief Retrieves the 3 atom pointer for the angle (vertex first)
-  **\return triple of OBAtom pointers 
+  **\return triple of OBAtom pointers
   */
   triple<OBAtom*,OBAtom*,OBAtom*> OBAngle::GetAtoms()
   {
@@ -968,7 +968,7 @@ namespace OpenBabel
       return(false);
 
     vector<OBAngle>::iterator angle;
-    
+
     angles.clear();
     angles.resize(_angles.size());
 
@@ -981,10 +981,10 @@ namespace OpenBabel
         angles[ct][1] = angle->_termini.first->GetIdx() - 1;
         angles[ct][2] = angle->_termini.second->GetIdx() - 1;
       }
- 
+
     return(true);
   }
-  
+
   /*!
   **\brief Fills an array with the indices of the atoms in the angle (vertex first)
   **\param angles pointer to the pointer to an array of angles atom indices
@@ -1010,7 +1010,7 @@ namespace OpenBabel
       }
     return (unsigned int)_angles.size();
   }
-  
+
   //
   //member functions for OBAngleData class - stores OBAngle set
   //
@@ -1118,7 +1118,7 @@ namespace OpenBabel
 
   /*!
   **\brief determines if torsion has only protons on either the a or d end
-  **\return boolean 
+  **\return boolean
   */
   bool OBTorsion::IsProtonRotor()
   {
@@ -1265,7 +1265,7 @@ namespace OpenBabel
     case input: _atom4refs = atom4refs;break;
     case output:_atom4refo = atom4refs;break;
     case calcvolume:_atom4refc = atom4refs;break;
-    default: 
+    default:
       obErrorLog.ThrowError(__FUNCTION__, "AtomRefType called is invalid", obDebug);
       return(false);
     }
@@ -1282,7 +1282,7 @@ namespace OpenBabel
       obErrorLog.ThrowError(__FUNCTION__, "AtomRefType called is invalid", obDebug);
       return(false);
     }
-              
+
     return (_atom4refs.size());
   }
 
@@ -1295,7 +1295,7 @@ namespace OpenBabel
     default:
       obErrorLog.ThrowError(__FUNCTION__, "AtomRefType called is invalid", obDebug);
       return(false);
-    }  
+    }
   }
   std::vector<unsigned int> OBChiralData::GetAtom4Refs(atomreftype t) const
   {

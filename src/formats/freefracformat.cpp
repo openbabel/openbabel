@@ -1,11 +1,11 @@
 /**********************************************************************
 Copyright (C) 2005-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -101,10 +101,10 @@ namespace OpenBabel
   {
     string temp = data;
     size_t stdErr = temp.rfind("(");
-  
+
     if(stdErr!=string::npos)
       temp.erase(stdErr);
-  
+
     return temp.c_str();
   }
 */
@@ -149,7 +149,7 @@ namespace OpenBabel
     //parse cell values
     double A, B, C, Alpha, Beta, Gamma;
     string temp; // used to trim ending (xx) data from strings
-    
+
     A = atof(vs[0].c_str());
     B = atof(vs[1].c_str());
     C = atof(vs[2].c_str());
@@ -205,13 +205,13 @@ namespace OpenBabel
       }
 
     // clean out any remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() && 
+    while(ifs.peek() != EOF && ifs.good() &&
           (ifs.peek() == '\n' || ifs.peek() == '\r'))
       ifs.getline(buffer,BUFF_SIZE);
-    
+
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
-    if (!pConv->IsOption("s",OBConversion::INOPTIONS) 
+    if (!pConv->IsOption("s",OBConversion::INOPTIONS)
         && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
 

@@ -2,11 +2,11 @@
 
 **********************************************************************
 Copyright (C) 2005-2006, eMolecules, Inc. (www.emolecules.com)
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -20,18 +20,18 @@ GNU General Public License for more details.
 | DESCRIPTION: CANONICALIZATION OF SMILES
 |
 |       This is a specialized SMILES canonicalization algorithm.  Although
-|       it can be applied in the standard fashion to a whole molecule, 
+|       it can be applied in the standard fashion to a whole molecule,
 |       its real job is to generate canonical SMILES for fragments, or
 |       "subsets", of the atoms of a molecule.
 |
 |       For example, consider the first three atoms of Oc1ccccc1.  With
 |       a "normal" SMILES canonicalizer, you couldn't generate a SMILES
 |       for Occ, because it's not a valid molecule.  However, this system
-|       can do exactly that, by taking both the whole molecule (which 
+|       can do exactly that, by taking both the whole molecule (which
 |       retains the aromaticity), and a "subset" bitmap that specifies
 |       which atoms are to be included in the SMILES.
 |
-|       Canonicalization is carried out per Weininger et al (J. Chem. 
+|       Canonicalization is carried out per Weininger et al (J. Chem.
 |       Inf. Comput. Sci., Vol. 29, No. 2, 1989, pp 97-101), with some
 |       modifications to handle bond symmetries not foreseen by Weininger
 |       in that paper.
@@ -78,7 +78,7 @@ static void print_vector_pairs(char *prefix, vector<pair<OBAtom*,unsigned int> >
   }
 }
 #endif
-  
+
 
 /***************************************************************************
 * FUNCTION: CompareXXX
@@ -153,7 +153,7 @@ static unsigned int GetHvyValence(OBAtom *atom, OBBitVec &frag_atoms)
     if (frag_atoms.BitIsSet(nbr->GetIdx()) && !(nbr->IsHydrogen()))
       count++;
   }
-  
+
   return(count);
 }
 
@@ -199,7 +199,7 @@ static unsigned int GetHvyBondSum(OBAtom *atom, OBBitVec &frag_atoms)
 * FUNCTION: GetGTDVector
 *
 * DESCRIPTION:
-*       
+*
 *       Calculates the graph theoretical distance of each atom.
 *       Vector is indexed from zero.
 *
@@ -222,7 +222,7 @@ static bool GetGTDVector(OBMol *pmol,
 {
   gtd.clear();
   gtd.resize(pmol->NumAtoms());
-  
+
   int gtdcount, natom;
   OBBitVec used, curr, next;
   OBAtom *atom, *atom1;
@@ -303,7 +303,7 @@ static void FindRingAtoms(OBMol *pmol, OBBitVec &frag_atoms, OBBitVec &ring_atom
     OBRing *ring = *ri;
     OBBitVec bvtmp = frag_atoms & ring->_pathset;       // intersection: fragment and ring
     if (bvtmp == ring->_pathset)                        // all ring atoms in fragment?
-      ring_atoms |= ring->_pathset;                     //   yes - add this ring's atoms 
+      ring_atoms |= ring->_pathset;                     //   yes - add this ring's atoms
   }
 }
 
@@ -350,7 +350,7 @@ static void GetGIVector(OBMol *pmol,
   for (i=0, atom = pmol->BeginAtom(ai); atom; atom = pmol->NextAtom(ai)) {
     vid[i] = 0;
     if (frag_atoms.BitIsOn(atom->GetIdx())) {
-      vid[i] = 
+      vid[i] =
         v[i]                                                    // 10 bits: graph-theoretical distance
         | (GetHvyValence(atom,frag_atoms)                <<10)  //  4 bits: heavy valence
         | (((atom->IsAromatic()) ? 1 : 0)                <<14)  //  1 bit:  aromaticity
@@ -429,7 +429,7 @@ static void CreateNewClassVector(vector<pair<OBAtom*,unsigned int> > &vp1,
   // Create a new extended varient for each atom.  Get its neighbors' class ID's,
   // sort them into ascending order, and create a sum of (c0 + c1*10^2 + c2*10^4 + ...)
   // which becomes the new class ID (where c0 is the current classID).
-  
+
   for (vp_iter = vp1.begin(); vp_iter != vp1.end(); vp_iter++) {
     atom = vp_iter->first;
     id   = vp_iter->second;
@@ -441,7 +441,7 @@ static void CreateNewClassVector(vector<pair<OBAtom*,unsigned int> > &vp1,
     }
 
     sort(vtmp.begin(),vtmp.end(),CompareUnsigned);
-    for (m = 100, k = vtmp.begin(); k != vtmp.end(); k++, m*=100) 
+    for (m = 100, k = vtmp.begin(); k != vtmp.end(); k++, m*=100)
       id += *k * m;
     vp2.push_back(pair<OBAtom*,unsigned int> (atom, id));
   }
@@ -498,7 +498,7 @@ static void CountAndRenumberClasses(vector<pair<OBAtom*,unsigned int> > &vp,
 *       of each atom's class and its neighbors' classes.  This iterates
 *       until a stable solution is found (further spreading doesn't
 *       change the answer).
-*       
+*
 * RETURNS: The number of distinct symmetry classes found.
 ***************************************************************************/
 
@@ -510,7 +510,7 @@ static int ExtendInvarients(vector<pair<OBAtom*, unsigned int> > &symmetry_class
 
   // How many classes are we starting with?  (The "renumber" part isn't relevant.)
   CountAndRenumberClasses(symmetry_classes, nclasses1);
-        
+
   // LOOP: Do extended sum-of-invarients until no further changes are
   // noted.  (Note: This is inefficient, as it re-computes extended sums
   // and re-sorts the entire list each time.  You can save a lot of time by
@@ -562,7 +562,7 @@ static int CalculateSymmetry(OBMol *pmol,
 #if DEBUG
   for (atom = pmol->BeginAtom(j); atom; atom = pmol->NextAtom(j)) {
     if (frag_atoms[atom->GetIdx()])
-      cout << etab.GetSymbol(atom->GetAtomicNum()) << " ";    
+      cout << etab.GetSymbol(atom->GetAtomicNum()) << " ";
   }
   cout << "\n";
 #endif
@@ -578,7 +578,7 @@ static int CalculateSymmetry(OBMol *pmol,
   }
 
   // The heart of the matter: Do extended sum-of-invarients until no further
-  // changes are noted. 
+  // changes are noted.
   int nclasses = ExtendInvarients(symmetry_classes, frag_atoms, nfragatoms, natoms);
 
   return nclasses;
@@ -633,9 +633,9 @@ static void BreakChiralTies(OBMol *pmol,
   // Loop over all atoms...
   vector<OBNodeBase*>::iterator ai, aj;
   for (OBAtom *atom = pmol->BeginAtom(ai); atom; atom = pmol->NextAtom(ai)) {
-  
+
     int idx = atom->GetIdx();
-    
+
     // We only want: unused, chiral, and part of this fragment.
     if (!frag_atoms[idx])
       continue;
@@ -649,7 +649,7 @@ static void BreakChiralTies(OBMol *pmol,
 
     // Get its symmetry class
     int symclass = idx2sym_class[idx];
-    
+
     // Start the vector of "same class" atoms by adding this atom
     vector<OBAtom *> same_class;
     same_class.push_back(atom);
@@ -666,7 +666,7 @@ static void BreakChiralTies(OBMol *pmol,
         used_atoms.SetBitOn(idx2);
       }
     }
-    
+
     // Unless at least two atoms in the class, there are no ties to break
     if (same_class.size() < 2)
       continue;
@@ -707,7 +707,7 @@ static void BreakChiralTies(OBMol *pmol,
       // Now put the chiral atom, and its sorted neighbors, into a vector.
       sorted_neighbors.push_back(pair<OBAtom*, vector<OBAtom*> >(*iatom, sorted));
     }
-    
+
     // See the comments in cansmilesformat.cpp::GetChiralStereo regarding
     // "torsion".  If two atoms' neighbors, sorted the same way, have torsion
     // angles with the same sign (both positive or both negative torsions),
@@ -739,7 +739,7 @@ static void BreakChiralTies(OBMol *pmol,
         symclass2.push_back(atom);      // t1 & t2 have opposite signs ==> opposite chirality
     }
 
-    // If there's nothing in symclass2, then we don't have to split 
+    // If there's nothing in symclass2, then we don't have to split
     // the symmetry class.
     if (symclass2.empty())
       continue;
@@ -765,11 +765,11 @@ static void BreakChiralTies(OBMol *pmol,
         }
       }
     }
-    
+
     // Now propagate the change across the whole molecule with the
     // extended sum-of-invariants.
     ExtendInvarients(atom_sym_classes, frag_atoms, nfragatoms, pmol->NumAtoms());
-    
+
   }
 
 }
@@ -799,7 +799,7 @@ static void BreakChiralTies(OBMol *pmol,
 *       all neighboring double bonds, continuing until either a single
 *       bond is encountered with no up/down designation, or the neighboring
 *       bond isn't a double bond.
-*       
+*
 *       On return, "flip_bonds" will be a set of single bonds that must
 *       all be "flipped" (Up/Down reversed) as a set.
 ***************************************************************************/
@@ -814,7 +814,7 @@ static void FindConjugatedEZBonds(OBAtom *atom,
 
     OBBond *bond = &(*bi);
 
-    // Filter out bonds that can't be part of 
+    // Filter out bonds that can't be part of
     // conjugated double-bond chain
     if (!bond->IsSingle())                      // only care about single-bonded neighbors
       continue;
@@ -827,7 +827,7 @@ static void FindConjugatedEZBonds(OBAtom *atom,
     // Ok, it's marked and it's single: this bond is part of the "flip set"
     flip_bonds.SetBitOn(bond->GetIdx());
 
-    // Now see if the neighbor atom also has a double bond, and if so 
+    // Now see if the neighbor atom also has a double bond, and if so
     // recursively carry the markings forward.
     if (nbr->HasDoubleBond())                   // neighbor must also have double bond
       FindConjugatedEZBonds(nbr, flip_bonds, visited_atoms);
@@ -857,7 +857,7 @@ static void FindConjugatedEZBonds(OBAtom *atom,
 * DESCRIPTION:
 *
 *       NOTE: THIS ALGORITHM IS NOT SUFFICIENT.  It canonicalizes certain
-*       aspects of cis/trans chirality, but it misses some important 
+*       aspects of cis/trans chirality, but it misses some important
 *       cases.  In particular, all symmetry analysis is done without taking
 *       cis/trans information into account; only after the symmetry analysis
 *       is done that the cis/trans double bonds are "canonicalized" by either
@@ -1046,8 +1046,8 @@ static void FixCisTransBonds(OBMol *pmol,
   }
 
   // OK, we've determined which bonds really are cis/trans, and we've
-  // got the up/down right on all of them.  The final step is to 
-  // remove any Up/Down marks on bonds that we determined weren't 
+  // got the up/down right on all of them.  The final step is to
+  // remove any Up/Down marks on bonds that we determined weren't
   // really up or down.
 
   FOR_BONDS_OF_MOL(bi, pmol) {
@@ -1058,8 +1058,8 @@ static void FixCisTransBonds(OBMol *pmol,
       b->UnsetDown();
     }
   }
-  
-  
+
+
 }
 
 /***************************************************************************

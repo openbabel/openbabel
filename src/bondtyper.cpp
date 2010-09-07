@@ -2,14 +2,14 @@
 bondtyper.cpp - Bond typer to perceive connectivity and bond orders/types.
 
 Copyright (C) 2003-2006 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -35,7 +35,7 @@ namespace OpenBabel
     \brief Assigns bond types for file formats without bond information
 
     The OBBondTyper class is designed to read in a list of bond typing
-    rules and apply them to molecules. It is called from the 
+    rules and apply them to molecules. It is called from the
     OBMol::PerceiveBondOrders() method.
   */
   OBBondTyper::OBBondTyper()
@@ -111,7 +111,7 @@ namespace OpenBabel
     vector<int> assignments;
     vector<vector<int> > mlist;
     vector<vector<int> >::iterator matches, l;
-    vector<pair<OBSmartsPattern*, vector<int> > >::iterator i;  
+    vector<pair<OBSmartsPattern*, vector<int> > >::iterator i;
     unsigned int j;
 
     // Loop through for all the functional groups and assign bond orders
@@ -146,7 +146,7 @@ namespace OpenBabel
     // FG with distance and/or bond criteria
     // Carbonyl oxygen C=O
     OBSmartsPattern carbo; carbo.Init("[#8D1][#6](*)(*)");
-  
+
     if (carbo.Match(mol))
       {
         mlist = carbo.GetUMapList();
@@ -154,15 +154,15 @@ namespace OpenBabel
           {
             a1 = mol.GetAtom((*l)[0]);
             a2 = mol.GetAtom((*l)[1]);
-	   
+
             angle = a2->AverageBondAngle();
             dist1 = a1->GetDistance(a2);
-	    
+
             // carbonyl geometries ?
-            if (angle > 115 && angle < 150 && dist1 < 1.28) { 
-	        
+            if (angle > 115 && angle < 150 && dist1 < 1.28) {
+
               if ( !a1->HasDoubleBond() ) {// no double bond already assigned
-                b1 = a1->GetBond(a2); 
+                b1 = a1->GetBond(a2);
 
                 if (!b1 ) continue;
                 b1->SetBO(2);
@@ -173,7 +173,7 @@ namespace OpenBabel
 
     // thione C=S
     OBSmartsPattern thione; thione.Init("[#16D1][#6](*)(*)");
-  
+
     if (thione.Match(mol))
       {
         mlist = thione.GetUMapList();
@@ -181,15 +181,15 @@ namespace OpenBabel
           {
             a1 = mol.GetAtom((*l)[0]);
             a2 = mol.GetAtom((*l)[1]);
-	   
+
             angle = a2->AverageBondAngle();
             dist1 = a1->GetDistance(a2);
-	    
+
             // thione geometries ?
-            if (angle > 115 && angle < 150 && dist1 < 1.72) { 
-	        
+            if (angle > 115 && angle < 150 && dist1 < 1.72) {
+
               if ( !a1->HasDoubleBond() ) {// no double bond already assigned
-                b1 = a1->GetBond(a2); 
+                b1 = a1->GetBond(a2);
 
                 if (!b1 ) continue;
                 b1->SetBO(2);
@@ -213,29 +213,29 @@ namespace OpenBabel
             angle = a2->AverageBondAngle();
             dist1 = a1->GetDistance(a2);
             dist2 = a2->GetDistance(a3);
-	    
+
             // isocyanate geometry or Isotiocyanate geometry ?
-            if (a1->IsOxygen()) 
+            if (a1->IsOxygen())
               dist1OK =  dist1 < 1.28;
             else
               dist1OK =  dist1 < 1.72;
-	    
-            if (angle > 150 && dist1OK && dist2 < 1.34) { 
-	          
-              b1 = a1->GetBond(a2); 
+
+            if (angle > 150 && dist1OK && dist2 < 1.34) {
+
+              b1 = a1->GetBond(a2);
               b2 = a2->GetBond(a3);
               if (!b1 || !b2) continue;
               b1->SetBO(2);
               b2->SetBO(2);
-	        
+
             }
-	    
-          }      
+
+          }
       } // Isocyanate
 
     // oxime C=S
     OBSmartsPattern oxime; oxime.Init("[#6D3][#7D2][#8D2]");
-  
+
     if (oxime.Match(mol))
       {
         mlist = oxime.GetUMapList();
@@ -243,15 +243,15 @@ namespace OpenBabel
           {
             a1 = mol.GetAtom((*l)[0]);
             a2 = mol.GetAtom((*l)[1]);
-	   
+
             angle = a2->AverageBondAngle();
             dist1 = a1->GetDistance(a2);
-	    
+
             // thione geometries ?
-            if (angle > 110 && angle < 150 && dist1 < 1.4) { 
-	        
+            if (angle > 110 && angle < 150 && dist1 < 1.4) {
+
               if ( !a1->HasDoubleBond() ) {// no double bond already assigned
-                b1 = a1->GetBond(a2); 
+                b1 = a1->GetBond(a2);
 
                 if (!b1 ) continue;
                 b1->SetBO(2);

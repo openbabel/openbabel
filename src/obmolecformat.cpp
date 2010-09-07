@@ -56,8 +56,8 @@ namespace OpenBabel
      {
        while(ret) //do all the molecules in the file
        {
-         ret = pFormat->ReadMolecule(pmol,pConv); 
-         
+         ret = pFormat->ReadMolecule(pmol,pConv);
+
          if(ret && (pmol->NumAtoms() > 0 || (pFormat->Flags()&ZEROATOMSOK)))
          {
            vector<OBMol> SepArray = pmol->Separate(); //use un-transformed molecule
@@ -73,7 +73,7 @@ namespace OpenBabel
            else
               SepArray[0].SetTitle(pmol->GetTitle());
 
-           copy(SepArray.begin(),SepArray.end(),back_inserter(MolArray));            
+           copy(SepArray.begin(),SepArray.end(),back_inserter(MolArray));
          }
        }
        reverse(MolArray.begin(),MolArray.end());
@@ -101,15 +101,15 @@ namespace OpenBabel
      return ret;
    }
 
-    ret=pFormat->ReadMolecule(pmol,pConv); 
+    ret=pFormat->ReadMolecule(pmol,pConv);
 
     OBMol* ptmol = NULL;
-    //Molecule is valid if it has some atoms 
+    //Molecule is valid if it has some atoms
     //or the format allows zero-atom molecules and it has a title
     if(ret && (pmol->NumAtoms() > 0 || (pFormat->Flags()&ZEROATOMSOK && *pmol->GetTitle())))
     {
       ptmol = static_cast<OBMol*>(pmol->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS),pConv));
-      if(ptmol && (pConv->IsOption("j",OBConversion::GENOPTIONS) 
+      if(ptmol && (pConv->IsOption("j",OBConversion::GENOPTIONS)
                 || pConv->IsOption("join",OBConversion::GENOPTIONS)))
       {
         //With j option, accumulate all mols in one stored in this class
@@ -155,7 +155,7 @@ namespace OpenBabel
     OBMol* pmol = dynamic_cast<OBMol*> (pOb);
     bool ret=false;
     if(pmol)
-      { 
+      {
         if(pmol->NumAtoms()==0)
           {
             std::string auditMsg = "OpenBabel::Molecule ";
@@ -175,14 +175,14 @@ namespace OpenBabel
                               obAuditMsg);
 
         ret = DoOutputOptions(pOb, pConv);
-        
+
         if(ret)
           ret = pFormat->WriteMolecule(pmol,pConv);
     }
-    
+
 #ifdef HAVE_SHARED_POINTER
     //If sent a OBReaction* (rather than a OBMol*) output the consituent molecules
-    OBReaction* pReact = dynamic_cast<OBReaction*> (pOb);   
+    OBReaction* pReact = dynamic_cast<OBReaction*> (pOb);
     if(pReact)
       ret = OutputMolsFromReaction(pReact, pConv, pFormat);
 #endif
@@ -202,7 +202,7 @@ namespace OpenBabel
     bool ret=false;
     if(pmol) {
       if(pConv->IsOption("writeconformers", OBConversion::GENOPTIONS)) {
-        //The last conformer is written in the calling function 
+        //The last conformer is written in the calling function
         unsigned int c = 0;
         for (; c < pmol->NumConformers()-1; ++c) {
           pmol->SetConformer(c);
@@ -216,16 +216,16 @@ namespace OpenBabel
   }
 
   /*! Instead of sending molecules for output via AddChemObject(), they are
-    saved in here in OBMoleculeFormat or discarded. By default they are 
+    saved in here in OBMoleculeFormat or discarded. By default they are
     saved only if they are in the first input file. Parts of subsequent
     molecules, such as chemical structure, coordinates and OBGenericData
     can replace the parts in molecules with the same title that have already
     been stored, subject to a set of rules. After all input files have been
     read, the stored molecules (possibly now having augmented properties) are
     sent to the output format.
-    
+
     Is a static function with *this as parameter so that it can be called from other
-    format classes like XMLMoleculeFormat which are not derived from OBMoleculeFormat. 
+    format classes like XMLMoleculeFormat which are not derived from OBMoleculeFormat.
   */
   bool OBMoleculeFormat::DeferMolOutput(OBMol* pmol, OBConversion* pConv, OBFormat* pF )
   {
@@ -238,7 +238,7 @@ namespace OpenBabel
         IMols.clear();
         pConv->AddOption("OutputAtEnd", OBConversion::GENOPTIONS);
       }
-    else 
+    else
       {
         if((std::streamoff)pConv->GetInStream()->tellg()<=0)
           IsFirstFile=false;//File has changed
@@ -258,7 +258,7 @@ namespace OpenBabel
         string::size_type pos = title.find_first_of("\t\r\n"); //some title have other data appended
         if(pos!=string::npos)
           title.erase(pos);
-    
+
         map<std::string, OBMol*>::iterator itr;
         itr = IMols.find(title);
         if(itr!=IMols.end())
@@ -290,31 +290,31 @@ namespace OpenBabel
     delete pmol;
     return true;
   }
-  
-  /*! Makes a new OBMol on the heap by combining two molecules according to the rule below. 
+
+  /*! Makes a new OBMol on the heap by combining two molecules according to the rule below.
     If both have OBGenericData of the same type, or OBPairData with the
     same attribute,  the version from pFirst is used.
     Returns a pointer to a new OBMol which will need deleting by the calling program
-    (probably by being sent to an output format). 
+    (probably by being sent to an output format).
     If the molecules cannot be regarded as being the same structure a NULL
     pointer is returned and an error message logged.
-    
+
     pFirst and pSecond and the objects they point to are not changed. (const
     modifiers difficult because class OBMol not designed appropriately)
-    
+
     Combining molecules: rules for each of the three parts
     Title:
     Use the title of pFirst unless it has none, when use that of pSecond.
     Warning if neither molecule has a title.
-    
+
     Structure
     - a structure with atoms replaces one with no atoms
     - a structure with bonds replaces one with no bonds,
     provided the formula is the same, else an error.
-    - structures with atoms and bonds are compared by InChI; error if not the same. 
+    - structures with atoms and bonds are compared by InChI; error if not the same.
     - a structure with 3D coordinates replaces one with 2D coordinates
     - a structure with 2D coordinates replace one with 0D coordinates
-    
+
     OBGenericData
     OBPairData
   */
@@ -340,7 +340,7 @@ namespace OpenBabel
       {
         if(pFirst->GetSpacedFormula()!=pSecond->GetSpacedFormula())
           {
-            obErrorLog.ThrowError(__FUNCTION__, 
+            obErrorLog.ThrowError(__FUNCTION__,
                                   "Molecules with name = " + title + " have different formula",obError);
             return NULL;
           }
@@ -363,8 +363,8 @@ namespace OpenBabel
 
     OBMol* pMain = swap ? pSecond : pFirst;
     OBMol* pOther = swap ? pFirst : pSecond;
-    
-    *pNewMol = *pMain; //Now copies all data 
+
+    *pNewMol = *pMain; //Now copies all data
 
     //Copy some OBGenericData from the OBMol which did not provide the structure
     vector<OBGenericData*>::iterator igd;
@@ -420,7 +420,7 @@ namespace OpenBabel
 
   bool OBMoleculeFormat::DeleteDeferredMols()
   {
-    //Empties IMols, deteting the OBMol objects whose pointers are stored there 
+    //Empties IMols, deteting the OBMol objects whose pointers are stored there
     std::map<std::string, OBMol*>::iterator itr;
     for(itr=IMols.begin();itr!=IMols.end();++itr)
       {
@@ -435,21 +435,21 @@ namespace OpenBabel
   bool OBMoleculeFormat::OutputMolsFromReaction
     (OBReaction* pReact, OBConversion* pConv, OBFormat* pFormat)
   {
-    //Output all the constituent molecules of the reaction    
-    
-    //Collect the molecules first, just for convenience 
+    //Output all the constituent molecules of the reaction
+
+    //Collect the molecules first, just for convenience
     vector<shared_ptr<OBMol> > mols;
     unsigned i;
     for(i=0;i<pReact->NumReactants();i++)
       mols.push_back(pReact->GetReactant(i));
     for(i=0;i<pReact->NumProducts();i++)
       mols.push_back(pReact->GetProduct(i));
-   
+
     if(pReact->GetAgent())
       mols.push_back(pReact->GetAgent());
     if(pReact->GetTransitionState())
       mols.push_back(pReact->GetTransitionState());
-   
+
     pConv->SetOutputIndex(pConv->GetOutputIndex() - 1); // The OBReaction object is not output
     if((pFormat->Flags() & WRITEONEONLY) && mols.size()>1)
     {
@@ -469,7 +469,7 @@ namespace OpenBabel
         pConv->SetOutputIndex(pConv->GetOutputIndex()+1);
         ok = pFormat->WriteMolecule(
           mols[i]->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS), pConv),pConv);
-      }      
+      }
     }
     return ok;
   }
@@ -483,7 +483,7 @@ namespace OpenBabel
       - in a subdirectory of the BABEL_DATADIR directory with the version of OpenBabel as its name
       An index of type NameIndexType is then constructed. NameIndexType is defined
       in obmolecformat.h and may be a std::tr1::unordered_map (a hash_map) or std::map.
-      In any case it is searched by 
+      In any case it is searched by
       @code
       NameIndexType::iterator itr = index.find(molecule_name);
       if(itr!=index.end())
@@ -495,10 +495,10 @@ namespace OpenBabel
       it using the format pInFormat, and written to the directory containing the datafile.
       This means that this function can be used without worrying whether there is an index.
       It will be slow to execute the first time, but subsequent uses get the speed benefit
-      of indexed access to the datafile. 
+      of indexed access to the datafile.
 
       The serialization and de-serialization of the NameIndexType is entirely in
-      this routine and could possibly be improved. Currently re-hashing is done 
+      this routine and could possibly be improved. Currently re-hashing is done
       every time the index is read.
   **/
 
@@ -522,7 +522,7 @@ namespace OpenBabel
         string datafilepath = OpenDatafile(datastream, datafilename);
         if(!datastream)
           {
-            obErrorLog.ThrowError(__FUNCTION__, 
+            obErrorLog.ThrowError(__FUNCTION__,
                                   datafilename + " was not found or could not be opened",  obError);
             return false;
           }
@@ -539,7 +539,7 @@ namespace OpenBabel
             mol.Clear();
             pos = datastream.tellg();
           }
-        obErrorLog.ThrowError(__FUNCTION__, 
+        obErrorLog.ThrowError(__FUNCTION__,
                               "Prepared an index for " + datafilepath, obAuditMsg);
         //Save index to file
         ofstream dofs((datafilepath + ".obindx").c_str(), ios_base::out|ios_base::binary);
@@ -549,7 +549,7 @@ namespace OpenBabel
         header.filename[sizeof(header.filename) - 1] = '\0';
         header.size = index.size();
         dofs.write((const char*)&header, sizeof(headertype));
-	
+
         for(itr=index.begin();itr!=index.end();++itr)
           {
             //#chars; chars;  ofset(4bytes).
@@ -557,7 +557,7 @@ namespace OpenBabel
             dofs.put(n);
             dofs.write(itr->first.c_str(),n);
             dofs.write((const char*)&itr->second,sizeof(unsigned));
-          }			
+          }
       }
     else
       {

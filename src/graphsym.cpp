@@ -2,11 +2,11 @@
 
 **********************************************************************
 Copyright (C) 2005-2006, eMolecules, Inc. (www.emolecules.com)
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -20,18 +20,18 @@ GNU General Public License for more details.
 | DESCRIPTION: CANONICALIZATION OF SMILES
 |
 |       This is a specialized SMILES canonicalization algorithm.  Although
-|       it can be applied in the standard fashion to a whole molecule, 
+|       it can be applied in the standard fashion to a whole molecule,
 |       its real job is to generate canonical SMILES for fragments, or
 |       "subsets", of the atoms of a molecule.
 |
 |       For example, consider the first three atoms of Oc1ccccc1.  With
 |       a "normal" SMILES canonicalizer, you couldn't generate a SMILES
 |       for Occ, because it's not a valid molecule.  However, this system
-|       can do exactly that, by taking both the whole molecule (which 
+|       can do exactly that, by taking both the whole molecule (which
 |       retains the aromaticity), and a "subset" bitmap that specifies
 |       which atoms are to be included in the SMILES.
 |
-|       Canonicalization is carried out per Weininger et al (J. Chem. 
+|       Canonicalization is carried out per Weininger et al (J. Chem.
 |       Inf. Comput. Sci., Vol. 29, No. 2, 1989, pp 97-101), with some
 |       modifications to handle bond symmetries not foreseen by Weininger
 |       in that paper.
@@ -87,7 +87,7 @@ namespace OpenBabel {
         _frag_atoms.SetBitOn(a->GetIdx());
     }
   }
- 
+
 
 // NOTE: Copied from OpenBabel/mol.cpp
 
@@ -163,7 +163,7 @@ namespace OpenBabel {
       if (_frag_atoms.BitIsSet(nbr->GetIdx()) && !(nbr->IsHydrogen()))
         count++;
     }
-    
+
     return(count);
   }
 
@@ -209,7 +209,7 @@ namespace OpenBabel {
 * FUNCTION: GetGTDVector
 *
 * DESCRIPTION:
-*       
+*
 *       Calculates the graph theoretical distance of each atom.
 *       Vector is indexed from zero.
 *
@@ -230,7 +230,7 @@ namespace OpenBabel {
 {
   gtd.clear();
   gtd.resize(_pmol->NumAtoms());
-  
+
   int gtdcount, natom;
   OBBitVec used, curr, next;
   OBAtom *atom, *atom1;
@@ -303,7 +303,7 @@ namespace OpenBabel {
     OBRing *ring = *ri;
     OBBitVec bvtmp = _frag_atoms & ring->_pathset;       // intersection: fragment and ring
     if (bvtmp == ring->_pathset)                        // all ring atoms in fragment?
-      ring_atoms |= ring->_pathset;                     //   yes - add this ring's atoms 
+      ring_atoms |= ring->_pathset;                     //   yes - add this ring's atoms
   }
 }
 
@@ -348,7 +348,7 @@ namespace OpenBabel {
   for (i=0, atom = _pmol->BeginAtom(ai); atom; atom = _pmol->NextAtom(ai)) {
     vid[i] = 0;
     if (_frag_atoms.BitIsOn(atom->GetIdx())) {
-      vid[i] = 
+      vid[i] =
         v[i]                                                    // 10 bits: graph-theoretical distance
         | (GetHvyValence(atom)                <<10)  //  4 bits: heavy valence
         | (((atom->IsAromatic()) ? 1 : 0)                <<14)  //  1 bit:  aromaticity
@@ -386,7 +386,7 @@ namespace OpenBabel {
 *
 ***************************************************************************/
 
-void IdsToSymClasses(OBMol *mol, OBCisTransStereo::Config &config, 
+void IdsToSymClasses(OBMol *mol, OBCisTransStereo::Config &config,
     const std::vector<unsigned int> &symClasses)
 {
   OBAtom *atom;
@@ -418,7 +418,7 @@ void IdsToSymClasses(OBMol *mol, OBCisTransStereo::Config &config,
   }
 }
 
-void IdsToSymClasses(OBMol *mol, OBTetrahedralStereo::Config &config, 
+void IdsToSymClasses(OBMol *mol, OBTetrahedralStereo::Config &config,
     const std::vector<unsigned int> &symClasses)
 {
   OBAtom *atom;
@@ -466,11 +466,11 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
   vector<pair<OBAtom*,unsigned int> >::iterator api;
   for (api = atom_sym_classes.begin(); api < atom_sym_classes.end(); api++)
     index2sym_class[api->first->GetIndex()] = api->second;
-  
+
   // find all types of stereogenic units (i.e. tetrahedral, cis/trans, ...)
   vector<StereogenicUnit> stereoUnits = FindStereogenicUnits(_pmol, index2sym_class);
 
-  // 
+  //
   // Tetrahedral atoms
   //
   for (vector<StereogenicUnit>::iterator unit1 = stereoUnits.begin(); unit1 != stereoUnits.end(); ++unit1) {
@@ -490,7 +490,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 
     // Get its symmetry class
     int symclass = index2sym_class[index1];
- 
+
     // Start the vector of "same class" atoms by adding this atom
     vector<OBAtom *> same_class;
     same_class.push_back(atom1);
@@ -509,7 +509,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
         used_atoms.SetBitOn(index2);
       }
     }
-    
+
     // Unless at least two atoms in the class, there are no ties to break
     if (same_class.size() < 2)
       continue;
@@ -536,10 +536,10 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
           TetrahedralFrom0D(_pmol, stereoUnits);
           break;
       }
-    } 
+    }
 
     // false = don't perceive stereochemistry, we already did it explicitly above
-    OBStereoFacade stereoFacade(_pmol, false); 
+    OBStereoFacade stereoFacade(_pmol, false);
     // get the reference config
     OBTetrahedralStereo::Config refConfig;
     if (stereoFacade.HasTetrahedralStereo(id1)) {
@@ -551,15 +551,15 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     IdsToSymClasses(_pmol, refConfig, index2sym_class);
 
     // Devide the centers in 3 groups based on comparing the Configs
-    // symclass1: all centers who's Config struct matches refConfig 
-    // symclass2: all centers who's Config struct does not match refConfig 
+    // symclass1: all centers who's Config struct matches refConfig
+    // symclass2: all centers who's Config struct does not match refConfig
     // unspecified: all centers with unspecified stereochemistry
     vector<OBAtom*> symclass1, symclass2, unspecified;
 
     vector<OBAtom*>::iterator iatom;
     for (iatom = same_class.begin(); iatom != same_class.end(); iatom++) {
       if (!stereoFacade.HasTetrahedralStereo((*iatom)->GetId())) {
-        // this happens for 0D when we don't want to delete data (see above) 
+        // this happens for 0D when we don't want to delete data (see above)
         // but have found new previously unidentified chiral centers
         unspecified.push_back(*iatom);
       } else {
@@ -570,7 +570,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
           continue;
         }
 
-        // if refConfig is still unspecified, assign otherConfig to it and 
+        // if refConfig is still unspecified, assign otherConfig to it and
         // otherConfig will go in symclass1
         if (!refConfig.specified)
           refConfig = otherConfig;
@@ -584,7 +584,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
       }
     }
 
-    // If there's nothing in symclass2, then we don't have to split 
+    // If there's nothing in symclass2, then we don't have to split
     // the symmetry class.
     if (symclass1.empty())
       if (symclass2.empty() || unspecified.empty())
@@ -614,10 +614,10 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     //cout << "refConfig = " << refConfig << endl;
     //cout << "orderedConfig = " << orderedConfig << endl;
 
-    // Time to break the class in 3. 
-    //                         
+    // Time to break the class in 3.
+    //
     //                         1-2-3  symclass1
-    //                        /             \ 
+    //                        /             \
     //   unspecified  3-2-1--a               symclass1 != symclass2
     //                        \             /
     //                         1-2-3  symclass2
@@ -646,7 +646,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     // Triple all symmetry classes.
     for (int i = 0; i < atom_sym_classes.size(); i++) {
       atom_sym_classes[i].second *= 3;
-      
+
       for (int j = 0; j < symclass1.size(); j++) {
         if (symclass1[j] == atom_sym_classes[i].first) {
           if (refMatchesOrdered)
@@ -664,7 +664,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
         }
       }
     }
-    
+
     // Now propagate the change across the whole molecule with the
     // extended sum-of-invariants.
     //ExtendInvariants(atom_sym_classes);
@@ -676,7 +676,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 
 
   }
-  // 
+  //
   // Cis/Trans bonds
   //
   for (vector<StereogenicUnit>::iterator unit1 = stereoUnits.begin(); unit1 != stereoUnits.end(); ++unit1) {
@@ -687,7 +687,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     OBBond *bond1 = _pmol->GetBondById(id1);
     unsigned int begin1 = bond1->GetBeginAtom()->GetIndex();
     unsigned int end1 = bond1->GetEndAtom()->GetIndex();
-    
+
     // We only want: unused and part of this fragment.
     if (!(_frag_atoms)[begin1+1] || !(_frag_atoms)[end1+1])
       continue;
@@ -699,7 +699,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     // Get its symmetry class
     int beginSymClass = index2sym_class[begin1];
     int endSymClass = index2sym_class[end1];
- 
+
     // Start the vector of "same class" bonds by adding this bond
     vector<OBBond*> same_class;
     same_class.push_back(bond1);
@@ -722,7 +722,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
         used_atoms.SetBitOn(end2);
       }
     }
-    
+
     // Unless at least two atoms in the class, there are no ties to break
     if (same_class.size() < 2)
       continue;
@@ -752,7 +752,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     }
 
     // false = don't perceive stereochemistry, we already did it explicitly above
-    OBStereoFacade stereoFacade(_pmol, false); 
+    OBStereoFacade stereoFacade(_pmol, false);
     // get the reference config
     OBCisTransStereo::Config refConfig;
     if (stereoFacade.HasCisTransStereo(id1)) {
@@ -764,15 +764,15 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     IdsToSymClasses(_pmol, refConfig, index2sym_class);
 
     // Devide the cis/trans bonds in 3 groups based on comparing the Configs
-    // symclass1: all bonds who's Config struct matches refConfig 
-    // symclass2: all bonds who's Config struct does not match refConfig 
+    // symclass1: all bonds who's Config struct matches refConfig
+    // symclass2: all bonds who's Config struct does not match refConfig
     // unspecified: all bonds with unspecified stereochemistry
     vector<OBBond*> symclass1, symclass2, unspecified;
 
     vector<OBBond*>::iterator ibond;
     for (ibond = same_class.begin(); ibond != same_class.end(); ibond++) {
       if (!stereoFacade.HasCisTransStereo((*ibond)->GetId())) {
-        // this happens for 0D when we don't want to delete data (see above) 
+        // this happens for 0D when we don't want to delete data (see above)
         // but have found new previously unidentified chiral centers
         unspecified.push_back(*ibond);
       } else {
@@ -783,7 +783,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
           continue;
         }
 
-        // if refConfig is still unspecified, assign otherConfig to it and 
+        // if refConfig is still unspecified, assign otherConfig to it and
         // otherConfig will go in symclass1
         if (!refConfig.specified)
           refConfig = otherConfig;
@@ -816,7 +816,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     // Time to break the class in 3. (see above for details)
     for (int i = 0; i < atom_sym_classes.size(); i++) {
       atom_sym_classes[i].second *= 3;
-      
+
       for (int j = 0; j < symclass1.size(); j++) {
         if (symclass1[j]->GetBeginAtom() == atom_sym_classes[i].first) {
           if (refMatchesOrdered)
@@ -839,7 +839,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     // extended sum-of-invariants.
     //ExtendInvariants(atom_sym_classes);
   }
- 
+
 
 }
 
@@ -898,7 +898,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
   // Create a new extended varient for each atom.  Get its neighbors' class ID's,
   // sort them into ascending order, and create a sum of (c0 + c1*10^2 + c2*10^4 + ...)
   // which becomes the new class ID (where c0 is the current classID).
-  
+
   for (vp_iter = vp1.begin(); vp_iter != vp1.end(); vp_iter++) {
     atom = vp_iter->first;
     id   = vp_iter->second;
@@ -910,7 +910,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     }
 
     sort(vtmp.begin(),vtmp.end(),CompareUnsigned);
-    for (m = 100, k = vtmp.begin(); k != vtmp.end(); k++, m*=100) 
+    for (m = 100, k = vtmp.begin(); k != vtmp.end(); k++, m*=100)
       id += *k * m;
     vp2.push_back(pair<OBAtom*,unsigned int> (atom, id));
   }
@@ -968,7 +968,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 *       of each atom's class and its neighbors' classes.  This iterates
 *       until a stable solution is found (further spreading doesn't
 *       change the answer).
-*       
+*
 * RETURNS: The number of distinct symmetry classes found.
 ***************************************************************************/
 
@@ -1011,7 +1011,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 
     /*cout << "AFTER BreakChiralTies, nclasses2 = " << nclasses2 << endl;
       for (int i = 0; i < symmetry_classes.size(); i++) {
-      cout << symmetry_classes[i].first->GetIndex() << " (" << symmetry_classes[i].first->GetType() 
+      cout << symmetry_classes[i].first->GetIndex() << " (" << symmetry_classes[i].first->GetType()
       << "): " << symmetry_classes[i].second << endl;
       }*/
     } else {
@@ -1045,7 +1045,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 *       the fragment.  Symmetry is computed as though the fragment is the
 *       only part that exists.
 ***************************************************************************/
-  
+
   int OBGraphSym::CalculateSymmetry(std::vector<unsigned int> &atom_sym_classes, bool breakChiralTies)
   {
     vector<unsigned int> vgi;
@@ -1064,7 +1064,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     }
 
     // The heart of the matter: Do extended sum-of-invariants until no further
-    // changes are noted. 
+    // changes are noted.
     int nclasses = ExtendInvariants(symmetry_classes, breakChiralTies);
 
     // Convert to a vector indexed by Index
@@ -1082,13 +1082,13 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
       temp << (*sym_iter++);
     for (; sym_iter != atom_sym_classes.end(); ++sym_iter)
       temp << " " << (*sym_iter);
-  
+
     OBPairData *symData = new OBPairData;
     symData->SetAttribute("OpenBabel Symmetry Classes");
     symData->SetOrigin(local); //will not show as sdf or cml property
     symData->SetValue(temp.str());
     _pmol->SetData(symData);
- 
+
     return nclasses;
   }
 
@@ -1115,7 +1115,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
       nclasses = end_pos - copy_sym.begin();
     }
 
-    return nclasses;      
+    return nclasses;
   }
 
   // Clears perceived symmetry

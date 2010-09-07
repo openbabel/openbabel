@@ -95,7 +95,7 @@ namespace OpenBabel {
         tokenize(vs, buffer);
         alat = atof(vs.at(4).c_str());
       }
-        
+
       // Unit cell info
       if (strstr(buffer, "CELL_PARAMETERS")) {
         // Discover units
@@ -104,7 +104,7 @@ namespace OpenBabel {
 
         if (strstr(vs[1].c_str(), "alat")) {
           conv = alat * BOHR_TO_ANGSTROM;
-        } 
+        }
         // Add others if needed
 
         double v11, v12, v13,
@@ -182,11 +182,11 @@ namespace OpenBabel {
 
         if (strstr(vs[1].c_str(), "alat")) {
           conv *= (alat * BOHR_TO_ANGSTROM);
-        } 
+        }
         else if (strstr(vs[1].c_str(), "crystal")) {
           // Set to the zero matrix and test below.
           conv = matrix3x3 (0.0);
-        } 
+        }
         // Add others if needed
 
         // Load new atoms from molecule

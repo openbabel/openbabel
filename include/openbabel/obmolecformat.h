@@ -58,8 +58,8 @@ namespace OpenBabel {
 
     An OBFormat which converts to and/or from OBMol can derive from this class
     to save duplicating the ReadChemObject() and/or WriteChemObject() methods.
-    Derive directly from OBFormat if the object converted is not OBMol or 
-    if interaction with the framework is required during the execution 
+    Derive directly from OBFormat if the object converted is not OBMol or
+    if interaction with the framework is required during the execution
     of ReadMolecule() or WriteMolecule(), as for example in CMLFormat
 **/
 
@@ -94,7 +94,7 @@ public:
       OBConversion::RegisterOptionParam("d", NULL, 0,OBConversion::GENOPTIONS);
       OBConversion::RegisterOptionParam("b", NULL, 0,OBConversion::GENOPTIONS);
       OBConversion::RegisterOptionParam("c", NULL, 0,OBConversion::GENOPTIONS);
-      OBConversion::RegisterOptionParam("p", NULL, 1,OBConversion::GENOPTIONS); 
+      OBConversion::RegisterOptionParam("p", NULL, 1,OBConversion::GENOPTIONS);
       OBConversion::RegisterOptionParam("t", NULL, 0,OBConversion::GENOPTIONS);
       OBConversion::RegisterOptionParam("k", NULL, 0,OBConversion::GENOPTIONS);
       OBConversion::RegisterOptionParam("filter", NULL, 1,OBConversion::GENOPTIONS);
@@ -116,7 +116,7 @@ public:
   /// The "Convert" interface for writing a new molecule
   virtual bool WriteChemObject(OBConversion* pConv)
   { return WriteChemObjectImpl(pConv, this);}
-  
+
   ///Applies output options to molecule. Returns false to terminate output.
   static bool DoOutputOptions(OBBase* pOb, OBConversion* pConv);
 
@@ -132,7 +132,7 @@ public:
   //! \return the OBMol which combines @p pFirst and @p pSecond (i.e.)
   static OBMol* MakeCombinedMolecule(OBMol* pFirst, OBMol* pSecond);
   //@}
-  
+
 #ifdef HAVE_SHARED_POINTER
   //!When sent an OBReaction object, output all the constituent molecules
   static bool OutputMolsFromReaction
@@ -146,7 +146,7 @@ public:
 #else
   typedef std::map<std::string, unsigned> NameIndexType;
 #endif
-  
+
   // documentation in obmolecformat.cpp
   static bool   ReadNameIndex(NameIndexType& index, const std::string& datafilename,
                   OBFormat* pInFormat);

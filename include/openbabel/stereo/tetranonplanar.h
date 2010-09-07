@@ -2,7 +2,7 @@
   tetranonplanar.h - OBTetraNonPlanarStereo
 
   Copyright (C) 2009 by Tim Vandermeersch
- 
+
   This file is part of the Open Babel project.
   For more information, see <http://openbabel.sourceforge.net/>
 
@@ -29,7 +29,7 @@
 
 namespace OpenBabel {
 
-  ///@addtogroup stereo Stereochemistry 
+  ///@addtogroup stereo Stereochemistry
   ///@{
 
   /**
@@ -53,7 +53,7 @@ namespace OpenBabel {
    * @endcode
    *
    * However, when dealing with tetrahedral stereochemistry, it is often easier
-   * to visualize by viewing from/towards one of the reference atoms to/from the 
+   * to visualize by viewing from/towards one of the reference atoms to/from the
    * center atom. This reduces the 24 possible combinations to 3! = 6.
    *
    * @code
@@ -69,17 +69,17 @@ namespace OpenBabel {
    * anti-clockwise: 321, 213, 132
    * @endcode
    *
-   * Since subclass ConfigType structs accept refs viewing from/towards any atom, 
+   * Since subclass ConfigType structs accept refs viewing from/towards any atom,
    * it is needed to have some rules for converting.
    *
-   * A single permutation of two consecutive elements in a sequence of 3 
+   * A single permutation of two consecutive elements in a sequence of 3
    * changes the winding. All permutations can be expressed as a combination
    * of consecutive permutations. The number of consecutive permutations can
    * be calculated from the difference in inversions (NumInversions()).
    *
-   * If we exchange the from atom with another atom in the sequence, the oddness 
+   * If we exchange the from atom with another atom in the sequence, the oddness
    * of the difference in inversions between the 2 sequences is calculated. If this
-   * is even, no extra permutation is needed. If this is odd, an extra permutation 
+   * is even, no extra permutation is needed. If this is odd, an extra permutation
    * is needed.
    *
    * Switching between viewing from and viewing towards reverses the winding.
@@ -100,15 +100,15 @@ namespace OpenBabel {
        * Destructor.
        */
       virtual ~OBTetraNonPlanarStereo();
-     
+
       /**
-       * Convert a @p ConfigType struct from any View/Winding to the 
+       * Convert a @p ConfigType struct from any View/Winding to the
        * desired representation.
        *
        * This is a template method which works on ConfigType structs from
-       * OBTetraNonPlanar subclasses. The subclasses can decide what data 
-       * member are needed to store the stereogenic unit (i.e. 1 atom for 
-       * tetrahedral, 3 for allene like, ...) and still use this generic 
+       * OBTetraNonPlanar subclasses. The subclasses can decide what data
+       * member are needed to store the stereogenic unit (i.e. 1 atom for
+       * tetrahedral, 3 for allene like, ...) and still use this generic
        * method to handle the real stereochemistry.
        *
        * A ConfigType struct should at least have the following data members:
@@ -116,7 +116,7 @@ namespace OpenBabel {
        * class SomeNonPlanarStereo : public TetraNonPlanarStereo
        * {
        *   public:
-       *     struct Config 
+       *     struct Config
        *     {
        *       // constructor(s) are recommended!
        *
@@ -127,9 +127,9 @@ namespace OpenBabel {
        *         unsigned long from;
        *         unsigned long towards;
        *       };
-       *       OBStereo::Refs refs; 
+       *       OBStereo::Refs refs;
        *       OBStereo::Winding winding;
-       *       OBStereo::View view; 
+       *       OBStereo::View view;
        *     };
        * };
        * @endcode
@@ -143,18 +143,18 @@ namespace OpenBabel {
        */
       template <typename ConfigType>
       static ConfigType ToConfig(const ConfigType &cfg, unsigned long from_or_towards,
-          OBStereo::Winding winding = OBStereo::Clockwise, 
+          OBStereo::Winding winding = OBStereo::Clockwise,
           OBStereo::View view = OBStereo::ViewFrom)
       {
         if (cfg.from == OBStereo::NoRef) {
-          obErrorLog.ThrowError(__FUNCTION__, 
+          obErrorLog.ThrowError(__FUNCTION__,
               "OBTetraNonPlanarStereo::ToConfig : Invalid from in ConfigType struct.", obError);
           return ConfigType();
         }
         if (cfg.refs.size() != 3) {
-          obErrorLog.ThrowError(__FUNCTION__, 
+          obErrorLog.ThrowError(__FUNCTION__,
               "OBTetraNonPlanarStereo::ToConfig : Invalid refs size.", obError);
-          return ConfigType(); 
+          return ConfigType();
         }
 
         // copy the internal refs
@@ -162,7 +162,7 @@ namespace OpenBabel {
         result.from = from_or_towards;
         result.winding = winding;
         result.view = view;
- 
+
         // keep track of the permuations by using the oddness
         bool odd = false;
 
@@ -191,9 +191,9 @@ namespace OpenBabel {
           if (odd)
             OBStereo::Permutate(result.refs, 1, 2);
           return result;
-        }   
+        }
 
-        obErrorLog.ThrowError(__FUNCTION__, 
+        obErrorLog.ThrowError(__FUNCTION__,
             "OBTetraNonPlanarStereo::ToConfig : Paramter id not found in internal refs.", obError);
         return result;
       }
@@ -224,7 +224,7 @@ namespace OpenBabel {
         OBStereo::Permutate(cfg.refs, 1, 2);
       }
  };
-  
+
   ///@} // addtogroup
 
 }

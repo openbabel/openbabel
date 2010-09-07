@@ -35,11 +35,11 @@ GNU General Public License for more details.
 
 /** \class DLHandler dlhandler.h <openbabel/dlhandler.h>
     \brief Interface for dynamic libraries.
-    
+
     This class defines an interface for finding and opening dynamic
     loadable libraries on different platforms (e.g., modular plugins)
     via different source code files.
-    It has only what is needed for OpenBabel and is not intended to be 
+    It has only what is needed for OpenBabel and is not intended to be
     general purpose. Internally, it is used for dynamic loading and unloading
     OBFormat file translation modules.
 **/
@@ -47,10 +47,10 @@ class OBERROR DLHandler
 {
 public:
 
-	/** 
+	/**
           * Get the directory containing the dynamic library plugins.
           *
-          * The result is stored in @p convPath and depends on the operating 
+          * The result is stored in @p convPath and depends on the operating
           * system and build tools.
           *
           * Linux: always returns OB_MODULE_PATH (defined in src/config.h.cmake).
@@ -63,7 +63,7 @@ public:
           * OBError dll module. From this, the dll's path can be extracted.
           *
           * @sa findFiles
-	  */ 
+	  */
 	static bool getConvDirectory(std::string& convPath);
 
 	/** Searches a directory specified by path for files whose name matches
@@ -77,7 +77,7 @@ public:
 	  * vector entries lik e:\\path\\to\\cmlformat.obf
 	  * \return the number of valid files.
 	  */
-	static int findFiles (std::vector <std::string>& file_list, 
+	static int findFiles (std::vector <std::string>& file_list,
 			const std::string& pattern, const std::string& path);
 
 	/** Searches for files which match a full filename (including the path) which

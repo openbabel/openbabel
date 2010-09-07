@@ -51,7 +51,7 @@ namespace OpenBabel
    { return "http://mmcif.pdb.org/";}; //optional
    // CIF itself is at http://www.iucr.org/iucr-top/cif/index.html
 
-   virtual const char* GetMIMEType() 
+   virtual const char* GetMIMEType()
    { return "chemical/x-mmcif"; };
 
    //*** This section identical for most OBMol conversions ***
@@ -92,7 +92,7 @@ namespace OpenBabel
      _atom_site_label_atom_id, // The atomic label within the residue
      _atom_site_label_comp_id, // The residue abbreviation, e.g. ILE
      _atom_site_label_entity_id, // The chain entity number of the residue, e.g. 2
-     _atom_site_label_asym_id, // The unique chain id	
+     _atom_site_label_asym_id, // The unique chain id
      _atom_site_label_seq_id, // The sequence number of the residue, within the chain, e.g. 12
      _atom_site_type_symbol, // Atomic symbol, e.g. C
      MAX_atom_site,
@@ -463,7 +463,7 @@ namespace OpenBabel
    if (lexer.good())
      lexer.backup(5 + token.as_text.size(), 'd'); // length of "data_<name>"
 
-   return lexer.good() ? 1 : -1;       
+   return lexer.good() ? 1 : -1;
  }
  bool mmCIFFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
  {
@@ -897,7 +897,7 @@ namespace OpenBabel
      }
    ofs << "###############" << endl;
    ofs << "## ATOM_SITE ##" << endl;
-   ofs << "###############" << endl;                        
+   ofs << "###############" << endl;
    ofs << endl;
    ofs << "loop_" << endl;
    ofs << "_atom_site.id" << endl;
@@ -905,15 +905,15 @@ namespace OpenBabel
    bool has_residues = (pmol->NumResidues() > 0);
    if (has_residues)
      {
-     ofs << "_atom_site.label_atom_id" << endl;                  
-     ofs << "_atom_site.label_comp_id" << endl;                  
-     ofs << "_atom_site.label_entity_id" << endl;                  
+     ofs << "_atom_site.label_atom_id" << endl;
+     ofs << "_atom_site.label_comp_id" << endl;
+     ofs << "_atom_site.label_entity_id" << endl;
      ofs << "_atom_site.label_seq_id" << endl;
-     }                  
-   ofs << "_atom_site.Cartn_x" << endl;                        
-   ofs << "_atom_site.Cartn_y" << endl;                        
+     }
+   ofs << "_atom_site.Cartn_x" << endl;
+   ofs << "_atom_site.Cartn_y" << endl;
    ofs << "_atom_site.Cartn_z" << endl;
-   size_t site_id = 1;                        
+   size_t site_id = 1;
    for (OBAtomIterator atom_x = pmol->BeginAtoms(), atom_y = pmol->EndAtoms(); atom_x != atom_y; ++ atom_x, ++ site_id)
      {
      OBAtom * atom = (* atom_x);
@@ -945,9 +945,9 @@ namespace OpenBabel
      ofs << "_cell.length_a\t" << pCell->GetA() << endl;
      ofs << "_cell.length_b\t" << pCell->GetB() << endl;
      ofs << "_cell.length_c\t" << pCell->GetC() << endl;
-     ofs << "_cell.angle_alpha\t" << pCell->GetAlpha() << endl;                 
-     ofs << "_cell.angle_beta\t"  << pCell->GetBeta() << endl;                 
-     ofs << "_cell.angle_gamma\t" << pCell->GetGamma() << endl;                
+     ofs << "_cell.angle_alpha\t" << pCell->GetAlpha() << endl;
+     ofs << "_cell.angle_beta\t"  << pCell->GetBeta() << endl;
+     ofs << "_cell.angle_gamma\t" << pCell->GetGamma() << endl;
      ofs << endl;
      const SpaceGroup * pSG = pCell->GetSpaceGroup();
      if (pSG)

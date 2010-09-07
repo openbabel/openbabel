@@ -1,16 +1,16 @@
 /**********************************************************************
 typer.h - Open Babel atom and aromaticity typer.
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -55,7 +55,7 @@ public:
     void AssignHyb(OBMol&);
     //! Assign external atomic types (i.e., EXTTYP lines in atomtyp.txt)
     void AssignTypes(OBMol&);
-    //! Assign implicit valence (i.e., given an atomic type, what is the 
+    //! Assign implicit valence (i.e., given an atomic type, what is the
     //! expected number of bonds to this atom
     void AssignImplicitValence(OBMol&);
     //! Correct typing, valence, and hybridization for aromatic nitrogen atoms

@@ -1,16 +1,16 @@
 /**********************************************************************
 forcefieldgaff.cpp - Gaff force field.
- 
+
 Copyright (C) 2009 by Frank Peters <e.a.j.f.peters@tue.nl>
 Copyright (C) 2006-2007 by Tim Vandermeersch <tim.vandermeersch@gmail.com>
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -34,16 +34,16 @@ namespace OpenBabel
       energy = 0.0;
       return;
     }
- 
+
     double delta2;
 
     if (gradients) {
       rab = OBForceField::VectorBondDerivative(pos_a, pos_b, force_a, force_b);
       delta = rab - r0;
       delta2 = delta * delta;
-      
+
       const double dE = 2.0 * kr * delta;
-      
+
       OBForceField::VectorSelfMultiply(force_a, dE);
       OBForceField::VectorSelfMultiply(force_b, dE);
     } else {
@@ -54,20 +54,20 @@ namespace OpenBabel
 
     energy = kr * delta2;
   }
-  
+
   template<bool gradients>
   double OBForceFieldGaff::E_Bond()
   {
     vector<OBFFBondCalculationGaff>::iterator i;
     double energy = 0.0;
-        
+
     IF_OBFF_LOGLVL_HIGH {
       OBFFLog("\nB O N D   S T R E T C H I N G\n\n");
       OBFFLog("ATOM TYPES  BOND       IDEAL       FORCE\n");
       OBFFLog(" I    J     LENGTH     LENGTH     CONSTANT      DELTA      ENERGY\n");
       OBFFLog("------------------------------------------------------------------------\n");
     }
- 
+
     for (i = _bondcalculations.begin(); i != _bondcalculations.end(); ++i) {
 
       i->template Compute<gradients>();
@@ -79,19 +79,19 @@ namespace OpenBabel
       }
 
       IF_OBFF_LOGLVL_HIGH {
-        snprintf(_logbuf, BUFF_SIZE, "%s %s  %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
+        snprintf(_logbuf, BUFF_SIZE, "%s %s  %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", (*i).a->GetType(), (*i).b->GetType(),
                 (*i).rab, (*i).r0, (*i).kr, (*i).delta, (*i).energy);
         OBFFLog(_logbuf);
       }
     }
-    
+
     IF_OBFF_LOGLVL_MEDIUM {
       snprintf(_logbuf, BUFF_SIZE, "     TOTAL BOND STRETCHING ENERGY = %8.3f %s\n",  energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
     return energy;
   }
-  
+
   template<bool gradients>
   void OBFFAngleCalculationGaff::Compute()
   {
@@ -99,15 +99,15 @@ namespace OpenBabel
       energy = 0.0;
       return;
     }
- 
+
     double delta2;
 
     if (gradients) {
       theta = OBForceField::VectorAngleDerivative(pos_a, pos_b, pos_c, force_a, force_b, force_c);
       delta = DEG_TO_RAD * (theta - theta0);
-      
+
       const double dE = 2.0 * kth * delta;
-      
+
       OBForceField::VectorSelfMultiply(force_a, dE);
       OBForceField::VectorSelfMultiply(force_b, dE);
       OBForceField::VectorSelfMultiply(force_c, dE);
@@ -120,48 +120,48 @@ namespace OpenBabel
       theta = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;
 
     delta2 = delta * delta;
-    
+
     energy = kth * delta2;
   }
-  
+
   template<bool gradients>
   double OBForceFieldGaff::E_Angle()
   {
     vector<OBFFAngleCalculationGaff>::iterator i;
     double energy = 0.0;
-        
+
     IF_OBFF_LOGLVL_HIGH {
       OBFFLog("\nA N G L E   B E N D I N G\n\n");
       OBFFLog("ATOM TYPES       VALENCE     IDEAL      FORCE\n");
       OBFFLog(" I    J    K      ANGLE      ANGLE     CONSTANT      DELTA      ENERGY\n");
       OBFFLog("-----------------------------------------------------------------------------\n");
     }
-    
+
     for (i = _anglecalculations.begin(); i != _anglecalculations.end(); ++i) {
 
       i->template Compute<gradients>();
       energy += i->energy;
-      
+
       if (gradients) {
         AddGradient((*i).force_a, (*i).idx_a);
         AddGradient((*i).force_b, (*i).idx_b);
         AddGradient((*i).force_c, (*i).idx_c);
       }
-     
+
       IF_OBFF_LOGLVL_HIGH {
-        snprintf(_logbuf, BUFF_SIZE, "%s %s %s  %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
+        snprintf(_logbuf, BUFF_SIZE, "%s %s %s  %8.3f   %8.3f     %8.3f   %8.3f   %8.3f\n", (*i).a->GetType(), (*i).b->GetType(),
                 (*i).c->GetType(), (*i).theta, (*i).theta0, (*i).kth, (*i).delta, (*i).energy);
         OBFFLog(_logbuf);
       }
     }
- 
+
     IF_OBFF_LOGLVL_MEDIUM {
       snprintf(_logbuf, BUFF_SIZE, "     TOTAL ANGLE BENDING ENERGY = %8.3f %s\n", energy, GetUnit().c_str());
       OBFFLog(_logbuf);
     }
     return energy;
   }
-  
+
   template<bool gradients>
   void OBFFTorsionCalculationGaff::Compute()
   {
@@ -169,16 +169,16 @@ namespace OpenBabel
       energy = 0.0;
       return;
     }
- 
+
     if (gradients) {
-      tor = OBForceField::VectorTorsionDerivative(pos_a, pos_b, pos_c, pos_d, 
+      tor = OBForceField::VectorTorsionDerivative(pos_a, pos_b, pos_c, pos_d,
                                                                force_a, force_b, force_c, force_d);
       if (!isfinite(tor))
         tor = 1.0e-3;
-      
+
       const double sine = sin(DEG_TO_RAD*(n*tor-gamma));
       const double dE = n * vn_half * sine;
-      
+
       OBForceField::VectorSelfMultiply(force_a, dE);
       OBForceField::VectorSelfMultiply(force_b, dE);
       OBForceField::VectorSelfMultiply(force_c, dE);
@@ -193,36 +193,36 @@ namespace OpenBabel
     const double phi1 = 1.0 + cosine;
 
     energy = vn_half * phi1;
-    
+
   }
-  
+
   template<bool gradients>
-  double OBForceFieldGaff::E_Torsion() 
+  double OBForceFieldGaff::E_Torsion()
   {
     vector<OBFFTorsionCalculationGaff>::iterator i;
     double energy = 0.0;
- 
+
     IF_OBFF_LOGLVL_HIGH {
       OBFFLog("\nT O R S I O N A L\n\n");
       OBFFLog("----ATOM TYPES-----    FORCE              TORSION\n");
       OBFFLog(" I    J    K    L     CONSTANT     s       ANGLE    n    ENERGY\n");
       OBFFLog("----------------------------------------------------------------\n");
     }
-    
+
     for (i = _torsioncalculations.begin(); i != _torsioncalculations.end(); ++i) {
 
       i->template Compute<gradients>();
       energy += i->energy;
-      
+
       if (gradients) {
         AddGradient((*i).force_a, (*i).idx_a);
         AddGradient((*i).force_b, (*i).idx_b);
         AddGradient((*i).force_c, (*i).idx_c);
         AddGradient((*i).force_d, (*i).idx_d);
       }
-  
+
       IF_OBFF_LOGLVL_HIGH {
-        snprintf(_logbuf, BUFF_SIZE, "%s %s %s %s    %6.3f    %5.0f   %8.3f   %1.0f   %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
+        snprintf(_logbuf, BUFF_SIZE, "%s %s %s %s    %6.3f    %5.0f   %8.3f   %1.0f   %8.3f\n", (*i).a->GetType(), (*i).b->GetType(),
                 (*i).c->GetType(), (*i).d->GetType(), (*i).vn_half, (*i).gamma, (*i).tor, (*i).n, (*i).energy);
         OBFFLog(_logbuf);
       }
@@ -243,7 +243,7 @@ namespace OpenBabel
   //   / 					//
   //  c						//
   //						//
-  OBFFParameter* OBForceFieldGaff::GetParameterOOP(const char* a, const char* b, const char* c, const char* d, 
+  OBFFParameter* OBForceFieldGaff::GetParameterOOP(const char* a, const char* b, const char* c, const char* d,
         std::vector<OBFFParameter> &parameter)
   {
     OBFFParameter *par;
@@ -254,9 +254,9 @@ namespace OpenBabel
     string _c(c);
     string _d(d);
     for (unsigned int idx=0; idx < parameter.size(); idx++)
-      if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b) && 
-	   (_c == parameter[idx]._c) && (_d == parameter[idx]._d)) || 
-	  ((_a == parameter[idx]._c) && (_b == parameter[idx]._b) && 
+      if (((_a == parameter[idx]._a) && (_b == parameter[idx]._b) &&
+	   (_c == parameter[idx]._c) && (_d == parameter[idx]._d)) ||
+	  ((_a == parameter[idx]._c) && (_b == parameter[idx]._b) &&
 	   (_c == parameter[idx]._a) && (_d == parameter[idx]._d))) {
 	par = &parameter[idx];
 	return par;
@@ -271,16 +271,16 @@ namespace OpenBabel
       energy = 0.0;
       return;
     }
- 
+
     if (gradients) {
-      tor = OBForceField::VectorTorsionDerivative(pos_a, pos_b, pos_c, pos_d, 
+      tor = OBForceField::VectorTorsionDerivative(pos_a, pos_b, pos_c, pos_d,
                                                                force_a, force_b, force_c, force_d);
       if (!isfinite(tor))
         tor = 1.0e-3;
-      
+
       const double sine = sin(DEG_TO_RAD*(n*tor-gamma));
       const double dE = n * vn_half * sine;
-      
+
       OBForceField::VectorSelfMultiply(force_a, dE);
       OBForceField::VectorSelfMultiply(force_b, dE);
       OBForceField::VectorSelfMultiply(force_c, dE);
@@ -295,36 +295,36 @@ namespace OpenBabel
     const double phi1 = 1.0 + cosine;
 
     energy = vn_half * phi1;
-    
+
   }
-  
+
   template<bool gradients>
-  double OBForceFieldGaff::E_OOP() 
+  double OBForceFieldGaff::E_OOP()
   {
     vector<OBFFOOPCalculationGaff>::iterator i;
     double energy = 0.0;
- 
+
     IF_OBFF_LOGLVL_HIGH {
       OBFFLog("\nI M P R O P E R   T O R S I O N A L\n\n");
       OBFFLog("----ATOM TYPES-----    FORCE     IMPROPER_TORSION\n");
       OBFFLog(" I    J    K    L     CONSTANT     s       ANGLE    n    ENERGY\n");
       OBFFLog("----------------------------------------------------------------\n");
     }
-    
+
     for (i = _oopcalculations.begin(); i != _oopcalculations.end(); ++i) {
 
       i->template Compute<gradients>();
       energy += i->energy;
-      
+
       if (gradients) {
         AddGradient((*i).force_a, (*i).idx_a);
         AddGradient((*i).force_b, (*i).idx_b);
         AddGradient((*i).force_c, (*i).idx_c);
         AddGradient((*i).force_d, (*i).idx_d);
       }
-  
+
       IF_OBFF_LOGLVL_HIGH {
-        snprintf(_logbuf, BUFF_SIZE, "%s %s %s %s    %6.3f    %5.0f   %8.3f   %1.0f   %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
+        snprintf(_logbuf, BUFF_SIZE, "%s %s %s %s    %6.3f    %5.0f   %8.3f   %1.0f   %8.3f\n", (*i).a->GetType(), (*i).b->GetType(),
                 (*i).c->GetType(), (*i).d->GetType(), (*i).vn_half, (*i).gamma, (*i).tor, (*i).n, (*i).energy);
         OBFFLog(_logbuf);
       }
@@ -345,7 +345,7 @@ namespace OpenBabel
       energy = 0.0;
       return;
     }
- 
+
     if (gradients) {
       rab = OBForceField::VectorDistanceDerivative(pos_a, pos_b, force_a, force_b);
     } else {
@@ -357,10 +357,10 @@ namespace OpenBabel
     double term6 = term * term * term; // ^3
     term6 = term6 * term6; // ^6
     const double term12 = term6 * term6; // ^12
-   
+
     energy = Eab * (term12 - 2.0*term6);
-    
-    if (gradients) { 
+
+    if (gradients) {
       const double term13 = term * term12; // ^13
       const double term7 = term * term6; // ^7
       const double dE = (12.0 * Eab / RVDWab) * (-term13 + term7);
@@ -368,13 +368,13 @@ namespace OpenBabel
       OBForceField::VectorSelfMultiply(force_b, dE);
     }
   }
-  
+
   template<bool gradients>
   double OBForceFieldGaff::E_VDW()
   {
     vector<OBFFVDWCalculationGaff>::iterator i;
     double energy = 0.0;
-     
+
     IF_OBFF_LOGLVL_HIGH {
       OBFFLog("\nV A N   D E R   W A A L S\n\n");
       OBFFLog("ATOM TYPES\n");
@@ -382,24 +382,24 @@ namespace OpenBabel
       OBFFLog("-----------------------------------------\n");
       //          XX   XX     -000.000  -000.000  -000.000  -000.000
     }
-    
-    unsigned int j = 0; 
+
+    unsigned int j = 0;
     for (i = _vdwcalculations.begin(); i != _vdwcalculations.end(); ++i, ++j) {
       // Cut-off check
       if (_cutoff)
-        if (!_vdwpairs.BitIsSet(j)) 
+        if (!_vdwpairs.BitIsSet(j))
           continue;
- 
+
       i->template Compute<gradients>();
       energy += i->energy;
-      
+
       if (gradients) {
         AddGradient((*i).force_a, (*i).idx_a);
         AddGradient((*i).force_b, (*i).idx_b);
       }
-  
+
       IF_OBFF_LOGLVL_HIGH {
-        snprintf(_logbuf, BUFF_SIZE, "%s %s   %8.3f  %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
+        snprintf(_logbuf, BUFF_SIZE, "%s %s   %8.3f  %8.3f\n", (*i).a->GetType(), (*i).b->GetType(),
                 (*i).rab, (*i).energy);
         OBFFLog(_logbuf);
       }
@@ -420,7 +420,7 @@ namespace OpenBabel
       energy = 0.0;
       return;
     }
- 
+
     if (gradients) {
       rab = OBForceField::VectorDistanceDerivative(pos_a, pos_b, force_a, force_b);
       const double rab2 = rab * rab;
@@ -430,44 +430,44 @@ namespace OpenBabel
     } else {
       rab = OBForceField::VectorDistance(pos_a, pos_b);
     }
-    
+
     if (IsNearZero(rab, 1.0e-3))
       rab = 1.0e-3;
 
     energy = qq / rab;
   }
-  
+
   template<bool gradients>
   double OBForceFieldGaff::E_Electrostatic()
   {
     vector<OBFFElectrostaticCalculationGaff>::iterator i;
     double energy = 0.0;
-     
+
     IF_OBFF_LOGLVL_HIGH {
       OBFFLog("\nE L E C T R O S T A T I C   I N T E R A C T I O N S\n\n");
       OBFFLog("ATOM TYPES\n");
       OBFFLog(" I    J           Rij   332.17*QiQj  ENERGY\n");
       OBFFLog("-------------------------------------------\n");
-      //            XX   XX     -000.000  -000.000  -000.000  
+      //            XX   XX     -000.000  -000.000  -000.000
     }
 
-    unsigned int j = 0; 
+    unsigned int j = 0;
     for (i = _electrostaticcalculations.begin(); i != _electrostaticcalculations.end(); ++i, ++j) {
       // Cut-off check
       if (_cutoff)
-        if (!_elepairs.BitIsSet(j)) 
+        if (!_elepairs.BitIsSet(j))
           continue;
- 
+
       i->template Compute<gradients>();
       energy += i->energy;
-      
+
       if (gradients) {
         AddGradient((*i).force_a, (*i).idx_a);
         AddGradient((*i).force_b, (*i).idx_b);
       }
-      
+
       IF_OBFF_LOGLVL_HIGH {
-        snprintf(_logbuf, BUFF_SIZE, "%s %s   %8.3f  %8.3f  %8.3f\n", (*i).a->GetType(), (*i).b->GetType(), 
+        snprintf(_logbuf, BUFF_SIZE, "%s %s   %8.3f  %8.3f  %8.3f\n", (*i).a->GetType(), (*i).b->GetType(),
                 (*i).rab, (*i).qq, (*i).energy);
         OBFFLog(_logbuf);
       }
@@ -508,7 +508,7 @@ namespace OpenBabel
     _oopcalculations      = src._oopcalculations;
     _vdwcalculations           = src._vdwcalculations;
     _electrostaticcalculations = src._electrostaticcalculations;
-    
+
     return *this;
   }
 
@@ -516,25 +516,25 @@ namespace OpenBabel
   {
     OBFFParameter *parameter;
     OBAtom *a, *b, *c, *d;
-    
+
     IF_OBFF_LOGLVL_LOW
       OBFFLog("\nS E T T I N G   U P   C A L C U L A T I O N S\n\n");
- 
-    // 
+
+    //
     // Bond Calculations
     IF_OBFF_LOGLVL_LOW
       OBFFLog("SETTING UP BOND CALCULATIONS...\n");
-    
+
     OBFFBondCalculationGaff bondcalc;
 
     _bondcalculations.clear();
-    
+
     FOR_BONDS_OF_MOL(bond, _mol) {
       a = bond->GetBeginAtom();
       b = bond->GetEndAtom();
-      
 
-      // skip this bond if the atoms are ignored 
+
+      // skip this bond if the atoms are ignored
       if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) )
         continue;
 
@@ -548,7 +548,7 @@ namespace OpenBabel
         if (!validBond)
           continue;
       }
-      
+
       bondcalc.a = a;
       bondcalc.b = b;
 
@@ -585,32 +585,32 @@ namespace OpenBabel
     //
     IF_OBFF_LOGLVL_LOW
       OBFFLog("SETTING UP ANGLE CALCULATIONS...\n");
- 
+
     OBFFAngleCalculationGaff anglecalc;
- 
+
     _anglecalculations.clear();
-    
+
     FOR_ANGLES_OF_MOL(angle, _mol) {
       b = _mol.GetAtom((*angle)[0] + 1);
       a = _mol.GetAtom((*angle)[1] + 1);
       c = _mol.GetAtom((*angle)[2] + 1);
-      
-      // skip this angle if the atoms are ignored 
-      if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) || _constraints.IsIgnored(c->GetIdx()) ) 
+
+      // skip this angle if the atoms are ignored
+      if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) || _constraints.IsIgnored(c->GetIdx()) )
         continue;
- 
+
       // if there are any groups specified, check if the three angle atoms are in a single intraGroup
       if (HasGroups()) {
         bool validAngle = false;
         for (unsigned int i=0; i < _intraGroup.size(); ++i) {
-          if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) && 
+          if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) &&
               _intraGroup[i].BitIsOn(c->GetIdx()))
             validAngle = true;
         }
         if (!validAngle)
           continue;
       }
- 
+
       anglecalc.a = a;
       anglecalc.b = b;
       anglecalc.c = c;
@@ -626,9 +626,9 @@ namespace OpenBabel
               anglecalc.kth = KCAL_TO_KJ * 0.020;
               anglecalc.theta0 = 120.0;
               anglecalc.SetupPointers();
-            
+
               _anglecalculations.push_back(anglecalc);
-            
+
               IF_OBFF_LOGLVL_LOW {
                 snprintf(_logbuf, BUFF_SIZE, "COULD NOT FIND PARAMETERS FOR ANGLE %s-%s-%s, USING DEFAULT PARAMETERS\n", a->GetType(), b->GetType(), c->GetType());
                 OBFFLog(_logbuf);
@@ -642,43 +642,43 @@ namespace OpenBabel
       anglecalc.kth = KCAL_TO_KJ * parameter->_dpar[0];
       anglecalc.theta0 = parameter->_dpar[1];
       anglecalc.SetupPointers();
-      
+
       _anglecalculations.push_back(anglecalc);
     }
-    
+
     //
     // Torsion Calculations
     //
     IF_OBFF_LOGLVL_LOW
       OBFFLog("SETTING UP TORSION CALCULATIONS...\n");
- 
+
     OBFFTorsionCalculationGaff torsioncalc;
 
     _torsioncalculations.clear();
- 
+
     FOR_TORSIONS_OF_MOL(t, _mol) {
       a = _mol.GetAtom((*t)[0] + 1);
       b = _mol.GetAtom((*t)[1] + 1);
       c = _mol.GetAtom((*t)[2] + 1);
       d = _mol.GetAtom((*t)[3] + 1);
 
-      // skip this torsion if the atoms are ignored 
+      // skip this torsion if the atoms are ignored
       if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) ||
-           _constraints.IsIgnored(c->GetIdx()) || _constraints.IsIgnored(d->GetIdx()) ) 
+           _constraints.IsIgnored(c->GetIdx()) || _constraints.IsIgnored(d->GetIdx()) )
         continue;
- 
+
       // if there are any groups specified, check if the four torsion atoms are in a single intraGroup
       if (HasGroups()) {
         bool validTorsion = false;
         for (unsigned int i=0; i < _intraGroup.size(); ++i) {
-          if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) && 
+          if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) &&
               _intraGroup[i].BitIsOn(c->GetIdx()) && _intraGroup[i].BitIsOn(d->GetIdx()))
             validTorsion = true;
         }
         if (!validTorsion)
           continue;
       }
- 
+
       torsioncalc.a = a;
       torsioncalc.b = b;
       torsioncalc.c = c;
@@ -714,26 +714,26 @@ namespace OpenBabel
       torsioncalc.n = parameter->_dpar[2];
 
       torsioncalc.SetupPointers();
-      _torsioncalculations.push_back(torsioncalc);     
+      _torsioncalculations.push_back(torsioncalc);
     }
-    
+
     //
     // Improper torsion (Out-Of-Plane) Calculations
     //
     IF_OBFF_LOGLVL_LOW
       OBFFLog("SETTING UP IMPROPER TORSION CALCULATIONS...\n");
- 
+
     OBFFOOPCalculationGaff oopcalc;
 
     _oopcalculations.clear();
- 
+
     FOR_ATOMS_OF_MOL(atom, _mol) {
       b = (OBAtom*) &*atom;
 
       a = NULL;
       c = NULL;
       d = NULL;
-      
+
       FOR_NBORS_OF_ATOM(nbr, b) {
 	if (a ==NULL)
 	  a = (OBAtom*) &*nbr;
@@ -742,21 +742,21 @@ namespace OpenBabel
 	else
 	  d = (OBAtom*) &*nbr;
       }
-	  
+
       // skip this improper dihedral if atom b does not have 3 neighbors
       if ((a == NULL) || (c == NULL) || (d == NULL))
 	continue;
 
-      // skip this improper dihedral if the atoms are ignored 
+      // skip this improper dihedral if the atoms are ignored
       if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) ||
-	   _constraints.IsIgnored(c->GetIdx()) || _constraints.IsIgnored(d->GetIdx()) ) 
+	   _constraints.IsIgnored(c->GetIdx()) || _constraints.IsIgnored(d->GetIdx()) )
 	continue;
-      
+
       // if there are any groups specified, check if the four improper-dihedral atoms are in a single intraGroup
       if (HasGroups()) {
 	bool validOOP = false;
 	for (unsigned int i=0; i < _intraGroup.size(); ++i) {
-	  if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) && 
+	  if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) &&
 	      _intraGroup[i].BitIsOn(c->GetIdx()) && _intraGroup[i].BitIsOn(d->GetIdx()))
 	    validOOP = true;
 	}
@@ -892,50 +892,50 @@ namespace OpenBabel
       }
     }
 
-    // 
+    //
     // VDW Calculations
     //
     IF_OBFF_LOGLVL_LOW
       OBFFLog("SETTING UP VAN DER WAALS CALCULATIONS...\n");
-    
+
     OBFFVDWCalculationGaff vdwcalc;
     OBFFParameter *parameter_a, *parameter_b;
     double Ra, Rb, Ea, Eb;
 
     _vdwcalculations.clear();
-    
+
     FOR_PAIRS_OF_MOL(p, _mol) {
       a = _mol.GetAtom((*p)[0]);
       b = _mol.GetAtom((*p)[1]);
 
-      // skip this vdw if the atoms are ignored 
+      // skip this vdw if the atoms are ignored
       if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) )
         continue;
-  
+
       // if there are any groups specified, check if the two atoms are in a single _interGroup or if
       // two two atoms are in one of the _interGroups pairs.
       if (HasGroups()) {
         bool validVDW = false;
         for (unsigned int i=0; i < _interGroup.size(); ++i) {
-          if (_interGroup[i].BitIsOn(a->GetIdx()) && _interGroup[i].BitIsOn(b->GetIdx())) 
+          if (_interGroup[i].BitIsOn(a->GetIdx()) && _interGroup[i].BitIsOn(b->GetIdx()))
             validVDW = true;
         }
         for (unsigned int i=0; i < _interGroups.size(); ++i) {
-          if (_interGroups[i].first.BitIsOn(a->GetIdx()) && _interGroups[i].second.BitIsOn(b->GetIdx())) 
+          if (_interGroups[i].first.BitIsOn(a->GetIdx()) && _interGroups[i].second.BitIsOn(b->GetIdx()))
             validVDW = true;
-          if (_interGroups[i].first.BitIsOn(b->GetIdx()) && _interGroups[i].second.BitIsOn(a->GetIdx())) 
+          if (_interGroups[i].first.BitIsOn(b->GetIdx()) && _interGroups[i].second.BitIsOn(a->GetIdx()))
             validVDW = true;
         }
- 
+
         if (!validVDW)
           continue;
       }
- 
+
       parameter_a = GetParameter(a->GetType(), NULL, NULL, NULL, _ffvdwparams);
       if (parameter_a == NULL) { // no vdw parameter -> use hydrogen
         Ra = 1.4870;
         Ea = 0.0157;
-	
+
         IF_OBFF_LOGLVL_LOW {
           snprintf(_logbuf, BUFF_SIZE, "COULD NOT FIND VDW PARAMETERS FOR ATOM %s, USING HYDROGEN VDW PARAMETERS\n", a->GetType());
           OBFFLog(_logbuf);
@@ -949,7 +949,7 @@ namespace OpenBabel
       if (parameter_b == NULL) { // no vdw parameter -> use hydrogen
         Rb = 1.4870;
         Eb = 0.0157;
-        
+
         IF_OBFF_LOGLVL_LOW {
           snprintf(_logbuf, BUFF_SIZE, "COULD NOT FIND VDW PARAMETERS FOR ATOM %s, USING HYDROGEN VDW PARAMETERS\n", b->GetType());
           OBFFLog(_logbuf);
@@ -961,11 +961,11 @@ namespace OpenBabel
 
       vdwcalc.a = &*a;
       vdwcalc.b = &*b;
-     
-      //this calculations only need to be done once for each pair, 
+
+      //this calculations only need to be done once for each pair,
       //we do them now and save them for later use
       vdwcalc.Eab = KCAL_TO_KJ * sqrt(Ea * Eb);
-      
+
       // 1-4 scaling
       if (a->IsOneFour(b))
         vdwcalc.Eab *= 0.5;
@@ -995,54 +995,54 @@ namespace OpenBabel
 
       _vdwcalculations.push_back(vdwcalc);
     }
-    
-    // 
+
+    //
     // Electrostatic Calculations
     //
     IF_OBFF_LOGLVL_LOW
       OBFFLog("SETTING UP ELECTROSTATIC CALCULATIONS...\n");
- 
+
     OBFFElectrostaticCalculationGaff elecalc;
 
     _electrostaticcalculations.clear();
-    
+
     FOR_PAIRS_OF_MOL(p, _mol) {
       a = _mol.GetAtom((*p)[0]);
       b = _mol.GetAtom((*p)[1]);
- 
-      // skip this ele if the atoms are ignored 
+
+      // skip this ele if the atoms are ignored
       if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) )
         continue;
-  
+
       // if there are any groups specified, check if the two atoms are in a single _interGroup or if
       // two two atoms are in one of the _interGroups pairs.
       if (HasGroups()) {
         bool validEle = false;
         for (unsigned int i=0; i < _interGroup.size(); ++i) {
-          if (_interGroup[i].BitIsOn(a->GetIdx()) && _interGroup[i].BitIsOn(b->GetIdx())) 
+          if (_interGroup[i].BitIsOn(a->GetIdx()) && _interGroup[i].BitIsOn(b->GetIdx()))
             validEle = true;
         }
         for (unsigned int i=0; i < _interGroups.size(); ++i) {
-          if (_interGroups[i].first.BitIsOn(a->GetIdx()) && _interGroups[i].second.BitIsOn(b->GetIdx())) 
+          if (_interGroups[i].first.BitIsOn(a->GetIdx()) && _interGroups[i].second.BitIsOn(b->GetIdx()))
             validEle = true;
-          if (_interGroups[i].first.BitIsOn(b->GetIdx()) && _interGroups[i].second.BitIsOn(a->GetIdx())) 
+          if (_interGroups[i].first.BitIsOn(b->GetIdx()) && _interGroups[i].second.BitIsOn(a->GetIdx()))
             validEle = true;
         }
- 
+
         if (!validEle)
           continue;
       }
- 
+
       elecalc.qq = KCAL_TO_KJ * 332.17 * a->GetPartialCharge() * b->GetPartialCharge();
-      
+
       if (elecalc.qq) {
         elecalc.a = &*a;
         elecalc.b = &*b;
-        
+
         // 1-4 scaling
         if (a->IsOneFour(b))
           elecalc.qq *= 0.5;
-	  
+
         elecalc.SetupPointers();
         _electrostaticcalculations.push_back(elecalc);
       }
@@ -1138,7 +1138,7 @@ namespace OpenBabel
         _fftorsionparams.push_back(parameter);
         ifs.getline(buffer, BUFF_SIZE);
       }
-    ifs.getline(buffer, BUFF_SIZE); //next line 
+    ifs.getline(buffer, BUFF_SIZE); //next line
     while(!ifs.fail() && strlen(buffer)!=0) //read block 7(impropers)
       {
 //         The input is the same as in for the dihedrals except that
@@ -1165,7 +1165,7 @@ namespace OpenBabel
         _ffoopparams.push_back(parameter);
         ifs.getline(buffer, BUFF_SIZE);
       }
-    ifs.getline(buffer, BUFF_SIZE); //next line 
+    ifs.getline(buffer, BUFF_SIZE); //next line
     while(!ifs.fail() && strlen(buffer)!=0) //read block 8 (10-12 H-BOND)
       {
         tokenize(vs, buffer," -\n\t");
@@ -1177,13 +1177,13 @@ namespace OpenBabel
         _ffhbondparams.push_back(parameter);
 	    ifs.getline(buffer, BUFF_SIZE);
       }
-    ifs.getline(buffer, BUFF_SIZE); //next line 
+    ifs.getline(buffer, BUFF_SIZE); //next line
     while(!ifs.fail() && strlen(buffer)!=0) //read block 9 (equivalent atoms for vdW potential)
       {
 	    // not used. We assume the types are all listed individually in block 10
 	    ifs.getline(buffer, BUFF_SIZE);
       }
-    ifs.getline(buffer, BUFF_SIZE); //next line 
+    ifs.getline(buffer, BUFF_SIZE); //next line
     ifs.getline(buffer, BUFF_SIZE); //'RE' means vdW radius and well-depth are read
     while(!ifs.fail() && strlen(buffer)!=0) //read block 10 (vdWaals)
       {
@@ -1199,10 +1199,10 @@ namespace OpenBabel
 
     if (ifs)
       ifs.close();
- 
+
     // return the locale to the original one
     obLocale.RestoreLocale();
- 
+
     return 0;
   }
 
@@ -1220,7 +1220,7 @@ namespace OpenBabel
     int BO;
 
     _mol.SetAtomTypesPerceived();
-    
+
     // open data/gaff.prm
     ifstream ifs;
     if (OpenDatafile(ifs, "gaff.prm").length() == 0) {
@@ -1246,7 +1246,7 @@ namespace OpenBabel
         }
       }
     }
-    
+
     for (i = _vexttyp.begin();i != _vexttyp.end();++i) {
       if (i->first->Match(_mol)) {
         _mlist = i->first->GetMapList();
@@ -1255,7 +1255,7 @@ namespace OpenBabel
         }
       }
     }
- 
+
     // Implementation of a special feature of GAFF concerning conjugated bonds
     // In a conjugated ring system cc-cc, and cd-cd are single conjugated bonds, cc-cd are double ones
     // All these types are initially types cc-cc, some cc's are changed to cd.
@@ -1267,12 +1267,12 @@ namespace OpenBabel
     FOR_ATOMS_OF_MOL(ai,_mol){
       atm = &(*ai);
       if (!visited[atm->GetIdx()-1]){
-	if( strcmp(atm->GetType(),"cc")==0 || 
-	    strcmp(atm->GetType(),"ce")==0 || 
-	    strcmp(atm->GetType(),"cp")==0 || 
-	    strcmp(atm->GetType(),"nc")==0 || 
-	    strcmp(atm->GetType(),"ne")==0 || 
-	    strcmp(atm->GetType(),"pc")==0 || 
+	if( strcmp(atm->GetType(),"cc")==0 ||
+	    strcmp(atm->GetType(),"ce")==0 ||
+	    strcmp(atm->GetType(),"cp")==0 ||
+	    strcmp(atm->GetType(),"nc")==0 ||
+	    strcmp(atm->GetType(),"ne")==0 ||
+	    strcmp(atm->GetType(),"pc")==0 ||
 	    strcmp(atm->GetType(),"pe")==0){
 	  FOR_BONDS_OF_ATOM(bond,atm) {
 	    a = bond->GetBeginAtom();
@@ -1385,11 +1385,11 @@ namespace OpenBabel
     //      cout << "ATOMTYPE " << a->GetType() << endl;
 
     SetPartialCharges();
- 
+
     IF_OBFF_LOGLVL_LOW {
       OBFFLog("\nA T O M   T Y P E S\n\n");
       OBFFLog("IDX\tTYPE\n");
-      
+
       FOR_ATOMS_OF_MOL (a, _mol) {
         snprintf(_logbuf, BUFF_SIZE, "%d\t%s\n", a->GetIdx(), a->GetType());
         OBFFLog(_logbuf);
@@ -1397,14 +1397,14 @@ namespace OpenBabel
 
       OBFFLog("\nC H A R G E S\n\n");
       OBFFLog("IDX\tCHARGE\n");
-      
+
       FOR_ATOMS_OF_MOL (a, _mol) {
         snprintf(_logbuf, BUFF_SIZE, "%d\t%f\n", a->GetIdx(), a->GetPartialCharge());
         OBFFLog(_logbuf);
       }
     }
-   
- 
+
+
     if (ifs)
       ifs.close();
 
@@ -1413,7 +1413,7 @@ namespace OpenBabel
 
     return true;
   }
-  
+
   bool OBForceFieldGaff::SetPartialCharges()
   {
     //use Gasteiger charges
@@ -1426,11 +1426,11 @@ namespace OpenBabel
   double OBForceFieldGaff::Energy(bool gradients)
   {
     double energy = 0.0;
-    
+
 
     IF_OBFF_LOGLVL_MEDIUM
       OBFFLog("\nE N E R G Y\n\n");
- 
+
     if (gradients) {
       ClearGradients();
       energy  = E_Bond<true>();
@@ -1455,19 +1455,19 @@ namespace OpenBabel
 
     return energy;
   }
-  
+
   bool OBForceFieldGaff::ValidateGradients ()
   {
     vector3 numgrad, anagrad, err;
     int coordIdx;
-    
+
     bool passed = true; // set to false if any component fails
-    
+
     OBFFLog("\nV A L I D A T E   G R A D I E N T S\n\n");
     OBFFLog("ATOM IDX      NUMERICAL GRADIENT           ANALYTICAL GRADIENT        REL. ERROR (%)   \n");
     OBFFLog("----------------------------------------------------------------------------------------\n");
     //     "XX       (000.000, 000.000, 000.000)  (000.000, 000.000, 000.000)  (00.00, 00.00, 00.00)"
-   
+
     FOR_ATOMS_OF_MOL (a, _mol) {
       coordIdx = (a->GetIdx() - 1) * 3;
 
@@ -1477,10 +1477,10 @@ namespace OpenBabel
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
-      snprintf(_logbuf, BUFF_SIZE, "%2d       (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", a->GetIdx(), numgrad.x(), numgrad.y(), numgrad.z(), 
+      snprintf(_logbuf, BUFF_SIZE, "%2d       (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", a->GetIdx(), numgrad.x(), numgrad.y(), numgrad.z(),
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
-      
+
       // OBFF_EBOND
       numgrad = NumericalDerivative(&*a, OBFF_EBOND);
       ClearGradients();
@@ -1488,13 +1488,13 @@ namespace OpenBabel
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
-      snprintf(_logbuf, BUFF_SIZE, "    bond    (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
+      snprintf(_logbuf, BUFF_SIZE, "    bond    (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(),
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
       // 8% tolerance here because some bonds have slight instability
       if (err.x() > 8.0 || err.y() > 8.0 || err.z() > 8.0)
         passed = false;
-      
+
       // OBFF_EANGLE
       numgrad = NumericalDerivative(&*a, OBFF_EANGLE);
       ClearGradients();
@@ -1502,7 +1502,7 @@ namespace OpenBabel
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
-      snprintf(_logbuf, BUFF_SIZE, "    angle   (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
+      snprintf(_logbuf, BUFF_SIZE, "    angle   (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(),
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
       if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
@@ -1515,7 +1515,7 @@ namespace OpenBabel
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
-      snprintf(_logbuf, BUFF_SIZE, "    torsion (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
+      snprintf(_logbuf, BUFF_SIZE, "    torsion (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(),
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
       if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
@@ -1528,7 +1528,7 @@ namespace OpenBabel
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
-      snprintf(_logbuf, BUFF_SIZE, "    oop     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
+      snprintf(_logbuf, BUFF_SIZE, "    oop     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(),
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
 
@@ -1540,7 +1540,7 @@ namespace OpenBabel
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
-      snprintf(_logbuf, BUFF_SIZE, "    vdw     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
+      snprintf(_logbuf, BUFF_SIZE, "    vdw     (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(),
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
       if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)
@@ -1553,7 +1553,7 @@ namespace OpenBabel
       anagrad.Set(_gradientPtr[coordIdx], _gradientPtr[coordIdx+1], _gradientPtr[coordIdx+2]);
       err = ValidateGradientError(numgrad, anagrad);
 
-      snprintf(_logbuf, BUFF_SIZE, "    electro (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(), 
+      snprintf(_logbuf, BUFF_SIZE, "    electro (%7.3f, %7.3f, %7.3f)  (%7.3f, %7.3f, %7.3f)  (%5.2f, %5.2f, %5.2f)\n", numgrad.x(), numgrad.y(), numgrad.z(),
               anagrad.x(), anagrad.y(), anagrad.z(), err.x(), err.y(), err.z());
       OBFFLog(_logbuf);
       if (err.x() > 5.0 || err.y() > 5.0 || err.z() > 5.0)

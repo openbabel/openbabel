@@ -1,11 +1,11 @@
 /*
-svgformat.cpp  Format for rendering multiple molecules by SVG 
+svgformat.cpp  Format for rendering multiple molecules by SVG
 Copyright (C) 2009 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -26,7 +26,7 @@ namespace OpenBabel
 class SVGFormat : public OBFormat
 {
 public:
-  SVGFormat() : _ncols(0), _nrows(0), _nmax(0) 
+  SVGFormat() : _ncols(0), _nrows(0), _nmax(0)
   {
     OBConversion::RegisterFormat("svg",this);
   }
@@ -47,9 +47,9 @@ public:
       "When displayed in an appropriate program, e.g. Firefox, there is\n"
       "javascript support for zooming (with the mouse wheel)\n"
       "and panning (by dragging with the left mouse button).\n\n"
-      
+
       "If both ``-xr`` and ``-xc`` are specified, they define the maximum number of\n"
-      "molecules that are displayed.\n"    
+      "molecules that are displayed.\n"
       "If only one of them is displayed, then the other is calculated so that\n"
       "ALL the molecules are displayed.\n"
       "If neither are specified, all the molecules are output in an\n"
@@ -59,7 +59,7 @@ public:
       "are already present. This can be slow with a large number of molecules.\n"
       "(3D coordinates are ignored.) Include ``--gen2D`` explicitly if you wish\n"
       "any existing 2D coordinates to be recalculated.\n\n"
-      
+
       "Write Options e.g. -xu\n"
       " u no element-specific atom coloring\n"
       "    Use this option to produce a black and white diagram\n"
@@ -74,7 +74,7 @@ public:
       "    So propane would display as H3C-CH2-CH3\n"
       " d do not display molecule name\n"
       " e embed molecule as CML\n"
-      "    OpenBabel can read the resulting svg file as a cml file.\n" 
+      "    OpenBabel can read the resulting svg file as a cml file.\n"
       " p# scale to bondlength in pixels(single mol only)\n"
       " c# number of columns in table\n"
       " r# number of rows in table\n"
@@ -97,7 +97,7 @@ public:
       "    would add a aliases COOH and CHO to represent the carboxyl and\n"
       "    aldehyde groups and would display them as such in the svg diagram.\n"
       "    The aliases which are recognized are in data/superatom.txt, which\n"
-      "    can be edited.\n" 
+      "    can be edited.\n"
       " x omit XML declaration (not displayed in GUI)\n"
       "    Useful if the output is to be embedded in another xml file.\n\n"
 
@@ -146,7 +146,7 @@ bool SVGFormat::WriteChemObject(OBConversion* pConv)
   //When there are no more they are sent to WriteMolecule.
   //This allows their number to be determined whatever their source
   //(they may also have been filtered), so that the table can be properly dimensioned.
-  
+
   //NOT CURRENTLY IMPLEMENTED
   //If the first object is OBText, the part of it before each insertion point (if it exists)
   //is output before every molecule. This allows molecule structures to be displayed
@@ -181,7 +181,7 @@ bool SVGFormat::WriteChemObject(OBConversion* pConv)
       _textpos = 0;
       return true;
     }
-*/  
+*/
   }
 
   OBMoleculeFormat::DoOutputOptions(pOb, pConv);
@@ -229,7 +229,7 @@ bool SVGFormat::WriteChemObject(OBConversion* pConv)
       //need to manually set these to mimic normal conversion
       pConv->SetOutputIndex(++n);
       pConv->SetLast(n==_objects.size());
-      
+
       ret=WriteMolecule(*iter, pConv);
 /*
       //If there is a subsequent insertion point, output text up to it and update _textpos.
@@ -238,7 +238,7 @@ bool SVGFormat::WriteChemObject(OBConversion* pConv)
         *pConv->GetOutStream() << _ptext->GetText(_textpos, true);
 */
     }
-/*    
+/*
     //Output remaining text
     if(_ptext)
       *pConv->GetOutStream() << _ptext->GetText(_textpos);
@@ -250,7 +250,7 @@ bool SVGFormat::WriteChemObject(OBConversion* pConv)
 
     _objects.clear();
     _ptext = NULL;
-    _nmax = _ncols = _nrows = 0;  
+    _nmax = _ncols = _nrows = 0;
   }
   //OBConversion decrements OutputIndex when returns false because it thinks it is an error
   //So we compensate.
@@ -323,14 +323,14 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
       ofs << "<title>OBDepict</title>\n";
       // Draw the background
-      ofs << "<rect x=\"0\" y=\"0\" width=\"" << vbwidth << "\" height=\"" << vbheight 
-          << "\" fill=\"" << background << "\"/>\n"; 
+      ofs << "<rect x=\"0\" y=\"0\" width=\"" << vbwidth << "\" height=\"" << vbheight
+          << "\" fill=\"" << background << "\"/>\n";
     }
   }
 
   //All mols
   double cellsize;
-  if(hasTable) 
+  if(hasTable)
   {
     //*** Parameter for inner svg ***
     int nc = _ncols ? _ncols : 1;
@@ -350,7 +350,7 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     SVGPainter painter(*pConv->GetOutStream(), true, cellsize,cellsize,innerX,innerY);
     OBDepict depictor(&painter);
 
-    
+
     if(!pConv->IsOption("C"))
       depictor.SetOption(OBDepict::drawTermC);// on by default
     if(pConv->IsOption("a"))
@@ -402,7 +402,7 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       depictor.SetBondSpacing(depictor.GetBondSpacing() * factor);
       depictor.SetFontSize((int)(depictor.GetFontSize() * factor));
     }
-    
+
     if(!pConv->IsOption("C"))
       depictor.SetOption(OBDepict::drawTermC);// on by default
     if(pConv->IsOption("a"))
@@ -501,7 +501,7 @@ bool SVGFormat::EmbedCML(OBMol* pmol, OBConversion* pConv)
 
 /*
 The script below was originally (and still could be) in data/svgformat.script,
-the whole of which is embedded into the output. 
+the whole of which is embedded into the output.
 It works adequately in Firefox 3 to zoom with the mouse wheel and pan by dragging,
 but may need modification for other SVG viewers. (It works in Opera.)
 
@@ -529,7 +529,7 @@ but may need modification for other SVG viewers. (It works in Opera.)
       starty = evt.clientY;
     }
     onmousemove=function(evt) {
-      if(startx!=0 && starty!=0 
+      if(startx!=0 && starty!=0
         && ((evt.clientX - startx)*(evt.clientX - startx)+(evt.clientY - starty)*(evt.clientY - starty)>100))
       {
         var vbtext = svgEl.getAttributeNS(null,"viewBox");
@@ -541,7 +541,7 @@ but may need modification for other SVG viewers. (It works in Opera.)
         startx = evt.clientX;
         starty = evt.clientY;
       }
-    } 
+    }
     onmouseup=function() {
       startx=0;
       starty=0;

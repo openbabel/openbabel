@@ -1,16 +1,16 @@
 /**********************************************************************
 ring.cpp - Deal with rings, find smallest set of smallest rings (SSSR).
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -134,7 +134,7 @@ namespace OpenBabel
               }
             //rs.WriteRings();
           }
-        
+
         OBRingData *rd = new OBRingData();
         rd->SetOrigin(perceived); // to separate from user or file input
         rd->SetAttribute("SSSR");
@@ -157,18 +157,18 @@ namespace OpenBabel
   }
 
   /**
-   * This function finds the LSSR containing all relevant cycles. A cycle is 
-   * relevant if it belongs to at least one minimum cycle basis. Another 
+   * This function finds the LSSR containing all relevant cycles. A cycle is
+   * relevant if it belongs to at least one minimum cycle basis. Another
    * description is more useful though:
    *
-   * A cycle (C) is relevant if: 
+   * A cycle (C) is relevant if:
    * - no smaller cycles C_i, ..., C_k exist such that C = C_1 + ... + C_k
    * - both bonds & atoms are checked
    *
    * This is based on lemma 1 from:
    *
    * P. Vismara, Union of all the minimum cycle bases of a graph, The electronic
-   * journal of combinatorics, Vol. 4, 1997 
+   * journal of combinatorics, Vol. 4, 1997
    * http://www.emis.de/journals/EJC/Volume_4/PostScriptfiles/v4i1r9.ps
    */
   void visitRing(OBMol *mol, OBRing *ring, std::vector<OBRing*> &rlist, std::vector<OBRing*> &rignored)
@@ -197,7 +197,7 @@ namespace OpenBabel
     OBBitVec bondset;
     for (unsigned int i = 0; i < bonds.size(); ++i)
       bondset.SetBitOn(bonds[i]);
- 
+
     //
     // Remove larger rings that cover the same bonds as smaller rings.
     //
@@ -283,7 +283,7 @@ namespace OpenBabel
               }
             //rs.WriteRings();
           }
-        
+
         OBRingData *rd = new OBRingData();
         rd->SetOrigin(perceived); // to separate from user or file input
         rd->SetAttribute("LSSR");
@@ -352,7 +352,7 @@ namespace OpenBabel
       return;
     }
 
-    // exit if we already have frj rings 
+    // exit if we already have frj rings
     if (_rlist.size() == (unsigned)frj)
       return;
 
@@ -490,7 +490,7 @@ namespace OpenBabel
     for (i = _rlist.begin();i != _rlist.end();++i)
       delete *i;
   }
-  
+
   bool CompareRingSize(const OBRing *a,const OBRing *b)
   {
     return(a->Size() < b->Size());
@@ -536,7 +536,7 @@ namespace OpenBabel
 
     // don't return if all atoms are visited
     // (For example, some atoms are in multiple rings!) -GRH
-      
+
     if (avisit[natom])
       {
         int j = depth-1;
@@ -578,13 +578,13 @@ namespace OpenBabel
 
     return(true);
   }
-  
+
   void OBRing::SetType(char *type)
   {
     strncpy(_type,type, sizeof(_type) - 1);
     _type[sizeof(_type) - 1] = '\0';
   }
-  
+
   void OBRing::SetType(std::string &type)
   {
      strncpy(_type,type.c_str(), sizeof(_type) - 1);
@@ -612,7 +612,7 @@ namespace OpenBabel
       for (i = _path.begin();i != _path.end();++i)
         if (!(mol->GetAtom(*i))->IsCarbon())
 	  return (*i);
-    
+
     if (Size() == 5)
       for (i = _path.begin();i != _path.end();++i) {
         OBAtom *atom = mol->GetAtom(*i);
@@ -623,7 +623,7 @@ namespace OpenBabel
         if (atom->IsNitrogen() && (atom->BOSum() == atom->GetValence()))
 	  return (*i);
       }
-      
+
     return 0;
   }
 
@@ -725,7 +725,7 @@ namespace OpenBabel
     _prv = prv;
   }
 
-  //! The supplied path is built up of OBAtom nodes, with the root atom 
+  //! The supplied path is built up of OBAtom nodes, with the root atom
   //! the last item in the vector.
   void OBRTree::PathToRoot(vector<OBAtom*> &path)
   {

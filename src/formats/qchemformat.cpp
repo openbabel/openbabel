@@ -2,11 +2,11 @@
 Copyright (C) 2000-2007 by Geoffrey Hutchison
 Some portions Copyright (C) 2004 by Michael Banck
 Some portions Copyright (C) 2004 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -155,7 +155,7 @@ namespace OpenBabel
           {
             ifs.getline(buffer,BUFF_SIZE); // actual components   X ###  Y #### Z ###
             tokenize(vs,buffer);
-            if (vs.size() >= 6) 
+            if (vs.size() >= 6)
               {
                 x = atof(vs[1].c_str());
                 y = atof(vs[3].c_str());
@@ -176,13 +176,13 @@ namespace OpenBabel
               {
                 atom = mol.GetAtom(atoi(vs[0].c_str()));
                 atom->SetPartialCharge(atof(vs[2].c_str()));
-                
+
                 if (!ifs.getline(buffer,BUFF_SIZE))
                   break;
                 tokenize(vs,buffer);
               }
           }
-        else if (strstr(buffer, "ISOTROPIC") != NULL 
+        else if (strstr(buffer, "ISOTROPIC") != NULL
                  && strstr(buffer, "ATOM") != NULL) // NMR summary
           {
             ifs.getline(buffer, BUFF_SIZE); // -------
@@ -292,7 +292,7 @@ namespace OpenBabel
       mol.PerceiveBondOrders();
 
     mol.EndModify();
-  
+
     if (hasPartialCharges) {
       mol.SetPartialChargesPerceived();
       // Annotate that partial charges come from Q-Chem Mulliken

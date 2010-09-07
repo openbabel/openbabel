@@ -41,7 +41,7 @@ namespace OpenBabel {
       //   |   |        |   |      <- in any case, refs[0] & refs[2] remain unchanged
       //   1 2 3 4      1 4 3 2
       //
-      return (u1.refs[2] == u2.refs[2]); 
+      return (u1.refs[2] == u2.refs[2]);
     }
 
     // possibilities:
@@ -95,7 +95,7 @@ namespace OpenBabel {
   void OBSquarePlanarStereo::SetConfig(const Config &config)
   {
     if (config.center == OBStereo::NoRef) {
-      obErrorLog.ThrowError(__FUNCTION__, 
+      obErrorLog.ThrowError(__FUNCTION__,
           "OBSquarePlanarStereo::SetConfig : center id is invalid.", obError);
       m_cfg = Config();
       return;
@@ -120,8 +120,8 @@ namespace OpenBabel {
 
     return OBTetraPlanarStereo::ToConfig(m_cfg, m_cfg.refs.at(0), shape);
   }
- 
-  OBSquarePlanarStereo::Config OBSquarePlanarStereo::GetConfig(unsigned long start, 
+
+  OBSquarePlanarStereo::Config OBSquarePlanarStereo::GetConfig(unsigned long start,
       OBStereo::Shape shape) const
   {
     if (!IsValid())
@@ -135,7 +135,7 @@ namespace OpenBabel {
     if (!IsValid() || !other.IsValid())
       return false;
 
-    Config u = OBTetraPlanarStereo::ToConfig(other.GetConfig(), 
+    Config u = OBTetraPlanarStereo::ToConfig(other.GetConfig(),
         m_cfg.refs.at(0), OBStereo::ShapeU);
     unsigned long a1 = u.refs.at(0);
     unsigned long b1 = u.refs.at(2);
@@ -154,7 +154,7 @@ namespace OpenBabel {
 
     return false;
   }
- 
+
   bool OBSquarePlanarStereo::IsTrans(unsigned long id1, unsigned long id2) const
   {
     return (GetTransRef(id1) == id2);
@@ -174,7 +174,7 @@ namespace OpenBabel {
 
     return false;
   }
- 
+
   unsigned long OBSquarePlanarStereo::GetTransRef(unsigned long id) const
   {
     if (m_cfg.refs.size() != 4)
@@ -212,16 +212,16 @@ namespace OpenBabel {
     }
 
     // id not found
-    return refs;  
+    return refs;
   }
- 
+
   OBGenericData* OBSquarePlanarStereo::Clone(OBBase *mol) const
   {
     OBSquarePlanarStereo *data = new OBSquarePlanarStereo(static_cast<OBMol*>(mol));
     data->SetConfig(m_cfg);
     return data;
   }
-    
+
 } // namespace OpenBabel
 
 namespace std {
@@ -230,7 +230,7 @@ namespace std {
   {
     OpenBabel::OBSquarePlanarStereo::Config cfg = ct.GetConfig();
     out << "OBSquarePlanarStereo(center = " << cfg.center;
- 
+
     out << ", refs = ";
     for (OpenBabel::OBStereo::Refs::iterator i = cfg.refs.begin(); i != cfg.refs.end(); ++i)
       if (*i != OpenBabel::OBStereo::ImplicitRef)
@@ -249,7 +249,7 @@ namespace std {
         out << ", shape = 4)";
         break;
     }
-    
+
     return out;
   }
 
@@ -275,7 +275,7 @@ namespace std {
         out << ", shape = 4)";
         break;
     }
- 
+
     return out;
   }
 

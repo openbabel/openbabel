@@ -5,11 +5,11 @@ Copyright(C) 2010 by Geoffrey R. Hutchison
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -31,7 +31,7 @@ public:
   OpPartialCharge(const char* ID) : OBOp(ID, false) {
     OBConversion::RegisterOptionParam(ID, NULL, 1, OBConversion::GENOPTIONS);
   }
-  
+
   const char* Description(){ return "<method> Calculate partial charges using specified method"; }
 
   virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
@@ -53,7 +53,7 @@ bool OpPartialCharge::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, O
   _pChargeModel = OBChargeModel::FindType(OptionText);
   if(!_pChargeModel)
     {
-      obErrorLog.ThrowError(__FUNCTION__, 
+      obErrorLog.ThrowError(__FUNCTION__,
                             std::string("Unknown charge model ") + OptionText, obError, onceOnly);
       return false;
     }

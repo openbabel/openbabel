@@ -1,16 +1,16 @@
 /**********************************************************************
 data.h - Global data and resource file parsers.
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -38,7 +38,7 @@ namespace OpenBabel
 
   /** \class OBGlobalDataBase data.h <openbabel/data.h>
       \brief Base data table class, handles reading data files
-      
+
       Base data table class--reads ASCII data files in various formats
       -# Checks for the environment variable _envvar (defaults to "BABEL_DATADIR")
       - Tries the _subdir directory if defined (def. "data") and then the main directory
@@ -75,7 +75,7 @@ namespace OpenBabel
 
   /** \class OBElement data.h <openbabel/data.h>
       \brief Individual element data type
-  
+
       Stores a variety of data about an individual element.
       Used mainly by OBElementTable.
   **/
@@ -106,12 +106,12 @@ namespace OpenBabel
           @param blue    RGB value for a suggest visualization color (0 .. 1)
           @param name Full IUPAC name
       **/
-      OBElement(int num, const char *sym, double ARENeg, double rcov, 
+      OBElement(int num, const char *sym, double ARENeg, double rcov,
       		double rvdw, int maxbo, double mass, double elNeg, double ionize,
                 double elAffin, double red, double green, double blue,
                 std::string name) :
-        _num(num), _name(name), _Rcov(rcov), _Rvdw(rvdw), _mass(mass), 
-        _elNeg(elNeg), _ARENeg(ARENeg), _ionize(ionize), _elAffinity(elAffin), 
+        _num(num), _name(name), _Rcov(rcov), _Rvdw(rvdw), _mass(mass),
+        _elNeg(elNeg), _ARENeg(ARENeg), _ionize(ionize), _elAffinity(elAffin),
         _red(red), _green(green), _blue(blue),
         _maxbonds(maxbo)
         {
@@ -262,7 +262,7 @@ namespace OpenBabel
       std::string GetToType();
     };
 
-  /** \class OBResidueData data.h <openbabel/data.h> 
+  /** \class OBResidueData data.h <openbabel/data.h>
       \brief Table of common biomolecule residues (for PDB or other files).
 
       Can assign atom types and bond orders for arbitrary residues

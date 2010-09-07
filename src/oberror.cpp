@@ -1,16 +1,16 @@
 /**********************************************************************
 oberror.cpp - Handle error messages.
- 
+
 Copyright (C) 2002 by Stefan Kebekus
 Some portions Copyright (C) 2002-2006 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -32,8 +32,8 @@ namespace OpenBabel
 
   OBMessageHandler obErrorLog;
 
-  OBError::OBError( const string &method, 
-                    const string &errorMsg, 
+  OBError::OBError( const string &method,
+                    const string &errorMsg,
                     const string &explanation,
                     const string &possibleCause,
                     const string &suggestedRemedy,
@@ -152,20 +152,20 @@ namespace OpenBabel
   }
 
   OBMessageHandler::~OBMessageHandler()
-  { 
+  {
     StopErrorWrap();
 
     // free the internal filter streambuf
     if (_filterStreamBuf != NULL)
       delete _filterStreamBuf;
   }
-    
+
   void OBMessageHandler::ThrowError(OBError err, errorQualifier qualifier)
   {
     if (!_logging)
       return;
-  
-    //Output error message if level sufficiently high and, if onceOnly set, it has not been logged before 
+
+    //Output error message if level sufficiently high and, if onceOnly set, it has not been logged before
     if (err.GetLevel() <= _outputLevel &&
       (qualifier!=onceOnly || find(_messageList.begin(), _messageList.end(), err)==_messageList.end()))
     {
@@ -178,7 +178,7 @@ namespace OpenBabel
       _messageList.pop_front();
   }
 
-  void OBMessageHandler::ThrowError(const std::string &method, 
+  void OBMessageHandler::ThrowError(const std::string &method,
                                     const std::string &errorMsg,
                                     obMessageLevel level, errorQualifier qualifier)
   {
@@ -211,7 +211,7 @@ namespace OpenBabel
       return true; // already wrapped cerr  -- don't go into loops!
 
     _inWrapStreamBuf = cerr.rdbuf();
- 
+
     if (_filterStreamBuf == NULL)
       {
         _filterStreamBuf = new(obLogBuf);

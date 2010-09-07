@@ -1,15 +1,15 @@
 /**********************************************************************
 forcefieldmm2.cpp - MM2 force field.
- 
+
 Copyright (C) 2006-2007 by Tim Vandermeersch <tim.vandermeersch@gmail.com>
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -30,22 +30,22 @@ namespace OpenBabel
     OBAtom *a, *b;
     vector3 va, vb, ab, vf;
     double e, energy, l, l_ref, force, delta, delta2, f;
-    
+
     //sprintf(errbuf, "bondunit=%f  bond_cubic=%f  bond_quartic=%f\n", bondunit, bond_cubic, bond_quartic); // DEBUG
- 
+
     energy = 0.0;
     if (forces.size() < _mol.NumAtoms() + 1)
       forces.resize(_mol.NumAtoms()+1);
 
     FOR_BONDS_OF_MOL(bond, _mol) {
       a = bond->GetBeginAtom();
-      b = bond->GetEndAtom();	
+      b = bond->GetEndAtom();
       l = bond->GetLength();
 
       va = a->GetVector();
       vb = b->GetVector();
       ab = va - vb;
-      
+
       parameter = GetParameter(atoi(a->GetType()), atoi(b->GetType()), 0, 0, _ffbondparams);
       if (parameter == NULL) {
         obErrorLog.ThrowError(__FUNCTION__, "Could not find all bond parameters", obError);
@@ -72,16 +72,16 @@ namespace OpenBabel
 
     return energy;
   }
-  
+
   double OBForceFieldMM2::E_Angle()
   {
     OBFFParameter *parameter;
     OBAtom *a, *b, *c;
     vector3 va, vb, vc, ab, bc, vfa, vfc, normal;
     double e, energy, force, ang, ang_ref, delta, delta2, delta3, delta4, f, dotprod, rab, rab2, rab3, rbc, rbc2, rbc3, root, dotprod_abbc;
-    
+
     //sprintf(errbuf, "angleunit=%f  angle_sextic=%f\n", angleunit, angle_sextic); // DEBUG
- 
+
     energy = 0.0;
     if (forces.size() < _mol.NumAtoms() + 1)
       forces.resize(_mol.NumAtoms()+1);
@@ -97,16 +97,16 @@ namespace OpenBabel
       vc = c->GetVector();
       ab = va - vb;
       bc = vb - vc;
- 
+
       parameter = GetParameter(atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), 0, _ffangleparams);
       if (parameter == NULL) {
         obErrorLog.ThrowError(__FUNCTION__, "Could not find all angle parameters", obError);
         return 0.0;
       }
-      
+
       ang_ref = parameter->_dpar[0];
       force   = parameter->_dpar[1];
-	
+
       delta = ang - ang_ref;
       delta2 = delta * delta;
       delta3 = delta2 * delta;
@@ -131,16 +131,16 @@ namespace OpenBabel
       forces[b->GetIdx()] += (vfa + vfc);
       forces[c->GetIdx()] -= vfc;
 
-      //sprintf(errbuf, "%sforce=%f  ang_ref=%f  ang=%f  delta=%f  E=%f   (%d-%d-%d)  (( vfa(%f, %f, %f)  vfc(%f, %f, %f) dotprod=%f))\n", 
+      //sprintf(errbuf, "%sforce=%f  ang_ref=%f  ang=%f  delta=%f  E=%f   (%d-%d-%d)  (( vfa(%f, %f, %f)  vfc(%f, %f, %f) dotprod=%f))\n",
       //  errbuf, force, ang_ref, ang, delta, e, a->GetIdx(), b->GetIdx(), c->GetIdx(), vfa.x(), vfa.y(), vfa.z(), vfc.x(), vfc.z(), dotprod); // DEBUG
     }
     //sprintf(errbuf, "%sAngle bending: E=%f\n", errbuf, energy); // DEBUG
     //obErrorLog.ThrowError(__FUNCTION__, errbuf, obError); // DEBUG
-	
+
     return energy;
   }
- 
-  double OBForceFieldMM2::E_StrBnd() 
+
+  double OBForceFieldMM2::E_StrBnd()
   {
     OBFFParameter *parameter;
     OBAtom *a, *b, *c;
@@ -148,7 +148,7 @@ namespace OpenBabel
     double e, energy, force, ang, ang_ref, l1, l2, l_ref1, l_ref2, delta_a, delta_b1, delta_b2;
 
     //sprintf(errbuf, "stretchbendunit=%f\n", stretchbendunit); // DEBUG
- 
+
     energy = 0.0;
 
     FOR_ANGLES_OF_MOL(angle, _mol) {
@@ -167,16 +167,16 @@ namespace OpenBabel
         return 0.0;
       }
       force = parameter->_dpar[0];
-      
+
       parameter = GetParameter(atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), 0, _ffangleparams);
       ang_ref = parameter->_dpar[0];
-      
+
       parameter = GetParameter(atoi(b->GetType()), atoi(a->GetType()), 0, 0, _ffbondparams);
       l_ref1 = parameter->_dpar[0];
- 
+
       parameter = GetParameter(atoi(b->GetType()), atoi(c->GetType()), 0, 0, _ffbondparams);
       l_ref2 = parameter->_dpar[0];
- 
+
       delta_a = ang - ang_ref;
       delta_b1 = l1 - l_ref1;
       delta_b2 = l2 - l_ref2;
@@ -186,11 +186,11 @@ namespace OpenBabel
     }
     //sprintf(errbuf, "%sBend-stretch term: E=%f\n", errbuf, energy); // DEBUG
     //obErrorLog.ThrowError(__FUNCTION__, errbuf, obError); // DEBUG
-	
+
     return energy;
   }
- 
-  double OBForceFieldMM2::E_Torsion() 
+
+  double OBForceFieldMM2::E_Torsion()
   {
     OBFFParameter *parameter;
     OBAtom *a, *b, *c, *d;
@@ -198,7 +198,7 @@ namespace OpenBabel
     vector3 va, vb, vc, vd, ab, bc, cd, c1, c2, cross_bcc1, cross_bcc2, vfa, vfd;
 
     //sprintf(errbuf, "torsionunit=%f\n", torsionunit); // DEBUG
- 
+
     energy = 0.0;
 
     FOR_TORSIONS_OF_MOL(t, _mol) {
@@ -207,7 +207,7 @@ namespace OpenBabel
       c = _mol.GetAtom((*t)[2] + 1);
       d = _mol.GetAtom((*t)[3] + 1);
       tor = _mol.GetTorsion(a->GetIdx(), b->GetIdx(), c->GetIdx(), d->GetIdx());
- 
+
       va = a->GetVector();
       vb = b->GetVector();
       vc = c->GetVector();
@@ -215,17 +215,17 @@ namespace OpenBabel
       ab = va - vb;
       bc = vb - vc;
       cd = vc - vd;
- 
+
       parameter = GetParameter(atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), atoi(d->GetType()), _fftorsionparams);
       if (parameter == NULL) {
         obErrorLog.ThrowError(__FUNCTION__, "Could not find all torsion parameters", obError);
         return 0.0;
       }
-      
+
       v1 = parameter->_dpar[0];
       v2 = parameter->_dpar[1];
       v3 = parameter->_dpar[2];
-      
+
       cosine = cos(DEG_TO_RAD * tor);
       sine = sin(DEG_TO_RAD * tor);
       cosine2 = cos(DEG_TO_RAD * 2 * tor);
@@ -253,7 +253,7 @@ namespace OpenBabel
       root = sqrt(1.0 - dot_rc1rc2);
       //        if (dot(b2,c3) > 0.0)
       //        torsion *= -1.0;
- 
+
       vfa = rc12 * cross_bcc2 - dot_c1c2 * cross_bcc1;
       vfa = f * vfa / (rc13 * rc2 * root);
       vfd = rc22 * cross_bcc1 - dot_c1c2 * cross_bcc2;
@@ -273,12 +273,12 @@ namespace OpenBabel
 
   //
   //  a
-  //   \  
+  //   \
   //    b---d      plane = a-b-c
   //   /
   //  c
   //
-  double OBForceFieldMM2::E_OOP() 
+  double OBForceFieldMM2::E_OOP()
   {
     OBAtom *a, *b, *c, *d;
     double e, energy, force, angle, angle2;
@@ -303,7 +303,7 @@ namespace OpenBabel
             else
               d = (OBAtom*) &*nbr;
           }
-	  
+
           if (atoi(d->GetType()) == _ffoutplanebendparams[idx].b) {
             force = _ffoutplanebendparams[idx]._dpar[0];
             angle = Point2PlaneAngle(d->GetVector(), a->GetVector(), b->GetVector(), c->GetVector());
@@ -344,7 +344,7 @@ namespace OpenBabel
 
     return energy;
   }
- 
+
   double OBForceFieldMM2::E_VDW()
   {
     OBFFParameter *parameter;
@@ -354,7 +354,7 @@ namespace OpenBabel
     int idx;
 
     //sprintf(errbuf, "a_expterm=%f  b_expterm=%f c_expter=%fm\n", a_expterm, b_expterm, c_expterm); // DEBUG
- 
+
     energy = 0.0;
 
     FOR_PAIRS_OF_MOL(p, _mol) {
@@ -365,7 +365,7 @@ namespace OpenBabel
       va = a->GetVector();
       vb = b->GetVector();
       ab = vb - va;
- 
+
       parameter = GetParameter(atoi(a->GetType()), atoi(b->GetType()), 0, 0, _ffvdwprparams);
       if (parameter != NULL) {
         rr = parameter->_dpar[0];
@@ -377,7 +377,7 @@ namespace OpenBabel
         parameter = GetParameter(atoi(b->GetType()), 0, 0, 0, _ffvdwparams);
         rb = parameter->_dpar[0];
         epsb = parameter->_dpar[1];
-	
+
         //sprintf(errbuf, "%s\n\n     *** v1=%f  v2=%f  v3=%f\n\n", errbuf, v1, v2, v3); // DEBUG
         rr = ra + rb;
         eps = (epsa + epsb) / 2; // is this correct??
@@ -411,9 +411,9 @@ namespace OpenBabel
     double debye, electric, f;
     vector3 va, vb, vc, vd, ab, cd, q, r;
     int idx;
-    
+
     //sprintf(errbuf, "dielectric=%f\n", dielectric); // DEBUG
-	
+
     energy = 0.0;
     debye = 4.8033324;
     electric = 332.05382;
@@ -421,8 +421,8 @@ namespace OpenBabel
 
     FOR_BONDS_OF_MOL(bond, _mol) {
       a = bond->GetBeginAtom();
-      b = bond->GetEndAtom();	
-      
+      b = bond->GetEndAtom();
+
       idx = GetParameterIdx(atoi(a->GetType()), atoi(b->GetType()), 0, 0, _ffdipoleparams);
       if (idx > 0) {
         dipole = _ffdipoleparams[idx]._dpar[0];
@@ -434,8 +434,8 @@ namespace OpenBabel
             continue;
 
           c = bond2->GetBeginAtom();
-          d = bond2->GetEndAtom();	
-          
+          d = bond2->GetEndAtom();
+
           idx = GetParameterIdx(atoi(c->GetType()), atoi(d->GetType()), 0, 0, _ffdipoleparams);
           if (idx > 0) {
             dipole2 = _ffdipoleparams[idx]._dpar[0];
@@ -444,8 +444,8 @@ namespace OpenBabel
             //    dipole1      dipole2
             //       i-----------j           i = center of bond 1
             //        \ a1    a2/            j = center of bond 2
-            //         \       /             
-            //          \     /              
+            //         \       /
+            //          \     /
             //           \a3 /
             //            \ /
             //             k
@@ -454,7 +454,7 @@ namespace OpenBabel
             vb = b->GetVector();
             vc = c->GetVector();
             vd = d->GetVector();
-            
+
             ab = va - vb;
             cd = vc - vd;
             ri2 = dot(ab, ab);
@@ -467,7 +467,7 @@ namespace OpenBabel
             doti = dot(ab, r);
             dotk = dot(cd, r);
             fik = f * dipole * dipole2;
-	    
+
             e = fik * (dotp - 3.0 * doti * dotk/r2) / rirkr3;
             energy += e;
             //sprintf(errbuf, "%sdipole=%f  dipole2=%f  r=%f cos_a1=%f  cos_a2=%f  cos_a3=%f  E=%f\n", errbuf, dipole, dipole2, r, cos_a1, cos_a2, cos_a3, e); // DEBUG
@@ -506,33 +506,33 @@ namespace OpenBabel
       ParseParamFile();
       _init = true;
     }
-    
+
     _mol = mol;
     SetMM2Types();
     return true;
   }
- 
+
   bool OBForceFieldMM2::ParseParamFile()
   {
     vector<string> vs;
     char buffer[80];
     char filename[80];
     int currently_parsing;
-    
+
     OBFFParameter parameter;
-    
+
     // open data/mm2.prm
     ifstream ifs;
     if (OpenDatafile(ifs, "mm2.prm").length() == 0) {
       obErrorLog.ThrowError(__FUNCTION__, "Cannot open mm2.prm", obError);
       return false;
     }
-    
+
     // Set the locale for number parsing to avoid locale issues: PR#1785463
     obLocale.SetLocale();
-    
+
     while (ifs.getline(buffer, 80)) {
-	
+
       tokenize(vs, buffer);
 
       if (EQn(buffer, "bondunit", 8)) {
@@ -587,9 +587,9 @@ namespace OpenBabel
         dielectric = atof(vs[1].c_str());
         continue;
       }
-	
+
       parameter.clear();
-	
+
       if (EQn(buffer, "bond3", 5))
         continue;
       if (EQn(buffer, "bond4", 5))
@@ -617,7 +617,7 @@ namespace OpenBabel
         continue;
       }
       if (EQn(buffer, "strbnd", 6)) {
-        parameter.a = atoi(vs[1].c_str());	
+        parameter.a = atoi(vs[1].c_str());
         parameter._dpar.push_back(atof(vs[2].c_str()));
         _ffstretchbendparams.push_back(parameter);
         continue;
@@ -636,12 +636,12 @@ namespace OpenBabel
         continue;
       }
       if (EQn(buffer, "opbend", 6)) {
-        parameter.a = atoi(vs[1].c_str());	
-        parameter.b = atoi(vs[2].c_str());	
+        parameter.a = atoi(vs[1].c_str());
+        parameter.b = atoi(vs[2].c_str());
         parameter._dpar.push_back(atof(vs[3].c_str()));
         _ffoutplanebendparams.push_back(parameter);
         continue;
-      }	
+      }
       if (EQn(buffer, "vdwpr", 5)) {
         parameter.a = atoi(vs[1].c_str());
         parameter.b = atoi(vs[2].c_str());
@@ -649,14 +649,14 @@ namespace OpenBabel
         parameter._dpar.push_back(atof(vs[4].c_str()));
         _ffvdwprparams.push_back(parameter);
         continue;
-      }	
+      }
       if (EQn(buffer, "vdw", 3)) {
         parameter.a = atoi(vs[1].c_str());
         parameter._dpar.push_back(atof(vs[2].c_str()));
         parameter._dpar.push_back(atof(vs[3].c_str()));
         _ffvdwparams.push_back(parameter);
         continue;
-      }	
+      }
       if (EQn(buffer, "dipole", 6)) {
         parameter.a = atoi(vs[1].c_str());
         parameter.b = atoi(vs[2].c_str());
@@ -666,34 +666,34 @@ namespace OpenBabel
         continue;
       }
     }
-	
+
     if (ifs)
       ifs.close();
-    
+
     // return the locale to the original one
     obLocale.RestoreLocale();
- 
+
     return 0;
   }
-  
+
   bool OBForceFieldMM2::SetMM2Types()
   {
     string atomtype;
 
     ttab.SetFromType("INT");
     ttab.SetToType("MM2");
- 
+
     FOR_ATOMS_OF_MOL(atom, _mol) {
       ttab.Translate(atomtype, atom->GetType());
       atom->SetType(atomtype);
-    }  
+    }
     return true;
   }
-  
+
   double OBForceFieldMM2::Energy()
   {
     double energy;
-    
+
     energy = E_Bond();
     energy += E_Angle();
     energy += E_StrBnd();

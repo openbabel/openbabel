@@ -67,7 +67,7 @@ namespace OpenBabel
      */
 
     if (geomList.size()==0){
-      obErrorLog.ThrowError(__FUNCTION__, 
+      obErrorLog.ThrowError(__FUNCTION__,
                             "Problems reading a GAMESS-UK Input file: ReadGeometry got empty list",
                             obWarning);
       return false;
@@ -138,7 +138,7 @@ namespace OpenBabel
           factor=Rescale(tokens[1]);
           //cout << "Factor now " << factor << endl;
           */
-        
+
       } else if (line.compare(0, 3, "end")==0) {
         ReadMode=SKIP;
         //cout << "SKIP mode " << ReadMode << endl;
@@ -156,9 +156,9 @@ namespace OpenBabel
                                     obWarning);
               return (false);
             }
-          
+
         } // End ReadMode ZMATRIX
-        
+
         if (ReadMode==CARTESIAN) {
           OBAtom *atom = mol.NewAtom();
           if (! ReadLineCartesian(atom,tokens,factor) )
@@ -169,20 +169,20 @@ namespace OpenBabel
                                     obWarning);
               return (false);
             }
-        
+
         } // End ReadMode CARTESIAN
-        
-        
+
+
       } // End Test for first chars on line
     } // End loop over lines
-    
-    
+
+
     if (ContainsZmatrix)InternalToCartesian(vic,mol);
     mol.EndModify();
-    
+
     return true;
   } // End Read Geometry
-  
+
   bool GAMESSUKFormat::IsUnits(string text)
   {
     /* See if the supplied string specifies a unit */
@@ -200,13 +200,13 @@ namespace OpenBabel
   double GAMESSUKFormat::Rescale(string text)
   {
     /* Return the correct scale factor given a string identifying the units */
-    
+
     if (! IsUnits(text) ){
       errorMsg << "Problems reading GUK input - bad scale factor: " << text;
       obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
       return -1.0;
     }
-    
+
     if (text.compare(0, 4, "angs")==0) {
       return 1.0;
     } else if (text.compare(0, 4, "bohr")==0||text.compare(0, 4, "a.u.")==0
@@ -216,14 +216,14 @@ namespace OpenBabel
       return -1.0;
     }
   }
-  
+
   int GAMESSUKFormat::LabelToAtomicNumber(string label)
   {
     /*
      * Given a string with the label for an atom return the atomic number
      * As we are using the GetAtomicNum function case is not important
      */
-    
+
     // See if the first 2 characters give us a valid atomic #
     int Z=etab.GetAtomicNum(label.substr(0,2).c_str());
 
@@ -388,9 +388,9 @@ namespace OpenBabel
      * This takes an input stream that is positioned where the list of variables
      * starts and the reads the variables into the supplied map
      *
-     * This is different to ReadGeometry (which takes a vector of strings as input) because 
+     * This is different to ReadGeometry (which takes a vector of strings as input) because
      * currently the variables always need to be read after the geometry, so we need to save the
-     * geometry and then read the variables. However this means that we can parse the variables 
+     * geometry and then read the variables. However this means that we can parse the variables
      * directly into a map and don't need to keep a copy of the specifcation as strings.
      *
      * stopstr is a string that defines when we stop reading
@@ -918,10 +918,10 @@ namespace OpenBabel
               }
 
               // Skip 2 lines - should then be at the coordinates
-              ifs.getline(buffer, BUFF_SIZE) && 
+              ifs.getline(buffer, BUFF_SIZE) &&
                 ifs.getline(buffer, BUFF_SIZE);
 
-              // Read in the coordinates - we process them directly rather 
+              // Read in the coordinates - we process them directly rather
               // then use ReadGeometry as we probably should do...
               mol.BeginModify();
               while (ifs.good() && ifs.getline(buffer, BUFF_SIZE)){

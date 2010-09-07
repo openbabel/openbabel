@@ -27,12 +27,12 @@ public:
 		wxBoxSizer* buttonSizer = new wxBoxSizer(wxVERTICAL);
 		buttonSizer->Add(new wxButton(this, wxID_OK, wxT("OK")),0,wxALL,10);
 		buttonSizer->Add(new wxButton(this,wxID_CANCEL),0,wxALL,10);
-		
+
 		topSizer->Add(buttonSizer);
 		SetSizer(topSizer);
 		topSizer->Fit(this);
 		topSizer->SetSizeHints(this);
-		
+
 		unsigned i;
 		for(i=0;i<AllFormatsArray.GetCount();++i)
 		{
@@ -85,7 +85,7 @@ public:
 	void WriteConfig(wxConfig& config) //Called in OBGUIFrame::OnClose()
 	{
 		config.Write(_T("ActiveFormats"), ActiveFormatsString);
-	} 
+	}
 
 	bool SelectFormats() // Called in OBGUIFrame::OnSelectFormats
 	{

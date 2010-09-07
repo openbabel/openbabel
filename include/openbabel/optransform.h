@@ -1,14 +1,14 @@
 /**********************************************************************
 optransform.h: makes option to transform molecule as specified in a datafile
 Copyright (C) 2008 Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -23,7 +23,7 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
-  
+
   /** \class OpTransform optransform.h <openbabel/optransform.h>
       \brief Applies molecular transforms (OBChemTsfm class) read from a datafile
       \since version 2.2

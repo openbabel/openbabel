@@ -2,14 +2,14 @@
 dlhandler_win32.cpp - Dynamic loader for Win32 (handles file format DDLs)
 
 Copyright (C) 2004 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -49,7 +49,7 @@ bool DLHandler::getConvDirectory(string& convPath)
   #endif
   if(!handle)
     handle = GetModuleHandle("openbabel-2.dll");//CMake/VC++2008 build will use this.
-  if(!handle)   
+  if(!handle)
     handle = GetModuleHandle(NULL); // If all else fails try the exe file module
   if (!handle)
     return false;
@@ -87,13 +87,13 @@ int DLHandler :: findFiles (std::vector<std::string>& file_list,const std::strin
 int DLHandler :: findFiles (std::vector<std::string>& file_list,const std::string &pattern,const std::string &path)
 {
   vector<string> paths, vs;
-  
+
   if (!path.empty())
     paths.push_back(path);
- 
+
   if (paths.empty())
     paths.push_back("./"); // defaults to current directory
-  
+
   string currentPath;
   for (unsigned int i = 0; i < paths.size(); ++i)
   {

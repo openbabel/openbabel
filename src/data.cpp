@@ -1,16 +1,16 @@
 /**********************************************************************
 data.cpp - Global data and resource file parsers.
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2008 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -49,7 +49,7 @@ namespace OpenBabel
 
   /** \class OBElementTable data.h <openbabel/data.h>
       \brief Periodic Table of the Elements
- 
+
       Translating element data is a common task given that many file
       formats give either element symbol or atomic number information, but
       not both. The OBElementTable class facilitates conversion between
@@ -63,7 +63,7 @@ namespace OpenBabel
       cout << "The atomic number for Sulfur is " << etab.GetAtomicNum(16) << endl;
       cout << "The van der Waal radius for Nitrogen is " << etab.GetVdwRad(7);
       \endcode
- 
+
       Stored information in the OBElementTable includes elemental:
       - symbols
       - covalent radii
@@ -127,10 +127,10 @@ namespace OpenBabel
   }
 
   unsigned int OBElementTable::GetNumberOfElements()
-  { 
+  {
     if (!_init)
       Init();
-    
+
     return _element.size();
   }
 
@@ -201,7 +201,7 @@ namespace OpenBabel
 
     return(_element[atomicnum]->GetElectronAffinity());
   }
- 
+
   vector<double> OBElementTable::GetRGB(int atomicnum)
   {
     if (!_init)
@@ -209,7 +209,7 @@ namespace OpenBabel
 
     vector <double> colors;
     colors.reserve(3);
-    
+
     if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
       {
         colors.push_back(0.0);
@@ -224,7 +224,7 @@ namespace OpenBabel
 
     return (colors);
   }
- 
+
   string OBElementTable::GetName(int atomicnum)
   {
     if (!_init)
@@ -330,7 +330,7 @@ namespace OpenBabel
     for (i = _element.begin();i != _element.end();++i)
       if (strncasecmp(identifier,(*i)->GetName().c_str(),5) == 0)
         return((*i)->GetAtomicNum());
-      
+
     if (strcasecmp(identifier, "D") == 0 ||
         (strcasecmp(identifier, "Deuterium") == 0) )
       {
@@ -356,7 +356,7 @@ namespace OpenBabel
     obErrorLog.ThrowError(__FUNCTION__, buffer, obWarning);
     return(0);
   }
-  
+
   int OBElementTable::GetAtomicNum(string name, int &iso)
   {
     return GetAtomicNum(name.c_str(), iso);
@@ -425,7 +425,7 @@ namespace OpenBabel
 
   /** \class OBTypeTable data.h <openbabel/data.h>
       \brief Atom Type Translation Table
- 
+
       Molecular file formats frequently store information about atoms in an
       atom type field. Some formats store only the element for each atom,
       while others include hybridization and local environments, such as the
@@ -437,7 +437,7 @@ namespace OpenBabel
       extern OBTypeTable ttab in mol.h.  The following code demonstrates how
       to use the OBTypeTable class to translate the internal representation
       of atom types in an OBMol Internal to Sybyl Mol2 atom types.
- 
+
       \code
       ttab.SetFromType("INT");
       ttab.SetToType("SYB");
@@ -451,7 +451,7 @@ namespace OpenBabel
          cout << "atom number " << atom->GetIdx() << "has mol2 type " << dst << endl;
       }
       \endcode
- 
+
       Current atom types include (defined in the top line of the data file types.txt):
       - INT (Open Babel internal codes)
       - ATN (atomic numbers)
@@ -761,7 +761,7 @@ namespace OpenBabel
               }
             continue;
           }
-	
+
         r1 = a1->GetResidue();
         if (r1 == NULL) continue; // atoms may not have residues
         if (skipres.length() && r1->GetNumString() == skipres)
@@ -909,7 +909,7 @@ namespace OpenBabel
     // Check return value from OpenDatafile
     // Suggestion from Zhiguo Liu
     string fn_open = OpenDatafile(ifs, _filename, _envvar);
-     
+
     if (fn_open != "" && (ifs))
       {
         while(ifs.getline(charBuffer,BUFF_SIZE))
@@ -942,7 +942,7 @@ namespace OpenBabel
 
     // return the locale to the original one
     obLocale.RestoreLocale();
-    
+
     if (ifs)
       ifs.close();
 
@@ -953,7 +953,7 @@ namespace OpenBabel
         s += "' which may cause further errors.";
         obErrorLog.ThrowError(__FUNCTION__, "Cannot initialize database", obWarning);
       }
-      
+
   }
 
 } // end namespace OpenBabel

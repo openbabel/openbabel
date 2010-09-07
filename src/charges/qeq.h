@@ -2,14 +2,14 @@
 qeq.h - A OBChargeModel to handle QEq charges
 
 Copyright (C) 2010 by Jiahao Chen <jiahao@mit.edu>
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -32,7 +32,7 @@ GNU General Public License for more details.
 //// conversion factor from electron volt to Hartree
 const double eV = 3.67493245e-2;
 
-/// conversion factor from Angstrom to bohr 
+/// conversion factor from Angstrom to bohr
 const double Angstrom = 1./0.529177249;
 USING_PART_OF_NAMESPACE_EIGEN
 
@@ -50,7 +50,7 @@ public:
   QEqCharges(void) : OBChargeModel("fake ID", false){};
   QEqCharges(const char* ID) : OBChargeModel(ID, false){};
   const char* Description(){ return "Assign QEq (charge equilibration) partial charges (Rappe and Goddard, 1991)"; }
-  
+
   /// \return whether partial charges were successfully assigned to this molecule
   bool ComputeCharges(OBMol &mol);
 

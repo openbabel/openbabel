@@ -1,16 +1,16 @@
 /**********************************************************************
 obiter.cpp - STL-style iterators for Open Babel
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -31,10 +31,10 @@ namespace OpenBabel
   /** \class OBMolAtomIter obiter.h <openbabel/obiter.h>
 
       To facilitate iteration through all atoms in a molecule, without resorting
-      to atom indexes (which <strong>will</strong> change in the future), a 
+      to atom indexes (which <strong>will</strong> change in the future), a
       variety of iterator methods are provided.
 
-      This has been made significantly easier by a series of macros in the 
+      This has been made significantly easier by a series of macros in the
       obiter.h header file:
 
       \code
@@ -53,7 +53,7 @@ namespace OpenBabel
          // The variable a behaves like OBAtom* when used with -> and * but
          // but needs to be explicitly converted when appearing as a parameter
          // in a function call - use &*a
-  
+
          exactMass +=  a->GetExactMass();
       }
       \endcode
@@ -107,7 +107,7 @@ namespace OpenBabel
       \since version 2.1
 
       To facilitate iteration through all atoms in a molecule, without resorting
-      to atom indexes (which <strong>will</strong> change in the future), a 
+      to atom indexes (which <strong>will</strong> change in the future), a
       variety of iterator methods are provided.
 
       This class provides a depth-first search ordering of atoms. When one
@@ -221,7 +221,7 @@ namespace OpenBabel
       {
         vector<OBBond*>::iterator i;
         OBAtom *a;
-        
+
         for (a = _ptr->BeginNbrAtom(i); a; a = _ptr->NextNbrAtom(i))
           if (_notVisited[a->GetIdx() - 1])
             {
@@ -245,7 +245,7 @@ namespace OpenBabel
       \since version 2.1
 
       To facilitate iteration through all atoms in a molecule, without resorting
-      to atom indexes (which <strong>will</strong> change in the future), a 
+      to atom indexes (which <strong>will</strong> change in the future), a
       variety of iterator methods are provided.
 
       This class provides a breadth-first search ordering of atoms. When one
@@ -275,7 +275,7 @@ namespace OpenBabel
          // The variable a behaves like OBAtom* when used with -> and * but
          // but needs to be explicitly converted when appearing as a parameter
          // in a function call - use &*a
-  
+
       }
       \endcode
   **/
@@ -375,7 +375,7 @@ namespace OpenBabel
       {
         vector<OBBond*>::iterator i;
         OBAtom *a;
-        
+
         for (a = _ptr->BeginNbrAtom(i); a; a = _ptr->NextNbrAtom(i))
           if (_notVisited[a->GetIdx() - 1])
             {
@@ -394,12 +394,12 @@ namespace OpenBabel
     operator++();
     return tmp;
   }
-  
+
   int OBMolAtomBFSIter::CurrentDepth() const
   {
     if (_ptr == NULL)
       return 0;
-      
+
     return _depth[_ptr->GetIdx()];
   }
 
@@ -408,7 +408,7 @@ namespace OpenBabel
       \since version 2.3
 
       To facilitate iteration through all bonds in a molecule, without resorting
-      to bond indexes (which <strong>will</strong> change in the future), a 
+      to bond indexes (which <strong>will</strong> change in the future), a
       variety of iterator methods are provided.
 
       This class provides a breadth-first search ordering of bonds. When one
@@ -438,7 +438,7 @@ namespace OpenBabel
          // The variable b behaves like OBBond* when used with -> and * but
          // but needs to be explicitly converted when appearing as a parameter
          // in a function call - use &*a
-  
+
       }
       \endcode
   **/
@@ -482,7 +482,7 @@ namespace OpenBabel
 
     if (!_ptr) return;
     _notVisited.SetBitOff(_ptr->GetIdx());
-    
+
     // Set up storage for the depths
     _depth.resize(_parent->NumBonds(), 0);
     _depth[_ptr->GetIdx()] = 1;
@@ -575,12 +575,12 @@ namespace OpenBabel
     operator++();
     return tmp;
   }
-  
+
   int OBMolBondBFSIter::CurrentDepth() const
   {
     if (_ptr == NULL)
       return 0;
-      
+
     return _depth[_ptr->GetIdx()];
   }
 ///////////////////////////////////////////////////////////////////////
@@ -591,7 +591,7 @@ namespace OpenBabel
       to bond indexes (which may change in the future), a variety of
       iterators are provided.
 
-      This has been made significantly easier by a series of macros in the 
+      This has been made significantly easier by a series of macros in the
       obiter.h header file:
 
       \code
@@ -664,7 +664,7 @@ namespace OpenBabel
       to bond indexes (which may change in the future), a variety of
       iterator classes and methods are provided.
 
-      This has been made significantly easier by a series of macros in the 
+      This has been made significantly easier by a series of macros in the
       obiter.h header file:
 
       \code
@@ -739,7 +739,7 @@ namespace OpenBabel
       to bond indexes (which may change in the future) a variety of
       iterator classes and methods are provided.
 
-      This has been made significantly easier by a series of macros in the 
+      This has been made significantly easier by a series of macros in the
       obiter.h header file:
 
       \code
@@ -813,7 +813,7 @@ namespace OpenBabel
       to residue indexes (which may change in the future) a variety of
       iterator classes and methods are provided.
 
-      This has been made significantly easier by a series of macros in the 
+      This has been made significantly easier by a series of macros in the
       obiter.h header file:
 
       \code
@@ -832,7 +832,7 @@ namespace OpenBabel
          // but needs to be explicitly converted when appearing as a parameter
          // in a function call - use &*r
 
-         if (r->GetName() == resname && r->GetNum() == rnum) 
+         if (r->GetName() == resname && r->GetNum() == rnum)
          {
             // got a match, let's go to work
             ...
@@ -890,7 +890,7 @@ namespace OpenBabel
       to atom indexes (which may change in the future) a variety of
       iterator classes and methods are provided.
 
-      This has been made significantly easier by a series of macros in the 
+      This has been made significantly easier by a series of macros in the
       obiter.h header file:
 
       \code
@@ -910,7 +910,7 @@ namespace OpenBabel
          // but needs to be explicitly converted when appearing as a parameter
          // in a function call - use &*r
 
-         if (r->GetName() == resname && r->GetNum() == rnum) 
+         if (r->GetName() == resname && r->GetNum() == rnum)
          {
             FOR_ATOMS_OF_RESIDUE(a, &*r)
             {
@@ -1053,10 +1053,10 @@ namespace OpenBabel
       \since version 2.1
 
       To facilitate iteration through all angles in a molecule, without resorting
-      to atom indexes (which <strong>will</strong> change in the future), a 
+      to atom indexes (which <strong>will</strong> change in the future), a
       variety of iterator methods are provided.
 
-      This has been made significantly easier by a series of macros in the 
+      This has been made significantly easier by a series of macros in the
       obiter.h header file:
 
       \code
@@ -1071,13 +1071,13 @@ namespace OpenBabel
       OBMol mol;
       OBAtom *a, *b, *c;
       double ang;
-  
+
       FOR_ANGLES_OF_MOL(angle, mol)
       {
          // The variable a behaves like OBAngle* when used with -> and * but
          // but needs to be explicitly converted when appearing as a parameter
          // in a function call - use &*a
-    
+
          b = _mol.GetAtom((*angle)[0] + 1);
          a = _mol.GetAtom((*angle)[1] + 1);
          c = _mol.GetAtom((*angle)[2] + 1);
@@ -1091,7 +1091,7 @@ namespace OpenBabel
     mol->FindAngles();
     OBAngleData *ad = (OBAngleData *) mol->GetData(OBGenericDataType::AngleData);
     ad->FillAngleArray(_vangle);
-    
+
     _parent = mol;
     if (!_vangle.empty()) {
       _i = _vangle.begin();
@@ -1106,7 +1106,7 @@ namespace OpenBabel
     mol.FindAngles();
     OBAngleData *ad = (OBAngleData *) mol.GetData(OBGenericDataType::AngleData);
     ad->FillAngleArray(_vangle);
-    
+
     _parent = &mol;
     if (!_vangle.empty()) {
       _i = _vangle.begin();
@@ -1142,7 +1142,7 @@ namespace OpenBabel
 
     if (_i != _vangle.end())
       _angle = *_i;
- 
+
     return *this;
   }
 
@@ -1151,10 +1151,10 @@ namespace OpenBabel
       \since version 2.1
 
       To facilitate iteration through all torsions in a molecule, without resorting
-      to atom indexes (which <strong>will</strong> change in the future), a 
+      to atom indexes (which <strong>will</strong> change in the future), a
       variety of iterator methods are provided.
 
-      This has been made significantly easier by a series of macros in the 
+      This has been made significantly easier by a series of macros in the
       obiter.h header file:
 
       \code
@@ -1169,7 +1169,7 @@ namespace OpenBabel
       OBMol mol;
       OBAtom *a, *b, *c, *d;
       double tor;
-  
+
       FOR_TORSIONS_OF_MOL(t, mol)
       {
          // The variable a behaves like OBTorsion* when used with -> and * but
@@ -1240,7 +1240,7 @@ namespace OpenBabel
   OBMolTorsionIter& OBMolTorsionIter::operator++()
   {
     _i++;
-    
+
     if (_i != _vtorsion.end())
       _torsion = *_i;
 
@@ -1251,12 +1251,12 @@ namespace OpenBabel
 
       \since version 2.1.
 
-      To facilitate iteration through all pairs of atoms in a molecule, without 
+      To facilitate iteration through all pairs of atoms in a molecule, without
       resorting to bond indexes (which may change in the future), a variety of
       iterators are provided. These pairs of atoms are separated by 4 atoms
       or more (i.e., these are non-bonded interactions).
 
-      This has been made significantly easier by a series of macros in the 
+      This has been made significantly easier by a series of macros in the
       obiter.h header file:
 
       \code
@@ -1291,7 +1291,7 @@ namespace OpenBabel
 
     bool foundPair = false;
     OBAtom *a = _parent->BeginAtom(_i);
-    if (!a) 
+    if (!a)
       return;
     OBAtom *b = _parent->BeginAtom(_j);
     while (!foundPair) {
@@ -1322,7 +1322,7 @@ namespace OpenBabel
 
     bool foundPair = false;
     OBAtom *a = _parent->BeginAtom(_i);
-    if (!a) 
+    if (!a)
       return;
     OBAtom *b = _parent->BeginAtom(_j);
     while (!foundPair) {
@@ -1393,7 +1393,7 @@ namespace OpenBabel
 
     _pair.push_back(a->GetIdx());
     _pair.push_back(b->GetIdx());
- 
+
     return *this;
   }
 

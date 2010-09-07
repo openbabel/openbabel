@@ -1,16 +1,16 @@
 /**********************************************************************
 parsmart.h - Daylight SMARTS parser.
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -223,7 +223,7 @@ namespace OpenBabel
 		return (*this);
 	}
 
-    
+
     //! \name Initialization Methods
     //@{
     //! Parse the @p pattern SMARTS string.
@@ -307,7 +307,7 @@ namespace OpenBabel
     bool RestrictedMatch(OBMol &mol, std::vector<std::pair<int,int> > &pairs, bool single=false);
 
     bool RestrictedMatch(OBMol &mol, OBBitVec &bv, bool single=false);
-    //! \return the number of non-unique SMARTS matches 
+    //! \return the number of non-unique SMARTS matches
     //! To get the number of unique SMARTS matches, query GetUMapList()->size()
     unsigned int NumMatches() const
     {
@@ -333,9 +333,9 @@ namespace OpenBabel
 
     //! \return the entire list of unique matches for this pattern
     /**
-        A unique match is defined as one which does not cover the 
+        A unique match is defined as one which does not cover the
         identical atoms that a previous match has covered.
-        
+
         For instance, the pattern [OD1]~C~[OD1] describes a
         carboxylate group. This pattern will match both atom number
         permutations of the carboxylate, and if GetMapList() is called, both

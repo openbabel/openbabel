@@ -1,21 +1,21 @@
 /**********************************************************************
 Spectrophore.cpp - Spectrophore(TM) calculator
- 
+
 Copyright (C) 2005-2010 by Silicos NV
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
 
 The algorithm in this software has been covered by patent WO2009146735.
-However, Silicos NV and the inventors of the above mentioned patent assure 
+However, Silicos NV and the inventors of the above mentioned patent assure
 that no patent infringment claims will be issued against individuals or
-institutions that use this software, as is stipulated by the GNU General 
+institutions that use this software, as is stipulated by the GNU General
 Public License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -57,7 +57,7 @@ OBSpectrophore::OBSpectrophore(const OBSpectrophore& s)
 ,  _coor(NULL)
 {
    SetAccuracy(s.GetAccuracy());
-   SetStereo(s.GetStereo());   
+   SetStereo(s.GetStereo());
    SetNormalization(s.GetNormalization());
 }
 
@@ -124,7 +124,7 @@ OBSpectrophore::SetResolution(const double r)
 
 
 
-double 
+double
 OBSpectrophore::GetResolution(void) const
 {
     return _resolution;
@@ -132,11 +132,11 @@ OBSpectrophore::GetResolution(void) const
 
 
 
-void 
+void
 OBSpectrophore::SetAccuracy(const OBSpectrophore::AccuracyOption a)
 {
    _accuracy = a;
-    
+
     // Update the rotation list
     _rotationStepList.clear();
     switch (_accuracy)
@@ -229,7 +229,7 @@ OBSpectrophore::GetSpectrophore(OpenBabel::OBMol* mol)
       std::cerr << "OBSpectrophore::GetSpectrophore() error: not enough atoms in molecule" << std::endl;;
       return _spectro;
    }
-    
+
    // Coordinate and property arrays
    _oricoor = new double*[_nAtoms];
    _coor = new double*[_nAtoms];
@@ -244,27 +244,27 @@ OBSpectrophore::GetSpectrophore(OpenBabel::OBMol* mol)
       REF2[i] = new double[3];
       _property[i] = new double[N_PROPERTIES];
    }
-   
+
     // Atom radii and coordinates
    _radii = new double[_nAtoms];
    _getMoleculeData(mol);
-   
+
    // Atom properties
    _calculateProperties(mol);
-   
+
    // Shift molecule to its center of gravity and orient it in a standard way
    _orient();
-   
+
    // Calculate the first spectrum to initiate values
    unsigned int sphoreSize(N_PROPERTIES * _numberOfProbes);
    std::vector<double> ENERGY(sphoreSize);
    std::vector<double> SPHORE(sphoreSize);
-    
+
    // Properties
    _getBox(_oricoor);
    _getEnergies(_oricoor, &(ENERGY[0]));
    _initiateSpectrophore(&(ENERGY[0]), &(SPHORE[0]));
-    
+
    // Rotate
    double psi;
    double cos_psi;
@@ -275,11 +275,11 @@ OBSpectrophore::GetSpectrophore(OpenBabel::OBMol* mol)
    double phi;
    double cos_phi;
    double sin_phi;
-   
+
    for (unsigned int i = 0; i < _rotationStepList.size(); ++i)
    {
       int rotationStep(_rotationStepList[i]);
-      
+
       for (int iTheta = 0; iTheta < 180; iTheta += rotationStep)
       {
          theta = 0.017453292519943 * iTheta;
@@ -293,14 +293,14 @@ OBSpectrophore::GetSpectrophore(OpenBabel::OBMol* mol)
             cos_psi = cos(psi);
             sin_psi = sin(psi);
             _rotateZ(REF1, REF2, cos_psi, sin_psi);
-            
+
             for (int iPhi = 0; iPhi < 360; iPhi += rotationStep)
             {
                phi = 0.017453292519943 * iPhi;
                cos_phi = cos(phi);
                sin_phi = sin(phi);
                _rotateX(REF2, _coor, cos_phi, sin_phi);
-            
+
                // Calculate energies
                _getBox(_coor);
                _getEnergies(_coor, &(ENERGY[0]));
@@ -327,15 +327,15 @@ OBSpectrophore::GetSpectrophore(OpenBabel::OBMol* mol)
    }
    delete[] _radii;
    _radii = NULL;
-    
-    
+
+
    // Modify the actual sphore data
    _spectro.resize(sphoreSize);
    for (unsigned int i = 0; i < sphoreSize; ++i)
    {
       _spectro[i] = -100 * SPHORE[i];
    }
-   
+
    // Normalisation
    double mean[N_PROPERTIES];
    double std[N_PROPERTIES];
@@ -382,14 +382,14 @@ OBSpectrophore::GetSpectrophore(OpenBabel::OBMol* mol)
          }
       }
    }
-   
+
    // Return
    return _spectro;
 }
 
 
 
-void 
+void
 OBSpectrophore::_getEnergies(double** c, double* e)
 {
    double d;
@@ -405,7 +405,7 @@ OBSpectrophore::_getEnergies(double** c, double* e)
       {
          _boxPoint[boxPoint].v[prop] = 0.0;
       }
-      
+
       // Calculate squared distances between atoms and boxpoints
       for (unsigned int atom = 0; atom < _nAtoms; ++atom)
       {
@@ -413,7 +413,7 @@ OBSpectrophore::_getEnergies(double** c, double* e)
          y2 = _boxPoint[boxPoint].y - c[atom][1];
          z2 = _boxPoint[boxPoint].z - c[atom][2];
          d = sqrt((x2 * x2) + (y2 * y2) + (z2 * z2));
-      
+
          // Calculate the potential at each box point
          for (unsigned int prop = 0; prop < N_PROPERTIES; ++prop)
          {
@@ -421,7 +421,7 @@ OBSpectrophore::_getEnergies(double** c, double* e)
          }
       }
    }
-   
+
    // Reset to zero
    for (unsigned int i = 0; i < N_PROPERTIES * _numberOfProbes; ++i)
    {
@@ -445,7 +445,7 @@ OBSpectrophore::_getEnergies(double** c, double* e)
 
 
 
-void 
+void
 OBSpectrophore::_initiateSpectrophore(double* e, double* s)
 {
     for (unsigned int i = 0; i < N_PROPERTIES * _numberOfProbes; ++i)
@@ -456,7 +456,7 @@ OBSpectrophore::_initiateSpectrophore(double* e, double* s)
 
 
 
-void 
+void
 OBSpectrophore::_updateSpectrophore(double* ENERGY, double* SPHORE)
 {
     for (unsigned int i = 0; i < N_PROPERTIES * _numberOfProbes; ++i)
@@ -467,7 +467,7 @@ OBSpectrophore::_updateSpectrophore(double* ENERGY, double* SPHORE)
 
 
 
-void 
+void
 OBSpectrophore::_getMoleculeData(OpenBabel::OBMol* mol)
 {
    unsigned int a(0);
@@ -478,7 +478,7 @@ OBSpectrophore::_getMoleculeData(OpenBabel::OBMol* mol)
       _oricoor[a][0] = atom->GetX();
       _oricoor[a][1] = atom->GetY();
       _oricoor[a][2] = atom->GetZ();
-      
+
       // Radii
       n = (unsigned int) atom->GetAtomicNum();
       switch (n)
@@ -531,7 +531,7 @@ OBSpectrophore::_getMoleculeData(OpenBabel::OBMol* mol)
          case 26: // Fe
             _radii[a] = 1.10;
             break;
-         case 29: // Cu 
+         case 29: // Cu
             _radii[a] = 1.40;
             break;
          case 30: // Zn
@@ -546,14 +546,14 @@ OBSpectrophore::_getMoleculeData(OpenBabel::OBMol* mol)
          default:
             _radii[a] = 1.50;
       }
-     
+
       // Counter
       ++a;
    }
 }
 
 
-void 
+void
 OBSpectrophore::_getBox(double** c)
 {
    // Calculate molecular extends
@@ -581,7 +581,7 @@ OBSpectrophore::_getBox(double** c)
    double xh((xp + xm) / 2.0);
    double yh((yp + ym) / 2.0);
    double zh((zp + zm) / 2.0);
-   
+
    // Box points
    _boxPoint[0].x =  xh;
    _boxPoint[1].x =  xp;
@@ -595,7 +595,7 @@ OBSpectrophore::_getBox(double** c)
    _boxPoint[9].x =  xh;
    _boxPoint[10].x = xm;
    _boxPoint[11].x = xh;
-         
+
    _boxPoint[0].y =  ym;
    _boxPoint[1].y =  yh;
    _boxPoint[2].y =  yp;
@@ -608,7 +608,7 @@ OBSpectrophore::_getBox(double** c)
    _boxPoint[9].y =  ym;
    _boxPoint[10].y = yh;
    _boxPoint[11].y = yp;
-         
+
    _boxPoint[0].z =  zp;
    _boxPoint[1].z =  zp;
    _boxPoint[2].z =  zp;
@@ -625,7 +625,7 @@ OBSpectrophore::_getBox(double** c)
 
 
 
-void 
+void
 OBSpectrophore::_rotateX(double** oc, double** nc, const double c, const double s)
 {
     for (unsigned int i = 0; i < _nAtoms; ++i)
@@ -651,7 +651,7 @@ OBSpectrophore::_rotateY(double** oc, double** nc, const double c, const double 
 
 
 
-void 
+void
 OBSpectrophore::_rotateZ(double** oc, double** nc, const double c, const double s)
 {
     for (unsigned int i = 0; i < _nAtoms; ++i)
@@ -664,7 +664,7 @@ OBSpectrophore::_rotateZ(double** oc, double** nc, const double c, const double 
 
 
 
-void 
+void
 OBSpectrophore::_orient(void)
 {
     // Center molecule around its COG
@@ -701,7 +701,7 @@ OBSpectrophore::_orient(void)
             maxAtom = i;
         }
     }
-    
+
     // Rotate all atoms along z-axis
     double angle(-atan2(_oricoor[maxAtom][1], _oricoor[maxAtom][0]));
     double x;
@@ -713,7 +713,7 @@ OBSpectrophore::_orient(void)
         _oricoor[i][0] = x;
         _oricoor[i][1] = y;
     }
-    
+
     // Rotate all atoms along y-axis to place the maxAtom on z
     angle = -atan2(_oricoor[maxAtom][0], _oricoor[maxAtom][2]);
     double z;
@@ -1338,7 +1338,7 @@ OBSpectrophore::_setBox(void)
    _probe[39].value[9] = +1;
    _probe[39].value[10] = -1;
    _probe[39].value[11] = -1;
-   
+
    // Dodecapole - unique-stereo - probe 11
    _probe[40].value[0] = +1;
    _probe[40].value[1] = +1;
@@ -1460,7 +1460,7 @@ OBSpectrophore::_calculateProperties(OpenBabel::OBMol* mol)
    //
    // PROPERTY 1: ATOMIC PARTIAL CHARGES [0]
    //
-   
+
    // CHI and ETA
    unsigned int dim(_nAtoms + 1);
    std::vector<double> CHI(dim);
@@ -1569,7 +1569,7 @@ OBSpectrophore::_calculateProperties(OpenBabel::OBMol* mol)
 
       CHI[i] = -electronegativity;
       ETA[i][i] = 2.0 * hardness;
-        
+
       // Adjust the total molecular charge
       totalCharge += atom->GetFormalCharge();
 
@@ -1579,7 +1579,7 @@ OBSpectrophore::_calculateProperties(OpenBabel::OBMol* mol)
 
    // Complete CHI
    CHI[_nAtoms] = totalCharge;
- 
+
    // Complete ETA
    double d;
    for (unsigned int r = 0; r < _nAtoms; ++r)
@@ -1599,19 +1599,19 @@ OBSpectrophore::_calculateProperties(OpenBabel::OBMol* mol)
       ETA[_nAtoms][i] = +1.0;
    }
    ETA[_nAtoms][_nAtoms] = 0.0;
-   
+
    // Make ETA2 a copy of ETA
    for (unsigned int r(0); r < dim; ++r)
    {
-      for (unsigned int c(0); c < dim; ++c) 
+      for (unsigned int c(0); c < dim; ++c)
       {
          ETA2[r][c] = ETA[r][c];
       }
    }
-        
+
    // Solve the matrix equation
    _solveMatrix(ETA, &(CHI[0]), dim);    // CHI will contain the values
-    
+
    // Add values to property matrix
    for (unsigned int i = 0; i < _nAtoms; ++i)
    {
@@ -1622,14 +1622,14 @@ OBSpectrophore::_calculateProperties(OpenBabel::OBMol* mol)
    // Clean
    for (unsigned int i = 0; i < dim; ++i)
    {
-      delete[] ETA[i]; 
+      delete[] ETA[i];
       ETA[i] = NULL;
    }
    delete[] ETA;
    ETA = NULL;
 
 
-   
+
    //
    // PROPERTY 2: ATOMIC LIPOPHILICITY VALUES [1]
    //
@@ -1686,13 +1686,13 @@ OBSpectrophore::_calculateProperties(OpenBabel::OBMol* mol)
             _property[a][1] = -0.175;
             break;
         }
-        
+
         // Increment
         ++a;
     }
 
 
-   
+
    //
    // PROPERTY 3: ATOMIC SHAPE DEVIATIONS [2]
    //
@@ -1707,13 +1707,13 @@ OBSpectrophore::_calculateProperties(OpenBabel::OBMol* mol)
    for (unsigned int c(0); c < 3; ++c)
    {
       COG[c] = _coor[0][c];
-      for (unsigned int a(1); a < _nAtoms; ++a) 
+      for (unsigned int a(1); a < _nAtoms; ++a)
       {
          COG[c] += _coor[a][c];
       }
       COG[c] /= _nAtoms;
    }
-    
+
    // Shift molecules to COG and calculate individual distances
    std::vector<double> distance(_nAtoms);
    double averageDistance(0.0);
@@ -1736,7 +1736,7 @@ OBSpectrophore::_calculateProperties(OpenBabel::OBMol* mol)
       distance[a] -= averageDistance;
       distance[a] *= averageDistance;
    }
-    
+
    // Add property
    for (unsigned int a(0); a < _nAtoms; ++a)
    {
@@ -1744,7 +1744,7 @@ OBSpectrophore::_calculateProperties(OpenBabel::OBMol* mol)
    }
 
 
-   
+
    //
    // PROPERTY 4: ATOMIC ELECTROPHILICITY [3]
    //
@@ -1754,7 +1754,7 @@ OBSpectrophore::_calculateProperties(OpenBabel::OBMol* mol)
       CHI[i] = 1.0;
    }
    CHI[_nAtoms] = 0.0;
- 
+
    // Complete ETA2
    for (int i = 0; i < dim; ++i)
    {
@@ -1762,16 +1762,16 @@ OBSpectrophore::_calculateProperties(OpenBabel::OBMol* mol)
       ETA2[_nAtoms][i] = 1.0;
    }
    ETA2[_nAtoms][_nAtoms] = -1.0;
-   
+
    // Solve the matrix equation
    _solveMatrix(ETA2, &(CHI[0]), dim);    // CHI will contain the values
-    
+
    // Add values to property matrix
    for (unsigned int i = 0; i < _nAtoms; ++i)
    {
       _property[i][3] = CHI[i] * CHIeq2;
    }
-   
+
    // Clean
    for (unsigned int i = 0; i < dim; ++i)
    {
@@ -1780,7 +1780,7 @@ OBSpectrophore::_calculateProperties(OpenBabel::OBMol* mol)
    }
    delete[] ETA2;
    ETA2 = NULL;
-   
+
    //
    // Return
    //
@@ -1799,7 +1799,7 @@ OBSpectrophore::_solveMatrix(double** A, double* B, unsigned int dim)
 
 
 
-void 
+void
 OBSpectrophore::_luDecompose(double** A, std::vector<int>& I, unsigned int dim)
 {
    int i, j, k, kMax, iMax;
@@ -1813,7 +1813,7 @@ OBSpectrophore::_luDecompose(double** A, std::vector<int>& I, unsigned int dim)
       maxVal = 0.0;
       for (j = 0; j < dim; ++j)
       {
-         if ((dummy=fabs(A[i][j])) > maxVal) 
+         if ((dummy=fabs(A[i][j])) > maxVal)
          {
             maxVal = dummy;
          }
@@ -1880,7 +1880,7 @@ OBSpectrophore::_luDecompose(double** A, std::vector<int>& I, unsigned int dim)
 
 
 
-void 
+void
 OBSpectrophore::_luSolve(double** A, std::vector<int>& I, double* B, unsigned int dim)
 {
    int i, k;
@@ -1899,7 +1899,7 @@ OBSpectrophore::_luSolve(double** A, std::vector<int>& I, double* B, unsigned in
    // do the backsubstitution
    for (i = dim - 1; i >= 0; --i)
    {
-      B[i] /= A[i][i]; 
+      B[i] /= A[i][i];
       for (k = 0; k < i; ++k)
       {
          B[k] -= A[k][i] * B[i];
@@ -1911,13 +1911,13 @@ OBSpectrophore::_luSolve(double** A, std::vector<int>& I, double* B, unsigned in
 
 
 
-void 
+void
 OBSpectrophore::_swapRows(double** _pMatrix, unsigned int i, unsigned int j, unsigned int nCols)
 {
    double dummy;
    for (unsigned int k = 0; k < nCols; ++k)         // loop over all columns
    {
-      dummy = _pMatrix[i][k]; 
+      dummy = _pMatrix[i][k];
       _pMatrix[i][k] = _pMatrix[j][k];
       _pMatrix[j][k] = dummy;
    }
@@ -1926,7 +1926,7 @@ OBSpectrophore::_swapRows(double** _pMatrix, unsigned int i, unsigned int j, uns
 
 
 
-void 
+void
 OBSpectrophore::_swapRows(double* _pMatrix, unsigned int i, unsigned int j)
 {
    double dummy;

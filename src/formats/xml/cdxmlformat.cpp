@@ -1,14 +1,14 @@
 /**********************************************************************
 Copyright (C) 2006 by Geoff Hutchison
 Portions Copyright (C) 2010 by Joerg Kurt Wegner
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -38,12 +38,12 @@ public:
 	virtual const char* NamespaceURI()const{return "http://www.cambridgesoft.com/xml/cdxml.dtd";}
   virtual const char* Description()
   {
-    return 
+    return
       "ChemDraw CDXML format\n"
       "Minimal support of chemical structure information only.\n\n";
   }
 
-  virtual const char* GetMIMEType() 
+  virtual const char* GetMIMEType()
   { return "chemical/x-cdxml"; };
 
   virtual const char* SpecificationURL()
@@ -58,9 +58,9 @@ public:
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 	virtual bool DoElement(const string& name);
 	virtual bool EndElement(const string& name);
- 
+
 	// EndTag is used so that the stream buffer is is filled with the XML from
-	// complete objects, as far as possible. 
+	// complete objects, as far as possible.
 	virtual const char* EndTag(){ return "/fragment>"; };
 
     //atoms and bonds might have no content, so EndElement is not always called
@@ -84,7 +84,7 @@ ChemDrawXMLFormat theChemDrawXMLFormat;
 bool ChemDrawXMLFormat::DoElement(const string& name)
 {
   string buf;
-  if(name=="fragment") 
+  if(name=="fragment")
   {
     //This is the start of the molecule we are extracting and it will
     //be put into the OBMol* _pmol declared in the parent class.
@@ -94,7 +94,7 @@ bool ChemDrawXMLFormat::DoElement(const string& name)
 
     _pmol->SetDimension(2);
     _pmol->BeginModify();
-    
+
     buf = _pxmlConv->GetAttribute("id");
     if (buf.length())
     {
@@ -225,7 +225,7 @@ bool ChemDrawXMLFormat::EndElement(const string& name)
     // This alone will already store the "Formula" property in the molecule property block
     // The "Formula" is required for older ChemDraw generations allowing to match molecules to reaction properties
     string MolFormula=_pmol->GetFormula();
-    
+
     // additional adding of "Formula" property is not required, as described above
     //OBPairData *dp = new OBPairData;
     //dp->SetAttribute("MolecularFormula");
@@ -235,7 +235,7 @@ bool ChemDrawXMLFormat::EndElement(const string& name)
 
     // alternative is using the molecular title, but a test is needed for preventing overwriting given titles, aka molecule ID
     //_pmol->SetTitle(MolFormula);
-    
+
     atoms.clear();
     return false;//means stop parsing
   }
@@ -253,9 +253,9 @@ bool ChemDrawXMLFormat::EndElement(const string& name)
     //dp->SetOrigin(fileformatInput);
     //mol.SetData(dp);
   }*/
-  
+
   return true;
-}	
+}
 
 void ChemDrawXMLFormat::EnsureEndElement(void)
 {
@@ -321,7 +321,7 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     _scale = 30. / _scale;
     _offset = 0;
   }
-	
+
   xmlTextWriterStartElement(writer(), C_MOLECULE);
 
   OBAtom *patom;
@@ -367,7 +367,7 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   _offset += mol.NumAtoms ();
 
   xmlTextWriterEndElement(writer());//molecule
-  
+
   //TODO: Writing property block
 
   if(_pxmlConv->IsLast())

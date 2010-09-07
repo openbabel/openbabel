@@ -1,15 +1,15 @@
 /**********************************************************************
 text.h - Declaration and Implementation of OBText
- 
+
 Copyright (C) 2008 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -36,7 +36,7 @@ public:
 
   ///\return all the text
   std::string GetText()const { return txt; }
-  
+
   /**\return text from position \param pos up to, but not including,
   the line containing the next occurrence of "OPENBABEL_INSERT".
   \param pos is updated to the start of the next line.
@@ -44,7 +44,7 @@ public:
   the text up to the end of the file is returned and \param pos is set to 0.
   If "OPENBABEL_INSERT" is not found, and \param ToInsertOnly is true
   an empty string is return and \param pos is unchaged.
-  
+
   Inserting OpenBabel output into boilerplate text.
   Suppose you wanted to insert XML output from OB into into a template XML document
   using the babel interface
@@ -54,7 +54,7 @@ public:
   and still be well-formed XML.
   The template file would be read by TextFormat and passed to the output as an OBText object.
   This could be processed in the output format's WriteChemObject() or WriteMolecule()
-  in the following way (see cmlreactformat.cpp)  
+  in the following way (see cmlreactformat.cpp)
   <code>
       OBText* ptext = dynamic_cast<OBText*>(pOb);
       if(ptext) {
@@ -62,7 +62,7 @@ public:
         *pConv->GetOutStream() << ptext->GetText(pos); //Output text up to insertion point
         _text = ptext->GetText(pos); //Save text after insertion point to be output at the end
       }
-  </code> 
+  </code>
   **/
   std::string GetText(std::string::size_type& pos, bool ToInsertOnly=false) const
   {

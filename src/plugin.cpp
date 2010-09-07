@@ -1,15 +1,15 @@
 /**********************************************************************
 plugin.cpp - facilitates construction of plugin classes
- 
+
 Copyright (C) 2007 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -49,7 +49,7 @@ OBPlugin* OBPlugin::GetPlugin(const char* Type, const char* ID)
 {
   if(Type!=NULL)
     return BaseFindType(GetTypeMap(Type), ID);
-  
+
   //When Type==NULL, search all types for matching ID and stop when found
   PluginMapType::iterator itr;
   for(itr=PluginMap().begin();itr!= PluginMap().end();++itr)
@@ -156,12 +156,12 @@ bool OBPlugin::Display(string& txt, const char* param, const char* ID)
 
  There are two levels of plugin. The top layer (at the time of writing) are:
   formats descriptors fingerprints forcefields charges ops loaders
- but additional types can be added without disturbing the main API. At runtime 
+ but additional types can be added without disturbing the main API. At runtime
    babel -L
  will list the top level of plugins. They typically are abstract classes with
  virtual functions that define an interface for that type. Classes derived
  from these are the second layer of plugins, and can be listed at runtime like,
- for instance: 
+ for instance:
    babel -L formats cml
  where formats is the top level of plugin and cml is the id of a derived class
  of this type.
@@ -183,7 +183,7 @@ bool OBPlugin::Display(string& txt, const char* param, const char* ID)
  Instances of some plugin classes can be constructed at startup from information
  in a text file and used in the same way as those defined in code. See OBDefine.
  This is appropriate for some classes that differ only by the datafile or
- SMARTS strings they use.   
+ SMARTS strings they use.
 */
 }//namespace
 

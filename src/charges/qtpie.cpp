@@ -2,14 +2,14 @@
 qtpie.cpp - A OBChargeModel to handle QTPIE charges
 
 Copyright (C) 2010 by Jiahao Chen <jiahao@mit.edu>
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -40,7 +40,7 @@ QTPIECharges theQTPIECharges("qtpie"); //Global instance
   {
     vector<string> vs;
     char buffer[BUFF_SIZE];
-    
+
     // open data/qeq.txt
     ifstream ifs;
     if (OpenDatafile(ifs, "qeq.txt").length() == 0) {
@@ -133,7 +133,7 @@ QTPIECharges theQTPIECharges("qtpie"); //Global instance
     double Z = (double)(mol.GetTotalCharge());
 
     if (Z != 0.) obErrorLog.ThrowError(__FUNCTION__, "Warning, total charge on molecule is not zero. QTPIE routine may give nonsense.", obWarning);
-    
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Now populate integrals
@@ -186,7 +186,7 @@ QTPIECharges theQTPIECharges("qtpie"); //Global instance
 	{
 	    j = atom2->GetIdx() - 1;
 	    if (i>j)
-	    { 
+	    {
 	        R = atom1->GetDistance(j+1)*Angstrom;
 	        if (R<OverlapMaxDistance)
 	        {
@@ -197,7 +197,7 @@ QTPIECharges theQTPIECharges("qtpie"); //Global instance
 	    }
 	}
     }
-    
+
     // Calculate normalization factors
     VectorXd OvNorm(N);
     for (i=0; i<N; i++) OvNorm[i] = 1.0 / (1.0 + Overlap.row(i).sum());
@@ -215,10 +215,10 @@ QTPIECharges theQTPIECharges("qtpie"); //Global instance
 		if (ThisOverlap > OverlapThreshold)
 		       ThisVoltage -= PotentialDiff * Norm* ThisOverlap;
 	}
-    	
+
 	Voltage[i] = ThisVoltage;
     }
-    
+
     Voltage[N] = Z;
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -279,7 +279,7 @@ bool QTPIECharges::solver(MatrixXd A, VectorXd b, VectorXd &x, const double Norm
 	// using a LU factorization
 	bool SolverOK = A.lu().solve(b, &x);
 	//bool SolverOK = A.svd().solve(b, &x);
-	
+
 	VectorXd resid = A*x - b;
 	double resnorm = resid.norm();
 	if (IsNan(resnorm) || resnorm > NormThreshold || !SolverOK)
@@ -298,7 +298,7 @@ bool QTPIECharges::solver(MatrixXd A, VectorXd b, VectorXd &x, const double Norm
 		SolverOK = A.svd().solve(b, &x);
 		resid = A*x - b;
 		resnorm = resid.norm();
-		
+
 		if (IsNan(resnorm) || !SolverOK)
 		{
 			obErrorLog.ThrowError(__FUNCTION__, "SVD solver returned an error. Charges may not be reliable!", obError);

@@ -1,15 +1,15 @@
 /**********************************************************************
 plugin.h - facilitates construction of plugin classes
- 
+
 Copyright (C) 2007 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -52,7 +52,7 @@ class OBERROR OBPlugin
 {
 public:
 
-  //Maps of thistype are used to store 
+  //Maps of thistype are used to store
   // (a)a list of the plugin types in OBPlugin, and
   // (b)a list of the sub-types in each type class derived from OBPlugin.
   typedef std::map<const char*, OBPlugin*, CharPtrLess> PluginMapType;
@@ -125,7 +125,7 @@ public:
 
 protected:
   ///\brief Returns a reference to the map of the plugin types.
-  /// Is a function rather than a static member variable to avoid initialization problems. 
+  /// Is a function rather than a static member variable to avoid initialization problems.
   static PluginMapType& PluginMap()
   {
     static PluginMapType m;
@@ -185,10 +185,10 @@ static BaseClass* FindType(const char* ID)\
    \brief Simplify 'plugin' classes to be discovered and/or loaded at runtime.
 
 The code in this file makes it easy to make 'plugin' classes. These classes are
-derived from a base class, like OBFingerprint. The derived classes 
-('sub-types' like fingerprint2) usually have a single instance. Plugin classes 
-are only discovered at runtime, so no existing code needs to be changed when 
-adding a new derived class. In some builds the new code can be added or removed 
+derived from a base class, like OBFingerprint. The derived classes
+('sub-types' like fingerprint2) usually have a single instance. Plugin classes
+are only discovered at runtime, so no existing code needs to be changed when
+adding a new derived class. In some builds the new code can be added or removed
 by just moving a DLL or so file. The plugin classes derived from any base class
 (including new ones) type can be listed from the commandline.
 
@@ -197,15 +197,15 @@ by just moving a DLL or so file. The plugin classes derived from any base class
 1) In the header file for YourBaseClass (which handles whatsits).
 Make sure to include the plugin.h header ,
 derive the class from OBPlugin
-and in its definition add 
-  the MAKE_PLUGIN macro 
+and in its definition add
+  the MAKE_PLUGIN macro
   and a function TypeID() containing a simple descriptor of the type
 \code
 #include <openbabel/plugin.h>
 class YourBaseClass : public OBPlugin
 {
   MAKE_PLUGIN(YourBaseClass)
-  
+
   const char* TypeID()
   { return "whatsits"; };
 
@@ -221,7 +221,7 @@ and give it a constructor which calls OBPlugin constructor as shown:
 class YourSubType1 : public YourBaseClass
 {
 public:
-  YourSubtype1(const char* ID, bool IsDefault=false) 
+  YourSubtype1(const char* ID, bool IsDefault=false)
     : YourBaseClass(ID, IsDefault){}
 
   virtual string Description()
@@ -243,7 +243,7 @@ YourSubType1 theType1("whatsit2",true);
 YourBaseClass* YourBaseClass::FindType(const char* ID);
 This returns the default type when ID is NULL or empty.
 
-To list the sub-types of any plugin class use the List which sends to cout 
+To list the sub-types of any plugin class use the List which sends to cout
 by default (or any other ostream if specified).
 \code
   OBPlugin::List("whatsits")
@@ -272,9 +272,9 @@ YourBaseClass* MakeNewInstance();
 MAKE_PLUGIN(YourBaseClass) inserts the following code into YourBaseClass:
 \code
 protected:
-  
+
   //The collection of sub-types is in a local static variable to avoid
-  //any difficulties with the order of initialization of static objects. 
+  //any difficulties with the order of initialization of static objects.
   static PluginMapType& Map()
   {
     static PluginMapType m;
@@ -286,7 +286,7 @@ protected:
   {
    return Map();
   }
-   
+
 public:
   static YourBaseClass*& Default()
   {
@@ -294,7 +294,7 @@ public:
     return d;
   }
 
-  //Constructor registers the sub-type 
+  //Constructor registers the sub-type
   YourBaseClass(const char* ID, bool IsDefault=false)
   {
     _id = ID;
@@ -307,7 +307,7 @@ public:
       PluginMap()[TypeID()] =this;
     }
   }
-   
+
   ///Returns the sub-type associated with the ID, or the default subtype if ID NULL or empty.
   static YourBaseClass* FindType(const char* ID)
   {

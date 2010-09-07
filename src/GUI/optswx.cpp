@@ -24,8 +24,8 @@ GNU General Public License for more details.
 /*
 The string returned by OBFormat::Description() gives information about the
 format and the commandline options that can be used with it. More general
-options have similar descriptions in for instance in 
-OBConversion::TargetClassDescription(). These strings are parsed in 
+options have similar descriptions in for instance in
+OBConversion::TargetClassDescription(). These strings are parsed in
 OBGUIFrame::OnChangeFormat and the following routine so that the GUI can
 present these options as checkboxes, editboxes, etc. The method was originally
 designed to use the existing descriptions as far as possible, so that the
@@ -33,18 +33,18 @@ information is extracted without having to add special codes, etc. It is
 fairly unobtrusive, but liable to breaking because of alterations which
 had more significance than the person making then was expecting.
 
-For format descriptions options for Read and Write are extracted with 
+For format descriptions options for Read and Write are extracted with
 separate calls to DynOptionswx::Construct(). The list of options starts with
-a line containing "Options". Those for reading have "Read" or "Input" 
+a line containing "Options". Those for reading have "Read" or "Input"
 preceding this on the same line and those for writing have "Write", "Output"
 or nothing preceding it on the same line. These are all case insensitive.
-The options themselves are one to a line on subsequent lines, ending with a 
+The options themselves are one to a line on subsequent lines, ending with a
 blank line or the end of the string.
 
-Each option has a name, which can be a single letter. Any punctuation 
+Each option has a name, which can be a single letter. Any punctuation
 preceding the name is ignored.
 
-If the first character after the name, other than space or tab, is a 
+If the first character after the name, other than space or tab, is a
 punctuation character, then the option will be displayed as an edit box,
 to be used to enter parameters.
 
@@ -62,7 +62,7 @@ displayed and the caption is displayed before it.
 
 If the text contains the word "default", the subsequent word is written into the
 editbox. It will have some punctuation characters stripped from its start and end,
-so that 
+so that
 q <day> Starting day, default <Sunday>
  will display as an edit box containing "Sunday" and caption "Starting day".
 
@@ -71,10 +71,10 @@ letter, then a checkbox is usually displayed.
   c  continuous output: no formatting\n
 
 If the text contains "default", the checkbox is displayed checked and the
-caption contains only the text up to this point. If the follow word is 
+caption contains only the text up to this point. If the follow word is
 "no", "not or "none" the checkbox is unchecked.
 
-A set of radio buttons are displayed, rather than a checkbox if "or" is the 
+A set of radio buttons are displayed, rather than a checkbox if "or" is the
 last word of the caption. Including "default" in the caption checks that button.
 For example
 1  output CML V1.0  or \n \
@@ -106,35 +106,35 @@ void DynOptionswx::Clear()
 bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int MultiCharFilter)
 {
   //Looks for "options" (case-insensitive)
-  //If StartText is not NULL it must precede "options" on the same line and 
+  //If StartText is not NULL it must precede "options" on the same line and
   //not be part of a longer word
-  const int MAXLEADINGSPACES = 3; //not an option line if more 
+  const int MAXLEADINGSPACES = 3; //not an option line if more
   const int ONE=1;
   const int FOUR=4;
   bool NextIsRadio=false;
   char* pNewStr = new char[strlen(OptionsText)+1];
-  strcpy(pNewStr,OptionsText); //Make a working copy 
+  strcpy(pNewStr,OptionsText); //Make a working copy
   char* p = pNewStr;
-  
+
   bool OptionsFound=false;
-  
+
   std::string qualifiedOptions;
   if(StartText)
-    qualifiedOptions = StartText; 
+    qualifiedOptions = StartText;
   qualifiedOptions += " options";
   p = strcasestr(p, qualifiedOptions.c_str());
   if(p)
   {
     OptionsFound=true;
-    p = strchr(p,'\n')+1; //options start on next line		
+    p = strchr(p,'\n')+1; //options start on next line
     while(p && p-1 && *p && *p!='\n') //loop for all options until blank line
     {
       int ProvideEditCtl=0;
       bool ProvideExtraCheckbox=false;
-      
+
       char* plinestart = p;
       while(*p && !isalnum(*(p++))); //skip space and punctuation
-      //Ignore lines which start with more than MAXLEADINGSPACES whitespace chars(tab is 1 char!)  
+      //Ignore lines which start with more than MAXLEADINGSPACES whitespace chars(tab is 1 char!)
       if(p - plinestart > MAXLEADINGSPACES)
       {
         p = strchr(p,'\n')+1;
@@ -152,7 +152,7 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
           p = lineend+1;
           continue;
         }
-      }      
+      }
 
       if(!(*p--)) break;
       wxString oname;
@@ -163,8 +163,8 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
       //MultiCharFilter == 0 Display all options
       //MultiCharFilter == 1 Display only single char options
       //MultiCharFilter == 2 Display only multi char options
-      if((MultiCharFilter==1 && oname.size()>1)  
-        || (MultiCharFilter==2 && oname.size()==1))  
+      if((MultiCharFilter==1 && oname.size()>1)
+        || (MultiCharFilter==2 && oname.size()==1))
       {
         p =strchr(p,'\n');
         if(p) ++p; //to next line
@@ -235,7 +235,7 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
         wxTextCtrl* pEd;
 
         //Make a large edit box on the next line if last char is of the caption is :
-        bool BigEdit =(pCaption[strlen(pCaption)-1] == ':'); 
+        bool BigEdit =(pCaption[strlen(pCaption)-1] == ':');
         if(BigEdit)
         {
           sizer->Add(pEdCaption,0,wxEXPAND|wxTOP,FOUR);
@@ -278,7 +278,7 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
       {
         // Checkbox, or radio button ("or" is the last word in the caption && no letters after " or")
         wxControl* pChk;
-        
+
         //First see if should be checked
         //If 'default appears in caption set the checkbox unless it is followed
         //by one of 'no' 'not' or 'none'
@@ -303,7 +303,7 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
           pChk = new wxCheckBox(parent,wxID_ANY,wxString(pCaption, wxConvUTF8));
           ((wxCheckBox*)pChk)->SetValue(SetChk);
         }
-      
+
         OptionMap.push_back(std::make_pair(oname,pChk));
         sizer->Add(pChk,0,wxEXPAND|wxTOP,FOUR);
       }
@@ -336,7 +336,7 @@ int DynOptionswx::SetOptions(OpenBabel::OBConversion& Conv, OpenBabel::OBConvers
 
     wxCheckBox* pChk = dynamic_cast<wxCheckBox*> (itr->second);
     if(pChk)
-    {	
+    {
       if(!pChk->IsChecked())
       {
         // if a checkbox is not checked, ignore the subsidiary editboxes also
@@ -365,7 +365,7 @@ int DynOptionswx::SetOptions(OpenBabel::OBConversion& Conv, OpenBabel::OBConvers
       }
     }
 
-    //Get the contents of subsequent editboxes 
+    //Get the contents of subsequent editboxes
     OMapType::iterator itr2 = itr;
     while(++itr2!= OptionMap.end())
     {
@@ -377,7 +377,7 @@ int DynOptionswx::SetOptions(OpenBabel::OBConversion& Conv, OpenBabel::OBConvers
     txt.Trim(true); txt.Trim(false);
     Conv.AddOption(oname.mb_str(), opttyp, txt.mb_str());
     ++count;
-        
+
   }
   return count;
 }
@@ -400,10 +400,10 @@ char* DynOptionswx::strcasestr(const char* haystack, const char* needle)
       for (hc = h + 1, nc = n + 1; *hc && *nc; hc++, nc++)
         if (tolower(*hc) != tolower(*nc))
           break;
-      
+
       if (!*nc)
         return (char*) h;
-    }		
+    }
     h++;
   }
   return NULL;

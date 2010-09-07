@@ -2,11 +2,11 @@
 Copyright (C) 2000 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -83,7 +83,7 @@ namespace OpenBabel
     virtual const char* SpecificationURL()
     {return "http://openbabel.sourceforge.net/wiki/XYZ";}; //optional
 
-    virtual const char* GetMIMEType() 
+    virtual const char* GetMIMEType()
     { return "chemical/x-xyz"; };
 
     //*** This section identical for most OBMol conversions ***
@@ -165,7 +165,7 @@ namespace OpenBabel
           {
             errorMsg << "Problems reading an XYZ file: "
                      << "Could not read line #" << i+2 << ", file error." << endl
-                     << " According to line one, there should be " << natoms 
+                     << " According to line one, there should be " << natoms
                      << " atoms, and therefore " << natoms+2 << " lines in the file.";
 
             obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
@@ -252,13 +252,13 @@ namespace OpenBabel
           if (decimal !=string::npos) { // period found
             double charge = strtod((char*)vs[4].c_str(),&endptr);
             if (endptr != (char*)vs[4].c_str())
-              atom->SetPartialCharge(charge);              
+              atom->SetPartialCharge(charge);
           }
         } // attempt to parse charges
       }
 
     // clean out any remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() && 
+    while(ifs.peek() != EOF && ifs.good() &&
           (ifs.peek() == '\n' || ifs.peek() == '\r'))
       ifs.getline(buffer,BUFF_SIZE);
 

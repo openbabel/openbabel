@@ -2,7 +2,7 @@
   tetraplanar.h - OBTetraPlanarStereo
 
   Copyright (C) 2009 by Tim Vandermeersch
- 
+
   This file is part of the Open Babel project.
   For more information, see <http://openbabel.sourceforge.net/>
 
@@ -51,13 +51,13 @@ namespace OpenBabel {
    *
    * Based on which reference ids are on opposite sides (180°), it is possible
    * to divide these 24 combinations in three sets. For this it is also needed
-   * to make use of a shape to map the reference id indexes on the points in 
+   * to make use of a shape to map the reference id indexes on the points in
    * the plane. Without these shapes or a fixed meaning, these sequences have
    * no meaning. The use of these shapes (U, Z & 4) is illustrated in the figure
    * below:
    * @image html SPshapes.png
    *
-   * In the figure, it can be seen the OBStereo::ShapeU implies the 1st 
+   * In the figure, it can be seen the OBStereo::ShapeU implies the 1st
    * reference id in the sequence is opposite to the 3th and the 2nd is opposite
    * to the 4th. The same can be done for OBStereo::ShapeZ and OBStereo::Shape
    *
@@ -68,13 +68,13 @@ namespace OpenBabel {
    * 1-4, 2-3 : 1423, 1432, 2314, 2341, 3214, 3241, 4123, 4132
    * @endcode
    *
-   * Internally the reference ids are stored in a U shape. The OBTetraPlanarStereo::ToInternal() 
+   * Internally the reference ids are stored in a U shape. The OBTetraPlanarStereo::ToInternal()
    * and OBTetraPlanarStereo::ToShape() methods convert between the internally used U shape
-   * and the other shapes. 
+   * and the other shapes.
    *
    * Like all stereo classes, errors, warnings or info is reported using OBMessageHandler.
    *
-   * @note U shaped ordering can also be considered circular and is the only shape 
+   * @note U shaped ordering can also be considered circular and is the only shape
    * that can be rotated lexicographically.
    *
    * @since version 2.3
@@ -87,7 +87,7 @@ namespace OpenBabel {
       virtual ~OBTetraPlanarStereo();
 
       template <typename ConfigType>
-      static ConfigType ToConfig(const ConfigType &cfg, unsigned long start, 
+      static ConfigType ToConfig(const ConfigType &cfg, unsigned long start,
           OBStereo::Shape shape = OBStereo::ShapeU)
       {
         ConfigType result = cfg;
@@ -105,7 +105,7 @@ namespace OpenBabel {
             break;
         }
 
-    
+
         // since refs are U shaped we can rotate the refs lexicographically
         for (int i = 0; i < 4; ++i) {
           std::rotate(result.refs.begin(), result.refs.begin() + 1, result.refs.end());
@@ -113,7 +113,7 @@ namespace OpenBabel {
           if (result.refs.at(0) == start)
             break;
         }
- 
+
         // convert from U to desired U/Z/4
         // (don't change refs[0]!)
         switch (shape) {
@@ -126,24 +126,24 @@ namespace OpenBabel {
             OBStereo::Permutate(result.refs, 1, 2); // convert to 4 shape
             break;
         }
- 
+
         return result;
       }
       /**
-       * Convert a sequence of reference ids from U, Z or 4 shape to 
+       * Convert a sequence of reference ids from U, Z or 4 shape to
        * internal U shape.
        * @note this method does nothing if a U shape is given as input.
        */
-//      static std::vector<unsigned long> ToInternal(const std::vector<unsigned long> &refs, 
+//      static std::vector<unsigned long> ToInternal(const std::vector<unsigned long> &refs,
 ///          OBStereo::Shape shape);
       /**
-       * Convert a sequence of reference ids from internal U shape 
+       * Convert a sequence of reference ids from internal U shape
        * to U, Z or 4 shape.
        * @note this method does nothing if a U shape is given as input.
        */
- //     static std::vector<unsigned long> ToShape(const std::vector<unsigned long> &refs, 
+ //     static std::vector<unsigned long> ToShape(const std::vector<unsigned long> &refs,
 //          OBStereo::Shape shape);
-  
+
   };
 
 }

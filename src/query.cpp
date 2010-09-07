@@ -4,7 +4,7 @@
 using namespace std;
 
 namespace OpenBabel {
- 
+
   OBQuery* CompileMoleculeQuery(OBMol *mol, const OBBitVec &mask)
   {
     // set all atoms to 1 if the mask is empty
@@ -29,12 +29,12 @@ namespace OpenBabel {
       unsigned int endIndex = obbond->GetEndAtom()->GetIndex();
       if (!mask2.BitIsSet(beginIndex + 1) || !mask2.BitIsSet(endIndex + 1))
         continue;
- 
+
       query->AddBond(new OBQueryBond(query->GetAtoms()[indexes[beginIndex]], query->GetAtoms()[indexes[endIndex]],
             obbond->GetBondOrder(), obbond->IsAromatic()));
     }
 
-    return query;  
+    return query;
   }
 
   OBQuery* CompileSmilesQuery(const std::string &smiles, const OBBitVec &mask)
@@ -43,7 +43,7 @@ namespace OpenBabel {
     conv.SetInFormat("smi");
     OBMol mol;
     conv.ReadString(&mol, smiles);
-    return CompileMoleculeQuery(&mol, mask);  
+    return CompileMoleculeQuery(&mol, mask);
   }
 
 

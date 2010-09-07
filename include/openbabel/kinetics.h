@@ -1,13 +1,13 @@
 /**********************************************************************
 Copyright (C) 2005 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -32,7 +32,7 @@ const unsigned ThermoData = 55556;
    Used by chemkin format and cml reaction format
 **/
 
-   
+
 class OBRateData : public OBGenericData
 {
 protected:
@@ -46,7 +46,7 @@ public:
   enum reaction_type {ARRHENIUS=55555, LINDERMANN, TROE, SRI, THREEBODY};
   reaction_type ReactionType;
   OBRateData():OBGenericData("Rate data", RateData)
-  {	
+  {
     Rates[0]=Rates[1]=Rates[2]=0;
     LoRates[0]=LoRates[1]=LoRates[2]=0;
     TroeParams[0]=TroeParams[1]=TroeParams[2]=TroeParams[3]=0;
@@ -85,12 +85,12 @@ public:
     if(n<4)
       TroeParams[n] = val;
   }
-  
+
   void SetEfficiency(std::string id, double Eff)
   {
     Efficiencies[id] = Eff;
   }
-  
+
   double GetEfficiency(std::string id)
   {
     return Efficiencies[id]; //will be 0 if not found
@@ -121,14 +121,14 @@ public:
 /// \brief Thermodynamic data in old style NASA polynomial form for OBMol
 /**This is a venerable data format used to describe specific heats, enthalpies
    and entropies, particularly in the gas phase and at high temperatures.
-   There is a standard datafile with fixed format (for punched cards!) which 
+   There is a standard datafile with fixed format (for punched cards!) which
    can be read and written to this OBMol extension using the thermo format. It
    is also used in chemkin format and in cmlreact format
    For a brief description of the meaning of the coefficients see
    http://www.me.berkeley.edu/gri_mech/data/nasa_plnm.html
    The first 7 coefficients are for the high temperature range MidT to HiT;
    and the second 7 are for the low temperature range LoT to MidT
-   Note that there is a more modern NASA polynomial with more terms, which 
+   Note that there is a more modern NASA polynomial with more terms, which
    is not supported here.
 **/
 class OBNasaThermoData : public OBGenericData
@@ -140,7 +140,7 @@ protected:
 public:
   OBNasaThermoData(): LoT(300),MidT(1000),HiT(3000),phase('G')
   {	_type = ThermoData;	_attr = "Nasa thermo data";}
-  
+
   virtual OBGenericData* Clone(OBBase* parent) const{return new OBNasaThermoData(*this);}
 
   double GetCoeff(unsigned n) const
@@ -161,7 +161,7 @@ public:
   void SetHiT(double val){HiT=val;}
 
   char GetPhase() const {return phase;}
-  void SetPhase(char ph){phase=ph;} 
+  void SetPhase(char ph){phase=ph;}
 };
 
 } //namespace OpenBabel

@@ -1,16 +1,16 @@
 /**********************************************************************
 obutil.h - Various utility methods.
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -136,7 +136,7 @@ namespace OpenBabel
     //! \param incr The floating point resolution of the lookup table
     void Init(double max,double incr)
     {
-      // parameters are potentially unneeded, but let's do this until we can 
+      // parameters are potentially unneeded, but let's do this until we can
       // deprecate them
       _max = max * max;
       _incr = incr;
@@ -255,7 +255,7 @@ namespace OpenBabel
       T1 first;
       T2 second;
       T3 third;
-  
+
       /** Default constructor
        *	T1() and T2() and T3() force initialization for built in types
        **/

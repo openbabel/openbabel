@@ -1,15 +1,15 @@
 /**********************************************************************
 smartsfilters.cpp - Some descriptors which analyse molecule using SMARTS
- 
+
 Copyright (C) 2007 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -49,11 +49,11 @@ public:
     OBMol* pmol = dynamic_cast<OBMol*> (pOb);
     if(!pmol)
       return 0;
-      
+
     OBSmartsPattern sp;
     sp.Init(_smarts);
     sp.Match(*pmol);
-      return sp.GetUMapList().size();  
+      return sp.GetUMapList().size();
   }
    virtual SmartsDescriptor* MakeInstance(const std::vector<std::string>& textlines)
    {

@@ -1,16 +1,16 @@
 /**********************************************************************
 generic.h - Handle generic data classes. Custom data for atoms, bonds, etc.
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2010 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -50,7 +50,7 @@ namespace OpenBabel
     OBCommentData();
     OBCommentData(const OBCommentData&);
     virtual OBGenericData* Clone(OBBase* /*parent*/) const{return new OBCommentData(*this);}
-		
+
     OBCommentData& operator=(const OBCommentData &src);
 
     void          SetData(const std::string &data)
@@ -59,12 +59,12 @@ namespace OpenBabel
     {_data = d; Trim(_data);     }
     const std::string &GetData()              const
     {        return(_data);      }
-    virtual const std::string &GetValue()              const  
+    virtual const std::string &GetValue()              const
     {        return(_data);      }
   };
 
   //! \class OBExternalBond generic.h <openbabel/generic.h>
-  //! \brief Used to store information on an external bond 
+  //! \brief Used to store information on an external bond
   //! (e.g., SMILES fragments)
   class OBAPI OBExternalBond
   {
@@ -93,10 +93,10 @@ namespace OpenBabel
     std::vector<OBExternalBond> _vexbnd;
   public:
     OBExternalBondData();
-		
+
     //Copying is not used and too much work to set up
     virtual OBGenericData* Clone(OBBase* /*parent*/) const{return NULL;}
-    
+
     void SetData(OBAtom*,OBBond*,int);
     std::vector<OBExternalBond> *GetData()
       {
@@ -293,18 +293,18 @@ namespace OpenBabel
  class OBAPI OBUnitCell: public OBGenericData
   {
   public:
-    enum LatticeType { Undefined, 
-                       Triclinic, 
-                       Monoclinic, 
-                       Orthorhombic, 
-                       Tetragonal, 
-                       Rhombohedral /**< also called trigonal*/, 
-                       Hexagonal, 
+    enum LatticeType { Undefined,
+                       Triclinic,
+                       Monoclinic,
+                       Orthorhombic,
+                       Tetragonal,
+                       Rhombohedral /**< also called trigonal*/,
+                       Hexagonal,
                        Cubic};
 
 
   protected:
-    matrix3x3 _mOrtho;// Orthogonal matrix of column vectors 
+    matrix3x3 _mOrtho;// Orthogonal matrix of column vectors
     matrix3x3 _mOrient;// Orientation matrix
     vector3 _offset;
     std::string _spaceGroupName;
@@ -357,16 +357,16 @@ namespace OpenBabel
     //! Set the space group symbol for this unit cell.
     //! Does not create an OBSymmetryData entry or attempt to convert
     //!  between different symbol notations
-    void SetSpaceGroup(const std::string sg) { _spaceGroup = SpaceGroup::GetSpaceGroup (sg); 
+    void SetSpaceGroup(const std::string sg) { _spaceGroup = SpaceGroup::GetSpaceGroup (sg);
                                                _spaceGroupName = sg; }
-    
+
     //! Set the space group for this unit cell. Each spacegroup-symbol
     //! has a numeric equivalent which is easier to use to convert between
     //! notations.
     //! Does not create an OBSymmetryData entry or attempt to convert
     //!  between different symbol notations
     void SetSpaceGroup(const int sg) { _spaceGroup = SpaceGroup::GetSpaceGroup (sg); }
-    
+
     //! Set the Bravais lattice type for this unit cell
     void SetLatticeType(const LatticeType lt) { _lattice = lt; }
 
@@ -391,13 +391,13 @@ namespace OpenBabel
 
     //! \return the text representation of the space group for this unit cell
     const SpaceGroup* GetSpaceGroup() { return(_spaceGroup); }
-		
+
     //! \return the text representation of the space group for this unit cell
     const std::string GetSpaceGroupName() { return(_spaceGroupName); }
 
     //! \return lattice type (based on the @p spacegroup)
     LatticeType GetLatticeType( int spacegroup );
-    
+
     //! \return lattice type (based on angles and distances)
     LatticeType GetLatticeType();
 
@@ -437,16 +437,16 @@ namespace OpenBabel
     //! \see OBUnitCell::CartesianToFractional
     matrix3x3 GetFractionalMatrix();
 
-    //! Convenience function to convert fractional coordinates to 
+    //! Convenience function to convert fractional coordinates to
     //! cartesian coordinates. Returns
-    //! 
+    //!
     //! GetOrientationMatrix() * GetOrthoMatrix() * frac + GetOffset()
     //! \param frac Vector of fractional coordinates
     //! \return Cartesian coordinates
     vector3 FractionalToCartesian(vector3 frac);
-    //! Convenience function to convert cartesian coordinates to 
+    //! Convenience function to convert cartesian coordinates to
     //! fractional coordinates. Returns
-    //! 
+    //!
     //! GetFractionalMatrix() * GetOrientationMatrix().inverse() * (cart - GetOffset())
     //! \param cart Vector of cartesian coordinates
     //! \return Fractional coordinates
@@ -487,7 +487,7 @@ namespace OpenBabel
     std::vector< std::vector< vector3 > >    _vDisplace;
     //! Additional data (as strings)
     std::vector<std::string>                 _vData;
-    
+
   public:
     OBConformerData();
     OBConformerData(const OBConformerData &);
@@ -600,7 +600,7 @@ namespace OpenBabel
 
   //! \class OBTorsionData generic.h <openbabel/generic.h>
   //! \brief Used to hold torsions as generic data for OBMol.
-  //! 
+  //!
   //! Filled by OBMol::FindTorsions()
  class OBAPI OBTorsionData : public OBGenericData
   {
@@ -627,7 +627,7 @@ namespace OpenBabel
       {
         return _torsions;
       }
-      
+
     //! Gets the number of torsion structs
     //! \return integer count of the number of torsions
     size_t      GetSize() const
@@ -730,7 +730,7 @@ namespace OpenBabel
   };
 
   enum atomreftype{
-    output,     //!< 
+    output,     //!<
     input,      //!<
     calcvolume  //!<
   }; // sets which atom4ref is accessed by OBChiralData
@@ -793,13 +793,13 @@ namespace OpenBabel
       _serialMap = cp._serialMap;
     }
     //! Member variables contain OBAtom pointers, so copying only valid within
-    //! same molecule, unless the code is modified, as in OBRotamerList 
+    //! same molecule, unless the code is modified, as in OBRotamerList
     virtual OBGenericData* Clone(OBBase* /*parent*/) const
     {return new OBSerialNums(*this);}
-      
+
     std::map<int,OBAtom*> &GetData()    { return _serialMap;    }
     void SetData(std::map<int,OBAtom*> &sm) { _serialMap = sm;  }
-      
+
   };
 
   //! \class OBVibrationData generic.h <openbabel/generic.h>
@@ -809,14 +809,14 @@ namespace OpenBabel
   protected:
     //! Normal modes in 1/sqrt(a.u.)
     std::vector< std::vector< vector3 > > _vLx;
-    
+
     //! Harmonic frequencies in inverse centimeters
     std::vector<double>  _vFrequencies;
-    
+
     //! Infrared absorption intensities in KM/Mole
     std::vector<double>  _vIntensities;
 
-    //! Raman activities  
+    //! Raman activities
     std::vector<double>  _vRamanActivities;
 
   public:
@@ -824,9 +824,9 @@ namespace OpenBabel
     virtual ~OBVibrationData() {}
     virtual OBGenericData* Clone(OBBase*) const
          {return new OBVibrationData(*this);}
-    
+
     OBVibrationData & operator=(const OBVibrationData &);
-    
+
     void SetData(const std::vector< std::vector< vector3 > > & lx,
                  const std::vector<double> & frequencies,
                  const std::vector<double> & intensities);
@@ -834,7 +834,7 @@ namespace OpenBabel
                  const std::vector<double> &,
                  const std::vector<double> &,
                  const std::vector<double> &);
-    
+
     std::vector< std::vector< vector3 > > GetLx() const
       { return this->_vLx; }
     std::vector<double> GetFrequencies() const
@@ -854,10 +854,10 @@ namespace OpenBabel
   protected:
     //! Fermi energy (eV) as shown in _vEnergies
     double _fermi;
-    
+
     //! Energy levels (eV)
     std::vector<double>  _vEnergies;
-    
+
     //! Density of corresponding energy level (number of states / unit cell)
     std::vector<double>  _vDensities;
 
@@ -869,14 +869,14 @@ namespace OpenBabel
     virtual ~OBDOSData() {}
     virtual OBGenericData* Clone(OBBase*) const
          {return new OBDOSData(*this);}
-    
+
     OBDOSData & operator=(const OBDOSData &);
-    
+
     void SetData(double,
                  const std::vector<double> &,
                  const std::vector<double> &,
                  const std::vector<double> &);
-    
+
     double GetFermiEnergy() const
       { return this->_fermi; }
     std::vector<double> GetEnergies() const
@@ -916,7 +916,7 @@ namespace OpenBabel
     virtual ~OBOrbitalData() {}
     virtual OBGenericData* Clone(OBBase*) const
          {return new OBOrbitalData(*this);}
-    
+
     OBOrbitalData & operator=(const OBOrbitalData &);
 
     void SetAlphaOrbitals(std::vector<OBOrbital> orbitalList)
@@ -929,7 +929,7 @@ namespace OpenBabel
     { _openShell = openShell; }
 
     bool IsOpenShell() { return _openShell; }
-    
+
     unsigned int GetAlphaHOMO() { return _alphaHOMO; }
     unsigned int GetBetaHOMO() { return _betaHOMO; }
     std::vector<OBOrbital> GetAlphaOrbitals() { return _alphaOrbitals; }
@@ -958,7 +958,7 @@ namespace OpenBabel
   protected:
     //! Wavelengths (nm)
     std::vector<double>  _vWavelengths;
-    
+
     //! Oscillator strengths
     std::vector<double>  _vForces;
 
@@ -976,9 +976,9 @@ namespace OpenBabel
     virtual ~OBElectronicTransitionData() {}
     virtual OBGenericData* Clone(OBBase*) const
          {return new OBElectronicTransitionData(*this);}
-    
+
     OBElectronicTransitionData & operator=(const OBElectronicTransitionData &);
-    
+
     void SetData(const std::vector<double> & wavelengths,
                  const std::vector<double> & forces);
 
@@ -1026,7 +1026,7 @@ namespace OpenBabel
    int                 SymNum;   //!< Rotational Symmetry Number
    RType               type;     //!< linear, symmetric or asymmetric top
  };
- 
+
   //! \class OBVectorData generic.h <openbabel/generic.h>
   //! \brief Used to hold a 3D vector item (e.g., a dipole moment)
   //! \since version 2.2
@@ -1043,11 +1043,11 @@ namespace OpenBabel
      { _vec = data; }
    vector3 GetData() const
      { return _vec; }
-   
+
  protected:
    vector3            _vec; //!< 3D vector to be stored
  };
- 
+
    //! \class OBMatrixData generic.h <openbabel/generic.h>
    //! \brief Used to hold a 3x3 matrix item (e.g., a quadrupole moment)
    //! \since version 2.2

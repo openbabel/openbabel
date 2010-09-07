@@ -1,15 +1,15 @@
 /**********************************************************************
 forcefieldmmff94.h - MMFF94
- 
+
 Copyright (C) 2006 by Tim Vandermeersch <tim.vandermeersch@gmail.com>
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -32,38 +32,38 @@ namespace OpenBabel
     public:
       int bt; // bondtype (BTIJ)
       double kb, r0, rab, delta;
-      
+
       template<bool> void Compute();
   };
-  
-  class OBFFAngleCalculationMMFF94 : public OBFFCalculation3 
+
+  class OBFFAngleCalculationMMFF94 : public OBFFCalculation3
   {
     public:
       int at; //angletype (ATIJK)
       bool linear;
       double ka, theta, theta0, delta;
- 
+
       template<bool> void Compute();
   };
-  
-  class OBFFStrBndCalculationMMFF94 : public OBFFCalculation3 
+
+  class OBFFStrBndCalculationMMFF94 : public OBFFCalculation3
   {
     public:
       int sbt; //strbndtype (SBTIJK)
       double kbaABC, kbaCBA, theta0, rab0, rbc0, delta_theta, delta_rab, delta_rbc;
       double theta, rab, rbc;
-      double force_ab_a[3], force_ab_b[3], force_bc_b[3], force_bc_c[3]; 
+      double force_ab_a[3], force_ab_b[3], force_bc_b[3], force_bc_c[3];
       double force_abc_a[3], force_abc_b[3], force_abc_c[3];
- 
+
       template<bool> void Compute();
   };
 
-  class OBFFTorsionCalculationMMFF94 : public OBFFCalculation4 
+  class OBFFTorsionCalculationMMFF94 : public OBFFCalculation4
   {
     public:
       int tt; //torsiontype (TTIJKL)
       double v1, v2, v3, tor, cosine;
-      
+
       template<bool> void Compute();
   };
 
@@ -71,7 +71,7 @@ namespace OpenBabel
   {
     public:
       double koop, angle;
-     
+
       template<bool> void Compute();
   };
 
@@ -184,18 +184,18 @@ namespace OpenBabel
       double GetRuleBondLength(OBAtom* a, OBAtom* b);
       //! return the bond length from mmffbond.par, if not found, one is calculated with a modified version of the Schomaker-Stevenson rule
       double GetBondLength(OBAtom* a, OBAtom* b);
-      
+
       //! Same as OBForceField::GetParameter, but takes (bond/angle/torsion) type in account and takes 0 as wildcart.
       OBFFParameter* GetParameter1Atom(int a, std::vector<OBFFParameter> &parameter);
       OBFFParameter* GetParameter2Atom(int a, int b, std::vector<OBFFParameter> &parameter);
       OBFFParameter* GetParameter3Atom(int a, int b, int c, std::vector<OBFFParameter> &parameter);
-      
+
       //! Same as OBForceField::GetParameter, but takes (bond/angle/torsion) type in account and takes 0 as wildcart.
       OBFFParameter* GetTypedParameter2Atom(int ffclass, int a, int b, std::vector<OBFFParameter> &parameter);
       OBFFParameter* GetTypedParameter3Atom(int ffclass, int a, int b, int c, std::vector<OBFFParameter> &parameter);
       OBFFParameter* GetTypedParameter4Atom(int ffclass, int a, int b, int c, int d, std::vector<OBFFParameter> &parameter);
-      
-      
+
+
       // OBFFParameter vectors to contain the parameters
       std::vector<OBFFParameter> _ffbondparams;
       std::vector<OBFFParameter> _ffbndkparams;
@@ -224,7 +224,7 @@ namespace OpenBabel
       std::vector<OBFFElectrostaticCalculationMMFF94> _electrostaticcalculations;
 
       bool mmff94s;
-      
+
     public:
       //! Constructor
       explicit OBForceFieldMMFF94(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault)
@@ -244,22 +244,22 @@ namespace OpenBabel
           _parFile = std::string("mmff94.ff");
 	}
       }
-      
+
       //! Destructor
       virtual ~OBForceFieldMMFF94();
-      
+
       //! Assignment
       OBForceFieldMMFF94 &operator = (OBForceFieldMMFF94 &);
-      
+
       //!Clone the current instance. May be desirable in multithreaded environments
       virtual OBForceFieldMMFF94* MakeNewInstance()
-      { 
-        return new OBForceFieldMMFF94(_id, false); 
+      {
+        return new OBForceFieldMMFF94(_id, false);
       }
 
       //! Get the description for this force field
       const char* Description()
-      { 
+      {
         if (mmff94s)
           return "MMFF94s force field.";
 	else
@@ -267,11 +267,11 @@ namespace OpenBabel
       }
 
       //! Get the unit in which the energy is expressed
-      std::string GetUnit() 
-      { 
-        return std::string("kcal/mol"); 
+      std::string GetUnit()
+      {
+        return std::string("kcal/mol");
       }
-      
+
       //! \return that analytical gradients are implemented for MMFF94
       bool HasAnalyticalGradients() { return true; }
 
@@ -279,52 +279,52 @@ namespace OpenBabel
       double Energy(bool gradients = true);
       //! Returns the bond stretching energy
       template<bool> double E_Bond();
-      double E_Bond(bool gradients = true) 
-      { 
-        return gradients ? E_Bond<true>() : E_Bond<false>(); 
+      double E_Bond(bool gradients = true)
+      {
+        return gradients ? E_Bond<true>() : E_Bond<false>();
       }
       //! Returns the angle bending energy
       template<bool> double E_Angle();
       double E_Angle(bool gradients = true)
-      { 
-        return gradients ? E_Angle<true>() : E_Angle<false>(); 
+      {
+        return gradients ? E_Angle<true>() : E_Angle<false>();
       }
       //! Returns the stretch-bend energy
       template<bool> double E_StrBnd();
       double E_StrBnd(bool gradients = true)
-      { 
-        return gradients ? E_StrBnd<true>() : E_StrBnd<false>(); 
+      {
+        return gradients ? E_StrBnd<true>() : E_StrBnd<false>();
       }
       //! Returns the torsional energy
       template<bool> double E_Torsion();
       double E_Torsion(bool gradients = true)
-      { 
-        return gradients ? E_Torsion<true>() : E_Torsion<false>(); 
+      {
+        return gradients ? E_Torsion<true>() : E_Torsion<false>();
       }
       //! Returns the out-of-plane bending energy
       template<bool> double E_OOP();
       double E_OOP(bool gradients = true)
-      { 
-        return gradients ? E_OOP<true>() : E_OOP<false>(); 
+      {
+        return gradients ? E_OOP<true>() : E_OOP<false>();
       }
       //! Returns the Van der Waals energy (Buckingham potential)
       template<bool> double E_VDW();
       double E_VDW(bool gradients = true)
-      { 
-        return gradients ? E_VDW<true>() : E_VDW<false>(); 
+      {
+        return gradients ? E_VDW<true>() : E_VDW<false>();
       }
       //! Returns the dipole-dipole interaction energy
       template<bool> double E_Electrostatic();
       double E_Electrostatic(bool gradients = true)
-      { 
-        return gradients ? E_Electrostatic<true>() : E_Electrostatic<false>(); 
+      {
+        return gradients ? E_Electrostatic<true>() : E_Electrostatic<false>();
       }
-      
+
       //! Validate MMFF94 using validation suite
       bool Validate();
       //! Compare and print the numerical and analytical gradients
       bool ValidateGradients();
- 
+
   }; // class OBForceFieldMM2
 
 }// namespace OpenBabel

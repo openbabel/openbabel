@@ -43,7 +43,7 @@ namespace OpenBabel {
 
     double           _max;
     double           _min;
-    
+
     bool             _unrestricted;
     int              _symmetries;
   };
@@ -52,16 +52,16 @@ namespace OpenBabel {
     \brief Store values for numeric grids such as orbitals or electrostatic potential
     \since version 2.2
     \sa OBFloatGrid
-    
+
     OBGridData facilitates attaching grids and cubes to molecular data. A "grid" is
     data representing some function f(x,y,z), such as a molecule's electrostatic potential
     or molecular orbitals. This need not be a "cube" even though this file format from Gaussian
     is frequently used. Axes need not be identical, and indeed do not need to be orthogonal.
-    
+
     Open Babel supports reading several types of grid file formats, including Gaussian cube,
     and OpenDX. The latter is notably used by the APBS program for numeric evaluation of molecular
     and protein electrostatic potential.
-    
+
     \code
     OBGridData *gd = new OBGridData;
     gd->SetAttribute("Example Grid"); // the title of the grid -- e.g., for user display
@@ -73,18 +73,18 @@ namespace OpenBabel {
     gd->SetLimits(origin, axes[0], axes[1], axes[2]);
     gd->SetUnit(OBGridData::ANGSTROM);
     gd->SetOrigin(fileformatInput); // i.e., is this data from a file or determined by Open Babel
-    
+
     for (int k = 0; k < voxels[2]; ++k)
       for (int j = 0; j < voxels[1]; ++j)
         for (int i = 0; i < voxels[0]; ++i)
           {
-            gd->SetValue(i, j, k, 
+            gd->SetValue(i, j, k,
                          grid[k*voxels[0]*voxels[1] + j*voxels[0] + i]);
           }
-    
+
     mol->SetData(gd);
     \endcode
-    
+
     \code
     if (mol->HasData(OBGenericDataType::GridData)) {
       vector<OBGenericData*> grids = mol->GetAllData(OBGenericDataType::GridData)
@@ -93,7 +93,7 @@ namespace OpenBabel {
         cout << grids[0]->GetAttribute();
     }
     \endcode
-    
+
   */
 
   OBGridData::OBGridData() : OBGenericData("GridData", OBGenericDataType::GridData),
@@ -146,12 +146,12 @@ namespace OpenBabel {
     ny = d->floatGrid.GetYdim();
     nz = d->floatGrid.GetZdim();
   }
-  
+
   int OBGridData::GetNumberOfPoints() const
   {
     return d->floatGrid.GetXdim() * d->floatGrid.GetYdim() * d->floatGrid.GetZdim();
   }
-  
+
   void OBGridData::GetNumberOfSteps( int steps[ 3 ] ) const
   {
     steps[0] = d->floatGrid.GetXdim() - 1;
@@ -203,7 +203,7 @@ namespace OpenBabel {
   {
     return d->floatGrid.GetMax();
   }
-  
+
   bool OBGridData::GetUnrestricted() const
   {
     return d->_unrestricted;
@@ -213,7 +213,7 @@ namespace OpenBabel {
   {
     return d->_symmetries;
   }
-  
+
   void OBGridData::SetUnrestricted( bool u )
   {
     d->_unrestricted = u;

@@ -7,11 +7,11 @@ Copyright (C) 2007,2008 by Andrei Gakh andrei.gakh@nnsa.doe.gov
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -24,7 +24,7 @@ GNU General Public License for more details.
 #include <openbabel/data.h>
 #include <openbabel/obconversion.h>
 
-#ifndef WIN32 
+#ifndef WIN32
 #include <cmath>
 #endif
 #ifdef __MINGW32__
@@ -50,8 +50,8 @@ typedef adjustedlist neigbourlist[NATOMSMAX];
 #define blDenominator 4.0   //Controls bond legth in bondEnlarge
 #define nRotBondsMax 20     //Determines no. rotating bonds in correctOverlapped
 
-    //Hydrogen valencies. Zero dummy element is the first 
-	const int hVal[NELEMMCDL] = {  
+    //Hydrogen valencies. Zero dummy element is the first
+	const int hVal[NELEMMCDL] = {
 	0,1,0,0,0,3,4,3,2,1,
 	0,0,0,3,4,3,2,1,0,0,
 	0,0,0,0,0,0,0,0,0,0,
@@ -155,7 +155,7 @@ const int metals[NMETALS] = {
   64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,87,88,89,90,91,
   92,93,94,95,96,97,98,99,100,101,102,103};
 
-//#define A B   ??? - 
+//#define A B   ??? -
 const int lightMetals[NLIGHT_METALS] = {
   3,4,11,12,13,19,20,21,22,23,24,25,26,27,28,29,30,31,37,38};
 const int heavyMetals[NHEAVY_METALS] = {
@@ -471,7 +471,7 @@ int TSingleAtom::encoder() {
 };
 
 int TSingleAtom::chargeConversion() {
-  
+
  //  3 - if radical label present.
  //  2 - if charge <0
  //  1 - if charge >0
@@ -483,12 +483,12 @@ int TSingleAtom::chargeConversion() {
 };
 
 int TSingleAtom::valencyConversion() {
-  
+
   //for atom's number ATN in array ATOM returns some connected with valency value:
   // =2-Valence of ATN is less, then usual
   // =1-Valence of ATN is more, then usual
   // =0-usual valency
-   
+
 
   int k1,k2;
   int result=0;
@@ -723,12 +723,12 @@ class TSimpleMolecule {
     void defineAtomConn();
     void defineBondConn(neigbourlist & bondConnection);
     void newB(neigbourlist & bk, int bnum, int anum, int & total, int * e, int * e1);
-    void singleVawe(neigbourlist & bk, std::vector<int> & alreadyDefined, 
+    void singleVawe(neigbourlist & bk, std::vector<int> & alreadyDefined,
       std::vector<int> & prevBond, std::vector<int> & prevAtom,
       int & nPrev, std::vector<int> & curBond, std::vector<int> & curAtom);
     void vaweBond(int bondN, neigbourlist & bk, int & ringSize, std::vector<int> & bondList);
     void allAboutCycles();
-    void redraw(const std::vector<int>listAtomClean, const std::vector<int>listBondClean, 
+    void redraw(const std::vector<int>listAtomClean, const std::vector<int>listBondClean,
     int & atomClean, int & bondClean, int spn, int sCHA1, int sCHB1, bool iOPT7);
     void clear();
     void readOBMol(OBMol * pmol);
@@ -763,8 +763,8 @@ class TSimpleMolecule {
     bool aromatic(int cycleSize, const std::vector<int> bondList, std::vector<int>& arom);
     void twoAtomUnitVector(int na1, int na2, double & xv, double & yv, const std::vector<int>atomDefine);
     void defC(int& currNumDef, int baseCycle, int atomClean, std::vector<int>& cycleDefine,
-      std::vector<int>& atomDefine, std::vector<int>& atomCycle, std::vector<int>& cycleAddress, 
-      std::vector<int>& cycleSize, std::vector<int>& dsATN, std::vector<int>& dsTP, 
+      std::vector<int>& atomDefine, std::vector<int>& atomCycle, std::vector<int>& cycleAddress,
+      std::vector<int>& cycleSize, std::vector<int>& dsATN, std::vector<int>& dsTP,
       std::vector<int>& dsSC, std::vector<int>& dsNA1, std::vector<int>& dsNA2);
     void defA(int& currNumDef, int atomClean, int sPN, int baseCycle, std::vector<int>& atomDefine, const std::vector<int> listAtomClean,
       std::vector<int>& cycleDefine, std::vector<int>& cycleSize, std::vector<int>& cycleAddress, std::vector<int>& atomCycle,
@@ -773,7 +773,7 @@ class TSimpleMolecule {
     //Chain rotate members
     double atomDistanceMetric(int an);
     bool bondsOverlapped(int bN1, int bN2, double delta);
-    int fragmentSecond(int sphere, int att, int secAt, const std::vector<int> a, 
+    int fragmentSecond(int sphere, int att, int secAt, const std::vector<int> a,
       const std::vector<int> b, const neigbourlist bk, std::vector<int>& wSphere);
     bool threeBondResolve(int an, int bondExcluded, double& xv, double& yv, neigbourlist* bkExt);
     bool unitVectorCoincident(int aN, double xV, double yV);
@@ -813,14 +813,14 @@ int TSimpleMolecule::singleAtomicDescriptor(int aNumber,int bNumber, bool useEnu
   for (j=0; j<getAtom(aNumber)->nb; j++) an[j]=getAtom(aNumber)->ac[j];
   if (useEnumerator) {
     //fragIndex as main base
-    for (j=0; j<(getAtom(aNumber)->nb-1); j++) for (m=j+1; m<getAtom(aNumber)->nb; m++) 
+    for (j=0; j<(getAtom(aNumber)->nb-1); j++) for (m=j+1; m<getAtom(aNumber)->nb; m++)
     if (getAtom(an[j])->fragIndex > getAtom(an[m])->fragIndex) {
       k=an[j];
       an[j]=an[m];
       an[m]=k;
     };
   } else {
-    for (j=0; j<(getAtom(aNumber)->nb-1); j++) for (m=j+1; m<getAtom(aNumber)->nb; m++) 
+    for (j=0; j<(getAtom(aNumber)->nb-1); j++) for (m=j+1; m<getAtom(aNumber)->nb; m++)
     if (an[j] > an[m]) {
       k=an[j];
       an[j]=an[m];
@@ -1058,8 +1058,8 @@ void TSimpleMolecule::unitVector(int aN, double& xV, double& yV) {
   //bond's array BOND and bond-connection matrix invariants CONN) unit vector
   //is calculated (XV, YV) on output. Unit vector shows the best direction to
   //make new bond}
-  double sc[4] = {0,1/2,1.7320508/2,1}; 
-  double cc[4] = {1,1.7320508/2,1/2,0};  
+  double sc[4] = {0,1/2,1.7320508/2,1};
+  double cc[4] = {1,1.7320508/2,1/2,0};
   double sQ3=sqrt(3.0)/2.0;
   double si,r1,r2,r3,r4,s1,s2,s3,s4,fi;
   double xm[3];  //Initial dimensions 1..3
@@ -1578,7 +1578,7 @@ TSingleBond * TSimpleMolecule::getBond(int index) {
 
 void TSimpleMolecule::defineAtomConn() {
      //for each atom returns list of adjusted atoms in atomConnection
-  int i,n1, n2; 
+  int i,n1, n2;
   TSingleAtom * sa;
 
   for (i=0; i<nAtoms(); i++) {
@@ -1600,7 +1600,7 @@ void TSimpleMolecule::defineAtomConn() {
 
 void TSimpleMolecule::defineBondConn(neigbourlist & bondConnection) {
   //for each atom returns list of adjusted bonds in bondConnection
-  int i,n1, n2; 
+  int i,n1, n2;
 
   for (i=0; i<=nAtoms(); i++) bondConnection[i].nb=0;
   for (i=0; i<nBonds(); i++) {
@@ -1623,12 +1623,12 @@ void TSimpleMolecule::newB(neigbourlist & bk, int bnum, int anum, int & total, i
   for (i=0; i<bk[anum].nb; i++) if (bk[anum].adjusted[i] != bnum) {
     n=bk[anum].adjusted[i];  //bond number zero-based
     e[total]=n;
-    if (getBond(n)->at[0] == anum) e1[total]=getBond(n)->at[1]; else e1[total]=getBond(n)->at[0]; 
+    if (getBond(n)->at[0] == anum) e1[total]=getBond(n)->at[1]; else e1[total]=getBond(n)->at[0];
     total++;
   };
   };
 
-void TSimpleMolecule::singleVawe(neigbourlist & bk, std::vector<int> & alreadyDefined, 
+void TSimpleMolecule::singleVawe(neigbourlist & bk, std::vector<int> & alreadyDefined,
   std::vector<int> & prevBond, std::vector<int> & prevAtom,
   int & nPrev, std::vector<int> & curBond, std::vector<int> & curAtom) {
   /*
@@ -1663,8 +1663,8 @@ void TSimpleMolecule::singleVawe(neigbourlist & bk, std::vector<int> & alreadyDe
     };
   };
   nPrev=ncur;
-  for (i=0; i<ncur; i++) prevBond[i]=curBond[i]; 
-  for (i=0; i<ncur; i++) prevAtom[i]=curAtom[i]; 
+  for (i=0; i<ncur; i++) prevBond[i]=curBond[i];
+  for (i=0; i<ncur; i++) prevAtom[i]=curAtom[i];
 };
 
 
@@ -1684,7 +1684,7 @@ void TSimpleMolecule::vaweBond(int bondN, neigbourlist & bk,
   std::vector<int>curAtom(NBONDSMAX);
   bool test;
   int nP;
-    
+
 
   for (j=0; j<nBonds(); j++) oD[j]=-1;
   oD[bondN]=65500;
@@ -1712,22 +1712,22 @@ void TSimpleMolecule::vaweBond(int bondN, neigbourlist & bk,
       k=oD[k];
     };
     //Sorting remaining bonds in ascending order - need for cycle comparison
-    k=2;                   //all bonds are sorted 
+    k=2;                   //all bonds are sorted
     //remains last bond in cycle description=bondN (input parameter)
     for (i=0; i<(ringSize-k); i++) for (j=i+1; j<=(ringSize-k); j++) {
       i1=bondList[i];
       i2=bondList[j];
       if (i1 > i2) {
-	    bondList[i]=i2;	 
-	    bondList[j]=i1;	 
-	  }; 
+	    bondList[i]=i2;
+	    bondList[j]=i1;
+	  };
 	};
   } else ringSize=0;
 };
 
 
   //This method must be called ONLY from AllAboutCycles
-bool TSimpleMolecule::aromatic(int cycleSize, const std::vector<int> bondList, 
+bool TSimpleMolecule::aromatic(int cycleSize, const std::vector<int> bondList,
   std::vector<int>& arom) {
 
   /*for a cycle with the dimension of CYCLESIZE determines, whether or not the
@@ -1940,7 +1940,7 @@ void TSimpleMolecule::twoAtomUnitVector(int na1, int na2, double & xv, double & 
     };
   };
   for (i=0; i<getAtom(na2)->nb; i++) {
-    k=getAtom(na2)->ac[i]; 
+    k=getAtom(na2)->ac[i];
 	if (k != na1) if (atomDefine[k] > 0) {
       x1=getAtom(k)->rx-s3;
       y1=getAtom(k)->ry-s4;
@@ -1953,8 +1953,8 @@ void TSimpleMolecule::twoAtomUnitVector(int na1, int na2, double & xv, double & 
 };
 
 void TSimpleMolecule::defC(int& currNumDef, int baseCycle, int atomClean, std::vector<int>& cycleDefine,
-  std::vector<int>& atomDefine, std::vector<int>& atomCycle, std::vector<int>& cycleAddress, 
-  std::vector<int>& cycleSize, std::vector<int>& dsATN, std::vector<int>& dsTP, 
+  std::vector<int>& atomDefine, std::vector<int>& atomCycle, std::vector<int>& cycleAddress,
+  std::vector<int>& cycleSize, std::vector<int>& dsATN, std::vector<int>& dsTP,
   std::vector<int>& dsSC, std::vector<int>& dsNA1, std::vector<int>& dsNA2) {
 //The procedure create priority list formation for cleaning of molecule. Recur-
 // sive calls to the procedure are required together with DefA. After recursion
@@ -2037,7 +2037,7 @@ void TSimpleMolecule::defC(int& currNumDef, int baseCycle, int atomClean, std::v
 void TSimpleMolecule::defA(int& currNumDef, int atomClean, int sPN, int baseCycle, std::vector<int>& atomDefine, const std::vector<int> listAtomClean,
   std::vector<int>& cycleDefine, std::vector<int>& cycleSize, std::vector<int>& cycleAddress, std::vector<int>& atomCycle,
   std::vector<int>& dsATN, std::vector<int>& dsTP, std::vector<int>& dsNA1, std::vector<int>& dsNA2) {
-  
+
  //The procedure create priority list formation for cleaning of molecule. Recur-
  // sive calls to the procedure are required together with DefC. After recursion
  //have been finished, the DEFINESEQUENCE array will be created. The procedure
@@ -2050,7 +2050,7 @@ void TSimpleMolecule::defA(int& currNumDef, int atomClean, int sPN, int baseCycl
 
   for (i=0; i<atomClean; i++) if (atomDefine[listAtomClean[i]]==0)
   if (getAtom(listAtomClean[i])->nb > 0) for (j=0; j<getAtom(listAtomClean[i])->nb; j++) {
-    k=getAtom(listAtomClean[i])->ac[j]; 
+    k=getAtom(listAtomClean[i])->ac[j];
     if (atomDefine[k]>0) {
       //if atom has a neighbour, which has already been inserted into priority
       // list, then it is inserted into the priority list}
@@ -2091,8 +2091,8 @@ void TSimpleMolecule::defA(int& currNumDef, int atomClean, int sPN, int baseCycl
 };
 
 void TSimpleMolecule::canonizeCycle(int ringSize, std::vector<int> & bondList) {
-  //Order of nonds in cycle description in so way, that bond with minimal number 
-  //is the first in this description. Then is coming bond, which is appended to 
+  //Order of nonds in cycle description in so way, that bond with minimal number
+  //is the first in this description. Then is coming bond, which is appended to
   //atom with maximal number, then next and so on
   std::vector<int> bondUsed(ringSize);
   std::vector<int> newBondList(ringSize);
@@ -2243,7 +2243,7 @@ bool TSimpleMolecule::threeBondResolve(int an, int bondExcluded, double& xv, dou
 };
 */
 
-void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vector<int>listBondClean, 
+void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vector<int>listBondClean,
   int & atomClean, int & bondClean, int spn, int sCHA1, int sCHB1, bool iOPT7) {
 
   std::vector<int> dsATN(NBONDSMAX);
@@ -2301,7 +2301,7 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
   if ((atomClean<1) || (bondClean==0)) return;
   defineAtomConn();
   allAboutCycles();
-    
+
   test=true;
   defineBondConn(bk);
   //{Start clean for LISTATOMCLEAN and LISTBONDCLEAN atoms and bonds}
@@ -2316,7 +2316,7 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
 
   for (i=0; i<bondClean; i++) {
     vaweBond(listBondClean[i],bk,cs,atomDefine); //If I-th bond belongs to cycle}
-	
+
     if (cs>0) {
       canonizeCycle(cs,atomDefine);
 	  test=false;
@@ -2335,7 +2335,7 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
         for (j=0; j<cs; j++) cycleDescription[cycleAddress[baseCycle-1]+j]=atomDefine[j];
       };
     };
-	
+
   };
 
   for (i=0; i<baseCycle; i++) { //making atom list in those order, as they will be defined at cycles}
@@ -2354,7 +2354,7 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
   };
 
   //calculation of the coordinates of fragment's center and scaling factor}
- 
+
   if ((spn<3) || (spn==4)) {
     xCenterOld=0;
     yCenterOld=0;
@@ -2381,7 +2381,7 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
       bondLengthOld=1E10;
       r1=0;
       for (i=0; i<nBonds(); i++) if (tempArray[i] == 0) {
-        r=this->bondLength(i);    
+        r=this->bondLength(i);
         if (r < bondLengthOld) bondLengthOld=n;
         r1=r1+r;
         n++;
@@ -2397,7 +2397,7 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
       xCenterOld=xCenterOld/(double)atomClean; yCenterOld=yCenterOld/(double)atomClean;
       for (i=0; i<bondClean; i++) {
         k=listBondClean[i];
-        bondLengthOld=bondLengthOld+this->bondLength(k); 
+        bondLengthOld=bondLengthOld+this->bondLength(k);
       };
       bondLengthOld=bondLengthOld/(double)bondClean;
     };
@@ -2422,7 +2422,7 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
     uvY=uvY/bondLengthOld;
 
   };
-  
+
   for (i=0; i<nAtoms(); i++) atomDefine[i]=0; //flags-zero value OK
   if ((spn<3) || (spn==4)) {     //checking already cleaned atoms...
     for (i=0; i<nAtoms(); i++) atomDefine[i]=1;
@@ -2772,7 +2772,7 @@ void TSimpleMolecule::getMolfile(std::ostream & data) {
       default: charge=0; break;
     }
     snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d",
-      sa->rx, sa->ry, 0.0, (aSymb[sa->na]).c_str(), 0,charge,0,0,0);    
+      sa->rx, sa->ry, 0.0, (aSymb[sa->na]).c_str(), 0,charge,0,0,0);
     data << buff << endl;
   };
   for (int i=0; i<nBonds(); i++) {
@@ -2861,7 +2861,7 @@ double xDistPoint(double x1, double y1, double x2, double y2, double x0, double 
 
 bool overlapped(double x1A, double y1A, double x2A, double y2A,
   double x1B, double y1B, double x2B, double y2B, double delta) {
- 
+
   double a1, b1, c1, a2, b2, c2, r, cX, cY, x, y, r1, r2;
   double xMin, xMax, yMin, yMax;
   bool result=false;
@@ -3056,7 +3056,7 @@ void TSimpleMolecule::flipSmall(int cHB) {
   if (cHB < 0) return;
 
   test=makeFragment(nB1,list1,getBond(cHB)->at[1],getBond(cHB)->at[0]);
-  if (nB1 > 1) {      
+  if (nB1 > 1) {
     //One of the atoms haven't neighbours-flip unavalable
     cHA1=getBond(cHB)->at[0];
     cHA2=getBond(cHB)->at[1];
@@ -3120,7 +3120,7 @@ bool compareAtoms(int a1, int a2, const std::vector<std::vector<int> *> aeqList)
   std::vector<int> * l2;
   int i;
   bool result=false;
-  
+
   if ((a1 < 0) || (a2 < 0) || (a1 >= aeqList.size()) || (a2 >= aeqList.size())) return result;
   l1 = (std::vector<int> *)(aeqList.at(a1));
   l2 = (std::vector<int> *)(aeqList.at(a2));
@@ -3134,7 +3134,7 @@ bool compareAtoms(int a1, int a2, const std::vector<std::vector<int> *> aeqList)
   return result;
 };
 
-int TSimpleMolecule::fragmentSecond(int sphere, int att, int secAt, const std::vector<int> a, 
+int TSimpleMolecule::fragmentSecond(int sphere, int att, int secAt, const std::vector<int> a,
   const std::vector<int> b, const neigbourlist bk, std::vector<int>& wSphere) {
 
   /*Generate a longinteger number, which is characterize fragment with atom
@@ -3338,7 +3338,7 @@ int TSimpleMolecule::correctOverlapped() {
   std::vector<int> rotBondList(nBonds());
   int at1,at2;
   int nn;
-  
+
 
   r=averageBondLength()/blDenominator;
   k=hasOverlapped(r,false);
@@ -3488,7 +3488,7 @@ int TSimpleMolecule::correctOverlapped() {
     std::vector<int>nUnassigned(nAtoms);
 	std::vector<int>nAssigned(nAtoms);
 	std::vector<int>bNumber(nAtoms);
-	
+
 
     int i,n,k;
 	int result;
@@ -3510,7 +3510,7 @@ int TSimpleMolecule::correctOverlapped() {
         nAssigned[iA2[i]]=nAssigned[iA2[i]]+n;
 	  };
 	};
-	
+
 	for (i=0; i<nAtoms; i++) if ((hydrogenValency[i] > 0) && (nUnassigned[i] == 1)) {
       n=bNumber[i];
       k=hydrogenValency[i]-(nH[i]+nAssigned[i]);
@@ -3519,7 +3519,7 @@ int TSimpleMolecule::correctOverlapped() {
 		  k=2;
 		} else {
 		  k=1;
-		}; 
+		};
         result=2;
 	  };
 	  if (k > 3) {
@@ -3534,10 +3534,10 @@ int TSimpleMolecule::correctOverlapped() {
 	return result;
   };
 
-  static void makeAssignment(const std::vector<int> iA1, const std::vector<int> iA2, const std::vector<int> nH, 
-	const std::vector<int> hydrogenValency,	const std::vector<int> bondAssignment, const std::vector<int> specialFlag, 
+  static void makeAssignment(const std::vector<int> iA1, const std::vector<int> iA2, const std::vector<int> nH,
+	const std::vector<int> hydrogenValency,	const std::vector<int> bondAssignment, const std::vector<int> specialFlag,
 	std::vector<int>& bondOrder, int nAtoms, int nBonds, int & nAss) {
-   
+
 	int i,k;
 
     nAss=0;
@@ -3551,15 +3551,15 @@ int TSimpleMolecule::correctOverlapped() {
 	};
   };
 
-  static bool analyzeOK(const std::vector<int> iA1,const std::vector<int> iA2, const std::vector<int> nH, 
-	const std::vector<int> hydrogenValency,	const std::vector<int> maxValency, const std::vector<int> bondOrder, 
-	const std::vector<int> atomCheckFlag, int nAtoms, int nBonds, int & nGtMax, int & nNEH, int & nOddEven, 
+  static bool analyzeOK(const std::vector<int> iA1,const std::vector<int> iA2, const std::vector<int> nH,
+	const std::vector<int> hydrogenValency,	const std::vector<int> maxValency, const std::vector<int> bondOrder,
+	const std::vector<int> atomCheckFlag, int nAtoms, int nBonds, int & nGtMax, int & nNEH, int & nOddEven,
 	bool testExceedHydrogen, bool oddEvenCheck) {
-  
+
     std::vector<int>nBondsValency(nAtoms);  //dynamically allocation
     int i,k;
 	bool result;
-  
+
     nGtMax=0;
     nNEH=0;
     nOddEven=0;
@@ -3588,7 +3588,7 @@ int TSimpleMolecule::correctOverlapped() {
   static bool incrementAssignment(std::vector<int>& bondAssignment, int nAss) {
     int i,j;
 	bool result;
- 
+
     result=false;
 	for (i=nAss-1; i>=0; i--) if (bondAssignment[i] == 1) {
       bondAssignment[i]++;
@@ -3599,12 +3599,12 @@ int TSimpleMolecule::correctOverlapped() {
 	return result;
   };
 
-  static int determineBondsOrder(const std::vector<int> iA1, const std::vector<int> iA2, 
-	const std::vector<int> nH, const std::vector<int> maxValency,std::vector<int>& bondOrder, 
+  static int determineBondsOrder(const std::vector<int> iA1, const std::vector<int> iA2,
+	const std::vector<int> nH, const std::vector<int> maxValency,std::vector<int>& bondOrder,
 	std::vector<int>& hydrogenValency, int nAtoms, int nBonds, bool oddEvenViolate) {
 //On input BortOrder has to be initialized. Real bond orders have to be putted. 0 means this order should be determined
 //MaxValency and HydrogenValency and NH are required only for those atoms, which are included in BondOrder=0
-  
+
     std::vector<int>nNeighbour(nAtoms);
     std::vector<int>bondAssignment(nBonds);  //Should be Max(Atoms, Bonds);
     std::vector<int>bondOrderStore(nBonds);
@@ -3723,7 +3723,7 @@ int TSimpleMolecule::correctOverlapped() {
 	return result;
   };
 
-  int alternate(const std::vector<int> aPosition,const std::vector<int> aCharge, 
+  int alternate(const std::vector<int> aPosition,const std::vector<int> aCharge,
 	const std::vector<int> aRad,const std::vector<int> nHydr, const std::vector<int> iA1,
 	const std::vector<int> iA2, std::vector<int> & bondOrders, int nAtoms, int nBonds) {
 
@@ -3735,7 +3735,7 @@ int TSimpleMolecule::correctOverlapped() {
       hVal[i]=hydrogenValency(aPosition[i]);
 	  if (hVal[i] > 0) {
         if (aRad[i] != 0) hVal[i]=hVal[i]-1;  //returns 0 for non-radical and 2 for radical
-		if (aPosition[i] == 5) hVal[i]=hVal[i]-aCharge[i];           //B 
+		if (aPosition[i] == 5) hVal[i]=hVal[i]-aCharge[i];           //B
 		else if (aPosition[i] == 6) hVal[i]=hVal[i]-abs(aCharge[i]); //C
 		else hVal[i]=hVal[i]+aCharge[i];  //Heteroatoms
         if (hVal[i] < 0) hVal[i]=0;
@@ -3748,7 +3748,7 @@ int TSimpleMolecule::correctOverlapped() {
   };
 
   int alternate(OBMol * pmol, const std::vector<int> nH, std::vector<int>& bondOrders) {
-    //This overloaded method does not work. By unknown reason I cannot extract 
+    //This overloaded method does not work. By unknown reason I cannot extract
 	//connection matrix from pmol
 
     //number of hydogens must be filled on input.
@@ -3794,7 +3794,7 @@ int TSimpleMolecule::correctOverlapped() {
 	for (i=0; i<nBonds; i++) {
 	  sb=pmol->GetBond(i);
 	  sb->SetBondOrder(bondOrders[i]);
-	}; 
+	};
     return result;
   };
 //*****************************************************************************
@@ -3825,13 +3825,13 @@ class TEditedMolecule: public TSimpleMolecule {
     void atomBondChange();
     bool stereoBondChange();
     void directBondAss(int& bnq, bool& test, bool& test1, const bool beq[NBONDSMAX][NBONDSMAX],
-      const bool aeq[NATOMSMAX][NATOMSMAX], std::vector<int>& bqcounter, std::vector<int>& aqtested, 
-      std::vector<int>& bstested, std::vector<int>& bqtested, std::vector<int>& astested, 
+      const bool aeq[NATOMSMAX][NATOMSMAX], std::vector<int>& bqcounter, std::vector<int>& aqtested,
+      std::vector<int>& bstested, std::vector<int>& bqtested, std::vector<int>& astested,
       const std::vector<int> ager, const neigbourlist bqconn, const neigbourlist bsconn, TSimpleMolecule * smol);
     bool allQueryPresent(const std::vector<int> qA, const std::vector<int> qB,
       int nA, int nB);
   public:
-    static int const NOOTHER_MASK=1; 
+    static int const NOOTHER_MASK=1;
     static int const AROMATIC_MASK=NOOTHER_MASK << 1;
     static int const EXACTNUMBER_MASK=AROMATIC_MASK << 1;
     bool fIOPT10;   //charge sensitivite
@@ -3926,7 +3926,7 @@ int TEditedMolecule::addFragment(TEditedMolecule & eMolecule, int naDEF, int cha
     }
   }
   if (nb > 0) emBLength=emBLength/nb;
-  
+
   if ((nb+nBonds()) >= NBONDSMAX) {
     result=2;
     return result;
@@ -3948,7 +3948,7 @@ int TEditedMolecule::addFragment(TEditedMolecule & eMolecule, int naDEF, int cha
 	    list[j]=list[i];
 		j++;
 	  };
-	};    
+	};
 	list[naDEF-2]=k1;
 	list[naDEF-1]=k2;
     //It is necessary to make the pair of atoms last in array so they may be
@@ -4071,7 +4071,7 @@ int TEditedMolecule::addFragment(TEditedMolecule & eMolecule, int naDEF, int cha
     } while (i < na);
 	*/
   }
-  
+
 
   if ((buttonStatus>1) && (chb < 0)) {
     //if fragment 'is freezed' through atom, the atom needs to be deleted
@@ -4527,7 +4527,7 @@ int TEditedMolecule::prepareQuery(TSimpleMolecule & sMol) {
     molecule1->moleculeCopy(*this);
     for (i=0; i<nAtoms(); i++) molecule1->getAtom(queryAQTested[i])->atomCopy(this->getAtom(i));
     for (i=0; i<nAtoms(); i++) queryBQTested[queryAQTested[i]]=queryQHydr[i];
-    for (i=0; i<queryQHydr.size(); i++) queryQHydr[i]=queryBQTested[i]; 
+    for (i=0; i<queryQHydr.size(); i++) queryQHydr[i]=queryBQTested[i];
     //Do NOT enumeate QueryEnum - it will be done later throgh QueryInverse!!!}
     if (nBonds()>0) for (i=0; i<nBonds(); i++) if (queryAGer[i] != -1) queryAGer[i]=queryAQTested[queryAGer[i]];
     if (nBonds()>0) for (i=0; i<nBonds(); i++) molecule1->getBond(bSTested[i])->bondCopy(this->getBond(i));
@@ -4664,8 +4664,8 @@ bool TEditedMolecule::stereoBondChange() {
 };
 
 void TEditedMolecule::directBondAss(int& bnq, bool& test, bool& test1, const bool beq[NBONDSMAX][NBONDSMAX],
-  const bool aeq[NATOMSMAX][NATOMSMAX], std::vector<int>& bqcounter, std::vector<int>& aqtested, 
-  std::vector<int>& bstested, std::vector<int>& bqtested, std::vector<int>& astested, 
+  const bool aeq[NATOMSMAX][NATOMSMAX], std::vector<int>& bqcounter, std::vector<int>& aqtested,
+  std::vector<int>& bstested, std::vector<int>& bqtested, std::vector<int>& astested,
   const std::vector<int> ager, const neigbourlist bqconn, const neigbourlist bsconn, TSimpleMolecule * smol) {
   //Assign a structure atom to query atom. Variables:
   //BNQ-query bond's number, which needs to be assigned
@@ -4703,7 +4703,7 @@ void TEditedMolecule::directBondAss(int& bnq, bool& test, bool& test1, const boo
   as1=aqtested[aq1];  //corresponding first structure atom
   if (as1<0) return;
   aq2=getBond(bnq)->at[1];      //second query atom}
-  bs=bqcounter[bnq]; 
+  bs=bqcounter[bnq];
   bns=0; as2=0;
   whiletest=true;
   if (bs<bsconn[as1].nb) while (whiletest) {
@@ -4818,7 +4818,7 @@ bool TEditedMolecule::fragmentSearch(TEditedMolecule * molecule1, std::vector<in
     } else test2=false;
   } else test2=true;
   */ test2=true;   //turn of molecular formula filter
-   
+
   molecule1->fIOPT11=fIOPT11;
   molecule1->fIOPT12=fIOPT13;
   molecule1->fIOPT13=fIOPT13;
@@ -5021,8 +5021,8 @@ private:
   static std::vector<TEditedMolecule *> queryData;
   void clear();
   bool internalBondsPresent(TEditedMolecule * mQuery, TSimpleMolecule * mStructure);
-  void rotateBondVertically(TSimpleMolecule * sm, const std::vector<int>bondList, int bondNo, 
-	double xuValue, double yuValue, double& c1, double& s1, double& xSize, double& ySize, 
+  void rotateBondVertically(TSimpleMolecule * sm, const std::vector<int>bondList, int bondNo,
+	double xuValue, double yuValue, double& c1, double& s1, double& xSize, double& ySize,
 	double& xCenter, double& yCenter, int& nVert);
   void selectFragmentConfiguration(TSimpleMolecule * sm, std::vector<int>* atomList);
   void rescaleSingleFragment(TSimpleMolecule * sm, std::vector<int>* atomList, int alCount, PartFragmentDefinition& pf, double offset);
@@ -5092,7 +5092,7 @@ TemplateRedraw::TemplateRedraw(){
     TEditedMolecule sm;
     bool test;
 
-    //Load external.. 
+    //Load external..
     loadTemplates();
     //...and internal templates
     for (i=0; i<NDATABASE_MOLECULES; i++) {
@@ -5655,7 +5655,7 @@ int TemplateRedraw::coordinatesPrepare(TEditedMolecule& sm, int kk, int anTempla
       k++;
     };
     //Atom and bond enumeration...
-	
+
     for (i=0; i<sm.nAtoms(); i++) {
       k=0;
       for (j=0; j<enumerator.size(); j++)  if (enumerator[j]==i) {
@@ -5671,7 +5671,7 @@ int TemplateRedraw::coordinatesPrepare(TEditedMolecule& sm, int kk, int anTempla
 	  sb->at[1]=enumerator[sb->at[1]];
       tm.addBond(sb);
     };
-	
+
     nFound=atomClean;
     //now tm is the same as sm (simplemolecule) on input, but coordinates will be taken from template for first nFound atoms
     tm.defineAtomConn();
@@ -5761,7 +5761,7 @@ int TemplateRedraw::coordinatesPrepare(TEditedMolecule& sm, int kk, int anTempla
 
 
 class StereoBondStore {
-  public: 
+  public:
     int bn,w;
  };
 
@@ -5797,7 +5797,7 @@ void TemplateRedraw::redrawFine(TSimpleMolecule& smIn) {
   smCopy.moleculeCopy(smIn);
 
   for (i=0; i<smIn.nBonds(); i++) if ((smIn.getBond(i)->tb == 9)  || (smIn.getBond(i)->tb == 10)) {
-    w=0;  //!!!! add for STEREO later !!!! w.value=ProcessStereo.analizeRS(smIn,smIn.fBond.getAT(i,1));   
+    w=0;  //!!!! add for STEREO later !!!! w.value=ProcessStereo.analizeRS(smIn,smIn.fBond.getAT(i,1));
 
     if (w>0) {
       sbs=new StereoBondStore();
@@ -5808,7 +5808,7 @@ void TemplateRedraw::redrawFine(TSimpleMolecule& smIn) {
   };
 
   for (i=0; i<smCopy.nAtoms(); i++) smCopy.getAtom(i)->anum=intToStr(i);
-  
+
   for (i=0; i<smCopy.nAtoms(); i++) atomTested[i]=0;
 
   bool testSingleAtom=false;
@@ -5852,7 +5852,7 @@ void TemplateRedraw::redrawFine(TSimpleMolecule& smIn) {
 	  qq++;
       sm->refofs=smIn.refofs;
       n=coordinatesPrepare(*sm,n,-1);
-   
+
      //Contrary to Delphi project - block of storing double-bonds is absent here.
      //I need to create AnalizeZE rpocedure to handle double-bond
       nOverlapped=sm->correctOverlapped();
@@ -5942,7 +5942,7 @@ void TemplateRedraw::redrawFine(TSimpleMolecule& smIn) {
     smCopy.getAtom(i)->ry=smCopy.getAtom(i)->ry*oldBondLength/newBondLength;
   };
   for (i=0; i<smCopy.nAtoms(); i++) {
-    n=atoi(smCopy.getAtom(i)->anum.c_str()); 
+    n=atoi(smCopy.getAtom(i)->anum.c_str());
     if (n >= 0) {
       smIn.getAtom(n)->rx=smCopy.getAtom(i)->rx;
       smIn.getAtom(n)->ry=smCopy.getAtom(i)->ry;
@@ -6085,7 +6085,7 @@ bool fragmentSearch(const std::vector<int> aPositionQuery, const std::vector<int
 };
 
 
-void equivalenceList(const std::vector<int> aPosition,const std::vector<int> aCharge, 
+void equivalenceList(const std::vector<int> aPosition,const std::vector<int> aCharge,
   const std::vector<int> aRad, const std::vector<int> iA1, const std::vector<int> iA2,
   const std::vector<int> bondTypes,  std::vector<int>& eqList, int nAtoms, int nBonds) {
 
@@ -6239,7 +6239,7 @@ std::string getAtomSymbol(TSimpleMolecule & sm, int atAtom, int atEx, int priori
 
   //result=aSymb[sm.getAtom(atAtom)->na];
   //result="at="+intToStr(atAtom)+" nt="+intToStr(sm.nAtoms())+" na="+intToStr(sm.getAtom(atAtom)->na);
- 
+
   for (i=0; i<sm.getAtom(atAtom)->nb; i++) {
     n=sm.getAtom(atAtom)->ac[i];
     if (n != atEx) {
@@ -6280,7 +6280,7 @@ std::string getAtomSymbol(TSimpleMolecule & sm, int atAtom) {
 
 int indexOf(const string instring, const string substring, int fromPos=0) {
   int result=instring.find(substring,fromPos);
-  if (result == string::npos) result=-1; 
+  if (result == string::npos) result=-1;
   if (result >= instring.length()) result=-1;
     return result;
 };
@@ -7195,7 +7195,7 @@ void implementBondStereo(const std::vector<int> iA1, const std::vector<int> iA2,
   int OBMCDL groupRedraw(OBMol * pmol, int bondN, int atomN, bool atomNInGroup) {
     //bondN - index of acyclic bond in pmol (zero-based). atomN - index of atom attached to bond bondN to start redraw from it (1-based)
     //atomNInGroup - if true it is assumed, that atom atomN, attached to bond bondN is inside group to be redrawn, false otherwise
-    //returns 0 - all OK, =1 - number of atoms or bond are outside defined, = 2-cyclic bond 
+    //returns 0 - all OK, =1 - number of atoms or bond are outside defined, = 2-cyclic bond
     TSimpleMolecule sm;
 	int result=0;
 	std::vector<int> allAtomList(NATOMSMAX);
@@ -7211,7 +7211,7 @@ void implementBondStereo(const std::vector<int> iA1, const std::vector<int> iA2,
 	  return result;
 	};
 
-	if (sm.getBond(bondN)->db > 0) {   
+	if (sm.getBond(bondN)->db > 0) {
       result=2;
 	  return result;
 	};
@@ -7243,7 +7243,7 @@ void implementBondStereo(const std::vector<int> iA1, const std::vector<int> iA2,
 	  sm.redraw(atomList,bondList,na,nb,3,atEx,bondN,false);
 	  //Setting OBMOL coordinates
 	  for (int i=0; i<na; i++) {
-        n=atomList[i]; 
+        n=atomList[i];
         atom=pmol->GetAtom(n+1);  //1-based
         atom->SetVector(sm.getAtom(n)->rx,sm.getAtom(n)->ry,0.0);
       };
@@ -7269,7 +7269,7 @@ void implementBondStereo(const std::vector<int> iA1, const std::vector<int> iA2,
     bool test;
     string asym;
     string value=formulaString;
-    
+
     valency=-1;
 
     for (i=0; i<NELEMMCDL; i++) enumber[i]=0;
@@ -7326,7 +7326,7 @@ void implementBondStereo(const std::vector<int> iA1, const std::vector<int> iA2,
       n=valency;
 	  valency=hVal[n];
 	  if (valency == 0) valency=1;
-	  for (i=1; i<NELEMMCDL; i++) if ((i != n) && (enumber[i] > 0)) {  
+	  for (i=1; i<NELEMMCDL; i++) if ((i != n) && (enumber[i] > 0)) {
         k=hVal[i];
 	    if (k == 0) k=1;
 	    k=k*enumber[i];

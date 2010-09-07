@@ -2,11 +2,11 @@
 Copyright (C) 2002 by Steffen Reith <streit@streit.cc>
 Some portions Copyright (C) 2003-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -71,7 +71,7 @@ OpenBabel::vector3 my_center_coords(double *c, unsigned int size)
     {
       return(OpenBabel::VZero);
     }
-	unsigned int i; 
+	unsigned int i;
   double x=0.0, y=0.0, z=0.0;
   for (i = 0;i < size;++i)
     {
@@ -175,7 +175,7 @@ namespace OpenBabel
 
     ofs <<  "// create a regular point light source\n"
             "light_source {\n"
-            "  <" << centroid.x()  + 2.0 << "," << centroid.y() + 3.0 << "," << centroid.z() - 8.0 << ">\n" 
+            "  <" << centroid.x()  + 2.0 << "," << centroid.y() + 3.0 << "," << centroid.z() - 8.0 << ">\n"
             "  color rgb <1,1,1>    // light's color\n"
             "}\n" << endl;
 
@@ -223,7 +223,7 @@ namespace OpenBabel
 
     /* ---- Checkerboard and mirror sphere ---- */
     if (sphere) {
-      ofs << 
+      ofs <<
 "// a mirror sphere\n"
 "sphere\n"
 "{ <" << centroid.x()  + 8.0 << "," << centroid.y() - 4 << "," << centroid.z() + 8.0 << ">,4\n"
@@ -232,7 +232,7 @@ namespace OpenBabel
 "}\n" << endl;
     }
     if (checkerboard) {
-      ofs << 
+      ofs <<
 "// simple Black on White checkerboard... it's a classic\n"
 "plane {\n"
 " -y, " << -(centroid.y()-8) << "\n"
@@ -755,7 +755,7 @@ namespace OpenBabel
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
       return false;
-    
+
     // Model-type should be one of "bas", "spf" or "cas"
     model_type = "BAS"; // Default is ball-and-stick
     const char* tmp = pConv->IsOption("m");
@@ -868,7 +868,7 @@ namespace OpenBabel
                         min_y, max_y,
                         min_z, max_z);
 
-    
+
     /* ---- Insert the molecule ---- */
     ofs << prefix << endl;
 

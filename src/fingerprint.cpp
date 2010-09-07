@@ -2,14 +2,14 @@
 fingerprint.cpp - Implementation of fingerpring base class and fastsearching
 
 Copyright (C) 2005 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -48,7 +48,7 @@ namespace OpenBabel
     return (word &= (1 << (n % Getbitsperint())))!=0;
   }
 
-  ////////////////////////////////////////	
+  ////////////////////////////////////////
   void OBFingerprint::Fold(vector<unsigned int>& vec, unsigned int nbits)
   {
     if(nbits<Getbitsperint())
@@ -58,7 +58,7 @@ namespace OpenBabel
       obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
       return;
     }
-    while(vec.size()*Getbitsperint()/2 >= nbits) 
+    while(vec.size()*Getbitsperint()/2 >= nbits)
       vec.erase(transform(vec.begin(),vec.begin()+vec.size()/2,
                           vec.begin()+vec.size()/2, vec.begin(), bit_or()), vec.end());
   }
@@ -93,7 +93,7 @@ namespace OpenBabel
       return iter->second;
   }
 */
-  double OBFingerprint::Tanimoto(const vector<unsigned int>& vec1, const vector<unsigned int>& vec2) 
+  double OBFingerprint::Tanimoto(const vector<unsigned int>& vec1, const vector<unsigned int>& vec2)
   {
     //Independent of sizeof(unsigned int)
     if(vec1.size()!=vec2.size())
@@ -133,16 +133,16 @@ namespace OpenBabel
     ///The type of fingerprint and its degree of folding does not have to be specified
     ///here because the values in the index file are used.
     ///The positions of the candidate matching molecules in the original datafile are returned.
-	
+
     vector<unsigned int> vecwords;
     _pFP->GetFingerprint(pOb,vecwords, _index.header.words * OBFingerprint::Getbitsperint());
-	
+
     vector<unsigned int>candidates; //indices of matches from fingerprint screen
     candidates.reserve(MaxCandidates);
 
     unsigned int dataSize = _index.header.nEntries;
-    //	GetFingerprint(mol, vecwords, _index.header.words, _index.header.fptype); 
-	
+    //	GetFingerprint(mol, vecwords, _index.header.words, _index.header.fptype);
+
     unsigned int words = _index.header.words;
     unsigned int* nextp = &_index.fptdata[0];
     unsigned int* ppat0 = &vecwords[0];
@@ -215,7 +215,7 @@ namespace OpenBabel
         break;
     }
   }
-  
+
   vector<unsigned int>::iterator itr;
   for(itr=candidates.begin();itr!=candidates.end();++itr)
     {
@@ -243,7 +243,7 @@ namespace OpenBabel
         double tani = OBFingerprint::Tanimoto(targetfp,p);
         if(tani>MinTani && tani < MaxTani)
           SeekposMap.insert(pair<const double, unsigned int>(tani,_index.seekdata[i]));
-      }	
+      }
     return true;
   }
 
@@ -277,11 +277,11 @@ namespace OpenBabel
         nextp += words;
         double tani = OBFingerprint::Tanimoto(targetfp,p);
         if(tani>SeekposMap.begin()->first)
-          {	
+          {
             SeekposMap.insert(pair<const double, unsigned int>(tani,_index.seekdata[i]));
             SeekposMap.erase(SeekposMap.begin());
           }
-      }	
+      }
     return true;
   }
 
@@ -291,7 +291,7 @@ namespace OpenBabel
     //Reads fs index from istream into member variables
     _index.Read(pIndexstream);
 
-    _pFP = _index.CheckFP();	
+    _pFP = _index.CheckFP();
     if(!_pFP)
       *(_index.header.datafilename) = '\0';
 
@@ -329,7 +329,7 @@ namespace OpenBabel
 
     pIndexstream->read((char*)&(fptdata[0]), sizeof(unsigned int) * nwords);
     pIndexstream->read((char*)&(seekdata[0]), sizeof(unsigned int) * header.nEntries);
-	
+
     if(pIndexstream->fail())
       {
         *(header.datafilename) = '\0';
@@ -357,7 +357,7 @@ namespace OpenBabel
     if(!pFP)
       {
         stringstream errorMsg;
-        errorMsg << "Index has Fingerprints of type '" << header.fpid 
+        errorMsg << "Index has Fingerprints of type '" << header.fpid
                  << " which is not currently loaded." << endl;
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
       }
@@ -365,7 +365,7 @@ namespace OpenBabel
   }
 
   //*******************************************************
-  FastSearchIndexer::FastSearchIndexer(string& datafilename, ostream* os, 
+  FastSearchIndexer::FastSearchIndexer(string& datafilename, ostream* os,
                                        std::string& fpid, int FptBits, int nmols)
   {
     ///Starts indexing process
@@ -390,7 +390,7 @@ namespace OpenBabel
   /////////////////////////////////////////////////////////////
   FastSearchIndexer::FastSearchIndexer(FptIndex* pindex, std::ostream* os, int nmols)
   {
-    //nmols is new total number of molecules 
+    //nmols is new total number of molecules
     _indexstream = os;
     _pindex = pindex;
     _nbits  = _pindex->header.words * OBFingerprint::Getbitsperint();
@@ -399,7 +399,7 @@ namespace OpenBabel
     _pindex->header.nEntries = nmols;
 
     //check that fingerprint type is available
-    _pFP = _pindex->CheckFP();	
+    _pFP = _pindex->CheckFP();
   }
 
   /////////////////////////////////////////////////////////////
@@ -415,7 +415,7 @@ namespace OpenBabel
     _indexstream->write( (const char*)&hdr.words,        sizeof(unsigned) );
     _indexstream->write( (const char*)&hdr.fpid,         sizeof(hdr.fpid) );
     _indexstream->write( (const char*)&hdr.datafilename, sizeof(hdr.datafilename) );
-      
+
     _indexstream->write((const char*)&_pindex->fptdata[0], _pindex->fptdata.size()*sizeof(unsigned int));
     _indexstream->write((const char*)&_pindex->seekdata[0], _pindex->seekdata.size()*sizeof(unsigned int));
     if(!_indexstream)
@@ -428,14 +428,14 @@ namespace OpenBabel
   bool FastSearchIndexer::Add(OBBase* pOb, std::streampos seekpos)
   {
     ///Adds a fingerprint
-	
+
     vector<unsigned int> vecwords;
     if(!_pFP)
       return false;
     if(_pFP->GetFingerprint(pOb, vecwords, _nbits))
       {
         _pindex->header.words = vecwords.size(); //Use size as returned from fingerprint
-        if(_pindex->fptdata.empty() && _pindex->header.nEntries!=0) 
+        if(_pindex->fptdata.empty() && _pindex->header.nEntries!=0)
         {
           //Reserve size of vectors at start to avoid multiple realloction and copying later.
           //Done here rather than in constructor because needs the size of the fingerprint.
@@ -445,7 +445,7 @@ namespace OpenBabel
         for(unsigned int i=0;i<_pindex->header.words;++i)
           _pindex->fptdata.push_back(vecwords[i]);
         _pindex->seekdata.push_back(seekpos);
-        return true;	
+        return true;
       }
     obErrorLog.ThrowError(__FUNCTION__, "Failed to make a fingerprint", obWarning);
     return false;
@@ -454,7 +454,7 @@ namespace OpenBabel
   /*!
     \class OBFingerprint fingerprint.h <openbabel/fingerprint.h>
     These fingerprints are condensed representation of molecules (or other objects)
-    as a list of boolean values (actually bits in a vector<unsigned>) with length 
+    as a list of boolean values (actually bits in a vector<unsigned>) with length
     of a power of 2. The main motivation is for fast searching of data sources
     containing large numbers of molecules (up to several million). Open Babel
     provides some routines which can search text files containing lists of molecules
@@ -465,14 +465,14 @@ namespace OpenBabel
     http://www.mesaac.com/Fingerprint.htm <br>
     Many methods of preparing fingerprints have been described, but the type supported
     currently in OpenBabel has each bit representing a substructure (or other
-    molecular property). If a substructure is present in the molecule, then a 
-    particular bit is set to 1. But because the hashing method may also map other 
-    substructures to the same bit, a match does not guarantee that a particular 
+    molecular property). If a substructure is present in the molecule, then a
+    particular bit is set to 1. But because the hashing method may also map other
+    substructures to the same bit, a match does not guarantee that a particular
     substructure is present; there may be false positives.  However, with proper design,
-    a large fraction of irrelevant molecules in a data set can be eliminated in a 
-    fast search with boolean methods on the fingerprints. 
+    a large fraction of irrelevant molecules in a data set can be eliminated in a
+    fast search with boolean methods on the fingerprints.
     It then becomes feasible to make a definitive substructure search by
-    conventional methods on this reduced list even if it is slow. 
+    conventional methods on this reduced list even if it is slow.
 
     OpenBabel provides a framework for applying new types of fingerprints without
     changing any existing code. They are derived from OBFingerprint and the
@@ -483,37 +483,37 @@ namespace OpenBabel
     For more on these specific implementations of fingerprints in Open
     Babel, please take a look at the developer's wiki:
     http://openbabel.org/wiki/Fingerprints
- 
-    Fingerprints derived from this abstract base class OBFingerprint can be for any 
-    object derived from OBBase (not just for OBMol). 
-    Each derived class provides an ID as a string and OBFingerprint keeps a map of 
+
+    Fingerprints derived from this abstract base class OBFingerprint can be for any
+    object derived from OBBase (not just for OBMol).
+    Each derived class provides an ID as a string and OBFingerprint keeps a map of
     these to provides a pointer to the class when requested in FindFingerprint.
-   
+
     <h4>-- To define a fingerprint type --</h4>
     The classes derived form OBFingerprint are required to provide
     a GetFingerprint() routine and a Description() routine
     \code
-    class MyFpType : OBFingerprint 
+    class MyFpType : OBFingerprint
     {
        MyFpType(const char* id) : OBFingerprint(id){};
 
-       virtual bool GetFingerprint(OBBase* pOb, vector<unsigned int>& fp, int nbits) 
+       virtual bool GetFingerprint(OBBase* pOb, vector<unsigned int>& fp, int nbits)
        {
           //Convert pOb to the required type, usually OBMol
           OBMol* pmol = dynamic_cast<OBMol*>(pOb);
           fp.resize(required_number_of_words);
-          ... 
+          ...
           use SetBit(fp,n); to set the nth bit
 
           if(nbits)
              Fold(fp, nbits);
        }
-       
+
        virtual const char* Description(){ return "Some descriptive text";}
        ...
     };
     \endcode
-    
+
     Declare a global instance with the ID you will use in -f options to specify
     its use.
     \code
@@ -526,7 +526,7 @@ namespace OpenBabel
     ...
     vector<unsigned int> fp;
     OBFingerprint::GetDefault()->GetFingerprint(&mol, fp); //gets default size of fingerprint
-    \endcode	
+    \endcode
     or
     \code
     vector<unsigned int> fp;
@@ -548,7 +548,7 @@ namespace OpenBabel
     Fingerprints are handled as vector<unsigned int> so that the number of bits
     in this vector and their order will be platform and compiler
     dependent, because of size of int types and endian differences.
-    Use fingerprints (and fastsearch indexes containing them) only 
+    Use fingerprints (and fastsearch indexes containing them) only
     for comparing with other fingerprints prepared on the same machine.
 
     The FingerprintFormat class is an output format which displays fingerprints
@@ -564,7 +564,7 @@ namespace OpenBabel
     to a quirk in the way the program works, it is necessary to have a valid input
     molecule for this option to work.
   */
-	
+
   /*! \class FastSearch fingerprint.h <openbabel/fingerprint.h>
     The FastSearch class searches an index to a datafile containing a list of molecules
     (or other objects) prepared by FastSearchIndexer.
@@ -576,10 +576,10 @@ namespace OpenBabel
     \endcode
     But when the data file contains more than about 10,000 molecules this becomes
     rather too slow to be used interactively. To do it more quickly, an index
-    of the molecules containing their fingerprints (see OBFingerprint) is prepared using 
-    FastSearchIndexer. The indexing process may take a long time but only has to 
-    be done once. The index can be searched very quickly with FastSearch. Because 
-    of the nature of fingerprints a match to a bit does not guarantee 
+    of the molecules containing their fingerprints (see OBFingerprint) is prepared using
+    FastSearchIndexer. The indexing process may take a long time but only has to
+    be done once. The index can be searched very quickly with FastSearch. Because
+    of the nature of fingerprints a match to a bit does not guarantee
     the presence of a particular substructure or other molecular property, so that
     a definitive answer may require a subsequent search of the (much reduced) list
     of candidates by another method (like OBSmartsPattern).
@@ -608,11 +608,11 @@ namespace OpenBabel
     of scope.
 
     <h4>To search in a fastsearch index file</h4>
- 
+
     - Open a std::istream to the indexfile (in binary mode on some systems)
-    - Make a FastSearch object, read the index and open the datafile whose 
+    - Make a FastSearch object, read the index and open the datafile whose
     name it provides
-    \code	
+    \code
     ifstream ifs(indexname,ios::binary);
     FastSearch fs;
     string datafilename = fs.ReadIndex(&ifs);
@@ -672,8 +672,8 @@ namespace OpenBabel
     babel datafile.xxx -ofs namedindex
     \endcode
     With options you can specify:
-    - which type of fingerprint to be used, e.g. -xfFP2, 
-    -	whether it is folded to a specified number of bits, e.g. -xn128 
+    - which type of fingerprint to be used, e.g. -xfFP2,
+    -	whether it is folded to a specified number of bits, e.g. -xn128
     (which should be a power of2)
     - whether to pre-select the molecules which are indexed:
     - by structure e.g only ethers and esters, -sCOC
@@ -684,7 +684,7 @@ namespace OpenBabel
     \code
     babel index.fs outfile.yyy -sSMILES
     \endcode
-    The datafile can also be used as the input file, provided the input format is specified as fs 
+    The datafile can also be used as the input file, provided the input format is specified as fs
     \code
     babel datafile.xxx outfile.yyy -sSMILES -ifs
     \endcode
@@ -692,7 +692,7 @@ namespace OpenBabel
     A "slow" search can use SMARTS strings, but the fast search is restricted
     to the subset which is valid SMILES.
 
-    With the -S option, the target can be specified as a molecule in a file of any format 
+    With the -S option, the target can be specified as a molecule in a file of any format
     \code
     babel datafile.xxx outfile.yyy -Spattern_mol.zzz -ifs
     \endcode
@@ -710,14 +710,14 @@ namespace OpenBabel
     babel datafile.xxx outfile.yyy -sSMILES -ifs -at0.7
     \endcode
     for instance
-    - -at0.7 will recover all molecules with Tanimoto greater than 0.7 
+    - -at0.7 will recover all molecules with Tanimoto greater than 0.7
     - -at15 (no decimal point) will recover the 15 molecules with largest coefficients.
     - -aa will add the Tanimoto coefficient to the titles of the output molecules.
 
     All stages, the indexing, the interpretation of the SMILES string in the -s option,
     the file in the -S option and the final SMARTS filter convert to OBMol and apply
-    ConvertDativeBonds(). This ensures thatforms such as[N+]([O-])=O  and N(=O)=O 
-    are recognized as chemically identical.     
+    ConvertDativeBonds(). This ensures thatforms such as[N+]([O-])=O  and N(=O)=O
+    are recognized as chemically identical.
   */
 
 }//Openbabel

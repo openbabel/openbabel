@@ -1,5 +1,5 @@
 /**********************************************************************
-conformer.cpp - A OBOp to calculate and minimize the energy using a 
+conformer.cpp - A OBOp to calculate and minimize the energy using a
                  forcefield (re-wrap of obminimize and obenergy)
 
 Copyright (C) 2010 by Tim Vandermeersch
@@ -35,7 +35,7 @@ Compile with tools/obabel.cpp rather than tools/babel.cpp
 namespace OpenBabel
 {
   using namespace std;
-  
+
   //////////////////////////////////////////////////////////
   //
   //  OpEnergy
@@ -62,14 +62,14 @@ namespace OpenBabel
           " genetic algorithm based methods (default):\n"
           " --children #     number of children to generate for each parent (default = 5)\n"
           " --mutability #   mutation frequency (default = 5)\n"
-          " --converge #     number of identical generations before convergence is reached\n"                                       
+          " --converge #     number of identical generations before convergence is reached\n"
           " --score #        scoring function [rmsd|energy] (default = rmsd)\n"
-          ; 
+          ;
       }
-  
+
       virtual bool WorksWith(OBBase* pOb) const
-      { 
-        return dynamic_cast<OBMol*>(pOb) != NULL; 
+      {
+        return dynamic_cast<OBMol*>(pOb) != NULL;
       }
       virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*);
   };
@@ -102,7 +102,7 @@ namespace OpenBabel
     iter = pmap->find("log");
     if(iter!=pmap->end())
       log=true;
-    
+
     iter = pmap->find("nconf");
     if(iter!=pmap->end())
       getInteger(iter->second, numConformers);
@@ -123,7 +123,7 @@ namespace OpenBabel
       std::string ff = "MMFF94";
       iter = pmap->find("ff");
       if(iter!=pmap->end())
-        ff = iter->second; 
+        ff = iter->second;
       OBForceField* pFF = OBForceField::FindForceField(ff);
 
       // set some force field variables

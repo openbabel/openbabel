@@ -2,7 +2,7 @@
   stereo.h - OBStereo & OBStereoBase
 
   Copyright (C) 2009 by Tim Vandermeersch
- 
+
   This file is part of the Open Babel project.
   For more information, see <http://openbabel.sourceforge.net/>
 
@@ -31,46 +31,46 @@
 #include <climits> // UINT_MAX
 
 namespace OpenBabel {
-  
-  ///@addtogroup stereo Stereochemistry 
+
+  ///@addtogroup stereo Stereochemistry
   ///@{
 
   /**
    * @brief Placeholder for enums & Ref/Refs related functions.
    *
-   * The OBStereo struct contains a number of enums with predefined values. 
-   * These are OBStereo::BondDirection, OBStereo::Type, OBStereo::Shape, 
-   * OBStereo::View, OBStereo::Winding. There are enums 
-   * which only apply to certain types of stereochemistry but having them 
-   * in 1 place makes it easier to remember. 
+   * The OBStereo struct contains a number of enums with predefined values.
+   * These are OBStereo::BondDirection, OBStereo::Type, OBStereo::Shape,
+   * OBStereo::View, OBStereo::Winding. There are enums
+   * which only apply to certain types of stereochemistry but having them
+   * in 1 place makes it easier to remember.
    *
-   * The OBStereo struct also contains typedefs and functions which 
-   * are crucial to fully understand how to use the OBStereoBase derived 
+   * The OBStereo struct also contains typedefs and functions which
+   * are crucial to fully understand how to use the OBStereoBase derived
    * classes (i.e. OBTetrahedralStereo, OBCisTransStereo, ...). Ref variables
    * and Refs lists are a way to uniquely reference atoms in the molecule. In
-   * most cases these Ref variables are the same as the unique atom ids 
+   * most cases these Ref variables are the same as the unique atom ids
    * (OBAtom::GetId). However, 2 special cases are provided:
    *
-   * - OBStereo::NoRef: An initial value for Ref variables. The constructors of 
-   *   the various Config structs set all refs to NoRef (Refs lists will remain 
+   * - OBStereo::NoRef: An initial value for Ref variables. The constructors of
+   *   the various Config structs set all refs to NoRef (Refs lists will remain
    *   empty). This value is considered invalid when comparing stereochemistry.
-   * - OBStereo::ImplicitRef: Can be used to replace implicit hydrogen ids. 
-   *   Even with explicit hydrogens, it is still valid to replace the Ref of 
-   *   the hydrogen with ImplicitRef. This flexibility also applies to 
+   * - OBStereo::ImplicitRef: Can be used to replace implicit hydrogen ids.
+   *   Even with explicit hydrogens, it is still valid to replace the Ref of
+   *   the hydrogen with ImplicitRef. This flexibility also applies to
    *   comparing stereochemistry. It is possible to compare stereochemistry
-   *   (e.g. OBTetrahedral::Config::operator==) between a Config struct with 
-   *   an ImplicitRef and a Config struct where the Ref is the atom id of the 
+   *   (e.g. OBTetrahedral::Config::operator==) between a Config struct with
+   *   an ImplicitRef and a Config struct where the Ref is the atom id of the
    *   explicit hydrogen. See actual documentation for details about operator==.
    *
    * There are utility functions which make it easier to handle Refs. The most
    * frequently used one is OBStereo::MakeRefs to create lists containing 3 or
-   * 4 Ref values. Formats and library use normally doesn't need the other 
+   * 4 Ref values. Formats and library use normally doesn't need the other
    * functions.
    *
    * @sa OBStereoBase OBStereoFacade
    * @since version 2.3
    */
-  struct OBAPI OBStereo 
+  struct OBAPI OBStereo
   {
     /**
      * The various types of stereochemistry
@@ -97,7 +97,7 @@ namespace OpenBabel {
     };
 
     /**
-     * Shapes used by OBTetraPlanarStereo subclasses for 
+     * Shapes used by OBTetraPlanarStereo subclasses for
      * setting/getting reference ids.
      *
      * @image html SPshapes.png
@@ -121,7 +121,7 @@ namespace OpenBabel {
     };
 
     /**
-     * Windings used by OBTetraNonPlanar subclasses for 
+     * Windings used by OBTetraNonPlanar subclasses for
      * setting/getting reference ids.
      * @sa OBTetraNonPlanar
      */
@@ -130,12 +130,12 @@ namespace OpenBabel {
       AntiClockwise = 2  //!< AntiClockwise winding (or CounterClockwise)
     };
 
-    ///@name Ref & Refs types 
+    ///@name Ref & Refs types
     //@{
     /**
      * All stereo classes work with variables of the type Ref to uniquely
      * identify atoms. In most cases these Ref variables are the same as the
-     * unique atom ids. 
+     * unique atom ids.
      *
      * @sa OBAtom::GetId() OBStereo
      */
@@ -157,7 +157,7 @@ namespace OpenBabel {
     typedef Refs::iterator RefIter;
     /**
      * Iterator (std::iterator) for a const Refs list.
-     */ 
+     */
     typedef Refs::const_iterator ConstRefIter;
     //@}
 
@@ -167,7 +167,7 @@ namespace OpenBabel {
      * Create a Refs list filled with @p ref1, @p ref2, @p ref3 & @p ref4.
      * @p ref4 is not added to the returned Refs if it is equal to NoRef.
      *
-     * @return A Refs list containing the specified Ref values. 
+     * @return A Refs list containing the specified Ref values.
      */
     static Refs MakeRefs(Ref ref1, Ref ref2, Ref ref3, Ref ref4 = NoRef)
     {
@@ -180,7 +180,7 @@ namespace OpenBabel {
       return refs;
     }
     /**
-     * Check if @p refs1 and @p refs2 contain the same Ref values regardless 
+     * Check if @p refs1 and @p refs2 contain the same Ref values regardless
      * of their order.
      *
      * @code
@@ -201,12 +201,12 @@ namespace OpenBabel {
     ///@name Low-level functions used by implementation.
     //@{
     /**
-     * Compute the inversion vector for @p refs and return the sum of it's 
-     * elements. The ith element in the inversion vector is the number of 
+     * Compute the inversion vector for @p refs and return the sum of it's
+     * elements. The ith element in the inversion vector is the number of
      * element to the right of element i with a lower value.
      *
      * The number of inversions is the same as the number of interchanges
-     * of consecutive elements. 
+     * of consecutive elements.
      *
      * When working with 3 refs from a tetrahedral configuration:
      * @code
@@ -244,7 +244,7 @@ namespace OpenBabel {
      */
     static Refs Permutated(const Refs &refs, int i, int j);
     //@}
- 
+
   };
 
   struct StereogenicUnit
@@ -257,7 +257,7 @@ namespace OpenBabel {
         type(_type), id(_id), para(_para)
     {
     }
-    
+
     OBStereo::Type type; //!< the type for this stereogenic unit
     unsigned long id; //! the atom/bond (depends on type) unique id
     bool para; //! para- (=ressemble) or true-stereocenter
@@ -272,15 +272,15 @@ namespace OpenBabel {
    * All stereochemistry classes are derived from OBStereoBase. This class
    * inherits from OBGenericData which allows the objects to be stored in
    * the molecule. The attribute (OBGenericData::GetAttribute) is set to
-   * "StereoData" and the data type is OBGenericDataType::StereoData. The 
+   * "StereoData" and the data type is OBGenericDataType::StereoData. The
    * pure virtual OBStereoBase::GetType function must be implemented by
    * derived classes to return a type defined in OBStereo::Type.
    *
-   * Use the OBStereoFacade for easy access to the derived classes. 
+   * Use the OBStereoFacade for easy access to the derived classes.
    *
    * OBStereoBase keeps track of the OBMol object. This must always be
-   * a valid (not 0 or deleted) pointer and can only be set using the 
-   * constructor. Subclasses can use this to get more information on bonding 
+   * a valid (not 0 or deleted) pointer and can only be set using the
+   * constructor. Subclasses can use this to get more information on bonding
    * for example. Finally, OBStereoBase also keeps track of the specified
    * flag. By default, this is always set to true.
    *
@@ -291,12 +291,12 @@ namespace OpenBabel {
   {
     public:
       /**
-       * Constructor. By default, the stereochemistry is specified. Use 
+       * Constructor. By default, the stereochemistry is specified. Use
        * SetSpecified(false) for unspecified/unknown stereochemistry.
        *
        * @param mol The molecule.
        */
-      OBStereoBase(OBMol *mol) : 
+      OBStereoBase(OBMol *mol) :
         OBGenericData("StereoData", OBGenericDataType::StereoData, perceived),
         m_mol(mol), m_specified(true)
       {
@@ -318,8 +318,8 @@ namespace OpenBabel {
        */
       virtual OBStereo::Type GetType() const = 0;
       /**
-       * Set whether the stereochemistry is specified. Comparing a specified 
-       * OBStereoBase derived class (or it's Config struct) with an unspecified 
+       * Set whether the stereochemistry is specified. Comparing a specified
+       * OBStereoBase derived class (or it's Config struct) with an unspecified
        * one, always returns true.
        */
       void SetSpecified(bool specified) { m_specified = specified; }
@@ -340,10 +340,10 @@ namespace OpenBabel {
   /**
    * @brief Facade to simplify retrieval of OBStereoBase derived objects.
    *
-   * The OBStereoFacade helps with retrieving OBStereoBase derived objects 
-   * (i.e. OBTetrahedralStereo, OBCisTransStereo, ...) from an OBMol. This 
-   * is done by iterating over all OBGenericData objects with data type 
-   * OBGenericDataType::StereoData and checking the OBStereo::Type using 
+   * The OBStereoFacade helps with retrieving OBStereoBase derived objects
+   * (i.e. OBTetrahedralStereo, OBCisTransStereo, ...) from an OBMol. This
+   * is done by iterating over all OBGenericData objects with data type
+   * OBGenericDataType::StereoData and checking the OBStereo::Type using
    * OBStereoBase::GetType.
    *
    * @sa OBStereo OBStereoBase
@@ -356,10 +356,10 @@ namespace OpenBabel {
        * Constructor with @p mol and @p perceive parameter.
        *
        * @param mol The molecule.
-       * @param perceive If true, PerceiveStereo will be called if the 
+       * @param perceive If true, PerceiveStereo will be called if the
        * OBMol::HasChiralityPerceived() flag is not set. (default is true)
        */
-      OBStereoFacade(OBMol *mol, bool perceive = true) : 
+      OBStereoFacade(OBMol *mol, bool perceive = true) :
           m_mol(mol), m_init(false), m_perceive(perceive)
       {
       }
@@ -371,18 +371,18 @@ namespace OpenBabel {
        */
       unsigned int NumTetrahedralStereo();
       /**
-       * Check if atom with @p id is a tetrahedral center. 
+       * Check if atom with @p id is a tetrahedral center.
        * @return True if the atom with @p id has tetrahedral stereochemistry.
        */
       bool HasTetrahedralStereo(unsigned long atomId);
       /**
-       * Get the OBTetrahedralStereo object with @p atomId as center. This 
-       * function returns 0 if there is no OBTetrahedralStereo object found 
+       * Get the OBTetrahedralStereo object with @p atomId as center. This
+       * function returns 0 if there is no OBTetrahedralStereo object found
        * with the specified center.
        */
       OBTetrahedralStereo* GetTetrahedralStereo(unsigned long atomId);
       ///@}
- 
+
       ///@name Cis/Trans stereochemistry
       ///@{
       /**
@@ -390,13 +390,13 @@ namespace OpenBabel {
        */
       unsigned int NumCisTransStereo();
       /**
-       * Check if bond with @p id is a stereogenic cis/trans double bond. 
+       * Check if bond with @p id is a stereogenic cis/trans double bond.
        * @return True if the bond with @p id has cis/trans stereochemistry.
        */
       bool HasCisTransStereo(unsigned long bondId);
       /**
-       * Get the OBTetrahedralStereo object with @p bondId as double bond. 
-       * This function returns 0 if there is no OBCisTransStereo object found 
+       * Get the OBTetrahedralStereo object with @p bondId as double bond.
+       * This function returns 0 if there is no OBCisTransStereo object found
        * with the specified bond.
        */
       OBCisTransStereo* GetCisTransStereo(unsigned long bondId);
@@ -409,13 +409,13 @@ namespace OpenBabel {
        */
       unsigned int NumSquarePlanarStereo();
       /**
-       * Check if atom with @p id is a stereogenic square-planar atom. 
+       * Check if atom with @p id is a stereogenic square-planar atom.
        * @return True if the atom with @p id has square-planar stereochemistry.
        */
       bool HasSquarePlanarStereo(unsigned long atomId);
       /**
-       * Get the OBSquarePlanarStereo object with @p atomId as center. This 
-       * function returns 0 if there is no OBSquarePlanarStereo object found 
+       * Get the OBSquarePlanarStereo object with @p atomId as center. This
+       * function returns 0 if there is no OBSquarePlanarStereo object found
        * with the specified center.
        */
       OBSquarePlanarStereo* GetSquarePlanarStereo(unsigned long atomId);
@@ -428,7 +428,7 @@ namespace OpenBabel {
        */
       inline void EnsureInit() { if (!m_init) InitMaps(); }
       /**
-       * Initialize @p m_tetrahedralMap and m_cistransMap to contain the 
+       * Initialize @p m_tetrahedralMap and m_cistransMap to contain the
        * data objects. If @p m_perceive is true and chirality isn't perceived
        * yet, PerceiveStereo will be called.
        */
@@ -447,23 +447,23 @@ namespace OpenBabel {
   ///@name High level functions
   ///@{
   /**
-   * Convert 0D/2D/3D coordinates to OBStereo objects. The right function will 
-   * be selected based on the molecule's dimensionality 
+   * Convert 0D/2D/3D coordinates to OBStereo objects. The right function will
+   * be selected based on the molecule's dimensionality
    * (i.e. OBMol::GetDimension()).
    *
    * @sa StereoFrom3D StereoFrom2D StereoFrom0D
    * @since version 2.3
    */
-  OBAPI void PerceiveStereo(OBMol *mol, bool force = false); 
+  OBAPI void PerceiveStereo(OBMol *mol, bool force = false);
   /**
    * Convert the 2D depiction of molecule @p mol to OBStereo objects.
-   * This function makes use of the lower level functions 
+   * This function makes use of the lower level functions
    * TetrahedralFrom2D(), CisTransFrom2D(), SquarePlanarFrom2D(), ...
    *
-   * First, symmetry analysis taking stereochemistry into account is 
-   * performed iteratively (see OBGraphSym). Next the 2D coordinates, 
-   * OBBond::Wedge, OBBond::Hash, OBBond::WedgeOrHash and OBBond::CisOrTrans 
-   * are used to construct OBStereoBase derived objects to store the 
+   * First, symmetry analysis taking stereochemistry into account is
+   * performed iteratively (see OBGraphSym). Next the 2D coordinates,
+   * OBBond::Wedge, OBBond::Hash, OBBond::WedgeOrHash and OBBond::CisOrTrans
+   * are used to construct OBStereoBase derived objects to store the
    * stereochemistry. These objects will be added to @p mol.
    *
    * Unless perception is forced, this function does nothing if stereochemistry
@@ -473,8 +473,8 @@ namespace OpenBabel {
    *
      @verbatim
      Reference:
-     [1] T. Cieplak, J.L. Wisniewski, A New Effective Algorithm for the 
-     Unambiguous Identification of the Stereochemical Characteristics of 
+     [1] T. Cieplak, J.L. Wisniewski, A New Effective Algorithm for the
+     Unambiguous Identification of the Stereochemical Characteristics of
      Compounds During Their Registration in Databases. Molecules 2000, 6,
      915-926, http://www.mdpi.org/molecules/papers/61100915/61100915.htm
      @endverbatim
@@ -486,7 +486,7 @@ namespace OpenBabel {
    * @sa StereoFrom3D StereoFrom0D PerceiveStereo
    * @since version 2.3
    */
-  OBAPI void StereoFrom2D(OBMol *mol, 
+  OBAPI void StereoFrom2D(OBMol *mol,
     std::map<OBBond*, enum OBStereo::BondDirection> *updown = NULL, bool force = false);
   /**
    * Convert the 3D coordinates of molecule @p mol to OBStereo objects. This
@@ -507,8 +507,8 @@ namespace OpenBabel {
   OBAPI void StereoFrom3D(OBMol *mol, bool force = false);
   /**
    * Add missing OBStereo objects. Unlike StereoFrom3D() and StereoFrom2D(), this
-   * method only adds objects for previously unidentified objects since we 
-   * don't want to loose any information. The Config::specified flag for the 
+   * method only adds objects for previously unidentified objects since we
+   * don't want to loose any information. The Config::specified flag for the
    * newly added structs is always set to false.
    *
    * For example, a smiles is read which has two tetrahedral centers. Only one has
@@ -526,116 +526,116 @@ namespace OpenBabel {
   ///@name Low level functions
   ///@{
   /**
-   * Get a vector with all OBTetrahedralStereo objects for the molecule. This 
-   * function is used by StereoFrom3D() with the @p addToMol parameter is set 
-   * to true. 
+   * Get a vector with all OBTetrahedralStereo objects for the molecule. This
+   * function is used by StereoFrom3D() with the @p addToMol parameter is set
+   * to true.
    *
    * The algorithm to convert the 3D coordinates to OBTetrahedralStereo object
    * uses the sign of the volume described by the 4 center atom neighbors. Given
-   * 4 points \f$a\f$, \f$b\f$, \f$c\f$ and \f$d\f$, the signed volume \f$S_v\f$ 
+   * 4 points \f$a\f$, \f$b\f$, \f$c\f$ and \f$d\f$, the signed volume \f$S_v\f$
    * is defined as:
    *
      \f[ S_v = \left| \begin{array}{ccc}
      x_b - x_a & y_b - y_a & z_b - z_a \\
      x_c - x_a & y_c - y_a & z_c - z_a \\
-     x_d - x_a & y_d - y_a & z_d - z_a 
+     x_d - x_a & y_d - y_a & z_d - z_a
      \end{array} \right| \f]
    *
    * The sign of \f$S_v\f$ changes when any of the points cross the plane defined
-   * by the other 3 points. To make this less abstract one could say that 
+   * by the other 3 points. To make this less abstract one could say that
    * a change of sign is equal to inverting the tetrahedral stereochemistry.
    *
-   * In case there are only 3 neighbor atoms for the tetrahedral center, the 
-   * center atom itself is used as 4th point. This only changes the magnitude 
+   * In case there are only 3 neighbor atoms for the tetrahedral center, the
+   * center atom itself is used as 4th point. This only changes the magnitude
    * and not the sign of \f$S_v\f$ because the center atom is still on the same
    * side of the plane.
    *
-   * This function is also used for symmetry analysis to handle cases where 
-   * there are two atoms in the same symmetry class that don't have the same 
-   * stereochemistry. In this situation, the @p addToMol parameter is set to 
+   * This function is also used for symmetry analysis to handle cases where
+   * there are two atoms in the same symmetry class that don't have the same
+   * stereochemistry. In this situation, the @p addToMol parameter is set to
    * false and the returned objects will need to be deleted explicitly.
    *
    * @param mol The molecule.
    * @param stereoUnits The stereogenic units.
-   * @param addToMol If true, the OBTetrahedralStereo objects will be added 
+   * @param addToMol If true, the OBTetrahedralStereo objects will be added
    * to the molecule using OBBase::SetData().
    *
    * @sa StereoFrom3D FindTetrahedralAtoms
    * @since version 2.3
    */
-  OBAPI std::vector<OBTetrahedralStereo*> TetrahedralFrom3D(OBMol *mol, 
+  OBAPI std::vector<OBTetrahedralStereo*> TetrahedralFrom3D(OBMol *mol,
       const std::vector<StereogenicUnit> &stereoUnits, bool addToMol = true);
   /**
-   * Get a vector with all OBTetrahedralStereo objects for the molecule. This 
-   * function is used by StereoFrom2D() with the @p addToMol parameter is set 
+   * Get a vector with all OBTetrahedralStereo objects for the molecule. This
+   * function is used by StereoFrom2D() with the @p addToMol parameter is set
    * to true.
    *
-   * The algorithm to convert the 2D coordinates and bond properties 
+   * The algorithm to convert the 2D coordinates and bond properties
    * (i.e. OBBond::Wedge, OBBond::Hash, OBBond::WedgeOrHash and OBBond::CisOrTrans)
-   * uses the sign of a triangle. Given 3 points \f$a\f$, \f$b\f$ and \f$c\f$, the 
-   * sign of the trianle \f$S_t\f$ is defined as: 
+   * uses the sign of a triangle. Given 3 points \f$a\f$, \f$b\f$ and \f$c\f$, the
+   * sign of the trianle \f$S_t\f$ is defined as:
    *
      \f[ S_t = (x_a - x_c) (y_b - y_c) - (y_a - y_c) (x_b - x_c) \f]
    *
-   * This is equation 6 from on the referenced web page. The 3 points used 
+   * This is equation 6 from on the referenced web page. The 3 points used
    * to calculate the triangle sign always remain in the same plane (i.e. z = 0).
-   * The actual meaning of \f$S_t\f$ (i.e. assignment of OBStereo::Winding) depends 
+   * The actual meaning of \f$S_t\f$ (i.e. assignment of OBStereo::Winding) depends
    * on the 4th atom. When the atom is in front of the plane, the sign should be
    * changed to have the same absolute meaning for an atom behind the plane and the
-   * same triangle. It is important to note that none of the z coordinates is ever 
-   * changed, the molecule always stays 2D (unlike methods which set a pseudo-z 
+   * same triangle. It is important to note that none of the z coordinates is ever
+   * changed, the molecule always stays 2D (unlike methods which set a pseudo-z
    * coordinate).
    *
    * @todo document bond property interpretation!
    *
-   * This function is also used for symmetry analysis to handle cases where 
-   * there are two atoms in the same symmetry class that don't have the same 
-   * stereochemistry. In this situation, the @p addToMol parameter is set to 
+   * This function is also used for symmetry analysis to handle cases where
+   * there are two atoms in the same symmetry class that don't have the same
+   * stereochemistry. In this situation, the @p addToMol parameter is set to
    * false and the returned objects will need to be deleted explicitly.
    *
      @verbatim
      Reference:
-     [1] T. Cieplak, J.L. Wisniewski, A New Effective Algorithm for the 
-     Unambiguous Identification of the Stereochemical Characteristics of 
+     [1] T. Cieplak, J.L. Wisniewski, A New Effective Algorithm for the
+     Unambiguous Identification of the Stereochemical Characteristics of
      Compounds During Their Registration in Databases. Molecules 2000, 6,
      915-926, http://www.mdpi.org/molecules/papers/61100915/61100915.htm
      @endverbatim
    *
    * @param mol The molecule.
    * @param stereoUnits The stereogenic units.
-   * @param addToMol If true, the OBTetrahedralStereo objects will be added 
+   * @param addToMol If true, the OBTetrahedralStereo objects will be added
    * to the molecule using OBBase::SetData().
    *
    * @sa StereoFrom2D FindTetrahedralAtoms
    * @since version 2.3
    */
-  OBAPI std::vector<OBTetrahedralStereo*> TetrahedralFrom2D(OBMol *mol, 
+  OBAPI std::vector<OBTetrahedralStereo*> TetrahedralFrom2D(OBMol *mol,
       const std::vector<StereogenicUnit> &stereoUnits, bool addToMol = true);
   /**
-   * Get a vector with all OBTetrahedralStereo objects for the molecule. This 
-   * function is used by StereoFrom0D() with the @p addToMol parameter is set 
+   * Get a vector with all OBTetrahedralStereo objects for the molecule. This
+   * function is used by StereoFrom0D() with the @p addToMol parameter is set
    * to true. There is no algorithm used here, all specified flags will be
-   * set to false. 
+   * set to false.
    *
-   * This function is also used for symmetry analysis to handle cases where 
-   * there are two atoms in the same symmetry class that don't have the same 
-   * stereochemistry. In this situation, the @p addToMol parameter is set to 
+   * This function is also used for symmetry analysis to handle cases where
+   * there are two atoms in the same symmetry class that don't have the same
+   * stereochemistry. In this situation, the @p addToMol parameter is set to
    * false and the returned objects will need to be deleted explicitly.
    *
    * @param mol The molecule.
    * @param stereoUnits The stereogenic units.
-   * @param addToMol If true, the OBTetrahedralStereo objects will be added 
+   * @param addToMol If true, the OBTetrahedralStereo objects will be added
    * to the molecule using OBBase::SetData().
    *
    * @sa StereoFrom0D FindTetrahedralAtoms
    * @since version 2.3
    */
-  OBAPI std::vector<OBTetrahedralStereo*> TetrahedralFrom0D(OBMol *mol, 
+  OBAPI std::vector<OBTetrahedralStereo*> TetrahedralFrom0D(OBMol *mol,
       const std::vector<StereogenicUnit> &stereoUnits, bool addToMol = true);
- 
+
   /**
-   * Get a vector with all OBCisTransStereo objects for the molecule. This 
-   * function is used by StereoFrom3D() with the @p addToMol parameter is set 
+   * Get a vector with all OBCisTransStereo objects for the molecule. This
+   * function is used by StereoFrom3D() with the @p addToMol parameter is set
    * to true.
    *
    * The algorithm to convert the 3D coordinates to OBCisTransStereo objects
@@ -644,65 +644,65 @@ namespace OpenBabel {
    * atoms. Bonds on the same side (cis) will share the same sign for the
    * signed distance.
    *
-   * Missing atom coordinates (OBStereo::ImplicitRef) and their bond 
+   * Missing atom coordinates (OBStereo::ImplicitRef) and their bond
    * vectors will be computed if needed.
    *
    @verbatim
          0      3     Get signed distance of 0 and 2 to the plane
           \    /      that goes through the double bond and is at
-           C==C       right angles to the stereo bonds. 
-          /    \      
+           C==C       right angles to the stereo bonds.
+          /    \
          1      2     If the two signed distances have the same sign
                       then they are cis; if not, then trans.
-   @endverbatim 
+   @endverbatim
    *
-   * This function is also used for symmetry analysis to handle cases where 
-   * there are two atoms in the same symmetry class that don't have the same 
-   * stereochemistry. In this situation, the @p addToMol parameter is set to 
+   * This function is also used for symmetry analysis to handle cases where
+   * there are two atoms in the same symmetry class that don't have the same
+   * stereochemistry. In this situation, the @p addToMol parameter is set to
    * false and the returned objects will need to be deleted explicitly.
    *
    * @param mol The molecule.
    * @param stereoUnits The stereogenic units.
-   * @param addToMol If true, the OBCisTransStereo objects will be added 
+   * @param addToMol If true, the OBCisTransStereo objects will be added
    * to the molecule using OBBase::SetData().
    *
    * @sa StereoFrom3D FindCisTransBonds
    * @since version 2.3
    */
-  OBAPI std::vector<OBCisTransStereo*> CisTransFrom3D(OBMol *mol, 
+  OBAPI std::vector<OBCisTransStereo*> CisTransFrom3D(OBMol *mol,
       const std::vector<StereogenicUnit> &stereoUnits, bool addToMol = true);
   /**
-   * Get a vector with all OBCisTransStereo objects for the molecule. This 
-   * function is used by StereoFrom2D() with the @p addToMol parameter is set 
-   * to true. 
+   * Get a vector with all OBCisTransStereo objects for the molecule. This
+   * function is used by StereoFrom2D() with the @p addToMol parameter is set
+   * to true.
    *
-   * This function is also used for symmetry analysis to handle cases where 
-   * there are two atoms in the same symmetry class that don't have the same 
-   * stereochemistry. In this situation, the @p addToMol parameter is set to 
+   * This function is also used for symmetry analysis to handle cases where
+   * there are two atoms in the same symmetry class that don't have the same
+   * stereochemistry. In this situation, the @p addToMol parameter is set to
    * false and the returned objects will need to be deleted explicitly.
    *
-   * The algorithm for converting the 2D coordinates uses the same triangle 
+   * The algorithm for converting the 2D coordinates uses the same triangle
    * sign as TetrahedralFrom2D(). Depending on sign of 2 triangles, the right
-   * OBStereo::Shape is selected. 
+   * OBStereo::Shape is selected.
    @verbatim
-      0      3       
+      0      3
        \    /        2 triangles: 0-1-b & 2-3-a
         a==b    -->  same sign: U
        /    \        opposite sign: Z
-      1      2       
+      1      2
    @endverbatim
    *
    * @param mol The molecule.
    * @param stereoUnits The stereogenic units.
    * @param updown A map of OBStereo::BondDirection for cis/trans bonds
-   * @param addToMol If true, the OBCisTransStereo objects will be added 
+   * @param addToMol If true, the OBCisTransStereo objects will be added
    * to the molecule using OBBase::SetData().
    *
    * @sa StereoFrom2D FindCisTransBonds
    * @since version 2.3
    */
-  OBAPI std::vector<OBCisTransStereo*> CisTransFrom2D(OBMol *mol, 
-      const std::vector<StereogenicUnit> &stereoUnits, 
+  OBAPI std::vector<OBCisTransStereo*> CisTransFrom2D(OBMol *mol,
+      const std::vector<StereogenicUnit> &stereoUnits,
       const std::map<OBBond*, enum OBStereo::BondDirection> *updown = NULL, bool addToMol = true);
   /**
    * Convert a molecule's OBTetrahedralStereo objects to a series of hash or
@@ -730,7 +730,7 @@ namespace OpenBabel {
    * @return True or False depending on whether the conversion was successful
    * @since version 2.3
    */
-  OBAPI bool TetStereoTo0D(OBMol &mol, 
+  OBAPI bool TetStereoTo0D(OBMol &mol,
       std::map<OBBond*, enum OBStereo::BondDirection> &updown,
       std::map<OBBond*, OBStereo::Ref> &from);
   /**
@@ -758,25 +758,25 @@ namespace OpenBabel {
    */
   OBAPI void StereoRefToImplicit(OBMol& mol, OBStereo::Ref atomId);
   /**
-   * Get a vector with all OBCisTransStereo objects for the molecule. This 
-   * function is used by StereoFrom0D() with the @p addToMol parameter is set 
+   * Get a vector with all OBCisTransStereo objects for the molecule. This
+   * function is used by StereoFrom0D() with the @p addToMol parameter is set
    * to true. There is no algorithm used here, all specified flags will be
    * set to false.
    *
-   * This function is also used for symmetry analysis to handle cases where 
-   * there are two atoms in the same symmetry class that don't have the same 
-   * stereochemistry. In this situation, the @p addToMol parameter is set to 
+   * This function is also used for symmetry analysis to handle cases where
+   * there are two atoms in the same symmetry class that don't have the same
+   * stereochemistry. In this situation, the @p addToMol parameter is set to
    * false and the returned objects will need to be deleted explicitly.
    *
    * @param mol The molecule.
    * @param stereoUnits The stereogenic units.
-   * @param addToMol If true, the OBCisTransStereo objects will be added 
+   * @param addToMol If true, the OBCisTransStereo objects will be added
    * to the molecule using OBBase::SetData().
    *
    * @sa StereoFrom0D FindCisTransBonds
    * @since version 2.3
    */
-  OBAPI std::vector<OBCisTransStereo*> CisTransFrom0D(OBMol *mol, 
+  OBAPI std::vector<OBCisTransStereo*> CisTransFrom0D(OBMol *mol,
       const std::vector<StereogenicUnit> &stereoUnits,
       bool addToMol = true);
   ///@}
@@ -784,17 +784,17 @@ namespace OpenBabel {
 
   ///@name Stereogenic unit identification
   ///@{
-  OBAPI std::vector<StereogenicUnit> FindStereogenicUnits(OBMol *mol, 
+  OBAPI std::vector<StereogenicUnit> FindStereogenicUnits(OBMol *mol,
       const std::vector<unsigned int> &symClasses);
   ///@}
 
   /**
    * @page Stereochemistry
-   * @section overview Overview of classes 
+   * @section overview Overview of classes
    *
    * There are many molecules which contain stereogenic elements. However,
    * certain cases (i.e. tetrahedral, cis/trans) are more common than others
-   * (i.e. allene, biphenyl, octrahedral, ...). For the common stereogenic 
+   * (i.e. allene, biphenyl, octrahedral, ...). For the common stereogenic
    * units, classes are provided. The inheritance of these classes resembles
    * the way they are split into groups.
    *
@@ -813,28 +813,28 @@ namespace OpenBabel {
    * @image html tetranonplanar.png
    * @image html tetraplanar.png
    *
-   * All specific classes (i.e. OBTetrahedralStereo, ...) have embedded Config 
-   * structs which define the actual stereochemistry. All these Config structs 
+   * All specific classes (i.e. OBTetrahedralStereo, ...) have embedded Config
+   * structs which define the actual stereochemistry. All these Config structs
    * use OBStereo::Ref values to reference or uniquely identify atoms. Make sure
    * to read about OBStereo::Ref and the related functions (in OBStereo). OBStereo
-   * is also a placeholder for various enums with predefined values for parameters 
-   * etc. These enums are used throughout the different stereo classes but having 
-   * these enums in a single location makes it easier to remember. When working 
+   * is also a placeholder for various enums with predefined values for parameters
+   * etc. These enums are used throughout the different stereo classes but having
+   * these enums in a single location makes it easier to remember. When working
    * with stereo classes, you normally don't need to use any of the parent classes
    * directly. Only OBStereo and the specific class are needed.
    *
    * @section usage Basic usage
    *
-   * The OBStereoFacade hides the complexity of working with stereochemistry. When 
-   * using openbabel as a library, this is by far the easiest way to access 
-   * stereochemistry information. 
+   * The OBStereoFacade hides the complexity of working with stereochemistry. When
+   * using openbabel as a library, this is by far the easiest way to access
+   * stereochemistry information.
    * The header for the specific OBStereo::Type type is all you need to include.
    * These are:
    * - @em openbabel/stereo/tetrahedral.h
    * - @em openbabel/stereo/cistrans.h
    * - @em openbabel/stereo/squareplanar.h
    *
-   * All these headers also include @em openbabel/stereo/stereo.h providing 
+   * All these headers also include @em openbabel/stereo/stereo.h providing
    * declarations for OBStereo & OBStereoFacade.
    *
      @code
@@ -864,51 +864,51 @@ namespace OpenBabel {
    *
    * All specific stereo classes and their embedded Config struct have an
    * operator<< function which allows them to be used with std::ostream objects
-   * (e.g. std::cout, std::err, ...). These functions are often useful when 
+   * (e.g. std::cout, std::err, ...). These functions are often useful when
    * debugging code.
-   * 
+   *
    * @section details Details on implementation
    *
-   * The detection of stereogenic units start with symmetry analysis. However, a 
+   * The detection of stereogenic units start with symmetry analysis. However, a
    * complete symmetry analysis also needs to take stereochemistry into account.
    * In practice, this means stereochemistry will be found iteratively. At each
    * iteration, the current atom symmetry classes are used to identify stereogenic
    * units. The details about how the symmetry classes are used depends on the type
    * (OBStereo::Type) of stereogenic unit. For tetrahedral centers, having 3 heavy
    * atom neighbors with different symmetry classes or 4 neighbors with different
-   * symmetry classes means the atom is chiral. See FindTetrahedralAtoms(), 
+   * symmetry classes means the atom is chiral. See FindTetrahedralAtoms(),
    * FindCisTransBonds(), FindSquarePlanarAtoms(), ... for details.
    *
-   * After identifying the stereogenic units, Config structs with all the 
-   * information on the spacial arrangement of the groups still have to be 
-   * created. This involves interpreting various ways to represent 
+   * After identifying the stereogenic units, Config structs with all the
+   * information on the spacial arrangement of the groups still have to be
+   * created. This involves interpreting various ways to represent
    * stereochemisrty:
    *
    * - 3D coordinates: StereoFrom3D()
    * - 2D coordinates: StereoFrom2D()
    * - 0D coordinates: StereoFrom0D()
-   * 
+   *
    * Both StereoFrom3D() and StereoFrom2D() delete all existing stereochemistry objects
-   * before adding new ones. For molecules with 3D coordinates, it is evident that 
-   * all information is specified by the coordinates itself. However, if a file format 
-   * uses stereo parity flags, Config structs must be constructed using lower level 
-   * functions and StereoFrom3D() should not be called. In these cases information 
-   * could be lost by calling StereoFrom3D() after reading the file (the stereo flag might have 
-   * indicated the stereochemistry was unspecified or the flag might not match the 
+   * before adding new ones. For molecules with 3D coordinates, it is evident that
+   * all information is specified by the coordinates itself. However, if a file format
+   * uses stereo parity flags, Config structs must be constructed using lower level
+   * functions and StereoFrom3D() should not be called. In these cases information
+   * could be lost by calling StereoFrom3D() after reading the file (the stereo flag might have
+   * indicated the stereochemistry was unspecified or the flag might not match the
    * coordinates). In the case of 2D molecules, the coordinates together with bond
-   * properties (OBBond::Hash, OBBond::Wedge, OBBond::WedgeOrHash and 
-   * OBBond::CisOrTrans) define the stereochemistry. Again, lower level functions 
+   * properties (OBBond::Hash, OBBond::Wedge, OBBond::WedgeOrHash and
+   * OBBond::CisOrTrans) define the stereochemistry. Again, lower level functions
    * can be used when stereo flags need to be used.
    *
-   * StereoFrom0D() works slightly different than 3D/2D. Here, deleting the 
+   * StereoFrom0D() works slightly different than 3D/2D. Here, deleting the
    * stereochemistry would always result in lost information. Instead StereoFrom0D()
    * only adds new objects for stereogenic units which were previously not found.
    * For example, a smiles is read which has two tetrahedral centers. Only one has
    * stereochemistry specified using a '@' character. StereoFrom0D() will detect the
    * second tetrahedral atom and add an OBTetrahedralStereo object to the molecule.
    * The Config::specified flag for the newly added structs is always set to false.
-   * 
-   * Assuming the format code has correctly set the molecule dimensions (OBMol::GetDimesions), 
+   *
+   * Assuming the format code has correctly set the molecule dimensions (OBMol::GetDimesions),
    * PerceiveStereo() will automatically select the correct function to call.
    * When StereoFrom3D(), StereoFrom2D() or StereoFrom0D() are not used, make sure to always
    * set OBMol::HasChiralityPerceived() before returning from the format's ReadMolecule().
@@ -918,7 +918,7 @@ namespace OpenBabel {
    * @subsection input Reading files
    *
    * - Read the section above
-   * - The MDL format (mdlformat.cpp) is a good example for 2D/3D formats with or 
+   * - The MDL format (mdlformat.cpp) is a good example for 2D/3D formats with or
    *   without parity flags.
    * - The SMILES format (smilesformat.cpp) is a good example for 0D formats.
    *
@@ -936,7 +936,7 @@ namespace OpenBabel {
    *
    * @since version 2.3
    */
-  
+
   ///@}  addtogroup
 }
 

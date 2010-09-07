@@ -1,11 +1,11 @@
 /**********************************************************************
 Copyright (C) 2000-2006 by Geoffrey Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -148,7 +148,7 @@ namespace OpenBabel
       mol.PerceiveBondOrders();
 
     // clean out any remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() && 
+    while(ifs.peek() != EOF && ifs.good() &&
           (ifs.peek() == '\n' || ifs.peek() == '\r'))
       ifs.getline(buffer,BUFF_SIZE);
 
@@ -180,11 +180,11 @@ namespace OpenBabel
 
         ofs << "$cell vectors" << endl;
         v1 = v[0] * ANGSTROM_TO_BOHR;
-        snprintf(buffer, BUFF_SIZE, 
+        snprintf(buffer, BUFF_SIZE,
                  "%-3s% 27.14f% 20.14f% 20.14f","", v1.x(), v1.y(), v1.z());
         ofs << buffer << endl;
         v1 = v[1] * ANGSTROM_TO_BOHR;
-        snprintf(buffer, BUFF_SIZE, 
+        snprintf(buffer, BUFF_SIZE,
                  "%-3s% 27.14f% 20.14f% 20.14f","", v1.x(), v1.y(), v1.z());
         ofs << buffer << endl;
         v1 = v[2] * ANGSTROM_TO_BOHR;

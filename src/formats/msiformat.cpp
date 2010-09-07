@@ -1,10 +1,10 @@
 /**********************************************************************
 Copyright (C) 2008 by Geoffrey Hutchison
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -38,7 +38,7 @@ namespace OpenBabel
     virtual const char* SpecificationURL()
     {return "http://openbabel.sourceforge.net/wiki/MSI_format";}; //optional
 
-    virtual const char* GetMIMEType() 
+    virtual const char* GetMIMEType()
     { return "chemical/x-msi-msi"; };
 
     //Flags() can return be any the following combined by | or be omitted if none apply
@@ -93,7 +93,7 @@ namespace OpenBabel
     // "records" start with
     // (1 Model
     // ....
-    //   and end with 
+    //   and end with
     // ....
     // )
     unsigned int openParens = 0; // the count of "open parentheses" tags
@@ -127,7 +127,7 @@ namespace OpenBabel
           openParens++;
           continue;
         }
-        
+
         // atom information
         if (atomRecord) {
           if (strstr(buffer, "ACL") != NULL) {
@@ -189,7 +189,7 @@ namespace OpenBabel
             continue;
           }
         }
-        
+
         // ending a "tag" -- a lone ")" on a line
         if (strstr(buffer,")") != NULL && strstr(buffer, "(") == NULL) {
           openParens--;
@@ -201,7 +201,7 @@ namespace OpenBabel
             mol.AddBond(startBondAtom - 1, endBondAtom - 1, bondOrder);
             bondRecord = false;
           }
-          
+
           if (openParens == 0) {
             ifs.getline(buffer, BUFF_SIZE);
             break; // closed this molecule
@@ -212,17 +212,17 @@ namespace OpenBabel
     mol.EndModify();
 
     // clean out any remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() && 
+    while(ifs.peek() != EOF && ifs.good() &&
           (ifs.peek() == '\n' || ifs.peek() == '\r'))
       ifs.getline(buffer,BUFF_SIZE);
-    
+
     /*
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
     */
-      
+
     return(true);
   }
 

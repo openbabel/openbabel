@@ -22,7 +22,7 @@ object, it calls the op's ProcessVec(std::vector<OBBase*>& vec) function.
 The objects can be manipulated or deleted (call delete with their pointer).
 When the function returns, the remaining molecules in the vector will be
 output to the normal output format. No conversion options are applied at
-this stage, since they already have been earlier. 
+this stage, since they already have been earlier.
 **/
 class DeferredFormat : public OBFormat
 {

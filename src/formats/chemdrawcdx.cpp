@@ -2,11 +2,11 @@
 Copyright (C) 2006 by Fredrik Wallner
 Some portions Copyright (C) 2006-2007 by Geoffrey Hutchsion
 Some portions Copyright (C) 2004 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -71,7 +71,7 @@ data = bswap_32 (data);
 (stream).read ((char*)&data, sizeof(data));
 #endif
 // end endian / bigendian issues (on non-Mac systems)
-#endif 
+#endif
 // end Apple/non-Apple systems
 
 using namespace std;
@@ -98,10 +98,10 @@ namespace OpenBabel
     virtual const char* SpecificationURL()
     {return "http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/IntroCDX.htm";};
 
-    virtual const char* GetMIMEType() 
+    virtual const char* GetMIMEType()
     { return "chemical/x-cdx"; };
 
-    /* Flags() can return be any of the following combined by | 
+    /* Flags() can return be any of the following combined by |
        or be omitted if none apply
        NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY */
     virtual unsigned int Flags()
@@ -128,16 +128,16 @@ namespace OpenBabel
     };
 
 
-    int readFragment(istream *ifs, UINT32 fragmentId, 
+    int readFragment(istream *ifs, UINT32 fragmentId,
                      OBMol *pmol, map<UINT32, int> &atoms, list<cdBond> &bonds);
-    int readNode(istream *ifs, UINT32 nodeId, OBMol *pmol, 
-                 map<UINT32, int> &atoms, list<cdBond> &bonds, 
+    int readNode(istream *ifs, UINT32 nodeId, OBMol *pmol,
+                 map<UINT32, int> &atoms, list<cdBond> &bonds,
                  UINT32 fragmentID);
     int readBond(istream *ifs, UINT32 nodeId, OBMol *pmol, list<cdBond> &bonds);
     int readGeneric(istream *ifs, UINT32 objId);
     const char* getName(istream *ifs, UINT32 size);
 
-  };  
+  };
 	////////////////////////////////////////////////////
 
   //Make an instance of the format class
@@ -170,7 +170,7 @@ namespace OpenBabel
     pmol->BeginModify();
 
     pmol->SetTitle(pConv->GetTitle());
-	
+
     if((int)ifs.tellg() == 0)	// Beginning of file
       {
         ifs.read(buffer,kCDX_HeaderStringLen);
@@ -216,7 +216,7 @@ namespace OpenBabel
                               {
                                 obErrorLog.ThrowError(__FUNCTION__, "Can't assign all bonds!", obDebug);
                                 break;
-                              }	
+                              }
                             bonds.push_back(*bondsIter);
                           }
                         else
@@ -246,12 +246,12 @@ namespace OpenBabel
                 break;
               }
             else if ((tag == kCDXObj_Graphic) || (tag == kCDXObj_Text)
-                     || (tag == kCDXObj_BracketedGroup) 
-                     || (tag == kCDXObj_BracketAttachment) 
-                     || (tag == kCDXObj_CrossingBond) 
-                     || (tag == kCDXObj_ReactionStep) 
-                     || (tag == kCDXObj_Curve) 
-                     || (tag == kCDXObj_EmbeddedObject)) 
+                     || (tag == kCDXObj_BracketedGroup)
+                     || (tag == kCDXObj_BracketAttachment)
+                     || (tag == kCDXObj_CrossingBond)
+                     || (tag == kCDXObj_ReactionStep)
+                     || (tag == kCDXObj_Curve)
+                     || (tag == kCDXObj_EmbeddedObject))
               {	// Objects that can be ignored
                 readGeneric(&ifs, id);
               }
@@ -278,10 +278,10 @@ namespace OpenBabel
             READ_INT16 (ifs ,size);
             switch(tag)
               {
-              case kCDXProp_Name: 
-                pmol->SetTitle(getName(&ifs, size)); 
+              case kCDXProp_Name:
+                pmol->SetTitle(getName(&ifs, size));
                 break;
-              case kCDXProp_FontTable: 
+              case kCDXProp_FontTable:
               case kCDXProp_BoundingBox:
               case kCDXProp_Window_Position:
               case kCDXProp_Window_Size:
@@ -321,11 +321,11 @@ namespace OpenBabel
               case kCDXProp_ColorTable:
               case kCDXProp_CreationProgram:
               case kCDXProp_Group_Integral:
-                ifs.seekg(size, ios_base::cur); 
+                ifs.seekg(size, ios_base::cur);
                 break;
               default: // some unknown tag
-                ifs.seekg(size, ios_base::cur); 
-                snprintf(errorMsg, BUFF_SIZE, "Root Tag: %04X\tSize: %04X\n", tag, size); 
+                ifs.seekg(size, ios_base::cur);
+                snprintf(errorMsg, BUFF_SIZE, "Root Tag: %04X\tSize: %04X\n", tag, size);
                 obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
                 break;
               }
@@ -353,7 +353,7 @@ namespace OpenBabel
     cdBond oneBond;
     //    OBPairData *pd;
     int iInt=0, depth=1;
-	
+
     if((int)ifs.tellg() == 0)	// Beginning of file
       {
         ifs.read(buffer,kCDX_HeaderStringLen);
@@ -409,7 +409,7 @@ namespace OpenBabel
                               {
                                 obErrorLog.ThrowError(__FUNCTION__, "Can't assign all bonds!", obDebug);
                                 break;
-                              }	
+                              }
                             bonds.push_back(*bondsIter);
                           }
                         else
@@ -447,11 +447,11 @@ puts("found a reaction");
                 return new OBReaction();
               }
            else if ((tag == kCDXObj_Graphic) || (tag == kCDXObj_Text)
-                     || (tag == kCDXObj_BracketedGroup) 
-                     || (tag == kCDXObj_BracketAttachment) 
-                     || (tag == kCDXObj_CrossingBond) 
-                     || (tag == kCDXObj_Curve) 
-                     || (tag == kCDXObj_EmbeddedObject)) 
+                     || (tag == kCDXObj_BracketedGroup)
+                     || (tag == kCDXObj_BracketAttachment)
+                     || (tag == kCDXObj_CrossingBond)
+                     || (tag == kCDXObj_Curve)
+                     || (tag == kCDXObj_EmbeddedObject))
               {	// Objects that can be ignored
                 readGeneric(&ifs, id);
               }
@@ -480,9 +480,9 @@ puts("found a reaction");
               {
               case kCDXProp_Name:
 puts("found name");
-                /*pmol->SetTitle(*/puts(getName(&ifs, size));//); 
+                /*pmol->SetTitle(*/puts(getName(&ifs, size));//);
                 break;
-              case kCDXProp_FontTable: 
+              case kCDXProp_FontTable:
               case kCDXProp_BoundingBox:
               case kCDXProp_Window_Position:
               case kCDXProp_Window_Size:
@@ -522,11 +522,11 @@ puts("found name");
               case kCDXProp_ColorTable:
               case kCDXProp_CreationProgram:
               case kCDXProp_Group_Integral:
-                ifs.seekg(size, ios_base::cur); 
+                ifs.seekg(size, ios_base::cur);
                 break;
               default: // some unknown tag
-                ifs.seekg(size, ios_base::cur); 
-                snprintf(errorMsg, BUFF_SIZE, "Root Tag: %04X\tSize: %04X\n", tag, size); 
+                ifs.seekg(size, ios_base::cur);
+                snprintf(errorMsg, BUFF_SIZE, "Root Tag: %04X\tSize: %04X\n", tag, size);
                 obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
                 break;
               }
@@ -541,7 +541,7 @@ puts("found name");
     char *buff;
     UINT16 temp;
     UINT32 skipsize;
-		
+
     //	buff = new char[size];
     READ_INT16 ((*ifs), temp);
     if(temp == 0)
@@ -569,7 +569,7 @@ puts("found name");
 
     READ_INT32 (*ifs, y);
     READ_INT32 (*ifs, x);
-    
+
     // 	printf("2D coordinates - x: %d, y: %d\n", x, y);
     return 0;
   }
@@ -577,10 +577,10 @@ puts("found name");
   UINT32 getBondStart(istream *ifs, UINT32 size)
   {
     UINT32 atomID;
-	
+
     if(size != 4)
       return -1;
-	
+
     READ_INT32 (*ifs, atomID);
     //	printf("Bond starts at atom nr: %08X\n", atomID);
     return atomID;
@@ -589,10 +589,10 @@ puts("found name");
   UINT32 getBondEnd(istream *ifs, UINT32 size)
   {
     UINT32 atomID;
-	
+
     if(size != 4)
       return -1;
-	
+
     READ_INT32 (*ifs, atomID);
     //	printf("Bond ends at atom nr: %08X\n", atomID);
     return atomID;
@@ -601,10 +601,10 @@ puts("found name");
   int getBondOrder(istream *ifs, UINT32 size)
   {
     UINT16 order;
-	
+
     if(size != 2)
       return -1;
-	
+
     READ_INT16 (*ifs, order);
     //	printf("Bond order is: %d\n", order);
     return (int) order;
@@ -613,10 +613,10 @@ puts("found name");
   int getBondDisplay(istream *ifs, UINT32 size)
   {
     UINT16 stereo;
-	
+
     if(size != 2)
       return -1;
-	
+
     READ_INT16 (*ifs, stereo);
     //    printf("Bond stereo is: %d\n", stereo);
     return (int) stereo;
@@ -625,10 +625,10 @@ puts("found name");
   int getNodeType(istream *ifs, UINT32 size)
   {
     UINT16 nodeType;
-	
+
     if(size != 2)
       return -1;
-	
+
     READ_INT16 (*ifs, nodeType);
     //	printf("Node type is: %d\n", nodeType);
     return (int) nodeType;
@@ -637,10 +637,10 @@ puts("found name");
   int getElement(istream *ifs, UINT32 size, OBAtom &atom)
   {
     UINT16 element;
-	
+
     if(size != 2)
       return -1;
-	
+
     READ_INT16 (*ifs, element);
     atom.SetAtomicNum(element);
     //	printf("Atomic number: %d\n", element);
@@ -650,10 +650,10 @@ puts("found name");
   int getIsotope(istream *ifs, UINT32 size, OBAtom &atom)
   {
     UINT16 isotope;
-	
+
     if(size != 2)
       return -1;
-	
+
     READ_INT16 (*ifs, isotope);
     atom.SetIsotope(isotope);
     return 0;
@@ -667,7 +667,7 @@ puts("found name");
 #if __BYTE_ORDER == __BIG_ENDIAN
     radical = radical >> 24;
 #endif
-	
+
     //    cout << " Atomic radical " << size << " " << radical << endl;
     switch (radical)
       {
@@ -689,7 +689,7 @@ puts("found name");
   int getCharge(istream *ifs, UINT32 size)
   {
     int charge;
-	
+
     if(size == 4)		// Bug in ChemDraw 8.0, see http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/properties/Atom_Charge.htm
       {
         READ_INT32 (*ifs, charge);
@@ -704,7 +704,7 @@ puts("found name");
         }
       else
         return 0;
-	
+
     //	printf("Charge: %d\n",charge);
     return charge;
   }
@@ -712,10 +712,10 @@ puts("found name");
   int getAtomHydrogens(istream *ifs, UINT32 size)
   {
     UINT16 hydrogens;
-	
+
     if(size != 2)
       return -1;
-	
+
     READ_INT16 (*ifs, hydrogens);
     //	printf("Number of explicit hydrogens: %d\n", hydrogens);
     return 0;
@@ -762,7 +762,7 @@ puts("found name");
     return -1;
   }
 
-		
+
   int ChemDrawBinaryFormat::readNode(istream *ifs, UINT32 nodeId,
                                      OBMol *pmol, map<UINT32, int> &atoms,
                                      list<cdBond> &bonds, UINT32 fragmentID)
@@ -783,14 +783,14 @@ puts("found name");
     //	data->SetAttribute("nodeId");
     //	snprintf(strNodeId, 20, "%d", nodeId);
     //	data->SetValue(strNodeId);
-    //	atom.SetData(data);	
+    //	atom.SetData(data);
     //	if(atom.HasData("nodeId"))
     //	{
     //		printf("Adding data to atom - attr: %s\tvalue: %s\n", dynamic_cast<OBPairData *> (atom.GetData("nodeId"))->GetAttribute().c_str(), dynamic_cast<OBPairData *> (atom.GetData("nodeId"))->GetValue().c_str());
     //	}
     //	else
     //		printf("No data added\n");
-		
+
     while(ifs->good())
       {
         READ_INT16 (*ifs, tag);
@@ -824,12 +824,12 @@ puts("found name");
               }
             else if(tag == kCDXObj_Group)
               {	// Objects where we can ignore the header
-              }			
+              }
             else
               {
                 snprintf(errorMsg, BUFF_SIZE, "New object in node, type %04X\n", tag);
                 obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-              }			
+              }
           }
         else if(tag == 0)	// End of object
           {
@@ -845,20 +845,20 @@ puts("found name");
             switch(tag)
               {
               case kCDXProp_Atom_NumHydrogens:
-                getAtomHydrogens(ifs, size); 
+                getAtomHydrogens(ifs, size);
                 break;
               case kCDXProp_2DPosition:
-                get2DPosition(ifs, size, x, y); 
+                get2DPosition(ifs, size, x, y);
                 atom.SetVector((double) x / 500000., (double) y / -500000.0, (double) 0.0);
                 break;
               case kCDXProp_Node_Element:
-                getElement(ifs, size, atom); 
+                getElement(ifs, size, atom);
                 break;
               case kCDXProp_Atom_Charge:
-                atom.SetFormalCharge(getCharge(ifs, size)); 
+                atom.SetFormalCharge(getCharge(ifs, size));
                 break;
               case kCDXProp_Node_Type:
-                nodeType = getNodeType(ifs, size); 
+                nodeType = getNodeType(ifs, size);
                 break;
               case kCDXProp_Atom_Isotope:
                 getIsotope(ifs, size, atom);
@@ -871,7 +871,7 @@ puts("found name");
               case kCDXProp_Name:
               case kCDXProp_IgnoreWarnings:
               case kCDXProp_ChemicalWarning:
-                ifs->seekg(size, ios_base::cur); 
+                ifs->seekg(size, ios_base::cur);
                 break;  // Maybe use? (any of the above properties)
               case kCDXProp_MarginWidth:
               case kCDXProp_ZOrder:
@@ -883,11 +883,11 @@ puts("found name");
               case kCDXProp_LabelStyle:
               case kCDXProp_ForegroundColor:
               case kCDXProp_BackgroundColor:
-                ifs->seekg(size, ios_base::cur); 
+                ifs->seekg(size, ios_base::cur);
                 break;
               default: // some unknown node tag
-                ifs->seekg(size, ios_base::cur); 
-                snprintf(errorMsg, BUFF_SIZE, "Node Tag: %04X\tSize: %04X\n", tag, size); 
+                ifs->seekg(size, ios_base::cur);
+                snprintf(errorMsg, BUFF_SIZE, "Node Tag: %04X\tSize: %04X\n", tag, size);
                 obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
                 break;
               }
@@ -898,11 +898,11 @@ puts("found name");
             switch(nodeType)
               {
               case kCDXNodeType_Fragment:
-                atoms[nodeId] = -1; 
+                atoms[nodeId] = -1;
                 break;
               case kCDXNodeType_ExternalConnectionPoint:
                 atoms[nodeId] = -1;
-                bonds.push_back(cdBond(nodeId,fragmentID,1)); 
+                bonds.push_back(cdBond(nodeId,fragmentID,1));
                 break;
               default:
                 atom2 = pmol->NewAtom();
@@ -924,7 +924,7 @@ puts("found name");
     return -1; // file ended early
   }
 
-  int ChemDrawBinaryFormat::readBond(istream *ifs, UINT32 bondId, 
+  int ChemDrawBinaryFormat::readBond(istream *ifs, UINT32 bondId,
                                      OBMol *pmol, list<cdBond> &bonds)
   {
     char errorMsg[BUFF_SIZE];
@@ -969,10 +969,10 @@ puts("found name");
             switch(tag)
               {
               case kCDXProp_Bond_Begin:
-                bgnID = getBondStart(ifs, size); 
+                bgnID = getBondStart(ifs, size);
                 break;
               case kCDXProp_Bond_End:
-                endID = getBondEnd(ifs, size); 
+                endID = getBondEnd(ifs, size);
                 break;
               case kCDXProp_Bond_Order:
                 order = getBondOrder(ifs, size);
@@ -995,7 +995,7 @@ puts("found name");
                   }
                 break;
               case kCDXProp_Bond_Display:
-                stereo = getBondDisplay(ifs, size); 
+                stereo = getBondDisplay(ifs, size);
                 break; // Stereo info
 
               case kCDXProp_BondLength:
@@ -1003,7 +1003,7 @@ puts("found name");
               case kCDXProp_Bond_BeginAttach:
               case kCDXProp_Bond_EndAttach:
               case kCDXProp_ChemicalWarning:
-                ifs->seekg(size, ios_base::cur); 
+                ifs->seekg(size, ios_base::cur);
                 break; // Maybe use? (any of the above cases)
 
               case kCDXProp_IgnoreWarnings:
@@ -1019,7 +1019,7 @@ puts("found name");
               case kCDXProp_ForegroundColor:
               case kCDXProp_BackgroundColor:
               case kCDXProp_LabelStyle:
-                ifs->seekg(size, ios_base::cur); 
+                ifs->seekg(size, ios_base::cur);
                 break;
 
               default: // some unknown, undocumented property
@@ -1057,9 +1057,9 @@ puts("found name");
             snprintf(errorMsg, BUFF_SIZE, "Object ID (in generic %08X): %08X has type: %04X\n", objId, id, tag);
             obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
 
-            if ((tag == kCDXObj_BracketAttachment) 
-                || (tag == kCDXObj_CrossingBond) 
-                || (tag == kCDXObj_BracketedGroup) 
+            if ((tag == kCDXObj_BracketAttachment)
+                || (tag == kCDXObj_CrossingBond)
+                || (tag == kCDXObj_BracketedGroup)
                 || (tag == kCDXObj_Text)
                 || (tag == kCDXObj_Fragment))
               {	// Objects to ignore (Fragment might be worth parsing)
@@ -1086,7 +1086,7 @@ puts("found name");
             //switch(tag)
             //  {
             //  default:
-                ifs->seekg(size, ios_base::cur); 
+                ifs->seekg(size, ios_base::cur);
             //   break;
             //  }
           }
@@ -1165,13 +1165,13 @@ puts("found name");
             switch(tag)
               {
               case kCDXProp_Frag_ConnectionOrder:
-                ifs->seekg(size, ios_base::cur); 
+                ifs->seekg(size, ios_base::cur);
                 break;  // Should use
               case kCDXProp_BoundingBox:
-                ifs->seekg(size, ios_base::cur); 
+                ifs->seekg(size, ios_base::cur);
                 break;
               default:
-                ifs->seekg(size, ios_base::cur); 
+                ifs->seekg(size, ios_base::cur);
                 snprintf(errorMsg, BUFF_SIZE, "Fragment Tag: %04X\tSize: %04X\n", tag, size);
                 obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
 
@@ -1181,7 +1181,7 @@ puts("found name");
         if(depth < 1)
           {
 cerr<<"Done reading "<<pmol<<endl;
-            return 0; // all begin and end tags matched -- everything good 
+            return 0; // all begin and end tags matched -- everything good
           }
       } // while reading
     return -1; // file ended before reading was finished

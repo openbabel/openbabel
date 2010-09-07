@@ -2,7 +2,7 @@
   stereofacade.cpp - OBStereoFacade
 
   Copyright (C) 2009 by Tim Vandermeersch
- 
+
   This file is part of the Open Babel project.
   For more information, see <http://openbabel.sourceforge.net/>
 
@@ -27,31 +27,31 @@
 #include <openbabel/mol.h>
 
 namespace OpenBabel {
-      
+
   unsigned int OBStereoFacade::NumTetrahedralStereo()
   {
     EnsureInit();
     return static_cast<unsigned int> (m_tetrahedralMap.size());
   }
 
-  unsigned int OBStereoFacade::NumCisTransStereo() 
+  unsigned int OBStereoFacade::NumCisTransStereo()
   {
     EnsureInit();
     return static_cast<unsigned int> (m_cistransMap.size());
   }
- 
-  unsigned int OBStereoFacade::NumSquarePlanarStereo() 
+
+  unsigned int OBStereoFacade::NumSquarePlanarStereo()
   {
     EnsureInit();
     return static_cast<unsigned int> (m_squarePlanarMap.size());
   }
-  
+
   bool OBStereoFacade::HasTetrahedralStereo(unsigned long atomId)
   {
     EnsureInit();
     if (m_tetrahedralMap.find(atomId) != m_tetrahedralMap.end())
       return true;
-    return false;  
+    return false;
   }
 
   bool OBStereoFacade::HasCisTransStereo(unsigned long bondId)
@@ -59,24 +59,24 @@ namespace OpenBabel {
     EnsureInit();
     if (m_cistransMap.find(bondId) != m_cistransMap.end())
       return true;
-    return false;  
+    return false;
   }
- 
+
   bool OBStereoFacade::HasSquarePlanarStereo(unsigned long atomId)
   {
     EnsureInit();
     if (m_squarePlanarMap.find(atomId) != m_squarePlanarMap.end())
       return true;
-    return false;  
+    return false;
   }
-      
+
   OBTetrahedralStereo* OBStereoFacade::GetTetrahedralStereo(unsigned long atomId)
   {
     if (!HasTetrahedralStereo(atomId))
       return 0;
     return m_tetrahedralMap[atomId];
   }
-  
+
   OBCisTransStereo* OBStereoFacade::GetCisTransStereo(unsigned long bondId)
   {
     if (!HasCisTransStereo(bondId))
@@ -95,7 +95,7 @@ namespace OpenBabel {
   {
     if (m_perceive && !m_mol->HasChiralityPerceived())
       PerceiveStereo(m_mol);
-      
+
     std::vector<OBGenericData *> stereoData = m_mol->GetAllData(OBGenericDataType::StereoData);
 
     std::vector<OBGenericData*>::iterator data;
@@ -137,7 +137,7 @@ namespace OpenBabel {
         m_cistransMap[id] = ct;
       }
     }
- 
+
     m_init = true;
   }
 

@@ -2,11 +2,11 @@
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2007 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -49,7 +49,7 @@ namespace OpenBabel
       return "http://www.tripos.com/data/support/mol2.pdf";
     }; //optional
 
-    virtual const char* GetMIMEType() 
+    virtual const char* GetMIMEType()
     { return "chemical/x-mol2"; };
 
     virtual int SkipObjects(int n, OBConversion* pConv);
@@ -342,7 +342,7 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
     bool ligandsOnly = pConv->IsOption("l", OBConversion::OUTOPTIONS)!=NULL;
- 
+
     //The old code follows....
     string str,str1;
     char buffer[BUFF_SIZE],label[BUFF_SIZE];
@@ -362,7 +362,7 @@ namespace OpenBabel
     OBPairData *dp = (OBPairData*)mol.GetData("PartialCharges");
     if (dp != NULL) {
         // Tripos spec says:
-        // NO_CHARGES, DEL_RE, GASTEIGER, GAST_HUCK, HUCKEL, PULLMAN, 
+        // NO_CHARGES, DEL_RE, GASTEIGER, GAST_HUCK, HUCKEL, PULLMAN,
         // GAUSS80_CHARGES, AMPAC_CHARGES, MULLIKEN_CHARGES, DICT_ CHARGES,
         // MMFF94_CHARGES, USER_CHARGES
       if (strcasecmp(dp->GetValue().c_str(),"Mulliken") == 0)
@@ -449,7 +449,7 @@ namespace OpenBabel
       {
         s1 = bond->GetBeginAtom()->GetType();
         s2 = bond->GetEndAtom()->GetType();
-        if (bond->IsAromatic() || s1 == "O.co2" || s2 == "O.co2") 
+        if (bond->IsAromatic() || s1 == "O.co2" || s2 == "O.co2")
           strcpy(label,"ar");
         else if (bond->IsAmide())
           strcpy(label,"am");
@@ -478,7 +478,7 @@ namespace OpenBabel
     do {
       ignore(ifs, txt);
     } while(ifs && (--n)>0);
-    
+
     if(!ifs.eof())
       ifs.seekg(1-sizeof(txt), ios::cur);//1 for '/0'
     char ch = ifs.peek();

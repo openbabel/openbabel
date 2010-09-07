@@ -2,7 +2,7 @@
   tetraplanar.cpp - OBTetraPlanarStereo
 
   Copyright (C) 2009 by Tim Vandermeersch
- 
+
   This file is part of the Open Babel project.
   For more information, see <http://openbabel.sourceforge.net/>
 
@@ -35,7 +35,7 @@ namespace OpenBabel {
   }
 
   /*
-  std::vector<unsigned long> OBTetraPlanarStereo::ToInternal(const std::vector<unsigned long> &refs, 
+  std::vector<unsigned long> OBTetraPlanarStereo::ToInternal(const std::vector<unsigned long> &refs,
       OBStereo::Shape shape)
   {
     assert( refs.size() == 4 );
@@ -57,10 +57,10 @@ namespace OpenBabel {
         result[2] = refs.at(1);
         return result;
     }
-  
+
   }
-  
-  std::vector<unsigned long> OBTetraPlanarStereo::ToShape(const std::vector<unsigned long> &refs, 
+
+  std::vector<unsigned long> OBTetraPlanarStereo::ToShape(const std::vector<unsigned long> &refs,
       OBStereo::Shape shape)
   {
     assert( refs.size() == 4 );
@@ -85,6 +85,6 @@ namespace OpenBabel {
 
   }
   */
- 
+
 }
 

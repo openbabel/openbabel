@@ -1,17 +1,17 @@
 /**********************************************************************
 atom.h - Handle OBAtom class.
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2003 by Michael Banck
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -110,7 +110,7 @@ namespace OpenBabel
 
     public:
       enum StereoFlag {
-        
+
       };
 
 
@@ -436,7 +436,7 @@ namespace OpenBabel
       bool IsNotCorH();
       //! \return Is this atom directly connected to the supplied OBAtom?
       bool IsConnected(OBAtom*);
-      //! \return Is this atom related to the supplied OBAtom in 
+      //! \return Is this atom related to the supplied OBAtom in
       //!  a 1,3 bonding pattern?
       bool IsOneThree(OBAtom*);
       //! \return Is this atom related to the supplied OBAtom in
@@ -444,7 +444,7 @@ namespace OpenBabel
       bool IsOneFour(OBAtom*);
       //! \return Is this atom an oxygen in a carboxyl (-CO2 or CO2H) group?
       bool IsCarboxylOxygen();
-      //! \return Is this atom an oxygen in a phosphate (R-PO3) group? 
+      //! \return Is this atom an oxygen in a phosphate (R-PO3) group?
       bool IsPhosphateOxygen();
       //! \return Is this atom an oxygen in a sulfate (-SO3) group?
       bool IsSulfateOxygen();

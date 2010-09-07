@@ -1,14 +1,14 @@
 /**********************************************************************
 finger3.cpp: Fingerprints based on list of SMARTS patterns
 Copyright (C) 2005 Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -48,7 +48,7 @@ protected:
   string _patternsfile;
 
 public:
-  PatternFP(const char* ID, const char* filename=NULL, 
+  PatternFP(const char* ID, const char* filename=NULL,
       bool IsDefault=false) : OBFingerprint(ID, IsDefault)
   {
     if(filename==NULL)
@@ -57,7 +57,7 @@ public:
       _patternsfile = filename;
   }
 
-///////////////////////////////////////////////////////////////////////////// 
+/////////////////////////////////////////////////////////////////////////////
   virtual const char* Description()
   {
     static string desc;
@@ -68,7 +68,7 @@ public:
 
 //////////////////////////////////////////////////////////////////////////////
   //Each bit represents a single substructure; no need for confirmation when substructure searching
-  virtual unsigned int Flags() { return FPT_UNIQUEBITS;}; 
+  virtual unsigned int Flags() { return FPT_UNIQUEBITS;};
 
 ///////////////////////////////////////////////////////////////////////////////
   virtual PatternFP* MakeInstance(const std::vector<std::string>& textlines)
@@ -76,13 +76,13 @@ public:
     return new PatternFP(textlines[1].c_str(),textlines[2].c_str());
   }
 
-//////////////////////////////////////////////////////////////////////////////// 
-  virtual bool GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int foldbits) 
+////////////////////////////////////////////////////////////////////////////////
+  virtual bool GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int foldbits)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(!pmol)
       return false;
-    
+
     unsigned int n;
     //Read patterns file if it has not been done already
     if(_pats.empty())
@@ -112,13 +112,13 @@ public:
            So with a pattern with numbits = 4 and numoccurences = 2,
            the groups would be 1, 1, and 2 bits.
            A molecule with
-              1 match to the pattern would give 0011 
-              2 matches to the pattern would give 0111 
-              3 or more matches to the pattern would give 1111 
+              1 match to the pattern would give 0011
+              2 matches to the pattern would give 0111
+              3 or more matches to the pattern would give 1111
         */
-        int numMatches = ppat->obsmarts.GetUMapList().size();       
+        int numMatches = ppat->obsmarts.GetUMapList().size();
         int num =  ppat->numbits, div = ppat->numoccurrences+1, ngrp;
- 
+
         int i = n;
         while(num)
         {
@@ -138,13 +138,13 @@ public:
       Fold(fp, foldbits);
     return true;
   }
-  
+
   /////////////////////////////////////////////////////////////////////
   bool ReadPatternFile()
   {
     //Reads three types of file. See below
     ifstream ifs;
-	  stringstream errorMsg; 
+	  stringstream errorMsg;
 
     if (OpenDatafile(ifs, _patternsfile).length() == 0)
     {
@@ -157,7 +157,7 @@ public:
     if(!getline(ifs, line)) //first line
       return false;
     bool smartsfirst = (Trim(line)=="#Comments after SMARTS");
-    
+
     _bitcount=0;
     do
     {
@@ -199,7 +199,7 @@ public:
         _bitcount += p.numbits;
       }
     }while(getline(ifs,line));
- 
+
     if (ifs)
       ifs.close();
     return true;
@@ -234,7 +234,7 @@ public:
   }
 
 ///////////////////////////////////////////////////////////////////////////////////
-  bool ParseRDKitFormat(istringstream& ss, pattern& p) 
+  bool ParseRDKitFormat(istringstream& ss, pattern& p)
   {
     //rdkit format, e.g.
     //  14:('[S,s]-[S,s]',0), # S-S

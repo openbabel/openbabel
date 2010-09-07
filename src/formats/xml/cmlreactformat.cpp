@@ -1,10 +1,10 @@
 /**********************************************************************
 Copyright (C) 2005 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -39,7 +39,7 @@ public:
 
   const char* Description()
   {
-    return 
+    return
       "CML Reaction format\n"
       "A minimal implementation of the CML Reaction format\n"
       "This implementation uses libxml2.\n"
@@ -137,7 +137,7 @@ bool CMLReactFormat::ReadChemObject(OBConversion* pConv)
             auditMsg,
             obAuditMsg);
 
-   //Do transformation and return reaction, if it has either reactants or products 
+   //Do transformation and return reaction, if it has either reactants or products
   if(ret && (pReact->NumReactants()!=0 || pReact->NumProducts()!=0)) //Do transformation and return molecule
     return pConv->AddChemObject(pReact->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS),pConv))!=0;
   else
@@ -192,7 +192,7 @@ bool CMLReactFormat::DoElement(const string& name)
     }
     else
     {
-      shared_ptr<OBMol> sp(new OBMol);	
+      shared_ptr<OBMol> sp(new OBMol);
       OBFormat* pCMLFormat = OBConversion::FindFormat("cml");
       if(!pCMLFormat)
         return false;
@@ -318,13 +318,13 @@ bool CMLReactFormat::WriteChemObject(OBConversion* pConv)
     //If sent a molecule, add it to the list.
     //Molecules added in this way have precedence over internal molecules.
     //They can therefore have structure and properties, perhaps obtained from
-    //more than one place using the -C option. Thermodynamic data can also be 
+    //more than one place using the -C option. Thermodynamic data can also be
     //upgraded from that in molecules in OBReaction object (and so in Chemkin or
     //CMLReact input file) by including a separate file with updates.
 
     if(pConv->GetOutputIndex()==1)
     {
-      _pOut = pConv->GetOutStream();//Save the original output stream       
+      _pOut = pConv->GetOutStream();//Save the original output stream
       OMols.clear();
     }
 
@@ -357,7 +357,7 @@ bool CMLReactFormat::WriteChemObject(OBConversion* pConv)
       }
       return ret;
     }
-    else  
+    else
     //If sent text as an OBText object, output the text up to the insertion point
     //and the rest of the text in _text. The content of _text is output at the end.
     {
@@ -373,7 +373,7 @@ bool CMLReactFormat::WriteChemObject(OBConversion* pConv)
       // and also omit <cml>...</cml> wrapper
       if(frontText.find("<?xml ")!=string::npos)
         pConv->AddOption("ReactionsNotStandalone");
-      
+
       pConv->SetOutputIndex(pConv->GetOutputIndex()-1);//not an output we want to count
       return true;
     }
@@ -416,7 +416,7 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   //With normal form, if more than one reaction to be output,
   //write <cml> at start and </cml> at end.
   //With list form, use ref attributes when refering to molecules and put
-  //actual molecules in a separate list. 
+  //actual molecules in a separate list.
   // <cml><moleculeList>...</moleculeList><reactionList>...</reactionList></cml>
 
   //The following element and attribute names may be output
@@ -436,7 +436,7 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   static const xmlChar C_TITLE[]        = "id"; //"title";
   static const xmlChar C_REVERSIBLE[]   = "reversible";
 
-  
+
   bool list = _pxmlConv->IsOption("l")==NULL; //Output with molecules in a separate list
 
   xmlChar* prefix = BAD_CAST _pxmlConv->IsOption("N");
@@ -444,13 +444,13 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   xmlChar* uri=NULL;
   xmlChar* alturi=NULL;
-  
-  _pxmlConv->AddOption("MolsNotStandalone",OBConversion::OUTOPTIONS); //inform CMLFormat 
+
+  _pxmlConv->AddOption("MolsNotStandalone",OBConversion::OUTOPTIONS); //inform CMLFormat
 
 //  OBConversion MolConv(*_pxmlConv); //new copy to use to write associated CML molecules
 //	MolConv.SetAuxConv(NULL); //temporary until a proper OBConversion copy constructor written
 //	MolConv.SetOneObjectOnly();
-   
+
   OBFormat* pCMLFormat = _pxmlConv->FindFormat("cml");
   if(pCMLFormat==NULL)
   {
@@ -458,7 +458,7 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       "CML format for molecules is needed by CMLReactformat and is not available\n",obError);
     return false;
   }
-  
+
   bool MolsHaveBeenAdded=false;
   if(pConv->GetOutputIndex()==0)
   {
@@ -469,7 +469,7 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   //For first reaction
   if(pConv->GetOutputIndex()==1) //OBConversion::Convert() is still using original pConv
   {
-    _pOut = pConv->GetOutStream();//Save the original output stream 
+    _pOut = pConv->GetOutStream();//Save the original output stream
     if(list)
     {
       //Use a temporary stringstream for list format so that moleculeList can be first
@@ -479,7 +479,7 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
       _pxmlConv->SetOutStream(&ssout);
       //Do also for original object; GetDerived() copies the old to the new on subsequent reactions
-      pConv->SetOutStream(&ssout); 
+      pConv->SetOutStream(&ssout);
     }
     if(!_pxmlConv->IsOption("x") && !_pxmlConv->IsOption("ReactionsNotStandalone"))
     {
@@ -531,7 +531,7 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     xmlTextWriterEndElement(writer());//reactant
   }
   xmlTextWriterEndElement(writer());//reactantList
-  
+
   xmlTextWriterStartElementNS(writer(), prefix, C_PRODUCTLIST, NULL);
   for(i=0;i<pReact->NumProducts();i++)
   {
@@ -639,7 +639,7 @@ string CMLReactFormat::AddMolToList(shared_ptr<OBMol> spmol, MolMap& mmap)
   }
   else
   {
-    //If id is a filename with a path or an extension, which can 
+    //If id is a filename with a path or an extension, which can
     //happen if no explicit title given to a molecule,
     // remove path and extension and use the filename as id
     string::size_type pos;
@@ -668,7 +668,7 @@ string CMLReactFormat::AddMolToList(shared_ptr<OBMol> spmol, MolMap& mmap)
       {
         spmol.swap(spnew);
         mapitr->second = spmol; //replace with new molecule
-      //The OBMol originally in map will be deleted when local shared_ptr goes out of scope. 
+      //The OBMol originally in map will be deleted when local shared_ptr goes out of scope.
       }
     }
   }
@@ -730,7 +730,7 @@ bool CMLReactFormat::WriteRateData(OBReaction* pReact, xmlChar* altprefix)
   {
   case OBRateData::TROE:
     xmlTextWriterStartElementNS(writer(), altprefix, C_TROEPARAMS, NULL);
-    xmlTextWriterWriteFormatString(writer(),"%g %g %g %g", 
+    xmlTextWriterWriteFormatString(writer(),"%g %g %g %g",
       pRD->GetTroeParam(0),pRD->GetTroeParam(1),pRD->GetTroeParam(2),pRD->GetTroeParam(3));
     xmlTextWriterEndElement(writer());
     //fallthrough

@@ -2,11 +2,11 @@
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2003-2006 Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -48,7 +48,7 @@ namespace OpenBabel
     virtual const char* SpecificationURL()
     { return "http://www.wwpdb.org/docs.html";};
 
-    virtual const char* GetMIMEType() 
+    virtual const char* GetMIMEType()
     { return "chemical/x-pdb"; };
 
     //*** This section identical for most OBMol conversions ***
@@ -63,7 +63,7 @@ namespace OpenBabel
 
   //Make an instance of the format class
   PDBFormat thePDBFormat;
-  
+
   ////////////////////////////////////////////////////
   /// Utility functions
   static bool parseAtomRecord(char *buffer, OBMol & mol, int chainNum);
@@ -84,8 +84,8 @@ namespace OpenBabel
         if (EQn(buffer,"ENDMDL",6))
           -- n;
       }
-      
-    return ifs.good() ? 1 : -1;       
+
+    return ifs.good() ? 1 : -1;
   }
   /////////////////////////////////////////////////////////////////
   bool PDBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
@@ -149,13 +149,13 @@ namespace OpenBabel
         if (EQn(buffer,"CRYST1",6)) {
           float a, b, c, alpha, beta, gamma;
           string group = "";
-          
+
           sscanf (&(buffer[6]), "%9f%9f%9f%7f%7f%7f", &a, &b, &c,
                   &alpha, &beta, &gamma);
           buffer[66] = '\0';
           group += &(buffer[55]);
           Trim (group);
-          
+
           OBUnitCell *pCell=new OBUnitCell;
           pCell->SetOrigin(fileformatInput);
           pCell->SetData(a,b,c,alpha,beta,gamma);
@@ -163,7 +163,7 @@ namespace OpenBabel
           pmol->SetData(pCell);
           continue;
         }
-        
+
         // another record type, add it as an OBPairData entry
         line = buffer;
         // if the file is valid, all lines should have more than 6 characters
@@ -177,7 +177,7 @@ namespace OpenBabel
         key = line.substr(0,6); // the first 6 characters are the record name
         Trim(key);
         value = line.substr(6);
-        
+
         // We haven't found this record yet
         if (!mol.HasData(key)) {
           dp = new OBPairData;
@@ -185,7 +185,7 @@ namespace OpenBabel
           dp->SetValue(value);
           dp->SetOrigin(fileformatInput);
           mol.SetData(dp);
-        } 
+        }
         // Add on additional lines
         else {
           dp = static_cast<OBPairData*>(mol.GetData(key));
@@ -217,7 +217,7 @@ namespace OpenBabel
       mol.PerceiveBondOrders();
 
     // clean out remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() && 
+    while(ifs.peek() != EOF && ifs.good() &&
           (ifs.peek() == '\n' || ifs.peek() == '\r'))
       ifs.getline(buffer,BUFF_SIZE);
 
@@ -231,24 +231,24 @@ namespace OpenBabel
     integer, and returns either false or true, if the conversion was
     successful or not. If the conversion was not successful, the target
     is set to a random value.
- 
+
     For instance, the PDB Format Description for a CONECT record specifies
- 
+
     COLUMNS        DATA TYPE        FIELD           DEFINITION
     ---------------------------------------------------------------------------------
     1 -  6         Record name      "CONECT"
     7 - 11         Integer          serial          Atom serial number
     ...
- 
+
     To read the Atom serial number, you would call
- 
+
     long int target;
     if ( readIntegerFromRecord(buffer, 7, &target) == false ) {
     cerr << "Could not parse" << endl;
     }
-  
+
     This function does not check the length of the buffer, or
-    strlen(buffer). If the buffer is not long enough => SEGFAULT. 
+    strlen(buffer). If the buffer is not long enough => SEGFAULT.
   */
   static bool readIntegerFromRecord(char *buffer, unsigned int columnAsSpecifiedInPDB, long int *target)
   {
@@ -268,7 +268,7 @@ namespace OpenBabel
   /*! This function reads a CONECT record, as specified
     http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html,
     in short:
- 
+
     COLUMNS         DATA TYPE        FIELD           DEFINITION
     ---------------------------------------------------------------------------------
     1 -  6         Record name      "CONECT"
@@ -283,7 +283,7 @@ namespace OpenBabel
     47 - 51         Integer          serial          Serial number of hydrogen bonded atom
     52 - 56         Integer          serial          Serial number of hydrogen bonded atom
     57 - 61         Integer          serial          Serial number of salt bridged atom
- 
+
     Hydrogen bonds and salt bridges are ignored. --Stefan Kebekus.
   */
 
@@ -333,7 +333,7 @@ namespace OpenBabel
         // make sure we don't look at salt bridges or whatever, so cut the buffer short
         buffer[32] = '\0';
         tokenize(vs,buffer);
-        if( vs.empty() || vs.size() < 2) 
+        if( vs.empty() || vs.size() < 2)
           return false;
         vs.erase(vs.begin()); // remove "CONECT"
 
@@ -357,7 +357,7 @@ namespace OpenBabel
     for (OBAtom *a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i)) {
       // atoms may not have residue information, but if they do,
       // check serial numbers
-      if (a1->GetResidue() != NULL && 
+      if (a1->GetResidue() != NULL &&
           static_cast<long int>(a1->GetResidue()->
                                 GetSerialNum(a1)) == startAtomSerialNumber)
         {
@@ -427,7 +427,7 @@ namespace OpenBabel
             errorMsg << "WARNING: Problems reading a PDB file:\n"
                      << "  Problems reading a CONECT record.\n"
                      << "  According to the PDB specification,\n"
-                     << "  Atoms with serial #" << startAtomSerialNumber 
+                     << "  Atoms with serial #" << startAtomSerialNumber
                      << " and #" << boundedAtomsSerialNumbers[k]
                      << " should be connected\n"
                      << "  However, an atom with serial #" << boundedAtomsSerialNumbers[k] << " was not found.\n"
@@ -442,7 +442,7 @@ namespace OpenBabel
                                                             == boundedAtomsSerialNumbers[k+order+1]))
           order++;
         k += order;
-	
+
         // Generate the bond
         if (firstAtom->GetIdx() < connectedAtom->GetIdx()) { // record the bond 'in one direction' only
           OBBond *bond = mol.GetBond(firstAtom, connectedAtom);
@@ -455,7 +455,7 @@ namespace OpenBabel
                //   CONECT 1136 1138 1139
             bond->SetBondOrder(bond->GetBondOrder() + order+1);
         }
-	
+
       }
     return(true);
   }
@@ -494,7 +494,7 @@ namespace OpenBabel
     for (std::vector<OBGenericData*>::iterator data = pairData.begin(); data != pairData.end(); ++data) {
       OBPairData *pd = static_cast<OBPairData*>(*data);
       string attr = pd->GetAttribute();
-      
+
       // filter to make sure we are writing pdb fields only
       if (attr != "HEADER" && attr != "OBSLTE" && attr != "TITLE" && attr != "SPLIT" &&
           attr != "CAVEAT" && attr != "COMPND" && attr != "SOURCE" && attr != "KEYWDS" &&
@@ -506,7 +506,7 @@ namespace OpenBabel
           attr != "SSBOND" && attr != "LINK" && attr != "CISPEP" && attr != "SITE" &&
           attr != "ORIGX1" && attr != "ORIGX2" && attr != "ORIGX3" && attr != "SCALE1" &&
           attr != "SCALE2" && attr != "SCALE3" && attr != "MATRIX1" && attr != "MATRIX2" &&
-          attr != "MATRIX3" && attr != "MODEL") 
+          attr != "MATRIX3" && attr != "MODEL")
         continue;
 
       if (attr == "COMPND")
@@ -553,7 +553,7 @@ namespace OpenBabel
     if (pmol->HasData(OBGenericDataType::UnitCell))
       {
         OBUnitCell *pUC = (OBUnitCell*)pmol->GetData(OBGenericDataType::UnitCell);
-	
+
         snprintf(buffer, BUFF_SIZE,
                  "CRYST1%9.3f%9.3f%9.3f%7.2f%7.2f%7.2f %-11s 1",
                  pUC->GetA(), pUC->GetB(), pUC->GetC(),
@@ -651,7 +651,7 @@ namespace OpenBabel
           }
 
         element_name = etab.GetSymbol(atom->GetAtomicNum());
-        
+
         int charge = atom->GetFormalCharge();
         char scharge[3] = { ' ', ' ', '\0' };
         if(0 != charge)
@@ -697,7 +697,7 @@ namespace OpenBabel
               ofs << "                                       \n";
               // write the start of a new CONECT record
               snprintf(buffer, BUFF_SIZE, "CONECT%5d", i);
-              ofs << buffer;              
+              ofs << buffer;
             }
           }
 
@@ -722,7 +722,7 @@ namespace OpenBabel
 
     return(true);
   }
-  
+
   ////////////////////////////////////////////////////////////////
   static bool parseAtomRecord(char *buffer, OBMol &mol,int /*chainNum*/)
   /* ATOMFORMAT "(i5,1x,a4,a1,a3,1x,a1,i4,a1,3x,3f8.3,2f6.2,a2,a2)" */
@@ -739,7 +739,7 @@ namespace OpenBabel
 
     /* atom name */
     string atmid = sbuf.substr(6,4);
-    
+
     /* chain */
     char chain = sbuf.substr(15,1)[0];
 
@@ -772,7 +772,7 @@ namespace OpenBabel
                  << "  but OpenBabel found '" << element << "' (atom " << mol.NumAtoms()+1 << ")";
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
       }
-    
+
     // charge - optional
     string scharge;
     if (sbuf.size() > 73)
@@ -809,7 +809,7 @@ namespace OpenBabel
         if (isdigit(type[0])) {
           // sometimes non-standard files have, e.g 11HH
           if (!isdigit(type[1])) type = atmid.substr(1,1);
-          else type = atmid.substr(2,1); 
+          else type = atmid.substr(2,1);
         } else if (sbuf[6] == ' ' &&
                    strncasecmp(type.c_str(), "Zn", 2) != 0 &&
                    strncasecmp(type.c_str(), "Fe", 2) != 0 ||
@@ -836,8 +836,8 @@ namespace OpenBabel
             type = "N";
         }
         // fix: #2002557
-        if (atmid[0] == 'H' && 
-            (atmid[1] == 'D' || atmid[1] == 'E' || 
+        if (atmid[0] == 'H' &&
+            (atmid[1] == 'D' || atmid[1] == 'E' ||
              atmid[1] == 'G' || atmid[1] == 'H')) // HD, HE, HG, HH, ..
           type = "H";
       } else { //must be hetatm record
@@ -936,14 +936,14 @@ namespace OpenBabel
     /* residue sequence number */
     string resnum = sbuf.substr(16,4);
     OBResidue *res  = (mol.NumResidues() > 0) ? mol.GetResidue(mol.NumResidues()-1) : NULL;
-    if (res == NULL 
-        || res->GetName() != resname 
+    if (res == NULL
+        || res->GetName() != resname
         || res->GetNumString() != resnum
         || res->GetChain() != chain)
       {
         vector<OBResidue*>::iterator ri;
         for (res = mol.BeginResidue(ri) ; res ; res = mol.NextResidue(ri))
-          if (res->GetName() == resname 
+          if (res->GetName() == resname
               && res->GetNumString() == resnum
               && static_cast<int>(res->GetChain()) == chain)
             break;

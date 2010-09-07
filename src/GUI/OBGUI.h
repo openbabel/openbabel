@@ -45,7 +45,7 @@ public:
 class CFilenames : public wxTextCtrl
 {
 public:
-	CFilenames(wxWindow* parent, wxWindowID id, const wxString& value = _T(""), 
+	CFilenames(wxWindow* parent, wxWindowID id, const wxString& value = _T(""),
 		const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize)
 		: wxTextCtrl(parent,id,value,pos,size,wxTE_NOHIDESEL|wxTE_PROCESS_TAB)
 	{
@@ -59,9 +59,9 @@ public:
 
 private:
 	DECLARE_EVENT_TABLE()
-	wxString nameWithWildcard; 
+	wxString nameWithWildcard;
 };
-  
+
 
 //*******************************************
 /// The main window
@@ -70,7 +70,7 @@ class OBGUIFrame : public wxFrame
 public:
 	OBGUIFrame(const wxString& title, wxPoint position, wxSize size);
 
-	// event handlers 
+	// event handlers
 	void OnQuit(wxCommandEvent& event);
 	void OnSaveInputText(wxCommandEvent& event);
   void OnCopyToInput(wxCommandEvent& event);
@@ -78,8 +78,8 @@ public:
 	void OnHelp(wxCommandEvent& event);
 	void OnGetInputFile(wxCommandEvent& event);
 	void OnGetOutputFile(wxCommandEvent& event);
-	void OnInFormatInfo(wxCommandEvent& event); 
-	void OnOutFormatInfo(wxCommandEvent& event); 
+	void OnInFormatInfo(wxCommandEvent& event);
+	void OnOutFormatInfo(wxCommandEvent& event);
 	void OnOutFileNameUpdate(wxUpdateUIEvent& event);
 	void OnInFileNameUpdate(wxUpdateUIEvent& event);
 	void OnConvert(wxCommandEvent& event);
@@ -127,7 +127,7 @@ private:
 	wxButton*   m_pOutInfo;
 	wxButton*   m_pConvert;
 	wxTextCtrl* m_pMessages;
-	
+
 	DynOptionswx* m_pGenOptsPanel;
 	DynOptionswx* m_pAPIOptsPanel;
 	DynOptionswx* m_pConvOptsPanel;
@@ -168,12 +168,12 @@ public:
 	MyDialog(wxWindow *parent, const wxString &title );
 };
 
-class DnD : public wxFileDropTarget 
+class DnD : public wxFileDropTarget
 {
 public:
   DnD(OBGUIFrame* parent) : m_pParent(parent){};
   virtual bool OnDropFiles(wxCoord, wxCoord, const wxArrayString& filenames)
-  { 
+  {
     m_pParent->DisplayInputFiles(filenames);
     return true;
   }
@@ -183,7 +183,7 @@ private:
 
 
 
- 
+
 // ----------------------------------------------------------------------------
 // constants
 // ----------------------------------------------------------------------------

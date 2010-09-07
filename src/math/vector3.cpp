@@ -1,17 +1,17 @@
 /**********************************************************************
 vector3.cpp - Handle 3D coordinates.
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2006 by Benoit Jacob
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -57,7 +57,7 @@ namespace OpenBabel
     then a warning is printed and 0.0 is returned.
     Otherwise, if i is 0, 1 or 2, then a reference to x,
     y or z is returned, respectively.
-  
+
     \warning This method is primarily designed to facilitate the
     integration ('Open Babelization') of code that uses arrays of
     doubles rather than the vector class. Due to the error checks
@@ -86,7 +86,7 @@ namespace OpenBabel
     to be) uniformly distributed over the unit sphere. Uses the
     random number generator obRand, or uses the system number
     generator with a time seed if obRand == NULL.
-     
+
     @param obRandP random number generator to use, or NULL, if the
     system random number generator (with time seed) should be used
   */
@@ -183,7 +183,7 @@ namespace OpenBabel
 
 
   /*! This method calculates the angle between two vectors
-     
+
   \warning If length() of any of the two vectors is == 0.0,
   this method will divide by zero. If the product of the
   length() of the two vectors is very close to 0.0, but not ==
@@ -326,7 +326,7 @@ namespace OpenBabel
   {
     return fabs( Point2PlaneSigned(a, b, c, d) );
   }
-  
+
   /* Calculate the angle between point a and the plane determined by b,c,d */
   double Point2PlaneAngle(const vector3 a, const vector3 b, const vector3 c, const vector3 d)
   {
@@ -336,7 +336,7 @@ namespace OpenBabel
     ac = a - c;
     bc = b - c;
     cd = c - d;
- 
+
     normal = cross(bc, cd);
     angle = 90.0 - vectorAngle(normal, ac);
 

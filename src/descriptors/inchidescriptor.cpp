@@ -1,15 +1,15 @@
 /**********************************************************************
-inchifilter.cpp - A descriptor giving an InChI string  
- 
+inchifilter.cpp - A descriptor giving an InChI string
+
 Copyright (C) 2009 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -78,7 +78,7 @@ bool InChIFilter::Compare(OBBase* pOb, istream& optionText, bool noEval, std::st
     filterpos=InchiFilterString.find('/')+1;
 
   //Considering only the significant parts,
-  //compare InChI and filter string, only to length of filter string 
+  //compare InChI and filter string, only to length of filter string
   len = InchiFilterString.size() - filterpos;
   bool ret = inchi.compare(inchipos+1, len, InchiFilterString, filterpos, len)==0;
 
@@ -88,13 +88,13 @@ bool InChIFilter::Compare(OBBase* pOb, istream& optionText, bool noEval, std::st
 }
 
 /*
-///Compare InChI strings in a chemically sensible way 
+///Compare InChI strings in a chemically sensible way
 // See InChIFormat::InchiLess()
 bool InChIFilter::LessThan(OBBase* pOb1, OBBase* pOb2)
 {
   string s1, s2;
   //There is a cache, indexed by the molecule pointer, to reduce
-  //the number of InChI evaluations. This is potentially large when sorting. 
+  //the number of InChI evaluations. This is potentially large when sorting.
   GetCachedValue(pOb1, s1);
   GetCachedValue(pOb2, s2);
   InChIFormat::InchiLess f;

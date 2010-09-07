@@ -1,11 +1,11 @@
 /**********************************************************************
 Copyright (C) 2008 Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -45,7 +45,7 @@ namespace OpenBabel
     virtual const char* SpecificationURL()
     { return "";};
 
-    virtual const char* GetMIMEType() 
+    virtual const char* GetMIMEType()
     { return "chemical/x-pqr"; };
 
     //*** This section identical for most OBMol conversions ***
@@ -79,8 +79,8 @@ namespace OpenBabel
         if (EQn(buffer,"ENDMDL",6))
           -- n;
       }
-      
-    return ifs.good() ? 1 : -1;       
+
+    return ifs.good() ? 1 : -1;
   }
   /////////////////////////////////////////////////////////////////
   bool PQRFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
@@ -176,7 +176,7 @@ namespace OpenBabel
     mol.SetPartialChargesPerceived();
 
     // clean out remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() && 
+    while(ifs.peek() != EOF && ifs.good() &&
           (ifs.peek() == '\n' || ifs.peek() == '\r'))
       ifs.getline(buffer,BUFF_SIZE);
 
@@ -217,7 +217,7 @@ namespace OpenBabel
 
     return 0.0;
   }
-  
+
   static bool parseAtomRecord(char *buffer, OBMol &mol,int /*chainNum*/)
   /* ATOMFORMAT "(i5,1x,a4,a1,a3,1x,a1,i4,a1,3x,3f8.3,2f6.2,1x,i3)" */
   {
@@ -233,7 +233,7 @@ namespace OpenBabel
 
     /* atom name */
     string atmid = sbuf.substr(6,4);
-    
+
     /* chain */
     char chain = sbuf.substr(15,1)[0];
 
@@ -272,13 +272,13 @@ namespace OpenBabel
         if (isdigit(type[0])) {
           // sometimes non-standard files have, e.g 11HH
           if (!isdigit(type[1])) type = atmid.substr(1,1);
-          else type = atmid.substr(2,1); 
+          else type = atmid.substr(2,1);
         } else if (sbuf[6] == ' ' &&
                    strncasecmp(type.c_str(), "Zn", 2) != 0 &&
                    strncasecmp(type.c_str(), "Fe", 2) != 0 ||
 		               isdigit(type[1]))	//type[1] is digit in Platon
           type = atmid.substr(0,1);     // one-character element
-        
+
 
         if (resname.substr(0,2) == "AS" || resname[0] == 'N')
           {
@@ -302,8 +302,8 @@ namespace OpenBabel
               type = "N";
           }
         // fix: #2002557
-        if (atmid[0] == 'H' && 
-            (atmid[1] == 'D' || atmid[1] == 'E' || 
+        if (atmid[0] == 'H' &&
+            (atmid[1] == 'D' || atmid[1] == 'E' ||
              atmid[1] == 'G' || atmid[1] == 'H')) // HD, HE, HG, HH, ..
           type = "H";
       }
@@ -320,7 +320,7 @@ namespace OpenBabel
           }
         else
           {
-            if (isalpha(atmid[0])) 
+            if (isalpha(atmid[0]))
               {
               if (atmid.size() > 2 && (atmid[2] == '\0' || atmid[2] == ' '))
                 type = atmid.substr(0,2);
@@ -368,7 +368,7 @@ namespace OpenBabel
                         }
                     }
           }
-        
+
       }
 
     OBAtom atom;
@@ -387,12 +387,12 @@ namespace OpenBabel
     /* residue sequence number */
     string resnum = sbuf.substr(16,4);
     OBResidue *res  = (mol.NumResidues() > 0) ? mol.GetResidue(mol.NumResidues()-1) : NULL;
-    if (res == NULL || res->GetName() != resname 
+    if (res == NULL || res->GetName() != resname
         || res->GetNumString() != resnum)
       {
         vector<OBResidue*>::iterator ri;
         for (res = mol.BeginResidue(ri) ; res ; res = mol.NextResidue(ri))
-          if (res->GetName() == resname 
+          if (res->GetName() == resname
               && res->GetNumString() == resnum
               && static_cast<int>(res->GetChain()) == chain)
             break;
@@ -470,7 +470,7 @@ namespace OpenBabel
         if (a->GetZ() < minZ)
           minZ = a->GetZ();
       }
-    
+
     vector3 transV = VZero;
     if (minX < -999.0)
       transV.SetX( -1.0*minX - 900.0 );
@@ -574,7 +574,7 @@ namespace OpenBabel
               ofs << "                                       \n";
               // write the start of a new CONECT record
               snprintf(buffer, BUFF_SIZE, "CONECT%5d", i);
-              ofs << buffer;              
+              ofs << buffer;
             }
           }
 

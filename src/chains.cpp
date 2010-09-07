@@ -1,18 +1,18 @@
 /**********************************************************************
 chains.cpp - Parse for macromolecule chains and residues.
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 (original author, Roger Sayle, version 1.6, March 1998)
 (modified by Joe Corkery, OpenEye Scientific Software, March 2001)
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -48,8 +48,8 @@ using namespace std;
 //! An index of the residue names perceived during a run
 //! 0, 1, and 2 reserved for UNK, HOH, LIG
 static char ChainsResName[RESIDMAX][4] = {
-  /*0*/ "UNK",  
-  /*1*/ "HOH",  
+  /*0*/ "UNK",
+  /*1*/ "HOH",
   /*2*/ "LIG",
   /*3*/ "ACE"
 };
@@ -157,12 +157,12 @@ namespace OpenBabel
     int n4;          //!< mask 4 used by ConstrainBackbone() and MatchConstraint()
   }    Template;
 
-  /** 
+  /**
    * Generic template for peptide residue backbone. \n
    * col 1: bitmask \n
    * col 2: element number \n
    * col 3: neighbour count \n
-   * col 4-7: 1-4 bitmasks for neighbour atoms (-6 means carbon) 
+   * col 4-7: 1-4 bitmasks for neighbour atoms (-6 means carbon)
    */
   static Template Peptide[MAXPEPTIDE] = {
     /* N     */    {  0x0001, 7, 2, 0x0030, 0x0100,      0, 0 }, //!< N
@@ -287,9 +287,9 @@ namespace OpenBabel
     const char *data; //!< pseudo-SMILES definition of side-chain
   }    ResidType;
 
-  /** 
+  /**
    * Side chains for recognized amino acids using a pseudo-SMARTS syntax
-   * for branching and bonds. Numbers indicate atom types defined by 
+   * for branching and bonds. Numbers indicate atom types defined by
    * OpenBabel::ChainsAtomName global array above.
    */
   static ResidType AminoAcids[AMINOMAX] = {
@@ -320,9 +320,9 @@ namespace OpenBabel
   /* Amino-N-Butyric Acid (ABA): 1-4-7                PDB Example: 1BBO */
   /* Selenic Acid (SEC):         1-4-"SEG "(-15)-18   PDB Example: 1GP1 */
 
-  /** 
+  /**
    * Side chains for recognized nucleotides using a pseudo-SMARTS syntax
-   * for branching and bonds. Numbers indicate atom types defined by 
+   * for branching and bonds. Numbers indicate atom types defined by
    * OpenBabel::ChainsAtomName global array above.
    */
   static ResidType Nucleotides[NUCLEOMAX] = {
@@ -417,7 +417,7 @@ namespace OpenBabel
       }
     result->type = type;
     result->eval.next     = NULL;
-    result->count.tcond   = NULL; 
+    result->count.tcond   = NULL;
     result->count.fcond   = NULL;
     result->elem.tcond    = NULL;
     result->elem.fcond    = NULL;
@@ -450,7 +450,7 @@ namespace OpenBabel
               delete [] node->assign.bflags;
               node->assign.bflags = NULL; // prevent double-free
             }
-            
+
             break;
 
           case BC_COUNT:
@@ -689,7 +689,7 @@ namespace OpenBabel
       {
         stringstream errorMsg;
         errorMsg << "Maximum Monomer Fanout Exceeded!" << endl;
-        errorMsg << "Residue " << ChainsResName[resid] << " atom " 
+        errorMsg << "Residue " << ChainsResName[resid] << " atom "
                  << curr << endl;
         errorMsg << "Previous = " << prev << " Fanout = " << count << endl;
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
@@ -726,7 +726,7 @@ namespace OpenBabel
           {
             stringstream errorMsg;
             errorMsg << "Duplicated Monomer Specification!\n";
-            errorMsg << "Residue " << ChainsResName[resid] 
+            errorMsg << "Residue " << ChainsResName[resid]
                      << " matches residue ";
             errorMsg << ChainsResName[(*node)->assign.resid] << endl;
             obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
@@ -784,7 +784,7 @@ namespace OpenBabel
   // Setup / Cleanup Functions
   //////////////////////////////////////////////////////////////////////////////
 
-  //! Setup parsing for this molecule -- 
+  //! Setup parsing for this molecule --
   void OBChainsParser::SetupMol(OBMol &mol)
   {
     CleanupMol();
@@ -857,7 +857,7 @@ namespace OpenBabel
     unsigned int numAtoms = mol.NumAtoms();
 
     //DumpState();
-    
+
     // correct serine OG
     for ( unsigned int i = 0 ; i < numAtoms ; i++ ) {
       if (resids[i] == RESIDMIN + 17) // serine
@@ -905,11 +905,11 @@ namespace OpenBabel
 
       if (buffer[3] == ' ')
         buffer[3] = '\0';
-	  
+
       //cout << "  (2) --> = " << buffer << endl;
 
       atomid = (buffer[0] == ' ') ? buffer + 1 : buffer;
-      
+
       //cout << "  (3) --> = " << buffer << endl;
 
       if (resmap[chains[i]].find(resnos[i]) != resmap[chains[i]].end()) {
@@ -960,7 +960,7 @@ namespace OpenBabel
     result = DetermineNucleicBackbone(mol)   && result;
     result = DetermineNucleicSidechains(mol) && result;
     result = DetermineHydrogens(mol)         && result;
-    
+
     // Partially identified residues
     // example: CSD in 1LWF (CYS with two Os on the S)
     bool changed;
@@ -987,7 +987,7 @@ namespace OpenBabel
 
 		bool addResidue = true;
 		for (unsigned int i = 0; i < invalidResidues.size(); ++i)
-		  if ( (invalidResidues[i].first == chains[idx2]) && 
+		  if ( (invalidResidues[i].first == chains[idx2]) &&
 		       (invalidResidues[i].second == resnos[idx2]) )
 		    addResidue = false;
 		if (addResidue)
@@ -996,17 +996,17 @@ namespace OpenBabel
             }
           }
         }
-        
+
       }
     } while (changed);
     for (unsigned int i = 0; i < invalidResidues.size(); ++i) {
       FOR_ATOMS_OF_MOL (atom, mol) {
         idx = atom->GetIdx() - 1;
-        if ( (invalidResidues[i].first == chains[idx]) && 
+        if ( (invalidResidues[i].first == chains[idx]) &&
              (invalidResidues[i].second == resnos[idx]) ) {
           hetflags[idx] = true;
           resids[idx] = 0; // UNK
-          atomids[idx] = -1; 
+          atomids[idx] = -1;
         }
       }
     }
@@ -1016,17 +1016,17 @@ namespace OpenBabel
     short resno = 1;
     FOR_ATOMS_OF_MOL (atom, mol) {
       idx = atom->GetIdx() - 1;
-      
-      if (atom->GetHvyValence() == 0) { 
+
+      if (atom->GetHvyValence() == 0) {
         chains[idx] = ' ';
         resnos[idx] = resno;
         resno++;
-      } else { 
+      } else {
         if (resids[idx] != 0) // UNK
           continue;
         if (hetflags[idx])
           continue;
-	
+
         char chain = chains[idx];
         FOR_ATOMS_OF_MOL (b, mol) {
           unsigned int idx2 = b->GetIdx() - 1;
@@ -1037,7 +1037,7 @@ namespace OpenBabel
             resids[idx2] = 2; // LIG
           }
         }
-        
+
         resno++;
       }
 
@@ -1060,7 +1060,7 @@ namespace OpenBabel
   {
     OBAtom *atom;
     vector<OBAtom *>::iterator a;
-    
+
     // find un-connected atoms (e.g., HOH oxygen atoms)
     for (atom = mol.BeginAtom(a) ; atom ; atom = mol.NextAtom(a)) {
       if (atom->IsHydrogen() || atom->GetHvyValence() != 0)
@@ -1097,7 +1097,7 @@ namespace OpenBabel
       idx = atom->GetIdx() - 1;
       if (!hetflags[idx] && chains[idx] == ' ' && !atom->IsHydrogen()) {
         size = RecurseChain(mol, idx, 'A' + count);
-            
+
         // size = number of heavy atoms in residue chain
         if (size < 4) { // small ligand, probably
           if (size == 1 && atom->IsOxygen())
@@ -1122,7 +1122,7 @@ namespace OpenBabel
       }
     }
 
-    /* 
+    /*
        if( count == 1 )
        for ( i = 0 ; i < numAtoms ; i++ )
        chains[i] = ' ';
@@ -1168,7 +1168,7 @@ namespace OpenBabel
 
     unsigned int i, numAtoms = mol.NumAtoms();
 
-    // Cyclic peptides have no NTer (1SKI) 
+    // Cyclic peptides have no NTer (1SKI)
     // timvdm 30/06/08
     bool foundNTer = false;
     for (i = 0 ; i < numAtoms; i++)
@@ -1179,7 +1179,7 @@ namespace OpenBabel
         if (bitmasks[i] & BitNAll)
           bitmasks[i] |= BitNTer;
 
-    
+
     /* Order Peptide Backbone */
 
     for ( i = 0 ; i < numAtoms ; i++ )
@@ -1353,7 +1353,7 @@ namespace OpenBabel
     int count;
     int j,k;
     unsigned int idx;
-    
+
     j = k = 0; // ignore warning
 
     vector<OBBond *>::iterator b;
@@ -1588,7 +1588,7 @@ namespace OpenBabel
             ptr = ptr->count.fcond;
           break;
 
-        case(BC_ASSIGN): 
+        case(BC_ASSIGN):
           for( i=0; i<AtomCount; i++ ) {
             if( !bitmasks[ResMonoAtom[i]])
               {

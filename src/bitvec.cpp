@@ -1,16 +1,16 @@
 /**********************************************************************
 bitvec.cpp - Fast and efficient bitstring class.
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -313,7 +313,7 @@ namespace OpenBabel
   }
   /** Sets bits on, listed as a string of character-represented integers
       This bit vector is first cleared.
-      The format is "[ n0 n1 n2 n3 ... ]".  
+      The format is "[ n0 n1 n2 n3 ... ]".
       The square brackets are optional.
       The whitespace can be SPACE, NEWLINE or HTAB
       For example "[ 1 5 6 9 ]"
@@ -551,7 +551,7 @@ namespace OpenBabel
       \param[in] bv2 Another bit vector
       \return true if equal, false otherwise
   */
-  bool operator< (const OBBitVec & bv1, const OBBitVec & bv2) 
+  bool operator< (const OBBitVec & bv1, const OBBitVec & bv2)
   {
     bool rtn = false;
     int next_bit_1 = bv1.NextBit(-1);
@@ -576,11 +576,11 @@ namespace OpenBabel
         }
       }
     return rtn;
-  }  
+  }
 
   /** Sets bits on, listed as a string of character-represented integers in a stream
       Only reads one line of input
-      The format is "[ n0 n1 n2 n3 ... ]".  
+      The format is "[ n0 n1 n2 n3 ... ]".
       The square brackets are optional.
       The whitespace can be SPACE or HTAB
       For example "[ 1 5 6 9 ]"
@@ -631,7 +631,7 @@ namespace OpenBabel
   }
 
   /** Output this bit vector to a stream
-      The format is "[ n0 n1 n2 n3 ... ]".  
+      The format is "[ n0 n1 n2 n3 ... ]".
       The whitespace is SPACE
       For example "[ 1 5 6 9 ]"
      \param[out] os The output stream

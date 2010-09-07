@@ -1,18 +1,18 @@
 /**********************************************************************
 bond.h - Handle OBBond class.
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2003 by Michael Banck
 Some portions Copyright (C) 2008 by Tim Vandermeersch
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -63,7 +63,7 @@ namespace OpenBabel
 
 #define OB_WEDGE_OR_HASH_BOND     (1<<11)
 #define OB_CIS_OR_TRANS_BOND     (1<<12)
-  /// @addtogroup core Core classes 
+  /// @addtogroup core Core classes
   //@{
   //class OBBondPrivate;
   class OBAPI OBBond: public OBBase
@@ -78,15 +78,15 @@ namespace OpenBabel
       unsigned long                 _id;        //!< unique id
       //OBBondPrivate * const d;
 
-      /** 
+      /**
       * @return True id the @p flag is set.
        */
       bool HasFlag(int flag) const { return ((_flags & flag) != 0); }
-      /** 
+      /**
        * Sets the bitwise @p flag
        */
       void SetFlag(int flag) { _flags |= flag; }
-      /** 
+      /**
        * Unsets the bitwise @p flag
        */
       void UnsetFlag(int flag) { _flags &= (~(flag)); }
@@ -145,18 +145,18 @@ namespace OpenBabel
       void SetKTriple();
       //! Mark that this bond is aromatic. Does not update atoms or validate.
       void SetAromatic()    { SetFlag(OB_AROMATIC_BOND); }
-      /** 
-       * Mark that this bond has 2D "wedge" notation (i.e., goes in a positive 
+      /**
+       * Mark that this bond has 2D "wedge" notation (i.e., goes in a positive
        * Z direction from the beginning to end atoms)
        */
       void SetWedge() { SetFlag(Wedge); }
-      /** 
-       * Mark that this bond has 2D "hash" notation (i.e., goes in a negative 
+      /**
+       * Mark that this bond has 2D "hash" notation (i.e., goes in a negative
        * Z direction from the beginning to end atoms)
        */
       void SetHash() { SetFlag(Hash); }
-      /** 
-       * Mark that this bond has 2D "wedge" notation (i.e., goes in a positive 
+      /**
+       * Mark that this bond has 2D "wedge" notation (i.e., goes in a positive
        * Z direction from the beginning to end atoms)
        */
       void SetWedgeOrHash() { SetFlag(WedgeOrHash); }
@@ -168,7 +168,7 @@ namespace OpenBabel
       void SetInRing(bool set=true) { if(set)SetFlag(OB_RING_BOND); else UnsetFlag(OB_RING_BOND);}
       //! Mark that this bond indicates a ring closure when walking the molecule
       /** \warning This is for internal use only. All closure bonds are marked
-          automatically by lazy evaluation when requesting 
+          automatically by lazy evaluation when requesting
           OBBond::IsClosure() **/
       void SetClosure()     { SetFlag(OB_CLOSURE_BOND);  }
       //! Clear any indication of 2D "hash" notation from SetHash()
@@ -201,14 +201,14 @@ namespace OpenBabel
       //! \return The set of property flags defined for this bond.
       unsigned int     GetFlags()         const { return(_flags);      }
       //! \return The atom index for the end atom in this bond (from OBAtom::GetIdx()
-      unsigned int     GetBeginAtomIdx()  const 
+      unsigned int     GetBeginAtomIdx()  const
         { return (_bgn ? _bgn->GetIdx() : 0); }
       //! \return The atom index for the end atom in this bond (from OBAtom::GetIdx()
-      unsigned int     GetEndAtomIdx()    const 
+      unsigned int     GetEndAtomIdx()    const
         { return (_end ? _end->GetIdx() : 0); }
       //! \return The "beginning" atom for this bond
       OBAtom *GetBeginAtom()    { return(_bgn);    }
-      const OBAtom *GetBeginAtom() const 
+      const OBAtom *GetBeginAtom() const
         { return(_bgn);    }
       //! \return The "end" atom for this bond
       OBAtom *GetEndAtom()      { return(_end);    }
@@ -234,16 +234,16 @@ namespace OpenBabel
       unsigned int     GetNbrAtomIdx(OBAtom *ptr)
         {
           if (ptr!=_bgn)
-            return (_bgn ? _bgn->GetIdx() : 0); 
+            return (_bgn ? _bgn->GetIdx() : 0);
           else
-            return (_end ? _end->GetIdx() : 0); 
+            return (_end ? _end->GetIdx() : 0);
         }
       //@}
 
       //! \name property request methods
       //@{
-      //! \return Is the bond aromatic? 
-      //!  (Note that the two atoms of the bond may be aromatic, 
+      //! \return Is the bond aromatic?
+      //!  (Note that the two atoms of the bond may be aromatic,
       //!   but not the bond)
       bool IsAromatic() const;
       //! \return Is the bond part of a ring?
@@ -252,7 +252,7 @@ namespace OpenBabel
       /**  Currently, this function classifies any bond with at least one heavy
            atom, no sp-hybrid atoms (e.g., a triple bond somewhere) not in a ring
            as a potential rotor. No other bond typing is attempted.
-           For more detailed rotor detection, check the OBRotorList and 
+           For more detailed rotor detection, check the OBRotorList and
            OBRotorRules classes **/
       bool IsRotor();
       /** \return Is the bond an amide link (i.e., between a carbonyl C and a N)?
@@ -308,13 +308,13 @@ namespace OpenBabel
        * @since version 2.3
        */
       bool IsCisOrTrans() const { return(HasFlag(CisOrTrans)); }
- 
+
       //! \return whether the geometry around this bond "looks" unsaturated
       bool IsDoubleBondGeometry();
       //@}
 
     }; // class OBBond
-  
+
   //@} group
 
   //! A standard iterator over a vector of bonds

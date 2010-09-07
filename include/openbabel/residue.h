@@ -1,16 +1,16 @@
 /**********************************************************************
 residue.h - Defines for residue properties, names, etc.
- 
+
 Copyright (C) 2001, 2002  OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -113,7 +113,7 @@ namespace OpenBabel {
 
     //! \return a vector of all atoms in this residue
     std::vector<OBAtom*> GetAtoms(void)           const;
-    //! \return all bonds in this residue. @p exterior includes bonds to atoms 
+    //! \return all bonds in this residue. @p exterior includes bonds to atoms
     //!  outside this residue (default is true)
     std::vector<OBBond*> GetBonds(bool exterior= true)const;
 

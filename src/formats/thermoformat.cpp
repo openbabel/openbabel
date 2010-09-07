@@ -1,13 +1,13 @@
 /**********************************************************************
 Copyright (C) 2005 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -76,7 +76,7 @@ bool ThermoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   do
   {
     if(!ifs.getline(ln,BUFF_SIZE) || stopOnEnd && !strncasecmp(ln,"END",3))
-      return false; 
+      return false;
   }while(ln[79]!='1');
 
   char phase, nam[25], dum[7], elname[3];
@@ -92,7 +92,7 @@ bool ThermoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     //Reaction Design extension
     p+=20;
     string line;
-    if(!getline(ifs,line))return false; 
+    if(!getline(ifs,line))return false;
     vector<string> toks;
     tokenize(toks,line," \t\n\r");
     for(i=0;i<toks.size();i+=2)
@@ -103,7 +103,7 @@ bool ThermoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       atom.ForceNoH();
       for(;elnum>0;--elnum)
         pmol->AddAtom(atom);
-    }	
+    }
   }
   else
   {
@@ -144,7 +144,7 @@ bool ThermoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   p=ln;
   for(i=10;i<14;i++,p+=15)
     sscanf(p,"%15lf",&Coeff[i]);
-  
+
   for(i=0;i<14;++i)
     pND->SetCoeff(i, Coeff[i]);
 
@@ -189,9 +189,9 @@ bool ThermoFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   }
   ofs << right << pND->GetPhase() << fixed << setprecision(3) << setw(10) << pND->GetLoT();
   ofs << setw(10) << pND->GetHiT() << setw(9) << pND->GetMidT() << "    01";
-  
+
   if(toobig)
-    ofs << "&\n" << formula << '\n'; 
+    ofs << "&\n" << formula << '\n';
   else
     ofs << '\n';
 

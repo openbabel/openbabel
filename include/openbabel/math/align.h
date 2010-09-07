@@ -1,15 +1,15 @@
 /**********************************************************************
 align.h - Align two molecules or vectors of vector3
- 
+
 Copyright (C) 2010 by Noel M. O'Boyle
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -45,9 +45,9 @@ namespace OpenBabel
    *
    * When aligning molecules, the atoms of the two molecules must be in the same
    * order for the results to be sensible. By default, hydrogens are not
-   * included in the least-squares fitting procedure (set @p includeH to 
+   * included in the least-squares fitting procedure (set @p includeH to
    * true if you wish to include them) and so the resulting RMSD is the
-   * heavy-atom RMSD (which is usually what you want). 
+   * heavy-atom RMSD (which is usually what you want).
    *
    * By default, symmetry is taken
    * into account when comparing molecules. For example, if a benzene is flipped
@@ -61,13 +61,13 @@ namespace OpenBabel
    * new coordinates from the alignment, you need to use UpdateCoords().
    *
    * @since version 2.3
-   */ 
+   */
   class OBAPI OBAlign {
-  public: 
+  public:
     ///@name Constructors
     //@{
     /**
-     * If this constructor is used, the Target and Reference must be 
+     * If this constructor is used, the Target and Reference must be
      * set using SetRef/SetRefMol and SetTarget/SetTargetMol before running
      * the alignment.
      */
@@ -128,7 +128,7 @@ namespace OpenBabel
     double GetRMSD();
     /**
      * Return the actual alignment of the Target to the Reference
-     * in terms of a vector of vector3 objects. If you want an OBMol 
+     * in terms of a vector of vector3 objects. If you want an OBMol
      * with the aligned coordinates, you should use UpdateCoords() instead.
      * This function should only
      * be called after running the alignment (using Align()).

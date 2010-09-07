@@ -1,18 +1,18 @@
 /**********************************************************************
-reportformat.cpp - Report information about the molecule: charge, distance 
+reportformat.cpp - Report information about the molecule: charge, distance
              matrix angle, chiral info, etc.
- 
+
 Copyright (C) 2000 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -75,7 +75,7 @@ namespace OpenBabel
 "    H   8    2.1537     1.0846     2.1537     3.4003     3.8761     3.4003 \n"
 "    H   9    3.4003     2.1537     1.0846     2.1537     3.4003     3.8761 \n"
 "    H  10    3.8761     3.4003     2.1537     1.0846     2.1537     3.4003 \n"
-"    H  11    3.4003     3.8761     3.4003     2.1537     1.0846     2.1537\n" 
+"    H  11    3.4003     3.8761     3.4003     2.1537     1.0846     2.1537\n"
 "    H  12    2.1537     3.4003     3.8761     3.4003     2.1537     1.0846 \n\n"
 
 "               H   7      H   8      H   9      H  10      H  11      H  12\n"
@@ -85,7 +85,7 @@ namespace OpenBabel
 "    H   9    4.2961     2.4804     0.0000 \n"
 "    H  10    4.9607     4.2961     2.4803     0.0000 \n"
 "    H  11    4.2961     4.9607     4.2961     2.4803     0.0000 \n"
-"    H  12    2.4803     4.2961     4.9607     4.2961     2.4804     0.0000\n\n" 
+"    H  12    2.4803     4.2961     4.9607     4.2961     2.4804     0.0000\n\n"
 
 " ATOMIC CHARGES\n"
 "    C   1   -0.1000000000\n"

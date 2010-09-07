@@ -1,9 +1,9 @@
 /**********************************************************************
   XTCFormat - portable compressed trajectory format (gromacs)
 
-  Copyright (C) 2008 by Tim Vandermeersch 
- 
-  Parts of the code are from libxdrf: 
+  Copyright (C) 2008 by Tim Vandermeersch
+
+  Parts of the code are from libxdrf:
   frans van hoesel hoesel@chem.rug.nl
   http://hpcv100.rc.rug.nl/xdrf.html
 
@@ -59,13 +59,13 @@ namespace OpenBabel
     void	sendbits(int buf[], int num_of_bits, int num);
     int	sizeofint(const int size);
     int	sizeofints( const int num_of_ints, unsigned int sizes[]);
-    void	sendints(int buf[], const int num_of_ints, const int num_of_bits, 
+    void	sendints(int buf[], const int num_of_ints, const int num_of_bits,
                    unsigned int sizes[], unsigned int nums[]);
     int	receivebits(int buf[], int num_of_bits);
-    void	receiveints(int buf[], const int num_of_ints, int num_of_bits, 
+    void	receiveints(int buf[], const int num_of_ints, int num_of_bits,
                       unsigned int sizes[], int nums[]);
     int	xdr3dfcoord(XDR *xdrs, float *fp, int *size, float *precision);
- 
+
   public:
     //Register this format type ID
     XTCFormat()
@@ -97,8 +97,8 @@ namespace OpenBabel
     //virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
   };
   //***
- 
-  // define the static magicints 
+
+  // define the static magicints
   int XTCFormat::magicints[] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0,
     8, 10, 12, 16, 20, 25, 32, 40, 50, 64,
@@ -108,7 +108,7 @@ namespace OpenBabel
     82570, 104031, 131072, 165140, 208063, 262144, 330280, 416127, 524287, 660561,
     832255, 1048576, 1321122, 1664510, 2097152, 2642245, 3329021, 4194304, 5284491, 6658042,
     8388607, 10568983, 13316085, 16777216 };
-  
+
   //Make an instance of the format class
   XTCFormat theXTCFormat;
 
@@ -151,7 +151,7 @@ namespace OpenBabel
       xdr_int(&xd, &natoms);
       if (natoms != mol.NumAtoms()) {
         std::stringstream errorMsg;
-        errorMsg << "Error: number of atoms in the trajectory (" << natoms 
+        errorMsg << "Error: number of atoms in the trajectory (" << natoms
                  << ") doesn't match the number of atoms in the supplied "
                  << "molecule (" << mol.NumAtoms() << ").";
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
@@ -160,9 +160,9 @@ namespace OpenBabel
 
       // Get the frame step number
       xdr_int(&xd, &step);
-      // Get the frame time 
+      // Get the frame time
       xdr_float(&xd, &time);
-      // Get the frame box 
+      // Get the frame box
       xdr_float(&xd, &box[0][0]);
       xdr_float(&xd, &box[0][1]);
       xdr_float(&xd, &box[0][2]);
@@ -193,8 +193,8 @@ namespace OpenBabel
     }
 
     // Close the XDR file
-    xdrclose(&xd); 
- 
+    xdrclose(&xd);
+
     // Set the conformers in the mol object
     mol.SetConformers(vconf);
 
@@ -214,14 +214,14 @@ namespace OpenBabel
     | ________________________________________________________________________
     |
     | Below are the routines to be used by C programmers. Use the 'normal'
-    | xdr routines to write integers, floats, etc (see man xdr)	
+    | xdr routines to write integers, floats, etc (see man xdr)
     |
     | int xdropen(XDR *xdrs, const char *filename, const char *type)
-    |	This will open the file with the given filename and the 
+    |	This will open the file with the given filename and the
     |	given mode. You should pass it an allocated XDR struct
     |	in xdrs, to be used in all other calls to xdr routines.
-    |	Mode is 'w' to create, or update an file, and for all 
-    |	other values of mode the file is opened for reading. 
+    |	Mode is 'w' to create, or update an file, and for all
+    |	other values of mode the file is opened for reading.
     |	You need to call xdrclose to flush the output and close
     |	the file.
     |
@@ -232,14 +232,14 @@ namespace OpenBabel
     |	Flush the data to the file, and close the file;
     |	You should not use xdr_destroy (which comes standard
     |	with the xdr libraries).
-    |	 
+    |
     | int xdr3dfcoord(XDR *xdrs, float *fp, int *size, float *precision)
-    |	This is \fInot\fR a standard xdr routine. I named it this 
-    |	way, because it invites people to use the other xdr 
+    |	This is \fInot\fR a standard xdr routine. I named it this
+    |	way, because it invites people to use the other xdr
     |	routines.
     |
     |	frans van hoesel hoesel@chem.rug.nl
-  */	
+  */
 
 
   /*___________________________________________________________________________
@@ -265,7 +265,7 @@ namespace OpenBabel
     int init_done = 0;
     enum xdr_op lmode;
     int xdrid;
-    
+
     if (init_done == 0) {
       for (xdrid = 1; xdrid < MAXID; xdrid++) {
         xdridptr[xdrid] = NULL;
@@ -316,26 +316,26 @@ namespace OpenBabel
     | done by xdr_destroy).
     |
   */
- 
+
   int XTCFormat::xdrclose(XDR *xdrs) {
     int xdrid;
-    
+
     if (xdrs == NULL) {
       fprintf(stderr, "xdrclose: passed a NULL pointer\n");
       return 0;
     }
     for (xdrid = 1; xdrid < MAXID; xdrid++) {
       if (xdridptr[xdrid] == xdrs) {
-	    
+
         xdr_destroy(xdrs);
         fclose(xdrfiles[xdrid]);
         xdridptr[xdrid] = NULL;
         return 1;
       }
-    } 
+    }
     fprintf(stderr, "xdrclose: no such open xdr file\n");
     return 0;
-    
+
   }
 
   /*____________________________________________________________________________
@@ -350,11 +350,11 @@ namespace OpenBabel
   */
 
   void XTCFormat::sendbits(int buf[], int num_of_bits, int num) {
-    
+
     unsigned int cnt, lastbyte;
     int lastbits;
     unsigned char * cbuf;
-    
+
     cbuf = ((unsigned char *)buf) + 3 * sizeof(*buf);
     cnt = (unsigned int) buf[0];
     lastbits = buf[1];
@@ -391,7 +391,7 @@ namespace OpenBabel
   int XTCFormat::sizeofint(const int size) {
     unsigned int num = 1;
     int num_of_bits = 0;
-    
+
     while (size >= num && num_of_bits < 32) {
       num_of_bits++;
       num <<= 1;
@@ -417,7 +417,7 @@ namespace OpenBabel
     num_of_bytes = 1;
     bytes[0] = 1;
     num_of_bits = 0;
-    for (i=0; i < num_of_ints; i++) {	
+    for (i=0; i < num_of_ints; i++) {
       tmp = 0;
       for (bytecnt = 0; bytecnt < num_of_bytes; bytecnt++) {
         tmp = bytes[bytecnt] * sizes[i] + tmp;
@@ -439,13 +439,13 @@ namespace OpenBabel
     return num_of_bits + num_of_bytes * 8;
 
   }
-    
+
   /*____________________________________________________________________________
     |
     | sendints - send a small set of small integers in compressed format
     |
     | this routine is used internally by xdr3dfcoord, to send a set of
-    | small integers to the buffer. 
+    | small integers to the buffer.
     | Multiplication with fixed (specified maximum ) sizes is used to get
     | to one big, multibyte integer. Allthough the routine could be
     | modified to handle sizes bigger than 16777216, or more than just
@@ -454,7 +454,7 @@ namespace OpenBabel
     | or the byte buffer (32 bytes) is unchecked and causes bad results.
     |
   */
- 
+
   void XTCFormat::sendints(int buf[], const int num_of_ints, const int num_of_bits,
                            unsigned int sizes[], unsigned int nums[]) {
 
@@ -474,7 +474,7 @@ namespace OpenBabel
                 "match size %d\n", nums[i], sizes[i]);
         return;
       }
-      /* use one step multiply */    
+      /* use one step multiply */
       tmp = nums[i];
       for (bytecnt = 0; bytecnt < num_of_bytes; bytecnt++) {
         tmp = bytes[bytecnt] * sizes[i] + tmp;
@@ -504,14 +504,14 @@ namespace OpenBabel
   /*___________________________________________________________________________
     |
     | receivebits - decode number from buf using specified number of bits
-    | 
+    |
     | extract the number of bits from the array buf and construct an integer
     | from it. Return that value.
     |
   */
 
   int XTCFormat::receivebits(int buf[], int num_of_bits) {
-    int cnt, num; 
+    int cnt, num;
     unsigned int lastbits, lastbyte;
     unsigned char * cbuf;
     int mask = (1 << num_of_bits) -1;
@@ -520,7 +520,7 @@ namespace OpenBabel
     cnt = buf[0];
     lastbits = (unsigned int) buf[1];
     lastbyte = (unsigned int) buf[2];
-    
+
     num = 0;
     while (num_of_bits >= 8) {
       lastbyte = ( lastbyte << 8 ) | cbuf[cnt++];
@@ -539,7 +539,7 @@ namespace OpenBabel
     buf[0] = cnt;
     buf[1] = lastbits;
     buf[2] = lastbyte;
-    return num; 
+    return num;
   }
 
   /*____________________________________________________________________________
@@ -557,7 +557,7 @@ namespace OpenBabel
                               unsigned int sizes[], int nums[]) {
     int bytes[32];
     int i, j, num_of_bytes, p, num;
-    
+
     bytes[1] = bytes[2] = bytes[3] = 0;
     num_of_bytes = 0;
     while (num_of_bits > 8) {
@@ -579,7 +579,7 @@ namespace OpenBabel
     }
     nums[0] = bytes[0] | (bytes[1] << 8) | (bytes[2] << 16) | (bytes[3] << 24);
   }
-    
+
   /*____________________________________________________________________________
     |
     | xdr3dfcoord - read or write compressed 3d coordinates to xdr file.
@@ -606,7 +606,7 @@ namespace OpenBabel
     | it shouldn't harm in the general case.
     |
   */
- 
+
   int XTCFormat::xdr3dfcoord(XDR *xdrs, float *fp, int *size, float *precision) {
     int *ip = NULL;
     int oldsize;
@@ -617,7 +617,7 @@ namespace OpenBabel
     int minidx, maxidx;
     unsigned sizeint[3], sizesmall[3], bitsizeint[3], size3, *luip;
     int flag, k;
-    int small_, smaller, larger, i; 
+    int small_, smaller, larger, i;
     int is_small, is_smaller, run, prevrun;
     float *lfp, lf;
     int tmp, *thiscoord,  prevcoord[3];
@@ -651,7 +651,7 @@ namespace OpenBabel
         return (xdr_vector(xdrs, (char *) fp, size3, sizeof(*fp),
                            (xdrproc_t)xdr_float));
       }
-	
+
       xdr_float(xdrs, precision);
       if (ip == NULL) {
         ip = (int *)malloc(size3 * sizeof(*ip));
@@ -741,11 +741,11 @@ namespace OpenBabel
       xdr_int(xdrs, &(minint[0]));
       xdr_int(xdrs, &(minint[1]));
       xdr_int(xdrs, &(minint[2]));
-	
+
       xdr_int(xdrs, &(maxint[0]));
       xdr_int(xdrs, &(maxint[1]));
       xdr_int(xdrs, &(maxint[2]));
-	
+
       if ((float)maxint[0] - (float)minint[0] >= MAXABS ||
           (float)maxint[1] - (float)minint[1] >= MAXABS ||
           (float)maxint[2] - (float)minint[2] >= MAXABS) {
@@ -757,7 +757,7 @@ namespace OpenBabel
       sizeint[0] = maxint[0] - minint[0]+1;
       sizeint[1] = maxint[1] - minint[1]+1;
       sizeint[2] = maxint[2] - minint[2]+1;
-	
+
       /* check if one of the sizes is to big to be multiplied */
       if ((sizeint[0] | sizeint[1] | sizeint[2] ) > 0xffffff) {
         bitsizeint[0] = sizeofint(sizeint[0]);
@@ -809,7 +809,7 @@ namespace OpenBabel
             thiscoord[5] = tmp;
             is_small = 1;
           }
-    
+
         }
         tmpcoord[0] = thiscoord[0] - minint[0];
         tmpcoord[1] = thiscoord[1] - minint[1];
@@ -826,7 +826,7 @@ namespace OpenBabel
         prevcoord[2] = thiscoord[2];
         thiscoord = thiscoord + 3;
         i++;
-	    
+
         run = 0;
         if (is_small == 0 && is_smaller == -1)
           is_smaller = 0;
@@ -841,7 +841,7 @@ namespace OpenBabel
           tmpcoord[run++] = thiscoord[0] - prevcoord[0] + small_;
           tmpcoord[run++] = thiscoord[1] - prevcoord[1] + small_;
           tmpcoord[run++] = thiscoord[2] - prevcoord[2] + small_;
-		
+
           prevcoord[0] = thiscoord[0];
           prevcoord[1] = thiscoord[1];
           prevcoord[2] = thiscoord[2];
@@ -864,7 +864,7 @@ namespace OpenBabel
           sendbits(buf, 1, 0); /* flag the fact that runlength did not change */
         }
         for (k=0; k < run; k+=3) {
-          sendints(buf, 3, smallidx, sizesmall, &tmpcoord[k]);	
+          sendints(buf, 3, smallidx, sizesmall, &tmpcoord[k]);
         }
         if (is_smaller != 0) {
           smallidx += is_smaller;
@@ -882,10 +882,10 @@ namespace OpenBabel
       xdr_int(xdrs, &(buf[0])); /* buf[0] holds the length in bytes */
       return errval * (xdr_opaque(xdrs, (caddr_t)&(buf[3]), (u_int)buf[0]));
     } else {
-	
+
       /* xdrs is open for reading */
-	
-      if (xdr_int(xdrs, &lsize) == 0) 
+
+      if (xdr_int(xdrs, &lsize) == 0)
         return 0;
       if (*size != 0 && lsize != *size) {
         fprintf(stderr, "wrong number of coordinates in xdr3dfcoor; "
@@ -926,7 +926,7 @@ namespace OpenBabel
         oldsize = *size;
       }
       buf[0] = buf[1] = buf[2] = 0;
-	
+
       xdr_int(xdrs, &(minint[0]));
       xdr_int(xdrs, &(minint[1]));
       xdr_int(xdrs, &(minint[2]));
@@ -934,11 +934,11 @@ namespace OpenBabel
       xdr_int(xdrs, &(maxint[0]));
       xdr_int(xdrs, &(maxint[1]));
       xdr_int(xdrs, &(maxint[2]));
-		
+
       sizeint[0] = maxint[0] - minint[0]+1;
       sizeint[1] = maxint[1] - minint[1]+1;
       sizeint[2] = maxint[2] - minint[2]+1;
-	
+
       /* check if one of the sizes is to big to be multiplied */
       if ((sizeint[0] | sizeint[1] | sizeint[2] ) > 0xffffff) {
         bitsizeint[0] = sizeofint(sizeint[0]);
@@ -948,7 +948,7 @@ namespace OpenBabel
       } else {
         bitsize = sizeofints(3, sizeint);
       }
-	
+
       xdr_int(xdrs, &smallidx);
       maxidx = MIN(LASTIDX, smallidx + 8) ;
       minidx = maxidx - 8; /* often this equal smallidx */
@@ -964,7 +964,7 @@ namespace OpenBabel
       if (xdr_opaque(xdrs, (caddr_t)&(buf[3]), (u_int)buf[0]) == 0)
         return 0;
       buf[0] = buf[1] = buf[2] = 0;
-	
+
       lfp = fp;
       inv_precision = 1.0f / * precision;
       run = 0;
@@ -980,17 +980,17 @@ namespace OpenBabel
         } else {
           receiveints(buf, 3, bitsize, sizeint, thiscoord);
         }
-	    
+
         i++;
         thiscoord[0] += minint[0];
         thiscoord[1] += minint[1];
         thiscoord[2] += minint[2];
-	    
+
         prevcoord[0] = thiscoord[0];
         prevcoord[1] = thiscoord[1];
         prevcoord[2] = thiscoord[2];
-	    
-	   
+
+
         flag = receivebits(buf, 1);
         is_smaller = 0;
         if (flag == 1) {
@@ -1032,7 +1032,7 @@ namespace OpenBabel
         } else {
           *lfp++ = thiscoord[0] * inv_precision;
           *lfp++ = thiscoord[1] * inv_precision;
-          *lfp++ = thiscoord[2] * inv_precision;		
+          *lfp++ = thiscoord[2] * inv_precision;
         }
         smallidx += is_smaller;
         if (is_smaller < 0) {

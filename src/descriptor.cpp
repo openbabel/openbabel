@@ -1,15 +1,15 @@
 /**********************************************************************
 descriptor.cpp - Implementation of the base class for molecular descriptors
- 
+
 Copyright (C) 2007 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -24,20 +24,20 @@ GNU General Public License for more details.
 
 using namespace std;
 namespace OpenBabel
-{ 
+{
 #if defined(__CYGWIN__) || defined(__MINGW32__)
   // macro to implement static OBPlugin::PluginMapType& Map()
   PLUGIN_CPP_FILE(OBDescriptor)
 #endif
 
-/** 
+/**
      Compare() is a virtual function and can be overridden to allow different
-     comparison behaviour. 
+     comparison behaviour.
      The default implementation here is suitable for OBDescriptor classes
      which return a double value. The stringstream is parsed to retrieve a
      comparison operator, one of     > < >= <= = == != , and a numerical value.
      The function compares this the value returned by Predict() and returns
-     the result. The stringstream is left after the number, and its state 
+     the result. The stringstream is left after the number, and its state
      reflects whether any errors have occurred.
      If noEval is true, the parsing is as normal but Predict is not called
      and the function returns false.
@@ -50,7 +50,7 @@ bool OBDescriptor::Compare(OBBase* pOb, istream& optionText, bool noEval, string
     optionText >> ch1;
   if(ispunctU(optionText.peek()))
     optionText >> ch2;
-  
+
   //Get number
   double filterval, val;
   optionText >> filterval;
@@ -58,7 +58,7 @@ bool OBDescriptor::Compare(OBBase* pOb, istream& optionText, bool noEval, string
   {
     if(noEval)
       return false;
-    
+
     val = Predict(pOb, param);
 
     return DoComparison(ch1, ch2, val, filterval);
@@ -68,7 +68,7 @@ bool OBDescriptor::Compare(OBBase* pOb, istream& optionText, bool noEval, string
   return false;
 }
 
-/// Interprets the --filter option string and returns the combined result of all the comparisons it contains  
+/// Interprets the --filter option string and returns the combined result of all the comparisons it contains
 /**
     The string has the form:
     PropertyID1 predicate1 [booleanOp] PropertyID2 predicate2 ...
@@ -77,10 +77,10 @@ bool OBDescriptor::Compare(OBBase* pOb, istream& optionText, bool noEval, string
     The predicates must start with a punctuation character and are interpreted by
     the Compare function of the OBDescriptor class. The default implementation expects
     a comparison operator and a number, e.g. >=1.3  Whitespace is optional and is ignored.
-    Each predicate and this OBBase object (usually OBMol) is passed to 
-    the Compare function of a OBDescriptor. The result of each comparison 
+    Each predicate and this OBBase object (usually OBMol) is passed to
+    the Compare function of a OBDescriptor. The result of each comparison
     is combined in a boolean expression (which can include parentheses)
-    in the normal way. The AND operator can be & or &&, the OR operator can be 
+    in the normal way. The AND operator can be & or &&, the OR operator can be
     | or ||, and a unitary NOT is !  The expected operator precedence
     is achieved using recursive calls of the function. If there is no boolean Op, all
     the tests have to return true for the function to return true, i.e. the default is AND.
@@ -128,13 +128,13 @@ bool OBDescriptor::FilterCompare(OBBase* pOb, std::istream& optionText, bool noE
 
       pair<string,string> spair = GetIdentifier(optionText);
       string descID = spair.first;
-      string param  = spair.second;  
+      string param  = spair.second;
       if(descID.empty())
       {
         optionText.setstate(std::ios::badbit); //shows error
         return false;
       }
-      
+
       //If there is existing OBPairData use that
       if(param.empty() && MatchPairData(pOb, descID))
       {
@@ -181,7 +181,7 @@ bool OBDescriptor::FilterCompare(OBBase* pOb, std::istream& optionText, bool noE
     else
       if(optionText.peek()==ch) //treat && and || as & and |
         optionText.ignore();
-        
+
     if(ch=='|')
     {
       retFromCompare = FilterCompare(pOb, optionText, ret || noEval);
@@ -282,14 +282,14 @@ double OBDescriptor::ParsePredicate(istream& optionText, char& ch1, char& ch2, s
     mystring  =mystring ==mystring [must be terminated by a space or tab]
     "mystring" 'mystring'  ="mystring" ='mystring' [mystring can contain spaces or tabs]
     !=mystring !="mystring" [Returns false indicating negate]
-    There can be spaces or tabs after the operator = == !=  
+    There can be spaces or tabs after the operator = == !=
  **/
 bool OBDescriptor::ReadStringFromFilter(istream& optionText, string& result)
 {
   bool error=false;
   bool ret=true;
   char ch;
-  
+
   if(optionText >> ch)
   {
     if(ch=='=' || ch=='!')
@@ -301,7 +301,7 @@ bool OBDescriptor::ReadStringFromFilter(istream& optionText, string& result)
     }
     else  //no operator
       optionText.unget();
-  
+
     optionText >> ch;
     if(ch=='\"' || ch=='\'')
     {
@@ -328,10 +328,10 @@ bool OBDescriptor::ReadStringFromFilter(istream& optionText, string& result)
       optionText.setf(ios::skipws);
     }
   }
-  
+
   if(optionText.fail())
     obErrorLog.ThrowError(__FUNCTION__, "Error reading string from filter", obError, onceOnly);
-  
+
   return ret;
 }
 
@@ -376,7 +376,7 @@ bool OBDescriptor::CompareStringWithFilter(istream& optionText, string& sval, bo
     // there is no comparison operator
     return true; // means that the identifier exists
   }
-  
+
   stringstream ss(sval);
   double val;
   if((ss >> val) && !IsNan(filterval))
@@ -471,10 +471,10 @@ void OBDescriptor::DeleteProperties(OBBase* pOb, const string& DescrList)
           pDescr->GetStringValue(pOb, thisvalue, &spair.second);
         else
         {
-          obErrorLog.ThrowError(__FUNCTION__, 
+          obErrorLog.ThrowError(__FUNCTION__,
             spair.first + " not recognized as a property or a descriptor", obError, onceOnly);
           thisvalue = "??";
-        }    
+        }
       }
       values += delim + thisvalue;
     }
@@ -524,7 +524,7 @@ bool OBDescriptor::Display(std::string&txt, const char* param, const char* ID)
   \since version 2.2
 
 OBDescriptor and Filtering
-           
+
 On the command line, using the option --filter filter-string converts only
 those molecules which meet the criteria specified in the filter-string. This
 is useful to select particular molecules from a set.
@@ -551,7 +551,7 @@ babel -L descriptors
 or from the functions OBPlugin::List, OBPlugin::ListAsString and OBPlugin::ListAsVector.
 
 The filter-string is interpreted by a static function of OBDescriptor,
-FilterCompare(). This identifies the descriptor IDs and then calls a virtual 
+FilterCompare(). This identifies the descriptor IDs and then calls a virtual
 function, Compare(), of each OBDescriptor class to interpret the rest of relational
 expression, for example, ">200", or "=c1ccccc1". The default version of Compare()
 is suitable for descriptors, like MW or logP, which return a double from
@@ -561,7 +561,7 @@ provide their own.
 By default, as in the example, OBDescriptor::FilterCompare() would AND each
 comparison so that all the comparisons must be true for the test to succeed.
 However filter-string could also be a full boolean expression, with &, |, !,
-and parenthases allowing any combination of features to be selected. 
+and parenthases allowing any combination of features to be selected.
 FilterCompareAs calls itself recursively to give AND precidence over OR and
 evaluation is not carried out if not needed.
 
@@ -594,18 +594,18 @@ To parse a string for descriptors use GetIdentifier(), which returns both
 the ID and the parameter, if there is one.
 
 This facility can be called from the command line.Use the option
---add "descriptor list", which will add the requested descriptors to the 
-molecule.  They are then visible as properties in SDF and CML formats. 
+--add "descriptor list", which will add the requested descriptors to the
+molecule.  They are then visible as properties in SDF and CML formats.
 The IDs in the list can be separated by spaces or commas.
 All Descriptors will provide an output value as a string through a  virtual
 function GetStringValue((OBBase* pOb, string& svalue)) which
 assigns the value of a string descriptor(like inchi) to svalue or a string
 representation of a numerical property like logP.
 
-The classes MWFilter and TitleFilter illustrate the code that has to be 
+The classes MWFilter and TitleFilter illustrate the code that has to be
 provided for numerical and non-numerical descriptors.
 
-*/ 
+*/
 
 }//namespace
 

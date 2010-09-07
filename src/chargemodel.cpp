@@ -1,16 +1,16 @@
 /**********************************************************************
 chargemodel.cpp - Base class for partial charge models
- 
+
 Copyright (C) 2010 Geoffrey Hutchison
 Some portions Copyright (C) 2009 by Frank Peters
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -38,7 +38,7 @@ namespace OpenBabel
     m_partialCharges.reserve(mol.NumAtoms());
     m_formalCharges.clear();
     m_formalCharges.reserve(mol.NumAtoms());
-    
+
     for (atom = mol.BeginAtom(itr);atom;atom = mol.NextAtom(itr))
       {
         m_partialCharges.push_back(atom->GetPartialCharge());

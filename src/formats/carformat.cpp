@@ -2,11 +2,11 @@
 Copyright (C) 2000 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -42,7 +42,7 @@ namespace OpenBabel
     virtual const char* SpecificationURL()
     { return "http://www.centrcn.umontreal.ca/accelrys/life/insight2000.1/formats980/Files980TOC.doc.html";}; //optional
 
-    virtual const char* GetMIMEType() 
+    virtual const char* GetMIMEType()
     { return "chemical/x-msi-car"; };
 
     virtual unsigned int Flags()
@@ -139,25 +139,25 @@ namespace OpenBabel
         }
 
         atom = mol.NewAtom();
-      
+
         atom->SetAtomicNum(etab.GetAtomicNum(vs[7].c_str()));
         x = atof((char*)vs[1].c_str());
         y = atof((char*)vs[2].c_str());
         z = atof((char*)vs[3].c_str());
         atom->SetVector(x,y,z);
-      
+
         // vs[0] contains atom label
         // vs[4] contains "type of residue containing atom"
         // vs[5] contains "residue sequence name"
         // vs[6] contains "potential type of atom"
-      
+
         if (vs.size() == 9)
           {
             atom->SetPartialCharge(atof((char*)vs[8].c_str()));
             hasPartialCharges = true;
           }
       }
-    
+
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))

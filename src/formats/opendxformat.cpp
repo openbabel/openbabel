@@ -115,12 +115,12 @@ bool OBOpenDXCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     vector<int> voxels(3);
     if (!EQn(buffer, "object", 6) || vs.size() != 8)
       return false;
-    else {      
+    else {
       voxels[0] = atoi(vs[5].c_str());
       voxels[1] = atoi(vs[6].c_str());
       voxels[2] = atoi(vs[7].c_str());
     }
-    
+
     double x, y, z;
     if (!ifs.getline(buffer, BUFF_SIZE) || !EQn(buffer, "origin", 6))
       return false;
@@ -148,7 +148,7 @@ bool OBOpenDXCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
         z = atof(vs[3].c_str());
         axes.push_back(vector3(x, y, z));
       }
-    }    
+    }
 
     // Two remaining header lines before the data:
     /*
@@ -288,7 +288,7 @@ bool OBOpenDXCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
         zAxis[0], zAxis[1], zAxis[2]);
     ofs << buffer << "\n";
 
-    // data line 6: # of points in x, y, z (nx, ny, nz)    
+    // data line 6: # of points in x, y, z (nx, ny, nz)
     snprintf(buffer, BUFF_SIZE, "object 2 class gridconnections counts %5d %5d %5d", nx, ny, nz);
     ofs << buffer << "\n";
 

@@ -6,11 +6,11 @@ Copyright (C) 2007,2008 by Andrei Gakh andrei.gakh@nnsa.doe.gov
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -49,7 +49,7 @@ namespace OpenBabel {
   //Alternate overloaded methods
   OBMCDL int alternate(OBMol * pmol, const int nH[], int bondOrders []);  //This method does not work!
   //Zero-based atomic numeration should be in connection matrix arrays iA1 and iA2-so first atom has indez zero
-  OBMCDL int alternate(const std::vector<int> aPosition,const std::vector<int> aCharge, 
+  OBMCDL int alternate(const std::vector<int> aPosition,const std::vector<int> aCharge,
       const std::vector<int> aRad,const std::vector<int> nHydr, const std::vector<int> iA1,
       const std::vector<int> iA2, std::vector<int> & bondOrders, int nAtoms, int nBonds);
   /**
@@ -65,30 +65,30 @@ namespace OpenBabel {
   //Fragment search - pure subgraph isomorphisme
   bool fragmentSearch(OBMol * query, OBMol * structure);
   bool fragmentSearch(const std::vector<int> aPositionQuery, const std::vector<int> iA1Query,
-      const std::vector<int> iA2Query, const std::vector<int> bondTypesQuery, 
+      const std::vector<int> iA2Query, const std::vector<int> bondTypesQuery,
       const std::vector<int> aPositionStructure, const std::vector<int> iA1Structure,
-      const std::vector<int> iA2Structure,  const std::vector<int> bondTypesStructure, 
+      const std::vector<int> iA2Structure,  const std::vector<int> bondTypesStructure,
       int nAtomsQuery, int nBondsQuery, int nAtomsStructure, int nBondsStructure);
   ///Equivalence list generation
   OBMCDL void equivalenceList(OBMol * pmol,  std::vector<int>& eqList);
-  void equivalenceList(const std::vector<int> aPosition,const std::vector<int> aCharge, 
+  void equivalenceList(const std::vector<int> aPosition,const std::vector<int> aCharge,
       const std::vector<int> aRad, const std::vector<int> iA1, const std::vector<int> iA2,
       const std::vector<int> bondTypes,  std::vector<int>& eqList, int nAtoms, int nBonds);
   //Fragment addition
-  OBMCDL void addFragment(OBMol * molecule, OBMol * fragment, int molAN, int fragAN, int molBN, 
+  OBMCDL void addFragment(OBMol * molecule, OBMol * fragment, int molAN, int fragAN, int molBN,
       int fragBN, bool isAddition);
 
   //routines below have no common meaning, but are necessary to process stereo information
-  OBMCDL void createStereoLists(OBMol * pmol, std::vector<int>& bondStereoList, 
+  OBMCDL void createStereoLists(OBMol * pmol, std::vector<int>& bondStereoList,
       std::vector<int>& atomStereoList, std::vector<int>& eqList);
-  OBMCDL std::string getAtomMCDL(OBMol * pmol, int ntatoms, const std::vector<int> ix, 
+  OBMCDL std::string getAtomMCDL(OBMol * pmol, int ntatoms, const std::vector<int> ix,
       const std::vector<int> aNumber, const std::vector<int> atomStereoList, const std::vector<int> eqList);
-  OBMCDL std::string getBondMCDL(OBMol * pmol, int nbStore, int ntatoms, const std::vector<int> ix, 
-      const std::vector<int> aNumber, int bonds[MAXBONDS][4], const std::vector<int> bondStereoList, 
+  OBMCDL std::string getBondMCDL(OBMol * pmol, int nbStore, int ntatoms, const std::vector<int> ix,
+      const std::vector<int> aNumber, int bonds[MAXBONDS][4], const std::vector<int> bondStereoList,
       const std::vector<int> eqList);
-  OBMCDL void implementAtomStereo(std::vector<int>& iA1, std::vector<int>& iA2, std::vector<int>& stereoBonds, 
+  OBMCDL void implementAtomStereo(std::vector<int>& iA1, std::vector<int>& iA2, std::vector<int>& stereoBonds,
       const std::vector<double>rx, const std::vector<double> ry, int acount, int bcount, std::string astereo);
-  OBMCDL void implementBondStereo(const std::vector<int> iA1, const std::vector<int> iA2, 
+  OBMCDL void implementBondStereo(const std::vector<int> iA1, const std::vector<int> iA2,
       std::vector<double>& rx, std::vector<double>& ry, int acount, int bcount, std::string bstereo);
 
 

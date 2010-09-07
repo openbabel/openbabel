@@ -1,16 +1,16 @@
 /**********************************************************************
 tokenst.cpp - Tokenize a string.
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -30,10 +30,10 @@ using namespace std;
 namespace OpenBabel
 {
 
-  //! Break a string (supplied as the second argument) into tokens, returned 
+  //! Break a string (supplied as the second argument) into tokens, returned
   //! in the first argument. Tokens are determined by the delimiters supplied
   //! (defaults to whitespace (i.e., spaces, tabs, newlines)
-  bool tokenize(std::vector<std::string> &vcr, const char *buf, 
+  bool tokenize(std::vector<std::string> &vcr, const char *buf,
                       const char *delimstr)
   {
     vcr.clear();
@@ -90,12 +90,12 @@ namespace OpenBabel
     return(string);
   }
 
-  //! Break a string (supplied as the second argument) into tokens, returned 
+  //! Break a string (supplied as the second argument) into tokens, returned
   //! in the first argument. Tokens are determined by the delimiters supplied
   //! (defaults to whitespace (i.e., spaces, tabs, newlines)
   //! Only breaks at most 'limit' tokens and the last item in the vector may
   //! include un-parsed tokens.
-  bool tokenize(std::vector<std::string> &vcr, std::string &s, 
+  bool tokenize(std::vector<std::string> &vcr, std::string &s,
                       const char *delimstr, int limit)
   {
     vcr.clear();
@@ -170,25 +170,25 @@ namespace OpenBabel
 
 
     /** Opens the filestream with the first file called @p filename
-     found by looking 
+     found by looking
      successively in the following directories:
      - the current directory
-     - in a subdirectory (of the directory below) with the version of 
+     - in a subdirectory (of the directory below) with the version of
      OpenBabel as its name
-     - the parent directory specified by the environment variable 
-     named @p envvar 
+     - the parent directory specified by the environment variable
+     named @p envvar
      or "BABEL_DATADIR" if @p envvar is not specified, or the compiled-in
      macro BABEL_DATADIR if the environment variable is not set
 
      \param ifs        Stream to load
      \param filename   Name of the data file to load
-     \param envvar     Name of the environment variable 
+     \param envvar     Name of the environment variable
 
      \return the name of the file that was opened. This includes the path
      unless it is in current directory
 
   **/
-  std::string OpenDatafile(std::ifstream& ifs, const std::string& filename, 
+  std::string OpenDatafile(std::ifstream& ifs, const std::string& filename,
                            const std::string& envvar)
   {
     ios_base::openmode imode = ios_base::in;

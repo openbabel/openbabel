@@ -8,7 +8,7 @@ For more information, see <http://openbabel.sourceforge.net/>
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -53,7 +53,7 @@ namespace OpenBabel
     // Japanese DDBJ is here: http://www.ddbj.nig.ac.jp/
     // EMBL format http://www.ebi.ac.uk/embl/Documentation/User_manual/usrman.html
 
-    virtual const char* GetMIMEType() 
+    virtual const char* GetMIMEType()
     { return "chemical/x-genbank"; }
 
     virtual unsigned int Flags()
@@ -84,8 +84,8 @@ namespace OpenBabel
     OBMol* pmol = pOb->CastAndClear<OBMol>();
     if (pmol == 0)
       return false;
-      
-      
+
+
     std::istream * in = pConv->GetInStream();
     pmol->BeginModify();
 
@@ -127,13 +127,13 @@ namespace OpenBabel
         }
       else if (!line.compare(0, 6, "ORIGIN", 6) || !line.compare(0, 2, "SQ ", 2))
         break;
-  
+
       getline( * in, line);
       }
     if (sequence_type == GenBankFormat::UnknownSequence)
-      sequence_type = GenBankFormat::DNASequence;  
-    
-    bool rv = ReadFASTASequence(pmol, sequence_type, in, 
+      sequence_type = GenBankFormat::DNASequence;
+
+    bool rv = ReadFASTASequence(pmol, sequence_type, in,
         !pConv->IsOption("b",OBConversion::INOPTIONS), !pConv->IsOption("s",OBConversion::INOPTIONS));
 	  pmol->EndModify();
     return rv;

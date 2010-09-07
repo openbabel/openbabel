@@ -39,7 +39,7 @@ namespace OpenBabel
   {
     //Using withViewBox to supress xml header and xmlns attributes. May need another way.
     if(!m_withViewBox)
-      m_ofs << "<?xml version=\"1.0\"?>\n"; 
+      m_ofs << "<?xml version=\"1.0\"?>\n";
     m_ofs << "<svg ";
     if(!m_withViewBox)
       m_ofs << "xmlns=\"http://www.w3.org/2000/svg\"\n"
@@ -50,27 +50,27 @@ namespace OpenBabel
             << "x=\"" << m_x << "\" y=\"" << m_y << "\" ";
     if(m_withViewBox)
       m_ofs << "viewBox=\"0 0 " << width << ' ' << height << "\"\n";
-    
+
     //Bond color and width are the initial m_Pencolor and m_PenWidth
-    m_ofs << "font-family=\"" << m_fontFamily << "\" stroke=" << MakeRGB(m_Pencolor) 
+    m_ofs << "font-family=\"" << m_fontFamily << "\" stroke=" << MakeRGB(m_Pencolor)
           << "stroke-width=\"" << m_PenWidth << "\" >\n";
-    
-    if(!m_withViewBox)//Background color for single molecule. Handled by outer svg when table. 
+
+    if(!m_withViewBox)//Background color for single molecule. Handled by outer svg when table.
       m_ofs << "<rect x=\"0%\" y=\"0%\" width=\"100%\" height=\"100%\" fill="
             << MakeRGB(m_Fillcolor) << " />\n";
     m_OrigBondcolor = m_Pencolor;
   }
-  
+
   bool SVGPainter::IsGood() const
   {
     return true;
   }
-      
+
   void SVGPainter::SetFontSize(int pointSize)
   {
     m_fontPointSize = pointSize;
   }
-  
+
   void SVGPainter::SetFontFamily(const std::string &fontFamily)
   {
     m_fontFamily = fontFamily;
@@ -85,7 +85,7 @@ namespace OpenBabel
   {
     m_Pencolor = color; //value when NewCanvas called used for bonds
   }
-      
+
   void SVGPainter::SetPenWidth(double width)
   {
     m_PenWidth = width; //value when NewCanvas called used for bonds
@@ -94,7 +94,7 @@ namespace OpenBabel
   void SVGPainter::DrawLine(double x1, double y1, double x2, double y2)
   {
     streamsize oldprec = m_ofs.precision(1);
-    m_ofs << fixed << "<line x1=\"" << x1 << "\" y1=\"" << y1 << "\" x2=\"" 
+    m_ofs << fixed << "<line x1=\"" << x1 << "\" y1=\"" << y1 << "\" x2=\""
       << x2 << "\" y2=\"" << y2 << "\"";
     if(m_Pencolor!=m_OrigBondcolor)
       m_ofs << " stroke=" << MakeRGB(m_Pencolor);
@@ -107,8 +107,8 @@ namespace OpenBabel
     m_ofs << "<polygon points=\"";
       std::vector<std::pair<double,double> >::const_iterator i;
     for (i = points.begin(); i != points.end(); ++i)
-      m_ofs << i->first << ' ' << i->second << ' '; 
-    
+      m_ofs << i->first << ' ' << i->second << ' ';
+
     m_ofs << "\" />\n";
   }
 
@@ -138,7 +138,7 @@ namespace OpenBabel
 
     return metrics;
   }
-      
+
   void SVGPainter::WriteImage(const std::string &filename)
   {
   }
@@ -148,7 +148,7 @@ namespace OpenBabel
     stringstream ss;
     ss << "\"rgb(" << (int)(255*color.red) << ',' << (int)(255*color.green)
        << ',' << (int)(255*color.blue) << ")\" ";
-    return ss.str(); 
+    return ss.str();
   }
 }
 

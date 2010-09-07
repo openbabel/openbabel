@@ -34,7 +34,7 @@ namespace OpenBabel
       OBConversion::RegisterFormat("fasta", this, "chemical/x-fasta");
       OBConversion::RegisterFormat("fa", this);
       OBConversion::RegisterFormat("fsa", this);
-      
+
       OBConversion::RegisterOptionParam("s", this);
       OBConversion::RegisterOptionParam("b", this);
       OBConversion::RegisterOptionParam("n", this);
@@ -58,9 +58,9 @@ namespace OpenBabel
     };
       // Additionally http://www.ncbi.nlm.nih.gov/blast/fasta.shtml
 
-    virtual const char* GetMIMEType() 
+    virtual const char* GetMIMEType()
     { return "chemical/x-fasta"; }
-    
+
     virtual unsigned int Flags() {
       return READONEONLY | WRITEONEONLY;
     };
@@ -78,7 +78,7 @@ namespace OpenBabel
       };
   private:
     char conv_3to1(const string & three) const;
-  };  
+  };
 
   FASTAFormat theFASTAFormat;
 
@@ -87,7 +87,7 @@ namespace OpenBabel
     string seq;
     OBMol* pmol;
     //   OBResidue *res;
-  
+
     pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol == NULL)
       return false;
@@ -148,7 +148,7 @@ residue_lookup_record residue_lookup_table[] =
     { "GLX", 'Z' }, // Glutamine or Glutamic acid
     { "XLE", 'J' }, // Leucine or Isoleucine
     { "XAA", 'X' }, // any amino acid
-    
+
     { "DG", 'G' }, // Guanine
     { "DC", 'C' }, // Cytosine
     { "DA", 'A' }, // Adenine
@@ -313,9 +313,9 @@ struct ResidueRecord
   ResidueAtomRecord  atom[48];
   ResidueBondRecord  bond[48];
   };
-extern ResidueRecord RNAResidues[IUPAC_RNA_max]; 
-extern ResidueRecord DNAResidues[IUPAC_DNA_max]; 
-extern ResidueRecord DNAPairResidues[IUPAC_DNA_max]; 
+extern ResidueRecord RNAResidues[IUPAC_RNA_max];
+extern ResidueRecord DNAResidues[IUPAC_DNA_max];
+extern ResidueRecord DNAPairResidues[IUPAC_DNA_max];
 extern ResidueRecord ProteinResidues[IUPAC_Protein_max];
 struct HelixParameters
   {
@@ -354,7 +354,7 @@ void add_residue(OBMol * pmol, OBResidue * res, double offset_x, double offset_T
     ++ serial_no;
     bond_refs.push_back(atom);
     }
-  
+
   if (create_bonds)
     {
     size_t atom_count = bond_refs.size();
@@ -384,7 +384,7 @@ void add_residue(OBMol * pmol, OBResidue * res, double offset_x, double offset_T
         }
       }
     }
-  
+
   bond_refs.clear();
   }
 
@@ -413,24 +413,24 @@ void generate_sequence(const std::string & sequence, OBMol * pmol, unsigned long
         res->SetChainNum(chain_no);
         res->SetNum(residue_num);
         res->SetName(res_rec->Name);
-        
+
         if (residue_num == 1)
           { // Add the start terminal
           add_residue(pmol, res, offset_x, offset_Theta, serial_no, & Residues[IUPAC_Start], -1, resBondFrom, create_bonds, bond_orders);
           }
-        
+
         add_residue(pmol, res, offset_x, offset_Theta, serial_no, res_rec, helix.bond_connect, resBondFrom, create_bonds, bond_orders);
         }
       offset_x += helix.unit_X;
       offset_Theta += helix.unit_Theta;
       }
     }
-  
+
   if (res != 0)
     { // Add the end terminal
     add_residue(pmol, res, offset_x - helix.unit_X, offset_Theta - helix.unit_Theta, serial_no, & Residues[IUPAC_End], -2, resBondFrom, create_bonds, bond_orders);
     }
-  
+
   }
 
   bool ReadFASTASequence(OBMol * pmol, int seq_type, std::istream * in, bool create_bonds, bool bond_orders)
@@ -492,9 +492,9 @@ Sequence is from 5' to 3' left -> right.
         }
       }
     if (sequence_type == FASTAFormat::UnknownSequence)
-      sequence_type = sequence_na;  
+      sequence_type = sequence_na;
     if (sequence_type == FASTAFormat::UnknownSequence)
-      sequence_type = FASTAFormat::DNASequence;  
+      sequence_type = FASTAFormat::DNASequence;
 
   // We now have the sequence and know it's type
   double offset_x = 0, offset_Theta = 0;
@@ -523,7 +523,7 @@ Sequence is from 5' to 3' left -> right.
   }
     return (pmol->NumAtoms() > 0 ? true : false);
   }
-  
+
   /////////////////////////////////////////////////////////////////
   bool FASTAFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
@@ -531,13 +531,13 @@ Sequence is from 5' to 3' left -> right.
     if (pmol == 0)
       return false;
     pmol->BeginModify();
-    bool rv = ReadFASTASequence(pmol, UnknownSequence, pConv->GetInStream(), 
+    bool rv = ReadFASTASequence(pmol, UnknownSequence, pConv->GetInStream(),
         !pConv->IsOption("b",OBConversion::INOPTIONS), !pConv->IsOption("s",OBConversion::INOPTIONS));
     pmol->EndModify();
     return rv;
   }
 
-ResidueRecord DNAResidues[IUPAC_DNA_max] = 
+ResidueRecord DNAResidues[IUPAC_DNA_max] =
   {
     { 0, "", // DNA Start
       {
@@ -1337,7 +1337,7 @@ ResidueRecord DNAResidues[IUPAC_DNA_max] =
   }
     }
   };
-ResidueRecord DNAPairResidues[IUPAC_DNA_max] = 
+ResidueRecord DNAPairResidues[IUPAC_DNA_max] =
   {
     { 0, "", // DNA Pair Start
       {
@@ -2138,7 +2138,7 @@ ResidueRecord DNAPairResidues[IUPAC_DNA_max] =
     }
   };
 
-ResidueRecord RNAResidues[IUPAC_RNA_max] = 
+ResidueRecord RNAResidues[IUPAC_RNA_max] =
   {
     { 0, "", // RNA Start
       {
@@ -3001,7 +3001,7 @@ ResidueRecord RNAResidues[IUPAC_RNA_max] =
     }
   };
 
-ResidueRecord ProteinResidues[IUPAC_Protein_max] = 
+ResidueRecord ProteinResidues[IUPAC_Protein_max] =
   {
     { 0, "", // Protein Start
       {

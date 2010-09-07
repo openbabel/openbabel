@@ -7,14 +7,14 @@ Copyright (C) 2007      by Tim Vandermeersch
               2007      by Chris Morley
 
 Original version: JOELib2, http://joelib.sf.net
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -43,12 +43,12 @@ namespace OpenBabel
     txt += _filename;
     txt += "\nOBGroupContrib is definable";
     return txt.c_str();
-  } 
+  }
 
   bool OBGroupContrib::ParseFile()
   {
     OBSmartsPattern *sp;
-    
+
     // open data file
     ifstream ifs;
 
@@ -72,10 +72,10 @@ namespace OpenBabel
 
       if (vs.size() < 2)
         continue;
-      
+
       sp = new OBSmartsPattern;//causes non-serious memory leak.
       // Could be cured by copying OBSmartsPattern rather than a pointer in vectors
-      if (sp->Init(vs[0])) 
+      if (sp->Init(vs[0]))
       {
         if (heavy)
           _contribsHeavy.push_back(pair<OBSmartsPattern*, double> (sp, atof(vs[1].c_str())));
@@ -90,7 +90,7 @@ namespace OpenBabel
 
         // return the locale to the original one
         obLocale.RestoreLocale();
-        
+
         return false;
       }
     }
@@ -99,8 +99,8 @@ namespace OpenBabel
     obLocale.RestoreLocale();
     return true;
   }
-  
- 
+
+
   double OBGroupContrib::Predict(OBBase* pOb, string* param)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
@@ -118,7 +118,7 @@ namespace OpenBabel
     vector<vector<int> > _mlist; // match list for atom typing
     vector<vector<int> >::iterator j;
     vector<pair<OBSmartsPattern*, double> >::iterator i;
-    
+
     vector<double> atomValues(mol.NumAtoms(), 0.0);
 
     OBMol tmpmol;
@@ -137,10 +137,10 @@ namespace OpenBabel
         }
       }
     }
-    
+
     vector<double> hydrogenValues(tmpmol.NumAtoms(), 0.0);
-    //hydrogenValues.resize(tmpmol.NumAtoms());   
-    
+    //hydrogenValues.resize(tmpmol.NumAtoms());
+
     // hydrogen contributions
     //cout << "hydrogen contributions:" << endl;
     for (i = _contribsHydrogen.begin();i != _contribsHydrogen.end();++i) {
@@ -164,7 +164,7 @@ namespace OpenBabel
       total += atomValues[index];
       total += hydrogenValues[index];
     }
-   
+
     /*
     FOR_ATOMS_OF_MOL (a, tmpmol)
       cout << "hydrogens on atom " << a->GetIdx() << ": " << a->GetValence() - a->GetHvyValence() << endl;
@@ -178,7 +178,7 @@ namespace OpenBabel
   }
 
   //******************************************************
-  // Make global instances for descriptors which are all calculated 
+  // Make global instances for descriptors which are all calculated
   // from group contibutions in the same way but with different data.
 
   // LogP (octanol/water partition coefficient)

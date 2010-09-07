@@ -7,7 +7,7 @@ Some portions Copyright (C) 2004 by Chris Morley
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -49,7 +49,7 @@ namespace OpenBabel {
   class SMIBaseFormat : public OBMoleculeFormat
   {
   public:
-    virtual const char* GetMIMEType() 
+    virtual const char* GetMIMEType()
     { return "chemical/x-daylight-smiles"; };
 
     ////////////////////////////////////////////////////
@@ -70,7 +70,7 @@ namespace OpenBabel {
       istream& ifs = *pConv->GetInStream();
       if (ifs.eof())
         return -1;
-      
+
       int i=0;
       while(i<n && ifs.good())
         {
@@ -78,7 +78,7 @@ namespace OpenBabel {
             i++;
           ifs.ignore(numeric_limits<streamsize>::max(),'\n');
         }
-      return ifs ? 1 : -1; 
+      return ifs ? 1 : -1;
     }
   };
 
@@ -126,7 +126,7 @@ namespace OpenBabel {
 
   //Make an instance of the format class
   SMIFormat theSMIFormat;
-  
+
   //**************************************************
   class CANSMIFormat : public SMIBaseFormat
   {
@@ -138,7 +138,7 @@ namespace OpenBabel {
     }
 
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv)
-    {      
+    {
       //The "c" option sets us to use canonical ordering
       pConv->AddOption("c",OBConversion::OUTOPTIONS);
       return SMIBaseFormat::WriteMolecule(pOb, pConv);
@@ -164,7 +164,7 @@ namespace OpenBabel {
         "  t  Molecule name only\n\n"
 
         "See also, the \"regular\" SMILES format, which results in faster\n"
-        "output, since no canonical numbering is performed.\n\n"; 
+        "output, since no canonical numbering is performed.\n\n";
     };
 
   };
@@ -177,9 +177,9 @@ namespace OpenBabel {
   class OBSmilesParser
   {
     // simple structs to make code more readable
-    
+
     // see _extbond
-    struct ExternalBond 
+    struct ExternalBond
     {
       int digit;
       int prev;
@@ -211,7 +211,7 @@ namespace OpenBabel {
     vector<int> PosDouble; //for extension: lc atoms as conjugated double bonds
     OBAtomClassData _classdata; // to hold atom class data like [C:2]
     vector<OBBond*> _bcbonds; // Remember which bonds are bond closure bonds
-    
+
     // stereochimistry
     bool chiralWatch; // set when a tetrahedral atom is read
     map<OBAtom*, OBTetrahedralStereo::Config*> _tetrahedralMap; // map of tetrahedral atoms and their data
@@ -282,7 +282,7 @@ namespace OpenBabel {
     pos= smiles.find_first_of(",<\"\'!^&_|{}");
     if(pos!=string::npos)
     {
-      obErrorLog.ThrowError(__FUNCTION__, 
+      obErrorLog.ThrowError(__FUNCTION__,
         smiles + " contained a character '" + smiles[pos] + "' which is invalid in SMILES", obError);
       return false;
     }
@@ -300,8 +300,8 @@ namespace OpenBabel {
     if(sp.SmiToMol(*pmol1, smiles.substr(0,pos))                  //reactant
       && (pos2 = smiles.find('>', pos+1))!=string::npos)          //second >
     {
-      if((pos2-pos==1                                             //no agent  
-         || sp.SmiToMol(*pmol2, smiles.substr(pos+1,pos2-pos-1))) //agent           
+      if((pos2-pos==1                                             //no agent
+         || sp.SmiToMol(*pmol2, smiles.substr(pos+1,pos2-pos-1))) //agent
          && sp.SmiToMol(*pmol, smiles.substr(pos2+1)))            //product
       {
         //Is a valid reaction. Output species
@@ -313,7 +313,7 @@ namespace OpenBabel {
         if(pConv->AddChemObject(
           pmol1->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS),pConv))<0)//using Read or ReadString or ReadFile
         {
-          obErrorLog.ThrowError(__FUNCTION__, smiles + 
+          obErrorLog.ThrowError(__FUNCTION__, smiles +
             " SmilesFormat accepts reactions only with the \"Convert\" (commandline) interface", obError);
 
           return false; //Error
@@ -367,7 +367,7 @@ namespace OpenBabel {
   bool OBSmilesParser::ParseSmiles(OBMol &mol)
   {
     mol.BeginModify();
-    
+
     for (_ptr=_buffer;*_ptr;_ptr++)
       {
         //cerr << " parsing " << _ptr << endl;
@@ -452,7 +452,7 @@ namespace OpenBabel {
     if (!_rclose.empty()) {
       mol.EndModify();
       mol.Clear();
-      
+
       stringstream errorMsg;
       errorMsg << "Invalid SMILES string: " << _rclose.size() << " unmatched "
                << "ring bonds." << endl;
@@ -481,7 +481,7 @@ namespace OpenBabel {
             mol.UnsetImplicitValencePerceived();
           }
       }
-    
+
     // Add the data stored inside the _tetrahedralMap to the atoms now after end
     // modify so they don't get lost.
     if(_tetrahedralMap.size() > 0) {
@@ -490,7 +490,7 @@ namespace OpenBabel {
       for(ChiralSearch = _tetrahedralMap.begin(); ChiralSearch != _tetrahedralMap.end(); ChiralSearch++) {
         atom = ChiralSearch->first;
         OBTetrahedralStereo::Config *ts = ChiralSearch->second;
-        if (!ts) 
+        if (!ts)
           continue;
         if (ts->refs.size() != 3)
           continue;
@@ -510,7 +510,7 @@ namespace OpenBabel {
       for(ChiralSearch = _squarePlanarMap.begin(); ChiralSearch != _squarePlanarMap.end(); ChiralSearch++) {
         atom = ChiralSearch->first;
         OBSquarePlanarStereo::Config *sp = ChiralSearch->second;
-        if (!sp) 
+        if (!sp)
           continue;
         if (sp->refs.size() != 4)
           continue;
@@ -521,7 +521,7 @@ namespace OpenBabel {
         mol.SetData(obsp);
       }
     }
- 
+
     CreateCisTrans(mol);
     StereoFrom0D(&mol);
 
@@ -612,9 +612,9 @@ namespace OpenBabel {
         else
           a2_b2 = b;    // remember a 2nd bond of Atom2
       }
-      
+
       if (a1_b1 == NULL || a2_b1 == NULL) continue; // No cis/trans
-      
+
       // a1_b2 and/or a2_b2 will be NULL if there are bonds to implicit hydrogens
       unsigned int second = (a1_b2 == NULL) ? OBStereo::ImplicitRef : a1_b2->GetNbrAtom(a1)->GetId();
       unsigned int fourth = (a2_b2 == NULL) ? OBStereo::ImplicitRef : a2_b2->GetNbrAtom(a2)->GetId();
@@ -724,7 +724,7 @@ namespace OpenBabel {
       if (insertpos < 0) {
         if (ChiralSearch->second->from != OBStereo::NoRef)
           obErrorLog.ThrowError(__FUNCTION__, "Error: Overwriting previous from reference id.", obError);
-      
+
         (ChiralSearch->second)->from = id;
         // cerr << "Adding " << id << " at Config.from to " << ChiralSearch->second << endl;
       } else {
@@ -747,7 +747,7 @@ namespace OpenBabel {
       if (insertpos < 0) {
         if (ChiralSearch->second->refs[0] != OBStereo::NoRef)
           obErrorLog.ThrowError(__FUNCTION__, "Error: Overwriting previous from reference id.", obError);
-      
+
         (ChiralSearch->second)->refs[0] = id;
         //cerr << "Adding " << id << " at Config.refs[0] to " << ChiralSearch->second << endl;
       } else {
@@ -768,7 +768,7 @@ namespace OpenBabel {
     int element;
     bool arom=false;
     memset(symbol,'\0',sizeof(char)*3);
-    
+
     if (isupper(*_ptr))
       switch(*_ptr)
         {
@@ -881,21 +881,21 @@ namespace OpenBabel {
     else
       atom->ForceImplH();//ensures atom is never hydrogen deficient
 
-    
+
     // Untrue, but necessary to avoid perception being called in OBAtom::IsAromatic()
-    // on incomplete molecule. Undone at end of function. 
+    // on incomplete molecule. Undone at end of function.
     mol.SetAromaticPerceived();
-    
+
     if (_prev) //need to add bond
       {
         /* CM 18 Sept 2003
-           An extension to the SMILES format has been added so that lower case c,n,o can 
+           An extension to the SMILES format has been added so that lower case c,n,o can
            represent a radical centre: CcC is isopropyl radical;
            and cccc... a carbon chain bonded by conjugated double bonds.
            Fails sometimes when using c as both aromatic and as the extened form.
            For benzyl radical C6H5CH2. c1ccccc1c is ok; c1cc(c)ccc1 fails.
            Radical centres should not be involved in ring closure:
-           for cyclohexyl radical C1cCCCC1 is ok, c1CCCCC1 is not.  
+           for cyclohexyl radical C1cCCCC1 is ok, c1CCCCC1 is not.
 
            Implementation
            Atoms c,n,o, etc initially added as a radical centre
@@ -914,7 +914,7 @@ namespace OpenBabel {
         if(arom && prevatom->IsAromatic())
           {
             _order=5; //Potential aromatic bond
-        
+
             if (prevatom->GetSpinMultiplicity())
               {
                 //Previous atom had been marked, so bond is potentially a double bond
@@ -929,8 +929,8 @@ namespace OpenBabel {
         mol.AddBond(_prev, mol.NumAtoms(), _order);
         // store up/down
         if (_updown == BondUpChar || _updown == BondDownChar)
-          _upDownMap[mol.GetBond(_prev, mol.NumAtoms())] = _updown;       
-       
+          _upDownMap[mol.GetBond(_prev, mol.NumAtoms())] = _updown;
+
         InsertTetrahedralRef(mol, mol.NumAtoms() - 1);
         InsertSquarePlanarRef(mol, mol.NumAtoms() - 1);
       }
@@ -940,7 +940,7 @@ namespace OpenBabel {
     _order = 1;
     _updown = ' ';
 
-    mol.UnsetAromaticPerceived(); //undo 
+    mol.UnsetAromaticPerceived(); //undo
     return(true);
   }
 
@@ -1799,19 +1799,19 @@ namespace OpenBabel {
         // store up/down
         if (_updown == BondUpChar || _updown == BondDownChar)
           _upDownMap[mol.GetBond(_prev, mol.NumAtoms())] = _updown;
-       
+
         if(chiralWatch) { // if tetrahedral atom, set previous as from atom
           _tetrahedralMap[atom]->from = mol.GetAtom(_prev)->GetId();
           //cerr <<"NB7: line 1622: Added atom ref "<<_prev<<" at " << 0 << " to "<<_mapcd[atom]<<endl;
         }
         if (squarePlanarWatch) { // if squareplanar atom, set previous atom as first ref
           _squarePlanarMap[atom]->refs[0] = mol.GetAtom(_prev)->GetId();
-          //cerr <<"TV7: line 1748: Added atom ref " << mol.GetAtom(_prev)->GetId() 
+          //cerr <<"TV7: line 1748: Added atom ref " << mol.GetAtom(_prev)->GetId()
           //     << " at " << 0 << " to " << _squarePlanarMap[atom] << endl;
         }
         InsertTetrahedralRef(mol, atom->GetId());
         InsertSquarePlanarRef(mol, atom->GetId());
-      }          
+      }
 
     //set values
     _prev = mol.NumAtoms();
@@ -1941,7 +1941,7 @@ namespace OpenBabel {
     vector<ExternalBond>::iterator bond;
     int upDown, bondOrder;
     for (bond = _extbond.begin(); bond != _extbond.end(); bond++) {
-        
+
       if (bond->digit == digit) {
         upDown = (_updown > bond->updown) ? _updown : bond->updown;
         bondOrder = (_order > bond->order) ? _order : bond->order;
@@ -1950,12 +1950,12 @@ namespace OpenBabel {
         if (upDown == BondUpChar || upDown == BondDownChar)
           _upDownMap[mol.GetBond(bond->prev, _prev)] = upDown;
 
-   
+
         // after adding a bond to atom "_prev"
         // search to see if atom is bonded to a chiral atom
         InsertTetrahedralRef(mol, bond->prev - 1);
         InsertSquarePlanarRef(mol, bond->prev - 1);
-            
+
         _extbond.erase(bond);
         _updown = ' ';
         _order = 0;
@@ -2013,26 +2013,26 @@ namespace OpenBabel {
             bondOrder = 5;
           mol.UnsetAromaticPerceived();
         }
-          
+
         mol.AddBond(bond->prev, _prev, bondOrder, 0, bond->numConnections);
         // store up/down
         if (upDown == BondUpChar || upDown == BondDownChar)
           _upDownMap[mol.GetBond(bond->prev, _prev)] = upDown;
 
- 
+
         // For assigning cis/trans in the presence of bond closures, we need to
         // remember all bond closure bonds.
         _bcbonds.push_back(mol.GetBond(bond->prev, _prev));
-            
+
         // after adding a bond to atom "_prev"
         // search to see if atom is bonded to a chiral atom
         // need to check both _prev and bond->prev as closure is direction independent
         InsertTetrahedralRef(mol, bond->prev - 1);
         InsertSquarePlanarRef(mol, bond->prev - 1);
-       
+
         // FIXME: needed for squreplanar too??
         map<OBAtom*, OBTetrahedralStereo::Config*>::iterator ChiralSearch;
-        ChiralSearch = _tetrahedralMap.find(mol.GetAtom(bond->prev));  
+        ChiralSearch = _tetrahedralMap.find(mol.GetAtom(bond->prev));
         if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL) {
           int insertpos = bond->numConnections - 1;
           if (insertpos < 0) {
@@ -2046,7 +2046,7 @@ namespace OpenBabel {
               obErrorLog.ThrowError(__FUNCTION__, "Error: Overwriting previously set reference id.", obError);
 
             (ChiralSearch->second)->refs[insertpos] = mol.GetAtom(_prev)->GetId();
-            // cerr << "Adding " << mol.GetAtom(_prev)->GetId() << " at " 
+            // cerr << "Adding " << mol.GetAtom(_prev)->GetId() << " at "
             //     << insertpos << " to " << ChiralSearch->second << endl;
           }
        }
@@ -2085,7 +2085,7 @@ namespace OpenBabel {
 
     return(true);
   }
-  
+
   // NumConnections finds the number of connections already made to
   // a particular atom. This is used to figure out the correct position
   // to insert an atom ID into atom4refs
@@ -2094,13 +2094,13 @@ namespace OpenBabel {
     int idx = atom->GetIdx();
     vector<RingClosureBond>::iterator bond;
     //correct for multiple closure bonds to a single atom
-    for (bond = _rclose.begin(); bond != _rclose.end(); ++bond) 
+    for (bond = _rclose.begin(); bond != _rclose.end(); ++bond)
       if (bond->prev == idx)
         val++;
-    
+
     return val;
   }
- 
+
 
   /*----------------------------------------------------------------------
    * CLASS: OBBondClosureInfo: For recording bond-closure digits as
@@ -2222,7 +2222,7 @@ namespace OpenBabel {
     std::string       _canorder;
     std::vector<OBCisTransStereo> _cistrans, _unvisited_cistrans;
     std::map<OBBond *, bool> _isup;
-    
+
     bool          _canonicalOutput; // regular or canonical SMILES
 
     OBConversion* _pconv;
@@ -2410,7 +2410,7 @@ namespace OpenBabel {
             // I don't think I need to check whether it has a bond with atom
             stereo_dbl = false;
             break;
-          }        
+          }
         }
     }
     return stereo_dbl;
@@ -2421,7 +2421,7 @@ namespace OpenBabel {
     // Given a cis/trans bond and the node in the SMILES tree, figures out
     // whether to write a '/' or '\' symbol.
     // See the comments smilesformat.cpp: FixCisTransBonds().
-    // 
+    //
     // The OBCanSmiNode is the most-recently-written atom in the SMILES string
     // we're creating.  If it is the double-bonded atom, then the substituent
     // follows, so that "up" means '/' and "down" means '\'.  If the OBCanSmiNode
@@ -2440,7 +2440,7 @@ namespace OpenBabel {
     // If this bond is in two different obcistransstereos (e.g. a conjugated system)
     // choose the one where the dbl bond atom is *atom (i.e. the one which comes first)
     std::vector<OBCisTransStereo>::iterator ChiralSearch;
-    std::vector<unsigned long>::iterator lookup;    
+    std::vector<unsigned long>::iterator lookup;
 
     bool dbl_bond_first = false;
     if (atom->HasDoubleBond())
@@ -2455,7 +2455,7 @@ namespace OpenBabel {
             // I don't think I need to check whether it has a bond with nbr_atom
             dbl_bond_first = true;
             break;
-          }        
+          }
         }
       else
         dbl_bond_first = true;
@@ -2480,16 +2480,16 @@ namespace OpenBabel {
         lookup = std::find(cfg.refs.begin(), cfg.refs.end(), endatom);
         if (lookup != cfg.refs.end() && (cfg.begin == centeratom || cfg.end == centeratom))
         { // Atoms endatom and centeratom are in this OBCisTransStereo
-          
+
           std::vector<OBBond *> refbonds(4, (OBBond*)NULL);
           refbonds[0] = mol->GetBond(mol->GetAtomById(cfg.refs[0]), mol->GetAtomById(cfg.begin));
-          
+
           if (cfg.refs[1] != OBStereo::ImplicitRef) // Could be a hydrogen
             refbonds[1] = mol->GetBond(mol->GetAtomById(cfg.refs[1]), mol->GetAtomById(cfg.begin));
-          
+
           if (cfg.refs[2] != OBStereo::ImplicitRef) // Could be a hydrogen
             refbonds[2] = mol->GetBond(mol->GetAtomById(cfg.refs[2]), mol->GetAtomById(cfg.end));
-          
+
           if (cfg.refs[3] != OBStereo::ImplicitRef) // Could be a hydrogen
             refbonds[3] = mol->GetBond(mol->GetAtomById(cfg.refs[3]), mol->GetAtomById(cfg.end));
 
@@ -2498,10 +2498,10 @@ namespace OpenBabel {
           bool use_same_config = true;
           // (The actual config used will be config ^ use_same_config)
 
-          // Make sure that the symbol for this bond is true. This ensures 
+          // Make sure that the symbol for this bond is true. This ensures
           // a canonical string, so that it's always C/C=C/C and not C\C=C\C.
           for(int i=0;i<4;i++)
-            if (refbonds[i] == bond) 
+            if (refbonds[i] == bond)
               if (!config[i])
               {
                   use_same_config = false;
@@ -2521,7 +2521,7 @@ namespace OpenBabel {
             if (refbonds[i] != NULL)
               _isup[refbonds[i]] = config[i] ^ use_same_config;
           _unvisited_cistrans.erase(ChiralSearch);
-          break; // break out of the ChiralSearch          
+          break; // break out of the ChiralSearch
         }
       }
     }
@@ -2552,7 +2552,7 @@ namespace OpenBabel {
   {
     if (!atom->IsOxygen())
       return false;
-     
+
     int nonHydrogenCount = 0;
     int hydrogenCount = 0;
     FOR_NBORS_OF_ATOM(neighbor, *atom) {
@@ -2561,7 +2561,7 @@ namespace OpenBabel {
       else
         hydrogenCount++;
     }
-    
+
     return (hydrogenCount == 2 && nonHydrogenCount == 1);
   }
 
@@ -2606,8 +2606,8 @@ namespace OpenBabel {
       break;
     case 6: break;
     case 7:
-      if (atom->IsAromatic() 
-          && atom->GetHvyValence() == 2 
+      if (atom->IsAromatic()
+          && atom->GetHvyValence() == 2
           && atom->GetImplicitValence() == 3) {
 #ifdef __INTEL_COMPILER
 #pragma warning (disable:187)
@@ -2651,7 +2651,7 @@ namespace OpenBabel {
       if (GetSquarePlanarStereo(node, chiral_neighbors, symmetry_classes, stereo))
         strcat(buffer,stereo);
     }
-    if (stereo[0] != '\0') 
+    if (stereo[0] != '\0')
       bracketElement = true;
 
 
@@ -2660,7 +2660,7 @@ namespace OpenBabel {
       if(!(_pconv && _pconv->IsOption ("r")))
         bracketElement = true;
     }
-    
+
     // Add brackets and explicit hydrogens for coordinated water molecules
     // PR#2505562
     if (isWaterOxygen(atom)) {
@@ -2762,9 +2762,9 @@ namespace OpenBabel {
     // "-xh" option was specified, then we're writing a SMARTS, so we
     // write the explicit hydrogen atom count only.  Otherwise we write
     // the proper total number of hydrogens.
-    if (!atom->IsHydrogen()) {      
+    if (!atom->IsHydrogen()) {
       int hcount;
-      if (writeExplicitHydrogen) 
+      if (writeExplicitHydrogen)
         hcount = atom->ExplicitHydrogenCount();
       else
         // if "isomeric", doesn't count isotopic H
@@ -2789,7 +2789,7 @@ namespace OpenBabel {
       if (abs(atom->GetFormalCharge()) > 1)
         sprintf(bracketBuffer+strlen(bracketBuffer), "%d", abs(atom->GetFormalCharge()));
     }
-    
+
     //atom class e.g. [C:2]
     if (_pac)
       strcat(bracketBuffer, _pac->GetClassString(atom->GetIdx()).c_str());
@@ -2812,7 +2812,7 @@ namespace OpenBabel {
    *       Returns TRUE if the atom is genuinely chiral, that is, it meets
    *       the criteria from OBAtom::IsChiral, and additionally it actually
    *       has a connected hash or wedge bond.
-   * 
+   *
    *       We arbitrarily reject chiral nitrogen because for our purposes there's
    *       no need to consider it.
    *
@@ -2849,7 +2849,7 @@ namespace OpenBabel {
    * FUNCTION: GetTetrahedralStereo
    *
    * DESCRIPTION:
-   *       If the atom is chiral, fills in the string with either '@', '@@' 
+   *       If the atom is chiral, fills in the string with either '@', '@@'
    *       or '@?' and returns true, otherwise returns false.
    ***************************************************************************/
 
@@ -2860,12 +2860,12 @@ namespace OpenBabel {
   {
     OBAtom *atom = node->GetAtom();
     OBMol *mol = (OBMol*) atom->GetParent();
-  
+
     // If no chiral neighbors were passed in, we're done
     if (chiral_neighbors.size() < 4)
       return false;
 
-    // OBStereoFacade will run symmetry analysis & stereo perception if needed    
+    // OBStereoFacade will run symmetry analysis & stereo perception if needed
     OBStereoFacade stereoFacade(mol);
     OBTetrahedralStereo *ts = stereoFacade.GetTetrahedralStereo(atom->GetId());
     // If atom is not a tetrahedral center, we're done
@@ -2874,7 +2874,7 @@ namespace OpenBabel {
 
     // get the Config struct defining the stereochemistry
     OBTetrahedralStereo::Config atomConfig = ts->GetConfig();
-    
+
     // write '@?' for unspecified (unknown) stereochemistry
     if (!atomConfig.specified) {
       // strcpy(stereo, "@?");
@@ -2882,7 +2882,7 @@ namespace OpenBabel {
     }
 
     // create a Config struct with the chiral_neighbors in canonical output order
-    OBStereo::Refs canonRefs = OBStereo::MakeRefs(chiral_neighbors[1]->GetId(), 
+    OBStereo::Refs canonRefs = OBStereo::MakeRefs(chiral_neighbors[1]->GetId(),
         chiral_neighbors[2]->GetId(), chiral_neighbors[3]->GetId());
     OBTetrahedralStereo::Config canConfig;
     canConfig.center = atom->GetId();
@@ -2893,11 +2893,11 @@ namespace OpenBabel {
     //cout << "canConfig = " << canConfig << endl;
 
     // canConfig is clockwise
-    if (atomConfig == canConfig) 
+    if (atomConfig == canConfig)
       strcpy(stereo, "@@");
     else
       strcpy(stereo, "@");
-    
+
     return true;
   }
 
@@ -2905,7 +2905,7 @@ namespace OpenBabel {
    * FUNCTION: GetSquarePlanarStereo
    *
    * DESCRIPTION:
-   *       If the atom is chiral, fills in the string with either '@', '@@' 
+   *       If the atom is chiral, fills in the string with either '@', '@@'
    *       or '@?' and returns true, otherwise returns false.
    ***************************************************************************/
 
@@ -2916,12 +2916,12 @@ namespace OpenBabel {
   {
     OBAtom *atom = node->GetAtom();
     OBMol *mol = (OBMol*) atom->GetParent();
-  
+
     // If no chiral neighbors were passed in, we're done
     if (chiral_neighbors.size() < 4)
       return false;
 
-    // OBStereoFacade will run symmetry analysis & stereo perception if needed    
+    // OBStereoFacade will run symmetry analysis & stereo perception if needed
     OBStereoFacade stereoFacade(mol);
     OBSquarePlanarStereo *sp = stereoFacade.GetSquarePlanarStereo(atom->GetId());
     // If atom is not a square-planar center, we're done
@@ -2930,7 +2930,7 @@ namespace OpenBabel {
 
     // get the Config struct defining the stereochemistry
     OBSquarePlanarStereo::Config atomConfig = sp->GetConfig();
-    
+
     if (!atomConfig.specified) {
       // write '@?' for unspecified (unknown) stereochemistry
       // strcpy(stereo, "@?");
@@ -2939,7 +2939,7 @@ namespace OpenBabel {
     }
 
     // create a Config struct with the chiral_neighbors in canonical output order
-    OBStereo::Refs canonRefs = OBStereo::MakeRefs(chiral_neighbors[0]->GetId(), 
+    OBStereo::Refs canonRefs = OBStereo::MakeRefs(chiral_neighbors[0]->GetId(),
         chiral_neighbors[1]->GetId(), chiral_neighbors[2]->GetId(), chiral_neighbors[3]->GetId());
     OBSquarePlanarStereo::Config canConfig;
     canConfig.center = atom->GetId();
@@ -2960,14 +2960,14 @@ namespace OpenBabel {
       strcpy(stereo, "@SP2");
       return true;
     }
- 
+
     canConfig.shape = OBStereo::ShapeZ;
     //cout << "canConfig = " << canConfig << endl;
     if (atomConfig == canConfig) {
       strcpy(stereo, "@SP3");
       return true;
     }
-    
+
     return false;
   }
 
@@ -3023,13 +3023,13 @@ namespace OpenBabel {
         int sorted_needs_bsymbol = bond->IsDouble() || bond->IsTriple();
         if (new_needs_bsymbol && !sorted_needs_bsymbol) {
           sort_nbrs.insert(ai, nbr);
-          ai = sort_nbrs.begin();//insert invalidated ai; set it to fail next test 
+          ai = sort_nbrs.begin();//insert invalidated ai; set it to fail next test
           break;
         }
         if (   new_needs_bsymbol == sorted_needs_bsymbol
                && canonical_order[idx-1] < canonical_order[(*ai)->GetIdx()-1]) {
           sort_nbrs.insert(ai, nbr);
-          ai = sort_nbrs.begin();//insert invalidated ai; set it to fail next test 
+          ai = sort_nbrs.begin();//insert invalidated ai; set it to fail next test
           break;
         }
       }
@@ -3074,11 +3074,11 @@ namespace OpenBabel {
    *       same molecule; we need to assign the digits of the first "C12"
    *       such that it always comes out one way or the other.
    *
-   *       This needs to find closing bonds (ring bonds already assigned a 
+   *       This needs to find closing bonds (ring bonds already assigned a
    *       digit) and opening bonds (ring bonds not encountered yet).
    *
    *    Closing Bonds:
-   *       This is easy: open bonds are already stored in the _vopen vector, 
+   *       This is easy: open bonds are already stored in the _vopen vector,
    *       in canonical order.  Just find open bonds to this atom and copy
    *       them from _vopen to our return vector.
    *
@@ -3087,7 +3087,7 @@ namespace OpenBabel {
    *       any that aren't on the _ubonds "used" list, (and also are non-H
    *       and are in this fragment).  Any such bonds must be ring-closure
    *       bonds.  If there is more than one, they are ordered by the
-   *       canonical order of the bonds' neighbor atoms; that is, the bond 
+   *       canonical order of the bonds' neighbor atoms; that is, the bond
    *       to the lowest canonical-ordered neighbor is assigned the first
    *       available number, and upwards in neighbor-atom canonical order.
    ***************************************************************************/
@@ -3178,10 +3178,10 @@ namespace OpenBabel {
    *
    * DESCRIPTION:
    *       For a hydrogen atom, returns TRUE if the atom is not [2H] or [3H], only
-   *       has one bond, and is not bonded to another hydrogen. 
+   *       has one bond, and is not bonded to another hydrogen.
    *
    *       NOTE: Return value is nonsensical if you pass it a non-hydrogen
-   *       atom.  Presumably, you're calling this because you've found a 
+   *       atom.  Presumably, you're calling this because you've found a
    *       hydrogen and want to know if it goes in the SMILES.
    ***************************************************************************/
 
@@ -3332,7 +3332,7 @@ namespace OpenBabel {
         { // Ring closure
           char bs[2] = {'\0', '\0'};
           // Only get symbol for ring closures on the dbl bond
-          if (HasStereoDblBond(bci->bond, node->GetAtom()))  
+          if (HasStereoDblBond(bci->bond, node->GetAtom()))
             bs[0] = GetCisTransBondSymbol(bci->bond, node);
           if (bs[0])
             strcat(buffer, bs);	// append "/" or "\"
@@ -3347,13 +3347,13 @@ namespace OpenBabel {
         { // Ring opening
           char bs[2] = {'\0', '\0'};
           // Only get symbol for ring openings on the dbl bond
-          if (!HasStereoDblBond(bci->bond, bci->bond->GetNbrAtom(node->GetAtom())))  
+          if (!HasStereoDblBond(bci->bond, bci->bond->GetNbrAtom(node->GetAtom())))
             bs[0] = GetCisTransBondSymbol(bci->bond, node);
           if (bs[0])
             strcat(buffer, bs);	// append "/" or "\"
         }
         if (bci->ringdigit > 9) strcat(buffer,"%");
-        sprintf(buffer+strlen(buffer), "%d", bci->ringdigit); 
+        sprintf(buffer+strlen(buffer), "%d", bci->ringdigit);
       }
     }
 
@@ -3387,14 +3387,14 @@ namespace OpenBabel {
 
   /****************************************************************************
    * FUNCTION: StandardLabels
-   * 
+   *
    * DESCRIPTION:
    *        Creates a set of non-canonical labels for the fragment atoms
    * ***************************************************************************/
-  void StandardLabels(OBMol *pMol, OBBitVec *frag_atoms, 
+  void StandardLabels(OBMol *pMol, OBBitVec *frag_atoms,
                       vector<unsigned int> &symmetry_classes,
                       vector<unsigned int> &labels)
-  {		
+  {
     FOR_ATOMS_OF_MOL(atom, *pMol) {
       if (frag_atoms->BitIsOn(atom->GetIdx())) {
         labels.push_back(atom->GetIdx() - 1);
@@ -3489,13 +3489,13 @@ namespace OpenBabel {
       }
     }
 
-    // OUTER LOOP: Handles dot-disconnected structures.  Finds the 
+    // OUTER LOOP: Handles dot-disconnected structures.  Finds the
     // lowest unmarked canorder atom, and starts there to generate a SMILES.
     // Repeats until no atoms remain unmarked.
 
     while (1) {
 
-      // It happens that the lowest canonically-numbered atom is usually 
+      // It happens that the lowest canonically-numbered atom is usually
       // a good place to start the canonical SMILES.
       OBAtom *root_atom;
       int lowest_canorder = 999999;
@@ -3528,7 +3528,7 @@ namespace OpenBabel {
       }
 
       // No atom found?  We've done all fragments.
-      if (root_atom == NULL) 
+      if (root_atom == NULL)
         break;
 
       // Clear out closures in case structure is dot disconnected
@@ -3536,7 +3536,7 @@ namespace OpenBabel {
       _vopen.clear();
 
       // Dot disconnected structure?
-      if (strlen(buffer) > 0) strcat(buffer,"."); 
+      if (strlen(buffer) > 0) strcat(buffer,".");
       root = new OBCanSmiNode (root_atom);
 
       BuildCanonTree(mol, frag_atoms, canonical_order, root);
@@ -3648,7 +3648,7 @@ namespace OpenBabel {
 
     // If we're doing isomeric (stereo), make a copy
     OBMol *pmol;
-    if (iso) 
+    if (iso)
       pmol = new OBMol(mol);
     else
       pmol = &mol;
@@ -3683,7 +3683,7 @@ namespace OpenBabel {
     // a chiral center, or it's something like [H][H]).
     FOR_ATOMS_OF_MOL(iatom, *pmol) {
       OBAtom *atom = &(*iatom);
-      if (frag_atoms.BitIsOn(atom->GetIdx()) && atom->IsHydrogen() 
+      if (frag_atoms.BitIsOn(atom->GetIdx()) && atom->IsHydrogen()
           && (!iso || m2s.IsSuppressedHydrogen(atom))) {
         frag_atoms.SetBitOff(atom->GetIdx());
       }
@@ -3788,7 +3788,7 @@ namespace OpenBabel {
     //cout << "end SMIBaseFromat::WriteMolecule()" << endl;
     return true;
   }
-  
+
   //********************************************************
   class FIXFormat : public OBMoleculeFormat
   {
@@ -3881,7 +3881,7 @@ namespace OpenBabel {
     for (j = 0;j < mol.NumConformers();j++)
       {
         mol.SetConformer(j);
-        for (unsigned int index = 0; index < canonical_order.size(); 
+        for (unsigned int index = 0; index < canonical_order.size();
              ++index) {
           atomIdx = atoi(canonical_order[index].c_str());
           atom = mol.GetAtom(atomIdx);

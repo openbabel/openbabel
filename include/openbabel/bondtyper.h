@@ -2,14 +2,14 @@
 bondtyper.h - Bond typer to perceive connectivity and bond orders/types.
 
 Copyright (C) 2003-2005 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -41,7 +41,7 @@ public:
     //! \return the size of the database (for error checking)
     size_t GetSize()                 { return _fgbonds.size();}
     //@}
-    
+
     //! \name Bond Perception Routines
     //@{
     //! Assign bonds to functional groups based on the bond typer database

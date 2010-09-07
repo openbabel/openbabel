@@ -2,7 +2,7 @@
   perception.cpp - Stereochemistry perception
 
   Copyright (C) 2009 by Tim Vandermeersch
- 
+
   This file is part of the Open Babel project.
   For more information, see <http://openbabel.sourceforge.net/>
 
@@ -31,7 +31,7 @@
 #include <set>
 
 namespace OpenBabel {
- 
+
   ////////////////////////////////////////////////////////////////////////////
   //
   //  General
@@ -51,14 +51,14 @@ namespace OpenBabel {
         StereoFrom0D(mol);
         break;
     }
-    
+
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::PerceiveStereo", obAuditMsg);
   }
 
-  enum NeighborSymmetryClasses 
-  { 
+  enum NeighborSymmetryClasses
+  {
     // Tetrahedral
-    T1234 = 1, // 4 different symmetry classes 
+    T1234 = 1, // 4 different symmetry classes
     T1123 = 2, // 3 different symmetry classes, 1 class duplicated (2 times)
     T1122 = 3, // 2 different symmetry classes, 1 class duplicated (3 times)
     T1112 = 4, // 2 different symmetry classes, each class duplicated (2 times)
@@ -80,7 +80,7 @@ namespace OpenBabel {
     std::sort(nbrClasses.begin(), nbrClasses.end());
     std::vector<unsigned int>::iterator endLoc = std::unique(nbrClasses.begin(), nbrClasses.end());
     std::copy(nbrClasses.begin(), endLoc, std::back_inserter(uniqueClasses));
-    
+
     switch (uniqueClasses.size()) {
       case 4:
         return T1234; // e.g. 1 2 3 4
@@ -166,9 +166,9 @@ namespace OpenBabel {
     for (bits = mergedRings.begin(); bits != mergedRings.end(); ++bits)
       if ((*bits).BitIsSet( idx1 ) && (*bits).BitIsSet( idx2 ))
         return true;
-    return false;  
+    return false;
   }
-  
+
   void addNbrs(OBBitVec &fragment, OBAtom *atom, OBAtom *skip)
   {
     FOR_NBORS_OF_ATOM (nbr, atom) {
@@ -182,13 +182,13 @@ namespace OpenBabel {
   }
 
   OBBitVec getFragment(OBAtom *atom, OBAtom *skip)
-  { 
+  {
     OBBitVec fragment;
 
     fragment.SetBitOn(atom->GetId());
     addNbrs(fragment, atom, skip);
-    
-    return fragment; 
+
+    return fragment;
   }
 
   std::vector<std::vector<StereogenicUnit> > sortParaCentersByMergedRings(OBMol *mol,
@@ -218,7 +218,7 @@ namespace OpenBabel {
 
 
 
-  std::vector<StereogenicUnit> FindStereogenicUnits(OBMol *mol, 
+  std::vector<StereogenicUnit> FindStereogenicUnits(OBMol *mol,
       const std::vector<unsigned int> &symClasses)
   {
     std::vector<StereogenicUnit> units;
@@ -249,8 +249,8 @@ namespace OpenBabel {
       return units;
 
     // para-stereocenters canditates
-    std::vector<unsigned int> paraAtoms; 
-    std::vector<unsigned int> paraBonds; 
+    std::vector<unsigned int> paraAtoms;
+    std::vector<unsigned int> paraBonds;
 
     /**
      * true Tetrahedral stereocenters:
@@ -263,14 +263,14 @@ namespace OpenBabel {
         int nbrRingAtomCount = 0;
         FOR_NBORS_OF_ATOM (nbr, atom) {
           if (nbr->IsInRing())
-            nbrRingAtomCount++;        
+            nbrRingAtomCount++;
         }
         if (nbrRingAtomCount < 3)
           continue;
       }
       if (atom->GetHyb() == 3 && atom->GetHvyValence() >= 3) {
         // list containing neighbor symmetry classes
-        std::vector<unsigned int> tlist; 
+        std::vector<unsigned int> tlist;
         ischiral = true;
 
         // check neighbors to see if this atom is stereogenic
@@ -311,19 +311,19 @@ namespace OpenBabel {
       if (bond->GetBO() == 2) {
         OBAtom *begin = bond->GetBeginAtom();
         OBAtom *end = bond->GetEndAtom();
-        if (!begin || !end) 
+        if (!begin || !end)
           continue;
 
         // Needs to have at least one explicit single bond at either end
         // FIXME: timvdm: what about C=C=C=C
         if (!begin->HasSingleBond() || !end->HasSingleBond())
           continue;
-          
+
         isCisTrans = true;
         std::vector<OBBond*>::iterator j;
-         
+
         if (begin->GetValence() == 2) {
-          // Begin atom has two explicit neighbors. One is the end atom. The other should 
+          // Begin atom has two explicit neighbors. One is the end atom. The other should
           // be a heavy atom - this is what we test here.
           // (There is a third, implicit, neighbor which is either a hydrogen
           // or a lone pair.)
@@ -331,7 +331,7 @@ namespace OpenBabel {
             isCisTrans = false;
         } else if (begin->GetValence() == 3) {
           std::vector<unsigned int> tlist;
-          
+
           for (OBAtom *nbr = begin->BeginNbrAtom(j); nbr; nbr = begin->NextNbrAtom(j)) {
             // skip end atom
             if (nbr->GetId() == end->GetId())
@@ -346,7 +346,7 @@ namespace OpenBabel {
               }
               break;
             }
-              
+
             // save first summetry class
             tlist.push_back(symClasses[nbr->GetIndex()]);
           }
@@ -355,16 +355,16 @@ namespace OpenBabel {
           isCisTrans = false;
         }
 
-        if (!isCisTrans) 
+        if (!isCisTrans)
           continue;
 
         if (end->GetValence() == 2) {
           // see comment above for begin atom
           if (end->ExplicitHydrogenCount() == 1)
             isCisTrans = false;
-        } else if (end->GetValence() == 3) { 
+        } else if (end->GetValence() == 3) {
           std::vector<unsigned int> tlist;
-          
+
           for (OBAtom *nbr = end->BeginNbrAtom(j); nbr; nbr = end->NextNbrAtom(j)) {
             // skip end atom
             if (nbr->GetId() == begin->GetId())
@@ -379,7 +379,7 @@ namespace OpenBabel {
               }
               break;
             }
-                
+
             // save first summetry class
             tlist.push_back(symClasses[nbr->GetIndex()]);
           }
@@ -396,7 +396,7 @@ namespace OpenBabel {
 
     /**
      * Apply rule 1 from the Razinger paper recusively:
-     * 
+     *
      * All rings are merged "mergedRings". A merged ring is simply a fragment consisting
      * of all atoms of a ring system (bridged, spiro, adjacent, ...). If two rings in the
      * SSSR set share an atom, they are merged.
@@ -405,7 +405,7 @@ namespace OpenBabel {
      * for the para-stereocenter to be valid. This is repeated until no new stereocenters
      * are identified.
      *
-     * rule 1 for double bonds: 
+     * rule 1 for double bonds:
      * - bond atom in ring has two identical symmetry classes for it's neighbor atoms (-> para)
      * - other bond atom:
      *   - has two different symmetry classes for it's neighbours -> new stereocenter
@@ -434,8 +434,8 @@ namespace OpenBabel {
           if ((*u).type == OBStereo::Tetrahedral) {
             OBAtom *atom = mol->GetAtomById((*u).id);
             if (mergedRings.at(s).BitIsOn(atom->GetIdx()))
-              centersInRing++;     
-          } 
+              centersInRing++;
+          }
         }
 
         // check for para-stereocenters in the ring
@@ -459,7 +459,7 @@ namespace OpenBabel {
                   for (unsigned int i = 0; i < nbrClasses.size()-1; ++i)
                     if (nbrClasses.at(i) == nbrClasses.at(i+1))
                       duplicatedSymmetryClass = nbrClasses.at(i);
- 
+
                   FOR_NBORS_OF_ATOM (nbr, atom) {
                     if (symClasses.at(nbr->GetIndex()) == duplicatedSymmetryClass) {
                       if (!ligandAtom1)
@@ -537,7 +537,7 @@ namespace OpenBabel {
                     ligandAtom = &*nbr;
                     break;
                   }
-                  
+
                   OBBitVec ligand = getFragment(ligandAtom, atom);
                   bool foundStereoCenterInLigand = false;
                   for (std::vector<StereogenicUnit>::iterator u2 = units.begin(); u2 != units.end(); ++u2) {
@@ -619,7 +619,7 @@ namespace OpenBabel {
 
         if (centersInRing < 2)
           continue;
-        
+
         // filter out the newly added para-stereocenters in the set of units sorted by ring (sortedParas)
         std::vector<StereogenicUnit> filtered;
         for (std::vector<StereogenicUnit>::iterator u = sortedParas[s].begin(); u != sortedParas[s].end(); ++u) {
@@ -668,8 +668,8 @@ namespace OpenBabel {
       }
       if (alreadyAdded)
         continue;
-          
- 
+
+
       int classification = classifyTetrahedralNbrSymClasses(symClasses, atom);
       switch (classification) {
         case T1123:
@@ -919,9 +919,9 @@ namespace OpenBabel {
             }
           }
           break;
-      
+
       }
-    
+
     }
 
     /**
@@ -940,10 +940,10 @@ namespace OpenBabel {
       }
       if (alreadyAdded)
         continue;
-       
+
       OBAtom *begin = bond->GetBeginAtom();
       OBAtom *end = bond->GetEndAtom();
-          
+
       int beginClassification = classifyCisTransNbrSymClasses(symClasses, bond, bond->GetBeginAtom());
       bool beginValid = false;
       switch (beginClassification) {
@@ -977,10 +977,10 @@ namespace OpenBabel {
           }
           break;
       }
-          
-      if (!beginValid)      
+
+      if (!beginValid)
         continue;
- 
+
       int endClassification = classifyCisTransNbrSymClasses(symClasses, bond, bond->GetEndAtom());
       bool endValid = false;
       switch (endClassification) {
@@ -1018,7 +1018,7 @@ namespace OpenBabel {
       if (endValid)
         units.push_back(StereogenicUnit(OBStereo::CisTrans, bond->GetId(), true));
     }
- 
+
     /*
     cout << "Final True-Tetrahedral: ";
     for (std::vector<StereogenicUnit>::iterator u = units.begin(); u != units.end(); ++u)
@@ -1031,11 +1031,11 @@ namespace OpenBabel {
         cout << (*u).id << " ";
     cout << endl;
     */
- 
+
     return units;
   }
- 
- 
+
+
   /**
    * Perform symmetry analysis.
    *
@@ -1059,7 +1059,7 @@ namespace OpenBabel {
   {
     if (mol->HasChiralityPerceived())
       return;
-     
+
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom0D", obAuditMsg);
 
     std::vector<unsigned int> symClasses = FindSymmetry(mol);
@@ -1069,7 +1069,7 @@ namespace OpenBabel {
     mol->SetChiralityPerceived();
   }
 
-  std::vector<OBTetrahedralStereo*> TetrahedralFrom0D(OBMol *mol, 
+  std::vector<OBTetrahedralStereo*> TetrahedralFrom0D(OBMol *mol,
       const std::vector<StereogenicUnit> &stereoUnits, bool addToMol)
   {
     std::vector<OBTetrahedralStereo*> configs;
@@ -1109,13 +1109,13 @@ namespace OpenBabel {
       // skip non-tetrahedral units
       if ((*u).type != OBStereo::Tetrahedral)
         continue;
-      // if there already exists a OBTetrahedralStereo object for this 
+      // if there already exists a OBTetrahedralStereo object for this
       // center, continue
       if (existingMap.find((*u).id) != existingMap.end())
         continue;
 
       OBAtom *center = mol->GetAtomById((*u).id);
- 
+
       OBTetrahedralStereo::Config config;
       config.specified = false;
       config.center = (*u).id;
@@ -1131,23 +1131,23 @@ namespace OpenBabel {
 
       OBTetrahedralStereo *th = new OBTetrahedralStereo(mol);
       th->SetConfig(config);
-      
+
       configs.push_back(th);
       // add the data to the molecule if needed
       if (addToMol)
         mol->SetData(th);
     }
 
-    return configs;    
+    return configs;
   }
 
-  std::vector<OBCisTransStereo*> CisTransFrom0D(OBMol *mol, 
-      const std::vector<StereogenicUnit> &stereoUnits, 
+  std::vector<OBCisTransStereo*> CisTransFrom0D(OBMol *mol,
+      const std::vector<StereogenicUnit> &stereoUnits,
       bool addToMol)
   {
     std::vector<OBCisTransStereo*> configs;
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::CisTransFrom0D", obAuditMsg);
- 
+
     std::vector<unsigned long> bonds;
     for (std::vector<StereogenicUnit>::const_iterator u = stereoUnits.begin(); u != stereoUnits.end(); ++u)
       if ((*u).type == OBStereo::CisTrans)
@@ -1191,7 +1191,7 @@ namespace OpenBabel {
 
     std::vector<unsigned long>::iterator i;
     for (i = bonds.begin(); i != bonds.end(); ++i) {
-      // If there already exists a OBCisTransStereo object for this 
+      // If there already exists a OBCisTransStereo object for this
       // bond, leave it alone
       if (existingMap.find(*i) != existingMap.end())
         continue;
@@ -1225,7 +1225,7 @@ namespace OpenBabel {
 
       OBCisTransStereo *ct = new OBCisTransStereo(mol);
       ct->SetConfig(config);
-      
+
       configs.push_back(ct);
       // add the data to the molecule if needed
       if (addToMol)
@@ -1247,7 +1247,7 @@ namespace OpenBabel {
   {
     if (mol->HasChiralityPerceived() && !force)
       return;
-     
+
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom3D", obAuditMsg);
 
     mol->DeleteData(OBGenericDataType::StereoData);
@@ -1269,7 +1269,7 @@ namespace OpenBabel {
     return m.determinant();
   }
 
-  std::vector<OBTetrahedralStereo*> TetrahedralFrom3D(OBMol *mol, 
+  std::vector<OBTetrahedralStereo*> TetrahedralFrom3D(OBMol *mol,
       const std::vector<StereogenicUnit> &stereoUnits, bool addToMol)
   {
     std::vector<OBTetrahedralStereo*> configs;
@@ -1280,21 +1280,21 @@ namespace OpenBabel {
     for (std::vector<StereogenicUnit>::const_iterator u = stereoUnits.begin(); u != stereoUnits.end(); ++u)
       if ((*u).type == OBStereo::Tetrahedral)
         centers.push_back((*u).id);
-     
+
     std::vector<unsigned long>::iterator i;
     for (i = centers.begin(); i != centers.end(); ++i) {
       OBAtom *center = mol->GetAtomById(*i);
- 
+
       // make sure we have at least 3 heavy atom neighbors
       // timvdm 28 Jun 2009: This is already checked in FindTetrahedralAtoms
       if (center->GetHvyValence() < 3) {
         std::stringstream errorMsg;
-        errorMsg << "Cannot calculate a signed volume for an atom with a heavy atom valence of " 
+        errorMsg << "Cannot calculate a signed volume for an atom with a heavy atom valence of "
                  << center->GetHvyValence() << std::endl;
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
         continue;
       }
-        
+
       OBTetrahedralStereo::Config config;
       config.center = *i;
       FOR_NBORS_OF_ATOM(nbr, center) {
@@ -1305,7 +1305,7 @@ namespace OpenBabel {
       }
 
       bool use_central_atom = false;
-           
+
       // Create a vector with the coordinates of the neighbor atoms
       // and check for a bond that indicates unspecified stereochemistry
       std::vector<vector3> nbrCoords;
@@ -1322,17 +1322,17 @@ namespace OpenBabel {
         if (bond->IsWedgeOrHash() && bond->GetBeginAtom()==center)
           config.specified = false;
       }
-    
+
         // Checks for a neighbour having 0 co-ords (added hydrogen etc)
-        /* FIXME: needed? if the molecule has 3D coords, additional 
+        /* FIXME: needed? if the molecule has 3D coords, additional
          * hydrogens will get coords using OBAtom::GetNewBondVector
-        for (std::vector<vector3>::iterator coord = nbrCoords.begin(); coord != nbrCoords.end(); ++coord) { 
+        for (std::vector<vector3>::iterator coord = nbrCoords.begin(); coord != nbrCoords.end(); ++coord) {
           // are the coordinates zero to 6 or more significant figures
           if (coord->IsApprox(VZero, 1.0e-6)) {
             if (!use_central_atom) {
               use_central_atom = true;
             } else {
-              obErrorLog.ThrowError(__FUNCTION__, 
+              obErrorLog.ThrowError(__FUNCTION__,
                   "More than 2 neighbours have 0 co-ords when attempting 3D chiral calculation", obInfo);
             }
           }
@@ -1352,22 +1352,22 @@ namespace OpenBabel {
 
       OBTetrahedralStereo *th = new OBTetrahedralStereo(mol);
       th->SetConfig(config);
-      
+
       configs.push_back(th);
       // add the data to the molecule if needed
       if (addToMol)
         mol->SetData(th);
     }
 
-    return configs;    
+    return configs;
   }
 
-  std::vector<OBCisTransStereo*> CisTransFrom3D(OBMol *mol, 
+  std::vector<OBCisTransStereo*> CisTransFrom3D(OBMol *mol,
       const std::vector<StereogenicUnit> &stereoUnits, bool addToMol)
   {
     std::vector<OBCisTransStereo*> configs;
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::CisTransFrom3D", obAuditMsg);
- 
+
     // find all cis/trans bonds
     std::vector<unsigned long> bonds;
     for (std::vector<StereogenicUnit>::const_iterator u = stereoUnits.begin(); u != stereoUnits.end(); ++u)
@@ -1414,8 +1414,8 @@ namespace OpenBabel {
 
       // 0      3     Get signed distance of 0 and 2 to the plane
       //  \    /      that goes through the double bond and is at
-      //   C==C       right angles to the stereo bonds. 
-      //  /    \      
+      //   C==C       right angles to the stereo bonds.
+      //  /    \
       // 1      2     If the two signed distances have the same sign
       //              then they are cis; if not, then trans.
 
@@ -1433,7 +1433,7 @@ namespace OpenBabel {
 
       OBCisTransStereo *ct = new OBCisTransStereo(mol);
       ct->SetConfig(config);
-      
+
       configs.push_back(ct);
       // add the data to the molecule if needed
       if (addToMol)
@@ -1448,8 +1448,8 @@ namespace OpenBabel {
   //  From2D
   //
   //  Reference:
-  //  [1] T. Cieplak, J.L. Wisniewski, A New Effective Algorithm for the 
-  //  Unambiguous Identification of the Stereochemical Characteristics of 
+  //  [1] T. Cieplak, J.L. Wisniewski, A New Effective Algorithm for the
+  //  Unambiguous Identification of the Stereochemical Characteristics of
   //  Compounds During Their Registration in Databases. Molecules 2000, 6,
   //  915-926, http://www.mdpi.org/molecules/papers/61100915/61100915.htm
   ////////////////////////////////////////////////////////////////////////////
@@ -1458,7 +1458,7 @@ namespace OpenBabel {
   {
     if (mol->HasChiralityPerceived() && !force)
       return;
-      
+
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom2D", obAuditMsg);
 
     std::vector<unsigned int> symClasses = FindSymmetry(mol);
@@ -1468,7 +1468,7 @@ namespace OpenBabel {
     CisTransFrom2D(mol, stereogenicUnits, updown);
     mol->SetChiralityPerceived();
   }
- 
+
   //! Calculate the "sign of a triangle" given by a set of 3 2D coordinates
   double TriangleSign(const vector3 &a, const vector3 &b, const vector3 &c)
   {
@@ -1476,35 +1476,35 @@ namespace OpenBabel {
     return (a.x() - c.x()) * (b.y() - c.y()) - (a.y() - c.y()) * (b.x() - c.x());
   }
 
-  std::vector<OBTetrahedralStereo*> TetrahedralFrom2D(OBMol *mol, 
+  std::vector<OBTetrahedralStereo*> TetrahedralFrom2D(OBMol *mol,
       const std::vector<StereogenicUnit> &stereoUnits, bool addToMol)
   {
     std::vector<OBTetrahedralStereo*> configs;
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::TetrahedralFrom2D", obAuditMsg);
- 
+
     // find all tetrahedral centers
     std::vector<unsigned long> centers;
     for (std::vector<StereogenicUnit>::const_iterator u = stereoUnits.begin(); u != stereoUnits.end(); ++u)
       if ((*u).type == OBStereo::Tetrahedral)
         centers.push_back((*u).id);
- 
-      
+
+
     std::vector<unsigned long>::iterator i;
     for (i = centers.begin(); i != centers.end(); ++i) {
       OBAtom *center = mol->GetAtomById(*i);
- 
+
       // make sure we have at least 3 heavy atom neighbors
       if (center->GetHvyValence() < 3) {
         std::stringstream errorMsg;
-        errorMsg << "Cannot calculate a signed volume for an atom with a heavy atom valence of " 
+        errorMsg << "Cannot calculate a signed volume for an atom with a heavy atom valence of "
                  << center->GetHvyValence() << std::endl;
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
         continue;
       }
-        
+
       OBTetrahedralStereo::Config config;
       config.center = *i;
-        
+
       // find the hash, wedge and 2 plane atoms
       std::vector<OBAtom*> planeAtoms;
       std::vector<OBAtom*> wedgeAtoms;
@@ -1532,14 +1532,14 @@ namespace OpenBabel {
         } else if (bond->IsWedgeOrHash()) {
           config.specified = false;
           break;
-        } else { 
+        } else {
           // plane bonds
           planeAtoms.push_back(nbr);
         }
       }
 
       bool success = true;
-      
+
       using namespace std;
       if (!config.specified) {
         // unspecified
@@ -1559,7 +1559,7 @@ namespace OpenBabel {
           config.refs[0] = planeAtoms[0]->GetId();
           config.refs[1] = planeAtoms[1]->GetId();
           config.refs[2] = hashAtoms[0]->GetId();
-          double sign = TriangleSign(planeAtoms[0]->GetVector(), 
+          double sign = TriangleSign(planeAtoms[0]->GetVector(),
               planeAtoms[1]->GetVector(), hashAtoms[0]->GetVector());
           if (sign > 0.0)
             config.winding = OBStereo::AntiClockwise;
@@ -1580,7 +1580,7 @@ namespace OpenBabel {
           config.refs[0] = planeAtoms[0]->GetId();
           config.refs[1] = planeAtoms[1]->GetId();
           config.refs[2] = stereoAtom->GetId();
-          double sign = TriangleSign(planeAtoms[0]->GetVector(), 
+          double sign = TriangleSign(planeAtoms[0]->GetVector(),
               planeAtoms[1]->GetVector(), stereoAtom->GetVector());
           if (sign > 0.0)
             config.winding = OBStereo::AntiClockwise;
@@ -1603,21 +1603,21 @@ namespace OpenBabel {
           config.refs[0] = planeAtoms[0]->GetId();
           config.refs[1] = planeAtoms[1]->GetId();
           config.refs[2] = planeAtoms[2]->GetId();
-          double sign = TriangleSign(planeAtoms[0]->GetVector(), 
+          double sign = TriangleSign(planeAtoms[0]->GetVector(),
               planeAtoms[1]->GetVector(), planeAtoms[2]->GetVector());
           if (sign > 0.0)
             config.winding = OBStereo::AntiClockwise;
         } else {
           success = false;
         }
-      
+
       } else {
         success = false;
       }
 
       if (!success) {
 //         std::stringstream errorMsg;
-//         errorMsg << "Symmetry analysis found atom with id " << center->GetId() 
+//         errorMsg << "Symmetry analysis found atom with id " << center->GetId()
 //             << " to be a tetrahedral atom but the wedge/hash bonds can't be interpreted." << std::endl
 //             << " # in-plane bonds = " << planeAtoms.size() << std::endl
 //             << " # wedge bonds = " << wedgeAtoms.size() << std::endl
@@ -1626,7 +1626,7 @@ namespace OpenBabel {
 //         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
         continue;
       }
- 
+
 
       OBTetrahedralStereo *th = new OBTetrahedralStereo(mol);
       th->SetConfig(config);
@@ -1636,12 +1636,12 @@ namespace OpenBabel {
       if (addToMol)
         mol->SetData(th);
     }
-   
+
     return configs;
   }
 
-  std::vector<OBCisTransStereo*> CisTransFrom2D(OBMol *mol, 
-      const std::vector<StereogenicUnit> &stereoUnits, 
+  std::vector<OBCisTransStereo*> CisTransFrom2D(OBMol *mol,
+      const std::vector<StereogenicUnit> &stereoUnits,
       const std::map<OBBond*, enum OBStereo::BondDirection> *updown, bool addToMol)
   {
     std::vector<OBCisTransStereo*> configs;
@@ -1652,7 +1652,7 @@ namespace OpenBabel {
     for (std::vector<StereogenicUnit>::const_iterator u = stereoUnits.begin(); u != stereoUnits.end(); ++u)
       if ((*u).type == OBStereo::CisTrans)
         bonds.push_back((*u).id);
-    
+
     std::vector<unsigned long>::iterator i;
     for (i = bonds.begin(); i != bonds.end(); ++i) {
       OBBond *bond = mol->GetBondById(*i);
@@ -1699,11 +1699,11 @@ namespace OpenBabel {
             config.specified = false;
       }
       if (config.specified==true) { // Work out the stereochemistry
-        // 0      3       
+        // 0      3
         //  \    /        2 triangles: 0-1-b & 2-3-a
         //   a==b    -->  same sign: U
         //  /    \        opposite sign: Z
-        // 1      2       
+        // 1      2
         /*
         double sign1 = TriangleSign(begin->GetVector(), end->GetVector(), bondVecs[0]);
         double sign2 = TriangleSign(begin->GetVector(), end->GetVector(), bondVecs[2]);
@@ -1728,7 +1728,7 @@ namespace OpenBabel {
     return configs;
   }
 
-  bool TetStereoTo0D(OBMol &mol, 
+  bool TetStereoTo0D(OBMol &mol,
       std::map<OBBond*, enum OBStereo::BondDirection> &updown,
       std::map<OBBond*, OBStereo::Ref> &from)
   {
@@ -1782,18 +1782,18 @@ namespace OpenBabel {
           }
         }
         if (chosen==NULL) { // There is a remote possibility of this but let's worry about 99.9% of cases first
-          obErrorLog.ThrowError(__FUNCTION__, 
+          obErrorLog.ThrowError(__FUNCTION__,
             "Failed to set stereochemistry as unable to find an available bond", obError);
           return false;
         }
         alreadyset.insert(chosen);
-        
+
         OBStereo::BondDirection bonddir = OBStereo::UnknownDir;
         if (cfg.specified) {
           // Determine whether this bond should be set hash or wedge (or indeed unknown)
           // (Code inspired by perception.cpp, TetrahedralFrom2D: plane1 + plane2 + plane3, wedge)
           OBTetrahedralStereo::Config test_cfg = cfg;
-           
+
           // If there is an implicit ref; let's make that the 'from' atom
           // otherwise use the atom on the chosen bond
           bool implicit = true;
@@ -1807,7 +1807,7 @@ namespace OpenBabel {
             }
           }
           // -ve sign implies clockwise
-          double sign = TriangleSign(mol.GetAtomById(test_cfg.refs[0])->GetVector(), 
+          double sign = TriangleSign(mol.GetAtomById(test_cfg.refs[0])->GetVector(),
               mol.GetAtomById(test_cfg.refs[1])->GetVector(), mol.GetAtomById(test_cfg.refs[2])->GetVector());
 
           // Things are inverted from the point of view of the ImplicitH which we
@@ -1848,7 +1848,7 @@ namespace OpenBabel {
 
       if (datatype != OBStereo::CisTrans && datatype != OBStereo::Tetrahedral) {
         // Maybe I should just unset the stereochemistry if this happens?
-        obErrorLog.ThrowError(__FUNCTION__, 
+        obErrorLog.ThrowError(__FUNCTION__,
             "This function should be updated to handle additional stereo types.\nSome stereochemistry objects may contain explicit refs to hydrogens which have been removed.", obWarning);
         continue;
       }

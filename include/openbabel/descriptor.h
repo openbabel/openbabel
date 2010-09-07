@@ -1,15 +1,15 @@
 /**********************************************************************
 descriptor.h - Base class for molecular descriptors
- 
+
 Copyright (C) 2007 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -50,7 +50,7 @@ public:
 
   ///Parses the filter stream for a relational expression and returns its result when applied to the chemical object
   virtual bool Compare(OBBase* pOb, std::istream& ss, bool noEval, std::string* param=NULL);
-  
+
   ///Write information on a plugin class to the string txt.
   ///If the parameter is a descriptor ID, displays the verbose description for that descriptor only
   /// e.g. babel -L descriptors HBA1
@@ -61,9 +61,9 @@ public:
   virtual bool Order(double p1, double p2){ return p1<p2; }
   virtual bool Order(std::string s1, std::string s2){ return s1<s2; }
 
-  /// Interprets the --filter option string and returns the combined result of all the comparisons it contains  
+  /// Interprets the --filter option string and returns the combined result of all the comparisons it contains
   static bool FilterCompare(OBBase* pOb, std::istream& ss, bool noEval);
-  
+
   ///Reads list of descriptor IDs and calls PredictAndSave() for each.
   static void AddProperties(OBBase* pOb, const std::string& DescrList);
 
@@ -106,15 +106,15 @@ static bool DoComparison(char ch1, char ch2, T& val, T& filterval)
   {
   case (0):  //no comparison operator is same as =
   case('='):
-  return val==filterval; //**needs a better floating point comparison**	
+  return val==filterval; //**needs a better floating point comparison**
   case('!'):
-  return val!=filterval; //**needs a better floating point comparison**	
-  case('>'):              
+  return val!=filterval; //**needs a better floating point comparison**
+  case('>'):
   if(ch2=='=')
     return val>=filterval;
   else
     return val>filterval;
-  case('<'):              
+  case('<'):
   if(ch2=='=')
     return val<=filterval;
   else

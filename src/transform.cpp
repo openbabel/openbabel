@@ -2,14 +2,14 @@
 transform.cpp - Perform command-line requested transformations
 
 Copyright (C) 2004-2005 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -30,7 +30,7 @@ namespace OpenBabel
   {
     // Perform any requested transformations
     // on a OBMol
-    //The input map has option letters or name as the key and 
+    //The input map has option letters or name as the key and
     //any associated text as the value.
     //For normal(non-filter) transforms:
     // returns a pointer to the OBMol (this) if ok or NULL if not.
@@ -40,7 +40,7 @@ namespace OpenBabel
     //This is now a virtual function. The OBBase version just returns the OBMol pointer.
     //This is declared in mol.h
 
-    //The filter options, s and v allow a obgrep facility. 
+    //The filter options, s and v allow a obgrep facility.
     //Used together they must both be true to allow a molecule through.
 
     //Parse GeneralOptions
@@ -49,7 +49,7 @@ namespace OpenBabel
 
     // DoOps calls Do() for each of the plugin options in the map
     // It normally returns true, even if there are no options but
-    // can return false if one of the options decides that the 
+    // can return false if one of the options decides that the
     // molecule should not be output. If it is a filtering op, it
     // should delete the molecule itself (unlike the -s, --filter options,
     // which delete it in this function).
@@ -126,7 +126,7 @@ namespace OpenBabel
             if(dp) {
               dp->SetValue(val);
               dp->SetOrigin(userInput);
-            } 
+            }
             else {
               // Pair did not exist; make new one
               dp = new OBPairData;
@@ -141,7 +141,7 @@ namespace OpenBabel
     itr = pOptions->find("add");  //adds new properties from descriptors in list
     if(itr!=pOptions->end())
       OBDescriptor::AddProperties(this, itr->second);
-    
+
     itr = pOptions->find("delete"); //deletes the specified properties
     if(itr!=pOptions->end())
       OBDescriptor::DeleteProperties(this, itr->second);
@@ -157,7 +157,7 @@ namespace OpenBabel
       }
 
 
-    
+
       //Filter using OBDescriptor comparison and (older) SMARTS tests
     //Continue only if previous test was true.
     bool fmatch = true;
@@ -230,7 +230,7 @@ namespace OpenBabel
 "-h Add hydrogens (make explicit)\n"
 "-p <pH> Add hydrogens appropriate for this pH\n"
 "-b Convert dative bonds e.g.[N+]([O-])=O to N(=O)=O\n"
-"-r Remove all but the largest contiguous fragment\n" 
+"-r Remove all but the largest contiguous fragment\n"
 "-c Center Coordinates\n"
 "-C Combine mols in first file with others having same name\n"
 "--filter <filterstring> Filter: convert only when tests are true:\n"

@@ -1,15 +1,15 @@
 /**********************************************************************
-fingerprint.h - Base class for fingerprints and fast searching 
- 
+fingerprint.h - Base class for fingerprints and fast searching
+
 Copyright (C) 2005 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -46,7 +46,7 @@ const char* TypeID()
 	{
 		return "fingerprints";
 	}
-	
+
 	//Rest of OBFingerprints declarations
 public:
 
@@ -58,15 +58,15 @@ public:
   ///return true if the nth bit is set;
   bool GetBit(const std::vector<unsigned int>& vec, const unsigned int n);
 
-    /// Repeatedly ORs the top half with the bottom half until no smaller than nbits 
-  void Fold(std::vector<unsigned int>& vec, unsigned int nbits); 
+    /// Repeatedly ORs the top half with the bottom half until no smaller than nbits
+  void Fold(std::vector<unsigned int>& vec, unsigned int nbits);
 
   /// \return fingerprint in vector, which may be resized, folded to nbits (if nbits!=0)
   virtual bool GetFingerprint(OBBase* pOb, std::vector<unsigned int>& fp, int nbits=0)=0;
 
   /// Optional flags
   enum FptFlag{FPT_UNIQUEBITS=1};
-  virtual unsigned int Flags() { return 0;}; 
+  virtual unsigned int Flags() { return 0;};
 
   /// \return a description of each bit that is set (or unset, if bSet=false)
   /// \since version 2.2
@@ -78,9 +78,9 @@ public:
 
   /// \return the Tanimoto coefficient between two vectors (vector<unsigned int>& SeekPositions)
   static double Tanimoto(const std::vector<unsigned int>& vec1, const std::vector<unsigned int>& vec2);
-  
+
   /// Inline version of Tanimoto() taking a pointer for the second vector
-  static double Tanimoto(const std::vector<unsigned int>& vec1, const unsigned int* p2) 
+  static double Tanimoto(const std::vector<unsigned int>& vec1, const unsigned int* p2)
   {
     ///If used for two vectors, vec1 and vec2, call as Tanimoto(vec1, &vec2[0]);
     int andbits=0, orbits=0;
@@ -106,7 +106,7 @@ public:
     }
       return((double)andbits/(double)orbits);
   };
-  
+
   static unsigned int Getbitsperint(){ return bitsperint; }
 
 private:
@@ -115,10 +115,10 @@ private:
   {
     unsigned int operator()(const unsigned int a, const unsigned int b)
     {
-      return a | b;	
+      return a | b;
     }
   };
-  
+
 
 public:
 /// \return a pointer to a fingerprint (the default if ID is empty), or NULL if not available
@@ -151,7 +151,7 @@ struct OBFPRT FptIndex
   bool Read(std::istream* pIndexstream);
   bool ReadIndex(std::istream* pIndexstream);
   bool ReadHeader(std::istream* pIndexstream);
-    
+
   /// \return A pointer to FP used or NULL and an error message
   OBFingerprint* CheckFP();
 };
@@ -168,7 +168,7 @@ public:
 
   virtual ~FastSearch(){};
 
-  /// \brief Does substructure search and returns vector of the file positions of matches 
+  /// \brief Does substructure search and returns vector of the file positions of matches
   bool    Find(OBBase* pOb, std::vector<unsigned int>& SeekPositions, unsigned int MaxCandidates);
 
   /// \brief Similar to Find() but all bits of matching fingerprints have to be the same
@@ -209,7 +209,7 @@ public:
 
   ///\brief Constructor using existing index
   FastSearchIndexer(FptIndex* pindex, std::ostream* os, int nmols=0);
-  
+
   ~FastSearchIndexer();
 
   ///\brief Called for each object

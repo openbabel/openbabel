@@ -1,16 +1,16 @@
 /**********************************************************************
 rotamer.cpp - Handle rotamer list data.
- 
+
 Copyright (C) 1998, 1999, 2000-2002 OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -116,7 +116,7 @@ namespace OpenBabel
     //Since the class contains OBAtom pointers, the new copy use
     //these from the new molecule, newparent
     OBMol* newmol = static_cast<OBMol*>(newparent);
-	
+
     OBRotamerList *new_rml = new OBRotamerList;
     new_rml->_attr = _attr;
     new_rml->_type = _type;
@@ -142,7 +142,7 @@ namespace OpenBabel
     if (ref)
       {
         GetReferenceArray(ref);
-        new_rml->Setup(*newmol,ref,NumRotors()); 
+        new_rml->Setup(*newmol,ref,NumRotors());
         delete [] ref;
       }
 
@@ -326,7 +326,7 @@ namespace OpenBabel
   {
     unsigned int i;
     double angle,res=255.0/360.0;
-    
+
     if (arr.size() != (_vrotor.size() + 1))
       return; // wrong size key
 
@@ -417,20 +417,20 @@ namespace OpenBabel
 
     return tmpclist;
   }
-  
+
   //! Change the current coordinate set
   //! \since version 2.2
   void OBRotamerList::SetCurrentCoordinates(OBMol &mol, std::vector<int> arr)
   {
     unsigned int i;
     double angle;
-    
+
     if (arr.size() != (_vrotor.size() + 1))
       return; // wrong size key
-    
+
     //    double *rot = new double [_vrotor.size()+1];
     //    rot[0] = arr[0];
-    
+
     double *c = mol.GetCoordinates();
     for (i = 0;i < _vrotor.size();++i)
       {
@@ -473,7 +473,7 @@ namespace OpenBabel
 
   //! Rotate the coordinates of 'atoms'
   //! such that tor == ang.
-  //! Atoms in 'tor' should be ordered such that the 3rd atom is 
+  //! Atoms in 'tor' should be ordered such that the 3rd atom is
   //! the pivot around which atoms rotate (ang is in degrees)
   //! \todo This code is identical to OBMol::SetTorsion() and should be combined
   void SetRotorToAngle(double *c, OBAtom **ref,double ang,vector<int> atoms)
@@ -504,8 +504,8 @@ namespace OpenBabel
     c1z = v1x*v2y - v1y*v2x;   c2z = v2x*v3y - v2y*v3x;
     c3x = c1y*c2z - c1z*c2y;
     c3y = -c1x*c2z + c1z*c2x;
-    c3z = c1x*c2y - c1y*c2x; 
-  
+    c3z = c1x*c2y - c1y*c2x;
+
     c1mag = c1x*c1x + c1y*c1y + c1z*c1z;
     c2mag = c2x*c2x + c2y*c2y + c2z*c2z;
     if (c1mag*c2mag < 0.01) costheta = 1.0; //avoid div by zero error
@@ -513,7 +513,7 @@ namespace OpenBabel
 
     if (costheta < -0.999999) costheta = -0.999999;
     if (costheta >  0.999999) costheta =  0.999999;
-			      
+
     if ((v2x*c3x + v2y*c3y + v2z*c3z) > 0.0) radang = -acos(costheta);
     else                                     radang = acos(costheta);
 
@@ -522,14 +522,14 @@ namespace OpenBabel
     //
 
     //find the difference between current and requested
-    rotang = (DEG_TO_RAD*ang) - radang; 
+    rotang = (DEG_TO_RAD*ang) - radang;
 
     sn = sin(rotang); cs = cos(rotang);t = 1 - cs;
     //normalize the rotation vector
     mag = sqrt(v2x*v2x + v2y*v2y + v2z*v2z);
     if (mag < 0.1) mag = 0.1; // avoid divide by zero error
     x = v2x/mag; y = v2y/mag; z = v2z/mag;
-  
+
     //set up the rotation matrix
     m[0]= t*x*x + cs;     m[1] = t*x*y + sn*z;  m[2] = t*x*z - sn*y;
     m[3] = t*x*y - sn*z;  m[4] = t*y*y + cs;    m[5] = t*y*z + sn*x;

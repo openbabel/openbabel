@@ -1,13 +1,13 @@
 /**********************************************************************
 Copyright (C) 2007 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -44,7 +44,7 @@ namespace OpenBabel
 
     }
 
-    virtual const char* GetMIMEType() 
+    virtual const char* GetMIMEType()
     { return "chemical/x-daylight-smiles"; }; // not right, need something else
 
     virtual const char* TargetClassDescription()
@@ -156,7 +156,7 @@ namespace OpenBabel
     pos = rsmiles.find_first_of(",<\"\'!^&_|{}");
     if(pos!=string::npos)
     {
-      obErrorLog.ThrowError(__FUNCTION__, 
+      obErrorLog.ThrowError(__FUNCTION__,
           rsmiles + " contained a character '" + rsmiles[pos] + "' which is invalid in SMILES", obError);
       return false;
     }
@@ -173,8 +173,8 @@ namespace OpenBabel
 
     //Extract reactants and split into individual molecules
     OBMol jreactants;
-    s = rsmiles.substr(0,pos); 
-    if(!sconv.ReadString(&jreactants, s)) 
+    s = rsmiles.substr(0,pos);
+    if(!sconv.ReadString(&jreactants, s))
     {
       obErrorLog.ThrowError(__FUNCTION__, "Cannot read reactant", obError);
       return false;
@@ -195,7 +195,7 @@ namespace OpenBabel
     {
       OBMol* pAgent = new OBMol;
       s = rsmiles.substr(pos+1,pos2-pos-1);
-      if(!sconv.ReadString(pAgent, s)) 
+      if(!sconv.ReadString(pAgent, s))
       {
         obErrorLog.ThrowError(__FUNCTION__, "Cannot read agent", obError);
         delete pAgent;
@@ -206,8 +206,8 @@ namespace OpenBabel
 
     //Extract products and split into separate molecules
     OBMol jproducts;
-    s = rsmiles.substr(pos2+1); 
-    if(!sconv.ReadString(&jproducts, s)) 
+    s = rsmiles.substr(pos2+1);
+    if(!sconv.ReadString(&jproducts, s))
     {
       obErrorLog.ThrowError(__FUNCTION__, "Cannot read product", obError);
       return false;

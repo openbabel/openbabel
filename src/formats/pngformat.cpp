@@ -1,10 +1,10 @@
 /**********************************************************************
 Copyright (C) 2007 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -106,7 +106,7 @@ private:
     }
     ofs.write(p, 4);
   }
-};  
+};
   ////////////////////////////////////////////////////
 
 //Make an instance of the format class
@@ -123,7 +123,7 @@ bool PNGFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   const char pngheader[] = {-119,80,78,71,13,10,26,10,0};
   char readbytes[9];
   ifs.read(readbytes, 8);
-  
+
   if(!equal(pngheader, pngheader+8, readbytes))
   {
     obErrorLog.ThrowError("PNG Format","Not a PNG file", obError);
@@ -253,7 +253,7 @@ bool PNGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     obErrorLog.ThrowError("PNG Format","Format not found", obError);
     return false;
-  
+
   }
   //Write new chunk
   stringstream ss;
@@ -263,7 +263,7 @@ bool PNGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ss << pid;
   else
     ss  << "tEXt";
-  ss  << formatID  << '\0'; 
+  ss  << formatID  << '\0';
   bool ret = conv2.Write(pOb, &ss);
   if(ret)
   {
@@ -271,7 +271,7 @@ bool PNGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     Write32(len, ofs);
     ofs << ss.str();
 
-    //ss has type, keyword and data 
+    //ss has type, keyword and data
     uLong crc = crc32(0L, Z_NULL, 0);
     crc       = crc32(crc, (unsigned char*)ss.str().c_str(), ss.str().size());
     Write32(crc, ofs);
@@ -279,7 +279,7 @@ bool PNGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   }
   else
     obErrorLog.ThrowError("PNG Format","Failed when converting the molecule", obError);
-    
+
   if(pConv->IsLast())
   {
     //Write the IEND chunk
@@ -331,7 +331,7 @@ Note that the content of the PNG file is stored in PNGFormat, so do
 not input from another PNG file until this one is written.
 
 //Set the format of the embedded molecule on output
-conv.AddOption("O",OBConversion::OUTOPTIONS,"smi"); 
+conv.AddOption("O",OBConversion::OUTOPTIONS,"smi");
 conv.Write(&mol, ofs);
 
 */

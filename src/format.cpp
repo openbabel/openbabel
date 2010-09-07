@@ -97,7 +97,7 @@ bool OBFormat::Display(std::string& txt, const char* param, const char* ID)
   }
 
   //Use the provided ID if possible. If more than one ID has been registed
-  //for the format, e.g. "smiles" and "smi", the contents of the member 
+  //for the format, e.g. "smiles" and "smi", the contents of the member
   //variable _id, returned by GetID() is the last one.
   if(ID)
     txt = ID;

@@ -43,7 +43,7 @@ namespace OpenBabel {
       //   |   |        |   |      <- in any case, refs[0] & refs[2] remain unchanged
       //   1 2 3 4      1 4 3 2
       //
-      return (u1.refs[2] == u2.refs[2]); 
+      return (u1.refs[2] == u2.refs[2]);
     }
 
     // possibilities:
@@ -96,13 +96,13 @@ namespace OpenBabel {
   void OBCisTransStereo::SetConfig(const Config &config)
   {
     if (config.begin == OBStereo::NoRef) {
-      obErrorLog.ThrowError(__FUNCTION__, 
+      obErrorLog.ThrowError(__FUNCTION__,
           "OBCisTransStereo::SetConfig : double bond begin id is invalid.", obError);
       m_cfg = Config();
       return;
     }
     if (config.end == OBStereo::NoRef) {
-      obErrorLog.ThrowError(__FUNCTION__, 
+      obErrorLog.ThrowError(__FUNCTION__,
           "OBCisTransStereo::SetConfig : double bond end id is invalid.", obError);
       m_cfg = Config();
       return;
@@ -127,8 +127,8 @@ namespace OpenBabel {
 
     return OBTetraPlanarStereo::ToConfig(m_cfg, m_cfg.refs.at(0), shape);
   }
- 
-  OBCisTransStereo::Config OBCisTransStereo::GetConfig(unsigned long start, 
+
+  OBCisTransStereo::Config OBCisTransStereo::GetConfig(unsigned long start,
       OBStereo::Shape shape) const
   {
     if (!IsValid())
@@ -136,23 +136,23 @@ namespace OpenBabel {
 
     return OBTetraPlanarStereo::ToConfig(m_cfg, start, shape);
   }
-   
+
   bool OBCisTransStereo::IsTrans(unsigned long id1, unsigned long id2) const
   {
     return (GetTransRef(id1) == id2);
   }
-  
+
   bool OBCisTransStereo::IsCis(unsigned long id1, unsigned long id2) const
   {
     return (GetCisRef(id1) == id2);
   }
- 
+
   bool OBCisTransStereo::operator==(const OBCisTransStereo &other) const
   {
     if (!IsValid() || !other.IsValid())
       return false;
 
-    Config u = OBTetraPlanarStereo::ToConfig(other.GetConfig(), 
+    Config u = OBTetraPlanarStereo::ToConfig(other.GetConfig(),
         m_cfg.refs.at(0), OBStereo::ShapeU);
     unsigned long a1 = u.refs.at(0);
     unsigned long b1 = u.refs.at(2);
@@ -189,13 +189,13 @@ namespace OpenBabel {
           j = 3 - i; // Convert 0 to 3, and 3 to 0
         else // GetTransRef
           j = (i > 1) ? i - 2 : i + 2;
-        
+
         unsigned long refId = m_cfg.refs.at(j);
         if (refId == OBStereo::ImplicitRef)
           return OBStereo::ImplicitRef;
         // make sure they are not bonded to the same atom
         if (IsOnSameAtom(id, refId)) {
-          obErrorLog.ThrowError(__FUNCTION__, 
+          obErrorLog.ThrowError(__FUNCTION__,
             "OBCisTransStereo::GetCisOrTransRef : References don't match bond orientation", obError);
           return OBStereo::NoRef;
         }
@@ -216,7 +216,7 @@ namespace OpenBabel {
   {
     return GetCisOrTransRef(id, true);
   }
-    
+
   bool OBCisTransStereo::IsOnSameAtom(unsigned long id1, unsigned long id2) const
   {
     const OBMol *mol = GetMolecule();
@@ -238,7 +238,7 @@ namespace OpenBabel {
 
     OBAtom *a = mol->GetAtomById(id1);
     OBAtom *b = mol->GetAtomById(id2);
-    
+
     if (a && b) {
       // both on begin atom?
       if (a->IsConnected(begin) && b->IsConnected(begin))
@@ -256,12 +256,12 @@ namespace OpenBabel {
             return true;
           // check if the end atom really is missing an atom
           if (end->GetValence() != 2) {
-            obErrorLog.ThrowError(__FUNCTION__, 
+            obErrorLog.ThrowError(__FUNCTION__,
                 "OBCisTransStereo::IsOnSameAtom : id2 is not valid and is not a missing hydrogen.", obError);
             return false;
           }
-          // inform user we are treating id2 as deleted hydrogen 
-          obErrorLog.ThrowError(__FUNCTION__, 
+          // inform user we are treating id2 as deleted hydrogen
+          obErrorLog.ThrowError(__FUNCTION__,
               "OBCisTransStereo::IsOnSameAtom : Atom with id2 doesn't exist anymore, must be a (deleted) hydrogen.", obInfo);
         } else if (a->IsConnected(end)) {
           // a is connected to end. again, if this is the atom missing a hydrogen, return false
@@ -269,18 +269,18 @@ namespace OpenBabel {
             return true;
           // check if the begin atom really is missing an atom
           if (begin->GetValence() != 2) {
-            obErrorLog.ThrowError(__FUNCTION__, 
+            obErrorLog.ThrowError(__FUNCTION__,
                 "OBCisTransStereo::IsOnSameAtom : id2 is not valid and is not a missing hydrogen.", obError);
             return true;
           }
-          // inform user we are treating id2 as deleted hydrogen 
-          obErrorLog.ThrowError(__FUNCTION__, 
+          // inform user we are treating id2 as deleted hydrogen
+          obErrorLog.ThrowError(__FUNCTION__,
               "OBCisTransStereo::IsOnSameAtom : Atom with id2 doesn't exist, must be a (deleted) hydrogen.", obInfo);
- 
+
         } else {
-          obErrorLog.ThrowError(__FUNCTION__, 
+          obErrorLog.ThrowError(__FUNCTION__,
               "OBCisTransStereo::IsOnSameAtom : Atom with id1 isn't connected to the begin or end atom.", obError);
-          return true;      
+          return true;
         }
       } else if (b) {
         // a atom not found, could be a deleted hydrogen...
@@ -290,12 +290,12 @@ namespace OpenBabel {
             return true;
           // check if the end atom really is missing an atom
           if (end->GetValence() != 2) {
-            obErrorLog.ThrowError(__FUNCTION__, 
+            obErrorLog.ThrowError(__FUNCTION__,
                 "OBCisTransStereo::IsOnSameAtom : id1 is not valid and is not a missing hydrogen.", obError);
             return true;
           }
-          // inform user we are treating id1 as deleted hydrogen 
-          obErrorLog.ThrowError(__FUNCTION__, 
+          // inform user we are treating id1 as deleted hydrogen
+          obErrorLog.ThrowError(__FUNCTION__,
               "OBCisTransStereo::IsOnSameAtom : Atom with id1 doesn't exist, must be a (deleted) hydrogen.", obInfo);
         } else if (b->IsConnected(end)) {
           // a is connected to end. again, if this is the atom missing a hydrogen, return false
@@ -303,17 +303,17 @@ namespace OpenBabel {
             return true;
           // check if the begin atom really is missing an atom
           if (begin->GetValence() != 2) {
-            obErrorLog.ThrowError(__FUNCTION__, 
+            obErrorLog.ThrowError(__FUNCTION__,
                 "OBCisTransStereo::IsOnSameAtom : id1 is not valid and is not a missing hydrogen.", obError);
             return true;
           }
-          // inform user we are treating id2 as deleted hydrogen 
-          obErrorLog.ThrowError(__FUNCTION__, 
+          // inform user we are treating id2 as deleted hydrogen
+          obErrorLog.ThrowError(__FUNCTION__,
               "OBCisTransStereo::IsOnSameAtom : Atom with id1 doesn't exist, must be a (deleted) hydrogen.", obInfo);
         } else {
-          obErrorLog.ThrowError(__FUNCTION__, 
+          obErrorLog.ThrowError(__FUNCTION__,
               "OBCisTransStereo::IsOnSameAtom : Atom with id1 isn't connected to the begin or end atom.", obError);
-          return true;      
+          return true;
         }
       } else {
         OBAtom *c = 0, *d = 0;
@@ -335,13 +335,13 @@ namespace OpenBabel {
           obErrorLog.ThrowError(__FUNCTION__, "OBCisTransStereo::IsOnSameAtom : invalid stereochemistry!", obError);
           return true;
         }
-        obErrorLog.ThrowError(__FUNCTION__, 
+        obErrorLog.ThrowError(__FUNCTION__,
             "OBCisTransStereo::IsOnSameAtom : Atoms with id1 & id2 don't exist, must be a (deleted) hydrogens.", obInfo);
         return IsOnSameAtom(c->GetId(), d->GetId());
       }
     }
 
-    return false;  
+    return false;
   }
 
   OBGenericData* OBCisTransStereo::Clone(OBBase *mol) const
@@ -350,7 +350,7 @@ namespace OpenBabel {
     data->SetConfig(m_cfg);
     return data;
   }
- 
+
 } // namespace OpenBabel
 
 namespace std {
@@ -360,7 +360,7 @@ namespace std {
     OpenBabel::OBCisTransStereo::Config cfg = ct.GetConfig();
     out << "OBCisTransStereo(begin = " << cfg.begin;
     out << ", end = " << cfg.end;
- 
+
     out << ", refs = ";
     for (OpenBabel::OBStereo::Refs::iterator i = cfg.refs.begin(); i != cfg.refs.end(); ++i)
       if (*i != OpenBabel::OBStereo::ImplicitRef)
@@ -379,7 +379,7 @@ namespace std {
         out << ", shape = 4)";
         break;
     }
-    
+
     return out;
   }
 
@@ -406,7 +406,7 @@ namespace std {
         out << ", shape = 4)";
         break;
     }
- 
+
     return out;
   }
 

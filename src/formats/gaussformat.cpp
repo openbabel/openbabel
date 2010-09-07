@@ -2,11 +2,11 @@
 Copyright (C) 2000 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2010 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -46,7 +46,7 @@ namespace OpenBabel
     virtual const char* SpecificationURL()
     { return "http://www.gaussian.com/";};
 
-    virtual const char* GetMIMEType() 
+    virtual const char* GetMIMEType()
     { return "chemical/x-gaussian-log"; };
 
     //Flags() can return be any the following combined by | or be omitted if none apply
@@ -93,7 +93,7 @@ namespace OpenBabel
     virtual const char* SpecificationURL()
     {return "http://www.gaussian.com/g_ur/m_input.htm";};
 
-    virtual const char* GetMIMEType() 
+    virtual const char* GetMIMEType()
     { return "chemical/x-gaussian-input"; };
 
     //Flags() can return be any the following combined by | or be omitted if none apply
@@ -135,7 +135,7 @@ namespace OpenBabel
       {
         defaultKeywords = keywords;
       }
-    
+
     if (keywordsEnable)
       {
         string model;
@@ -179,14 +179,14 @@ namespace OpenBabel
               ofs << keyBuffer << endl;
           }
       }
-    else 
+    else
       {
         ofs << defaultKeywords << endl;
       }
     ofs << endl; // blank line after keywords
     ofs << " " << mol.GetTitle() << endl << endl;
 
-    snprintf(buffer, BUFF_SIZE, "%d  %d", 
+    snprintf(buffer, BUFF_SIZE, "%d  %d",
              mol.GetTotalCharge(),
              mol.GetTotalSpinMultiplicity());
     ofs << buffer << endl;
@@ -202,7 +202,7 @@ namespace OpenBabel
                    etab.GetSymbol(atom->GetAtomicNum()),
                    atom->GetIsotope(),
                    atom->GetX(), atom->GetY(), atom->GetZ());
-	
+
         ofs << buffer << endl;
       }
     // Translation vectors
@@ -229,7 +229,7 @@ namespace OpenBabel
       vector<OBEdgeBase*>::iterator j;
       vector<OBNodeBase*>::iterator i;
       OBAtom *bgn, *end;
-      for (bond = mol.BeginBond(j); bond; bond = mol.NextBond(j)) 
+      for (bond = mol.BeginBond(j); bond; bond = mol.NextBond(j))
         {
           if (bond->GetBeginAtomIdx() > bond->GetEndAtomIdx()) {
             bgn = bond->GetBeginAtom();
@@ -244,7 +244,7 @@ namespace OpenBabel
       for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
         {
           ofs << endl << atom->GetIdx() << " ";
-          for (bond = mol.BeginBond(j); bond; bond = mol.NextBond(j)) 
+          for (bond = mol.BeginBond(j); bond; bond = mol.NextBond(j))
             {
               if (bond->GetBeginAtomIdx() == atom->GetIdx()) {
                 snprintf(buffer, BUFF_SIZE, "%d %1.1f ", bond->GetEndAtomIdx(), (float) bond->GetBondOrder());
@@ -310,7 +310,7 @@ namespace OpenBabel
     int numTranslationVectors = 0;
 
     //Electronic Excitation data
-    std::vector<double> Forces, Wavelengths, EDipole, 
+    std::vector<double> Forces, Wavelengths, EDipole,
       RotatoryStrengthsVelocity, RotatoryStrengthsLength;
 
     // Orbital data
@@ -319,7 +319,7 @@ namespace OpenBabel
     int aHOMO, bHOMO;
 
     mol.BeginModify();
-    bool have_coords = 0;    
+    bool have_coords = 0;
     while (ifs.getline(buffer,BUFF_SIZE))
       {
         if (strstr(buffer,"Multiplicity") != NULL)
@@ -330,10 +330,10 @@ namespace OpenBabel
                 charge = atoi(vs[2].c_str());
                 spin = atoi(vs[5].c_str());
               }
-	    
+
             ifs.getline(buffer,BUFF_SIZE);
           }
-        else if((strstr(buffer,"Input orientation:") != NULL) 
+        else if((strstr(buffer,"Input orientation:") != NULL)
                 || ((strstr(buffer,"Standard orientation:") != NULL) && (!have_coords))
                 || ((strstr(buffer,"Z-Matrix orientation:") != NULL) && (!have_coords)))
           {
@@ -366,7 +366,7 @@ namespace OpenBabel
                 else {
                   translationVectors[numTranslationVectors++].Set(x, y, z);
                 }
-		
+
                 if (!ifs.getline(buffer,BUFF_SIZE)) {
                   break;
                 }
@@ -385,7 +385,7 @@ namespace OpenBabel
             {
               ifs.getline(buffer,BUFF_SIZE); // actual components   X ###  Y #### Z ###
               tokenize(vs,buffer);
-              if (vs.size() >= 6) 
+              if (vs.size() >= 6)
                 {
                   OBVectorData *dipoleMoment = new OBVectorData;
                   dipoleMoment->SetAttribute("Dipole Moment");
@@ -407,14 +407,14 @@ namespace OpenBabel
             ifs.getline(buffer,BUFF_SIZE);	// column headings
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
-            while (vs.size() >= 3 && 
+            while (vs.size() >= 3 &&
                    strstr(buffer,"Sum of ") == NULL)
               {
                 atom = mol.GetAtom(atoi(vs[0].c_str()));
                 if (!atom)
                   break;
                 atom->SetPartialCharge(atof(vs[2].c_str()));
-		
+
                 if (!ifs.getline(buffer,BUFF_SIZE)) break;
                 tokenize(vs,buffer);
               }
@@ -427,14 +427,14 @@ namespace OpenBabel
             ifs.getline(buffer,BUFF_SIZE); // column header
             ifs.getline(buffer,BUFF_SIZE); // real charges
             tokenize(vs,buffer);
-            while (vs.size() >= 3 && 
+            while (vs.size() >= 3 &&
                    strstr(buffer,"-----") == NULL)
               {
                 atom = mol.GetAtom(atoi(vs[0].c_str()));
                 if (!atom)
                   break;
                 atom->SetPartialCharge(atof(vs[2].c_str()));
-		
+
                 if (!ifs.getline(buffer,BUFF_SIZE)) break;
                 tokenize(vs,buffer);
               }
@@ -467,7 +467,7 @@ namespace OpenBabel
               x = atof(vs[i].c_str());
               y = atof(vs[i+1].c_str());
               z = atof(vs[i+2].c_str());
-              
+
               if (i == 2)
                 vib1.push_back(vector3(x, y, z));
               else if (i == 5)
@@ -475,7 +475,7 @@ namespace OpenBabel
               else if (i == 8)
                 vib3.push_back(vector3(x, y, z));
             }
-            
+
             if (!ifs.getline(buffer, BUFF_SIZE))
               break;
             tokenize(vs,buffer);
@@ -507,7 +507,7 @@ namespace OpenBabel
           tokenize(vs, buffer);
           for(int i=3; i<vs.size(); ++i)
             RotConsts[i-3] = atof(vs[i].c_str());
-         
+
         }
         else if(strstr(buffer, "alpha electrons")) // # of electrons / orbital
         {
@@ -529,7 +529,7 @@ namespace OpenBabel
             for (unsigned int i = 1; i < vs.size(); ++i) {
               label = vs[i].substr(1, vs[i].length() - 2);
               symmetries.push_back(label);
-            } 
+            }
             ifs.getline(buffer, BUFF_SIZE);
 
             // Parse remaining lines
@@ -570,7 +570,7 @@ namespace OpenBabel
             Wavelengths.push_back(wavelength);
           }
         }
-        else if(strstr(buffer, " Ground to excited state Transition electric dipole moments (Au):")) 
+        else if(strstr(buffer, " Ground to excited state Transition electric dipole moments (Au):"))
           // Electronic dipole moments
         {
           ifs.getline(buffer, BUFF_SIZE); // Headings
@@ -580,7 +580,7 @@ namespace OpenBabel
             double s = atof(vs[4].c_str());
             EDipole.push_back(s);
             ifs.getline(buffer, BUFF_SIZE);
-            tokenize(vs, buffer);            
+            tokenize(vs, buffer);
           }
         }
         else if(strstr(buffer, "       state          X           Y           Z     R(velocity)")) {
@@ -591,7 +591,7 @@ namespace OpenBabel
             double s = atof(vs[4].c_str());
             RotatoryStrengthsVelocity.push_back(s);
             ifs.getline(buffer, BUFF_SIZE);
-            tokenize(vs, buffer);            
+            tokenize(vs, buffer);
           }
         }
         else if(strstr(buffer, "       state          X           Y           Z     R(length)")) {
@@ -602,10 +602,10 @@ namespace OpenBabel
             double s = atof(vs[4].c_str());
             RotatoryStrengthsLength.push_back(s);
             ifs.getline(buffer, BUFF_SIZE);
-            tokenize(vs, buffer);            
+            tokenize(vs, buffer);
           }
         }
-        
+
         else if (strstr(buffer, "Forces (Hartrees/Bohr)"))
           {
             ifs.getline(buffer, BUFF_SIZE); // column headers
@@ -657,7 +657,7 @@ namespace OpenBabel
     }
 
     mol.EndModify();
-    
+
     // Set conformers to all coordinates we adopted
     // but remove last geometry -- it's a duplicate
     if (vconf.size() > 1)
@@ -736,9 +736,9 @@ namespace OpenBabel
     }
     mol.SetTotalCharge(charge);
     mol.SetTotalSpinMultiplicity(spin);
-    
+
     mol.SetTitle(title);
     return(true);
   }
-    
+
 } //namespace OpenBabel

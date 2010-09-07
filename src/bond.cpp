@@ -1,16 +1,16 @@
 /**********************************************************************
 bond.cpp - Handle OBBond class
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -29,14 +29,14 @@ namespace OpenBabel
   class OBBondPrivate
   {
     public:
-      OBBondPrivate() {}  
+      OBBondPrivate() {}
   };
 
   extern OBAromaticTyper  aromtyper;
 
   /** \class OBBond bond.h <openbabel/bond.h>
       \brief Bond class
- 
+
       The OBBond class is straightforward in its data access and
       modification methods. OBBonds store pointers to the atoms on each end
       of the bond. In storing pointers to atoms instead of integer indices,
@@ -164,10 +164,10 @@ namespace OpenBabel
   {
     OBAtom *atom1 = GetBeginAtom();
     OBAtom *atom2 = GetEndAtom();
-    
+
     //split the length difference in half, and modify the bond twice
     double firstLength = length + ((GetLength() - length) / 2);
-    
+
     SetLength(atom1, firstLength);
     SetLength(atom2, length);
   }
@@ -210,7 +210,7 @@ namespace OpenBabel
       // Return
       return(false);
    }
-   
+
    bool OBBond::IsPrimaryAmide()
    {
       OBAtom *c,*n;
@@ -233,7 +233,7 @@ namespace OpenBabel
 
       // Make sure that N is connected to one non-H
       if (n->GetHvyValence() != 1) return(false);
-      
+
       // Make sure C is attached to =O
       OBBond *bond;
       vector<OBBond*>::iterator i;
@@ -244,7 +244,7 @@ namespace OpenBabel
 
       return(false);
    }
-   
+
    bool OBBond::IsSecondaryAmide()
    {
       OBAtom *c,*n;
@@ -267,7 +267,7 @@ namespace OpenBabel
 
       // Make sure that N is connected to two non-H atoms
       if (n->GetHvyValence() != 2) return(false);
-      
+
       // Make sure C is attached to =O
       OBBond *bond;
       vector<OBBond*>::iterator i;
@@ -278,7 +278,7 @@ namespace OpenBabel
 
       return(false);
    }
-   
+
    bool OBBond::IsTertiaryAmide()
    {
       OBAtom *c,*n;
@@ -301,7 +301,7 @@ namespace OpenBabel
 
       // Make sure that N is connected to three non-H atoms
       if (n->GetHvyValence() != 3) return(false);
-      
+
       // Make sure C is attached to =O
       OBBond *bond;
       vector<OBBond*>::iterator i;
@@ -313,7 +313,7 @@ namespace OpenBabel
       return(false);
    }
 
-/*  
+/*
   bool OBBond::IsAmide()
   {
     OBAtom *a1,*a2;
@@ -535,7 +535,7 @@ namespace OpenBabel
          nbrStart = static_cast<OBAtom*>(_bgn)->NextNbrAtom(i))
       {
         if (nbrStart != _end)
-          { 
+          {
             for (nbrEnd = static_cast<OBAtom*>(_end)->BeginNbrAtom(j);
                  nbrEnd; nbrEnd = static_cast<OBAtom*>(_end)->NextNbrAtom(j))
               {

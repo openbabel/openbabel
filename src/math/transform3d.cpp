@@ -1,16 +1,16 @@
 /**********************************************************************
 transform3d.cpp - Handle 3D transformations in space groups.
- 
+
 Copyright (C) 2007 by Jean Bréfort
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
-This program is free software; you can redistribute it and/or 
-modify it under the terms of the GNU General Public License as 
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
 published by the Free Software Foundation; either version 2 of the
 License, or (at your option) any later version.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,14 +25,14 @@ using namespace std;
 namespace OpenBabel
 {
 
-  /*! 
+  /*!
   */
   vector3 transform3d::operator *(const vector3 &v) const
     {
       return *static_cast <const matrix3x3 *> (this) * v + *static_cast <const vector3 *> (this);
     }
 
-  /*! 
+  /*!
   */
   transform3d transform3d::operator *(const transform3d &t) const
     {
@@ -42,7 +42,7 @@ namespace OpenBabel
                   );
     }
 
-  /*! 
+  /*!
   */
   string transform3d::DescribeAsString() const
     {
@@ -109,7 +109,7 @@ namespace OpenBabel
       return r.str();
     }
 
-  /*! 
+  /*!
   */
   string transform3d::DescribeAsValues() const
     {
@@ -122,7 +122,7 @@ namespace OpenBabel
       return oss.str();
     }
 
-  /*! 
+  /*!
   */
   void transform3d::Normalize()
 	{

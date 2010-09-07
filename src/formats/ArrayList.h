@@ -1,5 +1,5 @@
  /***************************************************************************
- ArrayList.h - header file for ArrayList: a simple searchable and extendable 
+ ArrayList.h - header file for ArrayList: a simple searchable and extendable
                list type
 
  Copyright (C) 2006-2008 by Scientific Computing and Modelling NV.

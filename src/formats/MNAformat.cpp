@@ -130,7 +130,7 @@ namespace OpenBabel
 
 ".. [fpbg99] Dmitrii Filimonov, Vladimir Poroikov, Yulia Borodina, and\n"
 "            Tatyana Gloriozova. **Chemical Similarity Assessment through\n"
-"            Multilevel Neighborhoods of Atoms: Definition and Comparison with\n" 
+"            Multilevel Neighborhoods of Atoms: Definition and Comparison with\n"
 "            the Other Descriptors.** *J. Chem. Inf. Comput. Sci.* **1999**, *39*, 666-670.\n"
 "            [`Link <http://dx.doi.org/10.1021/ci980335o>`_]\n\n"
 

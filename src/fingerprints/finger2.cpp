@@ -2,14 +2,14 @@
 finger2.cpp: fingerprint2 definition and implementation.
 
 Copyright (C) 2005 Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -35,19 +35,19 @@ namespace OpenBabel
 class fingerprint2 : public OBFingerprint
 {
 public:
-	fingerprint2(const char* ID, bool IsDefault=false) 
+	fingerprint2(const char* ID, bool IsDefault=false)
 		: OBFingerprint(ID, IsDefault){};
 
 	virtual const char* Description()
 	{ return "Indexes linear fragments up to 7 atoms.";};
 
-	//Calculates the fingerprint 
+	//Calculates the fingerprint
 	virtual bool GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbits=0);
 private:
 	typedef std::set<std::vector<int> > Fset;
 	typedef std::set<std::vector<int> >::iterator SetItr;
-	
-	void getFragments(std::vector<int> levels, std::vector<int> curfrag, 
+
+	void getFragments(std::vector<int> levels, std::vector<int> curfrag,
 			int level, OBAtom* patom, OBBond* pbond);
 	void DoReverses();
 	void DoRings();
@@ -68,29 +68,29 @@ fingerprint2 thefingerprint2("FP2",true);
 /*! class fingerprint2
 Similar to Fabien Fontain's fingerprint class, with a slightly improved
 algorithm, but re-written using STL which makes it shorter.
- 
+
 A molecule structure is analysed to identify linear fragments of length
-from one to Max_Fragment_Size = 7 atoms but single atom fragments of C,N,and O 
-are ignored. A fragment is terminated when the atoms form a ring. 
+from one to Max_Fragment_Size = 7 atoms but single atom fragments of C,N,and O
+are ignored. A fragment is terminated when the atoms form a ring.
 
 For each of these fragments the atoms, bonding and whether
 they constitute a complete ring is recorded and saved in a std::set
 so that there is only one of each fragment type. Chemically identical versions,
-i.e. ones with the atoms listed in reverse order and rings listed starting at 
+i.e. ones with the atoms listed in reverse order and rings listed starting at
 different atoms, are identified and only a single canonical fragment is retained.
 
 Each remaining fragment is assigned a hash number from 0 to 1020 which is used
-to set a bit in a 1024 bit vector  
+to set a bit in a 1024 bit vector
 */
 
-bool fingerprint2::GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbits) 
+bool fingerprint2::GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbits)
 {
 	OBMol* pmol = dynamic_cast<OBMol*>(pOb);
 	if(!pmol) return false;
 	fp.resize(1024/Getbitsperint());
 	fragset.clear();//needed because now only one instance of fp class
 	ringset.clear();
-	
+
 	//identify fragments starting at every atom
 	OBAtom *patom;
 	vector<OBNodeBase*>::iterator i;
@@ -101,7 +101,7 @@ bool fingerprint2::GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbit
 		vector<int> levels(pmol->NumAtoms());
 		getFragments(levels, curfrag, 1, patom, NULL);
 	}
-	
+
 //	TRACE("%s %d frags before; ",pmol->GetTitle(),fragset.size());
 
 	//Ensure that each chemically identical fragment is present only in a single
@@ -110,7 +110,7 @@ bool fingerprint2::GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbit
 
 	SetItr itr;
 	for(itr=fragset.begin();itr!=fragset.end();++itr)
-	{	
+	{
 		//Use hash of fragment to set a bit in the fingerprint
 		int hash = CalcHash(*itr);
 		SetBit(fp,hash);
@@ -124,7 +124,7 @@ bool fingerprint2::GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbit
 }
 
 //////////////////////////////////////////////////////////
-void fingerprint2::getFragments(vector<int> levels, vector<int> curfrag, 
+void fingerprint2::getFragments(vector<int> levels, vector<int> curfrag,
 					int level, OBAtom* patom, OBBond* pbond)
 {
 	//Recursive routine to analyse schemical structure and populate fragset and ringset
@@ -147,7 +147,7 @@ void fingerprint2::getFragments(vector<int> levels, vector<int> curfrag,
 	OBBond *pnewbond;
 //	PrintFpt(curfrag,(int)patom);
 	for (pnewbond = patom->BeginBond(itr);pnewbond;pnewbond = patom->NextBond(itr))
-	{		
+	{
 		if(pnewbond==pbond) continue; //don't retrace steps
 		OBAtom* pnxtat = pnewbond->GetNbrAtom(patom);
 		if(pnxtat->IsHydrogen()) continue;
@@ -167,7 +167,7 @@ void fingerprint2::getFragments(vector<int> levels, vector<int> curfrag,
 		{
 			if(level<Max_Fragment_Size)
 			{
-//				TRACE("level=%d size=%d %p frag[0]=%p\n",level, curfrag.size(),&curfrag, &(curfrag[0])); 
+//				TRACE("level=%d size=%d %p frag[0]=%p\n",level, curfrag.size(),&curfrag, &(curfrag[0]));
 				//Do the next atom; levels, curfrag are passed by value and hence copied
 				getFragments(levels, curfrag, level+1, pnxtat, pnewbond);
 			}
@@ -223,13 +223,13 @@ void fingerprint2::DoRings()
 			rotate(t1.begin(),t1.begin()+2,t1.end());
 			if(t1>maxring)
 				maxring=t1;
-			
-			//Add the non-ring form of all ring rotations 
+
+			//Add the non-ring form of all ring rotations
 			int tmp = t1[0];
 			t1[0] = 0;
 			fragset.insert(t1);
 			t1[0] = tmp;
-			
+
 			//reverse the direction around ring
 			vector<int> t2(t1);
 			reverse(t2.begin()+1, t2.end());
@@ -245,7 +245,7 @@ void fingerprint2::DoRings()
 unsigned int fingerprint2::CalcHash(const vector<int>& frag)
 {
 	//Something like... whole of fragment treated as a binary number modulus 1021
-	const int MODINT = 108; //2^32 % 1021 
+	const int MODINT = 108; //2^32 % 1021
 	unsigned int hash=0;
 	for(unsigned i=0;i<frag.size();++i)
 		hash= (hash*MODINT + (frag[i] % 1021)) % 1021;
@@ -267,7 +267,7 @@ void fingerprint2::PrintFpt(vector<int>& f, int hash)
     bo(0)(n), atno(1), bo(1)(2), atno(2), bo(2)(3),...atno(n)
 
  For the rest, even when stopped by encountering atoms already visited
-       0    , atno(1), bo(1)(2), atno(2), bo(2)(3),...atno(n) 
+       0    , atno(1), bo(1)(2), atno(2), bo(2)(3),...atno(n)
 */
 
 } //namespace OpenBabel

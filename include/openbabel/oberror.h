@@ -1,16 +1,16 @@
 /**********************************************************************
 oberror.h - Handle error messages, warnings, notices, etc.
- 
+
 Copyright (C) 2002 by Stefan Kebekus
 Some portions Copyright (C) 2003-2006 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -63,7 +63,7 @@ namespace OpenBabel
 
       //! \return A formatted message string, including optional explanations, etc.
       std::string message(void) const;
-  
+
       //! Output a formatted message string
       friend std::ostream& operator<< ( std::ostream &os, const OBError &er )
         { return os << er.message(); };
@@ -112,11 +112,11 @@ namespace OpenBabel
     public:
       OBMessageHandler();
       ~OBMessageHandler();
-    
+
       //! Throw an error with an already-formatted OBError object
       void ThrowError(OBError err, errorQualifier qqualifier = always);
       //! Throw an error in the specified method with an appropriate level
-      void ThrowError(const std::string &method, const std::string &errorMsg, 
+      void ThrowError(const std::string &method, const std::string &errorMsg,
                       obMessageLevel level = obDebug, errorQualifier qualifier = always);
 
       //! \return all messages matching a specified level
@@ -157,7 +157,7 @@ namespace OpenBabel
       unsigned int GetInfoMessageCount() { return _messageCount[obInfo];}
       //! \return Count of messages received at the obAuditMsg level
       unsigned int GetAuditMessageCount() { return _messageCount[obAuditMsg];}
-      //! \return Count of messages received at the obDebug level 
+      //! \return Count of messages received at the obDebug level
       unsigned int GetDebugMessageCount() { return _messageCount[obDebug];}
       //! \return Summary of messages received at all levels
       std::string GetMessageSummary();
@@ -181,7 +181,7 @@ namespace OpenBabel
       std::streambuf        *_inWrapStreamBuf;
       //! The filtered obLogBuf stream buffer to wrap error messages
       std::streambuf        *_filterStreamBuf;
-    }; 
+    };
 
   OBERROR extern OBMessageHandler obErrorLog;
 
@@ -202,7 +202,7 @@ namespace OpenBabel
     public:
       //! Close the output buffer, flush, and call OBMessageHandler::ThrowError()
       virtual ~obLogBuf() { sync(); }
-    
+
     protected:
       //! Call OBMessageHandler::ThrowError() and flush the buffer
       int sync()
@@ -218,4 +218,4 @@ namespace OpenBabel
 #endif
 
 //! \file oberror.h
-//! \brief Handle error messages, warnings, notices, etc. 
+//! \brief Handle error messages, warnings, notices, etc.

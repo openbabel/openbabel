@@ -121,7 +121,7 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
 
     while( getline( ifs, lineBuffer ) )
       {
-        if( lineBuffer.find( "[Atoms]" ) != string::npos || 
+        if( lineBuffer.find( "[Atoms]" ) != string::npos ||
             lineBuffer.find( "[ATOMS]" ) != string::npos ) {
           double factor = 1.; // Angstrom
           if( lineBuffer.find( "AU" ) != string::npos ) factor = BOHR_TO_ANGSTROM; // Bohr
@@ -142,7 +142,7 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
               getline( ifs, lineBuffer );
             }
         } // "[Atoms]" || "[ATOMS]"
-        if( lineBuffer.find( "[FREQ]" ) != string::npos ) {        
+        if( lineBuffer.find( "[FREQ]" ) != string::npos ) {
           while( getline( ifs, lineBuffer ) )
             {
               if( lineBuffer == "" ) continue;
@@ -153,7 +153,7 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
               Frequencies.push_back( freq );
             }
         } // "[FREQ]"
-        if( lineBuffer.find( "[INT]" ) != string::npos ) {        
+        if( lineBuffer.find( "[INT]" ) != string::npos ) {
           while( getline( ifs, lineBuffer ) )
             {
               if( lineBuffer == "" ) continue;
@@ -179,21 +179,21 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
                 OBAtom* atom = pmol->NewAtom();
                 if( !atom ) break;
                 atom->SetAtomicNum( etab.GetAtomicNum(atomName.c_str()));
-                // Vibrational equilibrium geometry is mandated to be 
+                // Vibrational equilibrium geometry is mandated to be
                 // in Bohr.
-                atom->SetVector( x * BOHR_TO_ANGSTROM, 
-                                 y * BOHR_TO_ANGSTROM, 
+                atom->SetVector( x * BOHR_TO_ANGSTROM,
+                                 y * BOHR_TO_ANGSTROM,
                                  z * BOHR_TO_ANGSTROM);
              }
            }
          } // "[FR-COORD]"
         if( lineBuffer.find( "[FR-NORM-COORD]" ) != string::npos ) {
           getline( ifs, lineBuffer );
-          while( ifs && lineBuffer.find( "ibration") != string::npos ) 
+          while( ifs && lineBuffer.find( "ibration") != string::npos )
             {
               vector<vector3> vib;
               getline( ifs, lineBuffer );
-              while( ifs && lineBuffer.find( "ibration") == string::npos ) 
+              while( ifs && lineBuffer.find( "ibration") == string::npos )
                 {
                   istringstream is( lineBuffer );
                   double x, y, z;
@@ -201,7 +201,7 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
                   vib.push_back( vector3( x, y, z ) );
                   getline( ifs, lineBuffer );
                 }
-              Lx.push_back( vib );  
+              Lx.push_back( vib );
            } // while
         } // "[FR-NORM-COORD]"
       } // while
@@ -219,7 +219,7 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
           // skip translational and rotational modes
           Frequencies.erase( Frequencies.begin() + i );
           if (Intensities.size() > i) Intensities.erase( Intensities.begin() + i );
-          Lx.erase( Lx.begin() + i );  
+          Lx.erase( Lx.begin() + i );
           i--;  // compensate for the vibration which just got cut out
         }
       }

@@ -12,13 +12,13 @@ namespace OpenBabel {
  * @class OBSquarePlanarStereo
  * @brief Class for handling and storing square planar stereochemistry.
  *
- * @image html squareplanar.png 
+ * @image html squareplanar.png
  *
  * The OBSquarePlanarStereo class is used to represent square planar stereochemistry.
  * Like all OBTetraPlanarStereo subclasses, it uses the OBStereo::Shape parameters
  * to set/get the reference ids.
  *
- * This class works with reference ids only, it never uses the molecule 
+ * This class works with reference ids only, it never uses the molecule
  * to get more information. Like all stereo classes, errors,
  * warnings or info is reported using OBMessageHandler.
  */
@@ -31,7 +31,7 @@ class OBAPI OBSquarePlanarStereo : public OBTetraPlanarStereo
      * For squareplanar stereocenters, the following data members define the spacial
      * arrengement of the atoms.
      *
-     * - OBStereo::Ref @p center: The central atom. 
+     * - OBStereo::Ref @p center: The central atom.
      * - OBStereo::Refs @p refs: The 4 atoms connected to the double bond.
      * - OBStereo::Shape @p shape: The shape formed by the @p refs by connecting them
      *   in the same order as they occur in @p refs.
@@ -39,14 +39,14 @@ class OBAPI OBSquarePlanarStereo : public OBTetraPlanarStereo
      * @image html squareplanar.png
      * @image html SPshapes.png
      *
-     * Only @p center are specific for OBSquarePlanarStereo::Config. The other 
+     * Only @p center are specific for OBSquarePlanarStereo::Config. The other
      * data members occur in all OBTetraPlanarStereo derived classes.
      */
 #ifndef SWIG
     struct OBAPI Config
     {
       /**
-       * Default constructor. Initializes @p center to OBStereo::NoRef 
+       * Default constructor. Initializes @p center to OBStereo::NoRef
        * and @p shape to OBStereo::ShapeU.
        */
       Config() : center(OBStereo::NoRef), shape(OBStereo::ShapeU),
@@ -59,7 +59,7 @@ class OBAPI OBSquarePlanarStereo : public OBTetraPlanarStereo
        * @param _refs The 4 reference ids.
        * @param _shape The shape for the 4 reference ids.
        */
-      Config(unsigned long _center, const OBStereo::Refs &_refs, 
+      Config(unsigned long _center, const OBStereo::Refs &_refs,
           OBStereo::Shape _shape = OBStereo::ShapeU) : center(_center),
           refs(_refs), shape(_shape), specified(true)
       {  }
@@ -71,15 +71,15 @@ class OBAPI OBSquarePlanarStereo : public OBTetraPlanarStereo
        * There are a number of cases resuling in false being returned:
        * - @p center atom ids don't match
        * - One of the Refs lists does not contain 4 elements.
-       * - 2 or more OBStereo::ImplicitRef values in a single Config struct 
+       * - 2 or more OBStereo::ImplicitRef values in a single Config struct
        * - (The two @p refs don't share a single common element)
        *
        * In the simplest case where both @p refs contain exactly the same elements
-       * (OBStereo::ContainsSameRefs()), coould include OBStereo::ImplicitRef), both Config 
-       * struct are normalized to OBStereo::ShapeU starting with the same element. 
-       * After this normalization, there are two possible orientations to overlay the 
-       * shape on the double bond. From the illustration below, it can be seen only 
-       * @p refs[2] has to be checked in order to conclude both Config structs 
+       * (OBStereo::ContainsSameRefs()), coould include OBStereo::ImplicitRef), both Config
+       * struct are normalized to OBStereo::ShapeU starting with the same element.
+       * After this normalization, there are two possible orientations to overlay the
+       * shape on the double bond. From the illustration below, it can be seen only
+       * @p refs[2] has to be checked in order to conclude both Config structs
        * have the same stereochemistry.
        *
          @verbatim
@@ -94,14 +94,14 @@ class OBAPI OBSquarePlanarStereo : public OBTetraPlanarStereo
                   1 2 3 4     1 4 3 2
         @endverbatim
        *
-       * When comparing a Config struct with explicit hydrogen(s) to one with 
+       * When comparing a Config struct with explicit hydrogen(s) to one with
        * implicit hydrogen(s), both @p refs are also normalized to OBStereo::ShapeU
-       * starting with the same common element. This shared element cannot be 
-       * OBStereo::ImplicitRef. Depending on the position of the OBStereo::ImplicitRef 
+       * starting with the same common element. This shared element cannot be
+       * OBStereo::ImplicitRef. Depending on the position of the OBStereo::ImplicitRef
        * element(s) in the @p refs, 3 cases are possible:
        *
         @verbatim
-         
+
          refs[2] != OBStereo::ImplicitId:
 
            (analog to the case above where they contained the same elements )
@@ -111,17 +111,17 @@ class OBAPI OBSquarePlanarStereo : public OBTetraPlanarStereo
            1 H 3 H
 
          else:
-    
+
            1 2 3 4
            |     |    <- refs[0] & refs[3] remain unchanged
            1 H H 4
-    
+
            1 2 3 4
            | |        <- refs[0] & refs[1] remain unchanged
            1 2 H H
         @endverbatim
        *
-       * In each case, the orientation of the U shape is also defined since 
+       * In each case, the orientation of the U shape is also defined since
        * there can be only one OBStereo::ImplicitRef for each side of the
        * double bond.
        *
@@ -134,10 +134,10 @@ class OBAPI OBSquarePlanarStereo : public OBTetraPlanarStereo
        * @return True if the two Config structs represent a different stereochemistry.
        */
       bool operator!=(const Config &other) const
-      { 
-        return !(*this == other); 
+      {
+        return !(*this == other);
       }
-            
+
       /**
        * @name Data members defining stereochemistry.
        * @{
@@ -145,7 +145,7 @@ class OBAPI OBSquarePlanarStereo : public OBTetraPlanarStereo
       unsigned long center; //<! The central atom id.
       OBStereo::Refs refs; //!< The 4 reference ids.
       OBStereo::Shape shape; //!< The shape of the 4 reference ids.
-      bool specified; //!< True if the stereochemistry is specified. When false, the described 
+      bool specified; //!< True if the stereochemistry is specified. When false, the described
                       //!< special orientation is only accidental (i.e. unspecified).
       //@}
     };
@@ -182,14 +182,14 @@ class OBAPI OBSquarePlanarStereo : public OBTetraPlanarStereo
      */
     Config GetConfig(OBStereo::Shape shape = OBStereo::ShapeU) const;
     /**
-     * Get the configuration as Config struct and ensure refs[0] is 
+     * Get the configuration as Config struct and ensure refs[0] is
      * equal to @p start.
      */
-    Config GetConfig(unsigned long start, 
+    Config GetConfig(unsigned long start,
         OBStereo::Shape shape = OBStereo::ShapeU) const;
 #endif
     /**
-     * Compare the stereochemistry stored in the Config struct with the 
+     * Compare the stereochemistry stored in the Config struct with the
      * stereochemistry specified in the Config struct from @p other.
      *
      * @copydoc Config::operator==()
@@ -202,15 +202,15 @@ class OBAPI OBSquarePlanarStereo : public OBTetraPlanarStereo
      */
     bool operator!=(const OBSquarePlanarStereo &other) const
     {
-      return !(*this == other); 
+      return !(*this == other);
     }
     ///@}
-    
+
     /*
      * Implement OBGenericData::Clone().
      */
     OBGenericData* Clone(OBBase *mol) const;
- 
+
     //! @name Query methods to compare stereochemistry.
     //@{
     /**
@@ -231,7 +231,7 @@ class OBAPI OBSquarePlanarStereo : public OBTetraPlanarStereo
      */
     std::vector<unsigned long> GetCisRefs(unsigned long id) const;
     //@}
- 
+
   private:
     Config m_cfg; //!< internal configuration
     // The following function sits behind GetCisRef and GetTransRef

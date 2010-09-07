@@ -9,7 +9,7 @@ For more information, see <http://openbabel.sourceforge.net/>
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -33,7 +33,7 @@ GNU General Public License for more details.
  // The correctness of the program, however, is unaffected by the truncated name,
  // but if you get link time errors on a truncated symbol, it will be more difficult
  // to determine the type of the symbol in the error. Debugging will also be more difficult;
- // the debugger will also have difficultly mapping symbol name to type name. 
+ // the debugger will also have difficultly mapping symbol name to type name.
 #endif
 
 using namespace std;
@@ -79,16 +79,16 @@ namespace OpenBabel
   struct ci_char_traits : public std::char_traits<char>
   {
     static bool eq( char c1, char c2 );
-   
+
     static bool ne( char c1, char c2 );
-   
+
     static bool lt( char c1, char c2 );
-   
+
     static int compare(const char* s1,const char* s2,size_t n );
-   
+
     static const char* find( const char* s, int n, char a );
   };
-   
+
   typedef std::basic_string<char, ci_char_traits> ci_string;
   int strnicmp(const char *s1, const char *s2, int len)
   {
@@ -109,19 +109,19 @@ namespace OpenBabel
       }
     return 0;
   }
-   
+
   bool ci_char_traits::eq( char c1, char c2 )
   {return tolower(c1) == tolower(c2);}
-   
+
   bool ci_char_traits::ne( char c1, char c2 )
   {return tolower(c1) != tolower(c2);}
-   
+
   bool ci_char_traits::lt( char c1, char c2 )
   {return tolower(c1) < tolower(c2);}
-   
+
   int ci_char_traits::compare(const char* s1,const char* s2,size_t n )
   {return strnicmp( s1, s2, n );}
-   
+
   const char* ci_char_traits::find( const char* s, int n, char a )
   {
     while( n-- > 0 && tolower(*s) != tolower(a) ) ++s;
@@ -129,7 +129,7 @@ namespace OpenBabel
   }
   //############################## CIF CLASSES headers####################################################
   /** The CIFData class holds all the information from a \e single data_ block from a cif file.
-   * 
+   *
    * It is a placeholder for all comments, item and loop data, as raw strings copied from
    * a cif file.
    *
@@ -148,14 +148,14 @@ namespace OpenBabel
    *
    * Cartesian coordinates are stored in Angstroems, angles in radians.
    *
-   * If another data field is needed, it is possible to directly access the string data 
+   * If another data field is needed, it is possible to directly access the string data
    * (CIFData::mvComment , CIFData::mvItem and CIFData::mvLoop) to search for the correct tags.
    */
   class CIFData
   {
   public:
     CIFData();
-         
+
     /// Extract lattice parameters, spacegroup (symbol or number), atomic positions,
     /// chemical name and formula if available.
     /// All other data is ignored
@@ -205,7 +205,7 @@ namespace OpenBabel
     std::string mName;
     /// Formula. Or empty string if none is available.
     std::string mFormula;
-    /// Atom record 
+    /// Atom record
     struct CIFAtom
     {
       CIFAtom();
@@ -216,7 +216,7 @@ namespace OpenBabel
       /// Fractionnal coordinates (_atom_site_fract_{x,y,z}) or empty vector.
       std::vector<float> mCoordFrac;
       /// Cartesian coordinates in Angstroem (_atom_site_Cartn_{x,y,z}) or empty vector.
-      /// Transformation to fractionnal coordinates currently assumes 
+      /// Transformation to fractionnal coordinates currently assumes
       /// "a parallel to x; b in the plane of y and z" (see _atom_sites_Cartn_transform_axes)
       std::vector<float> mCoordCart;
       /// Site occupancy, or -1
@@ -271,10 +271,10 @@ namespace OpenBabel
   CIFData::CIFAtom::CIFAtom():
     mLabel(""),mSymbol(""),mOccupancy(1.0f)
   {}
-   
+
   CIFData::CIFData()
   {}
-   
+
   void CIFData::ExtractAll(const bool verbose)
   {
     // :@todo: Take care of values listed as "." and "?" instead of a real value.
@@ -284,7 +284,7 @@ namespace OpenBabel
     this->ExtractAtomicPositions(verbose);
     this->ExtractBonds(verbose);
   }
-   
+
   void CIFData::ExtractUnitCell(const bool verbose)
   {
     map<ci_string,string>::const_iterator positem;
@@ -316,7 +316,7 @@ namespace OpenBabel
         this->CalcMatrices();
       }
   }
-   
+
   void CIFData::ExtractSpacegroup(const bool verbose)
   {
     map<ci_string,string>::const_iterator positem;
@@ -340,7 +340,7 @@ namespace OpenBabel
         else
           mSpacegroupNumberIT=0;
       }
-      
+
     positem=mvItem.find("_space_group_name_Hall");
     if(positem!=mvItem.end())
       {
@@ -358,7 +358,7 @@ namespace OpenBabel
             if(verbose) cout<<"Found spacegroup Hall symbol (with OBSOLETE CIF #1.0 TAG):"<<mSpacegroupSymbolHall<<endl;
           }
       }
-      
+
     positem=mvItem.find("_space_group_name_H-M_alt");
     if(positem!=mvItem.end())
       {
@@ -419,7 +419,7 @@ namespace OpenBabel
       // set the space group name to Hall symbol
       mSpacegroupSymbolHall = mSpaceGroup->GetHallName();
   }
-   
+
   void CIFData::ExtractName(const bool verbose)
   {
     map<ci_string,string>::const_iterator positem;
@@ -491,7 +491,7 @@ namespace OpenBabel
           }
       }
   }
-   
+
   void CIFData::ExtractAtomicPositions(const bool verbose)
   {
     map<ci_string,string>::const_iterator positem;
@@ -630,40 +630,40 @@ namespace OpenBabel
     alpha=mvLatticePar[3];
     beta=mvLatticePar[4];
     gamma=mvLatticePar[5];
-      
+
     v=sqrt(1-cos(alpha)*cos(alpha)-cos(beta)*cos(beta)-cos(gamma)*cos(gamma)
            +2*cos(alpha)*cos(beta)*cos(gamma));
-      
+
     aa=sin(alpha)/a/v;
     bb=sin(beta )/b/v;
     cc=sin(gamma)/c/v;
-      
+
     alphaa=acos( (cos(beta )*cos(gamma)-cos(alpha))/sin(beta )/sin(gamma) );
     betaa =acos( (cos(alpha)*cos(gamma)-cos(beta ))/sin(alpha)/sin(gamma) );
     gammaa=acos( (cos(alpha)*cos(beta )-cos(gamma))/sin(alpha)/sin(beta ) );
-      
+
     mOrthMatrix[0][0]=a;
     mOrthMatrix[0][1]=b*cos(gamma);
     mOrthMatrix[0][2]=c*cos(beta);
-      
+
     mOrthMatrix[1][0]=0;
     mOrthMatrix[1][1]=b*sin(gamma);
     mOrthMatrix[1][2]=-c*sin(beta)*cos(alphaa);
-      
+
     mOrthMatrix[2][0]=0;
     mOrthMatrix[2][1]=0;
     mOrthMatrix[2][2]=1/cc;
-      
+
     // Invert upper triangular matrix
     float cm[3][3];
     cm[0][0]=mOrthMatrix[0][0];
     cm[0][1]=mOrthMatrix[0][1];
     cm[0][2]=mOrthMatrix[0][2];
-      
+
     cm[1][0]=mOrthMatrix[1][0];
     cm[1][1]=mOrthMatrix[1][1];
     cm[1][2]=mOrthMatrix[1][2];
-      
+
     cm[2][0]=mOrthMatrix[2][0];
     cm[2][1]=mOrthMatrix[2][1];
     cm[2][2]=mOrthMatrix[2][2];
@@ -701,7 +701,7 @@ namespace OpenBabel
              <<mOrthMatrixInvert[2][0]<<" "<<mOrthMatrixInvert[2][1]<<" "<<mOrthMatrixInvert[2][2]<<endl<<endl;
       }
   }
-   
+
   void CIFData::f2c(float &x,float &y, float &z)
   {
     const float x0=x,y0=y,z0=z;
@@ -709,7 +709,7 @@ namespace OpenBabel
     y=mOrthMatrix[1][0]*x0+mOrthMatrix[1][1]*y0+mOrthMatrix[1][2]*z0;
     z=mOrthMatrix[2][0]*x0+mOrthMatrix[2][1]*y0+mOrthMatrix[2][2]*z0;
   }
-   
+
   void CIFData::c2f(float &x,float &y, float &z)
   {
     const float x0=x,y0=y,z0=z;
@@ -717,7 +717,7 @@ namespace OpenBabel
     y=mOrthMatrixInvert[1][0]*x0+mOrthMatrixInvert[1][1]*y0+mOrthMatrixInvert[1][2]*z0;
     z=mOrthMatrixInvert[2][0]*x0+mOrthMatrixInvert[2][1]*y0+mOrthMatrixInvert[2][2]*z0;
   }
-   
+
   void CIFData::Cartesian2FractionalCoord()
   {
     if(mvLatticePar.size()==0) return;//:@todo: report error
@@ -730,7 +730,7 @@ namespace OpenBabel
         c2f(pos->mCoordFrac[0],pos->mCoordFrac[1],pos->mCoordFrac[2]);
       }
   }
-   
+
   void CIFData::Fractional2CartesianCoord()
   {
     if(mvLatticePar.size()==0) return;//:@todo: report error
@@ -743,10 +743,10 @@ namespace OpenBabel
         f2c(pos->mCoordCart[0],pos->mCoordCart[1],pos->mCoordCart[2]);
       }
   }
-   
-  ///// 
-   
-   
+
+  /////
+
+
   CIF::CIF(istream &is, const bool interpret,const bool verbose)
   {
     //Copy to an iostream so that we can put back characters if necessary
@@ -759,9 +759,9 @@ namespace OpenBabel
       for(map<string,CIFData>::iterator posd=mvData.begin();posd!=mvData.end();++posd)
         posd->second.ExtractAll(verbose);
   }
-   
+
   bool iseol(const char c) { return ((c=='\n')||(c=='\r'));}
-   
+
   /// Read one value, whether it is numeric, string or text
   string CIFReadValue(stringstream &in,char &lastc)
   {
@@ -828,7 +828,7 @@ namespace OpenBabel
     if(vv) cout<<"NormalValue:"<<value<<endl;
     return value;
   }
-   
+
   void CIF::Parse(stringstream &in)
   {
     bool vv=false;//very verbose ?
@@ -951,7 +951,7 @@ namespace OpenBabel
         // It is OK if this is just a blank line though
         string junk;
         getline(in,junk);
-        
+
         if(junk.size()>0)
         {
           stringstream errorMsg;
@@ -961,7 +961,7 @@ namespace OpenBabel
         }
       }
   }
-   
+
   float CIFNumeric2Float(const string &s)
   {
     if((s==".") || (s=="?")) return 0.0;
@@ -970,7 +970,7 @@ namespace OpenBabel
     if(n!=1) return 0.0;
     return v;
   }
-   
+
   int CIFNumeric2Int(const string &s)
   {
     if((s==".") || (s=="?")) return 0;
@@ -993,7 +993,7 @@ namespace OpenBabel
   {
     if (!atom->IsOxygen())
       return false;
-     
+
     int nonHydrogenCount = 0;
     int hydrogenCount = 0;
     FOR_NBORS_OF_ATOM(neighbor, *atom) {
@@ -1002,7 +1002,7 @@ namespace OpenBabel
       else
         hydrogenCount++;
     }
-    
+
     return (hydrogenCount == 2 && nonHydrogenCount <= 1);
   }
 
@@ -1011,12 +1011,12 @@ namespace OpenBabel
   {
     if (!mol)
       return;
-    
+
     // First look for NR4, PR4 ions,
     // or bare halides, alkali and alkaline earth metal ions
     FOR_ATOMS_OF_MOL(atom, *mol) {
-      
-      if ((atom->GetAtomicNum() == 7 || atom->GetAtomicNum() == 15) 
+
+      if ((atom->GetAtomicNum() == 7 || atom->GetAtomicNum() == 15)
           && atom->BOSum() == 4) {
         // check if we should make a positive charge?
         // i.e., 4 non-metal neighbors
@@ -1037,7 +1037,7 @@ namespace OpenBabel
         if (nonMetalNeighbors) // 4 non-metals, e.g. NH4+
           atom->SetFormalCharge(+1);
       }
-      
+
       // Now look for simple atomic ions like Na, Li, F, Cl, Br...
       // If we have an existing formal charge, keep going
       if (atom->GetFormalCharge() != 0)
@@ -1114,7 +1114,7 @@ namespace OpenBabel
 
           // Keep a map linking the cif atom label to the obatom*, for bond interpretation later
           std::map<std::string,OBAtom *> vLabelOBatom;
-          
+
           const unsigned int nbatoms=pos->second.mvAtom.size();
           pmol->ReserveAtoms(nbatoms);
           for(vector<CIFData::CIFAtom>::const_iterator posat=pos->second.mvAtom.begin();posat!=pos->second.mvAtom.end();++posat)
@@ -1131,11 +1131,11 @@ namespace OpenBabel
                   if(isalpha(tmpSymbol[0]) && isalpha(tmpSymbol[1])) nbc=2;
                   else if(isalpha(tmpSymbol[0])) nbc=1;
                 }
-              
+
               OBAtom *atom  = pmol->NewAtom();
-              
+
               vLabelOBatom.insert(make_pair(posat->mLabel,atom));
-              
+
               if(tmpSymbol.size()>nbc)
                 {// Try to find a formal charge in the symbol
                   int charge=0;
@@ -1153,10 +1153,10 @@ namespace OpenBabel
                       atom->SetFormalCharge(sign*charge);
                     }
                 }
-              
+
               if(nbc>0) tmpSymbol=tmpSymbol.substr(0,nbc);
               else tmpSymbol="C";//Something went wrong, no symbol ! Default to C ??
-              
+
               int atomicNum = etab.GetAtomicNum(tmpSymbol.c_str());
               atom->SetAtomicNum(atomicNum); //set atomic number, or '0' if the atom type is not recognized
               atom->SetType(tmpSymbol); //set atomic number, or '0' if the atom type is not recognized

@@ -1,17 +1,17 @@
 /**********************************************************************
 matrix3x3.cpp - Handle 3D rotation matrix.
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2006 by Benoit Jacob
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -29,7 +29,7 @@ namespace OpenBabel
 
   /** \class matrix3x3 matrix3x3.h <openbabel/math/matrix3x3.h>
       \brief Represents a real 3x3 matrix.
- 
+
       Rotating points in space can be performed by a vector-matrix
       multiplication. The matrix3x3 class is designed as a helper to the
       vector3 class for rotating points in space. The rotation matrix may be
@@ -38,14 +38,14 @@ namespace OpenBabel
       that vector. Once set, the matrix3x3 class can be used to rotate
       vectors by the overloaded multiplication operator. The following
       demonstrates the usage of the matrix3x3 class:
- 
+
       \code
       matrix3x3 mat;
       mat.SetupRotMat(0.0,180.0,0.0); //rotate theta by 180 degrees
       vector3 v = VX;
       v *= mat; //apply the rotation
       \endcode
- 
+
   */
 
   /*! The axis of the rotation will be uniformly distributed on
@@ -89,7 +89,7 @@ namespace OpenBabel
 
   /*! Replaces *this with a matrix that represents reflection on
     the plane through 0 which is given by the normal vector norm.
-	
+
     \warning If the vector norm has length zero, this method will
     generate the 0-matrix. If the length of the axis is close to
     zero, but not == 0.0, this method may behave in unexpected
@@ -98,12 +98,12 @@ namespace OpenBabel
     method is therefore highly discouraged, unless you are certain
     that the length is in a reasonable range, away from 0.0
     (Stefan Kebekus)
-	
+
     \deprecated This method will probably replaced by a safer
     algorithm in the future.
-	
+
     \todo Replace this method with a more fool-proof version.
-	
+
     @param norm specifies the normal to the plane
   */
   void matrix3x3::PlaneReflection(const vector3 &norm)
@@ -119,8 +119,8 @@ namespace OpenBabel
   }
 
   /*! Replaces *this with a matrix that represents rotation about the
-    axis by a an angle. 
-	
+    axis by a an angle.
+
     \warning If the vector axis has length zero, this method will
     generate the 0-matrix. If the length of the axis is close to
     zero, but not == 0.0, this method may behave in unexpected ways
@@ -129,12 +129,12 @@ namespace OpenBabel
     is therefore highly discouraged, unless you are certain that the
     length is in a reasonable range, away from 0.0 (Stefan
     Kebekus)
-	
+
     \deprecated This method will probably replaced by a safer
     algorithm in the future.
-	
+
     \todo Replace this method with a more fool-proof version.
-	
+
     @param v specifies the axis of the rotation
     @param angle angle in degrees (0..360)
   */
@@ -294,7 +294,7 @@ namespace OpenBabel
   /*! This method checks if the absolute value of the determinant is smaller than 1e-6. If
     so, nothing is done and an exception is thrown. Otherwise, the
     inverse matrix is calculated and returned. *this is not changed.
-	
+
     \warning If the determinant is close to zero, but not == 0.0,
     this method may behave in unexpected ways and return almost
     random results; details may depend on your particular floating
@@ -394,16 +394,16 @@ namespace OpenBabel
     matrix. On entry it is checked if the matrix really is
     symmetric: if isSymmetric() returns 'false', an OBError is
     thrown.
- 
+
     \note The jacobi algorithm is should work great for all
     symmetric 3x3 matrices. If you need to find the eigenvectors
     of a non-symmetric matrix, you might want to resort to the
     sophisticated routines of LAPACK.
- 
+
     @param eigenvals a reference to a vector3 where the
     eigenvalues will be stored. The eigenvalues are ordered so
     that eigenvals[0] <= eigenvals[1] <= eigenvals[2].
- 
+
     @return an orthogonal matrix whose ith column is an
     eigenvector for the eigenvalue eigenvals[i]. Here 'orthogonal'
     means that all eigenvectors have length one and are mutually
@@ -414,7 +414,7 @@ namespace OpenBabel
     // Calculate eigenvectors and -values
     vector3 eigenvals;
     matrix3x3 eigenmatrix = somematrix.findEigenvectorsIfSymmetric(eigenvals);
-  
+
     // Print the 2nd eigenvector
     cout << eigenmatrix.GetColumn(1) << endl;
     \endcode
@@ -423,7 +423,7 @@ namespace OpenBabel
     // Diagonalize the matrix
     matrix3x3 diagonalMatrix = eigenmatrix.inverse() * somematrix * eigenmatrix;
     \endcode
-  
+
   */
   matrix3x3 matrix3x3::findEigenvectorsIfSymmetric(vector3 &eigenvals) const
 #ifdef OB_OLD_MATH_CHECKS
@@ -525,7 +525,7 @@ namespace OpenBabel
     eigenvectors of a SYMMETRIC nxn matrix. This method is used
     internally by OpenBabel, but may be useful as a general
     eigenvalue finder.
-  
+
     The algorithm uses Jacobi transformations. It is described
     e.g. in Wilkinson, Reinsch "Handbook for automatic computation,
     Volume II: Linear Algebra", part II, contribution II/1. The
@@ -534,13 +534,13 @@ namespace OpenBabel
     small matrices, of size perhaps up to 10x10. For bigger
     problems, you might want to resort to the sophisticated routines
     of LAPACK.
-  
+
     \note If you plan to find the eigenvalues of a symmetric 3x3
     matrix, you will probably prefer to use the more convenient
     method findEigenvectorsIfSymmetric()
-  
+
     @param n the size of the matrix that should be diagonalized
-  
+
     @param a array of size n^2 which holds the symmetric matrix
     whose eigenvectors are to be computed. The convention is that
     the entry in row r and column c is addressed as a[n*r+c] where,
@@ -548,11 +548,11 @@ namespace OpenBabel
     matrix is actually symmetric. If it is not, the behaviour of
     this function is undefined.  On return, the matrix is
     overwritten with junk.
-  
+
     @param d pointer to a field of at least n doubles which will be
     overwritten. On return of this function, the entries d[0]..d[n-1]
     will contain the eigenvalues of the matrix.
-  
+
     @param v an array of size n^2 where the eigenvectors will be
     stored. On return, the columns of this matrix will contain the
     eigenvectors. The eigenvectors are normalized and mutually

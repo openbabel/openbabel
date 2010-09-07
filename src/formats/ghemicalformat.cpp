@@ -176,7 +176,7 @@ namespace OpenBabel
     }
 
     // clean out remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() && 
+    while(ifs.peek() != EOF && ifs.good() &&
         (ifs.peek() == '\n' || ifs.peek() == '\r'))
       ifs.getline(buffer,BUFF_SIZE);
 
@@ -241,7 +241,7 @@ namespace OpenBabel
       }
       if (bond->IsAromatic())
         bond_char = 'C';
-      ofs << bond->GetBeginAtomIdx()-1 << ' ' 
+      ofs << bond->GetBeginAtomIdx()-1 << ' '
         << bond->GetEndAtomIdx()-1 << ' '
         <<  bond_char << '\n';
     }

@@ -1,16 +1,16 @@
 /**********************************************************************
 phmodel.h - Read pH rules and assign charges.
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -44,7 +44,7 @@ public:
     bool Apply(OBMol&);
     /*! Is this transformation an acid dissociation?
      *  \code
-     *      Ka 
+     *      Ka
      *  HA ----> A(-)         (the H(+) will be deleted)
      *  \endcode
      *
@@ -54,7 +54,7 @@ public:
     bool IsAcid();
     /*! Is this a transformation to the conjugated acid from a base?
      *  \code
-     *      Ka 
+     *      Ka
      *  HA ----> A(-)         (the H(+) will be deleted)
      *  \endcode
      *
@@ -66,8 +66,8 @@ public:
 
 /*! \brief Corrections for pH used by OBMol::CorrectForPH()
  *
- *  The data/phmodel.txt file contains transformations which are applied 
- *  to correct the charges for a given pH. This function uses the 
+ *  The data/phmodel.txt file contains transformations which are applied
+ *  to correct the charges for a given pH. This function uses the
  *  Henderson-Hasselbalch equation to calculate which species (protonated/
  *  unprotonated) is present in the highest concentration at the given pH.
  *
@@ -76,8 +76,8 @@ public:
  *  # carboxylic acid
  *  O=C[OD1:1] >> O=C[O-:1]	4.0
  *  \endcode
- *  
- *  The 4.0 is the pKa for the dissociation [HA] -> [H+] + [A-]. To 
+ *
+ *  The 4.0 is the pKa for the dissociation [HA] -> [H+] + [A-]. To
  *  calculate [HA]/[A-] we use:
  *  \code
  *  [HA] / [A-] = 10^(pKa - pH)
@@ -91,8 +91,8 @@ public:
  *  # methyl amine
  *  C[N:1] >> C[N+:1]	10.7
  *  \endcode
- *  
- *  Here, the 10.7 is the pKa for the dissociation [BH+] -> [H+] + [B:]. To 
+ *
+ *  Here, the 10.7 is the pKa for the dissociation [BH+] -> [H+] + [B:]. To
  *  calculate [BH+]/[B:] we use:
  *  \code
  *  [BH+] / [B:] = 10^(pKa - pH)
@@ -101,7 +101,7 @@ public:
  *  [BH+]/[B:] < 1  :  [B:] > [BH+]
  *  \endcode
  *
- *  The transformations are all applied (if needed at the specified pH value) in 
+ *  The transformations are all applied (if needed at the specified pH value) in
  *  the same order they are found in data/phmodel.txt.
  */
 class OBAPI OBPhModel : public OBGlobalDataBase

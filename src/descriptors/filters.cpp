@@ -1,15 +1,15 @@
 /**********************************************************************
 filters.cpp - Some classes derived from OBDescriptor
- 
+
 Copyright (C) 2007 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -29,7 +29,7 @@ namespace OpenBabel
 //**************************************************************
 
   class MWFilter : public OBDescriptor
-{ 
+{
 public:
   MWFilter(const char* ID) : OBDescriptor(ID){};
   virtual const char* Description(){return "Molecular Weight filter";};
@@ -54,7 +54,7 @@ public:
   virtual const char* Description(){return "SMARTS filter";};
   virtual bool Compare(OBBase* pOb, istream& optionText, bool noEval, std::string* param=NULL);
 
-}; 
+};
 
 /// For interpreting conditions like s!=c1ccccc1CN
 /** The descriptor name can be s or smarts and is case independent
@@ -63,20 +63,20 @@ public:
     starts with a letter.
     To return true for a mismatch the operator is !=
     A space or tab should follow the SMARTS string.
- **/      
+ **/
 bool SmartsFilter::Compare(OBBase* pOb, istream& optionText, bool noEval, std::string*)
 {
   OBMol* pmol = dynamic_cast<OBMol*> (pOb);
   if(!pmol)
     return false;
-  
+
   string smarts;
   bool matchornegate = ReadStringFromFilter(optionText, smarts);
   if(noEval)
     return false;
   OBSmartsPattern sp;
   sp.Init(smarts);
-  bool ret = sp.Match(*pmol,true);//single match  
+  bool ret = sp.Match(*pmol,true);//single match
   if(!matchornegate)
     ret = !ret;
   return ret;
@@ -149,14 +149,14 @@ public:
     return CompareStringWithFilter(optionText, svalue, noEval);
   }
 
-}; 
+};
 
 FormulaDescriptor TheFormulaDescriptor("formula");
 
 //******************************************************************
 /* This descriptor uses a parameter, e.g. popcount(FP4)
 class FPCount : public OBDescriptor
-{ 
+{
 public:
   FPCount(const char* ID) : OBDescriptor(ID){};
   virtual const char* Description(){return "Count bits set in fingerprint whose ID is in the parameter";};

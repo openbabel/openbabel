@@ -55,7 +55,7 @@ class OBCONV OBFormat : public OBPlugin
     /// @brief The "API" interface Read function.
 
     /// Reads a single object.
-    /// Does not make a new object on the heap; 
+    /// Does not make a new object on the heap;
     /// can be used with a pointer to an chem object on the heap or the stack.
     virtual bool ReadMolecule(OBBase* /*pOb*/, OBConversion* /*pConv*/)
       { std::cerr << "HIER" << std::endl;
@@ -63,8 +63,8 @@ std::cerr << "Not a valid input format"; return false;}
 
     /// @brief The "Convert" interface Read function.
 
-    /// Possibly reads multiple new objects on the heap and subjects them 
-    /// to its DoTransformations() function, which may delete them again. 
+    /// Possibly reads multiple new objects on the heap and subjects them
+    /// to its DoTransformations() function, which may delete them again.
     /// Sends result to pConv->AddChemObject()
     virtual bool ReadChemObject(OBConversion* /*pConv*/)
       { std::cerr << "Not a valid input format"; return false;}
@@ -72,7 +72,7 @@ std::cerr << "Not a valid input format"; return false;}
     /// @brief The "API" interface Write function.
 
     /// Writes a single object
-    /// Does not delete the object; 
+    /// Does not delete the object;
     /// can be used with a pointer to an chem object on the heap or the stack.
     /// \return false on error.
     virtual bool WriteMolecule(OBBase* /*pOb*/, OBConversion* /*pConv*/)
@@ -81,7 +81,7 @@ std::cerr << "Not a valid input format"; return false;}
     /// @brief The "Convert" interface Write function.
 
     /// Writes a single object
-    /// Deletes the object after writing 
+    /// Deletes the object after writing
     /// \return false on error
     virtual bool WriteChemObject(OBConversion* /*pConv*/)
       { std::cerr << "Not a valid output format"; return false;}
@@ -95,12 +95,12 @@ std::cerr << "Not a valid input format"; return false;}
 
     /// @brief A decription of the chemical object converted by this format.
 
-    /// If not provided, the object type used by the default format is used (usually OBMol). 
+    /// If not provided, the object type used by the default format is used (usually OBMol).
     virtual const char* TargetClassDescription();
 
     /// \return the type of chemical object used by the format.
 
-    /// Defaults to that used by the default format. Useful for checking 
+    /// Defaults to that used by the default format. Useful for checking
     /// that a format can handle a particular object.
     virtual const std::type_info& GetType();
 
@@ -111,15 +111,15 @@ std::cerr << "Not a valid input format"; return false;}
     virtual const char* GetMIMEType() { return pMime; }
 
     /// @brief Decribes the capabilities of the format (Read only etc.)
- 
+
     /// Currently, can be a bitwise OR of any of the following
     /// NOTREADABLE READONEONLY NOTWRITABLE WRITEONEONLY DEFAULTFORMAT
     /// READBINARY WRITEBINARY READXML
-    virtual unsigned int Flags() { return 0;}; 
+    virtual unsigned int Flags() { return 0;};
 
     /// @brief Skip past first n objects in input stream (or current one with n=0)
 
-    /// \return 1 on success, -1 on error and 0 if not implemented 
+    /// \return 1 on success, -1 on error and 0 if not implemented
     virtual int SkipObjects(int /*n*/, OBConversion* /*pConv*/)
       {
         return 0; //shows not implemented in the format class

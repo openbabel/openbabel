@@ -2,14 +2,14 @@
 xout.cpp - OpExtraOut to write a OBBase object additionally to a file
 
 Copyright (C) 2009 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,7 +25,7 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-//This format is not registered and is called from OpExtraOut::Do() 
+//This format is not registered and is called from OpExtraOut::Do()
 class ExtraFormat : public OBFormat
 {
 public:
@@ -154,7 +154,7 @@ bool OpExtraOut::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversi
 
     //Make an instance of ExtraFormat and divert the output to it. It will delete itself.
     pConv->SetOutFormat(new ExtraFormat(pOrigConv, pExtraConv));
-  }  
+  }
   return true;
 }
 

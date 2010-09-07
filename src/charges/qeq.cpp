@@ -2,14 +2,14 @@
 qeq.cpp - A OBChargeModel to handle QEq charges
 
 Copyright (C) 2010 by Jiahao Chen <jiahao@mit.edu>
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -40,7 +40,7 @@ namespace OpenBabel
   {
     vector<string> vs;
     char buffer[BUFF_SIZE];
-    
+
     // open data/qeq.txt
     ifstream ifs;
     if (OpenDatafile(ifs, "qeq.txt").length() == 0) {
@@ -113,7 +113,7 @@ namespace OpenBabel
       {
        	Parameters = GetParameters(atom->GetAtomicNum(), atom->GetFormalCharge());
         i = atom->GetIdx() - 1;
-        
+
         if (Parameters[0] == 0.)
           {
             stringstream msg;
@@ -127,10 +127,10 @@ namespace OpenBabel
         Hardness(i,i) = Parameters[1];
         BasisSet[i] = Parameters[2];
       }
-    
+
     //Read in total charge of molecule
     double Z = (double)(mol.GetTotalCharge());
-    
+
     ///////////////////////////////////////////////////////////////////////////////
     // Now populate integrals
 
@@ -219,7 +219,7 @@ namespace OpenBabel
     // using a LU factorization
     bool SolverOK = A.lu().solve(b, &x);
     //bool SolverOK = A.svd().solve(b, &x);
-	
+
     VectorXd resid = A*x - b;
     double resnorm = resid.norm();
     if (IsNan(resnorm) || resnorm > NormThreshold || !SolverOK)
@@ -238,7 +238,7 @@ namespace OpenBabel
         SolverOK = A.svd().solve(b, &x);
         resid = A*x - b;
         resnorm = resid.norm();
-		
+
         if (IsNan(resnorm) || !SolverOK)
           {
             obErrorLog.ThrowError(__FUNCTION__, "SVD solver returned an error. Charges may not be reliable!", obError);

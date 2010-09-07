@@ -1,11 +1,11 @@
 /**********************************************************************
 opisomorph.cpp - Enhanced -s option
 Copyright (C) 2010 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -30,10 +30,10 @@ Adds an OBPairData object to each atom and bond in a substructure.
 The substructure's atoms are specified in an input parameter, a
 vector of atom indx; the bonds are those in the molecule that join
 these atoms. The attribute and value of the OBPairObject (the same
-for all the added objects) are specified as parameters. 
+for all the added objects) are specified as parameters.
 **/
 bool AddDataToSubstruct(OBMol* pmol,
-        const std::vector<int>& atomIdxs, 
+        const std::vector<int>& atomIdxs,
         const std::string& attribute,
         const std::string& value)
 {
@@ -73,7 +73,7 @@ Deletes all atoms except those in @p atomIndxs
 bool ExtractSubstruct(OBMol* pmol, const std::vector<int>& atomIdxs)
 {
   //Erase from the top to avoid invalidating the remaining ones
-  for(int i = pmol->NumAtoms(); i; --i) 
+  for(int i = pmol->NumAtoms(); i; --i)
     if(find(atomIdxs.begin(),atomIdxs.end(), i)==atomIdxs.end())
       pmol->DeleteAtom(pmol->GetAtom(i));
   return true;
@@ -106,7 +106,7 @@ class OpNewS : public OBOp
 public:
   OpNewS(const char* ID) : OBOp(ID, false){}
   const char* Description()
-  { 
+  {
     return "Isomorphism filter (-s option replacement)(not displayed in GUI)\n"
       "This enhanced version can take a SMARTS parameter, for example:\n"
       "      babel in.smi -s \"c1ccccc1[#6] green\" out.cml \n"
@@ -118,7 +118,7 @@ public:
       "are converted, e.g.\n"
       "    -s ~c1ccccc1[#6]\n"
       "This is an alternative to the -v option.\n\n"
-      
+
       "The first parameter can also be a filename with an extension that\n"
       "can be interpreted as a file format:\n"
       "    -s \"pattern.mol exact\"\n"
@@ -183,7 +183,7 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
           pConv->SetOneObjectOnly(); //stop conversion
           return false;
         }
-        nPatternAtoms = patmol.NumHvyAtoms();   
+        nPatternAtoms = patmol.NumHvyAtoms();
       }
     }
     else
@@ -244,7 +244,7 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
     //delete a non-matching mol
     delete pmol;
     pmol = NULL;
-    return false; 
+    return false;
   }
 
   if(!inv && vec.size()>=2 && !vec[1].empty() && !nPatternAtoms)

@@ -25,7 +25,7 @@ inline double erf(double x)
 
   double sum= x, term= x, xsqr= x*x;
   int j= 1;
-  do 
+  do
   {
     term*= xsqr/j;
     sum-= term/(2*j+1);

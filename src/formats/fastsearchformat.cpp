@@ -1,11 +1,11 @@
 /**********************************************************************
 fastsearchformat.cpp: Preparation and searching of fingerprint-based index files
 Copyright (C) 2005-2006 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -29,7 +29,7 @@ class FastSearchFormat : public OBFormat
 {
 public:
 //Register this format type ID
-FastSearchFormat() : fsi(NULL) 
+FastSearchFormat() : fsi(NULL)
 {
   OBConversion::RegisterFormat("fs",this);
   //Specify the number of option taken by options
@@ -89,7 +89,7 @@ virtual const char* Description() //required
   " a  Add Tanimoto coeff to title in similarity search\n"
   " l# Maximum number of candidates. Default<4000>\n"
   " e  Exact match\n"
-  "     Alternative to using exact in ``-s`` parameter, see above\n"  
+  "     Alternative to using exact in ``-s`` parameter, see above\n"
   " n  No further SMARTS filtering after fingerprint phase\n\n"
   ;
 };
@@ -159,13 +159,13 @@ virtual const char* Description() //required
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
         return false;
       }
-    
+
     vector<OBMol> patternMols;
     if(!ObtainTarget(pConv, patternMols, indexname))
       return false;
 
     bool exactmatch = pConv->IsOption("e",OBConversion::INOPTIONS)!=NULL;// -ae option
-    
+
     //Open the datafile and put it in pConv
     //datafile name derived from index file probably won't have a file path
     //but indexname may. Derive a full datafile name
@@ -175,7 +175,7 @@ virtual const char* Description() //required
       path = datafilename;
     else
       path = indexname.substr(0,pos+1) + datafilename;
-	
+
     ifstream datastream(path.c_str());
     if(!datastream)
       {
@@ -184,7 +184,7 @@ virtual const char* Description() //required
         return false;
       }
     pConv->SetInStream(&datastream);
-	
+
     //Input format is currently fs; set it appropriately
     if(!pConv->SetInAndOutFormats(pConv->FormatFromExt(datafilename.c_str()),pConv->GetOutFormat()))
 			return false;
@@ -213,12 +213,12 @@ virtual const char* Description() //required
             double MinTani = atof( txt.substr( 0, pos ).c_str() );
             fs.FindSimilar(&patternMols[0], SeekposMap, MinTani, MaxTani);
           }
-		
+
         //Don't want to filter through SMARTS filter
         pConv->RemoveOption("s", OBConversion::GENOPTIONS);
         //also because op names are case independent
         pConv->RemoveOption("S", OBConversion::GENOPTIONS);
-		
+
         multimap<double, unsigned int>::reverse_iterator itr;
         for(itr=SeekposMap.rbegin();itr!=SeekposMap.rend();++itr)
           {
@@ -232,11 +232,11 @@ virtual const char* Description() //required
                 stringstream ss;
                 ss << " " << itr->first;
                 pConv->AddOption("addtotitle",OBConversion::GENOPTIONS, ss.str().c_str());
-			
+
               }
             pConv->SetOneObjectOnly();
             if(itr != --SeekposMap.rend())
-              pConv->SetMoreFilesToCome();//so that not seen as last on output 
+              pConv->SetMoreFilesToCome();//so that not seen as last on output
             pConv->Convert(NULL,NULL);
           }
       }
@@ -248,7 +248,7 @@ virtual const char* Description() //required
       p = pConv->IsOption("l",OBConversion::INOPTIONS);
       if(p && atoi(p))
         MaxCandidates = atoi(p);
-	
+
       vector<unsigned int> SeekPositions;
 
       if(exactmatch)
@@ -271,7 +271,7 @@ virtual const char* Description() //required
         clog << SeekPositions.size() << " candidates from fingerprint search phase" << endl;
       }
 
-      vector<unsigned int>::iterator seekitr, 
+      vector<unsigned int>::iterator seekitr,
           begin = SeekPositions.begin(), end = SeekPositions.end();
 
       if(patternMols.size()>1)//only sort and elininate duplicates if necessary
@@ -295,7 +295,7 @@ virtual const char* Description() //required
         pConv->SetFirstInput(false); //needed for OpSort
       }
     }
-    return false;	//To finish	
+    return false;	//To finish
   }
 
   /////////////////////////////////////////////////////
@@ -410,7 +410,7 @@ virtual const char* Description() //required
           clog << "\nIt contains " << nmols << " molecules" << flush;
 
         sw.Start();
-		
+
         if(update)
           {
             fsi = new FastSearchIndexer(pidx, pOs, nmols);//using existing index
@@ -421,7 +421,7 @@ virtual const char* Description() //required
           }
         else
           fsi = new FastSearchIndexer(datafilename, pOs, fpid, nbits, nmols);
-		
+
         obErrorLog.StopLogging();
       }
 
@@ -430,9 +430,9 @@ virtual const char* Description() //required
     OBMol* pmol = dynamic_cast<OBMol*> (pOb);
     if(pmol)
       pmol->ConvertDativeBonds();//use standard form for dative bonds
-	
+
     streampos seekpos = pConv->GetInPos();
-    if(!update || seekpos>LastSeekpos) 
+    if(!update || seekpos>LastSeekpos)
     {
       fsi->Add(pOb, seekpos );
       if(pConv->GetOutputIndex()==400 && nmols>1000)
@@ -453,7 +453,7 @@ virtual const char* Description() //required
 
     if(pConv->IsLast())
       {
-        //Last pass 
+        //Last pass
         delete fsi; //saves index file
         if(NewOstreamUsed)
           delete pOs;
@@ -486,7 +486,7 @@ virtual const char* Description() //required
     patternMol.SetIsPatternStructure();
 
     const char* p = pConv->IsOption("s",OBConversion::GENOPTIONS);
-    
+
     bool OldSOption=false;
     //If no -s option, make OBMol from file in -S option or -aS option (both deprecated)
     if(!p)
@@ -494,13 +494,13 @@ virtual const char* Description() //required
       p = pConv->IsOption("S",OBConversion::GENOPTIONS);
       if(!p)
         p = pConv->IsOption("S",OBConversion::INOPTIONS);//for GUI mainly
-      OldSOption = true; 
+      OldSOption = true;
     }
-    if(p) 
+    if(p)
     {
       vector<string> vec;
       tokenize(vec, p);
-      
+
       //ignore leading ~ (not relevant to fastsearch)
       if(vec[0][0]=='~')
         vec[0].erase(0,1);
@@ -589,8 +589,8 @@ virtual const char* Description() //required
       string id(header.fpid);
       if(id.empty())
         id = "default";
-      clog << indexname << " is an index of\n " << header.datafilename 
-           << ".\n It contains " << header.nEntries 
+      clog << indexname << " is an index of\n " << header.datafilename
+           << ".\n It contains " << header.nEntries
            << " molecules. The fingerprint type is " << id << " with "
            << OBFingerprint::Getbitsperint() * header.words << " bits.\n"
            << "Typical usage for a substructure search:\n"
@@ -631,7 +631,7 @@ virtual const char* Description() //required
   indices of the bond's atoms and change the bond's order.
   ObtainTarget() will return a vector of OBMol and the Find() in L260 will be done
   for each. All fs matches will go into SeekPositions. At the end this
-  will be sorted and duplicates removed with unique.  
+  will be sorted and duplicates removed with unique.
   */
 
 }//Openbabel

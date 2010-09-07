@@ -9,7 +9,7 @@ IUPAC International Chemical Identifier (InChI) (contact:secretariat@iupac.org)
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -53,7 +53,7 @@ public:
 
   virtual const char* Description()
   {
-    return 
+    return
     "InChI format\n"
     "IUPAC/NIST molecular identifier\n\n"
 
@@ -124,7 +124,7 @@ public:
   /// @param inchi The inchi string
   static bool EditInchi(std::string& inchi, std::string& spec);
 
-  ///Compare std::strings with embedded numbers so that 
+  ///Compare std::strings with embedded numbers so that
   // "a6b" (or "a06b") is less than "a15b"
   // and "CH4" is less than "C2H6"
   // and "CH4" is less than "ClH" (hydrogen chloride)
@@ -175,7 +175,7 @@ public:
   };
 
 private:
-  ///Erases the layer starting with \param str and, if \param all is true, all the subsequent ones 
+  ///Erases the layer starting with \param str and, if \param all is true, all the subsequent ones
   static void RemoveLayer (std::string& inchi, const std::string& str, bool all=false);
 
 private:
@@ -198,7 +198,7 @@ public:
   }
   virtual const char* Description() //required
   {
-    return 
+    return
       "Compare molecules using InChI\n"
       "A utility format that allows you to compare molecules using their InChIs\n"
       "The first molecule is compared with the rest, e.g.::\n\n"

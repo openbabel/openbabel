@@ -1,16 +1,16 @@
 /**********************************************************************
 phmodel.cpp - Read pH rules and assign charges.
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -154,8 +154,8 @@ void OBPhModel::CorrectForPH(OBMol &mol, double pH)
     mol.DeleteHydrogens();
 
     for (unsigned int i = 0; i < _vtsfm.size(); ++i) {
-      
-      if (_vpKa[i] > 1E+9) { 
+
+      if (_vpKa[i] > 1E+9) {
 	// always apply when pKa is > 1e+9
         _vtsfm[i]->Apply(mol);
       } else {
@@ -197,7 +197,7 @@ void OBPhModel::CorrectForPH(OBMol &mol, double pH)
 // Joerg Wegner
 /** \class OBChemTsfm phmodel.h <openbabel/phmodel.h>
     \brief SMARTS based structural modification (chemical transformation)
- 
+
     Transformation of chemical structures can be used for pH value correction
     (i.e. via OBPhModel and OBMol::CorrectForPH()). The OBChemTsfm class
     defines SMARTS based TRANSFORM patterns to delete atoms, change atom types,
@@ -385,7 +385,7 @@ bool OBChemTsfm::IsAcid()
     if (_end.GetCharge(i) < 0)
       return true;
   }
-  
+
   return false;
 }
 

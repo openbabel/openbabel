@@ -1,16 +1,16 @@
 /**********************************************************************
 ring.h - Deal with rings, find smallest set of smallest rings (SSSR).
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -53,7 +53,7 @@ namespace OpenBabel
     OBRing(const OBRing &src);
     OBRing& operator=(const OBRing &src);
     //@}
-    
+
     //member functions
 
     //! \return the size of this ring (i.e., how many atoms in the cycle)
@@ -62,7 +62,7 @@ namespace OpenBabel
     //! \deprecated Use Size() instead
     size_t    PathSize() const  {    return(_path.size());  }
 
-    //! \return whether this ring is aromatic 
+    //! \return whether this ring is aromatic
     //! If all atoms in this ring are aromatic, the ring will be considered aromatic
     //! \todo This method uses implicit bonding -- bond info is not stored in OBRing
     bool   IsAromatic();
@@ -120,7 +120,7 @@ namespace OpenBabel
   public:
     OBRingSearch()    {}
     ~OBRingSearch();
-  
+
     //! Sort ring sizes from smallest to largest
     void    SortRings()
     {
@@ -151,7 +151,7 @@ namespace OpenBabel
     //@}
   };
 
-  /** \class OBRTree ring.h <openbabel/ring.h> 
+  /** \class OBRTree ring.h <openbabel/ring.h>
       \brief Internal class for OBRing search algorithms to create a search tree
       of OBAtom objects
   **/
@@ -163,7 +163,7 @@ namespace OpenBabel
     //! Construct a search tree from a possible parent entry and atom entry
     OBRTree(OBAtom*,OBRTree*);
     ~OBRTree()    {}
-  
+
     //! \return the OBAtom::GetIdx() index of the atom in this node
     int  GetAtomIdx();
     //! Recursively find the root of this tree, building up a vector of OBAtom nodes.

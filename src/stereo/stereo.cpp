@@ -2,7 +2,7 @@
   stereo.cpp - OBStereo
 
   Copyright (C) 2009 by Tim Vandermeersch
- 
+
   This file is part of the Open Babel project.
   For more information, see <http://openbabel.sourceforge.net/>
 
@@ -61,14 +61,14 @@ namespace OpenBabel {
         // increment e if element to the right is lower
         if (*j < *i)
           e++;
-        
+
       invVec.push_back(e);
     }
 
     int sum = 0;
     for (OBStereo::RefIter k = invVec.begin(); k != invVec.end(); ++k)
       sum += *k;
-    
+
     return sum;
   }
 
@@ -92,7 +92,7 @@ namespace OpenBabel {
     OBStereo::Refs result(refs);
     result[i] = refs.at(j);
     result[j] = refs.at(i);
-    return result;   
+    return result;
   }
 
 }

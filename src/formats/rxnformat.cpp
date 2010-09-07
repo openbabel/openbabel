@@ -1,13 +1,13 @@
 /**********************************************************************
 Copyright (C) 2004 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -43,7 +43,7 @@ public:
         "See also the CML React format for storing chemical reactions using CML.\n\n";
   };
 
-  virtual const char* GetMIMEType() 
+  virtual const char* GetMIMEType()
   { return "chemical/x-mdl-rxn"; };
 
   virtual const char* TargetClassDescription()
@@ -202,7 +202,7 @@ bool RXNFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     OBConversion MolConv(*pConv); //new copy to use to write associated MOL
     MolConv.AddOption("no$$$$",OBConversion::OUTOPTIONS);
     MolConv.SetAuxConv(NULL); //temporary until a proper OBConversion copy constructor written
-     
+
     OBFormat* pMolFormat = pConv->FindFormat("MOL");
     if(pMolFormat==NULL)
     {

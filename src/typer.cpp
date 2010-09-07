@@ -1,16 +1,16 @@
 /**********************************************************************
 typer.cpp - Open Babel atom typer.
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -297,7 +297,7 @@ namespace OpenBabel
 
     return;
   }
-  
+
   /*! \class OBRingTyper typer.h <openbabel/typer.h>
     \brief Assigns ring types
 
@@ -308,7 +308,7 @@ namespace OpenBabel
     \code
     vector<OBRing*>::iterator i;
     vector<OBRing*> rlist = mol.GetSSSR();
-      
+
     for (i = rlist.begin();i != rlist.end();++i)
     cout << "ring type = " << (*i)->GetType() << endl;
     \endcode
@@ -380,12 +380,12 @@ namespace OpenBabel
 
           for (i = rlist.begin();i != rlist.end();++i) { // for each ring
             member_count = 0;
-            
+
             for(j = j2->begin(); j != j2->end(); ++j) { // for each atom in the match
-              if ((*i)->IsMember(mol.GetAtom(*j))) 
+              if ((*i)->IsMember(mol.GetAtom(*j)))
                 member_count++;
             }
-	    
+
             if ((*i)->Size() == member_count)
               (*i)->SetType(i2->second);
           }
@@ -397,11 +397,11 @@ namespace OpenBabel
 
   /*! \class OBAromaticTyper typer.h <openbabel/typer.h>
     \brief Assigns aromatic typing to atoms and bonds
- 
-    The OBAromaticTyper class is designed to read in a list of 
-    aromatic perception rules and apply them to molecules. The code 
-    that performs typing is not usually used directly -- it is usually 
-    done automatically when their corresponding values are requested of atoms 
+
+    The OBAromaticTyper class is designed to read in a list of
+    aromatic perception rules and apply them to molecules. The code
+    that performs typing is not usually used directly -- it is usually
+    done automatically when their corresponding values are requested of atoms
     or bonds.
     \code
     atom->IsAromatic();
@@ -556,7 +556,7 @@ namespace OpenBabel
     //if (bond->IsAromatic())
     //cerr << bond->GetIdx() << ' ' << bond->IsAromatic() << endl;
   }
-  
+
   /** \brief Traverse a potentially aromatic cycle starting at @p root.
       \return  True if the cycle is likely aromatic
       \param root  The initial, "root" atom in traversing this ring
@@ -570,7 +570,7 @@ namespace OpenBabel
       the Huekel 4n+2 rule is checked to see if there is a possible electronic
       configuration which corresponds to aromaticity.
   **/
-  bool OBAromaticTyper::TraverseCycle(OBAtom *root, OBAtom *atom, OBBond *prev, 
+  bool OBAromaticTyper::TraverseCycle(OBAtom *root, OBAtom *atom, OBBond *prev,
                                       std::pair<int,int> &er,int depth)
   {
     if (atom == root)
@@ -680,7 +680,7 @@ namespace OpenBabel
     vector<OBBond*>::iterator j, l, nbr2Iter;
     vector<OBRing*> sssRings = mol.GetSSSR();
     vector<OBRing*>::iterator k;
-    
+
     int rootAtom;
     int ringNbrs;
     int heavyNbrs;
@@ -690,8 +690,8 @@ namespace OpenBabel
 
     vector<OBBond*> cbonds;
     vector< vector<OBRing*> > ringAtoms; // store ring pointers on an atom basis
-    
-    //generate list of closure bonds 
+
+    //generate list of closure bonds
     for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
       {
         if( bond->IsClosure() )
@@ -703,7 +703,7 @@ namespace OpenBabel
               }
           }
       }
-    
+
     if(avoidInnerRingAtoms)
       {
         //for every atom fill vector with ring pointer it's associated with
@@ -717,8 +717,8 @@ namespace OpenBabel
               }
           }
       }
-    
-    
+
+
     //loop over closure bonds
     for(OBBondIterator bd(cbonds.begin()),bd_end(cbonds.end());bd!=bd_end;++bd)
       {
@@ -729,14 +729,14 @@ namespace OpenBabel
         // this is really ready, isn't it ! ;-)
         rootAtom = bond->GetBeginAtomIdx();
         _root[rootAtom] = true;
-	
+
         // EXTENDED APPROACH
         if (avoidInnerRingAtoms)
           {
             // count the number of neighbor ring atoms
             atom = mol.GetAtom(rootAtom);
             ringNbrs = heavyNbrs = 0;
-	    
+
             for (nbr = atom->BeginNbrAtom(l);nbr;nbr = atom->NextNbrAtom(l))
               {
                 // we can get this from atom->GetHvyValence()
@@ -748,12 +748,12 @@ namespace OpenBabel
                     if (nbr->IsInRing())
                       ringNbrs++;
                   }
-		
+
                 // if this atom has more than 2 neighbor ring atoms
                 // we could get trapped later when traversing cycles
                 // which can cause aromaticity false detection
                 newRoot = -1;
-		
+
                 if (ringNbrs > 2)
                   {
                     // try to find another root atom
@@ -762,7 +762,7 @@ namespace OpenBabel
                       {
                         ring = (*k);
                         tmp = ring->_path;
-			
+
                         bool checkThisRing = false;
                         int rootAtomNumber=0;
                         int idx=0;
@@ -796,13 +796,13 @@ namespace OpenBabel
                                         // used for getting an other
                                         // root atom
                                         checkThisRing = false;
-					
+
                                         break;
                                       }
                                   }
                               }
                           }
-			
+
                         // check ring for getting another
                         // root atom to avoid aromaticity typer problems
                         if (checkThisRing)
@@ -817,12 +817,12 @@ namespace OpenBabel
                                     if (!nbr2->IsHydrogen())
                                       {
                                         heavyNbrs++;
-					
+
                                         if (nbr2->IsInRing())
                                           ringNbrs++;
                                       }
                                   }
-				
+
                                 // if the number of neighboured heavy atoms is also
                                 // the number of neighboured ring atoms, the aromaticity
                                 // typer could be stuck in a local traversing trap
@@ -833,17 +833,17 @@ namespace OpenBabel
                               }
                           }
                       }
-		    
+
                     if ((newRoot != -1) && (rootAtom != newRoot))
                       {
                         // unset root atom
                         _root[rootAtom] = false;
-			
+
                         // pick new root atom
                         _root[newRoot] = true;
                       }
                   } // if (ringNbrs > 2)
-		
+
               } // end for
           } // if (avoid)
       } // end for(closure bonds)

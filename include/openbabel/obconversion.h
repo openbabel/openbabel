@@ -66,8 +66,8 @@ namespace OpenBabel {
       OBConversion(std::istream* is=NULL, std::ostream* os=NULL);
       /// @brief Copy constructor
       OBConversion(const OBConversion& o);
-      virtual     ~OBConversion(); 
-      //@}	
+      virtual     ~OBConversion();
+      //@}
       /// @name Collection of formats
       //@{
       /// @brief Called once by each format class
@@ -82,7 +82,7 @@ namespace OpenBabel {
       ///Deprecated!.Repeatedly called to recover available Formats
       static bool	        GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFormat);
       //@}
-		
+
       /// @name Information
       //@{
       static const char* Description(); //generic conversion options
@@ -93,7 +93,7 @@ namespace OpenBabel {
       std::istream* GetInStream() const {return pInStream;};
       std::ostream* GetOutStream() const {return pOutStream;};
       void          SetInStream(std::istream* pIn)
-        { 
+        {
           if (pInStream && NeedToFreeInStream) {
             delete pInStream; NeedToFreeInStream = false;
           }
@@ -120,12 +120,12 @@ namespace OpenBabel {
       OBFormat*   GetInFormat() const{return pInFormat;};
       OBFormat*   GetOutFormat() const{return pOutFormat;};
       std::string GetInFilename() const{return InFilename;};
-	
+
       ///Get the position in the input stream of the object being read
-      std::streampos GetInPos()const{return wInpos;}; 
+      std::streampos GetInPos()const{return wInpos;};
 
       ///Get the length in the input stream of the object being read
-      size_t GetInLen()const{return wInlen;}; 
+      size_t GetInLen()const{return wInlen;};
 
       /// \return a default title which is the filename
       const char* GetTitle() const;
@@ -141,14 +141,14 @@ namespace OpenBabel {
        text string. They are set individually by AddOption() or (rarely) collectively
        in SetOptions(). Options cannot be altered but can be replaced with AddOption()
        and deleted with RemoveOption(), which, however, should be used in an op derived
-       from OBOp (because of iterator invalidation). 
+       from OBOp (because of iterator invalidation).
 
        If the "Convert" interface is used, the GENOPTIONS are acted upon in the
        OBBase::DoTransformations() functions (currently only OBMol has one). This
-       happens after the object has been input but before it has been output. 
+       happens after the object has been input but before it has been output.
        All the options are available to input and output formats, etc. via the IsOption()
        function, and the interpretation of any text string needs to be done subsequently.
-       
+
        In the commandline interface, options with single character ids are are indicated
        like -s, and those with multiple character ids like --gen3D. An option may have
        one or more parameters which appear, space separated, in the option's text string.
@@ -168,22 +168,22 @@ namespace OpenBabel {
        Some conversion options, such as -f, -l, -m, are unlikely to be used in
        programming, but are listed in OBConversion::Description().  The built-in
        GENOPTIONS for OBMol objects are listed in OBMol::ClassDescription() which
-       is in transform.cpp and also in this documentation under AddOption(). 
+       is in transform.cpp and also in this documentation under AddOption().
        */
       //@{
       ///@brief Three types of options set on the the command line by -a? , -x? , or -?
       enum Option_type { INOPTIONS, OUTOPTIONS, GENOPTIONS, ALL };
 
-      ///@brief Determine whether an option is set. \return NULL if option not and a pointer to the associated text if it is 
+      ///@brief Determine whether an option is set. \return NULL if option not and a pointer to the associated text if it is
       const char* IsOption(const char* opt,Option_type opttyp=OUTOPTIONS);
-	
+
       ///@brief Access the map with option name as key and any associated text as value
       const std::map<std::string,std::string>* GetOptions(Option_type opttyp)
         { return &OptionsArray[opttyp];};
 
       ///@brief Set an option of specified type, with optional text
       void AddOption(const char* opt, Option_type opttyp=OUTOPTIONS, const char* txt=NULL);
-	
+
       bool RemoveOption(const char* opt, Option_type optype);
 
       ///@brief Set several single character options of specified type from string like ab"btext"c"ctext"
@@ -200,7 +200,7 @@ namespace OpenBabel {
       ///@brief Copies the options (by default of all types) from one OBConversion Object to another.
       void CopyOptions(OBConversion* pSourceConv, Option_type typ=ALL);
 
-      /// @name Supported file format 
+      /// @name Supported file format
       //@{
       // @brief Set and return the list of supported input format
       std::vector<std::string> GetSupportedInputFormat();
@@ -238,18 +238,18 @@ namespace OpenBabel {
       //@}
       /// @name Convenience functions
       //@{
-      ///The default format is set in a single OBFormat class (generally it is OBMol) 
+      ///The default format is set in a single OBFormat class (generally it is OBMol)
       static OBFormat* GetDefaultFormat(){return OBFormat::FindType(NULL);};
 
       /// @brief Outputs an object of a class derived from OBBase.
-	
-      /// Part of "API" interface. 
+
+      /// Part of "API" interface.
       /// The output stream can be specified and the change is retained in the OBConversion instance
       bool				Write(OBBase* pOb, std::ostream* pout=NULL);
 
       /// @brief Outputs an object of a class derived from OBBase as a string
-	
-      /// Part of "API" interface. 
+
+      /// Part of "API" interface.
       /// The output stream is temporarily changed to the string and then restored
       /// This method is primarily intended for scripting languages without "stream" classes
       /// The optional "trimWhitespace" parameter allows trailing whitespace to be removed
@@ -257,8 +257,8 @@ namespace OpenBabel {
       std::string                     WriteString(OBBase* pOb, bool trimWhitespace = false);
 
       /// @brief Outputs an object of a class derived from OBBase as a file (with the supplied path)
-	
-      /// Part of "API" interface. 
+
+      /// Part of "API" interface.
       /// The output stream is changed to the supplied file and the change is retained in the
       /// OBConversion instance.
       /// This method is primarily intended for scripting languages without "stream" classes
@@ -271,30 +271,30 @@ namespace OpenBabel {
       void CloseOutFile();
 
       /// @brief Reads an object of a class derived from OBBase into pOb.
-	
-      /// Part of "API" interface. 
+
+      /// Part of "API" interface.
       /// The input stream can be specified and the change is retained in the OBConversion instance
-      /// \return false and pOb=NULL on error 
+      /// \return false and pOb=NULL on error
       bool	Read(OBBase* pOb, std::istream* pin=NULL);
-	
-      /// Part of "API" interface. 
+
+      /// Part of "API" interface.
       /// The input stream can be specified and the change is retained in the OBConversion instance
-      /// \return NULL on error 
+      /// \return NULL on error
 //      OBBase*	ReadObject(std::istream* pin=NULL);
 
       /// @brief Reads an object of a class derived from OBBase into pOb from the supplied string
-	
-      /// Part of "API" interface. 
+
+      /// Part of "API" interface.
       /// \return false and pOb=NULL on error
       /// This method is primarily intended for scripting languages without "stream" classes
       bool	ReadString(OBBase* pOb, std::string input);
 
       /// @brief Reads an object of a class derived from OBBase into pOb from the file specified
-	
-      /// Part of "API" interface. 
+
+      /// Part of "API" interface.
       /// The output stream is changed to the supplied file and the change is retained in the
       /// OBConversion instance.
-      /// \return false and pOb=NULL on error 
+      /// \return false and pOb=NULL on error
       /// This method is primarily intended for scripting languages without "stream" classes
       bool	ReadFile(OBBase* pOb, std::string filePath);
 
@@ -311,7 +311,7 @@ namespace OpenBabel {
       /// is appropriately singular or plural.
       void ReportNumberConverted(int count, OBFormat* pFormat=NULL);
 
-      /// \return the number of objects in the inputstream, 
+      /// \return the number of objects in the inputstream,
       /// or -1 if error or if SkipObjects for the input format is not implemented
       /// Adjusts for the value of -f and -l options (first and last objects).
       int NumInputObjects();
@@ -368,7 +368,7 @@ protected:
       std::streampos rInpos; ///<position in the input stream of the object being read
       size_t wInlen; ///<length in the input stream of the object being written
       size_t rInlen; ///<length in the input stream of the object being read
-	
+
       OBConversion* pAuxConv;///<Way to extend OBConversion
 
       std::vector<std::string> SupportedInputFormat; ///< list of supported input format
@@ -382,4 +382,4 @@ protected:
 //! \file
 //! \brief Handle file conversions. Declaration of OBFormat, OBConversion.
 
- 
+

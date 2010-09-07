@@ -185,7 +185,7 @@ struct mobatom                     /* Modeling object atom structure */
   int32 posz;
   int32 link[4]; };
 
-struct atomid                      /* The order of the fields is not important */ 
+struct atomid                      /* The order of the fields is not important */
 { uint32 atom;
   uint32 resnamechain;
   uint32 resno;
@@ -350,7 +350,7 @@ YOBFormat theYOBFormat;
    ==================
    IF options CONTAINS 'f' (COMMAND LINE -af), ATOM NAMES WILL STAY FIXED (I.E. LEAVING THE SPACE IN THE FIRST COLUMN) */
 bool YOBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
-{ 
+{
   OBMol* pmol = pOb->CastAndClear<OBMol>();
   if(pmol==NULL)
       return false;
@@ -452,7 +452,7 @@ bool YOBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   mem_free(mob);
 
     // clean out remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() && 
+    while(ifs.peek() != EOF && ifs.good() &&
 	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
       ifs.getline(buffer,BUFF_SIZE);
 

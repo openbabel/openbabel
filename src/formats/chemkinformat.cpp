@@ -1,13 +1,13 @@
   /**********************************************************************
 Copyright (C) 2005-2007 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -34,7 +34,7 @@ using namespace std;
 
 namespace OpenBabel
 {
-  
+
 class ChemKinFormat : public OBFormat
 {
 public:
@@ -123,7 +123,7 @@ private:
         pConv->AddChemObject(NULL);
     return false;
   }
-  
+
   virtual bool WriteChemObject(OBConversion* pConv)
   {
     OBBase* pOb=pConv->GetChemObject();
@@ -154,7 +154,7 @@ bool ChemKinFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   /*Badly name function. It handles OBReaction objects.
 
   This format can be used with Chemkin files or with simple lists of
-  reactions. 
+  reactions.
 
   In the simple case:
   Reversible reactions use = or <=> Irreversible reactions use =>
@@ -247,7 +247,7 @@ int ChemKinFormat::ReadLine(istream& ifs )
 
   eqpos = ln.find('=');
   //eof may have been set, but we need ReadMolecule() to be called again to process this line
-  ifs.clear(); 
+  ifs.clear();
   return eqpos==string::npos? 0 : +1;
 }
 
@@ -304,7 +304,7 @@ bool ChemKinFormat::ReadHeader(istream& ifs, OBConversion* pConv)
       string EKeywords[6] ={"CAL/MOLE","KCAL/MOLE","JOULES/MOLE","KJOULES/MOLE","KELVINS","EVOLTS"};
       double EFactor[6]   ={   1.0    ,   0.001  ,    4.1816    ,   0.041816   ,   1.98  , 0.0};
       double AvFactor = 6.023E23;
-      
+
       for(int i=1;i<toks.size();++i)
       {
         for(int j=0;j<6;++j)
@@ -325,7 +325,7 @@ bool ChemKinFormat::ReadHeader(istream& ifs, OBConversion* pConv)
         if(!ReadStdThermo(stdthermo))
           return false;
       }
-      
+
     }
 
   // Anthing not in a SPECIES or THERMO section is ignored.
@@ -409,16 +409,16 @@ bool ChemKinFormat::ParseReactionLine(OBReaction* pReact, OBConversion* pConv)
           pReact->SetTitle(firstr[0]);             //Add label to OBReaction
           Trim(toks[0].erase(0, firstr[0].size()));//Remove label leaving only first reactant
         }
-        
+
         //Ambiguous cases
         else if(firstr.size()==2 || (firstr.size()==1 && toks.size()==1))
-          obErrorLog.ThrowError(__FUNCTION__, 
-            "In " + ln + 
+          obErrorLog.ThrowError(__FUNCTION__,
+            "In " + ln +
             "\nThe string " + firstr[0] + " has been assumed NOT to be a label\n"
             "If it should be, use the -aL option which mandates labels on reactions.\n"
             "A species missing from the SPECIES section, if one is used, can also give this error",
             obWarning);
-      } 
+      }
     }
 
     if(isalpha((*itr)[0]))
@@ -455,7 +455,7 @@ bool ChemKinFormat::ParseReactionLine(OBReaction* pReact, OBConversion* pConv)
       }
       else
       {
-        obErrorLog.ThrowError(__FUNCTION__, 
+        obErrorLog.ThrowError(__FUNCTION__,
           "In " + ln  +
           "\nThe species multiplier must be a single digit integer",
           obError);
@@ -536,7 +536,7 @@ bool ChemKinFormat::ParseReactionLine(OBReaction* pReact, OBConversion* pConv)
     if(HasRateData)
       pReact->SetData(pRD);
     else if(SpeciesListed) //a true ChemKin file
-      obErrorLog.ThrowError(__FUNCTION__, 
+      obErrorLog.ThrowError(__FUNCTION__,
             "In " + ln + "\nNo rate data found.", obWarning);
 
     //Read in product species
@@ -573,7 +573,7 @@ bool ChemKinFormat::ParseReactionLine(OBReaction* pReact, OBConversion* pConv)
             pReact->AddProduct(sp);
         }
         else
-          obErrorLog.ThrowError(__FUNCTION__, 
+          obErrorLog.ThrowError(__FUNCTION__,
             "In " + ln + "\nError in products or rate parameters.", obError);
       }
     }
@@ -618,7 +618,7 @@ bool ChemKinFormat::ReadReactionQualifierLines(istream& ifs, OBReaction* pReact)
       for(int i=0;i<4;++i)
         pRD->SetTroeParams(i, atof(toks[i+1].c_str()));
     }
-    
+
     else if(!strcasecmp(toks[0].c_str(),"DUPLICATE"))
     {}
 
@@ -719,12 +719,12 @@ bool ChemKinFormat::ReadStdThermo(const string& datafilename)
   //Get the index of std thermo file, which may involve it being prepared
   if(!pThermFormat || !OBMoleculeFormat::ReadNameIndex(index, datafilename, pThermFormat))
     return false;
-  
+
   string missing; // list of molecules which do not have thermodata
   OBConversion StdThermConv;
   ifstream stdthermo;
   OpenDatafile(stdthermo, datafilename);
-  if(!stdthermo) 
+  if(!stdthermo)
   {
     obErrorLog.ThrowError(__FUNCTION__,
     datafilename + " was not found", obError);
@@ -746,7 +746,7 @@ bool ChemKinFormat::ReadStdThermo(const string& datafilename)
       StdThermConv.Read(&thmol);
       shared_ptr<OBMol> psnewmol(OBMoleculeFormat::MakeCombinedMolecule(mapitr->second.get(),&thmol));
       IMols[thmol.GetTitle()] = psnewmol;
-    }	
+    }
     else
       if(mapitr->first!="M")
         missing += mapitr->first + ',';
@@ -787,7 +787,7 @@ bool ChemKinFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     OMols.clear();
     ss.str("");
   }
-  
+
   WriteReactionLine(pReact, pConv);
 
   //At end, construct ELEMENTS and SPECIES and output to ofs followed by ss
@@ -800,7 +800,7 @@ bool ChemKinFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         return false;
       ofs << "REACTIONS\n";
     }
-    ofs  << ss.rdbuf() << endl;     
+    ofs  << ss.rdbuf() << endl;
     if(!pConv->IsOption("s"))
       ofs << "END" << endl;
   }
@@ -872,7 +872,7 @@ bool ChemKinFormat::WriteHeader(OBConversion* pConv)
       {
         const char* title = (*itr)->GetTitle();
         if(strcmp(title, "M"))
-          if(ConvThermo.Write(itr->get())) 
+          if(ConvThermo.Write(itr->get()))
             ++ntherm;
       }
 
@@ -889,7 +889,7 @@ bool ChemKinFormat::WriteReactionLine(OBReaction* pReact, OBConversion* pConv)
 {
   //Get rate data so that we know what kind of reaction it is
   OBRateData* pRD = static_cast<OBRateData*>(pReact->GetData(RateData));
-  
+
   //If -0 option set, omit reactions with zero rates. However, number of reactions converted remains the same.
   if(pConv->IsOption("0"))
     if(!pRD || pRD->GetRate(OBRateData::A)==0.0)
@@ -923,7 +923,7 @@ bool ChemKinFormat::WriteReactionLine(OBReaction* pReact, OBConversion* pConv)
     //If reactant has no title use its formula
     if(*psMol->GetTitle()=='\0')
       psMol->SetTitle(psMol->GetSpacedFormula(1,"").c_str());
-    
+
     //write species name but, if M, only if (+M) is not going to be output
     if(mstring.empty() || strcasecmp(psMol->GetTitle(),"M"))
     {
@@ -978,15 +978,15 @@ bool ChemKinFormat::WriteReactionLine(OBReaction* pReact, OBConversion* pConv)
 
   if(pRD)
   {
-    ss << " \t" << scientific << setprecision(3) << pRD->GetRate(OBRateData::A) << ' ' 
-      << fixed << pRD->GetRate(OBRateData::n)	<< ' ' 
-      << setprecision(1) << pRD->GetRate(OBRateData::E) 
+    ss << " \t" << scientific << setprecision(3) << pRD->GetRate(OBRateData::A) << ' '
+      << fixed << pRD->GetRate(OBRateData::n)	<< ' '
+      << setprecision(1) << pRD->GetRate(OBRateData::E)
       << " \t" << pReact->GetComment() << endl;
 
     switch(pRD->ReactionType)
     {
     case OBRateData::TROE:
-      ss << "\tTROE / " << setprecision(3) << pRD->GetTroeParam(0) << ' ' 
+      ss << "\tTROE / " << setprecision(3) << pRD->GetTroeParam(0) << ' '
         << pRD->GetTroeParam(1) << ' ' << pRD->GetTroeParam(2);
       if(pRD->GetTroeParam(3))
         ss << ' ' <<pRD->GetTroeParam(3);
@@ -1031,8 +1031,8 @@ OBFormat* ChemKinFormat::GetThermoFormat()
 } //namespace
 /*
 LINDEMANN FALLOFF FORM
-This treatment applies if no specific falloff parameters are given. 
-At pressures intermediate to the high and low pressure limits, 
+This treatment applies if no specific falloff parameters are given.
+At pressures intermediate to the high and low pressure limits,
 the rate constant is given by the Lindemann formula:
 
                     k_inf
@@ -1044,18 +1044,18 @@ In cases where no high pressure limit rate constant parameters are given
 the reaction is in the low pressure limit.
 
 TROE FALLOFF FORM
-A more refined treatment of pressure effects than Lindemann is employed 
-using the TROE parameters. The falloff parameter F_cent for a unimolecular 
+A more refined treatment of pressure effects than Lindemann is employed
+using the TROE parameters. The falloff parameter F_cent for a unimolecular
 reaction is calculated from the values of a, b, c, and d by the formula of Troe
 
       F_cent  =  (1-a) exp(-T/b)  +  a exp(-T/c)  +  exp(-d/T)
 
-which gives the temperature dependence of F_cent, the factor by which 
-the rate constant of a given unimolecular reaction at temperature T and 
+which gives the temperature dependence of F_cent, the factor by which
+the rate constant of a given unimolecular reaction at temperature T and
 reduced pressure P_r = k_o[M]/k_inf of 1.0 is less than the value k_inf/2 which
 it would have if unimolecular reactions behaved according to the Lindemann formula.
 
-The broadening factor F, which is 1 for the Lindemann case where no parameters 
+The broadening factor F, which is 1 for the Lindemann case where no parameters
 for F_cent are provided, is computed from F_cent by
 
                                 log F_cent

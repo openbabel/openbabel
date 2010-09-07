@@ -27,7 +27,7 @@ public:
 	typedef std::vector <std::pair<wxString, wxWindow*> > OMapType;
 
 	DynOptionswx(wxWindow* Par, wxSizer* pSizer)
-		: parent(Par), sizer(pSizer){} 
+		: parent(Par), sizer(pSizer){}
 	~DynOptionswx();
 	void Clear();
 	bool Construct(const char* OptionsText, const char* StartText=NULL, int MultiCharFilter=0);

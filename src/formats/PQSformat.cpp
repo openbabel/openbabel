@@ -1,11 +1,11 @@
 /**********************************************************************
 Copyright (C) 2003 by Pawel Wolinski
 Some portions Copyright (C) 2004 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -260,11 +260,11 @@ namespace OpenBabel
 
                     /*         if (strstr(buffer,"=car" )!=NULL)
                                return ReadBiosymCAR(coordFileStream, mol, title);
-                               if (strstr(buffer,"=hin" )!=NULL) 
+                               if (strstr(buffer,"=hin" )!=NULL)
                                return ReadHIN(coordFileStream, mol, title);
-                               if (strstr(buffer,"=pdb" )!=NULL) 
+                               if (strstr(buffer,"=pdb" )!=NULL)
                                return ReadPDB(coordFileStream, mol, title);
-                               if (strstr(buffer,"=mop" )!=NULL) 
+                               if (strstr(buffer,"=mop" )!=NULL)
                                return ReadMOPAC(coordFileStream, mol, title);
                     */
                     //end new framework mods
@@ -323,7 +323,7 @@ namespace OpenBabel
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
- 
+
     unsigned int i;
     char buffer[BUFF_SIZE];
     OBAtom *atom;

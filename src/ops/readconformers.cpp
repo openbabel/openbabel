@@ -2,14 +2,14 @@
 read-conformers.cpp - A OBOp for combining conformers during conversion.
 
 Copyright (C) 2010 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -29,7 +29,7 @@ class OpReadConformers : public OBOp
 {
 public:
   OpReadConformers(const char* ID) : OBOp(ID, false){};
-  const char* Description(){ return 
+  const char* Description(){ return
     "Adjacent conformers combined into a single molecule\n"
     "If a molecule has the same structure as the preceding molecule, as determined\n"
     "from its SMILES, it is not output but its coordinates are added to the\n"
@@ -51,7 +51,7 @@ bool OpReadConformers::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, 
   //Make a deferred format and divert the output to it
   if(pConv && pConv->IsFirstInput())
     new DeferredFormat(pConv, this); //it will delete itself
-  
+
   return true;
 }
 
@@ -84,7 +84,7 @@ bool OpReadConformers::ProcessVec(std::vector<OBBase*>& vec)
       memcpy((char*)confCoord,(char*)pmol->GetCoordinates(),sizeof(double)*3*pmol->NumAtoms());
       stored_pmol->AddConformer(confCoord);
       delete pmol;
-      *iter = NULL;      
+      *iter = NULL;
     }
     else
     {
@@ -92,7 +92,7 @@ bool OpReadConformers::ProcessVec(std::vector<OBBase*>& vec)
       stored_smiles = smiles;
     }
   }
-  
+
   //erase the NULLS
   vec.erase(std::remove(vec.begin(),vec.end(), (void*)NULL), vec.end());
   return true;
@@ -110,5 +110,5 @@ bool OpReadConformers::ProcessVec(std::vector<OBBase*>& vec)
     if(!pOp)
       pOp->ProcessVec(vec);
     vec now contains one or more molecules with multiple conformers
-*/    
+*/
 

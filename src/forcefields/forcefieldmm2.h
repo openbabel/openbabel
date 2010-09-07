@@ -1,15 +1,15 @@
 /**********************************************************************
 forcefieldmm2.h - MM2 force field.
- 
+
 Copyright (C) 2006 by Tim Vandermeersch <tim.vandermeersch@gmail.com>
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -31,14 +31,14 @@ namespace OpenBabel
   class OBForceFieldMM2: public OBForceField
   {
     protected:
-    
+
       bool _init; //!< Used to only initialize and read parameters once
-      
+
       //! \return Parses the parameter file
       bool ParseParamFile();
       //! \return Sets atomtypes to MM2 in _mol
       bool SetMM2Types();
-      
+
       double bondunit, bond_cubic, bond_quartic;
       double angleunit, angle_sextic;
       double stretchbendunit;
@@ -65,7 +65,7 @@ namespace OpenBabel
 						   // dpar2 = v2
 						   // dpar3 = v3
       std::vector<OBFFParameter> _ffoutplanebendparams; // a = atom b        a
-                                                        // b = atom d         \  
+                                                        // b = atom d         \
 							// dpar1 = force       b---d
 							//                    /
 							//                   c
@@ -92,7 +92,7 @@ namespace OpenBabel
       {
         // ParseParamFile only called when needed
       }
-      
+
       //!Clone the current instance. May be desirable in multithreaded environments
       virtual OBForceFieldMM2* MakeNewInstance(){ return new OBForceFieldMM2(*this); }
 
@@ -121,7 +121,7 @@ namespace OpenBabel
       double E_VDW();
       //! Returns the dipole-dipole interaction energy
       double E_Electrostatic();
- 
+
 
   }; // class OBForceFieldMM2
 

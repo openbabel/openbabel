@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 2006 Chris Morley 
+Copyright (C) 2006 Chris Morley
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -7,7 +7,7 @@ For more information, see <http://openbabel.sourceforge.net/>
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -55,7 +55,7 @@ InChI=1/C18H25NO6S/c1-14-9-11-15(12-10-14)26(22,23)19(17(21)25-18(2,3)4)13<br />
 
 Any whitespace after the > is also ignored, so that newline characters can be added:
 InChI=1/C29H33NO4Si/c1-5-32-28(31)26-25(34-27(30-26)22-15-9-6-10-16-22)<br />
-21-33-35(29(2,3)4,23-17-11-7-12-18-23)24-19-13-8-14-20-24<br /> 
+21-33-35(29(2,3)4,23-17-11-7-12-18-23)24-19-13-8-14-20-24<br />
 /h6-20,25-26H,5,21H2,1-4H3/t25-,26-/m0/s1
 
 A second consecutive <...> element ends an unquoted InChI string:
@@ -76,18 +76,18 @@ A second consecutive <...> element ends an unquoted InChI string:
 
 The original proposal was essentially:
 - When an InChI string is enclosed by " quote characters,
-  any whitespace characters it contains (including new lines) are 
+  any whitespace characters it contains (including new lines) are
   ignored.
 - Other extraneous strings can also be ignored, but this
   is system dependent.
 - The "InChI=" cannot be split.
 
 The extensions are:
-- The character that encloses a quoted InChI does not have to be " 
-  and can be any character that is not used in InChI - a NIC 
+- The character that encloses a quoted InChI does not have to be "
+  and can be any character that is not used in InChI - a NIC
   [never miss the opportunity for a TLA!]. This means that
   conflicts in systems which have other uses for the quote character
-  can be avoided. 
+  can be avoided.
   As a special case, '>' is not allowed as a quote character because InChI
   strings in HTML commonly start after <...> elements.
 - As well as whitespace characters (which are ignored), a quoted
@@ -99,7 +99,7 @@ The extensions are:
   If the splitting were by an extraneous string the minimum column
   width is 2.
 
-The following are some examples of split InChIs. 
+The following are some examples of split InChIs.
 
 First two unbroken examples, the first is unquoted
 InChI=1/CH4/h1H4 methane
@@ -178,14 +178,14 @@ string GetInChI(istream& is)
       }
       lastch = ch;
     }
-    
+
     else if(ch=='<')
     {
       // Ignore the content of any <...> elements
       // But a second consecutive  <...> element terminates an unquoted InChI
       if(afterelement && state==unquoted)
           return result;
-      inelement=true; 
+      inelement=true;
     }
     else if(inelement)
     {

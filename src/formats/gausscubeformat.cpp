@@ -58,7 +58,7 @@ namespace OpenBabel
         "Gaussian cube format\n"
         "A grid format for volume data used by Gaussian\n"
         "Open Babel supports reading and writing Gaussian cubes, including multiple\n"
-        "grids in one file.\n\n" 
+        "grids in one file.\n\n"
 
         "Read Options e.g. -as\n"
         "  b no bonds\n"

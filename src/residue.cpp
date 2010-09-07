@@ -1,16 +1,16 @@
 /**********************************************************************
 residue.cpp - Handle macromolecule residues.
- 
+
 Copyright (C) 2001, 2002  OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -126,12 +126,12 @@ namespace OpenBabel
 
  /** \class OBResidue residue.h <openbabel/residue.h>
       \brief Residue information
- 
+
       The residue information is drawn from PDB or MOL2 files (or similar), which
       track biomolecule information,
-      and are stored in the OBResidue class. OBResidues are stored inside the 
-      OBAtom class and OBMol classes. 
-      The residue information for an atom can be requested in 
+      and are stored in the OBResidue class. OBResidues are stored inside the
+      OBAtom class and OBMol classes.
+      The residue information for an atom can be requested in
       the following way:
       \code
       OBAtom *atom;
@@ -960,7 +960,7 @@ namespace OpenBabel
     _atomid.clear();
     _hetatm.clear();
     _sernum.clear();
-    
+
     return (OBBase::Clear());
   }
 
@@ -1066,7 +1066,7 @@ namespace OpenBabel
     return _resnum;
   }
 
-  unsigned int OBResidue::GetNum(void) 
+  unsigned int OBResidue::GetNum(void)
   {
     return atoi(_resnum.c_str());
   }

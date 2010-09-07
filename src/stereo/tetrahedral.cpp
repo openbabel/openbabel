@@ -2,7 +2,7 @@
   tetrahedral.h - OBTetrahedralStereo
 
   Copyright (C) 2009 by Tim Vandermeersch
- 
+
   This file is part of the Open Babel project.
   For more information, see <http://openbabel.sourceforge.net/>
 
@@ -40,7 +40,7 @@ namespace OpenBabel {
     if (!specified || !other.specified)
       return true;
 
-    Config thisConfig = (from == OBStereo::ImplicitRef) ? 
+    Config thisConfig = (from == OBStereo::ImplicitRef) ?
         OBTetraNonPlanarStereo::ToConfig(*this, refs[0], winding, view) : *this;
     // convert the other Config's refs to same from, winding and view
     Config otherConfig = OBTetraNonPlanarStereo::ToConfig(other, thisConfig.from, winding, view);
@@ -50,17 +50,17 @@ namespace OpenBabel {
         // if both refs already contain ImplicitRef, return false
         if (OBStereo::ContainsRef(otherConfig.refs, OBStereo::ImplicitRef))
           return false;
-        
+
         // example: *this       = 23H
         //          otherConfig = 234 --> 23H
- 
+
         // for each ref in otherConfig
         for (unsigned int i = 0; i < otherConfig.refs.size(); ++i) {
           bool found = false;
           for (OBStereo::RefIter j = thisConfig.refs.begin(); j != thisConfig.refs.end(); ++j)
             if (otherConfig.refs.at(i) == *j)
               found = true;
-          
+
           if (!found) {
             // the ref from otherConfig is not found in this config
             otherConfig.refs[i] = OBStereo::ImplicitRef;
@@ -75,7 +75,7 @@ namespace OpenBabel {
 
         // example: *this       = 234
         //          otherConfig = 23H --> 234
- 
+
         // for each ref in *this
         for (unsigned int i = 0; i < thisConfig.refs.size(); ++i) {
           bool found = false;
@@ -102,8 +102,8 @@ namespace OpenBabel {
   //
   // OBTetrahedralStereo class
   //
-  
-  OBTetrahedralStereo::OBTetrahedralStereo(OBMol *mol) : 
+
+  OBTetrahedralStereo::OBTetrahedralStereo(OBMol *mol) :
       OBTetraNonPlanarStereo(mol), m_cfg(Config())
   {
   }
@@ -126,13 +126,13 @@ namespace OpenBabel {
   void OBTetrahedralStereo::SetConfig(const Config &config)
   {
     if (config.center == OBStereo::NoRef) {
-      obErrorLog.ThrowError(__FUNCTION__, 
+      obErrorLog.ThrowError(__FUNCTION__,
           "OBTetrahedralStereo::SetConfig : center atom id is invalid.", obError);
       m_cfg = Config();
       return;
     }
     if (config.from == OBStereo::NoRef) {
-      obErrorLog.ThrowError(__FUNCTION__, 
+      obErrorLog.ThrowError(__FUNCTION__,
           "OBTetrahedralStereo::SetConfig : from/towards atom id is invalid.", obError);
       m_cfg = Config();
       return;
@@ -157,8 +157,8 @@ namespace OpenBabel {
 
     return OBTetraNonPlanarStereo::ToConfig(m_cfg, m_cfg.from, winding, view);
   }
-  
-  OBTetrahedralStereo::Config OBTetrahedralStereo::GetConfig(unsigned long from_or_towards, 
+
+  OBTetrahedralStereo::Config OBTetrahedralStereo::GetConfig(unsigned long from_or_towards,
         OBStereo::Winding winding, OBStereo::View view) const
   {
     if (!IsValid())
@@ -166,7 +166,7 @@ namespace OpenBabel {
 
     return OBTetraNonPlanarStereo::ToConfig(m_cfg, from_or_towards, winding, view);
   }
- 
+
   bool OBTetrahedralStereo::operator==(const OBTetrahedralStereo &other) const
   {
     if (!IsValid() || !other.IsValid())
@@ -184,7 +184,7 @@ namespace OpenBabel {
     data->SetConfig(m_cfg);
     return data;
   }
-    
+
 } // namespace OpenBabel
 
 namespace std {
@@ -199,7 +199,7 @@ namespace std {
       out << ", viewFrom = ";
     else
       out << ", viewTowards = ";
-      
+
     if (cfg.from == OBStereo::ImplicitRef)
       out << "H";
     else
@@ -231,7 +231,7 @@ namespace std {
       out << ", viewFrom = ";
     else
       out << ", viewTowards = ";
-      
+
     if (cfg.from == OBStereo::ImplicitRef)
       out << "H";
     else

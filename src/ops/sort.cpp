@@ -2,14 +2,14 @@
 sort.cpp - A OBOp for sorting molecules during conversion.
 
 Copyright (C) 2009 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -33,9 +33,9 @@ struct Order : public std::binary_function<std::pair<OBBase*,T>, std::pair<OBBas
   Order(OBDescriptor* pDesc, bool rev) : _pDesc(pDesc), _rev(rev){}
   bool operator()(std::pair<OBBase*,T> p1, std::pair<OBBase*,T> p2) const
   {
-    return _rev ? 
+    return _rev ?
       _pDesc->Order(p2.second, p1.second) :
-      _pDesc->Order(p1.second, p2.second); 
+      _pDesc->Order(p1.second, p2.second);
   }
   OBDescriptor* _pDesc;
   bool _rev;
@@ -48,7 +48,7 @@ public:
   {
     OBConversion::RegisterOptionParam(ID, NULL, 1, OBConversion::GENOPTIONS);
   }
-  
+
   const char* Description(){ return "<desc> Sort by descriptor(~desc for reverse)"
     "\n Follow descriptor with + to also add it to the title, e.g. MW+ "
     "\n Custom ordering is possible; see inchi descriptor"; }
@@ -88,7 +88,7 @@ bool OpSort::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
     _pDesc = OBDescriptor::FindType(spair.first.c_str());
     if(!_pDesc)
     {
-     obErrorLog.ThrowError(__FUNCTION__, 
+     obErrorLog.ThrowError(__FUNCTION__,
               std::string("Unknown descriptor ") + OptionText, obError, onceOnly);
      return false;
     }

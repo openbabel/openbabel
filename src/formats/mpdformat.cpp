@@ -15,7 +15,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
-// Output format is #Origatomtype;#layer-#frequency-#atomtype;#l-#f-#aty;...<tab>Next atom<newline>next molecule 
+// Output format is #Origatomtype;#layer-#frequency-#atomtype;#l-#f-#aty;...<tab>Next atom<newline>next molecule
 
 #include <openbabel/babelconfig.h>
 
@@ -53,7 +53,7 @@ namespace OpenBabel
         "  The format of the output is as follows::\n\n"
         "   [Molec_name]\\t[atomtype];[layer]-[frequency]-[neighbour_type];\n\n"
         "  Example for the SMILES string `CC(=O)Cl`::\n\n"
-        "   acid chloride   1;1-1-2;2-1-9;2-1-15;   2;1-1-1;1-1-9;1-1-15;   9;1-1-2;2-1-1;2-1-15;   15;1-1-2;2-1-1;2-1-9;\n\n" 
+        "   acid chloride   1;1-1-2;2-1-9;2-1-15;   2;1-1-1;1-1-9;1-1-15;   9;1-1-2;2-1-1;2-1-15;   15;1-1-2;2-1-1;2-1-9;\n\n"
 
 ".. [bmg2004] Andreas Bender, Hamse Y. Mussa, and Robert C. Glen. **Molecular\n"
 "             Similarity Searching Using Atom Environments, Information-Based Feature\n"
@@ -72,7 +72,7 @@ namespace OpenBabel
       return "http://dx.doi.org/10.1021/ci034207y";
     }; //optional
 
-  
+
     virtual unsigned int Flags() //Flags() can return be any the following combined by | or be omitted if none apply
     {                            // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
       return NOTREADABLE;
@@ -100,7 +100,7 @@ namespace OpenBabel
           {
             layer_a[n][m]=0;
           }
-      }                  
+      }
   }
 
   void MPDFormat::PrintLayer(int layer_a[][LAYER_SIZE],ostream &ofs)
@@ -136,10 +136,10 @@ namespace OpenBabel
     ofs << "</atom>";
   }
   /*int MPDFormat::MyType(string a)
-    {                 
+    {
     int o=0;
     if (strcmp("C.3",a.c_str())==0) o=1;
-    else if(strcmp("C.2",a.c_str())==0) o=2;              
+    else if(strcmp("C.2",a.c_str())==0) o=2;
     else if(strcmp( "C.1",a.c_str())==0) o=4;
     else if(strcmp( "C.ar",a.c_str())==0) o=3;
     else if(strcmp( "C.cat",a.c_str())==0) o=33;
@@ -179,7 +179,7 @@ namespace OpenBabel
     return (o);
     }
   */
-    
+
 
   ///////////////////////////////////////////////////
   /* Now the Write molecule code */
@@ -189,13 +189,13 @@ namespace OpenBabel
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
       return false;
-        
-    
-        
+
+
+
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
-    
+
     OBAtom *atom,*nbr,*nbr2; // define atom and neghbour atom pointers
     string str,src,name;     // str used for output, src for handling
     unsigned int orig,otyp;  // orig holds first index for removal from layer 2, otype for output
@@ -205,7 +205,7 @@ namespace OpenBabel
     ttab.SetToType("SBN");
     int layer[LAYER_DEPTH][LAYER_SIZE]; // layer stores the frequencies of each atom type
     ClearLayer(layer);
-    
+
 		if(pConv->IsOption("n")) // appending file name to molecule names
       {
         name = pConv->GetInFilename();     // string name holds the filename for appending
@@ -257,7 +257,7 @@ namespace OpenBabel
         orig = atom->GetIdx();
         if(xml_true==true){ ofs << "<atom type=\"" << otyp << "\">";}
         else ofs << otyp << SEP_0;
-        
+
         vector<OBBond*>::iterator j; // iterate over its neighbours
         for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
           {
@@ -268,7 +268,7 @@ namespace OpenBabel
             //}
             //  else {otyp=MyType(str);}
             layer[0][otyp]=layer[0][otyp]+1;
-          
+
             vector<OBBond*>::iterator k; // iterate again over neighbours
             for (nbr2 = nbr->BeginNbrAtom(k);nbr2;nbr2 = nbr->NextNbrAtom(k))
               {

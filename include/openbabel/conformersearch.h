@@ -9,7 +9,7 @@ namespace OpenBabel {
   typedef std::vector<int> RotorKey;
   typedef std::vector<RotorKey> RotorKeys;
 
-  ///@addtogroup conformer Conformer Searching 
+  ///@addtogroup conformer Conformer Searching
   ///@{
 
   //////////////////////////////////////////////////////////
@@ -22,8 +22,8 @@ namespace OpenBabel {
    * @brief Interface used by OBConformerSearch for filtering conformers.
    *
    * The OBConformerFilter class defines an interface used by the OBConformerSearch
-   * class. A conformer filter is used as a first selection method when generating 
-   * conformers. A typical example is a steric filter to ensure atoms are never 
+   * class. A conformer filter is used as a first selection method when generating
+   * conformers. A typical example is a steric filter to ensure atoms are never
    * closer than some specified distance.
    *
    * @see OBConformerSearch OBConformerFilters
@@ -34,7 +34,7 @@ namespace OpenBabel {
       /**
        * Check if a conformer is good (i.e. passes the filter). The molecule, rotor
        * key and coords are passed as parameters to this function and can be used
-       * for checking the confoormer. 
+       * for checking the confoormer.
        * @return True if the conformer passes the filter.
        */
       virtual bool IsGood(const OBMol &mol, const RotorKey &key, double *coords) = 0;
@@ -43,9 +43,9 @@ namespace OpenBabel {
   /**
    * @brief Class for combining OBConformerFilter objects.
    *
-   * The OBConformerFilters class makes it easy to combine OBConformerFilter 
+   * The OBConformerFilters class makes it easy to combine OBConformerFilter
    * objects. A list of OBConformerFilter objects is specified when constructing
-   * this class. The IsGood implementation simply checks all the specified 
+   * this class. The IsGood implementation simply checks all the specified
    * filters and returns false if any of the filters returns false.
    *
    * @see OBConformerSearch OBConformerFilter
@@ -68,7 +68,7 @@ namespace OpenBabel {
         for (unsigned int i = 0; i < m_filters.size(); ++i)
           if (!m_filters[i]->IsGood(mol, key, coords))
             return false;
-        return true;      
+        return true;
       }
     protected:
       std::vector<OBConformerFilter*> m_filters;
@@ -78,7 +78,7 @@ namespace OpenBabel {
    * @brief A steric conformer filter class.
    *
    * The OBStericConformerFilter class is the default filter used by OBConformerSearch.
-   * The filter removes all molecules which have at least 2 atoms closer together than 
+   * The filter removes all molecules which have at least 2 atoms closer together than
    * the specified distance.
    */
   class OBAPI OBStericConformerFilter : public OBConformerFilter
@@ -100,11 +100,11 @@ namespace OpenBabel {
    * @brief Interface used by OBConformerSearch for scoring conformers.
    *
    * The OBConformerScore class defines an interface to assign scores to conformers.
-   * This class is used by OBConformerSearch to make the class flexible. A higher 
+   * This class is used by OBConformerSearch to make the class flexible. A higher
    * score means the conformer with index is more favourable. A typical example is
-   * the force field energy to find the lowest energy conformer (note: the energy is 
+   * the force field energy to find the lowest energy conformer (note: the energy is
    * not directly usable as score since lower values are better). Another example
-   * is to use some measure of diversity (e.g. RMSD) to generate a diverse set of 
+   * is to use some measure of diversity (e.g. RMSD) to generate a diverse set of
    * conformers.
    */
   class OBAPI OBConformerScore
@@ -129,14 +129,14 @@ namespace OpenBabel {
       /**
        * Score an individual conformer specified by index.
        */
-      virtual double Score(OBMol &mol, unsigned int index, const RotorKeys &keys, 
+      virtual double Score(OBMol &mol, unsigned int index, const RotorKeys &keys,
           const std::vector<double*> &conformers) = 0;
   };
 
   /**
    * @brief A RMSD conformer scoring class.
    *
-   * Score conformers by the RMSD between the conformer with specified index and 
+   * Score conformers by the RMSD between the conformer with specified index and
    * the closest conformer. This results in a diverse set of conformers.
    */
   class OBAPI OBRMSDConformerScore : public OBConformerScore
@@ -144,7 +144,7 @@ namespace OpenBabel {
     public:
       Preferred GetPreferred() { return HighScore; }
       Convergence GetConvergence() { return Average; }
-      double Score(OBMol &mol, unsigned int index, const RotorKeys &keys, 
+      double Score(OBMol &mol, unsigned int index, const RotorKeys &keys,
           const std::vector<double*> &conformers);
   };
 
@@ -153,7 +153,7 @@ namespace OpenBabel {
     public:
       Preferred GetPreferred() { return LowScore; }
       Convergence GetConvergence() { return Lowest; }
-      double Score(OBMol &mol, unsigned int index, const RotorKeys &keys, 
+      double Score(OBMol &mol, unsigned int index, const RotorKeys &keys,
           const std::vector<double*> &conformers);
   };
 
@@ -164,7 +164,7 @@ namespace OpenBabel {
   //
   //////////////////////////////////////////////////////////
 
-  class OBAPI OBConformerSearch 
+  class OBAPI OBConformerSearch
   {
     public:
       OBConformerSearch();
@@ -175,14 +175,14 @@ namespace OpenBabel {
        * @param mol The molecule with initial conformer.
        * @param numConformers The number of conformers that should be generated. This
        *        is also the number of conformers selected for each generation.
-       * @param numChildren When a new generation is generated, for each of the 
+       * @param numChildren When a new generation is generated, for each of the
        *        numConformers conformers, numChildren children are created.
        * @param mutability The mutability determines how frequent a permutation occurs
        *        when generating the next generation.
        * @param convergence The number of identical generations before considering
        *        the process converged.
        */
-      bool Setup(const OBMol &mol, int numConformers = 30, int numChildren = 5, 
+      bool Setup(const OBMol &mol, int numConformers = 30, int numChildren = 5,
           int mutability = 5, int convergence = 25);
       /**
        * Set the number of conformers.
@@ -209,7 +209,7 @@ namespace OpenBabel {
 
       /**
        * Set the filter method used to check if a newly generated is acceptable. Typical
-       * examples are a steric filter or electrostatic energy filter. The filters make a binary 
+       * examples are a steric filter or electrostatic energy filter. The filters make a binary
        * selection and one group will be scored in the next step. A number of filters
        * are provided by default but implementing a custom filter is easy.
        *
@@ -240,7 +240,7 @@ namespace OpenBabel {
        */
       void Search();
 
-      const RotorKeys& GetRotorKeys() const 
+      const RotorKeys& GetRotorKeys() const
       {
         return m_rotorKeys;
       }
@@ -263,7 +263,7 @@ namespace OpenBabel {
        * Check the specified rotor key using the set filter.
        */
       bool IsGood(const RotorKey &key);
- 
+
       int m_numConformers; //!< The desired number of conformers. This is also the population size.
       int m_numChildren; //!< The number of children generated each generation
       int m_mutability; //!< The mutability for generating the next generation
@@ -276,8 +276,8 @@ namespace OpenBabel {
 
       OBConformerFilter *m_filter;
       OBConformerScore  *m_score;
-  
-  
+
+
   };
 
   /**
@@ -287,12 +287,12 @@ namespace OpenBabel {
    * All conformer searching methods in OpenBabel are based on the concept of rotor
    * keys. A rotor key is simply an array of values specifying the rotations around
    * rotatable bonds. The number of possible values for a rotatable bond depends on
-   * the bond type. The classes implementing the rotor key concept are OBRotor, 
+   * the bond type. The classes implementing the rotor key concept are OBRotor,
    * OBRotorList and OBRotamer.
    *
-   * Previous OpenBabel releases contained only methods for finding stable (low 
+   * Previous OpenBabel releases contained only methods for finding stable (low
    * energy) conformers by using the force fields. The 2.3 release introduces a new
-   * flexible class (OBConformerSearch) implementing a genetic algorithm. The scoring 
+   * flexible class (OBConformerSearch) implementing a genetic algorithm. The scoring
    * or ranking of conformers is done by a seperate class derived from the abstract
    * OBConformerScore class. Reimplementing this class allows for all sorts of scoring
    * functions (e.g. RMSD, torson, energy, ... based).
@@ -301,8 +301,8 @@ namespace OpenBabel {
    *
    * @subsection systematic Systematic rotor search
    * This is the simplest of all conformer searching methods and only suitable when
-   * there are only a few rotatable bonds. Since the number of conformers grows 
-   * exponentially with the number of bonds, enumerating all conformers for reasonably 
+   * there are only a few rotatable bonds. Since the number of conformers grows
+   * exponentially with the number of bonds, enumerating all conformers for reasonably
    * sized molecules quickly results in unacceptable performance. A systematic rotor
    * search can be done with the OBForceField::SystematicRotorSearch method.
    *
@@ -310,7 +310,7 @@ namespace OpenBabel {
    * The random rotor search generates random rotor keys and evaluates the energy.
    * The lowest energy conformer is kept. All rotor keys are random and no attempt
    * is made to improve good scoring keys. In most cases the weighted rotor search
-   * is a better choice. A random rotor search can be performed with the 
+   * is a better choice. A random rotor search can be performed with the
    * OBForceField::RandomRotorSearch method.
    *
    * @subsection weighted Weighted rotor search
@@ -323,23 +323,23 @@ namespace OpenBabel {
    *
    * @subsection genetic Genetic algorithm
    * The OBConformerSearch class introduced in OpenBabel 2.3 implements a genetic
-   * algorithm for finding conformers. The class is configurable and with the 
-   * right scoring function (OBEnergyConformerScore), stable conformers can be 
-   * found. Read the OBConformerSearch section for more details on how the genetic 
+   * algorithm for finding conformers. The class is configurable and with the
+   * right scoring function (OBEnergyConformerScore), stable conformers can be
+   * found. Read the OBConformerSearch section for more details on how the genetic
    * algorithm works.
    *
    * @section diverse Finding a diverse set of conformers
    * A divers set of conformers can be generated using the OBConformerSearch class
    * with a scoring function like OBRMSDConformerScore. A diverse set of conformers
    * is often useful when screening bioactive molecules since the interaction with
-   * the target can stabilize a higher conformational energy. See the next section 
+   * the target can stabilize a higher conformational energy. See the next section
    * for details.
    *
    * @section OBConformerSearch
-   * The genetic algorithm starts by generating the initial population of rotor keys. 
+   * The genetic algorithm starts by generating the initial population of rotor keys.
    * The initial population contains up to numConformers, duplicate keys are ignored.
-   * OBConformerFilter objects are used to filter conformers before including them. 
-   * A typical filter is a steric filter to ignore all conformers with atoms to close 
+   * OBConformerFilter objects are used to filter conformers before including them.
+   * A typical filter is a steric filter to ignore all conformers with atoms to close
    * together.
    *
    * For each generation, numChildren children are created by permuting the parent
@@ -347,42 +347,42 @@ namespace OpenBabel {
    * (e.g. 5 means 1/5 bonds are permuted, 10 means 1/10).
    * Again, duplicated and filtered molecules are ignored. The population now contains
    * up to numConformer * (1 + numChildren). All these rotor keys are scored using the
-   * specified OBConformerScore class. Next, all keys are ordered by their score and 
-   * the best numConformers conformers are selected as parents for the next 
+   * specified OBConformerScore class. Next, all keys are ordered by their score and
+   * the best numConformers conformers are selected as parents for the next
    * generation.
    *
-   * New generations are generated until the specified number of generations (i.e. 
+   * New generations are generated until the specified number of generations (i.e.
    * convergence) don't improve the score.
    *
    * @subsection OBConformerFilter
-   * Filters are used to exclude certain generated conformers. For example, the 
+   * Filters are used to exclude certain generated conformers. For example, the
    * OBStericConformerFilter filters out all conformers with atoms to close together.
    * Custom filters can be used to consider additional properties (e.g. electrostatic
-   * energy, distance between pharmacophore groups, ...). Filters can easily be 
+   * energy, distance between pharmacophore groups, ...). Filters can easily be
    * combined using the OBConformerFilters class.
    *
-   * @subsection OBConformerScore 
+   * @subsection OBConformerScore
    * OBConformerScore derived classes compute the score for conformers. The scoring
    * function is probably the most important part of the algorithm since it selects
-   * which conformers will be used as parents for the next generation. Derived 
-   * classes also specify if the scores are descending or ascending and what 
+   * which conformers will be used as parents for the next generation. Derived
+   * classes also specify if the scores are descending or ascending and what
    * convergence criteria should be used (i.e. lowest, highest, sum or average).
    * There is no easy way to combine scoring functions since scores are not always
    * additive. However, a custom scoring function could be used that combines several
    * other scoring functions with weights for each score.
    *
-   * The scoring function determines what kind of conformers are selected. For 
+   * The scoring function determines what kind of conformers are selected. For
    * example, the OBEnergyConformerScore class selects stable, low energy conformers.
-   * A simple variation to this would be to only use the non-bonded energy. The 
+   * A simple variation to this would be to only use the non-bonded energy. The
    * result for these two scoring functions should be similar.
    *
    * The OBRMSDConformerScore scoring function can be used to generate a diverse set
    * of conformers. A diverse set is often useful when screening bioactive molecules
-   * since the interaction with the target can stabilize a higher conformational 
+   * since the interaction with the target can stabilize a higher conformational
    * energy. To calculate the RMSD between conformers, Kabsch alignment (OBAlign)
    * is used. The alignment takes symmetry into account.
-   * 
-   * @image html energyconformerscore.png 
+   *
+   * @image html energyconformerscore.png
    * @image html rmsdconformerscore.png "30 Conformers for methotrexate. top: OBEnergyConformerScore bottom: OBRMSDConformerScore"
    */
 

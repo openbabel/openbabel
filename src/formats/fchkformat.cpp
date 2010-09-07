@@ -231,7 +231,7 @@ namespace OpenBabel
                                     obError);
               return false;
             }
-        
+
             OBVectorData *dipoleMoment = new OBVectorData;
             dipoleMoment->SetAttribute("Dipole Moment");
             dipoleMoment->SetData(moments[0], moments[1], moments[2]);
@@ -624,8 +624,8 @@ namespace OpenBabel
         /* quit if the value cannot be read */
         if (endptr == substring.c_str())
           break;
-        
-        v.push_back(num);        
+
+        v.push_back(num);
       }
     }
 

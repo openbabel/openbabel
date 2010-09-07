@@ -2,14 +2,14 @@
 unique.cpp - A OBOp for eliminating chemically identical molecules during conversion.
 
 Copyright (C) 2009 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -47,7 +47,7 @@ public:
   OpUnique(const char* ID) : OBOp(ID, false){
     OBConversion::RegisterOptionParam("unique", NULL, 1, OBConversion::GENOPTIONS);}
 
-  const char* Description(){ return 
+  const char* Description(){ return
     "[param] remove duplicates by descriptor;default inchi\n"
     "param is a descriptor or property, or a truncation spec for InChI\n"
     "(making the comparison less detailed, see below).\n"
@@ -65,7 +65,7 @@ public:
 
   virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
   virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* pConv);
-  
+
 private:
 
   bool _reportDup;
@@ -99,14 +99,14 @@ bool OpUnique::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion
     string descID("inchi"); // the default
     _trunc.clear();
     if(OptionText[0]=='/')  //is parameter is /x?
-      _trunc = OptionText;    
+      _trunc = OptionText;
     else if(*OptionText!='\0') // not empty?
       descID = OptionText;
-    
+
     _pDesc = OBDescriptor::FindType(descID.c_str());
     if(!_pDesc)
     {
-      obErrorLog.ThrowError(__FUNCTION__, 
+      obErrorLog.ThrowError(__FUNCTION__,
               "Cannot find descriptor " + descID, obError, onceOnly);
       return false;
     }

@@ -1,16 +1,16 @@
 /**********************************************************************
 rotamer.h - Handle rotamer list data.
- 
+
 Copyright (C) 1998-2000 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -114,7 +114,7 @@ namespace OpenBabel
     //! \brief Create a conformer list using the internal base set of coordinates
     //! \return The set of coordinates as a reference in @p confs
     void ExpandConformerList(OBMol&mol,std::vector<double*>& confs);
-    
+
     void SetCurrentCoordinates(OBMol &mol, std::vector<int> arr);
 
     //! \brief Copies the mol's conformers (the coordinates, NOT the pointers)

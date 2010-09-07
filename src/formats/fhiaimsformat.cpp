@@ -1,10 +1,10 @@
 /**********************************************************************
 Copyright (C) 2010 by Geoffrey R. Hutchison
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -119,7 +119,7 @@ bool FHIaimsFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       mol.PerceiveBondOrders();
 
     // clean out remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() && 
+    while(ifs.peek() != EOF && ifs.good() &&
 	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
       ifs.getline(buffer,BUFF_SIZE);
 
@@ -156,7 +156,7 @@ bool FHIaimsFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ofs << "#\n";
 
     FOR_ATOMS_OF_MOL(atom, mol) {
-      snprintf(buffer, BUFF_SIZE, 
+      snprintf(buffer, BUFF_SIZE,
                "atom           %15.5f%15.5f%15.5f  %s",
                atom->GetX(),
                atom->GetY(),
@@ -174,7 +174,7 @@ bool FHIaimsFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         vector<vector3> v = uc->GetCellVectors();
 
         for (unsigned int i = 0; i < v.size(); ++i) {
-          snprintf(buffer, BUFF_SIZE, 
+          snprintf(buffer, BUFF_SIZE,
                    "lattice_vector %15.5f%15.5f%15.5f\n", v[i].x(), v[i].y(), v[i].z());
           ofs << buffer;
         }

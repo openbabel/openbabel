@@ -84,7 +84,7 @@ namespace OpenBabel {
   //***************************************************
 
   /** @class OBConversion obconversion.h <openbabel/obconversion.h>
-      OBConversion maintains a list of the available formats, 
+      OBConversion maintains a list of the available formats,
       provides information on them, and controls the conversion process.
 
       A conversion is carried out by the calling routine, usually in a
@@ -94,9 +94,9 @@ namespace OpenBabel {
       the Convert() function is called, which allows a single input file
       to be converted, or the extended functionality of FullConvert()
       is used. This allows multiple input and output files, allowing:
-      - aggregation      - the contents of many input files converted 
+      - aggregation      - the contents of many input files converted
       and sent to one output file;
-      - splitting        - the molecules from one input file sent to 
+      - splitting        - the molecules from one input file sent to
       separate output files;
       - batch conversion - each input file converted to an output file.
 
@@ -111,7 +111,7 @@ namespace OpenBabel {
       OBConversion can also be used with an "API" interface
       called from programs which manipulate chemical objects. Input/output is
       done with the Read() and Write() functions which work with any
-      chemical object, but need to have its type specified. (The 
+      chemical object, but need to have its type specified. (The
       ReadMolecule() and WriteMolecule() functions of the format classes
       can also be used directly.)
 
@@ -126,15 +126,15 @@ namespace OpenBabel {
       @code
       OBConversion conv(&cin,&cout);
       if(conv.SetInAndOutFormats("SMI","MOL"))
-      {	
+      {
          OBMol mol;
          if(conv.Read(&mol))
-            // ...manipulate molecule 
-		
+            // ...manipulate molecule
+
          conv->Write(&mol);
       }
       @endcode
-	
+
       A two stage construction is used to allow error handling
       if the format ID is not recognized. This is necessary now that the
       formats are dynamic and errors are not caught at compile time.
@@ -156,7 +156,7 @@ namespace OpenBabel {
 
       @code
       #include <openbabel/obconversion.h> //mol.h is not needed
-      ...set up an istream is and an ostream os 
+      ...set up an istream is and an ostream os
       OBConversion conv(&is,&os);
       if(conv.SetInAndOutFormats("SMI","MOL"))
       {
@@ -167,7 +167,7 @@ namespace OpenBabel {
 
       <b>To add automatic format conversion to an existing program.</b>
 
-      The existing program inputs from the file identified by the 
+      The existing program inputs from the file identified by the
       const char* filename into the istream is. The file is assumed to have
       a format ORIG, but other formats, identified by their file extensions,
       can now be used.
@@ -178,7 +178,7 @@ namespace OpenBabel {
       OBConversion conv;
       OBFormat* inFormat = conv.FormatFromExt(filename);
       OBFormat* outFormat = conv.GetFormat("ORIG");
-      istream* pIn = &ifs; 
+      istream* pIn = &ifs;
       stringstream newstream;
       if(inFormat && outFormat)
       {
@@ -186,28 +186,28 @@ namespace OpenBabel {
          conv.Convert(pIn,&newstream);
          pIn=&newstream;
       }
-      //else error; new features not available; fallback to original functionality 
+      //else error; new features not available; fallback to original functionality
 
       ...Carry on with original code using pIn
       @endcode
   */
-    
+
   int OBConversion::FormatFilesLoaded = 0;
 
 //  OBFormat* OBConversion::pDefaultFormat=NULL;
 
-  OBConversion::OBConversion(istream* is, ostream* os) : 
+  OBConversion::OBConversion(istream* is, ostream* os) :
     pInFormat(NULL),pOutFormat(NULL), Index(0), StartNumber(1),
     EndNumber(0), Count(-1), m_IsFirstInput(true), m_IsLast(true),
     MoreFilesToCome(false), OneObjectOnly(false), CheckedForGzip(false),
-    NeedToFreeInStream(false), NeedToFreeOutStream(false), 
+    NeedToFreeInStream(false), NeedToFreeOutStream(false),
     pOb1(NULL), pAuxConv(NULL),pLineEndBuf(NULL),wInpos(0),wInlen(0)
   {
     pInStream=is;
     pOutStream=os;
     if (FormatFilesLoaded == 0)
       FormatFilesLoaded = LoadFormatFiles();
-	
+
     //These options take a parameter
     RegisterOptionParam("f", NULL, 1,GENOPTIONS);
     RegisterOptionParam("l", NULL, 1,GENOPTIONS);
@@ -246,7 +246,7 @@ namespace OpenBabel {
   }
   ///////////////////////////////////////////////
 
-  OBConversion::~OBConversion() 
+  OBConversion::~OBConversion()
   {
     if(pAuxConv!=this)
       if(pAuxConv)
@@ -273,8 +273,8 @@ namespace OpenBabel {
   //////////////////////////////////////////////////////
 
   /// Class information on formats is collected by making an instance of the class
-  /// derived from OBFormat(only one is usually required). RegisterFormat() is called 
-  /// from its constructor. 
+  /// derived from OBFormat(only one is usually required). RegisterFormat() is called
+  /// from its constructor.
   ///
   /// If the compiled format is stored separately, like in a DLL or shared library,
   /// the initialization code makes an instance of the imported OBFormat class.
@@ -290,7 +290,7 @@ namespace OpenBabel {
     //	if(FormatFilesLoaded) return 0;
     //	FormatFilesLoaded=true; //so will load files only once
 #if  defined(USING_DYNAMIC_LIBS)
-    //Depending on availablilty, look successively in 
+    //Depending on availablilty, look successively in
     //FORMATFILE_DIR, executable directory,or current directory
     string TargetDir;
 #ifdef FORMATFILE_DIR
@@ -298,7 +298,7 @@ namespace OpenBabel {
 #endif
 
     DLHandler::getConvDirectory(TargetDir);
-	
+
     vector<string> files;
     if(!DLHandler::findFiles(files,DLHandler::getFormatFilePattern(),TargetDir)) return 0;
 
@@ -323,7 +323,7 @@ namespace OpenBabel {
     {
       static vector<string> vec(3);
       vec[1] = string("define");
-      vec[2] = string("plugindefines.txt"); 
+      vec[2] = string("plugindefines.txt");
       pdef->MakeInstance(vec);
     }
     return count;
@@ -374,9 +374,9 @@ namespace OpenBabel {
   }
 
   //////////////////////////////////////////////////////
-  int OBConversion::Convert(istream* is, ostream* os) 
+  int OBConversion::Convert(istream* is, ostream* os)
   {
-    if (is) { 
+    if (is) {
       pInStream=is;
       CheckedForGzip = false; // haven't checked this for gzip yet
     }
@@ -408,7 +408,7 @@ namespace OpenBabel {
 #endif
 
     //The FilteringInputStreambuf delivers characters to the istream, pInStream,
-    //and receives characters this stream's original rdbuf. 
+    //and receives characters this stream's original rdbuf.
     //It filters them, converting CRLF and CR line endings to LF.
     //seek and tellg requests to the stream are passed through to the original
     //rdbuf. A FilteringInputStreambuf is installed only for appropriate formats
@@ -424,23 +424,23 @@ namespace OpenBabel {
 
   ////////////////////////////////////////////////////
   /// Actions the "convert" interface.
-  ///	Calls the OBFormat class's ReadMolecule() which 
+  ///	Calls the OBFormat class's ReadMolecule() which
   ///	 - makes a new chemical object of its chosen type (e.g. OBMol)
   ///	 - reads an object from the input file
   ///	 - subjects the chemical object to 'transformations' as specified by the Options
-  ///	 - calls AddChemObject to add it to a buffer. The previous object is first output 
+  ///	 - calls AddChemObject to add it to a buffer. The previous object is first output
   ///	   via the output Format's WriteMolecule(). During the output process calling
   /// IsFirst() and GetIndex() (the number of objects including the current one already output.
-  /// allows more control, for instance writing \<cml\> and \</cml\> tags for multiple molecule outputs only. 
+  /// allows more control, for instance writing \<cml\> and \</cml\> tags for multiple molecule outputs only.
   ///
   ///	AddChemObject does not save the object passed to it if it is NULL (as a result of a DoTransformation())
   ///	or if the number of the object is outside the range defined by
-  ///	StartNumber and EndNumber.This means the start and end counts apply to all chemical objects 
+  ///	StartNumber and EndNumber.This means the start and end counts apply to all chemical objects
   ///	found whether or not they	are output.
-  ///	
-  ///	If ReadMolecule returns false the input conversion loop is exited. 
   ///
-  int OBConversion::Convert() 
+  ///	If ReadMolecule returns false the input conversion loop is exited.
+  ///
+  int OBConversion::Convert()
   {
     if(pInStream==NULL || pOutStream==NULL)
       {
@@ -463,7 +463,7 @@ namespace OpenBabel {
       OneObjectOnly=true;
 
     //Input loop
-    while(ReadyToInput && pInStream->good()) //Possible to omit? && pInStream->peek() != EOF 
+    while(ReadyToInput && pInStream->good()) //Possible to omit? && pInStream->peek() != EOF
       {
         if(pInStream==&cin)
           {
@@ -472,7 +472,7 @@ namespace OpenBabel {
           }
         else
           rInpos = pInStream->tellg();
-		
+
         bool ret=false;
         try
           {
@@ -506,7 +506,7 @@ namespace OpenBabel {
             }
 */
             SetFirstInput(false);
-          }		
+          }
         catch(...)
           {
             if(!IsOption("e", GENOPTIONS) && !OneObjectOnly)
@@ -520,16 +520,16 @@ namespace OpenBabel {
           {
             //error or termination request: terminate unless
             // -e option requested and successfully can skip past current object
-            if(!IsOption("e", GENOPTIONS) || pInFormat->SkipObjects(0,this)!=1) 
+            if(!IsOption("e", GENOPTIONS) || pInFormat->SkipObjects(0,this)!=1)
               break;
           }
         if(OneObjectOnly)
           break;
         // Objects supplied to AddChemObject() which may output them after a delay
         //ReadyToInput may be made false in AddChemObject()
-        // by WriteMolecule() returning false  or by Count==EndNumber		
+        // by WriteMolecule() returning false  or by Count==EndNumber
       }
-	
+
     //Output last object
     m_IsLast= !MoreFilesToCome;
 
@@ -538,9 +538,9 @@ namespace OpenBabel {
     if(pOutFormat && (!oae || m_IsLast))
       if((oae || pOb1) && !pOutFormat->WriteChemObject(this))
         Index--;
-	
+
     //Put AddChemObject() into non-queue mode
-    Count= -1; 
+    Count= -1;
     EndNumber=StartNumber=0; pOb1=NULL;//leave tidy
     MoreFilesToCome=false;
     OneObjectOnly=false;
@@ -561,7 +561,7 @@ namespace OpenBabel {
             //Try to skip objects now
             int ret = pInFormat->SkipObjects(StartNumber-1,this);
             if(ret==-1) //error
-              return false; 
+              return false;
             if(ret==1) //success:objects skipped
               {
                 Count = StartNumber-1;
@@ -591,31 +591,31 @@ namespace OpenBabel {
 
   //////////////////////////////////////////////////////
   ///	Called by ReadMolecule() to deliver an object it has read from an input stream.
-  /// Used in two modes: 
+  /// Used in two modes:
   ///  - When Count is negative it is left negative and the routine is just a store
   ///    for an OBBase object.  The negative value returned tells the calling
   ///    routine that no more objects are required.
   ///  - When count is >=0, probably set by Convert(), it acts as a queue of 2:
   ///    writing the currently stored value before accepting the supplied one. This delay
   ///    allows output routines to respond differently when the written object is the last.
-  ///    Count is incremented with each call, even if pOb=NULL. 
-  ///    Objects are not added to the queue if the count is outside the range  
-  ///    StartNumber to EndNumber. There is no upper limit if EndNumber is zero. 
+  ///    Count is incremented with each call, even if pOb=NULL.
+  ///    Objects are not added to the queue if the count is outside the range
+  ///    StartNumber to EndNumber. There is no upper limit if EndNumber is zero.
   ///    The return value is Count ((>0) or 0 if WriteChemObject returned false.
   int OBConversion::AddChemObject(OBBase* pOb)
   {
-    if(Count<0) 
+    if(Count<0)
       {
         pOb1=pOb;
         return Count; // <0
       }
     Count++;
     if(Count>=(int)StartNumber)//keeps reading objects but does nothing with them
-      {	
+      {
         if(Count==(int)EndNumber)
           ReadyToInput=false; //stops any more objects being read
 
-        rInlen = (pInStream->tellg() - rInpos); 
+        rInlen = (pInStream->tellg() - rInpos);
          // - (pLineEndBuf ? pLineEndBuf->getCorrection() : 0); //correction for CRLF
 
         if(pOb)
@@ -623,7 +623,7 @@ namespace OpenBabel {
             if(pOb1 && pOutFormat) //see if there is an object ready to be output
               {
                 //Output object
-                if (!pOutFormat->WriteChemObject(this))  
+                if (!pOutFormat->WriteChemObject(this))
                   {
                     //faultly write, so finish
                     --Index;
@@ -697,7 +697,7 @@ namespace OpenBabel {
   {
     OneObjectOnly=b;
     m_IsLast=b;
-  }	
+  }
 
   /////////////////////////////////////////////////////////
   OBFormat* OBConversion::FormatFromExt(const char* filename)
@@ -738,7 +738,7 @@ namespace OpenBabel {
 
   bool	OBConversion::Read(OBBase* pOb, std::istream* pin)
   {
-    if(pin) { 
+    if(pin) {
       pInStream=pin;
       CheckedForGzip = false; // haven't set this stream to gzip (yet)
     }
@@ -764,7 +764,7 @@ namespace OpenBabel {
 
     // Set the locale for number parsing to avoid locale issues: PR#1785463
     obLocale.SetLocale();
-    
+
     // Also set the C++ stream locale
     locale originalLocale = pInStream->getloc(); // save the original
     locale cNumericLocale(originalLocale, "C", locale::numeric);
@@ -818,7 +818,7 @@ namespace OpenBabel {
   {
     //Do not install filtering input stream if a binary or XML format
     //or if already installed in the current InStream (which may have changed).
-    //Deleting any old LErdbuf before contructing a new one ensures there is 
+    //Deleting any old LErdbuf before contructing a new one ensures there is
     //only one for each OBConversion object. It is deleted in the destructor.
 
     if(pInFormat && !(pInFormat->Flags() & (READBINARY | READXML)) && pInStream->rdbuf()!=pLineEndBuf)
@@ -913,7 +913,7 @@ namespace OpenBabel {
 
     ofstream *ofs = new ofstream;
     NeedToFreeOutStream = true; // make sure we clean this up later
-    ios_base::openmode omode = 
+    ios_base::openmode omode =
       pOutFormat->Flags() & WRITEBINARY ? ios_base::out|ios_base::binary : ios_base::out;
 
     ofs->open(filePath.c_str(),omode);
@@ -965,7 +965,7 @@ namespace OpenBabel {
 
     ifstream *ifs = new ifstream;
     NeedToFreeInStream = true; // make sure we free this
-    ios_base::openmode imode = 
+    ios_base::openmode imode =
       pInFormat->Flags() & READBINARY ? ios_base::in|ios_base::binary : ios_base::in;
 
     ifs->open(filePath.c_str(),imode);
@@ -1018,7 +1018,7 @@ namespace OpenBabel {
   ////////////////////////////////////////////
   const char* OBConversion::Description()
   {
-    return 
+    return
       "Conversion options\n"
       "-f <#> Start import at molecule # specified\n"
       "-l <#> End import at molecule # specified\n"
@@ -1080,7 +1080,7 @@ namespace OpenBabel {
         string::size_type posname= InFile.find_last_of("\\/");
         ofname.replace(pos,1, InFile, posname+1, posdot-posname-1);
       }
-    return ofname;	
+    return ofname;
   }
 
   ////////////////////////////////////////////////
@@ -1095,7 +1095,7 @@ namespace OpenBabel {
         snprintf(num, 33, "%d", Count);
         ofname.replace(pos,1, num);
       }
-    return ofname;		
+    return ofname;
   }
   ////////////////////////////////////////////////////
   bool OBConversion::CheckForUnintendedBatch(const string& infile, const string& outfile)
@@ -1112,7 +1112,7 @@ namespace OpenBabel {
     pos = outfile.rfind('.');
     if(pos != string::npos)
       inname2 = infile.substr(0,pos);
-    if(inname1==inname2) 
+    if(inname1==inname2)
       obErrorLog.ThrowError(__FUNCTION__,
 "This was a batch operation. For splitting, use non-empty base name for the output files", obWarning);
 
@@ -1132,7 +1132,7 @@ namespace OpenBabel {
      Done if FileList has more than one file name and OutputFileName does
      not contain * . All the chemical objects are converted and sent
      to the single output file.
- 
+
      Splitting
      Done if FileList contains a single file name and OutputFileName
      contains a * . Each chemical object in the input file is converted
@@ -1162,7 +1162,7 @@ namespace OpenBabel {
   int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& OutputFileName,
                                 std::vector<std::string>& OutputFileList)
   {
-	
+
     istream* pIs=NULL;
     ostream* pOs=NULL;
     ifstream is;
@@ -1172,7 +1172,7 @@ namespace OpenBabel {
     int Count=0;
     SetFirstInput();
     bool CommonInFormat = pInFormat ? true:false; //whether set in calling routine
-    ios_base::openmode omode = 
+    ios_base::openmode omode =
       pOutFormat->Flags() & WRITEBINARY ? ios_base::out|ios_base::binary : ios_base::out;
     obErrorLog.ClearLog();
     try
@@ -1276,7 +1276,7 @@ namespace OpenBabel {
                       {
                         //Batch conversion
                         string batchfile = BatchFileName(OutputFileName,*itr);
-                        
+
                         //With inputs like babel test.xxx -oyyy -m
                         //the user may have wanted to do a splitting operation
                         //Issue a message and abort if xxx==yyy which would overwrite input file
@@ -1285,20 +1285,20 @@ namespace OpenBabel {
 
                         if(ofs.is_open()) ofs.close();
                         ofs.open(batchfile.c_str(), omode);
-                        if(!ofs) 
+                        if(!ofs)
                           {
                             obErrorLog.ThrowError(__FUNCTION__,"Cannot open " + batchfile, obError);
                             return Count;
                           }
                         OutputFileList.push_back(batchfile);
                         SetOutputIndex(0); //reset for new file
-                        Count += Convert(pIs,&ofs);					
+                        Count += Convert(pIs,&ofs);
                       }
                     else
                       {
                         //Aggregation
                         if(itr!=tempitr) SetMoreFilesToCome();
-                        Count = Convert(pIs,pOs);					
+                        Count = Convert(pIs,pOs);
                       }
                   }
 
@@ -1316,7 +1316,7 @@ namespace OpenBabel {
                 return Count;
               }
             else
-              {			
+              {
                 //Single input file
                 InFilename = FileList[0];
                 if(!OpenAndSetFormat(CommonInFormat, &is, &ssIn))
@@ -1330,7 +1330,7 @@ namespace OpenBabel {
                   {
                     //Splitting
                     //Output is put in a temporary stream and written to a file
-                    //with an augmenting name only when it contains a valid object. 
+                    //with an augmenting name only when it contains a valid object.
                     int Indx=1;
                     SetInStream(&is);
 #ifdef HAVE_LIBZ
@@ -1362,7 +1362,7 @@ namespace OpenBabel {
                             obErrorLog.ThrowError(__FUNCTION__,"Cannot write to " + incrfile, obError);
                             return Count;
                           }
-						
+
                         OutputFileList.push_back(incrfile);
 #ifdef HAVE_LIBZ
 #ifndef DISABLE_WRITE_COMPRESSION
@@ -1423,7 +1423,7 @@ namespace OpenBabel {
             ss->clear();
             ss->str(InFilename); //...use the stringstream instead
             return true;
-          }      
+          }
       }
       else if(!SetFormat)
       {
@@ -1434,13 +1434,13 @@ namespace OpenBabel {
             string ext;
             if(pos!=string::npos)
               ext = InFilename.substr(pos);
-            obErrorLog.ThrowError(__FUNCTION__, "Cannot read input format \"" 
+            obErrorLog.ThrowError(__FUNCTION__, "Cannot read input format \""
                                   + ext + '\"' + " for file \"" + InFilename + "\"",obError);
             return false;
           }
       }
 
-#ifndef ALL_READS_BINARY 
+#ifndef ALL_READS_BINARY
   #define ALL_READS_BINARY //now the default
 #endif
     ios_base::openmode imode;
@@ -1468,7 +1468,7 @@ Additional options :
 -h Add hydrogens (make explicit)
 -p <pH> Add hydrogens appropriate for this pH
 -b Convert dative bonds e.g.[N+]([O-])=O to N(=O)=O
--r Remove all but the largest contiguous fragment 
+-r Remove all but the largest contiguous fragment
 -c Center Coordinates
 -C Combine mols in first file with others having same name
 --filter <filterstring> Filter: convert only when tests are true:\n
@@ -1549,8 +1549,8 @@ Additional options :
             string description("API");
             if(pFormat)
               description=pFormat->Description();
-            obErrorLog.ThrowError(__FUNCTION__, 
-                                  "The number of parameters needed by option \"" + name + "\" in " 
+            obErrorLog.ThrowError(__FUNCTION__,
+                                  "The number of parameters needed by option \"" + name + "\" in "
                                   + description.substr(0,description.find('\n'))
                                   + " differs from an earlier registration.", obError);
             return;
@@ -1621,7 +1621,7 @@ Additional options :
   {
     istream& ifs = *GetInStream();
     ifs.clear(); //it may have been at eof
-    //Save position of the input stream 
+    //Save position of the input stream
     streampos pos = ifs.tellg();
     if(!ifs)
       return -1;
@@ -1643,12 +1643,12 @@ Additional options :
       nlast=atoi(p);
 
     ifs.seekg(0); //rewind
-    //Compressed files currently show an error here.***TAKE CHANCE: RESET ifs**** 
+    //Compressed files currently show an error here.***TAKE CHANCE: RESET ifs****
     ifs.clear();
 
     OBFormat* pFormat = GetInFormat();
     int count=0;
-    //skip each object but stop after nlast objects 
+    //skip each object but stop after nlast objects
     while(ifs && pFormat->SkipObjects(1, this)>0  && count<nlast)
       ++count;
 
@@ -1673,7 +1673,7 @@ Additional options :
   {
 
     pFormat = NULL;
-    if(str==NULL) 
+    if(str==NULL)
       itr = OBPlugin::Begin("formats");
     else
       itr++;

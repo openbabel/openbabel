@@ -30,7 +30,7 @@ namespace OpenBabel {
 
     virtual const char* Description()
     {
-      return 
+      return
         "GULP format\n"
         "The format used by GULP (General Utility Lattice Program).\n\n";
     };
@@ -251,7 +251,7 @@ namespace OpenBabel {
             pmol->SetData(enthalpy);
             pmol->SetData(enthalpy_eV);
           }
-          
+
           ifs.getline(buffer,BUFF_SIZE);
         }
         if (hasPV)

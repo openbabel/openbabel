@@ -1,15 +1,15 @@
 /**********************************************************************
-loader.cpp Plugin type "loaders" 
+loader.cpp Plugin type "loaders"
   and derived class OBDefine to make plugin instances from a text file
 Copyright (C) 2008 Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -63,10 +63,10 @@ public:
         obErrorLog.ThrowError(__FUNCTION__,string(filename) + " found but could not be opened", obError);
       return;
     }
-    
+
     // Set the locale for number parsing to avoid locale issues: PR#1785463
     obLocale.SetLocale();
-    
+
     string ln;
     while(ifs) //read entries for multiple objects
     {
@@ -99,8 +99,8 @@ public:
         obErrorLog.ThrowError(__FUNCTION__, "Failed to make an instance " + textlines[0], obError);
       textlines.clear();
     }
-   
-    
+
+
     // return the locale to the original one
     obLocale.RestoreLocale();
   }
@@ -146,7 +146,7 @@ private:
 /* This dummy global instance has no content but is necessary to inform the
 system of the existence of OBDefine. It cannot do the work of the plugin and
 parse the datafile, because the plugins referred to there may not have been
-loaded yet. Another instance with the same ID is made using MakeInstance() in 
+loaded yet. Another instance with the same ID is made using MakeInstance() in
 OBConversion::LoadFormatFiles() after all the plugins are present.*/
 
 OBDefine placeholderOBDefine;

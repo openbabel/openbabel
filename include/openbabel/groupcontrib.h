@@ -1,19 +1,19 @@
 /**********************************************************************
 groupcontrib.h - Handle group contribution algorithms.
- 
+
 Copyright (C) 2007      by Tim Vandermeersch
               2001-2007 by Stephen Jelfs
               2001-2007 by Joerg Kurt Wegner, me@cheminformatics.eu
 
 Original version: JOELib2, http://joelib.sf.net
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -38,16 +38,16 @@ namespace OpenBabel
 
   /** \class OBGroupContrib groupcontrib.h <openbabel/groupcontrib.h>
       \brief Handle group contribution algorithms.
- 
-      This is the base class for calculations that use the JOELib2 contribution 
-      algorithm. 
+
+      This is the base class for calculations that use the JOELib2 contribution
+      algorithm.
     */
 class OBDESC OBGroupContrib : public OBDescriptor
 {
 public:
 
-  /*! Predict the logP, MR, TPSA (each instance of OBGroupContrib 
-   *  uses different parameters loaded from its own datafile) for 
+  /*! Predict the logP, MR, TPSA (each instance of OBGroupContrib
+   *  uses different parameters loaded from its own datafile) for
    *  molecule mol using the group contributions algorithm from JOELib2.
    */
 
@@ -63,7 +63,7 @@ public:
   }
 
 
-  virtual double Predict(OBBase* pOb, std::string* param=NULL); 
+  virtual double Predict(OBBase* pOb, std::string* param=NULL);
 
  private:
   bool ParseFile();
@@ -76,7 +76,7 @@ public:
 
 /* The classes OBLogp, OBPSA and OBMR have been replaced by instances of
 OBGroupContrib with different IDs.
-So instead of: 
+So instead of:
       OBLogp logP;
       cout << "logP  " << logP.Predict(mol) << endl;
 use:

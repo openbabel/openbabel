@@ -1,16 +1,16 @@
 /**********************************************************************
 spacegroup.cpp - Handle Space Groups.
- 
+
 Copyright (C) 2007 by Jean Bréfort
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
-This program is free software; you can redistribute it and/or 
-modify it under the terms of the GNU General Public License as 
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
 published by the Free Software Foundation; either version 2 of the
 License, or (at your option) any later version.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -145,7 +145,7 @@ namespace OpenBabel
       delete *i;
   }
 
-  /*! 
+  /*!
    */
   void SpaceGroup::AddTransform(const string &s)
   {
@@ -262,7 +262,7 @@ namespace OpenBabel
     m_transforms.push_back (new transform3d (m, v));
   }
 
-  /*! 
+  /*!
    */
   list<vector3> SpaceGroup::Transform(const vector3 &v) const
   {
@@ -301,7 +301,7 @@ namespace OpenBabel
     return res;
   }
 
-  /*! 
+  /*!
    */
   transform3d const * SpaceGroup::BeginTransform(transform3dIterator &i) const
   {
@@ -309,14 +309,14 @@ namespace OpenBabel
     return (i == m_transforms.end())? reinterpret_cast<transform3d*>(NULL): *i++;
   }
 
-  /*! 
+  /*!
    */
   transform3d const * SpaceGroup::NextTransform(transform3dIterator &i) const
   {
     return (i == m_transforms.end())? reinterpret_cast<transform3d*>(NULL): *i++;
   }
 
-  /*! 
+  /*!
    */
   const SpaceGroup * SpaceGroup::GetSpaceGroup (char const *name)
   {
@@ -325,7 +325,7 @@ namespace OpenBabel
     return (_SpaceGroups.sgbn.find(name)!=_SpaceGroups.sgbn.end())? _SpaceGroups.sgbn[name]: NULL;
   }
 
-  /*! 
+  /*!
    */
   const SpaceGroup * SpaceGroup::GetSpaceGroup (const string &name)
   {
@@ -334,7 +334,7 @@ namespace OpenBabel
     return (_SpaceGroups.sgbn.find(name)!=_SpaceGroups.sgbn.end())? _SpaceGroups.sgbn[name]: NULL;
   }
 
-  /*! 
+  /*!
    */
   const SpaceGroup * SpaceGroup::GetSpaceGroup (unsigned id)
   {
@@ -343,7 +343,7 @@ namespace OpenBabel
     return (id > 0 && id <= 230)? _SpaceGroups.sgbi[id - 1].front(): NULL;
   }
 
-  /*! 
+  /*!
    */
   void SpaceGroup::RegisterSpaceGroup (int nb, ...)
   {
@@ -372,7 +372,7 @@ namespace OpenBabel
     va_end(args);
   }
 
-  /*! 
+  /*!
    */
   bool SpaceGroup::operator ==(const SpaceGroup &sg) const
   {
@@ -395,7 +395,7 @@ namespace OpenBabel
     return true;
   }
 
-  /*! 
+  /*!
    */
   bool SpaceGroup::IsValid() const
   {
@@ -439,7 +439,7 @@ namespace OpenBabel
     return true;
   }
 
-  /*! 
+  /*!
    */
   const SpaceGroup * SpaceGroup::Find (SpaceGroup* group)
   {
@@ -458,7 +458,7 @@ namespace OpenBabel
                 return found;
               }
           }
-        else         
+        else
         /* even if there is an error (this should not occur) return the found group, since
            Hall names are secure */
           return found;

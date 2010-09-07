@@ -2,11 +2,11 @@
 Copyright (C) 2000 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -32,7 +32,7 @@ namespace OpenBabel
 
     virtual const char* Description() //required
     {
-      return 
+      return
         "Jaguar output format\n"
         "Read Options e.g. -as\n"
         " s  Output single bonds only\n"
@@ -160,7 +160,7 @@ namespace OpenBabel
           {
             ifs.getline(buffer,BUFF_SIZE); // actual components   X ###  Y #### Z ###
             tokenize(vs,buffer);
-            if (vs.size() >= 8) 
+            if (vs.size() >= 8)
               {
                 OBVectorData *dipoleMoment = new OBVectorData;
                 dipoleMoment->SetAttribute("Dipole Moment");
@@ -178,7 +178,7 @@ namespace OpenBabel
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
-    if (!pConv->IsOption("s",OBConversion::INOPTIONS) 
+    if (!pConv->IsOption("s",OBConversion::INOPTIONS)
         && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
 

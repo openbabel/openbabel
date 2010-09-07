@@ -1,13 +1,13 @@
 /**********************************************************************
 Copyright (C) 2005 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -27,7 +27,7 @@ namespace OpenBabel
 class PubChemFormat : public XMLMoleculeFormat
 {
 public:
-	PubChemFormat() 
+	PubChemFormat()
 	{
     OBConversion::RegisterFormat("pc", this, "chemical/x-ncbi-asn1-xml");
 		XMLConversion::RegisterXMLFormat(this);
@@ -35,7 +35,7 @@ public:
 	virtual const char* NamespaceURI()const{return "http://www.ncbi.nlm.nih.gov";}
   virtual const char* Description()
   {
-    return 
+    return
       "PubChem format\n"
       "An XML format containing information on PubChem entries.\n"
       "`PubChem <http://pubchem.ncbi.nlm.nih.gov/>`_ is a freely-available\n"
@@ -49,7 +49,7 @@ public:
   virtual const char* SpecificationURL()
   {return "ftp://ftp.ncbi.nlm.nih.gov/pubchem/data_spec/pubchem.xsd";};
 
-  virtual const char* GetMIMEType() 
+  virtual const char* GetMIMEType()
   { return "chemical/x-ncbi-asn1-xml"; };
 
   virtual unsigned int Flags()
@@ -61,16 +61,16 @@ public:
 	virtual bool EndElement(const string& name);
 
 	// EndTag is used so that the stream buffer is is filled with the XML from
-	// complete objects, as far as possible. 
+	// complete objects, as far as possible.
 	virtual const char* EndTag(){ return "/PC-Compound>"; };
 
 private:
 	int dim;
 	vector<int> AtNum;
-	
-	vector<int> BondBeginAtIndx; 
-	vector<int> BondEndAtIndx; 
-	vector<int> BondOrder; 
+
+	vector<int> BondBeginAtIndx;
+	vector<int> BondEndAtIndx;
+	vector<int> BondOrder;
 
 	vector<int> CoordIndx;
 	int ConformerIndx;
@@ -87,7 +87,7 @@ PubChemFormat thePubChemFormat;
 
 bool PubChemFormat::DoElement(const string& name)
 {
-	if(name=="PC-Compound") 
+	if(name=="PC-Compound")
 	{
 		//This is the start of the molecule we are extracting and it will
 		//be put into the OBMol* _pmol declared in the parent class.
@@ -152,7 +152,7 @@ bool PubChemFormat::DoElement(const string& name)
 	else if(name=="PC-Conformer_x_E")
 	{
 		if(ConformerIndx)
-			return true; //currently only one conformer is read 
+			return true; //currently only one conformer is read
 		double x;
 		if(_pxmlConv->GetContentDouble(x))
 			Coordx.push_back(x);
@@ -160,7 +160,7 @@ bool PubChemFormat::DoElement(const string& name)
 	else if(name=="PC-Conformer_y_E")
 	{
 		if(ConformerIndx)
-			return true; //currently only one conformer is read 
+			return true; //currently only one conformer is read
 		double y;
 		if(_pxmlConv->GetContentDouble(y))
 			Coordy.push_back(y);
@@ -168,7 +168,7 @@ bool PubChemFormat::DoElement(const string& name)
 	else if(name=="PC-Conformer_z_E")
 	{
 		if(ConformerIndx)
-			return true; //currently only one conformer is read 
+			return true; //currently only one conformer is read
 		double z;
 		if(_pxmlConv->GetContentDouble(z))
 			Coordz.push_back(z);
@@ -209,7 +209,7 @@ bool PubChemFormat::EndElement(const string& name)
 		return false;//means stop parsing
 	}
 	return true;
-}	
+}
 
 
 }//namespace

@@ -1,11 +1,11 @@
 /**********************************************************************
 Copyright (C) 2008 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004-2008 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -50,7 +50,7 @@ namespace OpenBabel
     virtual const char* SpecificationURL()
     { return "http://www.gaussian.com/";};
 
-    virtual const char* GetMIMEType() 
+    virtual const char* GetMIMEType()
     { return "chemical/x-gaussian-input"; };
 
     /// The "API" interface functions
@@ -82,7 +82,7 @@ namespace OpenBabel
     if(keywords) {
       defaultKeywords = keywords;
     }
-    
+
     if (keywordsEnable) {
       string model;
       string basis;
@@ -126,7 +126,7 @@ namespace OpenBabel
     ofs << "\n"; // blank line after keywords
     ofs << " " << mol.GetTitle() << "\n\n";
 
-    snprintf(buffer, BUFF_SIZE, "%d  %d", 
+    snprintf(buffer, BUFF_SIZE, "%d  %d",
              mol.GetTotalCharge(),
              mol.GetTotalSpinMultiplicity());
     ofs << buffer << "\n";
@@ -163,14 +163,14 @@ namespace OpenBabel
             ofs << buffer;
             continue;
             break;
-					
+
 					case 2:
             snprintf(buffer, BUFF_SIZE, "%-s  %d  r%d\n",
                      type.c_str(), a->GetIdx(), atom->GetIdx());
             ofs << buffer;
             continue;
             break;
-					
+
 					case 3:
             snprintf(buffer, BUFF_SIZE, "%-s  %d  r%d  %d  a%d\n",
                      type.c_str(), a->GetIdx(), atom->GetIdx(), b->GetIdx(), atom->GetIdx());
@@ -180,14 +180,14 @@ namespace OpenBabel
 
 					default:
             snprintf(buffer, BUFF_SIZE, "%-s  %d  r%d  %d  a%d  %d  d%d\n",
-                     type.c_str(), a->GetIdx(), atom->GetIdx(), 
+                     type.c_str(), a->GetIdx(), atom->GetIdx(),
                      b->GetIdx(), atom->GetIdx(), c->GetIdx(), atom->GetIdx());
             ofs << buffer;
           }
       }
 
 		ofs << "Variables:\n";
-		
+
 		FOR_ATOMS_OF_MOL(atom, mol)
       {
         r = vic[atom->GetIdx()]->_dst;
@@ -203,13 +203,13 @@ namespace OpenBabel
 					case 1:
             continue;
             break;
-					
+
 					case 2:
             snprintf(buffer, BUFF_SIZE, "r2= %6.4f\n", r);
             ofs << buffer;
             continue;
             break;
-					
+
 					case 3:
             snprintf(buffer, BUFF_SIZE, "r3= %6.4f\na3= %6.2f\n", r, w);
             ofs << buffer;
@@ -217,12 +217,12 @@ namespace OpenBabel
             break;
 
 					default:
-            snprintf(buffer, BUFF_SIZE, "r%d= %6.4f\na%d= %6.2f\nd%d= %6.2f\n", 
+            snprintf(buffer, BUFF_SIZE, "r%d= %6.4f\na%d= %6.2f\nd%d= %6.2f\n",
                      atom->GetIdx(), r, atom->GetIdx(), w, atom->GetIdx(), t);
             ofs << buffer;
           }
       }
-		
+
     // file should end with a blank line
     ofs << "\n";
     return(true);
@@ -247,7 +247,7 @@ namespace OpenBabel
     OBAtom *atom;
 		vector<OBInternalCoord*> vic;
 	  vic.push_back((OBInternalCoord*)NULL); // OBMol indexed from 1 -- potential atom index problem
-	
+
     vector<string> vs;
     int charge = 0;
     unsigned int spin = 1;
@@ -258,12 +258,12 @@ namespace OpenBabel
     vector<string> atomLines; // save atom lines to re-parse after reading variables
 
     mol.BeginModify();
-    
+
     //@todo: Read keywords from this line
     while (ifs.getline(buffer,BUFF_SIZE))
       if (strncmp(buffer,"#", 1) == 0) // begins with '#'
 			  break;
-			
+
 		while (ifs.getline(buffer,BUFF_SIZE)) { // blank line, title, blank, then we begin
 			if (strlen(buffer) == 0)
 				blankLines++;
@@ -278,7 +278,7 @@ namespace OpenBabel
         charge = atoi(vs[0].c_str());
         spin = atoi(vs[1].c_str());
       }
-		
+
 		// We read through atom lines and cache them (into atomLines)
 		while (ifs.getline(buffer,BUFF_SIZE)) {
 			if (strlen(buffer) == 0) {
@@ -289,12 +289,12 @@ namespace OpenBabel
           continue;
         }
       }
-				
+
 			if (strcasestr(buffer, "VARIABLE") != NULL) {
 				readVariables = true;
         continue;
 			}
-			
+
 			if (readVariables) {
 			  tokenize(vs, buffer, "= \t\n");
 			  if (vs.size() >= 2) {
@@ -308,7 +308,7 @@ namespace OpenBabel
         vic.push_back(new OBInternalCoord);
       }
 		} // end while
-		
+
     char *endptr;
     double temp;
 		if (atomLines.size() > 0) {
@@ -318,7 +318,7 @@ namespace OpenBabel
         tokenize(vs, atomLines[i]);
         atom = mol.NewAtom();
         atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
-        
+
         if (j == 1) {
           continue; // first atom, just create it
         }
@@ -326,7 +326,7 @@ namespace OpenBabel
         if (j >= 2) {
           if (vs.size() < 3) {return false;}
           vic[j]->_a = mol.GetAtom(atoi(vs[1].c_str()));
-          
+
           temp = strtod((char*)vs[2].c_str(), &endptr);
           if (endptr != (char*)vs[2].c_str())
             vic[j]->_dst = temp;
@@ -367,9 +367,9 @@ namespace OpenBabel
       mol.EndModify();
       return false;
     }
-		
+
 		InternalToCartesian(vic,mol);
-    
+
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
@@ -379,18 +379,18 @@ namespace OpenBabel
 
     mol.SetTotalCharge(charge);
     mol.SetTotalSpinMultiplicity(spin);
-    
+
     mol.SetTitle(title);
     return(true);
   }
-    
+
 } //namespace OpenBabel
 
 //*****************************************************************************
 // Adapted from the ht://Dig package   <http://www.htdig.org/>
 // Copyright (c) 1999, 2000, 2001 The ht://Dig Group
 // For copyright details, see the file COPYING in your distribution
-// or the GNU General Public License version 2 or later 
+// or the GNU General Public License version 2 or later
 // <http://www.gnu.org/copyleft/gpl.html>
 
 const char *

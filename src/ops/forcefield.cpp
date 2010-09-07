@@ -1,5 +1,5 @@
 /**********************************************************************
-forcefield.cpp - A OBOp to calculate and minimize the energy using a 
+forcefield.cpp - A OBOp to calculate and minimize the energy using a
                  forcefield (re-wrap of obminimize and obenergy)
 
 Copyright (C) 2006-2007 by Tim Vandermeersch
@@ -35,7 +35,7 @@ Compile with tools/obabel.cpp rather than tools/babel.cpp
 namespace OpenBabel
 {
   using namespace std;
-  
+
   //////////////////////////////////////////////////////////
   //
   //  OpEnergy
@@ -53,16 +53,16 @@ namespace OpenBabel
           "Typical usage: obabel infile.xxx -O outfile.yy --energy --log\n"
           " options:         description\n"
           " --log        output a log of the energies (default = no log)\n"
-          " --ff #       select a forcefield (default = Ghemical)\n"   
+          " --ff #       select a forcefield (default = Ghemical)\n"
           " The hydrogens are always made explicit before energy evaluation.\n"
           " The energy is put in an OBPairData object \"Energy\" which is\n"
           "   accessible via an SDF or CML property or --append (to title).\n"
-          ; 
+          ;
       }
-  
+
       virtual bool WorksWith(OBBase* pOb) const
-      { 
-        return dynamic_cast<OBMol*>(pOb) != NULL; 
+      {
+        return dynamic_cast<OBMol*>(pOb) != NULL;
       }
       virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*);
   };
@@ -83,7 +83,7 @@ namespace OpenBabel
     string ff = "Ghemical";
     OpMap::const_iterator iter = pmap->find("ff");
     if(iter!=pmap->end())
-      ff = iter->second; 
+      ff = iter->second;
     OBForceField* pFF = OBForceField::FindForceField(ff);
 
     iter = pmap->find("log");
@@ -99,7 +99,7 @@ namespace OpenBabel
       return false;
     }
 
-    //Put the energy in a OBPairData object 
+    //Put the energy in a OBPairData object
     OBPairData *dp = new OBPairData;
     dp->SetAttribute("Energy");
     stringstream ss;
@@ -121,9 +121,9 @@ namespace OpenBabel
   {
     public:
       OpMinimize(const char* ID) : OBOp(ID, false) {}
-      
+
       const char* Description()
-      { 
+      {
         return "ForceField Energy Minimization (not displayed in GUI)\n"
           "Typical usage: obabel infile.xxx -O outfile.yyy --minimize --steps 1500 --sd\n"
           " options:         description:\n"
@@ -131,21 +131,21 @@ namespace OpenBabel
           " --crit #     set convergence criteria (default=1e-6)\n"
           " --sd         use steepest descent algorithm (default = conjugate gradient)\n"
           " --newton     use Newton2Num linesearch (default = Simple)\n"
-          " --ff #       select a forcefield (default = Ghemical)\n"   
-          " --steps #    specify the maximum number of steps (default = 2500)\n"    
-          " --cut        use cut-off (default = don't use cut-off)\n"    
-          " --rvdw #     specify the VDW cut-off distance (default = 6.0)\n"    
-          " --rele #     specify the Electrostatic cut-off distance (default = 10.0)\n"    
+          " --ff #       select a forcefield (default = Ghemical)\n"
+          " --steps #    specify the maximum number of steps (default = 2500)\n"
+          " --cut        use cut-off (default = don't use cut-off)\n"
+          " --rvdw #     specify the VDW cut-off distance (default = 6.0)\n"
+          " --rele #     specify the Electrostatic cut-off distance (default = 10.0)\n"
           " --freq #     specify the frequency to update the non-bonded pairs (default = 10)\n"
           " The hydrogens are always made explicit before minimization.\n"
           " The energy is put in an OBPairData object \"Energy\" which is\n"
-          "   accessible via an SDF or CML property or --append (to title).\n" 
-          ; 
+          "   accessible via an SDF or CML property or --append (to title).\n"
+          ;
       }
 
       virtual bool WorksWith(OBBase* pOb) const
-      { 
-        return dynamic_cast<OBMol*>(pOb) != NULL; 
+      {
+        return dynamic_cast<OBMol*>(pOb) != NULL;
       }
       virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*);
   };
@@ -174,7 +174,7 @@ namespace OpenBabel
     string ff = "Ghemical";
     OpMap::const_iterator iter = pmap->find("ff");
     if(iter!=pmap->end())
-      ff = iter->second; 
+      ff = iter->second;
     OBForceField* pFF = OBForceField::FindForceField(ff);
 
     iter = pmap->find("sd");
@@ -191,15 +191,15 @@ namespace OpenBabel
 
     iter = pmap->find("crit");
     if(iter!=pmap->end())
-      crit = atof(iter->second.c_str()); 
+      crit = atof(iter->second.c_str());
 
     iter = pmap->find("steps");
     if(iter!=pmap->end())
-      steps = atoi(iter->second.c_str()); 
+      steps = atoi(iter->second.c_str());
 
     iter = pmap->find("rvdw");
     if(iter!=pmap->end())
-      rvdw = atof(iter->second.c_str()); 
+      rvdw = atof(iter->second.c_str());
 
     iter = pmap->find("rele");
     if(iter!=pmap->end())
@@ -207,22 +207,22 @@ namespace OpenBabel
 
     iter = pmap->find("pf");
     if(iter!=pmap->end())
-      freq = atoi(iter->second.c_str()); 
+      freq = atoi(iter->second.c_str());
 
     iter = pmap->find("log");
     if(iter!=pmap->end())
       log=true;
 
     if (newton)
-      pFF->SetLineSearchType(LineSearchType::Newton2Num); 
+      pFF->SetLineSearchType(LineSearchType::Newton2Num);
 
     // set some force field variables
     pFF->SetLogFile(&clog);
     pFF->SetLogLevel(log ? OBFF_LOGLVL_LOW : OBFF_LOGLVL_NONE);
-    pFF->SetVDWCutOff(rvdw);    
-    pFF->SetElectrostaticCutOff(rele);    
-    pFF->SetUpdateFrequency(freq);    
-    pFF->EnableCutOff(cut); 
+    pFF->SetVDWCutOff(rvdw);
+    pFF->SetElectrostaticCutOff(rele);
+    pFF->SetUpdateFrequency(freq);
+    pFF->EnableCutOff(cut);
 
     if (!pFF->Setup(*pmol)) {
       cerr  << "Could not setup force field." << endl;
@@ -249,7 +249,7 @@ namespace OpenBabel
         pFF->GetCoordinates(*pmol);
     }
 
-    //Put the energy in a OBPairData object 
+    //Put the energy in a OBPairData object
     OBPairData *dp = new OBPairData;
     dp->SetAttribute("Energy");
     stringstream ss;

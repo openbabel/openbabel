@@ -1,12 +1,12 @@
 /**********************************************************************
-xml.h Declaration of XMLConversion, 
-declaration and definition of XMLBaseFormat and XMLMoleculeFormat 
+xml.h Declaration of XMLConversion,
+declaration and definition of XMLBaseFormat and XMLMoleculeFormat
 Copyright (C) 2005-2006 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -37,7 +37,7 @@ namespace OpenBabel
   /** \class XMLConversion xml.h <openbabel/xml.h>
       \brief A subclass for conversion of XML formats
 
-      An extended OBConversion class which includes a libxml2 reader for use 
+      An extended OBConversion class which includes a libxml2 reader for use
       with XML formats. Copies an OBConversion and then extends it
       with a XML parser. Instances made on the heap are deleted when
       the original OBConversion object is.
@@ -55,7 +55,7 @@ namespace OpenBabel
     public:
       ///Existing OBConversion instance copied
       XMLConversion(OBConversion* pConv);
-        
+
       ///Frees reader and writer if necessary
       ~XMLConversion();
 
@@ -122,25 +122,25 @@ namespace OpenBabel
 
       std::string GetAttribute(const char* attrname);
 
-      ///Sets value to element content. Returns false if there is no content. 
+      ///Sets value to element content. Returns false if there is no content.
       std::string GetContent();
 
-      ///Sets value to element content as an integer. Returns false if there is no content. 
+      ///Sets value to element content as an integer. Returns false if there is no content.
       bool    GetContentInt(int& value);
 
-      ///Sets value to element content as an double. Returns false if there is no content. 
+      ///Sets value to element content as an double. Returns false if there is no content.
       bool GetContentDouble(double& value);
 
     private:
       static XMLBaseFormat* _pDefault;
       OBConversion* _pConv;
-      std::streampos  _requestedpos, _lastpos;  
+      std::streampos  _requestedpos, _lastpos;
       xmlTextReaderPtr _reader;
       xmlTextWriterPtr _writer;
       xmlOutputBufferPtr _buf;
       //    xmlBufferPtr _buf;
       bool _LookingForNamespace;
-    public: 
+    public:
       bool _SkipNextRead;
     };
 
@@ -151,7 +151,7 @@ namespace OpenBabel
     {
     protected:
       XMLConversion* _pxmlConv;
-    
+
       //formating for output
       std::string _prefix;
       int baseindent, ind;
@@ -165,7 +165,7 @@ namespace OpenBabel
       virtual bool EndElement(const std::string& ElName){return false;};
       /// The tag at the end of the chemical object e.g. "/molecule>"
       virtual const char* EndTag(){return ">";};
-    
+
     protected:
       xmlTextReaderPtr reader() const
         {
@@ -176,35 +176,35 @@ namespace OpenBabel
         {
           return _pxmlConv->GetWriter();
         }
-    
+
       void OutputToStream()
         {
           _pxmlConv->OutputToStream();
         }
-    
+
       ///Skip past first n objects in input stream (or current one with n=0)
-      /// Returns 1 on success, -1 on error and 0 if not implemented 
+      /// Returns 1 on success, -1 on error and 0 if not implemented
       virtual int SkipObjects(int n, OBConversion* pConv)
         {
           //don't implement on base class
           if(*EndTag()=='>')
             return 0;
 
-          //Set up XMLConversion class with reader 
+          //Set up XMLConversion class with reader
           _pxmlConv = XMLConversion::GetDerived(pConv,true);
           if(!_pxmlConv)
             return -1;
 
           //always find the end of at least 1 object
           if(n==0)++n;
-        
+
           //Skip n objects, returning -1 if not successful
           int i;
           for(i=0; i<n; ++i)
             if(_pxmlConv->SkipXML(EndTag())!=1)
               return -1;
-        
-          return 1;       
+
+          return 1;
         }
 
     };
@@ -252,7 +252,7 @@ namespace OpenBabel
 }//namespace
 
 //! \file
-//! \brief Declaration of XMLConversion, 
+//! \brief Declaration of XMLConversion,
 //!  declaration and definition of XMLBaseFormat and XMLMoleculeFormat
 
 #endif

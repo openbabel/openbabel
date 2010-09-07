@@ -53,7 +53,7 @@ namespace OpenBabel
       //@}
     private:
       std::string MakeRGB(OBColor color);
- 
+
     private:
       std::ostream& m_ofs;
       bool m_withViewBox;

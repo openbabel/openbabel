@@ -1,16 +1,16 @@
 /**********************************************************************
 lineend.h - Stream buffer for filtering line endings, converting \r or \r\n -> \n
- 
+
  Copyright (C) 1998 by James Kanze
  Copyright (C) 2007 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -36,20 +36,20 @@ namespace OpenBabel
 
   Based on an article by James Kanze, "Filtering Streambufs"
   http://kanze.james.neuf.fr/articles/fltrsbf1.html
-  
+
   A FilteringInputStreambuf delivers characters on request to an istream
   or a destination rdbuf(). It receives them from a source rdbuf.
   In doing the transfer it filters them in a way decided by the class
   specified in template parameter Extractor.
-  
+
   seekg and tellg requests from the stream are passed through to source rdbuf.
   This allows return to a position in the input data that was previously noted.
-  This is adequate to allow OpenBabel's fastsearch indexing, but may 
+  This is adequate to allow OpenBabel's fastsearch indexing, but may
   not be good enough for some other applications that use random access.
-  
+
   A class LineEndingExtractor converts DOS and MAC line endings to the
   UNIX line ending.
-  
+
   This filtering process is potentially extendable, with a chain of
   FilteringInputStreambufs each carrying out its filtering task.
   For instance a decompression streambuf could feed a LineEnding filter,
@@ -61,7 +61,7 @@ namespace OpenBabel
   public:
     FilteringInputStreambuf(
       std::streambuf*        source = NULL ,
-      bool                   deleteWhenFinished = false 
+      bool                   deleteWhenFinished = false
       ) ;
     virtual                 ~FilteringInputStreambuf()
     {
@@ -80,7 +80,7 @@ namespace OpenBabel
       return ret;
     };
 
-    virtual std::streampos   seekpos(std::streampos sp, 
+    virtual std::streampos   seekpos(std::streampos sp,
       std::ios_base::openmode which = std::ios_base::in | std::ios_base::out )
     {
       std::streampos ret = mySource->pubseekpos(sp, which);
@@ -114,7 +114,7 @@ namespace OpenBabel
   template< class Extractor >
   FilteringInputStreambuf< Extractor >::FilteringInputStreambuf(
     std::streambuf*        source ,
-    bool                   deleteWhenFinished) 
+    bool                   deleteWhenFinished)
     : mySource(source), myDeleteWhenFinished(deleteWhenFinished)
   {
     setg( &myBuffer , &myBuffer , &myBuffer ) ;
@@ -133,7 +133,7 @@ namespace OpenBabel
       result = myExtractor( *mySource ) ;
       if ( result != EOF )
       {
-        if( result < 0 || result > UCHAR_MAX ) 
+        if( result < 0 || result > UCHAR_MAX )
           std::cerr << "FilteringInputStreambuf error" << std::endl;
         myBuffer = result ;
         setg( &myBuffer , &myBuffer , &myBuffer + 1 ) ;

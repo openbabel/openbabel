@@ -2,7 +2,7 @@
   isomophism.h - OBIsomorphismMapper class for finding isomorphisms
 
   Copyright (C) 2010 by Tim Vandermeersch
- 
+
   This file is part of the Open Babel project.
   For more information, see <http://openbabel.sourceforge.net/>
 

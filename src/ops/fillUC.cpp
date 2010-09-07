@@ -10,7 +10,7 @@ For more information, see <http://openbabel.sourceforge.net/>
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -78,7 +78,7 @@ bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConver
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   if(!pmol)
     return false;
-  
+
   if (!(pmol->HasData(OBGenericDataType::UnitCell)))
   {
     obErrorLog.ThrowError(__FUNCTION__, "Cannot fill unit cell without a unit cell !" , obWarning);
@@ -94,20 +94,20 @@ bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConver
   // Now loop over all symmetry operations, and generate symmetric atoms one at a time
   // Avoid creating overlapping atoms (duplicate), and bring back atoms within the unit cell
   // using two options:
-  // "--fillUC strict": keep only atoms that are strictly inside the unit cell 
+  // "--fillUC strict": keep only atoms that are strictly inside the unit cell
   //                    (fractionnal coordinates 0<= <1)
-  // "--fillUC keepconnect": generate symmetrics of the molecule, and translate 
+  // "--fillUC keepconnect": generate symmetrics of the molecule, and translate
   //                         it back in the unit cell if necessary
 
   std::map<OBAtom*,std::vector<vector3> > vatoms;// key: original atoms, value=all generated symmetrics
   FOR_ATOMS_OF_MOL(atom, *pmol)
       vatoms[&(*atom)]=std::vector<vector3>();
-  
+
   for(std::map<OBAtom*,std::vector<vector3> >:: iterator atom=vatoms.begin();
       atom!=vatoms.end();++atom){
     vector3 orig = atom->first->GetVector();
     orig = pUC->CartesianToFractional(orig);// To fractionnal coordinates
-    
+
     // Loop over symmetry operators
     transform3dIterator ti;
     const transform3d *t = pSG->BeginTransform(ti);
@@ -175,10 +175,10 @@ bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConver
       }
     }
   }
-  
+
   // Set spacegroup to P1, since we generated all symmetrics
   pUC->SetSpaceGroup("P1");
-/*  
+/*
   list<vector3> transformedVectors; // list of symmetry-defined copies of the atom
   vector3 uniqueV, newV, updatedCoordinate;
     list<vector3> coordinates; // all coordinates to prevent duplicates
@@ -199,7 +199,7 @@ bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConver
       uniqueV = CartesianToFractional(uniqueV);
       uniqueV = transformedFractionalCoordinate(uniqueV);
       coordinates.push_back(uniqueV);
-  
+
       transformedVectors = sg->Transform(uniqueV);
       for (transformIterator = transformedVectors.begin();
            transformIterator != transformedVectors.end(); ++transformIterator) {
@@ -218,7 +218,7 @@ bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConver
         }
         if (foundDuplicate)
           continue;
-        
+
         coordinates.push_back(updatedCoordinate); // make sure to check the new atom for dupes
         newAtom = mol->NewAtom();
         newAtom->Duplicate(*i);

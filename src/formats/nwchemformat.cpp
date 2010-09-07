@@ -2,11 +2,11 @@
 Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
 Some portions Copyright (C) 2009 by Michael Banck
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -194,7 +194,7 @@ namespace OpenBabel
                 Intensities.push_back(atof(vs[5].c_str()));
              ifs.getline(buffer, BUFF_SIZE);
              tokenize(vs,buffer);
-           }            
+           }
          } // if "Projected Infra Red Intensities"
       } // while
 

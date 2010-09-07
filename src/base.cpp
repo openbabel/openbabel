@@ -1,16 +1,16 @@
 /**********************************************************************
 base.cpp - Base classes to build a graph
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -32,7 +32,7 @@ namespace OpenBabel
   }
 
   /** \class OBBase base.h <openbabel/base.h>
- 
+
   The various classes (Atom, Bond, Molecule) inherit from base classes--
   OBBase is largely a placeholder class. It also allows adding, deleting, and
   retrieving OBGenericData objects, which are ways to store arbitrary data
@@ -49,7 +49,7 @@ namespace OpenBabel
      label->SetAttribute("UserLabel");
      label->SetValue(atomLabel);
      label->SetOrigin(userInput); // set by user, not by Open Babel
-  
+
      atom.SetData(label);
   }
   \endcode
@@ -57,20 +57,20 @@ namespace OpenBabel
   This class is also important in the OBConversion class. Any derived class
   of OBBase can be supported in reading or writing data. While most OBFormat
   "translators" are designed around reading molecular data, the OBConversion
-  framework can support any base object. For example OBReaction supports 
-  reading and writing reaction files, OBGrid supports reading and writing 
+  framework can support any base object. For example OBReaction supports
+  reading and writing reaction files, OBGrid supports reading and writing
   2D or 3D "grids" of numeric data.
 
-  Therefore if you want to expand the range of input or output via the 
+  Therefore if you want to expand the range of input or output via the
   OBConversion and OBFormat classes, you will also need to make sure you define
   an appropriate derived class from OBBase.
   */
 
-  //! 
+  //!
   //! This method can be called by OBConversion::Read() before reading data.
   //! Derived classes should be sure to call OBBase::Clear() to remove
   //! inherited generic data.
-  //! 
+  //!
   //! \return Whether the call was successful.
   //! \since version 2.1.
   bool OBBase::Clear()
@@ -82,7 +82,7 @@ namespace OpenBabel
           delete *m;
         _vdata.clear();
       }
-    
+
     return(true);
   }
 
@@ -154,13 +154,13 @@ namespace OpenBabel
   std::vector<OBGenericData *> OBBase::GetAllData(const unsigned int dt)
   {
     std::vector<OBGenericData *> matches;
-    
+
     // return all values matching this type
     OBDataIterator i;
     for (i = _vdata.begin();i != _vdata.end();++i)
       if ((*i)->GetDataType() == dt)
         matches.push_back(*i);
-        
+
     return(matches);
   }
 
@@ -175,18 +175,18 @@ namespace OpenBabel
 
     return filtered;
   }
-  
+
   void OBBase::CloneData(OBGenericData *d)
   {
     if(!d)
       return; // Nothing to do for NULL
-    
+
     // Clone the data, relative to ourselves
     // This creates a new copy -- useable by scripting languages
     OBGenericData *clone = d->Clone(this);
     if (clone)
       _vdata.push_back(clone);
-    
+
     return;
   }
 
@@ -259,15 +259,15 @@ namespace OpenBabel
   /*! \mainpage API Documentation
 
   \section base Introduction
- 
+
   Open Babel is a full chemical software toolbox. In addition to converting
-  file formats, it offers a complete programming library for developing 
+  file formats, it offers a complete programming library for developing
   chemistry software. The library is written primarily in C++ and also offers
   interfaces to other languages (e.g., Perl, Python, Ruby, and Java)
   using essentially the same API.
 
   This documentation outlines the Open Babel programming interface, providing
-  information on all public classes, methods, and data. In particular, strives 
+  information on all public classes, methods, and data. In particular, strives
   to provide as much (or as little) detail as needed. More information
   can also be found on the <a href="http://openbabel.org/">
   main website</a> and through the <a
@@ -290,16 +290,16 @@ namespace OpenBabel
   \page intro Introduction to Open Babel API
 
   Open Babel is a full chemical software toolbox. In addition to converting
-  file formats, it offers a complete programming library for developing 
+  file formats, it offers a complete programming library for developing
   chemistry software. The library is written primarily in C++ and also offers
   interfaces to other languages (e.g., Perl and Python) using essentially
   the same API.
 
-  The heart of Open Babel lies in the \link OpenBabel::OBMol OBMol\endlink, 
-  \link OpenBabel::OBAtom OBAtom\endlink, and 
+  The heart of Open Babel lies in the \link OpenBabel::OBMol OBMol\endlink,
+  \link OpenBabel::OBAtom OBAtom\endlink, and
   \link OpenBabel::OBBond OBBond\endlink classes,
-  which handle operations on atoms, bonds and molecules. Newcomers should 
-  start with looking at the \link OpenBabel::OBMol OBMol\endlink class, 
+  which handle operations on atoms, bonds and molecules. Newcomers should
+  start with looking at the \link OpenBabel::OBMol OBMol\endlink class,
   designed to store the basic information
   in a molecule and to perceive information about a molecule.
 
@@ -320,8 +320,8 @@ namespace OpenBabel
   OBPairData\endlink classes.
 
   Conversion between various chemical file formats is accomplished through
-  the \link OpenBabel::OBConversion OBConversion\endlink and \link 
-  OpenBabel::OBFormat OBFormat\endlink classes, often through use of the \link 
+  the \link OpenBabel::OBConversion OBConversion\endlink and \link
+  OpenBabel::OBFormat OBFormat\endlink classes, often through use of the \link
   OpenBabel::OBMoleculeFormat OBMoleculeFormat\endlink subclass which is designed
   for easy read/write access to one or more \link OpenBabel::OBMol OBMol\endlink
   objects. The philosophy of the file format codes is to parse as much
@@ -333,7 +333,7 @@ namespace OpenBabel
 
   Not surprisingly, the Open Babel library is a full chemical
   toolbox. So to start out, the first example is to read in molecular
-  file data and uses the \link OpenBabel::OBMol OBMol\endlink, 
+  file data and uses the \link OpenBabel::OBMol OBMol\endlink,
   and \link OpenBabel::OBConversion OBConversion\endlink classes. The
   \link OpenBabel::OBMol former\endlink is designed to store the basic
   information in a molecule and to perceive information and chemical
@@ -358,12 +358,12 @@ namespace OpenBabel
          // Try to set input format to MDL SD file
          // and output to SMILES
          if(conv.SetInAndOutFormats("SDF","SMI"))
-         { 
+         {
             OBMol mol;
             if(conv.Read(&mol))
             {
-               //  ...manipulate molecule 
-               cerr << " Molecule has: " << mol.NumAtoms() 
+               //  ...manipulate molecule
+               cerr << " Molecule has: " << mol.NumAtoms()
                     << " atoms." << endl;
             }
 
@@ -380,7 +380,7 @@ namespace OpenBabel
   in the doc/examples directory and <a href="examples.shtml">all these examples are included in
   the documentation</a>.
 
-  For a further list of example code, see the 
+  For a further list of example code, see the
   <a
   href="http://openbabel.org/wiki/Developer:Tutorial">developer
   tutorials</a>. This section includes examples in C++, Perl, Python,
@@ -518,7 +518,7 @@ namespace OpenBabel
   \page changes22 What's New in Version 2.2
 
   Throughout the API documentation, new classes and methods are
-  indicated with a disclaimer "Since: version 2.2." 
+  indicated with a disclaimer "Since: version 2.2."
 
   Several new classes have been introduced, notably
   - OBPlugin - Cleaner interface to dynamic plugins, including OBFormat
@@ -527,7 +527,7 @@ namespace OpenBabel
   - AliasData - Handle atoms which serve as "aliases" for larger fragments
   for example in drawing programs - "COOH" vs. four atoms for the carboxylic
   acid. Currently used for MDL 2D files.
-  - OBGridData - Store and process numeric grid data involved with orbitals or 
+  - OBGridData - Store and process numeric grid data involved with orbitals or
   electrostatic potential.
   - OBBuilder - New class to handle generation of 3D coordinates for SMILES,
   InChI and other formats.
@@ -536,9 +536,9 @@ namespace OpenBabel
   - OBLocale - New class to ensure chemical data is read in the "C" numeric locale.
   - OBPhModel - Now accepts pH-dependent transformations.
 
-  In addition, a wide variety of plugins are available, including MMFF94 
+  In addition, a wide variety of plugins are available, including MMFF94
   and UFF force fields, SMARTS-based descriptors for filtering data sets,
-  compound descriptors such as the Lipinsky Rule of Five, and chemical 
+  compound descriptors such as the Lipinsky Rule of Five, and chemical
   transformations.
 
   Optional headers include integration with the Boost Graph Library.
@@ -549,7 +549,7 @@ namespace OpenBabel
   indicated with a disclaimer "Since: version 2.1." Documentation, in
   general should be more thorough and complete.
 
-  One major change is that the library uses the same header 
+  One major change is that the library uses the same header
   <code>\#include</code> paths as external code. This documentation
   attempts to uniformly use the correct style, e.g.:
   <code>\#include \<openbabel/mol.h\></code>
@@ -567,7 +567,7 @@ namespace OpenBabel
       iterators for atoms in OBMol, convenience iterators for rings, angles,
       torsions, and 1-4 non-bonded atom pair interactions.
   - OBGenericData - Generic data is now inherited through OBBase for
-      most types, including OBAtom, OBBond, OBMol, OBResidue, 
+      most types, including OBAtom, OBBond, OBMol, OBResidue,
       OBReaction, and OBGrid.
   - OBForceField - Generic interface to molecular mechanics force
       fields, including Ghemical (Tripos-like) methods, and ultimately

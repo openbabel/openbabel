@@ -1,18 +1,18 @@
 /**********************************************************************
 mol.h - Handle molecules. Declarations of OBMol, OBAtom, OBBond, OBResidue.
         (the main header for Open Babel)
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2003 by Michael Banck
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -36,8 +36,8 @@ GNU General Public License for more details.
 #include <map>
 
 // Currently includes many headers for 2.x backwards compatibility
-// \deprecated -- this will be cleaned up in 3.0 efforts 
-//      to improve compile time significantly. 
+// \deprecated -- this will be cleaned up in 3.0 efforts
+//      to improve compile time significantly.
 // Only include necessary headers and class declaration stubs.
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
@@ -74,7 +74,7 @@ namespace OpenBabel
 #define OB_ATOMTYPES_MOL         (1<<4)
   //! Chirality detection has been performed. See OBMol::IsChiral
 #define OB_CHIRALITY_MOL         (1<<5)
-  //! Partial charges have been set or percieved 
+  //! Partial charges have been set or percieved
 #define OB_PCHARGE_MOL           (1<<6)
   //! Atom hybridizations have been set. See OBAtomTyper
 #define OB_HYBRID_MOL            (1<<8)
@@ -152,7 +152,7 @@ namespace OpenBabel
     //! Destructor
     virtual ~OBMol();
     //! Assignment, copies atoms,bonds and OBGenericData
-    OBMol &operator=(const OBMol &mol);      
+    OBMol &operator=(const OBMol &mol);
     //! Copies atoms and bonds but not OBGenericData
     OBMol &operator+=(const OBMol &mol);
 
@@ -165,7 +165,7 @@ namespace OpenBabel
         _atomIds.reserve(natoms);
       }
     }
-    
+
     //! Create a new OBAtom pointer. Does no bookkeeping
     //! \deprecated Use NewAtom instead, which ensures internal connections
     virtual OBAtom *CreateAtom(void);
@@ -198,7 +198,7 @@ namespace OpenBabel
     //! \param flags     any bond flags such as stereochemistry (default = none)
     //! \param insertpos the position index to insert the bond (default = none)
     //! \return Whether the new bond creation was successful
-    bool AddBond(int beginIdx, int endIdx, int order, 
+    bool AddBond(int beginIdx, int endIdx, int order,
                  int flags=0,int insertpos=-1);
     //! Add the specified residue to this molecule and update connections
     //! \return Whether the method was successful
@@ -208,12 +208,12 @@ namespace OpenBabel
     bool AddResidue(OBResidue&);
 
     //! Create a new OBAtom in this molecule and ensure connections
-    //! (e.g. OBAtom::GetParent(). A new unique id will be assigned 
+    //! (e.g. OBAtom::GetParent(). A new unique id will be assigned
     //! to this atom.
     OBAtom    *NewAtom();
     //! Create a new OBAtom in this molecule and ensure connections.
     //! (e.g. OBAtom::GetParent(). The @p id will be assigned to this
-    //! atom. 
+    //! atom.
     OBAtom    *NewAtom(unsigned long id);
     //! Create a new OBBond in this molecule and ensure connections
     //! (e.g. OBBond::GetParent(). A new unique id will be assigned
@@ -250,7 +250,7 @@ namespace OpenBabel
     virtual void EndModify(bool nukePerceivedData=true);
     //! \return The number of nested BeginModify() calls. Used internally.
     int GetMod()           {      return(_mod);    }
-    //! Increase the number of nested BeginModify calls. Dangerous! 
+    //! Increase the number of nested BeginModify calls. Dangerous!
     //! Instead, properly use BeginModify as needed.
     void IncrementMod()    {      _mod++;          }
     //! Decrease the number of nested BeginModify calls. Dangerous!
@@ -275,7 +275,7 @@ namespace OpenBabel
     unsigned int NumResidues() const      { return(static_cast<unsigned int> (_residue.size())); }
     //! \return the number of rotatble bonds. See OBBond::IsRotor() for details
     unsigned int NumRotors();
-    
+
     //! \return the atom at index @p idx or NULL if it does not exist.
     //! \warning Atom indexing will change. Use iterator methods instead.
     OBAtom      *GetAtom(int idx) const;
@@ -302,12 +302,12 @@ namespace OpenBabel
     /*! \return the dihedral angle (in degrees) between the four atoms supplied a1-a2-a3-a4)
      *  WARNING: SetTorsion takes an angle in radians while GetTorsion returns it
      *  in degrees
-     */ 
+     */
     double       GetTorsion(int,int,int,int);
     /*! \return the dihedral angle (in degrees) between the four atoms @p a, @p b, @p c, and @p d)
      *  WARNING: SetTorsion takes an angle in radians while GetTorsion returns it
      *  in degrees
-     */ 
+     */
     double       GetTorsion(OBAtom* a,OBAtom* b,OBAtom* c,OBAtom* d);
     //! \return the angle (in degrees) between the three atoms @p a, @p b and @p c
     //!  (where  a-> b (vertex) -> c )
@@ -443,7 +443,7 @@ namespace OpenBabel
     //! Translate to the center of all coordinates (for this conformer)
     void Center();
     //! Transform to standard Kekule bond structure (presumably from an aromatic form)
-    
+
     bool Kekulize();
     bool PerceiveKekuleBonds();
 
@@ -481,14 +481,14 @@ namespace OpenBabel
     std::vector<OBMol> Separate(int StartIndex=1);
     //! Iterative component of Separate to copy one fragment at a time
     bool GetNextFragment( OpenBabel::OBMolAtomDFSIter& iter, OBMol& newMol );
-    //! Converts the charged form of coordinate bonds, e.g.[N+]([O-])=O to N(=O)=O 
+    //! Converts the charged form of coordinate bonds, e.g.[N+]([O-])=O to N(=O)=O
     bool ConvertDativeBonds();
 
     //! Correct for pH by applying the OBPhModel transformations
     bool CorrectForPH(double pH=7.4);
     // docs in mol.cpp
     bool AssignSpinMultiplicity(bool NoImplicitH=false);
-    //! The OBMol is a pattern, not a complete molecule. Left unchanged by Clear(). 
+    //! The OBMol is a pattern, not a complete molecule. Left unchanged by Clear().
     void   SetIsPatternStructure()       { SetFlag(OB_PATTERN_STRUCTURE);}
 
     //! \return the center of the supplied conformer @p nconf
@@ -498,7 +498,7 @@ namespace OpenBabel
      *  \par ang The torsion angle in radians
      *  WARNING: SetTorsion takes an angle in radians while GetTorsion returns it
      *  in degrees
-     */ 
+     */
     void SetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*,double ang);
     //@}
 
@@ -681,7 +681,7 @@ namespace OpenBabel
     }
     //! Advance the iterator to the next internal coordinate record
     //! \return the next first internal coordinate record, or NULL if none exist
-    //! \see SetInternalCoord 
+    //! \see SetInternalCoord
     OBInternalCoord *NextInternalCoord(std::vector<OBInternalCoord*>::iterator &i)
     {
       ++i;

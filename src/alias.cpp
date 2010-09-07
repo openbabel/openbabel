@@ -1,11 +1,11 @@
 /**********************************************************************
 alias.cpp - implementation of an OBGenericData class to hold alias information on atoms
 Copyright (C) 2008 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -77,7 +77,7 @@ namespace OpenBabel
   //seen to be successful - another method may be better. But at present
   //there is no other method.
   //Only single character element symbols are handled
-  //Atom which replaces atomindex is the first non-H 
+  //Atom which replaces atomindex is the first non-H
   //Will parse ND2 DS CH-
   bool AliasData::FormulaParse(OBMol& mol,const unsigned atomindex)
   {
@@ -200,14 +200,14 @@ bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
   OBBondIterator bi;
   unsigned mainAttachIdx = (XxAtom->BeginNbrAtom(bi))->GetIdx();
   unsigned    newFragIdx = mol.NumAtoms()+1;
-  
+
   //obFrag.SetDimension(dimension);
   OBBuilder builder;
   //Give the fragment appropriate coordinates
   if(dimension!=0)
     builder.Build(obFrag);
 
- //Combine with main molecule 
+ //Combine with main molecule
   mol += obFrag;
 
   //delete original Xx atom
@@ -222,7 +222,7 @@ bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
     mol.AddBond(mainAttachIdx, newFragIdx, 1);
   else
     builder.Connect(mol, mainAttachIdx, newFragIdx);
-  
+
   //Store the ids of the atoms which replace the alias (the last atoms in the combined molecule).
   //The ids do not change when other atoms are deleted.
   for(unsigned i=obFrag.NumAtoms();i;--i)
@@ -284,10 +284,10 @@ bool AliasData::LoadFile(SmartsTable& smtable)
     if(tokenize(vec, ln) && vec.size()>=3)
     {
       //Convert SMILES with implicit H to SMARTS with explicit H.
-      //Converting into and out of OBMol is a bit heavy, but saves 
+      //Converting into and out of OBMol is a bit heavy, but saves
       //worrying about edge cases in a string parse.
       stringstream ss('*'+vec[2]),// '*' added to SMILES because the superatom has to be attached
-                   ssmarts; 
+                   ssmarts;
       OBConversion conv(&ss, &ssmarts);
       conv.AddOption("h",OBConversion::GENOPTIONS);//add explicit Hs...
       conv.AddOption("h");//...and output them to ensure the superatom itself is not substituted
@@ -330,14 +330,14 @@ void AliasData::DeleteExpandedAtoms(OBMol& mol)
 void AliasData::RevertToAliasForm(OBMol& mol)
 {
   //Deleting atoms invalidates the iterator, so start again
-  //and continue until all no unexpanded aliases are found in molecule. 
+  //and continue until all no unexpanded aliases are found in molecule.
   bool acted;
   do
   {
     FOR_ATOMS_OF_MOL(a, mol)
     {
       acted=false;
-      AliasData* ad = NULL; 
+      AliasData* ad = NULL;
       if((ad = (static_cast<AliasData*>(a->GetData(AliasDataType)))) && ad->IsExpanded())
       {
         ad->DeleteExpandedAtoms(mol);
@@ -360,7 +360,7 @@ bool AliasData::AddAliases(OBMol* pmol)
   {
     if((*iter).second->Match(*pmol))
     {
-      vector<std::vector<int> > mlist = (*iter).second->GetUMapList();      
+      vector<std::vector<int> > mlist = (*iter).second->GetUMapList();
       for(unsigned imatch=0;imatch<mlist.size();++imatch) //each match
       {
         AliasData* ad  = new AliasData;
@@ -378,7 +378,7 @@ bool AliasData::AddAliases(OBMol* pmol)
           }
           else
           {
-            AllExAtoms.insert(idx);        
+            AllExAtoms.insert(idx);
             int id  =(pmol->GetAtom(idx))->GetId();
             ad->AddExpandedAtom(id);
           }

@@ -2,7 +2,7 @@
   tetranonplanar.h - OBTetraNonPlanarStereo
 
   Copyright (C) 2009 by Tim Vandermeersch
- 
+
   This file is part of the Open Babel project.
   For more information, see <http://openbabel.sourceforge.net/>
 

@@ -1,16 +1,16 @@
 /**********************************************************************
 obiter.h - STL-style iterators for Open Babel.
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -91,7 +91,7 @@ namespace OpenBabel
     OBAtom& operator*() const    { return *_ptr;     }
     /// \return NULL if at the last atom in a fragment, else the next atom
     OBAtom* next()
-    { 
+    {
       if(_stack.empty())
         return NULL; //end of a disconnected fragment
       else
@@ -179,7 +179,7 @@ namespace OpenBabel
     operator bool() const        { return _ptr != NULL; }
     //! Preincrement -- advance to the next bond and return
     OBMolBondIter& operator++();
-    //! Postincrement -- return the current bond and advance to the next 
+    //! Postincrement -- return the current bond and advance to the next
     OBMolBondIter  operator++(int);
     //! \return a pointer to the current bond
     OBBond* operator->() const   { return _ptr;      }
@@ -205,7 +205,7 @@ namespace OpenBabel
     operator bool() const        { return _ptr != NULL; }
     //! Preincrement -- advance to the next neighbor and return
     OBAtomAtomIter& operator++();
-    //! Postincrement -- return the current neighbor and advance to the next 
+    //! Postincrement -- return the current neighbor and advance to the next
     OBAtomAtomIter  operator++(int);
     //! \return a pointer to the current atom
     OBAtom* operator->() const   { return _ptr;      }
@@ -290,7 +290,7 @@ namespace OpenBabel
     //! \return a reference to the current atom
     OBAtom &operator*() const    { return *_ptr;}
   };
-  
+
   //! \brief Iterate over all angles in an OBMol
   class OBAPI OBMolAngleIter {
     OBMol     *_parent;
@@ -338,7 +338,7 @@ namespace OpenBabel
     //! \see OBAtom::GetIdx()
     std::vector<unsigned int> operator*() const    { return _torsion;     }
   };
-  
+
   //! \brief Iterate over all pairs of atoms (>1-4) in an OBMol
   class OBAPI OBMolPairIter {
     std::vector<OBAtom*>::iterator _i;
@@ -347,7 +347,7 @@ namespace OpenBabel
     //std::vector<std::vector<unsigned int> > _vpair;
     //std::vector<std::vector<unsigned int> >::iterator _i;
     std::vector<unsigned int> _pair;
- 
+
   public:
 
     OBMolPairIter() :_parent(NULL) { }

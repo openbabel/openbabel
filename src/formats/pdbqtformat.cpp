@@ -9,11 +9,11 @@ Extensively modified 2010 Stuart Armstrong (Source Science/InhibOx)
 for the purpose of reading and writing pdbqt format files.
 Some portions Copyright (C) 2010 by Stuart Armstrong of Source Science/
 InhibOx
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -80,7 +80,7 @@ namespace OpenBabel
 		virtual const char* SpecificationURL()
 			{return "http://autodock.scripps.edu/faqs-help/faq/what-is-the-format-of-a-pdbqt-file";};
 
-		virtual const char* GetMIMEType() 
+		virtual const char* GetMIMEType()
 			{return "chemical/x-pdbqt";};
 
 		//*** This section identical for most OBMol conversions ***
@@ -94,7 +94,7 @@ namespace OpenBabel
 	//***
 	//Make an instance of the format class
 	PDBQTFormat thePDBQTFormat;
-  
+
 	////////////////////////////////////////////////////
 	/// Utility functions
 	static bool parseAtomRecord(char *buffer, OBMol & mol, int chainNum);
@@ -122,7 +122,7 @@ namespace OpenBabel
 			if (EQn(buffer,"ENDMDL",6)) {-- n;}
 		}
 
-		return ifs.good() ? 1 : -1;       
+		return ifs.good() ? 1 : -1;
 	}
 	/////////////////////////////////////////////////////////////////
 	bool PDBQTFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
@@ -246,11 +246,11 @@ namespace OpenBabel
 				continue;
 			}
 
-        
+
 			key = line.substr(0,6); // the first 6 characters are the record name
 			Trim(key);
 			value = line.substr(6);
-        
+
 			// We haven't found this record yet
 			if (!mol.HasData(key))
 			{
@@ -288,7 +288,7 @@ namespace OpenBabel
 		if (!pConv->IsOption("b",OBConversion::INOPTIONS)) {mol.ConnectTheDots(); mol.PerceiveBondOrders();}
 
 		// clean out remaining blank lines
-		while(ifs.peek() != EOF && ifs.good() && 
+		while(ifs.peek() != EOF && ifs.good() &&
 			(ifs.peek() == '\n' || ifs.peek() == '\r'))
 		{
 			ifs.getline(buffer,BUFF_SIZE);
@@ -299,7 +299,7 @@ namespace OpenBabel
 
 	/////////////////////////////////////////////////////////////////////////
 	void OutputAtom(OBAtom* atom, ostream& ofs, const unsigned int index)
-	{ 
+	{
 		char buffer[BUFF_SIZE];
 		char type_name[10], padded_name[10];
 		char the_res[10];
@@ -557,7 +557,7 @@ namespace OpenBabel
 			for (vector <unsigned int>::iterator it=(*tree.find(i)).second.parents.end(); it != (*tree.find(i)).second.parents.begin(); )
 			{
 				it--;
-				if ((*it)==0) {break;} //do not close the main root; that is closed seperately 
+				if ((*it)==0) {break;} //do not close the main root; that is closed seperately
 				vector <unsigned int>::iterator it_parent=it;
 				it_parent--;
 				if ((*tree.find(*it)).second.children.size() == 0)
@@ -836,7 +836,7 @@ namespace OpenBabel
 
 		/* atom name */
 		string atmid = sbuf.substr(6,4);
-    
+
 		/* chain */
 		char chain = sbuf.substr(15,1)[0];
 
@@ -847,7 +847,7 @@ namespace OpenBabel
 		if (sbuf.size() > 72)
 		{
 			pdbqt_element = sbuf.substr(71,2);
-			if ( (pdbqt_element == "A ") || (pdbqt_element == " A") || (pdbqt_element == "Z ") || (pdbqt_element == " Z") || 
+			if ( (pdbqt_element == "A ") || (pdbqt_element == " A") || (pdbqt_element == "Z ") || (pdbqt_element == " Z") ||
 				(pdbqt_element == "G ") || (pdbqt_element == " G") || (pdbqt_element == "GA") || (pdbqt_element == "J ") ||
 				(pdbqt_element == " J") || (pdbqt_element == "Q ") || (pdbqt_element == " Q") )
 				{element = "C"; element += " ";} //all these are carbons
@@ -890,7 +890,7 @@ namespace OpenBabel
 			obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
 			return false;
 		}
-    
+
 		// charge - optional
 		string scharge;
 		if (sbuf.size() > 69)
@@ -960,12 +960,12 @@ namespace OpenBabel
 		/* residue sequence number */
 		string resnum = sbuf.substr(16,4);
 		OBResidue *res  = (mol.NumResidues() > 0) ? mol.GetResidue(mol.NumResidues()-1) : NULL;
-		if (res == NULL || res->GetName() != resname 
+		if (res == NULL || res->GetName() != resname
 			|| res->GetNumString() != resnum)
 		{
 			vector<OBResidue*>::iterator ri;
 			for (res = mol.BeginResidue(ri) ; res ; res = mol.NextResidue(ri))
-			if (res->GetName() == resname 
+			if (res->GetName() == resname
 				&& res->GetNumString() == resnum
 				&& static_cast<int>(res->GetChain()) == chain)
 				break;

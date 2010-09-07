@@ -36,9 +36,9 @@ namespace OpenBabel {
  * used as a template to get started. The <a href="http://www.cmake.org/cmake/help/documentation.html">
  * cmake documentation</a> can be consultated as your project becomes more
  * complex.
- * 
+ *
  * @b CMakeLists.txt
- * @code 
+ * @code
 # this line is required for cmake backwards compatibility
 cmake_minimum_required(VERSION 2.6)
 
@@ -61,7 +61,7 @@ target_link_libraries(myexe ${OPENBABEL2_LIBRARIES})
 install(TARGETS myexe DESTINATION bin)
    @endcode
    @b main.cpp
-   @code 
+   @code
 #include <openbabel/mol.h>
 
 using namespace OpenBabel;
@@ -186,26 +186,26 @@ endif(OPENBABEL2_EXECUTABLE)
   * Generic data is a concept used in OpenBabel to store additional information in objects. The objects are
   * usually molecules, atoms or bonds (OBMol, OBAtom and OBBond). The data can literally be anything since
   * OBPairTemplate allows any datatype (classes have to be copyable though) to be stored. For example, a file
-  * format contains some strings or numbers (e.g. QM energy, biological activity, chemical supplier & price, 
+  * format contains some strings or numbers (e.g. QM energy, biological activity, chemical supplier & price,
   * ...) for each molecule and these can be stored in the OBMol object. When the file format is used to read
-  * a file, the program can access and use this data. A concrete example is the PDB file format which 
+  * a file, the program can access and use this data. A concrete example is the PDB file format which
   * specifies a large number of protein specific data types. All data which cannot be stored using the API is
   * stored as strings in the OBMol object. The program (e.g. a 3D molecular viewer) can retrieve the data
   * (e.g. secondary structure) and use it. It would not be possible to add API methods for all this.
-  * 
+  *
   * @section generic_data_design Design
   * There are two abstract classes defining the interfaces. The OBGenericData interface makes it possible
   * to work with derived classes without knowing anything about the data itself. It contains methods
   * (@ref OBGenericData::SetAttribute and @ref OBGenericData::GetAttribute) for associating the data with a name.
-  * To use std::map<std::string, T> analogy, the attribute is the key for the data T. GetValue always returns 
-  * a std::string and derived classes should convert their data to a string when possible. Returning an empty 
-  * string is acceptable though. 
-  * The second OBBase class defines an interface to store/retrieve/remove OBGenericData objects by attribute, 
-  * type or source. To use std::map analogy again, classes derived from OBBase are the map. 
+  * To use std::map<std::string, T> analogy, the attribute is the key for the data T. GetValue always returns
+  * a std::string and derived classes should convert their data to a string when possible. Returning an empty
+  * string is acceptable though.
+  * The second OBBase class defines an interface to store/retrieve/remove OBGenericData objects by attribute,
+  * type or source. To use std::map analogy again, classes derived from OBBase are the map.
   *
   * @section generic_data_str_num Storing strings and numbers
   * In many cases storing strings and numbers is all you need. Strings can be stored using the OBPairData
-  * class. For numbers there is OBPairInteger and OBPairFloatingPoint. Although the interface is almost the 
+  * class. For numbers there is OBPairInteger and OBPairFloatingPoint. Although the interface is almost the
   * same for these classes multiple examples are given to make it easier to copy/paste.
   *
   * Storing and retrieving a string:
@@ -236,7 +236,7 @@ endif(OPENBABEL2_EXECUTABLE)
   *   cout << "number of aromatic rings: " << data->GetGenericValue() << endl;
   * }
   * @endcode
-  * 
+  *
   * There is a small difference between strings and numbers. The main reason is that
   * GetValue always returns a string. OBPairInteger and OBPairFloatingPoint
   * are actually typedefs for OBPairTemplate which defines the appropriate GetGenericValue
@@ -258,7 +258,7 @@ endif(OPENBABEL2_EXECUTABLE)
   * @endcode
   *
   * @section generic_data_template Truly generic data using OBPairTemplate
-  * Although there are a number of classes for specific data types, using OBPairTemplate 
+  * Although there are a number of classes for specific data types, using OBPairTemplate
   * the same can be accomplished with less code. The second example illustrates this but
   * a simpler example is given first.
   *
@@ -309,11 +309,11 @@ endif(OPENBABEL2_EXECUTABLE)
   *
   * @section generic_data_specific Specific data types
   * A number of specific OBGenericData subclasses are provided for frequently used
-  * data types: AliasData, OBAngleData, OBAtomClassData, OBChiralData, OBCommentData, 
-  * OBConformerData, OBDOSData, OBElectronicTransitionData, OBExternalBondData, 
-  * OBGridData, OBMatrixData, OBNasaThermoData, OBOrbitalEnergyData, OBPairData, 
-  * OBRateData, OBRingData, OBRotamerList, OBRotationData, OBSerialNums, OBSetData, 
-  * OBStereoBase, OBSymmetryData, OBTorsionData, OBUnitCell, OBVectorData, 
+  * data types: AliasData, OBAngleData, OBAtomClassData, OBChiralData, OBCommentData,
+  * OBConformerData, OBDOSData, OBElectronicTransitionData, OBExternalBondData,
+  * OBGridData, OBMatrixData, OBNasaThermoData, OBOrbitalEnergyData, OBPairData,
+  * OBRateData, OBRingData, OBRotamerList, OBRotationData, OBSerialNums, OBSetData,
+  * OBStereoBase, OBSymmetryData, OBTorsionData, OBUnitCell, OBVectorData,
   * OBVibrationData, OBVirtualBond. Consult the documentation for these classes for
   * more information.
   *
@@ -332,7 +332,7 @@ endif(OPENBABEL2_EXECUTABLE)
   *
   * @subsection generic_data_specific_by_format Read data ordered by format
   *
-  * @b adfformat: *.adfout 
+  * @b adfformat: *.adfout
   *   @li Attribute: "Dipole Moment", Type: OBVectorData, Value: dipile moment vector
   *   @li Attribute: "PartialCharges", Type: OBPairData, Value: "Mulliken"
   *   @li Attribute: "GridData", Type: OBGridData, Value: ??, Multiple
@@ -345,7 +345,7 @@ endif(OPENBABEL2_EXECUTABLE)
   *
   * @b chemkinformat: *.ck
   *   @li Attribute: "Rate data", Type: OBRateData, Value: the reaction rate data
-  * 
+  *
   *
   *
   *

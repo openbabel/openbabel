@@ -32,7 +32,7 @@ public:
 	}
 
 	const char* Description(){
-    return 
+    return
     "Interface to OBAPI internals\n"
     "API options, e.g. ---errorlevel 2\n"
     " errorlevel # min warning level displayed\n\n";
@@ -47,7 +47,7 @@ public:
 		{
 			stringstream ss(txt);
 			int ilevel=-1;
-			ss >> ilevel;	
+			ss >> ilevel;
 			if(ilevel>=0)
 				obErrorLog.SetOutputLevel((obMessageLevel)ilevel);
 		}

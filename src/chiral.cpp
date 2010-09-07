@@ -1,16 +1,16 @@
 /*********************************************************************
 chiral.cpp - Detect chiral atoms and molecules.
- 
+
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -64,7 +64,7 @@ namespace OpenBabel
   }
 
   // DEPRECATED
-  int GetParity4Ref(vector<unsigned int> pref) 
+  int GetParity4Ref(vector<unsigned int> pref)
   {
     if(pref.size()!=4)return(-1); // should be given a vector of size 4.
     int parity=0;
@@ -73,8 +73,8 @@ namespace OpenBabel
         for(int j=0;j<3;++j) // iterate across the array 4th element has no
           {                    // right hand neighbour so no need to sort
             if (pref[j+1] < pref[j]) // compare the two neighbors
-              {  
-                unsigned int tmp = pref[j];        // swap a[j] and a[j+1]  
+              {
+                unsigned int tmp = pref[j];        // swap a[j] and a[j+1]
                 pref[j] = pref[j+1];
                 pref[j+1] = tmp;
                 parity++; // parity odd will invert stereochem
@@ -89,12 +89,12 @@ namespace OpenBabel
   {
     if (!atm->HasChiralitySpecified()) // if no chirality defined can't do any more for 0D
       return(false);
-    
+
     int parityI=0,parityO=0;
     OBChiralData* cd=(OBChiralData*)atm->GetData(OBGenericDataType::ChiralData);
     if ((cd->GetAtom4Refs(input)).size()!=4)return(false); // must have 4 refs
     parityI=GetParity4Ref(cd->GetAtom4Refs(i)); // Gets Atom4Refs used to define the chirality
-    parityO=GetParity4Ref(cd->GetAtom4Refs(o));//GetsOutput parity.        
+    parityO=GetParity4Ref(cd->GetAtom4Refs(o));//GetsOutput parity.
     /* switch (CHTYPE)
        {
        case SMILES: // SMILES always uses 1234 atom refs
@@ -116,20 +116,20 @@ namespace OpenBabel
        nbr_atms.push_back(Hid);
        int tmp[4];
        for(int i=0;i<4;++i){tmp[i]=nbr_atms[i];}
-       parityO=GetParity4Ref(tmp);    
-       } 
+       parityO=GetParity4Ref(tmp);
+       }
        else if (atm->GetHvyValence()==4)
-       parityO=0;   
+       parityO=0;
        break;
        default:
-       parityO=0;                               
+       parityO=0;
        }*/
     if (parityO==parityI)
       {//cout << "Parity is the same"<<endl;
         return(true);
       }
     else if(parityO!=parityI) // Need to invert the Chirality which has been set
-      { //cout << "Parity is Opposite"<<endl;       
+      { //cout << "Parity is Opposite"<<endl;
         if (atm->IsClockwise())
           {atm->UnsetStereo();atm->SetAntiClockwiseStereo();}
         else if (atm->IsAntiClockwise())
@@ -153,7 +153,7 @@ namespace OpenBabel
     vector<vector3> nbr_crds;
     bool use_central_atom = false,is2D=false;
     //   double hbrad = etab.CorrectedBondRad(1,0);
-           
+
     if (!ReZeroZ || !mol.Has3D()) //give pseudo Z coords if mol is 2D
       {
         vector3 v,vz(0.0,0.0,1.0);
@@ -189,7 +189,7 @@ namespace OpenBabel
               }
           }
       }
-    
+
     if (atm->GetHvyValence() < 3)
       {
         stringstream errorMsg;
@@ -248,7 +248,7 @@ namespace OpenBabel
         atm->SetData(cd);
       }
     cd->SetAtom4Refs(nbr_atms,calcvolume);
-    
+
     //re-zero pseudo-coords
     if (is2D && ReZeroZ)
       {
@@ -262,7 +262,7 @@ namespace OpenBabel
             atom->SetVector(v);
           }
       }
-    
+
     return(signed_volume(nbr_crds[0],nbr_crds[1],nbr_crds[2],nbr_crds[3]));
   }
 
@@ -279,7 +279,7 @@ namespace OpenBabel
   }
 
   //! \brief Calculate the Graph Potentials of a molecule
-  //! 
+  //!
   //! based on
   //! V.E. and Rozenblit, A.B. Golender
   //! <em>Logical and Combinatorial Algorithms for Drug Design</em>. \n

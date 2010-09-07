@@ -735,10 +735,10 @@ namespace OpenBabel
       unsigned int NumKeys()
       {
 	unsigned int numKeys = 0;
-	
+
 	while (Next())
 	  numKeys++;
-	
+
 	return numKeys;
       }
 

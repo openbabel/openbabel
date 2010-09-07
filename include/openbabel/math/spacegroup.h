@@ -1,16 +1,16 @@
 /**********************************************************************
 spacegroup.h - Handle Crystallographic Space Groups.
- 
+
 Copyright (C) 2007 by Jean Bréfort
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
-This program is free software; you can redistribute it and/or 
-modify it under the terms of the GNU General Public License as 
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
 published by the Free Software Foundation; either version 2 of the
 License, or (at your option) any later version.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -53,7 +53,7 @@ namespace OpenBabel
         const std::string & GetHMName() const
           { return m_HM;}
         const std::string & GetHallName()const
-          { return m_Hall;} 
+          { return m_Hall;}
         unsigned GetId() const
           { return m_id; }
         std::list<vector3> Transform(const vector3 &v) const;
@@ -70,7 +70,7 @@ namespace OpenBabel
         /* Use it if the space group is unknown (might happen if no database has
          been loaded or if the HM name is not usual. */
         // Unfortunately, this seems to confuse the SWIG parser
-        // Fortunately, it's not needed for the scripting bindings, 
+        // Fortunately, it's not needed for the scripting bindings,
         // since this is internal code
 #ifndef SWIG
         void RegisterSpaceGroup (int nb = 0, ...);
@@ -84,7 +84,7 @@ namespace OpenBabel
         bool IsValid() const;
 
       private:
-        /** 
+        /**
          * Hermann-Mauguin Symbol, long version (e.g. "I m m a", "P 1 21 1")
          */
         std::string m_HM;
