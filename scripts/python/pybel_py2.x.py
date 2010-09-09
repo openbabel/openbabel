@@ -42,17 +42,21 @@ outformats = _formatstodict(_obconv.GetSupportedOutputFormat())
 def _getplugins(findplugin, names):
     plugins = dict([(x, findplugin(x)) for x in names if findplugin(x)])
     return plugins
+def _getpluginnames(ptype):
+    plugins = ob.vectorString()
+    ob.OBPlugin.ListAsVector(ptype, None, plugins)
+    return [x.split()[0] for x in plugins]
 
-descs = ['LogP', 'MR', 'TPSA']
+descs = _getpluginnames("descriptors")
 """A list of supported descriptors"""
 _descdict = _getplugins(ob.OBDescriptor.FindType, descs)
-fps = ['FP2', 'FP3', 'FP4']
+fps = _getpluginnames("fingerprints")
 """A list of supported fingerprint types"""
 _fingerprinters = _getplugins(ob.OBFingerprint.FindFingerprint, fps)
-forcefields = ['uff', 'mmff94', 'ghemical']
+forcefields = [_x.lower() for _x in _getpluginnames("forcefields")]
 """A list of supported forcefields"""
 _forcefields = _getplugins(ob.OBForceField.FindType, forcefields)
-operations = ['Gen3D']
+operations = _getpluginnames("ops")
 """A list of supported operations"""
 _operations = _getplugins(ob.OBOp.FindType, operations)
 
@@ -380,7 +384,8 @@ class Molecule(object):
     def __str__(self):
         return self.write()
 
-    def draw(self, show=True, filename=None, update=False, usecoords=False):
+    def draw(self, show=True, filename=None, update=False, usecoords=False,
+                   method="mcdl"):
         """Create a 2D depiction of the molecule.
 
         Optional parameters:
@@ -391,20 +396,35 @@ class Molecule(object):
                     (default is False)
           usecoords -- don't calculate 2D coordinates, just use
                        the current coordinates (default is False)
+          method -- two methods are available for calculating the
+                    2D coordinates: OpenBabel's "mcdl" (the default), or
+                    "oasa" (from the OASA toolkit)
 
-        OASA is used for 2D coordinate generation and depiction. Tkinter and
-        Python Imaging Library are required for image display.
+        OASA is used for depiction. Tkinter and Python
+        Imaging Library are required for image display.
         """
         etab = ob.OBElementTable()
 
         if not oasa:
-            errormessage = ("OASA not found, but is required for 2D structure "
-                            "generation and depiction. OASA is part of BKChem. "
+            errormessage = ("OASA not found, but is required for depiction. "
+                            "OASA is part of BKChem. "
                             "See installation instructions for more "
                             "information.")
             raise ImportError(errormessage)
+        if method not in ["mcdl", "oasa"]:
+            raise ValueError("Method '%s' not recognised. Should be either"
+                               " 'mcdl' or 'oasa'.")
+
+        workingmol = self
+        if method == "mcdl":
+            if not update: # Call gen2D on a clone
+                workingmol = Molecule(self)
+            if not usecoords:
+                _operations['gen2D'].Do(workingmol.OBMol)
+            usecoords = True # Use the workingmol's coordinates
+                   
         mol = oasa.molecule()
-        for atom in self.atoms:
+        for atom in workingmol.atoms:
             v = mol.create_vertex()
             v.symbol = etab.GetSymbol(atom.atomicnum)
             v.charge = atom.formalcharge
@@ -412,7 +432,7 @@ class Molecule(object):
                 v.x, v.y, v.z = atom.coords[0] * 30., atom.coords[1] * 30., 0.0
             mol.add_vertex(v)
 
-        for bond in ob.OBMolBondIter(self.OBMol):
+        for bond in ob.OBMolBondIter(workingmol.OBMol):
             e = mol.create_edge()
             e.order = bond.GetBO()
             if bond.IsHash():
@@ -425,10 +445,10 @@ class Molecule(object):
         # I'm sure there's a more elegant way to do the following, but here goes...
         # let's set the stereochemistry around double bonds
         self.write("can") # Perceive UP/DOWNness
-        for bond in ob.OBMolBondIter(self.OBMol):
+        for bond in ob.OBMolBondIter(workingmol.OBMol):
             ends = bond.GetBeginAtomIdx(), bond.GetEndAtomIdx()
             if bond.GetBO() == 2:
-                stereobonds = [[b for b in ob.OBAtomBondIter(self.OBMol.GetAtom(x)) if b.GetIdx() != bond.GetIdx() and (b.IsUp() or b.IsDown())]
+                stereobonds = [[b for b in ob.OBAtomBondIter(workingmol.OBMol.GetAtom(x)) if b.GetIdx() != bond.GetIdx() and (b.IsUp() or b.IsDown())]
                                for x in ends]
                 if stereobonds[0] and stereobonds[1]: # Needs to be defined at either end
                     if stereobonds[0][0].IsUp() == stereobonds[1][0].IsUp():
@@ -451,7 +471,7 @@ class Molecule(object):
                     mol.add_stereochemistry(st)
         
         mol.remove_unimportant_hydrogens()
-        if not usecoords:
+        if method == "oasa" and not usecoords:
             oasa.coords_generator.calculate_coords(mol, bond_length=30)
             if update:
                 newcoords = [(v.x / 30., v.y / 30., 0.0) for v in mol.vertices]

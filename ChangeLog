@@ -1,3 +1,9 @@
+2010-09-09  Noel O'Boyle
+
+	* scripts/python/pybel_py*.x.py: Synch with cinfony. Add support for
+	MCDL 2D coordinate generation when calling 'draw()'. MCDL is the
+	default. To use	OASA, specify method="oasa".
+
 2010-09-07  Geoffrey Hutchison  <babel@geoffhutchison.net>
 
 	* include/openbabel/base.h: Add new UNUSED() macro for unused
