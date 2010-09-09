@@ -74,8 +74,14 @@ namespace OpenBabel {
       static int				RegisterFormat(const char* ID, OBFormat* pFormat, const char* MIME = NULL);
       /// @brief Searches registered formats
       static OBFormat*	FindFormat(const char* ID);
+      /// @brief Searches registered formats
+      /// \since version 2.3
+      static OBFormat*  FindFormat(const std::string ID);
       /// @brief Searches registered formats for an ID the same as the file extension
       static OBFormat*	FormatFromExt(const char* filename);
+      /// @brief Searches registered formats for an ID the same as the file extension
+      /// \since version 2.3
+      static OBFormat*	FormatFromExt(const std::string filename);
       /// @brief Searches registered formats for a MIME the same as the chemical MIME type passed
       static OBFormat*        FormatFromMIME(const char* MIME);
 

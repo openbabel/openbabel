@@ -682,6 +682,11 @@ namespace OpenBabel {
     return OBFormat::FindType(ID);
   }
 
+  OBFormat* OBConversion::FindFormat(const std::string ID)
+  {
+    return OBFormat::FindType(ID.c_str());
+  }  
+
   //////////////////////////////////////////////////
   const char* OBConversion::GetTitle() const
   {
@@ -729,6 +734,11 @@ namespace OpenBabel {
     }
     // If we are just passed the filename with no path, this should catch it:
     return FindFormat( file.c_str() ); //if no format found
+  }
+
+  OBFormat* OBConversion::FormatFromExt(const std::string filename)
+  {
+    return FormatFromExt(filename.c_str());
   }
 
   OBFormat* OBConversion::FormatFromMIME(const char* MIME)
