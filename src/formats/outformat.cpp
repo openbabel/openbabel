@@ -135,7 +135,10 @@ namespace OpenBabel
 
     if (pFormat) {
       ifs.seekg (0, ios::beg); // reset the stream to the beginning
-      // Tag the molecule with the format (e.g., if a program wants to know what kind of "out" or "log" file this is
+      bool success = pFormat->ReadMolecule(pOb, pConv);
+
+      // Tag the molecule with the format (e.g., if a program wants to know the kind of "out" or "log" file)
+      // We have to do this *after* ReadMolecule returns, or the data might be cleared
       if (pOb) {
         OBPairData *dp = new OBPairData;
         dp->SetAttribute("File Format");
@@ -143,7 +146,8 @@ namespace OpenBabel
         dp->SetOrigin(fileformatInput);
         pOb->SetData(dp);
       }
-      return pFormat->ReadMolecule(pOb, pConv);
+
+      return success;
     }
 
     obErrorLog.ThrowError(__FUNCTION__,
