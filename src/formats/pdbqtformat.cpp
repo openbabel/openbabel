@@ -60,7 +60,6 @@ namespace OpenBabel
 		PDBQTFormat()
 		{
 			OBConversion::RegisterFormat("pdbqt",this, "chemical/x-pdbqt");
-			OBConversion::RegisterFormat("ent",this, "chemical/x-pdbqt");
 		}
 
 		virtual const char* Description() //required
