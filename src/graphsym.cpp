@@ -1,55 +1,26 @@
-/* -*-C++-*-
+/**********************************************************************
+  graphsym.cpp - Symmetry detection algorithm
 
-**********************************************************************
-Copyright (C) 2005-2006, eMolecules, Inc. (www.emolecules.com)
+  Copyright (C) 2009-2010 by Tim Vandermeersch
+  Copyright (C) 2005-2006, eMolecules, Inc. (www.emolecules.com)
+ 
+  This file is part of the Open Babel project.
+  For more information, see <http://openbabel.sourceforge.net/>
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation version 2 of the License.
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation version 2 of the License.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-***********************************************************************
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-+======================================================================
-|
-| AUTHOR: Craig A. James, eMolecules, Inc.
-|
-| DESCRIPTION: CANONICALIZATION OF SMILES
-|
-|       This is a specialized SMILES canonicalization algorithm.  Although
-|       it can be applied in the standard fashion to a whole molecule,
-|       its real job is to generate canonical SMILES for fragments, or
-|       "subsets", of the atoms of a molecule.
-|
-|       For example, consider the first three atoms of Oc1ccccc1.  With
-|       a "normal" SMILES canonicalizer, you couldn't generate a SMILES
-|       for Occ, because it's not a valid molecule.  However, this system
-|       can do exactly that, by taking both the whole molecule (which
-|       retains the aromaticity), and a "subset" bitmap that specifies
-|       which atoms are to be included in the SMILES.
-|
-|       Canonicalization is carried out per Weininger et al (J. Chem.
-|       Inf. Comput. Sci., Vol. 29, No. 2, 1989, pp 97-101), with some
-|       modifications to handle bond symmetries not foreseen by Weininger
-|       in that paper.
-|
-|       WARNING - KNOWN BUG: These functions make use of a bitmap vector
-|       to represent a "fragment" -- a subset of the atoms in a molecule.
-|       But this means the bonds of the fragment are implicit, not explicit,
-|       which is incorrect.  For example, if you want to break one bond of
-|       cyclehexane (C1CCCCC1), all six atoms will still be there, so the
-|       "fragment" will be cyclic.  This is relevant when generating fragment
-|       SMILES for ring systems where breaking a bond can reduce the number
-|       of ring without removing any atoms.  We need to add a pair of bit
-|       vectors, the atoms AND the bonds, to represent a fragment.  (Note
-|       that this is also an ambiguity in OpenBabel itself, which represents
-|       a ring as a set of atoms. This is only valid if the ring is a member
-|       of a SSSR.)
-+======================================================================
-*/
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+  02110-1301, USA.
+ **********************************************************************/
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
@@ -60,38 +31,82 @@ GNU General Public License for more details.
 
 #include <iterator> // std::istream_iterator
 #include <cassert>
+#include <algorithm>
+#include <cmath>
+#include <limits>
+
+#include "stereo/stereoutil.h"
+
+#define DEBUG 0
+
+  static const char *red    = "\033[1;31m";
+  static const char *green  = "\033[1;32m";
+  static const char *yellow = "\033[1;33m";
+  static const char *blue   = "\033[1;34m";
+  static const char *normal = "\033[0m";
 
 using namespace std;
+
+
+// debug function
+template<typename T>
+void print_vector(const std::string &label, const std::vector<T> &v)
+{
+  std::cout << label << ": ";
+  for (std::size_t i = 0; i < v.size(); ++i)
+    std::cout << v[i] << " ";
+  std::cout << endl;
+}
+
+// debug function
+void print_sym_classes(const std::string &label, const std::vector<std::pair<OpenBabel::OBAtom*, unsigned int> > &atom_sym_classes)
+{
+  cout << label << ": ";
+  for (int i = 0; i < atom_sym_classes.size(); i++)
+    cout << atom_sym_classes[i].second << " ";
+  cout << endl;
+}
 
 namespace OpenBabel {
 
   class OBGraphSymPrivate
   {
-  };
+    public:
+      OBBitVec _frag_atoms;
+      OBMol* _pmol;
+      Automorphisms _G;
+      std::vector<unsigned int> _canonLabels;
+      OBStereoUnitSet _stereoUnits;
 
-/***************************************************************************
-* FUNCTION: CompareXXX
-*
-* DESCRIPTION:
-*       Three functions for use by the sort() method of a vector.
-***************************************************************************/
+      unsigned int GetValence(OBAtom *atom);
+      unsigned int GetHvyValence(OBAtom *atom);
+      unsigned int GetHvyBondSum(OBAtom *atom);
+      void FindRingAtoms(OBBitVec &ring_atoms);
+      void CreateNewClassVector(std::vector<std::pair<OBAtom*,unsigned int> > &vp1,
+                                std::vector<std::pair<OBAtom*,unsigned int> > &vp2);
+      static void CreateNewClassVector(OBMol *mol, std::vector<std::pair<OBAtom*,unsigned int> > &vp1,
+                                       std::vector<std::pair<OBAtom*,unsigned int> > &vp2);
+      void GetGIVector(std::vector<unsigned int> &vid);
+      bool GetGTDVector(std::vector<int> &gtd);
+      static void CountAndRenumberClasses(std::vector<std::pair<OBAtom*,unsigned int> > &vp, unsigned int &count);
+      int ExtendInvariants(std::vector<std::pair<OBAtom*, unsigned int> > &symmetry_classes);
+      int CalculateSymmetry(std::vector<unsigned int> &symmetry_classes);
+      int Iterate(std::vector<unsigned int> &symmetry_classes);
+      void CanonicalLabels(const std::vector<unsigned int> &symmetry_classes, std::vector<unsigned int> &canon_labels);
+  };
 
   OBGraphSym::OBGraphSym(OBMol* pmol, OBBitVec* frag_atoms) : d(new OBGraphSymPrivate)
   {
-    _pmol = pmol;
+    d->_pmol = pmol;
     if (frag_atoms) {
-      _frag_atoms = *frag_atoms;
+      d->_frag_atoms = *frag_atoms;
     } else {
-      _frag_atoms.Resize(_pmol->NumAtoms());
-      FOR_ATOMS_OF_MOL(a, _pmol)
-        _frag_atoms.SetBitOn(a->GetIdx());
+      d->_frag_atoms.Resize(d->_pmol->NumAtoms());
+      FOR_ATOMS_OF_MOL(a, d->_pmol)
+        d->_frag_atoms.SetBitOn(a->GetIdx());
     }
   }
-
-
-// NOTE: Copied from OpenBabel/mol.cpp
-
-  // Destructor
+ 
   OBGraphSym::~OBGraphSym()
   {
     delete d;
@@ -99,36 +114,34 @@ namespace OpenBabel {
 
   const unsigned int OBGraphSym::NoSymmetryClass = 0x7FFFFFFF;
 
-  bool OBGraphSym::CompareUnsigned(const unsigned int &a,const unsigned int &b)
+  /**
+   * Functions for use by the sort() method of a vector.
+   */
+  inline bool CompareUnsigned(const unsigned int &a,const unsigned int &b)
   {
     return(a<b);
   }
 
-  bool OBGraphSym::ComparePairFirst(const std::pair<OBAtom*,unsigned int> &a,const std::pair<OBAtom*,unsigned int> &b)
+  inline bool ComparePairFirst(const std::pair<OBAtom*,unsigned int> &a,const std::pair<OBAtom*,unsigned int> &b)
   {
     return(a.first->GetIdx() < b.first->GetIdx());
   }
 
-  bool OBGraphSym::ComparePairSecond(const std::pair<OBAtom*,unsigned int> &a,const std::pair<OBAtom*,unsigned int> &b)
+  inline bool ComparePairSecond(const std::pair<OBAtom*,unsigned int> &a,const std::pair<OBAtom*,unsigned int> &b)
   {
     return(a.second < b.second);
   }
 
-  bool OBGraphSym::CompareBondPairSecond(const std::pair<OBBond*,unsigned int> &a,const std::pair<OBBond*,unsigned int> &b)
+  inline bool CompareBondPairSecond(const std::pair<OBBond*,unsigned int> &a,const std::pair<OBBond*,unsigned int> &b)
   {
     return(a.second < b.second);
   }
-
-
-/***************************************************************************
-* FUNCTION: GetValence
-*
-* DESCRIPTION:
-*       Like OBAtom::GetValence(): Counts the number of neighbors, but
-*       doesn't count atoms not in the fragment.
-***************************************************************************/
-
-  unsigned int OBGraphSym::GetValence(OBAtom *atom)
+  
+  /**
+   * Like OBAtom::GetValence(): Counts the number of neighbors, but
+   * doesn't count atoms not in the fragment.
+   */
+  unsigned int OBGraphSymPrivate::GetValence(OBAtom *atom)
   {
     unsigned int count = 0;
     OBBond *bond;
@@ -143,15 +156,11 @@ namespace OpenBabel {
     return(count);
   }
 
-/***************************************************************************
-* FUNCTION: GetHvyValence
-*
-* DESCRIPTION:
-*       Like OBAtom::GetHvyValence(): Counts the number non-hydrogen
-*       neighbors, but doesn't count atoms not in the fragment.
-***************************************************************************/
-
-  unsigned int OBGraphSym::GetHvyValence(OBAtom *atom)
+  /**
+   * Like OBAtom::GetHvyValence(): Counts the number non-hydrogen
+   * neighbors, but doesn't count atoms not in the fragment.
+   */
+  unsigned int OBGraphSymPrivate::GetHvyValence(OBAtom *atom)
   {
     unsigned int count = 0;
     OBBond *bond;
@@ -166,23 +175,19 @@ namespace OpenBabel {
 
     return(count);
   }
-
-/***************************************************************************
-* FUNCTION: GetHvyBondSum
-*
-* DESCRIPTION:
-*       Sums the bond order over the bonds from this atom to other atoms
-*       in the fragment.  Single = 1, double = 2, triple = 3, aromatic = 1.6,
-*       but sum is rounded to nearest integer.
-*
-*       This is used for fragment symmetry perception instead of the "implicit
-*       valence" used by the standard OpenBabel symmetry perception.  It
-*       has the same effect, but we don't have to worry about hydrogen counts,
-*       EXCEPT for aromatic N, where the difference between n and [nH] is
-*       critical.
-***************************************************************************/
-
-  unsigned int OBGraphSym::GetHvyBondSum(OBAtom *atom)
+  
+  /**
+   * Sums the bond order over the bonds from this atom to other atoms
+   * in the fragment.  Single = 1, double = 2, triple = 3, aromatic = 1.6,
+   * but sum is rounded to nearest integer.
+   *
+   * This is used for fragment symmetry perception instead of the "implicit
+   * valence" used by the standard OpenBabel symmetry perception.  It
+   * has the same effect, but we don't have to worry about hydrogen counts,
+   * EXCEPT for aromatic N, where the difference between n and [nH] is
+   * critical.
+   */
+  unsigned int OBGraphSymPrivate::GetHvyBondSum(OBAtom *atom)
   {
     float count = 0.0f;
     OBBond *bond;
@@ -204,738 +209,472 @@ namespace OpenBabel {
     return(int(count + 0.5));     // round to nearest int
   }
 
+  /**
+   * Calculates the graph theoretical distance of each atom.
+   * Vector is indexed from zero.
+   *
+   * NOTE: "Indexed from zero" means it's one off from the atom->GetIdx()
+   * that's used to index atoms inside the molecule!
+   *
+   * NOTE: This function is hard to decipher, and seems to be misnamed.
+   * A "distance" should be be between two atoms, but there's more here
+   * than that.  It seems to be doing a breadth-first search to find the
+   * most-distant atom from each atom, and reporting the number of steps
+   * (which happens to be the graph-theoretical distance) to that atom.
+   * The name "Graph Theoretical Distance" is thus misleading.
+   */
+  bool OBGraphSymPrivate::GetGTDVector(vector<int> &gtd)
+  {
+    gtd.clear();
+    gtd.resize(_pmol->NumAtoms());
 
-/***************************************************************************
-* FUNCTION: GetGTDVector
-*
-* DESCRIPTION:
-*
-*       Calculates the graph theoretical distance of each atom.
-*       Vector is indexed from zero.
-*
-*       NOTE: Copied from OpenBabel/mol.cpp
-*
-*       NOTE: "Indexed from zero" means it's one off from the atom->GetIdx()
-*       that's used to index atoms inside the molecule!
-*
-*       NOTE: This function is hard to decipher, and seems to be misnamed.
-*       A "distance" should be be between two atoms, but there's more here
-*       than that.  It seems to be doing a breadth-first search to find the
-*       most-distant atom from each atom, and reporting the number of steps
-*       (which happens to be the graph-theoretical distance) to that atom.
-*       The name "Graph Theoretical Distance" is thus misleading.
-***************************************************************************/
+    int gtdcount, natom;
+    OBBitVec used, curr, next;
+    OBAtom *atom, *atom1;
+    OBBond *bond;
+    vector<OBNodeBase*>::iterator ai;
+    vector<OBEdgeBase*>::iterator j;
 
-  bool OBGraphSym::GetGTDVector(vector<int> &gtd)
-{
-  gtd.clear();
-  gtd.resize(_pmol->NumAtoms());
+    next.Clear();
 
-  int gtdcount, natom;
-  OBBitVec used, curr, next;
-  OBAtom *atom, *atom1;
-  OBBond *bond;
-  vector<OBNodeBase*>::iterator ai;
-  vector<OBEdgeBase*>::iterator j;
+    for (atom = _pmol->BeginAtom(ai); atom; atom = _pmol->NextAtom(ai)) {
 
-  next.Clear();
-
-  for (atom = _pmol->BeginAtom(ai); atom; atom = _pmol->NextAtom(ai)) {
-
-    int idx = atom->GetIdx();
-    if (!_frag_atoms.BitIsOn(idx)) {     // Not in this fragment?
-      gtd[idx-1] = 0;
-      continue;
-    }
-
-    gtdcount = 0;
-    used.Clear();curr.Clear();
-    used.SetBitOn(idx);
-    curr.SetBitOn(idx);
-
-    while (!curr.IsEmpty()) {
-      next.Clear();
-      for (natom = curr.NextBit(-1);natom != curr.EndBit();natom = curr.NextBit(natom)) {
-        atom1 = _pmol->GetAtom(natom);
-        if (!_frag_atoms.BitIsOn(atom1->GetIdx()))
-          continue;
-        for (bond = atom1->BeginBond(j);bond;bond = atom1->NextBond(j)) {
-          int nbr_idx = bond->GetNbrAtomIdx(atom1);
-          if (   _frag_atoms.BitIsOn(nbr_idx)
-              && !used.BitIsOn(nbr_idx)
-              && !curr.BitIsOn(nbr_idx)
-              && !(bond->GetNbrAtom(atom1))->IsHydrogen())
-            next.SetBitOn(nbr_idx);
-        }
+      int idx = atom->GetIdx();
+      if (!_frag_atoms.BitIsOn(idx)) {     // Not in this fragment?
+        //gtd[idx-1] = 0;
+        gtd[idx-1] = OBGraphSym::NoSymmetryClass;
+        continue;
       }
-      used |= next;
-      curr = next;
-      gtdcount++;
+
+      gtdcount = 0;
+      used.Clear();curr.Clear();
+      used.SetBitOn(idx);
+      curr.SetBitOn(idx);
+
+      while (!curr.IsEmpty()) {
+        next.Clear();
+        for (natom = curr.NextBit(-1);natom != curr.EndBit();natom = curr.NextBit(natom)) {
+          atom1 = _pmol->GetAtom(natom);
+          if (!_frag_atoms.BitIsOn(atom1->GetIdx()))
+            continue;
+          for (bond = atom1->BeginBond(j);bond;bond = atom1->NextBond(j)) {
+            int nbr_idx = bond->GetNbrAtomIdx(atom1);
+            if (   _frag_atoms.BitIsOn(nbr_idx)
+                && !used.BitIsOn(nbr_idx)
+                && !curr.BitIsOn(nbr_idx)
+                && !(bond->GetNbrAtom(atom1))->IsHydrogen())
+              next.SetBitOn(nbr_idx);
+          }
+        }
+        used |= next;
+        curr = next;
+        gtdcount++;
+      }
+      gtd[idx-1] = gtdcount;
     }
-    gtd[idx-1] = gtdcount;
+
+    return(true);
   }
+  
+  /**
+   * Finds all atoms that are part of a ring in the current fragment.
+   * We start with the whole molecule's rings, and eliminate any that
+   * have atoms not in the subset.  For the rings that are left, mark
+   * each atom of the ring as a ring atom.
+   *
+   * @return A bit vector where TRUE means it's a ring atom.
+   */
+  void OBGraphSymPrivate::FindRingAtoms(OBBitVec &ring_atoms)
+  {
+    vector<OBRing*> sssRings;
+    vector<OBRing*>::iterator ri;
 
-  return(true);
-}
+    ring_atoms.Resize(_pmol->NumAtoms());
+    ring_atoms.Clear();
 
-/***************************************************************************
-* FUNCTION: FindRingAtoms
-*
-* DESCRIPTION:
-*       Finds all atoms that are part of a ring in the current fragment.
-*       We start with the whole molecule's rings, and eliminate any that
-*       have atoms not in the subset.  For the rings that are left, mark
-*       each atom of the ring as a ring atom.
-*
-*       Returns a bit vector where TRUE means it's a ring atom.
-***************************************************************************/
-
-  void OBGraphSym::FindRingAtoms(OBBitVec &ring_atoms)
-{
-  vector<OBRing*> sssRings;
-  vector<OBRing*>::iterator ri;
-
-  ring_atoms.Resize(_pmol->NumAtoms());
-  ring_atoms.Clear();
-
-  sssRings = _pmol->GetSSSR();
-  for (ri = sssRings.begin(); ri != sssRings.end(); ri++) {
-    OBRing *ring = *ri;
-    OBBitVec bvtmp = _frag_atoms & ring->_pathset;       // intersection: fragment and ring
-    if (bvtmp == ring->_pathset)                        // all ring atoms in fragment?
-      ring_atoms |= ring->_pathset;                     //   yes - add this ring's atoms
-  }
-}
-
-
-/***************************************************************************
-* FUNCTION: GetGIVector
-*
-* DESCRIPTION:
-*       NOTE: Copied from OpenBabel/mol.cpp
-*
-*       Calculates a set of graph invariant indexes using the graph theoretical
-*       distance, number of connected heavy atoms, aromatic boolean, ring
-*       boolean, atomic number, and summation of bond orders connected to the
-*       atom.
-*
-*       We have to recalculate which atoms are in rings by taking the fragment's
-*       atoms into account when we generate the graph invarients.
-*
-*       Vector is indexed from zero (not one, like atom->GetIdx()).
-*
-*       NOTE: This may need to be extended to include the bond-invariant properties,
-*       particularly the size of all rings the bond is in (from a SSSR).
-***************************************************************************/
-
-  void OBGraphSym::GetGIVector(vector<unsigned int> &vid)
-{
-  // Prepare the vector...
-  vid.clear();
-  vid.resize(_pmol->NumAtoms());
-
-  // The "graph theoretical distance" for each atom (see comments in the function)
-  vector<int> v;
-  GetGTDVector(v);
-
-  // Compute the ring atoms for this particular fragment (set of atoms)
-  OBBitVec ring_atoms;
-  FindRingAtoms(ring_atoms);
-
-  int i;
-  OBAtom *atom;
-  vector<OBNodeBase*>::iterator ai;
-  for (i=0, atom = _pmol->BeginAtom(ai); atom; atom = _pmol->NextAtom(ai)) {
-    vid[i] = 0;
-    if (_frag_atoms.BitIsOn(atom->GetIdx())) {
-      vid[i] =
-        v[i]                                                    // 10 bits: graph-theoretical distance
-        | (GetHvyValence(atom)                <<10)  //  4 bits: heavy valence
-        | (((atom->IsAromatic()) ? 1 : 0)                <<14)  //  1 bit:  aromaticity
-        | (((ring_atoms.BitIsOn(atom->GetIdx())) ? 1 : 0)<<15)  //  1 bit:  ring atom
-        | (atom->GetAtomicNum()                          <<16)  //  7 bits: atomic number
-        | (GetHvyBondSum(atom)               <<23)  //  4 bits: heavy bond sum
-        | ((7 + atom->GetFormalCharge())                 <<27); //  4 bits: formal charge
+    sssRings = _pmol->GetSSSR();
+    for (ri = sssRings.begin(); ri != sssRings.end(); ri++) {
+      OBRing *ring = *ri;
+      OBBitVec bvtmp = _frag_atoms & ring->_pathset;      // intersection: fragment and ring
+      if (bvtmp == ring->_pathset)                        // all ring atoms in fragment?
+        ring_atoms |= ring->_pathset;                     //   yes - add this ring's atoms 
     }
-    i++;
   }
-}
+  
+  /**
+   * Calculates a set of graph invariant indexes using the graph theoretical
+   * distance, number of connected heavy atoms, aromatic boolean, ring
+   * boolean, atomic number, and summation of bond orders connected to the
+   * atom.
+   *
+   * We have to recalculate which atoms are in rings by taking the fragment's
+   * atoms into account when we generate the graph invarients.
+   *
+   * Vector is indexed from zero (not one, like atom->GetIdx()).
+   *
+   * NOTE: This may need to be extended to include the bond-invariant properties,
+   * particularly the size of all rings the bond is in (from a SSSR).
+   */
+  void OBGraphSymPrivate::GetGIVector(vector<unsigned int> &vid)
+  {
+    // Prepare the vector...
+    vid.clear();
+    vid.resize(_pmol->NumAtoms());
 
-/***************************************************************************
-* FUNCTION: BreakChiralTies
-*
-* DESCRIPTION:
-*       After the achiral symmetry analysis ChiralSymmetry() is done, but
-*       before the "tie breaker" step (see CanonicalLabels(), below), there
-*       may be two (or more) chiral centers in the same symmetry class that
-*       actually have different chirality.  This function finds such chiral
-*       centers, and compares their chirality.  If it finds that two atoms
-*       in the same symmetry class have the same chirality, it leaves them
-*       alone, but if they have opposite chirality, it breaks the tie
-*       between the two atoms.
-*
-*       Actually, it's more subtle than that.  Suppose there are a bunch of
-*       chiral atoms in the same symmetry class.  The the class is divided
-*       into two classes: All atoms with one chirality go into one class,
-*       and all atoms with the opposite chirality go in the other class.
-*
-* INPUTS:
-*       pmol                the molecule
-*       frag_atoms          atoms of the molecules in this fragment
-*       atom_sym_classes    vector of atom/symclass pairs
-*
-***************************************************************************/
+    // The "graph theoretical distance" for each atom (see comments in the function)
+    vector<int> v;
+    GetGTDVector(v);
 
-void IdsToSymClasses(OBMol *mol, OBCisTransStereo::Config &config,
-    const std::vector<unsigned int> &symClasses)
-{
-  OBAtom *atom;
-  // begin
-  atom = mol->GetAtomById(config.begin);
-  if (atom) {
-    if (atom->IsHydrogen())
-      config.begin = OBStereo::ImplicitRef;
-    else
-      config.begin = symClasses.at(atom->GetIndex());
+    // Compute the ring atoms for this particular fragment (set of atoms)
+    OBBitVec ring_atoms;
+    FindRingAtoms(ring_atoms);
+
+    int i;
+    OBAtom *atom;
+    vector<OBNodeBase*>::iterator ai;
+    for (i=0, atom = _pmol->BeginAtom(ai); atom; atom = _pmol->NextAtom(ai)) {
+      //    vid[i] = 0;
+      vid[i] = OBGraphSym::NoSymmetryClass;
+      if (_frag_atoms.BitIsOn(atom->GetIdx())) {
+        vid[i] = 
+          v[i]                                                    // 10 bits: graph-theoretical distance
+          | (GetHvyValence(atom)                <<10)  //  4 bits: heavy valence
+          | (((atom->IsAromatic()) ? 1 : 0)                <<14)  //  1 bit:  aromaticity
+          | (((ring_atoms.BitIsOn(atom->GetIdx())) ? 1 : 0)<<15)  //  1 bit:  ring atom
+          | (atom->GetAtomicNum()                          <<16)  //  7 bits: atomic number
+          | (GetHvyBondSum(atom)               <<23)  //  4 bits: heavy bond sum
+          | ((7 + atom->GetFormalCharge())                 <<27); //  4 bits: formal charge
+      }
+      i++;
+    }
   }
-  // end
-  atom = mol->GetAtomById(config.end);
-  if (atom) {
-    if (atom->IsHydrogen())
-      config.end = OBStereo::ImplicitRef;
-    else
-      config.end = symClasses.at(atom->GetIndex());
-  }
-  // refs
-  for (unsigned int i = 0; i < config.refs.size(); ++i) {
-    atom = mol->GetAtomById(config.refs.at(i));
+
+  /**
+   * Translate atom ids to symmetry classes for a CisTrans config struct.
+   */
+  void IdsToSymClasses(OBMol *mol, OBCisTransStereo::Config &config, 
+      const std::vector<unsigned int> &symClasses)
+  {
+    OBAtom *atom;
+    // begin
+    atom = mol->GetAtomById(config.begin);
     if (atom) {
       if (atom->IsHydrogen())
-        config.refs[i] = OBStereo::ImplicitRef;
+        config.begin = OBGraphSym::NoSymmetryClass;
       else
-        config.refs[i] = symClasses.at(atom->GetIndex());
+        config.begin = symClasses.at(atom->GetIndex());
     }
-  }
-}
-
-void IdsToSymClasses(OBMol *mol, OBTetrahedralStereo::Config &config,
-    const std::vector<unsigned int> &symClasses)
-{
-  OBAtom *atom;
-  // center
-  atom = mol->GetAtomById(config.center);
-  if (atom) {
-    if (atom->IsHydrogen())
-      config.center = OBStereo::ImplicitRef;
-    else
-      config.center = symClasses.at(atom->GetIndex());
-  }
-  // from/towards
-  atom = mol->GetAtomById(config.from);
-  if (atom) {
-    if (atom->IsHydrogen())
-      config.from = OBStereo::ImplicitRef;
-    else
-      config.from = symClasses.at(atom->GetIndex());
-  }
-  // refs
-  for (unsigned int i = 0; i < config.refs.size(); ++i) {
-    atom = mol->GetAtomById(config.refs.at(i));
+    // end
+    atom = mol->GetAtomById(config.end);
     if (atom) {
       if (atom->IsHydrogen())
-        config.refs[i] = OBStereo::ImplicitRef;
+        config.end = OBGraphSym::NoSymmetryClass;
       else
-        config.refs[i] = symClasses.at(atom->GetIndex());
+        config.end = symClasses.at(atom->GetIndex());
     }
-  }
-}
-
-void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_classes)
-{
-  vector<pair<OBAtom*,unsigned int> > vp1, vp2;
-
-  // for keeping track of atoms we've already considered
-  OBBitVec used_atoms;
-  used_atoms.Clear();
-  used_atoms.Resize(_pmol->NumAtoms());
-
-  // Convert the atom/class pairs to an array indexed by atom idx.
-  // This is just for convenience in the next step.  Note that there
-  // will be "holes" in this vector since it's a molecule fragment.
-  vector<unsigned int> index2sym_class(_pmol->NumAtoms());
-  vector<pair<OBAtom*,unsigned int> >::iterator api;
-  for (api = atom_sym_classes.begin(); api < atom_sym_classes.end(); api++)
-    index2sym_class[api->first->GetIndex()] = api->second;
-
-  // find all types of stereogenic units (i.e. tetrahedral, cis/trans, ...)
-  vector<StereogenicUnit> stereoUnits = FindStereogenicUnits(_pmol, index2sym_class);
-
-  //
-  // Tetrahedral atoms
-  //
-  for (vector<StereogenicUnit>::iterator unit1 = stereoUnits.begin(); unit1 != stereoUnits.end(); ++unit1) {
-    if ((*unit1).type != OBStereo::Tetrahedral)
-      continue;
-    unsigned long id1 = (*unit1).id;
-    OBAtom *atom1 = _pmol->GetAtomById(id1);
-    int index1 = atom1->GetIndex();
-    // We only want: unused and part of this fragment.
-    if (!(_frag_atoms)[index1+1])
-      continue;
-    if (used_atoms[index1])
-      continue;
-    used_atoms.SetBitOn(index1);
-    //if (GetValence(atom) < 4) // Valence relative to this fragment
-    //  continue;
-
-    // Get its symmetry class
-    int symclass = index2sym_class[index1];
-
-    // Start the vector of "same class" atoms by adding this atom
-    vector<OBAtom *> same_class;
-    same_class.push_back(atom1);
-
-    // Inner Loop: Find all other atoms with the same symmetry class
-    for (vector<StereogenicUnit>::iterator unit2 = unit1+1; unit2 != stereoUnits.end(); ++unit2) {
-      if ((*unit2).type != OBStereo::Tetrahedral)
-        continue;
-      unsigned long id2 = (*unit2).id;
-      OBAtom *atom2 = _pmol->GetAtomById(id2);
-      int index2 = atom2->GetIndex();
-      if (used_atoms[index2])
-        continue;
-      if (index2sym_class[index2] == symclass) {
-        same_class.push_back(atom2);
-        used_atoms.SetBitOn(index2);
-      }
-    }
-
-    // Unless at least two atoms in the class, there are no ties to break
-    if (same_class.size() < 2)
-      continue;
-
-    /*cout << "BreakChiralTies: same_class = ";
-    vector<OBAtom*>::iterator ia;
-    for (ia = same_class.begin(); ia != same_class.end(); ia++)
-      cout << (*ia)->GetIndex() << " ";
-    cout << "\n";*/
-
-    // find tetrahedral atoms using current symmetry classes
-    if (!_pmol->HasChiralityPerceived()) {
-      //cout << "!_pmol->HasChiralityPerceived()" << endl;
-      switch (_pmol->GetDimension()) {
-        case 2:
-          _pmol->DeleteData(OBGenericDataType::StereoData);
-          TetrahedralFrom2D(_pmol, stereoUnits);
-          break;
-        case 3:
-          _pmol->DeleteData(OBGenericDataType::StereoData);
-          TetrahedralFrom3D(_pmol, stereoUnits);
-          break;
-        default:
-          TetrahedralFrom0D(_pmol, stereoUnits);
-          break;
-      }
-    }
-
-    // false = don't perceive stereochemistry, we already did it explicitly above
-    OBStereoFacade stereoFacade(_pmol, false);
-    // get the reference config
-    OBTetrahedralStereo::Config refConfig;
-    if (stereoFacade.HasTetrahedralStereo(id1)) {
-      refConfig = stereoFacade.GetTetrahedralStereo(id1)->GetConfig();
-    } else {
-      refConfig.specified = false;
-    }
-    // convert id --> symmetry classes to compare
-    IdsToSymClasses(_pmol, refConfig, index2sym_class);
-
-    // Devide the centers in 3 groups based on comparing the Configs
-    // symclass1: all centers who's Config struct matches refConfig
-    // symclass2: all centers who's Config struct does not match refConfig
-    // unspecified: all centers with unspecified stereochemistry
-    vector<OBAtom*> symclass1, symclass2, unspecified;
-
-    vector<OBAtom*>::iterator iatom;
-    for (iatom = same_class.begin(); iatom != same_class.end(); iatom++) {
-      if (!stereoFacade.HasTetrahedralStereo((*iatom)->GetId())) {
-        // this happens for 0D when we don't want to delete data (see above)
-        // but have found new previously unidentified chiral centers
-        unspecified.push_back(*iatom);
-      } else {
-        OBTetrahedralStereo::Config otherConfig = stereoFacade.GetTetrahedralStereo((*iatom)->GetId())->GetConfig();
-        // unspecified is group 3
-        if (!otherConfig.specified) {
-          unspecified.push_back(*iatom);
-          continue;
-        }
-
-        // if refConfig is still unspecified, assign otherConfig to it and
-        // otherConfig will go in symclass1
-        if (!refConfig.specified)
-          refConfig = otherConfig;
-
-        IdsToSymClasses(_pmol, otherConfig, index2sym_class);
-        // compare
-        if (refConfig == otherConfig)
-          symclass1.push_back(*iatom); // same, add it to symclass1
+    // refs
+    for (std::size_t i = 0; i < config.refs.size(); ++i) {
+      atom = mol->GetAtomById(config.refs.at(i));
+      if (atom) {
+        if (atom->IsHydrogen())
+          config.refs[i] = OBGraphSym::NoSymmetryClass;
         else
-          symclass2.push_back(*iatom); // different, add to symclass2
+          config.refs[i] = symClasses.at(atom->GetIndex());
       }
     }
+>>>>>>> ...:src/graphsym.cpp
+  }
 
-    // If there's nothing in symclass2, then we don't have to split
-    // the symmetry class.
-    if (symclass1.empty())
-      if (symclass2.empty() || unspecified.empty())
-        continue;
-    if (symclass2.empty() && unspecified.empty())
-      continue;
-
-    //
-    // Make a copy of refConfig and sort it
-    //
-    OBTetrahedralStereo::Config orderedConfig;    // constructor initializes view & winding --> canonical
-    // copy specified flag and center Ref
-    orderedConfig.center = refConfig.center;
-    orderedConfig.specified = refConfig.specified;
-
-    std::vector<unsigned long> refs = refConfig.refs;
-    refs.insert(refs.begin(), refConfig.from); // doesn't matter if view is from or towards, will be sorted anyway
-    std::sort(refs.begin(), refs.end());
-    for (unsigned int i = 0; i < refs.size(); ++i)
-      if (i)
-        orderedConfig.refs.push_back(refs.at(i));
+  /**
+   * Translate atom ids to symmetry classes for a Tetrahedral config struct.
+   */
+  void IdsToSymClasses(OBMol *mol, OBTetrahedralStereo::Config &config, 
+      const std::vector<unsigned int> &symClasses)
+  {
+    OBAtom *atom;
+    // center
+    atom = mol->GetAtomById(config.center);
+    if (atom) {
+      if (atom->IsHydrogen())
+        config.center = OBGraphSym::NoSymmetryClass;
       else
-        orderedConfig.from = refs.at(0);
-    // store the match/mismatch result
-    bool refMatchesOrdered = (refConfig == orderedConfig) ? true : false;
-
-    //cout << "refConfig = " << refConfig << endl;
-    //cout << "orderedConfig = " << orderedConfig << endl;
-
-    // Time to break the class in 3.
-    //
-    //                         1-2-3  symclass1
-    //                        /             \
-    //   unspecified  3-2-1--a               symclass1 != symclass2
-    //                        \             /
-    //                         1-2-3  symclass2
-    //
-    //                           |
-    //                           | triple all symmetry classes
-    //                           V
-    //
-    //                         3-6-9  symclass1  -1 <----- mismatch -----+
-    //                        /             \                            |
-    //   unspecified  9-6-3--a               check which one matches orderedConfig
-    //      (=)               \             /                            |
-    //                         3-6-9  symclass2  +1 <------ match -------+
-    //
-    //                           |
-    //                           | perform illustrated operations
-    //                           V
-    //
-    //                         2-5-8  symclass1  -1 <----- mismatch -----+
-    //                        /             \                            |
-    //   unspecified  9-6-3--a               check which one matches orderedConfig
-    //      (=)               \             /                            |
-    //                         4-7-10 symclass2  +1 <------ match -------+
-    //
-    //
-    // Triple all symmetry classes.
-    for (int i = 0; i < atom_sym_classes.size(); i++) {
-      atom_sym_classes[i].second *= 3;
-
-      for (int j = 0; j < symclass1.size(); j++) {
-        if (symclass1[j] == atom_sym_classes[i].first) {
-          if (refMatchesOrdered)
-            atom_sym_classes[i].second += 1; // symclass1 == orderedConfig
-          else
-            atom_sym_classes[i].second -= 1; // symclass1 != orderedConfig
-        }
-      }
-      for (int j = 0; j < symclass2.size(); j++) {
-        if (symclass2[j] == atom_sym_classes[i].first) {
-          if (refMatchesOrdered)
-            atom_sym_classes[i].second -= 1; // symclass1 == orderedConfig --> symclass2 != orderedConfig
-          else
-            atom_sym_classes[i].second += 1; // symclass1 != orderedConfig --> symclass2 == orderedConfig
-        }
-      }
+        config.center = symClasses.at(atom->GetIndex());
     }
-
-    // Now propagate the change across the whole molecule with the
-    // extended sum-of-invariants.
-    //ExtendInvariants(atom_sym_classes);
-
-    ///cout << "AFTER ExtendInvariants" << endl;
-    //for (int i = 0; i < atom_sym_classes.size(); i++) {
-    //  cout << atom_sym_classes[i].first->GetIndex() << ": " << atom_sym_classes[i].second << endl;
-    //}
-
-
-  }
-  //
-  // Cis/Trans bonds
-  //
-  for (vector<StereogenicUnit>::iterator unit1 = stereoUnits.begin(); unit1 != stereoUnits.end(); ++unit1) {
-    if ((*unit1).type != OBStereo::CisTrans)
-      continue;
-
-    unsigned long id1 = (*unit1).id;
-    OBBond *bond1 = _pmol->GetBondById(id1);
-    unsigned int begin1 = bond1->GetBeginAtom()->GetIndex();
-    unsigned int end1 = bond1->GetEndAtom()->GetIndex();
-
-    // We only want: unused and part of this fragment.
-    if (!(_frag_atoms)[begin1+1] || !(_frag_atoms)[end1+1])
-      continue;
-    if (used_atoms[begin1] || used_atoms[end1])
-      continue;
-    used_atoms.SetBitOn(begin1);
-    used_atoms.SetBitOn(end1);
-
-    // Get its symmetry class
-    int beginSymClass = index2sym_class[begin1];
-    int endSymClass = index2sym_class[end1];
-
-    // Start the vector of "same class" bonds by adding this bond
-    vector<OBBond*> same_class;
-    same_class.push_back(bond1);
-
-    // Inner Loop: Find all other bonds with the same symmetry classes
-    for (vector<StereogenicUnit>::iterator unit2 = unit1 + 1; unit2 != stereoUnits.end(); ++unit2) {
-      if ((*unit2).type != OBStereo::CisTrans)
-        continue;
-
-      unsigned long id2 = (*unit2).id;
-      OBBond *bond2 = _pmol->GetBondById(id2);
-      unsigned int begin2 = bond2->GetBeginAtom()->GetIndex();
-      unsigned int end2 = bond2->GetEndAtom()->GetIndex();
-      if (used_atoms[begin2] || used_atoms[end2])
-        continue;
-      if (((index2sym_class[begin2] == beginSymClass) && (index2sym_class[end2] == endSymClass)) ||
-          ((index2sym_class[begin2] == endSymClass) && (index2sym_class[end2] == beginSymClass))) {
-        same_class.push_back(bond2);
-        used_atoms.SetBitOn(begin2);
-        used_atoms.SetBitOn(end2);
-      }
+    // from/towards
+    atom = mol->GetAtomById(config.from);
+    if (atom) {
+      if (atom->IsHydrogen())
+        config.from = OBGraphSym::NoSymmetryClass;
+      else
+        config.from = symClasses.at(atom->GetIndex());
     }
-
-    // Unless at least two atoms in the class, there are no ties to break
-    if (same_class.size() < 2)
-      continue;
-
-    /*cout << "BreakChiralTies: same_class = ";
-    vector<OBBond*>::iterator ib;
-    for (ib = same_class.begin(); ib != same_class.end(); ib++)
-      cout << (*ib)->GetIdx() << " ";
-    cout << "\n";*/
-
-    // find cis/trans bonds using current symmetry classes
-    if (!_pmol->HasChiralityPerceived()) {
-      //cout << "!_pmol->HasChiralityPerceived()" << endl;
-      switch (_pmol->GetDimension()) {
-        case 2:
-          _pmol->DeleteData(OBGenericDataType::StereoData);
-          CisTransFrom2D(_pmol, stereoUnits);
-          break;
-        case 3:
-          _pmol->DeleteData(OBGenericDataType::StereoData);
-          CisTransFrom3D(_pmol, stereoUnits);
-          break;
-        default:
-          CisTransFrom0D(_pmol, stereoUnits);
-          break;
-      }
-    }
-
-    // false = don't perceive stereochemistry, we already did it explicitly above
-    OBStereoFacade stereoFacade(_pmol, false);
-    // get the reference config
-    OBCisTransStereo::Config refConfig;
-    if (stereoFacade.HasCisTransStereo(id1)) {
-      refConfig = stereoFacade.GetCisTransStereo(id1)->GetConfig();
-    } else {
-      refConfig.specified = false;
-    }
-    // convert id --> symmetry classes to compare
-    IdsToSymClasses(_pmol, refConfig, index2sym_class);
-
-    // Devide the cis/trans bonds in 3 groups based on comparing the Configs
-    // symclass1: all bonds who's Config struct matches refConfig
-    // symclass2: all bonds who's Config struct does not match refConfig
-    // unspecified: all bonds with unspecified stereochemistry
-    vector<OBBond*> symclass1, symclass2, unspecified;
-
-    vector<OBBond*>::iterator ibond;
-    for (ibond = same_class.begin(); ibond != same_class.end(); ibond++) {
-      if (!stereoFacade.HasCisTransStereo((*ibond)->GetId())) {
-        // this happens for 0D when we don't want to delete data (see above)
-        // but have found new previously unidentified chiral centers
-        unspecified.push_back(*ibond);
-      } else {
-        OBCisTransStereo::Config otherConfig = stereoFacade.GetCisTransStereo((*ibond)->GetId())->GetConfig();
-        // unspecified is group 3
-        if (!otherConfig.specified) {
-          unspecified.push_back(*ibond);
-          continue;
-        }
-
-        // if refConfig is still unspecified, assign otherConfig to it and
-        // otherConfig will go in symclass1
-        if (!refConfig.specified)
-          refConfig = otherConfig;
-
-        IdsToSymClasses(_pmol, otherConfig, index2sym_class);
-        // compare
-        if (refConfig == otherConfig)
-          symclass1.push_back(*ibond); // same, add it to symclass1
+    // refs
+    for (std::size_t i = 0; i < config.refs.size(); ++i) {
+      atom = mol->GetAtomById(config.refs.at(i));
+      if (atom) {
+        if (atom->IsHydrogen())
+          config.refs[i] = OBGraphSym::NoSymmetryClass;
         else
-          symclass2.push_back(*ibond); // different, add to symclass2
+          config.refs[i] = symClasses.at(atom->GetIndex());
       }
     }
-
-    // if there is only 1 group found, leave the symmetry classes alone
-    if (symclass1.empty())
-      if (symclass2.empty() || unspecified.empty())
-        continue;
-    if (symclass2.empty() && unspecified.empty())
-      continue;
-
-    // Make a copy of refConfig and sort it
-    OBCisTransStereo::Config orderedConfig = refConfig;
-    std::sort(orderedConfig.refs.begin(), orderedConfig.refs.end());
-    // store the match/mismatch result
-    bool refMatchesOrdered = (refConfig == orderedConfig) ? true : false;
-
-    //cout << "refConfig = " << refConfig << endl;
-    //cout << "orderedConfig = " << orderedConfig << endl;
-
-    // Time to break the class in 3. (see above for details)
-    for (int i = 0; i < atom_sym_classes.size(); i++) {
-      atom_sym_classes[i].second *= 3;
-
-      for (int j = 0; j < symclass1.size(); j++) {
-        if (symclass1[j]->GetBeginAtom() == atom_sym_classes[i].first) {
-          if (refMatchesOrdered)
-            atom_sym_classes[i].second += 1; // symclass1 == orderedConfig
-          else
-            atom_sym_classes[i].second -= 1; // symclass1 != orderedConfig
-        }
-      }
-      for (int j = 0; j < symclass2.size(); j++) {
-        if (symclass2[j]->GetBeginAtom() == atom_sym_classes[i].first) {
-          if (refMatchesOrdered)
-            atom_sym_classes[i].second -= 1; // symclass1 == orderedConfig --> symclass2 != orderedConfig
-          else
-            atom_sym_classes[i].second += 1; // symclass1 != orderedConfig --> symclass2 == orderedConfig
-        }
-      }
-    }
-
-    // Now propagate the change across the whole molecule with the
-    // extended sum-of-invariants.
-    //ExtendInvariants(atom_sym_classes);
   }
 
 
-}
+  /**
+   * Find a descriptor for the specified tetrahedral config struct. The
+   * returned descriptor had a value of 0 or 1.
+   *
+   * @note These descriptors depend on the values in the config struct but are
+   * not related to CIP descriptors for example. However, if the values in the
+   * config structs are replaced with CIP priorities, this function could be
+   * be used.
+   */
+  int findDescriptor(const OBTetrahedralStereo::Config &config)
+  {
+    std::vector<unsigned long> refs = config.refs;
+    refs.insert(refs.begin(), config.from);
+    if (OBStereo::NumInversions(refs) % 2)
+      return 1;
+    else
+      return 0; 
+  }
 
-/***************************************************************************
-* FUNCTION: CreateNewClassVector
-*
-* DESCRIPTION:
-*       NOTE: Derived from OpenBabel/mol.cpp
-*
-*       Creates a new vector of symmetry classes based on an existing
-*       vector.  (Helper routine to GetGIDVector.)  On return, vp2 will
-*       have newly-extended connectivity sums, but the numbers (the class
-*       IDs) are very large.
-*
-*       (Comments by CJ) This appears to compute the "extended connectivity
-*       sums" similar to those described by Weininger, Morgan, etc. It uses
-*       vp1 as its starting point (the current connectivity sums), and puts
-*       the new sums in vp2.  Note that vp1 is modified along the way.
-*
-*       Note that, per Weininger's warning, this assumes the initial class
-*       ID's are less than 100, which is a BAD assumption, e.g. OCC...CCN
-*       would have more than 100 symmetry classes if the chain is more than
-*       98 carbons long.  Should change this to use Weininger's product of
-*       corresponding primes.
-***************************************************************************/
+  /**
+   * Find a descriptor for the specified cis/trans config struct. The
+   * returned descriptor had a value of 0 or 1.
+   *
+   * @note These descriptors depend on the values in the config struct but are
+   * not related to CIP descriptors for example. However, if the values in the
+   * config structs are replaced with CIP priorities, this function could be
+   * be used.
+   */
+  int findDescriptor(const OBCisTransStereo::Config &config)
+  {
+    std::vector<unsigned long> refs1(2), refs2(2);
+    refs1[0] = config.refs[0];
+    refs1[1] = config.refs[1];
+    refs2[0] = config.refs[2];
+    refs2[1] = config.refs[3];
+    if ((OBStereo::NumInversions(refs1) % 2 + OBStereo::NumInversions(refs2) % 2) % 2)
+      return 1;
+    else
+      return 0; 
+  }
 
-  void OBGraphSym::CreateNewClassVector(std::vector<std::pair<OBAtom*,unsigned int> > &vp1,
+  /**
+   * Find a descriptor for the specified atom.
+   */
+  int findDescriptor(OBAtom *center, const std::vector<unsigned int> &symmetry_classes)
+  {
+    OBMol *mol = center->GetParent();
+    OBStereoFacade stereoFacade(mol, false);
+    if (!stereoFacade.HasTetrahedralStereo(center->GetId()))
+      return -1;
+    OBTetrahedralStereo::Config symConfig = stereoFacade.GetTetrahedralStereo(center->GetId())->GetConfig();
+    IdsToSymClasses(mol, symConfig, symmetry_classes);
+    return findDescriptor(symConfig);
+  }
+
+  /**
+   * Find a descriptor for the specified bond.
+   */
+  int findDescriptor(OBBond *bond, const std::vector<unsigned int> &symmetry_classes)
+  {
+    OBMol *mol = bond->GetParent();
+    OBStereoFacade stereoFacade(mol, false);
+    if (!stereoFacade.HasCisTransStereo(bond->GetId()))
+      return -1;
+    OBCisTransStereo::Config symConfig = stereoFacade.GetCisTransStereo(bond->GetId())->GetConfig();
+    IdsToSymClasses(mol, symConfig, symmetry_classes);
+    return findDescriptor(symConfig);
+  }
+
+  // GENERIC
+  /**
+   * Find the descriptor vector for all stereocenters in the specified fragment.
+   * The individual descriptors will be ordered in the same way are specified in
+   * the @p orderedUnits parameter. This method works by replacing the unique
+   * atom ids in the config structs by symmetry classes to obtain canonical
+   * results. This only works for resolved (T1234 & C12) stereogenic units and
+   * unresolved units are excluded from the vector. The elements in the returned
+   * vector are 0 or 1 and obtained using the findDescriptor functions above.
+   */
+  std::vector<int> findDescriptorVector(OBMol *mol, const OBBitVec &fragment,
+      const OBStereoUnitSet &orderedUnits, const std::vector<unsigned int> &symmetry_classes)
+  {
+    OBStereoUnitSet units = orderedUnits;//removeUnspecifiedUnits(mol, orderedUnits);
+    std::vector<int> v;
+    for (unsigned int i = 0; i < units.size(); ++i) {
+      const OBStereoUnit &unit = units[i];
+      if (!isUnitInFragment(mol, unit, fragment))
+        continue;
+      v.push_back(findDescriptor(mol, unit, symmetry_classes));
+    }
+
+    return v;
+  }
+
+  /**
+   * Find the value for a descriptor vector (see findDescriptorVector()). A
+   * descriptor vectors contains 0 or 1 for each stereogenic unit in the fragment
+   * in the same order specified in @p orderedUnits. This function reads these
+   * vectors as binary numbers and returns the decimal value. A single value
+   * for a descriptor vector, makes it easier to compare these vectors.
+   */
+  int findDescriptorVectorValue(OBMol *mol, const OBBitVec &fragment, 
+      const OBStereoUnitSet &orderedUnits, const std::vector<unsigned int> &symmetry_classes)
+  {
+    std::vector<int> v = findDescriptorVector(mol, fragment, orderedUnits, symmetry_classes);
+
+    int value = 0;
+    for (unsigned int i = 0; i < v.size(); ++i) {
+      if (!v[i])
+        continue;
+      int power = v.size() - i - 1;
+      value += std::pow(2, power);
+    }
+
+    return value;
+  }
+
+
+
+
+  /**
+   * Creates a new vector of symmetry classes based on an existing
+   * vector.  (Helper routine to GetGIDVector.)  On return, vp2 will
+   * have newly-extended connectivity sums, but the numbers (the class
+   * IDs) are very large.
+   *
+   * (Comments by CJ) This appears to compute the "extended connectivity
+   * sums" similar to those described by Weininger, Morgan, etc. It uses
+   * vp1 as its starting point (the current connectivity sums), and puts
+   * the new sums in vp2.  Note that vp1 is modified along the way.
+   *
+   * Note that, per Weininger's warning, this assumes the initial class
+   * ID's are less than 100, which is a BAD assumption, e.g. OCC...CCN
+   * would have more than 100 symmetry classes if the chain is more than
+   * 98 carbons long.  Should change this to use Weininger's product of
+   * corresponding primes.
+   */
+  void OBGraphSymPrivate::CreateNewClassVector(std::vector<std::pair<OBAtom*,unsigned int> > &vp1,
                                         std::vector<std::pair<OBAtom*,unsigned int> > &vp2)
-{
-  int m,id;
-  OBAtom *atom, *nbr;
-  vector<OBEdgeBase*>::iterator nbr_iter;
-  vector<unsigned int>::iterator k;
-  vector<pair<OBAtom*,unsigned int> >::iterator vp_iter;
+  {
+    int m,id;
+    OBAtom *atom, *nbr;
+    vector<OBEdgeBase*>::iterator nbr_iter;
+    vector<unsigned int>::iterator k;
+    vector<pair<OBAtom*,unsigned int> >::iterator vp_iter;
 
-#if DEBUG
-  cout << "CreateNewClassVector: START\n";
-  print_vector_pairs("    ", vp1);
+#if DEBUG2
+    cout << "CreateNewClassVector: START\n";
+    //print_vector_pairs("    ", vp1);
 #endif
 
-  // There may be fewer atoms than in the whole molecule, so we can't
-  // index the vp1 array by atom->GetIdx().  Instead, create a quick
-  // mapping vector of idx-to-index for vp1.
-  vector<int> idx2index(_pmol->NumAtoms() + 1, -1);  // natoms + 1
-  int index = 0;
-  for (vp_iter = vp1.begin(); vp_iter != vp1.end(); vp_iter++) {
-    int idx = vp_iter->first->GetIdx();
-    idx2index[idx] = index++;
-  }
-
-  // vp2 will hold the newly-extended symmetry classes
-  vp2.resize(vp1.size());
-  vp2.clear();
-
-  // Loop over original atoms.
-  // Create a new extended varient for each atom.  Get its neighbors' class ID's,
-  // sort them into ascending order, and create a sum of (c0 + c1*10^2 + c2*10^4 + ...)
-  // which becomes the new class ID (where c0 is the current classID).
-
-  for (vp_iter = vp1.begin(); vp_iter != vp1.end(); vp_iter++) {
-    atom = vp_iter->first;
-    id   = vp_iter->second;
-    vector<unsigned int> vtmp;
-    for (nbr = atom->BeginNbrAtom(nbr_iter); nbr; nbr = atom->NextNbrAtom(nbr_iter)) {
-      int idx = nbr->GetIdx();
-      if (_frag_atoms.BitIsOn(idx))
-        vtmp.push_back(vp1[idx2index[idx]].second);
+    // There may be fewer atoms than in the whole molecule, so we can't
+    // index the vp1 array by atom->GetIdx().  Instead, create a quick
+    // mapping vector of idx-to-index for vp1.
+    vector<int> idx2index(_pmol->NumAtoms() + 1, -1);  // natoms + 1
+    int index = 0;
+    for (vp_iter = vp1.begin(); vp_iter != vp1.end(); vp_iter++) {
+      int idx = vp_iter->first->GetIdx();
+      idx2index[idx] = index++;
     }
 
-    sort(vtmp.begin(),vtmp.end(),CompareUnsigned);
-    for (m = 100, k = vtmp.begin(); k != vtmp.end(); k++, m*=100)
-      id += *k * m;
-    vp2.push_back(pair<OBAtom*,unsigned int> (atom, id));
+    // vp2 will hold the newly-extended symmetry classes
+    vp2.resize(vp1.size());
+    vp2.clear();
+
+    // Loop over original atoms.
+    // Create a new extended varient for each atom.  Get its neighbors' class ID's,
+    // sort them into ascending order, and create a sum of (c0 + c1*10^2 + c2*10^4 + ...)
+    // which becomes the new class ID (where c0 is the current classID).
+
+    for (vp_iter = vp1.begin(); vp_iter != vp1.end(); vp_iter++) {
+      atom = vp_iter->first;
+      id   = vp_iter->second;
+      vector<unsigned int> vtmp;
+      for (nbr = atom->BeginNbrAtom(nbr_iter); nbr; nbr = atom->NextNbrAtom(nbr_iter)) {
+        int idx = nbr->GetIdx();
+        if (_frag_atoms.BitIsOn(idx))
+          vtmp.push_back(vp1[idx2index[idx]].second);
+      }
+
+      sort(vtmp.begin(),vtmp.end(),CompareUnsigned);
+      for (m = 100, k = vtmp.begin(); k != vtmp.end(); k++, m*=100) 
+        id += *k * m;
+      vp2.push_back(pair<OBAtom*,unsigned int> (atom, id));
+    }
+#if DEBUG2
+    cout << "CreateNewClassVector: FINISH\n";
+    //print_vector_pairs("    ", vp2);
+#endif
   }
-#if DEBUG
-  cout << "CreateNewClassVector: FINISH\n";
-  print_vector_pairs("    ", vp2);
+
+  void OBGraphSymPrivate::CreateNewClassVector(OBMol *mol, vector<pair<OBAtom*,unsigned int> > &vp1,
+      vector<pair<OBAtom*,unsigned int> > &vp2)
+  {
+    int m,id;
+    OBAtom *atom, *nbr;
+    vector<OBEdgeBase*>::iterator nbr_iter;
+    vector<unsigned int>::iterator k;
+    vector<pair<OBAtom*,unsigned int> >::iterator vp_iter;
+
+#if DEBUG2
+    cout << "CreateNewClassVector: START\n";
+    //print_vector_pairs("    ", vp1);
 #endif
 
-}
+    // There may be fewer atoms than in the whole molecule, so we can't
+    // index the vp1 array by atom->GetIdx().  Instead, create a quick
+    // mapping vector of idx-to-index for vp1.
+    vector<int> idx2index(mol->NumAtoms() + 1, -1);  // natoms + 1
+    int index = 0;
+    for (vp_iter = vp1.begin(); vp_iter != vp1.end(); vp_iter++) {
+      int idx = vp_iter->first->GetIdx();
+      idx2index[idx] = index++;
+    }
 
-/***************************************************************************
-* FUNCTION: CountAndRenumberClasses
-*
-* DESCRIPTION:
-*       NOTE: Copied from OpenBabel/mol.cpp
-*
-*       Counts the number of unique symmetry classes in a list.
-*
-*       (NOTE: CJ -- It also appears to MODIFY the list.  It sorts it in order
-*       of class ID, then renumbers the ID's zero through N-1.  See the comments
-*       in CreateNewClassVector() about how it returns very large numbers for the
-*       class IDs it creates.  These are replaced by lower, sequential numbers here.)
-***************************************************************************/
+    // vp2 will hold the newly-extended symmetry classes
+    vp2.resize(vp1.size());
+    vp2.clear();
 
-  void OBGraphSym::CountAndRenumberClasses(std::vector<std::pair<OBAtom*,unsigned int> > &vp,
+    // Loop over original atoms.
+    // Create a new extended varient for each atom.  Get its neighbors' class ID's,
+    // sort them into ascending order, and create a sum of (c0 + c1*10^2 + c2*10^4 + ...)
+    // which becomes the new class ID (where c0 is the current classID).
+
+    for (vp_iter = vp1.begin(); vp_iter != vp1.end(); vp_iter++) {
+      atom = vp_iter->first;
+      id   = vp_iter->second;
+      vector<unsigned int> vtmp;
+      for (nbr = atom->BeginNbrAtom(nbr_iter); nbr; nbr = atom->NextNbrAtom(nbr_iter)) {
+        int idx = nbr->GetIdx();
+        vtmp.push_back(vp1[idx2index[idx]].second);
+      }
+
+      sort(vtmp.begin(),vtmp.end(),CompareUnsigned);
+      for (m = 100, k = vtmp.begin(); k != vtmp.end(); k++, m*=100) 
+        id += *k * m;
+      vp2.push_back(pair<OBAtom*,unsigned int> (atom, id));
+    }
+#if DEBUG2
+    cout << "CreateNewClassVector: FINISH\n";
+    //print_vector_pairs("    ", vp2);
+#endif
+
+  }
+
+  /**
+   * Counts the number of unique symmetry classes in a list.
+   *
+   * (NOTE: CJ -- It also appears to MODIFY the list.  It sorts it in order
+   * of class ID, then renumbers the ID's zero through N-1.  See the comments
+   * in CreateNewClassVector() about how it returns very large numbers for the
+   * class IDs it creates.  These are replaced by lower, sequential numbers here.)
+   */
+  void OBGraphSymPrivate::CountAndRenumberClasses(std::vector<std::pair<OBAtom*,unsigned int> > &vp,
                                            unsigned int &count)
   {
     count = 1;
@@ -945,6 +684,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     k = vp.begin();
     if (k != vp.end()) {
       unsigned int id = k->second;
+      if (id) {
       k->second = 1;
       ++k;
       for (;k != vp.end(); ++k) {
@@ -955,31 +695,27 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
           k->second = count;
         }
       }
+      }
     }
   }
 
-
-/***************************************************************************
-* FUNCTION: ExtendInvariants
-*
-* DESCRIPTION:
-*       This is the core of symmetry analysis.  Starting with a set of
-*       classes on each atom, it "spreads" them using a sum-of-invariants
-*       of each atom's class and its neighbors' classes.  This iterates
-*       until a stable solution is found (further spreading doesn't
-*       change the answer).
-*
-* RETURNS: The number of distinct symmetry classes found.
-***************************************************************************/
-
-  int OBGraphSym::ExtendInvariants(std::vector<std::pair<OBAtom*, unsigned int> > &symmetry_classes, bool breakChiralTies)
+  /**
+   * This is the core of symmetry analysis.  Starting with a set of
+   * classes on each atom, it "spreads" them using a sum-of-invariants
+   * of each atom's class and its neighbors' classes.  This iterates
+   * until a stable solution is found (further spreading doesn't
+   * change the answer).
+   *
+   * @return The number of distinct symmetry classes found.
+   */
+  int OBGraphSymPrivate::ExtendInvariants(std::vector<std::pair<OBAtom*, unsigned int> > &symmetry_classes)
   {
     unsigned int nclasses1, nclasses2;
     vector<pair<OBAtom*,unsigned int> > tmp_classes;
-
+    
     // How many classes are we starting with?  (The "renumber" part isn't relevant.)
     CountAndRenumberClasses(symmetry_classes, nclasses1);
-
+    
     int natoms = _pmol->NumAtoms();
     int nfragatoms = _frag_atoms.CountBits();
 
@@ -999,54 +735,34 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
       }
     }
 
-    if (breakChiralTies) {
-    /*cout << "BEFORE BreakChiralTies, nclasses1 = " << nclasses1 << endl;
-      for (int i = 0; i < symmetry_classes.size(); i++) {
-      cout << symmetry_classes[i].first->GetIndex() << ": " << symmetry_classes[i].second << endl;
-      }*/
-
-      BreakChiralTies(symmetry_classes);
-      CreateNewClassVector(symmetry_classes, tmp_classes);
-      CountAndRenumberClasses(tmp_classes, nclasses2);
-
-    /*cout << "AFTER BreakChiralTies, nclasses2 = " << nclasses2 << endl;
-      for (int i = 0; i < symmetry_classes.size(); i++) {
-      cout << symmetry_classes[i].first->GetIndex() << " (" << symmetry_classes[i].first->GetType()
-      << "): " << symmetry_classes[i].second << endl;
-      }*/
-    } else {
-      CreateNewClassVector(symmetry_classes, tmp_classes);
-      CountAndRenumberClasses(tmp_classes, nclasses2);
-    }
+    CreateNewClassVector(symmetry_classes, tmp_classes);
+    CountAndRenumberClasses(tmp_classes, nclasses2);
 
 
     if (nclasses1 != nclasses2) {
       symmetry_classes = tmp_classes;
-      return ExtendInvariants(symmetry_classes, breakChiralTies);
+      return ExtendInvariants(symmetry_classes);
     }
+    
 
     return nclasses1;
   }
-
-/***************************************************************************
-* FUNCTION: CalculateSymmetry
-*
-* DESCRIPTION:
-*       Calculates a set of canonical symmetry identifiers for a molecule.
-*       Atoms with the same symmetry ID are symmetrically equivalent.  By
-*       "canonical", we mean it generates a repeatable labelling of the
-*       atoms, i.e. the same fragment will get the same symmetry labels in
-*       any molecule in which it occurs.
-*
-*       Vector is indexed from zero, corresponding to (atom->GetIdx() - 1).
-*
-*       The bit vector "_frag_atoms" specifies a fragment of the molecule,
-*       where each bit represents the presence or absence of the atom in
-*       the fragment.  Symmetry is computed as though the fragment is the
-*       only part that exists.
-***************************************************************************/
-
-  int OBGraphSym::CalculateSymmetry(std::vector<unsigned int> &atom_sym_classes, bool breakChiralTies)
+  
+  /**
+   * Calculates a set of canonical symmetry identifiers for a molecule.
+   * Atoms with the same symmetry ID are symmetrically equivalent.  By
+   * "canonical", we mean it generates a repeatable labelling of the
+   * atoms, i.e. the same fragment will get the same symmetry labels in
+   * any molecule in which it occurs.
+   *
+   * Vector is indexed from zero, corresponding to (atom->GetIdx() - 1).
+   *
+   * The bit vector "_frag_atoms" specifies a fragment of the molecule,
+   * where each bit represents the presence or absence of the atom in
+   * the fragment.  Symmetry is computed as though the fragment is the
+   * only part that exists.
+   */                           
+  int OBGraphSymPrivate::CalculateSymmetry(std::vector<unsigned int> &atom_sym_classes)
   {
     vector<unsigned int> vgi;
     vector<OBNodeBase*>::iterator j;
@@ -1054,6 +770,7 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
 
     // Get vector of graph invariants.  These are the starting "symmetry classes".
     GetGIVector(vgi);
+    
 
     // Create a vector-of-pairs, associating each atom with its Class ID.
     std::vector<std::pair<OBAtom*, unsigned int> > symmetry_classes;
@@ -1061,11 +778,14 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
       int idx = atom->GetIdx();
       if (_frag_atoms.BitIsOn(idx))
         symmetry_classes.push_back(pair<OBAtom*, unsigned int> (atom, vgi[idx-1]));
+      //else
+      //  symmetry_classes.push_back(pair<OBAtom*, unsigned int> (atom, OBGraphSym::NoSymmetryClass));
     }
 
+
     // The heart of the matter: Do extended sum-of-invariants until no further
-    // changes are noted.
-    int nclasses = ExtendInvariants(symmetry_classes, breakChiralTies);
+    // changes are noted. 
+    int nclasses = ExtendInvariants(symmetry_classes);
 
     // Convert to a vector indexed by Index
     // Atoms not in the fragment will have a value of OBGraphSym::NoSymmetryClass
@@ -1092,16 +812,18 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
     return nclasses;
   }
 
-  int OBGraphSym::GetSymmetry(std::vector<unsigned int> &symmetry_classes, bool breakChiralTies)
+  int OBGraphSym::GetSymmetry(std::vector<unsigned int> &symmetry_classes)
   {
+    if (DEBUG)
+      cout << "ENTER GetSymmetry()" << endl;
     ClearSymmetry(); // For the moment just recalculate the symmetry classes
 
     // Check to see whether we have already calculated the symmetry classes
-    OBPairData *pd = dynamic_cast<OBPairData*>(_pmol->GetData("OpenBabel Symmetry Classes"));
+    OBPairData *pd = dynamic_cast<OBPairData*>(d->_pmol->GetData("OpenBabel Symmetry Classes"));
 
     int nclasses = 0;
     if (!pd) {
-      nclasses = CalculateSymmetry(symmetry_classes, breakChiralTies);
+      nclasses = d->CalculateSymmetry(symmetry_classes);
     } else {
       istringstream iss(pd->GetValue());
       symmetry_classes.clear();
@@ -1115,104 +837,700 @@ void OBGraphSym::BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_
       nclasses = end_pos - copy_sym.begin();
     }
 
-    return nclasses;
+    return nclasses;      
   }
 
   // Clears perceived symmetry
   void OBGraphSym::ClearSymmetry()
   {
-    _pmol->DeleteData("OpenBabel Symmetry Classes");
+    d->_pmol->DeleteData("OpenBabel Symmetry Classes");
   }
 
-/***************************************************************************
-* FUNCTION: CanonicalLabels
-*
-* DESCRIPTION:
-*       Generates a canonical labeling of the atoms of a molecule, and as
-*       a side benefit, returns the symmetry classes of the molecule.
-*
-*       To create a canonical labeling, we need every node to have a unique
-*       label.  The canonical symmetry classes (see CalculateSymmetry(),
-*       above) are a good start, but the atoms in each symmetry class are
-*       still indistinguishable.  For writing a canonical string, we need
-*       to create an arbitrary, but canonical (repeatable) distinction
-*       between the atoms in each symmetry class -- "break the ties" in the
-*       symmetry values.
-*
-*       To break ties, we sort into symetry-class order, double all class
-*       IDs, then arbitrarily subtract one from the first repeated symmetry
-*       class, thus breaking the tie (see Weininger et al).  With this new
-*       set of symmetry classes, we repeat the extended-connectivity sums
-*       to "spread" the broken symmetry class, and check again.  This is
-*       repeated until all symmetry is gone and every atom has a unique
-*       label.
-*
-* RETURNS:
-*       canonical_labels - a vector indexed by [ OBAtom::GetIdx() - 1].
-***************************************************************************/
 
-  void OBGraphSym::CanonicalLabels(std::vector<unsigned int> &canonical_labels)
+  /**
+   * Helper function for getFragment below.
+   */
+  void addNbrs(OBBitVec &fragment, OBAtom *atom, const OBBitVec &mask)
   {
-    vector<pair<OBAtom*,unsigned int> > vp1, vp2;
-    vector<OBNodeBase*>::iterator j;
-    unsigned int nclass1, nclass2; //number of classes
-    int i;
-
-    int nfragatoms = _frag_atoms.CountBits();
-    int natoms = _pmol->NumAtoms();
-
-    std::vector<unsigned int> symmetry_classes;
-    nclass1 = GetSymmetry(symmetry_classes);
-    for (int i = 0; i < symmetry_classes.size(); ++i) {
-      if (symmetry_classes.at(i) != OBGraphSym::NoSymmetryClass)
-        vp1.push_back(
-            pair<OBAtom*, unsigned int>(_pmol->GetAtom(i+1), symmetry_classes[i]) );
+    FOR_NBORS_OF_ATOM (nbr, atom) {
+      // don't pass through skip
+      if (!mask.BitIsSet(nbr->GetIdx()))
+        continue;
+      // skip visited atoms
+      if (fragment.BitIsSet(nbr->GetId()))
+        continue;
+      // add the neighbor atom to the fragment
+      fragment.SetBitOn(nbr->GetId());
+      // recurse...
+      addNbrs(fragment, &*nbr, mask);
     }
-    CountAndRenumberClasses(vp1, nclass1);
+  }
 
-    /*cout << "BEFORE TieBreaker: nclass1 = " << nclass1 << ", nfragatoms = " << nfragatoms << "\n";
-      for (int i = 0; i < vp1.size(); i++) {
-      cout << vp1[i].first->GetIndex() << ": " << vp1[i].second << endl;
-      }*/
+  /**
+   * Create an OBBitVec objects with bets set for the fragment consisting of all
+   * atoms for which there is a path to atom without going through skip. These
+   * fragment bitvecs are indexed by unique id (i.e. OBAtom::GetId()).
+   */
+  OBBitVec getFragment(OBAtom *atom, const OBBitVec &mask)
+  {
+    OBBitVec fragment;
+    fragment.SetBitOn(atom->GetId());
+    // start the recursion
+    addNbrs(fragment, atom, mask);
+    return fragment;
+  }
 
-    // The symmetry classes are the starting point for the canonical labels
-    if (nclass1 < nfragatoms) {
-      int tie_broken = 1;
-      while (tie_broken) {
-        tie_broken = 0;
-        int last_rank = -1;
-        for (i = 0; i < vp1.size(); i++) {
-          vp1[i].second *= 2;             // Double symmetry classes
-          if (vp1[i].second == last_rank && !tie_broken) {
-            vp1[i-1].second -= 1;         // Break a tie
-            tie_broken = 1;
-          }
-          last_rank = vp1[i].second;
+
+
+
+
+  struct CanonicalCode
+  {
+    std::vector<OBAtom*> atoms;
+    std::vector<OBBond*> bonds, cbonds;
+
+    std::vector<unsigned int> labels;
+    std::vector<unsigned int> from;
+    std::vector<unsigned int> closures;
+    std::vector<unsigned int> atomTypes;
+    std::vector<unsigned int> bondTypes;
+    int stereo;
+    std::size_t lastFragment;
+        
+    CanonicalCode(std::size_t numAtoms) : stereo(0), lastFragment(0)
+    {
+      labels.resize(numAtoms, 0);
+    }
+
+    void add(OBAtom *atom)
+    {
+      atoms.push_back(atom);
+      atomTypes.push_back(atom->GetAtomicNum());
+    }
+    void add(OBBond *bond)
+    {
+      bonds.push_back(bond);
+      if (bond->IsAromatic())
+        bondTypes.push_back(5);
+      else
+        bondTypes.push_back(bond->GetBondOrder());
+    }
+    void add(OBAtom *fromAtom, OBAtom *atom)
+    {
+      for (std::size_t i = 0; i < atoms.size(); ++i)
+        if (fromAtom == atoms[i]) {
+          from.push_back(i+1);
+          break;
         }
-        if (tie_broken) {
-          for (i = 0; i < 100;i++) {  //sanity check - shouldn't ever hit this number
-            CreateNewClassVector(vp1, vp2);
-            CountAndRenumberClasses(vp2, nclass2);
-            vp1 = vp2;
-            if (nclass1 == nclass2) break;
-            nclass1 = nclass2;
+
+      add(atom);
+      add(atom->GetParent()->GetBond(fromAtom, atom));
+    }
+
+    bool operator<(const CanonicalCode &other)
+    {
+      std::size_t numFrom = std::min(from.size(), other.from.size());
+      for (std::size_t i = 0; i < numFrom; ++i) {
+        if (from[i] > other.from[i])
+          return false;
+        if (from[i] < other.from[i])
+          return true;
+      }
+     
+      return false;
+    }
+
+    bool operator>(const CanonicalCode &other)
+    {
+      std::size_t numFrom = std::min(from.size(), other.from.size());
+      for (std::size_t i = 0; i < numFrom; ++i) {
+        if (from[i] < other.from[i])
+          return false;
+        if (from[i] > other.from[i])
+          return true;
+      }
+     
+      std::size_t numClosures = std::min(closures.size(), other.closures.size());
+      for (std::size_t i = 0; i < numClosures; ++i) {
+        if (closures[i] < other.closures[i])
+          return false;
+        if (closures[i] > other.closures[i])
+          return true;
+      }
+      std::size_t numAtomTypes = std::min(atomTypes.size(), other.atomTypes.size());
+      for (std::size_t i = 0; i < numAtomTypes; ++i) {
+        if (atomTypes[i] < other.atomTypes[i])
+          return false;
+        if (atomTypes[i] > other.atomTypes[i])
+          return true;
+      }
+      std::size_t numBondTypes = std::min(bondTypes.size(), other.bondTypes.size());
+      for (std::size_t i = 0; i < numBondTypes; ++i) {
+        if (bondTypes[i] < other.bondTypes[i])
+          return false;
+        if (bondTypes[i] > other.bondTypes[i])
+          return true;
+      }
+
+      if (stereo < other.stereo)
+        return false;
+      if (stereo > other.stereo)
+        return true;
+
+      return false;
+    }
+
+
+
+  };
+
+
+  bool isFerroceneBond(OBBond *bond)
+  {
+    if (bond->GetBondOrder() != 1)
+      return false;
+
+    OBAtom *Fe = 0, *C = 0;
+    
+    OBAtom *begin = bond->GetBeginAtom();
+    if (begin->GetAtomicNum() == 26)
+      Fe = begin;
+    if (begin->GetAtomicNum() == 6)
+      C = begin;
+
+    OBAtom *end = bond->GetEndAtom();
+    if (end->GetAtomicNum() == 26)
+      Fe = end;
+    if (end->GetAtomicNum() == 6)
+      C = end;
+
+    if (!Fe || !C)
+      return false;
+
+    return C->HasDoubleBond();
+  }
+
+
+  void CanonicalLabelsRecursive(OBAtom *current, const std::vector<unsigned int> &symmetry_classes,
+      CanonicalCode &code, unsigned int label, std::size_t &loopCount, std::vector<CanonicalCode> &codes, 
+      const OBBitVec &fragment, const OBStereoUnitSet &stereoUnits, const OBBitVec &mask, bool onlyOne)
+  {
+    OBMol *mol = current->GetParent();
+
+    // avoid endless loops
+    if (loopCount > 200000) {
+      return;
+    }
+
+    if (onlyOne && !codes.empty())
+      return;
+
+    // abort early if this will not lead to a maximal canonical code
+    for (std::size_t i = 0; i < codes.size(); ++i)
+      if (code < codes[i])
+        return;
+    
+    // Check if there is a full mapping
+    if (label == mask.CountBits()) {
+    
+      // the RING-CLOSURE list
+      unsigned int current_label = 1;
+      for (std::size_t j = 0; j < code.atoms.size(); ++j) {
+        OBAtom *atom = code.atoms[j];
+        std::vector<std::pair<OBBond*, unsigned int> > closures;
+        FOR_BONDS_OF_ATOM (bond, atom) {
+          if (!mask.BitIsSet(bond->GetNbrAtom(atom)->GetIdx()))
+            continue;
+          if (std::find(code.bonds.begin(), code.bonds.end(), &*bond) == code.bonds.end()) {
+            closures.push_back(std::make_pair(&*bond, code.labels[bond->GetNbrAtom(atom)->GetIndex()]));
           }
-        } else {
-          CountAndRenumberClasses(vp1, nclass1);  // no more ties - undo the doublings
+        }
+
+        std::sort(closures.begin(), closures.end(), CompareBondPairSecond);
+        for (std::size_t k = 0; k < closures.size(); ++k) {
+          code.closures.push_back(current_label);
+          code.closures.push_back(closures[k].second);
+          code.bonds.push_back(closures[k].first);
+        }
+
+        current_label++;
+      }
+
+
+ 
+      OBBitVec frag;
+      for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
+        if (mask.BitIsSet(i+1))
+          frag.SetBitOn(mol->GetAtom(i+1)->GetId());
+      }
+ 
+      OBStereoUnitSet orderedUnits = orderSetBySymmetryClasses(mol, stereoUnits, code.labels);
+      code.stereo = findDescriptorVectorValue(mol, frag, orderedUnits, code.labels);
+ 
+      loopCount++;
+      
+      if (codes.empty()) {
+        codes.push_back(code);
+      } else {
+        if (code > codes[0]) {
+          codes[0] = code;        
+        }
+      }
+
+      return;
+    }
+    // Check if the current connected fragment is mapped
+    if (label - code.lastFragment == fragment.CountBits()) {
+      code.lastFragment += fragment.CountBits();
+
+
+      // find the highest symmetry class in a new fragment
+      std::vector<unsigned int> nextSymClasses;
+      for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
+        if (!mask.BitIsSet(i+1))
+          continue;
+        if (!code.labels[i])
+          nextSymClasses.push_back(symmetry_classes[i]);
+      }
+      unsigned int maxSymClass = *std::max_element(nextSymClasses.begin(), nextSymClasses.end());
+      
+      // start recursion on the new fragment
+      for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
+        if (!mask.BitIsSet(i+1))
+          continue;
+        if (code.labels[i])
+          continue;
+        OBAtom *atom = mol->GetAtom(i+1);
+
+        if (symmetry_classes[atom->GetIndex()] == maxSymClass) {
+          CanonicalCode codeCopy = code;
+          codeCopy.add(atom);
+          codeCopy.labels[atom->GetIndex()] = label + 1;
+          CanonicalLabelsRecursive(atom, symmetry_classes, codeCopy, label + 1, loopCount, codes, getFragment(atom, mask), stereoUnits, mask, onlyOne);
         }
       }
     }
 
-    /*cout << "AFTER TieBreaker: nclass1 = " << nclass1 << ", nfragatoms = " << nfragatoms << "\n";
-      for (int i = 0; i < vp1.size(); i++) {
-      cout << vp1[i].first->GetIndex() << ": " << vp1[i].second << endl;
-      }*/
-
-    canonical_labels.resize(_pmol->NumAtoms(), OBGraphSym::NoSymmetryClass);
-    for (int i = 0; i < vp1.size(); ++i) {
-      canonical_labels[vp1.at(i).first->GetIndex()] = vp1.at(i).second;
+    std::vector<OBAtom*> nbrs;
+    std::vector<unsigned int> nbrSymClasses;
+    std::vector<std::pair<OBBond*, unsigned int> > closures;
+    FOR_NBORS_OF_ATOM (nbr, current) {
+      if (!mask.BitIsSet(nbr->GetIdx()))
+          continue;
+      OBBond *bond = mol->GetBond(current, &*nbr);
+      
+      if (code.labels[nbr->GetIndex()]) {
+        if (std::find(code.bonds.begin(), code.bonds.end(), bond) == code.bonds.end())
+          closures.push_back(std::make_pair(bond, code.labels[nbr->GetIndex()]));
+        continue;
+      }
+      
+      if (!isFerroceneBond(bond)) {
+        nbrSymClasses.push_back(symmetry_classes[nbr->GetIndex()]);
+        nbrs.push_back(&*nbr);
+      }
     }
+
+    std::sort(closures.begin(), closures.end(), CompareBondPairSecond);
+    for (std::size_t k = 0; k < closures.size(); ++k) {
+      code.closures.push_back(code.labels[current->GetIndex()]);
+      code.closures.push_back(closures[k].second);
+      //code.add(closures[k].first);
+      code.cbonds.push_back(closures[k].first);
+    }
+
+    if (nbrs.empty()) {
+      unsigned int nextLabel = code.labels[current->GetIndex()] + 1;
+      for (std::size_t i = 0; i < code.labels.size(); ++i) {
+        if (code.labels[i] == nextLabel) {
+          CanonicalLabelsRecursive(mol->GetAtom(i+1), symmetry_classes, code, label, loopCount, codes, fragment, stereoUnits, mask, onlyOne);
+          return;
+        }
+      }
+      return;
+    }
+
+
+    std::vector<std::vector<OBAtom*> > allOrderedNbrs(1);
+    while (!nbrs.empty()) {
+
+      // select the next nbr atoms with highest symmetry classes
+      unsigned int maxSymClass = *std::max_element(nbrSymClasses.begin(), nbrSymClasses.end());
+      std::vector<OBAtom*> finalNbrs;
+      for (std::size_t i = 0; i < nbrs.size(); ++i) {
+        if (nbrSymClasses[i] == maxSymClass)
+          finalNbrs.push_back(nbrs[i]);
+      }
+
+      // remove the selected atoms from nbrs and nbrSymClasses
+      for (std::size_t i = 0; i < finalNbrs.size(); ++i) {
+        nbrs.erase(std::find(nbrs.begin(), nbrs.end(), finalNbrs[i]));
+        nbrSymClasses.erase(std::find(nbrSymClasses.begin(), nbrSymClasses.end(), maxSymClass));
+      }
+
+//      cout << "finalNbrs.size = " << finalNbrs.size() << endl;
+
+      if (finalNbrs.size() == 1) {
+        for (std::size_t i = 0; i < allOrderedNbrs.size(); ++i)
+          allOrderedNbrs[i].push_back(finalNbrs[0]);
+      } else {
+        std::sort(finalNbrs.begin(), finalNbrs.end());
+        
+        std::vector<std::vector<OBAtom*> > allOrderedNbrsCopy(allOrderedNbrs);
+
+        for (std::size_t j = 0; j < allOrderedNbrsCopy.size(); ++j) {
+          if (!allOrderedNbrsCopy[j].empty())
+            allOrderedNbrs.push_back(allOrderedNbrsCopy[j]);
+          for (std::size_t i = 0; i < finalNbrs.size(); ++i) {
+            allOrderedNbrs.back().push_back(finalNbrs[i]);
+          }
+        }
+
+        while (std::next_permutation(finalNbrs.begin(), finalNbrs.end())) {
+          for (std::size_t j = 0; j < allOrderedNbrsCopy.size(); ++j) {
+            allOrderedNbrs.push_back(allOrderedNbrsCopy[j]);
+            for (std::size_t i = 0; i < finalNbrs.size(); ++i) {
+              allOrderedNbrs.back().push_back(finalNbrs[i]);
+            }
+          }
+        }
+      }
+    }
+
+    if (DEBUG) {
+      cout << "allOrderedNbrs:" << endl;
+      for (std::size_t i = 0; i < allOrderedNbrs.size(); ++i) {
+        for (std::size_t j = 0; j < allOrderedNbrs[i].size(); ++j) {
+          cout << allOrderedNbrs[i][j]->GetIndex() << " ";
+        }
+        cout << endl;
+      }
+    }
+
+    if (allOrderedNbrs.size() == 1) {
+      for (std::size_t j = 0; j < allOrderedNbrs[0].size(); ++j) {
+        label++;
+        code.add(current, allOrderedNbrs[0][j]);
+        code.labels[allOrderedNbrs[0][j]->GetIndex()] = label;
+      }
+      CanonicalLabelsRecursive(current, symmetry_classes, code, label, loopCount, codes, fragment, stereoUnits, mask, onlyOne);
+    } else {
+      for (std::size_t i = 0; i < allOrderedNbrs.size(); ++i) {
+        unsigned int lbl = label;
+        CanonicalCode codeCopy = code;
+        for (std::size_t j = 0; j < allOrderedNbrs[i].size(); ++j) {
+          lbl++;
+          codeCopy.add(current, allOrderedNbrs[i][j]);
+          codeCopy.labels[allOrderedNbrs[i][j]->GetIndex()] = lbl;
+        }
+
+        CanonicalLabelsRecursive(current, symmetry_classes, codeCopy, lbl, loopCount, codes, fragment, stereoUnits, mask, onlyOne);
+      }
+    }
+ 
   }
+
+  void CalcCanonicalLabels(OBMol *mol, const std::vector<unsigned int> &symmetry_classes,
+      std::vector<unsigned int> &canonical_labels, const OBStereoUnitSet &stereoUnits, const OBBitVec &mask, bool onlyOne = false)
+  {
+    if (!mol->NumAtoms())
+      return;
+    if (mol->NumAtoms() == 1) {
+      canonical_labels.resize(1, 1);
+      return;
+    }
+
+    std::vector<unsigned int> nextSymClasses;
+    for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
+      if (mask.BitIsSet(i+1))
+        nextSymClasses.push_back(symmetry_classes[i]);
+    }
+    unsigned int maxSymClass = *std::max_element(nextSymClasses.begin(), nextSymClasses.end());
+ 
+
+    std::size_t loopCount = 0;
+    std::vector<CanonicalCode> codes;
+    for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
+      if (!mask.BitIsSet(i+1))
+        continue;
+      OBAtom *atom = mol->GetAtom(i+1);
+
+      if (symmetry_classes[atom->GetIndex()] == maxSymClass) {
+        CanonicalCode code(mol->NumAtoms());
+        code.add(atom);
+        code.labels[atom->GetIndex()] = 1;
+        CanonicalLabelsRecursive(atom, symmetry_classes, code, 1, loopCount, codes, getFragment(atom, mask), stereoUnits, mask, onlyOne);
+      }
+    }
+
+    if (loopCount > 200000) {
+      obErrorLog.ThrowError(__FUNCTION__, "too many possibilities, aborting...", obError);
+    }
+
+    if (!codes.empty())
+      canonical_labels = codes[0].labels;
+  }
+ 
+  int OBGraphSymPrivate::Iterate(vector<unsigned int> &symClasses)
+  {
+    // Create a vector-of-pairs, associating each atom with its Class ID.
+    vector<OBAtom*>::iterator j;
+    std::vector<std::pair<OBAtom*, unsigned int> > symmetry_classes;
+    for (OBAtom *atom = _pmol->BeginAtom(j); atom; atom = _pmol->NextAtom(j)) {
+      int idx = atom->GetIdx();
+      if (_frag_atoms.BitIsOn(idx))
+        symmetry_classes.push_back(pair<OBAtom*, unsigned int> (atom, symClasses[idx-1]));
+    }
+
+    // The heart of the matter: Do extended sum-of-invariants until no further
+    // changes are noted. 
+    int nclasses = ExtendInvariants(symmetry_classes);
+
+    // Convert to a vector indexed by Index
+    // Atoms not in the fragment will have a value of OBGraphSym::NoSymmetryClass
+    symClasses.clear();
+    symClasses.resize(_pmol->NumAtoms(), OBGraphSym::NoSymmetryClass);
+    for (unsigned int i = 0; i < symmetry_classes.size(); ++i) {
+      symClasses[symmetry_classes.at(i).first->GetIndex()] = symmetry_classes.at(i).second;
+    }
+
+    return nclasses;
+  }
+
+  void OBGraphSym::CanonicalLabels(std::vector<unsigned int> &canon_labels)
+  {
+    std::vector<unsigned int> symmetry_classes;
+    GetSymmetry(symmetry_classes);
+    d->CanonicalLabels(symmetry_classes, canon_labels);
+    if (canon_labels.empty())
+      for (std::size_t i = 0; i < symmetry_classes.size(); ++i)
+        canon_labels.push_back(i+1);
+  }
+
+  void OBGraphSym::CanonicalLabels(OBMol *mol, const std::vector<unsigned int> &symmetry_classes,
+      std::vector<unsigned int> &canonical_labels, const OBBitVec &mask)
+  {
+    OBBitVec maskCopy(mask);
+    if (!maskCopy.CountBits())
+      FOR_ATOMS_OF_MOL (atom, mol)
+        maskCopy.SetBitOn(atom->GetIdx());
+
+    CalcCanonicalLabels(mol, symmetry_classes, canonical_labels, OBStereoUnitSet(), maskCopy, true);
+    if (canonical_labels.empty())
+      for (std::size_t i = 0; i < symmetry_classes.size(); ++i)
+        canonical_labels.push_back(i+1);
+  }
+
+
+  void OBGraphSymPrivate::CanonicalLabels(const std::vector<unsigned int> &symmetry_classes, std::vector<unsigned int> &canon_labels)
+  {
+    bool hasAtLeastOneDefined = false;
+    OBStereoFacade sf(_pmol, false);
+    FOR_ATOMS_OF_MOL (atom, _pmol) {
+      if (sf.HasTetrahedralStereo(atom->GetId())) {
+        if (sf.GetTetrahedralStereo(atom->GetId())->GetConfig().specified) {
+          hasAtLeastOneDefined = true;
+          break;
+        }
+      }
+    }
+    FOR_BONDS_OF_MOL (bond, _pmol) {
+      if (sf.HasCisTransStereo(bond->GetId())) {
+        if (sf.GetCisTransStereo(bond->GetId())->GetConfig().specified) {
+          hasAtLeastOneDefined = true;
+          break;
+        }
+      }
+    }
+    if (!hasAtLeastOneDefined) {
+      CalcCanonicalLabels(_pmol, symmetry_classes, canon_labels, OBStereoUnitSet(), _frag_atoms);
+      return;
+    }
+
+
+    if (!_stereoUnits.size()) {
+      // Find all automorphisms
+      _G = FindAutomorphisms(_pmol, symmetry_classes, _frag_atoms);
+      // Find all types of stereogenic units (i.e. tetrahedral, cis/trans, ...)
+      _stereoUnits = FindStereogenicUnits(_pmol, symmetry_classes, _G);
+
+      // Mark all invalid stereo data as unspecified
+      std::vector<OBGenericData*> stereoData = _pmol->GetAllData(OBGenericDataType::StereoData);
+      std::vector<OBGenericData*>::iterator data;
+      for (data = stereoData.begin(); data != stereoData.end(); ++data) {
+        OBStereo::Type type = ((OBStereoBase*)*data)->GetType();
+        if (type == OBStereo::Tetrahedral) {
+          OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
+          OBTetrahedralStereo::Config config = ts->GetConfig();
+          bool valid = true;
+          if (!ts->IsValid())
+            valid = false;
+          OBAtom *center = _pmol->GetAtomById(config.center);
+          if (!center)
+            valid = false;
+          else if (!isTetrahedral(center, _stereoUnits))
+            valid = false;
+
+          if (!valid) {
+            config.specified = false;
+            ts->SetConfig(config);
+          }
+        }
+        if (type == OBStereo::CisTrans) {
+          OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
+          OBCisTransStereo::Config config = ct->GetConfig();
+          bool valid = true;
+          if (!ct->IsValid())
+            valid = false;
+          OBAtom *beginAtom = _pmol->GetAtomById(config.begin);
+          OBAtom *endAtom = _pmol->GetAtomById(config.end);
+          if (!beginAtom || !endAtom)
+            valid = false;
+          else {
+            OBBond *bond = _pmol->GetBond(beginAtom, endAtom);
+            if (!bond)
+              valid = false;
+            else if (!isCisTrans(bond, _stereoUnits))
+              valid = false;
+          }
+
+          if (!valid) {
+            config.specified = false;
+            ct->SetConfig(config);
+          }
+        }
+      }
+
+    }
+
+    // Determine stereochemistry from coordinates if needed
+    if (!_pmol->HasChiralityPerceived()) {
+      if (DEBUG)
+        cout << "Determining stereochemistry from coords..." << endl;
+      switch (_pmol->GetDimension()) {
+        case 2:
+          _pmol->DeleteData(OBGenericDataType::StereoData);
+          TetrahedralFrom2D(_pmol, _stereoUnits);
+          CisTransFrom2D(_pmol, _stereoUnits);
+          break;
+        case 3:
+          _pmol->DeleteData(OBGenericDataType::StereoData);
+          TetrahedralFrom3D(_pmol, _stereoUnits);
+          CisTransFrom3D(_pmol, _stereoUnits);
+          break;
+        default:
+          TetrahedralFrom0D(_pmol, _stereoUnits);
+          CisTransFrom0D(_pmol, _stereoUnits);
+          break;
+      }
+    }
+
+    std::vector<unsigned int> identity_labels;
+    CalcCanonicalLabels(_pmol, symmetry_classes, canon_labels, _stereoUnits, _frag_atoms);
+  }
+
+
+  /**
+   * @page canonical_code Canonical Coding Algorithm
+   *
+   * @section canonical_introduction Introduction
+   * The aim of a canonical coding algorithm is to assign unique labels to 
+   * atoms regardless of their input order. In practise, these labels or orders
+   * are atom indexes resulting from the order in which the atoms are defined
+   * in an input file. Although most chemical file formats could be used to
+   * store canonical ordered molecules, canonical single line notations are used
+   * more often since they allow two canonical molecules to be compared using a
+   * string comparison. Two well known examples are canonical smiles and inchi.
+   * While the canonical smiles for the same molecule should always be the same
+   * when using a specific implementation (i.e. toolkits), these canonical 
+   * smiles are usually not transferable between implementations. There is only
+   * one inchi implementation and the canonical code, although not formally
+   * specified is always the same. A typical use case for canonical codes is to
+   * determine if a molecule is already in a database. 
+   *
+   * The rest of this page documents the OpenBabel canonical coding algorithm.
+   *
+   * @section Terminology
+   * - Topology: 
+   *
+   * @section Topological Symmetry
+   * The starting point of the canonical coding algorithm is the topological 
+   * symmetry or graph symmetry. This symmetry can be expressed by assigning
+   * symmetry classes to atoms. Symmetric atoms have the same symmetry class.
+   * The term color is often used in graph theory as a synonym for symmetry 
+   * classes.
+   *
+   *
+   * 
+   *
+   * @subsection Canonical Code for Asymmetric Molecules
+   *
+   *
+   * @subsection Canonical Code for Symmetric Molecules
+   *
+   * @section Stereochemistry
+   
+   
+   For a molecule containing N atoms, there are N! possible
+   * ways to order the atoms. The actual complexity of the algorithm needed 
+   * depends on the molecule.
+   *
+   * 
+
+   * 
+   *
+   *
+   *
+   *
+   *
+   *
+   *
+   *
+   *
+   */
+
+/* -*-C++-*-
++======================================================================
+|
+|                       !!!DEPRECATED!!!
+|
+|
+| AUTHOR: Craig A. James, eMolecules, Inc.
+|
+| DESCRIPTION: CANONICALIZATION OF SMILES
+|
+|       This is a specialized SMILES canonicalization algorithm.  Although
+|       it can be applied in the standard fashion to a whole molecule, 
+|       its real job is to generate canonical SMILES for fragments, or
+|       "subsets", of the atoms of a molecule.
+|
+|       For example, consider the first three atoms of Oc1ccccc1.  With
+|       a "normal" SMILES canonicalizer, you couldn't generate a SMILES
+|       for Occ, because it's not a valid molecule.  However, this system
+|       can do exactly that, by taking both the whole molecule (which 
+|       retains the aromaticity), and a "subset" bitmap that specifies
+|       which atoms are to be included in the SMILES.
+|
+|       Canonicalization is carried out per Weininger et al (J. Chem. 
+|       Inf. Comput. Sci., Vol. 29, No. 2, 1989, pp 97-101), with some
+|       modifications to handle bond symmetries not foreseen by Weininger
+|       in that paper.
+|
+|       WARNING - KNOWN BUG: These functions make use of a bitmap vector
+|       to represent a "fragment" -- a subset of the atoms in a molecule.
+|       But this means the bonds of the fragment are implicit, not explicit,
+|       which is incorrect.  For example, if you want to break one bond of
+|       cyclehexane (C1CCCCC1), all six atoms will still be there, so the
+|       "fragment" will be cyclic.  This is relevant when generating fragment
+|       SMILES for ring systems where breaking a bond can reduce the number
+|       of ring without removing any atoms.  We need to add a pair of bit
+|       vectors, the atoms AND the bonds, to represent a fragment.  (Note
+|       that this is also an ambiguity in OpenBabel itself, which represents
+|       a ring as a set of atoms. This is only valid if the ring is a member
+|       of a SSSR.)
++======================================================================
+*/
+
 
 
 } // namespace OpenBabel

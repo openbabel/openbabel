@@ -1,7 +1,7 @@
 /**********************************************************************
   stereo.h - OBStereo & OBStereoBase
 
-  Copyright (C) 2009 by Tim Vandermeersch
+  Copyright (C) 2009-2010 by Tim Vandermeersch
 
   This file is part of the Open Babel project.
   For more information, see <http://openbabel.sourceforge.net/>
@@ -25,6 +25,7 @@
 #define OB_STEREO_H
 
 #include <openbabel/base.h> // OBGenericData
+#include <openbabel/isomorphism.h> // Automorphisms
 #include <vector>
 #include <map>
 #include <set>
@@ -247,13 +248,23 @@ namespace OpenBabel {
 
   };
 
-  struct StereogenicUnit
+  /**
+   * @brief Struct representing a single stereogenic unit.
+   */
+  struct OBStereoUnit
   {
-    StereogenicUnit() : type(static_cast<OBStereo::Type>(0)), id(OBStereo::NoRef), para(false)
+    /**
+     * Default constructor creating an invalid OBStereoUnit. The unit can be
+     * made valid by setting the type, id and para data members.
+     */
+    OBStereoUnit() : type(static_cast<OBStereo::Type>(0)), id(OBStereo::NoRef), para(false)
     {
     }
 
-    StereogenicUnit(OBStereo::Type _type, unsigned long _id, bool _para = false) :
+    /**
+     * Constructor specifying all data to create a valid OBStereoUnit.
+     */
+    OBStereoUnit(OBStereo::Type _type, unsigned long _id, bool _para = false) :
         type(_type), id(_id), para(_para)
     {
     }
@@ -262,6 +273,21 @@ namespace OpenBabel {
     unsigned long id; //! the atom/bond (depends on type) unique id
     bool para; //! para- (=ressemble) or true-stereocenter
   };
+  /**
+   * @brief A single set of OBStereoUnit objects.
+   *
+   * This type can be used to represent all stereogenic units in a molecule and
+   * is used as return type of FinStereogenicUnits(). This set is also the input
+   * for many functions requiring this information (e.g. StereoFrom2D, ...).
+   */
+  typedef std::vector<OBStereoUnit> OBStereoUnitSet;
+  /**
+   * @brief A set of sets of OBStereoUnit objects.
+   *
+   * This type is used for cases where there is some relationship between
+   * individual OBStereoUnit objects.
+   */
+  typedef std::vector<OBStereoUnitSet> OBStereoUnitSetOfSets;
 
 
   // fwd decl
@@ -421,6 +447,11 @@ namespace OpenBabel {
       OBSquarePlanarStereo* GetSquarePlanarStereo(unsigned long atomId);
       ///@}
 
+      template<int StereoType>
+      bool HasStereo(unsigned long id);
+      template<typename T>
+      T* GetStereo(unsigned long id);
+
 
     private:
       /**
@@ -560,11 +591,11 @@ namespace OpenBabel {
    * @param addToMol If true, the OBTetrahedralStereo objects will be added
    * to the molecule using OBBase::SetData().
    *
-   * @sa StereoFrom3D FindTetrahedralAtoms
+   * @sa StereoFrom3D FindStereogenicUnits
    * @since version 2.3
    */
   OBAPI std::vector<OBTetrahedralStereo*> TetrahedralFrom3D(OBMol *mol,
-      const std::vector<StereogenicUnit> &stereoUnits, bool addToMol = true);
+      const OBStereoUnitSet &stereoUnits, bool addToMol = true);
   /**
    * Get a vector with all OBTetrahedralStereo objects for the molecule. This
    * function is used by StereoFrom2D() with the @p addToMol parameter is set
@@ -606,11 +637,11 @@ namespace OpenBabel {
    * @param addToMol If true, the OBTetrahedralStereo objects will be added
    * to the molecule using OBBase::SetData().
    *
-   * @sa StereoFrom2D FindTetrahedralAtoms
+   * @sa StereoFrom2D FindStereogenicUnits
    * @since version 2.3
    */
   OBAPI std::vector<OBTetrahedralStereo*> TetrahedralFrom2D(OBMol *mol,
-      const std::vector<StereogenicUnit> &stereoUnits, bool addToMol = true);
+      const OBStereoUnitSet &stereoUnits, bool addToMol = true);
   /**
    * Get a vector with all OBTetrahedralStereo objects for the molecule. This
    * function is used by StereoFrom0D() with the @p addToMol parameter is set
@@ -627,11 +658,11 @@ namespace OpenBabel {
    * @param addToMol If true, the OBTetrahedralStereo objects will be added
    * to the molecule using OBBase::SetData().
    *
-   * @sa StereoFrom0D FindTetrahedralAtoms
+   * @sa StereoFrom0D FindStereogenicUnits
    * @since version 2.3
    */
   OBAPI std::vector<OBTetrahedralStereo*> TetrahedralFrom0D(OBMol *mol,
-      const std::vector<StereogenicUnit> &stereoUnits, bool addToMol = true);
+      const OBStereoUnitSet &stereoUnits, bool addToMol = true);
 
   /**
    * Get a vector with all OBCisTransStereo objects for the molecule. This
@@ -666,11 +697,11 @@ namespace OpenBabel {
    * @param addToMol If true, the OBCisTransStereo objects will be added
    * to the molecule using OBBase::SetData().
    *
-   * @sa StereoFrom3D FindCisTransBonds
+   * @sa StereoFrom3D FindStereogenicUnits
    * @since version 2.3
    */
   OBAPI std::vector<OBCisTransStereo*> CisTransFrom3D(OBMol *mol,
-      const std::vector<StereogenicUnit> &stereoUnits, bool addToMol = true);
+      const OBStereoUnitSet &stereoUnits, bool addToMol = true);
   /**
    * Get a vector with all OBCisTransStereo objects for the molecule. This
    * function is used by StereoFrom2D() with the @p addToMol parameter is set
@@ -698,11 +729,11 @@ namespace OpenBabel {
    * @param addToMol If true, the OBCisTransStereo objects will be added
    * to the molecule using OBBase::SetData().
    *
-   * @sa StereoFrom2D FindCisTransBonds
+   * @sa StereoFrom2D FindStereogenicUnits
    * @since version 2.3
    */
   OBAPI std::vector<OBCisTransStereo*> CisTransFrom2D(OBMol *mol,
-      const std::vector<StereogenicUnit> &stereoUnits,
+      const OBStereoUnitSet &stereoUnits,
       const std::map<OBBond*, enum OBStereo::BondDirection> *updown = NULL, bool addToMol = true);
   /**
    * Convert a molecule's OBTetrahedralStereo objects to a series of hash or
@@ -773,19 +804,178 @@ namespace OpenBabel {
    * @param addToMol If true, the OBCisTransStereo objects will be added
    * to the molecule using OBBase::SetData().
    *
-   * @sa StereoFrom0D FindCisTransBonds
+   * @sa StereoFrom0D FindStereogenicUnits
    * @since version 2.3
    */
   OBAPI std::vector<OBCisTransStereo*> CisTransFrom0D(OBMol *mol,
-      const std::vector<StereogenicUnit> &stereoUnits,
+      const OBStereoUnitSet &stereoUnits,
       bool addToMol = true);
   ///@}
 
 
   ///@name Stereogenic unit identification
   ///@{
-  OBAPI std::vector<StereogenicUnit> FindStereogenicUnits(OBMol *mol,
+  /**
+   * Find the stereogenic units in a molecule using a set of rules.<sup>1</sup>
+   *
+   * The potential stereocenters are identified first. A potential tetrahedral
+   * stereogenic atom is any atom meeting the following criteria:
+   *
+   * - sp3 hybridization
+   * - at least 3 "heavy" neighbors
+   *
+   * Nitrogen is treated as a special case since the barrier of inversion is
+   * low in many cases making the atom non-stereogenic. Only bridge-head
+   * nitrogen atoms (i.e. nitrogen has 3 neighbors in rings) will be
+   * considered stereogenic.
+   *
+   * Potential stereogenic double bonds are identified using another set of
+   * simple criteria:
+   *
+   * - must be a double bond
+   * - must not be in a ring
+   * - both begin and end atom should have at least one single bond
+   *
+   * True stereocenters (i.e. stereocenters with topologically different
+   * ligands) are identified first. For tetrahedral stereocenters, true
+   * stereocenters will have 4 different neighbor atom symmetry classes
+   * and this can be expressed using T1234 to classify these stereocenters.
+   * For stereogenic bonds, a similar classification C12 can be used but
+   * both begin and end atom have their own classification and the bond
+   * is only a true stereocenter if both atoms are C12.
+   *
+   * Para stereocenters are all stereocenters where there are at least two
+   * equivalent neighbor atom symmetry classes. These are T1123, T1112, T1111
+   * and T1122 for tetrahedral stereocenters and C11 for double bonds. To
+   * determine which of the remaining potential stereocenters really are
+   * stereocenters, a set of rules is used.<sup>1</sup>
+   *
+   * Rule 1 is applied recusively:
+   *
+   * All rings are merged "mergedRings". A merged ring is simply a fragment consisting
+   * of all atoms of a ring system (bridged, spiro, adjacent, ...). If two rings in the
+   * SSSR set share an atom, they are merged.
+   *
+   * Each merged must at least have two para-stereocenters (or 1 true + 1 para) in order
+   * for the para-stereocenter to be valid. This is repeated until no new stereocenters
+   * are identified.
+   *
+   * rule 1a for double bonds:
+   * - bond atom in ring has two identical symmetry classes for it's neighbor atoms (-> para)
+   * - other bond atom:
+   *   - has two different symmetry classes for it's neighbours -> new stereocenter
+   *   - has two identical symmetry classes, but the ligand contains at least 1 true or para stereocenter -> new stereocenter
+   *
+   * rule 1b for tetracoord atoms:
+   * - at least two neighbour symmetry classes are the same (-> para)
+   * - other pair:
+   *   - has two different symmetry classes for it's neighbours -> new stereocenter
+   *   - has two identical symmetry classes, but the ligand contains at least 1 true or para stereocenter -> new stereocenter
+   *
+   * Rules 2 and 3 are applied sequential (i.e. only once).
+   *
+   * Rule 2a for tetracoordinate carbon:
+   * - 1 or 2 pair identical ligands
+   * - each ligand contains at least 1 true-stereocenter or 2 para-stereocenters (from rule 1)
+   *
+   * Rule 2b for tetracoordinate carbon:
+   * - 3 or 4 identical ligands with at least
+   *   - 2 true-stereocenters
+   *   - 2 separate assemblies of para-stereocenters (from rule 1)
+   *
+   * Rule 3 for double bonds:
+   * - 1 or 2 pair identical ligands (on begin and end atom)
+   * - each pair contains at least 1 true-stereocenter or 2 para-stereocenters (from rule 1)
+   *
+   *
+   * @verbatim
+     Reference:
+     [1] M. Razinger, K. Balasubramanian, M. Perdih, M. E. Munk, Stereoisomer
+     Generation in Computer-Enhanced Structure Elucidation, J. Chem. Inf.
+     Comput. Sci. 1993, 33, 812-825
+     @endverbatim
+   */
+  OBAPI OBStereoUnitSet FindStereogenicUnits(OBMol *mol,
       const std::vector<unsigned int> &symClasses);
+  /**
+   * @brief Find the stereogenic units in a molecule making use of the automorphisms.
+   *
+   * The potential stereocenters are identified first. A potential tetrahedral
+   * stereogenic atom is any atom meeting the following criteria:
+   *
+   * - sp3 hybridization
+   * - at least 3 "heavy" neighbors
+   *
+   * Nitrogen is treated as a special case since the barrier of inversion is
+   * low in many cases making the atom non-stereogenic. Only bridge-head
+   * nitrogen atoms (i.e. nitrogen has 3 neighbors in rings) will be
+   * considered stereogenic.
+   *
+   * Potential stereogenic double bonds are identified using another set of
+   * simple criteria:
+   *
+   * - must be a double bond
+   * - must not be in a ring
+   * - both begin and end atom should have at least one single bond
+   *
+   * Once the potential stereocenters are found, the automorphisms are the key
+   * to identifying real stereogenic units. Automorphisms can be seen as
+   * permutations that permutate a graph back to the same graph. Such a
+   * permutation can only exchange atoms with the same symmetry class and it
+   * follows that the use of automorphisms takes symmetry into account. The
+   * definitions below use a concept where the automorphisms cause inversions
+   * of configuration to potential stereocenters. Such an inversion occurs
+   * whenever an automorphism exchanges two equivalent (i.e. with the same
+   * symmetry class) neighbor atoms attached to the potential stereogenic unit.
+   *
+   * @par Definition for tetrahedral stereocenters:
+   * A potential stereocenter really is a stereocenter if there exists no automorphic
+   * permutation causing an inversion of the configuration of only the potential
+   * stereogenic unit under consideration.
+   * If there exists at least one automorphic permutation causing an inversion of
+   * the configuration, then the potential stereogenic center can be a stereogenic
+   * center if the number of topologically equivalent neighbors (ligands) of the
+   * potential stereogenic center is less than or equal to the number of different
+   * configurations of these ligands.<sup>1</sup>
+   *
+   * The actual number of configurations needed for the ligands depends on the
+   * classification (i.e. T1234, T1123, ...) of the stereo center. These classes
+   * reflect the symmetry classes of the neighbor atoms of the center.
+   *
+   * - T1123: 1 true stereocenter OR 2 para stereocenters
+   * - T1122: 1 true stereocenter OR 2 para stereocenters (for both)
+   * - T1112: 2 true stereocenters OR 2 para stereocenter assemblies
+   * - T1111: 2 true stereocenters OR 2 para stereocenter assemblies
+   *
+   * @par Definition for double bond stereocenters:
+   * A potential stereogenic double bond really is a stereogenic bond if there
+   * exists no automorphic permutation causing an inversion of the configuration
+   * of only the potential stereogenic unit under consideration. The bond can still
+   * be a stereogenic bond if there exists such an automorphism when the number of
+   * configurations of the pair of topologically equivalent geminal ligands, which
+   * are exchanged by the automorphism, is greater than or equal to two (i.e. the
+   * number of topologically equivalent geminal ligands.<sup>1</sup>
+   *
+   * For stereogenic bonds, there is only one case but both begin and end atom
+   * have to be checked.
+   *
+   * - C11: 1 true stereocenter OR 1 para stereocenter
+   *
+   * These criteria are analogous to the rules from the Razinger paper on
+   * stereoisomer generation. Since the existance of stereocenters can depend
+   * on the existance of other stereocenters (in the ligands), the stereocenters
+   * are found by iterating until no new stereocenters are found.
+   *
+   * @verbatim
+     Reference:
+     [1] M. Perdih, M. Razinger, Stereochemistry and Sequence Rules:
+     A Proposal for Modification of Cahn-Ingold-Prelog System,
+     Tetrahedron: Asymmetry, 1994, Vol. 5, No. 5, 835-861
+     @endverbatim
+   */
+  OBAPI OBStereoUnitSet FindStereogenicUnits(OBMol *mol,
+      const std::vector<unsigned int> &symClasses,
+      const Automorphisms &automorphisms);
   ///@}
 
   /**
@@ -876,8 +1066,8 @@ namespace OpenBabel {
    * units. The details about how the symmetry classes are used depends on the type
    * (OBStereo::Type) of stereogenic unit. For tetrahedral centers, having 3 heavy
    * atom neighbors with different symmetry classes or 4 neighbors with different
-   * symmetry classes means the atom is chiral. See FindTetrahedralAtoms(),
-   * FindCisTransBonds(), FindSquarePlanarAtoms(), ... for details.
+   * symmetry classes means the atom is chiral. See FindStereogenicUnits() for
+   * details.
    *
    * After identifying the stereogenic units, Config structs with all the
    * information on the spacial arrangement of the groups still have to be

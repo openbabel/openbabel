@@ -17,6 +17,7 @@ set(tests
     lssr
     isomorphism
     rotor
+    shuffle
     smiles
     spectrophore
     squareplanar

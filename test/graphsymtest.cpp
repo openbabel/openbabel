@@ -102,7 +102,7 @@ void countGraphSymClassesTest(const std::string &filename, int numberOfClasses)
 
   OBGraphSym graphSym(&mol);
   std::vector<unsigned int> symmetry_classes;
-  graphSym.GetSymmetry(symmetry_classes, false);
+  graphSym.GetSymmetry(symmetry_classes);
   for (unsigned int i = 0; i < symmetry_classes.size(); ++i)
     cout << i+1 << ": " << symmetry_classes[i] << endl;
 

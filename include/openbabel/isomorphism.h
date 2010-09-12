@@ -90,7 +90,8 @@ namespace OpenBabel {
        * get an instance of a derived class.
        * @param query The search query.
        */
-      OBIsomorphismMapper(OBQuery *query) : m_query(query) {}
+      OBIsomorphismMapper(OBQuery *query);
+      virtual ~OBIsomorphismMapper();
 
       /**
        * Get a pointer to an instance of the specified @p algorithm. This pointer
@@ -130,16 +131,28 @@ namespace OpenBabel {
        * indexes start from 1 (i.e. OBAtom::GetIdx()).
        */
       virtual Mappings MapAll(const OBMol *queried, const OBBitVec &mask = OBBitVec()) = 0;
+
+      /**
+       * Set the timeout in seconds.
+       */
+      void SetTimeout(unsigned int seconds) { m_timeout = seconds; }
+
     protected:
       OBQuery *m_query; //!< The search query.
+      unsigned int m_timeout; //!< The timeout in seconds
   };
 
 
+  typedef OBIsomorphismMapper::Mapping Automorphism;
+  typedef OBIsomorphismMapper::Mappings Automorphisms;
   /**
    * Find the automorphisms of a molecule by using a OBIsomorphismMapper.
    * @since version 2.3
    */
-  OBAPI OBIsomorphismMapper::Mappings FindAutomorphisms(OBMol *mol, const OBBitVec &mask = OBBitVec());
+  OBAPI Automorphisms FindAutomorphisms(OBMol *mol, const OBBitVec &mask = OBBitVec());
+  OBAPI Automorphisms FindAutomorphisms(OBMol *mol, const std::vector<unsigned int> &symmetry_classes,
+      const OBBitVec &mask = OBBitVec());
+
 
 
   /**

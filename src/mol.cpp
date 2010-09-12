@@ -3349,6 +3349,13 @@ namespace OpenBabel
     _vatom.clear();
     for (i = va.begin();i != va.end();++i)
       _vatom.push_back(*i);
+
+    DeleteData(OBGenericDataType::RingData);
+    DeleteData("OpenBabel Symmetry Classes");
+    DeleteData("LSSR");
+    DeleteData("SSSR");
+    UnsetFlag(OB_LSSR_MOL);
+    UnsetFlag(OB_SSSR_MOL);
   }
 
   bool WriteTitles(ostream &ofs, OBMol &mol)

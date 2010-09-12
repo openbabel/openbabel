@@ -1154,9 +1154,9 @@ namespace OpenBabel
 
   void OBBuilder::CorrectStereoBonds(OBMol &mol)
   {
-    // Get CisTransStereos and make a vector of corresponding StereogenicUnits
+    // Get CisTransStereos and make a vector of corresponding OBStereoUnits
     std::vector<OBCisTransStereo*> cistrans, newcistrans;
-    std::vector<StereogenicUnit> sgunits;
+    OBStereoUnitSet sgunits;
     std::vector<OBGenericData*> vdata = mol.GetAllData(OBGenericDataType::StereoData);
     OBStereo::Ref bond_id;
     for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data)
@@ -1166,7 +1166,7 @@ namespace OpenBabel
           cistrans.push_back(ct);
           bond_id = mol.GetBond(mol.GetAtomById(ct->GetConfig().begin),
                                 mol.GetAtomById(ct->GetConfig().end))->GetId();
-          sgunits.push_back(StereogenicUnit(OBStereo::CisTrans, bond_id));
+          sgunits.push_back(OBStereoUnit(OBStereo::CisTrans, bond_id));
         }
       }
 
@@ -1284,9 +1284,9 @@ namespace OpenBabel
 
   void OBBuilder::CorrectStereoAtoms(OBMol &mol)
   {
-    // Get TetrahedralStereos and make a vector of corresponding StereogenicUnits
+    // Get TetrahedralStereos and make a vector of corresponding OBStereoUnits
     std::vector<OBTetrahedralStereo*> tetra, newtetra;
-    std::vector<StereogenicUnit> sgunits;
+    OBStereoUnitSet sgunits;
     std::vector<OBGenericData*> vdata = mol.GetAllData(OBGenericDataType::StereoData);
     OBStereo::Ref atom_id;
     for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data)
@@ -1295,7 +1295,7 @@ namespace OpenBabel
         if (th->GetConfig().specified) {
           tetra.push_back(th);
           atom_id = th->GetConfig().center;
-          sgunits.push_back(StereogenicUnit(OBStereo::Tetrahedral, atom_id));
+          sgunits.push_back(OBStereoUnit(OBStereo::Tetrahedral, atom_id));
         }
       }
 
@@ -1351,7 +1351,7 @@ namespace OpenBabel
       if (inversion) {
         sgunits.clear();
         for (origth = nonringtetra.begin(); origth != nonringtetra.end(); ++origth)
-          sgunits.push_back(StereogenicUnit(OBStereo::Tetrahedral, (*origth)->GetConfig().center));
+          sgunits.push_back(OBStereoUnit(OBStereo::Tetrahedral, (*origth)->GetConfig().center));
         nonringnewtetra = TetrahedralFrom3D(&mol, sgunits, false);
       }
     }

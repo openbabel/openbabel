@@ -1,7 +1,9 @@
 /**********************************************************************
 graphsym.h - Class for handling graph symmetry.
 
-To determine copyright, please analyse the Subversion commit log.
+  Copyright (C) 2009-2010 by Tim Vandermeersch
+  Copyright (C) 2005-2006, eMolecules, Inc. (www.emolecules.com)
+                           Craig A. James
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
@@ -20,13 +22,12 @@ GNU General Public License for more details.
 #define OB_GRAPHSYM_H
 
 #include <openbabel/babelconfig.h>
+#include <openbabel/stereo/stereo.h>
 #include <vector>
 
 #ifndef EXTERN
 #  define EXTERN extern
 #endif
-
-using namespace std;
 
 namespace OpenBabel {
 
@@ -41,30 +42,7 @@ namespace OpenBabel {
    * @since version 2.3
    */
   class OBAPI OBGraphSym {
-    private:
-      OBGraphSymPrivate * const d;
-      OBBitVec _frag_atoms;
-      OBMol* _pmol;
 
-      static bool CompareUnsigned(const unsigned int &a,const unsigned int &b);
-      static bool ComparePairFirst(const std::pair<OBAtom*,unsigned int> &a,const std::pair<OBAtom*,unsigned int> &b);
-      static bool ComparePairSecond(const std::pair<OBAtom*,unsigned int> &a,const std::pair<OBAtom*,unsigned int> &b);
-      static bool CompareBondPairSecond(const std::pair<OBBond*,unsigned int> &a,const std::pair<OBBond*,unsigned int> &b);
-
-      unsigned int GetValence(OBAtom *atom);
-      unsigned int GetHvyValence(OBAtom *atom);
-      unsigned int GetHvyBondSum(OBAtom *atom);
-
-      void FindRingAtoms(OBBitVec &ring_atoms);
-      void CreateNewClassVector(std::vector<std::pair<OBAtom*,unsigned int> > &vp1,
-                                std::vector<std::pair<OBAtom*,unsigned int> > &vp2);
-      void GetGIVector(std::vector<unsigned int> &vid);
-      bool GetGTDVector(std::vector<int> &gtd);
-      void CountAndRenumberClasses(std::vector<std::pair<OBAtom*,unsigned int> > &vp, unsigned int &count);
-      int ExtendInvariants(std::vector<std::pair<OBAtom*, unsigned int> > &symmetry_classes, bool breakChiralTies);
-
-      int CalculateSymmetry(std::vector<unsigned int> &symmetry_classes, bool breakChiralTies);
-      void BreakChiralTies(vector<pair<OBAtom*, unsigned int> > &atom_sym_classes);
     public:
       //! Constructor
       OBGraphSym(OBMol* pmol, OBBitVec* frag_atoms = NULL);
@@ -83,28 +61,31 @@ namespace OpenBabel {
        *
        * @return The number of symmetry classes.
        */
-      int GetSymmetry(vector<unsigned int> &symmetry_classes, bool breakChiralTies = true);
+      int GetSymmetry(std::vector<unsigned int> &symmetry_classes);
+      /**
+       * Clear the symmetry classes data stored in the molecule specified when
+       * construting the OBGraphSym object.
+       */
       void ClearSymmetry();
       /**
-       * Calculate the canonical labels for the molecule. The result will be
+       * Calculate the canonical labels for the molecule. Stereochemistry is
+       * included in the algorithm and the canonical labels. The result will be
        * stored in @p canonical_labels.
        *
-       * FIXME
-       *
-       * @return FIXME
+       * @return The canonical labels for the molecule.
        */
-      void CanonicalLabels(vector<unsigned int> &symmetry_classes);
-    };
+      void CanonicalLabels(std::vector<unsigned int> &canonical_labels);
 
+      static void CanonicalLabels(OBMol *mol, const std::vector<unsigned int> &symmetry_classes,
+          std::vector<unsigned int> &canon_labels, const OBBitVec &mask = OBBitVec());
 
-
-
-      //&OBBitVec GetFragment();
-      //SetFragment(&OBBitVec);
+    private:
+      OBGraphSymPrivate * const d;
+  };
 
 } // namespace OpenBabel
 
 //! \file graphsym.h
 //! \brief XXXX
 
-  #endif // OB_GRAPHSYM_H
+#endif // OB_GRAPHSYM_H

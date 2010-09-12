@@ -3647,7 +3647,6 @@ namespace OpenBabel {
       return;
     }
 
-    // If we're doing isomeric (stereo), make a copy
     OBMol *pmol;
     if (iso)
       pmol = new OBMol(mol);
@@ -3707,6 +3706,32 @@ namespace OpenBabel {
     }
   }
 
+  bool isFerroceneBond(OBBond *bond)
+  {
+    if (bond->GetBondOrder() != 1)
+      return false;
+
+    OBAtom *Fe = 0, *C = 0;
+
+    OBAtom *begin = bond->GetBeginAtom();
+    if (begin->GetAtomicNum() == 26)
+      Fe = begin;
+    if (begin->GetAtomicNum() == 6)
+      C = begin;
+
+    OBAtom *end = bond->GetEndAtom();
+    if (end->GetAtomicNum() == 26)
+      Fe = end;
+    if (end->GetAtomicNum() == 6)
+      C = end;
+
+    if (!Fe || !C)
+      return false;
+
+    return C->HasDoubleBond();
+  }
+
+
   //////////////////////////////////////////////////
   bool SMIBaseFormat::WriteMolecule(OBBase* pOb,OBConversion* pConv)
   {
@@ -3715,7 +3740,16 @@ namespace OpenBabel {
 
     // Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
-    OBMol &mol = *pmol;
+    OBMol mol = *pmol;
+
+    std::vector<OBBond*> ferroceneBonds;
+    FOR_BONDS_OF_MOL (bond, mol)
+      if (isFerroceneBond(&*bond))
+        ferroceneBonds.push_back(&*bond);
+
+    for (std::size_t i = 0; i < ferroceneBonds.size(); ++i) {
+      mol.DeleteBond(ferroceneBonds[i]);
+    }
 
     // Title only option?
     if(pConv->IsOption("t")) {

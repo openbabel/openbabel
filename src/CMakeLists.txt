@@ -78,6 +78,7 @@ endif (EIGEN2_FOUND)
 
 set(stereo_srcs
     stereo/stereo.cpp
+    stereo/stereoutil.cpp
     stereo/tetranonplanar.cpp
     stereo/tetraplanar.cpp
     stereo/squareplanar.cpp

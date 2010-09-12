@@ -1,7 +1,7 @@
 #include <openbabel/isomorphism.h>
 #include <openbabel/query.h>
 #include <openbabel/graphsym.h>
-#include <cassert>
+#include <ctime>
 
 #define DEBUG 0
 //#define DEBUG_PERFORMANCE
@@ -16,12 +16,12 @@ namespace OpenBabel {
   static const char *blue   = "\033[1;34m";
   static const char *normal = "\033[0m";
 
-
   class VF2Mapper : public OBIsomorphismMapper
   {
 #ifdef DEBUG_PERFORMANCE
       unsigned int numMapNextCalls;
 #endif
+      time_t m_startTime;
 
     public:
       VF2Mapper(OBQuery *query) : OBIsomorphismMapper(query)
@@ -324,6 +324,8 @@ namespace OpenBabel {
 #ifdef DEBUG_PERFORMANCE
         numMapNextCalls++;
 #endif
+        if (time(NULL) - m_startTime > m_timeout)
+          return; 
 
         // load the possible candidates
         std::vector<Candidate> candidates;
@@ -461,6 +463,8 @@ namespace OpenBabel {
        */
       Mapping MapFirst(const OBMol *queried, const OBBitVec &mask)
       {
+        m_startTime = time(NULL);
+
         // set all atoms to 1 if the mask is empty
         OBBitVec queriedMask = mask;
         if (!queriedMask.CountBits())
@@ -505,6 +509,8 @@ namespace OpenBabel {
 #ifdef DEBUG_PERFORMANCE
         numMapNextCalls = 0;
 #endif
+        m_startTime = time(NULL);
+
         // set all atoms to 1 if the mask is empty
         OBBitVec queriedMask = mask;
         if (!queriedMask.CountBits())
@@ -540,6 +546,10 @@ namespace OpenBabel {
               cout << "    " << it->first << " -> " << it->second << endl;
           }
 
+        if (time(NULL) - m_startTime > m_timeout)
+          obErrorLog.ThrowError(__FUNCTION__, "time limit exceeded...", obError);
+
+
 #ifdef DEBUG_PERFORMANCE
         cout << "# MapNext calls: " << numMapNextCalls << endl;
 #endif
@@ -560,6 +570,8 @@ namespace OpenBabel {
 #ifdef DEBUG_PERFORMANCE
         numMapNextCalls = 0;
 #endif
+        m_startTime = time(NULL);
+
         // set all atoms to 1 if the mask is empty
         OBBitVec queriedMask = mask;
         if (!queriedMask.CountBits())
@@ -595,6 +607,9 @@ namespace OpenBabel {
               cout << "    " << it->first << " -> " << it->second << endl;
           }
 
+        if (time(NULL) - m_startTime > m_timeout)
+          obErrorLog.ThrowError(__FUNCTION__, "time limit exceeded...", obError);
+
 #ifdef DEBUG_PERFORMANCE
         cout << "# MapNext calls: " << numMapNextCalls << endl;
 #endif
@@ -603,6 +618,14 @@ namespace OpenBabel {
       }
 
   };
+
+  OBIsomorphismMapper::OBIsomorphismMapper(OBQuery *query) : m_query(query), m_timeout(60)
+  {
+  }
+
+  OBIsomorphismMapper::~OBIsomorphismMapper()
+  {
+  }
 
   OBIsomorphismMapper* OBIsomorphismMapper::GetInstance(OBQuery *query, const std::string &algorithm)
   {
@@ -628,6 +651,8 @@ namespace OpenBabel {
       std::vector<unsigned int> symClasses;
   };
 
+  bool isFerroceneBond(OBBond *bond);
+
   OBQuery* CompileAutomorphismQuery(OBMol *mol, const OBBitVec &mask, const std::vector<unsigned int> &symClasses)
   {
     OBQuery *query = new OBQuery;
@@ -642,6 +667,8 @@ namespace OpenBabel {
       query->AddAtom(new OBAutomorphismQueryAtom(symClasses[obatom->GetIndex()], symClasses));
     }
     FOR_BONDS_OF_MOL (obbond, mol) {
+      if (isFerroceneBond(&*obbond))
+        continue;
       unsigned int beginIndex = obbond->GetBeginAtom()->GetIndex();
       unsigned int endIndex = obbond->GetEndAtom()->GetIndex();
       if (!mask.BitIsSet(beginIndex + 1) || !mask.BitIsSet(endIndex + 1))
@@ -653,18 +680,13 @@ namespace OpenBabel {
     return query;
   }
 
-  OBIsomorphismMapper::Mappings FindAutomorphisms(OBMol *mol, const OBBitVec &mask)
+  OBIsomorphismMapper::Mappings FindAutomorphisms(OBMol *mol, const std::vector<unsigned int> &symClasses, const OBBitVec &mask)
   {
     // set all atoms to 1 if the mask is empty
     OBBitVec queriedMask = mask;
     if (!queriedMask.CountBits())
       for (unsigned int i = 0; i < mol->NumAtoms(); ++i)
         queriedMask.SetBitOn(i + 1);
-
-    // get the symmetry classes
-    OBGraphSym gs(mol, &queriedMask);
-    std::vector<unsigned int> symClasses;
-    gs.GetSymmetry(symClasses);
 
     if (DEBUG)
     for (unsigned int i = 0; i < symClasses.size(); ++i)
@@ -714,6 +736,7 @@ namespace OpenBabel {
       OBIsomorphismMapper::Mappings translatedMaps;
       for (OBIsomorphismMapper::Mappings::iterator map = maps.begin(); map != maps.end(); map++) {
         OBIsomorphismMapper::Mapping m;
+        // convert the continuous mapping map to a mapping with gaps (considering key values)
         for (OBIsomorphismMapper::Mapping::iterator i = map->begin(); i != map->end(); i++)
           m[indexes[i->first]] = i->second;
         translatedMaps.push_back(m);
@@ -723,6 +746,24 @@ namespace OpenBabel {
     }
 
     return maps;
+  }
+
+
+
+  OBIsomorphismMapper::Mappings FindAutomorphisms(OBMol *mol, const OBBitVec &mask)
+  {
+    // set all atoms to 1 if the mask is empty
+    OBBitVec queriedMask = mask;
+    if (!queriedMask.CountBits())
+      for (unsigned int i = 0; i < mol->NumAtoms(); ++i)
+        queriedMask.SetBitOn(i + 1);
+
+    // get the symmetry classes
+    OBGraphSym gs(mol, &queriedMask);
+    std::vector<unsigned int> symClasses;
+    gs.GetSymmetry(symClasses);
+
+    return FindAutomorphisms(mol, symClasses, mask);;
   }
 
 

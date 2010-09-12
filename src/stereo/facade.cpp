@@ -141,6 +141,31 @@ namespace OpenBabel {
     m_init = true;
   }
 
+  template<>
+  bool OBStereoFacade::HasStereo<OBStereo::Tetrahedral>(unsigned long id)
+  {
+    return HasTetrahedralStereo(id);
+  }
+
+  template<>
+  bool OBStereoFacade::HasStereo<OBStereo::CisTrans>(unsigned long id)
+  {
+    return HasCisTransStereo(id);
+  }
+
+  template<>
+  OBTetrahedralStereo* OBStereoFacade::GetStereo<OBTetrahedralStereo>(unsigned long id)
+  {
+    return GetTetrahedralStereo(id);
+  }
+
+  template<>
+  OBCisTransStereo* OBStereoFacade::GetStereo<OBCisTransStereo>(unsigned long id)
+  {
+    return GetCisTransStereo(id);
+  }
+
+
 
 
 }
