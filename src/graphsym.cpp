@@ -382,7 +382,6 @@ namespace OpenBabel {
           config.refs[i] = symClasses.at(atom->GetIndex());
       }
     }
->>>>>>> ...:src/graphsym.cpp
   }
 
   /**
