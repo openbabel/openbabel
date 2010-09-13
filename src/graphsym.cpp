@@ -531,7 +531,9 @@ namespace OpenBabel {
       if (!v[i])
         continue;
       int power = v.size() - i - 1;
-      value += std::pow(2, power);
+      // bit shift is equivalent to 2^power
+      // i.e., 1 << 0 == 1, 1 << 1 == 2, etc.
+      value += 1 << power;
     }
 
     return value;
