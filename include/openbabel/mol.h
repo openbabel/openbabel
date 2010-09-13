@@ -138,7 +138,7 @@ namespace OpenBabel
     bool expand_kekulize(int bond_idx, std::vector<int> &atomState, std::vector<int> &bondState);
     bool has_no_leftover_electrons(std::vector<int> &atomState);
     int getorden(OBAtom *atom);
-    bool expandcycle(OBAtom *atom, OBBitVec &avisit, OBAtom *first = NULL, int depth = 0);
+    bool expandcycle(OBAtom *atom, OBBitVec &avisit, const OBBitVec &potAromBonds);
     //@}
 
   public:

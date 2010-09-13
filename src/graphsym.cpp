@@ -1067,13 +1067,11 @@ namespace OpenBabel {
         for (std::size_t k = 0; k < closures.size(); ++k) {
           code.closures.push_back(current_label);
           code.closures.push_back(closures[k].second);
-          code.bonds.push_back(closures[k].first);
+          code.add(closures[k].first);
         }
 
         current_label++;
       }
-
-
  
       OBBitVec frag;
       for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
@@ -1205,6 +1203,7 @@ namespace OpenBabel {
     }
 
     if (DEBUG) {
+      /*
       cout << "allOrderedNbrs:" << endl;
       for (std::size_t i = 0; i < allOrderedNbrs.size(); ++i) {
         for (std::size_t j = 0; j < allOrderedNbrs[i].size(); ++j) {
@@ -1212,6 +1211,7 @@ namespace OpenBabel {
         }
         cout << endl;
       }
+      */
     }
 
     if (allOrderedNbrs.size() == 1) {

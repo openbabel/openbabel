@@ -48,7 +48,57 @@ namespace OpenBabel
   // This method essentially does a modified depth-first search to find
   //  large aromatic cycles
   int expand_cycle (OBMol *mol, OBAtom *atom, OBBitVec &avisit, OBBitVec &cvisit,
-                    int rootIdx, int prevAtomIdx = -1, int depth = 24);
+      const OBBitVec &potAromBonds, int rootIdx, int prevAtomIdx = -1, int depth = 24);
+
+  bool isPotentialAromaticAtom(OBAtom *atom)
+  {
+    switch (atom->GetAtomicNum()) {
+      case 6:
+        return (atom->GetHvyValence() < 4);
+      case 7:
+      case 8:
+      case 14: // Si
+      case 15: // P
+      case 16: // S
+      case 33: // As
+      case 34: // Se
+      case 52: // Te
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  void potentialAromaticBonds(OBMol *mol, OBBitVec &bonds)
+  {
+    std::vector<OBRing*> rings = mol->GetLSSR();
+
+    for (std::size_t i = 0; i < rings.size(); ++i) {
+      bool skip = false;
+      bool allCarbon = true;
+      // check if all atoms are potential aromatic atoms
+      for (std::size_t j = 0; j < rings[i]->_path.size(); ++j) {
+        OBAtom *atom = mol->GetAtom(rings[i]->_path[j]);
+        if (!isPotentialAromaticAtom(atom)) {
+          skip = true;
+          break;
+        }
+        if (!atom->IsCarbon())
+          allCarbon = false;
+      }
+
+      if (skip)
+        continue;
+      // a 4 membered ring containing only carbon can't be aromatic
+      if (rings[i]->_path.size() == 4 && allCarbon)
+        continue;
+
+      // set the bond bits
+      for (std::size_t j = 1; j < rings[i]->_path.size(); ++j)
+        bonds.SetBitOn(mol->GetBond(rings[i]->_path[j-1], rings[i]->_path[j])->GetIdx());
+      bonds.SetBitOn(mol->GetBond(rings[i]->_path[rings[i]->_path.size()-1], rings[i]->_path[0])->GetIdx());
+    }
+  }
 
   ///////////////////////////////////////////////////////////////////////////////
   //! \brief Kekulize aromatic rings without using implicit valence
@@ -99,9 +149,14 @@ namespace OpenBabel
     if (fused.Match(*this))
       fusedRings = true;
 
+    OBBitVec potAromBonds;
+    potentialAromaticBonds(this, potAromBonds);
+
     // Find all the groups of aromatic cycle
     for(i=1; i<= NumAtoms(); i++ ) {
       atom = GetAtom(i);
+      if (!isPotentialAromaticAtom(atom))
+        continue;
       //      cout << "Checking for cycle at " << i << endl;
       if (atom->HasAromaticBond() && !cvisit[i]) { // is new aromatic atom of an aromatic cycle ?
 
@@ -112,9 +167,9 @@ namespace OpenBabel
         avisit.SetBitOn(i);
 
         if (fusedRings)
-          expandcycle(atom, avisit);
+          expandcycle(atom, avisit, potAromBonds);
         else {
-          int depth = expand_cycle(this, atom, avisit, cvisit, atom->GetIdx());
+          int depth = expand_cycle(this, atom, avisit, cvisit, potAromBonds, atom->GetIdx());
           if (depth <= 0)
             continue; // no valid cycle from this atom
         }
@@ -517,7 +572,7 @@ namespace OpenBabel
   }
 
   //! Recursively find the aromatic atoms with an aromatic bond to the current atom
-  bool OBMol::expandcycle (OBAtom *atom, OBBitVec &avisit, OBAtom *, int)
+  bool OBMol::expandcycle (OBAtom *atom, OBBitVec &avisit, const OBBitVec &potAromBonds)
   {
     OBAtom *nbr;
     //  OBBond *bond;
@@ -526,12 +581,14 @@ namespace OpenBabel
     //for each neighbour atom test if it is in the aromatic ring
     for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
       {
+        if (!potAromBonds.BitIsSet((*i)->GetIdx()))
+          continue;
         natom = nbr->GetIdx();
         // if (!avisit[natom] && nbr->IsAromatic() && ((OBBond*) *i)->IsAromatic()) {
         if (!avisit[natom] && ((OBBond*) *i)->GetBO()==5
             && ((OBBond*) *i)->IsInRing()) {
           avisit.SetBitOn(natom);
-          expandcycle(nbr, avisit);
+          expandcycle(nbr, avisit, potAromBonds);
         }
       }
 
@@ -540,7 +597,7 @@ namespace OpenBabel
 
   //! Recursively find the aromatic atoms with an aromatic bond to the current atom
   int expand_cycle (OBMol *mol, OBAtom *atom, OBBitVec &avisit, OBBitVec &cvisit,
-                    int rootIdx, int prevAtomIdx, int depth)
+      const OBBitVec &potAromBonds, int rootIdx, int prevAtomIdx, int depth)
   {
     // early termination
     if (depth < 0)
@@ -561,6 +618,8 @@ namespace OpenBabel
     OBBitVec trialMatch, bestMatch; // the best path we've found so far
     for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
       {
+        if (!potAromBonds.BitIsSet((*i)->GetIdx()))
+          continue;
         natom = nbr->GetIdx();
         //        cout << " checking: " << natom << " bo: " << (*i)->GetBO() << endl;
         if ((*i)->GetBO() != 5)
@@ -583,7 +642,7 @@ namespace OpenBabel
 
         trialMatch = avisit;
         trialMatch.SetBitOn(natom);
-        trialScore = expand_cycle(mol, nbr, trialMatch, cvisit, rootIdx, atom->GetIdx(), depth - 1);
+        trialScore = expand_cycle(mol, nbr, trialMatch, cvisit, potAromBonds, rootIdx, atom->GetIdx(), depth - 1);
         if (trialScore > 0 && trialScore < bestScore) { // we found a larger, valid cycle
           //          cout << " score: " << trialScore << endl;
           bestMatch = trialMatch;
