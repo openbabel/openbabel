@@ -502,7 +502,7 @@ namespace OpenBabel {
   std::vector<int> findDescriptorVector(OBMol *mol, const OBBitVec &fragment,
       const OBStereoUnitSet &orderedUnits, const std::vector<unsigned int> &symmetry_classes)
   {
-    OBStereoUnitSet units = orderedUnits;//removeUnspecifiedUnits(mol, orderedUnits);
+    OBStereoUnitSet units = removeUnspecifiedUnits(mol, orderedUnits);
     std::vector<int> v;
     for (unsigned int i = 0; i < units.size(); ++i) {
       const OBStereoUnit &unit = units[i];
@@ -1011,6 +1011,22 @@ namespace OpenBabel {
     return C->HasDoubleBond();
   }
 
+  void print_code(const CanonicalCode &code)
+  {
+    cout << "CODE: ";
+    for (std::size_t i =0; i < code.from.size(); ++i)
+      cout << code.from[i] << " ";
+    cout << "| ";
+    for (std::size_t i =0; i < code.closures.size(); ++i)
+      cout << code.closures[i] << " ";
+    cout << "| ";
+    for (std::size_t i =0; i < code.atomTypes.size(); ++i)
+      cout << code.atomTypes[i] << " ";
+    cout << "| ";
+    for (std::size_t i =0; i < code.bondTypes.size(); ++i)
+      cout << code.bondTypes[i] << " ";
+    cout << "| " << code.stereo << endl;
+  }
 
   void CanonicalLabelsRecursive(OBAtom *current, const std::vector<unsigned int> &symmetry_classes,
       CanonicalCode &code, unsigned int label, std::size_t &loopCount, std::vector<CanonicalCode> &codes, 
@@ -1070,6 +1086,9 @@ namespace OpenBabel {
  
       loopCount++;
       
+      if (DEBUG)
+        print_code(code);
+
       if (codes.empty()) {
         codes.push_back(code);
       } else {
@@ -1114,30 +1133,17 @@ namespace OpenBabel {
 
     std::vector<OBAtom*> nbrs;
     std::vector<unsigned int> nbrSymClasses;
-    std::vector<std::pair<OBBond*, unsigned int> > closures;
     FOR_NBORS_OF_ATOM (nbr, current) {
       if (!mask.BitIsSet(nbr->GetIdx()))
           continue;
-      OBBond *bond = mol->GetBond(current, &*nbr);
-      
-      if (code.labels[nbr->GetIndex()]) {
-        if (std::find(code.bonds.begin(), code.bonds.end(), bond) == code.bonds.end())
-          closures.push_back(std::make_pair(bond, code.labels[nbr->GetIndex()]));
+      if (code.labels[nbr->GetIndex()])
         continue;
-      }
-      
+
+      OBBond *bond = mol->GetBond(current, &*nbr);
       if (!isFerroceneBond(bond)) {
         nbrSymClasses.push_back(symmetry_classes[nbr->GetIndex()]);
         nbrs.push_back(&*nbr);
       }
-    }
-
-    std::sort(closures.begin(), closures.end(), CompareBondPairSecond);
-    for (std::size_t k = 0; k < closures.size(); ++k) {
-      code.closures.push_back(code.labels[current->GetIndex()]);
-      code.closures.push_back(closures[k].second);
-      //code.add(closures[k].first);
-      code.cbonds.push_back(closures[k].first);
     }
 
     if (nbrs.empty()) {
