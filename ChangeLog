@@ -1,5 +1,11 @@
 2010-09-14  Noel O'Boyle
 
+	* src/formats/smilesformat.cpp: Handle chiral S with a lone pair and
+	in general, the situation where a chiral atom has a lone pair.
+	Test cases: C[S@](Br)I, [S@](C)(Br)I, C[C@-](Br)I, C[S@](=O)(=O)Cl.
+
+2010-09-14  Noel O'Boyle
+
 	* CMakeLists.txt: As discussed on list, don't build all bindings when
 	RUN_SWIG=ON (building some bindings may cause errors). Instead, the
 	option ALL_BINDINGS=ON will build all bindings.

@@ -216,6 +216,7 @@ namespace OpenBabel {
     bool chiralWatch; // set when a tetrahedral atom is read
     map<OBAtom*, OBTetrahedralStereo::Config*> _tetrahedralMap; // map of tetrahedral atoms and their data
     map<OBBond*, char> _upDownMap; // store the '/' & '\' as they occured in smiles
+    map<unsigned int, char> _chiralLonePair; // for atoms with potential chiral lone pairs, remember when the l.p. was encountered
     bool squarePlanarWatch; // set when a square planar atom is read
     map<OBAtom*, OBSquarePlanarStereo::Config*> _squarePlanarMap;
 
@@ -494,6 +495,28 @@ namespace OpenBabel {
           continue;
         if (ts->refs.size() != 3)
           continue;
+        if (ts->refs[2] == OBStereo::NoRef) {
+          // This happens where there is chiral lone pair or where there simply aren't enough connections
+          // around a chiral atom. We handle the case where there is a S with a chiral lone pair.
+          // All other cases are ignored, and raise a warning. (Note that S can be chiral even without
+          // a lone pair, think of C[S@](=X)(=Y)Cl.
+
+          // We have remembered where to insert the lone pair in the _chiralLonePair map
+          map<unsigned int, char>::iterator m_it = _chiralLonePair.find(atom->GetIdx());
+          if (atom->GetAtomicNum() == 16 && m_it != _chiralLonePair.end()) { // Sulfur
+            ts->refs[2] = ts->refs[1]; ts->refs[1] = ts->refs[0];
+            if (m_it->second == 0) { // Insert in the 'from' position
+              ts->refs[0] = ts->from;
+              ts->from = OBStereo::ImplicitRef;
+            }
+            else // Insert in the refs[0] position
+              ts->refs[0] = OBStereo::ImplicitRef;
+          }
+          else { // Ignored by Open Babel
+            obErrorLog.ThrowError(__FUNCTION__, "Ignoring stereochemistry. Not enough connections to this atom.", obWarning);
+            continue;
+          }
+        }
 
         // cout << "*ts = " << *ts << endl;
         OBTetrahedralStereo *obts = new OBTetrahedralStereo(&mol);
@@ -1802,6 +1825,9 @@ namespace OpenBabel {
 
         if(chiralWatch) { // if tetrahedral atom, set previous as from atom
           _tetrahedralMap[atom]->from = mol.GetAtom(_prev)->GetId();
+          if (element == 16) // Handle chiral lone pair as in X[S@@](Y)Z
+            _chiralLonePair[mol.NumAtoms()] = 1; // First of the refs
+
           //cerr <<"NB7: line 1622: Added atom ref "<<_prev<<" at " << 0 << " to "<<_mapcd[atom]<<endl;
         }
         if (squarePlanarWatch) { // if squareplanar atom, set previous atom as first ref
@@ -1811,6 +1837,12 @@ namespace OpenBabel {
         }
         InsertTetrahedralRef(mol, atom->GetId());
         InsertSquarePlanarRef(mol, atom->GetId());
+      }
+    else
+      {
+        // Handle chiral lone pair as in [S@@](X)(Y)Z
+        if (chiralWatch && element == 16) // Handle chiral lone pair (only S at the moment)
+          _chiralLonePair[mol.NumAtoms()] = 0; // 'from' atom
       }
 
     //set values
