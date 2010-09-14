@@ -2795,7 +2795,8 @@ namespace OpenBabel {
     if (_pac)
       strcat(bracketBuffer, _pac->GetClassString(atom->GetIdx()).c_str());
 
-    if (strlen(bracketBuffer) > 1) {
+    // if the element is supposed to be bracketed (e.g., [U]), *always* use brackets
+    if (strlen(bracketBuffer) > 1 || bracketElement) {
       strcpy(buffer, "[");
       strcat(buffer, bracketBuffer);
       strcat(buffer,"]");
