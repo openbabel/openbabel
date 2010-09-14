@@ -1,3 +1,9 @@
+2010-09-14  Noel O'Boyle
+
+	* CMakeLists.txt: As discussed on list, don't build all bindings when
+	RUN_SWIG=ON (building some bindings may cause errors). Instead, the
+	option ALL_BINDINGS=ON will build all bindings.
+
 2010-09-10  Noel O'Boyle
 
 	* src/formats/pdbqtformat.cpp: Remove "ent" designation as this is

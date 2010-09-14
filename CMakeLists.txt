@@ -360,6 +360,9 @@ endif()
 # Should the language bindings be regenereted?
 option(RUN_SWIG "Generate language bindings with SWIG" OFF)
 
+# Should all bindings be built?
+option(ALL_BINDINGS "Build all languages bindings" OFF)
+
 # Should Python bindings be built?
 option(PYTHON_BINDINGS "Build Python bindings" OFF)
 
@@ -375,13 +378,13 @@ option(JAVA_BINDINGS "Build Java bindings" OFF)
 # Should CSharp bindings be built?
 option(CSHARP_BINDINGS "Build Csharp bindings" OFF)
 
-if (RUN_SWIG)
+if (ALL_BINDINGS)
   set(PYTHON_BINDINGS ON)
   set(RUBY_BINDINGS ON)
   set(PERL_BINDINGS ON)
   set(JAVA_BINDINGS ON)
   set(CSHARP_BINDINGS ON)
-endif (RUN_SWIG)
+endif (ALL_BINDINGS)
 
 add_subdirectory(scripts)
 
