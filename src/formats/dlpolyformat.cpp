@@ -124,6 +124,15 @@ namespace OpenBabel
 
   bool DlpolyInputReader::ParseUnitCell( std::istream &ifs, OBMol &mol )
   {
+    /*
+     * Need to work out how to shift the origin of the cell, so for now 
+     * we skip this
+     */
+    
+    ifs.getline(buffer,BUFF_SIZE);
+    ifs.getline(buffer,BUFF_SIZE);
+    ifs.getline(buffer,BUFF_SIZE);
+    return true;
 
     bool ok;
     double x,y,z;
@@ -281,7 +290,7 @@ namespace OpenBabel
     //Define some references so we can use the old parameter names
     std::istream &ifs = *pConv->GetInStream();
     OBMol &mol = *pmol;
-    
+
     if ( ! ParseHeader( ifs, mol ) ) return false;
 
     // If imcon > 0 then there are 3 lines with the cell vectors
@@ -398,8 +407,6 @@ public:
   bool DlpolyHISTORYFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
 
-    // gotHeader used so we don't parse the header when called again
-    static bool gotHeader=false;
     static std::string origTitle;
     std::string title;
     bool ok;
@@ -418,16 +425,16 @@ public:
     std::istream &ifs = *pConv->GetInStream();
     OBMol &mol = *pmol;
 
-  
-    if ( ! gotHeader )
+    // Only parse the header if we're at the start of the file
+    if ( ! ifs.tellg() )
       {
         if ( ! ParseHeader( ifs, mol ) ) return false;
-        gotHeader=true;
-        // We get the title from the first line of the file, so we need to remember
-        // it for subsequent calls
+        /*
+         * We get the title from the first line of the file, so we need to remember
+         * it for subsequent calls, hence storing it in a static variable
+         */
         origTitle=mol.GetTitle();
-      } // End of header parsing
-
+      }
 
     /*
      * Read the trajectory line - this tells us how many atoms we read in and
