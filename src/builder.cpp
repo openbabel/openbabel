@@ -1340,7 +1340,7 @@ namespace OpenBabel
       // Output warning message if necessary
       if (unfixed.size() > 0) {
         stringstream errorMsg;
-        errorMsg << "Could not correct " << unfixed.size() << " stereocenter(s) in this molecule";
+        errorMsg << "Could not correct " << unfixed.size() << " stereocenter(s) in this molecule (" << mol.GetTitle() << ")";
         errorMsg << std::endl << "  with Atom Ids as follows:";
         for (OBStereo::RefIter ref=unfixed.begin(); ref!=unfixed.end(); ++ref)
           errorMsg << " " << *ref;
@@ -1376,14 +1376,17 @@ namespace OpenBabel
         else {
           // It will only reach here if it can only find one non-ring bond
           // -- this is the case if the other non-ring bond is an implicit H
-          // Solution: make the H explicit, repeat the original procedure, then remove the H
-          mol.AddHydrogens(center);
-          idxs.clear();
+          //    or a lone pair
+          // Solution: Find where a new bond vector would be placed, and
+          //           replace the atom's coordinates with these
+          OBBond* non_ring_bond;
           FOR_BONDS_OF_ATOM(b, center)
             if (!b->IsInRing())
-              idxs.push_back(b->GetNbrAtom(center)->GetIdx());
-          Swap(mol, center->GetIdx(), idxs.at(0), center->GetIdx(), idxs.at(1));
-          mol.DeleteHydrogens(center);
+              non_ring_bond = &(*b);
+
+          vector3 newcoords = OBBuilder::GetNewBondVector(center, non_ring_bond->GetLength());
+          OBAtom* non_ring_atom = non_ring_bond->GetNbrAtom(center);
+          non_ring_atom->SetVector(newcoords);
         }
       }
     }
