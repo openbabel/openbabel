@@ -1,3 +1,10 @@
+2010-09-15  Noel O'Boyle
+
+	* src/formats/smilesformat.cpp: Handle chiral S with a lone pair in
+	the SMILES writer. Fixes PR#3058701. The test cases in the previous
+	commit log message should actually be C[S@](=O)Cl, etc. to be
+	chemically correct.
+
 2010-09-14  Noel O'Boyle
 
 	* src/formats/smilesformat.cpp: Handle chiral S with a lone pair and

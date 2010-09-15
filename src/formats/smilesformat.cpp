@@ -513,7 +513,9 @@ namespace OpenBabel {
               ts->refs[0] = OBStereo::ImplicitRef;
           }
           else { // Ignored by Open Babel
-            obErrorLog.ThrowError(__FUNCTION__, "Ignoring stereochemistry. Not enough connections to this atom.", obWarning);
+            stringstream ss;
+            ss << "Ignoring stereochemistry. Not enough connections to this atom. " << mol.GetTitle();
+            obErrorLog.ThrowError(__FUNCTION__, ss.str(), obWarning);
             continue;
           }
         }
@@ -2899,7 +2901,7 @@ namespace OpenBabel {
     OBAtom *atom = node->GetAtom();
     OBMol *mol = (OBMol*) atom->GetParent();
 
-    // If no chiral neighbors were passed in, we're done
+    // If not enough chiral neighbors were passed in, we're done
     if (chiral_neighbors.size() < 4)
       return false;
 
@@ -2920,11 +2922,19 @@ namespace OpenBabel {
     }
 
     // create a Config struct with the chiral_neighbors in canonical output order
-    OBStereo::Refs canonRefs = OBStereo::MakeRefs(chiral_neighbors[1]->GetId(),
-        chiral_neighbors[2]->GetId(), chiral_neighbors[3]->GetId());
+    OBStereo::Refs canonRefs;
+    for (vector<OBAtom*>::const_iterator atom_it = chiral_neighbors.begin() + 1; atom_it != chiral_neighbors.end(); ++atom_it) {
+      if (*atom_it)
+        canonRefs.push_back((*atom_it)->GetId());
+      else // Handle a chiral lone pair, represented by a NULL OBAtom* in chiral_neighbors
+        canonRefs.push_back(OBStereo::ImplicitRef);
+    }
     OBTetrahedralStereo::Config canConfig;
     canConfig.center = atom->GetId();
-    canConfig.from = chiral_neighbors[0]->GetId();
+    if (chiral_neighbors[0])
+      canConfig.from = chiral_neighbors[0]->GetId();
+    else // Handle a chiral lone pair, represented by a NULL OBAtom* in chiral_neighbors
+      canConfig.from = OBStereo::ImplicitRef;
     canConfig.refs = canonRefs;
 
     //cout << "atomConfig = " << atomConfig << endl;
@@ -3337,7 +3347,12 @@ namespace OpenBabel {
         }
       }
 
-      // Ok, done with H.  Next in the SMILES will be the ring-closure characters.
+      // Ok, done with H. Now we need to consider the case where there is a chiral
+      // lone pair. If it exists (and we won't know for sure until we've counted up
+      // all the neighbours) it will go in here
+      int lonepair_location = chiral_neighbors.size();
+
+      // Ok, done with all that. Next in the SMILES will be the ring-closure characters.
       // So we need to find the corresponding atoms and add them to the list.
       // (We got the canonical ring-closure list earlier.)
       if (!vclose_bonds.empty()) {
@@ -3355,6 +3370,12 @@ namespace OpenBabel {
         OBAtom *nbr = node->GetChildAtom(i);
         chiral_neighbors.push_back(nbr);
       }
+
+      // Handle a chiral lone-pair on a sulfur, by inserting a NULL OBAtom* at the
+      // appropriate location
+      if (chiral_neighbors.size() == 3 && atom->GetAtomicNum() == 16) // Handle sulfur
+        chiral_neighbors.insert(chiral_neighbors.begin() + lonepair_location, static_cast<OBAtom*> (NULL));
+
     }
 
     // Write the current atom to the string
