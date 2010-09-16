@@ -120,10 +120,11 @@ namespace OpenBabel
 #ifdef HAVE_USELOCALE
       uselocale(d->old_locale);
 #else
-#ifndef ANDROID
       setlocale(LC_NUMERIC, d->old_locale_string);
-#endif
+#ifndef ANDROID
+      // Don't free on Android because "C" is a static ctring constant
       free (d->old_locale_string);
+#endif
 #endif
     }
   }
