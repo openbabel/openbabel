@@ -97,8 +97,14 @@ namespace OpenBabel
       // Extended per-thread interface
       d->old_locale = uselocale(d->new_c_num_locale);
 #else
+#ifndef ANDROID
       // Original global POSIX interface
+      // regular UNIX, no USELOCALE, no ANDROID
       d->old_locale_string = strdup (setlocale (LC_NUMERIC, NULL));
+#else
+      // ANDROID should stay as "C" -- Igor Filippov
+      d->old_locale_string = "C";
+#endif
   	  setlocale(LC_NUMERIC, "C");
 #endif
     }
@@ -114,7 +120,9 @@ namespace OpenBabel
 #ifdef HAVE_USELOCALE
       uselocale(d->old_locale);
 #else
+#ifndef ANDROID
       setlocale(LC_NUMERIC, d->old_locale_string);
+#endif
       free (d->old_locale_string);
 #endif
     }
