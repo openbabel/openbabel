@@ -11,10 +11,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
-
 #include <openbabel/obmolecformat.h>
 
 #include <iomanip>
+#include <map>
 
 namespace OpenBabel
 {
@@ -58,11 +58,12 @@ namespace OpenBabel
 
     // These are data that are accessed by several subroutines, so we keep them as class variables
     int levcfg,imcon;
+    std::string title;
     std::vector< vector3 > forces;
+    typedef std::map<std::string, int> labelToZType;
+    labelToZType labelToZ; // For storing previously determined labels
 
-    
   }; // End DlpolyInputReader
-  
   
   int DlpolyInputReader::LabelToAtomicNumber(std::string label)
   {
@@ -70,6 +71,10 @@ namespace OpenBabel
      * Given a string with the label for an atom return the atomic number
      * As we are using the GetAtomicNum function case is not important
      */
+    // Check we don't have it already
+    labelToZType::const_iterator it;
+    it = labelToZ.find( label );
+    if ( it != labelToZ.end() ) return it-> second;
     
     // See if the first 2 characters give us a valid atomic number
     int Z=etab.GetAtomicNum(label.substr(0,2).c_str());
@@ -82,6 +87,9 @@ namespace OpenBabel
       errorMsg << "LabelToAtomicNumber got bad Label: " << label << std::endl;
       obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
     }
+
+    // Put it in the map
+    labelToZ.insert( std::pair<std::string,int>(label,Z) );
     return Z;
     
   } //End LabelToAtomicNumber
@@ -95,8 +103,10 @@ namespace OpenBabel
         obErrorLog.ThrowError(__FUNCTION__, "Problem reading title line", obWarning);
         return false;
       }  
+    title=buffer;
+    Trim(title); // Remove leading & trailing space
     mol.BeginModify();
-    mol.SetTitle(buffer);
+    mol.SetTitle(title);
     mol.EndModify();
   
     // levcfg, imcon & poss natms
@@ -109,7 +119,7 @@ namespace OpenBabel
       }
     
     tokenize(tokens, buffer, " \t\n");
-    if ( ! tokens.size() >= 2 || ! ( from_string<int>(levcfg, tokens.at(0), std::dec) 
+    if ( tokens.size() < 2 || ! ( from_string<int>(levcfg, tokens.at(0), std::dec) 
                                      && from_string<int>(imcon, tokens.at(1), std::dec) ) )
       {
         line=buffer;
@@ -406,9 +416,7 @@ public:
 
   bool DlpolyHISTORYFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
-
-    static std::string origTitle;
-    std::string title;
+    std::string tstitle;
     bool ok;
     int nstep,natms=0;
 
@@ -416,7 +424,6 @@ public:
     imcon=0;
     forces.clear();
   
-    OBAtom *atom;
     OBMol* pmol = pOb->CastAndClear<OBMol>();
     if(pmol==NULL)
       return false;
@@ -429,11 +436,6 @@ public:
     if ( ! ifs.tellg() )
       {
         if ( ! ParseHeader( ifs, mol ) ) return false;
-        /*
-         * We get the title from the first line of the file, so we need to remember
-         * it for subsequent calls, hence storing it in a static variable
-         */
-        origTitle=mol.GetTitle();
       }
 
     /*
@@ -442,7 +444,7 @@ public:
      */
     if ( ! ifs.getline(buffer,BUFF_SIZE) ) return false;
     tokenize(tokens, buffer, " \t\n");
-    if ( ! tokens.size() >= 6  )
+    if ( tokens.size() < 6  )
       {
         line=buffer;
         line="Problem reading trajectory line: " + line;
@@ -465,8 +467,8 @@ public:
     ok = from_string<int>(imcon, tokens.at(4), std::dec);
 
     // Set the title
-    title=origTitle + ": timestep=" + tokens.at(1);
-    mol.SetTitle( title );
+    tstitle=title + ": timestep=" + tokens.at(1);
+    mol.SetTitle( tstitle );
 
     // If imcon > 0 then there are 3 lines with the cell vectors 
     if ( imcon > 0 ) ParseUnitCell( ifs, mol );
