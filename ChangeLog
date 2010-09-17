@@ -1,3 +1,8 @@
+2010-09-17  Noel O'Boyle
+
+	* src/math/align.cpp, test/aligntest.cpp: Correct dumb error in
+	final line of calculation of RMSD.
+
 2010-09-15  Noel O'Boyle
 
 	* src/builder.cpp: When correcting stereo on rings, handle the case of

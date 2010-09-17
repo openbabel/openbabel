@@ -161,7 +161,7 @@ namespace OpenBabel
     Eigen::MatrixXd deviation = _result - _mref;
     Eigen::MatrixXd sqr = deviation.cwise().square();
     double sum = sqr.sum();
-    _rmsd = sqrt( sum / sqr.size() );
+    _rmsd = sqrt( sum / sqr.cols() );
 
   }
 
