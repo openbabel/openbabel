@@ -1,4 +1,26 @@
 2010-09-19  Chris Morley
+	
+	* src/depict/depict.cpp: correct position and direction of wedge and
+	hash bonds. Deduce using TetStereoTo0D. May need further work.
+	
+	* include/openbabel/depict/painter.h(OBColor): add a few more named
+	colors,	color input from rgb hex (like #8dcb70), and a default color,
+	in case of typos.
+
+2010-09-19  Chris Morley
+
+	* include/openbabel/obconversion.h: expose Count (the input index)
+	 
+	* src/ops/addinindex.cpp, src/CMakeLists.txt: add an op to add Count
+	to title: --addinindex (Yes, awful names)
+
+	* src/obmolecformat.cpp, src/transform.cpp:
+	rename --addindex to --addoutindex.
+	
+	src/transform.cpp: -v option does nothing if parameter empty.
+	(ClassDescription)small documentation changes for -s, -v
+
+2010-09-19  Chris Morley
 
 	* src/stereo/perception.cpp(TetStereoTo0D):fix bug which was truncating
 	the loop without examining all possible bonds.

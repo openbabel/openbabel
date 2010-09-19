@@ -22,6 +22,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <string>
 #include <vector>
+#include <sstream>
 #ifndef OBDEPICT
   #define OBDEPICT
 #endif
@@ -43,6 +44,13 @@ namespace OpenBabel
     }
     OBColor(const std::string &color)
     {
+      if (color[0]=='#')
+      {
+        std::stringstream ss(color.substr(1));
+        unsigned c;
+        ss >> std::hex >> c;
+        *this = OBColor((c/0x10000)/256.0, ((c%0x10000)/0x100/256.0), (c%0x100)/256.0);
+      }
       if (color == "black")
         *this = OBColor(0.0, 0.0, 0.0);
       else if (color == "white")
@@ -57,6 +65,16 @@ namespace OpenBabel
         *this = OBColor(1.0, 1.0, 0.0);
       else if (color == "gray")
         *this = OBColor(0.3, 0.3, 0.3);
+      else if (color == "cyan")
+        *this = OBColor(1.0, 0.0, 1.0);
+      else if (color == "purple")
+        *this = OBColor(0.5, 0.0, 0.5);
+      else if (color == "teal")
+        *this = OBColor(0.0, 0.5, 0.5);
+      else if (color == "olive")
+        *this = OBColor(0.5, 0.5, 0.0);
+      else
+        *this = OBColor(0.5, 0.5, 0.5);
     }
 
     OBColor(std::vector<double> vec) : red(vec[0]), green(vec[1]), blue(vec[2]), alpha(1.0){}
