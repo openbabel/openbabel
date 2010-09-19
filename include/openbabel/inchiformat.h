@@ -58,8 +58,7 @@ public:
     "IUPAC/NIST molecular identifier\n\n"
 
     "Write Options, e.g. -xat\n"
-    "    Standard InChI is written unless certain InChI options are used\n\n"
-
+    "    Standard InChI is written unless certain InChI options are used\n"
     " K output InChIKey only\n"
     " t add molecule name after InChI\n"
     " w ignore less important warnings\n"
@@ -86,8 +85,7 @@ public:
     "    - Stereo interpretation (produces non-standard InChI): ``SRel``, ``SRac``,\n"
     "      ``SUCF``, ``ChiralFlagON``, ``ChiralFlagOFF``\n"
     "    - InChI creation options (produces non-standard InChI): ``SUU``, ``SLUUD``,\n"
-    "      ``FixedH``, ``RecMet``, ``KET``, ``15T``\n\n"
-
+    "      ``FixedH``, ``RecMet``, ``KET``, ``15T``\n"
     "    The following options are for convenience, e.g. ``-xF``\n"
     "    but produce non-standard InChI.\n"
     " F include fixed hydrogen layer\n"

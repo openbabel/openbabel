@@ -281,7 +281,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     iat.z = patom->GetZ();
 
     int nbonds = 0;
-    vector<OBEdgeBase*>::iterator itr;
+    vector<OBBond*>::iterator itr;
     OBBond *pbond;
     for (pbond = patom->BeginBond(itr);pbond;pbond = patom->NextBond(itr))
     {

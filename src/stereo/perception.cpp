@@ -2654,7 +2654,7 @@ namespace OpenBabel {
         FOR_BONDS_OF_ATOM(b, center) {
           if (alreadyset.find(&*b) == alreadyset.end()) {
             if (chosen==NULL) chosen = &*b;
-            OBAtom* nbr = chosen->GetNbrAtom(center);
+            OBAtom* nbr = b->GetNbrAtom(center);
             if (tetcenters.find(nbr->GetId()) == tetcenters.end()) { // Not a tetcenter
               if (nottet_flag==false) {
                 chosen = &*b;

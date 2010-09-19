@@ -1,3 +1,14 @@
+2010-09-19  Chris Morley
+
+	* src/stereo/perception.cpp(TetStereoTo0D):fix bug which was truncating
+	the loop without examining all possible bonds.
+	   
+	* include/openbabel/inchiformat.h: correct formating of Description
+	so will work with GUI (no \n\n inside option list).
+	
+	* src/formats/inchiformat.cpp: OBBond instead of OBEdgeBase, which
+	was removed a million years ago.
+	
 2010-09-17  Noel O'Boyle
 
 	* src/math/align.cpp, test/aligntest.cpp: Correct dumb error in
