@@ -192,10 +192,11 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     {
       OBTetrahedralStereo::Config *ts = new OBTetrahedralStereo::Config;
       ts->center = stereo.central_atom;
-      inchi_Atom* central_atom = &out.atom[stereo.central_atom];
-      ts->from = central_atom->neighbor[0];
-      ts->refs = OBStereo::MakeRefs(central_atom->neighbor[1], central_atom->neighbor[2],
-                                    central_atom->neighbor[3]);
+      ts->from = stereo.neighbor[0];
+      if (ts->from == ts->center) // Handle the case where there are only three neighbours
+        ts->from = OBStereo::ImplicitRef;
+      ts->refs = OBStereo::MakeRefs(stereo.neighbor[1], stereo.neighbor[2],
+                                    stereo.neighbor[3]);
 
       if(stereo.parity==INCHI_PARITY_EVEN)
         ts->winding = OBStereo::Clockwise;
@@ -360,7 +361,17 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
           inchi_Stereo0D stereo;
           stereo.type = INCHI_StereoType_Tetrahedral;
           stereo.central_atom = static_cast<AT_NUM> (config.center);
-          stereo.neighbor[0] = static_cast<AT_NUM> (config.from);
+
+          bool has_implicit = false; // Does chirality involve implicit lone pair?
+          if (config.from == OBStereo::ImplicitRef || config.refs[0] == OBStereo::ImplicitRef) {
+            has_implicit = true;
+            config = ts->GetConfig(OBStereo::ImplicitRef); // Make the 'from' atom the lone pair
+          }
+
+          if (!has_implicit)
+            stereo.neighbor[0] = static_cast<AT_NUM> (config.from);
+          else
+            stereo.neighbor[0] = stereo.central_atom;
           for(int i=0; i<3; ++i)
             stereo.neighbor[i + 1] = static_cast<AT_NUM> (config.refs[i]);
 
