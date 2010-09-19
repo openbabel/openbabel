@@ -56,6 +56,7 @@ set(math_srcs
 endif (EIGEN2_FOUND)
 
 set(ops
+  ops/addinindex.cpp
   ops/addpolarh.cpp
   ops/gen2D.cpp
   ops/fillUC.cpp

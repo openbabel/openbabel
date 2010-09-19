@@ -171,7 +171,7 @@ namespace OpenBabel
     if(fmatch)
       {
         itr = pOptions->find("v");
-        if(itr!=pOptions->end())
+        if(itr!=pOptions->end() && !itr->second.empty())
           {
             //inverse match quoted SMARTS string which follows
             OBSmartsPattern sp;
@@ -237,15 +237,15 @@ namespace OpenBabel
 "--add <list> Add properties from descriptors\n"
 "--delete <list> Delete properties in list\n"
 "--append <list> Append properties or descriptors in list to title:\n"
-"-s\"smarts\" Convert only molecules matching SMARTS:\n"
-"-v\"smarts\" Convert only molecules NOT matching SMARTS: (not displayed in GUI)\n"
+"-s\"smarts\" Convert only if match SMARTS or mols in file:\n"
+"-v\"smarts\" Convert only if NO match to SMARTS or mols in file(not displayed in GUI)\n"
 "--join Join all input molecules into a single output molecule\n"
 "--separate Output disconnected fragments separately\n"
 "--property <attrib> <value> add or replace a property (SDF)\n"
 "--title <title> Add or replace molecule title\n"
-"--addtotitle <text> Append to title\n"
+"--addtotitle <text> Append text to title\n"
 "--writeconformers Output multiple conformers separately\n"
-"--addindex Append output index to title\n" ;
+"--addoutindex Append output index to title\n" ;
 
     //Append lines from OBOp plugins that work with OBMol
     OBMol dummymol; //just needed to carry class type information; messy!

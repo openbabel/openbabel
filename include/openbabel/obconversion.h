@@ -241,6 +241,9 @@ namespace OpenBabel {
       void     SetOneObjectOnly(bool b=true);///< @brief Used with multiple input files. Off by default.
       void     SetLast(bool b){SetOneObjectOnly(b);}///< @brief Synonym for SetOneObjectOnly()
       bool     IsLastFile(){ return !MoreFilesToCome;}///< @brief True if no more files to be read
+      /// @brief Number of objects read and processed
+      /// Incremented after options are processed, so 0 for first object.  Returns -1 if Convert interface not used. 
+      int      GetCount()const { return Count; }
       //@}
       /// @name Convenience functions
       //@{

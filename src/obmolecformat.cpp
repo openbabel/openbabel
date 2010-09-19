@@ -192,7 +192,7 @@ namespace OpenBabel
 
   bool OBMoleculeFormat::DoOutputOptions(OBBase* pOb, OBConversion* pConv)
   {
-    if(pConv->IsOption("addindex", OBConversion::GENOPTIONS)) {
+    if(pConv->IsOption("addoutindex", OBConversion::GENOPTIONS)) {
       stringstream ss;
       ss << pOb->GetTitle() << " " << pConv->GetOutputIndex();
       pOb->SetTitle(ss.str().c_str());
