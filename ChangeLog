@@ -1,4 +1,11 @@
 2010-09-19  Chris Morley
+
+	* src/ops/opisomorph.cpp: As requested by Douglas Houston, -s option
+	allows multiple molecules in pattern file (with multiple coloring of
+	matching substructures); -v (inverse of -s) now uses the same code
+	and has the same capabilities.
+
+2010-09-19  Chris Morley
 	
 	* src/depict/depict.cpp: correct position and direction of wedge and
 	hash bonds. Deduce using TetStereoTo0D. May need further work.

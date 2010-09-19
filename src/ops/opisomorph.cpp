@@ -81,7 +81,7 @@ bool ExtractSubstruct(OBMol* pmol, const std::vector<int>& atomIdxs)
 
 //*****************************************************
 
-OBQuery* MakeQueryFromMolInFile(const std::string& filename, int* pnAtoms)
+bool MakeQueriesFromMolInFile(vector<OBQuery*>& queries, const std::string& filename, int* pnAtoms)
 {
     OBMol patternMol;
     patternMol.SetIsPatternStructure();
@@ -94,10 +94,14 @@ OBQuery* MakeQueryFromMolInFile(const std::string& filename, int* pnAtoms)
         !patternConv.SetInFormat(pFormat) ||
         !patternConv.ReadFile(&patternMol, filename) ||
         patternMol.NumAtoms()==0)
-      return NULL;
+      return false;
 
-    *pnAtoms = patternMol.NumHvyAtoms();
-    return CompileMoleculeQuery(&patternMol);
+    do
+    {
+      *pnAtoms = patternMol.NumHvyAtoms();
+      queries.push_back(CompileMoleculeQuery(&patternMol));
+    }while(patternConv.Read(&patternMol));
+    return true;
 }
 
 //*****************************************************
@@ -107,38 +111,52 @@ public:
   OpNewS(const char* ID) : OBOp(ID, false){}
   const char* Description()
   {
-    return "Isomorphism filter (-s option replacement)(not displayed in GUI)\n"
+    return "Isomorphism filter(-s, -v options replacement)(not displayed in GUI)\n"
       "This enhanced version can take a SMARTS parameter, for example:\n"
       "      babel in.smi -s \"c1ccccc1[#6] green\" out.cml \n"
-      "Only molecules matching the SMARTS are converted. The optional second\n"
-      "parameter causes the matched substructure to be colored. The coloring is\n"
-      "recognized by SVGFormat and CMLFormat.\n"
-      "If the second parameter is ``exact`` only exact matches are converted.\n"
-      "If the SMARTS starts with a ``~`` character, only non-matching molecules \n"
-      "are converted, e.g.\n"
-      "    -s ~c1ccccc1[#6]\n"
-      "This is an alternative to the -v option.\n\n"
+      "With -s, only molecules matching the SMARTS are converted.\n"
+      "With -v, only molecules NOT matching the SMARTS are converted.\n"
+      "The optional second parameter causes the matched substructure to be colored\n"
+      "if it is a color name like ``green`` or a hex value like ``#8dcb70``\n"
+      "The coloring is recognized by SVGFormat and CMLFormat.\n\n"
 
       "The first parameter can also be a filename with an extension that\n"
       "can be interpreted as a file format:\n"
       "    -s \"pattern.mol exact\"\n"
-      "The molecule in the file is used in an isomorphism test with the default\n"
+      "A molecule in the file is used in an isomorphism test with the default\n"
       "matching: bonds by aromaticity or order, atoms only by atomic number.\n"
       "Explicit hydrogen atoms in this molecule are matched like any other atom.\n"
-      "The test can be negated with a ~ before the file name.\n\n"
+      "If the pattern file contains more than one molecule, the test is an OR\n"
+      "of them, i.e. with -s, a molecule is converted if it matches ANY of the\n"
+      "pattern molecules.\n"
+      "Multiple color parameters can be specified and the coloring in the\n"
+      "converted molecule corresponds to the first pattern molecule matched,\n"
+      "or the last color if there are fewer colors than pattern molecules.\n\n"
+
+      "If the second parameter is ``exact`` only exact matches are converted.\n"
+      "If the second parameter is ``extract`` all the atoms in the converted\n"
+      "molecule are deleted except for those matched. Since these retain their\n"
+      "coordinates, this can be used to prepare display templates.\n\n"
+
+      "In the GUI (or on the commandline as an alternative to using -v) the test\n"
+      "can be negated with a ~ before the SMARTS string or file name.\n\n"
 
       "With the babel commandline interface, unless the option is at the end of\n"
       "a line, it is necessary to enclose all the parameters together in quotes,\n"
-      "as in the first example above, because the -s option is expecting a\n"
-      "single parameter. With obabel and the GUI this is not necessary.\n";
+      "as in the first example above, because the -s and -v options are expecting\n"
+      "a single parameter. With obabel and the GUI this is not necessary.\n"
+      "A command must not have more than a single -s or single -v option. The\n"
+      "--filter option is more flexible.\n\n";
   }
   virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
   virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*);
 };
 
 /////////////////////////////////////////////////////////////////
-OpNewS theOpNewS("s"); //Global instance
+OpNewS theOpNewS("s"); //Global instances
+OpNewS theOpNewV("v");
 
+//////////////////////////////////////////////////////////////////
 bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* pConv)
 {
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
@@ -146,19 +164,22 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
     return false;
 
   // The SMARTS and any other parameters are extracted on the first molecule
-  // and stored in the static variable vec. The parameter is cleared so that:
+  // and stored in the static variables vec, inv. The parameter is cleared so that:
   // (a) the original -s option in transform.cpp is inactive, and
   // (b) the parsing does not have to be done again for multi-molecule files
-  string txt(pmap->find("s")->second);
+
+  string txt(pmap->find(GetID())->second); // ID can be "s" or "v"
   static vector<string> vec;
   static bool inv;
   static int nPatternAtoms; //non-zero for exact matches
   static OBQuery* query;
+  static vector<OBQuery*> queries;
+  vector<OBQuery*>::iterator qiter;
   if(!txt.empty())
   {
     //Set up on first call
     tokenize(vec, txt);
-    inv = false;
+    inv = GetID()[0]=='v';
     if(vec[0][0]=='~')
     {
       inv = true;
@@ -166,11 +187,11 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
     }
 
     //Interpret as a filename if possible
-    query = MakeQueryFromMolInFile(vec[0], &nPatternAtoms);
+    MakeQueriesFromMolInFile(queries, vec[0], &nPatternAtoms);
 
     if(vec.size()>1 && vec[1]=="exact")
     {
-      if(!query)
+      if(queries.empty())
       {
         //Convert SMARTS to SMILES to count number of atoms
         OBConversion conv;
@@ -188,8 +209,9 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
     }
     else
       nPatternAtoms = 0;
-
-    pConv->AddOption("s", OBConversion::GENOPTIONS, "");
+    
+    //disable old versions
+    pConv->AddOption(GetID(), OBConversion::GENOPTIONS, "");
   }
 
   bool match;
@@ -202,23 +224,29 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
     if(pmol->NumHvyAtoms() != nPatternAtoms)
       return false;
 
-  if(query) //filename supplied
+  int imol=0; //index of mol in pattern file
+  if(!queries.empty()) //filename supplied
   {
-    OBIsomorphismMapper* mapper = OBIsomorphismMapper::GetInstance(query);
-    OBIsomorphismMapper::Mappings mappings = mapper->MapUnique(pmol);
-    if(match = !mappings.empty())
+    //match is set true if any of the structures match - OR behaviour
+    for(qiter=queries.begin();qiter!=queries.end();++qiter, ++imol) 
     {
-      OBIsomorphismMapper::Mappings::iterator ita;
-      OBIsomorphismMapper::Mapping::iterator itb;
-      for(ita=mappings.begin(); ita!=mappings.end();++ita)//each mapping
+      OBIsomorphismMapper* mapper = OBIsomorphismMapper::GetInstance(*qiter);
+      OBIsomorphismMapper::Mappings mappings = mapper->MapUnique(pmol);
+      if(match = !mappings.empty())
       {
-        vector<int> atomvec;
-        for(itb=ita->begin(); itb!=ita->end();++itb)//each atom index
-          atomvec.push_back(itb->second+1);
-        vecatomvec.push_back(atomvec);
-        atomvec.clear();
+        OBIsomorphismMapper::Mappings::iterator ita;
+        OBIsomorphismMapper::Mapping::iterator itb;
+        for(ita=mappings.begin(); ita!=mappings.end();++ita)//each mapping
+        {
+          vector<int> atomvec;
+          for(itb=ita->begin(); itb!=ita->end();++itb)//each atom index
+            atomvec.push_back(itb->second+1);
+          vecatomvec.push_back(atomvec);
+          atomvec.clear();
+        }
+        pMappedAtoms = &vecatomvec;
+        break;
       }
-      pMappedAtoms = &vecatomvec;
     }
   }
   else //SMARTS supplied
@@ -227,7 +255,7 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
     {
       string msg = vec[0] + " cannot be interpreted as either valid SMARTS "
         "or the name of a file with an extension known to OpenBabel "
-        "that contains a pattern molecule.";
+        "that contains one or more pattern molecules.";
       obErrorLog.ThrowError(__FUNCTION__, msg, obError, onceOnly);
       delete pmol;
       pmol = NULL;
@@ -259,14 +287,20 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
     }
 
     // color the substructure if there is a second parameter which is not "exact" or "extract"
+    // with multiple color parameters use the one corresponding to the query molecule, or the last
+    if(imol>vec.size()-2)
+      imol = vec.size()-2;
     for(iter=pMappedAtoms->begin();iter!=pMappedAtoms->end();++iter)//each match
-       AddDataToSubstruct(pmol, *iter, "color", vec[1]);
+       AddDataToSubstruct(pmol, *iter, "color", vec[imol+1]);
     return true;
   }
 
   if(pConv && pConv->IsLast())
-    delete query;
-
+  {
+    for(qiter=queries.begin();qiter!=queries.end();++qiter)
+      delete *qiter;
+    queries.clear();
+  }
   return true;
 }
 
