@@ -11,10 +11,10 @@
   GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
-
 #include <openbabel/obmolecformat.h>
 
 #include <algorithm>
+#include <cmath>
 
 #ifdef _MSC_VER
 #include <regex>
@@ -47,6 +47,19 @@ namespace OpenBabel
     bool ReadLineZmatrix(OBMol &mol, OBAtom *atom, vector<string> &tokens, double factor, int *zmatLineCount);
     double Rescale(string text);
     bool IsUnits(string text);
+    /**
+     * Converts a string to a numerical type
+     * This purloined from: http://www.codeguru.com/forum/showthread.php?t=231054
+     */
+    template <class T>
+    bool from_string(T& t, const std::string& s,
+                     std::ios_base& (*f)(std::ios_base&))
+    {
+      std::istringstream iss(s);
+      return !(iss >> f >> t).fail();
+    }
+
+    // Variables
     enum ReadMode_t {CARTESIAN, ZMATRIX, VARIABLES, CONSTANTS, SKIP};
     ReadMode_t ReadMode;
     char buffer[BUFF_SIZE];
@@ -249,32 +262,39 @@ namespace OpenBabel
      * This assumes the line is formatted in GAMESS-UK input style as:
      * x y z AtomicNumber Label
      */
+    
+    bool ok=false;
+    int Z;
+    double x,y,z;
 
     // 4th field is the atomic number
-    atom->SetAtomicNum(atoi(tokens[3].c_str()));
+    ok = from_string<int>(Z, tokens.at(3), std::dec);
+    atom->SetAtomicNum(Z);
 
     // Read the atom coordinates
-    char *endptr;
-    double x = strtod((char*)tokens[0].c_str(), &endptr);
-    if (endptr == (char*)tokens[0].c_str()) {
-      // Can't convert to double so see if it's in the variables
-      if (variables.find(tokens[0])==variables.end()) return false;
-      x = variables[tokens[0]];
-    }
+    ok = from_string<double>(x, tokens.at(0), std::dec);
+    if ( ! ok)
+      {
+        // Can't convert to double so see if it's in the variables
+        if (variables.find(tokens[0])==variables.end()) return false;
+        x = variables[tokens[0]];
+      }
 
-    double y = strtod((char*)tokens[1].c_str(), &endptr);
-    if (endptr == (char*)tokens[1].c_str()) {
-      // Can't convert to double so see if it's in the variables
-      if (variables.find(tokens[1])==variables.end()) return false;
-      y = variables[tokens[1]];
-    }
+    ok = from_string<double>(y, tokens.at(1), std::dec);
+    if ( ! ok)
+      {
+        // Can't convert to double so see if it's in the variables
+        if (variables.find(tokens[1])==variables.end()) return false;
+        y = variables[tokens[1]];
+      }
 
-    double z = strtod((char*)tokens[2].c_str(), &endptr);
-    if (endptr == (char*)tokens[2].c_str()) {
-      // Can't convert to double so see if it's in the variables
-      if (variables.find(tokens[2])==variables.end())  return false;
-      z = variables[tokens[2]];
-    }
+    ok = from_string<double>(z, tokens.at(2), std::dec);
+    if ( ! ok)
+      {
+        // Can't convert to double so see if it's in the variables
+        if (variables.find(tokens[2])==variables.end()) return false;
+        z = variables[tokens[2]];
+      }
 
     // Convert to Angstroms
     x=x*factor;
@@ -292,8 +312,9 @@ namespace OpenBabel
      * that are defined using internal coordinates
      */
 
-    char *endptr;
     double var;
+    bool ok=false;
+    int n;
 
     vic.push_back(new OBInternalCoord);
     atom->SetAtomicNum(LabelToAtomicNumber(tokens[0]));
@@ -306,15 +327,17 @@ namespace OpenBabel
       if (tokens.size() < 3) {return false;}
 
       // Specify the atom that defines the distance to this one
-      vic[*zmatLineCount]->_a = mol.GetAtom(atoi(tokens[1].c_str()));
+      ok = from_string<int>(n, tokens.at(1), std::dec);
+      vic[*zmatLineCount]->_a = mol.GetAtom(n);
 
       // Get the distance
-      var = strtod((char*)tokens[2].c_str(), &endptr);
-      if (endptr == (char*)tokens[2].c_str()) {
-        // Can't convert to double so see if it's in the variables
-        if (variables.find(tokens[2])==variables.end()) return false;
-        var = variables[tokens[2]];
-      }
+      ok = from_string<double>(var, tokens.at(2), std::dec);
+      if ( !ok )
+        {
+          // Can't convert to double so see if it's in the variables
+          if (variables.find(tokens[2])==variables.end()) return false;
+          var = variables[tokens[2]];
+        }
       vic[*zmatLineCount]->_dst = var;
       break;
 
@@ -322,59 +345,70 @@ namespace OpenBabel
       if (tokens.size() < 5) {return false;}
 
       // Specify the atom that defines the distance to this one
-      vic[*zmatLineCount]->_a = mol.GetAtom(atoi(tokens[1].c_str()));
+      ok = from_string<int>(n, tokens.at(1), std::dec);
+      vic[*zmatLineCount]->_a = mol.GetAtom(n);
+
       // Get the distance
-      var = strtod((char*)tokens[2].c_str(), &endptr);
-      if (endptr == (char*)tokens[2].c_str()) {
-        // Can't convert to double so see if it's in the variables
-        if (variables.find(tokens[2])==variables.end()) return false;
-        var = variables[tokens[2]];
-      }
+      ok = from_string<double>(var, tokens.at(2), std::dec);
+      if ( !ok )
+        {
+          // Can't convert to double so see if it's in the variables
+          if (variables.find(tokens[2])==variables.end()) return false;
+          var = variables[tokens[2]];
+        }
       vic[*zmatLineCount]->_dst = var;
 
       // Specify atom defining angle
-      vic[*zmatLineCount]->_b = mol.GetAtom(atoi(tokens[3].c_str()));
+      ok = from_string<int>(n, tokens.at(3), std::dec);
+      vic[*zmatLineCount]->_b = mol.GetAtom(n);
       // Get the angle
-      var = strtod((char*)tokens[4].c_str(), &endptr);
-      if (endptr == (char*)tokens[4].c_str()) {
-        // Can't convert to double so see if it's in the variables
-        if (variables.find(tokens[4])==variables.end()) return false;
-        var = variables[tokens[4]];
-      }
+      ok = from_string<double>(var, tokens.at(4), std::dec);
+      if ( !ok )
+        {
+          // Can't convert to double so see if it's in the variables
+          if (variables.find(tokens[4])==variables.end()) return false;
+          var = variables[tokens[4]];
+        }
       vic[*zmatLineCount]->_ang = var;
       break;
 
     default:
       if (tokens.size() < 7) {return false;}
 
-      vic[*zmatLineCount]->_a = mol.GetAtom(atoi(tokens[1].c_str()));
+      ok = from_string<int>(n, tokens.at(1), std::dec);
+      vic[*zmatLineCount]->_a = mol.GetAtom(n);
       // Get the distance
-      var = strtod((char*)tokens[2].c_str(), &endptr);
-      if (endptr == (char*)tokens[2].c_str()) {
-        // Can't convert to double so see if it's in the variables
-        if (variables.find(tokens[2])==variables.end()) return false;
-        var = variables[tokens[2]];
-      }
+      ok = from_string<double>(var, tokens.at(2), std::dec);
+      if ( !ok )
+        {
+          // Can't convert to double so see if it's in the variables
+          if (variables.find(tokens[2])==variables.end()) return false;
+          var = variables[tokens[2]];
+        }
       vic[*zmatLineCount]->_dst = var;
 
-      vic[*zmatLineCount]->_b = mol.GetAtom(atoi(tokens[3].c_str()));
+      ok = from_string<int>(n, tokens.at(3), std::dec);
+      vic[*zmatLineCount]->_b = mol.GetAtom(n);
       // Get the angle
-      var = strtod((char*)tokens[4].c_str(), &endptr);
-      if (endptr == (char*)tokens[4].c_str()) {
-        // Can't convert to double so see if it's in the variables
-        if (variables.find(tokens[4])==variables.end()) return false;
-        var = variables[tokens[4]];
-      }
+      ok = from_string<double>(var, tokens.at(4), std::dec);
+      if ( !ok )
+        {
+          // Can't convert to double so see if it's in the variables
+          if (variables.find(tokens[4])==variables.end()) return false;
+          var = variables[tokens[4]];
+        }
       vic[*zmatLineCount]->_ang = var;
-
-      vic[*zmatLineCount]->_c = mol.GetAtom(atoi(tokens[5].c_str()));
+      
+      ok = from_string<int>(n, tokens.at(5), std::dec);
+      vic[*zmatLineCount]->_c = mol.GetAtom(n);
       // Get the torsion angle
-      var = strtod((char*)tokens[6].c_str(), &endptr);
-      if (endptr == (char*)tokens[6].c_str()) {
-        // Can't convert to double so see if it's in the variables
-        if (variables.find(tokens[6])==variables.end()) return false;
-        var = variables[tokens[6]];
-      }
+      ok = from_string<double>(var, tokens.at(6), std::dec);
+      if ( !ok )
+        {
+          // Can't convert to double so see if it's in the variables
+          if (variables.find(tokens[6])==variables.end()) return false;
+          var = variables[tokens[6]];
+        }
       vic[*zmatLineCount]->_tor = var;
     }
 
@@ -398,6 +432,8 @@ namespace OpenBabel
 
     string line;
     vector<string> tokens;
+    bool ok=false;
+    double var;
 
     // Now read in all the varibles
     while (ifs.good() && ifs.getline(buffer, BUFF_SIZE)) {
@@ -424,14 +460,14 @@ namespace OpenBabel
         tokenize(tokens, line, " \t\n");
       }
 
-      char *endptr;
-      double var = strtod((char*)tokens[1].c_str(), &endptr);
-      if (endptr == (char*)tokens[1].c_str()) {
-        errorMsg << "Problems reading a GAMESS-UK  file: "
-                 << "Could not read variable line: " << line;
-        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
-        return false;
-      }
+      ok = from_string<double>(var, tokens.at(3), std::dec);
+      if ( !ok )
+        {
+          errorMsg << "Problems reading a GAMESS-UK  file: "
+                   << "Could not read variable line: " << line;
+          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+          return false;
+        }
       // Add to list of variables
       variables[tokens[0]]=var*factor;
     }
@@ -617,7 +653,6 @@ namespace OpenBabel
 
     char buffer[BUFF_SIZE];
 
-
     ofs << "title" << endl;
     ofs << mol.GetTitle() << endl << endl;
 
@@ -668,20 +703,10 @@ namespace OpenBabel
   public:
     //Register this format type ID
     GAMESSUKOutputFormat()
-    {
-      OBConversion::RegisterFormat("gukout",this, "chemical/x-gamess-output");
-      // Command-line keywords
-      //OBConversion::RegisterOptionParam("k", NULL, 1, OBConversion::OUTOPTIONS);
-      // Command-line keyword file
-      //OBConversion::RegisterOptionParam("f", NULL, 1, OBConversion::OUTOPTIONS);
-    }
-
+    { OBConversion::RegisterFormat("gukout",this, "chemical/x-gamess-output"); }
 
     virtual const char* Description() //required
-    {
-      return
-        "GAMESS-UK Output\n";
-    };
+    { return "GAMESS-UK Output\n"; };
 
     virtual const char* SpecificationURL()
     {return "http://www.cfs.dl.ac.uk";}; //optional
@@ -689,326 +714,546 @@ namespace OpenBabel
     virtual const char* GetMIMEType()
     { return "chemical/x-gamessuk-output"; };
 
-
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    //virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+
+  private:
+    enum RunType_t { UNKNOWN, SINGLEPOINT, OPTXYZ, OPTZMAT, SADDLE, FREQUENCIES };
+    vector<string> tokens, geomList; // list of lines and list of tokens on a line
+    string line; // For convenience so we can refer to lines from the iterator as 'line'
+    bool ReadInputZmatrix( OBMol &mol, std::istream &ifs );
+    bool ReadInitialCartesian( OBMol &mol, std::istream &ifs );
+    bool ReadOptGeomXyz1( OBMol &mol, std::istream &ifs );
+    bool ReadOptGeomXyz2( OBMol &mol, std::istream &ifs );
+    bool ReadNormalModesHessian( OBMol &mol, std::istream &ifs);
+    bool ReadNormalModesForce( OBMol &mol, std::istream &ifs);
   };
 
   //Make an instance of the format class
   GAMESSUKOutputFormat theGAMESSUKOutputFormat;
 
+  bool GAMESSUKOutputFormat::ReadInputZmatrix( OBMol &mol, std::istream &ifs )
+  {
+    /* The zmatrix entered by the user
+     * REM:  need to add stuff for "automatic z-matrix generation" as we currently
+     * ignore the zmatrix & just read the cartesian coordinates
+     */
+    geomList.clear();
+    
+    // skip 2 lines
+    ifs.getline(buffer, BUFF_SIZE) && ifs.getline(buffer, BUFF_SIZE);
+    
+    // Stick a header line first
+    geomList.push_back("zmatrix bohr");
+    
+    // Read zmatrix into list until blank line
+    while (ifs.good() && ifs.getline(buffer, BUFF_SIZE) && strlen(buffer) != 0)
+      {
+        line = buffer;
+        // transform(method.begin(), method.end(), method.begin(), ::tolower);
+        ToLower(line);
+        Trim(line);
+        geomList.push_back(line);
+      }
+      
+    // Skip 2 lines
+    ifs.getline(buffer, BUFF_SIZE);
+    ifs.getline(buffer, BUFF_SIZE);
+      
+    // Check if line is variables line
+    if (strstr(buffer,"name            input  type     hessian         minima") != NULL)
+      {
+        // Skip additional line to be where variables are printed
+        ifs.getline(buffer, BUFF_SIZE);
+        // Read in the variables till we hit blank line
+        if (! ReadVariables(ifs, 1.0, "")) return false;
+      }
+      
+    // Now go and process the geometry
+    return ReadGeometry(mol, geomList);
+  } // ReadInputZmatrix
 
-  bool GAMESSUKOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv) {
+  bool GAMESSUKOutputFormat::ReadInitialCartesian( OBMol &mol, std::istream &ifs )
+  {
+    bool ok=false;
+    double x,y,z;
+    int n;
 
-    /*
+    // Skip 3 lines
+    ifs.getline(buffer, BUFF_SIZE) &&
+      ifs.getline(buffer, BUFF_SIZE) &&
+      ifs.getline(buffer, BUFF_SIZE);
 
-      Previously we parsed in the z-matrix - and the code to do that is still here and should work.
-      However, the zmatrix is not actually used anywhere in OpenBabel currently - it's just converted
-      to Cartesians, and this code appears to be buggy, so for the time being we just stick to reading
-      Cartesians
+    // Create regex for the coords
+    //                     ------label--------   -------charge-------- < seems enough for a match
+    string pattern(" *\\* *[a-zA-Z]{1,2}[0-9]* *[0-9]{1,3}\\.[0-9]{1}");
+    bool iok;
+#ifdef _MSC_VER
+    std::tr1::regex myregex;
+    try {
+      myregex.assign(pattern,
+                     std::tr1::regex_constants::extended |
+                     std::tr1::regex_constants::nosubs);
+      iok = true;
+    } catch (std::tr1::regex_error ex) {
+      iok = false;
+    }
+#else
+    regex_t *myregex = new regex_t;
+    iok = regcomp(myregex, pattern.c_str(), REG_EXTENDED | REG_NOSUB)==0;
+#endif
+    if (!iok) cerr << "Error compiling regex in GUK OUTPUT!\n";
 
-      The below text explains the strategy behind the parsing.
-
-      Read in coordinates after any reorientation due to the symmetry code
-
-      XXXX if there is a field called "input z-matrix" then we read the initial zmatrix in here - NOT NOW - IGNORE ZMATRIX
-
-      This geometry is not needed if we are optimising as we can use the optimised geometry
-      However, we need to keep this geometry as it's the only one we have if it's not an opt.
-
-      - if there is no zmat, we need to read the "molecular geometry" field. This geometry
-      only needs to be used if we are not in an optimisation.
-
-      Read the RUN TYPE field to work out whether we need to use the first geometry.
-
-      If it's a single point caculation, we can return the molecule at this point
-
-      If it's some form of structure search, we need to go and find the final structure
-
-    */
-
-    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if (pmol==NULL)
-      return false;
-
-    //Define some references so we can use the old parameter names
-    istream& ifs = *pConv->GetInStream();
-    OBMol &mol = *pmol;
-
-    // Get a default title as the filename
-    const char* title = pConv->GetTitle();
+    // Read in the coordinates - we process them directly rather
+    // then use ReadGeometry as we probably should do...
     mol.BeginModify();
-    mol.SetTitle(title);
-    mol.EndModify();
+    while (ifs.good() && ifs.getline(buffer, BUFF_SIZE)){
 
-    vector<string> tokens, geomList; // list of lines and list of tokens on a line
-    string line; // For convenience so we can refer to lines from the iterator as 'line'
-    //ReadMode_t ReadMode=SKIP;
-
-    enum RunType_t { UNKNOWN, SINGLEPOINT, OPTXYZ, OPTZMAT, SADDLE };
-    RunType_t RunType=UNKNOWN;
-    bool ok;
-
-    while (ifs.good() && ifs.getline(buffer, BUFF_SIZE)) {
-
-      /* The zmatrix entered by the user
-       * REM:  need to add stuff for "automatic z-matrix generation" as we currently
-       * ignore the zmatrix & just read the cartesian coordinates
-       */
-
-      if (strstr(buffer,"                              input z-matrix") != NULL){
-
-        // OpenBabel's handling of zmatricies is currently too buggy and the zmatrix
-        // read in isn't currently used - it's just converted to cartesians, so we
-        // can skip this for the time being
-        continue;
-
-        // Set Runtype to SINGLEPOINT so we don't read in the cartesians
-        RunType=SINGLEPOINT;
-
-        geomList.clear();
-
-        // skip 2 lines
-        ifs.getline(buffer, BUFF_SIZE) && ifs.getline(buffer, BUFF_SIZE);
-
-        // Stick a header line first
-        geomList.push_back("zmatrix bohr");
-
-        // Read zmatrix into list until blank line
-        while (ifs.good() && ifs.getline(buffer, BUFF_SIZE) && strlen(buffer) != 0){
-          line = buffer;
-          // transform(method.begin(), method.end(), method.begin(), ::tolower);
-          ToLower(line);
-          Trim(line);
-          geomList.push_back(line);
-        }
-
-        // Skip 2 lines
-        ifs.getline(buffer, BUFF_SIZE);
-        ifs.getline(buffer, BUFF_SIZE);
-
-        // Check if line is variables line
-        if (strstr(buffer,"name            input  type     hessian         minima") != NULL)
-          {
-            // Skip additional line to be where variables are printed
-            ifs.getline(buffer, BUFF_SIZE);
-            // Read in the variables till we hit blank line
-            if (! ReadVariables(ifs, 1.0, "")) return false;
-          }
-
-        // Now go and process the geometry
-        ok = ReadGeometry(mol, geomList);
-
-      } // End Reading user z-matrix
-
-      // Read the cartesian coordinates if we've not read in the ZMATRIX
-      if (strstr(buffer,"*            charge       x             y              z       shells") != NULL &&
-          RunType==UNKNOWN){
-
-        // Skip 3 lines
-        ifs.getline(buffer, BUFF_SIZE) &&
-          ifs.getline(buffer, BUFF_SIZE) &&
-          ifs.getline(buffer, BUFF_SIZE);
-
-        // Create regex for the coords
-        //                     ------label--------   -------charge-------- < seems enough for a match
-        string pattern(" *\\* *[a-zA-Z]{1,2}[0-9]* *[0-9]{1,3}\\.[0-9]{1}");
-        bool iok;
+      // End of geometry block
+      if (strstr(buffer,"*************************")!=NULL)break;
 #ifdef _MSC_VER
-        std::tr1::regex myregex;
-        try {
-          myregex.assign(pattern,
-                         std::tr1::regex_constants::extended |
-                         std::tr1::regex_constants::nosubs);
-          iok = true;
-        } catch (std::tr1::regex_error ex) {
-          iok = false;
-        }
+      if (std::tr1::regex_search(buffer, myregex)) {
 #else
-        regex_t *myregex = new regex_t;
-        iok = regcomp(myregex, pattern.c_str(), REG_EXTENDED | REG_NOSUB)==0;
+        if (regexec(myregex, buffer, 0, 0, 0)==0) {
 #endif
-        if (!iok) cerr << "Error compiling regex in GUK OUTPUT!\n";
+          //cerr << "Got Coord line: " << buffer << endl;
+          OBAtom *atom = mol.NewAtom();
+          tokenize(tokens,buffer," ");
 
-        // Read in the coordinates - we process them directly rather
-        // then use ReadGeometry as we probably should do...
-        mol.BeginModify();
-        while (ifs.good() && ifs.getline(buffer, BUFF_SIZE)){
-
-          // End of geometry block
-          if (strstr(buffer,"*************************")!=NULL)break;
-#ifdef _MSC_VER
-          if (std::tr1::regex_search(buffer, myregex)) {
-#else
-            if (regexec(myregex, buffer, 0, 0, 0)==0) {
-#endif
-              //cerr << "Got Coord line: " << buffer << endl;
-              OBAtom *atom = mol.NewAtom();
-              tokenize(tokens,buffer," ");
-              atom->SetAtomicNum(atoi(tokens[2].c_str()));
-              double x=atof(tokens[3].c_str())*BOHR_TO_ANGSTROM;
-              double y=atof(tokens[4].c_str())*BOHR_TO_ANGSTROM;
-              double z=atof(tokens[5].c_str())*BOHR_TO_ANGSTROM;
-              atom->SetVector(x, y, z);
-            }
-          }
-          mol.EndModify();
-#ifndef _MSC_VER
-          regfree(myregex);
-#endif
-
-        } // End Read Cartesian Coords
-
-
-        // Determine the RunType - affects how we move on from here.
-        if (strstr(buffer," * RUN TYPE") != NULL){
-          tokenize(tokens,buffer," \t\n");
-
-          if(tokens[3].compare(0,6,"optxyz")==0){
-            //cerr << "runtype is optxyz\n";
-            RunType=OPTXYZ;
-            break;
-          } else if (tokens[3].compare(0,8,"optimize")==0){
-            //cerr << "runtype is optimise\n";
-            RunType=OPTZMAT;
-            break;
-          } else if (tokens[3].compare(0,6,"saddle")==0){
-            //cerr << "runtype is optimise\n";
-            RunType=SADDLE;
-            break;
-          } else {
-            RunType=SINGLEPOINT;
-            break;
-          }
-        }
-      } // End First Reading loop
-
-      if(RunType==SINGLEPOINT){
-        // We can return the molecule that we've read in
-        if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
-          mol.EndModify();
-          return false;
-        } else {
-          if (!pConv->IsOption("b",OBConversion::INOPTIONS))
-            mol.ConnectTheDots();
-          if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
-            mol.PerceiveBondOrders();
-          return true;
+          ok = from_string<int>(n, tokens.at(2), std::dec);
+          atom->SetAtomicNum(n);
+          ok = from_string<double>(x, tokens.at(3), std::dec);
+          x=x*BOHR_TO_ANGSTROM;
+          ok = from_string<double>(y, tokens.at(4), std::dec);
+          y=y*BOHR_TO_ANGSTROM;
+          ok = from_string<double>(z, tokens.at(5), std::dec);
+          z=z*BOHR_TO_ANGSTROM;
+          atom->SetVector(x, y, z);
         }
       }
+      mol.EndModify();
+#ifndef _MSC_VER
+      regfree(myregex);
+#endif
+      return true;
+    } // End ReadInitalCartesian
+
+
+    bool GAMESSUKOutputFormat::ReadOptGeomXyz1( OBMol &mol, std::istream &ifs )
+    {
+      bool ok=false;
+      double x,y,z;
+      int n;
+      
+      // Clear the Molecule as we're going to start from scratch again.
+      mol.BeginModify();
+      mol.Clear();
+
+      // FF to start of coordinate specification
+      while (ifs.good() && ifs.getline(buffer, BUFF_SIZE)) {
+        if (strstr(buffer,
+                   "atom     znuc       x             y             z") != NULL) break;
+      }
+
+      // Skip 2 lines - should then be at the coordinates
+      ifs.getline(buffer, BUFF_SIZE) &&
+        ifs.getline(buffer, BUFF_SIZE);
+
+      // Read in the coordinates - we process them directly rather
+      // then use ReadGeometry as we probably should do...
+      while (ifs.good() && ifs.getline(buffer, BUFF_SIZE)){
+
+        // End of geometry block
+        if (strstr(buffer,"*************************")!=NULL)break;
+
+        //cerr << "Got Coord line: " << buffer << endl;
+        OBAtom *atom = mol.NewAtom();
+        tokenize(tokens,buffer," ");
+
+        ok = from_string<int>(n, tokens.at(2), std::dec);
+        atom->SetAtomicNum(n);
+        ok = from_string<double>(x, tokens.at(3), std::dec);
+        x=x*BOHR_TO_ANGSTROM;
+        ok = from_string<double>(y, tokens.at(4), std::dec);
+        y=y*BOHR_TO_ANGSTROM;
+        ok = from_string<double>(z, tokens.at(5), std::dec);
+        z=z*BOHR_TO_ANGSTROM;
+        atom->SetVector(x, y, z);
+
+      }
+
+      mol.EndModify();
+      return true;
+    } // End ReadOptGeomXyz
+
+    bool GAMESSUKOutputFormat::ReadOptGeomXyz2( OBMol &mol, std::istream &ifs )
+    {
+      bool ok=false;
+      double x,y,z;
+      int n;
 
       // Clear the Molecule as we're going to start from scratch again.
       mol.BeginModify();
       mol.Clear();
+
+      while (ifs.good() && ifs.getline(buffer, BUFF_SIZE)) {
+        if (strstr(buffer,
+                   "       x              y              z            chg  tag") != NULL) break;
+      }
+
+      // Skip 1 line - should then be at the coordinates
+      ifs.getline(buffer, BUFF_SIZE);
+
+      // Read in the coordinates - we process them directly rather
+      // then use ReadGeometry as we probably should do...
+      while (ifs.good() && ifs.getline(buffer, BUFF_SIZE)){
+
+        // End of geometry block
+        if (strstr(buffer,"============================================================")!=NULL)break;
+
+        //cerr << "Got Coord line: " << buffer << endl;
+        OBAtom *atom = mol.NewAtom();
+        tokenize(tokens,buffer," ");
+
+        ok = from_string<int>(n, tokens.at(3), std::dec);
+        atom->SetAtomicNum(n);
+        ok = from_string<double>(x, tokens.at(0), std::dec);
+        x=x*BOHR_TO_ANGSTROM;
+        ok = from_string<double>(y, tokens.at(1), std::dec);
+        y=y*BOHR_TO_ANGSTROM;
+        ok = from_string<double>(z, tokens.at(2), std::dec);
+        z=z*BOHR_TO_ANGSTROM;
+        atom->SetVector(x, y, z);
+      }
+
+      mol.EndModify();
+      return true;
+
+    } // End ReadOptGeomZmat
+
+    bool GAMESSUKOutputFormat::ReadNormalModesHessian( OBMol &mol, std::istream &ifs)
+    {
+
+      bool ok=false;
+      double dtmp,dtmp2;
+
+      int ncols = 8; // Think this is always the case
+      int natoms = mol.NumAtoms();
+      int maxroot = natoms*3;
+    
+      // Create data structures
+      std::vector< double > frequencies, intensities;
+      std::vector< std::vector< vector3 > > Lx;
+      
+      // Set up data structures with null data
+      for( int i=0; i<maxroot; i++ )
+        {
+          std::vector< vector3 > atoml;
+          for( int j=0; j < natoms; j++ )
+            {
+              atoml.push_back( vector3(0.0,0.0,0.0) );
+            }
+          Lx.push_back( atoml );
+        }
+      
+      ifs.getline(buffer, BUFF_SIZE); // skip "===============" line
+
+      int root7;
+      for ( int root1=0; root1 < maxroot; root1+=ncols )
+        {
+          root7 = root1 + ncols;
+          root7 = min(maxroot,root7);
+
+          //Skip 6 lines to col header with frequencies
+          for( int j=0; j < 6; j++ )
+            ifs.getline(buffer, BUFF_SIZE);
+
+          tokenize(tokens,buffer," \t\n");
+          for( uint ui=0; ui < tokens.size(); ui++ )
+            {
+              ok = from_string<double>(dtmp, tokens.at(ui), std::dec);
+              frequencies.push_back(dtmp);
+              intensities.push_back( 0.0 ); // Add placeholder data
+            }
+
+          // Skip 2 lines to where data matrix starts
+          ifs.getline(buffer, BUFF_SIZE);
+          ifs.getline(buffer, BUFF_SIZE);
+
+          int mycols=root7-root1;
+          // Loop over atoms & the x,y,z
+          int atomcount=0;
+          for ( int i=0; i<maxroot; i+=3 )
+            {
+              for ( int j=0; j<3; j++ )
+                {
+                  ifs.getline(buffer, BUFF_SIZE);
+                  //std::cout << "GOT LINE:" << buffer <<std::endl;
+                  tokenize(tokens,buffer," \t\n");
+                  int start=1;
+                  if ( j == 0 )
+                    start=3;
+                  for ( int k=0; k<mycols; k++ )
+                    {
+                      //std::cout << "Lx[ " << root1+k << " ]" <<
+                      //  "][ " << atomcount << " ] [ " << j << " ] = " << tokens.at(start+k) << std::endl;
+                      ok = from_string<double>(dtmp, tokens.at(start+k), std::dec);
+                      if ( j==0)
+                        Lx[ root1+k ][ atomcount ].SetX( dtmp );
+                      else if ( j==1 )
+                        Lx[ root1+k ][ atomcount ].SetY( dtmp );
+                      else if ( j==2 )
+                        Lx[ root1+k ][ atomcount ].SetZ( dtmp );
+                    }
+                } // End j loop
+              atomcount+=1;
+            } // End loop over atoms
+        } // loop over root1
+
+      // Now skip down to read in intensities
+      for( int i=0; i<7; i++ )
+        {
+          ifs.getline(buffer, BUFF_SIZE);
+        }
+      
+      // loop until we've read them all in
+      for( uint ui=0; ui<frequencies.size(); ui++ )
+        {
+          ifs.getline(buffer, BUFF_SIZE);
+          // End of info
+          if (strstr(buffer,"============")!=NULL)break;
+          tokenize(tokens,buffer," \t\n");
+          
+          ok = from_string<double>(dtmp, tokens.at(1), std::dec);
+          ok = from_string<double>(dtmp2, tokens.at(6), std::dec);
+          // Now match them up
+          for( uint uj=0; uj<frequencies.size(); uj++ )
+            {
+              if ( std::abs( frequencies.at(uj) - dtmp ) < 0.01 )
+                {
+                  intensities[uj]= dtmp2;
+                  continue;
+                }
+            }
+        }
+
+      //for (int i=0; i< frequencies.size(); i++ )
+      //  std::cout << "Frequency: " << frequencies.at(i) << " : " << intensities.at(i) << std::endl;
+      
+      if(frequencies.size()>0)
+        {
+          OBVibrationData* vd = new OBVibrationData;
+          vd->SetData(Lx, frequencies, intensities);
+          vd->SetOrigin(fileformatInput);
+          mol.SetData(vd);
+        }
+      return ok;
+    } // End ReadNormalModesHessian
+
+    bool GAMESSUKOutputFormat::ReadNormalModesForce( OBMol &mol, std::istream &ifs)
+    {
+
+      bool ok=false;
+      double dtmp;
+
+      int ncols = 9; // Think this is always the case
+      int natoms = mol.NumAtoms();
+      int maxroot = natoms*3;
+      int start,mycols;
+
+      // Create data structures
+      std::vector< double > frequencies, intensities;
+      std::vector< std::vector< vector3 > > Lx;
+      
+      // Set up data structures with null data
+      for( int i=0; i<maxroot; i++ )
+        {
+          std::vector< vector3 > atoml;
+          for( int j=0; j < natoms; j++ )
+            {
+              atoml.push_back( vector3(0.0,0.0,0.0) );
+            }
+          Lx.push_back( atoml );
+        }
+      
+      ifs.getline(buffer, BUFF_SIZE); // skip "===============" line
+
+      int root7;
+      for ( int root1=0; root1 < maxroot; root1+=ncols )
+        {
+          root7 = root1 + ncols;
+          root7 = min(maxroot,root7);
+          mycols=root7-root1;
+
+          //Skip 6 lines to col header with frequencies
+          for( int j=0; j < 6; j++ )
+            ifs.getline(buffer, BUFF_SIZE);
+
+          line=buffer;
+          // Need  to manually chop up line
+          start=20; // Numbers start at col 20 & are 11 characters long
+          for( int i=0; i<mycols; i++)
+            {
+              ok = from_string<double>(dtmp, line.substr(start,12), std::dec);
+              frequencies.push_back(dtmp);
+              intensities.push_back( 10.0 ); // Intensities aren't printed so just use 10
+              start+=12;
+            }
+
+          // Skip 2 lines to where data matrix starts
+          ifs.getline(buffer, BUFF_SIZE);
+          ifs.getline(buffer, BUFF_SIZE);
+
+          // Loop over atoms & the x,y,z
+          int atomcount=0;
+          for ( int i=0; i<maxroot; i+=3 )
+            {
+              //for j in range(3):
+              for ( int j=0; j<3; j++ )
+                {
+                  ifs.getline(buffer, BUFF_SIZE);
+                  //std::cout << "GOT LINE:" << buffer <<std::endl;
+                  tokenize(tokens,buffer," \t\n");
+                  start=1;
+                  if ( j == 0 )
+                    start=3;
+                  for ( int k=0; k<mycols; k++ )
+                    {
+                      //std::cout << "Lx[ " << root1+k << " ]" <<
+                      //  "][ " << atomcount << " ] [ " << j << " ] = " << tokens.at(start+k) << std::endl;
+                      ok = from_string<double>(dtmp, tokens.at(start+k), std::dec);
+                      if ( j==0)
+                        Lx[ root1+k ][ atomcount ].SetX( dtmp );
+                      else if ( j==1 )
+                        Lx[ root1+k ][ atomcount ].SetY( dtmp );
+                      else if ( j==2 )
+                        Lx[ root1+k ][ atomcount ].SetZ( dtmp );
+                    }
+                } // End j loop
+              atomcount+=1;
+            } // End loop over atoms
+        } // loop over root1
+
+      if(frequencies.size()>0)
+        {
+          OBVibrationData* vd = new OBVibrationData;
+          vd->SetData(Lx, frequencies, intensities);
+          vd->SetOrigin(fileformatInput);
+          mol.SetData(vd);
+        }
+      return ok;
+    } // End ReadNormalModesForce
+
+    /*
+      bool GAMESSUKOutputFormat::ReadOptGeomZmat( OBMol &mol, std::istream &ifs )
+      {
+  
+      //Below was for reading in zmatricies - ignore for the time being
+
+      // Original geometry specification should still be in geomList
+      // So just update the variables
+      //cerr << "Got converged for OPTZMAT\n";
+
+      // FF to variable specification
+      while (ifs.good() && ifs.getline(buffer, BUFF_SIZE)) {
+      if (strstr(buffer,
+      " variable           value                hessian") != NULL) break;
+      }
+      // Skip a line - should then be at variable specification
+      ifs.getline(buffer, BUFF_SIZE);
+
+      // Process them
+      if (! ReadVariables(ifs, BOHR_TO_ANGSTROM,
+      "===============================================")) return false;
+
+      // Now go and process with the geometry we read before
+      return ReadGeometry(mol, geomList);
+
+      } //ReadOptGeomZmat
+    */
+
+    bool GAMESSUKOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv) {
+
+      /*
+        Read a GAMESS-UK output file. The reader is currently set up to only return one molecule, i.e
+        if the run is some sort of optimisation run, then only the optimised geometry is returned.
+        
+        Previously we parsed in the z-matrix - and the code to do that is still here and should work.
+        However, the zmatrix is not actually used anywhere in OpenBabel currently - it's just converted
+        to Cartesians, and this code appears to be buggy, so for the time being we just stick to reading
+        Cartesians.
+      */
+
+      OBMol *pmol = dynamic_cast<OBMol*>(pOb);
+      if (pmol==NULL)
+        return false;
+
+      //Define some references so we can use the old parameter names
+      istream& ifs = *pConv->GetInStream();
+      OBMol &mol = *pmol;
+
+      // Get a default title as the filename
+      const char* title = pConv->GetTitle();
+      mol.BeginModify();
+      mol.SetTitle(title);
       mol.EndModify();
 
-      // Start trundling through the file again - just get the last geometry
-      while (ifs.good() && ifs.getline(buffer, BUFF_SIZE)) {
-        if (strstr(buffer,"optimization converged") != NULL)
-          {
-            if (RunType==OPTXYZ){
-              //cerr << "Got converged for OPTXYZ\n";
+      RunType_t RunType=UNKNOWN;
+      bool ok;
+      std::string runt;
 
-              // FF to start of coordinate specification
-              while (ifs.good() && ifs.getline(buffer, BUFF_SIZE)) {
-                if (strstr(buffer,
-                           "atom     znuc       x             y             z") != NULL) break;
-              }
-
-              // Skip 2 lines - should then be at the coordinates
-              ifs.getline(buffer, BUFF_SIZE) &&
-                ifs.getline(buffer, BUFF_SIZE);
-
-              // Read in the coordinates - we process them directly rather
-              // then use ReadGeometry as we probably should do...
-              mol.BeginModify();
-              while (ifs.good() && ifs.getline(buffer, BUFF_SIZE)){
-
-                // End of geometry block
-                if (strstr(buffer,"*************************")!=NULL)break;
-
-                //cerr << "Got Coord line: " << buffer << endl;
-                OBAtom *atom = mol.NewAtom();
-                tokenize(tokens,buffer," ");
-                atom->SetAtomicNum(atoi(tokens[2].c_str()));
-                double x=atof(tokens[3].c_str())*BOHR_TO_ANGSTROM;
-                double y=atof(tokens[4].c_str())*BOHR_TO_ANGSTROM;
-                double z=atof(tokens[5].c_str())*BOHR_TO_ANGSTROM;
-                atom->SetVector(x, y, z);
-              }
-
-              mol.EndModify();
-              break;
-              //return true;
-
-
-            } else if (RunType==OPTZMAT || RunType==SADDLE) {
-
-
-              while (ifs.good() && ifs.getline(buffer, BUFF_SIZE)) {
-                if (strstr(buffer,
-                           "       x              y              z            chg  tag") != NULL) break;
-              }
-
-              // Skip 1 line - should then be at the coordinates
-              ifs.getline(buffer, BUFF_SIZE);
-
-              // Read in the coordinates - we process them directly rather
-              // then use ReadGeometry as we probably should do...
-              mol.BeginModify();
-              while (ifs.good() && ifs.getline(buffer, BUFF_SIZE)){
-
-                // End of geometry block
-                if (strstr(buffer,"============================================================")!=NULL)break;
-
-                //cerr << "Got Coord line: " << buffer << endl;
-                OBAtom *atom = mol.NewAtom();
-                tokenize(tokens,buffer," ");
-                atom->SetAtomicNum(atoi(tokens[3].c_str()));
-                double x=atof(tokens[0].c_str())*BOHR_TO_ANGSTROM;
-                double y=atof(tokens[1].c_str())*BOHR_TO_ANGSTROM;
-                double z=atof(tokens[2].c_str())*BOHR_TO_ANGSTROM;
-                atom->SetVector(x, y, z);
-              }
-
-              mol.EndModify();
-              break;
-              //return true;
-
-
+      while (ifs.good() && ifs.getline(buffer, BUFF_SIZE))
+        {
+          if (strstr(buffer,"                              input z-matrix") != NULL)
+            {
+              /* OpenBabel's handling of zmatricies is currently too buggy and the zmatrix
+               * read in isn't currently used - it's just converted to cartesians, so we
+               * can skip this for the time being
+               */
+              continue;
               /*
-
-                Below was for reading in zmatricies - ignore for the time being
-
-                // Original geometry specification should still be in geomList
-                // So just update the variables
-                //cerr << "Got converged for OPTZMAT\n";
-
-                // FF to variable specification
-                while (ifs.good() && ifs.getline(buffer, BUFF_SIZE)) {
-                if (strstr(buffer,
-                " variable           value                hessian") != NULL) break;
-                }
-                // Skip a line - should then be at variable specification
-                ifs.getline(buffer, BUFF_SIZE);
-
-                // Process them
-                if (! ReadVariables(ifs, BOHR_TO_ANGSTROM,
-                "===============================================")) return false;
-
-                // Now go and process with the geometry we read before
-                return ReadGeometry(mol, geomList);
-
+                ok = ReadInputZmatrix( mol, ifs );
+                // Set Runtype to SINGLEPOINT so we don't read in the cartesians
+                RunType=SINGLEPOINT;
               */
+            } // End Reading user z-matrix
+          
+          // Read the cartesian coordinates if we've not read in the ZMATRIX
+          if (strstr(buffer,"*            charge       x             y              z       shells") != NULL &&
+              RunType==UNKNOWN)
+            ok = ReadInitialCartesian( mol, ifs );
+          
+          // Determine the RunType - affects how we move on from here.
+          if (strstr(buffer," * RUN TYPE") != NULL)
+            {
+              tokenize(tokens,buffer," \t\n");
+              runt=tokens[3].substr(0,5);
+              if(runt=="optxy") RunType=OPTXYZ;
+              else if (runt=="optim") RunType=OPTZMAT;
+              else if (runt=="saddl") RunType=SADDLE;
+              continue;
+            } // End RUNTYPE
+          
+          // Read the optimised geometry
+          if (strstr(buffer,"optimization converged") != NULL)
+            {
+              if (RunType==OPTXYZ)
+                ReadOptGeomXyz1( mol, ifs );
+              else if (RunType==OPTZMAT || RunType==SADDLE)
+                ReadOptGeomXyz2( mol, ifs );
+            } // End read optimised geometry
 
-            }
-          }
+          // Frequencies for runtype hessian
+          if (strstr(buffer,"cartesians to normal") != NULL)
+            ReadNormalModesHessian( mol, ifs);
 
-      } // End Second Reading loop
-
-
+          // Frequencies for runtype force
+          if (strstr(buffer,"eigenvectors of cartesian") != NULL)
+            ReadNormalModesForce( mol, ifs);
+          
+        } // End Reading loop
+    
       if (mol.NumAtoms() == 0) { // Something went wrong
         mol.EndModify();
         return false;
@@ -1019,8 +1264,8 @@ namespace OpenBabel
           mol.PerceiveBondOrders();
         return true;
       }
-
+    
     } // End GAMESSUKOutputFormat::ReadMolecule
-
-
+  
+  
   } //namespace OpenBabel
