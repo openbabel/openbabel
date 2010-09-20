@@ -148,6 +148,7 @@ namespace OpenBabel
     _vbond.clear();
     _vbond.reserve(4);
     _residue = (OBResidue*)NULL;
+    _id = NoId;
 
     return(OBBase::Clear());
   }

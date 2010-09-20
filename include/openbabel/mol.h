@@ -724,6 +724,22 @@ namespace OpenBabel
   //! Global OBResidueData biomolecule residue database
   EXTERN  OBResidueData    resdat;
 
+  namespace detail {
+    template<typename T, int size = sizeof(T)>
+    struct max_value
+    {
+      static const T result = (static_cast<T>(0xFF) << (size-1)*8) + max_value<T, size-1>::result;
+    };
+    template<typename T>
+    struct max_value<T, 0>
+    {
+      static const T result = 0;
+    };
+  }
+
+  // No unique id
+  static const unsigned long NoId = detail::max_value<unsigned long>::result;
+
   //Utility Macros
 
 #ifndef BUFF_SIZE

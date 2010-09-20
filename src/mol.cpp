@@ -1234,13 +1234,8 @@ namespace OpenBabel
     _vbond.reserve(src.NumBonds());
     _bondIds.reserve(src.NumBonds());
 
-    // create a map translating the ids from old to new molecule.
-    std::map<unsigned long, unsigned long> old2newId;
-
-    for (atom = src.BeginAtom(i);atom;atom = src.NextAtom(i)) {
+    for (atom = src.BeginAtom(i);atom;atom = src.NextAtom(i))
       AddAtom(*atom);
-      old2newId[atom->GetId()] = GetAtom(atom->GetIdx())->GetId();
-    }
     for (bond = src.BeginBond(j);bond;bond = src.NextBond(j))
       AddBond(*bond);
 
@@ -1326,47 +1321,8 @@ namespace OpenBabel
       }
     }
 
-    // Stereochemistry: translate the ids to the new mol.
-    // The Stereo objects have already been copied above.
     if (src.HasChiralityPerceived())
       SetChiralityPerceived();
-    if (HasData(OBGenericDataType::StereoData)) {
-      std::vector<OBGenericData*>  stereoData = GetAllData(OBGenericDataType::StereoData);
-
-      std::vector<OBGenericData*>::iterator data;
-      for (data = stereoData.begin(); data != stereoData.end(); ++data) {
-        OBStereo::Type type = static_cast<OBStereoBase*>(*data)->GetType();
-        if (type == OBStereo::Tetrahedral) {
-          OBTetrahedralStereo *th = static_cast<OBTetrahedralStereo*>(*data);
-          OBTetrahedralStereo::Config config = th->GetConfig();
-          // center
-          if (old2newId.find(config.center) != old2newId.end())
-            config.center = old2newId[config.center];
-          // from/towards
-          if (old2newId.find(config.from) != old2newId.end())
-            config.from = old2newId[config.from];
-          // refs
-          for (OBStereo::RefIter id = config.refs.begin(); id != config.refs.end(); ++id)
-            if (old2newId.find(*id) != old2newId.end())
-              *id = old2newId[*id];
-          th->SetConfig(config);
-        } else if (type == OBStereo::CisTrans) {
-          OBCisTransStereo *ct = static_cast<OBCisTransStereo*>(*data);
-          OBCisTransStereo::Config config = ct->GetConfig();
-          // begin
-          if (old2newId.find(config.begin) != old2newId.end())
-            config.begin = old2newId[config.begin];
-          // end
-          if (old2newId.find(config.end) != old2newId.end())
-            config.end = old2newId[config.end];
-          // refs
-          for (OBStereo::RefIter id = config.refs.begin(); id != config.refs.end(); ++id)
-            if (old2newId.find(*id) != old2newId.end())
-              *id = old2newId[*id];
-          ct->SetConfig(config);
-        }
-      }
-    }
 
     return(*this);
   }
@@ -1741,24 +1697,27 @@ namespace OpenBabel
   {
     //    BeginModify();
 
+    // get the atom id or assign the next available id if the
+    // specified atom has an invalid id
     unsigned long id = atom.GetId();
+    if (id == NoId)
+      id = _atomIds.size();
+
     OBAtom *obatom = CreateAtom();
     *obatom = atom;
     obatom->SetIdx(_natoms+1);
     obatom->SetParent(this);
 
-    /*
-      if (id >= _atomIds.size()) {
+    // resize _atomIds if needed
+    if (id >= _atomIds.size()) {
       unsigned int size = _atomIds.size();
+      _atomIds.resize(id+1);
       for (unsigned long i = size; i < id; ++i)
-      _atomIds.push_back((OBAtom*)NULL);
-      obatom->SetId(id);
-      _atomIds.push_back(obatom); // _atomIds[id]
-      } else {
-    */
-    obatom->SetId(_atomIds.size());
-    _atomIds.push_back(obatom);
-    //}
+        _atomIds[i] = (OBAtom*)NULL;
+    }
+
+    obatom->SetId(id);
+    _atomIds[id] = obatom;
 
 #define OBAtomIncrement 100
 
