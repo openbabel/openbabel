@@ -1379,7 +1379,7 @@ namespace OpenBabel {
 
       unsigned int offset = 0;
       for (std::size_t f = 0; f < fcodes.size(); ++f) {
-        print_code(fcodes[f]);
+        //print_code(fcodes[f]);
         unsigned int max_label = 0;
         for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
           if (fcodes[f].labels[i]) {
