@@ -970,9 +970,9 @@ namespace OpenBabel
             ifs.getline(buffer, BUFF_SIZE);
 
           tokenize(tokens,buffer," \t\n");
-          for( uint ui=0; ui < tokens.size(); ui++ )
+          for( std::size_t si=0; si < tokens.size(); si++ )
             {
-              ok = from_string<double>(dtmp, tokens.at(ui), std::dec);
+              ok = from_string<double>(dtmp, tokens.at(si), std::dec);
               frequencies.push_back(dtmp);
               intensities.push_back( 0.0 ); // Add placeholder data
             }
@@ -1018,7 +1018,7 @@ namespace OpenBabel
         }
       
       // loop until we've read them all in
-      for( uint ui=0; ui<frequencies.size(); ui++ )
+      for( std::size_t si=0; si<frequencies.size(); si++ )
         {
           ifs.getline(buffer, BUFF_SIZE);
           // End of info
@@ -1028,11 +1028,11 @@ namespace OpenBabel
           ok = from_string<double>(dtmp, tokens.at(1), std::dec);
           ok = from_string<double>(dtmp2, tokens.at(6), std::dec);
           // Now match them up
-          for( uint uj=0; uj<frequencies.size(); uj++ )
+          for( std::size_t sj=0; sj<frequencies.size(); sj++ )
             {
-              if ( std::abs( frequencies.at(uj) - dtmp ) < 0.01 )
+              if ( std::abs( frequencies.at(sj) - dtmp ) < 0.01 )
                 {
-                  intensities[uj]= dtmp2;
+                  intensities[sj]= dtmp2;
                   continue;
                 }
             }
@@ -1120,7 +1120,7 @@ namespace OpenBabel
                     start=3;
                   for ( int k=0; k<mycols; k++ )
                     {
-                      //std::cout << "Lx[ " << root1+k << " ]" <<
+                      // std::cout << "Lx[ " << root1+k << " ]" <<
                       //  "][ " << atomcount << " ] [ " << j << " ] = " << tokens.at(start+k) << std::endl;
                       ok = from_string<double>(dtmp, tokens.at(start+k), std::dec);
                       if ( j==0)
@@ -1134,6 +1134,10 @@ namespace OpenBabel
               atomcount+=1;
             } // End loop over atoms
         } // loop over root1
+
+
+      //for (int i=0; i< frequencies.size(); i++ )
+      //  std::cout << "Frequency: " << frequencies.at(i) << " : " << intensities.at(i) << std::endl;
 
       if(frequencies.size()>0)
         {
@@ -1205,6 +1209,7 @@ namespace OpenBabel
 
       while (ifs.good() && ifs.getline(buffer, BUFF_SIZE))
         {
+
           if (strstr(buffer,"                              input z-matrix") != NULL)
             {
               /* OpenBabel's handling of zmatricies is currently too buggy and the zmatrix
@@ -1239,18 +1244,18 @@ namespace OpenBabel
           if (strstr(buffer,"optimization converged") != NULL)
             {
               if (RunType==OPTXYZ)
-                ReadOptGeomXyz1( mol, ifs );
+                ok = ReadOptGeomXyz1( mol, ifs );
               else if (RunType==OPTZMAT || RunType==SADDLE)
-                ReadOptGeomXyz2( mol, ifs );
+                ok = ReadOptGeomXyz2( mol, ifs );
             } // End read optimised geometry
 
           // Frequencies for runtype hessian
           if (strstr(buffer,"cartesians to normal") != NULL)
-            ReadNormalModesHessian( mol, ifs);
+            ok = ReadNormalModesHessian( mol, ifs);
 
           // Frequencies for runtype force
           if (strstr(buffer,"eigenvectors of cartesian") != NULL)
-            ReadNormalModesForce( mol, ifs);
+            ok = ReadNormalModesForce( mol, ifs);
           
         } // End Reading loop
     
@@ -1258,10 +1263,12 @@ namespace OpenBabel
         mol.EndModify();
         return false;
       } else {
+        mol.BeginModify();
         if (!pConv->IsOption("b",OBConversion::INOPTIONS))
           mol.ConnectTheDots();
         if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
           mol.PerceiveBondOrders();
+        mol.EndModify();
         return true;
       }
     
