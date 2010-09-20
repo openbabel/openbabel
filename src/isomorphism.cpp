@@ -2,6 +2,7 @@
 #include <openbabel/query.h>
 #include <openbabel/graphsym.h>
 #include <ctime>
+#include <cassert>
 
 #define DEBUG 0
 //#define DEBUG_PERFORMANCE
@@ -58,6 +59,8 @@ namespace OpenBabel {
           queried = _queried;
           queriedMask = mask;
 
+          mapping.resize(query->NumAtoms(), 0);
+
           queryTerminalSet.resize(query->NumAtoms(), 0);
           queriedTerminalSet.resize(queried->NumAtoms(), 0);
         }
@@ -67,6 +70,8 @@ namespace OpenBabel {
         OBBitVec queriedMask; // the queriedMask
         std::vector<unsigned int> queryPath; // the path in the query
         std::vector<unsigned int> queriedPath; // the path in the queried molecule
+
+        std::vector<OBAtom*> mapping;
 
         OBBitVec queryPathBits, queriedPathBits; // the terminal sets
         std::vector<unsigned int> queryTerminalSet, queriedTerminalSet; // the terminal sets
@@ -81,26 +86,6 @@ namespace OpenBabel {
       {
         bool operator()(const KeyValuePair &p1, const KeyValuePair &p2) { return p1.key < p2.key; }
       };
-
-      /**
-       * Sort mapping by query atom index. Used during MapAll to detect duplicates.
-       */
-      void SortMapping(Mapping &map)
-      {
-        // sort the mapping
-        std::vector<KeyValuePair> pairs;
-        for (Mapping::iterator it = map.begin(); it != map.end(); ++it)
-          pairs.push_back(KeyValuePair(it->first, it->second));
-        std::sort(pairs.begin(), pairs.end(), KeyValuePairCompare());
-
-        // create a new map and add the pairs in order
-        Mapping newMap;
-        for (unsigned int i = 0; i < pairs.size(); ++i)
-          newMap[pairs[i].key] = pairs[i].value;
-
-        // copy the sorted map
-        map = newMap;
-      }
 
       /**
        * Check all bonds between mapped atoms.
@@ -129,6 +114,28 @@ namespace OpenBabel {
         }
         return true;
       }
+
+      bool checkBonds(State &state, OBQueryAtom *queryAtom)
+      {
+        const std::vector<OBQueryBond*> &bonds = queryAtom->GetBonds();
+        for (unsigned int i = 0; i < bonds.size(); ++i) {
+          OBQueryBond *qbond = bonds[i];
+          unsigned int beginIndex = qbond->GetBeginAtom()->GetIndex();
+          unsigned int endIndex = qbond->GetEndAtom()->GetIndex();
+
+          OBAtom *begin = state.mapping[beginIndex];
+          OBAtom *end = state.mapping[endIndex];
+          if (!begin || !end)
+            continue;
+          OBBond *bond = state.queried->GetBond(begin, end);
+          if (!bond)
+            return false;
+          if (!qbond->Matches(bond))
+            return false;
+        }
+        return true;
+      }
+
 
       /**
        * Check if the current state is a full mapping of the query.
@@ -169,20 +176,6 @@ namespace OpenBabel {
           if (isUnique) {
             maps.push_back(map);
           }
-        } else if (state.type == MapAllType) {
-          SortMapping(map);
-          bool duplicate = false;
-          for (unsigned int i = 0; i < maps.size(); ++i) {
-            if (map == maps[i]) {
-              duplicate = true;
-              break;
-            }
-          }
-          if (!duplicate) {
-            if (DEBUG)
-              cout << green << "found mapping" << normal << endl;
-            maps.push_back(map);
-          }
         } else {
           if (DEBUG)
             cout << green << "found mapping" << normal << endl;
@@ -197,44 +190,14 @@ namespace OpenBabel {
        */
       bool matchCandidate(State &state, OBQueryAtom *queryAtom, OBAtom *queriedAtom, Mappings &maps)
       {
-        // make sure the neighbor atom isn't in the paths already
-//        if (std::find(state.queryPath.begin(), state.queryPath.end(), queryAtom->GetIndex()) != state.queryPath.end()) {
-        if (state.queryPathBits.BitIsSet(queryAtom->GetIndex())) {
-          if (DEBUG)
-            cout << "    query index already mapped..." << endl;
-          return false;
-        }
-        if (state.queriedPathBits.BitIsSet(queriedAtom->GetIndex())) {
-//        if (std::find(state.queriedPath.begin(), state.queriedPath.end(), queriedAtom->GetIndex()) != state.queriedPath.end()) {
-          if (DEBUG)
-            cout << "    queried index already mapped..." << endl;
-          return false;
-        }
-
-        // check if the atoms match
-        if (!queryAtom->Matches(queriedAtom)) {
-          if (DEBUG)
-            cout << "    atoms do not match..." << endl;
-          return false;
-        }
-
-        // check if the bonds match
-        Mapping map;
-        for (unsigned int k = 0; k < state.queryPath.size(); ++k) {
-          map[state.queryPath[k]] = state.queriedPath[k];
-        }
-        map[queryAtom->GetIndex()] = queriedAtom->GetIndex();
-        if (!checkBonds(state, map)) {
-          if (DEBUG)
-            cout << "    bonds do not match..." << endl;
-          return false;
-        }
-
         // add the neighbors to the paths
         state.queryPath.push_back(queryAtom->GetIndex());
         state.queriedPath.push_back(queriedAtom->GetIndex());
+        // update the terminal sets
         state.queryPathBits.SetBitOn(queryAtom->GetIndex());
         state.queriedPathBits.SetBitOn(queriedAtom->GetIndex());
+        // update mapping
+        state.mapping[queryAtom->GetIndex()] = queriedAtom;
 
         //
         // update queryTerminalSet
@@ -264,6 +227,14 @@ namespace OpenBabel {
             state.queriedTerminalSet[index] = state.queryPath.size();
         }
 
+        // check if the bonds match
+        if (!checkBonds(state, queryAtom)) {
+          if (DEBUG)
+            cout << "    bonds do not match..." << endl;
+          Backtrack(state);
+          return false;
+        }
+
         if (DEBUG) {
           cout << "FOUND:  " << queryAtom->GetIndex() << " -> " << queriedAtom->GetIndex() << "       " << state.queryPath.size() << endl;
           cout << "queryTerminalSet:   ";
@@ -288,7 +259,6 @@ namespace OpenBabel {
         unsigned int numT1 = 0;
         for (unsigned int i = 0; i < state.query->NumAtoms(); ++i)
           if (state.queryTerminalSet[i])
-//            if (std::find(state.queryPath.begin(), state.queryPath.end(), i) == state.queryPath.end())
             if (!state.queryPathBits.BitIsSet(i))
               numT1++;
         // compute T2(s) size
@@ -296,7 +266,6 @@ namespace OpenBabel {
         for (unsigned int i = 0; i < state.queried->NumAtoms(); ++i)
           if (state.queriedTerminalSet[i])
             if (!state.queriedPathBits.BitIsSet(i))
-//            if (std::find(state.queriedPath.begin(), state.queriedPath.end(), i) == state.queriedPath.end())
               numT2++;
 
         // T1(s) > T()
@@ -325,7 +294,7 @@ namespace OpenBabel {
         numMapNextCalls++;
 #endif
         if (time(NULL) - m_startTime > m_timeout)
-          return; 
+          return;
 
         // load the possible candidates
         std::vector<Candidate> candidates;
@@ -361,14 +330,12 @@ namespace OpenBabel {
         for (unsigned int j = 0; j < state.queried->NumAtoms(); ++j) {
           if (state.queriedTerminalSet[j])
             if (!state.queriedPathBits.BitIsSet(j)) {
-//            if (std::find(state.queriedPath.begin(), state.queriedPath.end(), j) == state.queriedPath.end()) {
               OBAtom *queriedTerminal = state.queried->GetAtom(j + 1);
 
               if (!queryTerminal) {
                 for (unsigned int i = 0; i < state.query->NumAtoms(); ++i)
                   if (state.queryTerminalSet[i])
                     if (!state.queryPathBits.BitIsSet(i)) {
-//                    if (std::find(state.queryPath.begin(), state.queryPath.end(), i) == state.queryPath.end()) {
                       OBQueryAtom *n = state.query->GetAtoms()[i];
                       if (n->Matches(queriedTerminal)) {
                         queryTerminal = n;
@@ -388,13 +355,11 @@ namespace OpenBabel {
         if (candidates.empty()) {
           queryTerminal = 0;
           for (unsigned int j = 0; j < state.queried->NumAtoms(); ++j)
-//            if (std::find(state.queriedPath.begin(), state.queriedPath.end(), j) == state.queriedPath.end()) {
             if (!state.queriedPathBits.BitIsSet(j)) {
               OBAtom *queriedTerminal = state.queried->GetAtom(j + 1);
 
               if (!queryTerminal) {
                 for (unsigned int i = 0; i < state.query->NumAtoms(); ++i)
-//                  if (std::find(state.queryPath.begin(), state.queryPath.end(), i) == state.queryPath.end()) {
                   if (!state.queryPathBits.BitIsSet(i)) {
                     OBQueryAtom *n = state.query->GetAtoms()[i];
                     if (n->Matches(queriedTerminal)) {
@@ -439,6 +404,7 @@ namespace OpenBabel {
           cout << red << "backtrack... " << normal << state.queryPath.size()-1 << endl;
         // remove last atoms from the mapping
         if (state.queryPath.size()) {
+          state.mapping[state.queryPath.back()] = 0;
           state.queryPathBits.SetBitOff(state.queryPath.back());
           state.queryPath.pop_back();
         }
@@ -619,7 +585,7 @@ namespace OpenBabel {
 
   };
 
-  OBIsomorphismMapper::OBIsomorphismMapper(OBQuery *query) : m_query(query), m_timeout(60)
+  OBIsomorphismMapper::OBIsomorphismMapper(OBQuery *query) : m_query(query), m_timeout(600)
   {
   }
 
@@ -700,30 +666,14 @@ namespace OpenBabel {
       unsigned int symClass = symClasses[i];
       symClassCounts[symClass]++;
     }
-    // construct the premap
-    OBIsomorphismMapper::Mapping premap;
-    unsigned int offset = 0;
-    for (unsigned int i = 0; i < symClasses.size(); ++i) {
-      if (!queriedMask.BitIsSet(i + 1)) {
-        offset++;
-        continue;
-      }
-
-      if (symClassCounts[symClasses[i]] == 1)
-        premap[i-offset] = i;
-    }
 
     OBIsomorphismMapper::Mappings maps;
-    if (premap.size() < queriedMask.CountBits()) {
-      OBQuery *query = CompileAutomorphismQuery(mol, queriedMask, symClasses);
-      OBIsomorphismMapper *mapper = OBIsomorphismMapper::GetInstance(query);
+    OBQuery *query = CompileAutomorphismQuery(mol, queriedMask, symClasses);
+    OBIsomorphismMapper *mapper = OBIsomorphismMapper::GetInstance(query);
 
-      maps = mapper->MapAll(mol, queriedMask);
-      delete mapper;
-      delete query;
-    } else {
-      maps.push_back(premap);
-    }
+    maps = mapper->MapAll(mol, queriedMask);
+    delete mapper;
+    delete query;
 
     // translate the query indexes if a mask is used
     if (mask.CountBits()) {
