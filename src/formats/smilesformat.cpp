@@ -360,8 +360,6 @@ namespace OpenBabel {
 
     mol.SetAutomaticFormalCharge(false);
 
-    mol.SetChiralityPerceived(); //Avoid possibly buggy FindChiralCenters()
-
     return(true);
   }
 
@@ -548,7 +546,9 @@ namespace OpenBabel {
     }
 
     CreateCisTrans(mol);
-    StereoFrom0D(&mol);
+
+    // Use lazy evaluation to avoid Automorphisms for regular smiles.
+    mol.SetChiralityPerceived();
 
     return(true);
   }
@@ -3705,12 +3705,6 @@ namespace OpenBabel {
       return;
     }
 
-    OBMol *pmol;
-    if (iso)
-      pmol = new OBMol(mol);
-    else
-      pmol = &mol;
-
     OBMol2Cansmi m2s;
     m2s.Init(canonical, pConv);
     // GRH Added 208-06-05
@@ -3719,16 +3713,16 @@ namespace OpenBabel {
     m2s.CorrectAromaticAmineCharge(mol);
 
     if (iso) {
-      m2s.CreateCisTrans(*pmol); // No need for this if not iso
-      m2s.AddHydrogenToChiralCenters(*pmol, frag_atoms);
-      pmol->SetChiralityPerceived();
+      m2s.CreateCisTrans(mol); // No need for this if not iso
+      m2s.AddHydrogenToChiralCenters(mol, frag_atoms);
+      mol.SetChiralityPerceived();
     } else {
       // Not isomeric - be sure there are no Z coordinates, clear
       // all stereo-center and cis/trans information.
       OBBond *bond;
       vector<OBEdgeBase*>::iterator bi;
       vector<OBNodeBase*>::iterator ai;
-      for (bond = pmol->BeginBond(bi); bond; bond = pmol->NextBond(bi)) {
+      for (bond = mol.BeginBond(bi); bond; bond = mol.NextBond(bi)) {
         bond->UnsetUp();
         bond->UnsetDown();
         bond->UnsetHash();
@@ -3739,7 +3733,7 @@ namespace OpenBabel {
     // If the fragment includes ordinary hydrogens, get rid of them.
     // They won't appear in the SMILES anyway (unless they're attached to
     // a chiral center, or it's something like [H][H]).
-    FOR_ATOMS_OF_MOL(iatom, *pmol) {
+    FOR_ATOMS_OF_MOL(iatom, mol) {
       OBAtom *atom = &(*iatom);
       if (frag_atoms.BitIsOn(atom->GetIdx()) && atom->IsHydrogen()
           && (!iso || m2s.IsSuppressedHydrogen(atom))) {
@@ -3747,11 +3741,7 @@ namespace OpenBabel {
       }
     }
 
-    m2s.CreateFragCansmiString(*pmol, frag_atoms, iso, buffer);
-    if (iso) {
-      pmol->Clear();
-      delete pmol; // we created this as a temporary
-    }
+    m2s.CreateFragCansmiString(mol, frag_atoms, iso, buffer);
 
     // Could also save canonical bond order if anyone desires
     if (!mol.HasData("SMILES Atom Order")) {
@@ -3800,13 +3790,18 @@ namespace OpenBabel {
     ostream &ofs = *pConv->GetOutStream();
     OBMol mol = *pmol;
 
-    std::vector<OBBond*> ferroceneBonds;
-    FOR_BONDS_OF_MOL (bond, mol)
-      if (isFerroceneBond(&*bond))
-        ferroceneBonds.push_back(&*bond);
+    if(pConv->IsOption("c")) {
+      mol.UnsetFlag(OB_CHIRALITY_MOL);
+      PerceiveStereo(&mol);
 
-    for (std::size_t i = 0; i < ferroceneBonds.size(); ++i) {
-      mol.DeleteBond(ferroceneBonds[i]);
+      std::vector<OBBond*> ferroceneBonds;
+      FOR_BONDS_OF_MOL (bond, mol)
+        if (isFerroceneBond(&*bond))
+          ferroceneBonds.push_back(&*bond);
+
+      for (std::size_t i = 0; i < ferroceneBonds.size(); ++i) {
+        mol.DeleteBond(ferroceneBonds[i]);
+      }
     }
 
     // Title only option?
