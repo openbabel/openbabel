@@ -418,6 +418,12 @@ namespace OpenBabel {
     int count = Convert();
 
     pOutStream = pOrigOutStream;
+#ifdef HAVE_LIBZ
+    if ( CheckedForGzip ){ // Bug reported by Gert Thijs
+		delete zIn;
+		pInStream = is;
+	}
+#endif
     return count;
   }
 
