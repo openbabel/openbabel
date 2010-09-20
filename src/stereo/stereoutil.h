@@ -8,10 +8,10 @@ namespace OpenBabel {
    * These are the different types of stereocenter classification used throughout
    * this file.
    */
-  enum NeighborSymmetryClasses 
-  { 
+  enum NeighborSymmetryClasses
+  {
     // Tetrahedral
-    T1234 = 1234, // 4 different symmetry classes 
+    T1234 = 1234, // 4 different symmetry classes
     T1123 = 1123, // 3 different symmetry classes, 1 class duplicated (2 times)
     T1122 = 1122, // 2 different symmetry classes, 1 class duplicated (3 times)
     T1112 = 1112, // 2 different symmetry classes, each class duplicated (2 times)
@@ -36,13 +36,13 @@ namespace OpenBabel {
   unsigned int getSymClass(const OBStereoUnit &unit, OBMol *mol, const std::vector<unsigned int> &symmetry_classes);
 
 // graphsym.cpp
-  void IdsToSymClasses(OBMol *mol, OBCisTransStereo::Config &config, 
+  void IdsToSymClasses(OBMol *mol, OBCisTransStereo::Config &config,
       const std::vector<unsigned int> &symClasses);
-  void IdsToSymClasses(OBMol *mol, OBTetrahedralStereo::Config &config, 
+  void IdsToSymClasses(OBMol *mol, OBTetrahedralStereo::Config &config,
       const std::vector<unsigned int> &symClasses);
   bool setsContainSameSymmetryClasses(OBMol *mol, const OBStereoUnitSet &set1,
       const OBStereoUnitSet &set2, const std::vector<unsigned int> &symmetry_classes);
-  void orderSetByFragmentRecursive(OBStereoUnitSet &ordered, OBAtom *atom, OBAtom *skip, 
+  void orderSetByFragmentRecursive(OBStereoUnitSet &ordered, OBAtom *atom, OBAtom *skip,
       const OBStereoUnitSet &set, OBBitVec &fragment);
   OBStereoUnitSet orderSetByFragment(OBAtom *atom, OBAtom *skip, const OBStereoUnitSet &set);
   OBStereoUnitSet orderSetByRing(OBMol *mol, const OBBitVec &fragment, const OBStereoUnitSet &set);
@@ -53,10 +53,10 @@ namespace OpenBabel {
   int findDescriptor(OBBond *bond, const std::vector<unsigned int> &symmetry_classes);
   std::vector<int> findDescriptorVector(OBMol *mol, const OBBitVec &fragment,
       const OBStereoUnitSet &orderedUnits, const std::vector<unsigned int> &symmetry_classes);
-  int findDescriptorVectorValue(OBMol *mol, const OBBitVec &fragment, 
+  int findDescriptorVectorValue(OBMol *mol, const OBBitVec &fragment,
       const OBStereoUnitSet &orderedUnits, const std::vector<unsigned int> &symmetry_classes);
   OBStereoUnitSet findSetContainingUnit(const OBStereoUnitSetOfSets &sets, const OBStereoUnit &unit);
-  
+
   bool isUnitInFragment(OBMol *mol, const OBStereoUnit &unit, const OBBitVec &fragment);
 
 
@@ -81,7 +81,7 @@ namespace OpenBabel {
     typedef OBCisTransStereo::Config Config;
     static Center* GetCenter(OBMol *mol, unsigned long id) { return mol->GetBondById(id); }
   };
-  
+
   template<typename OBAtomOrOBBond> struct OBStereoCenterTraits;
   template<> struct OBStereoCenterTraits<OBAtom> : OBStereoTypeTraits<OBStereo::Tetrahedral> {};
   template<> struct OBStereoCenterTraits<OBBond> : OBStereoTypeTraits<OBStereo::CisTrans> {};
@@ -99,10 +99,10 @@ namespace OpenBabel {
     return false;
   }
 
-  int findDescriptor(OBMol *mol, const OBStereoUnit &unit, const std::vector<unsigned int> &symmetry_classes);
+  int findDescriptor(OBMol *mol, const OBStereoUnit &unit, const std::vector<unsigned int> &symmetry_classes, OBStereoFacade &stereoFacade);
   int classifyNbrSymClasses(OBMol *mol, const OBStereoUnit &unit, const std::vector<unsigned int> &symmetry_classes);
   bool isResolved(OBMol *mol, const OBStereoUnit &unit, const std::vector<unsigned int> &symClasses);
-  bool isSpecified(OBMol *mol, const OBStereoUnit &unit);
-  OBStereoUnitSet removeUnspecifiedUnits(OBMol *mol, const OBStereoUnitSet &units);
- 
+  bool isSpecified(OBMol *mol, const OBStereoUnit &unit, OBStereoFacade &stereoFacade);
+  OBStereoUnitSet removeUnspecifiedUnits(OBMol *mol, const OBStereoUnitSet &units, OBStereoFacade &stereoFacade);
+
 }

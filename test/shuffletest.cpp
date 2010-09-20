@@ -298,10 +298,31 @@ int main(int argc, char **argv)
     cout << "PASSED TESTS: " << testCount - failed << "/" << testCount << endl;
     return 0;
   }
- 
+
+
+
+  OB_ASSERT( doShuffleTest("CC(=O)O.N=C\\1/C=C/C(=C(/c2ccc(N)cc2)\\c2ccc(N)c(C)c2)/C=C1") );
+  OB_ASSERT( doShuffleTest("CCNc1ccc(cc1)/C(=C/1\\C=C/C(=N)/C=C1)/c1ccc(N(CC)CC)c(C)c1") );
+  OB_ASSERT( doShuffleTest("C[C@H]1CCCCN1/C=C/1\\C(=O)O[C@@](C)(C)OC1=O") );
+  OB_ASSERT( doShuffleTest("N=C\\1/C=C/C(=C(\\c2ccc(N)cc2)/c2ccc(N)c(C)c2)/C=C1") );
+  OB_ASSERT( doShuffleTest("N=C\\1/C=C/C(=N\\Cc2ccc(N)cc2)/C=C1") );
+
+  OB_ASSERT( doShuffleTest("[O+]#C[Fe+]1234(C#[O+])(/C=C/CCC/C=C/[Fe+]5678(C#[O+])(C#[O+])[C@H]9C7=C6C5=C89)[C@H]5C3=C2C1=C45.F[B-](F)(F)F") );
+  OB_ASSERT( doShuffleTest("[O+]#C[Fe+]1234(C#[O+])(/C=C/CCCC/C=C/[Fe+]5678(C#[O+])(C#[O+])C9=C6C7=C5[C@@H]89)C5=C3C2=C1[C@H]45.F[B-](F)(F)F") );
+  //cout << "PASSED TESTS: " << testCount - failed << "/" << testCount << endl;
+  //return 0;
+
+
+
 
 
   OB_ASSERT( doShuffleTestMultiFile("stereo/error2.smi") );
+
+  OB_ASSERT( doShuffleTest("F[Po@SP1](Cl)(Br)I") );
+  OB_ASSERT( doShuffleTest("F[Po@SP2](Br)(Cl)I") );
+  OB_ASSERT( doShuffleTest("F[Po@SP3](Cl)(I)Br") );
+
+
   //OB_ASSERT( doShuffleTest("C12=C3C4=C5[C@@H]1[Fe]16782345C2=C7[C@@]8(C6=C12)[Ge]([C@]12C3=C4C5=C1[Fe]16782345C2=C7C6=C1[C@H]82)([C@@]12C3=C4C5=C1[Fe]16782345C2=C7C6=C1[C@H]82)[C@]12C3=C4C5=C1[Fe]16782345C2=C7C6=C1[C@H]82") );
   OB_ASSERT( doShuffleTest("Br.CC(=O)Nc1ccc(cc1)S(=O)(=O)c1ccc(cc1)NC(=O)c1ccccc1SC(=O)CCCCn1ccccc1") );
   OB_ASSERT( doShuffleTest("Br.CC(=O)Nc1cccc(c1)S(=O)(=O)c1cccc(NC(=O)c2ccccc2SC(=O)CCCCn2ccccc2)c1") );

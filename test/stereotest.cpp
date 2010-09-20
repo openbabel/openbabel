@@ -120,7 +120,8 @@ bool doStereoPerception2(OBMol &mol, int numTetrahedral, int numCisTrans)
   OpenBabel::OBGraphSym graphsym(&mol);
   graphsym.GetSymmetry(symmetry_classes);
 
-  Automorphisms G = FindAutomorphisms(&mol, symmetry_classes);
+  Automorphisms G;
+  FindAutomorphisms(&mol, G, symmetry_classes);
   std::vector<OpenBabel::OBStereoUnit> units = FindStereogenicUnits(&mol, symmetry_classes, G);
 
   int tetrahedralCount = 0;
@@ -189,7 +190,8 @@ bool doStereoPerception3(OBMol &mol, const OBStereoUnitSet &refUnits = OBStereoU
     cout << "nclasses = " << nclasses << endl;
     OB_ASSERT( nclasses == 7 );
 
-    Automorphisms G = FindAutomorphisms(&mol, symmetry_classes);
+    Automorphisms G;
+    FindAutomorphisms(&mol, G, symmetry_classes);
     cout << "G.size " << G.size() << endl;
     std::vector<OpenBabel::OBStereoUnit> units = FindStereogenicUnits(&mol, symmetry_classes, G);
 

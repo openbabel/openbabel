@@ -15,7 +15,8 @@ std::string GetFilename(const std::string &filename)
 
 bool doAutomorphismTest(OBMol &mol, int numAutomorphisms)
 {
-  OBIsomorphismMapper::Mappings G = FindAutomorphisms(&mol);
+  OBIsomorphismMapper::Mappings G;
+  FindAutomorphisms(&mol, G);
 
   return (G.size() == numAutomorphisms);
 }
@@ -28,9 +29,8 @@ void testAutomorphisms()
   conv.SetInFormat("smi");
   conv.ReadString(&mol, "C1C(CC2CC2)C1");
 
-  vector<map<unsigned int, unsigned int> > aut;
-//  for (int i = 0; i < 100; ++i)
-  aut = FindAutomorphisms((OBMol*)&mol);
+  Automorphisms aut;
+  FindAutomorphisms((OBMol*)&mol, aut);
   cout << aut.size() << endl;
   OB_ASSERT( aut.size() == 8 );
 }

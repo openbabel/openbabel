@@ -123,8 +123,9 @@ namespace OpenBabel
     }
     SetRef(_refmol_coords);
 
-    if (_symmetry)
-      _aut = FindAutomorphisms((OBMol*)&refmol, _frag_atoms);
+    if (_symmetry) {
+      FindAutomorphisms((OBMol*)&refmol, _aut, _frag_atoms);
+    }
   }
 
   void OBAlign::SetTargetMol(const OBMol &targetmol) {
@@ -192,7 +193,11 @@ namespace OpenBabel
         int i=0;
         for (int j=1; j<=_prefmol->NumAtoms(); ++j) {
           if (_frag_atoms.BitIsSet(j)) {
-            mtarget.col(i) = _mtarget.col(_newidx[_aut[k][j - 1]]);
+            for (std::size_t l = 0; l < _aut[k].size(); ++l)
+              if (_aut[k][l].first == j - 1) {
+                mtarget.col(i) = _mtarget.col(_newidx[_aut[k][l].second]);
+                break;
+              }
             i++;
           }
         }

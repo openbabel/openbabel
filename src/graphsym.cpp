@@ -22,9 +22,10 @@
   02110-1301, USA.
  **********************************************************************/
 
+#include <openbabel/graphsym.h>
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
-#include <openbabel/graphsym.h>
+#include <openbabel/datacache.h>
 
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/stereo/tetrahedral.h>
@@ -74,11 +75,9 @@ namespace OpenBabel {
     public:
       OBBitVec _frag_atoms;
       OBMol* _pmol;
-      Automorphisms _G;
       std::vector<unsigned int> _canonLabels;
       OBStereoUnitSet _stereoUnits;
 
-      unsigned int GetValence(OBAtom *atom);
       unsigned int GetHvyValence(OBAtom *atom);
       unsigned int GetHvyBondSum(OBAtom *atom);
       void FindRingAtoms(OBBitVec &ring_atoms);
@@ -95,7 +94,7 @@ namespace OpenBabel {
       void CanonicalLabels(const std::vector<unsigned int> &symmetry_classes, std::vector<unsigned int> &canon_labels);
   };
 
-  OBGraphSym::OBGraphSym(OBMol* pmol, OBBitVec* frag_atoms) : d(new OBGraphSymPrivate)
+  OBGraphSym::OBGraphSym(OBMol* pmol, const OBBitVec* frag_atoms) : d(new OBGraphSymPrivate)
   {
     d->_pmol = pmol;
     if (frag_atoms) {
@@ -137,25 +136,6 @@ namespace OpenBabel {
     return(a.second < b.second);
   }
   
-  /**
-   * Like OBAtom::GetValence(): Counts the number of neighbors, but
-   * doesn't count atoms not in the fragment.
-   */
-  unsigned int OBGraphSymPrivate::GetValence(OBAtom *atom)
-  {
-    unsigned int count = 0;
-    OBBond *bond;
-    OBAtom *nbr;
-
-    vector<OBEdgeBase*>::iterator bi;
-    for (bond = atom->BeginBond(bi); bond; bond = atom->NextBond(bi)) {
-      nbr = bond->GetNbrAtom(atom);
-      if (_frag_atoms.BitIsSet(nbr->GetIdx()))
-        count++;
-    }
-    return(count);
-  }
-
   /**
    * Like OBAtom::GetHvyValence(): Counts the number non-hydrogen
    * neighbors, but doesn't count atoms not in the fragment.
@@ -241,7 +221,6 @@ namespace OpenBabel {
 
       int idx = atom->GetIdx();
       if (!_frag_atoms.BitIsOn(idx)) {     // Not in this fragment?
-        //gtd[idx-1] = 0;
         gtd[idx-1] = OBGraphSym::NoSymmetryClass;
         continue;
       }
@@ -464,10 +443,9 @@ namespace OpenBabel {
   /**
    * Find a descriptor for the specified atom.
    */
-  int findDescriptor(OBAtom *center, const std::vector<unsigned int> &symmetry_classes)
+  int findDescriptor(OBAtom *center, const std::vector<unsigned int> &symmetry_classes, OBStereoFacade &stereoFacade)
   {
     OBMol *mol = center->GetParent();
-    OBStereoFacade stereoFacade(mol, false);
     if (!stereoFacade.HasTetrahedralStereo(center->GetId()))
       return -1;
     OBTetrahedralStereo::Config symConfig = stereoFacade.GetTetrahedralStereo(center->GetId())->GetConfig();
@@ -478,10 +456,9 @@ namespace OpenBabel {
   /**
    * Find a descriptor for the specified bond.
    */
-  int findDescriptor(OBBond *bond, const std::vector<unsigned int> &symmetry_classes)
+  int findDescriptor(OBBond *bond, const std::vector<unsigned int> &symmetry_classes, OBStereoFacade &stereoFacade)
   {
     OBMol *mol = bond->GetParent();
-    OBStereoFacade stereoFacade(mol, false);
     if (!stereoFacade.HasCisTransStereo(bond->GetId()))
       return -1;
     OBCisTransStereo::Config symConfig = stereoFacade.GetCisTransStereo(bond->GetId())->GetConfig();
@@ -500,15 +477,28 @@ namespace OpenBabel {
    * vector are 0 or 1 and obtained using the findDescriptor functions above.
    */
   std::vector<int> findDescriptorVector(OBMol *mol, const OBBitVec &fragment,
-      const OBStereoUnitSet &orderedUnits, const std::vector<unsigned int> &symmetry_classes)
+      const OBStereoUnitSet &orderedUnits, const std::vector<unsigned int> &symmetry_classes, OBStereoFacade &stereoFacade)
   {
-    OBStereoUnitSet units = removeUnspecifiedUnits(mol, orderedUnits);
+    OBStereoUnitSet units = removeUnspecifiedUnits(mol, orderedUnits, stereoFacade);
     std::vector<int> v;
     for (unsigned int i = 0; i < units.size(); ++i) {
       const OBStereoUnit &unit = units[i];
-      if (!isUnitInFragment(mol, unit, fragment))
+      
+      bool isInFragment = false;
+      if (unit.type == OBStereo::Tetrahedral) {
+        if (fragment.BitIsOn(mol->GetAtomById(unit.id)->GetIdx()))
+          isInFragment = true;
+      } else if(unit.type == OBStereo::CisTrans) {
+        OBBond *bond = mol->GetBondById(unit.id);
+        OBAtom *begin = bond->GetBeginAtom();
+        OBAtom *end = bond->GetEndAtom();
+        if (fragment.BitIsOn(begin->GetIdx()) || fragment.BitIsOn(end->GetIdx()))
+          isInFragment = true;
+      }
+      if (!isInFragment)
         continue;
-      v.push_back(findDescriptor(mol, unit, symmetry_classes));
+
+      v.push_back(findDescriptor(mol, unit, symmetry_classes, stereoFacade));
     }
 
     return v;
@@ -522,9 +512,9 @@ namespace OpenBabel {
    * for a descriptor vector, makes it easier to compare these vectors.
    */
   int findDescriptorVectorValue(OBMol *mol, const OBBitVec &fragment, 
-      const OBStereoUnitSet &orderedUnits, const std::vector<unsigned int> &symmetry_classes)
+      const OBStereoUnitSet &orderedUnits, const std::vector<unsigned int> &symmetry_classes, OBStereoFacade &stereoFacade)
   {
-    std::vector<int> v = findDescriptorVector(mol, fragment, orderedUnits, symmetry_classes);
+    std::vector<int> v = findDescriptorVector(mol, fragment, orderedUnits, symmetry_classes, stereoFacade);
 
     int value = 0;
     for (unsigned int i = 0; i < v.size(); ++i) {
@@ -858,10 +848,10 @@ namespace OpenBabel {
       if (!mask.BitIsSet(nbr->GetIdx()))
         continue;
       // skip visited atoms
-      if (fragment.BitIsSet(nbr->GetId()))
+      if (fragment.BitIsSet(nbr->GetIdx()))
         continue;
       // add the neighbor atom to the fragment
-      fragment.SetBitOn(nbr->GetId());
+      fragment.SetBitOn(nbr->GetIdx());
       // recurse...
       addNbrs(fragment, &*nbr, mask);
     }
@@ -870,12 +860,12 @@ namespace OpenBabel {
   /**
    * Create an OBBitVec objects with bets set for the fragment consisting of all
    * atoms for which there is a path to atom without going through skip. These
-   * fragment bitvecs are indexed by unique id (i.e. OBAtom::GetId()).
+   * fragment bitvecs are indexed by atom idx (i.e. OBAtom::GetIdx()).
    */
   OBBitVec getFragment(OBAtom *atom, const OBBitVec &mask)
   {
     OBBitVec fragment;
-    fragment.SetBitOn(atom->GetId());
+    fragment.SetBitOn(atom->GetIdx());
     // start the recursion
     addNbrs(fragment, atom, mask);
     return fragment;
@@ -906,15 +896,10 @@ namespace OpenBabel {
     void add(OBAtom *atom)
     {
       atoms.push_back(atom);
-      atomTypes.push_back(atom->GetAtomicNum());
     }
     void add(OBBond *bond)
     {
       bonds.push_back(bond);
-      if (bond->IsAromatic())
-        bondTypes.push_back(5);
-      else
-        bondTypes.push_back(bond->GetBondOrder());
     }
     void add(OBAtom *fromAtom, OBAtom *atom)
     {
@@ -1008,7 +993,7 @@ namespace OpenBabel {
     if (!Fe || !C)
       return false;
 
-    return C->HasDoubleBond();
+    return C->HasDoubleBond() && C->IsInRing();
   }
 
   void print_code(const CanonicalCode &code)
@@ -1028,256 +1013,388 @@ namespace OpenBabel {
     cout << "| " << code.stereo << endl;
   }
 
-  void CanonicalLabelsRecursive(OBAtom *current, const std::vector<unsigned int> &symmetry_classes,
-      CanonicalCode &code, unsigned int label, std::size_t &loopCount, std::vector<CanonicalCode> &codes, 
-      const OBBitVec &fragment, const OBStereoUnitSet &stereoUnits, const OBBitVec &mask, bool onlyOne)
+
+  /**
+   * Get the symmetry class for the specified stereogenic unit. For tetrahedral
+   * stereogenic units, the symmetry class is simply the symmetry class for the
+   * center atom. For double bond stereogenic units, the lowest symmetry class
+   * for the begin and end atom is returned.
+   */
+  unsigned int getSymClass(const OBStereoUnit &unit, OBMol *mol, const std::vector<unsigned int> &symmetry_classes)
   {
-    OBMol *mol = current->GetParent();
+    if (unit.type == OBStereo::Tetrahedral) {
+      OBAtom *center = mol->GetAtomById(unit.id);
+      return symmetry_classes[center->GetIndex()];
+    } else
+    if (unit.type == OBStereo::CisTrans) {
+      OBBond *bond = mol->GetBondById(unit.id);
+      OBAtom *begin = bond->GetBeginAtom();
+      OBAtom *end = bond->GetEndAtom();
+      return std::min(symmetry_classes[begin->GetIndex()], symmetry_classes[end->GetIndex()]);
+    }
+    return OBGraphSym::NoSymmetryClass; // FIXME
+  }
 
-    // avoid endless loops
-    if (loopCount > 200000) {
-      return;
+  /**
+   * Helper struct for orderSetBySymmetryClasses().
+   */
+  struct IndexClassPair
+  {
+    IndexClassPair(unsigned int _setIndex, unsigned int _symClass/*, int _classification*/) : 
+        setIndex(_setIndex), symClass(_symClass)/*, classification(_classification)*/ {}
+    unsigned int setIndex;
+    unsigned int symClass;
+//    int classification;
+  };
+
+  /**
+   * Less than compare function for two IndexClassPair structs using the
+   * symClass attribute.
+   */
+  bool CompareIndexClassPair(const IndexClassPair &pair1, const IndexClassPair &pair2)
+  {
+    return pair1.symClass < pair2.symClass;
+  }
+
+  /**
+   * Sort a set of stereogenic units by the unit's symmetry class. The symmetry
+   * classes in the returned set are in increasing order. The symmetry class for
+   * a stereogenic unit is determined using getSymClass(). The descriptor values
+   * for the stereogenic units using symmetry classes as poriorities are also
+   * taken into account. Units with descriptor 1 will go first.
+   */
+  OBStereoUnitSet orderSetBySymmetryClasses(OBMol *mol, const OBStereoUnitSet &set,
+      const std::vector<unsigned int> &symmetry_classes)
+  {
+    // create setIndex-symClass pairs
+    std::vector<IndexClassPair> pairs;
+    for (std::size_t i = 0; i < set.size(); ++i) {
+      unsigned int symClass = getSymClass(set[i], mol, symmetry_classes);
+      pairs.push_back(IndexClassPair(i, symClass));
     }
 
-    if (onlyOne && !codes.empty())
-      return;
+    // sort the pairs by symclass
+    std::sort(pairs.begin(), pairs.end(), CompareIndexClassPair);
 
-    // abort early if this will not lead to a maximal canonical code
-    for (std::size_t i = 0; i < codes.size(); ++i)
-      if (code < codes[i])
+    // use the sorted set indexes to construct the ordered set
+    OBStereoUnitSet ordered;
+    for (std::size_t i = 0; i < pairs.size(); ++i)
+      ordered.push_back(set[pairs[i].setIndex]);
+
+    return ordered;
+  }
+
+ 
+  struct CompareLabels
+  {
+    const std::vector<unsigned int> &labels;
+    CompareLabels(const std::vector<unsigned int> &_labels) : labels(_labels) {}
+    bool operator()(OBAtom *atom1, OBAtom *atom2) { return labels[atom1->GetIndex()] < labels[atom2->GetIndex()]; }
+  };
+
+
+  bool SortCode(const CanonicalCode &code1, const CanonicalCode &code2)
+  {
+    std::vector<unsigned int> fullcode1 = code1.from;
+    for (std::size_t i = 0; i < code1.closures.size(); ++i)
+      fullcode1.push_back(code1.closures[i]);
+    for (std::size_t i = 0; i < code1.atomTypes.size(); ++i)
+      fullcode1.push_back(code1.atomTypes[i]);
+    for (std::size_t i = 0; i < code1.bondTypes.size(); ++i)
+      fullcode1.push_back(code1.bondTypes[i]);
+    fullcode1.push_back(code1.stereo);
+ 
+    std::vector<unsigned int> fullcode2 = code2.from;
+    for (std::size_t i = 0; i < code2.closures.size(); ++i)
+      fullcode2.push_back(code2.closures[i]);
+    for (std::size_t i = 0; i < code2.atomTypes.size(); ++i)
+      fullcode2.push_back(code2.atomTypes[i]);
+    for (std::size_t i = 0; i < code2.bondTypes.size(); ++i)
+      fullcode2.push_back(code2.bondTypes[i]);
+    fullcode2.push_back(code2.stereo);
+    
+    return (fullcode1 < fullcode2);
+  }
+
+
+  struct CanonicalLabelsImpl
+  {
+    static void CanonicalLabelsRecursive(OBAtom *current, const std::vector<unsigned int> &symmetry_classes,
+        CanonicalCode &code, unsigned int label, std::size_t &loopCount, std::vector<CanonicalCode> &codes, 
+        const OBBitVec &fragment, const OBStereoUnitSet &stereoUnits, OBStereoFacade *stereoFacade, bool onlyOne)
+    {
+      OBMol *mol = current->GetParent();
+
+      // avoid endless loops
+      if (loopCount > 200000) {
         return;
-    
-    // Check if there is a full mapping
-    if (label == mask.CountBits()) {
-    
-      // the RING-CLOSURE list
-      unsigned int current_label = 1;
-      for (std::size_t j = 0; j < code.atoms.size(); ++j) {
-        OBAtom *atom = code.atoms[j];
-        std::vector<std::pair<OBBond*, unsigned int> > closures;
-        FOR_BONDS_OF_ATOM (bond, atom) {
-          if (!mask.BitIsSet(bond->GetNbrAtom(atom)->GetIdx()))
-            continue;
-          if (std::find(code.bonds.begin(), code.bonds.end(), &*bond) == code.bonds.end()) {
-            closures.push_back(std::make_pair(&*bond, code.labels[bond->GetNbrAtom(atom)->GetIndex()]));
-          }
-        }
-
-        std::sort(closures.begin(), closures.end(), CompareBondPairSecond);
-        for (std::size_t k = 0; k < closures.size(); ++k) {
-          code.closures.push_back(current_label);
-          code.closures.push_back(closures[k].second);
-          code.add(closures[k].first);
-        }
-
-        current_label++;
-      }
- 
-      OBBitVec frag;
-      for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
-        if (mask.BitIsSet(i+1))
-          frag.SetBitOn(mol->GetAtom(i+1)->GetId());
-      }
- 
-      OBStereoUnitSet orderedUnits = orderSetBySymmetryClasses(mol, stereoUnits, code.labels);
-      code.stereo = findDescriptorVectorValue(mol, frag, orderedUnits, code.labels);
- 
-      loopCount++;
-      
-      if (DEBUG)
-        print_code(code);
-
-      if (codes.empty()) {
-        codes.push_back(code);
-      } else {
-        if (code > codes[0]) {
-          codes[0] = code;        
-        }
       }
 
-      return;
-    }
-    // Check if the current connected fragment is mapped
-    if (label - code.lastFragment == fragment.CountBits()) {
-      code.lastFragment += fragment.CountBits();
+      if (onlyOne && !codes.empty())
+        return;
 
-
-      // find the highest symmetry class in a new fragment
-      std::vector<unsigned int> nextSymClasses;
-      for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
-        if (!mask.BitIsSet(i+1))
-          continue;
-        if (!code.labels[i])
-          nextSymClasses.push_back(symmetry_classes[i]);
-      }
-      unsigned int maxSymClass = *std::max_element(nextSymClasses.begin(), nextSymClasses.end());
-      
-      // start recursion on the new fragment
-      for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
-        if (!mask.BitIsSet(i+1))
-          continue;
-        if (code.labels[i])
-          continue;
-        OBAtom *atom = mol->GetAtom(i+1);
-
-        if (symmetry_classes[atom->GetIndex()] == maxSymClass) {
-          CanonicalCode codeCopy = code;
-          codeCopy.add(atom);
-          codeCopy.labels[atom->GetIndex()] = label + 1;
-          CanonicalLabelsRecursive(atom, symmetry_classes, codeCopy, label + 1, loopCount, codes, getFragment(atom, mask), stereoUnits, mask, onlyOne);
-        }
-      }
-    }
-
-    std::vector<OBAtom*> nbrs;
-    std::vector<unsigned int> nbrSymClasses;
-    FOR_NBORS_OF_ATOM (nbr, current) {
-      if (!mask.BitIsSet(nbr->GetIdx()))
-          continue;
-      if (code.labels[nbr->GetIndex()])
-        continue;
-
-      OBBond *bond = mol->GetBond(current, &*nbr);
-      if (!isFerroceneBond(bond)) {
-        nbrSymClasses.push_back(symmetry_classes[nbr->GetIndex()]);
-        nbrs.push_back(&*nbr);
-      }
-    }
-
-    if (nbrs.empty()) {
-      unsigned int nextLabel = code.labels[current->GetIndex()] + 1;
-      for (std::size_t i = 0; i < code.labels.size(); ++i) {
-        if (code.labels[i] == nextLabel) {
-          CanonicalLabelsRecursive(mol->GetAtom(i+1), symmetry_classes, code, label, loopCount, codes, fragment, stereoUnits, mask, onlyOne);
+      // abort early if this will not lead to a maximal canonical code
+      for (std::size_t i = 0; i < codes.size(); ++i)
+        if (code < codes[i])
           return;
+
+      // Check if there is a full mapping
+      if (label == fragment.CountBits()) {
+
+        // the RING-CLOSURE list
+        unsigned int current_label = 1;
+        for (std::size_t j = 0; j < code.atoms.size(); ++j) {
+          OBAtom *atom = code.atoms[j];
+          std::vector<std::pair<OBBond*, unsigned int> > closures;
+          FOR_BONDS_OF_ATOM (bond, atom) {
+            if (!fragment.BitIsSet(bond->GetNbrAtom(atom)->GetIdx()))
+              continue;
+            if (std::find(code.bonds.begin(), code.bonds.end(), &*bond) == code.bonds.end()) {
+              closures.push_back(std::make_pair(&*bond, code.labels[bond->GetNbrAtom(atom)->GetIndex()]));
+            }
+          }
+
+          std::sort(closures.begin(), closures.end(), CompareBondPairSecond);
+          for (std::size_t k = 0; k < closures.size(); ++k) {
+            code.closures.push_back(current_label);
+            code.closures.push_back(closures[k].second);
+            code.add(closures[k].first);
+          }
+
+          current_label++;
         }
-      }
-      return;
-    }
 
+        // the ATOM-TYPES list
+        for (std::size_t j = 0; j < code.atoms.size(); ++j) {
+          OBAtom *atom = code.atoms[j];
+          code.atomTypes.push_back(atom->GetAtomicNum());
+        }
 
-    std::vector<std::vector<OBAtom*> > allOrderedNbrs(1);
-    while (!nbrs.empty()) {
+        // the BOND-TYPES list
+        for (std::size_t j = 0; j < code.bonds.size(); ++j) {
+          OBBond *bond = code.bonds[j];
+          if (bond->IsAromatic())
+            code.bondTypes.push_back(5);
+          else
+            code.bondTypes.push_back(bond->GetBondOrder());
+        }
 
-      // select the next nbr atoms with highest symmetry classes
-      unsigned int maxSymClass = *std::max_element(nbrSymClasses.begin(), nbrSymClasses.end());
-      std::vector<OBAtom*> finalNbrs;
-      for (std::size_t i = 0; i < nbrs.size(); ++i) {
-        if (nbrSymClasses[i] == maxSymClass)
-          finalNbrs.push_back(nbrs[i]);
-      }
+        // the STEREO flag
+        if (stereoFacade) {
+          OBStereoUnitSet orderedUnits = orderSetBySymmetryClasses(mol, stereoUnits, code.labels);
+          code.stereo = findDescriptorVectorValue(mol, fragment, orderedUnits, code.labels, *stereoFacade);
+        }
 
-      // remove the selected atoms from nbrs and nbrSymClasses
-      for (std::size_t i = 0; i < finalNbrs.size(); ++i) {
-        nbrs.erase(std::find(nbrs.begin(), nbrs.end(), finalNbrs[i]));
-        nbrSymClasses.erase(std::find(nbrSymClasses.begin(), nbrSymClasses.end(), maxSymClass));
-      }
+        loopCount++;
 
-//      cout << "finalNbrs.size = " << finalNbrs.size() << endl;
+        if (DEBUG)
+          print_code(code);
 
-      if (finalNbrs.size() == 1) {
-        for (std::size_t i = 0; i < allOrderedNbrs.size(); ++i)
-          allOrderedNbrs[i].push_back(finalNbrs[0]);
-      } else {
-        std::sort(finalNbrs.begin(), finalNbrs.end());
-        
-        std::vector<std::vector<OBAtom*> > allOrderedNbrsCopy(allOrderedNbrs);
-
-        for (std::size_t j = 0; j < allOrderedNbrsCopy.size(); ++j) {
-          if (!allOrderedNbrsCopy[j].empty())
-            allOrderedNbrs.push_back(allOrderedNbrsCopy[j]);
-          for (std::size_t i = 0; i < finalNbrs.size(); ++i) {
-            allOrderedNbrs.back().push_back(finalNbrs[i]);
+        if (codes.empty()) {
+          codes.push_back(code);
+        } else {
+          if (code > codes[0]) {
+            codes[0] = code;
           }
         }
 
-        while (std::next_permutation(finalNbrs.begin(), finalNbrs.end())) {
+        std::size_t numClosures = code.closures.size() / 2;
+        code.closures.clear();
+        code.atomTypes.clear();
+        code.bondTypes.clear();
+        for (std::size_t i = 0; i < numClosures; ++i)
+          code.bonds.pop_back();
+
+        return;
+      }
+
+
+
+
+      std::vector<OBAtom*> nbrs;
+      std::vector<unsigned int> nbrSymClasses;
+      FOR_NBORS_OF_ATOM (nbr, current) {
+        if (!fragment.BitIsSet(nbr->GetIdx()))
+          continue;
+        if (code.labels[nbr->GetIndex()])
+          continue;
+
+        OBBond *bond = mol->GetBond(current, &*nbr);
+        if (!isFerroceneBond(bond)) {
+          nbrSymClasses.push_back(symmetry_classes[nbr->GetIndex()]);
+          nbrs.push_back(&*nbr);
+        }
+      }
+
+      if (nbrs.empty()) {
+        unsigned int nextLabel = code.labels[current->GetIndex()] + 1;
+        for (std::size_t i = 0; i < code.labels.size(); ++i) {
+          if (code.labels[i] == nextLabel) {
+            CanonicalLabelsRecursive(mol->GetAtom(i+1), symmetry_classes, code, label, loopCount, codes, fragment, stereoUnits, stereoFacade, onlyOne);
+            return;
+          }
+        }
+        return;
+      }
+
+
+      std::vector<std::vector<OBAtom*> > allOrderedNbrs(1);
+      while (!nbrs.empty()) {
+
+        // select the next nbr atoms with highest symmetry classes
+        unsigned int maxSymClass = *std::max_element(nbrSymClasses.begin(), nbrSymClasses.end());
+        std::vector<OBAtom*> finalNbrs;
+        for (std::size_t i = 0; i < nbrs.size(); ++i) {
+          if (nbrSymClasses[i] == maxSymClass)
+            finalNbrs.push_back(nbrs[i]);
+        }
+
+        // remove the selected atoms from nbrs and nbrSymClasses
+        for (std::size_t i = 0; i < finalNbrs.size(); ++i) {
+          nbrs.erase(std::find(nbrs.begin(), nbrs.end(), finalNbrs[i]));
+          nbrSymClasses.erase(std::find(nbrSymClasses.begin(), nbrSymClasses.end(), maxSymClass));
+        }
+
+
+        if (finalNbrs.size() == 1) {
+          for (std::size_t i = 0; i < allOrderedNbrs.size(); ++i)
+            allOrderedNbrs[i].push_back(finalNbrs[0]);
+        } else {
+          std::sort(finalNbrs.begin(), finalNbrs.end());
+
+          std::vector<std::vector<OBAtom*> > allOrderedNbrsCopy(allOrderedNbrs);
+
           for (std::size_t j = 0; j < allOrderedNbrsCopy.size(); ++j) {
-            allOrderedNbrs.push_back(allOrderedNbrsCopy[j]);
+            if (!allOrderedNbrsCopy[j].empty())
+              allOrderedNbrs.push_back(allOrderedNbrsCopy[j]);
             for (std::size_t i = 0; i < finalNbrs.size(); ++i) {
               allOrderedNbrs.back().push_back(finalNbrs[i]);
             }
           }
+
+          while (std::next_permutation(finalNbrs.begin(), finalNbrs.end())) {
+            for (std::size_t j = 0; j < allOrderedNbrsCopy.size(); ++j) {
+              allOrderedNbrs.push_back(allOrderedNbrsCopy[j]);
+              for (std::size_t i = 0; i < finalNbrs.size(); ++i) {
+                allOrderedNbrs.back().push_back(finalNbrs[i]);
+              }
+            }
+          }
         }
       }
-    }
 
-    if (DEBUG) {
-      /*
-      cout << "allOrderedNbrs:" << endl;
-      for (std::size_t i = 0; i < allOrderedNbrs.size(); ++i) {
-        for (std::size_t j = 0; j < allOrderedNbrs[i].size(); ++j) {
-          cout << allOrderedNbrs[i][j]->GetIndex() << " ";
-        }
-        cout << endl;
+      if (DEBUG) {
+        /*
+           cout << "allOrderedNbrs:" << endl;
+           for (std::size_t i = 0; i < allOrderedNbrs.size(); ++i) {
+           for (std::size_t j = 0; j < allOrderedNbrs[i].size(); ++j) {
+           cout << allOrderedNbrs[i][j]->GetIndex() << " ";
+           }
+           cout << endl;
+           }
+         */
       }
-      */
-    }
 
-    if (allOrderedNbrs.size() == 1) {
-      for (std::size_t j = 0; j < allOrderedNbrs[0].size(); ++j) {
-        label++;
-        code.add(current, allOrderedNbrs[0][j]);
-        code.labels[allOrderedNbrs[0][j]->GetIndex()] = label;
-      }
-      CanonicalLabelsRecursive(current, symmetry_classes, code, label, loopCount, codes, fragment, stereoUnits, mask, onlyOne);
-    } else {
       for (std::size_t i = 0; i < allOrderedNbrs.size(); ++i) {
         unsigned int lbl = label;
-        CanonicalCode codeCopy = code;
         for (std::size_t j = 0; j < allOrderedNbrs[i].size(); ++j) {
           lbl++;
-          codeCopy.add(current, allOrderedNbrs[i][j]);
-          codeCopy.labels[allOrderedNbrs[i][j]->GetIndex()] = lbl;
+          code.add(current, allOrderedNbrs[i][j]);
+          code.labels[allOrderedNbrs[i][j]->GetIndex()] = lbl;
         }
 
-        CanonicalLabelsRecursive(current, symmetry_classes, codeCopy, lbl, loopCount, codes, fragment, stereoUnits, mask, onlyOne);
+        CanonicalLabelsRecursive(current, symmetry_classes, code, lbl, loopCount, codes, fragment, stereoUnits, stereoFacade, onlyOne);
+
+        for (std::size_t j = 0; j < allOrderedNbrs[i].size(); ++j) {
+          code.atoms.pop_back();
+          code.bonds.pop_back();
+          code.from.pop_back();
+          code.labels[allOrderedNbrs[i][j]->GetIndex()] = 0;
+        }
+
       }
-    }
- 
-  }
 
-  void CalcCanonicalLabels(OBMol *mol, const std::vector<unsigned int> &symmetry_classes,
-      std::vector<unsigned int> &canonical_labels, const OBStereoUnitSet &stereoUnits, const OBBitVec &mask, bool onlyOne = false)
-  {
-    if (!mol->NumAtoms())
-      return;
-    if (mol->NumAtoms() == 1) {
-      canonical_labels.resize(1, 1);
-      return;
+
     }
 
-    std::vector<unsigned int> nextSymClasses;
-    for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
-      if (mask.BitIsSet(i+1))
-        nextSymClasses.push_back(symmetry_classes[i]);
-    }
-    unsigned int maxSymClass = *std::max_element(nextSymClasses.begin(), nextSymClasses.end());
- 
-
-    std::size_t loopCount = 0;
-    std::vector<CanonicalCode> codes;
-    for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
-      if (!mask.BitIsSet(i+1))
-        continue;
-      OBAtom *atom = mol->GetAtom(i+1);
-
-      if (symmetry_classes[atom->GetIndex()] == maxSymClass) {
-        CanonicalCode code(mol->NumAtoms());
-        code.add(atom);
-        code.labels[atom->GetIndex()] = 1;
-        CanonicalLabelsRecursive(atom, symmetry_classes, code, 1, loopCount, codes, getFragment(atom, mask), stereoUnits, mask, onlyOne);
+    static void CalcCanonicalLabels(OBMol *mol, const std::vector<unsigned int> &symmetry_classes,
+        std::vector<unsigned int> &canonical_labels, const OBStereoUnitSet &stereoUnits, const OBBitVec &mask, 
+        OBStereoFacade *stereoFacade, bool onlyOne = false)
+    {
+      if (!mol->NumAtoms())
+        return;
+      if (mol->NumAtoms() == 1) {
+        canonical_labels.resize(1, 1);
+        return;
       }
+
+      canonical_labels.resize(mol->NumAtoms(), 0);
+
+      OBBitVec visited;
+      std::vector<OBBitVec> fragments;
+      for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
+        if (!mask.BitIsSet(i+1) || visited.BitIsSet(i+1))
+          continue;
+        fragments.push_back(getFragment(mol->GetAtom(i+1), mask));
+        visited |= fragments.back();
+      }
+
+      std::vector<CanonicalCode> fcodes;
+      for (std::size_t f = 0; f < fragments.size(); ++f) {
+        const OBBitVec &fragment = fragments[f];
+
+        std::vector<unsigned int> nextSymClasses;
+        for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
+          if (fragment.BitIsSet(i+1))
+            nextSymClasses.push_back(symmetry_classes[i]);
+        }
+        unsigned int maxSymClass = *std::max_element(nextSymClasses.begin(), nextSymClasses.end());
+
+        std::size_t loopCount = 0;
+        std::vector<CanonicalCode> codes;
+        for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
+          if (!fragment.BitIsSet(i+1))
+            continue;
+          OBAtom *atom = mol->GetAtom(i+1);
+
+          if (symmetry_classes[atom->GetIndex()] == maxSymClass) {
+            CanonicalCode code(mol->NumAtoms());
+            code.add(atom);
+            code.labels[atom->GetIndex()] = 1;
+            CanonicalLabelsRecursive(atom, symmetry_classes, code, 1, loopCount, codes, fragment, stereoUnits, stereoFacade, onlyOne);
+          }
+
+        }
+
+        if (loopCount > 200000) {
+          obErrorLog.ThrowError(__FUNCTION__, "too many possibilities, aborting...", obError);
+        }
+
+        if (!codes.empty()) {
+          fcodes.push_back(codes[0]);
+        }
+      }
+
+      std::sort(fcodes.begin(), fcodes.end(), SortCode);
+
+      unsigned int offset = 0;
+      for (std::size_t f = 0; f < fcodes.size(); ++f) {
+        print_code(fcodes[f]);
+        unsigned int max_label = 0;
+        for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
+          if (fcodes[f].labels[i]) {
+            canonical_labels[i] = fcodes[f].labels[i] + offset;
+            max_label = canonical_labels[i];
+          }
+        }
+        offset += max_label;
+      }
+
+
     }
 
-    if (loopCount > 200000) {
-      obErrorLog.ThrowError(__FUNCTION__, "too many possibilities, aborting...", obError);
-    }
+  }; // CanonicalLabelsImpl
 
-    if (!codes.empty())
-      canonical_labels = codes[0].labels;
-  }
- 
   int OBGraphSymPrivate::Iterate(vector<unsigned int> &symClasses)
   {
     // Create a vector-of-pairs, associating each atom with its Class ID.
@@ -1307,7 +1424,9 @@ namespace OpenBabel {
   void OBGraphSym::CanonicalLabels(std::vector<unsigned int> &canon_labels)
   {
     std::vector<unsigned int> symmetry_classes;
-    GetSymmetry(symmetry_classes);
+    DataCache cache(d->_pmol);
+    cache.GetSymmetryClasses(symmetry_classes, d->_frag_atoms);
+
     d->CanonicalLabels(symmetry_classes, canon_labels);
     if (canon_labels.empty())
       for (std::size_t i = 0; i < symmetry_classes.size(); ++i)
@@ -1322,7 +1441,7 @@ namespace OpenBabel {
       FOR_ATOMS_OF_MOL (atom, mol)
         maskCopy.SetBitOn(atom->GetIdx());
 
-    CalcCanonicalLabels(mol, symmetry_classes, canonical_labels, OBStereoUnitSet(), maskCopy, true);
+    CanonicalLabelsImpl::CalcCanonicalLabels(mol, symmetry_classes, canonical_labels, OBStereoUnitSet(), maskCopy, 0, true);
     if (canonical_labels.empty())
       for (std::size_t i = 0; i < symmetry_classes.size(); ++i)
         canonical_labels.push_back(i+1);
@@ -1350,16 +1469,15 @@ namespace OpenBabel {
       }
     }
     if (!hasAtLeastOneDefined) {
-      CalcCanonicalLabels(_pmol, symmetry_classes, canon_labels, OBStereoUnitSet(), _frag_atoms);
+      CanonicalLabelsImpl::CalcCanonicalLabels(_pmol, symmetry_classes, canon_labels, OBStereoUnitSet(), _frag_atoms, 0);
       return;
     }
 
 
     if (!_stereoUnits.size()) {
-      // Find all automorphisms
-      _G = FindAutomorphisms(_pmol, symmetry_classes, _frag_atoms);
-      // Find all types of stereogenic units (i.e. tetrahedral, cis/trans, ...)
-      _stereoUnits = FindStereogenicUnits(_pmol, symmetry_classes, _G);
+
+      DataCache cache(_pmol);
+      cache.GetStereogenicUnits(_stereoUnits, _frag_atoms);
 
       // Mark all invalid stereo data as unspecified
       std::vector<OBGenericData*> stereoData = _pmol->GetAllData(OBGenericDataType::StereoData);
@@ -1432,8 +1550,7 @@ namespace OpenBabel {
       }
     }
 
-    std::vector<unsigned int> identity_labels;
-    CalcCanonicalLabels(_pmol, symmetry_classes, canon_labels, _stereoUnits, _frag_atoms);
+    CanonicalLabelsImpl::CalcCanonicalLabels(_pmol, symmetry_classes, canon_labels, _stereoUnits, _frag_atoms, &sf);
   }
 
 

@@ -45,7 +45,7 @@ namespace OpenBabel {
 
     public:
       //! Constructor
-      OBGraphSym(OBMol* pmol, OBBitVec* frag_atoms = NULL);
+      OBGraphSym(OBMol* pmol, const OBBitVec* frag_atoms = NULL);
       //! Destructor
       virtual ~OBGraphSym();
 

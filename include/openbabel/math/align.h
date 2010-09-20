@@ -148,8 +148,7 @@ namespace OpenBabel
     bool _includeH;
     double _rmsd;
     OBBitVec _frag_atoms;
-    // OBIsomorphismMapper::Mappings _aut;
-    vector<map<unsigned int, unsigned int> > _aut;
+    Automorphisms _aut;
     const OBMol* _prefmol;
     const OBMol* _ptargetmol;
     Eigen::MatrixXd _rotMatrix;

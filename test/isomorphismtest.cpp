@@ -23,7 +23,8 @@ void testIsomorphism1()
 
   OBQuery *query = CompileMoleculeQuery(&mol);
   OBIsomorphismMapper *mapper = OBIsomorphismMapper::GetInstance(query);
-  OBIsomorphismMapper::Mappings maps = mapper->MapAll(&mol);
+  OBIsomorphismMapper::Mappings maps;
+  mapper->MapAll(&mol, maps);
 
   OB_ASSERT( maps.size() == 4 );
 
@@ -32,10 +33,16 @@ void testIsomorphism1()
 
   query = CompileSmilesQuery("C1(C)CCC(C)CC1");
   mapper = OBIsomorphismMapper::GetInstance(query);
-  
-  OB_ASSERT( mapper->MapFirst(&mol).size() == 8 );
-  OB_ASSERT( mapper->MapUnique(&mol).size() == 1 );
-  OB_ASSERT( mapper->MapAll(&mol).size() == 4 );
+
+  OBIsomorphismMapper::Mapping map;
+  mapper->MapFirst(&mol, map);
+  OB_ASSERT( map.size() == 8 );
+
+  mapper->MapUnique(&mol, maps);
+  OB_ASSERT( maps.size() == 1 );
+
+  mapper->MapAll(&mol, maps);
+  OB_ASSERT( maps.size() == 4 );
 
   delete query;
   delete mapper;
@@ -51,7 +58,8 @@ void testIsomorphism2()
 
   OBQuery *query = CompileSmilesQuery("c1ccccc1");
   OBIsomorphismMapper *mapper = OBIsomorphismMapper::GetInstance(query);
-  OBIsomorphismMapper::Mappings maps = mapper->MapUnique(&mol);
+  OBIsomorphismMapper::Mappings maps;
+  mapper->MapUnique(&mol, maps);
 
   cout << maps.size() << endl;
 
@@ -71,7 +79,8 @@ void testIsomorphism3()
 
   OBQuery *query = CompileSmilesQuery("C1CC1");
   OBIsomorphismMapper *mapper = OBIsomorphismMapper::GetInstance(query);
-  OBIsomorphismMapper::Mappings maps = mapper->MapUnique(&mol);
+  OBIsomorphismMapper::Mappings maps;
+  mapper->MapUnique(&mol, maps);
 
   cout << maps.size() << endl;
 
@@ -91,7 +100,8 @@ void testIsomorphism4()
 
   OBQuery *query = CompileSmilesQuery("C1CC1");
   OBIsomorphismMapper *mapper = OBIsomorphismMapper::GetInstance(query);
-  OBIsomorphismMapper::Mappings maps = mapper->MapUnique(&mol);
+  OBIsomorphismMapper::Mappings maps;
+  mapper->MapUnique(&mol, maps);
 
   cout << maps.size() << endl;
 
@@ -118,9 +128,10 @@ void testIsomorphismMask()
 
   OBQuery *query = CompileSmilesQuery("C1CCCCC1");
   OBIsomorphismMapper *mapper = OBIsomorphismMapper::GetInstance(query);
-  
+
   // no mask
-  OBIsomorphismMapper::Mappings maps = mapper->MapUnique(&mol);
+  OBIsomorphismMapper::Mappings maps;
+  mapper->MapUnique(&mol, maps);
   cout << maps.size() << endl;
   OB_ASSERT( maps.size() == 3 );
 
@@ -128,14 +139,14 @@ void testIsomorphismMask()
   OBBitVec mask;
   for (int i = 0; i < 6; ++i)
     mask.SetBitOn(i+1);
-  maps = mapper->MapUnique(&mol, mask);
+  mapper->MapUnique(&mol, maps, mask);
   cout << maps.size() << endl;
   OB_ASSERT( maps.size() == 1 );
 
   // mask second ring also
   for (int i = 6; i < 10; ++i)
     mask.SetBitOn(i+1);
-  maps = mapper->MapUnique(&mol, mask);
+  mapper->MapUnique(&mol, maps, mask);
   cout << maps.size() << endl;
   OB_ASSERT( maps.size() == 2 );
 
@@ -144,7 +155,7 @@ void testIsomorphismMask()
   for (int i = 10; i < 14; ++i)
     mask.SetBitOn(i+1);
   mask.SetBitOn(7 + 1); mask.SetBitOn(8 + 1);
-  maps = mapper->MapUnique(&mol, mask);
+  mapper->MapUnique(&mol, maps, mask);
   cout << maps.size() << endl;
   OB_ASSERT( maps.size() == 1 ); // Should be same result as masking just the first ring
 
@@ -167,11 +178,11 @@ void testAutomorphismMask() {
   OB_REQUIRE( ifs );
   conv.Read(&mol, &ifs);
 
-  OBIsomorphismMapper::Mappings maps; 
+  OBIsomorphismMapper::Mappings maps;
 
   // First of all, how many automorphisms are there without any mask?
   // This takes about 20 seconds, so you may want to comment this out while debugging
-  maps = FindAutomorphisms(&mol);
+  FindAutomorphisms(&mol, maps);
   cout << maps.size() << endl;
   OB_ASSERT( maps.size() == 4 );
 
@@ -185,7 +196,7 @@ void testAutomorphismMask() {
   OBBitVec mask;
   mask.SetRangeOn(1, mol.NumAtoms());
   mask.SetBitOff(6+1);
-  maps = FindAutomorphisms(&mol, mask);
+  FindAutomorphisms(&mol, maps, mask);
   cout << maps.size() << endl;
   for (unsigned int i = 0; i < maps.size(); ++i) {
     OBIsomorphismMapper::Mapping::const_iterator j;
@@ -216,14 +227,14 @@ void testAutomorphismMask2()
   std::ifstream ifs(GetFilename("progesterone.sdf").c_str());
   OB_REQUIRE( ifs );
   OB_REQUIRE( conv.Read(&mol, &ifs) );
-  
-  vector<map<unsigned int, unsigned int> > _aut;
+
+  Automorphisms _aut;
   OBBitVec _frag_atoms;
   FOR_ATOMS_OF_MOL(a, mol) {
     if(!(a->IsHydrogen()))
       _frag_atoms.SetBitOn(a->GetIdx());
   }
-  _aut = FindAutomorphisms((OBMol*)&mol, _frag_atoms);
+  FindAutomorphisms((OBMol*)&mol, _aut, _frag_atoms);
   OB_ASSERT( _aut.size() == 1 );
 
 }
@@ -236,20 +247,20 @@ void testAutomorphismPreMapping()
   conv.SetInFormat("smi");
   conv.ReadString(&mol, "c1(C)c(C)c(C)c(C)c(C)c1");
 
-  vector<map<unsigned int, unsigned int> > aut;
-  aut = FindAutomorphisms((OBMol*)&mol);
+  Automorphisms aut;
+  FindAutomorphisms((OBMol*)&mol, aut);
   cout << aut.size() << endl;
   OB_ASSERT( aut.size() == 2 );
 }
 
-int main() 
+int main()
 {
   // Define location of file formats for testing
   #ifdef FORMATDIR
     char env[BUFF_SIZE];
     snprintf(env, BUFF_SIZE, "BABEL_LIBDIR=%s", FORMATDIR);
     putenv(env);
-  #endif  
+  #endif
 
   testIsomorphism1();
   testIsomorphism2();
@@ -257,10 +268,10 @@ int main()
   testIsomorphism4();
   testIsomorphismMask();
   testAutomorphismMask();
-  testAutomorphismMask2(); 
+  testAutomorphismMask2();
   testAutomorphismPreMapping();
 
   return 0;
 }
 
-                
+

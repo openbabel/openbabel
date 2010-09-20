@@ -79,7 +79,7 @@ namespace OpenBabel {
       /**
        * Type for an individual mapping.
        */
-      typedef std::map<unsigned int,unsigned int> Mapping;
+      typedef std::vector< std::pair<unsigned int,unsigned int> > Mapping;
       /**
        * Type for a collection (std::vector) of Mapping objects.
        */
@@ -110,7 +110,7 @@ namespace OpenBabel {
        * The default empty mask will result in all atoms being considered. The mask
        * indexes start from 1 (i.e. OBAtom::GetIdx()).
        */
-      virtual Mapping MapFirst(const OBMol *queried, const OBBitVec &mask = OBBitVec()) = 0;
+      virtual void MapFirst(const OBMol *queried, Mapping &map, const OBBitVec &mask = OBBitVec()) = 0;
       /**
        * Find all unique mappings in @p queried. A mapping is unique when there is no previous
        * mapping covering the same queried atoms. For two mappings, some overlap is allowed but
@@ -120,7 +120,7 @@ namespace OpenBabel {
        * The default empty mask will result in all atoms being considered. The mask
        * indexes start from 1 (i.e. OBAtom::GetIdx()).
        */
-      virtual Mappings MapUnique(const OBMol *queried, const OBBitVec &mask = OBBitVec()) = 0;
+      virtual void MapUnique(const OBMol *queried, Mappings &maps, const OBBitVec &mask = OBBitVec()) = 0;
       /**
        * Find all mappings in @p queried. This function is used by FindAutomorphisms()
        * with a query that is a copy of the queried molecule (taking the mask into
@@ -130,7 +130,7 @@ namespace OpenBabel {
        * The default empty mask will result in all atoms being considered. The mask
        * indexes start from 1 (i.e. OBAtom::GetIdx()).
        */
-      virtual Mappings MapAll(const OBMol *queried, const OBBitVec &mask = OBBitVec()) = 0;
+      virtual void MapAll(const OBMol *queried, Mappings &maps, const OBBitVec &mask = OBBitVec()) = 0;
 
       /**
        * Set the timeout in seconds.
@@ -145,12 +145,25 @@ namespace OpenBabel {
 
   typedef OBIsomorphismMapper::Mapping Automorphism;
   typedef OBIsomorphismMapper::Mappings Automorphisms;
+
+  inline bool MapsTo(const OBIsomorphismMapper::Mapping &map, unsigned int queryIndex, unsigned int &queriedIndex)
+  {
+    OBIsomorphismMapper::Mapping::const_iterator i;
+    for (i = map.begin(); i != map.end(); ++i)
+      if (i->first == queryIndex) {
+        queriedIndex = i->second;
+        return true;
+      }
+
+    return false;
+  }
+
   /**
    * Find the automorphisms of a molecule by using a OBIsomorphismMapper.
    * @since version 2.3
    */
-  OBAPI Automorphisms FindAutomorphisms(OBMol *mol, const OBBitVec &mask = OBBitVec());
-  OBAPI Automorphisms FindAutomorphisms(OBMol *mol, const std::vector<unsigned int> &symmetry_classes,
+  OBAPI void FindAutomorphisms(OBMol *mol, Automorphisms &aut, const OBBitVec &mask = OBBitVec());
+  OBAPI void FindAutomorphisms(OBMol *mol, Automorphisms &aut, const std::vector<unsigned int> &symmetry_classes,
       const OBBitVec &mask = OBBitVec());
 
 

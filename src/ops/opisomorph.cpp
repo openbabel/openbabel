@@ -231,7 +231,8 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
     for(qiter=queries.begin();qiter!=queries.end();++qiter, ++imol) 
     {
       OBIsomorphismMapper* mapper = OBIsomorphismMapper::GetInstance(*qiter);
-      OBIsomorphismMapper::Mappings mappings = mapper->MapUnique(pmol);
+      OBIsomorphismMapper::Mappings mappings;
+      mapper->MapUnique(pmol, mappings);
       if(match = !mappings.empty())
       {
         OBIsomorphismMapper::Mappings::iterator ita;

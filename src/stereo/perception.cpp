@@ -27,6 +27,7 @@
 #include <openbabel/mol.h>
 #include <openbabel/graphsym.h>
 #include <openbabel/oberror.h>
+#include <openbabel/datacache.h>
 
 #include "stereoutil.h"
 
@@ -149,6 +150,8 @@ namespace OpenBabel {
       return false;
     if (!bond->GetBeginAtom()->HasSingleBond() || !bond->GetEndAtom()->HasSingleBond())
       return false;
+    if (bond->GetBeginAtom()->GetHvyValence() == 1 || bond->GetEndAtom()->GetHvyValence() == 1)
+      return false;
     return true;
   }
 
@@ -162,7 +165,7 @@ namespace OpenBabel {
 
 
   ////////////////////////////////////////////////////////////////////////////////
-  
+
 
   /**
    * Check if the specified stereogenic unit is in a fragment.
@@ -179,7 +182,7 @@ namespace OpenBabel {
       if (fragment.BitIsOn(begin->GetId()) || fragment.BitIsOn(end->GetId()))
         return true;
     }
-    return false; 
+    return false;
   }
 
 
@@ -1358,9 +1361,9 @@ namespace OpenBabel {
         // Translate the sorted indexes using the automorphism
         std::vector<unsigned long> tlist2;
         for (std::size_t j = 0; j < tlist1.size(); ++j) {
-          Automorphism::const_iterator t = p.find(tlist1[j].first);
-          if (t != p.end())
-            tlist2.push_back(canon_labels[t->second]);
+          unsigned int t;
+          if (MapsTo(p, tlist1[j].first, t))
+            tlist2.push_back(canon_labels[t]);
         }
 
         if (DEBUG_INVERSIONS) print_vector("tlist 2", tlist2);
@@ -1392,9 +1395,9 @@ namespace OpenBabel {
       // Translate the sorted indexes using the automorphism
       std::vector<unsigned long> tlist2;
       for (std::size_t j = 0; j < tlist1.size(); ++j) {
-        Automorphism::const_iterator t = p.find(tlist1[j].first);
-        if (t != p.end())
-          tlist2.push_back(canon_labels[t->second]);
+        unsigned int t;
+        if (MapsTo(p, tlist1[j].first, t))
+          tlist2.push_back(canon_labels[t]);
       }
 
       return (OBStereo::NumInversions(tlist2) % 2);
@@ -1465,12 +1468,12 @@ namespace OpenBabel {
         if (DEBUG_INVERSIONS) {
           cout << "automorphism " << i+1 << "     ";
           for (std::size_t j = 0; j < mol->NumAtoms(); ++j) {
-            Automorphism::const_iterator t = entry.p.find(j);
-            if (t != entry.p.end())
-              if (t->second < 10)
-                cout << " " << t->second << " ";
+            unsigned int t;
+            if (MapsTo(entry.p, j, t))
+              if (t < 10)
+                cout << " " << t << " ";
               else
-                cout << t->second << " ";
+                cout << t << " ";
           }
           cout << endl;
           cout << "  invertedAtoms: ";
@@ -1835,90 +1838,14 @@ namespace OpenBabel {
           cout << "Tetrahedral(center = " << unit->id << ", para = " << unit->para << ")" << endl;
         if (unit->type == OBStereo::CisTrans)
           cout << "CisTrans(bond = " << unit->id << ", para = " << unit->para << ")" << endl;
+        if (unit->type == OBStereo::SquarePlanar)
+          cout << "SquarePlanar(bond = " << unit->id << ", para = " << unit->para << ")" << endl;
       }
     }
 
     return units;
   } // FindStereogenicUnits using automorphisms
 
-  /**
-   * Get the symmetry class for the specified stereogenic unit. For tetrahedral
-   * stereogenic units, the symmetry class is simply the symmetry class for the
-   * center atom. For double bond stereogenic units, the lowest symmetry class
-   * for the begin and end atom is returned.
-   */
-  unsigned int getSymClass(const OBStereoUnit &unit, OBMol *mol, const std::vector<unsigned int> &symmetry_classes)
-  {
-    if (unit.type == OBStereo::Tetrahedral) {
-      OBAtom *center = mol->GetAtomById(unit.id);
-      return symmetry_classes[center->GetIndex()];
-    } else
-    if (unit.type == OBStereo::CisTrans) {
-      OBBond *bond = mol->GetBondById(unit.id);
-      OBAtom *begin = bond->GetBeginAtom();
-      OBAtom *end = bond->GetEndAtom();
-      return std::min(symmetry_classes[begin->GetIndex()], symmetry_classes[end->GetIndex()]);
-    }
-    return OBGraphSym::NoSymmetryClass; // FIXME
-  }
-
-  /**
-   * Helper struct for orderSetBySymmetryClasses().
-   */
-  struct IndexClassPair
-  {
-    IndexClassPair(unsigned int _setIndex, unsigned int _symClass, int _classification) : 
-        setIndex(_setIndex), symClass(_symClass), classification(_classification) {}
-    unsigned int setIndex;
-    unsigned int symClass;
-    int classification;
-  };
-
-  /**
-   * Less than compare function for two IndexClassPair structs using the
-   * symClass attribute.
-   */
-  bool CompareIndexClassPair(const IndexClassPair &pair1, const IndexClassPair &pair2)
-  {
-    // order: T1111 < T1112 < T1122 < T1123 < T1234
-    //        C11 < C12
-    if (pair1.classification != pair2.classification)
-      return pair1.classification < pair2.classification;
-    return pair1.symClass < pair2.symClass;
-  }
-
-  /**
-   * Sort a set of stereogenic units by the unit's symmetry class. The symmetry
-   * classes in the returned set are in increasing order. The symmetry class for
-   * a stereogenic unit is determined using getSymClass(). The descriptor values
-   * for the stereogenic units using symmetry classes as poriorities are also
-   * taken into account. Units with descriptor 1 will go first.
-   */
-  OBStereoUnitSet orderSetBySymmetryClasses(OBMol *mol, const OBStereoUnitSet &set,
-      const std::vector<unsigned int> &symmetry_classes)
-  {
-    OBStereoFacade stereoFacade(mol, false);
-
-    // create setIndex-symClass pairs
-    std::vector<IndexClassPair> pairs;
-    for (std::size_t i = 0; i < set.size(); ++i) {
-      unsigned int symClass = 2 * getSymClass(set[i], mol, symmetry_classes);
-      symClass -= findDescriptor(mol, set[i], symmetry_classes);
-
-      int classification = classifyNbrSymClasses(mol, set[i], symmetry_classes);
-      pairs.push_back(IndexClassPair(i, symClass, classification));
-    }
-
-    // sort the pairs by symclass
-    std::sort(pairs.begin(), pairs.end(), CompareIndexClassPair);
-
-    // use the sorted set indexes to construct the ordered set
-    OBStereoUnitSet ordered;
-    for (std::size_t i = 0; i < pairs.size(); ++i)
-      ordered.push_back(set[pairs[i].setIndex]);
-
-    return ordered;
-  }
 
   /**
    * Perform symmetry analysis.
@@ -1950,8 +1877,10 @@ namespace OpenBabel {
 
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom0D", obAuditMsg);
 
-    std::vector<unsigned int> symClasses = FindSymmetry(mol);
-    OBStereoUnitSet stereogenicUnits = FindStereogenicUnits(mol, symClasses);
+    OBStereoUnitSet stereogenicUnits;
+    DataCache cache(mol);
+    cache.GetStereogenicUnits(stereogenicUnits);
+
     TetrahedralFrom0D(mol, stereogenicUnits);
     CisTransFrom0D(mol, stereogenicUnits);
     mol->SetChiralityPerceived();
@@ -2140,9 +2069,11 @@ namespace OpenBabel {
 
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom3D", obAuditMsg);
 
+    OBStereoUnitSet stereogenicUnits;
+    DataCache cache(mol);
+    cache.GetStereogenicUnits(stereogenicUnits);
+
     mol->DeleteData(OBGenericDataType::StereoData);
-    std::vector<unsigned int> symClasses = FindSymmetry(mol);
-    OBStereoUnitSet stereogenicUnits = FindStereogenicUnits(mol, symClasses);
     TetrahedralFrom3D(mol, stereogenicUnits);
     CisTransFrom3D(mol, stereogenicUnits);
     mol->SetChiralityPerceived();
@@ -2353,8 +2284,10 @@ namespace OpenBabel {
 
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom2D", obAuditMsg);
 
-    std::vector<unsigned int> symClasses = FindSymmetry(mol);
-    OBStereoUnitSet stereogenicUnits = FindStereogenicUnits(mol, symClasses);
+    OBStereoUnitSet stereogenicUnits;
+    DataCache cache(mol);
+    cache.GetStereogenicUnits(stereogenicUnits);
+
     mol->DeleteData(OBGenericDataType::StereoData);
     TetrahedralFrom2D(mol, stereogenicUnits);
     CisTransFrom2D(mol, stereogenicUnits, updown);
