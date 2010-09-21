@@ -802,7 +802,7 @@ namespace OpenBabel {
 #ifdef HAVE_LIBZ
     if ( CheckedForGzip ){ // Bug reported by Gert Thijs
       delete zIn; // Make sure to free any created zip stream
-		pInStream = is;
+		pInStream = pin;
 	}
 #endif
 
