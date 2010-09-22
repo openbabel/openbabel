@@ -148,6 +148,7 @@ namespace OpenBabel {
           if (DEBUG)
             cout << green << "found mapping" << normal << endl;
           maps.push_back(map);
+          m_memory += 2 * sizeof(unsigned int) * map.size();
         }
 
         return true;
@@ -259,6 +260,8 @@ namespace OpenBabel {
       void MapNext(State &state, OBQueryAtom *queryAtom, OBAtom *queriedAtom, Mappings &maps)
       {
         if (time(NULL) - m_startTime > m_timeout)
+          return;
+        if (m_memory > m_maxMemory)
           return;
 
         // load the possible candidates
@@ -527,11 +530,14 @@ namespace OpenBabel {
         if (time(NULL) - m_startTime > m_timeout)
           obErrorLog.ThrowError(__FUNCTION__, "time limit exceeded...", obError);
 
+        if (m_memory > m_maxMemory)
+          obErrorLog.ThrowError(__FUNCTION__, "memory limit exceeded...", obError);
+
       }
 
   };
 
-  OBIsomorphismMapper::OBIsomorphismMapper(OBQuery *query) : m_query(query), m_timeout(600)
+  OBIsomorphismMapper::OBIsomorphismMapper(OBQuery *query) : m_query(query), m_timeout(600), m_memory(0), m_maxMemory(300000000)
   {
   }
 
@@ -592,7 +598,7 @@ namespace OpenBabel {
     return query;
   }
 
-  void FindAutomorphisms(OBMol *mol, Automorphisms &maps, const OBBitVec &mask)
+  bool FindAutomorphisms(OBMol *mol, Automorphisms &maps, const OBBitVec &mask)
   {
     // set all atoms to 1 if the mask is empty
     OBBitVec queriedMask = mask;
@@ -605,12 +611,12 @@ namespace OpenBabel {
     std::vector<unsigned int> symClasses;
     gs.GetSymmetry(symClasses);
 
-    FindAutomorphisms(mol, maps, symClasses, mask);;
+    return FindAutomorphisms(mol, maps, symClasses, mask);;
   }
 
   OBBitVec getFragment(OBAtom *atom, const OBBitVec &mask);
 
-  void FindAutomorphisms(OBMol *mol, Automorphisms &maps, const std::vector<unsigned int> &symClasses, const OBBitVec &mask)
+  bool FindAutomorphisms(OBMol *mol, Automorphisms &maps, const std::vector<unsigned int> &symClasses, const OBBitVec &mask)
   {
     // set all atoms to 1 if the mask is empty
     OBBitVec queriedMask = mask;
@@ -642,12 +648,24 @@ namespace OpenBabel {
     }
 
     maps.clear();
+    std::size_t memory = 0;
     for (std::size_t i = 0; i < fragments.size(); ++i) {
       OBQuery *query = CompileAutomorphismQuery(mol, fragments[i], symClasses);
       OBIsomorphismMapper *mapper = OBIsomorphismMapper::GetInstance(query);
+      mapper->SetMemory(memory);
 
       OBIsomorphismMapper::Mappings fragmaps;
       mapper->MapAll(mol, fragmaps, fragments[i]);
+
+      memory += mapper->GetMemory();
+
+      if (memory > mapper->GetMaxMemory()) {
+        maps.clear();
+        delete mapper;
+        delete query;
+        return false;
+      }
+
       delete mapper;
       delete query;
 
@@ -664,6 +682,7 @@ namespace OpenBabel {
       }
     }
 
+    return maps.size();
   }
 
 

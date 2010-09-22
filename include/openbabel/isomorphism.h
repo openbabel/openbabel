@@ -137,9 +137,15 @@ namespace OpenBabel {
        */
       void SetTimeout(unsigned int seconds) { m_timeout = seconds; }
 
+      std::size_t GetMemory() const { return m_memory; }
+      void SetMemory(std::size_t memory) { m_memory = memory; }
+      std::size_t GetMaxMemory() const { return m_maxMemory; }
+      void SetMaxMemory(std::size_t maxMemory) { m_maxMemory = maxMemory; }
+
     protected:
       OBQuery *m_query; //!< The search query.
       unsigned int m_timeout; //!< The timeout in seconds
+      std::size_t m_memory, m_maxMemory;
   };
 
 
@@ -162,8 +168,8 @@ namespace OpenBabel {
    * Find the automorphisms of a molecule by using a OBIsomorphismMapper.
    * @since version 2.3
    */
-  OBAPI void FindAutomorphisms(OBMol *mol, Automorphisms &aut, const OBBitVec &mask = OBBitVec());
-  OBAPI void FindAutomorphisms(OBMol *mol, Automorphisms &aut, const std::vector<unsigned int> &symmetry_classes,
+  OBAPI bool FindAutomorphisms(OBMol *mol, Automorphisms &aut, const OBBitVec &mask = OBBitVec());
+  OBAPI bool FindAutomorphisms(OBMol *mol, Automorphisms &aut, const std::vector<unsigned int> &symmetry_classes,
       const OBBitVec &mask = OBBitVec());
 
 
