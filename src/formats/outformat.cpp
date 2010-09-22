@@ -22,7 +22,7 @@ namespace OpenBabel
 {
 
   // The ".out" format:
-  // Detect GAMESS, Q-Chem, PWSCF, Gaussian, or MOPAC output files
+  // Detect GAMESS, GAMESS-UK, Q-Chem, PWSCF, Gaussian, or MOPAC output files
   class OutputFormat : public OBMoleculeFormat
   {
   public:
@@ -85,6 +85,10 @@ namespace OpenBabel
           (strstr(buffer,"GAMESS VERSION") != NULL)) {
         // GAMESS output
         formatName = "gamout";
+        break;
+      } else if (strstr(buffer,"===  G A M E S S - U K    === ") != NULL) {
+        // GAMESS-UK output
+        formatName = "gukout";
         break;
       } else if (strstr(buffer,"Gaussian, Inc") != NULL) {
         // Gaussian output
