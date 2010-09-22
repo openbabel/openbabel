@@ -27,7 +27,7 @@
 #include <openbabel/mol.h>
 #include <openbabel/graphsym.h>
 #include <openbabel/oberror.h>
-#include <openbabel/datacache.h>
+#include <cassert>
 
 #include "stereoutil.h"
 
@@ -51,6 +51,9 @@ void print_vector(const std::string &label, const std::vector<T> &v)
 
 namespace OpenBabel {
 
+  OBAtom* findAtomWithSymmetryClass(OBAtom *atom, unsigned int symClass, const std::vector<unsigned int> &symClasses);
+  bool containsAtLeast_1true_2para(OBAtom *ligandAtom, OBAtom *atom, const OBStereoUnitSet &units);
+  bool containsAtLeast_2true_2paraAssemblies(OBAtom *ligandAtom, OBAtom *atom, const OBStereoUnitSet &units, const std::vector<OBBitVec> &mergedRings);
 
   //////////////////////////////////////////////////////////////////////////////
   //
@@ -118,7 +121,7 @@ namespace OpenBabel {
   bool isPotentialTetrahedral(OBAtom *atom)
   {
     // consider only potential steroecenters
-    if (atom->GetHyb() != 3 || atom->GetHvyValence() < 3)
+    if (atom->GetHyb() != 3 || atom->GetHvyValence() < 3 || atom->GetHvyValence() > 4)
       return false;
     // skip non-chiral N
     if (atom->IsNitrogen()) {
@@ -129,6 +132,14 @@ namespace OpenBabel {
       }
       if (nbrRingAtomCount < 3)
         return false;
+    }
+    if (atom->IsCarbon()) {
+      if (atom->GetFormalCharge())
+        return false;
+      FOR_NBORS_OF_ATOM (nbr, atom) {
+        if (nbr->GetAtomicNum() == 26 && nbr->GetValence() > 7)
+          return false;
+      }
     }
 
     return true;
@@ -151,6 +162,8 @@ namespace OpenBabel {
     if (!bond->GetBeginAtom()->HasSingleBond() || !bond->GetEndAtom()->HasSingleBond())
       return false;
     if (bond->GetBeginAtom()->GetHvyValence() == 1 || bond->GetEndAtom()->GetHvyValence() == 1)
+      return false;
+    if (bond->GetBeginAtom()->GetHvyValence() > 3 || bond->GetEndAtom()->GetHvyValence() > 3)
       return false;
     return true;
   }
@@ -292,7 +305,7 @@ namespace OpenBabel {
    * Rings are merged if they share at least one atom (e.g. bridged, spiro,
    * adjacent, ...).
    */
-  std::vector<OBBitVec> mergeRings(OBMol *mol)
+  std::vector<OBBitVec> mergeRings(OBMol *mol, const std::vector<unsigned int> &symClasses)
   {
     std::vector<OBRing*> rings = mol->GetSSSR();
 
@@ -301,20 +314,29 @@ namespace OpenBabel {
       // check if ring shares atom with previously found ring
       bool found = false;
       for (std::size_t j = 0; j < result.size(); ++j) {
+        std::vector<unsigned int> shared;
         // foreach ring atom
         for (std::size_t k = 0; k < rings[i]->_path.size(); ++k) {
           // check if the ring atom is in the current result bitvec
           if (result[j].BitIsSet(rings[i]->_path[k])) {
-            found = true;
-            // add bits for the atoms in the ring
-            for (std::size_t l = 0; l < rings[i]->_path.size(); ++l)
-              result[j].SetBitOn(rings[i]->_path[l]);
-            break;
+            shared.push_back(rings[i]->_path[k]);
           }
         }
 
-        if (found)
+        if (shared.size() > 1) {
+          found = true;
+        } else if (shared.size() == 1) {
+          int classification = classifyTetrahedralNbrSymClasses(symClasses, mol->GetAtom(shared[0]));
+          if (classification == T1122 || classification == T1111)
+            found = true;
+        }
+
+        if (found) {
+          // add bits for the atoms in the ring
+          for (std::size_t l = 0; l < rings[i]->_path.size(); ++l)
+            result[j].SetBitOn(rings[i]->_path[l]);
           break;
+        }
       }
 
       // add the ring as a new bitvec if it shares no atom with a previous ring
@@ -373,41 +395,287 @@ namespace OpenBabel {
     return fragment;
   }
 
-  /**
-   * Create a set of sets of stereogenic units from atom and bond idxes (i.e.
-   * OBAtom::GetIdx() and OBBond::GetIdx(). The stereocenters will be placed
-   * in one set for each merged ring (see mergeRings(). The set of these sets
-   * is returned. If there are no stereocenters in a ring, and empty set is
-   * included making it possible to index the returned set the same way as
-   * the specified mergedRings.
-   */
-  OBStereoUnitSetOfSets sortParaCentersByMergedRings(OBMol *mol,
-      const std::vector<OBBitVec> &mergedRings, const std::vector<unsigned int> &paraAtoms,
-      const std::vector<unsigned int> &paraBonds)
+
+  struct StereoRing
   {
-    OBStereoUnitSetOfSets result;
+    struct ParaAtom
+    {
+      typedef OBAtom CenterType;
 
-    // foreach merged ring
-    for (std::vector<OBBitVec>::const_iterator bv = mergedRings.begin(); bv != mergedRings.end(); ++bv) {
-      OBStereoUnitSet subresult;
-
-      // add the atom stereocenters for this ring
-      for (std::vector<unsigned int>::const_iterator pa = paraAtoms.begin(); pa != paraAtoms.end(); ++pa)
-        if (bv->BitIsOn(*pa))
-          subresult.push_back(OBStereoUnit(OBStereo::Tetrahedral, mol->GetAtom(*pa)->GetId()));
-      // add the bond stereocenters for this ring
-      for (std::vector<unsigned int>::const_iterator pb = paraBonds.begin(); pb != paraBonds.end(); ++pb) {
-        OBBond *bond  = mol->GetBond(*pb);
-        if (bv->BitIsOn(bond->GetBeginAtomIdx()) || bv->BitIsOn(bond->GetEndAtomIdx()))
-          subresult.push_back(OBStereoUnit(OBStereo::CisTrans, mol->GetBond(*pb)->GetId()));
+      ParaAtom(unsigned long _id, unsigned int idx) : id(_id), inIdx(idx) {}
+      OBAtom* GetCenter(OBMol *mol) const { return mol->GetAtomById(id); }
+      bool isInRing(const StereoRing &ring) const
+      {
+        for (std::size_t i = 0; i < ring.paraAtoms.size(); ++i)
+          if (ring.paraAtoms[i].inIdx == inIdx)
+            return true;
+        return false;
       }
 
-      // add subresult, even if empty (allows for ring identification by index)
-      result.push_back(subresult);
+      unsigned long id;
+      union {
+        unsigned int inIdx, outIdx;
+      };
+      std::vector<OBAtom*> insideNbrs, outsideNbrs;
+    };
+    struct ParaBond
+    {
+      typedef OBBond CenterType;
+      ParaBond(unsigned long _id, unsigned int _inIdx, unsigned int _outIdx) : id(_id), inIdx(_inIdx), outIdx(_outIdx) {}
+      OBBond* GetCenter(OBMol *mol) const { return mol->GetBondById(id); }
+      bool isInRing(const StereoRing &ring) const
+      {
+        for (std::size_t i = 0; i < ring.paraBonds.size(); ++i)
+          if (ring.paraBonds[i].inIdx == inIdx)
+            return true;
+        return false;
+      }
+
+      unsigned long id;
+      unsigned int inIdx, outIdx;
+      std::vector<OBAtom*> insideNbrs, outsideNbrs;
+    };
+
+    StereoRing() : trueCount(0) {}
+
+    std::vector<ParaAtom> paraAtoms;
+    std::vector<ParaBond> paraBonds;
+    unsigned int trueCount;
+  };
+
+  template<typename Type>
+  bool checkLigands(const Type &currentPara, const OBStereoUnitSet &units)
+  {
+    if (currentPara.outsideNbrs.size() == 1) {
+      //cout << "OK: " << __LINE__ << endl;
+      return true;
+    }
+    OBMol *mol = currentPara.insideNbrs[0]->GetParent();
+    assert(mol->GetAtom(currentPara.outIdx));
+    OBBitVec ligand = getFragment(currentPara.outsideNbrs[0], mol->GetAtom(currentPara.outIdx));
+    for (OBStereoUnitSet::const_iterator u2 = units.begin(); u2 != units.end(); ++u2) {
+      if (isUnitInFragment(mol, *u2, ligand)) {
+        //cout << "OK: " << __LINE__ << endl;
+        return true;
+      }
+    }
+    //cout << "NOT OK: " << __LINE__ << endl;
+    return false;
+  }
+
+
+  template<typename Type>
+  bool ApplyRule1(const Type &currentPara, const std::vector<unsigned int> &symmetry_classes,
+      const std::vector<StereoRing> &rings, std::vector<bool> &visitedRings, const OBStereoUnitSet &units,
+      std::vector<unsigned int> stereoAtoms)
+  {
+    bool foundRing = false;
+    unsigned int idx = currentPara.inIdx;
+
+    /*
+    for (std::size_t i = 0; i < visitedRings.size(); ++i)
+      if (visitedRings[i])
+        cout << "  ";
+    cout << "ApplyRule1(" << currentPara.inIdx << ", " << currentPara.outIdx << ", outside = " << currentPara.outsideNbrs.size() << ")" << endl;
+    */
+
+    for (std::size_t i = 0; i < rings.size(); ++i) {
+      // skip visited rings
+      if (visitedRings[i])
+        continue;
+
+      // Check if there is a ParaAtom with idx in this ring
+      if (!currentPara.isInRing(rings[i]))
+        continue;
+
+      //
+      // A new ring containing idx is found
+      //
+      foundRing = true;
+
+      // if there are one or more true stereo centers, idx is a stereo center
+      if (rings[i].trueCount) {
+        //cout << "OK: " << __LINE__ << endl;
+        return true;
+      }
+
+      // check if there is at least one other potential atom
+      for (std::size_t j = 0; j < rings[i].paraAtoms.size(); ++j) {
+        const StereoRing::ParaAtom &paraAtom = rings[i].paraAtoms[j];
+        // skip idx
+        if (paraAtom.inIdx == idx)
+          continue;
+        // there is another atom already identified as stereo atom
+        if (std::find(stereoAtoms.begin(), stereoAtoms.end(), paraAtom.inIdx) != stereoAtoms.end()) {
+          //cout << "OK: " << __LINE__ << endl;
+          return true;
+        }
+
+        if (paraAtom.outsideNbrs.size() == 1) {
+          // only 1 ring substituent, the other is implicit H -> topologically different
+          //cout << "OK: " << __LINE__ << endl;
+          return true;
+        } else {
+          if (paraAtom.outsideNbrs.size() != 2)
+            return false;
+          // two ring substituents, need to check for topological difference
+          if (symmetry_classes[paraAtom.outsideNbrs[0]->GetIndex()] != symmetry_classes[paraAtom.outsideNbrs[1]->GetIndex()]) {
+            // they are different
+            //cout << "OK: " << __LINE__ << endl;
+            return true;
+          } else {
+            // they are the same and they might also be in a ring -> apply rule 1 recursive
+            visitedRings[i] = true;
+            if (ApplyRule1(paraAtom, symmetry_classes, rings, visitedRings, units, stereoAtoms)) {
+              //cout << "OK: " << __LINE__ << endl;
+              return true;
+            }
+          }
+        }
+      }
+      // check if there is at least one other potential bond
+      for (std::size_t j = 0; j < rings[i].paraBonds.size(); ++j) {
+        const StereoRing::ParaBond &paraBond = rings[i].paraBonds[j];
+        // skip idx
+        if (paraBond.inIdx == idx)
+          continue;
+        // there is another atom already identified as stereo atom
+        if (std::find(stereoAtoms.begin(), stereoAtoms.end(), paraBond.inIdx) != stereoAtoms.end()) {
+          //cout << "OK: " << __LINE__ << endl;
+          return true;
+        }
+
+        if (paraBond.outsideNbrs.size() == 1) {
+          // only 1 ring substituent, the other is implicit H -> topologically different
+          //cout << "OK: " << __LINE__ << endl;
+          return true;
+        } else {
+          assert(paraBond.outsideNbrs.size() == 2);
+          // two ring substituents, need to check for topological difference
+          if (symmetry_classes[paraBond.outsideNbrs[0]->GetIndex()] != symmetry_classes[paraBond.outsideNbrs[1]->GetIndex()]) {
+            // they are different
+            //cout << "OK: " << __LINE__ << endl;
+            return true;
+          } else {
+            // they are the same and they might also be in a ring -> apply rule 1 recursive
+            visitedRings[i] = true;
+            if (ApplyRule1(paraBond, symmetry_classes, rings, visitedRings, units, stereoAtoms)) {
+              //cout << "OK: " << __LINE__ << endl;
+              return true;
+            }
+          }
+        }
+      }
+
     }
 
-    return result;
+    // if a non-visited ring was found and true was not returned -> it does not
+    // contain any stereocenters other than idx
+    if (foundRing) {
+      //cout << "NOT OK: " << __LINE__ << endl;
+      return false;
+    }
+
+    //cout << "NOT OK: " << __LINE__ << endl;
+    return false;
   }
+
+  void StartRule1(const std::vector<unsigned int> &symmetry_classes, const std::vector<StereoRing> &rings,
+      OBStereoUnitSet &units, std::vector<unsigned int> &stereoAtoms)
+  {
+    for (std::size_t i = 0; i < rings.size(); ++i) {
+      //cout << "Checking ring: " << i << endl;
+
+      // tetrahedral atoms
+      for (std::size_t j = 0; j < rings[i].paraAtoms.size(); ++j) {
+        const StereoRing::ParaAtom &paraAtom = rings[i].paraAtoms[j];
+        // skip the atom if it is already in stereoAtoms
+        if (std::find(stereoAtoms.begin(), stereoAtoms.end(), paraAtom.inIdx) != stereoAtoms.end())
+          continue;
+
+        std::vector<bool> visitedRings(rings.size(), false);
+        //visitedRings[i] = true;
+        if (ApplyRule1(paraAtom, symmetry_classes, rings, visitedRings, units, stereoAtoms)) {
+          bool isStereoUnit = false;
+          if (paraAtom.outsideNbrs.size() == 1)
+            isStereoUnit = true;
+          if (paraAtom.outsideNbrs.size() == 2) {
+            if (symmetry_classes[paraAtom.outsideNbrs[0]->GetIndex()] == symmetry_classes[paraAtom.outsideNbrs[1]->GetIndex()]) {
+              // check for spiro atom
+              bool isSpiro = false;
+              for (std::size_t k = 0; k < rings[i].paraAtoms.size(); ++k) {
+                const StereoRing::ParaAtom &paraAtom2 = rings[i].paraAtoms[k];
+                if (paraAtom.inIdx == paraAtom2.outIdx && paraAtom.insideNbrs == paraAtom2.outsideNbrs) {
+                  isSpiro = true;
+                  if (ApplyRule1(paraAtom2, symmetry_classes, rings, visitedRings, units, stereoAtoms))
+                    isStereoUnit = true;
+                }
+              }
+              if (!isSpiro)
+                isStereoUnit = checkLigands(paraAtom, units);
+              //cout << "isStereoUnit = " << isStereoUnit << endl;
+            } else {
+              isStereoUnit = true;
+            }
+          }
+
+          if (isStereoUnit) {
+            stereoAtoms.push_back(paraAtom.inIdx);
+            OBAtom *atom = paraAtom.insideNbrs[0]->GetParent()->GetAtomById(paraAtom.id);
+            units.push_back(OBStereoUnit(OBStereo::Tetrahedral, atom->GetId(), true));
+          }
+        }
+
+      }
+
+      // cistrans bonds
+      for (std::size_t j = 0; j < rings[i].paraBonds.size(); ++j) {
+        const StereoRing::ParaBond &paraBond = rings[i].paraBonds[j];
+        // skip the atom if it is already in stereoAtoms
+        if (std::find(stereoAtoms.begin(), stereoAtoms.end(), paraBond.inIdx) != stereoAtoms.end())
+          continue;
+
+        std::vector<bool> visitedRings(rings.size(), false);
+        //visitedRings[i] = true;
+        if (ApplyRule1(paraBond, symmetry_classes, rings, visitedRings, units, stereoAtoms)) {
+          bool isStereoUnit = false;
+          if (paraBond.outsideNbrs.size() == 1)
+            isStereoUnit = true;
+          if (paraBond.outsideNbrs.size() == 2) {
+            if (symmetry_classes[paraBond.outsideNbrs[0]->GetIndex()] == symmetry_classes[paraBond.outsideNbrs[1]->GetIndex()]) {
+              // check for spiro bond
+              bool isSpiro = false;
+              for (std::size_t k = 0; k < rings[i].paraBonds.size(); ++k) {
+                const StereoRing::ParaBond &paraBond2 = rings[i].paraBonds[k];
+                if (paraBond.inIdx == paraBond2.outIdx && paraBond.insideNbrs == paraBond2.outsideNbrs) {
+                  isSpiro = true;
+                  if (ApplyRule1(paraBond2, symmetry_classes, rings, visitedRings, units, stereoAtoms))
+                    isStereoUnit = true;
+                }
+              }
+              if (!isSpiro)
+                isStereoUnit = checkLigands(paraBond, units);
+              //cout << "isStereoUnit = " << isStereoUnit << endl;
+            } else {
+              isStereoUnit = true;
+            }
+          }
+
+          if (isStereoUnit) {
+            stereoAtoms.push_back(paraBond.inIdx);
+            stereoAtoms.push_back(paraBond.outIdx);
+            OBBond *bond = paraBond.insideNbrs[0]->GetParent()->GetBondById(paraBond.id);
+            units.push_back(OBStereoUnit(OBStereo::CisTrans, bond->GetId(), true));
+          }
+        }
+
+      }
+
+
+    }
+
+  }
+
 
   /**
    * Find the stereogenic units in a molecule using a set of rules.
@@ -427,6 +695,7 @@ namespace OpenBabel {
       return units;
 
     // para-stereocenters candidates
+    std::vector<unsigned int> stereoAtoms; // Tetrahedral = idx, CisTrans = begin & end idx
     std::vector<unsigned int> paraAtoms;
     std::vector<unsigned int> paraBonds;
 
@@ -465,6 +734,7 @@ namespace OpenBabel {
 
       if (ischiral) {
         // true-stereocenter found
+        stereoAtoms.push_back(atom->GetIdx());
         units.push_back(OBStereoUnit(OBStereo::Tetrahedral, atom->GetId()));
       }
     }
@@ -590,241 +860,92 @@ namespace OpenBabel {
      *
      * NOTE: there must always be at least 2 new stereocenters (or one existing + 1 newly found) in order for them to be valid
      */
-    std::vector<OBBitVec> mergedRings = mergeRings(mol);
-    OBStereoUnitSetOfSets sortedParas = sortParaCentersByMergedRings(mol, mergedRings, paraAtoms, paraBonds);
-    size_t lastSize = units.size();
-    while (true) {
-      // iterate over the merged rings
-      for (std::size_t s = 0; s < sortedParas.size(); ++s) {
-        int centersInRing = 0;
-        std::vector<unsigned long> newAtoms;
-        std::vector<unsigned long> newBonds;
+    std::vector<OBRing*> lssr = mol->GetLSSR();
+    std::vector<StereoRing> rings;
 
-        // check for true-stereocenters in the ring
-        for (OBStereoUnitSet::iterator u = units.begin(); u != units.end(); ++u) {
-          if ((*u).type == OBStereo::Tetrahedral) {
-            OBAtom *atom = mol->GetAtomById((*u).id);
-            if (mergedRings.at(s).BitIsOn(atom->GetIdx()))
-              centersInRing++;
-          }
-        }
+    //cout << "=====================================================" << endl;
+    for (std::size_t i = 0; i < lssr.size(); ++i) {
+      rings.push_back(StereoRing());
+      StereoRing &ring = rings.back();
 
-        // check for para-stereocenters in the ring
-        for (OBStereoUnitSet::iterator u = sortedParas[s].begin(); u != sortedParas[s].end(); ++u) {
-          if ((*u).type == OBStereo::Tetrahedral) {
-            OBAtom *atom = mol->GetAtomById((*u).id);
-            int classification = classifyTetrahedralNbrSymClasses(symClasses, atom);
-            switch (classification) {
-              case T1123:
-                {
-                  // find the two ligands with identical symmetry classes
-                  OBAtom *ligandAtom1 = 0;
-                  OBAtom *ligandAtom2 = 0;
 
-                  std::vector<unsigned int> nbrClasses;
-                  FOR_NBORS_OF_ATOM (nbr, atom)
-                    nbrClasses.push_back(symClasses.at(nbr->GetIndex()));
+      for (std::size_t j = 0; j < stereoAtoms.size(); ++j)
+        if (lssr[i]->_pathset.BitIsSet(stereoAtoms[j]))
+          ring.trueCount++;
 
-                  unsigned int duplicatedSymmetryClass;
-                  std::sort(nbrClasses.begin(), nbrClasses.end());
-                  for (std::size_t i = 0; i < nbrClasses.size()-1; ++i)
-                    if (nbrClasses.at(i) == nbrClasses.at(i+1))
-                      duplicatedSymmetryClass = nbrClasses.at(i);
+      //cout << "StereoRing: trueCount = " << ring.trueCount << endl;
+      for (std::size_t j = 0; j < paraAtoms.size(); ++j) {
+        if (lssr[i]->_pathset.BitIsSet(paraAtoms[j])) {
+          OBAtom *atom = mol->GetAtom(paraAtoms[j]);
+          ring.paraAtoms.push_back(StereoRing::ParaAtom(atom->GetId(), paraAtoms[j]));
 
-                  FOR_NBORS_OF_ATOM (nbr, atom) {
-                    if (symClasses.at(nbr->GetIndex()) == duplicatedSymmetryClass) {
-                      if (!ligandAtom1)
-                        ligandAtom1 = &*nbr;
-                      else
-                        ligandAtom2 = &*nbr;
-                    }
-                  }
-
-                  // if the two identical symmetry classes are in a ring, this center is stereogenic
-                  if (mergedRings[s].BitIsOn(ligandAtom1->GetIdx()) && mergedRings[s].BitIsOn(ligandAtom1->GetIdx())) {
-                    centersInRing++;
-                    newAtoms.push_back((*u).id);
-                  }
-                }
-                break;
-              case T1122:
-                {
-                  // find the two different ligands
-                  OBAtom *ligandAtom1 = 0;
-                  OBAtom *ligandAtom2 = 0;
-                  FOR_NBORS_OF_ATOM (nbr, atom) {
-                    if (!ligandAtom1)
-                      ligandAtom1 = &*nbr;
-                    else {
-                      if (symClasses.at(ligandAtom1->GetIndex()) != symClasses.at(nbr->GetIndex())) {
-                        ligandAtom2 = &*nbr;
-                      }
-                    }
-                  }
-
-                  // check which ligand corresponds to the current merged ring
-                  OBBitVec ligand;
-                  bool spiroCarbon = false;
-                  if (mergedRings[s].BitIsOn(ligandAtom1->GetIdx()) && mergedRings[s].BitIsOn(ligandAtom2->GetIdx())) {
-                    ligand = getFragment(ligandAtom1, atom) | getFragment(ligandAtom2, atom);
-                    spiroCarbon = true;
-                  } else if (mergedRings[s].BitIsOn(ligandAtom1->GetIdx())) {
-                    ligand = getFragment(ligandAtom2, atom);
-                  } else {
-                    ligand = getFragment(ligandAtom1, atom);
-                  }
-
-                  // make sure there is at least one steroecenter (true/para) in the ligand
-                  bool foundStereoCenterInLigand = false;
-                  for (OBStereoUnitSet::iterator u2 = units.begin(); u2 != units.end(); ++u2) {
-                    if ((*u2).type == OBStereo::Tetrahedral) {
-                      if (ligand.BitIsOn((*u2).id)) {
-                        if (spiroCarbon)
-                          centersInRing++;
-                        foundStereoCenterInLigand = true;
-                      }
-                    } else if((*u2).type == OBStereo::CisTrans) {
-                      OBBond *bond = mol->GetBondById((*u2).id);
-                      OBAtom *begin = bond->GetBeginAtom();
-                      OBAtom *end = bond->GetEndAtom();
-                      if (ligand.BitIsOn(begin->GetId()) || ligand.BitIsOn(end->GetId())) {
-                        if (spiroCarbon)
-                          centersInRing++;
-                        foundStereoCenterInLigand = true;
-                      }
-                    }
-                  }
-
-                  if (foundStereoCenterInLigand) {
-                    centersInRing++;
-                    newAtoms.push_back(atom->GetId());
-                  }
-                }
-                break;
-              case T1111:
-                {
-                  bool spiroCarbon = true;
-                  OBAtom *ligandAtom = 0;
-                  FOR_NBORS_OF_ATOM (nbr, atom) {
-                    if (!mergedRings[s].BitIsOn(nbr->GetIdx()))
-                      spiroCarbon = false;
-                    ligandAtom = &*nbr;
-                  }
-
-                  OBBitVec ligand = getFragment(ligandAtom, atom);
-                  bool foundStereoCenterInLigand = false;
-                  for (OBStereoUnitSet::iterator u2 = units.begin(); u2 != units.end(); ++u2) {
-                    if ((*u2).type == OBStereo::Tetrahedral) {
-                      if (ligand.BitIsOn((*u2).id)) {
-                        if (spiroCarbon)
-                          centersInRing++;
-                        foundStereoCenterInLigand = true;
-                      }
-                    } else if((*u2).type == OBStereo::CisTrans) {
-                      OBBond *bond = mol->GetBondById((*u2).id);
-                      OBAtom *begin = bond->GetBeginAtom();
-                      OBAtom *end = bond->GetEndAtom();
-                      if (ligand.BitIsOn(begin->GetId()) || ligand.BitIsOn(end->GetId())) {
-                        if (spiroCarbon)
-                          centersInRing++;
-                        foundStereoCenterInLigand = true;
-                      }
-                    }
-                  }
-
-                  if (foundStereoCenterInLigand) {
-                    centersInRing++;
-                    newAtoms.push_back(atom->GetId());
-                  }
-                }
-                break;
-              case T1112:
-                break;
-              default:
-                break;
-            }
-          } else {
-            OBBond *bond = mol->GetBondById((*u).id);
-            OBAtom *atom = 0;
-            if (mergedRings[s].BitIsOn(bond->GetBeginAtomIdx()))
-              atom = bond->GetEndAtom();
+          FOR_NBORS_OF_ATOM (nbr, mol->GetAtom(paraAtoms[j])) {
+            if (lssr[i]->_pathset.BitIsSet(nbr->GetIdx()))
+              ring.paraAtoms.back().insideNbrs.push_back(&*nbr);
             else
-              atom = bond->GetBeginAtom();
-            int classification = classifyCisTransNbrSymClasses(symClasses, bond, atom);
-            switch (classification) {
-              case C12:
-                // again, easy :-)
-                centersInRing++;
-                newBonds.push_back((*u).id);
-                break;
-              case C11:
-                {
-                  // find the ligand
-                  OBAtom *ligandAtom = 0;
-                  FOR_NBORS_OF_ATOM (nbr, atom) {
-                    if ((nbr->GetIdx() != bond->GetBeginAtomIdx()) && (nbr->GetIdx() != bond->GetEndAtomIdx())) {
-                      ligandAtom = &*nbr;
-                      break;
-                    }
-                  }
-
-                  OBBitVec ligand = getFragment(ligandAtom, atom);
-                  bool foundStereoCenterInLigand = false;
-                  for (OBStereoUnitSet::iterator u2 = units.begin(); u2 != units.end(); ++u2) {
-                    if ((*u2).type == OBStereo::Tetrahedral) {
-                      if (ligand.BitIsOn((*u2).id))
-                        foundStereoCenterInLigand = true;
-                    } else if((*u2).type == OBStereo::CisTrans) {
-                      OBBond *bond = mol->GetBondById((*u2).id);
-                      OBAtom *begin = bond->GetBeginAtom();
-                      OBAtom *end = bond->GetEndAtom();
-                      if (ligand.BitIsOn(begin->GetId()) || ligand.BitIsOn(end->GetId()))
-                        foundStereoCenterInLigand = true;
-                    }
-                  }
-
-                  if (foundStereoCenterInLigand) {
-                    centersInRing++;
-                    newBonds.push_back((*u).id);
-                  }
-                }
-                break;
-
-              default:
-                break;
-            }
+              ring.paraAtoms.back().outsideNbrs.push_back(&*nbr);
           }
+
+          //cout << "  ParaAtom(idx = " << ring.paraAtoms.back().inIdx << ", outside = " << ring.paraAtoms.back().outsideNbrs.size() << ")" << endl;
+          assert( ring.paraAtoms.back().insideNbrs.size() == 2 );
+        }
+      }
+
+      for (std::size_t j = 0; j < paraBonds.size(); ++j) {
+        OBBond *bond = mol->GetBond(paraBonds[j]);
+        unsigned int beginIdx = bond->GetBeginAtomIdx();
+        unsigned int endIdx = bond->GetEndAtomIdx();
+
+        if (lssr[i]->_pathset.BitIsSet(beginIdx)) {
+          ring.paraBonds.push_back(StereoRing::ParaBond(bond->GetId(), beginIdx, endIdx));
+
+          FOR_NBORS_OF_ATOM (nbr, bond->GetBeginAtom()) {
+            if (nbr->GetIdx() == endIdx)
+              continue;
+            ring.paraBonds.back().insideNbrs.push_back(&*nbr);
+          }
+          FOR_NBORS_OF_ATOM (nbr, bond->GetEndAtom()) {
+            if (nbr->GetIdx() == beginIdx)
+              continue;
+            ring.paraBonds.back().outsideNbrs.push_back(&*nbr);
+          }
+
+          //cout << "  ParaBond(inIdx = " << beginIdx << ", outIdx = " << endIdx << ", outside = " << ring.paraBonds.back().outsideNbrs.size() << ")" << endl;
+          assert( ring.paraBonds.back().insideNbrs.size() == 2 );
         }
 
-        if (centersInRing < 2)
-          continue;
+        if (lssr[i]->_pathset.BitIsSet(endIdx)) {
+          ring.paraBonds.push_back(StereoRing::ParaBond(bond->GetId(), endIdx, beginIdx));
 
-        // filter out the newly added para-stereocenters in the set of units sorted by ring (sortedParas)
-        OBStereoUnitSet filtered;
-        for (OBStereoUnitSet::iterator u = sortedParas[s].begin(); u != sortedParas[s].end(); ++u) {
-          if ((*u).type == OBStereo::Tetrahedral) {
-            if (std::find(newAtoms.begin(), newAtoms.end(), (*u).id) == newAtoms.end())
-              filtered.push_back(*u);
-            else {
-              units.push_back(OBStereoUnit(OBStereo::Tetrahedral, (*u).id, true));
-            }
-          } else if ((*u).type == OBStereo::CisTrans) {
-            if (std::find(newBonds.begin(), newBonds.end(), (*u).id) == newBonds.end())
-              filtered.push_back(*u);
-            else
-              units.push_back(OBStereoUnit(OBStereo::CisTrans, (*u).id, true));
+          FOR_NBORS_OF_ATOM (nbr, bond->GetEndAtom()) {
+            if (nbr->GetIdx() == beginIdx)
+              continue;
+            ring.paraBonds.back().insideNbrs.push_back(&*nbr);
           }
+          FOR_NBORS_OF_ATOM (nbr, bond->GetBeginAtom()) {
+            if (nbr->GetIdx() == endIdx)
+              continue;
+            ring.paraBonds.back().outsideNbrs.push_back(&*nbr);
+          }
+
+          //cout << "  ParaBond(inIdx = " << endIdx << ", outIdx = " << beginIdx << ", outside = " << ring.paraBonds.back().outsideNbrs.size() << ")" << endl;
+          assert( ring.paraBonds.back().insideNbrs.size() == 2 );
         }
-        sortedParas[s] = filtered;
 
       }
 
+      if (ring.paraAtoms.size() + ring.paraBonds.size() == 1) {
+        ring.paraAtoms.clear();
+        ring.paraBonds.clear();
+      }
 
-      if (units.size() == lastSize)
-        break;
-      lastSize = units.size();
     }
+    //cout << "=====================================================" << endl;
 
+    StartRule1(symClasses, rings, units, stereoAtoms);
+
+
+    std::vector<OBBitVec> mergedRings = mergeRings(mol, symClasses);
     /**
      * Apply rule 2a for tetracoordinate carbon:
      * - 1 or 2 pair identical ligands
@@ -910,142 +1031,22 @@ namespace OpenBabel {
         case T1122:
           // rule 2a with 2 pairs
           {
-            // find the two different ligands
-            OBAtom *ligandAtom1 = 0;
-            OBAtom *ligandAtom2 = 0;
-            FOR_NBORS_OF_ATOM (nbr, atom) {
-              if (!ligandAtom1)
-                ligandAtom1 = &*nbr;
-              else {
-                if (symClasses.at(ligandAtom1->GetIndex()) != symClasses.at(nbr->GetIndex())) {
-                  ligandAtom2 = &*nbr;
-                }
-              }
-            }
-
-            // check if ligand contains at least:
-            // - 1 true-stereocenter
-            // - 2 para-stereocenters
-            OBBitVec ligand = getFragment(ligandAtom1, atom);
-            bool foundTrueStereoCenter = false;
-            int paraStereoCenterCount = 0;
-            for (OBStereoUnitSet::iterator u2 = units.begin(); u2 != units.end(); ++u2) {
-              if ((*u2).type == OBStereo::Tetrahedral) {
-                if (ligand.BitIsOn((*u2).id)) {
-                  if ((*u2).para)
-                    paraStereoCenterCount++;
-                  else
-                    foundTrueStereoCenter = true;
-                }
-              } else if((*u2).type == OBStereo::CisTrans) {
-                OBBond *bond = mol->GetBondById((*u2).id);
-                OBAtom *begin = bond->GetBeginAtom();
-                OBAtom *end = bond->GetEndAtom();
-                if (ligand.BitIsOn(begin->GetId()) || ligand.BitIsOn(end->GetId()))
-                  if ((*u2).para)
-                    paraStereoCenterCount++;
-                  else
-                    foundTrueStereoCenter = true;
-              }
-            }
-
-            if (!foundTrueStereoCenter && paraStereoCenterCount < 2)
-              continue;
-
-            ligand = getFragment(ligandAtom1, atom);
-            foundTrueStereoCenter = false;
-            paraStereoCenterCount = 0;
-            for (OBStereoUnitSet::iterator u2 = units.begin(); u2 != units.end(); ++u2) {
-              if ((*u2).type == OBStereo::Tetrahedral) {
-                if (ligand.BitIsOn((*u2).id)) {
-                  if ((*u2).para)
-                    paraStereoCenterCount++;
-                  else
-                    foundTrueStereoCenter = true;
-                }
-              } else if((*u2).type == OBStereo::CisTrans) {
-                OBBond *bond = mol->GetBondById((*u2).id);
-                OBAtom *begin = bond->GetBeginAtom();
-                OBAtom *end = bond->GetEndAtom();
-                if (ligand.BitIsOn(begin->GetId()) || ligand.BitIsOn(end->GetId()))
-                  if ((*u2).para)
-                    paraStereoCenterCount++;
-                  else
-                    foundTrueStereoCenter = true;
-              }
-            }
-
-            if (foundTrueStereoCenter || paraStereoCenterCount >= 2) {
+            unsigned int duplicatedSymClass1, duplicatedSymClass2;
+            findDuplicatedSymmetryClasses(atom, symClasses, duplicatedSymClass1, duplicatedSymClass2);
+            OBAtom *ligandAtom1 = findAtomWithSymmetryClass(atom, duplicatedSymClass1, symClasses);
+            OBAtom *ligandAtom2 = findAtomWithSymmetryClass(atom, duplicatedSymClass2, symClasses);
+            if (containsAtLeast_1true_2para(ligandAtom1, atom, units) &&
+                containsAtLeast_1true_2para(ligandAtom2, atom, units))
               units.push_back(OBStereoUnit(OBStereo::Tetrahedral, atom->GetId(), true));
-            }
           }
           break;
         case T1112:
           // rule 2b with 3 identical
           {
-            // find the duplicated symmetry class
-            unsigned int duplicatedSymClass = OBGraphSym::NoSymmetryClass;
-            std::vector<unsigned int> nbrSymClasses;
-            FOR_NBORS_OF_ATOM (nbr, atom) {
-              nbrSymClasses.push_back(symClasses.at(nbr->GetIndex()));
-            }
-            for (std::size_t i = 0; i < nbrSymClasses.size(); ++i) {
-              if (std::count(nbrSymClasses.begin(), nbrSymClasses.end(), nbrSymClasses.at(i)) == 3) {
-                duplicatedSymClass = nbrSymClasses.at(i);
-                break;
-              }
-            }
-            if (duplicatedSymClass == OBGraphSym::NoSymmetryClass)
-              continue;
-
-            // find the ligand atom
-            OBAtom *ligandAtom = 0;
-            FOR_NBORS_OF_ATOM (nbr, atom)
-              if (symClasses.at(nbr->GetIndex()) == duplicatedSymClass)
-                ligandAtom = &*nbr;
-
-            if (!ligandAtom)
-              break;
-
-            // check if ligand contains at least:
-            // - 2 true-stereocenter
-            // - 2 separate para-stereocenters assemblies
-            OBBitVec ligand = getFragment(ligandAtom, atom);
-            int trueStereoCenterCount = 0;
-            std::vector<unsigned int> ringIndices;
-            for (OBStereoUnitSet::iterator u2 = units.begin(); u2 != units.end(); ++u2) {
-              if ((*u2).type == OBStereo::Tetrahedral) {
-                if (ligand.BitIsOn((*u2).id)) {
-                  if ((*u2).para) {
-                    OBAtom *paraAtom = mol->GetAtomById((*u2).id);
-                    for (std::size_t ringIdx = 0; ringIdx < mergedRings.size(); ++ringIdx) {
-                      if (mergedRings.at(ringIdx).BitIsOn(paraAtom->GetIdx()))
-                        if (std::find(ringIndices.begin(), ringIndices.end(), ringIdx) == ringIndices.end())
-                          ringIndices.push_back(ringIdx);
-                    }
-                  } else
-                    trueStereoCenterCount++;
-                }
-              } else if((*u2).type == OBStereo::CisTrans) {
-                OBBond *bond = mol->GetBondById((*u2).id);
-                OBAtom *begin = bond->GetBeginAtom();
-                OBAtom *end = bond->GetEndAtom();
-                if (ligand.BitIsOn(begin->GetId()) || ligand.BitIsOn(end->GetId()))
-                  if ((*u2).para) {
-                    for (std::size_t ringIdx = 0; ringIdx < mergedRings.size(); ++ringIdx) {
-                      if (mergedRings.at(ringIdx).BitIsOn(begin->GetIdx()) || mergedRings.at(ringIdx).BitIsOn(end->GetIdx()))
-                        if (std::find(ringIndices.begin(), ringIndices.end(), ringIdx) == ringIndices.end())
-                          ringIndices.push_back(ringIdx);
-                    }
-                  } else
-                    trueStereoCenterCount++;
-              }
-            }
-
-            if (trueStereoCenterCount >= 2 || ringIndices.size() >= 2) {
+            unsigned int duplicatedSymClass = findDuplicatedSymmetryClass(atom, symClasses);
+            OBAtom *ligandAtom = findAtomWithSymmetryClass(atom, duplicatedSymClass, symClasses);
+            if (containsAtLeast_2true_2paraAssemblies(ligandAtom, atom, units, mergedRings))
               units.push_back(OBStereoUnit(OBStereo::Tetrahedral, atom->GetId(), true));
-            }
-
           }
           break;
         case T1111:
@@ -1343,15 +1344,21 @@ namespace OpenBabel {
         print_vector("duplicatedSymClasses", duplicatedSymClasses);
       }
 
-      bool permutated = false;
+      std::vector< std::vector<OBAtom*> > duplicatedAtoms;
+
+      int permutated = 0;
       for (std::size_t i = 0; i < duplicatedSymClasses.size(); ++i) {
         unsigned int duplicatedSymClass = duplicatedSymClasses[i];
+
+        duplicatedAtoms.resize(duplicatedAtoms.size()+1);
 
         // Store the ligand indexes for the atoms with the duplicated symmetry class
         std::vector< std::pair<unsigned int, unsigned int> > tlist1;
         FOR_NBORS_OF_ATOM (nbr, center) {
-          if (symmetry_classes[nbr->GetIndex()] == duplicatedSymClass)
+          if (symmetry_classes[nbr->GetIndex()] == duplicatedSymClass) {
             tlist1.push_back(std::make_pair(nbr->GetIndex(), canon_labels[nbr->GetIndex()]));
+            duplicatedAtoms.back().push_back(&*nbr);
+          }
         }
         // Sort the indexes
         std::sort(tlist1.begin(), tlist1.end(), ComparePairSecond);
@@ -1370,7 +1377,24 @@ namespace OpenBabel {
 
         // Permute the flag
         if (OBStereo::NumInversions(tlist2) % 2)
-          permutated = !permutated;
+          //permutated = !permutated;
+          permutated++;
+      }
+
+      if (permutated == 2) {
+        std::vector<OBRing*> lssr = center->GetParent()->GetLSSR();
+        assert( duplicatedAtoms.size() == 2 );
+        assert( duplicatedAtoms[0].size() == 2 );
+        assert( duplicatedAtoms[1].size() == 2 );
+        for (std::size_t i = 0; i < lssr.size(); ++i) {
+          if (lssr[i]->_pathset.BitIsSet(duplicatedAtoms[0][0]->GetIdx()) &&
+              lssr[i]->_pathset.BitIsSet(duplicatedAtoms[0][1]->GetIdx()))
+            return false;
+          if (lssr[i]->_pathset.BitIsSet(duplicatedAtoms[1][0]->GetIdx()) &&
+              lssr[i]->_pathset.BitIsSet(duplicatedAtoms[1][1]->GetIdx()))
+            return false;
+        }
+        return true;
       }
 
       return permutated;
@@ -1583,10 +1607,9 @@ namespace OpenBabel {
    * true- or 2 separate assemblies of at least 2 para-stereocenter. This is rule
    * 2b in the Razinger paper on stereoisomer generation.
    */
-  bool containsAtLeast_2true_2paraAssemblies(OBAtom *ligandAtom, OBAtom *atom, const OBStereoUnitSet &units)
+  bool containsAtLeast_2true_2paraAssemblies(OBAtom *ligandAtom, OBAtom *atom, const OBStereoUnitSet &units, const std::vector<OBBitVec> &mergedRings)
   {
     OBMol *mol = atom->GetParent();
-    std::vector<OBBitVec> mergedRings = mergeRings(mol);
     // check if ligand contains at least:
     // - 2 true-stereocenter
     // - 2 separate para-stereocenters assemblies
@@ -1649,6 +1672,8 @@ namespace OpenBabel {
     // for the stereogenic units
     std::vector<StereoInverted::Entry> inverted = StereoInverted::compute(mol, symClasses, automorphisms);
 
+    std::vector<OBBitVec> mergedRings = mergeRings(mol, symClasses);
+
     std::vector<unsigned long> doneAtoms, doneBonds;
     unsigned int lastSize = units.size();
     while (true) {
@@ -1678,6 +1703,9 @@ namespace OpenBabel {
         }
 
         int classification = classifyTetrahedralNbrSymClasses(symClasses, atom);
+
+        if (DEBUG_INVERSIONS)
+          cout << "foundPermutation for id = " << atom->GetId() << ": " << foundPermutation << endl;
 
         if (!foundPermutation) {
           // true-stereocenter found
@@ -1727,7 +1755,7 @@ namespace OpenBabel {
               {
                 unsigned int duplicatedSymClass = findDuplicatedSymmetryClass(atom, symClasses);
                 OBAtom *ligandAtom = findAtomWithSymmetryClass(atom, duplicatedSymClass, symClasses);
-                if (containsAtLeast_2true_2paraAssemblies(ligandAtom, atom, units)) {
+                if (containsAtLeast_2true_2paraAssemblies(ligandAtom, atom, units, mergedRings)) {
                   units.push_back(OBStereoUnit(OBStereo::Tetrahedral, atom->GetId(), true));
                   doneAtoms.push_back(atom->GetId());
                 }
@@ -1877,9 +1905,8 @@ namespace OpenBabel {
 
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom0D", obAuditMsg);
 
-    OBStereoUnitSet stereogenicUnits;
-    DataCache cache(mol);
-    cache.GetStereogenicUnits(stereogenicUnits);
+    std::vector<unsigned int> symmetry_classes = FindSymmetry(mol);
+    OBStereoUnitSet stereogenicUnits = FindStereogenicUnits(mol, symmetry_classes);
 
     TetrahedralFrom0D(mol, stereogenicUnits);
     CisTransFrom0D(mol, stereogenicUnits);
@@ -2069,9 +2096,8 @@ namespace OpenBabel {
 
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom3D", obAuditMsg);
 
-    OBStereoUnitSet stereogenicUnits;
-    DataCache cache(mol);
-    cache.GetStereogenicUnits(stereogenicUnits);
+    std::vector<unsigned int> symmetry_classes = FindSymmetry(mol);
+    OBStereoUnitSet stereogenicUnits = FindStereogenicUnits(mol, symmetry_classes);
 
     mol->DeleteData(OBGenericDataType::StereoData);
     TetrahedralFrom3D(mol, stereogenicUnits);
@@ -2284,9 +2310,8 @@ namespace OpenBabel {
 
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StereoFrom2D", obAuditMsg);
 
-    OBStereoUnitSet stereogenicUnits;
-    DataCache cache(mol);
-    cache.GetStereogenicUnits(stereogenicUnits);
+    std::vector<unsigned int> symmetry_classes = FindSymmetry(mol);
+    OBStereoUnitSet stereogenicUnits = FindStereogenicUnits(mol, symmetry_classes);
 
     mol->DeleteData(OBGenericDataType::StereoData);
     TetrahedralFrom2D(mol, stereogenicUnits);
