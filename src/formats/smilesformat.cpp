@@ -546,9 +546,7 @@ namespace OpenBabel {
     }
 
     CreateCisTrans(mol);
-
-    // Use lazy evaluation to avoid Automorphisms for regular smiles.
-    mol.SetChiralityPerceived();
+    StereoFrom0D(&mol);
 
     return(true);
   }
@@ -3763,11 +3761,6 @@ namespace OpenBabel {
     // Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol mol = *pmol;
-
-    if(pConv->IsOption("c")) {
-      mol.UnsetFlag(OB_CHIRALITY_MOL);
-      PerceiveStereo(&mol);
-    }
 
     // Title only option?
     if(pConv->IsOption("t")) {
