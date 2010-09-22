@@ -312,8 +312,12 @@ int main(int argc, char **argv)
   //cout << "PASSED TESTS: " << testCount - failed << "/" << testCount << endl;
   //return 0;
 
-
-
+  OB_ASSERT( doShuffleTest("c1[14cH]cccc1") );
+  OB_ASSERT( doShuffleTest("[14cH]1[14cH]cccc1") );
+  OB_ASSERT( doShuffleTest("[14cH]1[14cH]ccc[14cH]1") );
+  OB_ASSERT( doShuffleTest("[14cH]1[14cH]cc[14cH][14cH]1") );
+  OB_ASSERT( doShuffleTest("[14cH]1[14cH]c[14cH][14cH][14cH]1") );
+  OB_ASSERT( doShuffleTest("[14cH]1[14cH][14cH][14cH][14cH][14cH]1") );
 
 
   OB_ASSERT( doShuffleTestMultiFile("stereo/error2.smi") );
