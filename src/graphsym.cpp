@@ -54,7 +54,11 @@ void print_vector(const std::string &label, const std::vector<T> &v)
 {
   std::cout << label << ": ";
   for (std::size_t i = 0; i < v.size(); ++i)
-    std::cout << v[i] << " ";
+    if (v[i] < 10)
+      std::cout << " " << v[i] << " ";
+    else
+      std::cout << v[i] << " ";
+
   std::cout << endl;
 }
 
@@ -90,7 +94,7 @@ namespace OpenBabel {
       int ExtendInvariants(std::vector<std::pair<OBAtom*, unsigned int> > &symmetry_classes);
       int CalculateSymmetry(std::vector<unsigned int> &symmetry_classes);
       int Iterate(std::vector<unsigned int> &symmetry_classes);
-      void CanonicalLabels(const std::vector<unsigned int> &symmetry_classes, std::vector<unsigned int> &canon_labels);
+      void CanonicalLabels(const std::vector<unsigned int> &symmetry_classes, std::vector<unsigned int> &canon_labels, int maxSeconds);
   };
 
   OBGraphSym::OBGraphSym(OBMol* pmol, const OBBitVec* frag_atoms) : d(new OBGraphSymPrivate)
@@ -675,7 +679,6 @@ namespace OpenBabel {
   void addNbrs(OBBitVec &fragment, OBAtom *atom, const OBBitVec &mask)
   {
     FOR_NBORS_OF_ATOM (nbr, atom) {
-      // don't pass through skip
       if (!mask.BitIsSet(nbr->GetIdx()))
         continue;
       // skip visited atoms
@@ -701,6 +704,37 @@ namespace OpenBabel {
     addNbrs(fragment, atom, mask);
     return fragment;
   }
+
+  OBBitVec getFragment(OBAtom *atom, OBAtom *skip, const OBBitVec &mask)
+  {
+    struct getFragmentImpl
+    {
+      static void addNbrs(OBBitVec &fragment, OBAtom *atom, OBAtom *skip, const OBBitVec &mask)
+      {
+        FOR_NBORS_OF_ATOM (nbr, atom) {
+          // don't pass through skip
+          if (nbr->GetIdx() == skip->GetIdx())
+            continue;
+          // skip visited atoms
+          if (fragment.BitIsSet(nbr->GetIdx()))
+            continue;
+          if (!mask.BitIsSet(nbr->GetIdx()))
+            continue;
+          // add the neighbor atom to the fragment
+          fragment.SetBitOn(nbr->GetIdx());
+          // recurse...
+          addNbrs(fragment, &*nbr, skip, mask);
+        }
+      }
+    };
+
+    OBBitVec fragment;
+    fragment.SetBitOn(atom->GetIdx());
+    // start the recursion
+    getFragmentImpl::addNbrs(fragment, atom, skip, mask);
+    return fragment;
+  }
+
 
 
 
@@ -796,15 +830,12 @@ namespace OpenBabel {
       int getDescriptor(const std::vector<unsigned int> &labels) const
       {
         std::vector<unsigned long> refs1, refs2;
-        //cout << "refs = ";
         for (std::size_t i = 0; i < nbrIndexes1.size(); ++i) {
           if (nbrIndexes1[i] < labels.size())
             refs1.push_back(labels[nbrIndexes1[i]]);
           else
             refs1.push_back(nbrIndexes1[i]);
-          //cout << refs1.back() << " ";
         }
-        //cout << endl;
         for (std::size_t i = 0; i < nbrIndexes2.size(); ++i)
           if (nbrIndexes2[i] < labels.size())
             refs2.push_back(labels[nbrIndexes2[i]]);
@@ -840,6 +871,31 @@ namespace OpenBabel {
       return (code1.code < code2.code);
     }
 
+    static bool SortCode2(const std::pair<int, FullCode> &code1, const std::pair<int, FullCode> &code2)
+    {
+      return (code1.second.code > code2.second.code);
+    }
+
+    struct SortAtomsAscending
+    {
+      SortAtomsAscending(const std::vector<unsigned int> &_labels) : labels(_labels) {}
+      const std::vector<unsigned int> &labels;
+      inline bool operator()(const OBAtom *a1, const OBAtom *a2) const
+      {
+        return labels[a1->GetIndex()] < labels[a2->GetIndex()];
+      }
+    };
+
+    struct SortAtomsDescending
+    {
+      SortAtomsDescending(const std::vector<unsigned int> &_labels) : labels(_labels) {}
+      const std::vector<unsigned int> &labels;
+      inline bool operator()(const OBAtom *a1, const OBAtom *a2) const
+      {
+        return labels[a1->GetIndex()] > labels[a2->GetIndex()];
+      }
+    };
+
     struct State
     {
       State(const std::vector<unsigned int> &_symmetry_classes,
@@ -856,6 +912,15 @@ namespace OpenBabel {
 
       std::vector<StereoCenter> &stereoCenters;
       PartialCode code;
+    };
+
+    struct Timeout
+    {
+      Timeout(unsigned int _maxTime) : maxTime(_maxTime)
+      {
+        startTime = time(NULL);
+      }
+      unsigned int startTime, maxTime;
     };
 
 
@@ -950,13 +1015,166 @@ namespace OpenBabel {
         code.bonds.pop_back();
     }
 
-    static void CanonicalLabelsRecursive(OBAtom *current, unsigned int label, std::size_t &loopCount, FullCode &bestCode, State &state)
+    static void LabelFragments(OBAtom *current, std::vector<OBAtom*> &nbrs, unsigned int label, Timeout &timeout, FullCode &bestCode, State &state)
     {
       OBMol *mol = current->GetParent();
       PartialCode &code = state.code;
 
+      std::sort(nbrs.begin(), nbrs.end(), SortAtomsDescending(state.symmetry_classes));
+
+      unsigned int numUnique = 1;
+      unsigned int lastSymClass = state.symmetry_classes[nbrs[0]->GetIndex()];
+      for (std::size_t i = 0; i < nbrs.size(); ++i) {
+        unsigned int symClass = state.symmetry_classes[nbrs[i]->GetIndex()];
+        if (symClass != lastSymClass)
+          numUnique++;
+        lastSymClass = state.symmetry_classes[nbrs[i]->GetIndex()];
+      }
+
+      if (numUnique < nbrs.size()) {
+        // The canonical codes for the equivalent ligands
+        std::vector< std::pair<int, CanonicalLabelsImpl::FullCode> > lcodes;
+
+        std::vector<unsigned int> ligandSizes;
+        for (std::size_t i = 0; i < nbrs.size(); ++i) {
+          OBBitVec ligand = getFragment(nbrs[i], current, state.fragment);
+          ligandSizes.push_back(ligand.CountBits());
+
+          CanonicalLabelsImpl::FullCode lbestCode;
+          if (ligandSizes.back() == 1) {
+            // avoid additional state creation
+            lbestCode.code.push_back(nbrs[i]->GetAtomicNum());
+            lbestCode.labels.resize(state.symmetry_classes.size(), 0);
+            lbestCode.labels[nbrs[i]->GetIndex()] = 1;
+          } else if (ligandSizes.back() == 2) {
+            // avoid additional state creation
+            lbestCode.labels.resize(state.symmetry_classes.size(), 0);
+            lbestCode.code.push_back(1); // FROM
+            lbestCode.code.push_back(nbrs[i]->GetAtomicNum()); // ATOM-TYPES 1
+            lbestCode.labels[nbrs[i]->GetIndex()] = 1;
+            FOR_NBORS_OF_ATOM (nbr, nbrs[i]) {
+              if (!state.fragment.BitIsSet(nbr->GetIdx()))
+                continue;
+              if (code.labels[nbr->GetIndex()])
+                continue;
+              lbestCode.code.push_back(nbr->GetAtomicNum()); // ATOM-TYPES 2
+              OBBond *bond = mol->GetBond(nbrs[i], &*nbr);
+              if (bond->IsAromatic())
+                lbestCode.code.push_back(5);
+              else
+                lbestCode.code.push_back(bond->GetBondOrder()); // BOND-TYPES 1
+              lbestCode.labels[nbr->GetIndex()] = 2;
+            }
+          } else {
+            // start labeling from the ligand atom
+            State lstate(state.symmetry_classes, ligand, state.stereoCenters, state.onlyOne);
+            lstate.code.add(nbrs[i]);
+            lstate.code.labels[nbrs[i]->GetIndex()] = 1;
+            CanonicalLabelsRecursive(nbrs[i], 1, timeout, lbestCode, lstate);
+          }
+
+          lcodes.push_back(std::make_pair(i, lbestCode));
+        }
+
+        // sort the codes for the fragments
+        unsigned int firstIndex = 0;
+        lastSymClass = state.symmetry_classes[nbrs[0]->GetIndex()];
+        for (std::size_t i = 1; i < nbrs.size(); ++i) {
+          unsigned int symClass = state.symmetry_classes[nbrs[i]->GetIndex()];
+          if (symClass != lastSymClass) {
+            std::sort(lcodes.begin() + firstIndex, lcodes.begin() + i - 1, SortCode2);
+            firstIndex = i;
+          }
+          lastSymClass = state.symmetry_classes[nbrs[i]->GetIndex()];
+        }
+
+        std::vector<OBAtom*> atoms;
+        unsigned int nextLbl = label + 1;
+        for (std::size_t l = 0; l < lcodes.size(); ++l) {
+          OBAtom *atom = nbrs[lcodes[l].first];
+          code.add(current, atom);
+          code.labels[atom->GetIndex()] = nextLbl;
+          atoms.push_back(atom);
+          nextLbl++;
+        }
+
+        unsigned int ligandSize = *std::max_element(ligandSizes.begin(), ligandSizes.end());
+        for (unsigned int lbl = 1; lbl < ligandSize; ++lbl) {
+          for (std::size_t l = 0; l < lcodes.size(); ++l) {
+            if (lbl >= ligandSizes[lcodes[l].first])
+              continue;
+
+            OBAtom *atom = 0;
+            for (std::size_t i = 0; i < mol->NumAtoms(); ++i)
+              if (lcodes[l].second.labels[i] == lbl) {
+                atom = mol->GetAtom(i+1);
+                break;
+              }
+
+            if (!atom)
+              continue;
+
+            std::vector<OBAtom*> atomNbrs;
+            FOR_NBORS_OF_ATOM (nbr, atom) {
+              if (lcodes[l].second.labels[nbr->GetIndex()] > lbl) {
+                if (std::find(atoms.begin(), atoms.end(), &*nbr) != atoms.end())
+                  continue;
+                atomNbrs.push_back(&*nbr);
+              }
+            }
+
+            std::sort(atomNbrs.begin(), atomNbrs.end(), SortAtomsAscending(lcodes[l].second.labels));
+
+            for (std::size_t i = 0; i < atomNbrs.size(); ++i) {
+              code.add(atom, atomNbrs[i]);
+              code.labels[atomNbrs[i]->GetIndex()] = nextLbl;
+              atoms.push_back(atomNbrs[i]);
+              nextLbl++;
+            }
+          }
+        }
+
+        CanonicalLabelsRecursive(current, nextLbl - 1, timeout, bestCode, state);
+
+        for (std::size_t j = 0; j < atoms.size(); ++j) {
+          code.atoms.pop_back();
+          code.bonds.pop_back();
+          code.from.pop_back();
+          code.labels[atoms[j]->GetIndex()] = 0;
+        }
+      } else {
+        unsigned int lbl = label;
+        for (std::size_t i = 0; i < nbrs.size(); ++i) {
+          lbl++;
+          code.add(current, nbrs[i]);
+          code.labels[nbrs[i]->GetIndex()] = lbl;
+        }
+
+        CanonicalLabelsRecursive(current, lbl, timeout, bestCode, state);
+
+        for (std::size_t i = 0; i < nbrs.size(); ++i) {
+          code.atoms.pop_back();
+          code.bonds.pop_back();
+          code.from.pop_back();
+          code.labels[nbrs[i]->GetIndex()] = 0;
+        }
+      }
+    }
+
+
+    static void CanonicalLabelsRecursive(OBAtom *current, unsigned int label, Timeout &timeout, FullCode &bestCode, State &state)
+    {
+      OBMol *mol = current->GetParent();
+      PartialCode &code = state.code;
+
+      // Check if there is a full mapping
+      if (label == state.fragment.CountBits()) {
+        CompleteCode(mol, bestCode, state);
+        return;
+      }
+
       // avoid endless loops
-      if (loopCount > 200000) {
+      if (time(NULL) - timeout.startTime > timeout.maxTime) {
         return;
       }
 
@@ -967,12 +1185,6 @@ namespace OpenBabel {
       if (code < bestCode)
         return;
 
-      // Check if there is a full mapping
-      if (label == state.fragment.CountBits()) {
-        CompleteCode(mol, bestCode, state);
-        loopCount++;
-        return;
-      }
 
       std::vector<OBAtom*> nbrs;
       std::vector<unsigned int> nbrSymClasses;
@@ -993,101 +1205,102 @@ namespace OpenBabel {
         unsigned int nextLabel = code.labels[current->GetIndex()] + 1;
         for (std::size_t i = 0; i < code.labels.size(); ++i) {
           if (code.labels[i] == nextLabel) {
-            CanonicalLabelsRecursive(mol->GetAtom(i+1), label, loopCount, bestCode, state);
+            CanonicalLabelsRecursive(mol->GetAtom(i+1), label, timeout, bestCode, state);
             return;
           }
         }
         return;
       }
 
-
-      std::vector<std::vector<OBAtom*> > allOrderedNbrs(1);
-      while (!nbrs.empty()) {
-
-        // select the next nbr atoms with highest symmetry classes
-        unsigned int maxSymClass = *std::max_element(nbrSymClasses.begin(), nbrSymClasses.end());
-        std::vector<OBAtom*> finalNbrs;
-        for (std::size_t i = 0; i < nbrs.size(); ++i) {
-          if (nbrSymClasses[i] == maxSymClass)
-            finalNbrs.push_back(nbrs[i]);
-        }
-
-        // remove the selected atoms from nbrs and nbrSymClasses
-        for (std::size_t i = 0; i < finalNbrs.size(); ++i) {
-          nbrs.erase(std::find(nbrs.begin(), nbrs.end(), finalNbrs[i]));
-          nbrSymClasses.erase(std::find(nbrSymClasses.begin(), nbrSymClasses.end(), maxSymClass));
-        }
+      if (!current->IsInRing()) {
+        LabelFragments(current, nbrs, label, timeout, bestCode, state);
+      } else { // current->IsInRing
 
 
-        if (finalNbrs.size() == 1) {
-          for (std::size_t i = 0; i < allOrderedNbrs.size(); ++i)
-            allOrderedNbrs[i].push_back(finalNbrs[0]);
-        } else {
-          std::sort(finalNbrs.begin(), finalNbrs.end());
+        std::vector<std::vector<OBAtom*> > allOrderedNbrs(1);
+        while (!nbrs.empty()) {
 
-          std::vector<std::vector<OBAtom*> > allOrderedNbrsCopy(allOrderedNbrs);
-
-          for (std::size_t j = 0; j < allOrderedNbrsCopy.size(); ++j) {
-            if (!allOrderedNbrsCopy[j].empty())
-              allOrderedNbrs.push_back(allOrderedNbrsCopy[j]);
-            for (std::size_t i = 0; i < finalNbrs.size(); ++i) {
-              allOrderedNbrs.back().push_back(finalNbrs[i]);
-            }
+          // select the next nbr atoms with highest symmetry classes
+          unsigned int maxSymClass = *std::max_element(nbrSymClasses.begin(), nbrSymClasses.end());
+          std::vector<OBAtom*> finalNbrs;
+          for (std::size_t i = 0; i < nbrs.size(); ++i) {
+            if (nbrSymClasses[i] == maxSymClass)
+              finalNbrs.push_back(nbrs[i]);
           }
 
-          //if (current->GetValence() < 7) {
+          // remove the selected atoms from nbrs and nbrSymClasses
+          for (std::size_t i = 0; i < finalNbrs.size(); ++i) {
+            nbrs.erase(std::find(nbrs.begin(), nbrs.end(), finalNbrs[i]));
+            nbrSymClasses.erase(std::find(nbrSymClasses.begin(), nbrSymClasses.end(), maxSymClass));
+          }
 
-          while (std::next_permutation(finalNbrs.begin(), finalNbrs.end())) {
+
+          if (finalNbrs.size() == 1) {
+            for (std::size_t i = 0; i < allOrderedNbrs.size(); ++i)
+              allOrderedNbrs[i].push_back(finalNbrs[0]);
+          } else {
+            std::sort(finalNbrs.begin(), finalNbrs.end());
+
+            std::vector<std::vector<OBAtom*> > allOrderedNbrsCopy(allOrderedNbrs);
+
             for (std::size_t j = 0; j < allOrderedNbrsCopy.size(); ++j) {
-              allOrderedNbrs.push_back(allOrderedNbrsCopy[j]);
+              if (!allOrderedNbrsCopy[j].empty())
+                allOrderedNbrs.push_back(allOrderedNbrsCopy[j]);
               for (std::size_t i = 0; i < finalNbrs.size(); ++i) {
                 allOrderedNbrs.back().push_back(finalNbrs[i]);
               }
             }
+
+            while (std::next_permutation(finalNbrs.begin(), finalNbrs.end())) {
+              for (std::size_t j = 0; j < allOrderedNbrsCopy.size(); ++j) {
+                allOrderedNbrs.push_back(allOrderedNbrsCopy[j]);
+                for (std::size_t i = 0; i < finalNbrs.size(); ++i) {
+                  allOrderedNbrs.back().push_back(finalNbrs[i]);
+                }
+              }
+            }
+
+          } // finalNbrs.size() != 1
+        } // while (!nbrs.empty())
+
+        if (DEBUG) {
+          /*
+             cout << "allOrderedNbrs:" << endl;
+             for (std::size_t i = 0; i < allOrderedNbrs.size(); ++i) {
+             for (std::size_t j = 0; j < allOrderedNbrs[i].size(); ++j) {
+             cout << allOrderedNbrs[i][j]->GetIndex() << " ";
+             }
+             cout << endl;
+             }
+           */
+        }
+
+        for (std::size_t i = 0; i < allOrderedNbrs.size(); ++i) {
+          unsigned int lbl = label;
+          for (std::size_t j = 0; j < allOrderedNbrs[i].size(); ++j) {
+            lbl++;
+            code.add(current, allOrderedNbrs[i][j]);
+            code.labels[allOrderedNbrs[i][j]->GetIndex()] = lbl;
           }
 
-          //}
+          CanonicalLabelsRecursive(current, lbl, timeout, bestCode, state);
 
-        }
-      }
+          for (std::size_t j = 0; j < allOrderedNbrs[i].size(); ++j) {
+            code.atoms.pop_back();
+            code.bonds.pop_back();
+            code.from.pop_back();
+            code.labels[allOrderedNbrs[i][j]->GetIndex()] = 0;
+          }
 
-      if (DEBUG) {
-        /*
-           cout << "allOrderedNbrs:" << endl;
-           for (std::size_t i = 0; i < allOrderedNbrs.size(); ++i) {
-           for (std::size_t j = 0; j < allOrderedNbrs[i].size(); ++j) {
-           cout << allOrderedNbrs[i][j]->GetIndex() << " ";
-           }
-           cout << endl;
-           }
-         */
-      }
-
-      for (std::size_t i = 0; i < allOrderedNbrs.size(); ++i) {
-        unsigned int lbl = label;
-        for (std::size_t j = 0; j < allOrderedNbrs[i].size(); ++j) {
-          lbl++;
-          code.add(current, allOrderedNbrs[i][j]);
-          code.labels[allOrderedNbrs[i][j]->GetIndex()] = lbl;
-        }
-
-        CanonicalLabelsRecursive(current, lbl, loopCount, bestCode, state);
-
-        for (std::size_t j = 0; j < allOrderedNbrs[i].size(); ++j) {
-          code.atoms.pop_back();
-          code.bonds.pop_back();
-          code.from.pop_back();
-          code.labels[allOrderedNbrs[i][j]->GetIndex()] = 0;
         }
 
       }
-
 
     }
 
     static void CalcCanonicalLabels(OBMol *mol, const std::vector<unsigned int> &symmetry_classes,
         std::vector<unsigned int> &canonical_labels, const OBStereoUnitSet &stereoUnits, const OBBitVec &mask,
-        OBStereoFacade *stereoFacade, bool onlyOne = false)
+        OBStereoFacade *stereoFacade, int maxSeconds, bool onlyOne = false)
     {
       if (!mol->NumAtoms())
         return;
@@ -1174,7 +1387,7 @@ namespace OpenBabel {
         }
         unsigned int maxSymClass = *std::max_element(nextSymClasses.begin(), nextSymClasses.end());
 
-        std::size_t loopCount = 0;
+        CanonicalLabelsImpl::Timeout timeout(maxSeconds);
         CanonicalLabelsImpl::FullCode bestCode;
         for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
           if (!fragment.BitIsSet(i+1))
@@ -1186,13 +1399,13 @@ namespace OpenBabel {
             State state(symmetry_classes, fragment, stereoCenters, onlyOne);
             state.code.add(atom);
             state.code.labels[atom->GetIndex()] = 1;
-            CanonicalLabelsRecursive(atom, 1, loopCount, bestCode, state);
+            CanonicalLabelsRecursive(atom, 1, timeout, bestCode, state);
           }
 
         }
 
-        if (loopCount > 200000) {
-          obErrorLog.ThrowError(__FUNCTION__, "too many possibilities, aborting...", obError);
+        if (time(NULL) - timeout.startTime > timeout.maxTime) {
+          obErrorLog.ThrowError(__FUNCTION__, "maximum time exceeded...", obError);
         }
 
         fcodes.push_back(bestCode);
@@ -1219,12 +1432,12 @@ namespace OpenBabel {
 
   }; // CanonicalLabelsImpl
 
-  void OBGraphSym::CanonicalLabels(std::vector<unsigned int> &canon_labels)
+  void OBGraphSym::CanonicalLabels(std::vector<unsigned int> &canon_labels, int maxSeconds)
   {
     std::vector<unsigned int> symmetry_classes;
     GetSymmetry(symmetry_classes);
 
-    d->CanonicalLabels(symmetry_classes, canon_labels);
+    d->CanonicalLabels(symmetry_classes, canon_labels, maxSeconds);
     if (canon_labels.empty())
       for (std::size_t i = 0; i < symmetry_classes.size(); ++i)
         canon_labels.push_back(i+1);
@@ -1238,14 +1451,14 @@ namespace OpenBabel {
       FOR_ATOMS_OF_MOL (atom, mol)
         maskCopy.SetBitOn(atom->GetIdx());
 
-    CanonicalLabelsImpl::CalcCanonicalLabels(mol, symmetry_classes, canonical_labels, OBStereoUnitSet(), maskCopy, 0, true);
+    CanonicalLabelsImpl::CalcCanonicalLabels(mol, symmetry_classes, canonical_labels, OBStereoUnitSet(), maskCopy, 0, 10, true);
     if (canonical_labels.empty())
       for (std::size_t i = 0; i < symmetry_classes.size(); ++i)
         canonical_labels.push_back(i+1);
   }
 
 
-  void OBGraphSymPrivate::CanonicalLabels(const std::vector<unsigned int> &symmetry_classes, std::vector<unsigned int> &canon_labels)
+  void OBGraphSymPrivate::CanonicalLabels(const std::vector<unsigned int> &symmetry_classes, std::vector<unsigned int> &canon_labels, int maxSeconds)
   {
     bool hasAtLeastOneDefined = false;
     OBStereoFacade sf(_pmol, false);
@@ -1266,7 +1479,7 @@ namespace OpenBabel {
       }
     }
     if (!hasAtLeastOneDefined) {
-      CanonicalLabelsImpl::CalcCanonicalLabels(_pmol, symmetry_classes, canon_labels, OBStereoUnitSet(), _frag_atoms, 0);
+      CanonicalLabelsImpl::CalcCanonicalLabels(_pmol, symmetry_classes, canon_labels, OBStereoUnitSet(), _frag_atoms, 0, maxSeconds);
       return;
     }
 
@@ -1346,7 +1559,7 @@ namespace OpenBabel {
       }
     }
 
-    CanonicalLabelsImpl::CalcCanonicalLabels(_pmol, symmetry_classes, canon_labels, _stereoUnits, _frag_atoms, &sf);
+    CanonicalLabelsImpl::CalcCanonicalLabels(_pmol, symmetry_classes, canon_labels, _stereoUnits, _frag_atoms, &sf, maxSeconds);
   }
 
 

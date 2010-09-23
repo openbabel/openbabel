@@ -74,7 +74,7 @@ namespace OpenBabel {
        *
        * @return The canonical labels for the molecule.
        */
-      void CanonicalLabels(std::vector<unsigned int> &canonical_labels);
+      void CanonicalLabels(std::vector<unsigned int> &canonical_labels, int maxSeconds = 5);
 
       static void CanonicalLabels(OBMol *mol, const std::vector<unsigned int> &symmetry_classes,
           std::vector<unsigned int> &canon_labels, const OBBitVec &mask = OBBitVec());
