@@ -210,13 +210,13 @@ if (DO_PERL_BINDINGS)
     endif (RUN_SWIG)
 
     set(PERL_PREFIX_TEXT "")
-    if (PERL_PREFIX)
-      set(PERL_PREFIX_TEXT "PREFIX=${PERL_PREFIX}")
-    else (PERL_PREFIX)
+    if (OBPERL_PREFIX) # The PERL_PREFIX variable is already taken (it's set by FindPerlLibs :-/ )
+      set(PERL_PREFIX_TEXT "PREFIX=${OBPERL_PREFIX}")
+    else (OBPERL_PREFIX)
       if (NOT ${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
         set(PERL_PREFIX_TEXT "PREFIX=${CMAKE_INSTALL_PREFIX}")
       endif (NOT ${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-    endif (PERL_PREFIX)
+    endif (OBPERL_PREFIX)
 
     if (NOT MSVC)
       add_custom_target(pre_bindings_perl ALL
