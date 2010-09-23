@@ -61,7 +61,7 @@ private:
 	void DoRings();
 
 	unsigned int CalcHash(const std::vector<int>& frag);
-	void PrintFpt(std::vector<int>& f, int hash=0);
+	void PrintFpt(const std::vector<int>& f, int hash=0);
 
 	Fset fragset;
 	Fset ringset;
@@ -264,7 +264,7 @@ unsigned int fingerprint2::CalcHash(const vector<int>& frag)
 	return hash;
 }
 
-void fingerprint2::PrintFpt(vector<int>& f, int hash)
+void fingerprint2::PrintFpt(const vector<int>& f, int hash)
 {
 	unsigned int i;
 	for(i=0;i<f.size();++i)
