@@ -2191,7 +2191,7 @@ namespace OpenBabel
           }
         }
 
-        if (atom->BOSum() == 2) {
+        if (atom->BOSum() >= 2) { // Bug reported by Paolo Tosco
           oxygenCount = sulphurCount = 0;
 
           FOR_NBORS_OF_ATOM (nbr, atom) {
