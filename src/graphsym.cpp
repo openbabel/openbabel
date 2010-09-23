@@ -328,210 +328,6 @@ namespace OpenBabel {
   }
 
   /**
-   * Translate atom ids to symmetry classes for a CisTrans config struct.
-   */
-  void IdsToSymClasses(OBMol *mol, OBCisTransStereo::Config &config,
-      const std::vector<unsigned int> &symClasses)
-  {
-    OBAtom *atom;
-    // begin
-    atom = mol->GetAtomById(config.begin);
-    if (atom) {
-      if (atom->IsHydrogen())
-        config.begin = OBGraphSym::NoSymmetryClass;
-      else
-        config.begin = symClasses.at(atom->GetIndex());
-    }
-    // end
-    atom = mol->GetAtomById(config.end);
-    if (atom) {
-      if (atom->IsHydrogen())
-        config.end = OBGraphSym::NoSymmetryClass;
-      else
-        config.end = symClasses.at(atom->GetIndex());
-    }
-    // refs
-    for (std::size_t i = 0; i < config.refs.size(); ++i) {
-      atom = mol->GetAtomById(config.refs.at(i));
-      if (atom) {
-        if (atom->IsHydrogen())
-          config.refs[i] = OBGraphSym::NoSymmetryClass;
-        else
-          config.refs[i] = symClasses.at(atom->GetIndex());
-      }
-    }
-  }
-
-  /**
-   * Translate atom ids to symmetry classes for a Tetrahedral config struct.
-   */
-  void IdsToSymClasses(OBMol *mol, OBTetrahedralStereo::Config &config,
-      const std::vector<unsigned int> &symClasses)
-  {
-    OBAtom *atom;
-    // center
-    atom = mol->GetAtomById(config.center);
-    if (atom) {
-      if (atom->IsHydrogen())
-        config.center = OBGraphSym::NoSymmetryClass;
-      else
-        config.center = symClasses.at(atom->GetIndex());
-    }
-    // from/towards
-    atom = mol->GetAtomById(config.from);
-    if (atom) {
-      if (atom->IsHydrogen())
-        config.from = OBGraphSym::NoSymmetryClass;
-      else
-        config.from = symClasses.at(atom->GetIndex());
-    }
-    // refs
-    for (std::size_t i = 0; i < config.refs.size(); ++i) {
-      atom = mol->GetAtomById(config.refs.at(i));
-      if (atom) {
-        if (atom->IsHydrogen())
-          config.refs[i] = OBGraphSym::NoSymmetryClass;
-        else
-          config.refs[i] = symClasses.at(atom->GetIndex());
-      }
-    }
-  }
-
-
-  /**
-   * Find a descriptor for the specified tetrahedral config struct. The
-   * returned descriptor had a value of 0 or 1.
-   *
-   * @note These descriptors depend on the values in the config struct but are
-   * not related to CIP descriptors for example. However, if the values in the
-   * config structs are replaced with CIP priorities, this function could be
-   * be used.
-   */
-  int findDescriptor(const OBTetrahedralStereo::Config &config)
-  {
-    std::vector<unsigned long> refs = config.refs;
-    refs.insert(refs.begin(), config.from);
-    if (OBStereo::NumInversions(refs) % 2)
-      return 1;
-    else
-      return 0;
-  }
-
-  /**
-   * Find a descriptor for the specified cis/trans config struct. The
-   * returned descriptor had a value of 0 or 1.
-   *
-   * @note These descriptors depend on the values in the config struct but are
-   * not related to CIP descriptors for example. However, if the values in the
-   * config structs are replaced with CIP priorities, this function could be
-   * be used.
-   */
-  int findDescriptor(const OBCisTransStereo::Config &config)
-  {
-    std::vector<unsigned long> refs1(2), refs2(2);
-    refs1[0] = config.refs[0];
-    refs1[1] = config.refs[1];
-    refs2[0] = config.refs[2];
-    refs2[1] = config.refs[3];
-    if ((OBStereo::NumInversions(refs1) % 2 + OBStereo::NumInversions(refs2) % 2) % 2)
-      return 1;
-    else
-      return 0;
-  }
-
-  /**
-   * Find a descriptor for the specified atom.
-   */
-  int findDescriptor(OBAtom *center, const std::vector<unsigned int> &symmetry_classes, OBStereoFacade &stereoFacade)
-  {
-    OBMol *mol = center->GetParent();
-    if (!stereoFacade.HasTetrahedralStereo(center->GetId()))
-      return -1;
-    OBTetrahedralStereo::Config symConfig = stereoFacade.GetTetrahedralStereo(center->GetId())->GetConfig();
-    IdsToSymClasses(mol, symConfig, symmetry_classes);
-    return findDescriptor(symConfig);
-  }
-
-  /**
-   * Find a descriptor for the specified bond.
-   */
-  int findDescriptor(OBBond *bond, const std::vector<unsigned int> &symmetry_classes, OBStereoFacade &stereoFacade)
-  {
-    OBMol *mol = bond->GetParent();
-    if (!stereoFacade.HasCisTransStereo(bond->GetId()))
-      return -1;
-    OBCisTransStereo::Config symConfig = stereoFacade.GetCisTransStereo(bond->GetId())->GetConfig();
-    IdsToSymClasses(mol, symConfig, symmetry_classes);
-    return findDescriptor(symConfig);
-  }
-
-  // GENERIC
-  /**
-   * Find the descriptor vector for all stereocenters in the specified fragment.
-   * The individual descriptors will be ordered in the same way are specified in
-   * the @p orderedUnits parameter. This method works by replacing the unique
-   * atom ids in the config structs by symmetry classes to obtain canonical
-   * results. This only works for resolved (T1234 & C12) stereogenic units and
-   * unresolved units are excluded from the vector. The elements in the returned
-   * vector are 0 or 1 and obtained using the findDescriptor functions above.
-   */
-  std::vector<int> findDescriptorVector(OBMol *mol, const OBBitVec &fragment,
-      const OBStereoUnitSet &orderedUnits, const std::vector<unsigned int> &symmetry_classes, OBStereoFacade &stereoFacade)
-  {
-    OBStereoUnitSet units = removeUnspecifiedUnits(mol, orderedUnits, stereoFacade);
-    std::vector<int> v;
-    for (unsigned int i = 0; i < units.size(); ++i) {
-      const OBStereoUnit &unit = units[i];
-
-      bool isInFragment = false;
-      if (unit.type == OBStereo::Tetrahedral) {
-        if (fragment.BitIsOn(mol->GetAtomById(unit.id)->GetIdx()))
-          isInFragment = true;
-      } else if(unit.type == OBStereo::CisTrans) {
-        OBBond *bond = mol->GetBondById(unit.id);
-        OBAtom *begin = bond->GetBeginAtom();
-        OBAtom *end = bond->GetEndAtom();
-        if (fragment.BitIsOn(begin->GetIdx()) || fragment.BitIsOn(end->GetIdx()))
-          isInFragment = true;
-      }
-      if (!isInFragment)
-        continue;
-
-      v.push_back(findDescriptor(mol, unit, symmetry_classes, stereoFacade));
-    }
-
-    return v;
-  }
-
-  /**
-   * Find the value for a descriptor vector (see findDescriptorVector()). A
-   * descriptor vectors contains 0 or 1 for each stereogenic unit in the fragment
-   * in the same order specified in @p orderedUnits. This function reads these
-   * vectors as binary numbers and returns the decimal value. A single value
-   * for a descriptor vector, makes it easier to compare these vectors.
-   */
-  int findDescriptorVectorValue(OBMol *mol, const OBBitVec &fragment,
-      const OBStereoUnitSet &orderedUnits, const std::vector<unsigned int> &symmetry_classes, OBStereoFacade &stereoFacade)
-  {
-    std::vector<int> v = findDescriptorVector(mol, fragment, orderedUnits, symmetry_classes, stereoFacade);
-
-    int value = 0;
-    for (unsigned int i = 0; i < v.size(); ++i) {
-      if (!v[i])
-        continue;
-      int power = v.size() - i - 1;
-      // bit shift is equivalent to 2^power
-      // i.e., 1 << 0 == 1, 1 << 1 == 2, etc.
-      value += 1 << power;
-    }
-
-    return value;
-  }
-
-
-
-
-  /**
    * Creates a new vector of symmetry classes based on an existing
    * vector.  (Helper routine to GetGIDVector.)  On return, vp2 will
    * have newly-extended connectivity sums, but the numbers (the class
@@ -830,11 +626,47 @@ namespace OpenBabel {
     return nclasses;
   }
 
+  int OBGraphSymPrivate::Iterate(vector<unsigned int> &symClasses)
+  {
+    // Create a vector-of-pairs, associating each atom with its Class ID.
+    vector<OBAtom*>::iterator j;
+    std::vector<std::pair<OBAtom*, unsigned int> > symmetry_classes;
+    for (OBAtom *atom = _pmol->BeginAtom(j); atom; atom = _pmol->NextAtom(j)) {
+      int idx = atom->GetIdx();
+      if (_frag_atoms.BitIsOn(idx))
+        symmetry_classes.push_back(pair<OBAtom*, unsigned int> (atom, symClasses[idx-1]));
+    }
+
+    // The heart of the matter: Do extended sum-of-invariants until no further
+    // changes are noted.
+    int nclasses = ExtendInvariants(symmetry_classes);
+
+    // Convert to a vector indexed by Index
+    // Atoms not in the fragment will have a value of OBGraphSym::NoSymmetryClass
+    symClasses.clear();
+    symClasses.resize(_pmol->NumAtoms(), OBGraphSym::NoSymmetryClass);
+    for (unsigned int i = 0; i < symmetry_classes.size(); ++i) {
+      symClasses[symmetry_classes.at(i).first->GetIndex()] = symmetry_classes.at(i).second;
+    }
+
+    return nclasses;
+  }
+
   // Clears perceived symmetry
   void OBGraphSym::ClearSymmetry()
   {
     d->_pmol->DeleteData("OpenBabel Symmetry Classes");
   }
+
+
+
+
+
+
+
+
+
+
 
 
   /**
@@ -902,83 +734,7 @@ namespace OpenBabel {
     return C->HasDoubleBond() && C->IsInRing();
   }
 
-  /**
-   * Get the symmetry class for the specified stereogenic unit. For tetrahedral
-   * stereogenic units, the symmetry class is simply the symmetry class for the
-   * center atom. For double bond stereogenic units, the lowest symmetry class
-   * for the begin and end atom is returned.
-   */
-  unsigned int getSymClass(const OBStereoUnit &unit, OBMol *mol, const std::vector<unsigned int> &symmetry_classes)
-  {
-    if (unit.type == OBStereo::Tetrahedral) {
-      OBAtom *center = mol->GetAtomById(unit.id);
-      return symmetry_classes[center->GetIndex()];
-    } else
-    if (unit.type == OBStereo::CisTrans) {
-      OBBond *bond = mol->GetBondById(unit.id);
-      OBAtom *begin = bond->GetBeginAtom();
-      OBAtom *end = bond->GetEndAtom();
-      return std::min(symmetry_classes[begin->GetIndex()], symmetry_classes[end->GetIndex()]);
-    }
-    return OBGraphSym::NoSymmetryClass; // FIXME
-  }
 
-  /**
-   * Helper struct for orderSetBySymmetryClasses().
-   */
-  struct IndexClassPair
-  {
-    IndexClassPair(unsigned int _setIndex, unsigned int _symClass/*, int _classification*/) :
-        setIndex(_setIndex), symClass(_symClass)/*, classification(_classification)*/ {}
-    unsigned int setIndex;
-    unsigned int symClass;
-//    int classification;
-  };
-
-  /**
-   * Less than compare function for two IndexClassPair structs using the
-   * symClass attribute.
-   */
-  bool CompareIndexClassPair(const IndexClassPair &pair1, const IndexClassPair &pair2)
-  {
-    return pair1.symClass < pair2.symClass;
-  }
-
-  /**
-   * Sort a set of stereogenic units by the unit's symmetry class. The symmetry
-   * classes in the returned set are in increasing order. The symmetry class for
-   * a stereogenic unit is determined using getSymClass(). The descriptor values
-   * for the stereogenic units using symmetry classes as poriorities are also
-   * taken into account. Units with descriptor 1 will go first.
-   */
-  OBStereoUnitSet orderSetBySymmetryClasses(OBMol *mol, const OBStereoUnitSet &set,
-      const std::vector<unsigned int> &symmetry_classes)
-  {
-    // create setIndex-symClass pairs
-    std::vector<IndexClassPair> pairs;
-    for (std::size_t i = 0; i < set.size(); ++i) {
-      unsigned int symClass = getSymClass(set[i], mol, symmetry_classes);
-      pairs.push_back(IndexClassPair(i, symClass));
-    }
-
-    // sort the pairs by symclass
-    std::sort(pairs.begin(), pairs.end(), CompareIndexClassPair);
-
-    // use the sorted set indexes to construct the ordered set
-    OBStereoUnitSet ordered;
-    for (std::size_t i = 0; i < pairs.size(); ++i)
-      ordered.push_back(set[pairs[i].setIndex]);
-
-    return ordered;
-  }
-
-
-  struct CompareLabels
-  {
-    const std::vector<unsigned int> &labels;
-    CompareLabels(const std::vector<unsigned int> &_labels) : labels(_labels) {}
-    bool operator()(OBAtom *atom1, OBAtom *atom2) { return labels[atom1->GetIndex()] < labels[atom2->GetIndex()]; }
-  };
 
   struct CanonicalLabelsImpl
   {
@@ -1037,8 +793,27 @@ namespace OpenBabel {
 
     struct StereoCenter
     {
+      int getDescriptor(const std::vector<unsigned int> &labels) const
+      {
+        std::vector<unsigned long> refs1, refs2;
+        //cout << "refs = ";
+        for (std::size_t i = 0; i < nbrIndexes1.size(); ++i) {
+          if (nbrIndexes1[i] < labels.size())
+            refs1.push_back(labels[nbrIndexes1[i]]);
+          else
+            refs1.push_back(nbrIndexes1[i]);
+          //cout << refs1.back() << " ";
+        }
+        //cout << endl;
+        for (std::size_t i = 0; i < nbrIndexes2.size(); ++i)
+          if (nbrIndexes2[i] < labels.size())
+            refs2.push_back(labels[nbrIndexes2[i]]);
+          else
+            refs2.push_back(nbrIndexes2[i]);
+        return ((OBStereo::NumInversions(refs1) % 2 + OBStereo::NumInversions(refs2) % 2) % 2);
+      }
       std::vector<unsigned int> indexes;
-      std::vector<unsigned int> nbrIndexes;
+      std::vector<unsigned int> nbrIndexes1, nbrIndexes2;
     };
 
     struct SortStereoCenters
@@ -1068,24 +843,112 @@ namespace OpenBabel {
     struct State
     {
       State(const std::vector<unsigned int> &_symmetry_classes,
-            const OBStereoUnitSet &_stereoUnits, const OBBitVec &_fragment,
-            OBStereoFacade *_stereoFacade, bool _onlyOne) :
-          symmetry_classes(_symmetry_classes), stereoUnits(_stereoUnits),
-          fragment(_fragment), stereoFacade(_stereoFacade), onlyOne(_onlyOne),
+            const OBBitVec &_fragment, std::vector<StereoCenter> &_stereoCenters,
+            bool _onlyOne) : symmetry_classes(_symmetry_classes),
+          fragment(_fragment), stereoCenters(_stereoCenters), onlyOne(_onlyOne),
           code(_symmetry_classes.size())
       {
       }
 
       const std::vector<unsigned int> &symmetry_classes;
-      const OBStereoUnitSet &stereoUnits;
       const OBBitVec &fragment;
-      OBStereoFacade *stereoFacade;
       const bool onlyOne;
 
+      std::vector<StereoCenter> &stereoCenters;
       PartialCode code;
     };
 
 
+    static void CompleteCode(OBMol *mol, FullCode &bestCode, State &state)
+    {
+      PartialCode &code = state.code;
+
+      FullCode fullcode(code.labels, code.from);
+      unsigned int numClosures = 0;
+
+      // the RING-CLOSURE list
+      unsigned int current_label = 1;
+      for (std::size_t j = 0; j < code.atoms.size(); ++j) {
+        OBAtom *atom = code.atoms[j];
+        std::vector<std::pair<OBBond*, unsigned int> > closures;
+        FOR_BONDS_OF_ATOM (bond, atom) {
+          if (!state.fragment.BitIsSet(bond->GetNbrAtom(atom)->GetIdx()))
+            continue;
+          if (std::find(code.bonds.begin(), code.bonds.end(), &*bond) == code.bonds.end()) {
+            closures.push_back(std::make_pair(&*bond, code.labels[bond->GetNbrAtom(atom)->GetIndex()]));
+          }
+        }
+
+        std::sort(closures.begin(), closures.end(), CompareBondPairSecond);
+        for (std::size_t k = 0; k < closures.size(); ++k) {
+          fullcode.code.push_back(current_label);
+          fullcode.code.push_back(closures[k].second);
+          code.add(closures[k].first);
+          numClosures++;
+        }
+
+        current_label++;
+      }
+
+      bool hasIsotope = false;
+
+      // the ATOM-TYPES list
+      for (std::size_t j = 0; j < code.atoms.size(); ++j) {
+        OBAtom *atom = code.atoms[j];
+        if (atom->GetIsotope())
+          hasIsotope = true;
+        fullcode.code.push_back(atom->GetAtomicNum());
+      }
+
+      // the (optional) ISOTOPES list
+      if (hasIsotope)
+        for (std::size_t j = 0; j < code.atoms.size(); ++j)
+          fullcode.code.push_back(code.atoms[j]->GetIsotope());
+
+      // the BOND-TYPES list
+      for (std::size_t j = 0; j < code.bonds.size(); ++j) {
+        OBBond *bond = code.bonds[j];
+        if (bond->IsAromatic())
+          fullcode.code.push_back(5);
+        else
+          fullcode.code.push_back(bond->GetBondOrder());
+      }
+
+      // the STEREO flag
+      if (state.stereoCenters.size()) {
+        std::vector<int> dv;
+
+        std::sort(state.stereoCenters.begin(), state.stereoCenters.end(), SortStereoCenters(code.labels));
+        for (std::size_t i = 0; i < state.stereoCenters.size(); ++i) {
+          bool isInFragment = false;
+          for (std::size_t j = 0; j < state.stereoCenters[i].indexes.size(); ++j)
+            if (state.fragment.BitIsSet(state.stereoCenters[i].indexes[j]+1))
+              isInFragment = true;
+          if (isInFragment)
+            dv.push_back(state.stereoCenters[i].getDescriptor(code.labels));
+        }
+
+        int value = 0;
+        for (unsigned int i = 0; i < dv.size(); ++i) {
+          if (!dv[i])
+            continue;
+          int power = dv.size() - i - 1;
+          // bit shift is equivalent to 2^power
+          // i.e., 1 << 0 == 1, 1 << 1 == 2, etc.
+          value += 1 << power;
+        }
+
+        fullcode.code.push_back(value);
+      }
+
+      if (fullcode > bestCode) {
+        bestCode.labels.swap(fullcode.labels);
+        bestCode.code.swap(fullcode.code);
+      }
+
+      for (unsigned int i = 0; i < numClosures; ++i)
+        code.bonds.pop_back();
+    }
 
     static void CanonicalLabelsRecursive(OBAtom *current, unsigned int label, std::size_t &loopCount, FullCode &bestCode, State &state)
     {
@@ -1106,79 +969,10 @@ namespace OpenBabel {
 
       // Check if there is a full mapping
       if (label == state.fragment.CountBits()) {
-
-        FullCode fullcode(code.labels, code.from);
-        unsigned int numClosures = 0;
-
-        // the RING-CLOSURE list
-        unsigned int current_label = 1;
-        for (std::size_t j = 0; j < code.atoms.size(); ++j) {
-          OBAtom *atom = code.atoms[j];
-          std::vector<std::pair<OBBond*, unsigned int> > closures;
-          FOR_BONDS_OF_ATOM (bond, atom) {
-            if (!state.fragment.BitIsSet(bond->GetNbrAtom(atom)->GetIdx()))
-              continue;
-            if (std::find(code.bonds.begin(), code.bonds.end(), &*bond) == code.bonds.end()) {
-              closures.push_back(std::make_pair(&*bond, code.labels[bond->GetNbrAtom(atom)->GetIndex()]));
-            }
-          }
-
-          std::sort(closures.begin(), closures.end(), CompareBondPairSecond);
-          for (std::size_t k = 0; k < closures.size(); ++k) {
-            fullcode.code.push_back(current_label);
-            fullcode.code.push_back(closures[k].second);
-            code.add(closures[k].first);
-            numClosures++;
-          }
-
-          current_label++;
-        }
-
-        bool hasIsotope = false;
-
-        // the ATOM-TYPES list
-        for (std::size_t j = 0; j < code.atoms.size(); ++j) {
-          OBAtom *atom = code.atoms[j];
-          if (atom->GetIsotope())
-            hasIsotope = true;
-          fullcode.code.push_back(atom->GetAtomicNum());
-        }
-
-        // the (optional) ISOTOPES list
-        if (hasIsotope)
-          for (std::size_t j = 0; j < code.atoms.size(); ++j)
-            fullcode.code.push_back(code.atoms[j]->GetIsotope());
-
-        // the BOND-TYPES list
-        for (std::size_t j = 0; j < code.bonds.size(); ++j) {
-          OBBond *bond = code.bonds[j];
-          if (bond->IsAromatic())
-            fullcode.code.push_back(5);
-          else
-            fullcode.code.push_back(bond->GetBondOrder());
-        }
-
-        // the STEREO flag
-        if (state.stereoFacade) {
-          OBStereoUnitSet orderedUnits = orderSetBySymmetryClasses(mol, state.stereoUnits, code.labels);
-          fullcode.code.push_back(findDescriptorVectorValue(mol, state.fragment, orderedUnits, code.labels, *state.stereoFacade));
-        }
-
+        CompleteCode(mol, bestCode, state);
         loopCount++;
-
-        if (fullcode > bestCode) {
-          bestCode.labels.swap(fullcode.labels);
-          bestCode.code.swap(fullcode.code);
-        }
-
-        for (unsigned int i = 0; i < numClosures; ++i)
-          code.bonds.pop_back();
-
         return;
       }
-
-
-
 
       std::vector<OBAtom*> nbrs;
       std::vector<unsigned int> nbrSymClasses;
@@ -1314,6 +1108,58 @@ namespace OpenBabel {
         visited |= fragments.back();
       }
 
+      // precompute the stereo center information
+      std::vector<StereoCenter> stereoCenters;
+      if (stereoFacade) {
+        for (std::size_t i = 0; i < stereoUnits.size(); ++i) {
+          const OBStereoUnit &unit = stereoUnits[i];
+          if (unit.type == OBStereo::Tetrahedral) {
+            if (!stereoFacade->HasTetrahedralStereo(unit.id))
+              continue;
+            OBTetrahedralStereo::Config config = stereoFacade->GetTetrahedralStereo(unit.id)->GetConfig();
+            if (!config.specified)
+              continue;
+            OBAtom *atom = mol->GetAtomById(config.center);
+            if (!atom)
+              continue;
+            stereoCenters.resize(stereoCenters.size()+1);
+            stereoCenters.back().indexes.push_back(atom->GetIndex());
+            OBAtom *from = mol->GetAtomById(config.from);
+            if (from && !from->IsHydrogen())
+              stereoCenters.back().nbrIndexes1.push_back(from->GetIndex());
+            else
+              stereoCenters.back().nbrIndexes1.push_back(std::numeric_limits<unsigned int>::max());
+            for (std::size_t j = 0; j < config.refs.size(); ++j) {
+              OBAtom *ref = mol->GetAtomById(config.refs[j]);
+              if (ref && !ref->IsHydrogen())
+                stereoCenters.back().nbrIndexes1.push_back(ref->GetIndex());
+              else
+                stereoCenters.back().nbrIndexes1.push_back(std::numeric_limits<unsigned int>::max());
+            }
+          } else if (unit.type == OBStereo::CisTrans) {
+            if (!stereoFacade->HasCisTransStereo(unit.id))
+              continue;
+            OBCisTransStereo::Config config = stereoFacade->GetCisTransStereo(unit.id)->GetConfig();
+            if (!config.specified)
+              continue;
+            OBAtom *begin = mol->GetAtomById(config.begin);
+            OBAtom *end = mol->GetAtomById(config.end);
+            if (!begin || !end)
+              continue;
+            stereoCenters.resize(stereoCenters.size()+1);
+            stereoCenters.back().indexes.push_back(begin->GetIndex());
+            stereoCenters.back().indexes.push_back(end->GetIndex());
+            for (std::size_t j = 0; j < config.refs.size(); ++j) {
+              OBAtom *ref = mol->GetAtomById(config.refs[j]);
+              unsigned int r = (ref && !ref->IsHydrogen()) ? ref->GetIndex() : std::numeric_limits<unsigned int>::max();
+              if (stereoCenters.back().nbrIndexes1.size() < 2)
+                stereoCenters.back().nbrIndexes1.push_back(r);
+              else
+                stereoCenters.back().nbrIndexes2.push_back(r);
+            }
+          }
+        }
+      }
 
       // find the canonical code for each fragment
       std::vector<CanonicalLabelsImpl::FullCode> fcodes;
@@ -1337,7 +1183,7 @@ namespace OpenBabel {
 
           if (symmetry_classes[atom->GetIndex()] == maxSymClass) {
             // start labeling from the atom with the highest symmetry class
-            State state(symmetry_classes, stereoUnits, fragment, stereoFacade, onlyOne);
+            State state(symmetry_classes, fragment, stereoCenters, onlyOne);
             state.code.add(atom);
             state.code.labels[atom->GetIndex()] = 1;
             CanonicalLabelsRecursive(atom, 1, loopCount, bestCode, state);
@@ -1348,7 +1194,6 @@ namespace OpenBabel {
         if (loopCount > 200000) {
           obErrorLog.ThrowError(__FUNCTION__, "too many possibilities, aborting...", obError);
         }
-
 
         fcodes.push_back(bestCode);
       }
@@ -1373,32 +1218,6 @@ namespace OpenBabel {
     }
 
   }; // CanonicalLabelsImpl
-
-  int OBGraphSymPrivate::Iterate(vector<unsigned int> &symClasses)
-  {
-    // Create a vector-of-pairs, associating each atom with its Class ID.
-    vector<OBAtom*>::iterator j;
-    std::vector<std::pair<OBAtom*, unsigned int> > symmetry_classes;
-    for (OBAtom *atom = _pmol->BeginAtom(j); atom; atom = _pmol->NextAtom(j)) {
-      int idx = atom->GetIdx();
-      if (_frag_atoms.BitIsOn(idx))
-        symmetry_classes.push_back(pair<OBAtom*, unsigned int> (atom, symClasses[idx-1]));
-    }
-
-    // The heart of the matter: Do extended sum-of-invariants until no further
-    // changes are noted.
-    int nclasses = ExtendInvariants(symmetry_classes);
-
-    // Convert to a vector indexed by Index
-    // Atoms not in the fragment will have a value of OBGraphSym::NoSymmetryClass
-    symClasses.clear();
-    symClasses.resize(_pmol->NumAtoms(), OBGraphSym::NoSymmetryClass);
-    for (unsigned int i = 0; i < symmetry_classes.size(); ++i) {
-      symClasses[symmetry_classes.at(i).first->GetIndex()] = symmetry_classes.at(i).second;
-    }
-
-    return nclasses;
-  }
 
   void OBGraphSym::CanonicalLabels(std::vector<unsigned int> &canon_labels)
   {
