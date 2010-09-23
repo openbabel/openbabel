@@ -31,29 +31,25 @@ void compareMolecules(OBMol *mol1, OBMol *mol2)
 {
   std::vector<unsigned int> canlbls1, canlbls2;
   std::vector<unsigned int> symclasses1, symclasses2;
-  OBBitVec allbits(mol1->NumAtoms());
-  FOR_ATOMS_OF_MOL(a, mol1) {
-    allbits.SetBitOn(a->GetIdx());
-  }
 
-  CanonicalLabels(mol1, allbits, symclasses1, canlbls1); 
+  CanonicalLabels(mol1, symclasses1, canlbls1);
   cout << "mol1.NumAtoms = " << mol1->NumAtoms() << endl;
-    
-  CanonicalLabels(mol2, allbits, symclasses2, canlbls2); 
+
+  CanonicalLabels(mol2, symclasses2, canlbls2);
   cout << "mol2.NumAtoms = " << mol2->NumAtoms() << endl;
- 
+
   std::vector<unsigned int> symclassesCopy1 = symclasses1;
   std::sort(symclassesCopy1.begin(), symclassesCopy1.end());
   std::vector<unsigned int>::iterator end1 = std::unique(symclassesCopy1.begin(), symclassesCopy1.end());
   unsigned int unique1 = end1 - symclassesCopy1.begin();
-  
+
   std::vector<unsigned int> symclassesCopy2 = symclasses2;
   std::sort(symclassesCopy2.begin(), symclassesCopy2.end());
   std::vector<unsigned int>::iterator end2 = std::unique(symclassesCopy2.begin(), symclassesCopy2.end());
   unsigned int unique2 = end2 - symclassesCopy2.begin();
 
   OB_ASSERT( unique1 == unique2 );
-  if (unique1 != unique2) 
+  if (unique1 != unique2)
     cout << unique1 << " == " << unique2 << endl;
 
   FOR_ATOMS_OF_MOL (a1, mol1) {
@@ -91,7 +87,7 @@ bool doRoundtrip(OBMol *mol)
 
   OBMol round2; // result of reading first output as canonical SMILES
   std::string output, roundtrip; // first output string, then the roundtrip
-  
+
   mol->SetTitle("");
   output = conv.WriteString(mol, true); // trim whitespace
   OB_REQUIRE(conv.ReadString(&round2, output));
@@ -107,7 +103,7 @@ bool doRoundtrip(OBMol *mol)
   OB_ASSERT( roundtrip == output );
 
 //  compareMolecules(mol, &round2);
-  
+
   cout << "==================== end doRoundtrip =========================" << endl;
 
   return result;
@@ -138,11 +134,11 @@ bool doShuffleTest(const std::string &smiles)
   std::vector<OBAtom*> atoms;
   FOR_ATOMS_OF_MOL(atom, mol)
     atoms.push_back(&*atom);
-  
+
 
   std::string ref = canConv.WriteString(&mol, true); // FIXME
   cout << "ref = " << ref << endl;
- 
+
   bool result = true;
   for (int i = 0; i < N; ++i) {
     // shuffle the atoms
@@ -158,12 +154,12 @@ bool doShuffleTest(const std::string &smiles)
         failed++;
       result = false;
     } else {
-      cout << cansmi << endl;    
+      cout << cansmi << endl;
     }
-  
+
     doRoundtrip(&mol);
   }
-  
+
   bool roundtrip = doRoundtrip(&mol);
   OB_ASSERT( result == roundtrip );
 
@@ -198,7 +194,7 @@ bool doShuffleTestFile(const std::string &filename)
   OB_REQUIRE( canConv.ReadFile(&mol, file) );
   OB_REQUIRE( canConv.SetOutFormat("can") );
   OB_REQUIRE( smiConv.SetOutFormat("smi") );
-  
+
 
   std::string smiles = canConv.WriteString(&mol, true);
   testCount++;
@@ -206,10 +202,10 @@ bool doShuffleTestFile(const std::string &filename)
   std::vector<OBAtom*> atoms;
   FOR_ATOMS_OF_MOL(atom, mol)
     atoms.push_back(&*atom);
-  
+
   std::string ref = canConv.WriteString(&mol, true); // FIXME
   cout << "ref = " << ref << endl;
- 
+
   bool result = true;
   for (int i = 0; i < N; ++i) {
     // shuffle the atoms
@@ -227,7 +223,7 @@ bool doShuffleTestFile(const std::string &filename)
     }
     OB_ASSERT( cansmi == ref );
   }
-  
+
   bool roundtrip = doRoundtrip(&mol);
   OB_ASSERT( result == roundtrip );
 
@@ -253,13 +249,13 @@ bool doShuffleTestMultiFile(const std::string &filename)
 
   bool result = true;
   while (canConv.Read(&mol, &ifs)) {
-    
+
     testCount++;
 
     std::vector<OBAtom*> atoms;
     FOR_ATOMS_OF_MOL(atom, mol)
       atoms.push_back(&*atom);
-  
+
     mol.SetTitle("");
     std::string ref = canConv.WriteString(&mol, true);
     cout << "ref = " << ref << endl;
@@ -362,16 +358,16 @@ int main(int argc, char **argv)
   OB_ASSERT( doShuffleTest("CC(=O)O.Oc1nc2nc3c(nc2c(N)n1)c1cccc2cccc3c12") );
   OB_ASSERT( doShuffleTestFile("stereo/incorrect_canon1.mol") );
   OB_ASSERT( doShuffleTestFile("stereo/incorrect_canon2.mol") );
-  
+
   OB_ASSERT( doShuffleTest("O[C@H]1CC[C@@H](O)CC1") );
   OB_ASSERT( doShuffleTest("O[C@H]1C[C@@H](O)C[C@H](O)C1") );
   OB_ASSERT( doShuffleTest("O[C@H]1C[C@@H](O)C[C@@H](O)C1") );
-  
+
   OB_ASSERT( doShuffleTest("[C@@H]1([C@H]([C@H]([C@H]1C)C)C)C") );
   OB_ASSERT( doShuffleTestFile("stereo/cyclobutane_D1.smi") );
-  
+
   OB_ASSERT( doShuffleTestFile("stereo/razinger_fig7_5_spec.mol") );
- 
+
   OB_ASSERT( doShuffleTestFile("stereo/cyclohexanediol_D1.mol") );
   OB_ASSERT( doShuffleTestFile("stereo/cyclohexanediol_D2.mol") );
   OB_ASSERT( doShuffleTestFile("stereo/cyclohexanetriol_D1.mol") );
@@ -380,7 +376,7 @@ int main(int argc, char **argv)
   OB_ASSERT( doShuffleTestFile("stereo/cyclobutane_D2.mol") );
   OB_ASSERT( doShuffleTestFile("stereo/cyclobutane_D3.mol") );
   OB_ASSERT( doShuffleTestFile("stereo/cyclobutane_D4.mol") );
-  
+
   OB_ASSERT( doShuffleTest("[C@@H]1([C@H]([C@H]([C@H]1C)C)C)C") );
   OB_ASSERT( doShuffleTest("[C@@H]1([C@@H]([C@H]([C@H]1C)C)C)C") );	
   OB_ASSERT( doShuffleTest("[C@@H]1([C@@H]([C@H]([C@@H]1C)C)C)C") );	
@@ -396,7 +392,7 @@ int main(int argc, char **argv)
   OB_ASSERT( doShuffleTestFile("stereo/inositol_chiroD.mol") );
   OB_ASSERT( doShuffleTestFile("stereo/inositol_chiroL.mol") );
   OB_ASSERT( doShuffleTest("O[C@H]1[C@@H](O)[C@H](O)[C@H](O)[C@H](O)[C@H]1O") );
-  
+
   OB_ASSERT( doShuffleTestFile("stereo/razinger_fig7_19_spec1.mol") );
   OB_ASSERT( doShuffleTestFile("stereo/razinger_fig7_19_spec2.mol") );
   OB_ASSERT( doShuffleTestFile("stereo/razinger_fig7_19_spec3.mol") );
@@ -405,7 +401,7 @@ int main(int argc, char **argv)
   OB_ASSERT( doShuffleTestFile("stereo/razinger_fig7_20_spec1.mol") );
   OB_ASSERT( doShuffleTestFile("stereo/razinger_fig7_26_spec1.mol") );
   OB_ASSERT( doShuffleTestFile("stereo/razinger_fig7_59_spec1.mol") );
-  
+
   OB_ASSERT( doShuffleTestFile("stereo/razinger_fig7_30.mol") );
   OB_ASSERT( doShuffleTestFile("stereo/razinger_fig7_34.mol") );
   OB_ASSERT( doShuffleTestFile("stereo/razinger_fig7_35.mol") );
@@ -413,7 +409,7 @@ int main(int argc, char **argv)
   OB_ASSERT( doShuffleTestFile("stereo/razinger_fig7_37.mol") );
   OB_ASSERT( doShuffleTestFile("stereo/razinger_fig7_38.mol") );
   OB_ASSERT( doShuffleTestFile("stereo/razinger_fig7_39.mol") );
-  
+
   OB_ASSERT( doShuffleTestFile("stereo/canon1.mol") );
   OB_ASSERT( doShuffleTestFile("stereo/canon2.mol") );
   OB_ASSERT( doShuffleTestFile("stereo/canon3.mol") );
@@ -439,7 +435,7 @@ int main(int argc, char **argv)
   OB_ASSERT( doShuffleTestFile("stereo/canon22.mol") );
   OB_ASSERT( doShuffleTestFile("stereo/canon23.mol") );
   OB_ASSERT( doShuffleTestFile("stereo/canon24.mol") );
-  
+
   OB_ASSERT( doShuffleTestFile("stereo/canon_cistrans1.mol") );
   OB_ASSERT( doShuffleTestFile("stereo/canon_cistrans2.mol") );
   OB_ASSERT( doShuffleTestFile("stereo/canon_cistrans3.mol") );
@@ -451,7 +447,7 @@ int main(int argc, char **argv)
   OB_ASSERT( doShuffleTestFile("stereo/canon_cistrans9.mol") );
   OB_ASSERT( doShuffleTestFile("stereo/canon_cistrans15.mol") );
   OB_ASSERT( doShuffleTestFile("stereo/canon_cistrans16.mol") );
-  
+
 
 
   cout << "PASSED TESTS: " << testCount - failed << "/" << testCount << endl;

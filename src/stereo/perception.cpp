@@ -26,6 +26,7 @@
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/mol.h>
 #include <openbabel/graphsym.h>
+#include <openbabel/canon.h>
 #include <openbabel/oberror.h>
 #include <cassert>
 
@@ -1369,7 +1370,7 @@ namespace OpenBabel {
 
       // We need topological canonical labels for this
       std::vector<unsigned int> canon_labels;
-      OBGraphSym::CanonicalLabels(mol, symClasses, canon_labels);
+      CanonicalLabels(mol, symClasses, canon_labels, OBBitVec(), 5, true);
 
       // the result
       std::vector<Entry> result;

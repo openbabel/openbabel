@@ -34,37 +34,38 @@ void genericGraphSymTest(const std::string &smiles)
   // read a smiles string
   OB_REQUIRE( conv.ReadString(&mol1, smiles) );
 
+
   std::vector<unsigned int> canlbls1, canlbls2;
   std::vector<unsigned int> symclasses1, symclasses2;
-  OBBitVec allbits(mol1.NumAtoms());
-  FOR_ATOMS_OF_MOL(a, mol1) {
-    allbits.SetBitOn(a->GetIdx());
-  }
 
-  CanonicalLabels(&mol1, allbits, symclasses1, canlbls1); 
+  OBGraphSym gs1(&mol1);
+  gs1.GetSymmetry(symclasses1);
+  CanonicalLabels(&mol1, symclasses1, canlbls1);
   cout << "mol1.NumAtoms = " << mol1.NumAtoms() << endl;
-    
+
   // write to can smiles
   std::string canSmiles = conv.WriteString(&mol1);
   cout << "canSmiles: " << canSmiles;
   // read can smiles in again
   OB_REQUIRE( conv.ReadString(&mol2, canSmiles) );
 
-  CanonicalLabels(&mol2, allbits, symclasses2, canlbls2); 
+  OBGraphSym gs2(&mol2);
+  gs2.GetSymmetry(symclasses2);
+  CanonicalLabels(&mol2, symclasses2, canlbls2);
   cout << "mol2.NumAtoms = " << mol2.NumAtoms() << endl;
- 
+
   std::vector<unsigned int> symclassesCopy1 = symclasses1;
   std::sort(symclassesCopy1.begin(), symclassesCopy1.end());
   std::vector<unsigned int>::iterator end1 = std::unique(symclassesCopy1.begin(), symclassesCopy1.end());
   unsigned int unique1 = end1 - symclassesCopy1.begin();
-  
+
   std::vector<unsigned int> symclassesCopy2 = symclasses2;
   std::sort(symclassesCopy2.begin(), symclassesCopy2.end());
   std::vector<unsigned int>::iterator end2 = std::unique(symclassesCopy2.begin(), symclassesCopy2.end());
   unsigned int unique2 = end2 - symclassesCopy2.begin();
 
   OB_ASSERT( unique1 == unique2 );
-  if (unique1 != unique2) 
+  if (unique1 != unique2)
     cout << unique1 << " == " << unique2 << endl;
 
   FOR_ATOMS_OF_MOL (a1, mol1) {
@@ -86,7 +87,7 @@ void genericGraphSymTest(const std::string &smiles)
     OB_ASSERT( a1->GetImplicitValence() == a2->GetImplicitValence() );
   }
 
-  cout << "." << endl << endl; 
+  cout << "." << endl << endl;
 }
 
 void countGraphSymClassesTest(const std::string &filename, int numberOfClasses)
@@ -116,7 +117,7 @@ void countGraphSymClassesTest(const std::string &filename, int numberOfClasses)
   }
 }
 
-int main() 
+int main()
 {
   // Define location of file formats for testing
   #ifdef FORMATDIR
@@ -139,7 +140,7 @@ int main()
   genericGraphSymTest("CCC[C@@H]1C[C@H](N(C1)C)C(=O)NC([C@@H]2[C@@H]([C@@H]([C@H]([C@H](O2)SC)OP(=O)(O)O)O)O)C(C)Cl");
   genericGraphSymTest("CC(C)[C@H]1CC[C@]([C@@H]2[C@@H]1C=C(COC2=O)C(=O)O)(CCl)O");
   genericGraphSymTest("CC(C)[C@@]12C[C@@H]1[C@@H](C)C(=O)C2");
-  
+
   // ring gets converted to aromatic ring, adding H on n (i.e. N -> [nH])
   //genericGraphSymTest("CC1=CN(C(=O)NC1=O)[C@H]2C[C@@H]([C@H](O2)CNCC3=CC=CC=C3)O");
   // This is the aromatic form -- GRH, it passes
@@ -222,4 +223,4 @@ int main()
   return 0;
 }
 
-                
+

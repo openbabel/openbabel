@@ -67,17 +67,6 @@ namespace OpenBabel {
        * construting the OBGraphSym object.
        */
       void ClearSymmetry();
-      /**
-       * Calculate the canonical labels for the molecule. Stereochemistry is
-       * included in the algorithm and the canonical labels. The result will be
-       * stored in @p canonical_labels.
-       *
-       * @return The canonical labels for the molecule.
-       */
-      void CanonicalLabels(std::vector<unsigned int> &canonical_labels, int maxSeconds = 5);
-
-      static void CanonicalLabels(OBMol *mol, const std::vector<unsigned int> &symmetry_classes,
-          std::vector<unsigned int> &canon_labels, const OBBitVec &mask = OBBitVec());
 
     private:
       OBGraphSymPrivate * const d;

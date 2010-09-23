@@ -6,6 +6,7 @@
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/stereo/squareplanar.h>
 
+#include <openbabel/graphsym.h>
 #include <openbabel/canon.h>
 
 using namespace std;
@@ -40,7 +41,7 @@ void testTetrahedralStereo1()
   cout << *ts << endl;
 
   // construct a valid configuration here
-  // 
+  //
   // C[C@H](O)N
   // 0 1 2  3 4  <- ids
   //
@@ -49,7 +50,7 @@ void testTetrahedralStereo1()
   // compare stereochemistry
   OB_REQUIRE( ts->GetConfig() == cfg );
 
-  cout << endl; 
+  cout << endl;
 }
 
 void genericSmilesCanonicalTest(const std::string &smiles)
@@ -72,15 +73,12 @@ void genericSmilesCanonicalTest(const std::string &smiles)
   // get the stereo data
   OB_ASSERT( mol.HasData(OBGenericDataType::StereoData) );
   std::vector<OBGenericData *> stereoData = mol.GetAllData(OBGenericDataType::StereoData);
- 
+
   std::vector<unsigned int> canlbls;
   std::vector<unsigned int> symclasses;
-  OBBitVec allbits(mol.NumAtoms());
-  FOR_ATOMS_OF_MOL(a, mol) {
-    allbits.SetBitOn(a->GetIdx());
-  }
-
-  CanonicalLabels(&mol, allbits, symclasses, canlbls); 
+  OBGraphSym gs1(&mol);
+  gs1.GetSymmetry(symclasses);
+  CanonicalLabels(&mol, symclasses, canlbls);
   cout << "mol.NumAtoms = " << mol.NumAtoms() << endl;
   for (std::vector<OBGenericData*>::iterator data = stereoData.begin(); data != stereoData.end(); ++data) {
     if (((OBStereoBase*)*data)->GetType() == OBStereo::Tetrahedral) {
@@ -150,10 +148,10 @@ void genericSmilesCanonicalTest(const std::string &smiles)
       cout << "Config with symmetry ids: " << config << endl;
       squareplanar1.push_back(config);
     }
- 
- 
+
+
   }
-    
+
   // write to can smiles
   std::string canSmiles = conv.WriteString(&mol);
   cout << "canSmiles: " << canSmiles;
@@ -168,8 +166,10 @@ void genericSmilesCanonicalTest(const std::string &smiles)
   // get the stereo data
   OB_ASSERT( mol.HasData(OBGenericDataType::StereoData) );
   stereoData = mol.GetAllData(OBGenericDataType::StereoData);
-  
-  CanonicalLabels(&mol, allbits, symclasses, canlbls); 
+
+  OBGraphSym gs2(&mol);
+  gs2.GetSymmetry(symclasses);
+  CanonicalLabels(&mol, symclasses, canlbls);
   cout << "mol.NumAtoms = " << mol.NumAtoms() << endl;
   for (std::vector<OBGenericData*>::iterator data = stereoData.begin(); data != stereoData.end(); ++data) {
     if (((OBStereoBase*)*data)->GetType() == OBStereo::Tetrahedral) {
@@ -213,7 +213,7 @@ void genericSmilesCanonicalTest(const std::string &smiles)
         config.refs[3] = canlbls.at( mol.GetAtomById(config.refs[3])->GetIdx() - 1 );
       cout << "Config with symmetry ids: " << config << endl;
       cistrans2.push_back(config);
-    } else 
+    } else
     if (((OBStereoBase*)*data)->GetType() == OBStereo::SquarePlanar) {
       // convert to tetrahedral data
       OBSquarePlanarStereo *sp = dynamic_cast<OBSquarePlanarStereo*>(*data);
@@ -235,9 +235,9 @@ void genericSmilesCanonicalTest(const std::string &smiles)
       cout << "Config with symmetry ids: " << config << endl;
       squareplanar2.push_back(config);
     }
- 
+
   }
- 
+
   // compare the tetrahedral structs
   OB_ASSERT( tetrahedral1.size() == tetrahedral2.size() );
   for (unsigned int i = 0; i < tetrahedral1.size(); ++i) {
@@ -272,12 +272,12 @@ void genericSmilesCanonicalTest(const std::string &smiles)
         }
     }
   }
- 
-  cout << "." << endl << endl; 
+
+  cout << "." << endl << endl;
 }
 
 
-int main() 
+int main()
 {
   // Define location of file formats for testing
   #ifdef FORMATDIR
@@ -287,11 +287,11 @@ int main()
   #endif
 
   testTetrahedralStereo1();
-  
+
   // Tetrahedral
   genericSmilesCanonicalTest("C[C@H](O)N");
   genericSmilesCanonicalTest("Cl[C@@](CCl)(I)Br");
-  
+
   // CisTrans
   genericSmilesCanonicalTest("Cl/C=C/F");
 
@@ -323,4 +323,4 @@ int main()
   return 0;
 }
 
-                
+

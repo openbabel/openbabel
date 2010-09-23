@@ -29,6 +29,7 @@ GNU General Public License for more details.
 #include <openbabel/stereo/stereo.h>
 
 #include <openbabel/graphsym.h>
+#include <openbabel/canon.h>
 
 #include <limits>
 #include <iostream>
@@ -3536,7 +3537,7 @@ namespace OpenBabel {
     if (_canonicalOutput) {
       OBGraphSym gs(&mol, &frag_atoms);
       gs.GetSymmetry(symmetry_classes);
-      gs.CanonicalLabels(canonical_order);
+      CanonicalLabels(&mol, symmetry_classes, canonical_order, frag_atoms);
     }
     else {
       if (_pconv->IsOption("C")) {      // "C" == "anti-canonical form"
