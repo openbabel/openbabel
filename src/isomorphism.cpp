@@ -537,7 +537,7 @@ namespace OpenBabel {
 
   };
 
-  OBIsomorphismMapper::OBIsomorphismMapper(OBQuery *query) : m_query(query), m_timeout(600), m_memory(0), m_maxMemory(300000000)
+  OBIsomorphismMapper::OBIsomorphismMapper(OBQuery *query) : m_query(query), m_timeout(60), m_memory(0), m_maxMemory(300000000) // 300MB
   {
   }
 
