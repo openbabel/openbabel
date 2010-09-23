@@ -65,8 +65,10 @@ public:
   virtual bool GetFingerprint(OBBase* pOb, std::vector<unsigned int>& fp, int nbits=0)=0;
 
   /// Optional flags
-  enum FptFlag{FPT_UNIQUEBITS=1};
+  enum FptFlag{FPT_UNIQUEBITS=1, FPT_NOINFO=2};
   virtual unsigned int Flags() { return 0;};
+  //// \since version 2.3
+  virtual void SetFlags(unsigned int){}
 
   /// \return a description of each bit that is set (or unset, if bSet=false)
   /// \since version 2.2

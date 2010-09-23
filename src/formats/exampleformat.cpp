@@ -18,15 +18,13 @@ to indroduce a new format. The code just needs to be compiled and linked
 with the rest of the OpenBabel code.
 Alternatively, they can be built (either singly or in groups) as DLLs
 or shared libraries. [**Extra build info**]
-For a DLL, use the project OBFormats2 as a template.
 
 Each file may contain more than one format.
 
 This compilable, but non-functional example is for a format which
 converts a molecule to and from OpenBabel's internal format OBMol.
 The conversion framework can handle other types of object, provided
-they are derived from OBBase. OBReaction is currently the only
-alternative to OBMol and is used in rxnformat.cpp.
+they are derived from OBBase, such as OBReaction, OBText.
 
 For XML formats, extra support for the parsing is provided, see pubchem.cpp
 as an example.
@@ -78,11 +76,11 @@ public:
 
 	}
 
-	/* The first line of the description should be a brief identifier since it is
-	   used in dropdown lists, etc. in some user interfaces. The rest is optional.
+	/* The first line of the description should be a brief identifier, <40 chars, because
+     it is used in dropdown lists, etc. in some user interfaces. The rest is optional.
 
 	   Describe any format specific options here. This text is parsed to provide
-	   checkboxes, etc for the Windows GUI (for details click the control menu),
+	   checkboxes, etc for the GUI (for details click the control menu),
 	   so please try to keep to a similar form.
 
 	   Write options are the most common, and the "Write" is optional.
@@ -94,15 +92,15 @@ public:
 	virtual const char* Description() //required
 	{
 		return
-		"XXX format\n \
-		Some comments here, on as many lines as necessay\n \
-		Write Options e.g. -xf3 \n \
-			f# Number of (fictional) levels \n \
-			n  Omit (virtual) title\n \
-		\n \
-		Read Options e.g. -as\n\
-			s  Consider single bonds only\n\
-		";
+		"XXX format\n"
+		"Some comments here, on as many lines as necessay\n"
+		"Write Options e.g. -xf3 \n"
+		"	f# Number of (fictional) levels\n"
+		"	n  Omit (virtual) title\n\n"
+		
+		"Read Options e.g. -as\n"
+		"	s  Consider single bonds only\n"
+		;
   };
 
   //Optional URL where the file format is specified

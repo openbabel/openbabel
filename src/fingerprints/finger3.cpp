@@ -221,7 +221,7 @@ public:
         num -= ngrp;
         if(GetBit(fp, n) == bSet)
         {
-          ss << '\t' << ppat->description;
+          ss << ppat->description << '\t' ;
           if(div>0)
             ss << '*' << div+1;
           break; //ignore the bits signifying a smaller number of occurrences

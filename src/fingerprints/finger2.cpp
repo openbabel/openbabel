@@ -22,12 +22,6 @@ GNU General Public License for more details.
 #include <set>
 #include <vector>
 
-/*
-#ifdef _DEBUG
- #include "stdafx.h"
- #undef AddAtom
-#endif
-*/
 using namespace std;
 namespace OpenBabel
 {
@@ -36,13 +30,27 @@ class fingerprint2 : public OBFingerprint
 {
 public:
 	fingerprint2(const char* ID, bool IsDefault=false)
-		: OBFingerprint(ID, IsDefault){};
+		: OBFingerprint(ID, IsDefault), _flags(0){};
 
 	virtual const char* Description()
 	{ return "Indexes linear fragments up to 7 atoms.";};
 
 	//Calculates the fingerprint
 	virtual bool GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbits=0);
+
+  /// \returns fragment info unless SetFlags(OBFingerprint::FPT_NOINFO) has been called before GetFingerprint() called. 
+  /** Structure of a fragment (vector<int>)
+   For a complete ring: last atom bonded to first atom
+      bo(0)(n), atno(1), bo(1)(2), atno(2), bo(2)(3),...atno(n)
+   For the rest, even when stopped by encountering atoms already visited
+         0    , atno(1), bo(1)(2), atno(2), bo(2)(3),...atno(n)
+  **/
+virtual std::string DescribeBits(const std::  vector<unsigned int> fp, bool bSet=true)
+  { return _ss.str(); }
+
+  virtual unsigned int Flags() { return _flags;};
+  virtual void SetFlags(unsigned int f){ _flags=f; }
+
 private:
 	typedef std::set<std::vector<int> > Fset;
 	typedef std::set<std::vector<int> >::iterator SetItr;
@@ -57,6 +65,8 @@ private:
 
 	Fset fragset;
 	Fset ringset;
+  stringstream _ss;
+  unsigned int _flags;
 
 };
 
@@ -90,7 +100,7 @@ bool fingerprint2::GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbit
 	fp.resize(1024/Getbitsperint());
 	fragset.clear();//needed because now only one instance of fp class
 	ringset.clear();
-
+ 
 	//identify fragments starting at every atom
 	OBAtom *patom;
 	vector<OBNodeBase*>::iterator i;
@@ -114,7 +124,8 @@ bool fingerprint2::GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbit
 		//Use hash of fragment to set a bit in the fingerprint
 		int hash = CalcHash(*itr);
 		SetBit(fp,hash);
-		//PrintFpt(*itr,hash);
+		if(!(Flags() & FPT_NOINFO))
+      PrintFpt(*itr,hash);
 	}
 	if(nbits)
 		Fold(fp, nbits);
@@ -256,19 +267,9 @@ void fingerprint2::PrintFpt(vector<int>& f, int hash)
 {
 	unsigned int i;
 	for(i=0;i<f.size();++i)
-//		TRACE("%d ",f[i]);
-//	TRACE("<%d>\n",hash);
-		cerr << f[i] << " ";
-	cerr << "<" << hash << ">" << endl;
+    _ss  << f[i] << " ";
+  _ss << "<" << hash << ">" << endl;
 }
-
-/* Structure of a fragment (vector<int>)
-   For a complete ring: last atom bonded to first atom
-    bo(0)(n), atno(1), bo(1)(2), atno(2), bo(2)(3),...atno(n)
-
- For the rest, even when stopped by encountering atoms already visited
-       0    , atno(1), bo(1)(2), atno(2), bo(2)(3),...atno(n)
-*/
 
 } //namespace OpenBabel
 

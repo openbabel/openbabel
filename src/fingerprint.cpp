@@ -385,6 +385,9 @@ namespace OpenBabel
     _pFP = _pindex->CheckFP();
     if(fpid.empty()) // add id of default FP
       strcpy(_pindex->header.fpid, _pFP->GetID());
+
+    //Save a small amount of time by not generating info (FP2 currently)
+    _pFP->SetFlags(_pFP->Flags() | OBFingerprint::FPT_NOINFO);
   }
 
   /////////////////////////////////////////////////////////////
@@ -422,6 +425,8 @@ namespace OpenBabel
       obErrorLog.ThrowError(__FUNCTION__,
                             "Difficulty writing index", obWarning);
     delete _pindex;
+
+    _pFP->SetFlags(_pFP->Flags() & ~OBFingerprint::FPT_NOINFO); //Clear
   }
 
   ///////////////////////////////////////////////////////////////

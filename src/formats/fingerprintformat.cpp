@@ -156,7 +156,7 @@ namespace OpenBabel
         obErrorLog.ThrowError(__FUNCTION__,
         "Bit descriptions are not available for this fingerprint type", obError, onceOnly);
 
-      ofs << descr;
+      ofs << '\n' << descr;
       return true;
     }
 
@@ -180,9 +180,7 @@ namespace OpenBabel
           firstname=pmol->GetTitle();
         if(firstname.empty())
           firstname = "first mol";
-
-
-    }
+      }
     else
       {
         ofs << "   Tanimoto from " << firstname << " = " << OBFingerprint::Tanimoto(firstfp, fptvec);

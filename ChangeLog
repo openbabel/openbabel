@@ -1,3 +1,16 @@
+2010-09-23 Chris Morley
+
+	* src/fingerprints/finger2.cpp: generate detailed fragement info
+	and output via new DescribeBits function, as suggested by Noel. 
+	
+	* include/openbabel/fingerprint.h: make Flags interface writeable.
+	
+	* src/fingerprint.cpp(FastsearchIndexer): set fingerprints
+	FPT_NOINFO flag to save time (FP2).  
+	
+	* src/fingerprints/finger3.cpp,src/formats/fingerprintformat.cpp:
+	minor format changes to DescribeBits output.
+
 2010-09-19  Noel O'Boyle
 
 	* src/formats/inchiformat.cpp: Handle atoms with tet chirality due to
