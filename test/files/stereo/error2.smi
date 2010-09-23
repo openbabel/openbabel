@@ -3,7 +3,7 @@ O=C(N[C@@H]1[C@@H]2C[C@H]3C[C@@H](C2)C[C@@H]1C3)c1ccncn1 5
 Clc1nc(Cl)nc(c1)O[C@H]1[C@@H]2C[C@H]3C[C@@H](C2)C[C@@H]1C3 7 XXX
 OC(=O)[C@@H]1[C@@H](c2ccccc2)[C@H](C(=O)O)[C@@H]1c1ccccc1               6 XXX
 OC(=O)[C@@]12[C@@H]3CC[C@@H](O3)[C@@]2(C(=O)O)[C@H]2CC[C@@H]1O2 10
-C Nc1nc(S)nc(c1)C(=O)N[C@@H]1[C@@H]2C[C@H]3C[C@@H](C2)C[C@@H]1C3 9
+Nc1nc(S)nc(c1)C(=O)N[C@@H]1[C@@H]2C[C@H]3C[C@@H](C2)C[C@@H]1C3 9
 O1[C@@H]2[C@@H]1[C@@H]1O[C@H]1[C@@H]1O[C@H]1[C@@H]1O[C@H]21 8
 c1ccc(cc1)C[C@@]12N=N[C@@](Cc3ccccc3)([C@H]3C=C[C@@H]13)[C@H]1C=C[C@@H]21 12
 c1ccc2O[Cu@]34[N+](=Cc2c1)CCC[O+]3[Cu@]12Oc3ccccc3C=[N+]1CCC[O+]42 11
