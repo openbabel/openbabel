@@ -12,6 +12,7 @@ set(tests
     automorphism
     builder
     canonconsistent
+    canonstable
     cistrans
     graphsym
     lssr
