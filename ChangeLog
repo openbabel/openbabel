@@ -1,3 +1,9 @@
+2010-09-23 Noel O'Boyle
+
+	* src/math/align.cpp, align.h: Add OBAlign::GetRotMatrix()
+
+	* test/aligntest.cpp: Add basic test for GetRotMatrix()
+
 2010-09-23 Chris Morley
 
 	* src/fingerprints/finger2.cpp: generate detailed fragement info

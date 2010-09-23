@@ -72,6 +72,18 @@ void test_simpleAlign()
   OB_ASSERT( result[0].IsApprox(ref[0], 1.0E-08) );
   OB_ASSERT( result[1].IsApprox(ref[1], 1.0E-08) );
   OB_ASSERT( fabs(align.GetRMSD()) < 1.0E-08 );
+
+  // Verify that using GetRotMatrix() works to rotate bd onto ac
+  matrix3x3 rot = align.GetRotMatrix();
+  vector<vector3> centroids;
+  centroids.push_back( (b + d) / 2);
+  centroids.push_back( (a + c) / 2);
+  for (int i = 0; i<2; ++i) {
+    vector3 aligned = target[i] - centroids[0];
+    aligned *= rot;
+    aligned += centroids[1];
+    OB_ASSERT( aligned.IsApprox(ref[i], 1.0E-08) ); 
+  }
 }
 
 void test_RMSD()

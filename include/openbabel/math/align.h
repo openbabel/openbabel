@@ -127,6 +127,28 @@ namespace OpenBabel
      */
     double GetRMSD();
     /**
+     * Return the rotation matrix associated with the least squares
+     * alignment. This function should only
+     * be called after running the alignment (using Align()).
+     * 
+     * The following example shows how to use the rotation matrix
+     * to rotate all of the atoms in a molecule. 
+     * \code
+     * matrix3x3 rotmatrix = align.GetRotMatrix();
+     * for (unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
+     *    vector3 tmpvec = mol.GetAtom(i)->GetVector();
+     *    tmpvec *= rotmatrix; //apply the rotation
+     *    mol.GetAtom(i)->SetVector(tmpvec);
+     * }
+     * \endcode
+     * Note that if you wish to use the rotation matrix to find the
+     * aligned coordinates (that is, the same coordinates returned by
+     * GetAlignment()), you should first translate the set of coordinates
+     * to the origin by subtracting the centroid, then apply the rotation,
+     * and finally add the centroid of the reference coordinates.
+     */
+    matrix3x3 GetRotMatrix();
+    /**
      * Return the actual alignment of the Target to the Reference
      * in terms of a vector of vector3 objects. If you want an OBMol
      * with the aligned coordinates, you should use UpdateCoords() instead.

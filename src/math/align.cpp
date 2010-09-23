@@ -220,6 +220,23 @@ namespace OpenBabel
     return true;
   }
 
+  matrix3x3 OBAlign::GetRotMatrix()
+  {
+    if (!_ready) {
+      obErrorLog.ThrowError(__FUNCTION__, "Rotation matrix not available until you call Align()" , obError);
+      return matrix3x3();
+    }
+
+    // Convert Eigen::Matrix to matrix3x3
+    double rot[3][3];
+    for (int row=0; row<3; ++row)
+       for (int col=0; col<3; ++col)
+         rot[row][col] = _rotMatrix(row, col);
+    matrix3x3 rotmat = matrix3x3(rot);
+
+    return rotmat;
+  }
+
   vector<vector3> OBAlign::GetAlignment() {
     vector<vector3> aligned_coords;
     if (!_ready) {
