@@ -3,19 +3,24 @@ use ExtUtils::MakeMaker;
 use lib 'inc';
 use Devel::CheckLib;
 
-check_lib_or_exit( lib => 'openbabel' , libpath =>
-@ENV{"LD_LIBRARY_PATH"});
-
 $CC = 'g++';
 
-$cmake_src_dir = @ENV{"SRC_DIR"};
-$cmake_bin_dir = @ENV{"OBJ_DIR"};
+$cmakesrcdir = @ENV{"SRC_DIR"};
+$cmakebindir = @ENV{"OBJ_DIR"};
+
+# Look for libopenbabel.so
+if (-e "$cmakebindir/lib/libopenbabel.so" || -e "$cmakebindir/lib/libopenbabel.dylib") {
+  check_lib_or_exit( lib => 'openbabel' , libpath => "$cmakebindir/lib");
+}
+else {
+  check_lib_or_exit( lib => 'openbabel' , libpath => @ENV{"LD_LIBRARY_PATH"});
+}
 
 $ldfrom = "\$(OBJECT) -lopenbabel -lz";
-$ldfrom = "\$(OBJECT) -L$(cmake_bin_dir)/lib -lopenbabel -lz"
-    if (-r "$(cmake_bin_dir)/lib/libopenbabel.dylib") and (-s _) and (-B _);
-$ldfrom = "\$(OBJECT) -L$(cmake_bin_dir)/lib -lopenbabel -lz"
-    if (-r "$(cmake_bin_dir)/lib/libopenbabel.so") and (-s _) and (-B _);
+$ldfrom = "\$(OBJECT) -L$cmakebindir/lib -lopenbabel -lz"
+    if (-r "$cmakebindir/lib/libopenbabel.dylib") and (-s _) and (-B _);
+$ldfrom = "\$(OBJECT) -L$cmakebindir/lib -lopenbabel -lz"
+    if (-r "$cmakebindir/lib/libopenbabel.so") and (-s _) and (-B _);
 
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
@@ -26,6 +31,6 @@ WriteMakefile(
     'LDFROM'    => $ldfrom,
     'CC'        => $CC,
     'LD'        => '$(CC)',
-    'INC'       => '-I../../include -I'.$cmake_src_dir.'/include',
+    'INC'       => '-I../../include -I'.$cmakesrcdir.'/include',
     'OBJECT'    => 'openbabel-perl.o'
 );
