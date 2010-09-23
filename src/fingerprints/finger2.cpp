@@ -119,6 +119,7 @@ bool fingerprint2::GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbit
 	DoReverses();
 
 	SetItr itr;
+  _ss.str("");
 	for(itr=fragset.begin();itr!=fragset.end();++itr)
 	{
 		//Use hash of fragment to set a bit in the fingerprint
