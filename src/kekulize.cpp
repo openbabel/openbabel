@@ -48,7 +48,7 @@ namespace OpenBabel
   // This method essentially does a modified depth-first search to find
   //  large aromatic cycles
   int expand_cycle (OBMol *mol, OBAtom *atom, OBBitVec &avisit, OBBitVec &cvisit,
-      const OBBitVec &potAromBonds, int rootIdx, int prevAtomIdx = -1, int depth = 24);
+      const OBBitVec &potAromBonds, int rootIdx, int prevAtomIdx = -1, int depth = 30);
 
   bool isPotentialAromaticAtom(OBAtom *atom)
   {
@@ -543,7 +543,7 @@ namespace OpenBabel
   {
     FOR_ATOMS_OF_MOL(a, this) {
       int idx = a->GetIdx();
-      if (atomState[idx] == DOUBLE_ALLOWED && !a->IsNitrogen()) {
+      if (atomState[idx] == DOUBLE_ALLOWED) {
         // nitrogen failures are OK -- could be an 'n' which needs to be 'nH'
         if (DEBUG) {cout << "  failure, extra electron on atom " << idx << endl;}
         return false;
