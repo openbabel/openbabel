@@ -37,12 +37,6 @@
 
 #include "stereo/stereoutil.h"
 
-  static const char *red    = "\033[1;31m";
-  static const char *green  = "\033[1;32m";
-  static const char *yellow = "\033[1;33m";
-  static const char *blue   = "\033[1;34m";
-  static const char *normal = "\033[0m";
-
 using namespace std;
 
 
