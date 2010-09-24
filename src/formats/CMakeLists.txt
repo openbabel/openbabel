@@ -1,3 +1,5 @@
+if(BUILD_SHARED)
+
 set(formats_common
   smilesformat
   mdlformat
@@ -183,17 +185,15 @@ if(NOT WIN32)
   set(libs ${libs} m)
 endif(NOT WIN32)
 
-if(BUILD_SHARED)
-  if(WIN32)
-    set(openbabel_srcs ${openbabel_srcs}
-        dlhandler_win32
-        )
-  else(WIN32)
-    set(openbabel_srcs ${openbabel_srcs}
-        dlhandler_unix
-        )
-  endif(WIN32)
-endif(BUILD_SHARED)
+if(WIN32)
+  set(openbabel_srcs ${openbabel_srcs}
+      dlhandler_win32
+      )
+else(WIN32)
+  set(openbabel_srcs ${openbabel_srcs}
+      dlhandler_unix
+      )
+endif(WIN32)
 
 if(MSVC)
   foreach(formatgroup formats_common formats_utility formats_compchem formats_misc)
@@ -263,3 +263,5 @@ foreach(format ${formats_xml})
 endforeach(format)
 endif(MSVC)
 endif(NOT MINIMAL_BUILD)
+
+endif(BUILD_SHARED)
