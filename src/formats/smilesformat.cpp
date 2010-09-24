@@ -745,6 +745,8 @@ namespace OpenBabel {
     if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL)
     {
       int insertpos = NumConnections(ChiralSearch->first) - 2;
+      if (insertpos > 2)
+        return;
       if (insertpos < 0) {
         if (ChiralSearch->second->from != OBStereo::NoRef)
           obErrorLog.ThrowError(__FUNCTION__, "Error: Overwriting previous from reference id.", obError);
