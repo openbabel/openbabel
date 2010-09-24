@@ -58,6 +58,7 @@ endif (EIGEN2_FOUND)
 set(ops
   ops/addinindex.cpp
   ops/addpolarh.cpp
+  ops/canonical.cpp
   ops/gen2D.cpp
   ops/fillUC.cpp
   ops/forcefield.cpp
