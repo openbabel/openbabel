@@ -19,6 +19,12 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #define DEBUG 0
+#ifndef MAX_TIME
+#define MAX_TIME 60
+#endif
+#ifndef MAX_DEPTH
+#define MAX_DEPTH 30
+#endif
 
 #include <openbabel/babelconfig.h>
 
@@ -43,12 +49,27 @@ using namespace std;
 namespace OpenBabel
 {
 
+  namespace Kekulize {
+  // Allow ourselves to restrict recursive searching to 60 seconds max
+    struct Timeout
+    {
+      Timeout(unsigned int _maxTime) : maxTime(_maxTime)
+      {
+        startTime = time(NULL);
+      }
+      unsigned int startTime, maxTime;
+    };
+  }
+
+  using namespace Kekulize;
+
   // Modified internal-only version
   // Keep track of which rings contain *all* atoms in the cycle
   // This method essentially does a modified depth-first search to find
   //  large aromatic cycles
   int expand_cycle (OBMol *mol, OBAtom *atom, OBBitVec &avisit, OBBitVec &cvisit,
-      const OBBitVec &potAromBonds, int rootIdx, int prevAtomIdx = -1, int depth = 30);
+                    const OBBitVec &potAromBonds, int rootIdx, Timeout &timeout, 
+                    int prevAtomIdx = -1, int depth = MAX_DEPTH);
 
   bool isPotentialAromaticAtom(OBAtom *atom)
   {
@@ -169,7 +190,8 @@ namespace OpenBabel
         if (fusedRings)
           expandcycle(atom, avisit, potAromBonds);
         else {
-          int depth = expand_cycle(this, atom, avisit, cvisit, potAromBonds, atom->GetIdx());
+          Timeout timeout(MAX_TIME);
+          int depth = expand_cycle(this, atom, avisit, cvisit, potAromBonds, atom->GetIdx(), timeout);
           if (depth <= 0)
             continue; // no valid cycle from this atom
         }
@@ -597,11 +619,17 @@ namespace OpenBabel
 
   //! Recursively find the aromatic atoms with an aromatic bond to the current atom
   int expand_cycle (OBMol *mol, OBAtom *atom, OBBitVec &avisit, OBBitVec &cvisit,
-      const OBBitVec &potAromBonds, int rootIdx, int prevAtomIdx, int depth)
+                    const OBBitVec &potAromBonds, int rootIdx, Timeout &timeout, 
+                    int prevAtomIdx, int depth)
   {
-    // early termination
+    // early termination -- too deep recursion, or timeout
     if (depth < 0)
       return depth;
+
+    if (time(NULL) - timeout.startTime > timeout.maxTime) {
+      obErrorLog.ThrowError(__FUNCTION__, "maximum time exceeded...", obError);
+      return depth;
+    }
 
     //    cout << " expand_cycle: " << atom->GetIdx() << " depth " << depth << endl;
 
@@ -642,7 +670,7 @@ namespace OpenBabel
 
         trialMatch = avisit;
         trialMatch.SetBitOn(natom);
-        trialScore = expand_cycle(mol, nbr, trialMatch, cvisit, potAromBonds, rootIdx, atom->GetIdx(), depth - 1);
+        trialScore = expand_cycle(mol, nbr, trialMatch, cvisit, potAromBonds, rootIdx, timeout, atom->GetIdx(), depth - 1);
         if (trialScore > 0 && trialScore < bestScore) { // we found a larger, valid cycle
           //          cout << " score: " << trialScore << endl;
           bestMatch = trialMatch;
