@@ -2632,7 +2632,8 @@ namespace OpenBabel {
     // we have some special cases below
     bracketElement = !(normalValence = (bosum <= maxBonds));
 
-    switch (atom->GetAtomicNum()) {
+    int element = atom->GetAtomicNum();
+    switch (element) {
     case 0:	// pseudo '*' atom has no normal valence, needs brackets if it has any hydrogens
       normalValence = (atom->ExplicitHydrogenCount() == 0);
       bracketElement = !normalValence;
@@ -2704,13 +2705,6 @@ namespace OpenBabel {
       writeExplicitHydrogen = true;
     }
 
-    // Add brackets and explicit hydrogens for coordinated water molecules
-    // PR#2505562
-    if (isWaterOxygen(atom)) {
-      bracketElement = true;
-      writeExplicitHydrogen = true;
-    }
-
     //Output as [CH3][CH3] rather than CC if -xh option has been specified
     if (!bracketElement && _pconv && _pconv->IsOption("h") && atom->ExplicitHydrogenCount() > 0) {
       bracketElement = true;
@@ -2720,7 +2714,7 @@ namespace OpenBabel {
     if (!bracketElement) {
 
       // Ordinary non-bracket element
-      if (atom->GetAtomicNum()) {
+      if (element) {
         strcpy(symbol,etab.GetSymbol(atom->GetAtomicNum()));
         if (atom->IsAromatic())
           symbol[0] = tolower(symbol[0]);
@@ -2793,6 +2787,12 @@ namespace OpenBabel {
     // If chiral, append '@' or '@@'
     if (stereo[0] != '\0')
       strcat(bracketBuffer, stereo);
+
+    // don't try to handle implicit hydrogens for metals
+    if ( (element >= 21 && element <= 30)
+         || (element >= 39 && element <= 49)
+         || (element >= 71 && element <= 82) )
+      writeExplicitHydrogen = true;
 
     // Add extra hydrogens.  If this is a bracket-atom *only* because the
     // "-xh" option was specified, then we're writing a SMARTS, so we
