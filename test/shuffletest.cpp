@@ -289,6 +289,13 @@ bool doShuffleTestMultiFile(const std::string &filename)
 
 int main(int argc, char **argv)
 {
+  // Define location of file formats for testing
+#ifdef FORMATDIR
+    char env[BUFF_SIZE];
+    snprintf(env, BUFF_SIZE, "BABEL_LIBDIR=%s", FORMATDIR);
+    putenv(env);
+#endif  
+
   if (argc == 2) {
     OB_ASSERT( doShuffleTestMultiFile(argv[1]) );
     cout << "PASSED TESTS: " << testCount - failed << "/" << testCount << endl;

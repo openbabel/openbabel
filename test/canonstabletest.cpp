@@ -46,6 +46,12 @@ bool testCanSmiles(const std::string &smiles, const std::string &stable_cansmile
 
 int main(int argc, char **argv)
 {
+  // Define location of file formats for testing
+#ifdef FORMATDIR
+    char env[BUFF_SIZE];
+    snprintf(env, BUFF_SIZE, "BABEL_LIBDIR=%s", FORMATDIR);
+    putenv(env);
+#endif  
 
   testCanSmiles("N#CC1[C@@H](C#N)[C@@H]1C#N.N#CC1[C@@H](C#N)[C@@H]1C#N","C1([C@H]([C@@H]1C#N)C#N)C#N.C1([C@H]([C@@H]1C#N)C#N)C#N");
   testCanSmiles("O=C(N[C@@H]1[C@@H]2C[C@H]3C[C@@H](C2)C[C@@H]1C3)c1ccncn1","c1(C(=O)N[C@@H]2[C@@H]3C[C@@H]4C[C@H]2C[C@H](C3)C4)ncncc1");
