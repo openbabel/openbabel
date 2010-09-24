@@ -1023,6 +1023,10 @@ namespace OpenBabel {
               element = 96;
               strcpy(symbol,"Cm");
               break;
+            case 'n':
+              element = 112;
+              strcpy(symbol,"Cn");
+              break;
             case 'o':
               element = 27;
               strcpy(symbol,"Co");
@@ -1159,6 +1163,10 @@ namespace OpenBabel {
               element = 34;
               strcpy(symbol,"Se");
               break;
+            case 'g':
+              element = 106;
+              strcpy(symbol,"Sg");
+              break;
             case 'i':
               element = 14;
               strcpy(symbol,"Si");
@@ -1193,6 +1201,10 @@ namespace OpenBabel {
             case 'e':
               element =  4;
               strcpy(symbol,"Be");
+              break;
+            case 'h':
+              element =  107;
+              strcpy(symbol,"Bh");
               break;
             case 'i':
               element = 83;
@@ -1299,13 +1311,21 @@ namespace OpenBabel {
 
         case 'D':
           _ptr++;
-          if (*_ptr == 'y')
+          switch(*_ptr)
             {
+            case 'b':
+              element = 105;
+              strcpy(symbol,"Db");
+              break;
+            case 's':
+              element = 110;
+              strcpy(symbol,"Ds");
+              break;
+            case 'y':
               element = 66;
               strcpy(symbol,"Dy");
-            }
-          else
-            {
+              break;
+            default:
               _ptr--;
               return(false);
             }
@@ -1375,6 +1395,10 @@ namespace OpenBabel {
               element = 67;
               strcpy(symbol,"Ho");
               break;
+            case 's':
+              element = 108;
+              strcpy(symbol,"Hs");
+              break;
             default:
               element = 1;
               symbol[0] = 'H';
@@ -1443,6 +1467,10 @@ namespace OpenBabel {
               element =  42;
               strcpy(symbol,"Mo");
               break;
+            case 't':
+              element =  109;
+              strcpy(symbol,"Mt");
+              break;
             default:
               _ptr--;
               return(false);
@@ -1464,6 +1492,14 @@ namespace OpenBabel {
             case 'e':
               element = 75;
               strcpy(symbol,"Re");
+              break;
+            case 'f':
+              element = 104;
+              strcpy(symbol,"Rf");
+              break;
+            case 'g':
+              element = 111;
+              strcpy(symbol,"Rg");
               break;
             case 'h':
               element = 45;
@@ -2805,6 +2841,15 @@ namespace OpenBabel {
       else
         // if "isomeric", doesn't count isotopic H
         hcount = atom->ImplicitHydrogenCount() + atom->ExplicitHydrogenCount(isomeric);
+
+      // OK, see if we need to decrease the H-count due to hydrogens we'll write later
+      FOR_NBORS_OF_ATOM(nbr, atom) {
+        if (nbr->IsHydrogen() && ( (nbr->GetFormalCharge() != 0)
+                                   || (nbr->GetValence() > 1) ) ) {
+            hcount--;
+        }
+      }
+
       if (hcount != 0) {
         strcat(bracketBuffer,"H");
         if (hcount > 1) {
@@ -3635,6 +3680,7 @@ namespace OpenBabel {
   {
     bool is_modified = false;
     vector <OBAtom *> atomList;
+    int element;
 
     // Find all appropriate atoms to add hydrogens
     FOR_ATOMS_OF_MOL(atom, mol)
@@ -3642,12 +3688,19 @@ namespace OpenBabel {
         if (!frag_atoms[atom->GetIdx()] || !AtomIsChiral(&*atom))
           continue;
 
+        // don't mess with transition elements!
+        element = atom->GetAtomicNum();
+        if ( (element >= 21 && element <= 30)
+             || (element >= 39 && element <= 49)
+             || (element >= 71 && element <= 82) )
+          continue;
+
         if (GetSmilesValence(&*atom) == 3 && atom->GetValence() == 3) {       // implicit H?
           atomList.push_back(&*atom);
         }
       }
 
-    // Now add hyrdogens to the list
+    // Now add hydrogens to the list
     if (atomList.size() > 0) {
       mol.BeginModify();
 
@@ -3708,10 +3761,10 @@ namespace OpenBabel {
 
     OBMol2Cansmi m2s;
     m2s.Init(canonical, pConv);
-    // GRH Added 208-06-05
+    // GRH Added 2008-06-05
     // This came from the WriteMolecule call below
     // It doesn't seem to have any effect
-    m2s.CorrectAromaticAmineCharge(mol);
+    //    m2s.CorrectAromaticAmineCharge(mol);
 
     if (iso) {
       m2s.CreateCisTrans(mol); // No need for this if not iso
