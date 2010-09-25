@@ -234,7 +234,13 @@ namespace OpenBabel
 
         // At the beginning each atom give one electron to the cycle
         for(j=0; j< cycle.size(); ++j) {
-          electron.push_back(1);
+          atom = cycle[j];
+          if (atom->IsOxygen() 
+              && atom->GetFormalCharge() == 0
+              && atom->GetValence() == 2) // fixes PR#3075065
+            electron.push_back(2);
+          else
+            electron.push_back(1);
         }
 
         // remove one electron if the atom make a double bond out of the cycle
@@ -267,8 +273,8 @@ namespace OpenBabel
 
         // find the ideal number of electrons according to the huckel 4n+2 rule
         minde=99;
-        for (i=1; 1; ++i) {
-          n = 4 *i +2;
+        for (int x=1; 1; ++x) { // do NOT use "i": main for() loop counter 
+          n = 4 *x +2;
           de = n - sume;
           if (  de < minde )
             minde=de;
