@@ -213,10 +213,10 @@ namespace OpenBabel
         if (bond2 == VZero) {
           vector3 vrand;
           vrand.randomUnitVector();
-          double angle = ::abs(acos(dot(bond1, vrand)) * RAD_TO_DEG);
+          double angle = fabs(acos(dot(bond1, vrand)) * RAD_TO_DEG);
           while (angle < 45.0 || angle > 135.0) {
             vrand.randomUnitVector();
-            angle = ::abs(acos(dot(bond1, vrand)) * RAD_TO_DEG);
+            angle = fabs(acos(dot(bond1, vrand)) * RAD_TO_DEG);
           }
           // there is no a-2 atom
           v1 = cross(bond1, vrand);
@@ -277,10 +277,10 @@ namespace OpenBabel
            * whether PClF4 would be more likely to have an equatorial or axial Cl-P bond */
           vector3 vrand;
           vrand.randomUnitVector();
-          double angle = ::abs(acos(dot(bond1, vrand)) * RAD_TO_DEG);
+          double angle = fabs(acos(dot(bond1, vrand)) * RAD_TO_DEG);
           while (angle < 45.0 || angle > 135.0) {
             vrand.randomUnitVector();
-            angle = ::abs(acos(dot(bond1, vrand)) * RAD_TO_DEG);
+            angle = fabs(acos(dot(bond1, vrand)) * RAD_TO_DEG);
           }
           v1 = cross(bond1, vrand);
           v1 = v1.normalize();
