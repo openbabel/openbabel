@@ -79,6 +79,7 @@ namespace OpenBabel {
     OBMol &mol = *pmol;
     const char* title = pConv->GetTitle();
 
+    bool coordsAreFractional = false;
     char buffer[BUFF_SIZE], tag[BUFF_SIZE];
     double x,y,z,a,b,c,alpha,beta,gamma;
     vector<string> vs;
@@ -144,8 +145,71 @@ namespace OpenBabel {
         cell->SetData(a, b, c, alpha, beta, gamma);
       }
 
-      // Atoms info
+      // Fractional atomic info
       if (strstr(buffer, "Final fractional coordinates of atoms :")) {
+        coordsAreFractional = true;
+        // Clear old atoms from pmol
+        vector<OBAtom*> toDelete;
+        FOR_ATOMS_OF_MOL(a, *pmol)
+          toDelete.push_back(&*a);
+        for (int i = 0; i < toDelete.size(); i++)
+          pmol->DeleteAtom(toDelete.at(i));
+
+        // Load new atoms from molecule
+        ifs.getline(buffer,BUFF_SIZE); // Blank
+        ifs.getline(buffer,BUFF_SIZE); // Header
+        ifs.getline(buffer,BUFF_SIZE); // Header
+        ifs.getline(buffer,BUFF_SIZE); // Header
+        ifs.getline(buffer,BUFF_SIZE); // Header
+
+        ifs.getline(buffer,BUFF_SIZE); // First entry
+        tokenize(vs, buffer);
+        int size = vs.size();
+        while (size >= 7 && size <= 10) {
+          atomicNum = etab.GetAtomicNum(vs[1].c_str());
+
+          // Gulp sometimes places extra chars between the coords, so
+          // it's not so straight-forward to parse them...
+          x = y = z = 0;
+          int set = 0;
+          for (unsigned i = 3; i < size; i++) {
+            if (strstr(vs[i].c_str(), "*")) continue; // Skip "*" in output
+            // Else assign x,y,z based on how many coords have been
+            // set already. These are currently fractional, we'll
+            // convert all at the end of the run.
+            switch (set) {
+            case 0:
+              x = atof((char*)vs[i].c_str());
+              set++;
+              break;
+            case 1:
+              y = atof((char*)vs[i].c_str());
+              set++;
+              break;
+            case 2:
+              z = atof((char*)vs[i].c_str());
+              set++;
+              break;
+            default:
+              break;
+            }
+          }
+          // Add atom
+          OBAtom *atom = pmol->NewAtom();
+          atom->SetAtomicNum(atomicNum);
+          vector3 coords (x,y,z);
+          atom->SetVector(coords);
+
+          // Reset vars
+          ifs.getline(buffer,BUFF_SIZE); // First entry
+          tokenize(vs, buffer);
+          size = vs.size();
+        }
+      }
+
+      // Cartesian atomic info
+      if (strstr(buffer, "Final cartesian coordinates of atoms :")) {
+        coordsAreFractional = false;
         // Clear old atoms from pmol
         vector<OBAtom*> toDelete;
         FOR_ATOMS_OF_MOL(a, *pmol)
@@ -211,7 +275,31 @@ namespace OpenBabel {
         pmol->SetEnergy(atof(vs[3].c_str()) * EV_TO_KCAL_PER_MOL);
       }
 
-      // Enthalphy
+      // Enthalpy (molecular)
+      if (strstr(buffer, "Final enthalpy")) {
+        tokenize(vs, buffer);
+        float en, en_eV, pv, pv_eV;
+        OBPairData *enthalpy = new OBPairData();
+        OBPairData *enthalpy_pv = new OBPairData();
+        OBPairData *enthalpy_eV = new OBPairData();
+        OBPairData *enthalpy_pv_eV = new OBPairData();
+        enthalpy->SetAttribute("Enthalpy (kcal/mol)");
+        enthalpy_pv->SetAttribute("Enthalpy PV term (kcal/mol)");
+        enthalpy_eV->SetAttribute("Enthalpy (eV)");
+        enthalpy_pv_eV->SetAttribute("Enthalpy PV term (eV)");
+
+        pv = pv_eV = 0; // Doesn't make sense in a molecular system
+        en_eV = static_cast<float>(atof(vs[3].c_str()));
+        en = en_eV * EV_TO_KCAL_PER_MOL;
+        snprintf(tag, BUFF_SIZE, "%f", pv);
+        enthalpy_pv->SetValue(tag);
+        snprintf(tag, BUFF_SIZE, "%f", pv_eV);
+        enthalpy_pv_eV->SetValue(tag);
+        pmol->SetData(enthalpy_pv);
+        pmol->SetData(enthalpy_pv_eV);
+      }
+
+      // Enthalphy (periodic)
       if (strstr(buffer, "Components of enthalpy :")) {
         bool hasPV = false;
         float en, en_eV, pv, pv_eV;
@@ -259,9 +347,11 @@ namespace OpenBabel {
       }
     }
 
-    // Convert coords to cartesian
-    FOR_ATOMS_OF_MOL(atom, pmol) {
-      atom->SetVector(cell->FractionalToCartesian(atom->GetVector()));
+    // Convert coords to cartesian if needed
+    if (coordsAreFractional) {
+      FOR_ATOMS_OF_MOL(atom, pmol) {
+        atom->SetVector(cell->FractionalToCartesian(atom->GetVector()));
+      }
     }
 
     // set final unit cell
