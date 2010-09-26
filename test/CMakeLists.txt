@@ -70,6 +70,7 @@ set(old_tests
     cmlreadfile
     conversion
     datatest
+    ffgaff
     ffghemical
     ffmmff94
     ffuff
