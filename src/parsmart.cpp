@@ -353,6 +353,19 @@ namespace OpenBabel
     return result;
   }
 
+  /**
+   * Check if two BondExpr objects are the same. This is used for ring closures
+   * to identify invalid SMARTS like:
+   *
+   *   C-1CCCCC#1
+   *   C=1CCCCC:1
+   *
+   * However, the SMARTS below are valid and the bond expression next to the the
+   * second closure digit is used.
+   *
+   *   C1CCCCC#1
+   *   C1CCCCC=1
+   */
   static bool EquivalentBondExpr( BondExpr *expr1, BondExpr *expr2 )
   {
     if (expr1 == NULL && expr2 == NULL)
@@ -1484,7 +1497,7 @@ namespace OpenBabel
                     FreeBondExpr(stat->closord[index]);
                   } else
                     bexpr = stat->closord[index];
-                } else if (!EquivalentBondExpr(bexpr, stat->closord[index]))
+                } else if (stat->closord[index] && !EquivalentBondExpr(bexpr, stat->closord[index]))
                   return ParseSMARTSError(pat,bexpr);
 
                 CreateBond(pat,bexpr,prev,stat->closure[index]);
@@ -1518,7 +1531,7 @@ namespace OpenBabel
                     FreeBondExpr(stat->closord[index]);
                   } else
                     bexpr = stat->closord[index];
-                } else if (!EquivalentBondExpr(bexpr, stat->closord[index]))
+                } else if (stat->closord[index] && !EquivalentBondExpr(bexpr, stat->closord[index]))
                   return ParseSMARTSError(pat,bexpr);
 
                 CreateBond(pat,bexpr,prev,stat->closure[index]);

@@ -239,3 +239,5 @@ C[$(aaO);$(aaaN)]
 [oX2r5]
 [r;!r3;!r4;!r5;!r6;!r7]
 [sX2r5]
+C1CCC-1
+C1CCC=1
