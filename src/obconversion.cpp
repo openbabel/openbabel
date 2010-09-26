@@ -799,13 +799,6 @@ namespace OpenBabel {
         inFstream->close(); // We will free the stream later, but close the file now
     }
 
-#ifdef HAVE_LIBZ
-    if ( CheckedForGzip ){ // Bug reported by Gert Thijs
-      delete zIn; // Make sure to free any created zip stream
-		pInStream = pin;
-	}
-#endif
-
     return success;
   }
 
