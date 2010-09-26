@@ -65,6 +65,8 @@ set(old_tests
     atom
     bond
     cansmi
+    charge-mmff94
+    charge-gasteiger
     cmlreadfile
     conversion
     datatest
