@@ -32,7 +32,7 @@ public:
     OBConversion::RegisterOptionParam(ID, NULL, 1, OBConversion::GENOPTIONS);
   }
 
-  const char* Description(){ return "<method> Calculate partial charges using specified method"; }
+  const char* Description(){ return "<method> Calculate partial charges by specified method"; }
 
   virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
   virtual bool Do(OBBase* pOb, const char* OptionText=NULL, OpMap* pOptions=NULL, OBConversion* pConv=NULL);

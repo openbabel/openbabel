@@ -85,7 +85,7 @@ virtual const char* Description() //required
   " u  Update an existing index\n\n"
 
   "Read Options (when searching) e.g. -at0.7\n"
-  " t# Do similarity search: #mols or # as min Tanimoto\n"
+  " t# Do similarity search:#mols or # as min Tanimoto\n"
   " a  Add Tanimoto coeff to title in similarity search\n"
   " l# Maximum number of candidates. Default<4000>\n"
   " e  Exact match\n"
