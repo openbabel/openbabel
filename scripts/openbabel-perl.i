@@ -276,6 +276,31 @@ sub gen_iterator {
 }
 %}
 
+// Add some helper functions for C arrays
+%inline %{
+double *double_array(int size) {
+   return (double *) malloc(sizeof(double)*size);
+}
+void double_destroy(int *a) {
+   free(a);
+}
+void double_set(double *a, int i, double val) {
+   a[i] = val;
+}
+double double_get(double *a, int i) {
+   return a[i];
+}
+
+double (*rotation_matrix())[3] {
+     return (double (*)[3]) malloc(9*sizeof(double));
+}
+
+void rotation_matrix_free(double (*m)[3]) {
+    free(m);
+}
+%}
+
+
 %define MAKE_ITER_CLASS(itername, renamediter)
 %rename itername renamediter;
 %perlcode %{

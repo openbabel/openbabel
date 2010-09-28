@@ -153,10 +153,17 @@ namespace OpenBabel
   };
 
   //***RMS helper methods***/
-#ifndef SWIG
-  OBAPI void  rotate_coords(double*,double m[3][3],int);
+#ifndef __KCC
+  extern "C" {
+  OBAPI void  rotate_coords(double*,double m[3][3],unsigned);
   OBAPI double calc_rms(double*,double*,unsigned int);
-
+  }
+#else
+  OBAPI void  rotate_coords(double*,double m[3][3],unsigned);
+  OBAPI double calc_rms(double*,double*,unsigned int);
+#endif
+ 
+#ifndef SWIG
   //! \name  String conversion utilities
   //@{
   // Documentation in obutil.cpp
