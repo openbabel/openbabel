@@ -466,6 +466,9 @@ namespace OpenBabel
     // Identify from the HM symbol, after removing all whitespaces or underscore (which are valid separators in
     // old CIF files)
     std::string stripped_hm=RemoveWhiteSpaceUnderscore(group->m_HM);
+    if (stripped_hm == "Fm3m") {
+      stripped_hm = "Fm-3m"; // more typical notation used in space-groups.txt
+    }
     if (stripped_hm.length() > 0 &&
         _SpaceGroups.sgbn.find(stripped_hm)!=_SpaceGroups.sgbn.end() &&
         (found = _SpaceGroups.sgbn[stripped_hm]))
