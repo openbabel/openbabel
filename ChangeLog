@@ -1,3 +1,9 @@
+2010-09-29 Noel O'Boyle
+
+	* src/formats/smilesformat.cpp: Handle cis/trans stereo involving ring
+	closures. Handle errors in specifying cis/trans stereo in general and
+	involving ring closures.
+
 2010-09-23 Noel O'Boyle
 
 	* src/math/align.cpp, align.h: Add OBAlign::GetRotMatrix()

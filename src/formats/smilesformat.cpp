@@ -211,7 +211,13 @@ namespace OpenBabel {
     char                    _buffer[BUFF_SIZE];
     vector<int> PosDouble; //for extension: lc atoms as conjugated double bonds
     OBAtomClassData _classdata; // to hold atom class data like [C:2]
-    vector<OBBond*> _bcbonds; // Remember which bonds are bond closure bonds
+
+    struct StereoRingBond
+    {
+      vector<OBAtom*> atoms;
+      vector<char> updown;
+    };
+    map<OBBond*, StereoRingBond> _stereorbond; // Remember info on the stereo ring closure bonds
 
     // stereochimistry
     bool chiralWatch; // set when a tetrahedral atom is read
@@ -238,6 +244,7 @@ namespace OpenBabel {
     void FindOrphanAromaticAtoms(OBMol &mol); //CM 18 Sept 2003
     int NumConnections(OBAtom *);
     void CreateCisTrans(OBMol &mol);
+    char SetRingClosureStereo(StereoRingBond rcstereo, OBBond* dbl_bond);
     void InsertTetrahedralRef(OBMol &mol, unsigned long id);
     void InsertSquarePlanarRef(OBMol &mol, unsigned long id);
 
@@ -572,6 +579,67 @@ namespace OpenBabel {
     return false;
   }
 
+  char OBSmilesParser::SetRingClosureStereo(StereoRingBond rcstereo, OBBond* dbl_bond)
+  {
+    // Ring Closure bonds appear twice (at opening and closure).
+    // If involved in cis/trans stereo, then the stereo may be
+    // specified at either end or indeed both. Although Open Babel
+    // will only write out SMILES with the stereo at one end (the end
+    // on the double bond), it must handle all cases when reading.
+
+    // For example:
+    //
+    //         C
+    //        /|
+    //   C = C |
+    //  /     \|
+    // C       N
+    //
+    // Can be written as:
+    // (a) C/C=C/1\NC1 -- preferred
+    // (b) C/C=C1\NC\1 
+    // (c) C/C=C/1\NC\1
+    //  or indeed by replacing the "\N" with "N".
+
+    // If the stereo chemistry for a ring closure is inconsistently specified,
+    // it is ignored. In that case, if a stereo symbol does not exist for its
+    // partner bond on the double bond (e.g. (b) below), then the stereo is unspecified.
+
+    // (a) C/C=C/1NC\1 -- specified stereo
+    // (b) C/C=C/1NC/1  -- ignore ring closure stereo => treated as C/C=C1NC1  => CC=C1NC1
+    // (c) C/C=C/1\NC/1 -- ignore ring closure stereo => treated as C/C=C1\NC1 => C/C=C/1\NC1
+
+    // The ring closure bond is either up or down with respect 
+    // to the double bond. Our task here is to figure out which it is,
+    // based on the contents of _stereorbond.
+
+    bool found = false; // We have found the answer
+    bool updown = true; // The answer
+
+    if (rcstereo.updown[0]) { // Is there a stereo symbol at the opening?
+      bool on_dbl_bond = (rcstereo.atoms[0] == dbl_bond->GetBeginAtom() || rcstereo.atoms[0] == dbl_bond->GetEndAtom());
+      updown = (rcstereo.updown[0]==BondUpChar) ^ on_dbl_bond;
+      found = true;
+    }
+    if (rcstereo.updown[1]) { // Is there a stereo symbol at the closing?
+      bool on_dbl_bond = (rcstereo.atoms[1] == dbl_bond->GetBeginAtom() || rcstereo.atoms[1] == dbl_bond->GetEndAtom());
+      bool new_updown = (rcstereo.updown[1]==BondUpChar) ^ on_dbl_bond;
+      if (!found) {
+        updown = new_updown;
+        found = true;
+      }
+      else if (new_updown != updown) {
+        obErrorLog.ThrowError(__FUNCTION__, "Ignoring the cis/trans stereochemistry specified for the ring closure\n  as it is inconsistent.", obWarning);
+        found = false;
+      }
+    }
+    
+    if (!found)
+      return 0;
+    else
+      return updown ? 1 : 2;
+  }
+
   void OBSmilesParser::CreateCisTrans(OBMol &mol)
   {
     // Create a vector of CisTransStereo objects for the molecule
@@ -599,62 +667,78 @@ namespace OpenBabel {
         continue;
       }
 
-      // Get the bonds of neighbors of atom1 and atom2
-      OBBond *a1_b1 = NULL, *a1_b2 = NULL, *a2_b1 = NULL, *a2_b2 = NULL;
-      bool a1_stereo, a2_stereo;
+      vector<OBAtom*> dbl_bond_atoms;
+      dbl_bond_atoms.push_back(a1);
+      dbl_bond_atoms.push_back(a2);
 
-      FOR_BONDS_OF_ATOM(bi, a1) {
-        OBBond *b = &(*bi);
-        if ((b) == (dbl_bond)) continue;  // skip the double bond we're working on
-        if (a1_b1 == NULL && (IsUp(b) || IsDown(b)))
-        {
-          a1_b1 = b;    // remember a stereo bond of Atom1
-           // True/False for "up/down if moved to before the double bond C"
-          a1_stereo = !(IsUp(b) ^ (b->GetNbrAtomIdx(a1) < a1->GetIdx())) ;
-          if (std::find(_bcbonds.begin(), _bcbonds.end(), a1_b1) != _bcbonds.end())
-          { // This is a bond closure, so the cis/trans mark appears after
-            // the double bond C (and the Idx test is incorrect)
-            a1_stereo = !IsUp(b);
+      vector<bool> bond_stereo(2, true); // Store the stereo of the chosen bonds at each end of the dbl bond
+      vector<OBBond*> stereo_bond(2, (OBBond*) NULL); // These are the chosen stereo bonds
+      vector<OBBond*> other_bond(2, (OBBond*) NULL);  // These are the 'other' bonds at each end
+      
+      for (int i = 0; i < 2; ++i) { // Loop over each end of the double bond in turn
+
+        FOR_BONDS_OF_ATOM(bi, dbl_bond_atoms[i]) {
+          OBBond *b = &(*bi);
+          if (b == dbl_bond) continue;
+          if (!(IsUp(b) || IsDown(b))) {
+            other_bond[i] = b; // Use this for the 'other' bond
+            continue;
+          }
+
+          bool found = true;
+          bool stereo;
+          map<OBBond*, StereoRingBond>::iterator sb_it = _stereorbond.find(b);
+          if (sb_it == _stereorbond.end()) // Not a ring closure
+            // True/False for "up/down if moved to before the double bond C"
+            stereo = !(IsUp(b) ^ (b->GetNbrAtomIdx(dbl_bond_atoms[i]) < dbl_bond_atoms[i]->GetIdx())) ;
+          else  {                                                               // Is a ring closure
+            char bc_result = SetRingClosureStereo(sb_it->second, dbl_bond);
+            if (bc_result)
+              stereo = bc_result == 1 ? true : false;
+            else
+              found = false;
+          }
+
+          if (!found) { // This cannot be used as the stereo bond
+            other_bond[i] = b; // Use this for the 'other' bond
+            continue;
+          }
+          
+          if (stereo_bond[i] == NULL) { // This is a first stereo bond
+            stereo_bond[i] = b; // Use this for the 'stereo' bond
+            bond_stereo[i] = stereo;
+          }
+          else {               // This is a second stereo bond
+            if (stereo != bond_stereo[i]) { // Verify that the other stereo bond (on the same atom) has opposite stereo
+              other_bond[i] = b; // Use this for the 'other' bond
+            }
+            else  {
+              obErrorLog.ThrowError(__FUNCTION__, "Error in cis/trans stereochemistry specified for the double bond\n", obWarning);
+              stereo_bond[i] = (OBBond*) NULL;
+            }
           }
         }
-        else
-          a1_b2 = b;    // remember a 2nd bond of Atom1
       }
 
-      FOR_BONDS_OF_ATOM(bi, a2) {
-        OBBond *b = &(*bi);
-        if (b == dbl_bond) continue;
-        if (a2_b1 == NULL && (IsUp(b) || IsDown(b)))
-        {
-          a2_b1 = b;    // remember a stereo bond of Atom1
-          a2_stereo = !(IsUp(b) ^ (b->GetNbrAtomIdx(a2) < a2->GetIdx())) ;
-          if (std::find(_bcbonds.begin(), _bcbonds.end(), a2_b1)!=_bcbonds.end())
-          { // This is a bond closure
-            a2_stereo = !IsUp(b);
-          }
-        }
-        else
-          a2_b2 = b;    // remember a 2nd bond of Atom2
-      }
+      if (stereo_bond[0] == NULL || stereo_bond[1] == NULL) continue; // No cis/trans
 
-      if (a1_b1 == NULL || a2_b1 == NULL) continue; // No cis/trans
+      // other_bond will contain NULLs if there are bonds to implicit hydrogens
+      unsigned int second = (other_bond[0] == NULL) ? OBStereo::ImplicitRef : other_bond[0]->GetNbrAtom(a1)->GetId();
+      unsigned int fourth = (other_bond[1] == NULL) ? OBStereo::ImplicitRef : other_bond[1]->GetNbrAtom(a2)->GetId();
 
-      // a1_b2 and/or a2_b2 will be NULL if there are bonds to implicit hydrogens
-      unsigned int second = (a1_b2 == NULL) ? OBStereo::ImplicitRef : a1_b2->GetNbrAtom(a1)->GetId();
-      unsigned int fourth = (a2_b2 == NULL) ? OBStereo::ImplicitRef : a2_b2->GetNbrAtom(a2)->GetId();
 
-      // If a1_stereo==a2_stereo, this means cis for a1_b1 and a2_b1.
       OBCisTransStereo *ct = new OBCisTransStereo(&mol);
       OBCisTransStereo::Config cfg;
       cfg.begin = a1->GetId();
       cfg.end = a2->GetId();
 
-      if (a1_stereo == a2_stereo)
-        cfg.refs = OBStereo::MakeRefs(a1_b1->GetNbrAtom(a1)->GetId(), second,
-                                      fourth, a2_b1->GetNbrAtom(a2)->GetId());
+       // If bond_stereo[0]==bond_stereo[1], this means cis for stereo_bond[0] and stereo_bond[1].
+      if (bond_stereo[0] == bond_stereo[1])
+        cfg.refs = OBStereo::MakeRefs(stereo_bond[0]->GetNbrAtom(a1)->GetId(), second,
+                                      fourth, stereo_bond[1]->GetNbrAtom(a2)->GetId());
       else
-        cfg.refs = OBStereo::MakeRefs(a1_b1->GetNbrAtom(a1)->GetId(), second,
-                                      a2_b1->GetNbrAtom(a2)->GetId(), fourth);
+        cfg.refs = OBStereo::MakeRefs(stereo_bond[0]->GetNbrAtom(a1)->GetId(), second,
+                                      stereo_bond[1]->GetNbrAtom(a2)->GetId(), fourth);
       ct->SetConfig(cfg);
       // add the data to the atom
       mol.SetData(ct);
@@ -2090,11 +2174,15 @@ namespace OpenBabel {
         if (upDown == BondUpChar || upDown == BondDownChar)
           _upDownMap[mol.GetBond(bond->prev, _prev)] = upDown;
 
-
         // For assigning cis/trans in the presence of bond closures, we need to
-        // remember all bond closure bonds.
-        _bcbonds.push_back(mol.GetBond(bond->prev, _prev));
-
+        // remember info on all bond closure bonds.
+        StereoRingBond sb;
+        sb.updown.push_back(_updown);
+        sb.atoms.push_back(mol.GetAtom(_prev));
+        sb.updown.push_back(bond->updown);
+        sb.atoms.push_back(mol.GetAtom(bond->prev));
+        _stereorbond[mol.GetBond(bond->prev, _prev)] = sb; // Store for later
+        
         // after adding a bond to atom "_prev"
         // search to see if atom is bonded to a chiral atom
         // need to check both _prev and bond->prev as closure is direction independent
