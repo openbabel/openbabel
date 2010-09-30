@@ -616,12 +616,12 @@ namespace OpenBabel {
     bool found = false; // We have found the answer
     bool updown = true; // The answer
 
-    if (rcstereo.updown[0]) { // Is there a stereo symbol at the opening?
+    if (rcstereo.updown[0] == BondUpChar || rcstereo.updown[0] == BondDownChar) { // Is there a stereo symbol at the opening?
       bool on_dbl_bond = (rcstereo.atoms[0] == dbl_bond->GetBeginAtom() || rcstereo.atoms[0] == dbl_bond->GetEndAtom());
       updown = (rcstereo.updown[0]==BondUpChar) ^ on_dbl_bond;
       found = true;
     }
-    if (rcstereo.updown[1]) { // Is there a stereo symbol at the closing?
+    if (rcstereo.updown[1] == BondUpChar || rcstereo.updown[1] == BondDownChar) { // Is there a stereo symbol at the closing?
       bool on_dbl_bond = (rcstereo.atoms[1] == dbl_bond->GetBeginAtom() || rcstereo.atoms[1] == dbl_bond->GetEndAtom());
       bool new_updown = (rcstereo.updown[1]==BondUpChar) ^ on_dbl_bond;
       if (!found) {

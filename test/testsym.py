@@ -102,6 +102,38 @@ class TestCisTransSym(TestSym):
                 "C(=C\Br)\C=C\Cl"
                 ]
 
+class TestLonePairTetSym(TestSym):
+    """A series of tests relating to tet symmetry involving a lone pair"""
+
+    def setUp(self):
+        self.canFindExecutable("babel")
+
+        # The following all represent the same molecule
+        self.cansmi = "[S@@](=O)(Cl)C"
+        self.inchi = "InChI=1S/CH3ClOS/c1-4(2)3/h1H3/t4-/m0/s1"
+        self.smiles = [
+                self.cansmi,
+                "O=[S@](Cl)C",
+                "O=[S@@](C)Cl",
+                "[S@](Cl)(=O)C",
+                ]
+
+class TestRingBondCisTransSym(TestSym):
+    """A series of tests relating to tet symmetry involving a lone pair"""
+
+    def setUp(self):
+        self.canFindExecutable("babel")
+
+        # The following all represent the same molecule
+        self.cansmi = r"C\1(=C\I)/NC1"
+        self.inchi = "InChI=1S/C3H4IN/c4-1-3-2-5-3/h1,5H,2H2/b3-1+"
+        self.smiles = [
+                self.cansmi,
+                r"I/C=C\1/NC1",
+                r"I/C=C1NC/1",
+                 "I/C=C/1/NC/1",
+                ]
+
 class TestConversions(BaseTest):
     """A series of tests relating to file format conversions and symmetry"""
     
@@ -113,8 +145,15 @@ class TestConversions(BaseTest):
 ('Cl/C=C\\F', 'C(=C\\Cl)\\F', 'InChI=1S/C2H2ClF/c3-1-2-4/h1-2H/b2-1-'),
 ('Cl[C@@](Br)(F)I', '[C@@](I)(Br)(Cl)F', 'InChI=1S/CBrClFI/c2-1(3,4)5/t1-/m0/s1'),
 ('Cl[C@](Br)(F)I', '[C@](I)(Br)(Cl)F',   'InChI=1S/CBrClFI/c2-1(3,4)5/t1-/m1/s1'),
-('ClC(Br)(F)I', 'C(I)(Br)(Cl)F',         'InChI=1S/CBrClFI/c2-1(3,4)5')]
-
+('ClC(Br)(F)I', 'C(I)(Br)(Cl)F',         'InChI=1S/CBrClFI/c2-1(3,4)5'),
+('O=[S@@](Cl)I', "[S@@](=O)(I)Cl", "InChI=1S/ClIOS/c1-4(2)3/t4-/m0/s1"),
+('O=[S@](Cl)I', "[S@](=O)(I)Cl", "InChI=1S/ClIOS/c1-4(2)3/t4-/m1/s1"),
+('O=S(Cl)I', "S(=O)(I)Cl", "InChI=1S/ClIOS/c1-4(2)3"),
+(r"IC=C1NC1", r"C1(=CI)NC1", "InChI=1S/C3H4IN/c4-1-3-2-5-3/h1,5H,2H2"),
+(r"I/C=C\1/NC1", r"C\1(=C\I)/NC1", "InChI=1S/C3H4IN/c4-1-3-2-5-3/h1,5H,2H2/b3-1+"),
+(r"I/C=C/1\NC1", r"C\1(=C/I)/NC1", "InChI=1S/C3H4IN/c4-1-3-2-5-3/h1,5H,2H2/b3-1-"),
+]
+        
     def testSMILEStoInChI(self):
         # Tests interconversions between the SMILES on the left versus
         # the InChI on the right.
@@ -149,7 +188,13 @@ class TestConversions(BaseTest):
 # The bond parities are irrelevant/meaningless for the next two
 ([0, 0, 0, 0, 1], []), # 'Cl[C@@](Br)(F)I'
 ([0, 0, 0, 0, 2], []), # 'Cl[C@](Br)(F)I'
-([0, 0, 0, 0, 3], [0, 0, 0, 4]) # 'ClC(Br)(F)I'
+([0, 0, 0, 0, 3], [0, 0, 0, 4]), # 'ClC(Br)(F)I'
+([0, 0, 0, 1], []), # 'O=[S@@](Cl)I),
+([0, 0, 0, 2], []), # 'O=[S@](Cl)I),
+([0, 0, 0, 3], []), # 'O=S(Cl)I),
+([0]*9, [0]*8 + [3]), #  "IC=C1NC1"
+([0]*9, [0]*9), # r"I/C=C\1/NC1"
+([0]*9, [0]*9), # r"I/C=C/1\NC1"
 ]
         for i, (atompar, bondstereo) in enumerate(data):
             smiles, can = self.data[i][0:2]
@@ -230,7 +275,10 @@ class TestStereoConversion(BaseTest):
         
 if __name__ == "__main__":
     testsuite = []
-    for myclass in [TestConversions, TestCisTransSym, TestTetSym, TestStereoConversion]:
+    allclasses = [TestConversions, TestCisTransSym, TestTetSym,
+                  TestLonePairTetSym, TestStereoConversion,
+                  TestRingBondCisTransSym]
+    for myclass in allclasses:
         suite = unittest.TestLoader().loadTestsFromTestCase(myclass)
         testsuite.append(suite)
     unittest.TextTestRunner().run(unittest.TestSuite(testsuite))
