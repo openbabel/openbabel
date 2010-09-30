@@ -101,8 +101,8 @@
  #pragma warning( disable : 4290 )
  // Supress warning on signed/unsigned comparison with < or > (harmless, but maybe should be fixed)
  #pragma warning( disable : 4018 )
- // Supress warning on unreferenced formal parameter
- #pragma warning( disable : 4100 )
+ // Supress warning on forcing int etc. value to bool 'true' or 'false' (performance warning)
+ #pragma warning( disable : 4800 )
  //
  #pragma warning( disable : 4251 )
 

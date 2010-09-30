@@ -1,3 +1,17 @@
+2010-09-30 Chris Morley
+
+	* src/alias.cpp: Use MCDL for expanding aliases in 2D mols, since
+	builder seems now only to generate 3D coords. Add dummy connection to
+	alias before generating 3D coords to improve geometry, but still not
+	quite right for NO2. Fixes #3077897
+	
+	* src/mcdlutil.cpp: small doc change
+	
+	* src/config.h.cmake: MSVC build: enable warning on unreferenced
+	formal parameters and disable warning on forcing int etc. value 
+	to bool 'true' or 'false' (performance warning). Should reduce number
+	of warnings.
+
 2010-09-29 Noel O'Boyle
 
 	* src/formats/smilesformat.cpp: Handle cis/trans stereo involving ring

@@ -19,6 +19,7 @@ GNU General Public License for more details.
 #include <openbabel/op.h>
 #include <openbabel/builder.h>
 #include <openbabel/parsmart.h>
+#include <openbabel/mcdlutil.h>
 
 using namespace std;
 namespace OpenBabel
@@ -191,37 +192,48 @@ bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
   obFrag.SetIsPatternStructure();
   if(conv.SetInFormat("smi"))
   {
-    conv.ReadString(&obFrag, pos->second.smiles);//.second);
+    conv.ReadString(&obFrag, '*' + pos->second.smiles);//Add dummy atom to SMILES
     _right_form = pos->second.right_form;
     _color      = pos->second.color;
   }
+  obFrag.SetDimension(dimension);//will be same as parent
 
-  //Find index of atom to which XxAtom is attached, and the eventual index of first atom in fragment
+  //Find index of atom to which XxAtom is attached
   OBBondIterator bi;
   unsigned mainAttachIdx = (XxAtom->BeginNbrAtom(bi))->GetIdx();
-  unsigned    newFragIdx = mol.NumAtoms()+1;
-
-  //obFrag.SetDimension(dimension);
-  OBBuilder builder;
-  //Give the fragment appropriate coordinates
-  if(dimension!=0)
-    builder.Build(obFrag);
-
- //Combine with main molecule
-  mol += obFrag;
+  
+  //Copy coords of XxAtom to the first real atom in the fragment
+  //so that the connecting bond is well defined for 2D case
+  obFrag.GetAtom(2)->SetVector( XxAtom->GetVector());
 
   //delete original Xx atom
   mol.DeleteAtom(XxAtom, false);//delay deletion of the OBAtom object because this is attached to it
   //Correct indices for the deletion
-  --newFragIdx;
   if(atomindex<mainAttachIdx)
     --mainAttachIdx;
 
-  //Attach the fragment to the main molecule
-  if(dimension==0)
-    mol.AddBond(mainAttachIdx, newFragIdx, 1);
-  else
+  //Find the eventual index of first atom in fragment
+  unsigned newFragIdx = mol.NumAtoms()+1;
+
+  //Give the fragment appropriate coordinates
+  if(dimension==3)
+  {
+    OBBuilder builder;
+
+    builder.Build(obFrag);
+    obFrag.DeleteAtom(obFrag.GetAtom(1));//remove dummy atom
+    mol += obFrag; //Combine with main molecule
     builder.Connect(mol, mainAttachIdx, newFragIdx);
+  }
+  else // 0D, 2D  
+  {
+    obFrag.DeleteAtom(obFrag.GetAtom(1));//remove dummy atom
+    mol += obFrag; //Combine with main molecule and connect
+    mol.AddBond(mainAttachIdx, newFragIdx, 1);
+  }
+
+  if(dimension==2)//Use MCDL
+    groupRedraw(&mol, mol.NumBonds()-1, newFragIdx, true);
 
   //Store the ids of the atoms which replace the alias (the last atoms in the combined molecule).
   //The ids do not change when other atoms are deleted.

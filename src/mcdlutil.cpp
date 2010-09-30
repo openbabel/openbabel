@@ -7193,9 +7193,14 @@ void implementBondStereo(const std::vector<int> iA1, const std::vector<int> iA2,
 //Group redraw - generate 2D coordinates  for chemical group
 //****************************************************************************
   int OBMCDL groupRedraw(OBMol * pmol, int bondN, int atomN, bool atomNInGroup) {
-    //bondN - index of acyclic bond in pmol (zero-based). atomN - index of atom attached to bond bondN to start redraw from it (1-based)
-    //atomNInGroup - if true it is assumed, that atom atomN, attached to bond bondN is inside group to be redrawn, false otherwise
-    //returns 0 - all OK, =1 - number of atoms or bond are outside defined, = 2-cyclic bond
+    /*
+      bondN - index of acyclic bond in pmol (zero-based). 
+      atomN - index of atom attached to bond bondN to start redraw from it (1-based)
+      atomNInGroup - if true it is assumed, that atom atomN, attached to bond bondN
+        is inside group to be redrawn, false otherwise
+      Atoms at both ends of the bond should have coordinates before calling this function.
+      returns 0 - all OK, =1 - number of atoms or bond are outside defined, = 2-cyclic bond
+    */
     TSimpleMolecule sm;
 	int result=0;
 	std::vector<int> allAtomList(NATOMSMAX);

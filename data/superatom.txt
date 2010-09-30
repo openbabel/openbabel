@@ -19,6 +19,7 @@ nPr      nPr      CCC
 Et       Et       CC
 NCF3     F3CN     NC(F)(F)F
 CF3      F3C      C(F)(F)F
+CCl3	 Cl3C     C(Cl)(Cl)Cl
 CN       NC       C#N
 NC       CN       [N+]#[C-]
 N(OH)CH3 CH3(OH)N N(O)C
@@ -60,7 +61,7 @@ COOAm    AmOOC    C(=O)OCCCCC
 SAm      AmS      SCCCCC
 NHBn     BnNH     NCC1=CC=CC=C1
 CO2Bn    BnO2C    C(=O)OCC1=CC=CC=C1
-Sn Bu3   Bu3Sn    [Sn](CCCC)(CCCC)CCCC
+SnBu3    Bu3Sn    [Sn](CCCC)(CCCC)CCCC
 NHBu     BuNH     NCCCC
 OBu      BuO      OCCCC
 CO2Bu    BuO2C    C(=O)OCCCC
@@ -68,7 +69,6 @@ COOBu    BuOOC    C(=O)OCCCC
 SBu      BuS      SCCCC
 CBr3	 Br3C     C(Br)(Br)Br
 NHCbz    CbzNH    NC(=O)OCC1=CC=CC=C1
-CCl3	 Cl3C     C(Cl)(Cl)Cl
 SO2Cl    ClSO2    S(Cl)(=O)=O
 COBr     BrCO     C(=O)Br
 COBu     BuCO     C(=O)CCCC
