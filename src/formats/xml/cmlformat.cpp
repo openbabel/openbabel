@@ -955,16 +955,20 @@ namespace OpenBabel
                 if(!patom)
                   return false;
 
-
+                OBStereo::Ref center = patom->GetId();
                 OBStereo::Ref from = _pmol->GetAtom(AtomRefIdx[0])->GetId();
+                if (from == center)
+                  from = OBStereo::ImplicitRef;
 
                 OBStereo::Refs refs;
                 vector<unsigned int>::const_iterator idx_cit=AtomRefIdx.begin();
                 ++idx_cit;
-                for (; idx_cit!=AtomRefIdx.end(); ++idx_cit)
-                  refs.push_back(_pmol->GetAtom(*idx_cit)->GetId());
-
-                OBStereo::Ref center = patom->GetId();
+                for (; idx_cit!=AtomRefIdx.end(); ++idx_cit) {
+                  OBStereo::Ref id = _pmol->GetAtom(*idx_cit)->GetId();
+                  if (id == center)
+                    id = OBStereo::ImplicitRef;
+                  refs.push_back(id);
+                }
 
                 int parity = atoi(value.c_str());
                 OBStereo::Winding winding = OBStereo::Clockwise; // parity > 0
@@ -1572,13 +1576,17 @@ namespace OpenBabel
                             OBTetrahedralStereo::Config cfg = tetStereo_cit->second;
                             OBStereo::Refs refs = cfg.refs;
                             vector<string> atomrefs;
-                            atomrefs.push_back(atomIds[mol.GetAtomById(cfg.from)->GetIdx()]);
+                            // According to http://cml.sourceforge.net/schema/cmlCore/HTMLDOCS/cmlCore.pdf,
+                            // "if there are only 3 ligands, the current atom should be included
+                            //  in the 4 atomRefs.".
+                            if (cfg.from == OBStereo::ImplicitRef) // e.g. for [S@@](Cl)(Br)I
+                                atomrefs.push_back(atomIds[mol.GetAtomById(cfg.center)->GetIdx()]); // Add the central atom again
+                              else
+                                atomrefs.push_back(atomIds[mol.GetAtomById(cfg.from)->GetIdx()]);
+
                             for (OBStereo::RefIter ref = refs.begin(); ref!=refs.end(); ++ref) {
-                              // According to http://cml.sourceforge.net/schema/cmlCore/HTMLDOCS/cmlCore.pdf,
-                              // "if there are only 3 ligands, the current atom should be included
-                              //  in the 4 atomRefs.".
-                              if ( (OBStereo::Ref)*ref == OBStereo::ImplicitRef) // e.g. for [N@@](C1)(C2)C(C2)CC1
-                                atomrefs.push_back(atomIds[mol.GetAtomById(cfg.center)->GetIdx()]); // Add the from atom again
+                              if ( (OBStereo::Ref)*ref == OBStereo::ImplicitRef) // e.g. for Cl[S@@](Br)I
+                                atomrefs.push_back(atomIds[mol.GetAtomById(cfg.center)->GetIdx()]); // Add the central atom again
                               else
                                 atomrefs.push_back(atomIds[mol.GetAtomById(*ref)->GetIdx()]);
                             }
