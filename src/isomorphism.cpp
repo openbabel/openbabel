@@ -269,6 +269,8 @@ namespace OpenBabel {
 
         //
         // The terminology used in these comments is taken from the VF2 paper.
+        // Since molecules are undirected graphs, atoms have only one set of
+        // bonds.
         //
         //  G1 : The query graph (i.e. state.query)
         //  G2 : The queried graph (i.e. state.queried)
@@ -279,8 +281,15 @@ namespace OpenBabel {
         //  M1(s) : The set of already mapped query atoms (i.e. state.queryPath)
         //  M2(s) : The set of already mapped queried atoms (i.e. state.queriedPath)
         //
-
-
+        // Variables from the original C++ implementation referenced in paper:
+        //
+        //  core_1 : M1(s) or state.queryPath
+        //  core_2 : M2(s) or state.queriedPath
+        //
+        //  in_1, out_1 : state.queryTerminalSet
+        //  in_2, out_2 : state.queriedTerminalSet
+        //
+        //
         //  P(s) = T2(s) x { min T1(s) }        [note: this formula is incorrect in the paper!]
         //
         //  P(s) : The set of mapping candidates to consider for state s
