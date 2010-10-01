@@ -485,16 +485,16 @@ namespace OpenBabel {
       if (visitedRings[i])
         continue;
 
-      // Check if there is a ParaAtom with idx in this ring
+      // Check if currentPara is in this ring
       if (!currentPara.isInRing(rings[i]))
         continue;
 
       //
-      // A new ring containing idx is found
+      // A new ring containing currentPara is found
       //
       foundRing = true;
 
-      // if there are one or more true stereo centers, idx is a stereo center
+      // if there are one or more true stereo centers, currentPara is a stereo center
       if (rings[i].trueCount) {
         //cout << "OK: " << __LINE__ << endl;
         return true;
@@ -943,7 +943,11 @@ namespace OpenBabel {
     }
     //cout << "=====================================================" << endl;
 
-    StartRule1(symClasses, rings, units, stereoAtoms);
+    unsigned int numStereoUnits;
+    do {
+      numStereoUnits = units.size();
+      StartRule1(symClasses, rings, units, stereoAtoms);
+    } while (units.size() > numStereoUnits);
 
 
     std::vector<OBBitVec> mergedRings = mergeRings(mol, symClasses);
@@ -1116,18 +1120,17 @@ namespace OpenBabel {
         units.push_back(OBStereoUnit(OBStereo::CisTrans, bond->GetId(), true));
     }
 
-    /*
-    cout << "Final True-Tetrahedral: ";
-    for (OBStereoUnitSet::iterator u = units.begin(); u != units.end(); ++u)
-      if ((*u).type == OBStereo::Tetrahedral)
-        cout << (*u).id << " ";
-    cout << endl;
-    cout << "Final True-CisTrans: ";
-    for (OBStereoUnitSet::iterator u = units.begin(); u != units.end(); ++u)
-      if ((*u).type == OBStereo::CisTrans)
-        cout << (*u).id << " ";
-    cout << endl;
-    */
+    if (DEBUG) {
+      for (OBStereoUnitSet::iterator unit = units.begin(); unit != units.end(); ++unit) {
+        if (unit->type == OBStereo::Tetrahedral)
+          cout << "Tetrahedral(center = " << unit->id << ", para = " << unit->para << ")" << endl;
+        if (unit->type == OBStereo::CisTrans)
+          cout << "CisTrans(bond = " << unit->id << ", para = " << unit->para << ")" << endl;
+        if (unit->type == OBStereo::SquarePlanar)
+          cout << "SquarePlanar(bond = " << unit->id << ", para = " << unit->para << ")" << endl;
+      }
+    }
+
 
     return units;
   }
