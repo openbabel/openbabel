@@ -161,8 +161,8 @@ bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
   /*Converts an alias name (like COOH) to real chemistry:
     looks up in a table loaded from superatom.txt;
     converts the SMILES of the fragment and adds it to the molecule.
-    If the molecule already has atom coordinates, uses builder to generate
-    coordinates for the new atoms.
+    If the molecule already has atom coordinates, generates coordinates
+    for the new atoms, using builder for 3D and MCDL for 2D.
   */
 
   OBAtom* XxAtom = mol.GetAtom(atomindex);

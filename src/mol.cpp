@@ -1347,9 +1347,11 @@ namespace OpenBabel
 
     // First, handle atoms and bonds
     for (atom = src.BeginAtom(i) ; atom ; atom = src.NextAtom(i)) {
+      atom->SetId(NoId);//Need to remove ID which relates to source mol rather than this mol
       AddAtom(*atom);
     }
     for (bond = src.BeginBond(j) ; bond ; bond = src.NextBond(j)) {
+      bond->SetId(NoId);//Need to remove ID which relates to source mol rather than this mol
       AddBond(bond->GetBeginAtomIdx() + prevatms,
               bond->GetEndAtomIdx() + prevatms,
               bond->GetBO(), bond->GetFlags());
