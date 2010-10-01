@@ -794,7 +794,7 @@ namespace OpenBabel
     if (!pConv->IsOption("r",OBConversion::OUTOPTIONS)) {rotatable_bonds=torsdof;}
 
 
-    if (!OutputTree(mol, ofs, tree, rotatable_bonds, false, pConv->IsOption("p",OBConversion::OUTOPTIONS)) )
+    if (!OutputTree(mol, ofs, tree, rotatable_bonds, false, pConv->IsOption("p",OBConversion::OUTOPTIONS) != NULL) )
     {
       stringstream errorMsg;
       errorMsg << "WARNING: Problems writing a PDBQT file\n"
