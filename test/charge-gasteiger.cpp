@@ -85,7 +85,7 @@ int main(int argc,char *argv[])
   OBConversion conv(&mifs, &cout);
   unsigned int currentTest = 0;
   vector3 dipoleMoment, result;
-  double charge;
+  
   std::vector<double> partialCharges;
 
   if(! conv.SetInAndOutFormats("SDF","SDF"))

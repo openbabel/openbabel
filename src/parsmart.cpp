@@ -1786,7 +1786,7 @@ namespace OpenBabel
 
   Pattern *OBSmartsPattern::ParseSMARTSRecord( char *ptr )
   {
-    register char *src,*dst;
+    register char *src;
 
     src = ptr;
     while( *src && !isspace(*src) )

@@ -290,7 +290,7 @@ namespace OpenBabel {
 
         pv = pv_eV = 0; // Doesn't make sense in a molecular system
         en_eV = static_cast<float>(atof(vs[3].c_str()));
-        en = en_eV * EV_TO_KCAL_PER_MOL;
+        en = static_cast<float>(en_eV * EV_TO_KCAL_PER_MOL);
         snprintf(tag, BUFF_SIZE, "%f", pv);
         enthalpy_pv->SetValue(tag);
         snprintf(tag, BUFF_SIZE, "%f", pv_eV);

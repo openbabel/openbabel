@@ -53,11 +53,11 @@ namespace OpenBabel
   // Allow ourselves to restrict recursive searching to 60 seconds max
     struct Timeout
     {
-      Timeout(unsigned int _maxTime) : maxTime(_maxTime)
+      Timeout(time_t _maxTime) : maxTime(_maxTime)
       {
         startTime = time(NULL);
       }
-      unsigned int startTime, maxTime;
+      time_t startTime, maxTime;
     };
   }
 

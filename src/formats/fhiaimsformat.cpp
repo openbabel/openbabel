@@ -70,8 +70,6 @@ bool FHIaimsFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     OBMol &mol = *pmol;
     const char* title = pConv->GetTitle();
 
-    int i;
-    int natoms;
     char buffer[BUFF_SIZE];
     string str;
     double x,y,z;
@@ -147,7 +145,6 @@ bool FHIaimsFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
-    unsigned int i;
     char buffer[BUFF_SIZE];
 
     ofs << "#\n";
