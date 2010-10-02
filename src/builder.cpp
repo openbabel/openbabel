@@ -1403,13 +1403,9 @@ namespace OpenBabel
           //    or a lone pair
           // Solution: Find where a new bond vector would be placed, and
           //           replace the atom's coordinates with these
-          OBBond* non_ring_bond;
-          FOR_BONDS_OF_ATOM(b, center)
-            if (!b->IsInRing())
-              non_ring_bond = &(*b);
-
+          OBAtom* non_ring_atom = mol.GetAtom(idxs.at(0));
+          OBBond* non_ring_bond = mol.GetBond(center, non_ring_atom);
           vector3 newcoords = OBBuilder::GetNewBondVector(center, non_ring_bond->GetLength());
-          OBAtom* non_ring_atom = non_ring_bond->GetNbrAtom(center);
           non_ring_atom->SetVector(newcoords);
         }
       }
