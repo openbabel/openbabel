@@ -728,6 +728,21 @@ namespace OpenBabel
       }
     }
     //
+    // Get a neighbor of a and of b for setting the dihedral later
+    //
+    OBAtom* nbr_a = NULL;
+    FOR_NBORS_OF_ATOM(nbr, a) {
+      nbr_a = &*nbr;
+      break;
+    }
+    OBAtom* nbr_b = NULL;
+    FOR_NBORS_OF_ATOM(nbr, b) {
+      if (fragment.BitIsSet(nbr->GetIdx())) {
+        nbr_b = &*nbr;
+        break;
+      }
+    }
+    //
     // Create the bond between the two fragments
     //
     OBBond *bond = mol.NewBond();
@@ -736,6 +751,15 @@ namespace OpenBabel
     bond->SetBondOrder(bondOrder);
     a->AddBond(bond);
     b->AddBond(bond);
+    //
+    // Set the dihedral between the two fragments (for the moment, only handle double bonds)
+    //
+    // For example, if a double bond is coming off a ring, then the dihedral
+    // should be 180, e.g. for I/C=C\1/NC1 (don't worry about whether cis or trans
+    // at this point - this will be corrected later)
+    //
+    if(bondOrder==2 && a->GetHyb()==2 && b->GetHyb()==2 && nbr_a && nbr_b)
+      mol.SetTorsion(nbr_a, a, b, nbr_b, 180 * DEG_TO_RAD);
 
     return true;
   }
