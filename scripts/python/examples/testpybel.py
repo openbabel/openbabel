@@ -7,17 +7,25 @@ here = os.path.split(__file__)[0]
 ## In Python 3.x, generators have a __next__() method
 ## instead of a next() method
 nextmethod = "next"
+ispy2 = True
 if sys.version_info[0] >= 3:
     nextmethod = "__next__"
+    ispy2 = False
 
 try:
-    test = os.write
+	test = os.write
     try:
         from cinfony import pybel, rdkit, cdk
     except ImportError:
         cinfony = None
     try:
-        import pybel as obpybel
+        if sys.platform.startswith("win"):
+            if ispy2:
+                import pybel_py2x as obpybel
+            else:
+                import pybel_py3x as obpybel
+        else:
+            import pybel as obpybel
         pybel = rdkit = cdk = None
     except ImportError:
         obpybel = None

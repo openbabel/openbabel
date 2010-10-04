@@ -19,7 +19,9 @@ import unittest
 
 here = sys.path[0]
 
-if sys.platform.startswith("win"):
+iswin = sys.platform.startswith("win")
+
+if iswin:
     modulelocation = os.path.join("..", "Release")
 else:
     modulelocation = os.path.join("..", "scripts", "pybuild")
@@ -31,14 +33,17 @@ try:
 except ImportError:
     ob = None
 
-if sys.platform.startswith("win"):
+if iswin:
     pybellocation = os.path.join(here, "..", "scripts", "python")
 else:
     pybellocation = os.path.join("..", "scripts")
 sys.path = [pybellocation] + sys.path
 
 try:
-    import pybel
+    if iswin:
+        import pybel_py2x as pybel
+    else:
+        import pybel
 except ImportError:
     pybel = None
 
