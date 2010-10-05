@@ -19,16 +19,15 @@ std::string GetFilename(const std::string &filename)
 static unsigned int failed = 0;
 static unsigned int testCount = 0;
 
-bool doMultiMoleculeFile(const std::string &filename)
+bool doMultiMoleculeFile(const std::string &filename, bool counter = false)
 {
-  std::string file = GetFilename(filename);
   std::ifstream ifs;
-  ifs.open(file.c_str());
+  ifs.open(filename.c_str());
   OB_REQUIRE( ifs );
 
   OBMol mol;
   OBConversion conv(&ifs, &cout);
-  OBFormat *format = conv.FormatFromExt(file.c_str());
+  OBFormat *format = conv.FormatFromExt(filename.c_str());
   OBFormat *canSMI = conv.FindFormat("can");
   OBFormat *smi    = conv.FindFormat("smi");
   OB_REQUIRE(format);
@@ -43,8 +42,16 @@ bool doMultiMoleculeFile(const std::string &filename)
   OB_REQUIRE(conv2.SetInAndOutFormats(smi, canSMI));
 
   bool result = true;
-  while (conv.Read(&mol, &ifs)) {
+  conv.SetInStream(&ifs);
+  while (1) {
+    if (!conv.Read(&mol)) {
+      // failed read, try again
+      if (!conv.Read(&mol))
+        break; // we tried twice, so break
+    }
     testCount++;
+    if (counter && testCount % 1000 == 0)
+      cout << testCount << " completed" << endl;
 
     mol.SetTitle("");
     output = conv.WriteString(&mol, true); // trim whitespace
@@ -75,14 +82,14 @@ int main(int argc, char **argv)
 #endif  
 
   if (argc == 2) {
-    OB_ASSERT( doMultiMoleculeFile(argv[1]) );    cout << "PASSED TESTS: " << testCount - failed << "/" << testCount << endl;
+    OB_ASSERT( doMultiMoleculeFile(argv[1], true) );    cout << "PASSED TESTS: " << testCount - failed << "/" << testCount << endl;
     return 0;
   }
 
-  OB_ASSERT( doMultiMoleculeFile("forcefield.sdf") );
-  OB_ASSERT( doMultiMoleculeFile("filterset.sdf") );
-  OB_ASSERT( doMultiMoleculeFile("cantest.sdf") );
-//  OB_ASSERT( doMultiMoleculeFile("cansmi-roundtrip.smi") );
+  OB_ASSERT( doMultiMoleculeFile(GetFilename("forcefield.sdf")) );
+  OB_ASSERT( doMultiMoleculeFile(GetFilename("filterset.sdf")) );
+  OB_ASSERT( doMultiMoleculeFile(GetFilename("cantest.sdf")) );
+//  OB_ASSERT( doMultiMoleculeFile(GetFilename("cansmi-roundtrip.smi")) );
 
   cout << "PASSED TESTS: " << testCount - failed << "/" << testCount << endl;
 
