@@ -2306,8 +2306,12 @@ namespace OpenBabel
               // Nitrate anion oxygen (O2N, O2NO, O3N)
             }
             if (bond->IsSingle()) {
+	      if ((nbr->GetValence() == 2) || (nbr->BOSum() == 3))
+	      // O(-)--N
+	        return 35;
+	      else
               // O--N
-              return 32; // Oxygen in N-oxides (ONX)
+                return 32; // Oxygen in N-oxides (ONX)
             } else {
               // O==N
               return 7; // Nitroso oxygen (O=N)
@@ -2329,21 +2333,31 @@ namespace OpenBabel
 
               // are all sulfur nbr atoms carbon?
               bool isSulfoxide = true;
+              int oxygenBoundToSulfur = 0;
               FOR_NBORS_OF_ATOM (nbr2, &*nbr) {
                 if (atom == &*nbr2)
                   continue;
 
-                if (nbr->GetBond(&*nbr2)->IsDouble() && !nbr2->IsOxygen())
-                  return 7; // O=S on sulfur doubly bonded to, e.g., C (O=S=)
+                if (nbr2->IsOxygen())
+                  ++oxygenBoundToSulfur;
+              }
+              FOR_NBORS_OF_ATOM (nbr2, &*nbr) {
+                if (atom == &*nbr2)
+                  continue;
 
-                if (nbr2->IsOxygen() && nbr2->GetValence() == 1)
+                if (nbr->GetBond(&*nbr2)->IsDouble()
+                  && nbr2->IsCarbon() && oxygenBoundToSulfur == 1)
+                  isSulfoxide = false; // O=S on sulfur doubly bonded to, e.g., C (O=S=)
+
+                if ((nbr2->IsOxygen() && nbr2->GetValence() == 1)
+		  || (nbr2->IsNitrogen() && nbr2->GetValence() == 2))
                   isSulfoxide = false;
               }
 
               if (isSulfoxide)
                 return 7; // Doubly bonded sulfoxide oxygen (O=S)
               else
-                return 32; // (O2S, O3S, O4S)
+                return 32; // (O2S, O2S=C, O3S, O4S)
             }
           }
 
@@ -2423,7 +2437,8 @@ namespace OpenBabel
         FOR_NBORS_OF_ATOM (nbr, atom) {
           bond = _mol.GetBond(&*nbr, atom);
           if (bond->IsDouble()) {
-            doubleBondTo = nbr->GetAtomicNum();
+            if (nbr->GetAtomicNum() == 6)
+	      doubleBondTo = 6;
           }
 
           if (nbr->GetValence() == 1) {
@@ -3655,6 +3670,7 @@ namespace OpenBabel
       if (type == 32) {
         int o_count = 0;
         bool sulfonamide = false;
+        bool sulfone_s_c = false;
         int s_count = 0;
 
         FOR_NBORS_OF_ATOM(nbr, &*atom) {
@@ -3665,6 +3681,8 @@ namespace OpenBabel
               s_count++;
             if (nbr2->IsNitrogen() && !nbr2->IsAromatic())
               sulfonamide = true;
+            if (nbr2->IsCarbon() && nbr->GetBond(&*nbr2)->IsDouble())
+              sulfone_s_c = true;
           }
 
           if (nbr->IsCarbon())
@@ -3674,8 +3692,9 @@ namespace OpenBabel
             atom->SetPartialCharge(-1.0 / o_count);  // O3N
 
           if (nbr->IsSulfur() && !sulfonamide)
-            if (((o_count + s_count) == 2) && (nbr->GetValence() == 3) && (nbr->BOSum() == 3))
-              atom->SetPartialCharge(-0.5); // O2S
+            if (((o_count + s_count) == 2) && (nbr->GetValence() == 3)
+              && (nbr->BOSum() >= 3) && !sulfone_s_c)
+              atom->SetPartialCharge(-0.5); // O2S (sulfinate)
             else if ((o_count + s_count) == 3)
               atom->SetPartialCharge(-1.0 / 3.0); // O3S
             else if ((o_count + s_count) == 4)
