@@ -337,8 +337,17 @@ namespace OpenBabel
             found = true;
             if(verbose) cout<<"Found spacegroup IT number (with OBSOLETE CIF #1.0 TAG):"<<mSpacegroupNumberIT<<endl;
           }
-        else
-          mSpacegroupNumberIT=0;
+        else {
+          positem=mvItem.find("_symmetry_group_IT_number");
+          if(positem!=mvItem.end())
+          {
+            mSpacegroupNumberIT=CIFNumeric2Int(positem->second);
+            found = true;
+            if(verbose) cout<<"Found spacegroup IT number (with NON-STANDARD CIF TAG):"<<mSpacegroupNumberIT<<endl;
+          }
+          else
+            mSpacegroupNumberIT=0;
+        }
       }
 
     positem=mvItem.find("_space_group_name_Hall");
