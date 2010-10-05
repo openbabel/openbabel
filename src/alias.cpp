@@ -61,97 +61,11 @@ namespace OpenBabel
       }
     }
 
-    if(FromNameLookup(mol, atomindex))
-      return true;
-
-    if(!FormulaParse(mol, atomindex))
+    if(!FromNameLookup(mol, atomindex))
     {
-      obErrorLog.ThrowError(__FUNCTION__, "Alias " + _alias + " Could not be interpreted.\n Output may not be correct.", obWarning, onceOnly);
+      obErrorLog.ThrowError(__FUNCTION__, "Alias " + _alias + 
+        " Could not be interpreted.\n Output may not be correct.", obWarning, onceOnly);
       return false;
-    }
-    return true;
-  }
-
-
-  //Crude implementation of formula parse
-  //This should really not alter the molecule until the parsing has been
-  //seen to be successful - another method may be better. But at present
-  //there is no other method.
-  //Only single character element symbols are handled
-  //Atom which replaces atomindex is the first non-H
-  //Will parse ND2 DS CH-
-  bool AliasData::FormulaParse(OBMol& mol,const unsigned atomindex)
-  {
-    //(Adapt to use old code)
-    char* txt = new char[_alias.size()+1];
-    strcpy(txt, _alias.c_str());
-
-    if(*txt=='?') //Assume that it is harmless to ignore this alias
-    {
-      delete[] txt;
-      return true;
-    }
-    if(!isalpha(*txt)) //first char is the element that replaces atomindex
-    {
-      return false;
-      delete[] txt;
-    }
-    //Swaps any leading H isotope with the first non-H atom
-    if(*txt=='H' || *txt=='D' || *txt=='T')
-    {
-      char* p =txt+1;
-      while(*p && *p=='H' && *p=='D' && *p=='T')p++;
-      if(*p)
-        std::swap(*p, *txt);
-    }
-    char symb[2];
-    if(islower(*txt)) //Formula parse should not given lower case characters
-      return false;
-    symb[0]=*(txt++);
-    symb[1]='\0';
-    OBAtom* pAtom = mol.GetAtom(atomindex);
-    if(!pAtom)
-      return false;
-    int iso = 0;
-    pAtom->SetAtomicNum(etab.GetAtomicNum(symb,iso));
-    if(iso)
-      pAtom->SetIsotope(iso);
-    _expandedatoms.push_back(atomindex);
-
-    while(*txt)
-    {
-      if(isspace(*txt)) {
-        ++txt;
-        continue;
-      }
-      int chg=0;
-      if(*txt=='-')
-        chg = -1;
-      else if(*txt=='+')
-        chg = 1;
-      if(chg)
-      {
-        pAtom->SetFormalCharge(pAtom->GetFormalCharge()+chg);//put on central atom e.g. CH-
-        ++txt;
-        continue;
-      }
-      if(!isalpha(*txt))
-        return false;
-      symb[0]=*txt;
-      int rep = atoi(++txt);
-      if(rep)
-        ++txt;
-      do //for each rep
-      {
-        OBAtom* newAtom = mol.NewAtom();
-        _expandedatoms.push_back(mol.NumAtoms());
-        iso = 0;
-        newAtom->SetAtomicNum(etab.GetAtomicNum(symb,iso));
-        if(iso)
-          newAtom->SetIsotope(iso);
-
-        if (!mol.AddBond(atomindex,mol.NumAtoms(),1,0)) return false;
-      }while(--rep>0);
     }
     return true;
   }
@@ -174,10 +88,7 @@ bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
 */
   SuperAtomTable::iterator pos = table().find(_alias);
   if(pos==table().end())
-  {
-//    obErrorLog.ThrowError(__FUNCTION__, "Alias " + _alias + " was not recognized.\n Output may not be correct.", obWarning, onceOnly);
     return false;
-  }
 
   int dimension=0;
   if(mol.Has3D())

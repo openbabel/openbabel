@@ -330,7 +330,7 @@ virtual const char* Description() //required
         auditMsg += description.substr( 0, description.find('\n') );
         obErrorLog.ThrowError(__FUNCTION__,auditMsg,obAuditMsg);
 
-        FptIndex* pidx; //used with update
+        FptIndex* pidx=NULL; //used with update
 
         //if(pOs==&cout) did not work with GUI
         if(!dynamic_cast<ofstream*>(pOs))
@@ -367,7 +367,7 @@ virtual const char* Description() //required
                 obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
                 static_cast<ofstream *>(pOs)->close(); // close the file before quitting
                 delete pOs;
-                if (pidx) delete pidx; // remove possible memory leak
+                delete pidx; // remove possible memory leak
                 return false;
               }
             NewOstreamUsed=true;

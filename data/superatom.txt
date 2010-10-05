@@ -105,3 +105,9 @@ POEt3    EtO3P    P(OCC)(OCC)OCC
 POOEt2   Et2OOP   P(=O)(OCC)OCC
 PrNH     HNPr     CCCN
 SEt      CCS      SCC
+#Aliases from samples provided with InChI
+CH       HC       [CH]
+CH-      HC-      [CH-]
+D        D        [2H]
+ND2      D2N      [N]([2H])[2H]
+DS       SD       [S][2H]  

@@ -183,6 +183,8 @@ bool PNGFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             || uncompress(pUncTxt, &uncompLen, pCompTxt+1, datalength)!=Z_OK)
           {
             obErrorLog.ThrowError("PNG Format","Errors in decompression", obError);
+            delete[] pUncTxt;
+            delete[] pCompTxt;
             return false;
           }
           pUncTxt[uncompLen] = '\0';
