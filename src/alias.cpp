@@ -109,10 +109,17 @@ bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
   }
   obFrag.SetDimension(dimension);//will be same as parent
 
-  //Find index of atom to which XxAtom is attached
+  //Find index of *first* atom to which XxAtom is attached
   OBBondIterator bi;
   unsigned mainAttachIdx = (XxAtom->BeginNbrAtom(bi))->GetIdx();
-  
+ 
+  //++Make list of other attachments* of XxAtom
+  // (Added later so that the existing bonding of the XXAtom are retained)
+  vector<pair<OBAtom*, unsigned> > otherAttachments;
+  OBAtom* pAttach;
+  while(pAttach = XxAtom->NextNbrAtom(bi))
+    otherAttachments.push_back(make_pair(pAttach, (*bi)->GetBondOrder()));
+
   //Copy coords of XxAtom to the first real atom in the fragment
   //so that the connecting bond is well defined for 2D case
   obFrag.GetAtom(2)->SetVector( XxAtom->GetVector());
@@ -145,6 +152,13 @@ bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
 
   if(dimension==2)//Use MCDL
     groupRedraw(&mol, mol.NumBonds()-1, newFragIdx, true);
+
+  //++Add bonds from list to newFragIdx
+  while(!otherAttachments.empty())
+  {
+    mol.AddBond(otherAttachments.back().first->GetIdx(), newFragIdx, otherAttachments.back().second);
+    otherAttachments.pop_back();
+  }
 
   //Store the ids of the atoms which replace the alias (the last atoms in the combined molecule).
   //The ids do not change when other atoms are deleted.
