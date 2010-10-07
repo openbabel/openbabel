@@ -367,7 +367,7 @@ namespace OpenBabel {
       /**
        * The atom labels starting from 1. All excluded atoms have label 0.
        */
-      std::vector<unsigned int> labels
+      std::vector<unsigned int> labels;
       /**
        * The canonical candidate code resulting from the @p labels.
        */
