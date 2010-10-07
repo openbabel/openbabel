@@ -78,6 +78,7 @@ mark_as_advanced(CMAKE_LIBRARY_OUTPUT_DIRECTORY
 
 option(WITH_INCHI   "build inchi lib" ON)
 option(BUILD_SHARED "enable shared build support" ON)
+option(BUILD_MIXED "enable linux relocatable binaries support" OFF)
 if(BUILD_SHARED)
   set(BUILD_TYPE SHARED)
   set(PLUGIN_TYPE MODULE)
