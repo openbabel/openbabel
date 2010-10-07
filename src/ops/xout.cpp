@@ -143,7 +143,7 @@ bool OpExtraOut::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversi
   {
     OBConversion* pExtraConv = new OBConversion(*pConv); //copy ensures OBConversion::Index>-1
     std::ofstream* ofs;
-    if(ofs = new std::ofstream(OptionText))
+    if( (ofs = new std::ofstream(OptionText)) ) // extra parens to indicate truth value
       pExtraConv->SetOutStream(ofs);
     if(!ofs || !pExtraConv->SetOutFormat(OBConversion::FormatFromExt(OptionText)))
     {

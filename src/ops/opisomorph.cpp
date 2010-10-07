@@ -233,7 +233,7 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
       OBIsomorphismMapper* mapper = OBIsomorphismMapper::GetInstance(*qiter);
       OBIsomorphismMapper::Mappings mappings;
       mapper->MapUnique(pmol, mappings);
-      if(match = !mappings.empty())
+      if( (match = !mappings.empty()) ) // extra parens to indicate truth value
       {
         OBIsomorphismMapper::Mappings::iterator ita;
         OBIsomorphismMapper::Mapping::iterator itb;
@@ -264,7 +264,7 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
       return false;
     }
 
-    if(match = sp.Match(*pmol))
+    if( (match = sp.Match(*pmol)) ) // extra parens to indicate truth value
       pMappedAtoms = &sp.GetMapList();
   }
 

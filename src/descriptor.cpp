@@ -423,7 +423,7 @@ void OBDescriptor::AddProperties(OBBase* pOb, const string& DescrList)
   while(ss)
   {
     pair<string,string> spair = GetIdentifier(ss);
-    if(pDescr = OBDescriptor::FindType(spair.first.c_str()))
+    if( (pDescr = OBDescriptor::FindType(spair.first.c_str())) ) // extra parentheses to indicate assignment as truth value
       pDescr->PredictAndSave(pOb, &spair.second);
     else
       obErrorLog.ThrowError(__FUNCTION__, spair.first + " not recognized as a descriptor", obError, onceOnly);
@@ -467,7 +467,7 @@ void OBDescriptor::DeleteProperties(OBBase* pOb, const string& DescrList)
         thisvalue = pOb->GetData(spair.first)->GetValue();
       else
       {
-        if(pDescr = OBDescriptor::FindType(spair.first.c_str()))
+        if( (pDescr = OBDescriptor::FindType(spair.first.c_str())) ) // extra parentheses to indicate truth value
           pDescr->GetStringValue(pOb, thisvalue, &spair.second);
         else
         {

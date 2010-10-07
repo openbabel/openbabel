@@ -117,7 +117,7 @@ bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
   // (Added later so that the existing bonding of the XXAtom are retained)
   vector<pair<OBAtom*, unsigned> > otherAttachments;
   OBAtom* pAttach;
-  while(pAttach = XxAtom->NextNbrAtom(bi))
+  while( (pAttach = XxAtom->NextNbrAtom(bi)) ) // extra parentheses to minimize warnings
     otherAttachments.push_back(make_pair(pAttach, (*bi)->GetBondOrder()));
 
   //Copy coords of XxAtom to the first real atom in the fragment

@@ -69,7 +69,7 @@ namespace OpenBabel {
     typedef OBAtom Center; // the stereogenic center type
     typedef OBTetrahedralStereo Stereo; // The stereo data object
     typedef OBTetrahedralStereo::Config Config; // the config struct
-    static Center* GetCenter(OBMol *mol, unsigned long id) { mol->GetAtomById(id); }
+    static Center* GetCenter(OBMol *mol, unsigned long id) { return mol->GetAtomById(id); }
   };
   template<> struct OBStereoTypeTraits<OBStereo::CisTrans>
   {

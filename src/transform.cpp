@@ -54,7 +54,7 @@ namespace OpenBabel
     // should delete the molecule itself (unlike the -s, --filter options,
     // which delete it in this function).
     if(!OBOp::DoOps(this, pOptions, pConv))
-      return false;
+      return (OBBase *)NULL;
 
     bool ret=true;
 

@@ -674,7 +674,7 @@ namespace OpenBabel
     if (orbitals.size() > 0)
       {
         OBOrbitalData *od = new OBOrbitalData;
-        if (aHOMO = bHOMO) {
+        if (aHOMO == bHOMO) {
           od->LoadClosedShellOrbitals(orbitals, symmetries, aHOMO);
         }
         od->SetOrigin(fileformatInput);

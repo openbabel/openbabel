@@ -542,7 +542,7 @@ virtual const char* Description() //required
         }
 
         bool hasTildeBond;
-        if(hasTildeBond = (txt.find('~')!=string::npos))
+        if( (hasTildeBond = (txt.find('~')!=string::npos)) ) // extra parens to indicate truth value
         {
           //Find ~ bonds and make versions of query molecule with a single and aromatic bonds
           //To avoid having to parse the SMILES here, replace ~ by $ (quadruple bond)
