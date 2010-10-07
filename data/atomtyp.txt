@@ -92,8 +92,6 @@ IMPVAL  [#6^2-]                   2
 IMPVAL  [#6^1-]                   1 # isocyanides, CO (valence=1, bond order=3)
 IMPVAL  [c+]                      2
 
-IMPVAL  [$([#7-]=*)]              1
-IMPVAL  [$([#7+]#*)]              2
 IMPVAL  [N^3]                     3
 IMPVAL  [N^3+]                    4
 IMPVAL  [N^2]                     3
@@ -115,6 +113,8 @@ IMPVAL  [N-]                      2
 IMPVAL  [n]                       2
 IMPVAL  [n-]                      2
 IMPVAL  [n+]                      3
+IMPVAL  [$([#7-]=*)]              1
+IMPVAL  [$([#7+]#*)]              2
 
 IMPVAL [$([#8+]#*)] 1
 
