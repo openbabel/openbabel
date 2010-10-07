@@ -795,7 +795,7 @@ namespace OpenBabel
   **\brief Angle default constructor
   */
   OBAngle::OBAngle():
-    _vertex(NULL), _termini(NULL, NULL), _radians(0.0)
+    _vertex((OBAtom *)NULL), _termini((OBAtom *)NULL, (OBAtom *)NULL), _radians(0.0)
   {  }
 
   /*!

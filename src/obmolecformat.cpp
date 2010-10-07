@@ -18,6 +18,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
 #include <openbabel/obiter.h>
+#include <iterator>
 
 using namespace std;
 namespace OpenBabel

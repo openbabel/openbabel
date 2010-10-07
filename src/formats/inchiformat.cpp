@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #include <sstream>
 #include <set>
 #include <vector>
+#include <iterator>
 #include <openbabel/inchiformat.h>
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>

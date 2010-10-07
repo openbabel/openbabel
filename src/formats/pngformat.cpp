@@ -14,6 +14,7 @@ GNU General Public License for more details.
 #include <sstream>
 #include <string>
 #include <algorithm>
+#include <iterator>
 #include <openbabel/babelconfig.h>
 #include <openbabel/format.h>
 #include <openbabel/obconversion.h>

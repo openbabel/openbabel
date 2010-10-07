@@ -555,7 +555,7 @@ namespace OpenBabel
     //! double is angle in radians
     std::vector<triple<OBAtom*,OBAtom*,double> > _ads;
 
-    OBTorsion(): _bc(NULL, NULL)      {      }
+    OBTorsion(): _bc((OBAtom *)NULL, (OBAtom *)NULL)      {      }
     //protected for use only by friend classes
     OBTorsion(OBAtom *, OBAtom *, OBAtom *, OBAtom *);
 
