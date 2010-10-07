@@ -15,6 +15,7 @@ set(tests
     canonstable
     cistrans
     graphsym
+    implicitH
     lssr
     isomorphism
     rotor
