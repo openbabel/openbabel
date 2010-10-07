@@ -29,7 +29,20 @@ namespace OpenBabel {
    * included in the algorithm and the canonical labels. The result will be
    * stored in @p canonical_labels.
    *
-   * @return The canonical labels for the molecule.
+   * @param mol The molecule.
+   * @param symmetry_classes The symmetry_classes for the molecule. These can
+   * be obtained using the OBGraphSym class.
+   * @param mask The fragment to label. When the bit for an atom is set, it is
+   * included in the fragment. If no bits are set, all atoms will be included.
+   * Atoms are indexed from 1 (i.e. OBAtom::GetIdx()).
+   * @param maxSeconds Timeout in seconds.
+   * @param onlyOne If true, the first found labels are returned. These are
+   * canonical labels without considering stereochemistry and other attributes
+   * not included in the symmetry classes.
+   *
+   * @return The canonical labels for the molecule in @p canonical_labels.
+   *
+   * @see @ref canonical_code_algorithm
    */
   void OBAPI CanonicalLabels(OBMol *mol, const std::vector<unsigned int> &symmetry_classes,
       std::vector<unsigned int> &canonical_labels, const OBBitVec &mask = OBBitVec(),
