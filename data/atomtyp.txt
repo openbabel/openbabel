@@ -127,12 +127,15 @@ IMPVAL [#8^1+]                    1 # carbon monoxide
 
 IMPVAL  [#9D0]                    1
 IMPVAL  [#9D0-]                   0 #[F-]
-IMPVAL  [$([#14+]#*)]		      1 # just for InChI Si2
-IMPVAL  [$([#14-]#*)]		      1 # just for InChI Si2
 
 IMPVAL  [#13]                     3 # generic Al
+
 IMPVAL  [#14]                     4 # regular sp3 Si
 IMPVAL  [#14^2]                   2 # silylenes
+IMPVAL  [$([#14]=*)]              3 # e.g., Si=O 
+IMPVAL  [$([#14](=*)=*)]          0 # e.g., Si(=O)=O
+IMPVAL  [$([#14+]#*)]		          1 # just for InChI Si2
+IMPVAL  [$([#14-]#*)]		          1 # just for InChI Si2
 
 IMPVAL  [#15D4]                   4
 IMPVAL  [#15D3]                   3
@@ -143,6 +146,7 @@ IMPVAL  [#15D0]                   3
 IMPVAL  [$([#15]=[#6])]           2
 IMPVAL  [pD2]                     2
 IMPVAL  [$([#15]=[#8])]           4 # phosphinate (double bond = one valence)
+IMPVAL  [$([#15+](=[#8])([#8]))]      0 # R-P+O2
 
 IMPVAL  [#16]                     2 #revised CM April 2008
 IMPVAL  [$([#16D1]=*)]            1 
