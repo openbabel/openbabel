@@ -1377,12 +1377,13 @@ namespace OpenBabel
 
     vector<OBRing*>::iterator ri;
     vector<int>::iterator rj;
-    int n, index, ringsize, first_rj, prev_rj, pi_electrons;
+    int n, index, ringsize, first_rj, prev_rj, pi_electrons, c60;
     for (ri = vr.begin();ri != vr.end();++ri) { // for each ring
       ringsize = (*ri)->Size();
 
       n = 1;
       pi_electrons = 0;
+      c60 = 0; // we have a special case to get c60 right (all atom type 37)
       for(rj = (*ri)->_path.begin();rj != (*ri)->_path.end();rj++) { // for each ring atom
         index = *rj;
         ringatom = _mol.GetAtom(index);
@@ -1412,7 +1413,12 @@ namespace OpenBabel
             continue;
 
           if (!nbr->IsAromatic())
-            continue;
+	    if (ringatom->IsCarbon() && ringatom->IsInRingSize(5)
+	      && ringatom->IsInRingSize(6) && nbr->IsCarbon() && nbr->IsInRingSize(5)
+	      && nbr->IsInRingSize(6))
+	        c60++;
+            else
+              continue;
 
           ringbond = _mol.GetBond(nbr->GetIdx(), index);
           if (!ringbond) {
@@ -1438,7 +1444,8 @@ namespace OpenBabel
           pi_electrons += 2;
       }
 
-      if ((pi_electrons == 6) && ((ringsize == 5) || (ringsize == 6))) {
+      if (((pi_electrons == 6) && ((ringsize == 5) || (ringsize == 6)))
+        || ((pi_electrons == 5) && (c60 == 5))) {
         // mark ring atoms as aromatic
         for(rj = (*ri)->_path.begin();rj != (*ri)->_path.end();rj++) {
           if (!_mol.GetAtom(*rj)->IsAromatic())
@@ -1568,6 +1575,13 @@ namespace OpenBabel
           }
           if (!alphaAtoms.size() && !betaAtoms.size()) {
             if (atom->IsCarbon()) {
+	      int c60 = 1; // special case to ensure c60 is typed correctly -- Paolo Tosco
+	      FOR_NBORS_OF_ATOM (nbr, atom) {
+	        if (!(nbr->IsCarbon() && nbr->IsAromatic() && nbr->IsInRingSize(6)))
+		  c60 = 0;
+	      }
+	      if (c60)
+	        return 37; // correct atom type for c in c60 (all atoms symmetric)
               // there is no S:, O:, or N:
               // this is the case for anions with only carbon and nitrogen in the ring
               return 78; // General carbon in 5-membered aromatic ring (C5)
@@ -3821,7 +3835,7 @@ namespace OpenBabel
       if (!factor)
         FOR_NBORS_OF_ATOM (nbr, &*atom)
           if (nbr->GetPartialCharge() < 0.0)
-            q0a += nbr->GetPartialCharge() / (2.0 * nbr->GetValence());
+            q0a += nbr->GetPartialCharge() / (2.0 * (double)(nbr->GetValence()));
 
       // needed for SEYWUO, positive charge sharing?
       if (type == 62)
@@ -3839,7 +3853,7 @@ namespace OpenBabel
 
         bool bci_found = false;
         for (unsigned int idx=0; idx < _ffchgparams.size(); idx++)
-          if (GetBondType(&*atom, &*nbr) == _ffchgparams[idx]._ipar[0])
+          if (GetBondType(&*atom, &*nbr) == _ffchgparams[idx]._ipar[0]) {
             if ((type == _ffchgparams[idx].a) && (nbr_type == _ffchgparams[idx].b)) {
               Wab += -_ffchgparams[idx]._dpar[0];
               bci_found = true;
@@ -3847,6 +3861,7 @@ namespace OpenBabel
               Wab += _ffchgparams[idx]._dpar[0];
               bci_found = true;
             }
+	  }
 
         if (!bci_found) {
           for (unsigned int idx=0; idx < _ffpbciparams.size(); idx++) {
@@ -3858,7 +3873,6 @@ namespace OpenBabel
           Wab += Pa - Pb;
         }
       }
-
       if (factor)
         charges[atom->GetIdx()] = (1.0 - M * factor) * q0a + factor * q0b + Wab;
       else
