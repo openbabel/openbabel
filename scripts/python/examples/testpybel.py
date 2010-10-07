@@ -13,7 +13,7 @@ if sys.version_info[0] >= 3:
     ispy2 = False
 
 try:
-	test = os.write
+    test = os.write
     try:
         from cinfony import pybel, rdkit, cdk
     except ImportError:
