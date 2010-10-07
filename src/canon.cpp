@@ -762,15 +762,17 @@ namespace OpenBabel {
     }
 
     /**
-     * It's late and I'll properly document this tomorrow but this function basically implements optimization 1 as described above.
+     * This function implements optimization 1 as described above.
      */
     static void LabelFragments(OBAtom *current, std::vector<OBAtom*> &nbrs, unsigned int label, Timeout &timeout, FullCode &bestCode, State &state)
     {
       OBMol *mol = current->GetParent();
       PartialCode &code = state.code;
 
+      // Sort the neighbor atoms according to symmetry class.
       std::sort(nbrs.begin(), nbrs.end(), SortAtomsDescending(state.symmetry_classes));
 
+      // Count the number of unique neighbor symmetry classes.
       unsigned int numUnique = 1;
       unsigned int lastSymClass = state.symmetry_classes[nbrs[0]->GetIndex()];
       for (std::size_t i = 0; i < nbrs.size(); ++i) {
@@ -791,12 +793,12 @@ namespace OpenBabel {
 
           CanonicalLabelsImpl::FullCode lbestCode;
           if (ligandSizes.back() == 1) {
-            // avoid additional state creation
+            // Avoid additional state creation if the neighbor is a single terminal atom.
             lbestCode.code.push_back(nbrs[i]->GetAtomicNum());
             lbestCode.labels.resize(state.symmetry_classes.size(), 0);
             lbestCode.labels[nbrs[i]->GetIndex()] = 1;
           } else if (ligandSizes.back() == 2) {
-            // avoid additional state creation
+            // Avoid additional state creation if the neighbor is a fragment of 2 atoms.
             lbestCode.labels.resize(state.symmetry_classes.size(), 0);
             lbestCode.code.push_back(1); // FROM
             lbestCode.code.push_back(nbrs[i]->GetAtomicNum()); // ATOM-TYPES 1
@@ -815,17 +817,18 @@ namespace OpenBabel {
               lbestCode.labels[nbr->GetIndex()] = 2;
             }
           } else {
-            // start labeling from the ligand atom
+            // Start labeling from the ligand atom.
             State lstate(state.symmetry_classes, ligand, state.stereoCenters, state.onlyOne);
             lstate.code.add(nbrs[i]);
             lstate.code.labels[nbrs[i]->GetIndex()] = 1;
             CanonicalLabelsRecursive(nbrs[i], 1, timeout, lbestCode, lstate);
           }
 
+          // Store the canonical code (and labels) for the ligand.
           lcodes.push_back(std::make_pair(i, lbestCode));
         }
 
-        // sort the codes for the fragments
+        // Sort the codes for the fragments.
         unsigned int firstIndex = 0;
         lastSymClass = state.symmetry_classes[nbrs[0]->GetIndex()];
         for (std::size_t i = 1; i < nbrs.size(); ++i) {
@@ -837,6 +840,7 @@ namespace OpenBabel {
           lastSymClass = state.symmetry_classes[nbrs[i]->GetIndex()];
         }
 
+        // Label the neighbor atoms by updating code.
         std::vector<OBAtom*> atoms;
         unsigned int nextLbl = label + 1;
         for (std::size_t l = 0; l < lcodes.size(); ++l) {
@@ -847,6 +851,7 @@ namespace OpenBabel {
           nextLbl++;
         }
 
+        // Convert the labels from the ligands to labels in the whole fragment.
         unsigned int ligandSize = *std::max_element(ligandSizes.begin(), ligandSizes.end());
         for (unsigned int lbl = 1; lbl < ligandSize; ++lbl) {
           for (std::size_t l = 0; l < lcodes.size(); ++l) {
@@ -883,8 +888,10 @@ namespace OpenBabel {
           }
         }
 
+        // Recurse...
         CanonicalLabelsRecursive(current, nextLbl - 1, timeout, bestCode, state);
 
+        // Backtrack.
         for (std::size_t j = 0; j < atoms.size(); ++j) {
           code.atoms.pop_back();
           code.bonds.pop_back();
@@ -892,6 +899,8 @@ namespace OpenBabel {
           code.labels[atoms[j]->GetIndex()] = 0;
         }
       } else {
+        // There are no duplicated symmetry classes for the neighbor atoms.
+        // Label each neighbor atom in sorted sequence.
         unsigned int lbl = label;
         for (std::size_t i = 0; i < nbrs.size(); ++i) {
           lbl++;
@@ -899,8 +908,10 @@ namespace OpenBabel {
           code.labels[nbrs[i]->GetIndex()] = lbl;
         }
 
+        // Recurse...
         CanonicalLabelsRecursive(current, lbl, timeout, bestCode, state);
 
+        // Backtrack.
         for (std::size_t i = 0; i < nbrs.size(); ++i) {
           code.atoms.pop_back();
           code.bonds.pop_back();
