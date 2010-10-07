@@ -493,7 +493,7 @@ namespace OpenBabel
 
   bool CompareRingSize(const OBRing *a,const OBRing *b)
   {
-    return(a->Size() < b->Size());
+    return(a->Size() == b->Size() ? a->ring_id < b->ring_id : a->Size() < b->Size()); // ensure stable sort
   }
 
   void OBRingSearch::WriteRings()

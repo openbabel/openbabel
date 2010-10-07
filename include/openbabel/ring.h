@@ -41,6 +41,7 @@ namespace OpenBabel
     OBMol *_parent; //!< parent molecule for this ring
   public:
     //public data members
+    int ring_id;            //!< a unique id to ensure a stable sort in SSSR determination
     std::vector<int> _path; //!< the path of this ring (i.e., the atom indexes)
     OBBitVec _pathset;      //!< the path of this ring as a redundant bit vector
 
@@ -124,6 +125,11 @@ namespace OpenBabel
     //! Sort ring sizes from smallest to largest
     void    SortRings()
     {
+      std::vector<OBRing*>::iterator j;
+      int ring_id; // for each ring, assign a unique id to ensure a stable sort
+      
+      for (j = _rlist.begin(), ring_id = 0; j != _rlist.end(); ++j, ++ring_id)
+        (*j)->ring_id = ring_id;
       std::sort(_rlist.begin(),_rlist.end(),CompareRingSize);
     }
     //! Starting with a full ring set - reduce to SSSR set
