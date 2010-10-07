@@ -141,41 +141,323 @@ namespace OpenBabel {
   }
 
 
+  /**
+   * @page canonical_code_algorithm Canonical Coding Algorithm
+   *
+   * @section canonical_introduction Introduction
+   * The aim of a canonical coding algorithm is to assign unique labels to
+   * atoms regardless of their input order. In practise, these labels or orders
+   * are atom indexes resulting from the order in which the atoms are defined
+   * in an input file. Although most chemical file formats could be used to
+   * store canonical ordered molecules, canonical single line notations are used
+   * more often since they allow two canonical molecules to be compared using a
+   * string comparison. Two well known examples are canonical smiles and inchi.
+   * While the canonical smiles for the same molecule should always be the same
+   * when using a specific implementation (i.e. toolkits), these canonical
+   * smiles are usually not transferable between implementations. There is only
+   * one inchi implementation and the canonical code, although not formally
+   * specified is always the same. A typical use case for canonical codes is to
+   * determine if a molecule is already in a database.
+   *
+   * The rest of this page documents the OpenBabel canonical coding algorithm.
+   *
+   * @section Topological Symmetry
+   * The starting point of the canonical coding algorithm is the topological
+   * symmetry or graph symmetry. This symmetry can be expressed by assigning
+   * symmetry classes to atoms. Symmetric atoms have the same symmetry class.
+   * The term color is often used in graph theory as a synonym for symmetry
+   * classes.
+   *
+   * Symmetry classes are used as graph invariants to order atoms. The symmetry
+   * classes can be used in two ways:
+   *
+   * - lowest symmetry class = lowest label (i.e. 1)
+   * - highest symmetry class = lowest label
+   *
+   * Both methods are valid. OpenBabel uses the second method. In the following
+   * sections there are more of these decisions that have to be made. The first,
+   * choice is used as example to illustrate that it doesn't make any real
+   * difference as long as the same choice is used every time. When trying to
+   * reproduce OpenBabel canonical smiles the same choices or conventions have
+   * to be used.
+   *
+   * The used initial graph invariant is specified below and the iteration
+   * algorithm is similar to the original Morgan algorithm. The OBGraphSym class
+   * should be consulted for a detailed description.
+     @verbatim
+          0                   1                   2                   3
+          1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2
+     GI = D D D D D D D D D D D V V V V A R N N N N N N N B B B B C C C C
+
+     GI: Graph invariant (32 bits)
+     D: Graph theoretical distance (10 bits)
+     V: Heavy valence (4 bits)
+     A: Aromaticity (1 bit)
+     R: Ring atom (1 bit)
+     N: Atomic number (7 bits)
+     B: Heavy bond sum (4 bits)
+     C: Formal charge + 7 (4 bits)
+     @endverbatim
+   *
+   * (FIXME: ugly smiles)
+   *
+   * The symmetry classes encode various attributes for each atom. Consult the
+   * OBGraphSym documentation for details. (note: when trying to reproduce
+   * OpenBabel canonical smiles, make sure these graph invariants are the same)
+   *
+   * @section canonical_labeling Labeling
+   * The labeling starts by selecting the initial atom using a set of rules to
+   * ensure it starts at terminal atoms. (FIXME) Label 1 is assigned to this atom
+   * and the labeling continues using this atom as the current atom:
+   *
+   * -# Find the neighbor atoms of the current atom to label next. Already labeled
+   *   and atoms not in the fragment are ignored. If there are no such atoms, go
+   *   to 3.
+   * -# Sort the neighbors by their symmetry classes. Each group of atoms with the
+   *    same symmetry class is now handled in sequence. If there is only one atom
+   *    in the group, this atom is labeled and the process continues with the next
+   *    group. If there are multiple (n) atoms in a group, all n! permutations of
+   *    the group are tried. (note: The Optimization section below mentions some
+   *    exceptions which affect the final result. These optimizations are part of
+   *    the algorithm)
+   * -# When all neighbor atoms of the current atom are labeled, the next atom
+   *    (i.e. the atom with current_label+1 label) is considered the current atom
+   *    and step 1 through 3 are repeated. If there is no next atom, the labeling
+   *    is done.
+   *
+   * The algorithm just described results in a set of labellings that are candidates
+   * for the canonical labeling. For each labeling, a code is generated to select
+   * the canonical code and the associated labels.
+   *
+   * @section canonical_code Canonical Code
+   * A canonical code can be anything encoding the molecular graph with all the
+   * properties that should be canonicalized. The code should be invariant to the
+   * original atom order. At this point, it may seem that this is similar to the
+   * graph invariants from above (i.e. symmetry classes). However, generating these
+   * codes allows for additional attributes to be included. A simple example are
+   * isotopes. More importantly, stereochemistry is included in these codes which
+   * is an attribute that does not depend an isolated atom.
+   *
+   * The actual code is a list of numbers (unsigned int) constructed by joining
+   * smaller codes. These smaller codes usually encode specific attributes.
+   *
+   * @subsection canonical_from FROM code
+   * When labeling the molecule as described earlier, all but the initial atom in
+   * a connected fragment have a "from" atom (i.e. current atom in the algorithm).
+   * The FROM code contains the label of the "from" atom, for each atom (ignoring
+   * the initial atom) ordered by their assigned label. The FROM code is a
+   * spanning tree containing all bonds that are not ring closures.
+   *
+   * @subsection canonical_closure CLOSURE code
+   * The ring closure bonds are easily identified while creating the FROM code.
+   * The CLOSURE code contains two labels for each closure bond. The labels are
+   * sorted in the following way:
+   *
+   * - [1 6] < [6 1] (i.e. 1 6 is used, individual bond sorting)
+   * - [1 3][1 4] < [1 4][1 3] (i.e. 1 3 1 4 is used, sorting bonds)
+   * - [1 3][5 7] < [5 7][1 3]
+   *
+   * The square brackets are only to indicate individual bonds, the code is just
+   * a single list.
+   *
+   * @subsection canonical_atomtype ATOM-TYPES & ISOTOPES code
+   * The ATOM-TYPES code is simply the atomic number for each atom ordered by
+   * labels. If the molecule contains isotopes, an additional ISOTOPES code is
+   * used to correctly canonicalize these molecules.
+   *
+   * @subsection canonical_bondtype BOND-TYPES code
+   * The BOND-TYPES code contains, for each bond, the bond order or 5 if the
+   * bond is aromatic. The bonds are ordered using the order obtained during
+   * the FROM code construction. The closure bonds are last, ordered as
+   * described in the CLOSURE code section.
+   *
+   * @subsection canonical_stereo STEREO code
+   * The STEREO code contains a descriptor for each stereo center. The stereo
+   * centers are ordered using the central atom(s) (i.e. center for tetrahedral
+   * stereochemistry, lowest label for cistrans).
+   *
+   * @subsection canonical_canonical Canonical Code
+   * The canonical code is the greatest code (elements are compared, the first
+   * difference determines order). The complete canonical code can also be seen
+   * as layers. The first layer is the FROM code together with the CLOSURE code.
+   * Together these codes describe the graph without node (atom) or edge (bond)
+   * properties. The ATOM-TYPES code is the layer adding node properties. The
+   * optional ISOTOPES code also encodes node properties. Edge properties are
+   * specified in the BOND-TYPES code. The previous codes together are enough
+   * to specify the constitution of a molecule. Additional layers such as the
+   * STEREO code could be ignored for certain use cases. For example, if two
+   * molecules have the same canonical code up to the STEREO part, they are
+   * stereoisomers.
+   *
+   * @section canonical_fragments Disconnected Fragments
+   * Disconnected fragments are handled individually and the resulting canonical
+   * codes are sorted. The final canonical code for the whole molecule, are the
+   * sorted canonical codes joined together.
+   *
+   * @section canonical_optimization Optimizations
+   * This section documents optimizations to reduce the number of states which
+   * affect the final result. The aim of these optimizations is to avoid the n!
+   * permutations in step 2 of the labeling algorithm. Some of the optimizations
+   * affect the final result and should be implemented when trying to reproduce
+   * the same canonical code.
+   *
+   * @subsection canonical_opt1 Optimization 1
+   * If the current atom is not in a ring, it follows that the bonds to all it's
+   * neighbors are not ring bonds. It also follows that there is no path between
+   * two neighbor atoms with the same symmetry class without going through the
+   * current atom. Therefore, these ligands (i.e. the fragments that would be
+   * created by deleting the current atom) can be labeled individually. For
+   * example, for an atom with 4 neighbors with the same symmetry class, the
+   * number of permutations to label is reduced from 4! * 4 = 96 to 4. The times
+   * 4 is because after generating the 24 permutations, the ligands are not
+   * labeled yet.
+   *
+   * @note This optimization <b>affects the final result</b>.
+   *
+   * @subsection canonical_opt2 Optimization 2 (not implemented)
+   * If the bond(s) to the neighbor atom(s) with the same symmetry classes is not
+   * a ring bond, optimization 1 could be used. This is the more general version
+   * of optimization 1.
+   *
+   * @note This optimization <b>affects the final result</b> but is <b>not
+   * implemented</b>.
+   *
+   * @subsection canonical_opt3 Optimization 3 (not implemented)
+   * If the current atom is a stereo center, only permutations with the highest
+   * descriptor produce a greatest canonical code. This does not change the final
+   * result and can be implemented without changing canonical smiles etc.
+   *
+   * @subsection canonical_opt4 Other optimizations
+   * In essence, the canonical coding algorithm is very similar to the algorithm
+   * from the well-known nauty package[1]. However, the optimizations mentioned
+   * above are far easier to implement, document and result in acceptable
+   * performance for most structures. This enables anyone to reproduce OpenBabel
+   * canonical smiles without the absolute requirement to implement the complex
+   * optimizations from nauty. Since the optimizations from the nauty paper do
+   * not have any affect on the final result, these can be implemented as required.
+   *
+   * The OpenBabel algorithm uses the molecule graph as the main object while
+   * searching for a canonical code. Nauty starts from a partition of the set
+   * of nodes which is refined. This is not the essential part though. The
+   * similarity between the algorithms is that both algorithms share the
+   * concept of a search tree. A completed canonical candidate code is a leaf
+   * node in this search tree. If a second labeling is found with the same
+   * canonical code, there exists a permutation mapping the first labels to
+   * the second. This permutation is an automorphism that takes all attributes
+   * of the canonical code into account. The found automorphism is not only
+   * an automorphism of the molecule but also an isomorphism of the search tree.
+   * These accidentally discovered automorphisms can be used to reduce the
+   * number of states to consider in various ways.
+   *
+     @verbatim
+     [1] Brendan D. McKay, Practical graph isomorphism, Congressus Numerantium,
+         Vol. 30, 1981, pp. 45-87
+         http://cs.anu.edu.au/~bdm/nauty/PGI/
+     @endverbatim
+   */
 
   struct CanonicalLabelsImpl
   {
+    /**
+     * Structure to represent a completed labeling and it's associated canonical
+     * candidate code.
+     */
     struct FullCode
     {
-      std::vector<unsigned int> labels, code;
+      /**
+       * The atom labels starting from 1. All excluded atoms have label 0.
+       */
+      std::vector<unsigned int> labels
+      /**
+       * The canonical candidate code resulting from the @p labels.
+       */
+      std::vector<unsigned int> code;
 
+      /**
+       * Default constructor, used to create initial empty bestCode object.
+       */
       FullCode()
       {
       }
 
+      /**
+       * Constructor specifying both the @p labels and @p from (the FROM part
+       * of the canonical code). The other parts of the canonical code are
+       * added using the CompleteCode function.
+       */
       FullCode(const std::vector<unsigned int> &_labels, const std::vector<unsigned int> &from)
           : labels(_labels), code(from)
       {
       }
 
+      /**
+       * Compare this object's canonical candidate code to the other object's
+       * code and return true if this code is greater. This method is used to
+       * select the final canonical code. In other words, the canonical labels
+       * for a molecule are the labels with the greatest canonical code.
+       */
       inline bool operator>(const FullCode &other) const
       {
         return (code > other.code);
       }
     };
 
+    /**
+     * Structure to represent a partial labeling and the associated FROM part
+     * of the canonical code.
+     */
     struct PartialCode
     {
+      /**
+       * The atoms in canonical order. An atom is added when a label is assigned
+       * to it. When all atoms are labeled, this vector will contain all atoms
+       * in the fragment.
+       */
       std::vector<OBAtom*> atoms;
+      /**
+       * The bonds in canonical order. Since the atoms are labeled from another
+       * atom ("from"), these are the bonds connecting the "from" atom with the
+       * next labeled atom. The FROM list forms a spanning tree that does not
+       * include the ring closure bonds. These ring closure bonds are added at
+       * the end of this vector, in the correct order, in the CompleteCode
+       * function.
+       */
       std::vector<OBBond*> bonds;
-      std::vector<unsigned int> labels, from;
+      /**
+       * The FROM part of the canonical code. This is a vector containing the
+       * label of the "from" atom for the atoms in canonical order. The initial
+       * atom of a bonded fragment is not included in this list since there is
+       * no "from" atom.
+       */
+      std::vector<unsigned int> from;
+      /**
+       * The atom labels starting from 1. All atoms start with label 0.
+       */
+      std::vector<unsigned int> labels;
 
+      /**
+       * Constructor specifying the number of atoms in the molecule. The @p
+       * numAtoms are used to initialize the labels vector to contain label
+       * 0 for all atoms.
+       */
       PartialCode(std::size_t numAtoms)
       {
         labels.resize(numAtoms, 0);
       }
 
+      /**
+       * Add an atom to atoms. Used to add the initial atom.
+       */
       inline void add(OBAtom *atom) { atoms.push_back(atom); }
+      /**
+       * Add a bond to bonds. Used to add the ring closure bonds.
+       */
       inline void add(OBBond *bond) { bonds.push_back(bond); }
+      /**
+       * Add an atom that is labeled "from" another atom. This function adds
+       * the @p atom to atoms, adds bond between @p fromAtom and @p atom to
+       * bonds and updates the @p from vector.
+       */
       inline void add(OBAtom *fromAtom, OBAtom *atom)
       {
         from.push_back(labels[fromAtom->GetIndex()]);
@@ -183,6 +465,11 @@ namespace OpenBabel {
         bonds.push_back(atom->GetParent()->GetBond(fromAtom, atom));
       }
 
+      /**
+       * Compare the @p from vector with a FullCode's code and return true if
+       * this code is lower. This function is used to avoid completing a
+       * labeling that will never result in a greatest canonical code.
+       */
       inline bool operator<(const FullCode &other) const
       {
         std::size_t numFrom = std::min(from.size(), other.code.size());
@@ -197,8 +484,19 @@ namespace OpenBabel {
       }
     };
 
+    /**
+     * Structure to store and compute stereo center parities. Currently for
+     * both tetrahedral and cistrans stereochemistry. Precomputing these
+     * StereoCenter objects is done for performance reasons since parities
+     * need to be computed for each canonical candidate labeling.
+     */
     struct StereoCenter
     {
+      /**
+       * Use the stored nbrIndexes to access the @p labels and compute a parity
+       * or descriptor. This function returns 0 or 1 for both tetrahedral and
+       * cistrans stereo centers.
+       */
       int getDescriptor(const std::vector<unsigned int> &labels) const
       {
         std::vector<unsigned long> refs1, refs2;
@@ -215,10 +513,25 @@ namespace OpenBabel {
             refs2.push_back(nbrIndexes2[i]);
         return ((OBStereo::NumInversions(refs1) % 2 + OBStereo::NumInversions(refs2) % 2) % 2);
       }
+      /**
+       * Index(es) for the stereo center. This is used to sort the stereo
+       * centers by label. Tetrahedral stereo centers have one index in this
+       * vector and cistrans stereocenters have both double bond atom indexes
+       * in this vector.
+       */
       std::vector<unsigned int> indexes;
+      /**
+       * Indexes for the stereo center neighbor atoms. Tetrahedral centers have
+       * all neighbor atoms in nbrIndexes1. CisTrans stereo centers store the
+       * neighbor atoms for each double bond atom seperatly.
+       */
       std::vector<unsigned int> nbrIndexes1, nbrIndexes2;
     };
 
+    /**
+     * Sort StereoCenter objects by their label. Used in combination with
+     * std::sort to create STEREO code.
+     */
     struct SortStereoCenters
     {
       const std::vector<unsigned int> &labels;
@@ -238,36 +551,55 @@ namespace OpenBabel {
       }
     };
 
+    /**
+     * Sort FullCode objects by their code. Used in combination with
+     * std::sort order disconnected fragments.
+     */
     static bool SortCode(const FullCode &code1, const FullCode &code2)
     {
       return (code1.code < code2.code);
     }
 
+    /**
+     * Sort FullCode objects with associated int in std::pair. Used to sort
+     * ligands (i.e. equivalent fragments connected to a symmetric atom).
+     */
     static bool SortCode2(const std::pair<int, FullCode> &code1, const std::pair<int, FullCode> &code2)
     {
       return (code1.second.code > code2.second.code);
     }
 
+    /**
+     * Sort atoms by ascending ranks (e.g. labels).
+     */
     struct SortAtomsAscending
     {
-      SortAtomsAscending(const std::vector<unsigned int> &_labels) : labels(_labels) {}
-      const std::vector<unsigned int> &labels;
+      SortAtomsAscending(const std::vector<unsigned int> &_ranks) : ranks(_ranks) {}
+      const std::vector<unsigned int> &ranks;
       inline bool operator()(const OBAtom *a1, const OBAtom *a2) const
       {
-        return labels[a1->GetIndex()] < labels[a2->GetIndex()];
+        return ranks[a1->GetIndex()] < ranks[a2->GetIndex()];
       }
     };
 
+    /**
+     * Sort atoms by descending ranks (e.g. symmetry classes)
+     */
     struct SortAtomsDescending
     {
-      SortAtomsDescending(const std::vector<unsigned int> &_labels) : labels(_labels) {}
-      const std::vector<unsigned int> &labels;
+      SortAtomsDescending(const std::vector<unsigned int> &_ranks) : ranks(_ranks) {}
+      const std::vector<unsigned int> &ranks;
       inline bool operator()(const OBAtom *a1, const OBAtom *a2) const
       {
-        return labels[a1->GetIndex()] > labels[a2->GetIndex()];
+        return ranks[a1->GetIndex()] > ranks[a2->GetIndex()];
       }
     };
 
+    /**
+     * Structure used while labeling a single connected fragment. All input is
+     * specified using the constructor and @p code is generated as a result of
+     * assigning labels.
+     */
     struct State
     {
       State(const std::vector<unsigned int> &_symmetry_classes,
@@ -279,13 +611,26 @@ namespace OpenBabel {
       }
 
       const std::vector<unsigned int> &symmetry_classes;
+      /**
+       * The connected fragment. This is a subset of the mask.
+       */
       const OBBitVec &fragment;
       const bool onlyOne;
 
+      /**
+       * The pre-computed stereo centers. Non-const since it needs to be
+       * sorted.
+       */
       std::vector<StereoCenter> &stereoCenters;
+      /**
+       * The partial code with labels and FROM code.
+       */
       PartialCode code;
     };
 
+    /**
+     * Simple struct to manage timeout.
+     */
     struct Timeout
     {
       Timeout(time_t _maxTime) : maxTime(_maxTime)
@@ -296,30 +641,46 @@ namespace OpenBabel {
     };
 
 
+    /**
+     * Given a complete labeling (@p state.code.labels) and FROM code (@p state.code.from),
+     * construct a FullCode with complete code.
+     */
     static void CompleteCode(OBMol *mol, FullCode &bestCode, State &state)
     {
       PartialCode &code = state.code;
 
+      // initialize the FullCode object with the found labels and the from code
       FullCode fullcode(code.labels, code.from);
       unsigned int numClosures = 0;
 
+      //
       // the RING-CLOSURE list
-      unsigned int current_label = 1;
+      //
+      unsigned int current_label = 1; // the second atom is always labeled from 1
+      // iterate over all atoms in the order they are labeled
+      // (this ensures [1 3] < [3 1])
       for (std::size_t j = 0; j < code.atoms.size(); ++j) {
         OBAtom *atom = code.atoms[j];
+        // still need to sort [1 3] and [1 4]
         std::vector<std::pair<OBBond*, unsigned int> > closures;
         FOR_BONDS_OF_ATOM (bond, atom) {
+          // skip atoms not in the fragment
           if (!state.fragment.BitIsSet(bond->GetNbrAtom(atom)->GetIdx()))
             continue;
+          // a closure bond is a bond not found while generating the FROM spanning tree.
           if (std::find(code.bonds.begin(), code.bonds.end(), &*bond) == code.bonds.end()) {
             closures.push_back(std::make_pair(&*bond, code.labels[bond->GetNbrAtom(atom)->GetIndex()]));
           }
         }
 
+        // do the sorting: [1 3] < [1 4]
         std::sort(closures.begin(), closures.end(), CompareBondPairSecond);
+
         for (std::size_t k = 0; k < closures.size(); ++k) {
+          // add the closure bond to the code
           fullcode.code.push_back(current_label);
           fullcode.code.push_back(closures[k].second);
+          // add the bond to the list (needed for BOND-TYPES below)
           code.add(closures[k].first);
           numClosures++;
         }
@@ -327,22 +688,30 @@ namespace OpenBabel {
         current_label++;
       }
 
+      // isotopes are only considered if there are isotopes
       bool hasIsotope = false;
 
+      //
       // the ATOM-TYPES list
+      //
       for (std::size_t j = 0; j < code.atoms.size(); ++j) {
         OBAtom *atom = code.atoms[j];
         if (atom->GetIsotope())
           hasIsotope = true;
+        // add the atomic number to the code
         fullcode.code.push_back(atom->GetAtomicNum());
       }
 
+      //
       // the (optional) ISOTOPES list
+      //
       if (hasIsotope)
         for (std::size_t j = 0; j < code.atoms.size(); ++j)
           fullcode.code.push_back(code.atoms[j]->GetIsotope());
 
+      //
       // the BOND-TYPES list
+      //
       for (std::size_t j = 0; j < code.bonds.size(); ++j) {
         OBBond *bond = code.bonds[j];
         if (bond->IsAromatic())
@@ -355,12 +724,15 @@ namespace OpenBabel {
       if (state.stereoCenters.size()) {
         std::vector<int> dv;
 
+        // sort the stereo centers
         std::sort(state.stereoCenters.begin(), state.stereoCenters.end(), SortStereoCenters(code.labels));
+
         for (std::size_t i = 0; i < state.stereoCenters.size(); ++i) {
           bool isInFragment = false;
           for (std::size_t j = 0; j < state.stereoCenters[i].indexes.size(); ++j)
             if (state.fragment.BitIsSet(state.stereoCenters[i].indexes[j]+1))
               isInFragment = true;
+          // ignore stereo centers not in this fragment
           if (isInFragment)
             dv.push_back(state.stereoCenters[i].getDescriptor(code.labels));
         }
@@ -378,15 +750,20 @@ namespace OpenBabel {
         fullcode.code.push_back(value);
       }
 
+      // if fullcode is greater than bestCode, we have found a new greatest code
       if (fullcode > bestCode) {
         bestCode.labels.swap(fullcode.labels);
         bestCode.code.swap(fullcode.code);
       }
 
+      // backtrack
       for (unsigned int i = 0; i < numClosures; ++i)
         code.bonds.pop_back();
     }
 
+    /**
+     * It's late and I'll properly document this tomorrow but this function basically implements optimization 1 as described above.
+     */
     static void LabelFragments(OBAtom *current, std::vector<OBAtom*> &nbrs, unsigned int label, Timeout &timeout, FullCode &bestCode, State &state)
     {
       OBMol *mol = current->GetParent();
@@ -534,39 +911,52 @@ namespace OpenBabel {
     }
 
 
+    /**
+     * This is the recursive function implementing the labeling algorithm
+     * outlined above (steps 1-3). This function works for single connected
+     * fragments and uses @p state to hold most information. The @p bestCode
+     * is the current greatest code (if any). given the @p current atom and
+     * the last @p label, this function labels the neighbor atoms with
+     * label+1, label+2, ...
+     */
     static void CanonicalLabelsRecursive(OBAtom *current, unsigned int label, Timeout &timeout, FullCode &bestCode, State &state)
     {
       OBMol *mol = current->GetParent();
       PartialCode &code = state.code;
 
-      // Check if there is a full mapping
+      // Check if there is a full mapping.
       if (label == state.fragment.CountBits()) {
         CompleteCode(mol, bestCode, state);
         return;
       }
 
-      // avoid endless loops
+      // Avoid endless loops.
       if (time(NULL) - timeout.startTime > timeout.maxTime) {
         return;
       }
 
+      // If there is a bestCode and only one labeling is required, return.
       if (state.onlyOne && !bestCode.code.empty())
         return;
 
-      // abort early if this will not lead to a maximal canonical code
+      // Abort early if this will not lead to a greatest canonical code. The
+      // code.from vector is compared with the elements in the bestCode.
       if (code < bestCode)
         return;
 
-
+      // Find the neighbors of the current atom to assign the next label(s).
       std::vector<OBAtom*> nbrs;
       std::vector<unsigned int> nbrSymClasses;
       FOR_NBORS_OF_ATOM (nbr, current) {
+        // Skip atoms not in the fragment.
         if (!state.fragment.BitIsSet(nbr->GetIdx()))
           continue;
+        // Skip already labeled atoms.
         if (code.labels[nbr->GetIndex()])
           continue;
 
         OBBond *bond = mol->GetBond(current, &*nbr);
+        // Ugly, but it helps...                                        // <--- not documented! need better approach to handle this (not only ferrocene)...
         if (!isFerroceneBond(bond)) {
           nbrSymClasses.push_back(state.symmetry_classes[nbr->GetIndex()]);
           nbrs.push_back(&*nbr);
@@ -574,6 +964,8 @@ namespace OpenBabel {
       }
 
       if (nbrs.empty()) {
+        // If there are no neighbor atoms to label, recurse with the next
+        // current atom.
         unsigned int nextLabel = code.labels[current->GetIndex()] + 1;
         for (std::size_t i = 0; i < code.labels.size(); ++i) {
           if (code.labels[i] == nextLabel) {
@@ -585,14 +977,44 @@ namespace OpenBabel {
       }
 
       if (!current->IsInRing()) {
+        // Optimization to avoid generating the n! permutations. If the current
+        // atom is not in a ring, the neighbor atoms with the same symmetry
+        // are not connected and it is possible to label without considering
+        // the rest of the molecule. The found ligand labels can be sorted and
+        // the labels can be calculated using offsets.
+        //
+        // This modifies the final canonical code since it produces a different
+        // canonical order but although different, the code is still canonical.
         LabelFragments(current, nbrs, label, timeout, bestCode, state);
-      } else { // current->IsInRing
-
-
+      } else {
+        // Create all possible labelings for the neighbors.
+        //
+        // Example: The current atom has 4 neighbors to label.
+        //
+        // neighbor atom   : 1 2 3 4
+        // symmetry classes: 3 2 2 1
+        //
+        // The first neighbor with symmetry class 3 is added to allOrderedNbrs.
+        //
+        // allOrderedNbrs = [ [1] ]
+        //
+        // The two neighbor atoms with symmetry class 2 are added next. All
+        // permutations are added (2 in this case).
+        //
+        // allOrderedNbrs = [ [1,2,3], [1,3,2] ]
+        //
+        // The last atom is similar to the first one.
+        //
+        // allOrderedNbrs = [ [1,2,3,4], [1,3,2,4] ]
+        //
+        // Note: If there are atoms with a large number of neighbor atoms
+        // with the same symmetry class (n), this can result in a large number
+        // of permutations (n!).
         std::vector<std::vector<OBAtom*> > allOrderedNbrs(1);
+
         while (!nbrs.empty()) {
 
-          // select the next nbr atoms with highest symmetry classes
+          // Select the next nbr atoms with highest symmetry classes.
           unsigned int maxSymClass = *std::max_element(nbrSymClasses.begin(), nbrSymClasses.end());
           std::vector<OBAtom*> finalNbrs;
           for (std::size_t i = 0; i < nbrs.size(); ++i) {
@@ -600,7 +1022,7 @@ namespace OpenBabel {
               finalNbrs.push_back(nbrs[i]);
           }
 
-          // remove the selected atoms from nbrs and nbrSymClasses
+          // Remove the selected atoms from nbrs and nbrSymClasses (this could be made more efficient)
           for (std::size_t i = 0; i < finalNbrs.size(); ++i) {
             nbrs.erase(std::find(nbrs.begin(), nbrs.end(), finalNbrs[i]));
             nbrSymClasses.erase(std::find(nbrSymClasses.begin(), nbrSymClasses.end(), maxSymClass));
@@ -608,21 +1030,28 @@ namespace OpenBabel {
 
 
           if (finalNbrs.size() == 1) {
+            // If there is only one atom with the same symmetry class, label it
+            // and select the next group of neighbor atoms with the same symmetry
+            // class.
             for (std::size_t i = 0; i < allOrderedNbrs.size(); ++i)
               allOrderedNbrs[i].push_back(finalNbrs[0]);
           } else {
+            // Sort the atoms lexicographically.
             std::sort(finalNbrs.begin(), finalNbrs.end());
 
+            // Copy the current labelings for the neighbor atoms.
             std::vector<std::vector<OBAtom*> > allOrderedNbrsCopy(allOrderedNbrs);
 
+            // Add the first permutation for the neighbor atoms.
             for (std::size_t j = 0; j < allOrderedNbrsCopy.size(); ++j) {
-              if (!allOrderedNbrsCopy[j].empty())
-                allOrderedNbrs.push_back(allOrderedNbrsCopy[j]);
-              for (std::size_t i = 0; i < finalNbrs.size(); ++i) {
+              if (!allOrderedNbrsCopy[j].empty())  //  <------------------------ This line needs to go away but this is a doc only update... (It's canonical but redundant!)
+                allOrderedNbrs.push_back(allOrderedNbrsCopy[j]);                        // produces   [ [1], [1,2,3], [1,3,2] ]
+              for (std::size_t i = 0; i < finalNbrs.size(); ++i) {                      // should be  [ [1,2,3], [1,3,2] ]
                 allOrderedNbrs.back().push_back(finalNbrs[i]);
               }
             }
 
+            // Add the other permutations.
             while (std::next_permutation(finalNbrs.begin(), finalNbrs.end())) {
               for (std::size_t j = 0; j < allOrderedNbrsCopy.size(); ++j) {
                 allOrderedNbrs.push_back(allOrderedNbrsCopy[j]);
@@ -648,6 +1077,7 @@ namespace OpenBabel {
         }
 
         for (std::size_t i = 0; i < allOrderedNbrs.size(); ++i) {
+          // Convert the order stored in allOrderedNbrs to labels.
           unsigned int lbl = label;
           for (std::size_t j = 0; j < allOrderedNbrs[i].size(); ++j) {
             lbl++;
@@ -655,25 +1085,34 @@ namespace OpenBabel {
             code.labels[allOrderedNbrs[i][j]->GetIndex()] = lbl;
           }
 
+          // Recurse...
           CanonicalLabelsRecursive(current, lbl, timeout, bestCode, state);
 
+          // Backtrack...
           for (std::size_t j = 0; j < allOrderedNbrs[i].size(); ++j) {
             code.atoms.pop_back();
             code.bonds.pop_back();
             code.from.pop_back();
             code.labels[allOrderedNbrs[i][j]->GetIndex()] = 0;
           }
-
         }
 
-      }
+      } // current->IsInRing()
 
     }
 
+    /**
+     * Compute the canonical labels for @p mol. This function handles a whole molecule with
+     * disconnected fragments. It finds a canonical code for each fragment, sorts these codes
+     * and computes labels for the molecule as a whole.
+     *
+     * This is the CanonicalLabelsImpl entry point.
+     */
     static void CalcCanonicalLabels(OBMol *mol, const std::vector<unsigned int> &symmetry_classes,
         std::vector<unsigned int> &canonical_labels, const OBStereoUnitSet &stereoUnits, const OBBitVec &mask,
         OBStereoFacade *stereoFacade, int maxSeconds, bool onlyOne = false)
     {
+      // Handle some special cases.
       if (!mol->NumAtoms())
         return;
       if (mol->NumAtoms() == 1) {
@@ -681,9 +1120,11 @@ namespace OpenBabel {
         return;
       }
 
+      // Set all labels to 0.
+      canonical_labels.clear();
       canonical_labels.resize(mol->NumAtoms(), 0);
 
-      // find the connected fragments
+      // Find the (dis)connected fragments.
       OBBitVec visited;
       std::vector<OBBitVec> fragments;
       for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
@@ -693,7 +1134,7 @@ namespace OpenBabel {
         visited |= fragments.back();
       }
 
-      // precompute the stereo center information
+      // Pre-compute the stereo center information. (See StereoCenter)
       std::vector<StereoCenter> stereoCenters;
       if (stereoFacade) {
         for (std::size_t i = 0; i < stereoUnits.size(); ++i) {
@@ -746,12 +1187,12 @@ namespace OpenBabel {
         }
       }
 
-      // find the canonical code for each fragment
+      // Find the canonical code for each fragment.
       std::vector<CanonicalLabelsImpl::FullCode> fcodes;
       for (std::size_t f = 0; f < fragments.size(); ++f) {
         const OBBitVec &fragment = fragments[f];
 
-        // find the maximal symmetry class in the fragment
+        // find the maximal symmetry class in the fragment                                              // <--- start atom
         std::vector<unsigned int> nextSymClasses;
         for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
           if (fragment.BitIsSet(i+1))
@@ -767,26 +1208,27 @@ namespace OpenBabel {
           OBAtom *atom = mol->GetAtom(i+1);
 
           if (symmetry_classes[atom->GetIndex()] == maxSymClass) {
-            // start labeling from the atom with the highest symmetry class
+            // Start labeling from the atom with the highest symmetry class.
             State state(symmetry_classes, fragment, stereoCenters, onlyOne);
-            state.code.add(atom);
+            state.code.add(atom);                                                                       // <--- start atom
             state.code.labels[atom->GetIndex()] = 1;
             CanonicalLabelsRecursive(atom, 1, timeout, bestCode, state);
           }
-
         }
 
+        // Throw an error if the timeout is exceeded.
         if (time(NULL) - timeout.startTime > timeout.maxTime) {
           obErrorLog.ThrowError(__FUNCTION__, "maximum time exceeded...", obError);
         }
 
+        // Store the canonical code for the fragment.
         fcodes.push_back(bestCode);
       }
 
-      // sort the codes for the fragments
+      // Sort the codes for the fragments.
       std::sort(fcodes.begin(), fcodes.end(), SortCode);
 
-      // construct the full labeling from the sorted fragment labelings
+      // Construct the full labeling from the sorted fragment labels.
       unsigned int offset = 0;
       for (std::size_t f = 0; f < fcodes.size(); ++f) {
         unsigned int max_label = 0;
@@ -804,18 +1246,28 @@ namespace OpenBabel {
 
   }; // CanonicalLabelsImpl
 
+  /*
+   * See header for detailed description of parameters.
+   *
+   * The main purpose of this function is calling CanonicalLabelsImpl::CalcCanonicalLabels
+   * with the correct parameters regarding stereochemistry.
+   */
   void CanonicalLabels(OBMol *mol, const std::vector<unsigned int> &symmetry_classes,
       std::vector<unsigned int> &canonical_labels, const OBBitVec &mask,
       int maxSeconds, bool onlyOne)
   {
+    // make sure the mask is valid: no mask = all atoms
     OBBitVec maskCopy(mask);
     if (!maskCopy.CountBits())
       FOR_ATOMS_OF_MOL (atom, mol)
         maskCopy.SetBitOn(atom->GetIdx());
 
     if (onlyOne) {
+      // Only one labeling requested. This results in canonical labels that do not
+      // consider stereochemistry. Used for finding stereo centers with automorphisms.
       CanonicalLabelsImpl::CalcCanonicalLabels(mol, symmetry_classes, canonical_labels, OBStereoUnitSet(), maskCopy, 0, maxSeconds, true);
     } else {
+      // Check if there are specified stereo centers.
       bool hasAtLeastOneDefined = false;
       OBStereoFacade sf(mol, false);
       FOR_ATOMS_OF_MOL (atom, mol) {
@@ -835,10 +1287,12 @@ namespace OpenBabel {
         }
       }
       if (!hasAtLeastOneDefined) {
+        // If there are no specified stereo centers, we don't need to find stereogenic units.
         CanonicalLabelsImpl::CalcCanonicalLabels(mol, symmetry_classes, canonical_labels, OBStereoUnitSet(), maskCopy, 0, maxSeconds);
         return;
       }
 
+      // Find the stereogenic units
       OBStereoUnitSet stereoUnits = FindStereogenicUnits(mol, symmetry_classes);
 
       // Mark all invalid stereo data as unspecified
@@ -910,6 +1364,7 @@ namespace OpenBabel {
         }
       }
 
+      // Start the labeling process
       CanonicalLabelsImpl::CalcCanonicalLabels(mol, symmetry_classes, canonical_labels, stereoUnits, maskCopy, &sf, maxSeconds);
     }
 
@@ -920,64 +1375,6 @@ namespace OpenBabel {
   }
 
 
-  /**
-   * @page canonical_code Canonical Coding Algorithm
-   *
-   * @section canonical_introduction Introduction
-   * The aim of a canonical coding algorithm is to assign unique labels to
-   * atoms regardless of their input order. In practise, these labels or orders
-   * are atom indexes resulting from the order in which the atoms are defined
-   * in an input file. Although most chemical file formats could be used to
-   * store canonical ordered molecules, canonical single line notations are used
-   * more often since they allow two canonical molecules to be compared using a
-   * string comparison. Two well known examples are canonical smiles and inchi.
-   * While the canonical smiles for the same molecule should always be the same
-   * when using a specific implementation (i.e. toolkits), these canonical
-   * smiles are usually not transferable between implementations. There is only
-   * one inchi implementation and the canonical code, although not formally
-   * specified is always the same. A typical use case for canonical codes is to
-   * determine if a molecule is already in a database.
-   *
-   * The rest of this page documents the OpenBabel canonical coding algorithm.
-   *
-   * @section Terminology
-   * - Topology:
-   *
-   * @section Topological Symmetry
-   * The starting point of the canonical coding algorithm is the topological
-   * symmetry or graph symmetry. This symmetry can be expressed by assigning
-   * symmetry classes to atoms. Symmetric atoms have the same symmetry class.
-   * The term color is often used in graph theory as a synonym for symmetry
-   * classes.
-   *
-   *
-   *
-   *
-   * @subsection Canonical Code for Asymmetric Molecules
-   *
-   *
-   * @subsection Canonical Code for Symmetric Molecules
-   *
-   * @section Stereochemistry
-
-
-   For a molecule containing N atoms, there are N! possible
-   * ways to order the atoms. The actual complexity of the algorithm needed
-   * depends on the molecule.
-   *
-   *
-
-   *
-   *
-   *
-   *
-   *
-   *
-   *
-   *
-   *
-   *
-   */
 
 /* -*-C++-*-
 +======================================================================
