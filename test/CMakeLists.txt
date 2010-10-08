@@ -50,6 +50,8 @@ foreach(test ${tests})
   endif(MSVC)
   set_tests_properties(${test}_Test PROPERTIES
     FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed")
+    ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
+    ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data"
   if(MSVC)
     set_target_properties(test_${test} PROPERTIES
       RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
@@ -96,8 +98,6 @@ if(LIBXML2_FOUND)
   set(oldtests ${oldtests} cmlreadfile)
 endif(LIBXML2_FOUND)
 
-# TODO: forgot that inchiwrite requires arguments -- it compiles now, but
-#   doesn't run a test
 if(WITH_INCHI)
   add_executable(test_inchiwrite inchiwrite.cpp ../src/formats/getinchi.cpp)
   target_link_libraries(test_inchiwrite ${BABEL_LIBRARY})
@@ -119,6 +119,7 @@ if(WITH_INCHI)
 
     set_tests_properties(inchi${test}_Test PROPERTIES
                          FAIL_REGULAR_EXPRESSION "Not ok"
+                         ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
                          ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data"
 	 	        )
   endforeach(test ${inchitests})
@@ -134,6 +135,7 @@ foreach(test ${old_tests})
   endif(MSVC)
   set_tests_properties(${test}_Test PROPERTIES
     FAIL_REGULAR_EXPRESSION "not ok"
+    ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
     ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data"
  )
   if(MSVC)
@@ -170,6 +172,7 @@ if(NOT MINGW AND NOT CYGWIN)
     set_tests_properties(pytest_${pytest} PROPERTIES
          FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
          ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
+         ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data"
     )
   endforeach(pytest ${pytests})
 endif(NOT MINGW AND NOT CYGWIN)
@@ -186,6 +189,7 @@ if (PYTHON_BINDINGS)
     set_tests_properties(pybindtest_${pybindtest} PROPERTIES
          FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
          ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
+         ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data"
     )
   endforeach(pybindtest ${pybindtests})
 endif (PYTHON_BINDINGS)
