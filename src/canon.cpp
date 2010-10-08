@@ -38,6 +38,21 @@ GNU General Public License for more details.
 
 using namespace std;
 
+// debug function
+template<typename T>
+void print_vector(const std::string &label, const std::vector<T> &v)
+{
+  std::cout << label << ": ";
+  for (std::size_t i = 0; i < v.size(); ++i)
+    if (v[i] < 10)
+      std::cout << " " << v[i] << " ";
+    else
+      std::cout << v[i] << " ";
+
+  std::cout << endl;
+}
+
+
 namespace OpenBabel {
 
   inline bool CompareBondPairSecond(const std::pair<OBBond*,unsigned int> &a,const std::pair<OBBond*,unsigned int> &b)
@@ -828,7 +843,7 @@ namespace OpenBabel {
           lcodes.push_back(std::make_pair(i, lbestCode));
         }
 
-        // Sort the codes for the fragments.
+        // Sort the codes for the fragments. Each neighbor symmetry class is sorted separately.
         unsigned int firstIndex = 0;
         lastSymClass = state.symmetry_classes[nbrs[0]->GetIndex()];
         for (std::size_t i = 1; i < nbrs.size(); ++i) {
@@ -839,11 +854,14 @@ namespace OpenBabel {
           }
           lastSymClass = state.symmetry_classes[nbrs[i]->GetIndex()];
         }
+        // Make sure to sort the last set too.
+        std::sort(lcodes.begin() + firstIndex, lcodes.end(), SortCode2);
 
         // Label the neighbor atoms by updating code.
         std::vector<OBAtom*> atoms;
         unsigned int nextLbl = label + 1;
         for (std::size_t l = 0; l < lcodes.size(); ++l) {
+          //print_vector("LIG CODE:", lcodes[l].second.code);
           OBAtom *atom = nbrs[lcodes[l].first];
           code.add(current, atom);
           code.labels[atom->GetIndex()] = nextLbl;
@@ -1261,6 +1279,7 @@ namespace OpenBabel {
       // Construct the full labeling from the sorted fragment labels.
       unsigned int offset = 0;
       for (std::size_t f = 0; f < fcodes.size(); ++f) {
+        //print_vector("CODE:", fcodes[f].code);
         unsigned int max_label = 0;
         for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
           if (fcodes[f].labels[i]) {
