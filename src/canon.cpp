@@ -703,8 +703,10 @@ namespace OpenBabel {
         current_label++;
       }
 
-      // isotopes are only considered if there are isotopes
+      // Isotopes are only considered if there are isotopes.
       bool hasIsotope = false;
+      // Charges are only considered if there is a formal charge.
+      bool hasCharge = false;
 
       //
       // the ATOM-TYPES list
@@ -713,6 +715,8 @@ namespace OpenBabel {
         OBAtom *atom = code.atoms[j];
         if (atom->GetIsotope())
           hasIsotope = true;
+        if (atom->GetFormalCharge())
+          hasCharge = true;
         // add the atomic number to the code
         fullcode.code.push_back(atom->GetAtomicNum());
       }
@@ -723,6 +727,13 @@ namespace OpenBabel {
       if (hasIsotope)
         for (std::size_t j = 0; j < code.atoms.size(); ++j)
           fullcode.code.push_back(code.atoms[j]->GetIsotope());
+
+      //
+      // the (optional) CHARGES list
+      //
+      if (hasCharge)
+        for (std::size_t j = 0; j < code.atoms.size(); ++j)
+          fullcode.code.push_back(7 + code.atoms[j]->GetFormalCharge());
 
       //
       // the BOND-TYPES list
