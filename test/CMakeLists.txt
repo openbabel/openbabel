@@ -49,9 +49,9 @@ foreach(test ${tests})
     add_test(${test}_Test ${TEST_PATH}/test_${test})
   endif(MSVC)
   set_tests_properties(${test}_Test PROPERTIES
-    FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed")
+    FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
     ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
-    ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data"
+    ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data")
   if(MSVC)
     set_target_properties(test_${test} PROPERTIES
       RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
