@@ -1113,6 +1113,30 @@ namespace OpenBabel {
     }
 
     /**
+     * Select an initial atom from a fragment to assign the first label.
+     */
+    static unsigned int findStartSymmetryClass(OBMol *mol, const OBBitVec &fragment, const std::vector<unsigned int> &symmetry_classes)
+    {
+      // find the a symmetry class in the fragment using criteria
+      std::vector<unsigned int> nextSymClasses;
+      for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
+        if (!fragment.BitIsSet(i+1))
+          continue;
+
+        /*
+        OBAtom *atom = mol->GetAtom(i+1);
+        if (atom->GetFormalCharge())
+          continue;
+        */
+
+        nextSymClasses.push_back(symmetry_classes[i]);
+      }
+
+      //return *std::min_element(nextSymClasses.begin(), nextSymClasses.end());
+      return *std::max_element(nextSymClasses.begin(), nextSymClasses.end());
+    }
+
+    /**
      * Compute the canonical labels for @p mol. This function handles a whole molecule with
      * disconnected fragments. It finds a canonical code for each fragment, sorts these codes
      * and computes labels for the molecule as a whole.
@@ -1203,13 +1227,8 @@ namespace OpenBabel {
       for (std::size_t f = 0; f < fragments.size(); ++f) {
         const OBBitVec &fragment = fragments[f];
 
-        // find the maximal symmetry class in the fragment                                              // <--- start atom
-        std::vector<unsigned int> nextSymClasses;
-        for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
-          if (fragment.BitIsSet(i+1))
-            nextSymClasses.push_back(symmetry_classes[i]);
-        }
-        unsigned int maxSymClass = *std::max_element(nextSymClasses.begin(), nextSymClasses.end());
+        // Select the first atom.
+        unsigned int startSymClass = findStartSymmetryClass(mol, fragment, symmetry_classes);
 
         CanonicalLabelsImpl::Timeout timeout(maxSeconds);
         CanonicalLabelsImpl::FullCode bestCode;
@@ -1218,10 +1237,10 @@ namespace OpenBabel {
             continue;
           OBAtom *atom = mol->GetAtom(i+1);
 
-          if (symmetry_classes[atom->GetIndex()] == maxSymClass) {
-            // Start labeling from the atom with the highest symmetry class.
+          if (symmetry_classes[atom->GetIndex()] == startSymClass) {
+            // Start labeling of the fragment.
             State state(symmetry_classes, fragment, stereoCenters, onlyOne);
-            state.code.add(atom);                                                                       // <--- start atom
+            state.code.add(atom);
             state.code.labels[atom->GetIndex()] = 1;
             CanonicalLabelsRecursive(atom, 1, timeout, bestCode, state);
           }
