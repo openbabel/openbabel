@@ -68,7 +68,6 @@ set(old_tests
     cansmi
     charge-mmff94
     charge-gasteiger
-    cmlreadfile
     conversion
     datatest
     ffgaff
@@ -93,6 +92,9 @@ set(old_tests
     smilesmatch
     unitcell
    )
+if(LIBXML2_FOUND)
+  set(oldtests ${oldtests} cmlreadfile)
+endif(LIBXML2_FOUND)
 
 # TODO: forgot that inchiwrite requires arguments -- it compiles now, but
 #   doesn't run a test
@@ -156,16 +158,21 @@ install(TARGETS roundtrip
 # Tests wrapped in Python #
 ###########################
 
-include(UsePythonTest)
-set(pytests
-    babel sym fastsearch unique kekule)
-foreach(pytest ${pytests})
-  ADD_PYTHON_TEST(pytest_${pytest} test${pytest}.py)
-  set_tests_properties(pytest_${pytest} PROPERTIES
-       FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
-       ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
-  )
-endforeach(pytest ${pytests})
+# The following tests should work okay in MinGW, it's just that the calling
+# script needs some work. On Cygwin, there's some weird DLL problems when
+# calling from Python.
+if(NOT MINGW AND NOT CYGWIN)
+  include(UsePythonTest)
+  set(pytests
+      babel sym fastsearch unique kekule)
+  foreach(pytest ${pytests})
+    ADD_PYTHON_TEST(pytest_${pytest} test${pytest}.py)
+    set_tests_properties(pytest_${pytest} PROPERTIES
+         FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
+         ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
+    )
+  endforeach(pytest ${pytests})
+endif(NOT MINGW AND NOT CYGWIN)
 
 ###############################
 # Tests using Python bindings #
