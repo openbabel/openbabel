@@ -860,7 +860,7 @@ namespace OpenBabel {
         for (std::size_t i = 1; i < nbrs.size(); ++i) {
           unsigned int symClass = state.symmetry_classes[nbrs[i]->GetIndex()];
           if (symClass != lastSymClass) {
-            std::sort(lcodes.begin() + firstIndex, lcodes.begin() + i - 1, SortCode2);
+            std::sort(lcodes.begin() + firstIndex, lcodes.begin() + i, SortCode2);
             firstIndex = i;
           }
           lastSymClass = state.symmetry_classes[nbrs[i]->GetIndex()];
