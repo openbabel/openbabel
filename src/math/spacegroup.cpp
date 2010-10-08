@@ -320,9 +320,7 @@ namespace OpenBabel
    */
   const SpaceGroup * SpaceGroup::GetSpaceGroup (char const *name)
   {
-    if (!_SpaceGroups.Inited())
-      _SpaceGroups.Init();
-    return (_SpaceGroups.sgbn.find(name)!=_SpaceGroups.sgbn.end())? _SpaceGroups.sgbn[name]: NULL;
+    return GetSpaceGroup(std::string(name)); // let's only use one method
   }
 
   /*!
@@ -331,7 +329,25 @@ namespace OpenBabel
   {
     if (!_SpaceGroups.Inited())
       _SpaceGroups.Init();
-    return (_SpaceGroups.sgbn.find(name)!=_SpaceGroups.sgbn.end())? _SpaceGroups.sgbn[name]: NULL;
+
+    // This needs to be more forgiving
+    const SpaceGroup *match = (_SpaceGroups.sgbn.find(name)!=_SpaceGroups.sgbn.end())? _SpaceGroups.sgbn[name]: NULL;
+    if (!match) {
+      // Try another search, e.g. Fm-3m instead of Fm3m
+      string search = name;
+      bool hasMirror = (name.find('m') != string::npos || name.find('d') != string::npos || name.find('n') != string::npos || name.find('c') != string::npos);
+      if (name.find('4') != string::npos && hasMirror && name.find('-') == string::npos) {
+        search.insert(name.find('4'), "-");
+      } else if (name.find('3') != string::npos && hasMirror && name.find('-') == string::npos) {
+        search.insert(name.find('3'), "-");
+      } else if (name.find('6') != string::npos && hasMirror && name.find('-') == string::npos) {
+        search.insert(name.find('6'), "-");
+      }
+
+      match = (_SpaceGroups.sgbn.find(search)!=_SpaceGroups.sgbn.end())? _SpaceGroups.sgbn[search]: NULL;
+    }
+
+    return (match);
   }
 
   /*!
@@ -466,9 +482,6 @@ namespace OpenBabel
     // Identify from the HM symbol, after removing all whitespaces or underscore (which are valid separators in
     // old CIF files)
     std::string stripped_hm=RemoveWhiteSpaceUnderscore(group->m_HM);
-    if (stripped_hm == "Fm3m") {
-      stripped_hm = "Fm-3m"; // more typical notation used in space-groups.txt
-    }
     if (stripped_hm.length() > 0 &&
         _SpaceGroups.sgbn.find(stripped_hm)!=_SpaceGroups.sgbn.end() &&
         (found = _SpaceGroups.sgbn[stripped_hm]))
