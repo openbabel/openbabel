@@ -514,6 +514,9 @@ namespace OpenBabel {
        */
       int getDescriptor(const std::vector<unsigned int> &labels) const
       {
+        // Unspecified stereo centers have their own descriptor.
+        if (nbrIndexes1.empty())
+          return 2;
         std::vector<unsigned long> refs1, refs2;
         for (std::size_t i = 0; i < nbrIndexes1.size(); ++i) {
           if (nbrIndexes1[i] < labels.size())
@@ -748,8 +751,6 @@ namespace OpenBabel {
 
       // the STEREO flag
       if (state.stereoCenters.size()) {
-        std::vector<int> dv;
-
         // sort the stereo centers
         std::sort(state.stereoCenters.begin(), state.stereoCenters.end(), SortStereoCenters(code.labels));
 
@@ -760,20 +761,8 @@ namespace OpenBabel {
               isInFragment = true;
           // ignore stereo centers not in this fragment
           if (isInFragment)
-            dv.push_back(state.stereoCenters[i].getDescriptor(code.labels));
+            fullcode.code.push_back(state.stereoCenters[i].getDescriptor(code.labels));
         }
-
-        int value = 0;
-        for (unsigned int i = 0; i < dv.size(); ++i) {
-          if (!dv[i])
-            continue;
-          int power = dv.size() - i - 1;
-          // bit shift is equivalent to 2^power
-          // i.e., 1 << 0 == 1, 1 << 1 == 2, etc.
-          value += 1 << power;
-        }
-
-        fullcode.code.push_back(value);
       }
 
       // if fullcode is greater than bestCode, we have found a new greatest code
@@ -1203,17 +1192,22 @@ namespace OpenBabel {
       if (stereoFacade) {
         for (std::size_t i = 0; i < stereoUnits.size(); ++i) {
           const OBStereoUnit &unit = stereoUnits[i];
+
           if (unit.type == OBStereo::Tetrahedral) {
+            OBAtom *atom = mol->GetAtomById(unit.id);
+            if (!atom)
+              continue;
+            // Add the StereoCenter indexes.
+            stereoCenters.resize(stereoCenters.size()+1);
+            stereoCenters.back().indexes.push_back(atom->GetIndex());
+
             if (!stereoFacade->HasTetrahedralStereo(unit.id))
               continue;
             OBTetrahedralStereo::Config config = stereoFacade->GetTetrahedralStereo(unit.id)->GetConfig();
             if (!config.specified)
               continue;
-            OBAtom *atom = mol->GetAtomById(config.center);
-            if (!atom)
-              continue;
-            stereoCenters.resize(stereoCenters.size()+1);
-            stereoCenters.back().indexes.push_back(atom->GetIndex());
+
+            // Add the neighbor atom indexes.
             OBAtom *from = mol->GetAtomById(config.from);
             if (from && !from->IsHydrogen())
               stereoCenters.back().nbrIndexes1.push_back(from->GetIndex());
@@ -1227,18 +1221,25 @@ namespace OpenBabel {
                 stereoCenters.back().nbrIndexes1.push_back(std::numeric_limits<unsigned int>::max());
             }
           } else if (unit.type == OBStereo::CisTrans) {
+            OBBond *bond = mol->GetBondById(unit.id);
+            if (!bond)
+              continue;
+            OBAtom *begin = bond->GetBeginAtom();
+            OBAtom *end = bond->GetEndAtom();
+            if (!begin || !end)
+              continue;
+            // Add the StereoCenter indexes.
+            stereoCenters.resize(stereoCenters.size()+1);
+            stereoCenters.back().indexes.push_back(begin->GetIndex());
+            stereoCenters.back().indexes.push_back(end->GetIndex());
+
             if (!stereoFacade->HasCisTransStereo(unit.id))
               continue;
             OBCisTransStereo::Config config = stereoFacade->GetCisTransStereo(unit.id)->GetConfig();
             if (!config.specified)
               continue;
-            OBAtom *begin = mol->GetAtomById(config.begin);
-            OBAtom *end = mol->GetAtomById(config.end);
-            if (!begin || !end)
-              continue;
-            stereoCenters.resize(stereoCenters.size()+1);
-            stereoCenters.back().indexes.push_back(begin->GetIndex());
-            stereoCenters.back().indexes.push_back(end->GetIndex());
+
+            // Add the neighbor atom indexes.
             for (std::size_t j = 0; j < config.refs.size(); ++j) {
               OBAtom *ref = mol->GetAtomById(config.refs[j]);
               unsigned int r = (ref && !ref->IsHydrogen()) ? ref->GetIndex() : std::numeric_limits<unsigned int>::max();
