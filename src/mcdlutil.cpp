@@ -3841,8 +3841,7 @@ class TEditedMolecule: public TSimpleMolecule {
     std::vector<int> queryAQTested;
     std::vector<int> queryBQTested;
     std::vector<int>* fIncludedList;
-    TEditedMolecule() {
-      TSimpleMolecule();
+    TEditedMolecule() : TSimpleMolecule() {
       fIncludedList=NULL;
     };
 

@@ -973,7 +973,8 @@ namespace OpenBabel
         //      if(abs(atof(vs[4].c_str()))>0)is2D=true;
         //      if(abs(atof(vs[5].c_str()))>0)is2D=true;
         char type[5];
-        strncpy(type,vs[3].c_str(),4);
+        strncpy(type,vs[3].c_str(),5);
+        type[4] = '\0'; // ensure it's always null-terminated
         if(!strcmp(type, "R#"))
           {
           obErrorLog.ThrowError(__FUNCTION__,

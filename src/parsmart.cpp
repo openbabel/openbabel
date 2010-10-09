@@ -1746,6 +1746,9 @@ namespace OpenBabel
 
     while( *LexPtr == '(' )
       {
+        if (!result)
+          return (Pattern*)0; // ensure we don't get a null dereference
+
         LexPtr++;
         result = ParseSMARTSPart(result,result->parts);
         if( !result )
