@@ -85,7 +85,7 @@ namespace OpenBabel
   }
 
   // DEPRECATED
-  bool CorrectChirality(OBMol &mol, OBAtom *atm, atomreftype i, atomreftype o)
+  bool CorrectChirality(OBMol &, OBAtom *atm, atomreftype i, atomreftype o)
   {
     if (!atm->HasChiralitySpecified()) // if no chirality defined can't do any more for 0D
       return(false);

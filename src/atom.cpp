@@ -386,15 +386,15 @@ namespace OpenBabel
       }
   }
 
-  void OBAtom::SetVector(const double x,const double y,const double z)
+  void OBAtom::SetVector(const double v_x,const double v_y,const double v_z)
   {
     if (!_c)
-      _v.Set(x,y,z);
+      _v.Set(v_x,v_y,v_z);
     else
       {
-        (*_c)[_cidx  ] = x;
-        (*_c)[_cidx+1] = y;
-        (*_c)[_cidx+2] = z;
+        (*_c)[_cidx  ] = v_x;
+        (*_c)[_cidx+1] = v_y;
+        (*_c)[_cidx+2] = v_z;
       }
   }
 
@@ -806,7 +806,7 @@ namespace OpenBabel
 
     rlist = mol->GetSSSR();
     for (i = rlist.begin();i != rlist.end();++i)
-      if ((*i)->IsInRing(GetIdx()) && (*i)->PathSize() == size)
+      if ((*i)->IsInRing(GetIdx()) && static_cast<int>((*i)->PathSize()) == size)
         return(true);
 
     return(false);
