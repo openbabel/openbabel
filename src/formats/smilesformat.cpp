@@ -800,11 +800,15 @@ namespace OpenBabel {
       {
         int j = depth-1;
         bond=mol.GetBond(_path[j--]);
-        bond->SetBO(5);
+        if (bond->GetBO() != 2) { // don't rewrite explicit double bonds
+          bond->SetBO(5);
+        }
         while( j >= 0 )
           {
             bond=mol.GetBond(_path[j--]);
-            bond->SetBO(5);
+            if (bond->GetBO() != 2) { // don't rewrite explicit double bonds
+              bond->SetBO(5);
+            }
             if(bond->GetBeginAtom() == atom || bond->GetEndAtom() == atom)
               break;
           }
@@ -1023,7 +1027,7 @@ namespace OpenBabel {
         assert(prevatom);
         if(arom && prevatom->IsAromatic())
           {
-            _order=5; //Potential aromatic bond
+            if (_order != 2) _order=5; //Potential aromatic bond -- but flag explicit double bonds
 
             if (prevatom->GetSpinMultiplicity())
               {
@@ -2871,9 +2875,7 @@ namespace OpenBabel {
                      (bond->GetEndAtom())->HasDoubleBond() )
                   strcat(symbol,"/");
               }
-              if (bond->GetBO() == 2 && !bond->IsAromatic()
-                  && !(bond->GetBeginAtom()->IsAromatic() && bond->GetEndAtom()->IsAromatic()) )
-                // don't write a double bond symbol between two aromatic atoms
+              if (bond->GetBO() == 2 && !bond->IsAromatic())
                 strcat(symbol,"=");
               if (bond->GetBO() == 2 && bond->IsAromatic())
                 strcat(symbol,":");
@@ -3533,10 +3535,7 @@ namespace OpenBabel {
             strcat(buffer, bs);	// append "/" or "\"
           else
           {
-            if (bci->bond->GetBO() == 2 && !bci->bond->IsAromatic()
-                && !(bci->bond->GetBeginAtom()->IsAromatic() && bci->bond->GetEndAtom()->IsAromatic()) )
-                // don't write a double bond symbol between two aromatic atoms
-              strcat(buffer,"=");
+            if (bci->bond->GetBO() == 2 && !bci->bond->IsAromatic())  strcat(buffer,"=");
             if (bci->bond->GetBO() == 3)                              strcat(buffer,"#");
             if (bci->bond->GetBO() == 4)                              strcat(buffer,"$");
           }
@@ -3571,9 +3570,7 @@ namespace OpenBabel {
       if (cc[0] == BondUpChar || cc[0] == BondDownChar)
         strcat(buffer, cc);
       //}
-      else if (bond->GetBO() == 2 && !bond->IsAromatic()
-               && !(bond->GetBeginAtom()->IsAromatic() && bond->GetEndAtom()->IsAromatic()) )
-        // don't write a double bond symbol between two aromatic atoms
+      else if (bond->GetBO() == 2 && !bond->IsAromatic())
         strcat(buffer,"=");
       else if (bond->GetBO() == 3)
         strcat(buffer,"#");

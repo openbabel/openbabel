@@ -18,7 +18,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#define DEBUG 1
+#define DEBUG 0
 
 #ifndef MAX_TIME
 #define MAX_TIME 60
@@ -245,11 +245,16 @@ namespace OpenBabel
         }
 
         // remove one electron if the atom make a double bond out of the cycle
-        sume =0;
+        sume = 0;
+        bool doubleBondInRing = false;
         for(j=0; j< cycle.size(); ++j) {
           atom = cycle[j];
           for(bond = atom->BeginBond(bi); bond; bond = atom->NextBond(bi)) {
-            if ( bond->IsDouble() ) {
+            if ( bond->IsDouble()) {
+              // monitor this, because these count for electrons, even if this atom doesn't take a double bond
+              if (bond->IsInRing())
+                doubleBondInRing = true;
+
               OBAtom *atom2 = bond->GetNbrAtom(atom);
               int fcharge = atom->GetFormalCharge();
               int fcharge2 = atom2->GetFormalCharge();
@@ -266,7 +271,16 @@ namespace OpenBabel
             }
           }
           // count the number of electrons
-          sume += electron[j];
+          if (!doubleBondInRing) {
+            sume += electron[j];
+          } else {
+            sume++; // one electron contribution for explicit double bonds into another ring
+          }
+
+          if (atom->IsNitrogen() && atom->GetFormalCharge() == 0 && atom->GetValence() >= 3) {
+            electron[j] = 0;
+            sume++; // no double bonds, but count 2 electrons TODO: sometimes, these are 1 electron, sometimes 2
+          }
         }
 
         // Save the electron state in case huckel rule is not satisfied
@@ -287,7 +301,7 @@ namespace OpenBabel
 
         stringstream errorMsg;
 
-        //        cout << "minde before:" << minde << endl;
+        if (DEBUG)  cout << "sume " << sume << " minde before:" << minde << endl;
         // if huckel rule not satisfied some atoms must give more electrons
         while ( minde != 0 ) {
           bestorden=99;
@@ -431,7 +445,7 @@ namespace OpenBabel
         initAtomState[Idx] = DOUBLE_PROHIBITED;	// No electrons to contribute to aromatic system
       }
 
-      if (atom->GetAtomicNum() == 7 && atom->GetFormalCharge() == 0 && atom->GetValence() >= 3) {
+      if (atom->IsNitrogen() && atom->GetFormalCharge() == 0 && atom->GetValence() == 3) {
         // Correct N with three explict bonds
         initAtomState[Idx] = DOUBLE_PROHIBITED;
         if (DEBUG) { cout << "atom " << Idx << " rejected NR3 double bonds " << endl; }
