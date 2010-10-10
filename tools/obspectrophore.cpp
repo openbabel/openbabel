@@ -464,7 +464,7 @@ showHelp(const char* cmd)
 	std::cout << "Copyright (C) 2005-2010 by Silicos NV" << std::endl;
 	std::cout << std::endl;
 	std::cout << "This program and file are part of the Open Babel project." << std::endl;
-	std::cout << "For more information, see <http://openbabel.sourceforge.net/>" << std::endl;
+	std::cout << "For more information, see <http://openbabel.org/>" << std::endl;
 	std::cout << std::endl;
 	std::cout << "This program is free software; you can redistribute it and/or modify" << std::endl;
 	std::cout << "it under the terms of the GNU General Public License as published by" << std::endl;
@@ -546,7 +546,7 @@ showImplementationDetails(const char* cmd)
 	std::cout << "Copyright (C) 2005-2010 by Silicos NV" << std::endl;
 	std::cout << std::endl;
 	std::cout << "This program and file are part of the Open Babel project." << std::endl;
-	std::cout << "For more information, see <http://openbabel.sourceforge.net/>" << std::endl;
+	std::cout << "For more information, see <http://openbabel.org/>" << std::endl;
 	std::cout << std::endl;
 	std::cout << "This program is free software; you can redistribute it and/or modify" << std::endl;
 	std::cout << "it under the terms of the GNU General Public License as published by" << std::endl;

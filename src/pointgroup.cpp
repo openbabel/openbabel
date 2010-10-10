@@ -6,7 +6,7 @@ pointgroup.cpp - Brute force symmetry analyzer.
      (Ported to C++, integrated with Open Babel)
 
 This file is part of the Open Babel project.
-For more information, see <http://openbabel.sourceforge.net/>
+For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

@@ -2,7 +2,7 @@
 ffgaff.cpp - Test energy and gradients for GAFF force field
 
 This file is part of the Open Babel project.
-For more information, see <http://openbabel.sourceforge.net/>
+For more information, see <http://openbabel.org/>
 
 Some portions Copyright (C) 2008 Geoffrey R. Hutchison
  

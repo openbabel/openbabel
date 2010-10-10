@@ -1,7 +1,7 @@
 /***************************************************************
 This file is part of the Open Babel project.
 This is copyright under the GNU General Public License (GPL)
-For more information, see <http://openbabel.sourceforge.net/>
+For more information, see <http://openbabel.org/>
 
 This file contains a binary representation of data tables
  used by Open Babel. It is used as a fallback if the textual

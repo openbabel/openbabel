@@ -36,7 +36,7 @@ namespace OpenBabel
     };
 
     virtual const char* SpecificationURL()
-    {return "http://openbabel.sourceforge.net/wiki/MSI_format";}; //optional
+    {return "http://openbabel.org/wiki/MSI_format";}; //optional
 
     virtual const char* GetMIMEType()
     { return "chemical/x-msi-msi"; };

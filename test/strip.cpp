@@ -2,7 +2,7 @@
 strip.cpp - Test OBMol::StripSalts and friends
 
 This file is part of the Open Babel project.
-For more information, see <http://openbabel.sourceforge.net/>
+For more information, see <http://openbabel.org/>
 
 Copyright (C) 2009 Geoffrey R. Hutchison
 

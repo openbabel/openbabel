@@ -4,7 +4,7 @@ obdoc - Automatically generate documentation database for file formats
 Copyright (C) 2005 by Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
-For more information, see <http://openbabel.sourceforge.net/>
+For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

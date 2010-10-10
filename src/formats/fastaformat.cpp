@@ -5,7 +5,7 @@ Read sequence functions, helix generation and completed IUPAC coverage.
 Copyright (C) Scarlet Line 2007-9
 
 This file is part of the Open Babel project.
-For more information, see <http://openbabel.sourceforge.net/>
+For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

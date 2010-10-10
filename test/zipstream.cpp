@@ -2,7 +2,7 @@
  zipstream.cpp - Test compressed file reading of molecules
 
  This file is part of the Open Babel project.
- For more information, see <http://openbabel.sourceforge.net/>
+ For more information, see <http://openbabel.org/>
 
  Copyright (C) 2001-2009 Geoffrey R. Hutchison
 

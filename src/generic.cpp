@@ -6,7 +6,7 @@ Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2010 by David Lonie
 
 This file is part of the Open Babel project.
-For more information, see <http://openbabel.sourceforge.net/>
+For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ namespace OpenBabel
 
       For more information on currently supported types, please see
       the developer wiki:
-      http://openbabel.sourceforge.net/wiki/Generic_Data
+      http://openbabel.org/wiki/Generic_Data
 
       For your own custom data, either define a custom subclass using
       an id from the OBGenericDataType::CustomData0 to

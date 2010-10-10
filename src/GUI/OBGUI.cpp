@@ -4,7 +4,7 @@ OBGUI.cpp -  Implementation of a cross-platform Graphical User Interface
 Copyright (C) 2006 by Chris Morley
 
 This file is part of the Open Babel project.
-For more information, see <http://openbabel.sourceforge.net/>
+For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -461,9 +461,9 @@ void OBGUIFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
     wxString msg(_T("OpenBabelGUI (C) 2006 by Chris Morley\n\nThis program is part of\
 the OpenBabel project,\nwhich is released under the GNU General Public License.\n\
-See: http://openbabel.sourceforge.net/wiki/Main_Page\n\n\
+See: http://openbabel.org/wiki/Main_Page\n\n\
 For more detailed information see:\n\
-http://openbabel.sourceforge.net/wiki/Windows_GUI\n\n \
+http://openbabel.org/wiki/Windows_GUI\n\n \
 OpenBabel version "));
     msg << _T(BABEL_VERSION);
     wxMessageBox(msg, _T("About OpenBabelGUI"), wxOK | wxICON_INFORMATION | wxCENTER, this);

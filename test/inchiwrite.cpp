@@ -2,7 +2,7 @@
  inchiwrite.cpp - tests for writing InChIs
 
  This file is part of the Open Babel project.
- For more information, see <http://openbabel.sourceforge.net/>
+ For more information, see <http://openbabel.org/>
 
  Copyright (C) 2007 by Chris Morley
 

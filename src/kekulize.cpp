@@ -6,7 +6,7 @@ Some portions Copyright (C) 2005-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2009 by Craig A. James
 
 This file is part of the Open Babel project.
-For more information, see <http://openbabel.sourceforge.net/>
+For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,7 +18,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#define DEBUG 0
+#define DEBUG 1
+
 #ifndef MAX_TIME
 #define MAX_TIME 60
 #endif
@@ -339,8 +340,8 @@ namespace OpenBabel
           }
         }
 
-        /*
-          cout << "minde after:" << minde <<endl;
+        if (DEBUG) {
+          cout << "sume: " << sume << " minde after:" << minde <<endl;
           cout << "atom: ";
           for(j=0; j < cycle.size(); ++j) {
           OBAtom *cycleAtom = cycle[j];
@@ -353,7 +354,7 @@ namespace OpenBabel
         	cout << "\t" << electron[j];
         	}
         	cout << endl;
-        */
+        }
 
         // kekulize the cycle(s)
         start_kekulize(cycle,electron);

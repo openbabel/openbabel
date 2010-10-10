@@ -4,7 +4,7 @@ transform3d.cpp - Handle 3D transformations in space groups.
 Copyright (C) 2007 by Jean Bréfort
 
 This file is part of the Open Babel project.
-For more information, see <http://openbabel.sourceforge.net/>
+For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License as

@@ -484,7 +484,7 @@ FunctionEnd
   !define MUI_HEADERIMAGE_BITMAP "logo_small.bmp"
   !define MUI_WELCOMEFINISHPAGE_BITMAP "logo_big.bmp"
   !define MUI_FINISHPAGE_RUN "$INSTDIR/OBGUI.exe"
-;  !define MUI_FINISHPAGE_SHOWREADME "http://openbabel.sourceforge.net/wiki/OpenBabelGUI"
+;  !define MUI_FINISHPAGE_SHOWREADME "http://openbabel.org/wiki/OpenBabelGUI"
 
 ;--------------------------------
 ;Pages

@@ -5,7 +5,7 @@ molreport.cpp - Report information about the molecule:
 Copyright (C) 2006 by Geoffrey R. Hutchison
 
 This file is part of the Open Babel project.
-For more information, see <http://openbabel.sourceforge.net/>
+For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -68,7 +68,7 @@ namespace OpenBabel
     };
 
     virtual const char* SpecificationURL()
-    {return "http://openbabel.sourceforge.net/wiki/MolReport";}; //optional
+    {return "http://openbabel.org/wiki/MolReport";}; //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

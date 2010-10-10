@@ -2,7 +2,7 @@
  cansmi.cpp - Test Canonical SMILES generation -- write and then read
 
  This file is part of the Open Babel project.
- For more information, see <http://openbabel.sourceforge.net/>
+ For more information, see <http://openbabel.org/>
 
  Copyright (C) 2001-2007 Geoffrey R. Hutchison
 

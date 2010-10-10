@@ -4,7 +4,7 @@ obmolecformat.h - Subclass of OBFormat for conversion of OBMol.
 Copyright (C) 2005 Chris Morley
 
 This file is part of the Open Babel project.
-For more information, see <http://openbabel.sourceforge.net/>
+For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ namespace OpenBabel {
 
     This class is not intended for direct use outside of Open Babel, unless
     you're writing a new format converting to or from an OBMol molecule.
-    (e.g., see http://openbabel.sourceforge.net/wiki/HowTo:Add_A_New_File_Format).
+    (e.g., see http://openbabel.org/wiki/HowTo:Add_A_New_File_Format).
 
     An OBFormat which converts to and/or from OBMol can derive from this class
     to save duplicating the ReadChemObject() and/or WriteChemObject() methods.

@@ -12,7 +12,7 @@ chemistry, solid-state materials, biochemistry, or related areas.
 This code was automatically generated with SWIG and provides access to almost all of the Open Babel API via Ruby.
 
 More details can also be found at the Open Babel website:
-<http://openbabel.sourceforge.net/wiki/Ruby/>
+<http://openbabel.org/wiki/Ruby/>
 
 === INSTALLATION ===
 
@@ -81,7 +81,7 @@ Copyright (C) 2007 Geoffrey R. Hutchison  <babel@geoffhutchison.net>
     and Richard L. Apodaca <rich_apodaca@yahoo.com>
 
 This Ruby module is part of the Open Babel project.
-<http://openbabel.sourceforge.net/>
+<http://openbabel.org/>
 
 Open Babel is distributed under the GNU General Public License (GPL).
 This program is free software; you can redistribute it and/or modify

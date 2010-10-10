@@ -2,7 +2,7 @@
 formula.cpp - Test molecular formula, weight & exact mass
 
 This file is part of the Open Babel project.
-For more information, see <http://openbabel.sourceforge.net/>
+For more information, see <http://openbabel.org/>
 
 Some portions Copyright (C) 2005-2006 Geoffrey R. Hutchison
  

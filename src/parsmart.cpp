@@ -5,7 +5,7 @@ Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 
 This file is part of the Open Babel project.
-For more information, see <http://openbabel.sourceforge.net/>
+For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ namespace OpenBabel
     matching in Open Babel.
 
     For more information on the SMARTS support in Open Babel, see the wiki page:
-    http://openbabel.sourceforge.net/wiki/SMARTS
+    http://openbabel.org/wiki/SMARTS
 
     The SMARTS matcher, or OBSmartsPattern, is a separate object which can
     match patterns in the OBMol class. The following code demonstrates how

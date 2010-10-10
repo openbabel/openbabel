@@ -8,7 +8,7 @@ griddata.cpp - Store grids of data linked to a molecule (e.g. Gaussian cube)
  Some Portions Copyright (C) 2008 by Marcus D. Hanwell
 
 This file is part of the Open Babel project.
-For more information, see <http://openbabel.sourceforge.net/>
+For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

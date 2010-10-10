@@ -5,7 +5,7 @@ Copyright (C) 2006-2007 by Tim Vandermeersch <tim.vandermeersch@gmail.com>
 Some portions Copyright (C) 2007-2008 by Geoffrey Hutchison
 
 This file is part of the Open Babel project.
-For more information, see <http://openbabel.sourceforge.net/>
+For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

@@ -4,7 +4,7 @@ internalcoord.cpp - Unit tests for Open Babel OBInternalCoord class
 Copyright (C) 2005-2006 Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
-For more information, see <http://openbabel.sourceforge.net/>
+For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

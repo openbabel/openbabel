@@ -5,7 +5,7 @@ Copyright (C) 2007 Geoffrey R. Hutchison
 Based on code (C) 1996,2003 by S. Patchkovskii
  
 This file is part of the Open Babel project.
-For more information, see <http://openbabel.sourceforge.net/>
+For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -154,7 +154,7 @@ string sequence(OBMol &mol)
 *
 * Open Babel is currently maintained by \b Geoff \b Hutchison, \b Chris \b Morley and \b Michael \b Banck.
 *
-* For more contributors to Open Babel, see http://openbabel.sourceforge.net/THANKS.shtml
+* For more contributors to Open Babel, see http://openbabel.org/THANKS.shtml
 *
 * \par COPYRIGHT
 *  Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
@@ -168,5 +168,5 @@ string sequence(OBMol &mol)
 *  GNU General Public License for more details.
 *
 * \par SEE ALSO
-*   The web pages for Open Babel can be found at: http://openbabel.sourceforge.net/ \n
+*   The web pages for Open Babel can be found at: http://openbabel.org/ \n
 **/

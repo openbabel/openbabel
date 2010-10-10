@@ -6,7 +6,7 @@ Copyright (C) 2007,2008 by Andrei Gakh andrei.gakh@nnsa.doe.gov
           (C) 2007 by Chris Morley
 
 This file is part of the Open Babel project.
-For more information, see <http://openbabel.sourceforge.net/>
+For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

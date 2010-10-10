@@ -6,7 +6,7 @@ Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004-2006 by Chris Morley
 
 This file is part of the Open Babel project.
-For more information, see <http://openbabel.sourceforge.net/>
+For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -476,7 +476,7 @@ void help()
 *
 * Note that Open Babel can also be used as a library to interconvert
 * many file formats and to provide standard chemistry software routines.
-* See the Open Babel web pages (http://openbabel.sourceforge.net) for more
+* See the Open Babel web pages (http://openbabel.org) for more
 * information.
 *
 * \par OPTIONS
@@ -606,7 +606,7 @@ void help()
 *
 * Open Babel is currently maintained by \b Geoff \b Hutchison, \b Chris \b Morley and \b Michael \b Banck.
 *
-* For more contributors to Open Babel, see http://openbabel.sourceforge.net/THANKS.shtml
+* For more contributors to Open Babel, see http://openbabel.org/THANKS.shtml
 *
 * \par COPYRIGHT
 *  Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
@@ -620,5 +620,5 @@ void help()
 *  GNU General Public License for more details.
 *
 * \par SEE ALSO
-*   The web pages for Open Babel can be found at http://openbabel.sourceforge.net/
+*   The web pages for Open Babel can be found at http://openbabel.org/
 **/

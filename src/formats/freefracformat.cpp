@@ -84,7 +84,7 @@ namespace OpenBabel
     };
 
     virtual const char* SpecificationURL()
-    {return "http://openbabel.sourceforge.net/wiki/Free_Form_Fractional";}; //optional
+    {return "http://openbabel.org/wiki/Free_Form_Fractional";}; //optional
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////

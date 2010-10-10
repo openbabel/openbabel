@@ -15,7 +15,7 @@ conversion framework OBConversion.
 
 For more details, tutorials, example code, etc., please visit the Open Babel
 website:
-<http://openbabel.sourceforge.net/wiki/Python>
+<http://openbabel.org/wiki/Python>
 
 INSTALLATION
 
@@ -45,7 +45,7 @@ Copyright (C) 2005-2007 Geoffrey R. Hutchison <babel@geoffhutchison.net>
 Some portions Copyright (C) 2006-2009 Noel O'Boyle
 
 This Python module is part of the Open Babel project.
-<http://openbabel.sourceforge.net/>
+<http://openbabel.org/>
 
 Open Babel is distributed under the GNU General Public License (GPL).
 This program is free software; you can redistribute it and/or modify

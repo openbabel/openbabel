@@ -2,7 +2,7 @@
  smartsparse.cpp - Test SMARTS parsing for valid patterns
 
  This file is part of the Open Babel project.
- For more information, see <http://openbabel.sourceforge.net/>
+ For more information, see <http://openbabel.org/>
 
  Copyright (C) 2010 by Geoffrey R. Hutchison
 

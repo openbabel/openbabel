@@ -6,7 +6,7 @@
 # Some portions Copyright (c) 2002 by Geoffrey R. Hutchison
 #
 # This file is part of the Open Babel project.
-# For more information, see <http://openbabel.sourceforge.net/>
+# For more information, see <http://openbabel.org/>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ if( !$debug ) {
     print "/***************************************************************\n";
     print "This file is part of the Open Babel project.\n";
     print "This is copyright under the GNU General Public License (GPL)\n";
-    print "For more information, see <http://openbabel.sourceforge.net/>\n\n";
+    print "For more information, see <http://openbabel.org/>\n\n";
     print "This file contains a binary representation of data tables\n";
     print " used by Open Babel. It is used as a fallback if the textual\n";
     print " data table is not found at runtime. It is not a normal header.\n";
