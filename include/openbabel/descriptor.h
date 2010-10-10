@@ -39,7 +39,7 @@ public:
   const char* TypeID(){return "descriptors";};
 
   /// \return the value of a numeric descriptor
-  virtual double Predict(OBBase* pOb, std::string* param=NULL)
+  virtual double Predict(OBBase* /* pOb */, std::string* /* param */ =NULL)
   {return std::numeric_limits<double>::quiet_NaN();}
 
   /// \return the value of the descriptor and adds it to the object's OBPairData

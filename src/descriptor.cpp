@@ -286,7 +286,6 @@ double OBDescriptor::ParsePredicate(istream& optionText, char& ch1, char& ch2, s
  **/
 bool OBDescriptor::ReadStringFromFilter(istream& optionText, string& result)
 {
-  bool error=false;
   bool ret=true;
   char ch;
 
@@ -310,7 +309,6 @@ bool OBDescriptor::ReadStringFromFilter(istream& optionText, string& result)
     else // not quoted; get string up to next space or ')'
     {
       optionText.unget();
-      char ch;
       result.clear();
       optionText >> ch; //ignore leading white space
       optionText.unsetf(ios::skipws);
@@ -366,7 +364,7 @@ double OBDescriptor::GetStringValue(OBBase* pOb, string& svalue, string* param)
   return val;
 }
 
-bool OBDescriptor::CompareStringWithFilter(istream& optionText, string& sval, bool noEval, bool NoCompOK)
+bool OBDescriptor::CompareStringWithFilter(istream& optionText, string& sval, bool, bool NoCompOK)
 {
   char ch1=0, ch2=0;
   string sfilterval;
