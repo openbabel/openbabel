@@ -72,7 +72,8 @@ public:
 
   /// \return a description of each bit that is set (or unset, if bSet=false)
   /// \since version 2.2
-  virtual std::string DescribeBits(const std::  vector<unsigned int> fp, bool bSet=true)
+  virtual std::string DescribeBits(const std::vector<unsigned int> /* fp */,
+                                   bool /* bSet */ =true)
   {
     std::string txt("");
     return txt;

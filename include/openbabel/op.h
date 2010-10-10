@@ -48,7 +48,7 @@ public:
   virtual bool WorksWith(OBBase* pOb)const=0;
 
   /// Do something with an array of objects. Used a a callback routine in OpSort, etc.
-  virtual bool ProcessVec(std::vector<OBBase*>& vec){ return false; }
+  virtual bool ProcessVec(std::vector<OBBase*>& /* vec */){ return false; }
 
   /// \return string describing options, for display with -H and to make checkboxes in GUI
   static std::string OpOptions(OBBase* pOb)
