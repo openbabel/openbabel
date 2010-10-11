@@ -217,15 +217,15 @@ namespace OpenBabel
         //        cout << " depth: " << depth << endl;
         //store the atoms of the cycle(s)
         unsigned int j;
-        //        cout << " cycle: " << NumAtoms() << " ";
+        if (DEBUG)  cout << " cycle: " << NumAtoms() << " ";
         for(j=1; j<= NumAtoms(); ++j) {
           if ( avisit[j] ) {
-            //            cout << "\t" << j;
+            if (DEBUG)  cout << "\t" << j;
             atom = GetAtom(j);
             cycle.push_back(atom);
           }
         }
-        //        cout << endl;
+        if (DEBUG) cout << endl;
 
         // This isn't a real aromatic cycle -- give up
         // Fixes PR#1965566
@@ -278,8 +278,7 @@ namespace OpenBabel
           }
 
           if (atom->IsNitrogen() && atom->GetFormalCharge() == 0 && atom->GetValence() >= 3) {
-            electron[j] = 0;
-            sume++; // no double bonds, but count 2 electrons TODO: sometimes, these are 1 electron, sometimes 2
+            electron[j] = 0; // no double bonds, first try to kekulize with 1 electron, add two later if it doesn't work
           }
         }
 
@@ -303,10 +302,15 @@ namespace OpenBabel
 
         if (DEBUG)  cout << "sume " << sume << " minde before:" << minde << endl;
         // if huckel rule not satisfied some atoms must give more electrons
+        int currentState;
         while ( minde != 0 ) {
           bestorden=99;
           for(j=0; j< cycle.size(); ++j) {
-            if (electron[j] == 1) {
+            currentState = electron[j];
+            if (cycle[j]->IsNitrogen() && cycle[j]->GetFormalCharge() == 0 && cycle[j]->GetValence() >= 3)
+              currentState = 1; // might need to add another electron
+
+            if (currentState == 1) {
               orden = getorden(cycle[j]);
               if (orden < bestorden) {
                 bestorden = orden;
@@ -335,7 +339,12 @@ namespace OpenBabel
           //cout << "odd:" << odd << endl;
           if(odd) { // odd number of electrons try to add an electron to the best possible atom
             for(j=0; j< cycle.size(); ++j) {
-              if (electron[j] == 1) {
+
+            currentState = electron[j];
+            if (cycle[j]->IsNitrogen() && cycle[j]->GetFormalCharge() == 0 && cycle[j]->GetValence() >= 3)
+              currentState = 1; // might need to add another electron
+
+            if (currentState == 1) {
                 orden = getorden(cycle[j]);
                 if (orden < bestorden) {
                   bestorden = orden;
