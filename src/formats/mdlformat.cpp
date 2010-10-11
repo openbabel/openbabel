@@ -114,7 +114,6 @@ namespace OpenBabel
       string GetTimeDate();
       void GetParity(OBMol& mol, map<OBAtom*, Parity> &parity);
       void TetStereoFromParity(OBMol& mol, vector<MDLFormat::Parity> &parity);
-      double TriangleSign(const vector3 &a, const vector3 &b, const vector3 &c);
       int ReadIntField(const char *s);
       unsigned int ReadUIntField(const char *s);
       map<int,int> indexmap; //relates index in file to index in OBMol
@@ -1387,11 +1386,4 @@ namespace OpenBabel
     }
   }
 
-  //! Calculate the "sign of a triangle" given by a set of 3 2D coordinates
-  // Taken from perception.cpp
-  double MDLFormat::TriangleSign(const vector3 &a, const vector3 &b, const vector3 &c)
-  {
-    // equation 6 from [1]
-    return (a.x() - c.x()) * (b.y() - c.y()) - (a.y() - c.y()) * (b.x() - c.x());
-  }
 }
