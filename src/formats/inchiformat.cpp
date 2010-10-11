@@ -266,7 +266,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   map<OBBond*, OBStereo::Ref> from;
   map<OBBond*, OBStereo::Ref>::const_iterator from_cit;
   if (mol.GetDimension() != 0)
-    TetStereoTo0D(mol, updown, from);
+    TetStereoToWedgeHash(mol, updown, from);
   set<OBBond*> unspec_ctstereo = GetUnspecifiedCisTrans(mol);
 
   OBAtom* patom;

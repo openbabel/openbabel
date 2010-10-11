@@ -761,7 +761,7 @@ namespace OpenBabel {
    * @return True or False depending on whether the conversion was successful
    * @since version 2.3
    */
-  OBAPI bool TetStereoTo0D(OBMol &mol,
+  OBAPI bool TetStereoToWedgeHash(OBMol &mol,
       std::map<OBBond*, enum OBStereo::BondDirection> &updown,
       std::map<OBBond*, OBStereo::Ref> &from);
   /**

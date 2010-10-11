@@ -718,7 +718,7 @@ namespace OpenBabel
       map<OBBond*, OBStereo::Ref>::const_iterator from_cit;
       GetParity(mol, parity);
       if (mol.GetDimension() == 3 || (mol.GetDimension()==2 && pConv->IsOption("w", pConv->OUTOPTIONS)!=NULL))
-        TetStereoTo0D(mol, updown, from);
+        TetStereoToWedgeHash(mol, updown, from);
 
       // The counts line:
       // aaabbblllfffcccsssxxxrrrpppiiimmmvvvvvv

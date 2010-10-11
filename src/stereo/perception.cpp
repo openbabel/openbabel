@@ -2508,7 +2508,7 @@ namespace OpenBabel {
     return configs;
   }
 
-  bool TetStereoTo0D(OBMol &mol,
+  bool TetStereoToWedgeHash(OBMol &mol,
       std::map<OBBond*, enum OBStereo::BondDirection> &updown,
       std::map<OBBond*, OBStereo::Ref> &from)
   {

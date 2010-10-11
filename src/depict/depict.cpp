@@ -693,7 +693,7 @@ namespace OpenBabel
     std::map<OBBond*, enum OBStereo::BondDirection> updown;
     std::map<OBBond*, OBStereo::Ref> from;
     std::map<OBBond*, OBStereo::Ref>::const_iterator from_cit;
-    TetStereoTo0D(*mol, updown, from);
+    TetStereoToWedgeHash(*mol, updown, from);
 
     for(from_cit=from.begin();from_cit!=from.end();++from_cit) {
       OBBond* pbond = from_cit->first;
