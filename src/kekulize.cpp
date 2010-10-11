@@ -19,9 +19,12 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #define DEBUG 0
+// Note about DEBUG: Please don't remove or comment out the "if
+// (DEBUG)..."  statements.  When DEBUG is 0, all modern optimizing
+// compilers will remove these from the object code completely.
 
 #ifndef MAX_TIME
-#define MAX_TIME 60
+#define MAX_TIME 10
 #endif
 #ifndef MAX_DEPTH
 #define MAX_DEPTH 30
@@ -37,6 +40,7 @@ GNU General Public License for more details.
 #include <sstream>
 
 // Some names to make the code more readable
+#define UNASSIGNED 0
 #define SINGLE 1
 #define DOUBLE 2
 
@@ -51,7 +55,7 @@ namespace OpenBabel
 {
 
   namespace Kekulize {
-  // Allow ourselves to restrict recursive searching to 60 seconds max
+    // Allow ourselves to restrict recursive searching to 60 seconds max
     struct Timeout
     {
       Timeout(time_t _maxTime) : maxTime(_maxTime)
@@ -69,25 +73,31 @@ namespace OpenBabel
   // This method essentially does a modified depth-first search to find
   //  large aromatic cycles
   int expand_cycle (OBMol *mol, OBAtom *atom, OBBitVec &avisit, OBBitVec &cvisit,
-                    const OBBitVec &potAromBonds, int rootIdx, Timeout &timeout, 
+                    const OBBitVec &potAromBonds, int rootIdx, Timeout &timeout,
                     int prevAtomIdx = -1, int depth = MAX_DEPTH);
+
+  // Modified internal-only version
+  // Install a timeout to prevent slow recursion
+  bool expandKekulize(OBMol *mol, int bond_idx,
+                      std::vector<int> &atomState,
+                      std::vector<int> &bondState, Timeout &timeout);
 
   bool isPotentialAromaticAtom(OBAtom *atom)
   {
     switch (atom->GetAtomicNum()) {
-      case 6:
-        return (atom->GetHvyValence() < 4);
-      case 7:
-      case 8:
-      case 14: // Si
-      case 15: // P
-      case 16: // S
-      case 33: // As
-      case 34: // Se
-      case 52: // Te
-        return true;
-      default:
-        return false;
+    case 6:
+      return (atom->GetHvyValence() < 4);
+    case 7:
+    case 8:
+    case 14: // Si
+    case 15: // P
+    case 16: // S
+    case 33: // As
+    case 34: // Se
+    case 52: // Te
+      return true;
+    default:
+      return false;
     }
   }
 
@@ -236,7 +246,7 @@ namespace OpenBabel
         // At the beginning each atom give one electron to the cycle
         for(j=0; j< cycle.size(); ++j) {
           atom = cycle[j];
-          if (atom->IsOxygen() 
+          if (atom->IsOxygen()
               && atom->GetFormalCharge() == 0
               && atom->GetValence() == 2) // fixes PR#3075065
             electron.push_back(2);
@@ -244,7 +254,7 @@ namespace OpenBabel
             electron.push_back(1);
         }
 
-        // remove one electron if the atom make a double bond out of the cycle
+        // remove one electron if the atom makes a double bond out of the cycle
         sume = 0;
         bool doubleBondInRing = false;
         for(j=0; j< cycle.size(); ++j) {
@@ -287,7 +297,7 @@ namespace OpenBabel
 
         // find the ideal number of electrons according to the huckel 4n+2 rule
         minde=99;
-        for (int x=1; 1; ++x) { // do NOT use "i": main for() loop counter 
+        for (int x=1; 1; ++x) { // do NOT use "i": main for() loop counter
           n = 4 *x +2;
           de = n - sume;
           if (  de < minde )
@@ -340,11 +350,11 @@ namespace OpenBabel
           if(odd) { // odd number of electrons try to add an electron to the best possible atom
             for(j=0; j< cycle.size(); ++j) {
 
-            currentState = electron[j];
-            if (cycle[j]->IsNitrogen() && cycle[j]->GetFormalCharge() == 0 && cycle[j]->GetValence() >= 3)
-              currentState = 1; // might need to add another electron
+              currentState = electron[j];
+              if (cycle[j]->IsNitrogen() && cycle[j]->GetFormalCharge() == 0 && cycle[j]->GetValence() >= 3)
+                currentState = 1; // might need to add another electron
 
-            if (currentState == 1) {
+              if (currentState == 1) {
                 orden = getorden(cycle[j]);
                 if (orden < bestorden) {
                   bestorden = orden;
@@ -367,14 +377,14 @@ namespace OpenBabel
           cout << "sume: " << sume << " minde after:" << minde <<endl;
           cout << "atom: ";
           for(j=0; j < cycle.size(); ++j) {
-          OBAtom *cycleAtom = cycle[j];
-          cout << "\t" << cycleAtom->GetIdx();
+            OBAtom *cycleAtom = cycle[j];
+            cout << "\t" << cycleAtom->GetIdx();
           }
           cout << endl;
 
           cout << "atom: ";
           for(j=0; j < electron.size(); ++j) {
-        	cout << "\t" << electron[j];
+            cout << "\t" << electron[j];
         	}
         	cout << endl;
         }
@@ -533,14 +543,50 @@ namespace OpenBabel
                               std::vector<int> &atomState,
                               std::vector<int> &bondState)
   {
+    Timeout timeout(MAX_TIME);
+    return expandKekulize(this, bond_idx, atomState, bondState, timeout);
+  }
+
+  bool has_leftover_electrons(OBMol *mol, std::vector<int> &atomState)
+  {
+    FOR_ATOMS_OF_MOL(a, mol) {
+      int idx = a->GetIdx();
+      if (atomState[idx] == DOUBLE_ALLOWED) {
+        // nitrogen failures are OK -- could be an 'n' which needs to be 'nH'
+        if (DEBUG) {cout << "  failure, extra electron on atom " << idx << endl;}
+        return true;
+      }
+    }
+    return false;	// no extra electrons found
+  }
+
+  // Check for leftover electrons.  This is used during expand_kekulize() above
+  // to make sure all of the 4n+2 electrons that were available for bonding in the
+  // aromatic ring system were actually used during the assignment of single
+  // and double bonds.
+  bool OBMol::has_no_leftover_electrons(std::vector<int> &atomState)
+  {
+    return !has_leftover_electrons(this, atomState);
+  }
+
+  bool expandKekulize(OBMol *mol, int bond_idx,
+                      std::vector<int> &atomState,
+                      std::vector<int> &bondState, Timeout &timeout)
+  {
+    // Check for timeout first
+    if (time(NULL) - timeout.startTime > timeout.maxTime) {
+      obErrorLog.ThrowError(__FUNCTION__, "maximum time exceeded...", obError);
+      return !has_leftover_electrons(mol, atomState);
+    }
+
     // If all bonds are assigned, check that this is a sensible combination.
     // This is the "end of the line" for the recursion: Did this bond assignment
     // work or not?
     if (bond_idx >= bondState.size())
-      return has_no_leftover_electrons(atomState);
+      return !has_leftover_electrons(mol, atomState);
 
     // Get the bond and its atoms
-    OBBond *bond = this->GetBond(bond_idx);
+    OBBond *bond = mol->GetBond(bond_idx);
     OBAtom *atom1 = bond->GetBeginAtom();
     OBAtom *atom2 = bond->GetEndAtom();
     int idx1 = atom1->GetIdx();
@@ -548,7 +594,7 @@ namespace OpenBabel
 
     // If this bond isn't part of the aromatic system, move on to the next bond.
     if (atomState[idx1] == NOT_IN_RINGS || atomState[idx2] == NOT_IN_RINGS)
-      return expand_kekulize(bond_idx + 1, atomState, bondState);
+      return expandKekulize(mol, bond_idx + 1, atomState, bondState, timeout);
 
     // Remember the current state so that we can backtrack if the attempt fails
     vector<int> previousState         = atomState;	// Backup the atom states
@@ -556,7 +602,6 @@ namespace OpenBabel
 
     // Is a double bond allowed here?  Both atoms have to have an extra electron,
     // and not have been assigned a double bond from a previous step in recursion.
-
     if (atomState[idx1] == DOUBLE_ALLOWED && atomState[idx2] == DOUBLE_ALLOWED) {
 
       // Assign a double bond.
@@ -566,7 +611,7 @@ namespace OpenBabel
       if (DEBUG) {std::cout << "bond " << bond_idx << " (atoms " << idx1 << " to " << idx2 << ") double\n";}
 
       // Recursively try the next bond
-      if (expand_kekulize(bond_idx + 1, atomState, bondState))
+      if (expandKekulize(mol, bond_idx + 1, atomState, bondState, timeout))
         return true;
 
       // If the double bond didn't work, roll back the changes and try a single bond.
@@ -577,7 +622,7 @@ namespace OpenBabel
 
     // Double bond not allowed here, or double bond failed, just recurse with a single bond.
     if (DEBUG) {cout << "bond " << bond_idx << " (atoms " << idx1 << " to " << idx2 << ") single" << endl;}
-    if (expand_kekulize(bond_idx + 1, atomState, bondState))
+    if (expandKekulize(mol, bond_idx + 1, atomState, bondState, timeout))
       return true;
 
     // If it didn't work, roll back the changes we made and return failure.
@@ -586,24 +631,6 @@ namespace OpenBabel
     bondState = previousBondState;
     return false;
   }
-
-  // Check for leftover electrons.  This is used during expand_kekulize() above
-  // to make sure all of the 4n+2 electrons that were available for bonding in the
-  // aromatic ring system were actually used during the assignment of single
-  // and double bonds.
-  bool OBMol::has_no_leftover_electrons(std::vector<int> &atomState)
-  {
-    FOR_ATOMS_OF_MOL(a, this) {
-      int idx = a->GetIdx();
-      if (atomState[idx] == DOUBLE_ALLOWED) {
-        // nitrogen failures are OK -- could be an 'n' which needs to be 'nH'
-        if (DEBUG) {cout << "  failure, extra electron on atom " << idx << endl;}
-        return false;
-      }
-    }
-    return true;	// no extra electrons found
-  }
-
 
   //! Give the priority to give two electrons instead of 1
 
@@ -649,7 +676,7 @@ namespace OpenBabel
 
   //! Recursively find the aromatic atoms with an aromatic bond to the current atom
   int expand_cycle (OBMol *mol, OBAtom *atom, OBBitVec &avisit, OBBitVec &cvisit,
-                    const OBBitVec &potAromBonds, int rootIdx, Timeout &timeout, 
+                    const OBBitVec &potAromBonds, int rootIdx, Timeout &timeout,
                     int prevAtomIdx, int depth)
   {
     // early termination -- too deep recursion, or timeout
