@@ -24,7 +24,7 @@ GNU General Public License for more details.
 // compilers will remove these from the object code completely.
 
 #ifndef MAX_TIME
-#define MAX_TIME 10
+#define MAX_TIME 15
 #endif
 #ifndef MAX_DEPTH
 #define MAX_DEPTH 30
@@ -55,7 +55,7 @@ namespace OpenBabel
 {
 
   namespace Kekulize {
-    // Allow ourselves to restrict recursive searching to 60 seconds max
+    // Allow ourselves to restrict recursive searching (we will fall back to LSSR assignment which sometimes makes mistakes)
     struct Timeout
     {
       Timeout(time_t _maxTime) : maxTime(_maxTime)
@@ -82,6 +82,33 @@ namespace OpenBabel
                       std::vector<int> &atomState,
                       std::vector<int> &bondState, Timeout &timeout);
 
+  // LSSR-based version for fallback after timeout
+  bool expand_kekulize_lssr(OBMol *mol,
+                            std::vector<int> &atomState,
+                            std::vector<int> &bondState,
+                            std::vector<OBRing*> &lssr,
+                            std::vector<bool> &lssrAssigned,
+                            std::vector<OBBond *> &bondsThisRing);
+
+  // Count the number of bonds in one ring that are already assigned
+  // (single or double) during Kekule assignment for a ring system.  For
+  // example, in naphthalene, if we've already assigned single/double to
+  // the first ring, then calling this function for the second ring will
+  // return 1: one bond is already assigned.
+  int count_assigned_bonds(std::vector<OBBond *> &bondsThisRing,
+                           std::vector<int> &bondState)
+  {
+    int n = 0;
+    for (int i = 0; i < bondsThisRing.size(); i++) {
+      if (bondState[bondsThisRing[i]->GetIdx()] != UNASSIGNED) {
+        n++;
+      }
+    }
+    return n;
+  }
+
+  // Determine if this atom is possibly aromatic (to cut down on the search space
+  // Only considers C, N, O, Si, P, S, As, Se, Te
   bool isPotentialAromaticAtom(OBAtom *atom)
   {
     switch (atom->GetAtomicNum()) {
@@ -101,6 +128,9 @@ namespace OpenBabel
     }
   }
 
+  // Check the molecule for potential aromatic bonds
+  // (e.g., a bond to a non-aromatic atom doesn't count)
+  // Minimizes the search space for Kekule assignments
   void potentialAromaticBonds(OBMol *mol, OBBitVec &bonds)
   {
     std::vector<OBRing*> rings = mol->GetLSSR();
@@ -132,6 +162,42 @@ namespace OpenBabel
     }
   }
 
+  ////////////////////////////////////////////////////////////////////////////////
+  //! Returns a vector of the bonds in a ring, in circular order around the ring,
+  //
+  // The circular order (the fact that the bonds are end-to-end in the
+  // vector) is important when assigning single/double bonds to an aromatic
+  // system, because it helps you "walk" around a ring assigning
+  // alternating single/double bonds, and you can often get it right on the
+  // first try.
+  void get_bonds_of_ring(OBMol *mol, OBRing *ring, std::vector<OBBond *> &ring_bonds) {
+
+    vector<bool> used_bonds;
+    used_bonds.resize(mol->NumBonds());
+    for (int i = 0; i < used_bonds.size(); i++)
+      used_bonds[i] = false;
+
+    ring_bonds.clear();
+    int start_idx = ring->_path[0];
+    OBAtom *start_atom = mol->GetAtom(start_idx);
+    OBAtom *atom2 = start_atom;
+    OBAtom *atom;
+    do {
+      atom = atom2;				// move to the next atom in the ring
+      FOR_BONDS_OF_ATOM(b, &(*atom)) {		// loop over its bonds to find the next atom...
+        int bond_idx = b->GetIdx();
+        if (used_bonds[bond_idx])		// is this the previous neighbor atom?
+          continue;				//    skip it ... already done.
+        atom2 = b->GetNbrAtom(atom);
+        if (!ring->IsMember(atom2))		// is this neighbor in the ring?
+          continue;				//    not in aromatic system, ignore it
+        ring_bonds.push_back(&(*b));		// found the bond we want
+        used_bonds[bond_idx] = true;
+        break;
+      }
+    } while (atom2 && atom2 != start_atom);
+  }
+
   ///////////////////////////////////////////////////////////////////////////////
   //! \brief Kekulize aromatic rings without using implicit valence
   //!
@@ -144,6 +210,7 @@ namespace OpenBabel
   //! in order to satisfy the huckel (4n+2) rule
   //! If the huckel rule cannot be satisfied the algorithm try with its best alternative guess
   //! Then it recursively walk on the atoms of the cycle and assign single and double bonds
+  //! \deprecated Will no longer be a public, visible method
   void OBMol::NewPerceiveKekuleBonds()
   {
 
@@ -425,62 +492,84 @@ namespace OpenBabel
   //! double bond or not.  The function works recursively to "walk" around
   //! the ring or rings and try all possible arrangements of single and
   //! double bonds.
-
+  //! \deprecated Will no longer be a public, visible method
   void OBMol::start_kekulize( std::vector <OBAtom*> &cycle, std::vector<int> &electron) {
 
-    std::vector<int> initAtomState;
-    std::vector<int> atomState;
-    std::vector<int> initBondState;
-    std::vector<int> bondState;
-    int Idx;
+    // initialize atom and bond states in constructor
+    std::vector<int> atomState(NumAtoms() + 1, NOT_IN_RINGS); // atom index issue
+    std::vector<int> bondState(NumBonds(), SINGLE);
+    int idx;
     OBAtom *atom;
     OBBond *bond;
 
-    // Initialize the atom and arrays
-    initAtomState.resize(NumAtoms()+1);
-    atomState.resize(NumAtoms()+1);
-    for (int i = 0; i < NumAtoms()+1; ++i) {
-      initAtomState[i] = NOT_IN_RINGS;
-      atomState[i]     = NOT_IN_RINGS;
-    }
-
-    // Initialize the bond arrays with single bonds
-    initBondState.resize(NumBonds());
-    bondState.resize(NumBonds());
-    for (int i = 0; i < NumBonds(); ++i) {
-      initBondState[i] = SINGLE;
-      bondState[i] = SINGLE;
-    }
-
     // Figure out which atoms are in this ring system and whether or not each
     // atom can donate an electron.
-
     for (int i = 0; i < cycle.size(); ++i) {
       atom = cycle[i];
-      Idx =  atom->GetIdx();
+      idx =  atom->GetIdx();
       if (electron[i] == 1) {
-        initAtomState[Idx] = DOUBLE_ALLOWED;	// It has an electron it can donate
+        atomState[idx] = DOUBLE_ALLOWED;	// It has an electron it can donate
       } else {
-        initAtomState[Idx] = DOUBLE_PROHIBITED;	// No electrons to contribute to aromatic system
+        atomState[idx] = DOUBLE_PROHIBITED;	// No electrons to contribute to aromatic system
       }
 
-      if (atom->IsNitrogen() && atom->GetFormalCharge() == 0 && atom->GetValence() == 3) {
-        // Correct N with three explict bonds
-        initAtomState[Idx] = DOUBLE_PROHIBITED;
-        if (DEBUG) { cout << "atom " << Idx << " rejected NR3 double bonds " << endl; }
+      if (atomState[idx] == DOUBLE_ALLOWED && atom->IsNitrogen() && atom->GetFormalCharge() == 0 && atom->GetValence() == 3) {
+        // Correct N with three explict bonds, if we haven't already
+        atomState[idx] = DOUBLE_PROHIBITED;
+        if (DEBUG) { cout << "atom " << idx << " rejected NR3 double bonds " << endl; }
       }
-      atomState[Idx] = initAtomState[Idx];	// initialize atoms' current state too
-      if (DEBUG) {cout << "atom " << Idx << ": initial state = " << initAtomState[Idx] << endl;}
+      if (DEBUG) {cout << "atom " << idx << ": initial state = " << atomState[idx] << endl;}
     }
 
     // Do a recursive walk around the aromatic system, and see if we can find
     // an assignment of double/single bonds that works.
     atom = cycle[0];
-    if (!expand_kekulize(0, atomState, bondState) ) {
-      stringstream errorMsg;
-      errorMsg << "Kekulize Error for molecule " << GetTitle() << endl;
-      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
-      return;
+    Timeout timeout(MAX_TIME); // install a timeout to fallback to LSSR analysis
+    if (!expandKekulize(this, 0, atomState, bondState, timeout) ) {
+      // OK, now try using LSSR analysis
+
+      // Get the LSSR, and find all rings that are completely in cycle[], that
+      // is, every atom in the ring is in this aromatic ring system.
+      std::vector<OBRing*> lssr_tmp = GetLSSR();
+      std::vector<OBRing*> lssr;
+      std::vector<bool>atom_in_cycle(NumAtoms()+1);
+      for (int i = 0; i <= NumAtoms(); i++)
+        atom_in_cycle[i] = false;
+      for (std::vector<OBAtom*>::iterator ai = cycle.begin(); ai != cycle.end(); ai++)
+        atom_in_cycle[(*ai)->GetIdx()] = true;
+      for (std::vector<OBRing*>::iterator ri = lssr_tmp.begin(); ri != lssr_tmp.end(); ri++) {
+        OBRing *ring = *ri;
+        bool ok = true;
+        for (std::vector<int>::iterator pi = ring->_path.begin(); pi != ring->_path.end(); pi++) {
+          if (!atom_in_cycle[*pi]) {
+            ok = false;
+            break;
+          }
+        }
+        if (ok)
+          lssr.push_back(ring);
+        if (DEBUG) {cout << "ring " << (ri - lssr_tmp.begin()) << (ok ? " is" : " is not") << " in cycle" << endl;}
+      }
+
+      // Initialize the "ring is assigned" vector
+      std::vector<bool> lssrAssigned;
+      lssrAssigned.resize(lssr.size());
+      for (int i = 0; i < lssr.size(); i++)
+        lssrAssigned[i] = false;
+
+      // Initialize an empty vector that expand_kekulize2() uses.
+      std::vector<OBBond*> bondsThisRing;
+      bondsThisRing.clear();
+
+      // Do a recursive walk across the aromatic system, and see if we can find
+      // an assignment of double/single bonds that works.
+      if (!expand_kekulize_lssr(this, atomState, bondState, lssr, lssrAssigned, bondsThisRing)) {
+        stringstream errorMsg;
+        errorMsg << "Kekulize Error for molecule " << GetTitle() << endl;
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
+        return;
+    }
+      // If we did successfully use the LSSR assignment, we don't need to worry -- no error!
     }
 
     // We found a successful assignment, now actually change the bonds to double
@@ -538,7 +627,7 @@ namespace OpenBabel
   // divide the bonds into symmetrically-equivalent classes, and only try
   // combinations of single/double bonds that differ when symmetry is taken
   // into account.
-
+  //! \deprecated Will no longer be a public, visible method
   bool OBMol::expand_kekulize(int bond_idx,
                               std::vector<int> &atomState,
                               std::vector<int> &bondState)
@@ -547,12 +636,12 @@ namespace OpenBabel
     return expandKekulize(this, bond_idx, atomState, bondState, timeout);
   }
 
+  // Used in old expandKekulize code (i.e., fused-ring analysis)
   bool has_leftover_electrons(OBMol *mol, std::vector<int> &atomState)
   {
     FOR_ATOMS_OF_MOL(a, mol) {
       int idx = a->GetIdx();
-      if (atomState[idx] == DOUBLE_ALLOWED) {
-        // nitrogen failures are OK -- could be an 'n' which needs to be 'nH'
+      if (atomState[idx] == DOUBLE_ALLOWED) { // we haven't assigned this atom yet
         if (DEBUG) {cout << "  failure, extra electron on atom " << idx << endl;}
         return true;
       }
@@ -560,10 +649,51 @@ namespace OpenBabel
     return false;	// no extra electrons found
   }
 
-  // Check for leftover electrons.  This is used during expand_kekulize() above
-  // to make sure all of the 4n+2 electrons that were available for bonding in the
-  // aromatic ring system were actually used during the assignment of single
-  // and double bonds.
+  ////////////////////////////////////////////////////////////////////////////////
+  // Check for leftover electrons.  This is used during expand_kekulize_lssr()
+  // to make sure all of the 4n+2 electrons that are available for bonding in the
+  // aromatic ring system are actually used.
+  //
+  // Scans the aromatic atoms, and checks each one to see if all of its bonds
+  // have been assigned.  If they have, then all of the atom's electrons have to
+  // be used up, otherwise it's an invalid bond assignment.
+  //
+  // This is called repeatedly as the bonds are assigned, to help "fail fast."
+  // As the bonds are assigned to a complex ring system, there's no point waiting
+  // until the end to discover that you made an invalid assignment early on.
+  bool has_leftover_electrons(OBMol *mol, std::vector<int> &atomState,
+                              std::vector<int> &bondState)
+  {
+    FOR_ATOMS_OF_MOL(a, mol) {
+      int idx = a->GetIdx();
+      bool atom_ok = false;
+      if (atomState[idx] == DOUBLE_ALLOWED) {
+        FOR_BONDS_OF_ATOM(b, &(*a)) {
+          OBAtom *neighbor = b->GetNbrAtom(&(*a));
+          if (atomState[neighbor->GetIdx()] == NOT_IN_RINGS) {
+            continue;	// don't care about non-ring bonds
+          }
+          if (bondState[b->GetIdx()] == UNASSIGNED) {
+            atom_ok = true;	// if one in-ring bond is unassigned, then
+            break;		// it's OK if the atom still has an extra electron
+          }
+        }
+        // If no unassigned in-ring bonds were found, and the atom
+        // has an extra electron, it can't be valid.
+        if (!atom_ok) {
+          if (DEBUG) {cout << "  failure, extra electron on atom " << idx << endl;}
+          return true;
+        }
+      }
+    }
+    return false;	// no extra electrons found
+  }
+
+  //! Check for leftover electrons.  This is used during expand_kekulize()
+  //! to make sure all of the 4n+2 electrons that were available for bonding in the
+  //! aromatic ring system were actually used during the assignment of single
+  //! and double bonds.
+  //! \deprecated Will no longer be a public, visible method
   bool OBMol::has_no_leftover_electrons(std::vector<int> &atomState)
   {
     return !has_leftover_electrons(this, atomState);
@@ -575,7 +705,8 @@ namespace OpenBabel
   {
     // Check for timeout first
     if (time(NULL) - timeout.startTime > timeout.maxTime) {
-      obErrorLog.ThrowError(__FUNCTION__, "maximum time exceeded...", obError);
+      // Only issue the error once, not for each recurison
+      if (bond_idx == 0) obErrorLog.ThrowError(__FUNCTION__, "maximum time exceeded...", obError);
       return !has_leftover_electrons(mol, atomState);
     }
 
@@ -633,7 +764,7 @@ namespace OpenBabel
   }
 
   //! Give the priority to give two electrons instead of 1
-
+  //! \deprecated Will no longer be a public, visible method
   int OBMol::getorden( OBAtom *atom)
   {
     if ( atom->IsSulfur() && atom->GetFormalCharge() == 0) return 0;
@@ -651,6 +782,7 @@ namespace OpenBabel
   }
 
   //! Recursively find the aromatic atoms with an aromatic bond to the current atom
+  //! \deprecated Will no longer be a public, visible method
   bool OBMol::expandcycle (OBAtom *atom, OBBitVec &avisit, const OBBitVec &potAromBonds)
   {
     OBAtom *nbr;
@@ -663,7 +795,6 @@ namespace OpenBabel
         if (!potAromBonds.BitIsSet((*i)->GetIdx()))
           continue;
         natom = nbr->GetIdx();
-        // if (!avisit[natom] && nbr->IsAromatic() && ((OBBond*) *i)->IsAromatic()) {
         if (!avisit[natom] && ((OBBond*) *i)->GetBO()==5
             && ((OBBond*) *i)->IsInRing()) {
           avisit.SetBitOn(natom);
@@ -688,7 +819,7 @@ namespace OpenBabel
       return depth;
     }
 
-    //    cout << " expand_cycle: " << atom->GetIdx() << " depth " << depth << endl;
+    if (DEBUG) cout << " expand_cycle: " << atom->GetIdx() << " depth " << depth << endl;
 
     OBAtom *nbr;
     std::vector<OBBond*>::iterator i;
@@ -706,7 +837,6 @@ namespace OpenBabel
         if (!potAromBonds.BitIsSet((*i)->GetIdx()))
           continue;
         natom = nbr->GetIdx();
-        //        cout << " checking: " << natom << " bo: " << (*i)->GetBO() << endl;
         if ((*i)->GetBO() != 5)
           continue; // this is a non-aromatic bond, skip it
         if (natom == prevAtomIdx) {
@@ -729,7 +859,7 @@ namespace OpenBabel
         trialMatch.SetBitOn(natom);
         trialScore = expand_cycle(mol, nbr, trialMatch, cvisit, potAromBonds, rootIdx, timeout, atom->GetIdx(), depth - 1);
         if (trialScore > 0 && trialScore < bestScore) { // we found a larger, valid cycle
-          //          cout << " score: " << trialScore << endl;
+          if (DEBUG) cout << " score: " << trialScore << endl;
           bestMatch = trialMatch;
           bestScore = trialScore;
         }
@@ -740,6 +870,178 @@ namespace OpenBabel
 
     avisit = bestMatch; // remember our path
     return bestScore;
+  }
+
+  /// NEW ANALYSIS methods: rely on LSSR methods to only target one ring. Works much faster on fullerens, graphene, etc.
+
+  /////////////////////////////////////////////////////////////////////////////////////////
+  //! \brief Recursive function to find a sensible kekule assignment of
+  //! single and double bonds for an aromatic ring system.
+  //
+  // Very large aromatic ring systems can be very computationally difficult.  In theory,
+  // there are 2^N ways to try assigning single/double to assign bonds (where N is the
+  // number of bonds in the aromatic system).  For large molecules such as fullerenes,
+  // this number (e.g. 2^60) exceeds all computing power in the world.
+  //
+  // To avoid this, three strategies are used.
+  //
+  // 1. The algorithm proceeds by assigning bonds to each complete ring
+  //    from the LSSR, rather than treating the whole aromatic system.
+  //    That reduces the complexity to roughly O(2^R) where R is the number
+  //    of rings in the LSSR.
+  //
+  // 2. Each time a ring is completed (a trial assignment of
+  //    single/double), the whole tentative assignment is checked for
+  //    sensibility.  If any atom has all of its bonds assigned, but
+  //    still has a leftover electron, then the assignment fails before a
+  //    lot more work is invested.  (Atoms connected to bonds that haven't
+  //    been examined yet are ignored during this test.)
+  //
+  // 3. When one ring is finished, the next ring is selected by finding the
+  // 	one "most connected" to previously-considered rings.  Say, for
+  // 	example, we're working on a fullerene and have just finished one
+  // 	ring.  The second ring will be one that's adjacent to the first
+  // 	ring (one of its bonds is already assigned).  Now for the third
+  // 	ring, we can pick one that's in a "corner" of the first two, that
+  // 	is, a ring that has TWO bonds already assigned.
+  //
+  // Strategy #3 means that the completed area of the ring system (the
+  // bonds we've already assigned) will tend to have a "minimal perimeter",
+  // and any atom that has one bond assigned will quickly have all of its
+  // bonds assigned.  That means that strategy #2 can be used as early as
+  // possible to detect bond assignments that can never work, long before
+  // the entire aromatic system has been examined.  Strategy #1 means that
+  // we can typically assign alternating single/double bonds correctly to
+  // any particular ring on the first try.
+  //
+  // Together, these three strategies together mean that even very large
+  // aromatic systems are typically solved in milliseconds.
+  bool expand_kekulize_lssr(OBMol *mol,
+                            std::vector<int> &atomState,
+                            std::vector<int> &bondState,
+                            std::vector<OBRing*> &lssr,
+                            std::vector<bool> &lssrAssigned,
+                            std::vector<OBBond *> &bondsThisRing)
+  {
+    OBBond *bond = NULL;
+    OBAtom *atom1, *atom2;
+    int idx1, idx2, bond_idx;
+
+    if (DEBUG) {cout << "---------- expand_kekulize_lssr:" << endl;}
+
+    // Remember the current state so that we can backtrack if the attempt fails
+    vector<int> previousState         = atomState;	// Backup the atom states
+    vector<int> previousBondState     = bondState;	// ... and the bond states
+
+    // Find the next unassigned bond on this ring
+    for (std::vector<OBBond*>::iterator b = bondsThisRing.begin(); b != bondsThisRing.end(); b++) {
+      if (bondState[(*b)->GetIdx()] == UNASSIGNED) {
+        bond = *b;
+        break;
+      }
+    }
+
+    if (bond) {
+
+      bond_idx = bond->GetIdx();
+      atom1 = bond->GetBeginAtom();
+      atom2 = bond->GetEndAtom();
+      idx1 = atom1->GetIdx();
+      idx2 = atom2->GetIdx();
+
+      // Does a double bond work here?
+      if (   atomState[idx1] == DOUBLE_ALLOWED
+             && atomState[idx2] == DOUBLE_ALLOWED) {
+
+        // Assign a double bond.
+        atomState[idx1]  = DOUBLE_ASSIGNED;
+        atomState[idx2]  = DOUBLE_ASSIGNED;
+        bondState[bond_idx] = DOUBLE;        // set bond to double
+        if (DEBUG) {std::cout << "bond " << bond_idx << " (atoms " << idx1 << " to " << idx2 << ") double" << endl;}
+
+        // Recursively try the next bond
+        if (expand_kekulize_lssr(mol, atomState, bondState, lssr, lssrAssigned, bondsThisRing))
+          return true;
+
+        // If the double bond didn't work, roll back the changes and try a single bond.
+        atomState = previousState;
+        bondState = previousBondState;
+        if (DEBUG) {cout << "  double on bond " << bond_idx << " failed." << endl;}
+      }
+
+      // Either a double bond not allowed here, or double bond failed, try a single bond.
+      bondState[bond_idx] = SINGLE;        // set bond to single
+      if (DEBUG) {cout << "bond " << bond_idx << " (atoms " << idx1 << " to " << idx2 << ") single" << endl;}
+
+      // Recursively try the next bond
+      if (expand_kekulize_lssr(mol, atomState, bondState, lssr, lssrAssigned, bondsThisRing))
+        return true;
+
+      // If it didn't work, roll back the changes we made and return failure.
+      if (DEBUG) {cout << "bond " << bond_idx << " single failed, rolling back changes" << endl;}
+      atomState = previousState;
+      bondState = previousBondState;
+      return false;
+    }
+
+    // If we get here, it means we successfully assigned all of the bonds on
+    // the current ring.  Double check that we haven't made an impossible
+    // bond assignment.
+
+    if (has_leftover_electrons(mol, atomState, bondState)) {
+      atomState = previousState;
+      bondState = previousBondState;
+      return false;
+    }
+
+    // Now its time to pick the next ring to work on.
+    //
+    // Find the ring that has the most bonds already assigned.  This will
+    // tend to "localize" the search, so that the algorithm doesn't wander.
+    // For example, imagine a large sheet of graphite ("chickenwire").
+    // This algorithm will make it fill in a local area, rather than
+    // stretching across the sheet.  You can think of it like minimizing
+    // the perimeter of the area of assigned bonds.
+    //
+    // This is critical to the performance of this algorithm, because it
+    // "fails early, fails fast."
+
+    int best_rnum = -1;
+    int best_nbonds_assigned = -1;
+    std::vector<OBBond *> best_bondsThisRing;
+
+    if (DEBUG) {cout << "Select next ring: " << lssr.size() << " rings to try" << endl;}
+
+    for (int rnum = 0; rnum < lssr.size(); rnum++) {
+      if (lssrAssigned[rnum])
+        continue;
+      OBRing *ring = lssr[rnum];
+      get_bonds_of_ring(mol, ring, bondsThisRing);
+      int nbonds_assigned = count_assigned_bonds(bondsThisRing, bondState);
+      if (DEBUG) {cout << "Trying ring " << rnum << ": " << nbonds_assigned << " bonds assigned" << endl;}
+      if (nbonds_assigned > best_nbonds_assigned) {
+        best_rnum = rnum;
+        best_nbonds_assigned = nbonds_assigned;
+        best_bondsThisRing = bondsThisRing;
+        if (DEBUG) {cout << "    new best ring: " << rnum << "\n";}
+      }
+    }
+
+    // If we didn't find any unassigned ring at all, then we're done,
+    // the Kekule assignment was a success.
+    if (best_rnum == -1) {
+      if (DEBUG) {cout << "    No more rings, single/double bond assignment succeeded." << endl;}
+      return true;
+    }
+
+    // We found a new ring to assign.  Recursive call to assign its bonds.
+    lssrAssigned[best_rnum] = true;
+    if (!expand_kekulize_lssr(mol, atomState, bondState, lssr, lssrAssigned, best_bondsThisRing)) {
+      lssrAssigned[best_rnum] = false;
+      return false;
+    } else {
+      return true;
+    }
   }
 
 } // end namespace OpenBabel
