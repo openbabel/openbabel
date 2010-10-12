@@ -623,7 +623,7 @@ namespace OpenBabel {
     return FindAutomorphisms(mol, maps, symClasses, mask);;
   }
 
-  OBBitVec getFragment(OBAtom *atom, const OBBitVec &mask);
+  OBBitVec getFragment(OBAtom *atom, const OBBitVec &mask, const std::vector<OBBond*> &metalloceneBonds = std::vector<OBBond*>());
 
   bool FindAutomorphisms(OBMol *mol, Automorphisms &maps, const std::vector<unsigned int> &symClasses, const OBBitVec &mask)
   {

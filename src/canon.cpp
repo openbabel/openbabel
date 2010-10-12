@@ -65,7 +65,7 @@ namespace OpenBabel {
   /**
    * Helper function for getFragment below.
    */
-  void addNbrs(OBBitVec &fragment, OBAtom *atom, const OBBitVec &mask)
+  void addNbrs(OBBitVec &fragment, OBAtom *atom, const OBBitVec &mask, const std::vector<OBBond*> &metalloceneBonds)
   {
     FOR_NBORS_OF_ATOM (nbr, atom) {
       if (!mask.BitIsSet(nbr->GetIdx()))
@@ -73,10 +73,14 @@ namespace OpenBabel {
       // skip visited atoms
       if (fragment.BitIsSet(nbr->GetIdx()))
         continue;
+      // skip mettalocene bonds
+      if (std::find(metalloceneBonds.begin(), metalloceneBonds.end(),
+            atom->GetParent()->GetBond(atom, &*nbr)) != metalloceneBonds.end())
+        continue;
       // add the neighbor atom to the fragment
       fragment.SetBitOn(nbr->GetIdx());
       // recurse...
-      addNbrs(fragment, &*nbr, mask);
+      addNbrs(fragment, &*nbr, mask, metalloceneBonds);
     }
   }
 
@@ -85,12 +89,12 @@ namespace OpenBabel {
    * atoms for which there is a path to atom without going through skip. These
    * fragment bitvecs are indexed by atom idx (i.e. OBAtom::GetIdx()).
    */
-  OBBitVec getFragment(OBAtom *atom, const OBBitVec &mask)
+  OBBitVec getFragment(OBAtom *atom, const OBBitVec &mask, const std::vector<OBBond*> &metalloceneBonds = std::vector<OBBond*>())
   {
     OBBitVec fragment;
     fragment.SetBitOn(atom->GetIdx());
     // start the recursion
-    addNbrs(fragment, atom, mask);
+    addNbrs(fragment, atom, mask, metalloceneBonds);
     return fragment;
   }
 
@@ -155,6 +159,32 @@ namespace OpenBabel {
       return false;
 
     return C->HasDoubleBond() && C->IsInRing();
+  }
+
+  void findMetalloceneBonds(std::vector<OBBond*> &bonds, OBMol *mol, const std::vector<unsigned int> &symmetry_classes)
+  {
+    FOR_ATOMS_OF_MOL (atom, mol) {
+      if (!atom->IsInRingSize(3))
+        continue;
+      std::vector<unsigned int> nbrSymClasses;
+      FOR_NBORS_OF_ATOM (nbr, &*atom) {
+        if (nbr->IsInRingSize(3))
+          nbrSymClasses.push_back(symmetry_classes[nbr->GetIndex()]);
+      }
+
+      if (nbrSymClasses.size() < 8)
+        continue;
+
+      std::sort(nbrSymClasses.begin(), nbrSymClasses.end());
+      unsigned int numUnique = std::unique(nbrSymClasses.begin(), nbrSymClasses.end()) - nbrSymClasses.begin();
+      if (numUnique > 1)
+        continue;
+
+      FOR_NBORS_OF_ATOM (nbr, &*atom) {
+        if (symmetry_classes[nbr->GetIndex()] == nbrSymClasses[0])
+          bonds.push_back(mol->GetBond(&*atom, &*nbr));
+      }
+    }
   }
 
 
@@ -1313,6 +1343,7 @@ namespace OpenBabel {
                 }
               }
 
+              /*
             if (finalNbrs.size() > 6 && current->IsInRingSize(3)) {
               if (state.mcr.BitIsSet(finalNbrs[0]->GetIdx()))
               for (std::size_t r = 0; r < finalNbrs.size() - 1; ++r) {
@@ -1326,6 +1357,7 @@ namespace OpenBabel {
               }
 
             } else {
+            */
             // Add the other permutations.
             while (std::next_permutation(finalNbrs.begin(), finalNbrs.end())) {
               if (state.mcr.BitIsSet(finalNbrs[0]->GetIdx()))
@@ -1335,7 +1367,7 @@ namespace OpenBabel {
                     allOrderedNbrs.back().push_back(finalNbrs[i]);
                 }
             }
-            }
+            //}
 
           } // finalNbrs.size() != 1
         } // while (!nbrs.empty())
@@ -1430,13 +1462,16 @@ namespace OpenBabel {
       canonical_labels.clear();
       canonical_labels.resize(mol->NumAtoms(), 0);
 
+      std::vector<OBBond*> metalloceneBonds;
+      findMetalloceneBonds(metalloceneBonds, mol, symmetry_classes);
+
       // Find the (dis)connected fragments.
       OBBitVec visited;
       std::vector<OBBitVec> fragments;
       for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
         if (!mask.BitIsSet(i+1) || visited.BitIsSet(i+1))
           continue;
-        fragments.push_back(getFragment(mol->GetAtom(i+1), mask));
+        fragments.push_back(getFragment(mol->GetAtom(i+1), mask, metalloceneBonds));
         visited |= fragments.back();
       }
 
