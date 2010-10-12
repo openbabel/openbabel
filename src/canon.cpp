@@ -36,6 +36,8 @@ GNU General Public License for more details.
 
 #define DEBUG 0
 
+#define MAX_IDENTITY_NODES 5
+
 using namespace std;
 
 // debug function
@@ -344,7 +346,7 @@ namespace OpenBabel {
    *
    * @subsection canonical_opt4 Other optimizations
    * In essence, the canonical coding algorithm is very similar to the algorithm
-   * from the well-known nauty package[1]. However, the optimizations mentioned
+   * from the well-known nauty package [1, 2]. However, the optimizations mentioned
    * above are far easier to implement, document and result in acceptable
    * performance for most structures. This enables anyone to reproduce OpenBabel
    * canonical smiles without the absolute requirement to implement the complex
@@ -364,10 +366,19 @@ namespace OpenBabel {
    * These accidentally discovered automorphisms can be used to reduce the
    * number of states to consider in various ways.
    *
+   * @subsubsection canonical_opt5 Optimization 4
+   *
+   *
+   *
+   *
+   *
      @verbatim
-     [1] Brendan D. McKay, Practical graph isomorphism, Congressus Numerantium,
+     [1] Brendan D. McKay, Backtrack programming and isomorphism rejection on
+         ordered subsets, ARS Combinatoria, Vol. 5, 1979, pp. 65-99
+         http://cs.anu.edu.au/~bdm/papers/backtrack1978.pdf
+     [2] Brendan D. McKay, Practical graph isomorphism, Congressus Numerantium,
          Vol. 30, 1981, pp. 45-87
-         http://cs.anu.edu.au/~bdm/nauty/PGI/
+         http://cs.anu.edu.au/~bdm/papers/pgi.pdf
      @endverbatim
    */
 
@@ -624,7 +635,7 @@ namespace OpenBabel {
             const OBBitVec &_fragment, std::vector<StereoCenter> &_stereoCenters,
             bool _onlyOne) : symmetry_classes(_symmetry_classes),
           fragment(_fragment), stereoCenters(_stereoCenters), onlyOne(_onlyOne),
-          code(_symmetry_classes.size())
+          code(_symmetry_classes.size()), backtrackDepth(0)
       {
       }
 
@@ -644,6 +655,12 @@ namespace OpenBabel {
        * The partial code with labels and FROM code.
        */
       PartialCode code;
+
+      /**
+       * Identity nodes of the search tree.
+       */
+      std::vector<FullCode> identityNodes;
+      unsigned int backtrackDepth;
     };
 
     /**
@@ -663,12 +680,12 @@ namespace OpenBabel {
      * Given a complete labeling (@p state.code.labels) and FROM code (@p state.code.from),
      * construct a FullCode with complete code.
      */
-    static void CompleteCode(OBMol *mol, FullCode &bestCode, State &state)
+    static void CompleteCode(OBMol *mol, FullCode &fullcode, State &state)
     {
       PartialCode &code = state.code;
 
       // initialize the FullCode object with the found labels and the from code
-      FullCode fullcode(code.labels, code.from);
+      fullcode = FullCode(code.labels, code.from);
       unsigned int numClosures = 0;
 
       //
@@ -765,12 +782,6 @@ namespace OpenBabel {
         }
       }
 
-      // if fullcode is greater than bestCode, we have found a new greatest code
-      if (fullcode > bestCode) {
-        bestCode.labels.swap(fullcode.labels);
-        bestCode.code.swap(fullcode.code);
-      }
-
       // backtrack
       for (unsigned int i = 0; i < numClosures; ++i)
         code.bonds.pop_back();
@@ -861,7 +872,7 @@ namespace OpenBabel {
         std::vector<OBAtom*> atoms;
         unsigned int nextLbl = label + 1;
         for (std::size_t l = 0; l < lcodes.size(); ++l) {
-          //print_vector("LIG CODE:", lcodes[l].second.code);
+          //print_vector("LIG CODE", lcodes[l].second.code);
           OBAtom *atom = nbrs[lcodes[l].first];
           code.add(current, atom);
           code.labels[atom->GetIndex()] = nextLbl;
@@ -953,9 +964,74 @@ namespace OpenBabel {
       OBMol *mol = current->GetParent();
       PartialCode &code = state.code;
 
+      if (state.backtrackDepth) {
+        //std::cout << "backtrackDepth = " << state.backtrackDepth << std::endl;
+
+        if (code.atoms.size() > state.backtrackDepth) {
+          //std::cout << "BACKTRACKING" << std::endl;
+          return;
+        }
+        if (code.atoms.size() == state.backtrackDepth) {
+          //std::cout << "BACKTRACK DONE 1" << std::endl;
+          state.backtrackDepth = 0;
+          return;
+        } else
+        if (code.atoms.size() < state.backtrackDepth) {
+          //std::cout << "BACKTRACK DONE 2" << std::endl;
+          state.backtrackDepth = 0;
+        }
+      }
+
+
       // Check if there is a full mapping.
       if (label == state.fragment.CountBits()) {
-        CompleteCode(mol, bestCode, state);
+        // Complete the canonical code.
+        FullCode fullcode;
+        CompleteCode(mol, fullcode, state);
+
+        //print_vector("TERMINAL", fullcode.code);
+
+        // if fullcode is greater than bestCode, we have found a new greatest code
+        if (fullcode > bestCode) {
+          bestCode.labels = fullcode.labels;
+          bestCode.code = fullcode.code;
+        }
+
+
+        // Check previously found codes to find redundant subtrees.
+        //for (std::size_t i = 0; i < state.identityNodes.size(); ++i)
+        for (std::size_t i = state.identityNodes.size(); i > 0; --i)
+          if (fullcode.code == state.identityNodes[i-1].code) {
+
+            std::vector<unsigned int> v1(fullcode.labels.size(), 0);
+            for (std::size_t j = 0; j < fullcode.labels.size(); ++j)
+              if (fullcode.labels[j])
+                v1[fullcode.labels[j]-1] = j + 1;
+
+            std::vector<unsigned int> v2(state.identityNodes[i-1].labels.size(), 0);
+            for (std::size_t j = 0; j < state.identityNodes[i-1].labels.size(); ++j)
+              if (state.identityNodes[i-1].labels[j])
+                v2[state.identityNodes[i-1].labels[j]-1] = j + 1;
+
+            assert( v1.size() == v2.size() );
+
+            state.backtrackDepth = 0;
+            for (std::size_t j = 0; j < v1.size(); ++j) {
+              if (v1[j] != v2[j]) {
+                // Yield backtrackDepth.
+                return;
+              }
+
+              if (v1[j])
+                state.backtrackDepth++;
+            }
+          }
+
+        if (state.identityNodes.size() < MAX_IDENTITY_NODES)
+          state.identityNodes.push_back(fullcode);
+        else
+          state.identityNodes[MAX_IDENTITY_NODES-1] = fullcode;
+
         return;
       }
 
@@ -1124,6 +1200,21 @@ namespace OpenBabel {
             code.from.pop_back();
             code.labels[allOrderedNbrs[i][j]->GetIndex()] = 0;
           }
+
+          // Optimization
+          if (state.backtrackDepth) {
+            if (code.atoms.size() == state.backtrackDepth) {
+              //std::cout << "BACKTRACK DONE 3" << std::endl;
+              state.backtrackDepth = 0;
+            } else
+              if (code.atoms.size() < state.backtrackDepth) {
+                //std::cout << "BACKTRACK DONE 4" << std::endl;
+                state.backtrackDepth = 0;
+              }
+          }
+
+
+
         }
 
       } // current->IsInRing()
@@ -1145,12 +1236,11 @@ namespace OpenBabel {
         OBAtom *atom = mol->GetAtom(i+1);
         if (atom->GetFormalCharge())
           continue;
-        */
+          */
 
         nextSymClasses.push_back(symmetry_classes[i]);
       }
 
-      //return *std::min_element(nextSymClasses.begin(), nextSymClasses.end());
       return *std::max_element(nextSymClasses.begin(), nextSymClasses.end());
     }
 
@@ -1291,7 +1381,7 @@ namespace OpenBabel {
       // Construct the full labeling from the sorted fragment labels.
       unsigned int offset = 0;
       for (std::size_t f = 0; f < fcodes.size(); ++f) {
-        //print_vector("CODE:", fcodes[f].code);
+        //print_vector("CODE", fcodes[f].code);
         unsigned int max_label = 0;
         for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
           if (fcodes[f].labels[i]) {
@@ -1405,8 +1495,6 @@ namespace OpenBabel {
 
       // Determine stereochemistry from coordinates if needed
       if (!mol->HasChiralityPerceived()) {
-        if (DEBUG)
-          cout << "Determining stereochemistry from coords..." << endl;
         switch (mol->GetDimension()) {
           case 2:
             mol->DeleteData(OBGenericDataType::StereoData);
