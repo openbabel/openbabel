@@ -387,6 +387,22 @@ namespace OpenBabel {
     typedef std::vector<OBAtom*> Orbit;
     typedef std::vector<Orbit> Orbits;
 
+    static void print_orbits(const Orbits &orbits)
+    {
+      for (std::size_t j = 0; j < orbits.size(); ++j) {
+        cout << "( ";
+        for (std::size_t k = 0; k < orbits[j].size(); ++k)
+          cout << orbits[j][k]->GetIndex() << " ";
+        cout << ") ";
+      }
+    }
+    static void print_orbits(const std::string &label, const Orbits &orbits)
+    {
+      cout << label << ": ";
+      print_orbits(orbits);
+      cout << endl;
+    }
+
 
     /**
      * Structure to represent a completed labeling and it's associated canonical
@@ -970,6 +986,9 @@ namespace OpenBabel {
       Orbits newOrbits;
       std::vector<bool> visited(labels1.size(), false);
 
+      //print_vector("labels1", labels1);
+      //print_vector("labels2", labels2);
+
       // Construct the orbits for automorphic permutation labels1 -> labels2
       for (std::size_t i = 0; i < labels1.size(); ++i) {
         if (visited[i])
@@ -1000,6 +1019,8 @@ namespace OpenBabel {
       }
       //cout << endl;
 
+      //print_orbits("newOrbits", newOrbits);
+
       // Merge the orbits with previously found orbits.
       for (std::size_t j = 0; j < newOrbits.size(); ++j) {
         bool merge = false;
@@ -1022,6 +1043,44 @@ namespace OpenBabel {
           orbits.push_back(newOrbits[j]);
       }
 
+//      print_orbits("orbits", orbits);
+
+      newOrbits.clear();
+      std::vector<bool> vivisted(orbits.size(), false);
+      for (std::size_t i = 0; i < orbits.size(); ++i) {
+        if (visited[i])
+          continue;
+        visited[i] = true;
+
+        Orbit newOrbit = orbits[i];
+
+        for (std::size_t j = i; j < orbits.size(); ++j) {
+          if (visited[j])
+            continue;
+
+          std::sort(newOrbit.begin(), newOrbit.end());
+          std::sort(orbits[j].begin(), orbits[j].end());
+          Orbit result;
+
+          std::set_intersection(newOrbit.begin(), newOrbit.end(),
+                                orbits[j].begin(), orbits[j].end(),
+                                std::back_inserter(result));
+          if (result.empty())
+            continue;
+
+          visited[j] = true;
+          result.clear();
+          std::set_union(newOrbit.begin(), newOrbit.end(),
+                         orbits[j].begin(), orbits[j].end(),
+                         std::back_inserter(result));
+
+          newOrbit = result;
+        }
+
+        newOrbits.push_back(newOrbit);
+      }
+
+      orbits = newOrbits;
     }
 
     /**
@@ -1029,15 +1088,8 @@ namespace OpenBabel {
      */
     static void UpdateMcr(OBBitVec &mcr, Orbits &orbits, OBMol *mol, const std::vector<unsigned int> &bestLabels)
     {
-      /*
-      for (std::size_t j = 0; j < orbits.size(); ++j) {
-        cout << "( ";
-        for (std::size_t k = 0; k < orbits[j].size(); ++k)
-          cout << orbits[j][k]->GetIndex() << " ";
-        cout << ") ";
-      }
-      cout << endl;
-      */
+      //print_orbits("UpdateMcr", orbits);
+
       for (std::size_t i = 0; i < bestLabels.size(); ++i)
         mcr.SetBitOn(i+1);
 
@@ -1089,8 +1141,7 @@ namespace OpenBabel {
         FullCode fullcode;
         CompleteCode(mol, fullcode, state);
 
-//        print_vector("TERMINAL", fullcode.code);
-        //std::cout << state.identityCodes.size() << std::endl;
+        //print_vector("TERMINAL", fullcode.code);
 
         // Check previously found codes to find redundant subtrees.
         for (std::size_t i = state.identityCodes.size(); i > 0; --i)
@@ -1118,12 +1169,11 @@ namespace OpenBabel {
               if (v1[j])
                 state.backtrackDepth++;
             }
-
           }
 
         if (fullcode.code == bestCode.code) {
-          FindOrbits(state.orbits, mol, fullcode.labels, bestCode.labels);
           UpdateMcr(state.mcr, state.orbits, mol, bestCode.labels);
+          FindOrbits(state.orbits, mol, fullcode.labels, bestCode.labels);
         } else if (fullcode > bestCode) {
           // if fullcode is greater than bestCode, we have found a new greatest code
           bestCode = fullcode;
@@ -1263,15 +1313,28 @@ namespace OpenBabel {
                 }
               }
 
+            if (finalNbrs.size() > 6 && current->IsInRingSize(3)) {
+              if (state.mcr.BitIsSet(finalNbrs[0]->GetIdx()))
+              for (std::size_t r = 0; r < finalNbrs.size() - 1; ++r) {
+                for (std::size_t j = 0; j < allOrderedNbrsCopy.size(); ++j) {
+                  allOrderedNbrs.push_back(allOrderedNbrsCopy[j]);
+                  for (std::size_t i = 0; i < finalNbrs.size(); ++i)
+                    allOrderedNbrs.back().push_back(finalNbrs[i]);
+                }
+
+                std::rotate(finalNbrs.begin(), finalNbrs.begin()+1, finalNbrs.end());
+              }
+
+            } else {
             // Add the other permutations.
             while (std::next_permutation(finalNbrs.begin(), finalNbrs.end())) {
               if (state.mcr.BitIsSet(finalNbrs[0]->GetIdx()))
                 for (std::size_t j = 0; j < allOrderedNbrsCopy.size(); ++j) {
                   allOrderedNbrs.push_back(allOrderedNbrsCopy[j]);
-                  for (std::size_t i = 0; i < finalNbrs.size(); ++i) {
+                  for (std::size_t i = 0; i < finalNbrs.size(); ++i)
                     allOrderedNbrs.back().push_back(finalNbrs[i]);
-                  }
                 }
+            }
             }
 
           } // finalNbrs.size() != 1
@@ -1464,6 +1527,9 @@ namespace OpenBabel {
           if (symmetry_classes[atom->GetIndex()] == startSymClass) {
             // Start labeling of the fragment.
             State state(symmetry_classes, fragment, stereoCenters, identityCodes, orbits, mcr, onlyOne);
+//            if (!state.mcr.BitIsSet(atom->GetIdx()) && atom->IsInRing())
+//              continue;
+
             state.code.add(atom);
             state.code.labels[atom->GetIndex()] = 1;
             CanonicalLabelsRecursive(atom, 1, timeout, bestCode, state);
