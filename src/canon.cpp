@@ -180,10 +180,8 @@ namespace OpenBabel {
       if (numUnique > 1)
         continue;
 
-      FOR_NBORS_OF_ATOM (nbr, &*atom) {
-        if (symmetry_classes[nbr->GetIndex()] == nbrSymClasses[0])
-          bonds.push_back(mol->GetBond(&*atom, &*nbr));
-      }
+      FOR_NBORS_OF_ATOM (nbr, &*atom)
+        bonds.push_back(mol->GetBond(&*atom, &*nbr));
     }
   }
 
@@ -689,6 +687,7 @@ namespace OpenBabel {
           code(_symmetry_classes.size()), identityCodes(_identityCodes),
           backtrackDepth(0), orbits(_orbits), mcr(_mcr)
       {
+        mcr.Clear();
         if (mcr.IsEmpty())
           for (std::size_t i = 0; i < symmetry_classes.size(); ++i)
             mcr.SetBitOn(i+1);
@@ -714,9 +713,9 @@ namespace OpenBabel {
       /**
        * Identity nodes of the search tree.
        */
-      std::vector<FullCode> &identityCodes;
+      std::vector<FullCode> identityCodes;
       unsigned int backtrackDepth;
-      Orbits &orbits;
+      Orbits orbits;
       OBBitVec &mcr;
     };
 
@@ -1343,21 +1342,6 @@ namespace OpenBabel {
                 }
               }
 
-              /*
-            if (finalNbrs.size() > 6 && current->IsInRingSize(3)) {
-              if (state.mcr.BitIsSet(finalNbrs[0]->GetIdx()))
-              for (std::size_t r = 0; r < finalNbrs.size() - 1; ++r) {
-                for (std::size_t j = 0; j < allOrderedNbrsCopy.size(); ++j) {
-                  allOrderedNbrs.push_back(allOrderedNbrsCopy[j]);
-                  for (std::size_t i = 0; i < finalNbrs.size(); ++i)
-                    allOrderedNbrs.back().push_back(finalNbrs[i]);
-                }
-
-                std::rotate(finalNbrs.begin(), finalNbrs.begin()+1, finalNbrs.end());
-              }
-
-            } else {
-            */
             // Add the other permutations.
             while (std::next_permutation(finalNbrs.begin(), finalNbrs.end())) {
               if (state.mcr.BitIsSet(finalNbrs[0]->GetIdx()))
@@ -1367,7 +1351,6 @@ namespace OpenBabel {
                     allOrderedNbrs.back().push_back(finalNbrs[i]);
                 }
             }
-            //}
 
           } // finalNbrs.size() != 1
         } // while (!nbrs.empty())
@@ -1587,16 +1570,16 @@ namespace OpenBabel {
       unsigned int offset = 0;
       for (std::size_t f = 0; f < fcodes.size(); ++f) {
         //print_vector("CODE", fcodes[f].code);
+        //print_vector("code_labels", fcodes[f].labels);
         unsigned int max_label = 0;
         for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
           if (fcodes[f].labels[i]) {
             canonical_labels[i] = fcodes[f].labels[i] + offset;
-            max_label = canonical_labels[i];
+            max_label = std::max(max_label, canonical_labels[i]);
           }
         }
         offset += max_label;
       }
-
 
     }
 
@@ -1623,10 +1606,16 @@ namespace OpenBabel {
       // consider stereochemistry. Used for finding stereo centers with automorphisms.
       CanonicalLabelsImpl::CalcCanonicalLabels(mol, symmetry_classes, canonical_labels, OBStereoUnitSet(), maskCopy, 0, maxSeconds, true);
     } else {
+      std::vector<OBBond*> metalloceneBonds;
+      findMetalloceneBonds(metalloceneBonds, mol, symmetry_classes);
+
       // Check if there are specified stereo centers.
       bool hasAtLeastOneDefined = false;
       OBStereoFacade sf(mol, false);
       FOR_ATOMS_OF_MOL (atom, mol) {
+        FOR_BONDS_OF_ATOM (bond, &*atom)
+        if (std::find(metalloceneBonds.begin(), metalloceneBonds.end(), &*bond) != metalloceneBonds.end())
+          continue;
         if (sf.HasTetrahedralStereo(atom->GetId())) {
           if (sf.GetTetrahedralStereo(atom->GetId())->GetConfig().specified) {
             hasAtLeastOneDefined = true;
