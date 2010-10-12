@@ -1228,7 +1228,7 @@ namespace OpenBabel {
         while (!nbrs.empty()) {
 
           // Select the next nbr atoms with highest symmetry classes.
-          unsigned int maxSymClass = *std::max_element(nbrSymClasses.begin(), nbrSymClasses.end());
+          unsigned int maxSymClass = *std::min_element(nbrSymClasses.begin(), nbrSymClasses.end());
           std::vector<OBAtom*> finalNbrs;
           for (std::size_t i = 0; i < nbrs.size(); ++i) {
             if (nbrSymClasses[i] == maxSymClass)
@@ -1341,7 +1341,7 @@ namespace OpenBabel {
         nextSymClasses.push_back(symmetry_classes[i]);
       }
 
-      return *std::max_element(nextSymClasses.begin(), nextSymClasses.end());
+      return *std::min_element(nextSymClasses.begin(), nextSymClasses.end());
     }
 
     /**
