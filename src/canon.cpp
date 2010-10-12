@@ -36,7 +36,7 @@ GNU General Public License for more details.
 
 #define DEBUG 0
 
-#define MAX_IDENTITY_NODES 5
+#define MAX_IDENTITY_NODES 30
 
 using namespace std;
 
@@ -397,7 +397,7 @@ namespace OpenBabel {
       /**
        * The canonical candidate code resulting from the @p labels.
        */
-      std::vector<unsigned int> code;
+      std::vector<unsigned short> code;
 
       /**
        * Default constructor, used to create initial empty bestCode object.
@@ -411,7 +411,7 @@ namespace OpenBabel {
        * of the canonical code). The other parts of the canonical code are
        * added using the CompleteCode function.
        */
-      FullCode(const std::vector<unsigned int> &_labels, const std::vector<unsigned int> &from)
+      FullCode(const std::vector<unsigned int> &_labels, const std::vector<unsigned short> &from)
           : labels(_labels), code(from)
       {
       }
@@ -455,7 +455,7 @@ namespace OpenBabel {
        * atom of a bonded fragment is not included in this list since there is
        * no "from" atom.
        */
-      std::vector<unsigned int> from;
+      std::vector<unsigned short> from;
       /**
        * The atom labels starting from 1. All atoms start with label 0.
        */
@@ -633,9 +633,11 @@ namespace OpenBabel {
     {
       State(const std::vector<unsigned int> &_symmetry_classes,
             const OBBitVec &_fragment, std::vector<StereoCenter> &_stereoCenters,
-            bool _onlyOne) : symmetry_classes(_symmetry_classes),
-          fragment(_fragment), stereoCenters(_stereoCenters), onlyOne(_onlyOne),
-          code(_symmetry_classes.size()), backtrackDepth(0)
+            const std::vector<FullCode> &_identityCodes, bool _onlyOne) :
+          symmetry_classes(_symmetry_classes), fragment(_fragment),
+          stereoCenters(_stereoCenters), onlyOne(_onlyOne),
+          code(_symmetry_classes.size()), identityCodes(_identityCodes),
+          backtrackDepth(0)
       {
       }
 
@@ -659,7 +661,7 @@ namespace OpenBabel {
       /**
        * Identity nodes of the search tree.
        */
-      std::vector<FullCode> identityNodes;
+      std::vector<FullCode> identityCodes;
       unsigned int backtrackDepth;
     };
 
@@ -844,7 +846,8 @@ namespace OpenBabel {
             }
           } else {
             // Start labeling from the ligand atom.
-            State lstate(state.symmetry_classes, ligand, state.stereoCenters, state.onlyOne);
+            std::vector<CanonicalLabelsImpl::FullCode> identityCodes;
+            State lstate(state.symmetry_classes, ligand, state.stereoCenters, identityCodes, state.onlyOne);
             lstate.code.add(nbrs[i]);
             lstate.code.labels[nbrs[i]->GetIndex()] = 1;
             CanonicalLabelsRecursive(nbrs[i], 1, timeout, lbestCode, lstate);
@@ -992,26 +995,22 @@ namespace OpenBabel {
         //print_vector("TERMINAL", fullcode.code);
 
         // if fullcode is greater than bestCode, we have found a new greatest code
-        if (fullcode > bestCode) {
-          bestCode.labels = fullcode.labels;
-          bestCode.code = fullcode.code;
-        }
-
+        if (fullcode > bestCode)
+          bestCode = fullcode;
 
         // Check previously found codes to find redundant subtrees.
-        //for (std::size_t i = 0; i < state.identityNodes.size(); ++i)
-        for (std::size_t i = state.identityNodes.size(); i > 0; --i)
-          if (fullcode.code == state.identityNodes[i-1].code) {
+        for (std::size_t i = state.identityCodes.size(); i > 0; --i)
+          if (fullcode.code == state.identityCodes[i-1].code) {
 
             std::vector<unsigned int> v1(fullcode.labels.size(), 0);
             for (std::size_t j = 0; j < fullcode.labels.size(); ++j)
               if (fullcode.labels[j])
                 v1[fullcode.labels[j]-1] = j + 1;
 
-            std::vector<unsigned int> v2(state.identityNodes[i-1].labels.size(), 0);
-            for (std::size_t j = 0; j < state.identityNodes[i-1].labels.size(); ++j)
-              if (state.identityNodes[i-1].labels[j])
-                v2[state.identityNodes[i-1].labels[j]-1] = j + 1;
+            std::vector<unsigned int> v2(state.identityCodes[i-1].labels.size(), 0);
+            for (std::size_t j = 0; j < state.identityCodes[i-1].labels.size(); ++j)
+              if (state.identityCodes[i-1].labels[j])
+                v2[state.identityCodes[i-1].labels[j]-1] = j + 1;
 
             assert( v1.size() == v2.size() );
 
@@ -1027,10 +1026,14 @@ namespace OpenBabel {
             }
           }
 
-        if (state.identityNodes.size() < MAX_IDENTITY_NODES)
-          state.identityNodes.push_back(fullcode);
-        else
-          state.identityNodes[MAX_IDENTITY_NODES-1] = fullcode;
+        if (state.identityCodes.size() < MAX_IDENTITY_NODES) {
+          state.identityCodes.push_back(FullCode());
+          state.identityCodes.back().labels.swap(fullcode.labels);
+          state.identityCodes.back().code.swap(fullcode.code);
+        } else {
+          state.identityCodes[MAX_IDENTITY_NODES-1].labels.swap(fullcode.labels);
+          state.identityCodes[MAX_IDENTITY_NODES-1].code.swap(fullcode.code);
+        }
 
         return;
       }
@@ -1352,6 +1355,7 @@ namespace OpenBabel {
 
         CanonicalLabelsImpl::Timeout timeout(maxSeconds);
         CanonicalLabelsImpl::FullCode bestCode;
+        std::vector<CanonicalLabelsImpl::FullCode> identityCodes;
         for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
           if (!fragment.BitIsSet(i+1))
             continue;
@@ -1359,7 +1363,7 @@ namespace OpenBabel {
 
           if (symmetry_classes[atom->GetIndex()] == startSymClass) {
             // Start labeling of the fragment.
-            State state(symmetry_classes, fragment, stereoCenters, onlyOne);
+            State state(symmetry_classes, fragment, stereoCenters, identityCodes, onlyOne);
             state.code.add(atom);
             state.code.labels[atom->GetIndex()] = 1;
             CanonicalLabelsRecursive(atom, 1, timeout, bestCode, state);
