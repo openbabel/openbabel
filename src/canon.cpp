@@ -36,7 +36,7 @@ GNU General Public License for more details.
 
 #define DEBUG 0
 
-#define MAX_IDENTITY_NODES 30
+#define MAX_IDENTITY_NODES 50
 
 using namespace std;
 
@@ -633,7 +633,7 @@ namespace OpenBabel {
     {
       State(const std::vector<unsigned int> &_symmetry_classes,
             const OBBitVec &_fragment, std::vector<StereoCenter> &_stereoCenters,
-            const std::vector<FullCode> &_identityCodes, bool _onlyOne) :
+            std::vector<FullCode> &_identityCodes, bool _onlyOne) :
           symmetry_classes(_symmetry_classes), fragment(_fragment),
           stereoCenters(_stereoCenters), onlyOne(_onlyOne),
           code(_symmetry_classes.size()), identityCodes(_identityCodes),
@@ -993,6 +993,7 @@ namespace OpenBabel {
         CompleteCode(mol, fullcode, state);
 
         //print_vector("TERMINAL", fullcode.code);
+        //std::cout << state.identityCodes.size() << std::endl;
 
         // if fullcode is greater than bestCode, we have found a new greatest code
         if (fullcode > bestCode)
@@ -1001,6 +1002,10 @@ namespace OpenBabel {
         // Check previously found codes to find redundant subtrees.
         for (std::size_t i = state.identityCodes.size(); i > 0; --i)
           if (fullcode.code == state.identityCodes[i-1].code) {
+            //
+            // An explicit automorphism has been found.
+            //
+            //std::cout << "Found explicit automorphism" << std::endl;
 
             std::vector<unsigned int> v1(fullcode.labels.size(), 0);
             for (std::size_t j = 0; j < fullcode.labels.size(); ++j)
@@ -1012,8 +1017,6 @@ namespace OpenBabel {
               if (state.identityCodes[i-1].labels[j])
                 v2[state.identityCodes[i-1].labels[j]-1] = j + 1;
 
-            assert( v1.size() == v2.size() );
-
             state.backtrackDepth = 0;
             for (std::size_t j = 0; j < v1.size(); ++j) {
               if (v1[j] != v2[j]) {
@@ -1024,6 +1027,7 @@ namespace OpenBabel {
               if (v1[j])
                 state.backtrackDepth++;
             }
+
           }
 
         if (state.identityCodes.size() < MAX_IDENTITY_NODES) {
@@ -1055,10 +1059,14 @@ namespace OpenBabel {
       // Find the neighbors of the current atom to assign the next label(s).
       std::vector<OBAtom*> nbrs;
       std::vector<unsigned int> nbrSymClasses;
+//      unsigned int numDuplicatedSymClasses = 0;
+
       FOR_NBORS_OF_ATOM (nbr, current) {
         // Skip atoms not in the fragment.
         if (!state.fragment.BitIsSet(nbr->GetIdx()))
           continue;
+//        if (std::count(nbrSymClasses.begin(), nbrSymClasses.end(), state.symmetry_classes[nbr->GetIndex()]) == 1)
+//          numDuplicatedSymClasses++;
         // Skip already labeled atoms.
         if (code.labels[nbr->GetIndex()])
           continue;
@@ -1119,7 +1127,6 @@ namespace OpenBabel {
         // with the same symmetry class (n), this can result in a large number
         // of permutations (n!).
         std::vector<std::vector<OBAtom*> > allOrderedNbrs(1);
-
         while (!nbrs.empty()) {
 
           // Select the next nbr atoms with highest symmetry classes.
@@ -1151,11 +1158,9 @@ namespace OpenBabel {
             std::vector<std::vector<OBAtom*> > allOrderedNbrsCopy(allOrderedNbrs);
 
             // Add the first permutation for the neighbor atoms.
-            for (std::size_t j = 0; j < allOrderedNbrsCopy.size(); ++j) {
-              if (!allOrderedNbrsCopy[j].empty())  //  <------------------------ This line needs to go away but this is a doc only update... (It's canonical but redundant!)
-                allOrderedNbrs.push_back(allOrderedNbrsCopy[j]);                        // produces   [ [1], [1,2,3], [1,3,2] ]
-              for (std::size_t i = 0; i < finalNbrs.size(); ++i) {                      // should be  [ [1,2,3], [1,3,2] ]
-                allOrderedNbrs.back().push_back(finalNbrs[i]);
+            for (std::size_t j = 0; j < allOrderedNbrs.size(); ++j) {
+              for (std::size_t i = 0; i < finalNbrs.size(); ++i) {
+                allOrderedNbrs[j].push_back(finalNbrs[i]);
               }
             }
 
@@ -1173,15 +1178,13 @@ namespace OpenBabel {
         } // while (!nbrs.empty())
 
         if (DEBUG) {
-          /*
-             cout << "allOrderedNbrs:" << endl;
-             for (std::size_t i = 0; i < allOrderedNbrs.size(); ++i) {
-             for (std::size_t j = 0; j < allOrderedNbrs[i].size(); ++j) {
-             cout << allOrderedNbrs[i][j]->GetIndex() << " ";
-             }
-             cout << endl;
-             }
-           */
+          cout << "allOrderedNbrs:" << endl;
+          for (std::size_t i = 0; i < allOrderedNbrs.size(); ++i) {
+            for (std::size_t j = 0; j < allOrderedNbrs[i].size(); ++j) {
+              cout << allOrderedNbrs[i][j]->GetIndex() << " ";
+            }
+            cout << endl;
+          }
         }
 
         for (std::size_t i = 0; i < allOrderedNbrs.size(); ++i) {
@@ -1206,17 +1209,11 @@ namespace OpenBabel {
 
           // Optimization
           if (state.backtrackDepth) {
-            if (code.atoms.size() == state.backtrackDepth) {
+            if (code.atoms.size() <= state.backtrackDepth) {
               //std::cout << "BACKTRACK DONE 3" << std::endl;
               state.backtrackDepth = 0;
-            } else
-              if (code.atoms.size() < state.backtrackDepth) {
-                //std::cout << "BACKTRACK DONE 4" << std::endl;
-                state.backtrackDepth = 0;
-              }
+            }
           }
-
-
 
         }
 
