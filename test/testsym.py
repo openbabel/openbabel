@@ -54,7 +54,7 @@ class TestTetSym(TestSym):
         self.canFindExecutable("babel")
 
         # The following all represent the same molecule
-        self.cansmi = "[C@@](Br)(Cl)(F)C"
+        self.cansmi = "C[C@](Br)(Cl)F"
         self.inchi = "InChI=1S/C2H3BrClF/c1-2(3,4)5/h1H3/t2-/m0/s1"
         self.smiles = [
              'C[C@@](Cl)(Br)F',
@@ -91,7 +91,7 @@ class TestCisTransSym(TestSym):
         self.canFindExecutable("babel")
 
         # The following all represent the same molecule
-        self.cansmi = "C(=C\\Cl)/C=C\\Br"
+        self.cansmi = "Cl/C=C/C=C\\Br"
         self.inchi = "InChI=1S/C4H4BrCl/c5-3-1-2-4-6/h1-4H/b3-1-,4-2+"
         self.smiles = [
                 "C(=C\C=C/Br)/Cl",
@@ -109,7 +109,7 @@ class TestLonePairTetSym(TestSym):
         self.canFindExecutable("babel")
 
         # The following all represent the same molecule
-        self.cansmi = "[S@@](=O)(Cl)C"
+        self.cansmi = "C[S@](=O)Cl"
         self.inchi = "InChI=1S/CH3ClOS/c1-4(2)3/h1H3/t4-/m0/s1"
         self.smiles = [
                 self.cansmi,
@@ -125,7 +125,7 @@ class TestRingBondCisTransSym(TestSym):
         self.canFindExecutable("babel")
 
         # The following all represent the same molecule
-        self.cansmi = r"C\1(=C\I)/NC1"
+        self.cansmi = r"I/C=C/1\CN1"
         self.inchi = "InChI=1S/C3H4IN/c4-1-3-2-5-3/h1,5H,2H2/b3-1+"
         self.smiles = [
                 self.cansmi,
@@ -140,18 +140,18 @@ class TestConversions(BaseTest):
     def setUp(self):
         self.canFindExecutable("babel")
         self.data = [
-('ClC=CF', 'C(=CCl)F',       'InChI=1S/C2H2ClF/c3-1-2-4/h1-2H'),
-('Cl/C=C/F', 'C(=C\\Cl)/F',   'InChI=1S/C2H2ClF/c3-1-2-4/h1-2H/b2-1+'),
-('Cl/C=C\\F', 'C(=C\\Cl)\\F', 'InChI=1S/C2H2ClF/c3-1-2-4/h1-2H/b2-1-'),
-('Cl[C@@](Br)(F)I', '[C@@](I)(Br)(Cl)F', 'InChI=1S/CBrClFI/c2-1(3,4)5/t1-/m0/s1'),
-('Cl[C@](Br)(F)I', '[C@](I)(Br)(Cl)F',   'InChI=1S/CBrClFI/c2-1(3,4)5/t1-/m1/s1'),
-('ClC(Br)(F)I', 'C(I)(Br)(Cl)F',         'InChI=1S/CBrClFI/c2-1(3,4)5'),
-('O=[S@@](Cl)I', "[S@@](=O)(I)Cl", "InChI=1S/ClIOS/c1-4(2)3/t4-/m0/s1"),
-('O=[S@](Cl)I', "[S@](=O)(I)Cl", "InChI=1S/ClIOS/c1-4(2)3/t4-/m1/s1"),
-('O=S(Cl)I', "S(=O)(I)Cl", "InChI=1S/ClIOS/c1-4(2)3"),
-(r"IC=C1NC1", r"C1(=CI)NC1", "InChI=1S/C3H4IN/c4-1-3-2-5-3/h1,5H,2H2"),
-(r"I/C=C\1/NC1", r"C\1(=C\I)/NC1", "InChI=1S/C3H4IN/c4-1-3-2-5-3/h1,5H,2H2/b3-1+"),
-(r"I/C=C/1\NC1", r"C\1(=C/I)/NC1", "InChI=1S/C3H4IN/c4-1-3-2-5-3/h1,5H,2H2/b3-1-"),
+('ClC=CF', 'FC=CCl',       'InChI=1S/C2H2ClF/c3-1-2-4/h1-2H'),
+('Cl/C=C/F', 'F/C=C/Cl',   'InChI=1S/C2H2ClF/c3-1-2-4/h1-2H/b2-1+'),
+(r"Cl/C=C\F", r"F/C=C\Cl", 'InChI=1S/C2H2ClF/c3-1-2-4/h1-2H/b2-1-'),
+('Cl[C@@](Br)(F)I', 'F[C@](I)(Br)Cl', 'InChI=1S/CBrClFI/c2-1(3,4)5/t1-/m0/s1'),
+('Cl[C@](Br)(F)I', 'F[C@@](I)(Br)Cl',   'InChI=1S/CBrClFI/c2-1(3,4)5/t1-/m1/s1'),
+('ClC(Br)(F)I', 'FC(I)(Br)Cl',         'InChI=1S/CBrClFI/c2-1(3,4)5'),
+('O=[S@@](Cl)I', "Cl[S@](=O)I", "InChI=1S/ClIOS/c1-4(2)3/t4-/m0/s1"),
+('O=[S@](Cl)I', "Cl[S@@](=O)I", "InChI=1S/ClIOS/c1-4(2)3/t4-/m1/s1"),
+('O=S(Cl)I', "ClS(=O)I", "InChI=1S/ClIOS/c1-4(2)3"),
+(r"IC=C1NC1", r"IC=C1CN1", "InChI=1S/C3H4IN/c4-1-3-2-5-3/h1,5H,2H2"),
+(r"I/C=C\1/NC1", r"I/C=C/1\CN1", "InChI=1S/C3H4IN/c4-1-3-2-5-3/h1,5H,2H2/b3-1+"),
+(r"I/C=C/1\NC1", r"I/C=C\1/CN1", "InChI=1S/C3H4IN/c4-1-3-2-5-3/h1,5H,2H2/b3-1-"),
 ]
         
     def testSMILEStoInChI(self):
@@ -263,7 +263,7 @@ class TestStereoConversion(BaseTest):
         # Note to self: Need to ensure that roundtripping through the various
         # 2D and 3D formats works. In the meanwhile, this test at least ensures
         # that SMILES reading and writing works fine.
-        can = '[S@@](=O)(Cl)C'
+        can = 'C[S@](=O)Cl'
         smiles = [can, '[S@](Cl)(=O)C', 'O=[S@](Cl)C']
         for smile in smiles:
             output, error = run_exec(smile, "babel -ismi -ocan")
