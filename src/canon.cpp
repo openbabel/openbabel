@@ -384,6 +384,10 @@ namespace OpenBabel {
 
   struct CanonicalLabelsImpl
   {
+    typedef std::vector<OBAtom*> Orbit;
+    typedef std::vector<Orbit> Orbits;
+
+
     /**
      * Structure to represent a completed labeling and it's associated canonical
      * candidate code.
@@ -633,12 +637,15 @@ namespace OpenBabel {
     {
       State(const std::vector<unsigned int> &_symmetry_classes,
             const OBBitVec &_fragment, std::vector<StereoCenter> &_stereoCenters,
-            std::vector<FullCode> &_identityCodes, bool _onlyOne) :
-          symmetry_classes(_symmetry_classes), fragment(_fragment),
+            std::vector<FullCode> &_identityCodes, Orbits &_orbits, OBBitVec &_mcr,
+            bool _onlyOne) : symmetry_classes(_symmetry_classes), fragment(_fragment),
           stereoCenters(_stereoCenters), onlyOne(_onlyOne),
           code(_symmetry_classes.size()), identityCodes(_identityCodes),
-          backtrackDepth(0)
+          backtrackDepth(0), orbits(_orbits), mcr(_mcr)
       {
+        if (mcr.IsEmpty())
+          for (std::size_t i = 0; i < symmetry_classes.size(); ++i)
+            mcr.SetBitOn(i+1);
       }
 
       const std::vector<unsigned int> &symmetry_classes;
@@ -661,8 +668,10 @@ namespace OpenBabel {
       /**
        * Identity nodes of the search tree.
        */
-      std::vector<FullCode> identityCodes;
+      std::vector<FullCode> &identityCodes;
       unsigned int backtrackDepth;
+      Orbits &orbits;
+      OBBitVec &mcr;
     };
 
     /**
@@ -847,7 +856,9 @@ namespace OpenBabel {
           } else {
             // Start labeling from the ligand atom.
             std::vector<CanonicalLabelsImpl::FullCode> identityCodes;
-            State lstate(state.symmetry_classes, ligand, state.stereoCenters, identityCodes, state.onlyOne);
+            Orbits orbits;
+            OBBitVec mcr;
+            State lstate(state.symmetry_classes, ligand, state.stereoCenters, identityCodes, orbits, mcr, state.onlyOne);
             lstate.code.add(nbrs[i]);
             lstate.code.labels[nbrs[i]->GetIndex()] = 1;
             CanonicalLabelsRecursive(nbrs[i], 1, timeout, lbestCode, lstate);
@@ -953,6 +964,92 @@ namespace OpenBabel {
       }
     }
 
+    static void FindOrbits(Orbits &orbits, OBMol *mol, const std::vector<unsigned int> &labels1,
+        const std::vector<unsigned int> &labels2)
+    {
+      Orbits newOrbits;
+      std::vector<bool> visited(labels1.size(), false);
+
+      // Construct the orbits for automorphic permutation labels1 -> labels2
+      for (std::size_t i = 0; i < labels1.size(); ++i) {
+        if (visited[i])
+          continue;
+        unsigned int vi = labels1[i];
+        if (vi == labels2[i])
+          continue;
+        //cout << "( ";
+        std::size_t j = i;
+        unsigned int vj = labels2[j];
+        //cout << j << " ";
+        newOrbits.resize(newOrbits.size()+1);
+        newOrbits.back().push_back(mol->GetAtom(j+1));
+        visited[i] = true;
+        while (vi != vj) {
+          for (std::size_t k = i; k < labels1.size(); ++k) {
+            if (vj == labels1[k]) {
+              j = k;
+              vj =  labels2[j];
+              //cout << j << " ";
+              newOrbits.back().push_back(mol->GetAtom(j+1));
+              visited[j] = true;
+              break;
+            }
+          }
+        }
+        //cout << ") ";
+      }
+      //cout << endl;
+
+      // Merge the orbits with previously found orbits.
+      for (std::size_t j = 0; j < newOrbits.size(); ++j) {
+        bool merge = false;
+        for (std::size_t k = 0; k < orbits.size(); ++k) {
+
+          for (std::size_t l = 0; l < newOrbits[j].size(); ++l) {
+            if (std::find(orbits[k].begin(), orbits[k].end(), newOrbits[j][l]) != orbits[k].end())
+              merge = true;
+          }
+
+          if (merge) {
+            for (std::size_t l = 0; l < newOrbits[j].size(); ++l)
+              if (std::find(orbits[k].begin(), orbits[k].end(), newOrbits[j][l]) == orbits[k].end())
+                orbits[k].push_back(newOrbits[j][l]);
+            break;
+          }
+        }
+
+        if (!merge)
+          orbits.push_back(newOrbits[j]);
+      }
+
+    }
+
+    /**
+     * Update the minimum cell representations (mcr).
+     */
+    static void UpdateMcr(OBBitVec &mcr, Orbits &orbits, OBMol *mol, const std::vector<unsigned int> &bestLabels)
+    {
+      /*
+      for (std::size_t j = 0; j < orbits.size(); ++j) {
+        cout << "( ";
+        for (std::size_t k = 0; k < orbits[j].size(); ++k)
+          cout << orbits[j][k]->GetIndex() << " ";
+        cout << ") ";
+      }
+      cout << endl;
+      */
+      for (std::size_t i = 0; i < bestLabels.size(); ++i)
+        mcr.SetBitOn(i+1);
+
+      for (std::size_t j = 0; j < orbits.size(); ++j) {
+        std::sort(orbits[j].begin(), orbits[j].end(), SortAtomsAscending(bestLabels));
+
+        for (std::size_t k = 0; k < orbits[j].size(); ++k)
+          if (k)
+            mcr.SetBitOff(orbits[j][k]->GetIdx());
+      }
+    }
+
 
     /**
      * This is the recursive function implementing the labeling algorithm
@@ -992,12 +1089,8 @@ namespace OpenBabel {
         FullCode fullcode;
         CompleteCode(mol, fullcode, state);
 
-        //print_vector("TERMINAL", fullcode.code);
+//        print_vector("TERMINAL", fullcode.code);
         //std::cout << state.identityCodes.size() << std::endl;
-
-        // if fullcode is greater than bestCode, we have found a new greatest code
-        if (fullcode > bestCode)
-          bestCode = fullcode;
 
         // Check previously found codes to find redundant subtrees.
         for (std::size_t i = state.identityCodes.size(); i > 0; --i)
@@ -1005,8 +1098,6 @@ namespace OpenBabel {
             //
             // An explicit automorphism has been found.
             //
-            //std::cout << "Found explicit automorphism" << std::endl;
-
             std::vector<unsigned int> v1(fullcode.labels.size(), 0);
             for (std::size_t j = 0; j < fullcode.labels.size(); ++j)
               if (fullcode.labels[j])
@@ -1030,6 +1121,15 @@ namespace OpenBabel {
 
           }
 
+        if (fullcode.code == bestCode.code) {
+          FindOrbits(state.orbits, mol, fullcode.labels, bestCode.labels);
+          UpdateMcr(state.mcr, state.orbits, mol, bestCode.labels);
+        } else if (fullcode > bestCode) {
+          // if fullcode is greater than bestCode, we have found a new greatest code
+          bestCode = fullcode;
+        }
+
+
         if (state.identityCodes.size() < MAX_IDENTITY_NODES) {
           state.identityCodes.push_back(FullCode());
           state.identityCodes.back().labels.swap(fullcode.labels);
@@ -1038,6 +1138,7 @@ namespace OpenBabel {
           state.identityCodes[MAX_IDENTITY_NODES-1].labels.swap(fullcode.labels);
           state.identityCodes[MAX_IDENTITY_NODES-1].code.swap(fullcode.code);
         }
+
 
         return;
       }
@@ -1059,14 +1160,11 @@ namespace OpenBabel {
       // Find the neighbors of the current atom to assign the next label(s).
       std::vector<OBAtom*> nbrs;
       std::vector<unsigned int> nbrSymClasses;
-//      unsigned int numDuplicatedSymClasses = 0;
 
       FOR_NBORS_OF_ATOM (nbr, current) {
         // Skip atoms not in the fragment.
         if (!state.fragment.BitIsSet(nbr->GetIdx()))
           continue;
-//        if (std::count(nbrSymClasses.begin(), nbrSymClasses.end(), state.symmetry_classes[nbr->GetIndex()]) == 1)
-//          numDuplicatedSymClasses++;
         // Skip already labeled atoms.
         if (code.labels[nbr->GetIndex()])
           continue;
@@ -1158,20 +1256,22 @@ namespace OpenBabel {
             std::vector<std::vector<OBAtom*> > allOrderedNbrsCopy(allOrderedNbrs);
 
             // Add the first permutation for the neighbor atoms.
-            for (std::size_t j = 0; j < allOrderedNbrs.size(); ++j) {
-              for (std::size_t i = 0; i < finalNbrs.size(); ++i) {
-                allOrderedNbrs[j].push_back(finalNbrs[i]);
+//            if (state.mcr.BitIsSet(finalNbrs[0]->GetIdx()))
+              for (std::size_t j = 0; j < allOrderedNbrs.size(); ++j) {
+                for (std::size_t i = 0; i < finalNbrs.size(); ++i) {
+                  allOrderedNbrs[j].push_back(finalNbrs[i]);
+                }
               }
-            }
 
             // Add the other permutations.
             while (std::next_permutation(finalNbrs.begin(), finalNbrs.end())) {
-              for (std::size_t j = 0; j < allOrderedNbrsCopy.size(); ++j) {
-                allOrderedNbrs.push_back(allOrderedNbrsCopy[j]);
-                for (std::size_t i = 0; i < finalNbrs.size(); ++i) {
-                  allOrderedNbrs.back().push_back(finalNbrs[i]);
+              if (state.mcr.BitIsSet(finalNbrs[0]->GetIdx()))
+                for (std::size_t j = 0; j < allOrderedNbrsCopy.size(); ++j) {
+                  allOrderedNbrs.push_back(allOrderedNbrsCopy[j]);
+                  for (std::size_t i = 0; i < finalNbrs.size(); ++i) {
+                    allOrderedNbrs.back().push_back(finalNbrs[i]);
+                  }
                 }
-              }
             }
 
           } // finalNbrs.size() != 1
@@ -1353,6 +1453,9 @@ namespace OpenBabel {
         CanonicalLabelsImpl::Timeout timeout(maxSeconds);
         CanonicalLabelsImpl::FullCode bestCode;
         std::vector<CanonicalLabelsImpl::FullCode> identityCodes;
+        Orbits orbits;
+        OBBitVec mcr;
+
         for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
           if (!fragment.BitIsSet(i+1))
             continue;
@@ -1360,7 +1463,7 @@ namespace OpenBabel {
 
           if (symmetry_classes[atom->GetIndex()] == startSymClass) {
             // Start labeling of the fragment.
-            State state(symmetry_classes, fragment, stereoCenters, identityCodes, onlyOne);
+            State state(symmetry_classes, fragment, stereoCenters, identityCodes, orbits, mcr, onlyOne);
             state.code.add(atom);
             state.code.labels[atom->GetIndex()] = 1;
             CanonicalLabelsRecursive(atom, 1, timeout, bestCode, state);
