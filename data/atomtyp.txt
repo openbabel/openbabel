@@ -146,7 +146,8 @@ IMPVAL  [#15D0]                   3
 IMPVAL  [$([#15]=[#6])]           2
 IMPVAL  [pD2]                     2
 IMPVAL  [$([#15]=[#8])]           4 # phosphinate (double bond = one valence)
-IMPVAL  [$([#15+](=[#8])([#8]))]      0 # R-P+O2
+IMPVAL  [$([#15](=[#8])=[#8])]    3 # metaphosphate (double bond = one valence)
+IMPVAL  [$([#15+](=[#8])([#8]))]  0 # R-P+O2
 
 IMPVAL  [#16]                     2 #revised CM April 2008
 IMPVAL  [$([#16D1]=*)]            1 

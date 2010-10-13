@@ -352,8 +352,11 @@ namespace OpenBabel
     else
       iso = 0;
 
-    snprintf(buffer, BUFF_SIZE, "Cannot understand the element label %s.", identifier);
-    obErrorLog.ThrowError(__FUNCTION__, buffer, obWarning);
+    if(identifier[0]!='*')
+      {
+        snprintf(buffer, BUFF_SIZE, "Cannot understand the element label %s.", identifier);
+        obErrorLog.ThrowError(__FUNCTION__, buffer, obWarning);
+      }
     return(0);
   }
 
