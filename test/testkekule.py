@@ -64,7 +64,7 @@ class TestKekuleIsotope(BaseTest):
         # A series of isotopamers, and their canonical forms
         self.smiles = [
             'c1ccccc1',
-            'c1[14cH]cccc1',
+            '[14cH]1ccccc1',
             '[14cH]1[14cH]cccc1',
             '[14cH]1[14cH]ccc[14cH]1',
             '[14cH]1[14cH]cc[14cH][14cH]1',
@@ -73,11 +73,11 @@ class TestKekuleIsotope(BaseTest):
             ]
         self.cansmis = [
             'c1ccccc1',
-            '[14cH]1ccccc1',
-            '[14cH]1[14cH]cccc1',
-            '[14cH]1[14cH]ccc[14cH]1',
-            '[14cH]1[14cH][14cH]cc[14cH]1',
-            '[14cH]1[14cH][14cH]c[14cH][14cH]1',
+            'c1[14cH]cccc1',
+            'c1[14cH][14cH]ccc1',
+            'c1[14cH][14cH][14cH]cc1',
+            'c1[14cH][14cH][14cH][14cH]c1',
+            'c1[14cH][14cH][14cH][14cH][14cH]1',
             '[14cH]1[14cH][14cH][14cH][14cH][14cH]1',
             ]
         for i in range(0, len(self.smiles)):

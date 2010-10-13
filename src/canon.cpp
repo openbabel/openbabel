@@ -130,9 +130,6 @@ namespace OpenBabel {
 
 
 
-
-
-
   bool isFerroceneBond(OBBond *bond)
   {
     if (bond->GetBondOrder() != 1)
@@ -793,8 +790,13 @@ namespace OpenBabel {
           hasIsotope = true;
         if (atom->GetFormalCharge())
           hasCharge = true;
+
+        unsigned int c = 10000 * atom->GetSpinMultiplicity() +
+                          1000 * atom->ExplicitHydrogenCount() +
+                                 atom->GetAtomicNum();
+
         // add the atomic number to the code
-        fullcode.code.push_back(atom->GetAtomicNum());
+        fullcode.code.push_back(c);
       }
 
       //
@@ -1402,24 +1404,41 @@ namespace OpenBabel {
     /**
      * Select an initial atom from a fragment to assign the first label.
      */
-    static unsigned int findStartSymmetryClass(OBMol *mol, const OBBitVec &fragment, const std::vector<unsigned int> &symmetry_classes)
+    static std::vector<OBAtom*> findStartAtoms(OBMol *mol, const OBBitVec &fragment, const std::vector<unsigned int> &symmetry_classes)
     {
       // find the a symmetry class in the fragment using criteria
-      std::vector<unsigned int> nextSymClasses;
+      std::vector<unsigned int> ranks;
       for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
         if (!fragment.BitIsSet(i+1))
           continue;
 
-        /*
         OBAtom *atom = mol->GetAtom(i+1);
-        if (atom->GetFormalCharge())
-          continue;
-          */
+        unsigned int rank = 10000 * symmetry_classes[i]  +
+                             1000 * atom->GetSpinMultiplicity() +
+                               10 * (atom->GetFormalCharge() + 7) +
+                                    atom->ExplicitHydrogenCount();
 
-        nextSymClasses.push_back(symmetry_classes[i]);
+        ranks.push_back(rank);
       }
 
-      return *std::min_element(nextSymClasses.begin(), nextSymClasses.end());
+      unsigned int lowestRank = *std::min_element(ranks.begin(), ranks.end());
+
+      std::vector<OBAtom*> result;
+      for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
+        if (!fragment.BitIsSet(i+1))
+          continue;
+
+        OBAtom *atom = mol->GetAtom(i+1);
+        unsigned int rank = 10000 * symmetry_classes[i]  +
+                             1000 * atom->GetSpinMultiplicity() +
+                               10 * (atom->GetFormalCharge() + 7) +
+                                    atom->ExplicitHydrogenCount();
+
+        if (rank == lowestRank)
+          result.push_back(atom);
+      }
+
+      return result;
     }
 
     /**
@@ -1529,7 +1548,7 @@ namespace OpenBabel {
         const OBBitVec &fragment = fragments[f];
 
         // Select the first atom.
-        unsigned int startSymClass = findStartSymmetryClass(mol, fragment, symmetry_classes);
+        std::vector<OBAtom*> startAtoms = findStartAtoms(mol, fragment, symmetry_classes);
 
         CanonicalLabelsImpl::Timeout timeout(maxSeconds);
         CanonicalLabelsImpl::FullCode bestCode;
@@ -1537,21 +1556,17 @@ namespace OpenBabel {
         Orbits orbits;
         OBBitVec mcr;
 
-        for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
-          if (!fragment.BitIsSet(i+1))
-            continue;
-          OBAtom *atom = mol->GetAtom(i+1);
+        for (std::size_t i = 0; i < startAtoms.size(); ++i) {
+          OBAtom *atom = startAtoms[i];
 
-          if (symmetry_classes[atom->GetIndex()] == startSymClass) {
-            // Start labeling of the fragment.
-            State state(symmetry_classes, fragment, stereoCenters, identityCodes, orbits, mcr, onlyOne);
-//            if (!state.mcr.BitIsSet(atom->GetIdx()) && atom->IsInRing())
-//              continue;
+          // Start labeling of the fragment.
+          State state(symmetry_classes, fragment, stereoCenters, identityCodes, orbits, mcr, onlyOne);
+          //if (!state.mcr.BitIsSet(atom->GetIdx()) && atom->IsInRing())
+          //  continue;
 
-            state.code.add(atom);
-            state.code.labels[atom->GetIndex()] = 1;
-            CanonicalLabelsRecursive(atom, 1, timeout, bestCode, state);
-          }
+          state.code.add(atom);
+          state.code.labels[atom->GetIndex()] = 1;
+          CanonicalLabelsRecursive(atom, 1, timeout, bestCode, state);
         }
 
         // Throw an error if the timeout is exceeded.
