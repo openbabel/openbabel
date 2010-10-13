@@ -1850,29 +1850,23 @@ namespace OpenBabel {
             break;
           case '-':
             _ptr++;
-            if (isdigit(*_ptr))
-              {
-                tmpc[0] = *_ptr;
-                charge = -atoi(tmpc);
-              }
-            else
+            if (!isdigit(*_ptr))
               {
                 charge--;
                 _ptr--;
               }
+            while( isdigit(*_ptr) ) // go number by number
+              charge = charge*10 - ((*_ptr++)-'0');
             break;
           case '+':
             _ptr++;
-            if (isdigit(*_ptr))
-              {
-                tmpc[0] = *_ptr;
-                charge = atoi(tmpc);
-              }
-            else
+            if (!isdigit(*_ptr))
               {
                 charge++;
                 _ptr--;
               }
+            while( isdigit(*_ptr) ) // go number by number
+              charge = charge*10 + ((*_ptr++)-'0');
             break;
 
           case 'H':
