@@ -273,7 +273,7 @@ namespace OpenBabel
             rs.SortRings();
             rs.RemoveRedundant(-1); // -1 means LSSR
 
-            //store the SSSR set
+            //store the LSSR set
 
             for (j = rs.BeginRings();j != rs.EndRings();++j)
               {
@@ -338,6 +338,9 @@ namespace OpenBabel
             _rlist.erase(_rlist.begin()+i);
             break;
           }
+
+    if (_rlist.size() == 0)
+      return; // nothing to do
 
     // handle LSSR
     if (frj < 0) {
