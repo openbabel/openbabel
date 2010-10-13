@@ -33,6 +33,7 @@ set(BABEL_DATADIR  "${CMAKE_INSTALL_PREFIX}/share/openbabel")
 option(ENABLE_VERSIONED_FORMATS
   "Enable versioning of the format plugin directory" ON)
 
+
 # Set up our path handling, inspired by the path handling used in KDE
 set(BIN_INSTALL_DIR      "bin"
     CACHE PATH "Install dir for binaries")
@@ -71,12 +72,31 @@ file(REMOVE "${OB_EXPORTS_FILE}")
 # Place binaries and libraries in the root of the build directory
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
   CACHE STRING "Binary build output directory")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
-  CACHE STRING "Library build output directory")
+if(UNIX)
+  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
+    CACHE STRING "Library build output directory")
+else() # This is preferable on WIndows for example - bin = lib directory.
+  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+    CACHE STRING "Library build output directory")
+endif()
+  
 mark_as_advanced(CMAKE_LIBRARY_OUTPUT_DIRECTORY
   CMAKE_RUNTIME_OUTPUT_DIRECTORY)
 
-option(WITH_INCHI   "build inchi lib" ON)
+# Should we attempt to use the system inchi library?
+option(WITH_INCHI   "Build inchi support" ON)
+option(OPENBABEL_USE_SYSTEM_INCHI
+  "Use the system inchi library." OFF)
+if(OPENBABEL_USE_SYSTEM_INCHI)
+  find_package(Inchi REQUIRED)
+  if (NOT INCHI_FOUND)
+    message(FATAL_ERROR "Inchi library not found.")
+  endif()
+else()
+  message("Using included inchi library.")
+  set(INCHI_LIBRARIES inchi)
+endif()
+
 option(BUILD_SHARED "enable shared build support" ON)
 option(BUILD_MIXED "enable linux relocatable binaries support" OFF)
 if(BUILD_SHARED)
@@ -105,7 +125,6 @@ endif(WIN32)
 
 # configure checks
 find_package(LibXml2)
-
 
 find_package(ZLIB)
 if(ZLIB_FOUND)
