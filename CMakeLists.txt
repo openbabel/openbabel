@@ -367,7 +367,7 @@ add_subdirectory(tools)
 # Should we build the GUI? Default is yes on Linux or Windows, not Mac.
 if (APPLE)
 option(BUILD_GUI "Build the GUI" OFF)
-elseif (APPLE)
+else (APPLE)
 option(BUILD_GUI "Build the GUI" ON)
 endif(APPLE)
 
@@ -379,7 +379,7 @@ if(BUILD_GUI)
   else(wxWidgets_FOUND)
     message("   wxWidgets not found => GUI will not be built")
   endif(wxWidgets_FOUND)
-elseif(BUILD_GUI)
+else(BUILD_GUI)
   message("GUI will not be built")
 endif(BUILD_GUI)
 
