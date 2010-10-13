@@ -1851,24 +1851,19 @@ namespace OpenBabel {
           case '-':
             _ptr++;
             if (!isdigit(*_ptr))
-              {
-                charge--;
-                _ptr--;
-              }
+              charge--;
             while( isdigit(*_ptr) ) // go number by number
               charge = charge*10 - ((*_ptr++)-'0');
+            _ptr--;
             break;
           case '+':
             _ptr++;
             if (!isdigit(*_ptr))
-              {
-                charge++;
-                _ptr--;
-              }
+              charge++;
             while( isdigit(*_ptr) ) // go number by number
               charge = charge*10 + ((*_ptr++)-'0');
+            _ptr--;
             break;
-
           case 'H':
             _ptr++;
             if (isdigit(*_ptr))
