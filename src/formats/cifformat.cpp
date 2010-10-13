@@ -53,7 +53,7 @@ namespace OpenBabel
       return
         "Crystallographic Information File\n"
         "The CIF file format is the standard interchange format for small-molecule chemical structures\n\n"
-        "Read Options e.g. -b:\n"
+        "Read Options e.g. -ab:\n"
         "  v  Verbose CIF conversion\n"
         "  s  Output single bonds only\n"
         "  b  Disable bonding entirely\n"
