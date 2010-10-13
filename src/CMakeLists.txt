@@ -167,16 +167,6 @@ set(openbabel_library_srcs
   ${headers}
   "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h"
   )
-if(NOT MSVC AND BUILD_SHARED)
-  set(openbabel_library_srcs
-    ${openbabel_library_srcs}
-    ${charges}
-    ${descriptors}
-    ${fingerprints}
-    ${forcefields}
-    ${ops}
-    )
-endif(NOT MSVC AND BUILD_SHARED)
 
 if(WIN32)
   set(libs ${libs} ${ZLIB_LIBRARY})
@@ -230,7 +220,7 @@ install(TARGETS openbabel
   ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
 )
 
-if(MSVC AND BUILD_SHARED)
+if(BUILD_SHARED)
   foreach(plugingroup descriptors fingerprints forcefields ops charges)
     add_library(plugin_${plugingroup} ${PLUGIN_TYPE} ${${plugingroup}}
       "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h")
@@ -242,9 +232,8 @@ if(MSVC AND BUILD_SHARED)
     set_target_properties(plugin_${plugingroup} PROPERTIES
       OUTPUT_NAME plugin_${plugingroup}
       PREFIX ""
-      SUFFIX ${MODULE_EXTENSION}
-      LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+      SUFFIX ${MODULE_EXTENSION})
   endforeach(plugingroup)
-endif(MSVC AND BUILD_SHARED)
+endif(BUILD_SHARED)
 
 add_subdirectory(formats)
