@@ -552,7 +552,8 @@ namespace OpenBabel {
           //cout << "OK: " << __LINE__ << endl;
           return true;
         } else {
-          assert(paraBond.outsideNbrs.size() == 2);
+          if (paraBond.outsideNbrs.size() != 2)
+            continue;
           // two ring substituents, need to check for topological difference
           if (symmetry_classes[paraBond.outsideNbrs[0]->GetIndex()] != symmetry_classes[paraBond.outsideNbrs[1]->GetIndex()]) {
             // they are different
@@ -889,7 +890,8 @@ namespace OpenBabel {
           }
 
           //cout << "  ParaAtom(idx = " << ring.paraAtoms.back().inIdx << ", outside = " << ring.paraAtoms.back().outsideNbrs.size() << ")" << endl;
-          assert( ring.paraAtoms.back().insideNbrs.size() == 2 );
+          if (ring.paraAtoms.back().insideNbrs.size() != 2)
+            ring.paraAtoms.pop_back();
         }
       }
 
@@ -913,7 +915,8 @@ namespace OpenBabel {
           }
 
           //cout << "  ParaBond(inIdx = " << beginIdx << ", outIdx = " << endIdx << ", outside = " << ring.paraBonds.back().outsideNbrs.size() << ")" << endl;
-          assert( ring.paraBonds.back().insideNbrs.size() == 2 );
+          if (ring.paraBonds.back().insideNbrs.size() != 2)
+            ring.paraBonds.pop_back();
         }
 
         if (lssr[i]->_pathset.BitIsSet(endIdx)) {
@@ -931,7 +934,8 @@ namespace OpenBabel {
           }
 
           //cout << "  ParaBond(inIdx = " << endIdx << ", outIdx = " << beginIdx << ", outside = " << ring.paraBonds.back().outsideNbrs.size() << ")" << endl;
-          assert( ring.paraBonds.back().insideNbrs.size() == 2 );
+          if (ring.paraBonds.back().insideNbrs.size() != 2)
+            ring.paraBonds.pop_back();
         }
 
       }
