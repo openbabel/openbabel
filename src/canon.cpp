@@ -1586,6 +1586,9 @@ namespace OpenBabel {
       for (std::size_t f = 0; f < fcodes.size(); ++f) {
         //print_vector("CODE", fcodes[f].code);
         //print_vector("code_labels", fcodes[f].labels);
+        if (fcodes[f].labels.size() == 0)
+          continue; // defensive programming
+
         unsigned int max_label = 0;
         for (std::size_t i = 0; i < mol->NumAtoms(); ++i) {
           if (fcodes[f].labels[i]) {
