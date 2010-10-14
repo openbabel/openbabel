@@ -31,6 +31,85 @@ using temperf::erf;
 
 namespace OpenBabel
 {
+
+  /*! \class QEqCharges qeq.h "qeq.h" 
+   
+    \brief Assigns partial charges according to the charge equilibration (QEq) model of Rappé and Goddard, 1991.
+    
+    The QEq model solves for charges by minimizing an energy function of the form
+    
+    \f[
+
+    E\left(\mathbf{q}\right)=\mathbf{q}\cdot\boldsymbol{\chi}+\frac{1}{2}\mathbf{q}\boldsymbol{\eta}\mathbf{q}
+
+    \f]
+
+    where \f$\mathbf q\f$ is the vector of atomic charges, \f$\boldsymbol \chi\f$ are atomic electronegativities
+    and \f$\boldsymbol \eta \f$ is the matrix of Coulomb interactions with chemical hardnesses along the diagonal,
+    such that the overall charge is \f$Q\f$, i.e.
+
+    \f[
+
+    \mathbf{q} \cdot \mathbf{1} = \sum_{i=1}^N q_i = Q
+
+    \f]
+
+	in the current implementation, we assume \f$Q = 0\f$ always.
+
+    The off-diagonal Coulomb interactions are screened using the following integral
+    
+    \f[
+
+    \eta_{ij}=\int\frac{\phi_{i}^{2}\left(\mathbf{r}\right)\phi_{j}^{2}\left(\mathbf{r}^{\prime}\right)}
+          {\left|\mathbf{r}-\mathbf{r}^{\prime}\right|}d^{3}\mathbf{r}d^{3}\mathbf{r}^{\prime}
+
+    \f]
+
+    where the orbitals \f$ \phi_{i}(\mathbf{r}) \f$ are s-type Gaussian orbitals (GTOs) of the form
+
+    \f[
+
+    \phi_i\left(\mathbf{r}\right)=\left(\frac{2}{\pi\sigma_{i}^{2}}\right)^{3/4}
+          \exp\left(-\frac{\left|\mathbf{r}-\mathbf{R}_{i}\right|^{2}}{\sigma_{i}^{2}}\right)
+    
+    \f]
+
+    where \f$ \sigma_i \f$ is the Gaussian screening radius and \f$ \mathbf R_i \f$ is the Cartesian coordinate of atom \f$ i \f$. 
+
+    The parameters in this model are the atomic electronegativities \$f \chi_i = \chi_i^0 \$f in volts (V),
+    hardnesses \$f \eta_{ii} = \eta_i^0 \f$ in V/e, and screening radii \$f \sigma_i \$f in Angstroms.
+
+    The default parameter set uses the published values for the elements H, Li, C, N, O, F, Na, Si, P, S, Cl, K, Br, Rb, I and Cs.
+    Other parameters are taken from the unpublished values that are distributed with UFF. 
+
+    Reference:
+      A. K. Rappé and W. A. Goddard, III, J. Phys. Chem. 95 (1991): 3358-3363.
+      doi:10.1021/j100161a070
+   
+      The method of solving the model is given by
+      J. Chen and T. J. Martínez, J. Chem. Phys. 131 (2009): 044114.
+      doi:10.1063/1.3183167
+
+    \note This code differs from the published description in two ways:
+
+    \par 1. This code does _not_ compute the charge-dependent chemical hardness and screening exponent for hydrogen
+    which is specified in the original publication. Instead, they are set to the \f$q = 0\f$ parameters regardless
+    of the actual charge on hydrogen.
+
+    \par 2. The screening of the Coulomb interaction is not calculated in terms of Slater-type orbitals,
+    but rather recast in terms of Gaussian-type orbitals that are chosen to best reproduce the Coulomb integrals.
+    The maximum error in this approximation is on the order of 0.01 Hartree/e^2, which is on par with the level
+    of accuracy upon which the original parameters were chosen.
+
+    \par The procedure is described in:
+      J. Chen and T. J. Martínez, Prog. Theor. Chem. Phys. 19 (2009): 397-416.
+      doi:10.1007/978-90-481-2596-8_19
+
+    \author Jiahao Chen
+    
+    \since version 2.3.
+  */    
+    
   /////////////////////////////////////////////////////////////////
   QEqCharges theQEqCharges("qeq"); //Global instance
 
@@ -60,15 +139,20 @@ namespace OpenBabel
       if (vs.size() < 6)
         continue;
 
-      // Element, n, Xi, Hardness, Slater, Gaussian
-      P << atof(vs[2].c_str())*eV, atof(vs[3].c_str())*eV*2, atof(vs[5].c_str());
+      // Reads in a line of parameters
+      // The format is:              code converts to
+      //   Element
+      //   Electronegativity (V) ->  Electronegativity (a.u.)
+      //   Hardness (V/e)        ->  Hardness (a.u.)
+      //   radius (Angstrom)     ->  Gaussian exponent (bohr^-2)
+      P << atof(vs[1].c_str())*eV, atof(vs[2].c_str())*eV, (atof(vs[3].c_str())*Angstrom)**-2;
       _parameters.push_back(P);
     }
   }
 
+  //!Returns a triple of numbers: electronegativity (in eV), hardness (in eV), and Gaussian exponent (in bohr^-2)
   Vector3d QEqCharges::GetParameters(unsigned int Z, int Q)
   {
-    //Returns a triple of numbers: electronegativity (in eV), hardness (in eV), and Gaussian exponent (in bohr^-2)
 
     Vector3d P;
     //For now, completely ignore the formal charge
@@ -82,6 +166,7 @@ namespace OpenBabel
     return P;
   }
 
+  //! \return whether partial charges were successfully assigned to this molecule
   bool QEqCharges::ComputeCharges(OBMol &mol)
   {
 
@@ -206,14 +291,16 @@ namespace OpenBabel
   }
 
 
-  /// Calculates Coulomb integral
+  //! Calculates Coulomb integral
   double QEqCharges::CoulombInt(double a, double b, double R)
   {
     double p = sqrt(a * b / (a + b));
     return erf(p * R) / R;
   }
 
-  /// Here's a wrapper around the Eigen solver routine
+  //! Wrapper around the Eigen linear solver routines
+  // First attempts to solve using Gaussian elimination
+  // if that fails, tries again using singular value decomposition (SVD)
   bool QEqCharges::solver(MatrixXd A, VectorXd b, VectorXd &x, const double NormThreshold)
   {
     // using a LU factorization

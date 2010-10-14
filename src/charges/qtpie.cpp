@@ -31,6 +31,77 @@ using temperf::erf;
 
 namespace OpenBabel
 {
+
+  /*! \class QTPIECharges qtpie.h "qtpie.h" 
+   
+    \brief Assigns partial charges according to the charge transfer with polarization current equilibration
+    (QTPIE) model of Chen and Martinez, 2007; 2008.
+    
+    The QTPIE model solves for charges by minimizing an energy function of the form
+    
+    \f[
+
+    E\left(\mathbf{q}\right)=\mathbf{q}\cdot\boldsymbol{\chi}+\frac{1}{2}\mathbf{q}\boldsymbol{\eta}\mathbf{q}
+
+    \f]
+
+    where \f$\mathbf q\f$ is the vector of atomic charges, \f$\boldsymbol \chi\f$ are atomic electronegativities
+    and \f$\boldsymbol \eta \f$ is the matrix of Coulomb interactions with chemical hardnesses along the diagonal,
+    such that the overall charge is \f$Q\f$, i.e.
+
+    \f[
+
+    \mathbf{q} \cdot \mathbf{1} = \sum_{i=1}^N q_i = Q
+
+    \f]
+
+	in the current implementation, we assume \f$Q = 0\f$ always.
+
+    The off-diagonal Coulomb interactions are screened using the following integral
+    
+    \f[
+
+    \eta_{ij}=\int\frac{\phi_{i}^{2}\left(\mathbf{r}\right)\phi_{j}^{2}\left(\mathbf{r}^{\prime}\right)}
+          {\left|\mathbf{r}-\mathbf{r}^{\prime}\right|}d^{3}\mathbf{r}d^{3}\mathbf{r}^{\prime}
+
+    \f]
+
+    where the orbitals \f$ \phi_{i}(\mathbf{r}) \f$ are s-type Gaussian orbitals (GTOs) of the form
+
+    \f[
+
+    \phi_i\left(\mathbf{r}\right)=\left(\frac{2}{\pi\sigma_{i}^{2}}\right)^{3/4}
+          \exp\left(-\frac{\left|\mathbf{r}-\mathbf{R}_{i}\right|^{2}}{\sigma_{i}^{2}}\right)
+    
+    \f]
+
+    where \f$ \sigma_i \f$ is a Gaussian screening radius and \f$ \mathbf R_i \f$ is the Cartesian coordinate of atom \f$ i \f$. 
+
+    The parameters in this model are the atomic electronegativities \$f \chi_i = \chi_i^0 \$f in volts (V),
+    hardnesses \$f \eta_{ii} = \eta_i^0 \f$ in V/e, and screening exponents \$f \alpha_i \$f in Angstroms.
+
+    The default parameter set uses that of QEq.
+
+    References:
+      J. Chen and T. J. Martínez, Chem. Phys. Lett. 438 (2007): 315-320.
+      doi:10.1021/j100161a070
+
+      J. Chen, D. Hundertmark and T. J. Martínez, J. Chem. Phys. 129 (2008): 214113.
+      doi:10.1063/1.3021400
+
+      The Gaussian parameters are published in
+      J. Chen and T. J. Martínez, Prog. Theor. Chem. Phys. 19 (2009): 397-416.
+      doi:10.1007/978-90-481-2596-8_19
+
+      The method of solving the model is given by
+      J. Chen and T. J. Martínez, J. Chem. Phys. 131 (2009): 044114.
+      doi:10.1063/1.3183167
+
+    \author Jiahao Chen
+    
+    \since version 2.3.
+  */  
+
 /////////////////////////////////////////////////////////////////
 QTPIECharges theQTPIECharges("qtpie"); //Global instance
 
@@ -60,8 +131,13 @@ QTPIECharges theQTPIECharges("qtpie"); //Global instance
       if (vs.size() < 6)
         continue;
 
-      // Element, n, Xi, Hardness, Slater, Gaussian
-      P << atof(vs[2].c_str())*eV, atof(vs[3].c_str())*eV*2, atof(vs[5].c_str());
+      // Reads in a line of parameters
+      // The format is:              code converts to
+      //   Element
+      //   Electronegativity (V) ->  Electronegativity (a.u.)
+      //   Hardness (V/e)        ->  Hardness (a.u.)
+      //   radius (Angstrom)     ->  Gaussian exponent (bohr^-2)
+      P << atof(vs[1].c_str())*eV, atof(vs[2].c_str())*eV, (atof(vs[3].c_str())*Angstrom)**-2;
       _parameters.push_back(P);
     }
   }
