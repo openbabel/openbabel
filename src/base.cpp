@@ -512,8 +512,10 @@ namespace OpenBabel
   - OBDepict - 2D depiction
 
   In addition, a wide variety of new plugins are available, including
-  MMFF94, QEq, and QTPIE partial charges, "diverse" conformer
-  searching, etc.
+  
+  - computation of partial charges using GasteigerCharges, MMFF94Charges, QEqCharges, and QTPIECharges
+  - "diverse" conformer searching
+  - etc.
 
   \page changes22 What's New in Version 2.2
 
