@@ -130,13 +130,13 @@ namespace OpenBabel
     // Set the locale for number parsing to avoid locale issues: PR#1785463
     obLocale.SetLocale();
     Vector3d P;
-
+    float radius;
     while (ifs.getline(buffer, BUFF_SIZE)) {
       if (buffer[0] == '#')
         continue;
 
       tokenize(vs, buffer);
-      if (vs.size() < 6)
+      if (vs.size() < 4)
         continue;
 
       // Reads in a line of parameters
@@ -145,7 +145,9 @@ namespace OpenBabel
       //   Electronegativity (V) ->  Electronegativity (a.u.)
       //   Hardness (V/e)        ->  Hardness (a.u.)
       //   radius (Angstrom)     ->  Gaussian exponent (bohr^-2)
-      P << atof(vs[1].c_str())*eV, atof(vs[2].c_str())*eV, (atof(vs[3].c_str())*Angstrom)**-2;
+     
+      radius = atof(vs[3].c_str())*Angstrom;
+      P << atof(vs[1].c_str())*eV, atof(vs[2].c_str())*eV, 1.0/(radius*radius);
       _parameters.push_back(P);
     }
   }
