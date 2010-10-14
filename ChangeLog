@@ -1,3 +1,20 @@
+2010-10-14 Jiahao Chen <jiahao@mit.edu>
+
+	* src/charges/qeq.cpp,src/charges/qtpie.cpp: Added documentation.
+	* data/qeq.txt: Simplified parameter file format.
+	
+	There is an upper bound on the screening radius that is constrained by
+	the atomic hardness parameter. (These parameters are not entirely
+	independent.) If this constraint is violated, i.e. radius * hardness <
+	sqrt(2/pi) a.u., then it is possible to get infinite charges for
+	certain geometries. For now, the screening radius using the Gaussian
+	orbitals (in this code) is taken to be the same as the screening radius
+	for Slater orbitals in the original QEq specifications, except when the
+	constraint is violated, in which case the radius is reduced to the
+	largest possible radius satisfying the constraint. To do this properly,
+	a reparameterization of the methods are required, but this should
+	suffice for not producing ridiculous charge predictions.
+
 2010-09-30 Chris Morley
 
 	* src/alias.cpp: Use MCDL for expanding aliases in 2D mols, since
