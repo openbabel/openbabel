@@ -6,6 +6,11 @@ endif (NOT EMBED_OPENBABEL)
 project(openbabel)
 set(CMAKE_MODULE_PATH ${openbabel_SOURCE_DIR}/cmake/modules)
 
+# Allow loose loop constructs, i.e. no matching in if/else/endif or loops.
+# Note that this is true by default in CMake 2.6.0, but we currently only
+# require CMake 2.4.8 - remove this when the CMake requirement is bumped.
+set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS 1)
+
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
   cmake_policy(SET CMP0005 OLD) # add_definitions need updating to set to NEW
