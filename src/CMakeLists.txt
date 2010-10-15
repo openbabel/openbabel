@@ -3,21 +3,21 @@ set(SOVERSION 4)
 set(LIBRARY_VERSION 4.0.0)
 
 set(charges
-        charges/gasteiger.cpp
-        charges/mmff94.cpp
+  charges/gasteiger.cpp
+  charges/mmff94.cpp
 )
 
 if (EIGEN2_FOUND)
 # if eigen is available, compile QEq and QTPIE charge models
 set(charges ${charges}
-        charges/qeq.cpp
-        charges/qtpie.cpp
+  charges/qeq.cpp
+  charges/qtpie.cpp
 )
 endif(EIGEN2_FOUND)
 
 set(depict_srcs
-    depict/depict.cpp
-    depict/svgpainter.cpp
+  depict/depict.cpp
+  depict/svgpainter.cpp
 )
 
 set(descriptors
@@ -30,30 +30,29 @@ set(descriptors
 )
 
 set(fingerprints
-    fingerprints/finger2.cpp
-    fingerprints/finger3.cpp
+  fingerprints/finger2.cpp
+  fingerprints/finger3.cpp
 )
 
 set(forcefields
-    forcefields/forcefieldgaff.cpp
-    forcefields/forcefieldghemical.cpp
-    forcefields/forcefieldmmff94.cpp
-    forcefields/forcefielduff.cpp
+  forcefields/forcefieldgaff.cpp
+  forcefields/forcefieldghemical.cpp
+  forcefields/forcefieldmmff94.cpp
+  forcefields/forcefielduff.cpp
 )
 
 set(math_srcs
-    math/matrix3x3.cpp
-    math/spacegroup.cpp
-    math/transform3d.cpp
-    math/vector3.cpp
+  math/matrix3x3.cpp
+  math/spacegroup.cpp
+  math/transform3d.cpp
+  math/vector3.cpp
 )
 
-if (EIGEN2_FOUND)
-set(math_srcs
-        ${math_srcs}
-        math/align.cpp
-)
-endif (EIGEN2_FOUND)
+if(EIGEN2_FOUND)
+  set(math_srcs ${math_srcs}
+    math/align.cpp
+  )
+endif(EIGEN2_FOUND)
 
 set(ops
   ops/addinindex.cpp
@@ -71,91 +70,89 @@ set(ops
   ops/opisomorph.cpp
   ops/xout.cpp
 )
-if (EIGEN2_FOUND)
-set(ops
-        ${ops}
-        ops/conformer.cpp
-)
-endif (EIGEN2_FOUND)
+if(EIGEN2_FOUND)
+  set(ops ${ops}
+    ops/conformer.cpp
+  )
+endif(EIGEN2_FOUND)
 
 set(stereo_srcs
-    stereo/stereo.cpp
-    stereo/stereoutil.cpp
-    stereo/tetranonplanar.cpp
-    stereo/tetraplanar.cpp
-    stereo/squareplanar.cpp
-    stereo/cistrans.cpp
-    stereo/tetrahedral.cpp
-    stereo/perception.cpp
-    stereo/facade.cpp
+  stereo/stereo.cpp
+  stereo/stereoutil.cpp
+  stereo/tetranonplanar.cpp
+  stereo/tetraplanar.cpp
+  stereo/squareplanar.cpp
+  stereo/cistrans.cpp
+  stereo/tetrahedral.cpp
+  stereo/perception.cpp
+  stereo/facade.cpp
 )
 
 set(openbabel_srcs
-    alias.cpp
-    atom.cpp
-    base.cpp
-    bitvec.cpp
-    bond.cpp
-    bondtyper.cpp
-    builder.cpp
-    canon.cpp
-    chains.cpp
-    chargemodel.cpp
-    chiral.cpp
-    data.cpp
-    descriptor.cpp
-    fingerprint.cpp
-    forcefield.cpp
-    format.cpp
-    generic.cpp
-    graphsym.cpp
-    grid.cpp
-    griddata.cpp
-    isomorphism.cpp
-    kekulize.cpp
-    locale.cpp
-    matrix.cpp
-    mcdlutil.cpp
-    molchrg.cpp
-    mol.cpp
-    obconversion.cpp
-    oberror.cpp
-    obiter.cpp
-    obutil.cpp
-    op.cpp
-    parsmart.cpp
-    patty.cpp
-    phmodel.cpp
-    plugin.cpp
-    pointgroup.cpp
-    query.cpp
-    rand.cpp
-    residue.cpp
-    ring.cpp
-    rotamer.cpp
-    rotor.cpp
-    spectrophore.cpp
-    tokenst.cpp
-    transform.cpp
-    typer.cpp
-    obmolecformat.cpp
+  alias.cpp
+  atom.cpp
+  base.cpp
+  bitvec.cpp
+  bond.cpp
+  bondtyper.cpp
+  builder.cpp
+  canon.cpp
+  chains.cpp
+  chargemodel.cpp
+  chiral.cpp
+  data.cpp
+  descriptor.cpp
+  fingerprint.cpp
+  forcefield.cpp
+  format.cpp
+  generic.cpp
+  graphsym.cpp
+  grid.cpp
+  griddata.cpp
+  isomorphism.cpp
+  kekulize.cpp
+  locale.cpp
+  matrix.cpp
+  mcdlutil.cpp
+  molchrg.cpp
+  mol.cpp
+  obconversion.cpp
+  oberror.cpp
+  obiter.cpp
+  obutil.cpp
+  op.cpp
+  parsmart.cpp
+  patty.cpp
+  phmodel.cpp
+  plugin.cpp
+  pointgroup.cpp
+  query.cpp
+  rand.cpp
+  residue.cpp
+  ring.cpp
+  rotamer.cpp
+  rotor.cpp
+  spectrophore.cpp
+  tokenst.cpp
+  transform.cpp
+  typer.cpp
+  obmolecformat.cpp
 )
-if (EIGEN2_FOUND)
-set(openbabel_srcs
-        ${openbabel_srcs}
-        conformersearch.cpp
-)
+if(EIGEN2_FOUND)
+  set(openbabel_srcs ${openbabel_srcs}
+    conformersearch.cpp
+  )
 endif (EIGEN2_FOUND)
 
 if(BUILD_SHARED)
   if(MSVC)
     set(openbabel_srcs ${openbabel_srcs}
-        dlhandler_win32.cpp
-        )
+      dlhandler_win32.cpp
+    )
   else(MSVC)
     set(openbabel_srcs ${openbabel_srcs}
-        dlhandler_unix.cpp
-        )
+      dlhandler_unix.cpp
+    )
   endif(MSVC)
 endif(BUILD_SHARED)
 

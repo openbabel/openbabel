@@ -79,7 +79,7 @@ else() # This is preferable on WIndows for example - bin = lib directory.
   set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
     CACHE STRING "Library build output directory")
 endif()
-  
+
 mark_as_advanced(CMAKE_LIBRARY_OUTPUT_DIRECTORY
   CMAKE_RUNTIME_OUTPUT_DIRECTORY)
 
@@ -110,9 +110,9 @@ else(BUILD_SHARED)
   if(MSVC)
     # set cl flags for static compiling
     set(CMAKE_CXX_FLAGS_RELEASE
-	"/MT /O2 /Ob2 /D NDEBUG")
+      "/MT /O2 /Ob2 /D NDEBUG")
     set(CMAKE_EXE_LINKER_FLAGS_RELEASE
-	"/INCREMENTAL:NO /NODEFAULTLIB:MSVCRT")
+      "/INCREMENTAL:NO /NODEFAULTLIB:MSVCRT")
   endif(MSVC)
 endif(BUILD_SHARED)
 
@@ -186,16 +186,16 @@ check_type_size(clock_t CLOCK_T)
 
 # Get the GCC version - from KDE4 cmake files
 if(CMAKE_COMPILER_IS_GNUCXX)
-    exec_program(${CMAKE_C_COMPILER} ARGS --version OUTPUT_VARIABLE _gcc_version_info)
-    string (REGEX MATCH "[345]\\.[0-9]\\.[0-9]" _gcc_version "${_gcc_version_info}")
-    # gcc on mac just reports: "gcc (GCC) 3.3 20030304 ..." without the
-    # patch level, handle this here:
-    if (NOT _gcc_version)
-      string (REGEX REPLACE ".*\\(GCC\\).* ([34]\\.[0-9]) .*" "\\1.0" _gcc_version "${_gcc_version_info}")
-    endif (NOT _gcc_version)
-    macro_ensure_version("4.0.0" "${_gcc_version}" GCC_IS_NEWER_THAN_4_0)
-    macro_ensure_version("4.1.0" "${_gcc_version}" GCC_IS_NEWER_THAN_4_1)
-    macro_ensure_version("4.2.0" "${_gcc_version}" GCC_IS_NEWER_THAN_4_2)
+  exec_program(${CMAKE_C_COMPILER} ARGS --version OUTPUT_VARIABLE _gcc_version_info)
+  string(REGEX MATCH "[345]\\.[0-9]\\.[0-9]" _gcc_version "${_gcc_version_info}")
+  # gcc on mac just reports: "gcc (GCC) 3.3 20030304 ..." without the
+  # patch level, handle this here:
+  if (NOT _gcc_version)
+    string (REGEX REPLACE ".*\\(GCC\\).* ([34]\\.[0-9]) .*" "\\1.0" _gcc_version "${_gcc_version_info}")
+  endif (NOT _gcc_version)
+  macro_ensure_version("4.0.0" "${_gcc_version}" GCC_IS_NEWER_THAN_4_0)
+  macro_ensure_version("4.1.0" "${_gcc_version}" GCC_IS_NEWER_THAN_4_1)
+  macro_ensure_version("4.2.0" "${_gcc_version}" GCC_IS_NEWER_THAN_4_2)
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
 if(NOT MSVC)
@@ -346,8 +346,8 @@ if(NOT MSVC)
 endif(NOT MSVC)
 
 include_directories(${openbabel_BINARY_DIR}/include
-                    ${openbabel_SOURCE_DIR}/data
-                    ${openbabel_SOURCE_DIR}/include
+  ${openbabel_SOURCE_DIR}/data
+  ${openbabel_SOURCE_DIR}/include
 )
 
 #cjh
@@ -366,9 +366,9 @@ add_subdirectory(tools)
 
 # Should we build the GUI? Default is yes on Linux or Windows, not Mac.
 if (APPLE)
-option(BUILD_GUI "Build the GUI" OFF)
+  option(BUILD_GUI "Build the GUI" OFF)
 else (APPLE)
-option(BUILD_GUI "Build the GUI" ON)
+  option(BUILD_GUI "Build the GUI" ON)
 endif(APPLE)
 
 if(BUILD_GUI)
