@@ -33,7 +33,7 @@ public:
   /// \return whether partial charges were successfully assigned to this molecule
   bool ComputeCharges(OBMol &mol);
 
-  double DipoleScalingFactor() { return 3.490; } // fit from regression
+  double DipoleScalingFactor() { return 3.4927; } // fit from regression
 };
 
 /////////////////////////////////////////////////////////////////

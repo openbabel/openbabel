@@ -54,7 +54,7 @@ public:
   /// \return whether partial charges were successfully assigned to this molecule
   bool ComputeCharges(OBMol &mol);
 
-  double DipoleScalingFactor() { return 2.042; } // fit from regression
+  double DipoleScalingFactor() { return 1.959; } // fit from regression
 
 private:
   Vector3d GetParameters(unsigned int Z, int Q);
