@@ -212,8 +212,7 @@ if(MSVC)
     set_target_properties(${formatgroup} PROPERTIES
                   OUTPUT_NAME ${formatgroup}
                   PREFIX ""
-                  SUFFIX ${MODULE_EXTENSION}
-                  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+                  SUFFIX ${MODULE_EXTENSION})
   endforeach(formatgroup)
 else(MSVC)
 foreach(format ${formats})
@@ -247,8 +246,7 @@ if(MSVC)
   set_target_properties(formats_xml PROPERTIES
                   OUTPUT_NAME formats_xml
                   PREFIX ""
-                  SUFFIX ${MODULE_EXTENSION}
-                  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+                  SUFFIX ${MODULE_EXTENSION})
 else(MSVC)
 foreach(format ${formats_xml})
   add_library(${format} ${PLUGIN_TYPE} xml/${format}.cpp xml/xml.cpp)

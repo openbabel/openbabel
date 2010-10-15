@@ -27,10 +27,6 @@ if(BUILD_SHARED)
   foreach(tool ${tools})
     add_executable(${tool} ${tool}.cpp)
     target_link_libraries(${tool} ${BABEL_LIBRARY})
-    if(MSVC)
-      set_target_properties(${tool} PROPERTIES
-            RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-    endif(MSVC)
     install(TARGETS ${tool}
                     RUNTIME DESTINATION bin
                     LIBRARY DESTINATION lib
@@ -46,10 +42,6 @@ if(BUILD_SHARED)
       add_executable(obspectrophore obspectrophore.cpp)
     endif(NOT GETOPT_FOUND)
     target_link_libraries(obspectrophore ${BABEL_LIBRARY})
-    if(MSVC)
-      set_target_properties(obspectrophore PROPERTIES
-          RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-    endif(MSVC)
     install(TARGETS obspectrophore
                     RUNTIME DESTINATION bin
                     LIBRARY DESTINATION lib
@@ -63,10 +55,6 @@ if(BUILD_SHARED)
       add_executable(obgrep obgrep.cpp)
     endif(NOT GETOPT_FOUND)
       target_link_libraries(obgrep ${BABEL_LIBRARY})
-      if(MSVC)
-        set_target_properties(obgrep PROPERTIES
-            RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-      endif(MSVC)
       install(TARGETS obgrep
                       RUNTIME DESTINATION bin
                       LIBRARY DESTINATION lib
@@ -99,10 +87,6 @@ else(BUILD_SHARED)
   # build a static babel only
   add_executable(babel babel.cpp static_plugins.cpp)
   target_link_libraries(babel ${BABEL_LIBRARY} ${ZLIB_LIBRARY})
-    if(MSVC)
-      set_target_properties(babel PROPERTIES
-          RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-    endif(MSVC)
     install(TARGETS babel
                     RUNTIME DESTINATION bin
                     LIBRARY DESTINATION lib

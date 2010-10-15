@@ -52,12 +52,7 @@ foreach(test ${tests})
     FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
     ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
     ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data")
-  if(MSVC)
-    set_target_properties(test_${test} PROPERTIES
-      RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-  endif(MSVC)
 endforeach(test ${tests})
-
 
 ############################################################
 #  old-style tests using "not ok"
@@ -101,10 +96,6 @@ endif(LIBXML2_FOUND)
 if(WITH_INCHI)
   add_executable(test_inchiwrite inchiwrite.cpp ../src/formats/getinchi.cpp)
   target_link_libraries(test_inchiwrite ${BABEL_LIBRARY})
-  if(MSVC)
-    set_target_properties(test_inchiwrite PROPERTIES
-      RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-  endif(MSVC)
   # files in test/inchi -- both .sdf and .txt
   set(inchitests Samples SamplesTechMan)
   set(inchidata ${CMAKE_SOURCE_DIR}/test/inchi)
@@ -138,10 +129,6 @@ foreach(test ${old_tests})
     ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
     ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data"
  )
-  if(MSVC)
-    set_target_properties(test_${test} PROPERTIES
-      RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-  endif(MSVC)
 endforeach(test ${old_tests})
 
 ############################################################  

@@ -203,7 +203,6 @@ set_target_properties(openbabel PROPERTIES
 if(MSVC)
   # Set the output name to openbabel-2 (preserves old behaviour). Is this desired?
   set_target_properties(openbabel PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
     OUTPUT_NAME openbabel-2)
 endif(MSVC)
 
