@@ -52,7 +52,7 @@ namespace OpenBabel
         internalColor = 0x0002,
         drawTermC     = 0x0010,
         drawAllC      = 0x0020,
-
+        genWedgeHash  = 0x0100
       };
 
       /**

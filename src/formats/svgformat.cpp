@@ -86,6 +86,9 @@ public:
       " j do not embed javascript\n"
       "    Javascript is not usually embedded if there is one one molecule,\n"
       "    but it is if the rows and columns have been specified as 1: ``-xr1 -xc1``\n"
+      " w generate wedge/hash bonds(experimental)\n"
+      " x omit XML declaration (not displayed in GUI)\n"
+      "    Useful if the output is to be embedded in another xml file.\n"
       " A display aliases, if present\n"
       "    This applies to structures which have an alternative, usually\n"
       "    shorter, representation already present. This might have been input\n"
@@ -98,8 +101,7 @@ public:
       "    aldehyde groups and would display them as such in the svg diagram.\n"
       "    The aliases which are recognized are in data/superatom.txt, which\n"
       "    can be edited.\n"
-      " x omit XML declaration (not displayed in GUI)\n"
-      "    Useful if the output is to be embedded in another xml file.\n\n"
+
 
       "If the input molecule(s) contain explicit hydrogen, you could consider\n"
       "improving the appearance of the diagram by adding an option ``-d`` to make\n"
@@ -290,7 +292,7 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     obErrorLog.ThrowError("SVGFormat", mes, obError);
     return false;
   }
-
+  
   bool hasTable = (_nrows || _ncols);
 
   string background = pConv->IsOption("b") ? "black" : "white";
@@ -350,7 +352,8 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     SVGPainter painter(*pConv->GetOutStream(), true, cellsize,cellsize,innerX,innerY);
     OBDepict depictor(&painter);
 
-
+    if(pConv->IsOption("w"))
+      depictor.SetOption(OBDepict::genWedgeHash);
     if(!pConv->IsOption("C"))
       depictor.SetOption(OBDepict::drawTermC);// on by default
     if(pConv->IsOption("a"))
@@ -403,6 +406,8 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       depictor.SetFontSize((int)(depictor.GetFontSize() * factor));
     }
 
+    if(!pConv->IsOption("w"))
+      depictor.SetOption(OBDepict::genWedgeHash);
     if(!pConv->IsOption("C"))
       depictor.SetOption(OBDepict::drawTermC);// on by default
     if(pConv->IsOption("a"))

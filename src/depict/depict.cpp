@@ -321,7 +321,8 @@ namespace OpenBabel
     d->painter->NewCanvas(width, height);
     
     // draw bonds
-    d->SetWedgeAndHash(mol);
+    if(d->options & genWedgeHash)
+      d->SetWedgeAndHash(mol);
     for (OBBond *bond = mol->BeginBond(j); bond; bond = mol->NextBond(j)) {
       OBAtom *begin = bond->GetBeginAtom();
       OBAtom *end = bond->GetEndAtom();
