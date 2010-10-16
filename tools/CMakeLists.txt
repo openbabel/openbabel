@@ -195,6 +195,12 @@ else(BUILD_SHARED)
       XYZFormat
       YOBFormat
       ZINDOFormat
+      # XML formats
+      ChemDrawXMLFormat
+      CMLFormat
+      CMLReactFormat
+      PubChemFormat
+      XMLFormat
      )
 
   set(descriptor_classes
@@ -289,7 +295,7 @@ else(BUILD_SHARED)
 
   # build a static babel only
   add_executable(babel babel.cpp)
-  target_link_libraries(babel openbabel)
+  target_link_libraries(babel openbabel ${LIBXML2_LIBRARIES})
   # Prevent -Wl,-Bdynamic from being added to the end of the link line.
   set_target_properties(babel PROPERTIES
                         LINK_SEARCH_END_STATIC TRUE)

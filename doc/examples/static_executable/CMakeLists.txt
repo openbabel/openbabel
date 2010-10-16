@@ -154,6 +154,12 @@ set(format_classes
     XYZFormat
     YOBFormat
     ZINDOFormat
+    # XML formats
+    ChemDrawXMLFormat
+    CMLFormat
+    CMLReactFormat
+    PubChemFormat
+    XMLFormat
    )
 
 set(descriptor_classes
