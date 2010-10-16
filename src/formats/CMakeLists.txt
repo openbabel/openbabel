@@ -1,4 +1,3 @@
-if(BUILD_SHARED)
 
 set(formats_common
   smilesformat
@@ -262,5 +261,3 @@ foreach(format ${formats_xml})
 endforeach(format)
 endif(MSVC)
 endif(NOT MINIMAL_BUILD)
-
-endif(BUILD_SHARED)

@@ -154,6 +154,14 @@ if(BUILD_SHARED)
       dlhandler_unix.cpp
     )
   endif(MSVC)
+else(BUILD_SHARED)
+  include(formats/formats.cmake)
+  foreach(format ${formats})
+    set(openbabel_srcs ${openbabel_srcs} formats/${format}.cpp)
+  endforeach(format ${formats})
+  foreach(plugingroup descriptors fingerprints forcefields ops charges)
+    set(openbabel_srcs ${openbabel_srcs} ${${plugingroup}})
+  endforeach(plugingroup descriptors fingerprints forcefields ops charges)
 endif(BUILD_SHARED)
 
 set(openbabel_library_srcs
@@ -169,24 +177,21 @@ if(WIN32)
   set(libs ${libs} ${ZLIB_LIBRARY})
 else(WIN32)
   # the C math library
-  set(libs ${libs} m)
+  find_library(MATH_LIBRARY NAMES m)
+  if(MATH_LIBRARY)
+    set(libs ${libs} ${MATH_LIBRARY})
+  endif(MATH_LIBRARY)
+
   if(BUILD_SHARED)
     # dl library if it is found and we are doing a shared build
     if(HAVE_LIBDL)
       set(libs ${libs} dl)
     endif(HAVE_LIBDL)
-    # shared zlib
-    if(ZLIB_FOUND)
-      set(libs ${libs} ${ZLIB_LIBRARY})
-    endif(ZLIB_FOUND)
-  else(BUILD_SHARED)
-    # static zlib
-    if(ZLIB_FOUND)
-      set(ZLIB_NAMES z.a zdll.a zlib.a libz.a)
-      find_library(ZLIB_STATIC_LIBRARY NAMES ${ZLIB_NAMES})
-      set(libs ${libs} ${ZLIB_STATIC_LIBRARY})
-    endif(ZLIB_FOUND)
   endif(BUILD_SHARED)
+
+  if(ZLIB_FOUND)
+    set(libs ${libs} ${ZLIB_LIBRARY})
+  endif(ZLIB_FOUND)
 endif(WIN32)
 
 add_library(openbabel ${BUILD_TYPE}
@@ -230,6 +235,6 @@ if(BUILD_SHARED)
       PREFIX ""
       SUFFIX ${MODULE_EXTENSION})
   endforeach(plugingroup)
-endif(BUILD_SHARED)
 
-add_subdirectory(formats)
+  add_subdirectory(formats)
+endif(BUILD_SHARED)

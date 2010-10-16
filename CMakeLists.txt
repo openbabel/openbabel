@@ -87,6 +87,29 @@ endif()
 mark_as_advanced(CMAKE_LIBRARY_OUTPUT_DIRECTORY
   CMAKE_RUNTIME_OUTPUT_DIRECTORY)
 
+option(BUILD_SHARED "enable shared build support" ON)
+option(BUILD_MIXED "enable linux relocatable binaries support" OFF)
+# Static building
+if(BUILD_SHARED)
+  set(BUILD_TYPE SHARED)
+  set(PLUGIN_TYPE MODULE)
+  add_definitions(-DUSING_DYNAMIC_LIBS)
+else()
+  set(BUILD_TYPE STATIC)
+  set(PLUGIN_TYPE STATIC)
+
+  if(MSVC)
+    # set cl flags for static compiling
+    set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
+    set(CMAKE_EXE_LINKER_FLAGS_DEBUG "/INCREMENTAL:NO /NODEFAULTLIB:MSVCRT")
+    set(CMAKE_CXX_FLAGS_RELEASE	"/MT /O2 /Ob2 /D NDEBUG")
+    set(CMAKE_EXE_LINKER_FLAGS_RELEASE "/INCREMENTAL:NO /NODEFAULTLIB:MSVCRT")
+    # note: static libraries are specified when running cmake
+  else()
+    set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
+  endif()
+endif()
+
 # Should we attempt to use the system inchi library?
 option(WITH_INCHI   "Build inchi support" ON)
 option(OPENBABEL_USE_SYSTEM_INCHI
@@ -99,25 +122,6 @@ if(OPENBABEL_USE_SYSTEM_INCHI)
 else()
   message("Using included inchi library.")
   set(INCHI_LIBRARIES inchi)
-endif()
-
-option(BUILD_SHARED "enable shared build support" ON)
-option(BUILD_MIXED "enable linux relocatable binaries support" OFF)
-if(BUILD_SHARED)
-  set(BUILD_TYPE SHARED)
-  set(PLUGIN_TYPE MODULE)
-  add_definitions(-DUSING_DYNAMIC_LIBS)
-else()
-  set(BUILD_TYPE STATIC)
-  set(PLUGIN_TYPE STATIC)
-
-  if(MSVC)
-    # set cl flags for static compiling
-    set(CMAKE_CXX_FLAGS_RELEASE
-      "/MT /O2 /Ob2 /D NDEBUG")
-    set(CMAKE_EXE_LINKER_FLAGS_RELEASE
-      "/INCREMENTAL:NO /NODEFAULTLIB:MSVCRT")
-  endif()
 endif()
 
 if(WIN32)
@@ -138,13 +142,8 @@ if(ZLIB_FOUND)
   if(WIN32)
     add_definitions(-DDISABLE_WRITE_COMPRESSION)
   endif()
-
-  # static build
-  if(NOT BUILD_SHARED)
-    set(STATIC_ZLIB_NAMES z.a zlib.a zdll.a libz.a)
-    find_library(ZLIB_LIBRARY NAMES ${STATIC_ZLIB_NAMES} )
-  endif()
 endif()
+
 # wxWidgets instructions based on http://wiki.wxwidgets.org/CMake
 #find_package(wxWidgets COMPONENTS base core REQUIRED)
 find_package(wxWidgets COMPONENTS base core)
@@ -225,9 +224,11 @@ if(NOT MSVC)
       set (CMAKE_SHARED_LINKER_FLAGS "-Wl,--enable-new-dtags ${CMAKE_SHARED_LINKER_FLAGS}")
       set (CMAKE_MODULE_LINKER_FLAGS "-Wl,--fatal-warnings -Wl,--no-undefined -lc ${CMAKE_SHARED_LINKER_FLAGS}")
       set (CMAKE_MODULE_LINKER_FLAGS "-Wl,--enable-new-dtags ${CMAKE_SHARED_LINKER_FLAGS}")
-      set (CMAKE_EXE_LINKER_FLAGS "-Wl,--fatal-warnings -Wl,--no-undefined -lc ${CMAKE_SHARED_LINKER_FLAGS}")
-      set (CMAKE_EXE_LINKER_FLAGS "-Wl,--enable-new-dtags ${CMAKE_EXE_LINKER_FLAGS}")
-    endif()
+      if(BUILD_SHARED)
+        set (CMAKE_EXE_LINKER_FLAGS "-Wl,--fatal-warnings -Wl,--no-undefined -lc ${CMAKE_SHARED_LINKER_FLAGS}")
+        set (CMAKE_EXE_LINKER_FLAGS "-Wl,--enable-new-dtags ${CMAKE_EXE_LINKER_FLAGS}")
+      endif()
+    endif ()
     # Now check if we can use visibility to selectively export symbols
     check_cxx_compiler_flag(-fvisibility=hidden HAVE_GCC_VISIBILITY)
     set(HAVE_GCC_VISIBILITY ${HAVE_GCC_VISIBILITY} CACHE BOOL "GCC support for hidden visibility")
@@ -309,7 +310,7 @@ if(MSVC90)
 endif()
 
 # Some rpath handling for Linux and Mac
-if(UNIX)
+if(UNIX AND BUILD_SHARED)
   if(APPLE)
     set(CMAKE_INSTALL_NAME_DIR ${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR})
   else()
@@ -368,7 +369,7 @@ add_subdirectory(src)
 add_subdirectory(tools)
 
 # Should we build the GUI? Default is yes on Linux or Windows, not Mac.
-if (APPLE)
+if (APPLE OR NOT BUILD_SHARED)
   option(BUILD_GUI "Build the GUI" OFF)
 else ()
   option(BUILD_GUI "Build the GUI" ON)
