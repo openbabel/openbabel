@@ -240,6 +240,13 @@ namespace OpenBabel
               mol.SetData(dipoleMoment);
             }
           } // "STATE" && "DIPOLE MOMENT"
+
+        if(strstr(buffer, "   HF-SCF") || strstr(buffer, "   RHF-SCF") || strstr(buffer, "   OPTG(RHF)"))
+          {
+            ifs.getline(buffer,BUFF_SIZE);
+            const double myHARTREE_TO_KCAL = 627.509;
+            mol.SetEnergy(atof(buffer) * myHARTREE_TO_KCAL); //Uses first value on line
+          }
       } // while
 
     if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
