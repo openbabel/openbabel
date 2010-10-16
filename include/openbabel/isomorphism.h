@@ -130,27 +130,46 @@ namespace OpenBabel {
        * The default empty mask will result in all atoms being considered. The mask
        * indexes start from 1 (i.e. OBAtom::GetIdx()).
        */
-      virtual void MapAll(const OBMol *queried, Mappings &maps, const OBBitVec &mask = OBBitVec()) = 0;
+      virtual void MapAll(const OBMol *queried, Mappings &maps, const OBBitVec &mask = OBBitVec(), std::size_t maxMemory = 3000000) = 0;
+
+      /**
+       * Functor base class to be used in combination with MapGeneric.
+       *
+       * @see @ref MapGeneric
+       */
+      class Functor
+      {
+        public:
+          virtual ~Functor() {}
+          /**
+           * This function is called every time an isomorphism is discovered.
+           * Returing true, will abort the mapping process. The map is passed
+           * as non-const reference and may be modified (e.g. swap).
+           *
+           * @see @ref MapGeneric
+           */
+          virtual bool operator()(Mapping &map) = 0;
+      };
+      /**
+       * Find all mappings in @p queried. The functor will be called when a mapping is found.
+       * @param functor The functor to handle found mappings.
+       * @param queried The molecule to search.
+       * @param mask A mask to restrict the search to a part of the queried molecule.
+       * The default empty mask will result in all atoms being considered. The mask
+       * indexes start from 1 (i.e. OBAtom::GetIdx()).
+       */
+      virtual void MapGeneric(Functor &functor, const OBMol *queried, const OBBitVec &mask = OBBitVec()) = 0;
+
 
       /**
        * Set the timeout in seconds.
        */
       void SetTimeout(unsigned int seconds) { m_timeout = seconds; }
 
-      std::size_t GetMemory() const { return m_memory; }
-      void SetMemory(std::size_t memory) { m_memory = memory; }
-      std::size_t GetMaxMemory() const { return m_maxMemory; }
-      void SetMaxMemory(std::size_t maxMemory) { m_maxMemory = maxMemory; }
-
     protected:
       OBQuery *m_query; //!< The search query.
       unsigned int m_timeout; //!< The timeout in seconds
-      std::size_t m_memory, m_maxMemory;
   };
-
-
-  typedef OBIsomorphismMapper::Mapping Automorphism;
-  typedef OBIsomorphismMapper::Mappings Automorphisms;
 
   inline bool MapsTo(const OBIsomorphismMapper::Mapping &map, unsigned int queryIndex, unsigned int &queriedIndex)
   {
@@ -164,14 +183,53 @@ namespace OpenBabel {
     return false;
   }
 
+
+  typedef OBIsomorphismMapper::Mapping Automorphism;
+  typedef OBIsomorphismMapper::Mappings Automorphisms;
+
   /**
-   * Find the automorphisms of a molecule by using a OBIsomorphismMapper.
+   * Find the automorphisms of a molecule by using an OBIsomorphismMapper. This
+   * function is a wrapper for FindAutomorphisms with a functor to store all
+   * automorphisms.
+   *
+   * @param mol The molecule for which to find the automorphisms.
+   * @param aut The result will be stored here.
+   * @param symmetry_classes The graph invariants to use. See OBGraphSym or use
+   * the FindAutomorphisms function that computes these for you below.
+   * @param mask A bit vector specifying which atoms to consider. An empty mask
+   * will consider all atoms. The bits are indexed from 1 (i.e. OBAtom::GetIdx()).
+   * @param maxMemory Maximum memory limit for @p aut. The number of automorphisms
+   * for certain graphs can be large. The default is 300MB, consider using a functor
+   * to process automorphisms when they are found.
+   *
    * @since version 2.3
    */
-  OBAPI bool FindAutomorphisms(OBMol *mol, Automorphisms &aut, const OBBitVec &mask = OBBitVec());
   OBAPI bool FindAutomorphisms(OBMol *mol, Automorphisms &aut, const std::vector<unsigned int> &symmetry_classes,
-      const OBBitVec &mask = OBBitVec());
+      const OBBitVec &mask = OBBitVec(), std::size_t maxMemory = 3000000);
+  /**
+   * Find the automorphisms of a molecule by using an OBIsomorphismMapper. This
+   * function will first find the graph invariants (i.e. symmetry_classes) using
+   * the mask. This function is a wrapper for FindAutomorphisms with a functor to
+   * store all automorphisms.
+   *
+   * @since version 2.3
+   */
+  OBAPI bool FindAutomorphisms(OBMol *mol, Automorphisms &aut, const OBBitVec &mask = OBBitVec(),
+      std::size_t maxMemory = 3000000);
 
+  /**
+   * Find the automorphisms of a molecule by using an OBIsomorphismMapper. This
+   * is the main implementation for finding automorphisms and uses an
+   * OBIsomorphismMapper::Functor to process found isomorphisms. Wrapper functions
+   * are provided to find and store all automorphisms but the number of automorphisms
+   * can be large for certain graphs making it not feasible to store all automorphisms
+   * in memory (RAM).
+   *
+   * @see  @ref MapGeneric
+   * @since version 2.3
+   */
+  OBAPI void FindAutomorphisms(OBIsomorphismMapper::Functor &functor, OBMol *mol,
+      const std::vector<unsigned int> &symmetry_classes, const OBBitVec &mask = OBBitVec());
 
 
   /**
@@ -208,6 +266,9 @@ namespace OpenBabel {
    * object.
    *
    * @code
+   * #include <openbabel/query.h>
+   * using namespace OpenBabel;
+   *
    * OBMol *mol = new OBMol;
    *
    * // ... read molecule ...
@@ -241,6 +302,39 @@ namespace OpenBabel {
    * MapAll returns all non-duplicate maps. For example, when a phenyl query is
    * performed on a molecule with 2 phenyl rings, MapAll will return 24 maps
    * (6 atoms to start from * 2 directions (CW/CCW) * 2 rings).
+   *
+   * @subsection MapGeneric
+   * MapGeneric takes a functor object and calls the functor to handle found
+   * isomorphisms. This allows for custom mapping results to be obtained by
+   * filtering or avoid storing all results. To implement a custom functor,
+   * a simple class that inherits OBIsomorphismMapper::Functor and implements
+   * the required operator().
+   *
+   * @code
+   * #include <openbabel/isomorphism.h>
+   * using namespace OpenBabel;
+   *
+   * class MyCustomFunctor : public OBIsomorphismMapper::Functor
+   * {
+   *   private:
+   *     // store all mappings in m_data
+   *     std::vector<OBIsomorphismMapper::Mapping> &m_data;
+   *   public:
+   *     MyCustomFunctor(std::vector<OBIsomorphismMapper::Mapping> &data) : m_data(data) {}
+   *     bool operator()(OBIsomorphismMapper::Mapping &map)
+   *     {
+   *       // code to handle found isomorphism...
+   *       // examples: - store the mapping
+   *       //           - filter mappings
+   *       //           - use the found map in some way
+   *
+   *       m_data.push_back(map);
+   *
+   *       // continue mapping
+   *       return false;
+   *     }
+   * }
+   * @endcode
    *
    * @section automorphisms Automorphisms
    * The automorphisms of a graph or molecule are a group of isomorphism mappings

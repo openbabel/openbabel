@@ -10,11 +10,51 @@ using namespace std;
 
 namespace OpenBabel {
 
+  template<typename T>
+    void print_vector(const std::string &label, const std::vector<T> &v)
+    {
+      std::cout << label << ": ";
+      for (std::size_t i = 0; i < v.size(); ++i)
+        if (v[i] < 10)
+          std::cout << " " << v[i] << " ";
+        else
+          std::cout << v[i] << " ";
+
+      std::cout << endl;
+    }
+
   static const char *red    = "\033[1;31m";
   static const char *green  = "\033[1;32m";
   static const char *yellow = "\033[1;33m";
   static const char *blue   = "\033[1;34m";
   static const char *normal = "\033[0m";
+
+  class MapAllFunctor : public OBIsomorphismMapper::Functor
+  {
+    private:
+      OBIsomorphismMapper::Mappings &m_maps;
+      std::size_t m_memory, m_maxMemory;
+    public:
+      MapAllFunctor(OBIsomorphismMapper::Mappings &maps, std::size_t maxMemory)
+        : m_maps(maps), m_memory(0), m_maxMemory(maxMemory)
+      {
+      }
+      bool operator()(OBIsomorphismMapper::Mapping &map)
+      {
+        m_maps.push_back(map);
+        m_memory += 2 * sizeof(unsigned int) * map.size();
+
+        if (m_memory > m_maxMemory) {
+          obErrorLog.ThrowError(__FUNCTION__, "memory limit exceeded...", obError);
+          // stop mapping
+          return true;
+        }
+
+        // continue mapping
+        return false;
+      }
+  };
+
 
   class VF2Mapper : public OBIsomorphismMapper
   {
@@ -24,10 +64,6 @@ namespace OpenBabel {
       VF2Mapper(OBQuery *query) : OBIsomorphismMapper(query)
       {
       }
-
-      enum MapperType {
-        MapFirstType, MapUniqueType, MapAllType
-      };
 
       struct Candidate {
         Candidate() : queryAtom(0), queriedAtom(0) {}
@@ -48,19 +84,16 @@ namespace OpenBabel {
       };
 
       struct State {
-        State(MapperType _type, const OBQuery *_query, const OBMol *_queried, const OBBitVec &mask)
+        State(Functor &_functor, const OBQuery *_query, const OBMol *_queried, const OBBitVec &mask)
+            : functor(_functor), query(_query), queried(_queried), queriedMask(mask)
         {
-          type = _type;
-          query = _query;
-          queried = _queried;
-          queriedMask = mask;
-
+          abort = false;
           mapping.resize(query->NumAtoms(), 0);
-
           queryTerminalSet.resize(query->NumAtoms(), 0);
           queriedTerminalSet.resize(queried->NumAtoms(), 0);
         }
-        MapperType type; // MapFirst, MapUnique, MapAll
+        bool abort;
+        Functor &functor;
         const OBQuery *query; // the query
         const OBMol *queried; // the queried molecule
         OBBitVec queriedMask; // the queriedMask
@@ -111,7 +144,7 @@ namespace OpenBabel {
       /**
        * Check if the current state is a full mapping of the query.
        */
-      bool checkForMap(State &state, Mappings &maps)
+      bool checkForMap(State &state)
       {
         // store the mapping if all atoms are mapped
         if (state.queryPath.size() != state.query->NumAtoms())
@@ -123,41 +156,13 @@ namespace OpenBabel {
         for (unsigned int k = 0; k < state.queryPath.size(); ++k)
           map.push_back(std::make_pair(state.queryPath[k], state.queriedPath[k]));
 
-        // Check if the mapping is unique
-        if (state.type == MapUniqueType) {
-          // get the values from the map
-          std::vector<unsigned int> values;
-          for (Mapping::iterator it = map.begin(); it != map.end(); ++it)
-            values.push_back(it->second);
-          std::sort(values.begin(), values.end());
-
-          bool isUnique = true;
-          for (unsigned int k = 0; k < maps.size(); ++k) {
-            std::vector<unsigned int> kValues;
-            for (Mapping::iterator it = maps[k].begin(); it != maps[k].end(); ++it)
-              kValues.push_back(it->second);
-            std::sort(kValues.begin(), kValues.end());
-
-            if (values == kValues)
-              isUnique = false;
-          }
-          if (isUnique) {
-            maps.push_back(map);
-          }
-        } else {
-          if (DEBUG)
-            cout << green << "found mapping" << normal << endl;
-          maps.push_back(map);
-          m_memory += 2 * sizeof(unsigned int) * map.size();
-        }
-
-        return true;
+        return state.functor(map);
       }
 
       /**
        * Match the candidate atoms and bonds.
        */
-      bool matchCandidate(State &state, OBQueryAtom *queryAtom, OBAtom *queriedAtom, Mappings &maps)
+      bool matchCandidate(State &state, OBQueryAtom *queryAtom, OBAtom *queriedAtom)
       {
         // add the neighbors to the paths
         state.queryPath.push_back(queryAtom->GetIndex());
@@ -249,7 +254,7 @@ namespace OpenBabel {
         }
 
         // Check if there is a mapping found
-        checkForMap(state, maps);
+        state.abort = checkForMap(state);
 
         return true;
       }
@@ -257,11 +262,11 @@ namespace OpenBabel {
       /**
        * The depth-first isomorphism algorithm.
        */
-      void MapNext(State &state, OBQueryAtom *queryAtom, OBAtom *queriedAtom, Mappings &maps)
+      void MapNext(State &state, OBQueryAtom *queryAtom, OBAtom *queriedAtom)
       {
         if (time(NULL) - m_startTime > m_timeout)
           return;
-        if (m_memory > m_maxMemory)
+        if (state.abort)
           return;
 
         // load the possible candidates
@@ -366,8 +371,8 @@ namespace OpenBabel {
           if (DEBUG)
             cout << yellow << "candidate: " << candidate.queryAtom->GetIndex() << " -> " << candidate.queriedAtom->GetIndex() << normal << endl;
 
-          if (matchCandidate(state, candidate.queryAtom, candidate.queriedAtom, maps)) {
-            MapNext(state, candidate.queryAtom, candidate.queriedAtom, maps);
+          if (matchCandidate(state, candidate.queryAtom, candidate.queriedAtom)) {
+            MapNext(state, candidate.queryAtom, candidate.queriedAtom);
           }
         }
 
@@ -406,39 +411,24 @@ namespace OpenBabel {
        */
       void MapFirst(const OBMol *queried, Mapping &map, const OBBitVec &mask)
       {
-        map.clear();
-        m_startTime = time(NULL);
+        class MapFirstFunctor : public Functor
+        {
+          private:
+            Mapping &m_map;
+          public:
+            MapFirstFunctor(Mapping &map) : m_map(map)
+            {
+            }
+            bool operator()(Mapping &map)
+            {
+              m_map = map;
+              // stop mapping
+              return true;
+            }
+        };
 
-        // set all atoms to 1 if the mask is empty
-        OBBitVec queriedMask = mask;
-        if (!queriedMask.CountBits())
-          for (unsigned int i = 0; i < queried->NumAtoms(); ++i)
-            queriedMask.SetBitOn(i + 1);
-
-        Mappings maps;
-        OBQueryAtom *queryAtom = m_query->GetAtoms()[0];
-        for (unsigned int i = 0; i < queried->NumAtoms(); ++i) {
-          if (!queriedMask.BitIsSet(i + 1))
-            continue;
-          State state(MapFirstType, m_query, queried, queriedMask);
-
-          OBAtom *queriedAtom = queried->GetAtom(i+1);
-          if (!queryAtom->Matches(queriedAtom)) {
-            continue;
-          }
-
-          if (m_query->NumAtoms() > 1) {
-            if (matchCandidate(state, queryAtom, queriedAtom, maps))
-              MapNext(state, queryAtom, queriedAtom, maps);
-          } else {
-            map.push_back(std::make_pair(queryAtom->GetIndex(), queriedAtom->GetIndex()));
-          }
-
-          if (maps.size()) {
-            map = maps[0];
-            return;
-          }
-        }
+        MapFirstFunctor functor(map);
+        MapGeneric(functor, queried, mask);
       }
 
       /**
@@ -448,35 +438,47 @@ namespace OpenBabel {
        */
       void MapUnique(const OBMol *queried, Mappings &maps, const OBBitVec &mask)
       {
+        class MapUniqueFunctor : public OBIsomorphismMapper::Functor
+        {
+          private:
+            OBIsomorphismMapper::Mappings &m_maps;
+          public:
+            MapUniqueFunctor(OBIsomorphismMapper::Mappings &maps) : m_maps(maps)
+            {
+            }
+            bool operator()(OBIsomorphismMapper::Mapping &map)
+            {
+              // get the values from the map
+              std::vector<unsigned int> values;
+              for (OBIsomorphismMapper::Mapping::const_iterator it = map.begin(); it != map.end(); ++it)
+                values.push_back(it->second);
+              std::sort(values.begin(), values.end());
+                print_vector("values ", values);
+
+              bool isUnique = true;
+              for (unsigned int k = 0; k < m_maps.size(); ++k) {
+                std::vector<unsigned int> kValues;
+                for (OBIsomorphismMapper::Mapping::iterator it = m_maps[k].begin(); it != m_maps[k].end(); ++it)
+                  kValues.push_back(it->second);
+                std::sort(kValues.begin(), kValues.end());
+
+                print_vector("kValues", kValues);
+                if (values == kValues)
+                  isUnique = false;
+              }
+
+              if (isUnique)
+                m_maps.push_back(map);
+
+              // continue mapping
+              return false;
+            }
+        };
+
+
         maps.clear();
-        m_startTime = time(NULL);
-
-        // set all atoms to 1 if the mask is empty
-        OBBitVec queriedMask = mask;
-        if (!queriedMask.CountBits())
-          for (unsigned int i = 0; i < queried->NumAtoms(); ++i)
-            queriedMask.SetBitOn(i + 1);
-
-        OBQueryAtom *queryAtom = m_query->GetAtoms()[0];
-        for (unsigned int i = 0; i < queried->NumAtoms(); ++i) {
-          if (!queriedMask.BitIsSet(i + 1))
-            continue;
-          State state(MapUniqueType, m_query, queried, queriedMask);
-
-          OBAtom *queriedAtom = queried->GetAtom(i+1);
-          if (!queryAtom->Matches(queriedAtom)) {
-            continue;
-          }
-
-          if (m_query->NumAtoms() > 1) {
-            if (matchCandidate(state, queryAtom, queriedAtom, maps))
-              MapNext(state, queryAtom, queriedAtom, maps);
-          } else {
-            Mapping map;
-            map.push_back(std::make_pair(queryAtom->GetIndex(), queriedAtom->GetIndex()));
-            maps.push_back(map);
-          }
-        }
+        MapUniqueFunctor functor(maps);
+        MapGeneric(functor, queried, mask);
 
         if (DEBUG)
           for (unsigned int i =0; i < maps.size(); ++i) {
@@ -484,9 +486,6 @@ namespace OpenBabel {
             for (Mapping::iterator it = maps[i].begin(); it != maps[i].end(); ++it)
               cout << "    " << it->first << " -> " << it->second << endl;
           }
-
-        if (time(NULL) - m_startTime > m_timeout)
-          obErrorLog.ThrowError(__FUNCTION__, "time limit exceeded...", obError);
       }
 
       /**
@@ -497,9 +496,23 @@ namespace OpenBabel {
        * @param queried The queried molecule.
        * @return The mappings.
        */
-      void MapAll(const OBMol *queried, Mappings &maps, const OBBitVec &mask)
+      void MapAll(const OBMol *queried, Mappings &maps, const OBBitVec &mask, std::size_t maxMemory)
       {
         maps.clear();
+        MapAllFunctor functor(maps, maxMemory);
+        MapGeneric(functor, queried, mask);
+
+        if (DEBUG)
+          for (unsigned int i =0; i < maps.size(); ++i) {
+            cout << "mapping:" << endl;
+            for (Mapping::iterator it = maps[i].begin(); it != maps[i].end(); ++it)
+              cout << "    " << it->first << " -> " << it->second << endl;
+          }
+
+      }
+
+      void MapGeneric(Functor &functor, const OBMol *queried, const OBBitVec &mask)
+      {
         m_startTime = time(NULL);
 
         // set all atoms to 1 if the mask is empty
@@ -513,40 +526,30 @@ namespace OpenBabel {
           if (!queriedMask.BitIsSet(i + 1)) {
             continue;
           }
-          State state(MapAllType, m_query, queried, queriedMask);
+          State state(functor, m_query, queried, queriedMask);
           OBAtom *queriedAtom = queried->GetAtom(i+1);
           if (!queryAtom->Matches(queriedAtom)) {
             continue;
           }
 
           if (m_query->NumAtoms() > 1) {
-            if (matchCandidate(state, queryAtom, queriedAtom, maps))
-              MapNext(state, queryAtom, queriedAtom, maps);
+            if (matchCandidate(state, queryAtom, queriedAtom))
+              MapNext(state, queryAtom, queriedAtom);
           } else {
             Mapping map;
             map.push_back(std::make_pair(queryAtom->GetIndex(), queriedAtom->GetIndex()));
-            maps.push_back(map);
+            functor(map);
           }
         }
 
-        if (DEBUG)
-          for (unsigned int i =0; i < maps.size(); ++i) {
-            cout << "mapping:" << endl;
-            for (Mapping::iterator it = maps[i].begin(); it != maps[i].end(); ++it)
-              cout << "    " << it->first << " -> " << it->second << endl;
-          }
-
         if (time(NULL) - m_startTime > m_timeout)
           obErrorLog.ThrowError(__FUNCTION__, "time limit exceeded...", obError);
-
-        if (m_memory > m_maxMemory)
-          obErrorLog.ThrowError(__FUNCTION__, "memory limit exceeded...", obError);
 
       }
 
   };
 
-  OBIsomorphismMapper::OBIsomorphismMapper(OBQuery *query) : m_query(query), m_timeout(60), m_memory(0), m_maxMemory(300000000) // 300MB
+  OBIsomorphismMapper::OBIsomorphismMapper(OBQuery *query) : m_query(query), m_timeout(60)
   {
   }
 
@@ -561,6 +564,12 @@ namespace OpenBabel {
     // return VF2 mapper as default
     return new VF2Mapper(query);
   }
+
+
+
+
+
+
 
   class OBAutomorphismQueryAtom : public OBQueryAtom
   {
@@ -607,7 +616,7 @@ namespace OpenBabel {
     return query;
   }
 
-  bool FindAutomorphisms(OBMol *mol, Automorphisms &maps, const OBBitVec &mask)
+  bool FindAutomorphisms(OBMol *mol, Automorphisms &maps, const OBBitVec &mask, std::size_t maxMemory)
   {
     // set all atoms to 1 if the mask is empty
     OBBitVec queriedMask = mask;
@@ -620,13 +629,46 @@ namespace OpenBabel {
     std::vector<unsigned int> symClasses;
     gs.GetSymmetry(symClasses);
 
-    return FindAutomorphisms(mol, maps, symClasses, mask);;
+    return FindAutomorphisms(mol, maps, symClasses, mask, maxMemory);
+  }
+
+
+  bool FindAutomorphisms(OBMol *mol, Automorphisms &maps, const std::vector<unsigned int> &symClasses, const OBBitVec &mask, std::size_t maxMemory)
+  {
+    maps.clear();
+    MapAllFunctor functor(maps, maxMemory);
+    FindAutomorphisms(functor, mol, symClasses, mask);
+    return maps.size();
   }
 
   OBBitVec getFragment(OBAtom *atom, const OBBitVec &mask, const std::vector<OBBond*> &metalloceneBonds = std::vector<OBBond*>());
 
-  bool FindAutomorphisms(OBMol *mol, Automorphisms &maps, const std::vector<unsigned int> &symClasses, const OBBitVec &mask)
+  void FindAutomorphisms(OBIsomorphismMapper::Functor &functor, OBMol *mol,
+      const std::vector<unsigned int> &symClasses, const OBBitVec &mask)
   {
+    class AutomorphismFunctor : public OBIsomorphismMapper::Functor
+    {
+      private:
+        OBIsomorphismMapper::Functor &m_functor;
+        const OBBitVec &m_fragment;
+        std::vector<unsigned int> m_indexes;
+      public:
+        AutomorphismFunctor(OBIsomorphismMapper::Functor &functor, const OBBitVec &fragment, unsigned int numAtoms)
+            : m_functor(functor), m_fragment(fragment)
+        {
+          for (unsigned int j = 0; j < numAtoms; ++j)
+            if (m_fragment.BitIsSet(j + 1))
+              m_indexes.push_back(j);
+        }
+        bool operator()(Automorphism &map)
+        {
+          // convert the continuous mapping map to a mapping with gaps (considering key values)
+          for (Automorphism::iterator it = map.begin(); it != map.end(); it++)
+            it->first = m_indexes[it->first];
+          m_functor(map);
+        }
+    };
+
     // set all atoms to 1 if the mask is empty
     OBBitVec queriedMask = mask;
     if (!queriedMask.CountBits())
@@ -656,42 +698,16 @@ namespace OpenBabel {
       symClassCounts[symClass]++;
     }
 
-    maps.clear();
-    std::size_t memory = 0;
     for (std::size_t i = 0; i < fragments.size(); ++i) {
       OBQuery *query = CompileAutomorphismQuery(mol, fragments[i], symClasses);
       OBIsomorphismMapper *mapper = OBIsomorphismMapper::GetInstance(query);
-      mapper->SetMemory(memory);
 
-      OBIsomorphismMapper::Mappings fragmaps;
-      mapper->MapAll(mol, fragmaps, fragments[i]);
-
-      memory += mapper->GetMemory();
-
-      if (memory > mapper->GetMaxMemory()) {
-        maps.clear();
-        delete mapper;
-        delete query;
-        return false;
-      }
-
+      AutomorphismFunctor autFunctor(functor, fragments[i], mol->NumAtoms());
+      mapper->MapGeneric(autFunctor, mol, fragments[i]);
       delete mapper;
       delete query;
-
-      std::vector<unsigned int> indexes;
-      for (unsigned int j = 0; j < mol->NumAtoms(); ++j)
-        if (fragments[i].BitIsSet(j + 1))
-          indexes.push_back(j);
-
-      for (OBIsomorphismMapper::Mappings::iterator map = fragmaps.begin(); map != fragmaps.end(); map++) {
-        // convert the continuous mapping map to a mapping with gaps (considering key values)
-        for (OBIsomorphismMapper::Mapping::iterator it = map->begin(); it != map->end(); it++)
-          it->first = indexes[it->first];
-        maps.push_back(*map);
-      }
     }
 
-    return maps.size();
   }
 
 
