@@ -152,16 +152,18 @@ install(TARGETS roundtrip
 # calling from Python.
 if(NOT MINGW AND NOT CYGWIN)
   include(UsePythonTest)
-  set(pytests
-      babel sym fastsearch unique kekule)
-  foreach(pytest ${pytests})
-    ADD_PYTHON_TEST(pytest_${pytest} test${pytest}.py)
-    set_tests_properties(pytest_${pytest} PROPERTIES
-         FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
-         ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
-         ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data"
-    )
-  endforeach(pytest ${pytests})
+  if(PYTHON_EXECUTABLE)
+    set(pytests
+        babel sym fastsearch unique kekule)
+    foreach(pytest ${pytests})
+      ADD_PYTHON_TEST(pytest_${pytest} test${pytest}.py)
+      set_tests_properties(pytest_${pytest} PROPERTIES
+           FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
+           ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
+           ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data"
+      )
+    endforeach(pytest ${pytests})
+  endif(PYTHON_EXECUTABLE)
 endif(NOT MINGW AND NOT CYGWIN)
 
 ###############################

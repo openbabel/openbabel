@@ -20,8 +20,13 @@
 #
 
 # Need python interpreter:
-FIND_PACKAGE(PythonInterp REQUIRED)
+FIND_PACKAGE(PythonInterp)
 MARK_AS_ADVANCED(PYTHON_EXECUTABLE)
+
+# Make sure we handle systems w/o python (e.g. chroot)
+if(NOT PYTHON_EXECUTABLE)
+  return()
+endif(NOT PYTHON_EXECUTABLE)
 
 MACRO(ADD_PYTHON_TEST TESTNAME FILENAME)
   GET_SOURCE_FILE_PROPERTY(loc ${FILENAME} LOCATION)
