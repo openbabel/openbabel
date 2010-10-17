@@ -29,7 +29,7 @@ GNU General Public License for more details.
 #include <openbabel/tokenst.h>
 
 #ifdef UNUSED
-#elif defined(__GNUC__)
+#elif (__GNUC__ == 4)
 # define UNUSED(x) UNUSED_ ## x __attribute__((unused))
 #elif defined(__LCLINT__)
 # define UNUSED(x) /*@unused@*/ x
