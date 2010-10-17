@@ -456,7 +456,7 @@ FunctionEnd
 ;General
 
   ;OpenBabel version
-  !define OBVersion 2.3.0rc
+  !define OBVersion 2.3.0
 
   ;Name and file
   Name "OpenBabel ${OBVERSION}"
@@ -527,14 +527,14 @@ Section "Dummy Section" SecDummy
   File ..\sdf.bat
   File ..\obdepict.bat
   
-  File /r /x test_*.* ..\build\Release\*.exe
-  File /r ..\build\Release\*.obf
-  File ..\build\Release\openbabel-2.dll
+  File /r /x test_*.* ..\build\bin\Release\*.exe
+  File /r ..\build\bin\Release\*.obf
+  File ..\build\bin\Release\openbabel-2.dll
   
   File vcredist_x86.exe
 
   File ..\..\scripts\java\openbabel.jar
-  File ..\build\Release\openbabel_java.dll
+  File ..\build\bin\Release\openbabel_java.dll
   
   File ..\libs\i386\*.dll
 
@@ -557,7 +557,7 @@ Section "Dummy Section" SecDummy
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Open Babel Folder.lnk" "$INSTDIR"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Open Babel GUI.lnk" "$INSTDIR\OBGUI.exe"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using Open Babel GUI.lnk" "$INSTDIR\doc\OpenBabelGUI.html"
-    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using babel (web).lnk" "http://baoilleach.webfactional.com/site_media/ob-docs/index.html"
+    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using babel (web).lnk" "http://openbabel.org/docs/2.3.0"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
   !insertmacro MUI_STARTMENU_WRITE_END
 
@@ -585,7 +585,7 @@ Section "Dummy Section" SecDummy
   WriteRegStr HKCR "*\shell\OBDepict\command" "" "$INSTDIR\obdepict.bat %1"
   
   ; Convenience shortcut to OBDepict
-  CreateShortCut "$INSTDIR\OBDepict.lnk" "$INSTDIR\obdepict.bat" "" "" 0 SW_SHOWMINIMIZED 
+  ;CreateShortCut "$INSTDIR\OBDepict.lnk" "$INSTDIR\obdepict.bat" "" "" 0 SW_SHOWMINIMIZED 
    
 SectionEnd
 
@@ -615,6 +615,9 @@ Section "Uninstall"
   Delete "$INSTDIR\OBDepict.lnk"
   Delete "$INSTDIR\sdf.bat"
   Delete "$INSTDIR\*.obf"
+  
+  ;May not be installed, but it doesn't matter.
+  Delete "$INSTDIR\Sieve.exe"
   
   Delete "$INSTDIR\openbabel-2.dll"
   Delete "$INSTDIR\iconv.dll"
@@ -661,6 +664,4 @@ Section "Uninstall"
   Call un.RemoveFromEnvVar
   DeleteRegValue        HKCU "Environment" "BABEL_DATADIR"
   
-  Delete "$SENDTO\OBDepict.lnk"
-
 SectionEnd
