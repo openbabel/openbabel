@@ -665,8 +665,7 @@ namespace OpenBabel {
           // convert the continuous mapping map to a mapping with gaps (considering key values)
           for (Automorphism::iterator it = map.begin(); it != map.end(); it++)
             it->first = m_indexes[it->first];
-          m_functor(map);
-          return true;
+          return m_functor(map);
         }
     };
 
