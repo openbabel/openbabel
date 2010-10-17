@@ -666,6 +666,7 @@ namespace OpenBabel {
           for (Automorphism::iterator it = map.begin(); it != map.end(); it++)
             it->first = m_indexes[it->first];
           m_functor(map);
+          return true;
         }
     };
 
