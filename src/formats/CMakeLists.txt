@@ -18,6 +18,7 @@ set(formats_utility
   )
 set(formats_compchem
       adfformat
+      castepformat
       dmolformat
       fchkformat
       fhiaimsformat
