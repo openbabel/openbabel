@@ -1,9 +1,26 @@
-Open Babel 2.2.3 (2009-07-31)
+Open Babel 2.3.0 (2010-10-23)
 
 What's New from 2.2.3:
 
+This release represents a major update to Open Babel, adding many new
+features and fixing many long-standing bugs. It is a stable upgrade,
+strongly recommended for all users of Open Babel. Highlights include a
+completely rewritten stereochemistry engine, 2D depiction, improved 3D
+coordinate generation ...
+
+- New Feature Here
+
+==New File Formats==
+
+Import & Export:
+- PDBQT, contributed by
+
+Open Babel 2.2.3 (2009-07-31)
+
+What's New from 2.2.2:
+
 This release represents an important bug-fix upgrade, strongly recommended
-for all users of Open Babel. 
+for all users of Open Babel.
 
 - Fixed bug in fingerprints in 2.2.2, where the default fingerprint
   format and bit length was changed inadvertently.
@@ -44,7 +61,7 @@ fixed since 2.2.1.
 
 ==New File Formats==
 
-Import & Export: 
+Import & Export:
 - Molpro input and output.
 - VASP coordinate files (CONTCAR and POSCAR).
 
@@ -100,7 +117,7 @@ What's New from 2.1.1:
 - Facility to add new "ops", commandline options or operations on the
     conversion process as plugin code.
    Initial operations include 3D coordinate generation, tautomer
-    standarization, and addition of polar hydrogens. 
+    standarization, and addition of polar hydrogens.
 - Code for integrating Open Babel and the BOOST graph library.
 - Improved scripting support, including new bindings for C# and
     improved Java, Ruby, Python, and Perl bindings.
@@ -126,7 +143,7 @@ What's New from 2.1.1:
 
 ==New File Formats==
 
-Import & Export: 
+Import & Export:
  Chemkin
  Gaussian Cube
  Gaussian Z-matrix
@@ -181,7 +198,7 @@ Open Babel 2.1.0    (2007-04-07)
 
 What's New from 2.0.2:
 
-- Now handles molecules with >65536 atoms or bonds. Some PDB entries, 
+- Now handles molecules with >65536 atoms or bonds. Some PDB entries,
    in particular have such large molecular systems.
 - New features for molecular mechanics force fields, including energy
    evaluation and geometry optimization. Ultimately, this will enable
@@ -220,7 +237,7 @@ What's New from 2.0.2:
 - Many more bug fixes and small feature improvements.
 
 New File Formats:
-  Import & Export: 
+  Import & Export:
     Carine's ASCII Crystal (ACR)
     ChemDraw CDX & CDXML
     Crystallographic Interchange Format (CIF)
@@ -254,7 +271,7 @@ What's New from 2.0.0:
 
 - Support for dynamic building on the Cygwin environment. This fixes a
   long-standing problem that made Open Babel useless to Cygwin users.
-- Fixed a variety of memory leaks and improved overall memory use. 
+- Fixed a variety of memory leaks and improved overall memory use.
   More work to reduce memory consumption is underway for the 2.1 release.
 - Improved Perl and Python scripting wrappers, including many
   bug-fixes.
@@ -285,13 +302,13 @@ a stable, flexible interface for developers and users alike.
    libraries, DLLs, DSO, etc.). More importantly, it facilitates adding
    new formats, since each format is self-contained and no editing of
    other files is required.
-- Improved support for XML chemistry formats, including CML, PubChem XML, 
-- Support for fingerprinting and calculation of Tanimoto coefficients for 
-   similarity consideration. 
+- Improved support for XML chemistry formats, including CML, PubChem XML,
+- Support for fingerprinting and calculation of Tanimoto coefficients for
+   similarity consideration.
    (A flexible fingerprint framework is available for developers.)
 - New support for Perl and Python "wrappers" of the Open Babel library.
 - Many enhancements to the Open Babel API: See the Developers API Notes for
-   more information. Some code will require updating, see the 
+   more information. Some code will require updating, see the
    Developer's Migration Guide for details.
 - Support for automatically reading .gz compressed files.
    (e.g., 1abc.pdb.gz is uncompressed and treated as a PDB file)
@@ -318,7 +335,7 @@ a stable, flexible interface for developers and users alike.
 - Countless bug fixes.
 
 New File Formats:
-  Import & Export: 
+  Import & Export:
 	  ChemDraw CT (Connection Table)
 	  CML Reaction files
 	  MDL Molfile V3000
@@ -334,7 +351,7 @@ New File Formats:
 	  Improved SMILES import / export
   Import-Only:
           PubChem XML
-  Export-Only: 
+  Export-Only:
  	  MPQC input
 	  Open Babel "copy" format (i.e., copy the raw input file)
 	  Sybyl MPD descriptor format

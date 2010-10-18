@@ -10,7 +10,7 @@ Requirements
 Basic Installation
 ==================
 These instructions give a very basic overview of how to configure, compile and
-install OpenBabel on most systems.  If you are using unique install locations
+install Open Babel on most systems.  If you are using unique install locations
 and/or libraries are not automatically detected please consult the 'Advanced'
 section.
 
@@ -19,7 +19,8 @@ section.
    mkdir build
    cd build
 
-2. Configure the build system
+2. Configure the build system. You can specify additional build
+options at this time (see below).
 
    cmake ../
 
@@ -27,15 +28,20 @@ section.
 
    make -j2
 
-4. Install
+4. Test (optional)
+
+   make test
+
+5. Install
 
    sudo make install
 
 
 Advanced
 ========
-The build system (CMake) provides mechanisms for specifying non-standard
-installation locations and enabling/disabling of optional components
+The build system (CMake) provides mechanisms for specifying
+non-standard installation locations and enabling/disabling of optional
+components.
 
    -DCMAKE_INSTALL_PREFIX : specify the installation prefix
                             (default /usr/local)
@@ -49,16 +55,21 @@ installation locations and enabling/disabling of optional components
 
    -DPYTHON_BINDINGS : specify whether to build Python bindings
 
-   -DMINIMAL_BUILD : specify whether to do minimal build with just two 
+   -DMINIMAL_BUILD : specify whether to do minimal build with just two
                      formats (SMI, SDF) useful for developers
 
-   -DBUILD_GUI : specify wether to build OpenBabel GUI (wxWidgets required)
+   -DBUILD_GUI : specify wether to build Open Babel GUI (wxWidgets required)
 
-For more information please consult the CMake documentation.
+For more information please consult the CMake documentation and the
+Open Babel website:
+<http://openbabel.org/wiki/CMake>
 
-OpenBabel uses a few environment variables to find things at runtime. If OpenBabel
-is installed to the location specified at compile time none of these variables
-need to be set.
 
-BABEL_LIBDIR - the location of OpenBabel format plugins
+Environment Variables
+==================
+Open Babel uses a few environment variables to find things at
+runtime. If Open Babel is installed to the location specified at
+compile time, none of these variables need to be set.
+
+BABEL_LIBDIR - the location of Open Babel format plugins
 BABEL_DATADIR - the location of the data files
