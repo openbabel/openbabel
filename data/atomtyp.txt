@@ -74,6 +74,12 @@ INTHYB  [Sr]                      1
 INTHYB  [Ba]                      1
 INTHYB  [Ra]                      1
 
+INTHYB  [Pt]                      4 # normally square planar
+INTHYB  [Pd]                      4
+INTHYB  [Cu]                      4
+INTHYB  [Ag]                      4
+INTHYB  [Au]                      4
+
 #
 #IMPLICIT VALENCE RULES
 #
@@ -132,7 +138,7 @@ IMPVAL  [#13]                     3 # generic Al
 
 IMPVAL  [#14]                     4 # regular sp3 Si
 IMPVAL  [#14^2]                   2 # silylenes
-IMPVAL  [$([#14]=*)]              3 # e.g., Si=O 
+IMPVAL  [$([#14]=*)]              3 # e.g., Si=O
 IMPVAL  [$([#14](=*)=*)]          0 # e.g., Si(=O)=O
 IMPVAL  [$([#14+]#*)]		          1 # just for InChI Si2
 IMPVAL  [$([#14-]#*)]		          1 # just for InChI Si2
@@ -150,7 +156,7 @@ IMPVAL  [$([#15](=[#8])=[#8])]    3 # metaphosphate (double bond = one valence)
 IMPVAL  [$([#15+](=[#8])([#8]))]  0 # R-P+O2
 
 IMPVAL  [#16]                     2 #revised CM April 2008
-IMPVAL  [$([#16D1]=*)]            1 
+IMPVAL  [$([#16D1]=*)]            1
 IMPVAL  [$([#16D3](=O)(=O)-O)]    4 #e.g. O[S](=O)=O
 IMPVAL  [$([#16D2](=O)-O)]        3 # e.g. O[S]=O
 IMPVAL  [#16D1-]                  1
@@ -214,7 +220,7 @@ EXTTYP  [$(Oa)]         O2
 EXTTYP  [$([OD2]C=[O,S])]     O3  #ester oxygen
 EXTTYP  [$(Oa)]         O3      #aromatic ether
 EXTTYP  [#8-]         O-
-EXTTYP  [$([#8D1]~[#6]~[#8D1])]     O.co2  
+EXTTYP  [$([#8D1]~[#6]~[#8D1])]     O.co2
 
 EXTTYP  [#15]         P
 EXTTYP  [#15X4+]        P3+
