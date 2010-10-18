@@ -26,7 +26,7 @@ INTHYB  [D5]                      5       #any 5-valent atom -- trigbipy
 INTHYB  [D6]                      6       #any 6-valent atom -- oct
 INTHYB  [C]                       3       #sp3 carbon
 INTHYB  [c,$(C=*)]                2       #sp2 carbon
-INTHYB  [$([#6]([#8D1])[#8D1])]   2       #sp2 carbon
+# INTHYB  [$([#6]([#8D1])[#8D1])]   2     # Commented out after PR#3089597
 INTHYB  [$(C#*),$(C(=*)=*)]       1       #sp  carbon
 
 INTHYB  [N]                       3       #sp3 nitrogen
@@ -220,7 +220,7 @@ EXTTYP  [$(Oa)]         O2
 EXTTYP  [$([OD2]C=[O,S])]     O3  #ester oxygen
 EXTTYP  [$(Oa)]         O3      #aromatic ether
 EXTTYP  [#8-]         O-
-EXTTYP  [$([#8D1]~[#6]~[#8D1])]     O.co2
+EXTTYP  [$([#8D1]~[#6^2]~[#8D1])]     O.co2
 
 EXTTYP  [#15]         P
 EXTTYP  [#15X4+]        P3+
