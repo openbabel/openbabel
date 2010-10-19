@@ -20,7 +20,7 @@ GNU General Public License for more details.
 
 #include <openbabel/bond.h>
 #include <openbabel/mol.h>
-#include <limits.h>
+#include <climits>
 
 using namespace std;
 
@@ -635,7 +635,7 @@ namespace OpenBabel
 
     rlist = mol->GetSSSR();
     OBRing* result = (OBRing*) NULL;
-    size_t min_size = SIZE_MAX;
+    size_t min_size = UINT_MAX;
     for (i = rlist.begin();i != rlist.end();++i) {
       if ((*i)->IsMember((OBBond*)this) && (*i)->Size() < min_size) {
         min_size = (*i)->Size();
