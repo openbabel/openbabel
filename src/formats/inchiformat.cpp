@@ -265,7 +265,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   map<OBBond*, OBStereo::BondDirection> updown;
   map<OBBond*, OBStereo::Ref> from;
   map<OBBond*, OBStereo::Ref>::const_iterator from_cit;
-  if (mol.GetDimension() != 0)
+  if (mol.GetDimension() == 3 || (mol.GetDimension()==2 && pConv->IsOption("s", pConv->OUTOPTIONS)!=NULL))
     TetStereoToWedgeHash(mol, updown, from);
   set<OBBond*> unspec_ctstereo = GetUnspecifiedCisTrans(mol);
 
@@ -299,10 +299,24 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       if(bo==5)
         bo=4;
       iat.bond_type[nbonds]     = bo;
+
+      OBStereo::BondDirection stereo = OBStereo::NotStereo;
+      if (mol.GetDimension()==2 && pConv->IsOption("s", pConv->OUTOPTIONS)==NULL) {
+        if (pbond->IsWedge())
+          stereo = OBStereo::UpBond;
+        else if (pbond->IsHash())
+          stereo = OBStereo::DownBond;
+        else if (pbond->IsWedgeOrHash())
+          stereo = OBStereo::UnknownDir;
+      } 
+      else if (from_cit!=from.end()) { // It's a stereo bond
+        stereo = updown[pbond];
+      }
+
       if (mol.GetDimension() != 0) {
         inchi_BondStereo2D bondstereo2D = INCHI_BOND_STEREO_NONE;
-        if (from_cit!=from.end()) { // It's a stereobond
-          switch (updown[pbond]) {
+        if (stereo != OBStereo::NotStereo) {
+          switch (stereo) {
             case OBStereo::UpBond:
               bondstereo2D = INCHI_BOND_STEREO_SINGLE_1UP;
               break;

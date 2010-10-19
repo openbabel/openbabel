@@ -69,6 +69,7 @@ public:
     "    \'Metal was disconnected\'\n"
     " a output auxilliary information\n"
     " l display InChI log\n"
+    " s recalculate wedge and hash bonds(2D structures only)\n"
     "    **Uniqueness options** (see also ``--unique`` and ``--sort`` which are more versatile)\n"
     " u output only unique molecules\n"
     " U output only unique molecules and sort them\n"
