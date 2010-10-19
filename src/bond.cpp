@@ -20,6 +20,7 @@ GNU General Public License for more details.
 
 #include <openbabel/bond.h>
 #include <openbabel/mol.h>
+#include <limits.h>
 
 using namespace std;
 
