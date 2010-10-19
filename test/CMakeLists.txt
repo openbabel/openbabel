@@ -43,11 +43,7 @@ set(TEST_PATH ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 foreach(test ${tests})
   add_executable(test_${test} ${test}test.cpp)
   target_link_libraries(test_${test} ${BABEL_LIBRARY})
-  if(MSVC)
-    add_test(${test}_Test ${CMAKE_BINARY_DIR}/test_${test})
-  else(MSVC)
-    add_test(${test}_Test ${TEST_PATH}/test_${test})
-  endif(MSVC)
+  add_test(${test}_Test ${TEST_PATH}/test_${test})
   set_tests_properties(${test}_Test PROPERTIES
     FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
     ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
@@ -100,14 +96,8 @@ if(WITH_INCHI)
   set(inchitests Samples SamplesTechMan)
   set(inchidata ${CMAKE_SOURCE_DIR}/test/inchi)
   foreach(test ${inchitests})
-    if(MSVC)
-      add_test(inchi${test}_Test 
-               ${CMAKE_BINARY_DIR}/test_inchiwrite ${inchidata}/${test}.sdf ${inchidata}/${test}.txt)
-    else(MSVC)
-      add_test(inchi${test}_Test 
-              ${TEST_PATH}/test_inchiwrite ${inchidata}/${test}.sdf ${inchidata}/${test}.txt)
-    endif(MSVC)
-
+    add_test(inchi${test}_Test 
+             ${TEST_PATH}/test_inchiwrite ${inchidata}/${test}.sdf ${inchidata}/${test}.txt)
     set_tests_properties(inchi${test}_Test PROPERTIES
                          FAIL_REGULAR_EXPRESSION "Not ok"
                          ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
@@ -119,11 +109,7 @@ endif(WITH_INCHI)
 foreach(test ${old_tests})
   add_executable(test_${test} ${test}.cpp)
   target_link_libraries(test_${test} ${BABEL_LIBRARY})
-  if(MSVC)
-    add_test(${test}_Test ${CMAKE_BINARY_DIR}/test_${test})
-  else(MSVC)
-    add_test(${test}_Test ${TEST_PATH}/test_${test})
-  endif(MSVC)
+  add_test(${test}_Test ${TEST_PATH}/test_${test})
   set_tests_properties(${test}_Test PROPERTIES
     FAIL_REGULAR_EXPRESSION "not ok"
     ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
