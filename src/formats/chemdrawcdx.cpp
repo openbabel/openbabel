@@ -365,7 +365,7 @@ namespace OpenBabel
           {
             cout << "Invalid file, no ChemDraw Header" << endl;	// No header, error.
             ifs.seekg(0, ios_base::end);
-            return false;
+            return (OBBase*)NULL;
           }
       }
     while(ifs.good())
