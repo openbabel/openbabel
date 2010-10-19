@@ -191,14 +191,6 @@ namespace OpenBabel {
           j = (i > 1) ? i - 2 : i + 2;
 
         unsigned long refId = m_cfg.refs.at(j);
-        if (refId == OBStereo::ImplicitRef)
-          return OBStereo::ImplicitRef;
-        // make sure they are not bonded to the same atom
-        if (IsOnSameAtom(id, refId)) {
-          obErrorLog.ThrowError(__FUNCTION__,
-            "OBCisTransStereo::GetCisOrTransRef : References don't match bond orientation", obError);
-          return OBStereo::NoRef;
-        }
         return refId;
       }
     }

@@ -34,6 +34,7 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
   class OBAtom;
+  class OBRing;
 
   //! OBEdgeBase is declared for backwards-compatibility with 2.0 and earlier code
   typedef OBBond OBEdgeBase;
@@ -238,6 +239,8 @@ namespace OpenBabel
           else
             return (_end ? _end->GetIdx() : 0);
         }
+      //! Find the smallest ring containing this bond (returns a NULL pointer if none exists)
+      OBRing* FindSmallestRing() const;
       //@}
 
       //! \name property request methods

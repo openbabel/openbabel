@@ -37,6 +37,7 @@ GNU General Public License for more details.
 #include <string>
 
 //#define DEBUG 1
+#define IMPLICIT_CIS_RING_SIZE 12
 
 using namespace std;
 
@@ -2537,8 +2538,14 @@ namespace OpenBabel {
       if (((OBStereoBase*)*data)->GetType() != OBStereo::CisTrans)
         continue;
       OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
-      if (ct && ct->GetConfig().specified)
-        _cistrans.push_back(*ct);
+      if (ct && ct->GetConfig().specified) {
+        OBCisTransStereo::Config config = ct->GetConfig();
+        OBBond* dbl_bond = mol.GetBond(mol.GetAtomById(config.begin), mol.GetAtomById(config.end));
+        // Do not output cis/trans bond symbols for double bonds in rings of size IMPLICIT_CIS_RING_SIZE or less
+        OBRing* ring = dbl_bond->FindSmallestRing();
+        if (!ring || ring->Size()>IMPLICIT_CIS_RING_SIZE)
+          _cistrans.push_back(*ct);
+      }
     }
 
     _unvisited_cistrans = _cistrans; // Make a copy of _cistrans

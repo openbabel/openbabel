@@ -38,6 +38,7 @@
 
 #define DEBUG 0
 #define DEBUG_INVERSIONS 0
+#define IMPLICIT_CIS_RING_SIZE 12
 
 using namespace std;
 
@@ -102,7 +103,7 @@ namespace OpenBabel {
   {
     std::vector<OBBond*>::iterator ib;
     for (OBBond *bond = mol->BeginBond(ib); bond; bond = mol->NextBond(ib))
-      if (bond->GetBO() == 2 && !bond->IsInRing()) {
+      if (bond->GetBO() == 2) {
         return true;
       }
     return false;
@@ -749,8 +750,6 @@ namespace OpenBabel {
     bool isCisTransBond;
     std::vector<OBBond*>::iterator ib;
     for (OBBond *bond = mol->BeginBond(ib); bond; bond = mol->NextBond(ib)) {
-      if (bond->IsInRing())
-        continue;
 
       if (bond->GetBO() == 2) {
         OBAtom *begin = bond->GetBeginAtom();
@@ -1992,6 +1991,27 @@ namespace OpenBabel {
 
       OBCisTransStereo *ct = new OBCisTransStereo(mol);
       ct->SetConfig(config);
+
+      // For a double bond in a ring of size IMPLICIT_CIS_RING_SIZE or less
+      // the stereochemistry is implicitly cis (in terms
+      // of the ring atoms)
+      OBRing* ring = bond->FindSmallestRing();
+      if (ring && ring->Size() <= IMPLICIT_CIS_RING_SIZE) {
+
+        // Find the ring atoms in the config.refs
+        vector<unsigned int> ringrefs(2);
+        for (int i = 0; i<2; ++i) {
+          if (ring->IsMember(mol->GetAtomById(config.refs[i*2])))
+            ringrefs[i] = config.refs[i*2];
+          else
+            ringrefs[i] = config.refs[i*2 + 1];
+        }
+        if (!ct->IsCis(ringrefs[0], ringrefs[1])) // Need to invert the stereo
+          config.shape = OBStereo::ShapeZ;
+        
+        config.specified = true;
+        ct->SetConfig(config);
+      }
 
       configs.push_back(ct);
       // add the data to the molecule if needed
