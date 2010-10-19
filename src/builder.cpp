@@ -230,7 +230,7 @@ namespace OpenBabel
 
         // check to see if atom is a square planar in disguise
         if (atom->GetHyb() == 3) {
-          OBStereoFacade stereoFacade((OBMol*)atom->GetParent());
+          OBStereoFacade stereoFacade((OBMol*)atom->GetParent(), false); // Don't reperceive
           if (stereoFacade.HasSquarePlanarStereo(atom->GetId()))
             atom->SetHyb(4); // force sq. planar geometry for sq. planar stereo
         }
