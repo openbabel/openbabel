@@ -59,7 +59,7 @@ def executable(name):
     folder = "bin"
     if sys.platform == "win32":
         suffix = ".exe"
-        folder = "Release"
+        folder = os.path.join(folder, "Release")
     return os.path.join("..", folder, name + suffix)
 
 def log(text):
