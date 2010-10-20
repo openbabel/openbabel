@@ -201,6 +201,8 @@ else(BUILD_SHARED)
       CMLReactFormat
       PubChemFormat
       XMLFormat
+      # InChI format
+      InChIFormat
      )
 
   set(descriptor_classes
@@ -254,7 +256,7 @@ else(BUILD_SHARED)
      )
 
   # Set libs to imported openbabel target
-  set(libs openbabel ${LIBXML2_LIBRARIES})
+  set(libs openbabel ${LIBXML2_LIBRARIES} inchi)
 
   if(MSVC)
     #

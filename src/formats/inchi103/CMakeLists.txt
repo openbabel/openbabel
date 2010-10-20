@@ -10,7 +10,7 @@ if(NOT WIN32)
 endif(NOT WIN32)
 
 include_directories(${openbabel_SOURCE_DIR}/include/inchi103)
-add_library(inchi SHARED ${inchi_srcs})
+add_library(inchi ${BUILD_TYPE} ${inchi_srcs})
 target_link_libraries(inchi ${libs})
 set_target_properties(inchi PROPERTIES
                             VERSION ${INCHI_MAJ_VER}.${INCHI_MIN_VER}.${INCHI_PATCH_VER}

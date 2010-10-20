@@ -138,6 +138,19 @@ if(HAVE_RPC_XDR_H)
   )
 endif(HAVE_RPC_XDR_H)
 
+#if(ADD_INCHI_FORMAT)
+#  add_definitions(-DINCHI_LINK_AS_DLL)
+  if(NOT MSVC AND NOT OPENBABEL_USE_SYSTEM_INCHI)
+    include_directories(${CMAKE_SOURCE_DIR}/include/inchi103)
+  endif()
+#  set(inchiformat_additional_sources getinchi.cpp ../ops/unique.cpp)
+  set(formats_common
+    ${formats_common}
+    inchiformat
+  )
+#endif(ADD_INCHI_FORMAT)
+
+
 if(MINIMAL_BUILD)
   set(formats
     ${formats_common}
@@ -150,3 +163,5 @@ else(MINIMAL_BUILD)
       ${formats_misc}
   )
 endif(MINIMAL_BUILD)
+
+

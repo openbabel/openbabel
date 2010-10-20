@@ -169,6 +169,9 @@ else(BUILD_SHARED)
   foreach(plugingroup descriptors fingerprints forcefields ops charges)
     set(openbabel_srcs ${openbabel_srcs} ${${plugingroup}})
   endforeach(plugingroup descriptors fingerprints forcefields ops charges)
+
+  set(openbabel_srcs ${openbabel_srcs} formats/getinchi.cpp ops/unique.cpp)
+  add_subdirectory(formats/inchi103)
 endif(BUILD_SHARED)
 
 set(openbabel_library_srcs
