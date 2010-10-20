@@ -135,6 +135,9 @@ endif()
 
 # configure checks
 find_package(LibXml2)
+if(NOT LIBXML2_FOUND)
+  message(WARNING "libxml2 not found - disabling CML support!")
+endif()
 
 find_package(ZLIB)
 if(ZLIB_FOUND)
