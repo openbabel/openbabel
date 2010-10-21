@@ -820,6 +820,51 @@ namespace OpenBabel
      }
   */
 
+  // Variation of OBBuilder::Swap that allows swapping with a vector3 rather than
+  // an explicit bond. This is useful for correcting stereochemistry at Tet Centers
+  // where it is sometimes necessary to swap an existing bond with the location
+  // of an implicit hydrogen (or lone pair), in order to correct the stereo.
+  bool OBBuilder::SwapWithVector(OBMol &mol, int idxA, int idxB, int idxC, const vector3 &newlocation)
+  {
+    OBAtom *a = mol.GetAtom(idxA);
+    OBAtom *b = mol.GetAtom(idxB);
+    OBAtom *c = mol.GetAtom(idxC);
+
+    // make sure the atoms exist
+    if (a == NULL || b == NULL || c == NULL)
+      return false;
+
+    OBBond *bond1 = mol.GetBond(idxA, idxB);
+
+    // make sure a-b is connected
+    if (bond1 == NULL)
+      return false;
+
+    // make sure the bond are not in a ring
+    if (bond1->IsInRing())
+      return false;
+
+    // save the original bond order
+    int bondOrder1 = bond1->GetBondOrder();
+
+    // delete the bond
+    mol.DeleteBond(bond1);
+
+    // Get the old bond vector
+    vector3 bondB = b->GetVector() - a->GetVector();
+    vector3 bondD =  newlocation   - c->GetVector();
+
+    // Get the new positions for B and D
+    vector3 newB = c->GetVector() + bondB.length() * (bondD/bondD.length());
+    vector3 newD = a->GetVector() + bondD.length() * (bondB/bondB.length());
+
+    // connect the fragments
+    if (!Connect(mol, idxC, idxB, newB, bondOrder1))
+      return false;
+
+    return true;
+  }
+
   bool OBBuilder::Swap(OBMol &mol, int idxA, int idxB, int idxC, int idxD)
   {
     OBAtom *a = mol.GetAtom(idxA);
@@ -1435,7 +1480,7 @@ namespace OpenBabel
           OBAtom* non_ring_atom = mol.GetAtom(idxs.at(0));
           OBBond* non_ring_bond = mol.GetBond(center, non_ring_atom);
           vector3 newcoords = OBBuilder::GetNewBondVector(center, non_ring_bond->GetLength());
-          non_ring_atom->SetVector(newcoords);
+          SwapWithVector(mol, center->GetIdx(), idxs.at(0), center->GetIdx(), newcoords);
         }
       }
     }

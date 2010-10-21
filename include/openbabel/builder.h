@@ -161,6 +161,7 @@ namespace OpenBabel
       static bool FixRingStereo(std::vector<std::pair<OBStereo::Ref, bool> > atomIds,
                                 OBMol &mol, OBStereo::Refs &unfixedcenters);
       static void AddRingNbrs(OBBitVec &fragment, OBAtom *atom, OBMol &mol);
+      static bool SwapWithVector(OBMol &mol, int a, int b, int c, const vector3 &newlocation);
       bool _keeprings;
   }; // class OBBuilder
 
