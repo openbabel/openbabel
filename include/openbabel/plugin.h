@@ -319,6 +319,186 @@ public:
 */
 /*\@}*/
 
+#ifndef USING_DYNAMIC_LIBS
+
+#define OB_STATIC_PLUGIN(className,instanceName) \
+  class className; \
+  OBAPI EXTERN className instanceName;
+
+  // formats
+  OB_STATIC_PLUGIN(ACRFormat, theACRFormat);
+  OB_STATIC_PLUGIN(ADFOutputFormat, theADFOutputFormat);
+  OB_STATIC_PLUGIN(ADFInputFormat, theADFInputFormat);
+  OB_STATIC_PLUGIN(AlchemyFormat, theAlchemyFormat);
+  OB_STATIC_PLUGIN(AmberPrepFormat, theAmberPrepFormat);
+  OB_STATIC_PLUGIN(OBAPIInterface, theOBAPIInterface);
+  OB_STATIC_PLUGIN(BallStickFormat, theBallStickFormat);
+  OB_STATIC_PLUGIN(BGFFormat, theBGFFormat);
+  OB_STATIC_PLUGIN(BoxFormat, theBoxFormat);
+  OB_STATIC_PLUGIN(CacaoFormat, theCacaoFormat);
+  OB_STATIC_PLUGIN(CacheFormat, theCacheFormat);
+  OB_STATIC_PLUGIN(CARFormat, theCARFormat);
+  OB_STATIC_PLUGIN(CCCFormat, theCCCFormat);
+  OB_STATIC_PLUGIN(CHEM3D1Format, theCHEM3D1Format);
+  OB_STATIC_PLUGIN(CHEM3D2Format, theCHEM3D2Format);
+  OB_STATIC_PLUGIN(ChemDrawBinaryFormat, theChemDrawBinaryFormat);
+  OB_STATIC_PLUGIN(ChemDrawFormat, theChemDrawFormat);
+  OB_STATIC_PLUGIN(ChemKinFormat, theChemKinFormat);
+  OB_STATIC_PLUGIN(CHTFormat, theCHTFormat);
+  OB_STATIC_PLUGIN(CIFFormat, theCIFFormat);
+  OB_STATIC_PLUGIN(CopyFormat, theCopyFormat);
+  OB_STATIC_PLUGIN(CRK2DFormat, theCRK2DFormat);
+  OB_STATIC_PLUGIN(CRK3DFormat, theCRK3DFormat);
+  OB_STATIC_PLUGIN(CSRFormat, theCSRFormat);
+  OB_STATIC_PLUGIN(CSSRFormat, theCSSRFormat);
+  OB_STATIC_PLUGIN(DlpolyConfigFormat, theDlpolyConfigFormat);
+  OB_STATIC_PLUGIN(DlpolyHISTORYFormat, theDlpolyHISTORYFormat);
+  OB_STATIC_PLUGIN(DMolFormat, theDMolFormat);
+  OB_STATIC_PLUGIN(FASTAFormat, theFASTAFormat);
+  OB_STATIC_PLUGIN(FastSearchFormat, theFastSearchFormat);
+  OB_STATIC_PLUGIN(FCHKFormat, theFCHKFormat);
+  OB_STATIC_PLUGIN(FEATFormat, theFEATFormat);
+  OB_STATIC_PLUGIN(FenskeZmatFormat, theFenskeZmatFormat);
+  OB_STATIC_PLUGIN(FHIaimsFormat,theFHIaimsFormat);
+  OB_STATIC_PLUGIN(FingerprintFormat, theFingerprintFormat);
+  OB_STATIC_PLUGIN(FreeFormFractionalFormat, theFreeFormFractionalFormat);
+  OB_STATIC_PLUGIN(GAMESSOutputFormat, theGAMESSOutputFormat);
+  OB_STATIC_PLUGIN(GAMESSInputFormat, theGAMESSInputFormat);
+  OB_STATIC_PLUGIN(GAMESSUKInputFormat, theGAMESSUKInputFormat);
+  OB_STATIC_PLUGIN(GAMESSUKOutputFormat, theGAMESSUKOutputFormat);
+  OB_STATIC_PLUGIN(OBGaussianCubeFormat, theGaussianCubeFormat);
+  OB_STATIC_PLUGIN(GaussianOutputFormat, theGaussianOutputFormat);
+  OB_STATIC_PLUGIN(GaussianInputFormat, theGaussianInputFormat);
+  OB_STATIC_PLUGIN(GaussianZMatrixInputFormat, theGaussianZMatrixInputFormat);
+  OB_STATIC_PLUGIN(GenBankFormat, theGenBankFormat);
+  OB_STATIC_PLUGIN(GhemicalFormat, theGhemicalFormat);
+  OB_STATIC_PLUGIN(GROMOS96Format, theGROMOS96Format);
+  OB_STATIC_PLUGIN(GULPFormat, theGULPFormat);
+  OB_STATIC_PLUGIN(HINFormat, theHINFormat);
+  OB_STATIC_PLUGIN(JaguarOutputFormat, theJaguarOutputFormat);
+  OB_STATIC_PLUGIN(JaguarInputFormat, theJaguarInputFormat);
+  OB_STATIC_PLUGIN(MCDLFormat, theMCDLFormat);
+  OB_STATIC_PLUGIN(MOLFormat, theMOLFormat);
+  OB_STATIC_PLUGIN(SDFormat, theSDFormat);
+  OB_STATIC_PLUGIN(OBT41Format, t41Format__);
+  OB_STATIC_PLUGIN(OBMoldenFormat, moldenFormat__);
+  OB_STATIC_PLUGIN(mmCIFFormat, themmCIFFormat);
+  OB_STATIC_PLUGIN(MacroModFormat, theMacroModFormat);
+  OB_STATIC_PLUGIN(MNAFormat, theMNAFormat);
+  OB_STATIC_PLUGIN(MOL2Format, theMOL2Format);
+  OB_STATIC_PLUGIN(MolproOutputFormat, theMolproOutputFormat);
+  OB_STATIC_PLUGIN(MolproInputFormat, theMolproInputFormat);
+  OB_STATIC_PLUGIN(MolReportFormat, theMolReportFormat);
+  OB_STATIC_PLUGIN(MOPACFormat, theMOPACFormat);
+  OB_STATIC_PLUGIN(MOPACCARTFormat, theMOPACCARTFormat);
+  OB_STATIC_PLUGIN(MOPACINTFormat, theMOPACINTFormat);
+  OB_STATIC_PLUGIN(MPDFormat, theMPDFormat);
+  OB_STATIC_PLUGIN(MPQCFormat, theMPQCFormat);
+  OB_STATIC_PLUGIN(MPQCInputFormat, theMPQCInputFormat);
+  OB_STATIC_PLUGIN(MSIFormat, theMSIFormat);
+  OB_STATIC_PLUGIN(OBMSMSFormat, msmsFormat__);
+  OB_STATIC_PLUGIN(NulFormat, theNulFormat);
+  OB_STATIC_PLUGIN(NWChemOutputFormat, theNWChemOutputFormat);
+  OB_STATIC_PLUGIN(NWChemInputFormat, theNWChemInputFormat);
+  OB_STATIC_PLUGIN(OBOpenDXCubeFormat, theOpenDXCubeFormat);
+  OB_STATIC_PLUGIN(OutputFormat, theOutputFormat);
+  OB_STATIC_PLUGIN(PCModelFormat, thePCModelFormat);
+  OB_STATIC_PLUGIN(PDBFormat, thePDBFormat);
+  OB_STATIC_PLUGIN(PDBQTFormat, thePDBQTFormat);
+  OB_STATIC_PLUGIN(PNGFormat, thePNGFormat);
+  OB_STATIC_PLUGIN(PovrayFormat, thePovrayFormat);
+  OB_STATIC_PLUGIN(PQRFormat, thePQRFormat);
+  OB_STATIC_PLUGIN(PQSFormat, thePQSFormat);
+  OB_STATIC_PLUGIN(PWscfFormat, thePWscfFormat);
+  OB_STATIC_PLUGIN(QChemOutputFormat, theQChemOutputFormat);
+  OB_STATIC_PLUGIN(QChemInputFormat, theQChemInputFormat);
+  OB_STATIC_PLUGIN(ReportFormat, theReportFormat);
+  OB_STATIC_PLUGIN(SmiReactFormat, theSmiReactFormat);
+  OB_STATIC_PLUGIN(RXNFormat, theRXNFormat);
+  OB_STATIC_PLUGIN(ShelXFormat, theShelXFormat);
+  OB_STATIC_PLUGIN(SMIFormat, theSMIFormat);
+  OB_STATIC_PLUGIN(CANSMIFormat, theCANSMIFormat);
+  OB_STATIC_PLUGIN(FIXFormat, theFIXFormat);
+  OB_STATIC_PLUGIN(SVGFormat, theSVGFormat);
+  OB_STATIC_PLUGIN(TextFormat, theTextFormat);
+  OB_STATIC_PLUGIN(ThermoFormat, theThermoFormat);
+  OB_STATIC_PLUGIN(TinkerFormat, theTinkerFormat);
+  OB_STATIC_PLUGIN(TitleFormat, theTitleFormat);
+  OB_STATIC_PLUGIN(TurbomoleFormat, theTurbomoleFormat);
+  OB_STATIC_PLUGIN(UniChemFormat, theUniChemFormat);
+  OB_STATIC_PLUGIN(VASPFormat, theVASPFormat);
+  OB_STATIC_PLUGIN(ViewMolFormat, theViewMolFormat);
+  OB_STATIC_PLUGIN(XEDFormat, theXEDFormat);
+  OB_STATIC_PLUGIN(XTCFormat, theXTCFormat);
+  OB_STATIC_PLUGIN(XYZFormat, theXYZFormat);
+  OB_STATIC_PLUGIN(YOBFormat, theYOBFormat);
+  OB_STATIC_PLUGIN(ZINDOFormat, theZINDOFormat);
+  OB_STATIC_PLUGIN(ChemDrawXMLFormat, theChemDrawXMLFormat);
+  OB_STATIC_PLUGIN(CMLFormat, theCMLFormat);
+  OB_STATIC_PLUGIN(CMLReactFormat, theCMLReactFormat);
+  OB_STATIC_PLUGIN(PubChemFormat, thePubChemFormat);
+  OB_STATIC_PLUGIN(XMLFormat, theXMLFormat);
+  OB_STATIC_PLUGIN(InChIFormat, theInChIFormat);
+
+  // descriptors
+  OB_STATIC_PLUGIN(CanSmiles, theCanSmiles);
+  OB_STATIC_PLUGIN(CompoundFilter, dummyCmpFilter);
+  OB_STATIC_PLUGIN(MWFilter, theMWFilter);
+  OB_STATIC_PLUGIN(SmartsFilter, firstSmartsFilter);
+  OB_STATIC_PLUGIN(SmartsFilter, secondSmartsFilter);
+  OB_STATIC_PLUGIN(TitleFilter, theTitleFilter);
+  OB_STATIC_PLUGIN(FormulaDescriptor, TheFormulaDescriptor);
+  //OB_STATIC_PLUGIN(FPCount, theFPCount);
+  OB_STATIC_PLUGIN(InChIFilter, theInChIFilter);
+  // smarts descriptors
+  OB_STATIC_PLUGIN(SmartsDescriptor, theHBD);
+  OB_STATIC_PLUGIN(SmartsDescriptor, theHBA1);
+  OB_STATIC_PLUGIN(SmartsDescriptor, theHBA2);
+  OB_STATIC_PLUGIN(SmartsDescriptor, thenF);
+  // group contribution descriptors
+  OB_STATIC_PLUGIN(OBGroupContrib, thelogP);
+  OB_STATIC_PLUGIN(OBGroupContrib, theTPSA);
+  OB_STATIC_PLUGIN(OBGroupContrib, theMR);
+
+  // fingerprints
+  OB_STATIC_PLUGIN(fingerprint2, thefingerprint2);
+  OB_STATIC_PLUGIN(PatternFP, FP3PatternFP)
+  OB_STATIC_PLUGIN(PatternFP, FP4PatternFP)
+
+  // forcefields
+  OB_STATIC_PLUGIN(OBForceFieldGaff, theForceFieldGaff);
+  OB_STATIC_PLUGIN(OBForceFieldGhemical, theForceFieldGhemical);
+  OB_STATIC_PLUGIN(OBForceFieldMMFF94, theForceFieldMMFF94);
+  OB_STATIC_PLUGIN(OBForceFieldMMFF94, theForceFieldMMFF94s);
+  OB_STATIC_PLUGIN(OBForceFieldUFF, theForceFieldUFF);
+
+  // operations
+  OB_STATIC_PLUGIN(OpAddInIndex, theOpAddInIndex);
+  OB_STATIC_PLUGIN(OpAddPolarH, theOpAddPolarH);
+  OB_STATIC_PLUGIN(OpCanonical, theOpCanonical);
+  OB_STATIC_PLUGIN(OpConformer, theOpConformer);
+  OB_STATIC_PLUGIN(OpFillUC, theOpFillUC);
+  OB_STATIC_PLUGIN(OpEnergy, theOpEnergy);
+  OB_STATIC_PLUGIN(OpMinimize, theOpMinimize);
+  OB_STATIC_PLUGIN(OpGen2D, theOpGen2D);
+  OB_STATIC_PLUGIN(OpGen3D, theOpGen3D);
+  OB_STATIC_PLUGIN(OpNewS, theOpNewS);
+  OB_STATIC_PLUGIN(OpPartialCharge, theOpPartialCharge);
+  OB_STATIC_PLUGIN(OpReadConformers, theOpReadConformers);
+  OB_STATIC_PLUGIN(OpSort, theOpSort);
+  OB_STATIC_PLUGIN(OpUnique, theOpUnique);
+  OB_STATIC_PLUGIN(OpExtraOut, theOpExtraOut);
+
+  // charges
+  OB_STATIC_PLUGIN(GasteigerCharges, theGasteigerCharges);
+  OB_STATIC_PLUGIN(MMFF94Charges, theMMFF94Charges);
+  OB_STATIC_PLUGIN(QEqCharges, theQEqCharges);
+  OB_STATIC_PLUGIN(QTPIECharges, theQTPIECharges);
+
+  OBAPI std::vector<std::string> EnableStaticPlugins();
+
+#endif // USING_DYNAMIC_LIBS
+
 } // end namespce
 
 #endif

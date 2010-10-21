@@ -323,8 +323,7 @@ else(BUILD_SHARED)
 
   if(NOT BUILD_MIXED)
     # Prevent -Wl,-Bdynamic from being added to the end of the link line.
-    set_target_properties(babel PROPERTIES
-                          LINK_SEARCH_END_STATIC TRUE)
+    set_target_properties(babel PROPERTIES LINK_SEARCH_END_STATIC TRUE)
   endif(NOT BUILD_MIXED)
 
   install(TARGETS babel

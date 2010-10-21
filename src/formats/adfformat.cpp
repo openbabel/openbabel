@@ -498,11 +498,8 @@ private:
 
 //------------------------------------------------------------------------------
 
-namespace
-{
-    // Global variable used to register Tape41 format.
-    OBT41Format t41Format__;
-}
+// Global variable used to register Tape41 format.
+OBT41Format t41Format__;
 
 //------------------------------------------------------------------------------
 

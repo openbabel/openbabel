@@ -170,8 +170,9 @@ else(BUILD_SHARED)
     set(openbabel_srcs ${openbabel_srcs} ${${plugingroup}})
   endforeach(plugingroup descriptors fingerprints forcefields ops charges)
 
-  set(openbabel_srcs ${openbabel_srcs} formats/getinchi.cpp ops/unique.cpp)
   add_subdirectory(formats/inchi103)
+  set(openbabel_srcs ${openbabel_srcs} formats/getinchi.cpp ops/unique.cpp)
+  set(libs ${libs} inchi)
 endif(BUILD_SHARED)
 
 set(openbabel_library_srcs

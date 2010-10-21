@@ -94,11 +94,8 @@ public:
 
 //------------------------------------------------------------------------------
 
-namespace
-{
-    // Global variable used to register MSMS format.
-    OBMSMSFormat msmsFormat__;
-}
+// Global variable used to register MSMS format.
+OBMSMSFormat msmsFormat__;
 
 //------------------------------------------------------------------------------
 

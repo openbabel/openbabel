@@ -94,9 +94,10 @@ set(formats_misc
       xedformat
       xyzformat
       yasaraformat
+      genbankformat
       )
 
-if(MSVC90 OR Boost_FOUND)
+#if(MSVC90 OR Boost_FOUND)
   set(formats_misc
     ${formats_misc}
     rxnformat
@@ -104,7 +105,7 @@ if(MSVC90 OR Boost_FOUND)
     chemkinformat
     rsmiformat
   )
-endif(MSVC90 OR Boost_FOUND)
+#endif(MSVC90 OR Boost_FOUND)
 
 if(ZLIB_FOUND)
  set(formats_utility
@@ -123,12 +124,12 @@ if(LIBXML2_FOUND)
     pubchem
     xmlformat
   )
-  if(MSVC90 OR Boost_FOUND)
+#  if(MSVC90 OR Boost_FOUND)
     set(formats_xml
         ${formats_xml}
         cmlreactformat
     )
-  endif(MSVC90 OR Boost_FOUND)
+#  endif(MSVC90 OR Boost_FOUND)
 endif(LIBXML2_FOUND)
 
 if(HAVE_RPC_XDR_H)

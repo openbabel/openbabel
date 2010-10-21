@@ -144,6 +144,188 @@ bool OBPlugin::Display(string& txt, const char* param, const char* ID)
   return true;
 }
 
+#ifndef USING_DYNAMIC_LIBS
+
+std::vector<std::string> EnableStaticPlugins()
+{
+  // Return list of all plugin ids. This also ensures the code is not removed
+  // by compiler optimization.
+  std::vector<std::string> plugin_ids;
+  // formats
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theACRFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theADFOutputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theADFInputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&t41Format__)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theAlchemyFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theAmberPrepFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOBAPIInterface)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theBallStickFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theBGFFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theBoxFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCacaoFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCacheFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCARFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCCCFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCHEM3D1Format)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCHEM3D2Format)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theChemDrawBinaryFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theChemDrawFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theChemKinFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCHTFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCIFFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCopyFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCRK2DFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCRK3DFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCSRFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCSSRFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theDlpolyConfigFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theDlpolyHISTORYFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theDMolFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theFASTAFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theFastSearchFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theFCHKFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theFEATFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theFenskeZmatFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theFHIaimsFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theFingerprintFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theFreeFormFractionalFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGAMESSOutputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGAMESSInputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGAMESSUKInputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGAMESSUKOutputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGaussianCubeFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGaussianOutputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGaussianInputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGaussianZMatrixInputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGenBankFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGhemicalFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGROMOS96Format)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGULPFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theHINFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theJaguarOutputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theJaguarInputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMCDLFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMOLFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theSDFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&themmCIFFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMacroModFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMNAFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMOL2Format)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&moldenFormat__)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMolproOutputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMolproInputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMolReportFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMOPACFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMOPACCARTFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMOPACINTFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMPDFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMPQCFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMPQCInputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMSIFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&msmsFormat__)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theNulFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theNWChemOutputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theNWChemInputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpenDXCubeFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOutputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thePCModelFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thePDBFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thePDBQTFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thePNGFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thePovrayFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thePQRFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thePQSFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thePWscfFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theQChemOutputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theQChemInputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theReportFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theSmiReactFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theRXNFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theShelXFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theSMIFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCANSMIFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theFIXFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theSVGFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theTextFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theThermoFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theTinkerFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theTitleFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theTurbomoleFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theUniChemFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theVASPFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theViewMolFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theXEDFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theXTCFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theXYZFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theYOBFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theZINDOFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theChemDrawXMLFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCMLFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCMLReactFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thePubChemFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theXMLFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theInChIFormat)->GetID());
+
+  // descriptors
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCanSmiles)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&dummyCmpFilter)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMWFilter)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&firstSmartsFilter)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&secondSmartsFilter)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theTitleFilter)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&TheFormulaDescriptor)->GetID());
+  //plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theFPCount)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theInChIFilter)->GetID());
+  // smarts descriptors
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theHBD)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theHBA1)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theHBA2)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thenF)->GetID());
+  // group contribution descriptors
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thelogP)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theTPSA)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMR)->GetID());
+
+  // fingerprints
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thefingerprint2)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&FP3PatternFP)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&FP4PatternFP)->GetID());
+
+  // forcefields
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theForceFieldGaff)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theForceFieldGhemical)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theForceFieldMMFF94)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theForceFieldMMFF94s)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theForceFieldUFF)->GetID());
+
+  // operations
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpAddInIndex)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpAddPolarH)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpCanonical)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpConformer)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpFillUC)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpEnergy)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpMinimize)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpGen2D)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpGen3D)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpNewS)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpPartialCharge)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpReadConformers)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpSort)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpUnique)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpExtraOut)->GetID());
+
+  // charges
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGasteigerCharges)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMMFF94Charges)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theQEqCharges)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theQTPIECharges)->GetID());
+
+  return plugin_ids;
+}
+
+#endif // USING_DYNAMIC_LIBS
+
 /**
  @page plugins
  Plugins are a way of extending OpenBabel without having to alter any of the

@@ -92,11 +92,8 @@ public:
 
 //------------------------------------------------------------------------------
 
-namespace
-{
-    // Global variable used to register Molden format.
-    OBMoldenFormat moldenFormat__;
-}
+// Global variable used to register Molden format.
+OBMoldenFormat moldenFormat__;
 
 //------------------------------------------------------------------------------
 
