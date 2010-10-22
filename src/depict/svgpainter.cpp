@@ -33,6 +33,8 @@ namespace OpenBabel
   SVGPainter::~SVGPainter()
   {
     m_ofs << "</svg>\n";
+    if(m_withViewBox)
+      m_ofs << "</g>\n";
   }
 
   void SVGPainter::NewCanvas(double width, double height)
@@ -40,24 +42,30 @@ namespace OpenBabel
     //Using withViewBox to supress xml header and xmlns attributes. May need another way.
     if(!m_withViewBox)
       m_ofs << "<?xml version=\"1.0\"?>\n";
+
+    if(m_withViewBox)
+      m_ofs << "<g transform=\"translate(" << m_x << "," << m_y << ")\">\n";
+
     m_ofs << "<svg ";
     if(!m_withViewBox)
       m_ofs << "xmlns=\"http://www.w3.org/2000/svg\"\n"
                "xmlns:xlink=\"http://www.w3.org/1999/xlink\" "
                "xmlns:cml=\"http://www.xml-cml.org/schema\" ";
-    if(m_width!=0.0)
-      m_ofs << "width=\"" << m_width << "\" height=\"" << m_height << "\" "
-            << "x=\"" << m_x << "\" y=\"" << m_y << "\" ";
     if(m_withViewBox)
-      m_ofs << "viewBox=\"0 0 " << width << ' ' << height << "\"\n";
+      m_ofs << "width=\"" << m_width << "\" height=\"" << m_height << "\" "
+            << "x=\"0\" y=\"0\" "
+            << "viewBox=\"0 0 " << width << ' ' << height << "\"\n";
+    else
+      m_ofs << "width=\"" << width << "\" height=\"" << height << "\" "
+            << "x=\"0\" y=\"0\" ";
 
     //Bond color and width are the initial m_Pencolor and m_PenWidth
     m_ofs << "font-family=\"" << m_fontFamily << "\" stroke=" << MakeRGB(m_Pencolor)
           << "stroke-width=\"" << m_PenWidth << "\" >\n";
 
-    if(!m_withViewBox)//Background color for single molecule. Handled by outer svg when table.
-      m_ofs << "<rect x=\"0%\" y=\"0%\" width=\"100%\" height=\"100%\" fill="
-            << MakeRGB(m_Fillcolor) << " />\n";
+    //if(!m_withViewBox)//Background color for single molecule. Handled by outer svg when table.
+    //  m_ofs << "<rect x=\"0%\" y=\"0%\" width=\"100%\" height=\"100%\" fill="
+    //        << MakeRGB(m_Fillcolor) << " />\n";
     m_OrigBondcolor = m_Pencolor;
   }
 

@@ -321,12 +321,14 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         vbwidth = (100*_ncols)/_nrows;
       else if(_ncols>_nrows)
         vbheight = (100*_nrows)/_ncols;
+
+      ofs << "x=\"0\" y=\"0\" width=\"100%\" height=\"100%\" ";
       ofs << "viewBox=\"0 0 " << vbwidth << ' ' << vbheight << "\">\n";
 
       ofs << "<title>OBDepict</title>\n";
       // Draw the background
-      ofs << "<rect x=\"0\" y=\"0\" width=\"" << vbwidth << "\" height=\"" << vbheight
-          << "\" fill=\"" << background << "\"/>\n";
+      //ofs << "<rect x=\"0\" y=\"0\" width=\"" << vbwidth << "\" height=\"" << vbheight
+      //    << "\" fill=\"" << background << "\"/>\n";
     }
   }
 
@@ -391,7 +393,7 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //Final </svg> written at the end of this block (painter destructor)
     //This leads to some code duplication.
     double factor = 1.0;
-    SVGPainter painter(*pConv->GetOutStream());
+    SVGPainter painter(*pConv->GetOutStream(), false);
     OBDepict depictor(&painter);
 
     //Scale image by specifying the average bond length in pixels.
@@ -441,7 +443,7 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //*** Write molecule name ***
     if(!pConv->IsOption("d"))
       ofs << "<text font-size=\"" << 18 * factor  << "\""
-      << " fill =\"" << bondcolor << "\"\n"
+      << " fill =\"" << bondcolor << "\" font-family=\"sans-serif\"\n"
       << "x=\"" << 140 * factor << "\" y=\"" << 20 * factor << "\" >"
       << pmol->GetTitle() << "</text>\n";
 
