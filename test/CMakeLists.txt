@@ -188,3 +188,30 @@ if (PYTHON_BINDINGS)
   endforeach(pybindtest ${pybindtests})
 endif (PYTHON_BINDINGS)
 
+############################################################
+# Test 2D depiction using ImageMagick utilities
+############################################################
+
+# Example: add_depict_test(${CMAKE_SOURCE_DIR}/test/files/aromatics.smi aromatics ${CMAKE_SOURCE_DIR}/test/files/alias.png)
+function(add_depict_test testname obfile image_file ref_image)
+  set(depict_dir ${CMAKE_BINARY_DIR}/depict_test)
+  add_test(NAME test_${testname} COMMAND ${CMAKE_SOURCE_DIR}/test/test_depiction.sh
+      ${CMAKE_BINARY_DIR}/bin/babel ${ImageMagick_convert_EXECUTABLE}
+      ${ImageMagick_compare_EXECUTABLE} ${obfile} ${depict_dir}
+      ${image_file} ${ref_image})
+  set_tests_properties(test_${testname} PROPERTIES
+      PASS_REGULAR_EXPRESSION "0 @ 0,0")
+endfunction()
+
+option(TEST_DEPICTION "Test depiction using ImageMagick utilities" OFF)
+if(TEST_DEPICTION AND UNIX)
+  find_package(ImageMagick COMPONENTS convert compare)
+  if(ImageMagick_convert_FOUND AND ImageMagick_compare_FOUND)
+    set(depict_dir ${CMAKE_BINARY_DIR}/depict_test)
+    file(MAKE_DIRECTORY ${depict_dir})
+    add_depict_test(depict_aromatics ${CMAKE_SOURCE_DIR}/test/files/aromatics.smi
+        aromatics ${CMAKE_SOURCE_DIR}/test/files/aromatics.png)
+    add_depict_test(depict_alias ${CMAKE_SOURCE_DIR}/test/files/alias.mol
+        alias ${CMAKE_SOURCE_DIR}/test/files/alias.png)
+  endif()
+endif()
