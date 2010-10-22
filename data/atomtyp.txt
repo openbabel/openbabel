@@ -74,11 +74,11 @@ INTHYB  [Sr]                      1
 INTHYB  [Ba]                      1
 INTHYB  [Ra]                      1
 
-INTHYB  [Pt]                      4 # normally square planar
-INTHYB  [Pd]                      4
-INTHYB  [Cu]                      4
-INTHYB  [Ag]                      4
-INTHYB  [Au]                      4
+#INTHYB  [Pt]                      4 # normally square planar
+#INTHYB  [Pd]                      4
+#INTHYB  [Cu]                      4
+#INTHYB  [Ag]                      4
+#INTHYB  [Au]                      4
 
 #
 #IMPLICIT VALENCE RULES
