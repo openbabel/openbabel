@@ -295,6 +295,36 @@ namespace OpenBabel
         mol.AddBond(start,end,order);
       }
 
+    // Now that bonds are added, make a pass to "de-aromatize" carboxylates
+    // Fixes PR#3092368
+    OBAtom *carboxylCarbon, *oxygen;
+    FOR_BONDS_OF_MOL(bond, mol)
+      {
+        if (bond->GetBO() != 5)
+          continue;
+
+        if (bond->GetBeginAtom()->IsCarboxylOxygen()) {
+          carboxylCarbon = bond->GetEndAtom();
+          oxygen = bond->GetBeginAtom();
+        } else if (bond->GetEndAtom()->IsCarboxylOxygen()) {
+          carboxylCarbon = bond->GetBeginAtom();
+          oxygen = bond->GetEndAtom();
+        } else // not a carboxylate
+          continue;
+
+        if (carboxylCarbon->HasDoubleBond()) { // we've already picked a double bond
+          bond->SetBO(1); // this should be a single bond, not "aromatic"
+          continue;
+        }
+
+        // We need to choose a double bond
+        if (oxygen->ExplicitHydrogenCount() == 1) { // single only
+          bond->SetBO(1);
+          continue;
+        } else
+          bond->SetBO(2); // we have to pick one, let's use this one
+      }
+
     // Suggestion by Liu Zhiguo 2008-01-26
     // Mol2 files define atom types -- there is no need to re-perceive
     mol.SetAtomTypesPerceived();
