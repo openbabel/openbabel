@@ -319,6 +319,8 @@ public:
 */
 /*\@}*/
 
+#ifndef SWIG // Skipped by SWIG (for the moment)
+
 #ifndef USING_DYNAMIC_LIBS
 
 #define OB_STATIC_PLUGIN(className,instanceName) \
@@ -498,6 +500,8 @@ public:
   OBAPI std::vector<std::string> EnableStaticPlugins();
 
 #endif // USING_DYNAMIC_LIBS
+
+#endif // SWIG
 
 } // end namespce
 
