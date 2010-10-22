@@ -318,7 +318,7 @@ namespace OpenBabel
         }
 
         // We need to choose a double bond
-        if (oxygen->ExplicitHydrogenCount() == 1) { // single only
+        if (oxygen->ExplicitHydrogenCount() == 1 || oxygen->GetFormalCharge() == -1) { // single only
           bond->SetBO(1);
           continue;
         } else
