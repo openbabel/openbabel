@@ -2541,6 +2541,8 @@ namespace OpenBabel {
       if (ct && ct->GetConfig().specified) {
         OBCisTransStereo::Config config = ct->GetConfig();
         OBBond* dbl_bond = mol.GetBond(mol.GetAtomById(config.begin), mol.GetAtomById(config.end));
+        if (!dbl_bond)
+          continue;
         // Do not output cis/trans bond symbols for double bonds in rings of size IMPLICIT_CIS_RING_SIZE or less
         OBRing* ring = dbl_bond->FindSmallestRing();
         if (!ring || ring->Size()>IMPLICIT_CIS_RING_SIZE)
