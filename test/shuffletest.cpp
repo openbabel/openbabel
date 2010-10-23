@@ -302,6 +302,7 @@ int main(int argc, char **argv)
     return 0;
   }
 
+  OB_ASSERT( doShuffleTest("COc1cc2c(cc1O)CN1C[C@@H]2c2cc(OC)c(cc2C1)O") );
   OB_ASSERT( doShuffleTest("C(C1C=CCCC1)(C(=O)N/N=C/c1ccc(cc1)C#N)C(=O)N/N=C\\c1ccc(cc1)C#N") );
   OB_ASSERT( doShuffleTest("C(C1C=CCCC1)(C(=O)N/N=C\\c1ccc(cc1)C#N)C(=O)N/N=C/c1ccc(cc1)C#N") );
 

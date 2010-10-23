@@ -568,7 +568,7 @@ namespace OpenBabel {
        * or descriptor. This function returns 0 or 1 for both tetrahedral and
        * cistrans stereo centers.
        */
-      int getDescriptor(const std::vector<unsigned int> &labels) const
+      int getDescriptor(const std::vector<unsigned int> &symmetry_classes, const std::vector<unsigned int> &labels) const
       {
         // Unspecified stereo centers have their own descriptor.
         if (nbrIndexes1.empty())
@@ -585,6 +585,12 @@ namespace OpenBabel {
             refs2.push_back(labels[nbrIndexes2[i]]);
           else
             refs2.push_back(nbrIndexes2[i]);
+        if (indexes.size() == 2) {
+          bool symOrder = symmetry_classes[indexes[0]] < symmetry_classes[indexes[1]];
+          bool canOrder = labels[indexes[0]] < labels[indexes[1]];
+          if (symOrder != canOrder && symmetry_classes[indexes[0]] != symmetry_classes[indexes[1]])
+            std::swap(refs1[0], refs1[1]);
+        }
         return ((OBStereo::NumInversions(refs1) % 2 + OBStereo::NumInversions(refs2) % 2) % 2);
       }
       /**
@@ -836,7 +842,7 @@ namespace OpenBabel {
               isInFragment = true;
           // ignore stereo centers not in this fragment
           if (isInFragment)
-            fullcode.code.push_back(state.stereoCenters[i].getDescriptor(code.labels));
+            fullcode.code.push_back(state.stereoCenters[i].getDescriptor(state.symmetry_classes, code.labels));
         }
       }
 
