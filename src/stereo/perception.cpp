@@ -1996,7 +1996,6 @@ namespace OpenBabel {
       // the stereochemistry is implicitly cis (in terms
       // of the ring atoms)
       OBRing* ring = bond->FindSmallestRing();
-      /*
       if (ring && ring->Size() <= IMPLICIT_CIS_RING_SIZE) {
 
         // Find the ring atoms in the config.refs
@@ -2013,7 +2012,6 @@ namespace OpenBabel {
         config.specified = true;
         ct->SetConfig(config);
       }
-      */
 
       configs.push_back(ct);
       // add the data to the molecule if needed

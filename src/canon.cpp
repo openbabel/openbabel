@@ -1518,7 +1518,7 @@ namespace OpenBabel {
             }
           } else if (unit.type == OBStereo::CisTrans) {
             OBBond *bond = mol->GetBondById(unit.id);
-            if (!bond)
+            if (!bond || bond->IsAromatic())
               continue;
             OBAtom *begin = bond->GetBeginAtom();
             OBAtom *end = bond->GetEndAtom();

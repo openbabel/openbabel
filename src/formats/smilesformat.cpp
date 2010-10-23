@@ -2636,10 +2636,18 @@ namespace OpenBabel {
     {
       unsigned int endatom, centeratom;
       if (dbl_bond_first) {
+        if (atom->IsAromatic())
+          FOR_BONDS_OF_ATOM (bond, atom)
+            if (bond->IsAromatic() && bond->IsDouble())
+              return 0;
         endatom = nbr_atom->GetId();
         centeratom = atom->GetId();
       }
       else {
+        if (nbr_atom->IsAromatic())
+          FOR_BONDS_OF_ATOM (bond, nbr_atom)
+            if (bond->IsAromatic() && bond->IsDouble())
+              return 0;
         endatom = atom->GetId();
         centeratom = nbr_atom->GetId();
       }
