@@ -276,15 +276,15 @@ namespace OpenBabel
         if (t.x() < 0.)
           t.x() += 1.;
         if (t.x() > 1.)
-          t.x() += 1.;
+          t.x() -= 1.;
         if (t.y() < 0.)
           t.y() += 1.;
         if (t.y() > 1.)
-          t.y() += 1.;
+          t.y() -= 1.;
         if (t.z() < 0.)
           t.z() += 1.;
         if (t.z() > 1.)
-          t.z() += 1.;
+          t.z() -= 1.;
         list<vector3>::iterator j, jend = res.end();
         bool duplicate = false;
         for (j = res.begin(); j != jend; j++)
