@@ -166,6 +166,9 @@ namespace OpenBabel
   struct Pattern;
 #endif
 
+  //! Internal class for extending OBSmartsPattern
+  class OBSmartsPrivate;
+
   ///@addtogroup substructure Substructure Searching
   ///@{
 
@@ -174,6 +177,7 @@ namespace OpenBabel
   class OBAPI OBSmartsPattern
   {
   protected:
+    OBSmartsPrivate                *_d;        //!< Internal data storage for future expansion
     std::vector<bool>          		  _growbond; //!< \deprecated (Not used)
     std::vector<std::vector<int> >	_mlist;    //!< The list of matches
     Pattern                        *_pat;      //!< The parsed SMARTS pattern
