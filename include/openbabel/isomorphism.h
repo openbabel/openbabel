@@ -221,7 +221,7 @@ namespace OpenBabel {
    *
    * @since version 2.3
    */
-  OBAPI bool FindAutomorphisms(OBMol *mol, Automorphisms &aut, const std::vector<unsigned int> &symmetry_classes,
+  OBAPI bool FindAutomorphisms(OBMol *mol, std::vector<OBIsomorphismMapper::Mapping> &aut, const std::vector<unsigned int> &symmetry_classes,
       const OBBitVec &mask = OBBitVec(), std::size_t maxMemory = 3000000);
   /**
    * Find the automorphisms of a molecule by using an OBIsomorphismMapper. This
@@ -231,7 +231,7 @@ namespace OpenBabel {
    *
    * @since version 2.3
    */
-  OBAPI bool FindAutomorphisms(OBMol *mol, Automorphisms &aut, const OBBitVec &mask = OBBitVec(),
+  OBAPI bool FindAutomorphisms(OBMol *mol, std::vector<OBIsomorphismMapper::Mapping> &aut, const OBBitVec &mask = OBBitVec(),
       std::size_t maxMemory = 3000000);
 
   /**
