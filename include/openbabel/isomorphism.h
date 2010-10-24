@@ -1,5 +1,5 @@
 /**********************************************************************
-  isomophism.h - OBIsomorphismMapper class for finding isomorphisms
+  isomophism.h - OBIsomorphismMapper class for finding isomorphisms.
 
   Copyright (C) 2010 by Tim Vandermeersch
 
@@ -34,8 +34,8 @@ namespace OpenBabel {
   ///@{
 
   /**
+   * @class OBIsomorphismMapper isomorphism.h <openbabel/isomorphism.h>
    * @since version 2.3
-   * @class OBIsomorphismMapper
    * @brief Abstract class defining interface for isomorphism (i.e. substructure) searches.
    *
    * The OBIsomorphism class is an abstract class which defines an interface for
@@ -77,13 +77,15 @@ namespace OpenBabel {
   {
     public:
       /**
+       * @typedef std::vector< std::pair<unsigned int,unsigned int> > Mapping
        * Type for an individual mapping.
        */
       typedef std::vector< std::pair<unsigned int,unsigned int> > Mapping;
       /**
+       * @typedef std::vector<OBIsomorphismMapper::Mapping> Mappings
        * Type for a collection (std::vector) of Mapping objects.
        */
-      typedef std::vector<Mapping> Mappings;
+      typedef std::vector< Mapping > Mappings;
 
       /**
        * Constructor. OBIsomorphismMapper is an abstract class, use GetInstance() to
@@ -106,6 +108,7 @@ namespace OpenBabel {
       /**
        * Find a single mapping in @p queried.
        * @param queried The molecule to search.
+       * @param map Reference to the object to store the result in.
        * @param mask A mask to restrict the search to a part of the queried molecule.
        * The default empty mask will result in all atoms being considered. The mask
        * indexes start from 1 (i.e. OBAtom::GetIdx()).
@@ -116,6 +119,7 @@ namespace OpenBabel {
        * mapping covering the same queried atoms. For two mappings, some overlap is allowed but
        * at least one atom should be different.
        * @param queried The molecule to search.
+       * @param maps Reference to the object to store the results in.
        * @param mask A mask to restrict the search to a part of the queried molecule.
        * The default empty mask will result in all atoms being considered. The mask
        * indexes start from 1 (i.e. OBAtom::GetIdx()).
@@ -126,16 +130,19 @@ namespace OpenBabel {
        * with a query that is a copy of the queried molecule (taking the mask into
        * account).
        * @param queried The molecule to search.
+       * @param maps Reference to the object to store the results in.
        * @param mask A mask to restrict the search to a part of the queried molecule.
+       * @param maxMemory Memory limit for the @p maps object in bytes. Default is 300MB.
        * The default empty mask will result in all atoms being considered. The mask
        * indexes start from 1 (i.e. OBAtom::GetIdx()).
        */
       virtual void MapAll(const OBMol *queried, Mappings &maps, const OBBitVec &mask = OBBitVec(), std::size_t maxMemory = 3000000) = 0;
 
       /**
-       * Functor base class to be used in combination with MapGeneric.
-       *
+       * @class Functor isomorphism.h <openbabel/isomorphism.h>
+       * @brief Functor base class to be used in combination with MapGeneric.
        * @see @ref MapGeneric
+       * @since 2.3
        */
       class Functor
       {
@@ -184,7 +191,17 @@ namespace OpenBabel {
   }
 
 
+  /**
+   * @typedef OBIsomorphismMapper::Mapping Automorphism
+   * @brief A single automorphic permutation.
+   * @since 2.3
+   */
   typedef OBIsomorphismMapper::Mapping Automorphism;
+  /**
+   * @typedef OBIsomorphismMapper::Mappings Automorphisms
+   * @brief A group of automorphic permutations.
+   * @since 2.3
+   */
   typedef OBIsomorphismMapper::Mappings Automorphisms;
 
   /**
@@ -231,9 +248,9 @@ namespace OpenBabel {
   OBAPI void FindAutomorphisms(OBIsomorphismMapper::Functor &functor, OBMol *mol,
       const std::vector<unsigned int> &symmetry_classes, const OBBitVec &mask = OBBitVec());
 
-
   /**
    * @page substructure Substructure Search
+   * @since version 2.3
    *
    * Substructure searching is finding a mapping for a query to a target molecule.
    * Such a mapping is also known as a graph isomorphism. A graph isomorphism maps
@@ -349,5 +366,7 @@ namespace OpenBabel {
 
 }
 
-
 #endif
+
+/// @file isomorphism.h
+/// @brief OBIsomorphismMapper class for finding isomorphisms.

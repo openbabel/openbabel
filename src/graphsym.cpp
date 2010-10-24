@@ -390,8 +390,8 @@ namespace OpenBabel {
 #endif
   }
 
-  void OBGraphSymPrivate::CreateNewClassVector(OBMol *mol, vector<pair<OBAtom*,unsigned int> > &vp1,
-      vector<pair<OBAtom*,unsigned int> > &vp2)
+  void OBGraphSymPrivate::CreateNewClassVector(OBMol *mol, std::vector<std::pair<OBAtom*,unsigned int> > &vp1,
+      std::vector<std::pair<OBAtom*,unsigned int> > &vp2)
   {
     int m,id;
     OBAtom *atom, *nbr;

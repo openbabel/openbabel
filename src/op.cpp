@@ -29,5 +29,5 @@ namespace OpenBabel
 }
 
 
-//! \file descriptor.cpp
-//! \brief Base class for molecular descriptors
+//! \file op.cpp
+//! \brief Base plugin class for operations on molecules

@@ -25,8 +25,12 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
+
+//! @deprecated
 OBAPI void GraphPotentials(OBMol &mol, std::vector<double> &pot);
+//! @deprecated
 OBAPI void construct_g_matrix(OBMol &mol, std::vector<std::vector<double> > &m);
+//! @deprecated
 OBAPI void construct_c_matrix(OBMol &mol, std::vector<std::vector<double > > &m);
 
 //! @deprecated Use new @ref stereo classes.

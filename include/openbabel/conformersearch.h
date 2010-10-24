@@ -1,8 +1,27 @@
+/**********************************************************************
+conformersearch.h - Conformer searching using genetic algorithm.
+
+Copyright (C) 2010 Tim Vandermeersch
+
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.org/>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation version 2 of the License.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+***********************************************************************/
+
+#ifndef OB_CONFORMERSEARCH_H
+#define OB_CONFORMERSEARCH_H
+
 #include <openbabel/mol.h>
 #include <openbabel/rotor.h>
 #include <openbabel/rotamer.h>
-
-
 
 namespace OpenBabel {
 
@@ -19,6 +38,7 @@ namespace OpenBabel {
   //////////////////////////////////////////////////////////
 
   /**
+   * @class OBConformerFilter conformersearch.h <openbabel/conformersearch.h>
    * @brief Interface used by OBConformerSearch for filtering conformers.
    *
    * The OBConformerFilter class defines an interface used by the OBConformerSearch
@@ -27,6 +47,7 @@ namespace OpenBabel {
    * closer than some specified distance.
    *
    * @see OBConformerSearch OBConformerFilters
+   * @since 2.3
    */
   class OBAPI OBConformerFilter
   {
@@ -41,6 +62,7 @@ namespace OpenBabel {
   };
 
   /**
+   * @class OBConformerFilters conformersearch.h <openbabel/conformersearch.h>
    * @brief Class for combining OBConformerFilter objects.
    *
    * The OBConformerFilters class makes it easy to combine OBConformerFilter
@@ -49,6 +71,7 @@ namespace OpenBabel {
    * filters and returns false if any of the filters returns false.
    *
    * @see OBConformerSearch OBConformerFilter
+   * @since 2.3
    */
   class OBAPI OBConformerFilters : public OBConformerFilter
   {
@@ -75,11 +98,13 @@ namespace OpenBabel {
   };
 
   /**
+   * @class OBStericConformerFilter conformersearch.h <openbabel/conformersearch.h>
    * @brief A steric conformer filter class.
    *
    * The OBStericConformerFilter class is the default filter used by OBConformerSearch.
    * The filter removes all molecules which have at least 2 atoms closer together than
    * the specified distance.
+   * @since 2.3
    */
   class OBAPI OBStericConformerFilter : public OBConformerFilter
   {
@@ -97,6 +122,7 @@ namespace OpenBabel {
   //////////////////////////////////////////////////////////
 
   /**
+   * @class OBConformerScore conformersearch.h <openbabel/conformersearch.h>
    * @brief Interface used by OBConformerSearch for scoring conformers.
    *
    * The OBConformerScore class defines an interface to assign scores to conformers.
@@ -106,6 +132,7 @@ namespace OpenBabel {
    * not directly usable as score since lower values are better). Another example
    * is to use some measure of diversity (e.g. RMSD) to generate a diverse set of
    * conformers.
+   * @since 2.3
    */
   class OBAPI OBConformerScore
   {
@@ -134,10 +161,12 @@ namespace OpenBabel {
   };
 
   /**
+   * @class OBRMSDConformerScore conformersearch.h <openbabel/conformersearch.h>
    * @brief A RMSD conformer scoring class.
    *
    * Score conformers by the RMSD between the conformer with specified index and
    * the closest conformer. This results in a diverse set of conformers.
+   * @since 2.3
    */
   class OBAPI OBRMSDConformerScore : public OBConformerScore
   {
@@ -148,6 +177,11 @@ namespace OpenBabel {
           const std::vector<double*> &conformers);
   };
 
+  /**
+   * @class OBEnergyConformerScore conformersearch.h <openbabel/conformersearch.h>
+   * @brief A lowest energy conformer scoring class. 
+   * @since 2.3
+   */
   class OBAPI OBEnergyConformerScore : public OBConformerScore
   {
     public:
@@ -164,6 +198,12 @@ namespace OpenBabel {
   //
   //////////////////////////////////////////////////////////
 
+  /**
+   * @class OBConformerSearch conformersearch.h <openbabel/conformersearch.h>
+   * @brief Conformer searching using genetic algorithm.
+   * See @ref ConformerSearching
+   * @since 2.3
+   */
   class OBAPI OBConformerSearch
   {
     public:
@@ -388,3 +428,6 @@ namespace OpenBabel {
 
   ///@}
 };
+
+/// @file conformersearch.h
+/// @brief Conformer searching using genetic algorithm

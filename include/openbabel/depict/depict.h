@@ -1,7 +1,7 @@
 /**********************************************************************
-depict.h - 2D Depiction of molecules
+depict.h - 2D Depiction of molecules using OBPainter.
 
-Copyright (C) 2009 by Tim Vandermeersch
+Copyright (C) 2009-2010 by Tim Vandermeersch
 Some portions Copyright (C) 2009 by Chris Morley
 
 This file is part of the Open Babel project.
@@ -34,6 +34,8 @@ namespace OpenBabel
   #endif
 
   /**
+   * @class OBDepict depict.h <openbabel/depict/depict.h>
+   * @brief 2D depiction of molecules using OBPainter.
    * @since version 2.3
    */
   class OBDEPICT OBDepict
@@ -108,3 +110,6 @@ namespace OpenBabel
 }
 
 #endif
+
+/// @file depict.h
+/// @brief 2D depiction of molecules using OBPainter.

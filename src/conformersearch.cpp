@@ -1,8 +1,24 @@
+/**********************************************************************
+conformersearch.cpp - Conformer searching using genetic algorithm.
+
+Copyright (C) 2010 Tim Vandermeersch
+
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.org/>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation version 2 of the License.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+***********************************************************************/
+
 #include <openbabel/conformersearch.h>
 #include <openbabel/math/align.h>
 #include <openbabel/forcefield.h>
-
-
 
 namespace OpenBabel {
 
@@ -432,7 +448,9 @@ namespace OpenBabel {
 
   /**
    * @example obconformersearch_default.cpp
-   *
    */
 
 };
+
+/// @file conformersearch.cpp
+/// @brief Conformer searching using genetic algorithm
