@@ -37,6 +37,7 @@ namespace OpenBabel {
   ///@{
 
   /**
+   * @class OBStereo stereo.h <openbabel/stereo/stereo.h>
    * @brief Placeholder for enums & Ref/Refs related functions.
    *
    * The OBStereo struct contains a number of enums with predefined values.
@@ -249,7 +250,9 @@ namespace OpenBabel {
   };
 
   /**
+   * @struct OBStereoUnit stereo.h <openbabel/stereo/stereo.h>
    * @brief Struct representing a single stereogenic unit.
+   * @since 2.3
    */
   struct OBStereoUnit
   {
@@ -293,6 +296,7 @@ namespace OpenBabel {
   // fwd decl
   class OBMol;
   /**
+   * @class OBStereoBase stereo.h <openbabel/stereo/stereo.h>
    * @brief Base class for all stereochemistry classes.
    *
    * All stereochemistry classes are derived from OBStereoBase. This class
@@ -364,6 +368,7 @@ namespace OpenBabel {
   class OBCisTransStereo;
   class OBSquarePlanarStereo;
   /**
+   * @class OBStereoFacade stereo.h <openbabel/stereo/stereo.h>
    * @brief Facade to simplify retrieval of OBStereoBase derived objects.
    *
    * The OBStereoFacade helps with retrieving OBStereoBase derived objects

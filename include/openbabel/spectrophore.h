@@ -51,7 +51,7 @@ namespace OpenBabel
 {
 
 /**
-\class  OBSpectrophore
+\class  OBSpectrophore spectrophore.h <openbabel/spectrophore.h>
 \brief  Class to compute Spectrophores&tm;
 \since  Version 2.3
 <P>

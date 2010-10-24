@@ -33,7 +33,7 @@ namespace OpenBabel {
   ///@{
 
   /**
-   * @class OBTetraNonPlanarStereo tetranonplanar.h <openbabel/tetranonplanar.h>
+   * @class OBTetraNonPlanarStereo tetranonplanar.h <openbabel/stereo/tetranonplanar.h>
    * @brief Base class for handling and storing non-planar stereochemistry with 4 reference atom ids.
    *
    * @image html tetranonplanar.png
@@ -230,3 +230,6 @@ namespace OpenBabel {
 }
 
 #endif
+
+/// @file tetranonplanar.h
+/// @brief Base class for handling and storing non-planar stereochemistry with 4 reference atom ids.

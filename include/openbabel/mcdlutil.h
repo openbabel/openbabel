@@ -102,5 +102,5 @@ namespace OpenBabel {
 
 } // namespace OpenBabel
 
-//
-//! \utilities for MCDL format and other useful utilities
+/// @file mcdlutil.h
+/// @brief 2D molecule coordinate generation.

@@ -666,4 +666,4 @@ namespace OpenBabel {
 } // namespace OpenBabel
 
 //! \file graphsym.cpp
-//! \brief XXXX
+//! \brief Handle and perceive graph symmtery for canonical numbering.

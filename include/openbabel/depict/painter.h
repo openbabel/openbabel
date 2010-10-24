@@ -30,6 +30,8 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
   /**
+   * @class OBColor painter.h <openbabel/depict/painter.h>
+   * @brief Color class used by OBDepict. 
    * @since version 2.3
    */
   struct OBDEPICT OBColor
@@ -88,6 +90,8 @@ namespace OpenBabel
   };
 
   /**
+   * @class OBFontMetrics painter.h <openbabel/depict/painter.h>
+   * @brief Font metrics class used by OBDepict.
    * @since version 2.3
    */
   struct OBDEPICT OBFontMetrics
@@ -98,6 +102,8 @@ namespace OpenBabel
   };
 
   /**
+   * @class OBPainter painter.h <openbabel/depict/painter.h>
+   * @brief Abstract painter base class used by OBDepict.
    * @since version 2.3
    */
   class OBDEPICT OBPainter

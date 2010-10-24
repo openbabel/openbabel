@@ -39,6 +39,8 @@ namespace OpenBabel {
   class OBGraphSymPrivate;
 
   /**
+   * @class OBGraphSym graphsym.h <openbabel/graphsym.h>
+   * @brief Handle and perceive graph symmtery for canonical numbering .
    * @since version 2.3
    */
   class OBAPI OBGraphSym {
@@ -74,7 +76,9 @@ namespace OpenBabel {
 
 } // namespace OpenBabel
 
+#endif // OB_GRAPHSYM_H
+
 //! \file graphsym.h
 //! \brief Handle and perceive graph symmtery for canonical numbering
 
-#endif // OB_GRAPHSYM_H
+

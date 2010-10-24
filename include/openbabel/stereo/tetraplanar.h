@@ -30,7 +30,7 @@
 namespace OpenBabel {
 
   /**
-   * @class OBTetraPlanarStereo tetraplanar.h <openbabel/tetraplanar.h>
+   * @class OBTetraPlanarStereo tetraplanar.h <openbabel/stereo/tetraplanar.h>
    * @brief Base class for handling and storing planar stereochemistry with 4 reference atoms.
    *
    * @image html tetraplanar.png
@@ -129,23 +129,12 @@ namespace OpenBabel {
 
         return result;
       }
-      /**
-       * Convert a sequence of reference ids from U, Z or 4 shape to
-       * internal U shape.
-       * @note this method does nothing if a U shape is given as input.
-       */
-//      static std::vector<unsigned long> ToInternal(const std::vector<unsigned long> &refs,
-///          OBStereo::Shape shape);
-      /**
-       * Convert a sequence of reference ids from internal U shape
-       * to U, Z or 4 shape.
-       * @note this method does nothing if a U shape is given as input.
-       */
- //     static std::vector<unsigned long> ToShape(const std::vector<unsigned long> &refs,
-//          OBStereo::Shape shape);
-
+  
   };
 
 }
 
 #endif
+
+/// @file tetraplanar.h
+/// @brief Base class for handling and storing planar stereochemistry with 4 reference atoms.
