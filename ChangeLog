@@ -1,3 +1,7 @@
+2010-10-24  Jean Brefort  <jean.brefort@normalesup.org>
+
+	* data/space-groups.txt: fixed space group 104 (missing transfoms).
+
 2010-10-14 Jiahao Chen <jiahao@mit.edu>
 
 	* src/charges/qeq.cpp,src/charges/qtpie.cpp: Added documentation.
