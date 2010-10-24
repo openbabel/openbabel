@@ -589,8 +589,7 @@ INPUT                  = doc/modules.h \
                          src/ \
                          src/math \
                          src/depict \
-                         include/RDKitConv.h \
-                         include/OB-BGL
+                         include/RDKitConv.h
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is
@@ -621,11 +620,14 @@ RECURSIVE              = NO
 # subdirectory from a directory tree whose root is specified with the INPUT tag.
 
 EXCLUDE                = include/openbabel/babelconfig.h \
+                         include/openbabel/depict/svgpainter.h \
+                         include/openbabel/inchiformat.h \
                          src/babelconfig.h \
                          src/config.h \
                          src/zipstreamimpl.h \
                          src/zipstream.h \
                          src/all.h \
+                         src/depict/svgpainter.cpp \
                          src/RDKitConv.cpp
 
 # The EXCLUDE_SYMLINKS tag can be used select whether or not files or
@@ -823,7 +825,7 @@ HTML_FOOTER            = doc/api-footer.html
 # the style sheet file to the HTML output directory, so don't put your own
 # stylesheet in the HTML output directory as well, or it will be erased!
 
-HTML_STYLESHEET        = 
+HTML_STYLESHEET        =
 
 # The HTML_COLORSTYLE_HUE tag controls the color of the HTML output.
 # Doxygen will adjust the colors in the stylesheet and background images

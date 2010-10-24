@@ -161,3 +161,6 @@ namespace OpenBabel
 }
 
 #endif
+
+//! \file painter.h
+//! \brief Base class for graphical 2D depiction classes (e.g., "paint" to SVG)

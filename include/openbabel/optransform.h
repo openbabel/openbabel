@@ -25,7 +25,7 @@ namespace OpenBabel
 {
 
   /** \class OpTransform optransform.h <openbabel/optransform.h>
-      \brief Applies molecular transforms (OBChemTsfm class) read from a datafile
+      \brief Applies molecular reactions/transforms (OBChemTsfm class) read from a datafile
       \since version 2.2
   */
 class OpTransform : public OBOp

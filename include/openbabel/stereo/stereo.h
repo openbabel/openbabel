@@ -1131,3 +1131,6 @@ namespace OpenBabel {
 }
 
 #endif
+
+//! \file stereo.h
+//! \brief Process molecular stereochemistry information.

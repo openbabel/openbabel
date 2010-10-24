@@ -75,6 +75,6 @@ namespace OpenBabel {
 } // namespace OpenBabel
 
 //! \file graphsym.h
-//! \brief XXXX
+//! \brief Handle and perceive graph symmtery for canonical numbering
 
 #endif // OB_GRAPHSYM_H

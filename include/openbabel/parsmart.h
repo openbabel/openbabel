@@ -153,12 +153,14 @@ namespace OpenBabel
   }
   Pattern;
 
+  //! \struct ParseState parsmart.h <openbabel/parsmart.h>
+  //! \brief A SMARTS parser internal state
   typedef struct
-   {
-     BondExpr *closord[100];
-     int       closure[100];
-     int       closindex;
-   } ParseState;
+  {
+    BondExpr *closord[100];
+    int       closure[100];
+    int       closindex;
+  } ParseState;
 
 #else
   // for SWIG, just forward declare that we have some Pattern struct
@@ -200,32 +202,32 @@ namespace OpenBabel
     Pattern *ParseSMARTSRecord( char *ptr );
     int GetVectorBinding();
     Pattern *SMARTSParser( Pattern *pat, ParseState *stat,
-                                  int prev, int part );
+                           int prev, int part );
 
   public:
-    OBSmartsPattern() : _pat(NULL), _buffer(NULL), LexPtr(NULL), MainPtr(NULL) { }
+  OBSmartsPattern() : _pat(NULL), _buffer(NULL), LexPtr(NULL), MainPtr(NULL) { }
     virtual ~OBSmartsPattern();
 
-    OBSmartsPattern(const OBSmartsPattern& cp): _pat(NULL), _buffer(NULL), LexPtr(NULL), MainPtr(NULL)
-    {
-    	*this = cp;
-    }
+  OBSmartsPattern(const OBSmartsPattern& cp): _pat(NULL), _buffer(NULL), LexPtr(NULL), MainPtr(NULL)
+      {
+        *this = cp;
+      }
 
     OBSmartsPattern& operator=(const OBSmartsPattern& cp)
-	{
-		if (this == &cp)
-			return *this;
+      {
+        if (this == &cp)
+          return *this;
 
-		if (_pat)
-			delete[] _pat;
-		if (_buffer)
-			delete[] _buffer;
-		_buffer = NULL;
-		_pat = NULL;
-		std::string s = cp._str;
-		Init(s);
-		return (*this);
-	}
+        if (_pat)
+          delete[] _pat;
+        if (_buffer)
+          delete[] _buffer;
+        _buffer = NULL;
+        _pat = NULL;
+        std::string s = cp._str;
+        Init(s);
+        return (*this);
+      }
 
 
     //! \name Initialization Methods
@@ -337,14 +339,14 @@ namespace OpenBabel
 
     //! \return the entire list of unique matches for this pattern
     /**
-        A unique match is defined as one which does not cover the
-        identical atoms that a previous match has covered.
+       A unique match is defined as one which does not cover the
+       identical atoms that a previous match has covered.
 
-        For instance, the pattern [OD1]~C~[OD1] describes a
-        carboxylate group. This pattern will match both atom number
-        permutations of the carboxylate, and if GetMapList() is called, both
-        matches will be returned. If GetUMapList() is called only unique
-        matches of the pattern will be returned.
+       For instance, the pattern [OD1]~C~[OD1] describes a
+       carboxylate group. This pattern will match both atom number
+       permutations of the carboxylate, and if GetMapList() is called, both
+       matches will be returned. If GetUMapList() is called only unique
+       matches of the pattern will be returned.
     **/
     std::vector<std::vector<int> > &GetUMapList();
     //@}
@@ -365,25 +367,25 @@ namespace OpenBabel
 	  std::vector<std::pair<const Pattern*,std::vector<bool> > > RSCACHE;
 	  // list of fragment patterns (e.g., (*).(*)
 	  std::vector<const Pattern*> Fragments;
-/*
-	  bool EvalAtomExpr(AtomExpr *expr,OBAtom *atom);
-	  bool EvalBondExpr(BondExpr *expr,OBBond *bond);
-	  int GetVectorBinding();
-	  int CreateAtom(Pattern*,AtomExpr*,int,int vb=0);
-*/
-	bool EvalAtomExpr(AtomExpr *expr,OBAtom *atom);
-	bool EvalBondExpr(BondExpr *expr,OBBond *bond);
+    /*
+      bool EvalAtomExpr(AtomExpr *expr,OBAtom *atom);
+      bool EvalBondExpr(BondExpr *expr,OBBond *bond);
+      int GetVectorBinding();
+      int CreateAtom(Pattern*,AtomExpr*,int,int vb=0);
+    */
+    bool EvalAtomExpr(AtomExpr *expr,OBAtom *atom);
+    bool EvalBondExpr(BondExpr *expr,OBBond *bond);
     void SetupAtomMatchTable(std::vector<std::vector<bool> > &ttab,
 	                           const Pattern *pat, OBMol &mol);
     void FastSingleMatch(OBMol &mol,const Pattern *pat,
-                                std::vector<std::vector<int> > &mlist);
+                         std::vector<std::vector<int> > &mlist);
 
-	friend class OBSSMatch;
+    friend class OBSSMatch;
   public:
     OBSmartsMatcher() {}
     virtual ~OBSmartsMatcher() {}
 
-	 bool match(OBMol &mol, const Pattern *pat,std::vector<std::vector<int> > &mlist,bool single=false);
+    bool match(OBMol &mol, const Pattern *pat,std::vector<std::vector<int> > &mlist,bool single=false);
 
   };
 

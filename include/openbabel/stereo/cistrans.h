@@ -52,10 +52,12 @@ namespace OpenBabel {
  * @since version 2.3
  */
 class OBAPI OBCisTransStereo : public OBTetraPlanarStereo
-///@}
 {
   public:
     /**
+     * \struct Config cistrans.h <openbabel/stereo/cistrans.h>
+     * \brief Stereochemical configuration for double-bond cis/trans stereochemistry
+     *
      * The config struct represents the stereochemistry in a well defined way.
      * For cis/trans stereo bonds, the following data members define the spacial
      * arrengement of the atoms.
@@ -301,6 +303,7 @@ class OBAPI OBCisTransStereo : public OBTetraPlanarStereo
     // The following function sits behind GetCisRef and GetTransRef
     unsigned long GetCisOrTransRef(unsigned long id, bool getcisref) const;
 };
+///@}
 
 } // namespace OpenBabel
 
@@ -349,3 +352,6 @@ OBAPI ostream& operator<<(ostream &out, const OpenBabel::OBCisTransStereo::Confi
 #endif // Not SWIG
 
 #endif
+
+//! \file cistrans.h
+//! \brief Store and convert cis/trans double-bond stereochemistry

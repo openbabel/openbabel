@@ -31,7 +31,7 @@ namespace OpenBabel {
 ///@addtogroup stereo Stereochemistry
 ///@{
 /**
- * @class OBTetrahedralStereo
+ * @class OBTetrahedralStereo tetrahedral.h <openbabel/stereo/tetrahedral.h>
  * @brief Class for handling and storing tetrahedral atom stereochemistry.
  *
  * The OBTetrahedralStereo class is used to represent tetrahedral atom
@@ -56,11 +56,13 @@ namespace OpenBabel {
  * @since version 2.3
  */
 class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
-///@}
 {
   public:
 #ifndef SWIG
     /**
+     * \struct Config tetrahedral.h <openbabel/stereo/tetrahedral.h>
+     * \brief Stereochemical configuration for tetrahedral stereocenters
+     *
      * The config struct represents the stereochemistry in a well defined way. For
      * tetrahedral stereo centers, the following data members define the special
      * orientation of the atoms:
@@ -242,6 +244,8 @@ class OBAPI OBTetrahedralStereo : public OBTetraNonPlanarStereo
   private:
     Config m_cfg; //!< internal configuration
 };
+///@}
+// end addtogroup doxygen
 
 } // namespace OpenBabel
 
@@ -292,3 +296,6 @@ OBAPI ostream& operator<<(ostream &out, const OpenBabel::OBTetrahedralStereo::Co
 #endif // SWIG
 
 #endif
+
+//! \file tetrahedral.h
+//! \brief Handle general non-planar tetrahedral stereochemistry

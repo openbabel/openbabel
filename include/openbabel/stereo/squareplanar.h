@@ -9,7 +9,7 @@ namespace OpenBabel {
 ///@addtogroup stereo Stereochemistry
 ///@{
 /**
- * @class OBSquarePlanarStereo
+ * @class OBSquarePlanarStereo squareplanar.h <openbabel/stereo/squareplanar.h>
  * @brief Class for handling and storing square planar stereochemistry.
  *
  * @image html squareplanar.png
@@ -23,10 +23,12 @@ namespace OpenBabel {
  * warnings or info is reported using OBMessageHandler.
  */
 class OBAPI OBSquarePlanarStereo : public OBTetraPlanarStereo
-///@}
 {
   public:
     /**
+     * \struct Config squareplanar.h <openbabel/stereo/squareplanar.h>
+     * \brief Stereochemical configuration for square planar stereocenters
+     *
      * The config struct represents the stereochemistry in a well defined way.
      * For squareplanar stereocenters, the following data members define the spacial
      * arrengement of the atoms.
@@ -237,6 +239,8 @@ class OBAPI OBSquarePlanarStereo : public OBTetraPlanarStereo
     // The following function sits behind GetCisRef and GetTransRef
     unsigned long GetCisOrTransRef(unsigned long id, bool getcisref) const;
 };
+///@}
+// end addtogroup doxygen
 
 } // namespace OpenBabel
 
@@ -282,5 +286,7 @@ OBAPI ostream& operator<<(ostream &out, const OpenBabel::OBSquarePlanarStereo::C
 } // namespace std
 #endif // Not SWIG
 
-
 #endif
+
+//! \file squareplanar.h
+//! \brief Store and convert square-planar stereochemistry (e.g., for cis/trans double bonds or metals)

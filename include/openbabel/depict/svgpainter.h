@@ -69,3 +69,6 @@ namespace OpenBabel
 }
 
 #endif
+
+//! \file svgpainter.h
+//! \brief Generate 2D depictions in the SVG vector graphics format.
