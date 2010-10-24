@@ -222,6 +222,7 @@ namespace OpenBabel
      * Rotate the atoms in the specified @p coordinates. This function does not
      * require any precomputation and will compute all needed information when
      * needed.
+     * @param coordinates The coordinates for the molecules as pointer to double.
      * @param next The index of the new rotor angle. This is an index for the
      * GetTorsionValues() list.
      * @param prev If specified, the torsion current torsion angle can be

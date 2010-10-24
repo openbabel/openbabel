@@ -298,8 +298,7 @@ namespace OpenBabel
     //! This version is (more) thread safe.
     //! \param mol The molecule to use for matching
     //! \param mlist The resulting match list
-    //! \param single Whether only a single match is required (faster). Default is false.
-    //! \param unique Whether only unique matches should be returned. Default is false.
+    //! \param mtype The match type to use. Default is All.
     //! \return Whether matches occurred
     bool Match(OBMol &mol, std::vector<std::vector<int> > & mlist, MatchType mtype = All) const;
 

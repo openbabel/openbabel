@@ -197,22 +197,38 @@ namespace OpenBabel {
         std::for_each(m_atoms.begin(),m_atoms.end(), DeleteObject());
         std::for_each(m_bonds.begin(),m_bonds.end(), DeleteObject());
       }
+      /**
+       * @return The number of atoms in the query.
+       */
       unsigned int NumAtoms() const
       {
         return m_atoms.size();
       }
+      /**
+       * @return The number of bonds in the query.
+       */
       unsigned int NumBonds() const
       {
         return m_bonds.size();
       }
+      /**
+       * @return std::vector with pointers to the query atoms.
+       */
       const std::vector<OBQueryAtom*>& GetAtoms() const
       {
         return m_atoms;
       }
+      /**
+       * @return std::vector with pointers to the query bonds.
+       */
       const std::vector<OBQueryBond*>& GetBonds() const
       {
         return m_bonds;
       }
+      /**
+       * @return The query bond between @p begin and @p end. If there is no
+       * bond between @p begin and @p end, this function returns 0.
+       */
       OBQueryBond* GetBond(OBQueryAtom *begin, OBQueryAtom *end) const
       {
         for (unsigned int i = 0; i < begin->GetBonds().size(); ++i)
@@ -220,11 +236,17 @@ namespace OpenBabel {
             return begin->GetBonds()[i];
         return 0;
       }
+      /**
+       * Add a query atom to the query. This function steals the pointer.
+       */
       void AddAtom(OBQueryAtom *atom)
       {
         atom->m_index = m_atoms.size();
         m_atoms.push_back(atom);
       }
+      /**
+       * Add a query atom to the query. This function steals the pointer.
+       */
       void AddBond(OBQueryBond *bond)
       {
         bond->m_index = m_bonds.size();
