@@ -75,3 +75,6 @@ inline double erfc(double x)
 
 }//namespace
 #endif // OB_ERF_H
+
+/// @file erf.h
+/// @brief Error function

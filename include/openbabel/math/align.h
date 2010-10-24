@@ -30,6 +30,7 @@ using namespace std;
 namespace OpenBabel
 {
   /**
+   * \class OBAlign align.h <openbabel/math/align.h>
    * \brief Perform a least-squares alignment of two molecules or two vectors of vector3 objects
    *
    * This class may be used to perform a least-squares alignment of two OBMol
@@ -195,3 +196,6 @@ namespace OpenBabel
 }
 
 #endif // OB_ALIGN_H
+
+/// @file align.h
+/// @brief Perform a least-squares alignment of two molecules or two vectors of vector3 objects
