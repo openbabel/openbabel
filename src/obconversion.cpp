@@ -691,7 +691,7 @@ namespace OpenBabel {
   OBFormat* OBConversion::FindFormat(const std::string ID)
   {
     return OBFormat::FindType(ID.c_str());
-  }  
+  }
 
   //////////////////////////////////////////////////
   const char* OBConversion::GetTitle() const
@@ -1449,6 +1449,7 @@ namespace OpenBabel {
   }
 
   ///////////////////////////////////////////////
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 /**<pre>
 Built-in options for conversion of molecules
 Additional options :
@@ -1474,6 +1475,7 @@ Additional options :
 --addindex Append output index to title
 </pre>
 **/
+#endif
   void OBConversion::AddOption(const char* opt, Option_type opttyp, const char* txt)
   {
     //Also updates an option

@@ -33,7 +33,7 @@ General Public License for more details.
 
 namespace OpenBabel
 {
-///@addtogroup plugins Plugin
+///@addtogroup plugins Plugins
 ///@{
 
 /// @brief Case insensitive string comparison for PluginMapType key.

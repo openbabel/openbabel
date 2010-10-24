@@ -181,7 +181,7 @@ endif(OPENBABEL2_EXECUTABLE)
 
 
  /**
-  * @page generic_data Working with generic data
+  * @page generic_data Working with Generic Data
   * @section generic_data_intro Introduction
   * Generic data is a concept used in OpenBabel to store additional information in objects. The objects are
   * usually molecules, atoms or bonds (OBMol, OBAtom and OBBond). The data can literally be anything since

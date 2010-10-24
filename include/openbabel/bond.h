@@ -64,8 +64,7 @@ namespace OpenBabel
 
 #define OB_WEDGE_OR_HASH_BOND     (1<<11)
 #define OB_CIS_OR_TRANS_BOND     (1<<12)
-  /// @addtogroup core Core classes
-  //@{
+
   //class OBBondPrivate;
   class OBAPI OBBond: public OBBase
   {
@@ -317,8 +316,6 @@ namespace OpenBabel
       //@}
 
     }; // class OBBond
-
-  //@} group
 
   //! A standard iterator over a vector of bonds
   typedef std::vector<OBBond*>::iterator OBBondIterator;

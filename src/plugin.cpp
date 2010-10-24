@@ -327,7 +327,9 @@ std::vector<std::string> EnableStaticPlugins()
 #endif // USING_DYNAMIC_LIBS
 
 /**
- @page plugins
+  /// @addtogroup plugins Plugins
+  ///@{
+ @page plugins Plugins
  Plugins are a way of extending OpenBabel without having to alter any of the
  existing code. They may be built as shared libraries (DLLs with an extension
  .obf or .so files in a specified location) and distributed separately, but
@@ -367,6 +369,7 @@ std::vector<std::string> EnableStaticPlugins()
  This is appropriate for some classes that differ only by the datafile or
  SMARTS strings they use.
 */
+///@}
 }//namespace
 
 //! \file plugin.cpp

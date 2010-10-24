@@ -885,7 +885,7 @@ namespace OpenBabel
      *   \par Output to log:
      *    OBFF_LOGLVL_NONE:   none \n
      *    OBFF_LOGLVL_LOW:    none \n
-     *    OBFF_LOGLVL_MEDIUM: energy for indivudual energy terms \n
+     *    OBFF_LOGLVL_MEDIUM: energy for individual energy terms \n
      *    OBFF_LOGLVL_HIGH:   energy for individual energy interactions \n
      */
     virtual double Energy(bool UNUSED(gradients) = true) { return 0.0f; }

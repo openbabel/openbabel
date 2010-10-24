@@ -5,6 +5,8 @@
 
 #include <math.h>
 
+/// @cond
+// Hide this from doxygen -- internal only code
 namespace temperf
 {
 double erf(double x);
@@ -69,6 +71,7 @@ inline double erfc(double x)
   } while (fabs(q1-q2)/q2 > rel_error);
   return one_sqrtpi*exp(-x*x)*q2;
 }
+/// @endcond
 
 }//namespace
 #endif // OB_ERF_H
