@@ -1,0 +1,35 @@
+Several small programs are available as exe files, which
+should be run from a DOS command window.
+For syntax info, execute them without parameters.
+
+obabel - alternative commandline interface for babel.
+It has a more UNIX-like syntax, requiring the output file
+to be specified as a -O option, reducing the chances of unwanted
+over-writing of files. The handling of options is improved,
+allowing more versatile options in the future.
+
+obchiral       - print molecular chirality information
+obconformer    - superimpose two molecules based on a SMARTS pattern
+obenergy       - calculate the energy for a molecule using a forcefield
+obfit          - superimpose a set of molecules on the atoms of a reference molecule
+obgrep         - search for molecules inside multi-molecule database files
+                 (babel has the same functionality via -s option);
+obminimize     - minimize the energy for a molecule
+obprobe        - calculate the energy of adding a probe atom
+obprop         - print standard molecular properties
+obrotamer      - generate a random rotamer for a given molecule
+obrotate       - batch-rotate dihedral angles matching SMARTS patterns
+obspectrophore - one-dimensional descriptors from Silicos
+
+See http://openbabel.org/wiki/Guides or 
+http://openbabel.org/wiki/Tutorial:Other_Tools
+for further details of some of the above programs
+
+The following are not implemented in Windows:
+obgen       - babel has the same functionality (--gen3D)
+obxyz       - uses the unavailable getopt function
+obfragment  - is not routinely used
+obdoc       - is not routinely used
+obmm        - openbabel molecular mechanics program
+obseq       - residue sequence information for biomolecules
+obsym       - 3D Point Group Symmetry

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<molecule title="NSC 27">
+<atomArray>
+<atom id="a1" elementType="I" formalCharge="-1" x2="-3.0594" y2="-2.2749"/>
+<atom id="a2" elementType="N" formalCharge="1" x2="1.5095" y2="0.9169"/>
+<atom id="a3" elementType="C" x2="-1.5095" y2="0.9149"/>
+<atom id="a4" elementType="C" x2="-0.8764" y2="0.55"/>
+<atom id="a5" elementType="C" x2="-2.1424" y2="0.55"/>
+<atom id="a6" elementType="C" x2="-0.8764" y2="-0.181"/>
+<atom id="a7" elementType="C" x2="-2.1424" y2="-0.181"/>
+<atom id="a8" elementType="C" x2="-1.5095" y2="-0.546"/>
+<atom id="a9" elementType="C" x2="-3.1004" y2="-0.7339"/>
+<atom id="a10" elementType="C" x2="-1.5095" y2="1.5549"/>
+<atom id="a11" elementType="C" x2="-0.2405" y2="0.9169"/>
+<atom id="a12" elementType="C" x2="-0.1905" y2="-0.577"/>
+<atom id="a13" elementType="C" x2="1.5095" y2="-0.503"/>
+<atom id="a14" elementType="C" x2="1.5095" y2="2.2369"/>
+<atom id="a15" elementType="C" x2="3.5394" y2="0.9169"/>
+</atomArray>
+<bondArray>
+<bond atomRefs2="a2 a11" id="b1" order="1"/>
+<bond atomRefs2="a2 a13" id="b2" order="1"/>
+<bond atomRefs2="a2 a14" id="b3" order="1"/>
+<bond atomRefs2="a2 a15" id="b4" order="1"/>
+<bond atomRefs2="a3 a4" id="b5" order="2"/>
+<bond atomRefs2="a3 a5" id="b6" order="1"/>
+<bond atomRefs2="a3 a10" id="b7" order="1"/>
+<bond atomRefs2="a4 a6" id="b8" order="1"/>
+<bond atomRefs2="a4 a11" id="b9" order="1"/>
+<bond atomRefs2="a5 a7" id="b10" order="2"/>
+<bond atomRefs2="a6 a8" id="b11" order="2"/>
+<bond atomRefs2="a6 a12" id="b12" order="1"/>
+<bond atomRefs2="a7 a8" id="b13" order="1"/>
+<bond atomRefs2="a7 a9" id="b14" order="1"/>
+</bondArray>
+</molecule>
+

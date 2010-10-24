@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+  <title>OpenBabelGUI Help</title>
+  <style type="text/css">
+  /*<![CDATA[*/
+  h2{color:maroon;}
+  h2,h3{font-family:"Arial";}
+  h3{color:red;}
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+<h2>OpenBabelGUI Help</h2><h3>Basic operation</h3>
+<p>OpenBabel converts chemical objects (currently molecules or reactions) from one file format to another. This interface is an alternative to a command line and has the same capabilities.</p>
+<p> - Select the type of the type of the input file from the dropdown list.</p>
+<p> - Click the "..." button and select the file. Its contents are displayed in the textbox below.</p>
+<p> - Choose the output format and file in a similar way. You can merely display the
+output without saving it by not selecting an output file or by checking "Output below only..".</p>
+<p> - Click the "Convert" button.</p>
+<p>The message window below the button gives the number of molecules converted, and the contents of the output file are displayed.</p>
+<p>By default, all the molecules in an input file are converted if the output format allows multiple molecules.</p>
+
+<h3>Options</h3>
+<p>The options in the middle are those appropriate for the type of chemical object being converted (molecule or reaction) and the input and output formats. They are derived from the description text that is displayed with the -Hxxx option in the command line interface and with the "Format info" buttons here. You can switch off the display of any of the various types of option using the View menu, if the screen is getting too cluttered.</p>
+
+<h3>Multiple input files</h3>
+<p>You can select multiple input files in the input file dialog in the normal way (using the Control key in Windows). In the input filename box, each filename is displayed relative to the path shown just above the box, which is the path of the first file. You can display any of the files by moving the highlight with Tab/Shift Tab, Page Up/Down, the mouse wheel, or by double clicking.</p>
+<p>Selecting one or more new file names normally removes those already present, but they can instead be appended by holding the Control key down when leaving the file selection dialog.</p>
+<p>Files can be also be dragged and dropped (e.g. from Windows Explorer), adding the file when the Control key is pressed, replacing the existing files when it is not.</p>
+<p>Normally each file is converted according to its extension and the input files do not have to be all the same, but if you want to use non-standard file names set the checkbox "Use this format for all input files..." </p>
+<p>If you want to combine multiple molecules (from one or more files) into a single molecule with disconnected parts, use option "Join all input molecules..."</p>
+
+<h3>Wildcards in filenames</h3>
+<p>When an input filenames are typed in directly, any of them can contain the wildcard characters * and ? Typing Enter will replace these by a list of the matching files. The wildcarded names can be restored by typing Enter while holding down the Shift key. The original or the expanded versions will behave the same when the "Convert" button is pressed.</p>
+<p>By including the wildcard * in the both the input and output filenames you can carry out batch conversion. Suppose there were files first.smi, second.smi, third.smi. Using *.smi as the input filename and *.mol as the output filename would produce three files first.mol, second.mol and third.mol. If the output filename was NEW_*.mol the output files would be NEW_first.mol, etc. </p>
+
+<h3>Local input</h3>
+<p>By checking the "Input below..." checkbox you can type the input text directly. The text box changes colour to remind you that it is this text and not the contents of any files that will be converted.</p>
+
+<h3>Output file</h3>
+<p>The output file name can be fully specified with a path, but if it is not, then it is considered to berelative to the input file path.</p>
+
+<h3>Graphical display</h3>
+<p>The chemical structures being converted can be displayed (as SVG) in an external program. By default this Firefox but it can be changed from an item on the View menu. (For instance, Opera and Chrome work ok.) When "Display in firefox" (under the output file name) is checked, the structures will be shown in a new Firefox tab. With multiple molecules the display can be zoomed (mousewheel) and panned (dragging with mouse button depressed). Up to 100 molecules are easily handled but with more the system may be slow to manipulate. It may also be slow to generate, especially if 2D atom coordinates have to be calculated (e.g.from SMILES). A new Firefox tab is opened each time Convert is pressed.</p>  
+
+<h3>Using a restricted set of formats</h3>
+<p>It is probable that most of the large range of formats will usually not be required when OpenBabel is used regularly. You can restrict the choice offered in the dropdown boxes, which makes routine selection easier. Clicking "Select set of formats" on the View menu allows the formats to be displayed to be selected. Subsequently, clicking "Use restricted set of formats" on the View menu toggles this facility on and off.</p>
+	<p>Using a restricted set overcomes an irritating bug in the Windows version. In the file Open and Save dialogs the files displayed can be filtered by the current format, All Chemical Formats, or All Files. The All Chemical Formats filter will only display the first 30 possible formats (alphabetically). The All Files will indeed display all files and the conversion processes are unaffected.</p>
+<h3>Other features</h3>
+<p>Most of the interface parameters, such as the selected format and the window size and position are remembered between sessions.</p>
+<p>Using the View menu, the input and output text boxes can be set not to wrap the text. At present you have to restart the program for this to take effect.</p>
+<p>The message box at the top of the output text window receives program output on error and audit logging, and some progress reports. It can be expanded by dragging down the divider between the windows.</p>
+<h3>Example files</h3>
+<p>There are three chemical files in the executable folder to try out:<br />
+<strong>serotonin.mol</strong> which is has 3D atom coordinates;<br />
+<strong>oxamide.cml</strong> which is 2D and has a large number of properties that will be seen when converting to sdf.<br />
+<strong>FourSmallMols.cml</strong> which (unsurprisingly) contains four molecules with no atom coordinates and can be used to illustrate the handling of multiple molecules. Setting the output format to smi (which is easy to see), you can convert only the second and third molecules by entering 2 and 3 in the appropriate option boxes. Or convert only molecules with C-O single bonds by entering CO in the SMARTS option box.</p>
+<hr />
+<p>Please report bugs or suggestions for improvement to the <a  href="http://openbabel.org/wiki/Main_Page\n\n\">OpenBabel website</a>.</p>
+</body>
+</html>
