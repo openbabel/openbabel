@@ -117,6 +117,8 @@ namespace OpenBabel {
 
   /**
    * @class OBQueryBond query.h <openbabel/query.h>
+   * @brief Bond in an OBQuery
+   *
    * The OBQueryBond class defines an interface for query bonds. The class provides
    * some general methods and properties to access the topology information. The Matches
    * method can be reimplemented in subclasses to get custom matching behavior.
@@ -185,9 +187,10 @@ namespace OpenBabel {
 
   /**
    * @class OBQuery query.h <openbabel/query.h>
-   * @since version 2.3
+   * @brief A substructure query
    *
    * See @ref substructure for more information.
+   * @since version 2.3
    */
   class OBAPI OBQuery
   {
