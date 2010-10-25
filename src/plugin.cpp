@@ -302,7 +302,9 @@ std::vector<std::string> EnableStaticPlugins()
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpAddInIndex)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpAddPolarH)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpCanonical)->GetID());
+#ifdef HAVE_EIGEN2
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpConformer)->GetID());
+#endif
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpFillUC)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpEnergy)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpMinimize)->GetID());
@@ -318,8 +320,10 @@ std::vector<std::string> EnableStaticPlugins()
   // charges
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGasteigerCharges)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMMFF94Charges)->GetID());
+#ifdef HAVE_EIGEN2
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theQEqCharges)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theQTPIECharges)->GetID());
+#endif
 
   return plugin_ids;
 }
