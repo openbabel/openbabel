@@ -179,7 +179,7 @@ namespace OpenBabel {
 
   /**
    * @class OBEnergyConformerScore conformersearch.h <openbabel/conformersearch.h>
-   * @brief A lowest energy conformer scoring class. 
+   * @brief A lowest energy conformer scoring class.
    * @since 2.3
    */
   class OBAPI OBEnergyConformerScore : public OBConformerScore
@@ -428,6 +428,8 @@ namespace OpenBabel {
 
   ///@}
 };
+
+#endif
 
 /// @file conformersearch.h
 /// @brief Conformer searching using genetic algorithm
