@@ -222,6 +222,7 @@ namespace OpenBabel
      * Rotate the atoms in the specified @p coordinates. This function does not
      * require any precomputation and will compute all needed information when
      * needed.
+     * @param coordinates The coordinates for the molecules as pointer to double.
      * @param next The index of the new rotor angle. This is an index for the
      * GetTorsionValues() list.
      * @param prev If specified, the torsion current torsion angle can be
@@ -432,7 +433,7 @@ namespace OpenBabel
   typedef std::vector<OBRotor*>::iterator OBRotorIterator;
 
   /**
-   * @class OBRotorList
+   * @class OBRotorList rotor.h <openbabel/rotor.h>
    * @brief Given an OBMol, set up a list of possibly rotatable torsions,
    */
   class OBAPI OBRotorList
@@ -670,11 +671,11 @@ namespace OpenBabel
 #endif
   /// @endcond
 
-  //! \class OBRotorKeys
+  //! \class OBRotorKeys rotor.h <openbabel/rotor.h>
   //! \brief A class to generate all possible rotorKeys
   class OBAPI OBRotorKeys
   {
-      /** \class OBForceField forcefield.h <openbabel/forcefield.h>
+      /** 
       \brief A class to generate all possible rotorKeys
 
       This class can generate all possible rotor keys for a set of OBRotors

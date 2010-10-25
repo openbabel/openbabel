@@ -1,5 +1,5 @@
 /**********************************************************************
-  query.h - OBQuery, OBQueryAtom & OBQueryBond classes
+  query.h - OBQuery, OBQueryAtom & OBQueryBond classes.
 
   Copyright (C) 2010 by Tim Vandermeersch
 
@@ -35,11 +35,16 @@ namespace OpenBabel {
   ///@{
 
   /**
+   * @class OBQueryAtom query.h <openbabel/query.h>
+   * @brief Atom in an OBQuery
+   *
    * The OBQueryAtom class defines an interface for query atoms. The class provides
    * some general methods and properties to access the topology information. The Matches
    * method can be reimplemented in subclasses to get custom matching behavior.
    *
    * The default Matches implementation only checks the atomic number.
+   *
+   * See @ref substructure for more information.
    *
    * @sa OBQuery OBQueryBond OBIsomorphismMapper
    * @since version 2.3
@@ -52,6 +57,8 @@ namespace OpenBabel {
       /**
        * Constructor.
        * @param atomicNum The atomic number for this query atom.
+       * @param isInRing Specify wether the query atom is in a ring. Default is false.
+       * @param isAromatic Specify wether the query atom is aromatic. Default is false.
        */
       OBQueryAtom(int atomicNum = 6, bool isInRing = false, bool isAromatic = false) :
         m_atomicNum(atomicNum), m_isInRing(isInRing), m_isAromatic(isAromatic) {}
@@ -109,12 +116,17 @@ namespace OpenBabel {
   };
 
   /**
+   * @class OBQueryBond query.h <openbabel/query.h>
+   * @brief Bond in an OBQuery
+   *
    * The OBQueryBond class defines an interface for query bonds. The class provides
    * some general methods and properties to access the topology information. The Matches
    * method can be reimplemented in subclasses to get custom matching behavior.
    *
    * The default Matches implementation only checks if the bonds are both aromatic,
    * otherwise the bond orders are compared.
+   *
+   * See @ref substructure for more information.
    *
    * @sa OBQuery OBQueryAtom OBIsomorphismMapper
    * @since version 2.3
@@ -174,6 +186,10 @@ namespace OpenBabel {
   };
 
   /**
+   * @class OBQuery query.h <openbabel/query.h>
+   * @brief A substructure query
+   *
+   * See @ref substructure for more information.
    * @since version 2.3
    */
   class OBAPI OBQuery
@@ -184,22 +200,38 @@ namespace OpenBabel {
         std::for_each(m_atoms.begin(),m_atoms.end(), DeleteObject());
         std::for_each(m_bonds.begin(),m_bonds.end(), DeleteObject());
       }
+      /**
+       * @return The number of atoms in the query.
+       */
       unsigned int NumAtoms() const
       {
         return m_atoms.size();
       }
+      /**
+       * @return The number of bonds in the query.
+       */
       unsigned int NumBonds() const
       {
         return m_bonds.size();
       }
+      /**
+       * @return std::vector with pointers to the query atoms.
+       */
       const std::vector<OBQueryAtom*>& GetAtoms() const
       {
         return m_atoms;
       }
+      /**
+       * @return std::vector with pointers to the query bonds.
+       */
       const std::vector<OBQueryBond*>& GetBonds() const
       {
         return m_bonds;
       }
+      /**
+       * @return The query bond between @p begin and @p end. If there is no
+       * bond between @p begin and @p end, this function returns 0.
+       */
       OBQueryBond* GetBond(OBQueryAtom *begin, OBQueryAtom *end) const
       {
         for (unsigned int i = 0; i < begin->GetBonds().size(); ++i)
@@ -207,11 +239,17 @@ namespace OpenBabel {
             return begin->GetBonds()[i];
         return 0;
       }
+      /**
+       * Add a query atom to the query. This function steals the pointer.
+       */
       void AddAtom(OBQueryAtom *atom)
       {
         atom->m_index = m_atoms.size();
         m_atoms.push_back(atom);
       }
+      /**
+       * Add a query atom to the query. This function steals the pointer.
+       */
       void AddBond(OBQueryBond *bond)
       {
         bond->m_index = m_bonds.size();
@@ -223,11 +261,19 @@ namespace OpenBabel {
   };
 
   /**
+   * Create an OBQuery object from an OBMol object. 
+   * @param mol The query molecule.
+   * @param mask The mask specifying the atoms to use. Indexed from 1 (i.e. OBAtom::GetIdx()).
+   * @return A pointer to an OBQuery object for the smiles string. This pointer should be deleted.
    * @since version 2.3
    */
   OBAPI OBQuery* CompileMoleculeQuery(OBMol *mol, const OBBitVec &mask = OBBitVec());
 
   /**
+   * Create an OBQuery object from a smiles string. 
+   * @param smiles The query smiles string.
+   * @param mask The mask specifying the atoms to use. Indexed from 1 (i.e. OBAtom::GetIdx()).
+   * @return A pointer to an OBQuery object for the smiles string. This pointer should be deleted.
    * @since version 2.3
    */
   OBAPI OBQuery* CompileSmilesQuery(const std::string &smiles, const OBBitVec &mask = OBBitVec());
@@ -235,5 +281,7 @@ namespace OpenBabel {
   ///@}
 }
 
-
 #endif
+
+/// @file query.h
+/// @brief OBQuery, OBQueryAtom & OBQueryBond classes.

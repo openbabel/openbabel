@@ -28,3 +28,6 @@ GNU General Public License for more details.
 #endif
 
 #endif // OB_SHARED_PTR_H
+
+/// @file shared_ptr.h
+/// @brief Shared pointer.

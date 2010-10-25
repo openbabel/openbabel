@@ -54,6 +54,8 @@ using namespace std;
 namespace OpenBabel
 {
 
+  //! @cond
+  // Hide this from doxygen
   namespace Kekulize {
     // Allow ourselves to restrict recursive searching (we will fall back to LSSR assignment which sometimes makes mistakes)
     struct Timeout
@@ -65,6 +67,7 @@ namespace OpenBabel
       time_t startTime, maxTime;
     };
   }
+  //! @endcond
 
   using namespace Kekulize;
 

@@ -1,3 +1,26 @@
+/**********************************************************************
+  squareplanar.h - Class for handling and storing squareplanar stereochemistry.
+
+  Copyright (C) 2009-2010 by Tim Vandermeersch
+
+  This file is part of the Open Babel project.
+  For more information, see <http://openbabel.org/>
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+  02110-1301, USA.
+ **********************************************************************/
 #ifndef OB_SQUAREPLANAR_H
 #define OB_SQUAREPLANAR_H
 
@@ -9,7 +32,7 @@ namespace OpenBabel {
 ///@addtogroup stereo Stereochemistry
 ///@{
 /**
- * @class OBSquarePlanarStereo
+ * @class OBSquarePlanarStereo squareplanar.h <openbabel/stereo/squareplanar.h>
  * @brief Class for handling and storing square planar stereochemistry.
  *
  * @image html squareplanar.png
@@ -23,10 +46,12 @@ namespace OpenBabel {
  * warnings or info is reported using OBMessageHandler.
  */
 class OBAPI OBSquarePlanarStereo : public OBTetraPlanarStereo
-///@}
 {
   public:
     /**
+     * \struct Config squareplanar.h <openbabel/stereo/squareplanar.h>
+     * \brief Stereochemical configuration for square planar stereocenters
+     *
      * The config struct represents the stereochemistry in a well defined way.
      * For squareplanar stereocenters, the following data members define the spacial
      * arrengement of the atoms.
@@ -237,6 +262,8 @@ class OBAPI OBSquarePlanarStereo : public OBTetraPlanarStereo
     // The following function sits behind GetCisRef and GetTransRef
     unsigned long GetCisOrTransRef(unsigned long id, bool getcisref) const;
 };
+///@}
+// end addtogroup doxygen
 
 } // namespace OpenBabel
 
@@ -282,5 +309,7 @@ OBAPI ostream& operator<<(ostream &out, const OpenBabel::OBSquarePlanarStereo::C
 } // namespace std
 #endif // Not SWIG
 
-
 #endif
+
+//! \file squareplanar.h
+//! \brief Store and convert square-planar stereochemistry

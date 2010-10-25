@@ -714,3 +714,6 @@ namespace OpenBabel {
 
 
 }
+
+/// @file isomorphism.cpp
+/// @brief OBIsomorphismMapper class for finding isomorphisms.

@@ -32,7 +32,7 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
-  //! \class OBBuilder
+  //! \class OBBuilder builder.h <openbabel/builder.h>
   //! \brief Class to build 3D structures
   class OBAPI OBBuilder {
     public:

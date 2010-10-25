@@ -1,7 +1,7 @@
 /**********************************************************************
-depict.cpp - 2D Depiction of molecules
+depict.cpp - 2D Depiction of molecules using OBPainter.
 
-Copyright (C) 2009 by Tim Vandermeersch
+Copyright (C) 2009-2010 by Tim Vandermeersch
 Some portions Copyright (C) 2009 by Chris Morley
 
 This file is part of the Open Babel project.
@@ -16,6 +16,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+
 #include <openbabel/mol.h>
 #include <openbabel/alias.h>
 #include <openbabel/depict/depict.h>
@@ -706,3 +707,6 @@ namespace OpenBabel
   }
 
 }
+
+/// @file depict.cpp
+/// @brief 2D depiction of molecules using OBPainter.

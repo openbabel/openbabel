@@ -7373,4 +7373,5 @@ void implementBondStereo(const std::vector<int> iA1, const std::vector<int> iA2,
 //! \file mcdlutil.cpp
 //! utilities for mcdl format, might be useful for another
 
-
+/// @file mcdlutil.cpp
+/// @brief 2D molecule coordinate generation.

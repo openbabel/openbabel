@@ -28,9 +28,7 @@ namespace OpenBabel
 {
 class OBMol; //Forward declaration; used only as pointer.
 
-/**
- * @since version 2.3
- */
+// Documentation is down below
 class OBAPI OBChargeModel : public OBPlugin
 {
   MAKE_PLUGIN(OBChargeModel)
@@ -68,9 +66,6 @@ class OBAPI OBChargeModel : public OBPlugin
       /// Provide a scaling factor for the dipole moment -- ideally calibrated from many molecules
       virtual double DipoleScalingFactor() { return 1.0; }
 };
-
-}//namespace
-#endif
 
 /** \class OBChargeModel chargemodel.h <openbabel/chargemodel.h>
       \brief Atomic partial charge models
@@ -121,9 +116,12 @@ a carboxylate CO2- group).
 By default, Open Babel 2.3 includes Gasteiger and MMFF94 partial
 charges. If the Eigen matrix library is found when compiling, the QEq
 and QTPIE methods will be added. Future releases will likely add
-additional charge models.
+additional charge models, including the EEM method.
 
   */
+
+}//namespace
+#endif
 
 //! \file chargemodel.h
 //! \brief Base class for molecular partial charge models

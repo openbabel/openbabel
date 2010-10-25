@@ -724,12 +724,17 @@ namespace OpenBabel
   //! Global OBResidueData biomolecule residue database
   EXTERN  OBResidueData    resdat;
 
+  //! \brief Nested namespace for max_value templates
   namespace detail {
+    //! \struct max_value mol.h <openbabel/mol.h>
+    //! \brief a C++ template to return the maximum value of a type (e.g., int)
     template<typename T, int size = sizeof(T)>
     struct max_value
     {
       static const T result = (static_cast<T>(0xFF) << (size-1)*8) + max_value<T, size-1>::result;
     };
+
+    //! \brief a C++ template to return the maximum value of a type (e.g., int)
     template<typename T>
     struct max_value<T, 0>
     {

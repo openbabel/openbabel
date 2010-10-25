@@ -24,7 +24,8 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
-  /// An object containing just text
+  //! \class OBText text.h <openbabel/text.h>
+  //! \brief An object containing just text
 class OBText : public OBBase
 {
 private:
@@ -87,3 +88,5 @@ public:
 }//namespace
 #endif //OB_TEXT_H
 
+//! \file text.h
+//! \brief Handle generic non-chemical text processing
