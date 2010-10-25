@@ -1,0 +1,40 @@
+Open Babel for Java
+-------------------
+
+This directory contains a compiled Java jar file with SWIG-generated
+interface classes for using the Open Babel C++ library from Java or from any
+other language that runs on the JVM such as Jython or JRuby.
+
+The Open Babel wiki pages on Java give information on compiling and
+running Java programs with Open Babel:
+http://openbabel.org/wiki/Java
+
+*** Linux Compilation
+
+  First of all, set some environment variables (remember to change the paths to correspond to your system):
+$ export JAVA_HOME=/home/noel/Tools/jdk1.5.0_15
+$ export OB_JAVADIR=/home/noel/Tools/openbabel-2.2.0/scripts/java
+$ export OB_LIBDIR=/home/noel/tree/lib # The install location of libopenbabel.so
+
+  Next, compile the Java bindings:
+$ cd $OB_JAVADIR
+$ g++ -c -fpic openbabel_java.cpp -I../../include -I$JAVA_HOME/include -I$JAVA_HOME/include/linux
+$ g++ -shared openbabel_java.o -L../../src/.libs -lopenbabel -o libopenbabel_java.so
+
+  Compile and run the test program:
+$ export CLASSPATH=.:$OB_JAVADIR/openbabel.jar
+$ $JAVA_HOME/bin/javac OBTest.java
+$ export LD_LIBRARY_PATH=$OB_JAVADIR:$OB_LIBDIR
+$ $JAVA_HOME/bin/java OBTest
+
+  If you get the output "Benzene has 0 atoms", you need to preload the OpenBabel library as follows:
+$ LD_PRELOAD=$OB_LIBDIR/libopenbabel.so $JAVA_HOME/bin/java OBTest
+
+*** Mac OS X Compilation
+
+As for Linux, but use the following instructions to compile the bindings. Also, replace LD_LIBRARY_PATH with DYLD_LIBRARY_PATH.
+
+% g++ -c -I/System/Library/Frameworks/JavaVM.framework/Headers \
+openbabel_java.cpp
+% g++ -dynamiclib -o libopenbabel.jnilib openbabel_java.o \
+-framework JavaVM -L/usr/local/lib -lopenbabel

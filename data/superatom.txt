@@ -1,0 +1,113 @@
+# Translations of superatom labels to SMILES.
+# First atom of SMILES string should be the one connected to the rest of
+# the molecule.
+# Empty lines and lines starting with # are ignored.
+# Originally from http://cactus.nci.nih.gov/osra/
+# The left-aligned form is the one recognized in MDL alias lines;
+# the right-aligned form may be used in 2D depiction.
+# The whole list is used to look up alias names;
+# only the part up to a line starting with ## is used to generate aliases.
+# and here the largest fragments should be first; 
+#left    right    SMILES		color
+CO2Et    EtO2C    C(=O)OCC
+COOEt    EtOOC    C(=O)OCC
+OiBu     iBuO     OCC(C)C
+tBu      tBu      C(C)(C)C
+nBu      nBu      CCCC
+iPr      iPr      C(C)C
+nPr      nPr      CCC
+Et       Et       CC
+NCF3     F3CN     NC(F)(F)F
+CF3      F3C      C(F)(F)F
+CCl3	 Cl3C     C(Cl)(Cl)Cl
+CN       NC       C#N
+NC       CN       [N+]#[C-]
+N(OH)CH3 CH3(OH)N N(O)C
+NO2      O2N      N(=O)=O
+NO       ON       N=O
+SO3H     HO3S     S(=O)(=O)O
+COOH     HOOC     C(=O)O		blue
+OEt      EtO      OCC
+OAc      AcO      OC(=O)C
+NHAc     AcNH     NC(=O)C
+Ac       Ac       C(=O)C
+CHO      OHC      C=O
+NMe      MeN      NC
+SMe      MeS      SC
+OMe      MeO      OC
+COO-     -OOC     C(=O)[O-]
+## Only entries above this line are used to *generate* aliases.
+Ph       Ph       c1ccccc1
+OR       RO       O*
+R        R        *
+OBz      BzO      OCc1ccccc1
+THPO     THPO     O[C@@H]1OCCCC1
+NOH      HON      NO 
+CO2Me    MeO2C    C(=O)OC
+COOMe    MeOOC    C(=O)OC
+SO2Me    MeO2S    S(=O)(=O)C
+NMe2     Me2N     N(C)C
+CO2R     RO2C     C(=O)O*
+COOR     ROOC     C(=O)O*
+NHZ      ZNH      NC(=O)OCC1=CC=CC=C1
+CH2OH    HOCH2    CO
+CH2NH2   H2NCH2   CN
+Me       Me       C
+OBn      BnO      OCC1=CC=CC=C1
+NHAm     AmNH     NCCCCC
+OAm      AmO      OCCCCC
+CO2Am    AmO2C    C(=O)OCCCCC
+COOAm    AmOOC    C(=O)OCCCCC
+SAm      AmS      SCCCCC
+NHBn     BnNH     NCC1=CC=CC=C1
+CO2Bn    BnO2C    C(=O)OCC1=CC=CC=C1
+SnBu3    Bu3Sn    [Sn](CCCC)(CCCC)CCCC
+NHBu     BuNH     NCCCC
+OBu      BuO      OCCCC
+CO2Bu    BuO2C    C(=O)OCCCC
+COOBu    BuOOC    C(=O)OCCCC
+SBu      BuS      SCCCC
+CBr3	 Br3C     C(Br)(Br)Br
+NHCbz    CbzNH    NC(=O)OCC1=CC=CC=C1
+SO2Cl    ClSO2    S(Cl)(=O)=O
+COBr     BrCO     C(=O)Br
+COBu     BuCO     C(=O)CCCC
+COCF3    F3CCO    C(=O)C(F)(F)F
+COCl     ClCO     C(=O)Cl
+COCO     COCO     C(=O)C=O
+COEt     EtCO     C(=O)CC
+COF      FCO      C(=O)F
+COMe     MeCO     C(=O)C
+CONEt2   Et2NCO   C(=O)(CC)NCC
+CONH2    H2NCO    C(=O)N
+CONHEt   EtHNCO   C(=O)NCC
+CONHMe   MeHNCO   C(=O)NC
+CONMe2   Me2NCO   C(=O)(C)NC
+COSH     HSOC     C(=O)S
+NEt2     Et2N     N(CC)CC
+NEt3     Et3N     N(CC)(CC)CC
+NHEt     EtNH     NCC
+SO2NH2   H2NSO2   S(=O)(N)=O
+NHOH     HONH     ON
+NMe2     Me2N     N(C)C
+OMs      MsO      CS(O)(=O)=O
+OCN      NCO      N=C=O
+SCN      NCS      N=C=S
+NHAm     AmHN     NCCCCC
+NHBn     BuHN     NCC1=CC=CC=C1
+NHBu     BuHN     NCCCC
+NHEt     EtHB     NCC
+NHOH     HOHN     NO
+NHPr     PrHN     NCCC
+NO       ON       N=O
+POEt2    EtO2P    P(OCC)OCC
+POEt3    EtO3P    P(OCC)(OCC)OCC
+POOEt2   Et2OOP   P(=O)(OCC)OCC
+PrNH     HNPr     CCCN
+SEt      CCS      SCC
+#Aliases from samples provided with InChI
+CH       HC       [CH]
+CH-      HC-      [CH-]
+D        D        [2H]
+ND2      D2N      [N]([2H])[2H]
+DS       SD       [S][2H]  

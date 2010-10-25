@@ -1,0 +1,92 @@
+================================
+The Ruby Interface to Open Babel (v. 1.0)
+================================
+
+This is the Ruby interface to the Open Babel library. 
+
+Open Babel is a chemical toolbox designed to speak the many languages
+of chemical data. It's an open, collaborative project allowing anyone
+to search, convert, analyze, or store data from molecular modeling,
+chemistry, solid-state materials, biochemistry, or related areas.
+
+This code was automatically generated with SWIG and provides access to almost all of the Open Babel API via Ruby.
+
+More details can also be found at the Open Babel website:
+<http://openbabel.org/wiki/Ruby/>
+
+=== INSTALLATION ===
+
+To compile this module, run the following commands:
+$ ruby extconf.rb --with-openbabel-include=../../include --with-openbabel-lib=../../src/.libs
+$ make
+
+If you wish to install the module locally, set the environment variable DESTDIR to an appropriate location. To install the module, use the following command (as root, if installing globally):
+
+$ make install
+
+=== USE ===
+
+If OpenBabel is installed locally, then set LD_LIBRARY_PATH to the directory containing libopenbabel.so. If the OpenBabel Ruby module is installed locally in $tree, then set RUBYLIB using a command similar to the following:
+
+$ export RUBYLIB=~/tree/usr/local/lib/site_ruby/1.8/i486-linux/
+
+The module can be easily tested from irb (interactive ruby):
+
+$ irb
+
+irb(main):001:0> require 'openbabel'
+=> true
+irb(main):002:0> mol=OpenBabel::OBMol.new
+=> #<OpenBabel::OBMol:0x2add323ddf58>
+irb(main):003:0> mol.num_atoms
+=> 0
+
+Note: all Open Babel methods have been renamed to follow Ruby conventions. 
+For example, the method to count the number of atoms in a molecule is
+ "num_atoms", not "NumAtoms."
+
+Also note: The following fields have been renamed for Ruby compatibility:
+
+OpenBabel::OBResidueIndex::_1MA -> OpenBabel::OBResidueIndex::U1MA
+OpenBabel::OBResidueIndex::_1MG -> OpenBabel::OBResidueIndex::U1MG
+OpenBabel::OBResidueIndex::_2MG -> OpenBabel::OBResidueIndex::U2MG
+OpenBabel::OBResidueIndex::_7MG -> OpenBabel::OBResidueIndex::U7MG
+OpenBabel::OBResidueIndex::_5MU -> OpenBabel::OBResidueIndex::U5MU
+OpenBabel::OBResidueIndex::_5MC -> OpenBabel::OBResidueIndex::U5MC
+
+=== USING SWIG TO GENERATE THE WRAPPER C++ CODE ===
+
+Given the "openbabel-ruby.i" interface file (contained in this directory's 
+parent directory), wrapper code can be generated with SWIG. From the directory
+containing this README, use the following command:
+
+swig -ruby -autorename -c++ -I../../include -o openbabel_ruby.cpp ../openbabel-ruby.i
+
+This command produces the glue code "openbabel_ruby.cpp".
+
+To disable the autorenaming of Open Babel methods, use the "-noautorename"
+flag (SWIG 1.3.29+). Earlier SWIG versions don't support renaming.
+
+Generating the C++ glue code using SWIG currently gives a top-level module 
+called "Openbabel" instead of "OpenBabel". To use the latter name, change the 
+argument to "rb_define_module" from "Openbabel" to "OpenBabel" in 
+openbabel_ruby.cpp. These modifications are also made automatically by the 
+Open Babel makefiles. Make sure you run ./configure with the 
+--enable-maintainer-mode flag when building Open Babel to enable rebuilding
+these scripting interfaces.
+
+=== COPYRIGHT AND LICENSE ===
+
+Copyright (C) 2007 Geoffrey R. Hutchison  <babel@geoffhutchison.net> 
+    and Richard L. Apodaca <rich_apodaca@yahoo.com>
+
+This Ruby module is part of the Open Babel project.
+<http://openbabel.org/>
+
+Open Babel is distributed under the GNU General Public License (GPL).
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation version 2 of the License. Full details
+can be found in the file "COPYING" which should be included in your
+distribution.
+

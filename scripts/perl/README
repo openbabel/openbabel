@@ -1,0 +1,58 @@
+Chemistry::OpenBabel version 1.5
+================================
+
+This module provides a Perl interface to the Open Babel chemistry library. 
+
+Open Babel is a chemical toolbox designed to speak the many languages
+of chemical data. It's an open, collaborative project allowing anyone
+to search, convert, analyze, or store data from molecular modeling,
+chemistry, solid-state materials, biochemistry, or related areas.
+
+The code is generated using the SWIG package and provides access to
+almost all of the Open Babel interfaces via Perl, including the base
+classes OBMol, OBAtom, OBBond, and OBResidue, as well as the
+conversion framework OBConversion, fingerprints, and force field optimization
+etc.
+
+The version numbering does not always correspond to any particular release of
+Open Babel. For more information on the releases of Chemistry::OpenBabel, see
+the Changes file.
+
+Future development will include a "glue module" to integrate with
+PerlMol and other Perl chemistry projects.
+
+INSTALLATION
+
+To install this module, type the following (assuming you have already
+installed Open Babel):
+
+     perl Makefile.PL
+     make
+     make test
+     make install
+
+DEPENDENCIES
+
+     perl-5.6.0 or a more recent version.
+     openbabel-2.3 or a more recent version.
+
+Note that if you are trying to build/run this Perl code in the Open
+Babel source/build directory BEFORE you install Open Babel, you may
+encounter problems if the Perl module is linked against an older
+libopenbabel. If you encounter problems compiling, linking, or running
+this Perl module, make sure you have run "make install" for the latest
+Open Babel package and THEN rebuild this Perl module.
+
+COPYRIGHT AND LICENSE
+
+Copyright (C) 2005-2010 Geoffrey R. Hutchison <babel@geoffhutchison.net>
+
+This Perl Module is part of the Open Babel project.
+<http://openbabel.org/>
+
+Open Babel is distributed under the GNU General Public License (GPL).
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation version 2 of the License. Full details
+can be found in the file "COPYING" which should be included in your
+distribution.

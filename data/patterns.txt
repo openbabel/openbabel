@@ -1,0 +1,76 @@
+#Comments after SMARTS
+##############################################################################
+#                                                                            #
+#                       Open Babel file: patterns.txt                        #
+#                                                                            #
+#  Copyright (c) 2005 Chris Morley                                           #
+#  Part of the Open Babel package, under the GNU General Public License (GPL)#
+#                                                                            #
+# Functional groups for molecular fingerprinting based on Checkmol:          #
+#   http://merian.pch.univie.ac.at/~nhaider/cheminf/fgtable.pdf              #
+# (Numbers 200+ are from Chris Swain)                                        #
+# SMARTS Patterns are used by finger3.cpp:PatternFP                          #
+# Format of each line is a SMARTS pattern, then optionally                   #
+#   followed by a tab character and a pattern number and/or description      #
+#   (everything after the tab will be ignored by the code)                   #
+# A file of this format needs the same first line as this one.               #
+# An alternative format, as in SMARTS_InteLigand.txt, can also be used       #
+#                                                                            #
+#  INCOMPLETE!! Really only useful to test the fingerprint FP3               #
+##############################################################################
+[+]	1	cation
+[-]	2	anion
+[#6][CX3](=O)	3 aldehyde or ketone
+[CX3H1](=O)[#6]	4 aldehyde
+[#6][CX3](=O)[#6]	5 ketone
+[#6][CX3](=S)	6 thioaldehyde or thioketone
+[CX3H1](=S)	7 thioaldehyde
+[#6]C(=[S])[#6]	8 thioketone
+[CX3]=N([#6,#1])[#6,#1]	9 imine
+[#6,#1]C([#6,#1])=[N][N]([#6,#1])[#6,#1]	10 hydrazone
+[#6,#1]C([#6,#1])=[N][N]([#6,#1])C(=[O])[N]([#6,#1])[#6,#1]	11 semicarbazone
+[#6,#1]C([#6,#1])=[N][N]([#6,#1])C(=[S])[N]([#6,#1])[#6,#1]	12 thiosemicarbazone
+[#6,#1]C([#6,#1])=[N][OH]	13 oxime
+[#6,#1]C([#6,#1])=[N][O][#6]	14 oxime ether
+[CX3]=C=O	15 ketene
+[CX3]=C=O	16 keten acetyl derivative***
+[#6,#1]C([#6,#1])([OH])([OH])	17 carbonyl hydrate
+[#6,#1]C([#6,#1])([OH])(O[#6])	18 hemiacetal
+[#6,#1]C([#6,#1])(O[#6])(O[#6])	19 acetal
+[#6,#1]C([#6,#1])(N([#6,#1])[#6,#1])(O[#6])	20 hemiaminal	
+[#6,#1]C([#6,#1])(N([#6,#1])[#6,#1])(N([#6,#1])[#6,#1])	21 aminal	
+[#6,#1]C([#6,#1])(N([#6,#1])[#6,#1])([S][#6])	22 thiohemiaminal	
+[#6,#1]C([#6,#1])([S][#6])([S][#6])	23 thioacetal
+[#6,#1]C([#6,#1])=C([#6,#1])N([#6,#1])[#6,#1]	24 enamine
+[#6,#1]C([#6,#1])=C([#6,#1])[OH]	25 enol
+[#6,#1]C([#6,#1])=C([#6,#1])O[#6]	26 enol ether
+[#6][OH]	27 hydroxy compound
+C[OH]	28 alcohol
+[#6][CH2][OH]	29 primary alcohol   
+[#6][CH]([#6])[OH]	30 secondary alcohol   
+[#6][C]([#6])([#6])[OH]	31 tertiary alcohol   
+[#6,#1]C([#6,#1])([OH])C([#6,#1])([#6,#1])[OH]	32 1,2-diol
+[#6,#1]C([#6,#1])([OH])C([#6,#1])([#6,#1])[NH2]	33 1,2-aminoalcohol
+c[OH]	34 phenol
+[OH]cc[OH]	35 1,2-diphenol
+[OH]C=C[OH]	36 enediol
+[#6]O[#6]	37 ether
+COC	38 dialkyl ether
+cOC	39 alkylaryl ether
+cOc	40 diaryl ether
+[#6]S[#6]	41 thioether
+[#6]SS[#6]	42 disulfide
+[#6]OO[#6]	43 peroxide
+[#6]O[OH]	44 hydroperoxide
+[a]	200 aryl
+[!#6;$([N,O,S,F,Cl,Br,I,P])]	201 heteroatom
+[!#6;!$([+0]);!$([F,Cl,Br,I]);!$([o,s,nX3]);!$([Nv5,Pv5,Sv4,Sv6])]	202 HBA
+[$([N,O;!H0]),$(N(C)(C)C)]	203 HBD
+[R]	204 Ring
+[$([$([C;$(C=[$([O;D1;$(O=C)])])]);$(C[$([O;$([H1&-0,H0&-1])])]);$(C[#6,#1])])]	205 carboxylic acid
+[$([$([C;$(C=[$([O;D1;$(O=C)])])]);$(C(=O)O[#6]);$(C[#6,#1])])]	206 ester
+[$([N;+0,+1;$(N(=O)~[O;H0;-0,-1])])]	207 nitro
+[$([C;$(C#[N;D1])])]	208 nitrile
+[$([N;!$(N*=[!#6])]);$(N[$([a])]);!$(N~[!#6])]	209 aniline
+[$([N;$(N[$([$([C;$(C=[$([O;D1;$(O=C)])])]);$(C(=O)(N)N)])])])]	210 urea
+
