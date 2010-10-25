@@ -16,10 +16,10 @@ else {
   check_lib_or_exit( lib => 'openbabel' , libpath => @ENV{"LD_LIBRARY_PATH"});
 }
 
-$ldfrom = "\$(OBJECT) -lopenbabel -lz";
-$ldfrom = "\$(OBJECT) -L$cmakebindir/lib -lopenbabel -lz"
+$ldfrom = "\$(OBJECT) -lopenbabel";
+$ldfrom = "\$(OBJECT) -L$cmakebindir/lib -lopenbabel"
     if (-r "$cmakebindir/lib/libopenbabel.dylib") and (-s _) and (-B _);
-$ldfrom = "\$(OBJECT) -L$cmakebindir/lib -lopenbabel -lz"
+$ldfrom = "\$(OBJECT) -L$cmakebindir/lib -lopenbabel"
     if (-r "$cmakebindir/lib/libopenbabel.so") and (-s _) and (-B _);
 
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
@@ -27,7 +27,7 @@ $ldfrom = "\$(OBJECT) -L$cmakebindir/lib -lopenbabel -lz"
 WriteMakefile(
     'NAME'	=>  'Chemistry::OpenBabel',
     'AUTHOR'    =>  'Geoffrey Hutchison <openbabel-scripting@lists.sourceforge.net>',
-    'VERSION'   => '1.4.0',
+    'VERSION'   => '1.5.0',
     'LDFROM'    => $ldfrom,
     'CC'        => $CC,
     'LD'        => '$(CC)',
