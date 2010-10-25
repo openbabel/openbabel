@@ -366,8 +366,6 @@ public:
   OB_STATIC_PLUGIN(FreeFormFractionalFormat, theFreeFormFractionalFormat);
   OB_STATIC_PLUGIN(GAMESSOutputFormat, theGAMESSOutputFormat);
   OB_STATIC_PLUGIN(GAMESSInputFormat, theGAMESSInputFormat);
-  OB_STATIC_PLUGIN(GAMESSUKInputFormat, theGAMESSUKInputFormat);
-  OB_STATIC_PLUGIN(GAMESSUKOutputFormat, theGAMESSUKOutputFormat);
   OB_STATIC_PLUGIN(OBGaussianCubeFormat, theGaussianCubeFormat);
   OB_STATIC_PLUGIN(GaussianOutputFormat, theGaussianOutputFormat);
   OB_STATIC_PLUGIN(GaussianInputFormat, theGaussianInputFormat);
@@ -431,7 +429,6 @@ public:
   OB_STATIC_PLUGIN(VASPFormat, theVASPFormat);
   OB_STATIC_PLUGIN(ViewMolFormat, theViewMolFormat);
   OB_STATIC_PLUGIN(XEDFormat, theXEDFormat);
-  OB_STATIC_PLUGIN(XTCFormat, theXTCFormat);
   OB_STATIC_PLUGIN(XYZFormat, theXYZFormat);
   OB_STATIC_PLUGIN(YOBFormat, theYOBFormat);
   OB_STATIC_PLUGIN(ZINDOFormat, theZINDOFormat);
@@ -441,6 +438,13 @@ public:
   OB_STATIC_PLUGIN(PubChemFormat, thePubChemFormat);
   OB_STATIC_PLUGIN(XMLFormat, theXMLFormat);
   OB_STATIC_PLUGIN(InChIFormat, theInChIFormat);
+#ifdef HAVE_REGEX_H
+  OB_STATIC_PLUGIN(GAMESSUKInputFormat, theGAMESSUKInputFormat);
+  OB_STATIC_PLUGIN(GAMESSUKOutputFormat, theGAMESSUKOutputFormat);
+#endif
+#ifdef HAVE_RPC_XDR_H
+  OB_STATIC_PLUGIN(XTCFormat, theXTCFormat);
+#endif
 
   // descriptors
   OB_STATIC_PLUGIN(CanSmiles, theCanSmiles);
@@ -478,7 +482,6 @@ public:
   OB_STATIC_PLUGIN(OpAddInIndex, theOpAddInIndex);
   OB_STATIC_PLUGIN(OpAddPolarH, theOpAddPolarH);
   OB_STATIC_PLUGIN(OpCanonical, theOpCanonical);
-  OB_STATIC_PLUGIN(OpConformer, theOpConformer);
   OB_STATIC_PLUGIN(OpFillUC, theOpFillUC);
   OB_STATIC_PLUGIN(OpEnergy, theOpEnergy);
   OB_STATIC_PLUGIN(OpMinimize, theOpMinimize);
@@ -490,6 +493,9 @@ public:
   OB_STATIC_PLUGIN(OpSort, theOpSort);
   OB_STATIC_PLUGIN(OpUnique, theOpUnique);
   OB_STATIC_PLUGIN(OpExtraOut, theOpExtraOut);
+#ifdef HAVE_EIGEN2
+  OB_STATIC_PLUGIN(OpConformer, theOpConformer);
+#endif
 
   // charges
   OB_STATIC_PLUGIN(GasteigerCharges, theGasteigerCharges);

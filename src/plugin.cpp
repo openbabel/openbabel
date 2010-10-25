@@ -191,8 +191,6 @@ std::vector<std::string> EnableStaticPlugins()
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theFreeFormFractionalFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGAMESSOutputFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGAMESSInputFormat)->GetID());
-  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGAMESSUKInputFormat)->GetID());
-  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGAMESSUKOutputFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGaussianCubeFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGaussianOutputFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGaussianInputFormat)->GetID());
@@ -255,7 +253,6 @@ std::vector<std::string> EnableStaticPlugins()
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theVASPFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theViewMolFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theXEDFormat)->GetID());
-  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theXTCFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theXYZFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theYOBFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theZINDOFormat)->GetID());
@@ -265,6 +262,13 @@ std::vector<std::string> EnableStaticPlugins()
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thePubChemFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theXMLFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theInChIFormat)->GetID());
+#ifdef HAVE_RPC_XDR_H
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theXTCFormat)->GetID());
+#endif
+#ifdef HAVE_REGEX_H
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGAMESSUKInputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGAMESSUKOutputFormat)->GetID());
+#endif
 
   // descriptors
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCanSmiles)->GetID());
@@ -302,7 +306,6 @@ std::vector<std::string> EnableStaticPlugins()
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpAddInIndex)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpAddPolarH)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpCanonical)->GetID());
-  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpConformer)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpFillUC)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpEnergy)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpMinimize)->GetID());
@@ -314,12 +317,17 @@ std::vector<std::string> EnableStaticPlugins()
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpSort)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpUnique)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpExtraOut)->GetID());
+#ifdef HAVE_EIGEN2
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpConformer)->GetID());
+#endif
 
   // charges
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGasteigerCharges)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMMFF94Charges)->GetID());
+#ifdef HAVE_EIGEN2
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theQEqCharges)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theQTPIECharges)->GetID());
+#endif
 
   return plugin_ids;
 }
