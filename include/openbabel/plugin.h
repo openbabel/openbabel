@@ -405,7 +405,9 @@ public:
   OB_STATIC_PLUGIN(PCModelFormat, thePCModelFormat);
   OB_STATIC_PLUGIN(PDBFormat, thePDBFormat);
   OB_STATIC_PLUGIN(PDBQTFormat, thePDBQTFormat);
+#ifdef HAVE_LIBZ
   OB_STATIC_PLUGIN(PNGFormat, thePNGFormat);
+#endif
   OB_STATIC_PLUGIN(PovrayFormat, thePovrayFormat);
   OB_STATIC_PLUGIN(PQRFormat, thePQRFormat);
   OB_STATIC_PLUGIN(PQSFormat, thePQSFormat);
