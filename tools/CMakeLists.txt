@@ -110,7 +110,10 @@ else(BUILD_SHARED)
       #
       # Default static build using GNU-like compiler.
       #
-      set(CMAKE_CXX_FLAGS "-static ${CMAKE_CXX_FLAGS}")
+      if (NOT APPLE)
+            set(CMAKE_CXX_FLAGS "-static ${CMAKE_CXX_FLAGS}")
+      endif()
+      # APPLE doesn't use -static
     endif(BUILD_MIXED)
   endif()
 

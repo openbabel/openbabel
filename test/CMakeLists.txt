@@ -42,7 +42,9 @@ set(TEST_PATH ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
 if(NOT BUILD_SHARED)
   set(libs openbabel ${LIBXML2_LIBRARIES} inchi)
-  set(CMAKE_CXX_FLAGS "-static ${CMAKE_CXX_FLAGS}")
+  if (NOT APPLE)
+    set(CMAKE_CXX_FLAGS "-static ${CMAKE_CXX_FLAGS}")
+  endif()
 else()
   set(libs openbabel)
 endif()
@@ -109,7 +111,7 @@ if(WITH_INCHI)
   set(inchitests Samples SamplesTechMan)
   set(inchidata ${CMAKE_SOURCE_DIR}/test/inchi)
   foreach(test ${inchitests})
-    add_test(inchi${test}_Test 
+    add_test(inchi${test}_Test
              ${TEST_PATH}/test_inchiwrite ${inchidata}/${test}.sdf ${inchidata}/${test}.txt)
     set_tests_properties(inchi${test}_Test PROPERTIES
                          FAIL_REGULAR_EXPRESSION "Not ok"
@@ -133,9 +135,9 @@ foreach(test ${old_tests})
  )
 endforeach(test ${old_tests})
 
-############################################################  
-#  roundtrip 
-############################################################  
+############################################################
+#  roundtrip
+############################################################
 
 add_executable(roundtrip roundtrip.cpp)
 target_link_libraries(roundtrip ${libs})

@@ -1,4 +1,4 @@
-OpenBabel Python bindings version 1.5
+OpenBabel Python bindings version 1.6
 =====================================
 
 This is a Python interface to the Open Babel chemistry library. 
@@ -13,36 +13,18 @@ almost all of the Open Babel interfaces via Python, including the base
 classes OBMol, OBAtom, OBBond, and OBResidue, as well as the
 conversion framework OBConversion.
 
-For more details, tutorials, example code, etc., please visit the Open Babel
-website:
+For installation instructions, tutorials and examples, please visit the Open Babel website:
 <http://openbabel.org/wiki/Python>
-
-INSTALLATION
-
-To install this module, type the following (assuming you have already
-installed Open Babel):
-
-	python setup.py build
-	python setup.py install
-
-(Well, in theory that should work. Suggestions and complaints welcome.)
 
 DEPENDENCIES
 
      python-2.4 or a more recent version.
-     openbabel-2.2.2 or a more recent version.
-
-Note that if you are trying to build/run this Python code in the Open
-Babel source/build directory BEFORE you install Open Babel, you may
-encounter problems if the Python module is linked against an older
-libopenbabel. If you encounter problems compiling, linking, or running
-this module, make sure you have run "make install" for the latest
-Open Babel package and THEN rebuild this Python module.
+     openbabel-2.3.0 or a more recent version.
 
 COPYRIGHT AND LICENSE
 
 Copyright (C) 2005-2007 Geoffrey R. Hutchison <babel@geoffhutchison.net>
-Some portions Copyright (C) 2006-2009 Noel O'Boyle
+Some portions Copyright (C) 2006-2010 Noel O'Boyle
 
 This Python module is part of the Open Babel project.
 <http://openbabel.org/>

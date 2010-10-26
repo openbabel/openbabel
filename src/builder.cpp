@@ -1107,8 +1107,13 @@ namespace OpenBabel
                                         bondType);
         moldir = molvec - workMol.GetAtom(prev->GetIdx())->GetVector();
       } else {
-        molvec = VX;
-        moldir = VX;
+        // We don't want to plant all base atoms at exactly the same spot.
+        // (or in exactly the same direction)
+        // So we'll add a slight tweak -- fixes problem reported by Kasper Thofte
+        vector3 randomOffset;
+        randomOffset.randomUnitVector();
+        molvec = VX + 0.1 * randomOffset;
+        moldir = VX + 0.01 * randomOffset;
       }
 
       vdone.SetBitOn(a->GetIdx());
