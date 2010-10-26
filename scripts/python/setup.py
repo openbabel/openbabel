@@ -26,7 +26,7 @@ if "build" in sys.argv:
     shutil.copyfile(os.path.join(srcdir, "openbabel.py"), "openbabel.py")
 
 setup(name='openbabel',
-      version='1.5',
+      version='1.6',
       author='Noel O\'Boyle',
       author_email='openbabel-scripting@lists.sourceforge.net',
       url='http://openbabel.org/',
