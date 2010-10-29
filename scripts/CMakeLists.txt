@@ -67,7 +67,7 @@ if (DO_PYTHON_BINDINGS)
     if(NOT WIN32)
         add_custom_target(_openbabel ALL
             COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py build --build-lib=${openbabel_BINARY_DIR}/scripts/pybuild
-            DEPENDS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp
+            DEPENDS openbabel ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp
             WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts
         )
         add_custom_command(TARGET _openbabel POST_BUILD 

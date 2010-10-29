@@ -1,3 +1,12 @@
+2010-10-29  Konstantin Tokarev <annulen@yandex.ru>
+
+	* scripts/CMakeLists.txt: added dependency 'openbabel' to target
+	'_openbabel' (Python bindings)
+	
+	On non-Windows platfroms Python module is linked by custom script
+	which is not aware of target dependencies. This change fixes parallel
+	build
+
 2010-10-24  Jean Brefort  <jean.brefort@normalesup.org>
 
 	* data/space-groups.txt: fixed space group 104 (missing transfoms).
