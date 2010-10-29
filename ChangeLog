@@ -1,5 +1,10 @@
 2010-10-29  Konstantin Tokarev <annulen@yandex.ru>
 
+	* scripts/CMakeLists.txt: fixed behavior of build system if some of
+	JNI dependencies were not found
+
+2010-10-29  Konstantin Tokarev <annulen@yandex.ru>
+
 	* scripts/CMakeLists.txt: added dependency 'openbabel' to target
 	'_openbabel' (Python bindings)
 	
