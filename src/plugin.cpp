@@ -258,12 +258,16 @@ std::vector<std::string> EnableStaticPlugins()
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theXYZFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theYOBFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theZINDOFormat)->GetID());
+#ifdef HAVE_STATIC_LIBXML
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theChemDrawXMLFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCMLFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCMLReactFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thePubChemFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theXMLFormat)->GetID());
+#endif
+#ifdef HAVE_STATIC_INCHI
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theInChIFormat)->GetID());
+#endif
 #ifdef HAVE_RPC_XDR_H
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theXTCFormat)->GetID());
 #endif
@@ -317,10 +321,12 @@ std::vector<std::string> EnableStaticPlugins()
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpPartialCharge)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpReadConformers)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpSort)->GetID());
-  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpUnique)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpExtraOut)->GetID());
 #ifdef HAVE_EIGEN2
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpConformer)->GetID());
+#endif
+#ifdef HAVE_STATIC_INCHI
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpUnique)->GetID());
 #endif
 
   // charges

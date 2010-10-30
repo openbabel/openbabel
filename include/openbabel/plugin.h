@@ -434,12 +434,16 @@ public:
   OB_STATIC_PLUGIN(XYZFormat, theXYZFormat);
   OB_STATIC_PLUGIN(YOBFormat, theYOBFormat);
   OB_STATIC_PLUGIN(ZINDOFormat, theZINDOFormat);
+#ifdef HAVE_STATIC_LIBXML
   OB_STATIC_PLUGIN(ChemDrawXMLFormat, theChemDrawXMLFormat);
   OB_STATIC_PLUGIN(CMLFormat, theCMLFormat);
   OB_STATIC_PLUGIN(CMLReactFormat, theCMLReactFormat);
   OB_STATIC_PLUGIN(PubChemFormat, thePubChemFormat);
   OB_STATIC_PLUGIN(XMLFormat, theXMLFormat);
+#endif
+#ifdef HAVE_STATIC_INCHI
   OB_STATIC_PLUGIN(InChIFormat, theInChIFormat);
+#endif
 #ifdef HAVE_REGEX_H
   OB_STATIC_PLUGIN(GAMESSUKInputFormat, theGAMESSUKInputFormat);
   OB_STATIC_PLUGIN(GAMESSUKOutputFormat, theGAMESSUKOutputFormat);
@@ -493,8 +497,10 @@ public:
   OB_STATIC_PLUGIN(OpPartialCharge, theOpPartialCharge);
   OB_STATIC_PLUGIN(OpReadConformers, theOpReadConformers);
   OB_STATIC_PLUGIN(OpSort, theOpSort);
-  OB_STATIC_PLUGIN(OpUnique, theOpUnique);
   OB_STATIC_PLUGIN(OpExtraOut, theOpExtraOut);
+#ifdef HAVE_STATIC_INCHI
+  OB_STATIC_PLUGIN(OpUnique, theOpUnique);
+#endif
 #ifdef HAVE_EIGEN2
   OB_STATIC_PLUGIN(OpConformer, theOpConformer);
 #endif

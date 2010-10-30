@@ -159,20 +159,22 @@ else(BUILD_SHARED)
     set(openbabel_srcs ${openbabel_srcs} formats/${format}.cpp)
   endforeach(format ${formats})
 
-  if (LIBXML2_FOUND)
+  if(LIBXML2_FOUND AND WITH_STATIC_LIBXML)
     set(openbabel_srcs ${openbabel_srcs} formats/xml/xml.cpp)
     foreach(format ${formats_xml})
       set(openbabel_srcs ${openbabel_srcs} formats/xml/${format}.cpp)
     endforeach(format ${formats_xml})
-  endif(LIBXML2_FOUND)
+  endif(LIBXML2_FOUND AND WITH_STATIC_LIBXML)
 
   foreach(plugingroup descriptors fingerprints forcefields ops charges)
     set(openbabel_srcs ${openbabel_srcs} ${${plugingroup}})
   endforeach(plugingroup descriptors fingerprints forcefields ops charges)
 
-  add_subdirectory(formats/inchi103)
-  set(openbabel_srcs ${openbabel_srcs} formats/getinchi.cpp ops/unique.cpp)
-  set(libs ${libs} inchi)
+  if(WITH_STATIC_INCHI)
+    add_subdirectory(formats/inchi103)
+    set(openbabel_srcs ${openbabel_srcs} formats/getinchi.cpp ops/unique.cpp)
+    set(libs ${libs} inchi)
+  endif(WITH_STATIC_INCHI)
 endif(BUILD_SHARED)
 
 set(openbabel_library_srcs

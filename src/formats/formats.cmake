@@ -114,7 +114,7 @@ if(ZLIB_FOUND)
 )
 endif(ZLIB_FOUND)
 
-if(LIBXML2_FOUND)
+if(LIBXML2_FOUND AND WITH_STATIC_LIBXML)
   if(NOT MSVC)
     include_directories(${LIBXML2_INCLUDE_DIR})
   endif(NOT MSVC)
@@ -130,7 +130,7 @@ if(LIBXML2_FOUND)
         cmlreactformat
     )
 #  endif(MSVC90 OR Boost_FOUND)
-endif(LIBXML2_FOUND)
+endif(LIBXML2_FOUND AND WITH_STATIC_LIBXML)
 
 if(HAVE_RPC_XDR_H)
   set(formats_misc
@@ -139,17 +139,16 @@ if(HAVE_RPC_XDR_H)
   )
 endif(HAVE_RPC_XDR_H)
 
-#if(ADD_INCHI_FORMAT)
+if(WITH_STATIC_INCHI)
 #  add_definitions(-DINCHI_LINK_AS_DLL)
   if(NOT MSVC AND NOT OPENBABEL_USE_SYSTEM_INCHI)
     include_directories(${CMAKE_SOURCE_DIR}/include/inchi103)
   endif()
-#  set(inchiformat_additional_sources getinchi.cpp ../ops/unique.cpp)
   set(formats_common
     ${formats_common}
     inchiformat
   )
-#endif(ADD_INCHI_FORMAT)
+endif(WITH_STATIC_INCHI)
 
 
 if(MINIMAL_BUILD)
