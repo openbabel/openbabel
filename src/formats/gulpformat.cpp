@@ -35,7 +35,7 @@ namespace OpenBabel {
         "The format used by GULP (General Utility Lattice Program).\n\n";
     };
 
-    virtual const char* SpecificationURL(){return "http://cms.mpi.univie.ac.at/vasp/vasp/vasp.html";};
+    virtual const char* SpecificationURL(){return "https://projects.ivec.org/gulp/";};
 
     /* Flags() can return be any of the following combined by |
        or be omitted if none apply
@@ -146,7 +146,8 @@ namespace OpenBabel {
       }
 
       // Fractional atomic info
-      if (strstr(buffer, "Final fractional coordinates of atoms :")) {
+      if (strstr(buffer, "Final fractional coordinates of atoms :") ||
+          strstr(buffer, "Fractional coordinates of asymmetric unit :")) {
         coordsAreFractional = true;
         // Clear old atoms from pmol
         vector<OBAtom*> toDelete;
@@ -201,7 +202,7 @@ namespace OpenBabel {
           atom->SetVector(coords);
 
           // Reset vars
-          ifs.getline(buffer,BUFF_SIZE); // First entry
+          ifs.getline(buffer,BUFF_SIZE);
           tokenize(vs, buffer);
           size = vs.size();
         }
