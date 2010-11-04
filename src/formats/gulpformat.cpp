@@ -270,6 +270,12 @@ namespace OpenBabel {
         }
       }
 
+      // Single point energy
+      if (strstr(buffer, "Total lattice energy") && strstr(buffer, "eV") ) {
+        tokenize(vs, buffer);
+        pmol->SetEnergy(atof(vs[4].c_str()) * EV_TO_KCAL_PER_MOL);
+      }
+
       // Final energy
       if (strstr(buffer, "Final energy")) {
         tokenize(vs, buffer);
