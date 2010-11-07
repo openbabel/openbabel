@@ -153,7 +153,9 @@ int main(int argc,char **argv)
     }
   if(refatoms.size() > molref.NumAtoms())
     {  
-      ThrowError("The SMARTS pattern produces more matching atoms than are in the reference molecule");
+      cerr << program_name 
+           << ": The SMARTS pattern produces more matching atoms than are in the reference molecule"
+           << endl;
       exit(-1);
     }
 
