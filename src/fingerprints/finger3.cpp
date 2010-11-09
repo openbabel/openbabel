@@ -43,6 +43,7 @@ private:
   };
   vector<pattern> _pats;
   int _bitcount;
+  string _version;
 
 protected:
   string _patternsfile;
@@ -61,7 +62,12 @@ public:
   virtual const char* Description()
   {
     static string desc;
+    //Read patterns file if it has not been done already,
+    //because we need _bitcount and _version updated
+    if(_pats.empty())
+      ReadPatternFile(_version);
     desc = "SMARTS patterns specified in the file " + _patternsfile
+      + "\n" + toString(_bitcount) + " bits. Datafile version = " +  _version
       + "\nPatternFP is definable";
     return (desc.c_str());
   }
@@ -86,7 +92,7 @@ public:
     unsigned int n;
     //Read patterns file if it has not been done already
     if(_pats.empty())
-      ReadPatternFile();
+      ReadPatternFile(_version);
 
     //Make fp size the smallest power of two to contain the patterns
     n=Getbitsperint();
@@ -140,7 +146,7 @@ public:
   }
 
   /////////////////////////////////////////////////////////////////////
-  bool ReadPatternFile()
+  bool ReadPatternFile(string& ver)
   {
     //Reads three types of file. See below
     ifstream ifs;
@@ -159,6 +165,7 @@ public:
     bool smartsfirst = (Trim(line)=="#Comments after SMARTS");
 
     _bitcount=0;
+    bool indata=false;
     do
     {
       if(Trim(line).size()>0 && line[0]!='#')
@@ -167,7 +174,7 @@ public:
         p.numbits=1; p.numoccurrences=0; //default values
         p.bitindex = _bitcount;
         istringstream ss(line);
-
+        indata = true;
         if(smartsfirst)
         {
           if(isdigit(line[0]))
@@ -198,6 +205,27 @@ public:
         _pats.push_back(p);
         _bitcount += p.numbits;
       }
+      else if(!indata)
+      {
+        //Find version number
+        string::size_type pos = line.find("Version");
+        if(pos!=string::npos)
+          pos+=8;
+        else if(line.find("Extracted from RDKit")!=string::npos)
+        {
+          pos=20;
+          while((pos=line.find('r',pos))!=string::npos)
+            if(isdigit(line[++pos]))
+              break;
+        }
+        if(pos!=string::npos)
+        {
+          ver=line.substr(pos);
+          pos=1;
+          while(isdigit(ver[++pos]));
+          ver.erase(pos);
+        }
+      }
     }while(getline(ifs,line));
 
     if (ifs)
@@ -221,9 +249,10 @@ public:
         num -= ngrp;
         if(GetBit(fp, n) == bSet)
         {
-          ss << ppat->description << '\t' ;
+          ss << ppat->description; 
           if(div>0)
             ss << '*' << div+1;
+          ss << '\t' ;
           break; //ignore the bits signifying a smaller number of occurrences
         }
         n += ngrp;
