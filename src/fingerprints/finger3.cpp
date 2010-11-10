@@ -64,10 +64,16 @@ public:
     static string desc;
     //Read patterns file if it has not been done already,
     //because we need _bitcount and _version updated
-    if(_pats.empty())
-      ReadPatternFile(_version);
+    
+    // _bitcount and _version are available only after the datafile has been parsed.
+    // This is a burden on normal operation (Description() gets called on startup from OBDefine),
+    // so the secondline is present only after the fingerprint has been used.
+    // the 
+    string secondline;
+    if(!_pats.empty())
+      secondline = "\n" + toString(_bitcount) + " bits. Datafile version = " +  _version;
     desc = "SMARTS patterns specified in the file " + _patternsfile
-      + "\n" + toString(_bitcount) + " bits. Datafile version = " +  _version
+      + secondline
       + "\nPatternFP is definable";
     return (desc.c_str());
   }
