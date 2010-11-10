@@ -1791,47 +1791,61 @@ namespace OpenBabel
 
   bool OBMol::StripSalts(int threshold)
   {
-    vector<vector<int> > cfl;
+	vector<vector<int> > cfl;
     vector<vector<int> >::iterator i,max;
 
     ContigFragList(cfl);
     if (cfl.empty() || cfl.size() == 1)
-      return(false);
+	{
+		return(false);
+	}
+      
 
-    obErrorLog.ThrowError(__FUNCTION__,
-                          "Ran OpenBabel::StripSalts", obAuditMsg);
+    obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StripSalts", obAuditMsg);
 
     max = cfl.begin();
     for (i = cfl.begin();i != cfl.end();++i)
-      if ((*max).size() < (*i).size())
-        max = i;
+	{
+      	if ((*max).size() < (*i).size())
+		{
+	        max = i;
+		}
+	}
 
     vector<int>::iterator j;
-    vector< OBAtom* > delatoms;
-    set< int > atomIndices;
-    for( i = cfl.begin(); i != cfl.end(); ++i ) {
-      if( i->size() < threshold || (threshold == 0 && i != max) ) {
-        for (j = (*i).begin();j != (*i).end();++j) {
-          if( atomIndices.find( *j ) == atomIndices.end() ) {
-            delatoms.push_back(GetAtom(*j));
-            atomIndices.insert( *j );
-          }
-        }
-      }
+    vector<OBAtom*> delatoms;
+    set<int> atomIndices;
+    for (i = cfl.begin(); i != cfl.end(); ++i)
+	{
+      	if (i->size() < threshold || (threshold == 0 && i != max))
+		{
+        	for (j = (*i).begin(); j != (*i).end(); ++j)
+			{
+          		if (atomIndices.find( *j ) == atomIndices.end())
+				{
+            		delatoms.push_back(GetAtom(*j));
+            		atomIndices.insert(*j);
+          		}
+        	}
+      	}
     }
 
-    if( ! delatoms.empty() ) {
-      int tmpflags = _flags & (~(OB_SSSR_MOL));
-      BeginModify();
-      vector<OBAtom*>::iterator k;
-      for (k = delatoms.begin();k != delatoms.end();++k) {
-        DeleteAtom((OBAtom*)*k);
-      }
-      EndModify();
-      _flags = tmpflags;
+    if (!delatoms.empty())
+	{
+//      int tmpflags = _flags & (~(OB_SSSR_MOL));
+      	BeginModify();
+      	vector<OBAtom*>::iterator k;
+      	for (k = delatoms.begin(); k != delatoms.end(); ++k)
+		{
+        	DeleteAtom((OBAtom*)*k);
+      	}
+      	EndModify();
+//      _flags = tmpflags;	// Gave crash when SmartsPattern::Match()
+							// was called susequently
+							// Hans De Winter; 03-nov-2010
     }
 
-    return(true);
+    return (true);
   }
 
   bool OBMol::DeleteNonPolarHydrogens()

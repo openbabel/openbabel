@@ -11,6 +11,7 @@
 #include <openbabel/rand.h>
 #include <openbabel/math/vector3.h>
 #include <openbabel/math/matrix3x3.h>
+#include <openbabel/math/align.h>
 #include <openbabel/generic.h>
 #include <openbabel/griddata.h>
 
@@ -47,13 +48,17 @@
 #include <openbabel/conformersearch.h>
 
 #include <openbabel/chargemodel.h>
-
+#include <openbabel/graphsym.h>
+#include <openbabel/isomorphism.h>
+#include <openbabel/query.h>
+#include <openbabel/canon.h>
 %}
 
 %include "std_list.i"
 %include "std_map.i"
 %include "std_vector.i"
 %include "std_string.i"
+%include "std_pair.i"
 
 namespace std {
 
@@ -107,6 +112,31 @@ namespace std {
 %template(vector ## vectorname) vector<T>;
 %enddef
 
+%define VECTORPAIRTEMPLATE_WRAP(vectorname, T1, T2) 
+%feature("ignore") vector< pair<T1, T2> >::append;
+%feature("ignore") vector< pair<T1, T2> >::assign;
+%feature("ignore") vector< pair<T1, T2> >::back;
+%feature("ignore") vector< pair<T1, T2> >::begin;
+%feature("ignore") vector< pair<T1, T2> >::capacity;
+%feature("ignore") vector< pair<T1, T2> >::clear;
+%feature("ignore") vector< pair<T1, T2> >::empty;
+%feature("ignore") vector< pair<T1, T2> >::end;
+%feature("ignore") vector< pair<T1, T2> >::erase;
+%feature("ignore") vector< pair<T1, T2> >::front;
+%feature("ignore") vector< pair<T1, T2> >::get_allocator;
+%feature("ignore") vector< pair<T1, T2> >::insert;
+%feature("ignore") vector< pair<T1, T2> >::pop;
+%feature("ignore") vector< pair<T1, T2> >::pop_back;
+%feature("ignore") vector< pair<T1, T2> >::push_back;
+%feature("ignore") vector< pair<T1, T2> >::rbegin;
+%feature("ignore") vector< pair<T1, T2> >::rend;
+%feature("ignore") vector< pair<T1, T2> >::reserve;
+%feature("ignore") vector< pair<T1, T2> >::resize;
+%feature("ignore") vector< pair<T1, T2> >::size;
+%feature("ignore") vector< pair<T1, T2> >::swap;
+%template(vpair ## vectorname) vector< pair<T1, T2> >;
+%enddef
+
 VECTORTEMPLATE_WRAP(Int, int)
 VECTORTEMPLATE_WRAP(UnsignedInt, unsigned int)
 VVTEMPLATE_WRAP(Int, int)
@@ -121,6 +151,9 @@ VECTORTEMPLATE_WRAP(OBRing, OpenBabel::OBRing)
 VECTORTEMPLATE_WRAP(pOBRing, OpenBabel::OBRing*)
 VECTORTEMPLATE_WRAP(pOBGenericData, OpenBabel::OBGenericData*)
 
+%template(pairUIntUInt) pair<unsigned int, unsigned int>;
+VECTORPAIRTEMPLATE_WRAP(UIntUInt, unsigned int, unsigned int);
+%template(vvpairUIntUInt) vector< vector< pair<unsigned int, unsigned int> > >;
 }
 
 %define CAST_GENERICDATA_TO(subclass)
@@ -205,7 +238,7 @@ namespace std { class stringbuf {}; }
 def exceptionIter(*args):
     raise Exception("""\nThis method can only be used from C++. To iterate from Python
 use the Iter classes (OBMolAtomIter, etc.) as described at
-http://openbabel.org/wiki/Using_OpenBabel_from_Python#Using_iterators""")
+http://openbabel.org/wiki/Python""")
 %}
 %define IGNORE_ITER(parent, iteree)
 %ignore OpenBabel::parent::Begin ## iteree ## s;
@@ -241,6 +274,10 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 %include <openbabel/op.h>
 
 %include <openbabel/chargemodel.h>
+%include <openbabel/graphsym.h>
+%include <openbabel/isomorphism.h>
+%include <openbabel/query.h>
+%include <openbabel/canon.h>
 
 %warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
 %include <openbabel/bitvec.h>
@@ -252,6 +289,7 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 %include <openbabel/spectrophore.h>
 #ifdef HAVE_EIGEN2
 %include <openbabel/conformersearch.h>
+%include <openbabel/math/align.h>
 #endif
 
 # The following %ignores avoid warning messages due to shadowed classes.
