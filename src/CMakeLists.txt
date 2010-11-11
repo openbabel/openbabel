@@ -5,6 +5,7 @@ set(LIBRARY_VERSION 4.0.0)
 set(charges
   charges/gasteiger.cpp
   charges/mmff94.cpp
+  charges/eem.cpp
 )
 
 if (EIGEN2_FOUND)
