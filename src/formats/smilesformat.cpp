@@ -3874,9 +3874,9 @@ namespace OpenBabel {
     //    m2s.CorrectAromaticAmineCharge(mol);
 
     if (iso) {
+      PerceiveStereo(&mol);
       m2s.CreateCisTrans(mol); // No need for this if not iso
       m2s.AddHydrogenToChiralCenters(mol, frag_atoms);
-      mol.SetChiralityPerceived();
     } else {
       // Not isomeric - be sure there are no Z coordinates, clear
       // all stereo-center and cis/trans information.
