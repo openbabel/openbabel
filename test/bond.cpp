@@ -28,27 +28,38 @@ GNU General Public License for more details.
 #include <stdio.h>
 #include <iostream>
 
-#include <iostream>
-#include <openbabel/mol.h>
-#include <openbabel/obconversion.h>
-#include <openbabel/builder.h>
-
 using namespace std;
 using namespace OpenBabel;
 
-int main(int argc,char **argv)
+int main(int argc,char *argv[])
 {
-OBMol * mol = new OBMol();
-OBConversion obconversion;
-obconversion.SetInFormat("smiles");
-//obconversion.ReadString(mol, "C1(N=C(NC(C)C)N=C(N=1)OC)NC(C)C");
-obconversion.ReadString(mol,
-"N12[C@@H]([C@@H](NC([C@@H](c3ccsc3)C(=O)O)=O)C2=O)SC(C)(C)[C@@-]1C(=O)O");
-cout << "formula "<< mol->GetFormula() << "\n";
-cout << "Has3D: " << mol->Has3D() << "\n";
-OBBuilder builder;
-builder.Build(*mol);
-cout << "Has3D: " << mol->Has3D() << "\n";
-delete(mol);
-return 0;
+  // turn off slow sync with C-style output (we don't use it anyway).
+  std::ios::sync_with_stdio(false);
+
+  if (argc != 1)
+    {
+      cout << "Usage: bond" << endl;
+      cout << " Unit tests for OBBond " << endl;
+      return(-1);
+    }
+
+  cout << "# Unit tests for OBBond \n";
+
+  // the number of tests for "prove"
+  cout << "1..3\n";
+
+  cout << "ok 1\n"; // for loading tests
+
+  // OBBond isolation tests (no connection to residue, molecule...)
+
+  OBAtom emptyAtom, begin1, end1;
+  OBBond emptyBond, bond1;
+  cout << "ok 2\n"; // constructors work OK
+
+  bond1.SetBegin(&begin1);
+  bond1.SetEnd(&end1);
+  cout << "ok 3\n";
+
+  return(0);
 }
+
