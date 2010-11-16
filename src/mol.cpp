@@ -2014,6 +2014,9 @@ namespace OpenBabel
 
     if (HasHydrogensAdded())
       return(true);
+
+    bool hasChiralityPerceived = this->HasChiralityPerceived(); // remember
+
     /*
     //
     // This was causing bug #1892844 in avogadro. We also want to add hydrogens if the molecule has no bonds.
@@ -2039,6 +2042,10 @@ namespace OpenBabel
     }
 
     SetHydrogensAdded(); // This must come after EndModify() as EndModify() wipes the flags
+    // If chirality was already perceived, remember this (to avoid wiping information
+    // on unspecified chiral centers, for example)
+    if (hasChiralityPerceived)
+      this->SetChiralityPerceived();
 
     //count up number of hydrogens to add
     OBAtom *atom,*h;
