@@ -3788,6 +3788,7 @@ namespace OpenBabel {
     bool is_modified = false;
     vector <OBAtom *> atomList;
     int element;
+    bool hasChiralityPerceived = mol.HasChiralityPerceived(); // remember to restore
 
     // Find all appropriate atoms to add hydrogens
     FOR_ATOMS_OF_MOL(atom, mol)
@@ -3826,6 +3827,9 @@ namespace OpenBabel {
       }
 
       mol.EndModify();
+      // Don't lose the ChiralityPerceived flag...
+      if (hasChiralityPerceived)
+        mol.SetChiralityPerceived();
     }
   }
 
