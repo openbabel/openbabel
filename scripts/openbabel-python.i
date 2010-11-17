@@ -11,7 +11,6 @@
 #include <openbabel/rand.h>
 #include <openbabel/math/vector3.h>
 #include <openbabel/math/matrix3x3.h>
-#include <openbabel/math/align.h>
 #include <openbabel/generic.h>
 #include <openbabel/griddata.h>
 
@@ -45,7 +44,6 @@
 #include <openbabel/rotor.h>
 #include <openbabel/rotamer.h>
 #include <openbabel/spectrophore.h>
-#include <openbabel/conformersearch.h>
 
 #include <openbabel/chargemodel.h>
 #include <openbabel/graphsym.h>
@@ -53,6 +51,13 @@
 #include <openbabel/query.h>
 #include <openbabel/canon.h>
 %}
+
+#ifdef HAVE_EIGEN2
+%{
+#include <openbabel/conformersearch.h>
+#include <openbabel/math/align.h>
+%}
+#endif
 
 %include "std_list.i"
 %include "std_map.i"
