@@ -511,7 +511,7 @@ public:
   OB_STATIC_PLUGIN(QEqCharges, theQEqCharges)
   OB_STATIC_PLUGIN(QTPIECharges, theQTPIECharges)
 
-  OBAPI std::vector<std::string> EnableStaticPlugins()
+  OBAPI std::vector<std::string> EnableStaticPlugins();
 
 #endif // USING_DYNAMIC_LIBS
 
