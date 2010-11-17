@@ -210,6 +210,46 @@ class TestConversions(BaseTest):
             output, error = run_exec(output, "babel -isdf -ocan")
             self.assertEqual(output.rstrip(), can)
 
+    def testXYZtoSMILESand3DMDL(self):
+        """Test conversion from XYZ to SMILES and 3D MDL"""
+        # Since the XYZ format does not trigger stereo perception,
+        # this test makes sure that the SMILES and 3D MDL formats
+        # perceive stereo themselves.
+        data = [
+([0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 3]), # 'ClC=CF'
+([0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0]), # 'Cl/C=C/F'
+([0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0]), # 'Cl/C=C\\F'
+# The bond parities are irrelevant/meaningless for the next two
+([0, 0, 0, 0, 1], []), # 'Cl[C@@](Br)(F)I'
+([0, 0, 0, 0, 2], []), # 'Cl[C@](Br)(F)I'
+([0, 0, 0, 0, 3], [0, 0, 0, 4]), # 'ClC(Br)(F)I'
+([0, 0, 0, 1], []), # 'O=[S@@](Cl)I),
+([0, 0, 0, 2], []), # 'O=[S@](Cl)I),
+([0, 0, 0, 3], []), # 'O=S(Cl)I),
+([0]*9, [0]*8 + [3]), #  "IC=C1NC1"
+([0]*9, [0]*9), # r"I/C=C\1/NC1"
+([0]*9, [0]*9), # r"I/C=C/1\NC1"
+]
+        for i, (atompar, bondstereo) in enumerate(data):
+            if i in [0, 5, 9]: continue # ambiguous stereo is lost in XYZ
+            if i in [6, 7, 8]: continue # perception of S=O from XYZ fails
+
+            smiles, can = self.data[i][0:2]
+            output, error = run_exec(smiles, "babel -ismi -oxyz --gen3d")
+            
+            canoutput, error = run_exec(output, "babel -ixyz -ocan")
+            self.assertEqual(canoutput.rstrip(), can)
+            
+            sdfoutput, error = run_exec(output, "babel -ixyz -osdf")
+            atoms, bonds = self.parseMDL(sdfoutput)
+            parities = [atom['parity'] for atom in atoms]
+            parities.sort()
+            stereos = [bond['stereo'] for bond in bonds]
+            stereos.sort()
+            self.assertEqual(atompar, parities)
+            if bondstereo:
+                self.assertEqual(bondstereo, stereos)
+
     def test2DMDLto0D(self):
         """Test conversion for 2D MDL to CAN and InChI"""
         # The following file was created using RDKit starting from

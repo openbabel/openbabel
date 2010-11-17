@@ -151,6 +151,13 @@ int main(int argc,char **argv)
           refatoms.push_back(*j);
         }
     }
+  if(refatoms.size() > molref.NumAtoms())
+    {  
+      cerr << program_name 
+           << ": The SMARTS pattern produces more matching atoms than are in the reference molecule"
+           << endl;
+      exit(-1);
+    }
 
   // set the translation vector
   vector3 tvref(0,0,0);

@@ -3788,6 +3788,7 @@ namespace OpenBabel {
     bool is_modified = false;
     vector <OBAtom *> atomList;
     int element;
+    bool hasChiralityPerceived = mol.HasChiralityPerceived(); // remember to restore
 
     // Find all appropriate atoms to add hydrogens
     FOR_ATOMS_OF_MOL(atom, mol)
@@ -3826,6 +3827,9 @@ namespace OpenBabel {
       }
 
       mol.EndModify();
+      // Don't lose the ChiralityPerceived flag...
+      if (hasChiralityPerceived)
+        mol.SetChiralityPerceived();
     }
   }
 
@@ -3874,9 +3878,9 @@ namespace OpenBabel {
     //    m2s.CorrectAromaticAmineCharge(mol);
 
     if (iso) {
+      PerceiveStereo(&mol);
       m2s.CreateCisTrans(mol); // No need for this if not iso
       m2s.AddHydrogenToChiralCenters(mol, frag_atoms);
-      mol.SetChiralityPerceived();
     } else {
       // Not isomeric - be sure there are no Z coordinates, clear
       // all stereo-center and cis/trans information.

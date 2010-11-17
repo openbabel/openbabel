@@ -67,7 +67,7 @@ if (DO_PYTHON_BINDINGS)
     if(NOT WIN32)
         add_custom_target(_openbabel ALL
             COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py build --build-lib=${openbabel_BINARY_DIR}/scripts/pybuild
-            DEPENDS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp
+            DEPENDS openbabel ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp
             WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts
         )
         add_custom_command(TARGET _openbabel POST_BUILD 
@@ -114,9 +114,9 @@ if (JAVA_BINDINGS)
   if (EXISTS ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp OR RUN_SWIG)
 
     find_package(JNI)
-    if (NOT JNI_INCLUDE_DIRS)
-      message(STATUS "Java JNI include files NOT found. Java bindings will NOT be compiled.")
-    endif (NOT JNI_INCLUDE_DIRS)
+    if (NOT JNI_FOUND)
+      message(STATUS "Java Native Interface NOT found. Java bindings will NOT be compiled.")
+    endif ()
 
     if (RUN_SWIG)
       find_package(Java)
@@ -126,10 +126,10 @@ if (JAVA_BINDINGS)
       endif (NOT JAVA_COMPILE)
     endif (RUN_SWIG)
 
-    if(JNI_INCLUDE_DIRS AND NOT JAVAC_FAIL)
+    if(JNI_FOUND AND NOT JAVAC_FAIL)
       set(DO_JAVA_BINDINGS ON BOOL)
       message(STATUS "Java bindings will be compiled")
-    endif(JNI_INCLUDE_DIRS AND NOT JAVAC_FAIL)
+    endif()
 
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp OR RUN_SWIG)
     message(STATUS "Warning: Java bindings NOT found. Generate using -DRUN_SWIG.")

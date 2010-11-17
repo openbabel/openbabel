@@ -33,7 +33,20 @@ public:
 		: OBFingerprint(ID, IsDefault), _flags(0){};
 
 	virtual const char* Description()
-	{ return "Indexes linear fragments up to 7 atoms.";};
+	{ return "Indexes linear fragments up to 7 atoms."
+    "\n1021 bits.\n"
+    "Similar to Daylight fingerprints\n"
+    "A molecule structure is analysed to identify linear fragments of length\n"
+    "from one to Max_Fragment_Size = 7 atoms but single atom fragments of C,N,and O\n"
+    "are ignored. A fragment is terminated when the atoms form a ring.\n"
+    "For each of these fragments the atoms, bonding and whether they constitute\n"
+    "a complete ring is recorded and saved in a std::set, so that there is\n"
+    "only one of each fragment type. Chemically identical versions, i.e. ones with\n"
+    "the atoms listed in reverse order and rings listed starting at different\n"
+    "atoms, are identified and only a single canonical fragment is retained\n"
+    "Each remaining fragment is assigned a hash number from 0 to 1020 which is\n"
+    "used to set a bit in a 1024 bit vector."
+  ;}
 
 	//Calculates the fingerprint
 	virtual bool GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbits=0);
@@ -78,19 +91,6 @@ fingerprint2 thefingerprint2("FP2",true);
 /*! class fingerprint2
 Similar to Fabien Fontain's fingerprint class, with a slightly improved
 algorithm, but re-written using STL which makes it shorter.
-
-A molecule structure is analysed to identify linear fragments of length
-from one to Max_Fragment_Size = 7 atoms but single atom fragments of C,N,and O
-are ignored. A fragment is terminated when the atoms form a ring.
-
-For each of these fragments the atoms, bonding and whether
-they constitute a complete ring is recorded and saved in a std::set
-so that there is only one of each fragment type. Chemically identical versions,
-i.e. ones with the atoms listed in reverse order and rings listed starting at
-different atoms, are identified and only a single canonical fragment is retained.
-
-Each remaining fragment is assigned a hash number from 0 to 1020 which is used
-to set a bit in a 1024 bit vector
 */
 
 bool fingerprint2::GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbits)

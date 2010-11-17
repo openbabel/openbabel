@@ -127,6 +127,8 @@ int main(int argc, char **argv)
   OB_ASSERT( doSMILESBuilderTest("OC1=CC3=C([C@@]2([H])CC[C@@]4(C)[C@](CC[C@@H]4O)([H])[C@@]([H])2[C@H](CCCCCCCCCS(CCCC(F)(F)C(F)(F)F)=O)C3)C=C1") );
   // from Thomas Womack -- PR#3016479
   OB_ASSERT( doSMILESBuilderTest("O1C[C@H]2O[C@H]2c2ccc(Oc3c(O)ccc(CCC1=O)c3)cc2") );
+  // from Martin Guetlein -- PR#3107218 ("OBBuilder terminates while building 3d")
+  OB_ASSERT( doSMILESBuilderTest("N12[C@@H]([C@@H](NC([C@@H](c3ccsc3)C(=O)O)=O)C2=O)SC(C)(C)[C@@-]1C(=O)O") );
 
   cout << "PASSED TESTS: " << testCount - failed << "/" << testCount << endl;
 

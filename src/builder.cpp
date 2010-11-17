@@ -1144,7 +1144,7 @@ namespace OpenBabel
     // correct the chirality
     CorrectStereoBonds(workMol);
     CorrectStereoAtoms(workMol);
-
+    workMol.SetChiralityPerceived();
     mol = workMol;
     mol.SetDimension(3);
 

@@ -91,6 +91,8 @@ mark_as_advanced(CMAKE_LIBRARY_OUTPUT_DIRECTORY
 
 option(BUILD_SHARED "enable shared build support" ON)
 option(BUILD_MIXED "enable linux relocatable binaries support" OFF)
+option(WITH_STATIC_INCHI "enable static inchi and related plugins" OFF)
+option(WITH_STATIC_LIBXML "enable static libxml and xml file format plugins" OFF)
 # Static building
 if(BUILD_SHARED)
   set(BUILD_TYPE SHARED)
@@ -99,6 +101,13 @@ if(BUILD_SHARED)
 else()
   set(BUILD_TYPE STATIC)
   set(PLUGIN_TYPE STATIC)
+
+  if(WITH_STATIC_INCHI)
+    add_definitions(-DHAVE_STATIC_INCHI)
+  endif()
+  if(WITH_STATIC_LIBXML)
+    add_definitions(-DHAVE_STATIC_LIBXML)
+  endif()
 
   if(MSVC)
     # set cl flags for static compiling

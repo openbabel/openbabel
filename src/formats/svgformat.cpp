@@ -29,7 +29,11 @@ public:
   SVGFormat() : _ncols(0), _nrows(0), _nmax(0)
   {
     OBConversion::RegisterFormat("svg",this);
-  }
+    OBConversion::RegisterOptionParam("N", this, 1, OBConversion::OUTOPTIONS);
+    OBConversion::RegisterOptionParam("rows", this, 1, OBConversion::GENOPTIONS);
+    OBConversion::RegisterOptionParam("cols", this, 1, OBConversion::GENOPTIONS);
+    OBConversion::RegisterOptionParam("px", this, 1, OBConversion::GENOPTIONS);
+ }
 
   virtual const char* NamespaceURI()const{return "http://www.w3.org/2000/svg";}
   virtual const char* Description()
@@ -43,7 +47,8 @@ public:
       "the containing element, such as a browser window.\n\n"
 
       "Multiple molecules are displayed in a grid of dimensions specified by\n"
-      "the ``-xr`` and ``-xc`` options (number of rows and columns respectively).\n"
+      "the ``-xr`` and ``-xc`` options (number of rows and columns respectively\n"
+      "and ``--rows``, ``--cols`` with babel).\n"
       "When displayed in an appropriate program, e.g. Firefox, there is\n"
       "javascript support for zooming (with the mouse wheel)\n"
       "and panning (by dragging with the left mouse button).\n\n"
@@ -76,15 +81,18 @@ public:
       " e embed molecule as CML\n"
       "    OpenBabel can read the resulting svg file as a cml file.\n"
       " p# scale to bondlength in pixels(single mol only)\n"
+      " px# scale to bondlength in pixels(single mol only)(not displayed in GUI)\n"
       " c# number of columns in table\n"
+      " cols# number of columns in table(not displayed in GUI)\n"
       " r# number of rows in table\n"
+      " rows# number of rows in table(not displayed in GUI)\n"
       " N# max number objects to be output\n"
       " l draw grid lines\n"
       " i add index to each atom\n"
       "    These indices are those in sd or mol files and correspond to the\n"
       "    order of atoms in a SMILES string.\n"
       " j do not embed javascript\n"
-      "    Javascript is not usually embedded if there is one one molecule,\n"
+      "    Javascript is not usually embedded if there is only one molecule,\n"
       "    but it is if the rows and columns have been specified as 1: ``-xr1 -xc1``\n"
       " w generate wedge/hash bonds(experimental)\n"
       " x omit XML declaration (not displayed in GUI)\n"
@@ -95,7 +103,7 @@ public:
       "    from an A or S superatom entry in an sd or mol file, or can be\n"
       "    generated using the --genalias option. For example::\n\n"
 
-      "      echo \"c1cc(C=O)ccc1C(=O)O\" | babel -ismi out.svg --genalias -xA\n\n"
+      "      obabel -:\"c1cc(C=O)ccc1C(=O)O\" -O out.svg --genalias -xA\n\n"
 
       "    would add a aliases COOH and CHO to represent the carboxyl and\n"
       "    aldehyde groups and would display them as such in the svg diagram.\n"
@@ -110,14 +118,12 @@ public:
 
       "For example, if input.smi had 10 molecules::\n\n"
 
-      "      babel input.smi out.svg -xbCe\n\n"
+      "      obabel input.smi -O out.svg -xb -xC -xe\n\n"
 
       "would produce a svg file with a black background, with no explict\n"
       "terminal carbon, and with an embedded cml representation of each\n"
       "molecule. The structures would be in two rows of four and one row\n"
-      "of two. Note that in babel (but not obabel) it is possible to\n"
-      "concatenate multiple single-letter options (with a single preceding\n"
-      "``-x``).\n\n"
+      "of two.\n\n"
     ;
   }
 
@@ -162,7 +168,13 @@ bool SVGFormat::WriteChemObject(OBConversion* pConv)
     _nmax=0;
 
     const char* pc = pConv->IsOption("c");
+    //alternative for babel because -xc cannot take a parameter, because some other format uses it
+    //similarly for -xr -xp
+    if(!pc)
+      pc = pConv->IsOption("cols", OBConversion::GENOPTIONS);
     const char* pr = pConv->IsOption("r");
+    if(!pr)
+      pr = pConv->IsOption("rows", OBConversion::GENOPTIONS);
     if(pr)
       _nrows = atoi(pr);
     if(pc)
@@ -397,10 +409,13 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     OBDepict depictor(&painter);
 
     //Scale image by specifying the average bond length in pixels.
-    if(pConv->IsOption("p"))
+    const char* ppx = pConv->IsOption("p");
+    if(!ppx)
+      ppx= pConv->IsOption("px", OBConversion::GENOPTIONS);
+    if(ppx)
     {
       double oldblen = depictor.GetBondLength();
-      double newblen = atof(pConv->IsOption("p"));
+      double newblen = atof(ppx);
       depictor.SetBondLength(newblen);
       factor = newblen / oldblen;
       //Scale bondspacing and font size by same factor

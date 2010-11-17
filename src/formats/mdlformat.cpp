@@ -650,6 +650,8 @@ namespace OpenBabel
       obErrorLog.ThrowError(__FUNCTION__, "No 2D or 3D coordinates exist. Any stereochemical information will"
       " be lost. To generate 2D or 3D coordinates use --gen2D or --gen3d.", obWarning, onceOnly);
 
+    PerceiveStereo(&mol);
+
     if (pConv->GetOutputIndex()==1)
       HasProperties = false;
 
