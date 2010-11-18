@@ -176,11 +176,13 @@ if(NOT MINGW AND NOT CYGWIN)
     set(pytests
         babel sym fastsearch unique kekule)
     foreach(pytest ${pytests})
+    SET_SOURCE_FILES_PROPERTIES(test${pytest}.py PROPERTIES
+        BABEL_LIBDIR "${CMAKE_BINARY_DIR}/lib"
+        BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
+)
       ADD_PYTHON_TEST(pytest_${pytest} test${pytest}.py)
       set_tests_properties(pytest_${pytest} PROPERTIES
            FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
-           ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
-           ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data"
       )
     endforeach(pytest ${pytests})
   endif(PYTHON_EXECUTABLE)
