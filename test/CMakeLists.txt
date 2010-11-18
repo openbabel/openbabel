@@ -200,7 +200,12 @@ if (PYTHON_BINDINGS)
         PYTHONPATH "${CMAKE_BINARY_DIR}/scripts/pybuild:${CMAKE_BINARY_DIR}/lib"
         BABEL_LIBDIR "${CMAKE_BINARY_DIR}/lib"
         BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
-)
+    )
+    if(MSVC)
+      SET_SOURCE_FILES_PROPERTIES(test${pybindtest}.py PROPERTIES
+        PYTHONPATH "\"${CMAKE_SOURCE_DIR}/scripts/python;${CMAKE_BINARY_DIR}/bin/Release\""
+      )
+    endif()
     ADD_PYTHON_TEST(pybindtest_${pybindtest} test${pybindtest}.py)
     set_tests_properties(pybindtest_${pybindtest} PROPERTIES
          FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"

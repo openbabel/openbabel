@@ -11,8 +11,8 @@ You could also "chdir" into build and run the test file directly:
 python ../../test/testbindings.py
 
 In this latter case, you will need to set the environment variables
-LD_LIBRARY_PATH, BABEL_LIBDIR and BABEL_DATADIR beforehand. The CMake
-script does this automatically.
+PYTHONPATH, LD_LIBRARY_PATH, BABEL_LIBDIR and BABEL_DATADIR beforehand.
+The CMake script does this automatically.
 
 In both cases, the test file is run directly from the source folder,
 and so you can quickly develop the tests and try them out.
@@ -31,7 +31,6 @@ try:
 except ImportError:
     ob = None
     modulelocation = os.path.join("..", "scripts", "pybuild")
-    print modulelocation
     if os.path.isfile(os.path.join(modulelocation, "openbabel.py")):
 	sys.path = [modulelocation] + sys.path
         try:
