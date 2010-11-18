@@ -5,8 +5,14 @@ in the build folder with:
 "C:\Program Files\CMake 2.6\bin\ctest.exe" -C CTestTestfile.cmake
                                            -R pybindtest -VV
 
-You could also "chdir" into build/test and run the test file directly:
+The runtime directory is ${CMAKE_SRC_DIR}/test. 
+
+You could also "chdir" into build and run the test file directly:
 python ../../test/testbindings.py
+
+In this latter case, you will need to set the environment variables
+LD_LIBRARY_PATH, BABEL_LIBDIR and BABEL_DATADIR beforehand. The CMake
+script does this automatically.
 
 In both cases, the test file is run directly from the source folder,
 and so you can quickly develop the tests and try them out.
@@ -18,26 +24,26 @@ import sys
 import unittest
 
 here = sys.path[0]
-
 iswin = sys.platform.startswith("win")
-
-if iswin:
-    modulelocation = os.path.join("..", "Release")
-else:
-    modulelocation = os.path.join("..", "scripts", "pybuild")
-sys.path = [modulelocation] + sys.path
 
 try:
     import openbabel as ob
-    # We check later to make sure we have imported the right module
 except ImportError:
     ob = None
+    modulelocation = os.path.join("..", "scripts", "pybuild")
+    print modulelocation
+    if os.path.isfile(os.path.join(modulelocation, "openbabel.py")):
+	sys.path = [modulelocation] + sys.path
+        try:
+            import openbabel as ob
+        except ImportError:
+            pass
 
-if iswin:
-    pybellocation = os.path.join(here, "..", "scripts", "python")
-else:
-    pybellocation = os.path.join("..", "scripts")
-sys.path = [pybellocation] + sys.path
+# if iswin:
+#    pybellocation = os.path.join(here, "..", "scripts", "python")
+#else:
+#    pybellocation = os.path.join("..", "scripts")
+#sys.path = [pybellocation] + sys.path
 
 try:
     if iswin:
@@ -50,8 +56,6 @@ except ImportError:
 class PythonBindings(unittest.TestCase):
     def setUp(self):
         self.assertTrue(ob is not None, "Failed to import the openbabel module")
-        self.assertTrue(os.path.isfile(os.path.join(
-            modulelocation, "openbabel.py")), "openbabel module not found")
 
 class TestPythonBindings(PythonBindings):
     def testSimple(self):
@@ -65,8 +69,6 @@ class TestPythonBindings(PythonBindings):
 class PybelWrapper(PythonBindings):
     def testDummy(self):
         self.assertTrue(pybel is not None, "Failed to import the Pybel module")
-        self.assertTrue(os.path.isfile(os.path.join(
-            pybellocation, "pybel.py")), "Pybel module not found at %s" % pybellocation)
    
 if __name__ == "__main__":
     unittest.main()

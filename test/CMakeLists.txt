@@ -194,11 +194,14 @@ if (PYTHON_BINDINGS)
   set(pybindtests
       bindings _pybel example)
   foreach(pybindtest ${pybindtests})
+    SET_SOURCE_FILES_PROPERTIES(test${pybindtest}.py PROPERTIES
+        PYTHONPATH "${CMAKE_BINARY_DIR}/scripts/pybuild:${CMAKE_BINARY_DIR}/lib"
+        BABEL_LIBDIR "${CMAKE_BINARY_DIR}/lib"
+        BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
+)
     ADD_PYTHON_TEST(pybindtest_${pybindtest} test${pybindtest}.py)
     set_tests_properties(pybindtest_${pybindtest} PROPERTIES
          FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
-         ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
-         ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data"
     )
   endforeach(pybindtest ${pybindtests})
 endif (PYTHON_BINDINGS)
