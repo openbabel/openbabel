@@ -1,4 +1,4 @@
-set(CTEST_PROJECT_NAME "Open Babel")
+set(CTEST_PROJECT_NAME "openbabel")
 set(CTEST_NIGHTLY_START_TIME "01:00:00 EST")
 
 set(CTEST_DROP_METHOD "http")
