@@ -459,13 +459,13 @@ configure_file("${openbabel_SOURCE_DIR}/OpenBabel2ConfigVersion.cmake.in"
   "${openbabel_BINARY_DIR}/OpenBabel2ConfigVersion.cmake" @ONLY)
 
 # Now to configure the installed config file.
-set(OB_CONFIG_DIR "${LIB_INSTALL_DIR}/cmake")
+set(OB_CONFIG_DIR "${LIB_INSTALL_DIR}/cmake/openbabel2")
 set(OpenBabel2_INCLUDE_DIRS "\${OpenBabel2_INSTALL_PREFIX}/${OB_INCLUDE_DIRS}")
 set(OB_EXPORTS_FILE
   "\${OpenBabel2_INSTALL_PREFIX}/${OB_CONFIG_DIR}/OpenBabel2_EXPORTS.cmake")
 set(REL_REF)
 if(NOT WIN32)
-  set(REL_REF "/../..")
+  set(REL_REF "/../../..")
 endif()
 configure_file("${openbabel_SOURCE_DIR}/OpenBabel2Config.cmake.in"
   "${openbabel_BINARY_DIR}/OpenBabel2ConfigInstall.cmake" @ONLY)
