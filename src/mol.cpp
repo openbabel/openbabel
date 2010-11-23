@@ -1094,11 +1094,17 @@ namespace OpenBabel
 
             formula << symb << sp;
             if(atomicCount[alph] > ones)
-              formula << sp << atomicCount[alph] << sp;
+              formula << atomicCount[alph] << sp;
           }
       }
 
-    return (formula.str());
+    int chg = GetTotalCharge();
+    char ch = chg>0 ? '+' : '-' ;
+    chg = abs(chg);
+    while(chg--)
+      formula << ch << sp; 
+
+    return (Trim(formula.str()));
   }
 
   //! Stochoimetric formula (e.g., C4H6O).
