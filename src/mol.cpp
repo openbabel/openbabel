@@ -1104,7 +1104,8 @@ namespace OpenBabel
     while(chg--)
       formula << ch << sp; 
 
-    return (Trim(formula.str()));
+    string f_str = formula.str();
+    return (Trim(f_str));
   }
 
   //! Stochoimetric formula (e.g., C4H6O).
