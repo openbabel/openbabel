@@ -757,6 +757,9 @@ namespace OpenBabel {
         if (!begin || !end)
           continue;
 
+        if (begin->GetImplicitValence() > 3 || end->GetImplicitValence() > 3)
+          continue; // e.g. C=Ru where the Ru has four substituents
+
         // Needs to have at least one explicit single bond at either end
         // FIXME: timvdm: what about C=C=C=C
         if (!begin->HasSingleBond() || !end->HasSingleBond())

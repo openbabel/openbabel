@@ -58,8 +58,8 @@ INTHYB  [Si]                      3       # sp3 Si (and family)
 INTHYB  [Ge]                      3
 INTHYB  [Sn]                      3
 INTHYB  [Pb]                      3
-INTHYB  [As]                      3       # sp3 hybridization As (and family)
-INTHYB  [Sb]                      3
+INTHYB  [As;!D5]                  3       # AsCl3 (AsCl5 handled by D5 above)
+INTHYB  [Sb;!D5]                  3       # See Arsenic
 INTHYB  [Bi]                      3
 
 INTHYB  [se]                      2       # aromatic sp2 Se

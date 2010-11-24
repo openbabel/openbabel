@@ -121,11 +121,11 @@ if(WITH_INCHI)
     set_target_properties(test_inchiwrite PROPERTIES LINK_SEARCH_END_STATIC TRUE)
   endif()
   # files in test/inchi -- both .sdf and .txt
-  set(inchitests Samples SamplesTechMan)
+  set(inchitests Samples.sdf SamplesTechMan.sdf Steffen_PubChem.smi)
   set(inchidata ${CMAKE_SOURCE_DIR}/test/inchi)
   foreach(test ${inchitests})
     add_test(inchi${test}_Test
-             ${TEST_PATH}/test_inchiwrite ${inchidata}/${test}.sdf ${inchidata}/${test}.txt)
+             ${TEST_PATH}/test_inchiwrite ${inchidata}/${test} ${inchidata}/${test}.txt)
     set_tests_properties(inchi${test}_Test PROPERTIES
                          FAIL_REGULAR_EXPRESSION "Not ok"
                          ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
