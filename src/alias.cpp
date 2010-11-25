@@ -111,13 +111,14 @@ bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
 
   //Find index of *first* atom to which XxAtom is attached
   OBBondIterator bi;
-  unsigned mainAttachIdx = (XxAtom->BeginNbrAtom(bi))->GetIdx();
+  OBAtom* firstAttachAtom = XxAtom->BeginNbrAtom(bi);
+  unsigned mainAttachIdx = firstAttachAtom ? firstAttachAtom->GetIdx() : 0;
  
   //++Make list of other attachments* of XxAtom
   // (Added later so that the existing bonding of the XXAtom are retained)
   vector<pair<OBAtom*, unsigned> > otherAttachments;
   OBAtom* pAttach;
-  while( (pAttach = XxAtom->NextNbrAtom(bi)) ) // extra parentheses to minimize warnings
+  while(firstAttachAtom && (pAttach = XxAtom->NextNbrAtom(bi)) ) // extra parentheses to minimize warnings
     otherAttachments.push_back(make_pair(pAttach, (*bi)->GetBondOrder()));
 
   //Copy coords of XxAtom to the first real atom in the fragment
@@ -141,13 +142,15 @@ bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
     builder.Build(obFrag);
     obFrag.DeleteAtom(obFrag.GetAtom(1));//remove dummy atom
     mol += obFrag; //Combine with main molecule
-    builder.Connect(mol, mainAttachIdx, newFragIdx);
+    if(mainAttachIdx)
+      builder.Connect(mol, mainAttachIdx, newFragIdx);
   }
   else // 0D, 2D  
   {
     obFrag.DeleteAtom(obFrag.GetAtom(1));//remove dummy atom
     mol += obFrag; //Combine with main molecule and connect
-    mol.AddBond(mainAttachIdx, newFragIdx, 1);
+    if(mainAttachIdx)
+      mol.AddBond(mainAttachIdx, newFragIdx, 1);
   }
 
   if(dimension==2)//Use MCDL
