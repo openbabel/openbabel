@@ -114,7 +114,7 @@ if (JAVA_BINDINGS)
   if (EXISTS ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp OR RUN_SWIG)
 
     find_package(JNI)
-    if (NOT JNI_FOUND)
+    if (NOT JNI_INCLUDE_DIRS)
       message(STATUS "Java Native Interface NOT found. Java bindings will NOT be compiled.")
     endif ()
 
@@ -126,7 +126,7 @@ if (JAVA_BINDINGS)
       endif (NOT JAVA_COMPILE)
     endif (RUN_SWIG)
 
-    if(JNI_FOUND AND NOT JAVAC_FAIL)
+    if(JNI_INCLUDE_DIRS AND NOT JAVAC_FAIL)
       set(DO_JAVA_BINDINGS ON BOOL)
       message(STATUS "Java bindings will be compiled")
     endif()
