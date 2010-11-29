@@ -114,6 +114,7 @@ namespace OpenBabel {
    *
    * Criteria:
    * - sp3 hybridization
+   * - not connected to more than 4 atoms
    * - at least 3 "heavy" neighbors
    *
    * Nitrogen is treated as a special case since the barrier of inversion is
@@ -124,7 +125,7 @@ namespace OpenBabel {
   bool isPotentialTetrahedral(OBAtom *atom)
   {
     // consider only potential steroecenters
-    if (atom->GetHyb() != 3 || atom->GetHvyValence() < 3 || atom->GetHvyValence() > 4)
+    if (atom->GetHyb() != 3 || atom->GetImplicitValence() > 4 || atom->GetHvyValence() < 3 || atom->GetHvyValence() > 4)
       return false;
     // skip non-chiral N
     if (atom->IsNitrogen()) {

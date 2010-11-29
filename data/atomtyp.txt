@@ -55,12 +55,14 @@ INTHYB  [In]                      2
 INTHYB  [Tl]                      2
 INTHYB  [AlD4]                    3       # sp3 Al
 INTHYB  [Si]                      3       # sp3 Si (and family)
-INTHYB  [Ge]                      3
-INTHYB  [Sn]                      3
 INTHYB  [Pb]                      3
-INTHYB  [As;!D5]                  3       # AsCl3 (AsCl5 handled by D5 above)
-INTHYB  [Sb;!D5]                  3       # See Arsenic
-INTHYB  [Bi]                      3
+INTHYB  [Ge;!D5]                  3
+INTHYB  [Sn;!D5]                  3
+INTHYB  [AsD3]                    3       # AsCl3 (AsCl5 handled by D5 above)
+INTHYB  [SbD3]                    3       #
+# SbD5, AsD5 are all trigbpy so are handled by D5 above
+INTHYB  [BiD3]                    3       # 
+INTHYB  [BiD5]                    6       # BiF5 is square-pyr, not trigbpy 
 
 INTHYB  [se]                      2       # aromatic sp2 Se
 INTHYB  [Se]                      3       # sp3 hybridization Se (and family)
