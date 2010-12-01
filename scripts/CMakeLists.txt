@@ -347,7 +347,7 @@ if (DO_CSHARP_BINDINGS)
     add_library(bindings_csharp MODULE ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp)
     target_link_libraries(bindings_csharp ${BABEL_LIBRARY})
     set_target_properties(bindings_csharp PROPERTIES
-        OUTPUT_NAME openbabelcsharp )
+        OUTPUT_NAME openbabel_csharp )
 
 endif (DO_CSHARP_BINDINGS)
 
