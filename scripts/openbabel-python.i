@@ -283,6 +283,7 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 %include <openbabel/isomorphism.h>
 %include <openbabel/query.h>
 %include <openbabel/canon.h>
+%include <openbabel/stereo/stereo.h>
 
 %warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
 %include <openbabel/bitvec.h>
