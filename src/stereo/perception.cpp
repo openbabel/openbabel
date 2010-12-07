@@ -2346,6 +2346,11 @@ namespace OpenBabel {
         }
       }
 
+      // Handle the case of a tet center with four plane atoms or
+      //        3 plane atoms with the fourth bond implicit
+      if (planeAtoms.size() == 4 || (planeAtoms.size() == 3 && center->GetValence()==3))
+        config.specified = false;
+
       bool success = true;
 
       using namespace std;
