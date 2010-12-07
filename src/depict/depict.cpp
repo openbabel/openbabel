@@ -495,11 +495,11 @@ namespace OpenBabel
     orthogonalLine *= 0.5 * bondWidth;
     std::vector<std::pair<double,double> > points;
 
-    points.push_back(std::pair<double,double>(end.x(), end.y()));
-    points.push_back(std::pair<double,double>(begin.x() + orthogonalLine.x(), 
-                                              begin.y() + orthogonalLine.y()));
-    points.push_back(std::pair<double,double>(begin.x() - orthogonalLine.x(), 
-                                              begin.y() - orthogonalLine.y()));
+    points.push_back(std::pair<double,double>(begin.x(), begin.y()));
+    points.push_back(std::pair<double,double>(end.x() + orthogonalLine.x(), 
+                                              end.y() + orthogonalLine.y()));
+    points.push_back(std::pair<double,double>(end.x() - orthogonalLine.x(), 
+                                              end.y() - orthogonalLine.y()));
     painter->DrawPolygon(points);
   }
 
@@ -522,10 +522,10 @@ namespace OpenBabel
 
     for (int k = 0; k < 7; ++k) {
       double w = lines[k];
-      painter->DrawLine(end.x() - vb.x() * w + orthogonalLine.x() * w, 
-                        end.y() - vb.y() * w + orthogonalLine.y() * w, 
-                        end.x() - vb.x() * w - orthogonalLine.x() * w, 
-                        end.y() - vb.y() * w - orthogonalLine.y() * w);
+      painter->DrawLine(begin.x() + vb.x() * w + orthogonalLine.x() * w, 
+                        begin.y() + vb.y() * w + orthogonalLine.y() * w, 
+                        begin.x() + vb.x() * w - orthogonalLine.x() * w, 
+                        begin.y() + vb.y() * w - orthogonalLine.y() * w);
     }
   } 
   
