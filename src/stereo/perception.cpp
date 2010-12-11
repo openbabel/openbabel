@@ -2313,6 +2313,10 @@ namespace OpenBabel {
       OBTetrahedralStereo::Config config;
       config.center = *i;
 
+      // We assume the 'tip-only' convention. That is, wedge or hash bonds only
+      // determine the stereochemistry at their thin end (the BeginAtom)
+      bool tiponly = true;
+
       // find the hash, wedge and 2 plane atoms
       std::vector<OBAtom*> planeAtoms;
       std::vector<OBAtom*> wedgeAtoms;
@@ -2326,7 +2330,10 @@ namespace OpenBabel {
             hashAtoms.push_back(nbr);
           } else {
             // this is an 'inverted' hash bond going from nbr to center
-            wedgeAtoms.push_back(nbr);
+            if (tiponly)
+              planeAtoms.push_back(nbr);
+            else
+              wedgeAtoms.push_back(nbr);  
           }
         } else if (bond->IsWedge()) {
           // wedge bonds
@@ -2334,11 +2341,17 @@ namespace OpenBabel {
             // this is a 'real' wedge bond going from center to nbr
             wedgeAtoms.push_back(nbr);
           } else {
-            // this is an 'inverted' hash bond going from nbr to center
-            hashAtoms.push_back(nbr);
+            // this is an 'inverted' wedge bond going from nbr to center
+            if (tiponly)
+              planeAtoms.push_back(nbr);
+            else
+              hashAtoms.push_back(nbr);
           }
         } else if (bond->IsWedgeOrHash()) {
-          config.specified = false;
+          if (!tiponly || (tiponly && bond->GetBeginAtom()->GetId() == center->GetId()))
+            config.specified = false;
+          else
+            planeAtoms.push_back(nbr);
           break;
         } else {
           // plane bonds
