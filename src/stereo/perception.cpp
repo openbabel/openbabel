@@ -2348,11 +2348,12 @@ namespace OpenBabel {
               hashAtoms.push_back(nbr);
           }
         } else if (bond->IsWedgeOrHash()) {
-          if (!tiponly || (tiponly && bond->GetBeginAtom()->GetId() == center->GetId()))
+          if (!tiponly || (tiponly && bond->GetBeginAtom()->GetId() == center->GetId())) {
             config.specified = false;
+            break;
+          }
           else
             planeAtoms.push_back(nbr);
-          break;
         } else {
           // plane bonds
           planeAtoms.push_back(nbr);
