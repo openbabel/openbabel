@@ -79,9 +79,6 @@ namespace OpenBabel
         "Crystal structures are written using the <crystal>, <xfract>) etc., elements\n"
         "if the OBMol has a OBGenericDataType::UnitCell data.\n\n"
 
-        "If the OBMol has no bonds, a <formula> element is written instead of the\n"
-        "normal <atomArray> and <atom> elements.\n\n"
-
         "All these forms are handled transparently during reading. Only a subset of\n"
         "CML elements and attributes are recognised, but these include most of those\n"
         "which define chemical structure, see below.\n\n"
@@ -368,7 +365,18 @@ namespace OpenBabel
 
             xmlTextReaderRead(reader());
             const xmlChar* pvalue = xmlTextReaderConstValue(reader());
-            if(pvalue && !attr.empty())
+
+            if(titleonproperty.find("ZPE")!=string::npos)
+            {
+              double energy;
+              stringstream ss((const char*)pvalue);
+              ss >> energy; //units are kJ/mol
+              const double CALSTOJOULES = 4.1816;
+              _pmol->SetEnergy(energy/CALSTOJOULES);
+            }
+            else
+            {
+              if(pvalue && !attr.empty())
               {
                 OBPairData *dp = new OBPairData;
                 dp->SetAttribute(attr);
@@ -377,6 +385,7 @@ namespace OpenBabel
                 dp->SetOrigin(fileformatInput);
                 _pmol->SetData(dp);
               }
+            }
             PropertyScalarsNeeded=0;
           }
       }
@@ -1397,7 +1406,7 @@ namespace OpenBabel
         UseHydrogenCount=true;
       }
 
-    bool UseFormulaWithNoBonds=true;
+    bool UseFormulaWithNoBonds=false; //before 2.3.1 was true;
 
     int dim = mol.GetDimension();
 
@@ -2308,7 +2317,7 @@ namespace OpenBabel
     xmlTextWriterStartElementNS(writer(), prefix, C_ARRAY, NULL);
     xmlTextWriterWriteFormatAttribute(writer(), C_UNITS,"%s","cm-1");
     const double WAVENUM_TO_GHZ=30.0;
-    for(int i=0; i<3; ++i)
+    for(int i=0; i<rd->GetRotConsts().size(); ++i)
       if(rd->GetRotConsts()[i]!=0.0)
         xmlTextWriterWriteFormatString(writer(),"%.3lf ", rd->GetRotConsts()[i]/WAVENUM_TO_GHZ);
     xmlTextWriterEndElement(writer());//array
