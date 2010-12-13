@@ -340,9 +340,11 @@ int main()
   //           C
   //          / \
   //        Br   Cl
+  
+  /* No support for inverted bonds in 'tip-only' convention
   string smiles2D_5 = test_singleTetrahedral("stereo/tetrahedral2D_6.mol",
       OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, OBStereo::ImplicitRef), 
-      OBStereo::Clockwise));
+      OBStereo::Clockwise));*/
  
   // 3.2.3  Input molecule with 3 refs (2x in plane bond, real hash bond)
   //
@@ -362,12 +364,13 @@ int main()
   //           C
   //          / \
   //        Br   Cl
+  /* No support for inverted bonds in 'tip-only' convention
   string smiles2D_7 = test_singleTetrahedral("stereo/tetrahedral2D_7.mol",
       OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, OBStereo::ImplicitRef), 
       OBStereo::AntiClockwise));
 
   OB_ASSERT( smiles2D_4 == smiles2D_7 );
-  OB_ASSERT( smiles2D_5 == smiles2D_6 );
+  OB_ASSERT( smiles2D_5 == smiles2D_6 );*/
 
   cout << smiles2D_4 << endl;
 
