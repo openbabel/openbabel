@@ -17,7 +17,7 @@ dir_config('openbabel')
 # Find a trivial header in order to add the proper include path
 # to the build flags.
 here = File.dirname(__FILE__)
-find_header('inchi_api.h', here + '/../../include')
+find_header('inchi_api.h', '/usr/include/inchi', '/usr/include', here + '/../../include')
 
 # Prevent Ruby 1.8.x from trying to compile and link the extension
 # using gcc.

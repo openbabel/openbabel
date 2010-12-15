@@ -82,6 +82,7 @@ if (DO_PYTHON_BINDINGS)
             COMMAND ${CMAKE_COMMAND} -E copy ob.py ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
             COMMAND ${CMAKE_COMMAND} -E remove ob.py
             VERBATIM)
+        add_dependencies(_openbabel openbabel)
 
         if (PYTHON_PREFIX)
             install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --prefix=${PYTHON_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
@@ -89,7 +90,7 @@ if (DO_PYTHON_BINDINGS)
             if (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
                 install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
             else (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-                install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --prefix=${CMAKE_INSTALL_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
+                install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --prefix=$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
             endif (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
         endif (PYTHON_PREFIX)
 
@@ -227,8 +228,8 @@ if (DO_PERL_BINDINGS)
             DEPENDS ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp
             WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/perl
         )
-      add_dependencies(bindings_perl pre_bindings_perl)
-      install(CODE "execute_process(COMMAND make install WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/perl)")
+      add_dependencies(bindings_perl pre_bindings_perl openbabel)
+      install(CODE "execute_process(COMMAND make install_vendor WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/perl)")
     
     else (NOT MSVC)
       add_library(bindings_perl MODULE ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp)
@@ -281,20 +282,20 @@ if (DO_RUBY_BINDINGS)
         COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_BINARY_DIR}/scripts/ruby
         )
       add_custom_target(bindings_ruby ALL
-        COMMAND ${RUBY_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/ruby/extconf.rb --with-openbabel-lib=${BABEL_LIBRARY} --with-openbabel-include=${openbabel_BINARY_DIR}/include
+        COMMAND ${RUBY_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/ruby/extconf.rb --with-openbabel-lib=${openbabel_BINARY_DIR}/lib${LIB_SUFFIX} --with-openbabel-include=${openbabel_BINARY_DIR}/include
         COMMAND ${CMAKE_COMMAND} -E echo "Compiling Ruby bindings"
         COMMAND make
         DEPENDS ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp
         WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/ruby
         )
-        add_dependencies(bindings_ruby pre_bindings_ruby)
+      add_dependencies(bindings_ruby pre_bindings_ruby openbabel)
       if (RUBY_PREFIX)
         install(CODE "execute_process(COMMAND DESTDIR=${RUBY_PREFIX} make install WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/ruby)")
       else (RUBY_PREFIX)
         if (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
           install(CODE "execute_process(COMMAND make install WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/ruby)")
         else (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-          install(CODE "execute_process(COMMAND DESTDIR=${CMAKE_INSTALL_PREFIX} make install WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/ruby)")
+          install(CODE "execute_process(COMMAND make DESTDIR=$ENV{DESTDIR} install WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/ruby)")
         endif (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
       endif (RUBY_PREFIX)
     else(NOT MSVC)

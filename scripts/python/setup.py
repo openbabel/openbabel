@@ -17,7 +17,9 @@ obExtension = Extension('_openbabel',
                  [os.path.join(srcdir, "openbabel-python.cpp")],
                  include_dirs=[os.path.join(srcdir, "..", "..", "include"),
                                os.path.join("..", "include")],
-                 library_dirs=[os.path.join("..", "lib")],
+                 library_dirs=[os.path.join(srcdir, "..", "..", "lib"),
+                               os.path.join(srcdir, "..", "..", "lib64"),
+                               os.path.join("..", "lib")],
                  libraries=['openbabel']
                  )
 
