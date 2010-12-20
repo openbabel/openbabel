@@ -39,6 +39,10 @@ namespace OpenBabel {
 #define NATOMSMAX 255
 #define NBONDSMAX 255
 
+// Forward declarations
+class TEditedMolecule;
+bool restoreDoubleBonds(TEditedMolecule& sm, bool putEither);
+
 typedef struct adjustedlist{
   int nb;
   int adjusted[CONNMAX];
@@ -5976,7 +5980,7 @@ void TemplateRedraw::redrawFine(TSimpleMolecule& smIn) {
   if the file will not be found, predefined templates will be used
 */
 void generateDiagram(OBMol * pmol, std::ostream & ofs) {
-  TSimpleMolecule sm;
+  TEditedMolecule sm;
   OBAtom * atom;
 
   sm.readOBMol(pmol);
@@ -5984,6 +5988,7 @@ void generateDiagram(OBMol * pmol, std::ostream & ofs) {
 
   TemplateRedraw tr;
   tr.redrawFine(sm);
+  restoreDoubleBonds(sm,false);
   for (int i=1; i<=pmol->NumAtoms(); i++) {
     atom=pmol->GetAtom(i);
     atom->SetVector(sm.getAtom(i-1)->rx,sm.getAtom(i-1)->ry,0.0);
@@ -5993,13 +5998,14 @@ void generateDiagram(OBMol * pmol, std::ostream & ofs) {
 };
 
 void generateDiagram(OBMol * pmol) {
-  TSimpleMolecule sm;
+  TEditedMolecule sm;
   OBAtom * atom;
 
   sm.readOBMol(pmol);
 
   TemplateRedraw tr;
   tr.redrawFine(sm);
+  restoreDoubleBonds(sm,false);
   for (int i=1; i<=pmol->NumAtoms(); i++) {
     atom=pmol->GetAtom(i);
     atom->SetVector(sm.getAtom(i-1)->rx,sm.getAtom(i-1)->ry,0.0);
@@ -6009,7 +6015,7 @@ void generateDiagram(OBMol * pmol) {
 void generateDiagram(const std::vector<int> iA1, const std::vector<int> iA2,
   std::vector<double>& rx, std::vector<double>& ry, int nAtoms, int nBonds) {
 
-  TSimpleMolecule sm;
+  TEditedMolecule sm;
 
   sm.readConnectionMatrix(iA1,iA2,nAtoms,nBonds);
   TemplateRedraw tr;
