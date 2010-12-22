@@ -297,7 +297,12 @@ int main(int argc,char *argv[])
   FileList.clear();
   vector<string>::iterator itr;
   for(itr=tempFileList.begin();itr!=tempFileList.end();++itr)
-    DLHandler::findFiles (FileList, *itr);
+  {
+    if((*itr)[0]=='-')
+      FileList.push_back(*itr);
+    else
+      DLHandler::findFiles (FileList, *itr);
+  }
 #endif
   
   if (!gotInType)
