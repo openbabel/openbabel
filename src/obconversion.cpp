@@ -621,7 +621,7 @@ namespace OpenBabel {
         if(Count==(int)EndNumber)
           ReadyToInput=false; //stops any more objects being read
 
-        rInlen = (pInStream->tellg() - rInpos);
+        rInlen = pInStream ? pInStream->tellg() - rInpos : 0;
          // - (pLineEndBuf ? pLineEndBuf->getCorrection() : 0); //correction for CRLF
 
         if(pOb)
@@ -1502,6 +1502,11 @@ Additional options :
 
   void OBConversion::SetOptions(const char* options, Option_type opttyp)
   {
+    if(!*options) // "" clears all
+    {
+      OptionsArray[opttyp].clear();
+      return;
+    }
     while(*options)
       {
         string ch(1, *options++);
