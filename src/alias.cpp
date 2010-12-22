@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #include <openbabel/builder.h>
 #include <openbabel/parsmart.h>
 #include <openbabel/mcdlutil.h>
+#include <openbabel/atomclass.h>
 
 using namespace std;
 namespace OpenBabel
@@ -39,7 +40,7 @@ namespace OpenBabel
     Tries the following in turn until one is sucessful:
     1) If starts with number treat as isotope+element e.g. 2H
     2) Looks up alias in superatom.txt e.g. COOH Pr
-    3) Parse as simple formula
+    3) If of the form Rn stored as a * atom with OBAtomClassData
     Returns false if none are successful.
     */
 
@@ -61,13 +62,29 @@ namespace OpenBabel
       }
     }
 
-    if(!FromNameLookup(mol, atomindex))
+    if(FromNameLookup(mol, atomindex))
+      return true;
+
+    // Rn is stored as an atom with 0 atomic number and atomclass = n
+    // Note that if the name contains anything after the number it is ignored.
+    if(_alias[0]=='R' && isdigit(_alias[1]))
     {
-      obErrorLog.ThrowError(__FUNCTION__, "Alias " + _alias + 
-        " Could not be interpreted.\n Output may not be correct.", obWarning, onceOnly);
-      return false;
+      // Rn is stored a atom with 0 atomic number and atomclass = n
+      int n = atoi(_alias.c_str()+1);
+      OBAtomClassData* pac = static_cast<OBAtomClassData*>(mol.GetData("Atom Class"));
+      if(!pac)
+      {
+        pac = new OBAtomClassData;
+        mol.SetData(pac);
+      }
+      pac->Add(atomindex, n);
+      mol.GetAtom(atomindex)->SetAtomicNum(0);
+      return true;
     }
-    return true;
+
+    obErrorLog.ThrowError(__FUNCTION__, "Alias " + _alias + 
+      " Could not be interpreted.\n Output may not be correct.", obWarning, onceOnly);
+    return false;   
   }
 
 bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)

@@ -32,6 +32,7 @@ GNU General Public License for more details.
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/alias.h>
 #include <openbabel/tokenst.h>
+#include <openbabel/atomclass.h>
 
 using namespace std;
 namespace OpenBabel
@@ -821,7 +822,14 @@ namespace OpenBabel
               if(!ad->IsExpanded()) //do nothing with an expanded alias
                 ofs << "A  " << setw(3) << right << atom->GetIdx() << '\n' << ad->GetAlias() << endl;
             }
-
+            //Atoms with no AliasData, but 0 atomicnum and atomclass==n are given an alias Rn 
+            else if(atom->GetAtomicNum()==0)
+            {
+              OBAtomClassData* pac = static_cast<OBAtomClassData*>(mol.GetData("Atom Class"));
+              if(pac && pac->HasClass(atom->GetIdx()))
+                ofs << "A  " << setw(3) << right << atom->GetIdx() << '\n'
+                    << 'R' << pac->GetClass(atom->GetIdx()) << endl;
+            }
           }
         if (rads.size()) {
 	  int counter = 0;

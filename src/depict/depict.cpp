@@ -19,6 +19,7 @@ GNU General Public License for more details.
 
 #include <openbabel/mol.h>
 #include <openbabel/alias.h>
+#include <openbabel/atomclass.h>
 #include <openbabel/depict/depict.h>
 #include <openbabel/depict/painter.h>
 #include <algorithm> // std::reverse
@@ -276,6 +277,10 @@ namespace OpenBabel
       return false;
 
     d->mol = mol;
+    
+    OBAtomClassData* pac = NULL;
+    if(mol->HasData("Atom Class"))
+      pac = static_cast<OBAtomClassData*>(mol->GetData("Atom Class"));
 
     double width=0.0, height=0.0;
 
@@ -452,6 +457,14 @@ namespace OpenBabel
         OBColor aliasColor = !ad->GetColor().empty() ? ad->GetColor() : d->bondColor; 
           d->painter->SetPenColor(aliasColor);
       }
+
+      //Atoms with no AliasData, but 0 atomic num and atomclass==n are output as Rn 
+      else if(pac && atom->GetAtomicNum()==0 && pac->HasClass(atom->GetIdx()))
+      {
+        ss << 'R' << pac->GetClass(atom->GetIdx());
+        d->painter->SetPenColor(OBColor("black"));
+      }
+
       else {
         const char* atomSymbol;
         if(atom->IsHydrogen() && atom->GetIsotope()>1)
