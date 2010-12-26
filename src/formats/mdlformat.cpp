@@ -1295,9 +1295,21 @@ namespace OpenBabel
         Parity atomparity = Unknown;
         if (cfg.specified) {
           // If, when looking towards the maxref, the remaining refs increase in number
-          // clockwise, parity is 1 (Parity::Clockwise)
+          // clockwise, parity is 1 (Parity::Clockwise). Note that Implicit Refs and Hydrogens
+          // should be treated considered the maxref if present.
           OBStereo::Refs refs = cfg.refs;
-          unsigned long maxref = std::max(*(std::max_element(refs.begin(), refs.end())), cfg.from);
+          
+          unsigned long maxref = OBStereo::NoRef;
+          // Search for an explicit Hydrogen in the cfg refs...
+          if (cfg.from != OBStereo::ImplicitRef && mol.GetAtomById(cfg.from)->IsHydrogen())
+            maxref = cfg.from;
+          else
+            for (OBStereo::RefIter ref_it = refs.begin(); ref_it != refs.end(); ++ref_it)
+              if ((*ref_it) != OBStereo::ImplicitRef && mol.GetAtomById(*ref_it)->IsHydrogen())
+                maxref = *ref_it;
+          // ...otherwise, find the maximum ref (note that ImplicitRef will be max if present)
+          if (maxref == OBStereo::NoRef)
+            maxref = std::max(*(std::max_element(refs.begin(), refs.end())), cfg.from);
 
           // Get a new cfg and refs looking towards the maxref
           cfg = ts->GetConfig(maxref, OBStereo::Clockwise, OBStereo::ViewTowards);
