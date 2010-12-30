@@ -74,7 +74,6 @@ namespace std {
 %feature("ignore") vector< vector<T> >::rend;
 %feature("ignore") vector< vector<T> >::reserve;
 %feature("ignore") vector< vector<T> >::resize;
-%feature("ignore") vector< vector<T> >::size;
 %feature("ignore") vector< vector<T> >::swap;
 %template(vectorv ## name) vector< vector<T> >;
 %enddef
@@ -99,7 +98,6 @@ namespace std {
 %feature("ignore") vector<T>::rend;
 %feature("ignore") vector<T>::reserve;
 %feature("ignore") vector<T>::resize;
-%feature("ignore") vector<T>::size;
 %feature("ignore") vector<T>::swap;
 %template(vector ## vectorname) vector<T>;
 %enddef
