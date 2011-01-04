@@ -1,3 +1,10 @@
+INSTALLATION
+============
+
+This document gives a basic overview of the installation procedure. For full
+installation instructions, please see:
+   http://openbabel.org/docs/dev/Installation/install.html
+
 Requirements
 ============
  -- CMake 2.4.8 or later
@@ -14,25 +21,28 @@ install Open Babel on most systems.  If you are using unique install locations
 and/or libraries are not automatically detected please consult the 'Advanced'
 section.
 
-1. Create a 'build' directory in the package source directory.
+The following instructions assume that the Open Babel source distribution is in
+the directory ~/openbabel-2.3.0.
+
+1. Create a 'build' directory:
 
    mkdir build
    cd build
 
 2. Configure the build system. You can specify additional build
-options at this time (see below).
+options at this time (see below):
 
-   cmake ../
+   cmake ~/openbabel-2.3.0
 
-3. Compile
+3. Compile:
 
    make -j2
 
-4. Test (optional)
+4. Test (optional):
 
    make test
 
-5. Install
+5. Install:
 
    sudo make install
 
@@ -62,7 +72,7 @@ components.
 
 For more information please consult the CMake documentation and the
 Open Babel website:
-<http://openbabel.org/wiki/CMake>
+   http://openbabel.org/docs/dev/Installation/install.html
 
 
 Environment Variables
