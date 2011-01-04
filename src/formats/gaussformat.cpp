@@ -302,7 +302,7 @@ namespace OpenBabel
     std::vector<double> Frequencies, Intensities;
     //Rotational data
     std::vector<double> RotConsts(3);
-    int RotSymNum;
+    int RotSymNum=1;
     OBRotationData::RType RotorType;
 
     // Translation vectors (if present)
@@ -317,6 +317,26 @@ namespace OpenBabel
     std::vector<double> orbitals;
     std::vector<std::string> symmetries;
     int aHOMO, bHOMO;
+
+    //Put some metadata into OBCommentData
+    string comment("Gaussian ");  
+    ifs.getline(buffer,BUFF_SIZE);
+    comment += strchr(buffer,'=')+2;
+    comment += "";
+    for(unsigned i=0; i<115, ifs; ++i)
+    {
+      ifs.getline(buffer,BUFF_SIZE);
+      if(buffer[1]=='#')
+      {
+        //the line describing the method
+        comment += buffer;
+        OBCommentData *cd = new OBCommentData;
+        cd->SetData(comment);
+        cd->SetOrigin(fileformatInput);
+        mol.SetData(cd);
+        break;
+      }
+    }
 
     mol.BeginModify();
     bool have_coords = 0;
@@ -500,15 +520,16 @@ namespace OpenBabel
           ifs.getline(buffer,BUFF_SIZE); //symmetry number
           tokenize(vs, buffer);
           RotSymNum = atoi(vs[3].c_str());
-          do
-          {
-            ifs.getline(buffer,BUFF_SIZE);
-          }while(ifs && !strstr(buffer, "Rotational constant"));
-          tokenize(vs, buffer);
-          for(int i=3; i<vs.size(); ++i)
-            RotConsts[i-3] = atof(vs[i].c_str());
-
         }
+
+        else if(strstr(buffer, "Rotational constant"))
+        {
+          tokenize(vs, buffer);
+          RotConsts.clear();
+          for(int i=3; i<vs.size(); ++i)
+            RotConsts.push_back(atof(vs[i].c_str()));
+        }
+
         else if(strstr(buffer, "alpha electrons")) // # of electrons / orbital
         {
           tokenize(vs, buffer);
