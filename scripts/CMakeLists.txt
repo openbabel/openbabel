@@ -66,6 +66,7 @@ if (DO_PYTHON_BINDINGS)
 
     if(NOT WIN32)
         add_custom_target(_openbabel ALL
+            COMMAND export CFLAGS="${CFLAGS} -I${EIGEN2_INCLUDE_DIR}"
             COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py build --build-lib=${openbabel_BINARY_DIR}/scripts/pybuild
             DEPENDS openbabel ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp
             WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts
@@ -85,12 +86,12 @@ if (DO_PYTHON_BINDINGS)
         add_dependencies(_openbabel openbabel)
 
         if (PYTHON_PREFIX)
-            install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --prefix=${PYTHON_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
+            install(CODE "execute_process(COMMAND export CFLAGS='${CFLAGS} -I${EIGEN2_INCLUDE_DIR}' COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --prefix=${PYTHON_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
         else (PYTHON_PREFIX)
             if (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-                install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
+                install(CODE "execute_process(COMMAND export CFLAGS='${CFLAGS} -I${EIGEN2_INCLUDE_DIR}' COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
             else (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-                install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --prefix=$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
+                install(CODE "execute_process(COMMAND export CFLAGS='${CFLAGS} -I${EIGEN2_INCLUDE_DIR}' COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --prefix=$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
             endif (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
         endif (PYTHON_PREFIX)
 
