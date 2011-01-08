@@ -281,6 +281,14 @@ if (DO_RUBY_BINDINGS)
         # bindings_ruby as the WORKING_DIRECTORY needs to already exist!
         COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_BINARY_DIR}/scripts/ruby
         )
+      set (DESTDIR_TEXT "\$ENV{DESTDIR}")
+      if (RUBY_PREFIX)
+        set (DESTDIR_TEXT "${DESTDIR_TEXT}/${RUBY_PREFIX}")
+      else (RUBY_PREFIX)
+          if (NOT ${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
+            set (DESTDIR_TEXT "${DESTDIR_TEXT}/${CMAKE_INSTALL_PREFIX}")
+          endif (NOT ${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
+      endif (RUBY_PREFIX)
       add_custom_target(bindings_ruby ALL
         COMMAND ${RUBY_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/ruby/extconf.rb --with-openbabel-lib=${openbabel_BINARY_DIR}/lib${LIB_SUFFIX} --with-openbabel-include=${openbabel_BINARY_DIR}/include
         COMMAND ${CMAKE_COMMAND} -E echo "Compiling Ruby bindings"
@@ -289,15 +297,7 @@ if (DO_RUBY_BINDINGS)
         WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/ruby
         )
       add_dependencies(bindings_ruby pre_bindings_ruby openbabel)
-      if (RUBY_PREFIX)
-        install(CODE "execute_process(COMMAND DESTDIR=${RUBY_PREFIX} make install WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/ruby)")
-      else (RUBY_PREFIX)
-        if (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-          install(CODE "execute_process(COMMAND make install WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/ruby)")
-        else (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-          install(CODE "execute_process(COMMAND make DESTDIR=$ENV{DESTDIR} install WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/ruby)")
-        endif (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-      endif (RUBY_PREFIX)
+      install(CODE "execute_process(COMMAND make install DESTDIR=${DESTDIR_TEXT} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/ruby)")
     else(NOT MSVC)
       add_library(bindings_ruby MODULE ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp)
       target_link_libraries(bindings_ruby ${RUBY_LIBRARY} ${BABEL_LIBRARY})

@@ -4,9 +4,9 @@
 # binaries on OS X by default
 require 'rbconfig'
 if Config::CONFIG["arch"] =~ /universal-darwin/
-  case `uname -smr`.chomp
-  when "i386" : ENV['ARCHFLAGS'] = '-arch i386'
-  when "ppc"  : ENV['ARCHFLAGS'] = '-arch ppc'
+  ENV['ARCHFLAGS'] = case `uname -smr`.chomp
+    when "i386" then '-arch i386'
+    when "ppc"  then '-arch ppc'
   end
 end
 
