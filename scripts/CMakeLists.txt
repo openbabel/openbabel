@@ -229,7 +229,7 @@ if (DO_PERL_BINDINGS)
             WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/perl
         )
       add_dependencies(bindings_perl pre_bindings_perl openbabel)
-      install(CODE "execute_process(COMMAND make install_vendor WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/perl)")
+      install(CODE "execute_process(COMMAND make install DESTDIR=\$ENV{DESTDIR} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/perl)")
     
     else (NOT MSVC)
       add_library(bindings_perl MODULE ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp)
