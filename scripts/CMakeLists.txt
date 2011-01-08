@@ -85,7 +85,7 @@ if (DO_PYTHON_BINDINGS)
         add_dependencies(_openbabel openbabel)
 
         if (PYTHON_PREFIX)
-            install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --prefix=${PYTHON_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
+            install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --root=\$ENV{DESTDIR}/ --prefix=${PYTHON_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
         else (PYTHON_PREFIX)
             if (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
                 install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --root=\$ENV{DESTDIR}/ WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
