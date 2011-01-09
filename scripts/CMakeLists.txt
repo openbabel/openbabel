@@ -55,6 +55,7 @@ if (DO_PYTHON_BINDINGS)
 
     if (EIGEN2_FOUND) 
         set (eigen2_define "-DHAVE_EIGEN2")
+        set (CFLAGS_TEXT "CFLAGS=-I${EIGEN2_INCLUDE_DIR}")
     endif (EIGEN2_FOUND)
 
     if (RUN_SWIG)
@@ -66,7 +67,7 @@ if (DO_PYTHON_BINDINGS)
 
     if(NOT WIN32)
         add_custom_target(_openbabel ALL
-            COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py build --build-lib=${openbabel_BINARY_DIR}/scripts/pybuild
+            COMMAND ${CFLAGS_TEXT} ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py build --build-lib=${openbabel_BINARY_DIR}/scripts/pybuild
             DEPENDS openbabel ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp
             WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts
         )
