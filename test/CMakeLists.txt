@@ -121,11 +121,11 @@ if(WITH_INCHI)
     set_target_properties(test_inchiwrite PROPERTIES LINK_SEARCH_END_STATIC TRUE)
   endif()
   # files in test/inchi -- both .sdf and .txt
-  set(inchitests Samples SamplesTechMan)
+  set(inchitests Samples.sdf SamplesTechMan.sdf Steffen_PubChem.smi)
   set(inchidata ${CMAKE_SOURCE_DIR}/test/inchi)
   foreach(test ${inchitests})
     add_test(inchi${test}_Test
-             ${TEST_PATH}/test_inchiwrite ${inchidata}/${test}.sdf ${inchidata}/${test}.txt)
+             ${TEST_PATH}/test_inchiwrite ${inchidata}/${test} ${inchidata}/${test}.txt)
     set_tests_properties(inchi${test}_Test PROPERTIES
                          FAIL_REGULAR_EXPRESSION "Not ok"
                          ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
@@ -176,11 +176,13 @@ if(NOT MINGW AND NOT CYGWIN)
     set(pytests
         babel sym fastsearch unique kekule)
     foreach(pytest ${pytests})
+    SET_SOURCE_FILES_PROPERTIES(test${pytest}.py PROPERTIES
+        BABEL_LIBDIR "${CMAKE_BINARY_DIR}/lib"
+        BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
+)
       ADD_PYTHON_TEST(pytest_${pytest} test${pytest}.py)
       set_tests_properties(pytest_${pytest} PROPERTIES
            FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
-           ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
-           ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data"
       )
     endforeach(pytest ${pytests})
   endif(PYTHON_EXECUTABLE)
@@ -194,11 +196,19 @@ if (PYTHON_BINDINGS)
   set(pybindtests
       bindings _pybel example)
   foreach(pybindtest ${pybindtests})
+    SET_SOURCE_FILES_PROPERTIES(test${pybindtest}.py PROPERTIES
+        PYTHONPATH "${CMAKE_BINARY_DIR}/scripts/pybuild:${CMAKE_BINARY_DIR}/lib"
+        BABEL_LIBDIR "${CMAKE_BINARY_DIR}/lib"
+        BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
+    )
+    if(MSVC)
+      SET_SOURCE_FILES_PROPERTIES(test${pybindtest}.py PROPERTIES
+        PYTHONPATH "\"${CMAKE_SOURCE_DIR}/scripts/python;${CMAKE_BINARY_DIR}/bin/Release\""
+      )
+    endif()
     ADD_PYTHON_TEST(pybindtest_${pybindtest} test${pybindtest}.py)
     set_tests_properties(pybindtest_${pybindtest} PROPERTIES
          FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
-         ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
-         ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data"
     )
   endforeach(pybindtest ${pybindtests})
 endif (PYTHON_BINDINGS)

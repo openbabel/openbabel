@@ -252,6 +252,12 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
   }
   else //SMARTS supplied
   {
+    // Explicit H in SMARTS requires explicit H in the molecule.
+    // Calling AddHydrogens() on a copy of the molecule  is done in parsmart.cpp
+    // only when SMARTS contains [H]. Doing more has complications with atom typing,
+    // so AddHydrogens here on the molecule (not a copy) when #1 detected.
+    bool addHydrogens = (vec[0].find("#1]")!=string::npos);
+      
     if(!sp.Init(vec[0]))
     {
       string msg = vec[0] + " cannot be interpreted as either valid SMARTS "
@@ -263,6 +269,9 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
       pConv->SetOneObjectOnly(); //stop conversion
       return false;
     }
+
+    if(addHydrogens)
+      pmol->AddHydrogens(false,false);
 
     if( (match = sp.Match(*pmol)) ) // extra parens to indicate truth value
       pMappedAtoms = &sp.GetMapList();

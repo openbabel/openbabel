@@ -4,9 +4,9 @@
 # binaries on OS X by default
 require 'rbconfig'
 if Config::CONFIG["arch"] =~ /universal-darwin/
-  case `uname -smr`.chomp
-  when "i386" : ENV['ARCHFLAGS'] = '-arch i386'
-  when "ppc"  : ENV['ARCHFLAGS'] = '-arch ppc'
+  ENV['ARCHFLAGS'] = case `uname -smr`.chomp
+    when "i386" then '-arch i386'
+    when "ppc"  then '-arch ppc'
   end
 end
 
@@ -17,7 +17,7 @@ dir_config('openbabel')
 # Find a trivial header in order to add the proper include path
 # to the build flags.
 here = File.dirname(__FILE__)
-find_header('inchi_api.h', here + '/../../include')
+find_header('inchi_api.h', '/usr/include/inchi', '/usr/include', here + '/../../include')
 
 # Prevent Ruby 1.8.x from trying to compile and link the extension
 # using gcc.

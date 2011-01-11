@@ -19,6 +19,7 @@ GNU General Public License for more details.
 
 #include <openbabel/mol.h>
 #include <openbabel/alias.h>
+#include <openbabel/atomclass.h>
 #include <openbabel/depict/depict.h>
 #include <openbabel/depict/painter.h>
 #include <algorithm> // std::reverse
@@ -276,6 +277,10 @@ namespace OpenBabel
       return false;
 
     d->mol = mol;
+    
+    OBAtomClassData* pac = NULL;
+    if(mol->HasData("Atom Class"))
+      pac = static_cast<OBAtomClassData*>(mol->GetData("Atom Class"));
 
     double width=0.0, height=0.0;
 
@@ -452,6 +457,14 @@ namespace OpenBabel
         OBColor aliasColor = !ad->GetColor().empty() ? ad->GetColor() : d->bondColor; 
           d->painter->SetPenColor(aliasColor);
       }
+
+      //Atoms with no AliasData, but 0 atomic num and atomclass==n are output as Rn 
+      else if(pac && atom->GetAtomicNum()==0 && pac->HasClass(atom->GetIdx()))
+      {
+        ss << 'R' << pac->GetClass(atom->GetIdx());
+        d->painter->SetPenColor(OBColor("black"));
+      }
+
       else {
         const char* atomSymbol;
         if(atom->IsHydrogen() && atom->GetIsotope()>1)
@@ -495,11 +508,11 @@ namespace OpenBabel
     orthogonalLine *= 0.5 * bondWidth;
     std::vector<std::pair<double,double> > points;
 
-    points.push_back(std::pair<double,double>(end.x(), end.y()));
-    points.push_back(std::pair<double,double>(begin.x() + orthogonalLine.x(), 
-                                              begin.y() + orthogonalLine.y()));
-    points.push_back(std::pair<double,double>(begin.x() - orthogonalLine.x(), 
-                                              begin.y() - orthogonalLine.y()));
+    points.push_back(std::pair<double,double>(begin.x(), begin.y()));
+    points.push_back(std::pair<double,double>(end.x() + orthogonalLine.x(), 
+                                              end.y() + orthogonalLine.y()));
+    points.push_back(std::pair<double,double>(end.x() - orthogonalLine.x(), 
+                                              end.y() - orthogonalLine.y()));
     painter->DrawPolygon(points);
   }
 
@@ -522,10 +535,10 @@ namespace OpenBabel
 
     for (int k = 0; k < 7; ++k) {
       double w = lines[k];
-      painter->DrawLine(end.x() - vb.x() * w + orthogonalLine.x() * w, 
-                        end.y() - vb.y() * w + orthogonalLine.y() * w, 
-                        end.x() - vb.x() * w - orthogonalLine.x() * w, 
-                        end.y() - vb.y() * w - orthogonalLine.y() * w);
+      painter->DrawLine(begin.x() + vb.x() * w + orthogonalLine.x() * w, 
+                        begin.y() + vb.y() * w + orthogonalLine.y() * w, 
+                        begin.x() + vb.x() * w - orthogonalLine.x() * w, 
+                        begin.y() + vb.y() * w - orthogonalLine.y() * w);
     }
   } 
   

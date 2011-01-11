@@ -114,6 +114,7 @@ namespace OpenBabel {
    *
    * Criteria:
    * - sp3 hybridization
+   * - not connected to more than 4 atoms
    * - at least 3 "heavy" neighbors
    *
    * Nitrogen is treated as a special case since the barrier of inversion is
@@ -124,7 +125,7 @@ namespace OpenBabel {
   bool isPotentialTetrahedral(OBAtom *atom)
   {
     // consider only potential steroecenters
-    if (atom->GetHyb() != 3 || atom->GetHvyValence() < 3 || atom->GetHvyValence() > 4)
+    if (atom->GetHyb() != 3 || atom->GetImplicitValence() > 4 || atom->GetHvyValence() < 3 || atom->GetHvyValence() > 4)
       return false;
     // skip non-chiral N
     if (atom->IsNitrogen()) {
@@ -756,6 +757,9 @@ namespace OpenBabel {
         OBAtom *end = bond->GetEndAtom();
         if (!begin || !end)
           continue;
+
+        if (begin->GetImplicitValence() > 3 || end->GetImplicitValence() > 3)
+          continue; // e.g. C=Ru where the Ru has four substituents
 
         // Needs to have at least one explicit single bond at either end
         // FIXME: timvdm: what about C=C=C=C
@@ -2309,6 +2313,10 @@ namespace OpenBabel {
       OBTetrahedralStereo::Config config;
       config.center = *i;
 
+      // We assume the 'tip-only' convention. That is, wedge or hash bonds only
+      // determine the stereochemistry at their thin end (the BeginAtom)
+      bool tiponly = true;
+
       // find the hash, wedge and 2 plane atoms
       std::vector<OBAtom*> planeAtoms;
       std::vector<OBAtom*> wedgeAtoms;
@@ -2322,7 +2330,10 @@ namespace OpenBabel {
             hashAtoms.push_back(nbr);
           } else {
             // this is an 'inverted' hash bond going from nbr to center
-            wedgeAtoms.push_back(nbr);
+            if (tiponly)
+              planeAtoms.push_back(nbr);
+            else
+              wedgeAtoms.push_back(nbr);  
           }
         } else if (bond->IsWedge()) {
           // wedge bonds
@@ -2330,17 +2341,29 @@ namespace OpenBabel {
             // this is a 'real' wedge bond going from center to nbr
             wedgeAtoms.push_back(nbr);
           } else {
-            // this is an 'inverted' hash bond going from nbr to center
-            hashAtoms.push_back(nbr);
+            // this is an 'inverted' wedge bond going from nbr to center
+            if (tiponly)
+              planeAtoms.push_back(nbr);
+            else
+              hashAtoms.push_back(nbr);
           }
         } else if (bond->IsWedgeOrHash()) {
-          config.specified = false;
-          break;
+          if (!tiponly || (tiponly && bond->GetBeginAtom()->GetId() == center->GetId())) {
+            config.specified = false;
+            break;
+          }
+          else
+            planeAtoms.push_back(nbr);
         } else {
           // plane bonds
           planeAtoms.push_back(nbr);
         }
       }
+
+      // Handle the case of a tet center with four plane atoms or
+      //        3 plane atoms with the fourth bond implicit
+      if (planeAtoms.size() == 4 || (planeAtoms.size() == 3 && center->GetValence()==3))
+        config.specified = false;
 
       bool success = true;
 

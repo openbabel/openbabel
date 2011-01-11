@@ -1094,11 +1094,18 @@ namespace OpenBabel
 
             formula << symb << sp;
             if(atomicCount[alph] > ones)
-              formula << sp << atomicCount[alph] << sp;
+              formula << atomicCount[alph] << sp;
           }
       }
 
-    return (formula.str());
+    int chg = GetTotalCharge();
+    char ch = chg>0 ? '+' : '-' ;
+    chg = abs(chg);
+    while(chg--)
+      formula << ch << sp; 
+
+    string f_str = formula.str();
+    return (Trim(f_str));
   }
 
   //! Stochoimetric formula (e.g., C4H6O).
@@ -1215,7 +1222,8 @@ namespace OpenBabel
   //Residue information are copied, MM 4-27-01
   //All OBGenericData incl OBRotameterList is copied, CM 2006
   //OBChiralData for all atoms copied, TV 2008
-  //Zeros all flags except OB_TCHARGE_MOL and OB_TSPIN_MOL and OB_PATTERN_STRUCTURE which are copied
+  //Zeros all flags except OB_TCHARGE_MOL, OB_PCHARGE_MOL,
+  //OB_TSPIN_MOL and OB_PATTERN_STRUCTURE which are copied
   {
     if (this == &source)
       return *this;
@@ -1253,6 +1261,8 @@ namespace OpenBabel
       this->SetFlag(OB_TSPIN_MOL);
     if (src.HasFlag(OB_TCHARGE_MOL))
       this->SetFlag(OB_TCHARGE_MOL);
+    if (src.HasFlag(OB_PCHARGE_MOL))
+      this->SetFlag(OB_PCHARGE_MOL);
 
     //this->_flags = src.GetFlags(); //Copy all flags. Perhaps too drastic a change
 

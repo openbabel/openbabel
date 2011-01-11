@@ -118,7 +118,7 @@ public:
   const char* Description(){ return "<file.xxx> Additional file output\n"
        "Mainly intended to be used to generate svg files for display from the GUI,\n"
        "but can also be used to output to two different formats:\n"
-       "      obabel infile.sdf  -osmi  -0xout secondout.svg"; }
+       "      obabel infile.sdf  -osmi  --0xout secondout.svg"; }
 
   virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
   virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* pConv);
@@ -141,16 +141,20 @@ bool OpExtraOut::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversi
 
   if(pConv->IsFirstInput())
   {
+    std::string sOptionText(OptionText);
+    Trim(sOptionText);
     OBConversion* pExtraConv = new OBConversion(*pConv); //copy ensures OBConversion::Index>-1
     std::ofstream* ofs;
     if( (ofs = new std::ofstream(OptionText)) ) // extra parens to indicate truth value
       pExtraConv->SetOutStream(ofs);
-    if(!ofs || !pExtraConv->SetOutFormat(OBConversion::FormatFromExt(OptionText)))
+    if(!ofs || !pExtraConv->SetOutFormat(OBConversion::FormatFromExt(sOptionText)))
     {
       obErrorLog.ThrowError(__FUNCTION__, "Error setting up extra output file", obError);
       return true;
     }
     OBConversion* pOrigConv = new OBConversion(*pConv);
+    pOrigConv->SetInStream(NULL); //not used; avoids complications in AddChemObject()
+    pExtraConv->SetInStream(NULL);
 
     //Make an instance of ExtraFormat and divert the output to it. It will delete itself.
     pConv->SetOutFormat(new ExtraFormat(pOrigConv, pExtraConv));

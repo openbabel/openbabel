@@ -2568,16 +2568,20 @@ namespace OpenBabel
     // Iron
     ////////////////////////////////
     if (atom->GetAtomicNum() == 26) {
-      return 87; // Dipositive iron (FE+2)
-      return 88; // Tripositive iron (FE+3)
+      if (atom->GetFormalCharge() == 2)
+        return 87; // Dipositive iron (FE+2)
+      else
+        return 88; // Tripositive iron (FE+3)
     }
 
     ////////////////////////////////
     // Copper
     ////////////////////////////////
     if (atom->GetAtomicNum() == 29) {
-      return 97; // Monopositive copper cation (CU+1)
-      return 98; // Dipositive copper cation (CU+2)
+      if (atom->GetFormalCharge() == 1)
+        return 97; // Monopositive copper cation (CU+1)
+      else
+        return 98; // Dipositive copper cation (CU+2)
     }
 
     ////////////////////////////////
@@ -3670,6 +3674,10 @@ namespace OpenBabel
       case 98:
       case 99:
         atom->SetPartialCharge(2.0);
+        done = true;
+        break;
+      case 88:
+        atom->SetPartialCharge(3.0);
         done = true;
         break;
         //case 98:

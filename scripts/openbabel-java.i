@@ -74,7 +74,6 @@ namespace std {
 %feature("ignore") vector< vector<T> >::rend;
 %feature("ignore") vector< vector<T> >::reserve;
 %feature("ignore") vector< vector<T> >::resize;
-%feature("ignore") vector< vector<T> >::size;
 %feature("ignore") vector< vector<T> >::swap;
 %template(vectorv ## name) vector< vector<T> >;
 %enddef
@@ -99,7 +98,6 @@ namespace std {
 %feature("ignore") vector<T>::rend;
 %feature("ignore") vector<T>::reserve;
 %feature("ignore") vector<T>::resize;
-%feature("ignore") vector<T>::size;
 %feature("ignore") vector<T>::swap;
 %template(vector ## vectorname) vector<T>;
 %enddef
@@ -182,7 +180,8 @@ CAST_GENERICDATA_TO(VirtualBond)
 
 # CloneData should be used instead of the following method
 %ignore OpenBabel::OBBase::SetData;
-%warnfilter(516) OpenBabel::OBBase; // Ignoring std::string methods in favour of char* ones
+%ignore OpenBabel::OBBase::GetData(char const *);
+%ignore OpenBabel::OBBase::HasData(char const *);
 %include <openbabel/base.h>
 
 %warnfilter(516) OpenBabel::OBPairData; // Ignoring std::string methods in favour of char* ones
@@ -207,6 +206,8 @@ namespace std { class stringbuf {}; }
 %warnfilter(503) OpenBabel::OBError; // Not wrapping any of the overloaded operators
 %include <openbabel/oberror.h>
 %include <openbabel/format.h>
+%ignore OpenBabel::OBConversion::FindFormat(const char *);
+%ignore OpenBabel::OBConversion::FormatFromExt(const char *);
 %include <openbabel/obconversion.h>
 %include <openbabel/residue.h>
 %include <openbabel/internalcoord.h>
@@ -217,9 +218,12 @@ namespace std { class stringbuf {}; }
     public void SetCurrentDepth(int d) {currentDepth = d;}
     public int GetCurrentDepth() {return currentDepth;}
 %}
-%warnfilter(516) OpenBabel::OBAtom; // Using non-const version of GetVector
+%ignore OpenBabel::OBAtom::GetVector() const;
+%ignore OpenBabel::OBAtom::IsHydrogen const;
+%ignore OpenBabel::OBAtom::SetType(char const *);
 %include <openbabel/atom.h>
-%warnfilter(516) OpenBabel::OBBond; // Using non-const versions of GetBeginAtom, GetEndAtom
+%ignore OpenBabel::OBBond::GetBeginAtom() const;
+%ignore OpenBabel::OBBond::GetEndAtom() const;
 %include <openbabel/bond.h>
 %define IGNORE_ITER(parent, iteree)
 %ignore OpenBabel::parent::Begin ## iteree ## s;

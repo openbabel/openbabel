@@ -72,9 +72,10 @@ namespace OpenBabel
       if(!AddHydrogens(false, false))
         ret=false;
 
-    if(pOptions->find("r")!=pOptions->end())
-      if(!StripSalts())
-        ret=false;
+    if(pOptions->find("r")!=pOptions->end()) {
+      StripSalts();
+      ret = true;
+    }
 
     itr = pOptions->find("p");
     if(itr!=pOptions->end()) {

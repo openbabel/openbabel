@@ -599,7 +599,7 @@ with the output format.\nDo you wish to continue the conversion?"),
   }
 #ifndef __WXMAC__
   //Call Firefox to display the 2D structure
-  if(m_pDisplay->IsChecked() && wxFile::Exists(m_DisplayFile))
+  if(m_pDisplay->IsChecked() && wxFile::Exists(m_DisplayFile.Trim()))
   {
     wxExecute(m_DisplayCmd + m_DisplayFile);
   }

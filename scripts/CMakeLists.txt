@@ -55,6 +55,7 @@ if (DO_PYTHON_BINDINGS)
 
     if (EIGEN2_FOUND) 
         set (eigen2_define "-DHAVE_EIGEN2")
+        set (CFLAGS_TEXT "CFLAGS=-I${EIGEN2_INCLUDE_DIR}")
     endif (EIGEN2_FOUND)
 
     if (RUN_SWIG)
@@ -66,7 +67,7 @@ if (DO_PYTHON_BINDINGS)
 
     if(NOT WIN32)
         add_custom_target(_openbabel ALL
-            COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py build --build-lib=${openbabel_BINARY_DIR}/scripts/pybuild
+            COMMAND ${CFLAGS_TEXT} ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py build --build-lib=${openbabel_BINARY_DIR}/scripts/pybuild
             DEPENDS openbabel ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp
             WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts
         )
@@ -82,14 +83,15 @@ if (DO_PYTHON_BINDINGS)
             COMMAND ${CMAKE_COMMAND} -E copy ob.py ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
             COMMAND ${CMAKE_COMMAND} -E remove ob.py
             VERBATIM)
+        add_dependencies(_openbabel openbabel)
 
         if (PYTHON_PREFIX)
-            install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --prefix=${PYTHON_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
+            install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --root=\$ENV{DESTDIR}/ --prefix=${PYTHON_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
         else (PYTHON_PREFIX)
             if (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-                install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
+                install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --root=\$ENV{DESTDIR}/ WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
             else (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-                install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --prefix=${CMAKE_INSTALL_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
+                install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --root=\$ENV{DESTDIR}/ --prefix=${CMAKE_INSTALL_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
             endif (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
         endif (PYTHON_PREFIX)
 
@@ -114,7 +116,7 @@ if (JAVA_BINDINGS)
   if (EXISTS ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp OR RUN_SWIG)
 
     find_package(JNI)
-    if (NOT JNI_FOUND)
+    if (NOT JNI_INCLUDE_DIRS)
       message(STATUS "Java Native Interface NOT found. Java bindings will NOT be compiled.")
     endif ()
 
@@ -126,7 +128,7 @@ if (JAVA_BINDINGS)
       endif (NOT JAVA_COMPILE)
     endif (RUN_SWIG)
 
-    if(JNI_FOUND AND NOT JAVAC_FAIL)
+    if(JNI_INCLUDE_DIRS AND NOT JAVAC_FAIL)
       set(DO_JAVA_BINDINGS ON BOOL)
       message(STATUS "Java bindings will be compiled")
     endif()
@@ -147,7 +149,7 @@ if (DO_JAVA_BINDINGS)
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp # ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
           COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_SOURCE_DIR}/scripts/java/org/openbabel
           COMMAND ${SWIG_EXECUTABLE} -java -package org.openbabel -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp -outdir ${openbabel_SOURCE_DIR}/scripts/java/org/openbabel ${openbabel_SOURCE_DIR}/scripts/openbabel-java.i
-          COMMAND ${JAVA_COMPILE} ${openbabel_SOURCE_DIR}/scripts/java/org/openbabel/*.java
+          COMMAND ${CMAKE_COMMAND} -E chdir ${openbabel_SOURCE_DIR}/scripts/java ${JAVA_COMPILE} org/openbabel/*.java
           COMMAND ${CMAKE_COMMAND} -E chdir ${openbabel_SOURCE_DIR}/scripts/java ${JAVA_ARCHIVE} cf openbabel.jar org
           COMMAND ${CMAKE_COMMAND} -E remove_directory ${openbabel_SOURCE_DIR}/scripts/java/org
           MAIN_DEPENDENCY openbabel-java.i
@@ -228,8 +230,8 @@ if (DO_PERL_BINDINGS)
             DEPENDS ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp
             WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/perl
         )
-      add_dependencies(bindings_perl pre_bindings_perl)
-      install(CODE "execute_process(COMMAND make install WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/perl)")
+      add_dependencies(bindings_perl pre_bindings_perl openbabel)
+      install(CODE "execute_process(COMMAND make install DESTDIR=\$ENV{DESTDIR} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/perl)")
     
     else (NOT MSVC)
       add_library(bindings_perl MODULE ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp)
@@ -281,23 +283,23 @@ if (DO_RUBY_BINDINGS)
         # bindings_ruby as the WORKING_DIRECTORY needs to already exist!
         COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_BINARY_DIR}/scripts/ruby
         )
+      set (DESTDIR_TEXT "\$ENV{DESTDIR}")
+      if (RUBY_PREFIX)
+        set (DESTDIR_TEXT "${DESTDIR_TEXT}/${RUBY_PREFIX}")
+      else (RUBY_PREFIX)
+          if (NOT ${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
+            set (DESTDIR_TEXT "${DESTDIR_TEXT}/${CMAKE_INSTALL_PREFIX}")
+          endif (NOT ${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
+      endif (RUBY_PREFIX)
       add_custom_target(bindings_ruby ALL
-        COMMAND ${RUBY_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/ruby/extconf.rb --with-openbabel-lib=${BABEL_LIBRARY} --with-openbabel-include=${openbabel_BINARY_DIR}/include
+        COMMAND ${RUBY_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/ruby/extconf.rb --with-openbabel-lib=${openbabel_BINARY_DIR}/lib${LIB_SUFFIX} --with-openbabel-include=${openbabel_BINARY_DIR}/include
         COMMAND ${CMAKE_COMMAND} -E echo "Compiling Ruby bindings"
         COMMAND make
         DEPENDS ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp
         WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/ruby
         )
-        add_dependencies(bindings_ruby pre_bindings_ruby)
-      if (RUBY_PREFIX)
-        install(CODE "execute_process(COMMAND DESTDIR=${RUBY_PREFIX} make install WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/ruby)")
-      else (RUBY_PREFIX)
-        if (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-          install(CODE "execute_process(COMMAND make install WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/ruby)")
-        else (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-          install(CODE "execute_process(COMMAND DESTDIR=${CMAKE_INSTALL_PREFIX} make install WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/ruby)")
-        endif (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-      endif (RUBY_PREFIX)
+      add_dependencies(bindings_ruby pre_bindings_ruby openbabel)
+      install(CODE "execute_process(COMMAND make install DESTDIR=${DESTDIR_TEXT} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/ruby)")
     else(NOT MSVC)
       add_library(bindings_ruby MODULE ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp)
       target_link_libraries(bindings_ruby ${RUBY_LIBRARY} ${BABEL_LIBRARY})
@@ -330,12 +332,16 @@ endif (CSHARP_BINDINGS)
 if (DO_CSHARP_BINDINGS)
 
     if (RUN_SWIG)
+      set(PLATFORM_TYPE "")
+      if (WIN32) # We need to enforce 32-bit .NET dlls or it won't load
+          set(PLATFORM_TYPE "/platform:x86")
+      endif (WIN32)
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp ${openbabel_SOURCE_DIR}/scripts/csharp/OBDotNet.dll
           COMMAND ${CMAKE_COMMAND} -E remove_directory ${openbabel_BINARY_DIR}/scripts/csharp
           COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_BINARY_DIR}/scripts/csharp
           COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/windows-vc2008/Distribution/OBDotNetAssemblyInfo.cs ${openbabel_BINARY_DIR}/scripts/csharp
           COMMAND ${SWIG_EXECUTABLE} -csharp -c++ -small -O -templatereduce -namespace OpenBabel -outdir ${openbabel_BINARY_DIR}/scripts/csharp -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp ${openbabel_SOURCE_DIR}/scripts/openbabel-csharp.i
-          COMMAND ${CMAKE_COMMAND} -E chdir ${openbabel_BINARY_DIR}/scripts/csharp ${CSHARP_EXECUTABLE} /target:library /keyfile:${openbabel_SOURCE_DIR}/windows-vc2008/Distribution/obdotnet.snk /optimize /out:${openbabel_SOURCE_DIR}/scripts/csharp/OBDotNet.dll *.cs
+          COMMAND ${CMAKE_COMMAND} -E chdir ${openbabel_BINARY_DIR}/scripts/csharp ${CSHARP_EXECUTABLE} /target:library ${PLATFORM_TYPE} /keyfile:${openbabel_SOURCE_DIR}/windows-vc2008/Distribution/obdotnet.snk /optimize /out:${openbabel_SOURCE_DIR}/scripts/csharp/OBDotNet.dll *.cs
           MAIN_DEPENDENCY openbabel-csharp.i
           WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts
       )

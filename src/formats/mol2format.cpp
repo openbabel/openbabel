@@ -214,8 +214,10 @@ namespace OpenBabel
           {
             temp_type[1] = (char)tolower(temp_type[1]);
             str = temp_type;
+            ttab.SetToType("ATN");
             ttab.Translate(str1,str);
             elemno = atoi(str1.c_str());
+            ttab.SetToType("IDX");
           }
         // One last check if there isn't a period in the type,
         // it's a malformed atom type, but it may be the element symbol
@@ -234,6 +236,11 @@ namespace OpenBabel
         ttab.Translate(str1,str);
         atom.SetType(str1);
         atom.SetPartialCharge(pcharge);
+	// MMFF94 has different atom types for Cu(I) and Cu(II)
+	// as well as for Fe(II) and Fe(III), so the correct formal
+	// charge is needed for correct atom type assignment
+	if (str1 == "Cu" || str1 == "Fe")
+	   atom.SetFormalCharge((int)pcharge);
         if (!mol.AddAtom(atom))
           return(false);
         if (!IsNearZero(pcharge))

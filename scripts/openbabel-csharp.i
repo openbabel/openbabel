@@ -601,9 +601,7 @@ using System.Runtime.InteropServices;
 
 %}
 
-//Changed module class name to comply with
-//C# naming conventions
-%module openbabelcsharp
+%module openbabel_csharp
 %{
 // used to set import/export for Cygwin DLLs
 #ifdef WIN32
@@ -838,6 +836,8 @@ namespace std { class stringbuf {}; }
 %warnfilter(503) OpenBabel::OBError; // Not wrapping any of the overloaded operators
 %include <openbabel/oberror.h>
 %include <openbabel/format.h>
+%ignore OpenBabel::OBConversion::FindFormat(const char *);
+%ignore OpenBabel::OBConversion::FormatFromExt(const char *);
 %include <openbabel/obconversion.h>
 %include <openbabel/residue.h>
 %include <openbabel/internalcoord.h>
