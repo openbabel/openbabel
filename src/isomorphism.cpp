@@ -453,7 +453,7 @@ namespace OpenBabel {
               for (OBIsomorphismMapper::Mapping::const_iterator it = map.begin(); it != map.end(); ++it)
                 values.push_back(it->second);
               std::sort(values.begin(), values.end());
-                print_vector("values ", values);
+               // print_vector("values ", values);
 
               bool isUnique = true;
               for (unsigned int k = 0; k < m_maps.size(); ++k) {
@@ -462,7 +462,7 @@ namespace OpenBabel {
                   kValues.push_back(it->second);
                 std::sort(kValues.begin(), kValues.end());
 
-                print_vector("kValues", kValues);
+              //  print_vector("kValues", kValues);
                 if (values == kValues)
                   isUnique = false;
               }
