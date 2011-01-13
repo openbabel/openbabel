@@ -676,7 +676,10 @@ namespace OpenBabel
     // line 3: comment
     if (mol.HasData(OBGenericDataType::CommentData)) {
       OBCommentData *cd = (OBCommentData*)mol.GetData(OBGenericDataType::CommentData);
-      ofs << cd->GetData();
+      string comment = cd->GetData();
+      if(comment.size()>80)
+        comment.erase(80); //truncate to 80 chars
+      ofs << comment;
     }
     ofs << endl;
 
