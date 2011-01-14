@@ -284,11 +284,15 @@ if (DO_RUBY_BINDINGS)
         )
       set (DESTDIR_TEXT "\$ENV{DESTDIR}")
       if (RUBY_PREFIX)
-        set (DESTDIR_TEXT "${DESTDIR_TEXT}/${RUBY_PREFIX}")
+        # It is reasonably safe to assume that RUBY_POSSIBLE_LIB_DIR contains
+        # no regex metacharacters except possibly '.':
+        string(REGEX REPLACE ^${RUBY_POSSIBLE_LIB_DIR}/ruby ${RUBY_PREFIX} ruby_install_dir "${RUBY_SITEARCH_DIR}")
       else (RUBY_PREFIX)
-          if (NOT ${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-            set (DESTDIR_TEXT "${DESTDIR_TEXT}/${CMAKE_INSTALL_PREFIX}")
-          endif (NOT ${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
+        execute_process(COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "print Config::CONFIG['exec_prefix']"
+          OUTPUT_VARIABLE ruby_exec_prefix)
+        # It is reasonably safe to assume that ruby_exec_prefix contains no
+        # regex metacharacters except possibly '.':
+        string(REGEX REPLACE ^${ruby_exec_prefix} ${CMAKE_INSTALL_PREFIX} ruby_install_dir "${RUBY_SITEARCH_DIR}")
       endif (RUBY_PREFIX)
       add_custom_target(bindings_ruby ALL
         COMMAND ${RUBY_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/ruby/extconf.rb --with-openbabel-lib=${openbabel_BINARY_DIR}/lib${LIB_SUFFIX} --with-openbabel-include=${openbabel_BINARY_DIR}/include
@@ -298,7 +302,10 @@ if (DO_RUBY_BINDINGS)
         WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/ruby
         )
       add_dependencies(bindings_ruby pre_bindings_ruby openbabel)
-      install(CODE "execute_process(COMMAND make install DESTDIR=${DESTDIR_TEXT} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/ruby)")
+      set(ruby_install_dir ${ruby_install_dir}
+          CACHE PATH "The directory where the Ruby bindings will be installed")
+      install(FILES ruby/openbabel.so DESTINATION ${ruby_install_dir}
+        PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
     else(NOT MSVC)
       add_library(bindings_ruby MODULE ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp)
       target_link_libraries(bindings_ruby ${RUBY_LIBRARY} ${BABEL_LIBRARY})
