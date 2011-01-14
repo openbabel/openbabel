@@ -3,9 +3,10 @@ set(SOVERSION 4)
 set(LIBRARY_VERSION 4.0.0)
 
 set(charges
-  charges/gasteiger.cpp
-  charges/mmff94.cpp
   charges/eem.cpp
+  charges/gasteiger.cpp
+  charges/none.cpp
+  charges/mmff94.cpp
 )
 
 if (EIGEN2_FOUND)
