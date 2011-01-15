@@ -214,6 +214,12 @@ if(CMAKE_COMPILER_IS_GNUCXX)
   macro_ensure_version("4.2.0" "${_gcc_version}" GCC_IS_NEWER_THAN_4_2)
 endif()
 
+if(UNIX)
+  option(ENABLE_SYMBOL_VISIBILITY
+    "Enable support for compiler symbol visibility. WARNING: Some issues reported"
+    OFF)
+endif()
+
 if(NOT MSVC)
   SET(CMAKE_REQUIRED_FLAGS -Werror)
   check_c_source_compiles("
@@ -251,7 +257,8 @@ if(NOT MSVC)
       exec_program(${CMAKE_C_COMPILER} ARGS -v OUTPUT_VARIABLE _gcc_alloc_info)
       string(REGEX MATCH "(--enable-libstdcxx-allocator=mt)" _GCC_COMPILED_WITH_BAD_ALLOCATOR "${_gcc_alloc_info}")
     endif()
-    if(HAVE_GCC_VISIBILITY AND GCC_IS_NEWER_THAN_4_2 AND NOT _GCC_COMPILED_WITH_BAD_ALLOCATOR)
+    if(HAVE_GCC_VISIBILITY AND GCC_IS_NEWER_THAN_4_2 AND ENABLE_SYMBOL_VISIBILITY
+       AND NOT _GCC_COMPILED_WITH_BAD_ALLOCATOR)
       # We have all the parts necessary - use visibility support
       add_definitions(-DHAVE_GCC_VISIBILITY)
       set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
@@ -299,16 +306,18 @@ if(${CMAKE_CXX_COMPILER_ID} MATCHES Intel AND UNIX)
       "-lc ${CMAKE_EXE_LINKER_FLAGS}")
   endif (CMAKE_SYSTEM_NAME MATCHES Linux)
   check_cxx_compiler_flag(-fvisibility=hidden HAVE_INTEL_VISIBILITY)
-  set(HAVE_INTEL_VISIBILITY ${HAVE_INTEL_VISIBILITY} CACHE BOOL "Intel Compiler support for hidden visibility")
-  if(HAVE_INTEL_VISIBILITY)
+  set(HAVE_INTEL_VISIBILITY ${HAVE_INTEL_VISIBILITY} CACHE BOOL
+    "Intel Compiler support for hidden visibility")
+  if(HAVE_INTEL_VISIBILITY AND ENABLE_SYMBOL_VISIBILITY)
     add_definitions(-DHAVE_GCC_VISIBILITY)
 #    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
     check_cxx_compiler_flag(-fvisibility-inlines-hidden HAVE_INTEL_VISIBILITY_INLINES)
-    set(HAVE_INTEL_VISIBILITY_INLINES ${HAVE_INTEL_VISIBILITY_INLINES} CACHE BOOL "Intel Compiler support for -fvisibility-inlines-hidden")
+    set(HAVE_INTEL_VISIBILITY_INLINES ${HAVE_INTEL_VISIBILITY_INLINES} CACHE BOOL
+      "Intel Compiler support for -fvisibility-inlines-hidden")
     if(HAVE_INTEL_VISIBILITY_INLINES)
       set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility-inlines-hidden")
-    endif(HAVE_INTEL_VISIBILITY_INLINES)
-  endif(HAVE_INTEL_VISIBILITY)
+    endif()
+  endif()
 
   set(CMAKE_C_FLAGS_RELEASE "-O3 -ipo1 -DNDEBUG -Wl,-s")
   set(CMAKE_CXX_FLAGS_RELEASE "-O3 -ipo1 -DNDEBUG -Wl,-s")
