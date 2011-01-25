@@ -338,8 +338,28 @@ namespace OpenBabel
       }
     }
 
+    int i=0;
+    char coords_type[25];
+
+    //Prescan file to find second instance of "orientation:"
+    //This will be the kind of coords used in the chk/fchk file
+    while (ifs.getline(buffer,BUFF_SIZE))
+      {
+        if (strstr(buffer,"orientation:") !=NULL)
+           i++;
+        if (i==2)
+           break;
+     }
+    if (!ifs.eof())
+    {
+    tokenize (vs, buffer);
+    strcpy (coords_type, vs[0].c_str());
+    strcat (coords_type, " orientation:");
+    ifs.seekg(0);  //rewind
+    cout << coords_type << std::endl;
+    }
+
     mol.BeginModify();
-    bool have_coords = 0;
     while (ifs.getline(buffer,BUFF_SIZE))
       {
         if (strstr(buffer,"Multiplicity") != NULL)
@@ -353,12 +373,8 @@ namespace OpenBabel
 
             ifs.getline(buffer,BUFF_SIZE);
           }
-        else if((strstr(buffer,"Input orientation:") != NULL)
-                || ((strstr(buffer,"Standard orientation:") != NULL) && (!have_coords))
-                || ((strstr(buffer,"Z-Matrix orientation:") != NULL) && (!have_coords)))
+        else if (strstr(buffer, coords_type) != NULL)
           {
-            if (strstr(buffer,"Input orientation:") != NULL)
-              have_coords = 1; // if we came here from "Input orientation", disable reading "Standard orientation"
             numTranslationVectors = 0; // ignore old translationVectors
             ifs.getline(buffer,BUFF_SIZE);      // ---------------
             ifs.getline(buffer,BUFF_SIZE);      // column headings
