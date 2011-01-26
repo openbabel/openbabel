@@ -47,7 +47,7 @@ namespace OpenBabel
         "GAMESS Output\n"
         "Read Options e.g. -as\n"
         "  s  Output single bonds only\n"
-        "  b  Disable bonding entirely\n\n"
+        "  b  Disable bonding entirely\n"
         "  c  Read multiple conformers\n\n";
     };
 

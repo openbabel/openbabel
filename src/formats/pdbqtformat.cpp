@@ -75,7 +75,7 @@ namespace OpenBabel
       "  r  Outputs rigid molecule (no branches)\n"
       "  s  Outputs as a flexible residue\n"
       "  p  Preserves the atom indexes from the input file\n"
-      "  (default is to renumber sequentially).\n\n";
+      "     (default is to renumber sequentially).\n\n";
     };
 
     virtual const char* SpecificationURL()
