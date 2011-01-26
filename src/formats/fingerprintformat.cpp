@@ -34,8 +34,9 @@ namespace OpenBabel
     { return
       "Fingerprint format\n"
       "Generate or display molecular fingerprints.\n"
-      "This format constructs and displays fingerprints and (for multiple input objects)\n"
-      "the Tanimoto coefficient and whether a superstructure of the first object.\n\n"
+"This format constructs and displays fingerprints and (for multiple input\n"
+"objects) the Tanimoto coefficient and whether a superstructure of the first\n"
+"object.\n\n"
 
 "A list of available fingerprint types can be obtained by::\n\n"
 
@@ -65,22 +66,19 @@ namespace OpenBabel
 "The Tanimoto coefficient has no absolute meaning and depends on the design of the fingerprint.\n\n"
 
 
-"Use the ``-xs``\n"
-"option to describe the bits that are set in the fingerprint.\n"
-
-"The output depends on the fingerprint type. For Fingerprint FP4, each bit corresponds\n"
-"to a particular chemical feature,\n"
-"which are specified as SMARTS patterns in :file:`SMARTS_InteLigand.txt`, and\n"
-"the output is a tab-separated list of the features of a molecule. For\n"
-"instance, a well-known molecule gives::\n\n"
+"Use the ``-xs`` option to describe the bits that are set in the fingerprint.\n"
+"The output depends on the fingerprint type. For Fingerprint FP4, each bit\n"
+"corresponds to a particular chemical feature, which are specified as SMARTS\n"
+"patterns in :file:`SMARTS_InteLigand.txt`, and the output is a tab-separated\n"
+"list of the features of a molecule. For instance, a well-known molecule\n"
+"gives::\n\n"
 
 " Primary_carbon: Carboxylic_acid: Carboxylic_ester: Carboxylic_acid_derivative:\n"
 " Vinylogous_carbonyl_or_carboxyl_derivative: Vinylogous_ester: Aromatic:\n"
 " Conjugated_double_bond: C_ONS_bond: 1,3-Tautomerizable: Rotatable_bond: CH-acidic:\n\n"
 
-"For the path-based fingerprint FP2, the output from the ``-xs`` option is instead\n"
-"a list of the chemical fragments\n"
-"used to set bits, e.g.::\n\n"
+"For the path-based fingerprint FP2, the output from the ``-xs`` option is\n"
+"instead a list of the chemical fragments used to set bits, e.g.::\n\n"
 
 " $ obabel -:\"CCC(=O)Cl\" -ofpt -xs -xf FP2\n"
 " >\n"
@@ -89,10 +87,10 @@ namespace OpenBabel
 " 0 8 2 6 <623>\n"
 " ...etc\n\n"
 
-"where the first digit indicates whether the fragment is linear (0) or cyclic (1)\n"
-"and remaining digits indicate the atomic number and bond order alternatively. For\n"
-"example, bit 623 above is the linear fragment O=C (8 for oxygen, 2 for double\n"
-"bond and 6 for carbon).\n\n"
+"where the first digit indicates whether the fragment is linear (0) or cyclic\n"
+"(1) and remaining digits indicate the atomic number and bond order\n"
+"alternatively. For example, bit 623 above is the linear fragment O=C (8 for\n"
+"oxygen, 2 for double bond and 6 for carbon).\n\n"
 
       "Write Options e.g. -xfFP3 -xN128\n"
       " f<id> fingerprint type\n"
