@@ -43,14 +43,14 @@ namespace OpenBabel
 
 "The current default type FP2 is is of the Daylight type, indexing a molecule\n"
 "based on the occurrence of linear fragment up to 7 atoms in length. To use a\n"
-"fingerprint type other than the default, use the -xf option, for example::\n\n"
+"fingerprint type other than the default, use the ``-xf`` option, for example::\n\n"
 
 "  babel infile.xxx -ofpt -xfFP3\n\n"
 
 "For a single molecule the fingerprint is output in hexadecimal form\n"
 "(intended mainly for debugging).\n\n"
 
-"With multiple molecules the hexadecimal form is output only if the -xh\n"
+"With multiple molecules the hexadecimal form is output only if the ``-xh``\n"
 "option is specified. But in addition the Tanimoto coefficient between the\n"
 "first molecule and each of the subsequent ones is displayed. If the first\n"
 "molecule is a substructure of the target molecule a note saying this is\n"
@@ -64,14 +64,35 @@ namespace OpenBabel
 
 "The Tanimoto coefficient has no absolute meaning and depends on the design of the fingerprint.\n\n"
 
-"In Fingerprint FP4 each bit corresponds to a particular chemical feature,\n"
-"which are specified as SMARTS patterns in SMARTS_InteLigand.txt. Use the -xs\n"
-"option to output a tab separated list of the features in a molecule. For\n"
-"instance a well-known molecule gives::\n\n"
+
+"Use the ``-xs``\n"
+"option to describe the bits that are set in the fingerprint.\n"
+
+"The output depends on the fingerprint type. For Fingerprint FP4, each bit corresponds\n"
+"to a particular chemical feature,\n"
+"which are specified as SMARTS patterns in :file:`SMARTS_InteLigand.txt`, and\n"
+"the output is a tab-separated list of the features of a molecule. For\n"
+"instance, a well-known molecule gives::\n\n"
 
 " Primary_carbon: Carboxylic_acid: Carboxylic_ester: Carboxylic_acid_derivative:\n"
 " Vinylogous_carbonyl_or_carboxyl_derivative: Vinylogous_ester: Aromatic:\n"
 " Conjugated_double_bond: C_ONS_bond: 1,3-Tautomerizable: Rotatable_bond: CH-acidic:\n\n"
+
+"For the path-based fingerprint FP2, the output from the ``-xs`` option is instead\n"
+"a list of the chemical fragments\n"
+"used to set bits, e.g.::\n\n"
+
+" $ obabel -:\"CCC(=O)Cl\" -ofpt -xs -xf FP2\n"
+" >\n"
+" 0 6 1 6 <670>\n"
+" 0 6 1 6 1 6 <260>\n"
+" 0 8 2 6 <623>\n"
+" ...etc\n\n"
+
+"where the first digit indicates whether the fragment is linear (0) or cyclic (1)\n"
+"and remaining digits indicate the atomic number and bond order alternatively. For\n"
+"example, bit 623 above is the linear fragment O=C (8 for oxygen, 2 for double\n"
+"bond and 6 for carbon).\n\n"
 
       "Write Options e.g. -xfFP3 -xN128\n"
       " f<id> fingerprint type\n"
