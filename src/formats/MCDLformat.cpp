@@ -39,11 +39,15 @@ public:
   {
     return
     "MCDL format\n"
-    "Modular Chemical Descriptor Language\n"
-    "As described in Gakh A.A., Burnett M.N.,\n"
-    "Modular Chemical Descriptor Language (MCDL):\n"
-    "Composition, Connectivity and Supplementary Modules\n"
-    "J.Chem.Inf.Comput.Sci, 2001, 41, 1494-1499";
+    "Modular Chemical Descriptor Language\n\n"
+"As described in Gakh A.A., Burnett M.N.,\n"
+"Modular Chemical Descriptor Language (MCDL):\n"
+"Composition, Connectivity and Supplementary Modules\n"
+"J.Chem.Inf.Comput.Sci, 2001, 41, 1494-1499\n\n"
+
+"Here's an example conversion from SMILES to MCDL::\n\n"
+"  obabel -:\"CC(=O)Cl\" -omcdl\n"
+"  CHHH;COCl[2]\n";
   }
 
   virtual const char* SpecificationURL(){return

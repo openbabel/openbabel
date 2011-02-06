@@ -57,8 +57,7 @@ public:
     {
         return
         "M.F. Sanner's MSMS input format\n"
-        "Generates input to the MSMS (Michael Sanner Molecular Surface) program to compute solvent surfaces.\n"
-        "WriteOnly.\n"
+        "Generates input to the MSMS (Michael Sanner Molecular Surface) program to compute solvent surfaces.\n\n"
         "Write Options, e.g. -xa\n"
         "  a output atom names\n";
     }

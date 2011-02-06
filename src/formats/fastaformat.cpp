@@ -44,8 +44,7 @@ namespace OpenBabel
     {
       return
         "FASTA format\n"
-        "A file format used to exchange information between\n"
-        "genetic sequence databases\n"
+        "A file format used to exchange information between genetic sequence databases\n\n"
         "Read Options e.g. -as\n"
         "  s  Output single bonds only\n"
         "  b  Disable bonding entirely\n\n"

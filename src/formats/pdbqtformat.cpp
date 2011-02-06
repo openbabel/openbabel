@@ -66,7 +66,7 @@ namespace OpenBabel
     {
       return
       "Autodock Protein Data Bank\n"
-      " Q (Partial Charge) & Type\n"
+      "Q (Partial Charge) & Type\n\n"
       "Read Options e.g. -ab, -abd\n"
       "  b  Disable automatic bonding\n"
       "  d  Input file is in dlg (docking log file) format.\n\n"
@@ -75,7 +75,7 @@ namespace OpenBabel
       "  r  Outputs rigid molecule (no branches)\n"
       "  s  Outputs as a flexible residue\n"
       "  p  Preserves the atom indexes from the input file\n"
-      "     (default is to renumber sequentially).\n\n";
+      "       The default is to renumber sequentially.\n\n";
     };
 
     virtual const char* SpecificationURL()
