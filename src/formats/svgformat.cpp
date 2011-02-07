@@ -103,7 +103,8 @@ public:
       "    from an A or S superatom entry in an sd or mol file, or can be\n"
       "    generated using the --genalias option. For example::\n \n"
 
-      "      obabel -:\"c1cc(C=O)ccc1C(=O)O\" -O out.svg --genalias -xA\n \n"
+      "      obabel -:\"c1cc(C=O)ccc1C(=O)O\" -O out.svg\n"
+      "             --genalias -xA\n \n"
 
       "    would add a aliases COOH and CHO to represent the carboxyl and\n"
       "    aldehyde groups and would display them as such in the svg diagram.\n"
