@@ -58,7 +58,7 @@ public:
     "IUPAC/NIST molecular identifier\n\n"
 
     "Write Options, e.g. -xat\n"
-    "    Standard InChI is written unless certain InChI options are used\n"
+    "    Standard InChI is written unless certain InChI options are used\n \n"
     " K output InChIKey only\n"
     " t add molecule name after InChI\n"
     " w ignore less important warnings\n"
@@ -69,16 +69,16 @@ public:
     "    \'Metal was disconnected\'\n"
     " a output auxilliary information\n"
     " l display InChI log\n"
-    " s recalculate wedge and hash bonds(2D structures only)\n"
+    " s recalculate wedge and hash bonds(2D structures only)\n \n"
     "    **Uniqueness options** (see also ``--unique`` and ``--sort`` which are more versatile)\n"
     " u output only unique molecules\n"
     " U output only unique molecules and sort them\n"
     " e compare first molecule to others\n"
-    "    This can also be done with :ref:`InChICompare format <Compare_molecules_using_InChI>`::\n"
+    "    This can also be done with :ref:`InChICompare format <Compare_molecules_using_InChI>`::\n \n"
     "      babel first.smi second.mol third.cml -ok\n \n"
     " T <param> truncate InChI according to various parameters\n"
     "    See below for possible truncation parameters.\n"
-    "    These can be combined, e.g. ``/nochg/noiso``\n"
+    
     " X <Option string> Additional InChI options\n"
     "    See InChI documentation.\n"
     "    These options should be space delimited in a single quoted string.\n \n"
@@ -86,7 +86,7 @@ public:
     "    - Stereo interpretation (produces non-standard InChI): ``SRel``, ``SRac``,\n"
     "      ``SUCF``, ``ChiralFlagON``, ``ChiralFlagOFF``\n"
     "    - InChI creation options (produces non-standard InChI): ``SUU``, ``SLUUD``,\n"
-    "      ``FixedH``, ``RecMet``, ``KET``, ``15T``\n"
+    "      ``FixedH``, ``RecMet``, ``KET``, ``15T``\n \n"
     "    The following options are for convenience, e.g. ``-xF``\n"
     "    but produce non-standard InChI.\n"
     " F include fixed hydrogen layer\n"
@@ -105,6 +105,7 @@ public:
     "/noEZ      ignore E/Z steroeochemistry\n"
     "/nochg     ignore charge and protonation\n"
     "/noiso     ignore isotopes\n\n"
+    "Note that these can also be combined, e.g. ``/nochg/noiso``\n"
 ;
   };
 
