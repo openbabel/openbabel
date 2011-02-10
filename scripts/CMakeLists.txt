@@ -215,6 +215,11 @@ if (DO_PERL_BINDINGS)
       endif (NOT ${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
     endif (OBPERL_PREFIX)
 
+    set(PERL_INSTALLDIRS_TEXT "")
+    if (OBPERL_INSTALLDIRS)
+      set(PERL_INSTALLDIRS_TEXT "INSTALLDIRS=${OBPERL_INSTALLDIRS}")
+    endif (OBPERL_INSTALLDIRS)
+
     if (NOT MSVC)
       add_custom_target(pre_bindings_perl ALL
         # Create the scripts/perl directory; we cannot do this inside
@@ -224,7 +229,7 @@ if (DO_PERL_BINDINGS)
       add_custom_target(bindings_perl ALL
         COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/perl/Makefile.PL ${openbabel_BINARY_DIR}/scripts/perl
         COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp ${openbabel_BINARY_DIR}/scripts/perl
-        COMMAND PERL5LIB=${openbabel_SOURCE_DIR}/scripts/perl/inc SRC_DIR=${openbabel_SOURCE_DIR} OBJ_DIR=${openbabel_BINARY_DIR} ${PERL_EXECUTABLE} ${openbabel_BINARY_DIR}/scripts/perl/Makefile.PL ${PERL_PREFIX_TEXT}
+        COMMAND PERL5LIB=${openbabel_SOURCE_DIR}/scripts/perl/inc SRC_DIR=${openbabel_SOURCE_DIR} OBJ_DIR=${openbabel_BINARY_DIR} ${PERL_EXECUTABLE} ${openbabel_BINARY_DIR}/scripts/perl/Makefile.PL ${PERL_PREFIX_TEXT} ${PERL_INSTALLDIRS_TEXT}
         COMMAND PERL5LIB=${openbabel_SOURCE_DIR}/scripts/perl/inc make 
             DEPENDS openbabel ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp
             WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/perl
