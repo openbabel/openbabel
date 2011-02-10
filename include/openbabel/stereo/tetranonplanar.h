@@ -194,7 +194,7 @@ namespace OpenBabel {
         }
 
         obErrorLog.ThrowError(__FUNCTION__,
-            "OBTetraNonPlanarStereo::ToConfig : Paramter id not found in internal refs.", obError);
+            "OBTetraNonPlanarStereo::ToConfig : Parameter id not found in internal refs.", obError);
         return result;
       }
       /**
