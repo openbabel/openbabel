@@ -525,7 +525,7 @@ showHelp(const char* cmd)
 	std::cout << "     The default value is 3.0 Angstrom. Negative values or a value equal" << std::endl;
 	std::cout << "     to 0 generates an error message" << std::endl;
 	std::cout << std::endl;
-	std::cout << "-u : Displays implemention details." << std::endl;
+	std::cout << "-u : Displays implementation details." << std::endl;
 	std::cout << std::endl;
 	std::cout << "-h : Displays this help file." << std::endl;
 	std::cout << std::endl;

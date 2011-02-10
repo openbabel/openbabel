@@ -538,7 +538,7 @@ namespace OpenBabel
     for (i = _SpaceGroups.sgs.begin(); i != end; i++)
       if (**i == *group)
         return *i;
-    obErrorLog.ThrowError(__FUNCTION__, "Unkown space group error, please file a bug report.", obWarning);
+    obErrorLog.ThrowError(__FUNCTION__, "Unknown space group error, please file a bug report.", obWarning);
     return NULL;
 	}
 }
