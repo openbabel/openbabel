@@ -226,7 +226,7 @@ if (DO_PERL_BINDINGS)
         COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp ${openbabel_BINARY_DIR}/scripts/perl
         COMMAND PERL5LIB=${openbabel_SOURCE_DIR}/scripts/perl/inc SRC_DIR=${openbabel_SOURCE_DIR} OBJ_DIR=${openbabel_BINARY_DIR} ${PERL_EXECUTABLE} ${openbabel_BINARY_DIR}/scripts/perl/Makefile.PL ${PERL_PREFIX_TEXT}
         COMMAND PERL5LIB=${openbabel_SOURCE_DIR}/scripts/perl/inc make 
-            DEPENDS ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp
+            DEPENDS openbabel ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp
             WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/perl
         )
       add_dependencies(bindings_perl pre_bindings_perl openbabel)
