@@ -67,7 +67,7 @@ public:
     "    \'Charges were rearranged\'\n"
     "    \'Proton(s) added/removed\'\n"
     "    \'Metal was disconnected\'\n"
-    " a output auxilliary information\n"
+    " a output auxiliary information\n"
     " l display InChI log\n"
     " s recalculate wedge and hash bonds(2D structures only)\n \n"
     "    **Uniqueness options** (see also ``--unique`` and ``--sort`` which are more versatile)\n"
