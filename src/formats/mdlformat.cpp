@@ -48,7 +48,7 @@ namespace OpenBabel
       virtual const char* Description()
       {
         return "MDL MOL format\n"
-               "Reads and writes V2000 and V3000 versions\n"
+               "Reads and writes V2000 and V3000 versions\n\n"
                "Read Options, e.g. -as\n"
                " s  determine chirality from atom parity flags\n"
                "       This is valid only for 0D information. Atom\n"
@@ -58,7 +58,8 @@ namespace OpenBabel
                " P  read title and properties only\n"
                "       When filtering an sdf file on title or properties\n"
                "       only, avoid lengthy chemical interpretation by\n"
-               "       using the T or P option together with copy format.\n\n"
+               "       using the ``T`` or ``P`` option together with the\n"
+               "       :ref:`copy format <Copy_raw_text>`.\n\n"
 
                "Write Options, e.g. -x3\n"
                " 3  output V3000 not V2000 (used for >999 atoms/bonds) \n"

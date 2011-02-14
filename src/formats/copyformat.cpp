@@ -40,7 +40,7 @@ public:
 "Example:\n\n"
 
 "  Extract only structures that include at least one aromatic carbon\n"
-"  (by matching the SMARTS pattern `[c]`)::\n\n"
+"  (by matching the SMARTS pattern ``[c]``)::\n\n"
 
 "   babel -s '[c]' database.sdf -ocopy new.sd\n\n"
 

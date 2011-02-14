@@ -70,14 +70,15 @@ namespace OpenBabel
     {
       return
         "Chemical Markup Language\n"
-        "An XML format.\n"
+        "An XML format for interchange of chemical information.\n\n"
 
         "This format writes and reads CML XML files. To write CML1 format rather than\n"
-        "the default CML2, use the -x1 option. To write the array form use -xa and to\n"
-        "specify all hydrogens using the hydrogenCount attribute on atoms use -xh.\n\n"
+        "the default CML2, use the ``-x1`` option. To write the array form use ``-xa``\n"
+        "and to specify all hydrogens using the hydrogenCount attribute on atoms use\n"
+        "``-xh``.\n\n"
 
-        "Crystal structures are written using the <crystal>, <xfract>) etc., elements\n"
-        "if the OBMol has a OBGenericDataType::UnitCell data.\n\n"
+        "Crystal structures are written using the <crystal>, <xfract> (,...etc.)\n"
+        "elements if the OBMol has a OBGenericDataType::UnitCell data.\n\n"
 
         "All these forms are handled transparently during reading. Only a subset of\n"
         "CML elements and attributes are recognised, but these include most of those\n"
@@ -126,8 +127,8 @@ namespace OpenBabel
         "defining the object that OpenBabel will convert. For CML this is\n"
         "<molecule>. Files can have multiple objects and these can be treated\n"
         "the same as with other multiple object formats like SMILES and MDL\n"
-        "Molfile. So conversion can start at the nth object using the -fn option\n"
-        "and finish before the end using the -ln option. Multiple object XML files\n"
+        "Molfile. So conversion can start at the nth object using the ``-fn`` option\n"
+        "and finish before the end using the ``-ln`` option. Multiple object XML files\n"
         "also can be indexed and searched using FastSearch, although this has\n"
         "not yet been extensively tested.\n\n";
     };
