@@ -887,6 +887,9 @@ namespace OpenBabel
 
     } else {
       if (_validSetup) {
+        PrintTypes();
+	PrintFormalCharges();
+	PrintPartialCharges();
         SetCoordinates(mol);
         return true;
       } else {
@@ -985,7 +988,14 @@ namespace OpenBabel
         return true;
       if (atom->GetValence() != (mol.GetAtom(atom->GetIdx()))->GetValence())
         return true;
-      if (atom->BOSum() != (mol.GetAtom(atom->GetIdx()))->BOSum())
+    }
+    FOR_BONDS_OF_MOL (bond, _mol) {
+      if (bond->GetBO() != (mol.GetBond(bond->GetIdx()))->GetBO())
+        return true;
+      if (bond->GetBeginAtom()->GetAtomicNum()
+        != (mol.GetBond(bond->GetIdx()))->GetBeginAtom()->GetAtomicNum()
+	|| bond->GetEndAtom()->GetAtomicNum()
+	!= (mol.GetBond(bond->GetIdx()))->GetEndAtom()->GetAtomicNum())
         return true;
     }
 
