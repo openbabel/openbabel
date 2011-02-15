@@ -356,7 +356,7 @@ namespace OpenBabel
     strcpy (coords_type, vs[0].c_str());
     strcat (coords_type, " orientation:");
     ifs.seekg(0);  //rewind
-    cout << coords_type << std::endl;
+    //    cout << coords_type << std::endl;
     }
 
     mol.BeginModify();
