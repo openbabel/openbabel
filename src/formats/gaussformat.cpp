@@ -652,7 +652,7 @@ namespace OpenBabel
 
         else if(strstr(buffer,"SCF Done:") != NULL)
           {
-#define HARTREE_TO_KCAL 627.509
+#define HARTREE_TO_KCAL 627.509469
             tokenize(vs,buffer);
             mol.SetEnergy(atof(vs[4].c_str()) * HARTREE_TO_KCAL);
             confEnergies.push_back(mol.GetEnergy());

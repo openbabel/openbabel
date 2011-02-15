@@ -81,7 +81,7 @@ public:
     
     " X <Option string> Additional InChI options\n"
     "    See InChI documentation.\n"
-    "    These options should be space delimited in a single quoted string.\n\n"
+    "    These options should be space delimited in a single quoted string.\n \n"
     "    - Structure perception (compatible with stdInChI): ``NEWPSOFF``, ``DoNotAddH``, ``SNon``\n"
     "    - Stereo interpretation (produces non-standard InChI): ``SRel``, ``SRac``,\n"
     "      ``SUCF``, ``ChiralFlagON``, ``ChiralFlagOFF``\n"

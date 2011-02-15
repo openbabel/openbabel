@@ -133,7 +133,12 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
       bool ProvideExtraCheckbox=false;
 
       char* plinestart = p;
-      while(*p && !isalnum(*(p++))); //skip space and punctuation
+      while(*p && *p!='\n' && !isalnum(*(p++))); //skip space and punctuation except \n
+      if(*p=='\n')
+      {
+        plinestart = ++p; //reset start of line
+        continue;
+      }
       //Ignore lines which start with more than MAXLEADINGSPACES whitespace chars(tab is 1 char!)
       if(p - plinestart > MAXLEADINGSPACES)
       {

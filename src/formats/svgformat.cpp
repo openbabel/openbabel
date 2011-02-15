@@ -39,7 +39,7 @@ public:
   virtual const char* Description()
   {
     return
-      "SVG depiction\n"
+      "SVG 2D depiction\n"
       "Scalable Vector Graphics 2D rendering of molecular structure.\n\n"
 
       "Single molecules are displayed at a fixed scale, as in normal diagrams,\n"
