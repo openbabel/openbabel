@@ -57,7 +57,7 @@ namespace OpenBabel
         "  v  Verbose CIF conversion\n"
         "  s  Output single bonds only\n"
         "  b  Disable bonding entirely\n"
-        "  B  Use bonds listed in CIF file from _geom_bond_* records (overrides option b) \n\n";
+        "  B  Use bonds listed in CIF file from _geom_bond_etc records (overrides option b) \n\n";
     };
 
     virtual const char* SpecificationURL()

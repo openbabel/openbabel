@@ -62,7 +62,7 @@ public:
       "in a list at the start of the file and referenced in the reactant and\n"
       "product via e.g. <molecule ref=\"mol1\">.\n\n"
 
-      "On writing, the list format can be specified with the -xl option. The\n"
+      "On writing, the list format can be specified with the ``-xl`` option. The\n"
       "list containers are <moleculeList> and <reactionList> and the overall\n"
       "wrapper is <mechanism>. These are non-standard CMLReact element names\n"
       "and would have to be changed (in the code) to <list>,<list> and <cml>\n"

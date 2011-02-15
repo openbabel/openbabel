@@ -369,14 +369,15 @@ public:
     virtual const char* Description() //required
     {
         return
-        "ADF TAPE41 format\n"
-        "Read Options e.g. -as\n"
-        "  s  Output single bonds only\n"
-        "  b  Disable bonding entirely\n\n"
+        "ADF TAPE41 format\n\n"
 
         "Currently the ADF Tape41 support reads grids from\n"
         "TAPE41 text files. To generate an ASCII version from\n"
-        "the default binary, use the dmpkf program.\n\n";
+        "the default binary, use the dmpkf program.\n\n"
+
+        "Read Options e.g. -as\n"
+        "  s  Output single bonds only\n"
+        "  b  Disable bonding entirely\n\n";
     }
 
     /// Return a specification url, not really a specification since
