@@ -473,7 +473,6 @@ namespace OpenBabel
       - XED (XED format)
       - DOK (Dock)
       - M3D (Molecular Arts M3D)
-      - IDX (Index -- i.e., line number in the file)
       - SBN (Sybyl descriptor types for MPD files)
       - PCM (PC Model)
   */
@@ -495,10 +494,10 @@ namespace OpenBabel
     if (buffer[0] == '#')
       return; // just a comment line
 
-    if (_linecount == 0)
-      sscanf(buffer,"%d%d",&_nrows,&_ncols);
-    else if (_linecount == 1)
+    if (_linecount == 0) {
       tokenize(_colnames,buffer);
+      _ncols = _colnames.size();
+    }
     else
       {
         vector<string> vc;
