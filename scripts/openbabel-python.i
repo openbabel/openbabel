@@ -155,6 +155,7 @@ VECTORTEMPLATE_WRAP(OBResidue, OpenBabel::OBResidue)
 VECTORTEMPLATE_WRAP(OBRing, OpenBabel::OBRing)
 VECTORTEMPLATE_WRAP(pOBRing, OpenBabel::OBRing*)
 VECTORTEMPLATE_WRAP(pOBGenericData, OpenBabel::OBGenericData*)
+VECTORTEMPLATE_WRAP(pOBInternalCoord, OpenBabel::OBInternalCoord*)
 
 %template(pairUIntUInt) pair<unsigned int, unsigned int>;
 VECTORPAIRTEMPLATE_WRAP(UIntUInt, unsigned int, unsigned int);
