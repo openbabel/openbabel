@@ -984,6 +984,10 @@ namespace OpenBabel
       return true;
 
     FOR_ATOMS_OF_MOL (atom, _mol) {
+      // if we have Fe or Cu the atom type depends on the formal
+      // charge, so a new setup must be forced anyway
+      if (atom->GetAtomicNum() == 26 || atom->GetAtomicNum() == 29)
+        return true;
       if (atom->GetAtomicNum() != (mol.GetAtom(atom->GetIdx()))->GetAtomicNum())
         return true;
       if (atom->GetValence() != (mol.GetAtom(atom->GetIdx()))->GetValence())
