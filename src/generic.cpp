@@ -319,7 +319,7 @@ namespace OpenBabel
   }
 
   //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#convertNotionalIntoCartesianCoordinates">blue-obelisk:convertNotionalIntoCartesianCoordinates</a>
-  vector<vector3> OBUnitCell::GetCellVectors()
+  vector<vector3> OBUnitCell::GetCellVectors() const
   {
     vector<vector3> v;
     v.reserve(3);
@@ -333,37 +333,37 @@ namespace OpenBabel
     return v;
   }
 
-  matrix3x3 OBUnitCell::GetCellMatrix()
+  matrix3x3 OBUnitCell::GetCellMatrix() const
   {
     return (_mOrient * _mOrtho).transpose();
   }
 
-  matrix3x3 OBUnitCell::GetOrthoMatrix()
+  matrix3x3 OBUnitCell::GetOrthoMatrix() const
   {
     return _mOrtho;
   }
 
-  matrix3x3 OBUnitCell::GetOrientationMatrix()
+  matrix3x3 OBUnitCell::GetOrientationMatrix() const
   {
     return _mOrient;
   }
 
-  matrix3x3 OBUnitCell::GetFractionalMatrix()
+  matrix3x3 OBUnitCell::GetFractionalMatrix() const
   {
     return _mOrtho.inverse();
   }
 
-  vector3 OBUnitCell::FractionalToCartesian(vector3 frac)
+  vector3 OBUnitCell::FractionalToCartesian(vector3 frac) const
   {
     return _mOrient * _mOrtho * frac + _offset;
   }
 
-  vector3 OBUnitCell::CartesianToFractional(vector3 cart)
+  vector3 OBUnitCell::CartesianToFractional(vector3 cart) const
   {
     return _mOrtho.inverse() * _mOrient.inverse() * (cart - _offset);
   }
 
-  vector3 OBUnitCell::WrapCartesianCoordinate(vector3 cart)
+  vector3 OBUnitCell::WrapCartesianCoordinate(vector3 cart) const
   {
     vector3 v = CartesianToFractional(cart);
     v = WrapFractionalCoordinate(v);
@@ -381,7 +381,7 @@ namespace OpenBabel
     return vector3(x, y, z);
   }
 
-  OBUnitCell::LatticeType OBUnitCell::GetLatticeType( int spacegroup )
+  OBUnitCell::LatticeType OBUnitCell::GetLatticeType( int spacegroup ) const
   {
     //	1-2 	Triclinic
     //	3-15 	Monoclinic
@@ -430,7 +430,7 @@ namespace OpenBabel
       return OBUnitCell::Undefined;
   }
 
-  OBUnitCell::LatticeType OBUnitCell::GetLatticeType()
+  OBUnitCell::LatticeType OBUnitCell::GetLatticeType() const
   {
     if (_lattice != Undefined)
       return _lattice;
@@ -449,36 +449,40 @@ namespace OpenBabel
     if (IsApprox(beta,  90.0, 1.0e-3)) rightAngles++;
     if (IsApprox(gamma, 90.0, 1.0e-3)) rightAngles++;
 
+    // recast cache member "_lattice" as mutable
+    OBUnitCell::LatticeType *lattice =
+      const_cast<OBUnitCell::LatticeType*>(&_lattice);
+
     switch (rightAngles)
       {
       case 3:
         if (IsApprox(a, b, 1.0e-4) && IsApprox(b, c, 1.0e-4))
-          _lattice = Cubic;
+          *lattice = Cubic;
         else if (IsApprox(a, b, 1.0e-4) || IsApprox(b, c, 1.0e-4))
-          _lattice = Tetragonal;
+          *lattice = Tetragonal;
         else
-          _lattice = Orthorhombic;
+          *lattice = Orthorhombic;
         break;
       case 2:
         if ( (IsApprox(alpha, 120.0, 1.0e-3)
               || IsApprox(beta, 120.0, 1.0e-3)
               || IsApprox(gamma, 120.0f, 1.0e-3))
              && (IsApprox(a, b, 1.0e-4) || IsApprox(b, c, 1.0e-4)) )
-          _lattice = Hexagonal;
+          *lattice = Hexagonal;
         else
-          _lattice = Monoclinic;
+          *lattice = Monoclinic;
         break;
       default:
         if (IsApprox(a, b, 1.0e-4) && IsApprox(b, c, 1.0e-4))
-          _lattice = Rhombohedral;
+          *lattice = Rhombohedral;
         else
-          _lattice = Triclinic;
+          *lattice = Triclinic;
       }
 
-    return _lattice;
+    return *lattice;
   }
 
-  int OBUnitCell::GetSpaceGroupNumber( std::string name)
+  int OBUnitCell::GetSpaceGroupNumber( std::string name) const
   {
     static const char * const spacegroups[] = {
       "P1", "P-1", "P2", "P2(1)", "C2", "Pm", "Pc", "Cm", "Cc", "P2/m",
@@ -603,42 +607,42 @@ namespace OpenBabel
     SetSpaceGroup(1); // We've now applied the symmetry, so we should act like a P1 unit cell
   }
 
-  double OBUnitCell::GetA()
+  double OBUnitCell::GetA() const
   {
     return _mOrtho.GetColumn(0).length();
   }
 
-  double OBUnitCell::GetB()
+  double OBUnitCell::GetB() const
   {
     return _mOrtho.GetColumn(1).length();
   }
 
-  double OBUnitCell::GetC()
+  double OBUnitCell::GetC() const
   {
     return _mOrtho.GetColumn(2).length();
   }
 
-  double OBUnitCell::GetAlpha()
+  double OBUnitCell::GetAlpha() const
   {
     return vectorAngle(_mOrtho.GetColumn(1), _mOrtho.GetColumn(2));
   }
 
-  double OBUnitCell::GetBeta()
+  double OBUnitCell::GetBeta() const
   {
     return vectorAngle(_mOrtho.GetColumn(0), _mOrtho.GetColumn(2));
   }
 
-  double OBUnitCell::GetGamma()
+  double OBUnitCell::GetGamma() const
   {
     return vectorAngle(_mOrtho.GetColumn(0), _mOrtho.GetColumn(1));
   }
 
-  vector3 OBUnitCell::GetOffset()
+  vector3 OBUnitCell::GetOffset() const
   {
     return _offset;
   }
 
-  double OBUnitCell::GetCellVolume()
+  double OBUnitCell::GetCellVolume() const
   {
     return fabs(GetCellMatrix().determinant());
   }
