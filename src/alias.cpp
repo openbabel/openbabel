@@ -28,9 +28,13 @@ namespace OpenBabel
   std::string AliasData::GetAlias(bool rightAligned)const
   {
     if(rightAligned)
-      return table().find(_alias)->second.right_form;//.first;
-    else
-      return _alias;
+    {
+      if(!_right_form.empty())
+        return _right_form;
+      if(table().find(_alias)!=table().end())
+        return table().find(_alias)->second.right_form;
+    }
+    return _alias;
   }
 
   bool AliasData::Expand(OBMol& mol, const unsigned int atomindex)
@@ -66,11 +70,17 @@ namespace OpenBabel
       return true;
 
     // Rn is stored as an atom with 0 atomic number and atomclass = n
+    // R', R'' etc. are treated as R1, R2  
     // Note that if the name contains anything after the number it is ignored.
-    if(_alias[0]=='R' && isdigit(_alias[1]))
+    if(_alias[0]=='R' && (_alias[1]=='\'' || _alias[1]=='¢' || isdigit(_alias[1])))
     {
-      // Rn is stored a atom with 0 atomic number and atomclass = n
-      int n = atoi(_alias.c_str()+1);
+      replace(_alias.begin(),_alias.end(),'¢','\'');
+      int n=1;
+      if(_alias[1]=='\'' || _alias[1]=='¢')
+        while(n<_alias.size()-1 && _alias[n]==_alias[n+1]) n++;
+      else
+        n = atoi(_alias.c_str()+1);
+
       OBAtomClassData* pac = static_cast<OBAtomClassData*>(mol.GetData("Atom Class"));
       if(!pac)
       {
@@ -78,12 +88,15 @@ namespace OpenBabel
         mol.SetData(pac);
       }
       pac->Add(atomindex, n);
-      mol.GetAtom(atomindex)->SetAtomicNum(0);
+      if(atomindex <= mol.NumAtoms()) //needed for Rn aliases in mdlformat
+        mol.GetAtom(atomindex)->SetAtomicNum(0);
+
+      _right_form = _alias;
       return true;
     }
 
     obErrorLog.ThrowError(__FUNCTION__, "Alias " + _alias + 
-      " Could not be interpreted.\n Output may not be correct.", obWarning, onceOnly);
+      " was not chemically interpreted\n", obWarning, onceOnly);
     return false;   
   }
 
