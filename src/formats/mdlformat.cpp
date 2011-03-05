@@ -108,6 +108,8 @@ namespace OpenBabel
       bool ReadRGroupBlock(istream& ifs,OBMol& mol, OBConversion* pConv);
       bool WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv);
       void ReadPropertyLines(istream& ifs, OBMol& mol);
+      bool TestForAlias(const string& symbol, OBAtom* at, vector<pair<AliasData*,OBAtom*> >& aliases);
+
     private:
       enum Parity {
         NotStereo, Clockwise, AntiClockwise, Unknown
@@ -305,8 +307,6 @@ namespace OpenBabel
       mol.ReserveAtoms(natoms);
       double x,y,z;
       string symbol;
-      OBAtom atom;
-
       //
       // Atom Block
       //
@@ -326,7 +326,7 @@ namespace OpenBabel
         // 0...30   x y z = atom coordinates
         // 31..33   aaa = atom symbol
         // 34..35   dd = mass difference: -3, -2, -1, 0, 1, 2, 3, 4 ('M  ISO' lines take precedence)
-        // 36..38   ccc = charge  ('M  CGH' and 'M  RAD' lines take precedence)
+        // 36..38   ccc = charge  ('M  CHG' and 'M  RAD' lines take precedence)
         // 39..41   sss = atom stereo parity (ignored)
         //          ... = query/reaction related
         massdiff = charge = 0;
@@ -337,19 +337,26 @@ namespace OpenBabel
 	        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
           return false;
         }
+
+        //Need to have atom in molecule while adding data
+        OBAtom* patom = mol.NewAtom();
+
         // coordinates
         x = atof(line.substr(0, 10).c_str());
         y = atof(line.substr(10, 10).c_str());
         z = atof(line.substr(20, 10).c_str());
-        atom.SetVector(x, y, z);
+        patom->SetVector(x, y, z);
         // symbol & isotope
         symbol = line.substr(31, 3);
         // cout << " atom: " << symbol << endl;
         Trim(symbol);
-        isotope = 0;
-        atom.SetAtomicNum(etab.GetAtomicNum(symbol, isotope));
-        if (isotope != 0) // e.g. 'D' or 'T' atom symbol
-          atom.SetIsotope(isotope);
+        if(symbol[0]!='R' || TestForAlias(symbol, patom, aliases))
+        {
+          isotope = 0;
+          patom->SetAtomicNum(etab.GetAtomicNum(symbol, isotope));
+          if (isotope != 0) // e.g. 'D' or 'T' atom symbol
+            patom->SetIsotope(isotope);
+        }
         // mass difference
         if (line.size() >= 35)
           massdiff = ReadIntField(line.substr(34, 2).c_str());
@@ -378,9 +385,9 @@ namespace OpenBabel
         }
         parities.push_back(parity);
 
-        if (!mol.AddAtom(atom))
-          return false;
-        atom.Clear();
+//        if (!mol.AddAtom(atom))
+//          return false;
+//        atom.Clear();
       }
 
       //
@@ -1412,4 +1419,24 @@ namespace OpenBabel
     }
   }
 
-}
+  bool MDLFormat::TestForAlias(const string& symbol, OBAtom* at, vector<pair<AliasData*,OBAtom*> >& aliases)
+  {
+  /*If symbol is R R' R'' R¢ R¢¢ or Rn Rnn where n is an digit
+    the atom is added to the alias list and the atomic number set to zero. Returns false.
+    Otherwise, e.g Rh or Ru, returns true.
+  */
+    if(symbol.size()==1 || isdigit(symbol[1]) || symbol[1]=='\'' || symbol[1]=='¢')
+    {
+      AliasData* ad = new AliasData();
+      ad->SetAlias(symbol);
+      ad->SetOrigin(fileformatInput);
+      at->SetData(ad);
+      at->SetAtomicNum(0);
+      //The alias has now been added as a dummy atom with a AliasData object.
+      //Delay the chemical interpretation until the rest of the molecule has been built
+      aliases.push_back(make_pair(ad, at));
+      return false;
+    }
+    return true;
+  }
+}//namespace
