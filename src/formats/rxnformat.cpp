@@ -40,7 +40,8 @@ public:
       return
         "MDL RXN format\n"
         "The MDL reaction format is used to store information on chemical reactions.\n"
-        "See also the CML React format for storing chemical reactions using CML.\n\n";
+        "Output Options, e.g. -xA\n"
+        " A  output in Alias form, e.g. Ph, if present\n\n";
   };
 
   virtual const char* GetMIMEType()
