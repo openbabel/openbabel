@@ -424,7 +424,7 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       depictor.SetFontSize((int)(depictor.GetFontSize() * factor));
     }
 
-    if(!pConv->IsOption("w"))
+    if(pConv->IsOption("w"))
       depictor.SetOption(OBDepict::genWedgeHash);
     if(!pConv->IsOption("C"))
       depictor.SetOption(OBDepict::drawTermC);// on by default
