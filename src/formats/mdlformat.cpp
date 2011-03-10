@@ -104,8 +104,8 @@ namespace OpenBabel
       bool ReadV3000Line(istream& ifs, vector<string>& vs);
       bool ReadAtomBlock(istream& ifs,OBMol& mol, OBConversion* pConv);
       bool ReadBondBlock(istream& ifs,OBMol& mol, OBConversion* pConv);
-      bool ReadCollectionBlock(istream& ifs,OBMol& mol, OBConversion* pConv);
       bool ReadRGroupBlock(istream& ifs,OBMol& mol, OBConversion* pConv);
+      bool ReadUnimplementedBlock(istream& ifs,OBMol& mol, OBConversion* pConv, string& blockname);
       bool WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv);
       void ReadPropertyLines(istream& ifs, OBMol& mol);
       bool TestForAlias(const string& symbol, OBAtom* at, vector<pair<AliasData*,OBAtom*> >& aliases);
@@ -940,11 +940,12 @@ namespace OpenBabel
           ret = ReadAtomBlock(ifs,mol,pConv);
         else if(vs[3]=="BOND")
           ret = ReadBondBlock(ifs,mol,pConv);
-        else if(vs[3]=="COLLECTION")
-          ret = ReadCollectionBlock(ifs,mol,pConv);
+        //else if(vs[3]=="COLLECTION")
+        //  ret = ReadCollectionBlock(ifs,mol,pConv);
         else if(vs[3]=="RGROUP")
           ret = ReadRGroupBlock(ifs,mol,pConv);
-
+        else 
+          ret =ReadUnimplementedBlock(ifs,mol,pConv,vs[3]);
         /*
           else if(vs[3]=="3D")
           //not currently implemented
@@ -1120,11 +1121,11 @@ namespace OpenBabel
   }
 
 ////////////////////////////////////////////////////////////
-  bool MDLFormat::ReadCollectionBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
+  bool MDLFormat::ReadUnimplementedBlock(istream& ifs,OBMol& mol, OBConversion* pConv, string& blockname)
   {
     //Not currently implemented
     obErrorLog.ThrowError(__FUNCTION__,
-      "COLLECTION blocks are not currently implemented and their contents are ignored.", obWarning, onceOnly);
+      blockname + " blocks are not currently implemented and their contents are ignored.", obWarning, onceOnly);
     for(;;)
     {
       if(!ReadV3000Line(ifs,vs))
