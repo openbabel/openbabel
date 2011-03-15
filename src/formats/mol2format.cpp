@@ -223,7 +223,12 @@ namespace OpenBabel
         // it's a malformed atom type, but it may be the element symbol
         // GaussView does this (PR#1739905)
         if ( !elemno ) {
-          obErrorLog.ThrowError(__FUNCTION__, "This Mol2 file is non-standard. Cannot interpret atom types correctly, instead attempting to interpret as elements instead.", obWarning);
+          std::stringstream errorMsg;
+          errorMsg << "This Mol2 file is non-standard. Problem with molecule: "
+                   << mol.GetTitle()
+                   << " Cannot interpret atom types correctly, instead attempting to interpret atom type: "
+                   << str << " as elements instead.";
+          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
 
           string::size_type dotPos = str.find('.');
           if (dotPos == string::npos) {
