@@ -51,6 +51,7 @@ namespace OpenBabel
       how_many_atoms_moved=0; children.clear(); parents.clear(); atoms.clear(); rigid_with.clear(); parents.push_back(0);}
     unsigned int UpOne() {if (parents.size()>=2) {return parents.at(parents.size()-2);} return 0;}
     branch() {clear();}
+    void all_atoms(OBMol& mol) {clear(); rigid_with.insert(0); for (unsigned int i=1; i <= mol.NumAtoms(); i++) {atoms.push_back(i);}}
   };
 
   class PDBQTFormat : public OBMoleculeFormat
@@ -65,17 +66,20 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-      "Autodock Protein Data Bank\n"
-      "Q (Partial Charge) & Type\n\n"
-      "Read Options e.g. -ab, -abd\n"
+
+      "pdbqt  AutoDock PDQBT format\n"
+      "Reads and writes AutoDock PDBQT (Protein Data Bank, Partial Charge (Q), & Atom Type (T)) format; constructs torsion tree by default.\n\n"
+
+      "Read Options, e.g. -ab\n"
       "  b  Disable automatic bonding\n"
-      "  d  Input file is in dlg (docking log file) format.\n\n"
-      "Write options, e.g. -xr, -xp, -xrp\n"
-      "  b  Enables automatic bonding before writing to pdbqt format\n"
-      "  r  Outputs rigid molecule (no branches)\n"
-      "  s  Outputs as a flexible residue\n"
-      "  p  Preserves the atom indexes from the input file\n"
-      "       The default is to renumber sequentially.\n\n";
+      "  d  Input file is in dlg (AutoDock docking log) format\n\n"
+
+      "Write Options, e.g. -xr\n"
+      "  b  Enable automatic bonding\n"
+      "  r  Output as a rigid molecule (i.e. no branches or torsion tree)\n"
+      "  c  Combine separate molecular pieces of input into a single rigid molecule (requires \"r\" option or will have no effect)\n"
+      "  s  Output as a flexible residue\n"
+      "  p  Preserve atom indices from input file (default is to renumber atoms sequentially)\n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -107,9 +111,11 @@ namespace OpenBabel
   static bool FindBondedPiece(const vector<int>& root, const vector<int>& branch, unsigned int& root_atom, unsigned int& branch_atom,
                 unsigned int& root_atom_rank, unsigned int& branch_atom_rank, const OBMol& mol, unsigned int & atoms_moved);
   static bool OutputTree(OBMol& mol, ostream& ofs, map <unsigned int, branch >& tree, unsigned int depth, bool moves_many, bool preserve_original_index);
-  static void ConstructTree (map <unsigned int, branch >& tree, vector <vector <int> > rigid_fragments, unsigned int root_piece, const OBMol& mol);
+  static void ConstructTree (map <unsigned int, branch >& tree, vector <vector <int> > rigid_fragments, unsigned int root_piece, const OBMol& mol, bool flexible);
   static bool DeleteHydrogens(OBMol & mol);
+  static bool Separate_preserve_charges(OBMol & mol, vector<OBMol> & result);
   static unsigned int FindFragments(OBMol mol, vector <vector <int> >& rigid_fragments);
+  static unsigned int RotBond_count(OBMol & mol);
 
   /////////////////////////////////////////////////////////////////
   int PDBQTFormat::SkipObjects(int n, OBConversion* pConv)
@@ -194,11 +200,11 @@ namespace OpenBabel
         while (ifs.getline(buffer,BUFF_SIZE) && !EQn(buffer,"ENDMDL",6));
         break;
       }
-      if (EQn(buffer,"TER",3))
+/*      if (EQn(buffer,"TER",3))
       {
         chainNum++;
         continue;
-      }
+      }*/
       if (EQn(buffer,"ATOM",4) || EQn(buffer,"HETATM",6))
       {
         if( ! parseAtomRecord(buffer,mol,chainNum))
@@ -212,7 +218,7 @@ namespace OpenBabel
         if (EQn(buffer,"ATOM",4)) {bs.SetBitOn(mol.NumAtoms());}
         continue;
       }
-      if (EQn(buffer,"USER",4))
+      if ((EQn(buffer,"REMARK",6)) || (EQn(buffer,"USER",4)))
       {
         stringstream sst;
         string buffstring=buffer;
@@ -308,7 +314,7 @@ namespace OpenBabel
     const char *element_name;
     string element_name_string;
     int res_num;
-    bool het=true;
+    bool het=false;
 
     OBResidue *res;
     strncpy(type_name, etab.GetSymbol(atom->GetAtomicNum()), sizeof(type_name));
@@ -507,6 +513,8 @@ namespace OpenBabel
     }
 
     map <unsigned int, unsigned int> new_order; //gives the new ordering of the indexes of atoms, so that they are in increasing order from 1 in the output
+
+
     if (!preserve_original_index) //generates the new ordering
     {
       unsigned int current_atom_index=1; //the index of the current atom
@@ -583,7 +591,7 @@ namespace OpenBabel
     return true;
   }
 
-  void ConstructTree (map <unsigned int, branch>& tree, vector <vector <int> > rigid_fragments, unsigned int root_piece, const OBMol& mol)
+  void ConstructTree (map <unsigned int, branch>& tree, vector <vector <int> > rigid_fragments, unsigned int root_piece, const OBMol& mol, bool flexible)
   {
     unsigned int first_atom = 0;
     unsigned int second_atom = 0;
@@ -643,6 +651,15 @@ namespace OpenBabel
       else {position--;}
     }
   }
+  unsigned int RotBond_count(OBMol & mol)
+  {
+    unsigned int count=0;
+    for (OBBondIterator it=mol.BeginBonds(); it!=mol.EndBonds(); it++)
+    {
+      if (IsRotBond_PDBQT((*it))) {count++;}
+    }
+    return count;
+  }
 
 
   /////////////////////////////////////////////////////////////////////////
@@ -701,6 +718,27 @@ namespace OpenBabel
     return false;
   }
   /////////////////////////////////////////////////////////////////////////
+
+  bool Separate_preserve_charges(OBMol & mol, vector <OBMol> & result)
+  {
+//    vector<OBMol> result;
+    if( mol.NumAtoms() == 0 )
+      return false; // nothing to do, but let's prevent a crash
+
+    OBMolAtomDFSIter iter( mol, 1);
+    OBMol newMol;
+    newMol.SetAutomaticPartialCharge(false);
+    int fragments = 0;
+    while( mol.GetNextFragment( iter, newMol ) )
+    {
+      result.push_back( newMol );
+      newMol.Clear();
+      newMol.SetAutomaticPartialCharge(false);
+    }
+
+    return true;
+  }
+  /////////////////////////////////////////////////////////////////////////
   bool PDBQTFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
@@ -709,120 +747,156 @@ namespace OpenBabel
 
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
-    OBMol &mol = *pmol;
+    OBMol & mol = *pmol;
 
     if (pConv->IsOption("b",OBConversion::OUTOPTIONS)) {mol.ConnectTheDots(); mol.PerceiveBondOrders();}
-
-    bool residue=false;
-    string res_name="";
-    string res_chain="";
-    unsigned int res_num=1;
-    if (pConv->IsOption("s",OBConversion::OUTOPTIONS))
+    vector <OBMol> all_pieces;
+    if ((pConv->IsOption("c",OBConversion::OUTOPTIONS)!=NULL) && (pConv->IsOption("r",OBConversion::OUTOPTIONS)!=NULL))
     {
-      residue=true;
-      OBResidue* res=mol.GetResidue(0);
-      res_name=res->GetName();
-      res_name.resize(3);
-      res_chain=res->GetChain();
-      res_num=res->GetNum();
-    }
-
-    DeleteHydrogens(mol);
-    vector <vector <int> > rigid_fragments; //the vector of all the rigid molecule fragments, using atom indexes
-    unsigned int best_root_atom=FindFragments(mol, rigid_fragments); //the return value is the root atom index
-
-    if (residue) best_root_atom=1; //if this is a residue, uses the first atom as the root
-
-    unsigned int torsdof=rigid_fragments.size()-1;
-
-    unsigned int root_piece=0;
-    for (unsigned int i = 0; i < rigid_fragments.size(); i++)
-    {
-      if (IsIn((rigid_fragments.at(i)), best_root_atom)) {root_piece=i; break;} //this is the root rigid molecule fragment
-    }
-
-    int model_num = 0;
-    char buffer[BUFF_SIZE];
-    if (!residue)
-    {
-      if (!pConv->IsLast() || pConv->GetOutputIndex() > 1)
-      { // More than one molecule record
-        model_num = pConv->GetOutputIndex(); // MODEL 1-based index
-        snprintf(buffer, BUFF_SIZE, "MODEL %8d", model_num);
-        ofs << buffer << endl;
-      }
-      ofs << "USER    Name = " << mol.GetTitle(true) << endl;
-      ofs << "USER                              x       y       z     vdW  Elec       q    Type" << endl;
-      ofs << "USER                           _______ _______ _______ _____ _____    ______ ____" << endl;
+      mol.SetAutomaticPartialCharge(false);
+      all_pieces.push_back(mol);
     }
     else
     {
-      ofs << "BEGIN_RES" << " " << res_name << " " << res_chain << " ";
-      ofs.width(3);
-      ofs << right << res_num << endl;
+      Separate_preserve_charges(mol, all_pieces);
     }
 
-    // before we write any records, we should check to see if any coord < -1000
-    // which will cause errors in the formatting
-    double minX, minY, minZ;
-    minX = minY = minZ = -999.0f;
-    FOR_ATOMS_OF_MOL(a, mol)
+    for (unsigned int i = 0; i < all_pieces.size(); i++)
     {
-      if (a->GetX() < minX)
-        minX = a->GetX();
-      if (a->GetY() < minY)
-        minY = a->GetY();
-      if (a->GetZ() < minZ)
-        minZ = a->GetZ();
-    }
-    vector3 transV = VZero;
-    if (minX < -999.0)
-      transV.SetX(-1.0*minX - 900.0);
-    if (minY < -999.0)
-      transV.SetY(-1.0*minY - 900.0);
-    if (minZ < -999.0)
-      transV.SetZ(-1.0*minZ - 900.0);
-
-    // if minX, minY, or minZ was never changed, shift will be 0.0f
-    // otherwise, move enough so that smallest coord is > -999.0f
-    mol.Translate(transV);
-
-    map <unsigned int, branch> tree;
-    ConstructTree(tree, rigid_fragments, root_piece, mol);
-
-    unsigned int rotatable_bonds=0;
-    if (!pConv->IsOption("r",OBConversion::OUTOPTIONS)) {rotatable_bonds=torsdof;}
-
-
-    if (!OutputTree(mol, ofs, tree, rotatable_bonds, false, pConv->IsOption("p",OBConversion::OUTOPTIONS) != NULL) )
-    {
-      stringstream errorMsg;
-      errorMsg << "WARNING: Problems writing a PDBQT file\n"
-        <<  "  The torsion tree is wrong.\n";
-      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
-      return false;
-    }
-
-    if (!residue)
-    {
-      ofs << "TORSDOF " << torsdof << endl << "TER" << endl;
-      if (model_num)
+      bool residue=false;
+      string res_name="";
+      string res_chain="";
+      unsigned int res_num=1;
+      if (pConv->IsOption("s",OBConversion::OUTOPTIONS))
       {
-        ofs << "ENDMDL" << endl;
+        residue=true;
+        OBResidue* res=mol.GetResidue(0);
+        res_name=res->GetName();
+        res_name.resize(3);
+        res_chain=res->GetChain();
+        res_num=res->GetNum();
       }
-    }
-    else
-    {
-      ofs << "END_RES" << " " << res_name << " " << res_chain << " ";
-      ofs.width(3);
-      ofs << right << res_num << endl;
+
+      all_pieces.at(i).SetAutomaticPartialCharge(false);
+      DeleteHydrogens(all_pieces.at(i));
+
+      int model_num = 0;
+      char buffer[BUFF_SIZE];
+      if (!residue)
+      {
+        if (!pConv->IsLast() || pConv->GetOutputIndex() > 1)
+        { // More than one molecule record
+          model_num = pConv->GetOutputIndex(); // MODEL 1-based index
+          snprintf(buffer, BUFF_SIZE, "MODEL %8d", model_num);
+          ofs << buffer << endl;
+        }
+        ofs << "REMARK  Name = " << mol.GetTitle(true) << endl;
+//        ofs << "USER    Name = " << mol.GetTitle(true) << endl;
+        ofs << "REMARK                            x       y       z     vdW  Elec       q    Type" << endl;
+//        ofs << "USER                              x       y       z     vdW  Elec       q    Type" << endl;
+        ofs << "REMARK                         _______ _______ _______ _____ _____    ______ ____" << endl;
+//        ofs << "USER                           _______ _______ _______ _____ _____    ______ ____" << endl;
+      }
+      else
+      {
+        ofs << "BEGIN_RES" << " " << res_name << " " << res_chain << " ";
+        ofs.width(3);
+        ofs << right << res_num << endl;
+      }
+
+      // before we write any records, we should check to see if any coord < -1000
+      // which will cause errors in the formatting
+      double minX, minY, minZ;
+      minX = minY = minZ = -999.0f;
+      FOR_ATOMS_OF_MOL(a, all_pieces.at(i))
+      {
+        if (a->GetX() < minX)
+          minX = a->GetX();
+        if (a->GetY() < minY)
+          minY = a->GetY();
+        if (a->GetZ() < minZ)
+          minZ = a->GetZ();
+      }
+      vector3 transV = VZero;
+      if (minX < -999.0)
+        transV.SetX(-1.0*minX - 900.0);
+      if (minY < -999.0)
+        transV.SetY(-1.0*minY - 900.0);
+      if (minZ < -999.0)
+        transV.SetZ(-1.0*minZ - 900.0);
+
+      // if minX, minY, or minZ was never changed, shift will be 0.0f
+      // otherwise, move enough so that smallest coord is > -999.0f
+      all_pieces.at(i).Translate(transV);
+
+      bool flexible=!pConv->IsOption("r",OBConversion::OUTOPTIONS);
+
+      vector <vector <int> > rigid_fragments; //the vector of all the rigid molecule fragments, using atom indexes
+      unsigned int best_root_atom=1;
+      map <unsigned int, branch> tree;
+      unsigned int torsdof=0;
+      unsigned int root_piece=0;
+      unsigned int rotatable_bonds=0;
+
+      if (flexible)
+      {
+
+        best_root_atom=FindFragments(all_pieces.at(i), rigid_fragments); //the return value is the root atom index
+
+        if (residue) {best_root_atom=1;} //if this is a residue, uses the first atom as the root
+
+        torsdof=rigid_fragments.size()-1;
+
+        for (unsigned int j = 0; j < rigid_fragments.size(); j++)
+        {
+          if (IsIn((rigid_fragments.at(j)), best_root_atom)) {root_piece=j; break;} //this is the root rigid molecule fragment
+        }
+        ConstructTree(tree, rigid_fragments, root_piece, all_pieces.at(i), true);
+        rotatable_bonds=torsdof;
+      }
+      else //if no rotatable bonds are selected, then won't construct a tree, instead get a whole branch directly from the OBMol
+      {
+        branch all_molecule_branch;
+        all_molecule_branch.all_atoms(all_pieces.at(i));
+        tree.insert(pair<unsigned int, branch> (0, all_molecule_branch));
+        torsdof=RotBond_count(all_pieces.at(i));
+      }
+
+      bool preserve_original_index = (pConv->IsOption("p",OBConversion::OUTOPTIONS));
+      if (!flexible) {preserve_original_index=false;} //no need to relabel if we are preserving the original order anyway
+      if (!OutputTree(all_pieces.at(i), ofs, tree, rotatable_bonds, false, preserve_original_index) )
+//      if (!OutputTree(mol, ofs, tree, rotatable_bonds, false, preserve_original_index) )
+      {
+        stringstream errorMsg;
+        errorMsg << "WARNING: Problems writing a PDBQT file\n"
+          <<  "  The torsion tree is wrong.\n";
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+        return false;
+      }
+
+
+      if (!residue)
+      {
+        ofs << "TORSDOF " << torsdof << endl;
+//        ofs << "TER" << endl;
+        if (model_num)
+        {
+          ofs << "ENDMDL" << endl;
+        }
+      }
+      else
+      {
+        ofs << "END_RES" << " " << res_name << " " << res_chain << " ";
+        ofs.width(3);
+        ofs << right << res_num << endl;
+      }
     }
     return true;
   }
 
   /////////////////////////////////////////////////////////////////////////
 
-  static bool parseAtomRecord(char *buffer, OBMol &mol,int /*chainNum*/)
+  static bool parseAtomRecord(char *buffer, OBMol &mol,int chainNum)
   /* ATOMFORMAT "(i5,1x,a4,a1,a3,1x,a1,i4,a1,3x,3f8.3,2f6.2,a2,a2)" */
   {
     string sbuf = &buffer[6];
