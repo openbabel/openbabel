@@ -759,7 +759,8 @@ namespace OpenBabel
                 // Leave the protonation/deprotonation to phmodel.txt
                 a1->SetType("O3");
                 a1->SetHyb(3);
-                a1->SetFormalCharge(0);
+                // PR#3203039 -- Fix from Magnus Lundborg
+                //                a1->SetFormalCharge(0);
               }
             continue;
           }
