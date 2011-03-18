@@ -64,7 +64,7 @@ namespace OpenBabel
                "Write Options, e.g. -x3\n"
                " 3  output V3000 not V2000 (used for >999 atoms/bonds) \n"
                " m  write no properties\n"
-               " w  recalculate wedge and hash bonds(2D structures only)\n"
+               " w  use wedge and hash bonds from input (2D structures only)\n"
                " A  output in Alias form, e.g. Ph, if present\n\n";
       }
 
@@ -724,14 +724,14 @@ namespace OpenBabel
       set<OBBond*> unspec_ctstereo = GetUnspecifiedCisTrans(mol);
 
       // Calculate parity of atoms and up/down bond for chiral centers (see Appendix A of ctfile.pdf)
-      // The latter is only calculated for 2D if pConv->IsOption("w", pConv->OUTOPTIONS)). Otherwise
-      // the IsWedge/IsHash bond designations are used. For 3D it is always calculated. For 0D never.
+      // For 2D, if pConv->IsOption("w", pConv->OUTOPTIONS)), then the IsWedge/IsHash bond
+      // designations are used instead of calculating them. For 3D it is always calculated. For 0D never.
       map<OBBond*, OBStereo::BondDirection> updown;
       map<OBAtom*, Parity> parity;
       map<OBBond*, OBStereo::Ref> from;
       map<OBBond*, OBStereo::Ref>::const_iterator from_cit;
       GetParity(mol, parity);
-      if (mol.GetDimension() == 3 || (mol.GetDimension()==2 && pConv->IsOption("w", pConv->OUTOPTIONS)!=NULL))
+      if (mol.GetDimension() == 3 || (mol.GetDimension()==2 && !pConv->IsOption("w", pConv->OUTOPTIONS)))
         TetStereoToWedgeHash(mol, updown, from);
 
       // The counts line:
@@ -791,7 +791,7 @@ namespace OpenBabel
             if ( (from_cit==from.end() && atom->GetIdx()==bond->GetBeginAtomIdx()) ||
                  (from_cit!=from.end() && from_cit->second == atom->GetId()) ) {
               int stereo = 0;
-              if(mol.GetDimension() == 2 && !pConv->IsOption("w", pConv->OUTOPTIONS)) {
+              if(mol.GetDimension() == 2 && pConv->IsOption("w", pConv->OUTOPTIONS)!=NULL) {
                 if (bond->IsWedge())
                   stereo = 1;
                 else if (bond->IsHash())

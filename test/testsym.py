@@ -178,6 +178,13 @@ class TestConversions(BaseTest):
             broken = lines[i+4+Natoms].split()
             bonds.append({'stereo':int(broken[3])})
         return atoms, bonds
+
+    def testSMILESto2D(self):
+        """Test gen2d for some basic cases"""
+        for smi, can, inchi in self.data:
+            output, error = run_exec(smi, "obabel -ismi --gen2d -omdl")
+            output, error = run_exec(output.rstrip(), "obabel -imdl -ocan")
+            self.assertEqual(can, output.rstrip())
         
     def testSMILESto3DMDL(self):
         """Test interconversion between SMILES and 3D MDL"""
