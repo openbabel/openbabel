@@ -40,6 +40,9 @@
     onmouseup=function() {
       startx=0;
       starty=0;
-   }
+    }
+    ondblclick=function() {
+      location.reload();
+    }
   ]]>
 </script>
