@@ -64,7 +64,9 @@ set(ops
   ops/fillUC.cpp
   ops/forcefield.cpp
   ops/gen3d.cpp
+  ops/largest.cpp
   ops/loader.cpp
+  ops/opalign.cpp
   ops/optransform.cpp
   ops/partialcharges.cpp
   ops/readconformers.cpp
