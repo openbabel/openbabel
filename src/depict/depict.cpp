@@ -25,6 +25,7 @@ GNU General Public License for more details.
 #include <algorithm> // std::reverse
 #include <iterator> // std::istream_iterator
 #include <openbabel/stereo/stereo.h>
+#include <openbabel/obiter.h>
 
 #include <iostream>
 using namespace std;
@@ -704,7 +705,14 @@ namespace OpenBabel
     return false;
   }
 
-  void OBDepictPrivate::SetWedgeAndHash(OBMol* mol)  {
+  void OBDepictPrivate::SetWedgeAndHash(OBMol* mol)  
+  {
+    // Remove any existing wedge and hash bonds
+    FOR_BONDS_OF_MOL(b,mol)  {
+      b->UnsetWedge();
+      b->UnsetHash();
+    }
+
     std::map<OBBond*, enum OBStereo::BondDirection> updown;
     std::map<OBBond*, OBStereo::Ref> from;
     std::map<OBBond*, OBStereo::Ref>::const_iterator from_cit;
