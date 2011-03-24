@@ -95,6 +95,9 @@ public:
     if(!pmol)
       return false;
 
+    //This fingerprint is constructed from a molecule with no explicit hydrogens.
+    pmol->DeleteHydrogens();
+
     unsigned int n;
     //Read patterns file if it has not been done already
     if(_pats.empty())

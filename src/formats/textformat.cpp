@@ -29,11 +29,9 @@ public:
   virtual const char* Description() //required
   {
     return
-"Reads raw text\n"
-"Facilitates the input of boilerplate text with babel commandline" ;
+     "Read and write raw text\n"
+     "Facilitates the input of boilerplate text with babel commandline" ;
   }
-
-  virtual unsigned int Flags() { return NOTWRITABLE; }
 
 /////////////////////////////////////////////////////////////////
   virtual bool ReadChemObject(OBConversion* pConv)
@@ -64,6 +62,25 @@ public:
     string fileText(istreambuf_iterator<char>(*pConv->GetInStream()), istreambuf_iterator<char>());
     pText->SetText(fileText);
     return !fileText.empty();
+  }
+
+  virtual bool WriteChemObject(OBConversion* pConv)
+  {
+    //Output an OBText object and delete any other type.
+    OBBase* pOb = pConv->GetChemObject();
+    OBText* pText = dynamic_cast<OBText*>(pOb);
+    if(!pText)
+    {
+      delete pOb;
+      return false;
+    }
+    else
+    {
+      ostream* ofs = pConv->GetOutStream();
+      if(ofs)
+        *ofs << pText->GetText();
+      return *ofs;
+    }
   }
 };
 

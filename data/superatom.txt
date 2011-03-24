@@ -39,7 +39,6 @@ COO-     -OOC     C(=O)[O-]
 ## Only entries above this line are used to *generate* aliases.
 Ph       Ph       c1ccccc1
 OR       RO       O*
-R        R        *
 OBz      BzO      OCc1ccccc1
 THPO     THPO     O[C@@H]1OCCCC1
 NOH      HON      NO 
@@ -111,3 +110,5 @@ CH-      HC-      [CH-]
 D        D        [2H]
 ND2      D2N      [N]([2H])[2H]
 DS       SD       [S][2H]  
+CH3      H3C      C
+C2H5     C2H5     CC

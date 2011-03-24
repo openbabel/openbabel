@@ -25,6 +25,9 @@ GNU General Public License for more details.
 #include <algorithm> // std::reverse
 #include <iterator> // std::istream_iterator
 #include <openbabel/stereo/stereo.h>
+#include <openbabel/obiter.h>
+
+#include <cmath>
 
 #include <iostream>
 using namespace std;
@@ -33,15 +36,10 @@ namespace OpenBabel
 {
 
   enum {
-    TopLeft = 1,
-    TopCenter = 2,
-    TopRight = 3,
-    CenterLeft = 4,
-    Center = 5,
-    CenterRight = 6,
-    BottomLeft = 7,
-    BottomCenter = 8,
-    BottomRight = 9
+    Left,
+    Right,
+    Up,
+    Down
   };
 
   class OBDepictPrivate
@@ -195,21 +193,16 @@ namespace OpenBabel
     
     const double bias = -0.1; //towards left-alignment, which is more natural
     int alignment = 0;
-    if (direction.y() < 0.0) {
-      if (direction.x() < bias)
-        alignment = BottomRight;
-      else 
-        alignment = BottomLeft;
-    } else if (direction.x() > 0.0) {
-      if (direction.x() < bias)
-        alignment = TopRight;
+    if ((atom->GetValence() == 2) && (abs(direction.y()) > abs(direction.x()))) {
+      if (direction.y() <= 0.0)
+        alignment = Up;
       else
-        alignment = TopLeft;
+        alignment = Down;
     } else {
       if (direction.x() < bias)
-         alignment = CenterRight;
-      else 
-        alignment = CenterLeft;
+        alignment = Right;
+      else
+        alignment = Left;
     }
 
     return alignment;
@@ -390,9 +383,7 @@ namespace OpenBabel
       int alignment = GetLabelAlignment(atom);
       bool rightAligned = false;
       switch (alignment) {
-        case TopRight:
-        case CenterRight:
-        case BottomRight:
+        case Right:
           rightAligned = true;
         default:
           break;
@@ -412,11 +403,9 @@ namespace OpenBabel
         OBFontMetrics metrics = d->painter->GetFontMetrics("N");
         double yoffset = d->HasLabel(atom) ? 0.4 * metrics.height : 0.0;
         switch (GetLabelAlignment(atom)) {
-          case TopCenter:
-          case TopRight:
-          case TopLeft:
-          case CenterLeft:
-          case CenterRight:
+          case Up:
+          case Left:
+          case Right:
             yoffset = - 1.2 * metrics.height;
         }
         stringstream ss;
@@ -607,9 +596,7 @@ namespace OpenBabel
 
   void OBDepictPrivate::DrawAtomLabel(const std::string &label, int alignment, const vector3 &pos)
   {
-    painter->SetFontSize(fontSize);
-    OBFontMetrics metrics = painter->GetFontMetrics(label);
-    /*
+   /*
     cout << "FontMetrics(" << label << "):" << endl;
     cout << "  ascent = " << metrics.ascent << endl;
     cout << "  descent = " << metrics.descent << endl;
@@ -622,40 +609,87 @@ namespace OpenBabel
     painter->SetPenColor(OBColor("black"));
     */
  
+    // compute the total width
+    double totalWidth = 0.0;
+    if ((alignment == Right) || (alignment == Left) || (label.find("H") == std::string::npos)) {
+      for (int i = 0; i < label.size(); ++i) {
+        if (!isalpha(label[i])) {
+          painter->SetFontSize(subscriptSize);
+          totalWidth += painter->GetFontMetrics(label.substr(i, 1)).width;
+        } else {
+          painter->SetFontSize(fontSize);
+          totalWidth += painter->GetFontMetrics(label.substr(i, 1)).width;
+        }
+      }
+    } else {
+      painter->SetFontSize(fontSize);
+      totalWidth = painter->GetFontMetrics(label.substr(0, label.find("H"))).width;
+      double width = 0.0; 
+      for (int i = label.find("H"); i < label.size(); ++i) {
+        if (!isalpha(label[i])) {
+          painter->SetFontSize(subscriptSize);
+          width += painter->GetFontMetrics(label.substr(i, 1)).width;
+        } else {
+          painter->SetFontSize(fontSize);
+          width += painter->GetFontMetrics(label.substr(i, 1)).width;
+        }
+      }
+
+      if (width > totalWidth)
+        totalWidth = width; 
+    }
+
+    painter->SetFontSize(fontSize);
+    OBFontMetrics metrics = painter->GetFontMetrics(label);
+ 
+
     std::string str, subscript;
     // compute the horizontal starting position
     double xOffset, yOffset, yOffsetSubscript;
     switch (alignment) {
-      case TopLeft:
-      case CenterLeft:
-      case BottomLeft:
-        xOffset = - 0.5 * painter->GetFontMetrics(label.substr(0,1)).width;
-        break;
-      case TopRight:
-      case CenterRight:
-      case BottomRight:
-        xOffset = 0.7 * painter->GetFontMetrics(label.substr(label.size()-1,1)).width - 
+      case Right:
+        xOffset = 0.5 * painter->GetFontMetrics(label.substr(0, 1)).width - 
                   painter->GetFontMetrics(label).width;
         break;
+      case Left:
+        xOffset = - 0.5 * painter->GetFontMetrics(label.substr(label.size()-1, 1)).width;
+        break;
+      case Up:
+      case Down:
+        if (label.find("H") != std::string::npos)
+          xOffset = - 0.5 * painter->GetFontMetrics(label.substr(0, label.find("H"))).width;
+        else
+          xOffset = - 0.5 * totalWidth;
       default:
-        xOffset = - 0.5 * painter->GetFontMetrics(label).width;
+        xOffset = - 0.5 * totalWidth;
         break;
     }
+
     // compute the vertical starting position
-    switch (alignment) {
-      case BottomLeft:
-      case BottomCenter:
-      case BottomRight:
-        yOffset = 0.2 * metrics.ascent + metrics.descent;
-        yOffsetSubscript = metrics.ascent + metrics.descent;
-        break;
-      default:
-        yOffset = 0.5 * metrics.ascent;
-        yOffsetSubscript = metrics.ascent;
-        break;
-    }
-    
+    yOffset = 0.5 * (metrics.ascent /*- metrics.descent*/);
+    yOffsetSubscript = yOffset + metrics.descent;
+    double xInitial = xOffset;
+
     for (int i = 0; i < label.size(); ++i) {
+      if (label[i] == 'H') {
+        if ((alignment == Up) || (alignment == Down))
+          if (!str.empty()) {
+            // write the current string
+            painter->SetFontSize(fontSize);
+            painter->DrawText(pos.x() + xOffset, pos.y() + yOffset, str);
+            if (alignment == Down) {
+              yOffset += metrics.ascent  + metrics.descent;
+              yOffsetSubscript += metrics.ascent + metrics.descent;
+            } else {
+              yOffset -= 2.4 * metrics.ascent - metrics.descent;
+              yOffsetSubscript -= metrics.ascent - metrics.descent;
+            }
+            xOffset = xInitial;
+            str.clear();
+          }
+      }
+
+
       if (!isalpha(label[i])) {
         if (!str.empty()) {
           // write the current string
@@ -704,7 +738,14 @@ namespace OpenBabel
     return false;
   }
 
-  void OBDepictPrivate::SetWedgeAndHash(OBMol* mol)  {
+  void OBDepictPrivate::SetWedgeAndHash(OBMol* mol)  
+  {
+    // Remove any existing wedge and hash bonds
+    FOR_BONDS_OF_MOL(b,mol)  {
+      b->UnsetWedge();
+      b->UnsetHash();
+    }
+
     std::map<OBBond*, enum OBStereo::BondDirection> updown;
     std::map<OBBond*, OBStereo::Ref> from;
     std::map<OBBond*, OBStereo::Ref>::const_iterator from_cit;

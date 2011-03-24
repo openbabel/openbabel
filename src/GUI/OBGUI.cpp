@@ -15,6 +15,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
+#define HAVE_SNPRINTF_DECL //needed to avoid "inconsistent linkage"
 #include <openbabel/babelconfig.h>
 #include <stdwx.h>
 #include <wx/file.h>
@@ -24,6 +25,7 @@ GNU General Public License for more details.
 //#include <openbabel/dlhandler.h>
 #include <selformats.h>
 #include <OBGUI.h>
+
 
 #ifdef __WXMAC__
 // As described at http://wiki.wxwidgets.org/WxMac_Issues
@@ -42,10 +44,11 @@ using namespace OpenBabel;
 // the event tables connect the wxWidgets events with the functions (event
 // handlers) which process them.
 BEGIN_EVENT_TABLE(OBGUIFrame, wxFrame)
-  EVT_MENU(ID_CONVERT,		 OBGUIFrame::OnConvert)
+  EVT_MENU(ID_CONVERT,     OBGUIFrame::OnConvert)
   EVT_MENU(wxID_EXIT,      OBGUIFrame::OnQuit)
   EVT_MENU(wxID_SAVE,      OBGUIFrame::OnSaveInputText)
-  EVT_MENU(ID_COPYTOINPUT,  OBGUIFrame::OnCopyToInput)
+  EVT_MENU(ID_COPYTOINPUT, OBGUIFrame::OnCopyToInput)
+  EVT_MENU(ID_SAVECONFIG,  OBGUIFrame::OnSaveConfig)
   EVT_MENU(ID_SELFORMATS,  OBGUIFrame::OnSelectFormats)
   EVT_MENU(ID_RESTRICTFORMATS,  OBGUIFrame::OnRestrictFormats)
   EVT_MENU(ID_SETDISPLAYFILE,  OBGUIFrame::OnSetDisplayFile)
@@ -145,12 +148,14 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
   viewMenu->AppendSeparator();
   viewMenu->Append(ID_MINSIZE, _T("Reduce window to minimum useful size"));
 
-  fileMenu->Append(ID_CONVERT, _T("&Convert"));
+  fileMenu->Append(ID_CONVERT, _T("&Convert\tAlt-C"));
   fileMenu->Append(wxID_SAVE, _T("&Save Input Text As...\tCtrl+S"),
     _T("Brings up Save dialog"));
-  fileMenu->Append(ID_COPYTOINPUT, _T("&Copy Output To Input"),
+  fileMenu->Append(ID_COPYTOINPUT, _T("Copy Output To Input"),
     _T("Copies output text and format to input"));
+  fileMenu->Append(ID_SAVECONFIG, _T("Save screen configuration\tAlt-S"));
   fileMenu->Append(wxID_EXIT, _T("E&xit\tAlt-X"), _T("Quit OpenBabelGUI"));
+
   helpMenu->Append(wxID_HELP, _T("&Instructions"),
     _T("Opens default browser to view help file"));
   helpMenu->Append(wxID_ABOUT, _T("&About..."), _T("Show about dialog"));
@@ -349,7 +354,10 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
   m_pInputHere->SetValue(chk);
   ChangeInputHere(chk);
 
-  //Display the options
+  config.Read(_T("ForceInFormat"),&chk,false);
+  m_pForceInFormat->SetValue(chk);
+
+ //Display the options
   wxCommandEvent dum;
   OnChangeFormat(dum);
 }
@@ -360,6 +368,21 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
 void OBGUIFrame::OnClose(wxCloseEvent& event)
 {
   //Save the window size, in and out formats, and various options, for use next time.
+  wxCommandEvent ev;
+  OnSaveConfig(ev);
+
+  delete m_pGenOptsPanel;
+  delete m_pAPIOptsPanel;
+  delete m_pConvOptsPanel;
+  delete m_pInOptsPanel;
+  delete m_pOutOptsPanel;
+  delete m_pfixedFont;
+  this->Destroy();
+}
+
+void OBGUIFrame::OnSaveConfig(wxCommandEvent& event)
+{
+    //Save the window size, in and out formats, and various options, for use next time.
   wxConfig config(_T("OpenBabelGUI"));
 
   int width, height, left, top;
@@ -392,17 +415,10 @@ void OBGUIFrame::OnClose(wxCloseEvent& event)
   config.Write(_T("InWrapped"),viewMenu->IsChecked(ID_INWRAPPED));
   config.Write(_T("OutWrapped"),viewMenu->IsChecked(ID_OUTWRAPPED));
   config.Write(_T("InputHere"), m_pInputHere->IsChecked());
+  config.Write(_T("ForceInFormat"), m_pForceInFormat->IsChecked());
 
   m_ActiveFormats.WriteConfig(config);
   config.Write(_T("UseRestrictedFormats"), viewMenu->IsChecked(ID_RESTRICTFORMATS));
-
-  delete m_pGenOptsPanel;
-  delete m_pAPIOptsPanel;
-  delete m_pConvOptsPanel;
-  delete m_pInOptsPanel;
-  delete m_pOutOptsPanel;
-  delete m_pfixedFont;
-  this->Destroy();
 }
 
 void OBGUIFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
