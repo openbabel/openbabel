@@ -1,4 +1,6 @@
 cmake_minimum_required(VERSION 2.6.0)
+# Library versioning (used in Mac Python bindings)x
+set(SOVERSION 4)
 
 if (RUN_SWIG)
   include(FindSWIG)
@@ -17,7 +19,7 @@ if (RUN_SWIG)
   if (NOT ${SWIG_VERSION} STREQUAL "2.0.0" AND NOT ${SWIG_VERSION} STREQUAL "2.0.1")
     message(STATUS "SWIG version 2.0.0 exactly is required")
     return()
-  endif (NOT ${SWIG_VERSION} STREQUAL "2.0.0" AND NOT ${SWIG_VERSION} STREQUAL "2.0.1")
+  endif ()
 endif (RUN_SWIG)
 
 ###################
@@ -53,7 +55,7 @@ if (DO_PYTHON_BINDINGS)
         ${PYTHON_INCLUDE_PATH}
     )
 
-    if (EIGEN2_FOUND) 
+    if (EIGEN2_FOUND)
         set (eigen2_define "-DHAVE_EIGEN2")
         set (CFLAGS_TEXT "CFLAGS=-I${EIGEN2_INCLUDE_DIR}")
     endif (EIGEN2_FOUND)
@@ -71,7 +73,7 @@ if (DO_PYTHON_BINDINGS)
             DEPENDS openbabel ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp
             WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts
         )
-        add_custom_command(TARGET _openbabel POST_BUILD 
+        add_custom_command(TARGET _openbabel POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E echo "import sys" > ob.py
             COMMAND ${CMAKE_COMMAND} -E echo "if sys.platform.find('linux'\) != -1:" >> ob.py
             COMMAND ${CMAKE_COMMAND} -E echo "  try:" >> ob.py
@@ -83,6 +85,12 @@ if (DO_PYTHON_BINDINGS)
             COMMAND ${CMAKE_COMMAND} -E copy ob.py ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
             COMMAND ${CMAKE_COMMAND} -E remove ob.py
             VERBATIM)
+        if (APPLE)
+           # Update the built version
+          add_custom_command(TARGET _openbabel POST_BUILD
+           COMMAND install_name_tool -change ${openbabel_BINARY_DIR}/lib/libopenbabel.${SOVERSION}.dylib ${CMAKE_INSTALL_PREFIX}/lib/libopenbabel.${SOVERSION}.dylib ${openbabel_BINARY_DIR}/scripts/pybuild/_openbabel.so
+           VERBATIM)
+        endif()
         add_dependencies(_openbabel openbabel)
 
         if (PYTHON_PREFIX)
@@ -90,10 +98,16 @@ if (DO_PYTHON_BINDINGS)
         else (PYTHON_PREFIX)
             if (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
                 install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --root=\$ENV{DESTDIR}/ WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
-            else (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
+           else (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
                 install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --root=\$ENV{DESTDIR}/ --prefix=${CMAKE_INSTALL_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
-            endif (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-        endif (PYTHON_PREFIX)
+            endif ()
+        endif ()
+        if (APPLE)
+           EXECUTE_PROCESS(COMMAND ${PYTHON_EXECUTABLE} -c
+               "from sys import stdout; from distutils import sysconfig; stdout.write(sysconfig.get_python_lib(1))"
+           OUTPUT_VARIABLE PYTHON_LIB_PATH)
+           install(CODE "execute_process(COMMAND install_name_tool -change ${openbabel_BINARY_DIR}/lib/libopenbabel.${SOVERSION}.dylib ${CMAKE_INSTALL_PREFIX}/lib/libopenbabel.${SOVERSION}.dylib ${PYTHON_LIB_PATH}/_openbabel.so)")
+        endif()
 
     else(NOT WIN32)
         add_library(bindings_python MODULE ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp)
@@ -102,7 +116,7 @@ if (DO_PYTHON_BINDINGS)
             OUTPUT_NAME _openbabel
             PREFIX ""
             SUFFIX .pyd )
-        add_custom_command(TARGET bindings_python POST_BUILD 
+        add_custom_command(TARGET bindings_python POST_BUILD
           COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py ${openbabel_BINARY_DIR}/${CMAKE_CFG_INTDIR}
           )
     endif(NOT WIN32)
@@ -230,13 +244,13 @@ if (DO_PERL_BINDINGS)
         COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/perl/Makefile.PL ${openbabel_BINARY_DIR}/scripts/perl
         COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp ${openbabel_BINARY_DIR}/scripts/perl
         COMMAND PERL5LIB=${openbabel_SOURCE_DIR}/scripts/perl/inc SRC_DIR=${openbabel_SOURCE_DIR} OBJ_DIR=${openbabel_BINARY_DIR} ${PERL_EXECUTABLE} ${openbabel_BINARY_DIR}/scripts/perl/Makefile.PL ${PERL_PREFIX_TEXT} ${PERL_INSTALLDIRS_TEXT}
-        COMMAND PERL5LIB=${openbabel_SOURCE_DIR}/scripts/perl/inc make 
+        COMMAND PERL5LIB=${openbabel_SOURCE_DIR}/scripts/perl/inc make
             DEPENDS openbabel ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp
             WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/perl
         )
       add_dependencies(bindings_perl pre_bindings_perl openbabel)
       install(CODE "execute_process(COMMAND make install DESTDIR=\$ENV{DESTDIR} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/perl)")
-    
+
     else (NOT MSVC)
       add_library(bindings_perl MODULE ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp)
       target_link_libraries(bindings_perl ${PERL_LIBRARY} ${BABEL_LIBRARY})
