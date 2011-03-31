@@ -10,16 +10,11 @@ if (RUN_SWIG)
   # SWIG_EXECUTABLE - the path to the swig executable
   # SWIG_VERSION   - the version number of the swig executable
 
-  find_package(SWIG)
+  find_package(SWIG 2.0)
   if (NOT SWIG_FOUND)
-    message(STATUS "SWIG NOT found")
+    message(STATUS "SWIG 2.0 NOT found")
     return()
   endif (NOT SWIG_FOUND)
-  message(STATUS "SWIG version is ${SWIG_VERSION}")
-  if (NOT ${SWIG_VERSION} STREQUAL "2.0.0" AND NOT ${SWIG_VERSION} STREQUAL "2.0.1")
-    message(STATUS "SWIG version 2.0.0 exactly is required")
-    return()
-  endif ()
 endif (RUN_SWIG)
 
 ###################
@@ -94,12 +89,12 @@ if (DO_PYTHON_BINDINGS)
         add_dependencies(_openbabel openbabel)
 
         if (PYTHON_PREFIX)
-            install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --root=\$ENV{DESTDIR}/ --prefix=${PYTHON_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
+            install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --root=\$ENV{DESTDIR}/ --prefix=${PYTHON_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)"   LIBRARY DESTINATION ${LIB_INSTALL_DIR})
         else (PYTHON_PREFIX)
             if (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-                install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --root=\$ENV{DESTDIR}/ WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
+                install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --root=\$ENV{DESTDIR}/ WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)"   LIBRARY DESTINATION ${LIB_INSTALL_DIR})
            else (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-                install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --root=\$ENV{DESTDIR}/ --prefix=${CMAKE_INSTALL_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)")
+                install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --root=\$ENV{DESTDIR}/ --prefix=${CMAKE_INSTALL_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)"   LIBRARY DESTINATION ${LIB_INSTALL_DIR})
             endif ()
         endif ()
         if (APPLE)
@@ -321,11 +316,8 @@ if (DO_RUBY_BINDINGS)
         WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/ruby
         )
       add_dependencies(bindings_ruby pre_bindings_ruby openbabel)
-      set(ruby_install_dir ${ruby_install_dir}
-          CACHE PATH "The directory where the Ruby bindings will be installed")
-      install(FILES ruby/openbabel.so DESTINATION ${ruby_install_dir}
-        PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
-    else(NOT MSVC)
+      install(CODE "execute_process(COMMAND make install DESTDIR=\$ENV{DESTDIR} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/ruby)")
+   else(NOT MSVC)
       add_library(bindings_ruby MODULE ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp)
       target_link_libraries(bindings_ruby ${RUBY_LIBRARY} ${BABEL_LIBRARY})
       set_target_properties(bindings_ruby PROPERTIES
