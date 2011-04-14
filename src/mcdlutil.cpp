@@ -4202,6 +4202,11 @@ void TEditedMolecule::addAsTemplate(TEditedMolecule& fragmentMol, int thisAN, in
 
 
   if (fragmentMol.nAtoms() == 0) return;
+  if ((thisAN<0) && (thisBN<0)) {
+	this->moleculeCopy(fragmentMol);
+	return;
+  }
+
   naDef1=smAN;
   test1=true;
   test2=false;
