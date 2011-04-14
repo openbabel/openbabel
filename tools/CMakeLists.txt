@@ -16,7 +16,8 @@ else(MINIMAL_BUILD)
         obprop
         obrotamer
         obrotate
-  )
+        obsym
+     )
 endif(MINIMAL_BUILD)
 
 INCLUDE(CheckFunctionExists)

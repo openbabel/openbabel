@@ -45,11 +45,33 @@ namespace OpenBabel
       OBPointGroup();
       ~OBPointGroup();
 
+      enum Symbol
+      { // The most likely 60 cases
+        C1 = 0, Cs, Ci, // 0 to 2
+        C2, C3, C4, C5, C6, C7, C8, // 3 to 9
+        D2, D3, D4, D5, D6, D7, D8, // 10 to 16
+        C2v, C3v, C4v, C5v, C6v, C7v, C8v, // 17 to 23
+        C2h, C3h, C4h, C5h, C6h, C7h, C8h, // 24 to 30
+        D2d, D3d, D4d, D5d, D6d, D7d, D8d, // 31 to 37
+        D2h, D3h, D4h, D5h, D6h, D7h, D8h, // 38 to 44
+        S4, S6, S8, // 45 to 47
+        T, Th, Td, // 48 to 50
+        O, Oh, // 51, 52
+        Cinfv, Dinfh, // 53, 54
+        I, Ih, // 55, 56
+        K, Kh, // 57, 58
+        Unknown // 59
+      };
+
       //! Set the point group detection for this molecule
       void Setup(OBMol *);
 
       //! \return the 3D point group symbol for this molecule
       const char *IdentifyPointGroup();
+
+      //! \return the 3D point group symbol for this molecule
+      //! \arg tolerance The initial tolerance for determining possibly symmetric atoms
+      Symbol IdentifyPointGroupSymbol(double tolerance = 0.01);
 
     protected:
       PointGroupPrivate *d;
