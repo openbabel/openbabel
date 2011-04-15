@@ -76,14 +76,18 @@ set(OB_EXPORTS_FILE "${openbabel_BINARY_DIR}/OpenBabel2_EXPORTS.cmake")
 file(REMOVE "${OB_EXPORTS_FILE}")
 
 # Place binaries and libraries in the root of the build directory
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-  CACHE STRING "Binary build output directory")
-if(UNIX)
-  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
-    CACHE STRING "Library build output directory")
-else() # This is preferable on WIndows for example - bin = lib directory.
-  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-    CACHE STRING "Library build output directory")
+if(NOT CMAKE_RUNTIME_OUTPUT_DIRECTORY)
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+    CACHE STRING "Binary build output directory")
+endif()
+if(NOT CMAKE_LIBRARY_OUTPUT_DIRECTORY)
+  if(UNIX)
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
+      CACHE STRING "Library build output directory")
+  else() # This is preferable on WIndows for example - bin = lib directory.
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+      CACHE STRING "Library build output directory")
+  endif()
 endif()
 
 mark_as_advanced(CMAKE_LIBRARY_OUTPUT_DIRECTORY
