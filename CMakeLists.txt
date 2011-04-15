@@ -172,6 +172,11 @@ if(wxWidgets_FOUND)
 endif()
 
 if(MSVC)
+  option(OB_USE_PREBUILT_BINARIES
+    "Should Windows Open Babel builds use prebuilt binaries?" ON)
+endif()
+
+if(MSVC AND OB_USE_PREBUILT_BINARIES)
   include_directories(${openbabel_SOURCE_DIR}/windows-vc2008/include)
   # The following line is required for check_include_file(rpc/xdr.h ...) below
   set(CMAKE_REQUIRED_INCLUDES ${openbabel_SOURCE_DIR}/windows-vc2008/include)
