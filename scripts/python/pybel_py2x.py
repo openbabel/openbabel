@@ -90,12 +90,14 @@ def readfile(format, filename):
         raise ValueError("%s is not a recognised OpenBabel format" % format)
     if not os.path.isfile(filename):
         raise IOError("No such file: '%s'" % filename)
-    obmol = ob.OBMol()
-    notatend = obconversion.ReadFile(obmol,filename)
-    while notatend:
-        yield Molecule(obmol)
+    def filereader():
         obmol = ob.OBMol()
-        notatend = obconversion.Read(obmol)
+        notatend = obconversion.ReadFile(obmol,filename)
+        while notatend:
+            yield Molecule(obmol)
+            obmol = ob.OBMol()
+            notatend = obconversion.Read(obmol)
+    return filereader()
 
 def readstring(format, string):
     """Read in a molecule from a string.
@@ -126,7 +128,7 @@ def readstring(format, string):
 
 class Outputfile(object):
     """Represent a file to which *output* is to be sent.
-    
+   
     Although it's possible to write a single molecule to a file by
     calling the write() method of a molecule, if multiple molecules
     are to be written to the same file you should use the Outputfile
@@ -148,12 +150,12 @@ class Outputfile(object):
     def __init__(self, format, filename, overwrite=False):
         self.format = format
         self.filename = filename
-        if not overwrite and os.path.isfile(self.filename):
-            raise IOError("%s already exists. Use 'overwrite=True' to overwrite it." % self.filename)
         self.obConversion = ob.OBConversion()
         formatok = self.obConversion.SetOutFormat(self.format)
         if not formatok:
             raise ValueError("%s is not a recognised OpenBabel format" % format)
+        if not overwrite and os.path.isfile(self.filename):
+            raise IOError("%s already exists. Use 'overwrite=True' to overwrite it." % self.filename)
         self.total = 0 # The total number of molecules written to the file
     
     def write(self, molecule):
@@ -181,7 +183,7 @@ class Molecule(object):
 
     Required parameter:
        OBMol -- an Open Babel OBMol or any type of cinfony Molecule
-    
+ 
     Attributes:
        atoms, charge, conformers, data, dim, energy, exactmass, formula, 
        molwt, spin, sssr, title, unitcell.
@@ -425,8 +427,11 @@ class Molecule(object):
                    
         mol = oasa.molecule()
         for atom in workingmol.atoms:
-            v = mol.create_vertex()
-            v.symbol = etab.GetSymbol(atom.atomicnum)
+            v = mol.create_vertex()            
+            if atom.OBAtom.GetType() == "Du":
+                v.symbol = "R"
+            else:
+                v.symbol = etab.GetSymbol(atom.atomicnum)
             v.charge = atom.formalcharge
             if usecoords:
                 v.x, v.y, v.z = atom.coords[0] * 30., atom.coords[1] * 30., 0.0
@@ -541,10 +546,10 @@ class Atom(object):
     The original Open Babel atom can be accessed using the attribute:
        OBAtom
     """
-    
+
     def __init__(self, OBAtom):
         self.OBAtom = OBAtom
-        
+
     @property
     def coords(self):
         return (self.OBAtom.GetX(), self.OBAtom.GetY(), self.OBAtom.GetZ())

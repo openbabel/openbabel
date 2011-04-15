@@ -148,7 +148,7 @@
       
       castMethodName = string.Format("{0}{1}","To",derivedType);
       
-      System.Reflection.MethodInfo castMethod = typeof(OBGenericData).GetMethod(castMethodName);
+      System.Reflection.MethodInfo castMethod = typeof(OBGenericData).GetMethod(castMethodName, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
       
       if(castMethod == null)
         throw new InvalidCastException("No explicit downcast is defined for " + derivedType);
