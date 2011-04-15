@@ -221,7 +221,8 @@ namespace std { class stringbuf {}; }
 
 %warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
 %include <openbabel/bitvec.h>
-%rename(_next) OpenBabel::rotor_digit::next;
+# Ignore shadowed method
+%ignore OpenBabel::OBRotor::GetRotAtoms() const;
 %include <openbabel/rotor.h>
 %ignore OpenBabel::Swab;
 %include <openbabel/rotamer.h>

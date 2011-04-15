@@ -317,3 +317,4 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
 }
 
 }//namespace
+
