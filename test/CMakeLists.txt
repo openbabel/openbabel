@@ -24,6 +24,7 @@ set(tests
     spectrophore
     squareplanar
     stereo
+    stereobonds
     stereoperception
     tetrahedral
     tetranonplanar
