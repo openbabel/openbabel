@@ -112,6 +112,7 @@ set(openbabel_srcs
   graphsym.cpp
   grid.cpp
   griddata.cpp
+  groupcontrib.cpp
   isomorphism.cpp
   kekulize.cpp
   locale.cpp
