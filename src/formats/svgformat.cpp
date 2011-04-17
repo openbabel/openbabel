@@ -78,6 +78,7 @@ public:
       " a draw all carbon atoms\n"
       "    So propane would display as H3C-CH2-CH3\n"
       " d do not display molecule name\n"
+      " s use asymmetric double bonds\n"
       " e embed molecule as CML\n"
       "    OpenBabel can read the resulting svg file as a cml file.\n"
       " p# scale to bondlength in pixels(single mol only)\n"
@@ -389,6 +390,8 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       depictor.SetOption(OBDepict::bwAtoms);
     if(!pConv->IsOption("U"))
       depictor.SetOption(OBDepict::internalColor);
+    if(pConv->IsOption("s"))
+      depictor.SetOption(OBDepict::asymmetricDoubleBond);
 
     depictor.DrawMolecule(pmol);
 
@@ -448,6 +451,8 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       depictor.SetOption(OBDepict::bwAtoms);
     if(!pConv->IsOption("U"))
       depictor.SetOption(OBDepict::internalColor);
+    if(pConv->IsOption("s"))
+      depictor.SetOption(OBDepict::asymmetricDoubleBond);
 
     depictor.DrawMolecule(pmol);
 

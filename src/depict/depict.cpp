@@ -542,15 +542,52 @@ namespace OpenBabel
     if (HasLabel(endAtom))
       end -= 0.33 * vb;
 
+    vb.normalize();
+
     if (order == 1) {
       painter->DrawLine(begin.x(), begin.y(), end.x(), end.y());
     } else if (order == 2) {
       vector3 orthogonalLine = cross(end - begin, VZ).normalize();
-      vector3 offset = orthogonalLine * 0.5 * bondSpacing;
-      painter->DrawLine(begin.x() + offset.x(), begin.y() + offset.y(), 
-                        end.x() + offset.x(), end.y() + offset.y());
-      painter->DrawLine(begin.x() - offset.x(), begin.y() - offset.y(), 
-                        end.x() - offset.x(), end.y() - offset.y());
+
+      bool useAsymmetricDouble = options & OBDepict::asymmetricDoubleBond;
+      if (HasLabel(beginAtom) && HasLabel(endAtom))
+        useAsymmetricDouble = false;
+      if (HasLabel(beginAtom) && endAtom->GetValence() == 3)
+        useAsymmetricDouble = false;
+      if (HasLabel(endAtom) && beginAtom->GetValence() == 3)
+        useAsymmetricDouble = false;
+
+
+      if (!useAsymmetricDouble) {
+        // style1
+        //
+        // -----------
+        // -----------
+        vector3 offset = orthogonalLine * 0.5 * bondSpacing;
+        painter->DrawLine(begin.x() + offset.x(), begin.y() + offset.y(),
+                          end.x() + offset.x(), end.y() + offset.y());
+        painter->DrawLine(begin.x() - offset.x(), begin.y() - offset.y(),
+                          end.x() - offset.x(), end.y() - offset.y());
+      } else {
+        // style2
+        //
+        //   -------
+        // -----------
+        vector3 offset1 = orthogonalLine * /*0.5 * */ bondSpacing;
+        vector3 offset2 = vb * /*0.5 * */ bondSpacing;
+        vector3 offset3 = - vb * /*0.5 * */ bondSpacing;
+
+        if (HasLabel(beginAtom))
+          offset2 = VZero;
+        if (HasLabel(endAtom))
+          offset3 = VZero;
+
+        painter->DrawLine(begin.x(), begin.y(), end.x(), end.y());
+        painter->DrawLine(begin.x() + offset1.x() + offset2.x(),
+                          begin.y() + offset1.y() + offset2.y(),
+                          end.x() + offset1.x() + offset3.x(),
+                          end.y() + offset1.y() + offset3.y());
+      }
     } else if (order == 3) {
       vector3 orthogonalLine = cross(end - begin, VZ).normalize();
       vector3 offset = orthogonalLine * 0.7 * bondSpacing;
