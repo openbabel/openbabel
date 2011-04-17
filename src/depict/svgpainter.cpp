@@ -106,7 +106,7 @@ namespace OpenBabel
       << x2 << "\" y2=\"" << y2 << "\"";
     if(m_Pencolor!=m_OrigBondcolor)
       m_ofs << " stroke=" << MakeRGB(m_Pencolor);
-    m_ofs << " stroke-width=\"4\"";
+    m_ofs << " stroke-width=\"" << m_PenWidth << "\"";
     m_ofs << " stroke-linecap=\"round\"";
     m_ofs << "/>\n";
     m_ofs.precision(oldprec);
@@ -119,7 +119,7 @@ namespace OpenBabel
     for (i = points.begin(); i != points.end(); ++i)
       m_ofs << i->first << ' ' << i->second << ' ';
     m_ofs << "\"";
-    m_ofs << " stroke-width=\"4\"";
+    m_ofs << " stroke-width=\"" << m_PenWidth << "\"";
     m_ofs << " stroke-linejoin=\"round\"";
     m_ofs << "/>\n";
   }
