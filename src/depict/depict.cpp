@@ -520,7 +520,7 @@ namespace OpenBabel
     orthogonalLine.normalize();
     orthogonalLine *= 0.5 * bondWidth;
 
-    double lines[7] = { 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70 };
+    double lines[7] = { 0.20, 0.35, 0.50, 0.65 };
 
     for (int k = 0; k < 7; ++k) {
       double w = lines[k];
@@ -538,9 +538,9 @@ namespace OpenBabel
     vector3 vb = end - begin;
 
     if (HasLabel(beginAtom))
-      begin += 0.26 * vb;
+      begin += 0.33 * vb;
     if (HasLabel(endAtom))
-      end -= 0.26 * vb;
+      end -= 0.33 * vb;
 
     if (order == 1) {
       painter->DrawLine(begin.x(), begin.y(), end.x(), end.y());
@@ -581,9 +581,9 @@ namespace OpenBabel
 
     vector3 vbb = end - begin;
     if (HasLabel(beginAtom))
-      begin += 0.26 * vbb;
+      begin += 0.33 * vbb;
     if (HasLabel(endAtom))
-      end -= 0.26 * vbb;
+      end -= 0.33 * vbb;
     painter->DrawLine(begin.x(), begin.y(), end.x(), end.y());
 
     if (HasLabel(beginAtom))
