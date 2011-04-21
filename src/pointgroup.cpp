@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/atom.h>
 #include <openbabel/pointgroup.h>
+#include <openbabel/obiter.h>
 #include <iostream>
 
 #include <string>
@@ -102,13 +103,6 @@ namespace OpenBabel {
     {  "C6h",   "(i) (C6) (C3) (C2) (S6) (S3) (sigma) "},
     {  "C7h",   "(C7) (S7) (sigma) "},
     {  "C8h",   "(i) (C8) (C4) (C2) (S8) (S4) (sigma) "},
-    {  "D2h",   "(i) 3*(C2) 3*(sigma) "},
-    {  "D3h",   "(C3) 3*(C2) (S3) 4*(sigma) "},
-    {  "D4h",   "(i) (C4) 5*(C2) (S4) 5*(sigma) "},
-    {  "D5h",   "(C5) 5*(C2) (S5) 6*(sigma) "},
-    {  "D6h",   "(i) (C6) (C3) 7*(C2) (S6) (S3) 7*(sigma) "},
-    {  "D7h",   "(C7) 7*(C2) (S7) 8*(sigma) "},
-    {  "D8h",   "(i) (C8) (C4) 9*(C2) (S8) (S4) 9*(sigma) "},
     {  "D2d",   "3*(C2) (S4) 2*(sigma) "},
     {  "D3d",   "(i) (C3) 3*(C2) (S6) 3*(sigma) "},
     {  "D4d",   "(C4) 5*(C2) (S8) 4*(sigma) "},
@@ -116,6 +110,13 @@ namespace OpenBabel {
     {  "D6d",   "(C6) (C3) 7*(C2) (S12) (S4) 6*(sigma) "},
     {  "D7d",   "(i) (C7) 7*(C2) (S14) 7*(sigma) "},
     {  "D8d",   "(C8) (C4) 9*(C2) (S16) 8*(sigma) "},
+    {  "D2h",   "(i) 3*(C2) 3*(sigma) "},
+    {  "D3h",   "(C3) 3*(C2) (S3) 4*(sigma) "},
+    {  "D4h",   "(i) (C4) 5*(C2) (S4) 5*(sigma) "},
+    {  "D5h",   "(C5) 5*(C2) (S5) 6*(sigma) "},
+    {  "D6h",   "(i) (C6) (C3) 7*(C2) (S6) (S3) 7*(sigma) "},
+    {  "D7h",   "(C7) 7*(C2) (S7) 8*(sigma) "},
+    {  "D8h",   "(i) (C8) (C4) 9*(C2) (S8) (S4) 9*(sigma) "},
     {  "S4",    "(C2) (S4) "},
     {  "S6",    "(i) (C3) (S6) "},
     {  "S8",    "(C4) (C2) (S8) "},
@@ -151,15 +152,15 @@ namespace OpenBabel {
 
     PointGroupPrivate()
     {
-      ToleranceSame         = 5e-2;
-      TolerancePrimary      = 3e-1;
-      ToleranceFinal        = 2e-2;
+      ToleranceSame         = 1e-1;
+      TolerancePrimary      = 5e-1;
+      ToleranceFinal        = 1e-1;
       MaxOptStep            = 5e-1;
       MinOptStep            = 1e-6;
       GradientStep          = 1e-7;
       OptChangeThreshold    = 1e-10;
       DistanceFromCenter    = NULL;
-      verbose               = 0;
+      verbose               = -1;
       MaxOptCycles          = 500;
       OptChangeHits         = 5;
       MaxAxisOrder          = 20;
@@ -185,6 +186,8 @@ namespace OpenBabel {
       StatOrder             = 0 ;
       StatOpt               = 0 ;
       StatAccept            = 0 ;
+
+      Setup                 = false;
     }
 
     OBMol  *               _mol;
@@ -213,8 +216,10 @@ namespace OpenBabel {
     int *                  NormalAxesCounts      ;
     int *                  ImproperAxesCounts    ;
     int                    BadOptimization       ;
-    const char *                 SymmetryCode          ;
+    const char *           SymmetryCode          ;
     char *                 PointGroupRejectionReason;
+    std::vector< std::pair<int, int> > PairedAtoms;
+    bool                   Setup;
 
     /*
      *    Statistics
@@ -250,10 +255,11 @@ namespace OpenBabel {
       OBAtom            symmetric;
       OBAtom            *atom;
 
+      PairedAtoms.clear();
+
       if( atom_used == NULL ){
-        fprintf( stderr, "Out of memory for tagging array in establish_pairs()\n" ) ;
+        //        fprintf( stderr, "Out of memory for tagging array in establish_pairs()\n" ) ;
         return 0;
-        //      exit( EXIT_FAILURE ) ;
       }
       for( i = 0 ; i < _mol->NumAtoms() ; i++ ){
         if( elem->transform[i] >= _mol->NumAtoms() ){ /* No symmetric atom yet          */
@@ -286,6 +292,8 @@ namespace OpenBabel {
           elem->transform[i] = best_j ;
           atom_used[best_j]  = 1 ;
           if( verbose > 1 ) printf( "        atom %d transforms to the atom %d, err = %g\n", i, best_j, best_distance ) ;
+          std::pair<int, int> atomPair(i, best_j);
+          PairedAtoms.push_back( atomPair );
         }
       }
       free( atom_used ) ;
@@ -360,13 +368,13 @@ namespace OpenBabel {
       int                i ;
 
       if( elem == NULL ){
-        fprintf( stderr, "Out of memory allocating symmetry element\n" ) ;
-        exit( EXIT_FAILURE ) ;
+        //        fprintf( stderr, "Out of memory allocating symmetry element\n" ) ;
+        return NULL;
       }
       elem->transform = (int*)calloc( _mol->NumAtoms(), sizeof( int ) ) ;
       if( elem->transform == NULL ){
-        fprintf( stderr, "Out of memory allocating transform table for symmetry element\n" ) ;
-        exit( EXIT_FAILURE ) ;
+        //        fprintf( stderr, "Out of memory allocating transform table for symmetry element\n" ) ;
+        return NULL;
       }
       for( i = 0 ; i < _mol->NumAtoms() ; i++ ){
         elem->transform[i] = _mol->NumAtoms() + 1 ; /* An impossible value */
@@ -419,8 +427,8 @@ namespace OpenBabel {
         }
         r = sqrt( r ) ;
         if( r < ToleranceSame ){
-          fprintf( stderr, "Normal collapsed!\n" ) ;
-          exit( EXIT_FAILURE ) ;
+          //          fprintf( stderr, "Normal collapsed!\n" ) ;
+          return 0.0;
         }
         for( k = 0 ; k < DIMENSION ; k++ ){
           elem->normal[k] /= r ;
@@ -438,8 +446,8 @@ namespace OpenBabel {
         }
         r = sqrt( r ) ;
         if( r < ToleranceSame ){
-          fprintf( stderr, "Direction collapsed!\n" ) ;
-          exit( EXIT_FAILURE ) ;
+          //          fprintf( stderr, "Direction collapsed!\n" ) ;
+          return 0.0;
         }
         for( k = 0 ; k < DIMENSION ; k++ ){
           elem->direction[k] /= r ;
@@ -487,8 +495,8 @@ namespace OpenBabel {
       int               hits = 0 ;
 
       if( vars > MAXPARAM ){
-        fprintf( stderr, "Catastrophe in optimize_transformation_params()!\n" ) ;
-        exit( EXIT_FAILURE ) ;
+        //        fprintf( stderr, "Catastrophe in optimize_transformation_params()!\n" ) ;
+        return;
       }
       f = 0 ;
       do {
@@ -694,14 +702,14 @@ namespace OpenBabel {
       rab        = _mol->GetAtom(i+1)->GetDistance(_mol->GetAtom(j+1));
 
       if( rab < ToleranceSame ){
-        fprintf( stderr, "Atoms %d and %d coincide (r = %g)\n", i, j, rab ) ;
-        exit( EXIT_FAILURE ) ;
+        //        fprintf( stderr, "Atoms %d and %d coincide (r = %g)\n", i, j, rab ) ;
+        return NULL;
       }
       for( k = 0, r = 0 ; k < DIMENSION ; k++ ){
         plane->normal[k] = dx[k]/rab ;
         r += midpoint[k]*plane->normal[k] ;
       }
-      if( r < 0 ){  /* Reverce normal direction, distance is always positive! */
+      if( r < 0 ){  /* Reverse normal direction, distance is always positive! */
         r = -r ;
         for( k = 0 ; k < DIMENSION ; k++ ){
           plane->normal[k] = -plane->normal[k] ;
@@ -767,7 +775,7 @@ namespace OpenBabel {
       if( s2 >= s0 && s2 >= s1 ) d = d2 ;
       if( d == NULL ){
         fprintf( stderr, "Catastrophe in init_ultimate_plane(): %g, %g and %g have no ordering!\n", s0, s1, s2 ) ;
-        exit( EXIT_FAILURE ) ;
+        return NULL;
       }
       for( k = 0, r = 0 ; k < DIMENSION ; k++ )
         r += d[k]*d[k] ;
@@ -860,8 +868,8 @@ namespace OpenBabel {
       int                i ;
 
       if( DIMENSION != 3 ){
-        fprintf( stderr, "Catastrophe in rotate_atom!\n" ) ;
-        exit( EXIT_FAILURE ) ;
+        //        fprintf( stderr, "Catastrophe in rotate_atom!\n" ) ;
+        return;
       }
 
       x[0] = from->x() - axis->distance * axis->normal[0];
@@ -1075,7 +1083,7 @@ namespace OpenBabel {
       }
       if( rab <= ToleranceSame || rbc <= ToleranceSame || rac <= ToleranceSame ){
         StatEarly++ ;
-        if( verbose > 0 ) printf( "    rotation is underdefined by these points\n" ) ;
+        if( verbose > 0 ) printf( "    rotation is underdefined by these points: %8.3f %8.3f %8.3f\n", rab, rbc, rac ) ;
         return NULL ;
       }
       rab   = (rab+rbc)/2 ;
@@ -1191,8 +1199,8 @@ namespace OpenBabel {
       int                i ;
 
       if( DIMENSION != 3 ){
-        fprintf( stderr, "Catastrophe in rotate_reflect_atom!\n" ) ;
-        exit( EXIT_FAILURE ) ;
+        //        fprintf( stderr, "Catastrophe in rotate_reflect_atom!\n" ) ;
+        return;
       }
 
       x[0] = from->x() - axis->distance * axis->normal[0];
@@ -1301,8 +1309,8 @@ namespace OpenBabel {
                 CenterOfSomething[0], CenterOfSomething[1], CenterOfSomething[2] ) ;
       DistanceFromCenter = (double *) calloc( _mol->NumAtoms(), sizeof( double ) ) ;
       if( DistanceFromCenter == NULL ){
-        fprintf( stderr, "Unable to allocate array for the distances\n" ) ;
-        exit( EXIT_FAILURE ) ;
+        //        fprintf( stderr, "Unable to allocate array for the distances\n" ) ;
+        return;
       }
       for( i = 0 ; i < _mol->NumAtoms() ; i++ ){
         atom = _mol->GetAtom(i+1);
@@ -1370,7 +1378,7 @@ namespace OpenBabel {
         NormalAxes = (SYMMETRY_ELEMENT **) realloc( NormalAxes, sizeof( SYMMETRY_ELEMENT* ) * NormalAxesCount ) ;
         if( NormalAxes == NULL ){
           perror( "Out of memory in find_infinity_axes()" ) ;
-          exit( EXIT_FAILURE ) ;
+          return;
         }
         NormalAxes[ NormalAxesCount - 1 ] = axis ;
       }
@@ -1387,8 +1395,8 @@ namespace OpenBabel {
       OBAtom           *a1, *a2, *a3, *a4;
 
       if( distances == NULL ){
-        fprintf( stderr, "Out of memory in find_c2_axes()\n" ) ;
-        exit( EXIT_FAILURE ) ;
+        //        fprintf( stderr, "Out of memory in find_c2_axes()\n" ) ;
+        return;
       }
       for( i = 1 ; i < _mol->NumAtoms() ; i++ ){
         for( j = 0 ; j < i ; j++ ){
@@ -1414,7 +1422,7 @@ namespace OpenBabel {
               NormalAxes = (SYMMETRY_ELEMENT **) realloc( NormalAxes, sizeof( SYMMETRY_ELEMENT* ) * NormalAxesCount ) ;
               if( NormalAxes == NULL ){
                 perror( "Out of memory in find_c2_axes" ) ;
-                exit( EXIT_FAILURE ) ;
+                return;
               }
               NormalAxes[ NormalAxesCount - 1 ] = axis ;
             }
@@ -1430,7 +1438,7 @@ namespace OpenBabel {
               NormalAxes = (SYMMETRY_ELEMENT **) realloc( NormalAxes, sizeof( SYMMETRY_ELEMENT* ) * NormalAxesCount ) ;
               if( NormalAxes == NULL ){
                 perror( "Out of memory in find_c2_axes" ) ;
-                exit( EXIT_FAILURE ) ;
+                return;
               }
               NormalAxes[ NormalAxesCount - 1 ] = axis ;
             }
@@ -1463,7 +1471,7 @@ namespace OpenBabel {
                 NormalAxes = (SYMMETRY_ELEMENT **) realloc( NormalAxes, sizeof( SYMMETRY_ELEMENT* ) * NormalAxesCount ) ;
                 if( NormalAxes == NULL ){
                   perror( "Out of memory in find_c2_axes" ) ;
-                  exit( EXIT_FAILURE ) ;
+                  return;
                 }
                 NormalAxes[ NormalAxesCount - 1 ] = axis ;
               }
@@ -1497,7 +1505,7 @@ namespace OpenBabel {
               NormalAxes = (SYMMETRY_ELEMENT **) realloc( NormalAxes, sizeof( SYMMETRY_ELEMENT* ) * NormalAxesCount ) ;
               if( NormalAxes == NULL ){
                 perror( "Out of memory in find_higher_axes" ) ;
-                exit( EXIT_FAILURE ) ;
+                return;
               }
               NormalAxes[ NormalAxesCount - 1 ] = axis ;
             }
@@ -1519,8 +1527,8 @@ namespace OpenBabel {
               ImproperAxesCount++ ;
               ImproperAxes = (SYMMETRY_ELEMENT **) realloc( ImproperAxes, sizeof( SYMMETRY_ELEMENT* ) * ImproperAxesCount ) ;
               if( ImproperAxes == NULL ){
-                perror( "Out of memory in find_higher_axes" ) ;
-                exit( EXIT_FAILURE ) ;
+                perror( "Out of memory in find_improper_axes" ) ;
+                return;
               }
               ImproperAxes[ ImproperAxesCount - 1 ] = axis ;
             }
@@ -1625,14 +1633,15 @@ namespace OpenBabel {
     void
     report_and_reset_counters( void )
     {
-      printf( "  %10ld candidates examined\n"
-              "  %10ld removed early\n"
-              "  %10ld removed during initial mating stage\n"
-              "  %10ld removed as duplicates\n"
-              "  %10ld removed because of the wrong transformation order\n"
-              "  %10ld removed after unsuccessful optimization\n"
-              "  %10ld accepted\n",
-              StatTotal, StatEarly, StatPairs, StatDups, StatOrder, StatOpt, StatAccept ) ;
+      if (verbose > -1)
+        printf( "  %10ld candidates examined\n"
+                "  %10ld removed early\n"
+                "  %10ld removed during initial mating stage\n"
+                "  %10ld removed as duplicates\n"
+                "  %10ld removed because of the wrong transformation order\n"
+                "  %10ld removed after unsuccessful optimization\n"
+                "  %10ld accepted\n",
+                StatTotal, StatEarly, StatPairs, StatDups, StatOrder, StatOpt, StatAccept ) ;
       StatTotal = StatEarly = StatPairs = StatDups = StatOrder = StatOpt = StatAccept = 0 ;
     }
 
@@ -1733,13 +1742,16 @@ namespace OpenBabel {
       char         buf[ 100 ] ;
 
       if( symmetry_code == NULL ){
-        fprintf( stderr, "Unable to allocate memory for symmetry ID code in report_symmetry_elements_brief()\n" ) ;
-        exit( EXIT_FAILURE ) ;
+        //        fprintf( stderr, "Unable to allocate memory for symmetry ID code in report_symmetry_elements_brief()\n" ) ;
+        return;
       }
-      if( PlanesCount + NormalAxesCount + ImproperAxesCount + InversionCentersCount == 0 )
-        printf( "Molecule has no symmetry elements\n" ) ;
+      if( PlanesCount + NormalAxesCount + ImproperAxesCount + InversionCentersCount == 0 ) {
+        SymmetryCode = symmetry_code ;
+        return;
+        //        printf( "Molecule has no symmetry elements\n" ) ;
+      }
       else {
-        printf( "Molecule has the following symmetry elements: " ) ;
+        //        printf( "Molecule has the following symmetry elements: " ) ;
         if( InversionCentersCount > 0 ) strcat( symmetry_code, "(i) " ) ;
         if( NormalAxesCounts[0] == 1 )
           strcat( symmetry_code, "(Cinf) " ) ;
@@ -1757,7 +1769,7 @@ namespace OpenBabel {
         }
         if( PlanesCount == 1 ) strcat( symmetry_code, "(sigma) " ) ;
         if( PlanesCount >  1 ){ snprintf( buf, 100, "%d*(sigma) ", PlanesCount ) ; strcat( symmetry_code, buf ) ; }
-        printf( "%s\n", symmetry_code ) ;
+        //        printf( "%s\n", symmetry_code ) ;
       }
       SymmetryCode = symmetry_code ;
     }
@@ -1793,6 +1805,26 @@ namespace OpenBabel {
       return PointGroups[last_matching].group_name;
     }
 
+    void clean_paired_atoms(SYMMETRY_ELEMENT *elem)
+    {
+      if (PairedAtoms.size() == 0)
+        return;
+
+      OBAtom *a, *b, symmetric;
+      for (unsigned int idx = 0; idx < PairedAtoms.size(); ++idx) {
+          std::pair<int, int> atomPair = PairedAtoms[idx];
+          a = _mol->GetAtom(atomPair.first + 1); // ATOM INDEX ISSUE
+          b = _mol->GetAtom(atomPair.second + 1);
+          elem->transform_atom( elem, a, &symmetric ) ;   // ATOM INDEX ISSUE
+
+          // OK, so symmetric is where b *should* be
+          vector3 displacement = b->GetVector() - symmetric.GetVector();
+          displacement /= 2.0; // take the average displacement
+          a->SetVector(a->GetVector() + displacement);
+          b->SetVector(b->GetVector() - displacement);
+        }
+    }
+
   }; // end class PointGroupPrivate
 
   OBPointGroup::OBPointGroup()
@@ -1808,21 +1840,18 @@ namespace OpenBabel {
   void OBPointGroup::Setup(OBMol *mol)
   {
     d->_mol = mol;
+    d->_mol->Center();
+    d->Setup = true;
   }
 
-  const char* OBPointGroup::IdentifyPointGroup()
+  const char* OBPointGroup::IdentifyPointGroup(double tolerance)
   {
-    d->find_symmetry_elements();
-    d->sort_symmetry_elements();
-    d->summarize_symmetry_elements();
-    if( d->BadOptimization ) {
-      // error here
-    }
+    // Don't duplicate work, use the more reliable fallback method
+    Symbol pg = IdentifyPointGroupSymbol(tolerance);
+    if (pg == Unknown)
+      pg = C1; // no known symmetry
 
-    if( d->verbose >= 0 )
-      d->report_symmetry_elements_verbose();
-    d->report_symmetry_elements_brief();
-    return d->identify_point_group();
+    return PointGroups[pg].group_name;
   }
 
   OBPointGroup::Symbol OBPointGroup::IdentifyPointGroupSymbol(double tolerance)
@@ -1836,6 +1865,7 @@ namespace OpenBabel {
     }
 
     d->report_symmetry_elements_brief(); // assign a symmetry code
+    //    printf("%s\n", d->SymmetryCode);
 
     Symbol perceived = Unknown; // assume no symmetry
 
@@ -1906,10 +1936,10 @@ namespace OpenBabel {
 
     if (d->NormalAxesCounts[2] > 1 && maxAxis != 0) { // Probably Dihedral
       if ((maxAxis == 2 && d->NormalAxesCounts[2] == 3)
-          || d->NormalAxesCounts[2] == maxAxis) { // Are there the perpendicular C2 axes?
-        // If not, we'll handle it later
+          || d->NormalAxesCounts[2] >= maxAxis) { // Are there the perpendicular C2 axes?
 
-        if (d->PlanesCount > maxAxis + 1) { // Likely Dnh
+        // If not, we'll handle it later
+        if (d->PlanesCount >= maxAxis + 1) { // Likely Dnh
           switch (maxAxis){
           case 8:
             perceived = D8h;
@@ -2002,6 +2032,9 @@ namespace OpenBabel {
         perceived = Cs;
       else
         perceived = C1;
+
+      // Don't look for higher symmetry
+      return perceived;
     }
 
     // Must be Cn? or Sn
@@ -2101,6 +2134,52 @@ namespace OpenBabel {
     }
 
     return perceived;
+  }
+
+  void OBPointGroup::Symmetrize(OBMol *mol)
+  {
+    if (!d->Setup) {
+      // TODO: We should also check to see if this mol is different from the original setup molecule
+      Setup(mol);
+      IdentifyPointGroup(); // make sure we run the symmetry analysis
+    }
+
+    // We'll do this in several steps
+    // First, inversion centers
+    if (d->InversionCentersCount) {
+      PointGroupPrivate::SYMMETRY_ELEMENT *center = d->InversionCenters[0];
+      d->establish_pairs(center);
+      d->clean_paired_atoms(center);
+    } // inversion centers
+
+    // Mirror planes
+    for (unsigned int i = 0; i < d->PlanesCount; i++)
+      {
+        d->establish_pairs(d->Planes[i]);
+        d->clean_paired_atoms(d->Planes[i]);
+      }
+
+    // Proper rotations
+    for (unsigned int i = 0; i < d->NormalAxesCount; i++)
+      {
+        d->establish_pairs(d->NormalAxes[i]);
+        d->clean_paired_atoms(d->NormalAxes[i]);
+      }
+
+    // Improper rotations
+    for (unsigned int i = 0; i < d->ImproperAxesCount; i++)
+      {
+        d->establish_pairs(d->ImproperAxes[i]);
+        d->clean_paired_atoms(d->ImproperAxes[i]);
+      }
+
+    // Copy back to the molecule
+    OBAtom *atom;
+    FOR_ATOMS_OF_MOL(a, d->_mol)
+      {
+        atom = mol->GetAtom(a->GetIdx());
+        atom->SetVector(a->GetVector());
+      }
   }
 
 } // end namespace OpenBabel

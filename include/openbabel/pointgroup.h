@@ -67,11 +67,13 @@ namespace OpenBabel
       void Setup(OBMol *);
 
       //! \return the 3D point group symbol for this molecule
-      const char *IdentifyPointGroup();
+      const char *IdentifyPointGroup(double tolerance = 0.01);
 
       //! \return the 3D point group symbol for this molecule
       //! \arg tolerance The initial tolerance for determining possibly symmetric atoms
       Symbol IdentifyPointGroupSymbol(double tolerance = 0.01);
+
+      void Symmetrize(OBMol *);
 
     protected:
       PointGroupPrivate *d;

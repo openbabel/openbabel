@@ -50,13 +50,16 @@ int main(int argc,char **argv)
   }
 
   // Find Input filetype
-  OBConversion conv;
+  OBConversion conv(&cin, &cout);
   OBFormat *inFormat = conv.FormatFromExt(FileIn);
 
   if (!inFormat || !conv.SetInFormat(inFormat)) {
     cerr << program_name << ": cannot read input format!" << endl;
     exit (-1);
   }
+  // If we can't also use this for an output format, use XYZ
+  if (!conv.SetOutFormat(inFormat))
+    conv.SetOutFormat(conv.FindFormat("xyz"));
 
   ifstream ifs;
 
@@ -78,11 +81,11 @@ int main(int argc,char **argv)
         break;
 
       // not needed by OBPointGroup, but useful for external programs
-      mol.Center();
-      mol.ToInertialFrame();
-
       pg.Setup(&mol);
-      cout << "Point Group: " << pg.IdentifyPointGroup() << "  " << pg.IdentifyPointGroupSymbol(0.1) << endl;
+      cerr << "Point Group: " << pg.IdentifyPointGroup() << endl;
+      pg.Symmetrize(&mol);
+
+      conv.Write(&mol, &cout);
 
     } // end for loop
 
