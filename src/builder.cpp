@@ -144,7 +144,7 @@ namespace OpenBabel
 
   vector3 OBBuilder::GetNewBondVector(OBAtom *atom, double length)
   {
-    vector3 bond1, bond2, bond3, bond4, bond5, v1, v2, newbond;
+    vector3 bond1, bond2, bond3, bond4, bond5, v1, v2, v3, newbond;
 
     bond1 = VZero;
     bond2 = VZero;
@@ -220,13 +220,13 @@ namespace OpenBabel
             angle = fabs(acos(dot(bond1, vrand)) * RAD_TO_DEG);
           }
           // there is no a-2 atom
-          v1 = cross(bond1, vrand);
+          v1 = cross(bond1, vrand); // so find a perpendicular, given the random vector (this doesn't matter here)
           v2 = cross(bond1, v1);
         } else {
           v1 = cross(bond1, bond2);
           v2 = cross(bond1, v1);
-          v2 = v2.normalize();
         }
+        v2 = v2.normalize();
 
         // check to see if atom is a square planar in disguise
         if (atom->GetHyb() == 3) {
@@ -236,11 +236,11 @@ namespace OpenBabel
         }
 
         if (atom->GetHyb() == 1)
-          newbond = bond1;
+          newbond = bond1; // i.e., in the exact opposite direction
         else if (atom->GetHyb() == 2)
           newbond = bond1 - v2 * tan(DEG_TO_RAD*60.0);
         else if (atom->GetHyb() == 3)
-          newbond = bond1 - v2 * tan(DEG_TO_RAD*70.5);
+          newbond = bond1 - v2 * tan(DEG_TO_RAD*(180.0 - 109.471));
         else if (atom->GetHyb() == 4)
           newbond = bond1; // like 5-coordinate below, we want a 180-degree bond (trans)
         else if (atom->GetHyb() == 5) {
@@ -277,9 +277,10 @@ namespace OpenBabel
         if (atom->GetHyb() == 2)
           newbond = v1;
         if (atom->GetHyb() == 3) {
-          v2 = cross(bond1, bond2);
-          //v1 = v1.normalize();
-          newbond = v2 + v1 * tan(DEG_TO_RAD*35.25);
+          v2 = cross(bond1, bond2); // find the perpendicular
+          v2.normalize();
+          newbond = bond1 - v2 * tan(DEG_TO_RAD*(180.0 - 109.471));
+          newbond = v2 + v1 * (sqrt(2.0) / 2.0); // used to be tan(70.53 degrees/2) which is sqrt(2.0) / 2.0
         }
         if (atom->GetHyb() == 5 || atom->GetHyb() == 4) {
           /* add the first equatorial atom, orthogonally to bond1 (and bond2 = -bond1) */
