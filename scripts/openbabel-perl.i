@@ -125,6 +125,11 @@ OpenBabel::OB ## subclass *to ## subclass(OpenBabel::OBGenericData *data) {
 }
 %}
 %enddef
+%inline %{ // can't use macro -- AliasData not OBAliasData
+OpenBabel::AliasData *toAliasData(OpenBabel::OBGenericData *data) {
+    return (OpenBabel::AliasData*) data;
+}
+%}
 CAST_GENERICDATA_TO(AngleData)
 CAST_GENERICDATA_TO(AtomClassData)
 CAST_GENERICDATA_TO(ChiralData)
@@ -221,7 +226,8 @@ namespace std { class stringbuf {}; }
 
 %warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
 %include <openbabel/bitvec.h>
-%rename(_next) OpenBabel::rotor_digit::next;
+# Ignore shadowed method
+%ignore OpenBabel::OBRotor::GetRotAtoms() const;
 %include <openbabel/rotor.h>
 %ignore OpenBabel::Swab;
 %include <openbabel/rotamer.h>

@@ -76,14 +76,18 @@ set(OB_EXPORTS_FILE "${openbabel_BINARY_DIR}/OpenBabel2_EXPORTS.cmake")
 file(REMOVE "${OB_EXPORTS_FILE}")
 
 # Place binaries and libraries in the root of the build directory
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-  CACHE STRING "Binary build output directory")
-if(UNIX)
-  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
-    CACHE STRING "Library build output directory")
-else() # This is preferable on WIndows for example - bin = lib directory.
-  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-    CACHE STRING "Library build output directory")
+if(NOT CMAKE_RUNTIME_OUTPUT_DIRECTORY)
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+    CACHE STRING "Binary build output directory")
+endif()
+if(NOT CMAKE_LIBRARY_OUTPUT_DIRECTORY)
+  if(UNIX)
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
+      CACHE STRING "Library build output directory")
+  else() # This is preferable on WIndows for example - bin = lib directory.
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+      CACHE STRING "Library build output directory")
+  endif()
 endif()
 
 mark_as_advanced(CMAKE_LIBRARY_OUTPUT_DIRECTORY
@@ -131,7 +135,7 @@ if(OPENBABEL_USE_SYSTEM_INCHI)
     message(FATAL_ERROR "Inchi library not found.")
   endif()
 else()
-  message("Using included inchi library.")
+  message(STATUS "Using included inchi library.")
   set(INCHI_LIBRARIES inchi)
 endif()
 
@@ -168,9 +172,17 @@ if(wxWidgets_FOUND)
 endif()
 
 if(MSVC)
+  option(OB_USE_PREBUILT_BINARIES
+    "Should Windows Open Babel builds use prebuilt binaries?" ON)
+endif()
+
+if(MSVC AND OB_USE_PREBUILT_BINARIES)
   include_directories(${openbabel_SOURCE_DIR}/windows-vc2008/include)
   # The following line is required for check_include_file(rpc/xdr.h ...) below
   set(CMAKE_REQUIRED_INCLUDES ${openbabel_SOURCE_DIR}/windows-vc2008/include)
+  # Force OPENBABEL_USE_SYSTEM_INCHI to ON, as this should be using the binary
+  set(OPENBABEL_USE_SYSTEM_INCHI ON CACHE BOOL
+    "Forced to ON for prebuilt binaries" FORCE)
 endif()
 
 include(CheckIncludeFile)
@@ -403,15 +415,15 @@ else ()
 endif()
 
 if(BUILD_GUI)
-  message("Attempting to build the GUI")
+  message(STATUS "Attempting to build the GUI")
   if(wxWidgets_FOUND)
-    message("   wxWidgets found => GUI will be built")
+    message(STATUS "   wxWidgets found => GUI will be built")
     add_subdirectory(src/GUI)
   else()
-    message("   wxWidgets not found => GUI will not be built")
+    message(STATUS "   wxWidgets not found => GUI will not be built")
   endif()
 else()
-  message("GUI will not be built")
+  message(STATUS "GUI will not be built")
 endif()
 
 # Do we want to build the tests?

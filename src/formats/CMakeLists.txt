@@ -109,7 +109,7 @@ endif(MSVC90 OR SHARED_POINTER)
 
 set(ADD_INCHI_FORMAT FALSE)
 if(WITH_INCHI)
-  if(NOT MSVC AND NOT OPENBABEL_USE_SYSTEM_INCHI)
+  if(NOT OPENBABEL_USE_SYSTEM_INCHI)
     set(ADD_INCHI_FORMAT TRUE)
   else()
     if (EXISTS ${INCHI_LIBRARY})
@@ -122,7 +122,7 @@ endif()
 
 if(ADD_INCHI_FORMAT)
   add_definitions(-DINCHI_LINK_AS_DLL)
-  if(NOT MSVC AND NOT OPENBABEL_USE_SYSTEM_INCHI)
+  if(NOT OPENBABEL_USE_SYSTEM_INCHI)
     add_subdirectory(inchi103)
     include_directories(${CMAKE_SOURCE_DIR}/include/inchi103)
     set(libs ${libs} inchi)
@@ -135,7 +135,7 @@ if(ADD_INCHI_FORMAT)
     ${formats_common}
     inchiformat
   )
-endif(ADD_INCHI_FORMAT)
+endif()
 
 if(ZLIB_FOUND)
  set(formats_utility

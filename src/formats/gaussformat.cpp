@@ -321,20 +321,23 @@ namespace OpenBabel
     //Put some metadata into OBCommentData
     string comment("Gaussian ");  
     ifs.getline(buffer,BUFF_SIZE);
-    comment += strchr(buffer,'=')+2;
-    comment += "";
-    for(unsigned i=0; i<115, ifs; ++i)
+    if(*buffer)
     {
-      ifs.getline(buffer,BUFF_SIZE);
-      if(buffer[1]=='#')
+      comment += strchr(buffer,'=')+2;
+      comment += "";
+      for(unsigned i=0; i<115, ifs; ++i)
       {
-        //the line describing the method
-        comment += buffer;
-        OBCommentData *cd = new OBCommentData;
-        cd->SetData(comment);
-        cd->SetOrigin(fileformatInput);
-        mol.SetData(cd);
-        break;
+        ifs.getline(buffer,BUFF_SIZE);
+        if(buffer[1]=='#')
+        {
+          //the line describing the method
+          comment += buffer;
+          OBCommentData *cd = new OBCommentData;
+          cd->SetData(comment);
+          cd->SetOrigin(fileformatInput);
+          mol.SetData(cd);
+          break;
+        }
       }
     }
 
