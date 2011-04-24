@@ -23,6 +23,8 @@ GNU General Public License for more details.
 #include <openbabel/mcdlutil.h>
 #include <openbabel/data.h>
 #include <openbabel/obconversion.h>
+#include <openbabel/stereo/stereo.h>
+#include <openbabel/stereo/cistrans.h>
 
 #ifndef WIN32
 #include <cmath>
@@ -409,7 +411,18 @@ class  TSingleBond  {
                                 11 - either*/
     short int at[2];     /*Bond definition-atoms number in array ATOM*/
     short int db;        /*Ring/Chain conditions*/
+
+    // The original MCDL code used bstereo to store the bond stereo
     short int bstereo;   /* =0 - no, =1 - E , = 2 - Z, =3 E/Z*/
+    // The new code uses bstereo_refs, the refs from the OBCisTransStereo object arranged in a U
+    //
+    //                            1       4
+    //                             \     /
+    //                              X = Y
+    //                             /     \
+    //                            2       3
+    vector<unsigned long> bstereo_refs; 
+                             
     short int special;
 	int enumerator;
   /*=1 - Chain (query)
@@ -1529,6 +1542,16 @@ void TSimpleMolecule::readOBMol(OBMol * pmol) {
   OBBond * bond;
   int na,nb,i;
 
+  // Stereo perception should not be triggered if this function is called
+  // from MDLFormat::ReadMolecule->Alias::Expand->Alias::FromNameLookup->(MCDL)groupRedraw
+  // as this triggers a failure in the test suite for InChI conversion
+  // (specifically the ferrocene).
+  bool perceive_stereo = true;
+  if (pmol->GetMod() == 1)
+    perceive_stereo = false;
+
+  OBStereoFacade facade(pmol);
+
   clear();
 
   na=pmol->NumAtoms();
@@ -1546,15 +1569,20 @@ void TSimpleMolecule::readOBMol(OBMol * pmol) {
   };
   for (i=0; i<nb; i++) {
     bond=pmol->GetBond(i);
-	sb=new TSingleBond();
-	sb->at[0]=bond->GetBeginAtomIdx()-1;
-	sb->at[1]=bond->GetEndAtomIdx()-1;
-	sb->tb=bond->GetBondOrder();
+    sb=new TSingleBond();
+    sb->at[0]=bond->GetBeginAtomIdx()-1;
+    sb->at[1]=bond->GetEndAtomIdx()-1;
+    sb->tb=bond->GetBondOrder();
 //	if (bond->IsUp()) sb->tb=9;
 //	if (bond->IsDown()) sb->tb=10;
-	if (bond->IsWedge()) sb->tb=9;
-	if (bond->IsHash()) sb->tb=10;
-	fBond.push_back(sb);
+    if (bond->IsWedge()) sb->tb=9;
+    if (bond->IsHash()) sb->tb=10;
+    if (perceive_stereo && facade.HasCisTransStereo(bond->GetId())) {
+      OBCisTransStereo::Config config = facade.GetCisTransStereo(bond->GetId())->GetConfig(OBStereo::ShapeU);
+      if (config.specified)
+        sb->bstereo_refs = config.refs;
+    }
+    fBond.push_back(sb);
   };
 
 
@@ -6982,50 +7010,43 @@ bool restoreDoubleBonds(TEditedMolecule& sm, bool putEither/*, const std::vector
   bool hasStereoDouble=false;
   bool hasAcyclic=false;
   bool result=false;
-  int i,j,an,an1,an2,bn2,bn3,n;
+  int i,j,an1,an2,bn1,bn2,n;
 
   for (i=0; i<sm.nBonds(); i++) {
-    if (sm.getBond(i)->bstereo != 0) hasStereoDouble=true;
+    if (!sm.getBond(i)->bstereo_refs.empty()) hasStereoDouble = true;
     if (sm.getBond(i)->db <=1 ) hasAcyclic=true;
   };
     //Flip bonds to show Z/E orientation
-  if (hasStereoDouble) for (i=0; i<sm.nBonds(); i++) if (sm.getBond(i)->bstereo != 0) {
-    //try to calculate...
-    if (sm.getBond(i)->at[0] < sm.getBond(i)->at[1]) {
-      an1=sm.getBond(i)->at[0];
-      an2=sm.getBond(i)->at[1];
-    } else {
-      an2=sm.getBond(i)->at[0];
-      an1=sm.getBond(i)->at[1];
-    };
-    //an1 - minimal atomic number; an2-next
-    //search for minimal an, connected to an1
-    an=10000000;
-    for (j=0; j<sm.getAtom(an1)->nb; j++) {
-      n=sm.getAtom(an1)->ac[j];
-      if ((n != an2) && (n < an)) an=n;
-    };
-    //search for corresponding bn
-    bn2=-1;
-    for (j=0; j<sm.nBonds(); j++) if (((sm.getBond(j)->at[0] == an1) && (sm.getBond(j)->at[1] == an)) || ((sm.getBond(j)->at[1] == an1) && (sm.getBond(j)->at[0] == an))) {
-      bn2=j;
-      break;
-    };
-    //search for minimal an, connected to an2
-    an=10000000;
-    for (j=0; j<sm.getAtom(an2)->nb; j++) {
-      n=sm.getAtom(an2)->ac[j];
-      if ((n != an1) && (n < an)) an=n;
-    };
-    bn3=-1;
-    for (j=0; j<sm.nBonds(); j++) if (((sm.getBond(j)->at[0] == an2) && (sm.getBond(j)->at[1] == an)) || ((sm.getBond(j)->at[1] == an2) && (sm.getBond(j)->at[0] == an))) {
-      bn3=j;
-      break;
-    };
-    if ((bn2 >= 0) && (bn3 >= 0)) {
-      n=sproduct(sm,i,bn2,bn3);
-      n=3-n;
-      if (n != sm.getBond(i)->bstereo) {
+  if (hasStereoDouble) for (i=0; i<sm.nBonds(); i++) if (!sm.getBond(i)->bstereo_refs.empty()) {
+    
+    TSingleBond* dblbond = sm.getBond(i);
+    an1 = dblbond->at[0];
+    an2 = dblbond->at[1];
+    
+    int ref_atom1 = 0;
+    if (dblbond->bstereo_refs[ref_atom1]==OBStereo::ImplicitRef) ref_atom1 = 1;
+    int ref_atom2 = 2;
+    if (dblbond->bstereo_refs[ref_atom2]==OBStereo::ImplicitRef) ref_atom2 = 3;
+    short int cistrans=1; // cistrans of 1 => cis, 2 => trans
+    if ((ref_atom2 - ref_atom1) == 2)
+      cistrans=2;
+
+    bn1=-1; bn2=-1;
+    for (j=0; j<sm.nBonds(); ++j) {
+      TSingleBond* bond = sm.getBond(j);
+      if ((bond->at[0]==an1 && bond->at[1]!=an2) || (bond->at[0]==an2 && bond->at[1]!=an1) ||
+          (bond->at[1]==an1 && bond->at[0]!=an2) || (bond->at[1]==an2 && bond->at[0]!=an1))
+      { // This is one of the single bonds around the dbl bond
+        if (bond->at[0]==dblbond->bstereo_refs[ref_atom1] || bond->at[1]==dblbond->bstereo_refs[ref_atom1])
+          bn1=j;
+        if (bond->at[0]==dblbond->bstereo_refs[ref_atom2] || bond->at[1]==dblbond->bstereo_refs[ref_atom2])
+          bn2=j;
+      }
+    }
+
+    if ((bn1 >= 0) && (bn2 >= 0)) {
+      n=sproduct(sm,i,bn1,bn2); // 1 for cis, 2 for trans
+      if (n!=cistrans) {
         sm.flipSmall(i);
         result=true;
       };
