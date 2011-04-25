@@ -342,8 +342,8 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
       ofs << "<title>OBDepict</title>\n";
       // Draw the background
-      //ofs << "<rect x=\"0\" y=\"0\" width=\"" << vbwidth << "\" height=\"" << vbheight
-      //    << "\" fill=\"" << background << "\"/>\n";
+      ofs << "<rect x=\"0\" y=\"0\" width=\"" << vbwidth << "\" height=\"" << vbheight
+          << "\" fill=\"" << background << "\"/>\n";
     }
   }
 

@@ -63,9 +63,9 @@ namespace OpenBabel
     m_ofs << "font-family=\"" << m_fontFamily << "\" stroke=" << MakeRGB(m_Pencolor)
           << "stroke-width=\"" << m_PenWidth << "\" >\n";
 
-    //if(!m_withViewBox)//Background color for single molecule. Handled by outer svg when table.
-    //  m_ofs << "<rect x=\"0%\" y=\"0%\" width=\"100%\" height=\"100%\" fill="
-    //        << MakeRGB(m_Fillcolor) << " />\n";
+    if(!m_withViewBox)//Background color for single molecule. Handled by outer svg when table.
+      m_ofs << "<rect x=\"0%\" y=\"0%\" width=\"100%\" height=\"100%\" stroke-width=\"0\" fill="
+            << MakeRGB(m_Fillcolor) << " />\n";
     m_OrigBondcolor = m_Pencolor;
   }
 
