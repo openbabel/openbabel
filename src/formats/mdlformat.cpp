@@ -329,6 +329,7 @@ namespace OpenBabel
         // 36..38   ccc = charge  ('M  CHG' and 'M  RAD' lines take precedence)
         // 39..41   sss = atom stereo parity (ignored)
         //          ... = query/reaction related
+        // 48..50   vvv = valence (ignored unless 15, which means 0)
         massdiff = charge = 0;
         parity = NotStereo;
         if (line.size() < 34) {
@@ -384,6 +385,12 @@ namespace OpenBabel
           }
         }
         parities.push_back(parity);
+        // valence
+        if (line.size() >= 50) {
+          int valence = ReadIntField(line.substr(48, 3).c_str());
+          if(valence==15) //Other values ignored
+            patom->ForceNoH();
+        }
 
 //        if (!mol.AddAtom(atom))
 //          return false;
@@ -768,7 +775,9 @@ namespace OpenBabel
         snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d",
           atom->GetX(), atom->GetY(), atom->GetZ(),
           atom->GetAtomicNum() ? etab.GetSymbol(atom->GetAtomicNum()) : "* ",
-          0,charge,stereo,0,0,0,0,0,0,0,0,0);
+          0,charge,stereo,0,0,
+          atom->HasNoHForced() ? 15 : 0,
+          0,0,0,0,0,0);
 
 //       snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d",
 //                 atom->GetX(), atom->GetY(), atom->GetZ(),
