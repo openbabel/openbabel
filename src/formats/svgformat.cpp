@@ -472,7 +472,7 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     if(!pConv->IsOption("d"))
       ofs << "<text font-size=\"" << 18 * factor  << "\""
       << " fill =\"" << bondcolor << "\" font-family=\"sans-serif\"\n"
-      << "x=\"" << 140 * factor << "\" y=\"" << 20 * factor << "\" >"
+      << "x=\"" << 10 * factor << "\" y=\"" << 20 * factor << "\" >"
       << pmol->GetTitle() << "</text>\n";
 
     //*** Write page title name ***
