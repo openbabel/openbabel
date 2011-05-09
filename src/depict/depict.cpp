@@ -320,7 +320,7 @@ namespace OpenBabel
     d->painter->NewCanvas(width, height);
     
     // draw bonds
-    if(d->options & genWedgeHash)
+    if(!(d->options & noWedgeHashGen))//default is to regenerate wedge/hash bonds
       d->SetWedgeAndHash(mol);
     for (OBBond *bond = mol->BeginBond(j); bond; bond = mol->NextBond(j)) {
       OBAtom *begin = bond->GetBeginAtom();
