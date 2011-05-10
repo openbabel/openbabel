@@ -96,6 +96,8 @@ namespace OpenBabel {
     string str, path;
     vector<string> vs;
     vector<int> numAtoms, atomTypes;
+    bool hasEnthalpy=false;
+    float enthalpy_eV, pv_eV;
 
     // Get path of CONTCAR/POSCAR:
     //    ifs_path.getline(buffer,BUFF_SIZE);
@@ -126,31 +128,10 @@ namespace OpenBabel {
       while (ifs_out.getline(buffer,BUFF_SIZE)) {
         // Enthalphy
         if (strstr(buffer, "enthalpy is")) {
+          hasEnthalpy = true;
           tokenize(vs, buffer);
-          OBPairData *enthalpy = new OBPairData();
-          OBPairData *enthalpy_pv = new OBPairData();
-          OBPairData *enthalpy_eV = new OBPairData();
-          OBPairData *enthalpy_pv_eV = new OBPairData();
-          enthalpy->SetAttribute("Enthalpy (kcal/mol)");
-          enthalpy_pv->SetAttribute("Enthalpy PV term (kcal/mol)");
-          enthalpy_eV->SetAttribute("Enthalpy (eV)");
-          enthalpy_pv_eV->SetAttribute("Enthalpy PV term (eV)");
-          float en = static_cast<float> (atof(vs[4].c_str()) * EV_TO_KCAL_PER_MOL);
-          float pv = static_cast<float> (atof(vs[8].c_str()) * EV_TO_KCAL_PER_MOL);
-          float en_eV = static_cast<float> (atof(vs[4].c_str()));
-          float pv_eV = static_cast<float> (atof(vs[8].c_str()));
-          snprintf(tag, BUFF_SIZE, "%f", en);
-          enthalpy->SetValue(tag);
-          snprintf(tag, BUFF_SIZE, "%f", pv);
-          enthalpy_pv->SetValue(tag);
-          snprintf(tag, BUFF_SIZE, "%f", en_eV);
-          enthalpy_eV->SetValue(tag);
-          snprintf(tag, BUFF_SIZE, "%f", pv_eV);
-          enthalpy_pv_eV->SetValue(tag);
-          pmol->SetData(enthalpy);
-          pmol->SetData(enthalpy_pv);
-          pmol->SetData(enthalpy_eV);
-          pmol->SetData(enthalpy_pv_eV);
+          enthalpy_eV = static_cast<float>(atof(vs[4].c_str()));
+          pv_eV = static_cast<float>(atof(vs[8].c_str()));
         }
 
         // Free energy
@@ -299,6 +280,32 @@ namespace OpenBabel {
     }
 
     ifs_dos.close();
+
+    // Set enthalpy
+    if (hasEnthalpy) {
+      OBPairData *enthalpyPD = new OBPairData();
+      OBPairData *enthalpyPD_pv = new OBPairData();
+      OBPairData *enthalpyPD_eV = new OBPairData();
+      OBPairData *enthalpyPD_pv_eV = new OBPairData();
+      enthalpyPD->SetAttribute("Enthalpy (kcal/mol)");
+      enthalpyPD_pv->SetAttribute("Enthalpy PV term (kcal/mol)");
+      enthalpyPD_eV->SetAttribute("Enthalpy (eV)");
+      enthalpyPD_pv_eV->SetAttribute("Enthalpy PV term (eV)");
+      float en_kcal_per_mole = enthalpy_eV * EV_TO_KCAL_PER_MOL;
+      float pv_kcal_per_mole = pv_eV * EV_TO_KCAL_PER_MOL;
+      snprintf(tag, BUFF_SIZE, "%f", en_kcal_per_mole);
+      enthalpyPD->SetValue(tag);
+      snprintf(tag, BUFF_SIZE, "%f", pv_kcal_per_mole);
+      enthalpyPD_pv->SetValue(tag);
+      snprintf(tag, BUFF_SIZE, "%f", enthalpy_eV);
+      enthalpyPD_eV->SetValue(tag);
+      snprintf(tag, BUFF_SIZE, "%f", pv_eV);
+      enthalpyPD_pv_eV->SetValue(tag);
+      pmol->SetData(enthalpyPD);
+      pmol->SetData(enthalpyPD_pv);
+      pmol->SetData(enthalpyPD_eV);
+      pmol->SetData(enthalpyPD_pv_eV);
+    }
 
     pmol->EndModify();
 
