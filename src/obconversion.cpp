@@ -953,9 +953,10 @@ namespace OpenBabel {
 
     ifstream *ifs = new ifstream;
     NeedToFreeInStream = true; // make sure we free this
-    ios_base::openmode imode =
-      pInFormat->Flags() & READBINARY ? ios_base::in|ios_base::binary : ios_base::in;
 
+    ios_base::openmode imode = ios_base::in|ios_base::binary; //now always binary because may be gzipped
+//      pInFormat->Flags() & READBINARY ? ios_base::in|ios_base::binary : ios_base::in;
+      
     ifs->open(filePath.c_str(),imode);
     if(!ifs || !ifs->good())
       {
@@ -1150,6 +1151,7 @@ namespace OpenBabel {
   int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& OutputFileName,
                                 std::vector<std::string>& OutputFileList)
   {
+    //OBConversion::OutFilename = OutputFileName; ready for 2.4.0
 
     istream* pIs=NULL;
     ostream* pOs=NULL;
