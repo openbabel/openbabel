@@ -169,6 +169,11 @@ OpenBabel::OB ## subclass *to ## subclass(OpenBabel::OBGenericData *data) {
 }
 %}
 %enddef
+%inline %{ // can't use macro -- AliasData not OBAliasData
+OpenBabel::AliasData *toAliasData(OpenBabel::OBGenericData *data) {
+    return (OpenBabel::AliasData*) data;
+}
+%}
 CAST_GENERICDATA_TO(AngleData)
 CAST_GENERICDATA_TO(AtomClassData)
 CAST_GENERICDATA_TO(ChiralData)
