@@ -302,15 +302,16 @@ namespace OpenBabel {
 
       /// Part of "API" interface.
       /// The output stream is changed to the supplied file and the change is retained in the
-      /// OBConversion instance.
+      /// OBConversion instance. For multi-molecule files, the remaining molecules
+      /// can be read by repeatedly calling the Read() method.
       /// \return false and pOb=NULL on error
       /// This method is primarily intended for scripting languages without "stream" classes
       bool	ReadFile(OBBase* pOb, std::string filePath);
 
-      /// Part of the "Convert" interface
+      /// Part of the "Convert" interface.
       /// Open the files and update the streams in the OBConversion object.
       /// This method is primarily intended for scripting languages without "stream" classes
-      /// and will usually followed by a call to Convert()
+      /// and will usually followed by a call to Convert().
       /// \return false if unsucessful.
       bool OpenInAndOutFiles(std::string infilepath, std::string outfilepath);
 

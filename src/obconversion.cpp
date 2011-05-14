@@ -151,6 +151,15 @@ namespace OpenBabel {
       if(conv.SetInFormat("smi") && conv.Read(&mol))
          // ...
       @endcode
+      
+      An alternative way is more convenient if using bindings from another language:
+      @code
+      std::string SmilesString;
+      OBMol mol;
+      OBConversion conv;
+      if(conv.SetInFormat("smi") && conv.ReadString(&mol, SmilesString))
+         // ...
+      @endcode
 
       <b>To do a file conversion without manipulating the molecule.</b>
 
@@ -162,6 +171,27 @@ namespace OpenBabel {
       {
          conv.AddOption("h",OBConversion::GENOPTIONS); //Optional; (h adds expicit hydrogens)
          conv.Convert();
+      }
+      @endcode
+
+      <b>To read a multi-molecule file if using bindings from another language</b>
+
+      The first molecule should be read using ReadFile, and subsequent molecules using Read,
+      as follows:
+      @code
+      #include <openbabel/obconversion.h> //mol.h is not needed
+      OBConversion conv;
+      OBMol mol;
+      bool success = conv.SetInFormat("sdf");
+      if(success)
+      {
+         bool notatend = conv.ReadFile(&mol, "myfile.sdf");
+         // Do something with mol
+	 while(notatend)
+	 {
+             notatend = conv.Read(&mol);
+	     // Do something with mol
+	 }
       }
       @endcode
 
