@@ -112,7 +112,7 @@ if (DO_PYTHON_BINDINGS)
             PREFIX ""
             SUFFIX .pyd )
         add_custom_command(TARGET bindings_python POST_BUILD
-          COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py ${openbabel_BINARY_DIR}/${CMAKE_CFG_INTDIR}
+          COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py ${openbabel_BINARY_DIR}/bin/${CMAKE_CFG_INTDIR}
           )
     endif(NOT WIN32)
 endif (DO_PYTHON_BINDINGS)
