@@ -82,8 +82,9 @@ public:
       " t use thicker lines\n"
       " e embed molecule as CML\n"
       "    OpenBabel can read the resulting svg file as a cml file.\n"
-      " p# scale to bondlength in pixels(single mol only)\n"
-      " px# scale to bondlength in pixels(single mol only)(not displayed in GUI)\n"
+      " p# px Bond length(1 mol) or Image size(>1 mol)\n"
+      "    Setting rows=1 cols=1 allows the image size to be set for a single mol\n"
+      "    The General option --px # is an alternative to the above.\n"
       " c# number of columns in table\n"
       " cols# number of columns in table(not displayed in GUI)\n"
       " r# number of rows in table\n"
@@ -340,7 +341,15 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       else if(_ncols>_nrows)
         vbheight = (100*_nrows)/_ncols;
 
-      ofs << "x=\"0\" y=\"0\" width=\"100%\" height=\"100%\" ";
+      // -xp or --px options produce a fixed size square image when there are multiple mols
+      const char* ppx = pConv->IsOption("p");
+      if(!ppx)
+        ppx= pConv->IsOption("px", OBConversion::GENOPTIONS);
+      if(ppx)
+        ofs << "x=\"0\" y=\"0\" width=\"" << ppx << "px \" height=\"" << ppx <<"px\" ";
+      else
+        ofs << "x=\"0\" y=\"0\" width=\"100%\" height=\"100%\" ";
+      
       ofs << "viewBox=\"0 0 " << vbwidth << ' ' << vbheight << "\">\n";
 
       ofs << "<title>OBDepict</title>\n";
