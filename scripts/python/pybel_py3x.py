@@ -16,10 +16,10 @@ import tempfile
 import openbabel as ob
 
 try:
-    import oasa
-    import oasa.cairo_out
+    import cairo
+    import rsvg
 except ImportError: #pragma: no cover
-    oasa = None
+    cairo = rsvg = None
 
 try:
     import Tkinter as tk
@@ -386,8 +386,7 @@ class Molecule(object):
     def __str__(self):
         return self.write()
 
-    def draw(self, show=True, filename=None, update=False, usecoords=False,
-                   method="mcdl"):
+    def draw(self, show=True, filename=None, update=False, usecoords=False):
         """Create a 2D depiction of the molecule.
 
         Optional parameters:
@@ -398,136 +397,67 @@ class Molecule(object):
                     (default is False)
           usecoords -- don't calculate 2D coordinates, just use
                        the current coordinates (default is False)
-          method -- two methods are available for calculating the
-                    2D coordinates: OpenBabel's "mcdl" (the default), or
-                    "oasa" (from the OASA toolkit)
 
-        OASA is used for depiction. Tkinter and Python
+        Cairo and Rsvg are used for depiction. Tkinter and Python
         Imaging Library are required for image display.
         """
-        etab = ob.OBElementTable()
-
-        if not oasa:
-            errormessage = ("OASA not found, but is required for depiction. "
-                            "OASA is part of BKChem. "
+        if not cairo:
+            errormessage = ("Cairo or Rsvg not found, but are required for depiction. "
                             "See installation instructions for more "
                             "information.")
             raise ImportError(errormessage)
-        if method not in ["mcdl", "oasa"]:
-            raise ValueError("Method '%s' not recognised. Should be either"
-                               " 'mcdl' or 'oasa'.")
 
         workingmol = self
-        if method == "mcdl":
-            if not update: # Call gen2D on a clone
-                workingmol = Molecule(self)
-            if not usecoords:
-                _operations['gen2D'].Do(workingmol.OBMol)
-            usecoords = True # Use the workingmol's coordinates
-                   
-        mol = oasa.molecule()
-        for atom in workingmol.atoms:
-            v = mol.create_vertex()            
-            if atom.OBAtom.GetType() == "Du":
-                v.symbol = "R"
-            else:
-                v.symbol = etab.GetSymbol(atom.atomicnum)
-            v.charge = atom.formalcharge
-            if usecoords:
-                v.x, v.y, v.z = atom.coords[0] * 30., atom.coords[1] * 30., 0.0
-            mol.add_vertex(v)
 
-        for bond in ob.OBMolBondIter(workingmol.OBMol):
-            e = mol.create_edge()
-            e.order = bond.GetBO()
-            if bond.IsHash():
-                e.type = "h"
-            elif bond.IsWedge():
-                e.type = "w"
-            mol.add_edge(bond.GetBeginAtomIdx() - 1,
-                         bond.GetEndAtomIdx() - 1,
-                         e)
-        # I'm sure there's a more elegant way to do the following, but here goes...
-        # let's set the stereochemistry around double bonds
-        self.write("can") # Perceive UP/DOWNness
-        for bond in ob.OBMolBondIter(workingmol.OBMol):
-            ends = bond.GetBeginAtomIdx(), bond.GetEndAtomIdx()
-            if bond.GetBO() == 2:
-                stereobonds = [[b for b in ob.OBAtomBondIter(workingmol.OBMol.GetAtom(x)) if b.GetIdx() != bond.GetIdx() and (b.IsUp() or b.IsDown())]
-                               for x in ends]
-                if stereobonds[0] and stereobonds[1]: # Needs to be defined at either end
-                    if stereobonds[0][0].IsUp() == stereobonds[1][0].IsUp():
-                        # Either both up or both down
-                        stereo = oasa.stereochemistry.cis_trans_stereochemistry.SAME_SIDE
-                    else:
-                        stereo = oasa.stereochemistry.cis_trans_stereochemistry.OPPOSITE_SIDE
-                    atomids = [(b[0].GetBeginAtomIdx(), b[0].GetEndAtomIdx()) for b in stereobonds]
-                    extremes = []
-                    for id, end in zip(ends, atomids):
-                        if end[0] == id:
-                            extremes.append(end[1])
-                        else:
-                            extremes.append(end[0])
-                    center = mol.get_edge_between(mol.atoms[ends[0] - 1], mol.atoms[ends[1] - 1])
-                    st = oasa.stereochemistry.cis_trans_stereochemistry(
-                              center = center, value = stereo,
-                              references = (mol.atoms[extremes[0] - 1], mol.atoms[ends[0] - 1],
-                                            mol.atoms[ends[1] - 1], mol.atoms[extremes[1] - 1]))
-                    mol.add_stereochemistry(st)
-        
-        mol.remove_unimportant_hydrogens()
-        if method == "oasa" and not usecoords:
-            oasa.coords_generator.calculate_coords(mol, bond_length=30)
-            if update:
-                newcoords = [(v.x / 30., v.y / 30., 0.0) for v in mol.vertices]
-                for atom, newcoord in zip(ob.OBMolAtomIter(self.OBMol), newcoords):
-                    atom.SetVector(*newcoord)
-        if filename or show:
-            maxx = max([v.x for v in mol.vertices])
-            minx = min([v.x for v in mol.vertices])
-            maxy = max([v.y for v in mol.vertices])
-            miny = min([v.y for v in mol.vertices])
-            maxcoord = max(maxx - minx, maxy - miny)
-            fontsize = 16
-            bondwidth = 6
-            linewidth = 2
-            if maxcoord > 270: # 300  - margin * 2
-                for v in mol.vertices:
-                    v.x *= 270. / maxcoord
-                    v.y *= 270. / maxcoord
-                fontsize *= math.sqrt(270. / maxcoord)
-                bondwidth *= math.sqrt(270. / maxcoord)
-                linewidth *= math.sqrt(270. / maxcoord)
-            if filename:
-                filedes = None
-            else:
-                filedes, filename = tempfile.mkstemp()
+        if not update: # Call gen2D on a clone
+            workingmol = Molecule(self)
+        if not usecoords:
+            _operations['gen2D'].Do(workingmol.OBMol)
+
+        tmpsvgdes, tmpsvg = tempfile.mkstemp()
+        obconv = ob.OBConversion()
+        obconv.SetOutFormat("svg")
+        # Let out javascript and recalc wedges
+        obconv.SetOptions('jw', obconv.OUTOPTIONS)
+        with open(tmpsvg, "w") as f:
+            svg = obconv.WriteString(workingmol.OBMol)
+            f.write(svg)
             
-            canvas = oasa.cairo_out.cairo_out()
-            canvas.show_hydrogens_on_hetero = True
-            canvas.font_size = fontsize
-            canvas.bond_width = bondwidth
-            canvas.line_width = linewidth
-            canvas.mol_to_cairo(mol, filename)
-            if show:
-                if not tk:
-                    errormessage = ("Tkinter or Python Imaging "
-                                    "Library not found, but is required for image "
-                                    "display. See installation instructions for "
-                                    "more information.")
-                    raise ImportError(errormessage)
-                root = tk.Tk()
-                root.title((hasattr(self, "title") and self.title)
-                           or self.__str__().rstrip())
-                frame = tk.Frame(root, colormap="new", visual='truecolor').pack()
-                image = PIL.open(filename)
-                imagedata = piltk.PhotoImage(image)
-                label = tk.Label(frame, image=imagedata).pack()
-                quitbutton = tk.Button(root, text="Close", command=root.destroy).pack(fill=tk.X)
-                root.mainloop()
-            if filedes:
-                os.close(filedes)
-                os.remove(filename)
+        h = rsvg.Handle(tmpsvg)
+        width, height = h.props.width, h.props.height
+        scalefactor = 300/float(max([width, height]))
+        s = cairo.ImageSurface(cairo.FORMAT_ARGB32, 300, 300) 
+        ctx = cairo.Context(s)
+        ctx.scale(scalefactor, scalefactor)
+        h.render_cairo(ctx)
+        if filename:
+            filedes = None
+        else:
+            filedes, filename = tempfile.mkstemp()
+        s.write_to_png(filename)
+
+        if show:
+            if not tk:
+                errormessage = ("Tkinter or Python Imaging "
+                                "Library not found, but is required for image "
+                                "display. See installation instructions for "
+                                "more information.")
+                raise ImportError(errormessage)
+            root = tk.Tk()
+            root.title((hasattr(self, "title") and self.title)
+                       or self.__str__().rstrip())
+            frame = tk.Frame(root, colormap="new", visual='truecolor').pack()
+            image = PIL.open(filename)
+            imagedata = piltk.PhotoImage(image)
+            label = tk.Label(frame, image=imagedata).pack()
+            quitbutton = tk.Button(root, text="Close", command=root.destroy).pack(fill=tk.X)
+            root.mainloop()
+        if filedes:
+            os.close(filedes)
+            os.remove(filename)
+        if tmpsvgdes:
+            os.close(tmpsvgdes)
+            os.remove(tmpsvg)
 
 class Atom(object):
     """Represent a Pybel atom.
