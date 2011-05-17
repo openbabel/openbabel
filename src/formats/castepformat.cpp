@@ -1,5 +1,5 @@
 /**********************************************************************
-ht (C) 2004 by Chris Morley for template
+Copyright (C) 2004 by Chris Morley for template
 Copyright (C) 2009 by David C. Lonie for CASTEP
 
 This program is free software; you can redistribute it and/or modify
