@@ -86,6 +86,9 @@ namespace OpenBabel {
     matrix3x3 ortho;
     int atomicNum;
     OBUnitCell *cell = new OBUnitCell();
+    bool hasEnthalpy=false;
+    float enthalpy_eV, pv_eV;
+
     pmol->BeginModify();
 
     while (ifs.getline(buffer,BUFF_SIZE)) {
@@ -284,40 +287,16 @@ namespace OpenBabel {
 
       // Enthalpy (molecular)
       if (strstr(buffer, "Final enthalpy")) {
+        hasEnthalpy = true;
         tokenize(vs, buffer);
-        float en, en_eV, pv, pv_eV;
-        OBPairData *enthalpy = new OBPairData();
-        OBPairData *enthalpy_pv = new OBPairData();
-        OBPairData *enthalpy_eV = new OBPairData();
-        OBPairData *enthalpy_pv_eV = new OBPairData();
-        enthalpy->SetAttribute("Enthalpy (kcal/mol)");
-        enthalpy_pv->SetAttribute("Enthalpy PV term (kcal/mol)");
-        enthalpy_eV->SetAttribute("Enthalpy (eV)");
-        enthalpy_pv_eV->SetAttribute("Enthalpy PV term (eV)");
-
-        pv = pv_eV = 0; // Doesn't make sense in a molecular system
-        en_eV = static_cast<float>(atof(vs[3].c_str()));
-        en = static_cast<float>(en_eV * EV_TO_KCAL_PER_MOL);
-        snprintf(tag, BUFF_SIZE, "%f", pv);
-        enthalpy_pv->SetValue(tag);
-        snprintf(tag, BUFF_SIZE, "%f", pv_eV);
-        enthalpy_pv_eV->SetValue(tag);
-        pmol->SetData(enthalpy_pv);
-        pmol->SetData(enthalpy_pv_eV);
+        enthalpy_eV = static_cast<float>(atof(vs[3].c_str()));
+        pv_eV = 0.0;
       }
 
       // Enthalphy (periodic)
       if (strstr(buffer, "Components of enthalpy :")) {
         bool hasPV = false;
-        float en, en_eV, pv, pv_eV;
-        OBPairData *enthalpy = new OBPairData();
-        OBPairData *enthalpy_pv = new OBPairData();
-        OBPairData *enthalpy_eV = new OBPairData();
-        OBPairData *enthalpy_pv_eV = new OBPairData();
-        enthalpy->SetAttribute("Enthalpy (kcal/mol)");
-        enthalpy_pv->SetAttribute("Enthalpy PV term (kcal/mol)");
-        enthalpy_eV->SetAttribute("Enthalpy (eV)");
-        enthalpy_pv_eV->SetAttribute("Enthalpy PV term (eV)");
+        hasEnthalpy = true;
 
         ifs.getline(buffer,BUFF_SIZE);
 
@@ -325,32 +304,18 @@ namespace OpenBabel {
           if (strstr(buffer, "Pressure*volume")) {
             tokenize(vs, buffer);
             pv_eV = static_cast<float> (atof(vs[2].c_str()));
-            pv = static_cast<float> (pv_eV * EV_TO_KCAL_PER_MOL);
-            snprintf(tag, BUFF_SIZE, "%f", pv);
-            enthalpy_pv->SetValue(tag);
-            snprintf(tag, BUFF_SIZE, "%f", pv_eV);
-            enthalpy_pv_eV->SetValue(tag);
-            pmol->SetData(enthalpy_pv);
-            pmol->SetData(enthalpy_pv_eV);
             hasPV = true;
           }
 
           if (strstr(buffer, "Total lattice enthalpy")) {
             tokenize(vs, buffer);
-            en_eV = static_cast<float> (atof(vs[4].c_str()));
-            en = static_cast<float> (en_eV * EV_TO_KCAL_PER_MOL);
-            snprintf(tag, BUFF_SIZE, "%f", en);
-            enthalpy->SetValue(tag);
-            snprintf(tag, BUFF_SIZE, "%f", en_eV);
-            enthalpy_eV->SetValue(tag);
-            pmol->SetData(enthalpy);
-            pmol->SetData(enthalpy_eV);
+            enthalpy_eV = static_cast<float> (atof(vs[4].c_str()));
           }
 
           ifs.getline(buffer,BUFF_SIZE);
         }
         if (hasPV)
-          pmol->SetEnergy(en - pv);
+          pmol->SetEnergy((enthalpy_eV - pv_eV) * EV_TO_KCAL_PER_MOL);
       }
     }
 
@@ -359,6 +324,32 @@ namespace OpenBabel {
       FOR_ATOMS_OF_MOL(atom, pmol) {
         atom->SetVector(cell->FractionalToCartesian(atom->GetVector()));
       }
+    }
+
+    // Set enthalpy
+    if (hasEnthalpy) {
+      OBPairData *enthalpyPD = new OBPairData();
+      OBPairData *enthalpyPD_pv = new OBPairData();
+      OBPairData *enthalpyPD_eV = new OBPairData();
+      OBPairData *enthalpyPD_pv_eV = new OBPairData();
+      enthalpyPD->SetAttribute("Enthalpy (kcal/mol)");
+      enthalpyPD_pv->SetAttribute("Enthalpy PV term (kcal/mol)");
+      enthalpyPD_eV->SetAttribute("Enthalpy (eV)");
+      enthalpyPD_pv_eV->SetAttribute("Enthalpy PV term (eV)");
+      float en_kcal_per_mole = enthalpy_eV * EV_TO_KCAL_PER_MOL;
+      float pv_kcal_per_mole = pv_eV * EV_TO_KCAL_PER_MOL;
+      snprintf(tag, BUFF_SIZE, "%f", en_kcal_per_mole);
+      enthalpyPD->SetValue(tag);
+      snprintf(tag, BUFF_SIZE, "%f", pv_kcal_per_mole);
+      enthalpyPD_pv->SetValue(tag);
+      snprintf(tag, BUFF_SIZE, "%f", enthalpy_eV);
+      enthalpyPD_eV->SetValue(tag);
+      snprintf(tag, BUFF_SIZE, "%f", pv_eV);
+      enthalpyPD_pv_eV->SetValue(tag);
+      pmol->SetData(enthalpyPD);
+      pmol->SetData(enthalpyPD_pv);
+      pmol->SetData(enthalpyPD_eV);
+      pmol->SetData(enthalpyPD_pv_eV);
     }
 
     // set final unit cell
