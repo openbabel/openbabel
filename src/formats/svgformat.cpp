@@ -42,9 +42,14 @@ public:
       "SVG 2D depiction\n"
       "Scalable Vector Graphics 2D rendering of molecular structure.\n\n"
 
-      "Single molecules are displayed at a fixed scale, as in normal diagrams,\n"
+      "When called from commandline or GUI or otherwise via Convert(),\n"
+      "single molecules are displayed at a fixed scale, as in normal diagrams,\n"
       "but multiple molecules are displayed in a table which expands to fill\n"
-      "the containing element, such as a browser window.\n\n"
+      "the containing element, such as a browser window.\n"
+      "When WriteMolecule() is called directly, without going through\n"
+      "WriteChemObject, e.g. via OBConversion::Write(), a fixed size image by\n"
+      "default 200 x 200px containing a single molecule is written. The size\n"
+      "can be specified by the P output option.\n\n"
 
       "Multiple molecules are displayed in a grid of dimensions specified by\n"
       "the ``-xr`` and ``-xc`` options (number of rows and columns respectively\n"
@@ -82,8 +87,8 @@ public:
       " t use thicker lines\n"
       " e embed molecule as CML\n"
       "    OpenBabel can read the resulting svg file as a cml file.\n"
-      " p# px Bond length(1 mol) or Image size(>1 mol)\n"
-      "    Setting rows=1 cols=1 allows the image size to be set for a single mol\n"
+      " p# px Scale to bond length(single mol only)\n"
+      " P# px Single mol in defined size image\n"
       "    The General option --px # is an alternative to the above.\n"
       " c# number of columns in table\n"
       " cols# number of columns in table(not displayed in GUI)\n"
@@ -157,7 +162,7 @@ SVGFormat theSVGFormat;
 /////////////////////////////////////////////////////////////////
 bool SVGFormat::WriteChemObject(OBConversion* pConv)
 {
-  //Molecules are stored here as pointers to OBOb objects, which are not deleted as usual.
+  //Molecules are stored here as pointers to OBBase objects, which are not deleted as usual.
   //When there are no more they are sent to WriteMolecule.
   //This allows their number to be determined whatever their source
   //(they may also have been filtered), so that the table can be properly dimensioned.
@@ -174,6 +179,7 @@ bool SVGFormat::WriteChemObject(OBConversion* pConv)
     _objects.clear();
     _nmax=0;
 
+    pConv->AddOption("svgwritechemobject"); // to show WriteMolecule that this function has been called
     const char* pc = pConv->IsOption("c");
     //alternative for babel because -xc cannot take a parameter, because some other format uses it
     //similarly for -xr -xp
@@ -275,7 +281,7 @@ bool SVGFormat::WriteChemObject(OBConversion* pConv)
   }
   //OBConversion decrements OutputIndex when returns false because it thinks it is an error
   //So we compensate.
-  if(nomore)
+  if(!ret || nomore)
     pConv->SetOutputIndex(pConv->GetOutputIndex()+1);
   return ret && !nomore;
 }
@@ -286,6 +292,22 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   if(!pmol)
     return false;
   ostream &ofs = *pConv->GetOutStream();
+
+  //Check for option for single mol in fixed size image
+  const char* fixedpx = pConv->IsOption("P");
+  if(!fixedpx)
+    fixedpx= pConv->IsOption("px", OBConversion::GENOPTIONS);
+  //If WriteMolecule called directly, e.g. from OBConversion::Write()
+  //the default mode is a fixed image size of 200px square
+  if(!fixedpx && !pConv->IsOption("svgwritechemobject"))
+    fixedpx = "200";
+  if(fixedpx)
+  {
+    _nmax = _nrows = _ncols = 1;
+    pConv->AddOption("j");
+    pConv->SetLast(true);
+    pConv->SetOutputIndex(1);
+  }
 
   //*** Coordinate generation ***
   //Generate coordinates only if no existing 2D coordinates
@@ -317,7 +339,7 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   string background = pConv->IsOption("b") ? "black" : "white";
   string bondcolor  = pConv->IsOption("b") ? "white" : "black";
 
-  if(pConv->GetOutputIndex()==1)
+  if(pConv->GetOutputIndex()==1 || fixedpx)
   {
     //For the first molecule...
     if(hasTable)
@@ -341,12 +363,8 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       else if(_ncols>_nrows)
         vbheight = (100*_nrows)/_ncols;
 
-      // -xp or --px options produce a fixed size square image when there are multiple mols
-      const char* ppx = pConv->IsOption("p");
-      if(!ppx)
-        ppx= pConv->IsOption("px", OBConversion::GENOPTIONS);
-      if(ppx)
-        ofs << "x=\"0\" y=\"0\" width=\"" << ppx << "px \" height=\"" << ppx <<"px\" ";
+      if(fixedpx)//fixed size image
+        ofs << "x=\"0\" y=\"0\" width=\"" << fixedpx << "px\" height=\"" << fixedpx <<"px\" ";
       else
         ofs << "x=\"0\" y=\"0\" width=\"100%\" height=\"100%\" ";
       
@@ -514,8 +532,7 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     ofs << "</svg>\n" << endl;//Outer svg
   }
-
-  return true;
+  return !fixedpx; // return false with fixed size image because only 1 mol
 }
 
 
