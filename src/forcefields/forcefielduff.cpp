@@ -1628,6 +1628,29 @@ namespace OpenBabel {
         }
       }
     }
+
+    // Special atom types (i.e., P_3+q)
+    // (We can't easily do this with a SMARTS)
+    FOR_ATOMS_OF_MOL(a, _mol) {
+      if (a->GetAtomicNum() == 15) {
+        // loop through all the neighbors and see if we have a metal coordination
+        bool organomet = false;
+        int nbrElement;
+        FOR_NBORS_OF_ATOM (nbr, &*a) {
+          nbrElement = nbr->GetAtomicNum();
+          if ( (nbrElement >= 21 && nbrElement <= 31) // Sc to Ga
+               || (nbrElement >= 39 && nbrElement <= 50) // Y to Sn
+               || (nbrElement >= 57 && nbrElement <= 83) // La to Bi
+               || (nbrElement >= 89) ) {
+            organomet = true;
+            break; // done!
+          }
+        }
+        if (organomet)
+          a->SetType("P_3+q");
+      }
+    }
+
     IF_OBFF_LOGLVL_LOW {
       OBFFLog("\nA T O M   T Y P E S\n\n");
       OBFFLog("IDX\tTYPE\n");
