@@ -396,7 +396,7 @@ include_directories(${openbabel_BINARY_DIR}/include
 #cjh
 find_package(Eigen2) # find and setup Eigen2
 if(EIGEN2_FOUND)
-  add_definitions (-DHAVE_EIGEN2)
+  add_definitions (-DHAVE_EIGEN)
   include_directories(${EIGEN2_INCLUDE_DIR})
 endif()
 #cjh

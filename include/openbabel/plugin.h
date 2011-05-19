@@ -501,15 +501,17 @@ public:
 #ifdef HAVE_STATIC_INCHI
   OB_STATIC_PLUGIN(OpUnique, theOpUnique)
 #endif
-#ifdef HAVE_EIGEN2
+#ifdef HAVE_EIGEN
   OB_STATIC_PLUGIN(OpConformer, theOpConformer)
 #endif
 
   // charges
   OB_STATIC_PLUGIN(GasteigerCharges, theGasteigerCharges)
   OB_STATIC_PLUGIN(MMFF94Charges, theMMFF94Charges)
+#ifdef HAVE_EIGEN
   OB_STATIC_PLUGIN(QEqCharges, theQEqCharges)
   OB_STATIC_PLUGIN(QTPIECharges, theQTPIECharges)
+#endif
 
   OBAPI std::vector<std::string> EnableStaticPlugins();
 
