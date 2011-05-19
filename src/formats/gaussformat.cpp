@@ -316,10 +316,10 @@ namespace OpenBabel
     // Orbital data
     std::vector<double> orbitals;
     std::vector<std::string> symmetries;
-    int aHOMO, bHOMO;
+    int aHOMO, bHOMO, betaStart;
 
     //Put some metadata into OBCommentData
-    string comment("Gaussian ");  
+    string comment("Gaussian ");
     ifs.getline(buffer,BUFF_SIZE);
     if(*buffer)
     {
@@ -564,35 +564,42 @@ namespace OpenBabel
             std::string label; // used as a temporary to remove "(" and ")" from labels
             int offset = 0;
 
-            ifs.getline(buffer, BUFF_SIZE);
-            tokenize(vs, buffer); // parse first line "Occupied" ...
-            for (unsigned int i = 1; i < vs.size(); ++i) {
-              label = vs[i].substr(1, vs[i].length() - 2);
-              symmetries.push_back(label);
-            }
-            ifs.getline(buffer, BUFF_SIZE);
-
-            // Parse remaining lines
-            while (strstr(buffer, "(")) {
-              tokenize(vs, buffer);
-              if (strstr(buffer, "Virtual")) {
-                offset = 1; // skip first token
-              } else {
-                offset = 0;
-              }
-              for (unsigned int i = offset; i < vs.size(); ++i) {
+            while(true) {
+              ifs.getline(buffer, BUFF_SIZE);
+              tokenize(vs, buffer); // parse first line "Occupied" ...
+              for (unsigned int i = 1; i < vs.size(); ++i) {
                 label = vs[i].substr(1, vs[i].length() - 2);
                 symmetries.push_back(label);
               }
-              ifs.getline(buffer, BUFF_SIZE); // get next line
-            } // end parsing symmetry labels
+              ifs.getline(buffer, BUFF_SIZE);
+
+              // Parse remaining lines
+              while (strstr(buffer, "(")) {
+                tokenize(vs, buffer);
+                if (strstr(buffer, "Virtual")) {
+                  offset = 1; // skip first token
+                } else {
+                  offset = 0;
+                }
+                for (unsigned int i = offset; i < vs.size(); ++i) {
+                  label = vs[i].substr(1, vs[i].length() - 2);
+                  symmetries.push_back(label);
+                }
+                ifs.getline(buffer, BUFF_SIZE); // get next line
+              } // end parsing symmetry labels
+              if (!strstr(buffer, "Beta")) // no beta orbitals
+                break;
+            } // end alpha/beta section
           }
         else if (strstr(buffer, "Alpha") && strstr(buffer, ". eigenvalues --")) {
           orbitals.clear();
+          betaStart = 0;
           while (strstr(buffer, ". eigenvalues --")) {
             tokenize(vs, buffer);
             if (vs.size() < 4)
               break;
+            if (vs[0].find("Beta") !=string::npos && betaStart == 0) // mark where we switch from alpha to beta
+              betaStart = orbitals.size();
             for (unsigned int i = 4; i < vs.size(); ++i) {
               orbitals.push_back(atof(vs[i].c_str()));
             }
@@ -716,6 +723,23 @@ namespace OpenBabel
         OBOrbitalData *od = new OBOrbitalData;
         if (aHOMO == bHOMO) {
           od->LoadClosedShellOrbitals(orbitals, symmetries, aHOMO);
+        } else {
+          // we have to separate the alpha and beta vectors
+          std::vector<double>      betaOrbitals;
+          std::vector<std::string> betaSymmetries;
+          int initialSize = orbitals.size();
+          for (unsigned int i = betaStart; i < initialSize; ++i) {
+            betaOrbitals.push_back(orbitals[i]);
+            betaSymmetries.push_back(symmetries[i]);
+          }
+          // ok, now erase the end elements of orbitals and symmetries
+          for (unsigned int i = betaStart; i < initialSize; ++i) {
+            orbitals.pop_back();
+            symmetries.pop_back();
+          }
+          // and load the alphas and betas
+          od->LoadAlphaOrbitals(orbitals, symmetries, aHOMO);
+          od->LoadBetaOrbitals(betaOrbitals, betaSymmetries, bHOMO);
         }
         od->SetOrigin(fileformatInput);
         mol.SetData(od);
