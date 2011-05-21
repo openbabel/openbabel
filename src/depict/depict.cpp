@@ -320,26 +320,37 @@ namespace OpenBabel
     d->painter->NewCanvas(width, height);
     
     // draw bonds
-    if(!(d->options & noWedgeHashGen))//default is to regenerate wedge/hash bonds
-      d->SetWedgeAndHash(mol);
+    // determine which should be wedge and hash bonds
+    std::map<OBBond*, enum OBStereo::BondDirection> updown;
+    std::map<OBBond*, OBStereo::Ref> from;
+    TetStereoToWedgeHash(*mol, updown, from);
+
     for (OBBond *bond = mol->BeginBond(j); bond; bond = mol->NextBond(j)) {
       OBAtom *begin = bond->GetBeginAtom();
       OBAtom *end = bond->GetEndAtom();
-
       if((d->options & internalColor) && bond->HasData("color"))
         d->painter->SetPenColor(OBColor(bond->GetData("color")->GetValue()));
       else
         d->painter->SetPenColor(d->bondColor);
 
-      if (bond->IsWedge()) {
-        d->DrawWedge(begin, end);
-      } else if (bond->IsHash()) {
-        d->DrawHash(begin, end);
-      } else if (!bond->IsInRing()) {
-        d->DrawSimpleBond(begin, end, bond->GetBO());
+      if(from.find(bond)!=from.end()) {
+        //is a wedge or hash bond
+        if(from[bond]==bond->GetEndAtom()->GetId())
+          swap(begin, end);
+        if(updown[bond]==OBStereo::UpBond)
+          d->DrawWedge(begin, end);
+        else if(updown[bond]==OBStereo::DownBond)
+          d->DrawHash(begin, end);
+        else {
+          //This is a bond to a unspecified chiral center
+          //and could be depicted differently
+          d->DrawSimpleBond(begin, end, bond->GetBO());
+        }
       }
+      else if (!bond->IsInRing())
+        d->DrawSimpleBond(begin, end, bond->GetBO());
     }
-    
+
     // draw ring bonds
     std::vector<OBRing*> rings(mol->GetSSSR());
     OBBitVec drawnBonds;

@@ -2606,11 +2606,6 @@ namespace OpenBabel {
                 }
               }
             }
-            //Ensure the begin atom of the bond is the tet center, so that OBDepict will make it the pointy end
-            if(b->GetEndAtom()==center) {
-              b->SetEnd(b->GetBeginAtom());
-              b->SetBegin(center);
-            }
           }
         }
         if (chosen==NULL) { // There is a remote possibility of this but let's worry about 99.9% of cases first

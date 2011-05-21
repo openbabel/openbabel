@@ -102,10 +102,6 @@ public:
       " j do not embed javascript\n"
       "    Javascript is not usually embedded if there is only one molecule,\n"
       "    but it is if the rows and columns have been specified as 1: ``-xr1 -xc1``\n"
-      " W use existing wedge/hash bonds\n"
-      "    By default wedge/hash bonds are generated from the stereochemistry, but\n"
-      "    use this option to use those explicity specified in, for instance, a mol\n"
-      "    or cml file.\n"
       " x omit XML declaration (not displayed in GUI)\n"
       "    Useful if the output is to be embedded in another xml file.\n"
       " A display aliases, if present\n"
@@ -174,7 +170,7 @@ bool SVGFormat::WriteChemObject(OBConversion* pConv)
 
   OBBase* pOb = pConv->GetChemObject();
 
-  if(pConv->GetOutputIndex()==1)
+  if(pConv->GetOutputIndex()<=1)
   {
     _objects.clear();
     _nmax=0;
@@ -399,8 +395,6 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     SVGPainter painter(*pConv->GetOutStream(), true, cellsize,cellsize,innerX,innerY);
     OBDepict depictor(&painter);
 
-    if(pConv->IsOption("W"))
-      depictor.SetOption(OBDepict::noWedgeHashGen);
     if(!pConv->IsOption("C"))
       depictor.SetOption(OBDepict::drawTermC);// on by default
     if(pConv->IsOption("a"))

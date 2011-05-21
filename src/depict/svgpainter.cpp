@@ -61,7 +61,7 @@ namespace OpenBabel
 
     //Bond color and width are the initial m_Pencolor and m_PenWidth
     m_ofs << "font-family=\"" << m_fontFamily << "\" stroke=" << MakeRGB(m_Pencolor)
-          << "stroke-width=\"" << m_PenWidth << "\" >\n";
+          << "stroke-width=\"" << m_PenWidth << "\"  stroke-linecap=\"round\"" << ">\n";
 
     if(!m_withViewBox)//Background color for single molecule. Handled by outer svg when table.
       m_ofs << "<rect x=\"0%\" y=\"0%\" width=\"100%\" height=\"100%\" stroke-width=\"0\" fill="
@@ -107,7 +107,6 @@ namespace OpenBabel
     if(m_Pencolor!=m_OrigBondcolor)
       m_ofs << " stroke=" << MakeRGB(m_Pencolor);
     m_ofs << " stroke-width=\"" << m_PenWidth << "\"";
-    m_ofs << " stroke-linecap=\"round\"";
     m_ofs << "/>\n";
     m_ofs.precision(oldprec);
   }
@@ -120,7 +119,6 @@ namespace OpenBabel
       m_ofs << i->first << ' ' << i->second << ' ';
     m_ofs << "\"";
     m_ofs << " stroke-width=\"" << m_PenWidth << "\"";
-    m_ofs << " stroke-linejoin=\"round\"";
     m_ofs << "/>\n";
   }
 
