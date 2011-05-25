@@ -104,7 +104,7 @@ namespace OpenBabel
     streamsize oldprec = m_ofs.precision(1);
     m_ofs << fixed << "<line x1=\"" << x1 << "\" y1=\"" << y1 << "\" x2=\""
       << x2 << "\" y2=\"" << y2 << "\"";
-    if(m_Pencolor!=m_OrigBondcolor)
+    // if(m_Pencolor!=m_OrigBondcolor) // TODO: Bring this line back once Pybel is fine with this
       m_ofs << " stroke=" << MakeRGB(m_Pencolor);
     m_ofs << " stroke-width=\"" << m_PenWidth << "\"";
     m_ofs << "/>\n";
