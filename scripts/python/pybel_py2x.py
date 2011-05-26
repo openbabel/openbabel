@@ -417,19 +417,17 @@ class Molecule(object):
         tmpsvgdes, tmpsvg = tempfile.mkstemp()
         obconv = ob.OBConversion()
         obconv.SetOutFormat("svg")
-        # Let out javascript and recalc wedges
-        obconv.SetOptions('jw', obconv.OUTOPTIONS)
+        
+        obconv.SetOptions('r"1"c"1"P"300"', obconv.OUTOPTIONS)
         with open(tmpsvg, "w") as f:
             svg = obconv.WriteString(workingmol.OBMol)
             f.write(svg)
             
         h = rsvg.Handle(tmpsvg)
-        width, height = h.props.width, h.props.height
-        scalefactor = 300/float(max([width, height]))
         s = cairo.ImageSurface(cairo.FORMAT_ARGB32, 300, 300) 
         ctx = cairo.Context(s)
-        ctx.scale(scalefactor, scalefactor)
         h.render_cairo(ctx)
+        
         if filename:
             filedes = None
         else:
