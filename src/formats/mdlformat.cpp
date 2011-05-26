@@ -775,14 +775,7 @@ namespace OpenBabel
         snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d",
           atom->GetX(), atom->GetY(), atom->GetZ(),
           atom->GetAtomicNum() ? etab.GetSymbol(atom->GetAtomicNum()) : "* ",
-          0,charge,stereo,0,0,
-          atom->HasNoHForced() ? 15 : 0,
-          0,0,0,0,0,0);
-
-//       snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d",
-//                 atom->GetX(), atom->GetY(), atom->GetZ(),
-//                 atom->GetAtomicNum() ? etab.GetSymbol(atom->GetAtomicNum()) : "* ",
-//                 0, charge, stereo, 0, 0);
+          0,charge,stereo,0,0,0,0,0,0,0,0,0);
           ofs << buff << endl;
         }
 
