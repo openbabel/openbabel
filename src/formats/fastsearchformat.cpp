@@ -73,6 +73,7 @@ virtual const char* Description() //required
   "      babel index.fs outfile.yyy -at0.7,0.9 -sSMILES\n"
   "      #     Tanimoto >0.7 && Tanimoto < 0.9\n\n"
   "The datafile plus the ``-ifs`` option can be used instead of the index file.\n\n"
+  "NOTE that the datafile MUST NOT be larger than 4GB. (A 32 pointer is used.)\n\n"
 
   ".. seealso::\n\n"
 
@@ -409,7 +410,19 @@ virtual const char* Description() //required
         nmols = pConv->NumInputObjects();
         if(nmols>0)
           clog << "\nIt contains " << nmols << " molecules" << flush;
-
+        if(nmols>500000)
+        {
+          istream* is = pConv->GetInStream();
+          streampos origpos = is->tellg();
+          is->seekg(0,ios_base::end);
+          long long filesize = is->tellg();
+          if(filesize > 4294967295)
+          {
+            obErrorLog.ThrowError(__FUNCTION__, "The datafile must not be larger than 4GB", obError);
+            return false;
+          }
+          is->seekg(origpos);
+        }
         sw.Start();
 
         if(update)
