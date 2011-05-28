@@ -5,6 +5,20 @@ set(formats_common
   mol2format
   pdbformat
  )
+
+set(optional_formatgroups "")
+if(WITH_PNG)
+  set(optional_formatgroups
+    ${optional_formatgroups} formats_cairo
+    )
+  include_directories("C:/Tools/cairo-dev/include/cairo")
+  set(CAIRO_LIBRARY "C:/Tools/cairo-dev/lib/cairo.lib")
+  set(png2format_additional_sources ../depict/cairopainter.cpp)
+  set(formats_cairo
+    png2format
+  )
+endif(WITH_PNG)
+
 set(formats_utility
   copyformat
   MNAformat
@@ -179,6 +193,7 @@ else(MINIMAL_BUILD)
       ${formats_utility}
       ${formats_compchem}
       ${formats_misc}
+      ${formats_cairo}
   )
 endif(MINIMAL_BUILD)
 
@@ -196,15 +211,16 @@ else(WIN32)
       )
 endif(WIN32)
 
+
 if(MSVC)
-  foreach(formatgroup formats_common formats_utility formats_compchem formats_misc)
+  foreach(formatgroup formats_common formats_utility formats_compchem formats_misc ${optional_formatgroups})
     set(formatsources "")
     foreach(format ${${formatgroup}})
       set(formatsources ${formatsources} ${format}.cpp ${${format}_additional_sources})
     endforeach(format)
     add_library(${formatgroup} ${PLUGIN_TYPE} ${formatsources}
         "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h")
-    target_link_libraries(${formatgroup} ${libs} ${XDR_LIBRARY} openbabel)
+    target_link_libraries(${formatgroup} ${libs} ${CAIRO_LIBRARY} ${XDR_LIBRARY} openbabel)
     install(TARGETS ${formatgroup}
                   RUNTIME DESTINATION ${BIN_INSTALL_DIR}
                   LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
