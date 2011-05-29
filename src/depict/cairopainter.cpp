@@ -77,7 +77,8 @@ namespace OpenBabel
     for (i = points.begin(); i != points.end(); ++i)
       cairo_line_to(m_cairo, i->first, i->second); // note: when called without previous point, 
                                                    //       this function behaves like cairo_move_to 
-    cairo_stroke(m_cairo);
+    cairo_line_to(m_cairo, points.begin()->first, points.begin()->second);
+    cairo_fill(m_cairo);
   }
 
   void CairoPainter::DrawCircle(double x, double y, double r)
@@ -146,8 +147,8 @@ namespace OpenBabel
     if (scale < scale_y)
       cairo_translate(cr, 0, new_height/2.0 - scale*old_height/2.0);
     else
-      cairo_translate(cr, new_width/2.0 - scale*new_width/2.0, 0);
-    
+      cairo_translate(cr, new_width/2.0 - scale*old_width/2.0, 0);
+
     cairo_scale(cr, scale, scale); // Scale the drawing
 
     cairo_set_source_surface(cr, old_surface, 0, 0); // Redraw the old surface onto the new
