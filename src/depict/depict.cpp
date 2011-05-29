@@ -282,14 +282,14 @@ namespace OpenBabel
     OBAtomIterator i;
 
     if(mol->NumAtoms()>0) {
-      // scale bond lengths
+      // scale bond lengths and invert the y coordinate (both SVG and Cairo use top left as the origin)
       double bondLengthSum = 0.0;
       for (OBBond *bond = mol->BeginBond(j); bond; bond = mol->NextBond(j))
         bondLengthSum += bond->GetLength();
       const double averageBondLength = bondLengthSum / mol->NumBonds();
       const double f = mol->NumBonds() ? d->bondLength / averageBondLength : 1.0;
       for (atom = mol->BeginAtom(i); atom; atom = mol->NextAtom(i))
-        atom->SetVector(atom->GetX() * f, atom->GetY() * f, 0.0);
+        atom->SetVector(atom->GetX() * f, - atom->GetY() * f, 0.0);
 
       // find min/max values
       double min_x, max_x;

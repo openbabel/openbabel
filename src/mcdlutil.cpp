@@ -6024,7 +6024,7 @@ void generateDiagram(OBMol * pmol, std::ostream & ofs) {
   restoreDoubleBonds(sm,false);
   for (int i=1; i<=pmol->NumAtoms(); i++) {
     atom=pmol->GetAtom(i);
-    atom->SetVector(sm.getAtom(i-1)->rx,sm.getAtom(i-1)->ry,0.0);
+    atom->SetVector(sm.getAtom(i-1)->rx,-sm.getAtom(i-1)->ry,0.0);
 //	ofs<<sm.getAtom(i-1)->rx<<" "<<sm.getAtom(i-1)->ry<<endl;
   };
   sm.getMolfile(ofs);
@@ -6041,7 +6041,7 @@ void generateDiagram(OBMol * pmol) {
   restoreDoubleBonds(sm,false);
   for (int i=1; i<=pmol->NumAtoms(); i++) {
     atom=pmol->GetAtom(i);
-    atom->SetVector(sm.getAtom(i-1)->rx,sm.getAtom(i-1)->ry,0.0);
+    atom->SetVector(sm.getAtom(i-1)->rx,-sm.getAtom(i-1)->ry,0.0);
   };
 };
 
@@ -6059,7 +6059,7 @@ void generateDiagram(const std::vector<int> iA1, const std::vector<int> iA2,
   ry.resize(nAtoms);
   for (int i=0; i<nAtoms; i++) {
     rx[i]=sm.getAtom(i)->rx;
-    ry[i]=sm.getAtom(i)->ry;
+    ry[i]=-sm.getAtom(i)->ry;
   };
 };
 
