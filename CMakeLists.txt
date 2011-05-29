@@ -401,6 +401,13 @@ if(EIGEN2_FOUND)
 endif()
 #cjh
 
+find_package(Cairo)
+if(CAIRO_FOUND)
+  message(STATUS "Cairo found. PNG output will be supported.")
+else(CAIRO_FOUND)
+  message(STATUS "Could NOT find Cairo. PNG output will NOT be supported.")
+endif(CAIRO_FOUND)
+
 add_subdirectory(include)
 add_subdirectory(data)
 add_subdirectory(doc)

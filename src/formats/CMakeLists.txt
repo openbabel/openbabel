@@ -6,19 +6,6 @@ set(formats_common
   pdbformat
  )
 
-set(optional_formatgroups "")
-if(WITH_PNG)
-  set(optional_formatgroups
-    ${optional_formatgroups} formats_cairo
-    )
-  include_directories("C:/Tools/cairo-dev/include/cairo")
-  set(CAIRO_LIBRARY "C:/Tools/cairo-dev/lib/cairo.lib")
-  set(png2format_additional_sources ../depict/cairopainter.cpp)
-  set(formats_cairo
-    png2format
-  )
-endif(WITH_PNG)
-
 set(formats_utility
   copyformat
   MNAformat
@@ -121,6 +108,21 @@ if(MSVC90 OR SHARED_POINTER)
   )
 endif(MSVC90 OR SHARED_POINTER)
 
+set(optional_formatgroups "")
+if(CAIRO_FOUND)
+  # Cairo can generate several formats (e.g. PDF, PNG): if implemented, they
+  # can be added here
+  set(formats_cairo
+    png2format
+  )
+  set(png2format_additional_sources ../depict/cairopainter.cpp)
+  set(optional_formatgroups
+    ${optional_formatgroups} formats_cairo
+    )
+  include_directories(${CAIRO_INCLUDE_DIRS})
+  set(libs ${libs} ${CAIRO_LIBRARIES})
+endif(CAIRO_FOUND)
+
 set(ADD_INCHI_FORMAT FALSE)
 if(WITH_INCHI)
   if(NOT OPENBABEL_USE_SYSTEM_INCHI)
@@ -188,13 +190,12 @@ if(MINIMAL_BUILD)
     ${formats_common}
   )
 else(MINIMAL_BUILD)
-  set(formats
-      ${formats_common}
-      ${formats_utility}
-      ${formats_compchem}
-      ${formats_misc}
-      ${formats_cairo}
-  )
+  set(formats "")
+  foreach(formatgroup formats_common formats_utility formats_compchem formats_misc ${optional_formatgroups})
+    set(formats
+        ${formats} ${${formatgroup}}
+    )
+  endforeach(formatgroup)
 endif(MINIMAL_BUILD)
 
 if(NOT WIN32)
@@ -220,7 +221,7 @@ if(MSVC)
     endforeach(format)
     add_library(${formatgroup} ${PLUGIN_TYPE} ${formatsources}
         "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h")
-    target_link_libraries(${formatgroup} ${libs} ${CAIRO_LIBRARY} ${XDR_LIBRARY} openbabel)
+    target_link_libraries(${formatgroup} ${libs} ${XDR_LIBRARY} openbabel)
     install(TARGETS ${formatgroup}
                   RUNTIME DESTINATION ${BIN_INSTALL_DIR}
                   LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
