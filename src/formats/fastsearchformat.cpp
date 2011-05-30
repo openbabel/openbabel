@@ -416,7 +416,7 @@ virtual const char* Description() //required
           streampos origpos = is->tellg();
           is->seekg(0,ios_base::end);
           long long filesize = is->tellg();
-          if(filesize > 4294967295)
+          if(filesize > 4294967295u)
           {
             obErrorLog.ThrowError(__FUNCTION__, "The datafile must not be larger than 4GB", obError);
             return false;
