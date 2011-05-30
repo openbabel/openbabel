@@ -281,6 +281,13 @@ namespace OpenBabel
     OBBondIterator j;
     OBAtomIterator i;
 
+    
+    // Determine which should be wedge and hash bonds...
+    // Note: we need to do this before we invert the y-coordinate for depiction
+    std::map<OBBond*, enum OBStereo::BondDirection> updown;
+    std::map<OBBond*, OBStereo::Ref> from;
+    TetStereoToWedgeHash(*mol, updown, from);
+
     if(mol->NumAtoms()>0) {
       // scale bond lengths and invert the y coordinate (both SVG and Cairo use top left as the origin)
       double bondLengthSum = 0.0;
@@ -320,11 +327,6 @@ namespace OpenBabel
     d->painter->NewCanvas(width, height);
     
     // draw bonds
-    // determine which should be wedge and hash bonds
-    std::map<OBBond*, enum OBStereo::BondDirection> updown;
-    std::map<OBBond*, OBStereo::Ref> from;
-    TetStereoToWedgeHash(*mol, updown, from);
-
     for (OBBond *bond = mol->BeginBond(j); bond; bond = mol->NextBond(j)) {
       OBAtom *begin = bond->GetBeginAtom();
       OBAtom *end = bond->GetEndAtom();
