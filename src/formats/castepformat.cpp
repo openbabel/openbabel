@@ -77,8 +77,6 @@ namespace OpenBabel {
 
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
-    OBMol &mol = *pmol;
-    const char* title = pConv->GetTitle();
 
     bool coordsAreFractional = false;
     // H = U + PV breakdown is not given, must calculate it
@@ -123,7 +121,7 @@ namespace OpenBabel {
         vector<OBAtom*> toDelete;
         FOR_ATOMS_OF_MOL(a, *pmol)
           toDelete.push_back(&*a);
-        for (int i = 0; i < toDelete.size(); i++)
+        for (size_t i = 0; i < toDelete.size(); i++)
           pmol->DeleteAtom(toDelete.at(i));
 
         // Load new atoms from molecule

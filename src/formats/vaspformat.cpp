@@ -95,9 +95,9 @@ namespace OpenBabel {
     bool cartesian;
     string str, path;
     vector<string> vs;
-    vector<int> numAtoms, atomTypes;
+    vector<unsigned int> numAtoms, atomTypes;
     bool hasEnthalpy=false;
-    float enthalpy_eV, pv_eV;
+    double enthalpy_eV, pv_eV;
 
     // Get path of CONTCAR/POSCAR:
     //    ifs_path.getline(buffer,BUFF_SIZE);
@@ -130,8 +130,8 @@ namespace OpenBabel {
         if (strstr(buffer, "enthalpy is")) {
           hasEnthalpy = true;
           tokenize(vs, buffer);
-          enthalpy_eV = static_cast<float>(atof(vs[4].c_str()));
-          pv_eV = static_cast<float>(atof(vs[8].c_str()));
+          enthalpy_eV = atof(vs[4].c_str());
+          pv_eV = atof(vs[8].c_str());
         }
 
         // Free energy
@@ -291,8 +291,8 @@ namespace OpenBabel {
       enthalpyPD_pv->SetAttribute("Enthalpy PV term (kcal/mol)");
       enthalpyPD_eV->SetAttribute("Enthalpy (eV)");
       enthalpyPD_pv_eV->SetAttribute("Enthalpy PV term (eV)");
-      float en_kcal_per_mole = enthalpy_eV * EV_TO_KCAL_PER_MOL;
-      float pv_kcal_per_mole = pv_eV * EV_TO_KCAL_PER_MOL;
+      double en_kcal_per_mole = enthalpy_eV * EV_TO_KCAL_PER_MOL;
+      double pv_kcal_per_mole = pv_eV * EV_TO_KCAL_PER_MOL;
       snprintf(tag, BUFF_SIZE, "%f", en_kcal_per_mole);
       enthalpyPD->SetValue(tag);
       snprintf(tag, BUFF_SIZE, "%f", pv_kcal_per_mole);

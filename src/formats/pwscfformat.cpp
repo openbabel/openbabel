@@ -78,8 +78,6 @@ namespace OpenBabel {
 
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
-    OBMol &mol = *pmol;
-    const char* title = pConv->GetTitle();
 
     char buffer[BUFF_SIZE], tag[BUFF_SIZE];
     double x,y,z;
@@ -89,7 +87,7 @@ namespace OpenBabel {
     int atomicNum;
     OBUnitCell *cell = new OBUnitCell();
     bool hasEnthalpy=false;
-    float enthalpy, pv;
+    double enthalpy, pv;
 
     pmol->BeginModify();
 
@@ -176,7 +174,7 @@ namespace OpenBabel {
         vector<OBAtom*> toDelete;
         FOR_ATOMS_OF_MOL(a, *pmol)
           toDelete.push_back(&*a);
-        for (int i = 0; i < toDelete.size(); i++)
+        for (size_t i = 0; i < toDelete.size(); i++)
           pmol->DeleteAtom(toDelete.at(i));
 
 
@@ -237,8 +235,8 @@ namespace OpenBabel {
         tokenize(vs, buffer);
 
         hasEnthalpy = true;
-        enthalpy = static_cast<float>(atof(vs.at(3).c_str()) * RYDBERG_TO_KCAL_PER_MOL);
-        pv = static_cast<float>(enthalpy - pmol->GetEnergy());
+        enthalpy = atof(vs.at(3).c_str()) * RYDBERG_TO_KCAL_PER_MOL;
+        pv = enthalpy - pmol->GetEnergy();
       }
     }
 
@@ -255,10 +253,10 @@ namespace OpenBabel {
       enthalpyPD_pv->SetAttribute("Enthalpy PV term (kcal/mol)");
       enthalpyPD_eV->SetAttribute("Enthalpy (eV)");
       enthalpyPD_pv_eV->SetAttribute("Enthalpy PV term (eV)");
-      float en_kcal_per_mole = enthalpy;
-      float pv_kcal_per_mole = pv;
-      float en_eV = enthalpy / EV_TO_KCAL_PER_MOL;
-      float pv_eV = pv / EV_TO_KCAL_PER_MOL;
+      double en_kcal_per_mole = enthalpy;
+      double pv_kcal_per_mole = pv;
+      double en_eV = enthalpy / EV_TO_KCAL_PER_MOL;
+      double pv_eV = pv / EV_TO_KCAL_PER_MOL;
       snprintf(tag, BUFF_SIZE, "%f", en_kcal_per_mole);
       enthalpyPD->SetValue(tag);
       snprintf(tag, BUFF_SIZE, "%f", pv_kcal_per_mole);
