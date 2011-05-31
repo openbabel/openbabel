@@ -77,6 +77,11 @@ namespace OpenBabel
     d->painter = painter;
   }
 
+  OBDepict::~OBDepict()
+  {
+    delete d;
+  }
+
   void OBDepict::SetBondLength(double length) 
   { 
     d->bondLength = length; 

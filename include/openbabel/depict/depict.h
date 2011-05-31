@@ -62,6 +62,8 @@ namespace OpenBabel
        * Constructor.
        */
       OBDepict(OBPainter *painter);
+
+      OBDepict::~OBDepict();
       /**
        * Draw @p mol using the painter previously stored in the constructor.
        *
