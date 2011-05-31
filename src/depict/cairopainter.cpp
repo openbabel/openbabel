@@ -169,6 +169,7 @@ namespace OpenBabel
     int height = cairo_image_surface_get_height(m_surface);
     cairo_surface_t *new_surface = scale_surface (m_surface, width, height, 300, 300);
     cairo_surface_write_to_png_stream(new_surface, writeFunction, &in);
+    cairo_surface_destroy(new_surface);
     for(int i=0; i<in.size(); ++i)
       ofs << in.at(i);
   }

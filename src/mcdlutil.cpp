@@ -5046,9 +5046,9 @@ class PartFragmentDefinition {
 class  TemplateRedraw  {
 public:
   TemplateRedraw();
-//  virtual ~TemplateRedraw() {
-//    clear();
-//  };
+  ~TemplateRedraw() {
+    clear();
+  };
   bool isOverlapped(const std::vector<PartFragmentDefinition *> list, int fragNo, double xSuggested, double ySuggested);
   void arrangeFragments(std::vector<PartFragmentDefinition *>& list, int fragNo, double aspOptimal);
   void redrawFine(TSimpleMolecule& smIn);
