@@ -295,7 +295,7 @@ namespace OpenBabel
     // Note: we need to do this before we invert the y-coordinate for depiction
     std::map<OBBond*, enum OBStereo::BondDirection> updown;
     std::map<OBBond*, OBStereo::Ref> from;
-    TetStereoToWedgeHash(*mol, updown, from);
+    TetStereoToWedgeHash(*d->mol, updown, from);
 
     if(mol->NumAtoms()>0) {
       // scale bond lengths and invert the y coordinate (both SVG and Cairo use top left as the origin)
