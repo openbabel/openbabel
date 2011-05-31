@@ -154,9 +154,11 @@ bool PNG2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   ostream& ofs = *pConv->GetOutStream();
 
+  OBMol workingmol(*pmol); // Copy the molecule
+
   //*** Coordinate generation ***
   //Generate coordinates only if no existing 2D coordinates
-  if(!pmol->Has2D(true))
+  if(!workingmol.Has2D(true))
   {
     OBOp* pOp = OBOp::FindType("gen2D");
     if(!pOp)
@@ -164,16 +166,16 @@ bool PNG2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       obErrorLog.ThrowError("PNG2Format", "gen2D not found", obError, onceOnly);
       return false;
     }
-    if(!pOp->Do(pmol))
+    if(!pOp->Do(&workingmol))
     {
-      obErrorLog.ThrowError("PNG2Format", string(pmol->GetTitle()) + "- Coordinate generation unsuccessful", obError);
+      obErrorLog.ThrowError("PNG2Format", string(workingmol.GetTitle()) + "- Coordinate generation unsuccessful", obError);
       return false;
     }
   }
-  if(!pmol->Has2D() && pmol->NumAtoms()>1)
+  if(!workingmol.Has2D() && workingmol.NumAtoms()>1)
   {
     string mes("Molecule ");
-    mes += pmol->GetTitle();
+    mes += workingmol.GetTitle();
     mes += " needs 2D coordinates to display in PNG2format";
     obErrorLog.ThrowError("PNG2Format", mes, obError);
     return false;
@@ -181,7 +183,7 @@ bool PNG2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   CairoPainter painter;
   OBDepict depictor(&painter);
-  depictor.DrawMolecule(pmol);
+  depictor.DrawMolecule(&workingmol);
   painter.WriteImage(ofs);
 
   return true; //or false to stop converting

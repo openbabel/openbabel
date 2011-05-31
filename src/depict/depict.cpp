@@ -79,6 +79,8 @@ namespace OpenBabel
 
   OBDepict::~OBDepict()
   {
+    delete d->mol;
+    d->mol = NULL;
     delete d;
   }
 
@@ -274,7 +276,9 @@ namespace OpenBabel
     if (!d->painter)
       return false;
 
-    d->mol = mol;
+    if (d->mol != NULL)
+      delete d->mol;
+    d->mol = new OBMol(*mol); // Copy it
     
     OBAtomClassData* pac = NULL;
     if(mol->HasData("Atom Class"))
@@ -300,16 +304,16 @@ namespace OpenBabel
         bondLengthSum += bond->GetLength();
       const double averageBondLength = bondLengthSum / mol->NumBonds();
       const double f = mol->NumBonds() ? d->bondLength / averageBondLength : 1.0;
-      for (atom = mol->BeginAtom(i); atom; atom = mol->NextAtom(i))
+      for (atom = d->mol->BeginAtom(i); atom; atom = d->mol->NextAtom(i))
         atom->SetVector(atom->GetX() * f, - atom->GetY() * f, 0.0);
 
       // find min/max values
       double min_x, max_x;
       double min_y, max_y;
-      atom = mol->BeginAtom(i);
+      atom = d->mol->BeginAtom(i);
       min_x = max_x = atom->GetX();
       min_y = max_y = atom->GetY();
-      for (atom = mol->NextAtom(i); atom; atom = mol->NextAtom(i)) {
+      for (atom = d->mol->NextAtom(i); atom; atom = d->mol->NextAtom(i)) {
         min_x = std::min(min_x, atom->GetX());
         max_x = std::max(max_x, atom->GetX());
         min_y = std::min(min_y, atom->GetY());
@@ -318,7 +322,7 @@ namespace OpenBabel
 
       const double margin = 40.0;
       // translate all atoms so the bottom-left atom is at margin,margin
-      for (atom = mol->BeginAtom(i); atom; atom = mol->NextAtom(i))
+      for (atom = d->mol->BeginAtom(i); atom; atom = d->mol->NextAtom(i))
         atom->SetVector(atom->GetX() - min_x + margin, atom->GetY() - min_y + margin, 0.0);
 
       width  = max_x - min_x + 2*margin;
@@ -332,7 +336,7 @@ namespace OpenBabel
     d->painter->NewCanvas(width, height);
     
     // draw bonds
-    for (OBBond *bond = mol->BeginBond(j); bond; bond = mol->NextBond(j)) {
+    for (OBBond *bond = d->mol->BeginBond(j); bond; bond = d->mol->NextBond(j)) {
       OBAtom *begin = bond->GetBeginAtom();
       OBAtom *end = bond->GetEndAtom();
       if((d->options & internalColor) && bond->HasData("color"))
@@ -366,19 +370,19 @@ namespace OpenBabel
       std::vector<int> indexes = ring->_path;
       vector3 center(VZero);
       for (std::vector<int>::iterator l = indexes.begin(); l != indexes.end(); ++l) {
-        center += mol->GetAtom(*l)->GetVector();        
+        center += d->mol->GetAtom(*l)->GetVector();        
       }
       center /= indexes.size();
 
       for (unsigned int l = 0; l < indexes.size(); ++l) {
-        OBAtom *begin = mol->GetAtom(indexes[l]);
+        OBAtom *begin = d->mol->GetAtom(indexes[l]);
         OBAtom *end;
         if (l+1 < indexes.size())
-          end = mol->GetAtom(indexes[l+1]);
+          end = d->mol->GetAtom(indexes[l+1]);
         else
-          end = mol->GetAtom(indexes[0]);
+          end = d->mol->GetAtom(indexes[0]);
 
-        OBBond *ringBond = mol->GetBond(begin, end);
+        OBBond *ringBond = d->mol->GetBond(begin, end);
         if (drawnBonds.BitIsSet(ringBond->GetId()))
           continue;
 
@@ -394,7 +398,7 @@ namespace OpenBabel
     }
 
     // draw atom labels
-    for (atom = mol->BeginAtom(i); atom; atom = mol->NextAtom(i)) {
+    for (atom = d->mol->BeginAtom(i); atom; atom = d->mol->NextAtom(i)) {
       double x = atom->GetX();
       double y = atom->GetY();
 
