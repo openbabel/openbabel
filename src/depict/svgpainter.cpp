@@ -139,9 +139,9 @@ namespace OpenBabel
   {
     OBFontMetrics metrics;
     metrics.fontSize = m_fontPointSize;
-    metrics.ascent   = m_fontPointSize * 0.6;
-    metrics.descent  = m_fontPointSize * 0.4;
-    metrics.height   = m_fontPointSize;
+    metrics.ascent   = m_fontPointSize;
+    metrics.descent  = m_fontPointSize * -0.23; // Offset from baseline of bottom of text
+    metrics.height   = m_fontPointSize *  1.26; // Distance between successive lines of text
     metrics.width = 0.0;
     for(string::size_type i=0;i<text.size();++i)
       metrics.width += m_fontPointSize * (isalpha(text[i]) ? 0.75 : 0.5);

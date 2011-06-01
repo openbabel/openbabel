@@ -726,7 +726,7 @@ namespace OpenBabel
 
     // compute the vertical starting position
     yOffset = 0.5 * (metrics.ascent /*- metrics.descent*/);
-    yOffsetSubscript = yOffset + metrics.descent;
+    yOffsetSubscript = yOffset - metrics.descent;
     double xInitial = xOffset;
 
     for (int i = 0; i < label.size(); ++i) {
@@ -737,11 +737,11 @@ namespace OpenBabel
             painter->SetFontSize(fontSize);
             painter->DrawText(pos.x() + xOffset, pos.y() + yOffset, str);
             if (alignment == Down) {
-              yOffset += metrics.ascent  + metrics.descent;
-              yOffsetSubscript += metrics.ascent + metrics.descent;
+              yOffset += metrics.height;
+              yOffsetSubscript += metrics.height;
             } else {
-              yOffset -= 2.4 * metrics.ascent - metrics.descent;
-              yOffsetSubscript -= metrics.ascent - metrics.descent;
+              yOffset -= metrics.height;
+              yOffsetSubscript -= metrics.height;
             }
             xOffset = xInitial;
             str.clear();
