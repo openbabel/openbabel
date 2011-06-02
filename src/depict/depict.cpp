@@ -423,13 +423,13 @@ namespace OpenBabel
       int spin = atom->GetSpinMultiplicity();
       if(charge || spin) {
         OBFontMetrics metrics = d->painter->GetFontMetrics("N");
-        double yoffset = d->HasLabel(atom) ? 0.4 * metrics.height : 0.0;
-        switch (GetLabelAlignment(atom)) {
+        double yoffset = d->HasLabel(atom) ? -0.2 * metrics.height : -0.2 * metrics.height;
+        /*switch (GetLabelAlignment(atom)) {
           case Up:
           case Left:
           case Right:
             yoffset = - 1.2 * metrics.height;
-        }
+        }*/
         stringstream ss;
         if(charge) {
           if(abs(charge)!=1)
@@ -442,7 +442,7 @@ namespace OpenBabel
         }
         if(spin || charge<0)
           d->painter->SetFontSize(2 * metrics.fontSize);
-        d->painter->DrawText(x-0.4*metrics.width, y-yoffset, ss.str());
+        d->painter->DrawText(x + 0.4*metrics.width, y+yoffset, ss.str());
         d->painter->SetFontSize(metrics.fontSize);//restore
       }
  
@@ -739,11 +739,11 @@ namespace OpenBabel
             painter->SetFontSize(fontSize);
             painter->DrawText(pos.x() + xOffset, pos.y() + yOffset, str);
             if (alignment == Down) {
-              yOffset += metrics.height;
-              yOffsetSubscript += metrics.height;
+              yOffset += metrics.fontSize;
+              yOffsetSubscript += metrics.fontSize;
             } else {
-              yOffset -= metrics.height;
-              yOffsetSubscript -= metrics.height;
+              yOffset -= metrics.fontSize;
+              yOffsetSubscript -= metrics.fontSize;
             }
             xOffset = xInitial;
             str.clear();

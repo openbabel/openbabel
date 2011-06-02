@@ -579,6 +579,8 @@ but may need modification for other SVG viewers. (It works in Opera.)
       vb[2] = parseFloat(vb[2]) * zoom;
       vb[3] = parseFloat(vb[3]) * zoom;
       svgEl.setAttributeNS(null, "viewBox", vb.join(" "));
+      if (evt.preventDefault)
+        evt.preventDefault(); // Don't scroll the page when zooming
     }
     var startx=0;
     var starty=0;
