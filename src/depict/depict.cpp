@@ -534,17 +534,19 @@ namespace OpenBabel
     vector3 vb = end - begin;
 
     if (HasLabel(beginAtom))
-      begin += 0.26 * vb;
+      begin += 0.33 * vb;
     if (HasLabel(endAtom))
-      end -= 0.26 * vb;
+      end -= 0.33 * vb;
+    
+    vb = end - begin; // Resize the extents of the vb vector
 
     vector3 orthogonalLine = cross(vb, VZ);
     orthogonalLine.normalize();
     orthogonalLine *= 0.5 * bondWidth;
 
-    double lines[7] = { 0.20, 0.35, 0.50, 0.65 };
+    double lines[6] = { 0.20, 0.36, 0.52, 0.68, 0.84, 1.0 };
 
-    for (int k = 0; k < 7; ++k) {
+    for (int k = 0; k < 6; ++k) {
       double w = lines[k];
       painter->DrawLine(begin.x() + vb.x() * w + orthogonalLine.x() * w, 
                         begin.y() + vb.y() * w + orthogonalLine.y() * w, 
