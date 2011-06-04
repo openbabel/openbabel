@@ -51,9 +51,9 @@ namespace OpenBabel
                "Reads and writes V2000 and V3000 versions\n\n"
                "Read Options, e.g. -as\n"
                " s  determine chirality from atom parity flags\n"
-               "       This is valid only for 0D information. Atom\n"
-               "       parity is always ignored on reading for MOL files\n"
-               "       containing 2D or 3D information.\n"
+               "       The default setting is to ignore atom parity and\n"
+               "       work out the chirality based on the bond\n"
+               "       stereochemistry.\n"
                " T  read title only\n"
                " P  read title and properties only\n"
                "       When filtering an sdf file on title or properties\n"
@@ -117,7 +117,7 @@ namespace OpenBabel
       bool  HasProperties;
       string GetTimeDate();
       void GetParity(OBMol& mol, map<OBAtom*, Parity> &parity);
-      void TetStereoFromParity(OBMol& mol, vector<MDLFormat::Parity> &parity);
+      void TetStereoFromParity(OBMol& mol, vector<MDLFormat::Parity> &parity, bool deleteExisting=false);
       int ReadIntField(const char *s);
       unsigned int ReadUIntField(const char *s);
       map<int,int> indexmap; //relates index in file to index in OBMol
@@ -622,6 +622,9 @@ namespace OpenBabel
         mol.SetDimension(2);
       // use 2D coordinates + hash/wedge to determine stereochemistry
       StereoFrom2D(&mol, &updown);
+      if (pConv->IsOption("s", OBConversion::INOPTIONS)) { // Use the parities for tet stereo instead
+        TetStereoFromParity(mol, parities, true); // True means "delete existing TetStereo first"
+      }
     } else { // 0D
       if (!setDimension)
         mol.SetDimension(0);
@@ -1339,19 +1342,33 @@ namespace OpenBabel
       }
   }
 
-  void MDLFormat::TetStereoFromParity(OBMol& mol, vector<MDLFormat::Parity> &parity)
+  void MDLFormat::TetStereoFromParity(OBMol& mol, vector<MDLFormat::Parity> &parity, bool deleteExisting)
   {
+    if (deleteExisting) { // Remove any existing tet stereo
+      std::vector<OBGenericData*> vdata = mol.GetAllData(OBGenericDataType::StereoData);
+      for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data)
+        if (((OBStereoBase*)*data)->GetType() == OBStereo::Tetrahedral)
+          mol.DeleteData(*data);
+    }
+    
     for (unsigned long i=0;i<parity.size();i++) {
       if (parity[i] == NotStereo)
         continue;
 
       OBStereo::Refs refs;
+      unsigned long towards = OBStereo::ImplicitRef;
       FOR_NBORS_OF_ATOM(nbr, mol.GetAtomById(i)) {
-        refs.push_back(nbr->GetId());
+        if (!nbr->IsHydrogen())
+          refs.push_back(nbr->GetId());
+        else
+          towards = nbr->GetId(); // Look towards the H
       }
+
       sort(refs.begin(), refs.end());
-      unsigned long towards = refs.back();
-      refs.pop_back();
+      if (refs.size() == 4) { // No implicit ref or H present
+        towards = refs.back();
+        refs.pop_back();
+      }
 
       OBStereo::Winding winding = OBStereo::Clockwise;
       if (parity[i] == AntiClockwise)
