@@ -30,7 +30,7 @@ namespace OpenBabel
       //! @name CairoPainter specific
       //@{
       void WriteImage(const std::string &filename);
-      void WriteImage(std::ostream& ofs);
+      void WriteImage(std::ostream& ofs, int newWidth=300, int newHeight=300);
       //@}
  
     private:

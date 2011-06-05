@@ -160,14 +160,14 @@ namespace OpenBabel
     return new_surface;
   }
 
-  void CairoPainter::WriteImage(std::ostream& ofs)
+  void CairoPainter::WriteImage(std::ostream& ofs, int newWidth, int newHeight)
   {
     if (!m_cairo || !m_surface)
       return;
     vector<char> in;
     int width = cairo_image_surface_get_width(m_surface);
     int height = cairo_image_surface_get_height(m_surface);
-    cairo_surface_t *new_surface = scale_surface (m_surface, width, height, 300, 300);
+    cairo_surface_t *new_surface = scale_surface (m_surface, width, height, newWidth, newHeight);
     cairo_surface_write_to_png_stream(new_surface, writeFunction, &in);
     cairo_surface_destroy(new_surface);
     for(int i=0; i<in.size(); ++i)

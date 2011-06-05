@@ -16,8 +16,9 @@ GNU General Public License for more details.
 #include <algorithm>
 #include <iterator>
 #include <openbabel/babelconfig.h>
-#include <openbabel/format.h>
 #include <openbabel/obconversion.h>
+#include <openbabel/mol.h>
+
 #include <zlib.h>
 
 using namespace std;
@@ -37,12 +38,23 @@ public:
   virtual const char* Description()
   {
     return
-    "PNG files with embedded data\n"
-    "Extract chemical structure data embedded in PNG image files\n"
+    "PNG 2D depiction\n"
+    "Write a single molecule image file; 2D coordinates are added if not present.\n"
+    "  obabel  mymol.smi  -O image.png\n"
+    "Chemical structure data can be embedded (in a tEXt chunk)\n"
+    "  obabel  mymol.mol  -O image.png -xO molfile\n"
+    "The parameter of the -xO option specifies the format (\"file\"can be added)\n"
+    "Molecules can be embedded in an existing PNG file: \n"
+    "  obabel  existing.png  mymol1.smi  mymol2.mol  -O augmented.png  -xO mol\n\n"
+
+    "Reading from a PNG file will extract any embedded chemical structure data:\n"
+    "  obabel  augmented.png  -O contents.sdf\n"
+
     "Read Options e.g. -ay\n"
     " y <additional chunk ID> Look also in chunks with specified ID\n\n"
 
-    "Write Options e.g. -xO cml\n"
+    "Write Options e.g. -xp cml\n"
+    " p <pixels> image size, default 300\n"
     " O <format ID> Format of embedded text\n"
     " y <additional chunk ID> Write to a chunk with specified ID\n\n";
   };
@@ -108,6 +120,7 @@ private:
     ofs.write(p, 4);
   }
 };
+
   ////////////////////////////////////////////////////
 
 //Make an instance of the format class
@@ -231,10 +244,69 @@ bool PNGFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 bool PNGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
   ostream& ofs = *pConv->GetOutStream();
+  bool hasInputPngFile = false;
 
-  //Copy the saved input, except the IEND chunk, to the output
-  if(!CopyOfInput.empty() && bytesToIEND>0)//check for input PNG not yet written
+  if(CopyOfInput.empty() || bytesToIEND<=0)
   {
+    // if no PNG file has been read in, generate one using PNG2Format
+    OBFormat* ppng2 = OBConversion::FindFormat("png2");
+    if(!ppng2)
+    {
+      obErrorLog.ThrowError("PNG Format","PNG2Format not found. Probably the Cairo library is not loaded.", obError);
+      return false;
+    }
+    if(!pConv->IsOption("O"))
+    {
+      //no embedding requested; just output the image returned from PNG2Format
+      // report as output objects, not "PNG_files"
+      pConv->SetOutFormat("");
+      return ppng2->WriteMolecule(pOb, pConv);
+    }
+    else
+    {
+      // embedding of the molecule in the png file has been requested
+      // get the image in a stringstream
+      stringstream ss;
+      ss.str()="";
+      ostream* oldOutStream = pConv->GetOutStream();
+      pConv->SetOutStream(&ss);
+      ppng2->WriteMolecule(pOb, pConv);
+      pConv->SetOutStream(oldOutStream);
+      
+      // determine the position of the IEND chunk
+      ss.seekg(0);
+      ss.ignore(8); //PNG header
+      while(ss)
+      {
+        char readbytes[9];
+        unsigned int len = Read32(ss);
+        ss.read(readbytes,4);
+        string chunkid(readbytes, readbytes+4);
+        if(chunkid=="IEND")
+        {
+          bytesToIEND = ss.tellg();
+          bytesToIEND -= 8;
+          break;
+        }
+        streampos pos = ss.tellg();
+        //Move to end of chunk
+        ss.seekg(pos);
+        ss.ignore(len+4); //data + CRC
+      }
+
+      ss.seekg(0);
+      // Copy generated image to vector<char> CopyOfInput (to be compatible with orig PNGFormat)
+      CopyOfInput.clear();
+      copy(istreambuf_iterator<char>(ss), istreambuf_iterator<char>(), back_inserter(CopyOfInput));
+    }
+  }
+  else
+    hasInputPngFile = true;
+
+  // embed the molecule
+  if(!CopyOfInput.empty() && bytesToIEND>0)
+  {
+    //copy the generated or saved png file, except the IEND chunk, to the output
     ostreambuf_iterator<char> outiter(pConv->GetOutStream()->rdbuf());
     //In Windows the output stream needs to be in binary mode to avoid extra CRs here
     copy(CopyOfInput.begin(), CopyOfInput.begin()+bytesToIEND, outiter);
@@ -243,10 +315,20 @@ bool PNGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   }
 
   //Convert pOb and write it to a tEXt chunk
-  const char* formatID = pConv->IsOption("O", OBConversion::OUTOPTIONS);
+  const char* otxt = pConv->IsOption("O", OBConversion::OUTOPTIONS);
   OBConversion conv2;
   conv2.CopyOptions(pConv); //So that can use commandline options in this conversion
-  if(!formatID)
+  string formatID;
+  if(otxt)
+  {
+    formatID = otxt;
+    // Format name can have "file" at the end;
+    // e.g. "molfile" is written in PNG chunk, but the format is "mol"
+    string::size_type pos = formatID.find("file");
+    if(pos!=string::npos)
+      formatID.erase(pos);
+  }
+  else
   {
     formatID="inchi";
     obErrorLog.ThrowError("PNG Format","Embedding in InChI format.\n"
@@ -266,7 +348,7 @@ bool PNGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     ss << pid;
   else
     ss  << "tEXt";
-  ss  << formatID  << '\0';
+  ss  << otxt  << '\0';
   bool ret = conv2.Write(pOb, &ss);
   if(ret)
   {
@@ -290,10 +372,11 @@ bool PNGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     copy(CopyOfInput.begin()+origBytesToIEND, CopyOfInput.end(), outiter);
     CopyOfInput.clear();
 
-    // Decrement output index to not count the PNG file
-    pConv->SetOutputIndex(pConv->GetOutputIndex()-1);
+    // If there is an input PNG file, decrement output index to not count it
+    if(hasInputPngFile)
+      pConv->SetOutputIndex(pConv->GetOutputIndex()-1);
     // and report as output objects, not "PNG_files"
-    pConv->SetOutFormat(formatID);
+    pConv->SetOutFormat(formatID.c_str());
   }
 
   return ret;
