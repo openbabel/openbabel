@@ -16,12 +16,6 @@ import tempfile
 import openbabel as ob
 
 try:
-    import cairo
-    import rsvg
-except ImportError: #pragma: no cover
-    cairo = rsvg = None
-
-try:
     import Tkinter as tk
     import Image as PIL
     import ImageTk as piltk
@@ -398,42 +392,32 @@ class Molecule(object):
           usecoords -- don't calculate 2D coordinates, just use
                        the current coordinates (default is False)
 
-        Cairo and Rsvg are used for depiction. Tkinter and Python
-        Imaging Library are required for image display.
+        Tkinter and Python Imaging Library are required for image display.
         """
-        if not cairo:
-            errormessage = ("Cairo or Rsvg not found, but are required for depiction. "
-                            "See installation instructions for more "
-                            "information.")
+        if not "png2" in outformats:
+            errormessage = ("PNG output format not found. You should compile "
+                            "Open Babel with PNG support. See installation "
+                            "instructions for more information.")
             raise ImportError(errormessage)
 
         workingmol = self
 
         if not update: # Call gen2D on a clone
-            workingmol = Molecule(self)
+            workingmol = Molecule(ob.OBMol(self.OBMol))
         if not usecoords:
             _operations['gen2D'].Do(workingmol.OBMol)
 
-        tmpsvgdes, tmpsvg = tempfile.mkstemp()
-        obconv = ob.OBConversion()
-        obconv.SetOutFormat("svg")
-        
-        obconv.SetOptions('r"1"c"1"P"300"', obconv.OUTOPTIONS)
-        with open(tmpsvg, "w") as f:
-            svg = obconv.WriteString(workingmol.OBMol)
-            f.write(svg)
-            
-        h = rsvg.Handle(tmpsvg)
-        s = cairo.ImageSurface(cairo.FORMAT_ARGB32, 300, 300) 
-        ctx = cairo.Context(s)
-        h.render_cairo(ctx)
-        
+        # Need tmpmol to avoid removing hydrogens from self
+        tmpmol = Molecule(ob.OBMol(workingmol.OBMol))
+        tmpmol.removeh()
+
         if filename:
             filedes = None
         else:
             filedes, filename = tempfile.mkstemp()
-        s.write_to_png(filename)
-
+        
+        tmpmol.write("png2", filename=filename, overwrite=True)
+        
         if show:
             if not tk:
                 errormessage = ("Tkinter or Python Imaging "
@@ -453,9 +437,6 @@ class Molecule(object):
         if filedes:
             os.close(filedes)
             os.remove(filename)
-        if tmpsvgdes:
-            os.close(tmpsvgdes)
-            os.remove(tmpsvg)
 
 class Atom(object):
     """Represent a Pybel atom.
