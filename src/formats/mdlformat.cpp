@@ -754,8 +754,9 @@ namespace OpenBabel
       // ... = obsolete
       // mmm = no longer supported (default=999)
       //                         aaabbblllfffcccsssxxxrrrpppiiimmmvvvvvv
-      ofs << setw(3) << mol.NumAtoms() << setw(3) << mol.NumBonds();
-      ofs << "  0  0  0  0  0  0  0  0999 V2000" << endl;
+      snprintf(buff, BUFF_SIZE, "%3d%3d  0  0%3d  0  0  0  0  0999 V2000\n",
+               mol.NumAtoms(), mol.NumBonds(), mol.IsChiral());
+      ofs << buff;
 
       OBAtom *atom;
       vector<OBAtom*>::iterator i;
@@ -838,7 +839,7 @@ namespace OpenBabel
               if(!ad->IsExpanded()) //do nothing with an expanded alias
                 ofs << "A  " << setw(3) << right << atom->GetIdx() << '\n' << ad->GetAlias() << endl;
             }
-            //Atoms with no AliasData, but 0 atomicnum and atomclass==n are given an alias Rn 
+            //Atoms with no AliasData, but 0 atomicnum and atomclass==n are given an alias Rn
             else if(atom->GetAtomicNum()==0)
             {
               OBAtomClassData* pac = static_cast<OBAtomClassData*>(mol.GetData("Atom Class"));
@@ -949,7 +950,7 @@ namespace OpenBabel
         //  ret = ReadCollectionBlock(ifs,mol,pConv);
         else if(vs[3]=="RGROUP")
           ret = ReadRGroupBlock(ifs,mol,pConv);
-        else 
+        else
           ret =ReadUnimplementedBlock(ifs,mol,pConv,vs[3]);
         /*
           else if(vs[3]=="3D")
@@ -1315,7 +1316,7 @@ namespace OpenBabel
           // clockwise, parity is 1 (Parity::Clockwise). Note that Implicit Refs and Hydrogens
           // should be treated considered the maxref if present.
           OBStereo::Refs refs = cfg.refs;
-          
+
           unsigned long maxref = OBStereo::NoRef;
           // Search for an explicit Hydrogen in the cfg refs...
           if (cfg.from != OBStereo::ImplicitRef && mol.GetAtomById(cfg.from)->IsHydrogen())
@@ -1350,7 +1351,7 @@ namespace OpenBabel
         if (((OBStereoBase*)*data)->GetType() == OBStereo::Tetrahedral)
           mol.DeleteData(*data);
     }
-    
+
     for (unsigned long i=0;i<parity.size();i++) {
       if (parity[i] == NotStereo)
         continue;
