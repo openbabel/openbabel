@@ -363,52 +363,23 @@ namespace OpenBabel
 
   void ReportFormat::WriteAngles(ostream &ofs,OBMol &mol)
   {
-    // Alas, we still need to sort these to only list unique entries...
-    vector3 v1, v2;
-    OBAtom *a, *b, *c, *d;
-    OBBond *bond1, *bond2, *bond3;
-    vector<OBBond*>::iterator i, j, k;
+    OBAtom *a, *b, *c;
     char buffer[BUFF_SIZE];
+    double ang;
 
-    for (bond1 = mol.BeginBond(i); bond1; bond1 = mol.NextBond(i))
-      {
-        b = bond1->GetBeginAtom();
-        c = bond1->GetEndAtom();
+    FOR_ANGLES_OF_MOL(angle, mol)
+    {
+      b = mol.GetAtom((*angle)[0] + 1);
+      a = mol.GetAtom((*angle)[1] + 1);
+      c = mol.GetAtom((*angle)[2] + 1);
+      ang = a->GetAngle(b->GetIdx(), c->GetIdx());
 
-        for (bond2 = b->BeginBond(j); bond2; bond2 = b->NextBond(j))
-          {
-            if (bond2->GetEndAtomIdx() != c->GetIdx()
-                && bond2->GetEndAtomIdx() != b->GetIdx())
-              {
-                a = bond2->GetEndAtom();
-
-                v1 = a->GetVector() - b->GetVector();
-                v2 = c->GetVector() - b->GetVector();
-
-                snprintf(buffer, BUFF_SIZE, "%4d %4d %4d %4s %4s %4s %10.3f",
-                        a->GetIdx(),b->GetIdx(),c->GetIdx(),
-                        a->GetType(),b->GetType(),c->GetType(),
-                        vectorAngle(v1, v2));
-                ofs << buffer << "\n";
-
-                for (bond3 = c->BeginBond(k); bond3; bond3 = c->NextBond(k))
-                  if (bond3->GetEndAtomIdx() != b->GetIdx()
-                      && bond3->GetEndAtomIdx() != c->GetIdx())
-                    {
-                      d = bond3->GetEndAtom();
-
-                      v1 = b->GetVector() - c->GetVector();
-                      v2 = d->GetVector() - c->GetVector();
-
-                      snprintf(buffer, BUFF_SIZE, "%4d %4d %4d %4s %4s %4s %10.3f",
-                              b->GetIdx(),c->GetIdx(),d->GetIdx(),
-                              b->GetType(),c->GetType(),d->GetType(),
-                              vectorAngle(v1, v2));
-                      ofs << buffer << "\n";
-                    }
-              }
-          }
-      }
+      snprintf(buffer, BUFF_SIZE, "%4d %4d %4d %4s %4s %4s %10.3f",
+                a->GetIdx(),b->GetIdx(),c->GetIdx(),
+                a->GetType(),b->GetType(),c->GetType(),
+                ang);
+      ofs << buffer << "\n";
+    }
   }
 
   void ReportFormat::WriteChiral(ostream &ofs,OBMol &mol)
