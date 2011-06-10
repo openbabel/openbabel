@@ -17,6 +17,11 @@ if (RUN_SWIG)
   endif (NOT SWIG_FOUND)
 endif (RUN_SWIG)
 
+if (EIGEN2_FOUND)
+  set (eigen2_define "-DHAVE_EIGEN2")
+  set (CFLAGS_TEXT "CFLAGS=-I${EIGEN2_INCLUDE_DIR}")
+endif (EIGEN2_FOUND)
+
 ###################
 # Python
 ###################
@@ -49,11 +54,6 @@ if (DO_PYTHON_BINDINGS)
     include_directories(
         ${PYTHON_INCLUDE_PATH}
     )
-
-    if (EIGEN2_FOUND)
-        set (eigen2_define "-DHAVE_EIGEN2")
-        set (CFLAGS_TEXT "CFLAGS=-I${EIGEN2_INCLUDE_DIR}")
-    endif (EIGEN2_FOUND)
 
     if (RUN_SWIG)
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
@@ -157,7 +157,7 @@ if (DO_JAVA_BINDINGS)
     if (RUN_SWIG)
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp # ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
           COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_SOURCE_DIR}/scripts/java/org/openbabel
-          COMMAND ${SWIG_EXECUTABLE} -java -package org.openbabel -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp -outdir ${openbabel_SOURCE_DIR}/scripts/java/org/openbabel ${openbabel_SOURCE_DIR}/scripts/openbabel-java.i
+          COMMAND ${SWIG_EXECUTABLE} -java -package org.openbabel -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp ${eigen2_define} -outdir ${openbabel_SOURCE_DIR}/scripts/java/org/openbabel ${openbabel_SOURCE_DIR}/scripts/openbabel-java.i
           COMMAND ${CMAKE_COMMAND} -E chdir ${openbabel_SOURCE_DIR}/scripts/java ${JAVA_COMPILE} org/openbabel/*.java
           COMMAND ${CMAKE_COMMAND} -E chdir ${openbabel_SOURCE_DIR}/scripts/java ${JAVA_ARCHIVE} cf openbabel.jar org
           COMMAND ${CMAKE_COMMAND} -E remove_directory ${openbabel_SOURCE_DIR}/scripts/java/org
