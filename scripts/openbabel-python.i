@@ -11,6 +11,9 @@
 #include <openbabel/rand.h>
 #include <openbabel/math/vector3.h>
 #include <openbabel/math/matrix3x3.h>
+#include <openbabel/math/transform3d.h>
+#include <openbabel/math/spacegroup.h>
+
 #include <openbabel/generic.h>
 #include <openbabel/griddata.h>
 
@@ -211,20 +214,20 @@ CAST_GENERICDATA_TO(VirtualBond)
 %include <openbabel/math/vector3.h>
 %warnfilter(503) OpenBabel::matrix3x3; // Not wrapping any of the overloaded operators
 %include <openbabel/math/matrix3x3.h>
-
-%import <openbabel/math/spacegroup.h>
+%include <openbabel/math/transform3d.h>
+%include <openbabel/math/spacegroup.h>
 
 # CloneData should be used instead of the following method
 %ignore OpenBabel::OBBase::SetData;
 %include <openbabel/base.h>
 
 %include <openbabel/generic.h>
-%include <openbabel/griddata.h> // Needs to come after generic.h
+%include <openbabel/griddata.h>
 
-%import <openbabel/chains.h>
-%import <openbabel/typer.h>
+%include <openbabel/chains.h>
+%include <openbabel/typer.h>
 
-// To avoid warning in oberror.h about "Nothing known about std::binary_function"
+// To avoid warning in plugin.h about "Nothing known about std::binary_function"
 namespace std { 
         template <T1, T2, T3>
         class binary_function {}; 
