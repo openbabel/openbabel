@@ -400,23 +400,29 @@ class Molecule(object):
                             "instructions for more information.")
             raise ImportError(errormessage)
 
-        workingmol = self
+        # Need to copy to avoid removing hydrogens from self
+        workingmol = Molecule(ob.OBMol(self.OBMol))
+        workingmol.removeh()
 
-        if not update: # Call gen2D on a clone
-            workingmol = Molecule(ob.OBMol(self.OBMol))
         if not usecoords:
             _operations['gen2D'].Do(workingmol.OBMol)
-
-        # Need tmpmol to avoid removing hydrogens from self
-        tmpmol = Molecule(ob.OBMol(workingmol.OBMol))
-        tmpmol.removeh()
+        if update == True:
+            if workingmol.OBMol.NumAtoms() != self.OBMol.NumAtoms():
+                errormessage = ("It is not possible to update the original molecule "
+                                "with the calculated coordinates, as the original "
+                                "molecule contains explicit hydrogens for which no "
+                                "coordinates have been calculated.")
+                raise RunTimeError(errormessage)
+            else:
+                for i in range(workingmol.OBMol.NumAtoms()):
+                    self.OBMol.GetAtom(i + 1).SetVector(workingmol.OBMol.GetAtom(i + 1).GetVector())
 
         if filename:
             filedes = None
         else:
             filedes, filename = tempfile.mkstemp()
         
-        tmpmol.write("png2", filename=filename, overwrite=True)
+        workingmol.write("png2", filename=filename, overwrite=True)
         
         if show:
             if not tk:
