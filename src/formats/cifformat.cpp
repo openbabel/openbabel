@@ -53,12 +53,15 @@ namespace OpenBabel
       return
         "Crystallographic Information File\n"
         "The CIF file format is the standard interchange format for small-molecule crystal structures\n\n"
-        "Fractional coordinates are converted to cartesian ones using the following convention:\n"
-        " -The x axis is parallel to a\n"
-        " -The y axis is in the (a,b) plane\n"
-        " -The z axis is along c*\n"
-        " Ref: Int. Tables for Crystallography (2006), vol. B, sec 3.3.1.1.1\n"
+        "Fractional coordinates are converted to cartesian ones using the following convention:\n\n"
+
+        "- The x axis is parallel to a\n"
+        "- The y axis is in the (a,b) plane\n"
+        "- The z axis is along c*\n\n"
+
+        "Ref: Int. Tables for Crystallography (2006), vol. B, sec 3.3.1.1.1\n"
         "  (the matrix used is the 2nd form listed)\n\n"
+
         "Read Options e.g. -ab:\n"
         "  v  Verbose CIF conversion\n"
         "  s  Output single bonds only\n"

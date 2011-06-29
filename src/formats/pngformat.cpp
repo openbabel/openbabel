@@ -39,23 +39,35 @@ public:
   {
     return
     "PNG 2D depiction\n"
-    "Write a single molecule image file; 2D coordinates are added if not present.\n"
-    "  obabel  mymol.smi  -O image.png\n"
-    "Chemical structure data can be embedded (in a tEXt chunk)\n"
-    "  obabel  mymol.mol  -O image.png -xO molfile\n"
-    "The parameter of the -xO option specifies the format (\"file\"can be added)\n"
-    "Molecules can be embedded in an existing PNG file: \n"
-    "  obabel  existing.png  mymol1.smi  mymol2.mol  -O augmented.png  -xO mol\n\n"
+    "2D depiction of a single molecule, or add/extract a chemical structure from a .png file\n\n"
 
-    "Reading from a PNG file will extract any embedded chemical structure data:\n"
-    "  obabel  augmented.png  -O contents.sdf\n"
+    "The PNG format has several uses. The most common is to generate a\n"
+    ":file:`.png` file for a single structure (which may contain several\n"
+    "disconnected components). 2D coordinates are generated if not present::\n\n"
+    "  obabel mymol.smi -O image.png\n\n"
+
+    "Chemical structure data can be embedded in the :file:`.png` file\n"
+    "(in a ``tEXt`` chunk)::\n\n"
+    "  obabel mymol.mol -O image.png -xO molfile\n\n"
+
+    "The parameter of the ``-xO`` option specifies the format (\"file\"can be added).\n"
+    "Note that if you intend to embed a 2D or 3D format, you may have to call\n"
+    "``--gen2d`` or ``--gen3d`` to generate the required coordinates if they are\n"
+    "not present in the input.\n\n"
+
+    "Molecules can also be embedded in an existing PNG file::\n\n"
+    "  obabel existing.png mymol1.smi mymol2.mol -O augmented.png -xO mol\n\n"
+
+    "Reading from a PNG file will extract any embedded chemical structure data::\n\n"
+    "  obabel augmented.png -O contents.sdf\n\n"
 
     "Read Options e.g. -ay\n"
     " y <additional chunk ID> Look also in chunks with specified ID\n\n"
 
-    "Write Options e.g. -xp cml\n"
+    "Write Options e.g. -xp 500\n"
     " p <pixels> image size, default 300\n"
     " O <format ID> Format of embedded text\n"
+    "      For example, ``molfile`` or ``smi``.\n"
     " y <additional chunk ID> Write to a chunk with specified ID\n\n";
   };
 

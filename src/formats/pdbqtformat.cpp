@@ -67,8 +67,10 @@ namespace OpenBabel
     {
       return
 
-      "pdbqt  AutoDock PDQBT format\n"
-      "Reads and writes AutoDock PDBQT (Protein Data Bank, Partial Charge (Q), & Atom Type (T)) format; constructs torsion tree by default.\n\n"
+      "AutoDock PDQBT format\n"
+      "Reads and writes AutoDock PDBQT (Protein Data Bank, Partial Charge (Q), & Atom Type (T)) format\n"
+      "Note that the torsion tree is by default. Use the ``r`` write option\n"
+      "to prevent this.\n\n"
 
       "Read Options, e.g. -ab\n"
       "  b  Disable automatic bonding\n"

@@ -37,7 +37,34 @@ public:
   {
     return
     "PNG2 format\n"
-    "2D depiction of a single molecule using Cairo\n"
+    "2D depiction of a single molecule as a .png file\n\n"
+
+    "The PNG2 format is used 'behind the scenes' by the :ref:`PNG format<PNG_2D_depiction>`\n"
+    "if generating image files, and the best way to use it is\n"
+    "actually through the PNG format. While it possible to generate\n"
+    "a :file:`.png` file directly using the PNG2 format as follows...::\n\n"
+    "  obabel -:\"CC(=O)Cl\" -opng2 -O mymol.png\n\n"
+    "...it is much better to generate it using the PNG format\n"
+    "as this allows you to embed a chemical structure in the\n"
+    ":file:`.png` file header which you can later extract::\n\n"
+    "  $ obabel -:\"CC(=O)Cl\" -O mymol.png -xO smi\n"
+    "  $ obabel mymol.png -osmi\n"
+    "  CC(=O)Cl\n\n"
+
+    "The PNG2 format uses the Cairo library to generate the\n"
+    ":file:`.png` files.\n"
+    "If Cairo was not found when Open Babel was compiled, then\n"
+    "this format will be unavailable. However, it will still be possible\n"
+    "to use the PNG format to read :file:`.png` files if they contain\n"
+    "embedded information.\n\n"
+
+    ".. seealso::\n\n"
+
+    "    :ref:`PNG_2D_depiction`\n\n"
+
+    "Write Options e.g. -xp 500\n"
+    " p <pixels> image size, default 300\n\n"
+
     ;
   };
 

@@ -48,12 +48,12 @@ namespace OpenBabel
         "FASTA format\n"
         "A file format used to exchange information between genetic sequence databases\n\n"
         "Read Options e.g. -as\n"
-        "  1             Output single-stranded DNA\n"
-        "  t \"<turns>\" Use the specified number of base pairs per turn (e.g., 10)\n"
-        "  s             Output single bonds only\n"
-        "  b             Disable bonding entirely\n\n"
+        "  1  Output single-stranded DNA\n"
+        "  t <turns>  Use the specified number of base pairs per turn (e.g., 10)\n"
+        "  s  Output single bonds only\n"
+        "  b  Disable bonding entirely\n\n"
         "Write Options e.g. -xn \n"
-        "  n             Omit title and comments\n";
+        "  n  Omit title and comments\n";
     };
 
     virtual const char* SpecificationURL() {
