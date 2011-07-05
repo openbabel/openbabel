@@ -343,6 +343,97 @@ namespace OpenBabel
   MOPACCARTFormat theMOPACCARTFormat;
 
   /////////////////////////////////////////////////////////////////
+  // Here is a to-do list for a more complete MOPAC input reader
+  // - cjh 2011-07-02
+  //
+  // A. Comment lines
+  // 
+  // A comment line begins with * and may be specified anywhere.
+  //
+  // Status: implemented in the geometry block, not in header
+  //
+  //
+  // B. Header
+  //
+  // MOPAC supports line continuation for keywords using the special keywords & and +
+  // if & is present, keywords continue on the next line
+  // & may be specified on lines 1 and 2 only
+  // the total length of the header remains fixed at three lines; the number of lines
+  // available for description is reduced accordingly
+  // If + is present, keywords continue on the next line
+  // AND the total length of the header is extended by one line
+  // Up to two + may be used
+  // 
+  // References
+  // ----------
+  // MOPAC 7.1: 
+  // MOPAC 2009: http://openmopac.net/manual/allkeys.html
+  //
+  // Status: not implemented
+  //
+  //
+  // C. Processing atom name
+  //
+  // 1. MOPAC offers some unique atom names
+  // In MOPAC 7.1:
+  //
+  // XX dummy atom - OB already understands this
+  //
+  // sparkles
+  // +	A 100% ionic alkali metal
+  // ++	A 100% ionic alkaline earth metal
+  // -	A 100% ionic halogen-like atom
+  // --	A 100% ionic group VI-like atom.
+  // (Section 6.12 of MOPAC 7 Manual)
+  //
+  // Cb	(Capped bond) A special type of monovalent atom
+  //    existing purely to satisfy valence
+  // (Section 3.5 of MOPAC 7 Manual)
+  // 
+  // Tv - Translation vector defining 1-D periodicity for polymers
+  //
+  // In MOPAC 2009:
+  // 2. All of the above, plus:
+  // +3 - A +3 sparkle
+  // -3 - A -3 sparkle
+  // Fr - A sparkle with charge  1/2 (NOT Francium!)
+  // At - A sparkle with charge -1/2 (NOT Actinium)
+  // X  - also a dummy atom
+  // D  - Deuterium - OB already understands this
+  // T  - Tritium - OB already understands this
+  // Tv - up to 3 translation vectors can be specified for periodic cells
+  //      in 1D, 2D and 3D
+  //
+  // Isotopes can be specified with isotopic mass
+  // e.g. C13.0034
+  //
+  // 3. optional atom labels can be specified with ()
+  // e.g. "Mg(At center of porphyrin ring)"
+  // label is text in () and can be up to 38 characters long
+  // it CAN include spaces
+  // if it is "+" or "-", this specifies atomic charges in MOPAC 2009
+  // Both mass and label can be specified, e.g. C1(on C5)34.96885
+  //
+  // In MOPAC 7.x only the Z-matrix format is documented to support labels
+  // but in MOPAC 2009 labels are officially supported in all formats
+  //
+  // References
+  // ----------
+  // MOPAC 7.x: http://nova.colombo58.unimi.it/manual/pdf/Mopac7.pdf
+  // MOPAC 2009: http://openmopac.net/manual/Labels.html
+  //
+  // Status: atom labels and isotopes recognized but thrown away
+  //
+  //
+  // D. Mixed coordinate format
+  //
+  // MOPAC2009 supports mixed internal and Cartesian coordinate specification
+  // but the code as it stands will currently fail to process the coordinates
+  // correctly in this forma
+  //
+  // Status: throws error if this format is encountered
+  // 
+  // -cjh 2011-07-02
   bool MOPACCARTFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
 
@@ -356,10 +447,15 @@ namespace OpenBabel
     const char* title= pConv->GetTitle();
 
     char buffer[BUFF_SIZE];
-    string str;
-    double x,y,z;
+    string str, atomLabel, elementSymbol;
+    double x,y,z, isotopeMass;
     OBAtom *atom;
     vector<string> vs;
+
+    // Translation vectors (if present)
+    vector3 translationVectors[3];
+    int numTranslationVectors = 0;
+    //
 
     ifs.getline(buffer,BUFF_SIZE); // keywords
     ifs.getline(buffer,BUFF_SIZE); // filename
@@ -367,23 +463,90 @@ namespace OpenBabel
 
     mol.BeginModify();
 
-    while	(ifs.getline(buffer,BUFF_SIZE))
+    while (ifs.getline(buffer,BUFF_SIZE))
       {
-        tokenize(vs,buffer);
-        if (vs.size() == 0)
-          break;
-        else if (vs.size() < 7)
-          return false;
-        atom = mol.NewAtom();
-        x = atof((char*)vs[1].c_str());
-        y = atof((char*)vs[3].c_str());
-        z = atof((char*)vs[5].c_str());
-        atom->SetVector(x,y,z); //set coordinates
+	isotopeMass = 0;
+	elementSymbol = "";
 
-        //set atomic number
-        atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
+	//First see if this is a comment line - skip comment lines
+	if (buffer[0] == '*') continue;
+
+	//First see if there is a label defined
+	tokenize(vs,buffer,"()");
+	if (vs.size() > 3) //Only one label allowed per line
+	{
+	  //TODO Replace with correct OBError.ThrowError() call
+	  cerr << "Invalid format in geometry specification: There appears to be more than one atom label specified!\n";
+          return false;
+	}
+	else if (1 < vs.size() and vs.size() <= 3) //There is a label
+	{
+	  elementSymbol = vs[0];
+	  atomLabel = vs[1];
+	  strcpy(buffer,vs[2].c_str());
+	}
+	else //no label, reset buffer
+	  strcpy(buffer,vs[0].c_str());
+	    
+	//Now parse the rest of the line
+	//There should be three cases:
+	//1. There are 7 tokens and the first token is a number specifying the isotope mass
+	//2. There are 7 tokens and the first token is a string containing the element symbol
+	//3. There are 6 tokens and the first token is a number specifying the Cartesian x coordinate
+	tokenize(vs,buffer);
+	if (vs.size() == 0)
+          break;
+        else if (vs.size() < 6)
+	{
+	  //TODO Replace with correct OBError.ThrowError() call
+	  cerr << "Invalid format in geometry specification.\n";
+          return false;
+	}
+        else if (vs.size() > 7) //cjh 2011-07-02
+	{
+	  //TODO Replace with correct OBError.ThrowError() call
+	  cerr << "Mixed Cartesian and internal coordinates are currently not supported.\n";
+          return false;
+	}
+	else if (vs.size() == 7)
+	{
+	  if (elementSymbol == "")
+	    elementSymbol = vs[0];
+	  else
+	    isotopeMass = atof((char*)vs[0].c_str());
+
+          x = atof((char*)vs[1].c_str());
+          y = atof((char*)vs[3].c_str());
+          z = atof((char*)vs[5].c_str());
+        }
+	else //vs.size() == 6
+	{
+          x = atof((char*)vs[0].c_str());
+          y = atof((char*)vs[2].c_str());
+          z = atof((char*)vs[4].c_str());
+        }
+
+	if (elementSymbol == "Tv") //MOPAC translation vector
+	{
+          translationVectors[numTranslationVectors++].Set(x, y, z);
+	}
+	else
+	{
+          atom = mol.NewAtom();
+          atom->SetVector(x,y,z); //set coordinates
+          //set atomic number
+          atom->SetAtomicNum(etab.GetAtomicNum(elementSymbol.c_str()));
+	}
       }
 
+    // Attach unit cell translation vectors if found
+    if (numTranslationVectors > 0) {
+        OBUnitCell* uc = new OBUnitCell;
+        uc->SetData(translationVectors[0], translationVectors[1], translationVectors[2]);
+        uc->SetOrigin(fileformatInput);
+        mol.SetData(uc);
+    }
+    
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) &&
