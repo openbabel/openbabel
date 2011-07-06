@@ -2390,6 +2390,8 @@ namespace OpenBabel {
     OBConversion* _pconv;
     OBAtomClassData* _pac;
 
+    OBAtom* _endatom;
+
   public:
     OBMol2Cansmi()
     {
@@ -2434,6 +2436,7 @@ namespace OpenBabel {
                                    vector<unsigned int> &canonical_order,
                                    bool isomeric);
     bool         HasStereoDblBond(OBBond *, OBAtom *atom);
+    void MyFindChildren(OBMol &mol, vector<OBAtom*> &children, OBBitVec &seen, OBAtom *end);
     std::string &GetOutputOrder()
     {
       return _canorder;
@@ -2464,6 +2467,8 @@ namespace OpenBabel {
 
     _pconv = pconv;
     _canonicalOutput = canonical;
+
+    _endatom = NULL;
   }
 
 
@@ -3172,6 +3177,41 @@ namespace OpenBabel {
     return false;
   }
 
+  //! Adaptation of OBMol::FindChildren to allow a vector of OBAtoms to be passed in
+  //  MOVE THIS TO OBMOL FOR 2.4
+  void OBMol2Cansmi::MyFindChildren(OBMol &mol, vector<OBAtom*> &children, OBBitVec &seen, OBAtom *end)
+  {
+    OBBitVec curr,next;
+
+    OBBitVec used(seen);
+    used |= end->GetIdx();
+    curr |= end->GetIdx();
+    children.clear();
+
+    int i;
+    OBAtom *atom,*nbr;
+    vector<OBBond*>::iterator j;
+
+    for (;;)
+      {
+        next.Clear();
+        for (i = curr.NextBit(-1);i != curr.EndBit();i = curr.NextBit(i))
+          {
+            atom = mol.GetAtom(i);
+            for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
+              if (!used[nbr->GetIdx()])
+                {
+                  children.push_back(nbr);
+                  next |= nbr->GetIdx();
+                  used |= nbr->GetIdx();
+                }
+          }
+        if (next.Empty())
+          break;
+        curr = next;
+      }
+  }
+
   /***************************************************************************
    * FUNCTION: BuildCanonTree
    *
@@ -3239,6 +3279,26 @@ namespace OpenBabel {
     }
 
     _uatoms.SetBitOn(atom->GetIdx());     //mark the atom as visited
+
+    if (_endatom && sort_nbrs.size() > 1) {
+      // If you have specified an _endatom, the following section rearranges
+      // sort_nbrs as follows:
+      //   - if a branch does not lead to the end atom, move it to the front
+      //     (i.e. visit it first)
+      //   - otherwise move it to the end
+      
+      vector<OBAtom*> children;
+      MyFindChildren(mol, children, _uatoms, _endatom);
+      
+      vector<OBAtom*> front, end;
+      for (vector<OBAtom *>::iterator it=sort_nbrs.begin(); it!=sort_nbrs.end(); ++it)
+        if (std::find(children.begin(), children.end(), *it) == children.end() && *it != _endatom)
+          front.push_back(*it);
+        else
+          end.push_back(*it);
+      sort_nbrs = front;
+      sort_nbrs.insert(sort_nbrs.end(), end.begin(), end.end());
+    }
 
     // Build the next layer of nodes, in canonical order
     for (ai = sort_nbrs.begin(); ai != sort_nbrs.end(); ++ai) {
@@ -3575,9 +3635,9 @@ namespace OpenBabel {
     OBBond *bond;
     for (int i = 0;i < node->Size();i++) {
       bond = node->GetChildBond(i);
-      if (i+1 < node->Size()) {
+      if (i+1 < node->Size() || node->GetAtom() == _endatom)
         strcat(buffer,"(");
-      }
+
       //if (bond->IsUp() || bond->IsDown()) {
       char cc[2];
       cc[0] = GetCisTransBondSymbol(bond, node);
@@ -3593,7 +3653,8 @@ namespace OpenBabel {
         strcat(buffer,"$");
 
       ToCansmilesString(node->GetChildNode(i),buffer, frag_atoms, symmetry_classes, canonical_order, isomeric);
-      if (i+1 < node->Size()) strcat(buffer,")");
+      if (i+1 < node->Size() || node->GetAtom() == _endatom)
+        strcat(buffer,")");
     }
   }
 
@@ -3685,6 +3746,12 @@ namespace OpenBabel {
     //Pointer to Atom Class data set if -xa option and the molecule has any; NULL otherwise.
     if(_pconv->IsOption("a"))
       _pac = static_cast<OBAtomClassData*>(mol.GetData("Atom Class"));
+
+    // Remember the desired endatom, if specified
+    const char* pp = _pconv->IsOption("l");
+    int atom_idx  = pp ? atoi(pp) : -1;
+    if (atom_idx >= 1 && atom_idx <= mol.NumAtoms())
+      _endatom = mol.GetAtom(atom_idx);
 
     // First, create a canonical ordering vector for the atoms.  Canonical
     // labels are zero indexed, corresponding to "atom->GetIdx()-1".
@@ -3914,6 +3981,7 @@ namespace OpenBabel {
       OBPairData *canData = new OBPairData;
       canData->SetAttribute("SMILES Atom Order");
       canData->SetValue(m2s.GetOutputOrder());
+      // cout << "SMILES_atom_order "<<m2s.GetOutputOrder() << "\n";
       canData->SetOrigin(OpenBabel::local);
       mol.SetData(canData);
     }
