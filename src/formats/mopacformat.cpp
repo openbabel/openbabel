@@ -479,7 +479,7 @@ namespace OpenBabel
 	  cerr << "Invalid format in geometry specification: There appears to be more than one atom label specified!\n";
           return false;
 	}
-	else if (1 < vs.size() and vs.size() <= 3) //There is a label
+	else if (1 < vs.size() && vs.size() <= 3) //There is a label
 	{
 	  elementSymbol = vs[0];
 	  atomLabel = vs[1];
