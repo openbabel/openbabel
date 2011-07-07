@@ -3752,6 +3752,12 @@ namespace OpenBabel {
     int atom_idx  = pp ? atoi(pp) : -1;
     if (atom_idx >= 1 && atom_idx <= mol.NumAtoms())
       _endatom = mol.GetAtom(atom_idx);
+    // Was a start atom specified?
+    int startatom_idx = 0;
+    pp = _pconv->IsOption("f");
+    atom_idx  = pp ? atoi(pp) : -1;
+    if (atom_idx >= 1 && atom_idx <= mol.NumAtoms())
+      startatom_idx = atom_idx;
 
     // First, create a canonical ordering vector for the atoms.  Canonical
     // labels are zero indexed, corresponding to "atom->GetIdx()-1".
@@ -3779,15 +3785,23 @@ namespace OpenBabel {
       OBAtom *root_atom;
       int lowest_canorder = 999999;
       root_atom = NULL;
-      for (atom = mol.BeginAtom(ai); atom; atom = mol.NextAtom(ai)) {
-        int idx = atom->GetIdx();
-        if (!atom->IsHydrogen()       // don't start with a hydrogen
-            && !_uatoms[idx]          // skip atoms already used (for fragments)
-            && frag_atoms.BitIsOn(idx)// skip atoms not in this fragment
-            //&& !atom->IsChiral()    // don't use chiral atoms as root node
-            && canonical_order[idx-1] < lowest_canorder) {
-          root_atom = atom;
-          lowest_canorder = canonical_order[idx-1];
+
+      // If we specified a startatom_idx & it's in this fragment, use it to start the fragment
+      if (startatom_idx)
+        if (!_uatoms[startatom_idx] && frag_atoms.BitIsOn(startatom_idx))
+          root_atom = mol.GetAtom(startatom_idx);
+
+      if (root_atom == NULL) {
+        for (atom = mol.BeginAtom(ai); atom; atom = mol.NextAtom(ai)) {
+          int idx = atom->GetIdx();
+          if (!atom->IsHydrogen()       // don't start with a hydrogen
+              && !_uatoms[idx]          // skip atoms already used (for fragments)
+              && frag_atoms.BitIsOn(idx)// skip atoms not in this fragment
+              //&& !atom->IsChiral()    // don't use chiral atoms as root node
+              && canonical_order[idx-1] < lowest_canorder) {
+            root_atom = atom;
+            lowest_canorder = canonical_order[idx-1];
+          }
         }
       }
 
