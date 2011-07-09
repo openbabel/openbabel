@@ -106,9 +106,21 @@ namespace OpenBabel {
       return
         "SMILES format\n"
         "A linear text format which can describe the connectivity and chirality of a molecule\n"
-        "OpenBabel implements the `OpenSMILES specification <http://opensmiles.org>`_.\n\n"
+        "Open Babel implements the `OpenSMILES specification <http://opensmiles.org>`_.\n\n"
 
         "It also implements an extension to this specification for radicals.\n\n"
+
+        "Note that the ``l <atomno>`` option, used to specify a \"last\" atom, is\n"
+        "intended for the generation of SMILES strings to which additional atoms\n"
+        "will be concatenated. If the atom specified has an explicit H within a bracket\n"
+        "(e.g. ``[nH]`` or ``[C@@H]``) the output will have the H removed along with any\n"
+        "associated stereo symbols.\n\n"
+
+        ".. seealso::\n\n"
+
+        "  The :ref:`Canonical_SMILES_format` produces a canonical representation\n"
+        "  of the molecule in SMILES format. This is the same as the ``c`` option\n"
+        "  below but may be more convenient to use.\n\n"
 
         "Write Options e.g. -xt\n"
         "  a  Output atomclass like [C:2], if available\n"
@@ -120,7 +132,11 @@ namespace OpenBabel {
         "  t  Molecule name only\n"
         "  x  append X/Y coordinates in canonical-SMILES order\n"
         "  C  'anti-canonical' random order (mostly for testing)\n"
-        "\n";
+        "  f  <atomno> Specify the first atom\n"
+        "     This atom will be used to begin the SMILES string.\n"
+        "  l  <atomno> Specify the last atom\n"
+        "     The output will be rearranged so that any additional\n"
+        "     SMILES added to the end will be attached to this atom.\n\n";
     }
 
 
@@ -151,11 +167,16 @@ namespace OpenBabel {
     virtual const char* Description() {
       return
         "Canonical SMILES format\n"
-	"A canonical form of the SMILES linear text format\n"
+        "A canonical form of the SMILES linear text format\n"
         "The SMILES format is a linear text format which can describe the\n"
        	"connectivity "
         "and chirality of a molecule. Canonical SMILES gives a single\n"
        	"'canonical' form for any particular molecule.\n\n"
+
+        ".. seealso::\n\n"
+
+        "  The \"regular\" :ref:`SMILES_format` gives faster\n"
+        "  output, since no canonical numbering is performed.\n\n"
 
         "Write Options e.g. -xt\n"
         "  a  Output atomclass like [C:2], if available\n"
@@ -163,10 +184,13 @@ namespace OpenBabel {
         "  i  Do not include isotopic or chiral markings\n"
         "  n  No molecule name\n"
         "  r  Radicals lower case eg ethyl is Cc\n"
-        "  t  Molecule name only\n\n"
-
-        "See also, the \"regular\" SMILES format, which results in faster\n"
-        "output, since no canonical numbering is performed.\n\n";
+        "  t  Molecule name only\n"
+        "  f  <atomno> Specify the first atom\n"
+        "     This atom will be used to begin the SMILES string.\n"
+        "  l  <atomno> Specify the last atom\n"
+        "     The output will be rearranged so that any additional\n"
+        "     SMILES added to the end will be attached to this atom.\n"
+        "     See the :ref:`SMILES_format` for more information.\n\n";
     };
 
   };
@@ -2961,6 +2985,8 @@ namespace OpenBabel {
             hcount--;
         }
       }
+      if (atom == _endatom && hcount>0) // Leave a free valence for attachment
+        hcount--;
 
       if (hcount != 0) {
         strcat(bracketBuffer,"H");
@@ -3280,12 +3306,14 @@ namespace OpenBabel {
 
     _uatoms.SetBitOn(atom->GetIdx());     //mark the atom as visited
 
-    if (_endatom && sort_nbrs.size() > 1) {
+    if (_endatom && !_uatoms.BitIsSet(_endatom->GetIdx()) && sort_nbrs.size() > 1) {
       // If you have specified an _endatom, the following section rearranges
       // sort_nbrs as follows:
       //   - if a branch does not lead to the end atom, move it to the front
       //     (i.e. visit it first)
       //   - otherwise move it to the end
+      // This section is skipped if sort_nbrs has only a single member, or if
+      // we have already visited _endatom.
       
       vector<OBAtom*> children;
       MyFindChildren(mol, children, _uatoms, _endatom);
@@ -3530,8 +3558,12 @@ namespace OpenBabel {
     // in the order in which they'll appear in the canonical SMILES string.  This is more
     // complex than you'd guess because of implicit/explicit H and ring-closure digits.
 
+    // If _endatom is specified, don't include chiral symbol on _endatom.
+    // Otherwise, we end up with C[C@@H](Br)(Cl), where the C has 4 neighbours already
+    // and we cannot concatenate another SMILES string without creating a 5-valent C.
+
     bool is_chiral = AtomIsChiral(atom);
-    if (is_chiral) {
+    if (is_chiral && atom!=_endatom) {
 
       // If there's a parent node, it's the first atom in the ordered neighbor-vector
       // used for chirality.
