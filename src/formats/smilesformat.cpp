@@ -2415,6 +2415,7 @@ namespace OpenBabel {
     OBAtomClassData* _pac;
 
     OBAtom* _endatom;
+    OBAtom* _startatom;
 
   public:
     OBMol2Cansmi()
@@ -2493,6 +2494,7 @@ namespace OpenBabel {
     _canonicalOutput = canonical;
 
     _endatom = NULL;
+    _startatom = NULL;
   }
 
 
@@ -2985,7 +2987,7 @@ namespace OpenBabel {
             hcount--;
         }
       }
-      if (atom == _endatom && hcount>0) // Leave a free valence for attachment
+      if ((atom == _endatom || atom == _startatom) && hcount>0) // Leave a free valence for attachment
         hcount--;
 
       if (hcount != 0) {
@@ -3558,12 +3560,12 @@ namespace OpenBabel {
     // in the order in which they'll appear in the canonical SMILES string.  This is more
     // complex than you'd guess because of implicit/explicit H and ring-closure digits.
 
-    // If _endatom is specified, don't include chiral symbol on _endatom.
+    // Don't include chiral symbol on _endatom or _startatom.
     // Otherwise, we end up with C[C@@H](Br)(Cl), where the C has 4 neighbours already
     // and we cannot concatenate another SMILES string without creating a 5-valent C.
 
     bool is_chiral = AtomIsChiral(atom);
-    if (is_chiral && atom!=_endatom) {
+    if (is_chiral && atom!=_endatom && atom!=_startatom) {
 
       // If there's a parent node, it's the first atom in the ordered neighbor-vector
       // used for chirality.
@@ -3785,11 +3787,10 @@ namespace OpenBabel {
     if (atom_idx >= 1 && atom_idx <= mol.NumAtoms())
       _endatom = mol.GetAtom(atom_idx);
     // Was a start atom specified?
-    int startatom_idx = 0;
     pp = _pconv->IsOption("f");
     atom_idx  = pp ? atoi(pp) : -1;
     if (atom_idx >= 1 && atom_idx <= mol.NumAtoms())
-      startatom_idx = atom_idx;
+      _startatom = mol.GetAtom(atom_idx);
 
     // First, create a canonical ordering vector for the atoms.  Canonical
     // labels are zero indexed, corresponding to "atom->GetIdx()-1".
@@ -3819,9 +3820,9 @@ namespace OpenBabel {
       root_atom = NULL;
 
       // If we specified a startatom_idx & it's in this fragment, use it to start the fragment
-      if (startatom_idx)
-        if (!_uatoms[startatom_idx] && frag_atoms.BitIsOn(startatom_idx))
-          root_atom = mol.GetAtom(startatom_idx);
+      if (_startatom)
+        if (!_uatoms[_startatom->GetIdx()] && frag_atoms.BitIsOn(_startatom->GetIdx()))
+          root_atom = _startatom;
 
       if (root_atom == NULL) {
         for (atom = mol.BeginAtom(ai); atom; atom = mol.NextAtom(ai)) {
