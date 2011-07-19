@@ -301,6 +301,7 @@ namespace OpenBabel
     if(positem!=mvItem.end())
       {
         mvLatticePar.resize(6);
+        for(unsigned int i=0;i<6;i++) mvLatticePar[i]=float(0);
         mvLatticePar[0]=CIFNumeric2Float(positem->second);
         positem=mvItem.find("_cell_length_b");
         if(positem!=mvItem.end())
@@ -320,9 +321,50 @@ namespace OpenBabel
         if(verbose) cout<<"Found Lattice parameters:" <<mvLatticePar[0]<<" , "<<mvLatticePar[1]<<" , "<<mvLatticePar[2]
                         <<" , "<<mvLatticePar[3]<<" , "<<mvLatticePar[4]<<" , "<<mvLatticePar[5]<<endl;
         mvLatticePar[3] = static_cast<float> (mvLatticePar[3] * DEG_TO_RAD);// pi/180
-		mvLatticePar[4] = static_cast<float> (mvLatticePar[4] * DEG_TO_RAD);
-		mvLatticePar[5] = static_cast<float> (mvLatticePar[5] * DEG_TO_RAD);
+        mvLatticePar[4] = static_cast<float> (mvLatticePar[4] * DEG_TO_RAD);
+        mvLatticePar[5] = static_cast<float> (mvLatticePar[5] * DEG_TO_RAD);
+        // Handle missing values
+        if(mvLatticePar[3]<1e-6)
+        {
+            stringstream ss;
+            ss << "CIF WARNING: missing alpha value, defaulting to 90 degrees";
+            obErrorLog.ThrowError(__FUNCTION__, ss.str(), obWarning);
+            mvLatticePar[3]=90*DEG_TO_RAD;
+        }
+        if(mvLatticePar[4]<1e-6)
+        {
+            stringstream ss;
+            ss << "CIF WARNING: missing beta value, defaulting to 90 degrees";
+            obErrorLog.ThrowError(__FUNCTION__, ss.str(), obWarning);
+            mvLatticePar[4]=90*DEG_TO_RAD;
+        }
+        if(mvLatticePar[5]<1e-6)
+        {
+            stringstream ss;
+            ss << "CIF WARNING: missing gamma value, defaulting to 90 degrees";
+            obErrorLog.ThrowError(__FUNCTION__, ss.str(), obWarning);
+            mvLatticePar[5]=90*DEG_TO_RAD;
+        }
+        if(mvLatticePar[1]<1e-6)
+        {
+            stringstream ss;
+            ss << "CIF ERROR: missing b lattice parameter - cannot interpret structure !";
+            obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
+        }
+        if(mvLatticePar[2]<1e-6)
+        {
+            stringstream ss;
+            ss << "CIF ERROR: missing c lattice parameter - cannot interpret structure !";
+            obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
+        }
+
         this->CalcMatrices();
+      }
+      else
+      {
+         stringstream ss;
+         ss << "CIF ERROR: missing a,b or c value - cannot interpret structure !";
+         obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
       }
   }
 
@@ -433,9 +475,15 @@ namespace OpenBabel
         delete sg;
       }
     }
-    if (mSpaceGroup != NULL)
-      // set the space group name to Hall symbol
-      mSpacegroupSymbolHall = mSpaceGroup->GetHallName();
+    if(mSpaceGroup == NULL)
+    {
+        stringstream ss;
+        ss << "CIF ERROR: missing spacegroup description: defaulting to P1...";
+        obErrorLog.ThrowError(__FUNCTION__, ss.str(), obWarning);
+        mSpaceGroup = SpaceGroup::GetSpaceGroup(1);
+    }
+    // set the space group name to Hall symbol
+    mSpacegroupSymbolHall = mSpaceGroup->GetHallName();
   }
 
   void CIFData::ExtractName(const bool verbose)
