@@ -1153,6 +1153,7 @@ namespace OpenBabel
     for(map<string,CIFData>::iterator pos=cif.mvData.begin();pos!=cif.mvData.end();++pos)
       if(pos->second.mvAtom.size()>0)
         {
+          pmol->BeginModify();
           if(pos->second.mvLatticePar.size()==6)
             {// We have one unit cell
               string spg=pos->second.mSpacegroupSymbolHall;
