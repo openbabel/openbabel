@@ -560,13 +560,13 @@ namespace OpenBabel
     vector3 begin = beginAtom->GetVector();
     vector3 end = endAtom->GetVector();
     vector3 vb = end - begin;
+    
+    vb.normalize();
 
     if (HasLabel(beginAtom))
-      begin += 0.33 * vb;
+      begin += 13. * vb; // Length is normally 40
     if (HasLabel(endAtom))
-      end -= 0.33 * vb;
-
-    vb.normalize();
+      end -= 13. * vb;
 
     if (order == 1) {
       painter->DrawLine(begin.x(), begin.y(), end.x(), end.y());
