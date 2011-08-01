@@ -54,7 +54,7 @@ typedef adjustedlist neigbourlist[NATOMSMAX];
 
 #define PI 3.141592653589793238462
 #define blDenominator 4.0   //Controls bond legth in bondEnlarge
-#define nRotBondsMax 20     //Determines no. rotating bonds in correctOverlapped
+#define nRotBondsMax 10     //Determines no. rotating bonds that are systematically searched in correctOverlapped
 
     //Hydrogen valencies. Zero dummy element is the first
 	const int hVal[NELEMMCDL] = {
@@ -363,6 +363,7 @@ class  TSingleAtom  {
     double    ry;   /*Internal Y-coordinate representation*/
     short int rl;   /*radical label*/
     short int nb;   /*Number of neightboring atoms*/
+    int gtd;        /*Depth of atom in molecule according to GTD*/
     short int currvalence;
   /*Valence, excluding non-defined hydrogen
                              atoms. Equal sum of valences for each  bond type.*/
@@ -380,7 +381,7 @@ class  TSingleAtom  {
 	int fragIndex;
 
     TSingleAtom() {
-      na=6; nv=hVal[na];
+      na=6; nv=hVal[na]; gtd=0;
       nc=0; iz=0; nb=0; rl=0; currvalence=0; special=0; astereo=0; enumerator=0; fragIndex=0;
     };
     TSingleAtom * clone();
@@ -452,6 +453,7 @@ TSingleAtom * TSingleAtom::clone() {
   result->rl=this->rl;
   result->rx=this->rx;
   result->ry=this->ry;
+  result->gtd=this->gtd;
   result->special=this->special;
   result->enumerator=this->enumerator;
   result->fragIndex=this->fragIndex;
@@ -794,6 +796,7 @@ class TSimpleMolecule {
       const std::vector<int> b, const neigbourlist bk, std::vector<int>& wSphere);
     bool threeBondResolve(int an, int bondExcluded, double& xv, double& yv, neigbourlist* bkExt);
     bool unitVectorCoincident(int aN, double xV, double yV);
+    int setupRotorSearch(const vector<int> &rotBondList, vector<int>& inner_bonds, vector<int>& remainder);
 };
 
 int TSimpleMolecule::getNH(int atomNo) {
@@ -1549,8 +1552,14 @@ void TSimpleMolecule::readOBMol(OBMol * pmol) {
   bool perceive_stereo = true;
   if (pmol->GetMod() == 1)
     perceive_stereo = false;
-
   OBStereoFacade facade(pmol);
+
+  // When laying out, we may need to iterate over the most central bonds
+  // first - that's why we remember the GTD: the GTD is the distance from
+  // atom i to every other atom j. Atoms on the "inside" of the molecule
+  // will have a lower GTD value than atoms on the "outside". 
+  vector<int> vGTD;
+  pmol->GetGTDVector(vGTD);
 
   clear();
 
@@ -1565,6 +1574,7 @@ void TSimpleMolecule::readOBMol(OBMol * pmol) {
 	sa->rl=atom->GetSpinMultiplicity();
 	sa->rx=atom->GetX();
 	sa->ry=atom->GetY();
+  sa->gtd = vGTD.at(i-1);
 	fAtom.push_back(sa);
   };
   for (i=0; i<nb; i++) {
@@ -3340,6 +3350,9 @@ void TSimpleMolecule::makeEquivalentList(std::vector<int>& equivalenceList, bool
   delete(em);
 };
 
+// Iterates through all of the possibilities 1000..., 0100..., 1100..., 0010...
+// (in the case where maxValues is [1111...]). Returns false when all possibilities
+// have been generated (true otherwise).
 bool incrementValues(std::vector<int>& currentValues, const std::vector<int> maxValues) {
   int i,l;
   bool result=false;
@@ -3350,11 +3363,13 @@ bool incrementValues(std::vector<int>& currentValues, const std::vector<int> max
     if (l <= maxValues[i]) {
       currentValues[i]=l;
       result=true;
-      return result;
-    } else currentValues[i]=0;
-   };
+      break;
+    }
+    else
+      currentValues[i]=0;
+  }
   return result;
-};
+}
 
 
 
@@ -3362,6 +3377,7 @@ int TSimpleMolecule::correctOverlapped() {
   double r;
   TSimpleMolecule * smCopy=new TSimpleMolecule();
   TSimpleMolecule * bestStore=NULL;
+  TSimpleMolecule * tmpStore = new TSimpleMolecule();
   int i, j, n, k, kk;
   bool test;
   int result;
@@ -3369,7 +3385,6 @@ int TSimpleMolecule::correctOverlapped() {
   std::vector<int> maxValues(nBonds());
   std::vector<int> rotBondList(nBonds());
   int at1,at2;
-  int nn;
 
 
   r=averageBondLength()/blDenominator;
@@ -3387,63 +3402,81 @@ int TSimpleMolecule::correctOverlapped() {
         k=kk;
         smCopy->moleculeCopy(*this);
       } else moleculeCopy(*smCopy);
-    };
+    }
     if (k == 0) test=false;
-  };
+  }
   result=k;
-  if (result > 0)  {  //multiply bonds rotation...
+  if (result > 0)  {  //multiple bonds rotation...
     smCopy->moleculeCopy(*this);
 
     for (i=0; i<rotBondList.size(); i++) rotBondList[i]=0;
     for (i=0; i<nBonds(); i++) if (getBond(i)->db == 0) {
       at1=getBond(i)->at[0];
       at2=getBond(i)->at[1];
-	  if ((getAtom(at1)->nb >= 2) && (getAtom(at2)->nb >=2)) {
-       //checking if greter 1
-	    test=false;
-		if (getAtom(at1)->nb == 3) {
+	    if ((getAtom(at1)->nb >= 2) && (getAtom(at2)->nb >=2)) {
+        //checking if greter 1
+	      test=false;
+		    if (getAtom(at1)->nb == 3) {
+              test=true;
+	          for (j=0; j<getAtom(at1)->nb; j++) {
+	            k=getAtom(at1)->ac[j];
+	            if ((k != at2) && (getAtom(k)->nb > 1)) test=false;
+	          }
+		    }
+	      if ((! test) && (getAtom(at2)->nb == 3)) {
           test=true;
-	      for (j=0; j<getAtom(at1)->nb; j++) {
-	        k=getAtom(at1)->ac[j];
-	        if ((k != at2) && (getAtom(k)->nb > 1)) test=false;
-	      };
-		};
-	    if ((! test) && (getAtom(at2)->nb == 3)) {
-          test=true;
-		  for (j=0; j<getAtom(at2)->nb; j++) {
-	        k=getAtom(at2)->ac[j];
-		    if ((k != at1) && (getAtom(k)->nb > 1)) test=false;
-		  };
-		};
-
+		      for (j=0; j<getAtom(at2)->nb; j++) {
+	            k=getAtom(at2)->ac[j];
+		        if ((k != at1) && (getAtom(k)->nb > 1)) test=false;
+		      }
+		    }
         if (! test) rotBondList[i]=1;
-	  };
-	};
+	    }
+	  }
 
-    nn=0;
-    for (i=0; i<rotBondList.size(); i++) if (rotBondList[i] == 1) nn++;
-    if ((nn <= nRotBondsMax) && (nn>0)) {  //All possible combinations of rotations...
-      currentValues.resize(nn);
-      maxValues.resize(nn);
-      for (i=0; i<nn; i++) {
+    vector<int> inner_bonds;
+    vector<int> remainder;
+    int n_rotors = setupRotorSearch(rotBondList, inner_bonds, remainder);
+    int kk_flip;
+    
+    if (n_rotors > 0) {  // All possible combinations of rotations for the inner_bonds...
+      int m_rotors = n_rotors <= nRotBondsMax ? n_rotors : nRotBondsMax;
+      currentValues.resize(m_rotors);
+      maxValues.resize(m_rotors);
+      for (i=0; i<m_rotors; i++) {
         currentValues[i]=0;
         maxValues[i]=1;
-      };
+      }
       bestStore= new TSimpleMolecule();
       bestStore->moleculeCopy(*smCopy);
       test=true;
+      k = result;
       while (test && (k>0)) {
         moleculeCopy(*smCopy);
         n=0;
-        for (i=0; i<rotBondList.size(); i++) if (rotBondList[i] != 0) {
+        for (i=0; i<inner_bonds.size(); i++) if (inner_bonds[i] != 0) {
           n++;
           if (currentValues[n-1] == 1) flipSmall(i);
-        };
-        kk=hasOverlapped(r,false);
+        }
+        kk = hasOverlapped(r, false);
         if (kk < k) {
-          k=kk;
+          k = kk;
           bestStore->moleculeCopy(*this);
-        };
+        }
+        // Now greedily try the remainder of the bonds
+        for (i=0; i<remainder.size(); i++) {
+          tmpStore->moleculeCopy(*this);
+          flipSmall(remainder[i]);
+          kk_flip = hasOverlapped(r, false);
+          if (kk < kk_flip) // Revert to unflipped
+            moleculeCopy(*tmpStore);
+          else
+            kk = kk_flip;
+          if (kk < k) {
+            k = kk;
+            bestStore->moleculeCopy(*this);
+          }
+        }
         test=incrementValues(currentValues,maxValues);
       };// (k=0) or (not test);
       moleculeCopy(*bestStore);
@@ -3480,9 +3513,50 @@ int TSimpleMolecule::correctOverlapped() {
   //freeing resources
   if (smCopy != NULL) delete(smCopy);
   if (bestStore != NULL) delete(bestStore);
+  if (tmpStore != NULL) delete(tmpStore);
 
   return result;
 };
+
+// Comparison function for sort in setupRotorSearch
+bool CompareRotor(const pair<int, int> &a, const pair<int, int> &b)
+{
+  return(a.second < b.second);   //inside->out
+}
+
+int TSimpleMolecule::setupRotorSearch(const vector<int> &rotBondList, vector<int>& inner_bonds, vector<int>& remainder)
+{
+  vector<pair<int,int> > vtmp; // pair of (bond_id, gtd_score)
+  int at1, at2;
+  int n_rotors = 0;
+
+  for (int i=0; i<rotBondList.size(); i++)
+    if (rotBondList[i] != 0) {
+      n_rotors++;
+      at1 = getBond(i)->at[0];
+      at2 = getBond(i)->at[1];
+      int score = getAtom(at1)->gtd + getAtom(at2)->gtd;
+      vtmp.push_back(pair<int,int> (i, score));
+    }
+  // sort the rotatable bonds by GTD score
+  sort(vtmp.begin(), vtmp.end(), CompareRotor);
+
+  // inner_bonds will be identical to rotBondList except that
+  // only the inner ten rotatable bonds will have values of 1
+  inner_bonds.resize(rotBondList.size(), 0);
+  for (int j=0; j<nRotBondsMax && j<vtmp.size(); ++j) {
+    inner_bonds[vtmp[j].first] = 1;
+  }
+
+  // remainder will store all of the other rotatable bonds
+  if (vtmp.size() > nRotBondsMax) {
+    for (int j=nRotBondsMax; j<vtmp.size(); ++j) {
+      remainder.push_back(vtmp[j].first);
+    }
+  }
+
+  return n_rotors;
+}
 
 //********************************************************************************
 //                 Determine Bond orders from attached hydrogens
