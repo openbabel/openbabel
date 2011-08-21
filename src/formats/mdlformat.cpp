@@ -388,7 +388,7 @@ namespace OpenBabel
         // valence
         if (line.size() >= 50) {
           int valence = ReadIntField(line.substr(48, 3).c_str());
-          if(valence==15) //Other values ignored
+          if(valence!=0) // Now no H with any value
             patom->ForceNoH();
         }
 
@@ -776,11 +776,16 @@ namespace OpenBabel
         if (parity.find(atom) != parity.end())
           stereo = parity[atom];
 
+        int valence = 0; //Only non-zero when RAD value would be >=4 (outside spec)
+        //or an unbonded metal
+        if(atom->GetSpinMultiplicity()>=4 || atom->IsMetal() && atom->GetValence()==0 )
+          valence = atom->GetValence()==0 ? 15 : atom->GetValence();
+
         snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d",
           atom->GetX(), atom->GetY(), atom->GetZ(),
           atom->GetAtomicNum() ? etab.GetSymbol(atom->GetAtomicNum()) : "* ",
-          0,charge,stereo,0,0,0,0,0,0,0,0,0);
-          ofs << buff << endl;
+          0,charge,stereo,0,0,valence,0,0,0,0,0,0);
+        ofs << buff << endl;
         }
 
         OBAtom *nbr;
@@ -826,7 +831,7 @@ namespace OpenBabel
         vector<OBAtom*>::iterator itr;
         for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
           {
-            if(atom->GetSpinMultiplicity())
+            if(atom->GetSpinMultiplicity()>0 && atom->GetSpinMultiplicity()<4)
               rads.push_back(atom);
             if(atom->GetIsotope())
               isos.push_back(atom);
@@ -1460,4 +1465,5 @@ namespace OpenBabel
     }
     return true;
   }
+  
 }//namespace

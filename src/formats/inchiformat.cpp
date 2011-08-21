@@ -341,7 +341,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     strcpy(iat.elname,etab.GetSymbol(patom->GetAtomicNum()));
     iat.num_bonds = nbonds;
     //Let inchi add implicit Hs unless the atom is known not to have any
-    iat.num_iso_H[0] = patom->HasNoHForced() ? 0 : -1;
+    iat.num_iso_H[0] = patom->HasNoHForced() || patom->IsMetal() ? 0 : -1;
     if(patom->GetIsotope())
     {
       iat.isotopic_mass = ISOTOPIC_SHIFT_FLAG +

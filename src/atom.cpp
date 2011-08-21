@@ -1716,6 +1716,17 @@ namespace OpenBabel
     return(false);
   }
 
+  bool OBAtom::IsMetal()
+  {
+    const unsigned NMETALS = 78;
+    const int metals[NMETALS] = {
+    3,4,11,12,13,19,20,21,22,23,24,25,26,27,28,29,
+    30,31,37,38,39,40,41,42,43,44,45,46,47,48,49,50,55,56,57,58,59,60,61,62,63,
+    64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,87,88,89,90,91,
+    92,93,94,95,96,97,98,99,100,101,102,103};
+    return std::find(metals, metals+78, GetAtomicNum())!=metals+78;
+  }
+
 } // end namespace OpenBabel
 
 //! \file atom.cpp

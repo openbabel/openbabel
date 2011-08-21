@@ -88,6 +88,8 @@ INTHYB  [Ra]                      1
 #IMPVAL  [#3,#11,#19,#37,#55,#87]  1 # Alkali metals
 #IMPVAL  [#4,#12,#20,#38,#56,#88]  2 # Alkaline earth
 
+IMPVAL  [#5+]                     2
+IMPVAL  [#5-]                     4
 IMPVAL  [#5]                      3 # Generic boron
 IMPVAL [$([#6+]=*)]		          2
 IMPVAL [$([#6+]#*)]		          1 # just for InChI C2
@@ -95,6 +97,10 @@ IMPVAL [$([#6+]#*)]		          1 # just for InChI C2
 IMPVAL  [#6^3]                    4
 IMPVAL  [#6^2]                    3
 IMPVAL  [#6^1]                    2
+IMPVAL  [#6^3+]                   3
+IMPVAL  [#6^2+]                   2
+IMPVAL  [#6^1+]                   1
+
 IMPVAL  [#6^3-]                   3
 IMPVAL  [#6^2-]                   2
 IMPVAL  [#6^1-]                   1 # isocyanides, CO (valence=1, bond order=3)

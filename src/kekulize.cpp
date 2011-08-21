@@ -144,7 +144,7 @@ namespace OpenBabel
       // check if all atoms are potential aromatic atoms
       for (std::size_t j = 0; j < rings[i]->_path.size(); ++j) {
         OBAtom *atom = mol->GetAtom(rings[i]->_path[j]);
-        if (!isPotentialAromaticAtom(atom)) {
+        if (!atom || !isPotentialAromaticAtom(atom)) { //!atom is temp crash prevention
           skip = true;
           break;
         }

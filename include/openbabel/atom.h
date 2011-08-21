@@ -481,8 +481,9 @@ namespace OpenBabel
       bool IsHbondAcceptor();
       //! \return Is this atom a hydrogen-bond donor?
       bool IsHbondDonor();
-      //! \return Is this a hydrogen atom attached to a hydrogen-bond donor?
       bool IsHbondDonorH();
+      //! \return Is this atom a metal?
+      bool IsMetal();
       //! \return Whether a neighboring atom (alpha) has an unsaturated bond
       //!   to a third atom (beta).
       //! \param includePandS Whether to include phosphorus and sulfur neighbors
