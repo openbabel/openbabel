@@ -126,6 +126,9 @@ namespace OpenBabel
     bondLength += etab.CorrectedBondRad(atom1->GetAtomicNum(), atom1->GetHyb());
     bondLength += etab.CorrectedBondRad(atom2->GetAtomicNum(), atom2->GetHyb());
 
+    if (bondLength < 1.0)
+      bondLength = 1.0;
+
     // These are based on OBBond::GetEquibLength
     if (bondOrder == -1) // aromatic
       bondLength *= 0.93;
@@ -673,6 +676,15 @@ namespace OpenBabel
     if (fragment == GetFragment(a))
       return false; // a and b are in the same fragment
 
+    bool connectedFrag = true; // normal case
+    // If we don't have any neighbors, assume that the fragment
+    // is inserted at the end of the molecule and set anything after the atom.
+    // This lets us place fragments like Cp rings with dummy atoms
+    if (b->GetAtomicNum() == 0) {
+      connectedFrag = false;
+      fragment.SetRangeOn(b->GetIdx(), mol.NumAtoms());
+    }
+
     vector3 posa = a->GetVector();
     vector3 posb = b->GetVector();
     //
@@ -694,6 +706,22 @@ namespace OpenBabel
     double xyang, yzang, xzang;
 
     vector3 fragdir = GetNewBondVector(b); // b is at origin
+    if (!connectedFrag) { // nothing bonded to b, like a Cp ring
+      vector3 currentDir, vrand;
+      // Try finding the next atom
+      OBAtom *nextAtom = mol.GetAtom(b->GetIdx() + 1);
+      if (nextAtom) {
+        currentDir = nextAtom->GetVector() - b->GetVector();
+        vrand.randomUnitVector(); // pick something at random
+        // but not too shallow, or the cross product won't work well
+        double angle = fabs(acos(dot(currentDir, vrand)) * RAD_TO_DEG);
+        while (angle < 45.0 || angle > 135.0) {
+          vrand.randomUnitVector();
+          angle = fabs(acos(dot(currentDir, vrand)) * RAD_TO_DEG);
+        }
+        fragdir = cross(currentDir, vrand); // so find a perpendicular, given the random vector (this doesn't matter here)
+      }
+    }
     xyang = vectorAngle(vector3(moldir.x(), moldir.y(), 0.0), vector3(fragdir.x(), fragdir.y(), 0.0));
     if (cross(vector3(moldir.x(), moldir.y(), 0.0), vector3(fragdir.x(), fragdir.y(), 0.0)).z() > 0) {
       xyang = 180 + xyang;
@@ -703,15 +731,7 @@ namespace OpenBabel
       xyang = 0.0;
     }
     xymat.SetupRotMat(0.0, 0.0, xyang);
-    for (unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
-      if (fragment.BitIsSet(i)) {
-        vector3 tmpvec = mol.GetAtom(i)->GetVector();
-        tmpvec *= xymat; //apply the rotation
-        mol.GetAtom(i)->SetVector(tmpvec);
-      }
-    }
 
-    fragdir = GetNewBondVector(b);
     xzang = vectorAngle(vector3(moldir.x(), moldir.z(), 0.0), vector3(fragdir.x(), fragdir.z(), 0.0));
     if (cross(vector3(moldir.x(), moldir.z(), 0.0), vector3(fragdir.x(), fragdir.z(), 0.0)).z() > 0) {
       xzang = 180 - xzang;
@@ -721,15 +741,7 @@ namespace OpenBabel
       xzang = 0.0;
     }
     xzmat.SetupRotMat(0.0, xzang, 0.0);
-    for (unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
-      if (fragment.BitIsSet(i)) {
-        vector3 tmpvec = mol.GetAtom(i)->GetVector();
-        tmpvec *= xzmat; //apply the rotation
-        mol.GetAtom(i)->SetVector(tmpvec);
-      }
-    }
 
-    fragdir = GetNewBondVector(b);
     yzang = vectorAngle(vector3(moldir.y(), moldir.z(), 0.0), vector3(fragdir.y(), fragdir.z(), 0.0));
     if (cross(vector3(moldir.y(), moldir.z(), 0.0), vector3(fragdir.y(), fragdir.z(), 0.0)).z() > 0) {
       yzang = 180 + yzang;
@@ -742,7 +754,9 @@ namespace OpenBabel
     for (unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
       if (fragment.BitIsSet(i)) {
         vector3 tmpvec = mol.GetAtom(i)->GetVector();
-        tmpvec *= yzmat; //apply the rotation
+        tmpvec *= xymat;  //apply the rotation
+        tmpvec *= xzmat;
+        tmpvec *= yzmat;
         mol.GetAtom(i)->SetVector(tmpvec);
       }
     }
