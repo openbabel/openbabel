@@ -147,7 +147,7 @@ namespace OpenBabel
             if (vs.size() < 1) return false; // timvdm 18/06/2008
             while (strstr(vs[0].c_str(),"DIPOLE") == NULL)
               {
-                if (vs.size() < 3) return false; // timvdm 18/06/2008
+                if (vs.size() < 3) break;
                 atom = mol.GetAtom(atoi(vs[0].c_str()));
                 atom->SetPartialCharge(atof(vs[2].c_str()));
                 charges.push_back(atof(vs[2].c_str()));
@@ -158,7 +158,8 @@ namespace OpenBabel
                 if (vs.size() < 1) vs.push_back(string()); // timvdm 18/06/2008
               }
             // Now we should be at DIPOLE line
-            ifs.getline(buffer,BUFF_SIZE);	// POINT CHARGE
+            if (!ifs.getline(buffer,BUFF_SIZE))	// POINT CHARGE
+              continue; // let the outer loop handle this
             ifs.getline(buffer,BUFF_SIZE);	// HYBRID
             ifs.getline(buffer,BUFF_SIZE);	// SUM
             tokenize(vs, buffer);
@@ -347,7 +348,7 @@ namespace OpenBabel
   // - cjh 2011-07-02
   //
   // A. Comment lines
-  // 
+  //
   // A comment line begins with * and may be specified anywhere.
   //
   // Status: implemented in the geometry block, not in header
@@ -363,10 +364,10 @@ namespace OpenBabel
   // If + is present, keywords continue on the next line
   // AND the total length of the header is extended by one line
   // Up to two + may be used
-  // 
+  //
   // References
   // ----------
-  // MOPAC 7.1: 
+  // MOPAC 7.1:
   // MOPAC 2009: http://openmopac.net/manual/allkeys.html
   //
   // Status: not implemented
@@ -389,7 +390,7 @@ namespace OpenBabel
   // Cb	(Capped bond) A special type of monovalent atom
   //    existing purely to satisfy valence
   // (Section 3.5 of MOPAC 7 Manual)
-  // 
+  //
   // Tv - Translation vector defining 1-D periodicity for polymers
   //
   // In MOPAC 2009:
@@ -432,7 +433,7 @@ namespace OpenBabel
   // correctly in this forma
   //
   // Status: throws error if this format is encountered
-  // 
+  //
   // -cjh 2011-07-02
   bool MOPACCARTFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
@@ -487,7 +488,7 @@ namespace OpenBabel
 	}
 	else //no label, reset buffer
 	  strcpy(buffer,vs[0].c_str());
-	    
+
 	//Now parse the rest of the line
 	//There should be three cases:
 	//1. There are 7 tokens and the first token is a number specifying the isotope mass
@@ -546,7 +547,7 @@ namespace OpenBabel
         uc->SetOrigin(fileformatInput);
         mol.SetData(uc);
     }
-    
+
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) &&
