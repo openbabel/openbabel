@@ -32,6 +32,7 @@
 
 #include "stereoutil.h"
 
+#include <cmath>
 #include <limits>
 #include <set>
 #include <iterator>
