@@ -509,9 +509,9 @@ namespace OpenBabel
         if (line.substr(0, 3) == "A  " && line.size() > 3) { //alias
           int atomnum = ReadUIntField((line.substr(2, line.size() - 2)).c_str());
           //MDL documentation just has alias text here( x... ). A single line is assumed,
-          //and its contents ignored if it starts with ? or * .
+          //and the alias is ignored if the line starts with ? or * or is blank .
           std::getline(ifs, line);
-          if(line.at(0) != '?' && line.at(0) != '*') {
+          if(!line.empty() && line.at(0) != '?' && line.at(0) != '*') {
             AliasData* ad = new AliasData();
             ad->SetAlias(line);
             ad->SetOrigin(fileformatInput);
