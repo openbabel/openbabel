@@ -159,7 +159,6 @@ namespace OpenBabel
     OBUnitCell *uc = new OBUnitCell;
     uc->SetOrigin(fileformatInput);
     uc->SetData(A, B, C, Alpha, Beta, Gamma);
-    uc->SetSpaceGroup(1); // as default, use P1
     mol.SetData(uc);
 
     mol.BeginModify();
