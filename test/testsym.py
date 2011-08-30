@@ -45,7 +45,7 @@ class TestSym(BaseTest):
         output, error = run_exec(output.rstrip(), "babel -icml tmp.cml -ocan")
         output = "\n".join([x.rstrip() for x in output.split("\n")])
         self.assertEqual(output.rstrip(), "\n".join([self.cansmi] * len(self.smiles)))
-	os.remove("tmp.cml")
+        os.remove("tmp.cml")
 
 class TestTetSym(TestSym):
     """A series of tests relating to tetrahedral symmetry"""

@@ -36,22 +36,22 @@ def run_exec(*args):
     elif len(args) == 1:
         text, commandline = "", args[0]
     else:
-        raise Exception, "One or two arguments expected"
+        raise Exception("One or two arguments expected")
     
-    broken = commandline.split()
-    exe = executable(broken[0])
+    broken = commandline.encode().split()
+    exe = executable(broken[0].decode())
     # Note that bufsize = -1 means default buffering
     # Without this, it's unbuffered and it takes 10x longer on MacOSX
     if text:
         p = Popen([exe] + broken[1:], 
                   stdin=PIPE, stdout=PIPE, stderr=PIPE, bufsize=1)
-        stdout, stderr = p.communicate(text)
+        stdout, stderr = p.communicate(text.encode())
     else:
         p = Popen([exe] + broken[1:], 
                   stdout=PIPE, stderr=PIPE, bufsize=-1)
         stdout, stderr = p.communicate()
     
-    return stdout, stderr
+    return stdout.decode(), stderr.decode()
 
 def executable(name):
     """Return the full path to an executable"""
