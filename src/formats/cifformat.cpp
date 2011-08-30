@@ -348,13 +348,13 @@ namespace OpenBabel
         if(mvLatticePar[1]<1e-6)
         {
             stringstream ss;
-            ss << "CIF ERROR: missing b lattice parameter - cannot interpret structure !";
+            ss << "CIF Error: missing b lattice parameter - cannot interpret structure !";
             obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
         }
         if(mvLatticePar[2]<1e-6)
         {
             stringstream ss;
-            ss << "CIF ERROR: missing c lattice parameter - cannot interpret structure !";
+            ss << "CIF Error: missing c lattice parameter - cannot interpret structure !";
             obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
         }
 
@@ -363,7 +363,7 @@ namespace OpenBabel
       else
       {
          stringstream ss;
-         ss << "CIF ERROR: missing a,b or c value - cannot interpret structure !";
+         ss << "CIF Error: missing a,b or c value - cannot interpret structure !";
          obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
       }
   }
@@ -478,7 +478,7 @@ namespace OpenBabel
     if(mSpaceGroup == NULL)
     {
         stringstream ss;
-        ss << "CIF ERROR: missing spacegroup description: defaulting to P1...";
+        ss << "CIF Error: missing spacegroup description: defaulting to P1...";
         obErrorLog.ThrowError(__FUNCTION__, ss.str(), obWarning);
         mSpaceGroup = SpaceGroup::GetSpaceGroup(1);
     }
