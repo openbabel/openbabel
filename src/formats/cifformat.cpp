@@ -248,6 +248,8 @@ namespace OpenBabel
     /// Cartesian2Fractionnal matrix
     float mOrthMatrixInvert[3][3];
     const SpaceGroup *mSpaceGroup;
+    /// Name for the CIF data block
+    std::string mDataBlockName;
   };
   /** Main CIF class - parses the stream and separates data blocks, comments, items, loops.
    * All values are stored as string, and Each CIF block is stored in a separate CIFData object.
@@ -286,11 +288,49 @@ namespace OpenBabel
 
   void CIFData::ExtractAll(const bool verbose)
   {
+    {
+      stringstream ss;
+      ss<<"CIF: interpreting data block: "<<mDataBlockName;
+      obErrorLog.ThrowError(__FUNCTION__, ss.str(), obInfo);
+    }
+    if(mDataBlockName=="data_global")
+      { // :KLUDGE: this data block name is used for journal &author information
+        // for IUCr journals, so do not generate an error if the block contains
+        // no structural information
+        bool empty_iucrjournal_block=true;
+        if(mvItem.find("_cell_length_a"   )!=mvItem.end()) empty_iucrjournal_block=false;
+        if(mvItem.find("_cell_length_b"   )!=mvItem.end()) empty_iucrjournal_block=false;
+        if(mvItem.find("_cell_length_c"   )!=mvItem.end()) empty_iucrjournal_block=false;
+        for(map<set<ci_string>,map<ci_string,vector<string> > >::const_iterator loop=mvLoop.begin();
+            loop!=mvLoop.end();++loop)
+          {
+            if(loop->second.find("_atom_site_fract_x")!=loop->second.end()) empty_iucrjournal_block=false;
+            if(loop->second.find("_atom_site_fract_y")!=loop->second.end()) empty_iucrjournal_block=false;
+            if(loop->second.find("_atom_site_fract_z")!=loop->second.end()) empty_iucrjournal_block=false;
+            if(loop->second.find("_atom_site_Cartn_x")!=loop->second.end()) empty_iucrjournal_block=false;
+            if(loop->second.find("_atom_site_Cartn_y")!=loop->second.end()) empty_iucrjournal_block=false;
+            if(loop->second.find("_atom_site_Cartn_z")!=loop->second.end()) empty_iucrjournal_block=false;
+          }
+        if(empty_iucrjournal_block) 
+          {
+            stringstream ss;
+            ss << "CIF WARNING: found en empty 'data_global' block - SKIPPING\n"
+               << "  (you can safely ignore this if reading a CIF file from an IUCr journal)";
+            obErrorLog.ThrowError(__FUNCTION__, ss.str(), obWarning);
+            return;
+          }
+    }
     // :@todo: Take care of values listed as "." and "?" instead of a real value.
     this->ExtractName(verbose);
     this->ExtractUnitCell(verbose);
     this->ExtractSpacegroup(verbose);
     this->ExtractAtomicPositions(verbose);
+    if(mvAtom.size()==0)
+      {
+        stringstream ss;
+        ss << "CIF Error: no atom found ! (in data block:"<<mDataBlockName<<")";
+        obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
+      }
     this->ExtractBonds(verbose);
   }
 
@@ -327,34 +367,34 @@ namespace OpenBabel
         if(mvLatticePar[3]<1e-6)
         {
             stringstream ss;
-            ss << "CIF WARNING: missing alpha value, defaulting to 90 degrees";
+            ss << "CIF WARNING: missing alpha value, defaulting to 90 degrees (in data block:"<<mDataBlockName<<")";
             obErrorLog.ThrowError(__FUNCTION__, ss.str(), obWarning);
             mvLatticePar[3]=90*DEG_TO_RAD;
         }
         if(mvLatticePar[4]<1e-6)
         {
             stringstream ss;
-            ss << "CIF WARNING: missing beta value, defaulting to 90 degrees";
+            ss << "CIF WARNING: missing beta value, defaulting to 90 degrees (in data block:"<<mDataBlockName<<")";
             obErrorLog.ThrowError(__FUNCTION__, ss.str(), obWarning);
             mvLatticePar[4]=90*DEG_TO_RAD;
         }
         if(mvLatticePar[5]<1e-6)
         {
             stringstream ss;
-            ss << "CIF WARNING: missing gamma value, defaulting to 90 degrees";
+            ss << "CIF WARNING: missing gamma value, defaulting to 90 degrees (in data block:"<<mDataBlockName<<")";
             obErrorLog.ThrowError(__FUNCTION__, ss.str(), obWarning);
             mvLatticePar[5]=90*DEG_TO_RAD;
         }
         if(mvLatticePar[1]<1e-6)
         {
             stringstream ss;
-            ss << "CIF Error: missing b lattice parameter - cannot interpret structure !";
+            ss << "CIF Error: missing b lattice parameter - cannot interpret structure ! (in data block:"<<mDataBlockName<<")";
             obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
         }
         if(mvLatticePar[2]<1e-6)
         {
             stringstream ss;
-            ss << "CIF Error: missing c lattice parameter - cannot interpret structure !";
+            ss << "CIF Error: missing c lattice parameter - cannot interpret structure ! (in data block:"<<mDataBlockName<<")";
             obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
         }
 
@@ -363,7 +403,7 @@ namespace OpenBabel
       else
       {
          stringstream ss;
-         ss << "CIF Error: missing a,b or c value - cannot interpret structure !";
+         ss << "CIF Error: missing a,b or c value - cannot interpret structure ! (in data block:"<<mDataBlockName<<")";
          obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
       }
   }
@@ -478,7 +518,7 @@ namespace OpenBabel
     if(mSpaceGroup == NULL)
     {
         stringstream ss;
-        ss << "CIF Error: missing spacegroup description: defaulting to P1...";
+        ss << "CIF Error: missing spacegroup description: defaulting to P1... (in data block:"<<mDataBlockName<<")";
         obErrorLog.ThrowError(__FUNCTION__, ss.str(), obWarning);
         mSpaceGroup = SpaceGroup::GetSpaceGroup(1);
     }
@@ -932,6 +972,7 @@ namespace OpenBabel
             block=tmp.substr(5);
             if(vv) cout<<endl<<endl<<"NEW BLOCK DATA: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ->"<<block<<endl<<endl<<endl;
             mvData[block]=CIFData();
+            mvData[block].mDataBlockName=tmp;
             continue;
           }
         if((in.peek()=='l') || (in.peek()=='L'))
