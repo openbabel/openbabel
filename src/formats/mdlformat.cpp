@@ -814,7 +814,7 @@ namespace OpenBabel
               // For unspecified Cis/Trans double bonds, set the stereo to 3...
               if (unspec_ctstereo.find(bond) != unspec_ctstereo.end())
                 stereo = 3;
-              // For 3D (and 2D if "w" output option), see the stereo of the chiral centers.
+              // For 3D (and 2D if "w" output option), set the stereo of the chiral centers.
               if (updown.find(bond) != updown.end())
                 stereo = updown[bond];
 
@@ -1316,7 +1316,7 @@ namespace OpenBabel
         OBTetrahedralStereo::Config cfg = ts->GetConfig();
 
         Parity atomparity = Unknown;
-        if (cfg.specified) {
+        if (cfg.specified && cfg.winding != OBStereo::UnknownWinding) {
           // If, when looking towards the maxref, the remaining refs increase in number
           // clockwise, parity is 1 (Parity::Clockwise). Note that Implicit Refs and Hydrogens
           // should be treated considered the maxref if present.

@@ -105,10 +105,8 @@ std::string test_singleCisTrans(const std::string &file,
   return conv.WriteString(&mol);
 }
 
-std::string test_singleUnspecifiedTetrahedral(const std::string &file, 
-    unsigned long center)
+std::string readMol(OBMol *pmol, const std::string &file)
 {
-  OBMol mol;
   OBConversion conv;
   conv.SetInFormat("mol");
   conv.SetOutFormat("can");
@@ -117,18 +115,44 @@ std::string test_singleUnspecifiedTetrahedral(const std::string &file,
   ifstream ifs(filename.c_str());
   if (!ifs) {
     cerr << "Could not open " << filename << endl;
-    return std::string();
+    return false;
   }
 
-  conv.Read(&mol, &ifs);
+  conv.Read(pmol, &ifs);
   ifs.close();
+  return conv.WriteString(pmol);
+}
 
-  OBStereoFacade stereo(&mol);
-  OB_ASSERT( stereo.HasTetrahedralStereo(center) );
-  OBTetrahedralStereo *ts = stereo.GetTetrahedralStereo(center);
-  OB_ASSERT( ts->GetConfig().specified == false );
+std::string test_singleUnspecifiedTetrahedral(const std::string &file, 
+    unsigned long center)
+{
+  OBMol mol;
+  string retval = readMol(&mol, file);
+  if (retval.size() > 0) {
+    OBStereoFacade stereo(&mol);
+    OB_ASSERT( stereo.HasTetrahedralStereo(center) );
+    OBTetrahedralStereo *ts = stereo.GetTetrahedralStereo(center);
+    OB_ASSERT( ts->GetConfig().specified == false );
+  }
 
-  return conv.WriteString(&mol);
+  return retval;
+}
+
+std::string test_singleUnknownTetrahedral(const std::string &file, 
+    unsigned long center)
+{
+  OBMol mol;
+  string retval = readMol(&mol, file);
+  if (retval.size() > 0) {
+    OBStereoFacade stereo(&mol);
+    OB_ASSERT( stereo.HasTetrahedralStereo(center) );
+    OBTetrahedralStereo *ts = stereo.GetTetrahedralStereo(center);
+    OBTetrahedralStereo::Config cfg = ts->GetConfig();
+    OB_ASSERT( cfg.specified == true );
+    OB_ASSERT( cfg.winding == OBStereo::UnknownWinding );
+  }
+
+  return retval;
 }
 
 void test_noStereo(const std::string &file)
@@ -374,9 +398,15 @@ int main()
 
   cout << smiles2D_4 << endl;
 
-  string smiles2D_8 = test_singleUnspecifiedTetrahedral("stereo/tetrahedral2D_8.mol", 1);
+ // Input molecule with unknown stereochemistry
 
+  string smiles2D_8 = test_singleUnknownTetrahedral("stereo/tetrahedral2D_8.mol", 1);
   cout << smiles2D_8 << endl;
+
+ // Input molecule with unspecified stereochemistry
+
+  string smiles2D_9 = test_singleUnspecifiedTetrahedral("stereo/tetrahedral2D_9.mol", 1);
+  cout << smiles2D_9 << endl;
 
   //////////////////////////////////////////////////////////////////////////////
   // 

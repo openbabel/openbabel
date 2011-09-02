@@ -2579,100 +2579,103 @@ namespace OpenBabel {
         OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
         OBTetrahedralStereo::Config cfg = ts->GetConfig();
 
-        // Find the two bonds closest in angle and remember them if
-        // they are closer than DELTA_ANGLE_FOR_OVERLAPPING_BONDS
-        OBAtom* center = mol.GetAtomById(cfg.center);
-        vector<OBAtom*> nbrs;
-        FOR_NBORS_OF_ATOM(a, center)
-          nbrs.push_back(&*a);
-        double min_angle = 359.0;
-        OBBond *close_bond_a, *close_bond_b;
-        for (unsigned int i=0; i<nbrs.size() - 1; ++i)
-          for (unsigned int j=i+1; j<nbrs.size(); ++j) {
-            double angle = abs(nbrs[i]->GetAngle(center, nbrs[j]));
-            if (angle < min_angle) {
-              min_angle = angle;
-              close_bond_a = mol.GetBond(center, nbrs[i]);
-              close_bond_b = mol.GetBond(center, nbrs[j]);
+        if (cfg.specified) {
+          OBBond* chosen = (OBBond*) NULL;
+          OBAtom* center = mol.GetAtomById(cfg.center);
+
+          // Find the two bonds closest in angle and remember them if
+          // they are closer than DELTA_ANGLE_FOR_OVERLAPPING_BONDS
+          vector<OBAtom*> nbrs;
+          FOR_NBORS_OF_ATOM(a, center)
+            nbrs.push_back(&*a);
+          double min_angle = 359.0;
+          OBBond *close_bond_a, *close_bond_b;
+          for (unsigned int i=0; i<nbrs.size() - 1; ++i)
+            for (unsigned int j=i+1; j<nbrs.size(); ++j) {
+              double angle = abs(nbrs[i]->GetAngle(center, nbrs[j]));
+              if (angle < min_angle) {
+                min_angle = angle;
+                close_bond_a = mol.GetBond(center, nbrs[i]);
+                close_bond_b = mol.GetBond(center, nbrs[j]);
+              }
+            }
+          
+          if (min_angle > DELTA_ANGLE_FOR_OVERLAPPING_BONDS) {
+            close_bond_a = (OBBond*) NULL;
+            close_bond_b = (OBBond*) NULL;
+          }
+
+          // Find the best candidate bond to set to up/down
+          // 1. **Should not already be set**
+          // 2. Should not be connected to a 2nd tet center
+          // (this is acceptable, as the wedge is only at one end, but will only confuse things)
+          // 3. Preferably is not in a cycle
+          // 4. Preferably is a terminal H
+          // 5. If two bonds are overlapping, choose one of these
+          //    (otherwise the InChI code will mark it as ambiguous)
+
+          unsigned int max_bond_score = 0;
+          FOR_BONDS_OF_ATOM(b, center) {
+            if (alreadyset.find(&*b) != alreadyset.end()) continue;
+
+            OBAtom* nbr = b->GetNbrAtom(center);
+            unsigned int score = 1;
+
+            if (!b->IsInRing())
+              score += 2;
+            if (tetcenters.find(nbr->GetId()) == tetcenters.end()) // Not a tetcenter
+              score += 4;
+            if (nbr->IsHydrogen())
+              score += 8;
+            if (&*b==close_bond_a || &*b==close_bond_b)
+              score += 16;
+
+            if (score > max_bond_score) {
+              max_bond_score = score;
+              chosen = &*b;
             }
           }
-        
-        if (min_angle > DELTA_ANGLE_FOR_OVERLAPPING_BONDS) {
-          close_bond_a = (OBBond*) NULL;
-          close_bond_b = (OBBond*) NULL;
-        }
 
-        // Find the best candidate bond to set to up/down
-        // 1. **Should not already be set**
-        // 2. Should not be connected to a 2nd tet center
-        // (this is acceptable, as the wedge is only at one end, but will only confuse things)
-        // 3. Preferably is not in a cycle
-        // 4. Preferably is a terminal H
-        // 5. If two bonds are overlapping, choose one of these
-        //    (otherwise the InChI code will mark it as ambiguous)
-
-        unsigned int max_bond_score = 0;
-        OBBond* chosen = (OBBond*) NULL;
-        FOR_BONDS_OF_ATOM(b, center) {
-          if (alreadyset.find(&*b) != alreadyset.end()) continue;
-
-          OBAtom* nbr = b->GetNbrAtom(center);
-          unsigned int score = 1;
-
-          if (!b->IsInRing())
-            score += 2;
-          if (tetcenters.find(nbr->GetId()) == tetcenters.end()) // Not a tetcenter
-            score += 4;
-          if (nbr->IsHydrogen())
-            score += 8;
-          if (&*b==close_bond_a || &*b==close_bond_b)
-            score += 16;
-
-          if (score > max_bond_score) {
-            max_bond_score = score;
-            chosen = &*b;
+          if (chosen==NULL) { // There is a remote possibility of this but let's worry about 99.9% of cases first
+            obErrorLog.ThrowError(__FUNCTION__,
+              "Failed to set stereochemistry as unable to find an available bond", obError);
+            return false;
           }
-        }
+          alreadyset.insert(chosen);
 
-        if (chosen==NULL) { // There is a remote possibility of this but let's worry about 99.9% of cases first
-          obErrorLog.ThrowError(__FUNCTION__,
-            "Failed to set stereochemistry as unable to find an available bond", obError);
-          return false;
-        }
-        alreadyset.insert(chosen);
-
-        OBStereo::BondDirection bonddir = OBStereo::UnknownDir;
-        if (cfg.specified) {
           // Determine whether this bond should be set hash or wedge (or indeed unknown)
           // (Code inspired by perception.cpp, TetrahedralFrom2D: plane1 + plane2 + plane3, wedge)
-          OBTetrahedralStereo::Config test_cfg = cfg;
+          OBStereo::BondDirection bonddir = OBStereo::UnknownDir;
+          if (cfg.winding != OBStereo::UnknownWinding) {
+            OBTetrahedralStereo::Config test_cfg = cfg;
 
-          // If there is an implicit ref; let's make that the 'from' atom
-          // otherwise use the atom on the chosen bond
-          bool implicit = true;
-          if (test_cfg.from != OBStereo::ImplicitRef) {
-            OBStereo::RefIter ri = std::find(test_cfg.refs.begin(), test_cfg.refs.end(), (unsigned long) OBStereo::ImplicitRef);
-            if (ri!=test_cfg.refs.end())
-              test_cfg = OBTetrahedralStereo::ToConfig(test_cfg, OBStereo::ImplicitRef);
-            else {
-              test_cfg = OBTetrahedralStereo::ToConfig(test_cfg, chosen->GetNbrAtom(center)->GetId());
-              implicit = false;
+            // If there is an implicit ref; let's make that the 'from' atom
+            // otherwise use the atom on the chosen bond
+            bool implicit = true;
+            if (test_cfg.from != OBStereo::ImplicitRef) {
+              OBStereo::RefIter ri = std::find(test_cfg.refs.begin(), test_cfg.refs.end(), (unsigned long) OBStereo::ImplicitRef);
+              if (ri!=test_cfg.refs.end())
+                test_cfg = OBTetrahedralStereo::ToConfig(test_cfg, OBStereo::ImplicitRef);
+              else {
+                test_cfg = OBTetrahedralStereo::ToConfig(test_cfg, chosen->GetNbrAtom(center)->GetId());
+                implicit = false;
+              }
             }
-          }
-          
-          bool anticlockwise_order = AngleOrder(mol.GetAtomById(test_cfg.refs[0])->GetVector(),
-              mol.GetAtomById(test_cfg.refs[1])->GetVector(), mol.GetAtomById(test_cfg.refs[2])->GetVector(),
-              center->GetVector());
+            
+            bool anticlockwise_order = AngleOrder(mol.GetAtomById(test_cfg.refs[0])->GetVector(),
+                mol.GetAtomById(test_cfg.refs[1])->GetVector(), mol.GetAtomById(test_cfg.refs[2])->GetVector(),
+                center->GetVector());
 
-          // Things are inverted from the point of view of the ImplicitH which we
-          // assume to be of opposite stereochemistry to the wedge/hash
-          bool useup = !implicit;
-          if (anticlockwise_order) useup = !useup;
-          // Set to UpBond (filled wedge from cfg.center to chosen_nbr) or DownBond
-          bonddir = useup ? OBStereo::UpBond : OBStereo::DownBond;
+            // Things are inverted from the point of view of the ImplicitH which we
+            // assume to be of opposite stereochemistry to the wedge/hash
+            bool useup = !implicit;
+            if (anticlockwise_order) useup = !useup;
+            // Set to UpBond (filled wedge from cfg.center to chosen_nbr) or DownBond
+            bonddir = useup ? OBStereo::UpBond : OBStereo::DownBond;
+          }
+          updown[chosen] = bonddir;
+          from[chosen] = cfg.center;
         }
-        updown[chosen] = bonddir;
-        from[chosen] = cfg.center;
       }
       return true;
   }
