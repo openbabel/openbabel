@@ -322,8 +322,9 @@ namespace OpenBabel
     }
     // :@todo: Take care of values listed as "." and "?" instead of a real value.
     this->ExtractName(verbose);
-    this->ExtractUnitCell(verbose);
+    // Spacegroup must be extracted before unit cell
     this->ExtractSpacegroup(verbose);
+    this->ExtractUnitCell(verbose);
     this->ExtractAtomicPositions(verbose);
     if(mvAtom.size()==0)
       {
@@ -336,13 +337,18 @@ namespace OpenBabel
 
   void CIFData::ExtractUnitCell(const bool verbose)
   {
-    map<ci_string,string>::const_iterator positem;
-    positem=mvItem.find("_cell_length_a");
-    if(positem!=mvItem.end())
+    // Use spacegroup to determine missing angle or length
+    const int spgid= mSpaceGroup->GetId();
+    if(  (mvItem.find("_cell_length_a")!=mvItem.end())
+       ||(mvItem.find("_cell_length_b")!=mvItem.end())
+       ||(mvItem.find("_cell_length_c")!=mvItem.end()) )
       {
         mvLatticePar.resize(6);
         for(unsigned int i=0;i<6;i++) mvLatticePar[i]=float(0);
-        mvLatticePar[0]=CIFNumeric2Float(positem->second);
+        map<ci_string,string>::const_iterator positem;
+        positem=mvItem.find("_cell_length_a");
+        if(positem!=mvItem.end())
+          mvLatticePar[0]=CIFNumeric2Float(positem->second);
         positem=mvItem.find("_cell_length_b");
         if(positem!=mvItem.end())
           mvLatticePar[1]=CIFNumeric2Float(positem->second);
@@ -363,6 +369,66 @@ namespace OpenBabel
         mvLatticePar[3] = static_cast<float> (mvLatticePar[3] * DEG_TO_RAD);// pi/180
         mvLatticePar[4] = static_cast<float> (mvLatticePar[4] * DEG_TO_RAD);
         mvLatticePar[5] = static_cast<float> (mvLatticePar[5] * DEG_TO_RAD);
+        
+        // Fill values depending on spacegroup, *only* when missing
+        if((spgid>2)&&(spgid<=15))
+        {// :TODO: monoclinic spg, depending on unique axis....
+        }
+        if((spgid>15)&&(spgid<=142))
+        {// orthorombic & tetragonal
+          if(mvLatticePar[3]==0) mvLatticePar[3]=M_PI/2;
+          if(mvLatticePar[4]==0) mvLatticePar[4]=M_PI/2;
+          if(mvLatticePar[5]==0) mvLatticePar[5]=M_PI/2;
+        }
+        if((spgid>74)&&(spgid<=142))
+        {// Tetragonal, make sure a=b if one is missing
+          if(mvLatticePar[1]==0) mvLatticePar[1]=mvLatticePar[0];
+          if(mvLatticePar[0]==0) mvLatticePar[0]=mvLatticePar[1];
+        }
+        if((spgid>142)&&(spgid<=194))
+        {// trigonal/ rhomboedric...
+          const string::size_type pos = mSpaceGroup->GetHallName().find('R');
+          if(pos==std::string::npos)
+          {//rhomboedric cell, a=b=c, alpha=beta=gamma
+            float a=0;
+            if(mvLatticePar[0]>a) a=mvLatticePar[0];
+            if(mvLatticePar[1]>a) a=mvLatticePar[1];
+            if(mvLatticePar[2]>a) a=mvLatticePar[2];
+            if(mvLatticePar[0]==0) mvLatticePar[0]=a;
+            if(mvLatticePar[1]==0) mvLatticePar[1]=a;
+            if(mvLatticePar[2]==0) mvLatticePar[2]=a;
+            
+            float alpha=0;
+            if(mvLatticePar[3]>alpha) alpha=mvLatticePar[3];
+            if(mvLatticePar[4]>alpha) alpha=mvLatticePar[4];
+            if(mvLatticePar[5]>alpha) alpha=mvLatticePar[5];
+            if(mvLatticePar[3]==0) mvLatticePar[3]=alpha;
+            if(mvLatticePar[4]==0) mvLatticePar[4]=alpha;
+            if(mvLatticePar[5]==0) mvLatticePar[5]=alpha;
+          }
+          else
+          {//hexagonal cell, a=b & alpha=beta=pi/2, gamma= 2*pi/3
+            if(mvLatticePar[1]==0) mvLatticePar[1]=mvLatticePar[0];
+            if(mvLatticePar[0]==0) mvLatticePar[0]=mvLatticePar[1];
+            if(mvLatticePar[3]==0) mvLatticePar[3]=M_PI/2;
+            if(mvLatticePar[4]==0) mvLatticePar[4]=M_PI/2;
+            if(mvLatticePar[5]==0) mvLatticePar[5]=2*M_PI/3;
+          }
+        }
+        if(spgid>194)
+        {
+          if(mvLatticePar[3]==0) mvLatticePar[3]=M_PI/2;
+          if(mvLatticePar[4]==0) mvLatticePar[4]=M_PI/2;
+          if(mvLatticePar[5]==0) mvLatticePar[5]=M_PI/2;
+          // In case some idiot cif only supplies one value, make sure a=b=c
+          float a=0;
+          if(mvLatticePar[0]>a) a=mvLatticePar[0];
+          if(mvLatticePar[1]>a) a=mvLatticePar[1];
+          if(mvLatticePar[2]>a) a=mvLatticePar[2];
+          if(mvLatticePar[0]==0) mvLatticePar[0]=a;
+          if(mvLatticePar[1]==0) mvLatticePar[1]=a;
+          if(mvLatticePar[2]==0) mvLatticePar[2]=a;
+        }
         // Handle missing values
         if(mvLatticePar[3]<1e-6)
         {
@@ -403,7 +469,7 @@ namespace OpenBabel
       else
       {
          stringstream ss;
-         ss << "CIF Error: missing a,b or c value - cannot interpret structure ! (in data block:"<<mDataBlockName<<")";
+         ss << "CIF Error: missing a,b and c value - cannot interpret structure ! (in data block:"<<mDataBlockName<<")";
          obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
       }
   }
@@ -477,16 +543,24 @@ namespace OpenBabel
           }
       }
     mSpaceGroup=NULL;
-    if (mSpacegroupNumberIT != 0) {
-      mSpaceGroup = SpaceGroup::GetSpaceGroup(mSpacegroupNumberIT);
-    }
-    else if (mSpacegroupSymbolHall.length() > 0) {
+    // be forgiving - if spg not found, try again
+    // Prefer Hall > HM == number, as Hall symbol is truly unique
+    if (mSpacegroupSymbolHall.length() > 0) {
+      //Make sure there are no leading spaces before Hall symbol (kludge)
+      for(std::string::iterator pos=mSpacegroupSymbolHall.begin();pos!=mSpacegroupSymbolHall.end();)
+      {
+        if((char)(*pos)==' ')  pos=mSpacegroupSymbolHall.erase(pos);
+        else pos++;
+      }
       mSpaceGroup = SpaceGroup::GetSpaceGroup(mSpacegroupSymbolHall);
     }
-    else if (mSpacegroupHermannMauguin.length() > 0) {
+    if((mSpaceGroup == NULL)&& (mSpacegroupHermannMauguin.length() > 0)) {
       mSpaceGroup = SpaceGroup::GetSpaceGroup(mSpacegroupHermannMauguin);
     }
-    else {
+    if((mSpaceGroup == NULL)&&(mSpacegroupNumberIT != 0)) {
+      mSpaceGroup = SpaceGroup::GetSpaceGroup(mSpacegroupNumberIT);
+    }
+    if(mSpaceGroup == NULL) {
       SpaceGroup *sg = new SpaceGroup();
       positem=mvItem.find("_symmetry_equiv_pos_as_xyz");
       if(positem!=mvItem.end())
