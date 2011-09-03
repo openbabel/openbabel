@@ -3101,8 +3101,8 @@ namespace OpenBabel {
     // get the Config struct defining the stereochemistry
     OBTetrahedralStereo::Config atomConfig = ts->GetConfig();
 
-    // write '@?' for unspecified (unknown) stereochemistry
-    if (!atomConfig.specified) {
+    // Don't write '@?' for unspecified or unknown stereochemistry
+    if (!atomConfig.specified || (atomConfig.specified && atomConfig.winding==OBStereo::UnknownWinding)) {
       // strcpy(stereo, "@?");
       return true;
     }
@@ -3286,10 +3286,15 @@ namespace OpenBabel {
 
       OBBond *nbr_bond = atom->GetBond(nbr);
       int new_needs_bsymbol = nbr_bond->IsDouble() || nbr_bond->IsTriple();
+      if (_pconv->IsOption("I"))
+        new_needs_bsymbol = 0;
 
       for (ai = sort_nbrs.begin(); ai != sort_nbrs.end(); ++ai) {
         bond = atom->GetBond(*ai);
         int sorted_needs_bsymbol = bond->IsDouble() || bond->IsTriple();
+        if (_pconv->IsOption("I"))
+          sorted_needs_bsymbol = 0;
+
         if (new_needs_bsymbol && !sorted_needs_bsymbol) {
           sort_nbrs.insert(ai, nbr);
           ai = sort_nbrs.begin();//insert invalidated ai; set it to fail next test
@@ -3792,6 +3797,18 @@ namespace OpenBabel {
     if (atom_idx >= 1 && atom_idx <= mol.NumAtoms())
       _startatom = mol.GetAtom(atom_idx);
 
+    // Was an atom ordering specified?
+    pp = _pconv->IsOption("I");
+    vector<string> s_atom_order;
+    tokenize(s_atom_order,pp,"-()");
+    vector<int> atom_order;
+    for (vector<string>::const_iterator cit=s_atom_order.begin(); cit!=s_atom_order.end(); ++cit) {
+      canonical_order.push_back(atoi(cit->c_str()) - 1);
+      symmetry_classes.push_back(atoi(cit->c_str()) - 1);
+      cout << *cit << " ";
+    }
+    cout << "\n";
+
     // First, create a canonical ordering vector for the atoms.  Canonical
     // labels are zero indexed, corresponding to "atom->GetIdx()-1".
     if (_canonicalOutput) {
@@ -3802,7 +3819,7 @@ namespace OpenBabel {
     else {
       if (_pconv->IsOption("C")) {      // "C" == "anti-canonical form"
         RandomLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
-      } else {
+      } else if (!_pconv->IsOption("I")) {
         StandardLabels(&mol, &frag_atoms, symmetry_classes, canonical_order);
       }
     }

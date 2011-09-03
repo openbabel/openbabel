@@ -2352,7 +2352,8 @@ namespace OpenBabel {
           }
         } else if (bond->IsWedgeOrHash()) {
           if (!tiponly || (tiponly && bond->GetBeginAtom()->GetId() == center->GetId())) {
-            config.specified = false;
+            config.specified = true;
+            config.winding = OBStereo::UnknownWinding;
             break;
           }
           else
@@ -2371,8 +2372,8 @@ namespace OpenBabel {
       bool success = true;
 
       using namespace std;
-      if (!config.specified) {
-        // unspecified
+      if (!config.specified || (config.specified && config.winding==OBStereo::UnknownWinding)) {
+        // unspecified or specified as unknown
         FOR_NBORS_OF_ATOM (nbr, center)
           if (config.from == OBStereo::NoRef)
             config.from = nbr->GetId();
