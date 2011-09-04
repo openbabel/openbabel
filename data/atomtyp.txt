@@ -129,6 +129,7 @@ IMPVAL  [n-]                      2
 IMPVAL  [n+]                      3
 IMPVAL  [$([#7-]=*)]              1
 IMPVAL  [$([#7+]#*)]              2
+IMPVAL  [$([#7+]=*)]              3
 
 IMPVAL [$([#8+]#*)] 1
 
