@@ -3274,6 +3274,10 @@ namespace OpenBabel {
     // Since there are typically just one to three neighbors, we just do a
     // ordered insertion rather than sorting.
 
+    bool favor_multiple = true; // Visit 'multiple' bonds first
+    if (_pconv->IsOption("I"))
+      favor_multiple = false;   // Visit in strict canonical order
+
     for (nbr = atom->BeginNbrAtom(i); nbr; nbr = atom->NextNbrAtom(i)) {
 
       idx = nbr->GetIdx();
@@ -3290,12 +3294,12 @@ namespace OpenBabel {
       for (ai = sort_nbrs.begin(); ai != sort_nbrs.end(); ++ai) {
         bond = atom->GetBond(*ai);
         int sorted_needs_bsymbol = bond->IsDouble() || bond->IsTriple();
-        if (new_needs_bsymbol && !sorted_needs_bsymbol) {
+        if (favor_multiple && new_needs_bsymbol && !sorted_needs_bsymbol) {
           sort_nbrs.insert(ai, nbr);
           ai = sort_nbrs.begin();//insert invalidated ai; set it to fail next test
           break;
         }
-        if (   new_needs_bsymbol == sorted_needs_bsymbol
+        if (   (!favor_multiple || new_needs_bsymbol == sorted_needs_bsymbol)
                && canonical_order[idx-1] < canonical_order[(*ai)->GetIdx()-1]) {
           sort_nbrs.insert(ai, nbr);
           ai = sort_nbrs.begin();//insert invalidated ai; set it to fail next test
@@ -3792,6 +3796,20 @@ namespace OpenBabel {
     if (atom_idx >= 1 && atom_idx <= mol.NumAtoms())
       _startatom = mol.GetAtom(atom_idx);
 
+    // Was an atom ordering specified?
+    const char* ppI = _pconv->IsOption("I");
+    vector<string> s_atom_order;
+    if (ppI) {
+      tokenize(s_atom_order,ppI,"-()");
+      if (s_atom_order.size() != mol.NumHvyAtoms())
+        ppI = NULL;
+      else {
+        atom_idx = atoi(s_atom_order.at(0));
+        if (atom_idx >= 1 && atom_idx <= mol.NumAtoms())
+          _startatom = mol.GetAtom(atom_idx);
+      }
+    }
+
     // First, create a canonical ordering vector for the atoms.  Canonical
     // labels are zero indexed, corresponding to "atom->GetIdx()-1".
     if (_canonicalOutput) {
@@ -3802,6 +3820,12 @@ namespace OpenBabel {
     else {
       if (_pconv->IsOption("C")) {      // "C" == "anti-canonical form"
         RandomLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
+      } else if (ppI) { // "I" == "user specified canonical order"
+        for (vector<string>::const_iterator cit=s_atom_order.begin(); cit!=s_atom_order.end(); ++cit) {
+          canonical_order.push_back(atoi(cit->c_str()) - 1);
+          symmetry_classes.push_back(atoi(cit->c_str()) - 1);
+          // cout << *cit << " ";
+        }
       } else {
         StandardLabels(&mol, &frag_atoms, symmetry_classes, canonical_order);
       }
