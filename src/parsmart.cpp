@@ -2694,7 +2694,7 @@ namespace OpenBabel
           std::vector<int> nbrs;
 
           BondSpec bs;
-          for (int k = 0; k < pat->bcount; ++k)
+          for (int k = 0; k < pat->bcount; ++k) {
             // Iterate over the bonds in the order in which they were parsed.
             // In other words, ring closure bonds will be handled in the order
             // of their corresponding ring opening. This is important for stereo.
@@ -2703,6 +2703,7 @@ namespace OpenBabel
               nbrs.push_back(bs.src);
             else if (bs.src == j)
               nbrs.push_back(bs.dst);
+          }
 
           if (nbrs.size() < 3)
             continue;
@@ -2738,9 +2739,9 @@ namespace OpenBabel
               smartsConfig.specified = false;
           }
 
-          cout << "smarts config = " << smartsConfig << endl;
-          cout << "molecule config = " << ts->GetConfig() << endl;
-          cout << "match = " << (ts->GetConfig() == smartsConfig) << endl;
+          // cout << "smarts config = " << smartsConfig << endl;
+          // cout << "molecule config = " << ts->GetConfig() << endl;
+          // cout << "match = " << (ts->GetConfig() == smartsConfig) << endl;
 
           // and save the match if the two configurations are the same
           if (ts->GetConfig() != smartsConfig)
