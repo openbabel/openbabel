@@ -706,6 +706,7 @@ namespace OpenBabel
     double xyang, yzang, xzang;
 
     vector3 fragdir = GetNewBondVector(b); // b is at origin
+    vector3 crossdir;
     if (!connectedFrag) { // nothing bonded to b, like a Cp ring
       vector3 currentDir, vrand;
       // Try finding the next atom
@@ -719,7 +720,8 @@ namespace OpenBabel
           vrand.randomUnitVector();
           angle = fabs(acos(dot(currentDir, vrand)) * RAD_TO_DEG);
         }
-        fragdir = cross(currentDir, vrand); // so find a perpendicular, given the random vector (this doesn't matter here)
+        crossdir = cross(currentDir, vrand); // so find a perpendicular, given the random vector (this doesn't matter here)
+        fragdir = crossdir;
       }
     }
     xyang = vectorAngle(vector3(moldir.x(), moldir.y(), 0.0), vector3(fragdir.x(), fragdir.y(), 0.0));
@@ -731,7 +733,17 @@ namespace OpenBabel
       xyang = 0.0;
     }
     xymat.SetupRotMat(0.0, 0.0, xyang);
+    for (unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
+      if (fragment.BitIsSet(i)) {
+        vector3 tmpvec = mol.GetAtom(i)->GetVector();
+        tmpvec *= xymat; //apply the rotation
+        mol.GetAtom(i)->SetVector(tmpvec);
+      }
+    }
 
+    fragdir = GetNewBondVector(b);
+    if (!connectedFrag)
+      fragdir = crossdir;
     xzang = vectorAngle(vector3(moldir.x(), moldir.z(), 0.0), vector3(fragdir.x(), fragdir.z(), 0.0));
     if (cross(vector3(moldir.x(), moldir.z(), 0.0), vector3(fragdir.x(), fragdir.z(), 0.0)).z() > 0) {
       xzang = 180 - xzang;
@@ -741,7 +753,17 @@ namespace OpenBabel
       xzang = 0.0;
     }
     xzmat.SetupRotMat(0.0, xzang, 0.0);
+    for (unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
+      if (fragment.BitIsSet(i)) {
+        vector3 tmpvec = mol.GetAtom(i)->GetVector();
+        tmpvec *= xzmat; //apply the rotation
+        mol.GetAtom(i)->SetVector(tmpvec);
+      }
+    }
 
+    fragdir = GetNewBondVector(b);
+    if (!connectedFrag)
+      fragdir = crossdir;
     yzang = vectorAngle(vector3(moldir.y(), moldir.z(), 0.0), vector3(fragdir.y(), fragdir.z(), 0.0));
     if (cross(vector3(moldir.y(), moldir.z(), 0.0), vector3(fragdir.y(), fragdir.z(), 0.0)).z() > 0) {
       yzang = 180 + yzang;
@@ -754,9 +776,7 @@ namespace OpenBabel
     for (unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
       if (fragment.BitIsSet(i)) {
         vector3 tmpvec = mol.GetAtom(i)->GetVector();
-        tmpvec *= xymat;  //apply the rotation
-        tmpvec *= xzmat;
-        tmpvec *= yzmat;
+        tmpvec *= yzmat; //apply the rotation
         mol.GetAtom(i)->SetVector(tmpvec);
       }
     }
