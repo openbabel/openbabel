@@ -103,6 +103,11 @@ namespace OpenBabel
     OBAtom *atom;
 //    OBBond *bond;
     vector<string> vs;
+    const SpaceGroup *sg;
+    bool setSpaceGroup = false;
+    double x,y,z;
+    vector3 translationVectors[3];
+    int numTranslationVectors = 0;
 
     mol.BeginModify();
     while (ifs.getline(buffer,BUFF_SIZE))
@@ -126,6 +131,35 @@ namespace OpenBabel
           bondOrder = 1;
           openParens++;
           continue;
+        }
+
+        /* (A I PeriodicType 100)
+           (A D A3 (6.2380000000000004 0 0))
+           (A D B3 (0 6.9909999999999997 0))
+           (A D C3 (0 0 6.9960000000000004))
+           (A C SpaceGroup "63 5")
+        */
+        if (strstr(buffer, "PeriodicType") != NULL) {
+          ifs.getline(buffer,BUFF_SIZE); // next line should be translation vector
+          tokenize(vs,buffer);
+            while (vs.size() == 6) {
+              x = atof((char*)vs[3].erase(0,1).c_str());
+              y = atof((char*)vs[4].c_str());
+              z = atof((char*)vs[5].c_str());
+
+              translationVectors[numTranslationVectors++].Set(x, y, z);
+              if (!ifs.getline(buffer,BUFF_SIZE))
+                break;
+              tokenize(vs,buffer);
+            }
+        }
+
+        if (strstr(buffer, "SpaceGroup") != NULL) {
+          tokenize(vs, buffer);
+          if (vs.size() != 5)
+            continue; // invalid space group
+          setSpaceGroup = true;
+          sg = SpaceGroup::GetSpaceGroup(vs[4]); // remove the initial " character
         }
 
         // atom information
@@ -222,6 +256,16 @@ namespace OpenBabel
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
     */
+
+    if (numTranslationVectors > 0) {
+      OBUnitCell* uc = new OBUnitCell;
+      uc->SetData(translationVectors[0], translationVectors[1], translationVectors[2]);
+      uc->SetOrigin(fileformatInput);
+      if (setSpaceGroup) {
+        uc->SetSpaceGroup(sg);
+      }
+      mol.SetData(uc);
+    }
 
     return(true);
   }
