@@ -708,19 +708,25 @@ namespace OpenBabel
     vector3 fragdir = GetNewBondVector(b); // b is at origin
     vector3 crossdir;
     if (!connectedFrag) { // nothing bonded to b, like a Cp ring
-      vector3 currentDir, vrand;
+      vector3 firstDir, secondDir;
       // Try finding the next atom
       OBAtom *nextAtom = mol.GetAtom(b->GetIdx() + 1);
       if (nextAtom) {
-        currentDir = nextAtom->GetVector() - b->GetVector();
-        vrand.randomUnitVector(); // pick something at random
+        firstDir = nextAtom->GetVector() - b->GetVector();
+        // we'll try finding another atom
+        OBAtom *secondAtom = mol.GetAtom(b->GetIdx() + 2);
+        if (secondAtom)
+          secondDir = secondAtom->GetVector() - b->GetVector();
+        else
+          secondDir.randomUnitVector(); // pick something at random
         // but not too shallow, or the cross product won't work well
-        double angle = fabs(acos(dot(currentDir, vrand)) * RAD_TO_DEG);
+        double angle = fabs(acos(dot(firstDir, secondDir)) * RAD_TO_DEG);
         while (angle < 45.0 || angle > 135.0) {
-          vrand.randomUnitVector();
-          angle = fabs(acos(dot(currentDir, vrand)) * RAD_TO_DEG);
+          secondDir.randomUnitVector();
+          angle = fabs(acos(dot(firstDir, secondDir)) * RAD_TO_DEG);
         }
-        crossdir = cross(currentDir, vrand); // so find a perpendicular, given the random vector (this doesn't matter here)
+        // Now we find a perpendicular vector to the fragment
+        crossdir = cross(firstDir, secondDir);
         fragdir = crossdir;
       }
     }
