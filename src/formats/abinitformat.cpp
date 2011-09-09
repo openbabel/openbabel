@@ -118,9 +118,9 @@ namespace OpenBabel
           ifs.getline(buffer,BUFF_SIZE);
           tokenize(vs, buffer);
           while(vs.size() == 3) {
-            x = atof(vs[1].c_str());
-            y = atof(vs[2].c_str());
-            z = atof(vs[3].c_str());
+            x = atof(vs[0].c_str()) * unit;
+            y = atof(vs[1].c_str()) * unit;
+            z = atof(vs[2].c_str()) * unit;
 
             atomPositions.push_back(vector3(x, y, z));
             // get next line
@@ -198,17 +198,16 @@ namespace OpenBabel
       double *coordinates = new double[natom * 3];
       for (int j = 0; j < natom; ++j) {
         vector3 currentPosition = atomPositions[i*natom + j];
-        cout << currentPosition << endl;
         coordinates[j*3] = currentPosition.x();
         coordinates[j*3 + 1] = currentPosition.y();
         coordinates[j*3 + 2] = currentPosition.z();
       }
       mol.AddConformer(coordinates);
     }
-    mol.DeleteConformer(0); // first one is created by EndModify, bunch of 0s
+    // Delete first conformer, created by EndModify, bunch of 0s
+    mol.DeleteConformer(0);
+    // Set geometry to last one
     mol.SetConformer(mol.NumConformers() - 1);
-
-    cout << atomPositions.size() << " " << mol.NumConformers() << endl;
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
