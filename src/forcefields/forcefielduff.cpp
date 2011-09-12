@@ -731,6 +731,11 @@ namespace OpenBabel {
     }
     if (b->GetValence() > 4) {
       coordination = b->GetValence();
+    } else {
+      int coordDifference = ipar - b->GetValence();
+      if (abs(coordDifference) > 2)
+        // low valent, but very different than expected by ipar
+        coordination = b->GetValence() - 1; // 4 coordinate == sp3
     }
     return coordination;
   }
