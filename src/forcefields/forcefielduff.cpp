@@ -882,7 +882,9 @@ namespace OpenBabel {
       if (bond->IsAromatic())
         bondorder = 1.5;
       // e.g., in Cp rings, may not be "aromatic" by OB
-      if (a->GetType()[2] == 'R' && b->GetType()[2] == 'R')
+      // but check for explicit hydrogen counts (e.g., biphenyl inter-ring is not aromatic)
+      if ((a->GetType()[2] == 'R' && b->GetType()[2] == 'R')
+          && (a->ExplicitHydrogenCount() == 1 && b->ExplicitHydrogenCount() == 1))
         bondorder = 1.5;
       if (bond->IsAmide())
         bondorder = 1.41;
