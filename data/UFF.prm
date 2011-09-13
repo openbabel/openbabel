@@ -28,7 +28,7 @@ atom [#6]     C_3         Generic sp3 C
 atom [C^2]    C_2         sp2 non-aromatic C
 atom [C^1]    C_1         sp hybridized C
 atom [c]      C_R         aromatic C
-atom [#6Hr5]  C_R         aromatic C (cyclopentadienyl ring)
+atom [#6H1r5] C_R         aromatic C (cyclopentadienyl ring)
 atom [#7]     N_3         Generic sp3 N
 atom [N^2]    N_2         sp2 non-aromatic N
 atom [N^1]    N_1         sp hybridized N
@@ -147,7 +147,7 @@ atom [#102]    No6+3
 atom [#103]    Lw6+3
 
 # Atom          r1	theta0	x1	D1	zeta	Z1	Vi	Uj	Xi	Hard	Radius
-param Du  0.7   180 0 0 15	0.0	0	0	9.66	14.92	0.7
+param Du  0.1   180 0.4 5000 12	0.9	0 0 9.66	14.92	0.7
 param H_	0.354	180	2.886	0.044	12	0.712	0	0	4.528	6.9452	0.371
 param H_b	0.46	83.5	2.886	0.044	12	0.712	0	0	4.528	6.9452	0.371
 param He4+4	0.849	90	2.362	0.056	15.24	0.098	0	0	9.66	14.92	1.3

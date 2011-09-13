@@ -881,6 +881,9 @@ namespace OpenBabel {
       bondorder = bond->GetBondOrder();
       if (bond->IsAromatic())
         bondorder = 1.5;
+      // e.g., in Cp rings, may not be "aromatic" by OB
+      if (a->GetType()[2] == 'R' && b->GetType()[2] == 'R')
+        bondorder = 1.5;
       if (bond->IsAmide())
         bondorder = 1.41;
 
@@ -1067,6 +1070,27 @@ namespace OpenBabel {
       else { // normal coordination: sp, sp2, sp3, square planar, octahedral
         anglecalc.coord = coordination;
         anglecalc.theta0 = parameterB->_dpar[1];
+        if (coordination != parameterB->_ipar[0]) {
+          switch (coordination)
+            {
+            case 1:
+              anglecalc.theta0 = 180.0;
+              break;
+            case 2:
+              anglecalc.theta0 = 120.0;
+              break;
+            case 4: // sq. planar
+            case 5: // axial / equatorial
+            case 6: // octahedral
+            case 7: // axial equatorial
+              anglecalc.theta0 = 90.0;
+              break;
+            case 3: // tetrahedral
+            default:
+              anglecalc.theta0 = 109.5;
+              break;
+            }
+        }
         anglecalc.cosT0 = cos(anglecalc.theta0 * DEG_TO_RAD);
         sinT0 = sin(anglecalc.theta0 * DEG_TO_RAD);
         anglecalc.c2 = 1.0 / (4.0 * sinT0 * sinT0);
