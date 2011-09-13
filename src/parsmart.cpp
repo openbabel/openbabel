@@ -2694,16 +2694,16 @@ namespace OpenBabel
           std::vector<int> nbrs;
 
           BondSpec bs;
-          for (int k = 0; k < pat->bcount; ++k) {
+          for (int k = 0; k < pat->bcount; ++k)
             // Iterate over the bonds in the order in which they were parsed.
             // In other words, ring closure bonds will be handled in the order
             // of their corresponding ring opening. This is important for stereo.
             bs = pat->bond[pat->bond_parse_order[k]];
-            if (bs.dst == j)
-              nbrs.push_back(bs.src);
-            else if (bs.src == j)
-              nbrs.push_back(bs.dst);
-          }
+
+          if (bs.dst == j)
+            nbrs.push_back(bs.src);
+          else if (bs.src == j)
+            nbrs.push_back(bs.dst);
 
           if (nbrs.size() < 3)
             continue;
