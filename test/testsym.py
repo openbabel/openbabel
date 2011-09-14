@@ -195,7 +195,7 @@ class TestConversions(BaseTest):
 # The bond parities are irrelevant/meaningless for the next two
 ([0, 0, 0, 0, 1], []), # 'Cl[C@@](Br)(F)I'
 ([0, 0, 0, 0, 2], []), # 'Cl[C@](Br)(F)I'
-([0, 0, 0, 0, 3], [0, 0, 0, 4]), # 'ClC(Br)(F)I'
+([0, 0, 0, 0, 3], [0, 0, 0, 0]), # 'ClC(Br)(F)I'
 ([0, 0, 0, 1], []), # 'O=[S@@](Cl)I),
 ([0, 0, 0, 2], []), # 'O=[S@](Cl)I),
 ([0, 0, 0, 3], []), # 'O=S(Cl)I),
@@ -214,7 +214,8 @@ class TestConversions(BaseTest):
             self.assertEqual(atompar, parities)
             if bondstereo:
                 self.assertEqual(bondstereo, stereos)
-            output, error = run_exec(output, "babel -isdf -ocan")
+            output, error = run_exec(output, "obabel -isdf -as -ocan")
+            # "-as" is necessary to identify the unknown stereo
             self.assertEqual(output.rstrip(), can)
 
     def testXYZtoSMILESand3DMDL(self):

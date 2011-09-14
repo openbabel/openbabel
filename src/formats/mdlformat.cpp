@@ -616,6 +616,9 @@ namespace OpenBabel
         mol.SetDimension(3);
       // use 3D coordinates to determine stereochemistry
       StereoFrom3D(&mol);
+      if (pConv->IsOption("s", OBConversion::INOPTIONS)) { // Use the parities for tet stereo instead
+        TetStereoFromParity(mol, parities, true); // True means "delete existing TetStereo first"
+      }
     } else
     if (mol.Has2D()) {
       if (!setDimension)
