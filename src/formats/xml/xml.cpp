@@ -183,7 +183,7 @@ namespace OpenBabel
 
     //**Parse
     int result=1;
-    while(GetInStream()->good() && (_SkipNextRead || (result=xmlTextReaderRead(_reader))==1)) //read may not be called
+    while(!GetInStream()->bad() && (_SkipNextRead || (result=xmlTextReaderRead(_reader))==1)) //read may not be called
     {
       _SkipNextRead=false;
       if(_LookingForNamespace)
