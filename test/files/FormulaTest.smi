@@ -47,7 +47,7 @@ O[S](=O)=O	radical bug#1938652 HSO3
 OS(=O)=O	H added on S        H2SO3
 O[S]=O	 	radical             HSO2
 S=O		SO molecule         SO
-Using the --addformula option "Append formula to title"
+Using the --append formula option
 allows a quick comparison of the expected formula, given above, and the one calculated by OpenBabel.
 The formula should be independent of whether the 
 -h option "Add hydrogens (make explicit)"  is used or not.  

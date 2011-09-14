@@ -1520,8 +1520,6 @@ namespace OpenBabel
     //      atom->UnsetAromatic();
 
     //    OBBond *bond;
-    //    vector<OBBond*>::iterator k;
-    //    for (bond = BeginBond(k);bond;bond = NextBond(k))
     //      bond->UnsetAromatic();
 
     // Always remove angle and torsion data, since they will interfere with the iterators
@@ -2347,8 +2345,11 @@ namespace OpenBabel
 
 
   bool OBMol::AssignSpinMultiplicity(bool NoImplicitH)
-  {
-    if (HasSpinMultiplicityAssigned())
+  { 
+    // The following functions now uses the flag OB_ATOMSPIN_MOL rather than OB_TSPIN_MOL.
+    // OB_TSPIN_MOL is set when the total spin of a molecule is set, which prevented
+    // the hydrogen deficiency of individual atoms being set in this function.
+    if (HasSpinMultiplicityAssigned())//
       return(true);
 
     SetSpinMultiplicityAssigned();
@@ -2359,13 +2360,12 @@ namespace OpenBabel
     if(NumBonds()==0 && NumAtoms()!=1)
       {
         obErrorLog.ThrowError(__FUNCTION__,
-                              "Did not run OpenBabel::AssignSpinMultiplicity on molecule with no bonds", obAuditMsg);
+                  "Did not run OpenBabel::AssignSpinMultiplicity on molecule with no bonds", obAuditMsg);
         return true;
       }
 
     obErrorLog.ThrowError(__FUNCTION__,
-                          "Ran OpenBabel::AssignSpinMultiplicity",
-                          obAuditMsg);
+                  "Ran OpenBabel::AssignSpinMultiplicity", obAuditMsg);
 
     OBAtom *atom;
     int diff;

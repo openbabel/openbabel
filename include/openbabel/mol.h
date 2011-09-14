@@ -102,7 +102,9 @@ namespace OpenBabel
 #define OB_PATTERN_STRUCTURE     (1<<19)
   //! Largest Set of Smallest Rings (LSSR) done. See OBRing and OBMol::FindLSSR
 #define OB_LSSR_MOL              (1<<20)
-  // flags 21-32 unspecified
+  //! SpinMultiplicities on atoms have been set in OBMol::AssignSpinMultiplicity()
+#define OB_ATOMSPIN_MOL          (1<<21)
+  // flags 22-32 unspecified
 #define OB_CURRENT_CONFORMER	 -1
 
   // class introduction in mol.cpp
@@ -399,7 +401,7 @@ namespace OpenBabel
     void   SetHydrogensAdded()       { SetFlag(OB_H_ADDED_MOL);     }
     void   SetCorrectedForPH()       { SetFlag(OB_PH_CORRECTED_MOL);}
     void   SetAromaticCorrected()    { SetFlag(OB_AROM_CORRECTED_MOL);}
-    void   SetSpinMultiplicityAssigned(){ SetFlag(OB_TSPIN_MOL);    }
+    void   SetSpinMultiplicityAssigned(){ SetFlag(OB_ATOMSPIN_MOL);    }
     void   SetFlags(int flags)       { _flags = flags;              }
 
     void   UnsetAromaticPerceived()  { _flags &= (~(OB_AROMATIC_MOL));   }
@@ -584,7 +586,7 @@ namespace OpenBabel
     //! Has the molecule been corrected for pH by CorrectForPH?
     bool IsCorrectedForPH() { return(HasFlag(OB_PH_CORRECTED_MOL));     }
     //! Has total spin multiplicity been assigned?
-    bool HasSpinMultiplicityAssigned() { return(HasFlag(OB_TSPIN_MOL)); }
+    bool HasSpinMultiplicityAssigned() { return(HasFlag(OB_ATOMSPIN_MOL)); }
     //! Is this molecule chiral?
     bool IsChiral();
     //! Are there any atoms in this molecule?
