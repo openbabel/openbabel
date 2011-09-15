@@ -38,6 +38,7 @@ set(formats_compchem
       qchemformat
       turbomoleformat
       vaspformat
+      xsfformat
       zindoformat
   )
 
@@ -77,6 +78,7 @@ set(formats_misc
       freefracformat
       ghemicalformat
       gromos96format
+      groformat
       mmcifformat
       mmodformat
       moldenformat

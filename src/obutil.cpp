@@ -432,7 +432,9 @@ namespace OpenBabel
   }
 
   //! Transform the supplied vector<OBInternalCoord*> into cartesian and update
-  //! the OBMol accordingly.
+  //! the OBMol accordingly. The size of supplied internal coordinate vector
+  //! has to be the same as the number of atoms in molecule (+ NULL in the
+  //! beginning).
   //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#zmatrixCoordinatesIntoCartesianCoordinates">blue-obelisk:zmatrixCoordinatesIntoCartesianCoordinates</a>
   void InternalToCartesian(std::vector<OBInternalCoord*> &vic,OBMol &mol)
   {
@@ -444,6 +446,18 @@ namespace OpenBabel
 
     if (vic.empty())
       return;
+
+    if (vic[0] != NULL) {
+      std::vector<OBInternalCoord*>::iterator it = vic.begin();
+      vic.insert(it, NULL);
+    }
+
+    if (vic.size() != mol.NumAtoms() + 1) {
+      string error = "Number of internal coordinates is not the same as";
+      error += " the number of atoms in molecule";
+      obErrorLog.ThrowError(__FUNCTION__, error, obError);
+      return;
+    }
 
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::InternalToCartesian", obAuditMsg);
