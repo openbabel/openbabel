@@ -59,7 +59,7 @@ public:
     "InChI format\n"
     "IUPAC/NIST molecular identifier\n\n"
 
-    "Write Options, e.g. -xat\n"
+    "Write Options, e.g. -xa\n"
     "    Standard InChI is written unless certain InChI options are used\n \n"
     " K output InChIKey only\n"
     " t add molecule name after InChI\n"
@@ -71,6 +71,7 @@ public:
     "    \'Metal was disconnected\'\n"
     " a output auxiliary information\n"
     " l display InChI log\n"
+    " r recalculate InChI; normally an input InChI is reused\n"
     " s recalculate wedge and hash bonds(2D structures only)\n \n"
     "    **Uniqueness options** (see also ``--unique`` and ``--sort`` which are more versatile)\n"
     " u output only unique molecules\n"
@@ -183,6 +184,7 @@ private:
 private:
   OBAtom* GetCommonAtom(OBBond* pb1, OBBond* pb2);
   char* GetInChIOptions(OBConversion* pConv, bool Reading);
+  void SaveInchi(OBMol* pmol, const std::string& s);
 
   typedef	set<string, InchiLess> nSet;
   nSet allInchi;

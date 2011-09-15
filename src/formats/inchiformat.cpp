@@ -53,6 +53,10 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       return false; //eof
   }while(inchi.size()<9); //ignore empty "InChI=" or "InChI=1/"
 
+  // Save the original inchi to be used on output,
+  // avoiding conversion to and from OBMol
+  SaveInchi(pmol, inchi);
+
   //Set up input struct
   inchi_InputINCHI inp;
 
@@ -246,9 +250,10 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   //Although the OBMol may be altered, it is restored before exit.
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   if(pmol==NULL) return false;
-  if(pmol->NumAtoms()==0) return true; // PR#2864334
+    OBMol& mol = *pmol;
 
-  OBMol& mol = *pmol;
+  string ostring; //the inchi string
+  inchi_Output inout;
 
   stringstream molID;
   if(strlen(mol.GetTitle())==0)
@@ -258,235 +263,248 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   if(pConv->GetOutputIndex()==1)
     firstID=molID.str();
 
-  inchi_Input inp;
-  memset(&inp,0,sizeof(inchi_Input));
-
-  // Prepare stereo information for 2D, 3D
-  map<OBBond*, OBStereo::BondDirection> updown;
-  map<OBBond*, OBStereo::Ref> from;
-  map<OBBond*, OBStereo::Ref>::const_iterator from_cit;
-  if (mol.GetDimension() == 3 || (mol.GetDimension()==2 && pConv->IsOption("s", pConv->OUTOPTIONS)!=NULL))
-    TetStereoToWedgeHash(mol, updown, from);
-  set<OBBond*> unspec_ctstereo = GetUnspecifiedCisTrans(mol);
-
-  OBAtom* patom;
-  vector<inchi_Atom> inchiAtoms(mol.NumAtoms());
-  vector<OBNodeBase*>::iterator itr;
-  for (patom = mol.BeginAtom(itr);patom;patom = mol.NextAtom(itr))
+  //Use any existing InChI, probably from an InChIformat input,
+  //in preference to determining it from the structure.
+  if(!pConv->IsOption("r") && pmol->HasData("inchi"))
   {
-    //OB atom index starts at 1; inchi atom index starts at 0
-    inchi_Atom& iat = inchiAtoms[patom->GetIdx()-1];
-    memset(&iat,0,sizeof(inchi_Atom));
-
-    iat.x = patom->GetX();
-    iat.y = patom->GetY();
-    iat.z = patom->GetZ();
-
-    int nbonds = 0;
-    vector<OBBond*>::iterator itr;
-    OBBond *pbond;
-    for (pbond = patom->BeginBond(itr);pbond;pbond = patom->NextBond(itr))
-    {
-      from_cit = from.find(pbond);
-      // Do each bond only once. If the bond is a stereobond
-      // ensure that the BeginAtom is the 'from' atom.
-      if( (from_cit==from.end() && patom->GetIdx() != pbond->GetBeginAtomIdx()) ||
-          (from_cit!=from.end() && from_cit->second != patom->GetId()) )
-        continue;
-
-      iat.neighbor[nbonds]      = pbond->GetNbrAtomIdx(patom)-1;
-      int bo = pbond->GetBO();
-      if(bo==5)
-        bo=4;
-      iat.bond_type[nbonds]     = bo;
-
-      OBStereo::BondDirection stereo = OBStereo::NotStereo;
-      if (mol.GetDimension()==2 && pConv->IsOption("s", pConv->OUTOPTIONS)==NULL) {
-        if (pbond->IsWedge())
-          stereo = OBStereo::UpBond;
-        else if (pbond->IsHash())
-          stereo = OBStereo::DownBond;
-        else if (pbond->IsWedgeOrHash())
-          stereo = OBStereo::UnknownDir;
-      } 
-      else if (from_cit!=from.end()) { // It's a stereo bond
-        stereo = updown[pbond];
-      }
-
-      if (mol.GetDimension() != 0) {
-        inchi_BondStereo2D bondstereo2D = INCHI_BOND_STEREO_NONE;
-        if (stereo != OBStereo::NotStereo) {
-          switch (stereo) {
-            case OBStereo::UpBond:
-              bondstereo2D = INCHI_BOND_STEREO_SINGLE_1UP;
-              break;
-            case OBStereo::DownBond:
-              bondstereo2D = INCHI_BOND_STEREO_SINGLE_1DOWN;
-              break;
-            case OBStereo::UnknownDir:
-              bondstereo2D = INCHI_BOND_STEREO_SINGLE_1EITHER;
-              break;
-            default:
-              ; // INCHI_BOND_STEREO_NONE
-          }
-        }
-        // Is it a double bond with unspecified stereochemistry?
-        if (unspec_ctstereo.find(pbond)!=unspec_ctstereo.end())
-          bondstereo2D = INCHI_BOND_STEREO_DOUBLE_EITHER;
-        iat.bond_stereo[nbonds] = bondstereo2D;
-      }
-      nbonds++;
-    }
-
-    strcpy(iat.elname,etab.GetSymbol(patom->GetAtomicNum()));
-    iat.num_bonds = nbonds;
-    //Let inchi add implicit Hs unless the atom is known not to have any
-    iat.num_iso_H[0] = patom->HasNoHForced() || patom->IsMetal() ? 0 : -1;
-    if(patom->GetIsotope())
-    {
-      iat.isotopic_mass = ISOTOPIC_SHIFT_FLAG +
-        patom->GetIsotope() - (int)(etab.GetMass(patom->GetAtomicNum())+0.5);
-    }
-    else
-      iat.isotopic_mass = 0 ;
-    iat.radical = patom->GetSpinMultiplicity();
-    //InChI doesn't recognize spin miltiplicity of 4 or 5 (as used in OB for CH and C atom)
-    if(iat.radical>=4)
-    {
-      iat.radical=0;
-      iat.num_iso_H[0] = 0; //no implicit hydrogens
-    }
-    iat.charge  = patom->GetFormalCharge();
+    //All origins for the data are currently acceptable.
+    //Possibly this may need to be restricted to data with a local origin.
+    ostring = pmol->GetData("inchi")->GetValue();
   }
-
-  inp.atom = &inchiAtoms[0];
-
-  vector<inchi_Stereo0D> stereoVec;
-
-  if(mol.GetDimension()==0)
+  else
   {
-    std::vector<OBGenericData*>::iterator data;
-    std::vector<OBGenericData*> stereoData = mol.GetAllData(OBGenericDataType::StereoData);
-    for (data = stereoData.begin(); data != stereoData.end(); ++data) {
-      if (static_cast<OBStereoBase*>(*data)->GetType() == OBStereo::Tetrahedral) {
-        OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
-        OBTetrahedralStereo::Config config = ts->GetConfig();
+    //Determine InChI from the chemical structure
+    if(pmol->NumAtoms()==0) return true; // PR#2864334
 
-        if(config.specified) {
-          inchi_Stereo0D stereo;
-          stereo.type = INCHI_StereoType_Tetrahedral;
-          stereo.central_atom = static_cast<AT_NUM> (config.center);
+    inchi_Input inp;
+    memset(&inp,0,sizeof(inchi_Input));
 
-          bool has_implicit = false; // Does chirality involve implicit lone pair?
-          if (config.from == OBStereo::ImplicitRef || config.refs[0] == OBStereo::ImplicitRef) {
-            has_implicit = true;
-            config = ts->GetConfig(OBStereo::ImplicitRef); // Make the 'from' atom the lone pair
-          }
+    // Prepare stereo information for 2D, 3D
+    map<OBBond*, OBStereo::BondDirection> updown;
+    map<OBBond*, OBStereo::Ref> from;
+    map<OBBond*, OBStereo::Ref>::const_iterator from_cit;
+    if (mol.GetDimension() == 3 || (mol.GetDimension()==2 && pConv->IsOption("s", pConv->OUTOPTIONS)!=NULL))
+      TetStereoToWedgeHash(mol, updown, from);
+    set<OBBond*> unspec_ctstereo = GetUnspecifiedCisTrans(mol);
 
-          if (!has_implicit)
-            stereo.neighbor[0] = static_cast<AT_NUM> (config.from);
-          else
-            stereo.neighbor[0] = stereo.central_atom;
-          for(int i=0; i<3; ++i)
-            stereo.neighbor[i + 1] = static_cast<AT_NUM> (config.refs[i]);
-
-          if (config.winding == OBStereo::Clockwise)
-            stereo.parity = INCHI_PARITY_EVEN;
-          else
-            stereo.parity = INCHI_PARITY_ODD;
-
-          stereoVec.push_back(stereo);
-        }
-      }
-    }
-
-    //Double bond stereo (still inside 0D section)
-    //Currently does not handle cumulenes
-    for (data = stereoData.begin(); data != stereoData.end(); ++data) {
-      if (static_cast<OBStereoBase*>(*data)->GetType() == OBStereo::CisTrans) {
-        OBCisTransStereo *ts = dynamic_cast<OBCisTransStereo*>(*data);
-        OBCisTransStereo::Config config = ts->GetConfig();
-
-        if(config.specified) {
-          inchi_Stereo0D stereo;
-          stereo.central_atom = NO_ATOM;
-          stereo.type = INCHI_StereoType_DoubleBond;
-          OBStereo::Refs refs = config.refs;
-          unsigned long start = refs[0];
-          if (refs[0]==OBStereo::ImplicitRef)
-            start = refs[1];
-          unsigned long end = refs[3];
-          if (refs[3]==OBStereo::ImplicitRef)
-            end = refs[2];
-
-          stereo.neighbor[0] = static_cast<AT_NUM> (start);
-          stereo.neighbor[1] = static_cast<AT_NUM> (config.begin);
-          stereo.neighbor[2] = static_cast<AT_NUM> (config.end);
-          stereo.neighbor[3] = static_cast<AT_NUM> (end);
-
-          if (ts->IsTrans(start, end))
-            stereo.parity = INCHI_PARITY_EVEN;
-          else
-            stereo.parity = INCHI_PARITY_ODD;
-
-          stereoVec.push_back(stereo);
-        }
-      }
-    }
-  }
-
-  char* opts = GetInChIOptions(pConv, false);
-  inp.szOptions = opts;
-
-  inp.num_atoms = mol.NumAtoms();
-  inp.num_stereo0D = stereoVec.size();
-  if(inp.num_stereo0D>0)
-    inp.stereo0D = &stereoVec[0];
-
-  inchi_Output inout;
-  memset(&inout,0,sizeof(inchi_Output));
-
-  int ret = GetINCHI(&inp, &inout);
-
-  delete[] opts;
-  if(ret!=inchi_Ret_OKAY)
-  {
-    if(inout.szMessage)
+    OBAtom* patom;
+    vector<inchi_Atom> inchiAtoms(mol.NumAtoms());
+    vector<OBNodeBase*>::iterator itr;
+    for (patom = mol.BeginAtom(itr);patom;patom = mol.NextAtom(itr))
     {
-      string mes(inout.szMessage);
-      if(pConv->IsOption("w"))
+      //OB atom index starts at 1; inchi atom index starts at 0
+      inchi_Atom& iat = inchiAtoms[patom->GetIdx()-1];
+      memset(&iat,0,sizeof(inchi_Atom));
+
+      iat.x = patom->GetX();
+      iat.y = patom->GetY();
+      iat.z = patom->GetZ();
+
+      int nbonds = 0;
+      vector<OBBond*>::iterator itr;
+      OBBond *pbond;
+      for (pbond = patom->BeginBond(itr);pbond;pbond = patom->NextBond(itr))
       {
-        string::size_type pos;
-        string targ[4];
-        targ[0] = "Omitted undefined stereo";
-        targ[1] = "Charges were rearranged";
-        targ[2] = "Proton(s) added/removed";
-        targ[3] = "Metal was disconnected";
-        for(int i=0;i<4;++i)
-        {
-          pos = mes.find(targ[i]);
-          if(pos!=string::npos)
-          {
-            mes.erase(pos,targ[i].size());
-            if(mes[pos]==';')
-              mes[pos]=' ';
+        from_cit = from.find(pbond);
+        // Do each bond only once. If the bond is a stereobond
+        // ensure that the BeginAtom is the 'from' atom.
+        if( (from_cit==from.end() && patom->GetIdx() != pbond->GetBeginAtomIdx()) ||
+            (from_cit!=from.end() && from_cit->second != patom->GetId()) )
+          continue;
+
+        iat.neighbor[nbonds]      = pbond->GetNbrAtomIdx(patom)-1;
+        int bo = pbond->GetBO();
+        if(bo==5)
+          bo=4;
+        iat.bond_type[nbonds]     = bo;
+
+        OBStereo::BondDirection stereo = OBStereo::NotStereo;
+        if (mol.GetDimension()==2 && pConv->IsOption("s", pConv->OUTOPTIONS)==NULL) {
+          if (pbond->IsWedge())
+            stereo = OBStereo::UpBond;
+          else if (pbond->IsHash())
+            stereo = OBStereo::DownBond;
+          else if (pbond->IsWedgeOrHash())
+            stereo = OBStereo::UnknownDir;
+        } 
+        else if (from_cit!=from.end()) { // It's a stereo bond
+          stereo = updown[pbond];
+        }
+
+        if (mol.GetDimension() != 0) {
+          inchi_BondStereo2D bondstereo2D = INCHI_BOND_STEREO_NONE;
+          if (stereo != OBStereo::NotStereo) {
+            switch (stereo) {
+              case OBStereo::UpBond:
+                bondstereo2D = INCHI_BOND_STEREO_SINGLE_1UP;
+                break;
+              case OBStereo::DownBond:
+                bondstereo2D = INCHI_BOND_STEREO_SINGLE_1DOWN;
+                break;
+              case OBStereo::UnknownDir:
+                bondstereo2D = INCHI_BOND_STEREO_SINGLE_1EITHER;
+                break;
+              default:
+                ; // INCHI_BOND_STEREO_NONE
+            }
+          }
+          // Is it a double bond with unspecified stereochemistry?
+          if (unspec_ctstereo.find(pbond)!=unspec_ctstereo.end())
+            bondstereo2D = INCHI_BOND_STEREO_DOUBLE_EITHER;
+          iat.bond_stereo[nbonds] = bondstereo2D;
+        }
+        nbonds++;
+      }
+
+      strcpy(iat.elname,etab.GetSymbol(patom->GetAtomicNum()));
+      iat.num_bonds = nbonds;
+      //Let inchi add implicit Hs unless the atom is known not to have any
+      iat.num_iso_H[0] = patom->HasNoHForced() || patom->IsMetal() ? 0 : -1;
+      if(patom->GetIsotope())
+      {
+        iat.isotopic_mass = ISOTOPIC_SHIFT_FLAG +
+          patom->GetIsotope() - (int)(etab.GetMass(patom->GetAtomicNum())+0.5);
+      }
+      else
+        iat.isotopic_mass = 0 ;
+      iat.radical = patom->GetSpinMultiplicity();
+      //InChI doesn't recognize spin miltiplicity of 4 or 5 (as used in OB for CH and C atom)
+      if(iat.radical>=4)
+      {
+        iat.radical=0;
+        iat.num_iso_H[0] = 0; //no implicit hydrogens
+      }
+      iat.charge  = patom->GetFormalCharge();
+    }
+
+    inp.atom = &inchiAtoms[0];
+
+    vector<inchi_Stereo0D> stereoVec;
+
+    if(mol.GetDimension()==0)
+    {
+      std::vector<OBGenericData*>::iterator data;
+      std::vector<OBGenericData*> stereoData = mol.GetAllData(OBGenericDataType::StereoData);
+      for (data = stereoData.begin(); data != stereoData.end(); ++data) {
+        if (static_cast<OBStereoBase*>(*data)->GetType() == OBStereo::Tetrahedral) {
+          OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
+          OBTetrahedralStereo::Config config = ts->GetConfig();
+
+          if(config.specified) {
+            inchi_Stereo0D stereo;
+            stereo.type = INCHI_StereoType_Tetrahedral;
+            stereo.central_atom = static_cast<AT_NUM> (config.center);
+
+            bool has_implicit = false; // Does chirality involve implicit lone pair?
+            if (config.from == OBStereo::ImplicitRef || config.refs[0] == OBStereo::ImplicitRef) {
+              has_implicit = true;
+              config = ts->GetConfig(OBStereo::ImplicitRef); // Make the 'from' atom the lone pair
+            }
+
+            if (!has_implicit)
+              stereo.neighbor[0] = static_cast<AT_NUM> (config.from);
+            else
+              stereo.neighbor[0] = stereo.central_atom;
+            for(int i=0; i<3; ++i)
+              stereo.neighbor[i + 1] = static_cast<AT_NUM> (config.refs[i]);
+
+            if (config.winding == OBStereo::Clockwise)
+              stereo.parity = INCHI_PARITY_EVEN;
+            else
+              stereo.parity = INCHI_PARITY_ODD;
+
+            stereoVec.push_back(stereo);
           }
         }
       }
-      Trim(mes);
-      if(!mes.empty())
-        obErrorLog.ThrowError("InChI code", molID.str() + ':' + mes, obWarning);
+
+      //Double bond stereo (still inside 0D section)
+      //Currently does not handle cumulenes
+      for (data = stereoData.begin(); data != stereoData.end(); ++data) {
+        if (static_cast<OBStereoBase*>(*data)->GetType() == OBStereo::CisTrans) {
+          OBCisTransStereo *ts = dynamic_cast<OBCisTransStereo*>(*data);
+          OBCisTransStereo::Config config = ts->GetConfig();
+
+          if(config.specified) {
+            inchi_Stereo0D stereo;
+            stereo.central_atom = NO_ATOM;
+            stereo.type = INCHI_StereoType_DoubleBond;
+            OBStereo::Refs refs = config.refs;
+            unsigned long start = refs[0];
+            if (refs[0]==OBStereo::ImplicitRef)
+              start = refs[1];
+            unsigned long end = refs[3];
+            if (refs[3]==OBStereo::ImplicitRef)
+              end = refs[2];
+
+            stereo.neighbor[0] = static_cast<AT_NUM> (start);
+            stereo.neighbor[1] = static_cast<AT_NUM> (config.begin);
+            stereo.neighbor[2] = static_cast<AT_NUM> (config.end);
+            stereo.neighbor[3] = static_cast<AT_NUM> (end);
+
+            if (ts->IsTrans(start, end))
+              stereo.parity = INCHI_PARITY_EVEN;
+            else
+              stereo.parity = INCHI_PARITY_ODD;
+
+            stereoVec.push_back(stereo);
+          }
+        }
+      }
     }
 
-    if(ret!=inchi_Ret_WARNING)
+    char* opts = GetInChIOptions(pConv, false);
+    inp.szOptions = opts;
+
+    inp.num_atoms = mol.NumAtoms();
+    inp.num_stereo0D = stereoVec.size();
+    if(inp.num_stereo0D>0)
+      inp.stereo0D = &stereoVec[0];
+
+    //inchi_Output inout; now declared in block above
+    memset(&inout,0,sizeof(inchi_Output));
+
+    int ret = GetINCHI(&inp, &inout);
+
+    delete[] opts;
+    if(ret!=inchi_Ret_OKAY)
     {
-      obErrorLog.ThrowError("InChI code", "InChI generation failed", obError);
-      FreeStdINCHI(&inout);
-      return false;
-    }
-  }
+      if(inout.szMessage)
+      {
+        string mes(inout.szMessage);
+        if(pConv->IsOption("w"))
+        {
+          string::size_type pos;
+          string targ[4];
+          targ[0] = "Omitted undefined stereo";
+          targ[1] = "Charges were rearranged";
+          targ[2] = "Proton(s) added/removed";
+          targ[3] = "Metal was disconnected";
+          for(int i=0;i<4;++i)
+          {
+            pos = mes.find(targ[i]);
+            if(pos!=string::npos)
+            {
+              mes.erase(pos,targ[i].size());
+              if(mes[pos]==';')
+                mes[pos]=' ';
+            }
+          }
+        }
+        Trim(mes);
+        if(!mes.empty())
+          obErrorLog.ThrowError("InChI code", molID.str() + ':' + mes, obWarning);
+      }
 
-  string ostring = inout.szInChI;
+      if(ret!=inchi_Ret_WARNING)
+      {
+        obErrorLog.ThrowError("InChI code", "InChI generation failed", obError);
+        FreeStdINCHI(&inout);
+        return false;
+      }
+    }
+    ostring = inout.szInChI;
+  }
 
   //Truncate the InChI if requested
   const char* truncspec = pConv->IsOption("T");
@@ -499,14 +517,14 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   if(pConv->IsOption("K")) //Generate InChIKey and add after InChI on same line
   {
     char szINCHIKey[28];
-    GetStdINCHIKeyFromStdINCHI(inout.szInChI, szINCHIKey);
+    GetStdINCHIKeyFromStdINCHI(ostring.c_str(), szINCHIKey);
     ostring = szINCHIKey;
   }
 
   if(pConv->IsOption("t"))
   {
     ostring += ' ';
-    ostring +=  mol.GetTitle();
+    ostring +=  pmol->GetTitle();
   }
 
   ostream &ofs = *pConv->GetOutStream();
@@ -765,6 +783,14 @@ void InChIFormat::RemoveLayer (std::string& inchi, const std::string& str, bool 
     inchi.erase(pos, (all ? string::npos : inchi.find('/', pos+1) - pos));
 }
 
+void InChIFormat::SaveInchi(OBMol* pmol, const std::string& s)
+{
+  OBPairData* dp = new OBPairData;
+  dp->SetAttribute("inchi");
+  dp->SetValue(s);
+  dp->SetOrigin(local);
+  pmol->SetData(dp);
+}
 
 //************************************************************************
 InChICompareFormat theInChICompareFormat;
@@ -777,3 +803,4 @@ bool InChICompareFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 }
 
 }//namespace OpenBabel
+

@@ -502,7 +502,7 @@ namespace OpenBabel
   {
     //Special case for [H] to avoid infite loop: SMARTS Match() <-> AssignSpinMultiplicity()
     if(GetAtomicNum() == 1)
-      return 1;
+      return GetFormalCharge() ? 0 : 1;
     OBMol *mol = (OBMol*)((OBAtom*)this)->GetParent();
     if (mol && !mol->HasImplicitValencePerceived())
       atomtyper.AssignImplicitValence(*((OBMol*)((OBAtom*)this)->GetParent()));
