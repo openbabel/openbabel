@@ -45,7 +45,7 @@ class TestSym(BaseTest):
         output, error = run_exec(output.rstrip(), "babel -icml tmp.cml -ocan")
         output = "\n".join([x.rstrip() for x in output.split("\n")])
         self.assertEqual(output.rstrip(), "\n".join([self.cansmi] * len(self.smiles)))
-	os.remove("tmp.cml")
+        os.remove("tmp.cml")
 
 class TestTetSym(TestSym):
     """A series of tests relating to tetrahedral symmetry"""
@@ -195,7 +195,7 @@ class TestConversions(BaseTest):
 # The bond parities are irrelevant/meaningless for the next two
 ([0, 0, 0, 0, 1], []), # 'Cl[C@@](Br)(F)I'
 ([0, 0, 0, 0, 2], []), # 'Cl[C@](Br)(F)I'
-([0, 0, 0, 0, 3], [0, 0, 0, 4]), # 'ClC(Br)(F)I'
+([0, 0, 0, 0, 3], [0, 0, 0, 0]), # 'ClC(Br)(F)I'
 ([0, 0, 0, 1], []), # 'O=[S@@](Cl)I),
 ([0, 0, 0, 2], []), # 'O=[S@](Cl)I),
 ([0, 0, 0, 3], []), # 'O=S(Cl)I),
@@ -214,7 +214,8 @@ class TestConversions(BaseTest):
             self.assertEqual(atompar, parities)
             if bondstereo:
                 self.assertEqual(bondstereo, stereos)
-            output, error = run_exec(output, "babel -isdf -ocan")
+            output, error = run_exec(output, "obabel -isdf -as -ocan")
+            # "-as" is necessary to identify the unknown stereo
             self.assertEqual(output.rstrip(), can)
 
     def testXYZtoSMILESand3DMDL(self):

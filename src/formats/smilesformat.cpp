@@ -3101,8 +3101,8 @@ namespace OpenBabel {
     // get the Config struct defining the stereochemistry
     OBTetrahedralStereo::Config atomConfig = ts->GetConfig();
 
-    // write '@?' for unspecified (unknown) stereochemistry
-    if (!atomConfig.specified) {
+    // Don't write '@?' for unspecified or unknown stereochemistry
+    if (!atomConfig.specified || (atomConfig.specified && atomConfig.winding==OBStereo::UnknownWinding)) {
       // strcpy(stereo, "@?");
       return true;
     }

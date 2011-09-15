@@ -98,6 +98,9 @@ namespace OpenBabel {
     vector<unsigned int> numAtoms, atomTypes;
     bool hasEnthalpy=false;
     double enthalpy_eV, pv_eV;
+    vector<vector <vector3> > Lx;
+    vector<double> Frequencies, Intensities;
+
 
     // Get path of CONTCAR/POSCAR:
     //    ifs_path.getline(buffer,BUFF_SIZE);
@@ -138,6 +141,47 @@ namespace OpenBabel {
         if (strstr(buffer, "free  energy")) {
           tokenize(vs, buffer);
           pmol->SetEnergy(atof(vs[4].c_str()) * EV_TO_KCAL_PER_MOL);
+        }
+        // Frequencies
+        if (strstr(buffer, "Eigenvectors") && Frequencies.size() == 0) {
+          double x, y, z;
+          ifs_out.getline(buffer,BUFF_SIZE);  // dash line
+          ifs_out.getline(buffer,BUFF_SIZE);  // blank line
+          ifs_out.getline(buffer,BUFF_SIZE);  // blank line
+          ifs_out.getline(buffer,BUFF_SIZE);  // first frequency line
+          while (!strstr(buffer, "Eigenvectors")) {
+            vector<vector3> vib;
+            tokenize(vs, buffer);
+            if (vs.size() < 2) {
+              // No more frequencies
+              break;
+            }
+            int freqnum = atoi(vs[0].c_str());
+            if (strstr(vs[1].c_str(), "f/i=")) {
+              // Imaginary frequency
+              Frequencies.push_back(-atof(vs[6].c_str()));
+            } else {
+              Frequencies.push_back(atof(vs[7].c_str()));
+            }
+            // TODO: Intensities not parsed yet
+            Intensities.push_back(0.0);
+            ifs_out.getline(buffer,BUFF_SIZE);  // header line
+            ifs_out.getline(buffer,BUFF_SIZE);  // first displacement line
+            tokenize(vs, buffer);
+            while (vs.size() == 6) {
+              x = atof(vs[3].c_str());
+              y = atof(vs[4].c_str());
+              z = atof(vs[5].c_str());
+              vib.push_back(vector3(x, y, z));
+              ifs_out.getline(buffer,BUFF_SIZE);  // next displacement line
+              tokenize(vs, buffer);
+            }
+            Lx.push_back(vib);
+            ifs_out.getline(buffer,BUFF_SIZE);  // next frequency line
+          }
+          OBVibrationData* vd = new OBVibrationData;
+          vd->SetData(Lx, Frequencies, Intensities);
+          pmol->SetData(vd);
         }
       }
     }

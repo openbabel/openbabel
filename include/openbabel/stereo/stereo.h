@@ -129,7 +129,8 @@ namespace OpenBabel {
      */
     enum Winding {
       Clockwise = 1,     //!< Clockwise winding
-      AntiClockwise = 2  //!< AntiClockwise winding (or CounterClockwise)
+      AntiClockwise = 2, //!< AntiClockwise winding (or CounterClockwise)
+      UnknownWinding = 3 //!< The configuration is specified as unknown (squiggly line in depiction)
     };
 
     ///@name Ref & Refs types

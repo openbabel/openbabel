@@ -147,7 +147,7 @@ namespace OpenBabel
             if (vs.size() < 1) return false; // timvdm 18/06/2008
             while (strstr(vs[0].c_str(),"DIPOLE") == NULL)
               {
-                if (vs.size() < 3) return false; // timvdm 18/06/2008
+                if (vs.size() < 3) break;
                 atom = mol.GetAtom(atoi(vs[0].c_str()));
                 atom->SetPartialCharge(atof(vs[2].c_str()));
                 charges.push_back(atof(vs[2].c_str()));
@@ -158,7 +158,8 @@ namespace OpenBabel
                 if (vs.size() < 1) vs.push_back(string()); // timvdm 18/06/2008
               }
             // Now we should be at DIPOLE line
-            ifs.getline(buffer,BUFF_SIZE);	// POINT CHARGE
+            if (!ifs.getline(buffer,BUFF_SIZE))	// POINT CHARGE
+              continue; // let the outer loop handle this
             ifs.getline(buffer,BUFF_SIZE);	// HYBRID
             ifs.getline(buffer,BUFF_SIZE);	// SUM
             tokenize(vs, buffer);
@@ -347,7 +348,7 @@ namespace OpenBabel
   // - cjh 2011-07-02
   //
   // A. Comment lines
-  // 
+  //
   // A comment line begins with * and may be specified anywhere.
   //
   // Status: implemented in the geometry block, not in header
@@ -363,10 +364,10 @@ namespace OpenBabel
   // If + is present, keywords continue on the next line
   // AND the total length of the header is extended by one line
   // Up to two + may be used
-  // 
+  //
   // References
   // ----------
-  // MOPAC 7.1: 
+  // MOPAC 7.1:
   // MOPAC 2009: http://openmopac.net/manual/allkeys.html
   //
   // Status: not implemented
@@ -389,7 +390,7 @@ namespace OpenBabel
   // Cb	(Capped bond) A special type of monovalent atom
   //    existing purely to satisfy valence
   // (Section 3.5 of MOPAC 7 Manual)
-  // 
+  //
   // Tv - Translation vector defining 1-D periodicity for polymers
   //
   // In MOPAC 2009:
@@ -432,7 +433,7 @@ namespace OpenBabel
   // correctly in this forma
   //
   // Status: throws error if this format is encountered
-  // 
+  //
   // -cjh 2011-07-02
   bool MOPACCARTFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
@@ -465,88 +466,88 @@ namespace OpenBabel
 
     while (ifs.getline(buffer,BUFF_SIZE))
       {
-	isotopeMass = 0;
-	elementSymbol = "";
+        isotopeMass = 0;
+        elementSymbol = "";
 
-	//First see if this is a comment line - skip comment lines
-	if (buffer[0] == '*') continue;
+        //First see if this is a comment line - skip comment lines
+        if (buffer[0] == '*') continue;
 
-	//First see if there is a label defined
-	tokenize(vs,buffer,"()");
-	if (vs.size() > 3) //Only one label allowed per line
-	{
-	  //TODO Replace with correct OBError.ThrowError() call
-	  cerr << "Invalid format in geometry specification: There appears to be more than one atom label specified!\n";
-          return false;
-	}
-	else if (1 < vs.size() && vs.size() <= 3) //There is a label
-	{
-	  elementSymbol = vs[0];
-	  atomLabel = vs[1];
-	  strcpy(buffer,vs[2].c_str());
-	}
-	else //no label, reset buffer
-	  strcpy(buffer,vs[0].c_str());
-	    
-	//Now parse the rest of the line
-	//There should be three cases:
-	//1. There are 7 tokens and the first token is a number specifying the isotope mass
-	//2. There are 7 tokens and the first token is a string containing the element symbol
-	//3. There are 6 tokens and the first token is a number specifying the Cartesian x coordinate
-	tokenize(vs,buffer);
-	if (vs.size() == 0)
+        //First see if there is a label defined
+        tokenize(vs,buffer,"()");
+        if (vs.size() > 3) //Only one label allowed per line
+          {
+            //TODO Replace with correct OBError.ThrowError() call
+            cerr << "Invalid format in geometry specification: There appears to be more than one atom label specified!\n";
+            return false;
+          }
+        else if (1 < vs.size() && vs.size() <= 3) //There is a label
+          {
+            elementSymbol = vs[0];
+            atomLabel = vs[1];
+            strcpy(buffer,vs[2].c_str());
+          }
+        else //no label, reset buffer
+          strcpy(buffer,vs[0].c_str());
+
+        //Now parse the rest of the line
+        //There should be three cases:
+        //1. There are 7 tokens and the first token is a number specifying the isotope mass
+        //2. There are 7 tokens and the first token is a string containing the element symbol
+        //3. There are 6 tokens and the first token is a number specifying the Cartesian x coordinate
+        tokenize(vs,buffer);
+        if (vs.size() == 0)
           break;
         else if (vs.size() < 6)
-	{
-	  //TODO Replace with correct OBError.ThrowError() call
-	  cerr << "Invalid format in geometry specification.\n";
-          return false;
-	}
+          {
+            //TODO Replace with correct OBError.ThrowError() call
+            cerr << "Invalid format in geometry specification.\n";
+            return false;
+          }
         else if (vs.size() > 7) //cjh 2011-07-02
-	{
-	  //TODO Replace with correct OBError.ThrowError() call
-	  cerr << "Mixed Cartesian and internal coordinates are currently not supported.\n";
-          return false;
-	}
-	else if (vs.size() == 7)
-	{
-	  if (elementSymbol == "")
-	    elementSymbol = vs[0];
-	  else
-	    isotopeMass = atof((char*)vs[0].c_str());
+          {
+            //TODO Replace with correct OBError.ThrowError() call
+            cerr << "Mixed Cartesian and internal coordinates are currently not supported.\n";
+            return false;
+          }
+        else if (vs.size() == 7)
+          {
+            if (elementSymbol == "")
+              elementSymbol = vs[0];
+            else
+              isotopeMass = atof((char*)vs[0].c_str());
 
-          x = atof((char*)vs[1].c_str());
-          y = atof((char*)vs[3].c_str());
-          z = atof((char*)vs[5].c_str());
-        }
-	else //vs.size() == 6
-	{
-          x = atof((char*)vs[0].c_str());
-          y = atof((char*)vs[2].c_str());
-          z = atof((char*)vs[4].c_str());
-        }
+            x = atof((char*)vs[1].c_str());
+            y = atof((char*)vs[3].c_str());
+            z = atof((char*)vs[5].c_str());
+          }
+        else //vs.size() == 6
+          {
+            x = atof((char*)vs[0].c_str());
+            y = atof((char*)vs[2].c_str());
+            z = atof((char*)vs[4].c_str());
+          }
 
-	if (elementSymbol == "Tv") //MOPAC translation vector
-	{
-          translationVectors[numTranslationVectors++].Set(x, y, z);
-	}
-	else
-	{
-          atom = mol.NewAtom();
-          atom->SetVector(x,y,z); //set coordinates
-          //set atomic number
-          atom->SetAtomicNum(etab.GetAtomicNum(elementSymbol.c_str()));
-	}
+        if (elementSymbol == "Tv") //MOPAC translation vector
+          {
+            translationVectors[numTranslationVectors++].Set(x, y, z);
+          }
+        else
+          {
+            atom = mol.NewAtom();
+            atom->SetVector(x,y,z); //set coordinates
+            //set atomic number
+            atom->SetAtomicNum(etab.GetAtomicNum(elementSymbol.c_str()));
+          }
       }
 
     // Attach unit cell translation vectors if found
     if (numTranslationVectors > 0) {
-        OBUnitCell* uc = new OBUnitCell;
-        uc->SetData(translationVectors[0], translationVectors[1], translationVectors[2]);
-        uc->SetOrigin(fileformatInput);
-        mol.SetData(uc);
+      OBUnitCell* uc = new OBUnitCell;
+      uc->SetData(translationVectors[0], translationVectors[1], translationVectors[2]);
+      uc->SetOrigin(fileformatInput);
+      mol.SetData(uc);
     }
-    
+
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) &&
@@ -571,7 +572,7 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
-//    unsigned int i;
+    //    unsigned int i;
     char buffer[BUFF_SIZE];
 
     const char *keywords = pConv->IsOption("k",OBConversion::OUTOPTIONS);
@@ -732,16 +733,16 @@ namespace OpenBabel
     }
 
     /*
-       vector<OBInternalCoord*>::iterator j;
-       for (j = vic.begin(); j != vic.end(); j++) {
-       cout << (*j)->_dst << " " << (*j)->_ang << " " << (*j)->_tor << " ";
-       if ((*j)->_a)
-       cout << (*j)->_a->GetIdx() << " ";
-       if ((*j)->_b)
-       cout << (*j)->_b->GetIdx() << " ";
-       if ((*j)->_c)
-       cout << (*j)->_c->GetIdx() << endl;
-       }
+      vector<OBInternalCoord*>::iterator j;
+      for (j = vic.begin(); j != vic.end(); j++) {
+      cout << (*j)->_dst << " " << (*j)->_ang << " " << (*j)->_tor << " ";
+      if ((*j)->_a)
+      cout << (*j)->_a->GetIdx() << " ";
+      if ((*j)->_b)
+      cout << (*j)->_b->GetIdx() << " ";
+      if ((*j)->_c)
+      cout << (*j)->_c->GetIdx() << endl;
+      }
     */
     InternalToCartesian(vic,mol);
 

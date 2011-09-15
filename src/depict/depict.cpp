@@ -52,6 +52,7 @@ namespace OpenBabel
       void DrawSimpleBond(OBAtom *beginAtom, OBAtom *endAtom, int order);
       void DrawWedge(OBAtom *beginAtom, OBAtom *endAtom);
       void DrawHash(OBAtom *beginAtom, OBAtom *endAtom);
+      void DrawWobblyBond(OBAtom *beginAtom, OBAtom *endAtom);
       void DrawRingBond(OBAtom *beginAtom, OBAtom *endAtom, const vector3 &center, int order);
       void DrawAtomLabel(const std::string &label, int alignment, const vector3 &pos);
 
@@ -353,9 +354,8 @@ namespace OpenBabel
         else if(updown[bond]==OBStereo::DownBond)
           d->DrawHash(begin, end);
         else {
-          //This is a bond to a unspecified chiral center
-          //and could be depicted differently
-          d->DrawSimpleBond(begin, end, bond->GetBO());
+          //This is a bond to a chiral center specified as unknown
+          d->DrawWobblyBond(begin, end);
         }
       }
       else if (!bond->IsInRing())
@@ -502,6 +502,44 @@ namespace OpenBabel
 
     return true;
   }
+
+  void OBDepictPrivate::DrawWobblyBond(OBAtom *beginAtom, OBAtom *endAtom)
+  {
+    vector3 begin = beginAtom->GetVector();
+    vector3 end = endAtom->GetVector();
+    vector3 vb = end - begin;
+
+    if (HasLabel(beginAtom))
+      begin += 0.33 * vb;
+    if (HasLabel(endAtom))
+      end -= 0.33 * vb;
+    
+    vb = end - begin; // Resize the extents of the vb vector
+
+    vector3 orthogonalLine = cross(vb, VZ);
+    orthogonalLine.normalize();
+    orthogonalLine *= 0.5 * bondWidth;
+
+    double lines[6] = { 0.20, 0.36, 0.52, 0.68, 0.84, 1.0 };
+
+    // This code is adapted from DrawWedge():
+    // What we do is just join up the opposite ends of each of the wedge strokes
+    // to create a zig-zag bond
+
+    double oldx, oldy, newx, newy;
+    oldx = begin.x();
+    oldy = begin.y();
+    int sign = 1;
+    for (int k = 0; k < 6; ++k) {
+      double w = lines[k];
+      newx = begin.x() + vb.x() * w + sign * orthogonalLine.x() * w;
+      newy = begin.y() + vb.y() * w + sign * orthogonalLine.y() * w;
+      painter->DrawLine(oldx, oldy, newx, newy);
+      oldx = newx;
+      oldy = newy;
+      sign =- sign;
+    }
+  } 
 
   void OBDepictPrivate::DrawWedge(OBAtom *beginAtom, OBAtom *endAtom)
   {

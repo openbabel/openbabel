@@ -155,7 +155,10 @@ namespace OpenBabel {
     if (!IsValid())
       return Config();
 
-    return OBTetraNonPlanarStereo::ToConfig(m_cfg, m_cfg.from, winding, view);
+    if (m_cfg.winding != OBStereo::UnknownWinding)
+      return OBTetraNonPlanarStereo::ToConfig(m_cfg, m_cfg.from, winding, view);
+    else
+      return OBTetraNonPlanarStereo::ToConfig(m_cfg, m_cfg.from, OBStereo::UnknownWinding, view);
   }
 
   OBTetrahedralStereo::Config OBTetrahedralStereo::GetConfig(unsigned long from_or_towards,
@@ -164,7 +167,10 @@ namespace OpenBabel {
     if (!IsValid())
       return Config();
 
-    return OBTetraNonPlanarStereo::ToConfig(m_cfg, from_or_towards, winding, view);
+    if (m_cfg.winding != OBStereo::UnknownWinding)
+      return OBTetraNonPlanarStereo::ToConfig(m_cfg, from_or_towards, winding, view);
+    else
+      return OBTetraNonPlanarStereo::ToConfig(m_cfg, from_or_towards, OBStereo::UnknownWinding, view);
   }
 
   bool OBTetrahedralStereo::operator==(const OBTetrahedralStereo &other) const

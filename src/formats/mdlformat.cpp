@@ -521,9 +521,9 @@ namespace OpenBabel
         if (line.substr(0, 3) == "A  " && line.size() > 3) { //alias
           int atomnum = ReadUIntField((line.substr(2, line.size() - 2)).c_str());
           //MDL documentation just has alias text here( x... ). A single line is assumed,
-          //and its contents ignored if it starts with ? or * .
+          //and the alias is ignored if the line starts with ? or * or is blank .
           std::getline(ifs, line);
-          if(line.at(0) != '?' && line.at(0) != '*') {
+          if(!line.empty() && line.at(0) != '?' && line.at(0) != '*') {
             AliasData* ad = new AliasData();
             ad->SetAlias(line);
             ad->SetOrigin(fileformatInput);
@@ -628,6 +628,9 @@ namespace OpenBabel
         mol.SetDimension(3);
       // use 3D coordinates to determine stereochemistry
       StereoFrom3D(&mol);
+      if (pConv->IsOption("s", OBConversion::INOPTIONS)) { // Use the parities for tet stereo instead
+        TetStereoFromParity(mol, parities, true); // True means "delete existing TetStereo first"
+      }
     } else
     if (mol.Has2D()) {
       if (!setDimension)
@@ -826,7 +829,7 @@ namespace OpenBabel
               // For unspecified Cis/Trans double bonds, set the stereo to 3...
               if (unspec_ctstereo.find(bond) != unspec_ctstereo.end())
                 stereo = 3;
-              // For 3D (and 2D if "w" output option), see the stereo of the chiral centers.
+              // For 3D (and 2D if "w" output option), set the stereo of the chiral centers.
               if (updown.find(bond) != updown.end())
                 stereo = updown[bond];
 
@@ -1328,7 +1331,7 @@ namespace OpenBabel
         OBTetrahedralStereo::Config cfg = ts->GetConfig();
 
         Parity atomparity = Unknown;
-        if (cfg.specified) {
+        if (cfg.specified && cfg.winding != OBStereo::UnknownWinding) {
           // If, when looking towards the maxref, the remaining refs increase in number
           // clockwise, parity is 1 (Parity::Clockwise). Note that Implicit Refs and Hydrogens
           // should be treated considered the maxref if present.

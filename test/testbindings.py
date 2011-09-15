@@ -32,7 +32,7 @@ except ImportError:
     ob = None
     modulelocation = os.path.join("..", "scripts", "pybuild")
     if os.path.isfile(os.path.join(modulelocation, "openbabel.py")):
-	sys.path = [modulelocation] + sys.path
+        sys.path = [modulelocation] + sys.path
         try:
             import openbabel as ob
         except ImportError:
