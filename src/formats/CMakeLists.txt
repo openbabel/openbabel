@@ -38,6 +38,7 @@ set(formats_compchem
       qchemformat
       turbomoleformat
       vaspformat
+      xsfformat
       zindoformat
   )
 
