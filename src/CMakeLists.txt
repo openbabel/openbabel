@@ -9,13 +9,13 @@ set(charges
   charges/mmff94.cpp
 )
 
-if (EIGEN2_FOUND)
+if (EIGEN2_FOUND OR EIGEN3_FOUND)
 # if eigen is available, compile QEq and QTPIE charge models
 set(charges ${charges}
   charges/qeq.cpp
   charges/qtpie.cpp
 )
-endif(EIGEN2_FOUND)
+endif()
 
 set(depict_srcs
   depict/depict.cpp
@@ -50,11 +50,11 @@ set(math_srcs
   math/vector3.cpp
 )
 
-if(EIGEN2_FOUND)
+if(EIGEN2_FOUND OR EIGEN3_FOUND)
   set(math_srcs ${math_srcs}
     math/align.cpp
   )
-endif(EIGEN2_FOUND)
+endif()
 
 set(ops
   ops/addinindex.cpp
@@ -73,12 +73,12 @@ set(ops
   ops/opisomorph.cpp
   ops/xout.cpp
 )
-if(EIGEN2_FOUND)
+if(EIGEN2_FOUND OR EIGEN3_FOUND)
   set(ops ${ops}
     ops/conformer.cpp
     ops/opalign.cpp
   )
-endif(EIGEN2_FOUND)
+endif()
 
 set(stereo_srcs
   stereo/stereo.cpp
@@ -141,11 +141,11 @@ set(openbabel_srcs
   typer.cpp
   obmolecformat.cpp
 )
-if(EIGEN2_FOUND)
+if(EIGEN2_FOUND OR EIGEN3_FOUND)
   set(openbabel_srcs ${openbabel_srcs}
     conformersearch.cpp
   )
-endif (EIGEN2_FOUND)
+endif ()
 
 if(BUILD_SHARED)
   if(MSVC)

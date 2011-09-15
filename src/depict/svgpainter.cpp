@@ -61,11 +61,11 @@ namespace OpenBabel
 
     //Bond color and width are the initial m_Pencolor and m_PenWidth
     m_ofs << "font-family=\"" << m_fontFamily << "\" stroke=" << MakeRGB(m_Pencolor)
-          << "stroke-width=\"" << m_PenWidth << "\" >\n";
+          << "stroke-width=\"" << m_PenWidth << "\"  stroke-linecap=\"round\"" << ">\n";
 
-    //if(!m_withViewBox)//Background color for single molecule. Handled by outer svg when table.
-    //  m_ofs << "<rect x=\"0%\" y=\"0%\" width=\"100%\" height=\"100%\" fill="
-    //        << MakeRGB(m_Fillcolor) << " />\n";
+    if(!m_withViewBox)//Background color for single molecule. Handled by outer svg when table.
+      m_ofs << "<rect x=\"0%\" y=\"0%\" width=\"100%\" height=\"100%\" stroke-width=\"0\" fill="
+            << MakeRGB(m_Fillcolor) << " />\n";
     m_OrigBondcolor = m_Pencolor;
   }
 
@@ -104,10 +104,9 @@ namespace OpenBabel
     streamsize oldprec = m_ofs.precision(1);
     m_ofs << fixed << "<line x1=\"" << x1 << "\" y1=\"" << y1 << "\" x2=\""
       << x2 << "\" y2=\"" << y2 << "\"";
-    if(m_Pencolor!=m_OrigBondcolor)
+    // if(m_Pencolor!=m_OrigBondcolor) // TODO: Bring this line back once Pybel is fine with this
       m_ofs << " stroke=" << MakeRGB(m_Pencolor);
     m_ofs << " stroke-width=\"" << m_PenWidth << "\"";
-    m_ofs << " stroke-linecap=\"round\"";
     m_ofs << "/>\n";
     m_ofs.precision(oldprec);
   }
@@ -120,7 +119,6 @@ namespace OpenBabel
       m_ofs << i->first << ' ' << i->second << ' ';
     m_ofs << "\"";
     m_ofs << " stroke-width=\"" << m_PenWidth << "\"";
-    m_ofs << " stroke-linejoin=\"round\"";
     m_ofs << "/>\n";
   }
 
@@ -141,9 +139,9 @@ namespace OpenBabel
   {
     OBFontMetrics metrics;
     metrics.fontSize = m_fontPointSize;
-    metrics.ascent   = m_fontPointSize * 0.6;
-    metrics.descent  = m_fontPointSize * 0.4;
-    metrics.height   = m_fontPointSize;
+    metrics.ascent   = m_fontPointSize;
+    metrics.descent  = m_fontPointSize * -0.23; // Offset from baseline of bottom of text
+    metrics.height   = m_fontPointSize *  1.26; // Distance between successive lines of text
     metrics.width = 0.0;
     for(string::size_type i=0;i<text.size();++i)
       metrics.width += m_fontPointSize * (isalpha(text[i]) ? 0.75 : 0.5);

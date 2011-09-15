@@ -17,6 +17,11 @@ if (RUN_SWIG)
   endif (NOT SWIG_FOUND)
 endif (RUN_SWIG)
 
+if (EIGEN2_FOUND)
+  set (eigen2_define "-DHAVE_EIGEN2")
+  set (CFLAGS_TEXT "CFLAGS=-I${EIGEN2_INCLUDE_DIR}")
+endif (EIGEN2_FOUND)
+
 ###################
 # Python
 ###################
@@ -49,11 +54,6 @@ if (DO_PYTHON_BINDINGS)
     include_directories(
         ${PYTHON_INCLUDE_PATH}
     )
-
-    if (EIGEN2_FOUND)
-        set (eigen2_define "-DHAVE_EIGEN2")
-        set (CFLAGS_TEXT "CFLAGS=-I${EIGEN2_INCLUDE_DIR}")
-    endif (EIGEN2_FOUND)
 
     if (RUN_SWIG)
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
@@ -112,7 +112,7 @@ if (DO_PYTHON_BINDINGS)
             PREFIX ""
             SUFFIX .pyd )
         add_custom_command(TARGET bindings_python POST_BUILD
-          COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py ${openbabel_BINARY_DIR}/${CMAKE_CFG_INTDIR}
+          COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py ${openbabel_BINARY_DIR}/bin/${CMAKE_CFG_INTDIR}
           )
     endif(NOT WIN32)
 endif (DO_PYTHON_BINDINGS)
@@ -157,7 +157,7 @@ if (DO_JAVA_BINDINGS)
     if (RUN_SWIG)
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp # ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
           COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_SOURCE_DIR}/scripts/java/org/openbabel
-          COMMAND ${SWIG_EXECUTABLE} -java -package org.openbabel -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp -outdir ${openbabel_SOURCE_DIR}/scripts/java/org/openbabel ${openbabel_SOURCE_DIR}/scripts/openbabel-java.i
+          COMMAND ${SWIG_EXECUTABLE} -java -package org.openbabel -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp ${eigen2_define} -outdir ${openbabel_SOURCE_DIR}/scripts/java/org/openbabel ${openbabel_SOURCE_DIR}/scripts/openbabel-java.i
           COMMAND ${CMAKE_COMMAND} -E chdir ${openbabel_SOURCE_DIR}/scripts/java ${JAVA_COMPILE} org/openbabel/*.java
           COMMAND ${CMAKE_COMMAND} -E chdir ${openbabel_SOURCE_DIR}/scripts/java ${JAVA_ARCHIVE} cf openbabel.jar org
           COMMAND ${CMAKE_COMMAND} -E remove_directory ${openbabel_SOURCE_DIR}/scripts/java/org
@@ -281,8 +281,10 @@ endif (RUBY_BINDINGS)
 if (DO_RUBY_BINDINGS)
 
     if (RUN_SWIG)
+      set(WORKAROUND_CMAKE260_BUG "s/rb_define_module(\"Openbabel\")/rb_define_module(\"OpenBabel\")/")
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp
-          COMMAND ${SWIG_EXECUTABLE} -ruby -c++ -small -O -templatereduce -naturalvar -autorename -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp ${openbabel_SOURCE_DIR}/scripts/openbabel-ruby.i
+          COMMAND ${SWIG_EXECUTABLE} -ruby -c++ -small -O -templatereduce -naturalvar -autorename -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.txt ${openbabel_SOURCE_DIR}/scripts/openbabel-ruby.i
+          COMMAND sed -e '${WORKAROUND_CMAKE_260_BUG}' -e's/void Init_OpenBabel/void Init_openbabel/' <${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.txt >${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp 
           MAIN_DEPENDENCY openbabel-ruby.i
       )
     endif (RUN_SWIG)

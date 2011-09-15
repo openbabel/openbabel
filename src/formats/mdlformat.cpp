@@ -51,9 +51,9 @@ namespace OpenBabel
                "Reads and writes V2000 and V3000 versions\n\n"
                "Read Options, e.g. -as\n"
                " s  determine chirality from atom parity flags\n"
-               "       This is valid only for 0D information. Atom\n"
-               "       parity is always ignored on reading for MOL files\n"
-               "       containing 2D or 3D information.\n"
+               "       The default setting is to ignore atom parity and\n"
+               "       work out the chirality based on the bond\n"
+               "       stereochemistry.\n"
                " T  read title only\n"
                " P  read title and properties only\n"
                "       When filtering an sdf file on title or properties\n"
@@ -117,7 +117,7 @@ namespace OpenBabel
       bool  HasProperties;
       string GetTimeDate();
       void GetParity(OBMol& mol, map<OBAtom*, Parity> &parity);
-      void TetStereoFromParity(OBMol& mol, vector<MDLFormat::Parity> &parity);
+      void TetStereoFromParity(OBMol& mol, vector<MDLFormat::Parity> &parity, bool deleteExisting=false);
       int ReadIntField(const char *s);
       unsigned int ReadUIntField(const char *s);
       map<int,int> indexmap; //relates index in file to index in OBMol
@@ -329,6 +329,7 @@ namespace OpenBabel
         // 36..38   ccc = charge  ('M  CHG' and 'M  RAD' lines take precedence)
         // 39..41   sss = atom stereo parity (ignored)
         //          ... = query/reaction related
+        // 48..50   vvv = valence (ignored unless 15, which means 0)
         massdiff = charge = 0;
         parity = NotStereo;
         if (line.size() < 34) {
@@ -384,6 +385,12 @@ namespace OpenBabel
           }
         }
         parities.push_back(parity);
+        // valence
+        if (line.size() >= 50) {
+          int valence = ReadIntField(line.substr(48, 3).c_str());
+          if(valence==15) //Other values ignored
+            patom->ForceNoH();
+        }
 
 //        if (!mol.AddAtom(atom))
 //          return false;
@@ -615,6 +622,9 @@ namespace OpenBabel
         mol.SetDimension(2);
       // use 2D coordinates + hash/wedge to determine stereochemistry
       StereoFrom2D(&mol, &updown);
+      if (pConv->IsOption("s", OBConversion::INOPTIONS)) { // Use the parities for tet stereo instead
+        TetStereoFromParity(mol, parities, true); // True means "delete existing TetStereo first"
+      }
     } else { // 0D
       if (!setDimension)
         mol.SetDimension(0);
@@ -744,8 +754,9 @@ namespace OpenBabel
       // ... = obsolete
       // mmm = no longer supported (default=999)
       //                         aaabbblllfffcccsssxxxrrrpppiiimmmvvvvvv
-      ofs << setw(3) << mol.NumAtoms() << setw(3) << mol.NumBonds();
-      ofs << "  0  0  0  0  0  0  0  0999 V2000" << endl;
+      snprintf(buff, BUFF_SIZE, "%3d%3d  0  0%3d  0  0  0  0  0999 V2000\n",
+               mol.NumAtoms(), mol.NumBonds(), mol.IsChiral());
+      ofs << buff;
 
       OBAtom *atom;
       vector<OBAtom*>::iterator i;
@@ -769,11 +780,6 @@ namespace OpenBabel
           atom->GetX(), atom->GetY(), atom->GetZ(),
           atom->GetAtomicNum() ? etab.GetSymbol(atom->GetAtomicNum()) : "* ",
           0,charge,stereo,0,0,0,0,0,0,0,0,0);
-
-//       snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d",
-//                 atom->GetX(), atom->GetY(), atom->GetZ(),
-//                 atom->GetAtomicNum() ? etab.GetSymbol(atom->GetAtomicNum()) : "* ",
-//                 0, charge, stereo, 0, 0);
           ofs << buff << endl;
         }
 
@@ -833,7 +839,7 @@ namespace OpenBabel
               if(!ad->IsExpanded()) //do nothing with an expanded alias
                 ofs << "A  " << setw(3) << right << atom->GetIdx() << '\n' << ad->GetAlias() << endl;
             }
-            //Atoms with no AliasData, but 0 atomicnum and atomclass==n are given an alias Rn 
+            //Atoms with no AliasData, but 0 atomicnum and atomclass==n are given an alias Rn
             else if(atom->GetAtomicNum()==0)
             {
               OBAtomClassData* pac = static_cast<OBAtomClassData*>(mol.GetData("Atom Class"));
@@ -944,7 +950,7 @@ namespace OpenBabel
         //  ret = ReadCollectionBlock(ifs,mol,pConv);
         else if(vs[3]=="RGROUP")
           ret = ReadRGroupBlock(ifs,mol,pConv);
-        else 
+        else
           ret =ReadUnimplementedBlock(ifs,mol,pConv,vs[3]);
         /*
           else if(vs[3]=="3D")
@@ -1310,7 +1316,7 @@ namespace OpenBabel
           // clockwise, parity is 1 (Parity::Clockwise). Note that Implicit Refs and Hydrogens
           // should be treated considered the maxref if present.
           OBStereo::Refs refs = cfg.refs;
-          
+
           unsigned long maxref = OBStereo::NoRef;
           // Search for an explicit Hydrogen in the cfg refs...
           if (cfg.from != OBStereo::ImplicitRef && mol.GetAtomById(cfg.from)->IsHydrogen())
@@ -1337,19 +1343,33 @@ namespace OpenBabel
       }
   }
 
-  void MDLFormat::TetStereoFromParity(OBMol& mol, vector<MDLFormat::Parity> &parity)
+  void MDLFormat::TetStereoFromParity(OBMol& mol, vector<MDLFormat::Parity> &parity, bool deleteExisting)
   {
+    if (deleteExisting) { // Remove any existing tet stereo
+      std::vector<OBGenericData*> vdata = mol.GetAllData(OBGenericDataType::StereoData);
+      for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data)
+        if (((OBStereoBase*)*data)->GetType() == OBStereo::Tetrahedral)
+          mol.DeleteData(*data);
+    }
+
     for (unsigned long i=0;i<parity.size();i++) {
       if (parity[i] == NotStereo)
         continue;
 
       OBStereo::Refs refs;
+      unsigned long towards = OBStereo::ImplicitRef;
       FOR_NBORS_OF_ATOM(nbr, mol.GetAtomById(i)) {
-        refs.push_back(nbr->GetId());
+        if (!nbr->IsHydrogen())
+          refs.push_back(nbr->GetId());
+        else
+          towards = nbr->GetId(); // Look towards the H
       }
+
       sort(refs.begin(), refs.end());
-      unsigned long towards = refs.back();
-      refs.pop_back();
+      if (refs.size() == 4) { // No implicit ref or H present
+        towards = refs.back();
+        refs.pop_back();
+      }
 
       OBStereo::Winding winding = OBStereo::Clockwise;
       if (parity[i] == AntiClockwise)

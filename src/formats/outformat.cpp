@@ -131,6 +131,10 @@ namespace OpenBabel
         // Jaguar
         formatName = "jout";
         break;
+      } else if (strstr(buffer, "ABINIT") != NULL) {
+        // Abinit
+        formatName = "abinit";
+        break;
       }
     }
 

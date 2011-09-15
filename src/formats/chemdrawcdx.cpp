@@ -25,6 +25,7 @@ GNU General Public License for more details.
 
 //#define debug
 
+#if !defined(__CYGWIN__)
 static inline unsigned short bswap_16(unsigned short x) {
   return (x>>8) | (x<<8);
 }
@@ -36,6 +37,7 @@ static inline unsigned int bswap_32(unsigned int x) {
 static inline unsigned long long bswap_64(unsigned long long x) {
   return (((unsigned long long)bswap_32(x&0xffffffffull))<<32) | (bswap_32(x>>32));
 }
+#endif
 
 // Macs -- need to use Apple macros to deal with Universal binaries correctly
 #ifdef __APPLE__

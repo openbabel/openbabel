@@ -99,44 +99,51 @@ namespace OpenBabel
         SetTitle(title.c_str());
       }
 
-/*    itr = pOptions->find("addformula"); //Appends tab + formula to title
-    if(itr!=pOptions->end())
-      {
-        string title(GetTitle());
-        title += '\t' + GetSpacedFormula(1,"");//actually unspaced
-        SetTitle(title.c_str());
-      }
-*/
     //Add an extra property to the molecule.
-    //Parameter has atrribute and value separated by a space
+    //--property attribute value   (no spaces in attribute)
+    //or
+    // --property attribute1=value1; multi word attribute2 = multi word value2;
+    //For both forms, no ';' in either attribute or value.
+    //For second form, no '=' in attribute or value
     itr = pOptions->find("property");
-    if(itr!=pOptions->end())
-      {
+    if(itr!=pOptions->end()) {
         string txt(itr->second);
-        string::size_type pos = txt.find(' ');
-        if(pos==string::npos)
-          {
-            obErrorLog.ThrowError(__FUNCTION__, "Missing property value", obError);
-            ret=false;
-          }
-        else
-          {
-            string attr(txt.substr(0,pos)), val(txt.substr(pos+1));
-            //Update value if it already exists
-            OBPairData* dp = dynamic_cast<OBPairData*>(GetData(attr));
-            if(dp) {
-              dp->SetValue(val);
-              dp->SetOrigin(userInput);
-            }
-            else {
-              // Pair did not exist; make new one
-              dp = new OBPairData;
-              dp->SetAttribute(attr);
-              dp->SetValue(val);
-              dp->SetOrigin(userInput);
-              SetData(dp);
+
+        vector<string> vec;
+        vector<string>::iterator it;
+        tokenize(vec, txt,";");
+        for(it=vec.begin();it!=vec.end();++it) {
+          string attr, val;
+          string::size_type pos = it->find('=');
+          if(pos==string::npos) {
+            //form with space
+            pos = it->find(' ');
+            if(pos==string::npos) {
+                obErrorLog.ThrowError(__FUNCTION__, "Missing property value", obError);
+                ret=false;
+                break;
             }
           }
+          val  = it->substr(pos+1);
+          Trim(val);
+          attr = it->erase(pos);
+          Trim(attr);
+
+          //Update value if it already exists
+          OBPairData* dp = dynamic_cast<OBPairData*>(GetData(attr));
+          if(dp) {
+            dp->SetValue(val);
+            dp->SetOrigin(userInput);
+          }
+          else {
+            // Pair did not exist; make new one
+            dp = new OBPairData;
+            dp->SetAttribute(attr);
+            dp->SetValue(val);
+            dp->SetOrigin(userInput);
+            SetData(dp);
+          }
+        }
       }
 
     itr = pOptions->find("add");  //adds new properties from descriptors in list

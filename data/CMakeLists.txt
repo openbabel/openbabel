@@ -3,6 +3,7 @@
 set(to_install
     aromatic.txt
     atomtyp.txt
+    babel_povray3.inc
     bondtyp.txt
     element.txt
     fragments.txt

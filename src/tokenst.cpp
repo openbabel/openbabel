@@ -41,7 +41,7 @@ namespace OpenBabel
       return false;
 
     string s(buf);
-    s += "\n";
+    s += delimstr[0]; //forces last token to be parsed
     size_t startpos=0,endpos=0;
 
     for (;;)

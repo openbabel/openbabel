@@ -76,8 +76,6 @@ namespace OpenBabel {
 
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
-    OBMol &mol = *pmol;
-    const char* title = pConv->GetTitle();
 
     bool coordsAreFractional = false;
     char buffer[BUFF_SIZE], tag[BUFF_SIZE];
@@ -86,6 +84,9 @@ namespace OpenBabel {
     matrix3x3 ortho;
     int atomicNum;
     OBUnitCell *cell = new OBUnitCell();
+    bool hasEnthalpy=false;
+    double enthalpy_eV, pv_eV;
+
     pmol->BeginModify();
 
     while (ifs.getline(buffer,BUFF_SIZE)) {
@@ -153,7 +154,7 @@ namespace OpenBabel {
         vector<OBAtom*> toDelete;
         FOR_ATOMS_OF_MOL(a, *pmol)
           toDelete.push_back(&*a);
-        for (int i = 0; i < toDelete.size(); i++)
+        for (size_t i = 0; i < toDelete.size(); i++)
           pmol->DeleteAtom(toDelete.at(i));
 
         // Load new atoms from molecule
@@ -165,7 +166,7 @@ namespace OpenBabel {
 
         ifs.getline(buffer,BUFF_SIZE); // First entry
         tokenize(vs, buffer);
-        int size = vs.size();
+        size_t size = vs.size();
         while (size >= 7 && size <= 10) {
           atomicNum = etab.GetAtomicNum(vs[1].c_str());
 
@@ -173,7 +174,7 @@ namespace OpenBabel {
           // it's not so straight-forward to parse them...
           x = y = z = 0;
           int set = 0;
-          for (unsigned i = 3; i < size; i++) {
+          for (size_t i = 3; i < size; i++) {
             if (strstr(vs[i].c_str(), "*")) continue; // Skip "*" in output
             // Else assign x,y,z based on how many coords have been
             // set already. These are currently fractional, we'll
@@ -215,7 +216,7 @@ namespace OpenBabel {
         vector<OBAtom*> toDelete;
         FOR_ATOMS_OF_MOL(a, *pmol)
           toDelete.push_back(&*a);
-        for (int i = 0; i < toDelete.size(); i++)
+        for (size_t i = 0; i < toDelete.size(); i++)
           pmol->DeleteAtom(toDelete.at(i));
 
         // Load new atoms from molecule
@@ -227,7 +228,7 @@ namespace OpenBabel {
 
         ifs.getline(buffer,BUFF_SIZE); // First entry
         tokenize(vs, buffer);
-        int size = vs.size();
+        size_t size = vs.size();
         while (size >= 7 && size <= 10) {
           atomicNum = etab.GetAtomicNum(vs[1].c_str());
 
@@ -235,7 +236,7 @@ namespace OpenBabel {
           // it's not so straight-forward to parse them...
           x = y = z = 0;
           int set = 0;
-          for (unsigned i = 3; i < size; i++) {
+          for (size_t i = 3; i < size; i++) {
             if (strstr(vs[i].c_str(), "*")) continue; // Skip "*" in output
             // Else assign x,y,z based on how many coords have been
             // set already. These are currently fractional, we'll
@@ -284,73 +285,35 @@ namespace OpenBabel {
 
       // Enthalpy (molecular)
       if (strstr(buffer, "Final enthalpy")) {
+        hasEnthalpy = true;
         tokenize(vs, buffer);
-        float en, en_eV, pv, pv_eV;
-        OBPairData *enthalpy = new OBPairData();
-        OBPairData *enthalpy_pv = new OBPairData();
-        OBPairData *enthalpy_eV = new OBPairData();
-        OBPairData *enthalpy_pv_eV = new OBPairData();
-        enthalpy->SetAttribute("Enthalpy (kcal/mol)");
-        enthalpy_pv->SetAttribute("Enthalpy PV term (kcal/mol)");
-        enthalpy_eV->SetAttribute("Enthalpy (eV)");
-        enthalpy_pv_eV->SetAttribute("Enthalpy PV term (eV)");
-
-        pv = pv_eV = 0; // Doesn't make sense in a molecular system
-        en_eV = static_cast<float>(atof(vs[3].c_str()));
-        en = static_cast<float>(en_eV * EV_TO_KCAL_PER_MOL);
-        snprintf(tag, BUFF_SIZE, "%f", pv);
-        enthalpy_pv->SetValue(tag);
-        snprintf(tag, BUFF_SIZE, "%f", pv_eV);
-        enthalpy_pv_eV->SetValue(tag);
-        pmol->SetData(enthalpy_pv);
-        pmol->SetData(enthalpy_pv_eV);
+        enthalpy_eV = atof(vs[3].c_str());
+        pv_eV = 0.0;
       }
 
       // Enthalphy (periodic)
       if (strstr(buffer, "Components of enthalpy :")) {
         bool hasPV = false;
-        float en, en_eV, pv, pv_eV;
-        OBPairData *enthalpy = new OBPairData();
-        OBPairData *enthalpy_pv = new OBPairData();
-        OBPairData *enthalpy_eV = new OBPairData();
-        OBPairData *enthalpy_pv_eV = new OBPairData();
-        enthalpy->SetAttribute("Enthalpy (kcal/mol)");
-        enthalpy_pv->SetAttribute("Enthalpy PV term (kcal/mol)");
-        enthalpy_eV->SetAttribute("Enthalpy (eV)");
-        enthalpy_pv_eV->SetAttribute("Enthalpy PV term (eV)");
+        hasEnthalpy = true;
 
         ifs.getline(buffer,BUFF_SIZE);
 
         while (strstr(buffer, "kJ/(mole unit cells)") == 0) {
           if (strstr(buffer, "Pressure*volume")) {
             tokenize(vs, buffer);
-            pv_eV = static_cast<float> (atof(vs[2].c_str()));
-            pv = static_cast<float> (pv_eV * EV_TO_KCAL_PER_MOL);
-            snprintf(tag, BUFF_SIZE, "%f", pv);
-            enthalpy_pv->SetValue(tag);
-            snprintf(tag, BUFF_SIZE, "%f", pv_eV);
-            enthalpy_pv_eV->SetValue(tag);
-            pmol->SetData(enthalpy_pv);
-            pmol->SetData(enthalpy_pv_eV);
+            pv_eV = atof(vs[2].c_str());
             hasPV = true;
           }
 
           if (strstr(buffer, "Total lattice enthalpy")) {
             tokenize(vs, buffer);
-            en_eV = static_cast<float> (atof(vs[4].c_str()));
-            en = static_cast<float> (en_eV * EV_TO_KCAL_PER_MOL);
-            snprintf(tag, BUFF_SIZE, "%f", en);
-            enthalpy->SetValue(tag);
-            snprintf(tag, BUFF_SIZE, "%f", en_eV);
-            enthalpy_eV->SetValue(tag);
-            pmol->SetData(enthalpy);
-            pmol->SetData(enthalpy_eV);
+            enthalpy_eV = atof(vs[4].c_str());
           }
 
           ifs.getline(buffer,BUFF_SIZE);
         }
         if (hasPV)
-          pmol->SetEnergy(en - pv);
+          pmol->SetEnergy((enthalpy_eV - pv_eV) * EV_TO_KCAL_PER_MOL);
       }
     }
 
@@ -359,6 +322,32 @@ namespace OpenBabel {
       FOR_ATOMS_OF_MOL(atom, pmol) {
         atom->SetVector(cell->FractionalToCartesian(atom->GetVector()));
       }
+    }
+
+    // Set enthalpy
+    if (hasEnthalpy) {
+      OBPairData *enthalpyPD = new OBPairData();
+      OBPairData *enthalpyPD_pv = new OBPairData();
+      OBPairData *enthalpyPD_eV = new OBPairData();
+      OBPairData *enthalpyPD_pv_eV = new OBPairData();
+      enthalpyPD->SetAttribute("Enthalpy (kcal/mol)");
+      enthalpyPD_pv->SetAttribute("Enthalpy PV term (kcal/mol)");
+      enthalpyPD_eV->SetAttribute("Enthalpy (eV)");
+      enthalpyPD_pv_eV->SetAttribute("Enthalpy PV term (eV)");
+      double en_kcal_per_mole = enthalpy_eV * EV_TO_KCAL_PER_MOL;
+      double pv_kcal_per_mole = pv_eV * EV_TO_KCAL_PER_MOL;
+      snprintf(tag, BUFF_SIZE, "%f", en_kcal_per_mole);
+      enthalpyPD->SetValue(tag);
+      snprintf(tag, BUFF_SIZE, "%f", pv_kcal_per_mole);
+      enthalpyPD_pv->SetValue(tag);
+      snprintf(tag, BUFF_SIZE, "%f", enthalpy_eV);
+      enthalpyPD_eV->SetValue(tag);
+      snprintf(tag, BUFF_SIZE, "%f", pv_eV);
+      enthalpyPD_pv_eV->SetValue(tag);
+      pmol->SetData(enthalpyPD);
+      pmol->SetData(enthalpyPD_pv);
+      pmol->SetData(enthalpyPD_eV);
+      pmol->SetData(enthalpyPD_pv_eV);
     }
 
     // set final unit cell

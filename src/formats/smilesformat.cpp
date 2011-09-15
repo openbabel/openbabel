@@ -106,9 +106,21 @@ namespace OpenBabel {
       return
         "SMILES format\n"
         "A linear text format which can describe the connectivity and chirality of a molecule\n"
-        "OpenBabel implements the `OpenSMILES specification <http://opensmiles.org>`_.\n\n"
+        "Open Babel implements the `OpenSMILES specification <http://opensmiles.org>`_.\n\n"
 
         "It also implements an extension to this specification for radicals.\n\n"
+
+        "Note that the ``l <atomno>`` option, used to specify a \"last\" atom, is\n"
+        "intended for the generation of SMILES strings to which additional atoms\n"
+        "will be concatenated. If the atom specified has an explicit H within a bracket\n"
+        "(e.g. ``[nH]`` or ``[C@@H]``) the output will have the H removed along with any\n"
+        "associated stereo symbols.\n\n"
+
+        ".. seealso::\n\n"
+
+        "  The :ref:`Canonical_SMILES_format` produces a canonical representation\n"
+        "  of the molecule in SMILES format. This is the same as the ``c`` option\n"
+        "  below but may be more convenient to use.\n\n"
 
         "Write Options e.g. -xt\n"
         "  a  Output atomclass like [C:2], if available\n"
@@ -120,7 +132,11 @@ namespace OpenBabel {
         "  t  Molecule name only\n"
         "  x  append X/Y coordinates in canonical-SMILES order\n"
         "  C  'anti-canonical' random order (mostly for testing)\n"
-        "\n";
+        "  f  <atomno> Specify the first atom\n"
+        "     This atom will be used to begin the SMILES string.\n"
+        "  l  <atomno> Specify the last atom\n"
+        "     The output will be rearranged so that any additional\n"
+        "     SMILES added to the end will be attached to this atom.\n\n";
     }
 
 
@@ -151,11 +167,16 @@ namespace OpenBabel {
     virtual const char* Description() {
       return
         "Canonical SMILES format\n"
-	"A canonical form of the SMILES linear text format\n"
+        "A canonical form of the SMILES linear text format\n"
         "The SMILES format is a linear text format which can describe the\n"
        	"connectivity "
         "and chirality of a molecule. Canonical SMILES gives a single\n"
        	"'canonical' form for any particular molecule.\n\n"
+
+        ".. seealso::\n\n"
+
+        "  The \"regular\" :ref:`SMILES_format` gives faster\n"
+        "  output, since no canonical numbering is performed.\n\n"
 
         "Write Options e.g. -xt\n"
         "  a  Output atomclass like [C:2], if available\n"
@@ -163,10 +184,13 @@ namespace OpenBabel {
         "  i  Do not include isotopic or chiral markings\n"
         "  n  No molecule name\n"
         "  r  Radicals lower case eg ethyl is Cc\n"
-        "  t  Molecule name only\n\n"
-
-        "See also, the \"regular\" SMILES format, which results in faster\n"
-        "output, since no canonical numbering is performed.\n\n";
+        "  t  Molecule name only\n"
+        "  f  <atomno> Specify the first atom\n"
+        "     This atom will be used to begin the SMILES string.\n"
+        "  l  <atomno> Specify the last atom\n"
+        "     The output will be rearranged so that any additional\n"
+        "     SMILES added to the end will be attached to this atom.\n"
+        "     See the :ref:`SMILES_format` for more information.\n\n";
     };
 
   };
@@ -2390,6 +2414,9 @@ namespace OpenBabel {
     OBConversion* _pconv;
     OBAtomClassData* _pac;
 
+    OBAtom* _endatom;
+    OBAtom* _startatom;
+
   public:
     OBMol2Cansmi()
     {
@@ -2434,6 +2461,7 @@ namespace OpenBabel {
                                    vector<unsigned int> &canonical_order,
                                    bool isomeric);
     bool         HasStereoDblBond(OBBond *, OBAtom *atom);
+    void MyFindChildren(OBMol &mol, vector<OBAtom*> &children, OBBitVec &seen, OBAtom *end);
     std::string &GetOutputOrder()
     {
       return _canorder;
@@ -2464,6 +2492,9 @@ namespace OpenBabel {
 
     _pconv = pconv;
     _canonicalOutput = canonical;
+
+    _endatom = NULL;
+    _startatom = NULL;
   }
 
 
@@ -2956,6 +2987,8 @@ namespace OpenBabel {
             hcount--;
         }
       }
+      if ((atom == _endatom || atom == _startatom) && hcount>0) // Leave a free valence for attachment
+        hcount--;
 
       if (hcount != 0) {
         strcat(bracketBuffer,"H");
@@ -3172,6 +3205,41 @@ namespace OpenBabel {
     return false;
   }
 
+  //! Adaptation of OBMol::FindChildren to allow a vector of OBAtoms to be passed in
+  //  MOVE THIS TO OBMOL FOR 2.4
+  void OBMol2Cansmi::MyFindChildren(OBMol &mol, vector<OBAtom*> &children, OBBitVec &seen, OBAtom *end)
+  {
+    OBBitVec curr,next;
+
+    OBBitVec used(seen);
+    used |= end->GetIdx();
+    curr |= end->GetIdx();
+    children.clear();
+
+    int i;
+    OBAtom *atom,*nbr;
+    vector<OBBond*>::iterator j;
+
+    for (;;)
+      {
+        next.Clear();
+        for (i = curr.NextBit(-1);i != curr.EndBit();i = curr.NextBit(i))
+          {
+            atom = mol.GetAtom(i);
+            for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
+              if (!used[nbr->GetIdx()])
+                {
+                  children.push_back(nbr);
+                  next |= nbr->GetIdx();
+                  used |= nbr->GetIdx();
+                }
+          }
+        if (next.Empty())
+          break;
+        curr = next;
+      }
+  }
+
   /***************************************************************************
    * FUNCTION: BuildCanonTree
    *
@@ -3239,6 +3307,28 @@ namespace OpenBabel {
     }
 
     _uatoms.SetBitOn(atom->GetIdx());     //mark the atom as visited
+
+    if (_endatom && !_uatoms.BitIsSet(_endatom->GetIdx()) && sort_nbrs.size() > 1) {
+      // If you have specified an _endatom, the following section rearranges
+      // sort_nbrs as follows:
+      //   - if a branch does not lead to the end atom, move it to the front
+      //     (i.e. visit it first)
+      //   - otherwise move it to the end
+      // This section is skipped if sort_nbrs has only a single member, or if
+      // we have already visited _endatom.
+      
+      vector<OBAtom*> children;
+      MyFindChildren(mol, children, _uatoms, _endatom);
+      
+      vector<OBAtom*> front, end;
+      for (vector<OBAtom *>::iterator it=sort_nbrs.begin(); it!=sort_nbrs.end(); ++it)
+        if (std::find(children.begin(), children.end(), *it) == children.end() && *it != _endatom)
+          front.push_back(*it);
+        else
+          end.push_back(*it);
+      sort_nbrs = front;
+      sort_nbrs.insert(sort_nbrs.end(), end.begin(), end.end());
+    }
 
     // Build the next layer of nodes, in canonical order
     for (ai = sort_nbrs.begin(); ai != sort_nbrs.end(); ++ai) {
@@ -3470,8 +3560,12 @@ namespace OpenBabel {
     // in the order in which they'll appear in the canonical SMILES string.  This is more
     // complex than you'd guess because of implicit/explicit H and ring-closure digits.
 
+    // Don't include chiral symbol on _endatom or _startatom.
+    // Otherwise, we end up with C[C@@H](Br)(Cl), where the C has 4 neighbours already
+    // and we cannot concatenate another SMILES string without creating a 5-valent C.
+
     bool is_chiral = AtomIsChiral(atom);
-    if (is_chiral) {
+    if (is_chiral && atom!=_endatom && atom!=_startatom) {
 
       // If there's a parent node, it's the first atom in the ordered neighbor-vector
       // used for chirality.
@@ -3575,9 +3669,9 @@ namespace OpenBabel {
     OBBond *bond;
     for (int i = 0;i < node->Size();i++) {
       bond = node->GetChildBond(i);
-      if (i+1 < node->Size()) {
+      if (i+1 < node->Size() || node->GetAtom() == _endatom)
         strcat(buffer,"(");
-      }
+
       //if (bond->IsUp() || bond->IsDown()) {
       char cc[2];
       cc[0] = GetCisTransBondSymbol(bond, node);
@@ -3593,7 +3687,8 @@ namespace OpenBabel {
         strcat(buffer,"$");
 
       ToCansmilesString(node->GetChildNode(i),buffer, frag_atoms, symmetry_classes, canonical_order, isomeric);
-      if (i+1 < node->Size()) strcat(buffer,")");
+      if (i+1 < node->Size() || node->GetAtom() == _endatom)
+        strcat(buffer,")");
     }
   }
 
@@ -3686,6 +3781,17 @@ namespace OpenBabel {
     if(_pconv->IsOption("a"))
       _pac = static_cast<OBAtomClassData*>(mol.GetData("Atom Class"));
 
+    // Remember the desired endatom, if specified
+    const char* pp = _pconv->IsOption("l");
+    int atom_idx  = pp ? atoi(pp) : -1;
+    if (atom_idx >= 1 && atom_idx <= mol.NumAtoms())
+      _endatom = mol.GetAtom(atom_idx);
+    // Was a start atom specified?
+    pp = _pconv->IsOption("f");
+    atom_idx  = pp ? atoi(pp) : -1;
+    if (atom_idx >= 1 && atom_idx <= mol.NumAtoms())
+      _startatom = mol.GetAtom(atom_idx);
+
     // First, create a canonical ordering vector for the atoms.  Canonical
     // labels are zero indexed, corresponding to "atom->GetIdx()-1".
     if (_canonicalOutput) {
@@ -3712,15 +3818,23 @@ namespace OpenBabel {
       OBAtom *root_atom;
       int lowest_canorder = 999999;
       root_atom = NULL;
-      for (atom = mol.BeginAtom(ai); atom; atom = mol.NextAtom(ai)) {
-        int idx = atom->GetIdx();
-        if (!atom->IsHydrogen()       // don't start with a hydrogen
-            && !_uatoms[idx]          // skip atoms already used (for fragments)
-            && frag_atoms.BitIsOn(idx)// skip atoms not in this fragment
-            //&& !atom->IsChiral()    // don't use chiral atoms as root node
-            && canonical_order[idx-1] < lowest_canorder) {
-          root_atom = atom;
-          lowest_canorder = canonical_order[idx-1];
+
+      // If we specified a startatom_idx & it's in this fragment, use it to start the fragment
+      if (_startatom)
+        if (!_uatoms[_startatom->GetIdx()] && frag_atoms.BitIsOn(_startatom->GetIdx()))
+          root_atom = _startatom;
+
+      if (root_atom == NULL) {
+        for (atom = mol.BeginAtom(ai); atom; atom = mol.NextAtom(ai)) {
+          int idx = atom->GetIdx();
+          if (!atom->IsHydrogen()       // don't start with a hydrogen
+              && !_uatoms[idx]          // skip atoms already used (for fragments)
+              && frag_atoms.BitIsOn(idx)// skip atoms not in this fragment
+              //&& !atom->IsChiral()    // don't use chiral atoms as root node
+              && canonical_order[idx-1] < lowest_canorder) {
+            root_atom = atom;
+            lowest_canorder = canonical_order[idx-1];
+          }
         }
       }
 
@@ -3914,6 +4028,7 @@ namespace OpenBabel {
       OBPairData *canData = new OBPairData;
       canData->SetAttribute("SMILES Atom Order");
       canData->SetValue(m2s.GetOutputOrder());
+      // cout << "SMILES_atom_order "<<m2s.GetOutputOrder() << "\n";
       canData->SetOrigin(OpenBabel::local);
       mol.SetData(canData);
     }

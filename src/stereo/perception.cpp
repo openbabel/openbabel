@@ -110,14 +110,14 @@ namespace OpenBabel {
   }
 
   /**
-   * Check if the specified atom is a poterntial stereogenic atom.
+   * Check if the specified atom is a potential stereogenic atom.
    *
    * Criteria:
-   * - sp3 hybridization
+   * - sp3 hybridization (or P and sp3d hybridization)
    * - not connected to more than 4 atoms
    * - at least 3 "heavy" neighbors
    *
-   * Nitrogen is treated as a special case since the barrier of inversion is
+   * Nitrogen (neutral) is treated as a special case since the barrier of inversion is
    * low in many cases making the atom non-stereogenic. Only bridge-head
    * nitrogen atoms (i.e. nitrogen has 3 neighbors in rings) will be
    * considered stereogenic.
@@ -125,10 +125,11 @@ namespace OpenBabel {
   bool isPotentialTetrahedral(OBAtom *atom)
   {
     // consider only potential steroecenters
-    if (atom->GetHyb() != 3 || atom->GetImplicitValence() > 4 || atom->GetHvyValence() < 3 || atom->GetHvyValence() > 4)
+    if ((atom->GetHyb() != 3 && !(atom->GetHyb() == 5 && atom->IsPhosphorus()))
+        || atom->GetImplicitValence() > 4 || atom->GetHvyValence() < 3 || atom->GetHvyValence() > 4)
       return false;
     // skip non-chiral N
-    if (atom->IsNitrogen()) {
+    if (atom->IsNitrogen() && atom->GetFormalCharge()==0) {
       int nbrRingAtomCount = 0;
       FOR_NBORS_OF_ATOM (nbr, atom) {
         if (nbr->IsInRing())

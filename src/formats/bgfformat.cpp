@@ -73,10 +73,29 @@ namespace OpenBabel
 
     char buffer[BUFF_SIZE];
     char tmp[16],tmptyp[16];
+    vector<string> vs;
 
-    while (ifs.getline(buffer,BUFF_SIZE))
-      if (EQn(buffer,"FORMAT",6))
+    while (ifs.getline(buffer,BUFF_SIZE)) {
+      if (EQn(buffer,"CRYSTX",6)) {
+        // Parse unit cell
+        tokenize(vs,buffer," \n\t,");
+        if (vs.size() != 7)
+          continue; // something strange
+
+        double A, B, C, Alpha, Beta, Gamma;
+        A = atof(vs[1].c_str());
+        B = atof(vs[2].c_str());
+        C = atof(vs[3].c_str());
+        Alpha = atof(vs[4].c_str());
+        Beta  = atof(vs[5].c_str());
+        Gamma = atof(vs[6].c_str());
+        OBUnitCell *uc = new OBUnitCell;
+        uc->SetOrigin(fileformatInput);
+        uc->SetData(A, B, C, Alpha, Beta, Gamma);
+        mol.SetData(uc);
+      } else if (EQn(buffer,"FORMAT",6))
         break;
+    }
 
     ttab.SetFromType("DRE");
     ttab.SetToType("INT");
@@ -115,7 +134,6 @@ namespace OpenBabel
       }
 
     unsigned int bgn;
-    vector<string> vs;
     for (;;)
       {
         if (!ifs.getline(buffer,BUFF_SIZE) || EQn(buffer,"END",3))
@@ -189,6 +207,19 @@ namespace OpenBabel
     ofs << buffer;
     snprintf(buffer, BUFF_SIZE, "REMARK BGF file created by Open Babel %s\n",BABEL_VERSION);
     ofs << "FORCEFIELD DREIDING  \n";
+
+    // write unit cell if available
+    if (mol.HasData(OBGenericDataType::UnitCell))
+      {
+        OBUnitCell *uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
+        // e.g. CRYSTX    49.30287   49.23010   25.45631   90.00008   89.99995   57.10041
+        snprintf(buffer, BUFF_SIZE,
+                 "CRYSTX%12.5f%12.5f%12.5f%12.5f%12.5f%12.5f",
+                 uc->GetA(), uc->GetB(), uc->GetC(),
+                 uc->GetAlpha() , uc->GetBeta(), uc->GetGamma());
+        ofs << buffer << "\n";
+      }
+
     ofs << "FORMAT ATOM   (a6,1x,i5,1x,a5,1x,a3,1x,a1,1x,a5,3f10.5,1x,a5,i3,i2,1x,f8.5)\n";
 
     ttab.SetFromType("INT");

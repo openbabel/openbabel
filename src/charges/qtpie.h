@@ -24,7 +24,7 @@ GNU General Public License for more details.
 
 #include <math.h>
 
-#ifdef HAVE_EIGEN2
+#ifdef HAVE_EIGEN
 
 #include <Eigen/LU>
 #include <Eigen/SVD>
@@ -38,7 +38,7 @@ const double eV = 3.67493245e-2;
 
 /// conversion factor from Angstrom to bohr
 const double Angstrom = 1./0.529177249;
-USING_PART_OF_NAMESPACE_EIGEN
+using namespace Eigen;
 
 /// Determines threshold value of Coulomb interaction beyond which the classical 1/R expression
 /// will be used instead of an integral over the Gaussian orbitals
@@ -75,5 +75,5 @@ private:
   void ParseParamFile();
 };
 }; //namespace OpenBabel
-#endif //HAVE_EIGEN2
+#endif //HAVE_EIGEN
 #endif //__QTPIE_H__

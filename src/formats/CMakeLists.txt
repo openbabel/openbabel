@@ -5,6 +5,7 @@ set(formats_common
   mol2format
   pdbformat
  )
+
 set(formats_utility
   copyformat
   MNAformat
@@ -17,6 +18,7 @@ set(formats_utility
   titleformat
   )
 set(formats_compchem
+      abinitformat
       adfformat
       castepformat
       dmolformat
@@ -107,6 +109,21 @@ if(MSVC90 OR SHARED_POINTER)
   )
 endif(MSVC90 OR SHARED_POINTER)
 
+set(optional_formatgroups "")
+if(CAIRO_FOUND)
+  # Cairo can generate several formats (e.g. PDF, PNG): if implemented, they
+  # can be added here
+  set(formats_cairo
+    png2format
+  )
+  set(png2format_additional_sources ../depict/cairopainter.cpp)
+  set(optional_formatgroups
+    ${optional_formatgroups} formats_cairo
+    )
+  include_directories(${CAIRO_INCLUDE_DIRS})
+  set(libs ${libs} ${CAIRO_LIBRARIES})
+endif(CAIRO_FOUND)
+
 set(ADD_INCHI_FORMAT FALSE)
 if(WITH_INCHI)
   if(NOT OPENBABEL_USE_SYSTEM_INCHI)
@@ -174,12 +191,12 @@ if(MINIMAL_BUILD)
     ${formats_common}
   )
 else(MINIMAL_BUILD)
-  set(formats
-      ${formats_common}
-      ${formats_utility}
-      ${formats_compchem}
-      ${formats_misc}
-  )
+  set(formats "")
+  foreach(formatgroup formats_common formats_utility formats_compchem formats_misc ${optional_formatgroups})
+    set(formats
+        ${formats} ${${formatgroup}}
+    )
+  endforeach(formatgroup)
 endif(MINIMAL_BUILD)
 
 if(NOT WIN32)
@@ -196,8 +213,9 @@ else(WIN32)
       )
 endif(WIN32)
 
+
 if(MSVC)
-  foreach(formatgroup formats_common formats_utility formats_compchem formats_misc)
+  foreach(formatgroup formats_common formats_utility formats_compchem formats_misc ${optional_formatgroups})
     set(formatsources "")
     foreach(format ${${formatgroup}})
       set(formatsources ${formatsources} ${format}.cpp ${${format}_additional_sources})

@@ -18,6 +18,7 @@ GNU General Public License for more details.
 #define RYDBERG_TO_KCAL_PER_MOL 313.755026
 #define RYDBERG_TO_ELECTRON_VOLT 13.60569193
 #define BOHR_TO_ANGSTROM .529177
+#define EV_TO_KCAL_PER_MOL 23.060538
 
 using namespace std;
 namespace OpenBabel {
@@ -77,8 +78,6 @@ namespace OpenBabel {
 
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
-    OBMol &mol = *pmol;
-    const char* title = pConv->GetTitle();
 
     char buffer[BUFF_SIZE], tag[BUFF_SIZE];
     double x,y,z;
@@ -87,6 +86,9 @@ namespace OpenBabel {
     matrix3x3 ortho;
     int atomicNum;
     OBUnitCell *cell = new OBUnitCell();
+    bool hasEnthalpy=false;
+    double enthalpy, pv;
+
     pmol->BeginModify();
 
     while (ifs.getline(buffer,BUFF_SIZE)) {
@@ -172,7 +174,7 @@ namespace OpenBabel {
         vector<OBAtom*> toDelete;
         FOR_ATOMS_OF_MOL(a, *pmol)
           toDelete.push_back(&*a);
-        for (int i = 0; i < toDelete.size(); i++)
+        for (size_t i = 0; i < toDelete.size(); i++)
           pmol->DeleteAtom(toDelete.at(i));
 
 
@@ -230,28 +232,44 @@ namespace OpenBabel {
 
       // Enthalphy
       if (strstr(buffer, "Final enthalpy =")) {
-        float en, pv;
         tokenize(vs, buffer);
 
-        OBPairData *enthalpy = new OBPairData();
-        enthalpy->SetAttribute("Enthalpy (kcal/mol)");
-        en = static_cast<float> (atof(vs.at(3).c_str()) * RYDBERG_TO_KCAL_PER_MOL);
-        snprintf(tag, BUFF_SIZE, "%f", en);
-        enthalpy->SetValue(tag);
-        pmol->SetData(enthalpy);
-
-        OBPairData *enthalpy_pv = new OBPairData();
-        enthalpy_pv->SetAttribute("Enthalpy PV term (kcal/mol)");
-        pv = static_cast<float> (en - pmol->GetEnergy());
-        snprintf(tag, BUFF_SIZE, "%f", pv);
-        enthalpy_pv->SetValue(tag);
-        pmol->SetData(enthalpy_pv);
-
+        hasEnthalpy = true;
+        enthalpy = atof(vs.at(3).c_str()) * RYDBERG_TO_KCAL_PER_MOL;
+        pv = enthalpy - pmol->GetEnergy();
       }
     }
 
     // set final unit cell
     pmol->SetData(cell);
+
+    // Set enthalpy
+    if (hasEnthalpy) {
+      OBPairData *enthalpyPD = new OBPairData();
+      OBPairData *enthalpyPD_pv = new OBPairData();
+      OBPairData *enthalpyPD_eV = new OBPairData();
+      OBPairData *enthalpyPD_pv_eV = new OBPairData();
+      enthalpyPD->SetAttribute("Enthalpy (kcal/mol)");
+      enthalpyPD_pv->SetAttribute("Enthalpy PV term (kcal/mol)");
+      enthalpyPD_eV->SetAttribute("Enthalpy (eV)");
+      enthalpyPD_pv_eV->SetAttribute("Enthalpy PV term (eV)");
+      double en_kcal_per_mole = enthalpy;
+      double pv_kcal_per_mole = pv;
+      double en_eV = enthalpy / EV_TO_KCAL_PER_MOL;
+      double pv_eV = pv / EV_TO_KCAL_PER_MOL;
+      snprintf(tag, BUFF_SIZE, "%f", en_kcal_per_mole);
+      enthalpyPD->SetValue(tag);
+      snprintf(tag, BUFF_SIZE, "%f", pv_kcal_per_mole);
+      enthalpyPD_pv->SetValue(tag);
+      snprintf(tag, BUFF_SIZE, "%f", en_eV);
+      enthalpyPD_eV->SetValue(tag);
+      snprintf(tag, BUFF_SIZE, "%f", pv_eV);
+      enthalpyPD_pv_eV->SetValue(tag);
+      pmol->SetData(enthalpyPD);
+      pmol->SetData(enthalpyPD_pv);
+      pmol->SetData(enthalpyPD_eV);
+      pmol->SetData(enthalpyPD_pv_eV);
+    }
 
     pmol->EndModify();
 

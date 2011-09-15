@@ -456,7 +456,7 @@ FunctionEnd
 ;General
 
   ;OpenBabel version
-  !define OBVersion 2.3.0
+  !define OBVersion 2.3.1cm
 
   ;Name and file
   Name "OpenBabel ${OBVERSION}"
@@ -533,9 +533,12 @@ Section "Dummy Section" SecDummy
   
   File vcredist_x86.exe
 
+  ;Java and CSharp bindings
   File ..\..\scripts\java\openbabel.jar
   File ..\build\bin\Release\openbabel_java.dll
-  
+  File ..\build\bin\Release\openbabel_csharp.dll
+  File ..\..\scripts\csharp\OBDotNet.dll
+
   File ..\libs\i386\*.dll
 
   SetOutPath "$INSTDIR\examples"
@@ -630,6 +633,8 @@ Section "Uninstall"
   Delete "$INSTDIR\OpenBabelGUI.html"
   Delete "$INSTDIR\openbabel.jar"
   Delete "$INSTDIR\openbabel_java.dll"
+  Delete "$INSTDIR\OBDotNet.dll"
+  Delete "$INSTDIR\openbabel_csharp.dll"
   Delete "$INSTDIR\Uninstall.exe"
 
   RMDir "$INSTDIR"

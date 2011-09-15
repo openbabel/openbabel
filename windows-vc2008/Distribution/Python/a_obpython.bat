@@ -8,7 +8,7 @@ set PYTHON_VER=%2
 
 
 cd ..\..
-call my_default_build.bat "-DPYTHON_EXECUTABLE=%PYTHON_DIR%\python.exe" "-DPYTHON_INCLUDE_DIR=%PYTHON_DIR%\include" "-DPYTHON_LIBRARY=%PYTHON_DIR%\libs\python%PYTHON_VER%.lib"
+call default_build.bat "-DPYTHON_EXECUTABLE=%PYTHON_DIR%\python.exe" "-DPYTHON_INCLUDE_DIR=%PYTHON_DIR%\include" "-DPYTHON_INCLUDE_PATH=%PYTHON_DIR%\include" "-DPYTHON_LIBRARY=%PYTHON_DIR%\libs\python%PYTHON_VER%.lib"
 cd Distribution\Python
 
 echo. 

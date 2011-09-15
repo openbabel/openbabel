@@ -77,6 +77,13 @@ namespace OpenBabel
     d->painter = painter;
   }
 
+  OBDepict::~OBDepict()
+  {
+    delete d->mol;
+    d->mol = NULL;
+    delete d;
+  }
+
   void OBDepict::SetBondLength(double length) 
   { 
     d->bondLength = length; 
@@ -269,7 +276,9 @@ namespace OpenBabel
     if (!d->painter)
       return false;
 
-    d->mol = mol;
+    if (d->mol != NULL)
+      delete d->mol;
+    d->mol = new OBMol(*mol); // Copy it
     
     OBAtomClassData* pac = NULL;
     if(mol->HasData("Atom Class"))
@@ -281,23 +290,30 @@ namespace OpenBabel
     OBBondIterator j;
     OBAtomIterator i;
 
+    
+    // Determine which should be wedge and hash bonds...
+    // Note: we need to do this before we invert the y-coordinate for depiction
+    std::map<OBBond*, enum OBStereo::BondDirection> updown;
+    std::map<OBBond*, OBStereo::Ref> from;
+    TetStereoToWedgeHash(*d->mol, updown, from);
+
     if(mol->NumAtoms()>0) {
-      // scale bond lengths
+      // scale bond lengths and invert the y coordinate (both SVG and Cairo use top left as the origin)
       double bondLengthSum = 0.0;
       for (OBBond *bond = mol->BeginBond(j); bond; bond = mol->NextBond(j))
         bondLengthSum += bond->GetLength();
       const double averageBondLength = bondLengthSum / mol->NumBonds();
       const double f = mol->NumBonds() ? d->bondLength / averageBondLength : 1.0;
-      for (atom = mol->BeginAtom(i); atom; atom = mol->NextAtom(i))
-        atom->SetVector(atom->GetX() * f, atom->GetY() * f, 0.0);
+      for (atom = d->mol->BeginAtom(i); atom; atom = d->mol->NextAtom(i))
+        atom->SetVector(atom->GetX() * f, - atom->GetY() * f, 0.0);
 
       // find min/max values
       double min_x, max_x;
       double min_y, max_y;
-      atom = mol->BeginAtom(i);
+      atom = d->mol->BeginAtom(i);
       min_x = max_x = atom->GetX();
       min_y = max_y = atom->GetY();
-      for (atom = mol->NextAtom(i); atom; atom = mol->NextAtom(i)) {
+      for (atom = d->mol->NextAtom(i); atom; atom = d->mol->NextAtom(i)) {
         min_x = std::min(min_x, atom->GetX());
         max_x = std::max(max_x, atom->GetX());
         min_y = std::min(min_y, atom->GetY());
@@ -306,7 +322,7 @@ namespace OpenBabel
 
       const double margin = 40.0;
       // translate all atoms so the bottom-left atom is at margin,margin
-      for (atom = mol->BeginAtom(i); atom; atom = mol->NextAtom(i))
+      for (atom = d->mol->BeginAtom(i); atom; atom = d->mol->NextAtom(i))
         atom->SetVector(atom->GetX() - min_x + margin, atom->GetY() - min_y + margin, 0.0);
 
       width  = max_x - min_x + 2*margin;
@@ -320,26 +336,32 @@ namespace OpenBabel
     d->painter->NewCanvas(width, height);
     
     // draw bonds
-    if(d->options & genWedgeHash)
-      d->SetWedgeAndHash(mol);
-    for (OBBond *bond = mol->BeginBond(j); bond; bond = mol->NextBond(j)) {
+    for (OBBond *bond = d->mol->BeginBond(j); bond; bond = d->mol->NextBond(j)) {
       OBAtom *begin = bond->GetBeginAtom();
       OBAtom *end = bond->GetEndAtom();
-
       if((d->options & internalColor) && bond->HasData("color"))
         d->painter->SetPenColor(OBColor(bond->GetData("color")->GetValue()));
       else
         d->painter->SetPenColor(d->bondColor);
 
-      if (bond->IsWedge()) {
-        d->DrawWedge(begin, end);
-      } else if (bond->IsHash()) {
-        d->DrawHash(begin, end);
-      } else if (!bond->IsInRing()) {
-        d->DrawSimpleBond(begin, end, bond->GetBO());
+      if(from.find(bond)!=from.end()) {
+        //is a wedge or hash bond
+        if(from[bond]==bond->GetEndAtom()->GetId())
+          swap(begin, end);
+        if(updown[bond]==OBStereo::UpBond)
+          d->DrawWedge(begin, end);
+        else if(updown[bond]==OBStereo::DownBond)
+          d->DrawHash(begin, end);
+        else {
+          //This is a bond to a unspecified chiral center
+          //and could be depicted differently
+          d->DrawSimpleBond(begin, end, bond->GetBO());
+        }
       }
+      else if (!bond->IsInRing())
+        d->DrawSimpleBond(begin, end, bond->GetBO());
     }
-    
+
     // draw ring bonds
     std::vector<OBRing*> rings(mol->GetSSSR());
     OBBitVec drawnBonds;
@@ -348,19 +370,19 @@ namespace OpenBabel
       std::vector<int> indexes = ring->_path;
       vector3 center(VZero);
       for (std::vector<int>::iterator l = indexes.begin(); l != indexes.end(); ++l) {
-        center += mol->GetAtom(*l)->GetVector();        
+        center += d->mol->GetAtom(*l)->GetVector();        
       }
       center /= indexes.size();
 
       for (unsigned int l = 0; l < indexes.size(); ++l) {
-        OBAtom *begin = mol->GetAtom(indexes[l]);
+        OBAtom *begin = d->mol->GetAtom(indexes[l]);
         OBAtom *end;
         if (l+1 < indexes.size())
-          end = mol->GetAtom(indexes[l+1]);
+          end = d->mol->GetAtom(indexes[l+1]);
         else
-          end = mol->GetAtom(indexes[0]);
+          end = d->mol->GetAtom(indexes[0]);
 
-        OBBond *ringBond = mol->GetBond(begin, end);
+        OBBond *ringBond = d->mol->GetBond(begin, end);
         if (drawnBonds.BitIsSet(ringBond->GetId()))
           continue;
 
@@ -376,7 +398,7 @@ namespace OpenBabel
     }
 
     // draw atom labels
-    for (atom = mol->BeginAtom(i); atom; atom = mol->NextAtom(i)) {
+    for (atom = d->mol->BeginAtom(i); atom; atom = d->mol->NextAtom(i)) {
       double x = atom->GetX();
       double y = atom->GetY();
 
@@ -401,13 +423,13 @@ namespace OpenBabel
       int spin = atom->GetSpinMultiplicity();
       if(charge || spin) {
         OBFontMetrics metrics = d->painter->GetFontMetrics("N");
-        double yoffset = d->HasLabel(atom) ? 0.4 * metrics.height : 0.0;
-        switch (GetLabelAlignment(atom)) {
+        double yoffset = d->HasLabel(atom) ? -0.2 * metrics.height : -0.2 * metrics.height;
+        /*switch (GetLabelAlignment(atom)) {
           case Up:
           case Left:
           case Right:
             yoffset = - 1.2 * metrics.height;
-        }
+        }*/
         stringstream ss;
         if(charge) {
           if(abs(charge)!=1)
@@ -420,7 +442,7 @@ namespace OpenBabel
         }
         if(spin || charge<0)
           d->painter->SetFontSize(2 * metrics.fontSize);
-        d->painter->DrawText(x-0.4*metrics.width, y-yoffset, ss.str());
+        d->painter->DrawText(x + 0.4*metrics.width, y+yoffset, ss.str());
         d->painter->SetFontSize(metrics.fontSize);//restore
       }
  
@@ -512,17 +534,19 @@ namespace OpenBabel
     vector3 vb = end - begin;
 
     if (HasLabel(beginAtom))
-      begin += 0.26 * vb;
+      begin += 0.33 * vb;
     if (HasLabel(endAtom))
-      end -= 0.26 * vb;
+      end -= 0.33 * vb;
+    
+    vb = end - begin; // Resize the extents of the vb vector
 
     vector3 orthogonalLine = cross(vb, VZ);
     orthogonalLine.normalize();
     orthogonalLine *= 0.5 * bondWidth;
 
-    double lines[7] = { 0.20, 0.35, 0.50, 0.65 };
+    double lines[6] = { 0.20, 0.36, 0.52, 0.68, 0.84, 1.0 };
 
-    for (int k = 0; k < 7; ++k) {
+    for (int k = 0; k < 6; ++k) {
       double w = lines[k];
       painter->DrawLine(begin.x() + vb.x() * w + orthogonalLine.x() * w, 
                         begin.y() + vb.y() * w + orthogonalLine.y() * w, 
@@ -536,13 +560,13 @@ namespace OpenBabel
     vector3 begin = beginAtom->GetVector();
     vector3 end = endAtom->GetVector();
     vector3 vb = end - begin;
+    
+    vb.normalize();
 
     if (HasLabel(beginAtom))
-      begin += 0.33 * vb;
+      begin += 13. * vb; // Length is normally 40
     if (HasLabel(endAtom))
-      end -= 0.33 * vb;
-
-    vb.normalize();
+      end -= 13. * vb;
 
     if (order == 1) {
       painter->DrawLine(begin.x(), begin.y(), end.x(), end.y());
@@ -704,7 +728,7 @@ namespace OpenBabel
 
     // compute the vertical starting position
     yOffset = 0.5 * (metrics.ascent /*- metrics.descent*/);
-    yOffsetSubscript = yOffset + metrics.descent;
+    yOffsetSubscript = yOffset - metrics.descent;
     double xInitial = xOffset;
 
     for (int i = 0; i < label.size(); ++i) {
@@ -715,11 +739,11 @@ namespace OpenBabel
             painter->SetFontSize(fontSize);
             painter->DrawText(pos.x() + xOffset, pos.y() + yOffset, str);
             if (alignment == Down) {
-              yOffset += metrics.ascent  + metrics.descent;
-              yOffsetSubscript += metrics.ascent + metrics.descent;
+              yOffset += metrics.fontSize;
+              yOffsetSubscript += metrics.fontSize;
             } else {
-              yOffset -= 2.4 * metrics.ascent - metrics.descent;
-              yOffsetSubscript -= metrics.ascent - metrics.descent;
+              yOffset -= metrics.fontSize;
+              yOffsetSubscript -= metrics.fontSize;
             }
             xOffset = xInitial;
             str.clear();

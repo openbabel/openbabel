@@ -10,7 +10,7 @@ DeferredFormat class is intended to assist writing ops that influence the
 conversion of multiple molecules with the OBConversion Convert interface.
 See, for instance, OpSort. Although it is a format, it does not registered
 itself, an object is not constructed in ReadChemObject() or deleted in
-WritChemObject(). It is used in a different way from normal formats. An 
+WriteChemObject(). It is used in a different way from normal formats. An 
 op makes an instance of DeferredFormat, probably when it is first called
 in its Do() function.
 \code
@@ -71,16 +71,19 @@ public:
         if(_pOp->ProcessVec(_obvec))
           pConv->SetOptions("",OBConversion::GENOPTIONS);
 
-        //Now output the processed vector
-        std::reverse(_obvec.begin(),_obvec.end()); //because DeferredFormat outputs in reverse order
-        pConv->SetInAndOutFormats(this, _pRealOutFormat);
+        //Now output the processed vector, unless it is empty
+        if(!_obvec.empty())
+        {
+          std::reverse(_obvec.begin(),_obvec.end()); //because DeferredFormat outputs in reverse order
+          pConv->SetInAndOutFormats(this, _pRealOutFormat);
 
-        std::ifstream ifs; // get rid of gcc warning
-        pConv->SetInStream(&ifs);//Not used, but Convert checks it is ok
-        pConv->GetInStream()->clear();
+          std::ifstream ifs; // get rid of gcc warning
+          pConv->SetInStream(&ifs);//Not used, but Convert checks it is ok
+          pConv->GetInStream()->clear();
 
-        pConv->SetOutputIndex(0);
-        pConv->Convert();
+          pConv->SetOutputIndex(0);
+          pConv->Convert();
+        }
       }
     }
     return true;

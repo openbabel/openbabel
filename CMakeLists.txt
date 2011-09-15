@@ -396,10 +396,17 @@ include_directories(${openbabel_BINARY_DIR}/include
 #cjh
 find_package(Eigen2) # find and setup Eigen2
 if(EIGEN2_FOUND)
-  add_definitions (-DHAVE_EIGEN2)
+  add_definitions (-DHAVE_EIGEN)
   include_directories(${EIGEN2_INCLUDE_DIR})
 endif()
 #cjh
+
+find_package(Cairo)
+if(CAIRO_FOUND)
+  message(STATUS "Cairo found. PNG output will be supported.")
+else(CAIRO_FOUND)
+  message(STATUS "Could NOT find Cairo. PNG output will NOT be supported.")
+endif(CAIRO_FOUND)
 
 add_subdirectory(include)
 add_subdirectory(data)

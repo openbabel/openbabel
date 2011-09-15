@@ -35,9 +35,9 @@ namespace OpenBabel
       return
         "Tinker XYZ format\n"
         "The cartesian XYZ file format used by the molecular mechanics package TINKER.\n"
-        "By default, the MM2 atom types are used for writiting files.\n"
+        "By default, the MM2 atom types are used for writiting files.\n\n"
         "Read Options e.g. -as\n"
-        "  s  Output single bonds only\n"
+        "  s  Output single bonds only\n\n"
         "Write Options e.g. -xm\n"
         "  m  Write an input file for the CNDO/INDO program.\n"
         "  3  Write atom types for the MM3 forcefield.\n\n";

@@ -18,7 +18,7 @@ shutil.copyfile("../../build/bin/Release/_openbabel.pyd", "_openbabel.pyd")
 shutil.copyfile("../../../scripts/python/openbabel.py", "openbabel.py")
 
 setup(name='openbabel-python',
-      version='1.6',
+      version='1.7',
       author='The Open Babel development team',
       author_email='openbabel-scripting@lists.sourceforge.net',
       url='http://openbabel.sourceforge.net/wiki/Python',
