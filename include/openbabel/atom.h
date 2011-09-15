@@ -326,6 +326,8 @@ namespace OpenBabel
       double GetDistance(int index);
       //! \return the distance to the supplied OBAtom
       double GetDistance(OBAtom*);
+      //! \return the distance to the coordinates of the supplied vector3
+      double GetDistance(vector3* v);
       //! \return the angle defined by this atom -> b (vertex) -> c
       double GetAngle(int b, int c);
       //! \return the angle defined by this atom -> b (vertex) -> c

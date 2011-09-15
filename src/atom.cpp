@@ -1081,6 +1081,11 @@ namespace OpenBabel
     return(( this->GetVector() - mol->GetAtom(b)->GetVector() ).length());
   }
 
+  double OBAtom::GetDistance(vector3 *v)
+  {
+    return(( this->GetVector() - *v ).length());
+  }
+
   double OBAtom::GetAngle(OBAtom *b, OBAtom *c)
   {
     vector3 v1,v2;
