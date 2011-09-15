@@ -77,6 +77,7 @@ set(formats_misc
       freefracformat
       ghemicalformat
       gromos96format
+      groformat
       mmcifformat
       mmodformat
       moldenformat
