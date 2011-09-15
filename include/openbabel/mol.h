@@ -361,9 +361,11 @@ namespace OpenBabel
     //! Overrides the calculation from spin multiplicity of OBAtoms
     void   SetTotalSpinMultiplicity(unsigned int spinMultiplicity);
     //! Set the internal coordinates to @p int_coord
-    //! (Does not call InternalToCartesian to update the 3D cartesian coordinates)
-    void   SetInternalCoord(std::vector<OBInternalCoord*> int_coord)
-    { _internals = int_coord; }
+    //! (Does not call InternalToCartesian to update the 3D cartesian
+    //! coordinates).
+    //! The size of the @p int_coord has to be the same as the number of atoms
+    //! in molecule (+ NULL at the beginning).
+    void SetInternalCoord(std::vector<OBInternalCoord*> int_coord);
     //! Set the flag for determining automatic formal charges with pH (default=true)
     void SetAutomaticFormalCharge(bool val)
     { _autoFormalCharge=val;  }
