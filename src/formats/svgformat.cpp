@@ -78,6 +78,8 @@ public:
       " a draw all carbon atoms\n"
       "    So propane would display as H3C-CH2-CH3\n"
       " d do not display molecule name\n"
+      " s use asymmetric double bonds\n"
+      " t use thicker lines\n"
       " e embed molecule as CML\n"
       "    OpenBabel can read the resulting svg file as a cml file.\n"
       " p# scale to bondlength in pixels(single mol only)\n"
@@ -382,13 +384,18 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     painter.SetFontFamily("sans-serif");
     painter.SetPenColor(OBColor(bondcolor));
     depictor.SetBondColor(bondcolor);
-    painter.SetPenWidth(2);
+    if(pConv->IsOption("t"))
+      painter.SetPenWidth(4);
+    else
+      painter.SetPenWidth(2);
 
     //No element-specific atom coloring if requested
     if(pConv->IsOption("u"))
       depictor.SetOption(OBDepict::bwAtoms);
     if(!pConv->IsOption("U"))
       depictor.SetOption(OBDepict::internalColor);
+    if(pConv->IsOption("s"))
+      depictor.SetOption(OBDepict::asymmetricDoubleBond);
 
     depictor.DrawMolecule(pmol);
 
@@ -441,13 +448,18 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     painter.SetPenColor(OBColor(bondcolor));
     depictor.SetBondColor(bondcolor);
     painter.SetFillColor(OBColor(background));
-    painter.SetPenWidth(1);
+    if(pConv->IsOption("t"))
+      painter.SetPenWidth(4);
+    else
+      painter.SetPenWidth(1);
 
     //No element-specific atom coloring if requested
     if(pConv->IsOption("u"))
       depictor.SetOption(OBDepict::bwAtoms);
     if(!pConv->IsOption("U"))
       depictor.SetOption(OBDepict::internalColor);
+    if(pConv->IsOption("s"))
+      depictor.SetOption(OBDepict::asymmetricDoubleBond);
 
     depictor.DrawMolecule(pmol);
 

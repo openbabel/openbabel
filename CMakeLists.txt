@@ -241,7 +241,7 @@ if(NOT MSVC)
      extern int matchFiles (struct dirent *entry_p);
      struct dirent **entries_pp;
      int count = scandir (\"./\", &entries_pp, matchFiles, 0);
-     return 0;
+     return count;
     }
    " SCANDIR_NEEDS_CONST)
 

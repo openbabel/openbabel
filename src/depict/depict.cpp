@@ -520,7 +520,7 @@ namespace OpenBabel
     orthogonalLine.normalize();
     orthogonalLine *= 0.5 * bondWidth;
 
-    double lines[7] = { 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70 };
+    double lines[7] = { 0.20, 0.35, 0.50, 0.65 };
 
     for (int k = 0; k < 7; ++k) {
       double w = lines[k];
@@ -538,19 +538,56 @@ namespace OpenBabel
     vector3 vb = end - begin;
 
     if (HasLabel(beginAtom))
-      begin += 0.26 * vb;
+      begin += 0.33 * vb;
     if (HasLabel(endAtom))
-      end -= 0.26 * vb;
+      end -= 0.33 * vb;
+
+    vb.normalize();
 
     if (order == 1) {
       painter->DrawLine(begin.x(), begin.y(), end.x(), end.y());
     } else if (order == 2) {
       vector3 orthogonalLine = cross(end - begin, VZ).normalize();
-      vector3 offset = orthogonalLine * 0.5 * bondSpacing;
-      painter->DrawLine(begin.x() + offset.x(), begin.y() + offset.y(), 
-                        end.x() + offset.x(), end.y() + offset.y());
-      painter->DrawLine(begin.x() - offset.x(), begin.y() - offset.y(), 
-                        end.x() - offset.x(), end.y() - offset.y());
+
+      bool useAsymmetricDouble = options & OBDepict::asymmetricDoubleBond;
+      if (HasLabel(beginAtom) && HasLabel(endAtom))
+        useAsymmetricDouble = false;
+      if (HasLabel(beginAtom) && endAtom->GetValence() == 3)
+        useAsymmetricDouble = false;
+      if (HasLabel(endAtom) && beginAtom->GetValence() == 3)
+        useAsymmetricDouble = false;
+
+
+      if (!useAsymmetricDouble) {
+        // style1
+        //
+        // -----------
+        // -----------
+        vector3 offset = orthogonalLine * 0.5 * bondSpacing;
+        painter->DrawLine(begin.x() + offset.x(), begin.y() + offset.y(),
+                          end.x() + offset.x(), end.y() + offset.y());
+        painter->DrawLine(begin.x() - offset.x(), begin.y() - offset.y(),
+                          end.x() - offset.x(), end.y() - offset.y());
+      } else {
+        // style2
+        //
+        //   -------
+        // -----------
+        vector3 offset1 = orthogonalLine * /*0.5 * */ bondSpacing;
+        vector3 offset2 = vb * /*0.5 * */ bondSpacing;
+        vector3 offset3 = - vb * /*0.5 * */ bondSpacing;
+
+        if (HasLabel(beginAtom))
+          offset2 = VZero;
+        if (HasLabel(endAtom))
+          offset3 = VZero;
+
+        painter->DrawLine(begin.x(), begin.y(), end.x(), end.y());
+        painter->DrawLine(begin.x() + offset1.x() + offset2.x(),
+                          begin.y() + offset1.y() + offset2.y(),
+                          end.x() + offset1.x() + offset3.x(),
+                          end.y() + offset1.y() + offset3.y());
+      }
     } else if (order == 3) {
       vector3 orthogonalLine = cross(end - begin, VZ).normalize();
       vector3 offset = orthogonalLine * 0.7 * bondSpacing;
@@ -581,9 +618,9 @@ namespace OpenBabel
 
     vector3 vbb = end - begin;
     if (HasLabel(beginAtom))
-      begin += 0.26 * vbb;
+      begin += 0.33 * vbb;
     if (HasLabel(endAtom))
-      end -= 0.26 * vbb;
+      end -= 0.33 * vbb;
     painter->DrawLine(begin.x(), begin.y(), end.x(), end.y());
 
     if (HasLabel(beginAtom))

@@ -50,11 +50,12 @@ namespace OpenBabel
       };
 
       enum OptionType{
-        bwAtoms       = 0x0001,
-        internalColor = 0x0002,
-        drawTermC     = 0x0010,
-        drawAllC      = 0x0020,
-        genWedgeHash  = 0x0100
+        bwAtoms              = 0x0001,
+        internalColor        = 0x0002,
+        drawTermC            = 0x0010,
+        drawAllC             = 0x0020,
+        genWedgeHash         = 0x0100,
+        asymmetricDoubleBond = 0x0200
       };
 
       /**
