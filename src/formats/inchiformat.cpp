@@ -37,6 +37,18 @@ extern string GetInChI(istream& is);
 //Make an instance of the format class
 InChIFormat theInChIFormat;
 
+  // Helper for 2.3 -- is this atom a metal
+  bool IsMetal(OBAtom *atom)
+  {
+    const unsigned NMETALS = 78;
+    const int metals[NMETALS] = {
+    3,4,11,12,13,19,20,21,22,23,24,25,26,27,28,29,
+    30,31,37,38,39,40,41,42,43,44,45,46,47,48,49,50,55,56,57,58,59,60,61,62,63,
+    64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,87,88,89,90,91,
+    92,93,94,95,96,97,98,99,100,101,102,103};
+    return std::find(metals, metals+78, atom->GetAtomicNum())!=metals+78;
+  }
+
 /////////////////////////////////////////////////////////////////
 bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
@@ -308,7 +320,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
           stereo = OBStereo::DownBond;
         else if (pbond->IsWedgeOrHash())
           stereo = OBStereo::UnknownDir;
-      } 
+      }
       else if (from_cit!=from.end()) { // It's a stereo bond
         stereo = updown[pbond];
       }
@@ -341,7 +353,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     strcpy(iat.elname,etab.GetSymbol(patom->GetAtomicNum()));
     iat.num_bonds = nbonds;
     //Let inchi add implicit Hs unless the atom is known not to have any
-    iat.num_iso_H[0] = patom->HasNoHForced() ? 0 : -1;
+    iat.num_iso_H[0] = patom->HasNoHForced() || IsMetal(patom) ? 0 : -1;
     if(patom->GetIsotope())
     {
       iat.isotopic_mass = ISOTOPIC_SHIFT_FLAG +

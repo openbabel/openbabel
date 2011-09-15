@@ -162,6 +162,18 @@ namespace OpenBabel
   //Make an instance of the format class
   SDFormat theSDFormat;
 
+  // Helper for 2.3 -- is this atom a metal
+  bool IsMetal(OBAtom *atom)
+  {
+    const unsigned NMETALS = 78;
+    const int metals[NMETALS] = {
+    3,4,11,12,13,19,20,21,22,23,24,25,26,27,28,29,
+    30,31,37,38,39,40,41,42,43,44,45,46,47,48,49,50,55,56,57,58,59,60,61,62,63,
+    64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,87,88,89,90,91,
+    92,93,94,95,96,97,98,99,100,101,102,103};
+    return std::find(metals, metals+78, atom->GetAtomicNum())!=metals+78;
+  }
+
   /////////////////////////////////////////////////////////////////
   bool MDLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
@@ -388,7 +400,7 @@ namespace OpenBabel
         // valence
         if (line.size() >= 50) {
           int valence = ReadIntField(line.substr(48, 3).c_str());
-          if(valence==15) //Other values ignored
+          if(valence!=0) // Now no H with any value
             patom->ForceNoH();
         }
 
@@ -776,11 +788,16 @@ namespace OpenBabel
         if (parity.find(atom) != parity.end())
           stereo = parity[atom];
 
+        int valence = 0; //Only non-zero when RAD value would be >=4 (outside spec)
+        //or an unbonded metal
+        if(atom->GetSpinMultiplicity()>=4 || IsMetal(atom) && atom->GetValence()==0 )
+          valence = atom->GetValence()==0 ? 15 : atom->GetValence();
+
         snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d",
           atom->GetX(), atom->GetY(), atom->GetZ(),
           atom->GetAtomicNum() ? etab.GetSymbol(atom->GetAtomicNum()) : "* ",
-          0,charge,stereo,0,0,0,0,0,0,0,0,0);
-          ofs << buff << endl;
+          0,charge,stereo,0,0,valence,0,0,0,0,0,0);
+        ofs << buff << endl;
         }
 
         OBAtom *nbr;
@@ -826,7 +843,7 @@ namespace OpenBabel
         vector<OBAtom*>::iterator itr;
         for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
           {
-            if(atom->GetSpinMultiplicity())
+            if(atom->GetSpinMultiplicity()>0 && atom->GetSpinMultiplicity()<4)
               rads.push_back(atom);
             if(atom->GetIsotope())
               isos.push_back(atom);
@@ -1460,4 +1477,5 @@ namespace OpenBabel
     }
     return true;
   }
+
 }//namespace
