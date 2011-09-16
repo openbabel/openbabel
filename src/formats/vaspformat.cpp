@@ -15,6 +15,8 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
 
+#include <locale> // For isalpha(int)
+
 #define EV_TO_KCAL_PER_MOL 23.060538
 
 using namespace std;
@@ -97,6 +99,7 @@ namespace OpenBabel {
     vector<string> vs;
     vector<unsigned int> numAtoms, atomTypes;
     bool hasEnthalpy=false;
+    bool needSymbolsInGeometryFile = false;
     double enthalpy_eV, pv_eV;
     vector<vector <vector3> > Lx;
     vector<double> Frequencies, Intensities;
@@ -121,89 +124,14 @@ namespace OpenBabel {
     ifstream ifs_out (outcar_filename.c_str());
     ifstream ifs_dos (doscar_filename.c_str());
     ifstream ifs_cont (contcar_filename.c_str());
-    if (!ifs_pot || !ifs_cont)
-      return false; // Missing some files
-
-    pmol->BeginModify();
-
-    // Read in optional information from outcar
-    if (ifs_out) {
-      while (ifs_out.getline(buffer,BUFF_SIZE)) {
-        // Enthalphy
-        if (strstr(buffer, "enthalpy is")) {
-          hasEnthalpy = true;
-          tokenize(vs, buffer);
-          enthalpy_eV = atof(vs[4].c_str());
-          pv_eV = atof(vs[8].c_str());
-        }
-
-        // Free energy
-        if (strstr(buffer, "free  energy")) {
-          tokenize(vs, buffer);
-          pmol->SetEnergy(atof(vs[4].c_str()) * EV_TO_KCAL_PER_MOL);
-        }
-        // Frequencies
-        if (strstr(buffer, "Eigenvectors") && Frequencies.size() == 0) {
-          double x, y, z;
-          ifs_out.getline(buffer,BUFF_SIZE);  // dash line
-          ifs_out.getline(buffer,BUFF_SIZE);  // blank line
-          ifs_out.getline(buffer,BUFF_SIZE);  // blank line
-          ifs_out.getline(buffer,BUFF_SIZE);  // first frequency line
-          while (!strstr(buffer, "Eigenvectors")) {
-            vector<vector3> vib;
-            tokenize(vs, buffer);
-            if (vs.size() < 2) {
-              // No more frequencies
-              break;
-            }
-            int freqnum = atoi(vs[0].c_str());
-            if (strstr(vs[1].c_str(), "f/i=")) {
-              // Imaginary frequency
-              Frequencies.push_back(-atof(vs[6].c_str()));
-            } else {
-              Frequencies.push_back(atof(vs[7].c_str()));
-            }
-            // TODO: Intensities not parsed yet
-            Intensities.push_back(0.0);
-            ifs_out.getline(buffer,BUFF_SIZE);  // header line
-            ifs_out.getline(buffer,BUFF_SIZE);  // first displacement line
-            tokenize(vs, buffer);
-            while (vs.size() == 6) {
-              x = atof(vs[3].c_str());
-              y = atof(vs[4].c_str());
-              z = atof(vs[5].c_str());
-              vib.push_back(vector3(x, y, z));
-              ifs_out.getline(buffer,BUFF_SIZE);  // next displacement line
-              tokenize(vs, buffer);
-            }
-            Lx.push_back(vib);
-            ifs_out.getline(buffer,BUFF_SIZE);  // next frequency line
-          }
-          OBVibrationData* vd = new OBVibrationData;
-          vd->SetData(Lx, Frequencies, Intensities);
-          pmol->SetData(vd);
-        }
-      }
+    if (!ifs_pot) {
+      needSymbolsInGeometryFile = true;
+    }
+    if (!ifs_cont) {
+      return false; // No geometry file?
     }
 
-    ifs_out.close();
-
-    // Get atom types from POTCAR
-    while (ifs_pot.getline(buffer,BUFF_SIZE)) {
-      if (strstr(buffer,"VRHFIN")) {
-        str = buffer;
-        size_t start = str.find("=") + 1;
-        size_t end = str.find(":");
-        str = str.substr(start, end - start);
-        // Clean up whitespace:
-        for (unsigned int i = 0; i < str.size(); i++)
-          if (str.at(i) == ' ')
-            str.erase(i,1);
-        atomTypes.push_back(OpenBabel::etab.GetAtomicNum(str.c_str()));
-      };
-    };
-
-    ifs_pot.close();
+    pmol->BeginModify();
 
     // Start working on CONTCAR:
     ifs_cont.getline(buffer,BUFF_SIZE); // Comment line
@@ -236,22 +164,94 @@ namespace OpenBabel {
     cell->SetData(x_vec, y_vec, z_vec);
     pmol->SetData(cell);
 
-    ifs_cont.getline(buffer,BUFF_SIZE); // Number of atoms per atom type. This is in the same order as atomTypes.
+    // Next comes either a list of numbers that represent the stoichiometry of
+    // the cell. The numbers are the atom counts for each type, in the order
+    // listed in the POTCAR file. Since VASP 5.2, a line with a list of atomic
+    // element symbols may precede the atom counts. This will be used if the
+    // POTCAR file is not present. If both are present, the data in the POSCAR
+    // or CONTCAR file will be used.
+    ifs_cont.getline(buffer,BUFF_SIZE);
     tokenize(vs, buffer);
-    for (unsigned int i = 0; i < atomTypes.size(); i++) {
-      numAtoms.push_back(atoi(vs.at(i).c_str()));
-      totalAtoms += atoi(vs.at(i).c_str());
+    bool symbolsInGeometryFile = false;
+    if (vs.size() != 0) {
+      if (vs.at(0).size() != 0) {
+        if (isalpha(static_cast<int>(vs.at(0).at(0))) != 0) {
+          symbolsInGeometryFile = true;
+        }
+      }
     }
 
-    ifs_cont.getline(buffer,BUFF_SIZE); // Cartesian or fractional?
-    if (buffer[0] == 'S' || buffer[0] == 's') // Skip selective dynamics line if present.
-      ifs_cont.getline(buffer,BUFF_SIZE);
-    if ( buffer[0] == 'C' || buffer[0] == 'c' ||
-         buffer[0] == 'K' || buffer[0] == 'k' )
-      cartesian = true;
-    else
-      cartesian = false;
+    // If no element data is present anywhere
+    if (needSymbolsInGeometryFile && !symbolsInGeometryFile &&
+        // and there are atoms specified
+        vs.size() != 0) {
+      // Abort read
+      pmol->EndModify();
+      return false;
+    }
 
+    if (symbolsInGeometryFile) {
+      atomTypes.clear();
+      for (size_t i = 0; i < vs.size(); ++i) {
+        atomTypes.push_back(OpenBabel::etab.GetAtomicNum(vs.at(i).c_str()));
+      }
+      // Fetch next line to get stoichiometry
+      ifs_cont.getline(buffer,BUFF_SIZE);
+      tokenize(vs, buffer);
+    }
+    else if (ifs_pot) {
+      // Get atom types from POTCAR
+      while (ifs_pot.getline(buffer,BUFF_SIZE)) {
+        if (strstr(buffer,"VRHFIN")) {
+          str = buffer;
+          size_t start = str.find("=") + 1;
+          size_t end = str.find(":");
+          str = str.substr(start, end - start);
+          // Clean up whitespace:
+          for (unsigned int i = 0; i < str.size(); i++)
+            if (str.at(i) == ' ') {
+              str.erase(i,1);
+              --i;
+            }
+          atomTypes.push_back(OpenBabel::etab.GetAtomicNum(str.c_str()));
+        }
+      }
+      ifs_pot.close();
+    }
+
+    // Extract and sum the atom counts. The sum is used to parse the atomic
+    // coordinates
+    totalAtoms = 0;
+    for (unsigned int i = 0; i < vs.size(); i++) {
+      int currentCount = atoi(vs.at(i).c_str());
+      numAtoms.push_back(currentCount);
+      totalAtoms += currentCount;
+    }
+
+    // Do the number of atom types match the number of atom counts?
+    if (numAtoms.size() != atomTypes.size()) {
+      // If not, abort read
+      pmol->EndModify();
+      return false;
+    }
+
+    // Cartesian or fractional?
+    ifs_cont.getline(buffer,BUFF_SIZE);
+    // Skip selective dynamics line if present.
+    if (buffer[0] == 'S' || buffer[0] == 's') {
+      ifs_cont.getline(buffer,BUFF_SIZE);
+    }
+    // [C|c|K|k] indicates cartesian coordinates, anything else (including
+    // an empty string, buffer[0] == 0) indicates fractional coordinates
+    if ( buffer[0] == 'C' || buffer[0] == 'c' ||
+         buffer[0] == 'K' || buffer[0] == 'k' ) {
+      cartesian = true;
+    }
+    else {
+      cartesian = false;
+    }
+
+    atomCount = 0;
     for (unsigned int i = 0; i < totalAtoms; i++) {
       // Things get a little nasty here. VASP just prints all the coordinates with no
       // identifying information one after another here. So in the above sections we've
@@ -324,6 +324,68 @@ namespace OpenBabel {
     }
 
     ifs_dos.close();
+
+    // Read in optional information from outcar
+    if (ifs_out) {
+      while (ifs_out.getline(buffer,BUFF_SIZE)) {
+        // Enthalphy
+        if (strstr(buffer, "enthalpy is")) {
+          hasEnthalpy = true;
+          tokenize(vs, buffer);
+          enthalpy_eV = atof(vs[4].c_str());
+          pv_eV = atof(vs[8].c_str());
+        }
+
+        // Free energy
+        if (strstr(buffer, "free  energy")) {
+          tokenize(vs, buffer);
+          pmol->SetEnergy(atof(vs[4].c_str()) * EV_TO_KCAL_PER_MOL);
+        }
+        // Frequencies
+        if (strstr(buffer, "Eigenvectors") && Frequencies.size() == 0) {
+          double x, y, z;
+          ifs_out.getline(buffer,BUFF_SIZE);  // dash line
+          ifs_out.getline(buffer,BUFF_SIZE);  // blank line
+          ifs_out.getline(buffer,BUFF_SIZE);  // blank line
+          ifs_out.getline(buffer,BUFF_SIZE);  // first frequency line
+          while (!strstr(buffer, "Eigenvectors")) {
+            vector<vector3> vib;
+            tokenize(vs, buffer);
+            if (vs.size() < 2) {
+              // No more frequencies
+              break;
+            }
+            int freqnum = atoi(vs[0].c_str());
+            if (strstr(vs[1].c_str(), "f/i=")) {
+              // Imaginary frequency
+              Frequencies.push_back(-atof(vs[6].c_str()));
+            } else {
+              Frequencies.push_back(atof(vs[7].c_str()));
+            }
+            // TODO: Intensities not parsed yet
+            Intensities.push_back(0.0);
+            ifs_out.getline(buffer,BUFF_SIZE);  // header line
+            ifs_out.getline(buffer,BUFF_SIZE);  // first displacement line
+            tokenize(vs, buffer);
+            while (vs.size() == 6) {
+              x = atof(vs[3].c_str());
+              y = atof(vs[4].c_str());
+              z = atof(vs[5].c_str());
+              vib.push_back(vector3(x, y, z));
+              ifs_out.getline(buffer,BUFF_SIZE);  // next displacement line
+              tokenize(vs, buffer);
+            }
+            Lx.push_back(vib);
+            ifs_out.getline(buffer,BUFF_SIZE);  // next frequency line
+          }
+          OBVibrationData* vd = new OBVibrationData;
+          vd->SetData(Lx, Frequencies, Intensities);
+          pmol->SetData(vd);
+        }
+      }
+    }
+
+    ifs_out.close();
 
     // Set enthalpy
     if (hasEnthalpy) {
