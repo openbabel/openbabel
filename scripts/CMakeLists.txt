@@ -19,7 +19,8 @@ endif (RUN_SWIG)
 
 if (EIGEN2_FOUND)
   set (eigen2_define "-DHAVE_EIGEN2")
-  set (CFLAGS_TEXT "CFLAGS=-I${EIGEN2_INCLUDE_DIR}")
+  set (CPPFLAGS_VALUE "-I${EIGEN2_INCLUDE_DIR}")
+  set (CPPFLAGS_TEXT "CPPFLAGS=${CPPFLAGS_VALUE}")
 endif (EIGEN2_FOUND)
 
 ###################
@@ -64,7 +65,7 @@ if (DO_PYTHON_BINDINGS)
 
     if(NOT WIN32)
         add_custom_target(_openbabel ALL
-            COMMAND ${CFLAGS_TEXT} ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py build --build-lib=${openbabel_BINARY_DIR}/scripts/pybuild
+            COMMAND ${CPPFLAGS_TEXT} ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py build --build-lib=${openbabel_BINARY_DIR}/scripts/pybuild
             DEPENDS openbabel ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp
             WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts
         )
@@ -89,12 +90,17 @@ if (DO_PYTHON_BINDINGS)
         add_dependencies(_openbabel openbabel)
 
         if (PYTHON_PREFIX)
-            install(CODE "execute_process(COMMAND ${CFLAGS_TEXT} ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --root=\$ENV{DESTDIR}/ --prefix=${PYTHON_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)"   LIBRARY DESTINATION ${LIB_INSTALL_DIR})
+            # In an execute_process, we cannot set the CPPFLAGS variable as we did with COMMAND above.
+            # ...hence the different approach here.
+            install(CODE "set(ENV{CPPFLAGS} ${CPPFLAGS_VALUE})
+                          execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --root=\$ENV{DESTDIR}/ --prefix=${PYTHON_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)"   LIBRARY DESTINATION ${LIB_INSTALL_DIR})
         else (PYTHON_PREFIX)
             if (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-                install(CODE "execute_process(COMMAND ${CFLAGS_TEXT} ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --root=\$ENV{DESTDIR}/ WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)"   LIBRARY DESTINATION ${LIB_INSTALL_DIR})
+                install(CODE "set(ENV{CPPFLAGS} ${CPPFLAGS_VALUE})
+                              execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --root=\$ENV{DESTDIR}/ WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)"   LIBRARY DESTINATION ${LIB_INSTALL_DIR})
            else (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-                install(CODE "execute_process(COMMAND ${CFLAGS_TEXT} ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --root=\$ENV{DESTDIR}/ --prefix=${CMAKE_INSTALL_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)"   LIBRARY DESTINATION ${LIB_INSTALL_DIR})
+                install(CODE "set(ENV{CPPFLAGS} ${CPPFLAGS_VALUE})
+                              execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --root=\$ENV{DESTDIR}/ --prefix=${CMAKE_INSTALL_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)"   LIBRARY DESTINATION ${LIB_INSTALL_DIR})
             endif ()
         endif ()
         if (APPLE)
