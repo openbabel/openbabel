@@ -57,6 +57,7 @@ if(EIGEN2_FOUND OR EIGEN3_FOUND)
 endif()
 
 set(ops
+  ops/addfilename.cpp
   ops/addinindex.cpp
   ops/addpolarh.cpp
   ops/canonical.cpp
