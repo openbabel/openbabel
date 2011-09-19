@@ -1102,7 +1102,7 @@ namespace OpenBabel
     char ch = chg>0 ? '+' : '-' ;
     chg = abs(chg);
     while(chg--)
-      formula << ch << sp; 
+      formula << ch << sp;
 
     string f_str = formula.str();
     return (Trim(f_str));
@@ -1315,20 +1315,26 @@ namespace OpenBabel
       }
 
     //Copy conformer information
-    if (src.NumConformers() > 1)
-      {
-        int k,l;
-        vector<double*> conf;
-        double* xyz = NULL;
-        for (k=0 ; k<src.NumConformers() ; ++k)
-          {
-            xyz = new double [3*src.NumAtoms()];
-            for (l=0 ; l<(int) (3*src.NumAtoms()) ; ++l)
-              xyz[l] = src.GetConformer(k)[l];
-            conf.push_back(xyz);
-          }
-        SetConformers(conf);
+    if (src.NumConformers() > 1) {
+      int k,l;
+      vector<double*> conf;
+      int currConf = -1;
+      double* xyz = NULL;
+      for (k=0 ; k<src.NumConformers() ; ++k) {
+        xyz = new double [3*src.NumAtoms()];
+        memcpy( xyz, src.GetConformer(k), sizeof( double )*3*src.NumAtoms() );
+        conf.push_back(xyz);
+
+        if( src.GetConformer(k) == src._c ) {
+          currConf = k;
+        }
       }
+
+      SetConformers(conf);
+      if( currConf >= 0 && _vconf.size() ) {
+        _c = _vconf[currConf];
+      }
+    }
 
     //Copy all the OBGenericData, providing the new molecule, this,
     //for those classes like OBRotameterList which contain Atom pointers
@@ -1825,7 +1831,7 @@ namespace OpenBabel
 	{
 		return(false);
 	}
-      
+
 
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::StripSalts", obAuditMsg);
 
@@ -2363,7 +2369,7 @@ namespace OpenBabel
 
 
   bool OBMol::AssignSpinMultiplicity(bool NoImplicitH)
-  { 
+  {
     // The following functions now uses the flag OB_ATOMSPIN_MOL rather than OB_TSPIN_MOL.
     // OB_TSPIN_MOL is set when the total spin of a molecule is set, which prevented
     // the hydrogen deficiency of individual atoms being set in this function.
