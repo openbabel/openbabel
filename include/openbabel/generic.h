@@ -374,34 +374,48 @@ namespace OpenBabel
     //! of the molecule, based on the known space group
     void FillUnitCell(OBMol *);
 
+    //! @todo Remove nonconst overloads in OBUnitCell on next version bump
+
     //! \return vector a
+    double GetA();
     double GetA() const;
     //! \return vector b
+    double GetB();
     double GetB() const;
     //! \return vector c
+    double GetC();
     double GetC() const;
     //! \return angle alpha
+    double GetAlpha();
     double GetAlpha() const;
     //! \return angle beta
+    double GetBeta();
     double GetBeta() const;
     //! \return angle gamma
+    double GetGamma();
     double GetGamma() const;
     //! \return any offset in the origin of the periodic boundaries
+    vector3 GetOffset();
     vector3 GetOffset() const;
 
     //! \return the text representation of the space group for this unit cell
+    const SpaceGroup* GetSpaceGroup() { return(_spaceGroup); }
     const SpaceGroup* GetSpaceGroup() const { return(_spaceGroup); }
 
     //! \return the text representation of the space group for this unit cell
+    const std::string GetSpaceGroupName() { return(_spaceGroupName); }
     const std::string GetSpaceGroupName() const { return(_spaceGroupName); }
 
     //! \return lattice type (based on the @p spacegroup)
+    LatticeType GetLatticeType( int spacegroup );
     LatticeType GetLatticeType( int spacegroup ) const;
 
     //! \return lattice type (based on angles and distances)
+    LatticeType GetLatticeType();
     LatticeType GetLatticeType() const;
 
     //! \return v1, v2, v3 cell vectors
+    std::vector<vector3> GetCellVectors();
     std::vector<vector3> GetCellVectors() const;
     //! Access to the cell matrix as row vectors, useful for writing input files.
     //! Equivalent to the transpose of GetOrientationMatrix() * GetOrthoMatrix()
@@ -411,6 +425,7 @@ namespace OpenBabel
     //! \see OBUnitCell::GetOrientationMatrix
     //! \see OBUnitCell::FractionalToCartesian
     //! \see OBUnitCell::CartesianToFractional
+    matrix3x3	GetCellMatrix();
     matrix3x3	GetCellMatrix() const;
     //! \return The orthogonalization matrix, used for converting from fractional to Cartesian coords.
     //! \see OBUnitCell::GetCellMatrix
@@ -418,6 +433,7 @@ namespace OpenBabel
     //! \see OBUnitCell::GetOrientationMatrix
     //! \see OBUnitCell::FractionalToCartesian
     //! \see OBUnitCell::CartesianToFractional
+    matrix3x3 GetOrthoMatrix();
     matrix3x3 GetOrthoMatrix() const;
     //! Used to convert fractional and cartesian coordinates if the
     //! cell is not oriented in standard form (a parallel to x axis,
@@ -428,6 +444,7 @@ namespace OpenBabel
     //! \see OBUnitCell::GetFractionalMatrix
     //! \see OBUnitCell::FractionalToCartesian
     //! \see OBUnitCell::CartesianToFractional
+    matrix3x3 GetOrientationMatrix();
     matrix3x3 GetOrientationMatrix() const;
     //! \return The fractionalization matrix, used for converting from Cartesian to fractional coords.
     //! \see OBUnitCell::GetOrthoMatrix
@@ -435,6 +452,7 @@ namespace OpenBabel
     //! \see OBUnitCell::GetOrientationMatrix
     //! \see OBUnitCell::FractionalToCartesian
     //! \see OBUnitCell::CartesianToFractional
+    matrix3x3 GetFractionalMatrix();
     matrix3x3 GetFractionalMatrix() const;
 
     //! Convenience function to convert fractional coordinates to
@@ -443,6 +461,7 @@ namespace OpenBabel
     //! GetOrientationMatrix() * GetOrthoMatrix() * frac + GetOffset()
     //! \param frac Vector of fractional coordinates
     //! \return Cartesian coordinates
+    vector3 FractionalToCartesian(vector3 frac);
     vector3 FractionalToCartesian(vector3 frac) const;
     //! Convenience function to convert cartesian coordinates to
     //! fractional coordinates. Returns
@@ -450,11 +469,13 @@ namespace OpenBabel
     //! GetFractionalMatrix() * GetOrientationMatrix().inverse() * (cart - GetOffset())
     //! \param cart Vector of cartesian coordinates
     //! \return Fractional coordinates
+    vector3 CartesianToFractional(vector3 cart);
     vector3 CartesianToFractional(vector3 cart) const;
 
     //! Wraps cartesian coordinate to fall within the unit cell.
     //! \param cart Vector of cartesian coordinates
     //! \return Cartesian coordinates within cell boundaries.
+    vector3 WrapCartesianCoordinate(vector3 cart);
     vector3 WrapCartesianCoordinate(vector3 cart) const;
     //! Wraps fractional coordinate to fall within the unit cell.
     //! \param frac Vector of fractional coordinates
@@ -462,8 +483,10 @@ namespace OpenBabel
     static vector3 WrapFractionalCoordinate(vector3 frac);
 
     //! \return The numeric value of the given spacegroup
+    int GetSpaceGroupNumber( std::string name = "" );
     int GetSpaceGroupNumber( std::string name = "" ) const;
     //! \return The cell volume (in Angstroms^3)
+    double GetCellVolume();
     double GetCellVolume() const;
   };
 

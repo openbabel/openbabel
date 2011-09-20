@@ -607,6 +607,36 @@ namespace OpenBabel
     SetSpaceGroup(1); // We've now applied the symmetry, so we should act like a P1 unit cell
   }
 
+  /// @todo Remove nonconst overloads in OBUnitCell on next version bump.
+#define OBUNITCELL_CALL_CONST_OVERLOAD(_type, _name) \
+  _type OBUnitCell::_name() \
+  { \
+    return const_cast<const OBUnitCell*>(this)->_name(); \
+  }
+#define OBUNITCELL_CALL_CONST_OVERLOAD_ARG(_type, _name, _argsig) \
+  _type OBUnitCell::_name( _argsig arg1 ) \
+  { \
+    return const_cast<const OBUnitCell*>(this)->_name(arg1); \
+  }
+  OBUNITCELL_CALL_CONST_OVERLOAD(double, GetA);
+  OBUNITCELL_CALL_CONST_OVERLOAD(double, GetB);
+  OBUNITCELL_CALL_CONST_OVERLOAD(double, GetC);
+  OBUNITCELL_CALL_CONST_OVERLOAD(double, GetAlpha);
+  OBUNITCELL_CALL_CONST_OVERLOAD(double, GetBeta);
+  OBUNITCELL_CALL_CONST_OVERLOAD(double, GetGamma);
+  OBUNITCELL_CALL_CONST_OVERLOAD_ARG(OBUnitCell::LatticeType,
+                                     GetLatticeType, int);
+  OBUNITCELL_CALL_CONST_OVERLOAD(OBUnitCell::LatticeType, GetLatticeType);
+  OBUNITCELL_CALL_CONST_OVERLOAD(std::vector<vector3>, GetCellVectors);
+  OBUNITCELL_CALL_CONST_OVERLOAD(matrix3x3, GetCellMatrix );
+  OBUNITCELL_CALL_CONST_OVERLOAD(matrix3x3, GetOrthoMatrix );
+  OBUNITCELL_CALL_CONST_OVERLOAD(matrix3x3, GetOrientationMatrix );
+  OBUNITCELL_CALL_CONST_OVERLOAD(matrix3x3, GetFractionalMatrix );
+  OBUNITCELL_CALL_CONST_OVERLOAD_ARG(vector3, FractionalToCartesian, vector3);
+  OBUNITCELL_CALL_CONST_OVERLOAD_ARG(vector3, CartesianToFractional, vector3);
+  OBUNITCELL_CALL_CONST_OVERLOAD_ARG(vector3, WrapCartesianCoordinate, vector3);
+  OBUNITCELL_CALL_CONST_OVERLOAD(double, GetCellVolume);
+
   double OBUnitCell::GetA() const
   {
     return _mOrtho.GetColumn(0).length();
