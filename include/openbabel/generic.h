@@ -480,7 +480,9 @@ namespace OpenBabel
     //! Wraps fractional coordinate to fall within the unit cell.
     //! \param frac Vector of fractional coordinates
     //! \return Fractional coordinates within cell boundaries (between 0 and 1).
-    static vector3 WrapFractionalCoordinate(vector3 frac);
+    //! \todo Make OBUnitCell::WrapFractionalCoordinate static in the next ABI break
+    vector3 WrapFractionalCoordinate(vector3 frac);
+    vector3 WrapFractionalCoordinate(vector3 frac) const;
 
     //! \return The numeric value of the given spacegroup
     int GetSpaceGroupNumber( std::string name = "" );

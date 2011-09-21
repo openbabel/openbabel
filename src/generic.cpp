@@ -370,7 +370,7 @@ namespace OpenBabel
     return FractionalToCartesian(v);
   }
 
-  vector3 OBUnitCell::WrapFractionalCoordinate(vector3 frac)
+  vector3 OBUnitCell::WrapFractionalCoordinate(vector3 frac) const
   {
     double x = fmod(frac.x(), 1);
     double y = fmod(frac.y(), 1);
@@ -624,6 +624,7 @@ namespace OpenBabel
   OBUNITCELL_CALL_CONST_OVERLOAD(double, GetAlpha);
   OBUNITCELL_CALL_CONST_OVERLOAD(double, GetBeta);
   OBUNITCELL_CALL_CONST_OVERLOAD(double, GetGamma);
+  OBUNITCELL_CALL_CONST_OVERLOAD(vector3, GetOffset);
   OBUNITCELL_CALL_CONST_OVERLOAD_ARG(OBUnitCell::LatticeType,
                                      GetLatticeType, int);
   OBUNITCELL_CALL_CONST_OVERLOAD(OBUnitCell::LatticeType, GetLatticeType);
@@ -635,6 +636,8 @@ namespace OpenBabel
   OBUNITCELL_CALL_CONST_OVERLOAD_ARG(vector3, FractionalToCartesian, vector3);
   OBUNITCELL_CALL_CONST_OVERLOAD_ARG(vector3, CartesianToFractional, vector3);
   OBUNITCELL_CALL_CONST_OVERLOAD_ARG(vector3, WrapCartesianCoordinate, vector3);
+  OBUNITCELL_CALL_CONST_OVERLOAD_ARG(vector3, WrapFractionalCoordinate, vector3);
+  OBUNITCELL_CALL_CONST_OVERLOAD_ARG(int, GetSpaceGroupNumber, std::string);
   OBUNITCELL_CALL_CONST_OVERLOAD(double, GetCellVolume);
 
   double OBUnitCell::GetA() const
