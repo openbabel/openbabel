@@ -66,18 +66,16 @@ namespace OpenBabel
       //! Set the point group detection for this molecule
       void Setup(OBMol *);
 
-      /** \return the 3D point group symbol for this molecule
+      /** \return the 3D point group symbol for this molecule. A tolerance of
+        *  0.01 is used.
         *
         * \todo Compatibility function; remove at next ABI break, update
         *  default arg in overload.
         */
-      const char *IdentifyPointGroup()
-      {
-        return this->IdentifyPointGroup(0.01);
-      }
+      const char * IdentifyPointGroup();
 
       //! \return the 3D point group symbol for this molecule
-      const char *IdentifyPointGroup(double tolerance /* = 0.01*/ );
+      const char * IdentifyPointGroup(double tolerance /* = 0.01*/ );
 
       //! \return the 3D point group symbol for this molecule
       //! \arg tolerance The initial tolerance for determining possibly symmetric atoms

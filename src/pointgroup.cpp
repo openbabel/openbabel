@@ -1844,6 +1844,12 @@ namespace OpenBabel {
     d->Setup = true;
   }
 
+  //! @todo Remove this on next ABI break
+  const char* OBPointGroup::IdentifyPointGroup()
+  {
+    return this->IdentifyPointGroup(0.01);
+  }
+
   const char* OBPointGroup::IdentifyPointGroup(double tolerance)
   {
     // Don't duplicate work, use the more reliable fallback method
