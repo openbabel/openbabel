@@ -1,11 +1,11 @@
 /**********************************************************************
 Copyright (C) 2002-2006 by Geoffrey Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -79,11 +79,12 @@ namespace OpenBabel
     if (cndoStyle) {
       ofs << mol.GetTitle() << '\n';
       ofs << "HAMILT= INDO CHARGE=" << pmol->GetTotalCharge() << " RESTART= auto\n";
-      ofs << "STOP=CI MAX_CI=100 CI_DUMP=100\n";
-      ofs << "MAX_ITS=500\n\n";
+      ofs << "STOP=CI MAX_CI=50 CI_DUMP=25\n";
+      ofs << "MAX_ITS=500\n";
       int spinState = pmol->GetTotalSpinMultiplicity();
       if (spinState != 1) // not a singlet, so give a reasonable default
         ofs << "HIGHSPIN= " << spinState - 1 << "  " << spinState - 1 << '\n';
+      ofs << endl;
     }
     else { // old-style ZINDO, so we have to calculate the # of valence electrons
       for (atom = mol.BeginAtom(i); atom; atom = mol.NextAtom(i))
