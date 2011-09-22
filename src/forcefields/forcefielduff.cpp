@@ -49,11 +49,10 @@ namespace OpenBabel {
     double delta2, dE;
 
     if (gradients) {
-      da = a->GetVector();
-      db = b->GetVector();
-      rab = OBForceField::VectorLengthDerivative(da, db);
-    } else
-      rab = a->GetDistance(b);
+      rab = OBForceField::VectorBondDerivative(pos_a, pos_b, force_a, force_b);
+    } else {
+      rab = OBForceField::VectorDistance(pos_a, pos_b);
+    }
 
     delta = rab - r0; // we pre-compute the r0 below
     delta2 = delta * delta;
@@ -61,10 +60,8 @@ namespace OpenBabel {
 
     if (gradients) {
       dE = 2.0 * kb * delta;
-      da *= dE;
-      db *= dE;
-      da.Get(force_a);
-      db.Get(force_b);
+      OBForceField::VectorSelfMultiply(force_a, dE);
+      OBForceField::VectorSelfMultiply(force_b, dE);
     }
   }
 
@@ -118,19 +115,15 @@ namespace OpenBabel {
 		double dE;
 
     if (gradients) {
-      da = a->GetVector();
-      db = b->GetVector();
-      dc = c->GetVector();
+      theta = OBForceField::VectorAngleDerivative(pos_a, pos_b, pos_c, force_a, force_b, force_c);
 
-      // Detect superimposed atoms and nudge them apart
-      double angle = a->GetAngle(b, c);
-      if (angle < 2.5 || angle > 355.0) {
+      if (theta < 2.5 || theta > 355.0) {
         vector3 v1;
         v1.randomUnitVector();
-        da = da + 0.1*v1;
+        for (int i = 0; i < 3; ++i)
+          force_a[i] += v1[i]*0.1;
       }
-
-      theta = OBForceField::VectorAngleDerivative(da, db, dc) * DEG_TO_RAD;
+      theta *= DEG_TO_RAD;
     } else {
       theta = a->GetAngle(b, c) * DEG_TO_RAD;
 		}
@@ -189,12 +182,9 @@ namespace OpenBabel {
         dE = -ka * (c1*sinT + 2.0 * c2*sin(2.0 * theta));
       }
 
-      da *= dE; // da = dTheta/dx * dE/dTheta
-      db *= dE; // da = dTheta/dx * dE/dTheta
-      dc *= dE; // da = dTheta/dx * dE/dTheta
-      da.Get(force_a);
-      db.Get(force_b);
-      dc.Get(force_c);
+      OBForceField::VectorSelfMultiply(force_a, dE);
+      OBForceField::VectorSelfMultiply(force_b, dE);
+      OBForceField::VectorSelfMultiply(force_c, dE);
     }
   }
 
@@ -249,11 +239,8 @@ namespace OpenBabel {
     double dE;
 
     if (gradients) {
-      da = a->GetVector();
-      db = b->GetVector();
-      dc = c->GetVector();
-      dd = d->GetVector();
-      tor = OBForceField::VectorTorsionDerivative(da, db, dc, dd);
+      tor = OBForceField::VectorTorsionDerivative(pos_a, pos_b, pos_c, pos_d,
+                                                  force_a, force_b, force_c, force_d);
       if (!isfinite(tor))
         tor = 1.0e-3;
       tor *= DEG_TO_RAD;
@@ -280,14 +267,10 @@ namespace OpenBabel {
 
     if (gradients) {
       dE = -(V * n * cosNPhi0 * sin(n * tor));
-      da *= dE;
-      db *= dE;
-      dc *= dE;
-      dd *= dE;
-      da.Get(force_a);
-      db.Get(force_b);
-      dc.Get(force_c);
-      dd.Get(force_d);
+      OBForceField::VectorSelfMultiply(force_a, dE);
+      OBForceField::VectorSelfMultiply(force_b, dE);
+      OBForceField::VectorSelfMultiply(force_c, dE);
+      OBForceField::VectorSelfMultiply(force_d, dE);
     }
   }
 
@@ -352,25 +335,19 @@ namespace OpenBabel {
     double dE;
 
     if (gradients) {
-      da = a->GetVector();
-      db = b->GetVector();
-      dc = c->GetVector();
-      dd = d->GetVector();
-      angle = OBForceField::VectorOOPDerivative(da, db, dc, dd) * DEG_TO_RAD;
+      angle = OBForceField::VectorOOPDerivative(pos_a, pos_b, pos_c, pos_d,
+                                                force_a, force_b, force_c, force_d);
+      angle *= DEG_TO_RAD;
 
 	    if (!isfinite(angle))
 	      angle = 0.0; // doesn't explain why GetAngle is returning NaN but solves it for us;
 
       // somehow we already get the -1 from the OOPDeriv -- so we'll omit it here
       dE = koop * (c1*sin(angle) + 2.0 * c2 * sin(2.0*angle));
-      da *= dE;
-      db *= dE;
-      dc *= dE;
-      dd *= dE;
-      da.Get(force_a);
-      db.Get(force_b);
-      dc.Get(force_c);
-      dd.Get(force_d);
+      OBForceField::VectorSelfMultiply(force_a, dE);
+      OBForceField::VectorSelfMultiply(force_b, dE);
+      OBForceField::VectorSelfMultiply(force_c, dE);
+      OBForceField::VectorSelfMultiply(force_d, dE);
     } else {
       angle = DEG_TO_RAD*Point2PlaneAngle(d->GetVector(), a->GetVector(), b->GetVector(), c->GetVector());
       if (!isfinite(angle))
@@ -430,14 +407,14 @@ namespace OpenBabel {
     double term6, term12, dE, term7, term13;
 
     if (gradients) {
-      da = a->GetVector();
-      db = b->GetVector();
-      rab = OBForceField::VectorLengthDerivative(da, db);
+      rab = OBForceField::VectorDistanceDerivative(pos_a, pos_b, force_a, force_b);
     } else
-      rab = a->GetDistance(b);
+      rab = OBForceField::VectorDistance(pos_a, pos_b);
 
     if (IsNearZero(rab, 1.0e-3))
       rab = 1.0e-3;
+
+    // TODO: This actually should include zetas (not always exactly 6-12 for VDW paper)
 
     term7 = term13 = term6 = ka / rab;
 
@@ -451,10 +428,8 @@ namespace OpenBabel {
       term13 = term13 * term12; // ^13
       term7 = term7 * term6; // ^7
       dE = kab * 12.0 * (term7/ka - term13/ka);
-      da *= dE;
-      db *= dE;
-      da.Get(force_a);
-      db.Get(force_b);
+      OBForceField::VectorSelfMultiply(force_a, dE);
+      OBForceField::VectorSelfMultiply(force_b, dE);
     }
   }
 
