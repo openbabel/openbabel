@@ -2333,7 +2333,8 @@ namespace OpenBabel
     step = 0.2;
     double trustRadius = 0.3; // don't move further than 0.3 Angstroms
 
-    e_n1 = Energy(false) + _constraints.GetConstraintEnergy();
+    // The initial energy should be precomputed
+    e_n1 = _e_n1; // Energy(false) + _constraints.GetConstraintEnergy();
 
     unsigned int i;
     for (i=0; i < 10; ++i) {
