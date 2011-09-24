@@ -2047,19 +2047,32 @@ namespace OpenBabel
     _vdwpairs.Clear();
     _elepairs.Clear();
 
+    //! \todo set the criteria as squared values
+    //  from what the user supplies
+    double rvdwSquared = SQUARE(_rvdw);
+    double releSquared = SQUARE(_rele);
+
     FOR_PAIRS_OF_MOL(p, _mol) {
       OBAtom *a = _mol.GetAtom((*p)[0]);
       OBAtom *b = _mol.GetAtom((*p)[1]);
 
-      double rab = VectorDistance(a->GetCoordinate(), b->GetCoordinate());
+      // Get the distance squared btwn a and b
+      // Not currently a method and this can be vectorized
+      double ab[3];
+      VectorSubtract(a->GetCoordinate(), b->GetCoordinate(), ab);
+      double rabSq = 0.0;
+      for (int j = 0; j < 3; ++j) {
+        rabSq += SQUARE(ab[j]);
+      }
+
       // update vdw pairs
-      if (rab < _rvdw) {
+      if (rabSq < rvdwSquared) {
         _vdwpairs.SetBitOn(i);
       } else {
         _vdwpairs.SetBitOff(i);
       }
       // update electrostatic pairs
-      if (rab < _rele) {
+      if (rabSq < releSquared) {
         _elepairs.SetBitOn(i);
       } else {
         _elepairs.SetBitOff(i);
