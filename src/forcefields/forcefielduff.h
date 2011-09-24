@@ -74,7 +74,7 @@ namespace OpenBabel
   {
     public:
       bool is14, samering;
-      double ka, Ra, kb, Rb, kab, rab;
+      double ka, kaSquared, Ra, kb, Rb, kab, rab;
 
       template<bool> void Compute();
   };

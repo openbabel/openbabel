@@ -404,30 +404,39 @@ namespace OpenBabel {
     }
 
     vector3 da, db;
-    double term6, term12, dE, term7, term13;
+    double term6, term12, dE, term7, term13, rabSquared = 0.0;
 
     if (gradients) {
       rab = OBForceField::VectorDistanceDerivative(pos_a, pos_b, force_a, force_b);
-    } else
-      rab = OBForceField::VectorDistance(pos_a, pos_b);
 
-    if (IsNearZero(rab, 1.0e-3))
-      rab = 1.0e-3;
+      if (rab < 1.0e-3)
+        rab = 1.0e-3;
+
+      rabSquared = SQUARE(rab);
+    } else {
+      // Get distance squared (saves a sqrt and multiply)
+      // for every energy evaluation
+      double ab[3];
+      for (unsigned int c = 0; c < 3; ++c)
+        rabSquared += SQUARE(a->GetCoordinate()[c] - b->GetCoordinate()[c]);
+
+      // make sure the energy doesn't blow up
+      if (rabSquared < 1.0e-5)
+        rabSquared = 1.0e-5;
+    }
 
     // TODO: This actually should include zetas (not always exactly 6-12 for VDW paper)
 
-    term7 = term13 = term6 = ka / rab;
-
-    term6 = term6 * term6 * term6; // ^3
-    term6 = term6 * term6; // ^6
+    term6 = kaSquared / rabSquared; // ^2
+    term6 = term6 * term6 * term6; // ^6
     term12 = term6 * term6; // ^12
 
     energy = kab * ((term12) - (2.0 * term6));
 
     if (gradients) {
-      term13 = term13 * term12; // ^13
-      term7 = term7 * term6; // ^7
-      dE = kab * 12.0 * (term7/ka - term13/ka);
+      term13 = term12 / rab; // ^13
+      term7 = term6 / rab; // ^7
+      dE = kab * 12.0 * (term7 - term13);
       OBForceField::VectorSelfMultiply(force_a, dE);
       OBForceField::VectorSelfMultiply(force_b, dE);
     }
@@ -634,7 +643,8 @@ namespace OpenBabel {
     //         vdwcalc.kab *= 0.5;
 
     // ka now represents the xij in equation 20 -- the expected vdw distance
-    vdwcalc.ka = sqrt(vdwcalc.Ra * vdwcalc.Rb);
+    vdwcalc.kaSquared = (vdwcalc.Ra * vdwcalc.Rb);
+    vdwcalc.ka = sqrt(vdwcalc.kaSquared);
 
     vdwcalc.SetupPointers();
     return true;
