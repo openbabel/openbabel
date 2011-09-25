@@ -216,6 +216,50 @@ public:
   virtual unsigned int Flags() { return NOTREADABLE;};
 };
 
+//*****************************************************
+class InChIKeyFormat : public OBMoleculeFormat
+{
+public:
+  InChIKeyFormat()
+  {
+      OBConversion::RegisterFormat("inchikey",this);
+  }
+  virtual const char* Description() //required
+  {
+    return
+      "InChIKey\n"
+      "A hashed representation of the InChI.\n\n"
+
+      "The InChIKey is a fixed-length (27-character) condensed digital\n"
+      "representation of an InChI, developed to make it easy to perform\n"
+      "web searches for chemical structures.\n\n"
+
+      "An InChIKey consists of 14 characters (derived from the connectivity\n"
+      "layer in the InChI), a hyphen, 9 characters (derived from the\n"
+      "remaining layers), a character indicating the InChI version, a hyphen\n"
+      "and a final checksum character. Contrast the InChI and InChIKey of the\n"
+      "molecule represented by the SMILES string `CC(=O)Cl`::\n\n"
+
+      "  obabel -:CC(=O)Cl -oinchi\n"
+      "  InChI=1S/C2H3ClO/c1-2(3)4/h1H3\n\n"
+
+      "  obabel -:CC(=O)Cl -oinchikey\n"
+      "  WETWJCDKMRHUPV-UHFFFAOYSA-N\n\n"
+      
+      "This is the same as using ``-oinchi -xK`` and can take the same options\n"
+      "as the InChI format (see :ref:`InChI_format`)::\n\n"
+
+      "  obabel -:CC(=O)Cl -oinchi -xK\n"
+      "  WETWJCDKMRHUPV-UHFFFAOYSA-N\n\n"
+
+      "Note that while a molecule with a particular InChI will always give the\n"
+      "same InChIKey, the reverse is not true; there may exist more than one\n"
+      "molecule which have different InChIs but yield the same InChIKey.\n";
+  }
+  virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+  virtual unsigned int Flags() { return NOTREADABLE;};
+};
+
 }//namespace OpenBabel
 
 #endif
