@@ -245,8 +245,9 @@ namespace OpenBabel
     //! \return the SMARTS string which is currently used
     const std::string &GetSMARTS() const    {      return _str;    }
     //! \return the SMARTS string which is currently used
+#ifndef SWIG    
     std::string  &GetSMARTS()               {      return _str;    }
-
+#endif
     //! \return If the SMARTS pattern is an empty expression (e.g., invalid)
     bool         Empty() const     {      return(_pat == NULL);    }
     //! \return If the SMARTS pattern is a valid expression
