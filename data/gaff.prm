@@ -1,6 +1,6 @@
 //
 // Copyright (C) 2009 by Frank Peters <e.a.j.f.peters@tue.nl>
-// 
+//
 // This is a SMARTS template-file for GAFF-atom types
 //
 // It is attempted to obey the typing given in the "ATOMTYPE_GFF.DEF"
@@ -10,7 +10,7 @@
 //
 //
 //
-// GAFF atomtypes defined using SMARTS 
+// GAFF atomtypes defined using SMARTS
 // [SMARTS] [atomtype id number] [description]
 // must be sorted according to the ELEMENT and COMPLEXITY OF THE TYPERULE!
 //
@@ -20,17 +20,17 @@ atom [*]                X
 atom [#1X1]             ha    "other hydrogen e.g. on aromatic C"
 atom [#1X1][CX4]        hc    "hydrogen on aliphatic C"
 // "hydrogen on aliphatic C with 1 ewd"
-atom [#1X1][CX4][#7,#8,#16,#17,#35,#53]        h1  
+atom [#1X1][CX4][#7,#8,#16,#17,#35,#53]        h1
 // "hydrogen on aliphatic C with 2 ewd"
-atom [#1X1][CX4]([#7,#8,#16,#17,#35,#53])[#7,#8,#16,#17,#35,#53]  h2  
+atom [#1X1][CX4]([#7,#8,#16,#17,#35,#53])[#7,#8,#16,#17,#35,#53]  h2
 // "hydrogen on aliphatic C with 3 ewd"
 atom [#1X1][CX4]([#7,#8,#16,#17,#35,#53])([#7,#8,#16,#17,#35,#53])[#7,#8] h3
 atom [#1X1][CX4]([#7,#8,#16,#17,#35,#53])([#7,#8,#16,#17,#35,#53])[#16,#17] h3
 atom [#1X1][CX4]([#7,#8,#16,#17,#35,#53])([#7,#8,#16,#17,#35,#53])[#35,#53] h3
 // "hydrogen on sp2 C with 1 ewd"
-atom [#1X1][#6X3][#7,#8,#16,#17,#35,#53]                            h4  
+atom [#1X1][#6X3][#7,#8,#16,#17,#35,#53]                            h4
 // "hydrogen on sp2 C with 2 ewd"
-atom [#1X1][#6X3]([#7,#8,#16,#17,#35,#53])[#7,#8,#16,#17,#35,#53]   h5  
+atom [#1X1][#6X3]([#7,#8,#16,#17,#35,#53])[#7,#8,#16,#17,#35,#53]   h5
 atom [#1X1][#6](N)(N)(N)N hx  ""
 atom [#1X1]O            ho    "hydrogen on oxygen"
 atom [#1X1][Oh1]        hw    "hydrogen on water"
@@ -41,17 +41,17 @@ atom [#6X4]             c3    "other sp3 C"
 atom [#6X4r3]           cx    "3-membered ring atom"
 atom [#6X4r4]           cy    "4-membered ring atom"
 atom [#6X3]             c2    "other sp2 C"
-atom [#6X3]=[O,S]       c     "C=O or C=S"
 atom [#6X3](N)(N)N      cz    ""
 atom [#6X3;R](=*)-*=*   cc    "inner sp2 C of conjugated ring systems"
 atom [#6X3;R](=*)-*#*   cc    "inner sp2 C of conjugated ring systems"
 atom [#6X3;R](#*)-*#*   cc    "inner sp2 C of conjugated ring systems"
-atom [#6X3;!R](=*)-*=*  ce    "inner sp2 C of conjugated ring systems"
-atom [#6X3;!R](#*)-*=*  ce    "inner sp2 C of conjugated ring systems"
-atom [#6X3;!R](#*)-*#*  ce    "inner sp2 C of conjugated ring systems"
+atom [#6X3;!R](=*)-*=*  ce    "inner sp2 C of conjugated chain systems"
+atom [#6X3;!R](#*)-*=*  ce    "inner sp2 C of conjugated chain systems"
+atom [#6X3;!R](#*)-*#*  ce    "inner sp2 C of conjugated chain systems"
 atom [cr6](c)(c)c       cp    "bridge aromatic c in byphenyl system"
 atom [#6X3r3]           cu    "sp2 carbon in a 3-membered ring"
 atom [#6X3r4]           cv    "sp2 carbon in a 4-membered ring"
+atom [#6X3]=[O,S]       c     "C=O or C=S"
 atom [c]                ca    "pure aromatic atom"
 atom [#6X2]             c1    "other sp C"
 atom [#6X2](=*)-*=*     cg    "sp C of conjugated system"
