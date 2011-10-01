@@ -5,11 +5,11 @@ This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
 
 Some portions Copyright (C) 2008 Geoffrey R. Hutchison
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -36,10 +36,10 @@ using namespace OpenBabel;
 #ifdef TESTDATADIR
   string testdatadir = TESTDATADIR;
   string results_file = testdatadir + "gaffresults.txt";
-  string molecules_file = testdatadir + "forcefield.sdf";
+  string molecules_file = testdatadir + "gaff.sdf";
 #else
   string results_file = "files/gaffresults.txt";
-  string molecules_file = "files/forcefield.sdf";
+  string molecules_file = "files/gaff.sdf";
 #endif
 
 void GenerateEnergies();
@@ -98,7 +98,7 @@ int main(int argc,char *argv[])
       cout << "Bail out! SDF format is not loaded" << endl;
       return -1; // test failed
     }
-    
+
   OBForceField* pFF = OBForceField::FindForceField("GAFF");
 
   if (pFF == NULL) {
@@ -121,7 +121,7 @@ int main(int argc,char *argv[])
           cout << "Bail out! error reading reference data" << endl;
           return -1; // test failed
         }
-        
+
       if (!pFF->Setup(mol)) {
         cout << "Bail out! could not setup force field on " << mol.GetTitle() << endl;
         return -1; // test failed
@@ -169,7 +169,7 @@ void GenerateEnergies()
   OBMol mol;
   OBConversion conv(&ifs, &cout);
   char buffer[BUFF_SIZE];
-  
+
   if(! conv.SetInAndOutFormats("SDF","SDF"))
     {
       cerr << "SDF format is not loaded" << endl;
@@ -197,7 +197,7 @@ void GenerateEnergies()
         cerr << "Could not setup force field on molecule: " << mol.GetTitle() << endl;
         return;
       }
-      
+
       // Don't compute gradients
       sprintf(buffer, "%15.5f\n", pFF->Energy(false));
       ofs << buffer;
