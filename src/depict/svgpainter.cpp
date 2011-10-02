@@ -119,6 +119,8 @@ namespace OpenBabel
       m_ofs << i->first << ' ' << i->second << ' ';
     m_ofs << "\"";
     m_ofs << " stroke-width=\"" << m_PenWidth << "\"";
+    m_ofs << " fill=" << MakeRGB(m_Pencolor);
+    m_ofs << " stroke=" << MakeRGB(m_Pencolor);
     m_ofs << "/>\n";
   }
 

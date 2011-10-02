@@ -1316,7 +1316,7 @@ namespace OpenBabel
 
     //Copy conformer information
     if (src.NumConformers() > 1) {
-      int k,l;
+      int k;//,l;
       vector<double*> conf;
       int currConf = -1;
       double* xyz = NULL;
@@ -3019,10 +3019,16 @@ namespace OpenBabel
 
   bool OBMol::AddBond(OBBond &bond)
   {
-    return(AddBond(bond.GetBeginAtomIdx(),
+    if(!AddBond(bond.GetBeginAtomIdx(),
                    bond.GetEndAtomIdx(),
                    bond.GetBO(),
-                   bond.GetFlags()));
+                   bond.GetFlags()))
+      return false;
+    //copy the bond's generic data
+    OBDataIterator diter;
+    for(diter=bond.BeginData(); diter!=bond.EndData();++diter)
+      GetBond(NumBonds()-1)->CloneData(*diter);
+    return true;
   }
 
   void OBMol::Align(OBAtom *a1,OBAtom *a2,vector3 &p1,vector3 &p2)
