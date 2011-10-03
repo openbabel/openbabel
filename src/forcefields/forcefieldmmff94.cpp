@@ -2236,6 +2236,7 @@ namespace OpenBabel
           }
         }
       }
+      return 8; // generic amine nitrogen
     }
 
     ////////////////////////////////
