@@ -483,7 +483,7 @@ namespace OpenBabel
 
   //***********************************************
   //Make a global instance
-  OBForceFieldGaff theForceFieldGaff("Gaff", true);
+  OBForceFieldGaff theForceFieldGaff("GAFF", true);
   //***********************************************
 
   OBForceFieldGaff::~OBForceFieldGaff()
