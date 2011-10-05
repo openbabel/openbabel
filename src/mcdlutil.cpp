@@ -2323,8 +2323,8 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
   int add,nb,k,k1,k2,l,i,j,baseCycle,lx,ly;
   int currNumDef;
   int atomSecond;
-  std::vector<int> atomCycle(3*nBonds());
-  std::vector<int> cycleDescription(3*nBonds());
+
+  std::vector<int> cycleDescription;
   std::vector<int> cycleAddress(nBonds());
   std::vector<int> atomDefine(NBONDSMAX);
   std::vector<int> cycleSize(NBONDSMAX);
@@ -2374,11 +2374,14 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
         baseCycle++;
         cycleAddress[baseCycle]=cycleAddress[baseCycle-1]+cs;
         cycleSize[baseCycle-1]=cs;
+        cycleDescription.resize(cycleDescription.size() + cs);
         for (j=0; j<cs; j++) cycleDescription[cycleAddress[baseCycle-1]+j]=atomDefine[j];
       };
     };
 
   };
+
+  std::vector<int> atomCycle(cycleDescription.size());
 
   for (i=0; i<baseCycle; i++) { //making atom list in those order, as they will be defined at cycles}
     cycleDefine[i]=0;
