@@ -3,14 +3,14 @@ obminimize.cpp - minimize the energy of a molecule
 
 Copyright (C) 2006 Tim Vandermeersch
 Some portions Copyright (C) 2006 Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -27,6 +27,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/forcefield.h>
+#include <openbabel/obutil.h>
 #ifndef _MSC_VER
   #include <unistd.h>
 #endif
@@ -121,7 +122,7 @@ int main(int argc,char **argv)
         newton = true;
         ifile++;
       }
-      
+
       if (strncmp(option.c_str(), "-o", 2) == 0) {
         oext = argv[i] + 2;
         if(!*oext) {
@@ -147,13 +148,13 @@ int main(int argc,char **argv)
         crit = atof(argv[i+1]);
         ifile += 2;
       }
- 
+
       if ((option == "-ff") && (argc > (i+1))) {
         ff = argv[i+1];
         ifile += 2;
       }
     }
-    
+
     basename = filename = argv[ifile];
     size_t extPos = filename.rfind('.');
 
@@ -163,8 +164,8 @@ int main(int argc,char **argv)
   }
 
   // Find Input filetype
-  OBFormat *format_in = conv.FormatFromExt(filename.c_str());    
-    
+  OBFormat *format_in = conv.FormatFromExt(filename.c_str());
+
   if (!format_in || !format_out || !conv.SetInAndOutFormats(format_in, format_out)) {
     cerr << program_name << ": cannot read input/output format!" << endl;
     exit (-1);
@@ -185,17 +186,17 @@ int main(int argc,char **argv)
     cerr << program_name << ": could not find forcefield '" << ff << "'." <<endl;
     exit (-1);
   }
- 
+
   // set some force field variables
   pFF->SetLogFile(&cerr);
   pFF->SetLogLevel(OBFF_LOGLVL_LOW);
-  pFF->SetVDWCutOff(rvdw);    
-  pFF->SetElectrostaticCutOff(rele);    
-  pFF->SetUpdateFrequency(freq);    
-  pFF->EnableCutOff(cut); 
+  pFF->SetVDWCutOff(rvdw);
+  pFF->SetElectrostaticCutOff(rele);
+  pFF->SetUpdateFrequency(freq);
+  pFF->EnableCutOff(cut);
   if (newton)
-    pFF->SetLineSearchType(LineSearchType::Newton2Num); 
- 
+    pFF->SetLineSearchType(LineSearchType::Newton2Num);
+
   OBMol mol;
 
   for (c=1;;c++) {
@@ -207,25 +208,29 @@ int main(int argc,char **argv)
 
     if (hydrogens)
       mol.AddHydrogens();
-      
+
     if (!pFF->Setup(mol)) {
       cerr << program_name << ": could not setup force field." << endl;
       exit (-1);
     }
 
     bool done = true;
+    OBStopwatch timer;
+    timer.Start();
     if (sd) {
       pFF->SteepestDescentInitialize(steps, crit);
     } else {
       pFF->ConjugateGradientsInitialize(steps, crit);
-    }    
+    }
 
+    unsigned int totalSteps = 1;
     while (done) {
       if (sd)
         done = pFF->SteepestDescentTakeNSteps(1);
       else
         done = pFF->ConjugateGradientsTakeNSteps(1);
- 
+      totalSteps++;
+
       if (pFF->DetectExplosion()) {
         cerr << "explosion has occured!" << endl;
         conv.Write(&mol, &cout);
@@ -233,11 +238,12 @@ int main(int argc,char **argv)
       } else
         pFF->GetCoordinates(mol);
     }
-    
+    double timeElapsed = timer.Elapsed();
 
     pFF->GetCoordinates(mol);
 
     conv.Write(&mol, &cout);
+    cerr << "Time: " << timeElapsed << "seconds. Iterations per second: " <<  double(totalSteps) / timeElapsed << endl;
   } // end for loop
 
   return(1);
@@ -258,7 +264,7 @@ int main(int argc,char **argv)
 *
 * \par DESCRIPTION
 *
-* The obminimize tool can be used to minimize the energy for molecules 
+* The obminimize tool can be used to minimize the energy for molecules
 * inside (multi-)molecule files (e.g., MOL2, etc.)
 *
 * \par OPTIONS
@@ -272,12 +278,12 @@ int main(int argc,char **argv)
 *     Select the forcefield \n\n
 *
 * \par EXAMPLES
-*  - View the possible options, including available forcefields: 
+*  - View the possible options, including available forcefields:
 *   obminimize
 *  - Minimize the energy for the molecule(s) in file test.mol2:
 *   obminimize test.mol2
 *  - Minimize the energy for the molecule(s) in file test.mol2 using the Ghemical forcefield:
-*   obminimize -ff Ghemical test.mol2 
+*   obminimize -ff Ghemical test.mol2
 *  - Minimize the energy for the molecule(s) in file test.mol2 and set the maximum numer of steps to 300:
 *    obenergy -n 300 test.mol2
 *
@@ -301,6 +307,6 @@ int main(int argc,char **argv)
 *
 * \par SEE ALSO
 *   The web pages for Open Babel can be found at: http://openbabel.org/ \n
-*   The web pages for Open Babel Molecular Mechanics can be found at: 
+*   The web pages for Open Babel Molecular Mechanics can be found at:
 *   http://openbabel.org/wiki/Molecular_mechanics \n
 **/

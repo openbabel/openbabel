@@ -138,7 +138,7 @@ namespace OpenBabel
       //! Get the description for this force field
       const char* Description()
       {
-        return "Gaff force field.";
+        return "General Amber Force Field (GAFF).";
       }
 
       //!Clone the current instance. May be desirable in multithreaded environments

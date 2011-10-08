@@ -2323,8 +2323,8 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
   int add,nb,k,k1,k2,l,i,j,baseCycle,lx,ly;
   int currNumDef;
   int atomSecond;
-  std::vector<int> atomCycle(3*nBonds());
-  std::vector<int> cycleDescription(3*nBonds());
+
+  std::vector<int> cycleDescription;
   std::vector<int> cycleAddress(nBonds());
   std::vector<int> atomDefine(NBONDSMAX);
   std::vector<int> cycleSize(NBONDSMAX);
@@ -2374,11 +2374,14 @@ void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vec
         baseCycle++;
         cycleAddress[baseCycle]=cycleAddress[baseCycle-1]+cs;
         cycleSize[baseCycle-1]=cs;
+        cycleDescription.resize(cycleDescription.size() + cs);
         for (j=0; j<cs; j++) cycleDescription[cycleAddress[baseCycle-1]+j]=atomDefine[j];
       };
     };
 
   };
+
+  std::vector<int> atomCycle(cycleDescription.size());
 
   for (i=0; i<baseCycle; i++) { //making atom list in those order, as they will be defined at cycles}
     cycleDefine[i]=0;
@@ -5791,8 +5794,8 @@ int TemplateRedraw::coordinatesPrepare(TEditedMolecule& sm, int kk, int anTempla
     while (test) {
       test=false;
       for (i=tm.nBonds()-1; i>=0; i--) {
-        test1=((tm.getBond(i)->at[0]<=nFound) && (tm.getBond(i)->at[1]>nFound)) || ((tm.getBond(i)->at[1]<=nFound) && (tm.getBond(i)->at[0]>nFound));
-		if (test1) if ((tm.getBond(i)->db<=1) && (tm.getAtom(tm.getBond(i)->at[0])->nb > 1) && (tm.getAtom(tm.getBond(i)->at[1])->nb > 1)) {   //acyclic bond
+        test1=((tm.getBond(i)->at[0]<nFound) && (tm.getBond(i)->at[1]>=nFound)) || ((tm.getBond(i)->at[1]<nFound) && (tm.getBond(i)->at[0]>=nFound));
+		if (test1) if (tm.getBond(i)->db<=1) { //acyclic bond
           test=true;
           emTemplate=new TEditedMolecule();
           if (tm.getBond(i)->at[1] >nFound) fragmentAN=tm.getBond(i)->at[1]; else fragmentAN=tm.getBond(i)->at[0];  //Error is absent! Really 2-nd atom is compared in both operators!

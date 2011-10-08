@@ -80,10 +80,13 @@ namespace OpenBabel
     bool readingVibrations = false;
     vector< vector<vector3> > displacements; // vibrational displacements
     vector<double> frequencies, intensities;
+    vector<double> orbitalEnergies;
+    vector<string> orbitalSymmetries; // left empty for now
 
     // Translation vectors (if present)
     vector3 translationVectors[3];
     int numTranslationVectors = 0;
+    int alphaHOMO = 0;
 
     mol.BeginModify();
     while	(ifs.getline(buffer,BUFF_SIZE))
@@ -130,6 +133,26 @@ namespace OpenBabel
                   break;
                 tokenize(vs,buffer);
               }
+          }
+        else if(strstr(buffer,"DOUBLY OCCUPIED LEVELS") != NULL)
+          {
+            tokenize(vs, buffer);
+            if (vs.size() < 9)
+              continue;
+            alphaHOMO = atoi(vs[8].c_str());
+          }
+        else if(strstr(buffer,"EIGENVALUES") != NULL)
+          {
+            ifs.getline(buffer, BUFF_SIZE); // real data
+            tokenize(vs, buffer);
+            while(vs.size() > 0) { // ends with a blank line
+              for (int orbital = 0; orbital < vs.size(); ++orbital) {
+                // orbitals are listed in eV already, no conversion needed
+                orbitalEnergies.push_back(atof(vs[orbital].c_str()));
+              }
+              ifs.getline(buffer, BUFF_SIZE);
+              tokenize(vs, buffer);
+            }
           }
         else if(strstr(buffer,"FINAL HEAT") != NULL)
           {
@@ -231,6 +254,8 @@ namespace OpenBabel
 
               // OK, now we have x, y, z for all new modes for one atom
               for (unsigned int i = 0; i < modeCount - 1;  ++i) {
+                if (displacements.size() < prevModeCount + i + 1)
+                  displacements.push_back(displacement);
                 displacements[prevModeCount + i].push_back(vector3(x[i], y[i], z[i]));
               }
 
@@ -294,6 +319,14 @@ namespace OpenBabel
       uc->SetData(translationVectors[0], translationVectors[1], translationVectors[2]);
       uc->SetOrigin(fileformatInput);
       mol.SetData(uc);
+    }
+
+    // Attach orbitals if found
+    if (alphaHOMO > 0) {
+      OBOrbitalData *od = new OBOrbitalData();
+      od->LoadClosedShellOrbitals(orbitalEnergies, orbitalSymmetries, alphaHOMO);
+      od->SetOrigin(fileformatInput);
+      mol.SetData(od);
     }
 
     mol.SetTitle(title);

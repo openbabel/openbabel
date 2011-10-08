@@ -58,6 +58,13 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
     pFF = OBForceField::FindForceField("UFF");
     if (!pFF || !pFF->Setup(*pmol)) return true; // can't use either MMFF94 or UFF
   }
+
+  // Since we only want a rough geometry, use distance cutoffs for VDW, Electrostatics
+  pFF->EnableCutOff(true);
+  pFF->SetVDWCutOff(10.0);
+  pFF->SetElectrostaticCutOff(20.0);
+  pFF->SetUpdateFrequency(10); // update non-bonded distances
+
   pFF->SteepestDescent(250, 1.0e-4);
   pFF->WeightedRotorSearch(200, 25);
   pFF->ConjugateGradients(250, 1.0e-6);

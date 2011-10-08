@@ -814,5 +814,15 @@ bool InChICompareFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   return theInChIFormat.WriteMolecule(pOb,pConv);
 }
 
+//************************************************************************
+InChIKeyFormat theInChIKeyFormat;
+
+bool InChIKeyFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+{
+  pConv->AddOption("K",OBConversion::OUTOPTIONS);
+  return theInChIFormat.WriteMolecule(pOb,pConv);
+}
+
+
 }//namespace OpenBabel
 
