@@ -254,6 +254,8 @@ namespace OpenBabel
 
               // OK, now we have x, y, z for all new modes for one atom
               for (unsigned int i = 0; i < modeCount - 1;  ++i) {
+                if (displacements.size() < prevModeCount + i + 1)
+                  displacements.push_back(displacement);
                 displacements[prevModeCount + i].push_back(vector3(x[i], y[i], z[i]));
               }
 
