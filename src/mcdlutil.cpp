@@ -5794,8 +5794,8 @@ int TemplateRedraw::coordinatesPrepare(TEditedMolecule& sm, int kk, int anTempla
     while (test) {
       test=false;
       for (i=tm.nBonds()-1; i>=0; i--) {
-        test1=((tm.getBond(i)->at[0]<=nFound) && (tm.getBond(i)->at[1]>nFound)) || ((tm.getBond(i)->at[1]<=nFound) && (tm.getBond(i)->at[0]>nFound));
-		if (test1) if ((tm.getBond(i)->db<=1) && (tm.getAtom(tm.getBond(i)->at[0])->nb > 1) && (tm.getAtom(tm.getBond(i)->at[1])->nb > 1)) {   //acyclic bond
+        test1=((tm.getBond(i)->at[0]<nFound) && (tm.getBond(i)->at[1]>=nFound)) || ((tm.getBond(i)->at[1]<nFound) && (tm.getBond(i)->at[0]>=nFound));
+		if (test1) if (tm.getBond(i)->db<=1) { //acyclic bond
           test=true;
           emTemplate=new TEditedMolecule();
           if (tm.getBond(i)->at[1] >nFound) fragmentAN=tm.getBond(i)->at[1]; else fragmentAN=tm.getBond(i)->at[0];  //Error is absent! Really 2-nd atom is compared in both operators!
