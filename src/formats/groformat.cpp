@@ -332,9 +332,9 @@ bool GROFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     ss >> v2z >> v3x >> v3y;
   }
   
-  if (!(v1x == 0.0 and v2y == 0.0 and v3z == 0.0 and
-        v1y == 0.0 and v1z == 0.0 and v2x == 0.0 and
-        v2z == 0.0 and v3x == 0.0 and v3y == 0.0)) {
+  if (!(v1x == 0.0 && v2y == 0.0 && v3z == 0.0 &&
+        v1y == 0.0 && v1z == 0.0 && v2x == 0.0 &&
+        v2z == 0.0 && v3x == 0.0 && v3y == 0.0)) {
   // Set box vectors and convert nm to angstroms
   const vector3 v1(v1x*10,v1y*10,v1z*10);
   const vector3 v2(v2x*10,v2y*10,v2z*10);
@@ -440,9 +440,9 @@ bool GROFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   
     // If there is any non-zero value among others, then write them all
     const double TRESHOLD = 1.0e-8;
-    if (fabs(v1.y()) > TRESHOLD or fabs(v1.z()) > TRESHOLD or
-        fabs(v2.x()) > TRESHOLD or fabs(v2.z()) > TRESHOLD or
-        fabs(v3.x()) > TRESHOLD or fabs(v3.y()) > TRESHOLD) {
+    if (fabs(v1.y()) > TRESHOLD || fabs(v1.z()) > TRESHOLD ||
+        fabs(v2.x()) > TRESHOLD || fabs(v2.z()) > TRESHOLD ||
+        fabs(v3.x()) > TRESHOLD || fabs(v3.y()) > TRESHOLD) {
       ofs << "   " << v1.y()/10
           << "   " << v1.z()/10
           << "   " << v2.x()/10

@@ -87,10 +87,11 @@ namespace OpenBabel
 " 0 8 2 6 <623>\n"
 " ...etc\n\n"
 
-"where the first digit indicates whether the fragment is linear (0) or cyclic\n"
-"(1) and remaining digits indicate the atomic number and bond order\n"
-"alternatively. For example, bit 623 above is the linear fragment O=C (8 for\n"
-"oxygen, 2 for double bond and 6 for carbon).\n\n"
+"where the first digit is 0 for linear fragments but is a bond order\n"
+"for cyclic fragments. The remaining digits indicate the atomic number\n"
+"and bond order alternatively. Note that a bond order of 5 is used for\n"
+"aromatic bonds. For example, bit 623 above is the linear fragment O=C\n"
+"(8 for oxygen, 2 for double bond and 6 for carbon).\n\n"
 
       "Write Options e.g. -xfFP3 -xN128\n"
       " f<id> fingerprint type\n"
