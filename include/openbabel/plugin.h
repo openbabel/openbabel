@@ -328,6 +328,8 @@ public:
   OBAPI EXTERN className instanceName;
 
   // formats
+  OB_STATIC_PLUGIN(AcesOutputFormat, theAcesOutputFormat)
+  OB_STATIC_PLUGIN(AcesInputFormat, theAcesInputFormat)
   OB_STATIC_PLUGIN(ACRFormat, theACRFormat)
   OB_STATIC_PLUGIN(ADFOutputFormat, theADFOutputFormat)
   OB_STATIC_PLUGIN(ADFInputFormat, theADFInputFormat)
