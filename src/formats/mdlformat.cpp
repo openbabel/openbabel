@@ -120,6 +120,8 @@ namespace OpenBabel
       void TetStereoFromParity(OBMol& mol, vector<MDLFormat::Parity> &parity, bool deleteExisting=false);
       int ReadIntField(const char *s);
       unsigned int ReadUIntField(const char *s);
+     // Helper for 2.3 -- is this atom a metal
+      bool IsMetal(OBAtom *atom);// Temporary for 2.3.1 (because of binary compatibility)
       map<int,int> indexmap; //relates index in file to index in OBMol
       vector<string> vs;
   };
@@ -161,6 +163,18 @@ namespace OpenBabel
 
   //Make an instance of the format class
   SDFormat theSDFormat;
+
+  // Helper for 2.3 -- is this atom a metal
+  bool MDLFormat::IsMetal(OBAtom *atom)
+  {
+    const unsigned NMETALS = 78;
+    const int metals[NMETALS] = {
+    3,4,11,12,13,19,20,21,22,23,24,25,26,27,28,29,
+    30,31,37,38,39,40,41,42,43,44,45,46,47,48,49,50,55,56,57,58,59,60,61,62,63,
+    64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,87,88,89,90,91,
+    92,93,94,95,96,97,98,99,100,101,102,103};
+    return std::find(metals, metals+78, atom->GetAtomicNum())!=metals+78;
+  }
 
   /////////////////////////////////////////////////////////////////
   bool MDLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
@@ -781,7 +795,7 @@ namespace OpenBabel
 
         int valence = 0; //Only non-zero when RAD value would be >=4 (outside spec)
         //or an unbonded metal
-        if(atom->GetSpinMultiplicity()>=4 || atom->IsMetal() && atom->GetValence()==0 )
+        if(atom->GetSpinMultiplicity()>=4 || IsMetal(atom) && atom->GetValence()==0 )
           valence = atom->GetValence()==0 ? 15 : atom->GetValence();
 
         snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d",
@@ -1468,5 +1482,5 @@ namespace OpenBabel
     }
     return true;
   }
-  
+
 }//namespace

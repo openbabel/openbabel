@@ -456,13 +456,13 @@ FunctionEnd
 ;General
 
   ;OpenBabel version
-  !define OBVersion 2.3.1cm
+  !define OBVersion 2.3.1
 
   ;Name and file
   Name "OpenBabel ${OBVERSION}"
   OutFile "OpenBabel${OBVERSION}_Windows_Installer.exe"
 
-  ;Default installation folder
+  ;Default installation folder 
   InstallDir "$PROGRAMFILES\OpenBabel-${OBVERSION}"
   
   ;Get installation folder from registry if available
@@ -515,13 +515,22 @@ FunctionEnd
 
 Section "Dummy Section" SecDummy
 
-  SetOutPath "$INSTDIR\data"
+  ;The data will be in (writable) subfolder of %ProgramData%, if it exists
+  Var /GLOBAL DataBase
+  ClearErrors
+  ReadEnvStr $0 ProgramData
+  IfErrors 0 +3    
+  StrCpy $DataBase "$INSTDIR"
+  Goto +2
+  StrCpy $DataBase "$%ProgramData%\OpenBabel-${OBVERSION}"
+  
+  SetOutPath "$DataBase\data"
   File /r /x .svn /x *.h ..\..\data\*.*
 
   SetOutPath "$INSTDIR\doc"
   File ..\..\doc\OpenBabelGUI.html
   File ToolsPrograms.txt
-  
+
   SetOutPath "$INSTDIR"
   File /oname=License.txt ..\..\COPYING
   File ..\sdf.bat
@@ -538,11 +547,22 @@ Section "Dummy Section" SecDummy
   File ..\build\bin\Release\openbabel_java.dll
   File ..\build\bin\Release\openbabel_csharp.dll
   File ..\..\scripts\csharp\OBDotNet.dll
+  File obdotnet.snk
+  File OBDotNetAssemblyInfo.cs
 
   File ..\libs\i386\*.dll
 
   SetOutPath "$INSTDIR\examples"
   File /r /x .svn ExampleFiles\*.*
+  
+  ;Files for user to build own C++ programs using precompiled OpenBabel
+  ;Not working correctly
+  ;SetOutPath "$DataBase\obbuild"
+  ;File ..\build\src\Release\openbabel-2.lib   
+  ;File /r /x .svn obbuild\*.*
+  ;SetOutPath "$DataBase\obbuild\openbabel"
+  ;File /r /x .svn ..\..\include\openbabel\*.*
+  ;File ..\build\include\openbabel\babelconfig.h  
   
   ;Store installation folder
   WriteRegStr HKCU "Software\OpenBabel ${OBVERSION}" "" $INSTDIR
@@ -575,9 +595,13 @@ Section "Dummy Section" SecDummy
   ; Old way: WriteRegStr HKCU "Environment" "BABEL_DATADIR" "$INSTDIR" 
   ; New way: Works immediately
   Push "BABEL_DATADIR"
-  Push $INSTDIR\data
+  Push "$DataBase\data"
   Call AddToEnvVar
   
+  ; Entry for Add/Remove Programs
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\OpenBabel-${OBVERSION}" "DisplayName" "OpenBabel-${OBVERSION}"
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\OpenBabel-${OBVERSION}" "UninstallString" "$INSTDIR\Uninstall.exe"
+ 
   ;Add Firefox to PATH so GUI can use it for displaying structures
   EnumRegKey $6 HKLM "SOFTWARE\Mozilla\Mozilla Firefox" 0
   ReadRegStr $7 HKLM "SOFTWARE\Mozilla\Mozilla Firefox\$6\Main" "Install Directory"
@@ -607,8 +631,9 @@ SectionEnd
 ;Uninstaller Section
 
 Section "Uninstall"
-
-  RMDir /r "$INSTDIR\data"
+  RMDir /r "$DataBase\data"
+  RMDir /r "$DataBase\obbuild"
+  RMDir /r "$DataBase"
   RMDir /r "$INSTDIR\examples"
   RMDir /r "$INSTDIR\doc"
 
@@ -635,6 +660,14 @@ Section "Uninstall"
   Delete "$INSTDIR\openbabel_java.dll"
   Delete "$INSTDIR\OBDotNet.dll"
   Delete "$INSTDIR\openbabel_csharp.dll"
+  Delete "$INSTDIR\libpng14-14.dll"
+  Delete "$INSTDIR\freetype6.dll"
+  Delete "$INSTDIR\libcairo-2.dll"
+  Delete "$INSTDIR\libexpat-1.dll"
+  Delete "$INSTDIR\libfontconfig-1.dll"
+  Delete "$INSTDIR\OBDotNetAssemblyInfo.cs"
+  Delete "$INSTDIR\obdotnet.snk"
+
   Delete "$INSTDIR\Uninstall.exe"
 
   RMDir "$INSTDIR"
