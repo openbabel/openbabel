@@ -146,7 +146,11 @@ namespace OpenBabel
     Eigen::Matrix3d C = _mref * mtarget.transpose();
 
     // Singular Value Decomposition of C into USV(t)
+#ifdef HAVE_EIGEN3
+    Eigen::JacobiSVD<Eigen::Matrix3d> svd(C);
+#else
     Eigen::SVD<Eigen::Matrix3d> svd(C);
+#endif
 
     // Prepare matrix T
     double sign = (C.determinant() > 0) ? 1. : -1.; // Sign of determinant
@@ -160,7 +164,7 @@ namespace OpenBabel
     _result = _rotMatrix.transpose() * mtarget;
 
     Eigen::MatrixXd deviation = _result - _mref;
-    Eigen::MatrixXd sqr = deviation.cwise().square();
+    Eigen::MatrixXd sqr = deviation.array().square();
     double sum = sqr.sum();
     _rmsd = sqrt( sum / sqr.cols() );
 

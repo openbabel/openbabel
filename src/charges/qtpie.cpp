@@ -16,7 +16,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#if (defined(HAVE_EIGEN2))
+#ifdef HAVE_EIGEN
 
 #include "qtpie.h"
 #include <openbabel/locale.h>
@@ -32,13 +32,13 @@ using temperf::erf;
 namespace OpenBabel
 {
 
-  /*! \class QTPIECharges qtpie.h "qtpie.h" 
-   
+  /*! \class QTPIECharges qtpie.h "qtpie.h"
+
     \brief Assigns partial charges according to the charge transfer with polarization current equilibration
     (QTPIE) model of Chen and Martinez, 2007; 2008.
-    
+
     The QTPIE model solves for charges by minimizing an energy function of the form
-    
+
     \f[
 
     E\left(\mathbf{q}\right)=\mathbf{q}\cdot\boldsymbol{\chi}+\frac{1}{2}\mathbf{q}\boldsymbol{\eta}\mathbf{q}
@@ -58,7 +58,7 @@ namespace OpenBabel
 	in the current implementation, we assume \f$Q = 0\f$ always.
 
     The off-diagonal Coulomb interactions are screened using the following integral
-    
+
     \f[
 
     \eta_{ij}=\int\frac{\phi_{i}^{2}\left(\mathbf{r}\right)\phi_{j}^{2}\left(\mathbf{r}^{\prime}\right)}
@@ -72,10 +72,10 @@ namespace OpenBabel
 
     \phi_i\left(\mathbf{r}\right)=\left(\frac{2}{\pi\sigma_{i}^{2}}\right)^{3/4}
           \exp\left(-\frac{\left|\mathbf{r}-\mathbf{R}_{i}\right|^{2}}{\sigma_{i}^{2}}\right)
-    
+
     \f]
 
-    where \f$ \sigma_i \f$ is a Gaussian screening radius and \f$ \mathbf R_i \f$ is the Cartesian coordinate of atom \f$ i \f$. 
+    where \f$ \sigma_i \f$ is a Gaussian screening radius and \f$ \mathbf R_i \f$ is the Cartesian coordinate of atom \f$ i \f$.
 
     The parameters in this model are the atomic electronegativities \$f \chi_i = \chi_i^0 \$f in volts (V),
     hardnesses \$f \eta_{ii} = \eta_i^0 \f$ in V/e, and screening exponents \$f \alpha_i \$f in Angstroms.
@@ -98,9 +98,9 @@ namespace OpenBabel
       doi:10.1063/1.3183167
 
     \author Jiahao Chen
-    
+
     \since version 2.3.
-  */  
+  */
 
 /////////////////////////////////////////////////////////////////
 QTPIECharges theQTPIECharges("qtpie"); //Global instance
@@ -354,48 +354,57 @@ double QTPIECharges::OverlapInt(double a, double b, double R)
 /// Here's a wrapper around the Eigen solver routine
 bool QTPIECharges::solver(MatrixXd A, VectorXd b, VectorXd &x, const double NormThreshold)
 {
-	// using a LU factorization
-	bool SolverOK = A.lu().solve(b, &x);
-	//bool SolverOK = A.svd().solve(b, &x);
+    // using a LU factorization
+#ifdef HAVE_EIGEN3
+    bool SolverOK = true;
+    x = A.partialPivLu().solve(b);
+#else
+    bool SolverOK = A.lu().solve(b, &x);
+#endif
+    //bool SolverOK = A.svd().solve(b, &x);
 
-	VectorXd resid = A*x - b;
-	double resnorm = resid.norm();
-	if (IsNan(resnorm) || resnorm > NormThreshold || !SolverOK)
-	{
-		stringstream msg;
-		msg << "Warning, LU solver failed." << endl;
-		if (!SolverOK) msg << "Solver returned error." << endl;
-		if (IsNan(resnorm)) msg << "NaNs were returned" << endl;
-		if (resnorm > NormThreshold) msg << "Residual has norm " << resnorm
-		       << " which exceeds the recommended threshold of " << NormThreshold
-		       << endl;
-		msg << "Proceeding with singular value decomposition.";
+    VectorXd resid = A*x - b;
+    double resnorm = resid.norm();
+    if (IsNan(resnorm) || resnorm > NormThreshold || !SolverOK)
+      {
+        stringstream msg;
+        msg << "Warning, LU solver failed." << endl;
+        if (!SolverOK) msg << "Solver returned error." << endl;
+        if (IsNan(resnorm)) msg << "NaNs were returned" << endl;
+        if (resnorm > NormThreshold) msg << "Residual has norm " << resnorm
+                                         << " which exceeds the recommended threshold of " << NormThreshold
+                                         << endl;
+        msg << "Proceeding with singular value decomposition.";
 
-		obErrorLog.ThrowError(__FUNCTION__, msg.str(), obWarning);
+        obErrorLog.ThrowError(__FUNCTION__, msg.str(), obWarning);
 
-		SolverOK = A.svd().solve(b, &x);
-		resid = A*x - b;
-		resnorm = resid.norm();
+#ifdef HAVE_EIGEN3
+        x = A.jacobiSvd().solve(b);
+#else
+        SolverOK = A.svd().solve(b, &x);
+#endif
+        resid = A*x - b;
+        resnorm = resid.norm();
 
-		if (IsNan(resnorm) || !SolverOK)
-		{
-			obErrorLog.ThrowError(__FUNCTION__, "SVD solver returned an error. Charges may not be reliable!", obError);
-			return false;
-		}
-	}
+        if (IsNan(resnorm) || !SolverOK)
+          {
+            obErrorLog.ThrowError(__FUNCTION__, "SVD solver returned an error. Charges may not be reliable!", obError);
+            return false;
+          }
+      }
 
-	stringstream msg_resid;
-	msg_resid << "The residual of the solution has norm " << resnorm;
-	obErrorLog.ThrowError(__FUNCTION__, msg_resid.str(), obInfo);
+    stringstream msg_resid;
+    msg_resid << "The residual of the solution has norm " << resnorm;
+    obErrorLog.ThrowError(__FUNCTION__, msg_resid.str(), obInfo);
 
-	if (resnorm > NormThreshold) {
-		stringstream msg_reswarn;
-		msg_reswarn << "Warning, the norm of the residual is " << resnorm
-			    << "which exceeds the recommended threshold of " << NormThreshold;
-		obErrorLog.ThrowError(__FUNCTION__, msg_reswarn.str(), obWarning);
-	}
-	return true;
-}
+    if (resnorm > NormThreshold) {
+      stringstream msg_reswarn;
+      msg_reswarn << "Warning, the norm of the residual is " << resnorm
+                  << "which exceeds the recommended threshold of " << NormThreshold;
+      obErrorLog.ThrowError(__FUNCTION__, msg_reswarn.str(), obWarning);
+    }
+    return true;
+  }
 
 }//namespace
 

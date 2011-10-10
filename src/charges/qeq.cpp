@@ -16,7 +16,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#if (defined(HAVE_EIGEN2))
+#ifdef HAVE_EIGEN
 
 #include "qeq.h"
 #include <openbabel/locale.h>
@@ -32,12 +32,12 @@ using temperf::erf;
 namespace OpenBabel
 {
 
-  /*! \class QEqCharges qeq.h "qeq.h" 
-   
+  /*! \class QEqCharges qeq.h "qeq.h"
+
     \brief Assigns partial charges according to the charge equilibration (QEq) model of Rappé and Goddard, 1991.
-    
+
     The QEq model solves for charges by minimizing an energy function of the form
-    
+
     \f[
 
     E\left(\mathbf{q}\right)=\mathbf{q}\cdot\boldsymbol{\chi}+\frac{1}{2}\mathbf{q}\boldsymbol{\eta}\mathbf{q}
@@ -57,7 +57,7 @@ namespace OpenBabel
 	in the current implementation, we assume \f$Q = 0\f$ always.
 
     The off-diagonal Coulomb interactions are screened using the following integral
-    
+
     \f[
 
     \eta_{ij}=\int\frac{\phi_{i}^{2}\left(\mathbf{r}\right)\phi_{j}^{2}\left(\mathbf{r}^{\prime}\right)}
@@ -71,21 +71,21 @@ namespace OpenBabel
 
     \phi_i\left(\mathbf{r}\right)=\left(\frac{2}{\pi\sigma_{i}^{2}}\right)^{3/4}
           \exp\left(-\frac{\left|\mathbf{r}-\mathbf{R}_{i}\right|^{2}}{\sigma_{i}^{2}}\right)
-    
+
     \f]
 
-    where \f$ \sigma_i \f$ is the Gaussian screening radius and \f$ \mathbf R_i \f$ is the Cartesian coordinate of atom \f$ i \f$. 
+    where \f$ \sigma_i \f$ is the Gaussian screening radius and \f$ \mathbf R_i \f$ is the Cartesian coordinate of atom \f$ i \f$.
 
     The parameters in this model are the atomic electronegativities \$f \chi_i = \chi_i^0 \$f in volts (V),
     hardnesses \$f \eta_{ii} = \eta_i^0 \f$ in V/e, and screening radii \$f \sigma_i \$f in Angstroms.
 
     The default parameter set uses the published values for the elements H, Li, C, N, O, F, Na, Si, P, S, Cl, K, Br, Rb, I and Cs.
-    Other parameters are taken from the unpublished values that are distributed with UFF. 
+    Other parameters are taken from the unpublished values that are distributed with UFF.
 
     Reference:
       A. K. Rappé and W. A. Goddard, III, J. Phys. Chem. 95 (1991): 3358-3363.
       doi:10.1021/j100161a070
-   
+
       The method of solving the model is given by
       J. Chen and T. J. Martínez, J. Chem. Phys. 131 (2009): 044114.
       doi:10.1063/1.3183167
@@ -106,10 +106,10 @@ namespace OpenBabel
       doi:10.1007/978-90-481-2596-8_19
 
     \author Jiahao Chen
-    
+
     \since version 2.3.
-  */    
-    
+  */
+
   /////////////////////////////////////////////////////////////////
   QEqCharges theQEqCharges("qeq"); //Global instance
 
@@ -145,7 +145,7 @@ namespace OpenBabel
       //   Electronegativity (V) ->  Electronegativity (a.u.)
       //   Hardness (V/e)        ->  Hardness (a.u.)
       //   radius (Angstrom)     ->  Gaussian exponent (bohr^-2)
-     
+
       radius = atof(vs[3].c_str())*Angstrom;
       P << atof(vs[1].c_str())*eV, atof(vs[2].c_str())*eV, 1.0/(radius*radius);
       _parameters.push_back(P);
@@ -306,7 +306,12 @@ namespace OpenBabel
   bool QEqCharges::solver(MatrixXd A, VectorXd b, VectorXd &x, const double NormThreshold)
   {
     // using a LU factorization
+#ifdef HAVE_EIGEN3
+    bool SolverOK = true;
+    x = A.partialPivLu().solve(b);
+#else
     bool SolverOK = A.lu().solve(b, &x);
+#endif
     //bool SolverOK = A.svd().solve(b, &x);
 
     VectorXd resid = A*x - b;
@@ -324,7 +329,11 @@ namespace OpenBabel
 
         obErrorLog.ThrowError(__FUNCTION__, msg.str(), obWarning);
 
+#ifdef HAVE_EIGEN3
+        x = A.jacobiSvd().solve(b);
+#else
         SolverOK = A.svd().solve(b, &x);
+#endif
         resid = A*x - b;
         resnorm = resid.norm();
 
