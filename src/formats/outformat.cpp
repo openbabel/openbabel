@@ -136,6 +136,11 @@ namespace OpenBabel
         formatName = "abinit";
         break;
       }
+      } else if (strstr(buffer, "ACES2") != NULL) {
+        // ACESII
+        formatName = "acesout";
+        break;
+      }
     }
 
     // if we assigned something above, let's try to find it
