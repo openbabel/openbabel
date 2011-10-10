@@ -164,7 +164,11 @@ namespace OpenBabel
     _result = _rotMatrix.transpose() * mtarget;
 
     Eigen::MatrixXd deviation = _result - _mref;
+#ifdef HAVE_EIGEN3
     Eigen::MatrixXd sqr = deviation.array().square();
+#else
+    Eigen::MatrixXd sqr = deviation.cwise().square();
+#endif
     double sum = sqr.sum();
     _rmsd = sqrt( sum / sqr.cols() );
 
