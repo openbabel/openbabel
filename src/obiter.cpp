@@ -46,7 +46,7 @@ namespace OpenBabel
       #include <openbabel/obiter.h>
       #include <openbabel/mol.h>
 
-      OBMol mol;
+      OpenBabel::OBMol mol;
       double exactMass = 0.0;
       FOR_ATOMS_OF_MOL(a, mol)
       {
@@ -131,7 +131,7 @@ namespace OpenBabel
       #include <openbabel/obiter.h>
       #include <openbabel/mol.h>
 
-      OBMol mol;
+      OpenBabel::OBMol mol;
       FOR_DFS_OF_MOL(a, mol)
       {
          // The variable a behaves like OBAtom* when used with -> and * but
@@ -269,7 +269,7 @@ namespace OpenBabel
       #include <openbabel/obiter.h>
       #include <openbabel/mol.h>
 
-      OBMol mol;
+      OpenBabel::OBMol mol;
       FOR_BFS_OF_MOL(a, mol)
       {
          // The variable a behaves like OBAtom* when used with -> and * but
@@ -432,7 +432,7 @@ namespace OpenBabel
       #include <openbabel/obiter.h>
       #include <openbabel/mol.h>
 
-      OBMol mol;
+      OpenBabel::OBMol mol;
       FOR_BONDBFS_OF_MOL(b, mol)
       {
          // The variable b behaves like OBBond* when used with -> and * but
@@ -603,7 +603,7 @@ namespace OpenBabel
       #include <openbabel/obiter.h>
       #include <openbabel/mol.h>
 
-      OBMol mol;
+      OpenBabel::OBMol mol;
       unsigned int bondOrderSum = 0;
       FOR_BONDS_OF_MOL(b, mol)
       {
@@ -676,7 +676,7 @@ namespace OpenBabel
       #include <openbabel/obiter.h>
       #include <openbabel/mol.h>
 
-      OBMol mol;
+      OpenBabel::OBMol mol;
       FOR_ATOMS_OF_MOL(a, mol)
       {
          // The variable a behaves like OBAtom* when used with -> and * but
@@ -751,7 +751,7 @@ namespace OpenBabel
       #include <openbabel/obiter.h>
       #include <openbabel/mol.h>
 
-      OBAtom atom;
+      OpenBabel::OBAtom atom;
       unsigned int tripleBondCount;
       FOR_BONDS_OF_ATOM(b, atom)
       {
@@ -825,7 +825,7 @@ namespace OpenBabel
       #include <openbabel/obiter.h>
       #include <openbabel/mol.h>
 
-      OBMol mol;
+      OpenBabel::OBMol mol;
       FOR_RESIDUES_OF_MOL(r, mol)
       {
          // The variable r behaves like OBResidue* when used with -> and * but
@@ -902,7 +902,7 @@ namespace OpenBabel
       #include <openbabel/obiter.h>
       #include <openbabel/mol.h>
 
-      OBMol mol;
+      OpenBabel::OBMol mol;
       double residueMass = 0.0;
       FOR_RESIDUES_OF_MOL(r, mol)
       {
@@ -983,7 +983,7 @@ namespace OpenBabel
       #include <openbabel/obiter.h>
       #include <openbabel/mol.h>
 
-      OBMol mol;
+      OpenBabel::OBMol mol;
       FOR_RINGS_OF_MOL(r, mol)
       {
          // The variable r behaves like OBRing* when used with -> and * but
@@ -1068,8 +1068,8 @@ namespace OpenBabel
       #include <openbabel/obiter.h>
       #include <openbabel/mol.h>
 
-      OBMol mol;
-      OBAtom *a, *b, *c;
+      OpenBabel::OBMol mol;
+      OpenBabel::OBAtom *a, *b, *c;
       double ang;
 
       FOR_ANGLES_OF_MOL(angle, mol)
@@ -1166,8 +1166,8 @@ namespace OpenBabel
       #include <openbabel/obiter.h>
       #include <openbabel/mol.h>
 
-      OBMol mol;
-      OBAtom *a, *b, *c, *d;
+      OpenBabel::OBMol mol;
+      OpenBabel::OBAtom *a, *b, *c, *d;
       double tor;
 
       FOR_TORSIONS_OF_MOL(t, mol)
@@ -1268,8 +1268,8 @@ namespace OpenBabel
       #include <openbabel/obiter.h>
       #include <openbabel/mol.h>
 
-      OBMol mol;
-      OBAtom *a, *b;
+      OpenBabel::OBMol mol;
+      OpenBabel::OBAtom *a, *b;
       double rab;
 
       FOR_PAIRS_OF_MOL(p, mol)
