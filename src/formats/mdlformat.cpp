@@ -120,6 +120,8 @@ namespace OpenBabel
       void TetStereoFromParity(OBMol& mol, vector<MDLFormat::Parity> &parity, bool deleteExisting=false);
       int ReadIntField(const char *s);
       unsigned int ReadUIntField(const char *s);
+     // Helper for 2.3 -- is this atom a metal
+      bool IsMetal(OBAtom *atom);// Temporary for 2.3.1 (because of binary compatibility)
       map<int,int> indexmap; //relates index in file to index in OBMol
       vector<string> vs;
   };
@@ -163,7 +165,7 @@ namespace OpenBabel
   SDFormat theSDFormat;
 
   // Helper for 2.3 -- is this atom a metal
-  bool IsMetal(OBAtom *atom)
+  bool MDLFormat::IsMetal(OBAtom *atom)
   {
     const unsigned NMETALS = 78;
     const int metals[NMETALS] = {

@@ -381,7 +381,7 @@ bool GROFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   OBVectorData* vector;
   vector3 v;
-  OBAtom* atom;
+  //OBAtom* atom;
   OBResidue* res;
   long int atIdx = 0;
   long int resIdx = 0;
