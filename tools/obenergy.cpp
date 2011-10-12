@@ -40,6 +40,7 @@ int main(int argc,char **argv)
   int verbose = 0;
   bool hydrogens = false;
   string basename, filename = "", option, option2, ff = "";
+  OBConversion conv;
 
   if (argc < 2) {
     cout << "Usage: obenergy [options] <filename>" << endl;
@@ -89,7 +90,6 @@ int main(int argc,char **argv)
   }
 
   // Find Input filetype
-  OBConversion conv;
   OBFormat *format_in = conv.FormatFromExt(filename.c_str());
     
   if (!format_in || !conv.SetInFormat(format_in)) {
