@@ -523,7 +523,7 @@ Section "Dummy Section" SecDummy
   StrCpy $DataBase "$INSTDIR"
   Goto +2
   StrCpy $DataBase "$%ProgramData%\OpenBabel-${OBVERSION}"
-  
+   
   SetOutPath "$DataBase\data"
   File /r /x .svn /x *.h ..\..\data\*.*
 
@@ -547,8 +547,6 @@ Section "Dummy Section" SecDummy
   File ..\build\bin\Release\openbabel_java.dll
   File ..\build\bin\Release\openbabel_csharp.dll
   File ..\..\scripts\csharp\OBDotNet.dll
-  File obdotnet.snk
-  File OBDotNetAssemblyInfo.cs
 
   File ..\libs\i386\*.dll
 
@@ -580,7 +578,7 @@ Section "Dummy Section" SecDummy
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Open Babel Folder.lnk" "$INSTDIR"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Open Babel GUI.lnk" "$INSTDIR\OBGUI.exe"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using Open Babel GUI.lnk" "$INSTDIR\doc\OpenBabelGUI.html"
-    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using babel (web).lnk" "http://openbabel.org/docs/2.3.0"
+    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using babel (web).lnk" "http://openbabel.org/docs/${OBVERSION}"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
   !insertmacro MUI_STARTMENU_WRITE_END
 
@@ -631,9 +629,6 @@ SectionEnd
 ;Uninstaller Section
 
 Section "Uninstall"
-  RMDir /r "$DataBase\data"
-  RMDir /r "$DataBase\obbuild"
-  RMDir /r "$DataBase"
   RMDir /r "$INSTDIR\examples"
   RMDir /r "$INSTDIR\doc"
 
@@ -665,8 +660,6 @@ Section "Uninstall"
   Delete "$INSTDIR\libcairo-2.dll"
   Delete "$INSTDIR\libexpat-1.dll"
   Delete "$INSTDIR\libfontconfig-1.dll"
-  Delete "$INSTDIR\OBDotNetAssemblyInfo.cs"
-  Delete "$INSTDIR\obdotnet.snk"
 
   Delete "$INSTDIR\Uninstall.exe"
 
@@ -701,5 +694,9 @@ Section "Uninstall"
   push $INSTDIR
   Call un.RemoveFromEnvVar
   DeleteRegValue        HKCU "Environment" "BABEL_DATADIR"
+
+  RMDir /r "$DataBase\data"
+  ;RMDir /r "$DataBase" is not safe 
+  RMDir "$DataBase"
   
 SectionEnd
