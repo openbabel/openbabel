@@ -1,3 +1,71 @@
+Open Babel 2.3.1 (2011-10-14)
+
+This release represents a major bug-fix release and is a stable
+upgrade, strongly recommended for all users of Open Babel. Many bugs
+and enhancements have been added since the 2.3.0 release.
+
+Citation:
+
+Please consider citing this work if you publish work which used Open Babel:
+Noel M. O'Boyle , Michael Banck , Craig A. James , Chris Morley , Tim
+Vandermeersch  and Geoffrey R. Hutchison. "Open Babel: An open
+chemical toolbox." Journal of Cheminformatics 2011, 3:33.
+
+http://dx.doi.org/10.1186/1758-2946-3-33
+
+What's New from 2.3.0:
+
+* Better support for unknown stereochemistry, including a "wobbly"
+  bond in 2D depiction.
+* Many fixes for rare bugs with stereochemical conversions, including
+  unusual valences.
+* Significantly improved 2D depiction code, improving performance and
+  cis/trans stereochemical accuracy
+* Added support for direct 2D depiction to PNG files using the Cairo
+  library, if available.
+* PNG files from Open Babel contain molecular information and can be
+  read to give the MDL Molfile.
+* SVG files with 2D depiction can now include a grid of molecules with
+  embedded JavaScript to zoom and scroll.
+* Molecular formulas now include the total charge (e.g., HCO2-)
+* Added the EEM partial charge model from Bultinck, et. al.
+* Fixed problems with FastSearch databases larger than 4GB, now
+  checking for large files.
+* Improved performance with force field minimization, particularly the
+  UFF and GAFF methods.
+* Several MMFF94 atom typing bugs fixed.
+* Updated GAFF parameters from the AmberTools distribution.
+* Improvements in 3D coordinate generation, particularly more accurate
+  sp3 bond angles
+* Fixed tests for auto-typing molecules with force fields when running
+  through different isomers.
+* Improvements in scripting bindings, particularly Python, Ruby, and Java
+* Pybel now uses the built-in 2D depiction, and no longer needs OASA.
+* Added initial support for MM3 atom typing with the Tinker package
+* Significant bug fixes for the PDBQT format.
+* Reading FASTA files can now generate 3D coordinates for
+  single-stranded DNA in addition to the default double-strand.
+* Support for reading/writing unit cell information from MOPAC files.
+* Support for re-numbering SMILES by specifying the first and last
+  atoms with -xf and -xl flags.
+* Better support for InChI -> InChI key generation by direct
+  conversion, rather than re-perception of the InChI.
+* Fix for rare stack overflow crash in SMARTS perception.
+* Improved UNIX man pages.
+* Many bug fixes and small enhancements
+
+==New File Formats==
+
+Import and Export:
+ Gromacs GRO
+
+Import-only:
+ ABINIT
+ XCrySDen XSF
+
+Export-only:
+ InChI Key
+
 Open Babel 2.3.0 (2010-10-23)
 
 This release represents a major update and should be a stable upgrade,
