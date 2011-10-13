@@ -695,6 +695,12 @@ Section "Uninstall"
   Call un.RemoveFromEnvVar
   DeleteRegValue        HKCU "Environment" "BABEL_DATADIR"
 
+  ClearErrors
+  ReadEnvStr $0 ProgramData
+  IfErrors 0 +3    
+  StrCpy $DataBase "$INSTDIR"
+  Goto +2
+  StrCpy $DataBase "$%ProgramData%\OpenBabel-${OBVERSION}"
   RMDir /r "$DataBase\data"
   ;RMDir /r "$DataBase" is not safe 
   RMDir "$DataBase"
