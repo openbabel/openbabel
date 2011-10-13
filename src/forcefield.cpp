@@ -1235,6 +1235,8 @@ namespace OpenBabel
       OBFFLog(_logbuf);
     }
 
+    _current_conformer = 0;
+
     if (!rl.Size()) { // only one conformer
       IF_OBFF_LOGLVL_LOW
         OBFFLog("  GENERATED ONLY ONE CONFORMER\n\n");
@@ -1262,7 +1264,6 @@ namespace OpenBabel
       OBFFLog("--------------------\n");
     }
 
-    _current_conformer = 0;
     _energies.clear();
 
     return _mol.NumConformers();
@@ -1354,6 +1355,8 @@ namespace OpenBabel
       OBFFLog(_logbuf);
     }
 
+    _current_conformer = 0;
+
     if (!rl.Size()) { // only one conformer
       IF_OBFF_LOGLVL_LOW
         OBFFLog("  GENERATED ONLY ONE CONFORMER\n\n");
@@ -1385,7 +1388,6 @@ namespace OpenBabel
       OBFFLog("--------------------\n");
     }
 
-    _current_conformer = 0;
     _energies.clear();
   }
 
