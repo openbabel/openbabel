@@ -629,6 +629,10 @@ SectionEnd
 ;Uninstaller Section
 
 Section "Uninstall"
+  ; The following line is required to delete shortcuts successfully
+  ; http://nsis.sourceforge.net/Shortcuts_removal_fails_on_Windows_Vista
+  SetShellVarContext all
+
   RMDir /r "$INSTDIR\examples"
   RMDir /r "$INSTDIR\doc"
 
