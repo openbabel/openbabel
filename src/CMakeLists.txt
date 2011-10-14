@@ -1,6 +1,6 @@
 # Library versioning
 set(SOVERSION 4)
-set(LIBRARY_VERSION 4.0.0)
+set(LIBRARY_VERSION 4.0.1)
 
 set(charges
   charges/eem.cpp
