@@ -693,6 +693,9 @@ Section "Uninstall"
   DeleteRegKey          HKCU "Software\OpenBabelGUI"
   DeleteRegKey          HKCR "*\shell\OBDepict"
 
+  ; Remove entry in Add/Remove Programs
+  DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\OpenBabel-${OBVERSION}" 
+
   ; Remove env var
   push "BABEL_DATADIR"
   push $INSTDIR
