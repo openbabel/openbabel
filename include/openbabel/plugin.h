@@ -163,8 +163,10 @@ public:\
       if (IsDefault || Map().empty()) {\
         Default() = this;\
       }\
-      Map()[ID] = this;\
-      PluginMap()[TypeID()] = this;\
+      if (Map().count(ID) == 0) {\
+        Map()[ID] = this;\
+        PluginMap()[TypeID()] = this;\
+      }\
     }\
   }\
   static BaseClass* FindType(const char* ID) {\
@@ -203,8 +205,10 @@ public:\
       if (IsDefault || Map().empty()) {\
         Default() = this;\
       }\
-      Map()[ID] = this;\
-      PluginMap()[TypeID()] = this;\
+      if (Map().count(ID) == 0) {\
+        Map()[ID] = this;\
+        PluginMap()[TypeID()] = this;\
+      }\
     }\
   }\
   static BaseClass* FindType(const char* ID) {\
