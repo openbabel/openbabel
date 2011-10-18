@@ -84,7 +84,7 @@ bool OBGUIApp::OnInit()
   TransformProcessType(&PSN,kProcessTransformToForegroundApplication);
 #endif
 
-  OBConversion dummy; //needed for OBConversion to load plugin classes (including formats)
+  //OBConversion dummy; //needed for OBConversion to load plugin classes (including formats)
   //Read in the stored window sizes and extensions previously used (or use the defaults)
   wxConfig config(_T("OpenBabelGUI"));
   wxSize size;

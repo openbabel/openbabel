@@ -222,8 +222,6 @@ namespace OpenBabel {
       @endcode
   */
 
-  int OBConversion::FormatFilesLoaded = 0;
-
 //  OBFormat* OBConversion::pDefaultFormat=NULL;
 
   OBConversion::OBConversion(istream* is, ostream* os) :
@@ -235,8 +233,6 @@ namespace OpenBabel {
   {
     pInStream=is;
     pOutStream=os;
-    if (FormatFilesLoaded == 0)
-      FormatFilesLoaded = LoadFormatFiles();
 
     //These options take a parameter
     RegisterOptionParam("f", NULL, 1,GENOPTIONS);
@@ -311,52 +307,6 @@ namespace OpenBabel {
   int OBConversion::RegisterFormat(const char* ID, OBFormat* pFormat, const char* MIME)
   {
     return pFormat->RegisterFormat(ID, MIME);
-  }
-
-  //////////////////////////////////////////////////////
-  int OBConversion::LoadFormatFiles()
-  {
-    int count=0;
-    //	if(FormatFilesLoaded) return 0;
-    //	FormatFilesLoaded=true; //so will load files only once
-#if  defined(USING_DYNAMIC_LIBS)
-    //Depending on availablilty, look successively in
-    //FORMATFILE_DIR, executable directory,or current directory
-    string TargetDir;
-#ifdef FORMATFILE_DIR
-    TargetDir="FORMATFILE_DIR";
-#endif
-
-    DLHandler::getConvDirectory(TargetDir);
-
-    vector<string> files;
-    if(!DLHandler::findFiles(files,DLHandler::getFormatFilePattern(),TargetDir)) return 0;
-
-    vector<string>::iterator itr;
-    for(itr=files.begin();itr!=files.end();++itr)
-      {
-        if(DLHandler::openLib(*itr))
-          count++;
-        // Error handling is now handled by DLHandler itself
-        //        else
-        //          obErrorLog.ThrowError(__FUNCTION__, *itr + " did not load properly", obError);
-      }
-#else
-    count = 1; //avoid calling this function several times
-#endif //USING_DYNAMIC_LIBS
-
-    //Make instances for plugin classes defined in the data file
-    //This is hook for OBDefine, but does nothing if it is not loaded
-    //or if plugindefines.txt is not found.
-    OBPlugin* pdef = OBPlugin::GetPlugin("loaders","define");
-    if(pdef)
-    {
-      static vector<string> vec(3);
-      vec[1] = string("define");
-      vec[2] = string("plugindefines.txt");
-      pdef->MakeInstance(vec);
-    }
-    return count;
   }
 
   //////////////////////////////////////////////////////

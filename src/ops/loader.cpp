@@ -44,7 +44,7 @@ PLUGIN_CPP_FILE(OBLoader)
 ///Class which makes instances of plugin classes from information in text file.
 ///This allows the commandline and GUI interfaces to be extended without recompiling.
 ///The class is itself a plugin but needs a short piece of code as a hook in
-///OBConversion::LoadFormatFiles(). This does nothing if the plugin is not loaded.
+///OBPlugin::LoadAllPlugins(). This does nothing if the plugin is not loaded.
 class OBDefine : public OBLoader
 {
 public:
@@ -147,7 +147,7 @@ private:
 system of the existence of OBDefine. It cannot do the work of the plugin and
 parse the datafile, because the plugins referred to there may not have been
 loaded yet. Another instance with the same ID is made using MakeInstance() in
-OBConversion::LoadFormatFiles() after all the plugins are present.*/
+OBPlugin::LoadAllPlugins() after all the plugins are present.*/
 
 OBDefine placeholderOBDefine;
 //************************************************************

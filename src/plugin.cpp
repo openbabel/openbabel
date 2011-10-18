@@ -28,14 +28,73 @@ namespace OpenBabel
 OBPlugin::PluginMapType& OBPlugin::GetTypeMap(const char* PluginID)
 {
   PluginMapType::iterator itr;
+
+  // Make sure the plugins are loaded
+  if (AllPluginsLoaded == 0) {
+    OBPlugin::LoadAllPlugins();
+  }
+
   itr = PluginMap().find(PluginID);
   if(itr!=PluginMap().end())
     return itr->second->GetMap();
   return PluginMap();//error: type not found; return plugins map
 }
 
+int OBPlugin::AllPluginsLoaded = 0;
+
+void OBPlugin::LoadAllPlugins()
+{
+  int count = 0;
+
+#if  defined(USING_DYNAMIC_LIBS)
+  // Depending on availability, look successively in
+  // FORMATFILE_DIR, executable directory or current directory
+  string TargetDir;
+
+#ifdef FORMATFILE_DIR
+  TargetDir="FORMATFILE_DIR";
+#endif
+
+  DLHandler::getConvDirectory(TargetDir);
+
+  vector<string> files;
+  if(!DLHandler::findFiles(files,DLHandler::getFormatFilePattern(),TargetDir)) {
+    return;
+  }
+
+  vector<string>::iterator itr;
+  for(itr=files.begin();itr!=files.end();++itr) {
+    if(DLHandler::openLib(*itr))
+      count++;
+  }
+#else
+  count = 1; // Avoid calling this function several times
+#endif //USING_DYNAMIC_LIBS
+
+  // Status have to be updated now
+  AllPluginsLoaded = count;
+
+  // Make instances for plugin classes defined in the data file.
+  // This is hook for OBDefine, but does nothing if it is not loaded
+  // or if plugindefines.txt is not found.
+  OBPlugin* pdef = OBPlugin::GetPlugin("loaders","define");
+  if(pdef) {
+    static vector<string> vec(3);
+    vec[1] = string("define");
+    vec[2] = string("plugindefines.txt");
+    pdef->MakeInstance(vec);
+  }
+
+  return;
+}
+
 OBPlugin* OBPlugin::BaseFindType(PluginMapType& Map, const char* ID)
 {
+  // Make sure the plugins are loaded
+  if (AllPluginsLoaded == 0) {
+    OBPlugin::LoadAllPlugins();
+  }
+
   if(!ID || !*ID)
     return NULL;
   PluginMapType::iterator itr = Map.find(ID);
@@ -49,6 +108,11 @@ OBPlugin* OBPlugin::GetPlugin(const char* Type, const char* ID)
 {
   if(Type!=NULL)
     return BaseFindType(GetTypeMap(Type), ID);
+
+  // Make sure the plugins are loaded
+  if (AllPluginsLoaded == 0) {
+    OBPlugin::LoadAllPlugins();
+  }
 
   //When Type==NULL, search all types for matching ID and stop when found
   PluginMapType::iterator itr;
@@ -65,6 +129,12 @@ bool OBPlugin::ListAsVector(const char* PluginID, const char* param, vector<stri
 {
   PluginMapType::iterator itr;
   bool ret=true;
+
+  // Make sure the plugins are loaded
+  if (AllPluginsLoaded == 0) {
+    LoadAllPlugins();
+  }
+
   if(PluginID)
   {
     if(*PluginID!=0 && strcmp(PluginID, "plugins"))

@@ -20,6 +20,7 @@ General Public License for more details.
 #define OB_PLUGIN_H
 
 #include <openbabel/babelconfig.h>
+#include <openbabel/dlhandler.h>
 #include <string>
 #include <iostream>
 #include <vector>
@@ -131,6 +132,12 @@ protected:
     static PluginMapType m;
     return m;
   }
+
+  ///Keep a record if all plugins have been loaded
+  static int AllPluginsLoaded;
+
+  ///Load all plugins (formats, fingerprints, forcefields etc.)
+  static void LoadAllPlugins();
 
   ///Returns the map of a particular plugin type, e.g. GetMapType("fingerprints")
   static PluginMapType& GetTypeMap(const char* PluginID);

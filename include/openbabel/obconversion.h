@@ -32,7 +32,6 @@ GNU General Public License for more details.
 #include <strings.h>
 #endif
 
-#include <openbabel/dlhandler.h>
 #include <openbabel/oberror.h>
 #include <openbabel/format.h>
 #include <openbabel/lineend.h>
@@ -345,7 +344,6 @@ protected:
 //      static FMapType& FormatsMIMEMap();///<contains MIME and pointer to all OBFormat classes
       typedef std::map<std::string,int> OPAMapType;
       static OPAMapType& OptionParamArray(Option_type typ);
-      static int       LoadFormatFiles();
       bool             OpenAndSetFormat(bool SetFormat, std::ifstream* is, std::stringstream* ss=NULL);
 
       std::string	  InFilename;
@@ -372,7 +370,6 @@ protected:
       typedef   FilteringInputStreambuf< LineEndingExtractor > LErdbuf;
       LErdbuf*  pLineEndBuf;
 
-      static int FormatFilesLoaded;
       OBBase*		  pOb1;
       std::streampos wInpos; ///<position in the input stream of the object being written
       std::streampos rInpos; ///<position in the input stream of the object being read
