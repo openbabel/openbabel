@@ -76,6 +76,7 @@ set(formats_misc
       featformat
       fhformat
       fingerprintformat
+      fpsformat
       freefracformat
       ghemicalformat
       gromos96format
