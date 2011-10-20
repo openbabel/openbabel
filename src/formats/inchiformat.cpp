@@ -254,6 +254,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   string ostring; //the inchi string
   inchi_Output inout;
+  inout.szInChI = NULL; // We are going to test this value later
 
   stringstream molID;
   if(strlen(mol.GetTitle())==0)
@@ -554,25 +555,29 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   ofs << ostring << endl;
 
-  if (pConv->IsOption("a"))
-    ofs << inout.szAuxInfo << endl;
+  // Note that inout.szInChI will still be NULL if this is an InChI->InChIKey conversion
+  // and so the following section will not apply.
+  if (inout.szInChI != NULL) {
+    if (pConv->IsOption("a"))
+      ofs << inout.szAuxInfo << endl;
 
-  if(pConv->IsOption("l"))
-    //Display InChI log message. With multiple molecules, it appears only once
-    obErrorLog.ThrowError("InChI log", inout.szLog, obError, onceOnly);
+    if(pConv->IsOption("l"))
+      //Display InChI log message. With multiple molecules, it appears only once
+      obErrorLog.ThrowError("InChI log", inout.szLog, obError, onceOnly);
 
-  if(pConv->IsOption("e"))
-  {
-    if(pConv->GetOutputIndex()==1)
-      firstInchi = inout.szInChI;
-    else
+    if(pConv->IsOption("e"))
     {
-      ofs << "Molecules " << firstID << "and " << molID.str();
-      ofs << InChIErrorMessage(CompareInchi(firstInchi.c_str(), inout.szInChI)) << endl;
+      if(pConv->GetOutputIndex()==1)
+        firstInchi = inout.szInChI;
+      else
+      {
+        ofs << "Molecules " << firstID << "and " << molID.str();
+        ofs << InChIErrorMessage(CompareInchi(firstInchi.c_str(), inout.szInChI)) << endl;
+      }
     }
+    FreeStdINCHI(&inout);
   }
 
-  FreeStdINCHI(&inout);
   return true;
 }
 
