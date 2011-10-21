@@ -124,9 +124,9 @@ bool FPSFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   stringstream molID;
   if(strlen(pOb->GetTitle())==0)
-    molID << '#' << pConv->GetOutputIndex() << ' ';
+    molID << '#' << pConv->GetOutputIndex();
   else
-    molID << pOb->GetTitle() << ' ';
+    molID << pOb->GetTitle();
 
   if(!_pFP->GetFingerprint(pOb, fptvec, _nbits))
     return false;
@@ -143,7 +143,7 @@ bool FPSFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   }
   // truncate to hex from whole number of bytes (seems to be the way fps does it)
   ofs << dec << ss.str().erase(2*((_nbits+7)/8));
-  ofs << '\t' << Trim(molID.str()) << endl;
+  ofs << '\t' << molID.str() << endl;
 
   return true;
 }
