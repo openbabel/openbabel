@@ -518,7 +518,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   if(pConv->IsOption("K")) //Generate InChIKey and add after InChI on same line
   {
     char szINCHIKey[28];
-    GetStdINCHIKeyFromStdINCHI(ostring.c_str(), szINCHIKey);
+    GetINCHIKeyFromINCHI(ostring.c_str(), 0 ,0, szINCHIKey, NULL, NULL);
     ostring = szINCHIKey;
   }
 
