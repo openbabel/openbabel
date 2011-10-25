@@ -449,7 +449,20 @@ void OBDescriptor::DeleteProperties(OBBase* pOb, const string& DescrList)
     stringstream ss(DescrList);
     char delim = DescrList[0];
     if(isspace(delim)||ispunctU(delim))
+    {
       ss.ignore();//skip delim char
+      //if list starts with "\t" delim is a tab; if "\\" or "\"is \ backslash
+      if(delim=='\\')
+      {
+        if(DescrList[1]=='\\')
+          ss.ignore();
+        else if(DescrList[1]=='t')
+        {
+          delim='\t';
+          ss.ignore();
+        }
+      }
+    }
     else
       delim = ' ';
 
