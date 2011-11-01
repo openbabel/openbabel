@@ -5,11 +5,11 @@ This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
 
 Some portions Copyright (C) 2005-2006 Geoffrey R. Hutchison
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -49,19 +49,21 @@ int main(int argc,char *argv[])
   std::ios::sync_with_stdio(false);
 
   // Define location of file formats for testing
-  #ifdef FORMATDIR
-    char env[BUFF_SIZE];
-    snprintf(env, BUFF_SIZE, "BABEL_LIBDIR=%s", FORMATDIR);
-    putenv(env);
-  #endif
+#ifdef FORMATDIR
+  char env[BUFF_SIZE];
+  snprintf(env, BUFF_SIZE, "BABEL_LIBDIR=%s", FORMATDIR);
+  putenv(env);
+#endif
 
+  bool check = true;
+  string filename;
   if (argc != 1)
     {
       if (strncmp(argv[1], "-g", 2))
         {
-          cout << "Usage: formula" << endl;
-          cout << "   Tests Open Babel molecular formula, weight, and exact mass." << endl;
-          return 0;
+          // generate formulas for this file
+          check = false;
+          filename = argv[1];
         }
       else
         {
@@ -73,27 +75,34 @@ int main(int argc,char *argv[])
   cout << "# Testing molecular formulas..." << endl;
 
   std::ifstream mifs;
-  if (!SafeOpen(mifs, smilestypes_file.c_str()))
-    {
-      cout << "Bail out! Cannot read file " << smilestypes_file << endl;
-      return -1; // test failed
-    }
-
-  std::ifstream rifs;
-  if (!SafeOpen(rifs, results_file.c_str()))
-    {
-      cout << "Bail out! Cannot read file " << results_file << endl;
-      return -1; // test failed
-    }
-
   char buffer[BUFF_SIZE];
   vector<string> vs;
   OBMol mol;
   OBConversion conv(&mifs, &cout);
   unsigned int currentTest = 0;
-  // double mass;
 
-  if(! conv.SetInAndOutFormats("SMI","SMI"))
+  if (check) {
+    filename = smilestypes_file;
+  }
+
+  if (!SafeOpen(mifs, filename.c_str()))
+    {
+      cout << "Bail out! Cannot read file " << filename << endl;
+      return -1; // test failed
+    }
+
+  OBFormat *format = conv.FormatFromExt(filename.c_str());
+
+  std::ifstream rifs;
+  if (check) {
+    if (!SafeOpen(rifs, results_file.c_str()))
+      {
+        cout << "Bail out! Cannot read file " << results_file << endl;
+        return -1; // test failed
+      }
+  }
+
+  if(! conv.SetInFormat(format))
     {
       cout << "Bail out! SMILES format is not loaded" << endl;
       return -1;
@@ -105,6 +114,13 @@ int main(int argc,char *argv[])
       conv.Read(&mol);
       if (mol.Empty())
         continue;
+
+      if (!check) {
+        // just give the molecular formula
+        cout << "Formula: " << mol.GetFormula() << '\n';
+        continue;
+      }
+
       if (!rifs.getline(buffer,BUFF_SIZE))
         {
           cout << "Bail out! error reading reference data" << endl;
@@ -180,7 +196,7 @@ int main(int argc,char *argv[])
           cout << "# Expected " << atof(vs[2].c_str()) << " found " <<
             mol.GetExactMass() << "\n";
           cout << "# Difference " << fabs(atof(vs[2].c_str()) - mol.GetExactMass())
-               << "\n";	
+               << "\n";
         }
       else
         cout << "ok " << ++currentTest << " # molecular exact mass"
@@ -222,7 +238,7 @@ void GenerateFormulaReference()
         continue;
 
       //write out formula, molecular weight and exact mass
-      ofs << mol.GetFormula() << " " << mol.GetMolWt() << " " 
+      ofs << mol.GetFormula() << " " << mol.GetMolWt() << " "
           << mol.GetExactMass() << endl;
     }
 
