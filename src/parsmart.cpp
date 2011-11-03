@@ -93,32 +93,60 @@ namespace OpenBabel
 #define ATOMPOOL      1
 #define BONDPOOL      1
 
-#define AE_LEAF        0x01
-#define AE_RECUR       0x02
-#define AE_NOT         0x03
-#define AE_ANDHI       0x04
-#define AE_OR          0x05
-#define AE_ANDLO       0x06
+#define AE_ANDHI        1
+#define AE_ANDLO        2
+#define AE_OR           3
+#define AE_RECUR        4
+#define AE_NOT          5
+#define AE_TRUE         6
+#define AE_FALSE        7
+#define AE_AROMATIC     8
+#define AE_ALIPHATIC    9
+#define AE_CYCLIC       10
+#define AE_ACYCLIC      11
+#define AE_MASS         12
+#define AE_ELEM         13
+#define AE_AROMELEM     14
+#define AE_ALIPHELEM    15
+#define AE_HCOUNT       16
+#define AE_CHARGE       17
+#define AE_CONNECT      18
+#define AE_DEGREE       19
+#define AE_IMPLICIT     20
+#define AE_RINGS        21
+#define AE_SIZE         22
+#define AE_VALENCE      23
+#define AE_CHIRAL       24
+#define AE_HYB          25
+#define AE_RINGCONNECT  26
 
-#define AL_CONST       0x01
-#define AL_MASS        0x02
-#define AL_AROM        0x03
-#define AL_ELEM        0x04
-#define AL_HCOUNT      0x05
-#define AL_NEGATIVE    0x06
-#define AL_POSITIVE    0x07
-#define AL_CONNECT     0x08
-#define AL_DEGREE      0x09
-#define AL_IMPLICIT    0x0a
-#define AL_RINGS       0x0b
-#define AL_SIZE        0x0c
-#define AL_VALENCE     0x0d
-#define AL_CHIRAL      0x0e
-#define AL_HYB         0x0f
-#define AL_RINGCONNECT 0x10
 #define AL_CLOCKWISE      1
 #define AL_ANTICLOCKWISE  2
 #define AL_UNSPECIFIED    0
+
+/* Each BondExpr node is identified by an integer type field
+   selected from the list of BE_ codes below.  BE_ANDHI,
+   BE_ANDLO and BE_OR are binary nodes of type BondExpr.bin,
+   BE_NOT is unary node of type BondExpr.mon, and the remaining
+   code are all leaf nodes.  */
+
+#define BE_ANDHI        1
+#define BE_ANDLO        2
+#define BE_OR           3
+#define BE_NOT          4
+#define BE_ANY          5
+#define BE_DEFAULT      6
+#define BE_SINGLE       7
+#define BE_DOUBLE       8
+#define BE_TRIPLE       9
+#define BE_QUAD         10
+#define BE_AROM         11
+#define BE_RING         12
+#define BE_UP           13
+#define BE_DOWN         14
+#define BE_UPUNSPEC     15
+#define BE_DOWNUNSPEC   16
+
 
   static int GetVectorBinding();
   static int CreateAtom(Pattern*,AtomExpr*,int,int vb=0);
@@ -146,36 +174,30 @@ namespace OpenBabel
   static void FreePattern( Pattern* );
   static Pattern *CopyPattern( Pattern* );
 
-  static AtomExpr *AllocAtomExpr( void )
-  {
-    register AtomExpr *result;
-
-    //result = (AtomExpr*)malloc(sizeof(AtomExpr));
-    result = new AtomExpr;
-    return result;
-  }
-
   static AtomExpr *CopyAtomExpr( AtomExpr *expr )
   {
     register AtomExpr *result;
 
-    result = AllocAtomExpr();
+    result = new AtomExpr;
     result->type = expr->type;
     switch( expr->type )
       {
-      case(AE_ANDHI):
-      case(AE_ANDLO):
-      case(AE_OR):    result->bin.lft = CopyAtomExpr(expr->bin.lft);
+      case AE_ANDHI:
+      case AE_ANDLO:
+      case AE_OR:
+        result->bin.lft = CopyAtomExpr(expr->bin.lft);
         result->bin.rgt = CopyAtomExpr(expr->bin.rgt);
         break;
 
-      case(AE_NOT):   result->mon.arg = CopyAtomExpr(expr->mon.arg);
+      case AE_NOT:
+        result->mon.arg = CopyAtomExpr(expr->mon.arg);
         break;
 
-      case(AE_RECUR): result->recur.recur = CopyPattern((Pattern*)expr->recur.recur );
+      case AE_RECUR:
+        result->recur.recur = CopyPattern((Pattern*)expr->recur.recur);
         break;
 
-      case(AE_LEAF):  result->leaf.prop = expr->leaf.prop;
+      default:
         result->leaf.value = expr->leaf.value;
         break;
       }
@@ -188,34 +210,42 @@ namespace OpenBabel
       {
         switch( expr->type )
           {
-          case(AE_ANDHI):
-          case(AE_ANDLO):
-          case(AE_OR):     FreeAtomExpr(expr->bin.lft);
+          case AE_ANDHI:
+          case AE_ANDLO:
+          case AE_OR:
+            FreeAtomExpr(expr->bin.lft);
             FreeAtomExpr(expr->bin.rgt);
             break;
 
-          case(AE_NOT):    FreeAtomExpr(expr->mon.arg);
+          case AE_NOT:
+            FreeAtomExpr(expr->mon.arg);
             break;
 
-          case(AE_RECUR):  FreePattern( (Pattern*)expr->recur.recur );
+          case AE_RECUR:
+            FreePattern((Pattern*)expr->recur.recur);
             break;
           }
-        if (expr)
-          {
-            //free(expr);
-            delete expr;
-            expr = (AtomExpr*)NULL;
-          }
+
+        delete expr;
       }
   }
 
-  static AtomExpr *BuildAtomLeaf( int prop, int val )
+  static AtomExpr *BuildAtomPred( int type )
   {
     register AtomExpr *result;
 
-    result = AllocAtomExpr();
-    result->leaf.type = AE_LEAF;
-    result->leaf.prop = prop;
+    result = new AtomExpr;
+    result->leaf.type = type;
+    result->leaf.value = 0;
+    return result;
+  }
+
+  static AtomExpr *BuildAtomLeaf( int type, int val )
+  {
+    register AtomExpr *result;
+
+    result = new AtomExpr;
+    result->leaf.type = type;
     result->leaf.value = val;
     return result;
   }
@@ -224,7 +254,7 @@ namespace OpenBabel
   {
     register AtomExpr *result;
 
-    result = AllocAtomExpr();
+    result = new AtomExpr;
     result->mon.type = AE_NOT;
     result->mon.arg = expr;
     return result;
@@ -234,7 +264,7 @@ namespace OpenBabel
   {
     register AtomExpr *result;
 
-    result = AllocAtomExpr();
+    result = new AtomExpr;
     result->bin.type = op;
     result->bin.lft = lft;
     result->bin.rgt = rgt;
@@ -245,7 +275,7 @@ namespace OpenBabel
   {
     register AtomExpr *result;
 
-    result = AllocAtomExpr();
+    result = new AtomExpr;
     result->recur.type = AE_RECUR;
     result->recur.recur = (void*)pat;
     return result;
@@ -253,60 +283,41 @@ namespace OpenBabel
 
   static AtomExpr *GenerateElement( int elem )
   {
-    return BuildAtomLeaf(AL_ELEM,elem);
+    return BuildAtomLeaf(AE_ELEM,elem);
   }
 
   static AtomExpr *GenerateAromElem( int elem, int flag )
   {
-    AtomExpr *expr1;
-    AtomExpr *expr2;
-
-    expr1 = BuildAtomLeaf(AL_AROM,flag);
-    expr2 = BuildAtomLeaf(AL_ELEM,elem);
-    return BuildAtomBin(AE_ANDHI,expr1,expr2);
+    return flag ? BuildAtomLeaf(AE_AROMELEM,elem)
+                : BuildAtomLeaf(AE_ALIPHELEM,elem);
   }
 
   static int IsInvalidAtom( AtomExpr *expr )
   {
-    if( !expr )
-      return true;
-    return( (expr->type==AE_LEAF) &&
-            (expr->leaf.prop==AL_CONST)
-            && !expr->leaf.value );
+    return !expr || expr->type==AE_FALSE;
   }
 
   /*================================*/
   /*  Bond Expression Manipulation  */
   /*================================*/
 
-  static BondExpr *AllocBondExpr( void )
-  {
-    register BondExpr *result;
-
-    //result = (BondExpr*)malloc(sizeof(BondExpr));
-    result = new BondExpr;
-    return result;
-  }
-
   static BondExpr *CopyBondExpr( BondExpr *expr )
   {
     register BondExpr *result;
 
-    result = AllocBondExpr();
+    result = new BondExpr;
     result->type = expr->type;
     switch( expr->type )
       {
-      case(AE_ANDHI):
-      case(AE_ANDLO):
-      case(AE_OR):    result->bin.lft = CopyBondExpr(expr->bin.lft);
+      case BE_ANDHI:
+      case BE_ANDLO:
+      case BE_OR:
+        result->bin.lft = CopyBondExpr(expr->bin.lft);
         result->bin.rgt = CopyBondExpr(expr->bin.rgt);
         break;
 
-      case(AE_NOT):   result->mon.arg = CopyBondExpr(expr->mon.arg);
-        break;
-
-      case(AE_LEAF):  result->leaf.prop = expr->leaf.prop;
-        result->leaf.value = expr->leaf.value;
+      case BE_NOT:
+        result->mon.arg = CopyBondExpr(expr->mon.arg);
         break;
       }
     return result;
@@ -329,34 +340,26 @@ namespace OpenBabel
   {
     if (expr1 == NULL && expr2 == NULL)
       return true;
-    else if (expr1 == NULL && expr2 != NULL)
+    if (expr1 == NULL && expr2 != NULL)
       return false;
-    else if (expr1 != NULL && expr2 == NULL)
+    if (expr1 != NULL && expr2 == NULL)
       return false;
 
     if (expr1->type != expr2->type)
       return false;
 
-    bool result = false;
     switch( expr1->type )
       {
-      case(AE_ANDHI):
-      case(AE_ANDLO):
-      case(AE_OR):
-        result = (EquivalentBondExpr(expr1->bin.lft, expr2->bin.lft)) &&
-          (EquivalentBondExpr(expr1->bin.rgt, expr2->bin.rgt));
-        break;
+      case BE_ANDHI:
+      case BE_ANDLO:
+      case BE_OR:
+        return EquivalentBondExpr(expr1->bin.lft, expr2->bin.lft) &&
+               EquivalentBondExpr(expr1->bin.rgt, expr2->bin.rgt);
 
-      case(AE_NOT):
-        result = EquivalentBondExpr(expr1->mon.arg, expr2->mon.arg);
-        break;
-
-      case(AE_LEAF):
-        result = (expr1->leaf.prop == expr2->leaf.prop) &&
-          (expr1->leaf.value == expr2->leaf.value);
-        break;
+      case BE_NOT:
+        return EquivalentBondExpr(expr1->mon.arg, expr2->mon.arg);
       }
-    return result;
+    return true;
   }
 
   static void FreeBondExpr( BondExpr *expr )
@@ -365,33 +368,28 @@ namespace OpenBabel
       {
         switch( expr->type )
           {
-          case(BE_ANDHI):
-          case(BE_ANDLO):
-          case(BE_OR):     FreeBondExpr(expr->bin.lft);
+          case BE_ANDHI:
+          case BE_ANDLO:
+          case BE_OR:
+            FreeBondExpr(expr->bin.lft);
             FreeBondExpr(expr->bin.rgt);
             break;
 
-          case(BE_NOT):    FreeBondExpr(expr->mon.arg);
+          case BE_NOT:
+            FreeBondExpr(expr->mon.arg);
             break;
           }
 
-        if (expr)
-          {
-            //free(expr);
-            delete expr;
-            expr = (BondExpr*)NULL;
-          }
+        delete expr;
       }
   }
 
-  static BondExpr *BuildBondLeaf( int prop, int val )
+  static BondExpr *BuildBondLeaf( int type )
   {
     register BondExpr *result;
 
-    result = AllocBondExpr();
-    result->leaf.type = BE_LEAF;
-    result->leaf.prop = prop;
-    result->leaf.value = val;
+    result = new BondExpr;
+    result->type = type;
     return result;
   }
 
@@ -399,7 +397,7 @@ namespace OpenBabel
   {
     register BondExpr *result;
 
-    result = AllocBondExpr();
+    result = new BondExpr;
     result->mon.type = BE_NOT;
     result->mon.arg = expr;
     return result;
@@ -409,7 +407,7 @@ namespace OpenBabel
   {
     register BondExpr *result;
 
-    result = AllocBondExpr();
+    result = new BondExpr;
     result->bin.type = op;
     result->bin.lft = lft;
     result->bin.rgt = rgt;
@@ -418,12 +416,7 @@ namespace OpenBabel
 
   static BondExpr *GenerateDefaultBond( void )
   {
-    register BondExpr *expr1;
-    register BondExpr *expr2;
-
-    expr1 = BuildBondLeaf(BL_TYPE,BT_SINGLE);
-    expr2 = BuildBondLeaf(BL_TYPE,BT_AROM);
-    return(BuildBondBin(BE_OR,expr1,expr2));
+    return BuildBondLeaf(BE_DEFAULT);
   }
 
   /*===============================*/
@@ -594,9 +587,9 @@ namespace OpenBabel
     switch( *LexPtr++ )
       {
       case '*':
-        return BuildAtomLeaf(AL_CONST,true);
+        return BuildAtomPred(AE_TRUE);
       case 'A':
-        return BuildAtomLeaf(AL_AROM,false);
+        return BuildAtomPred(AE_ALIPHATIC);
       case 'B':
         if( *LexPtr == 'r' )
           {
@@ -629,7 +622,7 @@ namespace OpenBabel
             LexPtr++;
             return GenerateAromElem(33, true);
           }
-        return BuildAtomLeaf(AL_AROM,true);
+        return BuildAtomPred(AE_AROMATIC);
       case 'c':
         return GenerateAromElem( 6,true);
       case 'n':
@@ -690,7 +683,7 @@ namespace OpenBabel
         return( BuildAtomRecurs(pat) );
 
       case('*'):
-        return( BuildAtomLeaf(AL_CONST,true) );
+        return BuildAtomPred(AE_TRUE);
 
       case('+'):
         if( isdigit(*LexPtr) )
@@ -708,7 +701,7 @@ namespace OpenBabel
                 index++;
               }
           }
-        return( BuildAtomLeaf(AL_POSITIVE,index) );
+        return BuildAtomLeaf(AE_CHARGE,index);
 
       case('-'):
         if( isdigit(*LexPtr) )
@@ -726,20 +719,20 @@ namespace OpenBabel
                 index++;
               }
           }
-        return BuildAtomLeaf(AL_NEGATIVE,index);
+        return BuildAtomLeaf(AE_CHARGE,-index);
 
       case '@':
         if (*LexPtr == '?')
           {
             LexPtr++;
-            return(BuildAtomLeaf(AL_CHIRAL,AL_UNSPECIFIED)); // unspecified
+            return BuildAtomLeaf(AE_CHIRAL,AL_UNSPECIFIED); // unspecified
           }
         else if (*LexPtr != '@')
-          return(BuildAtomLeaf(AL_CHIRAL,AL_ANTICLOCKWISE));
+          return BuildAtomLeaf(AE_CHIRAL,AL_ANTICLOCKWISE);
         else
           {
             LexPtr++;
-            return(BuildAtomLeaf(AL_CHIRAL,AL_CLOCKWISE));
+            return BuildAtomLeaf(AE_CHIRAL,AL_CLOCKWISE);
           }
 
       case '^':
@@ -748,17 +741,17 @@ namespace OpenBabel
             index = 0;
             while( isdigit(*LexPtr) )
               index = index*10 + ((*LexPtr++)-'0');
-            return(BuildAtomLeaf(AL_HYB,index));
+            return BuildAtomLeaf(AE_HYB,index);
           }
         else
-          return(BuildAtomLeaf(AL_HYB,1));
+          return BuildAtomLeaf(AE_HYB,1);
 
       case('0'): case('1'): case('2'): case('3'): case('4'):
       case('5'): case('6'): case('7'): case('8'): case('9'):
         index = LexPtr[-1]-'0';
         while( isdigit(*LexPtr) )
           index = index*10 + ((*LexPtr++)-'0');
-        return BuildAtomLeaf(AL_MASS,index);
+        return BuildAtomLeaf(AE_MASS,index);
 
       case('A'):
         switch( *LexPtr++ )
@@ -773,7 +766,7 @@ namespace OpenBabel
           case('u'):  return GenerateElement(79);
           }
         LexPtr--;
-        return BuildAtomLeaf(AL_AROM,false);
+        return BuildAtomPred(AE_ALIPHATIC);
 
       case('B'):
         switch( *LexPtr++ )
@@ -815,10 +808,9 @@ namespace OpenBabel
             index = 0;
             while( isdigit(*LexPtr) )
               index = index*10 + ((*LexPtr++)-'0');
-            return BuildAtomLeaf(AL_DEGREE,index);
+            return BuildAtomLeaf(AE_DEGREE,index);
           }
-        return BuildAtomLeaf(AL_DEGREE,1);
-        break;
+        return BuildAtomLeaf(AE_DEGREE,1);
 
       case('E'):
         if( *LexPtr == 'r' )
@@ -900,9 +892,9 @@ namespace OpenBabel
             index = 0;
             while( isdigit(*LexPtr) )
               index = index*10 + ((*LexPtr++)-'0');
-            return( BuildAtomLeaf(AL_HCOUNT,index) );
+            return BuildAtomLeaf(AE_HCOUNT,index);
           }
-        return( BuildAtomLeaf(AL_HCOUNT,1) );
+        return BuildAtomLeaf(AE_HCOUNT,1);
 
       case('I'):
         if( *LexPtr == 'n' )
@@ -1024,10 +1016,11 @@ namespace OpenBabel
             index = 0;
             while( isdigit(*LexPtr) )
               index = index*10 + ((*LexPtr++)-'0');
+            if( index == 0 )
+              return BuildAtomPred(AE_ACYCLIC);
+            return BuildAtomLeaf(AE_RINGS,index);
           }
-        else
-          index = -1;
-        return( BuildAtomLeaf(AL_RINGS,index) );
+        return BuildAtomPred(AE_CYCLIC);
 
       case('S'):
         switch( *LexPtr++ )
@@ -1075,10 +1068,9 @@ namespace OpenBabel
               index = index*10 + ((*LexPtr++)-'0');
             if (index == 0) // default to 1 (if no number present)
               index = 1;
-            return( BuildAtomLeaf(AL_CONNECT,index) );
+            return BuildAtomLeaf(AE_CONNECT,index);
           }
-        return( BuildAtomLeaf(AL_CONNECT,1) );
-        break;
+        return BuildAtomLeaf(AE_CONNECT,1);
 
       case('Y'):
         if( *LexPtr == 'b' )
@@ -1107,9 +1099,10 @@ namespace OpenBabel
             LexPtr++;
             return GenerateAromElem(33,true);
           }
-        return BuildAtomLeaf(AL_AROM,true);
+        return BuildAtomPred(AE_AROMATIC);
 
-      case('c'):  return GenerateAromElem(6,true);
+      case('c'):
+        return GenerateAromElem(6,true);
 
       case('h'):
         if( isdigit(*LexPtr) )
@@ -1120,7 +1113,7 @@ namespace OpenBabel
           }
         else
           index = 1;
-        return BuildAtomLeaf(AL_IMPLICIT,index);
+        return BuildAtomLeaf(AE_IMPLICIT,index);
 
       case('n'):  return GenerateAromElem(7,true);
       case('o'):  return GenerateAromElem(8,true);
@@ -1133,10 +1126,10 @@ namespace OpenBabel
             while( isdigit(*LexPtr) )
               index = index*10 + ((*LexPtr++)-'0');
             if( index == 0 )
-              return BuildAtomLeaf(AL_RINGS,0);
-            return BuildAtomLeaf(AL_SIZE,index);
+              return BuildAtomPred(AE_ACYCLIC);
+            return BuildAtomLeaf(AE_SIZE,index);
           }
-        return BuildAtomLeaf(AL_RINGS,-1);
+        return BuildAtomPred(AE_CYCLIC);
 
       case('s'):
         if( *LexPtr == 'e' )
@@ -1152,10 +1145,9 @@ namespace OpenBabel
             index = 0;
             while( isdigit(*LexPtr) )
               index = index*10 + ((*LexPtr++)-'0');
-            return BuildAtomLeaf(AL_VALENCE,index);
+            return BuildAtomLeaf(AE_VALENCE,index);
           }
-        return BuildAtomLeaf(AL_VALENCE,1);
-        break;
+        return BuildAtomLeaf(AE_VALENCE,1);
 
       case('x'):
         if( isdigit(*LexPtr) )
@@ -1163,11 +1155,9 @@ namespace OpenBabel
             index = 0;
             while( isdigit(*LexPtr) )
               index = index*10 + ((*LexPtr++)-'0');
-            return( BuildAtomLeaf(AL_RINGCONNECT,index) );
+            return BuildAtomLeaf(AE_RINGCONNECT,index);
           }
-        return( BuildAtomLeaf(AL_RINGCONNECT, -1) );
-        break;
-
+        return BuildAtomPred(AE_CYCLIC);
       }
     LexPtr--;
     return (AtomExpr*)0;
@@ -1252,24 +1242,22 @@ namespace OpenBabel
 
   BondExpr *OBSmartsPattern::ParseBondPrimitive( void )
   {
-    char bsym    = *LexPtr++;
-
-    if (bsym == '/')
-      return BuildBondLeaf(BL_TYPE,BT_SINGLE);
-    //      return BuildBondLeaf(BL_TYPE, *LexPtr == '?' ? BT_UPUNSPEC : BT_UP);
-    if (bsym == '\\')
-      return BuildBondLeaf(BL_TYPE,BT_SINGLE);
-    //      return BuildBondLeaf(BL_TYPE, *LexPtr == '?' ? BT_DOWNUNSPEC : BT_DOWN);
+    char bsym = *LexPtr++;
 
     switch(bsym)
       {
-      case('-'):  return BuildBondLeaf(BL_TYPE,BT_SINGLE);
-      case('='):  return BuildBondLeaf(BL_TYPE,BT_DOUBLE);
-      case('#'):  return BuildBondLeaf(BL_TYPE,BT_TRIPLE);
-      case('$'):  return BuildBondLeaf(BL_TYPE,BT_QUAD);
-      case(':'):  return BuildBondLeaf(BL_TYPE,BT_AROM);
-      case('@'):  return BuildBondLeaf(BL_TYPE,BT_RING);
-      case('~'):  return BuildBondLeaf(BL_CONST,true);
+      case '-':  return BuildBondLeaf(BE_SINGLE);
+      case '=':  return BuildBondLeaf(BE_DOUBLE);
+      case '#':  return BuildBondLeaf(BE_TRIPLE);
+      case '$':  return BuildBondLeaf(BE_QUAD);
+      case ':':  return BuildBondLeaf(BE_AROM);
+      case '@':  return BuildBondLeaf(BE_RING);
+      case '~':  return BuildBondLeaf(BE_ANY);
+
+      // return BuildBondLeaf(*LexPtr == '?' ? BE_UPUNSPEC : BE_UP);
+      case '/':  return BuildBondLeaf(BE_SINGLE);
+      // return BuildBondLeaf(*LexPtr == '?' ? BE_DOWNUNSPEC : BE_DOWN);
+      case '\\': return BuildBondLeaf(BE_SINGLE);
       }
     LexPtr--;
     return (BondExpr*)0;
@@ -1584,10 +1572,8 @@ namespace OpenBabel
 
     switch (expr->type)
       {
-        case AE_LEAF:
-          if (expr->leaf.prop == AL_CHIRAL)
-            return expr->leaf.value;
-          break;
+        case AE_CHIRAL:
+          return expr->leaf.value;
 
         case AE_ANDHI:
         case AE_ANDLO:
@@ -1724,551 +1710,40 @@ namespace OpenBabel
     return ParseSMARTSString(ptr);
   }
 
-  /*============================*/
-  /*  Canonical SMARTS Pattern  */
-  /*============================*/
-
-  static AtomExpr *NotAtomExpr( AtomExpr* );
-  static AtomExpr *AndAtomExpr( AtomExpr*, AtomExpr* );
-  static AtomExpr *OrAtomExpr( AtomExpr*, AtomExpr* );
-  //static AtomExpr *TransformAtomExpr( AtomExpr* );
-  //static Pattern *CanonicaliseSMARTS( Pattern* );
-
-  static int IsBooleanAtomLeaf( AtomExpr *expr )
-  {
-    return (expr->leaf.prop==AL_AROM) ||
-      (expr->leaf.prop==AL_CONST);
-  }
-
-  static int IsNegatingAtomLeaf( AtomExpr *expr )
-  {
-    return (expr->leaf.prop==AL_RINGS);
-  }
-
-  static int EqualAtomExpr( AtomExpr *lft, AtomExpr *rgt )
-  {
-    if( lft->type != rgt->type )
-      return false;
-
-    if( lft->type == AE_LEAF )
-      {
-        return( (lft->leaf.prop==rgt->leaf.prop) &&
-                (lft->leaf.value==rgt->leaf.value) );
-      }
-    else if( lft->type == AE_NOT )
-      {
-        return EqualAtomExpr(lft->mon.arg,rgt->mon.arg);
-      }
-    else if( lft->type == AE_RECUR )
-      return false;
-
-    return EqualAtomExpr(lft->bin.lft,rgt->bin.lft) &&
-      EqualAtomExpr(lft->bin.rgt,rgt->bin.rgt);
-  }
-
-  static int OrderAtomExpr( AtomExpr *lft, AtomExpr *rgt )
-  {
-    register AtomExpr *larg;
-    register AtomExpr *rarg;
-    register int stat;
-
-    if( lft->type == AE_NOT )
-      {   /* larg->type == AE_LEAF */
-        larg = lft->mon.arg;
-      }
-    else
-      larg = lft;
-
-    if( rgt->type == AE_NOT )
-      {   /* rarg->type == AE_LEAF */
-        rarg = rgt->mon.arg;
-      }
-    else
-      rarg = rgt;
-
-    if( larg->type > rarg->type )
-      {
-        return  1;
-      }
-    else if( larg->type < rarg->type )
-      return -1;
-
-    if( larg->type == AE_LEAF )
-      {
-        if( larg->leaf.prop > rarg->leaf.prop )
-          return  1;
-        if( larg->leaf.prop < rarg->leaf.prop )
-          return -1;
-        return( larg->leaf.value - rarg->leaf.value );
-      }
-
-    stat = OrderAtomExpr(lft->bin.lft,rgt->bin.lft);
-    if( stat != 0 )
-      return stat;
-    return OrderAtomExpr(lft->bin.rgt,rgt->bin.rgt);
-  }
-
-  static int AtomLeafConflict( AtomExpr *lft, AtomExpr *rgt )
-  {
-    register AtomExpr *tmp;
-
-    if( (lft->type==AE_LEAF) && (rgt->type==AE_LEAF) )
-      {
-        if( lft->leaf.prop == rgt->leaf.prop )
-          {
-            if( IsNegatingAtomLeaf(lft) )
-              {
-                if( lft->leaf.value == 0 )
-                  {
-                    return rgt->leaf.value != 0;
-                  }
-                else if( lft->leaf.value == -1 )
-                  return rgt->leaf.value == 0;
-
-                if( rgt->leaf.value == 0 )
-                  {
-                    return lft->leaf.value != 0;
-                  }
-                else if( rgt->leaf.value == -1 )
-                  return lft->leaf.value == 0;
-              }
-            return lft->leaf.value != rgt->leaf.value;
-          }
-
-        if( lft->leaf.prop > rgt->leaf.prop )
-          {
-            tmp = lft;
-            lft = rgt;
-            rgt = tmp;
-          }
-
-        /* Aromaticity -> Ring */
-        if( (lft->leaf.prop==AL_AROM) && (rgt->leaf.prop==AL_RINGS) )
-          return( lft->leaf.value && !rgt->leaf.value );
-
-        /* Positive charge ~ Negative charge */
-        if( (lft->leaf.prop==AL_NEGATIVE) && (rgt->leaf.prop==AL_POSITIVE) )
-          return( (lft->leaf.value!=0) || (rgt->leaf.value!=0) );
-
-        /* Total hcount >= Implicit hcount */
-        if( (lft->leaf.prop==AL_HCOUNT) && (rgt->leaf.prop==AL_IMPLICIT) )
-          return( lft->leaf.value < rgt->leaf.value );
-      }
-
-    if( (lft->type==AE_LEAF) && (rgt->type==AE_NOT) )
-      {
-        rgt = rgt->mon.arg;
-        if( (lft->leaf.prop==AL_NEGATIVE) && (rgt->leaf.prop==AL_POSITIVE) )
-          return( (lft->leaf.value==0) && (rgt->leaf.value==0) );
-        if( (lft->leaf.prop==AL_POSITIVE) && (rgt->leaf.prop==AL_NEGATIVE) )
-          return( (lft->leaf.value==0) && (rgt->leaf.value==0) );
-        return false;
-      }
-
-    if( (lft->type==AE_NOT) && (rgt->type==AE_LEAF) )
-      {
-        lft = lft->mon.arg;
-        if( (lft->leaf.prop==AL_NEGATIVE) && (rgt->leaf.prop==AL_POSITIVE) )
-          return( (lft->leaf.value==0) && (rgt->leaf.value==0) );
-        if( (lft->leaf.prop==AL_POSITIVE) && (rgt->leaf.prop==AL_NEGATIVE) )
-          return( (lft->leaf.value==0) && (rgt->leaf.value==0) );
-        return false;
-      }
-
-    return false;
-  }
-
-  static int AtomExprConflict( AtomExpr *lft, AtomExpr *rgt )
-  {
-    while( rgt->type == AE_ANDHI )
-      {
-        if( AtomLeafConflict(lft,rgt->bin.lft) )
-          return true;
-        rgt = rgt->bin.rgt;
-      }
-    return AtomLeafConflict(lft,rgt);
-  }
-
-  /* return LEAF(lft) => LEAF(rgt); */
-  static int AtomLeafImplies( AtomExpr *lft, AtomExpr *rgt )
-  {
-    if( (lft->type==AE_LEAF) && (rgt->type==AE_LEAF) )
-      {   /* Implied Ring Membership */
-        if( (rgt->leaf.prop==AL_RINGS) && (rgt->leaf.value==-1) )
-          {
-            if( lft->leaf.prop == AL_AROM )
-              return lft->leaf.value;
-
-            if( lft->leaf.prop == AL_RINGS )
-              return lft->leaf.value > 0;
-
-            if( lft->leaf.prop == AL_SIZE )
-              return lft->leaf.value > 0;
-          }
-
-        /* Positive charge ~ Negative charge */
-        if( (lft->leaf.prop==AL_POSITIVE) && (rgt->leaf.prop==AL_NEGATIVE) )
-          return (lft->leaf.value==0) && (rgt->leaf.value==0);
-        return false;
-      }
-
-    if( (lft->type==AE_LEAF) && (rgt->type==AE_NOT) )
-      {
-        rgt = rgt->mon.arg;
-        if( lft->leaf.prop == rgt->leaf.prop )
-          return lft->leaf.value != rgt->leaf.value;
-
-        if( (lft->leaf.prop==AL_POSITIVE) && (rgt->leaf.prop==AL_NEGATIVE) )
-          return true;
-        if( (lft->leaf.prop==AL_NEGATIVE) && (rgt->leaf.prop==AL_POSITIVE) )
-          return true;
-        return false;
-      }
-
-    return false;
-  }
-
-  /* return EXPR(rgt) => LEAF(lft); */
-  static int AtomExprImplied( AtomExpr *lft, AtomExpr *rgt )
-  {
-    while( rgt->type == AE_ANDHI )
-      {
-        if( AtomLeafImplies(rgt->bin.lft,lft) )
-          return true;
-        rgt = rgt->bin.rgt;
-      }
-    return AtomLeafImplies(rgt,lft);
-  }
-
-  /* remove implied nodes from EXPR(rgt) */
-  static AtomExpr *AtomExprImplies( AtomExpr *lft, AtomExpr *rgt )
-  {
-    register AtomExpr *tmp;
-
-    if( rgt->type != AE_ANDHI )
-      {
-        if( AtomLeafImplies(lft,rgt) )
-          {
-            FreeAtomExpr(rgt);
-            return (AtomExpr*)0;
-          }
-        return rgt;
-      }
-
-    tmp = AtomExprImplies(lft,rgt->bin.rgt);
-
-    if( tmp )
-      {
-        if( AtomLeafImplies(lft,rgt->bin.lft) )
-          {
-            rgt->bin.rgt = (AtomExpr*)0;
-            FreeAtomExpr(rgt);
-            return tmp;
-          }
-        rgt->bin.rgt = tmp;
-        return rgt;
-      }
-    else
-      {
-        rgt->bin.rgt = (AtomExpr*)0;
-        if( AtomLeafImplies(lft,rgt->bin.lft) )
-          {
-            FreeAtomExpr(rgt);
-            return (AtomExpr*)0;
-          }
-        tmp = rgt->bin.lft;
-        rgt->bin.lft = (AtomExpr*)0;
-        FreeAtomExpr(rgt);
-        return tmp;
-      }
-  }
-
-  static AtomExpr *AndAtomExprLeaf( AtomExpr *lft, AtomExpr *rgt )
-  {
-    if( AtomExprConflict(lft,rgt) )
-      {
-        FreeAtomExpr(lft);
-        FreeAtomExpr(rgt);
-        return BuildAtomLeaf(AL_CONST,false);
-      }
-
-    if( AtomExprImplied(lft,rgt) )
-      {
-        FreeAtomExpr(lft);
-        return rgt;
-      }
-
-    rgt = AtomExprImplies(lft,rgt);
-    if( !rgt )
-      return lft;
-
-    return BuildAtomBin(AE_ANDHI,lft,rgt);
-  }
-
-  static AtomExpr *ConstrainRecursion( AtomExpr *recur, AtomExpr *expr )
-  {
-    register AtomExpr *head;
-    register Pattern *pat;
-
-    pat = (Pattern*)recur->recur.recur;
-    head = AndAtomExpr(pat->atom[0].expr,expr);
-    pat->atom[0].expr = head;
-
-    if( IsInvalidAtom(head) )
-      {
-        FreePattern(pat);
-        return BuildAtomLeaf(AL_CONST,false);
-      }
-    return recur;
-  }
-
-  static AtomExpr *AndAtomExpr( AtomExpr *lft, AtomExpr *rgt )
-  {
-    register AtomExpr *expr;
-    register int order;
-
-    /* Identities */
-    if( EqualAtomExpr(lft,rgt) )
-      {
-        FreeAtomExpr(rgt);
-        return lft;
-      }
-
-    if( (lft->type==AE_LEAF) && (lft->leaf.prop==AL_CONST) )
-      {
-        if( lft->leaf.value )
-          {
-            FreeAtomExpr(lft);
-            return rgt;
-          }
-        else
-          {
-            FreeAtomExpr(rgt);
-            return lft;
-          }
-      }
-
-    if( (rgt->type==AE_LEAF) && (rgt->leaf.prop==AL_CONST) )
-      {
-        if( rgt->leaf.value )
-          {
-            FreeAtomExpr(rgt);
-            return lft;
-          }
-        else
-          {
-            FreeAtomExpr(lft);
-            return rgt;
-          }
-      }
-
-    /*  Distributivity  */
-    if( lft->type == AE_OR )
-      {
-        expr = CopyAtomExpr(rgt);
-        expr = OrAtomExpr(AndAtomExpr(expr,lft->bin.lft),
-                          AndAtomExpr(rgt, lft->bin.rgt));
-        lft->bin.lft = (AtomExpr*)0;
-        lft->bin.rgt = (AtomExpr*)0;
-        FreeAtomExpr(lft);
-        return( expr );
-      }
-
-    if( rgt->type == AE_OR )
-      {
-        expr = CopyAtomExpr(lft);
-        expr = OrAtomExpr(AndAtomExpr(expr,rgt->bin.lft),
-                          AndAtomExpr(lft, rgt->bin.rgt));
-        rgt->bin.lft = (AtomExpr*)0;
-        rgt->bin.rgt = (AtomExpr*)0;
-        FreeAtomExpr(rgt);
-        return( expr );
-      }
-
-    /* Recursion */
-    if( (rgt->type==AE_RECUR) && (lft->type!=AE_RECUR) )
-      return ConstrainRecursion(rgt,lft);
-
-    if( (rgt->type!=AE_RECUR) && (lft->type==AE_RECUR) )
-      return ConstrainRecursion(lft,rgt);
-
-    order = OrderAtomExpr(lft,rgt);
-    if( order > 0 )
-      {
-        expr = lft;
-        lft = rgt;
-        rgt = expr;
-      }
-
-    if( lft->type == AE_ANDHI )
-      {
-        expr = AndAtomExpr(lft->bin.rgt,rgt);
-        expr = AndAtomExpr(lft->bin.lft,expr);
-        lft->bin.lft = (AtomExpr*)0;
-        lft->bin.rgt = (AtomExpr*)0;
-        FreeAtomExpr(lft);
-        return expr;
-      }
-
-    if( rgt->type == AE_ANDHI )
-      {
-        if( OrderAtomExpr(lft,rgt->bin.lft) > 0 )
-          {
-            expr = AndAtomExpr(lft,rgt->bin.rgt);
-            expr = AndAtomExpr(rgt->bin.lft,expr);
-            rgt->bin.lft = (AtomExpr*)0;
-            rgt->bin.rgt = (AtomExpr*)0;
-            FreeAtomExpr(rgt);
-            return expr;
-          }
-
-        if( EqualAtomExpr(lft,rgt->bin.lft) )
-          {
-            FreeAtomExpr(lft);
-            return rgt;
-          }
-      }
-
-    return AndAtomExprLeaf(lft,rgt);
-  }
-
-  static AtomExpr *OrAtomExprLeaf( AtomExpr *lft, AtomExpr *rgt )
-  {
-    return BuildAtomBin(AE_OR,lft,rgt);
-  }
-
-  static AtomExpr *OrAtomExpr( AtomExpr *lft, AtomExpr *rgt )
-  {
-    register AtomExpr *expr;
-    register int order;
-
-    /* Identities */
-    if( EqualAtomExpr(lft,rgt) )
-      {
-        FreeAtomExpr(rgt);
-        return lft;
-      }
-
-    if( (lft->type==AE_LEAF) && (lft->leaf.prop==AL_CONST) )
-      {
-        if( lft->leaf.value )
-          {
-            FreeAtomExpr(rgt);
-            return lft;
-          }
-        else
-          {
-            FreeAtomExpr(lft);
-            return rgt;
-          }
-      }
-
-    if( (rgt->type==AE_LEAF) && (rgt->leaf.prop==AL_CONST) )
-      {
-        if( rgt->leaf.value )
-          {
-            FreeAtomExpr(lft);
-            return rgt;
-          }
-        else
-          {
-            FreeAtomExpr(rgt);
-            return lft;
-          }
-      }
-
-    order = OrderAtomExpr(lft,rgt);
-    if( order > 0 )
-      {
-        expr = lft;
-        lft = rgt;
-        rgt = expr;
-      }
-
-    if( lft->type == AE_OR )
-      {
-        expr = OrAtomExpr(lft->bin.rgt,rgt);
-        expr = OrAtomExpr(lft->bin.lft,expr);
-        lft->bin.lft = (AtomExpr*)0;
-        lft->bin.rgt = (AtomExpr*)0;
-        FreeAtomExpr(lft);
-        return expr;
-      }
-
-    if( rgt->type == AE_OR )
-      {
-        if( OrderAtomExpr(lft,rgt->bin.lft) > 0 )
-          {
-            expr = OrAtomExpr(lft,rgt->bin.rgt);
-            expr = OrAtomExpr(rgt->bin.lft,expr);
-            rgt->bin.lft = (AtomExpr*)0;
-            rgt->bin.rgt = (AtomExpr*)0;
-            FreeAtomExpr(rgt);
-            return expr;
-          }
-
-        if( EqualAtomExpr(lft,rgt->bin.lft) )
-          {
-            FreeAtomExpr(lft);
-            return rgt;
-          }
-      }
-
-    return OrAtomExprLeaf(lft,rgt);
-  }
+  /*================================*/
+  /*  SMARTS Pattern simplification */
+  /*================================*/
 
   static AtomExpr *NotAtomExpr( AtomExpr *expr )
   {
     register AtomExpr *result;
-    register AtomExpr *lft;
-    register AtomExpr *rgt;
 
-    if( expr->type == AE_LEAF )
+    switch (expr->type)
       {
-        if( IsBooleanAtomLeaf(expr) )
-          {
-            expr->leaf.value = !expr->leaf.value;
-            return expr;
-          }
-        else if( IsNegatingAtomLeaf(expr) )
-          {
-            if( expr->leaf.value == -1 )
-              {
-                expr->leaf.value = 0;
-                return expr;
-              }
-            else if( expr->leaf.value == 0 )
-              {
-                expr->leaf.value = -1;
-                return expr;
-              }
-          }
-      }
-    else if( expr->type == AE_NOT )
-      {
+      case AE_TRUE:
+        expr->type = AE_FALSE;
+        return expr;
+      case AE_FALSE:
+        expr->type = AE_TRUE;
+        return expr;
+      case AE_AROMATIC:
+        expr->type = AE_ALIPHATIC;
+        return expr;
+      case AE_ALIPHATIC:
+        expr->type = AE_AROMATIC;
+        return expr;
+      case AE_CYCLIC:
+        expr->type = AE_ACYCLIC;
+        return expr;
+      case AE_ACYCLIC:
+        expr->type = AE_CYCLIC;
+        return expr;
+      
+      case AE_NOT:
         result = expr->mon.arg;
         expr->mon.arg = (AtomExpr*)0;
         FreeAtomExpr(expr);
         return result;
-      }
-    else if( (expr->type==AE_ANDHI) ||
-             (expr->type==AE_ANDLO) )
-      {
-        lft = NotAtomExpr(expr->bin.lft);
-        rgt = NotAtomExpr(expr->bin.rgt);
-        expr->bin.lft = (AtomExpr*)0;
-        expr->bin.rgt = (AtomExpr*)0;
-        FreeAtomExpr(expr);
-        return OrAtomExpr(lft,rgt);
-      }
-    else if( expr->type == AE_OR )
-      {
-        lft = NotAtomExpr(expr->bin.lft);
-        rgt = NotAtomExpr(expr->bin.rgt);
-        expr->bin.lft = (AtomExpr*)0;
-        expr->bin.rgt = (AtomExpr*)0;
-        FreeAtomExpr(expr);
-        return AndAtomExpr(lft,rgt);
       }
     return BuildAtomNot(expr);
   }
@@ -2688,81 +2163,65 @@ namespace OpenBabel
     for (;;)
       switch (expr->type)
         {
-        case AE_LEAF:
-          switch( expr->leaf.prop )
-            {
-            case AL_ELEM:
-              return(expr->leaf.value == (int)atom->GetAtomicNum());
-            case AL_AROM:
-              if( !expr->leaf.value )
-                return !atom->IsAromatic();
-              return atom->IsAromatic();
-            case AL_HCOUNT:
-              return (expr->leaf.value==(signed int)atom->ExplicitHydrogenCount() + (signed int)atom->ImplicitHydrogenCount());
-            case AL_DEGREE:
-              return(expr->leaf.value == (int)atom->GetValence());
-            case AL_VALENCE:
-              return(expr->leaf.value == (int)atom->KBOSum());
-            case AL_CONNECT:
-              return(expr->leaf.value == (int)atom->GetImplicitValence());
-            case AL_NEGATIVE:
-              return(expr->leaf.value == -(atom->GetFormalCharge()));
-            case AL_POSITIVE:
-              return(expr->leaf.value == atom->GetFormalCharge());
-            case AL_MASS:
-              return(expr->leaf.value == atom->GetIsotope());
-            case AL_HYB:
-              return(expr->leaf.value == (int)atom->GetHyb());
+        case AE_TRUE:
+          return true;
+        case AE_FALSE:
+          return false;
+        case AE_AROMATIC:
+          return atom->IsAromatic();
+        case AE_ALIPHATIC:
+          return !atom->IsAromatic();
+        case AE_CYCLIC:
+          return atom->IsInRing();
+        case AE_ACYCLIC:
+          return !atom->IsInRing();
 
-            case AL_RINGS:
-              if( expr->leaf.value == -1 )
-                return atom->IsInRing();
-              else if( expr->leaf.value == 0 )
-                return !atom->IsInRing();
-              else
-                return expr->leaf.value == (int)atom->MemberOfRingCount();
-
-            case AL_SIZE:
-              if( expr->leaf.value == -1 )
-                return atom->IsInRing();
-              if (!expr->leaf.value)
-                return !atom->IsInRing();
-              else
-                return atom->IsInRingSize(expr->leaf.value);
-
-            case AL_IMPLICIT:
-              return expr->leaf.value == (signed int)atom->ImplicitHydrogenCount();
-
-            case AL_CONST:
-              if( !expr->leaf.value )
-                return false;
-              return(true);
-
-            case AL_CHIRAL:
-              // always return true (i.e. accept the match) and check later
-              return true;
-
-            case AL_RINGCONNECT:
-              if (expr->leaf.value == -1)
-                return (atom->CountRingBonds() >= 1);
-              return(expr->leaf.value == (int)atom->CountRingBonds());
-
-            default:
-              return false;
-            }
-          break;
+        case AE_MASS:
+          return expr->leaf.value == atom->GetIsotope();
+        case AE_ELEM:
+          return expr->leaf.value == (int)atom->GetAtomicNum();
+        case AE_AROMELEM:
+          return expr->leaf.value == (int)atom->GetAtomicNum() &&
+                 atom->IsAromatic();
+        case AE_ALIPHELEM:
+          return expr->leaf.value == (int)atom->GetAtomicNum() &&
+                 !atom->IsAromatic();
+        case AE_HCOUNT:
+          return expr->leaf.value == ((int)atom->ExplicitHydrogenCount() +
+                                      (int)atom->ImplicitHydrogenCount());
+        case AE_CHARGE:
+          return expr->leaf.value == atom->GetFormalCharge();
+        case AE_CONNECT:
+          return expr->leaf.value == (int)atom->GetImplicitValence();
+        case AE_DEGREE:
+          return expr->leaf.value == (int)atom->GetValence();
+        case AE_IMPLICIT:
+          return expr->leaf.value == (int)atom->ImplicitHydrogenCount();
+        case AE_RINGS:
+          return expr->leaf.value == (int)atom->MemberOfRingCount();
+        case AE_SIZE:
+          return atom->IsInRingSize(expr->leaf.value);
+        case AE_VALENCE:
+          return expr->leaf.value == (int)atom->KBOSum();
+        case AE_CHIRAL:
+          // always return true (i.e. accept the match) and check later
+          return true;
+        case AE_HYB:
+          return expr->leaf.value == (int)atom->GetHyb();
+        case AE_RINGCONNECT:
+          return expr->leaf.value == (int)atom->CountRingBonds();
 
         case AE_NOT:
-          return(!EvalAtomExpr(expr->mon.arg,atom));
+          return !EvalAtomExpr(expr->mon.arg,atom);
         case AE_ANDHI: /* Same as AE_ANDLO */
         case AE_ANDLO:
-          if( !EvalAtomExpr(expr->bin.lft,atom))
-            return(false);
+          if (!EvalAtomExpr(expr->bin.lft,atom))
+            return false;
           expr = expr->bin.rgt;
           break;
         case AE_OR:
-          if(EvalAtomExpr(expr->bin.lft,atom))
-            return(true);
+          if (EvalAtomExpr(expr->bin.lft,atom))
+            return true;
           expr = expr->bin.rgt;
           break;
 
@@ -2791,7 +2250,7 @@ namespace OpenBabel
           }
 
         default:
-          return(false);
+          return false;
         }
   }
 
@@ -2800,52 +2259,46 @@ namespace OpenBabel
     for (;;)
       switch( expr->type )
         {
-        case BE_LEAF:
-
-          if( expr->leaf.prop == BL_CONST )
-            return((expr->leaf.value != 0) ? true : false);
-          else
-            switch( expr->leaf.value )
-              {
-              case BT_SINGLE:
-                return(bond->GetBO() == 1 && !bond->IsAromatic());
-              case BT_AROM:
-                return(bond->IsAromatic());
-              case BT_DOUBLE:
-                return(bond->GetBO()==2 && !bond->IsAromatic());
-              case BT_TRIPLE:
-                return(bond->GetBO()==3);
-              case BT_QUAD:
-                return(bond->GetBO()==4);
-              case BT_RING:
-                return(bond->IsInRing());
-              case BT_UP:
-                return(bond->IsUp());
-              case BT_DOWN:
-                return(bond->IsDown());
-              case BT_UPUNSPEC: // up or unspecified (i.e., not down)
-                return(!bond->IsDown());
-              case BT_DOWNUNSPEC: // down or unspecified (i.e., not up)
-                return(!bond->IsUp());
-              default:
-                return(false);
-              }
-          break;
-
-        case BE_NOT:
-          return(!EvalBondExpr(expr->mon.arg,bond));
         case BE_ANDHI:
         case BE_ANDLO:
           if (!EvalBondExpr(expr->bin.lft,bond))
-            return(false);
+            return false;
           expr = expr->bin.rgt;
           break;
 
         case BE_OR:
           if (EvalBondExpr(expr->bin.lft,bond))
-            return(true);
+            return true;
           expr = expr->bin.rgt;
           break;
+
+        case BE_NOT:
+          return !EvalBondExpr(expr->mon.arg,bond);
+
+        case BE_ANY:
+          return true;
+        case BE_DEFAULT:
+          return bond->GetBO()==1 || bond->IsAromatic();
+        case BE_SINGLE:
+          return bond->GetBO()==1 && !bond->IsAromatic();
+        case BE_DOUBLE:
+          return bond->GetBO()==2 && !bond->IsAromatic();
+        case BE_TRIPLE:
+          return bond->GetBO() == 3;
+        case BE_QUAD:
+          return bond->GetBO() == 4;
+        case BE_AROM:
+          return bond->IsAromatic();
+        case BE_RING:
+          return bond->IsInRing();
+        case BE_UP:
+          return bond->IsUp();
+        case BE_DOWN:
+          return bond->IsDown();
+        case BE_UPUNSPEC: // up or unspecified (i.e., not down)
+          return !bond->IsDown();
+        case BE_DOWNUNSPEC: // down or unspecified (i.e., not up)
+          return !bond->IsUp();
         default:
           return false;
         }
@@ -2988,18 +2441,18 @@ namespace OpenBabel
 
     switch( expr->type )
       {
-      case BE_LEAF:
-        if(expr->leaf.prop == BL_TYPE)
-          switch( expr->leaf.value )
-            {
-            case BT_SINGLE:  return 1;
-            case BT_DOUBLE:  return 2;
-            case BT_TRIPLE:  return 3;
-            case BT_QUAD:    return 4;
-            case BT_AROM:    return 5;
-            }
-        break;
+      case BE_SINGLE:  return 1;
+      case BE_DOUBLE:  return 2;
+      case BE_TRIPLE:  return 3;
+      case BE_QUAD:    return 4;
+      case BE_AROM:    return 5;
 
+      case BE_UP:
+      case BE_DOWN:
+      case BE_UPUNSPEC:
+      case BE_DOWNUNSPEC:
+        return 1;
+      
       case BE_ANDHI:
       case BE_ANDLO:
         tmp1 = GetExprOrder(expr->bin.lft);
@@ -3027,15 +2480,8 @@ namespace OpenBabel
 
     switch( expr->type )
       {
-      case AE_LEAF:
-        switch( expr->leaf.prop )
-          {
-          case AL_NEGATIVE:
-            return -(int)expr->leaf.value;
-          case AL_POSITIVE:
-            return (int)expr->leaf.value;
-          }
-        break;
+      case AE_CHARGE:
+        return expr->leaf.value;
 
       case AE_ANDHI:
       case AE_ANDLO:
@@ -3069,10 +2515,10 @@ namespace OpenBabel
 
     switch( expr->type )
       {
-      case AE_LEAF:
-        if (expr->leaf.prop == AL_ELEM)
-          return expr->leaf.value;
-        break;
+      case AE_ELEM:
+      case AE_AROMELEM:
+      case AE_ALIPHELEM:
+        return expr->leaf.value;
 
       case AE_ANDHI:
       case AE_ANDLO:

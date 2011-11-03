@@ -44,7 +44,6 @@ namespace OpenBabel
     struct
     {
       int type;
-      int prop;
       int value;
     }
       leaf;
@@ -69,37 +68,10 @@ namespace OpenBabel
       bin;
   } AtomExpr;
 
-#define BE_LEAF      0x01
-#define BE_ANDHI     0x02
-#define BE_ANDLO     0x03
-#define BE_NOT       0x04
-#define BE_OR        0x05
-
-#define BL_CONST     0x01
-#define BL_TYPE      0x02
-
-#define BT_SINGLE     0x01
-#define BT_DOUBLE     0x02
-#define BT_TRIPLE     0x03
-#define BT_AROM       0x04
-#define BT_UP         0x05
-#define BT_DOWN       0x06
-#define BT_UPUNSPEC   0x07
-#define BT_DOWNUNSPEC 0x08
-#define BT_RING       0x09
-#define BT_QUAD       0x0A //quadruple bond $
-
   //! \union _BondExpr parsmart.h <openbabel/parsmart.h>
   //! \brief An internal (SMARTS parser) bond expression
   typedef union _BondExpr {
     int type;
-    struct
-    {
-      int type;
-      int prop;
-      int value;
-    }
-      leaf;
     struct
     {
       int type;
