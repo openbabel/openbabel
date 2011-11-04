@@ -25,6 +25,7 @@ set(tests
     squareplanar
     stereo
     stereoperception
+    tautomer
     tetrahedral
     tetranonplanar
     tetraplanar

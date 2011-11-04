@@ -17,6 +17,7 @@ else(MINIMAL_BUILD)
         obrotamer
         obrotate
         obsym
+        obtautomer
      )
 endif(MINIMAL_BUILD)
 
