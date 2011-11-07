@@ -91,7 +91,7 @@ namespace OpenBabel
     mol.BeginModify();
     while	(ifs.getline(buffer,BUFF_SIZE))
       {
-        if(strstr(buffer,"  CARTESIAN COORDINATES") != NULL)
+        if(strstr(buffer,"CARTESIAN COORDINATES") != NULL)
           {
             // mol.EndModify();
             mol.Clear();
@@ -134,6 +134,53 @@ namespace OpenBabel
                 tokenize(vs,buffer);
               }
           }
+        // Optimized translation vectors:
+        else if (strstr(buffer, "FINAL  POINT  AND  DERIVATIVES") != NULL)
+          {
+            numTranslationVectors = 0; // Reset
+            ifs.getline(buffer,BUFF_SIZE);	// blank
+            ifs.getline(buffer,BUFF_SIZE);	// column headings
+            ifs.getline(buffer,BUFF_SIZE);
+            tokenize(vs,buffer);
+            while (vs.size() == 8)
+              {
+                // Skip coords -- these would be overwritten by the later
+                // CARTESIAN COORDINATES block anyway
+                if (strcmp(vs.at(2).c_str(), "Tv") != 0)
+                  {
+                    if (!ifs.getline(buffer,BUFF_SIZE))
+                      break;
+                    tokenize(vs,buffer);
+                    continue;
+                  }
+                const char coord = vs[4].at(0);
+                double val = atof(vs[5].c_str());
+                bool isZ = false;
+                switch (coord) {
+                case 'X':
+                  x = val;
+                  break;
+                case 'Y':
+                  y = val;
+                  break;
+                case 'Z':
+                  z = val;
+                  isZ = true;
+                  break;
+                default:
+                  cerr << "Reading MOPAC Tv values: unknown coordinate '"
+                       << coord << "', value: " << val << endl;
+                  break;
+                }
+
+                if (isZ)
+                  translationVectors[numTranslationVectors++].Set(x, y, z);
+
+                if (!ifs.getline(buffer,BUFF_SIZE))
+                  break;
+                tokenize(vs,buffer);
+              }
+          }
         else if(strstr(buffer,"DOUBLY OCCUPIED LEVELS") != NULL)
           {
             tokenize(vs, buffer);
@@ -168,7 +215,7 @@ namespace OpenBabel
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
             if (vs.size() < 1) return false; // timvdm 18/06/2008
-            while (strstr(vs[0].c_str(),"DIPOLE") == NULL)
+            while (vs.size() > 0 && strstr(vs[0].c_str(),"DIPOLE") == NULL)
               {
                 if (vs.size() < 3) break;
                 atom = mol.GetAtom(atoi(vs[0].c_str()));
@@ -178,9 +225,11 @@ namespace OpenBabel
                 if (!ifs.getline(buffer,BUFF_SIZE))
                   break;
                 tokenize(vs,buffer);
-                if (vs.size() < 1) vs.push_back(string()); // timvdm 18/06/2008
               }
-            // Now we should be at DIPOLE line
+            // Now we should be at DIPOLE line. If missing, break out of block
+            // and continue parsing file.
+            if (vs.size() == 0 || strstr(vs[0].c_str(), "DIPOLE") != NULL)
+              continue;
             if (!ifs.getline(buffer,BUFF_SIZE))	// POINT CHARGE
               continue; // let the outer loop handle this
             ifs.getline(buffer,BUFF_SIZE);	// HYBRID
@@ -314,8 +363,16 @@ namespace OpenBabel
     }
 
     // Attach unit cell translation vectors if found
-    if (numTranslationVectors > 0) {
+    if (numTranslationVectors == 3) {
       OBUnitCell* uc = new OBUnitCell;
+      // Translation vectors are actually the translated positions of the
+      // first listed atom, so adjust for this:
+      if (mol.NumAtoms() > 0) {
+        const vector3 &atom1Pos = mol.GetAtomById(0)->GetVector();
+        translationVectors[0] -= atom1Pos;
+        translationVectors[1] -= atom1Pos;
+        translationVectors[2] -= atom1Pos;
+      }
       uc->SetData(translationVectors[0], translationVectors[1], translationVectors[2]);
       uc->SetOrigin(fileformatInput);
       mol.SetData(uc);
