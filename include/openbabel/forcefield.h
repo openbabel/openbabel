@@ -859,9 +859,17 @@ namespace OpenBabel
     //void UpdatePairsGroup(); TODO
 
     /*! Get the number of non-bonded pairs in _mol.
-     *  \return The number of pairs currently enabled (within cut-off distance)
+     *  \return The number of atom pairs (ignores cutoff)
      */
     unsigned int GetNumPairs();
+    /*! Get the number of enabled electrostatic pairs in _mol.
+     *  \return The number of pairs currently enabled (within cut-off distance)
+     */
+    unsigned int GetNumElectrostaticPairs();
+    /*! Get the number of enabled VDW pairs in _mol.
+     *  \return The number of pairs currently enabled (within cut-off distance)
+     */
+    unsigned int GetNumVDWPairs();
     /*! Set bits in range 0..._numpairs-1 to 1. Using this means there will
      *  be no cut-off. (not-working: see code for more information.
      */

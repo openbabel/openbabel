@@ -2100,6 +2100,16 @@ namespace OpenBabel
     return i;
   }
 
+  unsigned int OBForceField::GetNumElectrostaticPairs()
+  {
+     return _elepairs.CountBits();
+  }
+
+  unsigned int OBForceField::GetNumVDWPairs()
+  {
+     return _vdwpairs.CountBits();
+  }
+
   //////////////////////////////////////////////////////////////////////////////////
   //
   // Interaction groups
