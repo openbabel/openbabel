@@ -2044,19 +2044,54 @@ namespace OpenBabel
 
   void OBForceField::UpdatePairsSimple()
   {
-    unsigned int i = 0;
-
     _vdwpairs.Clear();
     _elepairs.Clear();
+
+    const unsigned int numAtoms = _mol.NumAtoms();
+    const unsigned int numPairs = numAtoms * (numAtoms - 1) / 2;
+    _vdwpairs.Resize(numPairs);
+    _elepairs.Resize(numPairs);
 
     //! \todo set the criteria as squared values
     //  from what the user supplies
     double rvdwSquared = SQUARE(_rvdw);
     double releSquared = SQUARE(_rele);
 
+    unsigned int pairIndex = -1;
     FOR_PAIRS_OF_MOL(p, _mol) {
+      ++pairIndex;
+
       OBAtom *a = _mol.GetAtom((*p)[0]);
       OBAtom *b = _mol.GetAtom((*p)[1]);
+
+      // Check whether or not this interaction is included
+      if (HasGroups()) {
+        bool isIncludedPair = false;
+        for (size_t i=0; i < _interGroup.size(); ++i) {
+          if (_interGroup[i].BitIsOn(a->GetIdx()) &&
+              _interGroup[i].BitIsOn(b->GetIdx())) {
+            isIncludedPair = true;
+            break;
+          }
+        }
+        if (!isIncludedPair) {
+          for (size_t i=0; i < _interGroups.size(); ++i) {
+            if (_interGroups[i].first.BitIsOn(a->GetIdx()) &&
+                _interGroups[i].second.BitIsOn(b->GetIdx())) {
+              isIncludedPair = true;
+              break;
+            }
+            if (_interGroups[i].first.BitIsOn(b->GetIdx()) &&
+                _interGroups[i].second.BitIsOn(a->GetIdx())) {
+              isIncludedPair = true;
+              break;
+            }
+          }
+        }
+        if (!isIncludedPair) {
+          continue;
+        }
+      }
 
       // Get the distance squared btwn a and b
       // Not currently a method and this can be vectorized
@@ -2069,19 +2104,18 @@ namespace OpenBabel
 
       // update vdw pairs
       if (rabSq < rvdwSquared) {
-        _vdwpairs.SetBitOn(i);
+        _vdwpairs.SetBitOn(pairIndex);
       } else {
-        _vdwpairs.SetBitOff(i);
+        _vdwpairs.SetBitOff(pairIndex);
       }
       // update electrostatic pairs
       if (rabSq < releSquared) {
-        _elepairs.SetBitOn(i);
+        _elepairs.SetBitOn(pairIndex);
       } else {
-        _elepairs.SetBitOff(i);
+        _elepairs.SetBitOff(pairIndex);
       }
-
-      i++;
     }
+
     /*
        IF_OBFF_LOGLVL_LOW {
        snprintf(_logbuf, BUFF_SIZE, "UPDATE VDW PAIRS: %d --> %d (VDW), %d (ELE) \n", i+1,

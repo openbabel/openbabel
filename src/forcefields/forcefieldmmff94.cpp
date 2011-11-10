@@ -699,7 +699,7 @@ namespace OpenBabel
     for (int i = 0; i < _vdwcalculations.size(); ++i) {
       // Cut-off check
       if (_cutoff)
-        if (!_vdwpairs.BitIsSet(i))
+        if (!_vdwpairs.BitIsSet(_vdwcalculations[i].pairIndex))
           continue;
 
       _vdwcalculations[i].template Compute<gradients>();
@@ -785,7 +785,7 @@ namespace OpenBabel
     for (int i = 0; i < _electrostaticcalculations.size(); ++i) {
       // Cut-off check
       if (_cutoff)
-        if (!_elepairs.BitIsSet(i))
+        if (!_elepairs.BitIsSet(_electrostaticcalculations[i].pairIndex))
           continue;
 
       _electrostaticcalculations[i].template Compute<gradients>();
@@ -3449,7 +3449,9 @@ namespace OpenBabel
 
     _vdwcalculations.clear();
 
+    int pairIndex = -1;
     FOR_PAIRS_OF_MOL(p, _mol) {
+      ++pairIndex;
       a = _mol.GetAtom((*p)[0]);
       b = _mol.GetAtom((*p)[1]);
 
@@ -3565,6 +3567,7 @@ namespace OpenBabel
         vdwcalc.epsilon = (181.16 * vdwcalc.Ga * vdwcalc.Gb * vdwcalc.alpha_a * vdwcalc.alpha_b) / (sqrt_a + sqrt_b) * (1.0 / R_AB6);
       }
 
+      vdwcalc.pairIndex = pairIndex;
       vdwcalc.SetupPointers();
       _vdwcalculations.push_back(vdwcalc);
     }
@@ -3579,7 +3582,9 @@ namespace OpenBabel
 
     _electrostaticcalculations.clear();
 
+    pairIndex = -1;
     FOR_PAIRS_OF_MOL(p, _mol) {
+      ++pairIndex;
       a = _mol.GetAtom((*p)[0]);
       b = _mol.GetAtom((*p)[1]);
 
@@ -3624,6 +3629,7 @@ namespace OpenBabel
         if (a->IsOneFour(b))
           elecalc.qq *= 0.75;
 
+        elecalc.pairIndex = pairIndex;
         elecalc.SetupPointers();
         _electrostaticcalculations.push_back(elecalc);
       }
