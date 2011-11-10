@@ -107,6 +107,7 @@ namespace OpenBabel
     int part;
     int chiral_flag;
     int vb;
+    std::vector<int> nbrs;
   }
   AtomSpec;
 
@@ -121,7 +122,6 @@ namespace OpenBabel
     BondSpec *bond;
     int parts;
     bool hasExplicitH;
-    std::vector<int> bond_parse_order; // Used to recover the order in which bonds were parsed
   }
   Pattern;
 

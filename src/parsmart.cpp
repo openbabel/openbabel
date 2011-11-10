@@ -151,9 +151,7 @@ namespace OpenBabel
   static int GetVectorBinding();
   static int CreateAtom(Pattern*,AtomExpr*,int,int vb=0);
 
-  // The following are used to recover stereochemistry involving ring closures:
-  // Pattern.bond_parse_order;              // - the order in which bonds were parsed
-  static int N_parsed_bonds;                // - the number of bonds parsed to date
+  const int SmartsImplicitRef = -9999; // Used as a placeholder when recording atom nbrs for chiral atoms
 
 
   /*=============================*/
@@ -1475,7 +1473,7 @@ namespace OpenBabel
               { // Ring opening
                 stat->closord[index] = bexpr;
                 stat->closure[index] = prev;
-                pat->bond_parse_order.push_back(-1); // Place-holder
+                pat->atom[prev].nbrs.push_back(-index); // Store the BC idx as a -ve
                 bexpr = (BondExpr*)0;
               }
             else if( stat->closure[index] != prev )
@@ -1490,8 +1488,11 @@ namespace OpenBabel
                   return ParseSMARTSError(pat,bexpr);
 
                 CreateBond(pat,bexpr,prev,stat->closure[index]);
-                pat->bond_parse_order[stat->closure[index]] = N_parsed_bonds;
-                N_parsed_bonds++;
+                pat->atom[prev].nbrs.push_back(stat->closure[index]);
+                for (int nbr_idx=0; nbr_idx < pat->atom[stat->closure[index]].nbrs.size(); ++nbr_idx) {
+                  if (pat->atom[stat->closure[index]].nbrs[nbr_idx] == -index)
+                    pat->atom[stat->closure[index]].nbrs[nbr_idx] = prev;
+                }
                 stat->closure[index] = -1;
                 bexpr = (BondExpr*)0;
               }
@@ -1518,10 +1519,13 @@ namespace OpenBabel
                 if( !bexpr )
                   bexpr = GenerateDefaultBond();
                 CreateBond(pat,bexpr,prev,index);
-                pat->bond_parse_order.push_back(N_parsed_bonds);
-                N_parsed_bonds++;
+                pat->atom[index].nbrs.push_back(prev);
+                pat->atom[prev].nbrs.push_back(index);
                 bexpr = (BondExpr*)0;
               }
+            if(*(LexPtr-1) == 'H' && *(LexPtr-2) == '@' ) { // i.e. [C@H] or [C@@H]
+              pat->atom[index].nbrs.push_back(SmartsImplicitRef);
+            }
             prev = index;
             LexPtr++;
             break;
@@ -1537,8 +1541,8 @@ namespace OpenBabel
                 if( !bexpr )
                   bexpr = GenerateDefaultBond();
                 CreateBond(pat,bexpr,prev,index);
-                pat->bond_parse_order.push_back(N_parsed_bonds);
-                N_parsed_bonds++;
+                pat->atom[index].nbrs.push_back(prev);
+                pat->atom[prev].nbrs.push_back(index);
                 bexpr = (BondExpr*)0;
               }
             prev = index;
@@ -1607,8 +1611,6 @@ namespace OpenBabel
     ParseState stat;
     int i,flag;
 
-    result->bond_parse_order.clear();
-    N_parsed_bonds = 0;
     for( i=0; i<100; i++ )
       stat.closure[i] = -1;
 
@@ -2083,44 +2085,31 @@ namespace OpenBabel
             break;
           }
 
-          // create a vector with the nbr (i.e. neighbors of the stereocenter)
-          // indexes for use with the mapping
-          std::vector<int> nbrs;
+          std::vector<int> nbrs = pat->atom[j].nbrs;
 
-          BondSpec bs;
-          for (int k = 0; k < pat->bcount; ++k)
-            // Iterate over the bonds in the order in which they were parsed.
-            // In other words, ring closure bonds will be handled in the order
-            // of their corresponding ring opening. This is important for stereo.
-            bs = pat->bond[pat->bond_parse_order[k]];
-
-          if (bs.dst == j)
-            nbrs.push_back(bs.src);
-          else if (bs.src == j)
-            nbrs.push_back(bs.dst);
-
-          if (nbrs.size() < 3)
+          if (nbrs.size() != 4) {
+            stringstream ss;
+            ss << "Ignoring stereochemistry. There are " << nbrs.size() << " connections to this atom instead of 4. Title: " << mol.GetTitle();
+            obErrorLog.ThrowError(__FUNCTION__, ss.str(), obWarning);
             continue;
+          }
 
           // construct a OBTetrahedralStereo::Config using the smarts pattern
           OBTetrahedralStereo::Config smartsConfig;
           smartsConfig.center = center->GetId();
-          smartsConfig.from = mol.GetAtom( (*m)[nbrs.at(0)] )->GetId();
-          if (nbrs.size() == 4) {
-            OBAtom *ra1 = mol.GetAtom( (*m)[nbrs.at(1)] );
-            OBAtom *ra2 = mol.GetAtom( (*m)[nbrs.at(2)] );
-            OBAtom *ra3 = mol.GetAtom( (*m)[nbrs.at(3)] );
-            smartsConfig.refs = OBStereo::MakeRefs(ra1->GetId(), ra2->GetId(), ra3->GetId());
-          } else {
-            //cout << "nbrs[0] = " << nbrs[0] << endl;
-            //cout << "nbrs[1] = " << nbrs[1] << endl;
-            //cout << "nbrs[2] = " << nbrs[2] << endl;
-            // nbrs.size = 3! (already checked)
-            // the missing reference must be the hydrogen (in position 2)
-            OBAtom *ra2 = mol.GetAtom( (*m)[nbrs.at(1)] );
-            OBAtom *ra3 = mol.GetAtom( (*m)[nbrs.at(2)] );
-            smartsConfig.refs = OBStereo::MakeRefs(OBStereo::ImplicitRef, ra2->GetId(), ra3->GetId());
-          }
+          if (nbrs.at(0) == SmartsImplicitRef)
+            smartsConfig.from = OBStereo::ImplicitRef;
+          else
+            smartsConfig.from = mol.GetAtom( (*m)[nbrs.at(0)] )->GetId();
+          OBStereo::Ref firstref;
+          if (nbrs.at(1) == SmartsImplicitRef)
+            firstref = OBStereo::ImplicitRef;
+          else
+            firstref = mol.GetAtom( (*m)[nbrs.at(1)] )->GetId();
+          OBAtom *ra2 = mol.GetAtom( (*m)[nbrs.at(2)] );
+          OBAtom *ra3 = mol.GetAtom( (*m)[nbrs.at(3)] );
+          smartsConfig.refs = OBStereo::MakeRefs(firstref, ra2->GetId(), ra3->GetId());
+
           smartsConfig.view = OBStereo::ViewFrom;
           switch (pat->atom[j].chiral_flag) {
             case AL_CLOCKWISE:

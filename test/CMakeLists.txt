@@ -175,7 +175,7 @@ if(NOT MINGW AND NOT CYGWIN)
   include(UsePythonTest)
   if(PYTHON_EXECUTABLE)
     set(pytests
-        babel sym fastsearch unique kekule)
+        babel sym smartssym fastsearch unique kekule)
     foreach(pytest ${pytests})
     SET_SOURCE_FILES_PROPERTIES(test${pytest}.py PROPERTIES
         BABEL_LIBDIR "${CMAKE_BINARY_DIR}/lib"
