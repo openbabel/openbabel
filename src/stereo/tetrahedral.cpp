@@ -40,10 +40,21 @@ namespace OpenBabel {
     if (!specified || !other.specified)
       return true;
 
-    Config thisConfig = (from == OBStereo::ImplicitRef) ?
-        OBTetraNonPlanarStereo::ToConfig(*this, refs[0], winding, view) : *this;
-    // convert the other Config's refs to same from, winding and view
-    Config otherConfig = OBTetraNonPlanarStereo::ToConfig(other, thisConfig.from, winding, view);
+    // Convert both Config's refs to same from, winding and view while
+    // avoiding having an ImplicitRef in the 'from' position of either
+    Config thisConfig, otherConfig;
+    if (from == OBStereo::ImplicitRef) {
+      thisConfig = OBTetraNonPlanarStereo::ToConfig(*this, refs[0], winding, view);
+      otherConfig = OBTetraNonPlanarStereo::ToConfig(other, thisConfig.from, winding, view);
+    }
+    else if (other.from == OBStereo::ImplicitRef) {
+      otherConfig = OBTetraNonPlanarStereo::ToConfig(other, other.refs[0], winding, view);
+      thisConfig = OBTetraNonPlanarStereo::ToConfig(*this, otherConfig.from, winding, view);
+    }
+    else {
+      thisConfig = *this;
+      otherConfig = OBTetraNonPlanarStereo::ToConfig(other, thisConfig.from, winding, view);
+    }
 
     if (!OBStereo::ContainsSameRefs(thisConfig.refs, otherConfig.refs)) {
       if (OBStereo::ContainsRef(thisConfig.refs, OBStereo::ImplicitRef)) {
