@@ -15,6 +15,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
 
+#include <limits.h>
 #include <locale> // For isalpha(int)
 
 #define EV_TO_KCAL_PER_MOL 23.060538
@@ -28,22 +29,39 @@ namespace OpenBabel {
     VASPFormat()
     {
       // This will actually read the CONTCAR file:
-      //      OBConversion::RegisterFormat("vasp",this);
       OBConversion::RegisterFormat("CONTCAR",this);
       OBConversion::RegisterFormat("POSCAR",this);
+      OBConversion::RegisterFormat("VASP",this);
+      OBConversion::RegisterOptionParam("s", this, 0, OBConversion::INOPTIONS);
+      OBConversion::RegisterOptionParam("b", this, 0, OBConversion::INOPTIONS);
+      OBConversion::RegisterOptionParam("w", this, 0, OBConversion::OUTOPTIONS);
+      OBConversion::RegisterOptionParam("4", this, 0, OBConversion::OUTOPTIONS);
     }
 
     virtual const char* Description()
     {
       return
         "VASP format\n"
-        "Reads in data from POSCAR and CONTCAR to obtain information from VASP calculations.\n\n"
+        "Reads in data from POSCAR and CONTCAR to obtain information from "
+        "VASP calculations.\n\n"
+        "Read Options e.g. -as\n"
+        "  s Output single bonds only\n"
+        "  b Disable bonding entirely\n"
+        "  (note: VASP 4.x vs 5.x POSCAR formats are detected automatically)\n"
+        "\n"
+        "Write Options e.g. -xw\n"
+        "  w Preserve atomic ordering. Otherwise atoms will be sorted by\n"
+        "      atomic number.\n"
+        "  4 Write a POSCAR using VASP 4.x specification. VASP 5.x is used \n"
+        "      by default.\n"
+        "\n"
+        "Due to limitations in Open Babel's file handling, reading in VASP\n"
+        "files can be a bit tricky; the client that is using Open Babel must\n"
+        "use OBConversion::ReadFile() to begin the conversion. This change is\n"
+        "usually trivial. Also, the complete path to the CONTCAR/POSCAR file\n"
+        "must be provided, otherwise the other files needed will not be\n"
+        "found.\n";
 
-"Due to limitations in Open Babel's file handling, reading in VASP files can\n"
-"be a bit tricky; the client that is using Open Babel must use\n"
-"OBConversion::ReadFile() to begin the conversion. This change is usually\n"
-"trivial. Also, the complete path to the CONTCAR file must be provided,\n"
-"otherwise the other files needed will not be found.\n";
     };
 
     virtual const char* SpecificationURL(){return "http://cms.mpi.univie.ac.at/vasp/vasp/vasp.html";};
@@ -54,7 +72,7 @@ namespace OpenBabel {
        READBINARY  WRITEBINARY  READXML  ZEROATOMSOK */
     virtual unsigned int Flags()
     {
-      return READONEONLY | NOTWRITABLE;
+      return READONEONLY;
     };
 
     virtual int SkipObjects(int n, OBConversion* pConv)
@@ -65,7 +83,7 @@ namespace OpenBabel {
     ////////////////////////////////////////////////////
     /// Declarations for the "API" interface functions. Definitions are below
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    //    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
   private:
     /* Add declarations for any local function or member variables used.
@@ -98,6 +116,9 @@ namespace OpenBabel {
     string str, path;
     vector<string> vs;
     vector<unsigned int> numAtoms, atomTypes;
+    bool selective;    // is selective dynamics used?
+    string key, value; // store the info about constraints
+    OBPairData *cp;    // in this PairData
     bool hasEnthalpy=false;
     bool needSymbolsInGeometryFile = false;
     double enthalpy_eV, pv_eV;
@@ -135,6 +156,7 @@ namespace OpenBabel {
 
     // Start working on CONTCAR:
     ifs_cont.getline(buffer,BUFF_SIZE); // Comment line
+    pmol->SetTitle(buffer);
     ifs_cont.getline(buffer,BUFF_SIZE); // Scale
     scale = atof(buffer);
 
@@ -237,8 +259,10 @@ namespace OpenBabel {
 
     // Cartesian or fractional?
     ifs_cont.getline(buffer,BUFF_SIZE);
-    // Skip selective dynamics line if present.
+    selective = false;
+    // Set the variable selective accordingly
     if (buffer[0] == 'S' || buffer[0] == 's') {
+      selective = true;
       ifs_cont.getline(buffer,BUFF_SIZE);
     }
     // [C|c|K|k] indicates cartesian coordinates, anything else (including
@@ -281,6 +305,21 @@ namespace OpenBabel {
       if (!cartesian)
         coords = cell->FractionalToCartesian( coords );
       atom->SetVector(coords);
+      //if the selective dynamics info is present then read it into OBPairData
+      //this needs to be kept somehow to be able to write out the same as input
+      //it's string so it wastes memory :(
+      if (selective && vs.size() >= 6) {
+        key = "move";
+        value  = " "; value += vs[3].c_str();
+        value += " "; value += vs[4].c_str();
+        value += " "; value += vs[5].c_str();
+        cp = new OBPairData;
+        cp->SetAttribute(key);
+        cp->SetValue(value);
+        cp->SetOrigin(fileformatInput);
+        atom->SetData(cp);
+      }
+
       atomCount++;
     };
 
@@ -415,7 +454,188 @@ namespace OpenBabel {
 
     pmol->EndModify();
 
+    const char *noBonding  = pConv->IsOption("b", OBConversion::INOPTIONS);
+    const char *singleOnly = pConv->IsOption("s", OBConversion::INOPTIONS);
+
+    if (noBonding == NULL) {
+      pmol->ConnectTheDots();
+      if (singleOnly == NULL) {
+        pmol->PerceiveBondOrders();
+      }
+    }
+
+    return true;
+  }
+
+  bool VASPFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
+  {
+    //No surprises in this routine, cartesian coordinates are written out
+    //and if at least a single atom has information about constraints,
+    //then selective dynamics is used and the info is written out.
+    //The atoms are ordered according to their atomic number so that the
+    //output looks nice, this can be reversed by using command line flag "-xw".
+    //
+    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+    if (pmol == NULL) {
+      return false;
+    }
+
+    ostream& ofs = *pConv->GetOutStream();
+    OBMol &mol = *pmol;
+
+    char buffer[BUFF_SIZE];
+    OBUnitCell *uc = NULL;
+    vector<vector3> cell;
+    int atnum, atprev;
+    int atcount;
+
+    bool selective;
+
+    const char * keepOrder = pConv->IsOption("w", OBConversion::OUTOPTIONS);
+
+    // Create a list of ids. These may be sorted by atomic number depending
+    // on the value of keepOrder.
+    vector<unsigned long> atomids;
+    atomids.reserve(mol.NumAtoms());
+    vector<unsigned int> atomicNums;
+    atomicNums.reserve(mol.NumAtoms());
+
+    FOR_ATOMS_OF_MOL(atom, mol) {
+      atomids.push_back(atom->GetId());
+      atomicNums.push_back(atom->GetAtomicNum());
+    }
+
+    if (!keepOrder) {
+      // Sort the ids by atomic number
+      for (size_t i = 0; i < atomids.size() - 1; ++i) {
+        unsigned int atomicNum_i = atomicNums[i];
+        for (size_t j = i+1; j < atomids.size(); ++j) {
+          unsigned int atomicNum_j = atomicNums[j];
+
+          if (atomicNum_j < atomicNum_i) {
+            swap(atomids[i], atomids[j]);
+            swap(atomicNums[i], atomicNums[j]);
+            swap(atomicNum_i, atomicNum_j);
+          }
+        }
+      }
+    }
+
+    // Use the atomicNums vector to determine the composition line.
+    // atomicNumsCondensed and atomCounts contain the same data as atomicNums:
+    // if:
+    //   atomicNums          = [ 3 3 3 2 2 8 2 6 6 ]
+    // then:
+    //   atomicNumsCondensed = [ 3 2 8 2 6 ] // Adjacent duplicates removed
+    //   atomCounts          = [ 3 2 1 1 2 ] // Number of atoms in "block"
+    vector<unsigned int> atomicNumsCondensed;
+    vector<unsigned int> atomCounts;
+    for (size_t i = 0; i < atomicNums.size(); ++i) {
+      const unsigned int currentAtomicNumber = atomicNums[i];
+      atomicNumsCondensed.push_back(currentAtomicNumber);
+      atomCounts.push_back(1);
+      for (++i;
+           i < atomicNums.size() && atomicNums[i] == currentAtomicNumber;
+           ++i) {
+        ++(atomCounts.back());
+      }
+      --i; // Undo the final increment since the outer loop will redo it.
+    }
+
+    // write title
+    ofs << mol.GetTitle() << endl;
+    // write the multiplication factor, set this to one
+    // and write the cell using the 3x3 cell matrix
+    ofs << "1.000 " << endl;
+
+    if (!mol.HasData(OBGenericDataType::UnitCell)) {
+      // the unit cell has not been defined. Leave as all zeros so the user
+      // can fill it in themselves
+      for (int ii = 0; ii < 3; ii++) {
+        snprintf(buffer, BUFF_SIZE, "0.0  0.0  0.0");
+        ofs << buffer << endl;
+      }
+    }
+    else
+    {
+      // there is a unit cell, write it out
+      uc = static_cast<OBUnitCell*>(mol.GetData(OBGenericDataType::UnitCell));
+      cell = uc->GetCellVectors();
+      for (vector<vector3>::const_iterator i = cell.begin();
+           i != cell.end(); ++i) {
+        snprintf(buffer, BUFF_SIZE, "%20.15f%20.15f%20.15f",
+                 i->x(), i->y(), i->z());
+        ofs << buffer << endl;
+      }
+    }
+
+    // go through the atoms first to write out the element names if using
+    // VASP 5 format
+    const char *vasp4Format = pConv->IsOption("4", OBConversion::OUTOPTIONS);
+    if (!vasp4Format) {
+      for (vector<unsigned int>::const_iterator
+           it = atomicNumsCondensed.begin(),
+           it_end = atomicNumsCondensed.end(); it != it_end; ++it) {
+        snprintf(buffer, BUFF_SIZE, "%-3s ",etab.GetSymbol(*it));
+        ofs << buffer ;
+      }
+      ofs << endl;
+    }
+
+    // then do the same to write out the number of ions of each element
+    for (vector<unsigned int>::const_iterator
+         it = atomCounts.begin(),
+         it_end = atomCounts.end(); it != it_end; ++it) {
+      snprintf(buffer, BUFF_SIZE, "%-3u ", *it);
+      ofs << buffer ;
+    }
+    ofs << endl;
+
+    // assume that there are no constraints on the atoms
+    selective = false;
+    OBAtom *atom;
+    // and test if any of the atoms has constraints
+    FOR_ATOMS_OF_MOL(atom, mol) {
+      if (atom->HasData("move")){
+        selective =true;
+        break;
+      }
+    }
+    if (selective) {
+      ofs << "SelectiveDyn" << endl;
+    }
+
+    // print the atomic coordinates in \AA
+    ofs << "Cartesian" << endl;
+
+    for (vector<unsigned long>::const_iterator it = atomids.begin(),
+         it_end = atomids.end();
+         it != it_end && (atom = mol.GetAtomById(*it)); ++it) {
+
+      // Print coordinates
+      snprintf(buffer,BUFF_SIZE, "%26.19f %26.19f %26.19f",
+               atom->GetX(), atom->GetY(), atom->GetZ());
+      ofs << buffer;
+
+      // if at least one atom has info about constraints
+      if (selective) {
+        // if this guy has, write it out
+        if (atom->HasData("move")) {
+          OBGenericData *cp = atom->GetData("move");
+          // seemingly ridiculous number of digits is written out
+          // but sometimes you just don't want to change them
+          ofs << " " << cp->GetValue().c_str();
+        }
+        else {
+          // the atom has been created and the info has not been copied
+          ofs << "  T T T";
+        }
+      }
+      ofs << endl;
+    }
+
     return true;
   }
 
 } //namespace OpenBabel
+
