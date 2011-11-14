@@ -50,8 +50,7 @@ namespace OpenBabel {
         "  (note: VASP 4.x vs 5.x POSCAR formats are detected automatically)\n"
         "\n"
         "Write Options e.g. -xw\n"
-        "  w Preserve atomic ordering. Otherwise atoms will be sorted by\n"
-        "      atomic number.\n"
+        "  w Sort atoms by atomic number (this helps keep POTCAR files compact)\n"
         "  4 Write a POSCAR using VASP 4.x specification. VASP 5.x is used \n"
         "      by default.\n"
         "\n"
@@ -491,7 +490,7 @@ namespace OpenBabel {
 
     bool selective;
 
-    const char * keepOrder = pConv->IsOption("w", OBConversion::OUTOPTIONS);
+    const char * sortAtoms = pConv->IsOption("w", OBConversion::OUTOPTIONS);
 
     // Create a list of ids. These may be sorted by atomic number depending
     // on the value of keepOrder.
@@ -505,7 +504,7 @@ namespace OpenBabel {
       atomicNums.push_back(atom->GetAtomicNum());
     }
 
-    if (!keepOrder) {
+    if (sortAtoms != NULL) {
       // Sort the ids by atomic number
       for (size_t i = 0; i < atomids.size() - 1; ++i) {
         unsigned int atomicNum_i = atomicNums[i];
