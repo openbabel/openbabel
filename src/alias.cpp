@@ -282,7 +282,7 @@ void AliasData::AddExpandedAtom(int id) { _expandedatoms.push_back(id); };
 
 void AliasData::DeleteExpandedAtoms(OBMol& mol)
 {
-  //The atom that carries the AliasData object remains as an Xx atom;
+  //The atom that carries the AliasData object remains as an Xx atom with no charge;
   //the others are deleted.
   for(unsigned i=0;i<_expandedatoms.size();++i)
   {
@@ -290,7 +290,11 @@ void AliasData::DeleteExpandedAtoms(OBMol& mol)
     if(!at)
       continue;
     if(at->HasData(AliasDataType))
+    {
       at->SetAtomicNum(0);
+      at->SetFormalCharge(0);
+      at->SetSpinMultiplicity(0);
+    }
     else
       mol.DeleteAtom(at);
   }
