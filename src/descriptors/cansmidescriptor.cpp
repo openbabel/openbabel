@@ -33,13 +33,13 @@ public:
   {
     return _noStereo ? "Canonical SMILES without isotopes or stereo" : "Canonical SMILES";
   };
-  virtual bool Compare(OBBase* pOb, istream& optionText, bool noEval);
+  virtual bool Compare(OBBase* pOb, istream& optionText, bool noEval, string* param=NULL);
   virtual double GetStringValue(OBBase* pOb, std::string& svalue, std::string* = NULL);
 private:
   bool _noStereo;
 };
 
-bool CanSmiles::Compare(OBBase* pOb, istream& optionText, bool noEval)
+bool CanSmiles::Compare(OBBase* pOb, istream& optionText, bool noEval, string* param)
 {
   string can;
   GetStringValue(pOb, can);
