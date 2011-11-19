@@ -1,8 +1,8 @@
 <script type="text/ecmascript">
   <![CDATA[
-    addEventListener('DOMMouseScroll', wheel, false);
-    onmousewheel = wheel;
     var svgEl = document.getElementById("topsvg");
+    svgEl.addEventListener('DOMMouseScroll', wheel, false);
+    svgEl.addEventListener('mousewheel', wheel, false);
     var startx=0;
     var starty=0;
     function wheel(evt){
@@ -21,11 +21,11 @@
       if (evt.preventDefault)
         evt.preventDefault(); // Don't scroll the page when zooming
     }
-    onmousedown = function(evt) {
+   svgEl.onmousedown = function(evt) {
       startx = evt.clientX;
       starty = evt.clientY;
     }
-    onmousemove=function(evt) {
+    svgEl.onmousemove=function(evt) {
       if(startx!=0 && starty!=0 
         && ((evt.clientX - startx)*(evt.clientX - startx)+(evt.clientY - starty)*(evt.clientY - starty)>100))
       {
@@ -39,12 +39,13 @@
         starty = evt.clientY;
       }
     } 
-    onmouseup=function() {
+    svgEl.onmouseup=function() {
       startx=0;
       starty=0;
     }
-    ondblclick=function() {
+    svgEl.ondblclick=function() {
       location.reload();
     }
   ]]>
 </script>
+
