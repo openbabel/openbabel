@@ -17,6 +17,9 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <openbabel/babelconfig.h>
+#ifndef OBAPI
+  #define OBAPI
+#endif
 
 namespace OpenBabel {
 
@@ -64,7 +67,7 @@ namespace OpenBabel {
    * }
    * @endcode
    */  
-  class TautomerFunctor
+  class OBAPI TautomerFunctor
   {
     public:
       virtual ~TautomerFunctor() {}
@@ -86,7 +89,7 @@ namespace OpenBabel {
    * @warning This function makes hydrogens implicit.
    * @see TautomerFunctor
    */
-  void EnumerateTautomers(OBMol *mol, TautomerFunctor &functor);
+  void OBAPI EnumerateTautomers(OBMol *mol, TautomerFunctor &functor);
 
   /**
    * Compuate the canonical tautomer for @p mol. The canonical tautomer is the
@@ -97,7 +100,7 @@ namespace OpenBabel {
    *
    * @warning This function makes hydrogens implicit.
    */
-  void CanonicalTautomer(OBMol *mol);
+  void OBAPI CanonicalTautomer(OBMol *mol);
 
 }
 
