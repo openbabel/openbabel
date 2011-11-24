@@ -23,7 +23,11 @@ if (EIGEN2_FOUND)
   set (CPPFLAGS_TEXT "CPPFLAGS=${CPPFLAGS_VALUE}")
 endif (EIGEN2_FOUND)
 
-if (NEW_PYTHON_BINDINGS)
+###################
+# Python
+###################
+
+if (PYTHON_BINDINGS)
   if (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR RUN_SWIG)
     find_package(PythonLibs)
     if (NOT PYTHONLIBS_FOUND)
@@ -36,7 +40,7 @@ if (NEW_PYTHON_BINDINGS)
     endif (NOT PYTHONINTERP_FOUND)
 
     if(PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND)
-      set(DO_NEW_PYTHON_BINDINGS ON BOOL)
+      set(DO_PYTHON_BINDINGS ON BOOL)
       message(STATUS "Python bindings will be compiled")
     endif(PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND)
 
@@ -49,9 +53,9 @@ if (NEW_PYTHON_BINDINGS)
     message(STATUS "Warning: Python bindings NOT found. Generate using -DRUN_SWIG.")
 
   endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR RUN_SWIG)
-endif (NEW_PYTHON_BINDINGS)
+endif (PYTHON_BINDINGS)
 
-if (DO_NEW_PYTHON_BINDINGS)
+if (DO_PYTHON_BINDINGS)
 
     include_directories(
         ${PYTHON_INCLUDE_PATH}
@@ -87,107 +91,6 @@ if (DO_NEW_PYTHON_BINDINGS)
         install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py DESTINATION ${LIB_INSTALL_DIR})
         install(FILES ${openbabel_SOURCE_DIR}/scripts/python/pybel_py${PYTHON_VERSION_MAJOR}x.py DESTINATION ${LIB_INSTALL_DIR} RENAME pybel.py)
     else(NOT WIN32)
-        set_target_properties(bindings_python PROPERTIES
-            OUTPUT_NAME _openbabel
-            PREFIX ""
-            SUFFIX .pyd )
-        add_custom_command(TARGET bindings_python POST_BUILD
-          COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py ${openbabel_BINARY_DIR}/bin/${CMAKE_CFG_INTDIR}
-          )
-    endif(NOT WIN32)
-endif (DO_NEW_PYTHON_BINDINGS)
-
-
-###################
-# Python
-###################
-
-if (PYTHON_BINDINGS)
-  if (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR RUN_SWIG)
-    find_package(PythonLibs)
-    if (NOT PYTHONLIBS_FOUND)
-      message(STATUS "Python libraries NOT found")
-    endif (NOT PYTHONLIBS_FOUND)
-
-    find_package(PythonInterp)
-    if (NOT PYTHONINTERP_FOUND)
-      message(STATUS "Python interpreter NOT found")
-    endif (NOT PYTHONINTERP_FOUND)
-
-    if(PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND)
-      set(DO_PYTHON_BINDINGS ON BOOL)
-      message(STATUS "Python bindings will be compiled")
-    endif(PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND)
-
-  else (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR RUN_SWIG)
-    message(STATUS "Warning: Python bindings NOT found. Generate using -DRUN_SWIG.")
-
-  endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR RUN_SWIG)
-endif (PYTHON_BINDINGS)
-
-if (DO_PYTHON_BINDINGS)
-
-    include_directories(
-        ${PYTHON_INCLUDE_PATH}
-    )
-
-    if (RUN_SWIG)
-      add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
-          COMMAND ${SWIG_EXECUTABLE} -python -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${eigen2_define} -outdir ${openbabel_SOURCE_DIR}/scripts/python ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
-          MAIN_DEPENDENCY openbabel-python.i
-      )
-    endif (RUN_SWIG)
-
-    if(NOT WIN32)
-        add_custom_target(_openbabel ALL
-            COMMAND ${CPPFLAGS_TEXT} ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py build --build-lib=${openbabel_BINARY_DIR}/scripts/pybuild
-            DEPENDS openbabel ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp
-            WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts
-        )
-        add_custom_command(TARGET _openbabel POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E echo "import sys" > ob.py
-            COMMAND ${CMAKE_COMMAND} -E echo "if sys.platform.find('linux'\) != -1:" >> ob.py
-            COMMAND ${CMAKE_COMMAND} -E echo "  try:" >> ob.py
-            COMMAND ${CMAKE_COMMAND} -E echo "    import dl" >> ob.py
-            COMMAND ${CMAKE_COMMAND} -E echo "  except ImportError:" >> ob.py
-            COMMAND ${CMAKE_COMMAND} -E echo "    import DLFCN as dl" >> ob.py
-            COMMAND ${CMAKE_COMMAND} -E echo "  sys.setdlopenflags(sys.getdlopenflags() | dl.RTLD_GLOBAL)" >> ob.py
-            COMMAND cat ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py >> ob.py
-            COMMAND ${CMAKE_COMMAND} -E copy ob.py ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
-            COMMAND ${CMAKE_COMMAND} -E remove ob.py
-            VERBATIM)
-        if (APPLE)
-           # Update the built version
-          add_custom_command(TARGET _openbabel POST_BUILD
-           COMMAND install_name_tool -change ${openbabel_BINARY_DIR}/lib/libopenbabel.${SOVERSION}.dylib ${CMAKE_INSTALL_PREFIX}/lib/libopenbabel.${SOVERSION}.dylib ${openbabel_BINARY_DIR}/scripts/pybuild/_openbabel.so
-           VERBATIM)
-        endif()
-        add_dependencies(_openbabel openbabel)
-
-        if (PYTHON_PREFIX)
-            # In an execute_process, we cannot set the CPPFLAGS variable as we did with COMMAND above.
-            # ...hence the different approach here.
-            install(CODE "set(ENV{CPPFLAGS} ${CPPFLAGS_VALUE})
-                          execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --root=\$ENV{DESTDIR}/ --prefix=${PYTHON_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)"   LIBRARY DESTINATION ${LIB_INSTALL_DIR})
-        else (PYTHON_PREFIX)
-            if (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-                install(CODE "set(ENV{CPPFLAGS} ${CPPFLAGS_VALUE})
-                              execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --root=\$ENV{DESTDIR}/ WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)"   LIBRARY DESTINATION ${LIB_INSTALL_DIR})
-           else (${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-                install(CODE "set(ENV{CPPFLAGS} ${CPPFLAGS_VALUE})
-                              execute_process(COMMAND ${PYTHON_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/python/setup.py install --root=\$ENV{DESTDIR}/ --prefix=${CMAKE_INSTALL_PREFIX} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts)"   LIBRARY DESTINATION ${LIB_INSTALL_DIR})
-            endif ()
-        endif ()
-        if (APPLE)
-           EXECUTE_PROCESS(COMMAND ${PYTHON_EXECUTABLE} -c
-               "from sys import stdout; from distutils import sysconfig; stdout.write(sysconfig.get_python_lib(1))"
-           OUTPUT_VARIABLE PYTHON_LIB_PATH)
-           install(CODE "execute_process(COMMAND install_name_tool -change ${openbabel_BINARY_DIR}/lib/libopenbabel.${SOVERSION}.dylib ${CMAKE_INSTALL_PREFIX}/lib/libopenbabel.${SOVERSION}.dylib ${PYTHON_LIB_PATH}/_openbabel.so)")
-        endif()
-
-    else(NOT WIN32)
-        add_library(bindings_python MODULE ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp)
-        target_link_libraries(bindings_python ${PYTHON_LIBRARIES} ${BABEL_LIBRARY})
         set_target_properties(bindings_python PROPERTIES
             OUTPUT_NAME _openbabel
             PREFIX ""
