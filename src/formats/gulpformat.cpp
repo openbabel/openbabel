@@ -168,6 +168,13 @@ namespace OpenBabel {
         tokenize(vs, buffer);
         size_t size = vs.size();
         while (size >= 7 && size <= 10) {
+          // Skip shell entities:
+          if (strstr(vs[2].c_str(), "s")) {
+            ifs.getline(buffer,BUFF_SIZE);
+            tokenize(vs, buffer);
+            size = vs.size();
+            continue;
+          }
           atomicNum = etab.GetAtomicNum(vs[1].c_str());
 
           // Gulp sometimes places extra chars between the coords, so
@@ -230,6 +237,13 @@ namespace OpenBabel {
         tokenize(vs, buffer);
         size_t size = vs.size();
         while (size >= 7 && size <= 10) {
+          // Skip shell entities:
+          if (strstr(vs[2].c_str(), "s")) {
+            ifs.getline(buffer,BUFF_SIZE);
+            tokenize(vs, buffer);
+            size = vs.size();
+            continue;
+          }
           atomicNum = etab.GetAtomicNum(vs[1].c_str());
 
           // Gulp sometimes places extra chars between the coords, so
