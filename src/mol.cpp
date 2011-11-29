@@ -2192,30 +2192,9 @@ namespace OpenBabel
               }
 
             int bondFlags = 0;
-            // OBBuilder::GetNewBondVec checked to make sure the new bond is
-            // next to a wedge/hash if present, now we still need to set the
-            // bond flag.
-            if (GetDimension() == 2) {
-              OBStereoFacade stereoFacade(this);
-              if (stereoFacade.HasTetrahedralStereo(atom->GetId())) {
-                OBBondIterator i;
-                for (OBBond *bond = atom->BeginBond(i); bond; bond = atom->NextBond(i))
-                  if (bond->IsWedge()) {
-                    if (bond->GetBeginAtom() == atom)
-                      bondFlags = OB_HASH_BOND; // real wedge, make hash to H
-                    else
-                      bondFlags = OB_WEDGE_BOND; // inverted wedge = hash, make wedge to H
-                  } else if (bond->IsHash()) {
-                    if (bond->GetBeginAtom() == atom)
-                      bondFlags = OB_WEDGE_BOND; // real hash, make wedge to H
-                    else
-                      bondFlags = OB_HASH_BOND; // inverted hash = wedge, make hash to H
-                  }
-              }
-            }
-
             AddBond(atom->GetIdx(),h->GetIdx(),1, bondFlags);
             h->SetCoordPtr(&_c);
+            OpenBabel::ImplicitRefToStereo(*this, atom->GetId(), h->GetId());
           }
       }
 
@@ -2300,32 +2279,11 @@ namespace OpenBabel
             h = NewAtom();
             h->SetType("H");
             h->SetAtomicNum(1);
-
+            
             int bondFlags = 0;
-            // OBBuilder::GetNewBondVec checked to make sure the new bond is
-            // next to a wedge/hash if present, now we still need to set the
-            // bond flag.
-            if (GetDimension() == 2) {
-              OBStereoFacade stereoFacade(this);
-              if (stereoFacade.HasTetrahedralStereo(atom->GetId())) {
-                OBBondIterator i;
-                for (OBBond *bond = atom->BeginBond(i); bond; bond = atom->NextBond(i))
-                  if (bond->IsWedge()) {
-                    if (bond->GetBeginAtom() == atom)
-                      bondFlags = OB_HASH_BOND; // real wedge, make hash to H
-                    else
-                      bondFlags = OB_WEDGE_BOND; // inverted wedge = hash, make wedge to H
-                  } else if (bond->IsHash()) {
-                    if (bond->GetBeginAtom() == atom)
-                      bondFlags = OB_WEDGE_BOND; // real hash, make wedge to H
-                    else
-                      bondFlags = OB_HASH_BOND; // inverted hash = wedge, make hash to H
-                  }
-              }
-            }
-
             AddBond(atom->GetIdx(),h->GetIdx(),1, bondFlags);
             h->SetCoordPtr(&_c);
+            OpenBabel::ImplicitRefToStereo(*this, atom->GetId(), h->GetId());
           }
       }
 

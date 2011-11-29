@@ -795,6 +795,20 @@ namespace OpenBabel {
    */
   OBAPI void StereoRefToImplicit(OBMol& mol, OBStereo::Ref atomId);
   /**
+   * Convert any reference to an OBStereo::ImplicitRef attached to @p centerId
+   * in a stereo object to an explicit reference to @p newId.
+   * This function is called from OBMol::AddHydrogens() and
+   * OBMol::AddHydrogen() to convert any implicit references to a
+   * hydrogen atom that has just been added. However, the code is not specific
+   * to hydrogen atoms and could be used for other atoms.
+   *
+   * @param mol The molecule
+   * @param centerId The Id of the atom to which the new explicit atom is attached
+   * @param newId The Id of the atom which was previously an OBStereo::ImplicitRef
+   * @since version 2.4
+   */
+  OBAPI void ImplicitRefToStereo(OBMol& mol, OBStereo::Ref centerId, OBStereo::Ref newId);
+  /**
    * Get a vector with all OBCisTransStereo objects for the molecule. This
    * function is used by StereoFrom0D() with the @p addToMol parameter is set
    * to true. There is no algorithm used here, all specified flags will be

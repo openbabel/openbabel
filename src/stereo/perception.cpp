@@ -2730,5 +2730,45 @@ namespace OpenBabel {
     }
   }
 
+  void ImplicitRefToStereo(OBMol& mol, OBStereo::Ref centerId, OBStereo::Ref newId) {
+    // The following is for use in replace_if(...) below
+    const std::binder1st<std::equal_to<OBStereo::Ref> > equal_to_implicitRef = std::bind1st (equal_to<OBStereo::Ref>(), OBStereo::ImplicitRef);
+
+    std::vector<OBGenericData*> vdata = mol.GetAllData(OBGenericDataType::StereoData);
+    for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data) {
+      OBStereo::Type datatype = ((OBStereoBase*)*data)->GetType();
+
+      if (datatype != OBStereo::CisTrans && datatype != OBStereo::Tetrahedral) {
+        // Maybe I should just unset the stereochemistry if this happens?
+        obErrorLog.ThrowError(__FUNCTION__,
+            "This function should be updated to handle additional stereo types.\nSome stereochemistry objects may contain implicit refs to hydrogens which need to be converted to explicit.", obWarning);
+        continue;
+      }
+
+      // Replace any references to ImplicitRef (attached to centerId) with newId
+      if (datatype == OBStereo::CisTrans) {
+        OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
+        OBCisTransStereo::Config ct_cfg = ct->GetConfig();
+        if (ct_cfg.begin == centerId || ct_cfg.end == centerId) {
+          // Assumption: the first two refs are on the begin atom, the last two on the end atom
+          if (ct_cfg.begin == centerId)
+            replace_if(ct_cfg.refs.begin(), ct_cfg.refs.begin()+2, equal_to_implicitRef, (OBStereo::Ref) newId);
+          if (ct_cfg.end == centerId)
+            replace_if(ct_cfg.refs.begin()+2, ct_cfg.refs.end(), equal_to_implicitRef, (OBStereo::Ref) newId);
+          ct->SetConfig(ct_cfg);
+        }
+      }
+      else if (datatype == OBStereo::Tetrahedral) {
+        OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
+        OBTetrahedralStereo::Config ts_cfg = ts->GetConfig();
+        if (ts_cfg.center == centerId) {
+          if (ts_cfg.from == OBStereo::ImplicitRef) ts_cfg.from = newId;
+          replace_if(ts_cfg.refs.begin(), ts_cfg.refs.end(), equal_to_implicitRef, (OBStereo::Ref) newId);
+          ts->SetConfig(ts_cfg);
+        }
+      }
+    }
+  }
+
 }
 
