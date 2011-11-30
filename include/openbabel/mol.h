@@ -408,6 +408,8 @@ namespace OpenBabel
 
     void   UnsetAromaticPerceived()  { _flags &= (~(OB_AROMATIC_MOL));   }
     void   UnsetSSSRPerceived()  { _flags &= (~(OB_SSSR_MOL));   }
+    //! Mark that Largest Set of Smallest Rings will need to be run again if required (see OBRing class)
+    void   UnsetLSSRPerceived()  { _flags &= (~(OB_LSSR_MOL));   }
     void   UnsetRingTypesPerceived()  { _flags &= (~(OB_RINGTYPES_MOL));   }
     void   UnsetPartialChargesPerceived(){ _flags &= (~(OB_PCHARGE_MOL));}
     void   UnsetImplicitValencePerceived(){_flags &= (~(OB_IMPVAL_MOL)); }
