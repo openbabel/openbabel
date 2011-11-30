@@ -2732,7 +2732,7 @@ namespace OpenBabel {
 
   void ImplicitRefToStereo(OBMol& mol, OBStereo::Ref centerId, OBStereo::Ref newId) {
     // The following is for use in replace_if(...) below
-    const std::binder1st<std::equal_to<OBStereo::Ref> > equal_to_implicitRef = std::bind1st (equal_to<OBStereo::Ref>(), OBStereo::ImplicitRef);
+    const std::binder1st<std::equal_to<OBStereo::Ref> > equal_to_implicitRef = std::bind1st (equal_to<OBStereo::Ref>(), (OBStereo::Ref) OBStereo::ImplicitRef);
 
     std::vector<OBGenericData*> vdata = mol.GetAllData(OBGenericDataType::StereoData);
     for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data) {
