@@ -2087,10 +2087,10 @@ namespace OpenBabel
 
           std::vector<int> nbrs = pat->atom[j].nbrs;
 
-          if (nbrs.size() != 4) {
-            stringstream ss;
-            ss << "Ignoring stereochemistry. There are " << nbrs.size() << " connections to this atom instead of 4. Title: " << mol.GetTitle();
-            obErrorLog.ThrowError(__FUNCTION__, ss.str(), obWarning);
+          if (nbrs.size() != 4) { // 3 nbrs currently not supported. Other values are errors.
+            //stringstream ss;
+            //ss << "Ignoring stereochemistry. There are " << nbrs.size() << " connections to this atom instead of 4. Title: " << mol.GetTitle();
+            //obErrorLog.ThrowError(__FUNCTION__, ss.str(), obWarning);
             continue;
           }
 
