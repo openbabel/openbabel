@@ -204,43 +204,13 @@ if (DO_PERL_BINDINGS)
       endif (NOT WIN32)
     endif (RUN_SWIG)
 
-    set(PERL_PREFIX_TEXT "")
-    if (OBPERL_PREFIX) # The PERL_PREFIX variable is already taken (it's set by FindPerlLibs :-/ )
-      set(PERL_PREFIX_TEXT "PREFIX=${OBPERL_PREFIX}")
-    else (OBPERL_PREFIX)
-      if (NOT ${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-        set(PERL_PREFIX_TEXT "PREFIX=${CMAKE_INSTALL_PREFIX}")
-      endif (NOT ${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-    endif (OBPERL_PREFIX)
-
-    set(PERL_INSTALLDIRS_TEXT "")
-    if (OBPERL_INSTALLDIRS)
-      set(PERL_INSTALLDIRS_TEXT "INSTALLDIRS=${OBPERL_INSTALLDIRS}")
-    endif (OBPERL_INSTALLDIRS)
-
-    if (NOT MSVC)
-      add_custom_target(pre_bindings_perl ALL
-        # Create the scripts/perl directory; we cannot do this inside
-        # bindings_perl as the WORKING_DIRECTORY needs to already exist!
-        COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_BINARY_DIR}/scripts/perl
-        )
-      add_custom_target(bindings_perl ALL
-        COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/perl/Makefile.PL ${openbabel_BINARY_DIR}/scripts/perl
-        COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp ${openbabel_BINARY_DIR}/scripts/perl
-        COMMAND PERL5LIB=${openbabel_SOURCE_DIR}/scripts/perl/inc SRC_DIR=${openbabel_SOURCE_DIR} OBJ_DIR=${openbabel_BINARY_DIR} ${PERL_EXECUTABLE} ${openbabel_BINARY_DIR}/scripts/perl/Makefile.PL ${PERL_PREFIX_TEXT} ${PERL_INSTALLDIRS_TEXT}
-        COMMAND PERL5LIB=${openbabel_SOURCE_DIR}/scripts/perl/inc make
-            DEPENDS openbabel ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp
-            WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/perl
-        )
-      add_dependencies(bindings_perl pre_bindings_perl openbabel)
-      install(CODE "execute_process(COMMAND make install DESTDIR=\$ENV{DESTDIR} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/perl)")
-
-    else (NOT MSVC)
-      add_library(bindings_perl MODULE ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp)
-      target_link_libraries(bindings_perl ${PERL_LIBRARY} ${BABEL_LIBRARY})
-      set_target_properties(bindings_perl PROPERTIES
-          OUTPUT_NAME openbabel_perl )
-    endif(NOT MSVC)
+    add_library(bindings_perl MODULE ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp)
+    target_link_libraries(bindings_perl ${PERL_LIBRARY} ${BABEL_LIBRARY})
+    set_target_properties(bindings_perl PROPERTIES
+        OUTPUT_NAME openbabel_perl)
+    add_dependencies(bindings_perl openbabel)
+    install(TARGETS bindings_perl LIBRARY DESTINATION ${LIB_INSTALL_DIR})
+    install(FILES ${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.pm DESTINATION ${LIB_INSTALL_DIR})
 
 endif (DO_PERL_BINDINGS)
 
@@ -280,40 +250,12 @@ if (DO_RUBY_BINDINGS)
     include_directories(
         ${RUBY_INCLUDE_PATH}
     )
-
-    if(NOT MSVC)
-      add_custom_target(pre_bindings_ruby ALL
-        # Create the scripts/ruby directory; we cannot do this inside
-        # bindings_ruby as the WORKING_DIRECTORY needs to already exist!
-        COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_BINARY_DIR}/scripts/ruby
-        )
-      set (DESTDIR_TEXT "\$ENV{DESTDIR}")
-      if (RUBY_PREFIX)
-        # It is reasonably safe to assume that RUBY_POSSIBLE_LIB_DIR contains
-        # no regex metacharacters except possibly '.':
-        string(REGEX REPLACE ^${RUBY_POSSIBLE_LIB_DIR}/ruby ${RUBY_PREFIX} ruby_install_dir "${RUBY_SITEARCH_DIR}")
-      else (RUBY_PREFIX)
-        execute_process(COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "print Config::CONFIG['exec_prefix']"
-          OUTPUT_VARIABLE ruby_exec_prefix)
-        # It is reasonably safe to assume that ruby_exec_prefix contains no
-        # regex metacharacters except possibly '.':
-        string(REGEX REPLACE ^${ruby_exec_prefix} ${CMAKE_INSTALL_PREFIX} ruby_install_dir "${RUBY_SITEARCH_DIR}")
-      endif (RUBY_PREFIX)
-      add_custom_target(bindings_ruby ALL
-        COMMAND ${RUBY_EXECUTABLE} ${openbabel_SOURCE_DIR}/scripts/ruby/extconf.rb --with-openbabel-lib=${openbabel_BINARY_DIR}/lib${LIB_SUFFIX} --with-openbabel-include=${openbabel_BINARY_DIR}/include
-        COMMAND ${CMAKE_COMMAND} -E echo "Compiling Ruby bindings"
-        COMMAND make
-        DEPENDS ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp
-        WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/ruby
-        )
-      add_dependencies(bindings_ruby pre_bindings_ruby openbabel)
-      install(CODE "execute_process(COMMAND make install DESTDIR=\$ENV{DESTDIR} WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts/ruby)")
-   else(NOT MSVC)
-      add_library(bindings_ruby MODULE ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp)
-      target_link_libraries(bindings_ruby ${RUBY_LIBRARY} ${BABEL_LIBRARY})
-      set_target_properties(bindings_ruby PROPERTIES
-          OUTPUT_NAME openbabel_ruby )
-    endif(NOT MSVC)
+    add_library(bindings_ruby MODULE ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp)
+    target_link_libraries(bindings_ruby ${RUBY_LIBRARY} ${BABEL_LIBRARY})
+    set_target_properties(bindings_ruby PROPERTIES
+        OUTPUT_NAME openbabel
+        PREFIX "" )
+    install(TARGETS bindings_ruby LIBRARY DESTINATION ${LIB_INSTALL_DIR})
 
 endif (DO_RUBY_BINDINGS)
 
@@ -359,6 +301,8 @@ if (DO_CSHARP_BINDINGS)
     target_link_libraries(bindings_csharp ${BABEL_LIBRARY})
     set_target_properties(bindings_csharp PROPERTIES
         OUTPUT_NAME openbabel_csharp )
+    install(TARGETS bindings_csharp LIBRARY DESTINATION ${LIB_INSTALL_DIR})
+    install(FILES ${openbabel_SOURCE_DIR}/scripts/csharp/OBDotNet.dll DESTINATION ${LIB_INSTALL_DIR})
 
 endif (DO_CSHARP_BINDINGS)
 
