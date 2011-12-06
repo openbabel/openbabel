@@ -534,25 +534,25 @@ namespace OpenBabel
     return 0; //presumably never reached
   }
 
-  // Helper function -- transform fractional coordinates to ensure they lie in the unit cell
-  vector3 transformedFractionalCoordinate(vector3 originalCoordinate)
+  // Whether two points (given in fractional coordinates) are close enough
+  // to be considered duplicates.
+  bool areDuplicateAtoms (vector3 v1, vector3 v2)
   {
-    // ensure the fractional coordinate is entirely within the unit cell
-    vector3 returnValue(originalCoordinate);
+    vector3 dr = v2 - v1;
+    if (dr.x() < -0.5)
+      dr.SetX(dr.x() + 1);
+    if (dr.x() > 0.5)
+      dr.SetX(dr.x() - 1);
+    if (dr.y() < -0.5)
+      dr.SetY(dr.y() + 1);
+    if (dr.y() > 0.5)
+      dr.SetY(dr.y() - 1);
+    if (dr.z() < -0.5)
+      dr.SetZ(dr.z() + 1);
+    if (dr.z() > 0.5)
+      dr.SetZ(dr.z() - 1);
 
-    // So if we have -2.08, we take -2.08 - (-2) = -0.08 .... almost what we want
-    returnValue.SetX(originalCoordinate.x() - int(originalCoordinate.x()) );
-    returnValue.SetY(originalCoordinate.y() - int(originalCoordinate.y()) );
-    returnValue.SetZ(originalCoordinate.z() - int(originalCoordinate.z()) );
-
-    if (returnValue.x() < 0.0)
-      returnValue.SetX(returnValue.x() + 1.0);
-    if (returnValue.y() < 0.0)
-      returnValue.SetY(returnValue.y() + 1.0);
-    if (returnValue.z() < 0.0)
-      returnValue.SetZ(returnValue.z() + 1.0);
-
-    return returnValue;
+    return (dr.length_2() < 1e-4);
   }
 
   void OBUnitCell::FillUnitCell(OBMol *mol)
@@ -574,7 +574,7 @@ namespace OpenBabel
     for (i = atoms.begin(); i != atoms.end(); ++i) {
       uniqueV = (*i)->GetVector();
       uniqueV = CartesianToFractional(uniqueV);
-      uniqueV = transformedFractionalCoordinate(uniqueV);
+      uniqueV = WrapFractionalCoordinate(uniqueV);
       coordinates.push_back(uniqueV);
 
       transformedVectors = sg->Transform(uniqueV);
@@ -582,13 +582,13 @@ namespace OpenBabel
            transformIterator != transformedVectors.end(); ++transformIterator) {
         // coordinates are in reciprocal space -- check if it's in the unit cell
         // if not, transform it in place
-        updatedCoordinate = transformedFractionalCoordinate(*transformIterator);
+        updatedCoordinate = WrapFractionalCoordinate(*transformIterator);
         foundDuplicate = false;
 
         // Check if the transformed coordinate is a duplicate of an atom
         for (duplicateIterator = coordinates.begin();
              duplicateIterator != coordinates.end(); ++duplicateIterator) {
-          if (duplicateIterator->distSq(updatedCoordinate) < 1.0e-4) {
+          if (areDuplicateAtoms(*duplicateIterator, updatedCoordinate)) {
             foundDuplicate = true;
             break;
           }
