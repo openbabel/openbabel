@@ -378,6 +378,16 @@ namespace OpenBabel
     if (x < 0) x += 1;
     if (y < 0) y += 1;
     if (z < 0) z += 1;
+
+#define LIMIT 0.999999
+    if (x > LIMIT)
+      x -= 1;
+    if (y > LIMIT)
+      y -= 1;
+    if (z > LIMIT)
+      z -= 1;
+#undef LIMIT
+
     return vector3(x, y, z);
   }
 
