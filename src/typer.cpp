@@ -70,7 +70,7 @@ namespace OpenBabel
     if (EQn(buffer,"INTHYB",6))
       {
         tokenize(vs,buffer);
-        if (vs.empty() || vs.size() < 3)
+        if (vs.size() < 3)
           {
             obErrorLog.ThrowError(__FUNCTION__, " Could not parse INTHYB line in atom type table from atomtyp.txt", obInfo);
             return;
@@ -90,7 +90,7 @@ namespace OpenBabel
     else if (EQn(buffer,"IMPVAL",6))
       {
         tokenize(vs,buffer);
-        if (vs.empty() || vs.size() < 3)
+        if (vs.size() < 3)
           {
             obErrorLog.ThrowError(__FUNCTION__, " Could not parse IMPVAL line in atom type table from atomtyp.txt", obInfo);
             return;
@@ -110,7 +110,7 @@ namespace OpenBabel
     else if (EQn(buffer,"EXTTYP",6))
       {
         tokenize(vs,buffer);
-        if (vs.empty() || vs.size() < 3)
+        if (vs.size() < 3)
           {
             obErrorLog.ThrowError(__FUNCTION__, " Could not parse EXTTYP line in atom type table from atomtyp.txt", obInfo);
             return;
@@ -330,7 +330,7 @@ namespace OpenBabel
 
     if (EQn(buffer,"RINGTYP",7)) {
       tokenize(vs,buffer);
-      if (vs.empty() || vs.size() < 3) {
+      if (vs.size() < 3) {
         obErrorLog.ThrowError(__FUNCTION__, " Could not parse RING line in ring type table from ringtyp.txt", obInfo);
         return;
       }

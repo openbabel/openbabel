@@ -227,10 +227,7 @@ namespace OpenBabel
       //! \deprecated Use GetCoordinateIdx() instead
       unsigned int GetCIdx()          const { return((int)_cidx); }
       //! \return The current number of explicit connections
-      unsigned int GetValence()       const
-        {
-          return((_vbond.empty()) ? 0 : static_cast<unsigned int> (_vbond.size()));
-        }
+      unsigned int GetValence() const { return (unsigned int)_vbond.size(); }
       //! \return The hybridization of this atom: 1 for sp, 2 for sp2, 3 for sp3, 4 for sq. planar, 5 for trig. bipy, 6 for octahedral
       unsigned int GetHyb()             const;
       //! \return The implicit valence of this atom type (i.e. maximum number of connections expected)

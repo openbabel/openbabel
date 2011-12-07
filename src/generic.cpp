@@ -1616,7 +1616,7 @@ void OBVibrationData::SetData(const std::vector< std::vector< vector3 > > & vLx,
 */
 unsigned int OBVibrationData::GetNumberOfFrequencies() const
 {
-  return !this->_vFrequencies.empty() ? this->_vFrequencies.size() : 0;
+  return this->_vFrequencies.size();
 }
 
 } //end namespace OpenBabel

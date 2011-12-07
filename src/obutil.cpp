@@ -395,7 +395,7 @@ namespace OpenBabel
   //! \param start - The position to start inverting case
   void InvertCase(std::string &s, unsigned int start)
   {
-    if (s.empty() || start >= s.size())
+    if (start >= s.size())
       return;
     unsigned int i;
     for (i = start; i < s.size();++i)
@@ -527,7 +527,7 @@ namespace OpenBabel
 
     // Delete dummy atoms
     vector<OBAtom*> for_deletion;
-    FOR_ATOMS_OF_MOL(a, mol) 
+    FOR_ATOMS_OF_MOL(a, mol)
       if (a->GetAtomicNum() == 0)
         for_deletion.push_back(&(*a));
     for(vector<OBAtom*>::iterator a_it=for_deletion.begin(); a_it!=for_deletion.end(); ++a_it)

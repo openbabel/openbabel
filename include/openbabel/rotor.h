@@ -467,7 +467,7 @@ namespace OpenBabel
      */
     size_t Size()
     {
-      return((_rotor.empty()) ? (size_t)0: _rotor.size());
+      return _rotor.size();
     }
     /**
      * When no atoms/bonds are fixed or when bonds are fixed, this function will
