@@ -118,9 +118,40 @@ namespace OpenBabel {
     }
 
     OBForceField *ff = OBForceField::FindType("MMFF94");
-    if (!ff->Setup(mol))
-      return 10e10;
+    if (!ff->Setup(mol)) {
+      ff = OBForceField::FindType("UFF");
+      if (!ff->Setup(mol))
+        return 10e10;
+    }
 //    ff->SteepestDescent(500);
+    double score = ff->Energy();
+
+    // copy original coordinates back
+    for (unsigned int i = 0; i < mol.NumAtoms() * 3; ++i)
+      origCoords[i] = coords[i];
+
+    return score;
+  }
+
+  double OBMinimizingEnergyConformerScore::Score(OBMol &mol, unsigned int index,
+                                                 const RotorKeys &keys, const std::vector<double*> &conformers)
+  {
+    double *origCoords = mol.GetCoordinates();
+    // copy the original coordinates to coords
+    // copy the conformer coordinates to OBMol object
+    std::vector<double> coords(mol.NumAtoms() * 3);
+    for (unsigned int i = 0; i < mol.NumAtoms() * 3; ++i) {
+      coords[i] = origCoords[i];
+      origCoords[i] = conformers[index][i];
+    }
+
+    OBForceField *ff = OBForceField::FindType("MMFF94");
+    if (!ff->Setup(mol)) {
+      ff = OBForceField::FindType("UFF");
+      if (!ff->Setup(mol))
+        return 10e10;
+    }
+    ff->SteepestDescent(250);
     double score = ff->Energy();
 
     // copy original coordinates back

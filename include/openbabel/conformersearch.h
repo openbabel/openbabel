@@ -191,6 +191,19 @@ namespace OpenBabel {
           const std::vector<double*> &conformers);
   };
 
+  /**
+   * @class OBMinimizingEnergyConformerScore conformersearch.h <openbabel/conformersearch.h>
+   * @brief A lowest energy conformer scoring class (after minimization)
+   * @since 2.4
+   */
+  class OBAPI OBMinimizingEnergyConformerScore : public OBConformerScore
+  {
+    public:
+      Preferred GetPreferred() { return LowScore; }
+      Convergence GetConvergence() { return Lowest; }
+      double Score(OBMol &mol, unsigned int index, const RotorKeys &keys,
+          const std::vector<double*> &conformers);
+  };
 
   //////////////////////////////////////////////////////////
   //

@@ -63,7 +63,7 @@ namespace OpenBabel
           " --children #     number of children to generate for each parent (default = 5)\n"
           " --mutability #   mutation frequency (default = 5)\n"
           " --converge #     number of identical generations before convergence is reached\n"
-          " --score #        scoring function [rmsd|energy] (default = rmsd)\n"
+          " --score #        scoring function [rmsd|energy|minenergy] (default = rmsd)\n"
           ;
       }
 
@@ -159,6 +159,8 @@ namespace OpenBabel
       OBConformerSearch cs;
       if (score == "energy")
         cs.SetScore(new OBEnergyConformerScore);
+      else if (score.find("min") != std::string::npos)
+        cs.SetScore(new OBMinimizingEnergyConformerScore);
 
       if (cs.Setup(*pmol, numConformers, numChildren, mutability, convergence)) {
         cs.Search();
