@@ -970,7 +970,12 @@ namespace OpenBabel
        if (! (pSG->GetHMName().empty()))
          {
          loop_transforms = true;
-         ofs << "_space_group.name_H-M_alt\t'" << pSG->GetHMName() << "'" << endl;
+         // Do we have an extended HM symbol, with origin choice as ":1" or ":2" ? If so, remove it.
+         size_t n=pSG->GetHMName().find(":");
+         if(n==string::npos)
+           ofs << "_space_group_name_H-M_alt '" << pSG->GetHMName() << "'" << endl;
+         else
+           ofs << "_space_group_name_H-M_alt '" << pSG->GetHMName().substr(0,n) << "'" << endl;
          }
        ofs << endl;
 

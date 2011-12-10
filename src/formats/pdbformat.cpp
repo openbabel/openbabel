@@ -553,13 +553,24 @@ namespace OpenBabel
     if (pmol->HasData(OBGenericDataType::UnitCell))
       {
         OBUnitCell *pUC = (OBUnitCell*)pmol->GetData(OBGenericDataType::UnitCell);
-
-        snprintf(buffer, BUFF_SIZE,
-                 "CRYST1%9.3f%9.3f%9.3f%7.2f%7.2f%7.2f %-11s 1",
-                 pUC->GetA(), pUC->GetB(), pUC->GetC(),
-                 pUC->GetAlpha(), pUC->GetBeta(), pUC->GetGamma(),
-                 pUC->GetSpaceGroup() ?
-                 pUC->GetSpaceGroup()->GetHMName().c_str() : "P1");
+        if(pUC->GetSpaceGroup()){
+          string tmpHM=pUC->GetSpaceGroup()->GetHMName();
+          // Do we have an extended HM symbol, with origin choice as ":1" or ":2" ? If so, remove it.
+          size_t n=tmpHM.find(":");
+          if(n!=string::npos) tmpHM=tmpHM.substr(0,n);
+          snprintf(buffer, BUFF_SIZE,
+                   "CRYST1%9.3f%9.3f%9.3f%7.2f%7.2f%7.2f %-11s 1",
+                   pUC->GetA(), pUC->GetB(), pUC->GetC(),
+                   pUC->GetAlpha(), pUC->GetBeta(), pUC->GetGamma(),
+                   tmpHM.c_str());
+        }
+        else
+          snprintf(buffer, BUFF_SIZE,
+                   "CRYST1%9.3f%9.3f%9.3f%7.2f%7.2f%7.2f %-11s 1",
+                   pUC->GetA(), pUC->GetB(), pUC->GetC(),
+                   pUC->GetAlpha(), pUC->GetBeta(), pUC->GetGamma(),
+                   "P1");
+           
         ofs << buffer << endl;
       }
 
