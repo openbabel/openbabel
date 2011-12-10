@@ -2195,7 +2195,7 @@ x,-y,z
 
 48
 P 2 2 -1n
-P n n n
+P n n n:1
 x,y,z
 -x,-y,z
 -x,y,-z
@@ -2481,7 +2481,7 @@ x,-y,-z
 1/2+x,-y,1/2+z
 -x,y,z
 
-53:
+53
 -P 2bc 2bc
 P n m b
 x,y,z
