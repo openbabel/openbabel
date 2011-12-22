@@ -1,7 +1,7 @@
 /**********************************************************************
 spacegroup.cpp - Handle Space Groups.
 
-Copyright (C) 2007 by Jean Bréfort
+Copyright (C) 2007-2011 by Jean Bréfort
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
@@ -61,6 +61,8 @@ namespace OpenBabel
     set<SpaceGroup*> sgs;
   };
 
+  static SpaceGroups _SpaceGroups;
+
   SpaceGroups::SpaceGroups()
   {
     sgbi.assign(230, list<const SpaceGroup*>());
@@ -107,6 +109,12 @@ namespace OpenBabel
           std::string::size_type idx=linestr.find(',');
           if (idx != std::string::npos)
             {
+              std::string alt = linestr.substr(0, idx);
+              if (alt.length() > 0 && _SpaceGroups.sgbn[alt] == NULL)
+                _SpaceGroups.sgbn[alt] = group;
+              std::string stripped_HM=RemoveWhiteSpaceUnderscore(alt);
+              if (stripped_HM.length() > 0 && _SpaceGroups.sgbn[stripped_HM] == NULL)
+                _SpaceGroups.sgbn[stripped_HM] = group;
               group->SetHMName(linestr.substr(idx+1));
             }
           else
@@ -131,10 +139,8 @@ namespace OpenBabel
       }
   }
 
-  static SpaceGroups _SpaceGroups;
-
   SpaceGroup::SpaceGroup():
-    m_HM(""),m_Hall(""),m_id(0)
+    m_HM(""),m_Hall(""),m_id(0),m_OriginAlternative(0)
   {
   }
 
@@ -143,6 +149,17 @@ namespace OpenBabel
     list<transform3d*>::iterator i, end = m_transforms.end();
     for (i = m_transforms.begin(); i != end; ++i)
       delete *i;
+  }
+
+  void SpaceGroup::SetHMName(const std::string &name)
+  {
+    std::string::size_type idx=name.find(':');
+    if (idx != std::string::npos)
+      {
+        m_OriginAlternative = atoi (name.c_str () + idx + 1);
+        m_HM = name.substr (0, idx);
+	  } else
+        m_HM = name;
   }
 
   /*!
@@ -366,10 +383,24 @@ namespace OpenBabel
     _SpaceGroups.sgs.insert(this);
     if (m_id > 0 && m_id <= 230)
       _SpaceGroups.sgbi[m_id - 1].push_back(this);
-    if (m_HM.length() > 0 && _SpaceGroups.sgbn[m_HM] == NULL)
-      _SpaceGroups.sgbn[m_HM] = this;
+    if (m_HM.length() > 0)
+	  {
+        if (m_OriginAlternative != 0)
+		  {
+            char a = '0' + m_OriginAlternative;
+            std::string nm = m_HM + ':' + a;
+            if (_SpaceGroups.sgbn[nm] == NULL)
+              _SpaceGroups.sgbn[nm] = this;
+            // Also use the symbol stripped from whitespaces as key
+            std::string stripped_HM=RemoveWhiteSpaceUnderscore(nm);
+            if (stripped_HM.length() > 0 && _SpaceGroups.sgbn[nm] == NULL)
+              _SpaceGroups.sgbn[nm] = this;
+		  }
+        if ((m_OriginAlternative & 1 == 0) && (_SpaceGroups.sgbn[m_HM] == NULL))
+          _SpaceGroups.sgbn[m_HM] = this;
+	  }
     // Also use the HM symbol stripped from whitespaces as key
-    std::string stripped_HM=RemoveWhiteSpaceUnderscore(m_HM);
+	  std::string stripped_HM=RemoveWhiteSpaceUnderscore(m_HM);
     if (stripped_HM.length() > 0 && _SpaceGroups.sgbn[stripped_HM] == NULL)
       _SpaceGroups.sgbn[stripped_HM] = this;
     if (m_Hall.length() > 0 && _SpaceGroups.sgbn[m_Hall] == NULL)

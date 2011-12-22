@@ -40,8 +40,7 @@ namespace OpenBabel
 
         void SetHMName(const char *name)
           { m_HM = name; }
-        void SetHMName(const std::string &name)
-          { m_HM = name; }
+        void SetHMName(const std::string &name);
         void SetHallName(const char *name)
           { m_Hall = name; }
         void SetHallName(const std::string &name)
@@ -56,7 +55,9 @@ namespace OpenBabel
           { return m_Hall;}
         unsigned GetId() const
           { return m_id; }
-        std::list<vector3> Transform(const vector3 &v) const;
+        unsigned int GetOriginAlternative() const
+            { return m_OriginAlternative; }
+      std::list<vector3> Transform(const vector3 &v) const;
 
         transform3d const * BeginTransform(transform3dIterator &i) const;
         transform3d const * NextTransform(transform3dIterator &i) const;
@@ -90,6 +91,7 @@ namespace OpenBabel
         std::string m_HM;
         std::string m_Hall;
         unsigned int m_id;
+        unsigned int m_OriginAlternative;
         std::list<transform3d*> m_transforms;
     };
 
