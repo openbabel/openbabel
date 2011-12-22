@@ -61,8 +61,8 @@ INTHYB  [Sn;!D5]                  3
 INTHYB  [AsD3]                    3       # AsCl3 (AsCl5 handled by D5 above)
 INTHYB  [SbD3]                    3       #
 # SbD5, AsD5 are all trigbpy so are handled by D5 above
-INTHYB  [BiD3]                    3       # 
-INTHYB  [BiD5]                    6       # BiF5 is square-pyr, not trigbpy 
+INTHYB  [BiD3]                    3       #
+INTHYB  [BiD5]                    6       # BiF5 is square-pyr, not trigbpy
 
 INTHYB  [se]                      2       # aromatic sp2 Se
 INTHYB  [Se]                      3       # sp3 hybridization Se (and family)
@@ -132,14 +132,13 @@ IMPVAL  [$([#7+]#*)]              2
 IMPVAL  [$([#7+]=*)]              3
 IMPVAL  [$([#7+](=*)=*)]          2
 
-IMPVAL [$([#8+]#*)] 1
-
 IMPVAL [#8]                       2 # Generic O
 IMPVAL [#8-]                      1
 IMPVAL [#8-2]                     0
 IMPVAL [#8+]                      3
 IMPVAL [$([#8]=*)]                1
 IMPVAL [#8^1+]                    1 # carbon monoxide
+IMPVAL [$([#8]#*)]                1
 
 IMPVAL  [#9D0]                    1
 IMPVAL  [#9D0-]                   0 #[F-]
