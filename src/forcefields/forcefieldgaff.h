@@ -126,7 +126,7 @@ namespace OpenBabel
         _rele = 15.0;
         _pairfreq = 10;
         _cutoff = false;
-        _linesearch = LineSearchType::Simple;
+        _linesearch = LineSearchType::Newton2Num;
       }
 
       //! Destructor
