@@ -1146,7 +1146,7 @@ namespace OpenBabel
 
     //! \name Methods for energy minimization
     //@{
-    /*! Set the LineSearchType. The default type is LineSearchType::Simple.
+    /*! Set the LineSearchType. The default type is LineSearchType::Newton2Num.
      *  \param type The LineSearchType to be used in SteepestDescent and ConjugateGradients.
      */
     void SetLineSearchType(int type)
