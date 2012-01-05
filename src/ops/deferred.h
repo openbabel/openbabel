@@ -59,7 +59,7 @@ public:
   virtual bool WriteChemObject(OBConversion* pConv)
   {
     OBBase* pOb = pConv->GetChemObject();
-    if(!_callDo || (_callDo && _pOp->Do(pOb, "", pConv->GetOptions(OBConversion::GENOPTIONS), pConv)))  
+    if(!_callDo || _pOp->Do(pOb, "", pConv->GetOptions(OBConversion::GENOPTIONS), pConv))  
       _obvec.push_back(pOb); // Store the object pointer.
 
     if(pConv->IsLast())

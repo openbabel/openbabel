@@ -125,6 +125,7 @@ namespace OpenBabel {
       OBFormat*   GetInFormat() const{return pInFormat;};
       OBFormat*   GetOutFormat() const{return pOutFormat;};
       std::string GetInFilename() const{return InFilename;};
+      std::string GetOutFilename() const{return OutFilename;};
 
       ///Get the position in the input stream of the object being read
       std::streampos GetInPos()const{return wInpos;};
@@ -346,7 +347,7 @@ protected:
       static OPAMapType& OptionParamArray(Option_type typ);
       bool             OpenAndSetFormat(bool SetFormat, std::ifstream* is, std::stringstream* ss=NULL);
 
-      std::string	  InFilename;
+      std::string	  InFilename, OutFilename; //OutFileName added v2.4.0
       std::istream*     pInStream;
       std::ostream*     pOutStream;
       static OBFormat*  pDefaultFormat;

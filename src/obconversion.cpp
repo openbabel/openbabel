@@ -1131,7 +1131,7 @@ namespace OpenBabel {
   int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& OutputFileName,
                                 std::vector<std::string>& OutputFileList)
   {
-    //OBConversion::OutFilename = OutputFileName; ready for 2.4.0
+    OBConversion::OutFilename = OutputFileName; //ready for 2.4.0
 
     istream* pIs=NULL;
     ostream* pOs=NULL;
@@ -1359,7 +1359,7 @@ namespace OpenBabel {
         //Single input and output files
         Count = Convert(pIs,pOs);
 
-        if(!os.is_open() && !OutputFileName.empty())
+        if(os && !os.is_open() && !OutputFileName.empty())
           {
             //Output was written to temporary string stream. Output it to the file
             os.open(OutputFileName.c_str(),omode);
@@ -1391,11 +1391,11 @@ namespace OpenBabel {
         if(SetFormat || SetInFormat("smi"))
           {
             ss->clear();
-            ss->str(InFilename); //...use the stringstream instead
+            ss->str(InFilename); 
             return true;
           }
       }
-      else if(!SetFormat)
+    else if(!SetFormat)
       {
         pInFormat = FormatFromExt(InFilename.c_str());
         if(pInFormat==NULL)
@@ -1441,7 +1441,7 @@ Additional options :
 -b Convert dative bonds e.g.[N+]([O-])=O to N(=O)=O
 -r Remove all but the largest contiguous fragment
 -c Center Coordinates
--C Combine mols in first file with others having same name
+-C Combine mols in first file with others by name
 --filter <filterstring> Filter: convert only when tests are true:\n
 --add <list> Add properties from descriptors\n
 --delete <list> Delete properties in list\n
