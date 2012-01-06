@@ -81,6 +81,7 @@ set(formats_misc
       ghemicalformat
       gromos96format
       groformat
+      lmpdatformat
       mmcifformat
       mmodformat
       moldenformat
@@ -112,6 +113,9 @@ if(MSVC90 OR SHARED_POINTER)
     rsmiformat
   )
 endif(MSVC90 OR SHARED_POINTER)
+
+
+set_source_files_properties(lmpdatformat.cpp PROPERTIES COMPILE_FLAGS "-std=c++0x")
 
 set(optional_formatgroups "")
 if(CAIRO_FOUND)
