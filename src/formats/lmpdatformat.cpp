@@ -16,7 +16,7 @@ GNU General Public License for more details.
 #include <openbabel/obiter.h>
 
 #include <sstream>
-#include <unordered_map>
+#include <map>
 
 using namespace std;
 namespace OpenBabel
@@ -88,16 +88,16 @@ namespace OpenBabel
     OBAtom *atom;
     double ThisMass;
     string ThisAtom;
-    unordered_map<string, double> AtomMass;
+    map<string, double> AtomMass;
     FOR_ATOMS_OF_MOL(atom, mol)
     {
 		 ThisMass=atom->GetAtomicMass();
 		 ThisAtom=etab.GetSymbol(atom->GetAtomicNum());
 		 AtomMass[ThisAtom] = ThisMass;
     }
-    unordered_map<string, int> AtomType;
+    map<string, int> AtomType;
     int AtomIndex=0;
-    unordered_map<string, double>::iterator itr;
+    map<string, double>::iterator itr;
     //Set AtomType integer
     for(itr=AtomMass.begin();itr!=AtomMass.end();++itr) 
     {
@@ -109,7 +109,7 @@ namespace OpenBabel
     mol.ConnectTheDots();
     OBBond *bond;
     char BondString[BUFF_SIZE];
-    unordered_map<string, int> BondType;
+    map<string, int> BondType;
     FOR_BONDS_OF_MOL(bond,mol)
     {
 	    a=bond->GetBeginAtom();
@@ -133,7 +133,7 @@ namespace OpenBabel
 	    }
 	    BondType[BondString] = 0;
     }
-    unordered_map<string, int>::iterator intitr;
+    map<string, int>::iterator intitr;
     int BondIndex=0;
     //Set the BondType integer
     for(intitr=BondType.begin();intitr!=BondType.end();++intitr)
@@ -147,7 +147,7 @@ namespace OpenBabel
     OBAngle *angle;
     int anglecount=0;
     char AngleString[BUFF_SIZE];
-    unordered_map<string, int> AngleType;
+    map<string, int> AngleType;
     FOR_ANGLES_OF_MOL(angle,mol)
     {
 	    anglecount++;
@@ -188,7 +188,7 @@ namespace OpenBabel
     OBTorsion *dihedral;
     int dihedralcount=0;
     char DihedralString[BUFF_SIZE];
-    unordered_map<string, int>DihedralType;
+    map<string, int>DihedralType;
     FOR_TORSIONS_OF_MOL(dihedral, mol)
     {
 	    dihedralcount++;
@@ -311,7 +311,7 @@ namespace OpenBabel
     //Set atomic charges for atom_style=full
     //These are charges for the SPC water model
     const char *selectCharges = pConv->IsOption("q",OBConversion::OUTOPTIONS);
-    unordered_map<string, double> AtomCharge;
+    map<string, double> AtomCharge;
     for(itr=AtomMass.begin();itr!=AtomMass.end();++itr) 
     {
 	    if(selectCharges)
