@@ -2368,6 +2368,8 @@ namespace OpenBabel
     // Take optimal step
     LineSearchTakeStep(origCoords, direction, opt_step);
 
+    delete [] origCoords;
+
     return opt_step * scale;
   }
 
