@@ -1681,6 +1681,12 @@ namespace OpenBabel {
     if (ifs)
       ifs.close();
 
+    // Free memory
+    for (i = _vexttyp.begin();i != _vexttyp.end();++i) {
+      sp = i->first;
+      delete sp;
+    }
+
     return true;
   }
 
