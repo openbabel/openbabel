@@ -8,7 +8,8 @@ namespace OpenBabel
 {
 
   // Class definition of CairoPainter
-  CairoPainter::CairoPainter() : m_surface(0), m_cairo(0), m_fontPointSize(12)
+  CairoPainter::CairoPainter(int width, int height, string title) : m_surface(0), m_cairo(0),
+    m_fontPointSize(12), m_width(width), m_height(height), m_pen_width(1), m_title(title)
   {
   }
 
@@ -27,11 +28,33 @@ namespace OpenBabel
       cairo_destroy(m_cairo);
     if (m_surface)
       cairo_surface_destroy(m_surface);
+
+    // Work out the scaling factor
+    double scale_x = m_width / (double) width;
+    double scale_y = (m_height-16) / (double) height; // Leave some extra space for the title
+    double scale = std::min(scale_x, scale_y);
+
     // create new surface to paint on
-    m_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, static_cast<int> (width), static_cast<int> (height));
+    m_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, static_cast<int> (m_width), static_cast<int> (m_height));
     m_cairo = cairo_create(m_surface);
     cairo_set_source_rgb (m_cairo, 255, 255, 255);
     cairo_paint (m_cairo);
+    cairo_set_line_width(m_cairo, m_pen_width);
+
+    // Add the title
+    if (!m_title.empty()) {
+      this->SetPenColor(OBColor("black"));
+      this->SetFontSize(static_cast<int>(16.0));
+      OBFontMetrics fm = this->GetFontMetrics(m_title);
+      this->DrawText(m_width/2.0 - fm.width/2.0, m_height - fm.height * 0.25, m_title);
+    }
+
+    // Translate the over-scaled dimension into the centre
+    if (scale < scale_y)
+      cairo_translate(m_cairo, 0, m_height/2.0 - scale*height/2.0);
+    else
+      cairo_translate(m_cairo, m_width/2.0 - scale*width/2.0, 0);
+    cairo_scale(m_cairo, scale, scale); // Set a scaling transformation
   }
   
   bool CairoPainter::IsGood() const
@@ -61,7 +84,8 @@ namespace OpenBabel
       
   void CairoPainter::SetPenWidth(double width)
   {
-    cairo_set_line_width(m_cairo, width);
+    m_pen_width = width;
+    
   }
 
   void CairoPainter::DrawLine(double x1, double y1, double x2, double y2)
@@ -125,51 +149,12 @@ namespace OpenBabel
     return CAIRO_STATUS_SUCCESS;
   }
 
-  static cairo_surface_t *
-  scale_surface (cairo_surface_t *old_surface, 
-                int old_width, int old_height,
-                int new_width, int new_height)
-  {
-    cairo_surface_t *new_surface = cairo_surface_create_similar(old_surface, CAIRO_CONTENT_COLOR_ALPHA, new_width, new_height);
-    cairo_t *cr = cairo_create (new_surface);
-
-    // Draw white background
-    cairo_set_source_rgb (cr, 255, 255, 255);
-    cairo_rectangle (cr, 0, 0, new_width, new_height);
-    cairo_fill (cr);
-
-    // Work out the scaling factor
-    double scale_x = new_width / (double) old_width;
-    double scale_y = new_height / (double) old_height;
-    double scale = std::min(scale_x, scale_y);
-
-    // Translate the over-scaled dimension into the centre
-    if (scale < scale_y)
-      cairo_translate(cr, 0, new_height/2.0 - scale*old_height/2.0);
-    else
-      cairo_translate(cr, new_width/2.0 - scale*old_width/2.0, 0);
-
-    cairo_scale(cr, scale, scale); // Scale the drawing
-
-    cairo_set_source_surface(cr, old_surface, 0, 0); // Redraw the old surface onto the new
-
-    cairo_paint(cr); // Do the actual drawing
-
-    cairo_destroy(cr);
-
-    return new_surface;
-  }
-
-  void CairoPainter::WriteImage(std::ostream& ofs, int newWidth, int newHeight)
+  void CairoPainter::WriteImage(std::ostream& ofs)
   {
     if (!m_cairo || !m_surface)
       return;
     vector<char> in;
-    int width = cairo_image_surface_get_width(m_surface);
-    int height = cairo_image_surface_get_height(m_surface);
-    cairo_surface_t *new_surface = scale_surface (m_surface, width, height, newWidth, newHeight);
-    cairo_surface_write_to_png_stream(new_surface, writeFunction, &in);
-    cairo_surface_destroy(new_surface);
+    cairo_surface_write_to_png_stream(m_surface, writeFunction, &in);
     for(int i=0; i<in.size(); ++i)
       ofs << in.at(i);
   }

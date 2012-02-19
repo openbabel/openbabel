@@ -10,6 +10,7 @@ namespace OpenBabel
   {
     public:
       CairoPainter();
+      CairoPainter::CairoPainter(int width, int height, std::string title="");
       ~CairoPainter();
       //! @name OBPainter methods
       //@{
@@ -30,13 +31,17 @@ namespace OpenBabel
       //! @name CairoPainter specific
       //@{
       void WriteImage(const std::string &filename);
-      void WriteImage(std::ostream& ofs, int newWidth=300, int newHeight=300);
+      void WriteImage(std::ostream& ofs);
       //@}
  
     private:
       cairo_surface_t *m_surface;
       cairo_t *m_cairo;
       int m_fontPointSize;
+      int m_width;
+      int m_height;
+      double m_pen_width;
+      std::string m_title;
   };
 
 }
