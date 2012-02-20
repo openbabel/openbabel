@@ -8,8 +8,8 @@ namespace OpenBabel
 {
 
   // Class definition of CairoPainter
-  CairoPainter::CairoPainter(int width, int height, string title) : m_surface(0), m_cairo(0),
-    m_fontPointSize(12), m_width(width), m_height(height), m_pen_width(1), m_title(title)
+  CairoPainter::CairoPainter() : m_surface(0), m_cairo(0),
+    m_fontPointSize(12), m_width(0), m_height(0), m_pen_width(1), m_title(""), m_index(1)
   {
   }
 
@@ -23,37 +23,44 @@ namespace OpenBabel
 
   void CairoPainter::NewCanvas(double width, double height)
   {
-    // clean up
-    if (m_cairo)
-      cairo_destroy(m_cairo);
-    if (m_surface)
-      cairo_surface_destroy(m_surface);
+    if (m_index == 1) {
+      // create new surface to paint on
+      m_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, static_cast<int> (m_width), static_cast<int> (m_height));
+      m_cairo = cairo_create(m_surface);
+      cairo_set_source_rgb (m_cairo, 255, 255, 255);
+      cairo_paint (m_cairo);
+      cairo_set_line_width(m_cairo, m_pen_width);
+    }
+    else {
+      // reset transformation matrix
+      cairo_identity_matrix(m_cairo);
+    }
+
+    // Work out some things!
+    double cellwidth = m_width/m_ncols;
+    double cellheight = m_height/m_nrows;
+    int row = (m_index - 1)/m_ncols + 1;
+    int col = m_index - ((row-1)*m_ncols);
 
     // Work out the scaling factor
-    double scale_x = m_width / (double) width;
-    double scale_y = (m_height-16) / (double) height; // Leave some extra space for the title
+    double scale_x = cellwidth / (double) width;
+    double scale_y = (cellheight-16) / (double) height; // Leave some extra space for the title
     double scale = std::min(scale_x, scale_y);
-
-    // create new surface to paint on
-    m_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, static_cast<int> (m_width), static_cast<int> (m_height));
-    m_cairo = cairo_create(m_surface);
-    cairo_set_source_rgb (m_cairo, 255, 255, 255);
-    cairo_paint (m_cairo);
-    cairo_set_line_width(m_cairo, m_pen_width);
 
     // Add the title
     if (!m_title.empty()) {
       this->SetPenColor(OBColor("black"));
       this->SetFontSize(static_cast<int>(16.0));
       OBFontMetrics fm = this->GetFontMetrics(m_title);
-      this->DrawText(m_width/2.0 - fm.width/2.0, m_height - fm.height * 0.25, m_title);
+      this->DrawText(cellwidth/2.0 - fm.width/2.0 + cellwidth*(col-1),
+                     cellheight - fm.height * 0.25 + cellheight*(row-1), m_title);
     }
 
     // Translate the over-scaled dimension into the centre
     if (scale < scale_y)
-      cairo_translate(m_cairo, 0, m_height/2.0 - scale*height/2.0);
+      cairo_translate(m_cairo, 0 + cellwidth*(col-1), cellheight/2.0 - scale*height/2.0 + cellheight*(row-1));
     else
-      cairo_translate(m_cairo, m_width/2.0 - scale*width/2.0, 0);
+      cairo_translate(m_cairo, cellwidth/2.0 - scale*width/2.0 + cellwidth*(col-1), 0 + cellheight*(row-1));
     cairo_scale(m_cairo, scale, scale); // Set a scaling transformation
   }
   
