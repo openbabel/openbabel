@@ -79,6 +79,19 @@ public:
       " d do not display molecule name\n"
       " s use asymmetric double bonds\n"
       " t use thicker lines\n"
+      " A display aliases, if present\n"
+      "    This applies to structures which have an alternative, usually\n"
+      "    shorter, representation already present. This might have been input\n"
+      "    from an A or S superatom entry in an sd or mol file, or can be\n"
+      "    generated using the --genalias option. For example::\n \n"
+
+      "      obabel -:\"c1cc(C=O)ccc1C(=O)O\" -O out.svg\n"
+      "             --genalias -xA\n \n"
+
+      "    would add a aliases COOH and CHO to represent the carboxyl and\n"
+      "    aldehyde groups and would display them as such in the svg diagram.\n"
+      "    The aliases which are recognized are in data/superatom.txt, which\n"
+      "    can be edited.\n"
       "\n"
     ;
   };
@@ -159,7 +172,7 @@ bool PNG2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   if(pConv->IsOption("A"))
   {
-    AliasData::RevertToAliasForm(*pmol);
+    AliasData::RevertToAliasForm(workingmol);
     depictor.SetAliasMode();
   }
   if(pConv->IsOption("t"))
