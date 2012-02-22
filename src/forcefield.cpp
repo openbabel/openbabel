@@ -855,7 +855,21 @@ namespace OpenBabel
     }
 
     if (IsSetupNeeded(mol)) {
+      int *formal_charge = new int[mol.NumAtoms()];
+      int i;
+
+      i = 0;
+      FOR_ATOMS_OF_MOL (atom, mol) {
+        formal_charge[i] = atom->GetFormalCharge();
+        ++i;
+      }
       _mol = mol;
+      i = 0;
+      FOR_ATOMS_OF_MOL (atom, _mol) {
+        atom->SetFormalCharge(formal_charge[i]);
+        ++i;
+      }
+      delete [] formal_charge;
       _ncoords = _mol.NumAtoms() * 3;
 
       if (_velocityPtr)
