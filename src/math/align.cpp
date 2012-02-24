@@ -239,7 +239,7 @@ namespace OpenBabel
     double rot[3][3];
     for (int row=0; row<3; ++row)
        for (int col=0; col<3; ++col)
-         rot[row][col] = _rotMatrix(row, col);
+         rot[col][row] = _rotMatrix(row, col); // Return in form suitable for use in expressions like "result *= rotMatrix";
     matrix3x3 rotmat = matrix3x3(rot);
 
     return rotmat;

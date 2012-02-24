@@ -181,21 +181,36 @@ bool OpAlign::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*
 
     // Get the atoms equivalent to those in ref molecule        
     vector<int> ats = _pOpIsoM->GetMatchAtoms();
-    // Make a vector of their coordinates
-    vector<vector3> vec;
-    for(vector<int>::iterator iter=ats.begin(); iter!=ats.end(); ++iter)
-      vec.push_back(pmol->GetAtom(*iter)->GetVector());
 
+    // Make a vector of their coordinates and get the centroid
+    vector<vector3> vec;
+    vector3 centroid;
+    for(vector<int>::iterator iter=ats.begin(); iter!=ats.end(); ++iter) {
+      vector3 v = pmol->GetAtom(*iter)->GetVector();
+      centroid += v;
+      vec.push_back(v);
+    }
+    centroid /= vec.size();
+    
+    // Do the alignment
     _align.SetTarget(vec);
     if(!_align.Align())
       return false;
 
-    //rotate the target molecule
+    // Get the centroid of the reference atoms
+    vector3 ref_centroid;
+    for(vector<vector3>::iterator iter=_refvec.begin(); iter!=_refvec.end(); ++iter)
+      ref_centroid += *iter;
+    ref_centroid /= _refvec.size();
+
+    //subtract the centroid, rotate the target molecule, then add the centroid
     matrix3x3 rotmatrix = _align.GetRotMatrix();
     for (unsigned int i = 1; i <= pmol->NumAtoms(); ++i)
     {
       vector3 tmpvec = pmol->GetAtom(i)->GetVector();
+      tmpvec -= centroid;
       tmpvec *= rotmatrix; //apply the rotation
+      tmpvec += ref_centroid;
       pmol->GetAtom(i)->SetVector(tmpvec);
     }
   }
