@@ -902,8 +902,8 @@ namespace OpenBabel
     } else {
       if (_validSetup) {
         PrintTypes();
-	PrintFormalCharges();
-	PrintPartialCharges();
+        PrintFormalCharges();
+        PrintPartialCharges();
         SetCoordinates(mol);
         return true;
       } else {
@@ -925,7 +925,21 @@ namespace OpenBabel
     }
 
     if (IsSetupNeeded(mol)) {
+      int *formal_charge = new int[mol.NumAtoms()];
+      int i;
+
+      i = 0;
+      FOR_ATOMS_OF_MOL (atom, mol) {
+        formal_charge[i] = atom->GetFormalCharge();
+        ++i;
+      }
       _mol = mol;
+      i = 0;
+      FOR_ATOMS_OF_MOL (atom, _mol) {
+        atom->SetFormalCharge(formal_charge[i]);
+        ++i;
+      }
+      delete [] formal_charge;
       _ncoords = _mol.NumAtoms() * 3;
 
       if (_velocityPtr)
@@ -1011,9 +1025,9 @@ namespace OpenBabel
       if (bond->GetBO() != (mol.GetBond(bond->GetIdx()))->GetBO())
         return true;
       if (bond->GetBeginAtom()->GetAtomicNum()
-        != (mol.GetBond(bond->GetIdx()))->GetBeginAtom()->GetAtomicNum()
-	|| bond->GetEndAtom()->GetAtomicNum()
-	!= (mol.GetBond(bond->GetIdx()))->GetEndAtom()->GetAtomicNum())
+          != (mol.GetBond(bond->GetIdx()))->GetBeginAtom()->GetAtomicNum()
+          || bond->GetEndAtom()->GetAtomicNum()
+          != (mol.GetBond(bond->GetIdx()))->GetEndAtom()->GetAtomicNum())
         return true;
     }
 
@@ -2131,11 +2145,11 @@ namespace OpenBabel
     }
 
     /*
-       IF_OBFF_LOGLVL_LOW {
-       snprintf(_logbuf, BUFF_SIZE, "UPDATE VDW PAIRS: %d --> %d (VDW), %d (ELE) \n", i+1,
-       _vdwpairs.CountBits(), _elepairs.CountBits());
-       OBFFLog(_logbuf);
-       }
+      IF_OBFF_LOGLVL_LOW {
+      snprintf(_logbuf, BUFF_SIZE, "UPDATE VDW PAIRS: %d --> %d (VDW), %d (ELE) \n", i+1,
+      _vdwpairs.CountBits(), _elepairs.CountBits());
+      OBFFLog(_logbuf);
+      }
     */
   }
 
@@ -2150,12 +2164,12 @@ namespace OpenBabel
 
   unsigned int OBForceField::GetNumElectrostaticPairs()
   {
-     return _elepairs.CountBits();
+    return _elepairs.CountBits();
   }
 
   unsigned int OBForceField::GetNumVDWPairs()
   {
-     return _vdwpairs.CountBits();
+    return _vdwpairs.CountBits();
   }
 
   //////////////////////////////////////////////////////////////////////////////////
