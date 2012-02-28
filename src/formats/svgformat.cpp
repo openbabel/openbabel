@@ -146,7 +146,7 @@ public:
 
   virtual unsigned int Flags()
   {
-      return NOTREADABLE | ZEROATOMSOK;
+      return NOTREADABLE | ZEROATOMSOK | DEPICTION2D;
   }
 
   bool WriteChemObject(OBConversion* pConv);

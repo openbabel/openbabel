@@ -23,6 +23,8 @@ GNU General Public License for more details.
 #include<openbabel/obconversion.h>
 #include "opisomorph.h"
 
+#define DEPICTION2D     0x100 // Should have the same value as in format.h!!
+
 namespace OpenBabel
 {
 using namespace std;
@@ -109,6 +111,16 @@ bool OpAlign::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*
         return false;
       }
     }
+  }
+
+  // If the output format is a 2D depiction format, then we should align
+  // on the 2D coordinates and not the 3D coordinates (if present). This
+  //means we need to generate the 2D coordinates at this point.
+  if(pmol->GetDimension()==3 && (pConv->GetOutFormat()->Flags() & DEPICTION2D))
+  {
+    OBOp* pgen = OBOp::FindType("gen2D");
+    if(pgen)
+      pgen->Do(pmol);
   }
 
   // All molecules must have coordinates, so add them if 0D
