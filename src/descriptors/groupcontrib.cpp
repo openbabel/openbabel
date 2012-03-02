@@ -67,6 +67,8 @@ namespace OpenBabel
       if(ln[0]=='#') continue;
       if(ln.find(";heavy")!=string::npos)
         heavy=true;
+      if(ln.find(";debug")!=string::npos)
+        _debug = true;
       if(ln[0]==';') continue;
       tokenize(vs, ln);
 
@@ -119,37 +121,44 @@ namespace OpenBabel
     vector<vector<int> >::iterator j;
     vector<pair<OBSmartsPattern*, double> >::iterator i;
 
+    stringstream debugMessage;
+    OBBitVec seenHeavy(mol.NumAtoms() + 1);
+    OBBitVec seenHydrogen(mol.NumAtoms() + 1);
     vector<double> atomValues(mol.NumAtoms(), 0.0);
 
     OBMol tmpmol;
     tmpmol = mol;
-
     tmpmol.ConvertDativeBonds();
 
     // atom contributions
-    //cout << "atom contributions:" << endl;
+    if (_debug) debugMessage << "Heavy atom contributions:" << endl;
     for (i = _contribsHeavy.begin();i != _contribsHeavy.end();++i) {
       if (i->first->Match(tmpmol)) {
         _mlist = i->first->GetMapList();
         for (j = _mlist.begin();j != _mlist.end();++j) {
-	  atomValues[(*j)[0] - 1] = i->second;
-	  //cout << (*j)[0] << " = " << i->first->GetSMARTS() << " : " << i->second << endl;
+          atomValues[(*j)[0] - 1] = i->second;
+          seenHeavy.SetBitOn((*j)[0]);
+	        if (_debug)
+            debugMessage << (*j)[0] << " = " << i->first->GetSMARTS() << " : " << i->second << endl;
         }
       }
     }
 
     vector<double> hydrogenValues(tmpmol.NumAtoms(), 0.0);
-    //hydrogenValues.resize(tmpmol.NumAtoms());
 
-    // hydrogen contributions
-    //cout << "hydrogen contributions:" << endl;
+    // Hydrogen contributions - note that matches to hydrogens themselves are ignored
+    if (_debug) debugMessage << "  Hydrogen contributions:" << endl;
     for (i = _contribsHydrogen.begin();i != _contribsHydrogen.end();++i) {
       if (i->first->Match(tmpmol)) {
         _mlist = i->first->GetMapList();
         for (j = _mlist.begin();j != _mlist.end();++j) {
-	  int Hcount = tmpmol.GetAtom((*j)[0])->GetValence() - tmpmol.GetAtom((*j)[0])->GetHvyValence();
-	  hydrogenValues[(*j)[0] - 1] = i->second * Hcount;
-	  //cout << (*j)[0] << " = " << i->first->GetSMARTS() << " : " << i->second << endl;
+          if (tmpmol.GetAtom((*j)[0])->IsHydrogen())
+            continue;
+          int Hcount = tmpmol.GetAtom((*j)[0])->GetValence() - tmpmol.GetAtom((*j)[0])->GetHvyValence();
+          hydrogenValues[(*j)[0] - 1] = i->second * Hcount;
+          seenHydrogen.SetBitOn((*j)[0]);
+          if (_debug)
+            debugMessage << (*j)[0] << " = " << i->first->GetSMARTS() << " : " << i->second << " Hcount " << Hcount << endl;
         }
       }
     }
@@ -157,22 +166,26 @@ namespace OpenBabel
     // total atomic and hydrogen contribution
     double total = 0.0;
 
+    if (_debug)
+      debugMessage << "  Final contributions:\n";
     for (int index = 0; index < tmpmol.NumAtoms(); index++) {
-      if (tmpmol.GetAtom(index+1)->IsHydrogen())
+      if (tmpmol.GetAtom(index + 1)->IsHydrogen())
         continue;
-
       total += atomValues[index];
       total += hydrogenValues[index];
+      if (_debug) {
+        debugMessage << index+1 << " = " << atomValues[index] << " ";
+        if (!seenHeavy.BitIsSet(index + 1)) debugMessage << "un";
+        debugMessage << "matched...";
+        int Hcount = tmpmol.GetAtom(index + 1)->GetValence() - tmpmol.GetAtom(index + 1)->GetHvyValence();
+        debugMessage << "   " << Hcount << " hydrogens = " << hydrogenValues[index] << " ";
+        if (!seenHydrogen.BitIsSet(index + 1)) debugMessage << "un";
+        debugMessage << "matched\n";        
+      }
     }
 
-    /*
-    FOR_ATOMS_OF_MOL (a, tmpmol)
-      cout << "hydrogens on atom " << a->GetIdx() << ": " << a->GetValence() - a->GetHvyValence() << endl;
-    for (int index = 0; index < tmpmol.NumAtoms(); index++)
-      cout << "atom " << index << ": " << atomValues[index] << endl;
-    for (int index = 0; index < tmpmol.NumAtoms(); index++)
-      cout << "hydrogen " << index << ": " << hydrogenValues[index] << endl;
-    */
+    if (_debug)
+      obErrorLog.ThrowError(__FUNCTION__, debugMessage.str(), obWarning);
 
     return total;
   }
