@@ -1373,6 +1373,15 @@ namespace OpenBabel
               atom->SetAtomicNum(atomicNum); //set atomic number, or '0' if the atom type is not recognized
               atom->SetType(tmpSymbol); //set atomic number, or '0' if the atom type is not recognized
               atom->SetVector(posat->mCoordCart[0],posat->mCoordCart[1],posat->mCoordCart[2]);
+              if(posat->mLabel.size()>0)
+                {
+                  OBPairData *label = new OBPairData;
+                  label->SetAttribute("_atom_site_label");
+                  label->SetValue(posat->mLabel);
+                  label->SetOrigin(fileformatInput);
+                  atom->SetData(label);
+                }
+                
             }
           if (!pConv->IsOption("b",OBConversion::INOPTIONS))
             pmol->ConnectTheDots();
@@ -1472,13 +1481,28 @@ namespace OpenBabel
     unsigned int i=0;
     FOR_ATOMS_OF_MOL(atom, *pmol)
       {
-        snprintf(buffer, BUFF_SIZE, "    %3s  %3s%d  %10.5f %10.5f %10.5f\n",
-                 etab.GetSymbol(atom->GetAtomicNum()),
-                 etab.GetSymbol(atom->GetAtomicNum()),
-                 ++i,
-                 atom->GetX(),
-                 atom->GetY(),
-                 atom->GetZ());
+        const char* label=etab.GetSymbol(atom->GetAtomicNum());
+        if(strlen(atom->GetTitle())>0) label=atom->GetTitle();
+        if (atom->HasData("_atom_site_label"))
+          {
+            OBPairData *label = dynamic_cast<OBPairData *> (atom->GetData("_atom_site_label"));
+            snprintf(buffer, BUFF_SIZE, "    %3s  %3s  %10.5f %10.5f %10.5f\n",
+                     etab.GetSymbol(atom->GetAtomicNum()),
+                     label->GetValue().c_str(),
+                     atom->GetX(),
+                     atom->GetY(),
+                     atom->GetZ());
+          }
+        else
+          {
+            snprintf(buffer, BUFF_SIZE, "    %3s  %3s%d  %10.5f %10.5f %10.5f\n",
+                     etab.GetSymbol(atom->GetAtomicNum()),
+                     etab.GetSymbol(atom->GetAtomicNum()),
+                     ++i,
+                     atom->GetX(),
+                     atom->GetY(),
+                     atom->GetZ());
+          }
         ofs << buffer;
       }
     return true;
