@@ -73,6 +73,7 @@ set(ops
   ops/readconformers.cpp
   ops/sort.cpp
   ops/opisomorph.cpp
+  ops/ophighlight.cpp
   ops/xout.cpp
 )
 if(EIGEN2_FOUND OR EIGEN3_FOUND)
