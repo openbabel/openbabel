@@ -48,7 +48,7 @@ public:
   virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
   virtual bool Do(OBBase* pOb, const char* OptionText=NULL, OpMap* pOptions=NULL, OBConversion* pConv=NULL);
 private:
-  bool OpHighlight::AddDataToSubstruct(OBMol* pmol,
+  bool AddDataToSubstruct(OBMol* pmol,
         const std::vector<int>& atomIdxs,
         const std::string& attribute,
         const std::string& value);
