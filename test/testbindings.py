@@ -30,25 +30,9 @@ try:
     import openbabel as ob
 except ImportError:
     ob = None
-    modulelocation = os.path.join("..", "scripts", "pybuild")
-    if os.path.isfile(os.path.join(modulelocation, "openbabel.py")):
-        sys.path = [modulelocation] + sys.path
-        try:
-            import openbabel as ob
-        except ImportError:
-            pass
-
-# if iswin:
-#    pybellocation = os.path.join(here, "..", "scripts", "python")
-#else:
-#    pybellocation = os.path.join("..", "scripts")
-#sys.path = [pybellocation] + sys.path
 
 try:
-    if iswin:
-        import pybel_py2x as pybel
-    else:
-        import pybel
+    import pybel_py2x as pybel
 except ImportError:
     pybel = None
 

@@ -198,7 +198,7 @@ if (PYTHON_BINDINGS)
       bindings _pybel example)
   foreach(pybindtest ${pybindtests})
     SET_SOURCE_FILES_PROPERTIES(test${pybindtest}.py PROPERTIES
-        PYTHONPATH "${CMAKE_BINARY_DIR}/scripts/pybuild:${CMAKE_BINARY_DIR}/lib"
+        PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib"
         BABEL_LIBDIR "${CMAKE_BINARY_DIR}/lib"
         BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
     )
