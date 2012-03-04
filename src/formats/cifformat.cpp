@@ -1481,8 +1481,6 @@ namespace OpenBabel
     unsigned int i=0;
     FOR_ATOMS_OF_MOL(atom, *pmol)
       {
-        const char* label=etab.GetSymbol(atom->GetAtomicNum());
-        if(strlen(atom->GetTitle())>0) label=atom->GetTitle();
         if (atom->HasData("_atom_site_label"))
           {
             OBPairData *label = dynamic_cast<OBPairData *> (atom->GetData("_atom_site_label"));
