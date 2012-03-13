@@ -1192,7 +1192,7 @@ namespace OpenBabel
   void OBMol::SetInternalCoord(std::vector<OBInternalCoord*> int_coord) {
     if (int_coord[0] != NULL) {
       std::vector<OBInternalCoord*>::iterator it = int_coord.begin();
-      int_coord.insert(it, NULL);
+      int_coord.insert(it, static_cast<OBInternalCoord*>(NULL));
     }
 
     if (int_coord.size() != _natoms + 1) {
