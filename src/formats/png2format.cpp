@@ -65,8 +65,8 @@ public:
 
     "Write Options e.g. -xp 500\n"
     " p <pixels> image size, default 300\n"
-    " w <pixels> image width, default is image size (p)\n"
-    " h <pixels> image height, default is image size (p)\n"
+    " w <pixels> image width (or from image size)\n"
+    " h <pixels> image height (or from image size)\n"
       " c# number of columns in table\n"
       " r# number of rows in table\n"
       " N# max number objects to be output\n"
