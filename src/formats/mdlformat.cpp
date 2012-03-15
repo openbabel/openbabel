@@ -479,29 +479,6 @@ namespace OpenBabel
 	        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
 	        return false;
 	      }
-        if (stereo) {
-          OBStereo::BondDirection bd;
-          switch (stereo) {
-            case 1:
-              bd = OBStereo::UpBond;
-              break;
-            case 6:
-              bd = OBStereo::DownBond;
-              break;
-            case 4:
-              bd = OBStereo::UnknownDir;
-              break;
-            case 3: // Unspecified stereo around double bond
-              if (order==2)
-                bd = OBStereo::UnknownDir;
-              break;
-            default:
-              bd = OBStereo::NotStereo;
-              break;
-          }
-          if (bd != OBStereo::NotStereo)
-            updown[mol.GetBond(begin, end)] = bd;
-        }
       }
 
       //
@@ -610,6 +587,22 @@ namespace OpenBabel
       AliasData* ad = (*iter).first;
       unsigned atomnum = (*iter).second->GetIdx();
       ad->Expand(mol, atomnum); //Make chemically meaningful, if possible.
+    }
+
+    // Set up the updown map we are going to use to derive stereo info
+    FOR_BONDS_OF_MOL(bond, mol) {
+      OBStereo::BondDirection bd = OBStereo::NotStereo;;
+      unsigned int flag = bond->GetFlags();
+      if (flag & OBBond::Wedge)
+        bd = OBStereo::UpBond;
+      if (flag & OBBond::Hash)
+        bd = OBStereo::DownBond;
+      if (flag & OBBond::WedgeOrHash)
+        bd = OBStereo::UnknownDir;
+      if (flag & OBBond::CisOrTrans && bond->GetBondOrder()==2)
+        bd = OBStereo::UnknownDir;
+      if (bd != OBStereo::NotStereo)
+        updown[&*bond] = bd;
     }
 
     mol.AssignSpinMultiplicity();

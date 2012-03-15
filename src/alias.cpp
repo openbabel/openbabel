@@ -139,10 +139,13 @@ bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
   }
   obFrag.SetDimension(dimension);//will be same as parent
 
-  //Find index of *first* atom to which XxAtom is attached
+  //Find index of *first* atom to which XxAtom is attached (could be NULL)
   OBBondIterator bi;
   OBAtom* firstAttachAtom = XxAtom->BeginNbrAtom(bi);
   unsigned mainAttachIdx = firstAttachAtom ? firstAttachAtom->GetIdx() : 0;
+  unsigned int firstAttachFlags = 0;
+  if (firstAttachAtom)
+    firstAttachFlags = mol.GetBond(XxAtom, firstAttachAtom)->GetFlags();
 
   //++Make list of other attachments* of XxAtom
   // (Added later so that the existing bonding of the XXAtom are retained)
@@ -180,7 +183,7 @@ bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
     obFrag.DeleteAtom(obFrag.GetAtom(1));//remove dummy atom
     mol += obFrag; //Combine with main molecule and connect
     if(mainAttachIdx)
-      mol.AddBond(mainAttachIdx, newFragIdx, 1);
+      mol.AddBond(mainAttachIdx, newFragIdx, 1, firstAttachFlags);
   }
 
   if(dimension==2)//Use MCDL
