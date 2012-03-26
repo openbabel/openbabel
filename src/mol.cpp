@@ -1876,6 +1876,36 @@ namespace OpenBabel
     return (true);
   }
 
+  bool OBMol::DeletePolarHydrogens()
+  {
+    OBAtom *atom;
+    vector<OBAtom*>::iterator i;
+    vector<OBAtom*> delatoms;
+
+    obErrorLog.ThrowError(__FUNCTION__,
+                          "Ran OpenBabel::DeleteHydrogens -- polar",
+                          obAuditMsg);
+
+    for (atom = BeginAtom(i);atom;atom = NextAtom(i))
+      if (atom->IsPolarHydrogen())
+        delatoms.push_back(atom);
+
+    if (delatoms.empty())
+      return(true);
+
+    IncrementMod();
+
+    for (i = delatoms.begin();i != delatoms.end();++i)
+      DeleteAtom((OBAtom *)*i);
+
+    DecrementMod();
+
+    UnsetSSSRPerceived();
+    UnsetLSSRPerceived();
+    return(true);
+  }
+
+
   bool OBMol::DeleteNonPolarHydrogens()
   {
     OBAtom *atom;
@@ -2039,7 +2069,15 @@ namespace OpenBabel
     return(true);
   }
 
-  bool OBMol::AddHydrogens(bool polaronly,bool correctForPH, double pH)
+  /*
+  this has become a wrapper for backward compatibility
+  */
+  bool OBMol::AddHydrogens(bool polaronly, bool correctForPH, double pH)
+  {
+    return(AddNewHydrogens(polaronly ? PolarHydrogen : AllHydrogen, correctForPH, pH));
+  }
+  
+  bool OBMol::AddNewHydrogens(HydrogenType whichHydrogen, bool correctForPH, double pH)
   {
     if (!IsCorrectedForPH() && correctForPH)
       CorrectForPH(pH);
@@ -2060,12 +2098,15 @@ namespace OpenBabel
     return true;
     }
     */
-    if (!polaronly)
+    if (whichHydrogen == AllHydrogen)
       obErrorLog.ThrowError(__FUNCTION__,
                             "Ran OpenBabel::AddHydrogens", obAuditMsg);
-    else
+    else if (whichHydrogen == PolarHydrogen)
       obErrorLog.ThrowError(__FUNCTION__,
                             "Ran OpenBabel::AddHydrogens -- polar only", obAuditMsg);
+    else
+      obErrorLog.ThrowError(__FUNCTION__,
+                            "Ran OpenBabel::AddHydrogens -- nonpolar only", obAuditMsg);
 
     // Make sure we have conformers (PR#1665519)
     if (!_vconf.empty()) {
@@ -2086,7 +2127,12 @@ namespace OpenBabel
     vector<OBAtom*>::iterator i;
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       {
-        if (polaronly && !(atom->IsNitrogen() || atom->IsOxygen() ||
+        if (whichHydrogen == PolarHydrogen
+                           && !(atom->IsNitrogen() || atom->IsOxygen() ||
+                           atom->IsSulfur() || atom->IsPhosphorus()))
+          continue;
+        if (whichHydrogen == NonPolarHydrogen
+                           && (atom->IsNitrogen() || atom->IsOxygen() ||
                            atom->IsSulfur() || atom->IsPhosphorus()))
           continue;
 
@@ -2209,7 +2255,12 @@ namespace OpenBabel
 
   bool OBMol::AddPolarHydrogens()
   {
-    return(AddHydrogens(true));
+    return(AddNewHydrogens(PolarHydrogen));
+  }
+
+  bool OBMol::AddNonPolarHydrogens()
+  {
+    return(AddNewHydrogens(NonPolarHydrogen));
   }
 
   bool OBMol::AddHydrogens(OBAtom *atom)

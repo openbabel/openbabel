@@ -1,5 +1,5 @@
 /**********************************************************************
-AddPolarH.cpp - The option --AddPolarHAdds  adds hydrogen to polar atoms only.
+DelPolarH.cpp - The option --DelPolarH  deletes hydrogen from polar atoms only.
 
 Copyright(C) 2007 by Chris Morley
 
@@ -23,27 +23,27 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-class OpAddPolarH : public OBOp
+class OpDelPolarH : public OBOp
 {
 public:
-  OpAddPolarH(const char* ID) : OBOp(ID, false){};
-  const char* Description(){ return "Adds hydrogen to polar atoms only"; }
+  OpDelPolarH(const char* ID) : OBOp(ID, false){};
+  const char* Description(){ return "Deletes hydrogen from polar atoms only"; }
 
   virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
   virtual bool Do(OBBase* pOb, const char* OptionText=NULL, OpMap* pOptions=NULL, OBConversion* pConv=NULL);
 };
 
 /////////////////////////////////////////////////////////////////
-OpAddPolarH theOpAddPolarH("AddPolarH"); //Global instance
+OpDelPolarH theOpDelPolarH("DelPolarH"); //Global instance
 
 /////////////////////////////////////////////////////////////////
-bool OpAddPolarH::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConversion* pConv)
+bool OpDelPolarH::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConversion* pConv)
 {
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   if(!pmol)
     return false;
 
-  pmol->AddPolarHydrogens();
+  pmol->DeletePolarHydrogens();
 
   return true;
 }

@@ -107,6 +107,8 @@ namespace OpenBabel
   // flags 22-32 unspecified
 #define OB_CURRENT_CONFORMER	 -1
 
+enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
+
   // class introduction in mol.cpp
  class OBAPI OBMol: public OBBase
   {
@@ -461,6 +463,9 @@ namespace OpenBabel
     //! Delete all hydrogens from the supplied atom
     //! \return Success
     bool DeleteHydrogens(OBAtom*);
+    //! Delete all hydrogen atoms connected to a polar atom
+    //! \see OBAtom::IsPolarHydrogen
+    bool DeletePolarHydrogens();
     //! Delete all hydrogen atoms connected to a non-polar atom
     //! \see OBAtom::IsNonPolarHydrogen
     bool DeleteNonPolarHydrogens();
@@ -478,6 +483,10 @@ namespace OpenBabel
     bool AddHydrogens(OBAtom*);
     //! Add only polar hydrogens (i.e., attached to polar atoms, not C)
     bool AddPolarHydrogens();
+    //! Add only nonpolar hydrogens (i.e., attached to C)
+    bool AddNonPolarHydrogens();
+    //! Add polar and/or nonpolar hydrogens
+    bool AddNewHydrogens(HydrogenType whichHydrogen, bool correctForPH=false, double pH=7.4);
 
     //! If @p threshold is not specified or is zero, remove all but the largest
     //! contiguous fragment. If @p threshold is non-zero, remove any fragments with fewer

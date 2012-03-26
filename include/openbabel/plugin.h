@@ -535,7 +535,10 @@ public:
   // operations
   OB_STATIC_PLUGIN(OpAddInIndex, theOpAddInIndex)
   OB_STATIC_PLUGIN(OpAddPolarH, theOpAddPolarH)
+  OB_STATIC_PLUGIN(OpAddNonPolarH, theOpAddNonPolarH)
   OB_STATIC_PLUGIN(OpCanonical, theOpCanonical)
+  OB_STATIC_PLUGIN(OpDelPolarH, theOpDelPolarH)
+  OB_STATIC_PLUGIN(OpDelNonPolarH, theOpDelNonPolarH)
   OB_STATIC_PLUGIN(OpFillUC, theOpFillUC)
   OB_STATIC_PLUGIN(OpEnergy, theOpEnergy)
   OB_STATIC_PLUGIN(OpMinimize, theOpMinimize)

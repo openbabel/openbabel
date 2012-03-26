@@ -60,7 +60,10 @@ set(ops
   ops/addfilename.cpp
   ops/addinindex.cpp
   ops/addpolarh.cpp
+  ops/addnonpolarh.cpp
   ops/canonical.cpp
+  ops/delpolarh.cpp
+  ops/delnonpolarh.cpp
   ops/gen2D.cpp
   ops/fillUC.cpp
   ops/forcefield.cpp

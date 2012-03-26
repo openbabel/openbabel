@@ -1689,6 +1689,9 @@ namespace OpenBabel
             || (GetValence() == 3 && GetHyb() == 2)))
             return true;
     }
+    // Changes from Paolo Tosco
+    if (_ele == 16 && GetFormalCharge() == -1)
+      return true;
     return false;
   }
 

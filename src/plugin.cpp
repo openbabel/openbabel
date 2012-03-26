@@ -383,7 +383,10 @@ std::vector<std::string> EnableStaticPlugins()
   // operations
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpAddInIndex)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpAddPolarH)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpAddNonPolarH)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpCanonical)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpDelPolarH)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpDelNonPolarH)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpFillUC)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpEnergy)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpMinimize)->GetID());
