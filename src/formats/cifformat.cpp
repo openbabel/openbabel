@@ -583,7 +583,9 @@ namespace OpenBabel
     }
     if(mSpaceGroup == NULL) {
       SpaceGroup *sg = new SpaceGroup();
-      positem=mvItem.find("_symmetry_equiv_pos_as_xyz");
+      positem=mvItem.find("_space_group_symop_operation_xyz");
+      if(positem==mvItem.end())
+        positem=mvItem.find("_symmetry_equiv_pos_as_xyz");
       if(positem!=mvItem.end())
         {
           sg->AddTransform (positem->second);
@@ -595,7 +597,9 @@ namespace OpenBabel
           {
             map<ci_string,vector<string> >::const_iterator pos;
             unsigned i, nb;
-            pos=loop->second.find("_symmetry_equiv_pos_as_xyz");
+            pos=loop->second.find("_space_group_symop_operation_xyz");
+            if (pos==loop->second.end())
+              pos=loop->second.find("_symmetry_equiv_pos_as_xyz");
             if (pos!=loop->second.end())
               {
                 nb=pos->second.size();
@@ -607,7 +611,10 @@ namespace OpenBabel
           }
         if (found)
           mSpaceGroup = SpaceGroup::Find(sg);
-        delete sg;
+        if (mSpaceGroup == NULL && sg->IsValid())
+          mSpaceGroup = sg;
+        else
+          delete sg;
       }
     }
     if(mSpaceGroup == NULL)
