@@ -626,6 +626,22 @@ namespace OpenBabel
       if (pConv->IsOption("s", OBConversion::INOPTIONS)) { // Use the parities for tet stereo instead
         TetStereoFromParity(mol, parities, true); // True means "delete existing TetStereo first"
       }
+
+      // For unspecified cis/trans stereos, set their Configs to unspecified
+      // This should really be done in CisTransFrom3D like in CisTransFrom2D but can't change the API now :-/
+      map<OBBond*, OBStereo::BondDirection>::const_iterator bd_it;
+      OpenBabel::OBStereoFacade facade(&mol);
+      for(bd_it=updown.begin(); bd_it!=updown.end(); ++bd_it) {
+        OBBond* bond = bd_it->first;
+        if (bond->GetBondOrder()!=2 || bd_it->second != OBStereo::UnknownDir)
+          continue; // Only continue for those double bonds with UnknownDir
+        OBCisTransStereo* ct = facade.GetCisTransStereo(bond->GetId());
+        if (ct) {
+          OBCisTransStereo::Config config = ct->GetConfig();
+          config.specified = false;
+          ct->SetConfig(config);
+        }
+      }
     } else
     if (mol.Has2D()) {
       if (!setDimension)
@@ -644,22 +660,6 @@ namespace OpenBabel
       if (pConv->IsOption("s", OBConversion::INOPTIONS))
         TetStereoFromParity(mol, parities);
       StereoFrom0D(&mol);
-    }
-
-    // For unspecified cis/trans stereos, set their Configs to unspecified
-    map<OBBond*, OBStereo::BondDirection>::const_iterator bd_it;
-    OpenBabel::OBStereoFacade facade(&mol);
-    for(bd_it=updown.begin(); bd_it!=updown.end(); ++bd_it) {
-      OBBond* bond = bd_it->first;
-      if (bond->GetBondOrder()!=2 || bd_it->second != OBStereo::UnknownDir)
-        continue; // Only continue for those double bonds with UnknownDir
-
-      OBCisTransStereo* ct = facade.GetCisTransStereo(bond->GetId());
-      if (ct) {
-        OBCisTransStereo::Config config = ct->GetConfig();
-        config.specified = false;
-        ct->SetConfig(config);
-      }
     }
 
     return true;

@@ -2478,6 +2478,7 @@ namespace OpenBabel {
       const std::map<OBBond*, enum OBStereo::BondDirection> *updown, bool addToMol)
   {
     std::vector<OBCisTransStereo*> configs;
+    std::map<OBBond*, enum OBStereo::BondDirection>::const_iterator ud_cit;
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::CisTransFrom2D", obAuditMsg);
 
     // find all cis/trans bonds
@@ -2495,6 +2496,8 @@ namespace OpenBabel {
       // Create a vector with the coordinates of the neighbor atoms
       std::vector<vector3> bondVecs;
       OBCisTransStereo::Config config;
+      config.specified = true;
+
       // begin
       config.begin = begin->GetId();
       FOR_NBORS_OF_ATOM (nbr, begin) {
@@ -2502,6 +2505,12 @@ namespace OpenBabel {
           continue;
         config.refs.push_back(nbr->GetId());
         bondVecs.push_back(nbr->GetVector());
+
+        // Check whether a single bond with unknown dir starts at the dbl bond (tip-only convention)
+        OBBond *b = mol->GetBond(begin, &*nbr);
+        ud_cit = updown->find(b);
+        if (ud_cit!=updown->end() && ud_cit->second==OBStereo::UnknownDir && b->GetBeginAtom()==begin)
+          config.specified = false;
       }
       if (config.refs.size() == 1) {
         config.refs.push_back(OBStereo::ImplicitRef);
@@ -2516,6 +2525,12 @@ namespace OpenBabel {
           continue;
         config.refs.push_back(nbr->GetId());
         bondVecs.push_back(nbr->GetVector());
+
+        // Check whether a single bond with unknown dir starts at the dbl bond (tip-only convention)
+        OBBond *b = mol->GetBond(end, &*nbr);
+        ud_cit = updown->find(b);
+        if (ud_cit!=updown->end() && ud_cit->second==OBStereo::UnknownDir && b->GetBeginAtom()==end)
+          config.specified = false;
       }
       if (config.refs.size() == 3) {
         config.refs.push_back(OBStereo::ImplicitRef);
@@ -2524,13 +2539,11 @@ namespace OpenBabel {
         bondVecs.push_back(pos);
       }
 
-      config.specified = true;
-      if (updown) {
-        std::map<OBBond*, enum OBStereo::BondDirection>::const_iterator ud_cit;
-        ud_cit = updown->find(bond);
-        if (ud_cit!=updown->end() && ud_cit->second==OBStereo::UnknownDir)
-            config.specified = false;
-      }
+      // Handle the case where the dbl bond is marked as unknown stereo
+      ud_cit = updown->find(bond);
+      if (ud_cit!=updown->end() && ud_cit->second==OBStereo::UnknownDir)
+          config.specified = false;
+
       if (config.specified==true) { // Work out the stereochemistry
         // 0      3
         //  \    /        2 triangles: 0-1-b & 2-3-a
