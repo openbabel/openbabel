@@ -3018,7 +3018,7 @@ namespace OpenBabel {
       strcat(bracketBuffer, _pac->GetClassString(atom->GetIdx()).c_str());
 
     // Check if this is an aromatic "n" or "s" that doesn't need a hydrogen after all
-    if (atom->IsAromatic() && strlen(bracketBuffer) == 1)
+    if (atom->IsAromatic() && strlen(bracketBuffer) == 1 && atom->GetSpinMultiplicity()==0)
       bracketElement = false;
 
     // if the element is supposed to be bracketed (e.g., [U]), *always* use brackets
