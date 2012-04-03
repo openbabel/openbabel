@@ -25,6 +25,7 @@ GNU General Public License for more details.
 #include <algorithm> // std::reverse
 #include <iterator> // std::istream_iterator
 #include <openbabel/stereo/stereo.h>
+#include <openbabel/stereo/cistrans.h>
 #include <openbabel/obiter.h>
 
 #include <cmath>
@@ -49,7 +50,7 @@ namespace OpenBabel
           bondSpacing(6.0), bondWidth(8.0), fontSize(16), subscriptSize(13),
           aliasMode(false), bondColor("black"), options(0){}
 
-      void DrawSimpleBond(OBAtom *beginAtom, OBAtom *endAtom, int order);
+      void DrawSimpleBond(OBAtom *beginAtom, OBAtom *endAtom, int order, bool crossed_bond=false);
       void DrawWedge(OBAtom *beginAtom, OBAtom *endAtom);
       void DrawHash(OBAtom *beginAtom, OBAtom *endAtom);
       void DrawWobblyBond(OBAtom *beginAtom, OBAtom *endAtom);
@@ -358,8 +359,16 @@ namespace OpenBabel
           d->DrawWobblyBond(begin, end);
         }
       }
-      else if (!bond->IsInRing())
-        d->DrawSimpleBond(begin, end, bond->GetBO());
+      else if (!bond->IsInRing()) {
+        bool crossed_dbl_bond = false;
+        OBStereoFacade sf(d->mol);
+        if (sf.HasCisTransStereo(bond->GetId())) {
+          OBCisTransStereo *ct = sf.GetCisTransStereo(bond->GetId());
+          if (!ct->GetConfig().specified)
+            crossed_dbl_bond = true;
+        }
+        d->DrawSimpleBond(begin, end, bond->GetBO(), crossed_dbl_bond);
+      }
     }
 
     // draw ring bonds
@@ -593,7 +602,7 @@ namespace OpenBabel
     }
   } 
   
-  void OBDepictPrivate::DrawSimpleBond(OBAtom *beginAtom, OBAtom *endAtom, int order)
+  void OBDepictPrivate::DrawSimpleBond(OBAtom *beginAtom, OBAtom *endAtom, int order, bool crossed_dbl_bond)
   {
     vector3 begin = beginAtom->GetVector();
     vector3 end = endAtom->GetVector();
@@ -618,7 +627,8 @@ namespace OpenBabel
         useAsymmetricDouble = false;
       if (HasLabel(endAtom) && beginAtom->GetValence() == 3)
         useAsymmetricDouble = false;
-
+      if (crossed_dbl_bond)
+        useAsymmetricDouble = false; // The bond looks very strange otherwise in the case of cis
 
       if (!useAsymmetricDouble) {
         // style1
@@ -626,10 +636,18 @@ namespace OpenBabel
         // -----------
         // -----------
         vector3 offset = orthogonalLine * 0.5 * bondSpacing;
-        painter->DrawLine(begin.x() + offset.x(), begin.y() + offset.y(),
-                          end.x() + offset.x(), end.y() + offset.y());
-        painter->DrawLine(begin.x() - offset.x(), begin.y() - offset.y(),
-                          end.x() - offset.x(), end.y() - offset.y());
+        if (!crossed_dbl_bond) {
+          painter->DrawLine(begin.x() + offset.x(), begin.y() + offset.y(),
+                            end.x() + offset.x(), end.y() + offset.y());
+          painter->DrawLine(begin.x() - offset.x(), begin.y() - offset.y(),
+                            end.x() - offset.x(), end.y() - offset.y());
+        }
+        else {
+          painter->DrawLine(begin.x() + offset.x(), begin.y() + offset.y(),
+                            end.x() - offset.x(), end.y() - offset.y());
+          painter->DrawLine(begin.x() - offset.x(), begin.y() - offset.y(),
+                            end.x() + offset.x(), end.y() + offset.y());
+        }
       } else {
         // style2
         //
