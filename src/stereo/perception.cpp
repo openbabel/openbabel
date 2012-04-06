@@ -2508,9 +2508,11 @@ namespace OpenBabel {
 
         // Check whether a single bond with unknown dir starts at the dbl bond (tip-only convention)
         OBBond *b = mol->GetBond(begin, &*nbr);
-        ud_cit = updown->find(b);
-        if (ud_cit!=updown->end() && ud_cit->second==OBStereo::UnknownDir && b->GetBeginAtom()==begin)
-          config.specified = false;
+        if (updown) {
+          ud_cit = updown->find(b);
+          if (ud_cit!=updown->end() && ud_cit->second==OBStereo::UnknownDir && b->GetBeginAtom()==begin)
+            config.specified = false;
+        }
       }
       if (config.refs.size() == 1) {
         config.refs.push_back(OBStereo::ImplicitRef);
@@ -2528,9 +2530,11 @@ namespace OpenBabel {
 
         // Check whether a single bond with unknown dir starts at the dbl bond (tip-only convention)
         OBBond *b = mol->GetBond(end, &*nbr);
-        ud_cit = updown->find(b);
-        if (ud_cit!=updown->end() && ud_cit->second==OBStereo::UnknownDir && b->GetBeginAtom()==end)
-          config.specified = false;
+        if (updown) {
+          ud_cit = updown->find(b);
+          if (ud_cit!=updown->end() && ud_cit->second==OBStereo::UnknownDir && b->GetBeginAtom()==end)
+            config.specified = false;
+        }
       }
       if (config.refs.size() == 3) {
         config.refs.push_back(OBStereo::ImplicitRef);
@@ -2540,9 +2544,11 @@ namespace OpenBabel {
       }
 
       // Handle the case where the dbl bond is marked as unknown stereo
-      ud_cit = updown->find(bond);
-      if (ud_cit!=updown->end() && ud_cit->second==OBStereo::UnknownDir)
-          config.specified = false;
+      if (updown) {
+        ud_cit = updown->find(bond);
+        if (ud_cit!=updown->end() && ud_cit->second==OBStereo::UnknownDir)
+            config.specified = false;
+      }
 
       if (config.specified==true) { // Work out the stereochemistry
         // 0      3
