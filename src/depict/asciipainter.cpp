@@ -18,6 +18,7 @@ GNU General Public License for more details.
 #include <openbabel/obutil.h>
 #include <openbabel/depict/asciipainter.h>
 
+#include <cstdlib> // for abs and fabs
 #include <iostream>
 using namespace std;
 
@@ -141,7 +142,7 @@ namespace OpenBabel
     if (y2 > y) {
       ans = 1;
       double slope = (y2-y) / double(x2-x);
-      if (abs(slope) > 1.0)
+      if (fabs(slope) > 1.0)
         ans = 0;
     }
     return ans;
