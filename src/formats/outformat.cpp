@@ -139,6 +139,11 @@ namespace OpenBabel
         // ACESII
         formatName = "acesout";
         break;
+      } else if (strstr(buffer, "CRYSTAL06") != NULL ||
+                 strstr(buffer, "CRYSTAL09") != NULL) {
+        // CRYSTAL09
+        formatName = "c09out";
+        break;
       }
     }
 
