@@ -487,7 +487,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
             if(pos!=string::npos)
             {
               mes.erase(pos,targ[i].size());
-              if(mes[pos]==';')
+              if(pos<mes.size() && mes[pos]==';')
                 mes[pos]=' ';
             }
           }
