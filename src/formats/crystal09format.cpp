@@ -39,12 +39,11 @@ public:
   virtual const char* Description() //required
   {
     return
-        "Crystal 09 - *.out format\n"
-        "Write Options e.g. -x \n"
-        "       None Supported"
+        "Crystal 09 output format\n"
+
         "Read Options e.g. -as \n"
-        "	      s  Consider single bonds only\n"
-        "       b  Disable bonding entirely\n" ;
+        "  s  Consider single bonds only\n"
+        "  b  Disable bonding entirely\n" ;
   }
 
   //Optional URL where the file format is specified
