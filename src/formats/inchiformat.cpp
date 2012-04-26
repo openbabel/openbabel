@@ -133,7 +133,7 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     //OB takes care of implicit hydrogens, so num_iso_H[0] and num_iso_H[1] are ignored,
     //except for H2, which has one explicit H and one implict H. OB doesn't add implicit H to H.
     //Implicit D and T also need to be added explicitly.
-    for(int m=0;m<3;++m)
+    for(int m=0;m<=3;++m)
     {
       if(piat->num_iso_H[m] && (m>1 || *piat->elname=='H'))
       {
