@@ -1602,7 +1602,7 @@ namespace OpenBabel {
             max_label = std::max(max_label, canonical_labels[i]);
           }
         }
-        offset += max_label;
+        offset = max_label;
       }
 
     }
