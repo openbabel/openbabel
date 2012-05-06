@@ -214,7 +214,8 @@ namespace OpenBabel
         }
 
         bond1 = bond1.normalize();
-        if (bond2 == VZero) {
+        v1 = cross(bond1, bond2);
+        if (bond2 == VZero || v1 == VZero) {
           vector3 vrand;
           vrand.randomUnitVector();
           double angle = fabs(acos(dot(bond1, vrand)) * RAD_TO_DEG);
