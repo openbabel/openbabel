@@ -224,7 +224,7 @@ namespace OpenBabel {
       // perform random mutation(s)
       OBRotorIterator ri;
       OBRotor *rotor = m_rotorList.BeginRotor(ri);
-      for (int i = 1; i < m_rotorList.Size() + 1; ++i, rotor = m_rotorList.NextRotor(ri)) {
+      for (unsigned int i = 1; i < m_rotorList.Size() + 1; ++i, rotor = m_rotorList.NextRotor(ri)) {
         if (generator.NextInt() % m_mutability == 0)
           rotorKey[i] = generator.NextInt() % rotor->GetResolution().size();
       }
@@ -269,7 +269,7 @@ namespace OpenBabel {
           // perform random mutation(s)
           OBRotorIterator ri;
           OBRotor *rotor = m_rotorList.BeginRotor(ri);
-          for (int i = 1; i < m_rotorList.Size() + 1; ++i, rotor = m_rotorList.NextRotor(ri)) {
+          for (unsigned int i = 1; i < m_rotorList.Size() + 1; ++i, rotor = m_rotorList.NextRotor(ri)) {
             if (generator.NextInt() % m_mutability == 0)
               rotorKey[i] = generator.NextInt() % rotor->GetResolution().size(); // permutate gene
           }

@@ -317,7 +317,7 @@ namespace OpenBabel {
        */
       bool IsGood(const RotorKey &key);
 
-      int m_numConformers; //!< The desired number of conformers. This is also the population size.
+      unsigned int m_numConformers; //!< The desired number of conformers. This is also the population size.
       int m_numChildren; //!< The number of children generated each generation
       int m_mutability; //!< The mutability for generating the next generation
       int m_convergence; //!< Number of generations that remain unchanged before quiting

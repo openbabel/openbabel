@@ -58,7 +58,7 @@ void print_vector(const std::string &label, const std::vector<T> &v)
 void print_sym_classes(const std::string &label, const std::vector<std::pair<OpenBabel::OBAtom*, unsigned int> > &atom_sym_classes)
 {
   cout << label << ": ";
-  for (int i = 0; i < atom_sym_classes.size(); i++)
+  for (unsigned int i = 0; i < atom_sym_classes.size(); i++)
     cout << atom_sym_classes[i].second << " ";
   cout << endl;
 }
@@ -494,8 +494,7 @@ namespace OpenBabel {
     // How many classes are we starting with?  (The "renumber" part isn't relevant.)
     CountAndRenumberClasses(symmetry_classes, nclasses1);
 
-    int natoms = _pmol->NumAtoms();
-    int nfragatoms = _frag_atoms.CountBits();
+    unsigned int nfragatoms = _frag_atoms.CountBits();
 
     // LOOP: Do extended sum-of-invarients until no further changes are
     // noted.  (Note: This is inefficient, as it re-computes extended sums

@@ -102,7 +102,7 @@ namespace OpenBabel
                            std::vector<int> &bondState)
   {
     int n = 0;
-    for (int i = 0; i < bondsThisRing.size(); i++) {
+    for (unsigned int i = 0; i < bondsThisRing.size(); i++) {
       if (bondState[bondsThisRing[i]->GetIdx()] != UNASSIGNED) {
         n++;
       }
@@ -177,7 +177,7 @@ namespace OpenBabel
 
     vector<bool> used_bonds;
     used_bonds.resize(mol->NumBonds());
-    for (int i = 0; i < used_bonds.size(); i++)
+    for (unsigned int i = 0; i < used_bonds.size(); i++)
       used_bonds[i] = false;
 
     ring_bonds.clear();
@@ -507,7 +507,7 @@ namespace OpenBabel
 
     // Figure out which atoms are in this ring system and whether or not each
     // atom can donate an electron.
-    for (int i = 0; i < cycle.size(); ++i) {
+    for (unsigned int i = 0; i < cycle.size(); ++i) {
       atom = cycle[i];
       idx =  atom->GetIdx();
       if (electron[i] == 1) {
@@ -536,7 +536,7 @@ namespace OpenBabel
       std::vector<OBRing*> lssr_tmp = GetLSSR();
       std::vector<OBRing*> lssr;
       std::vector<bool>atom_in_cycle(NumAtoms()+1);
-      for (int i = 0; i <= NumAtoms(); i++)
+      for (unsigned int i = 0; i <= NumAtoms(); i++)
         atom_in_cycle[i] = false;
       for (std::vector<OBAtom*>::iterator ai = cycle.begin(); ai != cycle.end(); ai++)
         atom_in_cycle[(*ai)->GetIdx()] = true;
@@ -557,7 +557,7 @@ namespace OpenBabel
       // Initialize the "ring is assigned" vector
       std::vector<bool> lssrAssigned;
       lssrAssigned.resize(lssr.size());
-      for (int i = 0; i < lssr.size(); i++)
+      for (unsigned int i = 0; i < lssr.size(); i++)
         lssrAssigned[i] = false;
 
       // Initialize an empty vector that expand_kekulize2() uses.
@@ -578,7 +578,7 @@ namespace OpenBabel
     // We found a successful assignment, now actually change the bonds to double
 
     if (DEBUG) {std::cout << "Set double bonds\n";}
-    for (int i = 0; i < NumBonds(); ++i) {
+    for (unsigned int i = 0; i < NumBonds(); ++i) {
       bond = GetBond(i);
       if (DEBUG) { std::cout << "  bond " << bond->GetBeginAtomIdx() << " " << bond->GetEndAtomIdx() << " ";}
       if (bond->GetBO()==5 && bondState[i] == DOUBLE) {
@@ -1015,7 +1015,7 @@ namespace OpenBabel
 
     if (DEBUG) {cout << "Select next ring: " << lssr.size() << " rings to try" << endl;}
 
-    for (int rnum = 0; rnum < lssr.size(); rnum++) {
+    for (unsigned int rnum = 0; rnum < lssr.size(); rnum++) {
       if (lssrAssigned[rnum])
         continue;
       OBRing *ring = lssr[rnum];

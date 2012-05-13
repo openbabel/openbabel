@@ -699,7 +699,8 @@ namespace OpenBabel
 
   OBSymmetryData::OBSymmetryData(const OBSymmetryData &src) :
     OBGenericData(src._attr, src._type, src._source),
-    _pointGroup(src._pointGroup), _spaceGroup(src._spaceGroup)
+    _spaceGroup(src._spaceGroup),
+    _pointGroup(src._pointGroup)
   {  }
 
   OBSymmetryData & OBSymmetryData::operator=(const OBSymmetryData &src)

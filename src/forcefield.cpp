@@ -376,8 +376,8 @@ namespace OpenBabel
   //////////////////////////////////////////////////////////////////////////////////
 
   OBFFConstraints OBForceField::_constraints = OBFFConstraints(); // define static data variable
-  int OBForceField::_fixAtom = 0; // define static data variable
-  int OBForceField::_ignoreAtom = 0; // define static data variable
+  unsigned int OBForceField::_fixAtom = 0; // define static data variable
+  unsigned int OBForceField::_ignoreAtom = 0; // define static data variable
 
   OBFFConstraints& OBForceField::GetConstraints()
   {
@@ -1276,7 +1276,7 @@ namespace OpenBabel
 
     OBRotorKeys rotorKeys;
     rotor = rl.BeginRotor(ri);
-    for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) // foreach rotor
+    for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) // foreach rotor
       rotorKeys.AddRotor(rotor->GetResolution().size());
 
     rotamers.AddRotamer(rotorKeys.GetKey());
@@ -1398,9 +1398,9 @@ namespace OpenBabel
 
     std::vector<int> rotorKey(rl.Size() + 1, 0); // indexed from 1
 
-    for (int c = 0; c < conformers; ++c) {
+    for (unsigned int c = 0; c < conformers; ++c) {
       rotor = rl.BeginRotor(ri);
-      for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
+      for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
         // foreach rotor
         rotorKey[i] = generator.NextInt() % rotor->GetResolution().size();
       }
@@ -1474,7 +1474,7 @@ namespace OpenBabel
     double fraction, minWeight, maxWeight;
     bool improve = (bonus > 0.0);
 
-    for (int i = 1; i < rotorWeights.size() - 1; ++i) {
+    for (unsigned int i = 1; i < rotorWeights.size() - 1; ++i) {
 			if (rotorKey[i] == -1)
 				continue; // don't rotate
 
@@ -1485,7 +1485,7 @@ namespace OpenBabel
 
       // Check to make sure we don't kill some poor weight
       minWeight = maxWeight = rotorWeights[i][0];
-      for (int j = 1; j < rotorWeights[i].size(); ++j) {
+      for (unsigned int j = 1; j < rotorWeights[i].size(); ++j) {
         if (j == rotorKey[i])
           continue; // we already checked for problems with this entry
         if (rotorWeights[i][j] < minWeight)
@@ -1504,7 +1504,7 @@ namespace OpenBabel
         fraction = bonus / (rotorWeights[i].size() - 1);
       }
 
-      for (int j = 0; j < rotorWeights[i].size(); ++j) {
+      for (unsigned int j = 0; j < rotorWeights[i].size(); ++j) {
         if (j == rotorKey[i])
           rotorWeights[i][j] += bonus;
         else
@@ -1593,14 +1593,13 @@ namespace OpenBabel
     IF_OBFF_LOGLVL_LOW
       OBFFLog("  INITIAL WEIGHTING OF ROTAMERS...\n\n");
     rotor = rl.BeginRotor(ri);
-    for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
+    for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
       rotorKey[i] = -1; // no rotation (new in 2.2)
     }
 
     rotor = rl.BeginRotor(ri);
-    int confCount = 0;
-    //    int settings;
-    for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
+
+    for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
       // foreach rotor
       energies.clear();
       for (unsigned int j = 0; j < rotor->GetResolution().size(); j++) {
@@ -1664,12 +1663,12 @@ namespace OpenBabel
     }
 
     double defaultRotor = 1.0/sqrt((double)rl.Size());
-    for (int c = 0; c < conformers; ++c) {
+    for (unsigned int c = 0; c < conformers; ++c) {
       _mol.SetCoordinates(initialCoord);
 
       // Choose the rotor key based on current weightings
       rotor = rl.BeginRotor(ri);
-      for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
+      for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
         // foreach rotor
         rotorKey[i] = -1; // default = don't change dihedral
         randFloat = generator.NextFloat();
@@ -1733,10 +1732,10 @@ namespace OpenBabel
     // debugging output to see final weightings of each rotor setting
     IF_OBFF_LOGLVL_HIGH {
       OBFFLog("Final Weights: \n");
-      for (int i = 1; i < rotorWeights.size() - 1; ++i) {
+      for (unsigned int i = 1; i < rotorWeights.size() - 1; ++i) {
         snprintf(_logbuf, BUFF_SIZE, " Weight: %d", i);
         OBFFLog(_logbuf);
-        for (int j = 0; j < rotorWeights[i].size(); ++j) {
+        for (unsigned int j = 0; j < rotorWeights[i].size(); ++j) {
           snprintf(_logbuf, BUFF_SIZE, " %8.3f", rotorWeights[i][j]);
           OBFFLog(_logbuf);
         }
@@ -2414,7 +2413,7 @@ namespace OpenBabel
 
   double OBForceField::LineSearch(double *currentCoords, double *direction)
   {
-    int numCoords = _mol.NumAtoms() * 3;
+    unsigned int numCoords = _mol.NumAtoms() * 3;
     double e_n1, e_n2, step, alpha, tempStep;
     double *lastStep = new double [numCoords];
 
@@ -2676,8 +2675,8 @@ namespace OpenBabel
     if (!_validSetup)
       return 0;
 
-    int _ncoords = _mol.NumAtoms() * 3;
-    double e_n2, alpha;
+    _ncoords = _mol.NumAtoms() * 3;
+    double e_n2;
     vector3 dir;
 
     for (int i = 1; i <= n; i++) {
@@ -2719,11 +2718,11 @@ namespace OpenBabel
       // perform a linesearch
       switch (_linesearch) {
       case LineSearchType::Newton2Num:
-        alpha = Newton2NumLineSearch(_gradientPtr);
+        Newton2NumLineSearch(_gradientPtr);
         break;
       default:
       case LineSearchType::Simple:
-        alpha = LineSearch(_mol.GetCoordinates(), _gradientPtr);
+        LineSearch(_mol.GetCoordinates(), _gradientPtr);
         break;
       }
       e_n2 = Energy() + _constraints.GetConstraintEnergy();
@@ -2768,7 +2767,7 @@ namespace OpenBabel
     if (!_validSetup || steps==0)
       return;
 
-    double e_n2, alpha;
+    double e_n2;
     vector3 dir;
 
     _cstep = 0;
@@ -2832,11 +2831,11 @@ namespace OpenBabel
     // perform a linesearch
     switch (_linesearch) {
     case LineSearchType::Newton2Num:
-      alpha = Newton2NumLineSearch(_gradientPtr);
+      Newton2NumLineSearch(_gradientPtr);
       break;
     default:
     case LineSearchType::Simple:
-      alpha = LineSearch(_mol.GetCoordinates(), _gradientPtr);
+      LineSearch(_mol.GetCoordinates(), _gradientPtr);
       break;
     }
     e_n2 = Energy() + _constraints.GetConstraintEnergy();
@@ -2857,7 +2856,7 @@ namespace OpenBabel
       return 0;
 
     double e_n2;
-    double g2g2, g1g1, beta, alpha;
+    double g2g2, g1g1, beta;
     vector3 grad2, dir2;
     vector3 grad1, dir1; // temporaries to perform dot product, etc.
 
@@ -2917,11 +2916,11 @@ namespace OpenBabel
       // perform a linesearch
       switch (_linesearch) {
       case LineSearchType::Newton2Num:
-        alpha = Newton2NumLineSearch(_grad1);
+        Newton2NumLineSearch(_grad1);
         break;
       default:
       case LineSearchType::Simple:
-        alpha = LineSearch(_mol.GetCoordinates(), _grad1);
+        LineSearch(_mol.GetCoordinates(), _grad1);
         break;
       }
       // save the direction
@@ -3414,7 +3413,6 @@ namespace OpenBabel
     int coordIdx;
     double timestep2;
     vector3 force, pos, accel;
-    double kB = 0.00831451 / KCAL_TO_KJ; // kcal/(mol*K)
     _timestep = timestep;
     _temp = T;
 

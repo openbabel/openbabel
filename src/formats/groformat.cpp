@@ -150,7 +150,7 @@ bool GROFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   long int resid = 0; // 5
   string resname = ""; //5
   string atomtype = ""; //5
-  long int atomid = 0; //5
+  //long int atomid = 0; //5
   double x = 0.0; // 8.3
   double y = 0.0; // 8.3
   double z = 0.0; // 8.3

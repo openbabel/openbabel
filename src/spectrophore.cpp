@@ -1593,7 +1593,7 @@ OBSpectrophore::_calculateProperties(OpenBabel::OBMol* mol)
          ETA[c][r] = ETA[r][c];
       }
    }
-   for (int i = 0; i < dim; ++i)
+   for (unsigned int i = 0; i < dim; ++i)
    {
       ETA[i][_nAtoms] = -1.0;
       ETA[_nAtoms][i] = +1.0;
@@ -1756,7 +1756,7 @@ OBSpectrophore::_calculateProperties(OpenBabel::OBMol* mol)
    CHI[_nAtoms] = 0.0;
 
    // Complete ETA2
-   for (int i = 0; i < dim; ++i)
+   for (unsigned int i = 0; i < dim; ++i)
    {
       ETA2[i][_nAtoms] = 0.0;
       ETA2[_nAtoms][i] = 1.0;
@@ -1802,7 +1802,7 @@ OBSpectrophore::_solveMatrix(double** A, double* B, unsigned int dim)
 void
 OBSpectrophore::_luDecompose(double** A, std::vector<int>& I, unsigned int dim)
 {
-   int i, j, k, kMax, iMax;
+   unsigned int i, j, k, kMax, iMax;
    std::vector<double> vScales(dim, 0);
    double maxVal = 0, dummy = 0;
    double * pRowi = NULL;
@@ -1883,9 +1883,9 @@ OBSpectrophore::_luDecompose(double** A, std::vector<int>& I, unsigned int dim)
 void
 OBSpectrophore::_luSolve(double** A, std::vector<int>& I, double* B, unsigned int dim)
 {
-   int i, k;
+   unsigned int i, k;
 
-   for (int i = 0; i < dim; ++i) _swapRows(B, i, I[i]);
+   for (i = 0; i < dim; ++i) _swapRows(B, i, I[i]);
 
    // forward substitution pass
    for (k = 0; k < dim; ++k)
@@ -1897,7 +1897,7 @@ OBSpectrophore::_luSolve(double** A, std::vector<int>& I, double* B, unsigned in
    }
 
    // do the backsubstitution
-   for (i = dim - 1; i >= 0; --i)
+   for (int i = dim - 1; i >= 0; --i)
    {
       B[i] /= A[i][i];
       for (k = 0; k < i; ++k)

@@ -249,7 +249,7 @@ namespace OpenBabel {
     int
     establish_pairs( SYMMETRY_ELEMENT *elem )
     {
-      int               i, j, best_j ;
+      unsigned int      i, j, best_j;
       char *            atom_used = (char *)calloc( _mol->NumAtoms(), 1 ) ;
       double            distance, best_distance ;
       OBAtom            symmetric;
@@ -303,7 +303,7 @@ namespace OpenBabel {
     int
     check_transform_order( SYMMETRY_ELEMENT *elem )
     {
-      int             i, j, k ;
+      unsigned int i, j, k;
 
       for( i = 0 ; i < _mol->NumAtoms() ; i++ ){
         if( elem->transform[i] == i )   /* Identity transform is Ok for any order */
@@ -339,8 +339,8 @@ namespace OpenBabel {
     int
     same_transform( SYMMETRY_ELEMENT *a, SYMMETRY_ELEMENT *b )
     {
-      int               i, j ;
-      int               code ;
+      unsigned int      i, j;
+      int               code;
 
       if( ( a->order != b->order ) || ( a->nparam != b->nparam ) || ( a->transform_atom != b->transform_atom ) )
         return 0 ;
@@ -365,7 +365,7 @@ namespace OpenBabel {
     alloc_symmetry_element( void )
     {
       SYMMETRY_ELEMENT * elem = (SYMMETRY_ELEMENT *)calloc( 1, sizeof( SYMMETRY_ELEMENT ) ) ;
-      int                i ;
+      unsigned int i;
 
       if( elem == NULL ){
         //        fprintf( stderr, "Out of memory allocating symmetry element\n" ) ;
@@ -397,7 +397,7 @@ namespace OpenBabel {
     int
     check_transform_quality( SYMMETRY_ELEMENT *elem )
     {
-      int               i, j;
+      unsigned int      i, j;
       OBAtom            symmetric ;
       double            r, max_r ;
 
@@ -419,7 +419,7 @@ namespace OpenBabel {
     double
     eval_optimization_target_function( SYMMETRY_ELEMENT *elem, int *finish )
     {
-      int               i, j, k ;
+      unsigned int      i, j, k;
       OBAtom            symmetric ;
       double            target, r, maxr ;
 
@@ -735,7 +735,7 @@ namespace OpenBabel {
       double             p[ DIMENSION ] ;
       double             r, s0, s1, s2 ;
       double *           d ;
-      int                i, j, k ;
+      unsigned int       i, j, k;
 
       if( verbose > 0 ) printf( "Trying whole-molecule mirror plane\n" ) ;
       StatTotal++ ;
@@ -907,7 +907,7 @@ namespace OpenBabel {
       SYMMETRY_ELEMENT * axis = alloc_symmetry_element() ;
       double             dir[ DIMENSION ], rel[ DIMENSION ] ;
       double             s ;
-      int                i, k ;
+      unsigned int       i, k;
 
       if( verbose > 0 ) printf( "Trying infinity axis\n" ) ;
       StatTotal++ ;
@@ -1293,7 +1293,7 @@ namespace OpenBabel {
     void
     find_center_of_something( void )
     {
-      int                i, j ;
+      unsigned int       i, j;
       double             coord_sum[ DIMENSION ] ;
       double             r ;
       OBAtom             *atom;
@@ -1327,7 +1327,7 @@ namespace OpenBabel {
     void
     find_planes(void)
     {
-      int                i, j ;
+      unsigned int i, j;
       SYMMETRY_ELEMENT * plane ;
 
       plane = init_ultimate_plane() ;
@@ -1389,7 +1389,7 @@ namespace OpenBabel {
     void
     find_c2_axes(void)
     {
-      int                i, j, k, l;
+      unsigned int       i, j, k, l;
       double             center[ DIMENSION ] ;
       double *           distances = (double*)calloc( _mol->NumAtoms(), sizeof( double ) ) ;
       double             r ;
@@ -1488,7 +1488,7 @@ namespace OpenBabel {
     void
     find_higher_axes(void)
     {
-      int                i, j, k ;
+      unsigned int i, j, k;
       SYMMETRY_ELEMENT * axis ;
 
       for( i = 0 ; i < _mol->NumAtoms() ; i++ ){
@@ -1520,7 +1520,7 @@ namespace OpenBabel {
     void
     find_improper_axes(void)
     {
-      int                i, j, k ;
+      unsigned int i, j, k;
       SYMMETRY_ELEMENT * axis ;
 
       for( i = 0 ; i < _mol->NumAtoms() ; i++ ){
@@ -1779,7 +1779,7 @@ namespace OpenBabel {
 
     const char *identify_point_group( void )
     {
-      int            i;
+      unsigned int   i;
       int            last_matching = -1;
       int            matching_count = 0;
 

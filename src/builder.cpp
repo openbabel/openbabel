@@ -1008,7 +1008,7 @@ namespace OpenBabel
       workMol.SetDimension(0);
 
     // Count the number of ring atoms.
-    int ratoms = 0;
+    unsigned int ratoms = 0;
     FOR_ATOMS_OF_MOL(a, mol)
       if (a->IsInRing()) {
         ratoms++;
@@ -1544,7 +1544,7 @@ namespace OpenBabel
     // Have we dealt with a particular ring stereo? (Indexed by Id)
     OBBitVec seen;
 
-    for(int n=0; n<atomIds.size(); ++n) {
+    for(unsigned int n=0; n<atomIds.size(); ++n) {
       // Keep looping until you come to an unseen wrong stereo
       if (seen.BitIsSet(atomIds[n].first) || atomIds[n].second) continue;
 
@@ -1554,7 +1554,7 @@ namespace OpenBabel
       // Which ring stereos does this fragment contain, and
       // are the majority of them right or wrong?
       OBStereo::Refs wrong, right;
-      for (int i=0; i<atomIds.size(); ++i)
+      for (unsigned int i=0; i<atomIds.size(); ++i)
         if (fragment.BitIsSet(atomIds[i].first)) {
           if (atomIds[i].second)
             right.push_back(atomIds[i].first);

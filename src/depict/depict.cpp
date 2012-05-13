@@ -733,7 +733,7 @@ namespace OpenBabel
     // compute the total width
     double totalWidth = 0.0;
     if ((alignment == Right) || (alignment == Left) || (label.find("H") == std::string::npos)) {
-      for (int i = 0; i < label.size(); ++i) {
+      for (unsigned int i = 0; i < label.size(); ++i) {
         if (!isalpha(label[i])) {
           painter->SetFontSize(subscriptSize);
           totalWidth += painter->GetFontMetrics(label.substr(i, 1)).width;
@@ -746,7 +746,7 @@ namespace OpenBabel
       painter->SetFontSize(fontSize);
       totalWidth = painter->GetFontMetrics(label.substr(0, label.find("H"))).width;
       double width = 0.0; 
-      for (int i = label.find("H"); i < label.size(); ++i) {
+      for (unsigned int i = label.find("H"); i < label.size(); ++i) {
         if (!isalpha(label[i])) {
           painter->SetFontSize(subscriptSize);
           width += painter->GetFontMetrics(label.substr(i, 1)).width;
@@ -791,7 +791,7 @@ namespace OpenBabel
     yOffsetSubscript = yOffset - metrics.descent;
     double xInitial = xOffset;
 
-    for (int i = 0; i < label.size(); ++i) {
+    for (unsigned int i = 0; i < label.size(); ++i) {
       if (label[i] == 'H') {
         if ((alignment == Up) || (alignment == Down))
           if (!str.empty()) {

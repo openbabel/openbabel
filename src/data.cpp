@@ -381,7 +381,6 @@ namespace OpenBabel
 
   void OBIsotopeTable::ParseLine(const char *buffer)
   {
-    unsigned int atomicNum;
     unsigned int i;
     vector<string> vs;
 
@@ -393,7 +392,6 @@ namespace OpenBabel
         tokenize(vs,buffer);
         if (vs.size() > 3) // atomic number, 0, most abundant mass (...)
           {
-            atomicNum = atoi(vs[0].c_str());
             for (i = 1; i < vs.size() - 1; i += 2) // make sure i+1 still exists
               {
                 entry.first = atoi(vs[i].c_str()); // isotope
