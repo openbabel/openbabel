@@ -66,8 +66,31 @@ bool areDuplicateAtoms (vector3 v1, vector3 v2)
   if (dr.z() > 0.5)
     dr.SetZ(dr.z() - 1);
 
-  return (dr.length_2() < 1e-4);
+  return (dr.length_2() < 1e-6);
 }
+
+
+// Wrap coordinates in the unit cell with some fuzziness, i.e. when one
+// coordinate is very very close to 1 (>= 0.999999), we wrap it to
+// exactly zero.
+vector3 fuzzyWrapFractionalCoordinate (vector3 coord, OBUnitCell *pUC)
+{
+  vector3 res = pUC->WrapFractionalCoordinate(coord);
+
+#define EPSILON 0.000001
+  if (res.x() > 1 - EPSILON || res.x() < EPSILON)
+    res.SetX(0);
+  if (res.y() > 1 - EPSILON || res.y() < EPSILON)
+    res.SetY(0);
+  if (res.z() > 1 - EPSILON || res.z() < EPSILON)
+    res.SetZ(0);
+#undef EPSILON
+
+  return res;
+}
+
+
+
 
 /////////////////////////////////////////////////////////////////
 bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConversion* pConv)
@@ -122,7 +145,7 @@ bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConver
         ccoord+=atom->second[i];
       }
       ccoord /=vatoms.size();
-      ccoord=pUC->WrapFractionalCoordinate(ccoord)-ccoord;
+      ccoord=fuzzyWrapFractionalCoordinate(ccoord, pUC)-ccoord;
       for(std::map<OBAtom*,std::vector<vector3> >:: iterator atom=vatoms.begin();
         atom!=vatoms.end();++atom){
         atom->second[i]+=ccoord;
@@ -154,7 +177,7 @@ bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConver
         atom!=vatoms.end();++atom){
       // Bring back within unit cell
       for(unsigned int i=0;i<atom->second.size();++i){
-        atom->second[i]=pUC->WrapFractionalCoordinate(atom->second[i]);
+        atom->second[i]=fuzzyWrapFractionalCoordinate(atom->second[i], pUC);
       }
       for(unsigned int i=1;i<atom->second.size();++i){
         bool foundDuplicate = false;
