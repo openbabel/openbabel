@@ -414,6 +414,7 @@ namespace OpenBabel
     if( !result )
       {
         obErrorLog.ThrowError(__FUNCTION__, "Unable to allocate byte codes for biomolecule residue perception.", obError);
+        return (result);
       }
     result->type = type;
     result->eval.next     = NULL;
