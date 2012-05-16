@@ -2387,6 +2387,7 @@ namespace OpenBabel {
       if (planeAtoms.size() == 2) {
         if (hashAtoms.size() == 1 && wedgeAtoms.size() == 1) {
           // plane1 + plane2, hash, wedge
+          // TODO: Add a sanity check that the hash and wedge are not beside each other!!
           config.from = wedgeAtoms[0]->GetId();
           config.refs.resize(3);
           config.refs[0] = planeAtoms[0]->GetId();
@@ -2396,6 +2397,41 @@ namespace OpenBabel {
               planeAtoms[1]->GetVector(), hashAtoms[0]->GetVector(), center->GetVector());
           if (anticlockwise_order)
             config.winding = OBStereo::AntiClockwise;
+        } else if (wedgeAtoms.size() == 2 || hashAtoms.size() == 2) {
+          // plane1, wedge1, plane2, wedge2 or plane1, hash1, plane2, hash2
+          // First, sanity check that the two wedges or hashes are opposite each other
+          bool anticlockwise_A, anticlockwise_B;
+          if (wedgeAtoms.size() == 2) {
+            anticlockwise_A = AngleOrder(planeAtoms[0]->GetVector(),
+                 wedgeAtoms[0]->GetVector(), planeAtoms[1]->GetVector(), center->GetVector());
+            anticlockwise_B = AngleOrder(planeAtoms[0]->GetVector(),
+                 wedgeAtoms[1]->GetVector(), planeAtoms[1]->GetVector(), center->GetVector());
+          } else {
+            anticlockwise_A = AngleOrder(planeAtoms[0]->GetVector(),
+                 hashAtoms[0]->GetVector(), planeAtoms[1]->GetVector(), center->GetVector());
+            anticlockwise_B = AngleOrder(planeAtoms[0]->GetVector(),
+                 hashAtoms[1]->GetVector(), planeAtoms[1]->GetVector(), center->GetVector());
+          }
+          if (anticlockwise_A == anticlockwise_B) { // Two wedges or hashes beside each other
+            success = false;
+            obErrorLog.ThrowError(__FUNCTION__, "Ignoring stereo due to two neighbouring wedges or hashes", obWarning);
+          }
+          else {
+            config.refs.resize(3);
+            config.refs[0] = planeAtoms[0]->GetId();            
+            config.refs[2] = planeAtoms[1]->GetId();
+            if (wedgeAtoms.size() == 2) {
+              config.from = wedgeAtoms[0]->GetId();
+              config.refs[1] = wedgeAtoms[1]->GetId();
+              if (anticlockwise_B)
+                config.winding = OBStereo::AntiClockwise;
+            } else {
+              config.from = hashAtoms[0]->GetId();
+              config.refs[1] = hashAtoms[1]->GetId();
+              if (!anticlockwise_B)
+                config.winding = OBStereo::AntiClockwise;
+            }
+          }
         } else if ((hashAtoms.size() + wedgeAtoms.size()) == 1) {
           // Either: plane1 + plane2 + hash *or* plane1 + plane2 + wedge
           OBAtom* stereoAtom;
