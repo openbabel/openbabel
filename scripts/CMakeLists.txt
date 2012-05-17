@@ -207,7 +207,7 @@ if (DO_PERL_BINDINGS)
           COMMAND sed -e \"s/^@EXPORT.*/& sub dl_load_flags { 0x01 }/\" <${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.pm >${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.new
           COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.new ${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.pm
           COMMAND ${CMAKE_COMMAND} -E remove ${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.new
-          MAIN_DEPENDENCY ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp
+          MAIN_DEPENDENCY openbabel-perl.i
         )
       endif (NOT WIN32)
     endif (RUN_SWIG)
@@ -215,7 +215,8 @@ if (DO_PERL_BINDINGS)
     add_library(bindings_perl MODULE ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp)
     target_link_libraries(bindings_perl ${PERL_LIBRARY} ${BABEL_LIBRARY})
     set_target_properties(bindings_perl PROPERTIES
-        OUTPUT_NAME openbabel_perl)
+        PREFIX ""
+        OUTPUT_NAME OpenBabel)
     add_dependencies(bindings_perl openbabel)
     install(TARGETS bindings_perl LIBRARY DESTINATION ${LIB_INSTALL_DIR})
     install(FILES ${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.pm DESTINATION ${LIB_INSTALL_DIR})
