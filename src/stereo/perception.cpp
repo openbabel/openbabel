@@ -2383,79 +2383,112 @@ namespace OpenBabel {
             config.refs.push_back(nbr->GetId());
         while (config.refs.size() < 3)
           config.refs.push_back(OBStereo::ImplicitRef);
-      } else
-      if (planeAtoms.size() == 2) {
-        if (hashAtoms.size() == 1 && wedgeAtoms.size() == 1) {
-          // plane1 + plane2, hash, wedge
-          // TODO: Add a sanity check that the hash and wedge are not beside each other!!
-          config.from = wedgeAtoms[0]->GetId();
-          config.refs.resize(3);
-          config.refs[0] = planeAtoms[0]->GetId();
-          config.refs[1] = planeAtoms[1]->GetId();
-          config.refs[2] = hashAtoms[0]->GetId();
-          bool anticlockwise_order = AngleOrder(planeAtoms[0]->GetVector(),
-              planeAtoms[1]->GetVector(), hashAtoms[0]->GetVector(), center->GetVector());
-          if (anticlockwise_order)
-            config.winding = OBStereo::AntiClockwise;
-        } else if (wedgeAtoms.size() == 2 || hashAtoms.size() == 2) {
-          // plane1, wedge1, plane2, wedge2 or plane1, hash1, plane2, hash2
-          // First, sanity check that the two wedges or hashes are opposite each other
-          bool anticlockwise_A, anticlockwise_B;
-          if (wedgeAtoms.size() == 2) {
-            anticlockwise_A = AngleOrder(planeAtoms[0]->GetVector(),
-                 wedgeAtoms[0]->GetVector(), planeAtoms[1]->GetVector(), center->GetVector());
-            anticlockwise_B = AngleOrder(planeAtoms[0]->GetVector(),
-                 wedgeAtoms[1]->GetVector(), planeAtoms[1]->GetVector(), center->GetVector());
-          } else {
-            anticlockwise_A = AngleOrder(planeAtoms[0]->GetVector(),
-                 hashAtoms[0]->GetVector(), planeAtoms[1]->GetVector(), center->GetVector());
-            anticlockwise_B = AngleOrder(planeAtoms[0]->GetVector(),
-                 hashAtoms[1]->GetVector(), planeAtoms[1]->GetVector(), center->GetVector());
-          }
-          if (anticlockwise_A == anticlockwise_B) { // Two wedges or hashes beside each other
-            success = false;
-            obErrorLog.ThrowError(__FUNCTION__, "Ignoring stereo due to two neighbouring wedges or hashes", obWarning);
-          }
-          else {
-            config.refs.resize(3);
-            config.refs[0] = planeAtoms[0]->GetId();            
-            config.refs[2] = planeAtoms[1]->GetId();
-            if (wedgeAtoms.size() == 2) {
-              config.from = wedgeAtoms[0]->GetId();
-              config.refs[1] = wedgeAtoms[1]->GetId();
-              if (anticlockwise_B)
-                config.winding = OBStereo::AntiClockwise;
-            } else {
-              config.from = hashAtoms[0]->GetId();
-              config.refs[1] = hashAtoms[1]->GetId();
-              if (!anticlockwise_B)
-                config.winding = OBStereo::AntiClockwise;
+      } else {
+
+        // config.specified
+
+        if (hashAtoms.size() == 4 || wedgeAtoms.size() == 4)
+        {
+          success = false;
+        } else if (planeAtoms.size() + hashAtoms.size() + wedgeAtoms.size() == 4)
+        {
+          // Handle all explicit tetra with at least one stereobond
+          vector<OBAtom*> order;
+
+          // First of all, handle the case of three wedge (or three hash) and one other bond
+          //          by converting it into a single hash (or single wedge) and three planes
+          if (wedgeAtoms.size() == 3 || hashAtoms.size() == 3) {
+            vector<OBAtom*> *pwedge, *phash;
+            if (wedgeAtoms.size() == 3) {
+              pwedge = &wedgeAtoms; phash = &hashAtoms;
+            }
+            else {
+              phash = &wedgeAtoms; pwedge = &hashAtoms;
+            }
+          
+            if (planeAtoms.size() == 0) { // Already has the hash bond
+              planeAtoms.insert(planeAtoms.end(), pwedge->begin(), pwedge->end());
+              pwedge->clear();
+            }
+            else { // Does not already have the hash bond
+              phash->push_back(planeAtoms[0]);
+              planeAtoms.clear();
+              pwedge->clear();
             }
           }
-        } else if ((hashAtoms.size() + wedgeAtoms.size()) == 1) {
-          // Either: plane1 + plane2 + hash *or* plane1 + plane2 + wedge
-          OBAtom* stereoAtom;
-          if (hashAtoms.size() == 1) {
-            config.from = OBStereo::ImplicitRef;
-            config.view = OBStereo::ViewFrom;
-            stereoAtom = hashAtoms[0];
+
+          // Pick a stereobond on which to base the stereochemistry: 
+          bool wedge = wedgeAtoms.size() > 0;
+          order.push_back(wedge?wedgeAtoms[0]:hashAtoms[0]);
+          vector<OBAtom*> nbrs;
+          FOR_NBORS_OF_ATOM(nbr, center) {
+            if (&*nbr != order[0])
+              nbrs.push_back(&*nbr);
           }
-          else { // wedgeAtoms.size() == 1
-            config.towards = OBStereo::ImplicitRef;
-            config.view = OBStereo::ViewTowards;
-            stereoAtom = wedgeAtoms[0];
+          // Add "nbrs" to "order" in order of anticlockwise stereo
+          order.push_back(nbrs[0]);
+          if (AngleOrder(order[0]->GetVector(), order[1]->GetVector(), nbrs[1]->GetVector(), center->GetVector()))
+            order.push_back(nbrs[1]);
+          else
+            order.insert(order.begin()+1, nbrs[1]);
+          if (AngleOrder(order[0]->GetVector(), order[2]->GetVector(), nbrs[2]->GetVector(), center->GetVector()))
+            order.push_back(nbrs[2]);
+          else {
+            if (AngleOrder(order[0]->GetVector(), order[1]->GetVector(), nbrs[2]->GetVector(), center->GetVector()))
+              order.insert(order.begin()+2, nbrs[2]);
+            else
+              order.insert(order.begin()+1, nbrs[2]);
           }
+
+          config.from = order[0]->GetId();
           config.refs.resize(3);
-          config.refs[0] = planeAtoms[0]->GetId();
-          config.refs[1] = planeAtoms[1]->GetId();
-          config.refs[2] = stereoAtom->GetId();
-          bool anticlockwise_order = AngleOrder(planeAtoms[0]->GetVector(),
-              planeAtoms[1]->GetVector(), stereoAtom->GetVector(), center->GetVector());
-          if (anticlockwise_order)
+          for(int i=0; i<3; ++i)
+            config.refs[i] = order[i+1]->GetId();
+          if (wedge)
             config.winding = OBStereo::AntiClockwise;
-        } else {
-          success = false;
-        }
+
+          // Check for ambiguous stereo based on the members of "order".
+          // If the first is a wedge bond, then the next should be a plane/hash, then plane/wedge, then plane/hash
+          // If not, then the stereo is considered ambiguous. More work is needed here, but this is a big
+          // improvement on the previous behaviour. A counterexample to this may the case of two planes, a wedge and a hash,
+          // where the wedge and hash are opposite. Is this ambiguous, or does it just need some extra code?
+          vector<OBAtom*> *pwedge, *phash;
+          if (wedge) {
+            pwedge = &wedgeAtoms; phash = &hashAtoms;
+          }
+          else {
+            phash = &wedgeAtoms; pwedge = &hashAtoms;
+          }
+          if (std::find(pwedge->begin(), pwedge->end(), order[1]) != pwedge->end() ||
+              std::find(phash->begin(), phash->end(), order[2]) != phash->end()  ||
+              std::find(pwedge->begin(), pwedge->end(), order[3]) != pwedge->end()) { // Ambiguous stereo
+                success = false;
+          }
+        } else if (planeAtoms.size() == 2) {
+          if ((hashAtoms.size() + wedgeAtoms.size()) == 1) {
+            // Either: plane1 + plane2 + hash *or* plane1 + plane2 + wedge
+            OBAtom* stereoAtom;
+            if (hashAtoms.size() == 1) {
+              config.from = OBStereo::ImplicitRef;
+              config.view = OBStereo::ViewFrom;
+              stereoAtom = hashAtoms[0];
+            }
+            else { // wedgeAtoms.size() == 1
+              config.towards = OBStereo::ImplicitRef;
+              config.view = OBStereo::ViewTowards;
+              stereoAtom = wedgeAtoms[0];
+            }
+            config.refs.resize(3);
+            config.refs[0] = planeAtoms[0]->GetId();
+            config.refs[1] = planeAtoms[1]->GetId();
+            config.refs[2] = stereoAtom->GetId();
+            bool anticlockwise_order = AngleOrder(planeAtoms[0]->GetVector(),
+                planeAtoms[1]->GetVector(), stereoAtom->GetVector(), center->GetVector());
+            if (anticlockwise_order)
+              config.winding = OBStereo::AntiClockwise;
+          } else {
+            success = false;
+          }
       } else if (planeAtoms.size() == 3) {
         if ( (hashAtoms.size() + wedgeAtoms.size()) == 1) {
           // Either: plane1 + plane2 + plane3, hash
@@ -2483,6 +2516,7 @@ namespace OpenBabel {
       } else {
         success = false;
       }
+      } // end of config.specified
 
       if (!success) {
 //         std::stringstream errorMsg;

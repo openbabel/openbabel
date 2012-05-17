@@ -275,6 +275,17 @@ class TestConversions(BaseTest):
         for i, inchi in enumerate(output.rstrip().split("\n")):
             self.assertEqual(inchi.rstrip(), self.data[i][2])
 
+    def test2DMDLto0D_more(self):
+        """Test various combinations of stereobonds in 2D perception"""
+        filename = self.getTestFile("testsym_2Dtests_more.sdf")
+        # The test file has the correct canonical SMILES string
+        # stored in the data field "smiles"
+
+        output, error = run_exec("obabel -isdf %s -ocan --append smiles" % filename)
+        for line in output.rstrip().split("\n"):
+            result, correct_answer = line.split()
+            self.assertEqual(result, correct_answer)
+
     def testSMILESto0DMDL(self):
         """Test interconversion between SMILES and 0D MDL"""
         data = [
