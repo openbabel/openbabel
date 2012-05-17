@@ -277,11 +277,14 @@ class TestConversions(BaseTest):
 
     def test2DMDLto0D_more(self):
         """Test various combinations of stereobonds in 2D perception"""
-        filename = self.getTestFile("testsym_2Dtests_more.sdf")
-        # The test file has the correct canonical SMILES string
+        filenames = [self.getTestFile(x) for x in
+                     ["testsym_2Dtests_more.sdf",
+                      "testsym_2Dtests_threeligands.sdf"]]
+        # The test files have the correct canonical SMILES string
         # stored in the data field "smiles"
 
-        output, error = run_exec("obabel -isdf %s -ocan --append smiles" % filename)
+        output, error = run_exec("obabel -isdf %s %s -ocan --append smiles" %
+                                 (filenames[0], filenames[1]))
         for line in output.rstrip().split("\n"):
             result, correct_answer = line.split()
             self.assertEqual(result, correct_answer)
