@@ -2462,7 +2462,7 @@ namespace OpenBabel {
           if (planeAtoms.size() == 2 && wedgeAtoms.size() == 1) { // Two planes, 1 wedge, 1 hash
             if (order[2] == hashAtoms[0]) { // The wedge and hash are opposite
               double angle = GetAngle(order[1], center, order[3]); // The anticlockwise angle between the plane atoms
-              if (angle > -133 && angle < 133) { // It's okay
+              if (angle > -133 && angle < 133) { // This value is from the InChI TechMan Figure 9
                 if (angle > 0) { // Change to three planes and the hash bond
                   std::rotate(order.begin(), order.begin() + 2, order.end()); // Change the order so that it begins with the hash bond
                   wedge = false;
@@ -2486,9 +2486,7 @@ namespace OpenBabel {
 
           // Check for ambiguous stereo based on the members of "order".
           // If the first is a wedge bond, then the next should be a plane/hash, then plane/wedge, then plane/hash
-          // If not, then the stereo is considered ambiguous. More work is needed here, but this is a big
-          // improvement on the previous behaviour. A counterexample to this may the case of two planes, a wedge and a hash,
-          // where the wedge and hash are opposite. Is this ambiguous, or does it just need some extra code?
+          // If not, then the stereo is considered ambiguous.
           vector<OBAtom*> *pwedge, *phash;
           if (wedge) {
             pwedge = &wedgeAtoms; phash = &hashAtoms;
