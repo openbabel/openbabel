@@ -2289,6 +2289,21 @@ namespace OpenBabel {
     v.normalize();
     return TriangleSign(t, u, v) > 0;
   }
+  //! Get the angle between three atoms (from -180 to +180)
+  //! Note: OBAtom.GetAngle just returns 0->180
+  double GetAngle(OBAtom *a, OBAtom *b, OBAtom *c)
+  {
+   vector3 v1,v2;
+
+    v1 = a->GetVector() - b->GetVector();
+    v2 = c->GetVector() - b->GetVector();
+    if (IsNearZero(v1.length(), 1.0e-3)
+      || IsNearZero(v2.length(), 1.0e-3)) {
+        return(0.0);
+    }
+
+    return (atan2(v2.y(),v2.x()) - atan2(v1.y(),v1.x())) * RAD_TO_DEG;
+  }
   std::vector<OBTetrahedralStereo*> TetrahedralFrom2D(OBMol *mol,
       const OBStereoUnitSet &stereoUnits, bool addToMol)
   {
@@ -2405,7 +2420,6 @@ namespace OpenBabel {
             else {
               phash = &wedgeAtoms; pwedge = &hashAtoms;
             }
-          
             if (planeAtoms.size() == 0) { // Already has the hash bond
               planeAtoms.insert(planeAtoms.end(), pwedge->begin(), pwedge->end());
               pwedge->clear();
@@ -2438,6 +2452,29 @@ namespace OpenBabel {
               order.insert(order.begin()+2, nbrs[2]);
             else
               order.insert(order.begin()+1, nbrs[2]);
+          }
+
+          // Handle the case of two planes with a wedge and hash bond opposite each other.
+          // This is handled as in the InChI TechMan (Figure 9) by marking it ambiguous if
+          // the (small) angle between the plane bonds is > 133, and basing the stereo on
+          // the 'inner' bond otherwise. This is commonly used for stereo in rings.
+          // See also Get2DTetrahedralAmbiguity() in ichister.c (part of InChI)
+          if (planeAtoms.size() == 2 && wedgeAtoms.size() == 1) { // Two planes, 1 wedge, 1 hash
+            if (order[2] == hashAtoms[0]) { // The wedge and hash are opposite
+              double angle = GetAngle(order[1], center, order[3]); // The anticlockwise angle between the plane atoms
+              if (angle > -133 && angle < 133) { // It's okay
+                if (angle > 0) { // Change to three planes and the hash bond
+                  std::rotate(order.begin(), order.begin() + 2, order.end()); // Change the order so that it begins with the hash bond
+                  wedge = false;
+                  planeAtoms.push_back(wedgeAtoms[0]);
+                  wedgeAtoms.clear();
+                }
+                else { // Change to three planes and the wedge bond (note: order is already correct)
+                  planeAtoms.push_back(hashAtoms[0]);
+                  hashAtoms.clear();
+                }
+              } // No need for "else" statement, as this will be picked up as ambiguous stereo below
+            }
           }
 
           config.from = order[0]->GetId();
