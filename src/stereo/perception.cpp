@@ -2302,7 +2302,10 @@ namespace OpenBabel {
         return(0.0);
     }
 
-    return (atan2(v2.y(),v2.x()) - atan2(v1.y(),v1.x())) * RAD_TO_DEG;
+    double angle = (atan2(v2.y(),v2.x()) - atan2(v1.y(),v1.x())) * RAD_TO_DEG;
+    while (angle < -180.0) angle += 360.0;
+    while (angle > 180.0) angle -= 360.0;
+    return angle; 
   }
   std::vector<OBTetrahedralStereo*> TetrahedralFrom2D(OBMol *mol,
       const OBStereoUnitSet &stereoUnits, bool addToMol)
@@ -2518,6 +2521,15 @@ namespace OpenBabel {
               order.push_back(nbrs[1]);
             else
               order.insert(order.begin()+1, nbrs[1]);
+
+            // Handle the case of two planes with a wedge/hash in the small angle between them.
+            // This is handled similar to the InChI TechMan (Figure 10) by treating the stereo bond
+            // as being in the large angle. This is consistent with Symyx Draw.
+            if (planeAtoms.size() == 2) { // Two planes, 1 stereo
+              double angle = GetAngle(order[1], center, order[2]); // The anticlockwise angle between the plane atoms
+              if (angle < 0) // Invert the stereo of the stereobond
+                wedge = !wedge;
+            }
 
             config.from = OBStereo::ImplicitRef;
             config.refs.resize(3);
