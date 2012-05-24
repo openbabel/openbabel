@@ -366,6 +366,12 @@ namespace OpenBabel {
 
   bool OBSmilesParser::SmiToMol(OBMol &mol,const string &s)
   {
+    if (s.length() > BUFF_SIZE)  {
+      stringstream errorMsg;
+      errorMsg << "Invalid SMILES string: string is too long (" << s.length() << " characters).  Limit is " << BUFF_SIZE << " characters.";
+      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+      return false;
+    }
     strncpy(_buffer,s.c_str(), BUFF_SIZE);
     _buffer[BUFF_SIZE - 1] = '\0';
 
