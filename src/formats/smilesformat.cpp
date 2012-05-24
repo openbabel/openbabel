@@ -4044,11 +4044,10 @@ namespace OpenBabel {
 
     // Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
-    OBMol mol = *pmol;
 
     // Title only option?
     if(pConv->IsOption("t")) {
-      ofs << mol.GetTitle() <<endl;
+      ofs << pmol->GetTitle() <<endl;
       return true;
     }
 
@@ -4057,12 +4056,12 @@ namespace OpenBabel {
 
     // This is a hack to prevent recursion problems.
     //  we still need to fix the underlying problem (mainly chiral centers) -GRH
-    if (mol.NumAtoms() > 1000) {
+    if (pmol->NumAtoms() > 1000) {
       stringstream errorMsg;
       errorMsg <<
         "SMILES Conversion failed: Molecule is too large to convert."
         "Open Babel is currently limited to 1000 atoms." << endl;
-      errorMsg << "  Molecule size: " << mol.NumAtoms() << " atoms " << endl;
+      errorMsg << "  Molecule size: " << pmol->NumAtoms() << " atoms " << endl;
       obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
       return(false);
     }
@@ -4071,40 +4070,40 @@ namespace OpenBabel {
     // an ascii OBBitVec, representing the atoms of a fragment.  The
     // SMILES generated will only include these fragment atoms.
 
-    OBBitVec fragatoms(mol.NumAtoms());
+    OBBitVec fragatoms(pmol->NumAtoms());
 
-    OBPairData *dp = (OBPairData *) mol.GetData("SMILES_Fragment");
+    OBPairData *dp = (OBPairData *) pmol->GetData("SMILES_Fragment");
     if (dp) {
-      fragatoms.FromString(dp->GetValue(), mol.NumAtoms());
+      fragatoms.FromString(dp->GetValue(), pmol->NumAtoms());
     }
 
     // If no "SMILES_Fragment" data, fill the entire OBBitVec
     // with 1's so that the SMILES will be for the whole molecule.
     else {
-      FOR_ATOMS_OF_MOL(a, mol)
+      FOR_ATOMS_OF_MOL(a, *pmol)
         {
           fragatoms.SetBitOn(a->GetIdx());
         }
     }
 
-    if (mol.NumAtoms() > 0) {
-      CreateCansmiString(mol, buffer, fragatoms, !pConv->IsOption("i"), pConv);
+    if (pmol->NumAtoms() > 0) {
+      CreateCansmiString(*pmol, buffer, fragatoms, !pConv->IsOption("i"), pConv);
     }
 
     ofs << buffer;
     if(!pConv->IsOption("smilesonly")) {
 
       if(!pConv->IsOption("n"))
-        ofs << '\t' <<  mol.GetTitle();
+        ofs << '\t' <<  pmol->GetTitle();
 
-      if (pConv->IsOption("x") && mol.HasData("SMILES Atom Order")) {
+      if (pConv->IsOption("x") && pmol->HasData("SMILES Atom Order")) {
         vector<string> vs;
-        string canorder = mol.GetData("SMILES Atom Order")->GetValue();
+        string canorder = pmol->GetData("SMILES Atom Order")->GetValue();
         tokenize(vs, canorder);
         ofs << '\t';
         for (int i = 0; i < vs.size(); i++) {
           int idx = atoi(vs[i].c_str());
-          OBAtom *atom = mol.GetAtom(idx);
+          OBAtom *atom = pmol->GetAtom(idx);
           if (i > 0)
             ofs << ",";
           ofs << atom->GetX() << "," << atom->GetY();
