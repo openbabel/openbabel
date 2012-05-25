@@ -282,6 +282,7 @@ namespace OpenBabel
       return;
     mol.SetAromaticCorrected();
 
+/* Deactivated CM 25May12 c1[n]cccc1 was wrong
     FOR_ATOMS_OF_MOL(atom, mol) {
       if (atom->IsNitrogen() && atom->IsAromatic()) {
         atom->SetHyb(2);
@@ -294,7 +295,7 @@ namespace OpenBabel
         }
       }
     }
-
+*/
     return;
   }
 
