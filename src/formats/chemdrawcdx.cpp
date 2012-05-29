@@ -163,8 +163,7 @@ namespace OpenBabel
     list<cdBond>::const_iterator bondsIter;
     cdBond prevBond;
     cdBond oneBond;
-    //    OBPairData *pd;
-    int iInt=0, depth=1;
+    int depth=1;
 
     if (!ifs.good() || ifs.peek() == EOF)
       return false;
@@ -203,7 +202,6 @@ namespace OpenBabel
                     obErrorLog.ThrowError(__FUNCTION__, "Error reading fragment", obWarning);
                     return false;
                   }
-                iInt = 0;
                 prevBond = cdBond(0,0,0);
                 for (bondsIter=bonds.begin(); bondsIter != bonds.end(); bondsIter++)
                   {
@@ -353,8 +351,7 @@ namespace OpenBabel
     list<cdBond>::const_iterator bondsIter;
     cdBond prevBond;
     cdBond oneBond;
-    //    OBPairData *pd;
-    int iInt=0, depth=1;
+    int depth=1;
 
     if((int)ifs.tellg() == 0)	// Beginning of file
       {
@@ -396,7 +393,6 @@ namespace OpenBabel
                     delete pmol;
                     return NULL;
                   }
-                iInt = 0;
                 prevBond = cdBond(0,0,0);
                 for (bondsIter=bonds.begin(); bondsIter != bonds.end(); bondsIter++)
                   {
