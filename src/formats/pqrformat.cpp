@@ -273,10 +273,10 @@ namespace OpenBabel
           // sometimes non-standard files have, e.g 11HH
           if (!isdigit(type[1])) type = atmid.substr(1,1);
           else type = atmid.substr(2,1);
-        } else if (sbuf[6] == ' ' &&
-                   strncasecmp(type.c_str(), "Zn", 2) != 0 &&
-                   strncasecmp(type.c_str(), "Fe", 2) != 0 ||
-		               isdigit(type[1]))	//type[1] is digit in Platon
+        } else if ((sbuf[6] == ' ' &&
+                    strncasecmp(type.c_str(), "Zn", 2) != 0 &&
+                    strncasecmp(type.c_str(), "Fe", 2) != 0) ||
+                   isdigit(type[1]))    //type[1] is digit in Platon
           type = atmid.substr(0,1);     // one-character element
 
 
