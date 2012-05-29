@@ -62,6 +62,15 @@ namespace OpenBabel {
         std::cout << "  " << i << ": ";
 
         switch (types[i]) {
+          case Assigned:
+            std::cout << "Assigned" << std::endl;
+            break;
+          case Single:
+            std::cout << "Single" << std::endl;
+            break;
+          case Double:
+            std::cout << "Double" << std::endl;
+            break;
           case Donor:
             std::cout << "Donor" << std::endl;
             break;
@@ -91,6 +100,24 @@ namespace OpenBabel {
         switch (types[i]) {
           case Assigned:
             std::cout << "Assigned" << std::endl;
+            break;
+          case Single:
+            std::cout << "Single" << std::endl;
+            break;
+          case Double:
+            std::cout << "Double" << std::endl;
+            break;
+          case Donor:
+            std::cout << "Donor" << std::endl;
+            break;
+          case Acceptor:
+            std::cout << "Acceptor" << std::endl;
+            break;
+          case Hybridized:
+            std::cout << "Hybridized" << std::endl;
+            break;
+          case Other:
+            std::cout << "Other" << std::endl;
             break;
           case Unassigned:
             std::cout << "Unassigned" << std::endl;
