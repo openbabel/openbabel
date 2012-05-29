@@ -246,7 +246,7 @@ bool SVGFormat::WriteChemObject(OBConversion* pConv)
     }
 
     //output all collected molecules
-    int n=0;
+    unsigned int n=0;
 /*
     if(_ptext)
     {
