@@ -1937,7 +1937,7 @@ namespace OpenBabel
     map<int,char> acmap; //key=atom calss; value=last letter used as second in id
     OBAtomClassData* pac = static_cast<OBAtomClassData*>(mol.GetData("Atom Class"));
     atomIDs.push_back("Error"); //atom idex stats at 1. atomIDs[0] is not used
-    for (int idx=1; idx<=mol.NumAtoms(); ++idx)
+    for (unsigned int idx=1; idx<=mol.NumAtoms(); ++idx)
     {
       ss.str("");
       ss << 'a';
@@ -2287,7 +2287,7 @@ namespace OpenBabel
 
     double imaginaryFrequency = 0.0;
     //A negative frequency is output separately as an imaginary frequency (for transition states)
-    for(int i=0; i<vd->GetNumberOfFrequencies(); ++i)
+    for (unsigned int i=0; i<vd->GetNumberOfFrequencies(); ++i)
     {
       double freq = vd->GetFrequencies()[i];
       if(freq>0.0)
@@ -2322,7 +2322,7 @@ namespace OpenBabel
     xmlTextWriterStartElementNS(writer(), prefix, C_ARRAY, NULL);
     xmlTextWriterWriteFormatAttribute(writer(), C_UNITS,"%s","cm-1");
     const double WAVENUM_TO_GHZ=30.0;
-    for(int i=0; i<rd->GetRotConsts().size(); ++i)
+    for (unsigned int i=0; i<rd->GetRotConsts().size(); ++i)
       if(rd->GetRotConsts()[i]!=0.0)
         xmlTextWriterWriteFormatString(writer(),"%.3lf ", rd->GetRotConsts()[i]/WAVENUM_TO_GHZ);
     xmlTextWriterEndElement(writer());//array
