@@ -184,7 +184,7 @@ namespace OpenBabel
             ETA[c][r] = ETA[r][c];
           }
       }
-    for (int i = 0; i < dim; ++i)
+    for (unsigned int i = 0; i < dim; ++i)
       {
         ETA[i][_nAtoms] = -1.0;
         ETA[_nAtoms][i] = +1.0;
@@ -219,7 +219,7 @@ namespace OpenBabel
   void
   EEMCharges::_luDecompose(double** A, std::vector<int>& I, unsigned int dim)
   {
-    int i, j, k, kMax, iMax;
+    unsigned int i, j, k, kMax, iMax;
     std::vector<double> vScales(dim, 0);
     double maxVal = 0, dummy = 0;
     double * pRowi = NULL;
@@ -300,9 +300,9 @@ namespace OpenBabel
   void
   EEMCharges::_luSolve(double** A, std::vector<int>& I, double* B, unsigned int dim)
   {
-    int i, k;
+    unsigned int i, k;
 
-    for (int i = 0; i < dim; ++i) _swapRows(B, i, I[i]);
+    for (i = 0; i < dim; ++i) _swapRows(B, i, I[i]);
 
     // forward substitution pass
     for (k = 0; k < dim; ++k)
