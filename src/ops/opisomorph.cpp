@@ -291,7 +291,7 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
   {
     vector<vector<int> >::iterator iter;
 
-    if(vec[1]=="extract" || vec.size()>3 && vec[2]=="extract")
+    if (vec[1]=="extract" || (vec.size()>3 && vec[2]=="extract"))
     {
       //Delete all unmatched atoms. Use only the first match
       ExtractSubstruct(pmol, *pMappedAtoms->begin());
