@@ -90,7 +90,7 @@ namespace OpenBabel
     /** Parse the input stream and use the OpenBabel API to populate the OBMol **/
     int id;
     char buf[BUFF_SIZE];
-    int atoms, bonds, tmp;
+    unsigned int atoms, bonds, tmp;
     float scale, dtmp;
     bool atom_input = false, bond_input = false;
     string type;
