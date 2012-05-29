@@ -788,7 +788,7 @@ namespace OpenBabel
 
         int valence = 0; //Only non-zero when RAD value would be >=4 (outside spec)
         //or an unbonded metal
-        if(atom->GetSpinMultiplicity()>=4 || IsMetal(atom) && atom->GetValence()==0 )
+        if (atom->GetSpinMultiplicity()>=4 || (IsMetal(atom) && atom->GetValence()==0))
           valence = atom->GetValence()==0 ? 15 : atom->GetValence();
 
         snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d",
