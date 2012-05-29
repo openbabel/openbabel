@@ -1629,7 +1629,7 @@ namespace OpenBabel
 
 #define OBAtomIncrement 100
 
-    if (_natoms+1 >= (signed)_vatom.size())
+    if (_natoms+1 >= _vatom.size())
       {
         _vatom.resize(_natoms+OBAtomIncrement);
         vector<OBAtom*>::iterator j;
@@ -1709,7 +1709,7 @@ namespace OpenBabel
     pBond->SetId(id);
 
 #define OBBondIncrement 100
-    if (_nbonds+1 >= (signed)_vbond.size())
+    if (_nbonds+1 >= _vbond.size())
       {
         _vbond.resize(_nbonds+OBBondIncrement);
         vector<OBBond*>::iterator i;
@@ -1755,7 +1755,7 @@ namespace OpenBabel
 
 #define OBAtomIncrement 100
 
-    if (_natoms+1 >= (signed)_vatom.size())
+    if (_natoms+1 >= _vatom.size())
       {
         _vatom.resize(_natoms+OBAtomIncrement);
         vector<OBAtom*>::iterator j;
@@ -2990,7 +2990,7 @@ namespace OpenBabel
           }
 
 #define OBBondIncrement 100
-        if (_nbonds+1 >= (signed)_vbond.size())
+        if (_nbonds+1 >= _vbond.size())
           {
             _vbond.resize(_nbonds+OBBondIncrement);
             vector<OBBond*>::iterator i;
