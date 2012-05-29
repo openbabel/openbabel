@@ -1126,14 +1126,19 @@ namespace OpenBabel {
        *  or the direction is positive.
        */
       sign = 0 ;
-      if( axis->direction[0] <= 0 )
-        if( axis->direction[0] < 0 )
-          sign = 1 ;
-        else if( axis->direction[1] <= 0 )
-          if( axis->direction[1] < 0 )
-            sign = 1 ;
-          else if( axis->direction[2] < 0 )
-            sign = 1 ;
+      if (axis->direction[0] <= 0) {
+        if (axis->direction[0] < 0) {
+          sign = 1;
+        }
+        else if (axis->direction[1] <= 0) {
+          if (axis->direction[1] < 0) {
+            sign = 1;
+          }
+          else if (axis->direction[2] < 0) {
+            sign = 1;
+          }
+        }
+      }
       if( sign )
         for( i = 0 ; i < DIMENSION ; i++ )
           axis->direction[i] = -axis->direction[i] ;
