@@ -84,7 +84,7 @@ public:
     "Right now there is only limited support for element perception. It works "
     "for \nelements with one letter symbols if the atomtype starts with the "
     "same letter.\n\n"
-    
+
     "Read Options e.g. -as\n"
     " s  Consider single bonds only\n"
     " b  Disable bonding entierly\n"
@@ -212,13 +212,17 @@ bool GROFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       return false;
     }
 
+    line = buffer;
+
     // Get atom
     atom  = pmol->NewAtom();
-    line = buffer;
+
+    // Needed for -h to work with molecules with implicit hydrogens
+    atom->ForceImplH();
 
     tempstr.assign(line,0,5);
     stringstream(tempstr) >> resid;
-    
+
     resname.assign(line,5,5);
     Trim(resname);
 
@@ -325,13 +329,13 @@ bool GROFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
     return false;
   }
-  
+
   ss >> v1x >> v2y >> v3z;
   if (ss) {
     ss >> v1y >> v1z >> v2x;
     ss >> v2z >> v3x >> v3y;
   }
-  
+
   if (!(v1x == 0.0 && v2y == 0.0 && v3z == 0.0 &&
         v1y == 0.0 && v1z == 0.0 && v2x == 0.0 &&
         v2z == 0.0 && v3x == 0.0 && v3y == 0.0)) {
@@ -339,7 +343,7 @@ bool GROFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   const vector3 v1(v1x*10,v1y*10,v1z*10);
   const vector3 v2(v2x*10,v2y*10,v2z*10);
   const vector3 v3(v3x*10,v3y*10,v3z*10);
-  
+
   OBUnitCell* cell = new OBUnitCell();
   cell->SetData(v1, v2, v3);
   pmol->SetData(cell);
@@ -381,8 +385,8 @@ bool GROFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   OBVectorData* vector;
   vector3 v;
-  //OBAtom* atom;
   OBResidue* res;
+  string tempstr = "";
   long int atIdx = 0;
   long int resIdx = 0;
 
@@ -400,7 +404,9 @@ bool GROFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       ofs << setw(5) << res->GetNum();
     }
     ofs << setw(5) << left  << res->GetName();
-    ofs << setw(5) << right << res->GetAtomID(&(*atom));
+    // Remove whitespace from AtomID left by other formats
+    tempstr = res->GetAtomID(&(*atom));
+    ofs << setw(5) << right << Trim(tempstr);
     atIdx = atom->GetIdx();
     // Check if atom index excedes the field width and should be wrapped
     if (atIdx > 99999) {
@@ -431,13 +437,13 @@ bool GROFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     vector3 v1 = m.GetRow(0);
     vector3 v2 = m.GetRow(1);
     vector3 v3 = m.GetRow(2);
-  
+
     // Gromacs itself uses precision of 5, so it should be fine
     ofs.precision(5);
     ofs << "   " << v1.x()/10
         << "   " << v2.y()/10
         << "   " << v3.z()/10;
-  
+
     // If there is any non-zero value among others, then write them all
     const double TRESHOLD = 1.0e-8;
     if (fabs(v1.y()) > TRESHOLD || fabs(v1.z()) > TRESHOLD ||
