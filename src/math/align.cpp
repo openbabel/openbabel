@@ -109,7 +109,7 @@ namespace OpenBabel
     int delta = 1;
     _newidx.resize(0);
 
-    for (int i=1; i<=refmol.NumAtoms(); ++i) {
+    for (unsigned int i=1; i<=refmol.NumAtoms(); ++i) {
       atom = refmol.GetAtom(i);
       if (_includeH || !atom->IsHydrogen()) {
         _frag_atoms.SetBitOn(i);
@@ -132,7 +132,7 @@ namespace OpenBabel
     _ptargetmol = &targetmol;
     _targetmol_coords.resize(0);
     OBAtom const *atom;
-    for (int i=1; i<=targetmol.NumAtoms(); ++i) {
+    for (unsigned int i=1; i<=targetmol.NumAtoms(); ++i) {
       atom = targetmol.GetAtom(i);
       if (_includeH || !atom->IsHydrogen())
         _targetmol_coords.push_back(atom->GetVector());
@@ -196,10 +196,10 @@ namespace OpenBabel
       OBIsomorphismMapper::Mappings::const_iterator cit;
       Eigen::MatrixXd mtarget(_mtarget.rows(), _mtarget.cols());
 
-      for (int k = 0; k < _aut.size(); ++k) {
+      for (unsigned int k = 0; k < _aut.size(); ++k) {
         // Rearrange columns of _mtarget for this permutation
-        int i=0;
-        for (int j=1; j<=_prefmol->NumAtoms(); ++j) {
+        unsigned int i=0;
+        for (unsigned int j=1; j<=_prefmol->NumAtoms(); ++j) {
           if (_frag_atoms.BitIsSet(j)) {
             for (std::size_t l = 0; l < _aut[k].size(); ++l)
               if (_aut[k][l].first == j - 1) {
@@ -263,7 +263,7 @@ namespace OpenBabel
     }
     else { // Need to deal with the case where hydrogens were excluded
       vector<vector3> target_coords;
-      for (int i=1; i<=_ptargetmol->NumAtoms(); ++i)
+      for (unsigned int i=1; i<=_ptargetmol->NumAtoms(); ++i)
         target_coords.push_back(_ptargetmol->GetAtom(i)->GetVector());
       Eigen::MatrixXd mtarget;
       VectorsToMatrix(&target_coords, mtarget);
