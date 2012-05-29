@@ -3791,12 +3791,12 @@ namespace OpenBabel {
 
     // Remember the desired endatom, if specified
     const char* pp = _pconv->IsOption("l");
-    int atom_idx  = pp ? atoi(pp) : -1;
+    unsigned int atom_idx  = pp ? atoi(pp) : 0;
     if (atom_idx >= 1 && atom_idx <= mol.NumAtoms())
       _endatom = mol.GetAtom(atom_idx);
     // Was a start atom specified?
     pp = _pconv->IsOption("f");
-    atom_idx  = pp ? atoi(pp) : -1;
+    atom_idx  = pp ? atoi(pp) : 0;
     if (atom_idx >= 1 && atom_idx <= mol.NumAtoms())
       _startatom = mol.GetAtom(atom_idx);
 
@@ -3824,7 +3824,7 @@ namespace OpenBabel {
       // It happens that the lowest canonically-numbered atom is usually
       // a good place to start the canonical SMILES.
       OBAtom *root_atom;
-      int lowest_canorder = 999999;
+      unsigned int lowest_canorder = 999999;
       root_atom = NULL;
 
       // If we specified a startatom_idx & it's in this fragment, use it to start the fragment
@@ -4107,7 +4107,7 @@ namespace OpenBabel {
         string canorder = pmol->GetData("SMILES Atom Order")->GetValue();
         tokenize(vs, canorder);
         ofs << '\t';
-        for (int i = 0; i < vs.size(); i++) {
+        for (unsigned int i = 0; i < vs.size(); i++) {
           int idx = atoi(vs[i].c_str());
           OBAtom *atom = pmol->GetAtom(idx);
           if (i > 0)
