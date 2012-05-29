@@ -68,7 +68,7 @@ bool OpHighlight::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConvers
   
   // Jump in twos over the parameters! 
   // "SMARTS1 color1 SMARTS2 color2 ..."
-  for(int vecIdx=0; vecIdx<vec.size(); vecIdx+=2)
+  for(unsigned int vecIdx = 0; vecIdx < vec.size(); vecIdx += 2)
   {
     
     std::string smarts = vec[vecIdx];
@@ -129,7 +129,7 @@ bool OpHighlight::AddDataToSubstruct(OBMol* pmol,
         const std::string& value)
 {
   //Add data to atoms
-  for(int j=0; j<atomIdxs.size(); ++j)
+  for(unsigned int j = 0; j < atomIdxs.size(); ++j)
   {
     OBAtom* pAtom = pmol->GetAtom(atomIdxs[j]);
     if(!pAtom)
