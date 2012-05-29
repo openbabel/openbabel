@@ -134,7 +134,7 @@ namespace OpenBabel
     string::size_type pos, pos2;
 
     //Ignore lines that start with # or /
-    while(ifs && ifs.peek()=='#' || ifs.peek()=='/')
+    while ((ifs && ifs.peek()=='#') || ifs.peek()=='/')
       if(!getline(ifs, ln))
         return false;
 
