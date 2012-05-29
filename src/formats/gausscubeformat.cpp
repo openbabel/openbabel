@@ -402,7 +402,7 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
       }
 
       vgd.reserve(nCubes);
-      for (int i = 1; i < vs.size(); ++i)
+      for (unsigned int i = 1; i < vs.size(); ++i)
       {
         int cubeNumber = strtol(static_cast<const char*>(vs.at(i).c_str()), &endptr, 10);
         if (endptr == static_cast<const char*>(vs.at(i).c_str()))
@@ -437,7 +437,7 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
           return false;
         }
         tokenize(vs, buffer);
-        for (int i = 0; i < vs.size(); ++i)
+        for (unsigned int i = 0; i < vs.size(); ++i)
         {
           int cubeNumber = strtol(static_cast<const char*>(vs.at(i).c_str()), &endptr, 10);
           if (endptr == static_cast<const char*>(vs.at(i).c_str()))
@@ -640,7 +640,7 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
         for (int k = 0; k < nz; ++k)
         {
           // The cube files are stored in staggered z
-          for (int l = 0; l < grids.size(); ++l)
+          for (unsigned int l = 0; l < grids.size(); ++l)
           {
             value = static_cast<OBGridData*>(grids[l])->GetValue(i, j, k);
             snprintf(buffer, BUFF_SIZE," %12.5E", value);
