@@ -207,7 +207,7 @@ virtual const char* Description() //required
           {
             //Finds molecules with Tanimoto > MinTani
             double MaxTani = 1.1;
-            int pos = txt.find( ',' );
+            size_t pos = txt.find(',');
             if( pos != string::npos ) {
               MaxTani = atof( txt.substr( pos + 1 ).c_str() );
             }
