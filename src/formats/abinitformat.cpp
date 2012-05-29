@@ -92,8 +92,6 @@ namespace OpenBabel
     int numTranslationVectors = 0;
     int symmetryCode = 0;
 
-    SpaceGroup *sg = NULL;
-
     mol.BeginModify();
 
     while (ifs.getline(buffer,BUFF_SIZE))
