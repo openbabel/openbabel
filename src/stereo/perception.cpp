@@ -1424,11 +1424,13 @@ namespace OpenBabel {
           cout << "automorphism " << i+1 << "     ";
           for (std::size_t j = 0; j < mol->NumAtoms(); ++j) {
             unsigned int t;
-            if (MapsTo(entry.p, j, t))
-              if (t < 10)
+            if (MapsTo(entry.p, j, t)) {
+              if (t < 10) {
                 cout << " " << t << " ";
-              else
+              } else {
                 cout << t << " ";
+              }
+            }
           }
           cout << endl;
           cout << "  invertedAtoms: ";
@@ -1516,11 +1518,13 @@ namespace OpenBabel {
     bool foundTrueStereoCenter = false;
     int paraStereoCenterCount = 0;
     for (OBStereoUnitSet::const_iterator u2 = units.begin(); u2 != units.end(); ++u2) {
-      if (isUnitInFragment(mol, *u2, ligand))
-        if ((*u2).para)
+      if (isUnitInFragment(mol, *u2, ligand)) {
+        if ((*u2).para) {
           paraStereoCenterCount++;
-        else
+        } else {
           foundTrueStereoCenter = true;
+        }
+      }
     }
 
     if (foundTrueStereoCenter || paraStereoCenterCount >= 2)
@@ -1564,15 +1568,19 @@ namespace OpenBabel {
         OBBond *bond = mol->GetBondById((*u2).id);
         OBAtom *begin = bond->GetBeginAtom();
         OBAtom *end = bond->GetEndAtom();
-        if (ligand.BitIsOn(begin->GetId()) || ligand.BitIsOn(end->GetId()))
+        if (ligand.BitIsOn(begin->GetId()) || ligand.BitIsOn(end->GetId())) {
           if ((*u2).para) {
             for (std::size_t ringIdx = 0; ringIdx < mergedRings.size(); ++ringIdx) {
-              if (mergedRings.at(ringIdx).BitIsOn(begin->GetIdx()) || mergedRings.at(ringIdx).BitIsOn(end->GetIdx()))
-                if (std::find(ringIndices.begin(), ringIndices.end(), ringIdx) == ringIndices.end())
+              if (mergedRings.at(ringIdx).BitIsOn(begin->GetIdx()) || mergedRings.at(ringIdx).BitIsOn(end->GetIdx())) {
+                if (std::find(ringIndices.begin(), ringIndices.end(), ringIdx) == ringIndices.end()) {
                   ringIndices.push_back(ringIdx);
+                }
+              }
             }
-          } else
+          } else {
             trueStereoCenterCount++;
+          }
+        }
       }
     }
 
