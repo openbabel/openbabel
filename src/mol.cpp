@@ -3824,10 +3824,10 @@ namespace OpenBabel
                      && b->BOSum() + 1 <= static_cast<unsigned int>(etab.GetMaxBonds(b->GetAtomicNum()))
                      && (GetBond(atom, b))->IsDoubleBondGeometry()
                      && (currentElNeg > maxElNeg ||
-                         (IsApprox(currentElNeg,maxElNeg, 1.0e-6)
+                         ((IsApprox(currentElNeg,maxElNeg, 1.0e-6)
                           // If only the bond length counts, prefer double bonds in the ring
                           && (((atom->GetBond(b))->GetLength() < shortestBond)
-                              && (!atom->IsInRing() || !c || !c->IsInRing() || b->IsInRing()))
+                              && (!atom->IsInRing() || !c || !c->IsInRing() || b->IsInRing())))
                           || (atom->IsInRing() && c && !c->IsInRing() && b->IsInRing()))))
                   {
                     if (b->HasNonSingleBond() ||
