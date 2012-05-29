@@ -172,7 +172,6 @@ namespace OpenBabel
     CHI[_nAtoms] = totalCharge;
 
     // Complete ETA
-    double d;
     OBAtom *rAtom, *cAtom;
     for (unsigned int r = 0; r < _nAtoms; ++r)
       {
