@@ -372,7 +372,7 @@ namespace OpenBabel
     vector<int>::iterator j;
     vector<OBRing*> rlist = mol.GetSSSR();
 
-    int member_count;
+    unsigned int member_count;
     for (i2 = _ringtyp.begin();i2 != _ringtyp.end();++i2) { // for each ring type
       if (i2->first->Match(mol)) {
         _mlist = i2->first->GetMapList();
