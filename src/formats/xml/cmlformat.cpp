@@ -632,13 +632,21 @@ namespace OpenBabel
               && (attrname=="xFract" || attrname=="yFract" || attrname=="zFract"))
               usingFract=true;
 
-            if(using3 && attrname=="x3" || using2 && attrname=="x2" || usingFract && attrname=="xFract")
+            if ((using3     && attrname=="x3") ||
+                (using2     && attrname=="x2") ||
+                (usingFract && attrname=="xFract")) {
               x=strtod(value.c_str(),NULL);
-            else if(using3 && attrname=="y3" || using2 && attrname=="y2" || usingFract && attrname=="yFract")
+            }
+            else if ((using3     && attrname=="y3") ||
+                     (using2     && attrname=="y2") ||
+                     (usingFract && attrname=="yFract")) {
               y=strtod(value.c_str(),NULL);
-            else if(using3 && attrname=="z3" || using2 && attrname=="z2" || usingFract && attrname=="zFract")
+            }
+            else if ((using3     && attrname=="z3") ||
+                     (using2     && attrname=="z2") ||
+                     (usingFract && attrname=="zFract")) {
               z=strtod(value.c_str(),NULL);
-
+            }
             else if(using2 && attrname=="xy2")
               {
                 vector<string> vals;
