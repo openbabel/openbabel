@@ -2767,25 +2767,47 @@ namespace OpenBabel {
 
             // If there is an implicit ref; let's make that the 'from' atom
             // otherwise use the atom on the chosen bond
-            bool implicit = true;
+            bool implicit = false;
             if (test_cfg.from != OBStereo::ImplicitRef) {
               OBStereo::RefIter ri = std::find(test_cfg.refs.begin(), test_cfg.refs.end(), (unsigned long) OBStereo::ImplicitRef);
-              if (ri!=test_cfg.refs.end())
+              if (ri!=test_cfg.refs.end()) {
                 test_cfg = OBTetrahedralStereo::ToConfig(test_cfg, OBStereo::ImplicitRef);
-              else {
-                test_cfg = OBTetrahedralStereo::ToConfig(test_cfg, chosen->GetNbrAtom(center)->GetId());
-                implicit = false;
+                implicit = true;
               }
             }
-            
-            bool anticlockwise_order = AngleOrder(mol.GetAtomById(test_cfg.refs[0])->GetVector(),
+            else
+              implicit = true;
+
+            bool anticlockwise_order;
+            bool useup;
+            if (implicit) {
+              // Put the ref for the stereo bond second
+              while (test_cfg.refs[1] != chosen->GetNbrAtom(center)->GetId()) 
+                std::rotate(test_cfg.refs.begin(), test_cfg.refs.begin() + 2, test_cfg.refs.end());
+              anticlockwise_order = AngleOrder(mol.GetAtomById(test_cfg.refs[0])->GetVector(),
                 mol.GetAtomById(test_cfg.refs[1])->GetVector(), mol.GetAtomById(test_cfg.refs[2])->GetVector(),
                 center->GetVector());
+              // Get the angle between the plane bonds
+              double angle = GetAngle(mol.GetAtomById(test_cfg.refs[0]), center, mol.GetAtomById(test_cfg.refs[2]));
+              if ((angle<0 && anticlockwise_order) || (angle>0 && !anticlockwise_order)) // Is the stereobond in the bigger angle?
+                // If the bonds are in anticlockwise order, a clockwise angle (<180) between plane bonds
+                // implies that the stereo bond is in the bigger angle. Otherwise it has the opposite meaning.
+                useup = anticlockwise_order;
+              else
+                useup = !anticlockwise_order;
+              }
+            else {
+              test_cfg = OBTetrahedralStereo::ToConfig(test_cfg, chosen->GetNbrAtom(center)->GetId());
+              anticlockwise_order = AngleOrder(mol.GetAtomById(test_cfg.refs[0])->GetVector(),
+                mol.GetAtomById(test_cfg.refs[1])->GetVector(), mol.GetAtomById(test_cfg.refs[2])->GetVector(),
+                center->GetVector());
+              if (anticlockwise_order)
+                useup = false;
+              else
+                useup = true;
+            }
 
-            // Things are inverted from the point of view of the ImplicitH which we
-            // assume to be of opposite stereochemistry to the wedge/hash
-            bool useup = !implicit;
-            if (anticlockwise_order) useup = !useup;
+
             // Set to UpBond (filled wedge from cfg.center to chosen_nbr) or DownBond
             bonddir = useup ? OBStereo::UpBond : OBStereo::DownBond;
           }
