@@ -63,7 +63,7 @@ bool OpTransform::Initialize()
       ParseLine(charBuffer);
   }
   else //When filename is * use data in lines following
-    for(int i=4;i<_textlines.size();++i)
+    for(unsigned int i=4; i < _textlines.size(); ++i)
       ParseLine(_textlines[i].c_str());
 
 
