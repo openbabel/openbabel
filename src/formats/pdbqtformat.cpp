@@ -747,8 +747,8 @@ namespace OpenBabel
   {
     const OBAtom **da = (const OBAtom **)a;
     const OBAtom **db = (const OBAtom **)b;
-    int aIdx = (*da)->GetIdx();
-    int bIdx = (*db)->GetIdx();
+    unsigned int aIdx = (*da)->GetIdx();
+    unsigned int bIdx = (*db)->GetIdx();
 
     return ((aIdx > bIdx) - (aIdx < bIdx));
   }
@@ -757,8 +757,8 @@ namespace OpenBabel
   {
     const OBAtom ***da = (const OBAtom ***)a;
     const OBAtom ***db = (const OBAtom ***)b;
-    int aIdx[2] = { (*da)[0]->GetIdx(), (*da)[1]->GetIdx() };
-    int bIdx[2] = { (*db)[0]->GetIdx(), (*db)[1]->GetIdx() };
+    unsigned int aIdx[2] = { (*da)[0]->GetIdx(), (*da)[1]->GetIdx() };
+    unsigned int bIdx[2] = { (*db)[0]->GetIdx(), (*db)[1]->GetIdx() };
     int cmp1;
 
 
