@@ -165,9 +165,9 @@ int main(int argc,char *argv[])
                     // param is a subtype, like babel -L ops gen3D
                     // or first arg is a plugin ID, like babel -L cml
                     OBPlugin* plugin;
-                    if(OBPlugin::GetPlugin("plugins", argv[arg+1])
-                      && (plugin = OBPlugin::GetPlugin(argv[arg+1], param))
-                      || (plugin = OBPlugin::GetPlugin(NULL, argv[arg+1])))
+                    if ((OBPlugin::GetPlugin("plugins", argv[arg+1]) &&
+                         (plugin = OBPlugin::GetPlugin(argv[arg+1], param))) ||
+                        (plugin = OBPlugin::GetPlugin(NULL, argv[arg+1])))
                     {
                       //Output details of subtype
                       string txt;
