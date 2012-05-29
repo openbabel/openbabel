@@ -545,7 +545,7 @@ namespace OpenBabel
         {
           tokenize(vs, buffer);
           RotConsts.clear();
-          for(int i=3; i<vs.size(); ++i)
+          for (unsigned int i=3; i<vs.size(); ++i)
             RotConsts.push_back(atof(vs[i].c_str()));
         }
 
@@ -727,7 +727,7 @@ namespace OpenBabel
           // we have to separate the alpha and beta vectors
           std::vector<double>      betaOrbitals;
           std::vector<std::string> betaSymmetries;
-          int initialSize = orbitals.size();
+          unsigned int initialSize = orbitals.size();
           for (unsigned int i = betaStart; i < initialSize; ++i) {
             betaOrbitals.push_back(orbitals[i]);
             betaSymmetries.push_back(symmetries[i]);
