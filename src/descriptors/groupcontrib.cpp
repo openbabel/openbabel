@@ -168,7 +168,7 @@ namespace OpenBabel
 
     if (_debug)
       debugMessage << "  Final contributions:\n";
-    for (int index = 0; index < tmpmol.NumAtoms(); index++) {
+    for (unsigned int index = 0; index < tmpmol.NumAtoms(); index++) {
       if (tmpmol.GetAtom(index + 1)->IsHydrogen())
         continue;
       total += atomValues[index];
