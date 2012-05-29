@@ -30,7 +30,7 @@ namespace OpenBabel {
     if (refs1.size() != refs2.size())
       return false;
 
-    int count = 0;
+    unsigned int count = 0;
     for (ConstRefIter i = refs1.begin(); i != refs1.end(); ++i)
       for (ConstRefIter j = refs2.begin(); j != refs2.end(); ++j)
         if (*i == *j) {
