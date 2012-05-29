@@ -193,7 +193,7 @@ namespace OpenBabel
             ifs.getline(buffer, BUFF_SIZE); // real data
             tokenize(vs, buffer);
             while(vs.size() > 0) { // ends with a blank line
-              for (int orbital = 0; orbital < vs.size(); ++orbital) {
+              for (unsigned int orbital = 0; orbital < vs.size(); ++orbital) {
                 // orbitals are listed in eV already, no conversion needed
                 orbitalEnergies.push_back(atof(vs[orbital].c_str()));
               }
@@ -271,8 +271,8 @@ namespace OpenBabel
             ifs.getline(buffer, BUFF_SIZE); // blank
 
             // now real work
-            int prevModeCount = displacements.size();
-            int newModes = frequencies.size() - displacements.size();
+            unsigned int prevModeCount = displacements.size();
+            unsigned int newModes = frequencies.size() - displacements.size();
             vector<vector3> displacement;
             for (unsigned int i = 0; i < newModes; ++i) {
               displacements.push_back(displacement);
@@ -280,7 +280,7 @@ namespace OpenBabel
 
             ifs.getline(buffer, BUFF_SIZE);
             tokenize(vs, buffer);
-            int modeCount = vs.size();
+            unsigned int modeCount = vs.size();
             vector<double> x, y, z;
             while(modeCount > 1) {
               x.clear();
@@ -769,7 +769,7 @@ namespace OpenBabel
     vector<string> vs;
 
     vector<OBInternalCoord*> vic;
-    vector<int> indices;
+    vector<unsigned int> indices;
     vic.push_back((OBInternalCoord*)NULL);
 
     ifs.getline(buffer,BUFF_SIZE); // keywords
@@ -802,7 +802,7 @@ namespace OpenBabel
       atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
     }
 
-    int idx = 0;
+    unsigned int idx = 0;
     FOR_ATOMS_OF_MOL (a, mol) {
       if ((indices[idx] > 0) && (indices[idx] <= mol.NumAtoms()))
         vic[a->GetIdx()]->_a = mol.GetAtom(indices[idx]);
