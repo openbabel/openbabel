@@ -140,7 +140,7 @@ bool doShuffleTest(const std::string &smiles)
   cout << "ref = " << ref << endl;
 
   bool result = true;
-  for (int i = 0; i < N; ++i) {
+  for (unsigned int i = 0; i < N; ++i) {
     // shuffle the atoms
     std::random_shuffle(atoms.begin(), atoms.end());
     mol.RenumberAtoms(atoms);
@@ -207,7 +207,7 @@ bool doShuffleTestFile(const std::string &filename)
   cout << "ref = " << ref << endl;
 
   bool result = true;
-  for (int i = 0; i < N; ++i) {
+  for (unsigned int i = 0; i < N; ++i) {
     // shuffle the atoms
     std::random_shuffle(atoms.begin(), atoms.end());
     mol.RenumberAtoms(atoms);
@@ -261,7 +261,7 @@ bool doShuffleTestMultiFile(const std::string &filename)
     cout << "ref = " << ref << endl;
 
     bool subresult = true;
-    for (int i = 0; i < N; ++i) {
+    for (unsigned int i = 0; i < N; ++i) {
       // shuffle the atoms
       std::random_shuffle(atoms.begin(), atoms.end());
       mol.RenumberAtoms(atoms);
