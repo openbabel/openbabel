@@ -73,7 +73,7 @@ void testCanonicalTautomers(const std::string &smiles)
 
   canonicalTautomers.erase(std::unique(canonicalTautomers.begin(), canonicalTautomers.end()), canonicalTautomers.end());
 
-  OB_COMPARE( canonicalTautomers.size(), 1 );
+  OB_COMPARE(canonicalTautomers.size(), unsigned(1));
 }
 
 
