@@ -305,7 +305,7 @@ bool ChemKinFormat::ReadHeader(istream& ifs, OBConversion* pConv)
       double EFactor[6]   ={   1.0    ,   0.001  ,    4.1816    ,   0.041816   ,   1.98  , 0.0};
       double AvFactor = 6.023E23;
 
-      for(int i=1;i<toks.size();++i)
+      for (unsigned int i=1; i<toks.size(); ++i)
       {
         for(int j=0;j<6;++j)
           if(!strcasecmp(toks[i].c_str(), EKeywords[j].c_str()))
@@ -449,7 +449,7 @@ bool ChemKinFormat::ParseReactionLine(OBReaction* pReact, OBConversion* pConv)
           ln.clear();
           return false;
         }
-        for(int i=0;i<mult;++i)
+        for (unsigned int i=0; i<mult; ++i)
           pReact->AddReactant(sp);
         continue;
       }
@@ -569,7 +569,7 @@ bool ChemKinFormat::ParseReactionLine(OBReaction* pReact, OBConversion* pConv)
             ln.clear();
             return false;
           }
-          for(int j=0;j<mult;++j)
+          for (unsigned int j=0; j<mult; ++j)
             pReact->AddProduct(sp);
         }
         else
@@ -834,11 +834,11 @@ bool ChemKinFormat::WriteHeader(OBConversion* pConv)
 
   ofs << "SPECIES\n";
   vector<string>::iterator sitr;
-  int maxlen=0;
+  unsigned int maxlen=0;
   for(sitr= species.begin();sitr!=species.end();++sitr)
     if(sitr->size()>maxlen) maxlen = sitr->size();
 
-  int n=0;
+  unsigned int n=0;
   for(sitr=species.begin();sitr!=species.end();++sitr, ++n)
   {
     if(maxlen>0 && n > 80 / maxlen)
