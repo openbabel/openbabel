@@ -396,7 +396,7 @@ namespace OpenBabel
             if (stripped_HM.length() > 0 && _SpaceGroups.sgbn[nm] == NULL)
               _SpaceGroups.sgbn[nm] = this;
 		  }
-        if ((m_OriginAlternative & 1 == 0) && (_SpaceGroups.sgbn[m_HM] == NULL))
+        if ((m_OriginAlternative & (1 == 0)) && (_SpaceGroups.sgbn[m_HM] == NULL))
           _SpaceGroups.sgbn[m_HM] = this;
 	  }
     // Also use the HM symbol stripped from whitespaces as key
