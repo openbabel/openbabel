@@ -826,7 +826,7 @@ namespace OpenBabel
           OBAtom ***rotBondTable = new OBAtom **[nRotBond];
           int rotBondId=0;
           int bondAtomNum;
-          int end;
+          unsigned int end;
           OBResidue *res;
           for (OBBondIterator it=mol.BeginBonds(); it != mol.EndBonds(); it++)
           {
