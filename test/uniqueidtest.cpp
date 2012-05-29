@@ -15,7 +15,7 @@ using namespace OpenBabel;
 void testIdsNewAtom1()
 {
   OBMol mol;
-  for (int i = 0; i < 10; ++i) {
+  for (unsigned long i = 0; i < 10; ++i) {
     OBAtom *atom = mol.NewAtom();
     OB_REQUIRE(atom->GetId() == i);
   }
@@ -34,7 +34,7 @@ void testIdsNewAtom1()
 void testIdsNewAtom2()
 {
   OBMol mol;
-  for (int i = 0; i < 10; ++i) {
+  for (unsigned long i = 0; i < 10; ++i) {
     OBAtom *atom = mol.NewAtom(i*2);
     OB_REQUIRE(atom->GetId() == i*2);
   }
@@ -97,7 +97,7 @@ void testIdsAddAtom()
 void testIdsNewBond1()
 {
   OBMol mol;
-  for (int i = 0; i < 10; ++i) {
+  for (unsigned long i = 0; i < 10; ++i) {
     OBBond *bond = mol.NewBond();
     OB_REQUIRE(bond->GetId() == i);
   }
@@ -116,7 +116,7 @@ void testIdsNewBond1()
 void testIdsNewBond2()
 {
   OBMol mol;
-  for (int i = 0; i < 10; ++i) {
+  for (unsigned long i = 0; i < 10; ++i) {
     OBBond *bond = mol.NewBond(i*2);
     OB_REQUIRE(bond->GetId() == i*2);
   }
