@@ -6,8 +6,6 @@
 using namespace OpenBabel;
 
 
-
-
 void testEnumerateTautomers(const std::string &smiles, int numTautomers)
 {
   class Functor : public TautomerFunctor
@@ -77,13 +75,15 @@ void testCanonicalTautomers(const std::string &smiles)
 }
 
 
+int main() {
+  // Define location of file formats for testing
+  #ifdef FORMATDIR
+    char env[BUFF_SIZE];
+    snprintf(env, BUFF_SIZE, "BABEL_LIBDIR=%s", FORMATDIR);
+    putenv(env);
+  #endif
 
-
-int main()
-{
   // guanine
   testEnumerateTautomers("Nc1nc2ncnc2c([nH]1)O", 15);
   testCanonicalTautomers("Nc1nc2ncnc2c([nH]1)O");
-
-
 }
