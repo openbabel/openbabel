@@ -123,9 +123,10 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
           double factor = 1.; // Angstrom
           if( lineBuffer.find( "AU" ) != string::npos ) factor = BOHR_TO_ANGSTROM; // Bohr
           getline( ifs, lineBuffer );
-          while( lineBuffer.find( "[") == string::npos )
+          while( getline( ifs, lineBuffer ) )
             {
               if( lineBuffer == "" ) continue;
+              if( lineBuffer.find( "[" ) != string::npos ) break;
               istringstream is( lineBuffer );
               string atomName;
               int atomId;
