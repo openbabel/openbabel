@@ -132,6 +132,7 @@ namespace OpenBabel {
         "  t  Molecule name only\n"
         "  x  append X/Y coordinates in canonical-SMILES order\n"
         "  C  'anti-canonical' random order (mostly for testing)\n"
+        "  R  do not reuse bond closure symbols\n"
         "  f  <atomno> Specify the first atom\n"
         "     This atom will be used to begin the SMILES string.\n"
         "  l  <atomno> Specify the last atom\n"
@@ -2413,6 +2414,7 @@ namespace OpenBabel {
     std::vector<bool> _aromNH;
     OBBitVec _uatoms,_ubonds;
     std::vector<OBBondClosureInfo> _vopen;
+    unsigned int _bcdigit; // Unused unless option "R" is specified
     std::string       _canorder;
     std::vector<OBCisTransStereo> _cistrans, _unvisited_cistrans;
     std::map<OBBond *, bool> _isup;
@@ -2513,7 +2515,7 @@ namespace OpenBabel {
    *       Returns the next available bond-closure index for a SMILES.
    *
    *       You could just do this sequentially, not reusing bond-closure
-   *       digits, thus:
+   *       digits, thus (chosen by Option("R")):
    *
    *               c1cc2ccccc2cc1          napthalene
    *               c1ccccc1c2ccccc2        biphenyl
@@ -2531,8 +2533,13 @@ namespace OpenBabel {
 
   int OBMol2Cansmi::GetUnusedIndex()
   {
-    int idx=1;
+    if (_pconv->IsOption("R")) {
+      // Keep incrementing the bond closure digits (for each connected component)
+      _bcdigit++;
+      return _bcdigit;
+    }
 
+    int idx=1;
     vector<OBBondClosureInfo>::iterator j;
     for (j = _vopen.begin();j != _vopen.end();)
       if (j->ringdigit == idx)
@@ -3820,6 +3827,8 @@ namespace OpenBabel {
     // Repeats until no atoms remain unmarked.
 
     while (1) {
+      if (_pconv->IsOption("R"))
+        _bcdigit = 0; // Reset the bond closure index for each disconnected component
 
       // It happens that the lowest canonically-numbered atom is usually
       // a good place to start the canonical SMILES.
