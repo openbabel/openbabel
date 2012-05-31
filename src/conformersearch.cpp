@@ -39,10 +39,12 @@ namespace OpenBabel {
           continue;
         OBAtom *atom1 = mol.GetAtom(a1+1);
         OBAtom *atom2 = mol.GetAtom(a2+1);
-        if (atom1->IsHydrogen())
-          continue;
-        if (atom2->IsHydrogen())
-          continue;
+        // Default should be to recognize H clashes too
+        // if (atom1->IsHydrogen())
+        //   continue;
+        // if (atom2->IsHydrogen())
+        //   continue;
+
         // skip connected atoms
         if (mol.GetAtom(a1+1)->IsConnected(mol.GetAtom(a2+1)))
           continue;
@@ -50,9 +52,14 @@ namespace OpenBabel {
         double dx = conformer[a1*3  ] - conformer[a2*3  ];
         double dy = conformer[a1*3+1] - conformer[a2*3+1];
         double dz = conformer[a1*3+2] - conformer[a2*3+2];
-        double distance = sqrt(dx*dx + dy*dy + dz*dz);
+        double distanceSquared = sqrt(dx*dx + dy*dy + dz*dz);
+        double vdwCutoff = etab.GetVdwRad(atom1->GetAtomicNum())
+          + etab.GetVdwRad(atom2->GetAtomicNum());
+        vdwCutoff *= vdwCutoff; // compare squared distances
+
         // check distance
-        if (distance < m_cutoff)
+        if (distanceSquared < m_cutoff
+            || distanceSquared < vdwCutoff)
           return false;
       }
     }

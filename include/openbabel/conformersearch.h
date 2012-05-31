@@ -112,10 +112,10 @@ namespace OpenBabel {
   class OBAPI OBStericConformerFilter : public OBConformerFilter
   {
     public:
-      OBStericConformerFilter(double cutoff) : m_cutoff(cutoff) {}
+      OBStericConformerFilter(double cutoff) : m_cutoff(cutoff*cutoff) {}
       bool IsGood(const OBMol &mol, const RotorKey &key, double *coords);
     private:
-      double m_cutoff;
+      double m_cutoff; //!< Internal cutoff (used as a squared distance)
   };
 
   //////////////////////////////////////////////////////////
