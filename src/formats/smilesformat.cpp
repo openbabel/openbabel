@@ -132,7 +132,12 @@ namespace OpenBabel {
         "  t  Molecule name only\n"
         "  x  append X/Y coordinates in canonical-SMILES order\n"
         "  C  'anti-canonical' random order (mostly for testing)\n"
-        "  R  do not reuse bond closure symbols\n"
+        "  o  <ordering> Output in user-specified order\n"
+        "     Ordering should be specified like 4-2-1-3 for a 4-atom molecule.\n"
+        "     This gives canonical labels 1,2,3,4 to atoms 4,2,1,3 respectively,\n"
+        "     so that atom 4 will be visited first and the remaining atoms\n"
+        "     visited in a depth-first manner following the lowest canonical labels.\n"
+        "  R  Do not reuse bond closure symbols\n"
         "  f  <atomno> Specify the first atom\n"
         "     This atom will be used to begin the SMILES string.\n"
         "  l  <atomno> Specify the last atom\n"
@@ -3289,6 +3294,10 @@ namespace OpenBabel {
     // Since there are typically just one to three neighbors, we just do a
     // ordered insertion rather than sorting.
 
+    bool favor_multiple = true; // Visit 'multiple' bonds first
+    if (_pconv->IsOption("o"))
+      favor_multiple = false; // Visit in strict canonical order (if using user-specified order)
+
     for (nbr = atom->BeginNbrAtom(i); nbr; nbr = atom->NextNbrAtom(i)) {
 
       idx = nbr->GetIdx();
@@ -3305,12 +3314,12 @@ namespace OpenBabel {
       for (ai = sort_nbrs.begin(); ai != sort_nbrs.end(); ++ai) {
         bond = atom->GetBond(*ai);
         int sorted_needs_bsymbol = bond->IsDouble() || bond->IsTriple();
-        if (new_needs_bsymbol && !sorted_needs_bsymbol) {
+        if (favor_multiple && new_needs_bsymbol && !sorted_needs_bsymbol) {
           sort_nbrs.insert(ai, nbr);
           ai = sort_nbrs.begin();//insert invalidated ai; set it to fail next test
           break;
         }
-        if (   new_needs_bsymbol == sorted_needs_bsymbol
+        if (   (!favor_multiple || new_needs_bsymbol == sorted_needs_bsymbol)
                && canonical_order[idx-1] < canonical_order[(*ai)->GetIdx()-1]) {
           sort_nbrs.insert(ai, nbr);
           ai = sort_nbrs.begin();//insert invalidated ai; set it to fail next test
@@ -3807,6 +3816,23 @@ namespace OpenBabel {
     if (atom_idx >= 1 && atom_idx <= mol.NumAtoms())
       _startatom = mol.GetAtom(atom_idx);
 
+    // Was an atom ordering specified?
+    const char* ppo = _pconv->IsOption("o");
+    vector<string> s_atom_order;
+    vector<int> atom_order;
+    if (ppo) {
+      tokenize(s_atom_order,ppo,"-()");
+      if (s_atom_order.size() != mol.NumHvyAtoms())
+        ppo = NULL;
+      else {
+        for (vector<string>::const_iterator cit=s_atom_order.begin(); cit!=s_atom_order.end(); ++cit)
+          atom_order.push_back(atoi(cit->c_str()));
+        atom_idx = atom_order.at(0);
+        if (atom_idx >= 1 && atom_idx <= mol.NumAtoms())
+          _startatom = mol.GetAtom(atom_idx);
+      }
+    }
+
     // First, create a canonical ordering vector for the atoms.  Canonical
     // labels are zero indexed, corresponding to "atom->GetIdx()-1".
     if (_canonicalOutput) {
@@ -3817,6 +3843,23 @@ namespace OpenBabel {
     else {
       if (_pconv->IsOption("C")) {      // "C" == "anti-canonical form"
         RandomLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
+      } else if (ppo) { // "o" (user specified order)
+        canonical_order.resize(mol.NumAtoms());
+        symmetry_classes.resize(mol.NumAtoms());
+        int idx = 3; // Start the labels at 3 (to leave space for special values 0, 1 and 2)
+        for (int i=0; i<atom_order.size(); ++i)
+          if (canonical_order[atom_order[i] - 1] == 0) {
+            canonical_order[atom_order[i] - 1] = idx;
+            symmetry_classes[atom_order[i] - 1] = idx;
+            ++idx;
+          }
+        for (int i=0; i<canonical_order.size(); ++i)
+          if (canonical_order[i] == 0) { // Explicit hydrogens
+            if (mol.GetAtom(i+1)->IsHydrogen() && mol.GetAtom(i+1)->GetIsotope()!=0) { // [2H] or [3H]
+              canonical_order[i] = mol.GetAtom(i+1)->GetIsotope() - 1; // i.e. 1 or 2
+              symmetry_classes[i] = canonical_order[i];
+            }
+          }
       } else {
         StandardLabels(&mol, &frag_atoms, symmetry_classes, canonical_order);
       }
