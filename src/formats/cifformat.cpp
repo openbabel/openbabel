@@ -313,7 +313,7 @@ namespace OpenBabel
             if(loop->second.find("_atom_site_Cartn_y")!=loop->second.end()) empty_iucrjournal_block=false;
             if(loop->second.find("_atom_site_Cartn_z")!=loop->second.end()) empty_iucrjournal_block=false;
           }
-        if(empty_iucrjournal_block) 
+        if(empty_iucrjournal_block)
           {
             stringstream ss;
             ss << "CIF WARNING: found en empty 'data_global' block - SKIPPING\n"
@@ -371,7 +371,7 @@ namespace OpenBabel
         mvLatticePar[3] = static_cast<float> (mvLatticePar[3] * DEG_TO_RAD);// pi/180
         mvLatticePar[4] = static_cast<float> (mvLatticePar[4] * DEG_TO_RAD);
         mvLatticePar[5] = static_cast<float> (mvLatticePar[5] * DEG_TO_RAD);
-        
+
         // Fill values depending on spacegroup, *only* when missing
         if((spgid>2)&&(spgid<=15))
         {// :TODO: monoclinic spg, depending on unique axis....
@@ -399,7 +399,7 @@ namespace OpenBabel
             if(mvLatticePar[0]==0) mvLatticePar[0]=a;
             if(mvLatticePar[1]==0) mvLatticePar[1]=a;
             if(mvLatticePar[2]==0) mvLatticePar[2]=a;
-            
+
             float alpha=0;
             if(mvLatticePar[3]>alpha) alpha=mvLatticePar[3];
             if(mvLatticePar[4]>alpha) alpha=mvLatticePar[4];
@@ -551,7 +551,7 @@ namespace OpenBabel
         if(verbose) cout<<"Found spacegroup IT_coordinate_system_code:"<<positem->second<<endl;
         if((mSpacegroupHermannMauguin.length()>0) && (positem->second=="1" || positem->second=="2"))
         {
-          // this is a HACK which will work as long as the HM symbols in spacegroups.txt have the ":1" or ":2" extension listed, when needed 
+          // this is a HACK which will work as long as the HM symbols in spacegroups.txt have the ":1" or ":2" extension listed, when needed
           mSpacegroupHermannMauguin=mSpacegroupHermannMauguin+string(":")+positem->second;
         }
         else
@@ -562,7 +562,7 @@ namespace OpenBabel
           obErrorLog.ThrowError(__FUNCTION__, ss.str(), obWarning);
         }
       }
-    
+
     mSpaceGroup=NULL;
     // be forgiving - if spg not found, try again
     // Prefer Hall > HM == number, as Hall symbol is truly unique
@@ -1075,12 +1075,12 @@ namespace OpenBabel
         if((in.peek()=='d') || (in.peek()=='D'))
           {// Data
             if(mvData.size()>0) return; // We want just a single data block
-            
+
             string tmp;
             in>>tmp;
             block=tmp.substr(5);
             if(vv) cout<<endl<<endl<<"NEW BLOCK DATA: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ->"<<block<<endl<<endl<<endl;
-            
+
 
             mvData[block]=CIFData();
             mvData[block].mDataBlockName=tmp;
@@ -1377,6 +1377,11 @@ namespace OpenBabel
               else tmpSymbol="C";//Something went wrong, no symbol ! Default to C ??
 
               int atomicNum = etab.GetAtomicNum(tmpSymbol.c_str());
+              // Test for some oxygens with subscripts
+              if (atomicNum == 0 && tmpSymbol[0] == 'O') {
+                atomicNum = 8; // e.g. Ob, OH, etc.
+              }
+
               atom->SetAtomicNum(atomicNum); //set atomic number, or '0' if the atom type is not recognized
               atom->SetType(tmpSymbol); //set atomic number, or '0' if the atom type is not recognized
               atom->SetVector(posat->mCoordCart[0],posat->mCoordCart[1],posat->mCoordCart[2]);
@@ -1388,7 +1393,7 @@ namespace OpenBabel
                   label->SetOrigin(fileformatInput);
                   atom->SetData(label);
                 }
-                
+
             }
           if (!pConv->IsOption("b",OBConversion::INOPTIONS))
             pmol->ConnectTheDots();
