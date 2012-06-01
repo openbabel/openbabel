@@ -82,6 +82,8 @@ namespace OpenBabel {
         }
       return ifs ? 1 : -1;
     }
+  private:
+    bool GetInchifiedSMILESMolecule(OBMol *mol, bool useFixedHRecMet);
   };
 
   //**************************************************
@@ -125,6 +127,8 @@ namespace OpenBabel {
         "Write Options e.g. -xt\n"
         "  a  Output atomclass like [C:2], if available\n"
         "  c  Output in canonical form\n"
+        "  U  Universal SMILES\n"
+        "  I  Inchified SMILES\n"
         "  h  Output explicit hydrogens as such\n"
         "  i  Do not include isotopic or chiral markings\n"
         "  n  No molecule name\n"
@@ -2481,6 +2485,7 @@ namespace OpenBabel {
     {
       return _canorder;
     }
+    bool         ParseInChI(OBMol &mol, vector<int> &atom_order);
   };
 
 
@@ -3780,6 +3785,133 @@ namespace OpenBabel {
     }
   }
 
+  //! Same as tokenize, except in treatment of multiple delimiters. Tokenize
+  //! treats multiple delimiters as a single delimiter. It also ignores delimiters
+  //! in the first or last position. In contrast, mytokenize treats each instance of
+  //! the delimiter as the end/start of a new token.
+  bool mytokenize(std::vector<std::string> &vcr, std::string &s,
+                      const char *delimstr)
+  {
+    vcr.clear();
+    size_t startpos=0,endpos=0;
+
+    size_t s_size = s.size();
+    for (;;)
+      {
+        //startpos = s.find_first_not_of(delimstr,startpos);
+        endpos = s.find_first_of(delimstr,startpos);
+        if (endpos <= s_size && startpos <= s_size)
+          {
+            vcr.push_back(s.substr(startpos,endpos-startpos));
+          }
+        else
+          {
+            if (startpos <= s_size)
+              vcr.push_back(s.substr(startpos,s_size-startpos));
+            break;
+          }
+
+        startpos = endpos+1;
+      }
+    return(true);
+  }
+
+  // Returns canonical label order
+  bool OBMol2Cansmi::ParseInChI(OBMol &mol, vector<int> &atom_order)
+  {
+    /*OBConversion MolConv(*_pconv); //new copy to use to write associated MOL
+    MolConv.SetAuxConv(NULL); //temporary until a proper OBConversion copy constructor written
+
+    OBFormat* pInChIFormat = _pconv->FindFormat("InChI");
+    if(pInChIFormat==NULL) {
+      obErrorLog.ThrowError(__FUNCTION__, "InChI format not available", obError);
+      return false;
+    }*/
+    OBConversion MolConv;
+    MolConv.SetOutFormat("InChI");
+    MolConv.SetAuxConv(NULL); //temporary until a proper OBConversion copy constructor written
+    stringstream newstream;
+    MolConv.SetOutStream(&newstream);
+    // I'm sure there's a better way of preventing InChI warning output
+    MolConv.SetOptions("waX'RecMet FixedH'", OBConversion::OUTOPTIONS);
+    //pInChIFormat->WriteMolecule(&mol, &MolConv);
+    MolConv.Write(&mol);
+
+    vector<string> splitlines;
+    string tmp = newstream.str();
+    tokenize(splitlines, tmp,"\n");
+    vector<string> split, split_aux;
+    string aux_part;
+
+    size_t rm_start = splitlines.at(0).find("/r"); // Correct for reconnected metal if necessary
+    if (rm_start == string::npos) {
+      tokenize(split, splitlines.at(0),"/");
+      aux_part = splitlines.at(1); // Use the normal labels
+    }
+    else { 
+      tmp = splitlines.at(0).substr(rm_start);
+      tokenize(split, tmp, "/");
+      split.insert(split.begin(), "");
+      size_t rm_start_b = splitlines.at(1).find("/R:");
+      aux_part = splitlines.at(1).substr(rm_start_b); // Use the reconnected metal labels
+    }
+    tokenize(split_aux, aux_part, "/");
+
+    // Parse the canonical labels
+    vector<vector<int> > canonical_labels;
+    vector<string> s_components, s_atoms;
+
+    tmp = split_aux.at(2).substr(2);
+    tokenize(s_components, tmp, ";");
+    for(vector<string>::iterator it=s_components.begin(); it!=s_components.end(); ++it) {
+      tokenize(s_atoms, *it, ",");
+      vector<int> atoms;
+      for(vector<string>::iterator itb=s_atoms.begin(); itb!=s_atoms.end(); ++itb)
+        atoms.push_back(atoi(itb->c_str()));
+      canonical_labels.push_back(atoms);
+    }
+
+    // Adjust the canonical labels if necessary using a /F section
+    size_t f_start = aux_part.find("/F:");
+    if (f_start != string::npos) {
+      tmp = aux_part.substr(f_start+3);
+      tokenize(split_aux, tmp, "/");
+      tokenize(s_components, split_aux.at(0), ";");
+      vector<vector<int> > new_canonical_labels;
+      int total = 0;
+      for(vector<string>::iterator it=s_components.begin(); it!=s_components.end(); ++it) {
+        // e.g. "1,2,3;2m" means replace the first component by "1,2,3"
+        //                       but keep the next two unchanged
+        if (*(it->rbegin()) == 'm') {
+          int mult;
+          if (it->size()==1)
+            mult = 1;
+          else
+            mult = atoi(it->substr(0, it->size()-1).c_str());
+          new_canonical_labels.insert(new_canonical_labels.end(), 
+            canonical_labels.begin()+total, canonical_labels.begin()+total+mult);
+          total += mult;
+        }
+        else {
+          tokenize(s_atoms, *it, ",");
+          vector<int> atoms;
+          for(vector<string>::iterator itb=s_atoms.begin(); itb!=s_atoms.end(); ++itb)
+            atoms.push_back(atoi(itb->c_str()));
+          new_canonical_labels.push_back(atoms);
+          total++;
+        }
+      }
+      canonical_labels = new_canonical_labels;
+    }
+
+    // Flatten the canonical_labels
+    for(vector<vector<int> >::iterator it=canonical_labels.begin(); it!=canonical_labels.end(); ++it) {
+      atom_order.insert(atom_order.end(), it->begin(), it->end());      
+    }
+
+    return true;
+  }
+
 
   /***************************************************************************
    * FUNCTION: CreateFragCansmiString
@@ -3832,6 +3964,12 @@ namespace OpenBabel {
           _startatom = mol.GetAtom(atom_idx);
       }
     }
+    // Was Universal SMILES requested?
+    if (_pconv->IsOption("U")) {
+      bool parsedOkay = ParseInChI(mol, atom_order);
+      if (!parsedOkay)
+        _pconv->RemoveOption("U", OBConversion::OUTOPTIONS);
+    }
 
     // First, create a canonical ordering vector for the atoms.  Canonical
     // labels are zero indexed, corresponding to "atom->GetIdx()-1".
@@ -3843,12 +3981,12 @@ namespace OpenBabel {
     else {
       if (_pconv->IsOption("C")) {      // "C" == "anti-canonical form"
         RandomLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
-      } else if (ppo) { // "o" (user specified order)
+      } else if (ppo || _pconv->IsOption("U")) { // user-specified or InChI canonical labels
         canonical_order.resize(mol.NumAtoms());
         symmetry_classes.resize(mol.NumAtoms());
         int idx = 3; // Start the labels at 3 (to leave space for special values 0, 1 and 2)
         for (int i=0; i<atom_order.size(); ++i)
-          if (canonical_order[atom_order[i] - 1] == 0) {
+          if (canonical_order[atom_order[i] - 1] == 0) { // Ignore ring closures (for "U")
             canonical_order[atom_order[i] - 1] = idx;
             symmetry_classes[atom_order[i] - 1] = idx;
             ++idx;
@@ -3894,6 +4032,21 @@ namespace OpenBabel {
               && canonical_order[idx-1] < lowest_canorder) {
             root_atom = atom;
             lowest_canorder = canonical_order[idx-1];
+          }
+        }
+        // For Inchified or Universal SMILES, if the start atom is an [O-] attached to atom X, choose any =O attached to X instead.
+        //          Ditto for [S-] and =S.
+        if ((_pconv->IsOption("I") || _pconv->IsOption("U"))
+             && root_atom && root_atom->GetFormalCharge()==-1  && root_atom->GetValence() == 1
+             && root_atom->HasSingleBond() && (root_atom->IsOxygen() || root_atom->IsSulfur())) {
+          OBBondIterator bi = root_atom->BeginBonds();
+          OBAtom* central = root_atom->BeginNbrAtom(bi);
+          FOR_NBORS_OF_ATOM(nbr, central) {
+            if (root_atom == &*nbr) continue;
+            if (nbr->GetAtomicNum() == root_atom->GetAtomicNum() && nbr->GetValence() == 1 && nbr->HasDoubleBond()) {
+              root_atom = &*nbr;
+              break;
+            }
           }
         }
       }
@@ -4094,6 +4247,32 @@ namespace OpenBabel {
     }
   }
 
+  bool SMIBaseFormat::GetInchifiedSMILESMolecule(OBMol *mol, bool useFixedHRecMet)
+  {
+    OBConversion MolConv;
+
+    OBFormat* pInChIFormat = MolConv.FindFormat("InChI");
+    if(pInChIFormat==NULL) {
+      obErrorLog.ThrowError(__FUNCTION__, "InChI format not available", obError);
+      return false;
+    }
+    stringstream newstream;
+    MolConv.SetOutStream(&newstream);
+    if (useFixedHRecMet)
+      MolConv.SetOptions("wX'RecMet FixedH'", OBConversion::OUTOPTIONS);
+    else
+      MolConv.SetOptions("w", OBConversion::OUTOPTIONS);
+    bool success = pInChIFormat->WriteMolecule(mol, &MolConv);
+    if (!success) return false;
+    string inchi = newstream.str();
+    if (inchi.size() == 0) return false;
+    vector<string> vs;
+    tokenize(vs, inchi);
+    MolConv.SetInFormat(pInChIFormat);
+    success = MolConv.ReadString(mol, vs.at(0));
+    return success;
+  }
+
   //////////////////////////////////////////////////
   bool SMIBaseFormat::WriteMolecule(OBBase* pOb,OBConversion* pConv)
   {
@@ -4102,6 +4281,16 @@ namespace OpenBabel {
 
     // Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
+
+    // Inchified SMILES? If so, then replace mol with the new 'normalised' one
+    if (pConv->IsOption("I")) {
+      bool success = GetInchifiedSMILESMolecule(pmol, false);
+      if (!success) {
+        ofs << "\n";
+        obErrorLog.ThrowError(__FUNCTION__, "Cannot generate Universal NSMILES for this molecule", obError);
+        return false;
+      }
+    }
 
     // Title only option?
     if(pConv->IsOption("t")) {
