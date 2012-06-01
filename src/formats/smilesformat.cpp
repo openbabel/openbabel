@@ -37,7 +37,7 @@ GNU General Public License for more details.
 #include <string>
 
 //#define DEBUG 1
-#define IMPLICIT_CIS_RING_SIZE 12
+#define IMPLICIT_CIS_RING_SIZE 8
 
 using namespace std;
 
