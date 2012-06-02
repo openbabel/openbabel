@@ -523,7 +523,7 @@ showHelp(const char* cmd)
 	std::cout << std::endl;
 	std::cout << "-r : Specifies the required resolution expressed as a real positive number." << std::endl;
 	std::cout << "     The default value is 3.0 Angstrom. Negative values or a value equal" << std::endl;
-	std::cout << "     to 0 generates an error message" << std::endl;
+	std::cout << "     to 0 generate an error message" << std::endl;
 	std::cout << std::endl;
 	std::cout << "-u : Displays implementation details." << std::endl;
 	std::cout << std::endl;
