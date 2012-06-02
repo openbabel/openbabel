@@ -119,7 +119,7 @@
  marked with empty         the "metal flower" (5-8) all charge group vertex numbers are
  comments for vertices     less than metal flower vertices: (2,3,4) < (5,6,7,8)
  1 and 5(M) should         This MAY be neded for c-group enumeration. The order is: 
- be set separately         t-groups, c-groups, M-flower. All types BNS_VT_M_GROUP allows to avoid duplications.
+ be set separately         t-groups, c-groups, M-flower. All types BNS_VT_M_GROUP allow one to avoid duplications.
 
               3(+)           
                ||         (Metal)
@@ -2284,7 +2284,7 @@ int ConnectTwoVertices( BNS_VERTEX *p1, BNS_VERTEX *p2, BNS_EDGE *e, BN_STRUCT *
                               /\              fb =  c +  D + dc - (f + df)    
    ci=3, fi=0 or 1   c1,f1  /... \ cn,fn                            ------------------------------------
                           /       \           cd =  c + 2D          D is an arbitrary integer > 0
-   all n Metal atoms:    M1 ...    Mn         fd =  f +  D          it allows to apply
+   all n Metal atoms:    M1 ...    Mn         fd =  f +  D          it allows one to apply
                                                                     C3++ (add st_flow to cancel radicals)
   For each Mi add cap and flow=cap            cx = cy = D           D times.
   to M-charge group                           fx = fy = 0

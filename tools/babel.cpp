@@ -481,7 +481,7 @@ void help()
 *
 * \par OPTIONS
 *
-* If only input and ouput files are given, Open Babel will guess 
+* If only input and output files are given, Open Babel will guess 
 * the file type from the filename extension. \n\n
 *
 * \b -V :

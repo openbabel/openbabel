@@ -137,7 +137,7 @@ public:
 
       "      obabel input.smi -O out.svg -xb -xC -xe\n\n"
 
-      "would produce a svg file with a black background, with no explict\n"
+      "would produce a svg file with a black background, with no explicit\n"
       "terminal carbon, and with an embedded cml representation of each\n"
       "molecule. The structures would be in two rows of four and one row\n"
       "of two.\n\n"

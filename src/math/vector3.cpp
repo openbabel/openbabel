@@ -52,7 +52,7 @@ namespace OpenBabel
     \endcode
   */
 
-  /*! This (slow) method allows to access the elements of the
+  /*! This (slow) method allows one to access the elements of the
     vector as if it were an array of doubles. If the index is > 2,
     then a warning is printed and 0.0 is returned.
     Otherwise, if i is 0, 1 or 2, then a reference to x,

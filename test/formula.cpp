@@ -163,7 +163,7 @@ int main(int argc,char *argv[])
         cout << "ok " << ++currentTest << " # molecular exact mass\n";
 
 
-      // now after adding explict hydrogens -- should be identical
+      // now after adding explicit hydrogens -- should be identical
       //  since we'll add hydrogens that were implicit before
 
       // PR#1485580
