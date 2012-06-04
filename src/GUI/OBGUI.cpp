@@ -431,7 +431,7 @@ void OBGUIFrame::OnSaveInputText(wxCommandEvent& WXUNUSED(event))
 {
   wxString filter = GetFilter(m_pInFormat) +_T("All files(*.*)|*.*||");
   wxFileDialog dialog(this, _T("Save input text"), m_InFileBasePath,
-    _T("FromOB"), filter, wxSAVE|wxOVERWRITE_PROMPT);
+    _T("FromOB"), filter, wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
   if(dialog.ShowModal() == wxID_OK)
   {
     wxString filename = dialog.GetPath();
@@ -652,7 +652,7 @@ void OBGUIFrame::OnGetInputFile(wxCommandEvent& WXUNUSED(event))
 {
   wxFileDialog dialog(this,_T("Choose Input File"),m_InFileBasePath,_T(""),
       GetFilter(m_pInFormat) + InputFilterString,
-      wxMULTIPLE | wxFILE_MUST_EXIST );
+      wxFD_MULTIPLE | wxFD_FILE_MUST_EXIST );
   if(dialog.ShowModal() == wxID_OK)
   {
 //		m_pInFilename->Clear();
@@ -704,7 +704,7 @@ void OBGUIFrame::OnGetOutputFile(wxCommandEvent& WXUNUSED(event))
 {
   wxFileDialog dialog(this,_T("Choose Output File"),_T(""),_T(""),
       GetFilter(m_pOutFormat) + OutputFilterString,
-      wxSAVE | wxOVERWRITE_PROMPT);
+      wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
   if(dialog.ShowModal() == wxID_OK)
   {
     wxString filepath = dialog.GetPath();
@@ -1050,13 +1050,13 @@ void OBGUIFrame::OnClickPlugin(wxCommandEvent& event)
       wxMenuItem* itemm = node->GetData();
       if(itemm->GetSubMenu()==parent)
       {
-        plugintype = itemm->GetText();
+        plugintype = itemm->GetItemLabel();
         break;
       }
       node = node->GetNext();
     }
 
-    wxString id = item->GetText().BeforeFirst(' ');
+    wxString id = item->GetItemLabel().BeforeFirst(' ');
     OBPlugin* plugin = OBPlugin::GetPlugin(plugintype.mb_str(), id.mb_str());
     if(plugin)
     {
@@ -1067,7 +1067,7 @@ void OBGUIFrame::OnClickPlugin(wxCommandEvent& event)
     //And also put ID on clipboard
     if (wxTheClipboard->Open())
     {
-      wxString itemText = item->GetText();
+      wxString itemText = item->GetItemLabel();
       wxTheClipboard->SetData( new wxTextDataObject(itemText.BeforeFirst(' ')) );
     }
     wxTheClipboard->Close();
