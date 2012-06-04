@@ -25,21 +25,19 @@ GNU General Public License for more details.
 #include <vector>
 #include <string>
 
-#ifndef USE_64BIT_INTEGER
-// For 32-bit architecture
+#if defined(_MSC_VER) && _MSC_VER < 1600
+  // Assuming 32bit integer
+  typedef unsigned uint32_t;
+#else
+  #include <inttypes.h>
+#endif
+
+// Use uint32_t
 #define SETWORD 32
 // SETWORD = 2 ^ WORDROLL
 #define WORDROLL 5
 // WORDMASK = SETWORD - 1
 #define WORDMASK 31
-#else
-// For 64-bit architecture
-#define SETWORD 64
-// SETWORD = 2 ^ WORDROLL
-#define WORDROLL 6
-// WORDMASK = SETWORD - 1
-#define WORDMASK 63
-#endif // 64 bit
 
 #define WORDSIZE_OF_BITSIZE( bit_size ) ( ( bit_size >> WORDROLL ) + (( bit_size & WORDMASK ) ? 1 : 0) )
 
@@ -51,17 +49,15 @@ namespace OpenBabel
   {
   /// A speed-optimized vector of bits
   /** This class implements a fast vector of bits
-      using internally a vector of processor native
-	  unsigned words.
-	  Any bits which are out of reach of the current
-	  size are considered to be zero.
-	  Streamlined, corrected and documented
-	   by kshepherd1@users.sourceforge.net
+      using internally a vector of fixed size unsigned ints (uint32_t).
+      Any bits which are out of reach of the current size
+      are considered to be zero.
+      Streamlined, corrected and documented by kshepherd1@users.sourceforge.net
   */
   class OBERROR OBBitVec
     {
     public:
-	  typedef std::vector<unsigned> word_vector;
+      typedef std::vector<uint32_t> word_vector;
 
 	private:
 	  /// The number of <b>words</b> currently stored ( NOT bit count )

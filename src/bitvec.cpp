@@ -136,7 +136,7 @@ namespace OpenBabel
             for ( unsigned i = lo_bit_offset ; i < SETWORD ; ++ i )
               _set[lo_word_offset] |= (1<<i);
             for ( unsigned i = lo_word_offset + 1 ; i < hi_word_offset ; ++ i )
-              _set[i] = 0xFFFFFFFF;
+              _set[i] = ~0;
             for ( unsigned i = 0 ; i <= hi_bit_offset ; ++ i )
               _set[hi_word_offset] |= (1<<i);
           }
@@ -281,7 +281,7 @@ namespace OpenBabel
     unsigned count = 0;
     for (word_vector::const_iterator sx = _set.begin(), sy = _set.end(); sx != sy; ++ sx)
       {
-      unsigned word = * sx;
+      uint32_t word = *sx;
       while (word)
         {
         count += nibble_bit_count[word & 0xF];
