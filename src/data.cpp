@@ -566,9 +566,9 @@ namespace OpenBabel
     string sto,sfrom;
     sfrom = from;
     rval = Translate(sto,sfrom);
-    strncpy(to,(char*)sto.c_str(), sizeof(to) - 1);
-    to[sizeof(to) - 1] = '\0';
-
+    strncpy(to,(char*)sto.c_str(), OBATOM_TYPE_LEN - 1);
+    to[OBATOM_TYPE_LEN - 1] = '\0';
+    
     return(rval);
   }
 

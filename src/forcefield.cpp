@@ -779,10 +779,11 @@ namespace OpenBabel
   {
     IF_OBFF_LOGLVL_LOW {
       OBFFLog("\nA T O M   T Y P E S\n\n");
-      OBFFLog("IDX\tTYPE\n");
+      OBFFLog("IDX\tTYPE\tRING\n");
 
       FOR_ATOMS_OF_MOL (a, _mol) {
-        snprintf(_logbuf, BUFF_SIZE, "%d\t%s\n", a->GetIdx(), a->GetType());
+        snprintf(_logbuf, BUFF_SIZE, "%d\t%s\t%s\n", a->GetIdx(), a->GetType(),
+          (a->IsInRing() ? (a->IsAromatic() ? "AR" : "AL") : "NO"));
         OBFFLog(_logbuf);
       }
     }
@@ -855,21 +856,7 @@ namespace OpenBabel
     }
 
     if (IsSetupNeeded(mol)) {
-      int *formal_charge = new int[mol.NumAtoms()];
-      int i;
-
-      i = 0;
-      FOR_ATOMS_OF_MOL (atom, mol) {
-        formal_charge[i] = atom->GetFormalCharge();
-        ++i;
-      }
       _mol = mol;
-      i = 0;
-      FOR_ATOMS_OF_MOL (atom, _mol) {
-        atom->SetFormalCharge(formal_charge[i]);
-        ++i;
-      }
-      delete [] formal_charge;
       _ncoords = _mol.NumAtoms() * 3;
 
       if (_velocityPtr)
@@ -925,21 +912,7 @@ namespace OpenBabel
     }
 
     if (IsSetupNeeded(mol)) {
-      int *formal_charge = new int[mol.NumAtoms()];
-      int i;
-
-      i = 0;
-      FOR_ATOMS_OF_MOL (atom, mol) {
-        formal_charge[i] = atom->GetFormalCharge();
-        ++i;
-      }
       _mol = mol;
-      i = 0;
-      FOR_ATOMS_OF_MOL (atom, _mol) {
-        atom->SetFormalCharge(formal_charge[i]);
-        ++i;
-      }
-      delete [] formal_charge;
       _ncoords = _mol.NumAtoms() * 3;
 
       if (_velocityPtr)
