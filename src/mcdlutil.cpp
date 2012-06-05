@@ -5803,8 +5803,13 @@ namespace OpenBabel {
           if (test1) if (tm.getBond(i)->db<=1) { //acyclic bond
               test=true;
               emTemplate=new TEditedMolecule();
-              if (tm.getBond(i)->at[1] >nFound) fragmentAN=tm.getBond(i)->at[1]; else fragmentAN=tm.getBond(i)->at[0];  //Error is absent! Really 2-nd atom is compared in both operators!
-              if (tm.getBond(i)->at[1] >nFound) templateAN=tm.getBond(i)->at[0]; else templateAN=tm.getBond(i)->at[1];
+			  if (tm.getBond(i)->at[1] < nFound) {
+				templateAN=tm.getBond(i)->at[0]; 
+				fragmentAN=tm.getBond(i)->at[1]; 
+			  } else {
+			    templateAN=tm.getBond(i)->at[1];
+				fragmentAN=tm.getBond(i)->at[0]; 
+			  }
               templateAtomNumber.push_back(tm.getAtom(templateAN)->enumerator);  //in template....
               fragmentAtomNumber.push_back(tm.getAtom(fragmentAN)->enumerator);
               tm.deleteBond(i);  //must be called prior extract fragment
@@ -5865,9 +5870,6 @@ namespace OpenBabel {
         tm.refofs=sm.refofs;
 
         tm.addAsTemplate(*emTemplate,templateAN,fragmentAN,-1,-1,true);
-        if ((naStore+emTemplate->nAtoms()) == tm.nAtoms()) for (j=0; j<emTemplate->nAtoms(); j++) {
-            tm.getAtom(naStore+j)->enumerator=emTemplate->getAtom(j)->enumerator;
-          };
       };
       sm.moleculeCopy(tm);
       sm.defineAtomConn();
