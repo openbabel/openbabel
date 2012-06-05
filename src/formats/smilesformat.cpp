@@ -3833,7 +3833,9 @@ namespace OpenBabel {
     stringstream newstream;
     MolConv.SetOutStream(&newstream);
     // I'm sure there's a better way of preventing InChI warning output
-    MolConv.SetOptions("waX'RecMet FixedH'", OBConversion::OUTOPTIONS);
+    MolConv.AddOption("w", OBConversion::OUTOPTIONS);
+    MolConv.AddOption("a", OBConversion::OUTOPTIONS);
+    MolConv.AddOption("X", OBConversion::OUTOPTIONS, "RecMet FixedH");
     //pInChIFormat->WriteMolecule(&mol, &MolConv);
     MolConv.Write(&mol);
 
@@ -4258,10 +4260,12 @@ namespace OpenBabel {
     }
     stringstream newstream;
     MolConv.SetOutStream(&newstream);
-    if (useFixedHRecMet)
-      MolConv.SetOptions("wX'RecMet FixedH'", OBConversion::OUTOPTIONS);
+    if (useFixedHRecMet) {
+      MolConv.AddOption("w", OBConversion::OUTOPTIONS);
+      MolConv.AddOption("X", OBConversion::OUTOPTIONS, "RecMet FixedH");
+    }
     else
-      MolConv.SetOptions("w", OBConversion::OUTOPTIONS);
+      MolConv.AddOption("w", OBConversion::OUTOPTIONS);
     bool success = pInChIFormat->WriteMolecule(mol, &MolConv);
     if (!success) return false;
     string inchi = newstream.str();
