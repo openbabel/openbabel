@@ -296,12 +296,14 @@ if(CMAKE_COMPILER_IS_GNUCXX)
       message(FATAL_ERROR "Boost is required to compile OpenBabel with GCC 3.x")
     endif()
   else()
+    add_definitions(-DHAVE_SHARED_POINTER)
     set(SHARED_POINTER true)
   endif()
 endif()
 
 if (${CMAKE_CXX_COMPILER_ID} MATCHES Clang)
    set(SHARED_POINTER true)
+   add_definitions(-DHAVE_SHARED_POINTER)
 endif()
 
 # Intel C++ Compiler
