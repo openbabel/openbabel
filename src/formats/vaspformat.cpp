@@ -44,22 +44,25 @@ namespace OpenBabel {
         "VASP format\n"
         "Reads in data from POSCAR and CONTCAR to obtain information from "
         "VASP calculations.\n\n"
-        "Read Options e.g. -as\n"
-        "  s Output single bonds only\n"
-        "  b Disable bonding entirely\n"
-        "  (note: VASP 4.x vs 5.x POSCAR formats are detected automatically)\n"
-        "\n"
-        "Write Options e.g. -xw\n"
-        "  w Sort atoms by atomic number (this helps keep POTCAR files compact)\n"
-        "  4 Write a POSCAR using VASP 4.x specification. VASP 5.x is used \n"
-        "      by default.\n"
-        "\n"
+
         "Due to limitations in Open Babel's file handling, reading in VASP\n"
         "files can be a bit tricky; the client that is using Open Babel must\n"
         "use OBConversion::ReadFile() to begin the conversion. This change is\n"
         "usually trivial. Also, the complete path to the CONTCAR/POSCAR file\n"
         "must be provided, otherwise the other files needed will not be\n"
-        "found.\n";
+        "found.\n\n"
+
+        "Both VASP 4.x and 5.x POSCAR formats are supported.\n\n"
+
+        "Read Options e.g. -as\n"
+        "  s Output single bonds only\n"
+        "  b Disable bonding entirely\n\n"
+
+        "Write Options e.g. -xw\n"
+        "  w Sort atoms by atomic number (this helps keep POTCAR files compact)\n"
+        "  4 Write a POSCAR using the VASP 4.x specification.\n"
+        "    The default is to use the VASP 5.x specification.\n\n"
+        ;
 
     };
 
@@ -485,8 +488,6 @@ namespace OpenBabel {
     char buffer[BUFF_SIZE];
     OBUnitCell *uc = NULL;
     vector<vector3> cell;
-    int atnum, atprev;
-    int atcount;
 
     bool selective;
 

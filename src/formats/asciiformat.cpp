@@ -164,6 +164,11 @@ bool ASCIIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     depictor.DrawMolecule(&workingmol);
 
   painter.Write(ofs);
+  if(pConv->IsOption("s")) {
+    ofs << "The above drawing is supposed to show a square. "
+        << "If instead you see a squat rectangle, try again with a smaller aspect ratio, e.g.\n   -oascii -xs -xa " << aspect-0.1 << "\n"
+        << "If you see a tall rectangle, try again with a larger aspect ratio, e.g.\n   -oascii -xs -xa " << aspect+0.1 << "\n";
+  }
 
   return true;
 }

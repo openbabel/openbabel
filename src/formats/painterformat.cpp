@@ -43,10 +43,12 @@ public:
     "Painter format\n"
     "Commands used to generate a 2D depiction of a molecule\n\n"
 
-    "This is a utility format that may be useful for those who wish to\n"
-    "generate depictions of molecules themselves, using their own\n"
-    "software. The format writes out a list of commands as shown\n"
+    "This is a utility format that is useful if you want to\n"
+    "generate a depiction of a molecule yourself, for example\n"
+    "by drawing on a Graphics2D canvas in Java. The format\n"
+    "writes out a list of drawing commands as shown\n"
     "in the following example::\n\n"
+
     "  obabel -:CC(=O)Cl -opaint\n\n"
 
 "  NewCanvas 149.3 140.0\n"
@@ -73,7 +75,13 @@ public:
 
 "Note that the origin is considered to be in the top left corner.\n\n"
 
-    "Write Options e.g. -xp 500\n"
+"The following image was drawn using the information\n"
+"in this format as described at\n"
+"http://baoilleach.blogspot.co.uk/2012/04/painting-molecules-your-way-introducing.html:\n\n"
+
+".. image:: ../_static/bananamol.png\n\n"
+
+    "Write Options e.g. -xM\n"
     " M Do not include a margin around the depiction\n\n"
 
     ;
