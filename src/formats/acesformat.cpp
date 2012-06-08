@@ -35,7 +35,8 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Aces output format\n"
+        "ACES output format\n"
+        "ACES is a set of programs that performs ab initio quantum chemistry calculations.\n"
         "Read Options e.g. -as\n"
         " s  Output single bonds only\n"
         " b  Disable bonding entirely\n\n";
@@ -71,8 +72,9 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Aces input format\n"
-        "No comments yet\n";
+        "ACES input format\n"
+        "ACES is a set of programs that performs ab initio quantum chemistry calculations.\n"
+        ;
     };
 
     virtual const char* SpecificationURL()
