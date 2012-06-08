@@ -2446,7 +2446,6 @@ namespace OpenBabel {
 
     void         CreateCisTrans(OBMol&);
     char         GetCisTransBondSymbol(OBBond *, OBCanSmiNode *);
-    void         AddHydrogenToChiralCenters(OBMol &mol, OBBitVec &frag_atoms);
     bool         AtomIsChiral(OBAtom *atom);
     bool         BuildCanonTree(OBMol &mol, OBBitVec &frag_atoms,
                                 vector<unsigned int> &canonical_order,
@@ -3623,6 +3622,10 @@ namespace OpenBabel {
         }
       }
 
+      // Handle implict H by adding a NULL OBAtom*
+      if(atom->ImplicitHydrogenCount() == 1)
+        chiral_neighbors.push_back(static_cast<OBAtom*> (NULL));
+
       // Ok, done with H. Now we need to consider the case where there is a chiral
       // lone pair. If it exists (and we won't know for sure until we've counted up
       // all the neighbours) it will go in here
@@ -4103,65 +4106,6 @@ namespace OpenBabel {
     }
   }
 
-  /***************************************************************************
-   * FUNCTION: OBMol2Cansmi::AddHydrogenToChiralCenters
-   *
-   * DESCRIPTION:
-   *       Adds an explicit hydrogen to any chiral center that only has three
-   *       atoms.  This makes analysis much easier since the algorithms can
-   *       assume that all tetrahedral carbons have four neighbors.
-   ***************************************************************************/
-
-  void OBMol2Cansmi::AddHydrogenToChiralCenters(OBMol &mol, OBBitVec &frag_atoms)
-  {
-    bool is_modified = false;
-    vector <OBAtom *> atomList;
-    int element;
-    bool hasChiralityPerceived = mol.HasChiralityPerceived(); // remember to restore
-
-    // Find all appropriate atoms to add hydrogens
-    FOR_ATOMS_OF_MOL(atom, mol)
-      {
-        if (!frag_atoms[atom->GetIdx()] || !AtomIsChiral(&*atom))
-          continue;
-
-        // don't mess with transition elements!
-        element = atom->GetAtomicNum();
-        if ( (element >= 21 && element <= 30)
-             || (element >= 39 && element <= 49)
-             || (element >= 71 && element <= 82) )
-          continue;
-
-        if (GetSmilesValence(&*atom) == 3 && atom->GetValence() == 3) {       // implicit H?
-          atomList.push_back(&*atom);
-        }
-      }
-
-    // Now add hydrogens to the list
-    if (atomList.size() > 0) {
-      mol.BeginModify();
-
-      vector<OBAtom*>::iterator i;
-      //      OBAtom *atom;
-      for (i = atomList.begin(); i != atomList.end(); ++i) {
-
-#if DEBUG
-        cout << "AddHydrogenToChiralCenters: Adding H to atom " << (*i)->GetIdx() << "\n";
-#endif
-
-        // Add the H atom
-        mol.AddHydrogens(*i);
-
-        frag_atoms.SetBitOn(mol.NumAtoms());
-      }
-
-      mol.EndModify();
-      // Don't lose the ChiralityPerceived flag...
-      if (hasChiralityPerceived)
-        mol.SetChiralityPerceived();
-    }
-  }
-
   /*----------------------------------------------------------------------
    * END OF CLASS: OBMol2Cansmi
    ----------------------------------------------------------------------*/
@@ -4209,7 +4153,6 @@ namespace OpenBabel {
     if (iso) {
       PerceiveStereo(&mol);
       m2s.CreateCisTrans(mol); // No need for this if not iso
-      m2s.AddHydrogenToChiralCenters(mol, frag_atoms);
     } else {
       // Not isomeric - be sure there are no Z coordinates, clear
       // all stereo-center and cis/trans information.
