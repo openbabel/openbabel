@@ -23,3 +23,4 @@ bherger = Brian Herger <bherger@users.sourceforge.net>
 reg8 = Richard Gillilan <reg8@cornell.edu>
 pspendrin = Patrick Spendrin <ps_ml@gmx.de>
 annulen = Konstantin Tokarev <annulen@yandex.ru>
+ptosco = Paolo Tosco <paolo.tosco@unito.it>

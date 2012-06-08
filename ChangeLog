@@ -1,3 +1,19 @@
+2012-06-07  Paolo Tosco <paolo.tosco@unito.it>
+
+	* include/openbabel/atom.h: added protos for CountFreeSulfurs() and
+	IsThiocarboxylSulfur() functions which are equivalent to
+	CountFreeOxygens() and IsCarboxylOxygen() and address
+	(di)thiocarboxyl groups
+	* src/atom.cpp: added the CountFreeSulfurs() and
+	IsThiocarboxylSulfur() functions
+	* src/forcefields/forcefieldmmff94.cpp: added some additional
+	checks to make MMFF94 atom type assignment more robust
+	* src/formats/mol2format.cpp: added some checks to improve downstream
+	aromaticity perception on charged molecules containing nitrogen,
+	oxygen and sulfur
+	* src/kekulize.cpp: added a check to fix incorrect perception of
+	aromatic oxonium and thionium cations
+
 2010-10-29  Konstantin Tokarev <annulen@yandex.ru>
 
 	* scripts/CMakeLists.txt: fixed behavior of build system if some of

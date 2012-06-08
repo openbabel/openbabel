@@ -633,11 +633,41 @@ namespace OpenBabel
         }
     if (!atom)
       return(false);
-    if (atom->CountFreeOxygens() != 2)
+    if (!(atom->CountFreeOxygens() == 2)
+      && !(atom->CountFreeOxygens() == 1 && atom->CountFreeSulfurs() == 1))
       return(false);
 
     //atom is connected to a carbon that has a total
-    //of 2 attached free oxygens
+    //of 2 attached free oxygens or 1 free oxygen and 1 free sulfur
+    return(true);
+  }
+
+  bool OBAtom::IsThiocarboxylSulfur()
+  {
+    if (!IsSulfur())
+      return(false);
+    if (GetHvyValence() != 1)
+      return(false);
+
+    OBAtom *atom;
+    OBBond *bond;
+    OBBondIterator i;
+
+    atom = NULL;
+    for (bond = BeginBond(i);bond;bond = NextBond(i))
+      if ((bond->GetNbrAtom(this))->IsCarbon())
+        {
+          atom = bond->GetNbrAtom(this);
+          break;
+        }
+    if (!atom)
+      return(false);
+    if (!(atom->CountFreeSulfurs() == 2)
+      && !(atom->CountFreeOxygens() == 1 && atom->CountFreeSulfurs() == 1))
+      return(false);
+
+    //atom is connected to a carbon that has a total
+    //of 2 attached free sulfurs or 1 free oxygen and 1 free sulfur
     return(true);
   }
 
@@ -943,6 +973,23 @@ namespace OpenBabel
       {
         atom = bond->GetNbrAtom((OBAtom*)this);
         if (atom->IsOxygen() && atom->GetHvyValence() == 1)
+          count++;
+      }
+
+    return(count);
+  }
+
+  unsigned int OBAtom::CountFreeSulfurs() const
+  {
+    unsigned int count = 0;
+    OBAtom *atom;
+    OBBond *bond;
+    OBBondIterator i;
+
+    for (bond = ((OBAtom*)this)->BeginBond(i);bond;bond = ((OBAtom*)this)->NextBond(i))
+      {
+        atom = bond->GetNbrAtom((OBAtom*)this);
+        if (atom->IsSulfur() && atom->GetHvyValence() == 1)
           count++;
       }
 

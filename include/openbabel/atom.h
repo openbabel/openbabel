@@ -389,6 +389,8 @@ namespace OpenBabel
       //@{
       //! \return The number of oxygen atoms connected that only have one heavy valence
       unsigned int  CountFreeOxygens()      const;
+      //! \return The number of sulfur atoms connected that only have one heavy valence
+      unsigned int  CountFreeSulfurs()      const;
       //! \return The number of hydrogens needed to fill the implicit valence of this atom
       unsigned int  ImplicitHydrogenCount() const;
       //! \return The number of hydrogens explicitly bound to this atom, optionally excluding D,T and isotope explicitly set to 1
@@ -444,6 +446,8 @@ namespace OpenBabel
       bool IsOneFour(OBAtom*);
       //! \return Is this atom an oxygen in a carboxyl (-CO2 or CO2H) group?
       bool IsCarboxylOxygen();
+      //! \return Is this atom a sulfur in a (di)thiocarboxyl (-CS2, -COS, CS2H or COSH) group?
+      bool IsThiocarboxylSulfur();
       //! \return Is this atom an oxygen in a phosphate (R-PO3) group?
       bool IsPhosphateOxygen();
       //! \return Is this atom an oxygen in a sulfate (-SO3) group?

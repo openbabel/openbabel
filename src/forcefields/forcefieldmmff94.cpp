@@ -1577,13 +1577,13 @@ namespace OpenBabel
           }
           if (!alphaAtoms.size() && !betaAtoms.size()) {
             if (atom->IsCarbon()) {
-	      int c60 = 1; // special case to ensure c60 is typed correctly -- Paolo Tosco
-	      FOR_NBORS_OF_ATOM (nbr, atom) {
-	        if (!(nbr->IsCarbon() && nbr->IsAromatic() && nbr->IsInRingSize(6)))
-		  c60 = 0;
-	      }
-	      if (c60)
-	        return 37; // correct atom type for c in c60 (all atoms symmetric)
+              bool c60 = true; // special case to ensure c60 is typed correctly -- Paolo Tosco
+              FOR_NBORS_OF_ATOM (nbr, atom) {
+                if (!(nbr->IsCarbon() && nbr->IsAromatic() && nbr->IsInRingSize(6)))
+                  c60 = false;
+              }
+              if (c60)
+                return 37; // correct atom type for c in c60 (all atoms symmetric)
               // there is no S:, O:, or N:
               // this is the case for anions with only carbon and nitrogen in the ring
               return 78; // General carbon in 5-membered aromatic ring (C5)
@@ -1883,6 +1883,7 @@ namespace OpenBabel
       if (atom->GetValence() == 3) {
         int N2count = 0;
         int N3count = 0;
+        int N3fcharge = 0;
         oxygenCount = sulphurCount = doubleBondTo = 0;
 
         FOR_NBORS_OF_ATOM (nbr, atom) {
@@ -1899,6 +1900,7 @@ namespace OpenBabel
             }
           } else if (nbr->GetValence() == 3) {
             if (nbr->IsNitrogen()) {
+              N3fcharge += nbr->GetFormalCharge();
               N3count++;
             }
           } else if ((nbr->GetValence() == 2) && bond->IsDouble()) {
@@ -1907,7 +1909,8 @@ namespace OpenBabel
             }
           }
         }
-        if ((N3count >= 2) && (doubleBondTo == 7) && !N2count) {
+        if ((N3count >= 2) && (doubleBondTo == 7 || (!(doubleBondTo == 6) && atom->GetValence() == 3
+          && N3fcharge == 1)) && !N2count && !oxygenCount && !sulphurCount) {
           // N3==C--N3
           return 57; // Guanidinium carbon, Carbon in +N=C-N: resonance structures (CGD+, CNN+)
         }
@@ -2168,13 +2171,18 @@ namespace OpenBabel
       }
       // 2 neighbours
       if (atom->GetValence() == 2) {
-        if (atom->BOSum() == 4) {
+        if (atom->BOSum() >= 4) {
+          bool isNbrCarbon = false;
+          bool isBondTriple = false;
           FOR_NBORS_OF_ATOM (nbr, atom) {
+            if (!isNbrCarbon)
+              isNbrCarbon = nbr->IsCarbon();
             bond = _mol.GetBond(&*nbr, atom);
-            if (bond->IsTriple()) {
-              return 61; // Isonitrile nitrogen (NR%)
-            }
+            if (!isBondTriple)
+              isBondTriple = bond->IsTriple();
           }
+          if (isBondTriple && isNbrCarbon)
+            return 61; // Isonitrile nitrogen (NR%)
 
           return 53; // Central nitrogen in C=N=N or N=N=N (=N=)
         }
@@ -2231,10 +2239,15 @@ namespace OpenBabel
        	FOR_NBORS_OF_ATOM (nbr, atom) {
           bond = _mol.GetBond(&*nbr, atom);
           if (bond->IsTriple()) {
-            return 42; // Triply bonded nitrogen (NSP)
+            FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
+              if (atom != &*nbrNbr && !(nbr->IsNitrogen()
+                && nbrNbr->IsNitrogen() && nbrNbr->GetValence() == 2)) {
+                return 42; // Triply bonded nitrogen (NSP)
+              }
+            }
           }
           if (nbr->IsNitrogen() && (nbr->GetValence() == 2)) {
-            return 47; // Terminal nitrogen in azido or diazo group (NAZT)
+            return 47; // Terminal nitrogen in azido group (NAZT)
           }
         }
       }
@@ -2330,8 +2343,19 @@ namespace OpenBabel
               // O--N
                 return 32; // Oxygen in N-oxides (ONX)
             } else {
-              // O==N
-              return 7; // Nitroso oxygen (O=N)
+              // sometimes ONX bonds are labelled as double bonds
+              // (e.g. by MOE, noticed by Paolo Tosco)
+              int ndab = 0;
+              FOR_BONDS_OF_ATOM(bond2, &*nbr) {
+                if (bond2->GetBO() == 2 || bond2->GetBO() == 5)
+                  ndab++;
+              }
+              if (ndab + nbr->GetValence() == 5)
+                // O--N
+                return 32; // Oxygen in N-oxides (ONX)
+              else
+                // O==N
+                return 7; // Nitroso oxygen (O=N)
             }
           }
           // O-?-S
@@ -3698,10 +3722,6 @@ namespace OpenBabel
         atom->SetPartialCharge(0.5);
         done = true;
         break;
-      case 56:
-        atom->SetPartialCharge(1.0/3.0);
-        done = true;
-        break;
       case 87:
       case 95:
       case 96:
@@ -3723,7 +3743,16 @@ namespace OpenBabel
       if (done)
         continue;
 
-      if (type == 32) {
+      if (type == 56) {
+        int n_count = 0;
+        int temp_type;
+        FOR_ATOMS_OF_MOL (atom2, _mol) {
+          temp_type = atoi(atom2->GetType());
+          if (temp_type == 56 || temp_type == 81)
+            ++n_count;
+        }
+        atom->SetPartialCharge((double)((n_count + 1) / 3) / (double)n_count);
+      } else if (type == 32) {
         int o_count = 0;
         bool sulfonamide = false;
         bool sulfone_s_c = false;
