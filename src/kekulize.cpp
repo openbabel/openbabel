@@ -316,9 +316,8 @@ namespace OpenBabel
         // At the beginning each atom give one electron to the cycle
         for(j=0; j< cycle.size(); ++j) {
           atom = cycle[j];
-          if ((atom->IsOxygen() || atom->IsSulfur())
+          if (atom->IsOxygen()
               && atom->GetFormalCharge() == 0
-              && cycle.size() % 2
               && atom->GetValence() == 2) // fixes PR#3075065
             electron.push_back(2);
           else

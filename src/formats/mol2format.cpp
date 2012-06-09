@@ -368,7 +368,7 @@ namespace OpenBabel
       }
 
     // Make a pass to fix aromatic bond orders and formal charges
-    // involving nitrogen atoms - before this patch
+    // involving nitrogen and oxygen atoms - before this patch
     // the aromaticity of a molecule as simple as pyridinium
     // cation could not be correctly perceived
     // Patch by Paolo Tosco 2012-06-07
@@ -432,6 +432,15 @@ namespace OpenBabel
           }
           bv.SetBitOn(bond2->GetIdx());
         }
+      } else if ((bond->GetBeginAtom()->IsCarbon() && bond->GetEndAtom()->IsOxygen())
+        || (bond->GetBeginAtom()->IsOxygen() && bond->GetEndAtom()->IsCarbon())) {
+        OBAtom *atom1, *atom2;
+        atom1 = bond->GetBeginAtom();
+        atom2 = bond->GetEndAtom();
+        if (atom1->IsOxygen() && atom1->IsInRingSize(6))
+          atom1->SetFormalCharge(1);
+        else if (atom2->IsOxygen() && atom2->IsInRingSize(6))
+          atom2->SetFormalCharge(1);
       }
     }
     // Suggestion by Liu Zhiguo 2008-01-26

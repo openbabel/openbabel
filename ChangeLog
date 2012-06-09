@@ -1,3 +1,12 @@
+2012-06-09  Paolo Tosco <paolo.tosco@unito.it>
+
+	* src/kekulize.cpp: reverted the r4862 patch to kekulize.cpp;
+	the incorrect aromaticity perception of oxonium salts concerned
+	only the MOL2 format, so the fix was applied to mol2format.cpp
+	instead
+	* src/formats/mol2format.cpp: added a check to improve downstream
+	aromaticity perception on charged molecules containing oxygen
+
 2012-06-07  Paolo Tosco <paolo.tosco@unito.it>
 
 	* include/openbabel/atom.h: added protos for CountFreeSulfurs() and
