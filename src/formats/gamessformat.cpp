@@ -953,6 +953,21 @@ namespace OpenBabel
                   break;
               }
           }
+        if (strstr(buffer,"$FMOXYZ") != NULL) {
+          while (strstr(buffer, "$END") == NULL) {
+            tokenize(vs,buffer);
+            if(vs.size() == 5) {
+              atom = mol.NewAtom();
+              atom->SetAtomicNum(atoi(vs[1].c_str()));
+              x = atof((char*)vs[2].c_str());
+              y = atof((char*)vs[3].c_str());
+              z = atof((char*)vs[4].c_str());
+              atom->SetVector(x,y,z);
+            }
+            if (!ifs.getline(buffer,BUFF_SIZE))
+              break;
+          }
+        }
         if(strstr(buffer,"$EFRAG") != NULL)
           {
             while (strstr(buffer,"FRAGNAME") == NULL)
