@@ -28,6 +28,8 @@ namespace OpenBabel {
   //
   //////////////////////////////////////////////////////////
 
+  OBConformerFilter::~OBConformerFilter() {}
+
   bool OBStericConformerFilter::IsGood(const OBMol &mol, const RotorKey &key, double *conformer)
   {
     unsigned int numAtoms = mol.NumAtoms();
@@ -72,6 +74,8 @@ namespace OpenBabel {
   //  OBConformerScore(s)
   //
   //////////////////////////////////////////////////////////
+
+  OBConformerScore::~OBConformerScore() {}
 
   double OBRMSDConformerScore::Score(OBMol &mol, unsigned int index,
       const RotorKeys &keys, const std::vector<double*> &conformers)

@@ -62,8 +62,6 @@ namespace OpenBabel {
       virtual ~OBConformerFilter() = 0;
   };
 
-  OBConformerFilter::~OBConformerFilter() {}
-
   /**
    * @class OBConformerFilters conformersearch.h <openbabel/conformersearch.h>
    * @brief Class for combining OBConformerFilter objects.
@@ -163,8 +161,6 @@ namespace OpenBabel {
           const std::vector<double*> &conformers) = 0;
       virtual ~OBConformerScore() = 0;
   };
-
-  OBConformerScore::~OBConformerScore() {}
 
   /**
    * @class OBRMSDConformerScore conformersearch.h <openbabel/conformersearch.h>
