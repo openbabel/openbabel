@@ -237,6 +237,7 @@ CAST_GENERICDATA_TO(VirtualBond)
 %warnfilter(516) OpenBabel::OBPairData; // Ignoring std::string methods in favour of char* ones
 %warnfilter(516) OpenBabel::OBSetData;
 %warnfilter(516) OpenBabel::OBCommentData;
+%warnfilter(516) OpenBabel::OBUnitCell; // Ignoring const methods in favour of non-const ones
 %include <openbabel/generic.h>
 %include <openbabel/griddata.h>
 
