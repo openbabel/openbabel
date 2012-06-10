@@ -422,7 +422,9 @@ namespace OpenBabel {
             std::cout << "  --> LeafNode reached..." << std::endl;
 #endif
             m_foundLeafNode = true;
-//            mol->UnsetAromaticPerceived();
+            
+            mol->BeginModify();
+            mol->EndModify();
             functor(mol);
           }
         } else
