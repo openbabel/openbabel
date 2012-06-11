@@ -133,7 +133,7 @@ int main(int argc,char *argv[])
                   if(!*oext)
                     oext = argv[++arg]; //space left after -i: use next argument
 
-                  if (strncasecmp(oext, "MIME", 4) == 0)
+                  if (oext && strncasecmp(oext, "MIME", 4) == 0)
                     {
                       // get the MIME type from the next argument
                       oext = argv[++arg];
