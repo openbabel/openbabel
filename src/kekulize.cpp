@@ -951,7 +951,7 @@ namespace OpenBabel
   {
     OBBond *bond = NULL;
     OBAtom *atom1, *atom2;
-    int idx1, idx2, bond_idx;
+    size_t idx1, idx2, bond_idx;
 
     if (DEBUG) {cout << "---------- expand_kekulize_lssr:" << endl;}
 
@@ -972,9 +972,13 @@ namespace OpenBabel
       idx2 = atom2->GetIdx();
 
       // Remember the current state so that we can backtrack if the attempt fails
-      // Keep previous states on heap to avoid stack overflows for large molecules
-      vector<int>* ppreviousState     = new vector<int>(atomState);  // Backup the atom states
-      vector<int>* ppreviousBondState = new vector<int>(bondState);  // ... and the bond states
+      stateDiff_t* pps = new stateDiff_t;
+      pps->idx1 = idx1;
+      pps->ps1  = atomState[idx1];
+      pps->idx2 = idx2;
+      pps->ps2  = atomState[idx2];
+      pps->idxb = bond_idx;
+      pps->psb  = bondState[bond_idx];
 
       // Does a double bond work here?
       if (   atomState[idx1] == DOUBLE_ALLOWED
@@ -988,14 +992,14 @@ namespace OpenBabel
 
         // Recursively try the next bond
         if (expand_kekulize_lssr(mol, atomState, bondState, lssr, lssrAssigned, bondsThisRing)) {
-          delete ppreviousState;
-          delete ppreviousBondState;
+          delete pps;
           return true;
         }
 
         // If the double bond didn't work, roll back the changes and try a single bond.
-        atomState = *ppreviousState;
-        bondState = *ppreviousBondState;
+        atomState[pps->idx1] = pps->ps1;
+        atomState[pps->idx2] = pps->ps2;
+        bondState[pps->idxb] = pps->psb;
         if (DEBUG) {cout << "  double on bond " << bond_idx << " failed." << endl;}
       }
 
@@ -1005,17 +1009,16 @@ namespace OpenBabel
 
       // Recursively try the next bond
       if (expand_kekulize_lssr(mol, atomState, bondState, lssr, lssrAssigned, bondsThisRing)) {
-        delete ppreviousState;
-        delete ppreviousBondState;
+        delete pps;
         return true;
       }
 
       // If it didn't work, roll back the changes we made and return failure.
       if (DEBUG) {cout << "bond " << bond_idx << " single failed, rolling back changes" << endl;}
-      atomState = *ppreviousState;
-      bondState = *ppreviousBondState;
-      delete ppreviousState;
-      delete ppreviousBondState;
+      atomState[pps->idx1] = pps->ps1;
+      atomState[pps->idx2] = pps->ps2;
+      bondState[pps->idxb] = pps->psb;
+      delete pps;
       return false;
     }
 
