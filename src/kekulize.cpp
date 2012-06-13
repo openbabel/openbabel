@@ -731,8 +731,9 @@ namespace OpenBabel
       return expandKekulize(mol, bond_idx + 1, atomState, bondState, timeout);
 
     // Remember the current state so that we can backtrack if the attempt fails
-    vector<int> previousState         = atomState;	// Backup the atom states
-    vector<int> previousBondState     = bondState;	// ... and the bond states
+    // Keep previous states on heap to avoid stack overflows for large molecules
+    vector<int>* ppreviousState     = new vector<int>(atomState);  // Backup the atom states
+    vector<int>* ppreviousBondState = new vector<int>(bondState);  // ... and the bond states
 
     // Is a double bond allowed here?  Both atoms have to have an extra electron,
     // and not have been assigned a double bond from a previous step in recursion.
@@ -745,24 +746,32 @@ namespace OpenBabel
       if (DEBUG) {std::cout << "bond " << bond_idx << " (atoms " << idx1 << " to " << idx2 << ") double\n";}
 
       // Recursively try the next bond
-      if (expandKekulize(mol, bond_idx + 1, atomState, bondState, timeout))
+      if (expandKekulize(mol, bond_idx + 1, atomState, bondState, timeout)) {
+        delete ppreviousState;
+        delete ppreviousBondState;
         return true;
+      }
 
       // If the double bond didn't work, roll back the changes and try a single bond.
-      atomState = previousState;
-      bondState = previousBondState;
+      atomState = *ppreviousState;
+      bondState = *ppreviousBondState;
       if (DEBUG) {cout << "  double on bond " << bond_idx << " failed." << endl;}
     }
 
     // Double bond not allowed here, or double bond failed, just recurse with a single bond.
     if (DEBUG) {cout << "bond " << bond_idx << " (atoms " << idx1 << " to " << idx2 << ") single" << endl;}
-    if (expandKekulize(mol, bond_idx + 1, atomState, bondState, timeout))
+    if (expandKekulize(mol, bond_idx + 1, atomState, bondState, timeout)) {
+      delete ppreviousState;
+      delete ppreviousBondState;
       return true;
+    }
 
     // If it didn't work, roll back the changes we made and return failure.
     if (DEBUG) {cout << "bond " << bond_idx << " single failed, rolling back changes" << endl;}
-    atomState = previousState;
-    bondState = previousBondState;
+    atomState = *ppreviousState;
+    bondState = *ppreviousBondState;
+    delete ppreviousState;
+    delete ppreviousBondState;
     return false;
   }
 
