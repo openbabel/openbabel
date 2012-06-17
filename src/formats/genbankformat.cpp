@@ -77,7 +77,8 @@ namespace OpenBabel
   GenBankFormat theGenBankFormat;
 
   // from formats/fastaformat.cpp
-  bool ReadFASTASequence(OBMol * pmol, int seq_type, std::istream * in, bool create_bonds, bool bond_orders);
+  bool ReadFASTASequence(OBMol * pmol, int seq_type, std::istream * in, bool create_bonds, bool bond_orders,
+                         bool singleStrand, const char *turns = 0);
   /////////////////////////////////////////////////////////////////
   bool GenBankFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
@@ -134,7 +135,7 @@ namespace OpenBabel
       sequence_type = GenBankFormat::DNASequence;
 
     bool rv = ReadFASTASequence(pmol, sequence_type, in,
-        !pConv->IsOption("b",OBConversion::INOPTIONS), !pConv->IsOption("s",OBConversion::INOPTIONS));
+        !pConv->IsOption("b",OBConversion::INOPTIONS), !pConv->IsOption("s",OBConversion::INOPTIONS), false);
 	  pmol->EndModify();
     return rv;
   }
