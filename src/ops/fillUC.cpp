@@ -50,7 +50,8 @@ OpFillUC theOpFillUC("fillUC"); //Global instance
 
 // Whether two points (given in fractional coordinates) are close enough
 // to be considered duplicates.
-bool areDuplicateAtoms (vector3 v1, vector3 v2)
+// This function is duplicate from generic.cpp, these should be merged
+bool areDuplicateAtoms2(vector3 v1, vector3 v2)
 {
   vector3 dr = v2 - v1;
   if (dr.x() < -0.5)
@@ -157,7 +158,7 @@ bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConver
       for(unsigned int i=1;i<atom->second.size();++i){
         bool foundDuplicate = false;
         for(unsigned int j=0;j<i;++j){
-          if(areDuplicateAtoms(atom->second[i],atom->second[j])){
+          if(areDuplicateAtoms2(atom->second[i],atom->second[j])){
             foundDuplicate=true;
             break;
           }
@@ -182,7 +183,7 @@ bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConver
       for(unsigned int i=1;i<atom->second.size();++i){
         bool foundDuplicate = false;
         for(unsigned int j=0;j<i;++j){
-          if(areDuplicateAtoms(atom->second[i],atom->second[j])){
+          if(areDuplicateAtoms2(atom->second[i],atom->second[j])){
             foundDuplicate=true;
             break;
           }
