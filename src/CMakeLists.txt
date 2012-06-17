@@ -186,7 +186,7 @@ else(BUILD_SHARED)
       add_subdirectory(formats/libinchi)
     endif()
     set(openbabel_srcs ${openbabel_srcs} formats/getinchi.cpp ops/unique.cpp)
-    set(libs ${libs} inchi)
+    set(libs ${libs} ${INCHI_LIBRARY})
   endif(WITH_STATIC_INCHI)
 endif(BUILD_SHARED)
 
