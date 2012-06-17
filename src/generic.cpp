@@ -556,7 +556,7 @@ namespace OpenBabel
 
   // Whether two points (given in fractional coordinates) are close enough
   // to be considered duplicates.
-  bool OBUnitCell::areDuplicateAtoms (vector3 v1, vector3 v2)
+  bool areDuplicateAtoms (vector3 v1, vector3 v2)
   {
     vector3 dr = v2 - v1;
     if (dr.x() < -0.5)
