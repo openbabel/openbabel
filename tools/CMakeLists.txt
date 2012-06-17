@@ -74,10 +74,10 @@ else(BUILD_SHARED)
   # Set libs to imported openbabel target
   set(libs openbabel)
   if(WITH_STATIC_INCHI)
-    set(libs ${libs} ${LIBXML2_LIBRARIES})
+    set(libs ${libs} inchi)
   endif()
   if(WITH_STATIC_LIBXML)
-    set(libs ${libs} inchi)
+    set(libs ${libs} ${LIBXML2_LIBRARIES})
   endif()
 
   if(NOT MSVC)
