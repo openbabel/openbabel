@@ -370,6 +370,10 @@ namespace OpenBabel
     //! Set the Bravais lattice type for this unit cell
     void SetLatticeType(const LatticeType lt) { _lattice = lt; }
 
+    //! Whether two points (given in fractional coordinates) are close enough
+    //! to be considered duplicates.
+    bool areDuplicateAtoms(vector3 v1, vector3 v2);
+
     //! Duplicate symmetry-unique atoms to fill out the unit cell
     //! of the molecule, based on the known space group
     void FillUnitCell(OBMol *);
