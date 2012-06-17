@@ -128,6 +128,8 @@ else(BUILD_SHARED)
   # build a static babel only
   add_executable(babel babel.cpp)
   target_link_libraries(babel ${libs})
+  add_executable(obabel obabel.cpp)
+  target_link_libraries(obabel ${libs})
 
   if(NOT BUILD_MIXED)
     # Prevent -Wl,-Bdynamic from being added to the end of the link line.
