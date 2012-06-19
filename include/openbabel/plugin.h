@@ -374,6 +374,7 @@ public:
   OBAPI EXTERN className instanceName;
 
   // formats
+  OB_STATIC_PLUGIN(ABINITFormat, theABINITFormat)
   OB_STATIC_PLUGIN(AcesOutputFormat, theAcesOutputFormat)
   OB_STATIC_PLUGIN(AcesInputFormat, theAcesInputFormat)
   OB_STATIC_PLUGIN(ACRFormat, theACRFormat)
@@ -388,6 +389,7 @@ public:
   OB_STATIC_PLUGIN(CacaoFormat, theCacaoFormat)
   OB_STATIC_PLUGIN(CacheFormat, theCacheFormat)
   OB_STATIC_PLUGIN(CARFormat, theCARFormat)
+  OB_STATIC_PLUGIN(CASTEPFormat, theCASTEPFormat)
   OB_STATIC_PLUGIN(CCCFormat, theCCCFormat)
   OB_STATIC_PLUGIN(CHEM3D1Format, theCHEM3D1Format)
   OB_STATIC_PLUGIN(CHEM3D2Format, theCHEM3D2Format)
@@ -420,11 +422,13 @@ public:
   OB_STATIC_PLUGIN(GaussianZMatrixInputFormat, theGaussianZMatrixInputFormat)
   OB_STATIC_PLUGIN(GenBankFormat, theGenBankFormat)
   OB_STATIC_PLUGIN(GhemicalFormat, theGhemicalFormat)
+  OB_STATIC_PLUGIN(GROFormat, theGROFormat)
   OB_STATIC_PLUGIN(GROMOS96Format, theGROMOS96Format)
   OB_STATIC_PLUGIN(GULPFormat, theGULPFormat)
   OB_STATIC_PLUGIN(HINFormat, theHINFormat)
   OB_STATIC_PLUGIN(JaguarOutputFormat, theJaguarOutputFormat)
   OB_STATIC_PLUGIN(JaguarInputFormat, theJaguarInputFormat)
+  OB_STATIC_PLUGIN(LMPDATFormat, theLMPDATFormat)
   OB_STATIC_PLUGIN(MCDLFormat, theMCDLFormat)
   OB_STATIC_PLUGIN(MOLFormat, theMOLFormat)
   OB_STATIC_PLUGIN(SDFormat, theSDFormat)
@@ -479,6 +483,7 @@ public:
   OB_STATIC_PLUGIN(VASPFormat, theVASPFormat)
   OB_STATIC_PLUGIN(ViewMolFormat, theViewMolFormat)
   OB_STATIC_PLUGIN(XEDFormat, theXEDFormat)
+  OB_STATIC_PLUGIN(XSFFormat, theXSFFormat)
   OB_STATIC_PLUGIN(XYZFormat, theXYZFormat)
   OB_STATIC_PLUGIN(YOBFormat, theYOBFormat)
   OB_STATIC_PLUGIN(ZINDOFormat, theZINDOFormat)

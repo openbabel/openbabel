@@ -17,8 +17,10 @@ set(formats_utility
   titleformat
   )
 set(formats_compchem
+      abinitformat
       acesformat
       adfformat
+      castepformat
       dmolformat
       fchkformat
       fhiaimsformat
@@ -74,7 +76,9 @@ set(formats_misc
       fingerprintformat
       freefracformat
       ghemicalformat
+      groformat
       gromos96format
+      lmpdatformat
       mmcifformat
       mmodformat
       moldenformat
@@ -93,6 +97,7 @@ set(formats_misc
       unichemformat
       viewmolformat
       xedformat
+      xsfformat
       xyzformat
       yasaraformat
       genbankformat

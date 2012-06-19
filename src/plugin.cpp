@@ -222,6 +222,7 @@ std::vector<std::string> EnableStaticPlugins()
   // by compiler optimization.
   std::vector<std::string> plugin_ids;
   // formats
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theABINITFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theAcesOutputFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theAcesInputFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theACRFormat)->GetID());
@@ -237,6 +238,7 @@ std::vector<std::string> EnableStaticPlugins()
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCacaoFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCacheFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCARFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCASTEPFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCCCFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCHEM3D1Format)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCHEM3D2Format)->GetID());
@@ -269,11 +271,13 @@ std::vector<std::string> EnableStaticPlugins()
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGaussianZMatrixInputFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGenBankFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGhemicalFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGROFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGROMOS96Format)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGULPFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theHINFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theJaguarOutputFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theJaguarInputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theLMPDATFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMCDLFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMOLFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theSDFormat)->GetID());
@@ -327,6 +331,7 @@ std::vector<std::string> EnableStaticPlugins()
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theVASPFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theViewMolFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theXEDFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theXSFFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theXYZFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theYOBFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theZINDOFormat)->GetID());
