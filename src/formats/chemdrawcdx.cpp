@@ -1,7 +1,7 @@
 /**********************************************************************
 Copyright (C) 2006 by Fredrik Wallner
 Some portions Copyright (C) 2006-2007 by Geoffrey Hutchsion
-Some portions Copyright (C) 2004 by Chris Morley
+Some portions Copyright (C) 2011 by Chris Morley
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -15,17 +15,20 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/stereo/stereo.h>
 #include <openbabel/reaction.h>
+#include <openbabel/tokenst.h>
+#include <openbabel/text.h>
+#include <openbabel/alias.h>
 #include "chemdrawcdx.h"
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <map>
 #include <list>
 
-//#define debug
 
-#if !defined(__CYGWIN__)
 static inline unsigned short bswap_16(unsigned short x) {
   return (x>>8) | (x<<8);
 }
@@ -37,7 +40,6 @@ static inline unsigned int bswap_32(unsigned int x) {
 static inline unsigned long long bswap_64(unsigned long long x) {
   return (((unsigned long long)bswap_32(x&0xffffffffull))<<32) | (bswap_32(x>>32));
 }
-#endif
 
 // Macs -- need to use Apple macros to deal with Universal binaries correctly
 #ifdef __APPLE__
@@ -80,1109 +82,752 @@ using namespace std;
 namespace OpenBabel
 {
 
-  class ChemDrawBinaryFormat : public OBMoleculeFormat
+//Class which traverse the tree in CDX binary files 
+class CDXReader
+{
+public:
+  CDXReader(std::istream& is);
+  CDXTag ReadNext(bool objectsOnly=false, int targetDepth=-2);
+  void IgnoreObject()          { ReadNext(true, GetDepth()-1); }
+  operator bool ()const        { return ifs; }
+  int GetDepth()const          { return depth; }
+  int GetLen()const            { return _len;} //length of current property data
+  CDXObjectID CurrentID()const { return ids.back(); }
+  stringstream& data(); //call this only once for each set of property data
+
+  //Routines to display the structure of a cdx binary file
+  OBText* WriteTree(const std::string& filename, unsigned wtoptions);
+private:
+  bool ParseEnums(std::map<CDXTag, std::string>& enummap, const std::string& filename);
+  std::string TagName(std::map<CDXTag, std::string>& enummap, CDXTag tag);
+
+private:
+  std::istream& ifs;
+  int depth;
+  std::vector<CDXObjectID> ids;
+  CDXObjectID _tempback;
+  std::string _buf;
+  UINT16 _len;
+  std::stringstream _ss;
+};
+
+//**************************************************************
+class ChemDrawBinaryXFormat : OBFormat
+{
+public:
+  //Register this format type ID in the constructor
+  ChemDrawBinaryXFormat()
   {
-  public:
-    //Register this format type ID in the constructor
-    ChemDrawBinaryFormat()
+    OBConversion::RegisterFormat("cdx",this);
+  }
+
+  virtual const char* Description() //required
+  {
+    return
+      "ChemDraw binary format\n"
+      "Read only\n"
+      "The whole file is read in one call.\n"
+      "Reactions if present are read and output as OBReaction objects.\n"
+      "Any molecules not involved in a reaction are output as OBMol objects.\n"
+      "Most molecule formats will output the reactants and products when\n"
+      "given an OBReaction object.\n"
+      "With the -ad option, a human-readable representation of the CDX tree\n"
+      "structure is output as an OBText object. Use textformat to view it:\n"
+      "    obabel input.cdx -otext -ad\n"
+      "Many reactions in CDX files are not fully specified with reaction data\n"
+      "structures, and may not be completely interpreted by this parser.\n"
+      "Read Options, e.g. -am\n"
+      " m read molecules only; no reactions\n"
+      " d output CDX tree to OBText object\n"
+      " o display only objects in tree output\n";
+  }
+
+  virtual const char* SpecificationURL()
+  {return "http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/IntroCDX.htm";}
+
+  virtual const char* GetMIMEType()
+  { return "chemical/x-cdx"; };
+
+  virtual unsigned int Flags()
+  {
+    return READBINARY|NOTWRITABLE;
+  };
+
+  virtual bool ReadChemObject(OBConversion* pConv)
+  {
+    return ReadMolecule(NULL, pConv);
+  }
+
+  ////////////////////////////////////////////////////
+  virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+
+private:
+  enum graphicType {none, equilArrow};
+  bool        TopLevelParse(CDXReader& cdxr, OBConversion* pConv,CDXObjectID ContainingGroup);
+  bool        DoFragment(CDXReader& cdxr, OBMol* pmol);
+  bool        DoFragmentImpl(CDXReader& cdxr, OBMol* pmol,
+         map<CDXObjectID, unsigned>& atommap, map<OBBond*, OBStereo::BondDirection>& updown);
+  bool        DoReaction(CDXReader& cdxr, OBReaction* pReact);
+  std::string DoText(CDXReader& cdxr);
+
+  std::vector<OBMol*> LookupMol(CDXObjectID id);
+  graphicType         LookupGraphic(CDXObjectID id);
+  OBMol*              LookupInMolMap(CDXObjectID id);
+
+private:
+  bool readReactions;
+  static const bool objectsOnly = true;
+  std::map<CDXObjectID, graphicType> _graphicmap;
+  std::map<CDXObjectID, OBMol*> _molmap;
+  std::map<CDXObjectID, std::vector<CDXObjectID> > _groupmap;
+  typedef std::map<CDXObjectID, std::vector<CDXObjectID> >::iterator GroupMapIterator;
+  static const unsigned usedFlag = 1<<30;
+};
+
+//******************************************************************
+  //Global instance of the format
+ ChemDrawBinaryXFormat theChemDrawBinaryXFormat;
+//******************************************************************
+
+ /*New CDXformat
+Each fragment goes into a new OBMol on the heap.
+The CDX id and OBMol* are added to _molmap.
+When a reaction is found, the reactant/product/agent CDX ids are looked up in molmap,
+made into a shared_ptr and added to an OBReaction (made by deleting pOb if it is a OBMol
+and assigning pOb to a new OBReaction. The OBMol is marked as Used.
+When the reaction is complete it is output via AddChemObject().
+At the end, any OBMol in the map not marked as Used is output as an OBMol.
+*/
+
+
+bool ChemDrawBinaryXFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+{
+  _molmap.clear();
+  _graphicmap.clear();
+  _groupmap.clear();
+  OBMol* pmol=NULL;
+  bool ok = true;
+
+  CDXReader cdxr(*pConv->GetInStream());
+  readReactions = (pConv->IsOption("m",OBConversion::INOPTIONS)==NULL);
+
+  // Write CDX tree only if requested
+  if(pConv->IsOption("d",OBConversion::INOPTIONS))
+  {
+    unsigned wtoptions=0;
+    if(pConv->IsOption("o",OBConversion::INOPTIONS))
+      wtoptions |= 1; //display objects only
+    OBText* pText  = cdxr.WriteTree("chemdrawcdx.h", wtoptions);
+    if(pText)
     {
-      OBConversion::RegisterFormat("cdx",this, "chemical/x-cdx");
+      pConv->AddChemObject(pText);
+      return true;
+    }
+    return false;
+  }
+
+  // Normal reading of molecules and reactions
+  //Top level parse 
+  while(cdxr)
+  {
+    if(!TopLevelParse(cdxr, pConv, 0))
+      return false;
+  }
+
+  //At the end, output molecules that have not been used in a reaction
+  map<CDXObjectID, OBMol*>::iterator mapiter = _molmap.begin();
+  for(; mapiter!=_molmap.end(); ++mapiter)
+  {
+    pmol = mapiter->second;
+    if(!(pmol->GetFlags() & usedFlag) && strcmp(pmol->GetTitle(),"justplus"))
+    {
+      OBMol* ptmol = static_cast<OBMol*>(pmol->DoTransformations(
+                    pConv->GetOptions(OBConversion::GENOPTIONS),pConv));
+      if(!ptmol)
+        delete pmol;
+      else
+        if(!pConv->AddChemObject(ptmol))
+          return false; //error during writing
+    }
+  }
+
+  return ok;
+}
+///////////////////////////////////////////////////////////////////////
+bool ChemDrawBinaryXFormat::TopLevelParse
+        (CDXReader& cdxr, OBConversion* pConv, CDXObjectID ContainingGroup)
+{
+  bool ok = true;
+  CDXTag tag;
+  while((tag = cdxr.ReadNext(objectsOnly)))
+  {
+    if(tag == kCDXObj_Group)
+    {
+      CDXObjectID cid = cdxr.CurrentID();
+      vector<CDXObjectID> v;
+      _groupmap.insert(make_pair(cid,v)); //empty vector as yet
+      TopLevelParse(cdxr, pConv, cid );
     }
 
-    virtual const char* Description() //required
+    else if(tag==kCDXObj_Fragment)
     {
-      return
-        "ChemDraw binary format\n"
-        "Read only.\n";
-    };
+      OBMol* pmol = new OBMol;
+      //Save all molecules to the end
+      _molmap[cdxr.CurrentID()] = pmol;
 
-    //Optional URL where the file format is specified
-    virtual const char* SpecificationURL()
-    {return "http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/IntroCDX.htm";};
-
-    virtual const char* GetMIMEType()
-    { return "chemical/x-cdx"; };
-
-    /* Flags() can return be any of the following combined by |
-       or be omitted if none apply
-       NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY */
-    virtual unsigned int Flags()
-    {
-      return READBINARY|NOTWRITABLE;
-    };
-
-    ////////////////////////////////////////////////////
-    /// Declarations for the "API" interface functions. Definitions are below
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    OBBase* ReadObject(OBConversion* pConv);
-    //  virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-  private:
-    struct cdBond
-    {
-      UINT32	begin;
-      UINT32	end;
-      int	order;
-      int stereo;
-
-			cdBond() {}
-			cdBond(UINT32 bgn, UINT32 e, int ord, int st = 0) : begin(bgn), end (e), order(ord), stereo(st) {}
-			~cdBond() {}
-    };
-
-
-    int readFragment(istream *ifs, UINT32 fragmentId,
-                     OBMol *pmol, map<UINT32, int> &atoms, list<cdBond> &bonds);
-    int readNode(istream *ifs, UINT32 nodeId, OBMol *pmol,
-                 map<UINT32, int> &atoms, list<cdBond> &bonds,
-                 UINT32 fragmentID);
-    int readBond(istream *ifs, UINT32 nodeId, OBMol *pmol, list<cdBond> &bonds);
-    int readGeneric(istream *ifs, UINT32 objId);
-    const char* getName(istream *ifs, UINT32 size);
-
-  };
-	////////////////////////////////////////////////////
-
-  //Make an instance of the format class
-  ChemDrawBinaryFormat theChemDrawBinaryFormat;
-
-  /////////////////////////////////////////////////////////////////
-  bool ChemDrawBinaryFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
-  {
-    OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
-      return false;
-
-    istream& ifs = *pConv->GetInStream();
-    char buffer[BUFF_SIZE];
-    char errorMsg[BUFF_SIZE];
-    UINT16 tag;
-    UINT16 size;
-    UINT32 id;
-    map<UINT32, int> atoms;
-    list<cdBond> bonds;
-    list<cdBond>::const_iterator bondsIter;
-    cdBond prevBond;
-    cdBond oneBond;
-    int depth=1;
-
-    if (!ifs.good() || ifs.peek() == EOF)
-      return false;
-
-    pmol->BeginModify();
-
-    pmol->SetTitle(pConv->GetTitle());
-
-    if((int)ifs.tellg() == 0)	// Beginning of file
+      if(ContainingGroup)
       {
-        ifs.read(buffer,kCDX_HeaderStringLen);
-        if(strncmp(buffer, kCDX_HeaderString, kCDX_HeaderStringLen) == 0)  // File header
-          {
-            ifs.seekg (kCDX_HeaderLength - kCDX_HeaderStringLen, ios_base::cur);	// Discard rest of header.
-          }
-        else
-          {
-            cout << "Invalid file, no ChemDraw Header" << endl;	// No header, error.
-            ifs.seekg(0, ios_base::end);
-            return false;
-          }
+        // Add the id of this mol to the group's entry in _groupmap 
+        GroupMapIterator gmapiter = _groupmap.find(ContainingGroup);
+        if(gmapiter!=_groupmap.end())
+          gmapiter->second.push_back(cdxr.CurrentID());
       }
-    while(ifs.good())
+      ok = DoFragment(cdxr, pmol);
+    }
+
+    else if(tag == kCDXObj_ReactionStep && readReactions)
+    {
+      OBReaction* pReact = new OBReaction;
+      ok = DoReaction(cdxr, pReact);
+      // Output OBReaction and continue 
+      if(pReact)
+        if(!pConv->AddChemObject(pReact))
+          return false; //error during writing
+    }
+
+    else if(ok && tag==kCDXObj_Graphic)
+    {
+      while(tag = cdxr.ReadNext())
       {
-        READ_INT16 (ifs, tag);
-        if(tag & kCDXTag_Object)	// Object
-          {
-            READ_INT32 (ifs, id);
-            snprintf(errorMsg, BUFF_SIZE, "Object ID: %08X in root has type: %04X\n", id, tag);
-            obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-
-            if(tag == kCDXObj_Fragment)
-              {
-                if(readFragment(&ifs, id, pmol, atoms, bonds) != 0)
-                  {
-                    obErrorLog.ThrowError(__FUNCTION__, "Error reading fragment", obWarning);
-                    return false;
-                  }
-                prevBond = cdBond(0,0,0);
-                for (bondsIter=bonds.begin(); bondsIter != bonds.end(); bondsIter++)
-                  {
-                    // printf("Bond between %08X (%d) and %08x (%d)\n", bondsIter->begin, atoms[bondsIter->begin], bondsIter->end, atoms[bondsIter->end]);
-                    if(atoms[bondsIter->begin] == -1)
-                      {
-                        //						printf("Bond starts at a non-atom\n");
-                        if(atoms[bondsIter->end] == -1)
-                          {
-                            //							printf("Bond between two non-atoms pushed back\n");
-                            if((prevBond.begin == bondsIter->begin) && (prevBond.end == bondsIter->end))
-                              {
-                                obErrorLog.ThrowError(__FUNCTION__, "Can't assign all bonds!", obDebug);
-                                break;
-                              }
-                            bonds.push_back(*bondsIter);
-                          }
-                        else
-                          atoms[bondsIter->begin] = atoms[bondsIter->end];
-                      }
-                    else if(atoms[bondsIter->end] == -1)
-                      atoms[bondsIter->end] = atoms[bondsIter->begin];
-                    else
-                      {
-                        int flags = 0;
-                        switch (bondsIter->stereo)
-                          {
-                          case kCDXBondDisplay_WedgedHashBegin:
-                          case kCDXBondDisplay_WedgeEnd:
-                            flags = OB_HASH_BOND;
-                            break;
-                          case kCDXBondDisplay_WedgedHashEnd:
-                          case kCDXBondDisplay_WedgeBegin:
-                            flags = OB_WEDGE_BOND;
-                            break;
-                          default:;
-                          }
-                        pmol->AddBond(atoms[bondsIter->begin], atoms[bondsIter->end], bondsIter->order, flags);
-                      }
-                    prevBond = *bondsIter;
-                  }
-                break;
-              }
-            else if ((tag == kCDXObj_Graphic) || (tag == kCDXObj_Text)
-                     || (tag == kCDXObj_BracketedGroup)
-                     || (tag == kCDXObj_BracketAttachment)
-                     || (tag == kCDXObj_CrossingBond)
-                     || (tag == kCDXObj_ReactionStep)
-                     || (tag == kCDXObj_Curve)
-                     || (tag == kCDXObj_EmbeddedObject))
-              {	// Objects that can be ignored
-                readGeneric(&ifs, id);
-              }
-            else if((tag == kCDXObj_Page) || ( tag == kCDXObj_Group))
-              {	// Objects where the header can be ignored
-              }
-            else
-              {
-                depth++;
-                snprintf(errorMsg, BUFF_SIZE, "New object in root, type %04X\n", tag);
-                obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-              }
-          }
-        else if(tag == 0)	// End of object
-          {
-            if(depth > 1)
-              {
-                obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-                depth--;
-              }
-          }
-        else	// Property
-          {
-            READ_INT16 (ifs ,size);
-            switch(tag)
-              {
-              case kCDXProp_Name:
-                pmol->SetTitle(getName(&ifs, size));
-                break;
-              case kCDXProp_FontTable:
-              case kCDXProp_BoundingBox:
-              case kCDXProp_Window_Position:
-              case kCDXProp_Window_Size:
-              case kCDXProp_Atom_ShowQuery:
-              case kCDXProp_Atom_ShowStereo:
-              case kCDXProp_Atom_ShowAtomNumber:
-              case kCDXProp_Bond_ShowQuery:
-              case kCDXProp_Bond_ShowStereo:
-              case kCDXProp_MacPrintInfo:
-              case kCDXProp_DrawingSpaceType:
-              case kCDXProp_Width:
-              case kCDXProp_Height:
-              case kCDXProp_PageOverlap:
-              case kCDXProp_Magnification:
-              case kCDXProp_ChainAngle:
-              case kCDXProp_BondSpacing:
-              case kCDXProp_BondSpacingAbs:
-              case kCDXProp_BondLength:
-              case kCDXProp_BoldWidth:
-              case kCDXProp_LineWidth:
-              case kCDXProp_MarginWidth:
-              case kCDXProp_HashSpacing:
-              case kCDXProp_LabelStyle:
-              case kCDXProp_CaptionStyle:
-              case kCDXProp_CaptionJustification:
-              case kCDXProp_LabelJustification:
-              case kCDXProp_FractionalWidths:
-              case kCDXProp_LabelLineHeight:
-              case kCDXProp_CaptionLineHeight:
-              case kCDXProp_Window_IsZoomed:
-              case kCDXProp_WidthPages:
-              case kCDXProp_HeightPages:
-              case kCDXProp_HeaderPosition:
-              case kCDXProp_FooterPosition:
-              case kCDXProp_PrintTrimMarks:
-              case kCDXProp_PrintMargins:
-              case kCDXProp_ColorTable:
-              case kCDXProp_CreationProgram:
-              case kCDXProp_Group_Integral:
-                ifs.seekg(size, ios_base::cur);
-                break;
-              default: // some unknown tag
-                ifs.seekg(size, ios_base::cur);
-                snprintf(errorMsg, BUFF_SIZE, "Root Tag: %04X\tSize: %04X\n", tag, size);
-                obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-                break;
-              }
-          }
+        stringstream& ss = cdxr.data();
+        if(tag == kCDXProp_Arrow_Type)
+        {
+          char type1=0;
+          UINT16 type2=0;
+          if(cdxr.GetLen()==1)
+            ss.get(type1);
+          else
+            READ_INT16(ss,type2);
+          if(type1==kCDXArrowType_Equilibrium || type2==kCDXArrowType_Equilibrium)
+            _graphicmap[type1+type2] = equilArrow; //save in graphicmap
+        }
       }
-
-    pmol->SetDimension(2);
-    pmol->EndModify();
-
-    return true;
+    }
   }
-
-  OBBase* ChemDrawBinaryFormat::ReadObject(OBConversion* pConv)
+  return true;
+}
+///////////////////////////////////////////////////////////////////////
+bool ChemDrawBinaryXFormat::DoReaction(CDXReader& cdxr, OBReaction* pReact)
+{
+  CDXTag tag;
+  CDXObjectID id;
+  while(tag = cdxr.ReadNext())
   {
-    istream& ifs = *pConv->GetInStream();
-    char buffer[BUFF_SIZE];
-    char errorMsg[BUFF_SIZE];
-    UINT16 tag;
-    UINT16 size;
-    UINT32 id;
-    map<UINT32, int> atoms;
-    list<cdBond> bonds;
-    list<cdBond>::const_iterator bondsIter;
-    cdBond prevBond;
-    cdBond oneBond;
-    int depth=1;
-
-    if((int)ifs.tellg() == 0)	// Beginning of file
+    if(tag ==	kCDXProp_ReactionStep_Reactants)
+    {
+      stringstream& ss = cdxr.data();
+      for(unsigned i=0;i<cdxr.GetLen()/4;++i)//for each reactant id
       {
-        ifs.read(buffer,kCDX_HeaderStringLen);
-        if(strncmp(buffer, kCDX_HeaderString, kCDX_HeaderStringLen) == 0)  // File header
-          {
-            ifs.seekg (kCDX_HeaderLength - kCDX_HeaderStringLen, ios_base::cur);	// Discard rest of header.
-          }
-        else
-          {
-            cout << "Invalid file, no ChemDraw Header" << endl;	// No header, error.
-            ifs.seekg(0, ios_base::end);
-            return (OBBase*)NULL;
-          }
+        READ_INT32(ss,id);
+        vector<OBMol*> molvec = LookupMol(id); //id could be a group with several mols
+        for(unsigned i=0;i<molvec.size();++i)
+          if(strcmp(molvec[i]->GetTitle(),"justplus"))
+            pReact->AddReactant(shared_ptr<OBMol>(molvec[i]));
       }
-    while(ifs.good())
+    }
+    else if(tag == kCDXProp_ReactionStep_Products)
+    {
+      stringstream& ss = cdxr.data();
+      for(unsigned i=0;i<cdxr.GetLen()/4;++i)//for each product id
       {
-        READ_INT16 (ifs, tag);
-        if(tag & kCDXTag_Object)	// Object
-          {
-            READ_INT32 (ifs, id);
-            snprintf(errorMsg, BUFF_SIZE, "Object ID: %08X in root has type: %04X\n", id, tag);
-            obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-
-            if(tag == kCDXObj_Fragment)
-              {
-                OBMol *pmol = new OBMol();
-                if(pmol==NULL)
-                  {
-                  	return NULL;
-                  }
-
-                pmol->BeginModify();
-
-  	            pmol->SetTitle(pConv->GetTitle());
-                if(readFragment(&ifs, id, pmol, atoms, bonds) != 0)
-                  {
-                    obErrorLog.ThrowError(__FUNCTION__, "Error reading fragment", obWarning);
-                    delete pmol;
-                    return NULL;
-                  }
-                prevBond = cdBond(0,0,0);
-                for (bondsIter=bonds.begin(); bondsIter != bonds.end(); bondsIter++)
-                  {
-                    // printf("Bond between %08X (%d) and %08x (%d)\n", bondsIter->begin, atoms[bondsIter->begin], bondsIter->end, atoms[bondsIter->end]);
-                    if(atoms[bondsIter->begin] == -1)
-                      {
-                        //						printf("Bond starts at a non-atom\n");
-                        if(atoms[bondsIter->end] == -1)
-                          {
-                            //							printf("Bond between two non-atoms pushed back\n");
-                            if((prevBond.begin == bondsIter->begin) && (prevBond.end == bondsIter->end))
-                              {
-                                obErrorLog.ThrowError(__FUNCTION__, "Can't assign all bonds!", obDebug);
-                                break;
-                              }
-                            bonds.push_back(*bondsIter);
-                          }
-                        else
-                          atoms[bondsIter->begin] = atoms[bondsIter->end];
-                      }
-                    else if(atoms[bondsIter->end] == -1)
-                      atoms[bondsIter->end] = atoms[bondsIter->begin];
-                    else
-                      {
-                        int flags = 0;
-                        switch (bondsIter->stereo)
-                          {
-                          case kCDXBondDisplay_WedgedHashBegin:
-                          case kCDXBondDisplay_WedgeEnd:
-                            flags = OB_HASH_BOND;
-                            break;
-                          case kCDXBondDisplay_WedgedHashEnd:
-                          case kCDXBondDisplay_WedgeBegin:
-                            flags = OB_WEDGE_BOND;
-                            break;
-                          default:;
-                          }
-                        pmol->AddBond(atoms[bondsIter->begin], atoms[bondsIter->end], bondsIter->order, flags);
-                      }
-                    prevBond = *bondsIter;
-                  }
-                pmol->SetDimension(2);
-                pmol->EndModify();
-                return pmol;
-              }
-            else if (tag == kCDXObj_ReactionScheme)
-              {
-                readGeneric(&ifs, id);
-puts("found a reaction");
-                return new OBReaction();
-              }
-           else if ((tag == kCDXObj_Graphic) || (tag == kCDXObj_Text)
-                     || (tag == kCDXObj_BracketedGroup)
-                     || (tag == kCDXObj_BracketAttachment)
-                     || (tag == kCDXObj_CrossingBond)
-                     || (tag == kCDXObj_Curve)
-                     || (tag == kCDXObj_EmbeddedObject))
-              {	// Objects that can be ignored
-                readGeneric(&ifs, id);
-              }
-            else if((tag == kCDXObj_Page) || ( tag == kCDXObj_Group))
-              {	// Objects where the header can be ignored
-              }
-            else
-              {
-                depth++;
-                snprintf(errorMsg, BUFF_SIZE, "New object in root, type %04X\n", tag);
-                obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-              }
-          }
-        else if(tag == 0)	// End of object
-          {
-            if(depth > 1)
-              {
-                obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-                depth--;
-              }
-          }
-        else	// Property
-          {
-            READ_INT16 (ifs ,size);
-            switch(tag)
-              {
-              case kCDXProp_Name:
-puts("found name");
-                /*pmol->SetTitle(*/puts(getName(&ifs, size));//);
-                break;
-              case kCDXProp_FontTable:
-              case kCDXProp_BoundingBox:
-              case kCDXProp_Window_Position:
-              case kCDXProp_Window_Size:
-              case kCDXProp_Atom_ShowQuery:
-              case kCDXProp_Atom_ShowStereo:
-              case kCDXProp_Atom_ShowAtomNumber:
-              case kCDXProp_Bond_ShowQuery:
-              case kCDXProp_Bond_ShowStereo:
-              case kCDXProp_MacPrintInfo:
-              case kCDXProp_DrawingSpaceType:
-              case kCDXProp_Width:
-              case kCDXProp_Height:
-              case kCDXProp_PageOverlap:
-              case kCDXProp_Magnification:
-              case kCDXProp_ChainAngle:
-              case kCDXProp_BondSpacing:
-              case kCDXProp_BondSpacingAbs:
-              case kCDXProp_BondLength:
-              case kCDXProp_BoldWidth:
-              case kCDXProp_LineWidth:
-              case kCDXProp_MarginWidth:
-              case kCDXProp_HashSpacing:
-              case kCDXProp_LabelStyle:
-              case kCDXProp_CaptionStyle:
-              case kCDXProp_CaptionJustification:
-              case kCDXProp_LabelJustification:
-              case kCDXProp_FractionalWidths:
-              case kCDXProp_LabelLineHeight:
-              case kCDXProp_CaptionLineHeight:
-              case kCDXProp_Window_IsZoomed:
-              case kCDXProp_WidthPages:
-              case kCDXProp_HeightPages:
-              case kCDXProp_HeaderPosition:
-              case kCDXProp_FooterPosition:
-              case kCDXProp_PrintTrimMarks:
-              case kCDXProp_PrintMargins:
-              case kCDXProp_ColorTable:
-              case kCDXProp_CreationProgram:
-              case kCDXProp_Group_Integral:
-                ifs.seekg(size, ios_base::cur);
-                break;
-              default: // some unknown tag
-                ifs.seekg(size, ios_base::cur);
-                snprintf(errorMsg, BUFF_SIZE, "Root Tag: %04X\tSize: %04X\n", tag, size);
-                obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-                break;
-              }
-          }
+        READ_INT32(ss,id);
+        vector<OBMol*> molvec = LookupMol(id); //id could be a group with several mols
+        for(unsigned i=0;i<molvec.size();++i)
+          if(strcmp(molvec[i]->GetTitle(),"justplus"))
+            pReact->AddProduct(shared_ptr<OBMol>(molvec[i]));
       }
+    }
+    else if(tag==kCDXProp_ReactionStep_Arrows)
+    {
+      READ_INT32(cdxr.data(),id);
+      if(LookupGraphic(id)==equilArrow)
+        pReact->SetReversible();
+    }
+  }
+  return true;
+}
+///////////////////////////////////////////////////////////////////////
+vector<OBMol*> ChemDrawBinaryXFormat::LookupMol(CDXObjectID id)
+{
+  vector<OBMol*> molvec;
+  //Check whether the id is that of a kCDXObj_Group
+  GroupMapIterator gmapiter;
+  gmapiter = _groupmap.find(id);
+  if(gmapiter != _groupmap.end())
+  {
+    for(unsigned i=0;i<gmapiter->second.size();++i)
+    {
+      OBMol* pmmol = LookupInMolMap(gmapiter->second[i]);
+      if(pmmol)
+        molvec.push_back(pmmol);
+    }
+  }
+  else
+  {
+    //id is not a group; it must be a fragment
+    OBMol* pmmol = LookupInMolMap(id);
+    if(pmmol)
+      molvec.push_back(pmmol);
+  }
+  return molvec; 
+}
 
+OBMol* ChemDrawBinaryXFormat::LookupInMolMap(CDXObjectID id)
+{
+  std::map<CDXObjectID, OBMol*>::iterator mapiter;
+  mapiter = _molmap.find(id);
+  if(mapiter!=_molmap.end())
+  {
+    //Mark mol as used in a reaction, so that it will not be output independently
+    mapiter->second->SetFlags(mapiter->second->GetFlags() | usedFlag);
+    return mapiter->second;
+  }
+  else
+  {
+    stringstream ss;
+    ss << "Reactant or product mol not found id = " << hex << showbase << id; 
+    obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
     return NULL;
   }
+}
 
-  const char* ChemDrawBinaryFormat::getName(istream *ifs, UINT32 size)
+////////////////////////////////////////////////////////////////////////
+ChemDrawBinaryXFormat::graphicType ChemDrawBinaryXFormat::LookupGraphic(CDXObjectID id)
+{
+  std::map<CDXObjectID, graphicType>::iterator mapiter;
+  mapiter = _graphicmap.find(id);
+  if(mapiter != _graphicmap.end())
+    return mapiter->second;
+  else
+    return none;
+}
+
+////////////////////////////////////////////////////////////////////////
+bool ChemDrawBinaryXFormat::DoFragment(CDXReader& cdxr, OBMol* pmol)
+{
+  map<OBBond*, OBStereo::BondDirection> updown;
+  pmol->SetDimension(2);
+  pmol->BeginModify();
+
+  map<CDXObjectID, unsigned> atommap; //key = CDX id; value = OB atom idx
+
+  //The inner workings of DoFragment,since Fragment elements can be nested
+  DoFragmentImpl(cdxr, pmol, atommap, updown);
+
+  // use 2D coordinates + hash/wedge to determine stereochemistry
+  StereoFrom2D(pmol, &updown);
+
+  pmol->EndModify();
+
+  //Expand any aliases after molecule constructed
+  for(int idx=1; idx<=pmol->NumAtoms();++idx)
   {
-    char *buff;
-    UINT16 temp;
-    UINT32 skipsize;
+    OBAtom* pAtom = pmol->GetAtom(idx);
+    AliasData* ad = dynamic_cast<AliasData*>(pAtom->GetData(AliasDataType));
+    if(ad && !ad->IsExpanded())
+      ad->Expand(*pmol, idx); //Make chemically meaningful, if possible.
+  }
+  return true;
+}
 
-    //	buff = new char[size];
-    READ_INT16 ((*ifs), temp);
-    if(temp == 0)
+bool ChemDrawBinaryXFormat::DoFragmentImpl(CDXReader& cdxr, OBMol* pmol, 
+       map<CDXObjectID, unsigned>& atommap, map<OBBond*, OBStereo::BondDirection>& updown)
+{
+  CDXTag tag;
+  while((tag = cdxr.ReadNext(objectsOnly)))
+  {
+    if(tag==kCDXObj_Node)
+    {
+      unsigned nodeID = cdxr.CurrentID();
+      bool isAlias=false, hasElement=false;
+      UINT16 atnum=-1, spin=0;
+      int x, y, charge=0, iso=0;
+      string aliastext;
+
+      //Read all node properties
+      while(tag = cdxr.ReadNext())
       {
-        buff = new char[size-1];
-        ifs->read(buff, size-2);
-        buff[size-2] = 0;
-      }
-    else
-      {
-        skipsize = temp * 10;
-        ifs->seekg(skipsize, ios_base::cur);
-        buff = new char[size-skipsize-1];
-        ifs->read(buff, size-skipsize-2);
-        buff[size-skipsize-2] = 0;
-      }
-    return buff;
-  }
-
-
-  int get2DPosition(istream *ifs, UINT32 size, INT32 &x, INT32 &y)
-  {
-    if(size != 8) {
-      return -1; }
-
-    READ_INT32 (*ifs, y);
-    READ_INT32 (*ifs, x);
-
-    // 	printf("2D coordinates - x: %d, y: %d\n", x, y);
-    return 0;
-  }
-
-  UINT32 getBondStart(istream *ifs, UINT32 size)
-  {
-    UINT32 atomID;
-
-    if(size != 4)
-      return -1;
-
-    READ_INT32 (*ifs, atomID);
-    //	printf("Bond starts at atom nr: %08X\n", atomID);
-    return atomID;
-  }
-
-  UINT32 getBondEnd(istream *ifs, UINT32 size)
-  {
-    UINT32 atomID;
-
-    if(size != 4)
-      return -1;
-
-    READ_INT32 (*ifs, atomID);
-    //	printf("Bond ends at atom nr: %08X\n", atomID);
-    return atomID;
-  }
-
-  int getBondOrder(istream *ifs, UINT32 size)
-  {
-    UINT16 order;
-
-    if(size != 2)
-      return -1;
-
-    READ_INT16 (*ifs, order);
-    //	printf("Bond order is: %d\n", order);
-    return (int) order;
-  }
-
-  int getBondDisplay(istream *ifs, UINT32 size)
-  {
-    UINT16 stereo;
-
-    if(size != 2)
-      return -1;
-
-    READ_INT16 (*ifs, stereo);
-    //    printf("Bond stereo is: %d\n", stereo);
-    return (int) stereo;
-  }
-
-  int getNodeType(istream *ifs, UINT32 size)
-  {
-    UINT16 nodeType;
-
-    if(size != 2)
-      return -1;
-
-    READ_INT16 (*ifs, nodeType);
-    //	printf("Node type is: %d\n", nodeType);
-    return (int) nodeType;
-  }
-
-  int getElement(istream *ifs, UINT32 size, OBAtom &atom)
-  {
-    UINT16 element;
-
-    if(size != 2)
-      return -1;
-
-    READ_INT16 (*ifs, element);
-    atom.SetAtomicNum(element);
-    //	printf("Atomic number: %d\n", element);
-    return 0;
-  }
-
-  int getIsotope(istream *ifs, UINT32 size, OBAtom &atom)
-  {
-    UINT16 isotope;
-
-    if(size != 2)
-      return -1;
-
-    READ_INT16 (*ifs, isotope);
-    atom.SetIsotope(isotope);
-    return 0;
-  }
-
-  int getRadical(istream *ifs, UINT32 size, OBAtom &atom)
-  {
-    int radical;
-
-    ifs->read((char *)&radical, size);
-#if __BYTE_ORDER == __BIG_ENDIAN
-    radical = radical >> 24;
-#endif
-
-    //    cout << " Atomic radical " << size << " " << radical << endl;
-    switch (radical)
-      {
-      case 2:
-        atom.SetSpinMultiplicity(2);
-        break;
-      case 3:
-        atom.SetSpinMultiplicity(3);
-        break;
-      case 1:
-      case 0:
-      default:
-        break; // all singlets (current no way in OB to set diradical singlet)
-      }
-
-    return 0;
-  }
-
-  int getCharge(istream *ifs, UINT32 size)
-  {
-    int charge;
-
-    if(size == 4)		// Bug in ChemDraw 8.0, see http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/properties/Atom_Charge.htm
-      {
-        READ_INT32 (*ifs, charge);
-      }
-    else
-      if(size == 1)
+        switch(tag)
         {
-          ifs->read((char *)&charge, size);
-#if __BYTE_ORDER == __BIG_ENDIAN
-          charge = charge >> 24;
-#endif
+        case kCDXProp_Node_Type:
+          UINT16 type;
+          READ_INT16(cdxr.data(), type);
+          if(type==4 || type==5) //Nickname or fragment
+            isAlias = true;
+          break;
+        case kCDXProp_Node_Element:
+          READ_INT16(cdxr.data(), atnum);
+          hasElement = true;
+          break;
+        case kCDXProp_2DPosition:
+          {
+            stringstream& ss = cdxr.data();
+            READ_INT32(ss, y); //yes, this way round
+            READ_INT32(ss, x);
+          }
+            break;
+        case kCDXProp_Atom_Charge:
+          if(cdxr.GetLen()==1)
+            charge = cdxr.data().get();
+          else
+            READ_INT32(cdxr.data(), charge);
+          break;
+        case kCDXProp_Atom_Radical:
+          READ_INT16(cdxr.data(),spin);
+          break;
+        case kCDXProp_Atom_Isotope:
+          READ_INT16(cdxr.data(),iso);
+          break;
+        case kCDXProp_Atom_NumHydrogens:
+          break;
+        case kCDXProp_Atom_CIPStereochemistry:
+          break;
+        case kCDXObj_Text:
+          aliastext = DoText(cdxr);
+          if(aliastext=="+")
+          {
+            //This node is not an atom, but dangerous to delete
+            pmol->SetTitle("justplus");
+          }
+          break;
+        case kCDXObj_Fragment:
+        /* ignore fragment contained in node
+        if(isAlias)
+          {
+            unsigned Idxbefore = pmol->NumAtoms();
+            if(DoFragmentImpl(cdxr, pmol, atommap, updown))
+              return false;
+          }
+         */
+          //ignore the contents of this node
+          cdxr.IgnoreObject();
+          //cdxr.ReadNext(objectsOnly, cdxr.GetDepth()-1);
+          break;
+        default:
+          if(tag & kCDXTag_Object) //unhandled object
+            while(cdxr.ReadNext());
         }
+      }
+      //All properties of Node have now been read
+      OBAtom* pAtom = pmol->NewAtom();
+      pAtom->SetVector(x*1.0e-6, -y*1.0e-6, 0); //inv y axis
+      atommap[nodeID] = pmol->NumAtoms();
+      if(isAlias || (!aliastext.empty() && atnum==0xffff))
+      {
+        //Treat text as an alias 
+        pAtom->SetAtomicNum(0);
+        AliasData* ad = new AliasData();
+        ad->SetAlias(aliastext);
+        ad->SetOrigin(fileformatInput);
+        pAtom->SetData(ad);
+      } 
       else
-        return 0;
-
-    //	printf("Charge: %d\n",charge);
-    return charge;
-  }
-
-  int getAtomHydrogens(istream *ifs, UINT32 size)
-  {
-    UINT16 hydrogens;
-
-    if(size != 2)
-      return -1;
-
-    READ_INT16 (*ifs, hydrogens);
-    //	printf("Number of explicit hydrogens: %d\n", hydrogens);
-    return 0;
-  }
-
-  int readText(istream *ifs, UINT32 textId)
-  {
-    char errorMsg[BUFF_SIZE];
-    UINT16 tag;
-    UINT16 size;
-    UINT32 id;
-    int depth = 1;
-
-    while(ifs->good())
       {
-        READ_INT16 (*ifs, tag);
-        if(tag & kCDXTag_Object)	// Object
-          {
-            depth++;
-            READ_INT32 (*ifs, id);
-            //			printf("Object ID (in text-object %08X): %08X has type: %04X\n", textId, id, tag);
-            snprintf(errorMsg, BUFF_SIZE, "New object in text, type %04X\n", tag);
-            obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-          }
-        else if(tag == 0)	// End of object
-          {
-            depth--;
-            //			printf("End of textobject %08X\n", textId);
-          }
-        else	// Property
-          {
-            READ_INT16 (*ifs, size);
-            //			printf("Tag: %04X\tSize: %04X\n", tag, size);
-            //switch(tag)
-            //  {
-              //default:
-              ifs->seekg(size, ios_base::cur);
-              //break;
-            //  }
-          }
-        if(depth < 1)
-          return 0;
+        if(atnum==0xffff)
+          atnum = 6; //atoms are C by default
+        pAtom->SetAtomicNum(atnum);
+        pAtom->SetFormalCharge(charge);
+        pAtom->SetIsotope(iso);
+        pAtom->SetSpinMultiplicity(spin);
       }
-    return -1;
-  }
+    }
 
+    else if(tag==kCDXObj_Bond)
+    {
+      CDXObjectID bgnID, endID;
+      int order=1, bgnIdx, endIdx ;
+      UINT16 stereo=0;
 
-  int ChemDrawBinaryFormat::readNode(istream *ifs, UINT32 nodeId,
-                                     OBMol *pmol, map<UINT32, int> &atoms,
-                                     list<cdBond> &bonds, UINT32 fragmentID)
-  {
-    char errorMsg[BUFF_SIZE];
-    UINT16 tag;
-    UINT16 size;
-    UINT32 id;
-    int depth = 1;
-    OBAtom atom;
-    OBAtom *atom2;
-    //	OBPairData *data = new OBPairData;   // To hold ChemDraw's indexnr
-    INT32 x, y;
-    int nodeType = 1;
-    //    char strNodeId[20];
-
-    atom.SetAtomicNum(6);
-    //	data->SetAttribute("nodeId");
-    //	snprintf(strNodeId, 20, "%d", nodeId);
-    //	data->SetValue(strNodeId);
-    //	atom.SetData(data);
-    //	if(atom.HasData("nodeId"))
-    //	{
-    //		printf("Adding data to atom - attr: %s\tvalue: %s\n", dynamic_cast<OBPairData *> (atom.GetData("nodeId"))->GetAttribute().c_str(), dynamic_cast<OBPairData *> (atom.GetData("nodeId"))->GetValue().c_str());
-    //	}
-    //	else
-    //		printf("No data added\n");
-
-    while(ifs->good())
+      while(tag = cdxr.ReadNext())
       {
-        READ_INT16 (*ifs, tag);
-        if(tag & kCDXTag_Object)	// Object
+        switch(tag)
+        {
+        case kCDXProp_Bond_Begin:
+          READ_INT32(cdxr.data(), bgnID);
+          bgnIdx = atommap[bgnID];
+          break;
+        case kCDXProp_Bond_End:
+          READ_INT32(cdxr.data(), endID);
+          endIdx = atommap[endID];
+          break;
+        case kCDXProp_Bond_Order:
+          READ_INT16(cdxr.data(), order);
+          switch (order)
           {
-            depth++;
-            READ_INT32 (*ifs, id);
-
-            snprintf(errorMsg, BUFF_SIZE, "Object ID (in node %08X): %08X has type: %04X\n", nodeId, id, tag);
-            obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-
-            if(tag == kCDXObj_Fragment)
-              {
-                if(readFragment(ifs, id, pmol, atoms, bonds) != 0)
-                  {
-                    obErrorLog.ThrowError(__FUNCTION__, "Error reading fragment", obWarning);
-                    return false;
-                  }
-                bonds.push_back(cdBond(nodeId, id, 1));
-                depth--;
-              }
-            else if(tag == kCDXObj_Text)
-              {
-                readText(ifs, id);
-                depth--;
-              }
-            else if((tag == kCDXObj_ObjectTag))
-              {	// Objects to ignore
-                readGeneric(ifs, id);
-                depth--;
-              }
-            else if(tag == kCDXObj_Group)
-              {	// Objects where we can ignore the header
-              }
-            else
-              {
-                snprintf(errorMsg, BUFF_SIZE, "New object in node, type %04X\n", tag);
-                obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-              }
+          case 0xFFFF: // undefined, keep 1 for now
+            order = 1;
+          case 0x0001:
+          case 0x0002:
+            break;
+          case 0x0004:
+            order = 3;
+            break;
+          case 0x0080: // aromatic bond
+            order = 5;
+            break;
+          default: // other cases are just not supported, keep 1
+            order = 1;
+            break;
           }
-        else if(tag == 0)	// End of object
-          {
-            depth--;
-            //			printf("End of Object, depth=%d\n", depth);
-          }
-        else	// Property
-          {
-            READ_INT16 (*ifs, size);
-            snprintf(errorMsg, BUFF_SIZE, "Node Tag: %04X\tSize: %04X\n", tag, size);
-            obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-
-            switch(tag)
-              {
-              case kCDXProp_Atom_NumHydrogens:
-                getAtomHydrogens(ifs, size);
-                break;
-              case kCDXProp_2DPosition:
-                get2DPosition(ifs, size, x, y);
-                atom.SetVector((double) x / 500000., (double) y / -500000.0, (double) 0.0);
-                break;
-              case kCDXProp_Node_Element:
-                getElement(ifs, size, atom);
-                break;
-              case kCDXProp_Atom_Charge:
-                atom.SetFormalCharge(getCharge(ifs, size));
-                break;
-              case kCDXProp_Node_Type:
-                nodeType = getNodeType(ifs, size);
-                break;
-              case kCDXProp_Atom_Isotope:
-                getIsotope(ifs, size, atom);
-                break;
-              case kCDXProp_Atom_Radical:
-                getRadical(ifs, size, atom);
-                break;
-              case kCDXProp_Atom_ElementList:
-              case kCDXProp_Atom_AbnormalValence:
-              case kCDXProp_Name:
-              case kCDXProp_IgnoreWarnings:
-              case kCDXProp_ChemicalWarning:
-                ifs->seekg(size, ios_base::cur);
-                break;  // Maybe use? (any of the above properties)
-              case kCDXProp_MarginWidth:
-              case kCDXProp_ZOrder:
-              case kCDXProp_Atom_GenericNickname:
-              case kCDXProp_Atom_CIPStereochemistry: // maybe use for chirality
-              case kCDXProp_Atom_Geometry:
-              case kCDXProp_Atom_BondOrdering:
-              case kCDXProp_Node_LabelDisplay:
-              case kCDXProp_LabelStyle:
-              case kCDXProp_ForegroundColor:
-              case kCDXProp_BackgroundColor:
-                ifs->seekg(size, ios_base::cur);
-                break;
-              default: // some unknown node tag
-                ifs->seekg(size, ios_base::cur);
-                snprintf(errorMsg, BUFF_SIZE, "Node Tag: %04X\tSize: %04X\n", tag, size);
-                obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-                break;
-              }
-          }
-        if(depth < 1)
-          {
-						// Check the data before returning...
-            switch(nodeType)
-              {
-              case kCDXNodeType_Fragment:
-                atoms[nodeId] = -1;
-                break;
-              case kCDXNodeType_ExternalConnectionPoint:
-                atoms[nodeId] = -1;
-                bonds.push_back(cdBond(nodeId,fragmentID,1));
-                break;
-              default:
-                atom2 = pmol->NewAtom();
-                atom2->SetVector(atom.GetVector());
-                atom2->SetFormalCharge(atom.GetFormalCharge());
-                atom2->SetAtomicNum(atom.GetAtomicNum());
-                /*
-                if (atom.IsClockwise())
-                  atom2->SetClockwiseStereo();
-                else if (atom.IsAntiClockwise())
-                  atom2->SetAntiClockwiseStereo();
-                */
-                atoms[nodeId] = atom2->GetIdx();
-                break;
-              }
-            return 0; // everything worked correctly
-          }
-      } // end while(ifs.good())
-    return -1; // file ended early
-  }
-
-  int ChemDrawBinaryFormat::readBond(istream *ifs, UINT32 bondId,
-                                     OBMol *pmol, list<cdBond> &bonds)
-  {
-    char errorMsg[BUFF_SIZE];
-    UINT16 tag;
-    UINT16 size;
-    UINT32 id, bgnID, endID;
-    int depth = 1, order=1, stereo = 0;
-
-    while(ifs->good())
-      {
-        READ_INT16 (*ifs, tag);
-        if(tag & kCDXTag_Object)	// Object
-          {
-            depth++;
-            READ_INT32 (*ifs, id);
-            snprintf(errorMsg, BUFF_SIZE, "Object ID (in bond %08X): %08X has type: %04X\n", bondId, id, tag);
-            obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-
-            if(tag == kCDXObj_Text)
-              {
-                readText(ifs, id);
-                depth--;
-              }
-            else
-              {
-                snprintf(errorMsg, BUFF_SIZE, "New object in bond, type %04X\n", tag);
-                obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-              }
-          }
-        else if(tag == 0)	// End of object
-          {
-            depth--;
-            //			printf("End of Object\n");
-          }
-        else	// Property
-          {
-            READ_INT16 (*ifs, size);
-
-            snprintf(errorMsg, BUFF_SIZE, "Bond Tag: %04X\tSize: %04X\n", tag, size);
-            obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-
-            switch(tag)
-              {
-              case kCDXProp_Bond_Begin:
-                bgnID = getBondStart(ifs, size);
-                break;
-              case kCDXProp_Bond_End:
-                endID = getBondEnd(ifs, size);
-                break;
-              case kCDXProp_Bond_Order:
-                order = getBondOrder(ifs, size);
-                switch (order)
-                  {
-                  case 0xFFFF: // undefined, keep 1 for now
-                    order = 1;
-                  case 0x0001:
-                  case 0x0002:
-                    break;
-                  case 0x0004:
-                    order = 3;
-                    break;
-                  case 0x0080: // aromatic bond
-                    order = 5;
-                    break;
-                  default: // other cases are just not supported, keep 1
-                    order = 1;
-                    break;
-                  }
-                break;
-              case kCDXProp_Bond_Display:
-                stereo = getBondDisplay(ifs, size);
-                break; // Stereo info
-
-              case kCDXProp_BondLength:
-              case kCDXProp_Bond_CIPStereochemistry:
-              case kCDXProp_Bond_BeginAttach:
-              case kCDXProp_Bond_EndAttach:
-              case kCDXProp_ChemicalWarning:
-                ifs->seekg(size, ios_base::cur);
-                break; // Maybe use? (any of the above cases)
-
-              case kCDXProp_IgnoreWarnings:
-              case kCDXProp_MarginWidth:
-              case kCDXProp_Bond_Display2:
-              case kCDXProp_Bond_DoublePosition:
-              case kCDXProp_Bond_BondOrdering:
-              case kCDXProp_BondSpacing:
-              case kCDXProp_LineWidth:
-              case kCDXProp_BoldWidth:
-              case kCDXProp_HashSpacing:
-              case kCDXProp_ZOrder:
-              case kCDXProp_ForegroundColor:
-              case kCDXProp_BackgroundColor:
-              case kCDXProp_LabelStyle:
-                ifs->seekg(size, ios_base::cur);
-                break;
-
-              default: // some unknown, undocumented property
-                ifs->seekg(size, ios_base::cur);
-                snprintf(errorMsg, BUFF_SIZE, "Bond Tag: %04X\tSize: %04X\n", tag, size);
-                obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-                break;
-              }
-          }
-        if(depth < 1)
-          {
-            bonds.push_back(cdBond(bgnID,endID,order,stereo));
-            return 0;
-          }
+          break;
+        case kCDXProp_Bond_Display:
+          READ_INT16(cdxr.data(), stereo);
+        break;
+        }
       }
-    return -1;
-  }
 
-  int ChemDrawBinaryFormat::readGeneric(istream *ifs, UINT32 objId)
-  {
-    char errorMsg[BUFF_SIZE];
-    UINT16 tag;
-    UINT16 size;
-    UINT32 id;
-    int depth = 1;
-
-    while(ifs->good())
+      if(!order || !bgnIdx || !endIdx)
       {
-        READ_INT16 (*ifs, tag);
-        if(tag & kCDXTag_Object)	// Object
-          {
-            depth++;
-            READ_INT32 (*ifs, id);
-
-            snprintf(errorMsg, BUFF_SIZE, "Object ID (in generic %08X): %08X has type: %04X\n", objId, id, tag);
-            obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-
-            if ((tag == kCDXObj_BracketAttachment)
-                || (tag == kCDXObj_CrossingBond)
-                || (tag == kCDXObj_BracketedGroup)
-                || (tag == kCDXObj_Text)
-                || (tag == kCDXObj_Fragment))
-              {	// Objects to ignore (Fragment might be worth parsing)
-                readGeneric(ifs, id);
-                depth--;
-              }
-            else {
-              snprintf(errorMsg, BUFF_SIZE, "New object in generic, type %04X\n", tag);
-              obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-            }
-          }
-        else if(tag == 0)	// End of object
-          {
-            depth--;
-            snprintf(errorMsg, BUFF_SIZE, "End of Object in generic %08X\n", objId);
-            obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-          }
-        else	// Property
-          {
-            READ_INT16 (*ifs, size);
-
-            snprintf(errorMsg, BUFF_SIZE, "Generic Tag: %04X\tSize: %04X\n", tag, size);
-            obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-            //switch(tag)
-            //  {
-            //  default:
-                ifs->seekg(size, ios_base::cur);
-            //   break;
-            //  }
-          }
-        if(depth < 1) // matched begin and end tags, so we're good
-          {
-            return 0;
-          }
-      } // while reading
-    return -1; // file ended while reading
-  }
-
-  int ChemDrawBinaryFormat::readFragment(istream *ifs, UINT32 fragmentId,
-                                         OBMol *pmol, map<UINT32, int> &atoms,
-                                         list<cdBond> &bonds)
-  {
-    char errorMsg[BUFF_SIZE];
-    UINT16 tag;
-    UINT16 size;
-    UINT32 id;
-    //char u32[4];
-    int depth = 1;
-
- cerr<<"Reading "<<pmol<<endl;
-   atoms[fragmentId] = -1;
-    while(ifs->good())
+        obErrorLog.ThrowError(__FUNCTION__,"Incorrect bond", obError);
+        return false;
+      }
+      if(stereo==4 || stereo==7 || stereo==10 || stereo==12)
+        swap(bgnIdx, endIdx);
+      pmol->AddBond(bgnIdx, endIdx, order);
+      if(stereo)
       {
-        READ_INT16 ((*ifs), tag);
-        if(tag & kCDXTag_Object)	// Object
-          {
-            depth++;
-            READ_INT32 (*ifs, id);
-
-            snprintf(errorMsg, BUFF_SIZE, "Object ID (in fragment %08X): %08X has type: %04X\n", fragmentId, id, tag);
-            obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-
-            if(tag == kCDXObj_Fragment)
-              {
-                if(readFragment(ifs, id, pmol, atoms, bonds) != 0)
-                  {
-                    obErrorLog.ThrowError(__FUNCTION__, "Error reading fragment", obWarning);
-                    return false;
-                  }
-              }
-            else if(tag == kCDXObj_Node)
-              {
-                readNode(ifs, id, pmol, atoms, bonds, fragmentId);
-                depth--;
-              }
-            else if(tag == kCDXObj_Bond)
-              {
-                readBond(ifs, id, pmol, bonds);
-                depth--;
-              }
-            else if((tag == kCDXObj_Graphic) || (tag == kCDXObj_Text))
-              {	// Objects that can be ignored
-                readGeneric(ifs, id);
-                depth--;
-              }
-            //			else if((tag == kCDXObj_Page) || ( tag == kCDXObj_Group))
-            //			{	// Objects where the header can be ignored
-            //			}
-            else
-              {
-                snprintf(errorMsg, BUFF_SIZE, "New object in fragment, type %04X\n", tag);
-                obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-              }
-
-          }
-        else if(tag == 0)	// End of object
-          {
-            depth--;
-          }
-        else	// Property
-          {
-            READ_INT16 ((*ifs), size);
-            switch(tag)
-              {
-              case kCDXProp_Frag_ConnectionOrder:
-                ifs->seekg(size, ios_base::cur);
-                break;  // Should use
-              case kCDXProp_BoundingBox:
-                ifs->seekg(size, ios_base::cur);
-                break;
-              default:
-                ifs->seekg(size, ios_base::cur);
-                snprintf(errorMsg, BUFF_SIZE, "Fragment Tag: %04X\tSize: %04X\n", tag, size);
-                obErrorLog.ThrowError(__FUNCTION__, errorMsg, obDebug);
-
-                break;
-              }
-          }
-        if(depth < 1)
-          {
-cerr<<"Done reading "<<pmol<<endl;
-            return 0; // all begin and end tags matched -- everything good
-          }
-      } // while reading
-    return -1; // file ended before reading was finished
+        OBBond* pBond = pmol->GetBond(pmol->NumBonds()-1);
+        if(stereo==3 || stereo==4)
+          pBond->SetHash();
+        else if(stereo==6 || stereo==7)
+          pBond->SetWedge();
+      }
+    }
   }
+  return true;
+}
 
-} //namespace OpenBabel
+string ChemDrawBinaryXFormat::DoText(CDXReader& cdxr)
+{
+  CDXTag tag;
+  string text;
+  while(tag=cdxr.ReadNext())
+  {
+    stringstream& ss = cdxr.data();
+    switch(tag)
+    {
+    case kCDXProp_Text:
+      UINT16 nStyleRuns;
+      READ_INT16(ss,nStyleRuns);
+      ss.ignore(nStyleRuns*10);
+      ss >> text;
+    default:
+      if(tag & kCDXTag_Object) //unhandled object
+        while(cdxr.ReadNext());      
+    }
+  }
+  return text;
+}
+
+//****************************************************************
+CDXTag CDXReader::ReadNext(bool objectsOnly, int targetDepth)
+{
+  //ostringstream treestream;
+  CDXTag tag;
+  CDXObjectID id;
+
+  while(ifs) 
+  {
+    READ_INT16(ifs, tag);
+    if(tag==0)
+    {
+      if(depth==0)
+      {
+        ifs.setstate(ios::eofbit); //ignore everything after end of document
+        return 0; //end of document
+      }
+      --depth;
+      _tempback = ids.back(); //needed for WriteTree
+      ids.pop_back();
+      if(targetDepth<0 || depth == targetDepth)
+        return 0; //end of object
+    }
+    else if(tag & kCDXTag_Object)
+    {
+      READ_INT32(ifs, id);
+      ids.push_back(id);
+      ++depth;
+      if(targetDepth<0 || depth-1 == targetDepth)
+        return tag; //object
+    }
+    else
+    {
+      //property
+      READ_INT16(ifs, _len);
+
+      if(objectsOnly)
+        ifs.ignore(_len);
+      else
+      {
+        //copy property data to buffer
+        char* p = new char[_len+1];
+        ifs.read(p, _len);
+        _buf.assign(p, _len);
+        delete[] p;
+        return tag; //property
+      }
+    }
+  }
+  return 0;
+}
+/////////////////////////////////////////////////////////////////////
+
+stringstream& CDXReader::data()
+{
+  _ss.clear();
+  _ss.str(_buf);
+  return _ss;
+}
+/////////////////////////////////////////////////////////////////////
+
+CDXReader::CDXReader(std::istream& is) : ifs(is), depth(0)
+{
+  //ReadHeader
+  char buffer[kCDX_HeaderStringLen+1];
+  ifs.read(buffer,kCDX_HeaderStringLen);
+  buffer[kCDX_HeaderStringLen] = '\0';
+  if(strncmp(buffer, kCDX_HeaderString, kCDX_HeaderStringLen) == 0)
+    ifs.ignore(kCDX_HeaderLength - kCDX_HeaderStringLen);	// Discard rest of header.
+  else
+  {
+    obErrorLog.ThrowError(__FUNCTION__,"Invalid file, no ChemDraw Header",obError);
+    ifs.setstate(ios::eofbit);
+    throw;
+  }
+}
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//Routines to display the structure of a cdx binary file
+
+OBText* CDXReader::WriteTree(const string& filename, unsigned wtoptions)
+{  
+  const char indentchar = '\t';
+  std::map<CDXTag, std::string> enummap;
+  ParseEnums(enummap, filename);
+
+  stringstream tss;
+  tss << hex << showbase;
+
+  while(*this)
+  {
+    CDXTag tag = ReadNext();
+    if(ifs.eof())
+      return new OBText(tss.str()); //normal exit
+    if(tag==0 && !(wtoptions &1))
+    {
+      //Object end
+      tss << string(depth,indentchar) << "ObjectEnd " << _tempback << endl;
+    } 
+    else if(tag & kCDXTag_Object)
+    {
+      //Object
+      tss<<string(depth-1,indentchar) << "Object " << tag
+                   << TagName(enummap,tag) << " id=" << ids.back() << endl; 
+    }
+    else
+    {
+      //Property
+      if(!(wtoptions &1))
+      {
+        stringstream ss;
+        ss << _len;
+        tss<<string(depth,indentchar) << "Property  "<< tag << TagName(enummap,tag)
+                     << " [" << ss.str() << " bytes] ";
+        for(unsigned i=0;i<_len;++i)
+        {
+          ss.str("");
+          ss.fill('0');
+          ss.width(8);
+          ss << hex << static_cast<unsigned>(_buf[i]) << dec;
+          tss << ss.str()[6] << ss.str()[7] << ' ';
+        }
+
+        if(tag==0x700 || tag==kCDXProp_CreationProgram || tag==kCDXProp_CreationDate
+          || tag==kCDXProp_Name)
+        {
+          stringstream ss(_buf);
+          UINT16 nStyleRuns;
+          READ_INT16(ss, nStyleRuns);
+          tss << '\"';
+          for(unsigned i=2+nStyleRuns*10; i<_len; ++i)
+            tss << _buf[i];
+          tss << '\"';
+        }
+        tss << endl;
+      }
+    }
+  }
+  return NULL; //error exit
+}
+
+///////////////////////////////////////////////////////////////////////
+bool CDXReader::ParseEnums(map<CDXTag, string>& enummap, const string& filename)
+{
+  ifstream ihs;
+  if(OpenDatafile(ihs, filename).empty())
+  {
+    obErrorLog.ThrowError(__FUNCTION__, 
+      filename + " needs to be in the *data* directory when displaying the tree.\n" , obError);
+    return false;
+  }
+  ignore(ihs, "enum CDXDatumID");
+  string ln;
+  vector<string> vec;
+  stringstream ss;
+  CDXTag tag;
+  while(ihs)
+  {
+    getline(ihs, ln);
+    tokenize(vec, ln, " \t,{}");
+    if(vec.size()==0 || vec[0]=="//")
+      continue; //blank and comment lines
+    if(vec[0]==";") //line is }; end of enum
+      return true;
+    if(vec[0][0]!='k') //only collect enums starting with kCDX
+      continue;
+    int tagpos = (vec[1]=="=" && vec.size()>4) ? 4 : 2;
+    ss.str(vec[tagpos]);
+    ss.clear();
+    ss >> hex >> tag;
+    if(ss)
+    {
+      if(tag==0x0400 && vec[0]=="kCDXUser_TemporaryEnd")//special case
+        continue;
+      enummap[tag] = vec[0];
+    }
+  }
+  return false;
+}
+/////////////////////////////////////////////////////////////////////////
+
+string CDXReader::TagName(map<CDXTag, string>& enummap, CDXTag tag)
+{
+  string tagname;
+  if(!enummap.empty())
+  {
+    map<CDXTag, std::string>::iterator iter = enummap.find(tag);
+    if(iter!=enummap.end())
+    {
+      tagname=iter->second;
+      //Remove prefix, e.g. kCDXProp_
+      string::size_type pos = tagname.find('_');
+      if(pos!=string::npos)
+      {
+        tagname.erase(0,pos);
+        tagname[0] = ' ';
+      }
+    }
+  }
+  return tagname;
+}
+
+} //namespace
