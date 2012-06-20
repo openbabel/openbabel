@@ -25,6 +25,7 @@ GNU General Public License for more details.
 
 #include <fstream>
 
+#include "obtest.h"
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/forcefield.h>
@@ -60,11 +61,7 @@ void GenerateEnergies(string molecules_file, string results_file)
     }
 
   OBForceField* pFF = OBForceField::FindForceField("MMFF94");
-
-  if (pFF == NULL) {
-    cerr << "Cannot load force field!" << endl;
-    return;
-  }
+  OB_REQUIRE(pFF != NULL);
 
   pFF->SetLogFile(&cout);
   pFF->SetLogLevel(OBFF_LOGLVL_NONE);
@@ -118,11 +115,7 @@ void TestFile(string filename, string results_file)
     }
     
   OBForceField* pFF = OBForceField::FindForceField("MMFF94");
-
-  if (pFF == NULL) {
-    cerr << "Bail out! Cannot load force field!" << endl;
-    return;
-  }
+  OB_REQUIRE(pFF != NULL);
 
   pFF->SetLogFile(&cout);
   pFF->SetLogLevel(OBFF_LOGLVL_NONE);
