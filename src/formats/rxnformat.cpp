@@ -215,7 +215,7 @@ bool RXNFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     ofs << "$RXN" << endl;
     ofs << pReact->GetTitle() << endl;
-    ofs << "  OpenBabel" << endl;
+    ofs << "      OpenBabel" << endl;
     ofs << pReact->GetComment() <<endl;
 
     ofs << setw(3) << pReact->NumReactants() << setw(3) << pReact->NumProducts() << endl;
