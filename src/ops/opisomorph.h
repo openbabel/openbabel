@@ -58,6 +58,7 @@ private:
   OBQuery* query;
   std::vector<OBQuery*> queries;
   std::vector<int> firstmatch; //Idxes of first match by SMARTS or OBIsomorphismMapper
+  bool showAll;
 };
 
 } //namespace
