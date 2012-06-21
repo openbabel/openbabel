@@ -23,7 +23,7 @@ GNU General Public License for more details.
 #include<openbabel/obconversion.h>
 #include "opisomorph.h"
 
-#define DEPICTION2D     0x100 // Should have the same value as in format.h!!
+//#define DEPICTION2D     0x100 // Should have the same value as in format.h!!
 
 namespace OpenBabel
 {
@@ -134,6 +134,18 @@ bool OpAlign::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*
     OBOp* pgen = (itr==pmap->end()) ? OBOp::FindType("gen2D") : OBOp::FindType("gen3D");
     if(pgen)
       pgen->Do(pmol);
+  }
+
+  //Do the alignment in 2D if the output format is svg, png etc. and there is no -xn option
+  if(pmol->GetDimension()==3 && pConv && !pConv->IsOption("n"))
+  {
+    OBFormat* pOutFormat = pConv->GetOutFormat();
+    if(pOutFormat->Flags() & DEPICTION2D)
+    {
+      OBOp* pgen = OBOp::FindType("gen2D");
+      if(pgen)
+        pgen->Do(pmol);
+    }
   }
 
   if(pConv->IsFirstInput() || _refMol.NumAtoms()==0)
