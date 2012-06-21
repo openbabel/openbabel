@@ -205,8 +205,8 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
 
   m_pInFormat    = new wxChoice(panel,ID_INFORMAT,	wxDefaultPosition,wxDefaultSize,
     0, static_cast<wxString*> (NULL));
-  m_pInInfo      = new wxButton  (panel, ID_ININFO, wxT("Format Info"),
-        wxDefaultPosition);
+  m_pInInfo      = new wxButton  (panel, ID_ININFO, wxT("?"),
+        wxDefaultPosition,wxDefaultSize,wxBU_EXACTFIT);
   m_pForceInFormat  = new wxCheckBox(panel,ID_INFORCEFORMAT,
         wxT("Use this format for all &input files (ignore file extensions)"));
   m_pInPath      = new wxStaticText(panel,wxID_STATIC,wxT(""),
@@ -228,8 +228,8 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
 
   m_pOutFormat   = new wxChoice(panel,ID_OUTFORMAT,wxDefaultPosition,wxDefaultSize,
     0, static_cast<wxString*> (NULL));
-  m_pOutInfo     = new wxButton  (panel, ID_OUTINFO, wxT("Format Info"),
-        wxDefaultPosition);
+  m_pOutInfo     = new wxButton  (panel, ID_OUTINFO, wxT("?"),
+        wxDefaultPosition,wxDefaultSize,wxBU_EXACTFIT);
   m_pOutFilename = new wxTextCtrl(panel, ID_OUTFILENAME,wxEmptyString,
         wxDefaultPosition,wxSize(150,20));
   m_pOutFiles    = new wxButton  (panel, ID_OUTGETFILES, wxT("..."),
@@ -338,7 +338,7 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
 
   panel->SetSizer( topSizer );     // use the sizer for layout
   topSizer->Fit( panel );          // fit the dialog to the contents
-  topSizer->SetSizeHints( panel ); // set hints to honor min size
+//  topSizer->SetSizeHints( panel ); // set hints to honor min size
 
   GetAvailableFormats();
   wxString inExt = config.Read(_T("InExt"),_T("smi"));
@@ -729,7 +729,7 @@ void OBGUIFrame::OnChangeInputHere(wxCommandEvent& event)
 
 void OBGUIFrame::ChangeInputHere(bool chk)
 {
-  wxColour bg = chk ? wxColour(250,255,210) : wxNullColour;
+  wxColour bg = chk ? wxColour(250,255,210) : wxColour(250,255,255);
   m_pInText->SetEditable(chk);
   m_pInText->SetBackgroundColour(bg);
   m_pInText->Refresh();
@@ -799,10 +799,11 @@ bool OBGUIFrame::SetChoice(wxChoice* pChoice, const wxString& FileName)
   wxString ext(FileName);
   int pos = FileName.rfind('.');
   if(pos!=-1)
+  {
     wxString ext = FileName.substr(pos+1);
-  if(FileName.substr(pos)==_T(".gz"))
-    pos = FileName.rfind('.',pos-1);
-
+    if(FileName.substr(pos)==_T(".gz"))
+      pos = FileName.rfind('.',pos-1);
+  }
   for(int iSel=0;iSel<pChoice->GetCount();iSel++)
   {
     wxString txt(pChoice->GetString(iSel).substr(0,ext.length()));
