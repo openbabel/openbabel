@@ -72,11 +72,10 @@ namespace OpenBabel
     // Rn is stored as an atom with 0 atomic number and atomclass = n
     // R', R'' etc. are treated as R1, R2
     // Note that if the name contains anything after the number it is ignored.
-    if(_alias[0]=='R' && (_alias[1]=='\'' || _alias[1]=='¢' || isdigit(_alias[1])))
+    if(_alias[0]=='R' && (_alias[1]=='\'' || isdigit(_alias[1])))
     {
-      replace(_alias.begin(),_alias.end(),'¢','\'');
       unsigned int n = 1;
-      if(_alias[1]=='\'' || _alias[1]=='¢')
+      if(_alias[1]=='\'')
         while(n<_alias.size()-1 && _alias[n]==_alias[n+1]) n++;
       else
         n = atoi(_alias.c_str()+1);
