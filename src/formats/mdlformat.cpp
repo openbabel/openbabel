@@ -49,11 +49,28 @@ namespace OpenBabel
       {
         return "MDL MOL format\n"
                "Reads and writes V2000 and V3000 versions\n\n"
+               
+               "Open Babel supports an extension to the MOL file standard\n"
+               "that allows cis/trans and tetrahedral stereochemistry to be\n"
+               "stored in 0D MOL files. The tetrahedral stereochemistry is\n"
+               "stored as the atom parity, while the cis/trans stereochemistry\n"
+               "is stored using Up and Down bonds similar to how it is\n"
+               "represented in a SMILES string. Use the ``S`` option\n"
+               "when reading or writing if you want to avoid storing\n"
+               "or interpreting stereochemistry in 0D MOL files.\n\n"
+
                "Read Options, e.g. -as\n"
                " s  determine chirality from atom parity flags\n"
-               "       The default setting is to ignore atom parity and\n"
+               "       The default setting for 2D and 3D is to ignore atom parity and\n"
                "       work out the chirality based on the bond\n"
-               "       stereochemistry.\n"
+               "       stereochemistry (2D) or coordinates (3D).\n"
+               "       For 0D the default is already to determine the chirality\n"
+               "       from the atom parity.\n"
+               " S  do not read stereochemistry from 0D MOL files\n"
+               "       Open Babel supports reading and writing cis/trans\n"
+               "       and tetrahedral stereochemistry to 0D MOL files.\n"
+               "       This is an extension to the standard which you can\n"
+               "       turn off using this option.\n"
                " T  read title only\n"
                " P  read title and properties only\n"
                "       When filtering an sdf file on title or properties\n"
@@ -65,6 +82,7 @@ namespace OpenBabel
                " 3  output V3000 not V2000 (used for >999 atoms/bonds) \n"
                " m  write no properties\n"
                " w  use wedge and hash bonds from input (2D only)\n"
+               " S  do not store cis/trans stereochemistry in 0D MOL files\n"
                " A  output in Alias form, e.g. Ph, if present\n\n";
       }
 
@@ -116,8 +134,10 @@ namespace OpenBabel
       };
       bool  HasProperties;
       string GetTimeDate();
+      void GetUpDown(OBMol& mol, map<OBBond*, OBStereo::BondDirection> &updown, set<OBBond*> &stereodbl);
       void GetParity(OBMol& mol, map<OBAtom*, Parity> &parity);
       void TetStereoFromParity(OBMol& mol, vector<MDLFormat::Parity> &parity, bool deleteExisting=false);
+      void CisTransFromUpDown(OBMol *mol, std::map<OBBond*, OBStereo::BondDirection> *updown);
       int ReadIntField(const char *s);
       unsigned int ReadUIntField(const char *s);
      // Helper for 2.3 -- is this atom a metal
@@ -656,12 +676,13 @@ namespace OpenBabel
     } else { // 0D
       if (!setDimension)
         mol.SetDimension(0);
-      // The 0D format is not considered to store stereochemistry, but
-      // if you specify the "s" option, then atom parities from the
-      // MOL file will be used to create tetrahedral stereochemistry
-      if (pConv->IsOption("s", OBConversion::INOPTIONS))
+      // Atom parities from the MOL file will be used to create tetrahedral stereochemistry
+      // unless you specified the S option (but not s).
+      if (pConv->IsOption("s", OBConversion::INOPTIONS) || pConv->IsOption("S", OBConversion::INOPTIONS)==NULL)
         TetStereoFromParity(mol, parities);
       StereoFrom0D(&mol);
+      if (pConv->IsOption("S", OBConversion::INOPTIONS)==NULL)
+        CisTransFromUpDown(&mol, &updown);
     }
 
     return true;
@@ -678,8 +699,14 @@ namespace OpenBabel
 
     // Recommend using --gen2D or --gen3D
     if (mol.GetDimension()==0)
-      obErrorLog.ThrowError(__FUNCTION__, "No 2D or 3D coordinates exist. Any stereochemical information will"
-      " be lost. To generate 2D or 3D coordinates use --gen2D or --gen3d.", obWarning, onceOnly);
+    {
+      if (pConv->IsOption("S", OBConversion::OUTOPTIONS))
+        obErrorLog.ThrowError(__FUNCTION__, "No 2D or 3D coordinates exist. Any stereochemical information will"
+                   " be lost. To generate 2D or 3D coordinates use --gen2D or --gen3D.", obWarning, onceOnly);
+      else
+        obErrorLog.ThrowError(__FUNCTION__, "No 2D or 3D coordinates exist. Stereochemical information will"
+                   " be stored using an Open Babel extension. To generate 2D or 3D coordinates instead use --gen2D or --gen3D.", obWarning, onceOnly);
+    }
 
     PerceiveStereo(&mol);
 
@@ -755,6 +782,12 @@ namespace OpenBabel
       GetParity(mol, parity);
       if (mol.GetDimension() == 3 || (mol.GetDimension()==2 && !pConv->IsOption("w", pConv->OUTOPTIONS)))
         TetStereoToWedgeHash(mol, updown, from);
+
+      // Calculate up/downness of cis/trans bonds for 0D
+      set<OBBond*> stereodbl;
+      if (mol.GetDimension() == 0 && !pConv->IsOption("S", OBConversion::OUTOPTIONS))
+        GetUpDown(mol, updown, stereodbl);
+      
 
       // The counts line:
       // aaabbblllfffcccsssxxxrrrpppiiimmmvvvvvv
@@ -1316,6 +1349,93 @@ namespace OpenBabel
              ts->tm_hour, ts->tm_min);
     return string(td);
   }
+  
+  void MDLFormat::GetUpDown(OBMol& mol, map<OBBond*, OBStereo::BondDirection> &updown,
+                            set<OBBond*> &stereodbl)
+  {
+    // Create a set of unvisited CT stereos
+    OBStereoFacade facade(&mol);
+    std::set<OBCisTransStereo*> cistrans;
+    FOR_BONDBFS_OF_MOL(b, mol) // Probably no real advantage in the BFS part
+    {
+      if (b->GetBondOrder() != 2 || !facade.HasCisTransStereo(b->GetId())) continue;
+      OBCisTransStereo *ct = facade.GetCisTransStereo(b->GetId());
+      OBCisTransStereo::Config cfg = ct->GetConfig();
+      if (ct->GetConfig().specified)
+        cistrans.insert(ct);
+    }
+
+    // Initialise two opposite configurations for up/downness
+    bool use_alt_config;
+    vector<OBStereo::BondDirection> config(4), alt_config(4);
+    config[0] = OBStereo::UpBond;   config[3] = config[0];
+    config[1] = OBStereo::DownBond; config[2] = config[1];
+    alt_config[0] = config[1]; alt_config[3] = alt_config[0];
+    alt_config[1] = config[0]; alt_config[2] = alt_config[1];
+
+    // Initialize the stack
+    std::vector<OBCisTransStereo *> stack;
+
+    // Keep looping until all CT stereos have been handled
+    while (cistrans.size() > 0) {
+      stack.push_back( *(cistrans.begin()) );
+
+      // This loop uses the stack to handle a conjugated dbl bond system
+      while (stack.size() > 0) {
+        OBCisTransStereo *ct = stack.back();
+        stack.pop_back();
+        cistrans.erase(ct);
+        OBCisTransStereo::Config cfg = ct->GetConfig();
+
+        // ****************** START OF HANDLING ONE DOUBLE BOND ******************************
+        std::vector<OBBond *> refbonds(4, (OBBond*)NULL);
+        if (cfg.refs[0] != OBStereo::ImplicitRef) // Could be a hydrogen
+          refbonds[0] = mol.GetBond(mol.GetAtomById(cfg.refs[0]), mol.GetAtomById(cfg.begin));
+        if (cfg.refs[1] != OBStereo::ImplicitRef) // Could be a hydrogen
+          refbonds[1] = mol.GetBond(mol.GetAtomById(cfg.refs[1]), mol.GetAtomById(cfg.begin));
+              
+        if (cfg.refs[2] != OBStereo::ImplicitRef) // Could be a hydrogen
+          refbonds[2] = mol.GetBond(mol.GetAtomById(cfg.refs[2]), mol.GetAtomById(cfg.end));
+        if (cfg.refs[3] != OBStereo::ImplicitRef) // Could be a hydrogen
+          refbonds[3] = mol.GetBond(mol.GetAtomById(cfg.refs[3]), mol.GetAtomById(cfg.end));              
+              
+        // If any of the bonds have been previously set, now set them all
+        // in agreement
+        use_alt_config = false;
+        for (int i=0; i<4; ++i)
+          if (updown.find(refbonds[i]) != updown.end()) // We have already set this one (conjugated bond)
+            if (updown[refbonds[i]] != config[i])
+            {
+              use_alt_config = true;
+              break;
+            }
+              
+        // Set the configuration
+        OBBond* dbl_bond = mol.GetBond(mol.GetAtomById(cfg.begin), mol.GetAtomById(cfg.end));
+        stereodbl.insert(dbl_bond);
+        for(int i=0;i<4;i++)
+          if (refbonds[i] != NULL)
+            updown[refbonds[i]] = use_alt_config ? alt_config[i] : config[i];
+        // ******************** END OF HANDLING ONE DOUBLE BOND ******************************
+
+        // Find any conjugated CT stereos and put them on the stack
+        set<OBCisTransStereo*>::iterator ChiralSearch;
+        for (ChiralSearch = cistrans.begin(); ChiralSearch != cistrans.end(); ChiralSearch++)
+        {
+          // Are any of the refs of cfg on stereo double bonds?
+          OBCisTransStereo::Config cscfg = (*ChiralSearch)->GetConfig();
+          if (std::find(cfg.refs.begin(), cfg.refs.end(), cscfg.begin) != cfg.refs.end() ||
+              std::find(cfg.refs.begin(), cfg.refs.end(), cscfg.end)   != cfg.refs.end())
+          {
+            stack.push_back(*ChiralSearch);
+            //stack.insert(stack.begin(), *ChiralSearch);
+          }
+        }
+
+      } // Loop over stack
+    } // Loop over remaining CT stereos
+
+  }
 
   void MDLFormat::GetParity(OBMol& mol, map<OBAtom*, MDLFormat::Parity> &parity)
   {
@@ -1477,5 +1597,74 @@ namespace OpenBabel
     }
     return true;
   }
+
+  void MDLFormat::CisTransFromUpDown(OBMol *mol, std::map<OBBond*, OBStereo::BondDirection> *updown)
+  {
+    // Create a vector of CisTransStereo objects for the molecule
+
+    // Loop across the known cistrans bonds, updating them if necessary
+    std::vector<OBGenericData*>::iterator data;
+    std::vector<OBGenericData*> stereoData = mol->GetAllData(OBGenericDataType::StereoData);
+    for (data = stereoData.begin(); data != stereoData.end(); ++data) {
+      if (static_cast<OBStereoBase*>(*data)->GetType() != OBStereo::CisTrans)
+        continue;
+
+      OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
+      OBCisTransStereo::Config cfg = ct->GetConfig();
+      OBAtom *a1 = mol->GetAtomById(cfg.begin);
+      OBAtom *a2 = mol->GetAtomById(cfg.end);
+
+      OBBond* dbl_bond = mol->GetBond(a1, a2);
+
+      // Get the bonds of neighbors of atom1 and atom2
+      OBBond *a1_b1 = NULL, *a1_b2 = NULL, *a2_b1 = NULL, *a2_b2 = NULL;
+      OBStereo::BondDirection a1_stereo, a2_stereo;
+
+      FOR_BONDS_OF_ATOM(bi, a1) {
+        OBBond *b = &(*bi);
+        if (b == dbl_bond) continue;  // skip the double bond we're working on
+        if (a1_b1 == NULL && updown->find(b) != updown->end())
+        {
+          a1_b1 = b;    // remember a stereo bond of Atom1
+          a1_stereo = (*updown)[b];
+        }
+        else
+          a1_b2 = b;    // remember a 2nd bond of Atom1
+      }
+
+      FOR_BONDS_OF_ATOM(bi, a2) {
+        OBBond *b = &(*bi);
+        if (b == dbl_bond) continue;
+        if (a2_b1 == NULL && updown->find(b) != updown->end())
+        {
+          a2_b1 = b;    // remember a stereo bond of Atom2
+          a2_stereo = (*updown)[b];
+        }
+        else
+          a2_b2 = b;    // remember a 2nd bond of Atom2
+      }
+      
+      if (a1_b1 == NULL || a2_b1 == NULL) continue; // No cis/trans
+
+      cfg.specified = true;
+      
+      // a1_b2 and/or a2_b2 will be NULL if there are bonds to implicit hydrogens
+      unsigned int second = (a1_b2 == NULL) ? OBStereo::ImplicitRef : a1_b2->GetNbrAtom(a1)->GetId();
+      unsigned int fourth = (a2_b2 == NULL) ? OBStereo::ImplicitRef : a2_b2->GetNbrAtom(a2)->GetId();
+
+      // If a1_stereo==a2_stereo, this means cis for a1_b1 and a2_b1.
+      if (a1_stereo == a2_stereo)
+        cfg.refs = OBStereo::MakeRefs(a1_b1->GetNbrAtom(a1)->GetId(), second,
+                                      fourth, a2_b1->GetNbrAtom(a2)->GetId());
+      else
+        cfg.refs = OBStereo::MakeRefs(a1_b1->GetNbrAtom(a1)->GetId(), second,
+                                      a2_b1->GetNbrAtom(a2)->GetId(), fourth);
+      if (a1_stereo == OBStereo::UnknownDir || a2_stereo == OBStereo::UnknownDir)
+        cfg.specified = false;
+      // FIXME:: Handle specified unknown stereo on the dbl bond itself
+
+      ct->SetConfig(cfg);
+    }
+  } 
 
 }//namespace

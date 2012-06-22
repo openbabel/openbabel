@@ -1975,39 +1975,48 @@ namespace OpenBabel {
     std::vector<unsigned long>::iterator i;
     for (i = bonds.begin(); i != bonds.end(); ++i) {
       // If there already exists a OBCisTransStereo object for this
-      // bond, leave it alone
-      if (existingMap.find(*i) != existingMap.end())
-        continue;
+      // bond, leave it alone unless it's in a ring of small size
 
+      bool alreadyExists = (existingMap.find(*i) != existingMap.end());
       OBBond *bond = mol->GetBondById(*i);
-      OBAtom *begin = bond->GetBeginAtom();
-      OBAtom *end = bond->GetEndAtom();
 
+      OBCisTransStereo *ct;
       OBCisTransStereo::Config config;
-      config.specified = false;
-      // begin
-      config.begin = begin->GetId();
-      FOR_NBORS_OF_ATOM (nbr, begin) {
-        if (nbr->GetId() == end->GetId())
-          continue;
-        config.refs.push_back(nbr->GetId());
+      if (alreadyExists)
+      {
+        ct = existingMap[*i];
+        config = ct->GetConfig();
       }
-      if (config.refs.size() == 1) {
-        config.refs.push_back(OBStereo::ImplicitRef);
-      }
-      // end
-      config.end = end->GetId();
-      FOR_NBORS_OF_ATOM (nbr, end) {
-        if (nbr->GetId() == begin->GetId())
-          continue;
-        config.refs.push_back(nbr->GetId());
-      }
-      if (config.refs.size() == 3) {
-        config.refs.push_back(OBStereo::ImplicitRef);
-      }
+      else
+      {
+        OBAtom *begin = bond->GetBeginAtom();
+        OBAtom *end = bond->GetEndAtom();
+        
+        config.specified = false;
+        // begin
+        config.begin = begin->GetId();
+        FOR_NBORS_OF_ATOM (nbr, begin) {
+          if (nbr->GetId() == end->GetId())
+            continue;
+          config.refs.push_back(nbr->GetId());
+        }
+        if (config.refs.size() == 1) {
+          config.refs.push_back(OBStereo::ImplicitRef);
+        }
+        // end
+        config.end = end->GetId();
+        FOR_NBORS_OF_ATOM (nbr, end) {
+          if (nbr->GetId() == begin->GetId())
+            continue;
+          config.refs.push_back(nbr->GetId());
+        }
+        if (config.refs.size() == 3) {
+          config.refs.push_back(OBStereo::ImplicitRef);
+        }
 
-      OBCisTransStereo *ct = new OBCisTransStereo(mol);
-      ct->SetConfig(config);
+        ct = new OBCisTransStereo(mol);
+        ct->SetConfig(config);
+      }
 
       // For a double bond in a ring of size IMPLICIT_CIS_RING_SIZE or less
       // the stereochemistry is implicitly cis (in terms
@@ -2018,7 +2027,7 @@ namespace OpenBabel {
         // Find the ring atoms in the config.refs
         vector<unsigned int> ringrefs(2);
         for (int i = 0; i<2; ++i) {
-          if (ring->IsMember(mol->GetAtomById(config.refs[i*2])))
+          if (config.refs[i*2] != OBStereo::ImplicitRef && ring->IsMember(mol->GetAtomById(config.refs[i*2])))
             ringrefs[i] = config.refs[i*2];
           else
             ringrefs[i] = config.refs[i*2 + 1];
@@ -2032,8 +2041,9 @@ namespace OpenBabel {
 
       configs.push_back(ct);
       // add the data to the molecule if needed
-      if (addToMol)
+      if (addToMol && !alreadyExists)
         mol->SetData(ct);
+      
     }
 
     return configs;
