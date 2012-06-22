@@ -50,6 +50,14 @@ GNU General Public License for more details.
 #include "zipstream.h"
 #endif
 
+//This makes recognizing starting "http:" the default
+//#ifndef USE_HAPPYHTTP
+//  #define USE_HAPPYHTTP
+//#endif
+#ifdef USE_HAPPYHTTP
+#include <happyhttp.h>
+#endif
+
 #if !HAVE_STRNCASECMP
 extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
 #endif
@@ -1408,7 +1416,14 @@ namespace OpenBabel {
             return false;
           }
       }
-
+#ifdef USE_HAPPYHTTP
+    // If a web http:// URL open it in the stream 
+    if(ss && happyhttp::IsWebAddress(InFilename, ss))
+      {
+        is->setstate(ios::failbit); // do not use the input filestream...
+        return true; // instead use the stringstream populated with the web page
+      }
+#endif
 #ifndef ALL_READS_BINARY
   #define ALL_READS_BINARY //now the default
 #endif

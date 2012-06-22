@@ -15,6 +15,7 @@ set(formats_utility
   painterformat
   povrayformat
   reportformat
+  resolverformat
   svgformat
   textformat
   titleformat

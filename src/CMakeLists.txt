@@ -153,6 +153,11 @@ if(EIGEN2_FOUND OR EIGEN3_FOUND)
     conformersearch.cpp
   )
 endif ()
+if(USE_WEB)
+  set(openbabel_srcs ${openbabel_srcs}
+    happyhttp.cpp
+  )
+endif ()
 
 if(BUILD_SHARED)
   if(MSVC)
@@ -240,6 +245,7 @@ if(MSVC)
   # Set the output name to openbabel-2 (preserves old behaviour). Is this desired?
   set_target_properties(openbabel PROPERTIES
     OUTPUT_NAME openbabel-2)
+  remove_definitions(_UNICODE UNICODE)
 endif(MSVC)
 
 # Export the openbabel target, for use in other projects

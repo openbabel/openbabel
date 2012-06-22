@@ -1152,10 +1152,18 @@ int  CFilenames::Expand(std::vector<std::string>& filelist)
     name.Trim().Trim(false);
     if(name.IsEmpty())
       break;
-    wxFileName fn(name);
+    if(!name.StartsWith("http://"))
+    {
+      wxFileName fn(name);
+      fn.MakeAbsolute(frame->GetInFileBasePath());
+      count += DLHandler::findFiles(filelist, std::string(fn.GetFullPath().mb_str()));
+    }
+    else
+    {
+      filelist.push_back(name.ToStdString());
+      ++count;
+    }
     namestart=nameend+1; // 0 at end
-    fn.MakeAbsolute(frame->GetInFileBasePath());
-    count += DLHandler::findFiles(filelist, std::string(fn.GetFullPath().mb_str()));
   }while(namestart);
 
   return count;

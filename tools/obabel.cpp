@@ -298,8 +298,8 @@ int main(int argc,char *argv[])
   vector<string>::iterator itr;
   for(itr=tempFileList.begin();itr!=tempFileList.end();++itr)
   {
-    if((*itr)[0]=='-')
-      FileList.push_back(*itr);
+    if((*itr)[0]=='-' || itr->compare(0, 7, "http://")==0)
+      FileList.push_back(*itr); //leave input file name alone
     else
       DLHandler::findFiles (FileList, *itr);
   }
