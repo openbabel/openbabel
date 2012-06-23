@@ -1152,7 +1152,7 @@ int  CFilenames::Expand(std::vector<std::string>& filelist)
     name.Trim().Trim(false);
     if(name.IsEmpty())
       break;
-    if(!name.StartsWith("http://"))
+    if(!name.StartsWith(_T("http://")))
     {
       wxFileName fn(name);
       fn.MakeAbsolute(frame->GetInFileBasePath());
@@ -1160,7 +1160,7 @@ int  CFilenames::Expand(std::vector<std::string>& filelist)
     }
     else
     {
-      filelist.push_back(name.ToStdString());
+      filelist.push_back(std::string(name.mb_str()));
       ++count;
     }
     namestart=nameend+1; // 0 at end
