@@ -31,6 +31,8 @@ GNU General Public License for more details.
 	#endif
 #endif
 
+// #define DONT_CATCH_EXCEPTIONS     // This is useful when debugging an exception
+
 #include <iosfwd>
 #include <fstream>
 #include <sstream>
@@ -468,7 +470,9 @@ namespace OpenBabel {
           rInpos = pInStream->tellg();
 
         bool ret=false;
-        try
+#ifndef DONT_CATCH_EXCEPTIONS
+       try
+#endif
           {
             ret = pInFormat->ReadChemObject(this);
 /*            if (ret && IsOption("readconformers", GENOPTIONS)) {
@@ -501,6 +505,7 @@ namespace OpenBabel {
 */
             SetFirstInput(false);
           }
+#ifndef DONT_CATCH_EXCEPTIONS
         catch(...)
           {
             if(!IsOption("e", GENOPTIONS) && !OneObjectOnly)
@@ -509,6 +514,7 @@ namespace OpenBabel {
               return Index; // the number we've actually output so far
             }
           }
+#endif
 
         if(!ret)
           {
@@ -1152,7 +1158,9 @@ namespace OpenBabel {
     ios_base::openmode omode =
       pOutFormat->Flags() & WRITEBINARY ? ios_base::out|ios_base::binary : ios_base::out;
     obErrorLog.ClearLog();
+#ifndef DONT_CATCH_EXCEPTIONS
     try
+#endif
       {
         ofstream ofs;
 
@@ -1379,11 +1387,13 @@ namespace OpenBabel {
           }
         return Count;
       }
+#ifndef DONT_CATCH_EXCEPTIONS
     catch(...)
       {
         obErrorLog.ThrowError(__FUNCTION__, "Conversion failed with an exception.",obError);
         return Count;
       }
+#endif
     return Count;
   }
 
