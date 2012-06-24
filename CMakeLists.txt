@@ -172,7 +172,7 @@ if(wxWidgets_FOUND)
 endif()
 
 ## Default is NOT to enable HTTP access
-option(USE_WEB, "Enable web-file access by HTTP and use of NIH Resolver" OFF)
+option(USE_WEB "Enable web-file access by HTTP and use of NIH Resolver" OFF)
 if(USE_WEB)
   message(STATUS "Web-file and NIH Resolver support enabled.")
   add_definitions(-DUSE_HAPPYHTTP)
