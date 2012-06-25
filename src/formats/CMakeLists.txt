@@ -19,10 +19,6 @@ set(formats_utility
   textformat
   titleformat
   )
-if(USE_WEB)
-  set(formats_utility ${formats_utility} resolverformat)
-endif(USE_WEB)
-
 set(painterformat_additional_sources ../depict/commandpainter.cpp)
 set(asciiformat_additional_sources   ../depict/asciipainter.cpp)
 

@@ -153,11 +153,6 @@ if(EIGEN2_FOUND OR EIGEN3_FOUND)
     conformersearch.cpp
   )
 endif ()
-if(USE_WEB)
-  set(openbabel_srcs ${openbabel_srcs}
-    happyhttp.cpp
-  )
-endif ()
 
 if(BUILD_SHARED)
   if(MSVC)

@@ -153,7 +153,7 @@ if(NOT LIBXML2_FOUND)
 endif()
 
 find_package(ZLIB)
-if(ZLIB_FOUND) 
+if(ZLIB_FOUND)
   add_definitions(-DHAVE_LIBZ)
   include_directories(${ZLIB_INCLUDE_DIR})
   # Longstanding unsolved problem with compression under Windows
@@ -170,16 +170,6 @@ if(wxWidgets_FOUND)
   add_definitions(-DHAVE_WXWIDGETS)
   include_directories(${wxWidgets_INCLUDE_DIRS})
 endif()
-
-## Default is NOT to enable HTTP access
-option(USE_WEB "Enable web-file access by HTTP and use of NIH Resolver" OFF)
-if(USE_WEB)
-  message(STATUS "Web-file and NIH Resolver support enabled.")
-  add_definitions(-DUSE_HAPPYHTTP)
-  if(MSVC)
-    set(libs ${libs} "Ws2_32.lib")
-  endif ()
-endif ()
 
 if(MSVC)
   option(OB_USE_PREBUILT_BINARIES
