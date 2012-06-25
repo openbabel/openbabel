@@ -99,6 +99,7 @@ set(formats_misc
       outformat
       pcmodelformat
       pdbqtformat
+      posformat
       pqrformat
       shelxformat
       thermoformat
