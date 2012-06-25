@@ -5865,11 +5865,11 @@ namespace OpenBabel {
             fragmentAN=j;
             break;
           };
-        naStore=tm.nAtoms();
-
-        tm.refofs=sm.refofs;
-
-        tm.addAsTemplate(*emTemplate,templateAN,fragmentAN,-1,-1,true);
+		if ((templateAN>=0) && (fragmentAN>=0)) {
+          naStore=tm.nAtoms();
+          tm.refofs=sm.refofs;
+          tm.addAsTemplate(*emTemplate,templateAN,fragmentAN,-1,-1,true);
+		};
       };
       sm.moleculeCopy(tm);
       sm.defineAtomConn();
@@ -5908,6 +5908,13 @@ namespace OpenBabel {
 
     //smIn will be clear-nothing
 
+	for (int i=0; i<smIn.nAtoms(); i++) {
+	  smIn.getAtom(i)->rx=cos(2*PI*i/smIn.nAtoms());
+	  smIn.getAtom(i)->ry=-sin(2*PI*i/smIn.nAtoms());
+	};
+	smIn.defineAtomConn();
+	smIn.allAboutCycles();
+	smIn.redrawMolecule();
 
 
 
