@@ -44,11 +44,6 @@ if (PYTHON_BINDINGS)
       message(STATUS "Python bindings will be compiled")
     endif(PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND)
 
-    execute_process(COMMAND ${PYTHON_EXECUTABLE} --version
-              ERROR_VARIABLE PYTHON_VERSION_FULL
-              OUTPUT_STRIP_TRAILING_WHITESPACE)
-    string(REGEX MATCH "[0-9]" PYTHON_VERSION_MAJOR "${PYTHON_VERSION_FULL}")
-
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR RUN_SWIG)
     message(STATUS "Warning: Python bindings NOT found. Generate using -DRUN_SWIG.")
 
@@ -97,7 +92,7 @@ if (DO_PYTHON_BINDINGS)
         add_dependencies(bindings_python openbabel)
         install(TARGETS bindings_python LIBRARY DESTINATION ${LIB_INSTALL_DIR})
         install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py DESTINATION ${LIB_INSTALL_DIR})
-        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/pybel_py${PYTHON_VERSION_MAJOR}x.py DESTINATION ${LIB_INSTALL_DIR} RENAME pybel.py)
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/pybel.py DESTINATION ${LIB_INSTALL_DIR})
     else(NOT WIN32)
         set_target_properties(bindings_python PROPERTIES
             OUTPUT_NAME _openbabel
