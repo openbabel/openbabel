@@ -114,8 +114,8 @@ def readfile(format, filename, opt=None):
     of the iterator (or the next() keyword in Python 3):
         mol = readfile("smi", "myfile.smi").next() # Python 2
         mol = next(readfile("smi", "myfile.smi"))  # Python 3
-    
-	You can make a list of the molecules in a file using:
+
+    You can make a list of the molecules in a file using:
         mols = list(readfile("smi", "myfile.smi"))
 
     You can iterate over the molecules in a file as shown in the
@@ -724,7 +724,7 @@ class MoleculeData(object):
 
     Example:
     >>> mol = readfile("sdf", 'head.sdf').next() # Python 2
-	>>> # mol = next(readfile("sdf", 'head.sdf')) # Python 3
+    >>> # mol = next(readfile("sdf", 'head.sdf')) # Python 3
     >>> data = mol.data
     >>> print data
     {'Comment': 'CORINA 2.61 0041  25.10.2001', 'NSC': '1'}
