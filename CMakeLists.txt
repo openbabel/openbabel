@@ -172,6 +172,11 @@ if(wxWidgets_FOUND)
 endif()
 
 if(MSVC)
+  # Ensure that CharacterSet="0" in the project files
+  add_definitions(-D_SBCS) # Single-Byte Character Set (requires CMake 2.8.8)
+endif()
+
+if(MSVC)
   option(OB_USE_PREBUILT_BINARIES
     "Should Windows Open Babel builds use prebuilt binaries?" ON)
 endif()
