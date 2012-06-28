@@ -201,6 +201,24 @@ namespace OpenBabel {
   class OBAPI OBMinimizingEnergyConformerScore : public OBConformerScore
   {
     public:
+      Preferred GetPreferred() { return HighScore; }
+      Convergence GetConvergence() { return Average; }
+      double Score(OBMol &mol, unsigned int index, const RotorKeys &keys,
+          const std::vector<double*> &conformers);
+  };
+
+  /**
+   * @class OBMinimizingRMSDConformerScore conformersearch.h <openbabel/conformersearch.h>
+   * @brief An RMSD conformer scoring class, after a short minimization
+   *
+   * This scores conformers by the RMSD between the conformer and the closest, to produce a
+   * diverse set of conformers, but after minimization. This ensures each conformer is
+   * "reasonable" and avoids steric clashes.
+   * @since 2.4
+   */
+  class OBAPI OBMinimizingRMSDConformerScore : public OBConformerScore
+  {
+    public:
       Preferred GetPreferred() { return LowScore; }
       Convergence GetConvergence() { return Lowest; }
       double Score(OBMol &mol, unsigned int index, const RotorKeys &keys,

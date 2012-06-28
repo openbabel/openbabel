@@ -134,7 +134,6 @@ namespace OpenBabel {
       if (!ff->Setup(mol))
         return 10e10;
     }
-//    ff->SteepestDescent(500);
     double score = ff->Energy();
 
     // copy original coordinates back
@@ -162,7 +161,7 @@ namespace OpenBabel {
       if (!ff->Setup(mol))
         return 10e10;
     }
-    ff->SteepestDescent(250);
+    ff->SteepestDescent(50);
     double score = ff->Energy();
 
     // copy original coordinates back
@@ -170,6 +169,65 @@ namespace OpenBabel {
       origCoords[i] = coords[i];
 
     return score;
+  }
+
+  double OBMinimizingRMSDConformerScore::Score(OBMol &mol, unsigned int index,
+                                               const RotorKeys &keys, const std::vector<double*> &conformers)
+  {
+    unsigned int numAtoms = mol.NumAtoms();
+    double *origCoords = mol.GetCoordinates();
+    // copy the original coordinates to coords
+    // copy the conformer coordinates to OBMol object
+    std::vector<double> coords(mol.NumAtoms() * 3);
+    for (unsigned int i = 0; i < mol.NumAtoms() * 3; ++i) {
+      coords[i] = origCoords[i];
+      origCoords[i] = conformers[index][i];
+    }
+
+    OBForceField *ff = OBForceField::FindType("MMFF94");
+    if (!ff->Setup(mol)) {
+      ff = OBForceField::FindType("UFF");
+      if (!ff->Setup(mol))
+        return 10e10;
+    }
+    ff->SteepestDescent(50);
+    double score = ff->Energy();
+
+    // copy original coordinates back
+    for (unsigned int i = 0; i < mol.NumAtoms() * 3; ++i)
+      origCoords[i] = coords[i];
+
+    double *conformer_i = conformers[index];
+    std::vector<vector3> vi;
+    for (unsigned int a = 0; a < numAtoms; ++a)
+      vi.push_back(vector3(conformer_i[a*3], conformer_i[a*3+1], conformer_i[a*3+2]));
+
+    OBAlign align(mol, mol, false, false);
+    align.SetRef(vi);
+
+    double score_min = 10e10;
+    for (unsigned int j = 0; j < conformers.size(); ++j) {
+      if (index == j)
+        continue;
+      double *conformer_j = conformers[j];
+      // create vector3 conformer
+      std::vector<vector3> vj;
+      for (unsigned int a = 0; a < numAtoms; ++a)
+        vj.push_back(vector3(conformer_j[a*3], conformer_j[a*3+1], conformer_j[a*3+2]));
+
+      // perform Kabsch alignment
+      align.SetTarget(vj);
+      align.Align();
+
+      // get the RMSD
+      double rmsd = align.GetRMSD();
+      // store the rmsd if it is lower than any of the previous
+      if (rmsd < score_min)
+        score_min = rmsd;
+    }
+
+    // return the lowest RMSD
+    return score_min;
   }
 
   //////////////////////////////////////////////////////////
