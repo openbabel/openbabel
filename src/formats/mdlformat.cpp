@@ -125,7 +125,7 @@ namespace OpenBabel
       bool ReadRGroupBlock(istream& ifs,OBMol& mol, OBConversion* pConv);
       bool ReadUnimplementedBlock(istream& ifs,OBMol& mol, OBConversion* pConv, string& blockname);
       bool WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv);
-      void ReadPropertyLines(istream& ifs, OBMol& mol);
+      bool ReadPropertyLines(istream& ifs, OBMol& mol);
       bool TestForAlias(const string& symbol, OBAtom* at, vector<pair<AliasData*,OBAtom*> >& aliases);
 
     private:
@@ -638,7 +638,11 @@ namespace OpenBabel
     }
 
     //Get property lines
-    ReadPropertyLines(ifs, mol);
+    if(!ReadPropertyLines(ifs, mol)) {
+      //Has read the first line of the next reaction in RXN format
+      pConv->AddOption("$RXNread");
+      return true;
+    }
 
     if (mol.Has3D()) {
       if (!setDimension)
@@ -1540,10 +1544,13 @@ namespace OpenBabel
     return n;
   }
 
-  void MDLFormat::ReadPropertyLines(istream& ifs, OBMol& mol)
+  bool MDLFormat::ReadPropertyLines(istream& ifs, OBMol& mol)
   {
     string line;
     while (std::getline(ifs, line)) {
+      if (line.substr(0, 4) == "$RXN")
+        return false; //Has read the first line of the next reaction in RXN format
+
       if (line.find("<") != string::npos) {
         size_t lt = line.find("<")+1;
         size_t rt = line.find_last_of(">");
@@ -1575,6 +1582,7 @@ namespace OpenBabel
       if (line.substr(0, 4) == "$MOL")
         break;
     }
+    return true;
   }
 
   bool MDLFormat::TestForAlias(const string& symbol, OBAtom* at, vector<pair<AliasData*,OBAtom*> >& aliases)
