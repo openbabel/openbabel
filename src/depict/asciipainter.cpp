@@ -110,11 +110,13 @@ namespace OpenBabel
   OBFontMetrics ASCIIPainter::GetFontMetrics(const std::string &text)
   {
     OBFontMetrics metrics;
-    metrics.fontSize = 0;
+    // The following line tries to workaround the fact that fontSize is an int
+    // -  the correct value is 1.0 / m_scale * m_aspect, and we round to the nearest integer.
+    metrics.fontSize = round(1.0 / m_scale * m_aspect + 0.5);
     metrics.ascent = 0;
     metrics.descent = 0;
-    metrics.width = 0;
-    metrics.height = 0;
+    metrics.width = 1.0 / m_scale;
+    metrics.height = 1;
     return metrics;
   }
   void ASCIIPainter::Write(std::ostream &ofs)
