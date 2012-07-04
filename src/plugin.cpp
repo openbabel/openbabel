@@ -152,6 +152,8 @@ std::vector<std::string> EnableStaticPlugins()
   // by compiler optimization.
   std::vector<std::string> plugin_ids;
   // formats
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theAcesOutputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theAcesInputFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theACRFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theADFOutputFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theADFInputFormat)->GetID());

@@ -396,19 +396,19 @@ namespace OpenBabel
     OBRing& operator*()  const { return *_ptr;}
   };
 
-#define FOR_ATOMS_OF_MOL(a,m)     for( OBMolAtomIter     a(m); a; ++a )
-#define FOR_BONDS_OF_MOL(b,m)     for( OBMolBondIter     b(m); b; ++b )
-#define FOR_NBORS_OF_ATOM(a,p)    for( OBAtomAtomIter    a(p); a; ++a )
-#define FOR_BONDS_OF_ATOM(b,p)    for( OBAtomBondIter    b(p); b; ++b )
-#define FOR_RESIDUES_OF_MOL(r,m)  for( OBResidueIter     r(m); r; ++r )
-#define FOR_ATOMS_OF_RESIDUE(a,r) for( OBResidueAtomIter a(r); a; ++a )
-#define FOR_DFS_OF_MOL(a,m)       for( OBMolAtomDFSIter  a(m); a; ++a )
-#define FOR_BFS_OF_MOL(a,m)       for( OBMolAtomBFSIter  a(m); a; ++a )
-#define FOR_BONDBFS_OF_MOL(b,m)   for( OBMolBondBFSIter  b(m); b; ++b )
-#define FOR_RINGS_OF_MOL(r,m)     for( OBMolRingIter     r(m); r; ++r )
-#define FOR_ANGLES_OF_MOL(a,m)    for( OBMolAngleIter    a(m); a; ++a )
-#define FOR_TORSIONS_OF_MOL(t,m)  for( OBMolTorsionIter  t(m); t; ++t )
-#define FOR_PAIRS_OF_MOL(p,m)     for( OBMolPairIter     p(m); p; ++p )
+#define FOR_ATOMS_OF_MOL(a,m)     for( OpenBabel::OBMolAtomIter     a(m); a; ++a )
+#define FOR_BONDS_OF_MOL(b,m)     for( OpenBabel::OBMolBondIter     b(m); b; ++b )
+#define FOR_NBORS_OF_ATOM(a,p)    for( OpenBabel::OBAtomAtomIter    a(p); a; ++a )
+#define FOR_BONDS_OF_ATOM(b,p)    for( OpenBabel::OBAtomBondIter    b(p); b; ++b )
+#define FOR_RESIDUES_OF_MOL(r,m)  for( OpenBabel::OBResidueIter     r(m); r; ++r )
+#define FOR_ATOMS_OF_RESIDUE(a,r) for( OpenBabel::OBResidueAtomIter a(r); a; ++a )
+#define FOR_DFS_OF_MOL(a,m)       for( OpenBabel::OBMolAtomDFSIter  a(m); a; ++a )
+#define FOR_BFS_OF_MOL(a,m)       for( OpenBabel::OBMolAtomBFSIter  a(m); a; ++a )
+#define FOR_BONDBFS_OF_MOL(b,m)   for( OpenBabel::OBMolBondBFSIter  b(m); b; ++b )
+#define FOR_RINGS_OF_MOL(r,m)     for( OpenBabel::OBMolRingIter     r(m); r; ++r )
+#define FOR_ANGLES_OF_MOL(a,m)    for( OpenBabel::OBMolAngleIter    a(m); a; ++a )
+#define FOR_TORSIONS_OF_MOL(t,m)  for( OpenBabel::OBMolTorsionIter  t(m); t; ++t )
+#define FOR_PAIRS_OF_MOL(p,m)     for( OpenBabel::OBMolPairIter     p(m); p; ++p )
 
 } // namespace OpenBabel
 #endif // OB_OBITER_H

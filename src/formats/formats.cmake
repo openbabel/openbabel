@@ -17,6 +17,7 @@ set(formats_utility
   titleformat
   )
 set(formats_compchem
+      acesformat
       adfformat
       dmolformat
       fchkformat
