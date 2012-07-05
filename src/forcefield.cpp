@@ -2399,10 +2399,10 @@ namespace OpenBabel
 
           if (tempStep > trustRadius) // positive big step
             currentCoords[c] += trustRadius;
-          else if (tempStep < -1.0 * trustRadius) // negative big step
+          else if (tempStep < -trustRadius) // negative big step
             currentCoords[c] -= trustRadius;
           else
-            currentCoords[c] += direction[c] * step;
+            currentCoords[c] += tempStep;
         }
       }
 
@@ -2410,8 +2410,10 @@ namespace OpenBabel
 
       // convergence criteria: A higher precision here
       // only takes longer with the same result.
-      if (IsNear(e_n2, e_n1, 1.0e-3))
+      if (IsNear(e_n2, e_n1, 1.0e-3)) {
+        alpha += step;
         break;
+      }
 
       if (e_n2 > e_n1) { // decrease stepsize
         step *= 0.1;
@@ -2426,7 +2428,6 @@ namespace OpenBabel
       }
 
     }
-    //cout << "LineSearch steps: " << i << endl;
 
     delete [] lastStep;
 
@@ -2884,7 +2885,7 @@ namespace OpenBabel
         break;
       }
       // save the direction
-      memcpy(_grad1, _gradientPtr, sizeof(double)*_ncoords);
+      memcpy(_gradientPtr, _grad1, sizeof(double)*_ncoords);
 
       e_n2 = Energy() + _constraints.GetConstraintEnergy();
 

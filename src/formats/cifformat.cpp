@@ -1443,7 +1443,12 @@ namespace OpenBabel
         const SpaceGroup* pSG = pUC->GetSpaceGroup();
         if (pSG != NULL)
           {
-            ofs << "_space_group_name_H-M_alt '" << pSG->GetHMName() << "'" << endl;
+            // Do we have an extended HM symbol, with origin choice as ":1" or ":2" ? If so, remove it.
+            size_t n=pSG->GetHMName().find(":");
+            if(n==string::npos)
+              ofs << "_space_group_name_H-M_alt '" << pSG->GetHMName() << "'" << endl;
+            else
+              ofs << "_space_group_name_H-M_alt '" << pSG->GetHMName().substr(0,n) << "'" << endl;
             ofs << "_space_group_name_Hall '" << pSG->GetHallName() << "'" << endl;
             ofs << "loop_" <<endl
                 << "    _symmetry_equiv_pos_as_xyz" << endl;

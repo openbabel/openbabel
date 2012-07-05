@@ -1171,15 +1171,17 @@ namespace OpenBabel
 
     }
 
-    // Ensure all bonds from the old molecule exist in the new molecule
+    // Make sure we keep the bond indexes the same
+    // so we'll delete the bonds again and copy them
+    // Fixes PR#3448379 (and likely other topology issues)
+    while (workMol.NumBonds())
+      workMol.DeleteBond(workMol.GetBond(0));
+
     int beginIdx, endIdx;
     FOR_BONDS_OF_MOL(b, mol) {
       beginIdx = b->GetBeginAtomIdx();
       endIdx = b->GetEndAtomIdx();
-      if (!workMol.GetBond(beginIdx, endIdx)) {
-        // We need to duplicate the old bond
-        workMol.AddBond(beginIdx, endIdx, b->GetBO(), b->GetFlags());
-      }
+      workMol.AddBond(beginIdx, endIdx, b->GetBO(), b->GetFlags());
     }
 
     // correct the chirality
