@@ -69,7 +69,7 @@ namespace OpenBabel
     if (EQn(buffer,"TRANSFORM",7))
       {
         tokenize(vs,buffer);
-        if (vs.empty() || vs.size() < 5)
+        if (vs.size() < 5)
           {
             obErrorLog.ThrowError(__FUNCTION__, " Could not parse line in phmodel table from phmodel.txt", obInfo);
             return;
@@ -90,7 +90,7 @@ namespace OpenBabel
     else if (EQn(buffer,"SEEDCHARGE",10))
       {
         tokenize(vs,buffer);
-        if (vs.empty() || vs.size() < 2)
+        if (vs.size() < 2)
           {
             obErrorLog.ThrowError(__FUNCTION__, " Could not parse line in phmodel table from phmodel.txt", obInfo);
             return;

@@ -941,7 +941,7 @@ namespace OpenBabel
         return;
       }
 
-    if (!vs.empty() && vs.size() > 5)
+    if (vs.size() > 5)
       {
         strncpy(temp_buffer,vs[0].c_str(), sizeof(temp_buffer) - 1);
         temp_buffer[sizeof(temp_buffer) - 1] = '\0';

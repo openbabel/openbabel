@@ -48,28 +48,25 @@ public:
 /////////////////////////////////////////////////////////////////
 OpFillUC theOpFillUC("fillUC"); //Global instance
 
-
-// Helper function -- transform fractional coordinates to ensure they lie in the unit cell
-//
-// Copied from generic.cpp - should be defined in some header ? vector.h ?
-vector3 transformedFractionalCoordinate2(vector3 originalCoordinate)
+// Whether two points (given in fractional coordinates) are close enough
+// to be considered duplicates.
+bool areDuplicateAtoms (vector3 v1, vector3 v2)
 {
-  // ensure the fractional coordinate is entirely within the unit cell
-  vector3 returnValue(originalCoordinate);
+  vector3 dr = v2 - v1;
+  if (dr.x() < -0.5)
+    dr.SetX(dr.x() + 1);
+  if (dr.x() > 0.5)
+    dr.SetX(dr.x() - 1);
+  if (dr.y() < -0.5)
+    dr.SetY(dr.y() + 1);
+  if (dr.y() > 0.5)
+    dr.SetY(dr.y() - 1);
+  if (dr.z() < -0.5)
+    dr.SetZ(dr.z() + 1);
+  if (dr.z() > 0.5)
+    dr.SetZ(dr.z() - 1);
 
-  // So if we have -2.08, we take -2.08 - (-2) = -0.08 .... almost what we want
-  returnValue.SetX(originalCoordinate.x() - int(originalCoordinate.x()) );
-  returnValue.SetY(originalCoordinate.y() - int(originalCoordinate.y()) );
-  returnValue.SetZ(originalCoordinate.z() - int(originalCoordinate.z()) );
-
-  if (returnValue.x() < 0.0)
-  returnValue.SetX(returnValue.x() + 1.0);
-  if (returnValue.y() < 0.0)
-  returnValue.SetY(returnValue.y() + 1.0);
-  if (returnValue.z() < 0.0)
-  returnValue.SetZ(returnValue.z() + 1.0);
-
-  return returnValue;
+  return (dr.length_2() < 1e-4);
 }
 
 /////////////////////////////////////////////////////////////////
@@ -124,8 +121,8 @@ bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConver
         atom!=vatoms.end();++atom){
         ccoord+=atom->second[i];
       }
-      ccoord/=vatoms.size();
-      ccoord=transformedFractionalCoordinate2(ccoord)-ccoord;
+      ccoord /=vatoms.size();
+      ccoord=pUC->WrapFractionalCoordinate(ccoord)-ccoord;
       for(std::map<OBAtom*,std::vector<vector3> >:: iterator atom=vatoms.begin();
         atom!=vatoms.end();++atom){
         atom->second[i]+=ccoord;
@@ -137,7 +134,7 @@ bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConver
       for(unsigned int i=1;i<atom->second.size();++i){
         bool foundDuplicate = false;
         for(unsigned int j=0;j<i;++j){
-          if(atom->second[i].distSq(atom->second[j])<1e-4){
+          if(areDuplicateAtoms(atom->second[i],atom->second[j])){
             foundDuplicate=true;
             break;
           }
@@ -157,12 +154,12 @@ bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConver
         atom!=vatoms.end();++atom){
       // Bring back within unit cell
       for(unsigned int i=0;i<atom->second.size();++i){
-        atom->second[i]=transformedFractionalCoordinate2(atom->second[i]);
+        atom->second[i]=pUC->WrapFractionalCoordinate(atom->second[i]);
       }
       for(unsigned int i=1;i<atom->second.size();++i){
         bool foundDuplicate = false;
         for(unsigned int j=0;j<i;++j){
-          if(atom->second[i].distSq(atom->second[j])<1e-4){
+          if(areDuplicateAtoms(atom->second[i],atom->second[j])){
             foundDuplicate=true;
             break;
           }

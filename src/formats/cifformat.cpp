@@ -544,6 +544,25 @@ namespace OpenBabel
             if(verbose) cout<<"Found spacegroup Hermann-Mauguin symbol (with OBSOLETE CIF #1.0 TAG):"<<mSpacegroupHermannMauguin<<endl;
           }
       }
+    // DDL2 tag is "_space_group.IT_coordinate_system_code", converted by the cif reader to "_space_group_IT_coordinate_system_code"
+    positem=mvItem.find("_space_group_IT_coordinate_system_code");
+    if(positem!=mvItem.end())
+      {
+        if(verbose) cout<<"Found spacegroup IT_coordinate_system_code:"<<positem->second<<endl;
+        if((mSpacegroupHermannMauguin.length()>0) && (positem->second=="1" || positem->second=="2"))
+        {
+          // this is a HACK which will work as long as the HM symbols in spacegroups.txt have the ":1" or ":2" extension listed, when needed 
+          mSpacegroupHermannMauguin=mSpacegroupHermannMauguin+string(":")+positem->second;
+        }
+        else
+        {
+          stringstream ss;
+          ss << "CIF Error: found DDL2 tag _space_group.IT_coordinate_system_code ("<<positem->second<<")"<<endl
+             <<"            but could not interpret it ! Origin choice or axis may be incorrect.";
+          obErrorLog.ThrowError(__FUNCTION__, ss.str(), obWarning);
+        }
+      }
+    
     mSpaceGroup=NULL;
     // be forgiving - if spg not found, try again
     // Prefer Hall > HM == number, as Hall symbol is truly unique

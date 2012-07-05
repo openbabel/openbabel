@@ -59,9 +59,9 @@ namespace OpenBabel
         tokenize(vs,buffer);
         // Make sure we actually have a SMARTS pattern plus at least one triple
         // and make sure we have the correct number of integers
-        if (vs.empty() || vs.size() < 4)
+        if (vs.size() < 4)
           return; // just ignore empty (or short lines)
-        else if (!vs.empty() && vs.size() >= 4 && (vs.size() % 3 != 1))
+        else if (vs.size() >= 4 && (vs.size() % 3 != 1))
           {
             stringstream errorMsg;
             errorMsg << " Error in OBBondTyper. Pattern is incorrect, found "
