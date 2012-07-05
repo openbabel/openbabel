@@ -90,49 +90,8 @@ namespace OpenBabel
 
   */
 
-  typedef struct
-  {
-    char *symbol;
-    int organic;
-    int aromflag;
-    double weight;
-  } Element;
-
-#define ELEMMAX  104
-
-
-#define ATOMEXPRPOOL  1
-#define BONDEXPRPOOL  1
 #define ATOMPOOL      1
 #define BONDPOOL      1
-
-  /*=====================*/
-  /*  BondExpr Bit Sets  */
-  /*=====================*/
-
-#define BF_NONRINGUNSPEC   0x0001
-#define BF_NONRINGDOWN     0x0002
-#define BF_NONRINGUP       0x0004
-#define BF_NONRINGDOUBLE   0x0008
-#define BF_NONRINGTRIPLE   0x0010
-#define BF_RINGUNSPEC      0x0020
-#define BF_RINGDOWN        0x0040
-#define BF_RINGUP          0x0080
-#define BF_RINGAROM        0x0100
-#define BF_RINGDOUBLE      0x0200
-#define BF_RINGTRIPLE      0x0400
-
-#define BS_ALL             0x07FF
-#define BS_SINGLE          0x00E7
-#define BS_DOUBLE          0x0208
-#define BS_TRIPLE          0x0410
-#define BS_AROM            0x0100
-#define BS_UP              0x0084
-#define BS_DOWN            0x0042
-#define BS_UPUNSPEC        0x00A5
-#define BS_DOWNUNSPEC      0x0063
-#define BS_RING            0x07E0
-#define BS_DEFAULT         0x01E7
 
 #define AE_LEAF        0x01
 #define AE_RECUR       0x02
@@ -476,8 +435,10 @@ namespace OpenBabel
     Pattern *ptr;
 
     ptr = new Pattern;
-    if( !ptr )
+    if( !ptr ) {
       FatalAllocationError("pattern");
+      return NULL;
+    }
 
     ptr->atom = (AtomSpec*)0;
     ptr->aalloc = 0;
@@ -496,6 +457,9 @@ namespace OpenBabel
   static int CreateAtom( Pattern *pat, AtomExpr *expr, int part,int vb)
   {
     int index,size;
+
+    if (!pat)
+      return -1; // should never happen
 
     if( pat->acount == pat->aalloc )
       {
@@ -525,6 +489,9 @@ namespace OpenBabel
   static int CreateBond( Pattern *pat, BondExpr *expr, int src, int dst )
   {
     int index,size;
+
+    if (!pat)
+      return -1; // should never happen
 
     if( pat->bcount == pat->balloc )
       {
@@ -697,7 +664,7 @@ namespace OpenBabel
         index = 0;
         while( isdigit(*LexPtr) )
           index = index*10 + ((*LexPtr++)-'0');
-        if( index > ELEMMAX )
+        if( index > 255 )
           {
             LexPtr--;
             return( (AtomExpr*)0 );
@@ -3017,169 +2984,120 @@ namespace OpenBabel
 
   static int GetExprOrder(BondExpr *expr)
   {
-    int size=0;
-    BondExpr *stack[15];
-    memset(stack,'\0',sizeof(AtomExpr*)*15);
-    bool lftest=true;
+    int tmp1,tmp2;
 
-    for (size=0,stack[size] = expr;size >= 0;expr=stack[size])
-      switch( expr->type )
-        {
-        case(BE_LEAF):
-
-          if( expr->leaf.prop == BL_CONST )
-            lftest = true;
-          else /* expr->leaf.prop == BL_TYPE */
-            switch( expr->leaf.value )
-              {
-              case(BT_SINGLE):    return(1);
-              case(BT_DOUBLE):    return(2);
-              case(BT_TRIPLE):    return(3);
-              case(BT_QUAD):      return(4);
-              case(BT_AROM):      return(5);
-              default:
-                lftest = true;
-              }
-          size--;
-          break;
-
-        case(BE_NOT):    return(0);
-        case(BE_ANDHI):
-        case(BE_ANDLO):
-        case(BE_OR):
-          if (stack[size+1] == expr->bin.rgt)
-            size--;
-          else if (stack[size+1] == expr->bin.lft)
+    switch( expr->type )
+      {
+      case BE_LEAF:
+        if(expr->leaf.prop == BL_TYPE)
+          switch( expr->leaf.value )
             {
-              if (lftest)
-                {
-                  size++;
-                  stack[size] = expr->bin.rgt;
-                }
-              else
-                size--;
+            case BT_SINGLE:  return 1;
+            case BT_DOUBLE:  return 2;
+            case BT_TRIPLE:  return 3;
+            case BT_QUAD:    return 4;
+            case BT_AROM:    return 5;
             }
-          else
-            {
-              size++;
-              stack[size] = expr->bin.lft;
-            }
-          break;
-        }
+        break;
 
-    return(0);
+      case BE_ANDHI:
+      case BE_ANDLO:
+        tmp1 = GetExprOrder(expr->bin.lft);
+        tmp2 = GetExprOrder(expr->bin.rgt);
+        if (tmp1 == 0) return tmp2;
+        if (tmp2 == 0) return tmp1;
+        if (tmp1 == tmp2) return tmp1;
+        break;
+
+      case BE_OR:
+        tmp1 = GetExprOrder(expr->bin.lft);
+        if (tmp1 == 0) return 0;
+        tmp2 = GetExprOrder(expr->bin.rgt);
+        if (tmp2 == 0) return 0;
+        if (tmp1 == tmp2) return tmp1;
+        break;
+      }
+
+    return 0;
+  }
+
+  static int GetExprCharge(AtomExpr *expr)
+  {
+    int tmp1,tmp2;
+
+    switch( expr->type )
+      {
+      case AE_LEAF:
+        switch( expr->leaf.prop )
+          {
+          case AL_NEGATIVE:
+            return -(int)expr->leaf.value;
+          case AL_POSITIVE:
+            return (int)expr->leaf.value;
+          }
+        break;
+
+      case AE_ANDHI:
+      case AE_ANDLO:
+        tmp1 = GetExprCharge(expr->bin.lft);
+        tmp2 = GetExprCharge(expr->bin.rgt);
+        if (tmp1 == 0) return tmp2;
+        if (tmp2 == 0) return tmp1;
+        if (tmp1 == tmp2) return tmp1;
+        break;
+
+      case AE_OR:
+        tmp1 = GetExprCharge(expr->bin.lft);
+        if (tmp1 == 0) return 0;
+        tmp2 = GetExprCharge(expr->bin.rgt);
+        if (tmp2 == 0) return 0;
+        if (tmp1 == tmp2) return tmp1;
+        break;
+      }
+
+    return 0;
   }
 
   int OBSmartsPattern::GetCharge(int idx)
   {
-    AtomExpr *expr = _pat->atom[idx].expr;
+    return GetExprCharge(_pat->atom[idx].expr);
+  }
 
-    int size=0;
-    AtomExpr *stack[15];
-    memset(stack,'\0',sizeof(AtomExpr*)*15);
-    bool lftest=true;
+  static int GetExprAtomicNum(AtomExpr *expr)
+  {
+    int tmp1,tmp2;
 
-    for (size=0,stack[size] = expr;size >= 0;expr=stack[size])
+    switch( expr->type )
       {
-        switch (expr->type)
-          {
-          case AE_LEAF:
-            switch( expr->leaf.prop )
-              {
-              case AL_NEGATIVE:
-                return(-1*(int)expr->leaf.value);
-              case AL_POSITIVE:
-                return((int)expr->leaf.value);
-              default:
-                lftest=true;
-              }
-            size--;
-            break;
+      case AE_LEAF:
+        if (expr->leaf.prop == AL_ELEM)
+          return expr->leaf.value;
+        break;
 
-          case AE_OR:
-          case AE_ANDHI:
-          case AE_ANDLO:
+      case AE_ANDHI:
+      case AE_ANDLO:
+        tmp1 = GetExprAtomicNum(expr->bin.lft);
+        tmp2 = GetExprAtomicNum(expr->bin.rgt);
+        if (tmp1 == 0) return tmp2;
+        if (tmp2 == 0) return tmp1;
+        if (tmp1 == tmp2) return tmp1;
+        break;
 
-            if (stack[size+1] == expr->bin.rgt)
-              size--;
-            else if (stack[size+1] == expr->bin.lft)
-              {
-                if (lftest)
-                  {
-                    size++;
-                    stack[size] = expr->bin.rgt;
-                  }
-                else
-                  size--;
-              }
-            else
-              {
-                size++;
-                stack[size] = expr->bin.lft;
-              }
-            break;
-
-          case AE_NOT:
-            return(0);
-          case AE_RECUR:
-            return(0);
-          }
+      case AE_OR:
+        tmp1 = GetExprAtomicNum(expr->bin.lft);
+        if (tmp1 == 0) return 0;
+        tmp2 = GetExprAtomicNum(expr->bin.rgt);
+        if (tmp2 == 0) return 0;
+        if (tmp1 == tmp2) return tmp1;
+        break;
       }
 
-    return(0);
+    return 0;
   }
 
   int OBSmartsPattern::GetAtomicNum(int idx)
   {
-    AtomExpr *expr = _pat->atom[idx].expr;
-
-    int size=0;
-    AtomExpr *stack[15];
-    memset(stack,'\0',sizeof(AtomExpr*)*15);
-    bool lftest=true;
-
-    for (size=0,stack[size] = expr;size >= 0;expr=stack[size])
-      {
-        switch (expr->type)
-          {
-          case AE_LEAF:
-            if ( expr->leaf.prop == AL_ELEM)
-              return(expr->leaf.value);
-            lftest = true;
-            size--;
-            break;
-
-          case AE_OR:
-          case AE_ANDHI:
-          case AE_ANDLO:
-
-            if (stack[size+1] == expr->bin.rgt)
-              size--;
-            else if (stack[size+1] == expr->bin.lft)
-              {
-                if (lftest)
-                  {
-                    size++;
-                    stack[size] = expr->bin.rgt;
-                  }
-                else
-                  size--;
-              }
-            else
-              {
-                size++;
-                stack[size] = expr->bin.lft;
-              }
-            break;
-
-          case AE_NOT:
-            return(0);
-          case AE_RECUR:
-            return(0);
-          }
-      }
-
-    return(0);
+    return GetExprAtomicNum(_pat->atom[idx].expr);
   }
 
   void OBSmartsPattern::GetBond(int &src,int &dst,int &ord,int idx)

@@ -1251,10 +1251,14 @@ namespace OpenBabel
                   if (!nbr->IsHydrogen())
                     neighbour[count++] = nbr;
 
-                na = neighbour[0];
-                nb = neighbour[1];
-                nc = neighbour[2];
-                nd = neighbour[3];
+                if (count >= 1)
+                  na = neighbour[0];
+                if (count >= 2)
+                  nb = neighbour[1];
+                if (count >= 3)
+                  nc = neighbour[2];
+                if (count >= 4)
+                  nd = neighbour[3];
 
                 for ( i = 0 ; i < tmax ; i++ )
                   if ( templ[i].flag & bitmasks[idx] )
@@ -1373,9 +1377,12 @@ namespace OpenBabel
 
     resnos[idx] = r;
 
-    na = neighbour[0];
-    nb = neighbour[1];
-    nc = neighbour[2];
+    if (count >= 1)
+      na = neighbour[0];
+    if (count >= 2)
+      nb = neighbour[1];
+    if (count >= 3)
+      nc = neighbour[2];
 
     switch( atomids[i] )
       {
@@ -1663,9 +1670,12 @@ namespace OpenBabel
 
     resnos[i] = r;
 
-    na = neighbour[0];
-    nb = neighbour[1];
-    nc = neighbour[2];
+    if (count >= 1)
+      na = neighbour[0];
+    if (count >= 2)
+      nb = neighbour[1];
+    if (count >= 3)
+      nc = neighbour[2];
 
     switch( atomids[i] )
       {

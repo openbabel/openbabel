@@ -943,7 +943,7 @@ namespace OpenBabel
   //////////////////////////////////////////////////////
   bool MDLFormat::ReadV3000Block(istream& ifs, OBMol& mol, OBConversion* pConv,bool DoMany)
   {
-    bool ret;
+    bool ret = true;
     do
       {
         if(!ReadV3000Line(ifs,vs)) return false;

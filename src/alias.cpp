@@ -70,7 +70,7 @@ namespace OpenBabel
       return true;
 
     // Rn is stored as an atom with 0 atomic number and atomclass = n
-    // R', R'' etc. are treated as R1, R2  
+    // R', R'' etc. are treated as R1, R2
     // Note that if the name contains anything after the number it is ignored.
     if(_alias[0]=='R' && (_alias[1]=='\'' || _alias[1]=='¢' || isdigit(_alias[1])))
     {
@@ -95,9 +95,9 @@ namespace OpenBabel
       return true;
     }
 
-    obErrorLog.ThrowError(__FUNCTION__, "Alias " + _alias + 
+    obErrorLog.ThrowError(__FUNCTION__, "Alias " + _alias +
       " was not chemically interpreted\n", obWarning, onceOnly);
-    return false;   
+    return false;
   }
 
 bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
@@ -143,7 +143,7 @@ bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
   OBBondIterator bi;
   OBAtom* firstAttachAtom = XxAtom->BeginNbrAtom(bi);
   unsigned mainAttachIdx = firstAttachAtom ? firstAttachAtom->GetIdx() : 0;
- 
+
   //++Make list of other attachments* of XxAtom
   // (Added later so that the existing bonding of the XXAtom are retained)
   vector<pair<OBAtom*, unsigned> > otherAttachments;
@@ -175,7 +175,7 @@ bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
     if(mainAttachIdx)
       builder.Connect(mol, mainAttachIdx, newFragIdx);
   }
-  else // 0D, 2D  
+  else // 0D, 2D
   {
     obFrag.DeleteAtom(obFrag.GetAtom(1));//remove dummy atom
     mol += obFrag; //Combine with main molecule and connect
@@ -301,7 +301,7 @@ void AliasData::RevertToAliasForm(OBMol& mol)
 {
   //Deleting atoms invalidates the iterator, so start again
   //and continue until all no unexpanded aliases are found in molecule.
-  bool acted;
+  bool acted = false;
   do
   {
     FOR_ATOMS_OF_MOL(a, mol)

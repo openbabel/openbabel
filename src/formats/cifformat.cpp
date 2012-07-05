@@ -265,7 +265,9 @@ namespace OpenBabel
     //private:
     /// Separate the file in data blocks and parse them to sort tags, loops and comments.
     /// All is stored in the original strings.
-    void Parse(std::stringstream &in);
+    ///
+    /// Returns the name of the next data block
+    void Parse(std::istream &in);
     /// The data blocks, after parsing. The key is the name of the data block
     std::map<std::string,CIFData> mvData;
     /// Global comments, outside and data block
@@ -929,21 +931,26 @@ namespace OpenBabel
 
   CIF::CIF(istream &is, const bool interpret,const bool verbose)
   {
-    //Copy to an iostream so that we can put back characters if necessary
-    stringstream in;
-    char c;
-    while(is.get(c))in.put(c);
-    this->Parse(in);
-    // Extract structure from blocks
-    if(interpret)
-      for(map<string,CIFData>::iterator posd=mvData.begin();posd!=mvData.end();++posd)
-        posd->second.ExtractAll(verbose);
+    bool found_atoms=false;
+    while(!found_atoms)
+    {
+      // :TODO: we don't need a vector of CIFData, since only one block is read at a time
+      mvData.clear();
+      this->Parse(is);
+      // Extract structure from 1 block
+      if(interpret)
+        for(map<string,CIFData>::iterator posd=mvData.begin();posd!=mvData.end();++posd)
+        {
+          posd->second.ExtractAll(verbose);
+          if(posd->second.mvAtom.size()>0) found_atoms=true;
+        }
+    }
   }
 
   bool iseol(const char c) { return ((c=='\n')||(c=='\r'));}
 
   /// Read one value, whether it is numeric, string or text
-  string CIFReadValue(stringstream &in,char &lastc)
+  string CIFReadValue(istream &in,char &lastc)
   {
     bool vv=false;//very verbose ?
     string value("");
@@ -1009,7 +1016,7 @@ namespace OpenBabel
     return value;
   }
 
-  void CIF::Parse(stringstream &in)
+  void CIF::Parse(istream &in)
   {
     bool vv=false;//very verbose ?
     char lastc=' ';
@@ -1041,10 +1048,14 @@ namespace OpenBabel
           }
         if((in.peek()=='d') || (in.peek()=='D'))
           {// Data
+            if(mvData.size()>0) return; // We want just a single data block
+            
             string tmp;
             in>>tmp;
             block=tmp.substr(5);
             if(vv) cout<<endl<<endl<<"NEW BLOCK DATA: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ->"<<block<<endl<<endl<<endl;
+            
+
             mvData[block]=CIFData();
             mvData[block].mDataBlockName=tmp;
             continue;
@@ -1081,45 +1092,45 @@ namespace OpenBabel
             map<ci_string,vector<string> > lp;
             while(true)
               {
+                std::ios::pos_type pos0=in.tellg();
                 while(!isgraph(in.peek()) && !in.eof()) in.get(lastc);
                 if(in.eof()) break;
-                if(vv) cout<<"LOOP VALUES...: "<<(char)in.peek()<<" "<<endl;
                 if(in.peek()=='_') break;
                 if(in.peek()=='#')
                   {// Comment (in a loop ??)
-                    const std::ios::pos_type pos=in.tellg();
+                    //const std::ios::pos_type pos=in.tellg();
                     string tmp;
                     getline(in,tmp);
+                    pos0=in.tellg();
                     if(block=="") mvComment.push_back(tmp);
                     else mvData[block].mvComment.push_back(tmp);
                     lastc='\r';
                     if(vv) cout<<"Comment in a loop (?):"<<tmp<<endl;
-                    in.seekg(pos);
+                    //in.seekg(pos);
                     break;
                   }
-                const std::ios::pos_type pos=in.tellg();
-                in>>tmp;
-                if(vv) cout<<"WHATNEXT? "<<tmp;
+                //in>>tmp;
+                tmp=CIFReadValue(in,lastc);
                 if(ci_string(tmp.c_str())=="loop_")
                   {//go back and continue
-                    if(vv) cout<<endl<<"END OF LOOP :"<<tmp<<endl;
-                    in.seekg(pos);
+                    in.clear();
+                    in.seekg(pos0,std::ios::beg);
+                    if(vv) cout<<endl<<"END OF LOOP :"<<tmp<<","<<(char)in.peek()<<","<<in.tellg()<<endl;
                     break;
                   }
                 if(tmp.size()>=5)
                   if(ci_string(tmp.substr(0,5).c_str())=="data_")
                     {//go back and continue
-                      if(vv) cout<<endl<<"END OF LOOP :"<<tmp<<endl;
-                      in.seekg(pos);
+                      in.clear();
+                      in.seekg(pos0,std::ios::beg);
+                      if(vv) cout<<endl<<"END OF LOOP :"<<tmp<<","<<(char)in.peek()<<","<<in.tellg()<<endl;
                       break;
                     }
-                // go back
-                in.seekg(pos);
                 for(unsigned int i=0;i<tit.size();++i)
                   {//Read all values
-                    const string value=CIFReadValue(in,lastc);
-                    lp[tit[i]].push_back(value);
-                    if(vv) cout<<"     #"<<i<<" :  "<<value<<endl;
+                    if(i>0) tmp=CIFReadValue(in,lastc);
+                    lp[tit[i]].push_back(tmp);
+                    if(vv) cout<<" LOOP VALUE    #"<<lp[tit[i]].size()<<","<<i<<" :  "<<tmp<<endl;
                   }
               }
             // The key to the mvLoop map is the set of column titles

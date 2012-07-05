@@ -204,13 +204,13 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
     }
     else
       nPatternAtoms = 0;
-    
+
     //disable old versions
     if(pConv)
       pConv->AddOption(GetID(), OBConversion::GENOPTIONS, "");
   }
 
-  bool match;
+  bool match = false;
   //These are a vector of each mapping, each containing atom indxs.
   vector<vector<int> > vecatomvec;
   vector<vector<int> >* pMappedAtoms = NULL;
@@ -224,7 +224,7 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
   if(!queries.empty()) //filename supplied
   {
     //match is set true if any of the structures match - OR behaviour
-    for(qiter=queries.begin();qiter!=queries.end();++qiter, ++imol) 
+    for(qiter=queries.begin();qiter!=queries.end();++qiter, ++imol)
     {
       OBIsomorphismMapper* mapper = OBIsomorphismMapper::GetInstance(*qiter);
       OBIsomorphismMapper::Mappings mappings;
@@ -253,7 +253,7 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
     // only when SMARTS contains [H]. Doing more has complications with atom typing,
     // so AddHydrogens here on the molecule (not a copy) when #1 detected.
     bool addHydrogens = (vec[0].find("#1]")!=string::npos);
-      
+
     if(!sp.Init(vec[0]))
     {
       string msg = vec[0] + " cannot be interpreted as either valid SMARTS "
@@ -280,7 +280,7 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
     pmol = NULL;
     return false;
   }
-  
+
   if(match)
     //Copy the idxes of the first match to a member variable so that it can be retrieved from outside
     firstmatch.assign(pMappedAtoms->begin()->begin(), pMappedAtoms->begin()->end());
