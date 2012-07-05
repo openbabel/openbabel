@@ -58,6 +58,8 @@ public:
   {
     static string txt;
     txt = _descr;
+    txt += '\n';
+    txt += _macroText;
     txt += "\nCompoundFilter is definable";//Entries in plugindefines.txt can start "CompoundFilter"
     return txt.c_str();
   }
@@ -69,7 +71,7 @@ public:
   }
 
 ///Returns the result of evaluating the conditional expressions in the macrotext
-  virtual bool Compare(OBBase* pOb, istream&, bool noEval)
+  virtual bool Compare(OBBase* pOb, istream&, bool noEval, string* param)
   {
     stringstream ss;
     ss.str(_macroText);

@@ -1850,7 +1850,8 @@ namespace OpenBabel {
             if (*_ptr == 'S') {
               // square planar atom found
               squarePlanarWatch = true;
-              _squarePlanarMap[atom] = new OBSquarePlanarStereo::Config;
+              if (_squarePlanarMap.find(atom)==_squarePlanarMap.end()) // Prevent memory leak for malformed smiles (PR#3428432)
+                _squarePlanarMap[atom] = new OBSquarePlanarStereo::Config;
               _squarePlanarMap[atom]->refs = OBStereo::Refs(4, OBStereo::NoRef);
               _squarePlanarMap[atom]->center = atom->GetId();
               _ptr += 2;
@@ -1863,7 +1864,8 @@ namespace OpenBabel {
             } else {
               // tetrahedral atom found
               chiralWatch=true;
-              _tetrahedralMap[atom] = new OBTetrahedralStereo::Config;
+              if (_tetrahedralMap.find(atom)==_tetrahedralMap.end()) // Prevent memory leak for malformed smiles (PR#3428432)
+                _tetrahedralMap[atom] = new OBTetrahedralStereo::Config;
               _tetrahedralMap[atom]->refs = OBStereo::Refs(3, OBStereo::NoRef);
               _tetrahedralMap[atom]->center = atom->GetId();
               if (*_ptr == '@') {

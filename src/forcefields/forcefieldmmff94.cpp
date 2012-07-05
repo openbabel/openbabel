@@ -699,7 +699,7 @@ namespace OpenBabel
     for (int i = 0; i < _vdwcalculations.size(); ++i) {
       // Cut-off check
       if (_cutoff)
-        if (!_vdwpairs.BitIsSet(i))
+        if (!_vdwpairs.BitIsSet(_vdwcalculations[i].pairIndex))
           continue;
 
       _vdwcalculations[i].template Compute<gradients>();
@@ -785,7 +785,7 @@ namespace OpenBabel
     for (int i = 0; i < _electrostaticcalculations.size(); ++i) {
       // Cut-off check
       if (_cutoff)
-        if (!_elepairs.BitIsSet(i))
+        if (!_elepairs.BitIsSet(_electrostaticcalculations[i].pairIndex))
           continue;
 
       _electrostaticcalculations[i].template Compute<gradients>();
@@ -2687,8 +2687,10 @@ namespace OpenBabel
       if (HasGroups()) {
         bool validBond = false;
         for (unsigned int i=0; i < _intraGroup.size(); ++i) {
-          if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()))
+          if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx())) {
             validBond = true;
+            break;
+          }
         }
         if (!validBond)
           continue;
@@ -2782,8 +2784,10 @@ namespace OpenBabel
         bool validAngle = false;
         for (unsigned int i=0; i < _intraGroup.size(); ++i) {
           if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) &&
-              _intraGroup[i].BitIsOn(c->GetIdx()))
+              _intraGroup[i].BitIsOn(c->GetIdx())) {
             validAngle = true;
+            break;
+          }
         }
         if (!validAngle)
           continue;
@@ -3078,8 +3082,10 @@ namespace OpenBabel
         bool validTorsion = false;
         for (unsigned int i=0; i < _intraGroup.size(); ++i) {
           if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) &&
-              _intraGroup[i].BitIsOn(c->GetIdx()) && _intraGroup[i].BitIsOn(d->GetIdx()))
+              _intraGroup[i].BitIsOn(c->GetIdx()) && _intraGroup[i].BitIsOn(d->GetIdx())) {
             validTorsion = true;
+            break;
+          }
         }
         if (!validTorsion)
           continue;
@@ -3356,8 +3362,10 @@ namespace OpenBabel
             bool validOOP = false;
             for (unsigned int i=0; i < _intraGroup.size(); ++i) {
               if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) &&
-                  _intraGroup[i].BitIsOn(c->GetIdx()) && _intraGroup[i].BitIsOn(d->GetIdx()))
+                  _intraGroup[i].BitIsOn(c->GetIdx()) && _intraGroup[i].BitIsOn(d->GetIdx())) {
                 validOOP = true;
+                break;
+              }
             }
             if (!validOOP)
               continue;
@@ -3441,7 +3449,9 @@ namespace OpenBabel
 
     _vdwcalculations.clear();
 
+    int pairIndex = -1;
     FOR_PAIRS_OF_MOL(p, _mol) {
+      ++pairIndex;
       a = _mol.GetAtom((*p)[0]);
       b = _mol.GetAtom((*p)[1]);
 
@@ -3454,14 +3464,22 @@ namespace OpenBabel
       if (HasGroups()) {
         bool validVDW = false;
         for (unsigned int i=0; i < _interGroup.size(); ++i) {
-          if (_interGroup[i].BitIsOn(a->GetIdx()) && _interGroup[i].BitIsOn(b->GetIdx()))
+          if (_interGroup[i].BitIsOn(a->GetIdx()) && _interGroup[i].BitIsOn(b->GetIdx())) {
             validVDW = true;
+            break;
+          }
         }
-        for (unsigned int i=0; i < _interGroups.size(); ++i) {
-          if (_interGroups[i].first.BitIsOn(a->GetIdx()) && _interGroups[i].second.BitIsOn(b->GetIdx()))
-            validVDW = true;
-          if (_interGroups[i].first.BitIsOn(b->GetIdx()) && _interGroups[i].second.BitIsOn(a->GetIdx()))
-            validVDW = true;
+        if (!validVDW) {
+          for (unsigned int i=0; i < _interGroups.size(); ++i) {
+            if (_interGroups[i].first.BitIsOn(a->GetIdx()) && _interGroups[i].second.BitIsOn(b->GetIdx())) {
+              validVDW = true;
+              break;
+            }
+            if (_interGroups[i].first.BitIsOn(b->GetIdx()) && _interGroups[i].second.BitIsOn(a->GetIdx())) {
+              validVDW = true;
+              break;
+            }
+          }
         }
 
         if (!validVDW)
@@ -3549,6 +3567,7 @@ namespace OpenBabel
         vdwcalc.epsilon = (181.16 * vdwcalc.Ga * vdwcalc.Gb * vdwcalc.alpha_a * vdwcalc.alpha_b) / (sqrt_a + sqrt_b) * (1.0 / R_AB6);
       }
 
+      vdwcalc.pairIndex = pairIndex;
       vdwcalc.SetupPointers();
       _vdwcalculations.push_back(vdwcalc);
     }
@@ -3563,7 +3582,9 @@ namespace OpenBabel
 
     _electrostaticcalculations.clear();
 
+    pairIndex = -1;
     FOR_PAIRS_OF_MOL(p, _mol) {
+      ++pairIndex;
       a = _mol.GetAtom((*p)[0]);
       b = _mol.GetAtom((*p)[1]);
 
@@ -3576,14 +3597,22 @@ namespace OpenBabel
       if (HasGroups()) {
         bool validEle = false;
         for (unsigned int i=0; i < _interGroup.size(); ++i) {
-          if (_interGroup[i].BitIsOn(a->GetIdx()) && _interGroup[i].BitIsOn(b->GetIdx()))
+          if (_interGroup[i].BitIsOn(a->GetIdx()) && _interGroup[i].BitIsOn(b->GetIdx())) {
             validEle = true;
+            break;
+          }
         }
-        for (unsigned int i=0; i < _interGroups.size(); ++i) {
-          if (_interGroups[i].first.BitIsOn(a->GetIdx()) && _interGroups[i].second.BitIsOn(b->GetIdx()))
-            validEle = true;
-          if (_interGroups[i].first.BitIsOn(b->GetIdx()) && _interGroups[i].second.BitIsOn(a->GetIdx()))
-            validEle = true;
+        if (!validEle) {
+          for (unsigned int i=0; i < _interGroups.size(); ++i) {
+            if (_interGroups[i].first.BitIsOn(a->GetIdx()) && _interGroups[i].second.BitIsOn(b->GetIdx())) {
+              validEle = true;
+              break;
+            }
+            if (_interGroups[i].first.BitIsOn(b->GetIdx()) && _interGroups[i].second.BitIsOn(a->GetIdx())) {
+              validEle = true;
+              break;
+            }
+          }
         }
 
         if (!validEle)
@@ -3600,6 +3629,7 @@ namespace OpenBabel
         if (a->IsOneFour(b))
           elecalc.qq *= 0.75;
 
+        elecalc.pairIndex = pairIndex;
         elecalc.SetupPointers();
         _electrostaticcalculations.push_back(elecalc);
       }

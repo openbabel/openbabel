@@ -52,6 +52,7 @@ namespace OpenBabel
         unsigned c;
         ss >> std::hex >> c;
         *this = OBColor((c/0x10000)/256.0, ((c%0x10000)/0x100/256.0), (c%0x100)/256.0);
+        return;
       }
       if (color == "black")
         *this = OBColor(0.0, 0.0, 0.0);
@@ -75,6 +76,8 @@ namespace OpenBabel
         *this = OBColor(0.0, 0.5, 0.5);
       else if (color == "olive")
         *this = OBColor(0.5, 0.5, 0.0);
+      else if (color == "none")
+        *this = OBColor(0.0, 0.0, 0.0, 0.0);
       else
         *this = OBColor(0.5, 0.5, 0.5);
     }
