@@ -278,6 +278,44 @@ void test_alignWithSymWithoutHydrogens() {
   OB_ASSERT( fabs(rmsd) < 0.019 );
 }
 
+void test_bug()
+{
+  // Multiplying by GetRotMatrix() was not giving the same answer as
+  // GetAlignment(). I finally figured out why with this test case.
+  // The matrix3x3 should have been returned as the transpose.
+
+  vector3 a(-1.0560719999999999, 0.070211999999999997, -0.10441499999999999);
+  vector3 b(-2.4428160000000001,-0.82010000000000005,-1.1872100000000001);
+  vector3 c(-3.1217000000000001,-0.24128900000000000,-2.0887270000000000);
+
+  vector3 d(-0.13895900000000000,-0.65032000000000001,0.081436999999999996);
+  vector3 e(-1.4315770000000001,-1.9259770000000001,-0.66990700000000003);
+  vector3 f(-1.1263280000000000,-3.0768879999999998,-1.1025430000000001);
+
+  vv3 ref(3), target(3), result;
+  ref[0] = a; ref[1] = b; ref[2] = c;
+
+  target[0] = d; target[1] = e; target[2] = f;
+  OBAlign align(ref, target);
+
+  align.Align();
+  result = align.GetAlignment();
+  OB_ASSERT( fabs(align.GetRMSD()) < 0.04 );
+
+  // Verify that using GetRotMatrix() gives the same answer as GetAlignment()
+  matrix3x3 rot = align.GetRotMatrix();
+  vector<vector3> centroids;
+  centroids.push_back( (d + e + f) / 3);
+  centroids.push_back( (a + b + c) / 3);
+  for (int i = 0; i<3; ++i) {
+    vector3 tmp = target[i] - centroids[0];
+    tmp *= rot;
+    vector3 aligned = tmp + centroids[1];
+    OB_ASSERT( aligned.IsApprox(result[i], 1.0E-08) ); 
+  }
+}
+
+
 int main()
 {
   // Define location of file formats for testing
@@ -286,6 +324,8 @@ int main()
     snprintf(env, BUFF_SIZE, "BABEL_LIBDIR=%s", FORMATDIR);
     putenv(env);
   #endif  
+
+  test_bug();
 
   test_simpleAlign();
 

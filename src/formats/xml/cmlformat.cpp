@@ -2155,7 +2155,7 @@ namespace OpenBabel
     //Energy is output when it is not zero
     //This is the molecular energy, probably originally in Hartrees,
     // stored in OB as kcal/mol, but output here in kJ/mol
-    if(mol.GetEnergy()<-1e-3)//will be negative if assigned
+    if(fabs(mol.GetEnergy()) > 1e-3)
       WriteScalarProperty(mol, "Energy", mol.GetEnergy() * CALSTOJOULES,
         "me:ZPE", "kJ/mol", "computational");
 
