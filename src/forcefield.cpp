@@ -2346,7 +2346,7 @@ namespace OpenBabel
 
     alpha = 0.0; // Scale factor along direction vector
     step = 0.2;
-    double trustRadius = 0.3; // don't move further than 0.3 Angstroms
+    double trustRadius = 0.75; // don't move too far at once
 
     // The initial energy should be precomputed
     e_n1 = _e_n1; // Energy(false) + _constraints.GetConstraintEnergy();
