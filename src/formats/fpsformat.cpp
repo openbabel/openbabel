@@ -32,13 +32,24 @@ namespace OpenBabel
 
     virtual const char* Description() //required
     { return
-    "FPS text fingerprint format (Dalke)\n"
-      "Any molecule without a title is given one of the form #n.\n"
+    "FPS text fingerprint format (Dalke)\n\n"
+    "The FPS file format for fingerprints was developed by Andrew Dalke to\n"
+    "define and promote common file formats for storing and exchanging\n"
+    "cheminformatics fingerprint data sets, and to develop tools which\n"
+    "work with that format. For more information, see\n"
+    "http://chem-fingerprints.googlecode.com\n\n"
+
+      "Any molecule without a title is given its index in the file as title.\n\n"
+
+"A list of available fingerprint types can be obtained by::\n\n"
+
+"  obabel -L fingerprints\n\n"
+
       "Write Options e.g. -xf FP3 -xN 128\n"
-      " f<id> fingerprint type\n"
-      " N# fold to specified number of bits, 32, 64, 128, etc.\n"
-      " p use full input path as source, not just filename\n"
-      " t <text> use <text> as source in header\n\n";
+      " f<id> Fingerprint type\n"
+      " N # Fold to specified number of bits, 32, 64, 128, etc.\n"
+      " p Use full input path as source, not just filename\n"
+      " t <text> Use <text> as source in header\n\n";
     }
   virtual const char* SpecificationURL()
   { return "http://code.google.com/p/chem-fingerprints/wiki/FPS"; }

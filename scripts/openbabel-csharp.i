@@ -739,6 +739,7 @@ using System.Runtime.InteropServices;
 %warnfilter(516) OpenBabel::OBPairData; // Ignoring std::string methods in favour of char* ones
 %warnfilter(516) OpenBabel::OBSetData;
 %warnfilter(516) OpenBabel::OBCommentData;
+%warnfilter(516) OpenBabel::OBUnitCell; // Ignoring const methods in favour of non-const ones
 
 //replacement for method return unsupported std::pair
 %ignore OpenBabel::OBTorsion::GetBC;

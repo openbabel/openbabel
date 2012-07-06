@@ -36,15 +36,18 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-	"The LAMMPS data format\n"
-        "Write Options, e.g. -xq\n"
-	"  q \"water-model\" Set atomic charges for water:\n"
-	"      SPC (default), SPCE\n"
-	"  d \"length\" Set the lenght of the boundary box\n"
-	"    around the molecule.\n"
-	"    The default is to make a cube around the molecule\n"
-	"    adding 50\% to the most positive and negative\n"
-	"    cartesian coordinate.\n"
+  "The LAMMPS data format\n\n"
+
+  "LAMMPS is a classical molecular dynamics code, and an acronym for\n"
+  "Large-scale Atomic/Molecular Massively Parallel Simulator.\n\n"
+
+  "Write Options, e.g. -xq\n"
+  "  q \"water-model\" Set atomic charges for water.\n"
+  "    There are two options: SPC (default) or SPCE\n"
+  "  d \"length\" Set the length of the boundary box around the molecule.\n"
+  "    The default is to make a cube around the molecule\n"
+  "    adding 50% to the most positive and negative\n"
+  "    cartesian coordinate.\n"
 	;
     };
 
@@ -85,7 +88,6 @@ namespace OpenBabel
 
     //Very basic atom typing by element only
     //TODO: The maps should become smarts strings instead of element names
-    OBAtom *atom;
     double ThisMass;
     string ThisAtom;
     map<string, double> AtomMass;
@@ -107,7 +109,6 @@ namespace OpenBabel
 
     //Determine unique bonds
     mol.ConnectTheDots();
-    OBBond *bond;
     char BondString[BUFF_SIZE];
     map<string, int> BondType;
     FOR_BONDS_OF_MOL(bond,mol)
@@ -144,7 +145,6 @@ namespace OpenBabel
 
     //Determine unique angles
     mol.FindAngles();
-    OBAngle *angle;
     int anglecount=0;
     char AngleString[BUFF_SIZE];
     map<string, int> AngleType;
@@ -185,7 +185,6 @@ namespace OpenBabel
 
     //dihedrals
     mol.FindTorsions();
-    OBTorsion *dihedral;
     int dihedralcount=0;
     char DihedralString[BUFF_SIZE];
     map<string, int>DihedralType;
