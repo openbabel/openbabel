@@ -3952,6 +3952,10 @@ namespace OpenBabel {
     std::vector<int>* fIncludedList;
     TEditedMolecule() : TSimpleMolecule() {
       fIncludedList=NULL;
+	  fIOPT10=false;
+	  fIOPT11=false;
+	  fIOPT13=true;
+	  fIOPT12=1;
     };
 
     int prepareQuery(TSimpleMolecule & sMol);

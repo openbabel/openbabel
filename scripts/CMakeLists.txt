@@ -199,19 +199,19 @@ if (DO_PERL_BINDINGS)
           COMMAND sed -e \"s/^@EXPORT.*/& sub dl_load_flags { 0x01 }/\" <${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.pm >${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.new
           COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.new ${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.pm
           COMMAND ${CMAKE_COMMAND} -E remove ${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.new
-          MAIN_DEPENDENCY ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp
+          MAIN_DEPENDENCY openbabel-perl.i
         )
       endif (NOT WIN32)
     endif (RUN_SWIG)
 
-    set(PERL_PREFIX_TEXT "")
-    if (OBPERL_PREFIX) # The PERL_PREFIX variable is already taken (it's set by FindPerlLibs :-/ )
-      set(PERL_PREFIX_TEXT "PREFIX=${OBPERL_PREFIX}")
-    else (OBPERL_PREFIX)
-      if (NOT ${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-        set(PERL_PREFIX_TEXT "PREFIX=${CMAKE_INSTALL_PREFIX}")
-      endif (NOT ${CMAKE_INSTALL_PREFIX} STREQUAL "/usr/local")
-    endif (OBPERL_PREFIX)
+    add_library(bindings_perl MODULE ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp)
+    target_link_libraries(bindings_perl ${PERL_LIBRARY} ${BABEL_LIBRARY})
+    set_target_properties(bindings_perl PROPERTIES
+        PREFIX ""
+        OUTPUT_NAME OpenBabel)
+    add_dependencies(bindings_perl openbabel)
+    install(TARGETS bindings_perl LIBRARY DESTINATION ${LIB_INSTALL_DIR})
+    install(FILES ${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.pm DESTINATION ${LIB_INSTALL_DIR})
 
     set(PERL_INSTALLDIRS_TEXT "")
     if (OBPERL_INSTALLDIRS)

@@ -213,7 +213,7 @@ namespace std { class stringbuf {}; }
 %include <openbabel/alias.h>
 %include <openbabel/atomclass.h>
 
-%include <openbabel/fingerprint.h>
+# %include <openbabel/fingerprint.h> # Causes an error (I don't know why)
 %include <openbabel/descriptor.h>
 
 # Ignore shadowed methods
@@ -228,6 +228,7 @@ namespace std { class stringbuf {}; }
 %include <openbabel/bitvec.h>
 # Ignore shadowed method
 %ignore OpenBabel::OBRotor::GetRotAtoms() const;
+%warnfilter(314); // 'next' is a Perl keyword
 %include <openbabel/rotor.h>
 %ignore OpenBabel::Swab;
 %include <openbabel/rotamer.h>

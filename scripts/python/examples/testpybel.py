@@ -355,7 +355,7 @@ class TestPybel(TestToolkit):
         """Testing unit cell access"""
         mol = getattr(self.toolkit.readfile("cif", os.path.join(here, "hashizume.cif")), nextmethod)()
         cell = mol.unitcell
-        self.assertAlmostEqual(cell.GetAlpha(), 92.9, 1)
+        self.assertAlmostEqual(cell.GetAlpha(), 93.0, 1)
 
     def testMDcomment(self):
         """Mess about with the comment field"""
