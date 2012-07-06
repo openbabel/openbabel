@@ -388,6 +388,16 @@ namespace OpenBabel
       z -= 1;
 #undef LIMIT
 
+    // Fuzzy logic from Francois-Xavier
+#define EPSILON 1.0e-6
+    if (x > 1 - EPSILON || x < EPSILON)
+      x = 0.0;
+    if (y > 1 - EPSILON || y < EPSILON)
+      y = 0.0;
+    if (z > 1 - EPSILON || z < EPSILON)
+      z = 0.0;
+#undef EPSILON
+
     return vector3(x, y, z);
   }
 
@@ -558,7 +568,7 @@ namespace OpenBabel
     if (dr.z() > 0.5)
       dr.SetZ(dr.z() - 1);
 
-    return (dr.length_2() < 1e-4);
+    return (dr.length_2() < 1e-6);
   }
 
   void OBUnitCell::FillUnitCell(OBMol *mol)
