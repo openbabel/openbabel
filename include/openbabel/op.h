@@ -126,12 +126,14 @@ of the Do() function. They can also access other general options specified on th
 command line by examining the the OpMap parameter.
 
 To use an OBOp class from the API it is necessary to use an extra step in case it isn't
-present. So to apply the OBOp clas with ID gen3D to your mol
+present. So to apply the OBOp class with ID gen3D to your mol
 
+\code
 OBOp* pOp = OBOp::FindType("gen3D");
 if(!pOp)
   ...report error
 pOp->Do(mol);
+\endcode
 
   */
 
