@@ -120,7 +120,7 @@ namespace OpenBabel
 
         // add bonding
         if (vs.size() > 6)
-          for (int j = 6; j < vs.size(); ++j)
+          for (unsigned int j = 6; j < vs.size(); ++j)
             mol.AddBond(mol.NumAtoms(), atoi((char *)vs[j].c_str()), 1); // we don't know the bond order
 
     }

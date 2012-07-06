@@ -59,7 +59,10 @@ namespace OpenBabel {
        * @return True if the conformer passes the filter.
        */
       virtual bool IsGood(const OBMol &mol, const RotorKey &key, double *coords) = 0;
+      virtual ~OBConformerFilter() = 0;
   };
+
+  OBConformerFilter::~OBConformerFilter() {}
 
   /**
    * @class OBConformerFilters conformersearch.h <openbabel/conformersearch.h>
@@ -158,7 +161,10 @@ namespace OpenBabel {
        */
       virtual double Score(OBMol &mol, unsigned int index, const RotorKeys &keys,
           const std::vector<double*> &conformers) = 0;
+      virtual ~OBConformerScore() = 0;
   };
+
+  OBConformerScore::~OBConformerScore() {}
 
   /**
    * @class OBRMSDConformerScore conformersearch.h <openbabel/conformersearch.h>

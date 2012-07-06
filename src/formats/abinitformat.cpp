@@ -92,8 +92,6 @@ namespace OpenBabel
     int numTranslationVectors = 0;
     int symmetryCode = 0;
 
-    SpaceGroup *sg = NULL;
-
     mol.BeginModify();
 
     while (ifs.getline(buffer,BUFF_SIZE))
@@ -163,7 +161,7 @@ namespace OpenBabel
         else if (strstr(buffer, "typat")) {
           tokenize(vs, buffer);
           atomTypes.clear();
-          for (int i = 1; i < vs.size(); ++i) {
+          for (unsigned int i = 1; i < vs.size(); ++i) {
             atomTypes.push_back(atoi(vs[i].c_str()));
           }
         }
@@ -175,7 +173,7 @@ namespace OpenBabel
           // push back the remaining tokens into atomicNumbers
           atomicNumbers.clear();
           atomicNumbers.push_back(0); // abinit starts typat with 1
-          for (int i = 1; i < vs.size(); ++i)
+          for (unsigned int i = 1; i < vs.size(); ++i)
             atomicNumbers.push_back(int(atof(vs[i].c_str())));
         }
         // xangst

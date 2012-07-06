@@ -48,7 +48,6 @@ using namespace OpenBabel;
 //! \brief Set a tortional bond to a given angle
 int main(int argc,char **argv)
 {
-  char *program_name=NULL;
   OBAtom *a1, *a2, *a3, *a4;
   unsigned int smartor[4]= {0,0,0,0};// atoms of the tortional in the SMART
   float angle =   0;      // tortional angle value to set in degree
@@ -58,7 +57,6 @@ int main(int argc,char **argv)
   string err;
   //bool changeAll = false; // default to only change the last matching torsion
 
-  program_name = argv[0];
   // parse the command line -- optional -a flag to change all matching torsions
   if (argc < 8 || argc > 9) {
     errflg++;

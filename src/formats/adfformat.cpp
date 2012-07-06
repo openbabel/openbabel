@@ -205,7 +205,7 @@ namespace OpenBabel {
                 // prefixes...rather than check each possible case,
                 // just try to convert tokens 1 thru vs.size() to
                 // double and keep the last one that works.
-                for (int i = 1; i < vs.size(); i++) {
+                for (unsigned int i = 1; i < vs.size(); i++) {
                   if (double d = atof(vs.at(i).c_str())) {
                     energy = d;
                   }
@@ -595,7 +595,7 @@ bool OBT41Format::ReadASCII( OBBase* pOb, OBConversion* pConv )
           return false;
       }
       eol( ifs );
-      int numAtoms = -1;
+      unsigned int numAtoms = 0;
       ifs >> numAtoms; cout << numAtoms << endl;
       buf  = "";
 
@@ -610,7 +610,7 @@ bool OBT41Format::ReadASCII( OBBase* pOb, OBConversion* pConv )
       eol( ifs );
       std::vector< AtomData > atoms;
       atoms.reserve( numAtoms );
-      for( int i = 0; i != numAtoms; ++i )
+      for (unsigned int i = 0; i != numAtoms; ++i)
       {
           ifs >> buf; cout << buf << endl;
           atoms.push_back( GetAtomicNumber( buf ) );
@@ -630,7 +630,7 @@ bool OBT41Format::ReadASCII( OBBase* pOb, OBConversion* pConv )
           return false;
       }
       eol( ifs );
-      for( int i = 0; i != numAtoms; ++i )
+      for (unsigned int i = 0; i != numAtoms; ++i)
       {
           ifs >> atoms[ i ].coord[ 0 ] >> atoms[ i ].coord[ 1 ] >> atoms[ i ].coord[ 2 ];
           cout << atoms[ i ].coord[ 0 ] << ' ' << atoms[ i ].coord[ 1 ] << ' ' << atoms[ i ].coord[ 2 ] << endl;
@@ -645,7 +645,7 @@ bool OBT41Format::ReadASCII( OBBase* pOb, OBConversion* pConv )
           return false;
       }
       eol( ifs );
-      for( int i = 0; i != numAtoms; ++i )
+      for (unsigned int i = 0; i != numAtoms; ++i)
       {
           ifs >> atoms[ i ].charge;
       }
@@ -663,7 +663,7 @@ bool OBT41Format::ReadASCII( OBBase* pOb, OBConversion* pConv )
       double scale = 1.0;
       ifs >> scale;
       /// @todo multply coordinates by axis length;
-      for( int i = 0; i != numAtoms; ++i )
+      for (unsigned int i = 0; i != numAtoms; ++i)
       {
 
           atoms[ i ].coord[ 0 ] *= BOHR_TO_ANGSTROM;
@@ -686,7 +686,7 @@ bool OBT41Format::ReadASCII( OBBase* pOb, OBConversion* pConv )
 
       pmol->ReserveAtoms( numAtoms );
 
-      for( int i = 0; i < numAtoms; ++i )
+      for (unsigned int i = 0; i < numAtoms; ++i)
       {
           OBAtom *atom = pmol->NewAtom();
           atom->SetAtomicNum( atoms[ i ].atomicNum );
@@ -811,7 +811,7 @@ OBT41Format::GridData OBT41Format::ReadGridData( istream& is ) const
 inline bool IsNum( const string& s )
 {
     bool isnum = true;
-    for( int i = 0; i != s.size(); ++i )
+    for (unsigned int i = 0; i != s.size(); ++i)
     {
         if( !isdigit( s[ i ] ) )
         {

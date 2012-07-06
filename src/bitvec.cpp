@@ -55,7 +55,7 @@ namespace OpenBabel
     \endcode
   */
 
-  static int bitsoff[SETWORD] =
+  static unsigned int bitsoff[SETWORD] =
     {
       0xFFFFFFFF,0xFFFFFFFE,0xFFFFFFFC,0xFFFFFFF8,0xFFFFFFF0,0xFFFFFFE0,0xFFFFFFC0,
       0xFFFFFF80,0xFFFFFF00,0xFFFFFE00,0xFFFFFC00,0xFFFFF800,0xFFFFF000,0xFFFFE000,

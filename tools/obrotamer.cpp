@@ -73,7 +73,6 @@ int main(int argc,char *argv[])
   
   OBRotorList rl;
   OBRotamerList rotamers;
-  int *rotorKey = NULL;
   OBRandom rand;
   rand.TimeSeed();
 
@@ -94,7 +93,7 @@ int main(int argc,char *argv[])
       //       (the different angles to sample from the OBRotorRules database)
       OBRotorIterator ri;
       OBRotor *rotor = rl.BeginRotor(ri);
-      for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri))
+      for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri))
         rotorKey[i] = rand.NextInt() % rotor->GetResolution().size();
 
       rotamers.SetBaseCoordinateSets(mol);

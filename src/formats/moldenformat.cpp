@@ -123,9 +123,10 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
           double factor = 1.; // Angstrom
           if( lineBuffer.find( "AU" ) != string::npos ) factor = BOHR_TO_ANGSTROM; // Bohr
           getline( ifs, lineBuffer );
-          while( lineBuffer.find( "[") == string::npos )
+          while( getline( ifs, lineBuffer ) )
             {
               if( lineBuffer == "" ) continue;
+              if( lineBuffer.find( "[" ) != string::npos ) break;
               istringstream is( lineBuffer );
               string atomName;
               int atomId;
@@ -211,7 +212,7 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     // Attach vibrational data, if there is any, to molecule
     if(Frequencies.size()>0)
     {
-      for (int i=0; i < Frequencies.size(); i++) {
+      for (unsigned int i = 0; i < Frequencies.size(); i++) {
         if (fabs(Frequencies[i]) < 10.) {
           // skip translational and rotational modes
           Frequencies.erase( Frequencies.begin() + i );
@@ -269,13 +270,13 @@ bool OBMoldenFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       ofs << "[FREQ]" << endl;
       vector<double> frequencies = vib->GetFrequencies();
       vector<double> intensities = vib->GetIntensities();
-      for (int i=0; i < vib->GetNumberOfFrequencies(); i++) {
+      for (unsigned int i = 0; i < vib->GetNumberOfFrequencies(); i++) {
 	snprintf(buffer, BUFF_SIZE, "%10.4f\n", frequencies[i]);
         ofs << buffer;
       }
       if (intensities.size() > 0) {
         ofs << "[INT]" << endl;
-	for (int i=0; i < vib->GetNumberOfFrequencies(); i++) {
+	for (unsigned int i = 0; i < vib->GetNumberOfFrequencies(); i++) {
 	  snprintf(buffer, BUFF_SIZE, "%10.4f\n", intensities[i]);
 	  ofs << buffer;
         }
@@ -291,11 +292,11 @@ bool OBMoldenFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
           ofs << buffer;
         }
       ofs << "[FR-NORM-COORD]" << endl;
-      for (int mode=0; mode < vib->GetNumberOfFrequencies(); mode++) {
+      for (unsigned int mode = 0; mode < vib->GetNumberOfFrequencies(); mode++) {
 	snprintf(buffer, BUFF_SIZE, "vibration%6d\n", mode+1);
 	ofs << buffer;
         vector<vector3> lx = vib->GetLx()[mode];
-	for (int i=0; i < mol.NumAtoms(); i++) {
+	for (unsigned int i = 0; i < mol.NumAtoms(); i++) {
 	  vector3 disp = lx[i];
 	  snprintf(buffer, BUFF_SIZE, "%12.6f%13.6f%13.6f\n",
 		  disp[0], disp[1], disp[2]);

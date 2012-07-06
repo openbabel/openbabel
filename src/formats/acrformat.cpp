@@ -88,9 +88,8 @@ namespace OpenBabel
     pmol->BeginModify();
 
     /** Parse the input stream and use the OpenBabel API to populate the OBMol **/
-    int id;
     char buf[BUFF_SIZE];
-    int atoms, bonds, tmp;
+    unsigned int atoms, bonds, tmp;
     float scale, dtmp;
     bool atom_input = false, bond_input = false;
     string type;
@@ -100,7 +99,7 @@ namespace OpenBabel
 
     // read in one at a time
     /* WARNING: Atom id starts from zero in Carine; not so in openbabel.
-     * Solution: increment atom id's */
+     * Solution: Let Open Babel to set them. */
 
     while (true) {
       ifs.getline(buf, BUFF_SIZE);
@@ -134,7 +133,6 @@ namespace OpenBabel
 
       if (atom_input) {
 	if (vs.size() < 9) return false; // timvdm 18/06/2008
-        id = atoi((char*)vs[0].c_str()) + 1; // see warning above
         type = vs[1];
         X = atof((char*)vs[6].c_str())/scale;
         Y = atof((char*)vs[7].c_str())/scale;

@@ -954,7 +954,7 @@ private:
   std::vector <int> nH(MAXFRAGS);
   std::vector <int> nF(MAXFRAGS);
 //  int nb;//,na;
-  int i,j,nt,n1,n2;//,n3, nfrag;
+  unsigned int i, j, nt, n1, n2;//,n3, nfrag;
   bool test;
   OBAtom sa;
   string mf="";
@@ -983,10 +983,10 @@ private:
   std::vector <string> names(MAXFRAGS);
   int netcharge=0;
   int netradical=0;
-  int nelements=0;
+  unsigned int nelements=0;
   int kk;
   string value="";
-  int acount,bcount,flags;
+  unsigned int acount, bcount, flags;
 
   std::vector <int> iA1(MAXBONDS);
   std::vector <int> iA2(MAXBONDS);
@@ -1409,7 +1409,7 @@ private:
 
 bool MCDLFormat::parseFormula(const string formulaString, std::vector <int>& enumber) {
   //vector<string> items;
-  int i,n,k,n1,n2;//,j,nStart;
+  unsigned int i, n, k, n1, n2;//,j,nStart;
   string s;
   bool test;
   string asym;

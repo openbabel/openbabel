@@ -132,11 +132,9 @@ int main(int argc,char *argv[])
       // test ring iterators: PR#2815025
       counter = 0;
       OBRing *prevRing = 0;
-      bool sameRing = false;
       if (mol.GetSSSR().size() != 0) {
         FOR_RINGS_OF_MOL(ring, mol) {
           if (prevRing != 0 && &*ring == prevRing) {
-            sameRing = true;
             break; // OOPS, same ring in a row?!
           }
           prevRing = &*ring;

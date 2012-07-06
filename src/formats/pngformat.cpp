@@ -193,7 +193,7 @@ bool PNGFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
           //Copy it to a stringstream
           istreambuf_iterator<char> initer(ifs);
           ostreambuf_iterator<char> outiter(ss);
-          for(int i=0; i<datalength; ++i)
+          for (unsigned int i = 0; i < datalength; ++i)
             *outiter++ = *initer++;
         }
 

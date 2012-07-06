@@ -312,7 +312,7 @@ namespace OpenBabel
     char *endptr;
     double temp;
 		if (atomLines.size() > 0) {
-      int i, j;
+      unsigned int i, j;
       for (i = 0; i < atomLines.size(); ++i) {
         j = i+1;
         tokenize(vs, atomLines[i]);

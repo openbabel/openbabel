@@ -120,7 +120,7 @@ namespace OpenBabel
   static cairo_status_t writeFunction(void* closure, const unsigned char* data, unsigned int length)
   {
     vector<char>* in = reinterpret_cast<vector<char>*>(closure);
-    for(int i=0;i<length;++i)
+    for (unsigned int i = 0; i < length; ++i)
       in->push_back(data[i]);
     return CAIRO_STATUS_SUCCESS;
   }
@@ -170,7 +170,7 @@ namespace OpenBabel
     cairo_surface_t *new_surface = scale_surface (m_surface, width, height, newWidth, newHeight);
     cairo_surface_write_to_png_stream(new_surface, writeFunction, &in);
     cairo_surface_destroy(new_surface);
-    for(int i=0; i<in.size(); ++i)
+    for (unsigned int i = 0; i < in.size(); ++i)
       ofs << in.at(i);
   }
 

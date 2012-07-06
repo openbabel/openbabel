@@ -544,7 +544,7 @@ namespace OpenBabel
         if ((line.substr(0, 6) != "M  CHG") && (line.substr(0, 6) != "M  RAD") &&
             (line.substr(0, 6) != "M  ISO"))
           continue;
-        int n = -1;
+        unsigned int n = 0;
         if (line.size() >= 9)
           n = ReadUIntField((line.substr(6, 3)).c_str()); //entries on this line
         if (n <= 0 || n > 99 || 6+n*8 > line.size()) { //catch ill-formed line
@@ -795,7 +795,7 @@ namespace OpenBabel
 
         int valence = 0; //Only non-zero when RAD value would be >=4 (outside spec)
         //or an unbonded metal
-        if(atom->GetSpinMultiplicity()>=4 || IsMetal(atom) && atom->GetValence()==0 )
+        if (atom->GetSpinMultiplicity()>=4 || (IsMetal(atom) && atom->GetValence()==0))
           valence = atom->GetValence()==0 ? 15 : atom->GetValence();
 
         snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d",

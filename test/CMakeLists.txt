@@ -64,8 +64,7 @@ foreach(test ${tests})
   add_test(${test}_Test ${TEST_PATH}/test_${test})
   set_tests_properties(${test}_Test PROPERTIES
     FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
-    ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
-    ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data")
+    ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib")
 endforeach(test ${tests})
 
 ############################################################
@@ -128,9 +127,8 @@ if(WITH_INCHI)
              ${TEST_PATH}/test_inchiwrite ${inchidata}/${test} ${inchidata}/${test}.txt)
     set_tests_properties(inchi${test}_Test PROPERTIES
                          FAIL_REGULAR_EXPRESSION "Not ok"
-                         ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
-                         ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data"
-	 	        )
+                         ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib"
+    )
   endforeach(test ${inchitests})
 endif(WITH_INCHI)
 
@@ -143,8 +141,7 @@ foreach(test ${old_tests})
   add_test(${test}_Test ${TEST_PATH}/test_${test})
   set_tests_properties(${test}_Test PROPERTIES
     FAIL_REGULAR_EXPRESSION "not ok"
-    ENVIRONMENT "BABEL_LIBDIR=${CMAKE_BINARY_DIR}/lib"
-    ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data"
+    ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib"
  )
 endforeach(test ${old_tests})
 
@@ -177,9 +174,11 @@ if(NOT MINGW AND NOT CYGWIN)
         babel sym fastsearch unique kekule)
     foreach(pytest ${pytests})
     SET_SOURCE_FILES_PROPERTIES(test${pytest}.py PROPERTIES
-        BABEL_LIBDIR "${CMAKE_BINARY_DIR}/lib"
-        BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
-)
+      PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib"
+      BABEL_LIBDIR "${CMAKE_BINARY_DIR}/lib"
+      BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
+      LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/lib"
+    )
       ADD_PYTHON_TEST(pytest_${pytest} test${pytest}.py)
       set_tests_properties(pytest_${pytest} PROPERTIES
            FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
@@ -200,6 +199,7 @@ if (PYTHON_BINDINGS)
         PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib"
         BABEL_LIBDIR "${CMAKE_BINARY_DIR}/lib"
         BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
+        LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/lib"
     )
     if(MSVC)
       SET_SOURCE_FILES_PROPERTIES(test${pybindtest}.py PROPERTIES

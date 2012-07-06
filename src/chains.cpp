@@ -1652,7 +1652,6 @@ namespace OpenBabel
   void OBChainsParser::TraceNucleicChain(OBMol &mol, unsigned int i, int r)
   {
     unsigned int neighbour[4];
-    unsigned int na,nb,nc;
     int count;
     int j,k;
 
@@ -1670,13 +1669,6 @@ namespace OpenBabel
         neighbour[count++] = nbr->GetIdx() - 1;
 
     resnos[i] = r;
-
-    if (count >= 1)
-      na = neighbour[0];
-    if (count >= 2)
-      nb = neighbour[1];
-    if (count >= 3)
-      nc = neighbour[2];
 
     switch( atomids[i] )
       {

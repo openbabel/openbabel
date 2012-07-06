@@ -228,10 +228,9 @@ bool SVGFormat::WriteChemObject(OBConversion* pConv)
   {
     int nmols = _objects.size();
     //Set table properties according to the options and the number of molecules to be output
-    if(!(nmols==0 ||                      //ignore this block if there is no input or
-         (_nrows && _ncols) ||            //if the user has specified both rows and columns or
-         (!_nrows && !_ncols) && nmols==1)//if neither is specified and there is one output molecule
-      )
+    if (!(nmols==0 ||                      //ignore this block if there is no input or
+         (_nrows && _ncols) ||             //if the user has specified both rows and columns or
+         (!_nrows && !_ncols && nmols==1)))//if neither is specified and there is one output molecule
     {
       if(!_nrows && !_ncols ) //neither specified
       {
@@ -246,7 +245,7 @@ bool SVGFormat::WriteChemObject(OBConversion* pConv)
     }
 
     //output all collected molecules
-    int n=0;
+    unsigned int n=0;
 /*
     if(_ptext)
     {

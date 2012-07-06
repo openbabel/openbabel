@@ -35,7 +35,7 @@ bool AddDataToSubstruct(OBMol* pmol,
         const std::string& value)
 {
   //Add data to atoms
-  for(int j=0; j<atomIdxs.size(); ++j)
+  for(unsigned int j=0; j<atomIdxs.size(); ++j)
   {
     OBAtom* pAtom = pmol->GetAtom(atomIdxs[j]);
     if(!pAtom)
@@ -220,7 +220,7 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
     if(pmol->NumHvyAtoms() != nPatternAtoms)
       return false;
 
-  int imol=0; //index of mol in pattern file
+  unsigned int imol=0; //index of mol in pattern file
   if(!queries.empty()) //filename supplied
   {
     //match is set true if any of the structures match - OR behaviour
@@ -291,7 +291,7 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
   {
     vector<vector<int> >::iterator iter;
 
-    if(vec[1]=="extract" || vec.size()>3 && vec[2]=="extract")
+    if (vec[1]=="extract" || (vec.size()>3 && vec[2]=="extract"))
     {
       //Delete all unmatched atoms. Use only the first match
       ExtractSubstruct(pmol, *pMappedAtoms->begin());

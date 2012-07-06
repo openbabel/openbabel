@@ -342,25 +342,30 @@ namespace OpenBabel
     }
 
     int i=0;
+    bool no_symmetry=false;
     char coords_type[25];
 
     //Prescan file to find second instance of "orientation:"
     //This will be the kind of coords used in the chk/fchk file
+    //Unless the "nosym" keyword has been requested
     while (ifs.getline(buffer,BUFF_SIZE))
       {
-        if (strstr(buffer,"orientation:") !=NULL)
-           i++;
-        if (i==2)
+        if (strstr(buffer,"Symmetry turned off by external request.") != NULL) 
+          {
+            // The "nosym" keyword has been requested
+            no_symmetry = true;
+          }
+        if (strstr(buffer,"orientation:") !=NULL) 
+          {
+            i++;
+            tokenize (vs, buffer);
+            strcpy (coords_type, vs[0].c_str());
+            strcat (coords_type, " orientation:");
+          }
+        if ((no_symmetry && i==1) || i==2)
            break;
-     }
-    if (!ifs.eof())
-    {
-    tokenize (vs, buffer);
-    strcpy (coords_type, vs[0].c_str());
-    strcat (coords_type, " orientation:");
+      }
     ifs.seekg(0);  //rewind
-    //    cout << coords_type << std::endl;
-    }
 
     mol.BeginModify();
     while (ifs.getline(buffer,BUFF_SIZE))
@@ -545,7 +550,7 @@ namespace OpenBabel
         {
           tokenize(vs, buffer);
           RotConsts.clear();
-          for(int i=3; i<vs.size(); ++i)
+          for (unsigned int i=3; i<vs.size(); ++i)
             RotConsts.push_back(atof(vs[i].c_str()));
         }
 
@@ -727,7 +732,7 @@ namespace OpenBabel
           // we have to separate the alpha and beta vectors
           std::vector<double>      betaOrbitals;
           std::vector<std::string> betaSymmetries;
-          int initialSize = orbitals.size();
+          unsigned int initialSize = orbitals.size();
           for (unsigned int i = betaStart; i < initialSize; ++i) {
             betaOrbitals.push_back(orbitals[i]);
             betaSymmetries.push_back(symmetries[i]);

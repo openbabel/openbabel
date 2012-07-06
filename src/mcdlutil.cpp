@@ -940,15 +940,15 @@ namespace OpenBabel {
     bool result=false;
     double centerX[3];
     double centerY[3];
-    int nBondNo;
+    unsigned int nBondNo;
     neigbourlist* bk;
     std::vector<int>bondList(listarSize());
     std::vector<int>* blStore=NULL;
     bool testBad,testOK;
-    int m,j,n1,n2,n,k;
+    unsigned int m, j, n1, n2, n, k;
     int rs;
     double dist,x,y,minDist;
-    int i;
+    unsigned int i;
     bool test;
     int at;
     double r1,r2,s1,s3;
@@ -1261,9 +1261,9 @@ namespace OpenBabel {
   }
 
   void TSimpleMolecule::clear() {
-    for (int i=0; i<fAtom.size(); i++) delete(fAtom.at(i));
+    for (unsigned int i=0; i<fAtom.size(); i++) delete(fAtom.at(i));
     fAtom.clear();
-    for (int i=0; i<fBond.size(); i++) delete(fBond.at(i));
+    for (unsigned int i=0; i<fBond.size(); i++) delete(fBond.at(i));
     fBond.clear();
   };
 
@@ -1385,7 +1385,7 @@ namespace OpenBabel {
   void TSimpleMolecule::deleteAtom(int index) {
     std::vector<TSingleAtom*> tempAtom(nAtoms()-1);
     std::vector<TSingleBond*> tempBond(nBonds());
-    int i,n;
+    unsigned int i, n;
 
     n=0;
     //atom deletion
@@ -3163,7 +3163,7 @@ namespace OpenBabel {
   bool compareAtoms(int a1, int a2, const std::vector<std::vector<int> *> aeqList) {
     std::vector<int> * l1;
     std::vector<int> * l2;
-    int i;
+    unsigned int i;
     bool result=false;
 
     if ((a1 < 0) || (a2 < 0) || (a1 >= aeqList.size()) || (a2 >= aeqList.size())) return result;
@@ -3357,7 +3357,7 @@ namespace OpenBabel {
   // (in the case where maxValues is [1111...]). Returns false when all possibilities
   // have been generated (true otherwise).
   bool incrementValues(std::vector<int>& currentValues, const std::vector<int> maxValues) {
-    int i,l;
+    unsigned int i, l;
     bool result=false;
 
     for (i=0; i<currentValues.size(); i++) {
@@ -3533,7 +3533,7 @@ namespace OpenBabel {
     int at1, at2;
     int n_rotors = 0;
 
-    for (int i=0; i<rotBondList.size(); i++)
+    for (unsigned int i=0; i<rotBondList.size(); i++)
       if (rotBondList[i] != 0) {
         n_rotors++;
         at1 = getBond(i)->at[0];
@@ -3547,13 +3547,13 @@ namespace OpenBabel {
     // inner_bonds will be identical to rotBondList except that
     // only the inner ten rotatable bonds will have values of 1
     inner_bonds.resize(rotBondList.size(), 0);
-    for (int j=0; j<nRotBondsMax && j<vtmp.size(); ++j) {
+    for (unsigned int j=0; j<nRotBondsMax && j<vtmp.size(); ++j) {
       inner_bonds[vtmp[j].first] = 1;
     }
 
     // remainder will store all of the other rotatable bonds
     if (vtmp.size() > nRotBondsMax) {
-      for (int j=nRotBondsMax; j<vtmp.size(); ++j) {
+      for (unsigned int j=nRotBondsMax; j<vtmp.size(); ++j) {
         remainder.push_back(vtmp[j].first);
       }
     }
@@ -3566,7 +3566,7 @@ namespace OpenBabel {
   //*******************************************************************************
 
   void deleteIntElement(std::vector<int> * source, int index) {
-    int i,n;
+    unsigned int i, n;
     std::vector<int> temp(source->size()-1);
 
     n=0;
@@ -5203,7 +5203,7 @@ namespace OpenBabel {
   TemplateRedraw::TemplateRedraw(){
     if(queryData.empty()) //Load internal and external templates only once
       {
-        int i,j;
+        unsigned int i, j;
         TEditedMolecule * em;
         TEditedMolecule * em1;
         TEditedMolecule * em2;
@@ -5238,7 +5238,7 @@ namespace OpenBabel {
   }
 
   void TemplateRedraw::clear() {
-    for (int i=0; i<queryData.size(); i++) {
+    for (unsigned int i=0; i<queryData.size(); i++) {
       delete(queryData[i]);
     };
   };
@@ -5247,7 +5247,7 @@ namespace OpenBabel {
   bool TemplateRedraw::internalBondsPresent(TEditedMolecule * mQuery, TSimpleMolecule * mStructure) {
     std::vector<int> aList(mStructure->nAtoms());
     std::vector<int> bList(mStructure->nBonds());
-    int i,n1,n2;
+    unsigned int i, n1, n2;
     bool result=false;
 
     for (i=0; i<aList.size(); i++) aList[i]=0;
@@ -5632,7 +5632,7 @@ namespace OpenBabel {
 
   void TemplateRedraw::arrangeMolecules(std::vector<PartFragmentDefinition *>& extendedList, double aspOptimal) {
 
-    int i,j;
+    unsigned int i, j;
     PartFragmentDefinition * ef;
     PartFragmentDefinition * efTemp;
     double maxX,minY,minX,maxY,r,r1;
@@ -6104,10 +6104,9 @@ namespace OpenBabel {
     TemplateRedraw tr;
     tr.redrawFine(sm);
     restoreDoubleBonds(sm,false);
-    for (int i=1; i<=pmol->NumAtoms(); i++) {
+    for (unsigned int i=1; i<=pmol->NumAtoms(); i++) {
       atom=pmol->GetAtom(i);
       atom->SetVector(sm.getAtom(i-1)->rx,-sm.getAtom(i-1)->ry,0.0);
-      //	ofs<<sm.getAtom(i-1)->rx<<" "<<sm.getAtom(i-1)->ry<<endl;
     };
     sm.getMolfile(ofs);
   };
@@ -6121,7 +6120,7 @@ namespace OpenBabel {
     TemplateRedraw tr;
     tr.redrawFine(sm);
     restoreDoubleBonds(sm,false);
-    for (int i=1; i<=pmol->NumAtoms(); i++) {
+    for (unsigned int i=1; i<=pmol->NumAtoms(); i++) {
       atom=pmol->GetAtom(i);
       atom->SetVector(sm.getAtom(i-1)->rx,-sm.getAtom(i-1)->ry,0.0);
     };
@@ -6330,7 +6329,7 @@ namespace OpenBabel {
   int compareStringsNumbers(string s1, string s2) {
 
     int result;
-    int n,i;
+    unsigned int n, i;
 
     n=s1.length();
     if (s2.length()>n) n=s2.length();

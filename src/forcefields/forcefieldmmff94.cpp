@@ -1412,13 +1412,15 @@ namespace OpenBabel
           if ((*ri)->IsInRing(nbr->GetIdx()))
             continue;
 
-          if (!nbr->IsAromatic())
-	    if (ringatom->IsCarbon() && ringatom->IsInRingSize(5)
-	      && ringatom->IsInRingSize(6) && nbr->IsCarbon() && nbr->IsInRingSize(5)
-	      && nbr->IsInRingSize(6))
-	        c60++;
-            else
+          if (!nbr->IsAromatic()) {
+            if (ringatom->IsCarbon() && ringatom->IsInRingSize(5)
+                && ringatom->IsInRingSize(6) && nbr->IsCarbon() && nbr->IsInRingSize(5)
+                && nbr->IsInRingSize(6)) {
+              c60++;
+            } else {
               continue;
+            }
+          }
 
           ringbond = _mol.GetBond(nbr->GetIdx(), index);
           if (!ringbond) {
@@ -3263,7 +3265,7 @@ namespace OpenBabel
           }
 
         // rule (h) page 632
-        if (!found_rule)
+        if (!found_rule) {
           if ((b->IsOxygen() || b->IsSulfur()) && (c->IsOxygen() || c->IsSulfur())) {
             double Wb, Wc;
 
@@ -3301,6 +3303,7 @@ namespace OpenBabel
             torsioncalc.v2 = 0.0;
             torsioncalc.v3 = sqrt(Vb * Vc) / Nbc;
           }
+        }
       }
 
       torsioncalc.a = a;
@@ -3744,22 +3747,30 @@ namespace OpenBabel
           if (nbr->IsNitrogen() && (o_count == 3))
             atom->SetPartialCharge(-1.0 / o_count);  // O3N
 
-          if (nbr->IsSulfur() && !sulfonamide)
+          if (nbr->IsSulfur() && !sulfonamide) {
             if (((o_count + s_count) == 2) && (nbr->GetValence() == 3)
-              && (nbr->BOSum() >= 3) && !sulfone_s_c)
+                && (nbr->BOSum() >= 3) && !sulfone_s_c) {
               atom->SetPartialCharge(-0.5); // O2S (sulfinate)
-            else if ((o_count + s_count) == 3)
+            }
+            else if ((o_count + s_count) == 3) {
               atom->SetPartialCharge(-1.0 / 3.0); // O3S
-            else if ((o_count + s_count) == 4)
+            }
+            else if ((o_count + s_count) == 4) {
               atom->SetPartialCharge(-0.5); // O4S
+            }
+          }
 
-          if (nbr->IsPhosphorus())
-            if ((o_count + s_count) == 2)
+          if (nbr->IsPhosphorus()) {
+            if ((o_count + s_count) == 2) {
               atom->SetPartialCharge(-0.5); // O2P
-            else if ((o_count + s_count) == 3)
+            }
+            else if ((o_count + s_count) == 3) {
               atom->SetPartialCharge(-2.0 / 3.0); // O3P
-            else if ((o_count + s_count) == 4)
+            }
+            else if ((o_count + s_count) == 4) {
               atom->SetPartialCharge(-0.25); // O4P
+            }
+          }
 
           if (type == 77)
             atom->SetPartialCharge(-0.25); // O4CL
@@ -4489,16 +4500,20 @@ namespace OpenBabel
       return 0;
 
     case 1:
-      if (btab)
-        if (!inverse)
+      if (btab) {
+        if (!inverse) {
           return 1;
-        else
+        } else {
           return 2;
-      if (btbc)
-        if (!inverse)
+        }
+      }
+      if (btbc) {
+        if (!inverse) {
           return 2;
-        else
+        } else {
           return 1;
+        }
+      }
 
     case 2:
       return 3;
@@ -4510,31 +4525,39 @@ namespace OpenBabel
       return 4;
 
     case 5:
-      if (btab)
-        if (!inverse)
+      if (btab) {
+        if (!inverse) {
           return 6;
-        else
+        } else {
           return 7;
-      if (btbc)
-        if (!inverse)
+        }
+      }
+      if (btbc) {
+        if (!inverse) {
           return 7;
-        else
+        } else {
           return 6;
+        }
+      }
 
     case 6:
       return 8;
 
     case 7:
-      if (btab)
-        if (!inverse)
+      if (btab) {
+        if (!inverse) {
           return 9;
-        else
+        } else {
           return 10;
-      if (btbc)
-        if (!inverse)
+        }
+      }
+      if (btbc) {
+        if (!inverse) {
           return 10;
-        else
+        } else {
           return 9;
+        }
+      }
 
     case 8:
       return 11;
@@ -4970,11 +4993,13 @@ namespace OpenBabel
       BOab = 5;
     if ((GetMltb(atoi(a->GetType())) == 2) && (GetMltb(atoi(b->GetType())) == 1))
       BOab = 5;
-    if (a->GetBond(b)->IsAromatic())
-      if (!HasPilpSet(atoi(a->GetType())) && !HasPilpSet(atoi(b->GetType())))
+    if (a->GetBond(b)->IsAromatic()) {
+      if (!HasPilpSet(atoi(a->GetType())) && !HasPilpSet(atoi(b->GetType()))) {
         BOab = 4;
-      else
+      } else {
         BOab = 5;
+      }
+    }
 
     switch (BOab) {
     case 5:
