@@ -148,23 +148,26 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       pmol->AddBond(i+1, piat->neighbor[j]+1, piat->bond_type[j]);
     }
 
-    //OB takes care of implicit hydrogens, so num_iso_H[0] and num_iso_H[1] are ignored,
-    //except for H2, which has one explicit H and one implict H. OB doesn't add implicit H to H.
-    //Implicit D and T also need to be added explicitly.
+    //Now use the implicit H info provided by InChI code to make explicit H in OBMol,
+    //assign spinMultiplicity, then remove the hydrogens to be consistent with old way.
+    //Add implicit hydrogen. m=0 is non-istopic H m=1,2,3 are isotope specified
     for(int m=0;m<=3;++m)
     {
-      if(piat->num_iso_H[m] && (m>1 || *piat->elname=='H'))
+      if(piat->num_iso_H[m])// && (m>1 || *piat->elname=='H'))
       {
         for(int k=0;k<piat->num_iso_H[m];++k)
         {
           OBAtom* DorT = pmol->NewAtom();
           DorT->SetAtomicNum(1);
-          DorT->SetIsotope(m);
+          if(m>0)
+            DorT->SetIsotope(m);
           pmol->AddBond(i+1, pmol->NumAtoms(), 1);
         }
       }
     }
   }
+  pmol->AssignSpinMultiplicity(true); //true means no implicit H
+  pmol->DeleteHydrogens();
 
   //***@todo implicit H isotopes
   //Stereochemistry

@@ -265,7 +265,7 @@ bool OBOpenDXCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     gd->GetOriginVector(origin);
 
     // data line 1: # of points in x, y, z (nx, ny, nz)
-    snprintf(buffer, BUFF_SIZE, "object 1 class gridposition counts %5d %5d %5d", nx, ny, nz);
+    snprintf(buffer, BUFF_SIZE, "object 1 class gridpositions counts %5d %5d %5d", nx, ny, nz);
     ofs << buffer << "\n";
 
     // data line 2: origin (x, y, z)

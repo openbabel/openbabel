@@ -839,7 +839,8 @@ namespace OpenBabel
     if (!subscript.empty()) {
       painter->SetFontSize(subscriptSize);
       OBFontMetrics metrics = painter->GetFontMetrics(subscript);
-      double yOffset = ispunct(subscript[subscript.size()-1]) || ispunct(subscript[0]) || ispunct(subscript[1])
+      double yOffset = ispunct(subscript[subscript.size()-1]) || ispunct(subscript[0]) 
+        || (subscript.size()>1 && ispunct(subscript[1]))
         ? -yOffsetSubscript : yOffsetSubscript;
       painter->DrawText(pos.x() + xOffset, pos.y() + yOffset, subscript);
     }

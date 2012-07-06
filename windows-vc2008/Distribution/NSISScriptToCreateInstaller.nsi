@@ -456,7 +456,7 @@ FunctionEnd
 ;General
 
   ;OpenBabel version
-  !define OBVersion 2.3.1
+  !define OBVersion 2.3.2
 
   ;Name and file
   Name "OpenBabel ${OBVERSION}"
@@ -515,14 +515,16 @@ FunctionEnd
 
 Section "Dummy Section" SecDummy
 
-  ;The data will be in (writable) subfolder of %ProgramData%, if it exists
+  SetShellVarContext all
+
+  ;The data will be in (writable) subfolder of %APPDATA%, if it exists
   Var /GLOBAL DataBase
   ClearErrors
-  ReadEnvStr $0 ProgramData
+  ReadEnvStr $0 APPDATA
   IfErrors 0 +3    
   StrCpy $DataBase "$INSTDIR"
   Goto +2
-  StrCpy $DataBase "$%ProgramData%\OpenBabel-${OBVERSION}"
+  StrCpy $DataBase "$%APPDATA%\OpenBabel-${OBVERSION}"
    
   SetOutPath "$DataBase\data"
   File /r /x .svn /x *.h ..\..\data\*.*
@@ -550,7 +552,7 @@ Section "Dummy Section" SecDummy
 
   File ..\libs\i386\*.dll
 
-  SetOutPath "$INSTDIR\examples"
+  SetOutPath "$DataBase\examples"
   File /r /x .svn ExampleFiles\*.*
   
   ;Files for user to build own C++ programs using precompiled OpenBabel
@@ -565,7 +567,7 @@ Section "Dummy Section" SecDummy
   ;Store installation folder
   WriteRegStr HKCU "Software\OpenBabel ${OBVERSION}" "" $INSTDIR
   
-  ;Install VC++ 2008 redistributable
+  ;Install VC++ 2010 redistributable
   ExecWait '"$INSTDIR/vcredist_x86.exe" /q:a'
   Delete "$INSTDIR\vcredist_x86.exe"
 
@@ -578,7 +580,7 @@ Section "Dummy Section" SecDummy
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Open Babel Folder.lnk" "$INSTDIR"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Open Babel GUI.lnk" "$INSTDIR\OBGUI.exe"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using Open Babel GUI.lnk" "$INSTDIR\doc\OpenBabelGUI.html"
-    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using babel (web).lnk" "http://openbabel.org/docs/${OBVERSION}"
+    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using babel (web).lnk" "http://openbabel.org/docs/2.3.1"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
   !insertmacro MUI_STARTMENU_WRITE_END
 
@@ -629,11 +631,10 @@ SectionEnd
 ;Uninstaller Section
 
 Section "Uninstall"
-  ; The following line is required to delete shortcuts successfully
-  ; http://nsis.sourceforge.net/Shortcuts_removal_fails_on_Windows_Vista
-  SetShellVarContext all
-
-  RMDir /r "$INSTDIR\examples"
+  RMDir /r "$DataBase\data"
+  RMDir /r "$DataBase\examples"
+  ;RMDir /r "$DataBase\obbuild"
+  RMDir /r "$DataBase"
   RMDir /r "$INSTDIR\doc"
 
   Delete "$INSTDIR\ob*.exe"
@@ -668,30 +669,36 @@ Section "Uninstall"
   Delete "$INSTDIR\Uninstall.exe"
 
   RMDir "$INSTDIR"
+  
+  SetShellVarContext all
   !insertmacro MUI_STARTMENU_GETFOLDER Application $MUI_TEMP
     
-  Delete "$SMPROGRAMS\$MUI_TEMP\*.lnk"
+  ;Delete "$SMPROGRAMS\$MUI_TEMP\*.lnk"
+  RMDir /r "$SMPROGRAMS\$MUI_TEMP"
 
   ;Remove from PATH
   push $INSTDIR
   Call un.RemoveFromPath
   
   ;Delete empty start menu parent diretories
-  StrCpy $MUI_TEMP "$SMPROGRAMS\$MUI_TEMP"
+  ;StrCpy $MUI_TEMP "$SMPROGRAMS\$MUI_TEMP"
  
-  startMenuDeleteLoop:
-	ClearErrors
-    RMDir $MUI_TEMP
-    GetFullPathName $MUI_TEMP "$MUI_TEMP\.."
-    
-    IfErrors startMenuDeleteLoopDone
-  
-    StrCmp $MUI_TEMP $SMPROGRAMS startMenuDeleteLoopDone startMenuDeleteLoop
-  startMenuDeleteLoopDone:
+;  startMenuDeleteLoop:
+;	ClearErrors
+;    RMDir $MUI_TEMP
+;    GetFullPathName $MUI_TEMP "$MUI_TEMP\.."
+;    
+;    IfErrors startMenuDeleteLoopDone
+;  
+;    StrCmp $MUI_TEMP $SMPROGRAMS startMenuDeleteLoopDone startMenuDeleteLoop
+;  startMenuDeleteLoopDone:
 
   DeleteRegKey /ifempty HKCU "Software\OpenBabel ${OBVERSION}"
   DeleteRegKey          HKCU "Software\OpenBabelGUI"
   DeleteRegKey          HKCR "*\shell\OBDepict"
+  
+  ; Remove entry in Add/Remove Programs
+  DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\OpenBabel-${OBVERSION}" 
 
   ; Remove entry in Add/Remove Programs
   DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\OpenBabel-${OBVERSION}" 
@@ -703,12 +710,13 @@ Section "Uninstall"
   DeleteRegValue        HKCU "Environment" "BABEL_DATADIR"
 
   ClearErrors
-  ReadEnvStr $0 ProgramData
+  ReadEnvStr $0 APPDATA
   IfErrors 0 +3    
   StrCpy $DataBase "$INSTDIR"
   Goto +2
-  StrCpy $DataBase "$%ProgramData%\OpenBabel-${OBVERSION}"
+  StrCpy $DataBase "$%APPDATA%\OpenBabel-${OBVERSION}"
   RMDir /r "$DataBase\data"
+  RMDir /r "$DataBase\examples"
   ;RMDir /r "$DataBase" is not safe 
   RMDir "$DataBase"
   

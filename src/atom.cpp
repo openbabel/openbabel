@@ -175,6 +175,7 @@ namespace OpenBabel
     _v = src->GetVector();
     _flags = src->GetFlag();
     _residue = (OBResidue*)NULL;
+    _id = src->GetId();
 
     _vdata.clear();
     //Copy all the OBGenericData, providing the new atom
