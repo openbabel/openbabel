@@ -64,7 +64,7 @@ namespace OpenBabel
                "Write Options, e.g. -x3\n"
                " 3  output V3000 not V2000 (used for >999 atoms/bonds) \n"
                " m  write no properties\n"
-               " w  use wedge and hash bonds from input (2D structures only)\n"
+               " w  use wedge and hash bonds from input (2D only)\n"
                " A  output in Alias form, e.g. Ph, if present\n\n";
       }
 
@@ -532,7 +532,7 @@ namespace OpenBabel
             OBAtom* at = mol.GetAtom(atomnum);
             if (at) {
               at->SetData(ad);
-              at->SetAtomicNum(0);
+              //at->SetAtomicNum(0); Now leave element as found
               //The alias has now been added as a dummy atom with a AliasData object.
               //Delay the chemical interpretation until the rest of the molecule has been built
               aliases.push_back(make_pair(ad, at));

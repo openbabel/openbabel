@@ -449,7 +449,7 @@ namespace OpenBabel
 
     if (vic[0] != NULL) {
       std::vector<OBInternalCoord*>::iterator it = vic.begin();
-      vic.insert(it, NULL);
+      vic.insert(it, static_cast<OBInternalCoord*>(NULL));
     }
 
     if (vic.size() != mol.NumAtoms() + 1) {
