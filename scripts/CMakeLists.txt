@@ -176,6 +176,20 @@ if (PERL_BINDINGS)
     if(PERL_LIBRARY)
       set(DO_PERL_BINDINGS ON BOOL)
       message(STATUS "Perl bindings will be compiled")
+      ### On some Linux OSes, linking against Perl fails due to no -lpthread.
+      ### The following is an attempt to work around this by taking the
+      ### link libraries from Perl.
+      execute_process(
+        COMMAND
+          ${PERL_EXECUTABLE} -V:perllibs
+        OUTPUT_VARIABLE
+          PERLLIBS_OUTPUT_VARIABLE
+        RESULT_VARIABLE
+          PERLLIBS_RESULT_VARIABLE
+        )
+      if (NOT PERLLIBS_RESULT_VARIABLE)
+        string(REGEX REPLACE "perllibs='([^']+)'.*" "\\1" PERL_EXTRA_LINK_FLAGS ${PERLLIBS_OUTPUT_VARIABLE})
+      endif (NOT PERLLIBS_RESULT_VARIABLE)
     endif(PERL_LIBRARY)
 
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp OR RUN_SWIG)
@@ -205,7 +219,7 @@ if (DO_PERL_BINDINGS)
     endif (RUN_SWIG)
 
     add_library(bindings_perl MODULE ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp)
-    target_link_libraries(bindings_perl ${PERL_LIBRARY} ${BABEL_LIBRARY})
+    target_link_libraries(bindings_perl ${PERL_LIBRARY} ${BABEL_LIBRARY} ${PERL_EXTRA_LINK_FLAGS})
     set_target_properties(bindings_perl PROPERTIES
         PREFIX ""
         OUTPUT_NAME OpenBabel)
