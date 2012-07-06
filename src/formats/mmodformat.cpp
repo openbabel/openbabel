@@ -166,6 +166,13 @@ namespace OpenBabel
         mol.AddBond(i, connections[i][j].first, connections[i][j].second);
 
     mol.EndModify();
+    mol.SetPartialChargesPerceived();
+    // Annotate origin of partial charges
+    OBPairData *dp = new OBPairData;
+    dp->SetAttribute("PartialCharges");
+    dp->SetValue("MACROMODEL");
+    dp->SetOrigin(fileformatInput);
+    mol.SetData(dp);
 
     OBBond *bond;
     vector<OBBond*>::iterator bi;

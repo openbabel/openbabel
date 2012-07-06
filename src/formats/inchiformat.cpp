@@ -83,16 +83,22 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
   //Call the conversion routine in InChI code
   int ret = GetStructFromINCHI( &inp, &out );
+  delete[] nonconstinchi;
+  delete[] opts;
 
   if (ret!=inchi_Ret_OKAY)
   {
-    string mes = out.szMessage ? out.szMessage : "Conversion failed";
-    obErrorLog.ThrowError("InChI code", mes + '\n' + inchi, obWarning);
+    string mes = out.szMessage;
+    if (!mes.empty()) {
+      Trim(mes);
+      obErrorLog.ThrowError("InChI code", "For " + inchi + "\n  " + mes, obWarning);
+    }
+    if (ret!=inchi_Ret_WARNING)
+    {
+      obErrorLog.ThrowError("InChI code", "Reading InChI failed", obError);
+      return false;
+    }
   }
-  delete[] nonconstinchi;
-  delete[] opts;
-  if(ret)
-    return false;
 
   //Read name if requested e.g InChI=1/CH4/h1H4 methane
   //OR InChI=1/CH4/h1H4 "First alkane"  Quote can be any punct char and
@@ -145,7 +151,7 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     //OB takes care of implicit hydrogens, so num_iso_H[0] and num_iso_H[1] are ignored,
     //except for H2, which has one explicit H and one implict H. OB doesn't add implicit H to H.
     //Implicit D and T also need to be added explicitly.
-    for(int m=0;m<3;++m)
+    for(int m=0;m<=3;++m)
     {
       if(piat->num_iso_H[m] && (m>1 || *piat->elname=='H'))
       {
@@ -499,7 +505,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
             if(pos!=string::npos)
             {
               mes.erase(pos,targ[i].size());
-              if(mes[pos]==';')
+              if(pos<mes.size() && mes[pos]==';')
                 mes[pos]=' ';
             }
           }
