@@ -141,6 +141,7 @@ class TestConversions(BaseTest):
         self.canFindExecutable("babel")
         self.data = [
 ('ClC=CF', 'FC=CCl',       'InChI=1S/C2H2ClF/c3-1-2-4/h1-2H'),
+('ClC=CF', 'FC=CCl',       'InChI=1S/C2H2ClF/c3-1-2-4/h1-2H'),
 ('Cl/C=C/F', 'F/C=C/Cl',   'InChI=1S/C2H2ClF/c3-1-2-4/h1-2H/b2-1+'),
 (r"Cl/C=C\F", r"F/C=C\Cl", 'InChI=1S/C2H2ClF/c3-1-2-4/h1-2H/b2-1-'),
 ('Cl[C@@](Br)(F)I', 'F[C@](I)(Br)Cl', 'InChI=1S/CBrClFI/c2-1(3,4)5/t1-/m0/s1'),
@@ -190,6 +191,7 @@ class TestConversions(BaseTest):
         """Test interconversion between SMILES and 3D MDL"""
         data = [
 ([0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 3]), # 'ClC=CF'
+([0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 3]), # 'ClC=CF'
 ([0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0]), # 'Cl/C=C/F'
 ([0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0]), # 'Cl/C=C\\F'
 # The bond parities are irrelevant/meaningless for the next two
@@ -225,6 +227,7 @@ class TestConversions(BaseTest):
         # perceive stereo themselves.
         data = [
 ([0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 3]), # 'ClC=CF'
+([0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 3]), # 'ClC=CF'
 ([0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0]), # 'Cl/C=C/F'
 ([0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0]), # 'Cl/C=C\\F'
 # The bond parities are irrelevant/meaningless for the next two
@@ -239,8 +242,8 @@ class TestConversions(BaseTest):
 ([0]*9, [0]*9), # r"I/C=C/1\NC1"
 ]
         for i, (atompar, bondstereo) in enumerate(data):
-            if i in [0, 5, 9]: continue # ambiguous stereo is lost in XYZ
-            if i in [6, 7, 8]: continue # perception of S=O from XYZ fails
+            if i in [0, 1, 6, 10]: continue # ambiguous stereo is lost in XYZ
+            if i in [7, 8, 9]: continue # perception of S=O from XYZ fails
 
             smiles, can = self.data[i][0:2]
             output, error = run_exec(smiles, "babel -ismi -oxyz --gen3d")
@@ -280,7 +283,7 @@ class TestConversions(BaseTest):
 ([0, 0, 0, 0, 3], [0, 0, 0, 0])  # 'ClC(Br)(F)I'
 ]
         for i, (atompar, bondstereo) in enumerate(data):
-            smiles, can = self.data[i + 3][0:2]
+            smiles, can = self.data[i + 4][0:2]
             output, error = run_exec(smiles, "babel -ismi -osdf")
             atoms, bonds = self.parseMDL(output)
             parities = [atom['parity'] for atom in atoms]
