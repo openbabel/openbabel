@@ -2319,7 +2319,7 @@ namespace OpenBabel
       return false;
     if(_pat->hasExplicitH) //The SMARTS pattern contains [H]
       {
-        //Do matching on a copy of mol with explict hydrogens
+        //Do matching on a copy of mol with explicit hydrogens
         OBMol tmol = mol;
         tmol.AddHydrogens(false,false);
         return(matcher.match(tmol,_pat,_mlist,single));
@@ -2343,7 +2343,7 @@ namespace OpenBabel
       return false;
     if(_pat->hasExplicitH) //The SMARTS pattern contains [H]
       {
-        //Do matching on a copy of mol with explict hydrogens
+        //Do matching on a copy of mol with explicit hydrogens
         OBMol tmol = mol;
         tmol.AddHydrogens(false,false);
         if(!matcher.match(tmol,_pat,mlist,mtype == Single))

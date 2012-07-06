@@ -39,7 +39,7 @@
 
 #define DEBUG 0
 #define DEBUG_INVERSIONS 0
-#define IMPLICIT_CIS_RING_SIZE 12
+#define IMPLICIT_CIS_RING_SIZE 8
 #define DELTA_ANGLE_FOR_OVERLAPPING_BONDS 4.0 // In degrees
 
 using namespace std;

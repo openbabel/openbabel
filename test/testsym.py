@@ -289,6 +289,21 @@ class TestConversions(BaseTest):
             result, correct_answer = line.split()
             self.assertEqual(result, correct_answer)
 
+    def test2DMDLto2DMDL(self):
+        """Make sure that stereo is preserved when writing wedge bonds"""
+        filenames = [self.getTestFile(x) for x in
+                     ["testsym_2Dtests_more.sdf",
+                      "testsym_2Dtests_threeligands.sdf"]]
+        # The test files have the correct canonical SMILES string
+        # stored in the data field "smiles"
+
+        output, error = run_exec("obabel -isdf %s %s -osdf --append smiles" %
+                                 (filenames[0], filenames[1]))
+        finaloutput, error = run_exec(output, "obabel -isdf -ocan")
+        for line in finaloutput.rstrip().split("\n"):
+            result, correct_answer = line.split()
+            self.assertEqual(result, correct_answer) 
+
     def testSMILESto0DMDL(self):
         """Test interconversion between SMILES and 0D MDL"""
         data = [

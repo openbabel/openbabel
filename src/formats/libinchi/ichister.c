@@ -3798,7 +3798,7 @@ int ReconcileCmlIncidentBondParities( inp_ATOM *at, int cur_atom, int prev_atom,
                For T (trans) the values are (1,1) or (2,2)
                For C (cis)   the values are (1,2) or (2,1)
                The fact that one pair = another with inverted parities, namely
-               Inv(1,1) = (2,2) and Inv(1,2) = (2,1), allows to
+               Inv(1,1) = (2,2) and Inv(1,2) = (2,1), allows one to
                simultaneouly invert parities of the current bond end atoms
                (at[cur_atom].sb_parity[i], at[nxt_atom].sb_parity[j])
                so that the final current atom parity cur_parity

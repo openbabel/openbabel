@@ -1641,7 +1641,7 @@ int ReadCommandLineParms(int argc, const char *argv[], INPUT_PARMS *ip,
     }
 #ifdef TARGET_LIB_FOR_WINCHI
     if ( !(bDisplay & 1) ) {
-        bXml &= ~(INCHI_OUT_PLAIN_TEXT_COMMENTS | INCHI_OUT_XML_TEXT_COMMENTS); /* do not ouput comments in wINChI text file results */
+        bXml &= ~(INCHI_OUT_PLAIN_TEXT_COMMENTS | INCHI_OUT_XML_TEXT_COMMENTS); /* do not output comments in wINChI text file results */
     } else {
         bXml |= INCHI_OUT_WINCHI_WINDOW;
     }

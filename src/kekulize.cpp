@@ -517,7 +517,7 @@ namespace OpenBabel
       }
 
       if (atomState[idx] == DOUBLE_ALLOWED && atom->IsNitrogen() && atom->GetFormalCharge() == 0 && atom->GetValence() == 3) {
-        // Correct N with three explict bonds, if we haven't already
+        // Correct N with three explicit bonds, if we haven't already
         atomState[idx] = DOUBLE_PROHIBITED;
         if (DEBUG) { cout << "atom " << idx << " rejected NR3 double bonds " << endl; }
       }

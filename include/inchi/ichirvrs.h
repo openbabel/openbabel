@@ -100,7 +100,7 @@ typedef struct tagBfsQueue {
 #define EXTRACT_STRUCT_NUMBER 1
 
 /* additional Mobile-H parities to be added to Fixed-H parities  */
-/* This allows to set parities that exist in Mobile-H layer only */
+/* This allows one to set parities that exist in Mobile-H layer only */
 typedef struct tagInpAtomAddParities {
     /* cml 0D parities */
     S_CHAR        bUsed0DParity;          /* bit=1 => stereobond; bit=2 => stereocenter */
