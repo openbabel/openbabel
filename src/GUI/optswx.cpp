@@ -345,7 +345,7 @@ int DynOptionswx::SetOptions(OpenBabel::OBConversion& Conv, OpenBabel::OBConvers
       if(!pChk->IsChecked())
       {
         // if a checkbox is not checked, ignore the subsidiary editboxes also
-        while((++itr)->first[0]==' ');
+        while(!(++itr)->first.empty()&& itr->first[0]==_T(' '));
         --itr;
         continue;
       }
@@ -374,7 +374,7 @@ int DynOptionswx::SetOptions(OpenBabel::OBConversion& Conv, OpenBabel::OBConvers
     OMapType::iterator itr2 = itr;
     while(++itr2!= OptionMap.end())
     {
-      if(itr2->first[0]!=' ') //subsequent editboxes have the name preceded by a space
+      if((itr2->first).empty() || itr2->first[0]!=_T(' ')) //subsequent editboxes have the name preceded by a space
         break;
       txt = txt + _T(' ') + static_cast<wxTextCtrl*>(itr2->second)->GetValue();
       ++itr;

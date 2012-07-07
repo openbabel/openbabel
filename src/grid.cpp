@@ -255,7 +255,6 @@ namespace OpenBabel
 
   void OBFloatGrid::SetVals(const std::vector<double> & vals)
   {
-    int size = _xdim*_ydim*_zdim;
     _values.clear();
     _values = vals;
   }

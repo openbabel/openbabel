@@ -125,7 +125,7 @@ namespace OpenBabel
       bool ReadRGroupBlock(istream& ifs,OBMol& mol, OBConversion* pConv);
       bool ReadUnimplementedBlock(istream& ifs,OBMol& mol, OBConversion* pConv, string& blockname);
       bool WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv);
-      void ReadPropertyLines(istream& ifs, OBMol& mol);
+      bool ReadPropertyLines(istream& ifs, OBMol& mol);
       bool TestForAlias(const string& symbol, OBAtom* at, vector<pair<AliasData*,OBAtom*> >& aliases);
 
     private:
@@ -499,29 +499,6 @@ namespace OpenBabel
 	        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
 	        return false;
 	      }
-        if (stereo) {
-          OBStereo::BondDirection bd;
-          switch (stereo) {
-            case 1:
-              bd = OBStereo::UpBond;
-              break;
-            case 6:
-              bd = OBStereo::DownBond;
-              break;
-            case 4:
-              bd = OBStereo::UnknownDir;
-              break;
-            case 3: // Unspecified stereo around double bond
-              if (order==2)
-                bd = OBStereo::UnknownDir;
-              break;
-            default:
-              bd = OBStereo::NotStereo;
-              break;
-          }
-          if (bd != OBStereo::NotStereo)
-            updown[mol.GetBond(begin, end)] = bd;
-        }
       }
 
       //
@@ -632,6 +609,22 @@ namespace OpenBabel
       ad->Expand(mol, atomnum); //Make chemically meaningful, if possible.
     }
 
+    // Set up the updown map we are going to use to derive stereo info
+    FOR_BONDS_OF_MOL(bond, mol) {
+      OBStereo::BondDirection bd = OBStereo::NotStereo;;
+      unsigned int flag = bond->GetFlags();
+      if (flag & OBBond::Wedge)
+        bd = OBStereo::UpBond;
+      if (flag & OBBond::Hash)
+        bd = OBStereo::DownBond;
+      if (flag & OBBond::WedgeOrHash)
+        bd = OBStereo::UnknownDir;
+      if (flag & OBBond::CisOrTrans && bond->GetBondOrder()==2)
+        bd = OBStereo::UnknownDir;
+      if (bd != OBStereo::NotStereo)
+        updown[&*bond] = bd;
+    }
+
     mol.AssignSpinMultiplicity();
     mol.EndModify();
 
@@ -643,7 +636,11 @@ namespace OpenBabel
     }
 
     //Get property lines
-    ReadPropertyLines(ifs, mol);
+    if(!ReadPropertyLines(ifs, mol)) {
+      //Has read the first line of the next reaction in RXN format
+      pConv->AddOption("$RXNread");
+      return true;
+    }
 
     if (mol.Has3D()) {
       if (!setDimension)
@@ -1545,10 +1542,13 @@ namespace OpenBabel
     return n;
   }
 
-  void MDLFormat::ReadPropertyLines(istream& ifs, OBMol& mol)
+  bool MDLFormat::ReadPropertyLines(istream& ifs, OBMol& mol)
   {
     string line;
     while (std::getline(ifs, line)) {
+      if (line.substr(0, 4) == "$RXN")
+        return false; //Has read the first line of the next reaction in RXN format
+
       if (line.find("<") != string::npos) {
         size_t lt = line.find("<")+1;
         size_t rt = line.find_last_of(">");
@@ -1580,6 +1580,7 @@ namespace OpenBabel
       if (line.substr(0, 4) == "$MOL")
         break;
     }
+    return true;
   }
 
   bool MDLFormat::TestForAlias(const string& symbol, OBAtom* at, vector<pair<AliasData*,OBAtom*> >& aliases)

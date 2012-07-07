@@ -2,14 +2,14 @@
 opalign.cpp - Align substructures in multiple molecules
 
 Copyright (C) 2010 by Chris Morley
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -23,6 +23,10 @@ GNU General Public License for more details.
 #include<openbabel/obconversion.h>
 #include "opisomorph.h"
 
+#ifndef DEPICTION2D
+#define DEPICTION2D     0x100 // Should have the same value as in format.h!!
+#endif
+
 namespace OpenBabel
 {
 using namespace std;
@@ -31,7 +35,7 @@ class OpAlign : public OBOp
 {
 public:
   OpAlign(const char* ID) : OBOp(ID, false), _align(false, false){};
-  const char* Description(){ return 
+  const char* Description(){ return
     "Align coordinates to the first molecule\n"
     "Typical use with a -s option:\n"
     "    obabel pattern.www  dataset.xxx  -outset.yyy  -s SMARTS  --align\n"
@@ -55,7 +59,7 @@ public:
     "See documentation for the -s option for its other possible\n"
     "parameters. For example, the matching atoms could be those\n"
     "of a molecule in a specified file.\n \n"
-    
+
     "Without an -s option, all the atoms in the first molecule\n"
     "are used as pattern atoms. The order of the atoms must be the same\n"
     "in all the molecules.\n\n"
@@ -88,7 +92,7 @@ bool OpAlign::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   if(!pmol)
     return false;
-    
+
   map<string,string>::const_iterator itr;
 
   // Is there an -s option?
@@ -103,7 +107,7 @@ bool OpAlign::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*
       _stext = itr->second; //get its parameter(s)
       if(!_pOpIsoM || _stext.empty())
       {
-        obErrorLog.ThrowError(__FUNCTION__, 
+        obErrorLog.ThrowError(__FUNCTION__,
         "No parameter on -s option, or its OBOp version is not loaded", obError);
         pConv->SetOneObjectOnly(); //to finish
         return false;
@@ -124,6 +128,18 @@ bool OpAlign::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*
       pgen->Do(pmol);
   }
 
+  //Do the alignment in 2D if the output format is svg, png etc. and there is no -xn option
+  if(pmol->GetDimension()==3 && pConv && !pConv->IsOption("n"))
+  {
+    OBFormat* pOutFormat = pConv->GetOutFormat();
+    if(pOutFormat->Flags() & DEPICTION2D)
+    {
+      OBOp* pgen = OBOp::FindType("gen2D");
+      if(pgen)
+        pgen->Do(pmol);
+    }
+  }
+
   if(pConv->IsFirstInput() || _refMol.NumAtoms()==0)
   {
     _refvec.clear();
@@ -137,20 +153,20 @@ bool OpAlign::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*
       //If there is a -s option, reference molecule has only those atoms that are matched
       //Call the -s option from here
       bool ret = _pOpIsoM->Do(pmol, _stext.c_str(), pmap, pConv);
-      // Get the atoms that were matched       
+      // Get the atoms that were matched
       vector<int> ats = _pOpIsoM->GetMatchAtoms();
       if(!ats.empty())
       {
         // Make a vector of the matching atom coordinates...
         for(vector<int>::iterator iter=ats.begin(); iter!=ats.end(); ++iter)
-          _refvec.push_back((pmol->GetAtom(*iter))->GetVector());        
+          _refvec.push_back((pmol->GetAtom(*iter))->GetVector());
         // ...and use a vector reference
         _align.SetRef(_refvec);
       }
       // Stop -s option being called normally, although it will still be called once
       //  in the DoOps loop already started for the current (first) molecule.
       pConv->RemoveOption("s",OBConversion::GENOPTIONS);
-      if(!ret) 
+      if(!ret)
       {
         // the first molecule did not match the -s option so a reference molecule
         // could not be made. Keep trying.
@@ -174,12 +190,12 @@ bool OpAlign::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*
   }
 
   if(_pOpIsoM) //Using -s option
-  {   
+  {
     //Ignore mol if it does not pass -s option
     if(!_pOpIsoM->Do(pmol, "", pmap, pConv)) // "" means will use existing parameters
       return false;
 
-    // Get the atoms equivalent to those in ref molecule        
+    // Get the atoms equivalent to those in ref molecule
     vector<int> ats = _pOpIsoM->GetMatchAtoms();
 
     // Make a vector of their coordinates and get the centroid
@@ -191,7 +207,7 @@ bool OpAlign::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*
       vec.push_back(v);
     }
     centroid /= vec.size();
-    
+
     // Do the alignment
     _align.SetTarget(vec);
     if(!_align.Align())

@@ -109,7 +109,7 @@ namespace OpenBabel {
       }
     protected:
       unsigned int m_index;
-      int m_atomicNum;
+      unsigned int m_atomicNum;
       bool m_isInRing, m_isAromatic;
       std::vector<OBQueryBond*> m_bonds;
       std::vector<OBQueryAtom*> m_nbrs;
@@ -181,7 +181,7 @@ namespace OpenBabel {
     protected:
       unsigned int m_index;
       OBQueryAtom *m_begin, *m_end;
-      int m_order;
+      unsigned int m_order;
       bool m_aromatic;
   };
 

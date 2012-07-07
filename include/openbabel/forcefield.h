@@ -565,8 +565,8 @@ namespace OpenBabel
     double 	*_velocityPtr; //!< pointer to the velocities
     // contraint varibles
     static OBFFConstraints _constraints; //!< Constraints
-    static int _fixAtom; //!< SetFixAtom()/UnsetFixAtom()
-    static int _ignoreAtom; //!< SetIgnoreAtom()/UnsetIgnoreAtom()
+    static unsigned int _fixAtom; //!< SetFixAtom()/UnsetFixAtom()
+    static unsigned int _ignoreAtom; //!< SetIgnoreAtom()/UnsetIgnoreAtom()
     // cut-off variables
     bool 	_cutoff; //!< true = cut-off enabled
     double 	_rvdw; //!< VDW cut-off distance

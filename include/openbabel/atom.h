@@ -77,12 +77,13 @@ namespace OpenBabel
 
   // Class OBAtom
   // class introduction in atom.cpp
+ #define OBATOM_TYPE_LEN 6
  class OBAPI OBAtom: public OBBase
     {
     protected:
       unsigned char                 _ele;       //!< atomic number (type unsigned char to minimize space -- allows for 0..255 elements)
       char                          _impval;    //!< implicit valence
-      char                          _type[6];   //!< atomic type
+      char                          _type[OBATOM_TYPE_LEN];   //!< atomic type
       short                         _fcharge;   //!< formal charge
       unsigned short                _isotope;   //!< isotope (0 = most abundant)
       short                         _spinmultiplicity;//!< atomic spin, e.g., 2 for radical  1 or 3 for carbene

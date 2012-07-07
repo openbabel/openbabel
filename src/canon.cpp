@@ -790,6 +790,7 @@ namespace OpenBabel {
       //
       // the ATOM-TYPES list
       //
+      OBStereoFacade facade(mol);
       for (std::size_t j = 0; j < code.atoms.size(); ++j) {
         OBAtom *atom = code.atoms[j];
         if (atom->GetIsotope())
@@ -797,8 +798,11 @@ namespace OpenBabel {
         if (atom->GetFormalCharge())
           hasCharge = true;
 
+        int hydrogens_to_include = atom->ExplicitHydrogenCount();
+        // We also include any implicit hydrogen on a stereocenter.
+        hydrogens_to_include += (facade.HasTetrahedralStereo(atom->GetId()) && atom->ImplicitHydrogenCount()==1) ? 1 : 0;
         unsigned int c = 10000 * atom->GetSpinMultiplicity() +
-                          1000 * atom->ExplicitHydrogenCount() +
+                          1000 * hydrogens_to_include +
                                  atom->GetAtomicNum();
 
         // add the atomic number to the code

@@ -373,15 +373,10 @@ namespace OpenBabel
 
   bool OBChemTsfm::IsAcid()
   {
-    //cout << _bgn.GetSMARTS() << " >> " << _end.GetSMARTS() << endl;
-    //cout << "  NumAtoms = " << _end.NumAtoms() << endl;
-
     if (_bgn.NumAtoms() > _end.NumAtoms())  // O=CO[#1:1] >> O=CO
       return true;
 
-    for (int i = 0; i < _end.NumAtoms(); ++i) {
-      //cout << "    _end(" << i << ")  " << _end.GetCharge(i) << endl;
-      //cout << "    _bgn(" << i << ")  " << _bgn.GetCharge(i) << endl;
+    for (unsigned int i = 0; i < _end.NumAtoms(); ++i) {
       if (_end.GetCharge(i) < 0)
         return true;
     }
@@ -391,12 +386,7 @@ namespace OpenBabel
 
   bool OBChemTsfm::IsBase()
   {
-    //cout << _bgn.GetSMARTS() << " >> " << _end.GetSMARTS() << endl;
-    //cout << "  NumAtoms = " << _end.NumAtoms() << endl;
-
-    for (int i = 0; i < _end.NumAtoms(); ++i) {
-      //cout << "    _end(" << i << ")  " << _end.GetCharge(i) << endl;
-      //cout << "    _bgn(" << i << ")  " << _bgn.GetCharge(i) << endl;
+    for (unsigned int i = 0; i < _end.NumAtoms(); ++i) {
       if (_end.GetCharge(i) > 0)
         return true;
     }

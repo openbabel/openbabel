@@ -130,12 +130,18 @@ bool RXNFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     //	OBConversion MolConv(*pConv); //new copy to use to read associated MOL
 
     istream &ifs = *pConv->GetInStream();
-
     string ln;
-    if (!getline(ifs,ln))
-      return(false);
-    if(Trim(ln).find("$RXN")!=0)
-      return false; //Has to start with $RXN
+    // When MDLFormat reads the last product it may also read and discard
+    // the line with $RXN for the next reaction. But it then sets $RXNread option.
+    if(pConv->IsOption("$RXNread"))
+      pConv->RemoveOption("$RXNread", OBConversion::OUTOPTIONS);
+    else
+    {
+      if (!getline(ifs,ln))
+        return(false);
+      if(Trim(ln).find("$RXN")!=0)
+        return false; //Has to start with $RXN
+    }
     if (!getline(ifs,ln))
       return(false); //reaction title
     pReact->SetTitle(Trim(ln));
@@ -200,9 +206,7 @@ bool RXNFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     if(pReact==NULL)
         return false;
 
-    OBConversion MolConv(*pConv); //new copy to use to write associated MOL
-    MolConv.AddOption("no$$$$",OBConversion::OUTOPTIONS);
-    MolConv.SetAuxConv(NULL); //temporary until a proper OBConversion copy constructor written
+    pConv->AddOption("no$$$$",OBConversion::OUTOPTIONS);
 
     OBFormat* pMolFormat = pConv->FindFormat("MOL");
     if(pMolFormat==NULL)
@@ -225,14 +229,14 @@ bool RXNFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     {
       ofs << "$MOL" << endl;
       //Write reactant in MOL format
-      pMolFormat->WriteMolecule(pReact->GetReactant(i).get(), &MolConv);
+      pMolFormat->WriteMolecule(pReact->GetReactant(i).get(), pConv);
     }
 
     for(i=0;i<pReact->NumProducts();i++)
     {
       ofs << "$MOL" << endl;
       //Write reactant in MOL format
-      pMolFormat->WriteMolecule(pReact->GetProduct(i).get(), &MolConv);
+      pMolFormat->WriteMolecule(pReact->GetProduct(i).get(), pConv);
     }
 
     return true;

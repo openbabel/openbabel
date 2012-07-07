@@ -172,6 +172,11 @@ if(wxWidgets_FOUND)
 endif()
 
 if(MSVC)
+  # Ensure that CharacterSet="0" in the project files
+  add_definitions(-D_SBCS) # Single-Byte Character Set (requires CMake 2.8.8)
+endif()
+
+if(MSVC)
   option(OB_USE_PREBUILT_BINARIES
     "Should Windows Open Babel builds use prebuilt binaries?" ON)
 endif()
@@ -343,6 +348,20 @@ if(${CMAKE_CXX_COMPILER_ID} MATCHES Intel AND UNIX)
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse2")
   endif(CMAKE_SIZEOF_VOID_P EQUAL 8 OR WITH_SSE2)
 endif(${CMAKE_CXX_COMPILER_ID} MATCHES Intel AND UNIX)
+
+#Find if OpenMP support is enabled
+
+option(ENABLE_OPENMP
+    "Enable support for OpenMP compilation of forcefield code"
+    OFF)
+if(ENABLE_OPENMP)
+  find_package(OpenMP)
+  if(OPENMP_FOUND)
+   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
+  endif()
+endif()
 
 if(MSVC90)
   # To be added: AND SP1  OR gcc>4.0

@@ -113,7 +113,7 @@ const char* OpNewS::Description()
     "With -v, only molecules NOT matching the SMARTS are converted.\n"
     "The optional second parameter causes the matched substructure to be\n"
     "colored if it is a color name like ``green`` or a hex value like\n"
-    "``#8dcb70``. The coloring is recognized by SVGFormat and CMLFormat.\n\n"
+    "``#8dcb70``. The coloring is recognized by SVGFormat and CMLFormat.\n \n"
 
     "The first parameter can also be a filename with an extension that\n"
     "can be interpreted as a file format:\n"
@@ -128,6 +128,9 @@ const char* OpNewS::Description()
     "Multiple color parameters can be specified and the coloring in the\n"
     "converted molecule corresponds to the first pattern molecule matched,\n"
     "or the last color if there are fewer colors than pattern molecules.\n\n"
+
+    "If the last parameter is ``showall``, all molecules are shown, even if\n"
+    "they do not match. This allows the -s option to be used for highlighting.\n \n"
 
     "If the second parameter is ``exact`` only exact matches are converted.\n"
     "If the second parameter is ``extract`` all the atoms in the converted\n"
@@ -178,6 +181,13 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
       inv = true;
       vec[0].erase(0,1);
     }
+
+    //Do not filter out any molecules if there is a parameter "showall";
+    //allows -s option to be used for highlighting substructures (--highlight also does this)
+    vector<string>::iterator it = std::remove(vec.begin(), vec.end(),"showall");
+    showAll = it != vec.end();
+    if(showAll)
+      vec.erase(it);
 
     //Interpret as a filename if possible
     MakeQueriesFromMolInFile(queries, vec[0], &nPatternAtoms, strstr(OptionText,"noH"));
@@ -273,7 +283,7 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
       pMappedAtoms = &sp.GetMapList();
   }
 
-  if((!match && !inv) || (match && inv))
+  if(!showAll && (!match && !inv) || (match && inv))
   {
     //delete a non-matching mol
     delete pmol;
@@ -287,7 +297,7 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
   else
     firstmatch.clear();
 
-  if(!inv && vec.size()>=2 && !vec[1].empty() && !nPatternAtoms)
+  if(match && !inv && vec.size()>=2 && !vec[1].empty() && !nPatternAtoms)
   {
     vector<vector<int> >::iterator iter;
 

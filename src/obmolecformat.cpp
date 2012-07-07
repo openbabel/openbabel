@@ -64,7 +64,7 @@ namespace OpenBabel
            vector<OBMol> SepArray = pmol->Separate(); //use un-transformed molecule
            //Add an appropriate title to each fragment
            if(SepArray.size()>1)
-             for(int i=0;i<SepArray.size();++i)
+             for (unsigned int i=0; i<SepArray.size(); ++i)
              {
                stringstream ss;
                ss << pmol->GetTitle() << '#' << i+1;
@@ -201,7 +201,6 @@ namespace OpenBabel
     }
 
     OBMol* pmol = dynamic_cast<OBMol*> (pOb);
-    bool ret=false;
     if(pmol) {
       if(pConv->IsOption("writeconformers", OBConversion::GENOPTIONS)) {
         //The last conformer is written in the calling function

@@ -11,7 +11,6 @@ ispy2 = True
 if sys.version_info[0] >= 3:
     nextmethod = "__next__"
     ispy2 = False
-
 try:
     test = os.write
     try:
@@ -19,20 +18,13 @@ try:
     except ImportError:
         cinfony = None
     try:
-        if sys.platform.startswith("win"):
-            if ispy2:
-                import pybel_py2x as obpybel
-            else:
-                import pybel_py3x as obpybel
-        else:
-            import pybel as obpybel
-        pybel = rdkit = cdk = None
+        import pybel
+        rdkit = cdk = None
     except ImportError:
-        obpybel = None
+        pybel = None
 except AttributeError:
     from cinfony import cdk
-    pybel = rdkit = obpybel = None
-
+    pybel = rdkit = None
 try:
     set
 except NameError:
@@ -401,10 +393,7 @@ GASTEIGER
         numatoms = len(list(self.toolkit.ob.OBMolAtomIter(self.mols[0].OBMol)))
         self.assertEqual(numatoms, 4)
 
-class TestOBPybel(TestPybel):
-    toolkit = obpybel
-
-class TestOBPybelNoDraw(TestOBPybel):
+class TestOBPybelNoDraw(TestPybel):
     def testDraw(self):
        """No drawing done"""
        pass
@@ -477,7 +466,7 @@ if __name__=="__main__":
     # testcases = [TestCDK]
     # testcases = [TestPybel]
     # testcases = [TestRDKit]
-    testcases = [TestOBPybel]
+    testcases = [TestPybel]
     for testcase in testcases:
         sys.stdout.write("\n\n\nTESTING %s\n%s\n\n\n" % (testcase.__name__, "== "*10))
         myunittest = unittest.defaultTestLoader.loadTestsFromTestCase(testcase)

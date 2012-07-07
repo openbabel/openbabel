@@ -173,7 +173,6 @@ namespace OpenBabel
    */
   void visitRing(OBMol *mol, OBRing *ring, std::vector<OBRing*> &rlist, std::vector<OBRing*> &rignored)
   {
-    const std::vector<int> &atoms = ring->_path;
     OBBitVec mask;
     // Make sure mask is the same size as the maximum ring atom/bond index.
     mask.SetBitOn(mol->NumAtoms());

@@ -4138,7 +4138,6 @@ namespace OpenBabel
 
     OBMolAtomDFSIter iter( this, StartIndex );
     OBMol newMol;
-    int fragments = 0;
     while( GetNextFragment( iter, newMol ) ) {
       result.push_back( newMol );
       newMol.Clear();

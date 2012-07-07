@@ -735,7 +735,7 @@ namespace OpenBabel
     tx = coordinates[_torsion[1]];
     ty = coordinates[_torsion[1]+1];
     tz = coordinates[_torsion[1]+2];
-    int i,j;
+    unsigned int i, j;
     for (i = 0; i < _rotatoms.size(); ++i)
       {
         j = _rotatoms[i];
@@ -815,7 +815,7 @@ namespace OpenBabel
     tx = c[_torsion[1]];
     ty = c[_torsion[1]+1];
     tz = c[_torsion[1]+2];
-    int i,j;
+    unsigned int i, j;
     for (i = 0; i < _rotatoms.size(); ++i)
       {
         j = _rotatoms[i];

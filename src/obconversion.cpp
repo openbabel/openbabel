@@ -1122,7 +1122,6 @@ namespace OpenBabel {
     //If infile == outfile issue error message and return false
     //If name without the extensions are the same issue warning and return true;
     //Otherwise return true
-    bool ret=true;
     string inname1, inname2;
     string::size_type pos;
     pos = infile.rfind('.');
