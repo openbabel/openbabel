@@ -529,9 +529,10 @@ Section "Dummy Section" SecDummy
   SetOutPath "$DataBase\data"
   File /r /x .svn /x *.h ..\..\data\*.*
 
-  SetOutPath "$INSTDIR\doc"
+  SetOutPath "$DataBase\doc"
   File ..\..\doc\OpenBabelGUI.html
   File ToolsPrograms.txt
+  File splash.png
 
   SetOutPath "$INSTDIR"
   File /oname=License.txt ..\..\COPYING
@@ -579,9 +580,8 @@ Section "Dummy Section" SecDummy
   ;Create shortcuts
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
-    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Open Babel Folder.lnk" "$INSTDIR"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Open Babel GUI.lnk" "$INSTDIR\OBGUI.exe"
-    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using Open Babel GUI.lnk" "$INSTDIR\doc\OpenBabelGUI.html"
+    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using Open Babel GUI.lnk" "$DataBase\doc\OpenBabelGUI.html"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using babel (web).lnk" "http://openbabel.org/docs/2.3.1"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
   !insertmacro MUI_STARTMENU_WRITE_END
@@ -633,12 +633,6 @@ SectionEnd
 ;Uninstaller Section
 
 Section "Uninstall"
-  RMDir /r "$DataBase\data"
-  RMDir /r "$DataBase\examples"
-  ;RMDir /r "$DataBase\obbuild"
-  RMDir /r "$DataBase"
-  RMDir /r "$INSTDIR\doc"
-
   Delete "$INSTDIR\ob*.exe"
   Delete "$INSTDIR\babel.exe"
   Delete "$INSTDIR\obdepict.bat"
@@ -718,6 +712,7 @@ Section "Uninstall"
   StrCpy $DataBase "$%APPDATA%\OpenBabel-${OBVERSION}"
   RMDir /r "$DataBase\data"
   RMDir /r "$DataBase\examples"
+  RMDir /r "$DataBase\doc"
   ;RMDir /r "$DataBase" is not safe 
   RMDir "$DataBase"
   
