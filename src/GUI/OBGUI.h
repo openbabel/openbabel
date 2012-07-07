@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include "stdwx.h"
 #include <wx/dnd.h>
 #include "optswx.h"
+#include <sstream>
 
 // ----------------------------------------------------------------------------
 // private classes
