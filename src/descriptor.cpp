@@ -386,7 +386,7 @@ bool OBDescriptor::CompareStringWithFilter(istream& optionText, string& sval, bo
     //If sval is quoted remove quotes
     if(sval[0]=='\"' || sval[0]=='\'')
       sval.erase(0,1);
-    if(sval.back()=='\"' || sval.back()=='\'')
+    if(sval[sval.size()-1]=='\"' || sval[sval.size()-1]=='\'')
       sval.erase(sval.size()-1);    
 
     bool leading=false, trailing=false;
