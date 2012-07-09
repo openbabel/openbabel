@@ -447,15 +447,24 @@ namespace OpenBabel
         if(charge) {
           if(abs(charge)!=1)
             ss << abs(charge);
-          ss << (charge>0 ? "+" : "-") ;
+          if(charge>0)
+            ss << '+';
+          else if (charge<-1) //use underscore for single negative charge and minus if multiple
+            ss << '-';
+          else
+          {
+            ss << '_';
+            yoffset -= 0.5 * metrics.height;
+          }
         }
-        if(spin) {
-          ss << (spin==2 ? "." : "..");
-          yoffset += 0.5 * metrics.height;
-        }
-        if(spin || charge<0)
-          d->painter->SetFontSize(2 * metrics.fontSize);
         d->painter->DrawText(x + 0.4*metrics.width, y+yoffset, ss.str());
+        if(spin) {
+          string radchars = (spin==2 ? "." : "..");
+          //yoffset += 0.5 * metrics.height;
+          d->painter->SetFontSize(2 * metrics.fontSize);
+          d->painter->DrawText(x + (0.4 + ss.str().size())*metrics.width,
+            y+yoffset, radchars);
+        }
         d->painter->SetFontSize(metrics.fontSize);//restore
       }
  
