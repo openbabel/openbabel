@@ -74,6 +74,8 @@ virtual const char* Description() //required
   "      #     Tanimoto >0.7 && Tanimoto < 0.9\n\n"
   "The datafile plus the ``-ifs`` option can be used instead of the index file.\n\n"
   "NOTE that the datafile MUST NOT be larger than 4GB. (A 32 pointer is used.)\n\n"
+  "Dative bonds like -[N+][O-](=O) are indexed as -N(=O)(=O), and when searching\n"
+  "the target molecule should be in the second form.\n\n"
 
   ".. seealso::\n\n"
 
