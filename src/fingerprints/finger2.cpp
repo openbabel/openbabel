@@ -45,7 +45,9 @@ public:
     "the atoms listed in reverse order and rings listed starting at different\n"
     "atoms, are identified and only a single canonical fragment is retained\n"
     "Each remaining fragment is assigned a hash number from 0 to 1020 which is\n"
-    "used to set a bit in a 1024 bit vector."
+    "used to set a bit in a 1024 bit vector.\n"
+    "For further details see:\n"
+    "http://baoilleach.blogspot.co.uk/2012/01/visualising-fragments-in-path-based.html \n"  
   ;}
 
 	//Calculates the fingerprint
