@@ -229,7 +229,7 @@ public:
         }
         if(pos!=string::npos)
         {
-          ver=line.substr(pos);
+          ver=line.substr(pos) + ' ';//space fixes bug in while() when number at end of line
           pos=1;
           while(isdigit(ver[++pos]));
           ver.erase(pos);
