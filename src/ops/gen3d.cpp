@@ -53,7 +53,7 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
   if (!pFF)
     return true;
 
-  pmol->AddHydrogens(false, true); // Add some hydrogens before running MMFF
+  pmol->AddHydrogens(false, false); // Add some hydrogens before running MMFF
   if (!pFF->Setup(*pmol)) {
     pFF = OBForceField::FindForceField("UFF");
     if (!pFF || !pFF->Setup(*pmol)) return true; // can't use either MMFF94 or UFF
