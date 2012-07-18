@@ -8,6 +8,7 @@ else(MINIMAL_BUILD)
         obabel
         obchiral
         obconformer
+        obdistgen
         obenergy
         obfit
         obgen

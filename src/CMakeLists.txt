@@ -151,6 +151,7 @@ set(openbabel_srcs
 if(EIGEN2_FOUND OR EIGEN3_FOUND)
   set(openbabel_srcs ${openbabel_srcs}
     conformersearch.cpp
+    distgeom.cpp
   )
 endif ()
 
