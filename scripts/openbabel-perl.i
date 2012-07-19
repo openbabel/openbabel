@@ -213,7 +213,7 @@ namespace std { class stringbuf {}; }
 %include <openbabel/alias.h>
 %include <openbabel/atomclass.h>
 
-# %include <openbabel/fingerprint.h> # Causes an error (I don't know why)
+// %include <openbabel/fingerprint.h> // Causes an error (I don't know why)
 %include <openbabel/descriptor.h>
 
 # Ignore shadowed methods
