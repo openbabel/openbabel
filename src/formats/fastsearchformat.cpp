@@ -283,10 +283,8 @@ virtual const char* Description() //required
         end = unique(begin, end); //removed duplicates are after new end
       }
 
-      //Output the candidate molecules, filtering through s filter, unless the
-      //fingerprint type does not require it, or it was not requested
-      if(fs.GetFingerprint()->Flags() & OBFingerprint::FPT_UNIQUEBITS
-                    || pConv->IsOption("n",OBConversion::INOPTIONS) )
+      //Output the candidate molecules, filtering through s filter, unless it was not requested
+      if(pConv->IsOption("n", OBConversion::INOPTIONS) )
         pConv->RemoveOption("s",OBConversion::GENOPTIONS);
 
       pConv->SetLast(false);
