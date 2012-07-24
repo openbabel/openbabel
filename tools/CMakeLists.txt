@@ -8,7 +8,6 @@ else(MINIMAL_BUILD)
         obabel
         obchiral
         obconformer
-        obdistgen
         obenergy
         obfit
         obgen
@@ -20,6 +19,12 @@ else(MINIMAL_BUILD)
         obsym
         obtautomer
      )
+  if(HAVE_EIGEN)
+    set(tools
+        ${tools}
+        obdistgen
+       )
+  endif()
 endif(MINIMAL_BUILD)
 
 INCLUDE(CheckFunctionExists)
