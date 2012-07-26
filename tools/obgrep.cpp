@@ -80,7 +80,7 @@ int main(int argc,char **argv)
           // the identifying file extension. This is a slight
           // reduction in flexibility (which is not currently used)
           pFormat = conv.FindFormat(iext);
-	  
+            
           if(pFormat==NULL)
             {
               cerr << program_name << ": cannot read input format!" << endl;
@@ -156,12 +156,14 @@ int main(int argc,char **argv)
 	
 	
       // Find Input filetype
-      pFormat = conv.FormatFromExt(FileIn);
-      if (pFormat == NULL)
-        {
-          cerr << program_name << ": cannot read input format!" << endl;
-          return (-1);
-        }
+      if (pFormat == NULL) {
+          pFormat = conv.FormatFromExt(FileIn);
+          if (pFormat == NULL)
+            {
+              cerr << program_name << ": cannot read input format!" << endl;
+              return (-1);
+            }
+      }
     }
 
   if (! conv.SetInAndOutFormats(pFormat, pFormat))
