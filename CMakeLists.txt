@@ -475,7 +475,7 @@ option(RUN_SWIG "Generate language bindings with SWIG" OFF)
 option(ALL_BINDINGS "Build all languages bindings" OFF)
 
 # Should PHP bindings be built
-option(PHP_BINDINGS "Build PHP bindings OFF)
+option(PHP_BINDINGS "Build PHP bindings" OFF)
 
 # Should Python bindings be built?
 option(PYTHON_BINDINGS "Build Python bindings" OFF)
