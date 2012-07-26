@@ -474,6 +474,9 @@ option(RUN_SWIG "Generate language bindings with SWIG" OFF)
 # Should all bindings be built?
 option(ALL_BINDINGS "Build all languages bindings" OFF)
 
+# Should PHP bindings be built
+option(PHP_BINDINGS "Build PHP bindings OFF)
+
 # Should Python bindings be built?
 option(PYTHON_BINDINGS "Build Python bindings" OFF)
 
@@ -492,6 +495,7 @@ option(CSHARP_BINDINGS "Build Csharp bindings" OFF)
 if(ALL_BINDINGS)
   set(PYTHON_BINDINGS ON)
   set(RUBY_BINDINGS ON)
+  set(PHP_BINDINGS ON)
   set(PERL_BINDINGS ON)
   set(JAVA_BINDINGS ON)
   set(CSHARP_BINDINGS ON)
