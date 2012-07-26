@@ -293,7 +293,7 @@ bool OBOpenDXCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     ofs << buffer << "\n";
 
     // data line 7: total # of points
-    snprintf(buffer, BUFF_SIZE, "object 3 class array type double rank 0 times %5d data follows", nx*ny*nz);
+    snprintf(buffer, BUFF_SIZE, "object 3 class array type double rank 0 items %5d data follows", nx*ny*nz);
     ofs << buffer << "\n";
 
     // The cube(s)
