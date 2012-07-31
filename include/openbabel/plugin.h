@@ -393,7 +393,7 @@ public:
   OB_STATIC_PLUGIN(CCCFormat, theCCCFormat)
   OB_STATIC_PLUGIN(CHEM3D1Format, theCHEM3D1Format)
   OB_STATIC_PLUGIN(CHEM3D2Format, theCHEM3D2Format)
-  OB_STATIC_PLUGIN(ChemDrawBinaryFormat, theChemDrawBinaryFormat)
+  OB_STATIC_PLUGIN(ChemDrawBinaryXFormat, theChemDrawBinaryXFormat)
   OB_STATIC_PLUGIN(ChemDrawFormat, theChemDrawFormat)
   OB_STATIC_PLUGIN(ChemKinFormat, theChemKinFormat)
   OB_STATIC_PLUGIN(CHTFormat, theCHTFormat)

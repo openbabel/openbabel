@@ -291,7 +291,7 @@ int main(int argc,char *argv[])
         }
     }
 
-#ifdef _WIN32
+#if defined(_WIN32) && defined(USING_DYNAMIC_LIBS)
   //Expand wildcards in input filenames and add to FileList
   vector<string> tempFileList(FileList);
   FileList.clear();

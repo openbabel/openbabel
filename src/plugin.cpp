@@ -242,7 +242,7 @@ std::vector<std::string> EnableStaticPlugins()
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCCCFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCHEM3D1Format)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCHEM3D2Format)->GetID());
-  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theChemDrawBinaryFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theChemDrawBinaryXFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theChemDrawFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theChemKinFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theCHTFormat)->GetID());
