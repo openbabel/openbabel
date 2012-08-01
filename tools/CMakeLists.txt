@@ -19,10 +19,11 @@ else(MINIMAL_BUILD)
         obsym
         obtautomer
      )
-  if(HAVE_EIGEN)
+  if(EIGEN3_FOUND)
     set(tools
         ${tools}
         obdistgen
+        obrms
        )
   endif()
 endif(MINIMAL_BUILD)
