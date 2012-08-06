@@ -53,6 +53,11 @@
 #include <openbabel/isomorphism.h>
 #include <openbabel/query.h>
 #include <openbabel/canon.h>
+
+#include <openbabel/stereo/tetrahedral.h>
+#include <openbabel/stereo/cistrans.h>
+#include <openbabel/stereo/squareplanar.h>
+#include <openbabel/stereo/python.h>
 %}
 
 #ifdef HAVE_EIGEN2
@@ -149,6 +154,7 @@ VECTORTEMPLATE_WRAP(Int, int)
 VECTORTEMPLATE_WRAP(UnsignedInt, unsigned int)
 VVTEMPLATE_WRAP(Int, int)
 VECTORTEMPLATE_WRAP(Double, double)
+VECTORTEMPLATE_WRAP(ULong, unsigned long)
 VECTORTEMPLATE_WRAP(String, std::string)
 VECTORTEMPLATE_WRAP(Vector3, OpenBabel::vector3)
 VVTEMPLATE_WRAP(Vector3, OpenBabel::vector3)
@@ -172,7 +178,7 @@ OpenBabel::OB ## subclass *to ## subclass(OpenBabel::OBGenericData *data) {
 }
 %}
 %enddef
-%inline %{ // can't use macro -- AliasData not OBAliasData
+%inline %{ /* can't use macro -- AliasData not OBAliasData */
 OpenBabel::AliasData *toAliasData(OpenBabel::OBGenericData *data) {
     return (OpenBabel::AliasData*) data;
 }
@@ -199,6 +205,9 @@ CAST_GENERICDATA_TO(UnitCell)
 CAST_GENERICDATA_TO(VectorData)
 CAST_GENERICDATA_TO(VibrationData)
 CAST_GENERICDATA_TO(VirtualBond)
+CAST_GENERICDATA_TO(TetrahedralStereo)
+CAST_GENERICDATA_TO(CisTransStereo)
+CAST_GENERICDATA_TO(SquarePlanarStereo)
 
 // This method is renamed to a valid Python method name, as otherwise
 // it cannot be used from Python
@@ -292,6 +301,7 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 %include <openbabel/isomorphism.h>
 %include <openbabel/query.h>
 %include <openbabel/canon.h>
+
 %include <openbabel/stereo/stereo.h>
 
 %warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
@@ -485,3 +495,107 @@ def exception(*args):
     raise Exception("Use OBMol.CloneData instead. OBMol.SetData is only for use from C++.")
 OBMol.SetData = exception
 %}
+
+
+%include <openbabel/stereo/tetranonplanar.h>
+%include <openbabel/stereo/tetraplanar.h>
+%include <openbabel/stereo/tetrahedral.h>
+%include <openbabel/stereo/cistrans.h>
+%include <openbabel/stereo/squareplanar.h>
+%include <openbabel/stereo/python.h>
+
+%extend OpenBabel::OBTetrahedralStereo {
+
+  OpenBabel::OBTetrahedralConfig GetConfig(OBStereo::Winding winding = OBStereo::Clockwise, OBStereo::View view = OBStereo::ViewFrom)
+  {
+    OpenBabel::OBTetrahedralStereo::Config cConfig = self->GetConfig(winding, view);
+    
+    OpenBabel::OBTetrahedralConfig pyConfig;
+    pyConfig.center = cConfig.center;
+    pyConfig.from_or_towards = cConfig.from;
+    pyConfig.refs = cConfig.refs;
+    pyConfig.winding = cConfig.winding;
+    pyConfig.view = cConfig.view;
+    pyConfig.specified = cConfig.specified;
+
+    return pyConfig;
+  }
+  
+  OpenBabel::OBTetrahedralConfig GetConfig(unsigned long from_or_towards, OBStereo::Winding winding = OBStereo::Clockwise, OBStereo::View view = OBStereo::ViewFrom)
+  {
+    OpenBabel::OBTetrahedralStereo::Config cConfig = self->GetConfig(from_or_towards, winding, view);
+    
+    OpenBabel::OBTetrahedralConfig pyConfig;
+    pyConfig.center = cConfig.center;
+    pyConfig.from_or_towards = cConfig.from;
+    pyConfig.refs = cConfig.refs;
+    pyConfig.winding = cConfig.winding;
+    pyConfig.view = cConfig.view;
+    pyConfig.specified = cConfig.specified;
+
+    return pyConfig;
+  }
+
+}
+
+%extend OpenBabel::OBCisTransStereo {
+
+  OpenBabel::OBCisTransConfig GetConfig(OBStereo::Shape shape = OBStereo::ShapeU)
+  {
+    OpenBabel::OBCisTransStereo::Config cConfig = self->GetConfig(shape);
+  
+    OpenBabel::OBCisTransConfig pyConfig;
+    pyConfig.begin = cConfig.begin;
+    pyConfig.end = cConfig.end;
+    pyConfig.refs = cConfig.refs;
+    pyConfig.shape = cConfig.shape;
+    pyConfig.specified = cConfig.specified;
+
+    return pyConfig;
+  }
+
+  OpenBabel::OBCisTransConfig GetConfig(unsigned long start, OBStereo::Shape shape = OBStereo::ShapeU)
+  {
+    OpenBabel::OBCisTransStereo::Config cConfig = self->GetConfig(start, shape);
+  
+    OpenBabel::OBCisTransConfig pyConfig;
+    pyConfig.begin = cConfig.begin;
+    pyConfig.end = cConfig.end;
+    pyConfig.refs = cConfig.refs;
+    pyConfig.shape = cConfig.shape;
+    pyConfig.specified = cConfig.specified;
+
+    return pyConfig;
+  }
+
+}
+
+%extend OpenBabel::OBSquarePlanarStereo {
+
+  OpenBabel::OBSquarePlanarConfig GetConfig(OBStereo::Shape shape = OBStereo::ShapeU)
+  {
+    OpenBabel::OBSquarePlanarStereo::Config cConfig = self->GetConfig(shape);
+  
+    OpenBabel::OBSquarePlanarConfig pyConfig;
+    pyConfig.center = cConfig.center;
+    pyConfig.refs = cConfig.refs;
+    pyConfig.shape = cConfig.shape;
+    pyConfig.specified = cConfig.specified;
+
+    return pyConfig;
+  }
+
+  OpenBabel::OBSquarePlanarConfig GetConfig(unsigned long start, OBStereo::Shape shape = OBStereo::ShapeU)
+  {
+    OpenBabel::OBSquarePlanarStereo::Config cConfig = self->GetConfig(start, shape);
+  
+    OpenBabel::OBSquarePlanarConfig pyConfig;
+    pyConfig.center = cConfig.center;
+    pyConfig.refs = cConfig.refs;
+    pyConfig.shape = cConfig.shape;
+    pyConfig.specified = cConfig.specified;
+
+    return pyConfig;
+  }
+
+}
