@@ -5,15 +5,15 @@ namespace OpenBabel {
   struct OBTetrahedralConfig
   {
 #ifndef SWIG
-    OBTetrahedralStereo::Config Convert(const OBTetrahedralConfig &other) const
+    static OBTetrahedralStereo::Config Convert(const OBTetrahedralConfig &other)
     {
       OBTetrahedralStereo::Config config;
-      config.center = center;
-      config.from = from_or_towards;
-      config.refs = refs;
-      config.winding = winding;
-      config.view = view;
-      config.specified = specified;
+      config.center = other.center;
+      config.from = other.from_or_towards;
+      config.refs = other.refs;
+      config.winding = other.winding;
+      config.view = other.view;
+      config.specified = other.specified;
       return config;
     }
 #endif
@@ -114,14 +114,14 @@ namespace OpenBabel {
   struct OBCisTransConfig
   {
 #ifndef SWIG
-    OBCisTransStereo::Config Convert(const OBCisTransConfig &other) const
+    static OBCisTransStereo::Config Convert(const OBCisTransConfig &other)
     {
       OBCisTransStereo::Config config;
-      config.begin = begin;
-      config.end = end;
-      config.refs = refs;
-      config.shape = shape;
-      config.specified = specified;
+      config.begin = other.begin;
+      config.end = other.end;
+      config.refs = other.refs;
+      config.shape = other.shape;
+      config.specified = other.specified;
       return config;
     }
 #endif
@@ -182,13 +182,13 @@ namespace OpenBabel {
   struct OBSquarePlanarConfig
   {
 #ifndef SWIG
-    OBSquarePlanarStereo::Config Convert(const OBSquarePlanarConfig &other) const
+    static OBSquarePlanarStereo::Config Convert(const OBSquarePlanarConfig &other)
     {
       OBSquarePlanarStereo::Config config;
-      config.center = center;
-      config.refs = refs;
-      config.shape = shape;
-      config.specified = specified;
+      config.center = other.center;
+      config.refs = other.refs;
+      config.shape = other.shape;
+      config.specified = other.specified;
       return config;
     }
 #endif

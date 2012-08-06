@@ -506,6 +506,11 @@ OBMol.SetData = exception
 
 %extend OpenBabel::OBTetrahedralStereo {
 
+  void SetConfig(const OpenBabel::OBTetrahedralConfig &config)
+  {
+    self->SetConfig(OpenBabel::OBTetrahedralConfig::Convert(config));
+  }
+
   OpenBabel::OBTetrahedralConfig GetConfig(OBStereo::Winding winding = OBStereo::Clockwise, OBStereo::View view = OBStereo::ViewFrom)
   {
     OpenBabel::OBTetrahedralStereo::Config cConfig = self->GetConfig(winding, view);
@@ -540,6 +545,11 @@ OBMol.SetData = exception
 
 %extend OpenBabel::OBCisTransStereo {
 
+  void SetConfig(const OpenBabel::OBCisTransConfig &config)
+  {
+    self->SetConfig(OpenBabel::OBCisTransConfig::Convert(config));
+  }
+
   OpenBabel::OBCisTransConfig GetConfig(OBStereo::Shape shape = OBStereo::ShapeU)
   {
     OpenBabel::OBCisTransStereo::Config cConfig = self->GetConfig(shape);
@@ -571,6 +581,11 @@ OBMol.SetData = exception
 }
 
 %extend OpenBabel::OBSquarePlanarStereo {
+
+  void SetConfig(const OpenBabel::OBSquarePlanarConfig &config)
+  {
+    self->SetConfig(OpenBabel::OBSquarePlanarConfig::Convert(config));
+  }
 
   OpenBabel::OBSquarePlanarConfig GetConfig(OBStereo::Shape shape = OBStereo::ShapeU)
   {
