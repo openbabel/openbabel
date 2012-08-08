@@ -37,7 +37,7 @@ namespace OpenBabel {
   public:
     DistanceGeometryPrivate(const unsigned int N)
     {
-      bounds = Eigen::MatrixXf(N, N);
+      bounds = Eigen::MatrixXf(static_cast<int>(N), static_cast<int>(N));
     }
     ~DistanceGeometryPrivate()
     { }
