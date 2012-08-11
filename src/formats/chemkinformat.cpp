@@ -233,6 +233,7 @@ int ChemKinFormat::ReadLine(istream& ifs )
     //discard lines that are empty or contain just a comment
     if(Trim(ln).empty() || ln[0]=='!')
       ln.clear();
+    comment.clear();
   }
   string::size_type eqpos, commentpos;
   commentpos = ln.find('!');
@@ -242,8 +243,6 @@ int ChemKinFormat::ReadLine(istream& ifs )
     comment = ln.substr(commentpos+1);
     ln.erase(commentpos);
   }
-  else
-    comment.clear();
 
   eqpos = ln.find('=');
   //eof may have been set, but we need ReadMolecule() to be called again to process this line
