@@ -37,11 +37,10 @@
 #include <unistd.h>
 #endif
 
+#include <cassert>
 #include <sstream>
-#include <boost/unordered_map.hpp>
 
 using namespace std;
-using namespace boost;
 using namespace OpenBabel;
 
 class AtomDistanceSorter
