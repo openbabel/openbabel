@@ -310,7 +310,7 @@ int main(int argc,char *argv[])
       if(FileList.empty())
         {
           cerr << "No input file or format spec or possibly a misplaced option.\n"
-            "Options, other than -i -o -O -m, must come after the input files.\n" <<endl;
+            "Most options must come after the input files. (-i -o -O -m can be anywhwere.)\n" <<endl;
           usage();
         }
     }

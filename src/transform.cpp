@@ -240,7 +240,7 @@ namespace OpenBabel
 "-b Convert dative bonds e.g.[N+]([O-])=O to N(=O)=O\n"
 "-r Remove all but the largest contiguous fragment\n"
 "-c Center Coordinates\n"
-"-C Combine mols in first file with others having same name\n"
+"-C Combine mols in first file with others by name\n"
 "--filter <filterstring> Filter: convert only when tests are true:\n"
 "--add <list> Add properties from descriptors\n"
 "--delete <list> Delete properties in list\n"
