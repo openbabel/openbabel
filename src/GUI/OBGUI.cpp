@@ -494,7 +494,7 @@ void OBGUIFrame::OnHelp(wxCommandEvent& WXUNUSED(event))
 void OBGUIFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
   //(wxT not required after v2.90)  
-  wxString msg(
+  std::string cmsg =
     "OpenBabelGUI (C) 2006 by Chris Morley\n\n"
     "This program is part of the OpenBabel project,\n"
     "which is released under the GNU General Public License.\n"
@@ -507,7 +507,9 @@ void OBGUIFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
     "T Vandermeersch and G R Hutchison\n"
     "Journal of Cheminformatics 2011, 3:33\n"
     "doi:10.1186/1758-2946-3-33\n\n"
-    "OpenBabel version ");
+    "OpenBabel version ";
+
+  wxString msg(cmsg.c_str(), wxConvUTF8);
   msg << _T(BABEL_VERSION);
   wxMessageBox(msg, _T("About OpenBabelGUI"), wxOK | wxICON_INFORMATION | wxCENTER, this);
 }
