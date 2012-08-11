@@ -24,7 +24,7 @@ include (MacroEnsureVersion)
 # had too many 1.100.1 releases. :-)
 set(BABEL_MAJ_VER   2)
 set(BABEL_MIN_VER   3)
-set(BABEL_PATCH_VER 90)
+set(BABEL_PATCH_VER 2)
 
 # This should be phased out in preference for just using the target name
 set(BABEL_LIBRARY openbabel)
@@ -164,7 +164,7 @@ endif()
 
 # wxWidgets instructions based on http://wiki.wxwidgets.org/CMake
 #find_package(wxWidgets COMPONENTS base core REQUIRED)
-find_package(wxWidgets COMPONENTS base core)
+find_package(wxWidgets COMPONENTS base core adv)
 if(wxWidgets_FOUND)
   include(${wxWidgets_USE_FILE})
   add_definitions(-DHAVE_WXWIDGETS)
@@ -179,6 +179,8 @@ endif()
 if(MSVC)
   option(OB_USE_PREBUILT_BINARIES
     "Should Windows Open Babel builds use prebuilt binaries?" ON)
+	# dlhandler_win32.cpp assumes multibyte character set
+	remove_definitions(-DUNICODE -D_UNICODE)
 endif()
 
 if(MSVC AND OB_USE_PREBUILT_BINARIES)
@@ -363,10 +365,12 @@ if(ENABLE_OPENMP)
   endif()
 endif()
 
-if(MSVC90)
+message(STATUS "MSVC_VERSION =" ${MSVC_VERSION})
+if(${MSVC_VERSION} EQUAL 1600)
   # To be added: AND SP1  OR gcc>4.0
   add_definitions(-DHAVE_SHARED_POINTER)
   set(SHARED_POINTER true)
+  message("SHARED_POINTER set") 
 endif()
 
 # Some rpath handling for Linux and Mac
