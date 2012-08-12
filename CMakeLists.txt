@@ -365,12 +365,14 @@ if(ENABLE_OPENMP)
   endif()
 endif()
 
-message(STATUS "MSVC_VERSION =" ${MSVC_VERSION})
-if(${MSVC_VERSION} EQUAL 1600)
-  # To be added: AND SP1  OR gcc>4.0
-  add_definitions(-DHAVE_SHARED_POINTER)
-  set(SHARED_POINTER true)
-  message("SHARED_POINTER set") 
+if(${MSVC_VERSION})
+  message(STATUS "MSVC_VERSION =" ${MSVC_VERSION})
+  if (${MSVC_VERSION} EQUAL 1600)
+    # To be added: AND SP1  OR gcc>4.0
+    add_definitions(-DHAVE_SHARED_POINTER)
+    set(SHARED_POINTER true)
+    message("SHARED_POINTER set") 
+  endif()
 endif()
 
 # Some rpath handling for Linux and Mac
