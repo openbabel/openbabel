@@ -120,8 +120,8 @@ bool OBGUIApp::OnInit()
   wxBitmap bitmap;
   std::ifstream fs; //not actually used
   //Get splash screen from normal OB data directory
-  std::string splfile = OpenDatafile(fs, "splash.png").c_str();
-  if(!splfile.empty() && bitmap.LoadFile(splfile.c_str(), wxBITMAP_TYPE_PNG))
+  std::string splfile = OpenDatafile(fs, "splash.png");
+  if(!splfile.empty() && bitmap.LoadFile(wxString(splfile.c_str(), wxConvUTF8), wxBITMAP_TYPE_PNG))
   {
     wxSplashScreen* splash = new wxSplashScreen(bitmap,
       wxSPLASH_CENTRE_ON_PARENT|wxSPLASH_TIMEOUT,
