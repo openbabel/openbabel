@@ -833,3 +833,4 @@ string CDXReader::TagName(map<CDXTag, string>& enummap, CDXTag tag)
 }
 
 } //namespace
+
