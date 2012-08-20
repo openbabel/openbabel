@@ -1,3 +1,8 @@
+2012-08-20  Paolo Tosco <paolo.tosco@unito.it>
+
+	* src/formats/mol2format.cpp: added a check for N.4 nitrogens
+	(fixes PR#3557898)
+
 2012-06-09  Paolo Tosco <paolo.tosco@unito.it>
 
 	* src/kekulize.cpp: reverted the r4862 patch to kekulize.cpp;

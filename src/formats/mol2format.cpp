@@ -178,6 +178,7 @@ namespace OpenBabel
                atmid, &x,&y,&z, temp_type, &resnum, resname, &pcharge);
 
         atom.SetVector(x, y, z);
+        atom.SetFormalCharge(0);
 
         // Handle "CL" and "BR" and other mis-typed atoms
         str = temp_type;
@@ -201,6 +202,9 @@ namespace OpenBabel
           str = "Ti";
         } else if (strncasecmp(temp_type,"Ru.", 3) == 0) { // e.g. Ru.oh
           str = "Ru";
+        // Fixes PR#3557898
+        } else if (strncmp(temp_type, "N.4", 3) == 0) {
+          atom.SetFormalCharge(1);
         }
 
         ttab.SetToType("ATN");
@@ -241,11 +245,11 @@ namespace OpenBabel
         ttab.Translate(str1,str);
         atom.SetType(str1);
         atom.SetPartialCharge(pcharge);
-	// MMFF94 has different atom types for Cu(I) and Cu(II)
-	// as well as for Fe(II) and Fe(III), so the correct formal
-	// charge is needed for correct atom type assignment
-	if (str1 == "Cu" || str1 == "Fe")
-	   atom.SetFormalCharge((int)pcharge);
+        // MMFF94 has different atom types for Cu(I) and Cu(II)
+        // as well as for Fe(II) and Fe(III), so the correct formal
+        // charge is needed for correct atom type assignment
+        if (str1 == "Cu" || str1 == "Fe")
+          atom.SetFormalCharge((int)pcharge);
         if (!mol.AddAtom(atom))
           return(false);
         if (!IsNearZero(pcharge))
