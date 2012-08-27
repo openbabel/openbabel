@@ -61,6 +61,7 @@ namespace OpenBabel {
        * @return True if the conformer passes the filter.
        */
       virtual bool IsGood(const OBMol &mol, const RotorKey &key, double *coords) = 0;
+      virtual ~OBConformerFilter() {}
   };
 
   /**
@@ -139,6 +140,7 @@ namespace OpenBabel {
   class OBAPI OBConformerScore
   {
     public:
+      virtual ~OBConformerScore() {}
       /**
        * Conformer scores can be preferably high or low.
        */
