@@ -2672,6 +2672,8 @@ namespace OpenBabel {
         getAtom(listAtomClean[i])->rx=getAtom(listAtomClean[i])->rx-xCenterNew+xCenterOld;
         getAtom(listAtomClean[i])->ry=getAtom(listAtomClean[i])->ry-yCenterNew+yCenterOld;
       };
+    // Tidy up
+    free(bk);
   };
 
 
@@ -4535,7 +4537,7 @@ namespace OpenBabel {
       queryStereoQ=stereoBondChange(); //Stereo bond conversion
     };
     delete(molecule1);
-    delete(queryBK);
+    free(queryBK);
     return result;
   };
 
