@@ -61,7 +61,7 @@ namespace OpenBabel {
        * @return True if the conformer passes the filter.
        */
       virtual bool IsGood(const OBMol &mol, const RotorKey &key, double *coords) = 0;
-      virtual ~OBConformerFilter() {}
+      virtual ~OBConformerFilter() = 0;
   };
 
   /**
@@ -112,10 +112,10 @@ namespace OpenBabel {
   class OBAPI OBStericConformerFilter : public OBConformerFilter
   {
     public:
-      OBStericConformerFilter(double cutoff) : m_cutoff(cutoff) {}
+      OBStericConformerFilter(double cutoff) : m_cutoff(cutoff*cutoff) {}
       bool IsGood(const OBMol &mol, const RotorKey &key, double *coords);
     private:
-      double m_cutoff;
+      double m_cutoff; //!< Internal cutoff (used as a squared distance)
   };
 
   //////////////////////////////////////////////////////////
@@ -140,7 +140,6 @@ namespace OpenBabel {
   class OBAPI OBConformerScore
   {
     public:
-      virtual ~OBConformerScore() {}
       /**
        * Conformer scores can be preferably high or low.
        */
@@ -162,6 +161,7 @@ namespace OpenBabel {
        */
       virtual double Score(OBMol &mol, unsigned int index, const RotorKeys &keys,
           const std::vector<double*> &conformers) = 0;
+      virtual ~OBConformerScore() = 0;
   };
 
   /**
@@ -205,7 +205,49 @@ namespace OpenBabel {
       long unsigned int energy_ncompute;
       long unsigned int energy_nrequest;
   };
+  
+  /**
+   * @class OBMinimizingEnergyConformerScore conformersearch.h <openbabel/conformersearch.h>
+   * @brief A lowest energy conformer scoring class (after minimization)
+   * @since 2.4
+   */
+  class OBAPI OBMinimizingEnergyConformerScore : public OBConformerScore
+  {
+    public:
+      OBMinimizingEnergyConformerScore () {
+	energy_map.clear ();
+	energy_ncompute = 0;
+	energy_nrequest = 0;
+      }
+      long unsigned int GetNbEnergyCompute () {return energy_ncompute;}
+      long unsigned int GetNbEnergyRequest () {return energy_nrequest;}
+      Preferred GetPreferred() { return LowScore; }
+      Convergence GetConvergence() { return Lowest; }
+      double Score(OBMol &mol, unsigned int index, const RotorKeys &keys,
+          const std::vector<double*> &conformers);
+    private:
+      mapRotorEnergy energy_map;
+      long unsigned int energy_ncompute;
+      long unsigned int energy_nrequest;
+  };
 
+  /**
+   * @class OBMinimizingRMSDConformerScore conformersearch.h <openbabel/conformersearch.h>
+   * @brief An RMSD conformer scoring class, after a short minimization
+   *
+   * This scores conformers by the RMSD between the conformer and the closest, to produce a
+   * diverse set of conformers, but after minimization. This ensures each conformer is
+   * "reasonable" and avoids steric clashes.
+   * @since 2.4
+   */
+  class OBAPI OBMinimizingRMSDConformerScore : public OBConformerScore
+  {
+    public:
+      Preferred GetPreferred() { return LowScore; }
+      Convergence GetConvergence() { return Lowest; }
+      double Score(OBMol &mol, unsigned int index, const RotorKeys &keys,
+          const std::vector<double*> &conformers);
+  };
 
   //////////////////////////////////////////////////////////
   //
@@ -261,6 +303,7 @@ namespace OpenBabel {
        */
       void SetFixedBonds(const OBBitVec &fixedBonds) { m_fixedBonds = fixedBonds; }
 
+
       /**
        * Set the filter method used to check if a newly generated is acceptable. Typical
        * examples are a steric filter or electrostatic energy filter. The filters make a binary
@@ -301,9 +344,8 @@ namespace OpenBabel {
 
       void GetConformers(OBMol &mol);
 
-       /* @brief Set an output stream for logging. If NULL pointer is provided, logging is disabled. */
+      /* @brief Set an output stream for logging. If NULL pointer is provided, logging is disabled. */
       void SetLogStream  (std::ostream *sptr) {m_logstream = sptr;}
-
 
       /*************************************************/
       /* Methods related to fitness sharing parameters */
@@ -371,7 +413,6 @@ namespace OpenBabel {
        */
       bool IsGood(const RotorKey &key);
 
-
       //! @brief Genetic similarity measure, i.e. "distance" between two rotor keys.
       int key_distance (const RotorKey &key1, const RotorKey &key2);      
       //! @brief Make a local search on the best individual
@@ -385,7 +426,7 @@ namespace OpenBabel {
       //! @brief Perform one generation with fitness sharing
       double sharing_generation ();
 
-      int m_numConformers; //!< The desired number of conformers. This is also the population size.
+      unsigned int m_numConformers; //!< The desired number of conformers. This is also the population size.
       int m_numChildren; //!< The number of children generated each generation
       int m_mutability; //!< The mutability for generating the next generation
       int m_convergence; //!< Number of generations that remain unchanged before quiting
@@ -403,8 +444,7 @@ namespace OpenBabel {
       int niche_radius;		//!< A pre-determined niche radius, for dynamic niche sharing.
       double p_crossover;	//!< Crossover probability
       double niche_mating;	//!< Probability of forcing the second parent in the first parent
-      int local_opt_rate;       //!< Perform a random local optimization every local_opt_rate generations. Disabled if set to 0.
-
+      int local_opt_rate;       //!< Perform a random local optimization every local_opt_rate generations. Disabled if set to 
       OBBitVec      m_fixedBonds; //!< Bonds that are fixed
       OBMol         m_mol; //!< The molecule with starting coordinates
       OBRotorList   m_rotorList; //!< The OBRotorList for the molecule
@@ -412,7 +452,7 @@ namespace OpenBabel {
 
       OBConformerFilter *m_filter;
       OBConformerScore  *m_score;
-      
+
       std::ostream *m_logstream;	//!< A pointer to a log stream (NULL means no loogging)
   };
 
@@ -478,33 +518,14 @@ namespace OpenBabel {
    * A typical filter is a steric filter to ignore all conformers with atoms to close
    * together.
    *
-   * Two possible approches are possible.
-   * First (default): Elistist GA with mutation only: for each generation, numChildren
-   * children are created by permuting the parent rotor keys. The mutability setting 
-   * determines how frequent a permutation is made (e.g. 5 means 1/5 bonds are 
-   * permuted, 10 means 1/10). Again, duplicated and filtered molecules are ignored.
-   * The population now contains up to numConformer * (1 + numChildren). All these 
-   * rotor keys are scored using the specified OBConformerScore class. Next, all keys
-   * are ordered by their score and the best numConformers conformers are selected as
-   * parents for the next generation.
-   *
-   * Second: use fitness sharing with dynamic niche identification. This schemes aims
-   * to  maintain genetic diversity in the population at the same time as it optimizes
-   * an objective function, like e.g. the conformer energy. In others words it aims ar
-   * identifying several local optima, i.e. finding different stable conformers (if the
-   * enery criterion is chosen).
-   * In this case, each individual (i.e. rotor keys) score is corrected by a factor
-   * depending on the number of similar individuals. The similarity measure or distance
-   * is defined as the number of different rotor keys. Sets of similar individuals
-   * (niches) are given a penalty (less chance to be selected for reproduction) relatively
-   * to the cardinality of the niche. In addition to mutation, uniform crossover
-   * (randomly exchanging key values at each position) is applied to couples of selected
-   * individuals with a default probability of 0.7. If the first parent individual belongs
-   * to a niche, the second parent is selected whithin this niche, with a controlled
-   * probability of 0.7. In addition, at a given rate, a quick random local search 
-   * is performed from the best individual: each key is in turn randomly changed, i.e.
-   * keeping the search a distance of 1. This increases the speed of local optimization
-   * for the most promising conformer.
+   * For each generation, numChildren children are created by permuting the parent
+   * rotor keys. The mutability setting determines how frequent a permutation is made
+   * (e.g. 5 means 1/5 bonds are permuted, 10 means 1/10).
+   * Again, duplicated and filtered molecules are ignored. The population now contains
+   * up to numConformer * (1 + numChildren). All these rotor keys are scored using the
+   * specified OBConformerScore class. Next, all keys are ordered by their score and
+   * the best numConformers conformers are selected as parents for the next
+   * generation.
    *
    * New generations are generated until the specified number of generations (i.e.
    * convergence) don't improve the score.

@@ -2,7 +2,6 @@
 conformersearch.cpp - Conformer searching using genetic algorithm.
 
 Copyright (C) 2010 Tim Vandermeersch
-Some portions Copyright (C) 2012 Materials Design, Inc.
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
@@ -29,6 +28,8 @@ namespace OpenBabel {
   //
   //////////////////////////////////////////////////////////
 
+  OBConformerFilter::~OBConformerFilter() {}
+
   bool OBStericConformerFilter::IsGood(const OBMol &mol, const RotorKey &key, double *conformer)
   {
     unsigned int numAtoms = mol.NumAtoms();
@@ -40,10 +41,12 @@ namespace OpenBabel {
           continue;
         OBAtom *atom1 = mol.GetAtom(a1+1);
         OBAtom *atom2 = mol.GetAtom(a2+1);
-        if (atom1->IsHydrogen())
-          continue;
-        if (atom2->IsHydrogen())
-          continue;
+        // Default should be to recognize H clashes too
+        // if (atom1->IsHydrogen())
+        //   continue;
+        // if (atom2->IsHydrogen())
+        //   continue;
+
         // skip connected atoms
         if (mol.GetAtom(a1+1)->IsConnected(mol.GetAtom(a2+1)))
           continue;
@@ -51,9 +54,16 @@ namespace OpenBabel {
         double dx = conformer[a1*3  ] - conformer[a2*3  ];
         double dy = conformer[a1*3+1] - conformer[a2*3+1];
         double dz = conformer[a1*3+2] - conformer[a2*3+2];
-        double distance = sqrt(dx*dx + dy*dy + dz*dz);
+        double distanceSquared = dx*dx + dy*dy + dz*dz;
+	// As we don't check 1-3 and 1-4 bonded atoms, apply a 
+	// factor of 0.6 to the sum of VdW radii
+        double vdwCutoff = 0.6 * (etab.GetVdwRad(atom1->GetAtomicNum())
+				  + etab.GetVdwRad(atom2->GetAtomicNum()));
+        vdwCutoff *= vdwCutoff; // compare squared distances
+
         // check distance
-        if (distance < m_cutoff)
+        if (distanceSquared < m_cutoff
+            || distanceSquared < vdwCutoff)
           return false;
       }
     }
@@ -66,6 +76,8 @@ namespace OpenBabel {
   //  OBConformerScore(s)
   //
   //////////////////////////////////////////////////////////
+
+  OBConformerScore::~OBConformerScore() {}
 
   double OBRMSDConformerScore::Score(OBMol &mol, unsigned int index,
       const RotorKeys &keys, const std::vector<double*> &conformers)
@@ -130,9 +142,11 @@ namespace OpenBabel {
     }
 
     OBForceField *ff = OBForceField::FindType("MMFF94");
-    if (!ff->Setup(mol))
-      return 10e10;
-    // ff->SteepestDescent(500);
+    if (!ff->Setup(mol)) {
+      ff = OBForceField::FindType("UFF");
+      if (!ff->Setup(mol))
+        return 10e10;
+    }
     double score = ff->Energy();
 
     // copy original coordinates back
@@ -142,8 +156,110 @@ namespace OpenBabel {
     // Save that in the map
     if (energy_map.size () < 50000)
       energy_map[cur_key] = score;
-    
+ 
     return score;
+  }
+
+  double OBMinimizingEnergyConformerScore::Score(OBMol &mol, unsigned int index,
+                                                 const RotorKeys &keys, const std::vector<double*> &conformers)
+  {
+    energy_nrequest++;
+    RotorKey cur_key = keys[index];
+    if (energy_map.size () > 0)
+      {
+	// Check that we haven't already computed this energy);
+	mapRotorEnergy::iterator it = energy_map.find (cur_key);  
+	if (it != energy_map.end ())
+	  return it->second;
+      }
+    energy_ncompute++;
+
+    double *origCoords = mol.GetCoordinates();
+    // copy the original coordinates to coords
+    // copy the conformer coordinates to OBMol object
+    std::vector<double> coords(mol.NumAtoms() * 3);
+    for (unsigned int i = 0; i < mol.NumAtoms() * 3; ++i) {
+      coords[i] = origCoords[i];
+      origCoords[i] = conformers[index][i];
+    }
+
+    OBForceField *ff = OBForceField::FindType("MMFF94");
+    if (!ff->Setup(mol)) {
+      ff = OBForceField::FindType("UFF");
+      if (!ff->Setup(mol))
+        return 10e10;
+    }
+    ff->SteepestDescent(50);
+    double score = ff->Energy();
+
+    // copy original coordinates back
+    for (unsigned int i = 0; i < mol.NumAtoms() * 3; ++i)
+      origCoords[i] = coords[i];
+    
+    // Save that in the map
+    if (energy_map.size () < 50000)
+      energy_map[cur_key] = score;
+
+    return score;
+  }
+
+  double OBMinimizingRMSDConformerScore::Score(OBMol &mol, unsigned int index,
+                                               const RotorKeys &keys, const std::vector<double*> &conformers)
+  {
+    unsigned int numAtoms = mol.NumAtoms();
+    double *origCoords = mol.GetCoordinates();
+    // copy the original coordinates to coords
+    // copy the conformer coordinates to OBMol object
+    std::vector<double> coords(mol.NumAtoms() * 3);
+    for (unsigned int i = 0; i < mol.NumAtoms() * 3; ++i) {
+      coords[i] = origCoords[i];
+      origCoords[i] = conformers[index][i];
+    }
+
+    OBForceField *ff = OBForceField::FindType("MMFF94");
+    if (!ff->Setup(mol)) {
+      ff = OBForceField::FindType("UFF");
+      if (!ff->Setup(mol))
+        return 10e10;
+    }
+    ff->SteepestDescent(50);
+    double score = ff->Energy();
+
+    // copy original coordinates back
+    for (unsigned int i = 0; i < mol.NumAtoms() * 3; ++i)
+      origCoords[i] = coords[i];
+
+    double *conformer_i = conformers[index];
+    std::vector<vector3> vi;
+    for (unsigned int a = 0; a < numAtoms; ++a)
+      vi.push_back(vector3(conformer_i[a*3], conformer_i[a*3+1], conformer_i[a*3+2]));
+
+    OBAlign align(mol, mol, false, false);
+    align.SetRef(vi);
+
+    double score_min = 10e10;
+    for (unsigned int j = 0; j < conformers.size(); ++j) {
+      if (index == j)
+        continue;
+      double *conformer_j = conformers[j];
+      // create vector3 conformer
+      std::vector<vector3> vj;
+      for (unsigned int a = 0; a < numAtoms; ++a)
+        vj.push_back(vector3(conformer_j[a*3], conformer_j[a*3+1], conformer_j[a*3+2]));
+
+      // perform Kabsch alignment
+      align.SetTarget(vj);
+      align.Align();
+
+      // get the RMSD
+      double rmsd = align.GetRMSD();
+      // store the rmsd if it is lower than any of the previous
+      if (rmsd < score_min)
+        score_min = rmsd;
+    }
+
+    // return the lowest RMSD
+    return score_min;
   }
 
   //////////////////////////////////////////////////////////
@@ -151,7 +267,8 @@ namespace OpenBabel {
   //  OBConformerSearch
   //
   //////////////////////////////////////////////////////////
-  
+
+
   OBConformerSearch::OBConformerSearch()
   {
     m_filter = static_cast<OBConformerFilter*>(new OBStericConformerFilter(1.0));
@@ -160,7 +277,6 @@ namespace OpenBabel {
     m_numConformers = 30;
     m_numChildren = 5;
     m_mutability = 10;
-
     // Set some inital values here, but will fine-tune some in the molecule Setup
     use_sharing = false;
     alpha_share = 2.0;
@@ -174,13 +290,14 @@ namespace OpenBabel {
     m_logstream = &cout; 	// Default logging send to standard output
     // m_logstream = NULL;
   }
-  
+
   OBConformerSearch::~OBConformerSearch()
   {
     delete m_filter;
     delete m_score;
   }
-  
+
+
   bool OBConformerSearch::Setup(const OBMol &mol, int numConformers, int numChildren, int mutability, int convergence)
   {
     int nb_rotors = 0;
@@ -190,10 +307,10 @@ namespace OpenBabel {
     m_numChildren = numChildren;
     m_mutability = mutability;
     m_convergence = convergence;
-    
+
     if (m_mol.GetCoordinates() == NULL)
       return false;
-    
+
     // Initialize the OBRotorList
     m_rotorList.SetFixedBonds(m_fixedBonds);
     m_rotorList.Setup(m_mol);
@@ -201,17 +318,6 @@ namespace OpenBabel {
     if (!nb_rotors) { // only one conformer
       return false;
     }
-    
-    // Setup some default values for dynamic niche sharing according to the molecule.
-    nb_niches = numConformers / 10;
-    if (nb_niches < 3)
-      nb_niches = 3;
-    sigma_share = nb_rotors / 3;
-    if (sigma_share < 1)
-      sigma_share ++;
-    niche_radius =  nb_rotors / 4;
-    if (niche_radius < 1)
-      niche_radius++;
     
     // create initial population
     OBRandom generator;
@@ -231,18 +337,10 @@ namespace OpenBabel {
       // perform random mutation(s)
       OBRotorIterator ri;
       OBRotor *rotor = m_rotorList.BeginRotor(ri);
-      if (tries == -1)
-	{
-	  for (int i = 1; i < m_rotorList.Size() + 1; ++i, rotor = m_rotorList.NextRotor(ri))
-	    rotorKey[i] = rotor->GetResolution().size() - 1;
-	}
-      else
-	{
-	  for (int i = 1; i < m_rotorList.Size() + 1; ++i, rotor = m_rotorList.NextRotor(ri)) {
-	    if (generator.NextInt() % m_mutability == 0)
-	      rotorKey[i] = generator.NextInt() % rotor->GetResolution().size();
-	  }
-	}
+      for (unsigned int i = 1; i < m_rotorList.Size() + 1; ++i, rotor = m_rotorList.NextRotor(ri)) {
+        if (generator.NextInt() % m_mutability == 0)
+          rotorKey[i] = generator.NextInt() % rotor->GetResolution().size();
+      }
       // duplicates are always rejected
       if (!IsUniqueKey(m_rotorKeys, rotorKey))
         continue;
@@ -252,7 +350,7 @@ namespace OpenBabel {
       // add the key
       m_rotorKeys.push_back(rotorKey);
     }
-
+    
     // print out initial conformers
     if (m_logstream != NULL)
       {
@@ -263,7 +361,18 @@ namespace OpenBabel {
 	  (*m_logstream) << std::endl;
 	}
       }
-
+    
+    // Setup some default values for dynamic niche sharing according to the molecule.
+    nb_niches = (m_rotorKeys.size()) / 10;
+    if (nb_niches < 3)
+      nb_niches = 3;
+    sigma_share = nb_rotors / 3;
+    if (sigma_share < 1)
+      sigma_share ++;
+    niche_radius =  nb_rotors / 4;
+    if (niche_radius < 1)
+      niche_radius++;
+    
     return true;
   }
 
@@ -287,7 +396,7 @@ namespace OpenBabel {
           // perform random mutation(s)
           OBRotorIterator ri;
           OBRotor *rotor = m_rotorList.BeginRotor(ri);
-          for (int i = 1; i < m_rotorList.Size() + 1; ++i, rotor = m_rotorList.NextRotor(ri)) {
+          for (unsigned int i = 1; i < m_rotorList.Size() + 1; ++i, rotor = m_rotorList.NextRotor(ri)) {
             if (generator.NextInt() % m_mutability == 0)
               rotorKey[i] = generator.NextInt() % rotor->GetResolution().size(); // permutate gene
           }
@@ -353,12 +462,12 @@ namespace OpenBabel {
       std::sort(conformer_scores.begin(), conformer_scores.end(), CompareConformerHighScore());
     else
       std::sort(conformer_scores.begin(), conformer_scores.end(), CompareConformerLowScore());
-    
-    // Remove the worst scored conformers until we have the disired number of conformers
+
+    // Rmove the worst scored conformers until we have the disired number of conformers
     while (conformer_scores.size() > m_numConformers) {
       conformer_scores.pop_back();
     }
-    
+
     // compute sum of all scores, this is a measure of convergence
     double sum = 0.0, lowest, highest;
     m_rotorKeys.clear();
@@ -402,14 +511,13 @@ namespace OpenBabel {
     int identicalGenerations = 0;
     double last_score = 0.0, score = 0.0;
     
-
     if (m_logstream != NULL)
       {
 	(*m_logstream) << endl << "=====> Starting conformers search with a Genetic Algorithm <=====" << endl;
 	if (use_sharing)
 	  {
 	    (*m_logstream) << "Uses fitness sharing (with dynamic niche identification)" << endl;
-	    (*m_logstream) << "Population size :" <<  m_numConformers << endl;
+	    (*m_logstream) << "Population size :" << m_rotorKeys.size() << endl;
 	    (*m_logstream) << nb_niches << " niches searched, with a key distance radius of " << niche_radius << endl;
 	    (*m_logstream) << "Fitness sharing parameter alpha: " << alpha_share << " \t sigma:" << sigma_share << endl;
 	    (*m_logstream) << "Uniform crossover probability: " << p_crossover << endl;
@@ -508,18 +616,14 @@ namespace OpenBabel {
     rotamers.SetBaseCoordinateSets(mol);
     rotamers.Setup(mol, m_rotorList);
 
-    if (m_logstream != NULL)
-      (*m_logstream) << "GetConformers:" << std::endl;
+    std::cout << "GetConformers:" << std::endl;
     // Add all (parent + children) unique rotor keys
     for (unsigned int i = 0; i < m_rotorKeys.size(); ++i) {
       rotamers.AddRotamer(m_rotorKeys[i]);
-      
-      if (m_logstream != NULL)
-	{
-	  for (unsigned int j = 1; j < m_rotorKeys[i].size(); ++j)
-	    (*m_logstream) << m_rotorKeys[i][j] << " ";
-	  (*m_logstream) << std::endl;
-	}
+
+      for (unsigned int j = 1; j < m_rotorKeys[i].size(); ++j)
+        std::cout << m_rotorKeys[i][j] << " ";
+      std::cout << std::endl;
     }
 
     // Get conformers for the rotor keys
@@ -557,6 +661,7 @@ namespace OpenBabel {
 
     return result;
   }
+
   
   /*! @brief   Genetic similarity measure, i.e. "distance" between two rotor keys.
     
@@ -1063,7 +1168,6 @@ namespace OpenBabel {
     // Convergence criterion: best half population score
     return sum / ((double) imax);
   }
- 
 
   /**
    * @example obconformersearch_default.cpp
