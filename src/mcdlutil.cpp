@@ -746,7 +746,7 @@ namespace OpenBabel {
     void vaweBond(int bondN, neighbourlist * bk, int & ringSize, std::vector<int> & bondList);
     void allAboutCycles();
     void redraw(const std::vector<int>listAtomClean, const std::vector<int>listBondClean,
-                int & atomClean, int & bondClean, int spn, int sCHA1, int sCHB1, bool iOPT7);
+                int atomClean, int & bondClean, int spn, int sCHA1, int sCHB1, bool iOPT7);
     void clear();
     void readOBMol(OBMol * pmol);
     void readConnectionMatrix(const std::vector<int>iA1, const std::vector<int>iA2, int nAtoms, int nBonds);
@@ -2157,7 +2157,7 @@ namespace OpenBabel {
   };
 
   void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vector<int>listBondClean,
-                               int & atomClean, int & bondClean, int spn, int sCHA1, int sCHB1, bool iOPT7) {
+                               int atomClean, int & bondClean, int spn, int sCHA1, int sCHB1, bool iOPT7) {
     /*
       the arrays are the priority list for clean. Minimal element of record has
       the maximal priority. Each element of record contains:
@@ -7172,7 +7172,7 @@ namespace OpenBabel {
 
     std::vector<int> bondList;
     OBAtom * atom;
-    int i,n,at,atEx,na,nb;
+    int i,n,at,atEx,nb;
 
     sm.readOBMol(pmol);
     atomN--; //TSimpleMolecule: numeration of atoms is started from 0, while for OBMOl from 1;
@@ -7209,7 +7209,7 @@ namespace OpenBabel {
           bondList.push_back(i);
           nb++;
         };
-      sm.redraw(atomList,bondList,na,nb,3,atEx,bondN,false);
+      sm.redraw(atomList,bondList,atomList.size(),nb,3,atEx,bondN,false);
       //Setting OBMOL coordinates
       for (int i=0; i<atomList.size(); i++) {
         n=atomList[i];
