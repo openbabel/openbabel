@@ -1119,6 +1119,7 @@ namespace OpenBabel {
     if (isoPtr >= 6)
       return false;
     isotope = atoi(symbol);
+    memset(symbol, '\0', 7*sizeof(char)); // PR#3165083 (Andrew Dalke)
 
     //parse element data
     if (isupper(*_ptr))
