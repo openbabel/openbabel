@@ -326,9 +326,10 @@ namespace OpenBabel
       if (!strncasecmp(identifier,(*i)->GetSymbol(),3))
         return((*i)->GetAtomicNum());
 
-    // Compare to IUPAC name
+    // Compare to IUPAC name (an abbreviated name will also work if 5 letters or more)
+    int numCharsToTest = std::max<int>(strlen(identifier), 5);
     for (i = _element.begin();i != _element.end();++i)
-      if (strncasecmp(identifier,(*i)->GetName().c_str(),5) == 0)
+      if (strncasecmp(identifier,(*i)->GetName().c_str(),numCharsToTest) == 0)
         return((*i)->GetAtomicNum());
 
     if (strcasecmp(identifier, "D") == 0 ||
