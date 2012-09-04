@@ -150,7 +150,7 @@ if(WITH_INCHI)
 endif()
 
 if(ADD_INCHI_FORMAT)
-  add_definitions(-DINCHI_LINK_AS_DLL)
+  add_definitions(-DBUILD_LINK_AS_DLL)
   if(NOT OPENBABEL_USE_SYSTEM_INCHI)
     add_subdirectory(libinchi)
     include_directories(${CMAKE_SOURCE_DIR}/include/inchi)
