@@ -165,6 +165,7 @@ IMPVAL  [$([#15](=[#8])=[#8])]    3 # metaphosphate (double bond = one valence)
 IMPVAL  [$([#15+](=[#8])([#8]))]  0 # R-P+O2
 
 IMPVAL  [#16]                     2 #revised CM April 2008
+IMPVAL  [#16D3]                   4 # S(C)(C)C
 IMPVAL  [$([#16D1]=*)]            1
 IMPVAL  [$([#16D3](=O)(=O)-O)]    4 #e.g. O[S](=O)=O
 IMPVAL  [$([#16D2](=O)-O)]        3 # e.g. O[S]=O
