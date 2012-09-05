@@ -49,6 +49,7 @@
 #include <openbabel/spectrophore.h>
 
 #include <openbabel/chargemodel.h>
+#include <openbabel/phmodel.h>
 #include <openbabel/graphsym.h>
 #include <openbabel/isomorphism.h>
 #include <openbabel/query.h>
@@ -297,6 +298,9 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 %include <openbabel/op.h>
 
 %include <openbabel/chargemodel.h>
+%apply std::string& INPUT { std::string &start } // Required for OBChemTsfm.Init
+%apply std::string& INPUT { std::string &end }   // Required for OBChemTsfm.Init
+%include <openbabel/phmodel.h>
 %include <openbabel/graphsym.h>
 %include <openbabel/isomorphism.h>
 %include <openbabel/query.h>
