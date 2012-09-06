@@ -421,12 +421,7 @@ namespace OpenBabel {
         //cerr << " parsing " << _ptr << endl;
 
         if (*_ptr<0 || isspace(*_ptr))
-          {
-            stringstream errorMsg;
-            errorMsg << "Invalid SMILES string: contains unsupported character \"" << *_ptr << "\"" << endl;
-            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
-            return false; // unsupported character (Unicode is *_ptr<0, PR#3426020) or space
-          }
+          continue;
         else if (isdigit(*_ptr) || *_ptr == '%') //ring open/close
           {
             if(!ParseRingBond(mol))
