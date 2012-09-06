@@ -739,12 +739,14 @@ namespace OpenBabel
           unsigned int initialSize = orbitals.size();
           for (unsigned int i = betaStart; i < initialSize; ++i) {
             betaOrbitals.push_back(orbitals[i]);
-            betaSymmetries.push_back(symmetries[i]);
+            if (symmetries.size() > 0)
+              betaSymmetries.push_back(symmetries[i]);
           }
           // ok, now erase the end elements of orbitals and symmetries
           for (unsigned int i = betaStart; i < initialSize; ++i) {
             orbitals.pop_back();
-            symmetries.pop_back();
+            if (symmetries.size() > 0)
+              symmetries.pop_back();
           }
           // and load the alphas and betas
           od->LoadAlphaOrbitals(orbitals, symmetries, aHOMO);
