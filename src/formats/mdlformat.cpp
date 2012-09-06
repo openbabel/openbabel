@@ -420,12 +420,21 @@ namespace OpenBabel
           }
         }
         parities.push_back(parity);
+        
         // valence
+        bool forceNoH = false;
         if (line.size() >= 50) {
           int valence = ReadIntField(line.substr(48, 3).c_str());
           if(valence!=0) // Now no H with any value
-            patom->ForceNoH();
+            forceNoH = true;
         }
+        if (forceNoH)
+          patom->ForceNoH(); // There are no additional implicit Hs
+        else
+          patom->ForceImplH(); // There could be additional implicit Hs
+                               // - if we don't set this, then the presence of a single explicit H
+                               //   will cause AssignSpinMultiplicity to assume no additional implicit Hs
+
 
 //        if (!mol.AddAtom(atom))
 //          return false;
