@@ -364,6 +364,10 @@ namespace OpenBabel
           }
         if ((no_symmetry && i==1) || i==2)
            break;
+	// Check for the last line of normal output and exit loop, otherwise,
+	// the rewind below will no longer work.
+        if (strstr(buffer,"Normal termination of Gaussian") != NULL)
+           break;
       }
     ifs.seekg(0);  //rewind
 
