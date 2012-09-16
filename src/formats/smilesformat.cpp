@@ -141,6 +141,8 @@ namespace OpenBabel {
         "     This gives canonical labels 1,2,3,4 to atoms 4,2,1,3 respectively,\n"
         "     so that atom 4 will be visited first and the remaining atoms\n"
         "     visited in a depth-first manner following the lowest canonical labels.\n"
+        "  F  <atom numbers> Generate SMILES for a fragment\n"
+        "     The atom numbers should be specified like \"1 2 4 7\".\n"
         "  R  Do not reuse bond closure symbols\n"
         "  f  <atomno> Specify the first atom\n"
         "     This atom will be used to begin the SMILES string.\n"
@@ -195,6 +197,8 @@ namespace OpenBabel {
         "  n  No molecule name\n"
         "  r  Radicals lower case eg ethyl is Cc\n"
         "  t  Molecule name only\n"
+        "  F  <atom numbers> Generate Canonical SMILES for a fragment\n"
+        "     The atom numbers should be specified like \"1 2 4 7\".\n"
         "  f  <atomno> Specify the first atom\n"
         "     This atom will be used to begin the SMILES string.\n"
         "  l  <atomno> Specify the last atom\n"
@@ -4268,10 +4272,13 @@ namespace OpenBabel {
     OBBitVec fragatoms(pmol->NumAtoms());
 
     OBPairData *dp = (OBPairData *) pmol->GetData("SMILES_Fragment");
+    const char* ppF = pConv->IsOption("F");
     if (dp) {
       fragatoms.FromString(dp->GetValue(), pmol->NumAtoms());
     }
-
+    else if (ppF) { // Use info from option "F"
+      fragatoms.FromString(ppF, pmol->NumAtoms());
+    }
     // If no "SMILES_Fragment" data, fill the entire OBBitVec
     // with 1's so that the SMILES will be for the whole molecule.
     else {
