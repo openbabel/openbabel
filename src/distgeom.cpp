@@ -27,9 +27,12 @@ GNU General Public License for more details.
 
 using namespace std;
 
-#define DIST12_TOL   0.01
-#define DIST13_TOL   0.1
-#define DIST14_TOL   0.4
+#define DIST12_TOL   0.01f
+#define DIST13_TOL   0.1f
+#define DIST14_TOL   0.4f
+
+#pragma warning(disable : 4244) // warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+#pragma warning(disable : 4305) // warning C4305: '*=' : truncation from 'double' to 'float'
 
 namespace OpenBabel {
 
@@ -123,7 +126,7 @@ namespace OpenBabel {
       return;
 
     unsigned int N = _mol.NumAtoms();
-    float aRad, bRad, minDist, maxDist = N*1.5; // if, somehow all atoms are in a linear chain
+    float aRad, bRad, minDist, maxDist = N*1.5f; // if, somehow all atoms are in a linear chain
     // TODO: unit cell -- max dist is 1/2 longest body diagonal
     OBAtom *a, *b;
     for (unsigned int i = 0; i < N; ++i) {
@@ -131,14 +134,14 @@ namespace OpenBabel {
       aRad = etab.GetVdwRad(a->GetAtomicNum());
 
       // set diagonal to zero
-      _d->bounds(i, i) = 0.0;
+      _d->bounds(i, i) = 0.0f;
       for (unsigned int j = i + 1; j < N; ++j)
         {
           b = _mol.GetAtom(j + 1);
           bRad = etab.GetVdwRad(b->GetAtomicNum());
           minDist = aRad + bRad;
-          if (minDist < 1.0)
-            minDist = 1.0;
+          if (minDist < 1.0f)
+            minDist = 1.0f;
 
           _d->SetLowerBounds(i, j, minDist);
           _d->SetUpperBounds(i, j, maxDist);
@@ -240,7 +243,7 @@ namespace OpenBabel {
       } else {
         // Guess angle based on central atom
         // TODO: refine if this angle is in a ring
-        float theta = 109.5 * DEG_TO_RAD; // in radians
+        float theta = 109.5f * DEG_TO_RAD; // in radians
 
         // If the two endpoints are in the same ring
         //  AND the vertex is in some ring, they're all in it
@@ -248,25 +251,25 @@ namespace OpenBabel {
         if (a->IsInRing() && ringSize != 0)
           {
             if (a->GetHyb() == 2 || ringSize <= 4) {
-              theta = 180.0 - (360.0/float(ringSize));
+              theta = 180.0f - (360.0f/float(ringSize));
               theta *= DEG_TO_RAD;
             }
             else if (a->GetHyb() == 3 && ringSize == 5)
-              theta = 104.0 * DEG_TO_RAD;
+              theta = 104.0f * DEG_TO_RAD;
             else
-              theta = 109.5 * DEG_TO_RAD;
+              theta = 109.5f * DEG_TO_RAD;
           }
         else { // not all in the same ring
           switch (a->GetHyb()) {
           case (1):
-            theta = 180.0 * DEG_TO_RAD;
+            theta = 180.0f * DEG_TO_RAD;
             break;
           case (2):
-            theta = 120.0 * DEG_TO_RAD;
+            theta = 120.0f * DEG_TO_RAD;
             break;
           case (3):
           default:
-            theta = 109.5 * DEG_TO_RAD;
+            theta = 109.5f * DEG_TO_RAD;
           } // end switch
         }
 
