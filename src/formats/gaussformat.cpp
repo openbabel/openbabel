@@ -350,12 +350,12 @@ namespace OpenBabel
     //Unless the "nosym" keyword has been requested
     while (ifs.getline(buffer,BUFF_SIZE))
       {
-        if (strstr(buffer,"Symmetry turned off by external request.") != NULL) 
+        if (strstr(buffer,"Symmetry turned off by external request.") != NULL)
           {
             // The "nosym" keyword has been requested
             no_symmetry = true;
           }
-        if (strstr(buffer,"orientation:") !=NULL) 
+        if (strstr(buffer,"orientation:") !=NULL)
           {
             i++;
             tokenize (vs, buffer);
@@ -479,6 +479,27 @@ namespace OpenBabel
                    strstr(buffer,"-----") == NULL)
               {
                 atom = mol.GetAtom(atoi(vs[0].c_str()));
+                if (!atom)
+                  break;
+                atom->SetPartialCharge(atof(vs[2].c_str()));
+
+                if (!ifs.getline(buffer,BUFF_SIZE)) break;
+                tokenize(vs,buffer);
+              }
+          }
+        else if(strstr(buffer,"Natural Population") != NULL)
+          {
+            hasPartialCharges = true;
+            chargeModel = "NBO";
+            ifs.getline(buffer,BUFF_SIZE);	// column headings
+            ifs.getline(buffer,BUFF_SIZE);  // again
+            ifs.getline(buffer,BUFF_SIZE);  // again (-----)
+            ifs.getline(buffer,BUFF_SIZE); // real data
+            tokenize(vs,buffer);
+            while (vs.size() >= 3 &&
+                   strstr(buffer,"=====") == NULL)
+              {
+                atom = mol.GetAtom(atoi(vs[1].c_str()));
                 if (!atom)
                   break;
                 atom->SetPartialCharge(atof(vs[2].c_str()));
