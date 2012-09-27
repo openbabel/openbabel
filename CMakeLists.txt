@@ -365,7 +365,7 @@ if(ENABLE_OPENMP)
   endif()
 endif()
 
-if(${MSVC_VERSION})
+if(MSVC)
   message(STATUS "MSVC_VERSION =" ${MSVC_VERSION})
   if (${MSVC_VERSION} EQUAL 1600)
     # To be added: AND SP1  OR gcc>4.0
