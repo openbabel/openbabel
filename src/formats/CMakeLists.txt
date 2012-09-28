@@ -105,7 +105,7 @@ set(formats_misc
       yasaraformat
       )
 
-if(MSVC90 OR SHARED_POINTER)
+if(MSVC OR SHARED_POINTER)
   set(formats_misc
     ${formats_misc}
     rxnformat
@@ -113,7 +113,7 @@ if(MSVC90 OR SHARED_POINTER)
     chemkinformat
     rsmiformat
   )
-endif(MSVC90 OR SHARED_POINTER)
+endif(MSVC OR SHARED_POINTER)
 
 set(optional_formatgroups "")
 if(CAIRO_FOUND)
@@ -144,7 +144,7 @@ if(WITH_INCHI)
 endif()
 
 if(ADD_INCHI_FORMAT)
-  add_definitions(-DINCHI_LINK_AS_DLL)
+  add_definitions(-DBUILD_LINK_AS_DLL)
   if(NOT OPENBABEL_USE_SYSTEM_INCHI)
     add_subdirectory(libinchi)
     include_directories(${CMAKE_SOURCE_DIR}/include/inchi)
@@ -177,12 +177,12 @@ if(LIBXML2_FOUND)
     pubchem
     xmlformat
   )
-  if(MSVC90 OR SHARED_POINTER)
+  if(MSVC OR SHARED_POINTER)
     set(formats_xml
         ${formats_xml}
         cmlreactformat
     )
-  endif(MSVC90 OR SHARED_POINTER)
+  endif(MSVC OR SHARED_POINTER)
 endif(LIBXML2_FOUND)
 
 if(HAVE_RPC_XDR_H)

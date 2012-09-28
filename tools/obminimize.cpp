@@ -48,10 +48,10 @@ int main(int argc,char **argv)
   double rvdw = 6.0;
   double rele = 10.0;
   int freq = 10;
-  string basename, filename = "", option, option2, ff = "Ghemical";
+  string basename, filename = "", option, option2, ff = "MMFF94";
   char *oext;
   OBConversion conv;
-  OBFormat *format_out = conv.FindFormat("pdb"); // default output format
+  OBFormat *format_out = conv.FindFormat("xyz"); // default output format
 
   if (argc < 2) {
     cout << "Usage: obminimize [options] <filename>" << endl;
@@ -168,6 +168,7 @@ int main(int argc,char **argv)
 
   if (!format_in || !format_out || !conv.SetInAndOutFormats(format_in, format_out)) {
     cerr << program_name << ": cannot read input/output format!" << endl;
+    cerr << " filename: " << filename << endl;
     exit (-1);
   }
 
@@ -243,7 +244,7 @@ int main(int argc,char **argv)
     pFF->GetCoordinates(mol);
 
     conv.Write(&mol, &cout);
-    cerr << "Time: " << timeElapsed << "seconds. Iterations per second: " <<  double(totalSteps) / timeElapsed << endl;
+    cerr << "Time: " << timeElapsed << " seconds. Iterations per second: " <<  double(totalSteps) / timeElapsed << endl;
   } // end for loop
 
   return(1);

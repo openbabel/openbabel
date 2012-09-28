@@ -38,8 +38,6 @@ using namespace std;
 namespace OpenBabel {
 
 #define CONNMAX 15
-#define NATOMSMAX 255
-#define NBONDSMAX 255
 
   // Forward declarations
   class TEditedMolecule;
@@ -50,7 +48,7 @@ namespace OpenBabel {
     int adjusted[CONNMAX];
   } adjustedlist;
 
-  typedef adjustedlist neigbourlist[NATOMSMAX];
+  typedef adjustedlist neighbourlist;
 
 #define PI 3.141592653589793238462
 #define blDenominator 4.0   //Controls bond legth in bondEnlarge
@@ -740,15 +738,15 @@ namespace OpenBabel {
     TSingleAtom * getAtom(int index);
     TSingleBond * getBond(int index);
     void defineAtomConn();
-    void defineBondConn(neigbourlist & bondConnection);
-    void newB(neigbourlist & bk, int bnum, int anum, int & total, int * e, int * e1);
-    void singleVawe(neigbourlist & bk, std::vector<int> & alreadyDefined,
+    void defineBondConn(neighbourlist *bondConnection);
+    void newB(neighbourlist * bk, int bnum, int anum, int & total, int * e, int * e1);
+    void singleVawe(neighbourlist * bk, std::vector<int> & alreadyDefined,
                     std::vector<int> & prevBond, std::vector<int> & prevAtom,
                     int & nPrev, std::vector<int> & curBond, std::vector<int> & curAtom);
-    void vaweBond(int bondN, neigbourlist & bk, int & ringSize, std::vector<int> & bondList);
+    void vaweBond(int bondN, neighbourlist * bk, int & ringSize, std::vector<int> & bondList);
     void allAboutCycles();
     void redraw(const std::vector<int>listAtomClean, const std::vector<int>listBondClean,
-                int & atomClean, int & bondClean, int spn, int sCHA1, int sCHB1, bool iOPT7);
+                int atomClean, int & bondClean, int spn, int sCHA1, int sCHB1, bool iOPT7);
     void clear();
     void readOBMol(OBMol * pmol);
     void readConnectionMatrix(const std::vector<int>iA1, const std::vector<int>iA2, int nAtoms, int nBonds);
@@ -759,7 +757,7 @@ namespace OpenBabel {
     double averageBondLength();
     void flipSmall(int cHB);
     int listarSize();
-    bool makeFragment(int& n, std::vector<int>& list, int aT, int aTEx);
+    bool makeFragment(std::vector<int>& list, int aT, int aTEx);
     void moleculeCopy(TSimpleMolecule & source);
     int correctOverlapped();
     void normalizeCoordinates(double aveBL);
@@ -782,19 +780,19 @@ namespace OpenBabel {
     bool aromatic(int cycleSize, const std::vector<int> bondList, std::vector<int>& arom);
     void twoAtomUnitVector(int na1, int na2, double & xv, double & yv, const std::vector<int>atomDefine);
     void defC(int& currNumDef, int baseCycle, int atomClean, std::vector<int>& cycleDefine,
-              std::vector<int>& atomDefine, std::vector<int>& atomCycle, std::vector<int>& cycleAddress,
-              std::vector<int>& cycleSize, std::vector<int>& dsATN, std::vector<int>& dsTP,
-              std::vector<int>& dsSC, std::vector<int>& dsNA1, std::vector<int>& dsNA2);
+                 std::vector<int>& atomDefine, std::vector<std::vector<int> >& atomCycle, std::vector<int>& dsATN,
+                 std::vector<int>& dsTP,
+                 std::vector<int>& dsSC, std::vector<int>& dsNA1, std::vector<int>& dsNA2);
     void defA(int& currNumDef, int atomClean, int sPN, int baseCycle, std::vector<int>& atomDefine, const std::vector<int> listAtomClean,
-              std::vector<int>& cycleDefine, std::vector<int>& cycleSize, std::vector<int>& cycleAddress, std::vector<int>& atomCycle,
+              std::vector<int>& cycleDefine, std::vector<std::vector<int> >& atomCycle,
               std::vector<int>& dsATN, std::vector<int>& dsTP, std::vector<int>& dsNA1, std::vector<int>& dsNA2);
     void canonizeCycle(int ringSize, std::vector<int> & bondList);
     //Chain rotate members
     double atomDistanceMetric(int an);
     bool bondsOverlapped(int bN1, int bN2, double delta);
     int fragmentSecond(int sphere, int att, int secAt, const std::vector<int> a,
-                       const std::vector<int> b, const neigbourlist bk, std::vector<int>& wSphere);
-    bool threeBondResolve(int an, int bondExcluded, double& xv, double& yv, neigbourlist* bkExt);
+                       const std::vector<int> b, const neighbourlist *bk, std::vector<int>& wSphere);
+    bool threeBondResolve(int an, int bondExcluded, double& xv, double& yv, neighbourlist* bkExt);
     bool unitVectorCoincident(int aN, double xV, double yV);
     int setupRotorSearch(const vector<int> &rotBondList, vector<int>& inner_bonds, vector<int>& remainder);
   };
@@ -934,15 +932,15 @@ namespace OpenBabel {
   }
 
 
-  bool TSimpleMolecule::threeBondResolve(int an, int bondExcluded, double& xv, double& yv, neigbourlist* bkExt) {
+  bool TSimpleMolecule::threeBondResolve(int an, int bondExcluded, double& xv, double& yv, neighbourlist* bkExt) {
     //Addition from 16 April 2006
     int bondNoList [3];
     bool result=false;
     double centerX[3];
     double centerY[3];
     unsigned int nBondNo;
-    neigbourlist* bk;
-    std::vector<int>bondList(listarSize());
+    neighbourlist* bk;
+    std::vector<int>bondList;
     std::vector<int>* blStore=NULL;
     bool testBad,testOK;
     unsigned int m, j, n1, n2, n, k;
@@ -954,17 +952,17 @@ namespace OpenBabel {
     double r1,r2,s1,s3;
 
     if (bkExt != NULL) bk=bkExt; else {
-      bk=(neigbourlist *)malloc((CONNMAX+1)*NBONDSMAX*4);
-      defineBondConn(*bk);
+      bk=(neighbourlist *)malloc(nAtoms() * sizeof(adjustedlist));
+      defineBondConn(bk);
     };
     nBondNo=0;
     testBad=false;
     testOK=true;
 
-    for (i=0; i<(*bk)[an].nb; i++) {
-      n=(*bk)[an].adjusted[i];
+    for (i=0; i<bk[an].nb; i++) {
+      n=bk[an].adjusted[i];
       if (n != bondExcluded) {
-        vaweBond(n,*bk,rs,bondList);
+        vaweBond(n,bk,rs,bondList);
         if (rs > 0) {
           //I have to analize bondList to determine second cycle to exclude adamanthane
           if (blStore == NULL) {
@@ -1430,51 +1428,48 @@ namespace OpenBabel {
     return result;
   };
 
-  int TSimpleMolecule::listarSize() {
+  int TSimpleMolecule::listarSize() { // Probably should be removed and replaced with either nAtoms() or nBonds() as appropriate
     int result=10;  //Minimal vector size 10
     if (nAtoms() > result) result=nAtoms();
     if (nBonds() > result) result=nBonds();
     return result;
   };
 
-  bool TSimpleMolecule::makeFragment(int& n, std::vector<int>& list, int aT, int aTEx) {
+  bool TSimpleMolecule::makeFragment(std::vector<int>& list, int aT, int aTEx) {
     //Starting from atom's number AT in bond-connection matrix invariants array CONN
     //the all connected atom's (through one or more bonds) numbers are inserted into
-    //the LIST array. Total number of such atoms is stored in N. If ATEX non-equal
+    //the LIST vector. If ATEX non-equal
     //zero, than atom with this number and all other, which is connected through
     //atom ATEX, don't include in LIST array. Boolean variable TEST has TRUE value
     //on output if between AT and ATEX exist cyclic bond, false otherwise}
     int i,j,k,l;
     bool test, test1;
+    list.resize(0);
 
     test=false;
     if ((nAtoms() ==0 ) || (aT < 0) || (aT >= nAtoms())) {
-      n=0;
-      list[0]=-1;;
       return test;
     }
-    n=1;
-    list[0]=aT;
+
+    list.push_back(aT);
     for (i=0; i<getAtom(aT)->nb; i++) if (getAtom(aT)->ac[i] != aTEx) {
-        list[n]=getAtom(aT)->ac[i];
-        n++;
+        list.push_back(getAtom(aT)->ac[i]);
       }
-    if (n == 1) return test;                      //exit in AT non-connected atom
+    if (list.size() == 1) return test;                      //exit in AT non-connected atom
     k=0;
     do {                                 //iterational algorithm to define all}
       for (i=0; i<getAtom(list[k])->nb; i++) {
         test1=false;
         l=getAtom(list[k])->ac[i];
         if (l != aTEx) {
-          for (j=0; j<n; j++) if (list[j] == l) test1=true;
+          for (j=0; j<list.size(); j++) if (list[j] == l) test1=true;
         } else test=true;
         if ((! test1) && (l != aTEx) && (l >= 0) && (l < nAtoms())) {
-          list[n]=l;
-          n++;
+          list.push_back(l);
         }
       }
       k=k+1;                             //atoms which are connected with AT}
-    } while (k<n);
+    } while (k<list.size());
     return test;
   }
 
@@ -1640,11 +1635,11 @@ namespace OpenBabel {
     };
   };
 
-  void TSimpleMolecule::defineBondConn(neigbourlist & bondConnection) {
+  void TSimpleMolecule::defineBondConn(neighbourlist *bondConnection) {
     //for each atom returns list of adjusted bonds in bondConnection
     int i,n1, n2;
 
-    for (i=0; i<=nAtoms(); i++) bondConnection[i].nb=0;
+    for (i=0; i<nAtoms(); i++) bondConnection[i].nb=0;
     for (i=0; i<nBonds(); i++) {
       n1=getBond(i)->at[0]; n2=getBond(i)->at[1];
       bondConnection[n1].adjusted[bondConnection[n1].nb]=i;
@@ -1654,7 +1649,7 @@ namespace OpenBabel {
     };
   };
 
-  void TSimpleMolecule::newB(neigbourlist & bk, int bnum, int anum, int & total, int * e, int * e1) {
+  void TSimpleMolecule::newB(neighbourlist * bk, int bnum, int anum, int & total, int * e, int * e1) {
     /*for atom's number ANUM calculates the bond's list, which are connected
       with the ANUM, excluding bond BNUM. The bond's list is inserted into array
       L, TOTAL-number of components in the array. Array L1 contains atom's number
@@ -1670,7 +1665,7 @@ namespace OpenBabel {
       };
   };
 
-  void TSimpleMolecule::singleVawe(neigbourlist & bk, std::vector<int> & alreadyDefined,
+  void TSimpleMolecule::singleVawe(neighbourlist * bk, std::vector<int> & alreadyDefined,
                                    std::vector<int> & prevBond, std::vector<int> & prevAtom,
                                    int & nPrev, std::vector<int> & curBond, std::vector<int> & curAtom) {
     /*
@@ -1709,8 +1704,7 @@ namespace OpenBabel {
     for (i=0; i<ncur; i++) prevAtom[i]=curAtom[i];
   };
 
-
-  void TSimpleMolecule::vaweBond(int bondN, neigbourlist & bk,
+  void TSimpleMolecule::vaweBond(int bondN, neighbourlist *bk,
                                  int & ringSize, std::vector<int> & bondList) {
     /*The procedure for bond's number BONDN determines, whether or not the bond
       belongs to ring (RINGSIZE=0 if not ring bond and RINGSIZE=number of atoms
@@ -1719,11 +1713,11 @@ namespace OpenBabel {
       also assigned to the same ring */
 
     int i,j,k,aA,i1,i2;
-    std::vector<int>pA(NBONDSMAX);
-    std::vector<int>pB(NBONDSMAX);
-    std::vector<int>oD(NBONDSMAX);
-    std::vector<int>curBond(NBONDSMAX);
-    std::vector<int>curAtom(NBONDSMAX);
+    std::vector<int>pA(nBonds());
+    std::vector<int>pB(nBonds());
+    std::vector<int>oD(nBonds());
+    std::vector<int>curBond(nBonds());
+    std::vector<int>curAtom(nBonds());
     bool test;
     int nP;
 
@@ -1748,6 +1742,7 @@ namespace OpenBabel {
           };
     }; //recursion finishing
     if (test) {                    //bond belongs to ring
+      bondList.resize(ringSize);
       bondList[ringSize-1]=bondN;         //bond BONDN must be last in the list
       for (j=1; j<ringSize; j++) {        //BONDLIST formation
         bondList[j-1]=k;
@@ -1857,39 +1852,30 @@ namespace OpenBabel {
       3 - aromatic, 6-membered ring;
       4...more = non-aromatic ring size+1}
     */
-    std::vector<int>bondTested(NBONDSMAX);
-    std::vector<int>bondList(NBONDSMAX);
-    std::vector<int>ar(NBONDSMAX);
-    std::vector<int>rSize(NBONDSMAX);
-    std::vector<int>ar1(NBONDSMAX);
-    std::vector<int>cycleDescription(3*NBONDSMAX);
-    std::vector<int>cycleAddress(NBONDSMAX);
+    std::vector<int>bondTested(nBonds(), 0);
+    std::vector<int>bondList;
+    std::vector<int>ar(nBonds(), 0);
+    std::vector<int>ar1(nBonds());
+    std::vector<std::vector<int> > cycleDescription;
 
     int i,n,j,k;
     int cycleSize;
-    neigbourlist * bk;
-
-    bk=(neigbourlist *)malloc((1+CONNMAX)*NBONDSMAX*4);
-
+    neighbourlist *bk;
 
     if (nBonds() == 0) return;
-    defineBondConn(*bk);
+    bk=(neighbourlist *)malloc(nAtoms() * sizeof(adjustedlist));
+    defineBondConn(bk);
     //initial values for MainList-number of bonds, connected to each atom and their numbers in array BOND
     for (i=0; i<nBonds(); i++) {
       getBond(i)->db=0;
-      ar[i]=0;;
-      bondTested[i]=0;
-    };
+    }
     n=0;
-    cycleAddress[0]=0;
     for (i=0; i<nBonds(); i++) if (bondTested[i] == 0) {
-        vaweBond(i,*bk,cycleSize,bondList); //Is I-th bond cyclic?
+        vaweBond(i,bk,cycleSize,bondList); //Is I-th bond cyclic?
         if (cycleSize>0) {       //Yes, cyclic
           canonizeCycle(cycleSize,bondList);
+          cycleDescription.push_back(bondList);
           n++;
-          cycleAddress[n]=cycleAddress[n-1]+cycleSize;  //store cycle definitions
-          rSize[n-1]=cycleSize;
-          for (j=0; j<cycleSize; j++) cycleDescription[cycleAddress[n-1]+j]=bondList[j];
           ar1[n-1]=0;
           if (aromatic(cycleSize,bondList,ar)) {       //store, if aromatic cycle}
             ar1[n-1]=1;
@@ -1905,8 +1891,8 @@ namespace OpenBabel {
       while (j != 0) {
         j=0;
         for (i=0; i<n; i++) if (ar1[i]==0) {   //search for condenced aromatics
-            cycleSize=rSize[i];
-            for (k=0; k<cycleSize; k++) bondList[k]=cycleDescription[cycleAddress[i]+k];
+            bondList=cycleDescription[i];
+            cycleSize=bondList.size();
             if (aromatic(cycleSize,bondList,ar)) {
               j++;
               ar1[i]=1;
@@ -1915,16 +1901,16 @@ namespace OpenBabel {
           };
       }; //until J=0;          {until new aromatics are not detected under iteration}
       for (i=0; i<n; i++) if (ar1[i]==0) {       //Label of non-aromatic cycles in BOND
-          cycleSize=rSize[i];
-          for (k=0; k<cycleSize; k++) bondList[k]=cycleDescription[cycleAddress[i]+k];  //!!!
+          bondList=cycleDescription[i];
+          cycleSize=bondList.size();
           for (j=0; j<cycleSize; j++) {
             k=cycleSize+1;
             if ((getBond(bondList[j])->db==0) || (k<getBond(bondList[j])->db)) getBond(bondList[j])->db=k;
           };
         };
       for (i=0; i<n; i++) if (ar1[i]==1)  {     //Label of aromatic cycle in BOND
-          cycleSize=rSize[i];
-          for (k=0; k<cycleSize; k++) bondList[k]=cycleDescription[cycleAddress[i]+k];  //!!!
+          bondList=cycleDescription[i];
+          cycleSize=bondList.size();
           for (j=0; j<cycleSize; j++) {
             if (cycleSize==5) getBond(bondList[j])->db=2;
             if ((cycleSize==6) && (getBond(bondList[j])->db != 2)) getBond(bondList[j])->db=3;
@@ -1995,8 +1981,8 @@ namespace OpenBabel {
   };
 
   void TSimpleMolecule::defC(int& currNumDef, int baseCycle, int atomClean, std::vector<int>& cycleDefine,
-                             std::vector<int>& atomDefine, std::vector<int>& atomCycle, std::vector<int>& cycleAddress,
-                             std::vector<int>& cycleSize, std::vector<int>& dsATN, std::vector<int>& dsTP,
+    std::vector<int>& atomDefine, std::vector<std::vector<int> >& atomCycle, std::vector<int>& dsATN,
+                             std::vector<int>& dsTP,
                              std::vector<int>& dsSC, std::vector<int>& dsNA1, std::vector<int>& dsNA2) {
     //The procedure create priority list formation for cleaning of molecule. Recur-
     // sive calls to the procedure are required together with DefA. After recursion
@@ -2014,17 +2000,17 @@ namespace OpenBabel {
           //        {for all cycles, which were not included into priority list}
           atDef=0;
           //        {search for maximal priority level}
-          for (j=0; j<cycleSize[i]; j++) if (atomDefine[atomCycle[cycleAddress[i]+j]]>0) atDef=atDef+1;
+          for (j=0; j<atomCycle[i].size(); j++) if (atomDefine[atomCycle[i][j]]>0) atDef=atDef+1;
           if (atDef > maxAtDef) {
             //          {  search for cycles, for which maximal number of atoms were inserted in the priority list}
             maxAtDef=atDef;
             cN=i;
           } else if ((maxAtDef > 0) && (atDef==maxAtDef)) {
             //         {search for minimal cycle size}
-            if (cycleSize[i]<cycleSize[cN]) cN=i;
+            if (atomCycle[i].size()<atomCycle[cN].size()) cN=i;
           };
         };
-      if (cN>=0) if (maxAtDef==cycleSize[cN]) {
+      if (cN>=0) if (maxAtDef==atomCycle[cN].size()) {
           cycleDefine[cN]=1;
           cN=-1;
         };
@@ -2033,29 +2019,29 @@ namespace OpenBabel {
       if (cN>=0) {
         cycleDefine[cN]=1;  //{Label, that CN-th cycle is inserted into priority list}
 
-        test=(atomDefine[atomCycle[cycleAddress[cN]]]>0) &&
-          (atomDefine[atomCycle[cycleAddress[cN]+cycleSize[cN]-1]]==0);
+        test=(atomDefine[atomCycle[cN][0]]>0) &&
+          (atomDefine[atomCycle[cN][atomCycle[cN].size() - 1]]==0);
         //        {if first atom from cyclic fragment was inserted into list previously and last-no}
         while (! test) {
           //          {enumeration of atom's sequence in cyclic fragment}
-          aA=atomCycle[cycleAddress[cN]];
-          for (j=1; j<cycleSize[cN]; j++) atomCycle[cycleAddress[cN]+j-1]=atomCycle[cycleAddress[cN]+j];
-          atomCycle[cycleAddress[cN]+cycleSize[cN]-1]=aA;
-          test=(atomDefine[atomCycle[cycleAddress[cN]]]>0) &&
-            (atomDefine[atomCycle[cycleAddress[cN]+cycleSize[cN]-1]]==0);
+          aA=atomCycle[cN][0];
+          for (j=1; j<atomCycle[cN].size(); j++) atomCycle[cN][j-1]=atomCycle[cN][j];
+          atomCycle[cN][atomCycle[cN].size() - 1]=aA;
+          test=(atomDefine[atomCycle[cN][0]]>0) &&
+            (atomDefine[atomCycle[cN][atomCycle[cN].size() - 1]]==0);
         };
         //        {now first atom in the cycle definition list must be inserted into the priority list early, and the last atom-no}
-        for (j=0;j<cycleSize[cN]-maxAtDef; j++) {
+        for (j=0;j<atomCycle[cN].size()-maxAtDef; j++) {
           //          for each undefined atom from selected cycle}
           //atom is added to priority list}
-          dsATN[currNumDef]=atomCycle[cycleAddress[cN]+maxAtDef+j];
+          dsATN[currNumDef]=atomCycle[cN][maxAtDef+j];
 
           atomDefine[dsATN[currNumDef]]=1;
           if (maxAtDef<3) dsTP[currNumDef]=maxAtDef+1; else dsTP[currNumDef]=4;
           //type of clean procedure definition}
-          dsNA1[currNumDef]=atomCycle[cycleAddress[cN]+maxAtDef-1];
-          dsNA2[currNumDef]=atomCycle[cycleAddress[cN]];
-          dsSC[currNumDef]=cycleSize[cN]-maxAtDef;
+          dsNA1[currNumDef]=atomCycle[cN][maxAtDef-1];
+          dsNA2[currNumDef]=atomCycle[cN][0];
+          dsSC[currNumDef]=atomCycle[cN].size()-maxAtDef;
           currNumDef++;
 
           /*       Initial Java codes
@@ -2077,7 +2063,7 @@ namespace OpenBabel {
   };
 
   void TSimpleMolecule::defA(int& currNumDef, int atomClean, int sPN, int baseCycle, std::vector<int>& atomDefine, const std::vector<int> listAtomClean,
-                             std::vector<int>& cycleDefine, std::vector<int>& cycleSize, std::vector<int>& cycleAddress, std::vector<int>& atomCycle,
+                             std::vector<int>& cycleDefine, std::vector<std::vector<int> >& atomCycle,
                              std::vector<int>& dsATN, std::vector<int>& dsTP, std::vector<int>& dsNA1, std::vector<int>& dsNA2) {
 
     //The procedure create priority list formation for cleaning of molecule. Recur-
@@ -2112,11 +2098,11 @@ namespace OpenBabel {
       rC=0;
       j=100000;
       //minimal cycle size searching}
-      if (baseCycle>0) for (i=0; i<baseCycle; i++) if (cycleDefine[i]==0) if (cycleSize[i]<j) {
+      if (baseCycle>0) for (i=0; i<baseCycle; i++) if (cycleDefine[i]==0) if (atomCycle[i].size()<j) {
               rC=i;
-              j=cycleSize[i];
+              j=atomCycle[i].size();
             };
-      if (rC>0) i=atomCycle[cycleAddress[rC]]; else {
+      if (rC>0) i=atomCycle[rC][0]; else {
         //        {not found-first undefined atom is selected}
         i=0;
         while (atomDefine[listAtomClean[i]] != 0) i++;
@@ -2170,129 +2156,8 @@ namespace OpenBabel {
     for (i=0; i<ringSize; i++)bondList[i]=newBondList[i];
   };
 
-  /*
-    bool TSimpleMolecule::threeBondResolve(int an, int bondExcluded, double& xv, double& yv, neigbourlist & bk) {
-    //Addition from 16 April 2006
-    int bondNoList[3];
-    bool result=false;
-    double centerX[3];
-    double centerY[3];
-    int nBondNo;
-    std::vector<int> bondList(nBonds());
-    std::vector<int> blStore(nBonds());
-    bool testBad,testOK;
-    int m,j,n1,n2,n,k;
-    int rs;
-    double dist,x,y,minDist;
-    int i;
-    bool test,testStore;
-    int at;
-    double r1,r2,s1,s3;
-
-    xv=0; yv=1;
-    nBondNo=0;
-    testBad=false;
-    testOK=true;
-    testStore=false;
-    for (i=0; i<bk[an].nb; i++) {
-    n=bk[an].adjusted[i];
-    if (n != bondExcluded) {
-    vaweBond(n,bk,rs,bondList);
-    if (rs > 0) {
-    //I have to analize bondList to determine second cycle to exclude adamanthane
-    if (! testStore) {
-    //Save
-    blStore.clear();
-    for (j=0; j<rs; j++) blStore.push_back(bondList[j]);
-    testStore=true;
-    } else {
-    m=0;
-    for (j=0; j<blStore.size(); j++) {
-    test=false;
-    for (k=0; k<rs; k++) if (bondList[k] == blStore[j]) {
-    test=true;
-    break;
-    };
-    if (test) m++;
-    };
-    if ((m > 1) && (m < blStore.size())) {
-    testOK=false;
-    };
-    };
-    //center determination
-    centerX[nBondNo]=0;
-    centerY[nBondNo]=0;
-    for (j=0; j<rs; j++) {
-    m=bondList[j];
-    n1=getBond(m)->at[0];
-    n2=getBond(m)->at[1];
-    centerX[nBondNo]=centerX[nBondNo]+getAtom(n1)->rx+getAtom(n2)->rx;
-    centerY[nBondNo]=centerY[nBondNo]+getAtom(n1)->ry+getAtom(n2)->ry;
-    };
-    centerX[nBondNo]=centerX[nBondNo]/(2*rs);
-    centerY[nBondNo]=centerY[nBondNo]/(2*rs);
-    bondNoList[nBondNo]=n;
-    nBondNo++;
-    };
-    };// else testBad:=true;
-    if ((nBondNo == 3) || (testBad)) break;
-    };
-    if (nBondNo < 2) testBad=true;
-    if ((! testBad) && testOK) {
-    dist=0;
-    if (nBondNo == 2) {
-    //single bond, attached to ring. Re-definition center....
-    x=0; y=0;
-    for (i=0; i<nAtoms(); i++) {
-    x=x+getAtom(i)->rx;
-    y=y+getAtom(i)->ry;
-    };
-    x=x/(double)nAtoms();
-    y=y/(double)nAtoms();
-    for (i=0; i<nBondNo; i++) {
-    centerX[i]=x;
-    centerY[i]=y;
-    };
-    };
-    for (i=0; i<nBondNo; i++) {
-    at=getBond(bondNoList[i])->at[0];
-    if (at== an) getBond(bondNoList[i])->at[1];
-    r1=getAtom(at)->rx-getAtom(an)->rx;
-    r2=getAtom(at)->ry-getAtom(an)->ry;
-    s1=sqrt(r1*r1+r2*r2);
-    if (s1 == 0) testBad=true; else {
-    r1=r1/s1; r2=r2/s1;
-    x=-r1;
-    y=-r2;
-    minDist=1000000000;
-    for (j=0; j<nBondNo; j++) {
-    r1=(x*s1+getAtom(an)->rx-centerX[j]);
-    r2=(y*s1+getAtom(an)->ry-centerY[j]);
-    s3=sqrt(r1*r1+r2*r2);
-    if (s3 < minDist) minDist=s3;
-    };
-    if (minDist > dist) {
-    dist=minDist;
-    xv=x;
-    yv=y;
-    };
-    };
-    };
-    if (! testBad) result=true;
-    };
-    //end addition from 16 April 2006
-    return result;
-    };
-  */
-
   void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vector<int>listBondClean,
-                               int & atomClean, int & bondClean, int spn, int sCHA1, int sCHB1, bool iOPT7) {
-
-    std::vector<int> dsATN(NBONDSMAX);
-    std::vector<int> dsTP(NBONDSMAX);
-    std::vector<int> dsSC(NBONDSMAX);
-    std::vector<int> dsNA1(NBONDSMAX);
-    std::vector<int> dsNA2(NBONDSMAX);
+                               int atomClean, int & bondClean, int spn, int sCHA1, int sCHB1, bool iOPT7) {
     /*
       the arrays are the priority list for clean. Minimal element of record has
       the maximal priority. Each element of record contains:
@@ -2324,15 +2189,9 @@ namespace OpenBabel {
     int currNumDef;
     int atomSecond;
 
-    std::vector<int> cycleDescription;
-    std::vector<int> cycleAddress(nBonds());
-    std::vector<int> atomDefine(NBONDSMAX);
-    std::vector<int> cycleSize(NBONDSMAX);
-    std::vector<int> cycleDefine(NBONDSMAX);
-    std::vector<int> tempArray(NBONDSMAX);
     double r,cf,fi,ux,uy,ux1,uy1,ux2,uy2,uvX,uvY,c,s;
     double xCenterOld,yCenterOld,xCenterNew,yCenterNew,bondLengthOld,bondLengthNew;
-    neigbourlist bk;
+    neighbourlist *bk;
     int n,n1,n2;
     double r1;
     bool isCycle,isChainFour;
@@ -2341,13 +2200,20 @@ namespace OpenBabel {
     //Lx,Ly,Button:integer;
 
     if ((atomClean<1) || (bondClean==0)) return;
+
+    std::vector<int> dsATN(atomClean);
+    std::vector<int> dsTP(atomClean);
+    std::vector<int> dsSC(atomClean);
+    std::vector<int> dsNA1(atomClean);
+    std::vector<int> dsNA2(atomClean);
+
     defineAtomConn();
     allAboutCycles();
 
     test=true;
+    bk = (neighbourlist *)malloc(nAtoms() * sizeof(adjustedlist));
     defineBondConn(bk);
     //{Start clean for LISTATOMCLEAN and LISTBONDCLEAN atoms and bonds}
-    cycleAddress[0]=0;
     baseCycle=0;
     cs=0;
     ux=0;
@@ -2356,15 +2222,16 @@ namespace OpenBabel {
     uvY=0;
     atomSecond=0;
 
+    std::vector<int>bondList;
+    std::vector<vector<int> > cycleDescription;
     for (i=0; i<bondClean; i++) {
-      vaweBond(listBondClean[i],bk,cs,atomDefine); //If I-th bond belongs to cycle}
-
+      vaweBond(listBondClean[i],bk,cs,bondList); //If I-th bond belongs to cycle}
       if (cs>0) {
-        canonizeCycle(cs,atomDefine);
+        canonizeCycle(cs,bondList);
         test=false;
-        for (j=0; j<baseCycle; j++) if(cycleSize[j] == cs) {
+        for (j=0; j<baseCycle; j++) if(cycleDescription[j].size() == cs) {
             test=true;
-            for (k=0; k<cycleSize[j]; k++) if (atomDefine[k] != cycleDescription[cycleAddress[j]+k]) {
+            for (k=0; k<cycleDescription[j].size(); k++) if (bondList[k] != cycleDescription[j][k]) {
                 test=false;
                 break;
               };
@@ -2372,29 +2239,26 @@ namespace OpenBabel {
           };
         if (! test) {     //{not found-the cycle is added to cycle's list}
           baseCycle++;
-          cycleAddress[baseCycle]=cycleAddress[baseCycle-1]+cs;
-          cycleSize[baseCycle-1]=cs;
-          cycleDescription.resize(cycleDescription.size() + cs);
-          for (j=0; j<cs; j++) cycleDescription[cycleAddress[baseCycle-1]+j]=atomDefine[j];
+          cycleDescription.push_back(bondList);
         };
       };
-
     };
 
-    std::vector<int> atomCycle(cycleDescription.size());
+    std::vector<std::vector<int> > atomCycle(cycleDescription.size());
+    std::vector<int> cycleDefine(cycleDescription.size());
 
     for (i=0; i<baseCycle; i++) { //making atom list in those order, as they will be defined at cycles}
       cycleDefine[i]=0;
-      k=cycleDescription[cycleAddress[i]+0];
-      j=cycleDescription[cycleAddress[i]+1];
+      k=cycleDescription[i][0];
+      j=cycleDescription[i][1];
 
-      if ((getBond(k)->at[0]==getBond(j)->at[0]) || (getBond(k)->at[0]==getBond(j)->at[1])) atomCycle[cycleAddress[i]+0]=getBond(k)->at[0];
-      else atomCycle[cycleAddress[i]+0]=getBond(k)->at[1];
-      n=atomCycle[cycleAddress[i]+0]; //previoulsly putted atom
-      for (j=1; j<cycleSize[i]; j++) {
-        k=cycleDescription[cycleAddress[i]+j];
-        if (getBond(k)->at[0]==n) atomCycle[cycleAddress[i]+j]=getBond(k)->at[1]; else atomCycle[cycleAddress[i]+j]=getBond(k)->at[0];
-        n=atomCycle[cycleAddress[i]+j];
+      if ((getBond(k)->at[0]==getBond(j)->at[0]) || (getBond(k)->at[0]==getBond(j)->at[1])) atomCycle[i].push_back(getBond(k)->at[0]);
+      else atomCycle[i].push_back(getBond(k)->at[1]);
+      n=atomCycle[i][0]; //previoulsly putted atom
+      for (j=1; j<cycleDescription[i].size(); j++) {
+        k=cycleDescription[i][j];
+        if (getBond(k)->at[0]==n) atomCycle[i].push_back(getBond(k)->at[1]); else atomCycle[i].push_back(getBond(k)->at[0]);
+        n=atomCycle[i][j];
       };
     };
 
@@ -2405,27 +2269,27 @@ namespace OpenBabel {
       yCenterOld=0;
       bondLengthOld=0;
       if (spn == 4) {
-        for (i=0; i<nAtoms(); i++) tempArray[i]=0;
+        vector<int> tempAtomArray(nAtoms(), 0);
         for (i=0; i<atomClean; i++) {
           k=listAtomClean[i];
-          tempArray[k]=1;
+          tempAtomArray[k]=1;
         };
         n=0;
-        for (i=0; i<nAtoms(); i++) if (tempArray[i]==0) {
+        for (i=0; i<nAtoms(); i++) if (tempAtomArray[i]==0) {
             xCenterOld=xCenterOld+getAtom(i)->rx;
             yCenterOld=yCenterOld+getAtom(i)->ry;
             n++;
           };
         xCenterOld=xCenterOld/(double)n; yCenterOld=yCenterOld/(double)n;
-        for (i=0; i<nBonds(); i++) tempArray[i]=0;
+        vector<int> tempBondArray(nBonds(), 0);
         for (i=0; i<bondClean; i++) {
           k=listBondClean[i];
-          tempArray[k]=1;
+          tempBondArray[k]=1;
         };
         n=0;
         bondLengthOld=1E10;
         r1=0;
-        for (i=0; i<nBonds(); i++) if (tempArray[i] == 0) {
+        for (i=0; i<nBonds(); i++) if (tempBondArray[i] == 0) {
             r=this->bondLength(i);
             if (r < bondLengthOld) bondLengthOld=n;
             r1=r1+r;
@@ -2468,7 +2332,7 @@ namespace OpenBabel {
 
     };
 
-    for (i=0; i<nAtoms(); i++) atomDefine[i]=0; //flags-zero value OK
+    std::vector<int> atomDefine(nAtoms(), 0); //flags-zero value OK
     if ((spn<3) || (spn==4)) {     //checking already cleaned atoms...
       for (i=0; i<nAtoms(); i++) atomDefine[i]=1;
       for (i=0; i<atomClean; i++) {
@@ -2477,12 +2341,10 @@ namespace OpenBabel {
       };
     };
     currNumDef=0;
-    i=0;
     while (currNumDef<atomClean) {
       //start recursion-priority list formation}
-      defC(currNumDef,baseCycle,atomClean,cycleDefine,atomDefine,atomCycle,cycleAddress,cycleSize,dsATN,dsTP,dsSC,dsNA1,dsNA2);
-      defA(currNumDef,atomClean,spn,baseCycle,atomDefine,listAtomClean,cycleDefine,cycleSize,cycleAddress,atomCycle,dsATN,dsTP,dsNA1,dsNA2);
-      i++;
+      defC(currNumDef,baseCycle,atomClean,cycleDefine,atomDefine,atomCycle,dsATN,dsTP,dsSC,dsNA1,dsNA2);
+      defA(currNumDef,atomClean,spn,baseCycle,atomDefine,listAtomClean,cycleDefine,atomCycle,dsATN,dsTP,dsNA1,dsNA2);
     }; //end recursion}
 
     for (i=0; i<nAtoms(); i++) atomDefine[i]=0;
@@ -2541,7 +2403,7 @@ namespace OpenBabel {
                   if (bnEx >= 0) break;
                 };
                 test= (bnEx >= 0);
-                if (test) test=threeBondResolve(k1,bnEx,ux,uy,&bk);
+                if (test) test=threeBondResolve(k1,bnEx,ux,uy,bk);
                 if (! test) {
                   ux=ux1; uy=uy1;
                 };
@@ -2793,6 +2655,8 @@ namespace OpenBabel {
         getAtom(listAtomClean[i])->rx=getAtom(listAtomClean[i])->rx-xCenterNew+xCenterOld;
         getAtom(listAtomClean[i])->ry=getAtom(listAtomClean[i])->ry-yCenterNew+yCenterOld;
       };
+    // Tidy up
+    free(bk);
   };
 
 
@@ -3096,12 +2960,11 @@ namespace OpenBabel {
     std::vector<int>list1(listarSize());
     double r, xc, yc, xo, yo, xn, yn;
     int i;
-    int nB1;
 
     if (cHB < 0) return;
 
-    test=makeFragment(nB1,list1,getBond(cHB)->at[1],getBond(cHB)->at[0]);
-    if (nB1 > 1) {
+    test=makeFragment(list1,getBond(cHB)->at[1],getBond(cHB)->at[0]);
+    if (list1.size() > 1) {
       //One of the atoms haven't neighbours-flip unavalable
       cHA1=getBond(cHB)->at[0];
       cHA2=getBond(cHB)->at[1];
@@ -3113,7 +2976,7 @@ namespace OpenBabel {
       xo=xc*xc-yc*yc;
       yo=2*xc*yc;
 
-      for (i=0; i<nB1; i++) {
+      for (i=0; i<list1.size(); i++) {
         //rotation at angle Pi around axes for all atoms in the LIST fragment
         n=list1[i];
         xc=getAtom(n)->rx-getAtom(cHA1)->rx;
@@ -3127,7 +2990,6 @@ namespace OpenBabel {
   };
 
   void TSimpleMolecule::bondEnlarge(int bN) {
-    int nB;
     double r;
     std::vector<int> list(listarSize());
     int cHA1, cH1, cH2, n;
@@ -3137,7 +2999,7 @@ namespace OpenBabel {
 
     for (i=0; i<nAtoms(); i++) list[i]=i;
     cHA1=getBond(bN)->at[0];
-    test=makeFragment(nB,list,cHA1,getBond(bN)->at[1]);
+    test=makeFragment(list,cHA1,getBond(bN)->at[1]);
     if (list[0] == getBond(bN)->at[0]) { //center definition
       cH1=getBond(bN)->at[0];
       cH2=getBond(bN)->at[1];
@@ -3153,7 +3015,7 @@ namespace OpenBabel {
     xc1=getAtom(cH2)->rx-getAtom(cH1)->rx;
     yc1=getAtom(cH2)->ry-getAtom(cH1)->ry;
     r=r*2;
-    for (i=0; i<nB; i++) { //coordinates change
+    for (i=0; i<list.size(); i++) { //coordinates change
       n=list[i];
       getAtom(n)->rx=getAtom(n)->rx+xc1+r*xc;
       getAtom(n)->ry=getAtom(n)->ry+yc1+r*yc;
@@ -3180,7 +3042,7 @@ namespace OpenBabel {
   };
 
   int TSimpleMolecule::fragmentSecond(int sphere, int att, int secAt, const std::vector<int> a,
-                                      const std::vector<int> b, const neigbourlist bk, std::vector<int>& wSphere) {
+                                      const std::vector<int> b, const neighbourlist *bk, std::vector<int>& wSphere) {
 
     /*Generate a longinteger number, which is characterize fragment with atom
       CHA in center. Up to second neigbour's sphere are took into account. Array
@@ -3302,7 +3164,7 @@ namespace OpenBabel {
     std::vector<int> b(listarSize());
     TSimpleMolecule * em;
     int i,j,n;
-    neigbourlist bk;
+    neighbourlist *bk;
     std::vector<std::vector<int> *> aeqList(0);
     std::vector<int> * lL;
 
@@ -3323,7 +3185,7 @@ namespace OpenBabel {
     } else {
       for (i=0; i<em->nBonds(); i++) if ((em->getBond(i)->tb >= 9) && (em->getBond(i)->tb <= 11)) em->getBond(i)->tb=1;
     };
-
+    bk=(neighbourlist *)malloc(nAtoms() * sizeof(adjustedlist));
     em->defineBondConn(bk);
     //
     for (i=0; i<em->nAtoms(); i++) a[i]=em->getAtom(i)->allAtAtom();
@@ -3350,6 +3212,7 @@ namespace OpenBabel {
     //freeing resorces
     for (int i=0; i<aeqList.size(); i++) delete(aeqList.at(i));
     aeqList.clear();
+    free(bk);
     delete(em);
   };
 
@@ -3913,8 +3776,6 @@ namespace OpenBabel {
 
   class TEditedMolecule: public TSimpleMolecule {
   protected:
-    neigbourlist queryBK;
-    neigbourlist structureBK;
     std::vector<int> queryQHydr;
     std::vector<int> queryAGer;
     std::vector<int> queryBQCounter;
@@ -3928,15 +3789,13 @@ namespace OpenBabel {
     std::vector<int> bSTested;
     std::vector<int> bSTestedStore;
 
-    bool aEQ[NATOMSMAX][NATOMSMAX];
-    bool bEQ[NBONDSMAX][NBONDSMAX];
     void removeHydrogen(std::vector<int> * qHydr, std::vector<int> * qEnumerator);
     void atomBondChange();
     bool stereoBondChange();
-    void directBondAss(int& bnq, bool& test, bool& test1, const bool beq[NBONDSMAX][NBONDSMAX],
-                       const bool aeq[NATOMSMAX][NATOMSMAX], std::vector<int>& bqcounter, std::vector<int>& aqtested,
+    void directBondAss(int& bnq, bool& test, bool& test1, bool const* const* beq,
+                       bool const* const* aeq, std::vector<int>& bqcounter, std::vector<int>& aqtested,
                        std::vector<int>& bstested, std::vector<int>& bqtested, std::vector<int>& astested,
-                       const std::vector<int> ager, const neigbourlist bqconn, const neigbourlist bsconn, TSimpleMolecule * smol);
+                       const std::vector<int> ager, const neighbourlist *bsconn, TSimpleMolecule * smol);
     bool allQueryPresent(const std::vector<int> qA, const std::vector<int> qB,
                          int nA, int nB);
   public:
@@ -4007,9 +3866,6 @@ namespace OpenBabel {
     int l2=0;
     bool test;
     double r1,r2,r3,r4,emBLength;
-    std::vector<int> bTested(NBONDSMAX);
-    std::vector<int> bList(NBONDSMAX);
-    std::vector<int> aList(NBONDSMAX);
     TSingleAtom * sa=NULL;
     TSingleBond * sb=NULL;
     int result=0;
@@ -4019,15 +3875,11 @@ namespace OpenBabel {
     //return result;
     //Analizing on boundaries}
     k2=1; k1=1;
-    if ((nAtoms()+naDEF) >= NATOMSMAX) {
-      result=1;
-      return result;
-    }
 
     //Analizing of bond's
     nb=0;
     emBLength=0;
-    for (i=0; i<eMolecule.nAtoms(); i++) bList[i]=0;
+    std::vector<int> bList(eMolecule.nAtoms(), 0);
     for (i=0; i<naDEF; i++) bList[list[i]]=1;
     for (i=0; i<eMolecule.nBonds(); i++) {
       n1=eMolecule.getBond(i)->at[0];
@@ -4039,10 +3891,6 @@ namespace OpenBabel {
     }
     if (nb > 0) emBLength=emBLength/nb;
 
-    if ((nb+nBonds()) >= NBONDSMAX) {
-      result=2;
-      return result;
-    }
     na=nAtoms();
     nb=nBonds();
 
@@ -4262,11 +4110,8 @@ namespace OpenBabel {
 
   void TEditedMolecule::addAsTemplate(TEditedMolecule& fragmentMol, int thisAN, int smAN, int thisBN, int smBN, bool isAddition) {
     int nAtomsOld,nBondsOld,naDef1,naDef,i;
-    int naNum;
     bool test,test1,test2;
-    std::vector<int> list(NBONDSMAX);
-    std::vector<int> listA(NBONDSMAX);
-    std::vector<int> listB(NBONDSMAX);
+    std::vector<int> list;
     double r,scale,xOld,yOld,xNew,yNew,xCenter,yCenter;
     double r1;
     double r2;
@@ -4301,7 +4146,7 @@ namespace OpenBabel {
     scale=1;
     xOld=0;
     yOld=0;
-    test=fragmentMol.makeFragment(naNum,list,naDef1,-1); //creation of template's fragment
+    test=fragmentMol.makeFragment(list,naDef1,-1); //creation of template's fragment
     //Scale definitions
 
     if (thisAN >= 0) { //connection through atoms
@@ -4421,7 +4266,7 @@ namespace OpenBabel {
       nAtomsOld=this->nAtoms();
       if (isAddition) mouseButton=1; else mouseButton=2;
 
-      this->addFragment(fragmentMol,naNum,thisAN,thisBN,smBN,list,
+      this->addFragment(fragmentMol,list.size(),thisAN,thisBN,smBN,list,
                         xOld,yOld,xNew,yNew,scale,r1,r2,mouseButton,false);
 
 
@@ -4436,7 +4281,7 @@ namespace OpenBabel {
       r2=yu1*xu2-xu1*yu2;
       nBondsOld=this->nBonds();
       nAtomsOld=this->nAtoms();
-      addFragment(fragmentMol,naNum,thisAN,thisBN,smBN,list,
+      addFragment(fragmentMol,list.size(),thisAN,thisBN,smBN,list,
                   xOld,yOld,xNew,yNew,scale,r1,r2,1,false);
     }
   }
@@ -4447,7 +4292,6 @@ namespace OpenBabel {
     std::vector<int> list(listarSize());
     std::vector<int>  inverseList(listarSize());
     int i,j,k;
-    int na;
     bool test;
     TSingleAtom * sa;
     TSingleBond * sb;
@@ -4456,18 +4300,18 @@ namespace OpenBabel {
     if ((atomN < 0) || (atomN >= nAtoms())) return result;
     if (enumerator != NULL) for (i=0; i<nAtoms(); i++) (*enumerator)[i]=-1;
     for (i=0; i<nAtoms(); i++) inverseList[i]=-1;
-    test=makeFragment(na,list,atomN,-1);
+    test=makeFragment(list,atomN,-1);
 
 
-    if (na>1) for (i=0; i<(na-1); i++) for (j=i+1; j<na; j++) if (list[i]>list[j]) {
+    if (list.size()>1) for (i=0; i<(list.size()-1); i++) for (j=i+1; j<list.size(); j++) if (list[i]>list[j]) {
             k=list[i];
             list[i]=list[j];
             list[j]=k;
           };
-    if (na > 0) for (i=0; i<na; i++) inverseList[list[i]]=i;
+    for (i=0; i<list.size(); i++) inverseList[list[i]]=i;
 
     result= new TEditedMolecule();
-    if (na > 0) for (i=0; i<na; i++) {
+    for (i=0; i<list.size(); i++) {
         sa=this->getAtom(list[i])->clone();
         result->addAtom(sa);
         if (enumerator != NULL) (*enumerator)[list[i]]=i;
@@ -4515,6 +4359,7 @@ namespace OpenBabel {
     };
 
     //Initializinf arrays
+    neighbourlist *queryBK=(neighbourlist *)malloc(listarSize()*sizeof(adjustedlist));
     queryQHydr.resize(listarSize());
     queryAGer.resize(listarSize());
     queryAQTested.resize(listarSize());
@@ -4665,6 +4510,7 @@ namespace OpenBabel {
       queryStereoQ=stereoBondChange(); //Stereo bond conversion
     };
     delete(molecule1);
+    free(queryBK);
     return result;
   };
 
@@ -4780,15 +4626,14 @@ namespace OpenBabel {
     return result;
   };
 
-  void TEditedMolecule::directBondAss(int& bnq, bool& test, bool& test1, const bool beq[NBONDSMAX][NBONDSMAX],
-                                      const bool aeq[NATOMSMAX][NATOMSMAX], std::vector<int>& bqcounter, std::vector<int>& aqtested,
+  void TEditedMolecule::directBondAss(int& bnq, bool& test, bool& test1, bool const* const* beq,
+                                      bool const* const* aeq, std::vector<int>& bqcounter, std::vector<int>& aqtested,
                                       std::vector<int>& bstested, std::vector<int>& bqtested, std::vector<int>& astested,
-                                      const std::vector<int> ager, const neigbourlist bqconn, const neigbourlist bsconn, TSimpleMolecule * smol) {
+                                      const std::vector<int> ager, const neighbourlist *bsconn, TSimpleMolecule * smol) {
     //Assign a structure atom to query atom. Variables:
     //BNQ-query bond's number, which needs to be assigned
     //BEQ,AEQ-boolean matrix, contains list of equivalent bonds
-    //BQCONN,BSCONN-for each atom containes list of connected bonds in query and
-    //              structure respectively.
+    //BSCONN-for each atom containes list of connected bonds in structure
     //QBOND,SBOND-bond's attributes for query and structure respectively
     //ASTESTED- I-th element of the array contains the query atom's number, which
     //          has been assigned to I-th atom of structure (=0-no assignment)
@@ -4892,7 +4737,7 @@ namespace OpenBabel {
     int j,k,l,m,mm;
     bool test;
     bool test1;
-    bool test2,test3,stereoS;
+    bool test2,test3;
     int aq1,aq2,as1,as2,j1,i1;
     int ii;
     bool result=false;
@@ -4908,187 +4753,177 @@ namespace OpenBabel {
     if (molecule1->listarSize()>queryBQTested.size()) queryBQTested.resize(molecule1->listarSize());
     if (molecule1->listarSize()>queryCurrentAssignment.size()) queryCurrentAssignment.resize(molecule1->listarSize());
     if (this->listarSize()>queryAQTested.size()) queryAQTested.resize(this->listarSize());
-    for (int i=0; i<molecule1->nAtoms(); i++) for (j=0; j<nAtoms(); j++) aEQ[i][j]=false;
-    for (int i=0; i<molecule1->nBonds(); i++) for (j=0; j<nBonds(); j++) bEQ[i][j]=false;
+
+    // Initialise aEQ, a 2D bool matrix of size [molecule1->nAtoms()][nAtoms()] and set all to false
+    bool **aEQ = (bool **)malloc(molecule1->nAtoms()*sizeof(bool *));
+    for (int i=0; i<molecule1->nAtoms(); ++i) {
+      aEQ[i] = (bool *)malloc(nAtoms()*sizeof(bool ));
+      for (int j=0; j<nAtoms(); ++j)
+        aEQ[i][j] = false;
+    }
+    // Initialise bEQ, a 2D bool matrix of size [molecule1->nBonds()][nBonds()] and set all to false
+    bool **bEQ = (bool **)malloc(molecule1->nBonds()*sizeof(bool *));
+    for (int i=0; i<molecule1->nBonds(); ++i) {
+      bEQ[i] = (bool *)malloc(nBonds()*sizeof(bool ));
+      for (int j=0; j<nBonds(); ++j)
+        bEQ[i][j] = false;
+    }
+
     cycleNumber=0;
-    //Formula filter
-    test2=false;
-    /*
-      if (fBruttoFormula.nD>0) {
-      j=0;
-      if (molecule1.fBruttoFormula.nD>0) {
-      whiletest1=true;
-      while (whiletest1) {
-      j++; k=0;
-      test1.value=(fBruttoFormula.eList[j]==104) && (! fIOPT11);
-      whiletest2=true;
-      if ((fBruttoFormula.eList[j] != 1) && (! test1.value)) while (whiletest2) {
-      k++;
-      test2=((fBruttoFormula.eList[j]==molecule1.fBruttoFormula.eList[k])
-      && (fBruttoFormula.eNumber[j]<=molecule1.fBruttoFormula.eNumber[k]));
-      whiletest2=test2 || (k==molecule1.fBruttoFormula.nD);
-      whiletest2=! whiletest2;
-      } else test2=true;
-      whiletest1=(! test2) || (j==fBruttoFormula.nD);
-      whiletest1=! whiletest1;
-      };
-      } else test2=false;
-      } else test2=true;
-    */ test2=true;   //turn of molecular formula filter
 
     molecule1->fIOPT11=fIOPT11;
     molecule1->fIOPT12=fIOPT13;
     molecule1->fIOPT13=fIOPT13;
-    if (test2) {
+    test2 = true;
 
-      //{R/S/Z/E description are removed: they are not used in substructure search}
-      if (fIOPT13) molecule1->atomBondChange(); //Semipolar bond conversion
-      molecule1->defineAtomConn();
-      molecule1->defineBondConn(structureBK);
-      // GRH: 2011-10-15 unused via clang static analyzer
-      // stereoS=molecule1->stereoBondChange(); //Stereo bond conversion}
-      for (j=0; j<molecule1->nAtoms(); j++) {
-        //Isotops conversion}
-        if ((molecule1->getAtom(j)->na==104) && (! fIOPT11)) molecule1->getAtom(j)->na=1;
-        if (! fIOPT11) molecule1->getAtom(j)->iz=0;
-        bSTested[j]=0;  //bsTested contains nu. explicit hydrogens - so 0 is fine!
-      };
-      for (j=0; j<molecule1->nAtoms(); j++) if (molecule1->getAtom(j)->na==1)
-                                              if (molecule1->getAtom(j)->nb>0) for (k=0; k<molecule1->getAtom(j)->nb; k++) {
-                                                  //Formation of list explicitly-defined hydrogens}
-                                                  l=molecule1->getAtom(j)->ac[k];
-                                                  bSTested[l]=bSTested[l]+1;
-                                                };
-      for (k=0; k<nAtoms(); k++) aSTested[k]=-1;
-      if (nAtoms()==1) {
-        //Partial case - if single atom was defined}
-        test2=false;
-        j=0;
-        whiletest1=true;
-        if (molecule1->nAtoms()>0) while (whiletest1) {
-            test2=TSingleAtom::atomEquivalent(molecule1->getAtom(j),getAtom(0),bSTested[j],queryQHydr[0],fIOPT10,fIOPT11);
-            //Addition for aromatic search}
-            if (test2 && ((getAtom(0)->special & AROMATIC_MASK)!=0) ){
-              test2=false;
-              for (m=0; m<=structureBK[j].nb; m++) {
+    //{R/S/Z/E description are removed: they are not used in substructure search}
+    if (fIOPT13) molecule1->atomBondChange(); //Semipolar bond conversion
+    molecule1->defineAtomConn();
+    neighbourlist *structureBK = (neighbourlist *)malloc(molecule1->nAtoms() * sizeof(adjustedlist));
+    molecule1->defineBondConn(structureBK);
+    // GRH: 2011-10-15 unused via clang static analyzer
+    // stereoS=molecule1->stereoBondChange(); //Stereo bond conversion}
+    for (j=0; j<molecule1->nAtoms(); j++) {
+      //Isotops conversion}
+      if ((molecule1->getAtom(j)->na==104) && (! fIOPT11)) molecule1->getAtom(j)->na=1;
+      if (! fIOPT11) molecule1->getAtom(j)->iz=0;
+      bSTested[j]=0;  //bsTested contains nu. explicit hydrogens - so 0 is fine!
+    };
+    for (j=0; j<molecule1->nAtoms(); j++) if (molecule1->getAtom(j)->na==1)
+                                            if (molecule1->getAtom(j)->nb>0) for (k=0; k<molecule1->getAtom(j)->nb; k++) {
+                                                //Formation of list explicitly-defined hydrogens}
+                                                l=molecule1->getAtom(j)->ac[k];
+                                                bSTested[l]=bSTested[l]+1;
+                                              };
+    for (k=0; k<nAtoms(); k++) aSTested[k]=-1;
+    if (nAtoms()==1) {
+      //Partial case - if single atom was defined}
+      test2=false;
+      j=0;
+      whiletest1=true;
+      if (molecule1->nAtoms()>0) while (whiletest1) {
+          test2=TSingleAtom::atomEquivalent(molecule1->getAtom(j),getAtom(0),bSTested[j],queryQHydr[0],fIOPT10,fIOPT11);
+          //Addition for aromatic search}
+          if (test2 && ((getAtom(0)->special & AROMATIC_MASK)!=0) ){
+            test2=false;
+            for (m=0; m<=structureBK[j].nb; m++) {
+              mm=structureBK[j].adjusted[m];
+              if ((molecule1->getBond(mm)->db==2) || (molecule1->getBond(mm)->db==3)) {
+                test2=true;
+                break;
+              };
+            };
+          };
+          //End addition}
+          if (test2) {
+            if (queryEnum.size()<1) queryEnum.resize(1);
+            queryEnum[0]=0;
+            if (queryAQTested.size()<1) queryAQTested.resize(1);
+            queryAQTested[0]=j;
+          };
+          j++;
+          whiletest1=test2 || (j==molecule1->nAtoms());
+          whiletest1=! whiletest1;
+        };
+    } else if (nBonds()==0) test2=false; else {
+      //General case - substructure search
+      if (fIncludedList != NULL) {
+        for (j=0; j<molecule1->nAtoms(); j++) for (k=0; k<nAtoms(); k++) aEQ[j][k]=false;
+        for (k=0; k<nAtoms(); k++) {
+          j=(*fIncludedList)[k];
+          aEQ[j][k]=true;
+          aSTested[k]=1;
+        };
+      } else {
+        for (j=0; j<molecule1->nAtoms(); j++) for (k=0; k<nAtoms(); k++) {
+            //Creation of atom-equivalent matrix}
+
+            test3=(TSingleAtom::atomEquivalent(molecule1->getAtom(j),getAtom(k),bSTested[j],
+                                               queryQHydr[k],fIOPT10,fIOPT11) && (getAtom(k)->nb<=molecule1->getAtom(j)->nb));
+
+            //Addition for aromatic search
+            if (test3 && ((getAtom(k)->special & AROMATIC_MASK) !=0)) {
+              test3=false;
+              for (m=0; m<structureBK[j].nb; m++) {
                 mm=structureBK[j].adjusted[m];
                 if ((molecule1->getBond(mm)->db==2) || (molecule1->getBond(mm)->db==3)) {
-                  test2=true;
+                  test3=true;
                   break;
                 };
               };
             };
-            //End addition}
-            if (test2) {
-              if (queryEnum.size()<1) queryEnum.resize(1);
-              queryEnum[0]=0;
-              if (queryAQTested.size()<1) queryAQTested.resize(1);
-              queryAQTested[0]=j;
-            };
-            j++;
-            whiletest1=test2 || (j==molecule1->nAtoms());
-            whiletest1=! whiletest1;
+            aEQ[j][k]=test3;
+            if (test3) aSTested[k]=1;
           };
-      } else if (nBonds()==0) test2=false; else {
-        //General case - substructure search
-        if (fIncludedList != NULL) {
-          for (j=0; j<molecule1->nAtoms(); j++) for (k=0; k<nAtoms(); k++) aEQ[j][k]=false;
-          for (k=0; k<nAtoms(); k++) {
-            j=(*fIncludedList)[k];
-            aEQ[j][k]=true;
-            aSTested[k]=1;
-          };
-        } else {
-          for (j=0; j<molecule1->nAtoms(); j++) for (k=0; k<nAtoms(); k++) {
-              //Creation of atom-equivalent matrix}
+      };
 
-              test3=(TSingleAtom::atomEquivalent(molecule1->getAtom(j),getAtom(k),bSTested[j],
-                                                 queryQHydr[k],fIOPT10,fIOPT11) && (getAtom(k)->nb<=molecule1->getAtom(j)->nb));
-
-              //Addition for aromatic search
-              if (test3 && ((getAtom(k)->special & AROMATIC_MASK) !=0)) {
-                test3=false;
-                for (m=0; m<structureBK[j].nb; m++) {
-                  mm=structureBK[j].adjusted[m];
-                  if ((molecule1->getBond(mm)->db==2) || (molecule1->getBond(mm)->db==3)) {
-                    test3=true;
-                    break;
-                  };
-                };
-              };
-              aEQ[j][k]=test3;
-              if (test3) aSTested[k]=1;
-            };
+      for (j=0; j<nBonds(); j++) queryAQTested[j]=0;
+      for (j=0; j<molecule1->nBonds(); j++) for (k=0; k<nBonds(); k++) {
+          //Creation of bond-equivalent matrix
+          aq1=getBond(k)->at[0];   aq2=getBond(k)->at[1];
+          as1=molecule1->getBond(j)->at[0]; as2=molecule1->getBond(j)->at[1];
+          test2=(aEQ[as1][aq1] && aEQ[as2][aq2]) || (aEQ[as1][aq2] && aEQ[as2][aq1]);
+          if (test2) {
+            test3=TSingleBond::bondEquivalent(molecule1->getBond(j),getBond(k));
+            bEQ[j][k]=test3;
+            if (test3) queryAQTested[k]=1;
+          } else bEQ[j][k]=false;
         };
-
-        for (j=0; j<nBonds(); j++) queryAQTested[j]=0;
-        for (j=0; j<molecule1->nBonds(); j++) for (k=0; k<nBonds(); k++) {
-            //Creation of bond-equivalent matrix
-            aq1=getBond(k)->at[0];   aq2=getBond(k)->at[1];
-            as1=molecule1->getBond(j)->at[0]; as2=molecule1->getBond(j)->at[1];
-            test2=(aEQ[as1][aq1] && aEQ[as2][aq2]) || (aEQ[as1][aq2] && aEQ[as2][aq1]);
-            if (test2) {
-              test3=TSingleBond::bondEquivalent(molecule1->getBond(j),getBond(k));
-              bEQ[j][k]=test3;
-              if (test3) queryAQTested[k]=1;
-            } else bEQ[j][k]=false;
-          };
-        //Check, if all query atoms has a partner in structure
-        test2=allQueryPresent(aSTested,queryAQTested,nAtoms(),nBonds());
-        if (test2) {
-          j1=0;
-          for (k=1; k<molecule1->nAtoms(); k++) if (aEQ[k][0]) {
-              //Collection of structure atoms, which may be associated with first query atom
-              j=0;
-              whiletest1=true;
-              while (whiletest1) {
-                test=bEQ[structureBK[k].adjusted[j]][0];
-                if (test) {
-                  queryCurrentAssignment[j1]=k;
-                  j1++;
-                };
-                j++;
-                whiletest1=test || (j==structureBK[k].nb);
-                whiletest1=! whiletest1;
+      //Check, if all query atoms has a partner in structure
+      test2=allQueryPresent(aSTested,queryAQTested,nAtoms(),nBonds());
+      if (test2) {
+        j1=0;
+        for (k=1; k<molecule1->nAtoms(); k++) if (aEQ[k][0]) {
+            //Collection of structure atoms, which may be associated with first query atom
+            j=0;
+            whiletest1=true;
+            while (whiletest1) {
+              test=bEQ[structureBK[k].adjusted[j]][0];
+              if (test) {
+                queryCurrentAssignment[j1]=k;
+                j1++;
               };
-            };
-          i1=0;
-          whiletest1=true;
-          if (j1>0) while (whiletest1) { //for each structure, which may be assigned to 1-st query
-              for (j=0; j<nAtoms(); j++) queryAQTested[j]=-1; //array initializing
-              for (j=0; j<nBonds(); j++) queryBQCounter[j]=0;
-              for (j=0; j<nBonds(); j++) queryBQTested[j]=-1;
-              for (j=0; j<molecule1->nBonds(); j++) bSTested[j]=-1;
-              for (j=0; j<molecule1->nAtoms(); j++) aSTested[j]=-1;
-              queryAQTested[0]=queryCurrentAssignment[i1];
-              aSTested[queryCurrentAssignment[i1]]=0;
-              ii=0;
-              whiletest2=true;
-              while (whiletest2) { //start recursion
-                directBondAss(ii,test,test1,bEQ,aEQ,queryBQCounter,queryAQTested,bSTested,
-                              queryBQTested,aSTested,queryAGer,queryBK,structureBK,molecule1);
-                if ((! test) && (ii>=1)) {
-                  //previous atom were badly assigned-backstep
-                  queryBQCounter[ii]=0;
-                  k=queryAGer[ii-1];
-                  if (k>=0) {
-                    l=queryAQTested[k]; queryAQTested[k]=-1; aSTested[l]=-1;
-                  };
-                  bSTested[queryBQTested[ii-1]]=-1;
-                  queryBQTested[ii-1]=-1;
-                  ii=ii-2;
-                  test=true;
-                };
-                ii=ii+1; //query bond counter
-                whiletest2=(ii==nBonds()) || ((! test) && (ii==1));
-                whiletest2=! whiletest2;
-              };
-              i1++;
-              test2=(ii==nBonds()); //Checking, if success has been reached
-              whiletest1=((j1==i1) || test2);
+              j++;
+              whiletest1=test || (j==structureBK[k].nb);
               whiletest1=! whiletest1;
-            } else test2=false;
-        };
+            };
+          };
+        i1=0;
+        whiletest1=true;
+        if (j1>0) while (whiletest1) { //for each structure, which may be assigned to 1-st query
+            for (j=0; j<nAtoms(); j++) queryAQTested[j]=-1; //array initializing
+            for (j=0; j<nBonds(); j++) queryBQCounter[j]=0;
+            for (j=0; j<nBonds(); j++) queryBQTested[j]=-1;
+            for (j=0; j<molecule1->nBonds(); j++) bSTested[j]=-1;
+            for (j=0; j<molecule1->nAtoms(); j++) aSTested[j]=-1;
+            queryAQTested[0]=queryCurrentAssignment[i1];
+            aSTested[queryCurrentAssignment[i1]]=0;
+            ii=0;
+            whiletest2=true;
+            while (whiletest2) { //start recursion
+              directBondAss(ii,test,test1,bEQ,aEQ,queryBQCounter,queryAQTested,bSTested,
+                            queryBQTested,aSTested,queryAGer,structureBK,molecule1);
+              if ((! test) && (ii>=1)) {
+                //previous atom were badly assigned-backstep
+                queryBQCounter[ii]=0;
+                k=queryAGer[ii-1];
+                if (k>=0) {
+                  l=queryAQTested[k]; queryAQTested[k]=-1; aSTested[l]=-1;
+                };
+                bSTested[queryBQTested[ii-1]]=-1;
+                queryBQTested[ii-1]=-1;
+                ii=ii-2;
+                test=true;
+              };
+              ii=ii+1; //query bond counter
+              whiletest2=(ii==nBonds()) || ((! test) && (ii==1));
+              whiletest2=! whiletest2;
+            };
+            i1++;
+            test2=(ii==nBonds()); //Checking, if success has been reached
+            whiletest1=((j1==i1) || test2);
+            whiletest1=! whiletest1;
+          } else test2=false;
       };
     };
 
@@ -5097,6 +4932,17 @@ namespace OpenBabel {
       if (test2) for (j=0; j<molecule1->nBonds(); j++) if (bSTested[j]>=0) (*bondLabel)[j]=1; else (*bondLabel)[j]=0;
     };
     result=test2;
+
+    // Tidy up
+    free(structureBK);
+    for (int i=0; i<molecule1->nAtoms(); ++i)
+      free(aEQ[i]);
+    free(aEQ);
+    for (int i=0; i<molecule1->nBonds(); ++i)
+      free(bEQ[i]);
+    free(bEQ);
+
+
     return result;
   };
   //***************************************************************************
@@ -5143,7 +4989,7 @@ namespace OpenBabel {
                               double xuValue, double yuValue, double& c1, double& s1, double& xSize, double& ySize,
                               double& xCenter, double& yCenter, int& nVert);
     void selectFragmentConfiguration(TSimpleMolecule * sm, std::vector<int>* atomList);
-    void rescaleSingleFragment(TSimpleMolecule * sm, std::vector<int>* atomList, int alCount, PartFragmentDefinition& pf, double offset);
+    void rescaleSingleFragment(TSimpleMolecule * sm, std::vector<int>* atomList, PartFragmentDefinition& pf, double offset);
     void arrangeMolecules(std::vector<PartFragmentDefinition *>& extendedList, double aspOptimal);
     bool loadTemplates();
   };
@@ -5267,12 +5113,12 @@ namespace OpenBabel {
   void TemplateRedraw::rotateBondVertically(TSimpleMolecule * sm, const std::vector<int>bondList, int bondNo, double xuValue, double yuValue, double& c1, double& s1, double& xSize, double& ySize, double& xCenter, double& yCenter, int& nVert) {
     //Dummy rotation of molecule
     //Two solution - when c2,s2 are used - are determined for cases of rotaition when Up and Down are counterchnged. Single solution would be enough
-    std::vector<bool> atomList(NATOMSMAX);
+    std::vector<bool> atomList(sm->nAtoms(), false);
     int i,n,n1,n2;
     bool test;
     double rX,rY,r;
-    std::vector<double> coorX(NATOMSMAX);
-    std::vector<double> coorY(NATOMSMAX);
+    std::vector<double> coorX(sm->nAtoms());
+    std::vector<double> coorY(sm->nAtoms());
     double xMin,xMax,yMin,yMax;
 
 
@@ -5282,7 +5128,6 @@ namespace OpenBabel {
     c1=1; s1=0;
     xCenter=0; yCenter=0;
     nVert=0;
-    for (i=0; i<sm->nAtoms(); i++) atomList[i]=false;
     test=false;
     for (i=0; i<bondList.size(); i++) {
       n=bondList[i];
@@ -5355,7 +5200,7 @@ namespace OpenBabel {
     double cMax,sMax,x,y;
     std::vector<int> bondList(0);
     std::vector<int> bondListAll(0);
-    std::vector<bool> atomCleaned(NATOMSMAX);
+    std::vector<bool> atomCleaned(sm->nAtoms());
     int i,j,n,n1,n2,w;
     bool test;
 
@@ -5440,8 +5285,8 @@ namespace OpenBabel {
         };
     };
   };
-
-  void TemplateRedraw::rescaleSingleFragment(TSimpleMolecule * sm, std::vector<int>* atomList, int alCount, PartFragmentDefinition& pf, double offset) {
+  
+  void TemplateRedraw::rescaleSingleFragment(TSimpleMolecule * sm, std::vector<int>* atomList, PartFragmentDefinition& pf, double offset) {
     int i,n;
     double xMin,xMax,yMin,yMax;
     double scale,r1,r2;
@@ -5451,7 +5296,7 @@ namespace OpenBabel {
     xMax=RUNDEF;
     yMin=RUNDEF;
     yMax=RUNDEF;
-    for (i=0; i<alCount; i++) {
+    for (i=0; i<atomList->size(); i++) {
       n=(*atomList)[i];
       if ((sm->getAtom(n)->rx < xMin) || (xMin == RUNDEF)) xMin=sm->getAtom(n)->rx;
       if ((sm->getAtom(n)->rx > xMax) || (xMax == RUNDEF)) xMax=sm->getAtom(n)->rx;
@@ -5459,7 +5304,7 @@ namespace OpenBabel {
       if ((sm->getAtom(n)->ry > yMax) || (yMax == RUNDEF)) yMax=sm->getAtom(n)->ry;
     };
     if ((xMax == xMin) && (yMax == yMin)) {
-      for (i=0; i<alCount; i++) {
+      for (i=0; i<atomList->size(); i++) {
         n=(*atomList)[i];
         sm->getAtom(n)->rx=(pf.fragLeft+pf.fragWidth/2);
         sm->getAtom(n)->ry=(pf.fragTop+pf.fragHeight/2);
@@ -5475,7 +5320,7 @@ namespace OpenBabel {
       r2=(pf.fragWidth-2*offset)/(xMax-xMin);
       if (r1 > r2) scale=r2; else scale=r1;
     };
-    for (i=0; i<alCount; i++) {
+    for (i=0; i<atomList->size(); i++) {
       n=(*atomList)[i];
       x=pf.fragLeft+offset+(sm->getAtom(n)->rx-xMin)*scale;
       y=pf.fragTop+offset+(sm->getAtom(n)->ry-yMin)*scale;
@@ -5692,8 +5537,6 @@ namespace OpenBabel {
     int i, j, k, fragmentAN, templateAN;
     int atomClean;
     int bondClean;
-    std::vector<int> listAtomClean(NBONDSMAX);
-    std::vector<int> listBondClean(NBONDSMAX);
     std::vector<int> templateAtomNumber(0);
     std::vector<int> fragmentAtomNumber(0);
     bool test,test1;
@@ -5740,12 +5583,11 @@ namespace OpenBabel {
       };
     } else {
       //Hurrah! Found! Redraw from template
-      listAtomClean.resize(NBONDSMAX);
-      listBondClean.resize(NBONDSMAX);
       templateAtomNumber.resize(0);
       fragmentAtomNumber.resize(0);
       //Atom list formation
       atomClean=0;
+      vector<int> listAtomClean;
       for (i=0; i<sm.nAtoms(); i++) {
         test=false;
         for (j=0; j<em->nAtoms(); j++) {
@@ -5759,7 +5601,7 @@ namespace OpenBabel {
           };
         };
         if (test) {   //Only those atoms, defined at template, are cleaned.....
-          listAtomClean[atomClean]=i;
+          listAtomClean.push_back(i);
           atomClean++;
         };
       };
@@ -5828,7 +5670,10 @@ namespace OpenBabel {
       };
       //Atom clean list formation
       atomClean=tm.nAtoms()-nFound;
-      for (i=0; i<atomClean; i++) listAtomClean[i]=nFound+i;
+      listAtomClean.resize(0);
+      for (i=0; i<atomClean; i++) listAtomClean.push_back(nFound+i);
+      
+      vector<int> listBondClean;
       bondClean=0;
       for (i=0; i<tm.nBonds(); i++) {
         test=false;
@@ -5838,7 +5683,7 @@ namespace OpenBabel {
           if (test) break;
         };
         if (test) {
-          listBondClean[bondClean]=i;
+          listBondClean.push_back(i);
           bondClean++;
         };
       };
@@ -5889,7 +5734,7 @@ namespace OpenBabel {
 
     int i,j,n;
     std::vector<int> atomTested(smIn.nAtoms());
-    std::vector<int> atomList(NATOMSMAX);
+    std::vector<int> atomList;
     std::vector<StereoBondStore *> stereoBondList(0);
     int w;
     PartFragmentDefinition * pf;
@@ -5940,8 +5785,8 @@ namespace OpenBabel {
 
     bool testSingleAtom=false;
     for (i=0; i<smCopy.nAtoms(); i++) if (atomTested[i] == 0) {
-        smCopy.makeFragment(w,atomList,i,-1);
-        for (j=0; j<w; j++) {
+        smCopy.makeFragment(atomList,i,-1);
+        for (j=0; j<atomList.size(); j++) {
           n=atomList[j];
           atomTested[n]=1;
         };
@@ -6046,7 +5891,6 @@ namespace OpenBabel {
     };
     smCopy.defineAtomConn();
     //arrange fragments
-    atomList.resize(NATOMSMAX);
     if (frList.size()>1) {
       newBondLength=smCopy.averageBondLength();
       for (i=0;i<frList.size(); i++) {
@@ -6058,8 +5902,8 @@ namespace OpenBabel {
       //rescaling in fragments....
       for (i=0; i<frList.size(); i++) {
         pf=(PartFragmentDefinition *)frList[i];
-        smCopy.makeFragment(w,atomList,pf->fragFirstAtomNo,-1);
-        rescaleSingleFragment(&smCopy,&atomList,w,*pf,newBondLength/2);
+        smCopy.makeFragment(atomList,pf->fragFirstAtomNo,-1);
+        rescaleSingleFragment(&smCopy,&atomList,*pf,newBondLength/2);
       };
     };
     //rescaling to satisfy bond length
@@ -6078,6 +5922,7 @@ namespace OpenBabel {
     for (i=0; i<stereoBondList.size(); i++) {
       sbs=(StereoBondStore *)stereoBondList[i];
       //w=ProcessStereo.analizeRS(smIn,smIn.fBond.getAT(sbs->bn,1)); !!!! add for STEREO later !!!!
+      w = 0; // Added by Noel as the previous line assigning w has been commented out
       if ((w > 0) && (w != sbs->w)) {
         if (smIn.getBond(sbs->bn)->tb == 9) smIn.getBond(sbs->bn)->tb=10; else smIn.getBond(sbs->bn)->tb=9;
       };
@@ -7324,11 +7169,10 @@ namespace OpenBabel {
     */
     TSimpleMolecule sm;
     int result=0;
-    std::vector<int> allAtomList(NATOMSMAX);
-    std::vector<int> atomList(NATOMSMAX);
-    std::vector<int> bondList(NBONDSMAX);
+
+    std::vector<int> bondList;
     OBAtom * atom;
-    int i,n,at,atEx,na,nb;
+    int i,n,at,atEx,nb;
 
     sm.readOBMol(pmol);
     atomN--; //TSimpleMolecule: numeration of atoms is started from 0, while for OBMOl from 1;
@@ -7346,7 +7190,8 @@ namespace OpenBabel {
       if (n == atomN) n=sm.getBond(bondN)->at[1];
       atomN=n;
     };
-    for (i=0; i<sm.nAtoms(); i++) allAtomList[i]=0;
+    std::vector<int> allAtomList(sm.nAtoms(), 0);
+    std::vector<int>    atomList(sm.nAtoms(), 0);
     n=0;
     if (sm.getBond(bondN)->at[0] == atomN) {
       at=sm.getBond(bondN)->at[0];
@@ -7355,20 +7200,18 @@ namespace OpenBabel {
       at=sm.getBond(bondN)->at[1];
       atEx=sm.getBond(bondN)->at[0];
     };
-    na=0;
-    if (sm.makeFragment(na,atomList,at,atEx)) {
+    if (sm.makeFragment(atomList,at,atEx)) {
       //addition of atom in non-cleaned fragment at last position
-      atomList[na]=atEx;
-      na++;
-      for (i=0; i<na; i++) allAtomList[atomList[i]]=1;
+      atomList.push_back(atEx);
+      for (i=0; i<atomList.size(); i++) allAtomList[atomList[i]]=1;
       nb=0;
       for (i=0; i<sm.nBonds(); i++) if ((allAtomList[sm.getBond(i)->at[0]] == 1) && (allAtomList[sm.getBond(i)->at[1]] == 1)) {
-          bondList[nb]=i;
+          bondList.push_back(i);
           nb++;
         };
-      sm.redraw(atomList,bondList,na,nb,3,atEx,bondN,false);
+      sm.redraw(atomList,bondList,atomList.size(),nb,3,atEx,bondN,false);
       //Setting OBMOL coordinates
-      for (int i=0; i<na; i++) {
+      for (int i=0; i<atomList.size(); i++) {
         n=atomList[i];
         atom=pmol->GetAtom(n+1);  //1-based
         atom->SetVector(sm.getAtom(n)->rx,sm.getAtom(n)->ry,0.0);

@@ -91,7 +91,8 @@ namespace OpenBabel
     mol.BeginModify();
     while	(ifs.getline(buffer,BUFF_SIZE))
       {
-        if(strstr(buffer,"CARTESIAN COORDINATES") != NULL)
+        // Avoid "FORCE CONSTANT IN CARTESIAN COORDINATES" (PR#3417992)
+        if(strstr(buffer,"  CARTESIAN COORDINATES") != NULL)
           {
             // mol.EndModify();
             mol.Clear();

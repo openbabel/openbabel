@@ -247,7 +247,7 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
           while(ProvideEditCtl--)
           {
             pEd = new wxTextCtrl(parent,wxID_ANY,wxEmptyString,
-                wxDefaultPosition,wxSize(EDWIDTH,16));
+                wxDefaultPosition,wxSize(EDWIDTH,18));
             OptionMap.push_back(std::make_pair(oname,pEd));
             if(ProvideEditCtl)
               oname = _T(' ') + oname;//editboxes except the first have name preceded by one or more spaces
@@ -267,7 +267,7 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
           while(ProvideEditCtl--)
           {
             pEd = new wxTextCtrl(parent,wxID_ANY,wxEmptyString,
-                wxDefaultPosition,wxSize(EDWIDTH,16));
+                wxDefaultPosition,wxSize(EDWIDTH,18));
             OptionMap.push_back(std::make_pair(oname,pEd));
             if(ProvideEditCtl)
               oname = _T(' ') + oname;//editboxes except the first have name preceded by one or more spaces

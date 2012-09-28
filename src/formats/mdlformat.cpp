@@ -322,6 +322,25 @@ namespace OpenBabel
 
     natoms = ReadUIntField((line.substr(0, 3)).c_str());
     nbonds = ReadUIntField((line.substr(3, 3)).c_str());
+    
+    // Store the Chiral Flag
+    unsigned int chiralFlagVal = ReadUIntField((line.substr(12, 3)).c_str());
+    if (chiralFlagVal > 1)
+    {
+      errorMsg << "WARNING: The Chiral Flag should be either 0 or 1. The value of "
+               << chiralFlagVal << " will be ignored.\n";	        
+	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+    }
+    else
+    {
+      OBPairData *chiralFlag = new OBPairData();
+      chiralFlag->SetAttribute("MOL Chiral Flag");
+      chiralFlag->SetOrigin(local);
+      std::stringstream convert;
+      convert << chiralFlagVal;
+      chiralFlag->SetValue(convert.str()); // 1 ("Absolute Chirality"), 0 ("Relative Chirality")
+      mol.SetData(chiralFlag);
+    }
 
     if(ReadUIntField((line.substr(6, 3)).c_str())>0)
       obErrorLog.ThrowError(__FUNCTION__,
@@ -419,12 +438,21 @@ namespace OpenBabel
           }
         }
         parities.push_back(parity);
+        
         // valence
+        bool forceNoH = false;
         if (line.size() >= 50) {
           int valence = ReadIntField(line.substr(48, 3).c_str());
           if(valence!=0) // Now no H with any value
-            patom->ForceNoH();
+            forceNoH = true;
         }
+        if (forceNoH)
+          patom->ForceNoH(); // There are no additional implicit Hs
+        else
+          patom->ForceImplH(); // There could be additional implicit Hs
+                               // - if we don't set this, then the presence of a single explicit H
+                               //   will cause AssignSpinMultiplicity to assume no additional implicit Hs
+
 
 //        if (!mol.AddAtom(atom))
 //          return false;
@@ -801,8 +829,31 @@ namespace OpenBabel
       // ... = obsolete
       // mmm = no longer supported (default=999)
       //                         aaabbblllfffcccsssxxxrrrpppiiimmmvvvvvv
+      bool chiralFlag = false;
+      int iflag = -1;
+      OBGenericData*  gd = mol.GetData("MOL Chiral Flag");
+      if (gd)
+      {
+        iflag = atoi(((OBPairData*) gd)->GetValue().c_str());
+        if (iflag == 0)
+          chiralFlag = false;
+        else if (iflag == 1)
+          chiralFlag = true;
+        else
+        {
+          stringstream errorMsg;
+          errorMsg << "WARNING: The Chiral Flag should be either 0 or 1. The value of "
+                                << iflag << " will be ignored.\n";	        
+    	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+        }
+      }
+
+      if (iflag < 0 || iflag > 1)
+      {
+        chiralFlag = mol.IsChiral();
+      }
       snprintf(buff, BUFF_SIZE, "%3d%3d  0  0%3d  0  0  0  0  0999 V2000\n",
-               mol.NumAtoms(), mol.NumBonds(), mol.IsChiral());
+               mol.NumAtoms(), mol.NumBonds(), chiralFlag);
       ofs << buff;
 
       OBAtom *atom;

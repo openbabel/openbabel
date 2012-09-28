@@ -49,10 +49,16 @@
 #include <openbabel/spectrophore.h>
 
 #include <openbabel/chargemodel.h>
+#include <openbabel/phmodel.h>
 #include <openbabel/graphsym.h>
 #include <openbabel/isomorphism.h>
 #include <openbabel/query.h>
 #include <openbabel/canon.h>
+
+#include <openbabel/stereo/tetrahedral.h>
+#include <openbabel/stereo/cistrans.h>
+#include <openbabel/stereo/squareplanar.h>
+#include <openbabel/stereo/bindings.h>
 %}
 
 #ifdef HAVE_EIGEN2
@@ -149,6 +155,7 @@ VECTORTEMPLATE_WRAP(Int, int)
 VECTORTEMPLATE_WRAP(UnsignedInt, unsigned int)
 VVTEMPLATE_WRAP(Int, int)
 VECTORTEMPLATE_WRAP(Double, double)
+VECTORTEMPLATE_WRAP(ULong, unsigned long)
 VECTORTEMPLATE_WRAP(String, std::string)
 VECTORTEMPLATE_WRAP(Vector3, OpenBabel::vector3)
 VVTEMPLATE_WRAP(Vector3, OpenBabel::vector3)
@@ -172,7 +179,7 @@ OpenBabel::OB ## subclass *to ## subclass(OpenBabel::OBGenericData *data) {
 }
 %}
 %enddef
-%inline %{ // can't use macro -- AliasData not OBAliasData
+%inline %{ /* can't use macro -- AliasData not OBAliasData */
 OpenBabel::AliasData *toAliasData(OpenBabel::OBGenericData *data) {
     return (OpenBabel::AliasData*) data;
 }
@@ -199,6 +206,9 @@ CAST_GENERICDATA_TO(UnitCell)
 CAST_GENERICDATA_TO(VectorData)
 CAST_GENERICDATA_TO(VibrationData)
 CAST_GENERICDATA_TO(VirtualBond)
+CAST_GENERICDATA_TO(TetrahedralStereo)
+CAST_GENERICDATA_TO(CisTransStereo)
+CAST_GENERICDATA_TO(SquarePlanarStereo)
 
 // This method is renamed to a valid Python method name, as otherwise
 // it cannot be used from Python
@@ -288,10 +298,14 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 %include <openbabel/op.h>
 
 %include <openbabel/chargemodel.h>
+%apply std::string& INPUT { std::string &start } // Required for OBChemTsfm.Init
+%apply std::string& INPUT { std::string &end }   // Required for OBChemTsfm.Init
+%include <openbabel/phmodel.h>
 %include <openbabel/graphsym.h>
 %include <openbabel/isomorphism.h>
 %include <openbabel/query.h>
 %include <openbabel/canon.h>
+
 %include <openbabel/stereo/stereo.h>
 
 %warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
@@ -485,3 +499,5 @@ def exception(*args):
     raise Exception("Use OBMol.CloneData instead. OBMol.SetData is only for use from C++.")
 OBMol.SetData = exception
 %}
+
+%include "stereo.i"

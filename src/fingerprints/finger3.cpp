@@ -79,7 +79,7 @@ public:
   }
 
 //////////////////////////////////////////////////////////////////////////////
-  //Each bit represents a single substructure; no need for confirmation when substructure searching
+  //Each bit represents a single substructure
   virtual unsigned int Flags() { return FPT_UNIQUEBITS;};
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -229,7 +229,7 @@ public:
         }
         if(pos!=string::npos)
         {
-          ver=line.substr(pos);
+          ver=line.substr(pos) + ' ';//space fixes bug in while() when number at end of line
           pos=1;
           while(isdigit(ver[++pos]));
           ver.erase(pos);

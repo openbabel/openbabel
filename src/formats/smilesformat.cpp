@@ -136,7 +136,14 @@ namespace OpenBabel {
         "  t  Molecule name only\n"
         "  x  append X/Y coordinates in canonical-SMILES order\n"
         "  C  'anti-canonical' random order (mostly for testing)\n"
-        "  R  do not reuse bond closure symbols\n"
+        "  o  <ordering> Output in user-specified order\n"
+        "     Ordering should be specified like 4-2-1-3 for a 4-atom molecule.\n"
+        "     This gives canonical labels 1,2,3,4 to atoms 4,2,1,3 respectively,\n"
+        "     so that atom 4 will be visited first and the remaining atoms\n"
+        "     visited in a depth-first manner following the lowest canonical labels.\n"
+        "  F  <atom numbers> Generate SMILES for a fragment\n"
+        "     The atom numbers should be specified like \"1 2 4 7\".\n"
+        "  R  Do not reuse bond closure symbols\n"
         "  f  <atomno> Specify the first atom\n"
         "     This atom will be used to begin the SMILES string.\n"
         "  l  <atomno> Specify the last atom\n"
@@ -190,6 +197,8 @@ namespace OpenBabel {
         "  n  No molecule name\n"
         "  r  Radicals lower case eg ethyl is Cc\n"
         "  t  Molecule name only\n"
+        "  F  <atom numbers> Generate Canonical SMILES for a fragment\n"
+        "     The atom numbers should be specified like \"1 2 4 7\".\n"
         "  f  <atomno> Specify the first atom\n"
         "     This atom will be used to begin the SMILES string.\n"
         "  l  <atomno> Specify the last atom\n"
@@ -633,7 +642,7 @@ namespace OpenBabel {
     //
     // Can be written as:
     // (a) C/C=C/1\NC1 -- preferred
-    // (b) C/C=C1\NC\1 
+    // (b) C/C=C1\NC\1
     // (c) C/C=C/1\NC\1
     //  or indeed by replacing the "\N" with "N".
 
@@ -645,7 +654,7 @@ namespace OpenBabel {
     // (b) C/C=C/1NC/1  -- ignore ring closure stereo => treated as C/C=C1NC1  => CC=C1NC1
     // (c) C/C=C/1\NC/1 -- ignore ring closure stereo => treated as C/C=C1\NC1 => C/C=C/1\NC1
 
-    // The ring closure bond is either up or down with respect 
+    // The ring closure bond is either up or down with respect
     // to the double bond. Our task here is to figure out which it is,
     // based on the contents of _stereorbond.
 
@@ -669,7 +678,7 @@ namespace OpenBabel {
         found = false;
       }
     }
-    
+
     if (!found)
       return 0;
     else
@@ -710,7 +719,7 @@ namespace OpenBabel {
       vector<bool> bond_stereo(2, true); // Store the stereo of the chosen bonds at each end of the dbl bond
       vector<OBBond*> stereo_bond(2, (OBBond*) NULL); // These are the chosen stereo bonds
       vector<OBBond*> other_bond(2, (OBBond*) NULL);  // These are the 'other' bonds at each end
-      
+
       for (int i = 0; i < 2; ++i) { // Loop over each end of the double bond in turn
 
         FOR_BONDS_OF_ATOM(bi, dbl_bond_atoms[i]) {
@@ -739,7 +748,7 @@ namespace OpenBabel {
             other_bond[i] = b; // Use this for the 'other' bond
             continue;
           }
-          
+
           if (stereo_bond[i] == NULL) { // This is a first stereo bond
             stereo_bond[i] = b; // Use this for the 'stereo' bond
             bond_stereo[i] = stereo;
@@ -1114,6 +1123,7 @@ namespace OpenBabel {
     if (isoPtr >= 6)
       return false;
     isotope = atoi(symbol);
+    memset(symbol, '\0', 7*sizeof(char)); // PR#3165083 (Andrew Dalke)
 
     //parse element data
     if (isupper(*_ptr))
@@ -1949,7 +1959,7 @@ namespace OpenBabel {
     if (charge) {
       atom->SetFormalCharge(charge);
       if (abs(charge) > 10 || charge > element) { // if the charge is +/- 10 or more than the number of electrons
-        errorMsg << "Atom " << atom->GetIdx() << " had an unrealistic charge of " << charge 
+        errorMsg << "Atom " << atom->GetIdx() << " had an unrealistic charge of " << charge
                  << "." << endl;
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
       }
@@ -2222,7 +2232,7 @@ namespace OpenBabel {
         sb.updown.push_back(bond->updown);
         sb.atoms.push_back(mol.GetAtom(bond->prev));
         _stereorbond[mol.GetBond(bond->prev, _prev)] = sb; // Store for later
-        
+
         // after adding a bond to atom "_prev"
         // search to see if atom is bonded to a chiral atom
         // need to check both _prev and bond->prev as closure is direction independent
@@ -3339,10 +3349,10 @@ namespace OpenBabel {
       //   - otherwise move it to the end
       // This section is skipped if sort_nbrs has only a single member, or if
       // we have already visited _endatom.
-      
+
       vector<OBAtom*> children;
       MyFindChildren(mol, children, _uatoms, _endatom);
-      
+
       vector<OBAtom*> front, end;
       for (vector<OBAtom *>::iterator it=sort_nbrs.begin(); it!=sort_nbrs.end(); ++it)
         if (std::find(children.begin(), children.end(), *it) == children.end() && *it != _endatom)
@@ -3848,7 +3858,7 @@ namespace OpenBabel {
       tokenize(split, splitlines.at(0),"/");
       aux_part = splitlines.at(1); // Use the normal labels
     }
-    else { 
+    else {
       tmp = splitlines.at(0).substr(rm_start);
       tokenize(split, tmp, "/");
       split.insert(split.begin(), "");
@@ -3888,7 +3898,7 @@ namespace OpenBabel {
             mult = 1;
           else
             mult = atoi(it->substr(0, it->size()-1).c_str());
-          new_canonical_labels.insert(new_canonical_labels.end(), 
+          new_canonical_labels.insert(new_canonical_labels.end(),
             canonical_labels.begin()+total, canonical_labels.begin()+total+mult);
           total += mult;
         }
@@ -3906,7 +3916,7 @@ namespace OpenBabel {
 
     // Flatten the canonical_labels
     for(vector<vector<int> >::iterator it=canonical_labels.begin(); it!=canonical_labels.end(); ++it) {
-      atom_order.insert(atom_order.end(), it->begin(), it->end());      
+      atom_order.insert(atom_order.end(), it->begin(), it->end());
     }
 
     return true;
@@ -4262,10 +4272,13 @@ namespace OpenBabel {
     OBBitVec fragatoms(pmol->NumAtoms());
 
     OBPairData *dp = (OBPairData *) pmol->GetData("SMILES_Fragment");
+    const char* ppF = pConv->IsOption("F");
     if (dp) {
       fragatoms.FromString(dp->GetValue(), pmol->NumAtoms());
     }
-
+    else if (ppF) { // Use info from option "F"
+      fragatoms.FromString(ppF, pmol->NumAtoms());
+    }
     // If no "SMILES_Fragment" data, fill the entire OBBitVec
     // with 1's so that the SMILES will be for the whole molecule.
     else {

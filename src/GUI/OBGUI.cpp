@@ -19,12 +19,15 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <stdwx.h>
 #include <wx/file.h>
-#include <sstream>
+//#include <sstream>
 #include <openbabel/plugin.h>
 #include <openbabel/obconversion.h>
 //#include <openbabel/dlhandler.h>
 #include <selformats.h>
 #include <OBGUI.h>
+#include <wx/splash.h>
+#include <wx/imagpng.h>
+#include <openbabel/tokenst.h>
 
 
 #ifdef __WXMAC__
@@ -94,12 +97,14 @@ bool OBGUIApp::OnInit()
   position.x = config.Read(_T("Left"),2);
   position.y = config.Read(_T("Top"),2);
 
-  wxFileName help(_T("OpenBabelGUI.html"));
+  wxFileName help, spl;
   wxString pHelp;
   wxGetEnv(_T("BABEL_DATADIR"), &pHelp);
   help.MakeAbsolute(pHelp);
   help.RemoveLastDir();
   help.AppendDir(_T("doc"));
+  spl = help;
+  help.SetFullName(_T("OpenBabelGUI.html"));
   HelpFile = help.GetFullPath();
 
   // create the main application window
@@ -109,6 +114,22 @@ bool OBGUIApp::OnInit()
   // created initially)
   frame->Show(true);
   frame->SetInitialFocus(); //doesn't work!
+
+  //Show the splash screen
+  wxImage::AddHandler(new wxPNGHandler);
+  wxBitmap bitmap;
+  std::ifstream fs; //not actually used
+  //Get splash screen from normal OB data directory
+  std::string splfile = OpenDatafile(fs, "splash.png");
+  if(!splfile.empty() && bitmap.LoadFile(wxString(splfile.c_str(), wxConvUTF8), wxBITMAP_TYPE_PNG))
+  {
+    wxSplashScreen* splash = new wxSplashScreen(bitmap,
+      wxSPLASH_CENTRE_ON_PARENT|wxSPLASH_TIMEOUT,
+      4000, NULL, -1, wxDefaultPosition, wxDefaultSize,
+      wxBORDER_SIMPLE|wxSTAY_ON_TOP);
+  }
+  wxImage::RemoveHandler(wxT("PNG file"));
+  wxYield();
   return true;
 }
 
@@ -463,7 +484,7 @@ void OBGUIFrame::OnHelp(wxCommandEvent& WXUNUSED(event))
     // 2) Get Open Message
     wxString command;
 
-    command = c_type->GetOpenCommand(((OBGUIApp*)wxTheApp)->HelpFile);
+      command = c_type->GetOpenCommand(((OBGUIApp*)wxTheApp)->HelpFile);
     if(!command) return; //No default program
 
     // 3) Execute message
@@ -475,14 +496,25 @@ void OBGUIFrame::OnHelp(wxCommandEvent& WXUNUSED(event))
 }
 void OBGUIFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
-    wxString msg(_T("OpenBabelGUI (C) 2006 by Chris Morley\n\nThis program is part of\
-the OpenBabel project,\nwhich is released under the GNU General Public License.\n\
-See: http://openbabel.org/wiki/Main_Page\n\n\
-For more detailed information see:\n\
-http://openbabel.org/wiki/Windows_GUI\n\n \
-OpenBabel version "));
-    msg << _T(BABEL_VERSION);
-    wxMessageBox(msg, _T("About OpenBabelGUI"), wxOK | wxICON_INFORMATION | wxCENTER, this);
+  //(wxT not required after v2.90)  
+  std::string cmsg =
+    "OpenBabelGUI (C) 2006 by Chris Morley\n\n"
+    "This program is part of the OpenBabel project,\n"
+    "which is released under the GNU General Public License.\n"
+    "See: http://openbabel.org/wiki/Main_Page\n\n"
+    "For more detailed information see: "
+    "http://openbabel.org/wiki/Windows_GUI\n\n"
+    "Please cite the paper:\n"
+    "\"Open Babel: An open chemical toolbox\"\n"
+    "N O'Boyle, M Banck, C A James, C Morley,\n"
+    "T Vandermeersch and G R Hutchison\n"
+    "Journal of Cheminformatics 2011, 3:33\n"
+    "doi:10.1186/1758-2946-3-33\n\n"
+    "OpenBabel version ";
+
+  wxString msg(cmsg.c_str(), wxConvUTF8);
+  msg << _T(BABEL_VERSION);
+  wxMessageBox(msg, _T("About OpenBabelGUI"), wxOK | wxICON_INFORMATION | wxCENTER, this);
 }
 ///////////////////////////////////////////
 
@@ -525,9 +557,14 @@ void OBGUIFrame::OnConvert(wxCommandEvent& WXUNUSED(event))
 
   //Default input is from input text box;
   std::stringstream ss(std::string(m_pInText->GetValue().mb_str()));
-//	char ch = ss.peek();
   //Default output is a string stream which is written to the Output text box at the end
-  std::ostringstream GUIostream;
+  std::stringstream GUIostream;
+  // LNK2005 error with VS10 (but not VS9) when stringstream used, possibly related to:
+  // http://osdir.com/ml/OpenSceneGraph-Users/2010-08/msg00501.html
+  // An unsatisfactory workaround is to set in obgui project
+  // ConfigurationProperties/Linker/General/Force File Output to
+  // Multiply Defined Symbol Only (/FORCE:MULTIPLE)
+
   OBConversion Conv(&ss, &GUIostream);
 
   int iSel = m_pInFormat->GetSelection();
@@ -1160,6 +1197,7 @@ int  CFilenames::Expand(std::vector<std::string>& filelist)
 
   return count;
 }
+
 bool CFilenames::ToNextFile(int delta)
 {
   wxString fname(GetValue());

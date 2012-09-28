@@ -65,3 +65,11 @@ atoms
 *
 Number of atoms\n
 Add or remove hydrogens to count total or heavy atoms
+
+OBGroupContrib
+MP        # name of descriptor
+mpC.txt   # data file
+Melting point\n    # brief description
+This is a melting point descriptor developed\n   # longer description
+by Andy Lang. For details see:\n
+ http://onschallenge.wikispaces.com/MeltingPointModel011

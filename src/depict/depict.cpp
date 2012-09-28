@@ -336,7 +336,27 @@ namespace OpenBabel
     }
 
     d->painter->NewCanvas(width, height);
-    
+
+    // Identify and remember the ring bonds according to the SSSR
+    // - note that OBBond->IsInRing() includes bonds not included in the SSSR as the SSSR excludes very large rings
+    std::vector<OBRing*> rings(mol->GetSSSR());
+    OBBitVec ringBonds;
+    for (std::vector<OBRing*>::iterator k = rings.begin(); k != rings.end(); ++k) {
+      OBRing *ring = *k;
+      std::vector<int> indexes = ring->_path;
+      for (unsigned int l = 0; l < indexes.size(); ++l) {
+        OBAtom *begin = d->mol->GetAtom(indexes[l]);
+        OBAtom *end;
+        if (l+1 < indexes.size())
+          end = d->mol->GetAtom(indexes[l+1]);
+        else
+          end = d->mol->GetAtom(indexes[0]);
+
+        OBBond *ringBond = d->mol->GetBond(begin, end);
+        ringBonds.SetBitOn(ringBond->GetId());
+      }
+    }
+
     // draw bonds
     for (OBBond *bond = d->mol->BeginBond(j); bond; bond = d->mol->NextBond(j)) {
       OBAtom *begin = bond->GetBeginAtom();
@@ -359,7 +379,7 @@ namespace OpenBabel
           d->DrawWobblyBond(begin, end);
         }
       }
-      else if (!bond->IsInRing()) {
+      else if (!ringBonds.BitIsSet(bond->GetId())) { // Ring bonds are handled below
         bool crossed_dbl_bond = false;
         OBStereoFacade sf(d->mol);
         if (sf.HasCisTransStereo(bond->GetId())) {
@@ -372,7 +392,6 @@ namespace OpenBabel
     }
 
     // draw ring bonds
-    std::vector<OBRing*> rings(mol->GetSSSR());
     OBBitVec drawnBonds;
     for (std::vector<OBRing*>::iterator k = rings.begin(); k != rings.end(); ++k) {
       OBRing *ring = *k;
@@ -443,15 +462,24 @@ namespace OpenBabel
         if(charge) {
           if(abs(charge)!=1)
             ss << abs(charge);
-          ss << (charge>0 ? "+" : "-") ;
+          if(charge>0)
+            ss << '+';
+          else if (charge<-1) //use underscore for single negative charge and minus if multiple
+            ss << '-';
+          else
+          {
+            ss << '_';
+            yoffset -= 0.5 * metrics.height;
+          }
         }
-        if(spin) {
-          ss << (spin==2 ? "." : "..");
-          yoffset += 0.5 * metrics.height;
-        }
-        if(spin || charge<0)
-          d->painter->SetFontSize(2 * metrics.fontSize);
         d->painter->DrawText(x + 0.4*metrics.width, y+yoffset, ss.str());
+        if(spin) {
+          string radchars = (spin==2 ? "." : "..");
+          //yoffset += 0.5 * metrics.height;
+          d->painter->SetFontSize(2 * metrics.fontSize);
+          d->painter->DrawText(x + (0.4 + ss.str().size())*metrics.width,
+            y+yoffset, radchars);
+        }
         d->painter->SetFontSize(metrics.fontSize);//restore
       }
  

@@ -383,6 +383,12 @@ bool OBDescriptor::CompareStringWithFilter(istream& optionText, string& sval, bo
   else
   {
     //Do a string comparison if either the filter or the OBPair value is not a number
+    //If sval is quoted remove quotes
+    if(sval[0]=='\"' || sval[0]=='\'')
+      sval.erase(0,1);
+    if(sval[sval.size()-1]=='\"' || sval[sval.size()-1]=='\'')
+      sval.erase(sval.size()-1);    
+
     bool leading=false, trailing=false;
     if(sfilterval[0]=='*')
     {

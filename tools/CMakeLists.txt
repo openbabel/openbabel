@@ -16,7 +16,13 @@ else(MINIMAL_BUILD)
         obprop
         obrotamer
         obrotate
-  )
+     )
+  if(EIGEN3_FOUND)
+    set(tools
+        ${tools}
+        obrms
+       )
+  endif()
 endif(MINIMAL_BUILD)
 
 INCLUDE(CheckFunctionExists)

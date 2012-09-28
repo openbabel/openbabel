@@ -332,8 +332,10 @@ namespace OpenBabel
       {
         startpos = line.find_first_not_of(" \t\r\n",startpos);
         endpos   = line.find_first_of(" \t\r\n",startpos);
+        if (endpos == std::string::npos)
+          endpos = line.size();
 
-        if (endpos < line.size() && startpos <= line.size())
+        if (startpos <= line.size())
           tokens.push_back(line.substr(startpos,endpos-startpos));
         else
           break;

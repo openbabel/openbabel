@@ -1,3 +1,33 @@
+2012-08-20  Paolo Tosco <paolo.tosco@unito.it>
+
+	* src/formats/mol2format.cpp: added a check for N.4 nitrogens
+	(fixes PR#3557898)
+
+2012-06-09  Paolo Tosco <paolo.tosco@unito.it>
+
+	* src/kekulize.cpp: reverted the r4862 patch to kekulize.cpp;
+	the incorrect aromaticity perception of oxonium salts concerned
+	only the MOL2 format, so the fix was applied to mol2format.cpp
+	instead
+	* src/formats/mol2format.cpp: added a check to improve downstream
+	aromaticity perception on charged molecules containing oxygen
+
+2012-06-07  Paolo Tosco <paolo.tosco@unito.it>
+
+	* include/openbabel/atom.h: added protos for CountFreeSulfurs() and
+	IsThiocarboxylSulfur() functions which are equivalent to
+	CountFreeOxygens() and IsCarboxylOxygen() and address
+	(di)thiocarboxyl groups
+	* src/atom.cpp: added the CountFreeSulfurs() and
+	IsThiocarboxylSulfur() functions
+	* src/forcefields/forcefieldmmff94.cpp: added some additional
+	checks to make MMFF94 atom type assignment more robust
+	* src/formats/mol2format.cpp: added some checks to improve downstream
+	aromaticity perception on charged molecules containing nitrogen,
+	oxygen and sulfur
+	* src/kekulize.cpp: added a check to fix incorrect perception of
+	aromatic oxonium and thionium cations
+
 2010-10-29  Konstantin Tokarev <annulen@yandex.ru>
 
 	* scripts/CMakeLists.txt: fixed behavior of build system if some of

@@ -89,8 +89,8 @@ namespace OpenBabel {
         {
           abort = false;
           mapping.resize(query->NumAtoms(), 0);
-          queryTerminalSet.resize(query->NumAtoms(), 0);
-          queriedTerminalSet.resize(queried->NumAtoms(), 0);
+          queryDepths.resize(query->NumAtoms(), 0);
+          queriedDepths.resize(queried->NumAtoms(), 0);
         }
         bool abort;
         Functor &functor;
@@ -103,18 +103,20 @@ namespace OpenBabel {
         std::vector<OBAtom*> mapping;
 
         OBBitVec queryPathBits, queriedPathBits; // the terminal sets
-        std::vector<unsigned int> queryTerminalSet, queriedTerminalSet; // the terminal sets
+        std::vector<unsigned int> queryDepths, queriedDepths; // the terminal sets
       };
 
-      struct KeyValuePair
+      bool isInTerminalSet(const std::vector<unsigned int> &depths,
+          const OBBitVec &path, std::size_t i)
       {
-        KeyValuePair(unsigned int _key, unsigned int _value) : key(_key), value(_value) {}
-        unsigned int key, value;
-      };
-      struct KeyValuePairCompare
-      {
-        bool operator()(const KeyValuePair &p1, const KeyValuePair &p2) { return p1.key < p2.key; }
-      };
+        if (!depths[i])
+          return false;
+
+        if (path.BitIsSet(i))
+          return false;
+
+        return true;
+      }
 
       /**
        * Check bonds around newly mapped atom.
@@ -150,6 +152,9 @@ namespace OpenBabel {
         if (state.queryPath.size() != state.query->NumAtoms())
           return false;
 
+        if (DEBUG)
+          std::cout << green << "-----------------> MATCH" << normal << std::endl;
+
         // create the map
         Mapping map;
         map.reserve(state.queryPath.size());
@@ -174,31 +179,31 @@ namespace OpenBabel {
         state.mapping[queryAtom->GetIndex()] = queriedAtom;
 
         //
-        // update queryTerminalSet
+        // update queryDepths
         //
-        if (!state.queryTerminalSet[queryAtom->GetIndex()])
-          state.queryTerminalSet[queryAtom->GetIndex()] = state.queryPath.size();
+        if (!state.queryDepths[queryAtom->GetIndex()])
+          state.queryDepths[queryAtom->GetIndex()] = state.queryPath.size();
 
         std::vector<OBQueryAtom*> queryNbrs = queryAtom->GetNbrs();
         for (unsigned int i = 0; i < queryNbrs.size(); ++i) {
           unsigned int index = queryNbrs[i]->GetIndex();
-          if (!state.queryTerminalSet[index])
-            state.queryTerminalSet[index] = state.queryPath.size();
+          if (!state.queryDepths[index])
+            state.queryDepths[index] = state.queryPath.size();
         }
 
         //
-        // update queriedTerminalSet
+        // update queriedDepths
         //
-        if (!state.queriedTerminalSet[queriedAtom->GetIndex()])
-          state.queriedTerminalSet[queriedAtom->GetIndex()] = state.queryPath.size();
+        if (!state.queriedDepths[queriedAtom->GetIndex()])
+          state.queriedDepths[queriedAtom->GetIndex()] = state.queriedPath.size();
 
         FOR_NBORS_OF_ATOM (nbr, queriedAtom) {
           unsigned int index = nbr->GetIndex();
           // skip atoms not in the mask
           if (!state.queriedMask.BitIsSet(index + 1))
             continue;
-          if (!state.queriedTerminalSet[index])
-            state.queriedTerminalSet[index] = state.queryPath.size();
+          if (!state.queriedDepths[index])
+            state.queriedDepths[index] = state.queriedPath.size();
         }
 
         // check if the bonds match
@@ -211,13 +216,13 @@ namespace OpenBabel {
 
         if (DEBUG) {
           cout << "FOUND:  " << queryAtom->GetIndex() << " -> " << queriedAtom->GetIndex() << "       " << state.queryPath.size() << endl;
-          cout << "queryTerminalSet:   ";
+          cout << "queryDepths:   ";
           for (unsigned int i = 0; i < state.query->NumAtoms(); ++i)
-            cout << state.queryTerminalSet[i] << " ";
+            cout << state.queryDepths[i] << " ";
           cout <<endl;
-          cout << "queriedTerminalSet: ";
+          cout << "queriedDepths: ";
           for (unsigned int i = 0; i < state.queried->NumAtoms(); ++i)
-            cout << state.queriedTerminalSet[i] << " ";
+            cout << state.queriedDepths[i] << " ";
           cout <<endl;
         }
 
@@ -232,14 +237,12 @@ namespace OpenBabel {
         // compute T1(s) size
         unsigned int numT1 = 0;
         for (unsigned int i = 0; i < state.query->NumAtoms(); ++i)
-          if (state.queryTerminalSet[i])
-            if (!state.queryPathBits.BitIsSet(i))
+          if (isInTerminalSet(state.queryDepths, state.queryPathBits, i))
               numT1++;
         // compute T2(s) size
         unsigned int numT2 = 0;
         for (unsigned int i = 0; i < state.queried->NumAtoms(); ++i)
-          if (state.queriedTerminalSet[i])
-            if (!state.queriedPathBits.BitIsSet(i))
+          if (isInTerminalSet(state.queriedDepths, state.queriedPathBits, i))
               numT2++;
 
         // T1(s) > T()
@@ -259,6 +262,46 @@ namespace OpenBabel {
         return true;
       }
 
+
+      Candidate NextCandidate(State &state, const Candidate &lastCandidate)
+      {
+        std::size_t lastQueryAtom = lastCandidate.queryAtom ? lastCandidate.queryAtom->GetIndex() : 0;
+        std::size_t lastQueriedAtom = lastCandidate.queriedAtom ? lastCandidate.queriedAtom->GetIndex() + 1 : 0;
+
+        std::size_t querySize = state.query->NumAtoms();
+        std::size_t queriedSize = state.queried->NumAtoms();
+
+        std::size_t queryTerminalSize = state.queryDepths.size() - std::count(state.queryDepths.begin(), state.queryDepths.end(), 0);
+        std::size_t queriedTerminalSize = state.queriedDepths.size() - std::count(state.queriedDepths.begin(), state.queriedDepths.end(), 0);
+
+        std::size_t mappingSize = state.queryPath.size();
+
+        if (queryTerminalSize > mappingSize && queriedTerminalSize > mappingSize) {
+          while (lastQueryAtom < querySize && (state.queryPathBits.BitIsSet(lastQueryAtom) || !state.queryDepths[lastQueryAtom])) {
+            lastQueryAtom++;
+            lastQueriedAtom = 0;
+          }
+        } else {
+          while(lastQueryAtom < querySize && state.queryPathBits.BitIsSet(lastQueryAtom)) {
+            lastQueryAtom++;
+            lastQueriedAtom = 0;
+          }
+        }
+
+        if (queryTerminalSize > mappingSize && queriedTerminalSize > mappingSize) {
+          while (lastQueriedAtom < queriedSize && (state.queriedPathBits.BitIsSet(lastQueriedAtom) || !state.queriedDepths[lastQueriedAtom]))
+            lastQueriedAtom++;
+        } else {
+          while(lastQueriedAtom < queriedSize && state.queriedPathBits[lastQueriedAtom])
+            lastQueriedAtom++;
+        }
+
+        if (lastQueryAtom < querySize && lastQueriedAtom < queriedSize)
+          return Candidate(state.query->GetAtoms()[lastQueryAtom], state.queried->GetAtom(lastQueriedAtom + 1));
+
+        return Candidate();
+      }
+
       /**
        * The depth-first isomorphism algorithm.
        */
@@ -269,115 +312,23 @@ namespace OpenBabel {
         if (state.abort)
           return;
 
-        // load the possible candidates
-        std::vector<Candidate> candidates;
+        Candidate candidate;
+        while (!state.abort) {
+          candidate = NextCandidate(state, candidate);
 
-        //
-        // The terminology used in these comments is taken from the VF2 paper.
-        // Since molecules are undirected graphs, atoms have only one set of
-        // bonds.
-        //
-        //  G1 : The query graph (i.e. state.query)
-        //  G2 : The queried graph (i.e. state.queried)
-        //
-        //  N1 : The set of query atoms in G1
-        //  N2 : The set of queried atoms in G2
-        //
-        //  M1(s) : The set of already mapped query atoms (i.e. state.queryPath)
-        //  M2(s) : The set of already mapped queried atoms (i.e. state.queriedPath)
-        //
-        // Variables from the original C++ implementation referenced in paper:
-        //
-        //  core_1 : M1(s) or state.queryPath
-        //  core_2 : M2(s) or state.queriedPath
-        //
-        //  in_1, out_1 : state.queryTerminalSet
-        //  in_2, out_2 : state.queriedTerminalSet
-        //
-        //
-        //  P(s) = T2(s) x { min T1(s) }        [note: this formula is incorrect in the paper!]
-        //
-        //  P(s) : The set of mapping candidates to consider for state s
-        //
-        //  T1(s) : The set of "terminal" query atoms for state s
-        //  T2(s) : The set of "terminal" queried atoms for state s
-        //
-        //  min T1(s) : The element from T1(s) with the lowest index. The { } brackets make the element a set again.
-        //
-        // T1(s) is computed using state.queryTerminalSet and the current mapping (i.e. state.queryPath).
-        // A query atom with index n is said to be in the T1(s) set if state.queryTerminalSet[n] is non-zero
-        // and n is not part of the current mapping (i.e. n is not in state.queryPath). T2(s) is computed in
-        // a similar way.
-        OBQueryAtom *queryTerminal = 0;
-        for (unsigned int j = 0; j < state.queried->NumAtoms(); ++j) {
-          if (state.queriedTerminalSet[j])
-            if (!state.queriedPathBits.BitIsSet(j)) {
-              OBAtom *queriedTerminal = state.queried->GetAtom(j + 1);
-
-              if (!queryTerminal) {
-                for (unsigned int i = 0; i < state.query->NumAtoms(); ++i)
-                  if (state.queryTerminalSet[i])
-                    if (!state.queryPathBits.BitIsSet(i)) {
-                      OBQueryAtom *n = state.query->GetAtoms()[i];
-                      if (n->Matches(queriedTerminal)) {
-                        queryTerminal = n;
-                        break;
-                      }
-                    }
-              }
-
-              if (queryTerminal && queryTerminal->Matches(queriedTerminal))
-                candidates.push_back(Candidate(queryTerminal, queriedTerminal));
-            }
-        }
-
-        // If the P(s) set from above is empty, use this set:
-        //
-        //  P(s) = (N2 - M2(s)) x { min (N1 - M1(s)) }
-        if (candidates.empty()) {
-          queryTerminal = 0;
-          for (unsigned int j = 0; j < state.queried->NumAtoms(); ++j)
-            if (!state.queriedPathBits.BitIsSet(j)) {
-              OBAtom *queriedTerminal = state.queried->GetAtom(j + 1);
-
-              if (!queryTerminal) {
-                for (unsigned int i = 0; i < state.query->NumAtoms(); ++i)
-                  if (!state.queryPathBits.BitIsSet(i)) {
-                    OBQueryAtom *n = state.query->GetAtoms()[i];
-                    if (n->Matches(queriedTerminal)) {
-                      queryTerminal = n;
-                      break;
-                    }
-                  }
-              }
-
-              if (queryTerminal && queryTerminal->Matches(queriedTerminal))
-                candidates.push_back(Candidate(queryTerminal, queriedTerminal));
-            }
-        }
-
-        if (DEBUG) {
-          cout << "Candidates:" << endl;
-          for (unsigned int i = 0; i < candidates.size(); ++i)
-            cout << "        " << candidates[i].queryAtom->GetIndex() << " -> "
-                               << candidates[i].queriedAtom->GetIndex() << endl;
-        }
-
-        // do the mapping by checking the candidates
-        while (candidates.size()) {
-          Candidate candidate(candidates.back());
-          candidates.pop_back();
+          if (!candidate.queryAtom)
+            return;
 
           if (DEBUG)
             cout << yellow << "candidate: " << candidate.queryAtom->GetIndex() << " -> " << candidate.queriedAtom->GetIndex() << normal << endl;
 
+
           if (matchCandidate(state, candidate.queryAtom, candidate.queriedAtom)) {
             MapNext(state, candidate.queryAtom, candidate.queriedAtom);
+            Backtrack(state);
           }
         }
 
-        // backtrack
-        Backtrack(state);
       }
 
       void Backtrack(State &state)
@@ -394,14 +345,10 @@ namespace OpenBabel {
           state.queriedPathBits.SetBitOff(state.queriedPath.back());
           state.queriedPath.pop_back();
         }
-        // restore queryTerminalSet and queriedTerminalSet
+        // restore queryDepths and queriedDepths
         unsigned int depth = state.queryPath.size() + 1;
-        for (unsigned int i = 0; i < state.query->NumAtoms(); ++i)
-          if (state.queryTerminalSet[i] == depth)
-            state.queryTerminalSet[i] = 0;
-        for (unsigned int i = 0; i < state.queried->NumAtoms(); ++i)
-          if (state.queriedTerminalSet[i] == depth)
-            state.queriedTerminalSet[i] = 0;
+        std::replace(state.queryDepths.begin(), state.queryDepths.end(), depth, static_cast<unsigned int>(0));
+        std::replace(state.queriedDepths.begin(), state.queriedDepths.end(), depth, static_cast<unsigned int>(0)); // O(n)  n = # vertices in the queried
       }
 
       /**
@@ -531,6 +478,8 @@ namespace OpenBabel {
           if (!queryAtom->Matches(queriedAtom)) {
             continue;
           }
+          if (DEBUG)
+            std::cout << blue << "START: 0 -> " << queriedAtom->GetIndex() << normal << std::endl;
 
           if (m_query->NumAtoms() > 1) {
             if (matchCandidate(state, queryAtom, queriedAtom))

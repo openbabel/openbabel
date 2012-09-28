@@ -89,10 +89,10 @@ protected:
   /// \return the result of the comparison and true if NoCompOK==true and there is no comparison operator.
   static bool CompareStringWithFilter(std::istream& optionText, std::string& s, bool noEval, bool NoCompOK=false);
 
-  // Treats _ as not a punctuation character
+  // Treats _ as not a punctuation character and since 2.3.2 also $ # and %
   static bool ispunctU(char ch)
   {
-    return ispunct(ch) && ch!='_';
+    return ispunct(ch) && ch!='_' && ch!='$' && ch!='#' && ch!='%';
   }
 
   /// \return true if s (with or without _ replaced by spaces) is a PairData attribute. On return s is the form which matches.

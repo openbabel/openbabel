@@ -235,7 +235,8 @@ namespace OpenBabel
     //find elements to be changed
     int ele;
     for (i = 0;i < _bgn.NumAtoms();++i)
-      if ((vb = _bgn.GetVectorBinding(i)) != 0)
+      // Allow single-atom transformations without vector bindings
+      if ((vb = _bgn.GetVectorBinding(i)) || _bgn.NumAtoms() == 1)
         {
           ele = _bgn.GetAtomicNum(i);
           for (j = 0;j < _end.NumAtoms();++j)
@@ -252,7 +253,7 @@ namespace OpenBabel
     for (i = 0;i < _bgn.NumAtoms();++i)
       // Allow single-atom transformations without vector bindings
       // PR#2802980.
-      if ((vb = _bgn.GetVectorBinding(i) || _bgn.NumAtoms() == 1))
+      if ((vb = _bgn.GetVectorBinding(i)) || _bgn.NumAtoms() == 1)
         {
           chrg = _bgn.GetCharge(i);
           for (j = 0;j < _end.NumAtoms();++j)
@@ -300,7 +301,7 @@ namespace OpenBabel
   {
     if (!_bgn.Match(mol))
       return(false);
-
+    mol.BeginModify();
     vector<vector<int> > mlist = _bgn.GetUMapList();
 
     obErrorLog.ThrowError(__FUNCTION__,
@@ -368,6 +369,7 @@ namespace OpenBabel
           mol.DeleteAtom((OBAtom*)*k);
       }
 
+    mol.EndModify();
     return(true);
   }
 

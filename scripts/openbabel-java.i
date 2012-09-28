@@ -53,6 +53,11 @@
 #include <openbabel/isomorphism.h>
 #include <openbabel/query.h>
 #include <openbabel/canon.h>
+
+#include <openbabel/stereo/tetrahedral.h>
+#include <openbabel/stereo/cistrans.h>
+#include <openbabel/stereo/squareplanar.h>
+#include <openbabel/stereo/bindings.h>
 %}
 
 #ifdef HAVE_EIGEN2
@@ -400,3 +405,4 @@ WRAPITERATOR(OBMolPairIter, vectorUnsignedInt, );
 
 %include <openbabel/obiter.h>
 
+%include "stereo.i"

@@ -350,12 +350,12 @@ namespace OpenBabel
     //Unless the "nosym" keyword has been requested
     while (ifs.getline(buffer,BUFF_SIZE))
       {
-        if (strstr(buffer,"Symmetry turned off by external request.") != NULL) 
+        if (strstr(buffer,"Symmetry turned off by external request.") != NULL)
           {
             // The "nosym" keyword has been requested
             no_symmetry = true;
           }
-        if (strstr(buffer,"orientation:") !=NULL) 
+        if (strstr(buffer,"orientation:") !=NULL)
           {
             i++;
             tokenize (vs, buffer);
@@ -363,6 +363,10 @@ namespace OpenBabel
             strcat (coords_type, " orientation:");
           }
         if ((no_symmetry && i==1) || i==2)
+           break;
+	// Check for the last line of normal output and exit loop, otherwise,
+	// the rewind below will no longer work.
+        if (strstr(buffer,"Normal termination of Gaussian") != NULL)
            break;
       }
     ifs.seekg(0);  //rewind
@@ -475,6 +479,27 @@ namespace OpenBabel
                    strstr(buffer,"-----") == NULL)
               {
                 atom = mol.GetAtom(atoi(vs[0].c_str()));
+                if (!atom)
+                  break;
+                atom->SetPartialCharge(atof(vs[2].c_str()));
+
+                if (!ifs.getline(buffer,BUFF_SIZE)) break;
+                tokenize(vs,buffer);
+              }
+          }
+        else if(strstr(buffer,"Natural Population") != NULL)
+          {
+            hasPartialCharges = true;
+            chargeModel = "NBO";
+            ifs.getline(buffer,BUFF_SIZE);	// column headings
+            ifs.getline(buffer,BUFF_SIZE);  // again
+            ifs.getline(buffer,BUFF_SIZE);  // again (-----)
+            ifs.getline(buffer,BUFF_SIZE); // real data
+            tokenize(vs,buffer);
+            while (vs.size() >= 3 &&
+                   strstr(buffer,"=====") == NULL)
+              {
+                atom = mol.GetAtom(atoi(vs[1].c_str()));
                 if (!atom)
                   break;
                 atom->SetPartialCharge(atof(vs[2].c_str()));
@@ -735,12 +760,14 @@ namespace OpenBabel
           unsigned int initialSize = orbitals.size();
           for (unsigned int i = betaStart; i < initialSize; ++i) {
             betaOrbitals.push_back(orbitals[i]);
-            betaSymmetries.push_back(symmetries[i]);
+            if (symmetries.size() > 0)
+              betaSymmetries.push_back(symmetries[i]);
           }
           // ok, now erase the end elements of orbitals and symmetries
           for (unsigned int i = betaStart; i < initialSize; ++i) {
             orbitals.pop_back();
-            symmetries.pop_back();
+            if (symmetries.size() > 0)
+              symmetries.pop_back();
           }
           // and load the alphas and betas
           od->LoadAlphaOrbitals(orbitals, symmetries, aHOMO);
