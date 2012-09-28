@@ -60,7 +60,7 @@
 #include <openbabel/stereo/bindings.h>
 %}
 
-#ifdef HAVE_EIGEN2
+#ifdef HAVE_EIGEN
 %{
 #include <openbabel/conformersearch.h>
 #include <openbabel/math/align.h>
@@ -329,7 +329,7 @@ IGNORE_ITER(OBMol, Residue)
 %ignore OpenBabel::Swab;
 %include <openbabel/rotamer.h>
 %include <openbabel/spectrophore.h>
-#ifdef HAVE_EIGEN2
+#ifdef HAVE_EIGEN
 %include <openbabel/conformersearch.h>
 %include <openbabel/math/align.h>
 #endif

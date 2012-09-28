@@ -85,7 +85,6 @@ public:
   virtual bool DoElement(const string& ElName);
   virtual bool EndElement(const string& ElName);
   virtual const char* EndTag(){ return "/reaction>"; };
-
   const type_info& GetType()
   {
     return typeid(OBReaction*);
@@ -95,6 +94,7 @@ private:
   typedef map<string,shared_ptr<OBMol> > MolMap;
   string AddMolToList(shared_ptr<OBMol> spmol, MolMap& mmap);
   bool WriteRateData(OBReaction* pReact, xmlChar* altprefix);
+  void WriteMetadataList(OBReaction& react);
 
 private:
   OBReaction* _preact;
@@ -509,6 +509,8 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   if(pReact->IsReversible())
     xmlTextWriterWriteFormatAttribute(writer(), C_REVERSIBLE,"%s", "true");
 
+  WriteMetadataList(*pReact);
+
   xmlTextWriterStartElementNS(writer(), prefix, C_REACTANTLIST, NULL);
   unsigned i;
   for(i=0;i<pReact->NumReactants();i++)
@@ -613,7 +615,6 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     }
     else if(_pxmlConv->GetOutputIndex()>1 && !_pxmlConv->IsOption("ReactionsNotStandalone"))
       xmlTextWriterEndElement(writer());//WRAPPER
-
     xmlTextWriterEndDocument(writer());
     OutputToStream();
 
@@ -761,5 +762,26 @@ bool CMLReactFormat::WriteRateData(OBReaction* pReact, xmlChar* altprefix)
   xmlTextWriterEndElement(writer());//rateParams
   return true;
 }
+  void CMLReactFormat::WriteMetadataList(OBReaction& react)
+  {
+    static const xmlChar C_METADATALIST[] = "metadataList";
+    static const xmlChar C_METADATA[]     = "metadata";
+    static const xmlChar C_TITLE[]        = "title";
+    static const xmlChar C_NAME[]         = "name";
+    static const xmlChar C_CONTENT[]      = "content";
+
+    string comment = react.GetComment();
+    if(!comment.empty())
+    {
+      xmlTextWriterStartElement(writer(), C_METADATALIST);
+      xmlTextWriterWriteAttributeNS(writer(),BAD_CAST "xmlns",BAD_CAST "dc",NULL,BAD_CAST "http://purl.org/dc/elements/1.1/");
+      xmlTextWriterStartElement(writer(), C_METADATA);
+      xmlTextWriterWriteAttribute(writer(), C_NAME, BAD_CAST "dc:description");
+      xmlTextWriterWriteAttribute(writer(), C_CONTENT, BAD_CAST comment.c_str());
+      xmlTextWriterEndElement(writer());
+      xmlTextWriterEndElement(writer());
+    }
+   
+  }
 
 } //namespace OpenBabel

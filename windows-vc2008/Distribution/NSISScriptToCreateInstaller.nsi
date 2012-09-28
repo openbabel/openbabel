@@ -532,7 +532,6 @@ Section "Dummy Section" SecDummy
   SetOutPath "$DataBase\doc"
   File ..\..\doc\OpenBabelGUI.html
   File ToolsPrograms.txt
-  File splash.png
 
   SetOutPath "$INSTDIR"
   File /oname=License.txt ..\..\COPYING

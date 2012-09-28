@@ -38,7 +38,7 @@ public:
   const char* Description(){ return
     "Align coordinates to the first molecule\n"
     "Typical use with a -s option:\n"
-    "    obabel pattern.www  dataset.xxx  -outset.yyy  -s SMARTS  --align\n"
+    "    obabel pattern.www  dataset.xxx  -O outset.yyy  -s SMARTS  --align\n"
     "Only molecules matching SMARTS are converted and are aligned by\n"
     "having all their atom coordinates modified. The atoms that are\n"
     "used in the alignment are those matched by SMARTS in the first\n"
@@ -50,9 +50,9 @@ public:
     "The standalone program obfit has similar functionality.\n \n"
 
     "The first input molecule could be part of the data set :\n"
-    "    obabel dataset.xxx  -outset.yyy  -s SMARTS  --align\n"
-    "which could be used to ensure a particular substructure always\n"
-    "had the same orientation in a 2D display of a set of molecules.\n"
+    "    obabel dataset.xxx  -O outset.yyy  -s SMARTS  --align\n"
+    "This form also ensures that a particular substructure always\n"
+    "has the same orientation in a 2D display of a set of molecules.\n"
     "0D molecules, e.g. from SMILES, are given 2D coordinates before\n"
     "alignment.\n \n"
 
@@ -69,7 +69,7 @@ public:
      "of the fit. To attach it to the title of each molecule use\n"
      "--append rmsd.\n"
      "To output the two conformers closest to the first conformer in a dataset:\n"
-     "    obabel dataset.xxx  -outset.yyy  --align  --smallest 2 rmsd\n\n"
+     "    obabel dataset.xxx  -O outset.yyy  --align  --smallest 2 rmsd\n\n"
     ;
 
 }

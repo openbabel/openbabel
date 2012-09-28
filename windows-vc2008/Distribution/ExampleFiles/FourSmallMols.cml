@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<cml xmlns="http://www.xml-cml.org/schema/cml2/core">
+<cml xmlns="http://www.xml-cml.org/schema">
  <molecule id="ethanol">
   <atomArray>
-   <atom id="a1" elementType="C"/>
-   <atom id="a2" elementType="C"/>
-   <atom id="a3" elementType="O"/>
+   <atom id="a1" elementType="C" x2="1.732051" y2="-0.000000"/>
+   <atom id="a2" elementType="C" x2="0.866025" y2="0.500000"/>
+   <atom id="a3" elementType="O" x2="-0.000000" y2="-0.000000"/>
   </atomArray>
   <bondArray>
    <bond atomRefs2="a1 a2" order="1"/>
@@ -13,9 +13,9 @@
  </molecule>
  <molecule id="dimethyl ether">
   <atomArray>
-   <atom id="a1" elementType="C"/>
-   <atom id="a2" elementType="O"/>
-   <atom id="a3" elementType="C"/>
+   <atom id="a1" elementType="C" x2="1.732051" y2="-0.000000"/>
+   <atom id="a2" elementType="O" x2="0.866025" y2="0.500000"/>
+   <atom id="a3" elementType="C" x2="-0.000000" y2="-0.000000"/>
   </atomArray>
   <bondArray>
    <bond atomRefs2="a1 a2" order="1"/>
@@ -24,13 +24,13 @@
  </molecule>
  <molecule id="benzyl radical">
   <atomArray>
-   <atom id="a1" elementType="C"/>
-   <atom id="a2" elementType="C"/>
-   <atom id="a3" elementType="C"/>
-   <atom id="a4" elementType="C"/>
-   <atom id="a5" elementType="C"/>
-   <atom id="a6" elementType="C"/>
-   <atom id="a7" elementType="C" spinMultiplicity="2"/>
+   <atom id="a1" elementType="C" x2="-0.866025" y2="-0.500000"/>
+   <atom id="a2" elementType="C" x2="-1.732051" y2="-0.000000"/>
+   <atom id="a3" elementType="C" x2="-1.732051" y2="1.000000"/>
+   <atom id="a4" elementType="C" x2="-0.866025" y2="1.500000"/>
+   <atom id="a5" elementType="C" x2="-0.000000" y2="1.000000"/>
+   <atom id="a6" elementType="C" x2="0.000000" y2="0.000000"/>
+   <atom id="a7" elementType="C" spinMultiplicity="2" x2="0.866025" y2="-0.500000"/>
   </atomArray>
   <bondArray>
    <bond atomRefs2="a1 a2" order="1"/>
@@ -44,10 +44,10 @@
  </molecule>
  <molecule id="trans difluoroethene">
   <atomArray>
-   <atom id="a1" elementType="F"/>
-   <atom id="a2" elementType="C"/>
-   <atom id="a3" elementType="C"/>
-   <atom id="a4" elementType="F"/>
+   <atom id="a1" elementType="F" x2="2.000000" y2="0.000000"/>
+   <atom id="a2" elementType="C" x2="1.500000" y2="0.866025"/>
+   <atom id="a3" elementType="C" x2="0.500000" y2="0.866025"/>
+   <atom id="a4" elementType="F" x2="0.000000" y2="1.732051"/>
   </atomArray>
   <bondArray>
    <bond atomRefs2="a1 a2" order="1"/>

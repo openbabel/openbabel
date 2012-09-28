@@ -17,11 +17,20 @@ if (RUN_SWIG)
   endif (NOT SWIG_FOUND)
 endif (RUN_SWIG)
 
-if (EIGEN2_FOUND)
-  set (eigen2_define "-DHAVE_EIGEN2")
-  set (CPPFLAGS_VALUE "-I${EIGEN2_INCLUDE_DIR}")
+# The following needs to be kept in synch with ..\CMakeLists.txt
+if(EIGEN3_FOUND)
+  set (eigen_define "-DHAVE_EIGEN -DHAVE_EIGEN3")
+  include_directories(${EIGEN3_INCLUDE_DIR})
+  set (CPPFLAGS_VALUE "-I${EIGEN3_INCLUDE_DIR}")
   set (CPPFLAGS_TEXT "CPPFLAGS=${CPPFLAGS_VALUE}")
-endif (EIGEN2_FOUND)
+else()
+  if(EIGEN2_FOUND)
+    set (eigen_define "-DHAVE_EIGEN")
+    include_directories(${EIGEN2_INCLUDE_DIR})
+    set (CPPFLAGS_VALUE "-I${EIGEN2_INCLUDE_DIR}")
+    set (CPPFLAGS_TEXT "CPPFLAGS=${CPPFLAGS_VALUE}")
+  endif()
+endif()
 
 ###################
 # Python
@@ -136,7 +145,7 @@ if (DO_JAVA_BINDINGS)
     if (RUN_SWIG)
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp
           COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_BINARY_DIR}/scripts/java/org/openbabel
-          COMMAND ${SWIG_EXECUTABLE} -java -package org.openbabel -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp ${eigen2_define} -outdir ${openbabel_BINARY_DIR}/scripts/java/org/openbabel ${openbabel_SOURCE_DIR}/scripts/openbabel-java.i
+          COMMAND ${SWIG_EXECUTABLE} -java -package org.openbabel -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp ${eigen_define} -outdir ${openbabel_BINARY_DIR}/scripts/java/org/openbabel ${openbabel_SOURCE_DIR}/scripts/openbabel-java.i
           COMMAND ${JAVA_COMPILE} ARGS "java/org/openbabel/*.java"
           COMMAND ${CMAKE_COMMAND} -E chdir ${openbabel_BINARY_DIR}/scripts/java ${JAVA_ARCHIVE} cf openbabel.jar org
           COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_BINARY_DIR}/scripts/java/openbabel.jar ${openbabel_SOURCE_DIR}/scripts/java

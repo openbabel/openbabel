@@ -147,7 +147,7 @@ namespace OpenBabel
 
     // Singular Value Decomposition of C into USV(t)
 #ifdef HAVE_EIGEN3
-    Eigen::JacobiSVD<Eigen::Matrix3d> svd(C);
+    Eigen::JacobiSVD<Eigen::Matrix3d> svd(C, Eigen::ComputeFullU | Eigen::ComputeFullV);
 #else
     Eigen::SVD<Eigen::Matrix3d> svd(C);
 #endif

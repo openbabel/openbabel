@@ -32,7 +32,7 @@ except ImportError:
     ob = None
 
 try:
-    import pybel_py2x as pybel
+    import pybel
 except ImportError:
     pybel = None
 
