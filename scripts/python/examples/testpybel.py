@@ -336,7 +336,7 @@ class TestPybel(TestToolkit):
     tpsaname = "TPSA"
     Nbits = 3
     Nfpbits = 32
-    datakeys = ['NSC', 'Comment', 'OpenBabel Symmetry Classes']
+    datakeys = ['NSC', 'Comment', 'OpenBabel Symmetry Classes', 'MOL Chiral Flag']
 
     def testFP_FP3(self):
         "Checking the results from FP3"
