@@ -7,16 +7,21 @@ set(formats_common
  )
 
 set(formats_utility
+  asciiformat
   copyformat
   MNAformat
   molreport
   nulformat
+  painterformat
   povrayformat
   reportformat
   svgformat
   textformat
   titleformat
   )
+set(painterformat_additional_sources ../depict/commandpainter.cpp)
+set(asciiformat_additional_sources   ../depict/asciipainter.cpp)
+
 set(formats_compchem
       acesformat
       abinitformat

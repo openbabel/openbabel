@@ -322,7 +322,11 @@ namespace OpenBabel
         max_y = std::max(max_y, atom->GetY());
       }
 
-      const double margin = 40.0;
+      double margin;
+      if (d->options & noMargin)
+        margin = 5.0;
+      else
+        margin = 40.0;
       // translate all atoms so the bottom-left atom is at margin,margin
       for (atom = d->mol->BeginAtom(i); atom; atom = d->mol->NextAtom(i))
         atom->SetVector(atom->GetX() - min_x + margin, atom->GetY() - min_y + margin, 0.0);
