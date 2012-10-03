@@ -12,14 +12,12 @@ set(formats_utility
   MNAformat
   molreport
   nulformat
-  painterformat
   povrayformat
   reportformat
   svgformat
   textformat
   titleformat
   )
-set(painterformat_additional_sources ../depict/commandpainter.cpp)
 set(asciiformat_additional_sources   ../depict/asciipainter.cpp)
 
 set(formats_compchem
