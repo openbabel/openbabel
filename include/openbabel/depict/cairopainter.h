@@ -30,13 +30,24 @@ namespace OpenBabel
       //! @name CairoPainter specific
       //@{
       void WriteImage(const std::string &filename);
-      void WriteImage(std::ostream& ofs, int newWidth=300, int newHeight=300);
+      void WriteImage(std::ostream& ofs);
+      void SetWidth(int width) {m_width=width;}
+      void SetHeight(int height) {m_height=height;}
+      void SetTitle(std::string title) {m_title=title;}
+      void SetIndex(int index) {m_index=index;}
+      void SetTableSize(int nrows, int ncols) {m_nrows=nrows; m_ncols=ncols;}
       //@}
  
     private:
       cairo_surface_t *m_surface;
       cairo_t *m_cairo;
       int m_fontPointSize;
+      int m_width;
+      int m_height;
+      double m_pen_width;
+      std::string m_title;
+      int m_index;        // Index of current molecule in a table
+      int m_ncols, m_nrows; // number of rows and columns
   };
 
 }
