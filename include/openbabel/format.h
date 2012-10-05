@@ -36,6 +36,7 @@ namespace OpenBabel
 #define WRITEONEONLY    0x20
 #define WRITEBINARY     0x40
 #define READXML         0x80
+#define DEPICTION2D     0x100
 #define DEFAULTFORMAT   0x4000
 
   /// @brief Base class for file formats.

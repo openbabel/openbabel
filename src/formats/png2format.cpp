@@ -102,7 +102,7 @@ public:
 
   virtual unsigned int Flags()
   {
-      return NOTREADABLE | WRITEBINARY;
+      return NOTREADABLE | WRITEBINARY | DEPICTION2D;
   };
   bool WriteChemObject(OBConversion* pConv);
   bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
