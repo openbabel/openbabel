@@ -344,8 +344,9 @@ namespace OpenBabel
 
     if(ReadUIntField((line.substr(6, 3)).c_str())>0)
       obErrorLog.ThrowError(__FUNCTION__,
-        "Either the file contains Atom Lists, which are not currently supported and are ignored\n"
-        "or the atom or bond count is >999, which is not allowed in V2000 MDL files.",
+        "WARNING: Problems reading the Count line of an MDL file\n"
+        "There may be erroneous addition spaces or\n"
+        "the file may contains Atom Lists, which are ignored\n",
         obWarning);
 
     mol.BeginModify();
@@ -488,7 +489,8 @@ namespace OpenBabel
 	}
         if (begin == 0 || end == 0 || order == 0 || begin > mol.NumAtoms() || end > mol.NumAtoms()) {
 	        errorMsg << "WARNING: Problems reading a MDL file\n";
-	        errorMsg << "Invalid bond specification, atom numbers or bond order are wrong.\n";
+	        errorMsg << "Invalid bond specification, atom numbers or bond order are wrong;\n";
+	        errorMsg << "each should be in a field of three characters.\n";
 	        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
           return false;
 	      }

@@ -72,11 +72,10 @@ namespace OpenBabel
     // Rn is stored as an atom with 0 atomic number and atomclass = n
     // R', R'' etc. are treated as R1, R2
     // Note that if the name contains anything after the number it is ignored.
-    if(_alias[0]=='R' && (_alias[1]=='\'' || _alias[1]=='¢' || isdigit(_alias[1])))
+    if(_alias[0]=='R' && (_alias[1]=='\'' || isdigit(_alias[1])))
     {
-      replace(_alias.begin(),_alias.end(),'¢','\'');
       unsigned int n = 1;
-      if(_alias[1]=='\'' || _alias[1]=='¢')
+      if(_alias[1]=='\'')
         while(n<_alias.size()-1 && _alias[n]==_alias[n+1]) n++;
       else
         n = atoi(_alias.c_str()+1);
@@ -286,12 +285,13 @@ void AliasData::AddExpandedAtom(int id) { _expandedatoms.push_back(id); };
 void AliasData::DeleteExpandedAtoms(OBMol& mol)
 {
   //The atom that carries the AliasData object remains as an Xx atom with no charge;
-  //the others are deleted.
+  //the others are deleted. All the attached hydrogens are also deleted.
   for(unsigned i=0;i<_expandedatoms.size();++i)
   {
     OBAtom* at = mol.GetAtomById(_expandedatoms[i]);
     if(!at)
       continue;
+    mol.DeleteHydrogens(at);
     if(at->HasData(AliasDataType))
     {
       at->SetAtomicNum(0);

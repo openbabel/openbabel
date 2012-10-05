@@ -81,7 +81,7 @@ public:
 
   virtual unsigned int Flags()
   {
-      return READONEONLY | READBINARY | WRITEBINARY;
+      return READONEONLY | READBINARY | WRITEBINARY | DEPICTION2D;
   };
 
   virtual bool ReadChemObject(OBConversion* pConv)

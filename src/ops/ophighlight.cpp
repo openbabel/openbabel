@@ -32,7 +32,7 @@ class OpHighlight : public OBOp
 public:
   OpHighlight(const char* ID) : OBOp(ID, false){};
   const char* Description(){ return
-    "Highlight substructures in 2D depictions\n"
+    "<param> Highlight substructures in 2D depictions\n"
     "Usage: --highlight \"SMARTS1 color1 [SMARTS2 color2 ...]\"\n"
     "\n"
     "Valid colors are black, gray, white, red, green, blue, yellow,\n"
