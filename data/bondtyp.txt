@@ -34,8 +34,28 @@
 [#7D2][#7D2^1][#7D1]		0 1 2 1 2 2
 # Nitro
 [#8D1][#7D3^2]([#8D1])*		0 1 2 1 2 2 1 3 1
-# Sulphone
-[#16D4]([#8D1])([#8D1])(*)(*)	0 1 2 0 2 2 0 3 1 0 4 1
+
+# Sulfones
+[#16D4]([#8D1])([#8D1])([*!#8])([*!#8]) 	0 1 2 0 2 2 0 3 1 0 4 1
+# Sulfates
+[#16D4]([#8D1])([#8D1])([#8-,#8])([#8-,#8])	0 1 2 0 2 2 0 3 1 0 4 1
+# Thiosulfates
+[#16D4]([#16D1])([#8D1])([#8-,#8])([#8-,#8])	0 1 2 0 2 2 0 3 1 0 4 1
+# Sulfoxides
+[#16D3]([#8D1])([*!#8])([*!#8])			0 1 2 0 2 1 0 3 1
+# Sulfite
+[#16D3]([#8D1])([#8D1-])([#8D1-])		0 1 2 0 2 1 0 3 1
+# Sulfur trioxide
+[#16D3]([#8D1])([#8D1])([#8D1])			0 1 2 0 2 2 0 3 2
+# Sulfites
+[#16D3]([#8D1])([#8])([#8])			0 1 2 0 2 1 0 3 1
+# Disulfur monoxide
+[#16D2]([#8D1])([#16D1])			0 1 2 0 2 2
+# Sulfmonoxides
+[#16D2]([#8D1])([*!#8])				0 1 2 0 2 1
+# Sulfur dioxide
+[#16D2]([#8D1])([#8D1])				0 1 2 0 2 2
+
 # Phosphone
 [#15D4]([#8D1])(*)(*)(*)	0 1 2 0 2 1 0 3 1 0 4 1
 
@@ -71,6 +91,5 @@
 
 ### other potential functional groups that may (or may not) be useful to add
 # imidines ( N=C/N\C=N
-# sulfoxides
 # heme / porphyrin
 # phthalocyanine
