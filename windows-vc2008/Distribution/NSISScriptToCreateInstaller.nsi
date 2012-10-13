@@ -494,10 +494,15 @@ FunctionEnd
   !insertmacro MUI_PAGE_DIRECTORY
 
   ;Start Menu Folder Page Configuration
+  
+  ;See http://nsis.sourceforge.net/Shortcuts_removal_fails_on_Windows_Vista
+  RequestExecutionLevel user
+  
   !define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKCU" 
   !define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\OpenBabel ${OBVERSION}" 
   !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "Start Menu Folder"
   !insertmacro MUI_PAGE_STARTMENU Application $STARTMENU_FOLDER
+  RequestExecutionLevel admin
 
   !insertmacro MUI_PAGE_INSTFILES
   !insertmacro MUI_PAGE_FINISH
@@ -515,23 +520,8 @@ FunctionEnd
 
 Section "Dummy Section" SecDummy
 
-  SetShellVarContext all
-
-  ;The data will be in (writable) subfolder of %APPDATA%, if it exists
+  ;The data will be in (writable) subfolder of %APPDATA%
   Var /GLOBAL DataBase
-  ClearErrors
-  ReadEnvStr $0 APPDATA
-  IfErrors 0 +3    
-  StrCpy $DataBase "$INSTDIR"
-  Goto +2
-  StrCpy $DataBase "$%APPDATA%\OpenBabel-${OBVERSION}"
-   
-  SetOutPath "$DataBase\data"
-  File /r /x .svn /x *.h ..\..\data\*.*
-
-  SetOutPath "$DataBase\doc"
-  File ..\..\doc\OpenBabelGUI.html
-  File ToolsPrograms.txt
 
   SetOutPath "$INSTDIR"
   File /oname=License.txt ..\..\COPYING
@@ -549,10 +539,32 @@ Section "Dummy Section" SecDummy
   File ..\build\bin\Release\openbabel_java.dll
   File ..\build\bin\Release\openbabel_csharp.dll
   File ..\..\scripts\csharp\OBDotNet.dll
-  File obdotnet.snk
-  File OBDotNetAssemblyInfo.cs
 
   File ..\libs\i386\*.dll
+
+  ;Install VC++ 2010 redistributable
+  ExecWait '"$INSTDIR/vcredist_x86.exe" /q:a'
+  Delete "$INSTDIR\vcredist_x86.exe"
+
+  ;Create uninstaller
+  WriteUninstaller "$INSTDIR\Uninstall.exe"
+  
+  ;Put OBDepict.bat in context menu
+  WriteRegStr HKCR "*\shell\OBDepict\command" "" "$INSTDIR\obdepict.bat %1"
+  
+  ; Convenience shortcut to OBDepict
+  ;CreateShortCut "$INSTDIR\OBDepict.lnk" "$INSTDIR\obdepict.bat" "" "" 0 SW_SHOWMINIMIZED 
+
+  ;needs to be in user mode from now on
+    
+  StrCpy $DataBase "$APPDATA\OpenBabel-${OBVERSION}"
+   
+  SetOutPath "$DataBase\data"
+  File /r /x .svn /x *.h ..\..\data\*.*
+
+  SetOutPath "$DataBase\doc"
+  File ..\..\doc\OpenBabelGUI.html
+  File ToolsPrograms.txt
 
   SetOutPath "$DataBase\examples"
   File /r /x .svn ExampleFiles\*.*
@@ -569,19 +581,12 @@ Section "Dummy Section" SecDummy
   ;Store installation folder
   WriteRegStr HKCU "Software\OpenBabel ${OBVERSION}" "" $INSTDIR
   
-  ;Install VC++ 2010 redistributable
-  ExecWait '"$INSTDIR/vcredist_x86.exe" /q:a'
-  Delete "$INSTDIR\vcredist_x86.exe"
-
-  ;Create uninstaller
-  WriteUninstaller "$INSTDIR\Uninstall.exe"
-
   ;Create shortcuts
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Open Babel GUI.lnk" "$INSTDIR\OBGUI.exe"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using Open Babel GUI.lnk" "$DataBase\doc\OpenBabelGUI.html"
-    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using babel (web).lnk" "http://openbabel.org/docs/2.3.1"
+    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Guide to using babel (web).lnk" "http://openbabel.org/docs/2.3.2"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
   !insertmacro MUI_STARTMENU_WRITE_END
 
@@ -608,13 +613,10 @@ Section "Dummy Section" SecDummy
   ReadRegStr $7 HKLM "SOFTWARE\Mozilla\Mozilla Firefox\$6\Main" "Install Directory"
   Push $7
   Call AddToPath
-
-  ;Put OBDepict.bat in context menu
-  WriteRegStr HKCR "*\shell\OBDepict\command" "" "$INSTDIR\obdepict.bat %1"
   
-  ; Convenience shortcut to OBDepict
-  ;CreateShortCut "$INSTDIR\OBDepict.lnk" "$INSTDIR\obdepict.bat" "" "" 0 SW_SHOWMINIMIZED 
-   
+  ; Set current directory for GUI's first run. Stored value used subsequently.
+  SetOutPath "$DataBase\examples"
+
 SectionEnd
 
 ;--------------------------------
@@ -632,6 +634,7 @@ SectionEnd
 ;Uninstaller Section
 
 Section "Uninstall"
+
   Delete "$INSTDIR\ob*.exe"
   Delete "$INSTDIR\babel.exe"
   Delete "$INSTDIR\obdepict.bat"
@@ -660,18 +663,15 @@ Section "Uninstall"
   Delete "$INSTDIR\libcairo-2.dll"
   Delete "$INSTDIR\libexpat-1.dll"
   Delete "$INSTDIR\libfontconfig-1.dll"
-  Delete "$INSTDIR\OBDotNetAssemblyInfo.cs"
-  Delete "$INSTDIR\obdotnet.snk"
 
   Delete "$INSTDIR\Uninstall.exe"
 
   RMDir "$INSTDIR"
-  
-  SetShellVarContext all
+
   !insertmacro MUI_STARTMENU_GETFOLDER Application $MUI_TEMP
     
-  ;Delete "$SMPROGRAMS\$MUI_TEMP\*.lnk"
-  RMDir /r "$SMPROGRAMS\$MUI_TEMP"
+  Delete "$SMPROGRAMS\$MUI_TEMP\*.lnk"
+  RMDir  "$SMPROGRAMS\$MUI_TEMP"
 
   ;Remove from PATH
   push $INSTDIR
@@ -697,18 +697,16 @@ Section "Uninstall"
   ; Remove entry in Add/Remove Programs
   DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\OpenBabel-${OBVERSION}" 
 
+  ; Remove entry in Add/Remove Programs
+  DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\OpenBabel-${OBVERSION}" 
+
   ; Remove env var
   push "BABEL_DATADIR"
   push $INSTDIR
   Call un.RemoveFromEnvVar
   DeleteRegValue        HKCU "Environment" "BABEL_DATADIR"
-
-  ClearErrors
-  ReadEnvStr $0 APPDATA
-  IfErrors 0 +3    
-  StrCpy $DataBase "$INSTDIR"
-  Goto +2
-  StrCpy $DataBase "$%APPDATA%\OpenBabel-${OBVERSION}"
+ 
+  StrCpy $DataBase "$APPDATA\OpenBabel-${OBVERSION}"
   RMDir /r "$DataBase\data"
   RMDir /r "$DataBase\examples"
   RMDir /r "$DataBase\doc"
