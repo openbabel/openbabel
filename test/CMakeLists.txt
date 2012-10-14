@@ -32,12 +32,12 @@ set(tests
     uniqueid
   )
 
-if (EIGEN2_FOUND)
-set(tests
-        align
-        ${tests}
-)
-endif (EIGEN2_FOUND)
+if(EIGEN2_FOUND OR EIGEN3_FOUND)
+  set(tests
+      align
+      ${tests}
+     )
+endif()
 
 set(TEST_PATH ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
