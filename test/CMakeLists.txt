@@ -2,7 +2,7 @@
 add_definitions(-DTESTDATADIR="\\"${CMAKE_SOURCE_DIR}/test/files/\\"")
 
 # define FORMATDIR for location of format plugin binaries
-add_definitions(-DFORMATDIR="\\"${openbabel_BINARY_DIR}/lib/\\"")
+add_definitions(-DFORMATDIR="\\"${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/\\"")
 
 ###########################################################
 #  new tests using obtest.h
@@ -89,7 +89,7 @@ foreach(test ${tests})
   add_test(${test}_Test ${TEST_PATH}/test_${test})
   set_tests_properties(${test}_Test PROPERTIES
     FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
-    ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib")
+    ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}")
 endforeach(test ${tests})
 
 ############################################################
@@ -152,7 +152,7 @@ if(WITH_INCHI)
              ${TEST_PATH}/test_inchiwrite ${inchidata}/${test} ${inchidata}/${test}.txt)
     set_tests_properties(inchi${test}_Test PROPERTIES
                          FAIL_REGULAR_EXPRESSION "Not ok"
-                         ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib"
+                         ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
     )
   endforeach(test ${inchitests})
 endif(WITH_INCHI)
@@ -166,7 +166,7 @@ foreach(test ${old_tests})
   add_test(${test}_Test ${TEST_PATH}/test_${test})
   set_tests_properties(${test}_Test PROPERTIES
     FAIL_REGULAR_EXPRESSION "not ok"
-    ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib"
+    ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
  )
 endforeach(test ${old_tests})
 
@@ -181,8 +181,8 @@ if(NOT BUILD_SHARED AND NOT BUILD_MIXED)
 endif()
 install(TARGETS roundtrip
                 RUNTIME DESTINATION bin
-                LIBRARY DESTINATION lib
-                ARCHIVE DESTINATION lib
+                LIBRARY DESTINATION lib${LIB_SUFFIX}
+                ARCHIVE DESTINATION lib${LIB_SUFFIX}
 )
 
 ###########################
@@ -199,10 +199,10 @@ if(NOT MINGW AND NOT CYGWIN)
         babel sym smartssym fastsearch unique kekule)
     foreach(pytest ${pytests})
     SET_SOURCE_FILES_PROPERTIES(test${pytest}.py PROPERTIES
-      PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib"
-      BABEL_LIBDIR "${CMAKE_BINARY_DIR}/lib"
+      PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
+      BABEL_LIBDIR "${CMAKE_BINARY_DIR}/lib${LIB_SYFFIX}"
       BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
-      LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/lib"
+      LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
     )
       ADD_PYTHON_TEST(pytest_${pytest} test${pytest}.py)
       set_tests_properties(pytest_${pytest} PROPERTIES
@@ -221,10 +221,10 @@ if (PYTHON_BINDINGS)
       bindings _pybel example)
   foreach(pybindtest ${pybindtests})
     SET_SOURCE_FILES_PROPERTIES(test${pybindtest}.py PROPERTIES
-        PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib"
-        BABEL_LIBDIR "${CMAKE_BINARY_DIR}/lib"
+        PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
+        BABEL_LIBDIR "${CMAKE_BINARY_DIR}/lib${LIB_SYFFIX}"
         BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
-        LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/lib"
+        LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
     )
     if(MSVC)
       SET_SOURCE_FILES_PROPERTIES(test${pybindtest}.py PROPERTIES

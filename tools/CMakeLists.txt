@@ -38,8 +38,8 @@ if(BUILD_SHARED)
     target_link_libraries(${tool} ${BABEL_LIBRARY})
     install(TARGETS ${tool}
                     RUNTIME DESTINATION bin
-                    LIBRARY DESTINATION lib
-                    ARCHIVE DESTINATION lib
+                    LIBRARY DESTINATION lib${LIB_SUFFIX}
+                    ARCHIVE DESTINATION lib${LIB_SUFFIX}
     )
   endforeach(tool)
 
@@ -53,8 +53,8 @@ if(BUILD_SHARED)
     target_link_libraries(obspectrophore ${BABEL_LIBRARY})
     install(TARGETS obspectrophore
                     RUNTIME DESTINATION bin
-                    LIBRARY DESTINATION lib
-                    ARCHIVE DESTINATION lib
+                    LIBRARY DESTINATION lib${LIB_SUFFIX}
+                    ARCHIVE DESTINATION lib${LIB_SUFFIX}
     )
 
     # obgrep -- requires getopt
@@ -66,8 +66,8 @@ if(BUILD_SHARED)
       target_link_libraries(obgrep ${BABEL_LIBRARY})
       install(TARGETS obgrep
                       RUNTIME DESTINATION bin
-                      LIBRARY DESTINATION lib
-                      ARCHIVE DESTINATION lib
+                      LIBRARY DESTINATION lib${LIB_SUFFIX}
+                      ARCHIVE DESTINATION lib${LIB_SUFFIX}
       )
   endif(NOT MINIMAL_BUILD)
 
@@ -146,7 +146,7 @@ else(BUILD_SHARED)
 
   install(TARGETS babel
           RUNTIME DESTINATION bin
-          LIBRARY DESTINATION lib
-          ARCHIVE DESTINATION lib)
+          LIBRARY DESTINATION lib${LIB_SUFFIX}
+          ARCHIVE DESTINATION lib${LIB_SUFFIX})
 
 endif(BUILD_SHARED)
