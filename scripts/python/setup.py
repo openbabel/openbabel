@@ -24,7 +24,7 @@ obExtension = Extension('_openbabel',
                  )
 
 if "build" in sys.argv:
-    shutil.copyfile(os.path.join(srcdir, "pybel_py%dx.py" % sys.version_info[0]), "pybel.py")
+    shutil.copyfile(os.path.join(srcdir, "pybel.py"), "pybel.py")
     shutil.copyfile(os.path.join(srcdir, "openbabel.py"), "openbabel.py")
 
 setup(name='openbabel',
