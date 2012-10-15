@@ -92,16 +92,30 @@ if (DO_PYTHON_BINDINGS)
     endif(RUN_SWIG)
 
     add_library(bindings_python MODULE ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp)
-    target_link_libraries(bindings_python ${PYTHON_LIBRARIES} ${BABEL_LIBRARY})
+    if(BINDINGS_ONLY)
+        target_link_libraries(bindings_python ${PYTHON_LIBRARIES} ${BABEL_SYSTEM_LIBRARY})
+    else()
+        target_link_libraries(bindings_python ${PYTHON_LIBRARIES} ${BABEL_LIBRARY})
+    endif()
+
     if(NOT WIN32)
         set_target_properties(bindings_python PROPERTIES
             OUTPUT_NAME _openbabel
             PREFIX ""
             SUFFIX .so )
-        add_dependencies(bindings_python openbabel)
-        install(TARGETS bindings_python LIBRARY DESTINATION ${LIB_INSTALL_DIR})
-        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py DESTINATION ${LIB_INSTALL_DIR})
-        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/pybel.py DESTINATION ${LIB_INSTALL_DIR})
+        if(NOT BINDINGS_ONLY)
+            add_dependencies(bindings_python openbabel)
+        endif()
+
+        install(TARGETS bindings_python
+                LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+                COMPONENT bindings_python)
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
+                DESTINATION ${LIB_INSTALL_DIR}
+                COMPONENT bindings_python)
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/pybel.py
+                DESTINATION ${LIB_INSTALL_DIR}
+                COMPONENT bindings_python)
     else(NOT WIN32)
         set_target_properties(bindings_python PROPERTIES
             OUTPUT_NAME _openbabel

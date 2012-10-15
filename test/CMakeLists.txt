@@ -2,7 +2,12 @@
 add_definitions(-DTESTDATADIR="\\"${CMAKE_SOURCE_DIR}/test/files/\\"")
 
 # define FORMATDIR for location of format plugin binaries
-add_definitions(-DFORMATDIR="\\"${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/\\"")
+if(BINDINGS_ONLY)
+  set(FORMATDIR "${OB_MODULE_PATH}/")
+else()
+  set(FORMATDIR "${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/")
+endif()
+add_definitions(-DFORMATDIR="\\"${FORMATDIR}/\\"")
 
 ###########################################################
 #  new tests using obtest.h
@@ -209,7 +214,7 @@ if(NOT MINGW AND NOT CYGWIN)
     foreach(pytest ${pytests})
     SET_SOURCE_FILES_PROPERTIES(test${pytest}.py PROPERTIES
       PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
-      BABEL_LIBDIR "${CMAKE_BINARY_DIR}/lib${LIB_SYFFIX}"
+      BABEL_LIBDIR "${FORMATDIR}"
       BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
       LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
     )
@@ -231,7 +236,7 @@ if (PYTHON_BINDINGS)
   foreach(pybindtest ${pybindtests})
     SET_SOURCE_FILES_PROPERTIES(test${pybindtest}.py PROPERTIES
         PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
-        BABEL_LIBDIR "${CMAKE_BINARY_DIR}/lib${LIB_SYFFIX}"
+        BABEL_LIBDIR "${FORMATDIR}"
         BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
         LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
     )
