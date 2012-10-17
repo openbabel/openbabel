@@ -318,29 +318,6 @@ namespace OpenBabel
     std::vector<std::string> symmetries;
     int aHOMO, bHOMO, betaStart;
 
-    //Put some metadata into OBCommentData
-    string comment("Gaussian ");
-    ifs.getline(buffer,BUFF_SIZE);
-    if(*buffer)
-    {
-      comment += strchr(buffer,'=')+2;
-      comment += "";
-      for(unsigned i=0; i<115, ifs; ++i)
-      {
-        ifs.getline(buffer,BUFF_SIZE);
-        if(buffer[1]=='#')
-        {
-          //the line describing the method
-          comment += buffer;
-          OBCommentData *cd = new OBCommentData;
-          cd->SetData(comment);
-          cd->SetOrigin(fileformatInput);
-          mol.SetData(cd);
-          break;
-        }
-      }
-    }
-
     int i=0;
     bool no_symmetry=false;
     char coords_type[25];
@@ -374,7 +351,34 @@ namespace OpenBabel
     mol.BeginModify();
     while (ifs.getline(buffer,BUFF_SIZE))
       {
-        if (strstr(buffer,"Multiplicity") != NULL)
+
+        if(strstr(buffer, "Entering Gaussian") != NULL)
+        {
+          //Put some metadata into OBCommentData
+          string comment("Gaussian ");
+
+          if(strchr(buffer,'='))
+          {
+            comment += strchr(buffer,'=')+2;
+            comment += "";
+            for(unsigned i=0; i<115, ifs; ++i)
+            {
+              ifs.getline(buffer,BUFF_SIZE);
+              if(buffer[1]=='#')
+              {
+                //the line describing the method
+                comment += buffer;
+                OBCommentData *cd = new OBCommentData;
+                cd->SetData(comment);
+                cd->SetOrigin(fileformatInput);
+                mol.SetData(cd);
+                break;
+              }
+            }
+          }
+        }
+
+        else if (strstr(buffer,"Multiplicity") != NULL)
           {
             tokenize(vs, buffer, " \t\n");
             if (vs.size() == 6)
