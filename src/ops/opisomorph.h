@@ -50,13 +50,18 @@ public:
   virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
   virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*);
   std::vector<int> GetMatchAtoms(){ return firstmatch; }
-  
+  virtual bool ProcessVec(std::vector<OBBase*>& vec);//Extra target mols
+
 private:
-  std::vector<std::string> vec;
+  std::vector<std::string> vec; //parsed parameter text
+  std::vector<OBBase*> ExtraMols; //extra OBMols passed in via ProcessVec() (FastSearchFormat)
+  OBSmartsPattern sp;  //if SMARTS (and not a filename) supplied
+  std::string xsmarts; //extra SMARTS provided externally via ProcessVec()
+  bool addHydrogens;   //The SMARTS contained one or more #1 to explicitly find hydrogen
   bool inv;
-  int nPatternAtoms; //non-zero for exact matches
+  int nPatternAtoms;   //non-zero for exact matches
+  std::vector<OBQuery*> queries; //populated if a filename was supplied
   OBQuery* query;
-  std::vector<OBQuery*> queries;
   std::vector<int> firstmatch; //Idxes of first match by SMARTS or OBIsomorphismMapper
   bool showAll;
 };

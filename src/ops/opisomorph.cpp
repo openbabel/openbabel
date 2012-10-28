@@ -192,6 +192,56 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
     //Interpret as a filename if possible
     MakeQueriesFromMolInFile(queries, vec[0], &nPatternAtoms, strstr(OptionText,"noH"));
     vec.erase(remove(vec.begin(),vec.end(),"noH"),vec.end());//to prevent "noH2" being seen as a color
+    
+     
+    if(queries.empty())
+    {
+      //SMARTS supplied
+    
+      // Explicit H in SMARTS requires explicit H in the molecule.
+      // Calling AddHydrogens() on a copy of the molecule  is done in parsmart.cpp
+      // only when SMARTS contains [H]. Doing more has complications with atom typing,
+      // so AddHydrogens here on the molecule (not a copy) when #1 detected.
+      addHydrogens = (vec[0].find("#1]")!=string::npos);
+
+      // If extra target mols have been supplied, make a composite SMARTS
+      // to test for any of the targets.
+      if(ExtraMols.size()>0)
+      {
+        for(unsigned i=0;i<ExtraMols.size();++i)
+        {
+          OBConversion extraConv;
+          extraConv.AddOption("h");
+          if(!extraConv.SetOutFormat("smi"))
+            return false;
+          // Add option which avoids implicit H being added to the SMARTS.
+          // The parameter must be present but can be anything.
+          extraConv.AddOption("h",OBConversion::OUTOPTIONS, "X");
+          xsmarts += ",$(" + extraConv.WriteString(ExtraMols[i], true) + ")";
+        }
+      }
+
+      string ysmarts = xsmarts.empty() ? vec[0] : "[$(" + vec[0] + ")" + xsmarts +"]";
+      xsmarts.clear();
+      if(!sp.Init(ysmarts))
+      {
+        string msg = ysmarts + " cannot be interpreted as either valid SMARTS "
+          "or the name of a file with an extension known to OpenBabel "
+          "that contains one or more pattern molecules.";
+        obErrorLog.ThrowError(__FUNCTION__, msg, obError, onceOnly);
+        delete pmol;
+        pmol = NULL;
+        pConv->SetOneObjectOnly(); //stop conversion
+        return false;
+      }
+    }
+    else
+    {
+      // Target is in a file. Add extra targets if any supplied
+      for(unsigned i=0;i<ExtraMols.size();++i)
+        queries.push_back(CompileMoleculeQuery(static_cast<OBMol*>(ExtraMols[i])));
+      ExtraMols.clear();
+    }
 
     if(vec.size()>1 && vec[1]=="exact")
     {
@@ -224,7 +274,6 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
   //These are a vector of each mapping, each containing atom indxs.
   vector<vector<int> > vecatomvec;
   vector<vector<int> >* pMappedAtoms = NULL;
-  OBSmartsPattern sp;
 
   if(nPatternAtoms)
     if(pmol->NumHvyAtoms() != nPatternAtoms)
@@ -258,23 +307,6 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
   }
   else //SMARTS supplied
   {
-    // Explicit H in SMARTS requires explicit H in the molecule.
-    // Calling AddHydrogens() on a copy of the molecule  is done in parsmart.cpp
-    // only when SMARTS contains [H]. Doing more has complications with atom typing,
-    // so AddHydrogens here on the molecule (not a copy) when #1 detected.
-    bool addHydrogens = (vec[0].find("#1]")!=string::npos);
-
-    if(!sp.Init(vec[0]))
-    {
-      string msg = vec[0] + " cannot be interpreted as either valid SMARTS "
-        "or the name of a file with an extension known to OpenBabel "
-        "that contains one or more pattern molecules.";
-      obErrorLog.ThrowError(__FUNCTION__, msg, obError, onceOnly);
-      delete pmol;
-      pmol = NULL;
-      pConv->SetOneObjectOnly(); //stop conversion
-      return false;
-    }
 
     if(addHydrogens)
       pmol->AddHydrogens(false,false);
@@ -323,6 +355,13 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
       delete *qiter;
     queries.clear();
   }
+  return true;
+}
+
+bool OpNewS::ProcessVec(std::vector<OBBase*>& Extravec)
+{
+  //Adds extra target molecules (see FastSearchFormat)
+  ExtraMols = Extravec;
   return true;
 }
 

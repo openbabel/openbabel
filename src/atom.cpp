@@ -1007,7 +1007,7 @@ namespace OpenBabel
     for (bond = ((OBAtom*)this)->BeginBond(i);bond;bond = ((OBAtom*)this)->NextBond(i))
       {
         bo = bond->GetBO();
-        bosum += (bo < 4) ? 2*bo : 3;
+        bosum += (bo < 5) ? 2*bo : 3;
       }
 
     bosum /= 2;

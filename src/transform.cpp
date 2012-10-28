@@ -61,8 +61,9 @@ namespace OpenBabel
     map<string,string>::const_iterator itr, itr2;
 
     if(pOptions->find("b")!=pOptions->end())
-      if(!ConvertDativeBonds())
-        ret=false;
+      ConvertDativeBonds();
+    if(pOptions->find("B")!=pOptions->end())
+      MakeDativeBonds();
 
     if(pOptions->find("d")!=pOptions->end())
       if(!DeleteHydrogens())
@@ -237,7 +238,8 @@ namespace OpenBabel
 "-d Delete hydrogens (make implicit)\n"
 "-h Add hydrogens (make explicit)\n"
 "-p <pH> Add hydrogens appropriate for this pH\n"
-"-b Convert dative bonds e.g.[N+]([O-])=O to N(=O)=O\n"
+"-b Convert dative bonds e.g.-[N+]([O-])=O to -N(=O)=O\n"
+"-B Make dative bonds e.g.-[N+]([O-])=O from -N(=O)=O\n"
 "-r Remove all but the largest contiguous fragment\n"
 "-c Center Coordinates\n"
 "-C Combine mols in first file with others by name\n"

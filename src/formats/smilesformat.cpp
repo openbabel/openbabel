@@ -2908,10 +2908,18 @@ namespace OpenBabel {
       writeExplicitHydrogen = true;
     }
 
-    //Output as [CH3][CH3] rather than CC if -xh option has been specified
-    if (!bracketElement && _pconv && _pconv->IsOption("h") && atom->ExplicitHydrogenCount() > 0) {
-      bracketElement = true;
-      writeExplicitHydrogen = true;
+      //Output explicit hydrogens as such (for SMARTS) See line 3008 approx
+    if(_pconv) {
+      const char* hoption = _pconv->IsOption("h");
+      if (!bracketElement && hoption && atom->ExplicitHydrogenCount() > 0) {
+        bracketElement = true;
+        writeExplicitHydrogen = true;
+      }
+
+      // When h option has any parameter, always use only explicit H in H counts.
+      // Used in opisomorph to avoid implicit H being added when writing SMARTS [N+](=O)[O-]
+      if(hoption && *hoption)
+        writeExplicitHydrogen = true;
     }
 
     if (!bracketElement) {

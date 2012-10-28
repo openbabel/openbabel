@@ -498,6 +498,9 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     bool GetNextFragment( OpenBabel::OBMolAtomDFSIter& iter, OBMol& newMol );
     //! Converts the charged form of coordinate bonds, e.g.[N+]([O-])=O to N(=O)=O
     bool ConvertDativeBonds();
+    //! Return has charged form of dative bonds(e.g.[N+]([O-])=O from N(=O)=O).
+    //! Converts 5-valent N and P only. Return true if conversion occurred.
+    bool MakeDativeBonds();
 
     //! Correct for pH by applying the OBPhModel transformations
     bool CorrectForPH(double pH=7.4);

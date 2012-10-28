@@ -4093,6 +4093,7 @@ namespace OpenBabel
     //Look for + and - charges on adjacent atoms
     OBAtom* patom;
     vector<OBAtom*>::iterator i;
+    bool converted = false;
     for (patom = BeginAtom(i);patom;patom = NextAtom(i))
       {
         vector<OBBond*>::iterator itr;
@@ -4105,6 +4106,7 @@ namespace OpenBabel
             if((chg1>0 && chg2<0)|| (chg1<0 && chg2>0))
               {
                 //dative bond. Reduce charges and increase bond order
+                converted =true;
                 if(chg1>0)
                   --chg1;
                 else
@@ -4119,7 +4121,50 @@ namespace OpenBabel
               }
           }
       }
-    return true;
+    return converted; //false if no changes made
+  }
+
+  //This maybe would be better using smirks from a datafile
+  bool OBMol::MakeDativeBonds()
+  {
+    //! Converts 5-valent N to charged form of dative bonds,
+    //! e.g. -N(=O)=O converted to -[N+]([O-])=O. Returns true if conversion occurs.
+    BeginModify();
+    //AddHydrogens();
+    bool converted = false;
+    OBAtom* patom;
+    vector<OBAtom*>::iterator ai;
+    for (patom = BeginAtom(ai);patom;patom = NextAtom(ai)) //all atoms
+    {
+      if(patom->IsNitrogen() // || patom->IsPhosphorus()) not phosphorus!
+        && (patom->BOSum()==5 || (patom->BOSum()==4 && patom->GetFormalCharge()==0)))
+      {
+        // Find the bond to be modified. Prefer a bond to a hetero-atom,
+        // and the highest order bond if there is a choice.
+        OBBond *bond, *bestbond;
+        OBBondIterator bi;
+        for (bestbond = bond = patom->BeginBond(bi); bond; bond = patom->NextBond(bi))
+        {
+          int bo = bond->GetBO();
+          if(bo>=2 && bo<=4)
+          {
+            bool het = bond->GetNbrAtom(patom)->IsNotCorH();
+            bool oldhet = bestbond->GetNbrAtom(patom)->IsNotCorH();
+            bool higherorder = bo > bestbond->GetBondOrder();
+            if((het && !oldhet) || (((het && oldhet) || (!het && !oldhet)) && higherorder))
+              bestbond = bond;
+          }
+        }
+        //Make the charged form
+        bestbond->SetBondOrder(bestbond->GetBondOrder()-1);
+        patom->SetFormalCharge(+1);
+        OBAtom* at = bestbond->GetNbrAtom(patom);
+        at->SetFormalCharge(-1);
+        converted=true;
+      }
+    }
+    EndModify();
+    return converted;
   }
 
   OBAtom *OBMol::BeginAtom(OBAtomIterator &i)
