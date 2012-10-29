@@ -495,9 +495,11 @@ class Molecule(object):
 
         Tkinter and Python Imaging Library are required for image display.
         """
-        if not "png2" in outformats:
-            errormessage = ("PNG output format not found. You should compile "
-                            "Open Babel with PNG support. See installation "
+        obconversion = ob.OBConversion()
+        formatok = obconversion.SetOutFormat("_png2")
+        if not formatok:
+            errormessage = ("PNG depiction support not found. You should compile "
+                            "Open Babel with support for Cairo. See installation "
                             "instructions for more information.")
             raise ImportError(errormessage)
 
@@ -529,7 +531,7 @@ class Molecule(object):
             
             filedes, filename = tempfile.mkstemp()
 
-        workingmol.write("png2", filename=filename, overwrite=True)
+        workingmol.write("_png2", filename=filename, overwrite=True)
 
         if show:
             if sys.platform[:4] == "java":
