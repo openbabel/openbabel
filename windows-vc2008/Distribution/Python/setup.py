@@ -12,7 +12,7 @@ or related areas.
 # The following line is necessary because only one 'root package' location
 # is possible: either "." or "../../scripts/python", but not both.
 # The root package location is set by "package_dir" and defaults to "."
-shutil.copyfile("../../../scripts/python/pybel_py%dx.py" % sys.version_info[0],
+shutil.copyfile("../../../scripts/python/pybel.py",
                 "pybel.py")
 shutil.copyfile("../../build/bin/Release/_openbabel.pyd", "_openbabel.pyd")
 shutil.copyfile("../../../scripts/python/openbabel.py", "openbabel.py")

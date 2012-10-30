@@ -1,7 +1,7 @@
 @echo off
 echo b_obpython.bat PYTHON_DIR PYTHON_VER
 
-set VER=1.6
+set VER=1.7
 
 if %1a==a GOTO:EOF
 set PYTHON_DIR=%1
