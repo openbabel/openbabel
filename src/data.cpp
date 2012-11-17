@@ -46,7 +46,7 @@ namespace OpenBabel
   OBTypeTable      ttab;
   OBIsotopeTable   isotab;
   OBResidueData    resdat;
-
+  
   /** \class OBElementTable data.h <openbabel/data.h>
       \brief Periodic Table of the Elements
 
@@ -423,6 +423,92 @@ namespace OpenBabel
         return _isotopes[ele][iso].second;
 
     return 0.0;
+  }
+  
+  OBAtomicHeatOfFormationTable::OBAtomicHeatOfFormationTable(void)
+  {
+    _init = false;
+    _dir = BABEL_DATADIR;
+    _envvar = "BABEL_DATADIR";
+    _filename = "atomization-energies.txt";
+    _subdir = "data";
+    Init();
+  }
+  
+  void OBAtomicHeatOfFormationTable::ParseLine(const char *line)
+  {
+    const char *ptr;
+    vector<string> vs;
+    int mult;
+    OBAtomHOF *oba;
+    
+    ptr = strchr(line,'#');
+    if (NULL != ptr) 
+      ptr = '\0';
+    if (strlen(line) >= 0) 
+      {
+        tokenize(vs,line,"|");
+        if (vs.size() >= 5)
+          {
+            mult = 1;
+            if (vs.size() > 5)
+              mult = atoi(vs[5].c_str());
+            oba = new OBAtomHOF(vs[0],vs[1],vs[2],
+                                atof(vs[3].c_str()),atof(vs[4].c_str()),mult);
+            _atomhof.push_back(*oba);
+          }
+      }
+  }
+  
+  int OBAtomicHeatOfFormationTable::GetHeatOfFormation(const char *elem,char *meth,
+                                                       int multiplicity,
+                                                       double *dhof0,double *dhof298)
+  {
+    int    found;
+    double vm,ve,vdh;
+    std::vector<OBAtomHOF>::iterator it;
+    const char *dhf0 = "DHf(0K)";
+    const char *dhf1 = "H(0K)-H(298.15K)";
+    const char *exp  = "exp";
+    char desc[128];
+    
+    found = 0;
+    vm = ve = vdh = 0;
+    sprintf(desc,"%s(0K)",meth);
+    
+    for(it = _atomhof.begin(); it != _atomhof.end(); ++it) 
+      {
+        if (0 == strcasecmp(it->Element().c_str(),elem)) 
+          { 
+            if ((0 == strcasecmp(it->Method().c_str(),meth)) &&
+                (0 == strcasecmp(it->Desc().c_str(),desc)))
+              {
+                vm += it->Value();
+                found++;
+              }
+            if ((0 == strcasecmp(it->Method().c_str(),exp)) &&
+                (0 == strcasecmp(it->Desc().c_str(),dhf0)))
+              {
+                ve += it->Value();
+                found++;
+              }
+            if ((0 == strcasecmp(it->Method().c_str(),exp)) &&
+                (0 == strcasecmp(it->Desc().c_str(),dhf1)))
+              {
+                vdh += it->Value();
+                found++;
+              }
+          }
+      }
+        
+    if (3 == found) 
+      {
+        *dhof0   = ve-vm;
+        *dhof298 = ve-vm-vdh;
+        return 1;
+      }
+    else
+      return 0;
   }
 
   /** \class OBTypeTable data.h <openbabel/data.h>

@@ -224,6 +224,76 @@ namespace OpenBabel
                            const unsigned int isotope = 0);
     };
 
+  /** \class OBAtomHOF data.h <openbabel/data.h>
+      \brief helper class for OBAtomicHeatOfFormationTable
+
+      Stores both theoretical and experimental corrections
+      needed to compute the Enthalpy of formation. In order to
+      use these you need to perform 
+      Gaussian G2/G3/G4 or CBS-QB3 calculations.
+  **/
+  class OBAPI OBAtomHOF
+  {
+  private:
+    std::string _element,_method,_desc;
+    double _T,_value;
+    int _multiplicity;
+    
+  public:
+    OBAtomHOF(std::string element,std::string method,std::string desc,
+              double T,double value,int multiplicity)
+      {
+        _element      = element; 
+        _method       = method; 
+        _desc         = desc;
+        _T            = T; 
+        _value        = value; 
+        _multiplicity = multiplicity;
+      }
+    
+    ~OBAtomHOF() {}
+    std::string Element() { return _element; }
+    std::string Method()  { return _method; }
+    std::string Desc()    { return _desc; }
+    double T()            { return _T; }
+    double Value()        { return _value; }
+    int Multiplicity()    { return _multiplicity; }
+  };
+  
+  /** \class OBAtomicHeatOfFormationTable data.h <openbabel/data.h>
+      \brief Atomic Heat of Formation Table
+
+      Contributions of atoms to Enthalpy of Formation calculations performed
+      in Gaussian, using the G2/G3/G4 or CBS-QB3 methods respectively.
+      The energies produced by Gaussian have to be corrected according to their
+      document on Thermochemistry with Gaussian. The data in the file
+      BABEL_DATA/atomization_energies.txt supplies this information based on 
+      single atom calculations with Gaussian and the appropriate method and
+      experimental data from Curtiss et al., J. Chem. Phys. 106 (1997) 1063-1079.
+  */
+  class OBAPI OBAtomicHeatOfFormationTable : public OBGlobalDataBase
+  {
+    std::vector<OBAtomHOF> _atomhof;
+
+    public:
+
+      OBAtomicHeatOfFormationTable(void);
+      ~OBAtomicHeatOfFormationTable() 
+      {
+        //delete _atomhof;
+      }
+
+      //! \return the number of elements in the Atomic Heat Of Formation table
+      size_t GetSize() { return _atomhof.size(); }
+
+      void	ParseLine(const char*);
+      //! \return 1 if the contribution to the Heat of Formation for this atom
+      //!   is known at temperatures 0K and 298.15K. If 1 the values
+      //!   including all corrections are returned in the respective double variables.
+      int	GetHeatOfFormation(const char *elem,char *method,
+                                   int multiplicity,double *dhof0,double *dhof298);
+    };
+
   // class introduction in data.cpp
   class OBAPI OBTypeTable : public OBGlobalDataBase
     {

@@ -1092,6 +1092,83 @@ namespace OpenBabel
     matrix3x3            _matrix; //!< 3x3 matrix to be stored
   };
 
+  //! \class OBFreeGridPoint generic.h <openbabel/generic.h>
+  //! \brief Helper class for OBFreeGrid
+  //! Can hold a random coordinate and associated value.
+  class OBAPI OBFreeGridPoint
+  {
+  protected:
+    double _x,_y,_z,_V;
+    
+  public:
+    OBFreeGridPoint();
+    OBFreeGridPoint(double x,double y,double z,double V) { _x = x; _y = y; _z = z; _V = V; }
+    ~OBFreeGridPoint();
+    double GetX() { return _x; }
+    double GetY() { return _y; }
+    double GetZ() { return _z; }
+    double GetV() { return _V; }
+    void SetX(double x) { _x = x; }
+    void SetY(double y) { _y = y; }
+    void SetZ(double z) { _z = z; }
+    void SetV(double V) { _V = V; }
+  };
+  
+  //! A standard iterator over a vector of FreeGridPoints
+  typedef std::vector<OBFreeGridPoint*>::iterator OBFreeGridPointIterator;
+
+  //! \class OBFreeGrid generic.h <openbabel/generic.h>
+  //! \brief Handle double precision floating point data with coordinates not on a grid
+  //! Can hold array of random coordinates and associated values.
+  class OBAPI OBFreeGrid: public OBGenericData
+  {
+  protected:
+    std::vector<OBFreeGridPoint*> _points;  //!< coordinates with accompanying float values
+  public:
+
+    OBFreeGrid() 
+    {
+    }
+    
+    ~OBFreeGrid() 
+    {
+      //delete _points;
+    }
+
+    int NumPoints() 
+    { 
+      return _points.size(); 
+    }
+    
+    void AddPoint(double x,double y,double z, double V) 
+    {
+      _points.push_back(new OpenBabel::OBFreeGridPoint(x,y,z,V));
+    }
+
+    OBFreeGridPointIterator BeginPoints() 
+    { 
+      return _points.begin(); 
+    }
+    
+    OBFreeGridPointIterator EndPoints() 
+    {
+      return _points.begin() + NumPoints(); 
+    }
+    
+    OBFreeGridPoint *BeginPoint(OBFreeGridPointIterator &i)
+    {
+      i = _points.begin();
+      return((i == _points.end()) ? (OBFreeGridPoint*)NULL : (OBFreeGridPoint*)*i);
+    }
+
+    OBFreeGridPoint *NextPoint(OBFreeGridPointIterator &i)
+    {
+      ++i;
+      return((i == _points.end()) ? (OBFreeGridPoint*)NULL : (OBFreeGridPoint*)*i);
+    }
+
+  };
+
  //! A standard iterator over vectors of OBGenericData (e.g., inherited from OBBase)
   typedef std::vector<OBGenericData*>::iterator OBDataIterator;
 
