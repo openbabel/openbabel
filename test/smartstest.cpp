@@ -175,7 +175,7 @@ int main(int argc,char *argv[])
               if (mlist.size())
                 cout << "# First match: atom #" << mlist[0][0] << "\n";
               molPassed = false;
-              break;
+              continue;
             }
 
           if (mlist.size())
@@ -197,7 +197,7 @@ int main(int argc,char *argv[])
               if (k != vs.size())
                 {
                   molPassed = false;
-                  break;
+                  continue;
                 }
             }
         }
