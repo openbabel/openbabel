@@ -4212,67 +4212,56 @@ namespace OpenBabel
 
     newmol.SetDimension(GetDimension());
     map<OBAtom*, OBAtom*> AtomMap;//key is from old mol; value from new mol
-    map<OBAtom*, OBChiralData*> ChiralMap; // key is from old mol
     do { //for each atom in fragment
       OBAtom* pnext = &*iter;
       newmol.AddAtom(*pnext); //each subsequent atom with its bond
       AtomMap[pnext] = newmol.GetAtom(newmol.NumAtoms());
-
-      OBChiralData* cd = (OBChiralData*)pnext->GetData(OBGenericDataType::ChiralData);
-      if (cd)
-        ChiralMap[pnext] = cd;
     }while((iter++).next());
 
+    // Update Stereo
+    std::vector<OBGenericData*>::iterator data;
+    std::vector<OBGenericData*> stereoData = GetAllData(OBGenericDataType::StereoData);
+    for (data = stereoData.begin(); data != stereoData.end(); ++data) {
+      if (static_cast<OBStereoBase*>(*data)->GetType() == OBStereo::CisTrans) {
+        OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
+        OBCisTransStereo::Config cfg = ct->GetConfig();
+        if (AtomMap.find(GetAtomById(cfg.begin)) == AtomMap.end()) // This stereodata does not refer to this fragment
+          continue;
 
-    // update any OBChiralData records
-    map<OBAtom*, OBChiralData*>::iterator ChiralSearch;
-    for (ChiralSearch = ChiralMap.begin(); ChiralSearch != ChiralMap.end(); ++ChiralSearch) {
-      OBAtom *oldAtom = ChiralSearch->first;
-      OBChiralData *oldCD = ChiralSearch->second;
-      OBAtom *newAtom = AtomMap[oldAtom];
-      if (newAtom == NULL) continue; // shouldn't happen, but be defensive
-      if (oldCD == NULL) continue; // similarly
-
-      OBChiralData *newCD = new OBChiralData;
-      if (newCD == NULL) continue; // out of memory error
-
-      OBAtom *a0, *a1, *a2, *a3; // old atom references
-      if (oldCD->GetSize(input) == 4) {
-        a0 = this->GetAtom(oldCD->GetAtomRef(0, input));
-        a1 = this->GetAtom(oldCD->GetAtomRef(1, input));
-        a2 = this->GetAtom(oldCD->GetAtomRef(2, input));
-        a3 = this->GetAtom(oldCD->GetAtomRef(3, input));
-        if (a0 && AtomMap[a0]) newCD->AddAtomRef(AtomMap[a0]->GetIdx(), input);
-        if (a1 && AtomMap[a1]) newCD->AddAtomRef(AtomMap[a1]->GetIdx(), input);
-        if (a2 && AtomMap[a2]) newCD->AddAtomRef(AtomMap[a2]->GetIdx(), input);
-        if (a3 && AtomMap[a3]) newCD->AddAtomRef(AtomMap[a3]->GetIdx(), input);
+        OBCisTransStereo::Config newcfg;
+        newcfg.specified = cfg.specified;
+        newcfg.begin = AtomMap[GetAtomById(cfg.begin)]->GetId();
+        newcfg.end = AtomMap[GetAtomById(cfg.end)]->GetId();
+        OBStereo::Refs refs;
+        for(OBStereo::RefIter ri=cfg.refs.begin(); ri!=cfg.refs.end(); ++ri)
+          refs.push_back(AtomMap[GetAtomById(*ri)]->GetId());
+        newcfg.refs = refs;
+ 
+        OBCisTransStereo *newct = new OBCisTransStereo(this);
+        newct->SetConfig(newcfg);
+        newmol.SetData(newct);
       }
+      else if (static_cast<OBStereoBase*>(*data)->GetType() == OBStereo::Tetrahedral) {
+        OBTetrahedralStereo *tet = dynamic_cast<OBTetrahedralStereo*>(*data);
+        OBTetrahedralStereo::Config cfg = tet->GetConfig();
+        if (AtomMap.find(GetAtomById(cfg.center)) == AtomMap.end()) // This stereodata does not refer to this fragment
+          continue;
 
-      if (oldCD->GetSize(output) == 4) {
-        a0 = this->GetAtom(oldCD->GetAtomRef(0, output));
-        a1 = this->GetAtom(oldCD->GetAtomRef(1, output));
-        a2 = this->GetAtom(oldCD->GetAtomRef(2, output));
-        a3 = this->GetAtom(oldCD->GetAtomRef(3, output));
-        if (a0 && AtomMap[a0]) newCD->AddAtomRef(AtomMap[a0]->GetIdx(), output);
-        if (a1 && AtomMap[a1]) newCD->AddAtomRef(AtomMap[a1]->GetIdx(), output);
-        if (a2 && AtomMap[a2]) newCD->AddAtomRef(AtomMap[a2]->GetIdx(), output);
-        if (a3 && AtomMap[a3]) newCD->AddAtomRef(AtomMap[a3]->GetIdx(), output);
-      }
-
-      if (oldCD->GetSize(calcvolume) == 4) {
-        a0 = this->GetAtom(oldCD->GetAtomRef(0, calcvolume));
-        a1 = this->GetAtom(oldCD->GetAtomRef(1, calcvolume));
-        a2 = this->GetAtom(oldCD->GetAtomRef(2, calcvolume));
-        a3 = this->GetAtom(oldCD->GetAtomRef(3, calcvolume));
-        if (a0 && AtomMap[a0]) newCD->AddAtomRef(AtomMap[a0]->GetIdx(), calcvolume);
-        if (a1 && AtomMap[a1]) newCD->AddAtomRef(AtomMap[a1]->GetIdx(), calcvolume);
-        if (a2 && AtomMap[a2]) newCD->AddAtomRef(AtomMap[a2]->GetIdx(), calcvolume);
-        if (a3 && AtomMap[a3]) newCD->AddAtomRef(AtomMap[a3]->GetIdx(), calcvolume);
-      }
-
-      newAtom->SetData(newCD);
+        OBTetrahedralStereo::Config newcfg;
+        newcfg.specified = cfg.specified;
+        newcfg.center = AtomMap[GetAtomById(cfg.center)]->GetId();
+        newcfg.from = AtomMap[GetAtomById(cfg.from)]->GetId();
+        OBStereo::Refs refs;
+        for(OBStereo::RefIter ri=cfg.refs.begin(); ri!=cfg.refs.end(); ++ri)
+          refs.push_back(AtomMap[GetAtomById(*ri)]->GetId());
+        newcfg.refs = refs;
+ 
+        OBTetrahedralStereo *newtet = new OBTetrahedralStereo(this);
+        newtet->SetConfig(newcfg);
+        newmol.SetData(newtet);
+        }
     }
-
+   
     FOR_BONDS_OF_MOL(b, this) {
       map<OBAtom*, OBAtom*>::iterator pos;
       pos = AtomMap.find(b->GetBeginAtom());
