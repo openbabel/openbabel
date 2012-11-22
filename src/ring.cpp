@@ -3,6 +3,7 @@ ring.cpp - Deal with rings, find smallest set of smallest rings (SSSR).
 
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2012 by NextMove Software
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
@@ -291,37 +292,20 @@ namespace OpenBabel
       }
   }
 
+  static unsigned int FindRingAtomsAndBonds2(OBMol &mol);
+
   static int DetermineFRJ(OBMol &mol)
   {
-    vector<vector<int> >::iterator i;
-    vector<vector<int> > cfl;
-    //find all continuous graphs in the mol area
-    mol.ContigFragList(cfl);
+    if (!mol.HasClosureBondsPerceived())
+      return (int)FindRingAtomsAndBonds2(mol);
 
-    if (cfl.empty())
-      return(0);
-    if (cfl.size() == 1)
-      return(mol.NumBonds() - mol.NumAtoms() + 1);
-
-    //count up the atoms and bonds belonging to each graph
+    int frj = 0;
     OBBond *bond;
     vector<OBBond*>::iterator j;
-    int numatoms,numbonds,frj=0;
-    OBBitVec frag;
-    for (i = cfl.begin();i != cfl.end();++i)
-      {
-        frag.Clear();
-        frag.FromVecInt(*i);
-        numatoms = (*i).size();
-        numbonds=0;
-        for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
-          if (frag.BitIsOn(bond->GetBeginAtomIdx()) &&
-              frag.BitIsOn(bond->GetEndAtomIdx()))
-            numbonds++;
-        frj += numbonds - numatoms + 1;
-      }
-
-    return(frj);
+    for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
+      if (bond->IsClosure()) // bond->HasFlag(OB_CLOSURE_BOND)?
+        frj++;
+    return frj;
   }
 
   void OBRingSearch::RemoveRedundant(int frj)
@@ -506,68 +490,77 @@ namespace OpenBabel
       cout << (*i)->_pathset << endl;
   }
 
-  static void FindRings(OBMol &mol,vector<int> &path,OBBitVec &avisit,
-                        OBBitVec &bvisit, int natom,int depth );
+  /* A recursive O(N) traversal of the molecule */
+  static int FindRings(OBAtom *atom, int *avisit, unsigned char *bvisit,
+                       unsigned int &frj, int depth)
+  {
+    OBBond *bond;
+    int result = -1;
+    vector<OBBond*>::iterator k;
+    for(bond = atom->BeginBond(k);bond;bond=atom->NextBond(k)) {
+      unsigned int bidx = bond->GetIdx();
+      if (bvisit[bidx] == 0) {
+        bvisit[bidx] = 1;
+        OBAtom *nbor = bond->GetNbrAtom(atom);
+        unsigned int nidx = nbor->GetIdx();
+        int nvisit = avisit[nidx];
+        if (nvisit == 0) {
+          avisit[nidx] = depth+1;
+          nvisit = FindRings(nbor,avisit,bvisit,frj,depth+1);
+          if (nvisit > 0) {
+            if (nvisit <= depth) {
+              bond->SetInRing();
+              if (result < 0 || nvisit < result)
+                result = nvisit;
+            }
+          }
+        } else {
+          if (result < 0 || nvisit < result)
+            result = nvisit;
+          bond->SetClosure();
+          bond->SetInRing();
+          frj++;
+        }
+      }
+    }
+    if (result > 0 && result <= depth)
+      atom->SetInRing();
+    return result;
+  }
+
+  static unsigned int FindRingAtomsAndBonds2(OBMol &mol)
+  {
+    mol.SetRingAtomsAndBondsPerceived(); // mol.SetFlag(OB_RINGFLAGS_MOL);
+    mol.SetClosureBondsPerceived();      // mol.SetFlag(OB_CLOSURE_MOL);
+
+    unsigned int bsize = mol.NumBonds()+1;
+    unsigned char *bvisit = (unsigned char*)malloc(bsize);
+    memset(bvisit,0,bsize);
+
+    unsigned int acount = mol.NumAtoms();
+    unsigned int asize = (unsigned int)((acount+1)*sizeof(int));
+    int *avisit = (int*)malloc(asize);
+    memset(avisit,0,asize);
+
+    unsigned int frj = 0;
+    for(unsigned int i=1; i<=acount; i++ )
+      if(avisit[i] == 0) {
+        avisit[i] = 1;
+        OBAtom *atom = mol.GetAtom(i);
+        FindRings(atom,avisit,bvisit,frj,1);
+      }
+    free(avisit);
+    free(bvisit);
+    return frj;
+  }
 
   void OBMol::FindRingAtomsAndBonds()
   {
     if (HasFlag(OB_RINGFLAGS_MOL))
       return;
-    SetFlag(OB_RINGFLAGS_MOL);
-
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::FindRingAtomsAndBonds", obAuditMsg);
-
-    OBBitVec avisit,bvisit;
-    avisit.Resize(NumAtoms()+1);
-    bvisit.Resize(NumAtoms()+1);
-    vector<int> path;
-    path.resize(NumAtoms()+1);
-
-    for(unsigned int i=1; i<= NumAtoms(); i++ )
-      if(!avisit[i])
-        FindRings(*this,path,avisit,bvisit,i,0);
-  }
-
-  static void FindRings(OBMol &mol,vector<int> &path,OBBitVec &avisit,
-                        OBBitVec &bvisit, int natom,int depth )
-  {
-    OBAtom *atom;
-    OBBond *bond;
-    vector<OBBond*>::iterator k;
-
-    // don't return if all atoms are visited
-    // (For example, some atoms are in multiple rings!) -GRH
-
-    if (avisit[natom])
-      {
-        int j = depth-1;
-        bond=mol.GetBond(path[j--]);
-        bond->SetInRing();
-        while( j >= 0 )
-          {
-            bond=mol.GetBond(path[j--]);
-            bond->SetInRing();
-            (bond->GetBeginAtom())->SetInRing();
-            (bond->GetEndAtom())->SetInRing();
-            if(bond->GetBeginAtomIdx()==static_cast<unsigned int>(natom) || bond->
-               GetEndAtomIdx()==static_cast<unsigned int>(natom))
-              break;
-          }
-      }
-    else
-      {
-        avisit.SetBitOn(natom);
-        atom = mol.GetAtom(natom);
-        for(bond = atom->BeginBond(k);bond;bond=atom->NextBond(k))
-          if( !bvisit[bond->GetIdx()])
-            {
-              path[depth] = bond->GetIdx();
-              bvisit.SetBitOn(bond->GetIdx());
-              FindRings(mol,path,avisit,bvisit,bond->GetNbrAtomIdx(atom),
-                        depth+1);
-            }
-      }
+    FindRingAtomsAndBonds2(*this);
   }
 
   bool OBRing::IsAromatic()

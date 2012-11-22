@@ -693,57 +693,10 @@ namespace OpenBabel
   {
     OBMol *mol = (OBMol*)GetParent();
     if (!mol)
-      return(false);
-    if (mol->HasClosureBondsPerceived())
-      return(HasFlag(OB_CLOSURE_BOND));
-
-    mol->SetClosureBondsPerceived();
-
-    obErrorLog.ThrowError(__FUNCTION__,
-                          "Ran OpenBabel::PerceiveClosureBonds", obAuditMsg);
-
-    OBBond *bond;
-    OBAtom *atom,*nbr;
-    OBBitVec uatoms,ubonds;
-    vector<OBAtom*> curr,next;
-    vector<OBAtom*>::iterator i;
-    vector<OBBond*>::iterator j;
-
-    uatoms.Resize(mol->NumAtoms()+1);
-    ubonds.Resize(mol->NumAtoms()+1);
-
-    for (;static_cast<unsigned int>(uatoms.CountBits()) < mol->NumAtoms();)
-      {
-        if (curr.empty())
-          for (atom = mol->BeginAtom(i);atom;atom = mol->NextAtom(i))
-            if (!uatoms[atom->GetIdx()])
-              {
-                uatoms |= atom->GetIdx();
-                curr.push_back(atom);
-                break;
-              }
-
-        for (;!curr.empty();)
-          {
-            for (i = curr.begin();i != curr.end();++i)
-              for (nbr = ((OBAtom*)*i)->BeginNbrAtom(j);nbr;nbr = ((OBAtom*)*i)->NextNbrAtom(j))
-                if (!uatoms[nbr->GetIdx()])
-                  {
-                    uatoms |= nbr->GetIdx();
-                    ubonds |= (*j)->GetIdx();
-                    next.push_back(nbr);
-                  }
-
-            curr = next;
-            next.clear();
-          }
-      }
-
-    for (bond = mol->BeginBond(j);bond;bond = mol->NextBond(j))
-      if (!ubonds[bond->GetIdx()])
-        bond->SetClosure();
-
-    return(HasFlag(OB_CLOSURE_BOND));
+      return false;
+    if (!mol->HasClosureBondsPerceived()) 
+      mol->FindRingAtomsAndBonds();
+    return HasFlag(OB_CLOSURE_BOND);
   }
 
   double OBBond::GetEquibLength() const
