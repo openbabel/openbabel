@@ -4230,11 +4230,13 @@ namespace OpenBabel
 
         OBCisTransStereo::Config newcfg;
         newcfg.specified = cfg.specified;
-        newcfg.begin = AtomMap[GetAtomById(cfg.begin)]->GetId();
-        newcfg.end = AtomMap[GetAtomById(cfg.end)]->GetId();
+        newcfg.begin = cfg.begin == OBStereo::ImplicitRef ? OBStereo::ImplicitRef : AtomMap[GetAtomById(cfg.begin)]->GetId();
+        newcfg.end = cfg.end == OBStereo::ImplicitRef ? OBStereo::ImplicitRef : AtomMap[GetAtomById(cfg.end)]->GetId();
         OBStereo::Refs refs;
-        for(OBStereo::RefIter ri=cfg.refs.begin(); ri!=cfg.refs.end(); ++ri)
-          refs.push_back(AtomMap[GetAtomById(*ri)]->GetId());
+        for(OBStereo::RefIter ri=cfg.refs.begin(); ri!=cfg.refs.end(); ++ri) {
+          OBStereo::Ref ref = *ri == OBStereo::ImplicitRef ? OBStereo::ImplicitRef : AtomMap[GetAtomById(*ri)]->GetId();
+          refs.push_back(ref);
+        }
         newcfg.refs = refs;
  
         OBCisTransStereo *newct = new OBCisTransStereo(this);
@@ -4250,10 +4252,12 @@ namespace OpenBabel
         OBTetrahedralStereo::Config newcfg;
         newcfg.specified = cfg.specified;
         newcfg.center = AtomMap[GetAtomById(cfg.center)]->GetId();
-        newcfg.from = AtomMap[GetAtomById(cfg.from)]->GetId();
+        newcfg.from = cfg.from == OBStereo::ImplicitRef ? OBStereo::ImplicitRef : AtomMap[GetAtomById(cfg.from)]->GetId();
         OBStereo::Refs refs;
-        for(OBStereo::RefIter ri=cfg.refs.begin(); ri!=cfg.refs.end(); ++ri)
-          refs.push_back(AtomMap[GetAtomById(*ri)]->GetId());
+        for(OBStereo::RefIter ri=cfg.refs.begin(); ri!=cfg.refs.end(); ++ri) {
+          OBStereo::Ref ref = *ri == OBStereo::ImplicitRef ? OBStereo::ImplicitRef : AtomMap[GetAtomById(*ri)]->GetId();
+          refs.push_back(ref);
+        }
         newcfg.refs = refs;
  
         OBTetrahedralStereo *newtet = new OBTetrahedralStereo(this);
