@@ -1,0 +1,415 @@
+/**********************************************************************
+Copyright (C) 2012 by Tim Vandermeersch
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation version 2 of the License.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+***********************************************************************/
+
+#include <openbabel/babelconfig.h>
+#include <openbabel/obmolecformat.h>
+#include <openbabel/typer.h>
+#include <openbabel/stereo/tetrahedral.h>
+#include <openbabel/stereo/cistrans.h>
+
+#include "smiley.h"
+
+using namespace std;
+
+namespace OpenBabel
+{
+
+  template<typename T>
+  void print_vector(const std::string &label, const std::vector<T> &v)
+  {
+    std::cout << label << ": ";
+    for (std::size_t i = 0; i < v.size(); ++i)
+      std::cout << v[i] << " ";
+    std::cout << std::endl;
+  }
+
+  /**
+   *
+   * Smiley callback.
+   *
+   */
+  struct OpenBabelCallback : public Smiley::CallbackBase
+  {
+    enum UpDown {
+      IsNotUpDown,
+      IsUp,
+      IsDown
+    };
+
+    OpenBabelCallback(OBMol *pmol) : mol(pmol)
+    {
+    }
+
+    void clear()
+    {
+      // prepare for new SMILES
+    }
+
+    void addAtom(int element, bool aromatic, int isotope, int hCount, int charge, int atomClass)
+    {
+      // invoked when an atom is completely parsed
+
+      // element: 0, 1, 2, ... (0 is '*' in SMILES)
+      // aromatic: true if the atom was lower case c, n, ...
+      // isotope: -1, 0, 1, 2, 3, 4 ... (-1 means no isotope specified and is not the same as 0)
+      // hCount: -1, 0, 1, 2, ..., 9 (-1 means default valence and is only for unbracketed atoms)
+      // charge: -9, -8, ..., -1, 0, 1, ..., 8, 9
+      // atomClass: 0, 1, 2, 3, 4, ... (0 means no atom class, specified atom classes should start from 1)
+
+      OBAtom *atom = mol->NewAtom();
+      atom->SetAtomicNum(element);
+
+      indices.push_back(mol->NumAtoms());
+
+      if (aromatic)
+        atom->SetAromatic();
+      else if (hCount == -1)
+        atom->ForceImplH();
+
+      if (hCount > -1) {
+        if (hCount == 0)
+          atom->SetSpinMultiplicity(2);
+
+        for (int i = 0; i < hCount; ++i) {
+          OBAtom *hydrogen = mol->NewAtom();
+          hydrogen->SetAtomicNum(1);
+          hydrogen->SetImplicitValence(1);
+          mol->AddBond(atom->GetIdx(), hydrogen->GetIdx(), 1);
+          upDown.push_back(IsNotUpDown);
+        }
+      }
+
+      if (isotope > 0)
+        atom->SetIsotope(isotope);
+
+      atom->SetFormalCharge(charge);
+    }
+
+    void addBond(int source, int target, int order, bool isUp, bool isDown)
+    {
+      // invoked for each bond once both of it's atoms have been added by
+      // calling addAtom(). This ensures that the bond's atom indexes are always valid.
+
+      // source: source atom index starting from 0 (order from addAtom() calls)
+      // target: target atom index starting from 0 (order from addAtom() calls)
+      // order: 1, 2, 3, 4, 5 (5 means aromatic)
+      // isUp: true if bond is single order up bond '/'
+      // isDown: true if bond is single order down bond '\'
+
+      //std::cout << "addBond(" << source << ", " << target << ")" << std::endl;
+
+      if (isDown)
+        upDown.push_back(IsDown);
+      else if (isUp)
+        upDown.push_back(IsUp);
+      else
+        upDown.push_back(IsNotUpDown);
+
+      /*
+      if (isUp || isDown) {
+        std::cout << "addBond(" << source << ", " << target << ")" << std::endl;
+        std::cout << "isUp: " << isUp << ", isDown: " << isDown << std::endl;
+      }
+      */
+
+      mol->AddBond(indices[source], indices[target], order);
+      if (order == 5)
+        mol->GetBond(mol->NumBonds() - 1)->SetAromatic();
+    }
+
+    void setChiral(int index, Smiley::Chirality chirality, const std::vector<int> &chiralNbrs)
+    {
+      // invoked at the end of parsing for each chiral atom
+
+      // index: atom index starting from 0
+      // chirality: Clockwise, AntiClockwise, TH1, AL2, SP3, TB14, OH26, ...
+      // chiralNbrs: atom indices of neighbors, size 4 for TH, AL and SP, size 5 for TB and 6 for OH
+
+      //print_vector("chiralNbrs", chiralNbrs);
+
+      unsigned long center = indices[index] - 1;
+      unsigned long from = indices[chiralNbrs[0]] - 1;
+      std::vector<unsigned long> refs(chiralNbrs.size() - 1);
+      for (std::size_t i = 0; i < refs.size(); ++i)
+        if (chiralNbrs[i + 1] == Smiley::implicitHydrogen())
+          refs[i] = OBStereo::ImplicitRef;
+        else
+          refs[i] = indices[chiralNbrs[i + 1]] - 1;
+
+      //std::cout << "center: " << center << std::endl;
+      //std::cout << "from: " << from << std::endl;
+      //print_vector("refs", refs);
+
+      switch (chirality) {
+        case Smiley::Clockwise:
+          switch (chiralNbrs.size()) {
+            case 4:
+              OBTetrahedralStereo *stereo = new OBTetrahedralStereo(mol);
+              stereo->SetConfig(OBTetrahedralStereo::Config(center, from, refs));
+              mol->SetData(stereo);
+              break;
+          }
+          break;
+        case Smiley::AntiClockwise:
+          switch (chiralNbrs.size()) {
+            case 4:
+              OBTetrahedralStereo *stereo = new OBTetrahedralStereo(mol);
+              stereo->SetConfig(OBTetrahedralStereo::Config(center, from, refs, OBStereo::AntiClockwise));
+              mol->SetData(stereo);
+              break;
+          }
+          break;
+      }
+    }
+
+    OBMol *mol;
+    std::vector<UpDown> upDown;
+    std::vector<int> indices;
+  };
+
+  /**
+   *
+   * OpenBabel format.
+   *
+   */
+  class SmileyFormat : public OBMoleculeFormat
+  {
+    public:
+      SmileyFormat()
+      {
+        OBConversion::RegisterFormat("smy", this);
+      }
+
+      virtual const char* Description() //required
+      {
+        return "SMILES format using Smiley parser\n";
+      }
+
+      virtual const char* SpecificationURL()
+      {
+        return "http://opensmiles.org";
+      }
+
+      virtual const char* GetMIMEType()
+      {
+        return "chemical/x-daylight-smiles";
+      }
+
+      virtual unsigned int Flags()
+      {
+        return NOTWRITABLE;
+      }
+
+      virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+
+    private:
+      void CreateCisTrans(OBMol *mol, const std::vector<OpenBabelCallback::UpDown> &upDown);
+      bool AssignNbrAtoms(const std::vector<OpenBabelCallback::UpDown> &upDown, OBAtom *atom,
+          unsigned long &above, unsigned long &below);
+
+  };
+
+  ////////////////////////////////////////////////////
+
+  //Make an instance of the format class
+  SmileyFormat theSmileyFormat;
+
+  /////////////////////////////////////////////////////////////////
+
+
+
+
+  bool SmileyFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  {
+    OBMol* pmol = pOb->CastAndClear<OBMol>();
+    if (!pmol)
+      return false;
+
+    // get the input stream
+    istream& ifs = *pConv->GetInStream();
+
+    // read the smiles string
+    std::string smiles;
+    std::getline(ifs, smiles);
+
+    // extract title
+    std::size_t space_pos = smiles.find(" ");
+    std::size_t tab_pos = smiles.find("\t");
+    if (space_pos != std::string::npos && tab_pos != std::string::npos)
+      space_pos = std::min(space_pos, tab_pos);
+    else if (tab_pos != std::string::npos)
+      space_pos = tab_pos;
+
+    if (space_pos != std::string::npos) {
+      while (space_pos < smiles.size() && (smiles[space_pos] == ' ' || smiles[space_pos] == '\t'))
+        ++space_pos;
+      pmol->SetTitle(smiles.substr(space_pos).c_str());
+    }
+
+    pmol->BeginModify();
+    pmol->SetDimension(0);
+
+    // create callback and parser object
+    OpenBabelCallback callback(pmol);
+    Smiley::Parser<OpenBabelCallback> parser(callback);
+
+    try {
+      parser.parse(smiles);
+    } catch (Smiley::Exception &e) {
+      if (e.type() == Smiley::Exception::SyntaxError)
+        std::cerr << "Syntax";
+      else
+        std::cerr << "Semantics";
+      std::cerr << "Error: " << e.what() << "." << std::endl;
+      std::cerr << smiles << std::endl;
+      for (std::size_t i = 0; i < e.pos(); ++i)
+        std::cerr << " ";
+      for (std::size_t i = 0; i < e.length(); ++i)
+        std::cerr << "^";
+      std::cerr << std::endl;
+    }
+
+    pmol->EndModify();
+
+    // handle aromaticity
+    pmol->SetAromaticPerceived();
+
+    OBAtomTyper typer;
+    typer.AssignImplicitValence(*pmol);
+
+    // fix aromatic nitrogens
+    FOR_ATOMS_OF_MOL (atom, pmol) {
+      if (atom->IsNitrogen() && atom->IsAromatic() && /*atom->IsInRingSize(6) &&*/ atom->GetValence() == 2)
+        atom->SetImplicitValence(2);
+    }
+
+    // create cis/trans stereo objects
+    CreateCisTrans(pmol, callback.upDown);
+    StereoFrom0D(pmol);
+
+    return true;
+  }
+
+  bool SmileyFormat::AssignNbrAtoms(const std::vector<OpenBabelCallback::UpDown> &upDown,
+      OBAtom *atom, unsigned long &aboveId, unsigned long &belowId)
+  {
+    OBAtom *above = 0;
+    OBAtom *below = 0;
+    OBAtom *unspecified = 0;
+
+    FOR_BONDS_OF_ATOM (bond, atom) {
+      if (bond->IsDouble())
+        continue;
+
+      OBAtom *nbr = bond->GetNbrAtom(atom);
+      //std::cout << "atom: " << atom->GetIndex() << std::endl;
+      //std::cout << "nbr: " << nbr->GetIndex() << std::endl;
+
+      switch (upDown[bond->GetIdx()]) {
+        case OpenBabelCallback::IsUp:
+          if (nbr->GetIndex() < atom->GetIndex() && bond->GetBeginAtomIdx() < bond->GetEndAtomIdx()) {
+            //std::cout << "below: " << nbr->GetIndex() << std::endl;
+            if (below)
+              return false;
+            below = nbr;
+          } else {
+            //std::cout << "above: " << nbr->GetIndex() << std::endl;
+            if (above)
+              return false;
+            above = nbr;
+          }
+          break;
+        case OpenBabelCallback::IsDown:
+          if (nbr->GetIndex() < atom->GetIndex() && bond->GetBeginAtomIdx() < bond->GetEndAtomIdx()) {
+            if (above)
+              return false;
+            above = nbr;
+          } else {
+            if (below)
+              return false;
+            below = nbr;
+          }
+          break;
+        case OpenBabelCallback::IsNotUpDown:
+          //std::cout << "unspecified: " << nbr->GetIndex() << std::endl;
+          unspecified = nbr;
+          break;
+      }
+    }
+
+    // at least 1 bond should be specified
+    if (!above && !below)
+      return true;
+
+    if (above && unspecified)
+      below = unspecified;
+    else if (below && unspecified)
+      above = unspecified;
+
+    aboveId = above ? above->GetId() : OBStereo::ImplicitRef;
+    belowId = below ? below->GetId() : OBStereo::ImplicitRef;
+
+    return true;
+  }
+
+  void SmileyFormat::CreateCisTrans(OBMol *mol, const std::vector<OpenBabelCallback::UpDown> &upDown)
+  {
+    FOR_BONDS_OF_MOL (doubleBond, mol) {
+      if (!doubleBond->IsDouble() || doubleBond->IsAromatic())
+        continue;
+
+      OBAtom *source = doubleBond->GetBeginAtom();
+      OBAtom *target = doubleBond->GetEndAtom();
+
+      //std::cout << "double bond: " << source->GetIndex() << " " << target->GetIndex() << std::endl;
+
+      // Check that both atoms on the double bond have at least one
+      // other neighbor, but not more than two other neighbors;
+      int v1 = source->GetValence();
+      int v2 = target->GetValence();
+      if (v1 < 2 || v1 > 3 || v2 < 2 || v2 > 3)
+        continue;
+
+      unsigned long aboveSource = OBStereo::ImplicitRef;
+      unsigned long belowSource = OBStereo::ImplicitRef;
+      if (!AssignNbrAtoms(upDown, source, aboveSource, belowSource)) {
+        std::cerr << "Invalid cis/trans specification" << std::endl;
+        continue;
+      }
+
+      if (aboveSource == OBStereo::ImplicitRef && belowSource == OBStereo::ImplicitRef)
+        continue;
+
+      unsigned long aboveTarget = OBStereo::ImplicitRef;
+      unsigned long belowTarget = OBStereo::ImplicitRef;
+      if (!AssignNbrAtoms(upDown, target, aboveTarget, belowTarget)) {
+        std::cerr << "Invalid cis/trans specification" << std::endl;
+        continue;
+      }
+
+      if (aboveTarget == OBStereo::ImplicitRef && belowTarget == OBStereo::ImplicitRef)
+        continue;
+
+      //std::cout << "refs: " << aboveSource << " " << aboveTarget << " " << belowTarget << " " << belowSource << std::endl;
+
+      OBCisTransStereo *stereo = new OBCisTransStereo(mol);
+      stereo->SetConfig(OBCisTransStereo::Config(source->GetId(), target->GetId(),
+            OBStereo::MakeRefs(aboveSource, belowSource, belowTarget, aboveTarget),
+            OBStereo::ShapeU));
+
+      mol->SetData(stereo);
+    }
+  }
+
+} //namespace OpenBabel
+

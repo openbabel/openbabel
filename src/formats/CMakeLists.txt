@@ -102,6 +102,7 @@ set(formats_misc
       posformat
       pqrformat
       shelxformat
+      smileyformat
       thermoformat
       tinkerformat
       unichemformat

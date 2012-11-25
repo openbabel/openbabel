@@ -21,6 +21,7 @@ set(tests
     rotor
     shuffle
     smiles
+    smiley
     spectrophore
     squareplanar
     stereo
