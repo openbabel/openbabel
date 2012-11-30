@@ -33,6 +33,7 @@
 #include <sstream>
 #include <limits>
 #include <iostream>
+#include <cctype>s
 
 //#include <cassert>
 #define DEBUG 0
@@ -2501,7 +2502,7 @@ namespace Smiley {
 
           // check for ring bond ::= ring_bond*
           std::size_t pos = std::string::npos;
-          while (pos != m_pos) {
+          while (pos != m_pos && m_pos < m_str.size()) {
             pos = m_pos;
             parseRingBond();
           }
@@ -2510,7 +2511,7 @@ namespace Smiley {
 
           // check for branch opening ::= '('?
           pos = std::string::npos;
-          while (pos != m_pos) {
+		  while (pos != m_pos && m_pos < m_str.size()) {
             pos = m_pos;
             if (m_str[m_pos] == '(') {
               if (DEBUG)
