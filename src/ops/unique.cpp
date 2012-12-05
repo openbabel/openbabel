@@ -54,6 +54,9 @@ public:
     "An OpenBabel warning message is output for each duplicate.\n"
     "Examples: --unique   --unique cansmi   --unique /nostereo\n\n"
 
+    "The duplicates can be output instead by making the first character\n"
+    "in the parameter ~  e.g. --unique ~cansmi   --unique ~\n\n"
+
     "/formula  formula only\n"
     "/connect  formula and connectivity only\n"
     "/nostereo ignore E/Z and sp3 stereochemistry\n"
@@ -72,6 +75,7 @@ private:
   std::string _trunc;
   OBDescriptor* _pDesc;
   unsigned _ndups;
+  bool _inv;
 
 #ifdef NO_UNORDERED_MAP
   typedef map<std::string, std::string> UMap;
@@ -98,10 +102,14 @@ bool OpUnique::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion
     _ndups=0;
     string descID("inchi"); // the default
     _trunc.clear();
-    if(OptionText[0]=='/')  //is parameter is /x?
-      _trunc = OptionText;
-    else if(*OptionText!='\0') // not empty?
-      descID = OptionText;
+    _inv = OptionText[0]=='~';   //has the parameter a leading ~ ?
+    if(_inv)
+      clog << "The output has the duplicate structures" << endl;
+
+    if(OptionText[0+_inv]=='/')  //is parameter is /x?
+      _trunc = OptionText+_inv;
+    else if(OptionText[0+_inv]!='\0') // not empty?
+      descID = OptionText+_inv;
 
     _pDesc = OBDescriptor::FindType(descID.c_str());
     if(!_pDesc)
@@ -113,7 +121,7 @@ bool OpUnique::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion
     _pDesc->Init();
     _inchimap.clear();
 
-    _reportDup = true; //always report duplicates
+    _reportDup = !_inv; //do not report duplicates when they are the output
   }
 
   if(!_pDesc)
@@ -132,9 +140,13 @@ bool OpUnique::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion
     if(_reportDup)
       clog << "Removed " << pmol->GetTitle() << " - a duplicate of " << result.first->second
          << " (#" << _ndups << ")" << endl;
-    delete pOb;
+    //delete pOb;
     ret = false; //filtered out
   }
+  if(_inv)
+    ret = !ret;
+  if(!ret)
+    delete pOb;
   return ret;
 }
 
