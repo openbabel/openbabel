@@ -28,42 +28,54 @@ namespace OpenBabel {
   //
   //////////////////////////////////////////////////////////
 
+  OBStericConformerFilter::OBStericConformerFilter ()
+  {
+    m_cutoff = 1.0;
+    m_vdw_factor = 0.6;
+    m_check_hydrogens = true;
+  }
+  
+  OBStericConformerFilter::OBStericConformerFilter (double cutoff, double vdw_factor, bool check_hydrogens) 
+  {
+    m_cutoff = cutoff * cutoff;
+    m_vdw_factor = vdw_factor;
+    m_check_hydrogens = check_hydrogens;
+  }
+
   OBConformerFilter::~OBConformerFilter() {}
 
   bool OBStericConformerFilter::IsGood(const OBMol &mol, const RotorKey &key, double *conformer)
   {
+    unsigned int a1 = 0, a2 = 0;
     unsigned int numAtoms = mol.NumAtoms();
-    for (unsigned int a1 = 0; a1 < numAtoms; ++a1) {
-      for (unsigned int a2 = 0; a2 < numAtoms; ++a2) {
-        // skip the pair if the atoms are the same
-        // also, only check each pair once
-        if (a1 <= a2)
-          continue;
-        OBAtom *atom1 = mol.GetAtom(a1+1);
-        OBAtom *atom2 = mol.GetAtom(a2+1);
+    OBAtom *atom1 = NULL, *atom2 = NULL;
+    double dx = 0.0, dy = 0.0, dz = 0.0; 
+    double distanceSquared = 0.0, vdwCutoff = 0.0;
+    
+    for (a1 = 0; a1 < numAtoms; ++a1) {
+      for (a2 = a1 + 1; a2 < numAtoms; ++a2) {
+        atom1 = mol.GetAtom(a1+1);
+        atom2 = mol.GetAtom(a2+1);
         // Default should be to recognize H clashes too
-        // if (atom1->IsHydrogen())
-        //   continue;
-        // if (atom2->IsHydrogen())
-        //   continue;
-
+	if (!m_check_hydrogens  && (atom1->IsHydrogen() || atom2->IsHydrogen() ))
+    	  continue;
+	
         // skip connected atoms
-        if (mol.GetAtom(a1+1)->IsConnected(mol.GetAtom(a2+1)))
+        if (atom1->IsConnected(atom2))
           continue;
         // compute the distance
-        double dx = conformer[a1*3  ] - conformer[a2*3  ];
-        double dy = conformer[a1*3+1] - conformer[a2*3+1];
-        double dz = conformer[a1*3+2] - conformer[a2*3+2];
-        double distanceSquared = dx*dx + dy*dy + dz*dz;
+        dx = conformer[a1*3  ] - conformer[a2*3  ];
+        dy = conformer[a1*3+1] - conformer[a2*3+1];
+        dz = conformer[a1*3+2] - conformer[a2*3+2];
+        distanceSquared = dx*dx + dy*dy + dz*dz;
 	// As we don't check 1-3 and 1-4 bonded atoms, apply a 
-	// factor of 0.6 to the sum of VdW radii
-        double vdwCutoff = 0.6 * (etab.GetVdwRad(atom1->GetAtomicNum())
+	// factor of to the sum of VdW radii
+        vdwCutoff = m_vdw_factor * (etab.GetVdwRad(atom1->GetAtomicNum())
 				  + etab.GetVdwRad(atom2->GetAtomicNum()));
         vdwCutoff *= vdwCutoff; // compare squared distances
-
+	
         // check distance
-        if (distanceSquared < m_cutoff
-            || distanceSquared < vdwCutoff)
+        if (distanceSquared < m_cutoff || distanceSquared < vdwCutoff)
           return false;
       }
     }
@@ -331,7 +343,7 @@ namespace OpenBabel {
 	(*m_logstream) << "Initial conformer does not pass filter!" << endl;
     }
 
-    int tries = 0;
+    int tries = 0, ndup = 0, nbad = 0;
     while (m_rotorKeys.size() < m_numConformers && tries < numConformers * 1000) {
       tries++;
       // perform random mutation(s)
@@ -343,10 +355,16 @@ namespace OpenBabel {
       }
       // duplicates are always rejected
       if (!IsUniqueKey(m_rotorKeys, rotorKey))
-        continue;
+	{
+	  ndup++;
+	  continue;
+	}
       // execute filter(s)
       if (!IsGood(rotorKey))
-        continue;
+	{
+	  nbad++;
+	  continue;
+	}
       // add the key
       m_rotorKeys.push_back(rotorKey);
     }
@@ -355,6 +373,7 @@ namespace OpenBabel {
     if (m_logstream != NULL)
       {
 	(*m_logstream) << "Initial conformer count: " << m_rotorKeys.size() << endl;
+	(*m_logstream) << tries << " attempts,  " << ndup << " duplicates, " << nbad << " failed filter." << endl;
 	for (unsigned int i = 0; i < m_rotorKeys.size(); ++i) {
 	  for (unsigned int j = 1; j < m_rotorKeys[i].size(); ++j)
 	    (*m_logstream) << m_rotorKeys[i][j] << " ";

@@ -112,10 +112,13 @@ namespace OpenBabel {
   class OBAPI OBStericConformerFilter : public OBConformerFilter
   {
     public:
-      OBStericConformerFilter(double cutoff) : m_cutoff(cutoff*cutoff) {}
+      OBStericConformerFilter ();
+      OBStericConformerFilter (double cutoff, double vdw_factor = 0.6, bool check_hydrogens = true);
       bool IsGood(const OBMol &mol, const RotorKey &key, double *coords);
     private:
       double m_cutoff; //!< Internal cutoff (used as a squared distance)
+      double m_vdw_factor;		//!< Factor applied to Van der Waals distance check
+      bool m_check_hydrogens;		//!< Check hydrOgens if true 
   };
 
   //////////////////////////////////////////////////////////
