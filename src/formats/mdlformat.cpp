@@ -34,6 +34,8 @@ GNU General Public License for more details.
 #include <openbabel/tokenst.h>
 #include <openbabel/atomclass.h>
 
+#include "mdlvalence.h"
+
 using namespace std;
 namespace OpenBabel
 {
@@ -655,8 +657,24 @@ namespace OpenBabel
         updown[&*bond] = bd;
     }
 
+    // Apply the MDL valence model
+    FOR_ATOMS_OF_MOL(atom, mol) {
+      unsigned int elem = atom->GetAtomicNum();
+      int charge = atom->GetFormalCharge();
+      OBBondIterator i;
+      unsigned int count = 0;
+      unsigned int expval = 0;
+      for (OBBond* bond = atom->BeginBond(i); bond; bond = atom->NextBond(i)) {
+        expval += bond->GetBondOrder();
+        count++;
+      }
+      unsigned int impval = MDLValence(elem ,charge, expval);
+      atom->SetImplicitValence(impval-(expval-count));
+    }
+
     mol.AssignSpinMultiplicity();
     mol.EndModify();
+    mol.SetImplicitValencePerceived();
 
     if (comment.length()) {
       OBCommentData *cd = new OBCommentData;
