@@ -1101,9 +1101,9 @@ namespace OpenBabel
     double _x,_y,_z,_V;
     
   public:
-    OBFreeGridPoint();
+    OBFreeGridPoint() {};
     OBFreeGridPoint(double x,double y,double z,double V) { _x = x; _y = y; _z = z; _V = V; }
-    ~OBFreeGridPoint();
+    ~OBFreeGridPoint() {};
     double GetX() { return _x; }
     double GetY() { return _y; }
     double GetZ() { return _z; }

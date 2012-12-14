@@ -281,7 +281,9 @@ namespace OpenBabel
     OBai = mol->BeginAtoms();
     atomid = 0;
     foundall = 0;
-    dhof[0] = dhof[1] = eg234;
+#define HARTREE_TO_KCAL 627.509469
+    dhof[0] = eg234;
+    dhof[1] = eg234+etherm-ezpe;
     for (OBa = mol->BeginAtom(OBai); (NULL != OBa); OBa = mol->NextAtom(OBai)) 
       {
         atomicnumber = OBa->GetAtomicNum();
@@ -295,7 +297,6 @@ namespace OpenBabel
         //cout << "Atom "<< atomid << " type " << OBa->GetType() << " atomicnumber " << atomicnumber << " element " << OBet->GetSymbol(atomicnumber) <<"\n";
         atomid++;
       }
-#define HARTREE_TO_KCAL 627.509469
     if (foundall == atomid) 
       {
         std::string str("method");
@@ -458,11 +459,9 @@ namespace OpenBabel
           }
         if ((no_symmetry && i==1) || i==2)
            break;
-	// Check for normal termination of a calculation since otherwise
-        // the rewind below will no longer work.
-        if (strstr(buffer,"Normal termination of Gaussian") != NULL)
-           break;
       }
+    // Reset end-of-file pointers etc.
+    ifs.clear();
     ifs.seekg(0);  //rewind
 
     mol.BeginModify();
@@ -668,10 +667,18 @@ namespace OpenBabel
             tokenize(vs,buffer);
             if (NULL == esp)
               esp = new OpenBabel::OBFreeGrid();
-            if (vs.size() >= 7)
+            if (vs.size() == 8)
               {
                 esp->AddPoint(atof(vs[5].c_str()),atof(vs[6].c_str()),
                               atof(vs[7].c_str()),0);
+              }
+            else if (vs.size() > 5) 
+              {
+                double x,y,z;
+                if (3 == sscanf(buffer+32,"%10.6f%10.f6%10.6f",&x,&y,&z))
+                  {
+                    esp->AddPoint(x,y,z,0);
+                  }
               }
           }
         else if (strstr(buffer, "ESP Fit Center") != NULL)
@@ -680,10 +687,18 @@ namespace OpenBabel
             tokenize(vs,buffer);
             if (NULL == esp)
               esp = new OpenBabel::OBFreeGrid();
-            if (vs.size() >= 8) 
+            if (vs.size() == 9) 
               {
                 esp->AddPoint(atof(vs[6].c_str()),atof(vs[7].c_str()),
                               atof(vs[8].c_str()),0);
+              }
+            else if (vs.size() > 6) 
+              {
+                double x,y,z;
+                if (3 == sscanf(buffer+32,"%10.6f%10.f6%10.6f",&x,&y,&z))
+                  {
+                    esp->AddPoint(x,y,z,0);
+                  }
               }
           }
         else if (strstr(buffer, "Electrostatic Properties (Atomic Units)") != NULL)
@@ -845,33 +860,33 @@ namespace OpenBabel
           {
             symmetries.clear();
             std::string label; // used as a temporary to remove "(" and ")" from labels
-            int offset = 0;
-
-            while(true) {
-              ifs.getline(buffer, BUFF_SIZE);
-              tokenize(vs, buffer); // parse first line "Occupied" ...
-              for (unsigned int i = 1; i < vs.size(); ++i) {
-                label = vs[i].substr(1, vs[i].length() - 2);
-                symmetries.push_back(label);
+            int iii,offset = 0;
+            bool bDoneSymm;
+            
+            // Extract both Alpha and Beta symmetries
+            for(iii=0; (iii<2); iii++) {
+              while (!ifs.eof() && 
+                     (NULL == strstr(buffer,"Alpha")) &&
+                     (NULL == strstr(buffer,"Beta"))) {
+                ifs.getline(buffer, BUFF_SIZE);
               }
-              ifs.getline(buffer, BUFF_SIZE);
-
-              // Parse remaining lines
-              while (strstr(buffer, "(")) {
-                tokenize(vs, buffer);
-                if (strstr(buffer, "Virtual")) {
-                  offset = 1; // skip first token
-                } else {
-                  offset = 0;
-                }
-                for (unsigned int i = offset; i < vs.size(); ++i) {
-                  label = vs[i].substr(1, vs[i].length() - 2);
-                  symmetries.push_back(label);
-                }
-                ifs.getline(buffer, BUFF_SIZE); // get next line
-              } // end parsing symmetry labels
-              if (!strstr(buffer, "Beta")) // no beta orbitals
-                break;
+              do {
+                ifs.getline(buffer, BUFF_SIZE);
+                bDoneSymm = (NULL == strstr(buffer, "("));
+                if (!bDoneSymm) {
+                  tokenize(vs, buffer); 
+                
+                  if ((NULL != strstr(buffer, "Occupied")) || (NULL != strstr(buffer, "Virtual"))) {
+                    offset = 1; // skip first token
+                  } else {
+                    offset = 0;
+                  }
+                  for (unsigned int i = offset; i < vs.size(); ++i) {
+                    label = vs[i].substr(1, vs[i].length() - 2);
+                    symmetries.push_back(label);
+                  }
+                } 
+              } while (!ifs.eof() && !bDoneSymm);
             } // end alpha/beta section
           }
         else if (strstr(buffer, "Alpha") && strstr(buffer, ". eigenvalues --")) {
@@ -997,7 +1012,9 @@ namespace OpenBabel
           {
             /* This must be the last else */
             int i,nsearch;
-            const char *search[] = { "CBS-QB3(0 K)", "G2(0 K)", "G3(0 K)", "G4(0 K)" };
+            const char *search[] = { "CBS-QB3 (0 K)", "G2(0 K)", "G3(0 K)", "G4(0 K)" };
+            const char *mymeth[] = { "CBS-QB3", "G2", "G3", "G4" };
+            const int myindex[] = { 3, 2, 2, 2 };
             
             nsearch = sizeof(search)/sizeof(search[0]);
             for(i=0; (i<nsearch); i++) 
@@ -1005,10 +1022,9 @@ namespace OpenBabel
                 if(strstr(buffer,search[i]) != NULL)
                   {
                     tokenize(vs,buffer);
-                    eg234 = atof(vs[2].c_str());
+                    eg234 = atof(vs[myindex[i]].c_str());
                     eg234_set = 1;
-                    strcpy(method,search[i]);
-                    method[strlen(method)-5] = '\0';
+                    strcpy(method,mymeth[i]);
                     break;
                   }
               }
@@ -1051,23 +1067,31 @@ namespace OpenBabel
           std::vector<double>      betaOrbitals;
           std::vector<std::string> betaSymmetries;
           unsigned int initialSize = orbitals.size();
-          for (unsigned int i = betaStart; i < initialSize; ++i) {
-            betaOrbitals.push_back(orbitals[i]);
-            if (symmetries.size() > 0)
-              betaSymmetries.push_back(symmetries[i]);
-          }
-          // ok, now erase the end elements of orbitals and symmetries
-          for (unsigned int i = betaStart; i < initialSize; ++i) {
-            orbitals.pop_back();
-            if (symmetries.size() > 0)
-              symmetries.pop_back();
-          }
-          // and load the alphas and betas
-          od->LoadAlphaOrbitals(orbitals, symmetries, aHOMO);
-          od->LoadBetaOrbitals(betaOrbitals, betaSymmetries, bHOMO);
+          unsigned int symmSize = symmetries.size();
+          if (initialSize != symmSize)
+            {
+              cerr << "Inconsistency: orbitals have " << initialSize << " elements while symmetries have " << symmSize << endl;
+            }
+          else
+            {
+              for (unsigned int i = betaStart; i < initialSize; ++i) {
+                betaOrbitals.push_back(orbitals[i]);
+                if (symmetries.size() > 0)
+                  betaSymmetries.push_back(symmetries[i]);
+              }
+              // ok, now erase the end elements of orbitals and symmetries
+              for (unsigned int i = betaStart; i < initialSize; ++i) {
+                orbitals.pop_back();
+                if (symmetries.size() > 0)
+                  symmetries.pop_back();
+              }
+              // and load the alphas and betas
+              od->LoadAlphaOrbitals(orbitals, symmetries, aHOMO);
+              od->LoadBetaOrbitals(betaOrbitals, betaSymmetries, bHOMO);
+            }
+          od->SetOrigin(fileformatInput);
+          mol.SetData(od);
         }
-        od->SetOrigin(fileformatInput);
-        mol.SetData(od);
       }
 
     //Attach vibrational data, if there is any, to molecule
