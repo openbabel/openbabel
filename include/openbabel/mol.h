@@ -506,6 +506,11 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     bool CorrectForPH(double pH=7.4);
     // docs in mol.cpp
     bool AssignSpinMultiplicity(bool NoImplicitH=false);
+
+    // Put the specified molecular charge on appropriate atoms.
+    // Assumes all the hydrogen is explicitly included in the molecule.
+    bool AssignTotalChargeToAtoms(int charge);
+
     //! The OBMol is a pattern, not a complete molecule. Left unchanged by Clear().
     void   SetIsPatternStructure()       { SetFlag(OB_PATTERN_STRUCTURE);}
 

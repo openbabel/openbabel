@@ -64,9 +64,6 @@ namespace OpenBabel
       return READONEONLY | NOTWRITABLE;
     };
 
-    //*** This section identical for most OBMol conversions ***
-    ////////////////////////////////////////////////////
-    /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
 
   private:
@@ -245,6 +242,7 @@ namespace OpenBabel
     int lowFreqModesEnd; // the number of the last low frequency mode
     int numFreq, numIntens, numDisp; // GAMESS prints rotations & transl., which we ignore
     numFreq = numIntens = numDisp = 0;
+    int charge=0,mult=1;
 
     // must build generic data while we parse then add at the end.
     OBSetData *gmsset = new OBSetData();
@@ -255,6 +253,17 @@ namespace OpenBabel
     mol.BeginModify();
     while (ifs.getline(buffer,BUFF_SIZE))
       {
+        if(strstr(buffer,"ICHARG="))
+          {
+            tokenize(vs,(strstr(buffer,"ICHARG=")));
+            charge=atoi(vs[1].c_str());
+          }
+        if(strstr(buffer,"MULT ")) 
+          {
+            tokenize(vs,(strstr(buffer,"MULT ")));
+            mult=atoi(vs[2].c_str());
+          }
+
         if(strstr(buffer,"ATOMIC                      COORDINATES (BOHR)") != NULL)
           {
             //mol.Clear();
@@ -900,6 +909,10 @@ namespace OpenBabel
       mol.SetData(vd);
     }
 
+    //mol.SetTotalCharge(charge);
+    mol.AssignTotalChargeToAtoms(charge);
+
+    mol.SetTotalSpinMultiplicity(mult);
 
     mol.SetTitle(title);
     return(true);

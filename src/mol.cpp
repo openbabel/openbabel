@@ -4278,6 +4278,61 @@ namespace OpenBabel
     return( true );
   }
 
+  // Put the specified molecular charge on a single atom (which is expected for InChIFormat).
+  // Assumes all the hydrogen is explicitly included in the molecule,
+  // and that SetTotalCharge() has not been called. (This function is an alternative.)
+  // Returns false if cannot assign all the charge.
+  // Not robust in the general case, but see below for the more common simpler cases.
+  bool OBMol::AssignTotalChargeToAtoms(int charge)
+  {
+    int extraCharge = charge - GetTotalCharge(); //GetTotalCharge() gets charge on atoms
+
+    //Redo AssignImplicitValence on atoms, allowing it to be less than the actual valence.
+    UnsetImplicitValencePerceived();
+    UnsetFlag(OB_ATOMSPIN_MOL);
+    atomtyper.AssignImplicitValence(*this, true);
+
+    bool somethingDone=false;
+    FOR_ATOMS_OF_MOL (atom, this)
+    {
+      if(atom->HasImplHForced() || atom->IsHydrogen()) //incl unbracketed atoms in SMILES
+        continue;
+      int diff=atom->GetImplicitValence() - (atom->GetHvyValence() + atom->ExplicitHydrogenCount());
+      if(diff!=0)
+      {
+        int c;
+        if(extraCharge==0)
+          c = diff>0 ? -1 : +1; //e.g. CH3C(=O)O, NH4 respectively
+        else
+          c = extraCharge<0 ? -1 : 1;
+        atom->SetFormalCharge(atom->GetFormalCharge() + c);
+        extraCharge-=c;
+        somethingDone = true;
+      }
+    }
+    // Correct the atom spin multiplicities for the charge added
+    if(somethingDone)
+    {
+      UnsetFlag(OB_ATOMSPIN_MOL);
+      AssignSpinMultiplicity(true);
+    }
+    if(extraCharge!=0)
+    {
+      obErrorLog.ThrowError(__FUNCTION__, "Unable to assign all the charge to atoms", obWarning);
+      return false;
+    }
+    return true;
+ }
+  /* These cases work ok
+   original      charge  result 
+  [NH4]             +1   [NH4+]
+  -C(=O)[O]         -1   -C(=O)[O-]
+  -[CH2]            +1   -C[CH2+]
+  -[CH2]            -1   -C[CH2-]
+  [NH3]CC(=O)[O]     0   [NH3+]CC(=O)[O-]
+  S(=O)(=O)([O])[O] -2   S(=O)(=O)([O-])[O-]
+  [NH4].[Cl]         0   [NH4+].[Cl-]
+  */
 
 } // end namespace OpenBabel
 

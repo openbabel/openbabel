@@ -223,7 +223,7 @@ namespace OpenBabel
         }
   }
 
-  void OBAtomTyper::AssignImplicitValence(OBMol &mol)
+  void OBAtomTyper::AssignImplicitValence(OBMol &mol, bool CanBeLessThanActual)
   {
     // FF Make sure that valence has not been perceived
     if(mol.HasImplicitValencePerceived())
@@ -259,11 +259,12 @@ namespace OpenBabel
     if (!mol.HasAromaticCorrected())
       CorrectAromaticNitrogens(mol);
 
-    for (atom = mol.BeginAtom(k);atom;atom = mol.NextAtom(k))
-      {
-        if (atom->GetImplicitValence() < atom->GetValence())
-          atom->SetImplicitValence(atom->GetValence());
-      }
+    if(!CanBeLessThanActual)
+      for (atom = mol.BeginAtom(k);atom;atom = mol.NextAtom(k))
+        {
+          if (atom->GetImplicitValence() < atom->GetValence())
+            atom->SetImplicitValence(atom->GetValence());
+        }
 
     // FF Come back to the initial flags
     mol.SetFlags(oldflags);

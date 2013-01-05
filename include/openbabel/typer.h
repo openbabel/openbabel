@@ -57,7 +57,7 @@ public:
     void AssignTypes(OBMol&);
     //! Assign implicit valence (i.e., given an atomic type, what is the
     //! expected number of bonds to this atom
-    void AssignImplicitValence(OBMol&);
+    void AssignImplicitValence(OBMol&, bool CanBeLessThanActual=false);
     //! Correct typing, valence, and hybridization for aromatic nitrogen atoms
     void CorrectAromaticNitrogens(OBMol&);
 };
