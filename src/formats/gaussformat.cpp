@@ -538,11 +538,12 @@ namespace OpenBabel
             ifs.getline(buffer,BUFF_SIZE);	// ---------------
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
-            while (vs.size() == 6)
+            while (vs.size()>4)
               {
-                x = atof((char*)vs[3].c_str());
-                y = atof((char*)vs[4].c_str());
-                z = atof((char*)vs[5].c_str());
+                int corr = vs.size()==5 ? -1 : 0; //g94; later versions have an extra column
+                x = atof((char*)vs[3+corr].c_str());
+                y = atof((char*)vs[4+corr].c_str());
+                z = atof((char*)vs[5+corr].c_str());
                 int atomicNum = atoi((char*)vs[1].c_str());
 
                 if (atomicNum > 0) // translation vectors are "-2"
@@ -566,6 +567,8 @@ namespace OpenBabel
               }
             // done with reading atoms
             natoms = mol.NumAtoms();
+            if(natoms==0)
+              return false;
             // malloc / memcpy
             double *tmpCoords = new double [(natoms)*3];
             memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
