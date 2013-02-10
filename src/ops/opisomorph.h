@@ -64,6 +64,8 @@ private:
   OBQuery* query;
   std::vector<int> firstmatch; //Idxes of first match by SMARTS or OBIsomorphismMapper
   bool showAll;
+  int nmatches;
+  char comparechar;
 };
 
 } //namespace

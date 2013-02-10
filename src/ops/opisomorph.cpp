@@ -127,7 +127,7 @@ const char* OpNewS::Description()
     "is excluded) if it matches ANY of the pattern molecules.\n"
     "Multiple color parameters can be specified and the coloring in the\n"
     "converted molecule corresponds to the first pattern molecule matched,\n"
-    "or the last color if there are fewer colors than pattern molecules.\n\n"
+    "or the last color if there are fewer colors than pattern molecules.\n \n"
 
     "If the last parameter is ``showall``, all molecules are shown, even if\n"
     "they do not match. This allows the -s option to be used for highlighting.\n \n"
@@ -137,8 +137,14 @@ const char* OpNewS::Description()
     "molecule are deleted except for those matched. Since these retain their\n"
     "coordinates, this can be used to prepare display templates.\n\n"
 
+    "With SMARTS matching only, the number of unique occurrences in a molecule\n"
+    "can be specified in the second parameter, e.g.\n"
+    "    -s c1ccccc1 2   which matches if there are exactly two benzene rings\n"
+    " or -s c1ccccc1 >2  which matches if there are more than two.\n"
+    "(<2 also works.) The color of the substructure can be in the 3rd parameter.\n \n"
+
     "In the GUI (or on the commandline as an alternative to using -v) the test\n"
-    "can be negated with a ~ before the SMARTS string or file name.\n\n"
+    "can be negated with a ~ before the SMARTS string or file name.\n \n"
 
     "With the ``babel`` commandline interface, unless the option is at the end\n"
     "of a line, it is necessary to enclose all the parameters together in quotes,\n"
@@ -188,6 +194,21 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
     showAll = it != vec.end();
     if(showAll)
       vec.erase(it);
+
+    //Store the number of matches required, if as a number in the second parameter, else 0.
+    nmatches = 0;
+    comparechar = '\0';
+    if(vec.size()>1)
+    {
+      comparechar = vec[1][0];
+      if(comparechar=='>' || comparechar=='<')
+        vec[1].erase(0,1);
+      else
+        comparechar = '\0';
+      nmatches = atoi(vec[1].c_str());
+      if(nmatches) //remove this parameter to still allow coloring
+        vec.erase(vec.begin()+1);
+    }
 
     //Interpret as a filename if possible
     MakeQueriesFromMolInFile(queries, vec[0], &nPatternAtoms, strstr(OptionText,"noH"));
@@ -312,7 +333,16 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
       pmol->AddHydrogens(false,false);
 
     if( (match = sp.Match(*pmol)) ) // extra parens to indicate truth value
+    {
       pMappedAtoms = &sp.GetMapList();
+      if(nmatches!=0)
+      {
+        int n = sp.GetUMapList().size();
+        if(comparechar=='>')      match = (n > nmatches);
+        else if(comparechar=='<') match = (n < nmatches);
+        else                      match = (n == nmatches);
+      }
+    }
   }
 
   if(!showAll && (!match && !inv) || (match && inv))
