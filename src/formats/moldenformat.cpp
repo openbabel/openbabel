@@ -122,7 +122,6 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
             lineBuffer.find( "[ATOMS]" ) != string::npos ) {
           double factor = 1.; // Angstrom
           if( lineBuffer.find( "AU" ) != string::npos ) factor = BOHR_TO_ANGSTROM; // Bohr
-          getline( ifs, lineBuffer );
           while( getline( ifs, lineBuffer ) )
             {
               if( lineBuffer == "" ) continue;
@@ -137,7 +136,6 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
               if( !atom ) break;
               atom->SetAtomicNum( atomicNumber );
               atom->SetVector( x * factor, y * factor, z * factor );
-              getline( ifs, lineBuffer );
             }
         } // "[Atoms]" || "[ATOMS]"
         if( lineBuffer.find( "[FREQ]" ) != string::npos ) {
