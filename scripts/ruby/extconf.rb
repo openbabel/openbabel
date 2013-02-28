@@ -8,6 +8,9 @@ if Config::CONFIG["arch"] =~ /universal-darwin/
     when "i386" then '-arch i386'
     when "ppc"  then '-arch ppc'
   end
+  isDarwin = true
+else
+  isDarwin = false
 end
 
 require 'mkmf'
@@ -36,9 +39,15 @@ if RUBY_VERSION < "1.9"
 end
 
 if have_library('openbabel')
-  with_ldflags("#$LDFLAGS -dynamic -flat_namespace") do #Enables cc to handle linking better.
-  create_makefile('openbabel')
-end
+  if isDarwin
+    with_ldflags("#$LDFLAGS -dynamic --flat-namespace") do #Enables cc to handle linking better.
+    create_makefile('openbabel')
+    end
+  else
+    with_ldflags("#$LDFLAGS -dynamic") do #Enables cc to handle linking better.
+    create_makefile('openbabel')
+    end
+  end
 else
   puts "Install Open Babel first. If you've already compiled and installed Open Babel, you may need to run ldconfig."
 end
