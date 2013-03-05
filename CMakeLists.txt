@@ -41,7 +41,7 @@ option(ENABLE_VERSIONED_FORMATS
   "Enable versioning of the format plugin directory" ON)
 
 # Set up our path handling, inspired by the path handling used in KDE
-set(BIN_INSTALL_DIR       "bin"
+set(BIN_INSTALL_DIR      "bin"
   CACHE PATH "Install dir for binaries")
 set(LIB_SUFFIX "" CACHE STRING "Suffix of the directory name, e.g. 64 for lib64")
 if(UNIX)
