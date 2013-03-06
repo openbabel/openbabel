@@ -289,6 +289,9 @@ class Molecule(object):
     def atoms(self):
         return [ Atom(self.OBMol.GetAtom(i+1)) for i in range(self.OBMol.NumAtoms()) ]
     @property
+    def residues(self):
+        return [ Residue(res) for res in ob.OBResidueIter(self.OBMol) ]
+    @property
     def charge(self): return self.OBMol.GetTotalCharge()
     @property
     def conformers(self): return self.OBMol.GetConformers()
@@ -574,7 +577,7 @@ class Atom(object):
     Attributes:
        atomicmass, atomicnum, cidx, coords, coordidx, exactmass,
        formalcharge, heavyvalence, heterovalence, hyb, idx,
-       implicitvalence, isotope, partialcharge, spin, type,
+       implicitvalence, isotope, partialcharge, residue, spin, type,
        valence, vector.
 
     (refer to the Open Babel library documentation for more info).
@@ -616,6 +619,8 @@ class Atom(object):
     @property
     def partialcharge(self): return self.OBAtom.GetPartialCharge()
     @property
+    def residue(self): return Residue(self.OBAtom.GetResidue())
+    @property
     def spin(self): return self.OBAtom.GetSpinMultiplicity()
     @property
     def type(self): return self.OBAtom.GetType()
@@ -627,6 +632,44 @@ class Atom(object):
     def __str__(self):
         c = self.coords
         return "Atom: %d (%.2f %.2f %.2f)" % (self.atomicnum, c[0], c[1], c[2])
+        
+class Residue(object):
+    """Represent a Pybel residue.
+
+    Required parameter:
+       OBResidue -- an Open Babel OBResidue
+
+    Attributes:
+       atomicmass, atomicnum, cidx, coords, coordidx, exactmass,
+       formalcharge, heavyvalence, heterovalence, hyb, idx,
+       implicitvalence, isotope, partialcharge, spin, type,
+       valence, vector.
+
+    (refer to the Open Babel library documentation for more info).
+
+    The original Open Babel atom can be accessed using the attribute:
+       OBResidue
+    """
+
+    def __init__(self, OBResidue):
+        self.OBResidue = OBResidue
+
+    @property
+    def atoms(self):
+        return [ Atom(atom) for atom in ob.OBResidueAtomIter(self.OBResidue) ]
+    @property
+    def idx(self): return self.OBResidue.GetIdx()
+    @property
+    def name(self): return self.OBResidue.GetName()
+    
+    def __iter__(self):
+        """Iterate over the Atoms of the Residue.
+
+        This allows constructions such as the following:
+           for atom in residue:
+               print atom
+        """
+        return iter(self.atoms)
 
 def _findbits(fp, bitsperint):
     """Find which bits are set in a list/vector.
