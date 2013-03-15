@@ -265,7 +265,8 @@ double OBDescriptor::ParsePredicate(istream& optionText, char& ch1, char& ch2, s
   //Try to read a double. Rewind and read as a string
   streampos spos = optionText.tellg();
   optionText >> val;
-  if(!optionText.eof()) //only a number when the param has no additional text
+   //only a number when the param has no additional text or only a closing bracket
+  if(!optionText.eof() && optionText.peek()!=')')
     val = std::numeric_limits<double>::quiet_NaN();
   optionText.clear();
   optionText.seekg(spos);
