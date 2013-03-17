@@ -66,7 +66,7 @@ class LpmdFormat : public OBMoleculeFormat
   };
 
   ////////////////////////////////////////////////////
-  /// Declarations for the "API" interface functions. Definitions are below  
+  /// Declarations for the "API" interface functions. Definitions are below
 
   //Converts a string to a numerical type
   //This purloined from: http://www.codeguru.com/forum/showthread.php?t=231054
@@ -84,7 +84,7 @@ class LpmdFormat : public OBMoleculeFormat
 
  private:
   char buffer[BUFF_SIZE];
-  std::vector<std::string> tokens; 
+  std::vector<std::string> tokens;
   std::vector<std::string> headers; //Header information.
   int N; //the number of atoms
   int file_line;
@@ -137,7 +137,7 @@ bool LpmdFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
  OBMol* pmol = pOb->CastAndClear<OBMol>();
  if(pmol==NULL) return false;
- 
+
  N=0;
  std::istream &ifs = *pConv->GetInStream();
  OBMol &mol = *pmol;
@@ -175,7 +175,7 @@ bool LpmdFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
  from_string<double>(cx, tokens.at(6), std::dec);
  from_string<double>(cy, tokens.at(7), std::dec);
  from_string<double>(cz, tokens.at(8), std::dec);
- 
+
  vector3 vx = vector3(ax,ay,az);
  vector3 vy = vector3(bx,by,bz);
  vector3 vz = vector3(cx,cy,cz);
@@ -198,10 +198,10 @@ bool LpmdFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
    ErrMsg << "There was a problem reading an atomic configuration,  "
           << "the line # " << file_line << " doesn't have the number "
-	  << "of columns indicated in the HDR (second line). "; 
-   obErrorLog.ThrowError(__FUNCTION__, ErrMsg.str(), obError); 
+	  << "of columns indicated in the HDR (second line). ";
+   obErrorLog.ThrowError(__FUNCTION__, ErrMsg.str(), obError);
   }
-  //Based in the OBAtom class, only X Y Z VX VY VZ FX FY FZ 
+  //Based in the OBAtom class, only X Y Z VX VY VZ FX FY FZ
   //FCH PCH CHG are the first candidates to use from a LPMD file.
   double X=0.0,Y=0.0,Z=0.0, VX=0.0, VY=0.0, VZ=0.0;
   double AX=0.0, AY=0.0, AZ=0.0, FX=0.0, FY=0.0, FZ=0.0;
@@ -255,7 +255,7 @@ bool LpmdFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
  conformer->SetForces( forceslist );
  conformer->SetVelocities( velocilist );
  mol.SetData(conformer);
- 
+
  while(ifs.peek() != EOF && ifs.good() &&
        (ifs.peek() == '\n' || ifs.peek() == '\r'))
    ifs.getline(buffer,BUFF_SIZE);
@@ -264,7 +264,7 @@ bool LpmdFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     mol.ConnectTheDots();
  if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
     mol.PerceiveBondOrders();
- 
+
  mol.EndModify();
  return true;
 }
@@ -282,7 +282,7 @@ bool LpmdFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
  std::vector< std::vector< vector3 > > forceslist;
  std::vector< std::vector< vector3 > > velocilist;
- 
+
  std::stringstream ErrMsg;
  std::vector < vector3 > v;
 
@@ -344,7 +344,7 @@ bool LpmdFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   if(extra==1) ofs << "CHG ";
   ofs << '\n';
  }
- 
+
  snprintf(buffer, BUFF_SIZE, "%d\n", mol.NumAtoms());
  ofs << buffer;
 
@@ -377,9 +377,9 @@ bool LpmdFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
  ofs << buffer;
 
  //Iteration over atoms
- for(int i=0;i<mol.NumAtoms();i)
+ for(int i=0;i<mol.NumAtoms();++i)
  {
-  OBAtom *atom = mol.GetAtom(i1);
+  OBAtom *atom = mol.GetAtom(i + 1);
   vector3 tmp=uc->CartesianToFractional(vector3(atom->GetX(),atom->GetY(),atom->GetZ()));
   snprintf(buffer, BUFF_SIZE, "%-3s%15.5f%15.5f%15.5f",etab.GetSymbol(atom->GetAtomicNum()),
    tmp.GetX(),
