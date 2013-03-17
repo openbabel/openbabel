@@ -3910,7 +3910,7 @@ namespace OpenBabel
     VectorSelfMultiply(temp, sin_dl);
     VectorDivide(temp, sin_theta, temp);
     VectorAdd(cn, temp, force_k);
-    VectorSelfMultiply(force_k, (sin_theta/length_ji));
+    VectorSelfMultiply(force_k, (sin_theta/length_jk));
     /* j = -(i + k + l); */
     VectorAdd(force_i, force_k, temp);
     VectorAdd(force_l, temp, temp);
