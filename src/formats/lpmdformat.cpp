@@ -154,7 +154,7 @@ bool LpmdFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
  double cx=0.0e0,cy=0.0e0,cz=0.0e0;
  //Reading the number of atoms.
  ifs.getline(buffer,BUFF_SIZE);
- file_line;
+ file_line++;
  tokenize(tokens, buffer, " ");
  if(tokens.size()!=1)
  {
@@ -164,7 +164,7 @@ bool LpmdFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
  tokens.clear();
  ifs.getline(buffer,BUFF_SIZE);
- file_line;
+ file_line++;
  tokenize(tokens, buffer, " ");
  from_string<double>(ax, tokens.at(0), std::dec);
  from_string<double>(ay, tokens.at(1), std::dec);
@@ -188,11 +188,11 @@ bool LpmdFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
  mol.BeginModify();
  mol.SetData( unitcell );
 
- for(int i=0 ; i<N ; i)
+ for(int i=0 ; i<N ; ++i)
  {
   OBAtom *atom  = mol.NewAtom();
   ifs.getline(buffer,BUFF_SIZE);
-  file_line;
+  file_line++;
   tokenize(tokens, buffer, " ");
   if(int(headers.size()-1)!=tokens.size())
   {
@@ -208,7 +208,7 @@ bool LpmdFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   double CHG=0.0,FCH=0.0;
   std::string symbol = "Xx";
   int ma=0,mf=0; //mode for acceleration or forces.
-  for(int i=1 ; i < headers.size() ; i) //the first element is HDR
+  for(int i=1 ; i < headers.size() ; ++i) //the first element is HDR
   {
    //Basic information position and atomic symbol.
    if(headers.at(i).compare("X")==0) from_string<double>(X, tokens.at(i-1), std::dec);
@@ -220,13 +220,13 @@ bool LpmdFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
    if(headers.at(i).compare("VY")==0) from_string<double>(VY, tokens.at(i-1), std::dec);
    if(headers.at(i).compare("VZ")==0) from_string<double>(VZ, tokens.at(i-1), std::dec);
    //Accelerations
-   if(headers.at(i).compare("AX")==0) {from_string<double>(AX, tokens.at(i-1), std::dec);ma;}
-   if(headers.at(i).compare("AY")==0) {from_string<double>(AY, tokens.at(i-1), std::dec);ma;}
-   if(headers.at(i).compare("AZ")==0) {from_string<double>(AZ, tokens.at(i-1), std::dec);ma;}
+   if(headers.at(i).compare("AX")==0) {from_string<double>(AX, tokens.at(i-1), std::dec);ma++;}
+   if(headers.at(i).compare("AY")==0) {from_string<double>(AY, tokens.at(i-1), std::dec);ma++;}
+   if(headers.at(i).compare("AZ")==0) {from_string<double>(AZ, tokens.at(i-1), std::dec);ma++;}
    //Forces
-   if(headers.at(i).compare("FX")==0) {from_string<double>(FX, tokens.at(i-1), std::dec);mf;}
-   if(headers.at(i).compare("FY")==0) {from_string<double>(FY, tokens.at(i-1), std::dec);mf;}
-   if(headers.at(i).compare("FZ")==0) {from_string<double>(FZ, tokens.at(i-1), std::dec);mf;}
+   if(headers.at(i).compare("FX")==0) {from_string<double>(FX, tokens.at(i-1), std::dec);mf++;}
+   if(headers.at(i).compare("FY")==0) {from_string<double>(FY, tokens.at(i-1), std::dec);mf++;}
+   if(headers.at(i).compare("FZ")==0) {from_string<double>(FZ, tokens.at(i-1), std::dec);mf++;}
    //Charges
    if(headers.at(i).compare("CHG")==0) from_string<double>(CHG, tokens.at(i-1), std::dec);
    if(headers.at(i).compare("PHG")==0) from_string<double>(CHG, tokens.at(i-1), std::dec);
@@ -361,7 +361,7 @@ bool LpmdFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   empty.push_back(vector3(0,0,0));
   empty.push_back(vector3(0,0,0));
   empty.push_back(vector3(0,0,0));
-  for(int i=0; i < mol.NumAtoms() ; i)
+  for(int i=0; i < mol.NumAtoms() ; ++i)
   {
    forceslist.push_back(empty);
    velocilist.push_back(empty);
