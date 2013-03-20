@@ -644,10 +644,7 @@ class Residue(object):
        OBResidue -- an Open Babel OBResidue
 
     Attributes:
-       atomicmass, atomicnum, cidx, coords, coordidx, exactmass,
-       formalcharge, heavyvalence, heterovalence, hyb, idx,
-       implicitvalence, isotope, partialcharge, spin, type,
-       valence, vector.
+       atoms, idx, name.
 
     (refer to the Open Babel library documentation for more info).
 
