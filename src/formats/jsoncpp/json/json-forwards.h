@@ -77,7 +77,7 @@ license you like.
 # define JSON_FORWARD_AMALGATED_H_INCLUDED
 /// If defined, indicates that the source file is amalgated
 /// to prevent private header inclusion.
-#define JSON_IS_AMALGATED
+#define JSON_IS_AMALGAMATION
 
 // //////////////////////////////////////////////////////////////////////
 // Beginning of content of file: include/json/config.h
