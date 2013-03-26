@@ -55,6 +55,10 @@ if(MSVC OR HAVE_REGEX_H)
   )
 endif(MSVC OR HAVE_REGEX_H)
 
+set(formats_json
+  chemdoodlejsonformat
+)
+
 set(formats_misc
       APIInterface
       CSRformat
@@ -206,7 +210,7 @@ if(MINIMAL_BUILD)
   )
 else(MINIMAL_BUILD)
   set(formats "")
-  foreach(formatgroup formats_common formats_utility formats_compchem formats_misc ${optional_formatgroups})
+  foreach(formatgroup formats_common formats_utility formats_compchem formats_json formats_misc ${optional_formatgroups})
     set(formats
         ${formats} ${${formatgroup}}
     )
@@ -229,7 +233,7 @@ endif(WIN32)
 
 
 if(MSVC)
-  foreach(formatgroup formats_common formats_utility formats_compchem formats_misc ${optional_formatgroups})
+  foreach(formatgroup formats_common formats_utility formats_compchem formats_json formats_misc ${optional_formatgroups})
     set(formatsources "")
     foreach(format ${${formatgroup}})
       set(formatsources ${formatsources} ${format}.cpp ${${format}_additional_sources})
