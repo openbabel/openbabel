@@ -28,6 +28,7 @@ GNU General Public License for more details.
 #include <wx/splash.h>
 #include <wx/imagpng.h>
 #include <openbabel/tokenst.h>
+#include <wx/dirdlg.h>
 
 
 #ifdef __WXMAC__
@@ -60,6 +61,8 @@ BEGIN_EVENT_TABLE(OBGUIFrame, wxFrame)
   EVT_MENU_RANGE(ID_SHOWCONVOPTIONS,ID_SHOWOUTOPTIONS, OBGUIFrame::OnChangeFormat)
   EVT_MENU(wxID_ABOUT, OBGUIFrame::OnAbout)
   EVT_MENU(wxID_HELP, OBGUIFrame::OnHelp)
+  EVT_MENU(ID_SHOWDATADIR, OBGUIFrame::OnShowDataDir)
+
 //  EVT_UPDATE_UI(ID_PLUGINS, OBGUIFrame::OnPlugins)
   EVT_BUTTON(ID_INGETFILES, OBGUIFrame::OnGetInputFile)
   EVT_BUTTON(ID_OUTGETFILES, OBGUIFrame::OnGetOutputFile)
@@ -73,7 +76,7 @@ BEGIN_EVENT_TABLE(OBGUIFrame, wxFrame)
   EVT_CHOICE(ID_OUTFORMAT,OBGUIFrame::OnChangeFormat)
   EVT_MOUSEWHEEL(OBGUIFrame::OnMouseWheel)
   EVT_CLOSE(OBGUIFrame::OnClose)
- END_EVENT_TABLE()
+END_EVENT_TABLE()
 
 IMPLEMENT_APP(OBGUIApp)
 
@@ -172,6 +175,8 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
   fileMenu->Append(ID_CONVERT, _T("&Convert\tAlt-C"));
   fileMenu->Append(wxID_SAVE, _T("&Save Input Text As...\tCtrl+S"),
     _T("Brings up Save dialog"));
+  fileMenu->Append(ID_SHOWDATADIR, _T("Show/change BABEL_DATADIR env var"),
+    _T("Any changes only affect this GUI instance"));
   fileMenu->Append(ID_COPYTOINPUT, _T("Copy Output To Input"),
     _T("Copies output text and format to input"));
   fileMenu->Append(ID_SAVECONFIG, _T("Save screen configuration\tAlt-S"));
@@ -516,6 +521,16 @@ void OBGUIFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
   msg << _T(BABEL_VERSION);
   wxMessageBox(msg, _T("About OpenBabelGUI"), wxOK | wxICON_INFORMATION | wxCENTER, this);
 }
+
+void OBGUIFrame::OnShowDataDir(wxCommandEvent& (event))
+{
+  wxString dir = wxGetenv(_T("BABEL_DATADIR"));
+  wxDirDialog dia(this, _T("BABEL_DATADIR = ")+ dir, dir,
+    wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST);
+  if(dia.ShowModal()==wxID_OK)
+    wxSetEnv(_T("BABEL_DATADIR"), dia.GetPath());
+}
+
 ///////////////////////////////////////////
 
 void OBGUIFrame::OnSelectFormats(wxCommandEvent& event)
@@ -555,15 +570,31 @@ void OBGUIFrame::OnConvert(wxCommandEvent& WXUNUSED(event))
   m_pOutText->Clear();
   m_pMessages->Clear();
 
+  /* Get LNK2005 error with VS10 (but not VS9) when stringstream used, possibly related to:
+     http://osdir.com/ml/OpenSceneGraph-Users/2010-08/msg00501.html
+
+     An unsatisfactory workaround is to set in obgui project
+     ConfigurationProperties/Linker/General/Force File Output to
+     Multiply Defined Symbol Only (/FORCE:MULTIPLE)
+     
+     A better way is to build wxWidgets with wxUSE_STD_IOSTREAM set to 0 in setup.h
+     (the top level version: \lib\vc_lib\mswu\wx\setup.h with Windows).
+     This means wxStreamToTextRedirector does not work, so its functionality is provided
+     by hand in this function.
+  */
+
   //Default input is from input text box;
-  std::stringstream ss(std::string(m_pInText->GetValue().mb_str()));
+  std::string s(m_pInText->GetValue().ToAscii());
+  std::istringstream ss(s);
+  ss.str();
+  
+  //With wxUSE_STD_IOSTREAM=0 none of these work. Locale problem?
+  //std::string s1(m_pInText->GetValue().mb_str());
+  //std::string s2(m_pInText->GetValue().ToStdString());
+  //std::string s3(m_pInText->GetValue().c_str());
+
   //Default output is a string stream which is written to the Output text box at the end
   std::stringstream GUIostream;
-  // LNK2005 error with VS10 (but not VS9) when stringstream used, possibly related to:
-  // http://osdir.com/ml/OpenSceneGraph-Users/2010-08/msg00501.html
-  // An unsatisfactory workaround is to set in obgui project
-  // ConfigurationProperties/Linker/General/Force File Output to
-  // Multiply Defined Symbol Only (/FORCE:MULTIPLE)
 
   OBConversion Conv(&ss, &GUIostream);
 
@@ -611,11 +642,19 @@ with the output format.\nDo you wish to continue the conversion?"),
     m_pInFilename->Expand(FileList);
 
   //redirect cerr & clog & cout
+  std::stringstream smes("");
+  std::streambuf *sbcerrOld = std::cerr.rdbuf();
+  std::streambuf *sbclogOld = std::clog.rdbuf();
+  std::cerr.rdbuf(smes.rdbuf());
+  std::clog.rdbuf(smes.rdbuf());
+
+/*
 #ifndef __WXMAC__
     wxStreamToTextRedirector cerrCapture(m_pMessages, &std::cerr);
     wxStreamToTextRedirector clogCapture(m_pMessages, &std::clog);
 #endif
 //		wxStreamToTextRedirector coutCapture(m_pOutText);
+*/
 
 //	m_pOutText->Freeze();//Otherwise seems to be redrawn after each char from cout
 
@@ -641,7 +680,8 @@ with the output format.\nDo you wish to continue the conversion?"),
     {
       //Read back file and add to output console
       m_pOutText->Clear();
-      m_pOutText->LoadFile(wxString(OutputFileList[0].c_str(), wxConvUTF8));
+      if(wxFile::Exists(OutputFileList[0])) //avoid error message with --split
+        m_pOutText->LoadFile(wxString(OutputFileList[0].c_str(), wxConvUTF8));
       //m_pOutText->LoadFile(_T(OutputFileList));
     }
     else
@@ -650,6 +690,12 @@ with the output format.\nDo you wish to continue the conversion?"),
       m_pOutText->SetInsertionPoint(0);
     }
   }
+
+  m_pMessages->AppendText(smes.str().c_str());
+  //Restore cerr and clog
+  std::cerr.rdbuf(sbcerrOld);
+  std::clog.rdbuf(sbclogOld);
+
 #ifndef __WXMAC__
   //Call Firefox to display the 2D structure
   if(m_pDisplay->IsChecked() && wxFile::Exists(m_DisplayFile.Trim()))
