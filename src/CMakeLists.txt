@@ -109,6 +109,7 @@ set(openbabel_srcs
   chains.cpp
   chargemodel.cpp
   chiral.cpp
+  confsearch.cpp
   data.cpp
   descriptor.cpp
   fingerprint.cpp

@@ -117,6 +117,13 @@ namespace OpenBabel
      * Align the Target to the Reference using a least-squares alignment.
      */
     bool Align();
+
+    enum AlignMethod {
+      Kabsch = 0,   // Returns matrix and RMSD
+      QCP    = 1    // Returns just RMSD (fast)
+    };
+
+    void SetMethod(enum AlignMethod method);
     //@}
 
     ///@name Access the result of the alignment
@@ -167,8 +174,10 @@ namespace OpenBabel
 
   private:
     bool _ready;
+    bool _fail;
     bool _symmetry;
     bool _includeH;
+    enum AlignMethod _method;
     double _rmsd;
     OBBitVec _frag_atoms;
     Automorphisms _aut;
@@ -185,6 +194,7 @@ namespace OpenBabel
     void VectorsToMatrix(const vector<vector3> *pcoords, Eigen::MatrixXd &coords);
     Eigen::Vector3d MoveToOrigin(Eigen::MatrixXd &coords);
     void SimpleAlign(const Eigen::MatrixXd &mtarget);
+    void TheobaldAlign(const Eigen::MatrixXd &mtarget);
     // Generate a mapping from the permutation map to the index of
     // correct column in _mtarget. Need to handle the fact that the
     // permutation group contains non-fragment atoms.
