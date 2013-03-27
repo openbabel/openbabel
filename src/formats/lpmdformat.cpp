@@ -29,7 +29,7 @@ class LpmdFormat : public OBMoleculeFormat
    OBConversion::RegisterFormat("lpmd",this);
 
    OBConversion::RegisterOptionParam("f", this, 1, OBConversion::OUTOPTIONS); //Level option
-   OBConversion::RegisterOptionParam("m", this, 1, OBConversion::OUTOPTIONS); //Mode option
+   OBConversion::RegisterOptionParam("t", this, 1, OBConversion::OUTOPTIONS); //Mode option
    OBConversion::RegisterOptionParam("e", this, 1, OBConversion::OUTOPTIONS); //Extra option
    OBConversion::RegisterOptionParam("cell", this, 1, OBConversion::OUTOPTIONS); //vectors cell
    OBConversion::RegisterOptionParam("n", this);
