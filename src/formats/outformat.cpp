@@ -153,6 +153,7 @@ namespace OpenBabel
 
     if (pFormat) {
       ifs.seekg (0, ios::beg); // reset the stream to the beginning
+      ifs.clear();
       bool success = pFormat->ReadMolecule(pOb, pConv);
 
       // Tag the molecule with the format (e.g., if a program wants to know the kind of "out" or "log" file)

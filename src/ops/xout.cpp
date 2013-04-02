@@ -63,18 +63,23 @@ public:
       _pExtraConv->SetOutputIndex(pConv->GetOutputIndex()-2);
       if(!_pExtraConv->AddChemObject(pOb))
         _pExtraConv = NULL; //error on extra output stops only it
-      _pExtraConv->SetLast(pConv->IsLast());
+      else // need "else" or we'll dereference a NULL
+        _pExtraConv->SetLast(pConv->IsLast());
     }
 
     if(pConv->IsLast())
     {
-      _pOrigConv->AddChemObject(pMolCopy); //dummy add to empty queue
+      if (_pOrigConv) {
+        _pOrigConv->AddChemObject(pMolCopy); //dummy add to empty queue
+        pConv->SetOutFormat(_pOrigConv->GetOutFormat()); //ReportNumberConverted() uses this at end
+      }
+
       if(_pExtraConv)
       {
         _pExtraConv->AddChemObject(pOb);  //dummy add to empty queue
         delete _pExtraConv->GetOutStream(); //filestream
       }
-      pConv->SetOutFormat(_pOrigConv->GetOutFormat()); //ReportNumberConverted() uses this at end
+
       delete _pOrigConv;
       delete _pExtraConv;
       _pOrigConv=NULL;
