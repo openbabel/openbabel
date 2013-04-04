@@ -34,8 +34,9 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
     ChemDoodleJSONFormat()
     {
       OBConversion::RegisterFormat("cdjson", this);
-      // TODO: Do we need to register options? If so, need to avoid clashes
-      //OBConversion::RegisterOptionParam("d", this, 0, OBConversion::OUTOPTIONS);
+      OBConversion::RegisterOptionParam("m", this, 0, OBConversion::OUTOPTIONS);
+      OBConversion::RegisterOptionParam("v", this, 0, OBConversion::OUTOPTIONS);
+      OBConversion::RegisterOptionParam("w", this, 0, OBConversion::OUTOPTIONS);
     }
 
     virtual const char* Description()
@@ -46,10 +47,8 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
       "the ChemDoodle Web Components.\n\n"
       
       "Write Options, e.g. -xd\n"
-      " d  include default values (e.g. for charge, stereochemistry)\n"
-      " h  don't output hydrogens\n"
       " m  minified output formatting, with no line breaks or indents\n"
-      " e  expanded output formatting, with extra line breaks and indents\n"
+      " v  verbose output (include default values)\n"
       " w  use wedge/hash bonds from input instead of calculating stereochemistry\n"
       ;
     };
@@ -85,7 +84,7 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
     
     pmol->BeginModify();
     
-    // Parse entire file into memory once, then reuse root for subsequent molecules
+    // Parse entire file into memory once, then reuse inRoot for subsequent molecules
     // (It's really tricky to stream json)
     if (inRoot.empty()) {
       Json::Reader reader;
@@ -100,7 +99,7 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
     
     // Get the root level of the molecule
     Json::Value molRoot;
-    if (!inRoot["m"].empty() || !inRoot["m"].isArray()) {
+    if (!inRoot["m"].empty() && inRoot["m"].isArray()) {
       // File contains an array of molecules, iterate over them
       if (inRoot["m"].size() > currentMolIndex) {
         molRoot = inRoot["m"][currentMolIndex];
@@ -260,9 +259,10 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
           order = 2;
         } else if (fabs(bond["o"].asDouble() - 3) < 0.01) {
           order = 3;
+        } else if (fabs(bond["o"].asDouble() - 4) < 0.01) {
+          order = 4;
         } else if (fabs(bond["o"].asDouble() - 0) < 0.01) {
-          obErrorLog.ThrowError("ChemDoodleJSONFormat", "Bond order 0 not supported, skipping bond", obWarning);
-          continue;
+          order = 0;
         } else if (fabs(bond["o"].asDouble() - 0.5) < 0.01) {
           obErrorLog.ThrowError("ChemDoodleJSONFormat", "Bond order 0.5 not supported, using 1", obWarning);
           order = 1;
@@ -315,19 +315,19 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
     }
     
     // Set up the updown map we are going to use to derive stereo info
-    FOR_BONDS_OF_MOL(bond, pmol) {
+    FOR_BONDS_OF_MOL(pbond, pmol) {
       OBStereo::BondDirection bd = OBStereo::NotStereo;
-      unsigned int flag = bond->GetFlags();
+      unsigned int flag = pbond->GetFlags();
       if (flag & OBBond::Wedge)
         bd = OBStereo::UpBond;
       if (flag & OBBond::Hash)
         bd = OBStereo::DownBond;
       if (flag & OBBond::WedgeOrHash)
         bd = OBStereo::UnknownDir;
-      if (flag & OBBond::CisOrTrans && bond->GetBondOrder() == 2)
+      if (flag & OBBond::CisOrTrans && pbond->GetBondOrder() == 2)
         bd = OBStereo::UnknownDir;
       if (bd != OBStereo::NotStereo)
-        updown[&*bond] = bd;
+        updown[&*pbond] = bd;
     }
     
     // TODO: Do we need to do SetImplicitValence for each atom?
@@ -375,11 +375,6 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
       return false;
     }
     
-    if (pConv->IsOption("h", pConv->OUTOPTIONS)) {
-      // Will this delete hydrogens that we might actually want to keep?
-      pmol->DeleteHydrogens();
-    }
-    
     PerceiveStereo(pmol);
     
     // Kekulize any untyped aromatic bonds (5)
@@ -404,9 +399,7 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
     Json::Value bonds(Json::arrayValue);
     
     // Atoms
-    OBAtom *patom;
-    vector<OBAtom*>::iterator i;
-    for (patom = pmol->BeginAtom(i); patom; patom = pmol->NextAtom(i)) {
+    FOR_ATOMS_OF_MOL(patom, pmol) {
       Json::Value atom(Json::objectValue);
       // Coordinates
       // TODO: An option to round coordinates to n decimal places?
@@ -417,7 +410,7 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
       }
       // Element
       if (patom->GetAtomicNum()) {
-        if (patom->GetAtomicNum() != 6 || pConv->IsOption("d", pConv->OUTOPTIONS)) {
+        if (patom->GetAtomicNum() != 6 || pConv->IsOption("v", pConv->OUTOPTIONS)) {
           atom["l"] = etab.GetSymbol(patom->GetAtomicNum());
         }
       } else {
@@ -431,17 +424,17 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
         }
       }
       // Charge
-      if (patom->GetFormalCharge() != 0 || pConv->IsOption("d", pConv->OUTOPTIONS)) {
+      if (patom->GetFormalCharge() != 0 || pConv->IsOption("v", pConv->OUTOPTIONS)) {
         atom["c"] = patom->GetFormalCharge();
       }
       // Mass
       int m = patom->GetIsotope();
-      if (m != 0 || pConv->IsOption("d", pConv->OUTOPTIONS)) {
+      if (m != 0 || pConv->IsOption("v", pConv->OUTOPTIONS)) {
         atom["m"] = (m == 0) ? -1 : m;
       }
       // Radicals
       int sm = patom->GetSpinMultiplicity();
-      if (sm != 0 || pConv->IsOption("d", pConv->OUTOPTIONS)) {
+      if (sm != 0 || pConv->IsOption("v", pConv->OUTOPTIONS)) {
         if (sm == 0) {
           atom["r"] = 0;
         } else if (sm == 2) {
@@ -454,7 +447,7 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
       if (patom->HasData("p")) {
         OBPairInteger *lp = dynamic_cast<OBPairInteger*>(patom->GetData("p"));
         atom["p"] = lp->GetGenericValue();
-      } else if (pConv->IsOption("d", pConv->OUTOPTIONS)) {
+      } else if (pConv->IsOption("v", pConv->OUTOPTIONS)) {
         atom["p"] = 0;
       }
       // Atom identifier string
@@ -466,9 +459,7 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
     }
     
     // Bonds
-    OBBond *pbond;
-    vector<OBBond*>::iterator j;
-    for (pbond = pmol->BeginBond(j); pbond; pbond = pmol->NextBond(j)) {
+    FOR_BONDS_OF_MOL(pbond, pmol) {
       Json::Value bond(Json::objectValue);
       
       bond["b"] = pbond->GetBeginAtomIdx()-1;
@@ -476,26 +467,26 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
       
       // Order
       int order = pbond->GetBondOrder();
-      if (order != 1 || pConv->IsOption("d", pConv->OUTOPTIONS)) {
+      if (order != 1 || pConv->IsOption("v", pConv->OUTOPTIONS)) {
         bond["o"] = order;
       }
       
       // Stereochemistry
       string stereo = "none";
       if (pConv->IsOption("w", pConv->OUTOPTIONS)) {
-        // option w means just use input wedge/hash/ambiguous bonds
+        // Option w means just use input wedge/hash/ambiguous bonds
         if (pbond->IsWedge()) {
           stereo = "protruding";
         } else if (pbond->IsHash()) {
           stereo = "recessed";
-        } else if (pbond->IsWedgeOrHash()) {
+        } else if (pbond->IsWedgeOrHash() || pbond->IsCisOrTrans()) {
           stereo = "ambiguous";
         }
       } else {
-        // no option w means use calculated stereochemistry
+        // No option w means use calculated stereochemistry
 
         // Swap start and end atom if necessary
-        from_cit = from.find(pbond);
+        from_cit = from.find(&*pbond);
         if (from_cit != from.end() && from_cit->second == pbond->GetEndAtom()->GetId()) {
           int tmp = bond["b"].asInt();
           bond["b"] = bond["e"];
@@ -503,21 +494,21 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
         }
         
         // Unspecified cis-trans stereo
-        if (unspec_ctstereo.find(pbond) != unspec_ctstereo.end()) {
+        if (unspec_ctstereo.find(&*pbond) != unspec_ctstereo.end()) {
           stereo = "ambiguous";
         }
                 
-        if (updown.find(pbond) != updown.end()) {
-          if (updown[pbond] == 1) {
+        if (updown.find(&*pbond) != updown.end()) {
+          if (updown[&*pbond] == 1) {
             stereo = "protruding";
-          } else if (updown[pbond] == 4) {
+          } else if (updown[&*pbond] == 4) {
             stereo = "ambiguous";
-          } else if (updown[pbond] == 6) {
+          } else if (updown[&*pbond] == 6) {
             stereo = "recessed";
           }
         }
       }
-      if (stereo != "none" || pConv->IsOption("d", pConv->OUTOPTIONS)) {
+      if (stereo != "none" || pConv->IsOption("v", pConv->OUTOPTIONS)) {
         bond["s"] = stereo;
       }
       // Bond identifier string
@@ -537,10 +528,8 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
       if (pConv->IsOption("m", pConv->OUTOPTIONS)) {
         Json::FastWriter fwriter;
         ofs << fwriter.write(outRoot);
-      } else if (pConv->IsOption("e", pConv->OUTOPTIONS)) {
-        ofs << outRoot;
       } else {
-        Json::CustomWriter cwriter = Json::CustomWriter("{", "}", "[", "]", ":", ",", "  ", 74);
+        Json::CustomWriter cwriter = Json::CustomWriter("{", "}", "[", "]", ": ", ",", "  ", 74);
         ofs << cwriter.write(outRoot);
       }
       outRoot.clear();  // Clear in case multiple output files
