@@ -46,7 +46,7 @@ namespace OpenBabel
   OBTypeTable      ttab;
   OBIsotopeTable   isotab;
   OBResidueData    resdat;
-  
+
   /** \class OBElementTable data.h <openbabel/data.h>
       \brief Periodic Table of the Elements
 
@@ -424,7 +424,7 @@ namespace OpenBabel
 
     return 0.0;
   }
-  
+
   OBAtomicHeatOfFormationTable::OBAtomicHeatOfFormationTable(void)
   {
     _init = false;
@@ -434,18 +434,18 @@ namespace OpenBabel
     _subdir = "data";
     Init();
   }
-  
+
   void OBAtomicHeatOfFormationTable::ParseLine(const char *line)
   {
     const char *ptr;
     vector<string> vs;
     int mult;
     OBAtomHOF *oba;
-    
+
     ptr = strchr(line,'#');
-    if (NULL != ptr) 
+    if (NULL != ptr)
       ptr = '\0';
-    if (strlen(line) >= 0) 
+    if (strlen(line) > 0)
       {
         tokenize(vs,line,"|");
         if (vs.size() >= 5)
@@ -459,7 +459,7 @@ namespace OpenBabel
           }
       }
   }
-  
+
   int OBAtomicHeatOfFormationTable::GetHeatOfFormation(const char *elem,char *meth,
                                                        int multiplicity,
                                                        double *dhof0,double *dhof298)
@@ -471,15 +471,15 @@ namespace OpenBabel
     const char *dhf1 = "H(0K)-H(298.15K)";
     const char *exp  = "exp";
     char desc[128];
-    
+
     found = 0;
     vm = ve = vdh = 0;
     sprintf(desc,"%s(0K)",meth);
-    
-    for(it = _atomhof.begin(); it != _atomhof.end(); ++it) 
+
+    for(it = _atomhof.begin(); it != _atomhof.end(); ++it)
       {
-        if (0 == strcasecmp(it->Element().c_str(),elem)) 
-          { 
+        if (0 == strcasecmp(it->Element().c_str(),elem))
+          {
             if ((0 == strcasecmp(it->Method().c_str(),meth)) &&
                 (0 == strcasecmp(it->Desc().c_str(),desc)))
               {
@@ -500,8 +500,8 @@ namespace OpenBabel
               }
           }
       }
-        
-    if (3 == found) 
+
+    if (3 == found)
       {
         *dhof0   = ve-vm;
         *dhof298 = ve-vm-vdh;
@@ -655,7 +655,7 @@ namespace OpenBabel
     rval = Translate(sto,sfrom);
     strncpy(to,(char*)sto.c_str(), OBATOM_TYPE_LEN - 1);
     to[OBATOM_TYPE_LEN - 1] = '\0';
-    
+
     return(rval);
   }
 
