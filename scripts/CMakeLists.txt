@@ -388,6 +388,6 @@ if (DO_PHP_BINDINGS)
         OUTPUT_NAME openbabel-php)
     add_dependencies(bindings_php openbabel)
     install(TARGETS bindings_php LIBRARY DESTINATION ${LIB_INSTALL_DIR})
-    install(FILES ${openbabel_SOURCE_DIR}/scripts/php/openpabel.php DESTINATION ${LIB_INSTALL_DIR})
+    install(FILES ${openbabel_SOURCE_DIR}/scripts/php/openbabel.php DESTINATION ${LIB_INSTALL_DIR})
 
 endif (DO_PHP_BINDINGS)
