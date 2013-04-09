@@ -2191,16 +2191,8 @@ class OBElementTable extends OBGlobalDataBase {
 		$this->_cPtr=new_OBElementTable();
 	}
 
-	function ParseLine($arg1) {
-		OBElementTable_ParseLine($this->_cPtr,$arg1);
-	}
-
 	function GetNumberOfElements() {
 		return OBElementTable_GetNumberOfElements($this->_cPtr);
-	}
-
-	function GetSize() {
-		return OBElementTable_GetSize($this->_cPtr);
 	}
 
 	function GetAtomicNum($name,$iso=null) {
@@ -2296,16 +2288,91 @@ class OBIsotopeTable extends OBGlobalDataBase {
 		$this->_cPtr=new_OBIsotopeTable();
 	}
 
-	function GetSize() {
-		return OBIsotopeTable_GetSize($this->_cPtr);
-	}
-
-	function ParseLine($arg1) {
-		OBIsotopeTable_ParseLine($this->_cPtr,$arg1);
-	}
-
 	function GetExactMass($atomicNum,$isotope=0) {
 		return OBIsotopeTable_GetExactMass($this->_cPtr,$atomicNum,$isotope);
+	}
+}
+
+class OBAtomHOF {
+	public $_cPtr=null;
+	protected $_pData=array();
+
+	function __set($var,$value) {
+		if ($var === 'thisown') return swig_openbabel_alter_newobject($this->_cPtr,$value);
+		$this->_pData[$var] = $value;
+	}
+
+	function __isset($var) {
+		if ($var === 'thisown') return true;
+		return array_key_exists($var, $this->_pData);
+	}
+
+	function __get($var) {
+		if ($var === 'thisown') return swig_openbabel_get_newobject($this->_cPtr);
+		return $this->_pData[$var];
+	}
+
+	function __construct($element,$method,$desc,$T,$value,$multiplicity) {
+		if (is_resource($element) && get_resource_type($element) === '_p_OpenBabel__OBAtomHOF') {
+			$this->_cPtr=$element;
+			return;
+		}
+		$this->_cPtr=new_OBAtomHOF($element,$method,$desc,$T,$value,$multiplicity);
+	}
+
+	function Element() {
+		return OBAtomHOF_Element($this->_cPtr);
+	}
+
+	function Method() {
+		return OBAtomHOF_Method($this->_cPtr);
+	}
+
+	function Desc() {
+		return OBAtomHOF_Desc($this->_cPtr);
+	}
+
+	function T() {
+		return OBAtomHOF_T($this->_cPtr);
+	}
+
+	function Value() {
+		return OBAtomHOF_Value($this->_cPtr);
+	}
+
+	function Multiplicity() {
+		return OBAtomHOF_Multiplicity($this->_cPtr);
+	}
+}
+
+class OBAtomicHeatOfFormationTable extends OBGlobalDataBase {
+	public $_cPtr=null;
+
+	function __set($var,$value) {
+		if ($var === 'thisown') return swig_openbabel_alter_newobject($this->_cPtr,$value);
+		OBGlobalDataBase::__set($var,$value);
+	}
+
+	function __isset($var) {
+		if ($var === 'thisown') return true;
+		return OBGlobalDataBase::__isset($var);
+	}
+
+	function __get($var) {
+		if ($var === 'thisown') return swig_openbabel_get_newobject($this->_cPtr);
+		return OBGlobalDataBase::__get($var);
+	}
+
+	function __construct($res=null) {
+		if (is_resource($res) && get_resource_type($res) === '_p_OpenBabel__OBAtomicHeatOfFormationTable') {
+			$this->_cPtr=$res;
+			return;
+		}
+		$this->_cPtr=new_OBAtomicHeatOfFormationTable();
+	}
+
+	function GetHeatOfFormation($elem,$method,$multiplicity,$dhof0,$dhof298) {
+		return OBAtomicHeatOfFormationTable_GetHeatOfFormation($this->_cPtr,$elem,$method,$multiplicity,$dhof0,$dhof298);
 	}
 }
 
@@ -2333,14 +2400,6 @@ class OBTypeTable extends OBGlobalDataBase {
 			return;
 		}
 		$this->_cPtr=new_OBTypeTable();
-	}
-
-	function ParseLine($arg1) {
-		OBTypeTable_ParseLine($this->_cPtr,$arg1);
-	}
-
-	function GetSize() {
-		return OBTypeTable_GetSize($this->_cPtr);
 	}
 
 	function SetFromType($arg1) {
@@ -2392,14 +2451,6 @@ class OBResidueData extends OBGlobalDataBase {
 			return;
 		}
 		$this->_cPtr=new_OBResidueData();
-	}
-
-	function ParseLine($arg1) {
-		OBResidueData_ParseLine($this->_cPtr,$arg1);
-	}
-
-	function GetSize() {
-		return OBResidueData_GetSize($this->_cPtr);
 	}
 
 	function SetResName($arg1) {
@@ -3199,26 +3250,12 @@ class OBCommentData extends OBGenericData {
 		}
 	}
 
-	function c_Clone($arg1) {
-		$r=OBCommentData_c_Clone($this->_cPtr,$arg1);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBGenericData($r);
-		}
-		return $r;
-	}
-
 	function SetData($data_or_d) {
 		OBCommentData_SetData($this->_cPtr,$data_or_d);
 	}
 
 	function GetData() {
 		return OBCommentData_GetData($this->_cPtr);
-	}
-
-	function GetValue() {
-		return OBCommentData_GetValue($this->_cPtr);
 	}
 }
 
@@ -3317,16 +3354,6 @@ class OBExternalBondData extends OBGenericData {
 		$this->_cPtr=new_OBExternalBondData();
 	}
 
-	function c_Clone($arg1) {
-		$r=OBExternalBondData_c_Clone($this->_cPtr,$arg1);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBGenericData($r);
-		}
-		return $r;
-	}
-
 	function SetData($arg1,$arg2,$arg3) {
 		OBExternalBondData_SetData($this->_cPtr,$arg1,$arg2,$arg3);
 	}
@@ -3362,22 +3389,8 @@ class OBPairData extends OBGenericData {
 		$this->_cPtr=new_OBPairData();
 	}
 
-	function c_Clone($arg1) {
-		$r=OBPairData_c_Clone($this->_cPtr,$arg1);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBGenericData($r);
-		}
-		return $r;
-	}
-
 	function SetValue($v) {
 		OBPairData_SetValue($this->_cPtr,$v);
-	}
-
-	function GetValue() {
-		return OBPairData_GetValue($this->_cPtr);
 	}
 }
 
@@ -3405,16 +3418,6 @@ class OBSetData extends OBGenericData {
 			return;
 		}
 		$this->_cPtr=new_OBSetData();
-	}
-
-	function c_Clone($arg1) {
-		$r=OBSetData_c_Clone($this->_cPtr,$arg1);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBGenericData($r);
-		}
-		return $r;
 	}
 
 	function AddData($d) {
@@ -3466,16 +3469,6 @@ class OBVirtualBond extends OBGenericData {
 	function __get($var) {
 		if ($var === 'thisown') return swig_openbabel_get_newobject($this->_cPtr);
 		return OBGenericData::__get($var);
-	}
-
-	function c_Clone($arg1) {
-		$r=OBVirtualBond_c_Clone($this->_cPtr,$arg1);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBGenericData($r);
-		}
-		return $r;
 	}
 
 	function __construct($arg1=null,$arg2=null,$arg3=null,$stereo=0) {
@@ -3535,16 +3528,6 @@ class OBRingData extends OBGenericData {
 		case 0: $this->_cPtr=new_OBRingData(); break;
 		default: $this->_cPtr=new_OBRingData($arg1);
 		}
-	}
-
-	function c_Clone($arg1) {
-		$r=OBRingData_c_Clone($this->_cPtr,$arg1);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBGenericData($r);
-		}
-		return $r;
 	}
 
 	function SetData($vr) {
@@ -3637,16 +3620,6 @@ class OBUnitCell extends OBGenericData {
 		case 0: $this->_cPtr=new_OBUnitCell(); break;
 		default: $this->_cPtr=new_OBUnitCell($arg1);
 		}
-	}
-
-	function c_Clone($arg1) {
-		$r=OBUnitCell_c_Clone($this->_cPtr,$arg1);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBGenericData($r);
-		}
-		return $r;
 	}
 
 	function SetData($a_or_v1_or_m,$b_or_v2=null,$c_or_v3=null,$alpha=null,$beta=null,$gamma=null) {
@@ -3863,16 +3836,6 @@ class OBConformerData extends OBGenericData {
 		}
 	}
 
-	function c_Clone($arg1) {
-		$r=OBConformerData_c_Clone($this->_cPtr,$arg1);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBGenericData($r);
-		}
-		return $r;
-	}
-
 	function SetDimension($vd) {
 		OBConformerData_SetDimension($this->_cPtr,$vd);
 	}
@@ -3979,16 +3942,6 @@ class OBSymmetryData extends OBGenericData {
 		case 0: $this->_cPtr=new_OBSymmetryData(); break;
 		default: $this->_cPtr=new_OBSymmetryData($arg1);
 		}
-	}
-
-	function c_Clone($arg1) {
-		$r=OBSymmetryData_c_Clone($this->_cPtr,$arg1);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBGenericData($r);
-		}
-		return $r;
 	}
 
 	function SetData($pg,$sg=null) {
@@ -4114,16 +4067,6 @@ class OBTorsionData extends OBGenericData {
 		$this->_cPtr=$h;
 	}
 
-	function c_Clone($arg1) {
-		$r=OBTorsionData_c_Clone($this->_cPtr,$arg1);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBGenericData($r);
-		}
-		return $r;
-	}
-
 	function Clear() {
 		OBTorsionData_Clear($this->_cPtr);
 	}
@@ -4214,16 +4157,6 @@ class OBAngleData extends OBGenericData {
 		$this->_cPtr=$h;
 	}
 
-	function c_Clone($arg1) {
-		$r=OBAngleData_c_Clone($this->_cPtr,$arg1);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBGenericData($r);
-		}
-		return $r;
-	}
-
 	function Clear() {
 		OBAngleData_Clear($this->_cPtr);
 	}
@@ -4272,16 +4205,6 @@ class OBChiralData extends OBGenericData {
 		case 0: $this->_cPtr=new_OBChiralData(); break;
 		default: $this->_cPtr=new_OBChiralData($src);
 		}
-	}
-
-	function c_Clone($arg1) {
-		$r=OBChiralData_c_Clone($this->_cPtr,$arg1);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBGenericData($r);
-		}
-		return $r;
 	}
 
 	function Clear() {
@@ -4344,16 +4267,6 @@ class OBSerialNums extends OBGenericData {
 		}
 	}
 
-	function c_Clone($arg1) {
-		$r=OBSerialNums_c_Clone($this->_cPtr,$arg1);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBGenericData($r);
-		}
-		return $r;
-	}
-
 	function GetData() {
 		return OBSerialNums_GetData($this->_cPtr);
 	}
@@ -4387,16 +4300,6 @@ class OBVibrationData extends OBGenericData {
 			return;
 		}
 		$this->_cPtr=new_OBVibrationData();
-	}
-
-	function c_Clone($arg1) {
-		$r=OBVibrationData_c_Clone($this->_cPtr,$arg1);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBGenericData($r);
-		}
-		return $r;
 	}
 
 	function SetData($lx,$frequencies,$intensities,$arg4=null) {
@@ -4475,16 +4378,6 @@ class OBDOSData extends OBGenericData {
 			return;
 		}
 		$this->_cPtr=new_OBDOSData();
-	}
-
-	function c_Clone($arg1) {
-		$r=OBDOSData_c_Clone($this->_cPtr,$arg1);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBGenericData($r);
-		}
-		return $r;
 	}
 
 	function SetData($arg1,$arg2,$arg3,$arg4) {
@@ -4599,16 +4492,6 @@ class OBOrbitalData extends OBGenericData {
 		$this->_cPtr=new_OBOrbitalData();
 	}
 
-	function c_Clone($arg1) {
-		$r=OBOrbitalData_c_Clone($this->_cPtr,$arg1);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBGenericData($r);
-		}
-		return $r;
-	}
-
 	function SetAlphaOrbitals($orbitalList) {
 		OBOrbitalData_SetAlphaOrbitals($this->_cPtr,$orbitalList);
 	}
@@ -4682,16 +4565,6 @@ class OBElectronicTransitionData extends OBGenericData {
 			return;
 		}
 		$this->_cPtr=new_OBElectronicTransitionData();
-	}
-
-	function c_Clone($arg1) {
-		$r=OBElectronicTransitionData_c_Clone($this->_cPtr,$arg1);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBGenericData($r);
-		}
-		return $r;
 	}
 
 	function SetData($wavelengths,$forces) {
@@ -4795,16 +4668,6 @@ class OBRotationData extends OBGenericData {
 		$this->_cPtr=new_OBRotationData();
 	}
 
-	function c_Clone($arg1) {
-		$r=OBRotationData_c_Clone($this->_cPtr,$arg1);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBGenericData($r);
-		}
-		return $r;
-	}
-
 	function SetData($RotorType,$RotationalConstants,$SymmetryNumber) {
 		OBRotationData_SetData($this->_cPtr,$RotorType,$RotationalConstants,$SymmetryNumber);
 	}
@@ -4854,16 +4717,6 @@ class OBVectorData extends OBGenericData {
 		$this->_cPtr=new_OBVectorData();
 	}
 
-	function c_Clone($arg1) {
-		$r=OBVectorData_c_Clone($this->_cPtr,$arg1);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBGenericData($r);
-		}
-		return $r;
-	}
-
 	function SetData($x_or_data,$y=null,$z=null) {
 		switch (func_num_args()) {
 		case 1: OBVectorData_SetData($this->_cPtr,$x_or_data); break;
@@ -4909,16 +4762,6 @@ class OBMatrixData extends OBGenericData {
 		$this->_cPtr=new_OBMatrixData();
 	}
 
-	function c_Clone($arg1) {
-		$r=OBMatrixData_c_Clone($this->_cPtr,$arg1);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBGenericData($r);
-		}
-		return $r;
-	}
-
 	function SetData($data) {
 		OBMatrixData_SetData($this->_cPtr,$data);
 	}
@@ -4929,6 +4772,135 @@ class OBMatrixData extends OBGenericData {
 			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
 			if (class_exists($c)) return new $c($r);
 			return new matrix3x3($r);
+		}
+		return $r;
+	}
+}
+
+class OBFreeGridPoint {
+	public $_cPtr=null;
+	protected $_pData=array();
+
+	function __set($var,$value) {
+		if ($var === 'thisown') return swig_openbabel_alter_newobject($this->_cPtr,$value);
+		$this->_pData[$var] = $value;
+	}
+
+	function __isset($var) {
+		if ($var === 'thisown') return true;
+		return array_key_exists($var, $this->_pData);
+	}
+
+	function __get($var) {
+		if ($var === 'thisown') return swig_openbabel_get_newobject($this->_cPtr);
+		return $this->_pData[$var];
+	}
+
+	function __construct($x=null,$y=null,$z=null,$V=null) {
+		if (is_resource($x) && get_resource_type($x) === '_p_OpenBabel__OBFreeGridPoint') {
+			$this->_cPtr=$x;
+			return;
+		}
+		switch (func_num_args()) {
+		case 0: $this->_cPtr=new_OBFreeGridPoint(); break;
+		case 1: $this->_cPtr=new_OBFreeGridPoint($x); break;
+		case 2: $this->_cPtr=new_OBFreeGridPoint($x,$y); break;
+		case 3: $this->_cPtr=new_OBFreeGridPoint($x,$y,$z); break;
+		default: $this->_cPtr=new_OBFreeGridPoint($x,$y,$z,$V);
+		}
+	}
+
+	function GetX() {
+		return OBFreeGridPoint_GetX($this->_cPtr);
+	}
+
+	function GetY() {
+		return OBFreeGridPoint_GetY($this->_cPtr);
+	}
+
+	function GetZ() {
+		return OBFreeGridPoint_GetZ($this->_cPtr);
+	}
+
+	function GetV() {
+		return OBFreeGridPoint_GetV($this->_cPtr);
+	}
+
+	function SetX($x) {
+		OBFreeGridPoint_SetX($this->_cPtr,$x);
+	}
+
+	function SetY($y) {
+		OBFreeGridPoint_SetY($this->_cPtr,$y);
+	}
+
+	function SetZ($z) {
+		OBFreeGridPoint_SetZ($this->_cPtr,$z);
+	}
+
+	function SetV($V) {
+		OBFreeGridPoint_SetV($this->_cPtr,$V);
+	}
+}
+
+class OBFreeGrid extends OBGenericData {
+	public $_cPtr=null;
+
+	function __set($var,$value) {
+		if ($var === 'thisown') return swig_openbabel_alter_newobject($this->_cPtr,$value);
+		OBGenericData::__set($var,$value);
+	}
+
+	function __isset($var) {
+		if ($var === 'thisown') return true;
+		return OBGenericData::__isset($var);
+	}
+
+	function __get($var) {
+		if ($var === 'thisown') return swig_openbabel_get_newobject($this->_cPtr);
+		return OBGenericData::__get($var);
+	}
+
+	function __construct($res=null) {
+		if (is_resource($res) && get_resource_type($res) === '_p_OpenBabel__OBFreeGrid') {
+			$this->_cPtr=$res;
+			return;
+		}
+		$this->_cPtr=new_OBFreeGrid();
+	}
+
+	function NumPoints() {
+		return OBFreeGrid_NumPoints($this->_cPtr);
+	}
+
+	function AddPoint($x,$y,$z,$V) {
+		OBFreeGrid_AddPoint($this->_cPtr,$x,$y,$z,$V);
+	}
+
+	function BeginPoints() {
+		return OBFreeGrid_BeginPoints($this->_cPtr);
+	}
+
+	function EndPoints() {
+		return OBFreeGrid_EndPoints($this->_cPtr);
+	}
+
+	function BeginPoint($i) {
+		$r=OBFreeGrid_BeginPoint($this->_cPtr,$i);
+		if (is_resource($r)) {
+			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
+			if (class_exists($c)) return new $c($r);
+			return new OBFreeGridPoint($r);
+		}
+		return $r;
+	}
+
+	function NextPoint($i) {
+		$r=OBFreeGrid_NextPoint($this->_cPtr,$i);
+		if (is_resource($r)) {
+			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
+			if (class_exists($c)) return new $c($r);
+			return new OBFreeGridPoint($r);
 		}
 		return $r;
 	}
@@ -5158,14 +5130,6 @@ class OBAtomTyper extends OBGlobalDataBase {
 		$this->_cPtr=new_OBAtomTyper();
 	}
 
-	function ParseLine($arg1) {
-		OBAtomTyper_ParseLine($this->_cPtr,$arg1);
-	}
-
-	function GetSize() {
-		return OBAtomTyper_GetSize($this->_cPtr);
-	}
-
 	function AssignHyb($arg1) {
 		OBAtomTyper_AssignHyb($this->_cPtr,$arg1);
 	}
@@ -5174,8 +5138,8 @@ class OBAtomTyper extends OBGlobalDataBase {
 		OBAtomTyper_AssignTypes($this->_cPtr,$arg1);
 	}
 
-	function AssignImplicitValence($arg1) {
-		OBAtomTyper_AssignImplicitValence($this->_cPtr,$arg1);
+	function AssignImplicitValence($arg1,$CanBeLessThanActual=false) {
+		OBAtomTyper_AssignImplicitValence($this->_cPtr,$arg1,$CanBeLessThanActual);
 	}
 
 	function CorrectAromaticNitrogens($arg1) {
@@ -5207,14 +5171,6 @@ class OBAromaticTyper extends OBGlobalDataBase {
 			return;
 		}
 		$this->_cPtr=new_OBAromaticTyper();
-	}
-
-	function GetSize() {
-		return OBAromaticTyper_GetSize($this->_cPtr);
-	}
-
-	function ParseLine($arg1) {
-		OBAromaticTyper_ParseLine($this->_cPtr,$arg1);
 	}
 
 	function AssignAromaticFlags($arg1) {
@@ -5266,14 +5222,6 @@ class OBRingTyper extends OBGlobalDataBase {
 			return;
 		}
 		$this->_cPtr=new_OBRingTyper();
-	}
-
-	function ParseLine($arg1) {
-		OBRingTyper_ParseLine($this->_cPtr,$arg1);
-	}
-
-	function GetSize() {
-		return OBRingTyper_GetSize($this->_cPtr);
 	}
 
 	function AssignTypes($arg1) {
@@ -5696,10 +5644,6 @@ abstract class OBFormat extends OBPlugin {
 		return $this;
 	}
 
-	function TypeID() {
-		return OBFormat_TypeID($this->_cPtr);
-	}
-
 	function ReadMolecule($arg1,$arg2) {
 		return OBFormat_ReadMolecule($this->_cPtr,$arg1,$arg2);
 	}
@@ -5714,10 +5658,6 @@ abstract class OBFormat extends OBPlugin {
 
 	function WriteChemObject($arg1) {
 		return OBFormat_WriteChemObject($this->_cPtr,$arg1);
-	}
-
-	function Description() {
-		return OBFormat_Description($this->_cPtr);
 	}
 
 	function TargetClassDescription() {
@@ -6147,10 +6087,6 @@ class OBResidue extends OBBase {
 		OBResidue_RemoveAtom($this->_cPtr,$atom);
 	}
 
-	function Clear() {
-		return OBResidue_Clear($this->_cPtr);
-	}
-
 	function SetName($resname) {
 		OBResidue_SetName($this->_cPtr,$resname);
 	}
@@ -6347,10 +6283,6 @@ class OBAtom extends OBBase {
 
 	function Duplicate($arg1) {
 		OBAtom_Duplicate($this->_cPtr,$arg1);
-	}
-
-	function Clear() {
-		return OBAtom_Clear($this->_cPtr);
 	}
 
 	function SetIdx($idx) {
@@ -7378,10 +7310,6 @@ class OBReaction extends OBBase {
 	static function ClassDescription() {
 		return OBReaction_ClassDescription();
 	}
-
-	function Clear() {
-		return OBReaction_Clear($this->_cPtr);
-	}
 }
 
 class OBMol extends OBBase {
@@ -7854,22 +7782,8 @@ class OBMol extends OBBase {
 		OBMol_UnsetFlag($this->_cPtr,$flag);
 	}
 
-	function DoTransformations($pOptions,$pConv) {
-		$r=OBMol_DoTransformations($this->_cPtr,$pOptions,$pConv);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBBase($r);
-		}
-		return $r;
-	}
-
 	static function ClassDescription() {
 		return OBMol_ClassDescription();
-	}
-
-	function Clear() {
-		return OBMol_Clear($this->_cPtr);
 	}
 
 	function RenumberAtoms($arg1) {
@@ -7978,12 +7892,20 @@ class OBMol extends OBBase {
 		return OBMol_ConvertDativeBonds($this->_cPtr);
 	}
 
+	function MakeDativeBonds() {
+		return OBMol_MakeDativeBonds($this->_cPtr);
+	}
+
 	function CorrectForPH($pH=7.4) {
 		return OBMol_CorrectForPH($this->_cPtr,$pH);
 	}
 
 	function AssignSpinMultiplicity($NoImplicitH=false) {
 		return OBMol_AssignSpinMultiplicity($this->_cPtr,$NoImplicitH);
+	}
+
+	function AssignTotalChargeToAtoms($charge) {
+		return OBMol_AssignTotalChargeToAtoms($this->_cPtr,$charge);
 	}
 
 	function SetIsPatternStructure() {
@@ -8637,16 +8559,6 @@ class AliasData extends OBGenericData {
 		$this->_cPtr=new_AliasData();
 	}
 
-	function c_Clone($arg1) {
-		$r=AliasData_c_Clone($this->_cPtr,$arg1);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBGenericData($r);
-		}
-		return $r;
-	}
-
 	function SetAlias($alias) {
 		AliasData_SetAlias($this->_cPtr,$alias);
 	}
@@ -8700,16 +8612,6 @@ class OBAtomClassData extends OBGenericData {
 			return;
 		}
 		$this->_cPtr=new_OBAtomClassData();
-	}
-
-	function c_Clone($arg1) {
-		$r=OBAtomClassData_c_Clone($this->_cPtr,$arg1);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBGenericData($r);
-		}
-		return $r;
 	}
 
 	function Clear() {
@@ -8766,10 +8668,6 @@ abstract class OBFingerprint extends OBPlugin {
 		$r=OBFingerprint_FindType($ID);
 		$this->_cPtr = $r;
 		return $this;
-	}
-
-	function TypeID() {
-		return OBFingerprint_TypeID($this->_cPtr);
 	}
 
 	function SetBit($vec,$n) {
@@ -8989,10 +8887,6 @@ class OBDescriptor extends OBPlugin {
 		return $r;
 	}
 
-	function TypeID() {
-		return OBDescriptor_TypeID($this->_cPtr);
-	}
-
 	function Predict($arg1,$arg2=null) {
 		return OBDescriptor_Predict($this->_cPtr,$arg1,$arg2);
 	}
@@ -9176,10 +9070,6 @@ class OBFFCalculation3 extends OBFFCalculation2 {
 		return OBFFCalculation2::__get($var);
 	}
 
-	function SetupPointers() {
-		OBFFCalculation3_SetupPointers($this->_cPtr);
-	}
-
 	function __construct($res=null) {
 		if (is_resource($res) && get_resource_type($res) === '_p_OpenBabel__OBFFCalculation3') {
 			$this->_cPtr=$res;
@@ -9211,10 +9101,6 @@ class OBFFCalculation4 extends OBFFCalculation3 {
 		if (function_exists($func)) return call_user_func($func,$this->_cPtr);
 		if ($var === 'thisown') return swig_openbabel_get_newobject($this->_cPtr);
 		return OBFFCalculation3::__get($var);
-	}
-
-	function SetupPointers() {
-		OBFFCalculation4_SetupPointers($this->_cPtr);
 	}
 
 	function __construct($res=null) {
@@ -9474,10 +9360,6 @@ abstract class OBForceField extends OBPlugin {
 		$r=OBForceField_MakeNewInstance($this->_cPtr);
 		$this->_cPtr = $r;
 		return $this;
-	}
-
-	function TypeID() {
-		return OBForceField_TypeID($this->_cPtr);
 	}
 
 	static function FindForceField($ID) {
@@ -10141,10 +10023,6 @@ abstract class OBOp extends OBPlugin {
 		return $this;
 	}
 
-	function TypeID() {
-		return OBOp_TypeID($this->_cPtr);
-	}
-
 	function c_Do($pOb,$OptionText=null,$pOptions=null,$pConv=null) {
 		switch (func_num_args()) {
 		case 1: $r=OBOp_c_Do($this->_cPtr,$pOb); break;
@@ -10208,10 +10086,6 @@ class OBChargeModel extends OBPlugin {
 			return new OBChargeModel($r);
 		}
 		return $r;
-	}
-
-	function TypeID() {
-		return OBChargeModel_TypeID($this->_cPtr);
 	}
 
 	function ComputeCharges($arg1) {
@@ -10975,14 +10849,6 @@ class OBRotorRules extends OBGlobalDataBase {
 		$this->_cPtr=new_OBRotorRules();
 	}
 
-	function ParseLine($arg1) {
-		OBRotorRules_ParseLine($this->_cPtr,$arg1);
-	}
-
-	function GetSize() {
-		return OBRotorRules_GetSize($this->_cPtr);
-	}
-
 	function SetFilename($s) {
 		OBRotorRules_SetFilename($this->_cPtr,$s);
 	}
@@ -11455,16 +11321,6 @@ class OBRotamerList extends OBGenericData {
 		$this->_cPtr=new_OBRotamerList();
 	}
 
-	function c_Clone($parent) {
-		$r=OBRotamerList_c_Clone($this->_cPtr,$parent);
-		if (is_resource($r)) {
-			$c=substr(get_resource_type($r), (strpos(get_resource_type($r), '__') ? strpos(get_resource_type($r), '__') + 2 : 3));
-			if (class_exists($c)) return new $c($r);
-			return new OBGenericData($r);
-		}
-		return $r;
-	}
-
 	function Setup($mol,$ref,$nrotors=null) {
 		switch (func_num_args()) {
 		case 2: OBRotamerList_Setup($this->_cPtr,$mol,$ref); break;
@@ -11705,10 +11561,6 @@ class OBMolAtomIter {
 
 	function Duplicate($arg1) {
 		OBMolAtomIter_Duplicate($this->_cPtr,$arg1);
-	}
-
-	function Clear() {
-		return OBMolAtomIter_Clear($this->_cPtr);
 	}
 
 	function SetIdx($idx) {
@@ -12303,6 +12155,10 @@ class OBMolAtomIter {
 		return OBMolAtomIter_MatchesSMARTS($this->_cPtr,$arg1);
 	}
 
+	function Clear() {
+		return OBMolAtomIter_Clear($this->_cPtr);
+	}
+
 	function DoTransformations($arg1,$arg2) {
 		$r=OBMolAtomIter_DoTransformations($this->_cPtr,$arg1,$arg2);
 		if (is_resource($r)) {
@@ -12437,10 +12293,6 @@ class OBMolAtomDFSIter {
 
 	function Duplicate($arg1) {
 		OBMolAtomDFSIter_Duplicate($this->_cPtr,$arg1);
-	}
-
-	function Clear() {
-		return OBMolAtomDFSIter_Clear($this->_cPtr);
 	}
 
 	function SetIdx($idx) {
@@ -13035,6 +12887,10 @@ class OBMolAtomDFSIter {
 		return OBMolAtomDFSIter_MatchesSMARTS($this->_cPtr,$arg1);
 	}
 
+	function Clear() {
+		return OBMolAtomDFSIter_Clear($this->_cPtr);
+	}
+
 	function DoTransformations($arg1,$arg2) {
 		$r=OBMolAtomDFSIter_DoTransformations($this->_cPtr,$arg1,$arg2);
 		if (is_resource($r)) {
@@ -13163,10 +13019,6 @@ class OBMolAtomBFSIter {
 
 	function Duplicate($arg1) {
 		OBMolAtomBFSIter_Duplicate($this->_cPtr,$arg1);
-	}
-
-	function Clear() {
-		return OBMolAtomBFSIter_Clear($this->_cPtr);
 	}
 
 	function SetIdx($idx) {
@@ -13759,6 +13611,10 @@ class OBMolAtomBFSIter {
 
 	function MatchesSMARTS($arg1) {
 		return OBMolAtomBFSIter_MatchesSMARTS($this->_cPtr,$arg1);
+	}
+
+	function Clear() {
+		return OBMolAtomBFSIter_Clear($this->_cPtr);
 	}
 
 	function DoTransformations($arg1,$arg2) {
@@ -14733,10 +14589,6 @@ class OBAtomAtomIter {
 		OBAtomAtomIter_Duplicate($this->_cPtr,$arg1);
 	}
 
-	function Clear() {
-		return OBAtomAtomIter_Clear($this->_cPtr);
-	}
-
 	function SetIdx($idx) {
 		OBAtomAtomIter_SetIdx($this->_cPtr,$idx);
 	}
@@ -15329,6 +15181,10 @@ class OBAtomAtomIter {
 		return OBAtomAtomIter_MatchesSMARTS($this->_cPtr,$arg1);
 	}
 
+	function Clear() {
+		return OBAtomAtomIter_Clear($this->_cPtr);
+	}
+
 	function DoTransformations($arg1,$arg2) {
 		$r=OBAtomAtomIter_DoTransformations($this->_cPtr,$arg1,$arg2);
 		if (is_resource($r)) {
@@ -15881,10 +15737,6 @@ class OBResidueIter {
 		OBResidueIter_RemoveAtom($this->_cPtr,$atom);
 	}
 
-	function Clear() {
-		return OBResidueIter_Clear($this->_cPtr);
-	}
-
 	function SetName($resname) {
 		OBResidueIter_SetName($this->_cPtr,$resname);
 	}
@@ -16013,6 +15865,10 @@ class OBResidueIter {
 		return $r;
 	}
 
+	function Clear() {
+		return OBResidueIter_Clear($this->_cPtr);
+	}
+
 	function DoTransformations($arg1,$arg2) {
 		$r=OBResidueIter_DoTransformations($this->_cPtr,$arg1,$arg2);
 		if (is_resource($r)) {
@@ -16137,10 +15993,6 @@ class OBResidueAtomIter {
 
 	function Duplicate($arg1) {
 		OBResidueAtomIter_Duplicate($this->_cPtr,$arg1);
-	}
-
-	function Clear() {
-		return OBResidueAtomIter_Clear($this->_cPtr);
 	}
 
 	function SetIdx($idx) {
@@ -16733,6 +16585,10 @@ class OBResidueAtomIter {
 
 	function MatchesSMARTS($arg1) {
 		return OBResidueAtomIter_MatchesSMARTS($this->_cPtr,$arg1);
+	}
+
+	function Clear() {
+		return OBResidueAtomIter_Clear($this->_cPtr);
 	}
 
 	function DoTransformations($arg1,$arg2) {

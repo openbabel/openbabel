@@ -333,3 +333,61 @@ if (DO_CSHARP_BINDINGS)
 
 endif (DO_CSHARP_BINDINGS)
 
+###################
+# PHP
+###################
+
+if (PHP_BINDINGS)
+  if (EXISTS ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp OR RUN_SWIG)
+
+    FIND_PROGRAM(PHP_CONFIG_EXECUTABLE
+      NAMES php5-config php-config
+    )
+    FIND_LIBRARY(PHP_LIBRARY
+      NAMES php php5
+    )
+    if (NOT PHP_CONFIG_EXECUTABLE OR NOT PHP_LIBRARY)
+      message(STATUS "PHP-Config files NOT found. PHP bindings will NOT be compiled.")
+    endif (NOT PHP_CONFIG_EXECUTABLE OR NOT PHP_LIBRARY)
+
+    if(PHP_CONFIG_EXECUTABLE AND PHP_LIBRARY)
+      set(DO_PHP_BINDINGS ON BOOL)
+      message(STATUS "PHP bindings will be compiled")
+      execute_process(
+        COMMAND
+          ${PHP_CONFIG_EXECUTABLE} --includes
+        OUTPUT_VARIABLE
+          PHP_CONFIG_INCLUDES
+        RESULT_VARIABLE
+          PHP_CONFIG_RESULT
+      )
+      STRING(REPLACE "\n" "" PHP_CONFIG_INCLUDES "${PHP_CONFIG_INCLUDES}")
+      STRING(REPLACE "-I" "" PHP_CONFIG_INCLUDES "${PHP_CONFIG_INCLUDES}")
+      STRING(REPLACE " " ";" PHP_CONFIG_INCLUDES "${PHP_CONFIG_INCLUDES}")
+    endif(PHP_CONFIG_EXECUTABLE AND PHP_LIBRARY)
+
+  else (EXISTS ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp OR RUN_SWIG)
+    message(STATUS "Warning: PHP bindings NOT found. Generate using -DRUN_SWIG.")
+  endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp OR RUN_SWIG)
+endif (PHP_BINDINGS)
+
+if (DO_PHP_BINDINGS)
+    include_directories(
+        ${PHP_CONFIG_INCLUDES}
+    )
+    if (RUN_SWIG)
+      add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp
+          COMMAND ${SWIG_EXECUTABLE} -php -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp -outdir ${openbabel_SOURCE_DIR}/scripts/php ${openbabel_SOURCE_DIR}/scripts/openbabel-php.i
+          MAIN_DEPENDENCY openbabel-php.i
+      )
+    endif (RUN_SWIG)
+    add_library(bindings_php MODULE ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp)
+    target_link_libraries(bindings_php ${BABEL_LIBRARY} ${PHP_LIBRARY})
+    set_target_properties(bindings_php PROPERTIES
+        PREFIX ""
+        OUTPUT_NAME openbabel-php)
+    add_dependencies(bindings_php openbabel)
+    install(TARGETS bindings_php LIBRARY DESTINATION ${LIB_INSTALL_DIR})
+    install(FILES ${openbabel_SOURCE_DIR}/scripts/php/openpabel.php DESTINATION ${LIB_INSTALL_DIR})
+
+endif (DO_PHP_BINDINGS)
