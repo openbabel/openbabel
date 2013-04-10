@@ -4256,9 +4256,6 @@ namespace OpenBabel
           chg = 1;  //  no matching capacity; do not charge separate
         }
 		// adjust bond order and atom charges accordingly
-		cout << "A:" << bgn->GetAtomicNum() << " CHG = " << bgn->GetFormalCharge() << "+" << chg << " = " << bgn->GetFormalCharge()+chg << endl;
-		cout << "A:" << end->GetAtomicNum() << " CHG = " << end->GetFormalCharge() << "+" << -chg << " = " << end->GetFormalCharge()-chg << endl;
-
 		bgn->SetFormalCharge(bgn->GetFormalCharge()+chg);
 		end->SetFormalCharge(end->GetFormalCharge()-chg);
 		bond->SetBondOrder(ord);
