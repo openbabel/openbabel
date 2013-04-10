@@ -85,7 +85,8 @@ namespace OpenBabel
                " m  write no properties\n"
                " w  use wedge and hash bonds from input (2D only)\n"
                " S  do not store cis/trans stereochemistry in 0D MOL files\n"
-               " A  output in Alias form, e.g. Ph, if present\n\n";
+               " A  output in Alias form, e.g. Ph, if present\n"
+               " H  use HYD extension (always on if mol contains zero-order bonds)\n\n";
       }
 
       virtual const char* SpecificationURL()
@@ -134,6 +135,7 @@ namespace OpenBabel
       enum Parity {
         NotStereo, Clockwise, AntiClockwise, Unknown
       };
+      typedef map<unsigned int, unsigned int> HYDMap;
       bool  HasProperties;
       string GetTimeDate();
       void GetUpDown(OBMol& mol, map<OBBond*, OBStereo::BondDirection> &updown, set<OBBond*> &stereodbl);
@@ -217,6 +219,8 @@ namespace OpenBabel
     map<OBBond*, OBStereo::BondDirection> updown;
     vector<Parity> parities;
     vector<pair<AliasData*,OBAtom*> > aliases;
+    HYDMap hydMap;
+    bool foundHYD = false, foundZCH = false, foundZBO = false;
 
     // Attempting to read past the end of the file -- don't bother
     if ( !ifs.good() || ifs.peek() == EOF )
@@ -571,7 +575,8 @@ namespace OpenBabel
         }
 
         if ((line.substr(0, 6) != "M  CHG") && (line.substr(0, 6) != "M  RAD") &&
-            (line.substr(0, 6) != "M  ISO"))
+            (line.substr(0, 6) != "M  ISO") && (line.substr(0, 6) != "M  ZCH") &&
+            (line.substr(0, 6) != "M  HYD") && (line.substr(0, 6) != "M  ZBO"))
           continue;
         unsigned int n = 0;
         if (line.size() >= 9)
@@ -585,25 +590,43 @@ namespace OpenBabel
 	}
         int pos = 10;
         for (; n > 0; n--, pos += 8) {
-          int atomnumber = ReadUIntField((line.substr(pos,3)).c_str());
-          OBAtom *at;
-          if (atomnumber==0 || (at=mol.GetAtom(atomnumber))==NULL) {
-            obErrorLog.ThrowError(__FUNCTION__, "Error in line:\n" + line, obError);
-            return false;
-          }
-
-          at = mol.GetAtom(atomnumber); //atom numbers start at 1
+          int number = ReadUIntField((line.substr(pos,3)).c_str());
           int value = ReadUIntField((line.substr(pos+4,3)).c_str());
-          if (line.substr(3, 3) == "RAD") {
-            at->SetSpinMultiplicity(value);
-            foundCHG = true;
-          } else if (line.substr(3, 3) == "CHG") {
-            at->SetFormalCharge(value);
-            foundCHG = true;
-          } else if (line.substr(3, 3) == "ISO") {
-            if (value)
-              at->SetIsotope(value);
-            foundISO = true;
+          if (line.substr(3, 3) == "ZBO") {
+            OBBond *bo;
+            if (number==0 || (bo=mol.GetBond(number-1))==NULL) {
+              obErrorLog.ThrowError(__FUNCTION__, "Error in line:\n" + line, obError);
+              return false;
+            }
+            bo->SetBondOrder(value);
+            foundZBO = true;
+          } else {
+            OBAtom *at;
+            if (number==0 || (at=mol.GetAtom(number))==NULL) {
+              obErrorLog.ThrowError(__FUNCTION__, "Error in line:\n" + line, obError);
+              return false;
+            }
+            if (line.substr(3, 3) == "RAD") {
+              at->SetSpinMultiplicity(value);
+              foundCHG = true;
+            } else if (line.substr(3, 3) == "CHG") {
+              // TODO: CHG should appear before ZCH, but should we check just in case?
+              at->SetFormalCharge(value);
+              foundCHG = true;
+            } else if (line.substr(3, 3) == "ISO") {
+              if (value)
+                at->SetIsotope(value);
+              foundISO = true;
+            } else if (line.substr(3, 3) == "ZCH") {
+              // ZCH contains corrections to CHG, including zero values for atoms that 
+              // were set as charged in CHG and should now have zero charge
+              at->SetFormalCharge(value);
+              foundZCH = true;
+            } else if (line.substr(3, 3) == "HYD") {
+              // Save HYD counts to hydMap, and use to set implicit valence later on
+              hydMap[number] = value;
+              foundHYD = true;
+            }
           }
         }
         // Lines setting several other properties are not implemented
@@ -617,8 +640,8 @@ namespace OpenBabel
             a->SetIsotope((int)(etab.GetMass(a->GetAtomicNum()) + massDifference));
         }
 
-      // if no 'M  CHG' or 'M  RAD' properties are found, use the charges from the atom block
-      if (!foundCHG)
+      // If no CHG, RAD, ZBO, ZCH or HYD properties are found, use the charges from the atom block
+      if (!foundCHG && !foundZCH && !foundZBO && !foundHYD)
         FOR_ATOMS_OF_MOL (a, mol) {
           charge = charges.at(a->GetIndex());
           switch (charge) {
@@ -657,7 +680,7 @@ namespace OpenBabel
         updown[&*bond] = bd;
     }
 
-    // Apply the MDL valence model
+    // Apply the MDL valence model (or ZBO valence model if ZBO/ZCH/HYD are present)
     FOR_ATOMS_OF_MOL(atom, mol) {
       unsigned int elem = atom->GetAtomicNum();
       int charge = atom->GetFormalCharge();
@@ -668,10 +691,28 @@ namespace OpenBabel
         expval += bond->GetBondOrder();
         count++;
       }
-      unsigned int impval = MDLValence(elem ,charge, expval);
-      atom->SetImplicitValence(impval-(expval-count));
+      if (foundZBO || foundZCH || foundHYD) {
+        // Use HYD count to SetImplicitValence if present, otherwise HYDValence model
+        HYDMap::const_iterator hyd = hydMap.find(atom->GetIdx());
+        if (hyd == hydMap.end()) {
+          unsigned int impval = HYDValence(elem, charge, expval);
+          atom->SetImplicitValence(impval-(expval-count));
+        } else {
+          atom->SetImplicitValence(atom->GetValence() + hyd->second);
+        }
+      } else {
+        unsigned int impval = MDLValence(elem, charge, expval);
+        atom->SetImplicitValence(impval-(expval-count));
+      }
     }
-
+    
+    // I think SetImplicitValencePerceived needs to be set before AssignSpinMultiplicity
+    // because in rare instances AssignSpinMultiplicity calls GetImplicitValence which
+    // would reset the implicit valence of all atoms using atomtyper, overriding HYDValence
+    // TODO: Is this also an issue with MDLValence?
+    if (foundZBO || foundZCH || foundHYD) {
+      mol.SetImplicitValencePerceived();
+    }    
     mol.AssignSpinMultiplicity();
     mol.EndModify();
     mol.SetImplicitValencePerceived();
@@ -757,6 +798,15 @@ namespace OpenBabel
         obErrorLog.ThrowError(__FUNCTION__, "No 2D or 3D coordinates exist. Stereochemical information will"
                    " be stored using an Open Babel extension. To generate 2D or 3D coordinates instead use --gen2D or --gen3D.", obWarning, onceOnly);
     }
+    
+    // TODO: Option to use ZBO, HYD, ZCH extensions (automatic if mol contains zero-order bonds)
+    
+    // Make a copy of mol (origmol) then ConvertZeroBonds() in mol
+    // TODO: Do we need to worry about modifying mol? (It happens anyway in Kekulize etc?)
+    // If so, instead make mol the copy: OBMol &origmol = *pmol; OBMol mol = origmol;
+    // However there is information loss in the copy, so may cause issues
+    OBMol origmol = mol;
+    bool foundZBO = mol.ConvertZeroBonds();
 
     PerceiveStereo(&mol);
 
@@ -909,6 +959,8 @@ namespace OpenBabel
         OBAtom *nbr;
         OBBond *bond;
         vector<OBBond*>::iterator j;
+        int bondline = 0;
+        vector<int> zbos;
         for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) {
           for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j)) {
             bond = (OBBond*) *j;
@@ -941,12 +993,23 @@ namespace OpenBabel
               ofs << setw(3) << bond->GetBO(); // bond type
               ofs << setw(3) << stereo; // bond stereo
               ofs << "  0  0  0" << endl;
+              
+              // Add position in bond list to zbos for zero-order bonds
+              bondline += 1;
+              if (foundZBO) {
+                OBBond *origbond = origmol.GetBond(bond->GetIdx());
+                if (origbond->GetBondOrder() == 0) {
+                  zbos.push_back(bondline);
+                }
+              }
             }
           }
         }
 
         vector<OBAtom*> rads, isos, chgs;
         vector<OBAtom*>::iterator itr;
+        vector<pair<int,int> > zchs, hyds;
+        vector<pair<int,int> >::iterator zitr;
         for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
           {
             if(atom->GetSpinMultiplicity()>0 && atom->GetSpinMultiplicity()<4)
@@ -955,6 +1018,19 @@ namespace OpenBabel
               isos.push_back(atom);
             if(atom->GetFormalCharge())
               chgs.push_back(atom);
+              
+            OBAtom *origatom = origmol.GetAtom(atom->GetIdx());
+            // Get charge differences for ZCH, and hydrogen counts for HYD
+            if (foundZBO || pConv->IsOption("H", pConv->OUTOPTIONS)) {
+              if (foundZBO && origatom->GetFormalCharge() != atom->GetFormalCharge()) {
+                zchs.push_back(make_pair(origatom->GetIdx(), origatom->GetFormalCharge()));
+              }
+              int hcount = atom->ExplicitHydrogenCount() + atom->ImplicitHydrogenCount();
+              int autohcount = HYDValence(origatom->GetAtomicNum(), origatom->GetFormalCharge(), origatom->BOSum()) - origatom->BOSum();
+              if (hcount != autohcount) {
+                hyds.push_back(make_pair(origatom->GetIdx(), atom->ImplicitHydrogenCount()));
+              }
+            }
 
             if(atom->HasData(AliasDataType))
             {
@@ -970,7 +1046,8 @@ namespace OpenBabel
                 ofs << "A  " << setw(3) << right << atom->GetIdx() << '\n'
                     << 'R' << pac->GetClass(atom->GetIdx()) << endl;
             }
-          }
+          }    
+          
         if (rads.size()) {
 	  int counter = 0;
 	  for(itr=rads.begin();itr!=rads.end();++itr, counter++) {
@@ -1001,6 +1078,39 @@ namespace OpenBabel
 	      ofs << "M  CHG" << setw(3) << min(static_cast<unsigned long int>(chgs.size() - counter), static_cast<unsigned long int>(8));
 	    }
 	    ofs << setw(4) << (*itr)->GetIdx() << setw(4) << (*itr)->GetFormalCharge();
+	  }
+	  ofs << endl;
+	}
+	if(zchs.size()) {
+	  int counter = 0;
+	  for (zitr=zchs.begin(); zitr != zchs.end(); ++zitr, counter++) {
+	    if (counter % 8 == 0) {
+	      if (counter > 0) ofs << endl;
+	      ofs << "M  ZCH" << setw(3) << min(static_cast<unsigned long int>(zchs.size() - counter), static_cast<unsigned long int>(8));
+	    }
+	    ofs << setw(4) << zitr->first << setw(4) << zitr->second;
+	  }
+	  ofs << endl;
+	}
+	if(hyds.size()) {
+	  int counter = 0;
+	  for (zitr=hyds.begin(); zitr != hyds.end(); ++zitr, counter++) {
+	    if (counter % 8 == 0) {
+	      if (counter > 0) ofs << endl;
+	      ofs << "M  HYD" << setw(3) << min(static_cast<unsigned long int>(hyds.size() - counter), static_cast<unsigned long int>(8));
+	    }
+	    ofs << setw(4) << zitr->first << setw(4) << zitr->second;
+	  }
+	  ofs << endl;
+	}
+	if(zbos.size()) {
+	  int counter = 0;
+	  for(vector<int>::iterator it = zbos.begin(); it != zbos.end(); ++it, counter++) {
+	    if (counter % 8 == 0) {
+	      if (counter > 0) ofs << endl;
+	      ofs << "M  ZBO" << setw(3) << min(static_cast<unsigned long int>(zbos.size() - counter), static_cast<unsigned long int>(8));
+	    }
+	    ofs << setw(4) << *it << setw(4) << 0;
 	  }
 	  ofs << endl;
 	}
