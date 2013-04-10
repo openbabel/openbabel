@@ -382,7 +382,7 @@ if (DO_PHP_BINDINGS)
       )
     endif (RUN_SWIG)
     add_library(bindings_php MODULE ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp)
-    target_link_libraries(bindings_php ${BABEL_LIBRARY} ${PHP_LIBRARY})
+    target_link_libraries(bindings_php ${BABEL_LIBRARY} "-Wl,--unresolved-symbols=ignore-all")
     set_target_properties(bindings_php PROPERTIES
         PREFIX ""
         OUTPUT_NAME openbabel-php)
