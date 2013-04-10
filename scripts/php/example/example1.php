@@ -1,5 +1,5 @@
 <?php
-include_once 'openbabel.php';
+include_once '/usr/local/libopenbabel.php';
 
 $obMol = new OBMol;
 
@@ -13,7 +13,7 @@ $numBonds = $obMol->NumBonds(); # now 1 bond
 $obMol->Clear();
 
 $obConversion = new OBConversion;
-$obConversion->SetInAndOutFormats("smi", "mdl");
+$obConversion->SetInAndOutFormats("smi", "svg");
 $obConversion->ReadString($obMol, "C1=CC=CS1");
 
 $numAtoms = $obMol->NumAtoms(); # now 5 atoms
