@@ -343,14 +343,11 @@ if (PHP_BINDINGS)
     FIND_PROGRAM(PHP_CONFIG_EXECUTABLE
       NAMES php5-config php-config
     )
-    FIND_LIBRARY(PHP_LIBRARY
-      NAMES php php5
-    )
-    if (NOT PHP_CONFIG_EXECUTABLE OR NOT PHP_LIBRARY)
+    if (NOT PHP_CONFIG_EXECUTABLE)
       message(STATUS "PHP-Config files NOT found. PHP bindings will NOT be compiled.")
-    endif (NOT PHP_CONFIG_EXECUTABLE OR NOT PHP_LIBRARY)
+    endif (NOT PHP_CONFIG_EXECUTABLE)
 
-    if(PHP_CONFIG_EXECUTABLE AND PHP_LIBRARY)
+    if(PHP_CONFIG_EXECUTABLE)
       set(DO_PHP_BINDINGS ON BOOL)
       message(STATUS "PHP bindings will be compiled")
       execute_process(
@@ -364,7 +361,7 @@ if (PHP_BINDINGS)
       STRING(REPLACE "\n" "" PHP_CONFIG_INCLUDES "${PHP_CONFIG_INCLUDES}")
       STRING(REPLACE "-I" "" PHP_CONFIG_INCLUDES "${PHP_CONFIG_INCLUDES}")
       STRING(REPLACE " " ";" PHP_CONFIG_INCLUDES "${PHP_CONFIG_INCLUDES}")
-    endif(PHP_CONFIG_EXECUTABLE AND PHP_LIBRARY)
+    endif(PHP_CONFIG_EXECUTABLE)
 
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp OR RUN_SWIG)
     message(STATUS "Warning: PHP bindings NOT found. Generate using -DRUN_SWIG.")
@@ -382,7 +379,7 @@ if (DO_PHP_BINDINGS)
       )
     endif (RUN_SWIG)
     add_library(bindings_php MODULE ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp)
-    target_link_libraries(bindings_php ${BABEL_LIBRARY} "-Wl,--unresolved-symbols=ignore-all")
+    target_link_libraries(bindings_php ${BABEL_LIBRARY} "-Wl,--unresolved-symbols=ignore-all") # Overriding --no-undefined linker flag, since PHP library should not be linked into extension.
     set_target_properties(bindings_php PROPERTIES
         PREFIX ""
         OUTPUT_NAME openbabel-php)
