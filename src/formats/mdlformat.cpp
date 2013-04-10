@@ -799,8 +799,6 @@ namespace OpenBabel
                    " be stored using an Open Babel extension. To generate 2D or 3D coordinates instead use --gen2D or --gen3D.", obWarning, onceOnly);
     }
     
-    // TODO: Option to use ZBO, HYD, ZCH extensions (automatic if mol contains zero-order bonds)
-    
     // Make a copy of mol (origmol) then ConvertZeroBonds() in mol
     // TODO: Do we need to worry about modifying mol? (It happens anyway in Kekulize etc?)
     // If so, instead make mol the copy: OBMol &origmol = *pmol; OBMol mol = origmol;
@@ -1026,7 +1024,8 @@ namespace OpenBabel
                 zchs.push_back(make_pair(origatom->GetIdx(), origatom->GetFormalCharge()));
               }
               int hcount = atom->ExplicitHydrogenCount() + atom->ImplicitHydrogenCount();
-              int autohcount = HYDValence(origatom->GetAtomicNum(), origatom->GetFormalCharge(), origatom->BOSum()) - origatom->BOSum();
+              int autohcount = HYDValence(origatom->GetAtomicNum(), origatom->GetFormalCharge(), origatom->BOSum())
+              					 - origatom->BOSum() + atom->ExplicitHydrogenCount();
               if (hcount != autohcount) {
                 hyds.push_back(make_pair(origatom->GetIdx(), atom->ImplicitHydrogenCount()));
               }
