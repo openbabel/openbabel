@@ -334,8 +334,8 @@ namespace OpenBabel
     if (chiralFlagVal > 1)
     {
       errorMsg << "WARNING: The Chiral Flag should be either 0 or 1. The value of "
-               << chiralFlagVal << " will be ignored.\n";	        
-	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+               << chiralFlagVal << " will be ignored.\n";        
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
     }
     else
     {
@@ -376,10 +376,10 @@ namespace OpenBabel
       for (i = 0; i < natoms; ++i) {
         if (!std::getline(ifs, line)) {
           errorMsg << "WARNING: Problems reading a MDL file\n";
-	        errorMsg << "Not enough atoms to match atom count (" << natoms << ") in counts line\n";
-	        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+          errorMsg << "Not enough atoms to match atom count (" << natoms << ") in counts line\n";
+          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
           return false;
-	      }
+        }
 
         // xxxxx.xxxxyyyyy.yyyyzzzzz.zzzz aaaddcccssshhhbbbvvvHHHrrriiimmmnnneee
         //
@@ -393,9 +393,9 @@ namespace OpenBabel
         massdiff = charge = 0;
         parity = NotStereo;
         if (line.size() < 34) {
-	        errorMsg << "WARNING: Problems reading a MDL file\n";
-	        errorMsg << "Missing data following atom specification in atom block\n";
-	        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+          errorMsg << "WARNING: Problems reading a MDL file\n";
+          errorMsg << "Missing data following atom specification in atom block\n";
+          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
           return false;
         }
 
@@ -475,12 +475,12 @@ namespace OpenBabel
         flag = 0;
         if (!std::getline(ifs, line)) {
           errorMsg << "WARNING: Problems reading a MDL file\n";
-	        errorMsg << "Not enough bonds to match bond count (" << nbonds << ") in counts line\n";
-	        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
-                return false;
-	      }
-	      begin = end = order = 0;
-	      // 111222tttsssxxxrrrccc
+          errorMsg << "Not enough bonds to match bond count (" << nbonds << ") in counts line\n";
+          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+          return false;
+        }
+        begin = end = order = 0;
+        // 111222tttsssxxxrrrccc
         //
         // 111 = first atom number
         // 222 = second atom number
@@ -489,17 +489,17 @@ namespace OpenBabel
         //                    for a single bond 1 is Hash, 6 Wedge, 4 is unspecified)
         // ... = query/topology
         if (line.size() >= 9) {
-	  begin = ReadUIntField(line.substr(0, 3).c_str());
-	  end   = ReadUIntField(line.substr(3, 3).c_str());
-	  order = ReadUIntField((line.substr(6, 3)).c_str());
-	}
+          begin = ReadUIntField(line.substr(0, 3).c_str());
+          end   = ReadUIntField(line.substr(3, 3).c_str());
+          order = ReadUIntField((line.substr(6, 3)).c_str());
+        }
         if (begin == 0 || end == 0 || order == 0 || begin > mol.NumAtoms() || end > mol.NumAtoms()) {
-	        errorMsg << "WARNING: Problems reading a MDL file\n";
-	        errorMsg << "Invalid bond specification, atom numbers or bond order are wrong;\n";
-	        errorMsg << "each should be in a field of three characters.\n";
-	        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+          errorMsg << "WARNING: Problems reading a MDL file\n";
+          errorMsg << "Invalid bond specification, atom numbers or bond order are wrong;\n";
+          errorMsg << "each should be in a field of three characters.\n";
+          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
           return false;
-	      }
+        }
 
         order = (order == 4) ? 5 : order;
         if (line.size() >= 12) {  //handle wedge/hash data
@@ -530,11 +530,11 @@ namespace OpenBabel
         }
 
         if (!mol.AddBond(begin,end,order,flag)) {
-	        errorMsg << "WARNING: Problems reading a MDL file\n";
-	        errorMsg << "Invalid bond specification\n";
-	        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
-	        return false;
-	      }
+          errorMsg << "WARNING: Problems reading a MDL file\n";
+          errorMsg << "Invalid bond specification\n";
+          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+          return false;
+        }
       }
 
       //
@@ -585,9 +585,9 @@ namespace OpenBabel
           obErrorLog.ThrowError(__FUNCTION__, "Error in line: Invalid number following 'M  CHG', 'M  ISO' or 'M  RAD' specification (must be an integer in range 1 to 8)\n" + line, obError);
           return false;
         }
-	if (n > 8) {
-	  obErrorLog.ThrowError(__FUNCTION__, "Invalid line: too many items, only 8 items are allowed:\n" + line, obWarning);
-	}
+        if (n > 8) {
+          obErrorLog.ThrowError(__FUNCTION__, "Invalid line: too many items, only 8 items are allowed:\n" + line, obWarning);
+        }
         int pos = 10;
         for (; n > 0; n--, pos += 8) {
           int number = ReadUIntField((line.substr(pos,3)).c_str());
@@ -911,8 +911,8 @@ namespace OpenBabel
         {
           stringstream errorMsg;
           errorMsg << "WARNING: The Chiral Flag should be either 0 or 1. The value of "
-                                << iflag << " will be ignored.\n";	        
-    	    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+                   << iflag << " will be ignored.\n";        
+          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
         }
       }
 
@@ -952,25 +952,25 @@ namespace OpenBabel
           atom->GetAtomicNum() ? etab.GetSymbol(atom->GetAtomicNum()) : "* ",
           0,charge,stereo,0,0,valence,0,0,0,0,0,0);
         ofs << buff << endl;
-        }
+      }
 
-        OBAtom *nbr;
-        OBBond *bond;
-        vector<OBBond*>::iterator j;
-        int bondline = 0;
-        vector<int> zbos;
-        for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) {
-          for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j)) {
-            bond = (OBBond*) *j;
-            from_cit = from.find(bond);
-            // If the bond has *calculated* stereodirectionality, ensure that the start point
-            // is at the 'from' atom. Otherwise, just ensure that the start atom
-            // is the 'begin atom' of the bond (so that stereodirectionality that was
-            // read in [rather than calculated] will be correct).
-            if ( (from_cit==from.end() && atom->GetIdx()==bond->GetBeginAtomIdx()) ||
-                 (from_cit!=from.end() && from_cit->second == atom->GetId()) ) {
-              int stereo = 0;
-              if(mol.GetDimension() == 2 && pConv->IsOption("w", pConv->OUTOPTIONS)!=NULL) {
+      OBAtom *nbr;
+      OBBond *bond;
+      vector<OBBond*>::iterator j;
+      int bondline = 0;
+      vector<int> zbos;
+      for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) {
+        for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j)) {
+          bond = (OBBond*) *j;
+          from_cit = from.find(bond);
+          // If the bond has *calculated* stereodirectionality, ensure that the start point
+          // is at the 'from' atom. Otherwise, just ensure that the start atom
+          // is the 'begin atom' of the bond (so that stereodirectionality that was
+          // read in [rather than calculated] will be correct).
+          if ( (from_cit==from.end() && atom->GetIdx()==bond->GetBeginAtomIdx()) ||
+               (from_cit!=from.end() && from_cit->second == atom->GetId()) ) {
+            int stereo = 0;
+            if(mol.GetDimension() == 2 && pConv->IsOption("w", pConv->OUTOPTIONS)!=NULL) {
                 if (bond->IsWedge())
                   stereo = 1;
                 else if (bond->IsHash())
@@ -979,165 +979,160 @@ namespace OpenBabel
                   stereo = 4;
               }
 
-              // For unspecified Cis/Trans double bonds, set the stereo to 3...
-              if (unspec_ctstereo.find(bond) != unspec_ctstereo.end())
-                stereo = 3;
-              // For 3D (and 2D if "w" output option), set the stereo of the chiral centers.
-              if (updown.find(bond) != updown.end())
-                stereo = updown[bond];
+            // For unspecified Cis/Trans double bonds, set the stereo to 3...
+            if (unspec_ctstereo.find(bond) != unspec_ctstereo.end())
+              stereo = 3;
+            // For 3D (and 2D if "w" output option), set the stereo of the chiral centers.
+            if (updown.find(bond) != updown.end())
+              stereo = updown[bond];
 
-              ofs << setw(3) << atom->GetIdx(); // begin atom number
-              ofs << setw(3) << nbr->GetIdx(); // end atom number
-              ofs << setw(3) << bond->GetBO(); // bond type
-              ofs << setw(3) << stereo; // bond stereo
-              ofs << "  0  0  0" << endl;
-              
-              // Add position in bond list to zbos for zero-order bonds
-              bondline += 1;
-              if (foundZBO) {
+            ofs << setw(3) << atom->GetIdx(); // begin atom number
+            ofs << setw(3) << nbr->GetIdx(); // end atom number
+            ofs << setw(3) << bond->GetBO(); // bond type
+            ofs << setw(3) << stereo; // bond stereo
+            ofs << "  0  0  0" << endl;
+            
+            // Add position in bond list to zbos for zero-order bonds
+            bondline++;
+            if (foundZBO) {
                 OBBond *origbond = origmol.GetBond(bond->GetIdx());
                 if (origbond->GetBondOrder() == 0) {
                   zbos.push_back(bondline);
                 }
               }
-            }
+          }
+        }
+      }
+
+      vector<OBAtom*> rads, isos, chgs;
+      vector<OBAtom*>::iterator itr;
+      vector<pair<int,int> > zchs, hyds;
+      vector<pair<int,int> >::iterator zitr;
+      for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) {
+        if(atom->GetSpinMultiplicity()>0 && atom->GetSpinMultiplicity()<4)
+          rads.push_back(atom);
+        if(atom->GetIsotope())
+          isos.push_back(atom);
+        if(atom->GetFormalCharge())
+          chgs.push_back(atom);
+          
+        OBAtom *origatom = origmol.GetAtom(atom->GetIdx());
+        // Get charge differences for ZCH, and hydrogen counts for HYD
+        if (foundZBO || pConv->IsOption("H", pConv->OUTOPTIONS)) {
+          if (foundZBO && origatom->GetFormalCharge() != atom->GetFormalCharge()) {
+            zchs.push_back(make_pair(origatom->GetIdx(), origatom->GetFormalCharge()));
+          }
+          int hcount = atom->ExplicitHydrogenCount() + atom->ImplicitHydrogenCount();
+          int autohcount = HYDValence(origatom->GetAtomicNum(), origatom->GetFormalCharge(), origatom->BOSum())
+                             - origatom->BOSum() + atom->ExplicitHydrogenCount();
+          if (hcount != autohcount) {
+            hyds.push_back(make_pair(origatom->GetIdx(), atom->ImplicitHydrogenCount()));
           }
         }
 
-        vector<OBAtom*> rads, isos, chgs;
-        vector<OBAtom*>::iterator itr;
-        vector<pair<int,int> > zchs, hyds;
-        vector<pair<int,int> >::iterator zitr;
-        for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-          {
-            if(atom->GetSpinMultiplicity()>0 && atom->GetSpinMultiplicity()<4)
-              rads.push_back(atom);
-            if(atom->GetIsotope())
-              isos.push_back(atom);
-            if(atom->GetFormalCharge())
-              chgs.push_back(atom);
-              
-            OBAtom *origatom = origmol.GetAtom(atom->GetIdx());
-            // Get charge differences for ZCH, and hydrogen counts for HYD
-            if (foundZBO || pConv->IsOption("H", pConv->OUTOPTIONS)) {
-              if (foundZBO && origatom->GetFormalCharge() != atom->GetFormalCharge()) {
-                zchs.push_back(make_pair(origatom->GetIdx(), origatom->GetFormalCharge()));
-              }
-              int hcount = atom->ExplicitHydrogenCount() + atom->ImplicitHydrogenCount();
-              int autohcount = HYDValence(origatom->GetAtomicNum(), origatom->GetFormalCharge(), origatom->BOSum())
-              					 - origatom->BOSum() + atom->ExplicitHydrogenCount();
-              if (hcount != autohcount) {
-                hyds.push_back(make_pair(origatom->GetIdx(), atom->ImplicitHydrogenCount()));
-              }
-            }
-
-            if(atom->HasData(AliasDataType))
-            {
-              AliasData* ad = static_cast<AliasData*>(atom->GetData(AliasDataType));
-              if(!ad->IsExpanded()) //do nothing with an expanded alias
-                ofs << "A  " << setw(3) << right << atom->GetIdx() << '\n' << ad->GetAlias() << endl;
-            }
-            //Atoms with no AliasData, but 0 atomicnum and atomclass==n are given an alias Rn
-            else if(atom->GetAtomicNum()==0)
-            {
-              OBAtomClassData* pac = static_cast<OBAtomClassData*>(mol.GetData("Atom Class"));
-              if(pac && pac->HasClass(atom->GetIdx()))
-                ofs << "A  " << setw(3) << right << atom->GetIdx() << '\n'
-                    << 'R' << pac->GetClass(atom->GetIdx()) << endl;
-            }
-          }    
-          
-        if (rads.size()) {
-	  int counter = 0;
-	  for(itr=rads.begin();itr!=rads.end();++itr, counter++) {
-	    if (counter % 8 == 0) {
-	      if (counter > 0) ofs << endl;
-	      ofs << "M  RAD" << setw(3) << min(static_cast<unsigned long int>(rads.size() - counter), static_cast<unsigned long int>(8));
-	    }
-	    ofs << setw(4) << (*itr)->GetIdx() << setw(4) << (*itr)->GetSpinMultiplicity();
-	  }
-	  ofs << endl;
-	}
-        if(isos.size()) {
-	  int counter = 0;
-	  for(itr=isos.begin();itr!=isos.end();++itr, counter++) {
-	    if (counter % 8 == 0) {
-	      if (counter > 0) ofs << endl;
-	      ofs << "M  ISO" << setw(3) << min(static_cast<unsigned long int>(isos.size() - counter), static_cast<unsigned long int>(8));
-	    }
-	    ofs << setw(4) << (*itr)->GetIdx() << setw(4) << (*itr)->GetIsotope();
-	  }
-	  ofs << endl;
-	}
-        if(chgs.size()) {
-	  int counter = 0;
-	  for (itr=chgs.begin(); itr != chgs.end(); ++itr, counter++) {
-	    if (counter % 8 == 0) {
-	      if (counter > 0) ofs << endl;
-	      ofs << "M  CHG" << setw(3) << min(static_cast<unsigned long int>(chgs.size() - counter), static_cast<unsigned long int>(8));
-	    }
-	    ofs << setw(4) << (*itr)->GetIdx() << setw(4) << (*itr)->GetFormalCharge();
-	  }
-	  ofs << endl;
-	}
-	if(zchs.size()) {
-	  int counter = 0;
-	  for (zitr=zchs.begin(); zitr != zchs.end(); ++zitr, counter++) {
-	    if (counter % 8 == 0) {
-	      if (counter > 0) ofs << endl;
-	      ofs << "M  ZCH" << setw(3) << min(static_cast<unsigned long int>(zchs.size() - counter), static_cast<unsigned long int>(8));
-	    }
-	    ofs << setw(4) << zitr->first << setw(4) << zitr->second;
-	  }
-	  ofs << endl;
-	}
-	if(hyds.size()) {
-	  int counter = 0;
-	  for (zitr=hyds.begin(); zitr != hyds.end(); ++zitr, counter++) {
-	    if (counter % 8 == 0) {
-	      if (counter > 0) ofs << endl;
-	      ofs << "M  HYD" << setw(3) << min(static_cast<unsigned long int>(hyds.size() - counter), static_cast<unsigned long int>(8));
-	    }
-	    ofs << setw(4) << zitr->first << setw(4) << zitr->second;
-	  }
-	  ofs << endl;
-	}
-	if(zbos.size()) {
-	  int counter = 0;
-	  for(vector<int>::iterator it = zbos.begin(); it != zbos.end(); ++it, counter++) {
-	    if (counter % 8 == 0) {
-	      if (counter > 0) ofs << endl;
-	      ofs << "M  ZBO" << setw(3) << min(static_cast<unsigned long int>(zbos.size() - counter), static_cast<unsigned long int>(8));
-	    }
-	    ofs << setw(4) << *it << setw(4) << 0;
-	  }
-	  ofs << endl;
-	}
+        if(atom->HasData(AliasDataType)) {
+          AliasData* ad = static_cast<AliasData*>(atom->GetData(AliasDataType));
+          if(!ad->IsExpanded()) //do nothing with an expanded alias
+            ofs << "A  " << setw(3) << right << atom->GetIdx() << '\n' << ad->GetAlias() << endl;
+        } else if (atom->GetAtomicNum()==0) {
+          //Atoms with no AliasData, but 0 atomicnum and atomclass==n are given an alias Rn
+          OBAtomClassData* pac = static_cast<OBAtomClassData*>(mol.GetData("Atom Class"));
+          if(pac && pac->HasClass(atom->GetIdx()))
+            ofs << "A  " << setw(3) << right << atom->GetIdx() << '\n'
+                << 'R' << pac->GetClass(atom->GetIdx()) << endl;
+        }
+      }    
+        
+      if (rads.size()) {
+        int counter = 0;
+        for(itr=rads.begin();itr!=rads.end();++itr, counter++) {
+          if (counter % 8 == 0) {
+            if (counter > 0) ofs << endl;
+            ofs << "M  RAD" << setw(3) << min(static_cast<unsigned long int>(rads.size() - counter), static_cast<unsigned long int>(8));
+          }
+          ofs << setw(4) << (*itr)->GetIdx() << setw(4) << (*itr)->GetSpinMultiplicity();
+        }
+        ofs << endl;
       }
-
+      if(isos.size()) {
+        int counter = 0;
+        for(itr=isos.begin();itr!=isos.end();++itr, counter++) {
+          if (counter % 8 == 0) {
+            if (counter > 0) ofs << endl;
+            ofs << "M  ISO" << setw(3) << min(static_cast<unsigned long int>(isos.size() - counter), static_cast<unsigned long int>(8));
+          }
+          ofs << setw(4) << (*itr)->GetIdx() << setw(4) << (*itr)->GetIsotope();
+        }
+        ofs << endl;
+      }
+      if(chgs.size()) {
+        int counter = 0;
+        for (itr=chgs.begin(); itr != chgs.end(); ++itr, counter++) {
+          if (counter % 8 == 0) {
+            if (counter > 0) ofs << endl;
+            ofs << "M  CHG" << setw(3) << min(static_cast<unsigned long int>(chgs.size() - counter), static_cast<unsigned long int>(8));
+          }
+          ofs << setw(4) << (*itr)->GetIdx() << setw(4) << (*itr)->GetFormalCharge();
+        }
+        ofs << endl;
+      }
+      if(zchs.size()) {
+        int counter = 0;
+        for (zitr=zchs.begin(); zitr != zchs.end(); ++zitr, counter++) {
+          if (counter % 8 == 0) {
+            if (counter > 0) ofs << endl;
+            ofs << "M  ZCH" << setw(3) << min(static_cast<unsigned long int>(zchs.size() - counter), static_cast<unsigned long int>(8));
+          }
+          ofs << setw(4) << zitr->first << setw(4) << zitr->second;
+        }
+        ofs << endl;
+      }
+      if(hyds.size()) {
+        int counter = 0;
+        for (zitr=hyds.begin(); zitr != hyds.end(); ++zitr, counter++) {
+          if (counter % 8 == 0) {
+            if (counter > 0) ofs << endl;
+            ofs << "M  HYD" << setw(3) << min(static_cast<unsigned long int>(hyds.size() - counter), static_cast<unsigned long int>(8));
+          }
+          ofs << setw(4) << zitr->first << setw(4) << zitr->second;
+        }
+        ofs << endl;
+      }
+      if(zbos.size()) {
+        int counter = 0;
+        for(vector<int>::iterator it = zbos.begin(); it != zbos.end(); ++it, counter++) {
+          if (counter % 8 == 0) {
+            if (counter > 0) ofs << endl;
+            ofs << "M  ZBO" << setw(3) << min(static_cast<unsigned long int>(zbos.size() - counter), static_cast<unsigned long int>(8));
+          }
+          ofs << setw(4) << *it << setw(4) << 0;
+        }
+        ofs << endl;
+      }
+    }
     ofs << "M  END" << endl;
 
     //For SD files only, write properties unless option m
     if(pConv->IsOption("sd") && !pConv->IsOption("m"))
+    {
+      vector<OBGenericData*>::iterator k;
+      vector<OBGenericData*> vdata = mol.GetData();
+      for (k = vdata.begin();k != vdata.end();k++)
       {
-        vector<OBGenericData*>::iterator k;
-        vector<OBGenericData*> vdata = mol.GetData();
-        for (k = vdata.begin();k != vdata.end();k++)
+        if ((*k)->GetDataType() == OBGenericDataType::PairData
+            && (*k)->GetOrigin()!=local) //internal OBPairData is not written
+        {
+          HasProperties = true;
+          //Since partial charges are not output
+          //in this format, don't need the annotation
+          if((*k)->GetAttribute()!="PartialCharges")
           {
-            if ((*k)->GetDataType() == OBGenericDataType::PairData
-                && (*k)->GetOrigin()!=local) //internal OBPairData is not written
-              {
-                HasProperties = true;
-                //Since partial charges are not output
-                //in this format, don't need the annotation
-                if((*k)->GetAttribute()!="PartialCharges")
-                {
-                  ofs << ">  <" << (*k)->GetAttribute() << ">" << endl;
-                  ofs << ((OBPairData*)(*k))->GetValue() << endl << endl;
-                }
-              }
+            ofs << ">  <" << (*k)->GetAttribute() << ">" << endl;
+            ofs << ((OBPairData*)(*k))->GetValue() << endl << endl;
           }
+        }
       }
+    }
 
     //Unless option no$$$$ is set, $$$$ is always written between molecules and
     //at the end any if properties have been output in any molecule,
@@ -1145,7 +1140,7 @@ namespace OpenBabel
     if(!pConv->IsOption("no$$$$"))
       if(!pConv->IsLast()  || HasProperties  || pConv->IsOption("sd"))
         ofs << "$$$$" << endl;
-
+  
     return(true);
   }
 
