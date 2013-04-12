@@ -28,6 +28,7 @@ set(formats_compchem
       adfformat
       castepformat
       crystal09format
+      daltonformat
       dmolformat
       fchkformat
       fhiaimsformat
