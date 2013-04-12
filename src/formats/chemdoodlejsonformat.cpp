@@ -129,6 +129,7 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
       obErrorLog.ThrowError("ChemDoodleJSONFormat", "Atoms must be specified in an array", obError);
       return false;
     }
+    pmol->ReserveAtoms(atoms.size());
     for(Json::ArrayIndex i = 0; i < atoms.size(); i++) {
       Json::Value atom = atoms.get(i, 0);
       if (!atom.isObject()) {

@@ -167,6 +167,7 @@ class PubChemJSONFormat : public OBMoleculeFormat
     // Atom elements
     Json::Value eAids = molRoot["atoms"]["aid"];
     Json::Value elements = molRoot["atoms"]["element"];
+    pmol->ReserveAtoms(eAids.size());
     for(Json::ArrayIndex i = 0; i < eAids.size(); i++) {
       if (eAids[i].isInt() && elements[i].isString()) {
         string elementstring = elements[i].asString();
