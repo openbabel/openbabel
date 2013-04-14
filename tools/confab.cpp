@@ -25,7 +25,6 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/forcefield.h>
-#include <openbabel/confsearch.h>
 
 #ifdef _MSC_VER
 	typedef char TCHAR;
