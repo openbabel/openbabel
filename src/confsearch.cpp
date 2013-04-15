@@ -424,7 +424,7 @@ vector<vector3> GetHeavyAtomCoords(const OBMol* mol, const vector<vector3> &all_
   return v_hvyatoms;
 }
 
-void UpdateConformersFromTree(OBMol* mol, vector<double> &energies, OBDiversePoses* divposes) {
+void UpdateConformersFromTree(OBMol* mol, vector<double> &energies, OBDiversePoses* divposes, bool verbose) {
 
   OBDiversePoses::Tree* poses = divposes->GetTree();
   double cutoff = divposes->GetCutoff();
@@ -439,7 +439,8 @@ void UpdateConformersFromTree(OBMol* mol, vector<double> &energies, OBDiversePos
   // Sort the confs by energy (lowest first)
   sort(confs.begin(), confs.end(), sortpred_b);
 
-  cout << "..(tree size = " << divposes->GetSize() <<  " confs = " << confs.size() << ")\n";
+  if(verbose)
+    cout << "....tree size = " << divposes->GetSize() <<  " confs = " << confs.size() << "\n";
 
   typedef vector<OBDiversePoses::PosePair> vpp;
 
@@ -451,8 +452,8 @@ void UpdateConformersFromTree(OBMol* mol, vector<double> &energies, OBDiversePos
       newconfs.push_back(*conf);
     }
   }
-
-  cout << "..(new tree size = " << newtree.GetSize() <<  " confs = " << newconfs.size() << ")\n";
+  if (verbose)
+    cout << "....new tree size = " << newtree.GetSize() <<  " confs = " << newconfs.size() << "\n";
 
   // Add confs to the molecule's conformer data and add the energies to molecules's energies
   for (vpp::iterator chosen = newconfs.begin(); chosen!=newconfs.end(); ++chosen) {
@@ -471,7 +472,7 @@ void UpdateConformersFromTree(OBMol* mol, vector<double> &energies, OBDiversePos
   }
 }
 
-int OBForceField::DiverseConfGen(double rmsd, unsigned int nconfs, double energy_gap)
+int OBForceField::DiverseConfGen(double rmsd, unsigned int nconfs, double energy_gap, bool verbose)
   {
     _energies.clear(); // Wipe any energies from previous conformer generators
 
@@ -523,11 +524,9 @@ int OBForceField::DiverseConfGen(double rmsd, unsigned int nconfs, double energy
       rotorKeys.AddRotor(size);
       combinations *= size;
       rotor_sizes.push_back(size);
-      IF_OBFF_LOGLVL_LOW {
-        stringstream ss;
-        ss << "....rotor " << i << " from " << rotor->GetBond()->GetBeginAtomIdx() << " to ";
-        ss << rotor->GetBond()->GetEndAtomIdx() << " has " << size << " values" << endl;
-        OBFFLog(ss.str());
+      if(verbose) {
+        cout << "....rotor " << i << " from " << rotor->GetBond()->GetBeginAtomIdx() << " to "
+             << rotor->GetBond()->GetEndAtomIdx() << " has " << size << " values" << endl;
       }
     }
     if (rotor_sizes.size() > 0 && combinations == 0) { // Overflow!
@@ -539,12 +538,10 @@ int OBForceField::DiverseConfGen(double rmsd, unsigned int nconfs, double energy
       nconfs = 1 << 20;
     unsigned int max_combinations = min<unsigned int>(nconfs , combinations);
     LFSR lfsr(max_combinations); // Systematic random number generator
-    if (combinations > max_combinations) {
-      ostringstream ss;
-      ss << "There are " << combinations << " conformers. Using a cutoff of "
-        << nconfs << " we will only explore " << std::fixed << setprecision(1)
-        << static_cast<float>(nconfs * 100)/static_cast<float>(combinations) << "% of these.";
-      obErrorLog.ThrowError(__FUNCTION__, ss.str(), obInfo);
+    if (verbose && combinations > max_combinations) {
+      cout << "....Using a cutoff of "
+           << nconfs << " we will only explore " << std::fixed << setprecision(1)
+           << static_cast<float>(nconfs * 100)/static_cast<float>(combinations) << "% of these\n";
     }
 
     unsigned int combination;
@@ -582,7 +579,7 @@ int OBForceField::DiverseConfGen(double rmsd, unsigned int nconfs, double energy
     _mol.SetCoordinates(store_initial);
 
     // Get results from the tree
-    UpdateConformersFromTree(&_mol, _energies, &divposes);
+    UpdateConformersFromTree(&_mol, _energies, &divposes, verbose);
 
     // Add back the energy offset
     transform(_energies.begin(), _energies.end(), _energies.begin(), bind2nd(plus<double>(), energy_offset));
