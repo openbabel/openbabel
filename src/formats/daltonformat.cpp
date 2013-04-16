@@ -33,13 +33,16 @@ namespace OpenBabel
     DALTONInputFormat()
     {
       OBConversion::RegisterFormat("dalmol",this, "chemical/x-dalton-input");
+      OBConversion::RegisterOptionParam("a", NULL, 1, OBConversion::OUTOPTIONS); // write atomic units
     }
 
 
     virtual const char* Description() //required
     {
       return
-        "DALTON Input\n";
+        "DALTON Input\n"
+        "Write Options e.g. -xa\n"
+        "  a                write input in atomic units instead of Angstrom\n";
     };
 
     virtual const char* SpecificationURL()
@@ -103,10 +106,22 @@ namespace OpenBabel
         // reading the first real option
         ifs.getline(buffer,BUFF_SIZE); // options
 
-        // first check if there is a NoSymmetry line. otherwise bail out
+        // first check if there are any atoms specified. otherwise bail out
+        if(strstr(buffer,"AtomTypes") != NULL)
+        {
+          tokenize(vs,(strstr(buffer,"AtomTypes=")), " \t\n=");
+          atomtypes = atoi(vs[1].c_str());
+        }
+        else
+        {
+          cout << "AtomTypes not specified in file." << endl;
+          return(false);
+        }
+
+        // then check if there is a NoSymmetry line. otherwise bail out
         if(strstr(buffer,"NoSymmetry") == NULL)
         {
-          cout << "Only molecules with NoSymmetry specified can be read" << endl;
+          cout << "Only molecules with NoSymmetry can be read" << endl;
           return(false);
         }
 
@@ -114,11 +129,6 @@ namespace OpenBabel
         if(strstr(buffer,"Angstrom") == NULL)
           factor = BOHR_TO_ANGSTROM;
 
-        if(strstr(buffer,"AtomTypes") != NULL)
-        {
-           tokenize(vs,(strstr(buffer,"AtomTypes=")), " \t\n=");
-           atomtypes = atoi(vs[1].c_str());
-        }
         while(atomtypes >= 0 && ifs.getline(buffer, BUFF_SIZE))
         {
           if(strstr(buffer, "Atoms") != NULL && strstr(buffer, "Charge") != NULL)
@@ -160,8 +170,11 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
-    //   unsigned int i;
     char buffer[BUFF_SIZE];
+    double factor = 1.0f;
+    bool writeatomicunit = pConv->IsOption("a", OBConversion::OUTOPTIONS) != NULL;
+    if (writeatomicunit)
+      factor *= ANGSTROM_TO_BOHR;
 
     // containers for atomtypes and charges
     std::vector<int> groupcounts;
@@ -191,7 +204,9 @@ namespace OpenBabel
       }
       groupcounts[atomtypes-1] += 1;
     }
-    ofs << "AtomTypes=" << atomtypes << " NoSymmetry Angstrom" << endl;
+    ofs << "AtomTypes=" << atomtypes << " NoSymmetry";
+    if (!writeatomicunit) ofs << " Angstrom";
+    ofs << endl;
 
     // now let us dump those atoms to the .mol file
     atomtypes = 0;
@@ -209,9 +224,9 @@ namespace OpenBabel
       }
       snprintf(buffer, BUFF_SIZE, "%-3s %22.10f  %14.10f  %14.10f ",
                etab.GetSymbol(atom->GetAtomicNum()),
-               atom->GetX(),
-               atom->GetY(),
-               atom->GetZ());
+               atom->GetX()*factor,
+               atom->GetY()*factor,
+               atom->GetZ()*factor);
       ofs << buffer << endl;
     }
     return(true);
