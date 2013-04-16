@@ -25,6 +25,42 @@ namespace OpenBabel
 {
 #define BOHR_TO_ANGSTROM 0.529177249
 #define ANGSTROM_TO_BOHR 1.889725989
+  class DALTONOutputFormat : public OBMoleculeFormat
+  {
+  public:
+
+    DALTONOutputFormat()
+    {
+      OBConversion::RegisterFormat("dallog", this, "chemical/x-dalton-output");
+    }
+
+    virtual const char* Description()
+    {
+      return
+        "DALTON Output\n";
+    };
+
+    virtual const char* SpecificationURL()
+    {return "http://daltonprogram.org/www/resources/dalton2011manual.pdf";}; //optional
+
+    virtual const char* GetMIMEType()
+    { return "chemical/x-dalton-output"; };
+
+    //Flags() can return be any the following combined by | or be omitted if none apply
+    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
+    virtual unsigned int Flags()
+    {
+      return READONEONLY | NOTWRITABLE;
+    };
+
+    ////////////////////////////////////////////////////
+    /// The "API" interface functions
+    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+
+  private:
+  };
+
+  DALTONOutputFormat theDALTONOutputFormat;
 
   class DALTONInputFormat : public OBMoleculeFormat
   {
@@ -67,6 +103,10 @@ namespace OpenBabel
   //Make an instance of the format class
   DALTONInputFormat theDALTONInputFormat;
 
+
+  // ---
+  // INPUT READ
+  // ---
   bool DALTONInputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
@@ -160,6 +200,9 @@ namespace OpenBabel
     return(true);
   }
 
+  // ---
+  // INPUT WRITE
+  // ---
   bool DALTONInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
@@ -232,4 +275,59 @@ namespace OpenBabel
     return(true);
   }
 
+  // ---
+  // OUTPUT READ
+  // ---
+  bool DALTONOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  {
+    OBMol* pmol = pOb->CastAndClear<OBMol>();
+    if(pmol==NULL)
+      return false;
+
+    istream &ifs = *pConv->GetInStream();
+    OBMol &mol = *pmol;
+
+    char buffer[BUFF_SIZE];
+    string str,str1;
+    double x,y,z;
+    OBAtom *atom;
+    vector<string> vs;
+
+    int atomcount = 0;
+
+    mol.BeginModify();
+    while(ifs.getline(buffer,BUFF_SIZE))
+    {
+      if(strstr(buffer,"Cartesian Coordinates (a.u.)") != NULL)
+      {
+        cout << "Reading coordinates." << endl;
+        ifs.getline(buffer,BUFF_SIZE); // ---
+        ifs.getline(buffer,BUFF_SIZE); // whitespace
+        ifs.getline(buffer,BUFF_SIZE); // number of coordinates
+        tokenize(vs,buffer);
+        atomcount = atoi(vs[4].c_str()) / 3; // number of atoms to read
+        while(atomcount > 0)
+        {
+          atomcount --;
+          ifs.getline(buffer,BUFF_SIZE); // line with data
+          tokenize(vs,buffer);
+          cout << vs.size() << endl;
+          if(vs.size() == 11)
+          {
+            atom = mol.NewAtom();
+            atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
+            x = atof((char*)vs[4].c_str()) * BOHR_TO_ANGSTROM;
+            y = atof((char*)vs[7].c_str()) * BOHR_TO_ANGSTROM;
+            z = atof((char*)vs[10].c_str()) * BOHR_TO_ANGSTROM;
+            atom->SetVector(x,y,z);
+          }
+        }
+      }
+    }
+    // always find bonds and figure out bond orders
+    mol.EndModify();
+    mol.ConnectTheDots();
+    mol.PerceiveBondOrders();
+    return(true);
+  }
 } //namespace OpenBabel
