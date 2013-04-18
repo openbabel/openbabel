@@ -81,7 +81,7 @@ namespace OpenBabel {
 
     char buffer[BUFF_SIZE], tag[BUFF_SIZE];
     double x,y,z;
-    double alat = 0;
+    double alat = 1.0;
     vector<string> vs;
     matrix3x3 ortho;
     int atomicNum;
