@@ -185,6 +185,11 @@ namespace OpenBabel
              atomtypes--;
              continue;
           }
+          if(strstr(buffer, "ZMAT") != NULL)
+          {
+             cout << "ZMAT format not supported" << endl;
+             return(false);
+          }
           tokenize(vs,buffer);
           if(vs.size() == 4)
           {
