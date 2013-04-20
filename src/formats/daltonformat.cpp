@@ -131,6 +131,11 @@ namespace OpenBabel
     mol.BeginModify();
     while(ifs.getline(buffer,BUFF_SIZE))
     {
+      if(strstr(buffer,"INTGRL") != NULL)
+      {
+        cout << "Cannot read INTGRL format" << endl;
+        return(false);
+      }
       if(strstr(buffer,"ATOMBASIS") != NULL)
       {
         cout << "Cannot read ATOMBASIS format" << endl;
