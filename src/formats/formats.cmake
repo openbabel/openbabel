@@ -148,7 +148,7 @@ endif(HAVE_RPC_XDR_H)
 if(WITH_STATIC_INCHI)
 #  add_definitions(-DINCHI_LINK_AS_DLL)
   if(NOT MSVC AND NOT OPENBABEL_USE_SYSTEM_INCHI)
-    include_directories(${CMAKE_SOURCE_DIR}/include/inchi103)
+    include_directories(${CMAKE_SOURCE_DIR}/include/inchi)
   endif()
   set(formats_common
     ${formats_common}
