@@ -79,7 +79,7 @@ namespace OpenBabel
     vector<string> vs;
 
     OBAtom *atom;
-    int natom;
+    int natom=-1;
     vector<int> atomicNumbers, atomTypes;
     double x, y, z;
     vector<vector3> atomPositions;
@@ -108,24 +108,32 @@ namespace OpenBabel
           }
         }
         // Sometimes Cartesian has lower-case letter
-        else if (strstr(buffer, "artesian coordinates")) {
+        else if 
+          ((strstr(buffer, "artesian coordinates")) &&
+           (strstr(buffer, "(xcart)")) &&
+           (natom > -1) //be sure natom has already been read
+           )
+          {
           double unit = BOHR_TO_ANGSTROM;
           if (strstr(buffer, "ngstrom"))
             unit = 1.0; // no conversion needed
-
-          ifs.getline(buffer,BUFF_SIZE);
-          tokenize(vs, buffer);
-          while(vs.size() == 3) {
-            x = atof(vs[0].c_str()) * unit;
-            y = atof(vs[1].c_str()) * unit;
-            z = atof(vs[2].c_str()) * unit;
-
-            atomPositions.push_back(vector3(x, y, z));
-            // get next line
-            ifs.getline(buffer,BUFF_SIZE);
-            tokenize(vs, buffer);
+          for (int i=0;i<natom;i++)
+            {
+              ifs.getline(buffer,BUFF_SIZE);
+              tokenize(vs, buffer);
+              if (vs.size() != 3) {
+                obErrorLog.ThrowError
+                  (__FUNCTION__,
+                   "error while parsing coordinates of atoms", obWarning);
+                return(false);
+              }
+              x = atof(vs[0].c_str()) * unit;
+              y = atof(vs[1].c_str()) * unit;
+              z = atof(vs[2].c_str()) * unit;
+              atomPositions.push_back(vector3(x, y, z));
+              // get next line
+            }
           }
-        }
         else if (strstr(buffer, "natom")) {
           tokenize(vs, buffer);
           if (vs.size() != 2)
