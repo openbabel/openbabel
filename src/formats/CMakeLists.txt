@@ -8,6 +8,7 @@ set(formats_common
 
 set(formats_utility
   asciiformat
+  confabreport
   copyformat
   MNAformat
   molreport

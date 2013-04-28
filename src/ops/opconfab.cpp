@@ -42,15 +42,7 @@ namespace OpenBabel
   {
   public:
     Confab() {};
-    void DisplayConfig(OBConversion* pConv);
-    void Run(OBConversion* pConv, OBMol* pmol);
-    double rmsd_cutoff;
-    double energy_cutoff;
-    unsigned int conf_cutoff;
-    bool verbose;
-    bool include_original;
-    unsigned int N;
-    OBForceField *pff;
+
   };
 
   class OpConfab : public OBOp
@@ -77,7 +69,16 @@ namespace OpenBabel
         return dynamic_cast<OBMol*>(pOb) != NULL;
       }
       virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*);
-      Confab confab;
+      
+      void DisplayConfig(OBConversion* pConv);
+      void Run(OBConversion* pConv, OBMol* pmol);
+      double rmsd_cutoff;
+      double energy_cutoff;
+      unsigned int conf_cutoff;
+      bool verbose;
+      bool include_original;
+      unsigned int N;
+      OBForceField *pff;
   };
 
   //////////////////////////////////////////////////////////
@@ -94,11 +95,12 @@ namespace OpenBabel
 
     if(pConv->IsFirstInput())
     {
-      double rmsd_cutoff = 0.5;
-      double energy_cutoff = 50.0;
-      unsigned int conf_cutoff = 1000000; // 1 Million
-      bool verbose = false;
-      bool include_original = false;
+      pConv->AddOption("writeconformers", OBConversion::GENOPTIONS);
+      rmsd_cutoff = 0.5;
+      energy_cutoff = 50.0;
+      conf_cutoff = 1000000; // 1 Million
+      verbose = false;
+      include_original = false;
 
       OpMap::const_iterator iter;
       iter = pmap->find("rcutoff");
@@ -119,25 +121,20 @@ namespace OpenBabel
 
       cout << "**Starting Confab " << CONFAB_VER << "\n";
       cout << "**To support, cite Journal of Cheminformatics, 2011, 3, 8.\n";
-      confab.rmsd_cutoff = rmsd_cutoff;
-      confab.energy_cutoff = energy_cutoff;
-      confab.conf_cutoff = conf_cutoff;
-      confab.verbose = verbose;
-      confab.include_original = include_original;
-      confab.pff = OpenBabel::OBForceField::FindType("mmff94");
-      if (!confab.pff) {
+      pff = OpenBabel::OBForceField::FindType("mmff94");
+      if (!pff) {
         cout << "!!Cannot find forcefield!" << endl;
         exit(-1);
       }
-      confab.DisplayConfig(pConv);
+      DisplayConfig(pConv);
     }
 
-    confab.Run(pConv, pmol);
+    Run(pConv, pmol);
 
-    return true;
+    return false;
   }
 
-  void Confab::Run(OBConversion* pConv, OBMol* pmol)
+  void OpConfab::Run(OBConversion* pConv, OBMol* pmol)
   {
     OBMol mol = *pmol;
     
@@ -169,7 +166,7 @@ namespace OpenBabel
 
   }
 
-  void Confab::DisplayConfig(OBConversion* pConv)
+  void OpConfab::DisplayConfig(OBConversion* pConv)
   {
     cout << "..Input format = " << pConv->GetInFormat()->GetID() << endl;
     cout << "..Output format = " << pConv->GetOutFormat()->GetID() << endl;
