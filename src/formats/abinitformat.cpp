@@ -93,17 +93,53 @@ namespace OpenBabel
     int symmetryCode = 0;
     bool last = false;
     mol.BeginModify();
-
-    while (ifs.getline(buffer,BUFF_SIZE))
+    while (ifs.getline(buffer,BUFF_SIZE) && ! last)
       {
-	if(strstr(buffer,"outvars")){
-	     last = true;
-	     continue;
-	   }
-	if(! last){
-	  continue;
+        if (strstr(buffer, "rprim")) {
+          numTranslationVectors = 0;
+          int column;
+	  ifs.getline(buffer,BUFF_SIZE);
+          for (int i = 1; i < 4; ++i) {
+            tokenize(vs, buffer);
+            if (vs.size() < 3)
+              break;
+
+              column = 0;
+
+            x = atof((char*)vs[column].c_str()) * BOHR_TO_ANGSTROM;
+            y = atof((char*)vs[column+1].c_str()) * BOHR_TO_ANGSTROM;
+            z = atof((char*)vs[column+2].c_str()) * BOHR_TO_ANGSTROM;
+            translationVectors[numTranslationVectors++].Set(x, y,z);
+            ifs.getline(buffer,BUFF_SIZE);
+          }
+        }
+        else if (strstr(buffer, "primitive")) {
+          numTranslationVectors = 0;
+          int column;
+	  ifs.getline(buffer,BUFF_SIZE);
+          for (int i = 1; i < 4; ++i) {
+            tokenize(vs, buffer);
+            if (vs.size() < 3)
+              break;
+	    column = 1;
+            x = atof((char*)vs[column].c_str()) * BOHR_TO_ANGSTROM;
+            y = atof((char*)vs[column+1].c_str()) * BOHR_TO_ANGSTROM;
+            z = atof((char*)vs[column+2].c_str()) * BOHR_TO_ANGSTROM;
+            translationVectors[numTranslationVectors++].Set(x, y,z);
+            ifs.getline(buffer,BUFF_SIZE);
+          }
+        }
+        else if (strstr(buffer, "Symmetries")) {
+          tokenize(vs, buffer, "()");
+          // Should be something like (#160)
+          symmetryCode = atoi(vs[1].substr(1).c_str());
+	  ifs.getline(buffer,BUFF_SIZE);
+        }
+	else if(strstr(buffer,"after computation")){
+	  last = true;
 	}
-        // tokens are listed in alphabetical order for code clarity
+      }
+    while (ifs.getline(buffer,BUFF_SIZE)){        // tokens are listed in alphabetical order for code clarity
         if (strstr(buffer, "acell")) {
           tokenize(vs, buffer);
           if (vs.size() < 4)
@@ -147,7 +183,7 @@ namespace OpenBabel
             continue;
           natom = atoi(vs[1].c_str());
         }
-        else if (strstr(buffer, "rprim")) {
+        if (strstr(buffer, "rprim")) {
           numTranslationVectors = 0;
           int column;
 	  ifs.getline(buffer,BUFF_SIZE);
@@ -156,10 +192,6 @@ namespace OpenBabel
             if (vs.size() < 3)
               break;
 
-            // first line, rprim takes up a token
-	    //            if (i == 0)
-	    // column = 1;
-            //else
               column = 0;
 
             x = atof((char*)vs[column].c_str()) * BOHR_TO_ANGSTROM;
@@ -168,12 +200,7 @@ namespace OpenBabel
             translationVectors[numTranslationVectors++].Set(x, y,z);
             ifs.getline(buffer,BUFF_SIZE);
           }
-        }
-        else if (strstr(buffer, "Symmetries")) {
-          tokenize(vs, buffer, "()");
-          // Should be something like (#160)
-          symmetryCode = atoi(vs[1].substr(1).c_str());
-        }
+	}
         else if (strstr(buffer, " typat ")) {
           atomTypes.clear();
 	  tokenize(vs, buffer);
