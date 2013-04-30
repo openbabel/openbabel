@@ -79,7 +79,7 @@ namespace OpenBabel
     vector<string> vs;
 
     OBAtom *atom;
-    int natom=-1;
+    int natom;
     vector<int> atomicNumbers, atomTypes;
     double x, y, z;
     vector<vector3> atomPositions;
@@ -91,69 +91,37 @@ namespace OpenBabel
     double acell[3]; // scale of lattice vectors
     int numTranslationVectors = 0;
     int symmetryCode = 0;
-
+    bool last = false;
     mol.BeginModify();
-
-    while (ifs.getline(buffer,BUFF_SIZE))
+    while (ifs.getline(buffer,BUFF_SIZE) && ! last)
       {
-        // tokens are listed in alphabetical order for code clarity
-        if (strstr(buffer, "acell")) {
-          tokenize(vs, buffer);
-          if (vs.size() < 4)
-            continue; // invalid line
-
-          // acell=  7.6967369631E+00  7.6967369631E+00  7.6967369631E+00
-          for (int i = 0; i < 3; ++i) {
-            acell[i] = atof(vs[i+1].c_str());
-          }
-        }
-        // Sometimes Cartesian has lower-case letter
-        else if 
-          ((strstr(buffer, "artesian coordinates")) &&
-           (strstr(buffer, "(xcart)")) &&
-           (natom > -1) //be sure natom has already been read
-           )
-          {
-          double unit = BOHR_TO_ANGSTROM;
-          if (strstr(buffer, "ngstrom"))
-            unit = 1.0; // no conversion needed
-          for (int i=0;i<natom;i++)
-            {
-              ifs.getline(buffer,BUFF_SIZE);
-              tokenize(vs, buffer);
-              if (vs.size() != 3) {
-                obErrorLog.ThrowError
-                  (__FUNCTION__,
-                   "error while parsing coordinates of atoms", obWarning);
-                return(false);
-              }
-              x = atof(vs[0].c_str()) * unit;
-              y = atof(vs[1].c_str()) * unit;
-              z = atof(vs[2].c_str()) * unit;
-              atomPositions.push_back(vector3(x, y, z));
-              // get next line
-            }
-          }
-        else if (strstr(buffer, "natom")) {
-          tokenize(vs, buffer);
-          if (vs.size() != 2)
-            continue;
-          natom = atoi(vs[1].c_str());
-        }
-        else if (strstr(buffer, "rprim")) {
+        if (strstr(buffer, "rprim")) {
           numTranslationVectors = 0;
           int column;
-          for (int i = 0; i < 3; ++i) {
+	  ifs.getline(buffer,BUFF_SIZE);
+          for (int i = 1; i < 4; ++i) {
             tokenize(vs, buffer);
             if (vs.size() < 3)
               break;
 
-            // first line, rprim takes up a token
-            if (i == 0)
-              column = 1;
-            else
               column = 0;
 
+            x = atof((char*)vs[column].c_str()) * BOHR_TO_ANGSTROM;
+            y = atof((char*)vs[column+1].c_str()) * BOHR_TO_ANGSTROM;
+            z = atof((char*)vs[column+2].c_str()) * BOHR_TO_ANGSTROM;
+            translationVectors[numTranslationVectors++].Set(x, y,z);
+            ifs.getline(buffer,BUFF_SIZE);
+          }
+        }
+        else if (strstr(buffer, "primitive")) {
+          numTranslationVectors = 0;
+          int column;
+	  ifs.getline(buffer,BUFF_SIZE);
+          for (int i = 1; i < 4; ++i) {
+            tokenize(vs, buffer);
+            if (vs.size() < 3)
+              break;
+	    column = 1;
             x = atof((char*)vs[column].c_str()) * BOHR_TO_ANGSTROM;
             y = atof((char*)vs[column+1].c_str()) * BOHR_TO_ANGSTROM;
             z = atof((char*)vs[column+2].c_str()) * BOHR_TO_ANGSTROM;
@@ -165,13 +133,90 @@ namespace OpenBabel
           tokenize(vs, buffer, "()");
           // Should be something like (#160)
           symmetryCode = atoi(vs[1].substr(1).c_str());
+	  ifs.getline(buffer,BUFF_SIZE);
         }
-        else if (strstr(buffer, "typat")) {
+	else if(strstr(buffer,"after computation")){
+	  last = true;
+	}
+      }
+    while (ifs.getline(buffer,BUFF_SIZE)){        // tokens are listed in alphabetical order for code clarity
+        if (strstr(buffer, "acell")) {
           tokenize(vs, buffer);
-          atomTypes.clear();
-          for (unsigned int i = 1; i < vs.size(); ++i) {
-            atomTypes.push_back(atoi(vs[i].c_str()));
+          if (vs.size() < 4)
+            continue; // invalid line
+
+          // acell=  7.6967369631E+00  7.6967369631E+00  7.6967369631E+00
+          for (int i = 0; i < 3; ++i) {
+            acell[i] = atof(vs[i+1].c_str());
           }
+        }
+        else if (strstr(buffer, " xcart ")) {
+          double unit = BOHR_TO_ANGSTROM;
+          if (strstr(buffer, "ngstrom"))
+            unit = 1.0; // no conversion needed
+
+	  //          ifs.getline(buffer,BUFF_SIZE);
+          tokenize(vs, buffer);
+
+          // first line, rprim takes up a token
+          x = atof((char*)vs[1].c_str()) * unit;
+          y = atof((char*)vs[2].c_str()) * unit;
+	  z = atof((char*)vs[3].c_str()) * unit;
+	  atomPositions.push_back(vector3(x, y, z));
+	  // get next line
+	  ifs.getline(buffer,BUFF_SIZE);
+	  tokenize(vs, buffer);
+	  //rest of lines
+	  while(vs.size() == 3) {
+	    x = atof(vs[0].c_str()) * unit;
+	    y = atof(vs[1].c_str()) * unit;
+	    z = atof(vs[2].c_str()) * unit;
+            atomPositions.push_back(vector3(x, y, z));
+            // get next line
+            ifs.getline(buffer,BUFF_SIZE);
+            tokenize(vs, buffer);
+          }
+      }
+        else if (strstr(buffer, "natom")) {
+          tokenize(vs, buffer);
+          if (vs.size() != 2)
+            continue;
+          natom = atoi(vs[1].c_str());
+        }
+        if (strstr(buffer, "rprim")) {
+          numTranslationVectors = 0;
+          int column;
+	  ifs.getline(buffer,BUFF_SIZE);
+          for (int i = 1; i < 4; ++i) {
+            tokenize(vs, buffer);
+            if (vs.size() < 3)
+              break;
+
+              column = 0;
+
+            x = atof((char*)vs[column].c_str()) * BOHR_TO_ANGSTROM;
+            y = atof((char*)vs[column+1].c_str()) * BOHR_TO_ANGSTROM;
+            z = atof((char*)vs[column+2].c_str()) * BOHR_TO_ANGSTROM;
+            translationVectors[numTranslationVectors++].Set(x, y,z);
+            ifs.getline(buffer,BUFF_SIZE);
+          }
+	}
+        else if (strstr(buffer, " typat ")) {
+          atomTypes.clear();
+	  tokenize(vs, buffer);
+	  for (unsigned int i = 1; i < vs.size(); ++i) {
+	    atomTypes.push_back(atoi(vs[i].c_str()));
+	  }
+	  ifs.getline(buffer,BUFF_SIZE);
+	  int n=0;
+	  while( n+vs.size()<natom){
+	    tokenize(vs, buffer);
+	    for (unsigned int i = 0; i < vs.size(); ++i) {
+	      atomTypes.push_back(atoi(vs[i].c_str()));
+	    }
+	    n+=vs.size();
+	    ifs.getline(buffer,BUFF_SIZE);
+	  }
         }
         else if (strstr(buffer, "znucl")) {
           tokenize(vs, buffer);
@@ -223,7 +268,8 @@ namespace OpenBabel
     // Attach unit cell translation vectors if found
     if (numTranslationVectors > 0) {
       OBUnitCell* uc = new OBUnitCell;
-      uc->SetData(acell[0] * translationVectors[0], acell[1] * translationVectors[1], acell[2] * translationVectors[2]);
+	    //      uc->SetData(acell[0] * translationVectors[0], acell[1] * translationVectors[1], acell[2] * translationVectors[2]);
+      uc->SetData(translationVectors[0], translationVectors[1], translationVectors[2]);
       uc->SetOrigin(fileformatInput);
       if (symmetryCode)
         uc->SetSpaceGroup(symmetryCode);
