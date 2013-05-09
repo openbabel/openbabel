@@ -2867,6 +2867,36 @@ namespace OpenBabel
     return(true);
   }
 
+  // Used by DeleteAtom below. Code based on StereoRefToImplicit
+  const void DeleteStereoOnAtom(OBMol& mol, OBStereo::Ref atomId)
+  {
+    std::vector<OBGenericData*> vdata = mol.GetAllData(OBGenericDataType::StereoData);
+    for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data) {
+      OBStereo::Type datatype = ((OBStereoBase*)*data)->GetType();
+
+      if (datatype != OBStereo::CisTrans && datatype != OBStereo::Tetrahedral) {
+        obErrorLog.ThrowError(__FUNCTION__,
+            "This function should be updated to handle additional stereo types.\nSome stereochemistry objects may contain explicit refs to hydrogens which have been removed.", obWarning);
+        continue;
+      }
+
+      if (datatype == OBStereo::CisTrans) {
+        OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
+        OBCisTransStereo::Config ct_cfg = ct->GetConfig();
+        if (ct_cfg.begin == atomId || ct_cfg.end == atomId ||
+            std::find(ct_cfg.refs.begin(), ct_cfg.refs.end(), atomId) != ct_cfg.refs.end())
+          mol.DeleteData(ct);
+      }
+      else if (datatype == OBStereo::Tetrahedral) {
+        OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
+        OBTetrahedralStereo::Config ts_cfg = ts->GetConfig();
+        if (ts_cfg.from == atomId ||
+            std::find(ts_cfg.refs.begin(), ts_cfg.refs.end(), atomId) != ts_cfg.refs.end())
+          mol.DeleteData(ts);
+      }
+    }
+  }
+
   bool OBMol::DeleteAtom(OBAtom *atom, bool destroyAtom)
   {
     if (atom->IsHydrogen())
@@ -2899,9 +2929,13 @@ namespace OpenBabel
 
     EndModify();
 
+    // Delete any stereo objects involving this atom
+    OBStereo::Ref id = atom->GetId();
+    DeleteStereoOnAtom(*this, id);
+
     if (destroyAtom)
       DestroyAtom(atom);
-
+    
     UnsetSSSRPerceived();
     UnsetLSSRPerceived();
     return(true);
