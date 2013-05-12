@@ -1380,8 +1380,12 @@ namespace OpenBabel
       _title += "_" + extitle;
 
     // First, handle atoms and bonds
-    for (atom = src.BeginAtom(i) ; atom ; atom = src.NextAtom(i))
+    map<unsigned long int, unsigned long int> correspondingId;
+    for (atom = src.BeginAtom(i) ; atom ; atom = src.NextAtom(i)) {
       AddAtom(*atom, true); // forceNewId=true (don't reuse the original Id)
+      OBAtom *addedAtom = GetAtom(NumAtoms());
+      correspondingId[atom->GetId()] = addedAtom->GetId();
+    }
 
     for (bond = src.BeginBond(j) ; bond ; bond = src.NextBond(j)) {
       bond->SetId(NoId);//Need to remove ID which relates to source mol rather than this mol
@@ -1403,6 +1407,34 @@ namespace OpenBabel
           (_residue[_residue.size() - 1])->AddAtom(atom);
         }
     }
+
+    // Copy the stereo
+    std::vector<OBGenericData*> vdata = src.GetAllData(OBGenericDataType::StereoData);
+    for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data) {
+      OBStereo::Type datatype = ((OBStereoBase*)*data)->GetType();
+      if (datatype == OBStereo::CisTrans) {
+        OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
+        OBCisTransStereo *nct = new OBCisTransStereo(this);
+        OBCisTransStereo::Config ct_cfg = ct->GetConfig();
+        ct_cfg.begin = correspondingId[ct_cfg.begin];
+        ct_cfg.end = correspondingId[ct_cfg.end];
+        for(OBStereo::RefIter ri = ct_cfg.refs.begin(); ri != ct_cfg.refs.end(); ++ri)
+          *ri = correspondingId[*ri];
+        nct->SetConfig(ct_cfg);
+        SetData(nct);
+      }
+      else if (datatype == OBStereo::Tetrahedral) {
+        OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
+        OBTetrahedralStereo *nts = new OBTetrahedralStereo(this);
+        OBTetrahedralStereo::Config ts_cfg = ts->GetConfig();
+        ts_cfg.center = correspondingId[ts_cfg.center];
+        ts_cfg.from = correspondingId[ts_cfg.from];
+        for(OBStereo::RefIter ri = ts_cfg.refs.begin(); ri != ts_cfg.refs.end(); ++ri)
+          *ri = correspondingId[*ri];
+        nts->SetConfig(ts_cfg);
+        SetData(nts);
+      }
+    }    
 
     // TODO: This is actually a weird situation (e.g., adding a 2D mol to 3D one)
     // We should do something to update the src coordinates if they're not 3D
