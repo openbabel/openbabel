@@ -1380,10 +1380,9 @@ namespace OpenBabel
       _title += "_" + extitle;
 
     // First, handle atoms and bonds
-    for (atom = src.BeginAtom(i) ; atom ; atom = src.NextAtom(i)) {
-      atom->SetId(NoId);//Need to remove ID which relates to source mol rather than this mol
-      AddAtom(*atom);
-    }
+    for (atom = src.BeginAtom(i) ; atom ; atom = src.NextAtom(i))
+      AddAtom(*atom, true); // forceNewId=true (don't reuse the original Id)
+
     for (bond = src.BeginBond(j) ; bond ; bond = src.NextBond(j)) {
       bond->SetId(NoId);//Need to remove ID which relates to source mol rather than this mol
       AddBond(bond->GetBeginAtomIdx() + prevatms,
@@ -1727,15 +1726,19 @@ namespace OpenBabel
   //! \brief Add an atom to a molecule
   //!
   //! Also checks bond_queue for any bonds that should be made to the new atom
-  bool OBMol::AddAtom(OBAtom &atom)
+  bool OBMol::AddAtom(OBAtom &atom, bool forceNewId)
   {
     //    BeginModify();
 
-    // get the atom id or assign the next available id if the
-    // specified atom has an invalid id
-    unsigned long id = atom.GetId();
-    if (id == NoId)
+    // Use the existing atom Id unless either it's invalid or forceNewId has been specified
+    unsigned long id;
+    if (forceNewId)
       id = _atomIds.size();
+    else {
+      id = atom.GetId();
+      if (id == NoId)
+        id = _atomIds.size();
+    }
 
     OBAtom *obatom = CreateAtom();
     *obatom = atom;
