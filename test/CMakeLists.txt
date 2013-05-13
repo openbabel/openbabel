@@ -8,37 +8,23 @@ add_definitions(-DFORMATDIR="\\"${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/\\"")
 #  new tests using obtest.h
 ############################################################
 
-set(tests
-    automorphism
-    builder
-    canonconsistent
-    canonstable
-    cistrans
-    graphsym
-    implicitH
-    lssr
-    isomorphism
-    rotor
-    shuffle
-    smiles
-    smiley
-    spectrophore
-    squareplanar
-    stereo
-    stereoperception
-    tautomer
-    tetrahedral
-    tetranonplanar
-    tetraplanar
-    uniqueid
-  )
+################ Add new tests here
+set (cpptests
+     automorphism builder
+    )
+set (automorphism_parts 1 2 3 4 5 6 7 8 9 10)
+set (builder_parts 1 2 3 4 5)
+##################################
 
-if(EIGEN2_FOUND OR EIGEN3_FOUND)
-  set(tests
-      align
-      ${tests}
-     )
-endif()
+foreach(cpptest ${cpptests})
+  set(cpptestsrc ${cpptestsrc} ${cpptest}test.cpp)
+endforeach()
+
+add_definitions(-DTESTDIR=${CMAKE_CURRENT_SOURCE_DIR})
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+create_test_sourcelist(srclist test_runner.cpp
+                       ${cpptestsrc})
 
 set(TEST_PATH ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
@@ -81,17 +67,21 @@ else()
   set(libs openbabel)
 endif()
 
-foreach(test ${tests})
-  add_executable(test_${test} ${test}test.cpp)
-  target_link_libraries(test_${test} ${libs})
-  if(NOT BUILD_SHARED AND NOT BUILD_MIXED)
-    set_target_properties(test_${test} PROPERTIES LINK_SEARCH_END_STATIC TRUE)
-  endif()
-  add_test(${test}_Test ${TEST_PATH}/test_${test})
-  set_tests_properties(${test}_Test PROPERTIES
-    FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
-    ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}")
-endforeach(test ${tests})
+add_executable(test_runner ${srclist} obtest.cpp)
+target_link_libraries(test_runner ${libs})
+if(NOT BUILD_SHARED AND NOT BUILD_MIXED)
+  set_target_properties(test_runner PROPERTIES LINK_SEARCH_END_STATIC TRUE)
+endif()
+
+foreach(cpptest ${cpptests})
+  foreach(part ${${cpptest}_parts})
+    add_test(test_${cpptest}_${part}
+             test_runner test_${cpptest} ${part})
+    set_tests_properties(test_${cpptest}_${part} PROPERTIES
+      FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
+      ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}")
+  endforeach()
+endforeach()
 
 ############################################################
 #  old-style tests using "not ok"
