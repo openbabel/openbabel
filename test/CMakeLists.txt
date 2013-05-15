@@ -76,7 +76,7 @@ endif()
 foreach(cpptest ${cpptests})
   foreach(part ${${cpptest}_parts})
     add_test(test_${cpptest}_${part}
-             test_runner test_${cpptest} ${part})
+             ${TEST_PATH}/test_runner ${cpptest}test ${part})
     set_tests_properties(test_${cpptest}_${part} PROPERTIES
       FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
       ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}")
