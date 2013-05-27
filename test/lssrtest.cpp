@@ -10,15 +10,6 @@
 using namespace std;
 using namespace OpenBabel;
 
-std::string GetFilename(const std::string &filename)
-{
-  std::string path = TESTDATADIR + filename;
-  return path;
-}
-
-static unsigned int failed = 0;
-static unsigned int testCount = 0;
-
 
 std::vector< std::vector<unsigned long> > getIdRingPaths(OBMol &mol)
 {
@@ -58,7 +49,6 @@ bool doShuffleTestMolecule(OBMol &mol)
 {
   //cout << "-------------------------------------------------------------------------" << endl;
   int N = 100;
-  testCount++;
 
   std::vector< std::vector<unsigned long> > ref = getIdRingPaths(mol);
 
@@ -83,10 +73,6 @@ bool doShuffleTestMolecule(OBMol &mol)
           }
         }
         OB_ASSERT( found );
-        if (!found) {
-          failed++;
-          return false;
-        }
       }
     }
   }
@@ -97,15 +83,13 @@ bool doShuffleTestMolecule(OBMol &mol)
 bool doShuffleTestMultiFile(const std::string &filename)
 {
   cout << "Shuffling: " << filename << endl;
-  std::string file = GetFilename(filename);
+  std::string file = OBTestUtil::GetFilename(filename);
   // read a smiles string
   OBMol mol;
   OBConversion conv;
   OBFormat *format = conv.FormatFromExt(file.c_str());
   OB_REQUIRE( format );
   OB_REQUIRE( conv.SetInFormat(format) );
-
-  testCount++;
 
   std::ifstream ifs;
   ifs.open(file.c_str());
@@ -155,15 +139,13 @@ class LSSR
 bool verifyLSSR(const std::string &filename, const LSSR &ref)
 {
   cout << "Verify LSSR: " << filename << endl;
-  std::string file = GetFilename(filename);
+  std::string file = OBTestUtil::GetFilename(filename);
   // read a smiles string
   OBMol mol;
   OBConversion conv;
   OBFormat *format = conv.FormatFromExt(file.c_str());
   OB_REQUIRE( format );
   OB_REQUIRE( conv.SetInFormat(format) );
-
-  testCount++;
 
   std::ifstream ifs;
   ifs.open(file.c_str());
@@ -189,19 +171,23 @@ bool verifyLSSR(const std::string &filename, const LSSR &ref)
   for (unsigned int i = 0; i < ref.size_count.size(); ++i) {
     const LSSR::Size_Count &size_count = ref.size_count[i];
     OB_ASSERT( ringSizeCount[size_count.ringSize] == size_count.ringCount );
-    if (ringSizeCount[size_count.ringSize] != size_count.ringCount)
-      fail = true;
   }
-
-  testCount++;
-  if (fail)
-    failed++;
 
   return true;
 }
 
-int main(int argc, char **argv)
+int lssrtest(int argc, char* argv[])
 {
+  int defaultchoice = 1;
+  
+  int choice = defaultchoice;
+
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
+    }
+  }
   // Define location of file formats for testing
   #ifdef FORMATDIR
     char env[BUFF_SIZE];
@@ -209,35 +195,44 @@ int main(int argc, char **argv)
     putenv(env);
   #endif
 
-  OB_ASSERT( doShuffleTestMultiFile("aromatics.smi") );
-  OB_ASSERT( doShuffleTestMultiFile("nci.smi") );
-  OB_ASSERT( doShuffleTestMultiFile("attype.00.smi") );
-  
-  OB_ASSERT( doShuffleTestMultiFile("rings/tetrahedron.mdl") );
-  OB_ASSERT( doShuffleTestMultiFile("rings/cubane.mdl") );
-  OB_ASSERT( doShuffleTestMultiFile("rings/cubane2.mdl") );
-  OB_ASSERT( doShuffleTestMultiFile("rings/octahedron.mdl") );
-  OB_ASSERT( doShuffleTestMultiFile("rings/bridged1.mdl") );
-  OB_ASSERT( doShuffleTestMultiFile("rings/fullerene20.mdl") );
-  OB_ASSERT( doShuffleTestMultiFile("rings/fullerene60.mdl") );
-  
-  // 4x 3-ring, 1x 5-ring
-  OB_ASSERT( verifyLSSR("rings/tetrahedron.mdl", LSSR(LSSR::Size_Count(3, 4), LSSR::Size_Count(5, 1))) );
-  // 6x 4-ring, 1x 6-ring
-  OB_ASSERT( verifyLSSR("rings/cubane.mdl", LSSR(LSSR::Size_Count(4, 6), LSSR::Size_Count(6, 1))) );
-  OB_ASSERT( verifyLSSR("rings/cubane2.mdl", LSSR(LSSR::Size_Count(4, 6), LSSR::Size_Count(6, 1))) );
-  // 8x 3-ring
-  OB_ASSERT( verifyLSSR("rings/octahedron.mdl", LSSR(LSSR::Size_Count(3, 8))) );
-  // 3x 6-ring
-  OB_ASSERT( verifyLSSR("rings/bridged1.mdl", LSSR(LSSR::Size_Count(6, 3))) );
-  // 12x 5-ring
-  OB_ASSERT( verifyLSSR("rings/fullerene20.mdl", LSSR(LSSR::Size_Count(5, 12))) );
-  // 12x 5-ring, 20x 6-ring
-  OB_ASSERT( verifyLSSR("rings/fullerene60.mdl", LSSR(LSSR::Size_Count(5, 12), LSSR::Size_Count(6, 20))) );
-
-  //OB_ASSERT( doShuffleTest("") );
-
-  cout << "PASSED TESTS: " << testCount - failed << "/" << testCount << endl;
+  switch(choice) {
+  case 1:
+    OB_ASSERT( doShuffleTestMultiFile("aromatics.smi") );
+    break;
+  case 2:
+    OB_ASSERT( doShuffleTestMultiFile("nci.smi") );
+    break;
+  case 3:
+    OB_ASSERT( doShuffleTestMultiFile("attype.00.smi") );
+    break;
+  case 4:    
+    OB_ASSERT( doShuffleTestMultiFile("rings/tetrahedron.mdl") );
+    OB_ASSERT( doShuffleTestMultiFile("rings/cubane.mdl") );
+    OB_ASSERT( doShuffleTestMultiFile("rings/cubane2.mdl") );
+    OB_ASSERT( doShuffleTestMultiFile("rings/octahedron.mdl") );
+    OB_ASSERT( doShuffleTestMultiFile("rings/bridged1.mdl") );
+    OB_ASSERT( doShuffleTestMultiFile("rings/fullerene20.mdl") );
+    OB_ASSERT( doShuffleTestMultiFile("rings/fullerene60.mdl") );
+    break;
+  case 5:
+    // 4x 3-ring, 1x 5-ring
+    OB_ASSERT( verifyLSSR("rings/tetrahedron.mdl", LSSR(LSSR::Size_Count(3, 4), LSSR::Size_Count(5, 1))) );
+    // 6x 4-ring, 1x 6-ring
+    OB_ASSERT( verifyLSSR("rings/cubane.mdl", LSSR(LSSR::Size_Count(4, 6), LSSR::Size_Count(6, 1))) );
+    OB_ASSERT( verifyLSSR("rings/cubane2.mdl", LSSR(LSSR::Size_Count(4, 6), LSSR::Size_Count(6, 1))) );
+    // 8x 3-ring
+    OB_ASSERT( verifyLSSR("rings/octahedron.mdl", LSSR(LSSR::Size_Count(3, 8))) );
+    // 3x 6-ring
+    OB_ASSERT( verifyLSSR("rings/bridged1.mdl", LSSR(LSSR::Size_Count(6, 3))) );
+    // 12x 5-ring
+    OB_ASSERT( verifyLSSR("rings/fullerene20.mdl", LSSR(LSSR::Size_Count(5, 12))) );
+    // 12x 5-ring, 20x 6-ring
+    OB_ASSERT( verifyLSSR("rings/fullerene60.mdl", LSSR(LSSR::Size_Count(5, 12), LSSR::Size_Count(6, 20))) );
+    break;
+  default:
+    cout << "Test number " << choice << " does not exist!\n";
+    return -1;
+  }
 
   return 0;
 }
