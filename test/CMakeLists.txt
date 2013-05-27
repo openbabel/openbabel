@@ -11,7 +11,7 @@ add_definitions(-DFORMATDIR="\\"${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/\\"")
 ################ Add new tests here
 set (cpptests
      automorphism builder canonconsistent canonstable cistrans graphsym
-     implicitH lssr
+     implicitH lssr isomorphism
     )
 set (automorphism_parts 1 2 3 4 5 6 7 8 9 10)
 set (builder_parts 1 2 3 4 5)
@@ -21,6 +21,7 @@ set (cistrans_parts 1 2 3 4 5 6 7 8 9)
 set (graphsym_parts 1 2 3 4 5)
 set (implicitH_parts 1)
 set (lssr_parts 1 2 3 4 5)
+set (isomorphism_parts 1 2 3 4 5 6 7 8)
 
 ##################################
 
