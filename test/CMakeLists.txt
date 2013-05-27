@@ -10,10 +10,12 @@ add_definitions(-DFORMATDIR="\\"${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/\\"")
 
 ################ Add new tests here
 set (cpptests
-     automorphism builder
+     automorphism builder canonconsistent canonstable
     )
 set (automorphism_parts 1 2 3 4 5 6 7 8 9 10)
 set (builder_parts 1 2 3 4 5)
+set (canonconsistent_parts  1 2 3)
+set (canonstable_parts 1)
 ##################################
 
 foreach(cpptest ${cpptests})

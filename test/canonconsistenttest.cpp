@@ -10,16 +10,7 @@
 using namespace std;
 using namespace OpenBabel;
 
-std::string GetFilename(const std::string &filename)
-{
-  std::string path = TESTDATADIR + filename;
-  return path;
-}
-
-static unsigned int failed = 0;
-static unsigned int testCount = 0;
-
-bool doMultiMoleculeFile(const std::string &filename, bool counter = false)
+bool mdoMultiMoleculeFile(const std::string &filename)
 {
   std::ifstream ifs;
   ifs.open(filename.c_str());
@@ -43,6 +34,9 @@ bool doMultiMoleculeFile(const std::string &filename, bool counter = false)
 
   bool result = true;
   conv.SetInStream(&ifs);
+  int testCount = 0;
+  int failed = 0;
+
   while (1) {
     if (!conv.Read(&mol)) {
       // failed read, try again
@@ -50,7 +44,7 @@ bool doMultiMoleculeFile(const std::string &filename, bool counter = false)
         break; // we tried twice, so break
     }
     testCount++;
-    if (counter && testCount % 1000 == 0)
+    if (testCount % 1000 == 0)
       cout << testCount << " completed" << endl;
 
     mol.SetTitle("");
@@ -67,31 +61,45 @@ bool doMultiMoleculeFile(const std::string &filename, bool counter = false)
         cout << "Failed aromaticity: \n " << output << "\n";
     }
   }
-
+  cout << "PASSED TESTS: " << testCount - failed << "/" << testCount << endl;
   return result;
 }
 
 
-int main(int argc, char **argv)
+int canonconsistenttest(int argc, char* argv[])
 {
+  int defaultchoice = 1;
+  int choice = defaultchoice;
+
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
+    }
+  }
+
   // Define location of file formats for testing
 #ifdef FORMATDIR
   char env[BUFF_SIZE];
   snprintf(env, BUFF_SIZE, "BABEL_LIBDIR=%s", FORMATDIR);
   putenv(env);
-#endif  
+#endif
 
-  if (argc == 2) {
-    OB_ASSERT( doMultiMoleculeFile(argv[1], true) );    cout << "PASSED TESTS: " << testCount - failed << "/" << testCount << endl;
-    return 0;
+  switch(choice) {
+    case 1:
+      OB_ASSERT( mdoMultiMoleculeFile(OBTestUtil::GetFilename("forcefield.sdf")) );
+      break;
+    case 2:
+      OB_ASSERT( mdoMultiMoleculeFile(OBTestUtil::GetFilename("filterset.sdf")) );
+      break;
+    case 3:
+      OB_ASSERT( mdoMultiMoleculeFile(OBTestUtil::GetFilename("cantest.sdf")) );
+      break;
+    default:
+      cout << "Test numer " << choice << " does not exist!\n";
+      return -1;
   }
-
-  OB_ASSERT( doMultiMoleculeFile(GetFilename("forcefield.sdf")) );
-  OB_ASSERT( doMultiMoleculeFile(GetFilename("filterset.sdf")) );
-  OB_ASSERT( doMultiMoleculeFile(GetFilename("cantest.sdf")) );
 //  OB_ASSERT( doMultiMoleculeFile(GetFilename("cansmi-roundtrip.smi")) );
-
-  cout << "PASSED TESTS: " << testCount - failed << "/" << testCount << endl;
 
   return 0;
 }
