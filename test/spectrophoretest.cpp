@@ -479,8 +479,19 @@ void test09(OpenBabel::OBMol* mol)
 
 
 
-int main(int argc,char **argv)
+int spectrophoretest(int argc, char* argv[])
 {
+  int defaultchoice = 1;
+  
+  int choice = defaultchoice;
+
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
+    }
+  }
+
    // Create a test molecule
    OpenBabel::OBMol mol;
    OpenBabel::OBAtom* a[5];
@@ -496,17 +507,30 @@ int main(int argc,char **argv)
       b->SetBegin(a[0]); b->SetEnd(a[i]); b->SetBondOrder(1);
    }
    
-   // Run the tests
-   test01(&mol);
-   test02(&mol);
-   test03(&mol);
-   test04(&mol);
-   test05(&mol);
-   test06(&mol);
-   test07(&mol);
-   test08(&mol);
-   test09(&mol);
-   
-   // End
-   return 0;
+  switch(choice) {
+  case 1:
+    test01(&mol);
+    test02(&mol);
+    break;
+  case 2:
+    test03(&mol);
+    test04(&mol);
+    break;
+  case 3:
+    test05(&mol);
+    test06(&mol);
+    break;
+  case 4:
+    test07(&mol);
+    test08(&mol);
+    break;
+  case 5:
+    test09(&mol);
+    break;
+  default:
+    std::cout << "Test number " << choice << " does not exist!\n";
+    return -1;
+  }
+
+  return 0;
 }

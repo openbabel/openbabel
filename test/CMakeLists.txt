@@ -11,7 +11,9 @@ add_definitions(-DFORMATDIR="\\"${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/\\"")
 ################ Add new tests here
 set (cpptests
      automorphism builder canonconsistent canonstable cistrans graphsym
-     implicitH lssr isomorphism
+     implicitH lssr isomorphism rotor shuffle smiles spectrophore
+     squareplanar stereo stereoperception tetrahedral
+     tetranonplanar tetraplanar uniqueid
     )
 set (automorphism_parts 1 2 3 4 5 6 7 8 9 10)
 set (builder_parts 1 2 3 4 5)
@@ -22,6 +24,23 @@ set (graphsym_parts 1 2 3 4 5)
 set (implicitH_parts 1)
 set (lssr_parts 1 2 3 4 5)
 set (isomorphism_parts 1 2 3 4 5 6 7 8)
+set (rotor_parts 1 2 3 4)
+set (shuffle_parts 1 2 3 4 5)
+set (smiles_parts 1 2 3)
+set (spectrophore_parts 1 2 3 4 5)
+set (squareplanar_parts 1 2 3 4 5)
+set (stereo_parts 1 2 3 4 5 6)
+set (stereoperception_parts 1 2 3 4)
+set (tetrahedral_parts 1 2 3 4 5)
+set (tetranonplanar_parts 1)
+set (tetraplanar_parts 1)
+set (uniqueid_parts 1 2)
+
+if (EIGEN2_FOUND)
+  set(cpptests
+      align ${cpptests})
+  set (align_parts 1 2 3 4 5)
+endif (EIGEN2_FOUND)
 
 ##################################
 

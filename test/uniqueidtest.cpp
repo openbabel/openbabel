@@ -178,19 +178,40 @@ void testIdsAddBond()
   OB_REQUIRE( mol.GetBondById(5)->GetId() == 5 );
 }
 
-int main() 
+int uniqueidtest(int argc, char* argv[])
 {
-  // atoms
-  testIdsNewAtom1();
-  testIdsNewAtom2();
-  testIdsDeleteAtom();
-  testIdsAddAtom();
+  int defaultchoice = 1;
+  
+  int choice = defaultchoice;
 
-  // bonds
-  testIdsNewBond1();
-  testIdsNewBond2();
-  testIdsDeleteBond();
-  testIdsAddBond();
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
+    }
+  }
+
+  switch(choice) {
+  case 1:
+    // atoms
+    testIdsNewAtom1();
+    testIdsNewAtom2();
+    testIdsDeleteAtom();
+    testIdsAddAtom();
+    break;
+
+  case 2:
+    // bonds
+    testIdsNewBond1();
+    testIdsNewBond2();
+    testIdsDeleteBond();
+    testIdsAddBond();
+    break;
+  
+  default:
+    cout << "Test number " << choice << " does not exist!\n";
+    return -1;
+  }
   
   return 0;
 }
