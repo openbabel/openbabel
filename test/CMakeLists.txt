@@ -42,10 +42,20 @@ if (EIGEN2_FOUND)
   set (align_parts 1 2 3 4 5)
 endif (EIGEN2_FOUND)
 
+set(origtests
+    atom ffmmff94 math
+    )
+set (atom_parts 1 2 3 4)
+set (ffmmff94_parts 1 2)
+set (math_parts 1 2 3 4)
+
 ##################################
 
 foreach(cpptest ${cpptests})
   set(cpptestsrc ${cpptestsrc} ${cpptest}test.cpp)
+endforeach()
+foreach(origtest ${origtests})
+  set(cpptestsrc ${cpptestsrc} ${origtest}.cpp)
 endforeach()
 
 add_definitions(-DTESTDIR=${CMAKE_CURRENT_SOURCE_DIR})
@@ -111,13 +121,22 @@ foreach(cpptest ${cpptests})
   endforeach()
 endforeach()
 
+foreach(cpptest ${origtests})
+  foreach(part ${${cpptest}_parts})
+    add_test(test_${cpptest}_${part}
+             ${TEST_PATH}/test_runner ${cpptest} ${part})
+    set_tests_properties(test_${cpptest}_${part} PROPERTIES
+      FAIL_REGULAR_EXPRESSION "not ok"
+      ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}")
+  endforeach()
+endforeach()
+
 ############################################################
 #  old-style tests using "not ok"
 ############################################################
 
 set(old_tests
     aromatest
-    atom
     bond
     cansmi
     charge-mmff94
@@ -126,7 +145,6 @@ set(old_tests
     datatest
     ffgaff
     ffghemical
-    ffmmff94
     ffuff
     formalcharge
     format
@@ -136,7 +154,6 @@ set(old_tests
     invalidsmiles
     iterators
     logp_psa
-    math
     mol
     phmodel
     residue
