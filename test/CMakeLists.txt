@@ -43,9 +43,14 @@ if (EIGEN2_FOUND)
 endif (EIGEN2_FOUND)
 
 set(origtests
-    atom ffmmff94 math
+    aromatest atom bond cansmi charge_mmff94 charge_gasteiger ffmmff94 math
     )
+set (aromatest_parts 1)
 set (atom_parts 1 2 3 4)
+set (bond_parts 1)
+set (cansmi_parts 1)
+set (charge_mmff94_parts 1) # 99 to regenerate
+set (charge_gasteiger_parts 1) # 99 to regenerate
 set (ffmmff94_parts 1 2)
 set (math_parts 1 2 3 4)
 
@@ -136,11 +141,6 @@ endforeach()
 ############################################################
 
 set(old_tests
-    aromatest
-    bond
-    cansmi
-    charge-mmff94
-    charge-gasteiger
     conversion
     datatest
     ffgaff
