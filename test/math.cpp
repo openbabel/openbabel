@@ -30,6 +30,7 @@ GNU General Public License for more details.
 #include <iostream>
 #include <stdlib.h>
 #include <string.h>
+#include <cstdio>
 
 #define REPEAT 1000
 
