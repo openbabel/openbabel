@@ -29,22 +29,26 @@ using namespace std;
 using namespace OpenBabel;
 
 #ifdef TESTDATADIR
-    string testdatadir = TESTDATADIR;
-    string unitcell_file = testdatadir + "unitcell.txt";
-    string results_file = testdatadir + "unitcell_results.txt";
+    string ptestdatadir = TESTDATADIR;
+    string punitcell_file = ptestdatadir + "unitcell.txt";
+    string presults_file = ptestdatadir + "unitcell_results.txt";
 #else
-    string unitcell_file = "files/unitcell.txt";
-    string results_file = "files/unitcell_results.txt";
+    string punitcell_file = "files/unitcell.txt";
+    string presults_file = "files/unitcell_results.txt";
 #endif
 
-int main(int argc,char *argv[])
+int unitcell(int argc, char* argv[])
 {
-    if (argc != 1)
-    {
-        cout << "Usage: unitcell" << endl;
-        cout << "   Tests Open Babel unit cell conversions." << endl;
-        return 0;
+  int defaultchoice = 1;
+  
+  int choice = defaultchoice;
+
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
     }
+  }
 
     cout << "# Testing unit cell transformations ..." << endl;
     cout << "1..12" << endl;
@@ -60,12 +64,12 @@ int main(int argc,char *argv[])
     vector<string> vs;
     unsigned int currTest = 1;
 
-    if (!SafeOpen(ifs, unitcell_file.c_str()))
+    if (!SafeOpen(ifs, punitcell_file.c_str()))
       {
 	cout << "Bail out! Couldn't open test file 'unitcell.txt'" << endl;
         return(-1);
       }
-    if (!SafeOpen(results, results_file.c_str()))
+    if (!SafeOpen(results, presults_file.c_str()))
       {
 	cout << "Bail out! Couldn't open test file 'unitcell_results.txt'" << endl;
         return(-1);

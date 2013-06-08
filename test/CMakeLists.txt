@@ -43,16 +43,24 @@ if (EIGEN2_FOUND)
 endif (EIGEN2_FOUND)
 
 set(origtests
-    aromatest atom bond cansmi charge_mmff94 charge_gasteiger ffmmff94 math
+    aromatest atom bond cansmi charge_mmff94 charge_gasteiger conversion
+    datatest ffgaff ffghemical ffmmff94 ffuff formalcharge format formula
+    internalcoord invalidsmarts invalidsmiles iterators logp_psa math mol
+    phmodel residue ringtest smartstest smartsparse smilesmatch unitcell
     )
-set (aromatest_parts 1)
 set (atom_parts 1 2 3 4)
-set (bond_parts 1)
-set (cansmi_parts 1)
-set (charge_mmff94_parts 1) # 99 to regenerate
-set (charge_gasteiger_parts 1) # 99 to regenerate
 set (ffmmff94_parts 1 2)
 set (math_parts 1 2 3 4)
+
+if(BUILD_SHARED)
+  if(LIBXML2_FOUND)
+    set(origtests ${origtests} cmlreadfile)
+  endif(LIBXML2_FOUND)
+else()
+  if(WITH_STATIC_LIBXML)
+    set(origtests ${origtests} cmlreadfile)
+  endif()
+endif()
 
 ##################################
 
@@ -61,6 +69,12 @@ foreach(cpptest ${cpptests})
 endforeach()
 foreach(origtest ${origtests})
   set(cpptestsrc ${cpptestsrc} ${origtest}.cpp)
+endforeach()
+
+foreach(origtest ${origtests})
+  if(NOT DEFINED "${origtest}_parts")
+    set(${origtest}_parts "1")
+  endif()
 endforeach()
 
 add_definitions(-DTESTDIR=${CMAKE_CURRENT_SOURCE_DIR})
@@ -140,37 +154,7 @@ endforeach()
 #  old-style tests using "not ok"
 ############################################################
 
-set(old_tests
-    conversion
-    datatest
-    ffgaff
-    ffghemical
-    ffuff
-    formalcharge
-    format
-    formula
-    internalcoord
-    invalidsmarts
-    invalidsmiles
-    iterators
-    logp_psa
-    mol
-    phmodel
-    residue
-    ringtest
-    smartstest
-    smartsparse
-    smilesmatch
-    unitcell
-   )
-if(BUILD_SHARED)
-  if(LIBXML2_FOUND)
-    set(oldtests ${oldtests} cmlreadfile)
-  endif(LIBXML2_FOUND)
-else()
-  if(WITH_STATIC_LIBXML)
-    set(oldtests ${oldtests} cmlreadfile)
-  endif()
+if(NOT BUILD_SHARED)
   set(WITH_INCHI ${WITH_STATIC_INCHI})
 endif()
 
@@ -192,19 +176,6 @@ if(WITH_INCHI)
     )
   endforeach(test ${inchitests})
 endif(WITH_INCHI)
-
-foreach(test ${old_tests})
-  add_executable(test_${test} ${test}.cpp)
-  target_link_libraries(test_${test} ${libs})
-  if(NOT BUILD_SHARED AND NOT BUILD_MIXED)
-    set_target_properties(test_${test} PROPERTIES LINK_SEARCH_END_STATIC TRUE)
-  endif()
-  add_test(${test}_Test ${TEST_PATH}/test_${test})
-  set_tests_properties(${test}_Test PROPERTIES
-    FAIL_REGULAR_EXPRESSION "not ok"
-    ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
- )
-endforeach(test ${old_tests})
 
 ############################################################
 #  roundtrip

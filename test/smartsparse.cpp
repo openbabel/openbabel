@@ -31,23 +31,31 @@ using namespace std;
 using namespace OpenBabel;
 
 #ifdef TESTDATADIR
-  string testdatadir = TESTDATADIR;
-  string smarts_file = testdatadir + "validsmarts.txt";
+  string ntestdatadir = TESTDATADIR;
+  string nsmarts_file = ntestdatadir + "validsmarts.txt";
 #else
-   string smarts_file = "files/validsmarts.txt";
+   string nsmarts_file = "files/validsmarts.txt";
 #endif
 
-int main(int argc,char *argv[])
+int smartsparse(int argc, char* argv[])
 {
-  // turn off slow sync with C-style output (we don't use it anyway).
-  std::ios::sync_with_stdio(false);
+  int defaultchoice = 1;
+  
+  int choice = defaultchoice;
+
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
+    }
+  }
   
   cout << "# Testing SMARTS Parsing...  \n";
 
   std::ifstream ifs;
-  if (!SafeOpen(ifs, smarts_file.c_str()))
+  if (!SafeOpen(ifs, nsmarts_file.c_str()))
     {
-      cout << "Bail out! Cannot read " << smarts_file << endl;
+      cout << "Bail out! Cannot read " << nsmarts_file << endl;
       return -1; // test failed
     }
 
