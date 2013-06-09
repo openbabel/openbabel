@@ -36,6 +36,7 @@
 #include <limits>
 #include <set>
 #include <iterator>
+#include <functional>
 
 #define DEBUG 0
 #define DEBUG_INVERSIONS 0
