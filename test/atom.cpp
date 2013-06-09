@@ -31,56 +31,62 @@ GNU General Public License for more details.
 using namespace std;
 using namespace OpenBabel;
 
-int main(int argc,char *argv[])
+int atom(int argc, char* argv[])
 {
-  // turn off slow sync with C-style output (we don't use it anyway).
-  std::ios::sync_with_stdio(false);
+  int defaultchoice = 1;
+  
+  int choice = defaultchoice;
 
-  if (argc != 1)
-    {
-      cout << "Usage: atom" << endl;
-      cout << " Unit tests for OBAtom " << endl;
-      return(-1);
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
     }
-
+  }
   cout << "# Unit tests for OBAtom \n";
 
-  // the number of tests for "prove"
-  cout << "1..6\n";
-
-  cout << "ok 1\n"; // for loading tests
+  double *coordPtr;
 
   OBAtom emptyAtom, testAtom1, testAtom2;
-  cout << "ok 2\n"; // constructor works OK
 
-  // OBAtom isolation tests (no connection to residue, bond, molecule...)
+  switch(choice) {
+  case 1:
+    break;
+  case 2:
+    // OBAtom isolation tests (no connection to residue, bond, molecule...)
 
-  // Beat up on SetIdx
-  testAtom1.SetIdx(0);
-  cout <<  testAtom1.GetIdx() << "\n";
-  testAtom1.SetIdx(-1);
-  cout <<  testAtom1.GetIdx() << "\n";
-  testAtom1.SetIdx(1);
-  cout <<  "ok 3\n";
-
-  // Beat up on atomic number
-  testAtom1.SetAtomicNum(0);
-  cout <<  testAtom1.GetAtomicNum() << "\n";
-  testAtom1.SetAtomicNum(-1);
-  cout <<  testAtom1.GetAtomicNum() << "\n";
-  testAtom1.SetAtomicNum(200);
-  cout <<  testAtom1.GetAtomicNum() << "\n";
-  testAtom1.SetAtomicNum(300);
-  cout <<  testAtom1.GetAtomicNum() << "\n";
-  testAtom1.SetAtomicNum(1);
-  cout <<  "ok 4\n";
-
-  // PR#1373650
-  double *coordPtr = testAtom1.GetCoordinate();
-  cout <<  "ok 5\n";
-
-  testAtom1.SetCoordPtr(&coordPtr);
-  cout <<  "ok 6\n";
+    // Beat up on SetIdx
+    testAtom1.SetIdx(0);
+    cout <<  testAtom1.GetIdx() << "\n";
+    testAtom1.SetIdx(-1);
+    cout <<  testAtom1.GetIdx() << "\n";
+    testAtom1.SetIdx(1);
+    cout <<  "ok 3\n";
+    break;
+  case 3:
+    // Beat up on atomic number
+    testAtom1.SetAtomicNum(0);
+    cout <<  testAtom1.GetAtomicNum() << "\n";
+    testAtom1.SetAtomicNum(-1);
+    cout <<  testAtom1.GetAtomicNum() << "\n";
+    testAtom1.SetAtomicNum(200);
+    cout <<  testAtom1.GetAtomicNum() << "\n";
+    testAtom1.SetAtomicNum(300);
+    cout <<  testAtom1.GetAtomicNum() << "\n";
+    testAtom1.SetAtomicNum(1);
+    cout <<  "ok 4\n";
+    break;
+  case 4:
+    // PR#1373650
+    coordPtr = testAtom1.GetCoordinate();
+    cout <<  "ok 5\n";
+    testAtom1.SetCoordPtr(&coordPtr);
+    cout <<  "ok 6\n";
+    break;
+  default:
+    cout << "Test number " << choice << " does not exist!\n";
+    return -1;
+  }
 
   return(0);
 }

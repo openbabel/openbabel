@@ -34,16 +34,24 @@ using namespace std;
 using namespace OpenBabel;
 
 #ifdef TESTDATADIR
-  string testdatadir = TESTDATADIR;
-  string smilestypes_file = testdatadir + "nci.smi";
+  string otestdatadir = TESTDATADIR;
+  string osmilestypes_file = otestdatadir + "nci.smi";
 #else
-   string smilestypes_file = "nci.smi";
+   string osmilestypes_file = "nci.smi";
 #endif
 
-int main(int argc,char *argv[])
+int smilesmatch(int argc, char* argv[])
 {
-  // turn off slow sync with C-style output (we don't use it anyway).
-  std::ios::sync_with_stdio(false);
+  int defaultchoice = 1;
+  
+  int choice = defaultchoice;
+
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
+    }
+  }
 
   // Define location of file formats for testing
   #ifdef FORMATDIR
@@ -52,19 +60,13 @@ int main(int argc,char *argv[])
     putenv(env);
   #endif
 
-  if (argc != 1)
-    {
-      cout << "Usage: smilesmatch\n";
-      cout << "   Tests Open Babel SMILES/SMARTS pattern matching." << endl;
-      return 0;
-    }
   
   cout << endl << "# Testing SMILES self-matching using SMARTS...  \n";
   
   std::ifstream mifs;
-  if (!SafeOpen(mifs, smilestypes_file.c_str()))
+  if (!SafeOpen(mifs, osmilestypes_file.c_str()))
     {
-      cout << "Bail out! Cannot read test data " << smilestypes_file << endl;
+      cout << "Bail out! Cannot read test data " << osmilestypes_file << endl;
       return -1; // test failed
     }
 

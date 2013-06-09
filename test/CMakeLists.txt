@@ -8,37 +8,80 @@ add_definitions(-DFORMATDIR="\\"${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/\\"")
 #  new tests using obtest.h
 ############################################################
 
-set(tests
-    automorphism
-    builder
-    canonconsistent
-    canonstable
-    cistrans
-    graphsym
-    implicitH
-    lssr
-    isomorphism
-    rotor
-    shuffle
-    smiles
-    smiley
-    spectrophore
-    squareplanar
-    stereo
-    stereoperception
-    tautomer
-    tetrahedral
-    tetranonplanar
-    tetraplanar
-    uniqueid
-  )
+################ Add new tests here
+set (cpptests
+     automorphism builder canonconsistent canonstable cistrans graphsym
+     implicitH lssr isomorphism rotor shuffle smiles spectrophore
+     squareplanar stereo stereoperception tetrahedral
+     tetranonplanar tetraplanar uniqueid
+    )
+set (automorphism_parts 1 2 3 4 5 6 7 8 9 10)
+set (builder_parts 1 2 3 4 5)
+set (canonconsistent_parts  1 2 3)
+set (canonstable_parts 1)
+set (cistrans_parts 1 2 3 4 5 6 7 8 9)
+set (graphsym_parts 1 2 3 4 5)
+set (implicitH_parts 1)
+set (lssr_parts 1 2 3 4 5)
+set (isomorphism_parts 1 2 3 4 5 6 7 8)
+set (rotor_parts 1 2 3 4)
+set (shuffle_parts 1 2 3 4 5)
+set (smiles_parts 1 2 3)
+set (spectrophore_parts 1 2 3 4 5)
+set (squareplanar_parts 1 2 3 4 5)
+set (stereo_parts 1 2 3 4 5 6)
+set (stereoperception_parts 1 2 3 4)
+set (tetrahedral_parts 1 2 3 4 5)
+set (tetranonplanar_parts 1)
+set (tetraplanar_parts 1)
+set (uniqueid_parts 1 2)
 
-if(EIGEN2_FOUND OR EIGEN3_FOUND)
-  set(tests
-      align
-      ${tests}
-     )
+if (EIGEN2_FOUND)
+  set(cpptests
+      align ${cpptests})
+  set (align_parts 1 2 3 4 5)
+endif (EIGEN2_FOUND)
+
+set(origtests
+    aromatest atom bond cansmi charge_mmff94 charge_gasteiger conversion
+    datatest ffgaff ffghemical ffmmff94 ffuff formalcharge format formula
+    internalcoord invalidsmarts invalidsmiles iterators logp_psa math mol
+    phmodel residue ringtest smartstest smartsparse smilesmatch unitcell
+    )
+set (atom_parts 1 2 3 4)
+set (ffmmff94_parts 1 2)
+set (math_parts 1 2 3 4)
+
+if(BUILD_SHARED)
+  if(LIBXML2_FOUND)
+    set(origtests ${origtests} cmlreadfile)
+  endif(LIBXML2_FOUND)
+else()
+  if(WITH_STATIC_LIBXML)
+    set(origtests ${origtests} cmlreadfile)
+  endif()
 endif()
+
+##################################
+
+foreach(cpptest ${cpptests})
+  set(cpptestsrc ${cpptestsrc} ${cpptest}test.cpp)
+endforeach()
+foreach(origtest ${origtests})
+  set(cpptestsrc ${cpptestsrc} ${origtest}.cpp)
+endforeach()
+
+foreach(origtest ${origtests})
+  if(NOT DEFINED "${origtest}_parts")
+    set(${origtest}_parts "1")
+  endif()
+endforeach()
+
+add_definitions(-DTESTDIR=${CMAKE_CURRENT_SOURCE_DIR})
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+create_test_sourcelist(srclist test_runner.cpp
+                       ${cpptestsrc})
 
 set(TEST_PATH ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
@@ -81,61 +124,37 @@ else()
   set(libs openbabel)
 endif()
 
-foreach(test ${tests})
-  add_executable(test_${test} ${test}test.cpp)
-  target_link_libraries(test_${test} ${libs})
-  if(NOT BUILD_SHARED AND NOT BUILD_MIXED)
-    set_target_properties(test_${test} PROPERTIES LINK_SEARCH_END_STATIC TRUE)
-  endif()
-  add_test(${test}_Test ${TEST_PATH}/test_${test})
-  set_tests_properties(${test}_Test PROPERTIES
-    FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
-    ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}")
-endforeach(test ${tests})
+add_executable(test_runner ${srclist} obtest.cpp)
+target_link_libraries(test_runner ${libs})
+if(NOT BUILD_SHARED AND NOT BUILD_MIXED)
+  set_target_properties(test_runner PROPERTIES LINK_SEARCH_END_STATIC TRUE)
+endif()
+
+foreach(cpptest ${cpptests})
+  foreach(part ${${cpptest}_parts})
+    add_test(test_${cpptest}_${part}
+             ${TEST_PATH}/test_runner ${cpptest}test ${part})
+    set_tests_properties(test_${cpptest}_${part} PROPERTIES
+      FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
+      ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}")
+  endforeach()
+endforeach()
+
+foreach(cpptest ${origtests})
+  foreach(part ${${cpptest}_parts})
+    add_test(test_${cpptest}_${part}
+             ${TEST_PATH}/test_runner ${cpptest} ${part})
+    set_tests_properties(test_${cpptest}_${part} PROPERTIES
+      FAIL_REGULAR_EXPRESSION "not ok"
+      ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}")
+  endforeach()
+endforeach()
 
 ############################################################
 #  old-style tests using "not ok"
 ############################################################
 
-set(old_tests
-    aromatest
-    atom
-    bond
-    cansmi
-    charge-mmff94
-    charge-gasteiger
-    conversion
-    datatest
-    ffgaff
-    ffghemical
-    ffmmff94
-    ffuff
-    formalcharge
-    format
-    formula
-    internalcoord
-    invalidsmarts
-    invalidsmiles
-    iterators
-    logp_psa
-    math
-    mol
-    phmodel
-    residue
-    ringtest
-    smartstest
-    smartsparse
-    smilesmatch
-    unitcell
-   )
-if(BUILD_SHARED)
-  if(LIBXML2_FOUND)
-    set(oldtests ${oldtests} cmlreadfile)
-  endif(LIBXML2_FOUND)
-else()
-  if(WITH_STATIC_LIBXML)
-    set(oldtests ${oldtests} cmlreadfile)
-  endif()
+if(NOT BUILD_SHARED)
   set(WITH_INCHI ${WITH_STATIC_INCHI})
 endif()
 
@@ -157,19 +176,6 @@ if(WITH_INCHI)
     )
   endforeach(test ${inchitests})
 endif(WITH_INCHI)
-
-foreach(test ${old_tests})
-  add_executable(test_${test} ${test}.cpp)
-  target_link_libraries(test_${test} ${libs})
-  if(NOT BUILD_SHARED AND NOT BUILD_MIXED)
-    set_target_properties(test_${test} PROPERTIES LINK_SEARCH_END_STATIC TRUE)
-  endif()
-  add_test(${test}_Test ${TEST_PATH}/test_${test})
-  set_tests_properties(${test}_Test PROPERTIES
-    FAIL_REGULAR_EXPRESSION "not ok"
-    ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
- )
-endforeach(test ${old_tests})
 
 ############################################################
 #  roundtrip

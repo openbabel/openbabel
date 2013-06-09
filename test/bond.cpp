@@ -31,34 +31,35 @@ GNU General Public License for more details.
 using namespace std;
 using namespace OpenBabel;
 
-int main(int argc,char *argv[])
+int bond(int argc, char* argv[])
 {
-  // turn off slow sync with C-style output (we don't use it anyway).
-  std::ios::sync_with_stdio(false);
+  int defaultchoice = 1;
+  
+  int choice = defaultchoice;
 
-  if (argc != 1)
-    {
-      cout << "Usage: bond" << endl;
-      cout << " Unit tests for OBBond " << endl;
-      return(-1);
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
     }
+  }
 
   cout << "# Unit tests for OBBond \n";
 
-  // the number of tests for "prove"
-  cout << "1..3\n";
-
-  cout << "ok 1\n"; // for loading tests
-
-  // OBBond isolation tests (no connection to residue, molecule...)
-
   OBAtom emptyAtom, begin1, end1;
   OBBond emptyBond, bond1;
-  cout << "ok 2\n"; // constructors work OK
 
-  bond1.SetBegin(&begin1);
-  bond1.SetEnd(&end1);
-  cout << "ok 3\n";
+  switch(choice) {
+  case 1:
+    // OBBond isolation tests (no connection to residue, molecule...)
+    bond1.SetBegin(&begin1);
+    bond1.SetEnd(&end1);
+    cout << "ok 3\n";
+    break;
+  default:
+    cout << "Test number " << choice << " does not exist!\n";
+    return -1;
+  }
 
   return(0);
 }

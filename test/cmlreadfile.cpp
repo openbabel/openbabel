@@ -34,23 +34,24 @@ using namespace OpenBabel;
 string cmlfile = "../cmltest/cs2a.cml";
 string cmlfile_multi = "3d.head.2.cml";
 
-int main(int argc,char *argv[])
+int cmlreadfile(int argc, char* argv[])
 {
-  // turn off slow sync with C-style output (we don't use it anyway).
-  std::ios::sync_with_stdio(false);
+  int defaultchoice = 1;
+  
+  int choice = defaultchoice;
+
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
+    }
+  }
 
   #ifdef FORMATDIR
     char env[BUFF_SIZE];
     snprintf(env, BUFF_SIZE, "BABEL_LIBDIR=%s", FORMATDIR);
     putenv(env);
   #endif
-
-  if (argc != 1)
-    {
-      cout << "Usage: mol" << endl;
-      cout << " Unit tests for OBMol " << endl;
-      return(-1);
-    }
 
   cout << "# Unit tests for OBMol \n";
 

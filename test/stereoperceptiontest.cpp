@@ -7,13 +7,6 @@
 using namespace std;
 using namespace OpenBabel;
 
-std::string GetFilename(const std::string &filename)
-{
-  string path = TESTDATADIR + filename;
-
-  return path;
-}
-
 std::string test_singleTetrahedral(const std::string &file, 
     const OBTetrahedralStereo::Config &correct)
 {
@@ -22,7 +15,7 @@ std::string test_singleTetrahedral(const std::string &file,
   conv.SetInFormat("mol");
   conv.SetOutFormat("can");
 
-  const std::string filename = GetFilename(file);
+  const std::string filename = OBTestUtil::GetFilename(file);
   ifstream ifs(filename.c_str());
   if (!ifs) {
     cerr << "Could not open " << filename << endl;
@@ -77,7 +70,7 @@ std::string test_singleCisTrans(const std::string &file,
   conv.SetInFormat("mol");
   conv.SetOutFormat("can");
 
-  const std::string filename = GetFilename(file);
+  const std::string filename = OBTestUtil::GetFilename(file);
   ifstream ifs(filename.c_str());
   if (!ifs) {
     cerr << "Could not open " << filename << endl;
@@ -111,7 +104,7 @@ std::string readMol(OBMol *pmol, const std::string &file)
   conv.SetInFormat("mol");
   conv.SetOutFormat("can");
 
-  const std::string filename = GetFilename(file);
+  const std::string filename = OBTestUtil::GetFilename(file);
   ifstream ifs(filename.c_str());
   if (!ifs) {
     cerr << "Could not open " << filename << endl;
@@ -162,7 +155,7 @@ void test_noStereo(const std::string &file)
   conv.SetInFormat("mol");
   conv.SetOutFormat("can");
 
-  const std::string filename = GetFilename(file);
+  const std::string filename = OBTestUtil::GetFilename(file);
   ifstream ifs(filename.c_str());
   if (!ifs) {
     cerr << "Could not open " << filename << endl;
@@ -180,8 +173,18 @@ void test_noStereo(const std::string &file)
 } 
 
 
-int main()
+int stereoperceptiontest(int argc, char* argv[])
 {
+  int defaultchoice = 1;
+  
+  int choice = defaultchoice;
+
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
+    }
+  }
   // Define location of file formats for testing
   #ifdef FORMATDIR
     char env[BUFF_SIZE];
@@ -189,250 +192,265 @@ int main()
     putenv(env);
   #endif
 
-  // There are several cases to test:
+  string smiles3D_1, smiles3D_2, smiles3D_3, smiles3D_4, smiles3D_5, smiles3D_6;
+  string smiles2D_1, smiles2D_2, smiles2D_3, smiles2D_4, smiles2D_5, smiles2D_6, smiles2D_7, smiles2D_8, smiles2D_9;
+  string smiles7, smiles8, smiles9, smiles10;
+  string cistrans2D_1, cistrans2D_2;
 
-  //////////////////////////////////////////////////////////////////////////////
-  // 
-  // 1      StereoFrom3D for tetrahedral atoms
-  //
-  //////////////////////////////////////////////////////////////////////////////
+  switch(choice) {
+  case 1:
+    //////////////////////////////////////////////////////////////////////////////
+    // 
+    // 1      StereoFrom3D for tetrahedral atoms
+    //
+    //////////////////////////////////////////////////////////////////////////////
 
-  // 1.1    Input molecule with 4 refs (explicit H)
- 
-  // 1.1.1  234 == 234  @
-  string smiles3D_1 = test_singleTetrahedral("stereo/tetrahedral3D_1.mol",
-      OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, 4), OBStereo::AntiClockwise));
-  // 1.1.2  234 == 234  @@
-  string smiles3D_2 = test_singleTetrahedral("stereo/tetrahedral3D_2.mol",
-      OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, 4), OBStereo::Clockwise));
-  
-  // 1.1.3 compare using ImplicitRef
-  string smiles3D_5 = test_singleTetrahedral("stereo/tetrahedral3D_1.mol",
-      OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, OBStereo::ImplicitRef), OBStereo::AntiClockwise));
+    // 1.1    Input molecule with 4 refs (explicit H)
    
-  // 1.2    Input molecule with 3 refs (implicit H)
-  
-  // 1.2.1  23H == 23H  @@
-  string smiles3D_3 = test_singleTetrahedral("stereo/tetrahedral3D_3.mol",
-      OBTetrahedralStereo::Config(0, 1, OBStereo::MakeRefs(2, 3, OBStereo::ImplicitRef), OBStereo::Clockwise));
-  // 1.2.2  23H == 23H  @
-  string smiles3D_4 = test_singleTetrahedral("stereo/tetrahedral3D_4.mol",
-      OBTetrahedralStereo::Config(0, 1, OBStereo::MakeRefs(2, 3, OBStereo::ImplicitRef), OBStereo::AntiClockwise));
-  
-  // 1.2.3 compare using explicit id 
-  string smiles3D_6 = test_singleTetrahedral("stereo/tetrahedral3D_4.mol",
-      OBTetrahedralStereo::Config(0, 1, OBStereo::MakeRefs(2, 3, 4), OBStereo::AntiClockwise));
+    // 1.1.1  234 == 234  @
+    smiles3D_1 = test_singleTetrahedral("stereo/tetrahedral3D_1.mol",
+        OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, 4), OBStereo::AntiClockwise));
+    // 1.1.2  234 == 234  @@
+    smiles3D_2 = test_singleTetrahedral("stereo/tetrahedral3D_2.mol",
+        OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, 4), OBStereo::Clockwise));
+    
+    // 1.1.3 compare using ImplicitRef
+    smiles3D_5 = test_singleTetrahedral("stereo/tetrahedral3D_1.mol",
+        OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, OBStereo::ImplicitRef), OBStereo::AntiClockwise));
+     
+    // 1.2    Input molecule with 3 refs (implicit H)
+    
+    // 1.2.1  23H == 23H  @@
+    smiles3D_3 = test_singleTetrahedral("stereo/tetrahedral3D_3.mol",
+        OBTetrahedralStereo::Config(0, 1, OBStereo::MakeRefs(2, 3, OBStereo::ImplicitRef), OBStereo::Clockwise));
+    // 1.2.2  23H == 23H  @
+    smiles3D_4 = test_singleTetrahedral("stereo/tetrahedral3D_4.mol",
+        OBTetrahedralStereo::Config(0, 1, OBStereo::MakeRefs(2, 3, OBStereo::ImplicitRef), OBStereo::AntiClockwise));
+    
+    // 1.2.3 compare using explicit id 
+    smiles3D_6 = test_singleTetrahedral("stereo/tetrahedral3D_4.mol",
+        OBTetrahedralStereo::Config(0, 1, OBStereo::MakeRefs(2, 3, 4), OBStereo::AntiClockwise));
 
-  OB_ASSERT( smiles3D_1 == smiles3D_2 );
-  OB_ASSERT( smiles3D_1 == smiles3D_3 );
-  OB_ASSERT( smiles3D_1 == smiles3D_4 );
-  OB_ASSERT( smiles3D_1 == smiles3D_5 );
-  OB_ASSERT( smiles3D_1 == smiles3D_6 );
-  
-  cout << smiles3D_1 << endl;
+    OB_ASSERT( smiles3D_1 == smiles3D_2 );
+    OB_ASSERT( smiles3D_1 == smiles3D_3 );
+    OB_ASSERT( smiles3D_1 == smiles3D_4 );
+    OB_ASSERT( smiles3D_1 == smiles3D_5 );
+    OB_ASSERT( smiles3D_1 == smiles3D_6 );
+    
+    cout << smiles3D_1 << endl;
+    break;
 
-  //////////////////////////////////////////////////////////////////////////////
-  // 
-  // 2      StereoFrom3D for cis/trans bonds
-  //
-  //////////////////////////////////////////////////////////////////////////////
+  case 2:
+    //////////////////////////////////////////////////////////////////////////////
+    // 
+    // 2      StereoFrom3D for cis/trans bonds
+    //
+    //////////////////////////////////////////////////////////////////////////////
 
-  // 2.1    Input molecule with 4 refs (explicit H)
- 
-  // 2.1.1  F      H   2      5
-  //         \    /
-  //          C==C       1  3
-  //         /    \     
-  //        H      F   0      4
-  string smiles7 = test_singleCisTrans("stereo/cistrans3D_1.mol",
-      OBCisTransStereo::Config(1, 3, OBStereo::MakeRefs(0, 2, 4, 5), OBStereo::ShapeZ));
-  // implicit refs
-  test_singleCisTrans("stereo/cistrans3D_1.mol", OBCisTransStereo::Config(1, 3, 
-        OBStereo::MakeRefs(OBStereo::ImplicitRef, 2, 4, 5), OBStereo::ShapeZ));
-  test_singleCisTrans("stereo/cistrans3D_1.mol", OBCisTransStereo::Config(1, 3, 
-        OBStereo::MakeRefs(0, 2, 4, OBStereo::ImplicitRef), OBStereo::ShapeZ));
-  test_singleCisTrans("stereo/cistrans3D_1.mol", OBCisTransStereo::Config(1, 3, 
-        OBStereo::MakeRefs(OBStereo::ImplicitRef, 2, 4, OBStereo::ImplicitRef), OBStereo::ShapeZ));
- 
-  // 2.1.2  F      F   2      4
-  //         \    /
-  //          C==C       1  3
-  //         /    \     
-  //        H      H   0      5
-  string smiles8 = test_singleCisTrans("stereo/cistrans3D_4.mol",
-      OBCisTransStereo::Config(1, 3, OBStereo::MakeRefs(0, 2, 4, 5), OBStereo::ShapeU));
-  // implicit refs
-  test_singleCisTrans("stereo/cistrans3D_4.mol", OBCisTransStereo::Config(1, 3, 
-        OBStereo::MakeRefs(OBStereo::ImplicitRef, 2, 4, 5), OBStereo::ShapeU));
-  test_singleCisTrans("stereo/cistrans3D_4.mol", OBCisTransStereo::Config(1, 3, 
+    // 2.1    Input molecule with 4 refs (explicit H)
+   
+    // 2.1.1  F      H   2      5
+    //         \    /
+    //          C==C       1  3
+    //         /    \     
+    //        H      F   0      4
+    smiles7 = test_singleCisTrans("stereo/cistrans3D_1.mol",
+        OBCisTransStereo::Config(1, 3, OBStereo::MakeRefs(0, 2, 4, 5), OBStereo::ShapeZ));
+    // implicit refs
+    test_singleCisTrans("stereo/cistrans3D_1.mol", OBCisTransStereo::Config(1, 3, 
+          OBStereo::MakeRefs(OBStereo::ImplicitRef, 2, 4, 5), OBStereo::ShapeZ));
+    test_singleCisTrans("stereo/cistrans3D_1.mol", OBCisTransStereo::Config(1, 3, 
+          OBStereo::MakeRefs(0, 2, 4, OBStereo::ImplicitRef), OBStereo::ShapeZ));
+    test_singleCisTrans("stereo/cistrans3D_1.mol", OBCisTransStereo::Config(1, 3, 
+          OBStereo::MakeRefs(OBStereo::ImplicitRef, 2, 4, OBStereo::ImplicitRef), OBStereo::ShapeZ));
+   
+    // 2.1.2  F      F   2      4
+    //         \    /
+    //          C==C       1  3
+    //         /    \     
+    //        H      H   0      5
+    smiles8 = test_singleCisTrans("stereo/cistrans3D_4.mol",
+        OBCisTransStereo::Config(1, 3, OBStereo::MakeRefs(0, 2, 4, 5), OBStereo::ShapeU));
+    // implicit refs
+    test_singleCisTrans("stereo/cistrans3D_4.mol", OBCisTransStereo::Config(1, 3, 
+          OBStereo::MakeRefs(OBStereo::ImplicitRef, 2, 4, 5), OBStereo::ShapeU));
+    test_singleCisTrans("stereo/cistrans3D_4.mol", OBCisTransStereo::Config(1, 3, 
+          OBStereo::MakeRefs(0, 2, 4, OBStereo::ImplicitRef), OBStereo::ShapeU));
+    test_singleCisTrans("stereo/cistrans3D_4.mol", OBCisTransStereo::Config(1, 3, 
+          OBStereo::MakeRefs(OBStereo::ImplicitRef, 2, 4, OBStereo::ImplicitRef), OBStereo::ShapeU));
+   
+    // 2.2    Input molecule with 3 refs (implicit H)
+
+    // 2.2.1  F          1      
+    //         \    
+    //          C==C       0  2
+    //              \     
+    //               F          3
+    smiles9 = test_singleCisTrans("stereo/cistrans3D_2.mol", OBCisTransStereo::Config(0, 2, 
+        OBStereo::MakeRefs(1, OBStereo::ImplicitRef, 3, OBStereo::ImplicitRef), OBStereo::ShapeU));
+
+    // 2.2.1  F      F   2      4
+    //         \    /
+    //          C==C       1  3
+    //         /
+    //        H          0
+    smiles10 = test_singleCisTrans("stereo/cistrans3D_5.mol", OBCisTransStereo::Config(1, 3, 
         OBStereo::MakeRefs(0, 2, 4, OBStereo::ImplicitRef), OBStereo::ShapeU));
-  test_singleCisTrans("stereo/cistrans3D_4.mol", OBCisTransStereo::Config(1, 3, 
-        OBStereo::MakeRefs(OBStereo::ImplicitRef, 2, 4, OBStereo::ImplicitRef), OBStereo::ShapeU));
- 
-  // 2.2    Input molecule with 3 refs (implicit H)
 
-  // 2.2.1  F          1      
-  //         \    
-  //          C==C       0  2
-  //              \     
-  //               F          3
-  string smiles9 = test_singleCisTrans("stereo/cistrans3D_2.mol", OBCisTransStereo::Config(0, 2, 
-      OBStereo::MakeRefs(1, OBStereo::ImplicitRef, 3, OBStereo::ImplicitRef), OBStereo::ShapeU));
+    OB_ASSERT( smiles7 == smiles9 );
+    OB_ASSERT( smiles8 == smiles10 );
+    
+    cout << smiles7 << endl;
 
-  // 2.2.1  F      F   2      4
-  //         \    /
-  //          C==C       1  3
-  //         /
-  //        H          0
-  string smiles10 = test_singleCisTrans("stereo/cistrans3D_5.mol", OBCisTransStereo::Config(1, 3, 
-      OBStereo::MakeRefs(0, 2, 4, OBStereo::ImplicitRef), OBStereo::ShapeU));
+    // 2.3      No stereochemistry
 
-  OB_ASSERT( smiles7 == smiles9 );
-  OB_ASSERT( smiles8 == smiles10 );
-  
-  cout << smiles7 << endl;
+    // 2.3.1  H      H   3      2
+    //         \    /
+    //          C==C       0  1
+    //              \     
+    //               F          4
+    test_noStereo("stereo/cistrans3D_3.mol");
+    break;
 
-  // 3      No stereochemistry
+  case 3:
+    //////////////////////////////////////////////////////////////////////////////
+    // 
+    // 3      StereoFrom2D for tetrahedral atoms
+    //
+    //////////////////////////////////////////////////////////////////////////////
+    
+    // 3.1    Input molecule with 4 refs (2x in plane, one behind plane, one in front of plane)
 
-  // 3.1    H      H   3      2
-  //         \    /
-  //          C==C       0  1
-  //              \     
-  //               F          4
-  test_noStereo("stereo/cistrans3D_3.mol");
+    // 3.1.1  Input molecule with 4 refs (2x in plane bond, hash & wedge bond)
+    //
+    //         F   I         C-F : hash (from C to F)
+    //          \ /          C-I : wedge (from C to F)
+    //           C
+    //          / \
+    //        Br   Cl
+    smiles2D_1 = test_singleTetrahedral("stereo/tetrahedral2D_1.mol",
+        OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, 4), OBStereo::AntiClockwise));
+   
+    // 3.1.2  Input molecule with 4 refs (2x in plane bond, 'real' hash & 'inverted' hash bond)
+    //
+    //         F   I         C-F : 'real' hash (from C to F)
+    //          \ /          C-I : 'inverted' hash (from I to C) = 'real' wedge
+    //           C
+    //          / \
+    //        Br   Cl
+    smiles2D_2 = test_singleTetrahedral("stereo/tetrahedral2D_4.mol",
+        OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, 4), OBStereo::AntiClockwise));
+   
+    // 3.1.3  Input molecule with 4 refs (2x in plane bond, 'real' wedge & 'inverted' wedge bond)
+    //
+    //         F   I         C-F : 'inverted' wedge (from F to C) = 'real' hash
+    //          \ /          C-I : 'real' wedge (from C to I)
+    //           C
+    //          / \
+    //        Br   Cl
+    smiles2D_3 = test_singleTetrahedral("stereo/tetrahedral2D_5.mol",
+        OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, 4), OBStereo::AntiClockwise));
 
-  //////////////////////////////////////////////////////////////////////////////
-  // 
-  // 3      StereoFrom2D for tetrahedral atoms
-  //
-  //////////////////////////////////////////////////////////////////////////////
-  
-  // 3.1    Input molecule with 4 refs (2x in plane, one behind plane, one in front of plane)
+    OB_ASSERT( smiles2D_1 == smiles2D_2 );
+    OB_ASSERT( smiles2D_1 == smiles2D_3 );
+    
+    cout << smiles2D_1 << endl;
+    
+    // 3.2    Input molecule with 3 refs (2x in plane, one behind plane or in front of plane)
+   
+    // 3.2.1  Input molecule with 3 refs (2x in plane bond, real wedge bond)
+    //
+    //           F           C-F : 'real' wedge (from C to F)
+    //           |           
+    //           C
+    //          / \
+    //        Br   Cl
+    smiles2D_4 = test_singleTetrahedral("stereo/tetrahedral2D_2.mol",
+        OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, OBStereo::ImplicitRef), 
+        OBStereo::AntiClockwise));
+   
+    // 3.2.2  Input molecule with 3 refs (2x in plane bond, inverted wedge bond)
+    //
+    //           F           C-F : 'inverted' wedge (from F to C)
+    //           |           
+    //           C
+    //          / \
+    //        Br   Cl
+    
+    /* No support for inverted bonds in 'tip-only' convention
+    string smiles2D_5 = test_singleTetrahedral("stereo/tetrahedral2D_6.mol",
+        OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, OBStereo::ImplicitRef), 
+        OBStereo::Clockwise));*/
+   
+    // 3.2.3  Input molecule with 3 refs (2x in plane bond, real hash bond)
+    //
+    //           F           C-F : 'real' hash (from C to F)
+    //           |           
+    //           C
+    //          / \
+    //        Br   Cl
+    smiles2D_6 = test_singleTetrahedral("stereo/tetrahedral2D_3.mol",
+        OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, OBStereo::ImplicitRef), 
+        OBStereo::Clockwise));
+   
+    // 3.2.3  Input molecule with 3 refs (2x in plane bond, real hash bond)
+    //
+    //           F           C-F : 'inverted' hash (from F to C)
+    //           |           
+    //           C
+    //          / \
+    //        Br   Cl
+    /* No support for inverted bonds in 'tip-only' convention
+    string smiles2D_7 = test_singleTetrahedral("stereo/tetrahedral2D_7.mol",
+        OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, OBStereo::ImplicitRef), 
+        OBStereo::AntiClockwise));
 
-  // 3.1.1  Input molecule with 4 refs (2x in plane bond, hash & wedge bond)
-  //
-  //         F   I         C-F : hash (from C to F)
-  //          \ /          C-I : wedge (from C to F)
-  //           C
-  //          / \
-  //        Br   Cl
-  string smiles2D_1 = test_singleTetrahedral("stereo/tetrahedral2D_1.mol",
-      OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, 4), OBStereo::AntiClockwise));
- 
-  // 3.1.2  Input molecule with 4 refs (2x in plane bond, 'real' hash & 'inverted' hash bond)
-  //
-  //         F   I         C-F : 'real' hash (from C to F)
-  //          \ /          C-I : 'inverted' hash (from I to C) = 'real' wedge
-  //           C
-  //          / \
-  //        Br   Cl
-  string smiles2D_2 = test_singleTetrahedral("stereo/tetrahedral2D_4.mol",
-      OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, 4), OBStereo::AntiClockwise));
- 
-  // 3.1.3  Input molecule with 4 refs (2x in plane bond, 'real' wedge & 'inverted' wedge bond)
-  //
-  //         F   I         C-F : 'inverted' wedge (from F to C) = 'real' hash
-  //          \ /          C-I : 'real' wedge (from C to I)
-  //           C
-  //          / \
-  //        Br   Cl
-  string smiles2D_3 = test_singleTetrahedral("stereo/tetrahedral2D_5.mol",
-      OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, 4), OBStereo::AntiClockwise));
+    OB_ASSERT( smiles2D_4 == smiles2D_7 );
+    OB_ASSERT( smiles2D_5 == smiles2D_6 );*/
 
-  OB_ASSERT( smiles2D_1 == smiles2D_2 );
-  OB_ASSERT( smiles2D_1 == smiles2D_3 );
-  
-  cout << smiles2D_1 << endl;
-  
-  // 3.2    Input molecule with 3 refs (2x in plane, one behind plane or in front of plane)
- 
-  // 3.2.1  Input molecule with 3 refs (2x in plane bond, real wedge bond)
-  //
-  //           F           C-F : 'real' wedge (from C to F)
-  //           |           
-  //           C
-  //          / \
-  //        Br   Cl
-  string smiles2D_4 = test_singleTetrahedral("stereo/tetrahedral2D_2.mol",
-      OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, OBStereo::ImplicitRef), 
-      OBStereo::AntiClockwise));
- 
-  // 3.2.2  Input molecule with 3 refs (2x in plane bond, inverted wedge bond)
-  //
-  //           F           C-F : 'inverted' wedge (from F to C)
-  //           |           
-  //           C
-  //          / \
-  //        Br   Cl
-  
-  /* No support for inverted bonds in 'tip-only' convention
-  string smiles2D_5 = test_singleTetrahedral("stereo/tetrahedral2D_6.mol",
-      OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, OBStereo::ImplicitRef), 
-      OBStereo::Clockwise));*/
- 
-  // 3.2.3  Input molecule with 3 refs (2x in plane bond, real hash bond)
-  //
-  //           F           C-F : 'real' hash (from C to F)
-  //           |           
-  //           C
-  //          / \
-  //        Br   Cl
-  string smiles2D_6 = test_singleTetrahedral("stereo/tetrahedral2D_3.mol",
-      OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, OBStereo::ImplicitRef), 
-      OBStereo::Clockwise));
- 
-  // 3.2.3  Input molecule with 3 refs (2x in plane bond, real hash bond)
-  //
-  //           F           C-F : 'inverted' hash (from F to C)
-  //           |           
-  //           C
-  //          / \
-  //        Br   Cl
-  /* No support for inverted bonds in 'tip-only' convention
-  string smiles2D_7 = test_singleTetrahedral("stereo/tetrahedral2D_7.mol",
-      OBTetrahedralStereo::Config(1, 0, OBStereo::MakeRefs(2, 3, OBStereo::ImplicitRef), 
-      OBStereo::AntiClockwise));
+    cout << smiles2D_4 << endl;
 
-  OB_ASSERT( smiles2D_4 == smiles2D_7 );
-  OB_ASSERT( smiles2D_5 == smiles2D_6 );*/
+   // Input molecule with unknown stereochemistry
 
-  cout << smiles2D_4 << endl;
+    smiles2D_8 = test_singleUnknownTetrahedral("stereo/tetrahedral2D_8.mol", 1);
+    cout << smiles2D_8 << endl;
 
- // Input molecule with unknown stereochemistry
+   // Input molecule with unspecified stereochemistry
 
-  string smiles2D_8 = test_singleUnknownTetrahedral("stereo/tetrahedral2D_8.mol", 1);
-  cout << smiles2D_8 << endl;
+    smiles2D_9 = test_singleUnspecifiedTetrahedral("stereo/tetrahedral2D_9.mol", 1);
+    cout << smiles2D_9 << endl;
+    break;
 
- // Input molecule with unspecified stereochemistry
+  case 4:
+    //////////////////////////////////////////////////////////////////////////////
+    // 
+    // 4      StereoFrom2D for cis/trans bonds
+    //
+    //////////////////////////////////////////////////////////////////////////////
+   
+    //  C     
+    //   \    
+    //    C==C 
+    //        \
+    //         C
+    cistrans2D_1 = test_singleCisTrans("stereo/cistrans2D_1.mol",
+        OBCisTransStereo::Config(0, 1, OBStereo::MakeRefs(2, OBStereo::ImplicitRef, 
+        3, OBStereo::ImplicitRef), OBStereo::ShapeU));
 
-  string smiles2D_9 = test_singleUnspecifiedTetrahedral("stereo/tetrahedral2D_9.mol", 1);
-  cout << smiles2D_9 << endl;
+    //  
+    //  C      C
+    //   \    / 
+    //    C==C
+    //        
+    cistrans2D_2 = test_singleCisTrans("stereo/cistrans2D_2.mol",
+        OBCisTransStereo::Config(0, 1, OBStereo::MakeRefs(2, OBStereo::ImplicitRef, 
+        OBStereo::ImplicitRef, 3), OBStereo::ShapeU));
+    break;
 
-  //////////////////////////////////////////////////////////////////////////////
-  // 
-  // 4      StereoFrom2D for cis/trans bonds
-  //
-  //////////////////////////////////////////////////////////////////////////////
- 
-  //  C     
-  //   \    
-  //    C==C 
-  //        \
-  //         C
-  string cistrans2D_1 = test_singleCisTrans("stereo/cistrans2D_1.mol",
-      OBCisTransStereo::Config(0, 1, OBStereo::MakeRefs(2, OBStereo::ImplicitRef, 
-      3, OBStereo::ImplicitRef), OBStereo::ShapeU));
-
-  //  
-  //  C      C
-  //   \    / 
-  //    C==C
-  //        
-  string cistrans2D_2 = test_singleCisTrans("stereo/cistrans2D_2.mol",
-      OBCisTransStereo::Config(0, 1, OBStereo::MakeRefs(2, OBStereo::ImplicitRef, 
-      OBStereo::ImplicitRef, 3), OBStereo::ShapeU));
-
-
+  default:
+    cout << "Test number " << choice << " does not exist!\n";
+    return -1;
+  }
 
   return 0;
 }

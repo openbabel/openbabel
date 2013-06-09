@@ -28,12 +28,20 @@ using namespace OpenBabel;
   string molecules_file = "files/forcefield.sdf";
 #endif
 
-void GenerateCharges();
+void GenerateMMFF94Charges();
 
-int main(int argc,char *argv[])
+int charge_mmff94(int argc, char* argv[])
 {
-  // turn off slow sync with C-style output (we don't use it anyway).
-  std::ios::sync_with_stdio(false);
+  int defaultchoice = 1;
+  
+  int choice = defaultchoice;
+
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
+    }
+  }
 
   // Define location of file formats for testing
 #ifdef FORMATDIR
@@ -41,20 +49,6 @@ int main(int argc,char *argv[])
     snprintf(env, BUFF_SIZE, "BABEL_LIBDIR=%s", FORMATDIR);
     putenv(env);
 #endif
-
-  if (argc != 1)
-    {
-      if (strncmp(argv[1], "-g", 2))
-        {
-          cout << "Usage: charge-mmff94" << endl;
-          return 0;
-        }
-      else
-        {
-          GenerateCharges();
-          return 0;
-        }
-    }
 
   cout << "# Testing MMFF94 Charge Model..." << endl;
 
@@ -87,75 +81,86 @@ int main(int argc,char *argv[])
   vector3 dipoleMoment, result;
   
   std::vector<double> partialCharges;
+  OBChargeModel *pCM;
 
-  if(! conv.SetInAndOutFormats("SDF","SDF"))
-    {
-      cout << "Bail out! SDF format is not loaded" << endl;
-      return -1; // test failed
-    }
-    
-  OBChargeModel *pCM = OBChargeModel::FindType("mmff94");
-
-  if (pCM == NULL) {
-    cerr << "Bail out! Cannot load charge model!" << endl;
-    return -1; // test failed
-  }
-
-  while(mifs)
-    {
-      mol.Clear();
-      conv.Read(&mol);
-      if (mol.Empty())
-        continue;
-      if (!difs.getline(buffer,BUFF_SIZE))
-        {
-          cout << "Bail out! error reading reference data" << endl;
-          return -1; // test failed
-        }
-        
-      if (!pCM->ComputeCharges(mol)) {
-        cout << "Bail out! could not compute charges on " << mol.GetTitle() << endl;
+  switch(choice) {
+  case 1:
+    if(! conv.SetInAndOutFormats("SDF","SDF"))
+      {
+        cout << "Bail out! SDF format is not loaded" << endl;
         return -1; // test failed
       }
-      partialCharges = pCM->GetPartialCharges();
-
-      // compare the calculated energy to our reference data
-      tokenize(vs, buffer);
-      if (vs.size() < 3)
-        return -1;
-
-      dipoleMoment.SetX(atof(vs[0].c_str()));
-      dipoleMoment.SetY(atof(vs[1].c_str()));
-      dipoleMoment.SetZ(atof(vs[2].c_str()));
-      result = pCM->GetDipoleMoment(mol) - dipoleMoment;
-                        
-      if ( fabs(result.length_2()) > 1.0e-4)
-        {
-          cout << "not ok " << ++currentTest << " # calculated dipole incorrect "
-               << " for molecule " << mol.GetTitle() << '\n';
-        }
-      else
-        cout << "ok " << ++currentTest << " # dipole\n";
-
       
-      FOR_ATOMS_OF_MOL(atom, mol) {
-        if (!rifs.getline(buffer,BUFF_SIZE)) {
-          cout << "Bail out! Cannot read reference data\n";
+    pCM = OBChargeModel::FindType("mmff94");
+
+    if (pCM == NULL) {
+      cerr << "Bail out! Cannot load charge model!" << endl;
+      return -1; // test failed
+    }
+
+    while(mifs)
+      {
+        mol.Clear();
+        conv.Read(&mol);
+        if (mol.Empty())
+          continue;
+        if (!difs.getline(buffer,BUFF_SIZE))
+          {
+            cout << "Bail out! error reading reference data" << endl;
+            return -1; // test failed
+          }
+          
+        if (!pCM->ComputeCharges(mol)) {
+          cout << "Bail out! could not compute charges on " << mol.GetTitle() << endl;
           return -1; // test failed
         }
-        
-        if ( fabs(atom->GetPartialCharge() - atof(buffer)) > 1.0e-3 ) {
-          cout << "not ok " << ++currentTest << " # calculated charge incorrect "
-               << " for molecule " << mol.GetTitle() << '\n';
-          cout << "# atom " << atom->GetIdx() << " expected " << buffer << " got "
-               << atom->GetPartialCharge() << '\n';
-        } else {
-          cout << "ok " << ++currentTest << " # charge\n";
-        }
-        
-      }
+        partialCharges = pCM->GetPartialCharges();
 
-    }
+        // compare the calculated energy to our reference data
+        tokenize(vs, buffer);
+        if (vs.size() < 3)
+          return -1;
+
+        dipoleMoment.SetX(atof(vs[0].c_str()));
+        dipoleMoment.SetY(atof(vs[1].c_str()));
+        dipoleMoment.SetZ(atof(vs[2].c_str()));
+        result = pCM->GetDipoleMoment(mol) - dipoleMoment;
+                          
+        if ( fabs(result.length_2()) > 1.0e-4)
+          {
+            cout << "not ok " << ++currentTest << " # calculated dipole incorrect "
+                 << " for molecule " << mol.GetTitle() << '\n';
+          }
+        else
+          cout << "ok " << ++currentTest << " # dipole\n";
+
+        
+        FOR_ATOMS_OF_MOL(atom, mol) {
+          if (!rifs.getline(buffer,BUFF_SIZE)) {
+            cout << "Bail out! Cannot read reference data\n";
+            return -1; // test failed
+          }
+          
+          if ( fabs(atom->GetPartialCharge() - atof(buffer)) > 1.0e-3 ) {
+            cout << "not ok " << ++currentTest << " # calculated charge incorrect "
+                 << " for molecule " << mol.GetTitle() << '\n';
+            cout << "# atom " << atom->GetIdx() << " expected " << buffer << " got "
+                 << atom->GetPartialCharge() << '\n';
+          } else {
+            cout << "ok " << ++currentTest << " # charge\n";
+          }
+          
+        }
+
+      }
+    break;
+  case 99:
+    GenerateMMFF94Charges();
+    return 0;
+  default:
+    cout << "Test number " << choice << " does not exist!\n";
+    return -1;
+  }
 
   // return number of tests run
   cout << "1.." << currentTest << endl;
@@ -164,7 +169,7 @@ int main(int argc,char *argv[])
   return 0;
 }
 
-void GenerateCharges()
+void GenerateMMFF94Charges()
 {
   std::ifstream ifs;
   if (!SafeOpen(ifs, molecules_file.c_str()))
