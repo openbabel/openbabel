@@ -6,16 +6,9 @@ using namespace OpenBabel;
 
 typedef vector<vector3> vv3;
 
-std::string GetFilename(const std::string &filename)
-{
-  string path = TESTDATADIR + filename;
-
-  return path;
-}
-
 void testLossOfHydrogen(string filename)
 {
-  string testfile = GetFilename(filename);
+  string testfile = OBTestUtil::GetFilename(filename);
   ifstream ifs(testfile.c_str());
 
   OBConversion conv(&ifs);
@@ -40,7 +33,7 @@ void testLossOfHydrogen(string filename)
   
 }
 
-int main()
+int implicitHtest(int argc, char* argv[])
 {
   // Define location of file formats for testing
   #ifdef FORMATDIR

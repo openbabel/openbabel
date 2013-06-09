@@ -33,17 +33,18 @@ GNU General Public License for more details.
 using namespace std;
 using namespace OpenBabel;
 
-int main(int argc,char *argv[])
+int datatest(int argc, char* argv[])
 {
-  // turn off slow sync with C-style output (we don't use it anyway).
-  std::ios::sync_with_stdio(false);
+  int defaultchoice = 1;
+  
+  int choice = defaultchoice;
 
-  if (argc != 1)
-    {
-      cout << "Usage: data" << endl;
-      cout << " Unit tests for Open Babel data tables " << endl;
-      return(-1);
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
     }
+  }
 
   cout << "# Unit tests for data tables \n";
 

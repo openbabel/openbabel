@@ -33,20 +33,28 @@ using namespace std;
 using namespace OpenBabel;
 
 #ifdef TESTDATADIR
-  string testdatadir = TESTDATADIR;
-  string results_file = testdatadir + "formalchargeresults.txt";
-  string smilestypes_file = testdatadir + "attype.00.smi";
+  string ftestdatadir = TESTDATADIR;
+  string fresults_file = ftestdatadir + "formalchargeresults.txt";
+  string fsmilestypes_file = ftestdatadir + "attype.00.smi";
 #else
-  string results_file = "files/formalchargeresults.txt";
-  string smilestypes_file = "files/attype.00.smi";
+  string fresults_file = "files/formalchargeresults.txt";
+  string fsmilestypes_file = "files/attype.00.smi";
 #endif
 
 void GenerateFormalChargeReference();
 
-int main(int argc,char *argv[])
+int formalcharge(int argc, char* argv[])
 {
-  // turn off slow sync with C-style output (we don't use it anyway).
-  std::ios::sync_with_stdio(false);
+  int defaultchoice = 1;
+  
+  int choice = defaultchoice;
+
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
+    }
+  }
 
   // Define location of file formats for testing
   #ifdef FORMATDIR
@@ -55,35 +63,25 @@ int main(int argc,char *argv[])
     putenv(env);
   #endif
 
-  if (argc != 1)
+  if (choice == 99)
     {
-      if (strncmp(argv[1], "-g", 2))
-        {
-          cout << "Usage: formalcharge" << endl;
-          cout << "   Tests Open Babel molecular formal charge perception." 
-               << endl;
-          return 0;
-        }
-      else
-        {
-          GenerateFormalChargeReference();
-          return 0;
-        }
+      GenerateFormalChargeReference();
+      return 0;
     }
 
   cout << "# Testing molecular formal charges..." << endl;
 
   std::ifstream mifs;
-  if (!SafeOpen(mifs, smilestypes_file.c_str()))
+  if (!SafeOpen(mifs, fsmilestypes_file.c_str()))
     {
-      cout << "Bail out! Cannot read file " << smilestypes_file << endl;
+      cout << "Bail out! Cannot read file " << fsmilestypes_file << endl;
       return -1; // test failed
     }
 
   std::ifstream rifs;
-  if (!SafeOpen(rifs, results_file.c_str()))
+  if (!SafeOpen(rifs, fresults_file.c_str()))
     {
-      cout << "Bail out! Cannot read file " << results_file << endl;
+      cout << "Bail out! Cannot read file " << fresults_file << endl;
       return -1; // test failed
     }
 
@@ -127,11 +125,11 @@ int main(int argc,char *argv[])
 void GenerateFormalChargeReference()
 {
   std::ifstream ifs;
-  if (!SafeOpen(ifs, smilestypes_file.c_str()))
+  if (!SafeOpen(ifs, fsmilestypes_file.c_str()))
     return;
 
   std::ofstream ofs;
-  if (!SafeOpen(ofs, results_file.c_str()))
+  if (!SafeOpen(ofs, fresults_file.c_str()))
     return;
 
   OBMol mol;

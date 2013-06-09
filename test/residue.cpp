@@ -42,10 +42,19 @@ void CheckValidDipeptide(OBConversion &conv,
                          const string &test,
                          unsigned int testCount);
 
-int main(int argc,char *argv[])
+int residue(int argc, char* argv[])
 {
-  // turn off slow sync with C-style output (we don't use it anyway).
-  std::ios::sync_with_stdio(false);
+  int defaultchoice = 1;
+  
+  int choice = defaultchoice;
+
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
+    }
+  }
+
 
   // Define location of file formats for testing
   #ifdef FORMATDIR
@@ -54,12 +63,6 @@ int main(int argc,char *argv[])
     putenv(env);
   #endif
 
-  if (argc != 1)
-    {
-      cout << "Usage: residue" << endl;
-      cout << " Unit tests for OBResidue " << endl;
-      return(-1);
-    }
 
   cout << "# Unit tests for OBResidue \n";
 

@@ -32,24 +32,30 @@ using namespace std;
 using namespace OpenBabel;
 
 #ifdef TESTDATADIR
-  string testdatadir = TESTDATADIR;
-  string invalid_file = testdatadir + "invalid-smiles.txt";
-  string random1_file = testdatadir + "random";
-  string random2_file = testdatadir + "random2";
-  string random3_file = testdatadir + "random3";
+  string itestdatadir = TESTDATADIR;
+  string iinvalid_file = itestdatadir + "invalid-smiles.txt";
+  string irandom1_file = itestdatadir + "random";
+  string irandom2_file = itestdatadir + "random2";
+  string irandom3_file = itestdatadir + "random3";
 #else
-  string invalid_file = "files/invalid-smiles.txt";
-  string random1_file = "files/random";
-  string random2_file = "files/random2";
-  string random3_file = "files/random3";
+  string iinvalid_file = "files/invalid-smiles.txt";
+  string irandom1_file = "files/random";
+  string irandom2_file = "files/random2";
+  string irandom3_file = "files/random3";
 #endif
 
-void GenerateFormalChargeReference();
-
-int main(int argc,char *argv[])
+int invalidsmiles(int argc, char* argv[])
 {
-  // turn off slow sync with C-style output (we don't use it anyway).
-  std::ios::sync_with_stdio(false);
+  int defaultchoice = 1;
+  
+  int choice = defaultchoice;
+
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
+    }
+  }
 
   // Define location of file formats for testing
   #ifdef FORMATDIR
@@ -72,9 +78,9 @@ int main(int argc,char *argv[])
   obErrorLog.StopLogging();
 
   std::ifstream mifs;
-  if (!SafeOpen(mifs, invalid_file.c_str()))
+  if (!SafeOpen(mifs, iinvalid_file.c_str()))
     {
-      cout << "Bail out! Cannot read file " << invalid_file << endl;
+      cout << "Bail out! Cannot read file " << iinvalid_file << endl;
       return -1; // test failed
     }
 

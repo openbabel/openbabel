@@ -15,7 +15,7 @@ bool sameWinding(const OBStereo::Refs &refs1, const OBStereo::Refs &refs2)
   return ((Ni1 + Ni2) % 2 == 0);
 }
   
-void test_configStruct()
+void mtest_configStruct()
 {
   // reference Config
   OBTetrahedralStereo::Config reference(0, 1, OBStereo::MakeRefs(2, 3, 4), OBStereo::Clockwise, OBStereo::ViewFrom);
@@ -51,7 +51,7 @@ void test_configStruct()
 
 }
 
-void test_IsValid()
+void mtest_IsValid()
 {
   OBTetrahedralStereo ts(0);
   OBTetrahedralStereo::Config cfg, cfgCopy;
@@ -81,7 +81,7 @@ void test_IsValid()
   OB_ASSERT( !ts.IsValid() );
 }
 
-void test_equalsOperator()
+void mtest_equalsOperator()
 {
   OBTetrahedralStereo ts1(0), ts2(0);
   OBTetrahedralStereo::Config cfg;
@@ -98,7 +98,7 @@ void test_equalsOperator()
   OB_ASSERT( ts1 != ts2 );
 }
 
-void test_GetSetConfig()
+void mtest_GetSetConfig()
 {
   OBTetrahedralStereo th(0);
   OBTetrahedralStereo::Config cfg;
@@ -220,13 +220,39 @@ void test_Refs()
   OB_ASSERT( th.GetConfig() != cfg5 ); 
 }
 
-int main()
+int tetrahedraltest(int argc, char* argv[])
 {
-  test_configStruct();
-  test_IsValid();
-  test_equalsOperator();
-  test_GetSetConfig();
-  test_Refs();
+  int defaultchoice = 1;
+  
+  int choice = defaultchoice;
+
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
+    }
+  }
+
+  switch(choice) {
+  case 1:
+    mtest_configStruct();
+    break;
+  case 2:
+    mtest_IsValid();
+    break;
+  case 3:
+    mtest_equalsOperator();
+    break;
+  case 4:
+    mtest_GetSetConfig();
+    break;
+  case 5:
+    test_Refs();
+    break;
+  default:
+    cout << "Test number " << choice << " does not exist!\n";
+    return -1;
+  }
 
   return 0;
 }

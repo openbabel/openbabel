@@ -30,6 +30,7 @@ GNU General Public License for more details.
 #include <iostream>
 #include <stdlib.h>
 #include <string.h>
+#include <cstdio>
 
 #define REPEAT 1000
 
@@ -366,29 +367,44 @@ void testEigenvectors()
     }
 }
 
-int main(int argc,char *argv[])
+int math(int argc, char* argv[])
 {
-  // turn off slow sync with C-style output (we don't use it anyway).
-  std::ios::sync_with_stdio(false);
+  int defaultchoice = 1;
+  
+  int choice = defaultchoice;
 
-  if (argc != 1)
-  {
-    cout << "Usage: math" << endl;
-    cout << "   Tests OpenBabel's math code." << endl;
-    return 0;
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
+    }
   }
   
   cout << "# math: repeating each test " << REPEAT << " times" << endl;
   
   randomizer.TimeSeed();
 
-  TEST( testBasics_vector3 );
-  TEST( testBasics_matrix3x3 );
-  TEST( testArithmeticOperators );
-  TEST( testDistancesAnglesOrthogonality );
-  TEST( testInversion );
-  TEST( testEigenvalues );
-  TEST( testEigenvectors );
+  cout << "# Testing MMFF94 Force Field..." << endl;
+  switch(choice) {
+  case 1:
+    TEST( testBasics_vector3 );
+    TEST( testBasics_matrix3x3 );
+    break;
+  case 2:
+    TEST( testArithmeticOperators );
+    TEST( testDistancesAnglesOrthogonality );
+    break;
+  case 3:
+    TEST( testInversion );
+    break;
+  case 4:
+    TEST( testEigenvalues );
+    TEST( testEigenvectors );
+    break;
+  default:
+    cout << "Test number " << choice << " does not exist!\n";
+    return -1;
+  }
 
   cout << "1.." << testCount << endl;
 

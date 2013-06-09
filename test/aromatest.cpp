@@ -36,10 +36,18 @@ extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
 using namespace std;
 using namespace OpenBabel;
 
-int main()
+int aromatest(int argc, char* argv[])
 {
-  // turn off slow sync with C-style output (we don't use it anyway).
-  std::ios::sync_with_stdio(false);
+  int defaultchoice = 1;
+  
+  int choice = defaultchoice;
+
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
+    }
+  }
 
   cout << endl << "# Testing aromaticity perception...  " << endl;
  
@@ -84,32 +92,38 @@ int main()
       return (-1);
     }
   
-  int molCount = 0;
-  while(ifs.peek() != EOF && ifs.good())
-    {
-      mol.Clear();
-      conv.Read(&mol);
-      molCount++;
-      
-      FOR_ATOMS_OF_MOL(atom, mol)
-        {
-          if (atom->IsHydrogen())
-            continue;
+  int molCount;
 
-          if (atom->IsAromatic())
-            cout << "ok " << ++testCount << "\n";
-          else
-            {
-              cout << "not ok " << ++testCount << " # atom isn't aromatic!\n";
-              cout << "# atom idx " << atom->GetIdx()
-                   << " in molecule " << molCount << " "
-                   << mol.GetTitle() << "\n";
-            }
-        }	
-    } // while reading molecules
-    
-  // output the number of tests run
-  cout << "1.." << testCount << endl;
+  switch(choice) {
+  case 1:
+    molCount = 0;
+    while(ifs.peek() != EOF && ifs.good())
+      {
+        mol.Clear();
+        conv.Read(&mol);
+        molCount++;
+        
+        FOR_ATOMS_OF_MOL(atom, mol)
+          {
+            if (atom->IsHydrogen())
+              continue;
+
+            if (atom->IsAromatic())
+              cout << "ok " << ++testCount << "\n";
+            else
+              {
+                cout << "not ok " << ++testCount << " # atom isn't aromatic!\n";
+                cout << "# atom idx " << atom->GetIdx()
+                     << " in molecule " << molCount << " "
+                     << mol.GetTitle() << "\n";
+              }
+          }	
+      } // while reading molecules
+    break;
+  default:
+    cout << "Test number " << choice << " does not exist!\n";
+    return -1;
+  }
 
   return(0);
 }
