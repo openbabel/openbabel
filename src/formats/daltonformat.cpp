@@ -69,7 +69,7 @@ namespace OpenBabel
     DALTONInputFormat()
     {
       OBConversion::RegisterFormat("dalmol",this, "chemical/x-dalton-input");
-      OBConversion::RegisterOptionParam("a", NULL, 1, OBConversion::OUTOPTIONS); // write atomic units
+      OBConversion::RegisterOptionParam("a", NULL, 0, OBConversion::OUTOPTIONS); // write atomic units
     }
 
 
