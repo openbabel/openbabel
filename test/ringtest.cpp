@@ -36,18 +36,26 @@ using namespace OpenBabel;
 void GenerateRingReference();
 
 #ifdef TESTDATADIR
-  string testdatadir = TESTDATADIR;
-  string results_file = testdatadir + "ringresults.txt";
-  string smilestypes_file = testdatadir + "attype.00.smi";
+  string ltestdatadir = TESTDATADIR;
+  string lresults_file = ltestdatadir + "ringresults.txt";
+  string lsmilestypes_file = ltestdatadir + "attype.00.smi";
 #else
-  string results_file = "files/ringresults.txt";
-  string smilestypes_file = "files/attype.00.smi";
+  string lresults_file = "files/ringresults.txt";
+  string lsmilestypes_file = "files/attype.00.smi";
 #endif
 
-int main(int argc,char *argv[])
+int ringtest(int argc, char* argv[])
 {
-  // turn off slow sync with C-style output (we don't use it anyway).
-  std::ios::sync_with_stdio(false);
+  int defaultchoice = 1;
+  
+  int choice = defaultchoice;
+
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
+    }
+  }
 
   // Define location of file formats for testing
   #ifdef FORMATDIR
@@ -56,34 +64,25 @@ int main(int argc,char *argv[])
     putenv(env);
   #endif
 
-  if (argc != 1)
+    if (choice==99)
     {
-      if (strncmp(argv[1], "-g", 2))
-        {
-          cout << "Usage: ringtest" << endl;
-          cout << "   Tests Open Babel ring perception testing." << endl;
-          return 0;
-        }
-      else
-        {
           GenerateRingReference();
           return 0;
-        }
     }
 
   cout << "# Testing ring perception..." << endl;
 
   std::ifstream mifs;
-  if (!SafeOpen(mifs, smilestypes_file.c_str()))
+  if (!SafeOpen(mifs, lsmilestypes_file.c_str()))
     {
-      cout << "Bail out! Cannot read file " << smilestypes_file << endl;
+      cout << "Bail out! Cannot read file " << lsmilestypes_file << endl;
       return -1; // test failed
     }
 
   std::ifstream rifs;
-  if (!SafeOpen(rifs, results_file.c_str()))
+  if (!SafeOpen(rifs, lresults_file.c_str()))
     {
-      cout << "Bail out! Cannot read file " << results_file << endl;
+      cout << "Bail out! Cannot read file " << lresults_file << endl;
       return -1; // test failed
     }
 
@@ -207,11 +206,11 @@ void GenerateRingReference()
 {
   std::ifstream ifs;
 
-  if (!SafeOpen(ifs,smilestypes_file.c_str()))
+  if (!SafeOpen(ifs,lsmilestypes_file.c_str()))
     return;
 
   std::ofstream ofs;
-  if (!SafeOpen(ofs,results_file.c_str()))
+  if (!SafeOpen(ofs,lresults_file.c_str()))
     return;
 
   int count;
