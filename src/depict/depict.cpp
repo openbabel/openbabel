@@ -313,13 +313,15 @@ namespace OpenBabel
       double min_x, max_x;
       double min_y, max_y;
       atom = d->mol->BeginAtom(i);
-      min_x = max_x = atom->GetX();
-      min_y = max_y = atom->GetY();
-      for (atom = d->mol->NextAtom(i); atom; atom = d->mol->NextAtom(i)) {
-        min_x = std::min(min_x, atom->GetX());
-        max_x = std::max(max_x, atom->GetX());
-        min_y = std::min(min_y, atom->GetY());
-        max_y = std::max(max_y, atom->GetY());
+      if (atom != NULL) {
+        min_x = max_x = atom->GetX();
+        min_y = max_y = atom->GetY();
+        for (atom = d->mol->NextAtom(i); atom; atom = d->mol->NextAtom(i)) {
+          min_x = std::min(min_x, atom->GetX());
+          max_x = std::max(max_x, atom->GetX());
+          min_y = std::min(min_y, atom->GetY());
+          max_y = std::max(max_y, atom->GetY());
+        }
       }
 
       double margin;
