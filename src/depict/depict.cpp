@@ -86,65 +86,65 @@ namespace OpenBabel
     delete d;
   }
 
-  void OBDepict::SetBondLength(double length) 
-  { 
-    d->bondLength = length; 
+  void OBDepict::SetBondLength(double length)
+  {
+    d->bondLength = length;
   }
 
-  double OBDepict::GetBondLength() const 
-  { 
-    return d->bondLength; 
+  double OBDepict::GetBondLength() const
+  {
+    return d->bondLength;
   }
- 
+
   void OBDepict::SetPenWidth(double width)
-  { 
+  {
     d->penWidth = width;
     d->painter->SetPenWidth(width);
   }
 
-  double OBDepict::GetPenWidth() const 
-  { 
-    return d->penWidth; 
-  }
-  
-  void OBDepict::SetBondSpacing(double spacing) 
-  { 
-    d->bondSpacing = spacing;
-  }
-  
-  double OBDepict::GetBondSpacing() const 
-  { 
-    return d->bondSpacing; 
-  }
-  
-  void OBDepict::SetBondWidth(double width) 
-  { 
-    d->bondWidth = width;
-  }
-  
-  double OBDepict::GetBondWidth() const 
-  { 
-    return d->bondWidth; 
-  }
-  
-/*  void OBDepict::SetDrawingTerminalCarbon(bool enabled) 
-  { 
-    d->drawTerminalC = enabled; 
+  double OBDepict::GetPenWidth() const
+  {
+    return d->penWidth;
   }
 
-  bool OBDepict::GetDrawingTerminalCarbon() const 
-  { 
-    return d->drawTerminalC; 
+  void OBDepict::SetBondSpacing(double spacing)
+  {
+    d->bondSpacing = spacing;
+  }
+
+  double OBDepict::GetBondSpacing() const
+  {
+    return d->bondSpacing;
+  }
+
+  void OBDepict::SetBondWidth(double width)
+  {
+    d->bondWidth = width;
+  }
+
+  double OBDepict::GetBondWidth() const
+  {
+    return d->bondWidth;
+  }
+
+/*  void OBDepict::SetDrawingTerminalCarbon(bool enabled)
+  {
+    d->drawTerminalC = enabled;
+  }
+
+  bool OBDepict::GetDrawingTerminalCarbon() const
+  {
+    return d->drawTerminalC;
   }
 */
   void OBDepict::SetOption(unsigned opts)
   {
     d->options |= opts;
   }
-  
-  unsigned OBDepict::GetOptions() const 
-  { 
-    return d->options; 
+
+  unsigned OBDepict::GetOptions() const
+  {
+    return d->options;
   }
   void OBDepict::ClearOptions()
   {
@@ -163,7 +163,7 @@ namespace OpenBabel
   }
 
   void OBDepict::SetFontSize(int pointSize, bool subscript)
-  { 
+  {
     if (subscript) {
       d->subscriptSize = pointSize;
       return;
@@ -172,7 +172,7 @@ namespace OpenBabel
     d->fontSize = pointSize;
     d->subscriptSize = (int)(0.85 * pointSize);
   }
-  
+
   int OBDepict::GetFontSize(bool subscript) const
   {
     if (subscript)
@@ -185,21 +185,21 @@ namespace OpenBabel
     d->aliasMode = b;
   }
 
-  //Color is not quite properly integrated into OBDepict, but is needed if 
+  //Color is not quite properly integrated into OBDepict, but is needed if
   //element-dependent coloring is to be used.
   void OBDepict::SetBondColor(const std::string& scolor)
   {
     d->bondColor = scolor;
   }
 
-  int GetLabelAlignment(OBAtom *atom) 
+  int GetLabelAlignment(OBAtom *atom)
   {
-    // compute the sum of the bond vectors, this gives 
+    // compute the sum of the bond vectors, this gives
     vector3 direction(VZero);
     OBBondIterator i;
     for (OBAtom *nbr = atom->BeginNbrAtom(i); nbr; nbr = atom->NextNbrAtom(i))
       direction += atom->GetVector() - nbr->GetVector();
-    
+
     const double bias = -0.1; //towards left-alignment, which is more natural
     int alignment = 0;
     if ((atom->GetValence() == 2) && (abs(direction.y()) > abs(direction.x()))) {
@@ -270,7 +270,7 @@ namespace OpenBabel
       }
     }
 
-    return true;    
+    return true;
   }
 
   bool OBDepict::DrawMolecule(OBMol *mol)
@@ -281,7 +281,7 @@ namespace OpenBabel
     if (d->mol != NULL)
       delete d->mol;
     d->mol = new OBMol(*mol); // Copy it
-    
+
     OBAtomClassData* pac = NULL;
     if(mol->HasData("Atom Class"))
       pac = static_cast<OBAtomClassData*>(mol->GetData("Atom Class"));
@@ -292,7 +292,7 @@ namespace OpenBabel
     OBBondIterator j;
     OBAtomIterator i;
 
-    
+
     // Determine which should be wedge and hash bonds...
     // Note: we need to do this before we invert the y-coordinate for depiction
     std::map<OBBond*, enum OBStereo::BondDirection> updown;
@@ -333,7 +333,7 @@ namespace OpenBabel
 
       width  = max_x - min_x + 2*margin;
       height = max_y - min_y + 2*margin;
-      
+
       //d->painter->SetPenWidth(d->penWidth);
       //d->painter->SetPenColor(d->pen));
       //d->painter->SetFillColor(OBColor("black"));
@@ -402,7 +402,7 @@ namespace OpenBabel
       std::vector<int> indexes = ring->_path;
       vector3 center(VZero);
       for (std::vector<int>::iterator l = indexes.begin(); l != indexes.end(); ++l) {
-        center += d->mol->GetAtom(*l)->GetVector();        
+        center += d->mol->GetAtom(*l)->GetVector();
       }
       center /= indexes.size();
 
@@ -486,8 +486,8 @@ namespace OpenBabel
         }
         d->painter->SetFontSize(metrics.fontSize);//restore
       }
- 
-      if (atom->IsCarbon()) { 
+
+      if (atom->IsCarbon()) {
         if(!(d->options & drawAllC))
         {
           if (atom->GetValence() > 1)
@@ -501,16 +501,16 @@ namespace OpenBabel
       AliasData* ad = NULL;
       if(d->aliasMode && atom->HasData(AliasDataType))
         ad = static_cast<AliasData*>(atom->GetData(AliasDataType));
-      
+
       //For unexpanded aliases use appropriate form of alias instead of element symbol, Hs, etc
       if(ad && !ad->IsExpanded())
       {
         ss <<ad->GetAlias(rightAligned);
-        OBColor aliasColor = !ad->GetColor().empty() ? ad->GetColor() : d->bondColor; 
+        OBColor aliasColor = !ad->GetColor().empty() ? ad->GetColor() : d->bondColor;
           d->painter->SetPenColor(aliasColor);
       }
 
-      //Atoms with no AliasData, but 0 atomic num and atomclass==n are output as Rn 
+      //Atoms with no AliasData, but 0 atomic num and atomclass==n are output as Rn
       else if(pac && atom->GetAtomicNum()==0 && pac->HasClass(atom->GetIdx()))
       {
         ss << 'R' << pac->GetClass(atom->GetIdx());
@@ -525,7 +525,7 @@ namespace OpenBabel
           atomSymbol = etab.GetSymbol(atom->GetAtomicNum());
 
         unsigned int hCount = atom->ImplicitHydrogenCount();
-        // rightAligned:  
+        // rightAligned:
         //   false  CH3
         //   true   H3C
         if (hCount && rightAligned)
@@ -554,7 +554,7 @@ namespace OpenBabel
       begin += 0.33 * vb;
     if (HasLabel(endAtom))
       end -= 0.33 * vb;
-    
+
     vb = end - begin; // Resize the extents of the vb vector
 
     vector3 orthogonalLine = cross(vb, VZ);
@@ -580,7 +580,7 @@ namespace OpenBabel
       oldy = newy;
       sign =- sign;
     }
-  } 
+  }
 
   void OBDepictPrivate::DrawWedge(OBAtom *beginAtom, OBAtom *endAtom)
   {
@@ -599,9 +599,9 @@ namespace OpenBabel
     std::vector<std::pair<double,double> > points;
 
     points.push_back(std::pair<double,double>(begin.x(), begin.y()));
-    points.push_back(std::pair<double,double>(end.x() + orthogonalLine.x(), 
+    points.push_back(std::pair<double,double>(end.x() + orthogonalLine.x(),
                                               end.y() + orthogonalLine.y()));
-    points.push_back(std::pair<double,double>(end.x() - orthogonalLine.x(), 
+    points.push_back(std::pair<double,double>(end.x() - orthogonalLine.x(),
                                               end.y() - orthogonalLine.y()));
     painter->DrawPolygon(points);
   }
@@ -616,7 +616,7 @@ namespace OpenBabel
       begin += 0.33 * vb;
     if (HasLabel(endAtom))
       end -= 0.33 * vb;
-    
+
     vb = end - begin; // Resize the extents of the vb vector
 
     vector3 orthogonalLine = cross(vb, VZ);
@@ -627,19 +627,19 @@ namespace OpenBabel
 
     for (int k = 0; k < 6; ++k) {
       double w = lines[k];
-      painter->DrawLine(begin.x() + vb.x() * w + orthogonalLine.x() * w, 
-                        begin.y() + vb.y() * w + orthogonalLine.y() * w, 
-                        begin.x() + vb.x() * w - orthogonalLine.x() * w, 
+      painter->DrawLine(begin.x() + vb.x() * w + orthogonalLine.x() * w,
+                        begin.y() + vb.y() * w + orthogonalLine.y() * w,
+                        begin.x() + vb.x() * w - orthogonalLine.x() * w,
                         begin.y() + vb.y() * w - orthogonalLine.y() * w);
     }
-  } 
-  
+  }
+
   void OBDepictPrivate::DrawSimpleBond(OBAtom *beginAtom, OBAtom *endAtom, int order, bool crossed_dbl_bond)
   {
     vector3 begin = beginAtom->GetVector();
     vector3 end = endAtom->GetVector();
     vector3 vb = end - begin;
-    
+
     vb.normalize();
 
     if (HasLabel(beginAtom))
@@ -704,9 +704,9 @@ namespace OpenBabel
       vector3 orthogonalLine = cross(end - begin, VZ).normalize();
       vector3 offset = orthogonalLine * 0.7 * bondSpacing;
       painter->DrawLine(begin.x(), begin.y(), end.x(), end.y());
-      painter->DrawLine(begin.x() + offset.x(), begin.y() + offset.y(), 
+      painter->DrawLine(begin.x() + offset.x(), begin.y() + offset.y(),
                         end.x() + offset.x(), end.y() + offset.y());
-      painter->DrawLine(begin.x() - offset.x(), begin.y() - offset.y(), 
+      painter->DrawLine(begin.x() - offset.x(), begin.y() - offset.y(),
                         end.x() - offset.x(), end.y() - offset.y());
     }
   }
@@ -716,8 +716,8 @@ namespace OpenBabel
     if (order != 2) {
       DrawSimpleBond(beginAtom, endAtom, order);
       return;
-    } 
-   
+    }
+
     vector3 begin = beginAtom->GetVector();
     vector3 end = endAtom->GetVector();
 
@@ -739,7 +739,7 @@ namespace OpenBabel
       begin -= 0.10 * vbb;
     if (HasLabel(endAtom))
       end += 0.10 * vbb;
-    painter->DrawLine(begin.x() + spacing.x() + offset.x(), begin.y() + spacing.y() + offset.y(), 
+    painter->DrawLine(begin.x() + spacing.x() + offset.x(), begin.y() + spacing.y() + offset.y(),
                       end.x() + spacing.x() - offset.x(), end.y() + spacing.y() - offset.y());
   }
 
@@ -757,7 +757,7 @@ namespace OpenBabel
     painter->DrawCircle(pos.x(), pos.y(), metrics.ascent / 2);
     painter->SetPenColor(OBColor("black"));
     */
- 
+
     // compute the total width
     double totalWidth = 0.0;
     if ((alignment == Right) || (alignment == Left) || (label.find("H") == std::string::npos)) {
@@ -773,7 +773,7 @@ namespace OpenBabel
     } else {
       painter->SetFontSize(fontSize);
       totalWidth = painter->GetFontMetrics(label.substr(0, label.find("H"))).width;
-      double width = 0.0; 
+      double width = 0.0;
       for (unsigned int i = label.find("H"); i < label.size(); ++i) {
         if (!isalpha(label[i])) {
           painter->SetFontSize(subscriptSize);
@@ -785,19 +785,19 @@ namespace OpenBabel
       }
 
       if (width > totalWidth)
-        totalWidth = width; 
+        totalWidth = width;
     }
 
     painter->SetFontSize(fontSize);
     OBFontMetrics metrics = painter->GetFontMetrics(label);
- 
+
 
     std::string str, subscript;
     // compute the horizontal starting position
     double xOffset, yOffset, yOffsetSubscript;
     switch (alignment) {
       case Right:
-        xOffset = 0.5 * painter->GetFontMetrics(label.substr(0, 1)).width - 
+        xOffset = 0.5 * painter->GetFontMetrics(label.substr(0, 1)).width -
                   painter->GetFontMetrics(label).width;
         break;
       case Left:
@@ -809,6 +809,7 @@ namespace OpenBabel
           xOffset = - 0.5 * painter->GetFontMetrics(label.substr(0, label.find("H"))).width;
         else
           xOffset = - 0.5 * totalWidth;
+        break;
       default:
         xOffset = - 0.5 * totalWidth;
         break;
@@ -843,7 +844,7 @@ namespace OpenBabel
         if (!str.empty()) {
           // write the current string
           painter->SetFontSize(fontSize);
-          OBFontMetrics metrics = painter->GetFontMetrics(str);   
+          OBFontMetrics metrics = painter->GetFontMetrics(str);
           painter->DrawText(pos.x() + xOffset, pos.y() + yOffset, str);
           xOffset += metrics.width;
           str.clear();
@@ -859,7 +860,7 @@ namespace OpenBabel
           xOffset += metrics.width;
           subscript.clear();
         }
- 
+
         str += label.substr(i, 1);
       }
     }
@@ -871,12 +872,12 @@ namespace OpenBabel
     if (!subscript.empty()) {
       painter->SetFontSize(subscriptSize);
       OBFontMetrics metrics = painter->GetFontMetrics(subscript);
-      double yOffset = ispunct(subscript[subscript.size()-1]) || ispunct(subscript[0]) 
+      double yOffset = ispunct(subscript[subscript.size()-1]) || ispunct(subscript[0])
         || (subscript.size()>1 && ispunct(subscript[1]))
         ? -yOffsetSubscript : yOffsetSubscript;
       painter->DrawText(pos.x() + xOffset, pos.y() + yOffset, subscript);
     }
-  
+
   }
 
   bool OBDepictPrivate::HasLabel(OBAtom *atom)
@@ -888,7 +889,7 @@ namespace OpenBabel
     return false;
   }
 
-  void OBDepictPrivate::SetWedgeAndHash(OBMol* mol)  
+  void OBDepictPrivate::SetWedgeAndHash(OBMol* mol)
   {
     // Remove any existing wedge and hash bonds
     FOR_BONDS_OF_MOL(b,mol)  {
