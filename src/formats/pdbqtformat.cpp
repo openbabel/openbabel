@@ -856,7 +856,8 @@ namespace OpenBabel
               {
                 snprintf(type_name,5,"%s",(char*)res->GetAtomID(rotBondTable[rotBondId][bondAtomNum]).c_str());
                 end=0;
-                while (end < sizeof(type_name) && type_name[end] && !isspace(type_name[end]))
+                // Use sizeof() - 1 to ensure there's room for the NULL termination!
+                while (end < sizeof(type_name) - 1 && type_name[end] && !isspace(type_name[end]))
                   end++;
                 type_name[end] = '\0';
               }
