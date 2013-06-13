@@ -775,7 +775,7 @@ namespace OpenBabel {
             largestRadius = parameterA->_dpar[0];
             largestNbr = current;
           }
-          if (secondLargestNbr == 0) {
+          if (secondLargestNbr == NULL) {
             // save this atom
             secondLargestNbr = current;
           }
@@ -787,14 +787,12 @@ namespace OpenBabel {
         label->SetValue("True"); // doesn't really matter
         atom->SetData(label);
 
-        // And tag the axial substituents, if it exists
-        if (largestNbr != NULL) {
-          label = new OBPairData;
-          label->SetAttribute("UFF_AXIAL_ATOM");
-          label->SetValue("True");
-          largestNbr->SetData(label);
-        }
-        if (secondLargestNbr != NULL) { // ditto
+        label = new OBPairData;
+        label->SetAttribute("UFF_AXIAL_ATOM");
+        label->SetValue("True");
+        largestNbr->SetData(label);
+
+        if (secondLargestNbr != NULL) { // check for NULL, no guarantee
           label = new OBPairData;
           label->SetAttribute("UFF_AXIAL_ATOM");
           label->SetValue("True");
@@ -820,7 +818,7 @@ namespace OpenBabel {
             largestRadius = parameterA->_dpar[0];
             largestNbr = current;
           }
-          if (secondLargestNbr == 0) {
+          if (secondLargestNbr == NULL) {
             // save this atom
             secondLargestNbr = current;
           }
@@ -836,11 +834,12 @@ namespace OpenBabel {
         label->SetAttribute("UFF_AXIAL_ATOM");
         label->SetValue("True");
         largestNbr->SetData(label);
-        label = new OBPairData;
-        label->SetAttribute("UFF_AXIAL_ATOM");
-        label->SetValue("True");
-        secondLargestNbr->SetData(label);
-
+        if (secondLargestNbr != NULL) { // check for NULL, no guarantee
+          label = new OBPairData;
+          label->SetAttribute("UFF_AXIAL_ATOM");
+          label->SetValue("True");
+          secondLargestNbr->SetData(label);
+        }
       }
     } // end loop through atoms
 
