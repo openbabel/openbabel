@@ -115,7 +115,7 @@ namespace OpenBabel
         _red(red), _green(green), _blue(blue),
         _maxbonds(maxbo)
         {
-          strncpy(_symbol, sym, 4);
+          strncpy(_symbol, sym, 3); // Make sure to leave 4th character for null
         }
 
       //! \return the atomic number of this element
@@ -229,7 +229,7 @@ namespace OpenBabel
 
       Stores both theoretical and experimental corrections
       needed to compute the Enthalpy of formation. In order to
-      use these you need to perform 
+      use these you need to perform
       Gaussian G2/G3/G4 or CBS-QB3 calculations.
   **/
   class OBAPI OBAtomHOF
@@ -238,19 +238,19 @@ namespace OpenBabel
     std::string _element,_method,_desc;
     double _T,_value;
     int _multiplicity;
-    
+
   public:
     OBAtomHOF(std::string element,std::string method,std::string desc,
               double T,double value,int multiplicity)
       {
-        _element      = element; 
-        _method       = method; 
+        _element      = element;
+        _method       = method;
         _desc         = desc;
-        _T            = T; 
-        _value        = value; 
+        _T            = T;
+        _value        = value;
         _multiplicity = multiplicity;
       }
-    
+
     ~OBAtomHOF() {}
     std::string Element() { return _element; }
     std::string Method()  { return _method; }
@@ -259,7 +259,7 @@ namespace OpenBabel
     double Value()        { return _value; }
     int Multiplicity()    { return _multiplicity; }
   };
-  
+
   /** \class OBAtomicHeatOfFormationTable data.h <openbabel/data.h>
       \brief Atomic Heat of Formation Table
 
@@ -267,7 +267,7 @@ namespace OpenBabel
       in Gaussian, using the G2/G3/G4 or CBS-QB3 methods respectively.
       The energies produced by Gaussian have to be corrected according to their
       document on Thermochemistry with Gaussian. The data in the file
-      BABEL_DATA/atomization_energies.txt supplies this information based on 
+      BABEL_DATA/atomization_energies.txt supplies this information based on
       single atom calculations with Gaussian and the appropriate method and
       experimental data from Curtiss et al., J. Chem. Phys. 106 (1997) 1063-1079.
   */
@@ -278,7 +278,7 @@ namespace OpenBabel
     public:
 
       OBAtomicHeatOfFormationTable(void);
-      ~OBAtomicHeatOfFormationTable() 
+      ~OBAtomicHeatOfFormationTable()
       {
         //delete _atomhof;
       }

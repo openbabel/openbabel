@@ -138,7 +138,7 @@ namespace OpenBabel
 
     for ( i = 0 ; i < rules.size() ; i++ )
       {
-        strncpy(buffer, rules[i].c_str(), BUFF_SIZE);
+        strncpy(buffer, rules[i].c_str(), BUFF_SIZE - 1); // leave space for null termination
         if (buffer[0] != '#')
           {
             tokenize(vs,buffer," \t\n");
