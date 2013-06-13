@@ -3863,7 +3863,8 @@ namespace OpenBabel
               if (_mol.GetAtom(*rj)->IsNitrogen() && (_mol.GetAtom(*rj)->GetValence() == 3))
                 n_count++;
 
-            atom->SetPartialCharge(1.0 / n_count); // NIM+
+            if (n_count) // coverity defensive testing
+              atom->SetPartialCharge(1.0 / n_count); // NIM+
 
             FOR_NBORS_OF_ATOM(nbr, &*atom)
               FOR_NBORS_OF_ATOM(nbr2, &*nbr)
