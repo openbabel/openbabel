@@ -2551,6 +2551,11 @@ namespace OpenBabel
 
     IF_OBFF_LOGLVL_LOW
       OBFFLog("\n");
+
+    if (atom != NULL) {
+      delete atom;
+      atom = NULL;
+    }
   }
 
   void OBForceField::ValidateConjugateGradients(int steps)
@@ -2614,6 +2619,11 @@ namespace OpenBabel
 
         e_n1 = e_n2;
       }
+    }
+
+    if (atom != NULL) {
+      delete atom;
+      atom = NULL;
     }
   }
 

@@ -258,7 +258,7 @@ namespace OpenBabel
             tokenize(vs,(strstr(buffer,"ICHARG=")));
             charge=atoi(vs[1].c_str());
           }
-        if(strstr(buffer,"MULT ")) 
+        if(strstr(buffer,"MULT "))
           {
             tokenize(vs,(strstr(buffer,"MULT ")));
             mult=atoi(vs[2].c_str());
@@ -691,7 +691,6 @@ namespace OpenBabel
                         {
                           // cout << vs[i].substr(0,loc) << " !!!!! " << vs[i].substr(loc+1) << endl;
                           OBPairData *data = new OBPairData();
-                          data = new OBPairData();
                           data->SetAttribute(vs[i].substr(0,loc));
                           data->SetValue(vs[i].substr(loc+1));
                           data->SetOrigin(fileformatInput);
