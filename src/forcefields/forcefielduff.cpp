@@ -782,21 +782,19 @@ namespace OpenBabel {
         }
 
         // OK, now we tag the central atom
-        OBPairData *label = NULL;
-        if (atom != NULL) {
-          label = new OBPairData;
-          label->SetAttribute("UFF_CENTRAL_ATOM");
-          label->SetValue("True"); // doesn't really matter
-          atom->SetData(label);
-        }
-        // And tag the axial substituents
+        OBPairData *label = new OBPairData;
+        label->SetAttribute("UFF_CENTRAL_ATOM");
+        label->SetValue("True"); // doesn't really matter
+        atom->SetData(label);
+
+        // And tag the axial substituents, if it exists
         if (largestNbr != NULL) {
           label = new OBPairData;
           label->SetAttribute("UFF_AXIAL_ATOM");
           label->SetValue("True");
           largestNbr->SetData(label);
         }
-        if (secondLargestNbr != NULL) {
+        if (secondLargestNbr != NULL) { // ditto
           label = new OBPairData;
           label->SetAttribute("UFF_AXIAL_ATOM");
           label->SetValue("True");
