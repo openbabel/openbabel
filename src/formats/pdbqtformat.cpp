@@ -328,7 +328,7 @@ namespace OpenBabel
     else
     {
       char tmp[10];
-      strncpy(tmp, type_name, 10);
+      strncpy(tmp, type_name, 9); // Make sure to null-terminate
       snprintf(type_name, sizeof(type_name), " %-3s", tmp);
     }
 
@@ -345,7 +345,7 @@ namespace OpenBabel
         if (strlen(type_name) < 4)
         {
           char tmp[10];
-          strncpy(tmp, type_name, 10);
+          strncpy(tmp, type_name, 9); // make sure to null-terminate
           snprintf(padded_name, sizeof(padded_name), " %-3s", tmp);
           strncpy(type_name,padded_name,4);
           type_name[4] = '\0';
