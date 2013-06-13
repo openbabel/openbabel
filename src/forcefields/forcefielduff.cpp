@@ -782,19 +782,25 @@ namespace OpenBabel {
         }
 
         // OK, now we tag the central atom
-        OBPairData *label = new OBPairData;
-        label->SetAttribute("UFF_CENTRAL_ATOM");
-        label->SetValue("True"); // doesn't really matter
-        atom->SetData(label);
+        if (atom != NULL) {
+          OBPairData *label = new OBPairData;
+          label->SetAttribute("UFF_CENTRAL_ATOM");
+          label->SetValue("True"); // doesn't really matter
+          atom->SetData(label);
+        }
         // And tag the axial substituents
-        label = new OBPairData;
-        label->SetAttribute("UFF_AXIAL_ATOM");
-        label->SetValue("True");
-        largestNbr->SetData(label);
-        label = new OBPairData;
-        label->SetAttribute("UFF_AXIAL_ATOM");
-        label->SetValue("True");
-        secondLargestNbr->SetData(label);
+        if (largestNbr != NULL) {
+          label = new OBPairData;
+          label->SetAttribute("UFF_AXIAL_ATOM");
+          label->SetValue("True");
+          largestNbr->SetData(label);
+        }
+        if (secondLargestNbr != NULL) {
+          label = new OBPairData;
+          label->SetAttribute("UFF_AXIAL_ATOM");
+          label->SetValue("True");
+          secondLargestNbr->SetData(label);
+        }
 
       } // end work for 5-coordinate angles
       if (GetCoordination(&*atom, parameterB->_ipar[0]) == 7) {
