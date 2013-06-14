@@ -267,12 +267,8 @@ namespace OpenBabel
             errorMsg << "Unable to find type of feature passed in " << endl;
             errorMsg << "Feature passed in is " << type << endl;
             obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
-            //	  exit(-1);
           }
-        else
-          {
-            result = 7;
-          }
+        result = 7;
       }
     return(result);
   }
