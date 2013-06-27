@@ -211,7 +211,7 @@ void testSquarePlanar()
  
 }
 
-void test_equalsOperator()
+void test_equalsThisOperator()
 {
   OBSquarePlanarStereo sq1(0), sq2(0);
   OBSquarePlanarStereo::Config cfg;
@@ -231,8 +231,18 @@ void test_equalsOperator()
   OB_ASSERT( sq1 == sq2 );
 }
 
-int main() 
+int squareplanartest(int argc, char* argv[])
 {
+  int defaultchoice = 1;
+  
+  int choice = defaultchoice;
+
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
+    }
+  }
   // Define location of file formats for testing
   #ifdef FORMATDIR
     char env[BUFF_SIZE];
@@ -240,13 +250,29 @@ int main()
     putenv(env);
   #endif
 
-  testGetType();
-  testCenter();
-  testIsValid();
-  testRefs1();
-  testRefs2();
-  testSquarePlanar();
-  test_equalsOperator();
+  switch(choice) {
+  case 1:
+    testGetType();
+    break;
+  case 2:
+    testCenter();
+    break;
+  case 3:
+    testIsValid();
+    break;
+  case 4:
+    testRefs1();
+    testRefs2();
+    break;
+  case 5:
+    testSquarePlanar();
+    test_equalsThisOperator();
+    break;
+  default:
+    cout << "Test number " << choice << " does not exist!\n";
+    return -1;
+  }
+
   
   cout << "end" << endl;
 

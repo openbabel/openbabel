@@ -2,56 +2,18 @@
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 
-/*
-#include <openbabel/graphsym.h>
-#include <openbabel/stereo/tetrahedral.h>
-#include <openbabel/canon.h>
-*/
-
 #include <iostream>
 #include <vector>
 #include <algorithm>
-
-std::string GetFilename(const std::string &filename)
-{
-  std::string path = TESTDATADIR + filename;
-  return path;
-}
-
 
 using std::cout;
 using std::endl;
 using namespace OpenBabel;
 
-bool testCanSmiles(const std::string &smiles, const std::string &stable_cansmiles)
+
+int canonstabletest(int argc, char *argv[])
 {
-  cout << " Testing: " << smiles << endl;
-  // read a smiles string
-  OBMol mol;
-  OBConversion canConv, smiConv;
-  OB_REQUIRE( canConv.SetInFormat("smi") );
-  OB_REQUIRE( canConv.SetOutFormat("can") );
-  OB_REQUIRE( smiConv.SetOutFormat("smi") );
-  // read a smiles string
-  OB_REQUIRE( canConv.ReadString(&mol, smiles) );
 
-
-  // get can smiles
-  std::string cansmiles = canConv.WriteString(&mol, true);
-  OB_COMPARE( cansmiles, stable_cansmiles );
-  // comapare with ref
-  if (cansmiles != stable_cansmiles) {
-    cout << " " << cansmiles << endl;
-    cout << " " << stable_cansmiles << endl;
-    return false;
-  }
-
-  return true;
-}
-
-
-int main(int argc, char **argv)
-{
   // Define location of file formats for testing
 #ifdef FORMATDIR
     char env[BUFF_SIZE];
@@ -59,7 +21,7 @@ int main(int argc, char **argv)
     putenv(env);
 #endif  
 
-  std::ifstream ifs(GetFilename("canonstable.can").c_str());
+  std::ifstream ifs(OBTestUtil::GetFilename("canonstable.can").c_str());
   OB_REQUIRE( ifs );
 
 

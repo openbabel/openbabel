@@ -36,6 +36,7 @@
 #include <limits>
 #include <set>
 #include <iterator>
+#include <functional>
 
 #define DEBUG 0
 #define DEBUG_INVERSIONS 0
@@ -1991,7 +1992,7 @@ namespace OpenBabel {
       {
         OBAtom *begin = bond->GetBeginAtom();
         OBAtom *end = bond->GetEndAtom();
-        
+
         config.specified = false;
         // begin
         config.begin = begin->GetId();
@@ -2034,7 +2035,7 @@ namespace OpenBabel {
         }
         if (!ct->IsCis(ringrefs[0], ringrefs[1])) // Need to invert the stereo
           config.shape = OBStereo::ShapeZ;
-        
+
         config.specified = true;
         ct->SetConfig(config);
       }
@@ -2043,7 +2044,7 @@ namespace OpenBabel {
       // add the data to the molecule if needed
       if (addToMol && !alreadyExists)
         mol->SetData(ct);
-      
+
     }
 
     return configs;
@@ -2298,7 +2299,7 @@ namespace OpenBabel {
   //! angle anticlockwise (true) or clockwise (false) relative to a central point.
   bool AngleOrder(const vector3 &a, const vector3 &b, const vector3 &c, const vector3 &center)
   {
-    vector3 t, u, v; 
+    vector3 t, u, v;
     t = a - center;
     t.normalize();
     u = b - center;
@@ -2323,7 +2324,7 @@ namespace OpenBabel {
     double angle = (atan2(v2.y(),v2.x()) - atan2(v1.y(),v1.x())) * RAD_TO_DEG;
     while (angle < -180.0) angle += 360.0;
     while (angle > 180.0) angle -= 360.0;
-    return angle; 
+    return angle;
   }
   std::vector<OBTetrahedralStereo*> TetrahedralFrom2D(OBMol *mol,
       const OBStereoUnitSet &stereoUnits, bool addToMol)
@@ -2374,7 +2375,7 @@ namespace OpenBabel {
             if (tiponly)
               planeAtoms.push_back(nbr);
             else
-              wedgeAtoms.push_back(nbr);  
+              wedgeAtoms.push_back(nbr);
           }
         } else if (bond->IsWedge()) {
           // wedge bonds
@@ -2452,7 +2453,7 @@ namespace OpenBabel {
             }
           }
 
-          // Pick a stereobond on which to base the stereochemistry: 
+          // Pick a stereobond on which to base the stereochemistry:
           bool wedge = wedgeAtoms.size() > 0;
           order.push_back(wedge?wedgeAtoms[0]:hashAtoms[0]);
           vector<OBAtom*> nbrs;
@@ -2523,8 +2524,8 @@ namespace OpenBabel {
         } else // 3 explicit bonds from here on
           if(hashAtoms.size() == 0 || wedgeAtoms.size() == 0) {
             // Composed of just wedge bonds and plane bonds, or just hash bonds and plane bonds
-            
-            // Pick a stereobond on which to base the stereochemistry: 
+
+            // Pick a stereobond on which to base the stereochemistry:
             vector<OBAtom*> order;
             bool wedge = wedgeAtoms.size() > 0;
             order.push_back(wedge?wedgeAtoms[0]:hashAtoms[0]);
@@ -2723,7 +2724,8 @@ namespace OpenBabel {
           FOR_NBORS_OF_ATOM(a, center)
             nbrs.push_back(&*a);
           double min_angle = 359.0;
-          OBBond *close_bond_a, *close_bond_b;
+          OBBond *close_bond_a = (OBBond*) NULL;
+          OBBond *close_bond_b = (OBBond*) NULL;
           for (unsigned int i=0; i<nbrs.size() - 1; ++i)
             for (unsigned int j=i+1; j<nbrs.size(); ++j) {
               double angle = abs(nbrs[i]->GetAngle(center, nbrs[j]));
@@ -2733,7 +2735,7 @@ namespace OpenBabel {
                 close_bond_b = mol.GetBond(center, nbrs[j]);
               }
             }
-          
+
           if (min_angle > DELTA_ANGLE_FOR_OVERLAPPING_BONDS) {
             close_bond_a = (OBBond*) NULL;
             close_bond_b = (OBBond*) NULL;
@@ -2800,7 +2802,7 @@ namespace OpenBabel {
             bool useup;
             if (implicit) {
               // Put the ref for the stereo bond second
-              while (test_cfg.refs[1] != chosen->GetNbrAtom(center)->GetId()) 
+              while (test_cfg.refs[1] != chosen->GetNbrAtom(center)->GetId())
                 std::rotate(test_cfg.refs.begin(), test_cfg.refs.begin() + 2, test_cfg.refs.end());
               anticlockwise_order = AngleOrder(mol.GetAtomById(test_cfg.refs[0])->GetVector(),
                 mol.GetAtomById(test_cfg.refs[1])->GetVector(), mol.GetAtomById(test_cfg.refs[2])->GetVector(),

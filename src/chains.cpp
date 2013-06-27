@@ -1273,7 +1273,7 @@ namespace OpenBabel
                         result = Match3Constraints(pep,na,nb,nc);
                       else if (count == 2)
                         result = Match2Constraints(pep,na,nb);
-                      else // count == 1
+                      else if (count == 1)
                         result = MatchConstraint(na,pep->n1);
 
                       if(result == false)
@@ -1432,7 +1432,7 @@ namespace OpenBabel
             if (!visits[j])
               TracePeptideChain(mol,j,r);
           }
-        else /* count == 2 */
+        else if (count == 2)
           {
             if ( bitmasks[na] & BitCAll )
               {

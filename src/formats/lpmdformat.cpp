@@ -27,29 +27,22 @@ class LpmdFormat : public OBMoleculeFormat
   {
    file_line=0;
    OBConversion::RegisterFormat("lpmd",this);
-
-   OBConversion::RegisterOptionParam("f", this, 1, OBConversion::OUTOPTIONS); //Level option
-   OBConversion::RegisterOptionParam("t", this, 1, OBConversion::OUTOPTIONS); //Mode option
-   OBConversion::RegisterOptionParam("e", this, 1, OBConversion::OUTOPTIONS); //Extra option
-   OBConversion::RegisterOptionParam("cell", this, 1, OBConversion::OUTOPTIONS); //vectors cell
-   OBConversion::RegisterOptionParam("n", this);
-   OBConversion::RegisterOptionParam("s", this, 0, OBConversion::INOPTIONS);
   }
   virtual const char* Description() //required
   {
    return
     "The LPMD file format.\n"
-    "Read and write lpmd's atomic configurations files\n"
-
+    "Read and write LPMD's atomic configuration file\n\n"
+    "Read Options e.g. -ab:\n"
+    "  s  Output single bonds only\n"
+    "  b  Disable bonding entirely\n\n"
     "Write Options e.g. -xn\n"
-    "   n Write to standard output. \n"
-    "   l Indicate the level of the ouput file 0,1, or 2.\n"
-    "   m Indicate the mode of if '-xl 1' is used, 0 is for accelerations and 1 for forces.\n"
-    "   c Set the vectors cells (a,b,c), if the readed format doesn't have it.\n"
-    "     Example : -xc 10.0,0,0,0.0,10.0,0.0,0.0,0.0,20.0\n"
-    "   e Extra options : \n"
-    "      0 : Add the charge to the output file.\n"
-    "      1 : Add the mass to the output file.\n"
+    "   f# Indicate the level of the ouput file 0 (default), 1 or 2.\n"
+    "   m# Indicate the mode if ``-xl 1`` is used\n"
+    "        0 (default) is for accelerations and 1 for forces.\n"
+    "   c <vectorcells> Set the cell vectors if not present\n"
+    "        Example: ``-xc 10.0,0,0,0.0,10.0,0.0,0.0,0.0,20.0``\n"
+    "   e Add the charge to the output file\n\n"
     ;
   };
 
@@ -154,7 +147,7 @@ bool LpmdFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
  double cx=0.0e0,cy=0.0e0,cz=0.0e0;
  //Reading the number of atoms.
  ifs.getline(buffer,BUFF_SIZE);
- file_line;
+ file_line++;
  tokenize(tokens, buffer, " ");
  if(tokens.size()!=1)
  {
@@ -164,7 +157,7 @@ bool LpmdFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
  tokens.clear();
  ifs.getline(buffer,BUFF_SIZE);
- file_line;
+ file_line++;
  tokenize(tokens, buffer, " ");
  from_string<double>(ax, tokens.at(0), std::dec);
  from_string<double>(ay, tokens.at(1), std::dec);
@@ -188,11 +181,11 @@ bool LpmdFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
  mol.BeginModify();
  mol.SetData( unitcell );
 
- for(int i=0 ; i<N ; i)
+ for(int i=0 ; i<N ; ++i)
  {
   OBAtom *atom  = mol.NewAtom();
   ifs.getline(buffer,BUFF_SIZE);
-  file_line;
+  file_line++;
   tokenize(tokens, buffer, " ");
   if(int(headers.size()-1)!=tokens.size())
   {
@@ -208,7 +201,7 @@ bool LpmdFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   double CHG=0.0,FCH=0.0;
   std::string symbol = "Xx";
   int ma=0,mf=0; //mode for acceleration or forces.
-  for(int i=1 ; i < headers.size() ; i) //the first element is HDR
+  for(int i=1 ; i < headers.size() ; ++i) //the first element is HDR
   {
    //Basic information position and atomic symbol.
    if(headers.at(i).compare("X")==0) from_string<double>(X, tokens.at(i-1), std::dec);
@@ -220,13 +213,13 @@ bool LpmdFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
    if(headers.at(i).compare("VY")==0) from_string<double>(VY, tokens.at(i-1), std::dec);
    if(headers.at(i).compare("VZ")==0) from_string<double>(VZ, tokens.at(i-1), std::dec);
    //Accelerations
-   if(headers.at(i).compare("AX")==0) {from_string<double>(AX, tokens.at(i-1), std::dec);ma;}
-   if(headers.at(i).compare("AY")==0) {from_string<double>(AY, tokens.at(i-1), std::dec);ma;}
-   if(headers.at(i).compare("AZ")==0) {from_string<double>(AZ, tokens.at(i-1), std::dec);ma;}
+   if(headers.at(i).compare("AX")==0) {from_string<double>(AX, tokens.at(i-1), std::dec);ma++;}
+   if(headers.at(i).compare("AY")==0) {from_string<double>(AY, tokens.at(i-1), std::dec);ma++;}
+   if(headers.at(i).compare("AZ")==0) {from_string<double>(AZ, tokens.at(i-1), std::dec);ma++;}
    //Forces
-   if(headers.at(i).compare("FX")==0) {from_string<double>(FX, tokens.at(i-1), std::dec);mf;}
-   if(headers.at(i).compare("FY")==0) {from_string<double>(FY, tokens.at(i-1), std::dec);mf;}
-   if(headers.at(i).compare("FZ")==0) {from_string<double>(FZ, tokens.at(i-1), std::dec);mf;}
+   if(headers.at(i).compare("FX")==0) {from_string<double>(FX, tokens.at(i-1), std::dec);mf++;}
+   if(headers.at(i).compare("FY")==0) {from_string<double>(FY, tokens.at(i-1), std::dec);mf++;}
+   if(headers.at(i).compare("FZ")==0) {from_string<double>(FZ, tokens.at(i-1), std::dec);mf++;}
    //Charges
    if(headers.at(i).compare("CHG")==0) from_string<double>(CHG, tokens.at(i-1), std::dec);
    if(headers.at(i).compare("PHG")==0) from_string<double>(CHG, tokens.at(i-1), std::dec);
@@ -278,7 +271,8 @@ bool LpmdFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
  ostream& ofs = *pConv->GetOutStream();
  OBMol &mol = *pmol;
- OBUnitCell *uc = new OBUnitCell();
+ OBUnitCell myUC;
+ OBUnitCell *uc = NULL;
 
  std::vector< std::vector< vector3 > > forceslist;
  std::vector< std::vector< vector3 > > velocilist;
@@ -286,7 +280,7 @@ bool LpmdFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
  std::stringstream ErrMsg;
  std::vector < vector3 > v;
 
- //Vectors readed from command line.
+ //Vectors read from command line.
  const char *c = pConv->IsOption("c");
  if(c)
  {
@@ -306,7 +300,8 @@ bool LpmdFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   v.push_back(vector3(ax,ay,az));
   v.push_back(vector3(bx,by,bz));
   v.push_back(vector3(cx,cy,cz));
-  uc->SetData(v[0],v[1],v[2]);
+  myUC.SetData(v[0],v[1],v[2]);
+  uc = &myUC;
  }
 
  if(mol.HasData(OBGenericDataType::UnitCell))
@@ -326,13 +321,14 @@ bool LpmdFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
  }
 
  //Define level and mode [(f)orce or (a)cceleration] and extra [(c)harge].
- int level=0, mode=0, extra=0;
+ int level=0, mode=0;
+ bool charge = false;
  const char* p = pConv->IsOption("f");
  const char* q = pConv->IsOption("m");
  const char* r = pConv->IsOption("e");
  if(p) level = atoi(p);
  if(q) mode  = atoi(q);
- if(r) extra = atoi(r);
+ if(r) charge = true;
 
  if(pConv->GetOutputIndex()==1)
  {
@@ -341,7 +337,7 @@ bool LpmdFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   if(level>=1) ofs << "VX VY VZ ";
   if(level>=2 && mode==0) ofs << "AX AY AZ ";
   if(level>=2 && mode==1) ofs << "FX FY FZ ";
-  if(extra==1) ofs << "CHG ";
+  if(charge) ofs << "CHG ";
   ofs << '\n';
  }
 
@@ -361,7 +357,7 @@ bool LpmdFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   empty.push_back(vector3(0,0,0));
   empty.push_back(vector3(0,0,0));
   empty.push_back(vector3(0,0,0));
-  for(int i=0; i < mol.NumAtoms() ; i)
+  for(int i=0; i < mol.NumAtoms() ; ++i)
   {
    forceslist.push_back(empty);
    velocilist.push_back(empty);
@@ -405,7 +401,7 @@ bool LpmdFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
    snprintf(buffer, BUFF_SIZE, "%15.5f%15.5f%15.5f",force.x(),force.y(),force.z());
    ofs << buffer;
   }
-  if(extra==1)
+  if(charge)
   {
    snprintf(buffer, BUFF_SIZE, "%15.5f", atom -> GetPartialCharge());
    ofs << buffer;

@@ -9,13 +9,6 @@ using namespace OpenBabel;
 
 typedef vector<vector3> vv3;
 
-std::string GetFilename(const std::string &filename)
-{
-  string path = TESTDATADIR + filename;
-
-  return path;
-}
-
 void test_simpleAlign()
 {
   //          |
@@ -316,8 +309,19 @@ void test_bug()
 }
 
 
-int main()
+int aligntest(int argc, char* argv[])
 {
+  int defaultchoice = 1;
+  
+  int choice = defaultchoice;
+
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
+    }
+  }
+
   // Define location of file formats for testing
   #ifdef FORMATDIR
     char env[BUFF_SIZE];
@@ -325,19 +329,28 @@ int main()
     putenv(env);
   #endif  
 
-  test_bug();
-
-  test_simpleAlign();
-
-  test_RMSD();
-
-  test_alignMol();
-
-  test_alignMolWithSym();
-
-  test_alignWithoutHydrogens();
-
-  test_alignWithSymWithoutHydrogens();
+  switch(choice) {
+  case 1:
+    test_bug();
+    break;
+  case 2:
+    test_simpleAlign();
+    break;
+  case 3:
+    test_RMSD();
+    break;
+  case 4:
+    test_alignMol();
+    test_alignMolWithSym();
+    break;
+  case 5:
+    test_alignWithoutHydrogens();
+    test_alignWithSymWithoutHydrogens();
+    break;
+  default:
+    cout << "Test number " << choice << " does not exist!\n";
+    return -1;
+  }
 
   return 0;
 }

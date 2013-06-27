@@ -386,7 +386,7 @@ namespace OpenBabel
           countNeighborS++; break;
         default:
           continue;
-        }            
+        }
       }
 
       if (countNeighborO == 1)
@@ -481,8 +481,9 @@ namespace OpenBabel
 
 
     default:
-      return 0;
+      break;
     }
+    return 0;
   }
 
 } //namespace OpenBabel

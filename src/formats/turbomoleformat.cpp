@@ -30,7 +30,6 @@ public:
     TurbomoleFormat()
     {
       OBConversion::RegisterFormat("tmol",this);
-      OBConversion::RegisterOptionParam("a", this);
       OBConversion::RegisterOptionParam("a", this, OBConversion::INOPTIONS);
     }
 

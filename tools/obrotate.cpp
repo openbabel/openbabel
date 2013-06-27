@@ -3,14 +3,14 @@ obrotate = rotate a tortional bond matched by a SMART pattern
 Copyright (C) 2003 Fabien Fontaine
 Some portions Copyright (C) 2004-2005 Geoffrey R. Hutchison
 Some portions Copyright (C) 2008 Tim Vandermeersch
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -67,11 +67,14 @@ int main(int argc,char **argv)
     for(i=3, t=0; i<7; ++i, ++t) {
       c = sscanf(argv[i], "%u", &smartor[t]);
       if (c != 1) {
+        errflg++;  // error in arguments, quit and warn user
         break;
-        errflg++;
       }
     }
     c = sscanf(argv[7], "%f", &angle);
+    if (c != 1) {
+      errflg++; // error in arguments, quit and warn user
+    }
   }
 
   if (errflg) {
@@ -113,7 +116,7 @@ int main(int argc,char **argv)
     exit (-1);
   }
 
-  OBMol mol; 
+  OBMol mol;
   vector< vector <int> > maplist;      // list of matched atoms
   vector< vector <int> >::iterator m;  // and its iterators
   //   int tindex;
@@ -126,10 +129,10 @@ int main(int argc,char **argv)
     if (mol.Empty())
       break;
 
-    if (sp.Match(mol)) {          
+    if (sp.Match(mol)) {
       // if match perform rotation
       maplist = sp.GetUMapList(); // get unique matches
-      
+
       if (maplist.size() > 1)
         cerr << "obrotate: Found " << maplist.size() << " matches. Only last one will be rotated." << endl;
 
@@ -140,7 +143,7 @@ int main(int argc,char **argv)
         a3 = mol.GetAtom( (*m)[ smartor[2] - 1] );
         a4 = mol.GetAtom( (*m)[ smartor[3] - 1] );
         //if (changeAll)
-        //  mol.SetTorsion(a1, a2, a3, a4, angle * DEG_TO_RAD);                
+        //  mol.SetTorsion(a1, a2, a3, a4, angle * DEG_TO_RAD);
       }
 
       if ( !a2->IsConnected(a3) ) {
@@ -171,20 +174,20 @@ int main(int argc,char **argv)
 *
 * \par DESCRIPTION
 *
-* The obrotate program rotates the torsional (dihedral) angle of a specified 
+* The obrotate program rotates the torsional (dihedral) angle of a specified
 * bond in molecules to that defined by the user. In other words, it does the
-* same as a user setting an angle in a molecular modelling package, but much 
+* same as a user setting an angle in a molecular modelling package, but much
 * faster and in batch mode.
 * \n\n
 * The four atom IDs required are indexes into the SMARTS pattern, which starts
 * at atom 1. The angle supplied is in degrees. The two atoms used to set
-* the dihedral angle \<atom1\> and \<atom4\> do not need to be connected 
+* the dihedral angle \<atom1\> and \<atom4\> do not need to be connected
 * to the atoms of the bond \<atom2\> and \<atom3\> in any way.
 *\n\n
 * The order of the atoms matters -- the portion of the molecule attached to
 * \<atom1\> and \<atom2\> remain fixed, but the portion bonded to \<atom3\> and
 & \<atom4\> moves.
-* 
+*
 * \par EXAMPLES
 *  - Let's say that you want to define the conformation of a large number of
 *  molecules with a pyridyl scaffold and substituted with an aliphatic chain
@@ -193,7 +196,7 @@ int main(int argc,char **argv)
 *    To set the value of the first dihedral angle to 90 degrees:\n
 *   obrotate "c1ccncc1CCC" pyridines.sdf 5 6 7 8 90
 * \n
-* Here 6 and 7 define the bond to rotate in the SMARTS patter, i.e., c1-C and 
+* Here 6 and 7 define the bond to rotate in the SMARTS patter, i.e., c1-C and
 * atoms 5 and 8 define the particular dihedral angle to rotate.
 *  - Since the atoms to define the dihedral do not need to be directly
 *  connected, the nitrogen in the pyridine can be used:\n

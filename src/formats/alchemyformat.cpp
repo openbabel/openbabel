@@ -71,7 +71,7 @@ namespace OpenBabel
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
     OBMol &mol = *pmol;
-    const char* title = pConv->GetInFilename().c_str();
+    const char* title = pConv->GetTitle();
 
     int i;
     int natoms = 0, nbonds = 0;
