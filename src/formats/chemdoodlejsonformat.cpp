@@ -34,9 +34,6 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
     ChemDoodleJSONFormat()
     {
       OBConversion::RegisterFormat("cdjson", this);
-      OBConversion::RegisterOptionParam("m", this, 0, OBConversion::OUTOPTIONS);
-      OBConversion::RegisterOptionParam("v", this, 0, OBConversion::OUTOPTIONS);
-      OBConversion::RegisterOptionParam("w", this, 0, OBConversion::OUTOPTIONS);
     }
 
     virtual const char* Description()
@@ -49,7 +46,7 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
       "Write Options, e.g. -xd\n"
       " m  minified output formatting, with no line breaks or indents\n"
       " v  verbose output (include default values)\n"
-      " w  use wedge/hash bonds from input instead of calculating stereochemistry\n"
+      " w  use wedge/hash bonds from input instead of perceived stereochemistry\n\n"
       ;
     };
   

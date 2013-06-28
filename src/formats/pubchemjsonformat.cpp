@@ -38,9 +38,6 @@ class PubChemJSONFormat : public OBMoleculeFormat
     PubChemJSONFormat()
     {
       OBConversion::RegisterFormat("pcjson",this);
-      OBConversion::RegisterOptionParam("s", this, 0);
-      OBConversion::RegisterOptionParam("m", this, 0, OBConversion::OUTOPTIONS);
-      OBConversion::RegisterOptionParam("w", this, 0, OBConversion::OUTOPTIONS);
     }
 
     virtual const char* Description()
@@ -51,11 +48,11 @@ class PubChemJSONFormat : public OBMoleculeFormat
       "requesting JSON. It closely resembles PubChem's internal data structure.\n\n"
       
       "Read Options, e.g. -as\n"
-      " s  disable stereo perception and just read stereo information from input\n"
+      " s  disable stereo perception and just read stereo information from input\n\n"
       
       "Write Options, e.g. -xm\n"
       " m  minified output, with no line breaks or indents\n"
-      " w  use bond styles from input instead of stereo information\n"
+      " w  use bond styles from input instead of perceived stereochemistry\n\n"
       ;
     };
   
