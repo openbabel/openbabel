@@ -14,8 +14,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#include "json/json.h"
-#include "json/customwriter.h"
+#include <openbabel/json/json.h>
+#include <openbabel/json/customwriter.h>
 
 namespace Json {
 

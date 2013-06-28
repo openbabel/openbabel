@@ -22,9 +22,8 @@ GNU General Public License for more details.
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/squareplanar.h>
-
-#include "jsoncpp/json/json.h"
-#include "jsoncpp/json/customwriter.h"
+#include <openbabel/json/json.h>
+#include <openbabel/json/customwriter.h>
 
 using namespace std;
 namespace OpenBabel
