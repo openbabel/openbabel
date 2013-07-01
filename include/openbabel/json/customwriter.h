@@ -45,7 +45,6 @@ namespace Json {
 
    private:
       void writeValue( const Value &value, std::string &doc, bool forceSingleLine );
-      bool isMultiline( const Value &value );
       void indent();
       void unindent();
 
