@@ -400,15 +400,12 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
     
     // Construct the JSON objects
     Json::Value doc(Json::objectValue);
-    Json::Value atoms(Json::arrayValue);
-    Json::Value bonds(Json::arrayValue);
     
     // Atoms
     double c = 20;
 	if (pConv->IsOption("c")) {
 	  c = atof((const char*)pConv->IsOption("c"));
 	}
-	cout << c << endl;
     FOR_ATOMS_OF_MOL(patom, pmol) {
       Json::Value atom(Json::objectValue);
       // Coordinates
@@ -465,7 +462,7 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
         OBPairData *id = dynamic_cast<OBPairData*>(patom->GetData("i"));
         atom["i"] = id->GetValue();
       }
-      atoms.append(atom);
+      doc["a"].append(atom);
     }
     
     // Bonds
@@ -526,11 +523,8 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
         OBPairData *id = dynamic_cast<OBPairData*>(pbond->GetData("i"));
         bond["i"] = id->GetValue();
       }
-      bonds.append(bond);
+      doc["b"].append(bond);
     }
-    
-    doc["a"] = atoms;
-    doc["b"] = bonds;
     outRoot["m"].append(doc);
     
     if (pConv->IsLast()) {
