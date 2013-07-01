@@ -42,7 +42,11 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
       "ChemDoodle JSON format is the native way to present data to \n"
       "the ChemDoodle Web Components.\n\n"
       
-      "Write Options, e.g. -xd\n"
+      "Read Options, e.g. -ac\n"
+      " c<num>  coordinate multiplier (default: 20)\n\n"
+      
+      "Write Options, e.g. -xc\n"
+      " c<num>  coordinate multiplier (default: 20)\n"
       " m  minified output formatting, with no line breaks or indents\n"
       " v  verbose output (include default values)\n"
       " w  use wedge/hash bonds from input instead of perceived stereochemistry\n\n"
@@ -126,6 +130,10 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
       return false;
     }
     pmol->ReserveAtoms(atoms.size());
+    double c = 20;
+	if (pConv->IsOption("c")) {
+	  c = atof((const char*)pConv->IsOption("c"));
+	}
     for(Json::ArrayIndex i = 0; i < atoms.size(); i++) {
       Json::Value atom = atoms.get(i, 0);
       if (!atom.isObject()) {
@@ -136,17 +144,17 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
       double x,y,z = 0;
       OBAtom* patom = pmol->NewAtom();
       if (atom["x"].isNumeric()) {
-        x = atom["x"].asDouble();
+        x = atom["x"].asDouble()/c;
       } else {
         obErrorLog.ThrowError("ChemDoodleJSONFormat", "Atom missing x coordinate", obWarning);
       }
       if (atom["y"].isNumeric()) {
-        y = atom["y"].asDouble();
+        y = atom["y"].asDouble()/c;
       } else {
         obErrorLog.ThrowError("ChemDoodleJSONFormat", "Atom missing y coordinate", obWarning);
       }
       if (atom["z"].isNumeric()) {
-        z = atom["z"].asDouble();
+        z = atom["z"].asDouble()/c;
         dim = 3;
       }
       patom->SetVector(x,y,z);
@@ -396,14 +404,19 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
     Json::Value bonds(Json::arrayValue);
     
     // Atoms
+    double c = 20;
+	if (pConv->IsOption("c")) {
+	  c = atof((const char*)pConv->IsOption("c"));
+	}
+	cout << c << endl;
     FOR_ATOMS_OF_MOL(patom, pmol) {
       Json::Value atom(Json::objectValue);
       // Coordinates
       // TODO: An option to round coordinates to n decimal places?
-      atom["x"] = patom->GetX();
-      atom["y"] = patom->GetY();
+      atom["x"] = patom->GetX()*c;
+      atom["y"] = patom->GetY()*c;
       if (pmol->GetDimension() == 3) {
-        atom["z"] = patom->GetZ();
+        atom["z"] = patom->GetZ()*c;
       }
       // Element
       if (patom->GetAtomicNum()) {
