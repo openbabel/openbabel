@@ -272,9 +272,9 @@ namespace OpenBabel
     char valbuf[128];
     int ii,atomid,atomicnumber,found,foundall;
     double ddd0,ddd298,dhof[2];
-    
+
     OBet = new OpenBabel::OBElementTable();
-    
+
     // cout << "Number of entries " << ahof->GetSize() << "\n";
     // cout << "Method " << method << "\n";
     // Now loop over atoms in order to correct the Delta H formation
@@ -284,7 +284,7 @@ namespace OpenBabel
 #define HARTREE_TO_KCAL 627.509469
     dhof[0] = eg234;
     dhof[1] = eg234+etherm-ezpe;
-    for (OBa = mol->BeginAtom(OBai); (NULL != OBa); OBa = mol->NextAtom(OBai)) 
+    for (OBa = mol->BeginAtom(OBai); (NULL != OBa); OBa = mol->NextAtom(OBai))
       {
         atomicnumber = OBa->GetAtomicNum();
         found = ahof->GetHeatOfFormation(OBet->GetSymbol(atomicnumber),method,1,&ddd0,&ddd298);
@@ -297,7 +297,7 @@ namespace OpenBabel
         //cout << "Atom "<< atomid << " type " << OBa->GetType() << " atomicnumber " << atomicnumber << " element " << OBet->GetSymbol(atomicnumber) <<"\n";
         atomid++;
       }
-    if (foundall == atomid) 
+    if (foundall == atomid)
       {
         std::string str("method");
         std::string val(method);
@@ -306,7 +306,7 @@ namespace OpenBabel
         OBpd0->SetValue(val);
         OBpd0->SetOrigin(fileformatInput);
         mol->SetData(OBpd0);
-        for(ii=0; (ii<2); ii++) 
+        for(ii=0; (ii<2); ii++)
           {
             // Add to molecule properties
             dhof[ii] *= HARTREE_TO_KCAL;
@@ -318,7 +318,7 @@ namespace OpenBabel
             OBpd0->SetValue(val);
             OBpd0->SetOrigin(fileformatInput);
             mol->SetData(OBpd0);
-            
+
             // cout << str << " = " << val << " kcal/mol.\n";
           }
       }
@@ -329,7 +329,7 @@ namespace OpenBabel
     // Clean up
     delete OBet;
     delete ahof;
-    
+
     if (foundall == atomid)
       return 1;
     else
@@ -344,18 +344,18 @@ namespace OpenBabel
     vector<string> vs;
     OpenBabel::OBPairData *pd;
     std::string method;
-    
+
     tokenize(vs,buffer);
-    if (vs.size() >= start) 
+    if (vs.size() >= start)
       {
         method = vs[start];
-        for(i=start+1; (i<vs.size()); i++) 
+        for(i=start+1; (i<vs.size()); i++)
           {
             method.append(" ");
             method.append(vs[i]);
           }
         pd = (OpenBabel::OBPairData *) mol->GetData(attribute);
-        if (NULL == pd) 
+        if (NULL == pd)
           {
             pd = new OpenBabel::OBPairData();
             pd->SetAttribute(attribute);
@@ -363,11 +363,11 @@ namespace OpenBabel
             pd->SetValue(method);
             mol->SetData(pd);
           }
-        else 
+        else
           {
             pd->SetValue(method);
           }
-        }  
+        }
   }
 
   // Reading Gaussian output has been tested for G98 and G03 to some degree
@@ -400,7 +400,7 @@ namespace OpenBabel
 
     // Electrostatic potential
     OBFreeGrid *esp = NULL;
-    
+
     // coordinates of all steps
     // Set conformers to all coordinates we adopted
     std::vector<double*> vconf; // index of all frames/conformers
@@ -421,7 +421,7 @@ namespace OpenBabel
     //Rotational data
     std::vector<double> RotConsts(3);
     int RotSymNum=1;
-    OBRotationData::RType RotorType;
+    OBRotationData::RType RotorType = OBRotationData::UNKNOWN;
 
     // Translation vectors (if present)
     vector3 translationVectors[3];
@@ -435,6 +435,7 @@ namespace OpenBabel
     std::vector<double> orbitals;
     std::vector<std::string> symmetries;
     int aHOMO, bHOMO, betaStart;
+    aHOMO = bHOMO = betaStart = -1;
 
     int i=0;
     bool no_symmetry=false;
@@ -454,7 +455,8 @@ namespace OpenBabel
           {
             i++;
             tokenize (vs, buffer);
-            strcpy (coords_type, vs[0].c_str());
+            // gotta check what types of orientation are present
+            strncpy (coords_type, vs[0].c_str(), 24);
             strcat (coords_type, " orientation:");
           }
         if ((no_symmetry && i==1) || i==2)
@@ -467,7 +469,7 @@ namespace OpenBabel
     mol.BeginModify();
     while (ifs.getline(buffer,BUFF_SIZE))
       {
-        
+
         if(strstr(buffer, "Entering Gaussian") != NULL)
         {
           //Put some metadata into OBCommentData
@@ -477,7 +479,7 @@ namespace OpenBabel
             {
             comment += strchr(buffer,'=')+2;
             comment += "";
-            for(unsigned i=0; i<115, ifs; ++i)
+            for(unsigned i=0; i<115 && ifs; ++i)
             {
               ifs.getline(buffer,BUFF_SIZE);
               if(strstr(buffer,"Revision") != NULL)
@@ -496,13 +498,13 @@ namespace OpenBabel
                 cd->SetData(comment);
                 cd->SetOrigin(fileformatInput);
                 mol.SetData(cd);
-                
+
                 tokenize(vs,buffer);
-                if (vs.size() > 1) 
+                if (vs.size() > 1)
                   {
                     char *str = strdup(vs[1].c_str());
                     char *ptr = strchr(str,'/');
-                    
+
                     if (NULL != ptr)
                       {
                         *ptr = ' ';
@@ -511,7 +513,7 @@ namespace OpenBabel
                         add_unique_pairdata_to_mol(&mol,"method",str,0);
                       }
                   }
-                
+
                 break;
               }
             }
@@ -604,7 +606,7 @@ namespace OpenBabel
                 {
                   double Q[3][3];
                   OpenBabel::OBMatrixData *quadrupoleMoment = new OpenBabel::OBMatrixData;
-                  
+
                   Q[0][0] = atof(vs[1].c_str());
                   Q[1][1] = atof(vs[3].c_str());
                   Q[2][2] = atof(vs[5].c_str());
@@ -612,7 +614,7 @@ namespace OpenBabel
                   Q[2][0] = Q[0][2] = atof(vs2[3].c_str());
                   Q[2][1] = Q[1][2] = atof(vs2[5].c_str());
                   matrix3x3 quad(Q);
-                  
+
                   quadrupoleMoment->SetAttribute("Traceless Quadrupole Moment");
                   quadrupoleMoment->SetData(quad);
                   quadrupoleMoment->SetOrigin(fileformatInput);
@@ -622,13 +624,13 @@ namespace OpenBabel
             }
         else if(strstr(buffer,"Exact polarizability") != NULL)
             {
-              // actual components XX, YX, YY, XZ, YZ, ZZ 
+              // actual components XX, YX, YY, XZ, YZ, ZZ
               tokenize(vs,buffer);
               if (vs.size() >= 8)
                 {
                   double Q[3][3];
                   OpenBabel::OBMatrixData *pol_tensor = new OpenBabel::OBMatrixData;
-                  
+
                   Q[0][0] = atof(vs[2].c_str());
                   Q[1][1] = atof(vs[4].c_str());
                   Q[2][2] = atof(vs[7].c_str());
@@ -636,7 +638,7 @@ namespace OpenBabel
                   Q[2][0] = Q[0][2] = atof(vs[5].c_str());
                   Q[2][1] = Q[1][2] = atof(vs[6].c_str());
                   matrix3x3 pol(Q);
-                  
+
                   pol_tensor->SetAttribute("Exact polarizability");
                   pol_tensor->SetData(pol);
                   pol_tensor->SetOrigin(fileformatInput);
@@ -675,10 +677,10 @@ namespace OpenBabel
                 esp->AddPoint(atof(vs[5].c_str()),atof(vs[6].c_str()),
                               atof(vs[7].c_str()),0);
               }
-            else if (vs.size() > 5) 
+            else if (vs.size() > 5)
               {
                 double x,y,z;
-                if (3 == sscanf(buffer+32,"%10.6f%10.f6%10.6f",&x,&y,&z))
+                if (3 == sscanf(buffer+32,"%10.6f%10.6f%10.6f",&x,&y,&z))
                   {
                     esp->AddPoint(x,y,z,0);
                   }
@@ -690,15 +692,15 @@ namespace OpenBabel
             tokenize(vs,buffer);
             if (NULL == esp)
               esp = new OpenBabel::OBFreeGrid();
-            if (vs.size() == 9) 
+            if (vs.size() == 9)
               {
                 esp->AddPoint(atof(vs[6].c_str()),atof(vs[7].c_str()),
                               atof(vs[8].c_str()),0);
               }
-            else if (vs.size() > 6) 
+            else if (vs.size() > 6)
               {
                 double x,y,z;
-                if (3 == sscanf(buffer+32,"%10.6f%10.f6%10.6f",&x,&y,&z))
+                if (3 == sscanf(buffer+32,"%10.6f%10.6f%10.6f",&x,&y,&z))
                   {
                     esp->AddPoint(x,y,z,0);
                   }
@@ -713,7 +715,7 @@ namespace OpenBabel
               {
                 ifs.getline(buffer,BUFF_SIZE);	// skip line
               }
-            // Assume file is correct and that potentials are present 
+            // Assume file is correct and that potentials are present
             // where they should.
             np = esp->NumPoints();
             fgpi = esp->BeginPoints();
@@ -722,7 +724,7 @@ namespace OpenBabel
               {
                 ifs.getline(buffer,BUFF_SIZE);
                 tokenize(vs,buffer);
-                if (vs.size() >= 2) 
+                if (vs.size() >= 2)
                   {
                     fgp->SetV(atof(vs[2].c_str()));
                     i++;
@@ -865,10 +867,10 @@ namespace OpenBabel
             std::string label; // used as a temporary to remove "(" and ")" from labels
             int iii,offset = 0;
             bool bDoneSymm;
-            
+
             // Extract both Alpha and Beta symmetries
             for(iii=0; (iii<2); iii++) {
-              while (!ifs.eof() && 
+              while (!ifs.eof() &&
                      (NULL == strstr(buffer,"Alpha")) &&
                      (NULL == strstr(buffer,"Beta"))) {
                 ifs.getline(buffer, BUFF_SIZE);
@@ -877,8 +879,8 @@ namespace OpenBabel
                 ifs.getline(buffer, BUFF_SIZE);
                 bDoneSymm = (NULL == strstr(buffer, "("));
                 if (!bDoneSymm) {
-                  tokenize(vs, buffer); 
-                
+                  tokenize(vs, buffer);
+
                   if ((NULL != strstr(buffer, "Occupied")) || (NULL != strstr(buffer, "Virtual"))) {
                     offset = 1; // skip first token
                   } else {
@@ -888,7 +890,7 @@ namespace OpenBabel
                     label = vs[i].substr(1, vs[i].length() - 2);
                     symmetries.push_back(label);
                   }
-                } 
+                }
               } while (!ifs.eof() && !bDoneSymm);
             } // end alpha/beta section
           }
@@ -995,7 +997,7 @@ namespace OpenBabel
             confEnergies.push_back(mol.GetEnergy());
             }
 */
-        else if(strstr(buffer,"Standard basis:") != NULL) 
+        else if(strstr(buffer,"Standard basis:") != NULL)
           {
             add_unique_pairdata_to_mol(&mol,"basis",buffer,2);
           }
@@ -1018,28 +1020,28 @@ namespace OpenBabel
             const char *search[] = { "CBS-QB3 (0 K)", "G2(0 K)", "G3(0 K)", "G4(0 K)" };
             const char *mymeth[] = { "CBS-QB3", "G2", "G3", "G4" };
             const int myindex[] = { 3, 2, 2, 2 };
-            
+
             nsearch = sizeof(search)/sizeof(search[0]);
-            for(i=0; (i<nsearch); i++) 
+            for(i=0; (i<nsearch); i++)
               {
                 if(strstr(buffer,search[i]) != NULL)
                   {
                     tokenize(vs,buffer);
                     eg234 = atof(vs[myindex[i]].c_str());
                     eg234_set = 1;
-                    strcpy(method,mymeth[i]);
+                    strncpy(method,mymeth[i], BUFF_SIZE - 1); // Make sure to leave room for NULL
                     break;
                   }
               }
           }
       } // end while
-    
+
     // Check whether we have data to extract heat of formation.
-    if (ezpe_set && etherm_set && eg234_set) 
+    if (ezpe_set && etherm_set && eg234_set)
       {
         extract_g234(&mol,method,ezpe,etherm,eg234);
       }
-      
+
     if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
       mol.EndModify();
       return false;
@@ -1071,7 +1073,7 @@ namespace OpenBabel
           std::vector<std::string> betaSymmetries;
           unsigned int initialSize = orbitals.size();
           unsigned int symmSize = symmetries.size();
-          if (initialSize != symmSize)
+          if (initialSize != symmSize || betaStart == -1)
             {
               cerr << "Inconsistency: orbitals have " << initialSize << " elements while symmetries have " << symmSize << endl;
             }
