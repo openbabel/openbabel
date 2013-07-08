@@ -155,7 +155,6 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     }
   }
   pmol->AssignSpinMultiplicity(true); //true means no implicit H
-  pmol->DeleteHydrogens();
 
   //***@todo implicit H isotopes
   //Stereochemistry
@@ -231,6 +230,9 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       obErrorLog.ThrowError("InChI code", "Unsupported stereo type has been ignored.", obWarning);
     }
   }
+
+  pmol->DeleteHydrogens();
+
   // Tidy up the stereo chemistry by removing any objects that are not
   // consistent with OB's symmetry analysis
   StereoFrom0D(pmol);
