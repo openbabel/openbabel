@@ -328,7 +328,7 @@ namespace OpenBabel
     else
     {
       char tmp[10];
-      strncpy(tmp, type_name, 10);
+      strncpy(tmp, type_name, 9); // Make sure to null-terminate
       snprintf(type_name, sizeof(type_name), " %-3s", tmp);
     }
 
@@ -345,7 +345,7 @@ namespace OpenBabel
         if (strlen(type_name) < 4)
         {
           char tmp[10];
-          strncpy(tmp, type_name, 10);
+          strncpy(tmp, type_name, 9); // make sure to null-terminate
           snprintf(padded_name, sizeof(padded_name), " %-3s", tmp);
           strncpy(type_name,padded_name,4);
           type_name[4] = '\0';
@@ -856,7 +856,8 @@ namespace OpenBabel
               {
                 snprintf(type_name,5,"%s",(char*)res->GetAtomID(rotBondTable[rotBondId][bondAtomNum]).c_str());
                 end=0;
-                while (end < sizeof(type_name) && type_name[end] && !isspace(type_name[end]))
+                // Use sizeof() - 1 to ensure there's room for the NULL termination!
+                while (end < sizeof(type_name) - 1 && type_name[end] && !isspace(type_name[end]))
                   end++;
                 type_name[end] = '\0';
               }

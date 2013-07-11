@@ -775,7 +775,7 @@ namespace OpenBabel {
             largestRadius = parameterA->_dpar[0];
             largestNbr = current;
           }
-          if (secondLargestNbr == 0) {
+          if (secondLargestNbr == NULL) {
             // save this atom
             secondLargestNbr = current;
           }
@@ -786,15 +786,18 @@ namespace OpenBabel {
         label->SetAttribute("UFF_CENTRAL_ATOM");
         label->SetValue("True"); // doesn't really matter
         atom->SetData(label);
-        // And tag the axial substituents
+
         label = new OBPairData;
         label->SetAttribute("UFF_AXIAL_ATOM");
         label->SetValue("True");
         largestNbr->SetData(label);
-        label = new OBPairData;
-        label->SetAttribute("UFF_AXIAL_ATOM");
-        label->SetValue("True");
-        secondLargestNbr->SetData(label);
+
+        if (secondLargestNbr != NULL) { // check for NULL, no guarantee
+          label = new OBPairData;
+          label->SetAttribute("UFF_AXIAL_ATOM");
+          label->SetValue("True");
+          secondLargestNbr->SetData(label);
+        }
 
       } // end work for 5-coordinate angles
       if (GetCoordination(&*atom, parameterB->_ipar[0]) == 7) {
@@ -815,7 +818,7 @@ namespace OpenBabel {
             largestRadius = parameterA->_dpar[0];
             largestNbr = current;
           }
-          if (secondLargestNbr == 0) {
+          if (secondLargestNbr == NULL) {
             // save this atom
             secondLargestNbr = current;
           }
@@ -831,11 +834,12 @@ namespace OpenBabel {
         label->SetAttribute("UFF_AXIAL_ATOM");
         label->SetValue("True");
         largestNbr->SetData(label);
-        label = new OBPairData;
-        label->SetAttribute("UFF_AXIAL_ATOM");
-        label->SetValue("True");
-        secondLargestNbr->SetData(label);
-
+        if (secondLargestNbr != NULL) { // check for NULL, no guarantee
+          label = new OBPairData;
+          label->SetAttribute("UFF_AXIAL_ATOM");
+          label->SetValue("True");
+          secondLargestNbr->SetData(label);
+        }
       }
     } // end loop through atoms
 

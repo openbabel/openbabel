@@ -680,7 +680,7 @@ with the output format.\nDo you wish to continue the conversion?"),
     {
       //Read back file and add to output console
       m_pOutText->Clear();
-      if(wxFile::Exists(OutputFileList[0])) //avoid error message with --split
+      if(wxFile::Exists(wxString(OutputFileList[0].c_str(), wxConvUTF8))) //avoid error message with --split REC
         m_pOutText->LoadFile(wxString(OutputFileList[0].c_str(), wxConvUTF8));
       //m_pOutText->LoadFile(_T(OutputFileList));
     }

@@ -12,12 +12,6 @@
 using namespace std;
 using namespace OpenBabel;
 
-std::string GetFilename(const std::string &filename)
-{
-  std::string path = TESTDATADIR + filename;
-  return path;
-}
-
 static unsigned int failed = 0;
 static unsigned int testCount = 0;
 
@@ -65,7 +59,7 @@ bool doMultiMoleculeFile(const std::string &filename)
 {
   cout << " Starting " << filename << endl;
 
-  std::string file = GetFilename(filename);
+  std::string file = OBTestUtil::GetFilename(filename);
   std::ifstream ifs;
   ifs.open(file.c_str());
   OB_REQUIRE( ifs );
@@ -105,8 +99,19 @@ bool doSMILESBuilderTest(string smiles)
   return mol.Has3D();
 }
 
-int main(int argc, char **argv)
+int buildertest(int argc, char* argv[])
 {
+  int defaultchoice = 1;
+  
+  int choice = defaultchoice;
+
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
+    }
+  }
+
   // Define location of file formats for testing
   #ifdef FORMATDIR
     char env[BUFF_SIZE];
@@ -114,8 +119,7 @@ int main(int argc, char **argv)
     putenv(env);
   #endif  
 
-  OB_ASSERT( doMultiMoleculeFile("forcefield.sdf") );
-  OB_ASSERT( doMultiMoleculeFile("filterset.sdf") );
+
 
   // fails because of selenium
   //  OB_ASSERT( doMultiMoleculeFile("aromatics.smi") );
@@ -124,14 +128,29 @@ int main(int argc, char **argv)
   // fails because of "organometallic" entries
   //  OB_ASSERT( doMultiMoleculeFile("attype.00.smi") );
 
-  // from Martin Guetlein to mailing list on July 14, 2010
-  OB_ASSERT( doSMILESBuilderTest("OC1=CC3=C([C@@]2([H])CC[C@@]4(C)[C@](CC[C@@H]4O)([H])[C@@]([H])2[C@H](CCCCCCCCCS(CCCC(F)(F)C(F)(F)F)=O)C3)C=C1") );
-  // from Thomas Womack -- PR#3016479
-  OB_ASSERT( doSMILESBuilderTest("O1C[C@H]2O[C@H]2c2ccc(Oc3c(O)ccc(CCC1=O)c3)cc2") );
-  // from Martin Guetlein -- PR#3107218 ("OBBuilder terminates while building 3d")
-  OB_ASSERT( doSMILESBuilderTest("N12[C@@H]([C@@H](NC([C@@H](c3ccsc3)C(=O)O)=O)C2=O)SC(C)(C)[C@@-]1C(=O)O") );
-
-  cout << "PASSED TESTS: " << testCount - failed << "/" << testCount << endl;
+  switch(choice) {
+  case 1:
+    OB_ASSERT( doMultiMoleculeFile("forcefield.sdf") );
+    break;
+  case 2:
+    OB_ASSERT( doMultiMoleculeFile("filterset.sdf") );
+    break;
+  case 3:
+    // from Martin Guetlein to mailing list on July 14, 2010
+    OB_ASSERT( doSMILESBuilderTest("OC1=CC3=C([C@@]2([H])CC[C@@]4(C)[C@](CC[C@@H]4O)([H])[C@@]([H])2[C@H](CCCCCCCCCS(CCCC(F)(F)C(F)(F)F)=O)C3)C=C1") );
+    break;
+  case 4:
+    // from Thomas Womack -- PR#3016479
+    OB_ASSERT( doSMILESBuilderTest("O1C[C@H]2O[C@H]2c2ccc(Oc3c(O)ccc(CCC1=O)c3)cc2") );
+    break;
+  case 5:
+    // from Martin Guetlein -- PR#3107218 ("OBBuilder terminates while building 3d")
+    OB_ASSERT( doSMILESBuilderTest("N12[C@@H]([C@@H](NC([C@@H](c3ccsc3)C(=O)O)=O)C2=O)SC(C)(C)[C@@-]1C(=O)O") );
+    break;
+  default:
+    cout << "Test number " << choice << " does not exist!\n";
+    return -1;
+  }
 
   return 0;
 }

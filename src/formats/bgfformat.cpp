@@ -226,7 +226,7 @@ namespace OpenBabel
 
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       {
-        strncpy(elmnt_typ,etab.GetSymbol(atom->GetAtomicNum()), sizeof(elmnt_typ));
+        strncpy(elmnt_typ,etab.GetSymbol(atom->GetAtomicNum()), 7); // make sure to null-terminate
         elmnt_typ[sizeof(elmnt_typ) - 1] = '0';
         ToUpper(elmnt_typ);
 

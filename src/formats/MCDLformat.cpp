@@ -1084,7 +1084,7 @@ private:
     };
   };
   if ((netcharge != 0) && (chargestring == "")) {
-    chargestring="1,"+abs(netcharge);
+    chargestring = "1," +intToStr(abs(netcharge));
     if (netcharge < 0) chargestring=chargestring+"-"; else chargestring=chargestring+"+";
   };
   //radical processing
@@ -1097,7 +1097,7 @@ private:
     };
   };
   if ((netradical != 0) && (radicalstring == "")) {
-    radicalstring="1,"+abs(netcharge)+'*';
+    radicalstring= "1," + intToStr(abs(netcharge)) + "*";
   };
 
   n1=indexOf(value,"]");

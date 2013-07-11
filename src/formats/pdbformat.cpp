@@ -570,7 +570,7 @@ namespace OpenBabel
                    pUC->GetA(), pUC->GetB(), pUC->GetC(),
                    pUC->GetAlpha(), pUC->GetBeta(), pUC->GetGamma(),
                    "P1");
-           
+
         ofs << buffer << endl;
       }
 
@@ -614,7 +614,7 @@ namespace OpenBabel
         else
           {
             char tmp[10];
-            strncpy(tmp, type_name, 10);
+            strncpy(tmp, type_name, 9); // make sure to null-terminate tmp
             snprintf(type_name, sizeof(type_name), " %-3s", tmp);
           }
 
@@ -632,7 +632,7 @@ namespace OpenBabel
                 if (strlen(type_name) < 4)
                   {
                     char tmp[10];
-                    strncpy(tmp, type_name, 10);
+                    strncpy(tmp, type_name, 9); // make sure to null-terminate tmp
                     snprintf(padded_name, sizeof(padded_name), " %-3s", tmp);
                     strncpy(type_name,padded_name,4);
                     type_name[4] = '\0';
