@@ -69,23 +69,6 @@ if(BUILD_SHARED)
                       LIBRARY DESTINATION lib${LIB_SUFFIX}
                       ARCHIVE DESTINATION lib${LIB_SUFFIX}
       )
-  foreach(tool confab calcrmsd)
-    if (NOT GETOPT_FOUND)
-      add_executable(${tool} ${tool}.cpp getopt.c)
-    else(NOT GETOPT_FOUND)
-      add_executable(${tool} ${tool}.cpp)
-    endif(NOT GETOPT_FOUND)
-    target_link_libraries(${tool} ${BABEL_LIBRARY})
-    if(MSVC)
-      set_target_properties(${tool} PROPERTIES
-          RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-    endif(MSVC)
-    install(TARGETS ${tool}
-                    RUNTIME DESTINATION bin
-                    LIBRARY DESTINATION lib${LIB_SUFFIX}
-                    ARCHIVE DESTINATION lib${LIB_SUFFIX}
-    )
-  endforeach(tool)
   endif(NOT MINIMAL_BUILD)
 
 else(BUILD_SHARED)
