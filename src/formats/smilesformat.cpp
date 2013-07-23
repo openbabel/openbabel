@@ -4193,16 +4193,20 @@ namespace OpenBabel {
 
     m2s.CreateFragCansmiString(mol, frag_atoms, iso, buffer);
 
+    // This atom order data is useful not just for canonical SMILES
     // Could also save canonical bond order if anyone desires
+    OBPairData *canData;
     if (!mol.HasData("SMILES Atom Order")) {
-      // This atom order data is useful not just for canonical SMILES
-      OBPairData *canData = new OBPairData;
+      // Create new OBPairData
+      canData = new OBPairData;
       canData->SetAttribute("SMILES Atom Order");
-      canData->SetValue(m2s.GetOutputOrder());
-      // cout << "SMILES_atom_order "<<m2s.GetOutputOrder() << "\n";
       canData->SetOrigin(OpenBabel::local);
       mol.SetData(canData);
+    } else {
+      // Recanonicalizing - update existing new OBPairData
+      canData = (OBPairData *) mol.GetData("SMILES Atom Order");
     }
+    canData->SetValue(m2s.GetOutputOrder());
   }
 
   bool SMIBaseFormat::GetInchifiedSMILESMolecule(OBMol *mol, bool useFixedHRecMet)
