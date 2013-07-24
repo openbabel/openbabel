@@ -157,8 +157,6 @@ if(EIGEN2_FOUND OR EIGEN3_FOUND)
   )
 endif ()
 
-set(openbabel_srcs ${openbabel_srcs} formats/jsoncpp/jsoncpp.cpp formats/jsoncpp/customwriter.cpp)
-
 if(BUILD_SHARED)
   if(MSVC)
     set(openbabel_srcs ${openbabel_srcs}

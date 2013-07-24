@@ -61,6 +61,7 @@ set(formats_json
   chemdoodlejsonformat
   pubchemjsonformat
 )
+set(json_additional_sources json/jsoncpp.cpp json/customwriter.cpp)
 
 set(formats_misc
       APIInterface
@@ -213,7 +214,7 @@ if(MINIMAL_BUILD)
   )
 else(MINIMAL_BUILD)
   set(formats "")
-  foreach(formatgroup formats_common formats_utility formats_compchem formats_json formats_misc ${optional_formatgroups})
+  foreach(formatgroup formats_common formats_utility formats_compchem formats_misc ${optional_formatgroups})
     set(formats
         ${formats} ${${formatgroup}}
     )
@@ -236,7 +237,7 @@ endif(WIN32)
 
 
 if(MSVC)
-  foreach(formatgroup formats_common formats_utility formats_compchem formats_json formats_misc ${optional_formatgroups})
+  foreach(formatgroup formats_common formats_utility formats_compchem formats_misc ${optional_formatgroups})
     set(formatsources "")
     foreach(format ${${formatgroup}})
       set(formatsources ${formatsources} ${format}.cpp ${${format}_additional_sources})
@@ -286,6 +287,23 @@ if(MSVC)
                   OUTPUT_NAME formats_xml
                   PREFIX ""
                   SUFFIX ${MODULE_EXTENSION})
+                  
+  set(jsonsources "")
+  foreach(format ${formats_json})
+    set(jsonsources ${jsonsources} json/${format}.cpp)
+  endforeach(format)
+  add_library(formats_json ${PLUGIN_TYPE} ${jsonsources} ${json_additional_sources}
+              "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h")
+  target_link_libraries(formats_json ${libs} ${XDR_LIBRARY} openbabel)
+  install(TARGETS formats_json
+          RUNTIME DESTINATION ${BIN_INSTALL_DIR}
+          LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
+          ARCHIVE DESTINATION ${OB_PLUGIN_INSTALL_DIR})
+  set_target_properties(formats_json PROPERTIES
+                        OUTPUT_NAME formats_json
+                        PREFIX ""
+                        SUFFIX ${MODULE_EXTENSION})  
+                                
 else(MSVC)
 foreach(format ${formats_xml})
   add_library(${format} ${PLUGIN_TYPE} xml/${format}.cpp xml/xml.cpp)
@@ -294,6 +312,20 @@ foreach(format ${formats_xml})
                   RUNTIME DESTINATION ${BIN_INSTALL_DIR}
                   LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
                   ARCHIVE DESTINATION ${OB_PLUGIN_INSTALL_DIR})
+  set_target_properties(${format} PROPERTIES
+                        OUTPUT_NAME ${format}
+                        PREFIX ""
+                        SUFFIX ${MODULE_EXTENSION})
+endforeach(format)
+  
+foreach(format ${formats_json})
+  add_library(${format} ${PLUGIN_TYPE} json/${format}.cpp ${json_additional_sources}
+              "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h")
+  target_link_libraries(${format} ${libs} openbabel)
+  install(TARGETS ${format}
+          RUNTIME DESTINATION ${BIN_INSTALL_DIR}
+          LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
+          ARCHIVE DESTINATION ${OB_PLUGIN_INSTALL_DIR})
   set_target_properties(${format} PROPERTIES
                         OUTPUT_NAME ${format}
                         PREFIX ""
