@@ -2744,10 +2744,11 @@ namespace OpenBabel {
           // Find the best candidate bond to set to up/down
           // 1. **Should not already be set**
           // 2. Should not be connected to a 2nd tet center
-          // (this is acceptable, as the wedge is only at one end, but will only confuse things)
+          //    (this is acceptable, as the wedge is only at one end, but will only confuse things)
           // 3. Preferably is not in a cycle
-          // 4. Preferably is a terminal H
-          // 5. If two bonds are overlapping, choose one of these
+	  // 4. Prefer neighbor with fewer bonds over neighbor with more bonds
+          // 5. Preferably is a terminal H, C, or heteroatom (in that order)
+          // 6. If two bonds are overlapping, choose one of these
           //    (otherwise the InChI code will mark it as ambiguous)
 
           unsigned int max_bond_score = 0;
@@ -2755,14 +2756,24 @@ namespace OpenBabel {
             if (alreadyset.find(&*b) != alreadyset.end()) continue;
 
             OBAtom* nbr = b->GetNbrAtom(center);
-            unsigned int score = 1;
-
-            if (!b->IsInRing())
-              score += 2;
+	    int nbr_nbonds = nbr->GetValence();
+            int score = 0;
+            if (!b->IsInRing()) {
+	      if (!nbr->IsInRing())
+		score += 8;		// non-ring bond to non-ring atom is good
+	      else
+		score += 2;		// non-ring bond to ring atom is bad
+	    }
             if (tetcenters.find(nbr->GetId()) == tetcenters.end()) // Not a tetcenter
               score += 4;
-            if (nbr->IsHydrogen())
-              score += 8;
+	    if (nbr_nbonds == 1)	// terminal atom...
+		score += 8;		// strongly prefer terminal atoms
+	    else
+	      score -= nbr_nbonds - 2;	// bond to atom with many bonds is penalized
+	    if (nbr->IsHydrogen())
+	      score += 2;		// prefer H
+	    else if (nbr->IsCarbon())
+	      score += 1;		// then C
             if (&*b==close_bond_a || &*b==close_bond_b)
               score += 16;
 

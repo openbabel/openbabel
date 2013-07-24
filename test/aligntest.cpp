@@ -308,6 +308,77 @@ void test_bug()
   }
 }
 
+void test_QCP()
+{
+    vector<vector<double> > frag_a;
+    vector<vector<double> > frag_b;
+    for (int i=0; i<3; ++i) {
+      frag_a.push_back(vector<double>(7));
+      frag_b.push_back(vector<double>(7));
+    }
+
+    frag_a[0][0] =  -2.803;
+    frag_a[1][0] = -15.373;
+    frag_a[2][0] =  24.556;
+    frag_a[0][1] =   0.893;
+    frag_a[1][1] = -16.062;
+    frag_a[2][1] =  25.147;
+    frag_a[0][2] =   1.368;
+    frag_a[1][2] = -12.371;
+    frag_a[2][2] =  25.885;
+    frag_a[0][3] =  -1.651;
+    frag_a[1][3] = -12.153;
+    frag_a[2][3] =  28.177;
+    frag_a[0][4] =  -0.440;
+    frag_a[1][4] = -15.218;
+    frag_a[2][4] =  30.068;
+    frag_a[0][5] =   2.551;
+    frag_a[1][5] = -13.273;
+    frag_a[2][5] =  31.372;
+    frag_a[0][6] =   0.105;
+    frag_a[1][6] = -11.330;
+    frag_a[2][6] =  33.567;
+
+    frag_b[0][0] = -14.739;
+    frag_b[1][0] = -18.673;
+    frag_b[2][0] =  15.040;
+    frag_b[0][1] = -12.473;
+    frag_b[1][1] = -15.810;
+    frag_b[2][1] =  16.074;
+    frag_b[0][2] = -14.802;
+    frag_b[1][2] = -13.307;
+    frag_b[2][2] =  14.408;
+    frag_b[0][3] = -17.782;
+    frag_b[1][3] = -14.852;
+    frag_b[2][3] =  16.171;
+    frag_b[0][4] = -16.124;
+    frag_b[1][4] = -14.617;
+    frag_b[2][4] =  19.584;
+    frag_b[0][5] = -15.029;
+    frag_b[1][5] = -11.037;
+    frag_b[2][5] =  18.902;
+    frag_b[0][6] = -18.577;
+    frag_b[1][6] = -10.001;
+    frag_b[2][6] =  17.996;
+
+    vector<vector3> ref, target;
+    for(int i=0; i<7; ++i) {
+      ref.push_back(vector3(frag_a[0][i], frag_a[1][i], frag_a[2][i]));
+      target.push_back(vector3(frag_b[0][i], frag_b[1][i], frag_b[2][i]));
+    }
+
+    OBAlign align(ref, target);
+    align.SetMethod(OBAlign::Kabsch);
+    align.Align();
+    double rmsd = align.GetRMSD();
+    OB_ASSERT(fabs(rmsd - 0.719) < 0.001);
+
+    align.SetMethod(OBAlign::QCP);
+    align.Align();
+    rmsd = align.GetRMSD();
+    OB_ASSERT(fabs(rmsd - 0.719) < 0.001);
+
+}
 
 int aligntest(int argc, char* argv[])
 {
@@ -351,6 +422,8 @@ int aligntest(int argc, char* argv[])
     cout << "Test number " << choice << " does not exist!\n";
     return -1;
   }
+
+  test_QCP();
 
   return 0;
 }

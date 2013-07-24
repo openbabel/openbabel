@@ -580,7 +580,7 @@ namespace OpenBabel
       painter->DrawLine(oldx, oldy, newx, newy);
       oldx = newx;
       oldy = newy;
-      sign =- sign;
+      sign = -sign;
     }
   }
 

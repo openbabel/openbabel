@@ -1458,6 +1458,8 @@ void OBDOSData::SetData(double fermi,
       return; // something is very weird -- it's OK to pass no symmetries (we'll assume "A")
     if (energies.size() == 0)
       return;
+    if (alphaHOMO <= 0)
+      return;
     if (alphaHOMO > energies.size())
       return;
 
@@ -1489,6 +1491,8 @@ void OBDOSData::SetData(double fermi,
       return; // something is very weird -- it's OK to pass no symmetries (we'll assume "A")
     if (energies.size() == 0)
       return;
+    if (alphaHOMO <= -1)
+      return;
     if (alphaHOMO > energies.size())
       return;
 
@@ -1517,6 +1521,8 @@ void OBDOSData::SetData(double fermi,
     if (energies.size() < symmetries.size())
       return; // something is very weird -- it's OK to pass no symmetries (we'll assume "A")
     if (energies.size() == 0)
+      return;
+    if (betaHOMO <= -1)
       return;
     if (betaHOMO > energies.size())
       return;
