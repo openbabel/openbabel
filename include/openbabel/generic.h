@@ -142,6 +142,8 @@ namespace OpenBabel
   typedef OBPairTemplate<int>     OBPairInteger;
   //! Store arbitrary key/value floating point data like OBPairData
   typedef OBPairTemplate<double>  OBPairFloatingPoint;
+  //! Store arbitrary key/value boolean data like OBPairData
+  typedef OBPairTemplate<bool>    OBPairBool;
 
   //! \class OBSetData generic.h <openbabel/generic.h>
   //! \brief Used to store arbitrary attribute/set relationships.
