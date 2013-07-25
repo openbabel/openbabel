@@ -591,7 +591,9 @@ namespace OpenBabel
       atoms.push_back(&(*atom));
 
     list<OBAtom*>::iterator i;
-    for (i = atoms.begin(); i != atoms.end(); ++i) {
+    for (i = atoms.begin(); i != atoms.end(); ++i) 
+    {
+      coordinates.clear();
       uniqueV = (*i)->GetVector();
       uniqueV = CartesianToFractional(uniqueV);
       uniqueV = WrapFractionalCoordinate(uniqueV);

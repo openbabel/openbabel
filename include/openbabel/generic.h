@@ -134,6 +134,8 @@ namespace OpenBabel
   public:
   OBPairTemplate():
     OBGenericData("PairData", OBGenericDataType::PairData) {};
+    virtual OBGenericData* Clone(OBBase* /*parent*/) const
+      {return new OBPairTemplate<ValueT>(*this);}
     void SetValue(const ValueT t)             { _value = t;     }
     virtual const ValueT &GetGenericValue() const    { return(_value); }
   };
