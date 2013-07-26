@@ -37,6 +37,28 @@ GNU General Public License for more details.
 #endif
 
 using namespace std;
+
+template <typename T>
+string to_string(T pNumber)
+{
+  ostringstream oOStrStream;
+  oOStrStream << pNumber;
+  return oOStrStream.str();
+}
+
+bool is_double(const std::string& s, double& r_double)
+{
+  std::istringstream i(s);
+  
+  if (i >> r_double)
+  {
+    return true;
+  }
+  r_double = 0.0;
+  return false;
+}
+
+
 namespace OpenBabel
 {
   class CIFFormat : public OBMoleculeFormat
@@ -770,10 +792,14 @@ namespace OpenBabel
                     }
                 }
             // Occupancy ?
-            posoccup=loop->second.find("atom_site_occupancy");
+            posoccup=loop->second.find("_atom_site_occupancy");
             if(posoccup!=loop->second.end())
               for(unsigned int i=0;i<nb;++i)
+	      {	
                 mvAtom[i].mOccupancy=CIFNumeric2Float(posoccup->second[i]);
+		if( (mvAtom[i].mOccupancy <= 0.0) || (mvAtom[i].mOccupancy > 1.0) )
+		  mvAtom[i].mOccupancy = 1.0;
+	      }	
             // Now be somewhat verbose
             if(verbose)
               {
@@ -1386,14 +1412,20 @@ namespace OpenBabel
               atom->SetType(tmpSymbol); //set atomic number, or '0' if the atom type is not recognized
               atom->SetVector(posat->mCoordCart[0],posat->mCoordCart[1],posat->mCoordCart[2]);
               if(posat->mLabel.size()>0)
-                {
-                  OBPairData *label = new OBPairData;
-                  label->SetAttribute("_atom_site_label");
-                  label->SetValue(posat->mLabel);
-                  label->SetOrigin(fileformatInput);
-                  atom->SetData(label);
-                }
+              {
+                OBPairData *label = new OBPairData;
+                label->SetAttribute("_atom_site_label");
+                label->SetValue(posat->mLabel);
+                label->SetOrigin(fileformatInput);
+                atom->SetData(label);
+              }
 
+              OBPairFloatingPoint *occup_data = new OBPairFloatingPoint;
+	      occup_data->SetAttribute("_atom_site_occupancy");
+              occup_data->SetValue(posat->mOccupancy);
+              occup_data->SetOrigin(fileformatInput);
+              atom->SetData(occup_data);
+	      
             }
           if (!pConv->IsOption("b",OBConversion::INOPTIONS))
             pmol->ConnectTheDots();
@@ -1483,12 +1515,13 @@ namespace OpenBabel
           }
       }
     ofs <<"loop_"<<endl
-	<<"    _atom_site_type_symbol"<<endl
-	<<"    _atom_site_label"<<endl
-	<<"    _atom_site_fract_x"<<endl
-	<<"    _atom_site_fract_y"<<endl
-	<<"    _atom_site_fract_z"<<endl;
-    unsigned int i=0;
+	<<"    _atom_site_type_symbol" <<endl
+	<<"    _atom_site_label"       <<endl
+	<<"    _atom_site_fract_x"     <<endl
+	<<"    _atom_site_fract_y"     <<endl
+	<<"    _atom_site_fract_z"     <<endl
+	<<"    _atom_site_occupancy"   <<endl;
+    unsigned int i = 0;
     FOR_ATOMS_OF_MOL(atom, *pmol)
       {
 	double X, Y, Z; //atom coordinates
@@ -1497,23 +1530,33 @@ namespace OpenBabel
 	X = v.x();
 	Y = v.y();
 	Z = v.z();
-        if (atom->HasData("_atom_site_label"))
-          {
-            OBPairData *label = dynamic_cast<OBPairData *> (atom->GetData("_atom_site_label"));
-	    snprintf(buffer, BUFF_SIZE, "    %3s  %3s  %10.5f %10.5f %10.5f\n",
-		     etab.GetSymbol(atom->GetAtomicNum()),
-		     label->GetValue().c_str(),
-		     X,Y,Z);
-	  }
+	string label_str;
+	
+	double occup;
+	
+	if (atom->HasData("_atom_site_occupancy"))
+	{
+	  occup = (dynamic_cast<OBPairFloatingPoint *> (atom->GetData("_atom_site_occupancy")))->GetGenericValue();
+	}
 	else
-	  {
-	  snprintf(buffer, BUFF_SIZE, "    %3s  %3s%d  %10.5f %10.5f %10.5f\n",
-		 etab.GetSymbol(atom->GetAtomicNum()),
-		 etab.GetSymbol(atom->GetAtomicNum()),
-		 ++i,
-		   X,Y,Z);
-	ofs << buffer;
-	  }
+	  occup = 1.0;
+	
+        if (atom->HasData("_atom_site_label"))
+        {
+          OBPairData *label = dynamic_cast<OBPairData *> (atom->GetData("_atom_site_label"));
+	  label_str = label->GetValue().c_str();
+	}
+	else
+	{
+	  label_str = etab.GetSymbol(atom->GetAtomicNum()) + to_string(i);
+	  i++;
+	}
+	
+        snprintf(buffer, BUFF_SIZE, "    %3s  %3s  %10.5f %10.5f %10.5f %10.3f\n",
+	         etab.GetSymbol(atom->GetAtomicNum()),
+	         label_str.c_str(), X, Y, Z, occup);
+	
+	ofs << buffer;	
       }
     return true;
   }//WriteMolecule
