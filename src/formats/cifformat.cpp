@@ -25,6 +25,8 @@ GNU General Public License for more details.
 #include <list>
 #include <map>
 #include <set>
+#include <assert.h>
+#include <cmath>
 
 #ifdef _MSC_VER
  #pragma warning( disable : 4503 )
@@ -37,27 +39,6 @@ GNU General Public License for more details.
 #endif
 
 using namespace std;
-
-template <typename T>
-string to_string(T pNumber)
-{
-  ostringstream oOStrStream;
-  oOStrStream << pNumber;
-  return oOStrStream.str();
-}
-
-bool is_double(const std::string& s, double& r_double)
-{
-  std::istringstream i(s);
-  
-  if (i >> r_double)
-  {
-    return true;
-  }
-  r_double = 0.0;
-  return false;
-}
-
 
 namespace OpenBabel
 {
@@ -202,6 +183,8 @@ namespace OpenBabel
     void ExtractAtomicPositions(const bool verbose=false);
     /// Extract listed bond distances, from _geom_bond_* loops
     void ExtractBonds(const bool verbose=false);
+    //// Extract Charges information from cif file and assign it to atoms
+    void ExtractCharges(const bool verbose=false);
     /// Generate fractional coordinates from cartesian ones for all atoms
     /// CIFData::CalcMatrices() must be called first
     void Cartesian2FractionalCoord();
@@ -252,6 +235,8 @@ namespace OpenBabel
       std::vector<float> mCoordCart;
       /// Site occupancy, or -1
       float mOccupancy;
+      //charge from oxydation
+      float mCharge;
     };
     /// Atoms, if any are found
     std::vector<CIFAtom> mvAtom;
@@ -301,6 +286,15 @@ namespace OpenBabel
   /// Convert one CIF value to a floating-point value
   /// Return 0 if no value can be converted (e.g. if '.' or '?' is encountered)
   int CIFNumeric2Int(const std::string &s);
+  
+  template <typename T> string to_string(T pNumber)
+  {
+    ostringstream oOStrStream;
+    oOStrStream << pNumber;
+    return oOStrStream.str();
+  }
+
+  bool is_double(const std::string& s, double& r_double);
 
   //############################## CIF CLASSES CODE ####################################################
   CIFData::CIFAtom::CIFAtom():
@@ -357,6 +351,7 @@ namespace OpenBabel
         obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
       }
     this->ExtractBonds(verbose);
+    this->ExtractCharges(verbose);
   }
 
   void CIFData::ExtractUnitCell(const bool verbose)
@@ -851,6 +846,49 @@ namespace OpenBabel
           }
       }
   }
+  
+  void CIFData::ExtractCharges(const bool verbose)
+  {
+    map<ci_string,string>::const_iterator positem;
+    
+    map<std::string, double> lbl2ox;            
+    for(map<set<ci_string>, map<ci_string, vector<string> > >::const_iterator loop=mvLoop.begin(); loop!=mvLoop.end(); loop++)
+    {
+      //if(mvBond.size()>0) break;// Only allow one bond list
+      map<ci_string,vector<string> >::const_iterator pos_symbol, pos_ox_number, posdist;
+      pos_symbol    =loop->second.find("_atom_type_symbol");
+      pos_ox_number =loop->second.find("_atom_type_oxidation_number");
+      if( (pos_symbol != loop->second.end()) && (pos_ox_number != loop->second.end()) )
+      {
+        if(verbose) cout<<" Found _atom_type* record with oxydation number..."<<endl;
+        const unsigned long nl = pos_symbol->second.size();
+	
+        for(unsigned int i = 0; i < nl; i++)
+        {
+          lbl2ox[pos_symbol->second[i]] = CIFNumeric2Float(pos_ox_number->second[i]);
+          if(verbose) 
+	    cout << pos_symbol->second[i] << " has oxydation " << pos_ox_number->second[i] << endl;
+        }
+      }
+    }
+    
+    assert(mvAtom.size() > 0);
+    ///Assign charges to Atoms by labels
+    
+    for (std::vector<CIFAtom>::iterator it = mvAtom.begin() ; it != mvAtom.end(); it++)
+    {  
+      string label = (*it).mLabel;
+      
+      if( lbl2ox.count(label) > 0 )
+        (*it).mCharge = lbl2ox[label];
+      else
+      {
+        (*it).mCharge = NAN;
+        if( verbose )
+          std::cout << "Charge for label: " + label + " cannot be found." << endl;
+      }  
+    }
+  }
 
   void CIFData::CalcMatrices(const bool verbose)
   {
@@ -1224,6 +1262,18 @@ namespace OpenBabel
     return v;
   }
 
+  bool is_double(const std::string& s, double& r_double)
+  {
+    std::istringstream i(s);
+  
+    if (i >> r_double)
+      return true;
+
+    r_double = 0.0;
+    return false;
+  }
+
+
   //################ END CIF CLASSES######################################
 
   //Make an instance of the format class
@@ -1425,7 +1475,15 @@ namespace OpenBabel
               occup_data->SetValue(posat->mOccupancy);
               occup_data->SetOrigin(fileformatInput);
               atom->SetData(occup_data);
-	      
+              
+              if( !isnan(posat->mCharge) )
+              {
+                OBPairFloatingPoint *charge_data = new OBPairFloatingPoint;
+                charge_data->SetAttribute("input_charge");
+                charge_data->SetValue(posat->mCharge);
+                charge_data->SetOrigin(fileformatInput);
+                atom->SetData(charge_data);
+              }
             }
           if (!pConv->IsOption("b",OBConversion::INOPTIONS))
             pmol->ConnectTheDots();
@@ -1514,6 +1572,7 @@ namespace OpenBabel
 	      }
           }
       }
+
     ofs <<"loop_"<<endl
 	<<"    _atom_site_type_symbol" <<endl
 	<<"    _atom_site_label"       <<endl
