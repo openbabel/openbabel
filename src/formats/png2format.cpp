@@ -53,7 +53,7 @@ public:
   private:
     int _ncols, _nrows, _nmax;
     vector<OBBase*> _objects;
-//    CairoPainter _cairopainter; now local variable in WriteMolecule()
+    CairoPainter _cairopainter; //now local variable in WriteMolecule()
 };
   ////////////////////////////////////////////////////
 
@@ -162,7 +162,7 @@ bool PNG2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   OBMol workingmol(*pmol); // Copy the molecule
 
-  CairoPainter cairopainter;
+  // CairoPainter cairopainter;
 
   if (!pConv->IsOption("pngwritechemobject") || (!_nrows && !_ncols))
   { //If WriteMolecule called directly, e.g. from OBConversion::Write()
@@ -208,17 +208,17 @@ bool PNG2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   if(!pConv->IsOption("d"))
   {    
     text = pmol->GetTitle();
-    cairopainter.SetTitle(text);
+    _cairopainter.SetTitle(text);
   }
 
   if(pConv->GetOutputIndex()==1) {
-    cairopainter.SetWidth(width);
-    cairopainter.SetHeight(height);
-    cairopainter.SetTableSize(_nrows, _ncols);
+    _cairopainter.SetWidth(width);
+    _cairopainter.SetHeight(height);
+    _cairopainter.SetTableSize(_nrows, _ncols);
   }
-  cairopainter.SetIndex(pConv->GetOutputIndex());
+  _cairopainter.SetIndex(pConv->GetOutputIndex());
 
-  OBDepict depictor(&cairopainter);
+  OBDepict depictor(&_cairopainter);
 
   // The following options are all taken from svgformat.cpp
   if(!pConv->IsOption("C"))
@@ -232,9 +232,9 @@ bool PNG2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     depictor.SetAliasMode();
   }
   if(pConv->IsOption("t"))
-    cairopainter.SetPenWidth(4);
+    _cairopainter.SetPenWidth(4);
   else
-    cairopainter.SetPenWidth(1);
+    _cairopainter.SetPenWidth(1);
 
   //No element-specific atom coloring if requested
   if(pConv->IsOption("u"))
@@ -251,12 +251,12 @@ bool PNG2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     if(!pConv->IsOption("O"))
      //if no embedding just write image
-      cairopainter.WriteImage(ofs);
+      _cairopainter.WriteImage(ofs);
     else //embedding
     {
       //write image to stringstream, read it into pngformat
       stringstream ss;
-      cairopainter.WriteImage(ss);
+      _cairopainter.WriteImage(ss);
       OBConversion conv2(&ss,pConv->GetOutStream());
       conv2.CopyOptions(pConv);
       OBBase Ob; //dummy
@@ -265,7 +265,7 @@ bool PNG2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         || !ppng->ReadMolecule(&Ob , &conv2))
       {
         obErrorLog.ThrowError("PNG Format", "Failed to embed molecule(s)",obError);
-        cairopainter.WriteImage(ofs); //just write image without embedding
+        _cairopainter.WriteImage(ofs); //just write image without embedding
         return true;
       }
       
