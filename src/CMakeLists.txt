@@ -70,6 +70,7 @@ set(ops
   ops/gen3d.cpp
   ops/largest.cpp
   ops/loader.cpp
+  ops/opconfab.cpp
   ops/opsplit.cpp
   ops/optransform.cpp
   ops/partialcharges.cpp
@@ -109,6 +110,7 @@ set(openbabel_srcs
   chains.cpp
   chargemodel.cpp
   chiral.cpp
+  confsearch.cpp
   data.cpp
   descriptor.cpp
   fingerprint.cpp

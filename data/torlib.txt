@@ -207,11 +207,11 @@ c[CD2^3][CD3^3][#1] 1 2 3 4 180.0 60.0 -60.0
 [aD3]cN(~[OD1])~[OD1] 1 2 3 4 0.0 60.0 -60.0
 [a]cN(~[OD1])~[OD1] 1 2 3 4 0.0
 
-#trifluoromethyl
+#trihalides
 **C(F)(F)F 1 2 3 4 0.0
-
-#trichloromethyl
-[a]cC(Cl)(Cl)Cl 1 2 3 4 0.0
+**C(I)(I)I 1 2 3 4 0.0
+**C(Cl)(Cl)Cl 1 2 3 4 0.0
+**C(Br)(Br)Br 1 2 3 4 0.0
 
 #CSD SPECIFIC RULES
 a[PD3](a)-[PD3](a)a 1 2 4 5 180.0 60.0 -60.0

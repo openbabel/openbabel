@@ -8,6 +8,7 @@ set(formats_common
 
 set(formats_utility
   asciiformat
+  confabreport
   copyformat
   MNAformat
   molreport
@@ -28,6 +29,7 @@ set(formats_compchem
       adfformat
       castepformat
       crystal09format
+      daltonformat
       dmolformat
       fchkformat
       fhiaimsformat
@@ -54,6 +56,12 @@ if(MSVC OR HAVE_REGEX_H)
       ${formats_compchem} gamessukformat
   )
 endif(MSVC OR HAVE_REGEX_H)
+
+set(formats_json
+  chemdoodlejsonformat
+  pubchemjsonformat
+)
+set(json_additional_sources json/jsoncpp.cpp json/customwriter.cpp)
 
 set(formats_misc
       APIInterface
@@ -279,6 +287,23 @@ if(MSVC)
                   OUTPUT_NAME formats_xml
                   PREFIX ""
                   SUFFIX ${MODULE_EXTENSION})
+                  
+  set(jsonsources "")
+  foreach(format ${formats_json})
+    set(jsonsources ${jsonsources} json/${format}.cpp)
+  endforeach(format)
+  add_library(formats_json ${PLUGIN_TYPE} ${jsonsources} ${json_additional_sources}
+              "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h")
+  target_link_libraries(formats_json ${libs} ${XDR_LIBRARY} openbabel)
+  install(TARGETS formats_json
+          RUNTIME DESTINATION ${BIN_INSTALL_DIR}
+          LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
+          ARCHIVE DESTINATION ${OB_PLUGIN_INSTALL_DIR})
+  set_target_properties(formats_json PROPERTIES
+                        OUTPUT_NAME formats_json
+                        PREFIX ""
+                        SUFFIX ${MODULE_EXTENSION})  
+                                
 else(MSVC)
 foreach(format ${formats_xml})
   add_library(${format} ${PLUGIN_TYPE} xml/${format}.cpp xml/xml.cpp)
@@ -287,6 +312,20 @@ foreach(format ${formats_xml})
                   RUNTIME DESTINATION ${BIN_INSTALL_DIR}
                   LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
                   ARCHIVE DESTINATION ${OB_PLUGIN_INSTALL_DIR})
+  set_target_properties(${format} PROPERTIES
+                        OUTPUT_NAME ${format}
+                        PREFIX ""
+                        SUFFIX ${MODULE_EXTENSION})
+endforeach(format)
+  
+foreach(format ${formats_json})
+  add_library(${format} ${PLUGIN_TYPE} json/${format}.cpp ${json_additional_sources}
+              "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h")
+  target_link_libraries(${format} ${libs} openbabel)
+  install(TARGETS ${format}
+          RUNTIME DESTINATION ${BIN_INSTALL_DIR}
+          LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
+          ARCHIVE DESTINATION ${OB_PLUGIN_INSTALL_DIR})
   set_target_properties(${format} PROPERTIES
                         OUTPUT_NAME ${format}
                         PREFIX ""

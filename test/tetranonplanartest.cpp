@@ -4,7 +4,7 @@
 using namespace std;
 using namespace OpenBabel;
 
-bool sameWinding(const OBStereo::Refs &refs1, const OBStereo::Refs &refs2)
+bool hasSameWinding(const OBStereo::Refs &refs1, const OBStereo::Refs &refs2)
 {
   OB_REQUIRE( refs1.size() == 3 );
   OB_REQUIRE( refs2.size() == 3 );
@@ -24,7 +24,7 @@ bool sameWinding(const OBStereo::Refs &refs1, const OBStereo::Refs &refs2)
 //           4
 
 
-void test_ToConfig()
+int tetranonplanartest(int argc, char* argv[])
 {
   OBTetrahedralStereo::Config cfg;
 
@@ -50,48 +50,42 @@ void test_ToConfig()
   OB_ASSERT( cfg2.center == 1 );
   OB_ASSERT( cfg2.from == 2 );
   OB_ASSERT( cfg2.refs.size() == 3 );
-  OB_ASSERT( sameWinding(cfg2.refs, OBStereo::MakeRefs(3, 0, 4)) );
+  OB_ASSERT( hasSameWinding(cfg2.refs, OBStereo::MakeRefs(3, 0, 4)) );
  
   // try viewing from other atom: 3
   cfg2 = OBTetraNonPlanarStereo::ToConfig(cfg, 3);
   OB_ASSERT( cfg2.center == 1 );
   OB_ASSERT( cfg2.from == 3 );
   OB_ASSERT( cfg2.refs.size() == 3 );
-  OB_ASSERT( sameWinding(cfg2.refs, OBStereo::MakeRefs(0, 2, 4)) );
+  OB_ASSERT( hasSameWinding(cfg2.refs, OBStereo::MakeRefs(0, 2, 4)) );
  
   // try viewing from other atom: 4
   cfg2 = OBTetraNonPlanarStereo::ToConfig(cfg, 4);
   OB_ASSERT( cfg2.center == 1 );
   OB_ASSERT( cfg2.from == 4 );
   OB_ASSERT( cfg2.refs.size() == 3 );
-  OB_ASSERT( sameWinding(cfg2.refs, OBStereo::MakeRefs(3, 2, 0)) );
+  OB_ASSERT( hasSameWinding(cfg2.refs, OBStereo::MakeRefs(3, 2, 0)) );
 
   // try viewing anti-clockwise 
   cfg2 = OBTetraNonPlanarStereo::ToConfig(cfg, 3, OBStereo::AntiClockwise);
   OB_ASSERT( cfg2.center == 1 );
   OB_ASSERT( cfg2.towards == 3 );
   OB_ASSERT( cfg2.refs.size() == 3 );
-  OB_ASSERT( sameWinding(cfg2.refs, OBStereo::MakeRefs(2, 0, 4)) ); // CW <-> ACW = inversion
+  OB_ASSERT( hasSameWinding(cfg2.refs, OBStereo::MakeRefs(2, 0, 4)) ); // CW <-> ACW = inversion
 
   // try viewing towards atom
   cfg2 = OBTetraNonPlanarStereo::ToConfig(cfg, 3, OBStereo::Clockwise, OBStereo::ViewTowards);
   OB_ASSERT( cfg2.center == 1 );
   OB_ASSERT( cfg2.towards == 3 );
   OB_ASSERT( cfg2.refs.size() == 3 );
-  OB_ASSERT( sameWinding(cfg2.refs, OBStereo::MakeRefs(2, 0, 4)) ); // from <-> towards = inversion
+  OB_ASSERT( hasSameWinding(cfg2.refs, OBStereo::MakeRefs(2, 0, 4)) ); // from <-> towards = inversion
  
   // try viewing towards atom anti-clockwise
   cfg2 = OBTetraNonPlanarStereo::ToConfig(cfg, 3, OBStereo::AntiClockwise, OBStereo::ViewTowards);
   OB_ASSERT( cfg2.center == 1 );
   OB_ASSERT( cfg2.towards == 3 );
   OB_ASSERT( cfg2.refs.size() == 3 );
-  OB_ASSERT( sameWinding(cfg2.refs, OBStereo::MakeRefs(0, 2, 4)) ); // 2 permutations cancel out
-
-}
-
-int main()
-{
-  test_ToConfig();
+  OB_ASSERT( hasSameWinding(cfg2.refs, OBStereo::MakeRefs(0, 2, 4)) ); // 2 permutations cancel out
 
   return 0;
 }

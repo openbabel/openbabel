@@ -38,7 +38,7 @@ public:
   {
     OBBase* pOb = pConv->GetChemObject();
 
-    OBMol* pMolCopy;
+    OBMol* pMolCopy = NULL;
     if(_pOrigConv)
     {
       //Need to copy pOb. But currently OBBase does not have a virtual Clone() function.
@@ -69,7 +69,7 @@ public:
 
     if(pConv->IsLast())
     {
-      if (_pOrigConv) {
+      if (_pOrigConv && pMolCopy != NULL) {
         _pOrigConv->AddChemObject(pMolCopy); //dummy add to empty queue
         pConv->SetOutFormat(_pOrigConv->GetOutFormat()); //ReportNumberConverted() uses this at end
       }

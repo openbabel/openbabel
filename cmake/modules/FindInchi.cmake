@@ -13,7 +13,7 @@ if(INCHI_INCLUDE_DIR AND INCHI_LIBRARY)
   # in cache already
   set(INCHI_FOUND TRUE)
 else()
-  find_path(INCHI_INCLUDE_DIR NAMES inchi_api.h PATHS /usr/include/inchi )
+  find_path(INCHI_INCLUDE_DIR NAMES inchi_api.h PATHS /usr/local/include/inchi /usr/include/inchi )
   find_library(INCHI_LIBRARY NAMES inchi Inchi)
   include(FindPackageHandleStandardArgs)
   find_package_handle_standard_args(INCHI DEFAULT_MSG INCHI_LIBRARY

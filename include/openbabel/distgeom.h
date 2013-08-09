@@ -29,7 +29,7 @@ GNU General Public License for more details.
 
 #ifdef HAVE_EIGEN
 
-#include <Eigen/Dense>
+#include <Eigen/Core>
 
 namespace OpenBabel {
 

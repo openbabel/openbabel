@@ -8,12 +8,6 @@
 using namespace std;
 using namespace OpenBabel;
 
-std::string GetFilename(const std::string &filename)
-{
-  string path = TESTDATADIR + filename;
-  return path;
-}
-
 void testIsomorphism1()
 {
   OBMol mol;
@@ -122,7 +116,7 @@ void testIsomorphismMask()
   OBMol mol;
   OBConversion conv;
   conv.SetInFormat("cml");
-  std::ifstream ifs(GetFilename("isomorphism1.cml").c_str());
+  std::ifstream ifs(OBTestUtil::GetFilename("isomorphism1.cml").c_str());
   OB_REQUIRE( ifs );
   conv.Read(&mol, &ifs);
 
@@ -174,7 +168,7 @@ void testAutomorphismMask() {
   OBMol mol;
   OBConversion conv;
   conv.SetInFormat("cml");
-  std::ifstream ifs(GetFilename("isomorphism1.cml").c_str());
+  std::ifstream ifs(OBTestUtil::GetFilename("isomorphism1.cml").c_str());
   OB_REQUIRE( ifs );
   conv.Read(&mol, &ifs);
 
@@ -224,7 +218,7 @@ void testAutomorphismMask2()
   OBConversion conv;
 
   conv.SetInFormat("sdf");
-  std::ifstream ifs(GetFilename("progesterone.sdf").c_str());
+  std::ifstream ifs(OBTestUtil::GetFilename("progesterone.sdf").c_str());
   OB_REQUIRE( ifs );
   OB_REQUIRE( conv.Read(&mol, &ifs) );
 
@@ -253,8 +247,19 @@ void testAutomorphismPreMapping()
   OB_ASSERT( aut.size() == 2 );
 }
 
-int main()
+int isomorphismtest(int argc, char* argv[])
 {
+  int defaultchoice = 1;
+  
+  int choice = defaultchoice;
+
+  if (argc > 1) {
+    if(sscanf(argv[1], "%d", &choice) != 1) {
+      printf("Couldn't parse that input as a number\n");
+      return -1;
+    }
+  }
+
   // Define location of file formats for testing
   #ifdef FORMATDIR
     char env[BUFF_SIZE];
@@ -262,15 +267,36 @@ int main()
     putenv(env);
   #endif
 
-  testIsomorphism1();
-  testIsomorphism2();
-  testIsomorphism3();
-  testIsomorphism4();
-  testIsomorphismMask();
-  testAutomorphismMask();
-  testAutomorphismMask2();
-  testAutomorphismPreMapping();
-
+    
+  switch(choice) {
+  case 1:
+    testIsomorphism1();
+    break;
+  case 2:
+    testIsomorphism2();
+    break;
+  case 3:
+    testIsomorphism3();
+    break;
+  case 4:
+    testIsomorphism4();
+    break;
+  case 5:
+    testIsomorphismMask();
+    break;
+  case 6:
+    testAutomorphismMask();
+    break;
+  case 7:
+    testAutomorphismMask2();
+    break;
+  case 8:
+    testAutomorphismPreMapping();
+    break;
+  default:
+    cout << "Test number " << choice << " does not exist!\n";
+    return -1;
+  }
   return 0;
 }
 

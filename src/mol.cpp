@@ -1380,10 +1380,13 @@ namespace OpenBabel
       _title += "_" + extitle;
 
     // First, handle atoms and bonds
+    map<unsigned long int, unsigned long int> correspondingId;
     for (atom = src.BeginAtom(i) ; atom ; atom = src.NextAtom(i)) {
-      atom->SetId(NoId);//Need to remove ID which relates to source mol rather than this mol
-      AddAtom(*atom);
+      AddAtom(*atom, true); // forceNewId=true (don't reuse the original Id)
+      OBAtom *addedAtom = GetAtom(NumAtoms());
+      correspondingId[atom->GetId()] = addedAtom->GetId();
     }
+
     for (bond = src.BeginBond(j) ; bond ; bond = src.NextBond(j)) {
       bond->SetId(NoId);//Need to remove ID which relates to source mol rather than this mol
       AddBond(bond->GetBeginAtomIdx() + prevatms,
@@ -1404,6 +1407,34 @@ namespace OpenBabel
           (_residue[_residue.size() - 1])->AddAtom(atom);
         }
     }
+
+    // Copy the stereo
+    std::vector<OBGenericData*> vdata = src.GetAllData(OBGenericDataType::StereoData);
+    for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data) {
+      OBStereo::Type datatype = ((OBStereoBase*)*data)->GetType();
+      if (datatype == OBStereo::CisTrans) {
+        OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
+        OBCisTransStereo *nct = new OBCisTransStereo(this);
+        OBCisTransStereo::Config ct_cfg = ct->GetConfig();
+        ct_cfg.begin = correspondingId[ct_cfg.begin];
+        ct_cfg.end = correspondingId[ct_cfg.end];
+        for(OBStereo::RefIter ri = ct_cfg.refs.begin(); ri != ct_cfg.refs.end(); ++ri)
+          *ri = correspondingId[*ri];
+        nct->SetConfig(ct_cfg);
+        SetData(nct);
+      }
+      else if (datatype == OBStereo::Tetrahedral) {
+        OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
+        OBTetrahedralStereo *nts = new OBTetrahedralStereo(this);
+        OBTetrahedralStereo::Config ts_cfg = ts->GetConfig();
+        ts_cfg.center = correspondingId[ts_cfg.center];
+        ts_cfg.from = correspondingId[ts_cfg.from];
+        for(OBStereo::RefIter ri = ts_cfg.refs.begin(); ri != ts_cfg.refs.end(); ++ri)
+          *ri = correspondingId[*ri];
+        nts->SetConfig(ts_cfg);
+        SetData(nts);
+      }
+    }    
 
     // TODO: This is actually a weird situation (e.g., adding a 2D mol to 3D one)
     // We should do something to update the src coordinates if they're not 3D
@@ -1727,15 +1758,19 @@ namespace OpenBabel
   //! \brief Add an atom to a molecule
   //!
   //! Also checks bond_queue for any bonds that should be made to the new atom
-  bool OBMol::AddAtom(OBAtom &atom)
+  bool OBMol::AddAtom(OBAtom &atom, bool forceNewId)
   {
     //    BeginModify();
 
-    // get the atom id or assign the next available id if the
-    // specified atom has an invalid id
-    unsigned long id = atom.GetId();
-    if (id == NoId)
+    // Use the existing atom Id unless either it's invalid or forceNewId has been specified
+    unsigned long id;
+    if (forceNewId)
       id = _atomIds.size();
+    else {
+      id = atom.GetId();
+      if (id == NoId)
+        id = _atomIds.size();
+    }
 
     OBAtom *obatom = CreateAtom();
     *obatom = atom;
@@ -2871,6 +2906,36 @@ namespace OpenBabel
     return(true);
   }
 
+  // Used by DeleteAtom below. Code based on StereoRefToImplicit
+  const void DeleteStereoOnAtom(OBMol& mol, OBStereo::Ref atomId)
+  {
+    std::vector<OBGenericData*> vdata = mol.GetAllData(OBGenericDataType::StereoData);
+    for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data) {
+      OBStereo::Type datatype = ((OBStereoBase*)*data)->GetType();
+
+      if (datatype != OBStereo::CisTrans && datatype != OBStereo::Tetrahedral) {
+        obErrorLog.ThrowError(__FUNCTION__,
+            "This function should be updated to handle additional stereo types.\nSome stereochemistry objects may contain explicit refs to hydrogens which have been removed.", obWarning);
+        continue;
+      }
+
+      if (datatype == OBStereo::CisTrans) {
+        OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
+        OBCisTransStereo::Config ct_cfg = ct->GetConfig();
+        if (ct_cfg.begin == atomId || ct_cfg.end == atomId ||
+            std::find(ct_cfg.refs.begin(), ct_cfg.refs.end(), atomId) != ct_cfg.refs.end())
+          mol.DeleteData(ct);
+      }
+      else if (datatype == OBStereo::Tetrahedral) {
+        OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
+        OBTetrahedralStereo::Config ts_cfg = ts->GetConfig();
+        if (ts_cfg.from == atomId ||
+            std::find(ts_cfg.refs.begin(), ts_cfg.refs.end(), atomId) != ts_cfg.refs.end())
+          mol.DeleteData(ts);
+      }
+    }
+  }
+
   bool OBMol::DeleteAtom(OBAtom *atom, bool destroyAtom)
   {
     if (atom->IsHydrogen())
@@ -2903,9 +2968,13 @@ namespace OpenBabel
 
     EndModify();
 
+    // Delete any stereo objects involving this atom
+    OBStereo::Ref id = atom->GetId();
+    DeleteStereoOnAtom(*this, id);
+
     if (destroyAtom)
       DestroyAtom(atom);
-
+    
     UnsetSSSRPerceived();
     UnsetLSSRPerceived();
     return(true);
