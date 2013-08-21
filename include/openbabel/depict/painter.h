@@ -151,6 +151,10 @@ namespace OpenBabel
        */
       virtual void SetPenWidth(double width) = 0;
       /**
+       * Get the painter's pen width.
+       */
+      virtual double GetPenWidth() = 0;
+      /**
        * Draw a line from @p x1, @p y1 to @p x2, @p y2. The line is drawn using
        * the current pen color and width.
        */

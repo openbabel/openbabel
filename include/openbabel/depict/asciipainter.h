@@ -36,6 +36,7 @@ namespace OpenBabel
       void SetFillColor(const OBColor &color);
       void SetPenColor(const OBColor &color);
       void SetPenWidth(double width);
+      double GetPenWidth();
       void DrawLine(double x1, double y1, double x2, double y2);
       void DrawPolygon(const std::vector<std::pair<double,double> > &points);
       void DrawCircle(double x, double y, double r);

@@ -92,11 +92,17 @@ namespace OpenBabel
   void CairoPainter::SetPenWidth(double width)
   {
     m_pen_width = width;
-    
+  }
+
+  double CairoPainter::GetPenWidth()
+  {
+    return m_pen_width;
   }
 
   void CairoPainter::DrawLine(double x1, double y1, double x2, double y2)
   {
+    cairo_set_line_width(m_cairo, m_pen_width);
+    cairo_set_line_cap(m_cairo, CAIRO_LINE_CAP_ROUND);
     cairo_move_to(m_cairo, x1, y1);
     cairo_line_to(m_cairo, x2, y2);
     cairo_stroke(m_cairo);
