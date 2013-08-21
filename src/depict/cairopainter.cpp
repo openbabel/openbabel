@@ -156,8 +156,8 @@ namespace OpenBabel
     metrics.fontSize = m_fontPointSize;
     metrics.ascent = fe.ascent;
     metrics.descent = -fe.descent;
-    metrics.width = te.width;
-    metrics.height = fe.height;
+    metrics.width = te.x_advance;//te.width;
+    metrics.height = te.height;
     return metrics;
   }
       
