@@ -204,6 +204,22 @@ bool PNG2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   pp = pConv->IsOption("h");
   int height  = pp ? atoi(pp) : size;
 
+  bool transparent=false;
+  string background, bondcolor;
+  const char* bg = pConv->IsOption("b");
+  background = bg ? "black" : "white";
+  bondcolor  = bg ? "white" : "black";
+  if(bg && (!strcmp(bg, "none") || bg[0]=='0'))
+  {
+    transparent = true;
+    bondcolor = "gray";
+  }
+  const char* bcol = pConv->IsOption("B");
+  if(bcol && *bcol)
+    bondcolor = bcol;
+  if(bg && *bg)
+    background = bg;
+
   string text;
   if(!pConv->IsOption("d"))
   {    
@@ -231,6 +247,10 @@ bool PNG2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     AliasData::RevertToAliasForm(workingmol);
     depictor.SetAliasMode();
   }
+  _cairopainter.SetBondColor(bondcolor);
+  depictor.SetBondColor(bondcolor);
+  _cairopainter.SetBackground(background);
+  _cairopainter.SetTransparent(transparent);
   if(pConv->IsOption("t"))
     _cairopainter.SetPenWidth(4);
   else

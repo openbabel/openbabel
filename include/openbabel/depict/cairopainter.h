@@ -37,7 +37,10 @@ namespace OpenBabel
       void SetTitle(std::string title) {m_title=title;}
       void SetIndex(int index) {m_index=index;}
       void SetTableSize(int nrows, int ncols) {m_nrows=nrows; m_ncols=ncols;}
-      //@}
+      void SetBackground(std::string color) {m_fillcolor=color;}
+      void SetBondColor(std::string color) {m_bondcolor=color;}
+      void SetTransparent(bool tr) {m_transparent=tr;}
+     //@}
  
     private:
       cairo_surface_t *m_surface;
@@ -49,6 +52,9 @@ namespace OpenBabel
       std::string m_title;
       int m_index;        // Index of current molecule in a table
       int m_ncols, m_nrows; // number of rows and columns
+      std::string m_fillcolor, m_bondcolor;
+      bool m_transparent;
+
   };
 
 }

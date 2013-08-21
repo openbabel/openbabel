@@ -9,7 +9,8 @@ namespace OpenBabel
 
   // Class definition of CairoPainter
   CairoPainter::CairoPainter() : m_surface(0), m_cairo(0),
-    m_fontPointSize(12), m_width(0), m_height(0), m_pen_width(1), m_title(""), m_index(1)
+    m_fontPointSize(12), m_width(0), m_height(0), m_pen_width(1), m_title(""), m_index(1),
+    m_fillcolor("white"), m_bondcolor("black"), m_transparent(false)
   {
   }
 
@@ -27,7 +28,13 @@ namespace OpenBabel
       // create new surface to paint on
       m_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, static_cast<int> (m_width), static_cast<int> (m_height));
       m_cairo = cairo_create(m_surface);
-      cairo_set_source_rgb (m_cairo, 255, 255, 255);
+      if(m_transparent)
+        cairo_set_source_rgba (m_cairo, 0.0, 0.0, 0.0, 0.0);
+      else {
+        OBColor bg = OBColor(m_fillcolor);
+        cairo_set_source_rgb (m_cairo, bg.red, bg.green, bg.blue);
+      }
+      
       cairo_paint (m_cairo);
       cairo_set_line_width(m_cairo, m_pen_width);
     }
@@ -49,7 +56,7 @@ namespace OpenBabel
 
     // Add the title
     if (!m_title.empty()) {
-      this->SetPenColor(OBColor("black"));
+      this->SetPenColor(OBColor(m_bondcolor));
       this->SetFontSize(static_cast<int>(16.0));
       OBFontMetrics fm = this->GetFontMetrics(m_title);
       this->DrawText(cellwidth/2.0 - fm.width/2.0 + cellwidth*(col-1),
