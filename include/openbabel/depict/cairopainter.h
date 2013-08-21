@@ -40,6 +40,7 @@ namespace OpenBabel
       void SetBackground(std::string color) {m_fillcolor=color;}
       void SetBondColor(std::string color) {m_bondcolor=color;}
       void SetTransparent(bool tr) {m_transparent=tr;}
+      void SetCropping(bool cr) {m_cropping=cr;}
      //@}
  
     private:
@@ -53,7 +54,7 @@ namespace OpenBabel
       int m_index;        // Index of current molecule in a table
       int m_ncols, m_nrows; // number of rows and columns
       std::string m_fillcolor, m_bondcolor;
-      bool m_transparent;
+      bool m_transparent, m_cropping;
 
   };
 

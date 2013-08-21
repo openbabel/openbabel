@@ -24,8 +24,16 @@ namespace OpenBabel
 
   void CairoPainter::NewCanvas(double width, double height)
   {
+    double titleheight = m_title.empty() ? 0.0 : 16.0;
     if (m_index == 1) {
       // create new surface to paint on
+      if(m_cropping) {
+        double ratio = width / height;
+        if(ratio > 1.0)
+          m_height = m_height / ratio;
+        else
+          m_width = m_width * ratio;
+      }
       m_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, static_cast<int> (m_width), static_cast<int> (m_height));
       m_cairo = cairo_create(m_surface);
       if(m_transparent)
@@ -51,7 +59,7 @@ namespace OpenBabel
 
     // Work out the scaling factor
     double scale_x = cellwidth / (double) width;
-    double scale_y = (cellheight-16) / (double) height; // Leave some extra space for the title
+    double scale_y = (cellheight-titleheight) / (double) height; // Leave some extra space for the title if present
     double scale = std::min(scale_x, scale_y);
 
     // Add the title

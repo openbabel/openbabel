@@ -234,6 +234,12 @@ bool PNG2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   }
   _cairopainter.SetIndex(pConv->GetOutputIndex());
 
+  // Detect if cropping should be done, also remove title in that case...
+  if((pConv->GetOutputIndex()==1) && pConv->IsLast() && pConv->IsOption("m")) {
+    _cairopainter.SetCropping(true);
+    _cairopainter.SetTitle("");
+  }
+
   OBDepict depictor(&_cairopainter);
 
   // The following options are all taken from svgformat.cpp
