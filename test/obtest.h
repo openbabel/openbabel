@@ -38,7 +38,7 @@ const char* ob_expr(const char *expr);
 
 
 // some utility functions
-typedef shared_ptr<OpenBabel::OBMol> OBMolPtr;
+typedef obsharedptr<OpenBabel::OBMol> OBMolPtr;
 
 struct OBTestUtil
 {
