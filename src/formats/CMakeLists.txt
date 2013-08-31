@@ -8,7 +8,6 @@ set(formats_common
 
 set(formats_utility
   asciiformat
-  confabreport
   copyformat
   MNAformat
   molreport
@@ -22,6 +21,11 @@ set(formats_utility
   )
 set(painterformat_additional_sources ../depict/commandpainter.cpp)
 set(asciiformat_additional_sources   ../depict/asciipainter.cpp)
+if(EIGEN2_FOUND OR EIGEN3_FOUND)
+  set(formats_utility ${formats_utility}
+      confabreport
+     )
+endif()
 
 set(formats_compchem
       acesformat
