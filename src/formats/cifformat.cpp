@@ -1509,14 +1509,14 @@ namespace OpenBabel
             const transform3d *t = pSG->BeginTransform(ti);
             while(t)
               {
-                ofs << "    '" << t->DescribeAsString() << "'" << endl;
+                ofs << "    " << t->DescribeAsString() << endl;
                 t = pSG->NextTransform(ti);
               }
           }
       }
     ofs << "loop_"                      << endl
-        << "    _atom_site_type_symbol" << endl
         << "    _atom_site_label"       << endl
+        << "    _atom_site_type_symbol" << endl
         << "    _atom_site_fract_x"     << endl
         << "    _atom_site_fract_y"     << endl
         << "    _atom_site_fract_z"     << endl
@@ -1551,9 +1551,9 @@ namespace OpenBabel
              i++;
            }
 
-         snprintf(buffer, BUFF_SIZE, "    %3s  %3s  %10.5f %10.5f %10.5f %10.3f\n",
-                  etab.GetSymbol(atom->GetAtomicNum()),
-                  label_str.c_str(), X, Y, Z, occup);
+         snprintf(buffer, BUFF_SIZE, "    %-8s%-5s%.5f%10.5f%10.5f%8.3f\n",
+                  label_str.c_str(), etab.GetSymbol(atom->GetAtomicNum()),
+                  X, Y, Z, occup);
 
          ofs << buffer;
       }
