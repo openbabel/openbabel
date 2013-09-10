@@ -181,6 +181,7 @@ if(MSVC)
     "Should Windows Open Babel builds use prebuilt binaries?" ON)
 	# dlhandler_win32.cpp assumes multibyte character set
 	remove_definitions(-DUNICODE -D_UNICODE)
+  include_directories(${openbabel_SOURCE_DIR}/windows-msvc/include)
 endif()
 
 if(MSVC AND OB_USE_PREBUILT_BINARIES)
