@@ -503,6 +503,24 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! Return has charged form of dative bonds(e.g.[N+]([O-])=O from N(=O)=O).
     //! Converts 5-valent N and P only. Return true if conversion occurred.
     bool MakeDativeBonds();
+    /** Convert zero-order bonds to single or double bonds and adjust adjacent atom 
+     *  charges in an attempt to achieve the correct valence state.
+     *  
+     *  This function is useful when writing to legacy formats (such as MDL MOL) that do
+     *  not support zero-order bonds. It is worth noting that some compounds cannot be 
+     *  well represented using just single, double and triple bonds, even with adjustments
+     *  to adjacent charges. In these cases, simply converting zero-order bonds to single
+     *  bonds is all that can be done.
+     *
+        @verbatim
+        Algorithm from:
+        Clark, A. M. Accurate Specification of Molecular Structures: The Case for 
+        Zero-Order Bonds and Explicit Hydrogen Counting. Journal of Chemical Information 
+        and Modeling, 51, 3149-3157 (2011). http://pubs.acs.org/doi/abs/10.1021/ci200488k 
+        @endverbatim
+     *  \return Whether any modifications were made
+     */
+    bool ConvertZeroBonds();
 
     //! Correct for pH by applying the OBPhModel transformations
     bool CorrectForPH(double pH=7.4);

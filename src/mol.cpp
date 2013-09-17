@@ -2121,6 +2121,7 @@ namespace OpenBabel
       return(true);
 
     bool hasChiralityPerceived = this->HasChiralityPerceived(); // remember
+    bool hasImplicitValencePerceived = this->HasImplicitValencePerceived(); // remember
 
     /*
     //
@@ -2154,6 +2155,9 @@ namespace OpenBabel
     // on unspecified chiral centers, for example)
     if (hasChiralityPerceived)
       this->SetChiralityPerceived();
+    // If implicit valence was already perceived, remember (e.g. custom valence model)
+    if (hasImplicitValencePerceived)
+      this->SetImplicitValencePerceived();
 
     //count up number of hydrogens to add
     OBAtom *atom,*h;
@@ -4233,6 +4237,100 @@ namespace OpenBabel
       }
     }
     EndModify();
+    return converted;
+  }
+  
+  bool OBMol::ConvertZeroBonds()
+  {
+    // TODO: Option to just remove zero-order bonds entirely
+    
+    // TODO: Is it OK to not wrap this in BeginModify() and EndModify()?
+    // If we must, I think we need to manually remember HasImplicitValencePerceived and 
+    // re-set it after EndModify()
+    
+    // Periodic table block for element (1=s, 2=p, 3=d, 4=f)
+    const int BLOCKS[113] = {0,1,2,1,1,2,2,2,2,2,2,1,1,2,2,2,2,2,2,1,1,3,3,3,3,3,3,3,3,3,
+                             3,2,2,2,2,2,2,1,1,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,1,1,4,4,4,
+                             4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,1,1,4,
+                             4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3};
+                             
+    bool converted = false;
+    // Get contiguous fragments of molecule
+    vector<vector<int> > cfl;
+    ContigFragList(cfl);
+    // Iterate over contiguous fragments
+    for (vector< vector<int> >::iterator i = cfl.begin(); i != cfl.end(); ++i) {
+      // Get all zero-order bonds in contiguous fragment
+      vector<OBBond*> bonds;
+      for(vector<int>::const_iterator j = i->begin(); j != i->end(); ++j) {
+        FOR_BONDS_OF_ATOM(b, GetAtom(*j)) {
+          if (b->GetBondOrder() == 0 && !(find(bonds.begin(), bonds.end(), &*b) != bonds.end())) {
+            bonds.push_back(&*b);
+          }
+        }
+      }
+      // Convert zero-order bonds
+      while (bonds.size() > 0) {
+        // Pick a bond using scoring system
+        int bi = 0;
+        if (bonds.size() > 1) {
+          vector<int> scores(bonds.size());
+          for (int n = 0; n < bonds.size(); n++) {
+            OBAtom *bgn = bonds[n]->GetBeginAtom();
+            OBAtom *end = bonds[n]->GetEndAtom();
+            int score = 0;
+            score += bgn->GetAtomicNum() + end->GetAtomicNum();
+            score += abs(bgn->GetFormalCharge()) + abs(end->GetFormalCharge());
+            pair<int, int> lb = bgn->LewisAcidBaseCounts();
+            pair<int, int> le = end->LewisAcidBaseCounts();
+            if (lb.first > 0 && lb.second > 0 && le.first > 0 && le.second > 0) {
+              score += 100;   // Both atoms are Lewis acids *and* Lewis bases
+            } else if ((lb.first > 0 && le.second > 0) && (lb.second > 0 && le.first > 0)) {
+              score -= 1000;  // Lewis acid/base direction is mono-directional
+            }
+            int bcount = bgn->ImplicitHydrogenCount();
+            FOR_BONDS_OF_ATOM(b, bgn) { bcount += 1; }
+            int ecount = end->ImplicitHydrogenCount();
+            FOR_BONDS_OF_ATOM(b, end) { ecount += 1; }
+            if (bcount == 1 || ecount == 1) {
+              score -= 10; // If the start or end atoms have only 1 neighbour
+            }
+            scores[n] = score;
+          }
+          for (int n = 1; n < scores.size(); n++) {
+            if (scores[n] < scores[bi]) {
+              bi = n;
+            }
+          }
+        }
+        OBBond *bond = bonds[bi];
+        bonds.erase(bonds.begin() + bi);
+        OBAtom *bgn = bond->GetBeginAtom();
+        OBAtom *end = bond->GetEndAtom();
+        int blockb = BLOCKS[bgn->GetAtomicNum()];
+        int blocke = BLOCKS[end->GetAtomicNum()];;
+        pair<int, int> lb = bgn->LewisAcidBaseCounts();
+        pair<int, int> le = end->LewisAcidBaseCounts();
+        int chg = 0; // Amount to adjust atom charges
+        int ord = 1; // New bond order
+        if (lb.first > 0 && lb.second > 0 && le.first > 0 && le.second > 0) {
+          ord = 2;  // both atoms are amphoteric, so turn it into a double bond
+        } else if (lb.first > 0 && blockb == 2 && blocke >= 3) {
+          ord = 2;  // p-block lewis acid with d/f-block element: make into double bond
+        } else if (le.first > 0 && blocke == 2 && blockb >= 3) {
+          ord = 2;  // p-block lewis acid with d/f-block element: make into double bond
+        } else if (lb.first > 0 && le.second > 0) {
+          chg = -1;  // lewis acid/base goes one way only; charge separate it
+        } else if (lb.second > 0 && le.first > 0) {
+          chg = 1;  //  no matching capacity; do not charge separate
+        }
+        // adjust bond order and atom charges accordingly
+        bgn->SetFormalCharge(bgn->GetFormalCharge()+chg);
+        end->SetFormalCharge(end->GetFormalCharge()-chg);
+        bond->SetBondOrder(ord);
+        converted = true;
+      }
+    }
     return converted;
   }
 
