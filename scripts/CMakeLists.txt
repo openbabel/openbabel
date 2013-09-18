@@ -245,13 +245,25 @@ if (DO_PERL_BINDINGS)
     endif (RUN_SWIG)
 
     add_library(bindings_perl MODULE ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp)
-    target_link_libraries(bindings_perl ${PERL_LIBRARY} ${BABEL_LIBRARY} ${PERL_EXTRA_LINK_FLAGS})
+    if(BINDINGS_ONLY)
+      target_link_libraries(bindings_perl ${PERL_LIBRARY} ${BABEL_SYSTEM_LIBRARY} ${PERL_EXTRA_LINK_FLAGS})
+    else()
+      target_link_libraries(bindings_perl ${PERL_LIBRARY} ${BABEL_LIBRARY} ${PERL_EXTRA_LINK_FLAGS})
+    endif()
+
     set_target_properties(bindings_perl PROPERTIES
         PREFIX ""
         OUTPUT_NAME OpenBabel)
-    add_dependencies(bindings_perl openbabel)
-    install(TARGETS bindings_perl LIBRARY DESTINATION ${LIB_INSTALL_DIR})
-    install(FILES ${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.pm DESTINATION ${LIB_INSTALL_DIR})
+    if(NOT BINDINGS_ONLY)
+      add_dependencies(bindings_perl openbabel)
+    endif()
+
+    install(TARGETS bindings_perl
+            LIBRARY DESTINATION ${LIB_INSTALL_DIR}/auto/Chemistry/OpenBabel/
+            COMPONENT bindings_perl)
+    install(FILES ${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.pm
+            DESTINATION ${LIB_INSTALL_DIR}/Chemistry/
+            COMPONENT bindings_perl)
 
 endif (DO_PERL_BINDINGS)
 
