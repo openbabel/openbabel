@@ -303,12 +303,25 @@ if (DO_RUBY_BINDINGS)
     include_directories(
         ${RUBY_INCLUDE_PATH}
     )
+
     add_library(bindings_ruby MODULE ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp)
-    target_link_libraries(bindings_ruby ${RUBY_LIBRARY} ${BABEL_LIBRARY})
+    if(BINDINGS_ONLY)
+      target_link_libraries(bindings_ruby ${RUBY_LIBRARY} ${BABEL_SYSTEM_LIBRARY})
+    else()
+      target_link_libraries(bindings_ruby ${RUBY_LIBRARY} ${BABEL_LIBRARY})
+    endif()
+
     set_target_properties(bindings_ruby PROPERTIES
         OUTPUT_NAME openbabel
         PREFIX "" )
-    install(TARGETS bindings_ruby LIBRARY DESTINATION ${LIB_INSTALL_DIR})
+
+    if(NOT BINDINGS_ONLY)
+      add_dependencies(bindings_ruby openbabel)
+    endif()
+
+    install(TARGETS bindings_ruby
+            LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+            COMPONENT bindings_ruby)
 
 endif (DO_RUBY_BINDINGS)
 
