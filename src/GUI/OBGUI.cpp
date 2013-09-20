@@ -691,7 +691,7 @@ with the output format.\nDo you wish to continue the conversion?"),
     }
   }
 
-  m_pMessages->AppendText(smes.str().c_str());
+  m_pMessages->AppendText(wxString(smes.str().c_str(), wxConvUTF8));
   //Restore cerr and clog
   std::cerr.rdbuf(sbcerrOld);
   std::clog.rdbuf(sbclogOld);
