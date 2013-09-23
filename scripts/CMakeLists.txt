@@ -177,13 +177,27 @@ if (DO_JAVA_BINDINGS)
     endif (RUN_SWIG)
 
     add_library(bindings_java MODULE ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp)
-    target_link_libraries(bindings_java ${JNI_LIBRARIES} ${BABEL_LIBRARY})
-    set_target_properties(bindings_java PROPERTIES OUTPUT_NAME openbabel_java)
+    if(BINDINGS_ONLY)
+      target_link_libraries(bindings_java ${JNI_LIBRARIES} ${BABEL_SYSTEM_LIBRARY})
+    else()
+      target_link_libraries(bindings_java ${JNI_LIBRARIES} ${BABEL_LIBRARY})
+    endif()
+
+    set_target_properties(bindings_java PROPERTIES
+        OUTPUT_NAME openbabel_java)
     if(APPLE)
       set_target_properties(bindings_java PROPERTIES SUFFIX ".jnilib")
     endif(APPLE)
-    install(TARGETS bindings_java LIBRARY DESTINATION ${LIB_INSTALL_DIR})
-    install(FILES ${openbabel_SOURCE_DIR}/scripts/java/openbabel.jar DESTINATION ${LIB_INSTALL_DIR})
+    if(NOT BINDINGS_ONLY)
+      add_dependencies(bindings_java openbabel)
+    endif()
+
+    install(TARGETS bindings_java
+            LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+            COMPONENT bindings_java)
+    install(FILES ${openbabel_SOURCE_DIR}/scripts/java/openbabel.jar
+            DESTINATION ${LIB_INSTALL_DIR}
+            COMPONENT bindings_java)
 
 endif (DO_JAVA_BINDINGS)
 
