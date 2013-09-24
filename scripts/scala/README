@@ -1,0 +1,14 @@
+Scala has native support for Java libraries. First compile Java bindings and
+then you can use them in Scala programs.
+
+There is a small test program OBTest.scala. Provided that Java bindings are
+installed in OB_JAVADIR:
+
+~$ CLASSPATH="$OB_JAVADIR/openbabel.jar" LD_LIBRARY_PATH="$OB_JAVADIR" scalac OBTest.scala
+~$ CLASSPATH=".:$OB_JAVADIR/openbabel.jar" LD_LIBRARY_PATH="$OB_JAVADIR" scala OBTest
+Loading openbabel_java...
+Running OBTest...
+Benzene has 6 heavy atoms.
+Benzene has 12 atoms in total.
+The molecular weight of benzene is 78.11184000000003
+
