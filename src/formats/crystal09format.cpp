@@ -22,12 +22,25 @@ GNU General Public License for more details.
 #include <openbabel/math/vector3.h>
 
 using namespace std;
+bool isParentheses (char c)
+{
+  switch(c)
+  {
+    case '(':
+    case ')':
+      return true;
+    default:
+      return false;
+  }
+}
+
 namespace OpenBabel
 {
 
 class Crystal09Format : public OBMoleculeFormat
 {
 public:
+
   //Register this format type ID in the constructor
   Crystal09Format()
   {
@@ -187,8 +200,7 @@ bool Crystal09Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       while (getline(ifs,line)) {
         // Strip out parenthesis, as these may or may not have whitespace
         // around them and can make the tokenize output unpredictable:
-        std::remove(line.begin(), line.end(), '(');
-        std::remove(line.begin(), line.end(), ')');
+        line.erase(remove_if(line.begin(), line.end(), isParentheses), line.end());
         tokenize(vs,line);
 
         if ( vs.size() < 11 ){
