@@ -431,13 +431,28 @@ if (DO_PHP_BINDINGS)
           MAIN_DEPENDENCY openbabel-php.i
       )
     endif (RUN_SWIG)
+
     add_library(bindings_php MODULE ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp)
-    target_link_libraries(bindings_php ${BABEL_LIBRARY} "-Wl,--unresolved-symbols=ignore-all") # Overriding --no-undefined linker flag, since PHP library should not be linked into extension.
+    # Overriding --no-undefined linker flag, since PHP library should not be linked into extension.
+    set(PHP_EXTRA_LINK_FLAGS "-Wl,--unresolved-symbols=ignore-all")
+    if(BINDINGS_ONLY)
+      target_link_libraries(bindings_php ${BABEL_SYSTEM_LIBRARY} ${PHP_EXTRA_LINK_FLAGS})
+    else()
+      target_link_libraries(bindings_php ${BABEL_LIBRARY} ${PHP_EXTRA_LINK_FLAGS})
+    endif()
+
     set_target_properties(bindings_php PROPERTIES
         PREFIX ""
         OUTPUT_NAME openbabel-php)
-    add_dependencies(bindings_php openbabel)
-    install(TARGETS bindings_php LIBRARY DESTINATION ${LIB_INSTALL_DIR})
-    install(FILES ${openbabel_SOURCE_DIR}/scripts/php/openbabel.php DESTINATION ${LIB_INSTALL_DIR})
+    if(NOT BINDINGS_ONLY)
+      add_dependencies(bindings_php openbabel)
+    endif()
+
+    install(TARGETS bindings_php
+            LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+	    COMPONENT bindings_php)
+    install(FILES ${openbabel_SOURCE_DIR}/scripts/php/openbabel.php
+            DESTINATION ${LIB_INSTALL_DIR}
+	    COMPONENT bindings_php)
 
 endif (DO_PHP_BINDINGS)
