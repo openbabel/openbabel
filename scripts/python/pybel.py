@@ -22,6 +22,7 @@ import sys
 import math
 import os.path
 import tempfile
+import json
 
 if sys.platform[:4] == "java":
     import org.openbabel as ob
@@ -35,7 +36,7 @@ elif sys.platform[:3] == "cli":
     import clr
     clr.AddReference('System.Windows.Forms')
     clr.AddReference('System.Drawing')
-     
+
     from System.Windows.Forms import (
         Application, DockStyle, Form, PictureBox, PictureBoxSizeMode
         )
@@ -96,6 +97,16 @@ _forcefields = _getplugins(ob.OBForceField.FindType, forcefields)
 operations = _getpluginnames("ops")
 """A list of supported operations"""
 _operations = _getplugins(ob.OBOp.FindType, operations)
+
+# Javascript imports for IPython rendering (IPy comes with JQuery)
+_path = os.path.normpath(os.path.dirname(__file__))
+_js_libs = ["three.min.js", "TrackballControls.js",
+            "ShaderToon.js", "imolecule.js"]
+# This is the only way I found to use local copies of js libraries in IPython
+_lib_script = ""
+for _filename in _js_libs:
+    with open(os.path.join(_path, "pybel",  _filename)) as in_js:
+        _lib_script += in_js.read()
 
 def readfile(format, filename, opt=None):
     """Iterate over the molecules in a file.
@@ -343,6 +354,44 @@ class Molecule(object):
         """
         return iter(self.atoms)
 
+    def _repr_javascript_(self):
+        """For IPython notebook, returns an interactive 3D render."""
+
+        # Some exposed parameters. Leaving this unfunctionalized for now.
+        size = (400, 300)
+        drawing_type = "ball and stick"
+        camera_type = "perspective"
+
+        # Infer structure in cases where the input format has no specification
+        if not self.OBMol.HasNonZeroCoords():
+            self.make3D()
+        self.OBMol.Center()
+
+        # Convert the relevant parts of `self` into JSON for rendering
+        table = ob.OBElementTable()
+        atoms = [{"element": table.GetSymbol(atom.atomicnum),
+                  "location": atom.coords}
+                 for atom in self.atoms]
+        bonds = [{"atoms": [bond.GetBeginAtom().GetIndex(),
+                            bond.GetEndAtom().GetIndex()],
+                  "order": bond.GetBondOrder()}
+                 for bond in ob.OBMolBondIter(self.OBMol)]
+        mol = {"atoms": atoms, "bonds": bonds}
+        if hasattr(self, "unitcell"):
+            uc = self.unitcell
+            mol["periodic_connections"] = [[v.GetX(), v.GetY(), v.GetZ()]
+                                            for v in uc.GetCellVectors()]
+        json_mol = json.dumps(mol, separators=(",", ":"))
+
+        js = ("var $d = $('<div/>').attr('id', 'molecule_' + utils.uuid());"
+              "$d.width(%d); $d.height(%d);"
+              "imolecule.create($d, {drawingType: '%s', cameraType: '%s'});"
+              "imolecule.draw(%s);"
+              "container.show();"
+              "element.append($d);" % (size + (drawing_type, camera_type,
+                                       json_mol)))
+        return _lib_script + js
+
     def calcdesc(self, descnames=[]):
         """Calculate descriptor values.
 
@@ -535,7 +584,7 @@ class Molecule(object):
                                 "provide a filename. The reason for this is that I kept "
                                 "having problems when using temporary files.")
                 raise RuntimeError(errormessage)
-            
+
             filedes, filename = tempfile.mkstemp()
 
         workingmol.write("_png2", filename=filename, overwrite=True)
@@ -551,7 +600,7 @@ class Molecule(object):
             elif sys.platform[:3] == "cli":
                 form = _MyForm()
                 form.setup(filename, self.title)
-                Application.Run(form)                
+                Application.Run(form)
             else:
                 if not tk:
                     errormessage = ("Tkinter or Python Imaging "
@@ -636,7 +685,7 @@ class Atom(object):
     def __str__(self):
         c = self.coords
         return "Atom: %d (%.2f %.2f %.2f)" % (self.atomicnum, c[0], c[1], c[2])
-        
+
 class Residue(object):
     """Represent a Pybel residue.
 
@@ -662,7 +711,7 @@ class Residue(object):
     def idx(self): return self.OBResidue.GetIdx()
     @property
     def name(self): return self.OBResidue.GetName()
-    
+
     def __iter__(self):
         """Iterate over the Atoms of the Residue.
 
@@ -857,7 +906,7 @@ if sys.platform[:3] == "cli":
             # adjust the form's client area size to the picture
             self.ClientSize = Size(300, 300)
             self.Text = title
-             
+
             self.filename = filename
             self.image = Image.FromFile(self.filename)
             pictureBox = PictureBox()
@@ -866,7 +915,7 @@ if sys.platform[:3] == "cli":
             pictureBox.Image = self.image
             # fit the picture box to the frame
             pictureBox.Dock = DockStyle.Fill
-             
+
             self.Controls.Add(pictureBox)
             self.Show()
 
