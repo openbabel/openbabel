@@ -1163,8 +1163,8 @@ namespace OpenBabel
 
   AtomExpr *OBSmartsPattern::ParseAtomExpr( int level )
   {
-    register AtomExpr *expr1;
-    register AtomExpr *expr2;
+    register AtomExpr *expr1 = NULL;
+    register AtomExpr *expr2 = NULL;
     register char *prev;
 
     switch( level )
@@ -1181,6 +1181,7 @@ namespace OpenBabel
                 FreeAtomExpr(expr1);
                 return (AtomExpr*)0;
               }
+            delete expr1;
             expr1 = BuildAtomBin(AE_ANDLO,expr1,expr2);
           }
         return expr1;
@@ -1263,8 +1264,8 @@ namespace OpenBabel
 
   BondExpr *OBSmartsPattern::ParseBondExpr( int level )
   {
-    register BondExpr *expr1;
-    register BondExpr *expr2;
+    register BondExpr *expr1 = NULL;
+    register BondExpr *expr2 = NULL;
     register char *prev;
 
     switch( level )
@@ -1281,6 +1282,7 @@ namespace OpenBabel
                 FreeBondExpr(expr1);
                 return (BondExpr*)0;
               }
+            delete expr1;
             expr1 = BuildBondBin(BE_ANDLO,expr1,expr2);
           }
         return expr1;
@@ -1375,10 +1377,7 @@ namespace OpenBabel
         switch( *LexPtr++ )
           {
           case('.'):
-            // if( bexpr || (prev==-1) )
             return ParseSMARTSError(pat,bexpr);
-            prev = -1;
-            break;
 
           case('-'):  case('='):  case('#'): case('$'):
           case(':'):  case('~'):  case('@'):

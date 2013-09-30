@@ -1100,7 +1100,7 @@ namespace OpenBabel
           }
         if((in.peek()=='d') || (in.peek()=='D'))
           {// Data
-            if(mvData.size()>0) return; // We want just a single data block
+            if(!mvData.empty()) return; // We want just a single data block
 
             string tmp;
             in>>tmp;
