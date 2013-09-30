@@ -759,7 +759,7 @@ namespace OpenBabel
         for (nbr = i->first->BeginNbrAtom(j);nbr;nbr = i->first->NextNbrAtom(j))
           vtmp.push_back(vp1[nbr->GetIdx()-1].second);
         sort(vtmp.begin(),vtmp.end(),OBCompareUnsigned);
-        for (id=i->second,m=100,k = vtmp.begin();k != vtmp.end();k++,m*=100)
+        for (id=i->second,m=100,k = vtmp.begin();k != vtmp.end();++k,m*=100)
           id += *k * m;
 
         vp2.push_back(pair<OBAtom*,unsigned int> (i->first,id));

@@ -125,7 +125,7 @@ int ringtest(int argc, char* argv[])
       vb.resize(mol.NumBonds(),false);
       //check ring bonds
       tokenize(vs,buffer);
-      for (i = vs.begin();i != vs.end();i++)
+      for (i = vs.begin();i != vs.end();++i)
         vb[atoi(i->c_str())] = true;
 
       for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
@@ -177,7 +177,7 @@ int ringtest(int argc, char* argv[])
             cout << "ok " << ++currentTest << " # correct SSSR count\n";
 
           count = 0;
-          for (m = vr.begin();m != vr.end();m++)
+          for (m = vr.begin();m != vr.end();++m)
             if ((*m)->_pathset[atom->GetIdx()])
               count++;
 
@@ -189,7 +189,7 @@ int ringtest(int argc, char* argv[])
           else
             cout << "ok " << ++currentTest << " # ring membership passed\n";
 
-          i++;
+          ++i;
         }
 
 
@@ -254,7 +254,7 @@ void GenerateRingReference()
       for (atom = mol.BeginAtom(j);atom;atom = mol.NextAtom(j))
         {
           count = 0;
-          for (k = vr.begin();k != vr.end();k++)
+          for (k = vr.begin();k != vr.end();++k)
             if ((*k)->_pathset[atom->GetIdx()])
               count++;
 

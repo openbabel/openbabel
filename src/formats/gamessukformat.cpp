@@ -109,7 +109,7 @@ namespace OpenBabel
       }
     */
 
-    for (vector<string>::iterator i=geomList.begin(); i !=geomList.end(); i++) {
+    for (vector<string>::iterator i=geomList.begin(); i !=geomList.end(); ++i) {
 
       // Alias the line
       line = *i;

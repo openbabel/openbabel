@@ -2331,7 +2331,7 @@ namespace OpenBabel
     std::vector<std::vector<int> >::iterator i;
     std::vector<int>::iterator j;
 
-    for ( i = _mlist.begin() ; i != _mlist.end() ; i++ )
+    for ( i = _mlist.begin() ; i != _mlist.end() ; ++i )
       {
         for (j = (*i).begin();j != (*i).end();++j)
           ofs << *j << ' ' << ends;

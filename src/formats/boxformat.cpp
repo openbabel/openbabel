@@ -96,7 +96,7 @@ bool BoxFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         {
             tokenize(vs,buffer);
             if (!vs.empty() && vs.size() > 2)
-                for (i = vs.begin(),i+=2;i != vs.end();i++)
+                for (i = vs.begin(),i+=2;i != vs.end();++i)
                     mol.AddBond(atoi(vs[1].c_str()),atoi((*i).c_str()),1);
         }
     }

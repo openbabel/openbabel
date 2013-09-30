@@ -34,8 +34,8 @@ namespace OpenBabel {
     m_vdw_factor = 0.6;
     m_check_hydrogens = true;
   }
-  
-  OBStericConformerFilter::OBStericConformerFilter (double cutoff, double vdw_factor, bool check_hydrogens) 
+
+  OBStericConformerFilter::OBStericConformerFilter (double cutoff, double vdw_factor, bool check_hydrogens)
   {
     m_cutoff = cutoff * cutoff;
     m_vdw_factor = vdw_factor;
@@ -49,9 +49,9 @@ namespace OpenBabel {
     unsigned int a1 = 0, a2 = 0;
     unsigned int numAtoms = mol.NumAtoms();
     OBAtom *atom1 = NULL, *atom2 = NULL;
-    double dx = 0.0, dy = 0.0, dz = 0.0; 
+    double dx = 0.0, dy = 0.0, dz = 0.0;
     double distanceSquared = 0.0, vdwCutoff = 0.0;
-    
+
     for (a1 = 0; a1 < numAtoms; ++a1) {
       for (a2 = a1 + 1; a2 < numAtoms; ++a2) {
         atom1 = mol.GetAtom(a1+1);
@@ -59,7 +59,7 @@ namespace OpenBabel {
         // Default should be to recognize H clashes too
 	if (!m_check_hydrogens  && (atom1->IsHydrogen() || atom2->IsHydrogen() ))
     	  continue;
-	
+
         // skip connected atoms
         if (atom1->IsConnected(atom2))
           continue;
@@ -68,12 +68,12 @@ namespace OpenBabel {
         dy = conformer[a1*3+1] - conformer[a2*3+1];
         dz = conformer[a1*3+2] - conformer[a2*3+2];
         distanceSquared = dx*dx + dy*dy + dz*dz;
-	// As we don't check 1-3 and 1-4 bonded atoms, apply a 
+	// As we don't check 1-3 and 1-4 bonded atoms, apply a
 	// factor of to the sum of VdW radii
         vdwCutoff = m_vdw_factor * (etab.GetVdwRad(atom1->GetAtomicNum())
 				  + etab.GetVdwRad(atom2->GetAtomicNum()));
         vdwCutoff *= vdwCutoff; // compare squared distances
-	
+
         // check distance
         if (distanceSquared < m_cutoff || distanceSquared < vdwCutoff)
           return false;
@@ -138,7 +138,7 @@ namespace OpenBabel {
     if (energy_map.size () > 0)
       {
 	// Check that we haven't already computed this energy);
-	mapRotorEnergy::iterator it = energy_map.find (cur_key);  
+	mapRotorEnergy::iterator it = energy_map.find (cur_key);
 	if (it != energy_map.end ())
 	  return it->second;
       }
@@ -164,11 +164,11 @@ namespace OpenBabel {
     // copy original coordinates back
     for (unsigned int i = 0; i < mol.NumAtoms() * 3; ++i)
       origCoords[i] = coords[i];
-    
+
     // Save that in the map
     if (energy_map.size () < 50000)
       energy_map[cur_key] = score;
- 
+
     return score;
   }
 
@@ -180,7 +180,7 @@ namespace OpenBabel {
     if (energy_map.size () > 0)
       {
 	// Check that we haven't already computed this energy);
-	mapRotorEnergy::iterator it = energy_map.find (cur_key);  
+	mapRotorEnergy::iterator it = energy_map.find (cur_key);
 	if (it != energy_map.end ())
 	  return it->second;
       }
@@ -207,7 +207,7 @@ namespace OpenBabel {
     // copy original coordinates back
     for (unsigned int i = 0; i < mol.NumAtoms() * 3; ++i)
       origCoords[i] = coords[i];
-    
+
     // Save that in the map
     if (energy_map.size () < 50000)
       energy_map[cur_key] = score;
@@ -330,7 +330,7 @@ namespace OpenBabel {
     if (!nb_rotors) { // only one conformer
       return false;
     }
-    
+
     // create initial population
     OBRandom generator;
     generator.TimeSeed();
@@ -368,7 +368,7 @@ namespace OpenBabel {
       // add the key
       m_rotorKeys.push_back(rotorKey);
     }
-    
+
     // print out initial conformers
     if (m_logstream != NULL)
       {
@@ -380,7 +380,7 @@ namespace OpenBabel {
 	  (*m_logstream) << std::endl;
 	}
       }
-    
+
     // Setup some default values for dynamic niche sharing according to the molecule.
     nb_niches = (m_rotorKeys.size()) / 10;
     if (nb_niches < 3)
@@ -391,7 +391,7 @@ namespace OpenBabel {
     niche_radius =  nb_rotors / 4;
     if (niche_radius < 1)
       niche_radius++;
-    
+
     return true;
   }
 
@@ -529,7 +529,7 @@ namespace OpenBabel {
   {
     int identicalGenerations = 0;
     double last_score = 0.0, score = 0.0;
-    
+
     if (m_logstream != NULL)
       {
 	(*m_logstream) << endl << "=====> Starting conformers search with a Genetic Algorithm <=====" << endl;
@@ -681,31 +681,31 @@ namespace OpenBabel {
     return result;
   }
 
-  
+
   /*! @brief   Genetic similarity measure, i.e. "distance" between two rotor keys.
-    
-    @param key1: compute distance from 
+
+    @param key1: compute distance from
     @param key2: compute distance to
-    
+
     @return: number of different alleles, i.e. number of different values in the key vectors
   */
   int
   OBConformerSearch::key_distance (const RotorKey &key1, const RotorKey &key2)
   {
     int dist = 0;
+    //    assert(key1.size() > 1 && key1.size()== key2.size());
     vector<int>::const_iterator it1 = key1.begin ();
     vector<int>::const_iterator it2 = key2.begin ();
-    
     // Skip first values, since  meaningfull valaues are starting at index 1 (Fortran translation inside ;-))
-    for (it1++, it2++; it1 != key1.end ();it1++, it2++)
+    for (++it1, ++it2; it1 != key1.end ();++it1, ++it2)
       if (*it1 != *it2)
 	dist++;
     return dist;
   }
-  
+
   /*! @brief Make a local search on the best individual.
       Randomly change each rotor key in the key vector.
-      This is not a complete coverage of all "neighbors" vectors, 
+      This is not a complete coverage of all "neighbors" vectors,
       since not all possible key values are tested.
   */
   int
@@ -756,18 +756,18 @@ namespace OpenBabel {
 	m_rotorKeys[0] = opt_key;
 	vscores[0] = opt_score;
       }
-    
+
     return (int) flag_improved;
   }
 
   /*! @brief  Produces one or two offsprings
-    
+
       @param key1: reference to the first offspring key
       @param key2: reference to the second offspring key
 
       @return: 0 if no valid offspring, 1 if first only, 2 if second only, and 3 if 2 are valid offsprings.
   */
-  int 
+  int
   OBConformerSearch::reproduce (RotorKey &key1, RotorKey &key2)
   {
      unsigned int i = 0, iniche = 0, j = 0, pop_size = vscores.size ();
@@ -776,9 +776,9 @@ namespace OpenBabel {
      bool flag_crossover = false;
      OBRotorIterator ri;
      OBRotor *rotor = NULL;
-     
+
      if (pop_size < 2)
-       return 0; 
+       return 0;
 
      // Make a 2-tournament selection to choose first parent
      i = unique_generator.NextInt() % pop_size;
@@ -787,13 +787,13 @@ namespace OpenBabel {
      iniche = niche_map[parent1];
      if (iniche > -1)
        nsize = dynamic_niches[iniche].size (); // Belongs to a specific niche
-     
+
      // Do we apply crossover here?
      flag_crossover = (unique_generator.NextFloat () <= p_crossover);
      if (flag_crossover && (unique_generator.NextFloat () <= niche_mating)  &&  nsize > 1)
        {
 	 // Apply niche mating: draw second parent in the same niche, if its has
-	 // at least 2 members. Make a 2-tournament selection whithin this niche 
+	 // at least 2 members. Make a 2-tournament selection whithin this niche
 	 rnd1 =  unique_generator.NextInt() % nsize;
 	 i =  dynamic_niches[iniche][rnd1];
 	 rnd2 =  unique_generator.NextInt() % nsize;
@@ -807,14 +807,14 @@ namespace OpenBabel {
 	 j = unique_generator.NextInt() % pop_size;
 	 parent2 = vshared_fitnes[i] > vshared_fitnes[j] ? i : j;
        }
-     
+
      if (flag_crossover)
        {
 	 // Cross the 2 vectors: toss a coin for each position (i.e. uniform crossover)
 	 for (i = 1; i < key1.size(); i++)
 	   {
 	     if ( unique_generator.NextInt() % 2)
-	       { // Copy parent1 to offspring 1 
+	       { // Copy parent1 to offspring 1
 		 key1[i] = m_rotorKeys[parent1][i];
 		 key2[i] = m_rotorKeys[parent2][i];
 	       }
@@ -825,12 +825,12 @@ namespace OpenBabel {
 	       }
 	   }
        }
-     else 
+     else
        {
 	 key1 =  m_rotorKeys[parent1];
 	 key2 =  m_rotorKeys[parent2];
        }
-     
+
      // perform random mutation(s)
      rotor = m_rotorList.BeginRotor(ri);
      for (i = 1; i <= m_rotorList.Size(); ++i, rotor = m_rotorList.NextRotor(ri))
@@ -848,10 +848,10 @@ namespace OpenBabel {
   }
 
   /*! @brief  Score and sort the current population
-    
+
      @return: 0 when OK, 1 or more if not
   */
-  int 
+  int
   OBConformerSearch::score_population ()
   {
     bool max_flag = (m_score->GetPreferred() == OBConformerScore::HighScore);
@@ -861,28 +861,28 @@ namespace OpenBabel {
     std::vector<double>::iterator dit;
     OBRotamerList rotamers;
     std::vector<ConformerScore> conformer_scores;
-    
+
     rotamers.SetBaseCoordinateSets(m_mol);
     rotamers.Setup(m_mol, m_rotorList);
-    
+
     // Add all (parent + children) rotor keys
-    for (i = 0; i < m_rotorKeys.size(); ++i) 
+    for (i = 0; i < m_rotorKeys.size(); ++i)
       rotamers.AddRotamer(m_rotorKeys[i]);
-    
+
     // Get conformers for the rotor keys
     rotamers.ExpandConformerList(m_mol, conformers);
-    
+
     // Score each conformer
     for (i = 0; i < conformers.size(); ++i)
       {
 	score = m_score->Score(m_mol, i, m_rotorKeys, conformers);
-	conformer_scores.push_back(ConformerScore(m_rotorKeys[i], score)); 
+	conformer_scores.push_back(ConformerScore(m_rotorKeys[i], score));
       }
-    
+
     // delete the conformers
     for (i = 0; i < conformers.size(); ++i)
 	delete [] conformers[i];
-    
+
     // Sort conformers
     if (max_flag)
       std::sort(conformer_scores.begin(), conformer_scores.end(), CompareConformerHighScore());
@@ -901,13 +901,13 @@ namespace OpenBabel {
     return 0;
   }
 
-  
+
   /*! @brief   Compute shared fitness values for a given population.
     Assume the population was order prior to this call.
-    
+
      @return: 0 when OK, 1 or more if not
   */
-  int 
+  int
   OBConformerSearch::share_fitness ()
   {
     bool max_flag = (m_score->GetPreferred() == OBConformerScore::HighScore);
@@ -920,33 +920,33 @@ namespace OpenBabel {
     std::vector<double>::iterator dit;
     std::vector<int>::iterator nit;
     std::vector<char> vshared;
-    
+
     min_score = max_flag?  vscores[pop_size - 1] :  vscores[0];
-    
+
     // Compute shared fitness from score: rescale score values so the minimum is 1.0
     vshared_fitnes.clear ();
     dtmp = 1.0 - min_score;
     if (max_flag)
-      for (dit =  vscores.begin (); dit != vscores.end (); dit++)
+      for (dit =  vscores.begin (); dit != vscores.end (); ++dit)
 	vshared_fitnes.push_back (*dit + dtmp);
     else			// Minimization: invert score so best has 1.0, others lower values
-      for (dit =  vscores.begin (); dit != vscores.end (); dit++)
+      for (dit =  vscores.begin (); dit != vscores.end (); ++dit)
 	vshared_fitnes.push_back (1.0 / (*dit + dtmp));
-    
+
     // Use a vector to keep track of assigned indivivduals
     vshared.resize (pop_size);
     // Identify niches
     dynamic_niches.clear ();
     for (k = 0; k < pop_size; k++)
       {
-	imax = -1; 
+	imax = -1;
 	if ((dynamic_niches.size () < nb_niches) && (dynamic_niches.size () %2))
 	  {
 	    // Get the most distant individual to current list heads, wihtin the first 2/3 of the population
 	    // The idea is to find some explicit niches, with maximum disimilarity form existing ones,
 	    // still with some reasonable head fitness score.
 	    max_dist = 0;
-	    for (i = 0; i < ((pop_size * 2) / 3); i++) 
+	    for (i = 0; i < ((pop_size * 2) / 3); i++)
 	      {
 		if (vshared[i])
 		  continue;
@@ -966,7 +966,7 @@ namespace OpenBabel {
 	      }
 	    i = imax;
 	  }
-	
+
 	// Get the best unassigned individual
 	if (imax == -1)
 	  for (i = 0; i < pop_size; i++)
@@ -1007,7 +1007,7 @@ namespace OpenBabel {
 	  }
 	vshared[i] = 1;
       }
-    
+
     // Build the niche map: provided an invididual index, provides the niche index it belongs to.
     // -1 means out of explicit niches.
     niche_map.clear ();
@@ -1017,21 +1017,21 @@ namespace OpenBabel {
 	// Divide each dynamic niche member score by the niche size: i.e. each niche member has the same
 	// penalty, i.e. the order is unchanged whitin this niche.
 	dtmp = 1.0 / ((double) dynamic_niches[iniche].size ());
-	for (nit = dynamic_niches[iniche].begin (); nit != dynamic_niches[iniche].end (); nit++)
+	for (nit = dynamic_niches[iniche].begin (); nit != dynamic_niches[iniche].end (); ++nit)
 	  {
 	    vshared_fitnes[*nit] *= dtmp;
 	    niche_map[*nit] = iniche;
 	  }
       }
-    
+
     return 0;
   }
-  
+
   /*! @brief  Create a new generation with fitness sharing
-    
+
      @return: generation score (lowest, highest, average or sum of fitness)
   */
-  double 
+  double
   OBConformerSearch::sharing_generation ()
   {
     RotorKeys new_generation, offsprings;
@@ -1044,23 +1044,23 @@ namespace OpenBabel {
     std::vector<double>::iterator dit;
     std::vector<unsigned char> vflag;
     std::vector<int> out_niches; // Vector of all individuals out of the niches
-    
+
     // key1 and key2 will be used to create new keys for the new generation
     key_size = m_rotorKeys[0].size();
     key1.resize (key_size);
     key2.resize (key_size);
-    
+
     pop_size = vscores.size ();
     vflag.resize (pop_size);
     half_pop = pop_size / 2;
     if (pop_size % 2)
       half_pop++;
-    
+
     // Build the list of individuals out of the niches
     for (i = 0; i < pop_size; i++)
       if (niche_map[i] == -1)
 	out_niches.push_back (i);
-    
+
     if (m_logstream != NULL)
       {
 	(*m_logstream) << "  ==> Number of niches: " << dynamic_niches.size ();
@@ -1106,15 +1106,15 @@ namespace OpenBabel {
 		    vflag[j] = 1;
 		    ninsert++;
 		    break;
-		    
-		  }	    
+
+		  }
 	      }
 	  }
 	if (ninsert == last_ninsert)
 	  break;
 	iround++;
       }
-    // Now add most distant individuals: force genetic diversity in the new population at the cost of higher energies. 
+    // Now add most distant individuals: force genetic diversity in the new population at the cost of higher energies.
     while (ninsert < half_pop)
       {
 	dist_max = 0;
@@ -1140,11 +1140,11 @@ namespace OpenBabel {
 	      }
 	  }
 	 new_generation.push_back (m_rotorKeys[imax]);
-	 vflag[imax] = 1; 
+	 vflag[imax] = 1;
 	 ninsert++;
       }
 
-    // Now generate offsprings 
+    // Now generate offsprings
     offsprings.clear ();
     while (offsprings.size () < pop_size)
       {
@@ -1156,7 +1156,7 @@ namespace OpenBabel {
 	if ((ret_code > 1) && IsUniqueKey(new_generation, key2))
 	  offsprings.push_back (key2);
       }
-    
+
     // Score the offsprings and the best in the new population
     m_rotorKeys.clear ();
     for (i = 0; i < offsprings.size(); i++)
@@ -1169,7 +1169,7 @@ namespace OpenBabel {
     for (i = 0; i < new_generation.size(); i++)
       m_rotorKeys.push_back(new_generation[i]);
     score_population ();
-   
+
     // Convergence energy values: average of niches best element
     sum = 0.0;
     if (0) {
@@ -1183,7 +1183,7 @@ namespace OpenBabel {
     imax = pop_size / 2;
     for (i = 0; i < imax; i++)
 	sum += vscores[i];
-    
+
     // Convergence criterion: best half population score
     return sum / ((double) imax);
   }

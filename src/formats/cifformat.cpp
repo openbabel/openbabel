@@ -593,7 +593,7 @@ namespace OpenBabel
       for(std::string::iterator pos=mSpacegroupSymbolHall.begin();pos!=mSpacegroupSymbolHall.end();)
       {
         if((char)(*pos)==' ')  pos=mSpacegroupSymbolHall.erase(pos);
-        else pos++;
+        else ++pos;
       }
       mSpaceGroup = SpaceGroup::GetSpaceGroup(mSpacegroupSymbolHall);
     }

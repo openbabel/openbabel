@@ -1034,7 +1034,7 @@ namespace OpenBabel
 
     unsigned int ct = 0;
 
-    for( angle=_angles.begin(); angle!=_angles.end(); angle++,ct++)
+    for( angle=_angles.begin(); angle!=_angles.end(); ++angle,ct++)
       {
         angles[ct].resize(3);
         angles[ct][0] = angle->_vertex->GetIdx() - 1;
