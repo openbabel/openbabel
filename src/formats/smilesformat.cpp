@@ -4144,18 +4144,6 @@ namespace OpenBabel {
   {
     bool canonical = pConv->IsOption("c")!=NULL;
 
-    // This is a hack to prevent recursion problems.
-    //  we still need to fix the underlying problem -GRH
-    if (mol.NumAtoms() > 1000) {
-      stringstream errorMsg;
-      errorMsg <<
-        "SMILES Conversion failed: Molecule is too large to convert."
-        "Open Babel is currently limited to 1000 atoms." << endl;
-      errorMsg << "  Molecule size: " << mol.NumAtoms() << " atoms " << endl;
-      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
-      return;
-    }
-
     OBMol2Cansmi m2s;
     m2s.Init(canonical, pConv);
     // GRH Added 2008-06-05
@@ -4265,18 +4253,6 @@ namespace OpenBabel {
     char buffer[BUFF_SIZE];
     *buffer = '\0'; // clear the buffer
 
-    // This is a hack to prevent recursion problems.
-    //  we still need to fix the underlying problem (mainly chiral centers) -GRH
-    if (pmol->NumAtoms() > 1000) {
-      stringstream errorMsg;
-      errorMsg <<
-        "SMILES Conversion failed: Molecule is too large to convert."
-        "Open Babel is currently limited to 1000 atoms." << endl;
-      errorMsg << "  Molecule size: " << pmol->NumAtoms() << " atoms " << endl;
-      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
-      return(false);
-    }
-
     // If there is data attached called "SMILES_Fragment", then it's
     // an ascii OBBitVec, representing the atoms of a fragment.  The
     // SMILES generated will only include these fragment atoms.
@@ -4384,18 +4360,6 @@ namespace OpenBabel {
     char buffer[BUFF_SIZE];
     OBMol2Cansmi m2s;
 
-    // This is a hack to prevent recursion problems.
-    //  we still need to fix the underlying problem -GRH
-    if (mol.NumAtoms() > 1000)
-      {
-        stringstream errorMsg;
-        errorMsg << "SMILES Conversion failed: Molecule is too large to convert. Open Babel is currently limited to 1000 atoms." << endl;
-        errorMsg << "  Molecule size: " << mol.NumAtoms() << " atoms " << endl;
-        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
-        return(false);
-      }
-
-    // Write the SMILES in a FIX with canonical order
     m2s.Init(true, pConv);
     // From 2.1 code.
     m2s.CorrectAromaticAmineCharge(mol);
