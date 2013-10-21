@@ -38,15 +38,19 @@ endif()
 
 if (PYTHON_BINDINGS)
   if (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR RUN_SWIG)
-    find_package(PythonLibs)
-    if (NOT PYTHONLIBS_FOUND)
-      message(STATUS "Python libraries NOT found")
-    endif (NOT PYTHONLIBS_FOUND)
-
     find_package(PythonInterp)
     if (NOT PYTHONINTERP_FOUND)
       message(STATUS "Python interpreter NOT found")
     endif (NOT PYTHONINTERP_FOUND)
+
+    if (PYTHONINTERP_FOUND AND NOT Python_ADDITIONAL_VERSIONS)
+      set(Python_ADDITIONAL_VERSIONS "${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}")
+    endif (PYTHONINTERP_FOUND AND NOT Python_ADDITIONAL_VERSIONS)
+
+    find_package(PythonLibs)
+    if (NOT PYTHONLIBS_FOUND)
+      message(STATUS "Python libraries NOT found")
+    endif (NOT PYTHONLIBS_FOUND)
 
     if(PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND)
       set(DO_PYTHON_BINDINGS ON BOOL)
