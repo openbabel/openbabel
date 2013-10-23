@@ -972,9 +972,9 @@ namespace OpenBabel
     for (i = _resatoms[_resnum].begin();i != _resatoms[_resnum].end();i+=3)
       if (atmid == *i)
         {
-          i++;
+          ++i;
           type = *i;
-          i++;
+          ++i;
           hyb = atoi((*i).c_str());
           return(true);
         }

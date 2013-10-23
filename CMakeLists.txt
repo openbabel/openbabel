@@ -181,6 +181,7 @@ if(MSVC)
     "Should Windows Open Babel builds use prebuilt binaries?" ON)
 	# dlhandler_win32.cpp assumes multibyte character set
 	remove_definitions(-DUNICODE -D_UNICODE)
+  include_directories(${openbabel_SOURCE_DIR}/windows-msvc/include)
 endif()
 
 if(MSVC AND OB_USE_PREBUILT_BINARIES)
@@ -252,7 +253,8 @@ if(NOT MSVC)
     }
    " SCANDIR_NEEDS_CONST)
 
-  set(OB_MODULE_PATH "${CMAKE_INSTALL_PREFIX}/${OB_PLUGIN_INSTALL_DIR}")
+  set(OB_MODULE_PATH "${CMAKE_INSTALL_PREFIX}/${OB_PLUGIN_INSTALL_DIR}"
+      CACHE PATH "Set to system install for bindings only build")
   add_definitions(-DOB_MODULE_PATH="\\"${OB_MODULE_PATH}\\"")
 
   # Add some visibility support when using GCC
@@ -380,7 +382,8 @@ if(UNIX AND BUILD_SHARED)
   if(APPLE)
     set(CMAKE_INSTALL_NAME_DIR ${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR})
   else()
-    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}")
+    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}"
+        CACHE PATH "Set sane rpath")
     set(CMAKE_SKIP_BUILD_RPATH FALSE)
     set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
@@ -476,6 +479,13 @@ endif()
 
 # Should the language bindings be regenereted?
 option(RUN_SWIG "Generate language bindings with SWIG" OFF)
+
+# Build bindings only
+option(BINDINGS_ONLY "Build bindings only" OFF)
+
+# Point to library if building bindings only
+set(BABEL_SYSTEM_LIBRARY ${BABEL_LIBRARY}
+    CACHE PATH "Point to openbabel library if building bindings only")
 
 # Should all bindings be built?
 option(ALL_BINDINGS "Build all languages bindings" OFF)

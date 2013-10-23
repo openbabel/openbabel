@@ -33,7 +33,7 @@
 #include <sstream>
 #include <limits>
 #include <iostream>
-#include <cctype>s
+#include <cctype>
 
 //#include <cassert>
 #define DEBUG 0
@@ -41,7 +41,7 @@
 namespace Smiley {
 
   /**
-   * @mainpage 
+   * @mainpage
    *
    * Smiley is a SMILES/SMARTS parser that is OpenSMILES (http://www.opensmiles.org)
    * compliant (draft 2007-11-13).
@@ -56,14 +56,14 @@ namespace Smiley {
    *
    * @code
    * #include "smiley.h"
-   * 
+   *
    * using namespace Smiley;
-   * 
+   *
    * int main(int argc, char **argv)
    * {
    *   PrintCallback callback;
    *   Parser<PrintCallback> parser(callback);
-   * 
+   *
    *   try {
    *     parser.parse(argv[1]);
    *   } catch (Exception &e) {
@@ -270,7 +270,7 @@ namespace Smiley {
    *
    *
    *
-   *  
+   *
    * @section license License
    * @code
    * Copyright (c) 2012, Tim Vandermeersch
@@ -737,7 +737,7 @@ namespace Smiley {
         << "    siUp: " << isUp << std::endl
         << "    isDown: " << isDown << std::endl;
     }
-    
+
     /**
      * The setChiral() method is invoked at the end of parsing for each atom
      * that has a chirality specified.
@@ -785,7 +785,7 @@ namespace Smiley {
     }
 
     std::string number2string(int value)
-    { 
+    {
       std::stringstream ss;
       ss << value;
       return ss.str();
@@ -931,14 +931,14 @@ namespace Smiley {
    *
    * @code
    * #include "smiley.h"
-   * 
+   *
    * using namespace Smiley;
-   * 
+   *
    * int main(int argc, char **argv)
    * {
    *   PrintCallback callback;
    *   Parser<PrintCallback> parser(callback);
-   * 
+   *
    *   try {
    *     parser.parse(argv[1]);
    *   } catch (Exception &e) {
@@ -1047,7 +1047,7 @@ namespace Smiley {
           std::size_t close_pos = m_str.find(close, pos + 1);
           // syntax error when there is no closing bracket
           if (close_pos == std::string::npos)
-            throw Exception(Exception::SyntaxError, NoClosingAtomBracket, 
+            throw Exception(Exception::SyntaxError, NoClosingAtomBracket,
                 "Could not find matching bracket", pos, m_str.size() - pos);
           if (open_pos > close_pos) {
             --indent;
@@ -1089,7 +1089,7 @@ namespace Smiley {
 
       /**
        * Add a bond by calling the callback's addBond() member function.
-       * 
+       *
        * @param source Bond source atom index (0...N)
        * @param target Bond target atom index (0...N)
        * @param order The bond order.
@@ -1511,7 +1511,7 @@ namespace Smiley {
           case 'a':
             if (checkNextChar('s')) {
               m_element = As;
-              m_aromatic = true;          
+              m_aromatic = true;
             }
             break;
           case '*':
@@ -1711,7 +1711,7 @@ namespace Smiley {
           if (checkNextChar('+')) {
             m_charge = 2;
             ++m_pos;
-            return;        
+            return;
           }
           if (std::isdigit(m_str[m_pos + 1])) {
             m_charge = m_str[m_pos + 1] - '0';
@@ -2106,7 +2106,7 @@ namespace Smiley {
         if (m_hCount > 1 && m_chiral && m_exceptions & InvalidChiralHydrogenCount) {
           throw Exception(Exception::SemanticsError, InvalidChiralHydrogenCount,
               "Chiral atoms can only have one hydrogen", m_chiralInfo.back().pos, 1);
-        } 
+        }
 
         if (m_str[m_pos] != ']')
           throw Exception(Exception::SyntaxError, TrailingCharInBracketAtom,
@@ -2362,7 +2362,7 @@ namespace Smiley {
         for (typename std::map<int, std::vector<RingBondInfo> >::iterator i = m_ringBonds.begin(); i != m_ringBonds.end(); ++i) {
           std::cout << "    RingBond: index = " << i->first << std::endl;
           for (std::size_t j = 0; j < i->second.size(); ++j)
-            std::cout << "        " << i->second[j].number << std::endl; 
+            std::cout << "        " << i->second[j].number << std::endl;
         }
       }
 
@@ -2391,7 +2391,7 @@ namespace Smiley {
           if (ringBond->second[j].isExplicit) {
             // check if the bond types match
             if (m_explicitBond && m_exceptions & ConflictingRingBonds) {
-              if (ringBond->second[j].order != m_bondOrder || 
+              if (ringBond->second[j].order != m_bondOrder ||
                   ringBond->second[j].isUp != m_isUp ||
                   ringBond->second[j].isDown != m_isDown)
                 throw Exception(Exception::SemanticsError, ConflictingRingBonds,

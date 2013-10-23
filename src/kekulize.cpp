@@ -549,12 +549,12 @@ namespace OpenBabel
       std::vector<bool>atom_in_cycle(NumAtoms()+1);
       for (unsigned int i = 0; i <= NumAtoms(); i++)
         atom_in_cycle[i] = false;
-      for (std::vector<OBAtom*>::iterator ai = cycle.begin(); ai != cycle.end(); ai++)
+      for (std::vector<OBAtom*>::iterator ai = cycle.begin(); ai != cycle.end(); ++ai)
         atom_in_cycle[(*ai)->GetIdx()] = true;
-      for (std::vector<OBRing*>::iterator ri = lssr_tmp.begin(); ri != lssr_tmp.end(); ri++) {
+      for (std::vector<OBRing*>::iterator ri = lssr_tmp.begin(); ri != lssr_tmp.end(); ++ri) {
         OBRing *ring = *ri;
         bool ok = true;
-        for (std::vector<int>::iterator pi = ring->_path.begin(); pi != ring->_path.end(); pi++) {
+        for (std::vector<int>::iterator pi = ring->_path.begin(); pi != ring->_path.end(); ++pi) {
           if (!atom_in_cycle[*pi]) {
             ok = false;
             break;
@@ -956,7 +956,7 @@ namespace OpenBabel
     if (DEBUG) {cout << "---------- expand_kekulize_lssr:" << endl;}
 
     // Find the next unassigned bond on this ring
-    for (std::vector<OBBond*>::iterator b = bondsThisRing.begin(); b != bondsThisRing.end(); b++) {
+    for (std::vector<OBBond*>::iterator b = bondsThisRing.begin(); b != bondsThisRing.end(); ++b) {
       if (bondState[(*b)->GetIdx()] == UNASSIGNED) {
         bond = *b;
         break;

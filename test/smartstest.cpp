@@ -151,7 +151,7 @@ int smartstest(int argc, char* argv[])
       currentMol++;
       molPassed = true;
 
-      for (i = vsp.begin();i != vsp.end();i++)
+      for (i = vsp.begin();i != vsp.end();++i)
         {
           if (!rifs.getline(buffer,BUFF_SIZE))
             {
@@ -261,11 +261,11 @@ void GenerateSmartsReference()
 
       if (mol.Empty())
         continue;
-      for (i = vsp.begin();i != vsp.end();i++)
+      for (i = vsp.begin();i != vsp.end();++i)
         {
           (*i)->Match(mol);
           mlist = (*i)->GetMapList();
-          for (j = mlist.begin();j != mlist.end();j++)
+          for (j = mlist.begin();j != mlist.end();++j)
             {
               sprintf(buffer,"%3d",*(j->begin()));
               ofs << buffer;

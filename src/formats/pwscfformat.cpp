@@ -138,7 +138,8 @@ namespace OpenBabel {
       }
 
       // Unit cell info (for non-variable cell calcs)
-      if (strstr(buffer, "crystal axes: (cart. coord. in units of a_0)")) {
+      if (strstr(buffer, "crystal axes: (cart. coord. in units of a_0)") ||
+          strstr(buffer, "crystal axes: (cart. coord. in units of alat)")) {
         double conv = alat * BOHR_TO_ANGSTROM;
         double v11, v12, v13,
           v21, v22, v23,

@@ -402,7 +402,7 @@ namespace OpenBabel
 
   void OutputGroup(OBMol& mol, ostream& ofs, const vector <int>& group, map <unsigned int, unsigned int> new_indexes, bool use_new_indexes)
   {
-    for (vector <int>::const_iterator it = group.begin(); it != group.end(); it++)
+    for (vector <int>::const_iterator it = group.begin(); it != group.end(); ++it)
     {
       if (use_new_indexes) {OutputAtom(mol.GetAtom((*it)), ofs, new_indexes.find(*it)->second);}
       else {OutputAtom(mol.GetAtom((*it)), ofs, (*it));}
@@ -448,7 +448,7 @@ namespace OpenBabel
       if (bonds_to_delete.size() != 0) //checks there is something to delete
       {
         vector <unsigned int>::iterator itb=bonds_to_delete.end();
-        itb--;
+        --itb;
         for (OBBondIterator it=mol_pieces.EndBonds(); true; )
         {
           it--;
@@ -456,7 +456,7 @@ namespace OpenBabel
           {
             mol_pieces.DeleteBond((*it), true);
             if (itb == bonds_to_delete.begin()) {break;}
-            else {itb--;}
+            else {--itb;}
           }
         }
       }
@@ -495,12 +495,12 @@ namespace OpenBabel
     }
 
     multimap <unsigned int, unsigned int>::iterator it=how_many_atoms_move.begin();
-    if ((!moves_many) && how_many_atoms_move.size() > 0) {it=how_many_atoms_move.end(); it--;}
+    if ((!moves_many) && how_many_atoms_move.size() > 0) {it=how_many_atoms_move.end(); --it;}
     for (unsigned int i = 1; i <= depth; i++)
     {
       free_bonds.insert((*it).second);
-      if (!moves_many) {it--;}
-      else{it++;}
+      if (!moves_many) {--it;}
+      else{++it;}
     }
 
 
@@ -524,7 +524,7 @@ namespace OpenBabel
       {
         if (free_bonds.count(i))
         {
-          for (set <unsigned int>::iterator it= (*tree.find(i)).second.rigid_with.begin() ; it != (*tree.find(i)).second.rigid_with.end(); it++)
+          for (set <unsigned int>::iterator it= (*tree.find(i)).second.rigid_with.begin() ; it != (*tree.find(i)).second.rigid_with.end(); ++it)
                                   {
             vector <int> atoms=(*tree.find(*it)).second.atoms;
             for (unsigned int j=0; j < atoms.size(); j++)
@@ -539,7 +539,7 @@ namespace OpenBabel
 
     if (!(pConv->IsOption("r",OBConversion::OUTOPTIONS)))
       ofs << "ROOT" << endl;
-    for (set <unsigned int>::iterator it= (*tree.find(0)).second.rigid_with.begin() ; it != (*tree.find(0)).second.rigid_with.end(); it++)
+    for (set <unsigned int>::iterator it= (*tree.find(0)).second.rigid_with.begin() ; it != (*tree.find(0)).second.rigid_with.end(); ++it)
     {
       OutputGroup(mol, ofs, (*tree.find(*it)).second.atoms, new_order, !preserve_original_index);
     }
@@ -561,7 +561,7 @@ namespace OpenBabel
         if (!preserve_original_index) {ofs << (new_order.find(child_atom))-> second;}
         else {ofs << child_atom;}
         ofs << endl;
-        for (set <unsigned int>::iterator it= (*tree.find(i)).second.rigid_with.begin() ; it != (*tree.find(i)).second.rigid_with.end(); it++)
+        for (set <unsigned int>::iterator it= (*tree.find(i)).second.rigid_with.begin() ; it != (*tree.find(i)).second.rigid_with.end(); ++it)
         {
           OutputGroup(mol, ofs, (*tree.find(*it)).second.atoms, new_order, !preserve_original_index);
         }
@@ -569,10 +569,10 @@ namespace OpenBabel
       unsigned int child=i;
       for (vector <unsigned int>::iterator it=(*tree.find(i)).second.parents.end(); it != (*tree.find(i)).second.parents.begin(); )
       {
-        it--;
+        --it;
         if ((*it)==0) {break;} //do not close the main root; that is closed seperately
         vector <unsigned int>::iterator it_parent=it;
-        it_parent--;
+        --it_parent;
         if ((*tree.find(*it)).second.children.size() == 0)
         {
           if (free_bonds.count(*it))
@@ -678,7 +678,7 @@ namespace OpenBabel
 
   bool IsIn(const vector<int>& vec, const int num) //checks whether a vector of int contains a specific int
   {
-    for (vector<int>::const_iterator itv=vec.begin(); itv != vec.end(); itv++)
+    for (vector<int>::const_iterator itv=vec.begin(); itv != vec.end(); ++itv)
     {
       if ((*itv) == num ) {return true;}
     }

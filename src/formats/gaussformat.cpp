@@ -680,7 +680,7 @@ namespace OpenBabel
             else if (vs.size() > 5)
               {
                 double x,y,z;
-                if (3 == sscanf(buffer+32,"%10.6f%10.6f%10.6f",&x,&y,&z))
+                if (3 == sscanf(buffer+32,"%10lf%10lf%10lf",&x,&y,&z))
                   {
                     esp->AddPoint(x,y,z,0);
                   }
@@ -700,7 +700,7 @@ namespace OpenBabel
             else if (vs.size() > 6)
               {
                 double x,y,z;
-                if (3 == sscanf(buffer+32,"%10.6f%10.6f%10.6f",&x,&y,&z))
+                if (3 == sscanf(buffer+32,"%10lf%10lf%10lf",&x,&y,&z))
                   {
                     esp->AddPoint(x,y,z,0);
                   }
@@ -913,9 +913,9 @@ namespace OpenBabel
         {
           // The above line appears for each state, so just append the info to the vectors
           tokenize(vs, buffer);
-          if (vs.size() == 9) {
+          if (vs.size() >= 9) {
             double wavelength = atof(vs[6].c_str());
-            double force = atof(vs[8].substr(2).c_str());
+            double force = atof(vs[8].substr(2).c_str()); // remove the "f=" part
             Forces.push_back(force);
             Wavelengths.push_back(wavelength);
           }

@@ -102,7 +102,7 @@ namespace OpenBabel
         atom->SetVector(x,y,z); //set coordinates
         atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
 
-        for (j = vs.begin()+4;j != vs.end();j++)
+        for (j = vs.begin()+4;j != vs.end();++j)
           mol.AddBond(atom->GetIdx(),atoi((char*)j->c_str()),1);
       }
 
