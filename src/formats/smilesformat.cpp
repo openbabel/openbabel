@@ -2188,6 +2188,13 @@ namespace OpenBabel {
     int digit;
     char str[10];
 
+    // The ring closure must be associated with a 'prev' atom
+    OBAtom* prevatom = mol.GetAtom(_prev);
+    if (!prevatom) {
+      obErrorLog.ThrowError(__FUNCTION__,"Number not parsed correctly as a ring bond", obWarning);
+      return false;
+    }
+
     if (*_ptr == '%')
       {
         _ptr++;
@@ -2281,13 +2288,7 @@ namespace OpenBabel {
     ringClosure.updown = _updown;
 
     OBAtom* atom = mol.GetAtom(_prev);
-    if (!atom) {
-      obErrorLog.ThrowError(__FUNCTION__,"Number not parsed correctly as a ring bond", obWarning);
-      return false;
-    }
-
     ringClosure.numConnections = NumConnections(atom); //store position to insert closure bond
-
     _rclose.push_back(ringClosure);
     _order = 1;
     _updown = ' ';
