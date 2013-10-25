@@ -38,15 +38,19 @@ endif()
 
 if (PYTHON_BINDINGS)
   if (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR RUN_SWIG)
-    find_package(PythonLibs)
-    if (NOT PYTHONLIBS_FOUND)
-      message(STATUS "Python libraries NOT found")
-    endif (NOT PYTHONLIBS_FOUND)
-
     find_package(PythonInterp)
     if (NOT PYTHONINTERP_FOUND)
       message(STATUS "Python interpreter NOT found")
     endif (NOT PYTHONINTERP_FOUND)
+
+    if (PYTHONINTERP_FOUND AND NOT Python_ADDITIONAL_VERSIONS)
+      set(Python_ADDITIONAL_VERSIONS "${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}")
+    endif (PYTHONINTERP_FOUND AND NOT Python_ADDITIONAL_VERSIONS)
+
+    find_package(PythonLibs)
+    if (NOT PYTHONLIBS_FOUND)
+      message(STATUS "Python libraries NOT found")
+    endif (NOT PYTHONLIBS_FOUND)
 
     if(PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND)
       set(DO_PYTHON_BINDINGS ON BOOL)
@@ -103,18 +107,24 @@ if (DO_PYTHON_BINDINGS)
             OUTPUT_NAME _openbabel
             PREFIX ""
             SUFFIX .so )
+        execute_process(
+          COMMAND
+          ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_python_lib(1,0,prefix='${CMAKE_INSTALL_PREFIX}'))"
+          OUTPUT_VARIABLE PYTHON_INSTDIR
+          OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
         if(NOT BINDINGS_ONLY)
             add_dependencies(bindings_python openbabel)
         endif()
 
         install(TARGETS bindings_python
-                LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+                LIBRARY DESTINATION ${PYTHON_INSTDIR}
                 COMPONENT bindings_python)
         install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
-                DESTINATION ${LIB_INSTALL_DIR}
+                DESTINATION ${PYTHON_INSTDIR}
                 COMPONENT bindings_python)
         install(FILES ${openbabel_SOURCE_DIR}/scripts/python/pybel.py
-                DESTINATION ${LIB_INSTALL_DIR}
+                DESTINATION ${PYTHON_INSTDIR}
                 COMPONENT bindings_python)
     else(NOT WIN32)
         set_target_properties(bindings_python PROPERTIES
