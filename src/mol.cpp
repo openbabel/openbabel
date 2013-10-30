@@ -38,7 +38,7 @@ namespace OpenBabel
 {
 
   extern bool SwabInt;
-  extern OBPhModel	phmodel;
+  extern OBPhModel  phmodel;
   extern OBAromaticTyper  aromtyper;
   extern OBAtomTyper      atomtyper;
   extern OBBondTyper      bondtyper;
@@ -201,7 +201,7 @@ namespace OpenBabel
 
   double OBMol::GetAngle( OBAtom* a, OBAtom* b, OBAtom* c)
   {
-	  return a->GetAngle( b, c );
+    return a->GetAngle( b, c );
   }
 
   double OBMol::GetTorsion(int a,int b,int c,int d)
@@ -1434,7 +1434,7 @@ namespace OpenBabel
         nts->SetConfig(ts_cfg);
         SetData(nts);
       }
-    }    
+    }
 
     // TODO: This is actually a weird situation (e.g., adding a 2D mol to 3D one)
     // We should do something to update the src coordinates if they're not 3D
@@ -1873,7 +1873,7 @@ namespace OpenBabel
     max = cfl.begin();
     for (i = cfl.begin();i != cfl.end();++i)
       {
-      	if ((*max).size() < (*i).size())
+        if ((*max).size() < (*i).size())
           max = i;
       }
 
@@ -1882,7 +1882,7 @@ namespace OpenBabel
     set<int> atomIndices;
     for (i = cfl.begin(); i != cfl.end(); ++i)
       {
-      	if (i->size() < threshold || (threshold == 0 && i != max))
+        if (i->size() < threshold || (threshold == 0 && i != max))
           {
             for (j = (*i).begin(); j != (*i).end(); ++j)
               {
@@ -1898,12 +1898,12 @@ namespace OpenBabel
     if (!delatoms.empty())
       {
         //      int tmpflags = _flags & (~(OB_SSSR_MOL));
-      	BeginModify();
-      	vector<OBAtom*>::iterator k;
-      	for (k = delatoms.begin(); k != delatoms.end(); ++k)
+        BeginModify();
+        vector<OBAtom*>::iterator k;
+        for (k = delatoms.begin(); k != delatoms.end(); ++k)
           DeleteAtom((OBAtom*)*k);
-      	EndModify();
-        //      _flags = tmpflags;	// Gave crash when SmartsPattern::Match()
+        EndModify();
+        //      _flags = tmpflags;  // Gave crash when SmartsPattern::Match()
         // was called susequently
         // Hans De Winter; 03-nov-2010
       }
@@ -2111,7 +2111,7 @@ namespace OpenBabel
   {
     return(AddNewHydrogens(polaronly ? PolarHydrogen : AllHydrogen, correctForPH, pH));
   }
-  
+
   bool OBMol::AddNewHydrogens(HydrogenType whichHydrogen, bool correctForPH, double pH)
   {
     if (!IsCorrectedForPH() && correctForPH)
@@ -2152,7 +2152,6 @@ namespace OpenBabel
 
     SetHydrogensAdded(); // This must come after EndModify() as EndModify() wipes the flags
     // If chirality was already perceived, remember this (to avoid wiping information
-    // on unspecified chiral centers, for example)
     if (hasChiralityPerceived)
       this->SetChiralityPerceived();
     // If implicit valence was already perceived, remember (e.g. custom valence model)
@@ -2974,7 +2973,7 @@ namespace OpenBabel
 
     if (destroyAtom)
       DestroyAtom(atom);
-    
+
     UnsetSSSRPerceived();
     UnsetLSSRPerceived();
     return(true);
@@ -3593,7 +3592,7 @@ namespace OpenBabel
               // NextBond = 0x????????
               // NextBond = 0x????????
               // NextBond = 0x????????
-              // NextBond = NULL	<-- this NULL was not detected
+              // NextBond = NULL  <-- this NULL was not detected
               // NextBond = 0x????????
               if (!bond) // so we add an additional check
                 break;
@@ -3792,7 +3791,7 @@ namespace OpenBabel
             if (!typed)
               for(loop = 0; loop < loopSize; ++loop)
                 {
-                  //		cout << " set aromatic " << path[loop] << endl;
+                  //    cout << " set aromatic " << path[loop] << endl;
                   (GetBond(path[loop], path[(loop+1) % loopSize]))->SetBO(5);
                   (GetBond(path[loop], path[(loop+1) % loopSize]))->UnsetKekule();
                 }
@@ -3942,38 +3941,8 @@ namespace OpenBabel
 
   void OBMol::Center()
   {
-    int j,size;
-    double *c,x,y,z,fsize;
-
-    size = NumAtoms();
-    fsize = -1.0/(double)NumAtoms();
-
-    obErrorLog.ThrowError(__FUNCTION__,
-                          "Ran OpenBabel::Center", obAuditMsg);
-
-    vector<double*>::iterator i;
-    for (i = _vconf.begin();i != _vconf.end();++i)
-      {
-        c = *i;
-        x = y = z = 0.0;
-        for (j = 0;j < size;++j)
-          {
-            x += c[j*3];
-            y += c[j*3+1];
-            z += c[j*3+2];
-          }
-        x *= fsize;
-        y *= fsize;
-        z *= fsize;
-
-        for (j = 0;j < size;++j)
-          {
-            c[j*3]+=x;
-            c[j*3+1]+=y;
-            c[j*3+2]+=z;
-          }
-      }
-
+    for (int i = 0;i < NumConformers();++i)
+      Center(i);
   }
 
   vector3 OBMol::Center(int nconf)
@@ -4021,7 +3990,7 @@ namespace OpenBabel
   /*! this method adds the vector v to all atom positions in the
     conformer nconf. If nconf == OB_CURRENT_CONFORMER, then the atom
     positions in the current conformer are translated. */
-  void OBMol::Translate(const vector3 &v,int nconf)
+  void OBMol::Translate(const vector3 &v, int nconf)
   {
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::Translate", obAuditMsg);
@@ -4405,7 +4374,7 @@ namespace OpenBabel
           refs.push_back(ref);
         }
         newcfg.refs = refs;
- 
+
         OBCisTransStereo *newct = new OBCisTransStereo(this);
         newct->SetConfig(newcfg);
         newmol.SetData(newct);
@@ -4426,13 +4395,13 @@ namespace OpenBabel
           refs.push_back(ref);
         }
         newcfg.refs = refs;
- 
+
         OBTetrahedralStereo *newtet = new OBTetrahedralStereo(this);
         newtet->SetConfig(newcfg);
         newmol.SetData(newtet);
         }
     }
-   
+
     FOR_BONDS_OF_MOL(b, this) {
       map<OBAtom*, OBAtom*>::iterator pos;
       pos = AtomMap.find(b->GetBeginAtom());
@@ -4491,7 +4460,7 @@ namespace OpenBabel
     return true;
  }
   /* These cases work ok
-   original      charge  result 
+   original      charge  result
   [NH4]             +1   [NH4+]
   -C(=O)[O]         -1   -C(=O)[O-]
   -[CH2]            +1   -C[CH2+]
