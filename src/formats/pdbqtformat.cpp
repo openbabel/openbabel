@@ -482,7 +482,7 @@ namespace OpenBabel
 
   bool OutputTree(OBConversion* pConv, OBMol& mol, ostream& ofs, map <unsigned int, branch> & tree, unsigned int depth, bool moves_many, bool preserve_original_index)
   {
-    if (tree.size() == 0) {return false;}
+    if (tree.empty()) {return false;}
     if (depth>= tree.size()-1) {depth=tree.size()-1;}
 
     set <unsigned int> free_bonds; //this section is to allow the code to be generalised when using obabel rather than babel, which accepts numerical arguments as to how many bonds to fix. As laid out, it will prioritise those bonds that move the fewest atoms, unless moves_many is true, where it will prioritise those that move the most. This is moot for the moment, as either all rotatable bonds are free, or they are all rigid.
@@ -495,7 +495,7 @@ namespace OpenBabel
     }
 
     multimap <unsigned int, unsigned int>::iterator it=how_many_atoms_move.begin();
-    if ((!moves_many) && how_many_atoms_move.size() > 0) {it=how_many_atoms_move.end(); --it;}
+    if ((!moves_many) && !how_many_atoms_move.empty()) {it=how_many_atoms_move.end(); --it;}
     for (unsigned int i = 1; i <= depth; i++)
     {
       free_bonds.insert((*it).second);

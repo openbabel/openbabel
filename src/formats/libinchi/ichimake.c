@@ -3829,7 +3829,7 @@ int FillOutCanonInfAtom(inp_ATOM *norm_at, INF_ATOM_DATA *inf_norm_at_data, int 
                 next_atom[len]  = (int)norm_at[j].neighbor[n];
                 next_neigh[len] = n;
                 cur_atom = j;
-                while ( next_atom[len] != k && len < MAX_CUMULENE_LEN && 2 == norm_at[next_atom[len]].valence ) {
+                while ( len < MAX_CUMULENE_LEN && next_atom[len] != k && 2 == norm_at[next_atom[len]].valence ) {
                     next_neigh[len+1] = ((int)norm_at[next_atom[len]].neighbor[0] == cur_atom);
                     next_atom[len+1]  =  (int)norm_at[next_atom[len]].neighbor[next_neigh[len+1]];
                     cur_atom = next_atom[len];
@@ -4313,7 +4313,7 @@ int FillOutOneCanonInfAtom(inp_ATOM *inp_norm_at, INF_ATOM_DATA *inf_norm_at_dat
                 next_atom[len]  = (int)norm_at[j].neighbor[n]-offset;
                 next_neigh[len] = n;
                 cur_atom = j;
-                while ( next_atom[len] != k && len < MAX_CUMULENE_LEN && 2 == norm_at[next_atom[len]].valence ) {
+                while ( len < MAX_CUMULENE_LEN && next_atom[len] != k && 2 == norm_at[next_atom[len]].valence ) {
                     next_neigh[len+1] = ((int)norm_at[next_atom[len]].neighbor[0]-offset == cur_atom);
                     next_atom[len+1]  =  (int)norm_at[next_atom[len]].neighbor[next_neigh[len+1]]-offset;
                     cur_atom = next_atom[len];

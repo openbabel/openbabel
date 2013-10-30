@@ -536,7 +536,7 @@ namespace OpenBabel {
 
     // Add the data stored inside the _tetrahedralMap to the atoms now after end
     // modify so they don't get lost.
-    if(_tetrahedralMap.size() > 0) {
+    if(!_tetrahedralMap.empty()) {
       OBAtom* atom;
       map<OBAtom*, OBTetrahedralStereo::Config*>::iterator ChiralSearch;
       for(ChiralSearch = _tetrahedralMap.begin(); ChiralSearch != _tetrahedralMap.end(); ++ChiralSearch) {
@@ -580,7 +580,7 @@ namespace OpenBabel {
 
     // Add the data stored inside the _squarePlanarMap to the atoms now after end
     // modify so they don't get lost.
-    if(_squarePlanarMap.size() > 0) {
+    if(!_squarePlanarMap.empty()) {
       OBAtom* atom;
       map<OBAtom*, OBSquarePlanarStereo::Config*>::iterator ChiralSearch;
       for(ChiralSearch = _squarePlanarMap.begin(); ChiralSearch != _squarePlanarMap.end(); ++ChiralSearch) {
@@ -2118,7 +2118,6 @@ namespace OpenBabel {
         _updown = BondDownChar;
         _ptr++;
         break;
-        _ptr++;
       case '\\': // chiral, but _order still == 1
         _updown = BondUpChar;
         _ptr++;
