@@ -22,9 +22,17 @@ GNU General Public License for more details.
 #else
   #include <memory>
   #if __GNUC__ == 4  //&& __GNUC_MINOR__ < 3  removed at the suggestion of Konstantin Tokarev
-    #include <tr1/memory>
+    #ifdef _LIBCPP_VERSION
+      #include <memory>
+    #else
+      #include <tr1/memory>
+    #endif
   #endif
-  #define obsharedptr std::tr1::shared_ptr
+  #ifdef _LIBCPP_VERSION
+    #define obsharedptr std::shared_ptr
+  #else
+    #define obsharedptr std::tr1::shared_ptr
+  #endif
 #endif
 
 #endif // OB_SHARED_PTR_H
