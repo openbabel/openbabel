@@ -21,7 +21,7 @@ GNU General Public License for more details.
 #include <openbabel/obconversion.h>
 #include <openbabel/descriptor.h>
 #include <openbabel/inchiformat.h>
-#ifdef _MSC_VER
+#if defined(_MSC_VER) || defined(_LIBCPP_VERSION)
   #include <unordered_map>
 #elif (__GNUC__ == 4 && __GNUC_MINOR__ >= 1 && !defined(__APPLE_CC__))
   #include <tr1/unordered_map>
@@ -36,7 +36,11 @@ GNU General Public License for more details.
 
 using namespace std;
 #ifndef NO_UNORDERED_MAP
-using std::tr1::unordered_map;
+  #ifdef _LIBCPP_VERSION
+    using std::unordered_map;
+  #else
+    using std::tr1::unordered_map;
+  #endif
 #endif
 namespace OpenBabel
 {

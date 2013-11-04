@@ -1181,7 +1181,6 @@ namespace OpenBabel
                 FreeAtomExpr(expr1);
                 return (AtomExpr*)0;
               }
-            delete expr1;
             expr1 = BuildAtomBin(AE_ANDLO,expr1,expr2);
           }
         return expr1;
@@ -1282,7 +1281,6 @@ namespace OpenBabel
                 FreeBondExpr(expr1);
                 return (BondExpr*)0;
               }
-            delete expr1;
             expr1 = BuildBondBin(BE_ANDLO,expr1,expr2);
           }
         return expr1;
