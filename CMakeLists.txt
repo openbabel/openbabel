@@ -505,6 +505,9 @@ option(PERL_BINDINGS "Build Perl bindings" OFF)
 # Should Java bindings be built?
 option(JAVA_BINDINGS "Build Java bindings" OFF)
 
+# Should R bindings be built?
+option(R_BINDINGS "Build R bindings" OFF)
+
 # Should CSharp bindings be built?
 option(CSHARP_BINDINGS "Build Csharp bindings" OFF)
 

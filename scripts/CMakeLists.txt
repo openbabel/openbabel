@@ -170,15 +170,15 @@ endif (JAVA_BINDINGS)
 
 if (DO_JAVA_BINDINGS)
 
-    include_directories(
-        ${JNI_INCLUDE_DIRS}
+include_directories( 
+	${JNI_INCLUDE_DIRS}
     )
 
     if (RUN_SWIG)
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp
           COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_BINARY_DIR}/scripts/java/org/openbabel
           COMMAND ${SWIG_EXECUTABLE} -java -package org.openbabel -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp ${eigen_define} -outdir ${openbabel_BINARY_DIR}/scripts/java/org/openbabel ${openbabel_SOURCE_DIR}/scripts/openbabel-java.i
-          COMMAND ${JAVA_COMPILE} ARGS "java/org/openbabel/*.java"
+			 COMMAND ${JAVA_COMPILE} ARGS "java/org/openbabel/*.java"
           COMMAND ${CMAKE_COMMAND} -E chdir ${openbabel_BINARY_DIR}/scripts/java ${JAVA_ARCHIVE} cf openbabel.jar org
           COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_BINARY_DIR}/scripts/java/openbabel.jar ${openbabel_SOURCE_DIR}/scripts/java
           COMMAND ${CMAKE_COMMAND} -E remove_directory ${openbabel_BINARY_DIR}/scripts/java/org
@@ -210,6 +210,61 @@ if (DO_JAVA_BINDINGS)
             COMPONENT bindings_java)
 
 endif (DO_JAVA_BINDINGS)
+
+
+###################
+# R
+###################
+
+if (R_BINDINGS)
+	if (EXISTS ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp OR RUN_SWIG)
+
+    if (RUN_SWIG)
+      set(DO_R_BINDINGS ON BOOL)
+    endif (RUN_SWIG)
+
+
+  else (EXISTS ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp OR RUN_SWIG)
+	  message(STATUS "Warning: R bindings NOT found. Generate using -DRUN_SWIG.")
+
+  endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp OR RUN_SWIG)
+endif (R_BINDINGS)
+
+if (DO_R_BINDINGS)
+
+
+    include_directories(/usr/share/R/include )
+    if (RUN_SWIG)
+		 add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp
+			 COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_BINARY_DIR}/scripts/R
+			 COMMAND ${SWIG_EXECUTABLE} -r -package openbabelR  -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp ${eigen_define} -outdir ${openbabel_BINARY_DIR}/scripts/R ${openbabel_SOURCE_DIR}/scripts/openbabel-R.i
+			 COMMAND sed  -i  -e "'s/reg\.finalizer(\(.*\)) /reg.finalizer(\1); /g'" ${openbabel_BINARY_DIR}/scripts/R/openbabelR.R
+			 MAIN_DEPENDENCY openbabel-R.i
+      )
+    endif (RUN_SWIG)
+
+	 add_library(bindings_R MODULE ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp)
+	 if(BINDINGS_ONLY)
+		 target_link_libraries(bindings_R R ${BABEL_SYSTEM_LIBRARY})
+	 else()
+		 target_link_libraries(bindings_R R ${BABEL_LIBRARY})
+	 endif()
+
+	 set_target_properties(bindings_R PROPERTIES
+		 OUTPUT_NAME openbabel_R)
+    if(NOT BINDINGS_ONLY)
+		 add_dependencies(bindings_R openbabel)
+    endif()
+	 add_dependencies(bindings_R R)
+
+	 install(TARGETS bindings_R
+            LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+				COMPONENT bindings_R)
+	 install(FILES ${openbabel_SOURCE_DIR}/scripts/R/openbabel_java.R
+            DESTINATION ${LIB_INSTALL_DIR}
+				COMPONENT bindings_R)
+
+endif (DO_R_BINDINGS)
 
 ###################
 # Perl
