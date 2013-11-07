@@ -325,6 +325,8 @@ OBSpectrophore::GetSpectrophore(OpenBabel::OBMol* mol)
       REF2[i] = NULL;
       _coor[i] = NULL;
    }
+   delete[] REF1;
+   delete[] REF2;
    delete[] _radii;
    _radii = NULL;
 

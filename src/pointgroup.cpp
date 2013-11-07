@@ -374,7 +374,7 @@ namespace OpenBabel {
       elem->transform = (int*)calloc( _mol->NumAtoms(), sizeof( int ) ) ;
       if( elem->transform == NULL ){
         //        fprintf( stderr, "Out of memory allocating transform table for symmetry element\n" ) ;
-        elem = NULL;
+        free(elem);
         return NULL;
       }
       for( i = 0 ; i < _mol->NumAtoms() ; i++ ){
@@ -1446,6 +1446,7 @@ namespace OpenBabel {
               NormalAxes = (SYMMETRY_ELEMENT **) realloc( NormalAxes, sizeof( SYMMETRY_ELEMENT* ) * NormalAxesCount ) ;
               if( NormalAxes == NULL ){
                 perror( "Out of memory in find_c2_axes" ) ;
+                free(distances);
                 return;
               }
               NormalAxes[ NormalAxesCount - 1 ] = axis ;

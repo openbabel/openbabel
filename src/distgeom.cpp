@@ -80,7 +80,7 @@ namespace OpenBabel {
 
   OBDistanceGeometry::OBDistanceGeometry(): _d(NULL) {}
 
-  OBDistanceGeometry::OBDistanceGeometry(const OBMol &mol, bool useCurrentGeometry)
+  OBDistanceGeometry::OBDistanceGeometry(const OBMol &mol, bool useCurrentGeometry): _d(NULL)
   {
     Setup(mol, useCurrentGeometry);
   }
