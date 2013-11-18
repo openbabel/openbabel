@@ -1039,7 +1039,7 @@ namespace OpenBabel
         string s = "Cannot initialize database '";
         s += _filename;
         s += "' which may cause further errors.";
-        obErrorLog.ThrowError(__FUNCTION__, "Cannot initialize database", obWarning);
+        obErrorLog.ThrowError(__FUNCTION__, s, obWarning);
       }
 
   }
