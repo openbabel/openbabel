@@ -3662,8 +3662,16 @@ namespace OpenBabel
 
         if (angle > 155.0)
           atom->SetHyb(1);
-        else if ( angle <= 155.0 && angle > 115)
+        else if (angle <= 155.0 && angle > 115.0)
           atom->SetHyb(2);
+
+        // special case for imines
+        if (atom->IsNitrogen()
+            && atom->ExplicitHydrogenCount() == 1
+            && atom->GetValence() == 2
+            && angle > 109.5)
+          atom->SetHyb(2);
+
       } // pass 1
 
     // Make sure upcoming calls to GetHyb() don't kill these temporary values
@@ -4208,21 +4216,21 @@ namespace OpenBabel
     EndModify();
     return converted;
   }
-  
+
   bool OBMol::ConvertZeroBonds()
   {
     // TODO: Option to just remove zero-order bonds entirely
-    
+
     // TODO: Is it OK to not wrap this in BeginModify() and EndModify()?
-    // If we must, I think we need to manually remember HasImplicitValencePerceived and 
+    // If we must, I think we need to manually remember HasImplicitValencePerceived and
     // re-set it after EndModify()
-    
+
     // Periodic table block for element (1=s, 2=p, 3=d, 4=f)
     const int BLOCKS[113] = {0,1,2,1,1,2,2,2,2,2,2,1,1,2,2,2,2,2,2,1,1,3,3,3,3,3,3,3,3,3,
                              3,2,2,2,2,2,2,1,1,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,1,1,4,4,4,
                              4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,1,1,4,
                              4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3};
-                             
+
     bool converted = false;
     // Get contiguous fragments of molecule
     vector<vector<int> > cfl;
