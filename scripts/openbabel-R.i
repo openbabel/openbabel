@@ -1,5 +1,4 @@
 %module openbabel_R
-
 %{
 #include <R.h>
 // used to set import/export for Cygwin DLLs
@@ -61,21 +60,6 @@
 #include <openbabel/stereo/bindings.h>
 %}
 
-%inline %{
-
-    #include <iostream>
-    std::istream* istreamFromString(const char *str){
-       return new std::istringstream(str);
-    }
-    std::istream & istreamFromFile(const char *filename) {
-       std::istream *instr = new std::ifstream(filename);
-       return *instr;
-    }
-    //istream & istreamFromFile(const char *filename);
-
-%}
-
-
 
 #ifdef HAVE_EIGEN
 %{
@@ -88,6 +72,39 @@
 %include "std_vector.i"
 %include "std_string.i"
 %include "std_pair.i"
+%include "cpointer.i"
+
+%pointer_class(std::string,stringp)
+%typemap("rtype")  const std::string & "character"; //add typemap for const references
+%typemap("rtype")  std::string *, std::string &; // remove erroneous typemap in swig libraries
+
+%typemap(scoercein) const std::string &
+      %{  $input = as($input, "character");     %}
+%typemap(scoercein) std::string *, std::string &; 
+
+
+
+%inline %{
+
+    #include <iostream>
+    std::istream* istreamFromString(std::string str){
+       return new std::istringstream(str);
+    }
+    std::istream* istreamFromFile(const char *filename) {
+       return new std::ifstream(filename);
+    }
+    std::ostream* ostreamToString(){
+       return new std::ostringstream();
+    }
+    std::ostream* ostreamToFile(const char *filename) {
+       return new std::ofstream(filename);
+    }
+    const char* stringFromOstream(const std::ostringstream* os){
+      return (os->str()).c_str();
+    }
+
+%}
+
 
 namespace std {
 
@@ -190,7 +207,7 @@ OpenBabel::OB ## subclass *to ## subclass(OpenBabel::OBGenericData *data) {
 }
 %}
 %enddef
-%inline %{ // can't use macro -- AliasData not OBAliasData
+%inline %{ // cant use macro -- AliasData not OBAliasData
 OpenBabel::AliasData *toAliasData(OpenBabel::OBGenericData *data) {
     return (OpenBabel::AliasData*) data;
 }

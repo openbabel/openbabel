@@ -234,13 +234,8 @@ if (DO_R_BINDINGS)
     if (RUN_SWIG)
 		 add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp
 			 COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_BINARY_DIR}/scripts/R
-			 COMMAND ${SWIG_EXECUTABLE} -r   -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp ${eigen_define} -outdir ${openbabel_BINARY_DIR}/scripts/R ${openbabel_SOURCE_DIR}/scripts/openbabel-R.i
-			 #seperate_arguments(SED_PARAMS "sed -i  -e 's/reg\.finalizer(\(.*\)) /reg.finalizer(\1); /g' ${openbabel_BINARY_DIR}/scripts/R/openbabel_R.R")
-			 #COMMAND ${SED_PARAMS} 
-
-			 #separate_arguments(SED_PARAMS  -i  -e 's/reg\.finalizer\(\\\(.*\\\)\) /reg.finalizer\(\\\1\); /g' )
-			 #COMMAND sed ${SED_PARAMS} ${openbabel_BINARY_DIR}/scripts/R/openbabel_R.R
-			 COMMAND sed  -i  -e "'s/reg\.finalizer(\(.*\)) /reg.finalizer(\1); /g'" ${openbabel_BINARY_DIR}/scripts/R/openbabel_R.R
+			 COMMAND ${SWIG_EXECUTABLE} -r -package openbabelR  -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp ${eigen_define} -outdir ${openbabel_BINARY_DIR}/scripts/R ${openbabel_SOURCE_DIR}/scripts/openbabel-R.i
+			 COMMAND sed  -i  -e "'s/reg\.finalizer(\(.*\)) /reg.finalizer(\1); /g'" ${openbabel_BINARY_DIR}/scripts/R/openbabelR.R
 			 MAIN_DEPENDENCY openbabel-R.i
       )
     endif (RUN_SWIG)
