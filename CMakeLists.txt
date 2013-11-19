@@ -518,6 +518,7 @@ if(ALL_BINDINGS)
   set(PERL_BINDINGS ON)
   set(JAVA_BINDINGS ON)
   set(CSHARP_BINDINGS ON)
+  set(R_BINDINGS ON)
 endif()
 
 add_subdirectory(scripts)
