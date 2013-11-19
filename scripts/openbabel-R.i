@@ -33,7 +33,6 @@
 #include <openbabel/descriptor.h>
 #include <openbabel/format.h>
 
-#include <openbabel/forcefield.h>
 #include <openbabel/builder.h>
 #include <openbabel/op.h>
 
@@ -63,6 +62,7 @@
 
 #ifdef HAVE_EIGEN
 %{
+#include <openbabel/forcefield.h>
 #include <openbabel/conformersearch.h>
 #include <openbabel/math/align.h>
 %}
@@ -339,13 +339,6 @@ IGNORE_ITER(OBMol, Residue)
 %include <openbabel/fingerprint.h>
 %ignore OpenBabel::OBDescriptor::LessThan;
 %include <openbabel/descriptor.h>
-
-# Ignore shadowed methods
-%ignore OpenBabel::OBForceField::VectorSubtract(const double *const, const double *const, double *);
-%ignore OpenBabel::OBForceField::VectorMultiply(const double *const, const double, double *);
-%warnfilter(516) OpenBabel::OBForceField; // Ignoring std::string methods in favour of char* ones
-%include <openbabel/forcefield.h>
-
 %include <openbabel/builder.h>
 %include <openbabel/op.h>
 
@@ -365,6 +358,14 @@ IGNORE_ITER(OBMol, Residue)
 %include <openbabel/rotamer.h>
 %include <openbabel/spectrophore.h>
 #ifdef HAVE_EIGEN
+
+# Ignore shadowed methods
+%ignore OpenBabel::OBForceField::VectorSubtract(const double *const, const double *const, double *);
+%ignore OpenBabel::OBForceField::VectorMultiply(const double *const, const double, double *);
+%warnfilter(516) OpenBabel::OBForceField; // Ignoring std::string methods in favour of char* ones
+%include <openbabel/forcefield.h>
+
+
 %include <openbabel/conformersearch.h>
 %include <openbabel/math/align.h>
 #endif
