@@ -99,8 +99,9 @@
     std::ostream* ostreamToFile(const char *filename) {
        return new std::ofstream(filename);
     }
-    const char* stringFromOstream(const std::ostringstream* os){
-      return (os->str()).c_str();
+    const std::string stringFromOstream(const std::ostringstream* os){
+     // return (os->str()).c_str();
+      return os->str();
     }
 
 %}

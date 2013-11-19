@@ -1,0 +1,2 @@
+PKG_CXXFLAGS +=  -I<open babel src dir>/include/ -I/usr/include/eigen3
+PKG_LIBS += -I<open babel build dir>/lib -lopenbabel 
