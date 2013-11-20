@@ -2821,7 +2821,7 @@ int set_stereo_bonds_parity( sp_ATOM *out_at, inp_ATOM *at, int at_1, inp_ATOM *
         if ( RETURNED_ERROR(cur_parity) || RETURNED_ERROR(next_parity) ) {
             return CT_CALC_STEREO_ERR;
         }
-        if ( (at[at_1].bUsed0DParity & FlagSB_0D) || (at[at_1].bUsed0DParity & FlagSB_0D) ) {
+        if ( (at[at_1].bUsed0DParity & FlagSB_0D) || (at[at_2].bUsed0DParity & FlagSB_0D) ) {
             FixSb0DParities( at, /* at_removed_H, num_removed_H,*/ chain_length,
                              at_1, i_next_at_1, z_dir1,
                              at_2, i_next_at_2, z_dir2, &cur_parity, &next_parity );

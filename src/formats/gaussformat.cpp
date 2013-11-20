@@ -869,14 +869,17 @@ namespace OpenBabel
             bool bDoneSymm;
 
             // Extract both Alpha and Beta symmetries
+            ifs.getline(buffer, BUFF_SIZE); // skip the current line
             for(iii=0; (iii<2); iii++) {
+              if (strstr(buffer, "electronic state"))
+                break; // We've gone too far!
               while (!ifs.eof() &&
-                     (NULL == strstr(buffer,"Alpha")) &&
-                     (NULL == strstr(buffer,"Beta"))) {
+                     ((NULL != strstr(buffer,"Alpha")) ||
+                      (NULL != strstr(buffer,"Beta")))) {
+                // skip the Alpha: and Beta: title lines
                 ifs.getline(buffer, BUFF_SIZE);
               }
               do {
-                ifs.getline(buffer, BUFF_SIZE);
                 bDoneSymm = (NULL == strstr(buffer, "("));
                 if (!bDoneSymm) {
                   tokenize(vs, buffer);
@@ -890,7 +893,9 @@ namespace OpenBabel
                     label = vs[i].substr(1, vs[i].length() - 2);
                     symmetries.push_back(label);
                   }
+                  ifs.getline(buffer, BUFF_SIZE); // get a new line if we've been reading symmetries
                 }
+                // don't read a new line if we're done with symmetries
               } while (!ifs.eof() && !bDoneSymm);
             } // end alpha/beta section
           }
@@ -1094,9 +1099,9 @@ namespace OpenBabel
               od->LoadAlphaOrbitals(orbitals, symmetries, aHOMO);
               od->LoadBetaOrbitals(betaOrbitals, betaSymmetries, bHOMO);
             }
-          od->SetOrigin(fileformatInput);
-          mol.SetData(od);
         }
+        od->SetOrigin(fileformatInput);
+        mol.SetData(od);
       }
 
     //Attach vibrational data, if there is any, to molecule

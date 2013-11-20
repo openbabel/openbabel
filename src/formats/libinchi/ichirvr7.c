@@ -1581,7 +1581,7 @@ int CompareTwoPairsOfInChI( INChI *pInChI1[TAUT_NUM], INChI *pInChI2[TAUT_NUM],
     for ( iMobileH = 0; iMobileH < TAUT_NUM; iMobileH ++ ) {
         if ( !pInChI1[iMobileH] != !pInChI2[iMobileH] ) {
             if ( iMobileH == TAUT_NON &&
-                 pInChI1[TAUT_YES] && pInChI1[TAUT_YES] ) {
+                 pInChI1[TAUT_YES] && pInChI2[TAUT_YES] ) {
                 CompareInchiFlags[iMobileH] |= INCHIDIFF_COMP_HLAYER;
             } else {
                 CompareInchiFlags[iMobileH] |= INCHIDIFF_COMP_NUMBER;
@@ -1692,7 +1692,7 @@ INCHI_MODE CompareReversedStereoINChI3( INChI_Stereo *s1/* InChI from reversed s
     int nNumSb1 = s1? s1->nNumberOfStereoBonds   : 0;
     int nNumSb2 = s2? s2->nNumberOfStereoBonds   : 0;
     
-    if ( (nNumSc1 || nNumSc1) &&
+    if ( (nNumSc1 || nNumSc2) &&
          ( nNumSc1 != nNumSc2 ||
            memcmp( s1->nNumber,  s2->nNumber,  nNumSc1*sizeof(s1->nNumber[0] ) ) ||
            memcmp( s1->t_parity, s2->t_parity, nNumSc1*sizeof(s1->t_parity[0]) ) ) ) {

@@ -352,7 +352,7 @@ namespace OpenBabel
       }
 
     vector<OBInternalCoord*>::iterator j;
-    for (j = vit.begin();j != vit.end();j++)
+    for (j = vit.begin();j != vit.end();++j)
       if (*j)
         {
           delete *j;

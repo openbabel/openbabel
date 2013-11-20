@@ -272,13 +272,13 @@ namespace OpenBabel
       ofs << "!GAMESS" << endl;
       std::vector<OBGenericData*>::iterator i,j;
 
-      for(i = gmsset->GetBegin(); i != gmsset->GetEnd(); i++)
+      for(i = gmsset->GetBegin(); i != gmsset->GetEnd(); ++i)
       {
         OBSetData *cset = (OBSetData *)(*i);
         if(cset)
         {
           string section = cset->GetAttribute();
-          for(j = cset->GetBegin(); j != cset->GetEnd(); j++)
+          for(j = cset->GetBegin(); j != cset->GetEnd(); ++j)
           {
             OBPairData *pd = (OBPairData *) (*j);
             if(pd)

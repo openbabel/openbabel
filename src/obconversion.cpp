@@ -1234,7 +1234,7 @@ namespace OpenBabel {
                 //multiple input files
                 vector<string>::iterator itr, tempitr;
                 tempitr = FileList.end();
-                tempitr--;
+                --tempitr;
                 for(itr=FileList.begin();itr!=FileList.end();++itr)
                   {
                     InFilename = *itr;

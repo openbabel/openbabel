@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #include <openbabel/graphsym.h>
 
 #include <set>
+#include <assert.h>
 
 // private data headers with default parameters
 #include "torlib.h"
@@ -237,7 +238,7 @@ namespace OpenBabel
       OBAtom* begin = bond->GetBeginAtom();
       int N_fold_symmetry = 1;
       for (int here=0; here <= 1; ++here) { // Try each side of the bond in turn
-        
+
         OBAtom *this_side, *other_side;
         if (here == 0) {
           this_side = begin; other_side = end;
@@ -263,7 +264,7 @@ namespace OpenBabel
         size_t old_size = rotor->Size();
         rotor->RemoveSymTorsionValues(N_fold_symmetry);
         if (!_quiet) {
-          cout << "...." << N_fold_symmetry << "-fold symmetry at rotor between " << 
+          cout << "...." << N_fold_symmetry << "-fold symmetry at rotor between " <<
                  begin->GetIdx() << " and " << end->GetIdx();
           cout << " - reduced from " << old_size << " to " << rotor->Size() << endl;
                   }
@@ -789,7 +790,8 @@ namespace OpenBabel
     if (EQn(buffer,"SP3-SP3",7))
       {
         _sp3sp3.clear();
-        for (j = vs.begin(),j++;j != vs.end();++j)
+        //        assert (vs.size() > 1);
+        for (j = vs.begin(),++j;j != vs.end();++j)
           _sp3sp3.push_back(DEG_TO_RAD*atof(j->c_str()));
         return;
       }
@@ -797,7 +799,8 @@ namespace OpenBabel
     if (EQn(buffer,"SP3-SP2",7))
       {
         _sp3sp2.clear();
-        for (j = vs.begin(),j++;j != vs.end();++j)
+        //        assert(vs.size() > 1);
+        for (j = vs.begin(),++j;j != vs.end();++j)
           _sp3sp2.push_back(DEG_TO_RAD*atof(j->c_str()));
         return;
       }
@@ -805,7 +808,8 @@ namespace OpenBabel
     if (EQn(buffer,"SP2-SP2",7))
       {
         _sp2sp2.clear();
-        for (j = vs.begin(),j++;j != vs.end();++j)
+        //        assert(vs.size() > 1);
+        for (j = vs.begin(),++j;j != vs.end();++j)
           _sp2sp2.push_back(DEG_TO_RAD*atof(j->c_str()));
         return;
       }

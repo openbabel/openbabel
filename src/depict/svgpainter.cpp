@@ -99,6 +99,11 @@ namespace OpenBabel
     m_PenWidth = width; //value when NewCanvas called used for bonds
   }
 
+  double SVGPainter::GetPenWidth()
+  {
+    return m_PenWidth;
+  }
+
   void SVGPainter::DrawLine(double x1, double y1, double x2, double y2)
   {
     streamsize oldprec = m_ofs.precision(1);

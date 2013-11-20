@@ -64,7 +64,13 @@ namespace OpenBabel
       
   void CommandPainter::SetPenWidth(double width)
   {
+    m_pen_width = width;
     m_ofs << "SetPenWidth " << width << endl;
+  }
+
+  double CommandPainter::GetPenWidth()
+  {
+    return m_pen_width;
   }
 
   void CommandPainter::DrawLine(double x1, double y1, double x2, double y2)

@@ -398,6 +398,7 @@ namespace OpenBabel
           if (partner->IsNitrogen() && partner->GetValence() == 3 && partner->GetFormalCharge() == 0) {
             int n_h_bonded = 0;
             FOR_BONDS_OF_ATOM(bond3, partner) {
+              boundToNitrogen = (bond3->GetBeginAtom() == partner ? bond3->GetEndAtom() : bond3->GetBeginAtom());
               if (boundToNitrogen->IsHydrogen())
                 n_h_bonded++;
             }

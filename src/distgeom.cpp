@@ -334,12 +334,12 @@ namespace OpenBabel {
     vector<OBRing*>::iterator i;
     vector<int>::iterator j;
 
-    for (i = vr.begin();i != vr.end();i++) {
+    for (i = vr.begin();i != vr.end();++i) {
       a_in = false;
       b_in = false;
       // Go through the path of the ring and see if a and/or b match
       // each node in the path
-      for(j = (*i)->_path.begin();j != (*i)->_path.end();j++) {
+      for(j = (*i)->_path.begin();j != (*i)->_path.end();++j) {
         if ((unsigned)(*j) == a->GetIdx())
           a_in = true;
         if ((unsigned)(*j) == b->GetIdx())

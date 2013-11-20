@@ -1163,8 +1163,8 @@ namespace OpenBabel
 
   AtomExpr *OBSmartsPattern::ParseAtomExpr( int level )
   {
-    register AtomExpr *expr1;
-    register AtomExpr *expr2;
+    register AtomExpr *expr1 = NULL;
+    register AtomExpr *expr2 = NULL;
     register char *prev;
 
     switch( level )
@@ -1263,8 +1263,8 @@ namespace OpenBabel
 
   BondExpr *OBSmartsPattern::ParseBondExpr( int level )
   {
-    register BondExpr *expr1;
-    register BondExpr *expr2;
+    register BondExpr *expr1 = NULL;
+    register BondExpr *expr2 = NULL;
     register char *prev;
 
     switch( level )
@@ -1375,10 +1375,7 @@ namespace OpenBabel
         switch( *LexPtr++ )
           {
           case('.'):
-            // if( bexpr || (prev==-1) )
             return ParseSMARTSError(pat,bexpr);
-            prev = -1;
-            break;
 
           case('-'):  case('='):  case('#'): case('$'):
           case(':'):  case('~'):  case('@'):
@@ -2331,7 +2328,7 @@ namespace OpenBabel
     std::vector<std::vector<int> >::iterator i;
     std::vector<int>::iterator j;
 
-    for ( i = _mlist.begin() ; i != _mlist.end() ; i++ )
+    for ( i = _mlist.begin() ; i != _mlist.end() ; ++i )
       {
         for (j = (*i).begin();j != (*i).end();++j)
           ofs << *j << ' ' << ends;

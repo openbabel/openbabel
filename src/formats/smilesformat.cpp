@@ -536,10 +536,10 @@ namespace OpenBabel {
 
     // Add the data stored inside the _tetrahedralMap to the atoms now after end
     // modify so they don't get lost.
-    if(_tetrahedralMap.size() > 0) {
+    if(!_tetrahedralMap.empty()) {
       OBAtom* atom;
       map<OBAtom*, OBTetrahedralStereo::Config*>::iterator ChiralSearch;
-      for(ChiralSearch = _tetrahedralMap.begin(); ChiralSearch != _tetrahedralMap.end(); ChiralSearch++) {
+      for(ChiralSearch = _tetrahedralMap.begin(); ChiralSearch != _tetrahedralMap.end(); ++ChiralSearch) {
         atom = ChiralSearch->first;
         OBTetrahedralStereo::Config *ts = ChiralSearch->second;
         if (!ts)
@@ -580,10 +580,10 @@ namespace OpenBabel {
 
     // Add the data stored inside the _squarePlanarMap to the atoms now after end
     // modify so they don't get lost.
-    if(_squarePlanarMap.size() > 0) {
+    if(!_squarePlanarMap.empty()) {
       OBAtom* atom;
       map<OBAtom*, OBSquarePlanarStereo::Config*>::iterator ChiralSearch;
-      for(ChiralSearch = _squarePlanarMap.begin(); ChiralSearch != _squarePlanarMap.end(); ChiralSearch++) {
+      for(ChiralSearch = _squarePlanarMap.begin(); ChiralSearch != _squarePlanarMap.end(); ++ChiralSearch) {
         atom = ChiralSearch->first;
         OBSquarePlanarStereo::Config *sp = ChiralSearch->second;
         if (!sp)
@@ -2054,7 +2054,7 @@ namespace OpenBabel {
 
     OBAtom *atom;
     vector<ExternalBond>::iterator bond;
-    for (bond = _extbond.begin(); bond != _extbond.end(); bond++) {
+    for (bond = _extbond.begin(); bond != _extbond.end(); ++bond) {
       // create new dummy atom
       atom = mol.NewAtom();
       atom->SetAtomicNum(0);
@@ -2118,7 +2118,6 @@ namespace OpenBabel {
         _updown = BondDownChar;
         _ptr++;
         break;
-        _ptr++;
       case '\\': // chiral, but _order still == 1
         _updown = BondUpChar;
         _ptr++;
@@ -2145,7 +2144,7 @@ namespace OpenBabel {
     //check for dot disconnect closures
     vector<ExternalBond>::iterator bond;
     int upDown, bondOrder;
-    for (bond = _extbond.begin(); bond != _extbond.end(); bond++) {
+    for (bond = _extbond.begin(); bond != _extbond.end(); ++bond) {
 
       if (bond->digit == digit) {
         upDown = (_updown > bond->updown) ? _updown : bond->updown;
@@ -2187,6 +2186,13 @@ namespace OpenBabel {
   {
     int digit;
     char str[10];
+
+    // The ring closure must be associated with a 'prev' atom
+    OBAtom* prevatom = mol.GetAtom(_prev);
+    if (!prevatom) {
+      obErrorLog.ThrowError(__FUNCTION__,"Number not parsed correctly as a ring bond", obWarning);
+      return false;
+    }
 
     if (*_ptr == '%')
       {
@@ -2281,13 +2287,7 @@ namespace OpenBabel {
     ringClosure.updown = _updown;
 
     OBAtom* atom = mol.GetAtom(_prev);
-    if (!atom) {
-      obErrorLog.ThrowError(__FUNCTION__,"Number not parsed correctly as a ring bond", obWarning);
-      return false;
-    }
-
     ringClosure.numConnections = NumConnections(atom); //store position to insert closure bond
-
     _rclose.push_back(ringClosure);
     _order = 1;
     _updown = ' ';
@@ -2414,7 +2414,7 @@ namespace OpenBabel {
   OBCanSmiNode::~OBCanSmiNode()
   {
     vector<OBCanSmiNode*>::iterator i;
-    for (i = _child_nodes.begin();i != _child_nodes.end();i++)
+    for (i = _child_nodes.begin();i != _child_nodes.end();++i)
       delete (*i);
   }
 
@@ -2561,7 +2561,7 @@ namespace OpenBabel {
           idx++; //increment idx and start over if digit is already used
           j = _vopen.begin();
         }
-      else j++;
+      else ++j;
 
     return(idx);
   }
@@ -2634,7 +2634,7 @@ namespace OpenBabel {
       if (nbr_atom->HasDoubleBond())
         // Check whether the nbr_atom is a begin or end in any CisTransStereo. If so,
         // then the ring opening already had the symbol.
-        for (ChiralSearch = _cistrans.begin(); ChiralSearch != _cistrans.end(); ChiralSearch++) {
+        for (ChiralSearch = _cistrans.begin(); ChiralSearch != _cistrans.end(); ++ChiralSearch) {
           OBCisTransStereo::Config cfg = ChiralSearch->GetConfig();
           if (nbr_atom->GetId() == cfg.begin || nbr_atom->GetId() == cfg.end) {
             // I don't think I need to check whether it has a bond with atom
@@ -2678,7 +2678,7 @@ namespace OpenBabel {
       if (nbr_atom->HasDoubleBond())
         // Check whether the atom is a center in any CisTransStereo. If so,#
         // then this CisTransStereo takes precedence over any other
-        for (ChiralSearch = _cistrans.begin(); ChiralSearch != _cistrans.end(); ChiralSearch++)
+        for (ChiralSearch = _cistrans.begin(); ChiralSearch != _cistrans.end(); ++ChiralSearch)
         {
           OBCisTransStereo::Config cfg = ChiralSearch->GetConfig();
           if (atom->GetId() == cfg.begin || atom->GetId() == cfg.end) {
@@ -2712,7 +2712,7 @@ namespace OpenBabel {
         centeratom = nbr_atom->GetId();
       }
 
-      for (ChiralSearch = _unvisited_cistrans.begin(); ChiralSearch != _unvisited_cistrans.end(); ChiralSearch++)
+      for (ChiralSearch = _unvisited_cistrans.begin(); ChiralSearch != _unvisited_cistrans.end(); ++ChiralSearch)
       {
         OBCisTransStereo::Config cfg = ChiralSearch->GetConfig(OBStereo::ShapeU);
         lookup = std::find(cfg.refs.begin(), cfg.refs.end(), endatom);
@@ -2943,7 +2943,7 @@ namespace OpenBabel {
         vector<pair<int,pair<OBAtom *,OBBond *> > >::iterator externalBond;
 
         if (externalBonds)
-          for(externalBond = externalBonds->begin();externalBond != externalBonds->end();externalBond++) {
+          for(externalBond = externalBonds->begin();externalBond != externalBonds->end();++externalBond) {
             if (externalBond->second.first == atom) {
               external = true;
               strcpy(symbol,"&");
@@ -3497,7 +3497,7 @@ namespace OpenBabel {
           j = _vopen.begin();             // reset iterator
         }
         else
-          j++;
+          ++j;
       }
     }
 
@@ -3649,7 +3649,7 @@ namespace OpenBabel {
       // (We got the canonical ring-closure list earlier.)
       if (!vclose_bonds.empty()) {
         vector<OBBondClosureInfo>::iterator i;
-        for (i = vclose_bonds.begin();i != vclose_bonds.end();i++) {
+        for (i = vclose_bonds.begin();i != vclose_bonds.end();++i) {
           OBBond *bond = i->bond;
           OBAtom *nbr = bond->GetNbrAtom(atom);
           chiral_neighbors.push_back(nbr);
@@ -3678,7 +3678,7 @@ namespace OpenBabel {
     // Write ring-closure digits
     if (!vclose_bonds.empty()) {
       vector<OBBondClosureInfo>::iterator bci;
-      for (bci = vclose_bonds.begin();bci != vclose_bonds.end();bci++) {
+      for (bci = vclose_bonds.begin();bci != vclose_bonds.end();++bci) {
         if (!bci->is_open)
         { // Ring closure
           char bs[2] = {'\0', '\0'};
@@ -4144,18 +4144,6 @@ namespace OpenBabel {
   {
     bool canonical = pConv->IsOption("c")!=NULL;
 
-    // This is a hack to prevent recursion problems.
-    //  we still need to fix the underlying problem -GRH
-    if (mol.NumAtoms() > 1000) {
-      stringstream errorMsg;
-      errorMsg <<
-        "SMILES Conversion failed: Molecule is too large to convert."
-        "Open Babel is currently limited to 1000 atoms." << endl;
-      errorMsg << "  Molecule size: " << mol.NumAtoms() << " atoms " << endl;
-      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
-      return;
-    }
-
     OBMol2Cansmi m2s;
     m2s.Init(canonical, pConv);
     // GRH Added 2008-06-05
@@ -4265,18 +4253,6 @@ namespace OpenBabel {
     char buffer[BUFF_SIZE];
     *buffer = '\0'; // clear the buffer
 
-    // This is a hack to prevent recursion problems.
-    //  we still need to fix the underlying problem (mainly chiral centers) -GRH
-    if (pmol->NumAtoms() > 1000) {
-      stringstream errorMsg;
-      errorMsg <<
-        "SMILES Conversion failed: Molecule is too large to convert."
-        "Open Babel is currently limited to 1000 atoms." << endl;
-      errorMsg << "  Molecule size: " << pmol->NumAtoms() << " atoms " << endl;
-      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
-      return(false);
-    }
-
     // If there is data attached called "SMILES_Fragment", then it's
     // an ascii OBBitVec, representing the atoms of a fragment.  The
     // SMILES generated will only include these fragment atoms.
@@ -4384,18 +4360,6 @@ namespace OpenBabel {
     char buffer[BUFF_SIZE];
     OBMol2Cansmi m2s;
 
-    // This is a hack to prevent recursion problems.
-    //  we still need to fix the underlying problem -GRH
-    if (mol.NumAtoms() > 1000)
-      {
-        stringstream errorMsg;
-        errorMsg << "SMILES Conversion failed: Molecule is too large to convert. Open Babel is currently limited to 1000 atoms." << endl;
-        errorMsg << "  Molecule size: " << mol.NumAtoms() << " atoms " << endl;
-        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
-        return(false);
-      }
-
-    // Write the SMILES in a FIX with canonical order
     m2s.Init(true, pConv);
     // From 2.1 code.
     m2s.CorrectAromaticAmineCharge(mol);
