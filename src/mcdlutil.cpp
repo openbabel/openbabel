@@ -41,7 +41,6 @@ namespace OpenBabel {
 
   // Forward declarations
   class TEditedMolecule;
-  bool restoreDoubleBonds(TEditedMolecule& sm, bool putEither);
 
   typedef struct adjustedlist{
     int nb;
@@ -614,6 +613,7 @@ namespace OpenBabel {
     result->at[0]=this->at[0];
     result->at[1]=this->at[1];
     result->bstereo=this->bstereo;
+    result->bstereo_refs=this->bstereo_refs;
     result->db=this->db;
     result->special=this->special;
     result->tb=this->tb;
@@ -776,6 +776,7 @@ namespace OpenBabel {
     int singleAtomicDescriptor(int aNumber,int bNumber, bool useEnumerator);
     int hasOverlapped(double delta, bool findFirst);
     int getNH(int atomNo);
+    void correctDblBondStereo();
   private:
     bool aromatic(int cycleSize, const std::vector<int> bondList, std::vector<int>& arom);
     void twoAtomUnitVector(int na1, int na2, double & xv, double & yv, const std::vector<int>atomDefine);
@@ -3022,6 +3023,92 @@ namespace OpenBabel {
     };
   };
 
+  int sproduct(TSimpleMolecule & sm, int br, int i1, int i2) {
+    /*
+      BR-central bond's number in array BOND, I1, I2-bond's numbers, which are
+      connected to different atoms of BR. The BR bond is treated by the subroutine
+      as a strait line. On return SPRODUCT has value 1 if both I1 and I2 lies at
+      one side of strait line (Z), 2-if at different side (E) and 0 if I1 or I2
+      is collinear with BR */
+
+    int crAN[4];  //0-th element will not be used-translation from Delphi
+    double crRx[4];
+    double crRy[4];
+    int i;
+    double l1,l2;
+    int result=0;
+
+    crAN[0]=sm.getBond(br)->at[0];
+    crAN[1]=sm.getBond(br)->at[1];
+    if ((sm.getBond(i1)->at[0] != crAN[0]) && (sm.getBond(i1)->at[0] != crAN[1])) {
+      crAN[2]=sm.getBond(i1)->at[0];
+    } else {
+      crAN[2]=sm.getBond(i1)->at[1];
+    };
+    if ((sm.getBond(i2)->at[0] != crAN[0]) && (sm.getBond(i2)->at[0] != crAN[1])) {
+      crAN[3]=sm.getBond(i2)->at[0];
+    } else {
+      crAN[3]=sm.getBond(i2)->at[1];
+    };
+    for (i=0; i<4; i++) {
+      crRx[i]=sm.getAtom(crAN[i])->rx;
+      crRy[i]=sm.getAtom(crAN[i])->ry;
+    };
+    for (i=1; i<4; i++) {
+      crRx[i]=crRx[i]-crRx[0];
+      crRy[i]=crRy[i]-crRy[0];
+    };
+    l1=crRx[1]*crRy[2]-crRy[1]*crRx[2];
+    l2=crRx[1]*crRy[3]-crRy[1]*crRx[3];
+    if ((l1 == 0) || (l2 == 0)) return result;
+    if (((l1 > 0) && (l2 > 0)) || ((l1 < 0) && (l2 < 0))) result=1; else result=2;
+    return result;
+  };
+
+  void TSimpleMolecule::correctDblBondStereo() {
+    TSimpleMolecule &sm = *this;
+    int i,j,an1,an2,bn1,bn2,n;
+
+    //Flip bonds to show Z/E orientation
+    for (i=0; i<sm.nBonds(); i++) {
+      TSingleBond* dblbond = sm.getBond(i);
+      if (dblbond->bstereo_refs.empty())
+        continue;
+    
+      an1 = dblbond->at[0];
+      an2 = dblbond->at[1];
+
+      int ref_atom1 = 0;
+      if (dblbond->bstereo_refs[ref_atom1]==OBStereo::ImplicitRef)
+        ref_atom1 = 1;
+      int ref_atom2 = 2;
+      if (dblbond->bstereo_refs[ref_atom2]==OBStereo::ImplicitRef)
+        ref_atom2 = 3;
+      short int cistrans=1; // cistrans of 1 => cis, 2 => trans
+      if ((ref_atom2 - ref_atom1) == 2)
+        cistrans=2;
+
+      bn1=-1; bn2=-1;
+      for (j=0; j<sm.nBonds(); ++j) {
+        TSingleBond* bond = sm.getBond(j);
+        if ((bond->at[0]==an1 && bond->at[1]!=an2) || (bond->at[0]==an2 && bond->at[1]!=an1) ||
+            (bond->at[1]==an1 && bond->at[0]!=an2) || (bond->at[1]==an2 && bond->at[0]!=an1)) {
+          // This is one of the single bonds around the dbl bond
+          if (bond->at[0]==dblbond->bstereo_refs[ref_atom1] || bond->at[1]==dblbond->bstereo_refs[ref_atom1])
+            bn1=j;
+          if (bond->at[0]==dblbond->bstereo_refs[ref_atom2] || bond->at[1]==dblbond->bstereo_refs[ref_atom2])
+            bn2=j;
+        }
+      }
+
+      if ((bn1 >= 0) && (bn2 >= 0)) {
+        n = sproduct(sm,i,bn1,bn2); // 1 for cis, 2 for trans
+        if (n != cistrans)
+          sm.flipSmall(i);
+      }
+    }
+  }
+
   bool compareAtoms(int a1, int a2, const std::vector<std::vector<int> *> aeqList) {
     std::vector<int> * l1;
     std::vector<int> * l2;
@@ -3275,30 +3362,38 @@ namespace OpenBabel {
     if (result > 0)  {  //multiple bonds rotation...
       smCopy->moleculeCopy(*this);
 
-      for (i=0; i<rotBondList.size(); i++) rotBondList[i]=0;
-      for (i=0; i<nBonds(); i++) if (getBond(i)->db == 0) {
-          at1=getBond(i)->at[0];
-          at2=getBond(i)->at[1];
-          if ((getAtom(at1)->nb >= 2) && (getAtom(at2)->nb >=2)) {
-            //checking if greter 1
-            test=false;
-            if (getAtom(at1)->nb == 3) {
-              test=true;
-              for (j=0; j<getAtom(at1)->nb; j++) {
-                k=getAtom(at1)->ac[j];
-                if ((k != at2) && (getAtom(k)->nb > 1)) test=false;
-              }
+      for (i=0; i<rotBondList.size(); i++)
+        rotBondList[i]=0;
+      for (i=0; i<nBonds(); i++) {
+        TSingleBond* bond = getBond(i);
+        if (bond->db != 0)
+          continue;
+        // Skip if it's a dbl bond with defined CT stereo as this will already have been set
+        if (bond->tb == 2 && !bond->bstereo_refs.empty())
+          continue;
+
+        at1 = bond->at[0];
+        at2 = bond->at[1];
+        if ((getAtom(at1)->nb >= 2) && (getAtom(at2)->nb >=2)) {
+          //checking if greter 1
+          test=false;
+          if (getAtom(at1)->nb == 3) {
+            test=true;
+            for (j=0; j<getAtom(at1)->nb; j++) {
+              k=getAtom(at1)->ac[j];
+              if ((k != at2) && (getAtom(k)->nb > 1)) test=false;
             }
-            if ((! test) && (getAtom(at2)->nb == 3)) {
-              test=true;
-              for (j=0; j<getAtom(at2)->nb; j++) {
-                k=getAtom(at2)->ac[j];
-                if ((k != at1) && (getAtom(k)->nb > 1)) test=false;
-              }
-            }
-            if (! test) rotBondList[i]=1;
           }
+          if ((! test) && (getAtom(at2)->nb == 3)) {
+            test=true;
+            for (j=0; j<getAtom(at2)->nb; j++) {
+              k=getAtom(at2)->ac[j];
+              if ((k != at1) && (getAtom(k)->nb > 1)) test=false;
+            }
+          }
+          if (! test) rotBondList[i]=1;
         }
+      }
 
       vector<int> inner_bonds;
       vector<int> remainder;
@@ -5825,8 +5920,7 @@ namespace OpenBabel {
         sm->refofs=smIn.refofs;
         n=coordinatesPrepare(*sm,n,-1);
 
-        //Contrary to Delphi project - block of storing double-bonds is absent here.
-        //I need to create AnalizeZE rpocedure to handle double-bond
+        sm->correctDblBondStereo();
         nOverlapped=sm->correctOverlapped();
         if (nOverlapped < nOverlappedMin) {
           smCopy2.moleculeCopy(*sm);
@@ -5957,7 +6051,6 @@ namespace OpenBabel {
 
     TemplateRedraw tr;
     tr.redrawFine(sm);
-    restoreDoubleBonds(sm,false);
     for (unsigned int i=1; i<=pmol->NumAtoms(); i++) {
       atom=pmol->GetAtom(i);
       atom->SetVector(sm.getAtom(i-1)->rx,-sm.getAtom(i-1)->ry,0.0);
@@ -5973,7 +6066,6 @@ namespace OpenBabel {
 
     TemplateRedraw tr;
     tr.redrawFine(sm);
-    restoreDoubleBonds(sm,false);
     for (unsigned int i=1; i<=pmol->NumAtoms(); i++) {
       atom=pmol->GetAtom(i);
       atom->SetVector(sm.getAtom(i-1)->rx,-sm.getAtom(i-1)->ry,0.0);
@@ -6556,49 +6648,6 @@ namespace OpenBabel {
     return result;
   };
 
-
-  int sproduct(TSimpleMolecule & sm, int br, int i1, int i2) {
-    /*
-      BR-central bond's number in array BOND, I1, I2-bond's numbers, which are
-      connected to different atoms of BR. The BR bond is treated by the subroutine
-      as a strait line. On return SPRODUCT has value 1 if both I1 and I2 lies at
-      one side of strait line (Z), 2-if at different side (E) and 0 if I1 or I2
-      is collinear with BR */
-
-    int crAN[4];  //0-th element will not be used-translation from Delphi
-    double crRx[4];
-    double crRy[4];
-    int i;
-    double l1,l2;
-    int result=0;
-
-    crAN[0]=sm.getBond(br)->at[0];
-    crAN[1]=sm.getBond(br)->at[1];
-    if ((sm.getBond(i1)->at[0] != crAN[0]) && (sm.getBond(i1)->at[0] != crAN[1])) {
-      crAN[2]=sm.getBond(i1)->at[0];
-    } else {
-      crAN[2]=sm.getBond(i1)->at[1];
-    };
-    if ((sm.getBond(i2)->at[0] != crAN[0]) && (sm.getBond(i2)->at[0] != crAN[1])) {
-      crAN[3]=sm.getBond(i2)->at[0];
-    } else {
-      crAN[3]=sm.getBond(i2)->at[1];
-    };
-    for (i=0; i<4; i++) {
-      crRx[i]=sm.getAtom(crAN[i])->rx;
-      crRy[i]=sm.getAtom(crAN[i])->ry;
-    };
-    for (i=1; i<4; i++) {
-      crRx[i]=crRx[i]-crRx[0];
-      crRy[i]=crRy[i]-crRy[0];
-    };
-    l1=crRx[1]*crRy[2]-crRy[1]*crRx[2];
-    l2=crRx[1]*crRy[3]-crRy[1]*crRx[3];
-    if ((l1 == 0) || (l2 == 0)) return result;
-    if (((l1 > 0) && (l2 > 0)) || ((l1 < 0) && (l2 < 0))) result=1; else result=2;
-    return result;
-  };
-
   bool bondEquivalent(int bn1, int bn2, const std::vector<int> eqList, TSimpleMolecule & sm) {
     bool result=false;
     int n1,n2,n3,n4;
@@ -6943,215 +6992,6 @@ namespace OpenBabel {
           };
         };
       };
-    };
-  };
-
-  bool restoreDoubleBonds(TEditedMolecule& sm, bool putEither/*, const std::vector<int>eqList*/) {
-    bool hasStereoDouble=false;
-    bool hasAcyclic=false;
-    bool result=false;
-    int i,j,an1,an2,bn1,bn2,n;
-
-    for (i=0; i<sm.nBonds(); i++) {
-      if (!sm.getBond(i)->bstereo_refs.empty()) hasStereoDouble = true;
-      if (sm.getBond(i)->db <=1 ) hasAcyclic=true;
-    };
-    //Flip bonds to show Z/E orientation
-    if (hasStereoDouble) for (i=0; i<sm.nBonds(); i++) if (!sm.getBond(i)->bstereo_refs.empty()) {
-
-          TSingleBond* dblbond = sm.getBond(i);
-          an1 = dblbond->at[0];
-          an2 = dblbond->at[1];
-
-          int ref_atom1 = 0;
-          if (dblbond->bstereo_refs[ref_atom1]==OBStereo::ImplicitRef) ref_atom1 = 1;
-          int ref_atom2 = 2;
-          if (dblbond->bstereo_refs[ref_atom2]==OBStereo::ImplicitRef) ref_atom2 = 3;
-          short int cistrans=1; // cistrans of 1 => cis, 2 => trans
-          if ((ref_atom2 - ref_atom1) == 2)
-            cistrans=2;
-
-          bn1=-1; bn2=-1;
-          for (j=0; j<sm.nBonds(); ++j) {
-            TSingleBond* bond = sm.getBond(j);
-            if ((bond->at[0]==an1 && bond->at[1]!=an2) || (bond->at[0]==an2 && bond->at[1]!=an1) ||
-                (bond->at[1]==an1 && bond->at[0]!=an2) || (bond->at[1]==an2 && bond->at[0]!=an1))
-              { // This is one of the single bonds around the dbl bond
-                if (bond->at[0]==dblbond->bstereo_refs[ref_atom1] || bond->at[1]==dblbond->bstereo_refs[ref_atom1])
-                  bn1=j;
-                if (bond->at[0]==dblbond->bstereo_refs[ref_atom2] || bond->at[1]==dblbond->bstereo_refs[ref_atom2])
-                  bn2=j;
-              }
-          }
-
-          if ((bn1 >= 0) && (bn2 >= 0)) {
-            n=sproduct(sm,i,bn1,bn2); // 1 for cis, 2 for trans
-            if (n!=cistrans) {
-              sm.flipSmall(i);
-              result=true;
-            };
-          };
-        };
-
-    //Put Either bonds where no stereodescriptors
-    //Exception v etom bloke. Iskat' oshibku
-    /*
-      if (hasStereoDouble || (putEither && hasAcyclic)) {
-      if (equivalentList != null) eqList=equivalentList; else eqList=new Listar(0);
-      ChainRotate.makeEquivalentList(sm,eqList,false);
-      for (i=1; i<=sm.fBond.maxIndex(); i++) if ((sm.fBond.getTB(i) == 2)  && (sm.fBond.getDB(i) < 2) && (sm.fBond.getBStereo(i) == 0)) {
-      an1=sm.fBond.getAT(i,1);
-      an2=sm.fBond.getAT(i,2);
-      test=(sm.fAtom.getNB(an1) > 1) && (sm.fAtom.getNB(an2) > 1);
-      n=-1;
-      if (test) for (j=1; j<=sm.fAtom.getNB(an1); j++) {  //if equivalent substitutors are at the first atom
-      k=sm.fAtom.getAC(an1,j);
-      if (k != an2) {
-      if (n < 0) n=eqList.getValue(k); else {
-      if (n == eqList.getValue(k)) test=false;
-      };
-      };
-      };
-      n=-1;
-      if (test) for (j=1; j<=sm.fAtom.getNB(an2); j++) {  //if equivalent substitutors are at the second atom
-      k=sm.fAtom.getAC(an2,j);
-      if (k != an1) {
-      if (n < 0) n=eqList.getValue(k); else {
-      if (n == eqList.getValue(k)) test=false;
-      };
-      };
-      };
-      if (test) {  //equivalent substitutors were not found-make bond either
-      at1=0; at2=0;
-      for (j=1; j<=sm.fAtom.getNB(an1); j++) {
-      k=sm.fAtom.getAC(an1,j);
-      if ((k != an2) && (sm.fAtom.getAStereo(k) == 0)) {
-      at2=k;
-      if (sm.fAtom.getNB(k) == 1) at1=k;
-      };
-      };
-      if (at1 == 0) {
-      for (j=1; j<=sm.fAtom.getNB(an2); j++) {
-      k=sm.fAtom.getAC(an2,j);
-      if ((k != an1) && (sm.fAtom.getAStereo(k) == 0)) {
-      at2=k;
-      if (sm.fAtom.getNB(k) == 1) at1=k;
-      };
-      };
-      n=an2;
-      } else n=an1;
-      if (at1 == 0) at1=at2;
-      //Search for bond between at1 and n
-      for (j=1; j<=sm.fBond.maxIndex(); j++) if (((sm.fBond.getAT(j,1) == at1) && (sm.fBond.getAT(j,2) == n)) || ((sm.fBond.getAT(j,2) == at1) && (sm.fBond.getAT(j,1) == n))) {
-      sm.fBond.setTB(j,(byte)11);
-      break;
-      };
-      };
-      };
-      };
-    */
-    return result;
-  }
-
-  void implementBondStereo(const std::vector<int> iA1, const std::vector<int> iA2, std::vector<double>& rx, std::vector<double>& ry, int acount, int bcount, std::string bstereo) {
-    TEditedMolecule sm;
-    string ss,s,sF,sa1,sa2,temp;
-    int i,n1,n2,k,bn;
-    bool hasStereo=false;
-    bool coorChanged=false;
-    if (bstereo.length() == 0) return;
-    sm.readConnectionMatrix(iA1,iA2,rx,ry,acount,bcount);
-    ss=bstereo;
-    bstereo=addZeroeth(bstereo,"0");
-    while (bstereo.length() >0 ) {
-      s="";
-      n1=indexOf(bstereo,";");
-      if (n1 > 0) {
-        s=bstereo.substr(0,n1);
-        if (n1 < (bstereo.length()-1)) bstereo=bstereo.substr(n1+1); else bstereo="";
-      } else {
-        s=bstereo;
-        bstereo="";
-      };
-      //analize s
-      if (s.length() > 0) {
-        //save data in Bstereo... Bond reconfiguring is possible only after re-drawing
-        //      CommonRout.RemoveSpaces(s);
-        n1=indexOf(s,",");
-        if (n1 > 0) {
-          temp=s.substr(0,n1);
-          s=s.substr(n1+1);
-          n1=indexOf(temp,"d");
-          if (n1 < 0) n1=indexOf(temp,"D");
-          if (n1 > 0) {
-            n2=atoi(temp.substr(0,n1).c_str());
-            n1=atoi(temp.substr(n1+1).c_str());
-            //search for bond...
-            bn=-1;
-            for (i=0; i<sm.nBonds(); i++) if (((sm.getBond(i)->at[0] == (n1-1)) && (sm.getBond(i)->at[1] == (n2-1))) || ((sm.getBond(i)->at[0] == (n2-1)) && (sm.getBond(i)->at[1] == (n1-1)))) {
-                bn=i;
-                break;
-              };
-            n1=-1;
-            n2=-1;
-            k=indexOf(s,",");
-            sF="";
-            if (k > 0)  {
-              sF=s.substr(0,k);
-              s=s.substr(k+1);  //removing 1-st fragment, added to an1
-            };
-            k=indexOf(s,",");
-            sa1=""; sa2="";
-            if (k > 0) {                    //and analizing of order of two remaining fragments, connected to an2
-              sa1=s.substr(0,k);
-              s=s.substr(k+1);
-              try {
-                n1=atoi(sa1.c_str());
-                if (n1 == 0) {
-                  n1=-1;
-                  sa1="00";//"zz";
-                };
-              } catch (exception ex) {
-                n1=-1;
-              };
-            };
-            k=indexOf(s,",");
-            if (k > 0) {
-              sa2=s.substr(0,k);
-              s=s.substr(k+1);
-              try {
-                n2=atoi(sa2.c_str());
-                if (n2 == 0) {
-                  n2=-1;
-                  sa2="00";//"zz";
-                };
-              } catch (exception ex) {
-                n2=-1;
-              };
-            };
-            if (bn >= 0) {
-              if ((n1 < 0) && (n2 < 0)) {
-                if (compareStringsNumbers(sa1,sa2) > 0) k=1; else k=2;
-              } else {
-                if (n1 < 0) k=1; else //E
-                  if (n2 < 0) k=2; else { //Z
-                    if (n1 < n2) k=2; else k=1;
-                  };
-              };
-              if (sF.compare("0") == 0) k=3-k;
-              sm.getBond(bn)->bstereo=k;
-              hasStereo=true;
-            };
-          };
-        };
-      };
-    };
-    if (hasStereo) {
-      coorChanged=restoreDoubleBonds(sm,false);
-      if (coorChanged) for (i=0; i<sm.nAtoms(); i++) {
-          rx[i]=sm.getAtom(i)->rx;
-          ry[i]=sm.getAtom(i)->ry;
-        };
     };
   };
 
