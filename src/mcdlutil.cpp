@@ -776,7 +776,7 @@ namespace OpenBabel {
     int singleAtomicDescriptor(int aNumber,int bNumber, bool useEnumerator);
     int hasOverlapped(double delta, bool findFirst);
     int getNH(int atomNo);
-    void correctDblBondStereo();
+    bool correctDblBondStereo();
   private:
     bool aromatic(int cycleSize, const std::vector<int> bondList, std::vector<int>& arom);
     void twoAtomUnitVector(int na1, int na2, double & xv, double & yv, const std::vector<int>atomDefine);
@@ -3065,9 +3065,10 @@ namespace OpenBabel {
     return result;
   };
 
-  void TSimpleMolecule::correctDblBondStereo() {
+  bool TSimpleMolecule::correctDblBondStereo() {
     TSimpleMolecule &sm = *this;
     int i,j,an1,an2,bn1,bn2,n;
+    bool result = false;
 
     //Flip bonds to show Z/E orientation
     for (i=0; i<sm.nBonds(); i++) {
@@ -3103,10 +3104,13 @@ namespace OpenBabel {
 
       if ((bn1 >= 0) && (bn2 >= 0)) {
         n = sproduct(sm,i,bn1,bn2); // 1 for cis, 2 for trans
-        if (n != cistrans)
+        if (n != cistrans) {
           sm.flipSmall(i);
+          result = true;
+        }
       }
     }
+    return result;
   }
 
   bool compareAtoms(int a1, int a2, const std::vector<std::vector<int> *> aeqList) {
@@ -6992,6 +6996,109 @@ namespace OpenBabel {
           };
         };
       };
+    };
+  };
+
+  // The following function is used by MCDLformat.cpp
+  void implementBondStereo(const std::vector<int> iA1, const std::vector<int> iA2, std::vector<double>& rx, std::vector<double>& ry, int acount, int bcount, std::string bstereo) {
+    TEditedMolecule sm;
+    string ss,s,sF,sa1,sa2,temp;
+    int i,n1,n2,k,bn;
+    bool hasStereo=false;
+    bool coorChanged=false;
+    if (bstereo.length() == 0) return;
+    sm.readConnectionMatrix(iA1,iA2,rx,ry,acount,bcount);
+    ss=bstereo;
+    bstereo=addZeroeth(bstereo,"0");
+    while (bstereo.length() >0 ) {
+      s="";
+      n1=indexOf(bstereo,";");
+      if (n1 > 0) {
+        s=bstereo.substr(0,n1);
+        if (n1 < (bstereo.length()-1)) bstereo=bstereo.substr(n1+1); else bstereo="";
+      } else {
+        s=bstereo;
+        bstereo="";
+      };
+      //analize s
+      if (s.length() > 0) {
+        //save data in Bstereo... Bond reconfiguring is possible only after re-drawing
+        //      CommonRout.RemoveSpaces(s);
+        n1=indexOf(s,",");
+        if (n1 > 0) {
+          temp=s.substr(0,n1);
+          s=s.substr(n1+1);
+          n1=indexOf(temp,"d");
+          if (n1 < 0) n1=indexOf(temp,"D");
+          if (n1 > 0) {
+            n2=atoi(temp.substr(0,n1).c_str());
+            n1=atoi(temp.substr(n1+1).c_str());
+            //search for bond...
+            bn=-1;
+            for (i=0; i<sm.nBonds(); i++) if (((sm.getBond(i)->at[0] == (n1-1)) && (sm.getBond(i)->at[1] == (n2-1))) || ((sm.getBond(i)->at[0] == (n2-1)) && (sm.getBond(i)->at[1] == (n1-1)))) {
+                bn=i;
+                break;
+              };
+            n1=-1;
+            n2=-1;
+            k=indexOf(s,",");
+            sF="";
+            if (k > 0)  {
+              sF=s.substr(0,k);
+              s=s.substr(k+1);  //removing 1-st fragment, added to an1
+            };
+            k=indexOf(s,",");
+            sa1=""; sa2="";
+            if (k > 0) {                    //and analizing of order of two remaining fragments, connected to an2
+              sa1=s.substr(0,k);
+              s=s.substr(k+1);
+              try {
+                n1=atoi(sa1.c_str());
+                if (n1 == 0) {
+                  n1=-1;
+                  sa1="00";//"zz";
+                };
+              } catch (exception ex) {
+                n1=-1;
+              };
+            };
+            k=indexOf(s,",");
+            if (k > 0) {
+              sa2=s.substr(0,k);
+              s=s.substr(k+1);
+              try {
+                n2=atoi(sa2.c_str());
+                if (n2 == 0) {
+                  n2=-1;
+                  sa2="00";//"zz";
+                };
+              } catch (exception ex) {
+                n2=-1;
+              };
+            };
+            if (bn >= 0) {
+              if ((n1 < 0) && (n2 < 0)) {
+                if (compareStringsNumbers(sa1,sa2) > 0) k=1; else k=2;
+              } else {
+                if (n1 < 0) k=1; else //E
+                  if (n2 < 0) k=2; else { //Z
+                    if (n1 < n2) k=2; else k=1;
+                  };
+              };
+              if (sF.compare("0") == 0) k=3-k;
+              sm.getBond(bn)->bstereo=k;
+              hasStereo=true;
+            };
+          };
+        };
+      };
+    };
+    if (hasStereo) {
+      coorChanged = sm.correctDblBondStereo();
+      if (coorChanged) for (i=0; i<sm.nAtoms(); i++) {
+          rx[i]=sm.getAtom(i)->rx;
+          ry[i]=sm.getAtom(i)->ry;
+        };
     };
   };
 
