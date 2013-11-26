@@ -65,6 +65,9 @@
 #include <openbabel/conformersearch.h>
 #include <openbabel/math/align.h>
 %}
+#else
+%ignore OpenBabel::OBForceField::FastRotorSearch;
+%ignore OpenBabel::OBForceField::DiverseConfGen;
 #endif
 
 %include "std_list.i"
