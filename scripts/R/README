@@ -1,0 +1,51 @@
+OpenBabel R bindings
+=====================
+
+This module provides an R interface to the Open Babel chemistry library. 
+
+Open Babel is a chemical toolbox designed to speak the many languages
+of chemical data. It's an open, collaborative project allowing anyone
+to search, convert, analyze, or store data from molecular modeling,
+chemistry, solid-state materials, biochemistry, or related areas.
+
+The code is generated using the SWIG package and provides access to
+almost all of the Open Babel interfaces via R, including the base
+classes OBMol, OBAtom, OBBond, and OBResidue, as well as the
+conversion framework OBConversion, fingerprints, and descriptors.
+
+
+There are two ways to use this binding. You can either build an 
+R package which wraps the C++ library (see examples directory for such
+a package) and then import it into your R code, or you can use the 
+generated openbabelR.R and openbabel-R.cpp files directly in your 
+own package.
+
+To use the first Method, copy the openbabelR directory from the examples 
+directory somewhere. In the R subdirectory place a copy of or a link to
+the openbabelR.R file (found in <build dir>/scripts/R/openbabelR.R).
+In the src subdirectory, do the same for the openbabel-R.cpp file (found
+in <source dir>/scripts/R/openbabel-R.cpp). You then need to edit
+the file src/Makevars to point to the open babel include and lib
+directories. Finally, install the package with "R CMD INSTALL openbabelR".
+You can then use this library in your code by calling "library(openbabelR)".
+
+To use the second method, copy the .R and .cpp files into an existing R
+package, in the same way as the first method. You will also need to 
+edit the .R file to replace all occurances of "PACKAGE=openbabelR"
+with "PACKAGE=<your package name>". I recommend using search and
+replaceAll for this as there are a few thousand occurances.
+You also need to copy the file examples/openbabelR/R/init.R into 
+your packages R directory. The key thing is that the library be
+loaded with LOCAL=FALSE, otherwise openbabel will not be able to 
+access any of its plugins.
+
+Finally, if OpenBabel has not been installed globally, ensure
+the following environment variables are set:
+
+export LD_LIBRARY_PATH=<openbabel build dir>/lib
+export BABEL_DATADIR=<openbabel source dir>/data
+export BABEL_LIBDIR=$LD_LIBRARY_PATH
+
+You can test the first method with the test.R script in the 
+examples directory. Run is as: R --vanilla --slave < test.R .
+
