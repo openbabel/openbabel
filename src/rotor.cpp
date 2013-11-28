@@ -442,7 +442,7 @@ namespace OpenBabel
   OBRotorList::OBRotorList()
   {
     _rotor.clear();
-    _quiet=false;
+    _quiet=true;
     _removesym=true;
   }
 
