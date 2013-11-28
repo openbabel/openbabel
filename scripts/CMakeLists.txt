@@ -505,7 +505,10 @@ if (DO_PHP_BINDINGS)
           MAIN_DEPENDENCY openbabel-php.i
       )
     endif (RUN_SWIG)
-
+	
+    # set openbabel.php include path
+    execute_process(COMMAND sed -i -e "s,include_once '\\(.*\\)openbabel.php,include_once '${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}/openbabel.php,g" ${openbabel_SOURCE_DIR}/scripts/php/baphpel.php)
+	
     add_library(bindings_php MODULE ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp)
     # Overriding --no-undefined linker flag, since PHP library should not be linked into extension.
     set(PHP_EXTRA_LINK_FLAGS "-Wl,--unresolved-symbols=ignore-all")
