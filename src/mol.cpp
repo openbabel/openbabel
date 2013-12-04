@@ -1131,7 +1131,6 @@ namespace OpenBabel
     dp->SetValue( sformula );
     dp->SetOrigin( perceived ); // internal generation
     SetData(dp);
-
     return sformula;
   }
 
@@ -1139,17 +1138,15 @@ namespace OpenBabel
   {
     string attr = "Formula";
     OBPairData *dp = (OBPairData *) GetData(attr);
-
     if (dp == NULL)
       {
         dp = new OBPairData;
         dp->SetAttribute(attr);
+        SetData(dp);
       }
     dp->SetValue(molFormula);
     // typically file input, but this needs to be revisited
     dp->SetOrigin(fileformatInput);
-
-    SetData(dp);
   }
 
   void OBMol::SetTotalCharge(int charge)
