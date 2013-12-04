@@ -479,6 +479,14 @@ if (PHP_BINDINGS)
       STRING(REPLACE "\n" "" PHP_CONFIG_INCLUDES "${PHP_CONFIG_INCLUDES}")
       STRING(REPLACE "-I" "" PHP_CONFIG_INCLUDES "${PHP_CONFIG_INCLUDES}")
       STRING(REPLACE " " ";" PHP_CONFIG_INCLUDES "${PHP_CONFIG_INCLUDES}")
+    
+      execute_process(
+      	COMMAND
+      	  ${PHP_CONFIG_EXECUTABLE} --extension-dir
+      	OUTPUT_VARIABLE 
+      	  PHP_EXTENSION_DIR
+      )
+      STRING(REPLACE "\n" "" PHP_EXTENSION_DIR "${PHP_EXTENSION_DIR}")
     endif(PHP_CONFIG_EXECUTABLE)
 
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp OR RUN_SWIG)
@@ -493,10 +501,14 @@ if (DO_PHP_BINDINGS)
     if (RUN_SWIG)
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp
           COMMAND ${SWIG_EXECUTABLE} -php -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp -outdir ${openbabel_SOURCE_DIR}/scripts/php ${openbabel_SOURCE_DIR}/scripts/openbabel-php.i
+          COMMAND sed -i -e's/abstract class OBForceField/class OBForceField/g' -e's/abstract class OBFingerprint/class OBFingerprint/g' -e's/abstract class OBOp/class OBOp/g' -e 's/static function FindType/function FindType/g' ${openbabel_SOURCE_DIR}/scripts/php/openbabel.php
           MAIN_DEPENDENCY openbabel-php.i
       )
     endif (RUN_SWIG)
-
+	
+    # set openbabel.php include path
+    execute_process(COMMAND sed -i -e "s,include_once '\\(.*\\)openbabel.php,include_once '${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}/openbabel.php,g" ${openbabel_SOURCE_DIR}/scripts/php/baphpel.php)
+	
     add_library(bindings_php MODULE ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp)
     # Overriding --no-undefined linker flag, since PHP library should not be linked into extension.
     set(PHP_EXTRA_LINK_FLAGS "-Wl,--unresolved-symbols=ignore-all")
@@ -514,10 +526,13 @@ if (DO_PHP_BINDINGS)
     endif()
 
     install(TARGETS bindings_php
-            LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+            LIBRARY DESTINATION ${PHP_EXTENSION_DIR}
 	    COMPONENT bindings_php)
     install(FILES ${openbabel_SOURCE_DIR}/scripts/php/openbabel.php
             DESTINATION ${LIB_INSTALL_DIR}
+	    COMPONENT bindings_php)
+	install(FILES ${openbabel_SOURCE_DIR}/scripts/php/baphpel.php
+	        DESTINATION ${LIB_INSTALL_DIR}
 	    COMPONENT bindings_php)
 
 endif (DO_PHP_BINDINGS)

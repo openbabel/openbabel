@@ -89,7 +89,7 @@ namespace std {
 %feature("ignore") vector< vector<T> >::rend;
 %feature("ignore") vector< vector<T> >::reserve;
 %feature("ignore") vector< vector<T> >::resize;
-%feature("ignore") vector< vector<T> >::size;
+//%feature("ignore") vector< vector<T> >::size;
 %feature("ignore") vector< vector<T> >::swap;
 %template(vectorv ## name) vector< vector<T> >;
 %enddef
@@ -114,7 +114,7 @@ namespace std {
 %feature("ignore") vector<T>::rend;
 %feature("ignore") vector<T>::reserve;
 %feature("ignore") vector<T>::resize;
-%feature("ignore") vector<T>::size;
+//%feature("ignore") vector<T>::size;
 %feature("ignore") vector<T>::swap;
 %template(vector ## vectorname) vector<T>;
 %enddef
@@ -139,7 +139,7 @@ namespace std {
 %feature("ignore") vector< pair<T1, T2> >::rend;
 %feature("ignore") vector< pair<T1, T2> >::reserve;
 %feature("ignore") vector< pair<T1, T2> >::resize;
-%feature("ignore") vector< pair<T1, T2> >::size;
+//%feature("ignore") vector< pair<T1, T2> >::size;
 %feature("ignore") vector< pair<T1, T2> >::swap;
 %template(vpair ## vectorname) vector< pair<T1, T2> >;
 %enddef
@@ -199,6 +199,7 @@ CAST_GENERICDATA_TO(VectorData)
 CAST_GENERICDATA_TO(VibrationData)
 CAST_GENERICDATA_TO(VirtualBond)
 
+%rename(add)  *::operator+=;
 %ignore *::operator=;
 %ignore *::operator[];
 

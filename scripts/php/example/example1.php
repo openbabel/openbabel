@@ -1,5 +1,5 @@
 <?php
-include_once '/usr/local/libopenbabel.php';
+include_once '/usr/local/lib/openbabel.php';
 
 $obMol = new OBMol;
 
