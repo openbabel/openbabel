@@ -216,18 +216,19 @@ namespace OpenBabel
     double OBMol::np_cross(double a1, double a2, double a3,
                            double b1, double b2, double b3) {
 
-        double cross[3];
+        // double * cross[3];
 
-        cross[0] = a2 * b3
-                 - b2 * a3;
+        // cross[0] = a2 * b3
+        //          - b2 * a3;
 
-        cross[1] = a3 * b1
-                 - b3 * a1;
+        // cross[1] = a3 * b1
+        //          - b3 * a1;
 
-        cross[2] = a1 * b2
-                 - b1 * a2;
+        // cross[2] = a1 * b2
+        //          - b1 * a2;
 
-        return cross;
+        // return cross;
+        return 1;
     }
 
 
@@ -253,65 +254,46 @@ namespace OpenBabel
         // dihedral = math.atan2( np.dot(rb2*b1,b2xb3), np.dot(b1xb2,b2xb3) )
         // return dihedral
 
-        double v1x,v1y,v1z,v2x,v2y,v2z,v3x,v3y,v3z;
-        double c1x,c1y,c1z,c2x,c2y,c2z,c3x,c3y,c3z;
-        double c1mag,c2mag,radang,costheta,m[9];
-        double x,y,z,mag,rotang,sn,cs,t,tx,ty,tz;
+        //calculate the vectors between
 
-        //calculate the torsion angle
+        double b1x = _c[tor[1]]   - _c[tor[0]];
+        double b1y = _c[tor[1]+1] - _c[tor[0]+1];
+        double b1z = _c[tor[1]+2] - _c[tor[0]+2];
 
-        v1x = _c[tor[0]]   - _c[tor[1]];
-        v1y = _c[tor[0]+1] - _c[tor[1]+1];
-        v1z = _c[tor[0]+2] - _c[tor[1]+2];
+        double b2x = _c[tor[2]]   - _c[tor[1]];
+        double b2y = _c[tor[2]+1] - _c[tor[1]+1];
+        double b2z = _c[tor[2]+2] - _c[tor[1]+2];
 
-        v2x = _c[tor[1]]   - _c[tor[2]];
-        v2y = _c[tor[1]+1] - _c[tor[2]+1];
-        v2z = _c[tor[1]+2] - _c[tor[2]+2];
+        double b3x = _c[tor[3]]   - _c[tor[2]];
+        double b3y = _c[tor[3]+1] - _c[tor[2]+1];
+        double b3z = _c[tor[3]+2] - _c[tor[2]+2];
 
-        v3x = _c[tor[2]]   - _c[tor[3]];
-        v3y = _c[tor[2]+1] - _c[tor[3]+1];
-        v3z = _c[tor[2]+2] - _c[tor[3]+2];
-
-        // v1 ~ b1
-        // v2 ~ b2
-        // v3 ~ b3
-
-        rv2 = math.sqrt( np_dot(v2x, v2y, v2z,
-                                v2x, v2y, v2z));
+        double rb2 = sqrt(b2x * b2x + b2y * b2y + b2z * b2z);
 
         // rv2 ~ rb2
 
-        c1x = v1y*v2z - v1z*v2y;
-        c2x = v2y*v3z - v2z*v3y;
-        c3x = c1y*c2z - c1z*c2y;
+        double b2xb3x = b2y * b3z - b3y * b2z;
+        double b2xb3y = b2z * b3x - b3z * b2x;
+        double b2xb3z = b2x * b3y - b3x * b2y;
 
-        c1y = -v1x*v2z + v1z*v2x;
-        c2y = -v2x*v3z + v2z*v3x;
-        c3y = -c1x*c2z + c1z*c2x;
+        double b1xb2x = b1y * b2z - b2y * b1z;
+        double b1xb2y = b1z * b2x - b2z * b1x;
+        double b1xb2z = b1x * b2y - b2x * b1y;
 
-        c1z = v1x*v2y - v1y*v2x;
-        c2z = v2x*v3y - v2y*v3x;
-        c3z = c1x*c2y - c1y*c2x;
+        double y = rb2 * (b1x * b2xb3x +
+                          b1y * b2xb3y +
+                          b1z * b2xb3z);
 
-        c1mag = SQUARE(c1x)+SQUARE(c1y)+SQUARE(c1z);
-        c2mag = SQUARE(c2x)+SQUARE(c2y)+SQUARE(c2z);
-        if (c1mag*c2mag < 0.01)
-          costheta = 1.0; //avoid div by zero error
-        else
-          costheta = (c1x*c2x + c1y*c2y + c1z*c2z)/(sqrt(c1mag*c2mag));
-
-        if (costheta < -0.999999)
-          costheta = -0.999999;
-        if (costheta >  0.999999)
-          costheta =  0.999999;
-
-        if ((v2x*c3x + v2y*c3y + v2z*c3z) > 0.0)
-          radang = -acos(costheta);
-        else
-          radang = acos(costheta);
+        double x = b1xb2x * b2xb3x +
+                   b1xb2y * b2xb3y +
+                   b1xb2z * b2xb3z;
 
 
-        return radang
+        double dihedral = atan2(y, x);
+
+
+
+        return dihedral;
 
     }
 
@@ -379,6 +361,13 @@ namespace OpenBabel
       radang = -acos(costheta);
     else
       radang = acos(costheta);
+
+
+    double new_radang = CalcTorsionForSet(tor);
+    std::cout << new_radang << std::endl;;
+    std::cout << radang << std::endl;;
+
+    radang = new_radang;
 
     //
     // now we have the torsion angle (radang) - set up the rot matrix

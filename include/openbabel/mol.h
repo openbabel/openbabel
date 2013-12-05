@@ -542,6 +542,9 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
      *  WARNING: SetTorsion takes an angle in radians while GetTorsion returns it
      *  in degrees
      */
+    double np_cross(double a1, double a2, double a3, double b1, double b2, double b3);
+    double np_dot(double v1x, double v1y, double v1z, double v2x, double v2y, double v2z);
+    double CalcTorsionForSet(std::vector<int> tor);
     void SetTorsion(OBAtom*,OBAtom*,OBAtom*,OBAtom*,double ang);
     //@}
 
