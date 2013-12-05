@@ -232,6 +232,7 @@ namespace OpenBabel
   OBAPI double CalcTorsionAngle(const vector3 &a, const vector3 &b,
                                 const vector3 &c, const vector3 &d)
   {
+
     double torsion;
     vector3 b1,b2,b3,c1,c2,c3;
 
@@ -239,11 +240,12 @@ namespace OpenBabel
     b2 = b - c;
     b3 = c - d;
 
+#ifdef OB_OLD_MATH_CHECKS
     c1 = cross(b1,b2);
     c2 = cross(b2,b3);
     c3 = cross(c1,c2);
 
-#ifdef OB_OLD_MATH_CHECKS
+
     if (c1.length() * c2.length() < 0.001)
     {
       torsion = 0.0;
@@ -251,14 +253,13 @@ namespace OpenBabel
     }
 #endif
 
-    torsion = vectorAngle(c1,c2);
-    if (dot(b2,c3) > 0.0)
-      torsion = -torsion;
+    double rb2 = sqrt(dot(b2, b2));
 
-    if (!isfinite(torsion))
-      torsion = 180.0;
+    vector3 b2xb3 = cross(b2, b3);
+    vector3 b1xb2 = cross(b1, b2);
+    torsion = - atan2(dot(rb2 * b1, b2xb3), dot(b1xb2, b2xb3));
 
-    return(torsion);
+    return(torsion * RAD_TO_DEG);
   }
 
   /*! \brief Construct a unit vector orthogonal to *this.
