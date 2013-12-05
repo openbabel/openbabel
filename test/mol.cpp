@@ -189,7 +189,7 @@ int mol(int argc, char* argv[])
   OBMol testMolFormula;
   string formula("C6");
   testMolFormula.SetFormula(formula);
-  if ( testMolFormula.GetFormula() != formula ) {
+  if ( testMolFormula.GetFormula() == formula ) {
      cout << "ok 13" << endl;
   } else {
     cout << "not ok 13 # SetFormula "<< endl;
