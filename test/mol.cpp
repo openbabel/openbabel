@@ -196,6 +196,21 @@ int mol(int argc, char* argv[])
   }
   // Reset the formula to test for a double delete error
   testMolFormula.SetFormula(formula);
-  cout << "1..13\n"; // total number of tests for Perl's "prove" tool
+
+  double dihedral = CalcTorsionAngle(vector3(-1., -1.,  0.),
+                                     vector3(-1.,  0.,  0.),
+                                     vector3( 1.,  0.,  0.),
+                                     vector3( 1.,  1.,  0.));
+
+  double dihedral_error = fabs(dihedral) - 180.0;
+
+  if (fabs(dihedral_error) < 0.001) {
+      std::cout << "ok 14 " << dihedral_error << std::endl;
+  } else {
+
+      std::cout << "not ok 14 # CalcTorsionAngle " << dihedral << "!= 180.0" << std::endl;
+  }
+
+  cout << "1..14\n"; // total number of tests for Perl's "prove" tool
   return(0);
 }
