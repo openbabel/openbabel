@@ -25,7 +25,6 @@ GNU General Public License for more details.
 #include <list>
 #include <map>
 #include <set>
-#include <assert.h>
 #include <cmath>
 
 #ifdef _MSC_VER
@@ -871,9 +870,6 @@ namespace OpenBabel
         }
       }
     }
-    
-    assert(mvAtom.size() > 0);
-    ///Assign charges to Atoms by labels
     
     for (std::vector<CIFAtom>::iterator it = mvAtom.begin() ; it != mvAtom.end(); it++)
     {  
