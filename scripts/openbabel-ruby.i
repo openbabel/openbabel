@@ -220,6 +220,15 @@ namespace std { class stringbuf {}; }
 # Ignore shadowed methods
 %ignore OpenBabel::OBForceField::VectorSubtract(const double *const, const double *const, double *);
 %ignore OpenBabel::OBForceField::VectorMultiply(const double *const, const double, double *);
+#ifdef HAVE_EIGEN
+%{
+#include <openbabel/conformersearch.h>
+#include <openbabel/math/align.h>
+%}
+#else
+%ignore OpenBabel::OBForceField::FastRotorSearch;
+%ignore OpenBabel::OBForceField::DiverseConfGen;
+#endif
 %include <openbabel/forcefield.h>
 
 %include <openbabel/builder.h>
@@ -227,6 +236,7 @@ namespace std { class stringbuf {}; }
 
 %warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
 %include <openbabel/bitvec.h>
+%ignore OpenBabel::OBRotor::GetRotAtoms() const;
 %include <openbabel/rotor.h>
 %ignore OpenBabel::Swab;
 %include <openbabel/rotamer.h>

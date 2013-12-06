@@ -173,7 +173,7 @@ OpenBabel::OB ## subclass *to ## subclass(OpenBabel::OBGenericData *data) {
 }
 %}
 %enddef
-%inline %{ // can't use macro -- AliasData not OBAliasData
+%inline %{ // can not use macro -- AliasData not OBAliasData
 OpenBabel::AliasData *toAliasData(OpenBabel::OBGenericData *data) {
     return (OpenBabel::AliasData*) data;
 }
@@ -305,6 +305,14 @@ IGNORE_ITER(OBMol, Residue)
 %ignore OpenBabel::OBDescriptor::LessThan;
 %include <openbabel/descriptor.h>
 
+#ifdef HAVE_EIGEN
+%include <openbabel/conformersearch.h>
+%include <openbabel/math/align.h>
+#else
+%ignore OpenBabel::OBForceField::FastRotorSearch;
+%ignore OpenBabel::OBForceField::DiverseConfGen;
+#endif
+
 # Ignore shadowed methods
 %ignore OpenBabel::OBForceField::VectorSubtract(const double *const, const double *const, double *);
 %ignore OpenBabel::OBForceField::VectorMultiply(const double *const, const double, double *);
@@ -329,10 +337,6 @@ IGNORE_ITER(OBMol, Residue)
 %ignore OpenBabel::Swab;
 %include <openbabel/rotamer.h>
 %include <openbabel/spectrophore.h>
-#ifdef HAVE_EIGEN
-%include <openbabel/conformersearch.h>
-%include <openbabel/math/align.h>
-#endif
 
 # The following %ignores avoid warning messages due to shadowed classes.
 # This does not imply a loss of functionality as (in this case)

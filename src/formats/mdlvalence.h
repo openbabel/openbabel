@@ -399,3 +399,23 @@ static unsigned int MDLValence(unsigned int elem, int q, unsigned int val)
   return val;
 }
 
+/* Return the implicit valence for element "elem" with charge "q" when using HYD extension */
+static unsigned int HYDValence(unsigned int elem, int q, unsigned int val)
+{
+  int impval = 0;
+  if (elem == 6) {  // C
+    impval = 4 - abs(q);
+  } else if (elem == 7 || elem == 15) {  // N or P
+    impval = 3 + q;
+  } else if (elem == 8 || elem == 16) {  // O or S
+    impval = 2 + q;
+  }
+  if (impval < 0) {
+    impval = 0;
+  }
+  if (val > impval) {
+    impval = val;
+  }
+  return impval;  
+}
+

@@ -972,9 +972,9 @@ namespace OpenBabel
     for (i = _resatoms[_resnum].begin();i != _resatoms[_resnum].end();i+=3)
       if (atmid == *i)
         {
-          i++;
+          ++i;
           type = *i;
-          i++;
+          ++i;
           hyb = atoi((*i).c_str());
           return(true);
         }
@@ -1039,7 +1039,7 @@ namespace OpenBabel
         string s = "Cannot initialize database '";
         s += _filename;
         s += "' which may cause further errors.";
-        obErrorLog.ThrowError(__FUNCTION__, "Cannot initialize database", obWarning);
+        obErrorLog.ThrowError(__FUNCTION__, s, obWarning);
       }
 
   }

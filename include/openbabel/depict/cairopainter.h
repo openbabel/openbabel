@@ -20,6 +20,7 @@ namespace OpenBabel
       void SetFillColor(const OBColor &color);
       void SetPenColor(const OBColor &color);
       void SetPenWidth(double width);
+      double GetPenWidth();
       void DrawLine(double x1, double y1, double x2, double y2);
       void DrawPolygon(const std::vector<std::pair<double,double> > &points);
       void DrawCircle(double x, double y, double r);
@@ -36,7 +37,11 @@ namespace OpenBabel
       void SetTitle(std::string title) {m_title=title;}
       void SetIndex(int index) {m_index=index;}
       void SetTableSize(int nrows, int ncols) {m_nrows=nrows; m_ncols=ncols;}
-      //@}
+      void SetBackground(std::string color) {m_fillcolor=color;}
+      void SetBondColor(std::string color) {m_bondcolor=color;}
+      void SetTransparent(bool tr) {m_transparent=tr;}
+      void SetCropping(bool cr) {m_cropping=cr;}
+     //@}
  
     private:
       cairo_surface_t *m_surface;
@@ -48,6 +53,9 @@ namespace OpenBabel
       std::string m_title;
       int m_index;        // Index of current molecule in a table
       int m_ncols, m_nrows; // number of rows and columns
+      std::string m_fillcolor, m_bondcolor;
+      bool m_transparent, m_cropping;
+
   };
 
 }

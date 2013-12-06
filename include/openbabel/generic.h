@@ -127,7 +127,7 @@ namespace OpenBabel
   //! \brief Used to store arbitrary attribute/value relationsips of any type.
   // More detailed description in generic.cpp
   template <class ValueT>
-    class OBAPI OBPairTemplate : public OBGenericData
+    class OBPairTemplate : public OBGenericData // Note: no OBAPI should be used
   {
   protected:
     ValueT _value; //!< The data for this key/value pair

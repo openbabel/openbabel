@@ -67,6 +67,11 @@ namespace OpenBabel
   {
   }
 
+  double ASCIIPainter::GetPenWidth()
+  {
+    return 0.0;
+  }
+
   void ASCIIPainter::DrawLine(double x1, double y1, double x2, double y2)
   {
     vector<pair<int, int> > coords;

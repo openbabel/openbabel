@@ -410,6 +410,21 @@ namespace OpenBabel
       //! \return The sum of the bond orders of bonds to the atom, considering only KDouble, KTriple bonds
       //! \deprecated Use BOSum() instead
       unsigned int  KBOSum()                const;
+      /** Lewis acid/base vacancies for this atom
+       *  
+       *  The returned values count whole lone pairs, so the acid count is the number of
+       *  electron pairs desired and the base count is the number of electron pairs
+       *  available.
+       *
+          @verbatim
+          Algorithm from:
+          Clark, A. M. Accurate Specification of Molecular Structures: The Case for 
+          Zero-Order Bonds and Explicit Hydrogen Counting. Journal of Chemical Information 
+          and Modeling, 51, 3149-3157 (2011). http://pubs.acs.org/doi/abs/10.1021/ci200488k 
+          @endverbatim
+       *  \return A pair of integers, where first is acid count and second is base count
+       */
+      std::pair<int, int> LewisAcidBaseCounts() const;
       //! \return Is there any residue information?
       bool HasResidue()    { return(_residue != NULL);    }
       //! \return Is the atom hydrogen?

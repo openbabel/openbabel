@@ -106,7 +106,7 @@ bool CCCFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         tokenize(vs,&buffer[60]);
         vector<string>::iterator j;
 
-        for (j = vs.begin();j != vs.end();j++)
+        for (j = vs.begin();j != vs.end();++j)
             if (!j->empty())
             {
                 //get the bond order
