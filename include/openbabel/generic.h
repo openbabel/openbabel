@@ -138,6 +138,13 @@ namespace OpenBabel
       {return new OBPairTemplate<ValueT>(*this);}
     void SetValue(const ValueT t)             { _value = t;     }
     virtual const ValueT &GetGenericValue() const    { return(_value); }
+    const ValueT &GetGenericValueDef(const ValueT &def_val) const
+    { 
+      if(this == NULL)
+	return def_val;
+      else	
+        return GetGenericValue(); 
+    }
   };
 
   //! Store arbitrary key/value integer data like OBPairData
