@@ -3571,8 +3571,6 @@ namespace OpenBabel
             maxlength = maxbond->GetLength();
             for (bond = atom->NextBond(l);bond;bond = atom->NextBond(l))
               {
-                if (!bond)
-                  break;
                 if (bond->GetLength() > maxlength)
                   {
                     maxbond = bond;
