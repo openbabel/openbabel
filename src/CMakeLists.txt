@@ -194,6 +194,7 @@ else(BUILD_SHARED)
 endif(BUILD_SHARED)
 
 set(openbabel_library_srcs
+  ${WRAP_MEMCPY_SRC}
   ${openbabel_srcs}
   ${depict_srcs}
   ${math_srcs}

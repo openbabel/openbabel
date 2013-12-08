@@ -6,7 +6,6 @@
 #define USING_OBDLL
 #endif
 
-#include <openbabel/shared_ptr.h>
 #include <openbabel/obutil.h>
 #include <openbabel/rand.h>
 #include <openbabel/math/vector3.h>
@@ -66,6 +65,9 @@
 #include <openbabel/conformersearch.h>
 #include <openbabel/math/align.h>
 %}
+#else
+%ignore OpenBabel::OBForceField::FastRotorSearch;
+%ignore OpenBabel::OBForceField::DiverseConfGen;
 #endif
 
 %include "std_list.i"
@@ -73,14 +75,6 @@
 %include "std_vector.i"
 %include "std_string.i"
 %include "std_pair.i"
-#define SWIG_SHARED_PTR_SUBNAMESPACE tr1
-%include "std_shared_ptr.i"
-%shared_ptr(OpenBabel::OBBase)
-%shared_ptr(OpenBabel::OBMol)
-%shared_ptr(OpenBabel::OBReaction)
-%shared_ptr(OpenBabel::OBAtom)
-%shared_ptr(OpenBabel::OBBond)
-%shared_ptr(OpenBabel::OBResidue)
 
 namespace std {
 
@@ -225,7 +219,6 @@ CAST_GENERICDATA_TO(SquarePlanarStereo)
 %ignore *::operator[];
 
 %import <openbabel/babelconfig.h>
-%import <openbabel/shared_ptr.h>
 
 %include <openbabel/data.h>
 %include <openbabel/rand.h>

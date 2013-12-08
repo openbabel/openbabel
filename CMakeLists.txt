@@ -92,6 +92,14 @@ endif()
 
 mark_as_advanced(CMAKE_LIBRARY_OUTPUT_DIRECTORY
   CMAKE_RUNTIME_OUTPUT_DIRECTORY)
+  
+#GLIBC_2.4
+option(GLIBC_24_COMPATIBLE "Build project compatible with GLIBC 2.4" OFF)
+if(GLIBC_24_COMPATIBLE AND UNIX)
+  set(WRAP_MEMCPY_SRC memcpy.c)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--wrap=memcpy")  
+endif()
+
 
 option(BUILD_SHARED "enable shared build support" ON)
 option(BUILD_MIXED "enable linux relocatable binaries support" OFF)
@@ -505,6 +513,9 @@ option(PERL_BINDINGS "Build Perl bindings" OFF)
 # Should Java bindings be built?
 option(JAVA_BINDINGS "Build Java bindings" OFF)
 
+# Should R bindings be built?
+option(R_BINDINGS "Build R bindings" OFF)
+
 # Should CSharp bindings be built?
 option(CSHARP_BINDINGS "Build Csharp bindings" OFF)
 
@@ -515,6 +526,7 @@ if(ALL_BINDINGS)
   set(PERL_BINDINGS ON)
   set(JAVA_BINDINGS ON)
   set(CSHARP_BINDINGS ON)
+  set(R_BINDINGS ON)
 endif()
 
 add_subdirectory(scripts)

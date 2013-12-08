@@ -170,15 +170,15 @@ endif (JAVA_BINDINGS)
 
 if (DO_JAVA_BINDINGS)
 
-    include_directories(
-        ${JNI_INCLUDE_DIRS}
+include_directories( 
+	${JNI_INCLUDE_DIRS}
     )
 
     if (RUN_SWIG)
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp
           COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_BINARY_DIR}/scripts/java/org/openbabel
           COMMAND ${SWIG_EXECUTABLE} -java -package org.openbabel -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp ${eigen_define} -outdir ${openbabel_BINARY_DIR}/scripts/java/org/openbabel ${openbabel_SOURCE_DIR}/scripts/openbabel-java.i
-          COMMAND ${JAVA_COMPILE} ARGS "java/org/openbabel/*.java"
+			 COMMAND ${JAVA_COMPILE} ARGS "java/org/openbabel/*.java"
           COMMAND ${CMAKE_COMMAND} -E chdir ${openbabel_BINARY_DIR}/scripts/java ${JAVA_ARCHIVE} cf openbabel.jar org
           COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_BINARY_DIR}/scripts/java/openbabel.jar ${openbabel_SOURCE_DIR}/scripts/java
           COMMAND ${CMAKE_COMMAND} -E remove_directory ${openbabel_BINARY_DIR}/scripts/java/org
@@ -210,6 +210,61 @@ if (DO_JAVA_BINDINGS)
             COMPONENT bindings_java)
 
 endif (DO_JAVA_BINDINGS)
+
+
+###################
+# R
+###################
+
+if (R_BINDINGS)
+	if (EXISTS ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp OR RUN_SWIG)
+
+    if (RUN_SWIG)
+      set(DO_R_BINDINGS ON BOOL)
+    endif (RUN_SWIG)
+
+
+  else (EXISTS ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp OR RUN_SWIG)
+	  message(STATUS "Warning: R bindings NOT found. Generate using -DRUN_SWIG.")
+
+  endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp OR RUN_SWIG)
+endif (R_BINDINGS)
+
+if (DO_R_BINDINGS)
+
+
+    include_directories(/usr/share/R/include )
+    if (RUN_SWIG)
+		 add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp
+			 COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_BINARY_DIR}/scripts/R
+			 COMMAND ${SWIG_EXECUTABLE} -r -package openbabelR  -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp ${eigen_define} -outdir ${openbabel_BINARY_DIR}/scripts/R ${openbabel_SOURCE_DIR}/scripts/openbabel-R.i
+			 COMMAND sed  -i  -e "'s/reg\.finalizer(\(.*\)) /reg.finalizer(\1); /g'" ${openbabel_BINARY_DIR}/scripts/R/openbabelR.R
+			 MAIN_DEPENDENCY openbabel-R.i
+      )
+    endif (RUN_SWIG)
+
+	 add_library(bindings_R MODULE ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp)
+	 if(BINDINGS_ONLY)
+		 target_link_libraries(bindings_R R ${BABEL_SYSTEM_LIBRARY})
+	 else()
+		 target_link_libraries(bindings_R R ${BABEL_LIBRARY})
+	 endif()
+
+	 set_target_properties(bindings_R PROPERTIES
+		 OUTPUT_NAME openbabel_R)
+    if(NOT BINDINGS_ONLY)
+		 add_dependencies(bindings_R openbabel)
+    endif()
+	 add_dependencies(bindings_R R)
+
+	 install(TARGETS bindings_R
+            LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+				COMPONENT bindings_R)
+	 install(FILES ${openbabel_SOURCE_DIR}/scripts/R/openbabel_java.R
+            DESTINATION ${LIB_INSTALL_DIR}
+				COMPONENT bindings_R)
+
+endif (DO_R_BINDINGS)
 
 ###################
 # Perl
@@ -424,6 +479,14 @@ if (PHP_BINDINGS)
       STRING(REPLACE "\n" "" PHP_CONFIG_INCLUDES "${PHP_CONFIG_INCLUDES}")
       STRING(REPLACE "-I" "" PHP_CONFIG_INCLUDES "${PHP_CONFIG_INCLUDES}")
       STRING(REPLACE " " ";" PHP_CONFIG_INCLUDES "${PHP_CONFIG_INCLUDES}")
+    
+      execute_process(
+      	COMMAND
+      	  ${PHP_CONFIG_EXECUTABLE} --extension-dir
+      	OUTPUT_VARIABLE 
+      	  PHP_EXTENSION_DIR
+      )
+      STRING(REPLACE "\n" "" PHP_EXTENSION_DIR "${PHP_EXTENSION_DIR}")
     endif(PHP_CONFIG_EXECUTABLE)
 
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp OR RUN_SWIG)
@@ -438,10 +501,14 @@ if (DO_PHP_BINDINGS)
     if (RUN_SWIG)
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp
           COMMAND ${SWIG_EXECUTABLE} -php -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp -outdir ${openbabel_SOURCE_DIR}/scripts/php ${openbabel_SOURCE_DIR}/scripts/openbabel-php.i
+          COMMAND sed -i -e's/abstract class OBForceField/class OBForceField/g' -e's/abstract class OBFingerprint/class OBFingerprint/g' -e's/abstract class OBOp/class OBOp/g' -e 's/static function FindType/function FindType/g' ${openbabel_SOURCE_DIR}/scripts/php/openbabel.php
           MAIN_DEPENDENCY openbabel-php.i
       )
     endif (RUN_SWIG)
-
+	
+    # set openbabel.php include path
+    execute_process(COMMAND sed -i -e "s,include_once '\\(.*\\)openbabel.php,include_once '${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}/openbabel.php,g" ${openbabel_SOURCE_DIR}/scripts/php/baphpel.php)
+	
     add_library(bindings_php MODULE ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp)
     # Overriding --no-undefined linker flag, since PHP library should not be linked into extension.
     set(PHP_EXTRA_LINK_FLAGS "-Wl,--unresolved-symbols=ignore-all")
@@ -459,10 +526,13 @@ if (DO_PHP_BINDINGS)
     endif()
 
     install(TARGETS bindings_php
-            LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+            LIBRARY DESTINATION ${PHP_EXTENSION_DIR}
 	    COMPONENT bindings_php)
     install(FILES ${openbabel_SOURCE_DIR}/scripts/php/openbabel.php
             DESTINATION ${LIB_INSTALL_DIR}
+	    COMPONENT bindings_php)
+	install(FILES ${openbabel_SOURCE_DIR}/scripts/php/baphpel.php
+	        DESTINATION ${LIB_INSTALL_DIR}
 	    COMPONENT bindings_php)
 
 endif (DO_PHP_BINDINGS)

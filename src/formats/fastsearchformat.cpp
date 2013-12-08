@@ -428,6 +428,7 @@ virtual const char* Description() //required
         if(datafilename.empty())
           {
             obErrorLog.ThrowError(__FUNCTION__, "No datafile!", obError);
+            delete pidx;
             return false;
           }
         string::size_type pos = datafilename.find_last_of("/\\");

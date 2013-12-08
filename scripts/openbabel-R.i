@@ -1,6 +1,6 @@
-%module openbabel
-
+%module openbabel_R
 %{
+#include <R.h>
 // used to set import/export for Cygwin DLLs
 #ifdef WIN32
 #define USING_OBDLL
@@ -33,7 +33,6 @@
 #include <openbabel/descriptor.h>
 #include <openbabel/format.h>
 
-#include <openbabel/forcefield.h>
 #include <openbabel/builder.h>
 #include <openbabel/op.h>
 
@@ -53,10 +52,17 @@
 #include <openbabel/isomorphism.h>
 #include <openbabel/query.h>
 #include <openbabel/canon.h>
+
+#include <openbabel/stereo/tetrahedral.h>
+#include <openbabel/stereo/cistrans.h>
+#include <openbabel/stereo/squareplanar.h>
+#include <openbabel/stereo/bindings.h>
 %}
+
 
 #ifdef HAVE_EIGEN
 %{
+#include <openbabel/forcefield.h>
 #include <openbabel/conformersearch.h>
 #include <openbabel/math/align.h>
 %}
@@ -66,6 +72,40 @@
 %include "std_vector.i"
 %include "std_string.i"
 %include "std_pair.i"
+%include "cpointer.i"
+
+%pointer_class(std::string,stringp)
+%typemap("rtype")  const std::string & "character"; //add typemap for const references
+%typemap("rtype")  std::string *, std::string &; // remove erroneous typemap in swig libraries
+
+%typemap(scoercein) const std::string &
+      %{  $input = as($input, "character");     %}
+%typemap(scoercein) std::string *, std::string &; 
+
+
+
+%inline %{
+
+    #include <iostream>
+    std::istream* istreamFromString(std::string str){
+       return new std::istringstream(str);
+    }
+    std::istream* istreamFromFile(const char *filename) {
+       return new std::ifstream(filename);
+    }
+    std::ostream* ostreamToString(){
+       return new std::ostringstream();
+    }
+    std::ostream* ostreamToFile(const char *filename) {
+       return new std::ofstream(filename);
+    }
+    const std::string stringFromOstream(const std::ostringstream* os){
+     // return (os->str()).c_str();
+      return os->str();
+    }
+
+%}
+
 
 namespace std {
 
@@ -89,7 +129,6 @@ namespace std {
 %feature("ignore") vector< vector<T> >::rend;
 %feature("ignore") vector< vector<T> >::reserve;
 %feature("ignore") vector< vector<T> >::resize;
-//%feature("ignore") vector< vector<T> >::size;
 %feature("ignore") vector< vector<T> >::swap;
 %template(vectorv ## name) vector< vector<T> >;
 %enddef
@@ -114,7 +153,6 @@ namespace std {
 %feature("ignore") vector<T>::rend;
 %feature("ignore") vector<T>::reserve;
 %feature("ignore") vector<T>::resize;
-//%feature("ignore") vector<T>::size;
 %feature("ignore") vector<T>::swap;
 %template(vector ## vectorname) vector<T>;
 %enddef
@@ -139,7 +177,6 @@ namespace std {
 %feature("ignore") vector< pair<T1, T2> >::rend;
 %feature("ignore") vector< pair<T1, T2> >::reserve;
 %feature("ignore") vector< pair<T1, T2> >::resize;
-//%feature("ignore") vector< pair<T1, T2> >::size;
 %feature("ignore") vector< pair<T1, T2> >::swap;
 %template(vpair ## vectorname) vector< pair<T1, T2> >;
 %enddef
@@ -171,7 +208,7 @@ OpenBabel::OB ## subclass *to ## subclass(OpenBabel::OBGenericData *data) {
 }
 %}
 %enddef
-%inline %{ // can't use macro -- AliasData not OBAliasData
+%inline %{ // cant use macro -- AliasData not OBAliasData
 OpenBabel::AliasData *toAliasData(OpenBabel::OBGenericData *data) {
     return (OpenBabel::AliasData*) data;
 }
@@ -199,25 +236,48 @@ CAST_GENERICDATA_TO(VectorData)
 CAST_GENERICDATA_TO(VibrationData)
 CAST_GENERICDATA_TO(VirtualBond)
 
-%rename(add)  *::operator+=;
 %ignore *::operator=;
+%ignore *::operator==;
+%ignore *::operator!=;
+%ignore *::operator<<;
+%ignore *::operator();
+%ignore *::operator*;
+%ignore *::operator*=;
+%ignore *::operator+;
+%ignore *::operator+=;
+%ignore *::operator-;
+%ignore *::operator-=;
+%ignore *::operator++;
+%ignore *::operator--;
+%ignore *::operator/;
+%ignore *::operator/=;
+%ignore *::operator bool;
 %ignore *::operator[];
 
 %import <openbabel/babelconfig.h>
 
+%warnfilter(516) OpenBabel::OBElementTable; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/data.h>
 %include <openbabel/rand.h>
 %include <openbabel/obutil.h>
+%warnfilter(516) OpenBabel::vector3; // Using the const x(), y() and z() in favour of the non-const
 %include <openbabel/math/vector3.h>
 %warnfilter(503) OpenBabel::matrix3x3; // Not wrapping any of the overloaded operators
 %include <openbabel/math/matrix3x3.h>
 %include <openbabel/math/transform3d.h>
+%warnfilter(516) OpenBabel::SpaceGroup; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/math/spacegroup.h>
 
 # CloneData should be used instead of the following method
 %ignore OpenBabel::OBBase::SetData;
+%ignore OpenBabel::OBBase::GetData(char const *);
+%ignore OpenBabel::OBBase::HasData(char const *);
 %include <openbabel/base.h>
 
+%warnfilter(516) OpenBabel::OBPairData; // Ignoring std::string methods in favour of char* ones
+%warnfilter(516) OpenBabel::OBSetData;
+%warnfilter(516) OpenBabel::OBCommentData;
+%warnfilter(516) OpenBabel::OBUnitCell; // Ignoring const methods in favour of non-const ones
 %include <openbabel/generic.h>
 %include <openbabel/griddata.h>
 
@@ -237,13 +297,28 @@ namespace std { class stringbuf {}; }
 %warnfilter(503) OpenBabel::OBError; // Not wrapping any of the overloaded operators
 %include <openbabel/oberror.h>
 %include <openbabel/format.h>
+%ignore OpenBabel::OBConversion::FindFormat(const char *);
+%ignore OpenBabel::OBConversion::FormatFromExt(const char *);
 %include <openbabel/obconversion.h>
 %include <openbabel/residue.h>
 %include <openbabel/internalcoord.h>
+
+%typemap(javacode) OpenBabel::OBAtom
+%{
+    private int currentDepth = 0;
+    public void SetCurrentDepth(int d) {currentDepth = d;}
+    public int GetCurrentDepth() {return currentDepth;}
+%}
+%ignore OpenBabel::OBAtom::GetVector() const;
+%ignore OpenBabel::OBAtom::IsHydrogen const;
+%ignore OpenBabel::OBAtom::SetType(char const *);
 %include <openbabel/atom.h>
+%ignore OpenBabel::OBBond::GetBeginAtom() const;
+%ignore OpenBabel::OBBond::GetEndAtom() const;
 %include <openbabel/bond.h>
 %include <openbabel/reaction.h>
 
+// Remove C++ iterators
 %define IGNORE_ITER(parent, iteree)
 %ignore OpenBabel::parent::Begin ## iteree ## s;
 %ignore OpenBabel::parent::End ## iteree ## s;
@@ -254,21 +329,16 @@ IGNORE_ITER(OBMol, Bond)
 IGNORE_ITER(OBMol, Atom)
 IGNORE_ITER(OBMol, Residue)
 %include <openbabel/mol.h>
-
 %include <openbabel/ring.h>
+%warnfilter(516) OpenBabel::OBSmartsPattern; // Using non-const versions of GetSMARTS
 %include <openbabel/parsmart.h>
+%warnfilter(516) OpenBabel::AliasData; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/alias.h>
 %include <openbabel/atomclass.h>
 %ignore OpenBabel::FptIndex;
 %include <openbabel/fingerprint.h>
 %ignore OpenBabel::OBDescriptor::LessThan;
 %include <openbabel/descriptor.h>
-
-# Ignore shadowed methods
-%ignore OpenBabel::OBForceField::VectorSubtract(const double *const, const double *const, double *);
-%ignore OpenBabel::OBForceField::VectorMultiply(const double *const, const double, double *);
-%include <openbabel/forcefield.h>
-
 %include <openbabel/builder.h>
 %include <openbabel/op.h>
 
@@ -287,8 +357,15 @@ IGNORE_ITER(OBMol, Residue)
 %ignore OpenBabel::Swab;
 %include <openbabel/rotamer.h>
 %include <openbabel/spectrophore.h>
-
 #ifdef HAVE_EIGEN
+
+# Ignore shadowed methods
+%ignore OpenBabel::OBForceField::VectorSubtract(const double *const, const double *const, double *);
+%ignore OpenBabel::OBForceField::VectorMultiply(const double *const, const double, double *);
+%warnfilter(516) OpenBabel::OBForceField; // Ignoring std::string methods in favour of char* ones
+%include <openbabel/forcefield.h>
+
+
 %include <openbabel/conformersearch.h>
 %include <openbabel/math/align.h>
 #endif
@@ -318,28 +395,50 @@ IGNORE_ITER(OBMol, Residue)
 %ignore OBResidueIter(OBMol &);
 %ignore OBResidueAtomIter(OBResidue &);
 
+%ignore SpaceGroup::RegisterSpaceGroup;
+
+%define WRAPITERATOR(NAME, RETURNS, OPTIONAL)
+ %rename(_next) OpenBabel::NAME::next;
+ %rename(inc) OpenBabel::NAME::operator++;
+ %rename(HasMore) OpenBabel::NAME::operator bool;
+ %typemap(javainterfaces) OpenBabel::NAME "Iterable<RETURNS>, Iterator<RETURNS>";
+ %typemap(javaimports) OpenBabel::NAME "  import org.openbabel.RETURNS;
+  import java.util.Iterator;"
+ %typemap(javacode) OpenBabel::NAME
+ %{
+	public Iterator<RETURNS> iterator() {
+		return this;
+	}
+
+	public boolean hasNext() {
+		return HasMore();
+	}
+
+	public RETURNS next() {
+		RETURNS atom = __ref__();
+		OPTIONAL
+		inc();
+		return atom;
+	}
+	
+	public void remove() {
+	}	
+ %}
+%enddef
+
+WRAPITERATOR(OBMolAtomIter, OBAtom, );
+WRAPITERATOR(OBMolAtomDFSIter, OBAtom, );
+WRAPITERATOR(OBMolAtomBFSIter, OBAtom, atom.SetCurrentDepth(CurrentDepth()););
+WRAPITERATOR(OBMolBondIter, OBBond, );
+WRAPITERATOR(OBMolAngleIter, vectorUnsignedInt, );
+WRAPITERATOR(OBAtomAtomIter, OBAtom, )
+WRAPITERATOR(OBAtomBondIter, OBBond, );
+WRAPITERATOR(OBMolRingIter, OBRing, );
+WRAPITERATOR(OBMolTorsionIter, vectorUnsignedInt, );
+WRAPITERATOR(OBResidueIter, OBResidue, );
+WRAPITERATOR(OBResidueAtomIter, OBAtom, );
+WRAPITERATOR(OBMolPairIter, vectorUnsignedInt, );
+
 %include <openbabel/obiter.h>
 
-# Functions to set the log file to std::cout and std::cerr
-       
-%ignore OBForceField::SetLogFile(std::ostream *pos);
-%extend OpenBabel::OBForceField {
-  void SetLogToStdOut() 
-  {
-    self->SetLogFile(&std::cout);
-  }
-
-  void SetLogToStdErr() 
-  {
-    self->SetLogFile(&std::cerr);
-  }
-};
-
-%extend OpenBabel::OBMol {
-  void SetTorsion(int i, int j, int k, int l, double ang) 
-  {
-    self->SetTorsion(self->GetAtom(i), self->GetAtom(j),
-                     self->GetAtom(k), self->GetAtom(l), ang);
-  }
-};
-
+%include "stereo.i"
