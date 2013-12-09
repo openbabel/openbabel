@@ -21,6 +21,7 @@ Global variables:
 import sys
 import os.path
 import tempfile
+import json
 
 if sys.platform[:4] == "java":
     import org.openbabel as ob
@@ -83,25 +84,29 @@ def _getpluginnames(ptype):
 _obconv = ob.OBConversion()
 _builder = ob.OBBuilder()
 
-# A dictionary of supported input and output formats
 informats = _formatstodict(_obconv.GetSupportedInputFormat())
+"""A dictionary of supported input formats"""
 outformats = _formatstodict(_obconv.GetSupportedOutputFormat())
+"""A dictionary of supported output formats"""
 
-# A list of supported descriptors
 descs = _getpluginnames("descriptors")
+"""A list of supported descriptors"""
 _descdict = _getplugins(ob.OBDescriptor.FindType, descs)
+
 fps = [_x.lower() for _x in _getpluginnames("fingerprints")]
-
-# A list of supported fingerprint types
+"""A list of supported fingerprint types"""
 _fingerprinters = _getplugins(ob.OBFingerprint.FindFingerprint, fps)
+
 forcefields = [_x.lower() for _x in _getpluginnames("forcefields")]
-
-# A list of supported forcefields
+"""A list of supported forcefields"""
 _forcefields = _getplugins(ob.OBForceField.FindType, forcefields)
-operations = _getpluginnames("ops")
 
-# A list of supported operations
+operations = _getpluginnames("ops")
+"""A list of supported operations"""
 _operations = _getplugins(ob.OBOp.FindType, operations)
+
+ipython_3d = False
+"""Toggles 2D vs 3D molecule representations in IPython notebook"""
 
 # Javascript imports for IPython rendering (IPy comes with JQuery)
 _path = os.path.normpath(os.path.dirname(__file__))
@@ -395,45 +400,56 @@ class Molecule(object):
         return iter(self.atoms)
 
     def _repr_svg_(self):
+        """For IPython notebook, renders 2D pybel.Molecule SVGs."""
+
+        # Returning None defers to _repr_javascript_
+        if ipython_3d:
+            return None
+
         return self.write("svg")
 
-    # def _repr_javascript_(self):
-    #    """For IPython notebook, returns an interactive 3D render."""
+    def _repr_javascript_(self):
+        """For IPython notebook, renders 3D pybel.Molecule webGL objects."""
 
-    # Some exposed parameters. Leaving this unfunctionalized for now.
-    #    size = (400, 300)
-    #    drawing_type = "ball and stick"
-    #    camera_type = "perspective"
+        # Returning None defers to _repr_svg_
+        if not ipython_3d:
+            return None
 
-    # Infer structure in cases where the input format has no specification
-    #    if not self.OBMol.HasNonZeroCoords():
-    #        self.make3D()
-    #    self.OBMol.Center()
+        # Some exposed parameters. Leaving this unfunctionalized for now.
+        size = (400, 300)
+        drawing_type = "ball and stick"
+        camera_type = "perspective"
 
-    # Convert the relevant parts of `self` into JSON for rendering
-    #    table = ob.OBElementTable()
-    #    atoms = [{"element": table.GetSymbol(atom.atomicnum),
-    #              "location": atom.coords}
-    #             for atom in self.atoms]
-    #    bonds = [{"atoms": [bond.GetBeginAtom().GetIndex(),
-    #                        bond.GetEndAtom().GetIndex()],
-    #              "order": bond.GetBondOrder()}
-    #             for bond in ob.OBMolBondIter(self.OBMol)]
-    #    mol = {"atoms": atoms, "bonds": bonds}
-    #    if hasattr(self, "unitcell"):
-    #        uc = self.unitcell
-    #        mol["periodic_connections"] = [[v.GetX(), v.GetY(), v.GetZ()]
-    #                                        for v in uc.GetCellVectors()]
-    #    json_mol = json.dumps(mol, separators=(",", ":"))
+        # Infer structure in cases where the input format has no specification
+        if not self.OBMol.HasNonZeroCoords():
+            self.make3D()
+        self.OBMol.Center()
 
-    #    js = ("var $d = $('<div/>').attr('id', 'molecule_' + utils.uuid());"
-    #          "$d.width(%d); $d.height(%d);"
-    #          "imolecule.create($d, {drawingType: '%s', cameraType: '%s'});"
-    #          "imolecule.draw(%s);"
-    #          "container.show();"
-    #          "element.append($d);" % (size + (drawing_type, camera_type,
-    #                                   json_mol)))
-    #    return _js_drawer + js
+        # Convert the relevant parts of `self` into JSON for rendering
+        table = ob.OBElementTable()
+        atoms = [{"element": table.GetSymbol(atom.atomicnum),
+                  "location": atom.coords}
+                 for atom in self.atoms]
+        bonds = [{"atoms": [bond.GetBeginAtom().GetIndex(),
+                            bond.GetEndAtom().GetIndex()],
+                  "order": bond.GetBondOrder()}
+                 for bond in ob.OBMolBondIter(self.OBMol)]
+        mol = {"atoms": atoms, "bonds": bonds}
+        if hasattr(self, "unitcell"):
+            uc = self.unitcell
+            mol["periodic_connections"] = [[v.GetX(), v.GetY(), v.GetZ()]
+                                           for v in uc.GetCellVectors()]
+        json_mol = json.dumps(mol, separators=(",", ":"))
+
+        js = ("var $d = $('<div/>').attr('id', 'molecule_' + utils.uuid());"
+              "$d.width(%d); $d.height(%d);"
+              "imolecule.create($d, {drawingType: '%s', cameraType: '%s'});"
+              "imolecule.draw(%s);"
+              "container.show();"
+              "element.append($d);" % (size + (drawing_type, camera_type,
+                                       json_mol)))
+
+        return _js_drawer + js
 
     def calcdesc(self, descnames=[]):
         """Calculate descriptor values.
