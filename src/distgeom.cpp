@@ -25,11 +25,16 @@ GNU General Public License for more details.
 #include <openbabel/bond.h>
 #include <openbabel/builder.h>
 
+#include <openbabel/stereo/stereo.h>
+#include <openbabel/stereo/cistrans.h>
+#include <openbabel/stereo/tetrahedral.h>
+
 using namespace std;
 
-#define DIST12_TOL   0.01f
-#define DIST13_TOL   0.1f
-#define DIST14_TOL   0.4f
+#define DIST12_TOL   0.03f
+#define DIST13_TOL   0.06f
+#define DIST14_TOL   0.09f
+#define DIST15_TOL   0.12f
 
 #pragma warning(disable : 4244) // warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
 #pragma warning(disable : 4305) // warning C4305: '*=' : truncation from 'double' to 'float'
@@ -41,6 +46,7 @@ namespace OpenBabel {
     DistanceGeometryPrivate(const unsigned int N)
     {
       bounds = Eigen::MatrixXf(static_cast<int>(N), static_cast<int>(N));
+      debug = false;
     }
     ~DistanceGeometryPrivate()
     { }
@@ -74,8 +80,14 @@ namespace OpenBabel {
       else
         return bounds(j, i);
     }
+    float GetSplitBounds(int i, int j)
+    {
+      float lb = GetLowerBounds(i, j);
+      return (GetUpperBounds(i, j) - lb) / 2.0 + lb;
+    }
 
     Eigen::MatrixXf bounds;
+    bool debug;
   };
 
   OBDistanceGeometry::OBDistanceGeometry(): _d(NULL) {}
@@ -104,17 +116,26 @@ namespace OpenBabel {
     SetDefaultBounds();
     // Do we use the current geometry for default 1-2 and 1-3 bounds?
     Set12Bounds(useCurrentGeometry);
-    cerr << _d->bounds << endl;
+    if (_d->debug) {
+      cerr << endl << " 1-2 Matrix\n";
+      cerr << _d->bounds << endl;
+    }
     Set13Bounds(useCurrentGeometry);
-    cerr << endl << " 13 Matrix\n";
-    cerr << _d->bounds << endl;
+    if (_d->debug) {
+      cerr << endl << " 1-3 Matrix\n";
+      cerr << _d->bounds << endl;
+    }
     Set14Bounds();
-    cerr << endl << " 14 Matrix\n";
-    cerr << _d->bounds << endl;
+    if (_d->debug) {
+      cerr << endl << " 1-4 Matrix\n";
+      cerr << _d->bounds << endl;
+    }
     Set15Bounds();
     TriangleSmooth();
-    cerr << endl << " Smoothed Matrix\n";
-    cerr << _d->bounds << endl;
+    if (_d->debug) {
+      cerr << endl << " Smoothed Matrix\n";
+      cerr << _d->bounds << endl;
+    }
 
     return true;
   }
@@ -163,8 +184,8 @@ namespace OpenBabel {
       } else {
         length = b->GetEquibLength(); // ideal length
         // Allow slightly more slop, since that's empirical
-        _d->SetLowerBounds(i, j, length - DIST12_TOL*4 );
-        _d->SetUpperBounds(i, j, length + DIST12_TOL*4 );
+        _d->SetLowerBounds(i, j, length - DIST12_TOL*2 );
+        _d->SetUpperBounds(i, j, length + DIST12_TOL*2 );
       }
     }
   }
@@ -250,14 +271,27 @@ namespace OpenBabel {
         int ringSize = AreInSameRing(b, c);
         if (a->IsInRing() && ringSize != 0)
           {
+            // Atom is sp2 hybrid, so assume planar
             if (a->GetHyb() == 2 || ringSize <= 4) {
               theta = 180.0f - (360.0f/float(ringSize));
               theta *= DEG_TO_RAD;
             }
-            else if (a->GetHyb() == 3 && ringSize == 5)
-              theta = 104.0f * DEG_TO_RAD;
-            else
+            // Atom is sp3, so approximate
+            else if (a->GetHyb() == 3) {
+              switch(ringSize) {
+              case 3:
+                theta = 60.0f * DEG_TO_RAD;
+                break;
+              case 4:
+                theta = 90.0f * DEG_TO_RAD;
+                break;
+              case 5:
+                theta = 104.0f * DEG_TO_RAD;
+                break;
+              default:
               theta = 109.5f * DEG_TO_RAD;
+              }
+            } // end sp3
           }
         else { // not all in the same ring
           switch (a->GetHyb()) {
@@ -294,8 +328,10 @@ namespace OpenBabel {
     float rAB, rBC, rCD;
     float rAC, rBD, B, C;
     OBAtom *a, *b, *c, *d;
+    OBBond *bc;
     unsigned int i, j;
 
+    // Loop through all torsions first
     FOR_TORSIONS_OF_MOL(t, _mol) {
       a = _mol.GetAtom((*t)[0] + 1);
       b = _mol.GetAtom((*t)[1] + 1);
@@ -315,14 +351,127 @@ namespace OpenBabel {
       B = Calculate13Angle(rAB, rBC, rAC);
       C = Calculate13Angle(rBC, rCD, rBD);
 
-      // We really need some special cases (e.g., for rings, amides, etc.)
+      // TODO: Handle special cases (e.g., amides, etc.)
       _d->SetLowerBounds((*t)[0], (*t)[3], Calculate14DistCis(rAB, rBC, rCD, B, C)   - DIST14_TOL);
       _d->SetUpperBounds((*t)[0], (*t)[3], Calculate14DistTrans(rAB, rBC, rCD, B, C) + DIST14_TOL);
     }
+
+    // OK, check and correct double bond cis/trans stereochemistry
+    // Get CisTransStereos and make a vector of corresponding OBStereoUnits
+    OBStereoUnitSet sgunits;
+    std::vector<OBGenericData*> vdata = _mol.GetAllData(OBGenericDataType::StereoData);
+    OBStereo::Ref bond_id;
+    for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data)
+      if (((OBStereoBase*)*data)->GetType() == OBStereo::CisTrans) {
+        OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
+        if (ct->GetConfig().specified) {
+          // OK, get the central bond (bc) and check all the bonded atoms for proper stereo
+          b = _mol.GetAtomById(ct->GetConfig().begin);
+          c = _mol.GetAtomById(ct->GetConfig().end);
+          FOR_NBORS_OF_ATOM(a, b) {
+            if (a->GetIdx() == c->GetIdx())
+              continue;
+            FOR_NBORS_OF_ATOM(d, c) {
+              if (d->GetIdx() == b->GetIdx())
+                continue;
+
+              double lBounds = _d->GetLowerBounds(a->GetIdx() - 1, d->GetIdx() - 1) + DIST14_TOL;
+              double uBounds = _d->GetUpperBounds(a->GetIdx() - 1, d->GetIdx() - 1) - DIST14_TOL;
+              if (ct->IsTrans(a, d)) {
+                // lower bounds should be trans (current upper bounds)
+                _d->SetLowerBounds(a->GetIdx() - 1, d->GetIdx() - 1, uBounds - DIST14_TOL);
+              } else if (ct->IsCis(a, d)) {
+                // upper bounds should be cis (current lower bounds)
+                _d->SetUpperBounds(a->GetIdx() - 1, d->GetIdx() - 1, lBounds + DIST14_TOL);
+              }
+            } // neighbors of cis/trans c
+          } // neighbors of cis/trans b
+        }
+      } // iterate through cis/trans
+
+
+    // Now correct ring bonds -- if bc is a ring bond, and a and d are in the same ring, then torsion should be "cis-oid"
+    //  If b=c is a double bond, set to exactly cis
+    //  Otherwise, give a bit of slack for upper bound
+    FOR_RINGS_OF_MOL(r, _mol) {
+      int size = r->Size();
+      if (size < 4)
+        continue;
+
+      std::vector<int> path = r->_path;
+      int a, b, c, d; // entries into path vector
+      for (a = 0; a < size; ++a) {
+        b = (a + 1) % size;
+        c = (a + 2) % size;
+        d = (a + 3) % size;
+
+        double lBounds = _d->GetLowerBounds(path[a] - 1, path[d] - 1) + DIST14_TOL;
+        double uBounds = _d->GetUpperBounds(path[a] - 1, path[d] - 1) - DIST14_TOL;
+
+        bc = _mol.GetBond(path[b], path[c]);
+        if (bc->IsDouble() || bc->IsAromatic()) {
+          uBounds = lBounds + DIST14_TOL;
+          // Correct non-ring neighbors too -- these should be out of the ring
+          FOR_NBORS_OF_ATOM(nbr, _mol.GetAtom(path[b])) {
+            if (nbr->GetIdx() == path[a] || nbr->GetIdx() == path[c])
+              continue;
+            // This atom should be trans to atom D
+            _d->SetLowerBounds(nbr->GetIdx() - 1, path[d] - 1,
+                               _d->GetUpperBounds(nbr->GetIdx() - 1, path[d] - 1) - DIST14_TOL);
+          }
+          FOR_NBORS_OF_ATOM(nbr, _mol.GetAtom(path[c])) {
+            if (nbr->GetIdx() == path[d] || nbr->GetIdx() == path[b])
+              continue;
+            // This atom should be trans to atom A
+            _d->SetLowerBounds(nbr->GetIdx() - 1, path[a] - 1,
+                               _d->GetUpperBounds(nbr->GetIdx() - 1, path[a] - 1) - DIST14_TOL);
+          }
+
+        } else if (bc->IsSingle()) {
+          // Could be anywhere from pure-cis to halfway to trans
+          uBounds = _d->GetSplitBounds(path[a] - 1, path[d] - 1);
+
+          // Adjust the non-ring neighbors too -- these should be out of the ring (i.e., trans-oid)
+          // Correct non-ring neighbors too -- these should be out of the ring
+          FOR_NBORS_OF_ATOM(nbr, _mol.GetAtom(path[b])) {
+            if (nbr->GetIdx() == path[a] || nbr->GetIdx() == path[c])
+              continue;
+            // This atom should be quasi-trans to atom D
+            _d->SetLowerBounds(nbr->GetIdx() - 1, path[d] - 1, _d->GetSplitBounds(nbr->GetIdx() - 1, path[d] - 1));
+          }
+          FOR_NBORS_OF_ATOM(nbr, _mol.GetAtom(path[c])) {
+            if (nbr->GetIdx() == path[d] || nbr->GetIdx() == path[b])
+              continue;
+            // This atom should be quasi-trans to atom A
+            _d->SetLowerBounds(nbr->GetIdx() - 1, path[a] - 1, _d->GetSplitBounds(nbr->GetIdx() - 1, path[a] - 1));
+          }
+        }
+        // New upper bounds for a-b-c-d
+        _d->SetUpperBounds(path[a] - 1, path[d] - 1, uBounds);
+
+      } // done with path
+    } // done with rings
+
+    // TODO: More special cases
   }
 
+  // - when atoms i and j are in a 1-5 relationship, the lower distance
+  //   cannot be lower than everything being in a cis relationship (i.e., curling around)
+  //    or farther than a fully extended trans relationship
   void OBDistanceGeometry::Set15Bounds()
   {
+    /* TODO:
+    FOR_TORSIONS_OF_MOL(t, _mol) {
+      a = _mol.GetAtom((*t)[0] + 1);
+      b = _mol.GetAtom((*t)[1] + 1);
+      c = _mol.GetAtom((*t)[2] + 1);
+      d = _mol.GetAtom((*t)[3] + 1);
+
+      FOR_NBRS_OF_ATOM(e, d) {
+
+      }
+    }
+    */
   }
 
   int OBDistanceGeometry::AreInSameRing(OBAtom *a, OBAtom *b)
@@ -380,28 +529,33 @@ namespace OpenBabel {
 
             // get the upper and lower limits for bc and ac
             u_bc = _d->GetUpperBounds(b, c);
-            //            l_bc = _d->GetLowerBounds(b, c);
+            l_bc = _d->GetLowerBounds(b, c);
             u_ac = _d->GetUpperBounds(a, c);
             l_ac = _d->GetLowerBounds(a, c);
 
+            // Triangle rule: ac length can't be longer than the sum of the two other legs
             if (u_ac > (u_ab + u_bc)) { // u_ac <= u_ab + u_bc
-              u_ac = u_ab + u_bc;
+              _d->SetUpperBounds(a, c, u_ab + u_bc);
               self_consistent = false;
             }
 
+            // Triangle rule: ac length can't be shorter than the difference between the legs
             if (l_ac < (l_ab - u_bc)) {// l_ac >= l_ab - u_bc
               l_ac = l_ab - u_bc;
       	      self_consistent = false;
+            } else if (l_ac < (l_bc - u_ab)) {
+              l_ac = (l_bc - u_ab);
+              self_consistent = false;
             }
-
-            // store smoothed l_ac and u_ac
-            _d->SetUpperBounds(a, c, u_ac);
             _d->SetLowerBounds(a, c, l_ac);
+
           } // loop(c)
         } // loop(b)
       } // loop(a)
       loopCount++; // Make sure we don't enter an infinite loop
-    } // self-consistency
+      if (_d->debug)
+        cerr << "Smoothing: " << loopCount << endl;
+    } // repeat until self-consistency (or loop count is exceeded)
   }
 
   bool OBDistanceGeometry::CheckChiralConstraints()
@@ -409,6 +563,9 @@ namespace OpenBabel {
     OBBuilder::CorrectStereoBonds(_mol);
     OBBuilder::CorrectStereoAtoms(_mol);
 
+    //TODO: Check all double-bond stereo contstrains
+    //  - should actually be OK since 1-4 bounds are enforced
+    //TODO: Check all atom-based stereo constraints
     return true;
   }
 
@@ -484,14 +641,16 @@ namespace OpenBabel {
             delta *= scale;
             a->SetVector(a->GetVector() + delta);
             b->SetVector(b->GetVector() - delta);
-            cerr << dist << " " << lBounds << " " << a->GetDistance(b) << endl;
+            if (_d->debug)
+              cerr << "< lBounds: " << a->GetIdx() << " " << b->GetIdx() << " " << dist << " " << lBounds << " " << a->GetDistance(b) << endl;
           } else if (dist > uBounds) {
             vector3 delta = a->GetVector() - b->GetVector();
             double scale = lambda * 0.5 * (uBounds - dist)/dist;
             delta *= scale;
             a->SetVector(a->GetVector() + delta);
             b->SetVector(b->GetVector() - delta);
-            cerr << dist << " " << lBounds << " " << a->GetDistance(b) << endl;
+            if (_d->debug)
+              cerr << "> uBounds: " << a->GetIdx() << " " << b->GetIdx() << " " << dist << " " << uBounds << " " << a->GetDistance(b) << endl;
           }
         }
       }
@@ -507,6 +666,8 @@ namespace OpenBabel {
     // Sanity Check
     if (_mol.NumAtoms() != mol.NumAtoms())
       return;
+
+    mol.SetDimension(3);
 
     //Copy conformer information
     if (_mol.NumConformers() > 0) {
