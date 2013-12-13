@@ -230,7 +230,7 @@ namespace OpenBabel {
     pInFormat(NULL),pOutFormat(NULL), Index(0), StartNumber(1),
     EndNumber(0), Count(-1), m_IsFirstInput(true), m_IsLast(true),
     MoreFilesToCome(false), OneObjectOnly(false), CheckedForGzip(false),
-    NeedToFreeInStream(false), NeedToFreeOutStream(false),
+    NeedToFreeInStream(false), NeedToFreeOutStream(false), SkippedMolecules(false),
     pOb1(NULL), pAuxConv(NULL),pLineEndBuf(NULL),wInpos(0),wInlen(0)
   {
     pInStream=is;
@@ -267,6 +267,7 @@ namespace OpenBabel {
     ReadyToInput   = o.ReadyToInput;
     m_IsFirstInput = o.m_IsFirstInput;
     CheckedForGzip = o.CheckedForGzip;
+    SkippedMolecules = o.SkippedMolecules;
     NeedToFreeInStream = o.NeedToFreeInStream;
     NeedToFreeOutStream = o.NeedToFreeOutStream;
     pLineEndBuf    = o.pLineEndBuf;
@@ -772,7 +773,22 @@ namespace OpenBabel {
     locale cNumericLocale(originalLocale, "C", locale::numeric);
     pInStream->imbue(cNumericLocale);
 
-    bool success = pInFormat->ReadMolecule(pOb, this);
+    // skip molecules if -f or -l option is set
+    if (!SkippedMolecules) {
+        Count = 0; // make sure it's 0
+        if(!SetStartAndEnd()) {
+           return false;
+        }
+        SkippedMolecules = true;
+    }
+
+    // catch last molecule acording to -l
+    Count++;
+    bool success = false;
+    if (EndNumber==0 || Count<=EndNumber) {
+        success = pInFormat->ReadMolecule(pOb, this);
+    }
+
     // return the C locale to the original one
     obLocale.RestoreLocale();
     // Restore the original C++ locale as well
