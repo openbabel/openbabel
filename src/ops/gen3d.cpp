@@ -66,7 +66,7 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
   pFF->SetUpdateFrequency(10); // update non-bonded distances
 
   pFF->SteepestDescent(250, 1.0e-4);
-  pFF->WeightedRotorSearch(250, 8);
+  pFF->FastRotorSearch(false);
   pFF->ConjugateGradients(250, 1.0e-6);
   pFF->UpdateCoordinates(*pmol);
 
