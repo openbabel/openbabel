@@ -56,6 +56,7 @@ namespace OpenBabel
           " --nconf #        number of conformers to generate\n"
           " forcefield based methods for finding stable conformers:\n"
           " --systematic     systematically generate all conformers\n"
+          " --fast           fast systematic search from central bonds\n"
           " --random         randomly generate conformers\n"
           " --weighted       weighted rotor search for lowest energy conformer\n"
           " --ff #           select a forcefield (default = MMFF94)\n"
@@ -97,6 +98,7 @@ namespace OpenBabel
     bool systematic = false;
     bool random = false;
     bool weighted = false;
+    bool fast = false;
     int numConformers = 30;
 
     iter = pmap->find("log");
@@ -115,11 +117,15 @@ namespace OpenBabel
     if(iter!=pmap->end())
       random = true;
 
+    iter = pmap->find("fast");
+    if(iter!=pmap->end())
+      fast = true;
+
     iter = pmap->find("weighted");
     if(iter!=pmap->end())
       weighted = true;
 
-    if (systematic || random || weighted) {
+    if (systematic || random || fast || weighted) {
       std::string ff = "MMFF94";
       iter = pmap->find("ff");
       if(iter!=pmap->end())
@@ -130,11 +136,31 @@ namespace OpenBabel
       pFF->SetLogFile(&clog);
       pFF->SetLogLevel(log ? OBFF_LOGLVL_MEDIUM : OBFF_LOGLVL_NONE);
 
+      // Add cut-offs for faster conformer searching
+      // Generally people will perform further optimization on a final conformer
+      pFF->EnableCutOff(true);
+      pFF->SetVDWCutOff(10.0);
+      pFF->SetElectrostaticCutOff(20.0);
+      pFF->SetUpdateFrequency(10); // delay updates of non-bonded distances
+
       if (!pFF->Setup(*pmol)) {
         cerr  << "Could not setup force field." << endl;
         return false;
       }
-    } else {
+
+      // Perform search
+      if (systematic) {
+        pFF->SystematicRotorSearch(10); // 10 steepest-descent forcfield steps per conformer
+      } else if (fast) {
+        pFF->FastRotorSearch(true); // permute rotors
+      } else if (random) {
+        pFF->RandomRotorSearch(numConformers, 10);
+      } else if (weighted) {
+        pFF->WeightedRotorSearch(numConformers, 10);
+      }
+      pFF->GetConformers(*pmol);
+
+    } else { // GA-based searching
       int numChildren = 5;
       int mutability = 5;
       int convergence = 25;
@@ -175,4 +201,3 @@ namespace OpenBabel
 
 
 }//namespace
-
