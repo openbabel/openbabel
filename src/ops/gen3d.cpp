@@ -55,8 +55,24 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
   // first try converting OptionText to an integer
   char *endptr;
   speed = strtol(OptionText, &endptr, 10);
-  if (endptr == OptionText) // not a number
-    speed = 2; // we'll default to 2
+  if (endptr == OptionText) { // not a number
+    speed = 3; // we'll default to balanced
+    // but let's also check if it's words like "fast" or "best"
+    if (strncasecmp(OptionText, "fastest", 7) == 0)
+      speed = 5;
+    else if (strncasecmp(OptionText, "fast", 4) == 0) // already matched fastest
+      speed = 4;
+    else if (strncasecmp(OptionText, "med", 3) == 0) // or medium
+      speed = 3;
+    else if ( (strncasecmp(OptionText, "slowest", 7) == 0)
+             || (strncasecmp(OptionText, "best", 4) == 0) )
+      speed = 1;
+    else if ( (strncasecmp(OptionText, "slow", 4) == 0)
+              || (strncasecmp(OptionText, "better", 6) == 0) )
+      speed = 2;
+  }
+
+  // Give some limits so we can use switch statements
   if (speed < 1)
     speed = 1;
   else if (speed > 5)
@@ -71,10 +87,11 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
   if (speed == 5)
     return true; // done
 
+  // All other speed levels do some FF cleanup
+  // Try MMFF94 first and UFF if that doesn't work
   OBForceField* pFF = OBForceField::FindForceField("MMFF94");
   if (!pFF)
     return true;
-
   if (!pFF->Setup(*pmol)) {
     pFF = OBForceField::FindForceField("UFF");
     if (!pFF || !pFF->Setup(*pmol)) return true; // can't use either MMFF94 or UFF
@@ -84,8 +101,9 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
   pFF->EnableCutOff(true);
   pFF->SetVDWCutOff(10.0);
   pFF->SetElectrostaticCutOff(20.0);
-  pFF->SetUpdateFrequency(10); // update non-bonded distances
+  pFF->SetUpdateFrequency(10); // update non-bonded distances infrequently
 
+  // How many cleanup cycles?
   int iterations = 250;
   switch (speed) {
   case 1:
@@ -100,19 +118,25 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
     iterations = 100;
   }
 
-  // Do this for every level
+  // Initial cleanup for every level
   pFF->SteepestDescent(iterations, 1.0e-4);
 
   if (speed == 4)
     return true; // no conformer searching
 
-  if (speed == 3)
-    pFF->FastRotorSearch(false);
-  else if (speed == 2)
-    pFF->WeightedRotorSearch(250, 10);
-  else if (speed == 1)
-    pFF->WeightedRotorSearch(500, 25);
+  switch(speed) {
+  case 1:
+    pFF->WeightedRotorSearch(250, 10); // maybe based on # of rotatable bonds?
+    break;
+  case 2:
+    pFF->FastRotorSearch(true); // permute central rotors
+    break;
+  case 3:
+  default:
+    pFF->FastRotorSearch(false); // only one permutation
+  }
 
+  // Final cleanup and copy the new coordinates back
   pFF->ConjugateGradients(iterations, 1.0e-6);
   pFF->UpdateCoordinates(*pmol);
 
