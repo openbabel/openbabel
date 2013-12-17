@@ -45,15 +45,36 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
   if(!pmol)
     return false;
 
+  // 1 is best quality, slowest
+  // 2 is good quality, slow
+  // 3 is balance   (FF cleanup + FastRotorSearch)
+  // 4 is fast      (OBBuilder + FF cleanup)
+  // 5 is fastest   (only OBBuilder)
+  int speed;
+
+  // first try converting OptionText to an integer
+  char *endptr;
+  speed = strtol(OptionText, &endptr, 10);
+  if (endptr == OptionText) // not a number
+    speed = 2; // we'll default to 2
+  if (speed < 1)
+    speed = 1;
+  else if (speed > 5)
+    speed = 5;
+
+  // This is done for all speed levels
   OBBuilder builder;
   builder.Build(*pmol);
   pmol->SetDimension(3);
+  pmol->AddHydrogens(false, false); // Add some hydrogens before running MMFF
+
+  if (speed == 5)
+    return true; // done
 
   OBForceField* pFF = OBForceField::FindForceField("MMFF94");
   if (!pFF)
     return true;
 
-  pmol->AddHydrogens(false, false); // Add some hydrogens before running MMFF
   if (!pFF->Setup(*pmol)) {
     pFF = OBForceField::FindForceField("UFF");
     if (!pFF || !pFF->Setup(*pmol)) return true; // can't use either MMFF94 or UFF
@@ -65,9 +86,34 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
   pFF->SetElectrostaticCutOff(20.0);
   pFF->SetUpdateFrequency(10); // update non-bonded distances
 
-  pFF->SteepestDescent(250, 1.0e-4);
-  pFF->FastRotorSearch(false);
-  pFF->ConjugateGradients(250, 1.0e-6);
+  int iterations = 250;
+  switch (speed) {
+  case 1:
+    iterations = 500;
+    break;
+  case 2:
+    iterations = 250;
+    break;
+  case 3:
+  case 4:
+  default:
+    iterations = 100;
+  }
+
+  // Do this for every level
+  pFF->SteepestDescent(iterations, 1.0e-4);
+
+  if (speed == 4)
+    return true; // no conformer searching
+
+  if (speed == 3)
+    pFF->FastRotorSearch(false);
+  else if (speed == 2)
+    pFF->WeightedRotorSearch(250, 10);
+  else if (speed == 1)
+    pFF->WeightedRotorSearch(500, 25);
+
+  pFF->ConjugateGradients(iterations, 1.0e-6);
   pFF->UpdateCoordinates(*pmol);
 
   return true;
