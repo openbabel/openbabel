@@ -318,6 +318,8 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! \return the angle (in degrees) between the three atoms @p a, @p b and @p c
     //!  (where  a-> b (vertex) -> c )
     double GetAngle(OBAtom* a, OBAtom* b, OBAtom* c);
+    //! \return the size of the smallest ring if a and b are in the same ring, 0 otherwise
+    int AreInSameRing(OBAtom *a, OBAtom *b);
     //! \return the stochoimetric formula (e.g., C4H6O)
     std::string  GetFormula();
     //! \return the stochoimetric formula in spaced format e.g. C 4 H 6 O 1
@@ -503,20 +505,20 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! Return has charged form of dative bonds(e.g.[N+]([O-])=O from N(=O)=O).
     //! Converts 5-valent N and P only. Return true if conversion occurred.
     bool MakeDativeBonds();
-    /** Convert zero-order bonds to single or double bonds and adjust adjacent atom 
+    /** Convert zero-order bonds to single or double bonds and adjust adjacent atom
      *  charges in an attempt to achieve the correct valence state.
-     *  
+     *
      *  This function is useful when writing to legacy formats (such as MDL MOL) that do
-     *  not support zero-order bonds. It is worth noting that some compounds cannot be 
+     *  not support zero-order bonds. It is worth noting that some compounds cannot be
      *  well represented using just single, double and triple bonds, even with adjustments
      *  to adjacent charges. In these cases, simply converting zero-order bonds to single
      *  bonds is all that can be done.
      *
         @verbatim
         Algorithm from:
-        Clark, A. M. Accurate Specification of Molecular Structures: The Case for 
-        Zero-Order Bonds and Explicit Hydrogen Counting. Journal of Chemical Information 
-        and Modeling, 51, 3149-3157 (2011). http://pubs.acs.org/doi/abs/10.1021/ci200488k 
+        Clark, A. M. Accurate Specification of Molecular Structures: The Case for
+        Zero-Order Bonds and Explicit Hydrogen Counting. Journal of Chemical Information
+        and Modeling, 51, 3149-3157 (2011). http://pubs.acs.org/doi/abs/10.1021/ci200488k
         @endverbatim
      *  \return Whether any modifications were made
      */

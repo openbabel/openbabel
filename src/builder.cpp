@@ -1355,22 +1355,33 @@ namespace OpenBabel
     if (watom->GetHvyValence() != 4) // QUESTION: Do I need to restrict it further?
       return false;
 
-    std::vector <OBBond*> bonds;
-    std::vector <OBBond*>::iterator bond_it;
-    FOR_BONDS_OF_ATOM(b, watom) {
-      if (!b->IsInRing())
+    int atomsInSameRing = 0;
+    int atomsInDiffRings = 0;
+    FOR_NBORS_OF_ATOM(n, watom) {
+      if (!n->IsInRing())
         return false;
+      if (mol.AreInSameRing(&*n, watom))
+        atomsInSameRing++;
       else
-        bonds.push_back(&(*b));
+        atomsInDiffRings++;
     }
+
+    if (atomsInSameRing == 2 && atomsInDiffRings == 2)
+      return true;
+
+    return false;
+
+    /*
+      This causes problems, since after deleting bonds, stereo is undefined
+      so OBMol::Separate() causes problems
+
     // Removing the four bonds should partition the molecule into 3 fragments
     // ASSUMPTION: Molecule is a contiguous fragment to begin with
     for(bond_it=bonds.begin(); bond_it != bonds.end(); ++bond_it)
       workmol.DeleteBond(*bond_it);
     if (workmol.Separate().size() != 3)
       return false;
-
-    return true;
+    */
   }
 
   void OBBuilder::FlipSpiro(OBMol &mol, int idx)

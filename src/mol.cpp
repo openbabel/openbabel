@@ -4301,6 +4301,35 @@ namespace OpenBabel
     return((i == _vbond.end()) ? (OBBond*)NULL : (OBBond*)*i);
   }
 
+  //! \since version 2.4
+  int OBMol::AreInSameRing(OBAtom *a, OBAtom *b)
+  {
+    bool a_in, b_in;
+    vector<OBRing*> vr;
+    vr = GetLSSR();
+
+    vector<OBRing*>::iterator i;
+    vector<int>::iterator j;
+
+    for (i = vr.begin();i != vr.end();++i) {
+      a_in = false;
+      b_in = false;
+      // Go through the path of the ring and see if a and/or b match
+      // each node in the path
+      for(j = (*i)->_path.begin();j != (*i)->_path.end();++j) {
+        if ((unsigned)(*j) == a->GetIdx())
+          a_in = true;
+        if ((unsigned)(*j) == b->GetIdx())
+          b_in = true;
+      }
+
+      if (a_in && b_in)
+        return (*i)->Size();
+    }
+
+    return 0;
+  }
+
   vector<OBMol> OBMol::Separate(int StartIndex)
   {
     vector<OBMol> result;
