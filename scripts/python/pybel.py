@@ -108,12 +108,8 @@ _operations = _getplugins(ob.OBOp.FindType, operations)
 ipython_3d = False
 """Toggles 2D vs 3D molecule representations in IPython notebook"""
 
-# Javascript imports for IPython rendering (IPy comes with JQuery)
-_path = os.path.normpath(os.path.dirname(__file__))
+# Javascript imports for IPython rendering
 _js_drawer = ""
-for f in ["three.min", "TrackballControls", "ShaderToon", "imolecule"]:
-    with open(os.path.join(_path, "js", "%s.js" % f)) as in_js:
-        _js_drawer += in_js.read()
 
 
 def readfile(format, filename, opt=None):
@@ -414,6 +410,17 @@ class Molecule(object):
         # Returning None defers to _repr_svg_
         if not ipython_3d:
             return None
+
+        # If the javascript files have not yet been loaded, do so
+        global _js_drawer
+        if not _js_drawer:
+            import urllib2
+
+            base = "https://raw.github.com/patrickfuller/imolecule/master/"
+            urls = [base + i for i in ["lib/three.min.js", "lib/ShaderToon.js",
+                    "lib/TrackballControls.js", "imolecule.js"]]
+            for url in urls:
+                _js_drawer += urllib2.urlopen(url).read()
 
         # Some exposed parameters. Leaving this unfunctionalized for now.
         size = (400, 300)
