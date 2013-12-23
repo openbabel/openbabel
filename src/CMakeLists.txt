@@ -10,8 +10,9 @@ set(charges
 )
 
 if (EIGEN2_FOUND OR EIGEN3_FOUND)
-# if eigen is available, compile QEq and QTPIE charge models
+# if eigen is available, compile QEq, EQeq, and QTPIE charge models
 set(charges ${charges}
+  charges/eqeq.cpp
   charges/qeq.cpp
   charges/qtpie.cpp
 )

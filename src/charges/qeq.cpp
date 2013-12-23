@@ -54,7 +54,7 @@ namespace OpenBabel
 
     \f]
 
-	in the current implementation, we assume \f$Q = 0\f$ always.
+    in the current implementation, we assume \f$Q = 0\f$ always.
 
     The off-diagonal Coulomb interactions are screened using the following integral
 
@@ -198,7 +198,7 @@ namespace OpenBabel
 
     FOR_ATOMS_OF_MOL(atom, mol)
       {
-       	Parameters = GetParameters(atom->GetAtomicNum(), atom->GetFormalCharge());
+        Parameters = GetParameters(atom->GetAtomicNum(), atom->GetFormalCharge());
         i = atom->GetIdx() - 1;
 
         if (Parameters[0] == 0.)
