@@ -415,12 +415,9 @@ class Molecule(object):
         global _js_drawer
         if not _js_drawer:
             import urllib2
-
-            base = "https://raw.github.com/patrickfuller/imolecule/master/"
-            urls = [base + i for i in ["lib/three.min.js", "lib/ShaderToon.js",
-                    "lib/TrackballControls.js", "imolecule.js"]]
-            for url in urls:
-                _js_drawer += urllib2.urlopen(url).read()
+            url = ("https://raw.github.com/openbabel/contributed/master/"
+                   "web/imolecule/build/imolecule.min.js")
+            _js_drawer = urllib2.urlopen(url).read()
 
         # Some exposed parameters. Leaving this unfunctionalized for now.
         size = (400, 300)
