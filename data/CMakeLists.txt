@@ -7,6 +7,7 @@ set(to_install
     babel_povray3.inc
     bondtyp.txt
     element.txt
+    eqeqIonizations.txt
     fragments.txt
     gaff.dat
     gaff.prm
