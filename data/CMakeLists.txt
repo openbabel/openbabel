@@ -32,6 +32,7 @@ set(to_install
     mmffvdw.par
     mmffs_oop.par
     mmffs_tor.par
+    mpC.txt
     mr.txt
     patterns.txt
     phmodel.txt
