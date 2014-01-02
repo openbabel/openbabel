@@ -39,9 +39,11 @@ namespace OpenBabel
    //Adds name of datafile containing SMARTS strings to the description
     static string txt;
     txt =  _descr;
+    /*
     txt += "\n Datafile: ";
     txt += _filename;
     txt += "\nOBGroupContrib is definable";
+    */
     return txt.c_str();
   }
 
@@ -180,7 +182,7 @@ namespace OpenBabel
         int Hcount = tmpmol.GetAtom(index + 1)->GetValence() - tmpmol.GetAtom(index + 1)->GetHvyValence();
         debugMessage << "   " << Hcount << " hydrogens = " << hydrogenValues[index] << " ";
         if (!seenHydrogen.BitIsSet(index + 1)) debugMessage << "un";
-        debugMessage << "matched\n";        
+        debugMessage << "matched\n";
       }
     }
 
