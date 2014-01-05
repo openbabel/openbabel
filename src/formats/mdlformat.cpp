@@ -2,6 +2,7 @@
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey Hutchison
 Portions Copyright (C) 2004-2006 by Chris Morley
+Portions Copyright (C) 2013 by NextMove Software
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
@@ -82,6 +83,7 @@ namespace OpenBabel
 
                "Write Options, e.g. -x3\n"
                " 3  output V3000 not V2000 (used for >999 atoms/bonds) \n"
+               " a  write atomclass if available\n"
                " m  write no properties\n"
                " w  use wedge and hash bonds from input (2D only)\n"
                " S  do not store cis/trans stereochemistry in 0D MOL files\n"
@@ -460,6 +462,17 @@ namespace OpenBabel
                                // - if we don't set this, then the presence of a single explicit H
                                //   will cause AssignSpinMultiplicity to assume no additional implicit Hs
 
+        if (line.size() >= 62) {
+          int aclass = ReadIntField(line.substr(60, 3).c_str());
+          if (aclass != 0) {
+            OBAtomClassData *pac;
+            if (!mol.HasData("Atom Class")) {
+              pac = new OBAtomClassData;
+              mol.SetData(pac);
+            } else pac = (OBAtomClassData*)mol.GetData("Atom Class");
+            pac->Add(patom->GetIdx(),aclass);
+          }
+        }
 
 //        if (!mol.AddAtom(atom))
 //          return false;
@@ -924,8 +937,15 @@ namespace OpenBabel
                mol.NumAtoms(), mol.NumBonds(), chiralFlag);
       ofs << buff;
 
+      OBAtomClassData *pac;
+      if (mol.HasData("Atom Class") && pConv->IsOption("a"))
+        pac = (OBAtomClassData*)mol.GetData("Atom Class");
+      else
+        pac = NULL;
+
       OBAtom *atom;
       vector<OBAtom*>::iterator i;
+      unsigned int aclass = 0;
       int charge = 0;
       for (atom = mol.BeginAtom(i); atom; atom = mol.NextAtom(i)) {
         // convert charge
@@ -947,10 +967,15 @@ namespace OpenBabel
         if (atom->GetSpinMultiplicity()>=4 || (IsMetal(atom) && atom->GetValence()==0))
           valence = atom->GetValence()==0 ? 15 : atom->GetValence();
 
+        if (pac && pac->HasClass(atom->GetIdx()))
+          aclass = pac->GetClass(atom->GetIdx());
+        else
+          aclass = 0; // 0 implies no class specified (see the OpenSMILES spec)
+
         snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d",
           atom->GetX(), atom->GetY(), atom->GetZ(),
           atom->GetAtomicNum() ? etab.GetSymbol(atom->GetAtomicNum()) : "* ",
-          0,charge,stereo,0,0,valence,0,0,0,0,0,0);
+          0,charge,stereo,0,0,valence,0,0,0,aclass,0,0);
         ofs << buff << endl;
       }
 
