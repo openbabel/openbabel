@@ -1,6 +1,8 @@
 #!/usr/bin/env python
-from distutils.core import *
+from setuptools import setup, Extension
 import os,sys,shutil
+import subprocess
+import sys
 
 about = """The Open Babel package provides a Python wrapper
 to the Open Babel C++ chemistry library. Open Babel is a chemical
@@ -10,25 +12,40 @@ analyze, or store data from molecular modeling, chemistry, solid-state
 materials, biochemistry, or related areas. It provides a broad base of
 chemical functionality for custom development.
 """
+version = "1.8"
+try:
+    subprocess.check_output("pkg-config --exists openbabel-2.0".split())
+except:
+    print ("pkg-config could not find an openbabel instal. Please install openbabel and rerun setup.py.")
+    sys.exit(1)
 
-srcdir = os.path.dirname(__file__)
+
+babel_version = subprocess.Popen("pkg-config --modversion openbabel-2.0".split(), 
+    stdout=subprocess.PIPE).stdout.readline().decode("utf-8")
+
+include_dirs = subprocess.Popen("pkg-config --variable=pkgincludedir openbabel-2.0".split(), 
+    stdout=subprocess.PIPE).stdout.readline().decode("utf-8").split()
+
+lib_dirs = subprocess.Popen("pkg-config --variable=libdir openbabel-2.0".split(), 
+    stdout=subprocess.PIPE).stdout.readline().decode("utf-8").split()
+
+#Code should be added here to ensure these directories exist, and that this version of babel is compatible
+#with this python package. 
+
+swig_opts = ["-c++", "-small", "-O", "-templatereduce", "-naturalvar"]
+swig_opts += ["-I%s" % i for i in include_dirs]
 
 obExtension = Extension('_openbabel',
-                 [os.path.join(srcdir, "openbabel-python.cpp")],
-                 include_dirs=[os.path.join(srcdir, "..", "..", "include"),
-                               os.path.join("..", "include")],
-                 library_dirs=[os.path.join(srcdir, "..", "..", "lib"),
-                               os.path.join(srcdir, "..", "..", "lib64"),
-                               os.path.join("..", "lib")],
-                 libraries=['openbabel']
+                 ["openbabel-python.i"],
+                 include_dirs=include_dirs,
+                 library_dirs=lib_dirs,
+		         swig_opts=swig_opts,
+                 libraries=["openbabel"]
                  )
 
-if "build" in sys.argv:
-    shutil.copyfile(os.path.join(srcdir, "pybel.py"), "pybel.py")
-    shutil.copyfile(os.path.join(srcdir, "openbabel.py"), "openbabel.py")
-
 setup(name='openbabel',
-      version='1.7',
+      zip_safe=True,
+      version=version,
       author='Noel O\'Boyle',
       author_email='openbabel-scripting@lists.sourceforge.net',
       url='http://openbabel.org/',
