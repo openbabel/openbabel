@@ -34,12 +34,11 @@ GNU General Public License for more details.
 
 // The following constants are functionalized in EQeq's original implementation,
 // but rarely ever changed in practice.
-const int neighborCells = 2; // Number of radial neighbor cells to use (ie. 2 corresponds to 5x5x5 supercell)
+const double minCellLength = 150.0; // Minimum dimension of supercell used in calculation [A]
 const double k = 14.4; // Vacuum permittivity (1/(4 * pi * eps_0)) [A * eV]
 const double lambda = 1.2; // Coulomb scaling parameter
 const double hi_0 = -2.0; // Electron affinity of hydrogen used in EQeq paper
 const double eta = 50; // Ewald splitting parameter
-const double chargePrecision = 3; // Number of digits to use for point charges
 
 using namespace Eigen;
 
@@ -61,7 +60,7 @@ private:
   double _ionizations[TABLE_OF_ELEMENTS_SIZE + 1][9]; // Electron affinity + 8x ionizations of elements
   bool ParseParamFile();
   double GetNonperiodicJij(double J_i, double J_j, double R_ij, bool isSameAtom);
-  double GetPeriodicEwaldJij(double J_i, double J_j, vector3 dx, bool isSameAtom, matrix3x3 unitcell, matrix3x3 fourier, double cellVolume);
+  double GetPeriodicEwaldJij(double J_i, double J_j, vector3 dx, bool isSameAtom, matrix3x3 unitcell, matrix3x3 fourier, double cellVolume, int numNeighbors[]);
 };
 
 }; //namespace OpenBabel
