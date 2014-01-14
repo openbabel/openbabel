@@ -73,7 +73,7 @@ if (DO_PYTHON_BINDINGS)
       if(WIN32) # Skip the extra COMMANDs below as 'cat' is not present on Windows
         add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
             COMMAND ${SWIG_EXECUTABLE} -python -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${eigen_define} -outdir ${openbabel_SOURCE_DIR}/scripts/python ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
-              MAIN_DEPENDENCY openbabel-python.i 
+              MAIN_DEPENDENCY openbabel-python.i
               VERBATIM
               )
       else(WIN32)
@@ -89,7 +89,7 @@ if (DO_PYTHON_BINDINGS)
               COMMAND cat ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py >> ob.py
               COMMAND ${CMAKE_COMMAND} -E copy ob.py ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
               COMMAND ${CMAKE_COMMAND} -E remove ob.py
-              MAIN_DEPENDENCY openbabel-python.i 
+              MAIN_DEPENDENCY openbabel-python.i
               VERBATIM
               )
       endif(WIN32)
@@ -170,7 +170,7 @@ endif (JAVA_BINDINGS)
 
 if (DO_JAVA_BINDINGS)
 
-include_directories( 
+include_directories(
 	${JNI_INCLUDE_DIRS}
     )
 
@@ -374,7 +374,8 @@ if (DO_RUBY_BINDINGS)
       set(WORKAROUND_CMAKE260_BUG "s/rb_define_module(\"Openbabel\")/rb_define_module(\"OpenBabel\")/")
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp
           COMMAND ${SWIG_EXECUTABLE} -ruby -c++ -small -O -templatereduce -naturalvar -autorename -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.txt ${openbabel_SOURCE_DIR}/scripts/openbabel-ruby.i
-          COMMAND sed -e '${WORKAROUND_CMAKE_260_BUG}' -e's/void Init_OpenBabel/void Init_openbabel/' <${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.txt >${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp 
+          COMMAND sed -e '${WORKAROUND_CMAKE_260_BUG}' -e's/void Init_OpenBabel/void Init_openbabel/' <${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.txt >${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp
+          COMMAND ${CMAKE_COMMAND} -E remove ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.txt
           MAIN_DEPENDENCY openbabel-ruby.i
       )
     endif (RUN_SWIG)
@@ -479,11 +480,11 @@ if (PHP_BINDINGS)
       STRING(REPLACE "\n" "" PHP_CONFIG_INCLUDES "${PHP_CONFIG_INCLUDES}")
       STRING(REPLACE "-I" "" PHP_CONFIG_INCLUDES "${PHP_CONFIG_INCLUDES}")
       STRING(REPLACE " " ";" PHP_CONFIG_INCLUDES "${PHP_CONFIG_INCLUDES}")
-    
+
       execute_process(
       	COMMAND
       	  ${PHP_CONFIG_EXECUTABLE} --extension-dir
-      	OUTPUT_VARIABLE 
+      	OUTPUT_VARIABLE
       	  PHP_EXTENSION_DIR
       )
       STRING(REPLACE "\n" "" PHP_EXTENSION_DIR "${PHP_EXTENSION_DIR}")
@@ -505,10 +506,10 @@ if (DO_PHP_BINDINGS)
           MAIN_DEPENDENCY openbabel-php.i
       )
     endif (RUN_SWIG)
-	
+
     # set openbabel.php include path
     execute_process(COMMAND sed -i -e "s,include_once '\\(.*\\)openbabel.php,include_once '${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}/openbabel.php,g" ${openbabel_SOURCE_DIR}/scripts/php/baphpel.php)
-	
+
     add_library(bindings_php MODULE ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp)
     # Overriding --no-undefined linker flag, since PHP library should not be linked into extension.
     set(PHP_EXTRA_LINK_FLAGS "-Wl,--unresolved-symbols=ignore-all")
