@@ -289,8 +289,8 @@ class Molecule(object):
     (refer to the Open Babel library documentation for more info).
 
     Methods:
-       addh(), calcfp(), calcdesc(), draw(), localopt(), make3D(), removeh(),
-       write()
+       addh(), calcfp(), calcdesc(), draw(), localopt(), make3D(),
+       calccharges(), removeh(), write()
 
     The underlying Open Babel molecule can be accessed using the attribute:
        OBMol
@@ -497,6 +497,25 @@ class Molecule(object):
                 "%s is not a recognised Open Babel Fingerprint type" % fptype)
         fingerprinter.GetFingerprint(self.OBMol, fp)
         return Fingerprint(fp)
+
+    def calccharges(self, model="mmff94"):
+        """Estimates atomic partial charges in the molecule.
+
+        Optional parameters:
+           model -- default is "mmff94". See the charges variable for a list
+                    of available charge models (in shell, `obabel -L charges`)
+
+        This method populates the `partialcharge` attribute of each atom
+        in the molecule in place.
+        """
+        model = model.lower()
+        charge_model = ob.OBChargeModel_FindType(model)
+        if not charge_model:
+            raise NotImplementedError('Charge model "%s" does not exist.\n'
+                                      % model)
+        success = charge_model.ComputeCharges(self.OBMol)
+        if not success:
+            raise Exception("Molecule failed to charge.")
 
     def write(self, format="smi", filename=None, overwrite=False, opt=None):
         """Write the molecule to a file or return a string.
