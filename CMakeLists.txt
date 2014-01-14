@@ -92,12 +92,12 @@ endif()
 
 mark_as_advanced(CMAKE_LIBRARY_OUTPUT_DIRECTORY
   CMAKE_RUNTIME_OUTPUT_DIRECTORY)
-  
+
 #GLIBC_2.4
 option(GLIBC_24_COMPATIBLE "Build project compatible with GLIBC 2.4" OFF)
 if(GLIBC_24_COMPATIBLE AND UNIX)
   set(WRAP_MEMCPY_SRC memcpy.c)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--wrap=memcpy")  
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--wrap=memcpy")
 endif()
 
 
@@ -321,6 +321,11 @@ endif()
 if (${CMAKE_CXX_COMPILER_ID} MATCHES Clang)
    set(SHARED_POINTER true)
    add_definitions(-DHAVE_SHARED_POINTER)
+   if (${CMAKE_CXX_COMPILER_VERSION} VERSION_EQUAL 5.0)
+      # there seems to be an issue with libc++ with garbage strings
+      set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libstdc++")
+      message(STATUS "Using libstdc++ to work around libc++ string bugs")
+   endif()
 endif()
 
 # Intel C++ Compiler
@@ -381,7 +386,7 @@ if(MSVC)
     # To be added: AND SP1  OR gcc>4.0
     add_definitions(-DHAVE_SHARED_POINTER)
     set(SHARED_POINTER true)
-    message("SHARED_POINTER set") 
+    message("SHARED_POINTER set")
   endif()
 endif()
 
