@@ -286,7 +286,7 @@ namespace OpenBabel
   /// Convert one CIF value to a floating-point value
   /// Return 0 if no value can be converted (e.g. if '.' or '?' is encountered)
   int CIFNumeric2Int(const std::string &s);
-  
+
   template <typename T> string to_string(T pNumber)
   {
     ostringstream oOStrStream;
@@ -846,12 +846,12 @@ namespace OpenBabel
           }
       }
   }
-  
+
   void CIFData::ExtractCharges(const bool verbose)
   {
     map<ci_string,string>::const_iterator positem;
-    
-    map<std::string, double> lbl2ox;            
+
+    map<std::string, double> lbl2ox;
     for(map<set<ci_string>, map<ci_string, vector<string> > >::const_iterator loop=mvLoop.begin(); loop!=mvLoop.end(); loop++)
     {
       //if(mvBond.size()>0) break;// Only allow one bond list
@@ -862,20 +862,20 @@ namespace OpenBabel
       {
         if(verbose) cout<<" Found _atom_type* record with oxydation number..."<<endl;
         const unsigned long nl = pos_symbol->second.size();
-	
+
         for(unsigned int i = 0; i < nl; i++)
         {
           lbl2ox[pos_symbol->second[i]] = CIFNumeric2Float(pos_ox_number->second[i]);
-          if(verbose) 
+          if(verbose)
 	    cout << pos_symbol->second[i] << " has oxydation " << pos_ox_number->second[i] << endl;
         }
       }
     }
-    
+
     for (std::vector<CIFAtom>::iterator it = mvAtom.begin() ; it != mvAtom.end(); it++)
-    {  
+    {
       string label = (*it).mLabel;
-      
+
       if( lbl2ox.count(label) > 0 )
         (*it).mCharge = lbl2ox[label];
       else
@@ -883,7 +883,7 @@ namespace OpenBabel
         (*it).mCharge = NOCHARGE;
         if( verbose )
           std::cout << "Charge for label: " + label + " cannot be found." << endl;
-      }  
+      }
     }
   }
 
@@ -1262,7 +1262,7 @@ namespace OpenBabel
   bool is_double(const std::string& s, double& r_double)
   {
     std::istringstream i(s);
-  
+
     if (i >> r_double)
       return true;
 
@@ -1472,7 +1472,7 @@ namespace OpenBabel
               occup_data->SetValue(posat->mOccupancy);
               occup_data->SetOrigin(fileformatInput);
               atom->SetData(occup_data);
-              
+
               if( posat->mCharge != NOCHARGE )
               {
                 OBPairFloatingPoint *charge_data = new OBPairFloatingPoint;
@@ -1582,8 +1582,10 @@ namespace OpenBabel
       {
          double X, Y, Z; //atom coordinates
          vector3 v = atom->GetVector();
-         v = pUC->CartesianToFractional(v);
-         v = pUC->WrapFractionalCoordinate(v);
+         if (pUC != NULL) {
+           v = pUC->CartesianToFractional(v);
+           v = pUC->WrapFractionalCoordinate(v);
+         }
          X = v.x();
          Y = v.y();
          Z = v.z();
