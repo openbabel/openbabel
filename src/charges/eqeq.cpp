@@ -91,6 +91,7 @@ namespace OpenBabel
     OBUnitCell *obuc;
     matrix3x3 unitcell, fourier;
     vector3 dx;
+    int numNeighbors[3];
     OBAtom *atom;
 
     // If parameters have not yet been loaded, do that
@@ -125,13 +126,18 @@ namespace OpenBabel
       fourier = (2 * PI * unitcell.inverse()).transpose();
       cellVolume = obuc->GetCellVolume();
 
+      // Get the number of radial unit cells to use in x, y, and z
+      numNeighbors[0] = int(ceil(minCellLength / (2.0 * (obuc->GetA())))) - 1;
+      numNeighbors[1] = int(ceil(minCellLength / (2.0 * (obuc->GetB())))) - 1;
+      numNeighbors[2] = int(ceil(minCellLength / (2.0 * (obuc->GetC())))) - 1;
+
       for (i = 0; i < N; i++)
       {
         atom = mol.GetAtom(i + 1);
         for (j = 0; j < N; j++)
         {
           dx = atom->GetVector() - (mol.GetAtom(j + 1))->GetVector();
-          J_ij(i, j) = GetPeriodicEwaldJij(J(i), J(j), dx, (i == j), unitcell, fourier, cellVolume);
+          J_ij(i, j) = GetPeriodicEwaldJij(J(i), J(j), dx, (i == j), unitcell, fourier, cellVolume, numNeighbors);
         }
       }
     // If no unit cell, use the simplified nonperiodic calculation
@@ -201,7 +207,7 @@ namespace OpenBabel
   }
 
   //! Calculates a lumped charge coefficient that incorporates neighboring unit cells
-  double EQEqCharges::GetPeriodicEwaldJij(double J_i, double J_j, vector3 dx, bool isSameAtom, matrix3x3 unitcell, matrix3x3 fourier, double cellVolume)
+  double EQEqCharges::GetPeriodicEwaldJij(double J_i, double J_j, vector3 dx, bool isSameAtom, matrix3x3 unitcell, matrix3x3 fourier, double cellVolume, int numNeighbors[])
   {
     int u, v, w;
     double R_ij, a_ij, h_2, orbital = 0.0, alpha = 0.0, beta = 0.0;
@@ -211,11 +217,11 @@ namespace OpenBabel
     a_ij = sqrt(J_i * J_j) / k;
     uvw = vector3();
 
-    for (u = -neighborCells; u <= neighborCells; u++)
+    for (u = -numNeighbors[0]; u <= numNeighbors[0]; u++)
     {
-      for (v = -neighborCells; v <= neighborCells; v++)
+      for (v = -numNeighbors[1]; v <= numNeighbors[1]; v++)
       {
-        for (w = -neighborCells; w <= neighborCells; w++)
+        for (w = -numNeighbors[2]; w <= numNeighbors[2]; w++)
         {
           // If we're iterating over same atom + center unit cell, skip
           if (isSameAtom && u == 0 && v == 0 && w == 0)

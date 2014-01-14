@@ -25,7 +25,8 @@ GNU General Public License for more details.
 #include <list>
 #include <map>
 #include <set>
-#include <cmath>
+
+#define NOCHARGE FLT_MAX
 
 #ifdef _MSC_VER
  #pragma warning( disable : 4503 )
@@ -879,7 +880,7 @@ namespace OpenBabel
         (*it).mCharge = lbl2ox[label];
       else
       {
-        (*it).mCharge = NAN;
+        (*it).mCharge = NOCHARGE;
         if( verbose )
           std::cout << "Charge for label: " + label + " cannot be found." << endl;
       }  
@@ -1472,7 +1473,7 @@ namespace OpenBabel
               occup_data->SetOrigin(fileformatInput);
               atom->SetData(occup_data);
               
-              if( !isnan(posat->mCharge) )
+              if( posat->mCharge != NOCHARGE )
               {
                 OBPairFloatingPoint *charge_data = new OBPairFloatingPoint;
                 charge_data->SetAttribute("input_charge");
