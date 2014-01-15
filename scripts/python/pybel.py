@@ -101,6 +101,10 @@ forcefields = [_x.lower() for _x in _getpluginnames("forcefields")]
 """A list of supported forcefields"""
 _forcefields = _getplugins(ob.OBForceField.FindType, forcefields)
 
+charges = [_x.lower() for _x in _getpluginnames("charges")]
+"""A list of supported charge models"""
+_charges = _getplugins(ob.OBChargeModel.FindType, forcefields)
+
 operations = _getpluginnames("ops")
 """A list of supported operations"""
 _operations = _getplugins(ob.OBOp.FindType, operations)
@@ -516,6 +520,7 @@ class Molecule(object):
         success = charge_model.ComputeCharges(self.OBMol)
         if not success:
             raise Exception("Molecule failed to charge.")
+        return [atom.partialcharge for atom in self.atoms]
 
     def write(self, format="smi", filename=None, overwrite=False, opt=None):
         """Write the molecule to a file or return a string.
