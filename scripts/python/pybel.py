@@ -103,7 +103,7 @@ _forcefields = _getplugins(ob.OBForceField.FindType, forcefields)
 
 charges = [_x.lower() for _x in _getpluginnames("charges")]
 """A list of supported charge models"""
-_charges = _getplugins(ob.OBChargeModel.FindType, forcefields)
+_charges = _getplugins(ob.OBChargeModel.FindType, charges)
 
 operations = _getpluginnames("ops")
 """A list of supported operations"""
@@ -513,10 +513,11 @@ class Molecule(object):
         in the molecule in place.
         """
         model = model.lower()
-        charge_model = ob.OBChargeModel_FindType(model)
-        if not charge_model:
-            raise NotImplementedError('Charge model "%s" does not exist.\n'
-                                      % model)
+        try:
+            charge_model = _charges[model]
+        except KeyError:
+            raise ValueError(
+                "%s is not a recognised Open Babel Charge Model type" % model)
         success = charge_model.ComputeCharges(self.OBMol)
         if not success:
             raise Exception("Molecule failed to charge.")
