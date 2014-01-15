@@ -520,7 +520,9 @@ class Molecule(object):
                 "%s is not a recognised Open Babel Charge Model type" % model)
         success = charge_model.ComputeCharges(self.OBMol)
         if not success:
-            raise Exception("Molecule failed to charge.")
+            errors = ob.obErrorLog.GetMessagesOfLevel(ob.obError)
+            error = errors[-1] if errors else "Molecule failed to charge."
+            raise Exception(error)
         return [atom.partialcharge for atom in self.atoms]
 
     def write(self, format="smi", filename=None, overwrite=False, opt=None):
