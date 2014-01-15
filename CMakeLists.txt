@@ -321,11 +321,6 @@ endif()
 if (${CMAKE_CXX_COMPILER_ID} MATCHES Clang)
    set(SHARED_POINTER true)
    add_definitions(-DHAVE_SHARED_POINTER)
-   if (${CMAKE_CXX_COMPILER_VERSION} VERSION_EQUAL 5.0)
-      # there seems to be an issue with libc++ with garbage strings
-      set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libstdc++")
-      message(STATUS "Using libstdc++ to work around libc++ string bugs")
-   endif()
 endif()
 
 # Intel C++ Compiler

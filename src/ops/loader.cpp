@@ -92,14 +92,24 @@ public:
         //Save a copy of textlines so that const char* pointers in new instance point
         //to something which has not been deleted
         _text.push_back(textlines);
-        //Make an instance of the object. It will be deleted in the destructor
-        _instances.push_back(pdef->MakeInstance(_text.back()));
+        // Previously, instances of the plugins were made here:
+        //_instances.push_back(pdef->MakeInstance(_text.back()));
+        // However, subsequent _text.push_back calls can cause vector reallocations, 
+        // which invalidates the const char* pointers in the instances. So instead we
+        // populate _text fully before making the plugin instances.
       }
       else
         obErrorLog.ThrowError(__FUNCTION__, "Failed to make an instance " + textlines[0], obError);
       textlines.clear();
     }
 
+    // Iterate through _text and make instances of the plugins.
+    // They will be deleted in the destructor.
+    vector<vector<string> >::iterator iter;
+    for(iter=_text.begin();iter!=_text.end();++iter) {
+      OBPlugin* pdef = FindDef((*iter)[0].c_str());
+      _instances.push_back(pdef->MakeInstance(*iter));
+    }
 
     // return the locale to the original one
     obLocale.RestoreLocale();
