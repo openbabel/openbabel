@@ -85,9 +85,8 @@ public:
         else
           textlines.push_back(ln);
       }
-      OBPlugin* pdef;
       //look up class name in map maintained in OBPlugin
-      if(!textlines.empty() && (pdef = FindDef(textlines[0].c_str()))!=NULL)
+      if(!textlines.empty() && FindDef(textlines[0].c_str())!=NULL)
       {
         //Save a copy of textlines so that const char* pointers in new instance point
         //to something which has not been deleted
