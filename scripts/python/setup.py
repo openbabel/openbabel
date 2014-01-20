@@ -1,8 +1,10 @@
 #!/usr/bin/env python
-from setuptools import setup, Extension
 import os
 import subprocess
 import sys
+from distutils.command.build import build
+from setuptools.command.install import install
+from setuptools import setup, Extension
 
 
 __author__ = 'Noel O\'Boyle'
@@ -52,6 +54,20 @@ obextension = Extension('_openbabel',
                         libraries=['openbabel'])
 
 
+class CustomBuild(build):
+    """Ensure build_ext runs first in build command."""
+    def run(self):
+        self.run_command('build_ext')
+        build.run(self)
+
+
+class CustomInstall(install):
+    """Ensure build_ext runs first in install command."""
+    def run(self):
+        self.run_command('build_ext')
+        self.do_egg_install()
+
+
 setup(name='openbabel',
       version=__version__,
       author=__author__,
@@ -61,6 +77,7 @@ setup(name='openbabel',
       description='Python interface to the Open Babel chemistry library',
       long_description=long_description,
       zip_safe=True,
+      cmdclass={'build': CustomBuild, 'install': CustomInstall},
       py_modules=['openbabel', 'pybel'],
       ext_modules=[obextension],
       classifiers=[
