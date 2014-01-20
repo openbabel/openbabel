@@ -3,6 +3,9 @@ import os
 import subprocess
 import sys
 from distutils.command.build import build
+from distutils.errors import DistutilsExecError
+from distutils.version import StrictVersion
+from setuptools.command.build_ext import build_ext
 from setuptools.command.install import install
 from setuptools import setup, Extension
 
@@ -24,34 +27,37 @@ else:
         development.
     '''
 
-try:
-    subprocess.check_output('pkg-config --exists openbabel-2.0'.split())
-except:
-    print ('pkg-config could not find an openbabel install. Please install openbabel and rerun setup.py.')
-    sys.exit(1)
+
+class PkgConfigError(Exception):
+    pass
 
 
-babel_version = subprocess.Popen('pkg-config --modversion openbabel-2.0'.split(),
-    stdout=subprocess.PIPE).stdout.readline().decode('utf-8')
+def pkgconfig(package, option):
+    """Wrapper around pkg-config command line tool."""
+    try:
+        p = subprocess.Popen(['pkg-config', option, package], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        stdout, stderr = p.communicate()
+        if stderr:
+            raise PkgConfigError('package %s could not be found by pkg-config' % package)
+        return stdout.strip()
+    except OSError:
+        raise PkgConfigError('pkg-config could not be found')
 
-include_dirs = subprocess.Popen('pkg-config --variable=pkgincludedir openbabel-2.0'.split(),
-    stdout=subprocess.PIPE).stdout.readline().decode('utf-8').split()
 
-lib_dirs = subprocess.Popen('pkg-config --variable=libdir openbabel-2.0'.split(),
-    stdout=subprocess.PIPE).stdout.readline().decode('utf-8').split()
-
-#Code should be added here to ensure these directories exist, and that this version of babel is compatible
-#with this python package. 
-
-swig_opts = ['-c++', '-small', '-O', '-templatereduce', '-naturalvar']
-swig_opts += ['-I%s' % i for i in include_dirs]
-
-obextension = Extension('_openbabel',
-                        ['openbabel-python.i'],
-                        include_dirs=include_dirs,
-                        library_dirs=lib_dirs,
-                        swig_opts=swig_opts,
-                        libraries=['openbabel'])
+def locate_ob():
+    """Try use pkgconfig to locate Open Babel, otherwise guess default location."""
+    try:
+        version = pkgconfig('openbabel-2.0', '--modversion')
+        if not StrictVersion(version) >= StrictVersion('2.3.0'):
+            print('Warning: Open Babel 2.3.0 or later is required. Your version (%s) may not be compatible.' % version)
+        include_dirs = pkgconfig('openbabel-2.0', '--variable=pkgincludedir')
+        library_dirs = pkgconfig('openbabel-2.0', '--variable=libdir')
+        print('Open Babel location automatically determined by pkg-config:')
+    except PkgConfigError as e:
+        print('Warning: %s.\nGuessing Open Babel location:' % e)
+        include_dirs = '/usr/local/include/openbabel-2.0'
+        library_dirs = '/usr/local/lib'
+    return include_dirs, library_dirs
 
 
 class CustomBuild(build):
@@ -68,6 +74,35 @@ class CustomInstall(install):
         self.do_egg_install()
 
 
+class CustomBuildExt(build_ext):
+    """Custom build_ext to set SWIG options and print a better error message."""
+    def finalize_options(self):
+        # Setting include_dirs, library_dirs, swig_opts here instead of in Extension constructor allows them to be
+        # overridden using -I and -L command line options to python setup.py build_ext.
+        if not self.include_dirs and not self.library_dirs:
+            self.include_dirs, self.library_dirs = locate_ob()
+        else:
+            print('Open Babel location manually specified:')
+        print('- include_dirs: %s\n- library_dirs: %s' % (self.include_dirs, self.library_dirs))
+        build_ext.finalize_options(self)
+        self.swig_opts = ['-c++', '-small', '-O', '-templatereduce', '-naturalvar']
+        self.swig_opts += ['-I%s' % i for i in self.include_dirs]
+
+    def swig_sources(self, sources, extension):
+        try:
+            return build_ext.swig_sources(self, sources, extension)
+        except DistutilsExecError:
+            print('\nError: SWIG failed. Is Open Babel installed?\n'
+                  'You may need to manually specify the location of Open Babel include and library directories. '
+                  'For example:\n'
+                  '  python setup.py build_ext -I/usr/local/include/openbabel-2.0 -L/usr/local/lib\n'
+                  '  python setup.py install')
+            sys.exit(1)
+
+
+obextension = Extension('_openbabel', ['openbabel-python.i'], libraries=['openbabel'])
+
+
 setup(name='openbabel',
       version=__version__,
       author=__author__,
@@ -77,7 +112,7 @@ setup(name='openbabel',
       description='Python interface to the Open Babel chemistry library',
       long_description=long_description,
       zip_safe=True,
-      cmdclass={'build': CustomBuild, 'install': CustomInstall},
+      cmdclass={'build': CustomBuild, 'build_ext': CustomBuildExt, 'install': CustomInstall},
       py_modules=['openbabel', 'pybel'],
       ext_modules=[obextension],
       classifiers=[
