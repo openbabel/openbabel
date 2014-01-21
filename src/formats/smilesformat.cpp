@@ -361,6 +361,7 @@ namespace OpenBabel {
         if(pConv->AddChemObject(
           pmol1->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS),pConv))<0)//using Read or ReadString or ReadFile
         {
+          delete pmol2;
           obErrorLog.ThrowError(__FUNCTION__, smiles +
             " SmilesFormat accepts reactions only with the \"Convert\" (commandline) interface", obError);
 
@@ -369,9 +370,11 @@ namespace OpenBabel {
         if(pmol2->NumAtoms())
            pConv->AddChemObject(
              pmol2->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS),pConv));
+        delete pmol2;
         return true; //valid reaction return
       }
     }
+    delete pmol2;
     obErrorLog.ThrowError(__FUNCTION__, smiles + " contained '>' but was not a acceptable reaction", obError);
     return false;
   }

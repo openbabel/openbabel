@@ -1430,6 +1430,7 @@ namespace OpenBabel {
               NormalAxes = (SYMMETRY_ELEMENT **) realloc( NormalAxes, sizeof( SYMMETRY_ELEMENT* ) * NormalAxesCount ) ;
               if( NormalAxes == NULL ){
                 perror( "Out of memory in find_c2_axes" ) ;
+                free(distances);
                 return;
               }
               NormalAxes[ NormalAxesCount - 1 ] = axis ;

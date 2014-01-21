@@ -1757,8 +1757,8 @@ namespace OpenBabel {
                     break;
                   }
                 }
-
-                beginValid = containsAtLeast_1true_1para(ligandAtom, bond->GetBeginAtom(), units);
+                if (ligandAtom)
+                  beginValid = containsAtLeast_1true_1para(ligandAtom, bond->GetBeginAtom(), units);
               }
               break;
           }
@@ -1781,8 +1781,8 @@ namespace OpenBabel {
                     break;
                   }
                 }
-
-                endValid = containsAtLeast_1true_1para(ligandAtom, bond->GetEndAtom(), units);
+                if (ligandAtom)
+                  endValid = containsAtLeast_1true_1para(ligandAtom, bond->GetEndAtom(), units);
               }
               break;
           }
