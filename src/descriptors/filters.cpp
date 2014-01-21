@@ -75,7 +75,9 @@ bool SmartsFilter::Compare(OBBase* pOb, istream& optionText, bool noEval, std::s
   if(noEval)
     return false;
   OBSmartsPattern sp;
-  sp.Init(smarts);
+  if (!sp.Init(smarts))
+    return false; // can't initialize the SMARTS, so fail gracefully
+
   bool ret = sp.Match(*pmol,true);//single match
   if(!matchornegate)
     ret = !ret;
@@ -121,6 +123,9 @@ bool TitleFilter::LessThan(OBBase* pOb1, OBBase* pOb2)
 {
   OBMol* pmol1 = dynamic_cast<OBMol*> (pOb1);
   OBMol* pmol2 = dynamic_cast<OBMol*> (pOb2);
+  if (pmol1 == NULL || pmol2 == NULL)
+    return false; //as a default to prevent dereferencing NULL pointers
+
   return strcmp(pmol1->GetTitle(), pmol2->GetTitle())<0;
 }
 
@@ -191,4 +196,3 @@ FPCount theFPCount("popcount");
 */
 //**************************************************************
 }//namespace
-
