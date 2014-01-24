@@ -38,13 +38,13 @@ Installation
 
 ::
 
-    pip install openbabel
+    pip install openbabel-python
 
 **Option 2**: Download the latest release and install yourself.
 
 ::
 
-    tar -xzvf openbabel-1.8.tar.gz
+    tar -xzvf openbabel-python-1.8.tar.gz
     cd openbabel-1.8
     python setup.py install
     
