@@ -103,7 +103,7 @@ class CustomBuildExt(build_ext):
 obextension = Extension('_openbabel', ['openbabel-python.i'], libraries=['openbabel'])
 
 
-setup(name='openbabel-python',
+setup(name='openbabel',
       version=__version__,
       author=__author__,
       author_email=__email__,
