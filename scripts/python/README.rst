@@ -45,8 +45,8 @@ Installation
 
 ::
 
-    tar -xzvf openbabel-1.8.tar.gz
-    cd openbabel-1.8
+    tar -xzvf openbabel-1.8.1.tar.gz
+    cd openbabel-1.8.1
     python setup.py install
     
 **Option 3**: While building Open Babel itself.

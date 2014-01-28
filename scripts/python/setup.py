@@ -12,7 +12,7 @@ from setuptools import setup, Extension
 
 __author__ = 'Noel O\'Boyle'
 __email__ = 'openbabel-discuss@lists.sourceforge.net'
-__version__ = '1.8'
+__version__ = '1.8.1'
 __license__ = 'GPL'
 
 
