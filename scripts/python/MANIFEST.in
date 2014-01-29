@@ -1,4 +1,4 @@
-include README
+include README.rst
 include *.py
 include *.i
 include *.html
