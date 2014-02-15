@@ -254,21 +254,15 @@ namespace OpenBabel {
         mult=atoi(vs[2].c_str());
       }
       if(strstr(buffer,"ATOMIC                      COORDINATES (BOHR)") != NULL) {
-       //mol.Clear();
-       //mol.BeginModify();
-
        ifs.getline(buffer,BUFF_SIZE); // column headings
        ifs.getline(buffer,BUFF_SIZE);
        tokenize(vs,buffer);
        while (vs.size() == 5) {
-         //atom = mol.NewAtom();
-         //atom->SetAtomicNum(atoi(vs[1].c_str())); // Parse the current one
+         // Parse the current one
          int atomicNum = atoi(vs[1].c_str());
          x = atof((char*)vs[2].c_str()) * BOHR_TO_ANGSTROM;
          y = atof((char*)vs[3].c_str()) * BOHR_TO_ANGSTROM;
          z = atof((char*)vs[4].c_str()) * BOHR_TO_ANGSTROM;
-         //atom->SetVector(x,y,z);
-         //vs[1].erase(vs[1].size() - 2, 2);
          // First time reading the molecule, create each atom
          if (natoms == 0) {
            atom = mol.NewAtom();
@@ -295,7 +289,6 @@ namespace OpenBabel {
          * conformer directly above this (ATOMIC   COORDINATES (BOHR))
          */
         double *tmpCoords = vconf.at(0);
-        //memcpy(&coordinates[0], tmpCoords, sizeof(double)*natoms*3);
         for (int i=0; i<natoms*3; i++)
           coordinates.push_back(tmpCoords[i]);
 
@@ -310,9 +303,7 @@ namespace OpenBabel {
            * or have a non-zero nuclear charge
            */
           if (atof((char*)vs[5].c_str()) > 0.0) {
-            //atom = mol.NewAtom();
             atomicNum=etab.GetAtomicNum(vs[0].substr(0,1).c_str());
-            //atom->SetAtomicNum(atomicNum);
             // First time reading the molecule, create each atom
             if (natoms == 0) {
               atom = mol.NewAtom();
@@ -321,18 +312,14 @@ namespace OpenBabel {
             x = atof((char*)vs[1].c_str())* BOHR_TO_ANGSTROM;
             y = atof((char*)vs[2].c_str())* BOHR_TO_ANGSTROM;
             z = atof((char*)vs[3].c_str())* BOHR_TO_ANGSTROM;
-            //atom->SetVector(x,y,z);
             coordinates.push_back(x);
             coordinates.push_back(y);
             coordinates.push_back(z);
           } else if (vs[0].substr(0,1) == "Z") {
-            //atom = mol.NewAtom();
             atomicNum=etab.GetAtomicNum(vs[0].substr(1,1).c_str());
-            //atom->SetAtomicNum(atomicNum);
             x = atof((char*)vs[1].c_str())* BOHR_TO_ANGSTROM;
             y = atof((char*)vs[2].c_str())* BOHR_TO_ANGSTROM;
             z = atof((char*)vs[3].c_str())* BOHR_TO_ANGSTROM;
-            //atom->SetVector(x,y,z);
             coordinates.push_back(x);
             coordinates.push_back(y);
             coordinates.push_back(z);
@@ -348,22 +335,16 @@ namespace OpenBabel {
         vconf[0] = tmpCoords;
         coordinates.clear();
       } else if(strstr(buffer,"COORDINATES OF ALL ATOMS ARE (ANGS)") != NULL) {
-        //mol.Clear();
-        //mol.BeginModify();
-
         ifs.getline(buffer,BUFF_SIZE); // column headings
         ifs.getline(buffer,BUFF_SIZE); // ---------------
         ifs.getline(buffer,BUFF_SIZE);
         tokenize(vs,buffer);
         while (vs.size() == 5) {
-          //atom = mol.NewAtom();
-          //atom->SetAtomicNum(atoi(vs[1].c_str())); // Parse the current one
+          // Parse the current one
           int atomicNum = atoi(vs[1].c_str());
           x = atof((char*)vs[2].c_str());
           y = atof((char*)vs[3].c_str());
           z = atof((char*)vs[4].c_str());
-          //atom->SetVector(x,y,z);
-          //vs[1].erase(vs[1].size() - 2, 2);
           // First time reading the molecule, create each atom
           if (natoms == 0) {
             atom = mol.NewAtom();
@@ -384,14 +365,12 @@ namespace OpenBabel {
           ifs.getline(buffer,BUFF_SIZE);
           //ifs.getline(buffer,BUFF_SIZE); //FRAGNAME
           tokenize(vs,buffer);
-          //while(vs.size() == 4)
           while(vs.size() > 0) {
             if (vs.size() == 1) {
               vector<string> vs2;
               char delim[] = "=";
               tokenize(vs2,buffer,delim);
             } else {
-              //atom = mol.NewAtom();
               /* For the included EFP1 potentials,
                * the atom name may start with "Z"
                */
@@ -400,7 +379,6 @@ namespace OpenBabel {
                 atomicNum=etab.GetAtomicNum(vs[0].substr(1,1).c_str());
               else
                 atomicNum=etab.GetAtomicNum(vs[0].substr(0,1).c_str());
-              //atom->SetAtomicNum(atomicNum);
               // First time reading the molecule, create each atom
               if (natoms == 0) {
                 atom = mol.NewAtom();
@@ -409,7 +387,6 @@ namespace OpenBabel {
               x = atof((char*)vs[1].c_str());
               y = atof((char*)vs[2].c_str());
               z = atof((char*)vs[3].c_str());
-              //atom->SetVector(x,y,z);
               coordinates.push_back(x);
               coordinates.push_back(y);
               coordinates.push_back(z);
@@ -638,7 +615,6 @@ namespace OpenBabel {
             for(unsigned int i=1;i < vs.size() &&  vs[i].substr(0,4) != "$END"; i++) {
               string::size_type loc = vs[i].find("=",0);
               if(loc != string::npos) {
-                // cout << vs[i].substr(0,loc) << " !!!!! " << vs[i].substr(loc+1) << endl;
                 OBPairData *data = new OBPairData();
                 data->SetAttribute(vs[i].substr(0,loc));
                 data->SetValue(vs[i].substr(loc+1));
@@ -786,12 +762,6 @@ namespace OpenBabel {
         nd->SetOrigin(fileformatInput);
         pmol->SetData(nd);
       }
-
-      /*
-        cout << "model: " << model << endl;
-        cout << "basis: " << basis << endl;
-        cout << "method: " << method << endl;
-      */
     }
 
     mol.EndModify();
@@ -832,7 +802,6 @@ namespace OpenBabel {
       mol.SetData(vd);
     }
 
-    //mol.SetTotalCharge(charge);
     mol.AssignTotalChargeToAtoms(charge);
 
     mol.SetTotalSpinMultiplicity(mult);
@@ -850,7 +819,6 @@ namespace OpenBabel {
     // Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
     OBMol &mol = *pmol;
-    //const char* title = pConv->GetTitle();
 
     char buffer[BUFF_SIZE];
     string str,str1;
@@ -943,7 +911,7 @@ namespace OpenBabel {
     mol.EndModify();
     if (hasPartialCharges)
       mol.SetPartialChargesPerceived();
-    //mol.SetTitle(title);
+
     return(true);
   }
 
@@ -957,7 +925,6 @@ namespace OpenBabel {
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
-    //   unsigned int i;
     char buffer[BUFF_SIZE];
 
     const char *keywords = pConv->IsOption("k",OBConversion::OUTOPTIONS);
@@ -1013,7 +980,6 @@ namespace OpenBabel {
       ofs << "Put symmetry info here" << endl << endl;
     }
 
-    //  OBAtom *atom;
     FOR_ATOMS_OF_MOL(atom, mol) {
       snprintf(buffer, BUFF_SIZE, "%-3s %4d.0    %14.10f  %14.10f  %14.10f ",
                etab.GetSymbol(atom->GetAtomicNum()),
