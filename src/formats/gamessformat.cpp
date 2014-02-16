@@ -28,94 +28,89 @@ namespace OpenBabel {
 #define BOHR_TO_ANGSTROM 0.529177249
 #define ANGSTROM_TO_BOHR 1.889725989
   class GAMESSOutputFormat : public OBMoleculeFormat {
+    public:
+      //Register this format type ID
+      GAMESSOutputFormat() {
+        OBConversion::RegisterFormat("gam", this, "chemical/x-gamess-output");
+        OBConversion::RegisterFormat("gamout",this);
+        OBConversion::RegisterFormat("gamess",this);
+      }
 
-  public:
-    //Register this format type ID
-    GAMESSOutputFormat() {
-      OBConversion::RegisterFormat("gam", this, "chemical/x-gamess-output");
-      OBConversion::RegisterFormat("gamout",this);
-      OBConversion::RegisterFormat("gamess",this);
-    }
+      //required
+      virtual const char* Description() {
+        return
+          "GAMESS Output\n"
+          "Read Options e.g. -as\n"
+          "  s  Output single bonds only\n"
+          "  b  Disable bonding entirely\n"
+          "  c  Read multiple conformers\n\n";
+      }
 
-    //required
-    virtual const char* Description() {
-      return
-        "GAMESS Output\n"
-        "Read Options e.g. -as\n"
-        "  s  Output single bonds only\n"
-        "  b  Disable bonding entirely\n"
-        "  c  Read multiple conformers\n\n";
-    }
+      //optional
+      virtual const char* SpecificationURL() {
+        return "http://www.msg.ameslab.gov/GAMESS/doc.menu.html";
+      }
 
-    //optional
-    virtual const char* SpecificationURL() {
-      return "http://www.msg.ameslab.gov/GAMESS/doc.menu.html";
-    }
+      virtual const char* GetMIMEType() {
+        return "chemical/x-gamess-output";
+      }
 
-    virtual const char* GetMIMEType() {
-      return "chemical/x-gamess-output";
-    }
+      //Flags() can return be any the following combined by | or be omitted if none apply
+      // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
+      virtual unsigned int Flags() {
+        return READONEONLY | NOTWRITABLE;
+      }
 
-    //Flags() can return be any the following combined by | or be omitted if none apply
-    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags() {
-      return READONEONLY | NOTWRITABLE;
-    }
+      virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
 
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-
-  private:
-    //! \brief Parse GAMESS options section.
-    //void ParseSection(char *tag, OBSetData *set, istream &ifs);
-
+    private:
+      //! \brief Parse GAMESS options section.
+      //void ParseSection(char *tag, OBSetData *set, istream &ifs);
   };
-  //***
 
   //Make an instance of the format class
   GAMESSOutputFormat theGAMESSOutputFormat;
 
-
   class GAMESSInputFormat : public OBMoleculeFormat {
-  public:
-    //Register this format type ID
-    GAMESSInputFormat() {
-      OBConversion::RegisterFormat("inp",this, "chemical/x-gamess-input");
-      OBConversion::RegisterFormat("gamin",this);
-      // Command-line keywords
-      OBConversion::RegisterOptionParam("k", NULL, 1, OBConversion::OUTOPTIONS);
-      // Command-line keyword file
-      OBConversion::RegisterOptionParam("f", NULL, 1, OBConversion::OUTOPTIONS);
-    }
+    public:
+      //Register this format type ID
+      GAMESSInputFormat() {
+        OBConversion::RegisterFormat("inp",this, "chemical/x-gamess-input");
+        OBConversion::RegisterFormat("gamin",this);
+        // Command-line keywords
+        OBConversion::RegisterOptionParam("k", NULL, 1, OBConversion::OUTOPTIONS);
+        // Command-line keyword file
+        OBConversion::RegisterOptionParam("f", NULL, 1, OBConversion::OUTOPTIONS);
+      }
 
-    //required
-    virtual const char* Description() {
-      return
-        "GAMESS Input\n"
-        "Write Options e.g. -xk\n"
-        "  k  \"keywords\" Use the specified keywords for input\n"
-        "  f    <file>     Read the file specified for input keywords\n\n";
-    }
+      //required
+      virtual const char* Description() {
+        return
+          "GAMESS Input\n"
+          "Write Options e.g. -xk\n"
+          "  k  \"keywords\" Use the specified keywords for input\n"
+          "  f    <file>     Read the file specified for input keywords\n\n";
+      }
 
-    //optional
-    virtual const char* SpecificationURL() {
-      return "http://www.msg.ameslab.gov/GAMESS/doc.menu.html";
-    }
+      //optional
+      virtual const char* SpecificationURL() {
+        return "http://www.msg.ameslab.gov/GAMESS/doc.menu.html";
+      }
 
-    virtual const char* GetMIMEType() {
-      return "chemical/x-gamess-input";
-    }
+      virtual const char* GetMIMEType() {
+        return "chemical/x-gamess-input";
+      }
 
-    //Flags() can return be any the following combined by | or be omitted if none apply
-    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags() {
-      return WRITEONEONLY; // | NOTREADABLE;
-    }
+      //Flags() can return be any the following combined by | or be omitted if none apply
+      // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
+      virtual unsigned int Flags() {
+        return WRITEONEONLY; // | NOTREADABLE;
+      }
 
-    ////////////////////////////////////////////////////
-    /// The "API" interface functions
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-
+      ////////////////////////////////////////////////////
+      /// The "API" interface functions
+      virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+      virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
   };
 
   //Make an instance of the format class
@@ -197,9 +192,8 @@ namespace OpenBabel {
    }
    }
   */
-  bool GAMESSOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
-  {
 
+  bool GAMESSOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv) {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
     if(pmol==NULL)
       return false;
@@ -249,430 +243,431 @@ namespace OpenBabel {
     mol.Clear();
     mol.BeginModify();
     while (ifs.getline(buffer,BUFF_SIZE)) {
-        if(strstr(buffer,"ICHARG=")) {
-            tokenize(vs,(strstr(buffer,"ICHARG=")));
-            charge=atoi(vs[1].c_str());
-        }
-        if(strstr(buffer,"MULT ")) {
-            tokenize(vs,(strstr(buffer,"MULT ")));
-            mult=atoi(vs[2].c_str());
-        }
-        if(strstr(buffer,"ATOMIC                      COORDINATES (BOHR)") != NULL) {
-            //mol.Clear();
-            //mol.BeginModify();
+      if(strstr(buffer,"ICHARG=")) {
+        tokenize(vs,(strstr(buffer,"ICHARG=")));
+        charge=atoi(vs[1].c_str());
+      }
+      if(strstr(buffer,"MULT ")) {
+        tokenize(vs,(strstr(buffer,"MULT ")));
+        mult=atoi(vs[2].c_str());
+      }
+      if(strstr(buffer,"ATOMIC                      COORDINATES (BOHR)") != NULL) {
+       //mol.Clear();
+       //mol.BeginModify();
 
-            ifs.getline(buffer,BUFF_SIZE);	// column headings
-            ifs.getline(buffer,BUFF_SIZE);
-            tokenize(vs,buffer);
-            while (vs.size() == 5) {
-                //atom = mol.NewAtom();
-                //atom->SetAtomicNum(atoi(vs[1].c_str())); // Parse the current one
-                int atomicNum = atoi(vs[1].c_str());
-                x = atof((char*)vs[2].c_str()) * BOHR_TO_ANGSTROM;
-                y = atof((char*)vs[3].c_str()) * BOHR_TO_ANGSTROM;
-                z = atof((char*)vs[4].c_str()) * BOHR_TO_ANGSTROM;
-                //atom->SetVector(x,y,z);
-                //vs[1].erase(vs[1].size() - 2, 2);
-                // first time reading the molecule, create each atom
-                if (natoms == 0) {
-                    atom = mol.NewAtom();
-                    atom->SetAtomicNum(atomicNum);
-                }
-                coordinates.push_back(x);
-                coordinates.push_back(y);
-                coordinates.push_back(z);
+       ifs.getline(buffer,BUFF_SIZE); // column headings
+       ifs.getline(buffer,BUFF_SIZE);
+       tokenize(vs,buffer);
+       while (vs.size() == 5) {
+         //atom = mol.NewAtom();
+         //atom->SetAtomicNum(atoi(vs[1].c_str())); // Parse the current one
+         int atomicNum = atoi(vs[1].c_str());
+         x = atof((char*)vs[2].c_str()) * BOHR_TO_ANGSTROM;
+         y = atof((char*)vs[3].c_str()) * BOHR_TO_ANGSTROM;
+         z = atof((char*)vs[4].c_str()) * BOHR_TO_ANGSTROM;
+         //atom->SetVector(x,y,z);
+         //vs[1].erase(vs[1].size() - 2, 2);
+         // first time reading the molecule, create each atom
+         if (natoms == 0) {
+           atom = mol.NewAtom();
+           atom->SetAtomicNum(atomicNum);
+         }
+         coordinates.push_back(x);
+         coordinates.push_back(y);
+         coordinates.push_back(z);
 
-                if (!ifs.getline(buffer,BUFF_SIZE))
-                  break;
-                tokenize(vs,buffer);
+         if (!ifs.getline(buffer,BUFF_SIZE))
+           break;
+         tokenize(vs,buffer);
+       }
+       // done with reading atoms
+       natoms = mol.NumAtoms();
+       // malloc / memcpy
+       double *tmpCoords = new double [(natoms)*3];
+       memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
+       vconf.push_back(tmpCoords);
+       coordinates.clear();
+       confDimensions.push_back(3); // always 3D -- OBConformerData allows mixing 2D and 3D structures
+      } else if(strstr(buffer,"MULTIPOLE COORDINATES, ELECTRONIC AND NUCLEAR CHARGES") != NULL) {
+        /*This set of EFP coordinates belongs only to the
+         * conformer directly above this (ATOMIC   COORDINATES (BOHR))
+         */
+        double *tmpCoords = vconf.at(0);
+        //memcpy(&coordinates[0], tmpCoords, sizeof(double)*natoms*3);
+        for (int i=0; i<natoms*3; i++)
+          coordinates.push_back(tmpCoords[i]);
+
+        ifs.getline(buffer,BUFF_SIZE);      // column headings
+        ifs.getline(buffer,BUFF_SIZE);
+        ifs.getline(buffer,BUFF_SIZE);
+        tokenize(vs,buffer);
+        while(vs.size() == 6) {
+          int atomicNum;
+          /* For the included EFP1 potentials,
+           * the atom name may start with "Z"
+           * or have a non-zero nuclear charge
+           */
+          if (atof((char*)vs[5].c_str()) > 0.0) {
+            //atom = mol.NewAtom();
+            atomicNum=etab.GetAtomicNum(vs[0].substr(0,1).c_str());
+            //atom->SetAtomicNum(atomicNum);
+            // first time reading the molecule, create each atom
+            if (natoms == 0) {
+              atom = mol.NewAtom();
+              atom->SetAtomicNum(atomicNum);
             }
-            // done with reading atoms
-            natoms = mol.NumAtoms();
-            // malloc / memcpy
-            double *tmpCoords = new double [(natoms)*3];
-            memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
-            vconf.push_back(tmpCoords);
-            coordinates.clear();
-            confDimensions.push_back(3); // always 3D -- OBConformerData allows mixing 2D and 3D structures
-        } else if(strstr(buffer,"MULTIPOLE COORDINATES, ELECTRONIC AND NUCLEAR CHARGES") != NULL) {
-            /*This set of EFP coordinates belongs only to the
-             * conformer directly above this (ATOMIC   COORDINATES (BOHR))
-             */
-            double *tmpCoords = vconf.at(0);
-            //memcpy(&coordinates[0], tmpCoords, sizeof(double)*natoms*3);
-            for (int i=0; i<natoms*3; i++)
-              coordinates.push_back(tmpCoords[i]);
+            x = atof((char*)vs[1].c_str())* BOHR_TO_ANGSTROM;
+            y = atof((char*)vs[2].c_str())* BOHR_TO_ANGSTROM;
+            z = atof((char*)vs[3].c_str())* BOHR_TO_ANGSTROM;
+            //atom->SetVector(x,y,z);
+            coordinates.push_back(x);
+            coordinates.push_back(y);
+            coordinates.push_back(z);
+          } else if (vs[0].substr(0,1) == "Z") {
+            //atom = mol.NewAtom();
+            atomicNum=etab.GetAtomicNum(vs[0].substr(1,1).c_str());
+            //atom->SetAtomicNum(atomicNum);
+            x = atof((char*)vs[1].c_str())* BOHR_TO_ANGSTROM;
+            y = atof((char*)vs[2].c_str())* BOHR_TO_ANGSTROM;
+            z = atof((char*)vs[3].c_str())* BOHR_TO_ANGSTROM;
+            //atom->SetVector(x,y,z);
+            coordinates.push_back(x);
+            coordinates.push_back(y);
+            coordinates.push_back(z);
+          }
+          if (!ifs.getline(buffer,BUFF_SIZE))
+            break;
+          tokenize(vs,buffer);
+        }
+        // done with reading atoms
+        ndummyatoms = mol.NumAtoms();
+        // malloc / memcpy
+        memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
+        vconf[0] = tmpCoords;
+        coordinates.clear();
+      } else if(strstr(buffer,"COORDINATES OF ALL ATOMS ARE (ANGS)") != NULL) {
+        //mol.Clear();
+        //mol.BeginModify();
 
-            ifs.getline(buffer,BUFF_SIZE);      // column headings
-            ifs.getline(buffer,BUFF_SIZE);
-            ifs.getline(buffer,BUFF_SIZE);
-            tokenize(vs,buffer);
-            while(vs.size() == 6) {
-                int atomicNum;
-                /* For the included EFP1 potentials,
-                 * the atom name may start with "Z"
-                 * or have a non-zero nuclear charge
-                 */
-                if (atof((char*)vs[5].c_str()) > 0.0) {
-                  //atom = mol.NewAtom();
-                  atomicNum=etab.GetAtomicNum(vs[0].substr(0,1).c_str());
-                  //atom->SetAtomicNum(atomicNum);
-		  // first time reading the molecule, create each atom
-                  if (natoms == 0) {
-                    atom = mol.NewAtom();
-                    atom->SetAtomicNum(atomicNum);
-                  }
-                  x = atof((char*)vs[1].c_str())* BOHR_TO_ANGSTROM;
-                  y = atof((char*)vs[2].c_str())* BOHR_TO_ANGSTROM;
-                  z = atof((char*)vs[3].c_str())* BOHR_TO_ANGSTROM;
-                  //atom->SetVector(x,y,z);
-                  coordinates.push_back(x);
-                  coordinates.push_back(y);
-                  coordinates.push_back(z);
-                } else if (vs[0].substr(0,1) == "Z") {
-                  //atom = mol.NewAtom();
-                  atomicNum=etab.GetAtomicNum(vs[0].substr(1,1).c_str());
-                  //atom->SetAtomicNum(atomicNum);
-                  x = atof((char*)vs[1].c_str())* BOHR_TO_ANGSTROM;
-                  y = atof((char*)vs[2].c_str())* BOHR_TO_ANGSTROM;
-                  z = atof((char*)vs[3].c_str())* BOHR_TO_ANGSTROM;
-                  //atom->SetVector(x,y,z);
-                  coordinates.push_back(x);
-                  coordinates.push_back(y);
-                  coordinates.push_back(z);
-                }
-                if (!ifs.getline(buffer,BUFF_SIZE))
-                  break;
-                tokenize(vs,buffer);
-            }
-            // done with reading atoms
-            ndummyatoms = mol.NumAtoms();
-            // malloc / memcpy
-            memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
-            vconf[0] = tmpCoords;
-            coordinates.clear();
-        } else if(strstr(buffer,"COORDINATES OF ALL ATOMS ARE (ANGS)") != NULL) {
-            //mol.Clear();
-            //mol.BeginModify();
+        ifs.getline(buffer,BUFF_SIZE); // column headings
+        ifs.getline(buffer,BUFF_SIZE); // ---------------
+        ifs.getline(buffer,BUFF_SIZE);
+        tokenize(vs,buffer);
+        while (vs.size() == 5) {
+          //atom = mol.NewAtom();
+          //atom->SetAtomicNum(atoi(vs[1].c_str())); // Parse the current one
+          int atomicNum = atoi(vs[1].c_str());
+          x = atof((char*)vs[2].c_str());
+          y = atof((char*)vs[3].c_str());
+          z = atof((char*)vs[4].c_str());
+          //atom->SetVector(x,y,z);
+          //vs[1].erase(vs[1].size() - 2, 2);
+          // first time reading the molecule, create each atom
+          if (natoms == 0) {
+            atom = mol.NewAtom();
+            atom->SetAtomicNum(atomicNum);
+          }
+          coordinates.push_back(x);
+          coordinates.push_back(y);
+          coordinates.push_back(z);
 
-            ifs.getline(buffer,BUFF_SIZE);	// column headings
-            ifs.getline(buffer,BUFF_SIZE);	// ---------------
-            ifs.getline(buffer,BUFF_SIZE);
-            tokenize(vs,buffer);
-            while (vs.size() == 5) {
-                //atom = mol.NewAtom();
-                //atom->SetAtomicNum(atoi(vs[1].c_str())); // Parse the current one
-                int atomicNum = atoi(vs[1].c_str());
-                x = atof((char*)vs[2].c_str());
-                y = atof((char*)vs[3].c_str());
-                z = atof((char*)vs[4].c_str());
-                //atom->SetVector(x,y,z);
-                //vs[1].erase(vs[1].size() - 2, 2);
-		// first time reading the molecule, create each atom
-                if (natoms == 0) {
-                    atom = mol.NewAtom();
-                    atom->SetAtomicNum(atomicNum);
-                }
-                coordinates.push_back(x);
-                coordinates.push_back(y);
-                coordinates.push_back(z);
+          if (!ifs.getline(buffer,BUFF_SIZE))
+            break;
+          tokenize(vs,buffer);
+        }
 
-                if (!ifs.getline(buffer,BUFF_SIZE))
-                  break;
-                tokenize(vs,buffer);
+        if(strstr(buffer,"COORDINATES OF FRAGMENT") != NULL) {
+          ifs.getline(buffer,BUFF_SIZE);      // column headings
+          ifs.getline(buffer,BUFF_SIZE);
+          ifs.getline(buffer,BUFF_SIZE);
+          //ifs.getline(buffer,BUFF_SIZE);    //FRAGNAME
+          tokenize(vs,buffer);
+          //while(vs.size() == 4)
+          while(vs.size() > 0) {
+            if (vs.size() == 1) {
+              vector<string> vs2;
+              char delim[] = "=";
+              tokenize(vs2,buffer,delim);
+            } else {
+              //atom = mol.NewAtom();
+              /* For the included EFP1 potentials,
+               * the atom name may start with "Z"
+               */
+              int atomicNum;
+              if ( vs[0].substr(0,1) == "Z" )
+                atomicNum=etab.GetAtomicNum(vs[0].substr(1,1).c_str());
+              else
+                atomicNum=etab.GetAtomicNum(vs[0].substr(0,1).c_str());
+              //atom->SetAtomicNum(atomicNum);
+              // first time reading the molecule, create each atom
+              if (natoms == 0) {
+                atom = mol.NewAtom();
+                atom->SetAtomicNum(atomicNum);
               }
-
-            if(strstr(buffer,"COORDINATES OF FRAGMENT") != NULL) {
-                ifs.getline(buffer,BUFF_SIZE);      // column headings
-                ifs.getline(buffer,BUFF_SIZE);
-                ifs.getline(buffer,BUFF_SIZE);
-                //ifs.getline(buffer,BUFF_SIZE);    //FRAGNAME
-                tokenize(vs,buffer);
-                //while(vs.size() == 4)
-                while(vs.size() > 0) {
-                  if (vs.size() == 1) {
-                    vector<string> vs2;
-                    char delim[] = "=";
-                    tokenize(vs2,buffer,delim);
-                  } else {
-                    //atom = mol.NewAtom();
-                    /* For the included EFP1 potentials,
-                     * the atom name may start with "Z"
-                     */
-                    int atomicNum;
-                    if ( vs[0].substr(0,1) == "Z" )
-                      atomicNum=etab.GetAtomicNum(vs[0].substr(1,1).c_str());
-                    else
-                      atomicNum=etab.GetAtomicNum(vs[0].substr(0,1).c_str());
-                    //atom->SetAtomicNum(atomicNum);
-		    // first time reading the molecule, create each atom
-                    if (natoms == 0) {
-                        atom = mol.NewAtom();
-                        atom->SetAtomicNum(atomicNum);
-                    }
-                    x = atof((char*)vs[1].c_str());
-                    y = atof((char*)vs[2].c_str());
-                    z = atof((char*)vs[3].c_str());
-                    //atom->SetVector(x,y,z);
-                    coordinates.push_back(x);
-                    coordinates.push_back(y);
-                    coordinates.push_back(z);
-                  }
-
-                  if (!ifs.getline(buffer,BUFF_SIZE))
-                    break;
-                  tokenize(vs,buffer);
-                }
+              x = atof((char*)vs[1].c_str());
+              y = atof((char*)vs[2].c_str());
+              z = atof((char*)vs[3].c_str());
+              //atom->SetVector(x,y,z);
+              coordinates.push_back(x);
+              coordinates.push_back(y);
+              coordinates.push_back(z);
             }
 
-            // done with reading atoms
-            natoms = mol.NumAtoms();
-            // malloc / memcpy
-            double *tmpCoords = new double [(natoms)*3];
-            memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
-            vconf.push_back(tmpCoords);
-            coordinates.clear();
-            confDimensions.push_back(3); // always 3D -- OBConformerData allows mixing 2D and 3D structures
-
-        } else if((strstr(buffer,"NSERCH=") != NULL) && (strstr(buffer,"ENERGY=") != NULL)) {
-            char *tok = strtok (buffer," ="); // my tokenize
-            int n=0;
-            while (true) {
-                tok = strtok (NULL, " =");
-                if (tok == NULL)
-                  break;
-                n++;
-                if (n == 3) {
-                    confEnergies.push_back(atof(tok));
-                    break;
-                }
-            }
-        } else if(strstr(buffer,"ELECTROSTATIC MOMENTS") != NULL) {
-            ifs.getline(buffer,BUFF_SIZE); //-----
-            ifs.getline(buffer,BUFF_SIZE);  // blank line
-            ifs.getline(buffer,BUFF_SIZE);	// column headings
-            ifs.getline(buffer,BUFF_SIZE); // point charges @todo
-            ifs.getline(buffer,BUFF_SIZE);	// column headings dipole moment
-            ifs.getline(buffer,BUFF_SIZE);
-
-            tokenize(vs, buffer);
-            if (vs.size() == 4) {
-              OBVectorData *dipoleMoment = new OBVectorData;
-              dipoleMoment->SetAttribute("Dipole Moment");
-              double x, y, z;
-              x = atof(vs[0].c_str());
-              y = atof(vs[1].c_str());
-              z = atof(vs[2].c_str());
-              dipoleMoment->SetData(x, y, z);
-              dipoleMoment->SetOrigin(fileformatInput);
-              mol.SetData(dipoleMoment);
-            }
-        } else if(strstr(buffer,"MOPAC CHARGES") != NULL) {
-            hasPartialCharges = true;
-            ifs.getline(buffer,BUFF_SIZE);	// ---------------
-            ifs.getline(buffer,BUFF_SIZE);	// column headings
-            ifs.getline(buffer,BUFF_SIZE);
-            tokenize(vs,buffer);
-            while (vs.size() == 4) {
-                atom = mol.GetAtom(atoi(vs[0].c_str()));
-                atom->SetPartialCharge(atof(vs[2].c_str()));
-
-                if (!ifs.getline(buffer,BUFF_SIZE))
-                  break;
-                tokenize(vs,buffer);
-            }
-        } else if(strstr(buffer,"TOTAL MULLIKEN") != NULL) {
-            hasPartialCharges = true;
-            ifs.getline(buffer,BUFF_SIZE);	// column headings
-            ifs.getline(buffer,BUFF_SIZE);
-            tokenize(vs,buffer);
-            // atom number, atomic symbol, mulliken pop, charge
-            while (vs.size() >= 4) {
-                atom = mol.GetAtom(atoi(vs[0].c_str()));
-                atom->SetPartialCharge(atof(vs[3].c_str()));
-
-                if (!ifs.getline(buffer,BUFF_SIZE))
-                  break;
-                tokenize(vs,buffer);
-            }
-        } else if (strstr(buffer,"NUMBER OF OCCUPIED ORBITALS") != NULL) {
-            tokenize(vs, buffer);
-            if (vs.size() == 7) // alpha
-              aHOMO = atoi(vs[6].c_str());
-            else if (vs.size() == 8) //beta
-              bHOMO = atoi(vs[7].c_str());
-        } else if (strstr(buffer, "TAKEN AS ROTATIONS AND TRANSLATIONS") != NULL) {
-            tokenize(vs, buffer);
-            if (vs.size() < 4)
+            if (!ifs.getline(buffer,BUFF_SIZE))
               break;
-            lowFreqModesBegin = atoi(vs[1].c_str());
-            lowFreqModesEnd = atoi(vs[3].c_str());
-        } else if (strstr(buffer,"TOTAL ENERGY      =") != NULL) {
-            tokenize(vs, buffer);
-            if (vs.size() == 4)
-              mol.SetEnergy(atof(vs[3].c_str()));
-        } else if (strstr(buffer,"FREQUENCY:") != NULL) {
-            tokenize(vs, buffer);
-            for (unsigned int i = 1; i < vs.size(); ++i) {
-              if (vs[i] == "I") // artifact from previous imaginary frequency
-                continue;
-              ++numFreq;
-              if (numFreq < lowFreqModesBegin) // imaginary frequency
-                frequencies.push_back(-atof(vs[i].c_str()));
-              if (numFreq > lowFreqModesEnd)
-                frequencies.push_back(atof(vs[i].c_str()));
-            }
-            ifs.getline(buffer, BUFF_SIZE); // reduced mass
-            ifs.getline(buffer, BUFF_SIZE);
-            tokenize(vs, buffer);
-            for (unsigned int i = 2; i < vs.size(); ++i) {
-              ++numIntens;
-              if (numIntens < lowFreqModesBegin || numIntens > lowFreqModesEnd)
-                intensities.push_back(atof(vs[i].c_str()) * 42.255); // conver to km/mol
-            }
-            ifs.getline(buffer, BUFF_SIZE); // blank or Raman activitie
-            if (strstr(buffer,"RAMAN") != NULL) {
-              tokenize(vs, buffer);
-              for (unsigned int i = 2; i < vs.size(); ++i) {
-                if (numIntens < lowFreqModesBegin || numIntens > lowFreqModesEnd)
-                  raman_intensities.push_back(atof(vs[i].c_str()));
+            tokenize(vs,buffer);
+          }
+        }
+
+        // done with reading atoms
+        natoms = mol.NumAtoms();
+        // malloc / memcpy
+        double *tmpCoords = new double [(natoms)*3];
+        memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
+        vconf.push_back(tmpCoords);
+        coordinates.clear();
+        confDimensions.push_back(3); // always 3D -- OBConformerData allows mixing 2D and 3D structures
+
+      } else if((strstr(buffer,"NSERCH=") != NULL) && (strstr(buffer,"ENERGY=") != NULL)) {
+        char *tok = strtok (buffer," ="); // my tokenize
+        int n=0;
+        while (true) {
+          tok = strtok (NULL, " =");
+          if (tok == NULL)
+            break;
+          n++;
+          if (n == 3) {
+            confEnergies.push_back(atof(tok));
+            break;
+          }
+        }
+      } else if(strstr(buffer,"ELECTROSTATIC MOMENTS") != NULL) {
+        ifs.getline(buffer,BUFF_SIZE); //-----
+        ifs.getline(buffer,BUFF_SIZE); // blank line
+        ifs.getline(buffer,BUFF_SIZE); // column headings
+        ifs.getline(buffer,BUFF_SIZE); // point charges @todo
+        ifs.getline(buffer,BUFF_SIZE); // column headings dipole moment
+        ifs.getline(buffer,BUFF_SIZE);
+
+        tokenize(vs, buffer);
+        if (vs.size() == 4) {
+          OBVectorData *dipoleMoment = new OBVectorData;
+          dipoleMoment->SetAttribute("Dipole Moment");
+          double x, y, z;
+          x = atof(vs[0].c_str());
+          y = atof(vs[1].c_str());
+          z = atof(vs[2].c_str());
+          dipoleMoment->SetData(x, y, z);
+          dipoleMoment->SetOrigin(fileformatInput);
+          mol.SetData(dipoleMoment);
+        }
+      } else if(strstr(buffer,"MOPAC CHARGES") != NULL) {
+        hasPartialCharges = true;
+        ifs.getline(buffer,BUFF_SIZE); // ---------------
+        ifs.getline(buffer,BUFF_SIZE); // column headings
+        ifs.getline(buffer,BUFF_SIZE);
+        tokenize(vs,buffer);
+        while (vs.size() == 4) {
+          atom = mol.GetAtom(atoi(vs[0].c_str()));
+          atom->SetPartialCharge(atof(vs[2].c_str()));
+
+          if (!ifs.getline(buffer,BUFF_SIZE))
+            break;
+          tokenize(vs,buffer);
+        }
+      } else if(strstr(buffer,"TOTAL MULLIKEN") != NULL) {
+        hasPartialCharges = true;
+        ifs.getline(buffer,BUFF_SIZE); // column headings
+        ifs.getline(buffer,BUFF_SIZE);
+        tokenize(vs,buffer);
+        // atom number, atomic symbol, mulliken pop, charge
+        while (vs.size() >= 4) {
+          atom = mol.GetAtom(atoi(vs[0].c_str()));
+          atom->SetPartialCharge(atof(vs[3].c_str()));
+
+          if (!ifs.getline(buffer,BUFF_SIZE))
+            break;
+          tokenize(vs,buffer);
+        }
+      } else if (strstr(buffer,"NUMBER OF OCCUPIED ORBITALS") != NULL) {
+        tokenize(vs, buffer);
+        if (vs.size() == 7) // alpha
+          aHOMO = atoi(vs[6].c_str());
+        else if (vs.size() == 8) //beta
+          bHOMO = atoi(vs[7].c_str());
+      } else if (strstr(buffer, "TAKEN AS ROTATIONS AND TRANSLATIONS") != NULL) {
+        tokenize(vs, buffer);
+        if (vs.size() < 4)
+          break;
+        lowFreqModesBegin = atoi(vs[1].c_str());
+        lowFreqModesEnd = atoi(vs[3].c_str());
+      } else if (strstr(buffer,"TOTAL ENERGY      =") != NULL) {
+        tokenize(vs, buffer);
+        if (vs.size() == 4)
+          mol.SetEnergy(atof(vs[3].c_str()));
+      } else if (strstr(buffer,"FREQUENCY:") != NULL) {
+        tokenize(vs, buffer);
+        for (unsigned int i = 1; i < vs.size(); ++i) {
+          if (vs[i] == "I") // artifact from previous imaginary frequency
+            continue;
+          ++numFreq;
+          if (numFreq < lowFreqModesBegin) // imaginary frequency
+            frequencies.push_back(-atof(vs[i].c_str()));
+          if (numFreq > lowFreqModesEnd)
+            frequencies.push_back(atof(vs[i].c_str()));
+        }
+        ifs.getline(buffer, BUFF_SIZE); // reduced mass
+        ifs.getline(buffer, BUFF_SIZE);
+        tokenize(vs, buffer);
+        for (unsigned int i = 2; i < vs.size(); ++i) {
+          ++numIntens;
+          if (numIntens < lowFreqModesBegin || numIntens > lowFreqModesEnd)
+            intensities.push_back(atof(vs[i].c_str()) * 42.255); // conver to km/mol
+        }
+        ifs.getline(buffer, BUFF_SIZE); // blank or Raman activitie
+        if (strstr(buffer,"RAMAN") != NULL) {
+          tokenize(vs, buffer);
+          for (unsigned int i = 2; i < vs.size(); ++i) {
+            if (numIntens < lowFreqModesBegin || numIntens > lowFreqModesEnd)
+              raman_intensities.push_back(atof(vs[i].c_str()));
+          }
+          ifs.getline(buffer, BUFF_SIZE); // DEPOLARIZATION
+          ifs.getline(buffer, BUFF_SIZE); // blank
+        }
+
+        // now real work -- read displacements
+        int prevModeCount = displacements.size();
+        int newModes = frequencies.size() - displacements.size();
+        vector<vector3> displacement;
+        for (unsigned int i = 0; i < newModes; ++i) {
+          displacements.push_back(displacement);
+        }
+
+        ifs.getline(buffer, BUFF_SIZE);
+        tokenize(vs, buffer);
+        int modeCount = vs.size() - 3;
+        double massNormalization;
+        vector<double> x, y, z;
+        while(modeCount >= 1) {
+          // 1/sqrt(atomic mass)
+          atom = mol.GetAtom(atoi(vs[0].c_str()));
+          massNormalization = 1 / sqrt( atom->GetAtomicMass() );
+
+          x.clear();
+          // not a typo -- e.g., atom number, atom label, x, then data
+          for (unsigned int i = 3; i < vs.size(); ++i) {
+            x.push_back(massNormalization * atof(vs[i].c_str()));
+          }
+          y.clear();
+          ifs.getline(buffer, BUFF_SIZE);
+          tokenize(vs, buffer);
+          for (unsigned int i = 1; i < vs.size(); ++i) {
+            y.push_back(massNormalization * atof(vs[i].c_str()));
+          }
+
+          z.clear();
+          ifs.getline(buffer, BUFF_SIZE);
+          tokenize(vs, buffer);
+          for (unsigned int i = 1; i < vs.size(); ++i) {
+            z.push_back(massNormalization * atof(vs[i].c_str()));
+          }
+
+          // OK, now we have x, y, z for all new modes for one atom
+          if (displacements.size()) {
+            numDisp = prevModeCount;
+            for (unsigned int i = 0; i < modeCount;  ++i) {
+              if (i >= modeCount - newModes){
+                displacements[numDisp++].push_back(vector3(x[i], y[i], z[i]));
               }
-              ifs.getline(buffer, BUFF_SIZE); // DEPOLARIZATION
-              ifs.getline(buffer, BUFF_SIZE); // blank
             }
+          }
 
-            // now real work -- read displacements
-            int prevModeCount = displacements.size();
-            int newModes = frequencies.size() - displacements.size();
-            vector<vector3> displacement;
-            for (unsigned int i = 0; i < newModes; ++i) {
-              displacements.push_back(displacement);
-            }
-
-            ifs.getline(buffer, BUFF_SIZE);
-            tokenize(vs, buffer);
-            int modeCount = vs.size() - 3;
-            double massNormalization;
-            vector<double> x, y, z;
-            while(modeCount >= 1) {
-              // 1/sqrt(atomic mass)
-              atom = mol.GetAtom(atoi(vs[0].c_str()));
-              massNormalization = 1 / sqrt( atom->GetAtomicMass() );
-
-              x.clear();
-              // not a typo -- e.g., atom number, atom label, x, then data
-              for (unsigned int i = 3; i < vs.size(); ++i) {
-                x.push_back(massNormalization * atof(vs[i].c_str()));
-              }
-              y.clear();
-              ifs.getline(buffer, BUFF_SIZE);
-              tokenize(vs, buffer);
-              for (unsigned int i = 1; i < vs.size(); ++i) {
-                y.push_back(massNormalization * atof(vs[i].c_str()));
-              }
-
-              z.clear();
-              ifs.getline(buffer, BUFF_SIZE);
-              tokenize(vs, buffer);
-              for (unsigned int i = 1; i < vs.size(); ++i) {
-                z.push_back(massNormalization * atof(vs[i].c_str()));
-              }
-
-              // OK, now we have x, y, z for all new modes for one atom
-              if (displacements.size()) {
-                numDisp = prevModeCount;
-                for (unsigned int i = 0; i < modeCount;  ++i) {
-                  if (i >= modeCount - newModes){
-                    displacements[numDisp++].push_back(vector3(x[i], y[i], z[i]));
-                  }
-                }
-              }
-
-              // Next set of atoms
-              ifs.getline(buffer, BUFF_SIZE);
-              tokenize(vs, buffer);
-              modeCount = vs.size() - 3;
-            }
-        } else if (strstr(buffer,"EIGENVECTORS") != NULL ||
+          // Next set of atoms
+          ifs.getline(buffer, BUFF_SIZE);
+          tokenize(vs, buffer);
+          modeCount = vs.size() - 3;
+        }
+      } else if (strstr(buffer,"EIGENVECTORS") != NULL ||
                  strstr(buffer,"MOLECULAR ORBITALS") != NULL) {
 
-            ifs.getline(buffer,BUFF_SIZE); // ------ line
-            ifs.getline(buffer,BUFF_SIZE); // blank
-            orbitals.clear();
-            symmetries.clear();
+        ifs.getline(buffer,BUFF_SIZE); // ------ line
+        ifs.getline(buffer,BUFF_SIZE); // blank
+        orbitals.clear();
+        symmetries.clear();
 
-            while (strstr(buffer,"END OF RHF CALCULATION") == NULL &&
-                   strstr(buffer,"-------") == NULL) {
-                //loop
-                ifs.getline(buffer,BUFF_SIZE); // orbitals!
-                ifs.getline(buffer,BUFF_SIZE); // energies in hartree
-                tokenize(vs, buffer);
-                for (unsigned int i = 0; i < vs.size(); ++i)
-                  orbitals.push_back(27.21 * atof(vs[i].c_str()));
+        while (strstr(buffer,"END OF RHF CALCULATION") == NULL &&
+             strstr(buffer,"-------") == NULL) {
+          //loop
+          ifs.getline(buffer,BUFF_SIZE); // orbitals!
+          ifs.getline(buffer,BUFF_SIZE); // energies in hartree
+          tokenize(vs, buffer);
+          for (unsigned int i = 0; i < vs.size(); ++i)
+            orbitals.push_back(27.21 * atof(vs[i].c_str()));
 
-                ifs.getline(buffer,BUFF_SIZE); // symmetries
-                tokenize(vs, buffer);
-                for (unsigned int i = 0; i < vs.size(); ++i)
-                  symmetries.push_back(vs[i]);
+          ifs.getline(buffer,BUFF_SIZE); // symmetries
+          tokenize(vs, buffer);
+          for (unsigned int i = 0; i < vs.size(); ++i)
+            symmetries.push_back(vs[i]);
 
-                // orbital coefficients
-                while (ifs.getline(buffer,BUFF_SIZE) && strlen(buffer)
-                       && strstr(buffer,"END") == NULL
-                       && strstr(buffer, "---") == NULL) {
-		}
-                if (!ifs.good())
-                  break;
-            }
-        } else if(strstr(buffer, "INPUT CARD> $")) {
-            string attr, value;
-            char *ptr;
-
-            for( ; ; ) {
-                ptr = buffer + 14;
-                tokenize(vs, ptr);
-
-                if(vs.size() > 2) {
-                    OBSetData *curset = (OBSetData *)gmsset->GetData(vs[0]);
-                    if(!curset) {
-                        curset = new OBSetData();
-                        curset->SetAttribute(vs[0]);
-                        curset->SetOrigin(fileformatInput);
-                        gmsset->AddData(curset);
-                    }
-                    for(unsigned int i=1;i < vs.size() &&  vs[i].substr(0,4) != "$END"; i++) {
-                      string::size_type loc = vs[i].find("=",0);
-                      if(loc != string::npos) {
-                          // cout << vs[i].substr(0,loc) << " !!!!! " << vs[i].substr(loc+1) << endl;
-                          OBPairData *data = new OBPairData();
-                          data->SetAttribute(vs[i].substr(0,loc));
-                          data->SetValue(vs[i].substr(loc+1));
-                          data->SetOrigin(fileformatInput);
-                          curset->AddData(data);
-                      }
-                    }
-                }
-                break;
-            }
+          // orbital coefficients
+          while (ifs.getline(buffer,BUFF_SIZE) && strlen(buffer)
+                 && strstr(buffer,"END") == NULL
+                 && strstr(buffer, "---") == NULL) {
+          }
+            if (!ifs.good())
+              break;
         }
-        /*
-          else if(strstr(buffer, "$CONTRL OPTIONS"))
-          {
-          ParseSection("CONTRL", gmsset, ifs);
+      } else if(strstr(buffer, "INPUT CARD> $")) {
+        string attr, value;
+        char *ptr;
+
+        for( ; ; ) {
+          ptr = buffer + 14;
+          tokenize(vs, ptr);
+
+          if(vs.size() > 2) {
+            OBSetData *curset = (OBSetData *)gmsset->GetData(vs[0]);
+            if(!curset) {
+              curset = new OBSetData();
+              curset->SetAttribute(vs[0]);
+              curset->SetOrigin(fileformatInput);
+              gmsset->AddData(curset);
+            }
+            for(unsigned int i=1;i < vs.size() &&  vs[i].substr(0,4) != "$END"; i++) {
+              string::size_type loc = vs[i].find("=",0);
+              if(loc != string::npos) {
+                // cout << vs[i].substr(0,loc) << " !!!!! " << vs[i].substr(loc+1) << endl;
+                OBPairData *data = new OBPairData();
+                data->SetAttribute(vs[i].substr(0,loc));
+                data->SetValue(vs[i].substr(loc+1));
+                data->SetOrigin(fileformatInput);
+                curset->AddData(data);
+              }
+            }
           }
-          else if(strstr(buffer, "$SYSTEM OPTIONS"))
-          {
-          ParseSection("SYSTEM", gmsset, ifs);
-          }
-          else if(strstr(buffer, "BASIS OPTIONS"))
-          {
-          ParseSection("BASIS", gmsset, ifs);
-          }
-          else if(strstr(buffer, "GUESS OPTIONS"))
-          {
-          ParseSection("GUESS", gmsset, ifs);
-          }
-        */
+          break;
+        }
+      }
+      /*
+        else if(strstr(buffer, "$CONTRL OPTIONS"))
+        {
+        ParseSection("CONTRL", gmsset, ifs);
+        }
+        else if(strstr(buffer, "$SYSTEM OPTIONS"))
+        {
+        ParseSection("SYSTEM", gmsset, ifs);
+        }
+        else if(strstr(buffer, "BASIS OPTIONS"))
+        {
+        ParseSection("BASIS", gmsset, ifs);
+        }
+        else if(strstr(buffer, "GUESS OPTIONS"))
+        {
+        ParseSection("GUESS", gmsset, ifs);
+        }
+      */
     }
+
     if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
       mol.EndModify();
       return false;
@@ -691,111 +686,109 @@ namespace OpenBabel {
     const char *keywordsEnable = pConv->IsOption("k",OBConversion::GENOPTIONS);
 
     if(keywordsEnable) {
-        // add our gamess set
-        pmol->SetData(gmsset);
+      // add our gamess set
+      pmol->SetData(gmsset);
 
-        // if we have basis set data we should set our global pair data
-        OBSetData *cset = (OBSetData *) gmsset->GetData("CONTRL");
-        OBSetData *bset = (OBSetData *) gmsset->GetData("BASIS");
+      // if we have basis set data we should set our global pair data
+      OBSetData *cset = (OBSetData *) gmsset->GetData("CONTRL");
+      OBSetData *bset = (OBSetData *) gmsset->GetData("BASIS");
 
-        string model = "b3lyp";
-        string basis;
-        string method;
+      string model = "b3lyp";
+      string basis;
+      string method;
 
-        if(cset) {
-            OBPairData *pd = NULL;
+      if(cset) {
+        OBPairData *pd = NULL;
 
-            pd = (OBPairData *) cset->GetData("SCFTYP");
-            if(pd) {
-                if(pd->GetValue() == "RHF") {
-                    model = "rhf";
-                }
-            }
-
-            pd = (OBPairData *) cset->GetData("DFTTYP");
-            if(pd) {
-                if(pd->GetValue() == "BLYP") {
-                    model = "b3lyp";
-                }
-            }
-
-            pd = (OBPairData *) cset->GetData("MPLEVL");
-            if(pd) {
-                if(pd->GetValue() == "2")
-                  model = "mp2";
-            }
-
-            pd = (OBPairData *) cset->GetData("CCTYP");
-            if(pd) {
-                if(pd->GetValue() == "CCSD(T)")
-                  model = "ccsd(t)";
-            }
-
-            pd = (OBPairData *) cset->GetData("RUNTYP");
-            if(pd) {
-                string value = pd->GetValue();
-                if(value == "GRADIENT" || value == "HESSIAN" || value == "RAMAN" || value == "OPTIMIZE" || value == "SADPOINT") {
-                    method = pd->GetValue();
-                    transform(method.begin(), method.end(), method.begin(), ::tolower);
-                }
-            }
+        pd = (OBPairData *) cset->GetData("SCFTYP");
+        if(pd) {
+          if(pd->GetValue() == "RHF")
+            model = "rhf";
         }
 
-        if(bset) {
-            OBPairData *gbasis = (OBPairData *) bset->GetData("GBASIS");
-            OBPairData *ngauss = (OBPairData *) bset->GetData("NGAUSS");
+        pd = (OBPairData *) cset->GetData("DFTTYP");
+        if(pd) {
+          if(pd->GetValue() == "BLYP")
+            model = "b3lyp";
+        }
 
-            if(gbasis) {
-                string value = gbasis->GetValue();
+        pd = (OBPairData *) cset->GetData("MPLEVL");
+        if(pd) {
+          if(pd->GetValue() == "2")
+            model = "mp2";
+        }
 
-                if( value == "am1" ) {
-                    model = "am1";
-                } else if( value == "pm3" ) {
-                    model = "pm3";
-                } else if(ngauss) {
-                    if(value == "STO") {
-                        basis.clear();
-                        basis += "sto-";
-                        basis += ngauss->GetValue();
-                        basis += "g";
-                    } else if(ngauss->GetValue() == "3" || ngauss->GetValue() == "6") {
-                        basis.clear();
-                        basis = ngauss->GetValue();
-                        basis += "-";
-                        basis += gbasis->GetValue().substr(1);
-                        basis += "G(d)";
-                    }
-                }
+        pd = (OBPairData *) cset->GetData("CCTYP");
+        if(pd) {
+          if(pd->GetValue() == "CCSD(T)")
+            model = "ccsd(t)";
+        }
+
+        pd = (OBPairData *) cset->GetData("RUNTYP");
+        if(pd) {
+          string value = pd->GetValue();
+          if(value == "GRADIENT" || value == "HESSIAN" || value == "RAMAN" || value == "OPTIMIZE" || value == "SADPOINT") {
+            method = pd->GetValue();
+            transform(method.begin(), method.end(), method.begin(), ::tolower);
+          }
+        }
+      }
+
+      if(bset) {
+        OBPairData *gbasis = (OBPairData *) bset->GetData("GBASIS");
+        OBPairData *ngauss = (OBPairData *) bset->GetData("NGAUSS");
+
+        if(gbasis) {
+          string value = gbasis->GetValue();
+
+          if( value == "am1" ) {
+            model = "am1";
+          } else if( value == "pm3" ) {
+            model = "pm3";
+          } else if(ngauss) {
+            if(value == "STO") {
+              basis.clear();
+              basis += "sto-";
+              basis += ngauss->GetValue();
+              basis += "g";
+            } else if(ngauss->GetValue() == "3" || ngauss->GetValue() == "6") {
+              basis.clear();
+              basis = ngauss->GetValue();
+              basis += "-";
+              basis += gbasis->GetValue().substr(1);
+              basis += "G(d)";
             }
+          }
         }
-        OBPairData *nd = NULL;
-        if(model != "") {
-            nd = new OBPairData();
-            nd->SetAttribute("model");
-            nd->SetValue(model);
-            nd->SetOrigin(fileformatInput);
-            pmol->SetData(nd);
-        }
-        if(basis != "") {
-            nd = new OBPairData();
-            nd->SetAttribute("basis");
-            nd->SetValue(basis);
-            nd->SetOrigin(fileformatInput);
-            pmol->SetData(nd);
-        }
-        if(method != "") {
-            nd = new OBPairData();
-            nd->SetAttribute("method");
-            nd->SetValue(method);
-            nd->SetOrigin(fileformatInput);
-            pmol->SetData(nd);
-        }
+      }
+      OBPairData *nd = NULL;
+      if(model != "") {
+        nd = new OBPairData();
+        nd->SetAttribute("model");
+        nd->SetValue(model);
+        nd->SetOrigin(fileformatInput);
+        pmol->SetData(nd);
+      }
+      if(basis != "") {
+        nd = new OBPairData();
+        nd->SetAttribute("basis");
+        nd->SetValue(basis);
+        nd->SetOrigin(fileformatInput);
+        pmol->SetData(nd);
+      }
+      if(method != "") {
+        nd = new OBPairData();
+        nd->SetAttribute("method");
+        nd->SetValue(method);
+        nd->SetOrigin(fileformatInput);
+        pmol->SetData(nd);
+      }
 
-        /*
-          cout << "model: " << model << endl;
-          cout << "basis: " << basis << endl;
-          cout << "method: " << method << endl;
-        */
+      /*
+        cout << "model: " << model << endl;
+        cout << "basis: " << basis << endl;
+        cout << "method: " << method << endl;
+      */
     }
 
     mol.EndModify();
@@ -845,7 +838,6 @@ namespace OpenBabel {
 
   ////////////////////////////////////////////////////////////////
   bool GAMESSInputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv) {
-
     OBMol* pmol = pOb->CastAndClear<OBMol>();
     if(pmol==NULL)
       return false;
@@ -865,77 +857,77 @@ namespace OpenBabel {
 
     mol.BeginModify();
     while (ifs.getline(buffer,BUFF_SIZE)) {
-        if(strstr(buffer,"$DATA") != NULL) {
-            ifs.getline(buffer,BUFF_SIZE);	// title
-            tokenize(vs,buffer);
-            mol.SetTitle(buffer);
-            ifs.getline(buffer,BUFF_SIZE);  // C1
-            ifs.getline(buffer,BUFF_SIZE);
-            while (strstr(buffer, "$END") == NULL) {
-                tokenize(vs,buffer);
-                if(vs.size() == 5) {
-                    atom = mol.NewAtom();
-                    atom->SetAtomicNum(atoi(vs[1].c_str())); // Parse the current one
-                    x = atof((char*)vs[2].c_str());
-                    y = atof((char*)vs[3].c_str());
-                    z = atof((char*)vs[4].c_str());
-                    atom->SetVector(x,y,z);
-                }
-
-                if (!ifs.getline(buffer,BUFF_SIZE))
-                  break;
-            }
-        }
-        if (strstr(buffer,"$FMOXYZ") != NULL) {
-          while (strstr(buffer, "$END") == NULL) {
-            tokenize(vs,buffer);
-            if(vs.size() == 5) {
-              atom = mol.NewAtom();
-              atom->SetAtomicNum(atoi(vs[1].c_str()));
-              x = atof((char*)vs[2].c_str());
-              y = atof((char*)vs[3].c_str());
-              z = atof((char*)vs[4].c_str());
-              atom->SetVector(x,y,z);
-            }
-            if (!ifs.getline(buffer,BUFF_SIZE))
-              break;
+      if(strstr(buffer,"$DATA") != NULL) {
+        ifs.getline(buffer,BUFF_SIZE); // title
+        tokenize(vs,buffer);
+        mol.SetTitle(buffer);
+        ifs.getline(buffer,BUFF_SIZE);  // C1
+        ifs.getline(buffer,BUFF_SIZE);
+        while (strstr(buffer, "$END") == NULL) {
+          tokenize(vs,buffer);
+          if(vs.size() == 5) {
+            atom = mol.NewAtom();
+            atom->SetAtomicNum(atoi(vs[1].c_str())); // Parse the current one
+            x = atof((char*)vs[2].c_str());
+            y = atof((char*)vs[3].c_str());
+            z = atof((char*)vs[4].c_str());
+            atom->SetVector(x,y,z);
           }
-        }
-        if(strstr(buffer,"$EFRAG") != NULL) {
-            while (strstr(buffer,"FRAGNAME") == NULL) {
-                //read $EFRAG parameters
-                tokenize(vs, buffer, "=");
-                if (vs.size() > 1)
-                  efragName = vs[1];
-                if(!ifs.getline(buffer,BUFF_SIZE))
-                  break;
-            }
-            while(strstr(buffer,"$END") == NULL) {
-                tokenize(vs,buffer);
-                if(vs.size() == 4) {
-                    atom = mol.NewAtom();
-                    int atomicNum;
-                    if( vs[0].substr(0,1) == "Z" || vs[0].substr(0,1) == "z" )
-                      atomicNum=etab.GetAtomicNum(vs[0].substr(1,1).c_str());
-                    else
-                      atomicNum=etab.GetAtomicNum(vs[0].substr(0,1).c_str());
-                    atom->SetAtomicNum(atomicNum);
-                    x = atof((char*)vs[1].c_str());
-                    y = atof((char*)vs[2].c_str());
-                    z = atof((char*)vs[3].c_str());
-                    atom->SetVector(x,y,z);
 
-                    // Tag these atoms as part of a specific EFP fragment
-                    OBPairData *dp = new OBPairData;
-                    dp->SetAttribute("EFRAG");
-                    dp->SetValue(efragName);
-                    dp->SetOrigin(fileformatInput);
-                    atom->SetData(dp);
-                }
-                if(!ifs.getline(buffer,BUFF_SIZE))
-                  break;
-            }
+          if (!ifs.getline(buffer,BUFF_SIZE))
+            break;
         }
+      }
+      if (strstr(buffer,"$FMOXYZ") != NULL) {
+        while (strstr(buffer, "$END") == NULL) {
+          tokenize(vs,buffer);
+          if(vs.size() == 5) {
+            atom = mol.NewAtom();
+            atom->SetAtomicNum(atoi(vs[1].c_str()));
+            x = atof((char*)vs[2].c_str());
+            y = atof((char*)vs[3].c_str());
+            z = atof((char*)vs[4].c_str());
+            atom->SetVector(x,y,z);
+          }
+          if (!ifs.getline(buffer,BUFF_SIZE))
+            break;
+        }
+      }
+      if(strstr(buffer,"$EFRAG") != NULL) {
+        while (strstr(buffer,"FRAGNAME") == NULL) {
+          //read $EFRAG parameters
+          tokenize(vs, buffer, "=");
+          if (vs.size() > 1)
+            efragName = vs[1];
+          if(!ifs.getline(buffer,BUFF_SIZE))
+            break;
+        }
+        while(strstr(buffer,"$END") == NULL) {
+          tokenize(vs,buffer);
+          if(vs.size() == 4) {
+            atom = mol.NewAtom();
+            int atomicNum;
+            if( vs[0].substr(0,1) == "Z" || vs[0].substr(0,1) == "z" )
+              atomicNum=etab.GetAtomicNum(vs[0].substr(1,1).c_str());
+            else
+              atomicNum=etab.GetAtomicNum(vs[0].substr(0,1).c_str());
+            atom->SetAtomicNum(atomicNum);
+            x = atof((char*)vs[1].c_str());
+            y = atof((char*)vs[2].c_str());
+            z = atof((char*)vs[3].c_str());
+            atom->SetVector(x,y,z);
+
+            // Tag these atoms as part of a specific EFP fragment
+            OBPairData *dp = new OBPairData;
+            dp->SetAttribute("EFRAG");
+            dp->SetValue(efragName);
+            dp->SetOrigin(fileformatInput);
+            atom->SetData(dp);
+          }
+          if(!ifs.getline(buffer,BUFF_SIZE))
+            break;
+        }
+      }
     }
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
@@ -969,39 +961,38 @@ namespace OpenBabel {
 
     string defaultKeywords = " $CONTRL COORD=CART UNITS=ANGS $END";
 
-    if(keywords) {
-        defaultKeywords = keywords;
-    }
+    if(keywords)
+      defaultKeywords = keywords;
 
     if (keywordsEnable) {
-        OBSetData *gmsset = (OBSetData *)pmol->GetData("gamess");
-        if(gmsset) {
-            std::vector<OBGenericData*>::iterator i,j;
-            for(i = gmsset->GetBegin(); i != gmsset->GetEnd(); ++i) {
-                OBSetData *cset = (OBSetData *)(*i);
-                if(cset) {
-                    ofs << " $" << cset->GetAttribute();
-                    for(j = cset->GetBegin(); j != cset->GetEnd(); ++j) {
-                        OBPairData *pd = (OBPairData *) (*j);
-                        if(pd) {
-                            ofs << " " << pd->GetAttribute() << "=" << pd->GetValue();
-                        }
-                    }
-                    ofs << " $END"<<endl;
-                }
+      OBSetData *gmsset = (OBSetData *)pmol->GetData("gamess");
+      if(gmsset) {
+        std::vector<OBGenericData*>::iterator i,j;
+        for(i = gmsset->GetBegin(); i != gmsset->GetEnd(); ++i) {
+          OBSetData *cset = (OBSetData *)(*i);
+          if(cset) {
+            ofs << " $" << cset->GetAttribute();
+            for(j = cset->GetBegin(); j != cset->GetEnd(); ++j) {
+              OBPairData *pd = (OBPairData *) (*j);
+              if(pd) {
+                ofs << " " << pd->GetAttribute() << "=" << pd->GetValue();
+              }
             }
-        } else {
-            ofs << "! Unable to translate keywords!" << endl;
-            ofs << "! Defining default control keywords." << endl;
-            ofs << defaultKeywords << endl;
+            ofs << " $END"<<endl;
+          }
         }
+      } else {
+        ofs << "! Unable to translate keywords!" << endl;
+        ofs << "! Defining default control keywords." << endl;
+        ofs << defaultKeywords << endl;
+      }
     } else if (keywordFile) {
-        ifstream kfstream(keywordFile);
-        string keyBuffer;
-        if (kfstream) {
-            while (getline(kfstream, keyBuffer))
-              ofs << keyBuffer << endl;
-        }
+      ifstream kfstream(keywordFile);
+      string keyBuffer;
+      if (kfstream) {
+        while (getline(kfstream, keyBuffer))
+          ofs << keyBuffer << endl;
+      }
     } else {
         ofs << defaultKeywords << endl;
     }
@@ -1011,21 +1002,21 @@ namespace OpenBabel {
     if (!mol.HasData(OBGenericDataType::SymmetryData))
       ofs << "C1" << endl;
     else {
-        // \todo needs to be updated for point group symmetry recognition
-        //   particularly for output of the symmetry elements
-        //   and any necessary rotation for frame of reference for GAMESS
-        ofs << "Put symmetry info here" << endl << endl;
+      // \todo needs to be updated for point group symmetry recognition
+      //   particularly for output of the symmetry elements
+      //   and any necessary rotation for frame of reference for GAMESS
+      ofs << "Put symmetry info here" << endl << endl;
     }
 
     //  OBAtom *atom;
     FOR_ATOMS_OF_MOL(atom, mol) {
-        snprintf(buffer, BUFF_SIZE, "%-3s %4d.0    %14.10f  %14.10f  %14.10f ",
-                 etab.GetSymbol(atom->GetAtomicNum()),
-                 atom->GetAtomicNum(),
-                 atom->GetX(),
-                 atom->GetY(),
-                 atom->GetZ());
-        ofs << buffer << endl;
+      snprintf(buffer, BUFF_SIZE, "%-3s %4d.0    %14.10f  %14.10f  %14.10f ",
+               etab.GetSymbol(atom->GetAtomicNum()),
+               atom->GetAtomicNum(),
+               atom->GetX(),
+               atom->GetY(),
+               atom->GetZ());
+      ofs << buffer << endl;
     }
 
     ofs << " $END" << endl << endl << endl;
