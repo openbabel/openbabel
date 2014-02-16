@@ -982,6 +982,8 @@ namespace OpenBabel {
 
     string defaultKeywords = " $CONTRL COORD=CART UNITS=ANGS $END";
 
+    int a = 0;
+
     if (keywords)
       defaultKeywords = keywords;
 
@@ -992,10 +994,17 @@ namespace OpenBabel {
         for (i=gmsset->GetBegin(); i != gmsset->GetEnd(); ++i) {
           OBSetData* cset = (OBSetData*) (*i);
           if (cset) {
+            a = 2 + cset->GetAttribute().length();
             ofs << " $" << cset->GetAttribute();
             for (j=cset->GetBegin(); j != cset->GetEnd(); ++j) {
               OBPairData* pd = (OBPairData*) (*j);
               if (pd) {
+                if (a + 2 + pd->GetAttribute().length() + pd->GetValue().length() > 72) {
+                  a = 5 + pd->GetAttribute().length() + pd->GetValue().length();
+                  ofs << endl << "   ";
+                } else {
+                  a += 2 + pd->GetAttribute().length() + pd->GetValue().length();
+                }
                 ofs << " " << pd->GetAttribute() << "=" << pd->GetValue();
               }
             }
