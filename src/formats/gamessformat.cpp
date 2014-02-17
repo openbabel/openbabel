@@ -214,7 +214,8 @@ namespace OpenBabel {
     OBAtom* atom;
     vector<string> vs;
     bool hasPartialCharges = false;
-    int aHOMO, bHOMO = 0;
+    int aHOMO = 0;
+    int bHOMO = 0;
     vector<double> orbitals;
     vector<std::string> symmetries;
 
@@ -531,8 +532,8 @@ namespace OpenBabel {
         }
 
         // Now real work -- read displacements
-        int prevModeCount = displacements.size();
-        int newModes = frequencies.size() - displacements.size();
+        unsigned int prevModeCount = displacements.size();
+        unsigned int newModes = frequencies.size() - displacements.size();
         vector<vector3> displacement;
         for (unsigned int i=0; i < newModes; ++i) {
           displacements.push_back(displacement);
@@ -540,7 +541,7 @@ namespace OpenBabel {
 
         ifs.getline(buffer, BUFF_SIZE);
         tokenize(vs, buffer);
-        int modeCount = vs.size() - 3;
+        unsigned int modeCount = vs.size() - 3;
         double massNormalization;
         vector<double> x, y, z;
         while (modeCount >= 1) {
