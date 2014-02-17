@@ -976,36 +976,121 @@ namespace OpenBabel {
 
     char buffer[BUFF_SIZE];
 
-    const char* keywords       = pConv->IsOption("k",OBConversion::OUTOPTIONS);
-    const char* keywordsEnable = pConv->IsOption("k",OBConversion::GENOPTIONS);
-    const char* keywordFile    = pConv->IsOption("f",OBConversion::OUTOPTIONS);
+    const char* keywords       = pConv->IsOption("k", OBConversion::OUTOPTIONS);
+    const char* keywordsEnable = pConv->IsOption("k", OBConversion::GENOPTIONS);
+    const char* keywordFile    = pConv->IsOption("f", OBConversion::OUTOPTIONS);
 
     string defaultKeywords = " $CONTRL COORD=CART UNITS=ANGS $END";
 
-    int a = 0;
+    int a        = 0;
+    string s     = "";
+    bool wrapped = false;
+
+    vector<int> spacePositions;
+    std::vector<int>::reverse_iterator rit;
+    std::vector<OBGenericData*>::iterator i, j;
+
+    struct local {
+      static const bool cmpfn(const char& a, const char& b) {
+        return (a == ' ' && b == ' ');
+      }
+    };
 
     if (keywords)
       defaultKeywords = keywords;
 
     if (keywordsEnable) {
       OBSetData* gmsset = (OBSetData*) pmol->GetData("gamess");
+
       if (gmsset) {
-        std::vector<OBGenericData*>::iterator i, j;
         for (i=gmsset->GetBegin(); i != gmsset->GetEnd(); ++i) {
           OBSetData* cset = (OBSetData*) (*i);
+
           if (cset) {
+            wrapped = false;
             a = 2 + cset->GetAttribute().length();
             ofs << " $" << cset->GetAttribute();
             for (j=cset->GetBegin(); j != cset->GetEnd(); ++j) {
               OBPairData* pd = (OBPairData*) (*j);
+
               if (pd) {
                 if (a + 2 + pd->GetAttribute().length() + pd->GetValue().length() > 72) {
-                  a = 5 + pd->GetAttribute().length() + pd->GetValue().length();
-                  ofs << endl << "   ";
+                  // Reached line end
+                  s = pd->GetAttribute();
+                  s += "=";
+                  s += pd->GetValue();
+
+                  // Remove consecutive spaces
+                  s.erase(unique(s.begin(), s.end(), local::cmpfn), s.end());
+
+                  while (s.length() > 0) {
+                    if (s.find(' ') != string::npos) {
+                      // There are spaces in value
+                      // Find space positions
+                      spacePositions.clear();
+                      for (unsigned int n=0; n < s.length(); ++n) {
+                        if (s.at(n) == ' ')
+                          spacePositions.push_back(n);
+                      }
+
+                      // Try to fit it all
+                      wrapped = false;
+                      if (a + 1 + s.length() <= 72) {
+                        a += 1 + s.length();
+                        ofs << " " << s;
+                        break;
+                      }
+
+                      // Try wrapping
+                      for (rit=spacePositions.rbegin(); rit != spacePositions.rend(); ++rit) {
+                        if (a + 1 + (*rit) <= 72) {
+                          ofs << " " << s.substr(0, *rit)
+                              << endl << "   ";
+                          a = 3;
+                          s = s.substr(*rit);
+                          wrapped = true;
+                          break;
+                        }
+                      }
+
+                      if (!wrapped) {
+                        // String could not be wrapped
+                        // Try putting it on the next line
+                        a = 4 + spacePositions.at(0);
+                        if (a > 72) {
+                          // It exceeds line length
+                          ofs << endl
+                              << "! Unable to fit " << pd->GetAttribute()
+                              << " on the line!" << endl;
+                          break;
+                        }
+                        a = 3;
+                        ofs << endl << "   ";
+                      }
+                    } else {
+                      // There are no spaces in the string
+                      a = 4 + s.length();
+                      if (a > 72) {
+                        // It exceeds line length
+                        ofs << endl
+                            << "! Unable to fit " << pd->GetAttribute()
+                            << " on the line!" << endl;
+                        break;
+                      }
+
+                      if (wrapped) {
+                        ofs << s;
+                      } else {
+                        ofs << endl << "    " << s;
+                      }
+                      s = "";
+                    }
+                  }
                 } else {
+                  // Whole key-value pair fits on the line
                   a += 2 + pd->GetAttribute().length() + pd->GetValue().length();
+                  ofs << " " << pd->GetAttribute() << "=" << pd->GetValue();
                 }
-                ofs << " " << pd->GetAttribute() << "=" << pd->GetValue();
               }
             }
             ofs << " $END" << endl;
