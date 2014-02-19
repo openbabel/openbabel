@@ -166,7 +166,9 @@ namespace OpenBabel
     // total atomic and hydrogen contribution
     double total = 0.0;
 
-    cout << "MOL " << tmpmol.GetTitle(false) << "\n"; // FBR
+    cout << "BEGIN\n"
+         << "MOL " << tmpmol.GetTitle(false) << "\n"
+         << "ATOMS\n"; // FBR
 
     if (_debug)
       debugMessage << "  Final contributions:\n";
@@ -190,6 +192,8 @@ namespace OpenBabel
         debugMessage << "matched\n";
       }
     }
+
+    cout << "END\n";
 
     if (_debug)
       obErrorLog.ThrowError(__FUNCTION__, debugMessage.str(), obWarning);
