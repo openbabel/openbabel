@@ -2,7 +2,12 @@
 add_definitions(-DTESTDATADIR="\\"${CMAKE_SOURCE_DIR}/test/files/\\"")
 
 # define FORMATDIR for location of format plugin binaries
-add_definitions(-DFORMATDIR="\\"${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/\\"")
+if(BINDINGS_ONLY)
+  set(FORMATDIR "${OB_MODULE_PATH}/")
+else()
+  set(FORMATDIR "${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/")
+endif()
+add_definitions(-DFORMATDIR="\\"${FORMATDIR}/\\"")
 
 ###########################################################
 #  new tests using obtest.h
@@ -10,7 +15,8 @@ add_definitions(-DFORMATDIR="\\"${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/\\"")
 
 ################ Add new tests here
 set (cpptests
-     automorphism builder canonconsistent canonstable cistrans graphsym
+     automorphism builder canonconsistent canonstable carspacegroup
+     cistrans graphsym
      implicitH lssr isomorphism rotor shuffle smiles spectrophore
      squareplanar stereo stereoperception tetrahedral
      tetranonplanar tetraplanar uniqueid
@@ -19,6 +25,7 @@ set (automorphism_parts 1 2 3 4 5 6 7 8 9 10)
 set (builder_parts 1 2 3 4 5)
 set (canonconsistent_parts  1 2 3)
 set (canonstable_parts 1)
+set (carspacegroup_parts 1 2 3 4)
 set (cistrans_parts 1 2 3 4 5 6 7 8 9)
 set (graphsym_parts 1 2 3 4 5)
 set (implicitH_parts 1)
@@ -36,11 +43,11 @@ set (tetranonplanar_parts 1)
 set (tetraplanar_parts 1)
 set (uniqueid_parts 1 2)
 
-if (EIGEN2_FOUND)
+if (EIGEN2_FOUND OR EIGEN3_FOUND)
   set(cpptests
       align ${cpptests})
   set (align_parts 1 2 3 4 5)
-endif (EIGEN2_FOUND)
+endif ()
 
 set(origtests
     aromatest atom bond cansmi charge_mmff94 charge_gasteiger conversion
@@ -207,7 +214,7 @@ if(NOT MINGW AND NOT CYGWIN)
     foreach(pytest ${pytests})
     SET_SOURCE_FILES_PROPERTIES(test${pytest}.py PROPERTIES
       PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
-      BABEL_LIBDIR "${CMAKE_BINARY_DIR}/lib${LIB_SYFFIX}"
+      BABEL_LIBDIR "${FORMATDIR}"
       BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
       LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
     )
@@ -229,7 +236,7 @@ if (PYTHON_BINDINGS)
   foreach(pybindtest ${pybindtests})
     SET_SOURCE_FILES_PROPERTIES(test${pybindtest}.py PROPERTIES
         PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
-        BABEL_LIBDIR "${CMAKE_BINARY_DIR}/lib${LIB_SYFFIX}"
+        BABEL_LIBDIR "${FORMATDIR}"
         BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
         LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
     )

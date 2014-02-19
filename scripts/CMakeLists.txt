@@ -38,15 +38,19 @@ endif()
 
 if (PYTHON_BINDINGS)
   if (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR RUN_SWIG)
-    find_package(PythonLibs)
-    if (NOT PYTHONLIBS_FOUND)
-      message(STATUS "Python libraries NOT found")
-    endif (NOT PYTHONLIBS_FOUND)
-
     find_package(PythonInterp)
     if (NOT PYTHONINTERP_FOUND)
       message(STATUS "Python interpreter NOT found")
     endif (NOT PYTHONINTERP_FOUND)
+
+    if (PYTHONINTERP_FOUND AND NOT Python_ADDITIONAL_VERSIONS)
+      set(Python_ADDITIONAL_VERSIONS "${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}")
+    endif (PYTHONINTERP_FOUND AND NOT Python_ADDITIONAL_VERSIONS)
+
+    find_package(PythonLibs)
+    if (NOT PYTHONLIBS_FOUND)
+      message(STATUS "Python libraries NOT found")
+    endif (NOT PYTHONLIBS_FOUND)
 
     if(PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND)
       set(DO_PYTHON_BINDINGS ON BOOL)
@@ -69,7 +73,7 @@ if (DO_PYTHON_BINDINGS)
       if(WIN32) # Skip the extra COMMANDs below as 'cat' is not present on Windows
         add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
             COMMAND ${SWIG_EXECUTABLE} -python -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${eigen_define} -outdir ${openbabel_SOURCE_DIR}/scripts/python ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
-              MAIN_DEPENDENCY openbabel-python.i 
+              MAIN_DEPENDENCY openbabel-python.i
               VERBATIM
               )
       else(WIN32)
@@ -85,23 +89,43 @@ if (DO_PYTHON_BINDINGS)
               COMMAND cat ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py >> ob.py
               COMMAND ${CMAKE_COMMAND} -E copy ob.py ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
               COMMAND ${CMAKE_COMMAND} -E remove ob.py
-              MAIN_DEPENDENCY openbabel-python.i 
+              MAIN_DEPENDENCY openbabel-python.i
               VERBATIM
               )
       endif(WIN32)
     endif(RUN_SWIG)
 
     add_library(bindings_python MODULE ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp)
-    target_link_libraries(bindings_python ${PYTHON_LIBRARIES} ${BABEL_LIBRARY})
+    if(BINDINGS_ONLY)
+        target_link_libraries(bindings_python ${PYTHON_LIBRARIES} ${BABEL_SYSTEM_LIBRARY})
+    else()
+        target_link_libraries(bindings_python ${PYTHON_LIBRARIES} ${BABEL_LIBRARY})
+    endif()
+
     if(NOT WIN32)
         set_target_properties(bindings_python PROPERTIES
             OUTPUT_NAME _openbabel
             PREFIX ""
             SUFFIX .so )
-        add_dependencies(bindings_python openbabel)
-        install(TARGETS bindings_python LIBRARY DESTINATION ${LIB_INSTALL_DIR})
-        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py DESTINATION ${LIB_INSTALL_DIR})
-        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/pybel.py DESTINATION ${LIB_INSTALL_DIR})
+        execute_process(
+          COMMAND
+          ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_python_lib(1,0,prefix='${CMAKE_INSTALL_PREFIX}'))"
+          OUTPUT_VARIABLE PYTHON_INSTDIR
+          OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
+        if(NOT BINDINGS_ONLY)
+            add_dependencies(bindings_python openbabel)
+        endif()
+
+        install(TARGETS bindings_python
+                LIBRARY DESTINATION ${PYTHON_INSTDIR}
+                COMPONENT bindings_python)
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
+                DESTINATION ${PYTHON_INSTDIR}
+                COMPONENT bindings_python)
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/pybel.py
+                DESTINATION ${PYTHON_INSTDIR}
+                COMPONENT bindings_python)
     else(NOT WIN32)
         set_target_properties(bindings_python PROPERTIES
             OUTPUT_NAME _openbabel
@@ -146,15 +170,15 @@ endif (JAVA_BINDINGS)
 
 if (DO_JAVA_BINDINGS)
 
-    include_directories(
-        ${JNI_INCLUDE_DIRS}
+include_directories(
+	${JNI_INCLUDE_DIRS}
     )
 
     if (RUN_SWIG)
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp
           COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_BINARY_DIR}/scripts/java/org/openbabel
           COMMAND ${SWIG_EXECUTABLE} -java -package org.openbabel -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp ${eigen_define} -outdir ${openbabel_BINARY_DIR}/scripts/java/org/openbabel ${openbabel_SOURCE_DIR}/scripts/openbabel-java.i
-          COMMAND ${JAVA_COMPILE} ARGS "java/org/openbabel/*.java"
+			 COMMAND ${JAVA_COMPILE} ARGS "java/org/openbabel/*.java"
           COMMAND ${CMAKE_COMMAND} -E chdir ${openbabel_BINARY_DIR}/scripts/java ${JAVA_ARCHIVE} cf openbabel.jar org
           COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_BINARY_DIR}/scripts/java/openbabel.jar ${openbabel_SOURCE_DIR}/scripts/java
           COMMAND ${CMAKE_COMMAND} -E remove_directory ${openbabel_BINARY_DIR}/scripts/java/org
@@ -163,15 +187,84 @@ if (DO_JAVA_BINDINGS)
     endif (RUN_SWIG)
 
     add_library(bindings_java MODULE ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp)
-    target_link_libraries(bindings_java ${JNI_LIBRARIES} ${BABEL_LIBRARY})
-    set_target_properties(bindings_java PROPERTIES OUTPUT_NAME openbabel_java)
+    if(BINDINGS_ONLY)
+      target_link_libraries(bindings_java ${JNI_LIBRARIES} ${BABEL_SYSTEM_LIBRARY})
+    else()
+      target_link_libraries(bindings_java ${JNI_LIBRARIES} ${BABEL_LIBRARY})
+    endif()
+
+    set_target_properties(bindings_java PROPERTIES
+        OUTPUT_NAME openbabel_java)
     if(APPLE)
       set_target_properties(bindings_java PROPERTIES SUFFIX ".jnilib")
     endif(APPLE)
-    install(TARGETS bindings_java LIBRARY DESTINATION ${LIB_INSTALL_DIR})
-    install(FILES ${openbabel_SOURCE_DIR}/scripts/java/openbabel.jar DESTINATION ${LIB_INSTALL_DIR})
+    if(NOT BINDINGS_ONLY)
+      add_dependencies(bindings_java openbabel)
+    endif()
+
+    install(TARGETS bindings_java
+            LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+            COMPONENT bindings_java)
+    install(FILES ${openbabel_SOURCE_DIR}/scripts/java/openbabel.jar
+            DESTINATION ${LIB_INSTALL_DIR}
+            COMPONENT bindings_java)
 
 endif (DO_JAVA_BINDINGS)
+
+
+###################
+# R
+###################
+
+if (R_BINDINGS)
+	if (EXISTS ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp OR RUN_SWIG)
+
+    if (RUN_SWIG)
+      set(DO_R_BINDINGS ON BOOL)
+    endif (RUN_SWIG)
+
+
+  else (EXISTS ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp OR RUN_SWIG)
+	  message(STATUS "Warning: R bindings NOT found. Generate using -DRUN_SWIG.")
+
+  endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp OR RUN_SWIG)
+endif (R_BINDINGS)
+
+if (DO_R_BINDINGS)
+
+
+    include_directories(/usr/share/R/include )
+    if (RUN_SWIG)
+		 add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp
+			 COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_BINARY_DIR}/scripts/R
+			 COMMAND ${SWIG_EXECUTABLE} -r -package openbabelR  -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp ${eigen_define} -outdir ${openbabel_BINARY_DIR}/scripts/R ${openbabel_SOURCE_DIR}/scripts/openbabel-R.i
+			 COMMAND sed  -i  -e "'s/reg\.finalizer(\(.*\)) /reg.finalizer(\1); /g'" ${openbabel_BINARY_DIR}/scripts/R/openbabelR.R
+			 MAIN_DEPENDENCY openbabel-R.i
+      )
+    endif (RUN_SWIG)
+
+	 add_library(bindings_R MODULE ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp)
+	 if(BINDINGS_ONLY)
+		 target_link_libraries(bindings_R R ${BABEL_SYSTEM_LIBRARY})
+	 else()
+		 target_link_libraries(bindings_R R ${BABEL_LIBRARY})
+	 endif()
+
+	 set_target_properties(bindings_R PROPERTIES
+		 OUTPUT_NAME openbabel_R)
+    if(NOT BINDINGS_ONLY)
+		 add_dependencies(bindings_R openbabel)
+    endif()
+	 add_dependencies(bindings_R R)
+
+	 install(TARGETS bindings_R
+            LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+				COMPONENT bindings_R)
+	 install(FILES ${openbabel_SOURCE_DIR}/scripts/R/openbabel_java.R
+            DESTINATION ${LIB_INSTALL_DIR}
+				COMPONENT bindings_R)
+
+endif (DO_R_BINDINGS)
 
 ###################
 # Perl
@@ -231,13 +324,25 @@ if (DO_PERL_BINDINGS)
     endif (RUN_SWIG)
 
     add_library(bindings_perl MODULE ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp)
-    target_link_libraries(bindings_perl ${PERL_LIBRARY} ${BABEL_LIBRARY} ${PERL_EXTRA_LINK_FLAGS})
+    if(BINDINGS_ONLY)
+      target_link_libraries(bindings_perl ${PERL_LIBRARY} ${BABEL_SYSTEM_LIBRARY} ${PERL_EXTRA_LINK_FLAGS})
+    else()
+      target_link_libraries(bindings_perl ${PERL_LIBRARY} ${BABEL_LIBRARY} ${PERL_EXTRA_LINK_FLAGS})
+    endif()
+
     set_target_properties(bindings_perl PROPERTIES
         PREFIX ""
         OUTPUT_NAME OpenBabel)
-    add_dependencies(bindings_perl openbabel)
-    install(TARGETS bindings_perl LIBRARY DESTINATION ${LIB_INSTALL_DIR})
-    install(FILES ${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.pm DESTINATION ${LIB_INSTALL_DIR})
+    if(NOT BINDINGS_ONLY)
+      add_dependencies(bindings_perl openbabel)
+    endif()
+
+    install(TARGETS bindings_perl
+            LIBRARY DESTINATION ${LIB_INSTALL_DIR}/auto/Chemistry/OpenBabel/
+            COMPONENT bindings_perl)
+    install(FILES ${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.pm
+            DESTINATION ${LIB_INSTALL_DIR}/Chemistry/
+            COMPONENT bindings_perl)
 
 endif (DO_PERL_BINDINGS)
 
@@ -269,7 +374,8 @@ if (DO_RUBY_BINDINGS)
       set(WORKAROUND_CMAKE260_BUG "s/rb_define_module(\"Openbabel\")/rb_define_module(\"OpenBabel\")/")
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp
           COMMAND ${SWIG_EXECUTABLE} -ruby -c++ -small -O -templatereduce -naturalvar -autorename -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.txt ${openbabel_SOURCE_DIR}/scripts/openbabel-ruby.i
-          COMMAND sed -e '${WORKAROUND_CMAKE_260_BUG}' -e's/void Init_OpenBabel/void Init_openbabel/' <${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.txt >${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp 
+          COMMAND sed -e '${WORKAROUND_CMAKE_260_BUG}' -e's/void Init_OpenBabel/void Init_openbabel/' <${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.txt >${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp
+          COMMAND ${CMAKE_COMMAND} -E remove ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.txt
           MAIN_DEPENDENCY openbabel-ruby.i
       )
     endif (RUN_SWIG)
@@ -277,12 +383,25 @@ if (DO_RUBY_BINDINGS)
     include_directories(
         ${RUBY_INCLUDE_PATH}
     )
+
     add_library(bindings_ruby MODULE ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp)
-    target_link_libraries(bindings_ruby ${RUBY_LIBRARY} ${BABEL_LIBRARY})
+    if(BINDINGS_ONLY)
+      target_link_libraries(bindings_ruby ${RUBY_LIBRARY} ${BABEL_SYSTEM_LIBRARY})
+    else()
+      target_link_libraries(bindings_ruby ${RUBY_LIBRARY} ${BABEL_LIBRARY})
+    endif()
+
     set_target_properties(bindings_ruby PROPERTIES
         OUTPUT_NAME openbabel
         PREFIX "" )
-    install(TARGETS bindings_ruby LIBRARY DESTINATION ${LIB_INSTALL_DIR})
+
+    if(NOT BINDINGS_ONLY)
+      add_dependencies(bindings_ruby openbabel)
+    endif()
+
+    install(TARGETS bindings_ruby
+            LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+            COMPONENT bindings_ruby)
 
 endif (DO_RUBY_BINDINGS)
 
@@ -314,11 +433,11 @@ if (DO_CSHARP_BINDINGS)
           set(PLATFORM_TYPE "/platform:x86")
       endif (WIN32)
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp ${openbabel_SOURCE_DIR}/scripts/csharp/OBDotNet.dll
-          COMMAND ${CMAKE_COMMAND} -E remove_directory ${openbabel_BINARY_DIR}/scripts/csharp
-          COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_BINARY_DIR}/scripts/csharp
-          COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/windows-vc2008/Distribution/OBDotNetAssemblyInfo.cs ${openbabel_BINARY_DIR}/scripts/csharp
-          COMMAND ${SWIG_EXECUTABLE} -csharp -c++ -small -O -templatereduce -namespace OpenBabel -outdir ${openbabel_BINARY_DIR}/scripts/csharp -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp ${openbabel_SOURCE_DIR}/scripts/openbabel-csharp.i
-          COMMAND ${CMAKE_COMMAND} -E chdir ${openbabel_BINARY_DIR}/scripts/csharp ${CSHARP_EXECUTABLE} /target:library ${PLATFORM_TYPE} /keyfile:${openbabel_SOURCE_DIR}/windows-vc2008/Distribution/obdotnet.snk /optimize /out:${openbabel_SOURCE_DIR}/scripts/csharp/OBDotNet.dll *.cs
+          COMMAND ${CMAKE_COMMAND} -E remove_directory ${openbabel_SOURCE_DIR}/scripts/csharp
+          COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_SOURCE_DIR}/scripts/csharp
+          COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/windows-vc2008/Distribution/OBDotNetAssemblyInfo.cs ${openbabel_SOURCE_DIR}/scripts/csharp
+          COMMAND ${SWIG_EXECUTABLE} -csharp -c++ -small -O -templatereduce -namespace OpenBabel -outdir ${openbabel_SOURCE_DIR}/scripts/csharp -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp ${openbabel_SOURCE_DIR}/scripts/openbabel-csharp.i
+          COMMAND ${CMAKE_COMMAND} -E chdir ${openbabel_SOURCE_DIR}/scripts/csharp ${CSHARP_EXECUTABLE} /target:library ${PLATFORM_TYPE} /keyfile:${openbabel_SOURCE_DIR}/windows-vc2008/Distribution/obdotnet.snk /optimize /out:${openbabel_SOURCE_DIR}/scripts/csharp/OBDotNet.dll *.cs
           MAIN_DEPENDENCY openbabel-csharp.i
           WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts
       )
@@ -361,6 +480,14 @@ if (PHP_BINDINGS)
       STRING(REPLACE "\n" "" PHP_CONFIG_INCLUDES "${PHP_CONFIG_INCLUDES}")
       STRING(REPLACE "-I" "" PHP_CONFIG_INCLUDES "${PHP_CONFIG_INCLUDES}")
       STRING(REPLACE " " ";" PHP_CONFIG_INCLUDES "${PHP_CONFIG_INCLUDES}")
+
+      execute_process(
+      	COMMAND
+      	  ${PHP_CONFIG_EXECUTABLE} --extension-dir
+      	OUTPUT_VARIABLE
+      	  PHP_EXTENSION_DIR
+      )
+      STRING(REPLACE "\n" "" PHP_EXTENSION_DIR "${PHP_EXTENSION_DIR}")
     endif(PHP_CONFIG_EXECUTABLE)
 
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp OR RUN_SWIG)
@@ -375,16 +502,38 @@ if (DO_PHP_BINDINGS)
     if (RUN_SWIG)
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp
           COMMAND ${SWIG_EXECUTABLE} -php -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp -outdir ${openbabel_SOURCE_DIR}/scripts/php ${openbabel_SOURCE_DIR}/scripts/openbabel-php.i
+          COMMAND sed -i -e's/abstract class OBForceField/class OBForceField/g' -e's/abstract class OBFingerprint/class OBFingerprint/g' -e's/abstract class OBOp/class OBOp/g' -e 's/static function FindType/function FindType/g' ${openbabel_SOURCE_DIR}/scripts/php/openbabel.php
           MAIN_DEPENDENCY openbabel-php.i
       )
     endif (RUN_SWIG)
+
+    # set openbabel.php include path
+    execute_process(COMMAND sed -i -e "s,include_once '\\(.*\\)openbabel.php,include_once '${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}/openbabel.php,g" ${openbabel_SOURCE_DIR}/scripts/php/baphpel.php)
+
     add_library(bindings_php MODULE ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp)
-    target_link_libraries(bindings_php ${BABEL_LIBRARY} "-Wl,--unresolved-symbols=ignore-all") # Overriding --no-undefined linker flag, since PHP library should not be linked into extension.
+    # Overriding --no-undefined linker flag, since PHP library should not be linked into extension.
+    set(PHP_EXTRA_LINK_FLAGS "-Wl,--unresolved-symbols=ignore-all")
+    if(BINDINGS_ONLY)
+      target_link_libraries(bindings_php ${BABEL_SYSTEM_LIBRARY} ${PHP_EXTRA_LINK_FLAGS})
+    else()
+      target_link_libraries(bindings_php ${BABEL_LIBRARY} ${PHP_EXTRA_LINK_FLAGS})
+    endif()
+
     set_target_properties(bindings_php PROPERTIES
         PREFIX ""
         OUTPUT_NAME openbabel-php)
-    add_dependencies(bindings_php openbabel)
-    install(TARGETS bindings_php LIBRARY DESTINATION ${LIB_INSTALL_DIR})
-    install(FILES ${openbabel_SOURCE_DIR}/scripts/php/openbabel.php DESTINATION ${LIB_INSTALL_DIR})
+    if(NOT BINDINGS_ONLY)
+      add_dependencies(bindings_php openbabel)
+    endif()
+
+    install(TARGETS bindings_php
+            LIBRARY DESTINATION ${PHP_EXTENSION_DIR}
+	    COMPONENT bindings_php)
+    install(FILES ${openbabel_SOURCE_DIR}/scripts/php/openbabel.php
+            DESTINATION ${LIB_INSTALL_DIR}
+	    COMPONENT bindings_php)
+	install(FILES ${openbabel_SOURCE_DIR}/scripts/php/baphpel.php
+	        DESTINATION ${LIB_INSTALL_DIR}
+	    COMPONENT bindings_php)
 
 endif (DO_PHP_BINDINGS)

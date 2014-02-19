@@ -374,8 +374,7 @@ namespace OpenBabel {
       elem->transform = (int*)calloc( _mol->NumAtoms(), sizeof( int ) ) ;
       if( elem->transform == NULL ){
         //        fprintf( stderr, "Out of memory allocating transform table for symmetry element\n" ) ;
-        delete elem;
-        elem = NULL;
+        free(elem);
         return NULL;
       }
       for( i = 0 ; i < _mol->NumAtoms() ; i++ ){
@@ -705,6 +704,7 @@ namespace OpenBabel {
 
       if( rab < ToleranceSame ){
         //        fprintf( stderr, "Atoms %d and %d coincide (r = %g)\n", i, j, rab ) ;
+        destroy_symmetry_element(plane);
         return NULL;
       }
       for( k = 0, r = 0 ; k < DIMENSION ; k++ ){
@@ -777,6 +777,7 @@ namespace OpenBabel {
       if( s2 >= s0 && s2 >= s1 ) d = d2 ;
       if( d == NULL ){
         fprintf( stderr, "Catastrophe in init_ultimate_plane(): %g, %g and %g have no ordering!\n", s0, s1, s2 ) ;
+        destroy_symmetry_element(plane);
         return NULL;
       }
       for( k = 0, r = 0 ; k < DIMENSION ; k++ )
@@ -1429,6 +1430,7 @@ namespace OpenBabel {
               NormalAxes = (SYMMETRY_ELEMENT **) realloc( NormalAxes, sizeof( SYMMETRY_ELEMENT* ) * NormalAxesCount ) ;
               if( NormalAxes == NULL ){
                 perror( "Out of memory in find_c2_axes" ) ;
+                free(distances);
                 return;
               }
               NormalAxes[ NormalAxesCount - 1 ] = axis ;
@@ -1445,6 +1447,7 @@ namespace OpenBabel {
               NormalAxes = (SYMMETRY_ELEMENT **) realloc( NormalAxes, sizeof( SYMMETRY_ELEMENT* ) * NormalAxesCount ) ;
               if( NormalAxes == NULL ){
                 perror( "Out of memory in find_c2_axes" ) ;
+                free(distances);
                 return;
               }
               NormalAxes[ NormalAxesCount - 1 ] = axis ;

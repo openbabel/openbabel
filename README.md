@@ -21,5 +21,5 @@ the Free Software Foundation version 2 of the License. Full details
 can be found in the file "COPYING" which should be included in your
 distribution.
 
-For more information, check the Open Babel website:
-<http://openbabel.org/>
+For more information, check the [Open Babel website](
+<http://openbabel.org/).

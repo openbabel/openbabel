@@ -9,7 +9,8 @@ namespace OpenBabel
 
   // Class definition of CairoPainter
   CairoPainter::CairoPainter() : m_surface(0), m_cairo(0),
-    m_fontPointSize(12), m_width(0), m_height(0), m_pen_width(1), m_title(""), m_index(1)
+    m_fontPointSize(12), m_width(0), m_height(0), m_pen_width(1), m_title(""), m_index(1),
+    m_fillcolor("white"), m_bondcolor("black"), m_transparent(false)
   {
   }
 
@@ -23,11 +24,25 @@ namespace OpenBabel
 
   void CairoPainter::NewCanvas(double width, double height)
   {
+    double titleheight = m_title.empty() ? 0.0 : 16.0;
     if (m_index == 1) {
       // create new surface to paint on
+      if(m_cropping) {
+        double ratio = width / height;
+        if(ratio > 1.0)
+          m_height = m_height / ratio;
+        else
+          m_width = m_width * ratio;
+      }
       m_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, static_cast<int> (m_width), static_cast<int> (m_height));
       m_cairo = cairo_create(m_surface);
-      cairo_set_source_rgb (m_cairo, 255, 255, 255);
+      if(m_transparent)
+        cairo_set_source_rgba (m_cairo, 0.0, 0.0, 0.0, 0.0);
+      else {
+        OBColor bg = OBColor(m_fillcolor);
+        cairo_set_source_rgb (m_cairo, bg.red, bg.green, bg.blue);
+      }
+      
       cairo_paint (m_cairo);
       cairo_set_line_width(m_cairo, m_pen_width);
     }
@@ -44,12 +59,12 @@ namespace OpenBabel
 
     // Work out the scaling factor
     double scale_x = cellwidth / (double) width;
-    double scale_y = (cellheight-16) / (double) height; // Leave some extra space for the title
+    double scale_y = (cellheight-titleheight) / (double) height; // Leave some extra space for the title if present
     double scale = std::min(scale_x, scale_y);
 
     // Add the title
     if (!m_title.empty()) {
-      this->SetPenColor(OBColor("black"));
+      this->SetPenColor(OBColor(m_bondcolor));
       this->SetFontSize(static_cast<int>(16.0));
       OBFontMetrics fm = this->GetFontMetrics(m_title);
       this->DrawText(cellwidth/2.0 - fm.width/2.0 + cellwidth*(col-1),
@@ -92,11 +107,17 @@ namespace OpenBabel
   void CairoPainter::SetPenWidth(double width)
   {
     m_pen_width = width;
-    
+  }
+
+  double CairoPainter::GetPenWidth()
+  {
+    return m_pen_width;
   }
 
   void CairoPainter::DrawLine(double x1, double y1, double x2, double y2)
   {
+    cairo_set_line_width(m_cairo, m_pen_width);
+    cairo_set_line_cap(m_cairo, CAIRO_LINE_CAP_ROUND);
     cairo_move_to(m_cairo, x1, y1);
     cairo_line_to(m_cairo, x2, y2);
     cairo_stroke(m_cairo);
@@ -135,8 +156,8 @@ namespace OpenBabel
     metrics.fontSize = m_fontPointSize;
     metrics.ascent = fe.ascent;
     metrics.descent = -fe.descent;
-    metrics.width = te.width;
-    metrics.height = fe.height;
+    metrics.width = te.x_advance;//te.width;
+    metrics.height = te.height;
     return metrics;
   }
       

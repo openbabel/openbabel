@@ -45,7 +45,7 @@ typedef unsigned short AT_RANK;
 #define AT_RANK_MASK   ((AT_RANK)~0)
 
 typedef signed short NUM_H;
-#define MAX_ATOMS  1024
+#define MAX_ATOMS  65534
 
 
 #define CHAR_MASK  0xFF

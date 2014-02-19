@@ -6,7 +6,6 @@
 #define USING_OBDLL
 #endif
 
-
 #include <openbabel/obutil.h>
 #include <openbabel/rand.h>
 #include <openbabel/math/vector3.h>
@@ -66,6 +65,9 @@
 #include <openbabel/conformersearch.h>
 #include <openbabel/math/align.h>
 %}
+#else
+%ignore OpenBabel::OBForceField::FastRotorSearch;
+%ignore OpenBabel::OBForceField::DiverseConfGen;
 #endif
 
 %include "std_list.i"

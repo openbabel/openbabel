@@ -7,6 +7,7 @@ set(to_install
     babel_povray3.inc
     bondtyp.txt
     element.txt
+    eqeqIonizations.txt
     fragments.txt
     gaff.dat
     gaff.prm
@@ -31,6 +32,7 @@ set(to_install
     mmffvdw.par
     mmffs_oop.par
     mmffs_tor.par
+    mpC.txt
     mr.txt
     patterns.txt
     phmodel.txt

@@ -680,7 +680,7 @@ namespace OpenBabel
             else if (vs.size() > 5)
               {
                 double x,y,z;
-                if (3 == sscanf(buffer+32,"%10.6f%10.6f%10.6f",&x,&y,&z))
+                if (3 == sscanf(buffer+32,"%10lf%10lf%10lf",&x,&y,&z))
                   {
                     esp->AddPoint(x,y,z,0);
                   }
@@ -700,7 +700,7 @@ namespace OpenBabel
             else if (vs.size() > 6)
               {
                 double x,y,z;
-                if (3 == sscanf(buffer+32,"%10.6f%10.6f%10.6f",&x,&y,&z))
+                if (3 == sscanf(buffer+32,"%10lf%10lf%10lf",&x,&y,&z))
                   {
                     esp->AddPoint(x,y,z,0);
                   }
@@ -869,14 +869,17 @@ namespace OpenBabel
             bool bDoneSymm;
 
             // Extract both Alpha and Beta symmetries
+            ifs.getline(buffer, BUFF_SIZE); // skip the current line
             for(iii=0; (iii<2); iii++) {
+              if (strstr(buffer, "electronic state"))
+                break; // We've gone too far!
               while (!ifs.eof() &&
-                     (NULL == strstr(buffer,"Alpha")) &&
-                     (NULL == strstr(buffer,"Beta"))) {
+                     ((NULL != strstr(buffer,"Alpha")) ||
+                      (NULL != strstr(buffer,"Beta")))) {
+                // skip the Alpha: and Beta: title lines
                 ifs.getline(buffer, BUFF_SIZE);
               }
               do {
-                ifs.getline(buffer, BUFF_SIZE);
                 bDoneSymm = (NULL == strstr(buffer, "("));
                 if (!bDoneSymm) {
                   tokenize(vs, buffer);
@@ -890,7 +893,9 @@ namespace OpenBabel
                     label = vs[i].substr(1, vs[i].length() - 2);
                     symmetries.push_back(label);
                   }
+                  ifs.getline(buffer, BUFF_SIZE); // get a new line if we've been reading symmetries
                 }
+                // don't read a new line if we're done with symmetries
               } while (!ifs.eof() && !bDoneSymm);
             } // end alpha/beta section
           }
@@ -913,9 +918,9 @@ namespace OpenBabel
         {
           // The above line appears for each state, so just append the info to the vectors
           tokenize(vs, buffer);
-          if (vs.size() == 9) {
+          if (vs.size() >= 9) {
             double wavelength = atof(vs[6].c_str());
-            double force = atof(vs[8].substr(2).c_str());
+            double force = atof(vs[8].substr(2).c_str()); // remove the "f=" part
             Forces.push_back(force);
             Wavelengths.push_back(wavelength);
           }
@@ -1094,9 +1099,9 @@ namespace OpenBabel
               od->LoadAlphaOrbitals(orbitals, symmetries, aHOMO);
               od->LoadBetaOrbitals(betaOrbitals, betaSymmetries, bHOMO);
             }
-          od->SetOrigin(fileformatInput);
-          mol.SetData(od);
         }
+        od->SetOrigin(fileformatInput);
+        mol.SetData(od);
       }
 
     //Attach vibrational data, if there is any, to molecule

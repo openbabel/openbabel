@@ -337,7 +337,7 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     obErrorLog.ThrowError("SVGFormat", mes, obError);
     return false;
   }
-  
+
   bool hasTable = (_nrows || _ncols);
 
   bool transparent=false;
@@ -355,7 +355,7 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     bondcolor = bcol;
   if(bg && *bg)
     background = bg;
-  
+
   if(pConv->GetOutputIndex()==1 || fixedpx)
   {
     //For the first molecule...
@@ -384,10 +384,10 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         ofs << "x=\"0\" y=\"0\" width=\"" << fixedpx << "px\" height=\"" << fixedpx <<"px\" ";
       else
         ofs << "x=\"0\" y=\"0\" width=\"100%\" height=\"100%\" ";
-      
+
       ofs << "viewBox=\"0 0 " << vbwidth << ' ' << vbheight << "\">\n";
 
-      ofs << "<title>OBDepict</title>\n";
+      ofs << "<title>Multiple Molecules - Open Babel Depiction</title>\n";
       // Draw the background unless transparent
       if(!transparent)
         ofs << "<rect x=\"0\" y=\"0\" width=\"" << vbwidth << "\" height=\"" << vbheight
@@ -539,7 +539,7 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       << pmol->GetTitle() << "</text>\n";
 
     //*** Write page title name ***
-    ofs << "<title>" << pmol->GetTitle() << " - OBDepict</title>\n";
+    ofs << "<title>" << pmol->GetTitle() << " - Open Babel Depiction</title>\n";
 
     //Embed CML of molecule if requested
     if(pConv->IsOption("e"))
@@ -630,7 +630,7 @@ Internet Explorer 9, to zoom with the mouse wheel and pan by dragging.
       starty = evt.clientY;
     }
     svgEl.onmousemove=function(evt) {
-      if(startx!=0 && starty!=0 
+      if(startx!=0 && starty!=0
         && ((evt.clientX - startx)*(evt.clientX - startx)+(evt.clientY - starty)*(evt.clientY - starty)>100))
       {
         var vbtext = svgEl.getAttributeNS(null,"viewBox");
@@ -642,7 +642,7 @@ Internet Explorer 9, to zoom with the mouse wheel and pan by dragging.
         startx = evt.clientX;
         starty = evt.clientY;
       }
-    } 
+    }
     svgEl.onmouseup=function() {
       startx=0;
       starty=0;

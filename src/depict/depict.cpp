@@ -626,7 +626,8 @@ namespace OpenBabel
     orthogonalLine *= 0.5 * bondWidth;
 
     double lines[6] = { 0.20, 0.36, 0.52, 0.68, 0.84, 1.0 };
-
+    double oldwidth = painter->GetPenWidth();
+    painter->SetPenWidth(1);
     for (int k = 0; k < 6; ++k) {
       double w = lines[k];
       painter->DrawLine(begin.x() + vb.x() * w + orthogonalLine.x() * w,
@@ -634,6 +635,7 @@ namespace OpenBabel
                         begin.x() + vb.x() * w - orthogonalLine.x() * w,
                         begin.y() + vb.y() * w - orthogonalLine.y() * w);
     }
+    painter->SetPenWidth(oldwidth);
   }
 
   void OBDepictPrivate::DrawSimpleBond(OBAtom *beginAtom, OBAtom *endAtom, int order, bool crossed_dbl_bond)

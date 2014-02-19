@@ -10,8 +10,9 @@ set(charges
 )
 
 if (EIGEN2_FOUND OR EIGEN3_FOUND)
-# if eigen is available, compile QEq and QTPIE charge models
+# if eigen is available, compile QEq, EQeq, and QTPIE charge models
 set(charges ${charges}
+  charges/eqeq.cpp
   charges/qeq.cpp
   charges/qtpie.cpp
 )
@@ -83,6 +84,7 @@ if(EIGEN2_FOUND OR EIGEN3_FOUND)
   set(ops ${ops}
     ops/conformer.cpp
     ops/opalign.cpp
+    ops/opconfab.cpp
   )
 endif()
 
@@ -151,6 +153,7 @@ set(openbabel_srcs
 if(EIGEN2_FOUND OR EIGEN3_FOUND)
   set(openbabel_srcs ${openbabel_srcs}
     conformersearch.cpp
+    confsearch.cpp
     distgeom.cpp
   )
 endif ()
@@ -192,6 +195,7 @@ else(BUILD_SHARED)
 endif(BUILD_SHARED)
 
 set(openbabel_library_srcs
+  ${WRAP_MEMCPY_SRC}
   ${openbabel_srcs}
   ${depict_srcs}
   ${math_srcs}

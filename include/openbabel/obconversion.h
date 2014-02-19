@@ -366,6 +366,7 @@ protected:
       bool		  OneObjectOnly;
       bool		  ReadyToInput;
       bool      CheckedForGzip;      ///< input stream is gzip-encoded
+      bool      SkippedMolecules;    /// skip molecules using -f and -l
       bool      NeedToFreeInStream;
       bool      NeedToFreeOutStream;
       typedef   FilteringInputStreambuf< LineEndingExtractor > LErdbuf;

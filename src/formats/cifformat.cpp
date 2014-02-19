@@ -26,6 +26,8 @@ GNU General Public License for more details.
 #include <map>
 #include <set>
 
+#define NOCHARGE FLT_MAX
+
 #ifdef _MSC_VER
  #pragma warning( disable : 4503 )
  // The decorated name was longer than the compiler limit (4096), and was truncated.
@@ -37,6 +39,7 @@ GNU General Public License for more details.
 #endif
 
 using namespace std;
+
 namespace OpenBabel
 {
   class CIFFormat : public OBMoleculeFormat
@@ -180,6 +183,8 @@ namespace OpenBabel
     void ExtractAtomicPositions(const bool verbose=false);
     /// Extract listed bond distances, from _geom_bond_* loops
     void ExtractBonds(const bool verbose=false);
+    //// Extract Charges information from cif file and assign it to atoms
+    void ExtractCharges(const bool verbose=false);
     /// Generate fractional coordinates from cartesian ones for all atoms
     /// CIFData::CalcMatrices() must be called first
     void Cartesian2FractionalCoord();
@@ -230,6 +235,8 @@ namespace OpenBabel
       std::vector<float> mCoordCart;
       /// Site occupancy, or -1
       float mOccupancy;
+      //charge from oxydation
+      float mCharge;
     };
     /// Atoms, if any are found
     std::vector<CIFAtom> mvAtom;
@@ -279,6 +286,15 @@ namespace OpenBabel
   /// Convert one CIF value to a floating-point value
   /// Return 0 if no value can be converted (e.g. if '.' or '?' is encountered)
   int CIFNumeric2Int(const std::string &s);
+
+  template <typename T> string to_string(T pNumber)
+  {
+    ostringstream oOStrStream;
+    oOStrStream << pNumber;
+    return oOStrStream.str();
+  }
+
+  bool is_double(const std::string& s, double& r_double);
 
   //############################## CIF CLASSES CODE ####################################################
   CIFData::CIFAtom::CIFAtom():
@@ -335,6 +351,7 @@ namespace OpenBabel
         obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
       }
     this->ExtractBonds(verbose);
+    this->ExtractCharges(verbose);
   }
 
   void CIFData::ExtractUnitCell(const bool verbose)
@@ -571,7 +588,7 @@ namespace OpenBabel
       for(std::string::iterator pos=mSpacegroupSymbolHall.begin();pos!=mSpacegroupSymbolHall.end();)
       {
         if((char)(*pos)==' ')  pos=mSpacegroupSymbolHall.erase(pos);
-        else pos++;
+        else ++pos;
       }
       mSpaceGroup = SpaceGroup::GetSpaceGroup(mSpacegroupSymbolHall);
     }
@@ -770,10 +787,14 @@ namespace OpenBabel
                     }
                 }
             // Occupancy ?
-            posoccup=loop->second.find("atom_site_occupancy");
+            posoccup=loop->second.find("_atom_site_occupancy");
             if(posoccup!=loop->second.end())
               for(unsigned int i=0;i<nb;++i)
-                mvAtom[i].mOccupancy=CIFNumeric2Float(posoccup->second[i]);
+                {
+                  mvAtom[i].mOccupancy=CIFNumeric2Float(posoccup->second[i]);
+                  if( (mvAtom[i].mOccupancy <= 0.0) || (mvAtom[i].mOccupancy > 1.0) )
+                    mvAtom[i].mOccupancy = 1.0;
+                }
             // Now be somewhat verbose
             if(verbose)
               {
@@ -824,6 +845,46 @@ namespace OpenBabel
               }
           }
       }
+  }
+
+  void CIFData::ExtractCharges(const bool verbose)
+  {
+    map<ci_string,string>::const_iterator positem;
+
+    map<std::string, double> lbl2ox;
+    for(map<set<ci_string>, map<ci_string, vector<string> > >::const_iterator loop=mvLoop.begin(); loop!=mvLoop.end(); loop++)
+    {
+      //if(mvBond.size()>0) break;// Only allow one bond list
+      map<ci_string,vector<string> >::const_iterator pos_symbol, pos_ox_number, posdist;
+      pos_symbol    =loop->second.find("_atom_type_symbol");
+      pos_ox_number =loop->second.find("_atom_type_oxidation_number");
+      if( (pos_symbol != loop->second.end()) && (pos_ox_number != loop->second.end()) )
+      {
+        if(verbose) cout<<" Found _atom_type* record with oxydation number..."<<endl;
+        const unsigned long nl = pos_symbol->second.size();
+
+        for(unsigned int i = 0; i < nl; i++)
+        {
+          lbl2ox[pos_symbol->second[i]] = CIFNumeric2Float(pos_ox_number->second[i]);
+          if(verbose)
+	    cout << pos_symbol->second[i] << " has oxydation " << pos_ox_number->second[i] << endl;
+        }
+      }
+    }
+
+    for (std::vector<CIFAtom>::iterator it = mvAtom.begin() ; it != mvAtom.end(); it++)
+    {
+      string label = (*it).mLabel;
+
+      if( lbl2ox.count(label) > 0 )
+        (*it).mCharge = lbl2ox[label];
+      else
+      {
+        (*it).mCharge = NOCHARGE;
+        if( verbose )
+          std::cout << "Charge for label: " + label + " cannot be found." << endl;
+      }
+    }
   }
 
   void CIFData::CalcMatrices(const bool verbose)
@@ -1074,7 +1135,7 @@ namespace OpenBabel
           }
         if((in.peek()=='d') || (in.peek()=='D'))
           {// Data
-            if(mvData.size()>0) return; // We want just a single data block
+            if(!mvData.empty()) return; // We want just a single data block
 
             string tmp;
             in>>tmp;
@@ -1197,6 +1258,18 @@ namespace OpenBabel
     if(n!=1) return 0;
     return v;
   }
+
+  bool is_double(const std::string& s, double& r_double)
+  {
+    std::istringstream i(s);
+
+    if (i >> r_double)
+      return true;
+
+    r_double = 0.0;
+    return false;
+  }
+
 
   //################ END CIF CLASSES######################################
 
@@ -1386,14 +1459,28 @@ namespace OpenBabel
               atom->SetType(tmpSymbol); //set atomic number, or '0' if the atom type is not recognized
               atom->SetVector(posat->mCoordCart[0],posat->mCoordCart[1],posat->mCoordCart[2]);
               if(posat->mLabel.size()>0)
-                {
-                  OBPairData *label = new OBPairData;
-                  label->SetAttribute("_atom_site_label");
-                  label->SetValue(posat->mLabel);
-                  label->SetOrigin(fileformatInput);
-                  atom->SetData(label);
-                }
+              {
+                OBPairData *label = new OBPairData;
+                label->SetAttribute("_atom_site_label");
+                label->SetValue(posat->mLabel);
+                label->SetOrigin(fileformatInput);
+                atom->SetData(label);
+              }
 
+              OBPairFloatingPoint *occup_data = new OBPairFloatingPoint;
+              occup_data->SetAttribute("_atom_site_occupancy");
+              occup_data->SetValue(posat->mOccupancy);
+              occup_data->SetOrigin(fileformatInput);
+              atom->SetData(occup_data);
+
+              if( posat->mCharge != NOCHARGE )
+              {
+                OBPairFloatingPoint *charge_data = new OBPairFloatingPoint;
+                charge_data->SetAttribute("input_charge");
+                charge_data->SetValue(posat->mCharge);
+                charge_data->SetOrigin(fileformatInput);
+                atom->SetData(charge_data);
+              }
             }
           if (!pConv->IsOption("b",OBConversion::INOPTIONS))
             pmol->ConnectTheDots();
@@ -1441,11 +1528,11 @@ namespace OpenBabel
     if(pmol==NULL)
       return false;
     ostream &ofs = *pConv->GetOutStream();
-    
+
     char buffer[BUFF_SIZE];
-    
+
     ofs <<"# CIF file generated by openbabel "<<BABEL_VERSION<<", see http://openbabel.sf.net"<<endl;
-    
+
     ofs << "data_I"<<endl;
     // Use pmol->GetTitle() as chemical name, though it will probably be the file name
     ofs <<"_chemical_name_common '"<<pmol->GetTitle()<<"'"<<endl;
@@ -1477,43 +1564,56 @@ namespace OpenBabel
             const transform3d *t = pSG->BeginTransform(ti);
             while(t)
               {
-                ofs << "    '" << t->DescribeAsString() << "'" << endl;
+                ofs << "    " << t->DescribeAsString() << endl;
                 t = pSG->NextTransform(ti);
-	      }
+              }
           }
       }
-    ofs <<"loop_"<<endl
-	<<"    _atom_site_type_symbol"<<endl
-	<<"    _atom_site_label"<<endl
-	<<"    _atom_site_fract_x"<<endl
-	<<"    _atom_site_fract_y"<<endl
-	<<"    _atom_site_fract_z"<<endl;
-    unsigned int i=0;
+
+    ofs << "loop_"                      << endl
+        << "    _atom_site_label"       << endl
+        << "    _atom_site_type_symbol" << endl
+        << "    _atom_site_fract_x"     << endl
+        << "    _atom_site_fract_y"     << endl
+        << "    _atom_site_fract_z"     << endl
+        << "    _atom_site_occupancy"   << endl;
+    unsigned int i = 0;
     FOR_ATOMS_OF_MOL(atom, *pmol)
       {
-	double X, Y, Z; //atom coordinates
-	vector3 v = atom->GetVector();
-	v = pUC->CartesianToFractional(v);
-	X = v.x();
-	Y = v.y();
-	Z = v.z();
-        if (atom->HasData("_atom_site_label"))
-          {
-            OBPairData *label = dynamic_cast<OBPairData *> (atom->GetData("_atom_site_label"));
-	    snprintf(buffer, BUFF_SIZE, "    %3s  %3s  %10.5f %10.5f %10.5f\n",
-		     etab.GetSymbol(atom->GetAtomicNum()),
-		     label->GetValue().c_str(),
-		     X,Y,Z);
-	  }
-	else
-	  {
-	  snprintf(buffer, BUFF_SIZE, "    %3s  %3s%d  %10.5f %10.5f %10.5f\n",
-		 etab.GetSymbol(atom->GetAtomicNum()),
-		 etab.GetSymbol(atom->GetAtomicNum()),
-		 ++i,
-		   X,Y,Z);
-	ofs << buffer;
-	  }
+         double X, Y, Z; //atom coordinates
+         vector3 v = atom->GetVector();
+         if (pUC != NULL) {
+           v = pUC->CartesianToFractional(v);
+           v = pUC->WrapFractionalCoordinate(v);
+         }
+         X = v.x();
+         Y = v.y();
+         Z = v.z();
+         string label_str;
+         double occup;
+
+         if (atom->HasData("_atom_site_occupancy"))
+           {
+             occup = (dynamic_cast<OBPairFloatingPoint *> (atom->GetData("_atom_site_occupancy")))->GetGenericValue();
+           }
+         else occup = 1.0;
+
+         if (atom->HasData("_atom_site_label"))
+           {
+             OBPairData *label = dynamic_cast<OBPairData *> (atom->GetData("_atom_site_label"));
+             label_str = label->GetValue().c_str();
+           }
+         else
+           {
+             label_str = etab.GetSymbol(atom->GetAtomicNum()) + to_string(i);
+             i++;
+           }
+
+         snprintf(buffer, BUFF_SIZE, "    %-8s%-5s%.5f%10.5f%10.5f%8.3f\n",
+                  label_str.c_str(), etab.GetSymbol(atom->GetAtomicNum()),
+                  X, Y, Z, occup);
+
+         ofs << buffer;
       }
     return true;
   }//WriteMolecule

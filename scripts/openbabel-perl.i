@@ -1,4 +1,4 @@
-// needed to work around bug in SWIG -- can't completely override module from command-line
+// needed to work around bug in SWIG -- can not completely override module from command-line
 %module "Chemistry::OpenBabel"
 
 %{
@@ -125,7 +125,7 @@ OpenBabel::OB ## subclass *to ## subclass(OpenBabel::OBGenericData *data) {
 }
 %}
 %enddef
-%inline %{ // can't use macro -- AliasData not OBAliasData
+%inline %{ // can not use macro -- AliasData not OBAliasData
 OpenBabel::AliasData *toAliasData(OpenBabel::OBGenericData *data) {
     return (OpenBabel::AliasData*) data;
 }
@@ -213,8 +213,16 @@ namespace std { class stringbuf {}; }
 %include <openbabel/alias.h>
 %include <openbabel/atomclass.h>
 
-// %include <openbabel/fingerprint.h> // Causes an error (I don't know why)
+// %include <openbabel/fingerprint.h> // Causes an error (I do not know why)
 %include <openbabel/descriptor.h>
+
+#ifdef HAVE_EIGEN
+%include <openbabel/conformersearch.h>
+%include <openbabel/math/align.h>
+#else
+%ignore OpenBabel::OBForceField::FastRotorSearch;
+%ignore OpenBabel::OBForceField::DiverseConfGen;
+#endif
 
 # Ignore shadowed methods
 %ignore OpenBabel::OBForceField::VectorSubtract(const double *const, const double *const, double *);

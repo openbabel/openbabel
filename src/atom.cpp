@@ -1067,6 +1067,38 @@ namespace OpenBabel
 
     return(numH);
   }
+  
+  pair<int, int> OBAtom::LewisAcidBaseCounts() const
+  {
+    // TODO: Is this data stored elsewhere?
+    // The number of valence electrons in a free atom
+    const int VALENCE[113] = {0,1,2,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,9,10,
+                              11,12,3,4,5,6,7,8,1,2,3,4,5,6,7,8,9,10,11,12,3,4,5,6,7,8,1,2,
+                              4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,5,6,7,8,9,10,11,12,3,4,5,6,7,
+                              8,1,1,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,5,6,7,8,9,10,11,12};
+    // The number of electrons required to make up a full valence shell
+    const int SHELL[113]   = {0,2,2,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,18,18,18,18,18,18,
+                              18,18,18,18,8,8,8,8,8,8,8,8,18,18,18,18,18,18,18,18,18,18,8,
+                              8,8,8,8,8,8,8,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,
+                              18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,8,8,18,18,18,18,
+                              18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18};
+                           
+    pair<int, int> counts;
+    int N = GetAtomicNum();
+    if (N == 0 || N > 112) {
+      counts.first = 0;
+      counts.second = 0;
+    } else {
+      int S = SHELL[N];
+      int V = VALENCE[N];
+      int C = GetFormalCharge();
+      int B = ImplicitHydrogenCount() + BOSum();
+      // TODO: Do we actually want to divide by 2 here? (counting pairs instead of single)
+      counts.first = (S - V - B + C) / 2;  // Acid: Number of electrons pairs desired
+      counts.second = (V - B - C) / 2;     // Base: Number of electrons pairs available
+    }
+    return counts;
+  }
 
   bool OBAtom::DeleteBond(OBBond *bond)
   {

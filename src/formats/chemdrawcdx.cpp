@@ -334,7 +334,7 @@ bool ChemDrawBinaryXFormat::DoReaction(CDXReader& cdxr, OBReaction* pReact)
         vector<OBMol*> molvec = LookupMol(id); //id could be a group with several mols
         for(unsigned i=0;i<molvec.size();++i)
           if(strcmp(molvec[i]->GetTitle(),"justplus"))
-            pReact->AddReactant(shared_ptr<OBMol>(molvec[i]));
+            pReact->AddReactant(obsharedptr<OBMol>(molvec[i]));
       }
     }
     else if(tag == kCDXProp_ReactionStep_Products)
@@ -346,7 +346,7 @@ bool ChemDrawBinaryXFormat::DoReaction(CDXReader& cdxr, OBReaction* pReact)
         vector<OBMol*> molvec = LookupMol(id); //id could be a group with several mols
         for(unsigned i=0;i<molvec.size();++i)
           if(strcmp(molvec[i]->GetTitle(),"justplus"))
-            pReact->AddProduct(shared_ptr<OBMol>(molvec[i]));
+            pReact->AddProduct(obsharedptr<OBMol>(molvec[i]));
       }
     }
     else if(tag==kCDXProp_ReactionStep_Arrows)

@@ -93,6 +93,14 @@ endif()
 mark_as_advanced(CMAKE_LIBRARY_OUTPUT_DIRECTORY
   CMAKE_RUNTIME_OUTPUT_DIRECTORY)
 
+#GLIBC_2.4
+option(GLIBC_24_COMPATIBLE "Build project compatible with GLIBC 2.4" OFF)
+if(GLIBC_24_COMPATIBLE AND UNIX)
+  set(WRAP_MEMCPY_SRC memcpy.c)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--wrap=memcpy")
+endif()
+
+
 option(BUILD_SHARED "enable shared build support" ON)
 option(BUILD_MIXED "enable linux relocatable binaries support" OFF)
 option(WITH_STATIC_INCHI "enable static inchi and related plugins" OFF)
@@ -181,6 +189,7 @@ if(MSVC)
     "Should Windows Open Babel builds use prebuilt binaries?" ON)
 	# dlhandler_win32.cpp assumes multibyte character set
 	remove_definitions(-DUNICODE -D_UNICODE)
+  include_directories(${openbabel_SOURCE_DIR}/windows-msvc/include)
 endif()
 
 if(MSVC AND OB_USE_PREBUILT_BINARIES)
@@ -252,7 +261,8 @@ if(NOT MSVC)
     }
    " SCANDIR_NEEDS_CONST)
 
-  set(OB_MODULE_PATH "${CMAKE_INSTALL_PREFIX}/${OB_PLUGIN_INSTALL_DIR}")
+  set(OB_MODULE_PATH "${CMAKE_INSTALL_PREFIX}/${OB_PLUGIN_INSTALL_DIR}"
+      CACHE PATH "Set to system install for bindings only build")
   add_definitions(-DOB_MODULE_PATH="\\"${OB_MODULE_PATH}\\"")
 
   # Add some visibility support when using GCC
@@ -371,7 +381,7 @@ if(MSVC)
     # To be added: AND SP1  OR gcc>4.0
     add_definitions(-DHAVE_SHARED_POINTER)
     set(SHARED_POINTER true)
-    message("SHARED_POINTER set") 
+    message("SHARED_POINTER set")
   endif()
 endif()
 
@@ -380,7 +390,8 @@ if(UNIX AND BUILD_SHARED)
   if(APPLE)
     set(CMAKE_INSTALL_NAME_DIR ${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR})
   else()
-    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}")
+    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}"
+        CACHE PATH "Set sane rpath")
     set(CMAKE_SKIP_BUILD_RPATH FALSE)
     set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
@@ -477,6 +488,13 @@ endif()
 # Should the language bindings be regenereted?
 option(RUN_SWIG "Generate language bindings with SWIG" OFF)
 
+# Build bindings only
+option(BINDINGS_ONLY "Build bindings only" OFF)
+
+# Point to library if building bindings only
+set(BABEL_SYSTEM_LIBRARY ${BABEL_LIBRARY}
+    CACHE PATH "Point to openbabel library if building bindings only")
+
 # Should all bindings be built?
 option(ALL_BINDINGS "Build all languages bindings" OFF)
 
@@ -495,6 +513,9 @@ option(PERL_BINDINGS "Build Perl bindings" OFF)
 # Should Java bindings be built?
 option(JAVA_BINDINGS "Build Java bindings" OFF)
 
+# Should R bindings be built?
+option(R_BINDINGS "Build R bindings" OFF)
+
 # Should CSharp bindings be built?
 option(CSHARP_BINDINGS "Build Csharp bindings" OFF)
 
@@ -505,6 +526,7 @@ if(ALL_BINDINGS)
   set(PERL_BINDINGS ON)
   set(JAVA_BINDINGS ON)
   set(CSHARP_BINDINGS ON)
+  set(R_BINDINGS ON)
 endif()
 
 add_subdirectory(scripts)

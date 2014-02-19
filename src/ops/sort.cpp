@@ -114,7 +114,7 @@ bool OpSort::ProcessVec(std::vector<OBBase*>& vec)
     valvec.reserve(vec.size());
     std::vector<OBBase*>::iterator iter;
     for(iter=vec.begin();iter!=vec.end();++iter)
-      valvec.push_back(std::make_pair<OBBase*,double>(*iter, _pDesc->Predict(*iter, &_pDescOption)));
+      valvec.push_back(std::make_pair<OBBase*,double>(&(**iter), _pDesc->Predict(*iter, &_pDescOption)));
 
     //Sort
     std::sort(valvec.begin(),valvec.end(), Order<double>(_pDesc, _rev));
@@ -144,7 +144,7 @@ bool OpSort::ProcessVec(std::vector<OBBase*>& vec)
     for(iter=vec.begin();iter!=vec.end();++iter)
     {
       _pDesc->GetStringValue(*iter, s, &_pDescOption);
-      valvec.push_back(std::make_pair<OBBase*,std::string>(*iter, s));
+      valvec.push_back(std::pair<OBBase*,std::string>(&(**iter), s));
     }
 
     //Sort

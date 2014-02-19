@@ -1,0 +1,20 @@
+language: cpp
+
+compiler:
+ - gcc
+ - clang
+
+before_install:
+ - sudo apt-get update -qq
+
+install:
+ - sudo apt-get install -qq swig libeigen3-dev
+
+before_script:
+ - mkdir build
+ - cd build
+ - cmake -DPYTHON_BINDINGS=ON  -DRUN_SWIG=ON ..
+
+script:
+ - make
+ - ctest

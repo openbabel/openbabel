@@ -127,21 +127,32 @@ namespace OpenBabel
   //! \brief Used to store arbitrary attribute/value relationsips of any type.
   // More detailed description in generic.cpp
   template <class ValueT>
-    class OBAPI OBPairTemplate : public OBGenericData
+    class OBPairTemplate : public OBGenericData // Note: no OBAPI should be used
   {
   protected:
     ValueT _value; //!< The data for this key/value pair
   public:
   OBPairTemplate():
     OBGenericData("PairData", OBGenericDataType::PairData) {};
+    virtual OBGenericData* Clone(OBBase* /*parent*/) const
+      {return new OBPairTemplate<ValueT>(*this);}
     void SetValue(const ValueT t)             { _value = t;     }
     virtual const ValueT &GetGenericValue() const    { return(_value); }
+    const ValueT &GetGenericValueDef(const ValueT &def_val) const
+    { 
+      if(this == NULL)
+	return def_val;
+      else	
+        return GetGenericValue(); 
+    }
   };
 
   //! Store arbitrary key/value integer data like OBPairData
   typedef OBPairTemplate<int>     OBPairInteger;
   //! Store arbitrary key/value floating point data like OBPairData
   typedef OBPairTemplate<double>  OBPairFloatingPoint;
+  //! Store arbitrary key/value boolean data like OBPairData
+  typedef OBPairTemplate<bool>    OBPairBool;
 
   //! \class OBSetData generic.h <openbabel/generic.h>
   //! \brief Used to store arbitrary attribute/set relationships.

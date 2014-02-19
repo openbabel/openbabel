@@ -80,7 +80,7 @@ namespace OpenBabel
 
     bool log = false;
 
-    string ff = "Ghemical";
+    string ff = "MMFF94";
     OpMap::const_iterator iter = pmap->find("ff");
     if(iter!=pmap->end())
       ff = iter->second;
@@ -262,4 +262,3 @@ namespace OpenBabel
   }
 
 }//namespace
-

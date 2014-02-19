@@ -1541,7 +1541,7 @@ int MoveRadToAtomsAddCharges( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStru
         num_candidates = 0;
         for ( i = 0; i < pBNS->num_vertices; i ++ ) {
             pnRad[i] = (pBNS->vert[i].st_edge.cap - pBNS->vert[i].st_edge.flow) - pnRad[i];
-            if ( pnRad[i] > 0 &&  i < pBNS->num_atoms && !pVA[i].nTautGroupEdge ) {
+            if ( i < pBNS->num_atoms && pnRad[i] > 0 && !pVA[i].nTautGroupEdge ) {
                 num_candidates ++;
             }
         }
@@ -1563,7 +1563,7 @@ int MoveRadToAtomsAddCharges( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStru
         }
 
         for ( i = 0, j = 0; i < pBNS->num_vertices; i ++ ) {
-            if ( pnRad[i] > 0 &&  i < pBNS->num_atoms && !pVA[i].nTautGroupEdge ) {
+            if ( i < pBNS->num_atoms && pnRad[i] > 0 && !pVA[i].nTautGroupEdge ) {
                 pCand[j].iat                  = i;
                 pCand[j].num_bonds            = at2[i].valence;
                 pCand[j].chem_valence         = at2[i].chem_bonds_valence;
