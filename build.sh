@@ -1,7 +1,7 @@
 
 set -x
 
-mkdir build
+mkdir -p build
 cd build
 cmake -DCMAKE_INSTALL_PREFIX=~/usr ../
 make -j 8
