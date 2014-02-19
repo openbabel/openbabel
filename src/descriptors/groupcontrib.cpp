@@ -166,6 +166,10 @@ namespace OpenBabel
     // total atomic and hydrogen contribution
     double total = 0.0;
 
+    cout << "BEGIN\n"
+         << "MOL " << tmpmol.GetTitle(false) << "\n"
+         << "ATOMS\n"; // FBR
+
     if (_debug)
       debugMessage << "  Final contributions:\n";
     for (unsigned int index = 0; index < tmpmol.NumAtoms(); index++) {
@@ -173,6 +177,11 @@ namespace OpenBabel
         continue;
       total += atomValues[index];
       total += hydrogenValues[index];
+
+      vector3 pos = tmpmol.GetAtom(index + 1)->GetVector(); // FBR
+      cout << "ATOM " << pos.x() << " " << pos.y() << " " << pos.z()
+           << " " << atomValues[index] + hydrogenValues[index] << "\n"; // FBR
+
       if (_debug) {
         debugMessage << index+1 << " = " << atomValues[index] << " ";
         if (!seenHeavy.BitIsSet(index + 1)) debugMessage << "un";
@@ -180,9 +189,11 @@ namespace OpenBabel
         int Hcount = tmpmol.GetAtom(index + 1)->GetValence() - tmpmol.GetAtom(index + 1)->GetHvyValence();
         debugMessage << "   " << Hcount << " hydrogens = " << hydrogenValues[index] << " ";
         if (!seenHydrogen.BitIsSet(index + 1)) debugMessage << "un";
-        debugMessage << "matched\n";        
+        debugMessage << "matched\n";
       }
     }
+
+    cout << "END\n";
 
     if (_debug)
       obErrorLog.ThrowError(__FUNCTION__, debugMessage.str(), obWarning);
