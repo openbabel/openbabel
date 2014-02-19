@@ -3933,6 +3933,37 @@ namespace OpenBabel {
     return true;
   }
 
+  /**
+   * Helper function for getFragment below.
+   */
+  void addNbrs(OBBitVec &fragment, OBAtom *atom, const OBBitVec &mask)
+  {
+    FOR_NBORS_OF_ATOM (nbr, atom) {
+      if (!mask.BitIsSet(nbr->GetIdx()))
+        continue;
+      // skip visited atoms
+      if (fragment.BitIsSet(nbr->GetIdx()))
+        continue;
+      // add the neighbor atom to the fragment
+      fragment.SetBitOn(nbr->GetIdx());
+      // recurse...
+      addNbrs(fragment, &*nbr, mask);
+    }
+  }
+
+  /**
+   * Create an OBBitVec objects with bets set for the fragment consisting of all
+   * atoms for which there is a path to atom without going through skip. These
+   * fragment bitvecs are indexed by atom idx (i.e. OBAtom::GetIdx()).
+   */
+  OBBitVec getFragment(OBAtom *atom, const OBBitVec &mask)
+  {
+    OBBitVec fragment;
+    fragment.SetBitOn(atom->GetIdx());
+    // start the recursion
+    addNbrs(fragment, atom, mask);
+    return fragment;
+  }
 
   /***************************************************************************
    * FUNCTION: CreateFragCansmiString
@@ -3995,8 +4026,34 @@ namespace OpenBabel {
     // First, create a canonical ordering vector for the atoms.  Canonical
     // labels are zero indexed, corresponding to "atom->GetIdx()-1".
     if (_canonicalOutput) {
+
+      // Find the (dis)connected fragments.
+      OBBitVec visited;
+      std::vector<OBBitVec> fragments;
+      for (std::size_t i = 0; i < mol.NumAtoms(); ++i) {
+        if (!frag_atoms.BitIsSet(i+1) || visited.BitIsSet(i+1))
+          continue;
+        fragments.push_back(getFragment(mol.GetAtom(i+1), frag_atoms));
+        visited |= fragments.back();
+      }
+
+      // Determine symmetry classes for each disconnected fragment seperatly
+      symmetry_classes.resize(mol.NumAtoms());
+      for (std::size_t i = 0; i < fragments.size(); ++i) {
+        OBGraphSym gs(&mol, &(fragments[i]));
+        vector<unsigned int> tmp;
+        gs.GetSymmetry(tmp);
+
+        for (std::size_t j = 0; j < mol.NumAtoms(); ++j)
+          if (fragments[i].BitIsSet(j+1))
+            symmetry_classes[j] = tmp[j];
+      }
+
+      /*
       OBGraphSym gs(&mol, &frag_atoms);
       gs.GetSymmetry(symmetry_classes);
+      */
+
       CanonicalLabels(&mol, symmetry_classes, canonical_order, frag_atoms);
     }
     else {
