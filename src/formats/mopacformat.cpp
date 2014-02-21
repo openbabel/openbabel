@@ -116,6 +116,28 @@ namespace OpenBabel
                 tokenize(vs,buffer);
               }
           }
+        else if(strstr(buffer,"(ANGSTROMS)") != NULL)
+          { // newer versions don't print CARTESIAN for final geometry
+            cout << " reading final coords" << endl;
+            mol.Clear();
+            mol.BeginModify();
+            ifs.getline(buffer,BUFF_SIZE);	// blank
+            ifs.getline(buffer,BUFF_SIZE);
+            tokenize(vs,buffer);
+            while (vs.size() == 8)
+              {
+                atom = mol.NewAtom();
+                atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
+                x = atof((char*)vs[2].c_str());
+                y = atof((char*)vs[4].c_str());
+                z = atof((char*)vs[6].c_str());
+                atom->SetVector(x,y,z);
+
+                if (!ifs.getline(buffer,BUFF_SIZE))
+                  break;
+                tokenize(vs,buffer);
+              }
+          }
         else if(strstr(buffer,"UNIT CELL TRANSLATION") != NULL)
           {
             numTranslationVectors = 0; // ignore old translationVectors
@@ -220,7 +242,8 @@ namespace OpenBabel
               {
                 if (vs.size() < 3) break;
                 atom = mol.GetAtom(atoi(vs[0].c_str()));
-                atom->SetPartialCharge(atof(vs[2].c_str()));
+                if (atom != NULL)
+                  atom->SetPartialCharge(atof(vs[2].c_str()));
                 charges.push_back(atof(vs[2].c_str()));
 
                 if (!ifs.getline(buffer,BUFF_SIZE))
