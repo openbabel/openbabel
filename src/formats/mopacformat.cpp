@@ -118,7 +118,6 @@ namespace OpenBabel
           }
         else if(strstr(buffer,"(ANGSTROMS)") != NULL)
           { // newer versions don't print CARTESIAN for final geometry
-            cout << " reading final coords" << endl;
             mol.Clear();
             mol.BeginModify();
             ifs.getline(buffer,BUFF_SIZE);	// blank
