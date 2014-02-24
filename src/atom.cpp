@@ -1067,7 +1067,19 @@ namespace OpenBabel
 
     return(numH);
   }
-  
+
+  /**
+   *  The returned values count whole lone pairs, so the acid count is the number of
+   *  electron pairs desired and the base count is the number of electron pairs
+   *  available.
+   *
+   @verbatim
+   Algorithm from:
+   Clark, A. M. Accurate Specification of Molecular Structures: The Case for
+   Zero-Order Bonds and Explicit Hydrogen Counting. Journal of Chemical Information
+   and Modeling, 51, 3149-3157 (2011). http://pubs.acs.org/doi/abs/10.1021/ci200488k
+   @endverbatim
+  */
   pair<int, int> OBAtom::LewisAcidBaseCounts() const
   {
     // TODO: Is this data stored elsewhere?
@@ -1082,7 +1094,7 @@ namespace OpenBabel
                               8,8,8,8,8,8,8,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,
                               18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,8,8,18,18,18,18,
                               18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18};
-                           
+
     pair<int, int> counts;
     int N = GetAtomicNum();
     if (N == 0 || N > 112) {

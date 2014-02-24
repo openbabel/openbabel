@@ -325,6 +325,7 @@ namespace OpenBabel
       //! \return the distance to the supplied OBAtom
       double GetDistance(OBAtom*);
       //! \return the distance to the coordinates of the supplied vector3
+      //! \since version 2.4
       double GetDistance(vector3* v);
       //! \return the angle defined by this atom -> b (vertex) -> c
       double GetAngle(int b, int c);
@@ -390,6 +391,7 @@ namespace OpenBabel
       //! \return The number of oxygen atoms connected that only have one heavy valence
       unsigned int  CountFreeOxygens()      const;
       //! \return The number of sulfur atoms connected that only have one heavy valence
+      //! \since version 2.4
       unsigned int  CountFreeSulfurs()      const;
       //! \return The number of hydrogens needed to fill the implicit valence of this atom
       unsigned int  ImplicitHydrogenCount() const;
@@ -411,22 +413,20 @@ namespace OpenBabel
       //! \deprecated Use BOSum() instead
       unsigned int  KBOSum()                const;
       /** Lewis acid/base vacancies for this atom
-       *  
-       *  The returned values count whole lone pairs, so the acid count is the number of
-       *  electron pairs desired and the base count is the number of electron pairs
-       *  available.
-       *
-          @verbatim
-          Algorithm from:
-          Clark, A. M. Accurate Specification of Molecular Structures: The Case for 
-          Zero-Order Bonds and Explicit Hydrogen Counting. Journal of Chemical Information 
-          and Modeling, 51, 3149-3157 (2011). http://pubs.acs.org/doi/abs/10.1021/ci200488k 
-          @endverbatim
        *  \return A pair of integers, where first is acid count and second is base count
+       *  \since version 2.3
        */
       std::pair<int, int> LewisAcidBaseCounts() const;
       //! \return Is there any residue information?
       bool HasResidue()    { return(_residue != NULL);    }
+      //! \return Is this a HETATM in a residue (returns false if not in a residue)
+      //! \since version 2.4
+      bool IsHetAtom() {
+        if (_residue == NULL)
+          return false;
+        else
+          return _residue->IsHetAtom(this);
+      }
       //! \return Is the atom hydrogen?
       bool IsHydrogen()    { return(GetAtomicNum() == 1); }
       bool IsHydrogen() const { return(GetAtomicNum() == 1); }
@@ -462,6 +462,7 @@ namespace OpenBabel
       //! \return Is this atom an oxygen in a carboxyl (-CO2 or CO2H) group?
       bool IsCarboxylOxygen();
       //! \return Is this atom a sulfur in a (di)thiocarboxyl (-CS2, -COS, CS2H or COSH) group?
+      //! \since version 2.4
       bool IsThiocarboxylSulfur();
       //! \return Is this atom an oxygen in a phosphate (R-PO3) group?
       bool IsPhosphateOxygen();
@@ -500,8 +501,10 @@ namespace OpenBabel
       bool IsHbondAcceptor();
       //! \return Is this atom a hydrogen-bond donor?
       bool IsHbondDonor();
+      //! \return Is this a hydrogen atom attached to a hydrogen-bond donor?
       bool IsHbondDonorH();
       //! \return Is this atom a metal?
+      //! \since version 2.4
       bool IsMetal();
       //! \return Whether a neighboring atom (alpha) has an unsaturated bond
       //!   to a third atom (beta).

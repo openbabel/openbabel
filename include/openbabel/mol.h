@@ -319,6 +319,7 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //!  (where  a-> b (vertex) -> c )
     double GetAngle(OBAtom* a, OBAtom* b, OBAtom* c);
     //! \return the size of the smallest ring if a and b are in the same ring, 0 otherwise
+    //! \since version 2.4
     int AreInSameRing(OBAtom *a, OBAtom *b);
     //! \return the stochoimetric formula (e.g., C4H6O)
     std::string  GetFormula();
@@ -469,6 +470,7 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     bool DeleteHydrogens(OBAtom*);
     //! Delete all hydrogen atoms connected to a polar atom
     //! \see OBAtom::IsPolarHydrogen
+    //! \since version 2.4
     bool DeletePolarHydrogens();
     //! Delete all hydrogen atoms connected to a non-polar atom
     //! \see OBAtom::IsNonPolarHydrogen
@@ -488,8 +490,10 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! Add only polar hydrogens (i.e., attached to polar atoms, not C)
     bool AddPolarHydrogens();
     //! Add only nonpolar hydrogens (i.e., attached to C)
+    //! \since version 2.4
     bool AddNonPolarHydrogens();
     //! Add polar and/or nonpolar hydrogens
+    //! \since verison 2.4
     bool AddNewHydrogens(HydrogenType whichHydrogen, bool correctForPH=false, double pH=7.4);
 
     //! If @p threshold is not specified or is zero, remove all but the largest
@@ -502,25 +506,14 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     bool GetNextFragment( OpenBabel::OBMolAtomDFSIter& iter, OBMol& newMol );
     //! Converts the charged form of coordinate bonds, e.g.[N+]([O-])=O to N(=O)=O
     bool ConvertDativeBonds();
-    //! Return has charged form of dative bonds(e.g.[N+]([O-])=O from N(=O)=O).
     //! Converts 5-valent N and P only. Return true if conversion occurred.
+    //! \return has charged form of dative bonds(e.g.[N+]([O-])=O from N(=O)=O).
+    //! \since version 2.4
     bool MakeDativeBonds();
     /** Convert zero-order bonds to single or double bonds and adjust adjacent atom
      *  charges in an attempt to achieve the correct valence state.
-     *
-     *  This function is useful when writing to legacy formats (such as MDL MOL) that do
-     *  not support zero-order bonds. It is worth noting that some compounds cannot be
-     *  well represented using just single, double and triple bonds, even with adjustments
-     *  to adjacent charges. In these cases, simply converting zero-order bonds to single
-     *  bonds is all that can be done.
-     *
-        @verbatim
-        Algorithm from:
-        Clark, A. M. Accurate Specification of Molecular Structures: The Case for
-        Zero-Order Bonds and Explicit Hydrogen Counting. Journal of Chemical Information
-        and Modeling, 51, 3149-3157 (2011). http://pubs.acs.org/doi/abs/10.1021/ci200488k
-        @endverbatim
-     *  \return Whether any modifications were made
+     *  @return Whether any modifications were made
+     *  @since version 2.4
      */
     bool ConvertZeroBonds();
 
@@ -529,8 +522,9 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     // docs in mol.cpp
     bool AssignSpinMultiplicity(bool NoImplicitH=false);
 
-    // Put the specified molecular charge on appropriate atoms.
-    // Assumes all the hydrogen is explicitly included in the molecule.
+    //! Put the specified molecular charge on appropriate atoms.
+    //! Assumes all the hydrogen is explicitly included in the molecule.
+    //! \since version 2.4
     bool AssignTotalChargeToAtoms(int charge);
 
     //! The OBMol is a pattern, not a complete molecule. Left unchanged by Clear().

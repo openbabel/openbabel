@@ -1161,9 +1161,11 @@ namespace OpenBabel
      * @param permute Whether or not to permute the order of the 4 most central rotors.
      *                Default is true. This does a more thorough search, but takes 4! = 24 times
      *                as long.
+     * @since version 2.4
      */
     int FastRotorSearch(bool permute = true);
 
+    //! \since version 2.4
     int DiverseConfGen(double rmsd, unsigned int nconfs = 0, double energy_gap = 50, bool verbose = false);
 
     /////////////////////////////////////////////////////////////////////////
