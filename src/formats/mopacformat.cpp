@@ -388,14 +388,6 @@ namespace OpenBabel
     // Attach unit cell translation vectors if found
     if (numTranslationVectors == 3) {
       OBUnitCell* uc = new OBUnitCell;
-      // Translation vectors are actually the translated positions of the
-      // first listed atom, so adjust for this:
-      if (mol.NumAtoms() > 0) {
-        const vector3 &atom1Pos = mol.GetAtomById(0)->GetVector();
-        translationVectors[0] -= atom1Pos;
-        translationVectors[1] -= atom1Pos;
-        translationVectors[2] -= atom1Pos;
-      }
       uc->SetData(translationVectors[0], translationVectors[1], translationVectors[2]);
       uc->SetOrigin(fileformatInput);
       mol.SetData(uc);
