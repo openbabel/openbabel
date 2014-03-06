@@ -580,6 +580,9 @@ namespace OpenBabel
   {
     const SpaceGroup *sg = GetSpaceGroup(); // the actual space group and transformations for this unit cell
 
+    if(sg == NULL)
+      return ;
+
     // For each atom, we loop through: convert the coords back to inverse space, apply the transformations and create new atoms
     vector3 baseV, uniqueV, updatedCoordinate;
     list<vector3> transformedVectors; // list of symmetry-defined copies of the atom
