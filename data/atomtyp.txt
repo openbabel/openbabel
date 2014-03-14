@@ -163,6 +163,7 @@ IMPVAL  [pD2]                     2
 IMPVAL  [$([#15]=[#8])]           4 # phosphinate (double bond = one valence)
 IMPVAL  [$([#15](=[#8])=[#8])]    3 # metaphosphate (double bond = one valence)
 IMPVAL  [$([#15+](=[#8])([#8]))]  0 # R-P+O2
+IMPVAL  [$([#15]#*)]                1 # for P#P
 
 IMPVAL  [#16]                     2 #revised CM April 2008
 IMPVAL  [$([#16D1]=*)]            1
@@ -255,4 +256,3 @@ EXTTYP  [#5D4]          B3
 #INTHYB  [Cr]			  5 # for development
 
 ############################# End Extra Definitions ##########################
-
