@@ -214,7 +214,7 @@ namespace OpenBabel
             dist1 = a1->GetDistance(a2);
             dist2 = a2->GetDistance(a3);
 
-            // isocyanate geometry or Isotiocyanate geometry ?
+            // isocyanate geometry or Isothiocyanate geometry ?
             if (a1->IsOxygen())
               dist1OK =  dist1 < 1.28;
             else
@@ -259,6 +259,26 @@ namespace OpenBabel
             }
           }
       } // oxime
+
+    // oxido-n+ (e.g., pyridine-N-oxide)
+    OBSmartsPattern oxidopyr; oxidopyr.Init("[#8D1][#7D3r6]");
+    if (oxidopyr.Match(mol))
+      {
+        mlist = oxidopyr.GetUMapList();
+        for (l = mlist.begin(); l != mlist.end(); ++l)
+          {
+            a1 = mol.GetAtom((*l)[0]);
+            a2 = mol.GetAtom((*l)[1]);
+
+            angle = a2->AverageBondAngle();
+            dist1 = a1->GetDistance(a2);
+
+            if (angle > 110 & angle < 150 && dist1 < 1.35) {
+              a1->SetFormalCharge(-1); // oxygen
+              a2->SetFormalCharge(+1); // nitrogen
+            }
+          }
+      }
 
   }
 
