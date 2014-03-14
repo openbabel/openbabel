@@ -413,9 +413,11 @@ std::vector<std::string> EnableStaticPlugins()
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGasteigerCharges)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMMFF94Charges)->GetID());
 #ifdef HAVE_EIGEN
-  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theEQEqCharges)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theQEqCharges)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theQTPIECharges)->GetID());
+#endif
+#ifdef HAVE_EIGEN3
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theEQEqCharges)->GetID());
 #endif
 
   return plugin_ids;
