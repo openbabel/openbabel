@@ -3746,7 +3746,7 @@ namespace OpenBabel
       {
         typed = false;
         loopSize = (*ringit)->PathSize();
-        if (loopSize == 5 || loopSize == 6)
+        if (loopSize == 5 || loopSize == 6 || loopSize == 7)
           {
             path = (*ringit)->_path;
             for(loop = 0; loop < loopSize; ++loop)
@@ -3801,7 +3801,9 @@ namespace OpenBabel
     for (iter = 0 ; iter < max ; iter++ )
       {
         atom = sortedAtoms[iter].first;
-        //        cout << " atom->Hyb " << atom->GetAtomicNum() << " " << atom->GetHyb() << endl;
+        // Debugging statement
+        //        cout << " atom->Hyb " << atom->GetAtomicNum() << " " << atom->GetIdx() << " " << atom->GetHyb()
+        //             << " BO: " << atom->BOSum() << endl;
 
         // Possible sp-hybrids
         if ( (atom->GetHyb() == 1 || atom->GetValence() == 1)
@@ -3867,12 +3869,7 @@ namespace OpenBabel
                 if ( (b->GetHyb() == 2 || b->GetValence() == 1)
                      && b->BOSum() + 1 <= static_cast<unsigned int>(etab.GetMaxBonds(b->GetAtomicNum()))
                      && (GetBond(atom, b))->IsDoubleBondGeometry()
-                     && (currentElNeg > maxElNeg ||
-                         ((IsApprox(currentElNeg,maxElNeg, 1.0e-6)
-                          // If only the bond length counts, prefer double bonds in the ring
-                          && (((atom->GetBond(b))->GetLength() < shortestBond)
-                              && (!atom->IsInRing() || !c || !c->IsInRing() || b->IsInRing())))
-                          || (atom->IsInRing() && c && !c->IsInRing() && b->IsInRing()))))
+                     && (currentElNeg > maxElNeg || (IsApprox(currentElNeg,maxElNeg, 1.0e-6)) ) )
                   {
                     if (b->HasNonSingleBond() ||
                         (b->GetAtomicNum() == 7 && b->BOSum() + 1 > 3))
@@ -3887,11 +3884,20 @@ namespace OpenBabel
                         continue; // too long, ignore it
                     }
 
-                    shortestBond = (atom->GetBond(b))->GetLength();
-                    maxElNeg = etab.GetElectroNeg(b->GetAtomicNum());
-                    c = b; // save this atom for later use
+                    // OK, see if this is better than the previous choice
+                    // If it's much shorter, pick it (e.g., fulvene)
+                    // If they're close (0.1A) then prefer the bond in the ring
+                    double difference = shortestBond - (atom->GetBond(b))->GetLength();
+                    if ( (difference > 0.1)
+                         || ( (difference > -0.01) &&
+                              ( (!atom->IsInRing() || !c || !c->IsInRing() || b->IsInRing())
+                                || (atom->IsInRing() && c && !c->IsInRing() && b->IsInRing()) ) ) ) {
+                      shortestBond = (atom->GetBond(b))->GetLength();
+                      maxElNeg = etab.GetElectroNeg(b->GetAtomicNum());
+                      c = b; // save this atom for later use
+                    } // is this bond better than previous choices
                   }
-              }
+              } // loop through neighbors
             if (c)
               (atom->GetBond(c))->SetBO(2);
           }
