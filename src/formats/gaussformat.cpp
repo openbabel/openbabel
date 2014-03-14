@@ -527,6 +527,8 @@ namespace OpenBabel
               {
                 charge = atoi(vs[2].c_str());
                 spin = atoi(vs[5].c_str());
+                mol.SetTotalCharge(charge);
+                mol.SetTotalSpinMultiplicity(spin);
               }
 
             ifs.getline(buffer,BUFF_SIZE);
@@ -1157,8 +1159,6 @@ namespace OpenBabel
       dp->SetOrigin(fileformatInput);
       mol.SetData(dp);
     }
-    mol.SetTotalCharge(charge);
-    mol.SetTotalSpinMultiplicity(spin);
 
     mol.SetTitle(title);
     return(true);

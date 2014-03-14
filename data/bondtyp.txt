@@ -77,6 +77,13 @@
 # allene C=C=C
 # (this is problematic -- need to make sure the center carbon is sp)
 [#6^2][#6D2^1][#6^2]		0 1 2 1 2 2
+# ene-one C=C=O
+[#6^2][#6D2^1][#8D1]		0 1 2 1 2 2
+
+# isonitrile / isocyano
+[#6D1][#7D2^1]*  0 1 3 1 2 1
+# NR2 in ring with hybridized carbon neighbors
+[#7D2R][#6D3^2] 0 1 2
 
 # guanidinium and amidine -C(=NH)NH2 without hydrogens
 [#6D3^2;!R]([#7D1H0;!R])([#7;!R])*	0 1 2 0 2 1 0 3 1
@@ -91,5 +98,3 @@
 
 ### other potential functional groups that may (or may not) be useful to add
 # imidines ( N=C/N\C=N
-# heme / porphyrin
-# phthalocyanine
