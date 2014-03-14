@@ -3860,6 +3860,15 @@ namespace OpenBabel
                 (atom->GetAtomicNum() == 7 && atom->BOSum() + 1 > 3))
               continue;
 
+            // Don't build multiple bonds to ring sulfurs
+            //  except thiopyrylium
+            if (atom->IsInRing() && atom->GetAtomicNum() == 16) {
+              if (_totalCharge > 1 && atom->GetFormalCharge() == 0)
+                atom->SetFormalCharge(+1);
+              else
+                continue;
+            }
+
             maxElNeg = 0.0;
             shortestBond = 5000.0;
             c = NULL;
@@ -3874,6 +3883,13 @@ namespace OpenBabel
                     if (b->HasNonSingleBond() ||
                         (b->GetAtomicNum() == 7 && b->BOSum() + 1 > 3))
                       continue;
+
+                    if (b->IsInRing() && b->GetAtomicNum() == 16) {
+                      if (_totalCharge > 1 && b->GetFormalCharge() == 0)
+                        b->SetFormalCharge(+1);
+                      else
+                        continue;
+                    }
 
                     // Test terminal bonds against expected double bond lengths
                     bondLength = (atom->GetBond(b))->GetLength();
