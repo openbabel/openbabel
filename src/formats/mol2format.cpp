@@ -310,9 +310,9 @@ namespace OpenBabel
 
         mol.AddBond(start,end,order);
       }
-      
+
     // Make a pass to ensure that there are no double bonds
-    // between atoms which are also involved in aromatic bonds 
+    // between atoms which are also involved in aromatic bonds
     // as that may ill-condition kekulization (fixes potential
     // issues with molecules like CEWYIM30 (MMFF94 validation suite)
     // Patch by Paolo Tosco 2012-06-07
@@ -378,12 +378,17 @@ namespace OpenBabel
     // Patch by Paolo Tosco 2012-06-07
     OBAtom *carbon, *partner, *boundToNitrogen;
     OBBitVec bv;
-    
+
     bv.SetBitOn(nbonds);
     bv.Clear();
     FOR_BONDS_OF_MOL(bond, mol)
     {
       if (bv[bond->GetIdx()] || (bond->GetBO() != 5))
+        continue;
+
+      // only bother for 6 membered rings (e.g., pyridinium)
+      // 5-membered rings like pyrrole, imidazole, or triazole are OK with nH
+      if ( (bond->FindSmallestRing())->Size() != 6 )
         continue;
 
       if ((bond->GetBeginAtom()->IsCarbon() && bond->GetEndAtom()->IsNitrogen())
@@ -442,6 +447,8 @@ namespace OpenBabel
         OBAtom *atom1, *atom2;
         atom1 = bond->GetBeginAtom();
         atom2 = bond->GetEndAtom();
+        // set formal charges for pyrilium
+        // (i.e., this bond is a 6-membered ring, aromatic, and C-O)
         if (atom1->IsOxygen() && atom1->IsInRingSize(6))
           atom1->SetFormalCharge(1);
         else if (atom2->IsOxygen() && atom2->IsInRingSize(6))
@@ -480,7 +487,7 @@ namespace OpenBabel
 
     ifs.seekg(pos); // go back to the end of the molecule
     */
-    
+
     return(true);
   }
 
