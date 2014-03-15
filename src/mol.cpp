@@ -3510,7 +3510,7 @@ namespace OpenBabel
 
             if (d2 > cutoff)
               continue;
-            if (d2 < 0.40)
+            if (d2 < 0.16) // 0.4 * 0.4 = 0.16
               continue;
 
             atom = GetAtom(idx1+1);
