@@ -3495,11 +3495,17 @@ namespace OpenBabel
             cutoff = SQUARE(rad[j] + rad[k] + 0.45);
 
             zd  = SQUARE(c[idx1*3+2] - c[idx2*3+2]);
-            if (zd > 25.0 )
-              break; // bigger than max cutoff
+            // bigger than max cutoff
+            // since we sort by z, anything beyond k will also fail
+            if (zd > cutoff )
+              break;
 
             d2  = SQUARE(c[idx1*3]   - c[idx2*3]);
+            if (d2 > cutoff)
+              continue; // x's bigger than cutoff
             d2 += SQUARE(c[idx1*3+1] - c[idx2*3+1]);
+            if (d2 > cutoff)
+              continue; // x^2 + y^2 bigger than cutoff
             d2 += zd;
 
             if (d2 > cutoff)
