@@ -85,7 +85,9 @@ namespace OpenBabel {
       static OBFormat*        FormatFromMIME(const char* MIME);
 
       ///Deprecated!.Repeatedly called to recover available Formats
+#ifndef SWIG
       static bool	        GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFormat);
+#endif
       //@}
 
       /// @name Information
