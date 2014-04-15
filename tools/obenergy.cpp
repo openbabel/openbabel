@@ -2,14 +2,14 @@
 obenergy.cpp - calculate the energy for a molecule
 
 Copyright (C) 2006 Tim Vandermeersch
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -39,7 +39,7 @@ int main(int argc,char **argv)
   int c;
   int verbose = 0;
   bool hydrogens = false;
-  string basename, filename = "", option, option2, ff = "";
+  string basename, filename = "", option, option2, ff = "MMFF94";
   OBConversion conv;
 
   if (argc < 2) {
@@ -61,7 +61,7 @@ int main(int argc,char **argv)
     int ifile = 1;
     for (int i = 1; i < argc; i++) {
       option = argv[i];
-      
+
       if (option == "-v") {
         verbose = 1;
         ifile++;
@@ -78,7 +78,7 @@ int main(int argc,char **argv)
         ifile += 2;
       }
     }
-    
+
     basename = filename = argv[ifile];
     size_t extPos = filename.rfind('.');
 
@@ -91,7 +91,7 @@ int main(int argc,char **argv)
 
   // Find Input filetype
   OBFormat *format_in = conv.FormatFromExt(filename.c_str());
-    
+
   if (!format_in || !conv.SetInFormat(format_in)) {
     cerr << program_name << ": cannot read input format!" << endl;
     exit (-1);
@@ -129,12 +129,12 @@ int main(int argc,char **argv)
 
     if (hydrogens)
       mol.AddHydrogens();
-       
+
     if (!pFF->Setup(mol)) {
       cerr << program_name << ": could not setup force field." << endl;
       exit (-1);
     }
-    
+
     energy = pFF->Energy(false);
     if (!isfinite(energy)) {
       cerr << " Title: " << mol.GetTitle() << endl;
@@ -158,7 +158,7 @@ int main(int argc,char **argv)
 *
 * \par DESCRIPTION
 *
-* The obenergy tool can be used to calculate the energy for molecules 
+* The obenergy tool can be used to calculate the energy for molecules
 * inside (multi-)molecule files (e.g., MOL2, etc.)
 *
 * \par OPTIONS
@@ -172,12 +172,12 @@ int main(int argc,char **argv)
 *     Select the forcefield \n\n
 *
 * \par EXAMPLES
-*  - View the possible options, including available forcefields: 
+*  - View the possible options, including available forcefields:
 *   obenergy
 *  - Calculate the energy for the molecule(s) in file test.mol2:
 *   obenergy test.mol2
 *  - Calculate the energy for the molecule(s) in file test.mol2 using the Ghemical forcefield:
-*   obenergy -ff Ghemical test.mol2 
+*   obenergy -ff Ghemical test.mol2
 *  - Calculate the energy for the molecule(s) in file test.mol2 and print out all individual energy interactions:
 *    obenergy -v test.mol2
 *
@@ -201,6 +201,6 @@ int main(int argc,char **argv)
 *
 * \par SEE ALSO
 *   The web pages for Open Babel can be found at: http://openbabel.org/ \n
-*   The web pages for Open Babel Molecular Mechanics can be found at: 
+*   The web pages for Open Babel Molecular Mechanics can be found at:
 *   http://openbabel.org/wiki/Molecular_mechanics \n
 **/
