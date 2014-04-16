@@ -1441,7 +1441,7 @@ namespace OpenBabel
                   if(0!=sign) // no sign, no charge
                     {
                       if(charge==0) charge=1;
-                      cout<<tmpSymbol<<" / symbol="<<tmpSymbol.substr(0,nbc)<<" charge= "<<sign*charge<<endl;
+                      if(verbose) cout<<tmpSymbol<<" / symbol="<<tmpSymbol.substr(0,nbc)<<" charge= "<<sign*charge<<endl;
                       atom->SetFormalCharge(sign*charge);
                     }
                 }
