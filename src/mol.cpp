@@ -180,7 +180,8 @@ namespace OpenBabel
       return(_title.c_str());
 
     //Only multiline titles use the following to replace newlines by spaces
-    static string title(_title); //potential problems in calling code with multiple molecules!
+    static string title;
+    title=_title;
     string::size_type j;
     for ( ; (j = title.find_first_of( "\n\r" )) != string::npos ; ) {
       title.replace( j, 1, " ");
