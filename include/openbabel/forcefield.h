@@ -1165,8 +1165,10 @@ namespace OpenBabel
      */
     int FastRotorSearch(bool permute = true);
 
+#ifdef HAVE_EIGEN
     //! \since version 2.4
     int DiverseConfGen(double rmsd, unsigned int nconfs = 0, double energy_gap = 50, bool verbose = false);
+#endif
 
     /////////////////////////////////////////////////////////////////////////
     // Energy Minimization                                                 //
