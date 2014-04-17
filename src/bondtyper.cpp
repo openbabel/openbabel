@@ -273,7 +273,7 @@ namespace OpenBabel
             angle = a2->AverageBondAngle();
             dist1 = a1->GetDistance(a2);
 
-            if (angle > 110 & angle < 150 && dist1 < 1.35) {
+            if (angle > 110 && angle < 150 && dist1 < 1.35) {
               a1->SetFormalCharge(-1); // oxygen
               a2->SetFormalCharge(+1); // nitrogen
             }
