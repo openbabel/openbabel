@@ -53,7 +53,7 @@ namespace OpenBabel
           "Typical usage: obabel infile.xxx -O outfile.yy --energy --log\n"
           " options:         description\n"
           " --log        output a log of the energies (default = no log)\n"
-          " --ff #       select a forcefield (default = Ghemical)\n"
+          " --ff #       select a forcefield (default = MMFF94)\n"
           " The hydrogens are always made explicit before energy evaluation.\n"
           " The energy is put in an OBPairData object \"Energy\" which is\n"
           "   accessible via an SDF or CML property or --append (to title).\n"
@@ -128,10 +128,11 @@ namespace OpenBabel
           "Typical usage: obabel infile.xxx -O outfile.yyy --minimize --steps 1500 --sd\n"
           " options:         description:\n"
           " --log        output a log of the minimization process(default= no log)\n"
-          " --crit #     set convergence criteria (default=1e-6)\n"
+          " --crit #     set convergence criteria (default=1e-5)\n"
           " --sd         use steepest descent algorithm (default = conjugate gradient)\n"
+          " --bfgs       use BFGS optimization algorithm (default = conjugate gradient)\n"
           " --newton     use Newton2Num linesearch (default = Simple)\n"
-          " --ff #       select a forcefield (default = Ghemical)\n"
+          " --ff #       select a forcefield (default = MMFF94)\n"
           " --steps #    specify the maximum number of steps (default = 2500)\n"
           " --cut        use cut-off (default = don't use cut-off)\n"
           " --rvdw #     specify the VDW cut-off distance (default = 6.0)\n"
@@ -162,8 +163,9 @@ namespace OpenBabel
     pmol->AddHydrogens(false, false);
 
     int steps = 2500;
-    double crit = 1e-6;
+    double crit = 1e-5;
     bool sd = false;
+    bool bfgs = false;
     bool cut = false;
     bool newton = false;
     double rvdw = 6.0;
@@ -171,15 +173,23 @@ namespace OpenBabel
     int freq = 10;
     bool log = false;
 
-    string ff = "Ghemical";
+    string ff = "MMFF94";
     OpMap::const_iterator iter = pmap->find("ff");
     if(iter!=pmap->end())
       ff = iter->second;
     OBForceField* pFF = OBForceField::FindForceField(ff);
 
     iter = pmap->find("sd");
-    if(iter!=pmap->end())
+    if(iter!=pmap->end()) {
       sd=true;
+      bfgs = false;
+    }
+
+    iter = pmap->find("bfgs");
+    if(iter!=pmap->end()) {
+      bfgs=true;
+      sd = false;
+    }
 
     iter = pmap->find("newton");
     if(iter!=pmap->end())
@@ -229,25 +239,15 @@ namespace OpenBabel
       return false;
     }
 
-    bool done = true;
     if (sd)
-      pFF->SteepestDescentInitialize(steps, crit);
+      pFF->SteepestDescent(steps, crit);
+    else if (bfgs)
+      pFF->BFGS(steps, crit);
     else
-      pFF->ConjugateGradientsInitialize(steps, crit);
+      pFF->ConjugateGradients(steps, crit);
 
-    while(done) {
-      if (sd)
-        done = pFF->SteepestDescentTakeNSteps(1);
-      else
-        done = pFF->ConjugateGradientsTakeNSteps(1);
-
-      if (pFF->DetectExplosion()) {
-        cerr << "explosion has occurred!" << endl;
-        break;
-      }
-      else
-        pFF->GetCoordinates(*pmol);
-    }
+    // Finished, so update the geometry
+    pFF->GetCoordinates(*pmol);
 
     //Put the energy in a OBPairData object
     OBPairData *dp = new OBPairData;

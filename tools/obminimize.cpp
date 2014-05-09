@@ -42,6 +42,7 @@ int main(int argc,char **argv)
   int steps = 2500;
   double crit = 1e-6;
   bool sd = false;
+  bool bfgs = false;
   bool cut = false;
   bool newton = false;
   bool hydrogens = false;
@@ -55,29 +56,19 @@ int main(int argc,char **argv)
 
   if (argc < 2) {
     cout << "Usage: obminimize [options] <filename>" << endl;
-    cout << endl;
     cout << "options:      description:" << endl;
     cout << endl;
     cout << "  -c crit     set convergence criteria (default=1e-6)" << endl;
-    cout << endl;
     cout << "  -cg         use conjugate gradients algorithm (default)" << endl;
-    cout << endl;
     cout << "  -sd         use steepest descent algorithm" << endl;
-    cout << endl;
+    cout << "  -bfgs       use BFGS algorithm" << endl;
     cout << "  -newton     use Newton2Num linesearch (default=Simple)" << endl;
-    cout << endl;
     cout << "  -ff ffid    select a forcefield:" << endl;
-    cout << endl;
     cout << "  -h          add hydrogen atoms" << endl;
-    cout << endl;
     cout << "  -n steps    specify the maximum numer of steps (default=2500)" << endl;
-    cout << endl;
     cout << "  -cut        use cut-off (default=don't use cut-off)" << endl;
-    cout << endl;
     cout << "  -rvdw rvdw  specify the VDW cut-off distance (default=6.0)" << endl;
-    cout << endl;
     cout << "  -rele rele  specify the Electrostatic cut-off distance (default=10.0)" << endl;
-    cout << endl;
     cout << "  -pf freq    specify the frequency to update the non-bonded pairs (default=10)" << endl;
     cout << endl;
     OBPlugin::List("forcefields", "verbose");
@@ -110,6 +101,13 @@ int main(int argc,char **argv)
       // steepest descent
       if (option == "-sd") {
         sd = true;
+        bfgs = false;
+        ifile++;
+      }
+      // steepest descent
+      if (option == "-bfgs") {
+        sd = false;
+        bfgs = true;
         ifile++;
       }
       // enable cut-off
@@ -141,6 +139,7 @@ int main(int argc,char **argv)
 
       if (option == "-cg") {
         sd = false;
+        bfgs = false;
         ifile++;
       }
 
@@ -219,6 +218,8 @@ int main(int argc,char **argv)
     timer.Start();
     if (sd) {
       pFF->SteepestDescentInitialize(steps, crit);
+    } else if (bfgs) {
+      pFF->BFGSInitialize(steps, crit);
     } else {
       pFF->ConjugateGradientsInitialize(steps, crit);
     }
@@ -226,17 +227,18 @@ int main(int argc,char **argv)
     unsigned int totalSteps = 1;
     while (done) {
       if (sd)
-        done = pFF->SteepestDescentTakeNSteps(1);
+        done = pFF->SteepestDescentTakeNSteps(5);
+      else if (bfgs)
+        done = pFF->BFGSTakeNSteps(5);
       else
-        done = pFF->ConjugateGradientsTakeNSteps(1);
-      totalSteps++;
+        done = pFF->ConjugateGradientsTakeNSteps(5);
+      totalSteps += 5;
 
       if (pFF->DetectExplosion()) {
         cerr << "explosion has occured!" << endl;
         conv.Write(&mol, &cout);
         return(1);
-      } else
-        pFF->GetCoordinates(mol);
+      }
     }
     double timeElapsed = timer.Elapsed();
 

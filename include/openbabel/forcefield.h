@@ -545,6 +545,20 @@ namespace OpenBabel
     std::string	_parFile; //! < parameter file name
     bool 	_validSetup; //!< was the last call to Setup succesfull
     double	*_gradientPtr; //!< pointer to the gradients (used by AddGradient(), minimization functions, ...)
+
+    // BFGS variables
+    std::vector<double> _BFGS_invH; //!< Row major inverse hessian (used for BFGS).
+    std::vector<double> _BFGS_p; //!< Temporary vector/matrix (used for BFGS).
+    std::vector<double> _BFGS_s; //!< Temporary vector/matrix (used for BFGS).
+    std::vector<double> _BFGS_y; //!< Temporary vector/matrix (used for BFGS).
+    std::vector<double> _BFGS_invHy; //!< Temporary vector/matrix (used for BFGS).
+    std::vector<double> _BFGS_ssT; //!< Temporary vector/matrix (used for BFGS).
+    std::vector<double> _BFGS_invHysT; //!< Temporary vector/matrix (used for BFGS).
+    std::vector<double> _BFGS_syT; //!< Temporary vector/matrix (used for BFGS).
+    std::vector<double> _BFGS_syTInvH; //!< Temporary vector/matrix (used for BFGS).
+    std::vector<double> _BFGS_matrix1; //!< Temporary vector/matrix (used for BFGS).
+    std::vector<double> _BFGS_matrix2; //!< Temporary vector/matrix (used for BFGS).
+
     // logging variables
     std::ostream* _logos; //!< Output for logfile
     char 	_logbuf[BUFF_SIZE+1]; //!< Temporary buffer for logfile output
@@ -556,7 +570,8 @@ namespace OpenBabel
     // minimization variables
     double 	_econv, _e_n1; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
     int 	_cstep, _nsteps; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
-    double 	*_grad1; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
+    double 	*_grad1; //!< Used for conjugate gradients, BFGS, and steepest descent(Initialize and TakeNSteps)
+    double 	*_grad2; //!< Used for BFGS
     unsigned int _ncoords; //!< Number of coordinates for conjugate gradients
     int         _linesearch; //!< LineSearch type
     // molecular dynamics variables
@@ -1028,7 +1043,8 @@ namespace OpenBabel
 
     //! \name Methods for structure generation
     //@{
-    //! Generate coordinates for the molecule (distance geometry). (OB 3.0).
+    //! Generate coordinates for the molecule (distance geometry)
+    //! \deprecated Use OBDistanceGeometry class instead
     void DistanceGeometry();
     /*! Generate conformers for the molecule (systematicaly rotating torsions).
      *
@@ -1345,6 +1361,66 @@ namespace OpenBabel
      *  OBFF_LOGLVL_HIGH:   see note above \n
     */
     bool ConjugateGradientsTakeNSteps(int n);
+    /*! Perform BFGS optimization for steps steps or until convergence criteria is reached.
+     *
+     *  \param steps The number of steps.
+     *  \param econv Energy convergence criteria. (defualt is 1e-6)
+     *  \param method Deprecated. (see HasAnalyticalGradients())
+     *
+     *  \par Output to log:
+     *  This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
+     *  too much information about the energy calculations needed for the minimization will interfere with the list
+     *  of energies for successive steps. \n\n
+     *  OBFF_LOGLVL_NONE:   none \n
+     *  OBFF_LOGLVL_LOW:    information about the progress of the minimization \n
+     *  OBFF_LOGLVL_MEDIUM: see note above \n
+     *  OBFF_LOGLVL_HIGH:   see note above \n
+     */
+    void BFGS(int steps, double econv = 1e-6f, int method = OBFF_ANALYTICAL_GRADIENT);
+    /*! Initialize BFGS optimization and take the first step, to be
+     *  used in combination with BFGSTakeNSteps().
+     *
+     *  example:
+     *  \code
+     *  // pFF is a pointer to a OBForceField class
+     *  pFF->BFGSInitialize(100, 1e-5f);
+     *  while (pFF->BFGSTakeNSteps(5)) {
+     *    // do some updating in your program (redraw structure, ...)
+     *  }
+     *  \endcode
+     *
+     *  If you don't need any updating in your program, BFGS() is recommended.
+     *
+     *  \param steps The number of steps.
+     *  \param econv Energy convergence criteria. (defualt is 1e-6)
+     *  \param method Deprecated. (see HasAnalyticalGradients())
+     *
+     *  \par Output to log:
+     *  This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
+     *  too much information about the energy calculations needed for the minimization will interfere with the list
+     *  of energies for succesive steps. \n\n
+     *  OBFF_LOGLVL_NONE:   none \n
+     *  OBFF_LOGLVL_LOW:    header including number of steps and first step \n
+     *  OBFF_LOGLVL_MEDIUM: see note above \n
+     *  OBFF_LOGLVL_HIGH:   see note above \n
+     */
+    void BFGSInitialize(int steps = 1000, double econv = 1e-6f, int method = OBFF_ANALYTICAL_GRADIENT);
+    /*! Take n steps in a BFGS optimization that was previously
+     *  initialized with BFGSInitialize().
+     *
+     *  \param n The number of steps to take.
+     *  \return False if convergence or the number of steps given by BFGSInitialize() has been reached.
+     *
+     *  \par Output to log:
+     *  This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
+     *  too much information about the energy calculations needed for the minimization will interfere with the list
+     *  of energies for succesive steps. \n\n
+     *  OBFF_LOGLVL_NONE:   none \n
+     *  OBFF_LOGLVL_LOW:    step number, energy and energy for the previous step \n
+     *  OBFF_LOGLVL_MEDIUM: see note above \n
+     *  OBFF_LOGLVL_HIGH:   see note above \n
+    */
+    bool BFGSTakeNSteps(int n);
     //@}
 
     /////////////////////////////////////////////////////////////////////////

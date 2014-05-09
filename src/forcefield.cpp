@@ -1242,7 +1242,7 @@ namespace OpenBabel
       IF_OBFF_LOGLVL_LOW
         OBFFLog("  GENERATED ONLY ONE CONFORMER\n\n");
 
-      ConjugateGradients(geomSteps); // final energy minimizatin for best conformation
+      ConjugateGradients(geomSteps); // final energy minimization for best conformation
 
       return 1; // there are no more conformers
     }
@@ -3082,6 +3082,323 @@ namespace OpenBabel
     if (steps > 1) // ConjugateGradientsInitialize takes the first step
       ConjugateGradientsTakeNSteps(steps);
   }
+
+  void OBForceField::BFGSInitialize(int steps, double econv, int method)
+  {
+    if (!_validSetup || steps==0)
+      return;
+
+    double e_n2, alpha;
+    vector3 dir;
+
+    _cstep = 0;
+    _nsteps = steps;
+    _econv = econv;
+    _ncoords = _mol.NumAtoms() * 3;
+
+    if (_cutoff)
+      UpdatePairsSimple(); // Update the non-bonded pairs (Cut-off)
+
+    _e_n1 = Energy() + _constraints.GetConstraintEnergy();
+
+    IF_OBFF_LOGLVL_LOW {
+      OBFFLog("\nB F G S\n\n");
+      snprintf(_logbuf, BUFF_SIZE, "STEPS = %d\n\n", steps);
+      OBFFLog(_logbuf);
+      OBFFLog("STEP n     E(n)       E(n-1)    \n");
+      OBFFLog("--------------------------------\n");
+    }
+
+    // Allocate working memory
+    if (_grad1 != NULL)
+      delete [] _grad1;
+    _grad1 = new double[_ncoords];
+    if (_grad2 != NULL)
+      delete [] _grad2;
+    _grad2 = new double[_ncoords];
+    _BFGS_invH.resize(_ncoords * _ncoords, 0.);
+    // TODO switch to L-BFGS for reduced memory particularly on large molecules
+    _BFGS_p.resize(_ncoords, 0.);
+    _BFGS_s.resize(_ncoords, 0.);
+    _BFGS_y.resize(_ncoords, 0.);
+    _BFGS_invHy.resize(_ncoords, 0.);
+    _BFGS_ssT.resize(_ncoords * _ncoords, 0.);
+    _BFGS_invHysT.resize(_ncoords * _ncoords, 0.);
+    _BFGS_syT.resize(_ncoords * _ncoords, 0.);
+    _BFGS_syTInvH.resize(_ncoords * _ncoords, 0.);
+    _BFGS_matrix1.resize(_ncoords * _ncoords, 1.);
+    _BFGS_matrix2.resize(_ncoords * _ncoords, 0.);
+
+    // Initialize inverse Hessian as unit matrix
+    for (int n=0;n<_ncoords;n++)
+      _BFGS_invH[n * _ncoords + n] = 1.0;
+
+    // Get initial gradient
+    FOR_ATOMS_OF_MOL (a, _mol) {
+      unsigned int idx = a->GetIdx();
+      unsigned int coordIdx = (idx - 1) * 3;
+
+      if (_constraints.IsFixed(idx) || (_fixAtom == idx) || (_ignoreAtom == idx)) {
+        _gradientPtr[coordIdx] = 0.0;
+        _gradientPtr[coordIdx+1] = 0.0;
+        _gradientPtr[coordIdx+2] = 0.0;
+      } else {
+        if (!HasAnalyticalGradients()) {
+          // use numerical gradients
+          dir = NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
+        } else {
+          // use analytical gradients
+          dir = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
+        }
+
+        if (!_constraints.IsXFixed(idx))
+          _gradientPtr[coordIdx] = dir.x();
+        else
+          _gradientPtr[coordIdx] = 0.0;
+
+        if (!_constraints.IsYFixed(idx))
+          _gradientPtr[coordIdx+1] = dir.y();
+        else
+          _gradientPtr[coordIdx+1] = 0.0;
+
+        if (!_constraints.IsZFixed(idx))
+          _gradientPtr[coordIdx+2] = dir.z();
+        else
+          _gradientPtr[coordIdx+2] = 0.0;
+      }
+    }
+
+    // perform a linesearch along the gradient -- just using steepest descent here
+    switch (_linesearch) {
+    case LineSearchType::Newton2Num:
+      alpha = Newton2NumLineSearch(_gradientPtr);
+      break;
+    default:
+    case LineSearchType::Simple:
+      alpha = LineSearch(_mol.GetCoordinates(), _gradientPtr);
+      break;
+    }
+    e_n2 = Energy() + _constraints.GetConstraintEnergy();
+
+    IF_OBFF_LOGLVL_LOW {
+      snprintf(_logbuf, BUFF_SIZE, " %4d    %8.3f    %8.3f\n", 1, e_n2, _e_n1);
+      OBFFLog(_logbuf);
+    }
+
+    // Recalculate the gradient and store in _grad1 to prepare for the
+    // takeNSteps function.
+    FOR_ATOMS_OF_MOL (a, _mol) {
+      unsigned int idx = a->GetIdx();
+      unsigned int coordIdx = (idx - 1) * 3;
+
+      if (_constraints.IsFixed(idx) || (_fixAtom == idx) || (_ignoreAtom == idx)) {
+        _gradientPtr[coordIdx] = 0.0;
+        _gradientPtr[coordIdx+1] = 0.0;
+        _gradientPtr[coordIdx+2] = 0.0;
+      } else {
+        if (!HasAnalyticalGradients()) {
+          // use numerical gradients
+          dir = NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
+        } else {
+          // use analytical gradients
+          dir = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
+        }
+
+        if (!_constraints.IsXFixed(idx))
+          _gradientPtr[coordIdx] = dir.x();
+        else
+          _gradientPtr[coordIdx] = 0.0;
+
+        if (!_constraints.IsYFixed(idx))
+          _gradientPtr[coordIdx+1] = dir.y();
+        else
+          _gradientPtr[coordIdx+1] = 0.0;
+
+        if (!_constraints.IsZFixed(idx))
+          _gradientPtr[coordIdx+2] = dir.z();
+        else
+          _gradientPtr[coordIdx+2] = 0.0;
+      }
+    }
+    memcpy(_grad1, _gradientPtr, sizeof(double)*_ncoords);
+
+    _e_n1 = Energy() + _constraints.GetConstraintEnergy();
+  }
+
+  bool OBForceField::BFGSTakeNSteps(int n)
+  {
+    if (!_validSetup)
+      return 0;
+
+    double e_n2 = 0.;
+    double sTy, yTinvHy, alpha;
+    vector3 dir;
+
+    if (_ncoords != _mol.NumAtoms() * 3)
+      return false;
+
+    // http://en.wikipedia.org/wiki/BFGS
+    for (int step=1; step<=n; step++) {
+      _cstep++;
+
+      // determine direction using matrix multiplication
+      for (int row=0; row<_ncoords; row++) {
+        double p_i = 0.0;
+        // _grad1 is initialized in the previous step
+        for (int col=0; col<_ncoords; col++)
+          p_i += _BFGS_invH[row *_ncoords + col] * _grad1[row];
+        _BFGS_p[row] = p_i;
+      }
+
+      // perform a linesearch
+      switch (_linesearch) {
+      case LineSearchType::Newton2Num:
+        alpha = Newton2NumLineSearch(&_BFGS_p[0]);
+        break;
+      default:
+      case LineSearchType::Simple:
+        alpha = LineSearch(_mol.GetCoordinates(), &_BFGS_p[0]);
+        break;
+      }
+
+    for (int i=0; i<_ncoords; ++i)
+      _BFGS_s[i] = alpha * _BFGS_p[i];
+
+    // Store old gradient for update step
+    memcpy(_grad2, _grad1, _ncoords * sizeof(double));
+
+    // calculate gradient at new position
+    FOR_ATOMS_OF_MOL (a, _mol) {
+      unsigned int idx = a->GetIdx();
+      unsigned int coordIdx = (a->GetIdx() - 1) * 3;
+
+      if (_constraints.IsFixed(idx) || (_fixAtom == idx) || (_ignoreAtom == idx)) {
+        _grad1[coordIdx] = 0.0;
+        _grad1[coordIdx+1] = 0.0;
+        _grad1[coordIdx+2] = 0.0;
+      } else {
+        if (!HasAnalyticalGradients()) {
+          // use numerical gradients
+          dir = NumericalDerivative(&*a) + _constraints.GetGradient(a->GetIdx());
+        } else {
+          // use analytical gradients
+          dir = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
+        }
+
+        if (!_constraints.IsXFixed(idx))
+          _grad1[coordIdx] = dir.x();
+        else
+          _grad1[coordIdx] = 0.0;
+
+        if (!_constraints.IsYFixed(idx))
+          _grad1[coordIdx+1] = dir.y();
+        else
+          _grad1[coordIdx+1] = 0.0;
+
+        if (!_constraints.IsZFixed(idx))
+          _grad1[coordIdx+2] = dir.z();
+        else
+          _grad1[coordIdx+2] = 0.0;
+      }
+    }
+
+    // Calculate inverse hessian updates:
+    for (int i = 0; i < _ncoords; ++i) {
+      _BFGS_y[i] = _grad2[i] - _grad1[i];
+    }
+
+    for (int row=0; row<_ncoords; row++) {
+      for (int col=0; col<_ncoords; col++)
+        _BFGS_ssT[row * _ncoords + col] = _BFGS_s[row] * _BFGS_s[col];
+    }
+
+    sTy = 0.0;
+    for (int i=0; i<_ncoords; i++)
+      sTy += _BFGS_s[i] * _BFGS_y[i];
+
+    for (int row=0; row<_ncoords; row++) {
+      double p_i = 0.0;
+      for (int col=0; col<_ncoords; col++)
+        p_i += _BFGS_invH[row *_ncoords + col] * _BFGS_y[row];
+      _BFGS_invHy[row] = p_i;
+    }
+
+    yTinvHy = 0;
+    for (int i=0; i<_ncoords; i++)
+      yTinvHy += _BFGS_y[i]* _BFGS_invHy[i];
+
+    for (int row=0; row<_ncoords; row++) {
+      for (int col=0; col<_ncoords; col++)
+        _BFGS_invHysT[row * _ncoords + col] = _BFGS_invHy[row] * _BFGS_s[col];
+    }
+
+    for (int row=0; row<_ncoords; row++) {
+      for (int col=0; col<_ncoords; col++)
+        _BFGS_syT[row * _ncoords + col] = _BFGS_s[row] * _BFGS_y[col];
+    }
+    for (int row=0; row<_ncoords; row++) {
+      double x=0.0;
+      for (int shift=0; shift<_ncoords; shift++) {
+        for (int col=0; col<_ncoords; col++)
+          x += _BFGS_syT[row * _ncoords + col] * _BFGS_invH[row + col * _ncoords + shift];
+        _BFGS_syTInvH[shift + row * _ncoords] = x;
+      }
+    }
+
+    double a, b, frac1;
+
+    a = sTy + yTinvHy;
+    b = sTy * sTy;
+    frac1 = a / b;
+
+    for (int i=0; i<_ncoords*_ncoords; i++)
+      _BFGS_matrix1[i] *= frac1;
+
+    for (int i=0; i<_ncoords*_ncoords; i++) {
+      _BFGS_matrix2[i] = _BFGS_invHysT[i] + _BFGS_syTInvH[i];
+      _BFGS_matrix2[i] /= sTy;
+    }
+
+    // apply BFGS to generate new inverse Hessian matrix
+    for (int i=0; i<_ncoords*_ncoords; i++)
+      _BFGS_invH[i] += _BFGS_matrix1[i] - _BFGS_matrix2[i];
+
+    if ((_cstep % _pairfreq == 0) && _cutoff)
+      UpdatePairsSimple(); // Update the non-bonded pairs (Cut-off)
+
+    e_n2 = Energy() + _constraints.GetConstraintEnergy();
+
+    if (IsNear(e_n2, _e_n1, _econv)) {
+      IF_OBFF_LOGLVL_LOW {
+        snprintf(_logbuf, BUFF_SIZE, " %4d    %8.3f    %8.3f\n", _cstep, e_n2, _e_n1);
+        OBFFLog(_logbuf);
+        OBFFLog("    BFGS HAS CONVERGED\n");
+      }
+      return false;
+    }
+
+    IF_OBFF_LOGLVL_LOW {
+      if (_cstep % 10 == 0) {
+        snprintf(_logbuf, BUFF_SIZE, " %4d    %8.3f    %8.3f\n", _cstep, e_n2, _e_n1);
+        OBFFLog(_logbuf);
+      }
+    }
+
+    if (_nsteps == _cstep)
+      return false;
+
+    _e_n1 = e_n2;
+  }
+
+  return true; // no convergence reached
+}
+
+void OBForceField::BFGS(int steps, double econv, int method)
+{
+  BFGSInitialize(steps, econv, method);
+  if (steps > 1) // BFGSInitialize takes the first step
+    BFGSTakeNSteps(steps);
+}
 
   //
   //         f(1) - f(0)
