@@ -185,10 +185,10 @@ namespace OpenBabel
       OBConformerSearch cs;
       if (score == "energy")
         cs.SetScore(new OBEnergyConformerScore);
-      //else if (score.find("mine") != std::string::npos)
-      //  cs.SetScore(new OBMinimizingEnergyConformerScore);
-      //else if (score.find("minr") != std::string::npos)
-      //  cs.SetScore(new OBMinimizingRMSDConformerScore);
+      else if (score.find("mine") != std::string::npos)
+        cs.SetScore(new OBMinimizingEnergyConformerScore);
+      else if (score.find("minr") != std::string::npos)
+        cs.SetScore(new OBMinimizingRMSDConformerScore);
 
       if (cs.Setup(*pmol, numConformers, numChildren, mutability, convergence)) {
         cs.Search();
