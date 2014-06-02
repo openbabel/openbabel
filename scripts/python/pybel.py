@@ -1,4 +1,4 @@
-#-*. coding: utf-8 -*-
+# -*. coding: utf-8 -*-
 # Copyright (c) 2008-2012, Noel O'Boyle; 2012, Adrià Cereto-Massagué
 # All rights reserved.
 #
@@ -113,7 +113,7 @@ ipython_3d = False
 """Toggles 2D vs 3D molecule representations in IPython notebook"""
 
 # Javascript imports for IPython rendering
-_js_drawer = ""
+_3d_initialized = False
 
 
 def readfile(format, filename, opt=None):
@@ -416,12 +416,18 @@ class Molecule(object):
             return None
 
         # If the javascript files have not yet been loaded, do so
-        global _js_drawer
-        if not _js_drawer:
-            import urllib2
-            url = ("https://raw.github.com/openbabel/contributed/master/"
-                   "web/imolecule/build/imolecule.min.js")
-            _js_drawer = urllib2.urlopen(url).read()
+        # IPython >=2.0 does this by copying into ~/.ipython/nbextensions
+        lib_path = "/nbextensions/imolecule.min.js"
+        global _3d_initialized
+        if not _3d_initialized:
+            import IPython
+            from IPython.html.nbextensions import install_nbextension
+            if IPython.release.version < "2.0":
+                raise ImportError("3D rendering requires IPython >=2.0.")
+            filepath = os.path.normpath(os.path.dirname(__file__))
+            install_nbextension([os.path.join(filepath, "imolecule.min.js")],
+                                verbose=0)
+            _3d_initialized = True
 
         # Some exposed parameters. Leaving this unfunctionalized for now.
         size = (400, 300)
@@ -449,15 +455,15 @@ class Molecule(object):
                                            for v in uc.GetCellVectors()]
         json_mol = json.dumps(mol, separators=(",", ":"))
 
-        js = ("var $d = $('<div/>').attr('id', 'molecule_' + utils.uuid());"
-              "$d.width(%d); $d.height(%d);"
-              "imolecule.create($d, {drawingType: '%s', cameraType: '%s'});"
-              "imolecule.draw(%s);"
-              "container.show();"
-              "element.append($d);" % (size + (drawing_type, camera_type,
-                                       json_mol)))
-
-        return _js_drawer + js
+        return """require(['%s'], function () {
+               var $d = $('<div/>').attr('id', 'molecule_' + utils.uuid());
+               $d.width(%d); $d.height(%d);
+               $d.imolecule = jQuery.extend({}, imolecule);
+               $d.imolecule.create($d, {drawingType: '%s', cameraType: '%s'});
+               $d.imolecule.draw(%s);
+               element.append($d);
+               });""" % ((lib_path,) + size + (drawing_type, camera_type,
+                         json_mol))
 
     def calcdesc(self, descnames=[]):
         """Calculate descriptor values.
@@ -992,7 +998,7 @@ class MoleculeData(object):
         return answer
 
     def _testforkey(self, key):
-        if not key in self:
+        if key not in self:
             raise KeyError("'%s'" % key)
 
     def keys(self):

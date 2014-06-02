@@ -126,6 +126,9 @@ if (DO_PYTHON_BINDINGS)
         install(FILES ${openbabel_SOURCE_DIR}/scripts/python/pybel.py
                 DESTINATION ${PYTHON_INSTDIR}
                 COMPONENT bindings_python)
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/imolecule.min.js
+                DESTINATION ${PYTHON_INSTDIR}
+                COMPONENT bindings_python)
     else(NOT WIN32)
         set_target_properties(bindings_python PROPERTIES
             OUTPUT_NAME _openbabel
