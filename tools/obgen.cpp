@@ -23,6 +23,8 @@ GNU General Public License for more details.
 #define USING_OBDLL
 #endif
 
+#include <list>
+
 #include <openbabel/babelconfig.h>
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
@@ -44,7 +46,23 @@ int main(int argc,char **argv)
   int c;
   string basename, filename = "", option, option2, ff = "MMFF94";
 
-  if (argc < 2) {
+  list<string> argl(argv+1, argv+argc);
+
+  list<string>::iterator optff = find(argl.begin(), argl.end(), "-ff");
+  if (optff != argl.end()) {
+    list<string>::iterator optffarg = optff;
+    optffarg++;
+
+    if (optffarg != argl.end()) {
+      ff = *optffarg;
+
+      argl.erase(optff,++optffarg);
+    } else {
+      argl.erase(optff);
+    }
+  }
+
+  if (argl.empty()) {
     cout << "Usage: obgen <filename> [options]" << endl;
     cout << endl;
     cout << "options:      description:" << endl;
@@ -53,19 +71,13 @@ int main(int argc,char **argv)
     cout << endl;
     OBPlugin::List("forcefields", "verbose");
     exit(-1);
-  } else {
-    basename = filename = argv[1];
-    size_t extPos = filename.rfind('.');
+  }
 
-    if (extPos!= string::npos) {
-      basename = filename.substr(0, extPos);
-    }
+  basename = filename = *argl.begin();
+  size_t extPos = filename.rfind('.');
 
-    for (int i = 2; i < argc; i++) {
-      option = argv[i];
-      if ((option == "-ff") && (argc > (i+1)))
-        ff = argv[i+1];
-    }
+  if (extPos!= string::npos) {
+    basename = filename.substr(0, extPos);
   }
 
   // Find Input filetype
