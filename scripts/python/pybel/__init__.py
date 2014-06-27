@@ -425,8 +425,8 @@ class Molecule(object):
             if IPython.release.version < "2.0":
                 raise ImportError("3D rendering requires IPython >=2.0.")
             filepath = os.path.normpath(os.path.dirname(__file__))
-            install_nbextension([os.path.join(filepath, "imolecule.min.js")],
-                                verbose=0)
+            install_nbextension([os.path.join(filepath,
+                                 "static/imolecule.min.js")], verbose=0)
             _3d_initialized = True
 
         # Some exposed parameters. Leaving this unfunctionalized for now.
