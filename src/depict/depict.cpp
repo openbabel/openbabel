@@ -57,6 +57,8 @@ namespace OpenBabel
       void DrawRingBond(OBAtom *beginAtom, OBAtom *endAtom, const vector3 &center, int order);
       void DrawAtomLabel(const std::string &label, int alignment, const vector3 &pos);
 
+      void DrawRing(OBRing *ring, OBBitVec &drawnBonds);
+
       bool HasLabel(OBAtom *atom);
       void SetWedgeAndHash(OBMol* mol);
 
@@ -273,6 +275,37 @@ namespace OpenBabel
     return true;
   }
 
+  void OBDepictPrivate::DrawRing(OBRing *ring, OBBitVec &drawnBonds)
+  {
+    std::vector<int> indexes = ring->_path;
+    vector3 center(VZero);
+    for (std::vector<int>::iterator l = indexes.begin(); l != indexes.end(); ++l) {
+      center += mol->GetAtom(*l)->GetVector();
+    }
+    center /= indexes.size();
+
+    for (unsigned int l = 0; l < indexes.size(); ++l) {
+      OBAtom *begin = mol->GetAtom(indexes[l]);
+      OBAtom *end;
+      if (l+1 < indexes.size())
+        end = mol->GetAtom(indexes[l+1]);
+      else
+        end = mol->GetAtom(indexes[0]);
+
+      OBBond *ringBond = mol->GetBond(begin, end);
+      if (drawnBonds.BitIsSet(ringBond->GetId()))
+        continue;
+
+      if((options & OBDepict::internalColor) && ringBond->HasData("color"))
+        painter->SetPenColor(OBColor(ringBond->GetData("color")->GetValue()));
+      else
+        painter->SetPenColor(bondColor);
+
+      DrawRingBond(begin, end, center, ringBond->GetBO());
+      drawnBonds.SetBitOn(ringBond->GetId());
+    }
+  }
+
   bool OBDepict::DrawMolecule(OBMol *mol)
   {
     if (!d->painter)
@@ -399,36 +432,18 @@ namespace OpenBabel
 
     // draw ring bonds
     OBBitVec drawnBonds;
+    // draw aromatic rings first, looks better since all double bonds will
+    // be inside aromatic rings
     for (std::vector<OBRing*>::iterator k = rings.begin(); k != rings.end(); ++k) {
       OBRing *ring = *k;
-      std::vector<int> indexes = ring->_path;
-      vector3 center(VZero);
-      for (std::vector<int>::iterator l = indexes.begin(); l != indexes.end(); ++l) {
-        center += d->mol->GetAtom(*l)->GetVector();
-      }
-      center /= indexes.size();
-
-      for (unsigned int l = 0; l < indexes.size(); ++l) {
-        OBAtom *begin = d->mol->GetAtom(indexes[l]);
-        OBAtom *end;
-        if (l+1 < indexes.size())
-          end = d->mol->GetAtom(indexes[l+1]);
-        else
-          end = d->mol->GetAtom(indexes[0]);
-
-        OBBond *ringBond = d->mol->GetBond(begin, end);
-        if (drawnBonds.BitIsSet(ringBond->GetId()))
-          continue;
-
-        if((d->options & internalColor) && ringBond->HasData("color"))
-          d->painter->SetPenColor(OBColor(ringBond->GetData("color")->GetValue()));
-        else
-          d->painter->SetPenColor(d->bondColor);
-
-        d->DrawRingBond(begin, end, center, ringBond->GetBO());
-        drawnBonds.SetBitOn(ringBond->GetId());
-      }
-
+      if (ring->IsAromatic())
+        d->DrawRing(ring, drawnBonds);
+    }
+    // draw aliphatic rings
+    for (std::vector<OBRing*>::iterator k = rings.begin(); k != rings.end(); ++k) {
+      OBRing *ring = *k;
+      if (!ring->IsAromatic())
+        d->DrawRing(ring, drawnBonds);
     }
 
     // draw atom labels
