@@ -1,4 +1,4 @@
-# 2008-03-15
+# Open Babel data files
 
 set(to_install
     aromatic.txt
@@ -45,6 +45,7 @@ set(to_install
     space-groups.txt
     superatom.txt
     svgformat.script
+    templates.sdf
     torlib.txt
     types.txt
     UFF.prm
