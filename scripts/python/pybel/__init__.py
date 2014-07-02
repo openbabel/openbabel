@@ -416,8 +416,8 @@ class Molecule(object):
         # If the javascript files have not yet been loaded, do so
         # IPython >=2.0 does this by copying into ~/.ipython/nbextensions
         local_path = "/nbextensions/imolecule.min"
-        remote_path = ("https://raw.githubusercontent.com/patrickfuller/"
-                       "imolecule/master/build/imolecule.min")
+        remote_path = ("https://github.com/openbabel/contributed/blob/master/"
+                       "web/imolecule/build/imolecule.min")
         file_path = os.path.normpath(os.path.dirname(__file__))
 
         # Try using IPython >=2.0 to install js locally
