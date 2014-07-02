@@ -22,6 +22,7 @@ import sys
 import os.path
 import tempfile
 import json
+import uuid
 
 if sys.platform[:4] == "java":
     import org.openbabel as ob
@@ -111,9 +112,6 @@ _operations = _getplugins(ob.OBOp.FindType, operations)
 
 ipython_3d = False
 """Toggles 2D vs 3D molecule representations in IPython notebook"""
-
-# Javascript imports for IPython rendering
-_3d_initialized = False
 
 
 def readfile(format, filename, opt=None):
@@ -408,7 +406,7 @@ class Molecule(object):
 
         return self.write("svg")
 
-    def _repr_javascript_(self):
+    def _repr_html_(self):
         """For IPython notebook, renders 3D pybel.Molecule webGL objects."""
 
         # Returning None defers to _repr_svg_
@@ -417,17 +415,18 @@ class Molecule(object):
 
         # If the javascript files have not yet been loaded, do so
         # IPython >=2.0 does this by copying into ~/.ipython/nbextensions
-        lib_path = "/nbextensions/imolecule.min.js"
-        global _3d_initialized
-        if not _3d_initialized:
-            import IPython
+        local_path = "/nbextensions/imolecule.min"
+        remote_path = ("https://raw.githubusercontent.com/patrickfuller/"
+                       "imolecule/master/build/imolecule.min")
+        file_path = os.path.normpath(os.path.dirname(__file__))
+
+        # Try using IPython >=2.0 to install js locally
+        try:
             from IPython.html.nbextensions import install_nbextension
-            if IPython.release.version < "2.0":
-                raise ImportError("3D rendering requires IPython >=2.0.")
-            filepath = os.path.normpath(os.path.dirname(__file__))
-            install_nbextension([os.path.join(filepath,
+            install_nbextension([os.path.join(file_path,
                                  "static/imolecule.min.js")], verbose=0)
-            _3d_initialized = True
+        except:
+            pass
 
         # Some exposed parameters. Leaving this unfunctionalized for now.
         size = (400, 300)
@@ -451,19 +450,25 @@ class Molecule(object):
         mol = {"atoms": atoms, "bonds": bonds}
         if hasattr(self, "unitcell"):
             uc = self.unitcell
-            mol["periodic_connections"] = [[v.GetX(), v.GetY(), v.GetZ()]
-                                           for v in uc.GetCellVectors()]
+            mol["unitcell"] = [[v.GetX(), v.GetY(), v.GetZ()]
+                               for v in uc.GetCellVectors()]
         json_mol = json.dumps(mol, separators=(",", ":"))
 
-        return """require(['%s'], function () {
-               var $d = $('<div/>').attr('id', 'molecule_' + utils.uuid());
+        # Try using local copy. If that fails, use remote copy.
+        div_id = uuid.uuid4()
+        return """<div id="molecule_%s"></div>
+               <script type="text/javascript">
+               requirejs.config({paths: {imolecule: ['%s', '%s']}});
+               require(['imolecule'], function () {
+               var $d = $('#molecule_%s');
                $d.width(%d); $d.height(%d);
                $d.imolecule = jQuery.extend({}, imolecule);
                $d.imolecule.create($d, {drawingType: '%s', cameraType: '%s'});
                $d.imolecule.draw(%s);
-               element.append($d);
-               });""" % ((lib_path,) + size + (drawing_type, camera_type,
-                         json_mol))
+               });
+               </script>""" % (div_id, local_path, remote_path, div_id,
+                               size[0], size[1], drawing_type, camera_type,
+                               json_mol)
 
     def calcdesc(self, descnames=[]):
         """Calculate descriptor values.
