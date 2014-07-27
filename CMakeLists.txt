@@ -14,7 +14,9 @@ set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS 1)
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
   cmake_policy(SET CMP0005 OLD) # add_definitions need updating to set to NEW
-  cmake_policy(SET CMP0042 OLD)
+  if(POLICY CMP0042)
+    cmake_policy(SET CMP0042 OLD)
+  endif()
 endif()
 
 include (CheckCXXCompilerFlag)
