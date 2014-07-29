@@ -91,7 +91,7 @@ public:
   CDXReader(std::istream& is);
   CDXTag ReadNext(bool objectsOnly=false, int targetDepth=-2);
   void IgnoreObject()          { ReadNext(true, GetDepth()-1); }
-  operator bool ()const        { return ifs; }
+  operator bool ()const        { return (bool)ifs; }
   int GetDepth()const          { return depth; }
   int GetLen()const            { return _len;} //length of current property data
   CDXObjectID CurrentID()const { return ids.back(); }
