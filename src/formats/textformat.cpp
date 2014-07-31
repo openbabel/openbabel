@@ -79,7 +79,7 @@ public:
       ostream* ofs = pConv->GetOutStream();
       if(ofs)
         *ofs << pText->GetText();
-      return *ofs;
+      return (bool)*ofs;
     }
   }
 };

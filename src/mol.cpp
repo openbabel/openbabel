@@ -3779,6 +3779,23 @@ namespace OpenBabel
     _flags &= (~(OB_KEKULE_MOL));
     Kekulize();
 
+    // Quick pass.. eliminate inter-ring sulfur atom multiple bonds
+    for (atom = BeginAtom(i); atom; atom = NextAtom(i)) {
+      // Don't build multiple bonds to ring sulfurs
+      //  except thiopyrylium
+      if (atom->IsInRing() && atom->GetAtomicNum() == 16) {
+        if (_totalCharge > 1 && atom->GetFormalCharge() == 0)
+          atom->SetFormalCharge(+1);
+        else {
+          // remove any ring bonds with multiple bond order
+          FOR_BONDS_OF_ATOM(bond, &*atom) {
+            if (bond->IsInRing() && bond->GetBondOrder() > 1)
+              bond->SetBondOrder(1);
+          }
+        }
+      }
+    }
+
     // Pass 6: Assign remaining bond types, ordered by atom electronegativity
     vector<pair<OBAtom*,double> > sortedAtoms;
     vector<double> rad;
@@ -3938,7 +3955,7 @@ namespace OpenBabel
     //deficient and which have implicit valency definitions (essentially the
     //organic subset in SMILES). There are assumed to no implicit hydrogens.
     AssignSpinMultiplicity(true);
-  }
+    }
 
   void OBMol::Center()
   {
