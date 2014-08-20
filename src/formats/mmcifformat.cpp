@@ -57,7 +57,7 @@ namespace OpenBabel
    //*** This section identical for most OBMol conversions ***
    ////////////////////////////////////////////////////
    /// The "API" interface functions
- 	virtual int SkipObjects(int n, OBConversion* pConv);
+   virtual int SkipObjects(int n, OBConversion* pConv);
    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
  };
@@ -260,18 +260,18 @@ namespace OpenBabel
  };
  CIFTagID::CIFDataName CIFLexer::lookup_tag(const string & tag_name)
  {
-	  if (CIFtagLookupTable.empty())
-		  {
-		  for (size_t idx = 0; CIFTagsRead[idx].tagid != CIFTagID::unread_CIFDataName; ++ idx)
-			  {
-			  CIFtagLookupTable.insert(CIFtagmap::value_type(string(CIFTagsRead[idx].tagname), CIFTagsRead[idx].tagid ));
-			  }
-		  }
- 	CIFTagID::CIFDataName rtn = CIFTagID::unread_CIFDataName;
-	  CIFtagmap::const_iterator found = CIFtagLookupTable.find(tag_name);
-	  if (found != CIFtagLookupTable.end())
-		  rtn = (* found).second;
-	  return rtn;
+    if (CIFtagLookupTable.empty())
+      {
+      for (size_t idx = 0; CIFTagsRead[idx].tagid != CIFTagID::unread_CIFDataName; ++ idx)
+        {
+        CIFtagLookupTable.insert(CIFtagmap::value_type(string(CIFTagsRead[idx].tagname), CIFTagsRead[idx].tagid ));
+        }
+      }
+   CIFTagID::CIFDataName rtn = CIFTagID::unread_CIFDataName;
+    CIFtagmap::const_iterator found = CIFtagLookupTable.find(tag_name);
+    if (found != CIFtagLookupTable.end())
+      rtn = (* found).second;
+    return rtn;
  }
  CIFTagID::CIFCatName CIFLexer::lookup_cat(CIFTagID::CIFDataName tagid)
  {
@@ -449,7 +449,7 @@ namespace OpenBabel
  return token.type != CIFLexer::UnknownToken;
  }
  /////////////////////////////////////////////////////////////////
-	int mmCIFFormat::SkipObjects(int n, OBConversion* pConv)
+  int mmCIFFormat::SkipObjects(int n, OBConversion* pConv)
  {
    if (n == 0)
      ++ n;
@@ -644,7 +644,7 @@ namespace OpenBabel
                residue_name.assign(token.as_text);
                break;
              case CIFTagID::_atom_site_label_entity_id: // The chain entity number of the residue, e.g. 2
-		// ignored and replaced by unique id for label_asym_id
+    // ignored and replaced by unique id for label_asym_id
                break;
              case CIFTagID::_atom_site_label_asym_id: // The strand number of the residue
                    if (token.as_text != last_asym_id) {
@@ -821,7 +821,7 @@ namespace OpenBabel
            for (OBAtomIterator atom_x = pmol->BeginAtoms(), atom_y = pmol->EndAtoms(); atom_x != atom_y; ++ atom_x)
              {
              OBAtom * atom = (* atom_x);
-             atom->SetVector(atom->GetX() * cell_a, atom->GetY() * cell_b, atom->GetZ() * cell_c);
+             atom->SetVector(pCell->FractionalToCartesian(atom->GetVector()));
              }
            }
          }
@@ -832,7 +832,7 @@ namespace OpenBabel
            pmol->PerceiveBondOrders();
          }
        }
- 	  pmol->EndModify();
+     pmol->EndModify();
      }
    return (pmol->NumAtoms() > 0 ? true : false);
  }
