@@ -19,6 +19,8 @@ GNU General Public License for more details.
 #include <openbabel/obmolecformat.h>
 
 #include <iostream>
+#include <algorithm>
+#include <ctype.h>
 
 using namespace std;
 namespace OpenBabel
@@ -606,7 +608,9 @@ namespace OpenBabel
                atom_mol_label.assign(token.as_text);
                if (atom_type_tag != CIFTagID::_atom_site_label)
                  break;
-               // else drop through to _atom_site_type_symbol
+               // Else remove digits and drop through to _atom_site_type_symbol
+               token.as_text.erase(remove_if(token.as_text.begin(), token.as_text.end(), ::isdigit),
+                                   token.as_text.end());
              case CIFTagID::_atom_site_type_symbol:
                atom->SetAtomicNum(etab.GetAtomicNum(token.as_text.c_str()));
                atom->SetType(token.as_text);
