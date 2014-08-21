@@ -825,7 +825,8 @@ namespace OpenBabel
            for (OBAtomIterator atom_x = pmol->BeginAtoms(), atom_y = pmol->EndAtoms(); atom_x != atom_y; ++ atom_x)
              {
              OBAtom * atom = (* atom_x);
-             atom->SetVector(pCell->FractionalToCartesian(atom->GetVector()));
+             atom->SetVector(pCell->FractionalToCartesian(
+                             pCell->WrapFractionalCoordinate(atom->GetVector())));
              }
            }
          }
