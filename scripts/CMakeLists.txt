@@ -123,7 +123,7 @@ if (DO_PYTHON_BINDINGS)
         install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
                 DESTINATION ${PYTHON_INSTDIR}
                 COMPONENT bindings_python)
-        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/pybel.py
+        install(DIRECTORY ${openbabel_SOURCE_DIR}/scripts/python/pybel
                 DESTINATION ${PYTHON_INSTDIR}
                 COMPONENT bindings_python)
     else(NOT WIN32)
