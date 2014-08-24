@@ -1,4 +1,4 @@
-#-*. coding: utf-8 -*-
+# -*. coding: utf-8 -*-
 # Copyright (c) 2008-2012, Noel O'Boyle; 2012, Adrià Cereto-Massagué
 # All rights reserved.
 #
@@ -22,6 +22,7 @@ import sys
 import os.path
 import tempfile
 import json
+import uuid
 
 if sys.platform[:4] == "java":
     import org.openbabel as ob
@@ -111,9 +112,6 @@ _operations = _getplugins(ob.OBOp.FindType, operations)
 
 ipython_3d = False
 """Toggles 2D vs 3D molecule representations in IPython notebook"""
-
-# Javascript imports for IPython rendering
-_js_drawer = ""
 
 
 def readfile(format, filename, opt=None):
@@ -408,7 +406,7 @@ class Molecule(object):
 
         return self.write("svg")
 
-    def _repr_javascript_(self):
+    def _repr_html_(self):
         """For IPython notebook, renders 3D pybel.Molecule webGL objects."""
 
         # Returning None defers to _repr_svg_
@@ -416,12 +414,20 @@ class Molecule(object):
             return None
 
         # If the javascript files have not yet been loaded, do so
-        global _js_drawer
-        if not _js_drawer:
-            import urllib2
-            url = ("https://raw.github.com/openbabel/contributed/master/"
-                   "web/imolecule/build/imolecule.min.js")
-            _js_drawer = urllib2.urlopen(url).read()
+        # IPython >=2.0 does this by copying into ~/.ipython/nbextensions
+        filename = "imolecule.min.js"
+        local_path = os.path.join("nbextensions", filename)
+        remote_path = ("https://rawgit.com/openbabel/contributed/master/web/"
+                       "imolecule/build/imolecule.min.js")
+
+        # Try using IPython >=2.0 to install js locally from website
+        try:
+            from IPython.html.nbextensions import (install_nbextension,
+                                                   check_nbextension)
+            if not check_nbextension(local_path):
+                install_nbextension(remote_path, verbose=0)
+        except:
+            pass
 
         # Some exposed parameters. Leaving this unfunctionalized for now.
         size = (400, 300)
@@ -445,19 +451,29 @@ class Molecule(object):
         mol = {"atoms": atoms, "bonds": bonds}
         if hasattr(self, "unitcell"):
             uc = self.unitcell
-            mol["periodic_connections"] = [[v.GetX(), v.GetY(), v.GetZ()]
-                                           for v in uc.GetCellVectors()]
+            mol["unitcell"] = [[v.GetX(), v.GetY(), v.GetZ()]
+                               for v in uc.GetCellVectors()]
+            # Support for previous naming scheme
+            mol["periodic_connections"] = mol["unitcell"]
         json_mol = json.dumps(mol, separators=(",", ":"))
 
-        js = ("var $d = $('<div/>').attr('id', 'molecule_' + utils.uuid());"
-              "$d.width(%d); $d.height(%d);"
-              "imolecule.create($d, {drawingType: '%s', cameraType: '%s'});"
-              "imolecule.draw(%s);"
-              "container.show();"
-              "element.append($d);" % (size + (drawing_type, camera_type,
-                                       json_mol)))
-
-        return _js_drawer + js
+        # Try using local copy. If that fails, use remote copy.
+        div_id = uuid.uuid4()
+        return """<div id="molecule_%s"></div>
+               <script type="text/javascript">
+               requirejs.config({baseUrl: "/",
+                                 paths: {imolecule: ['%s', '%s']}});
+               require(['imolecule'], function () {
+                   var $d = $('#molecule_%s');
+                   $d.width(%d); $d.height(%d);
+                   $d.imolecule = jQuery.extend({}, imolecule);
+                   $d.imolecule.create($d, {drawingType: '%s',
+                                            cameraType: '%s'});
+                   $d.imolecule.draw(%s);
+               });
+               </script>""" % (div_id, local_path[:-3], remote_path[:-3],
+                               div_id, size[0], size[1], drawing_type,
+                               camera_type, json_mol)
 
     def calcdesc(self, descnames=[]):
         """Calculate descriptor values.
@@ -992,7 +1008,7 @@ class MoleculeData(object):
         return answer
 
     def _testforkey(self, key):
-        if not key in self:
+        if key not in self:
             raise KeyError("'%s'" % key)
 
     def keys(self):
