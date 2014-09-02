@@ -266,16 +266,18 @@ namespace OpenBabel
       /** \return Is the bond a secondary amide (i.e., between a carbonyl C and a NH1)?
            In versions prior to 2.3, this function incorrectly identified tertiary amides. **/
       bool IsSecondaryAmide();
-      /** \return Is the bond a teriary amide (i.e., between a carbonyl C and a NH0)?
-           This function is new since release 2.3.**/
+      //! \return Is the bond a teriary amide (i.e., between a carbonyl C and a NH0)?
+      //!  \since version 2.3.
       bool IsTertiaryAmide();
       //! \return Is the bond an amidine link (i.e., between an imide C and a N)?
+      //! \since version 2.4
       bool IsAmidine();
       //! \return Is the bond an ester link (i.e., between a carbonyl C and an O)?
       bool IsEster();
       //! \return Is the bond a carbonyl C=O?
       bool IsCarbonyl();
       //! \return Is the bond an imide C=N?
+      //! \since version 2.4
       bool IsImide();
       //! \return Is the bond a single bond?
       bool IsSingle();

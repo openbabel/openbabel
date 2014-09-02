@@ -192,7 +192,7 @@ namespace OpenBabel
       }
 
       // Perform the actual minimization, maximum 1000 steps
-      pFF->SteepestDescent(1000);
+      pFF->ConjugateGradients(1000);
       \endcode
 
       Minimize a ligand molecule in a binding pocket.
@@ -238,7 +238,7 @@ namespace OpenBabel
       }
 
       // Perform the actual minimization, maximum 1000 steps
-      pFF->SteepestDescent(1000);
+      pFF->ConjugateGradients(1000);
       \endcode
 
   **/
@@ -1319,6 +1319,149 @@ namespace OpenBabel
       while (SystematicRotorSearchNextConformer(geomSteps)) {}
   }
 
+  int OBForceField::FastRotorSearch(bool permute)
+  {
+    if (_mol.NumRotors() == 0)
+      return 0;
+
+    int origLogLevel = _loglvl;
+
+    // Remove all conformers (e.g. from previous conformer generators) except for current conformer
+    double *initialCoord = new double [_mol.NumAtoms() * 3]; // initial state
+    double *store_initial = new double [_mol.NumAtoms() * 3]; // store the initial state
+    memcpy((char*)initialCoord,(char*)_mol.GetCoordinates(),sizeof(double)*3*_mol.NumAtoms());
+    memcpy((char*)store_initial,(char*)_mol.GetCoordinates(),sizeof(double)*3*_mol.NumAtoms());
+    std::vector<double *> newConfs(1, initialCoord);
+    _mol.SetConformers(newConfs);
+
+    _energies.clear(); // Wipe any energies from previous conformer generators
+
+    OBRotorList rl;
+    OBBitVec fixed = _constraints.GetFixedBitVec();
+    rl.SetFixAtoms(fixed);
+    rl.SetQuiet();
+    rl.Setup(_mol);
+
+    OBRotorIterator ri;
+    OBRotamerList rotamerlist;
+    rotamerlist.SetBaseCoordinateSets(_mol);
+    rotamerlist.Setup(_mol, rl);
+
+    // Start with all of the rotors in their 0 position
+    // (perhaps instead I should set them randomly?)
+    std::vector<int> init_rotorKey(rl.Size() + 1, 0);
+    std::vector<int> rotorKey(init_rotorKey);
+
+    unsigned int j, minj;
+    double currentE, minE, best_minE;
+
+    double *verybestconf = new double [_mol.NumAtoms() * 3]; // store the best conformer to date
+    double *bestconf = new double [_mol.NumAtoms() * 3]; // store the best conformer to date in the current permutation
+    double *minconf = new double [_mol.NumAtoms() * 3];  // store the best conformer for the current rotor
+    memcpy((char*)bestconf,(char*)_mol.GetCoordinates(),sizeof(double)*3*_mol.NumAtoms());
+
+    double energy_offset;
+    // Can take shortcut later, as 4 components of the energy will be constant
+    rotamerlist.SetCurrentCoordinates(_mol, rotorKey);
+    SetupPointers();
+    energy_offset = E_Bond(false) + E_Angle(false) + E_StrBnd(false) + E_OOP(false);
+
+    // This function relies on the fact that Rotors are ordered from the most
+    // central to the most peripheral (due to CompareRotors in rotor.cpp)
+    std::vector<OBRotor *> vrotors;
+    OBRotor *rotor;
+    for (rotor = rl.BeginRotor(ri); rotor; rotor = rl.NextRotor(ri))
+      vrotors.push_back(rotor);
+
+    // The permutations are ordered so that the first 2 permutations cover the
+    // combinations of 2, and the first 6 permutations cover the combinations of 3
+    const char permutations[24*4] = {0,1,2,3, 1,0,2,3, 0,2,1,3, 1,2,0,3, 2,0,1,3, 2,1,0,3,
+                                     0,1,3,2, 0,2,3,1, 0,3,1,2, 0,3,2,1, 1,0,3,2, 1,2,3,0,
+                                     1,3,0,2, 1,3,2,0, 2,0,3,1, 2,1,3,0, 2,3,0,1, 2,3,1,0,
+                                     3,0,1,2, 3,0,2,1, 3,1,0,2, 3,1,2,0, 3,2,0,1, 3,2,1,0};
+    const char factorial[5] = {0, 1, 2, 6, 24};
+
+    char num_rotors_to_permute, num_permutations;
+    if (permute)
+      num_rotors_to_permute = std::min<size_t> (4, vrotors.size());
+    else
+      num_rotors_to_permute = 1; // i.e. just use the original order
+    num_permutations = factorial[num_rotors_to_permute];
+
+    // Initialize reordered_rotors - the order in which to test rotors
+    std::vector<unsigned int> reordered_rotors(vrotors.size());
+    for (int i=0; i<vrotors.size(); ++i)
+      reordered_rotors[i] = i;
+
+    std::set<unsigned int> seen;
+    best_minE = DBL_MAX;
+    for (int N=0; N<num_permutations; ++N) {
+      for (int i=0; i<num_rotors_to_permute; ++i)
+        reordered_rotors.at(i) = *(permutations + N*4 + i);
+
+      rotorKey = init_rotorKey;
+      _mol.SetCoordinates(store_initial);
+      bool quit = false;
+
+      for (int i=0; i<reordered_rotors.size(); ++i) {
+        unsigned int idx = reordered_rotors[i];
+        rotor = vrotors.at(idx);
+
+        minE = DBL_MAX;
+
+        for (j = 0; j < rotor->GetResolution().size(); j++) { // For each rotor position
+          // Note: we could do slightly better by skipping the rotor position we already
+          //       tested in the last loop (position 0 at the moment). Note that this
+          //       isn't as simple as just changing the loop starting point to j = 1.
+          _mol.SetCoordinates(bestconf);
+          rotorKey[idx + 1] = j;
+          rotamerlist.SetCurrentCoordinates(_mol, rotorKey);
+          SetupPointers();
+
+          currentE = E_VDW(false) + E_Torsion(false) + E_Electrostatic(false);
+
+          if (currentE < minE) {
+            minE = currentE;
+            minj = j;
+            memcpy((char*)minconf,(char*)_mol.GetCoordinates(),sizeof(double)*3*_mol.NumAtoms());
+          }
+        } // Finished testing all positions of this rotor
+        rotorKey[idx + 1] = minj;
+
+        if (i==4) { // Check whether this rotorKey has already been chosen
+          // Create a hash of the rotorKeys (given that the max value of any rotorKey is 11 from torlib.txt)
+          unsigned int hash = rotorKey[1] + rotorKey[2]*12 + rotorKey[3]*12*12 + rotorKey[4]*12*12*12;
+
+          if (seen.find(hash) == seen.end()) // Not seen before
+            seen.insert(hash);
+          else { // Already seen - no point continuing
+            quit = true;
+            break;
+          }
+        }
+
+        memcpy((char*)bestconf,(char*)minconf,sizeof(double)*3*_mol.NumAtoms());
+      } // end of this permutation
+      if (!quit) {
+          if (minE < best_minE) {
+            best_minE = minE;
+            memcpy((char*)verybestconf,(char*)bestconf,sizeof(double)*3*_mol.NumAtoms());
+          }
+      }
+
+    } // end of final permutation
+
+    _mol.SetCoordinates(verybestconf);
+    SetupPointers();
+
+    delete [] store_initial;
+    delete [] bestconf;
+    delete [] verybestconf;
+    delete [] minconf;
+
+    return true;
+  }
+
   void OBForceField::RandomRotorSearchInitialize(unsigned int conformers, unsigned int geomSteps)
   {
     if (!_validSetup)
@@ -1583,7 +1726,7 @@ namespace OpenBabel
         SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
 
         _loglvl = OBFF_LOGLVL_NONE;
-        SteepestDescent(geomSteps); // energy minimization for conformer
+        ConjugateGradients(geomSteps); // energy minimization for conformer
         _loglvl = origLogLevel;
         currentE = Energy(false);
 
@@ -1663,7 +1806,7 @@ namespace OpenBabel
       SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
 
       _loglvl = OBFF_LOGLVL_NONE;
-      SteepestDescent(geomSteps); // energy minimization for conformer
+      ConjugateGradients(geomSteps); // energy minimization for conformer
       _loglvl = origLogLevel;
       currentE = Energy(false);
       _energies.push_back(currentE);
@@ -2292,7 +2435,7 @@ namespace OpenBabel
     double opt_step = 0.0;
     double opt_e = _e_n1; // get energy calculated by sd or cg
     const double def_step = 0.025; // default step
-    const double max_step = 5.0; // don't move further than 0.3 Angstroms
+    const double max_step = 4.5; // don't go too far
 
     double sum = 0.0;
     for (unsigned int c = 0; c < _ncoords; ++c) {
@@ -2306,7 +2449,7 @@ namespace OpenBabel
 
     double scale = sqrt(sum);
     if (IsNearZero(scale)) {
-      cout << "WARNING: too small \"scale\" at Newton2NumLineSearch" << endl;
+      //      cout << "WARNING: too small \"scale\" at Newton2NumLineSearch" << endl;
       scale = 1.0e-70; // try to avoid "division by zero" conditions
     }
 
@@ -2343,7 +2486,7 @@ namespace OpenBabel
       if (denom != 0.0) {
         step = fabs(step - delta * (e_n2 - e_n1) / denom);
         if (step > max_scl) {
-          cout << "WARNING: damped steplength " << step << " to " << max_scl << endl;
+          //          cout << "WARNING: damped steplength " << step << " to " << max_scl << endl;
           step = max_scl;
         }
       } else {
@@ -2367,6 +2510,8 @@ namespace OpenBabel
 
     // Take optimal step
     LineSearchTakeStep(origCoords, direction, opt_step);
+
+    //    cout << " scale: " << scale << " step: " << opt_step*scale << " maxstep " << max_scl*scale << endl;
 
     delete [] origCoords;
 
@@ -2629,6 +2774,7 @@ namespace OpenBabel
     _nsteps = steps;
     _cstep = 0;
     _econv = econv;
+    _gconv = 1.0e-2; // gradient convergence (0.1) squared
 
     if (_cutoff)
       UpdatePairsSimple(); // Update the non-bonded pairs (Cut-off)
@@ -2655,9 +2801,11 @@ namespace OpenBabel
     _ncoords = _mol.NumAtoms() * 3;
     double e_n2;
     vector3 dir;
+    double maxgrad; // for convergence
 
     for (int i = 1; i <= n; i++) {
       _cstep++;
+      maxgrad = 1.0e20;
 
       FOR_ATOMS_OF_MOL (a, _mol) {
         unsigned int idx = a->GetIdx();
@@ -2675,6 +2823,10 @@ namespace OpenBabel
             // use analytical gradients
             dir = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
           }
+
+          // check to see how large the gradients are
+          if (dir.length_2() > maxgrad)
+            maxgrad = dir.length_2();
 
           if (!_constraints.IsXFixed(idx))
             _gradientPtr[coordIdx] = dir.x();
@@ -2714,7 +2866,8 @@ namespace OpenBabel
         }
       }
 
-      if (IsNear(e_n2, _e_n1, _econv)) {
+      if (IsNear(e_n2, _e_n1, _econv)
+          && (maxgrad < _gconv)) { // gradient criteria (0.1) squared
         IF_OBFF_LOGLVL_LOW
           OBFFLog("    STEEPEST DESCENT HAS CONVERGED\n");
         return false;
@@ -2750,6 +2903,7 @@ namespace OpenBabel
     _cstep = 0;
     _nsteps = steps;
     _econv = econv;
+    _gconv = 1.0e-2; // gradient convergence (0.1) squared
     _ncoords = _mol.NumAtoms() * 3;
 
     if (_cutoff)
@@ -2836,6 +2990,7 @@ namespace OpenBabel
     double g2g2, g1g1, beta;
     vector3 grad2, dir2;
     vector3 grad1, dir1; // temporaries to perform dot product, etc.
+    double maxgrad; // for convergence
 
     if (_ncoords != _mol.NumAtoms() * 3)
       return false;
@@ -2844,6 +2999,7 @@ namespace OpenBabel
 
     for (int i = 1; i <= n; i++) {
       _cstep++;
+      maxgrad = 1.0e20;
 
       FOR_ATOMS_OF_MOL (a, _mol) {
         unsigned int idx = a->GetIdx();
@@ -2873,6 +3029,10 @@ namespace OpenBabel
             beta = g2g2 / g1g1;
             grad2 += beta * grad1;
           }
+
+          // check to see how large the gradients are
+          if (grad2.length_2() > maxgrad)
+            maxgrad = grad2.length_2();
 
           if (!_constraints.IsXFixed(idx))
             _grad1[coordIdx] = grad2.x();
@@ -2908,7 +3068,8 @@ namespace OpenBabel
       if ((_cstep % _pairfreq == 0) && _cutoff)
         UpdatePairsSimple(); // Update the non-bonded pairs (Cut-off)
 
-      if (IsNear(e_n2, _e_n1, _econv)) {
+      if (IsNear(e_n2, _e_n1, _econv)
+          && (maxgrad < _gconv)) { // gradient criteria (0.1) squared
         IF_OBFF_LOGLVL_LOW {
           snprintf(_logbuf, BUFF_SIZE, " %4d    %8.3f    %8.3f\n", _cstep, e_n2, _e_n1);
           OBFFLog(_logbuf);

@@ -310,9 +310,9 @@ namespace OpenBabel
 
         mol.AddBond(start,end,order);
       }
-      
+
     // Make a pass to ensure that there are no double bonds
-    // between atoms which are also involved in aromatic bonds 
+    // between atoms which are also involved in aromatic bonds
     // as that may ill-condition kekulization (fixes potential
     // issues with molecules like CEWYIM30 (MMFF94 validation suite)
     // Patch by Paolo Tosco 2012-06-07
@@ -378,12 +378,17 @@ namespace OpenBabel
     // Patch by Paolo Tosco 2012-06-07
     OBAtom *carbon, *partner, *boundToNitrogen;
     OBBitVec bv;
-    
+
     bv.SetBitOn(nbonds);
     bv.Clear();
     FOR_BONDS_OF_MOL(bond, mol)
     {
       if (bv[bond->GetIdx()] || (bond->GetBO() != 5))
+        continue;
+
+      // only bother for 6 membered rings (e.g., pyridinium)
+      // 5-membered rings like pyrrole, imidazole, or triazole are OK with nH
+      if ( (bond->FindSmallestRing())->Size() != 6 )
         continue;
 
       if ((bond->GetBeginAtom()->IsCarbon() && bond->GetEndAtom()->IsNitrogen())
@@ -442,6 +447,8 @@ namespace OpenBabel
         OBAtom *atom1, *atom2;
         atom1 = bond->GetBeginAtom();
         atom2 = bond->GetEndAtom();
+        // set formal charges for pyrilium
+        // (i.e., this bond is a 6-membered ring, aromatic, and C-O)
         if (atom1->IsOxygen() && atom1->IsInRingSize(6))
           atom1->SetFormalCharge(1);
         else if (atom2->IsOxygen() && atom2->IsInRingSize(6))
@@ -480,7 +487,7 @@ namespace OpenBabel
 
     ifs.seekg(pos); // go back to the end of the molecule
     */
-    
+
     return(true);
   }
 
@@ -585,11 +592,11 @@ namespace OpenBabel
             snprintf(rnum,BUFF_SIZE,"%d",res->GetNum());
           }
 
-        snprintf(buffer,BUFF_SIZE,"%7d%1s%-6s%12.4f%10.4f%10.4f%1s%-5s%4s%1s %-8s%10.4f",
-                 atom->GetIdx(),"",label,
+        snprintf(buffer,BUFF_SIZE,"%7d %-6s   %9.4f %9.4f %9.4f %-5s %3s  %-8s %9.4f",
+                 atom->GetIdx(),label,
                  atom->GetX(),atom->GetY(),atom->GetZ(),
-                 "",str1.c_str(),
-                 rnum,"",rlabel,
+                 str1.c_str(),
+                 rnum,rlabel,
                  atom->GetPartialCharge());
         ofs << buffer << endl;
       }
@@ -610,9 +617,9 @@ namespace OpenBabel
         else
           snprintf(label,BUFF_SIZE,"%d",bond->GetBO());
 
-        snprintf(buffer, BUFF_SIZE,"%6d%6d%6d%3s%2s",
+        snprintf(buffer, BUFF_SIZE,"%6d %5d %5d   %2s",
                  bond->GetIdx()+1,bond->GetBeginAtomIdx(),bond->GetEndAtomIdx(),
-                 "",label);
+                 label);
         ofs << buffer << endl;
       }
     // NO trailing blank line (PR#1868929).

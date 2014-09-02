@@ -554,7 +554,7 @@ namespace OpenBabel
     int 	_current_conformer; //!< used to hold i for current conformer (needed by UpdateConformers)
     std::vector<double> _energies; //!< used to hold the energies for all conformers
     // minimization variables
-    double 	_econv, _e_n1; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
+    double 	_econv, _gconv, _e_n1; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
     int 	_cstep, _nsteps; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
     double 	*_grad1; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
     unsigned int _ncoords; //!< Number of coordinates for conjugate gradients
@@ -1161,10 +1161,14 @@ namespace OpenBabel
      * @param permute Whether or not to permute the order of the 4 most central rotors.
      *                Default is true. This does a more thorough search, but takes 4! = 24 times
      *                as long.
+     * @since version 2.4
      */
     int FastRotorSearch(bool permute = true);
 
+#ifdef HAVE_EIGEN
+    //! \since version 2.4
     int DiverseConfGen(double rmsd, unsigned int nconfs = 0, double energy_gap = 50, bool verbose = false);
+#endif
 
     /////////////////////////////////////////////////////////////////////////
     // Energy Minimization                                                 //

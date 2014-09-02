@@ -47,6 +47,7 @@ set(formats_compchem
       molproformat
       mopacformat
       nwchemformat
+      orcaformat
       pwscfformat
       qchemformat
       turbomoleformat
@@ -89,6 +90,7 @@ set(formats_misc
       crkformat
       cssrformat
       dlpolyformat
+      exyzformat
       fastsearchformat
       fastaformat
       featformat

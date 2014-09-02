@@ -638,7 +638,7 @@ bool ChemKinFormat::ReadReactionQualifierLines(istream& ifs, OBReaction* pReact)
       }
     }
   }
-  return ifs!=NULL;
+  return (bool)ifs;
 }
 
 ///////////////////////////////////////////////////////////////

@@ -14,6 +14,9 @@ set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS 1)
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
   cmake_policy(SET CMP0005 OLD) # add_definitions need updating to set to NEW
+  if(POLICY CMP0042)
+    cmake_policy(SET CMP0042 OLD)
+  endif()
 endif()
 
 include (CheckCXXCompilerFlag)
@@ -92,12 +95,12 @@ endif()
 
 mark_as_advanced(CMAKE_LIBRARY_OUTPUT_DIRECTORY
   CMAKE_RUNTIME_OUTPUT_DIRECTORY)
-  
+
 #GLIBC_2.4
 option(GLIBC_24_COMPATIBLE "Build project compatible with GLIBC 2.4" OFF)
 if(GLIBC_24_COMPATIBLE AND UNIX)
   set(WRAP_MEMCPY_SRC memcpy.c)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--wrap=memcpy")  
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--wrap=memcpy")
 endif()
 
 
@@ -381,7 +384,7 @@ if(MSVC)
     # To be added: AND SP1  OR gcc>4.0
     add_definitions(-DHAVE_SHARED_POINTER)
     set(SHARED_POINTER true)
-    message("SHARED_POINTER set") 
+    message("SHARED_POINTER set")
   endif()
 endif()
 

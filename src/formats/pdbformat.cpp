@@ -695,28 +695,27 @@ namespace OpenBabel
         if (atom->GetValence() == 0)
           continue; // no need to write a CONECT record -- no bonds
 
-        snprintf(buffer, BUFF_SIZE, "CONECT%5d", i);
-        ofs << buffer;
         // Write out up to 4 real bonds per line PR#1711154
         int currentValence = 0;
         for (nbr = atom->BeginNbrAtom(k);nbr;nbr = atom->NextNbrAtom(k))
           {
-            snprintf(buffer, BUFF_SIZE, "%5d", nbr->GetIdx());
-            ofs << buffer;
-            if (++currentValence % 4 == 0) {
-              // Add the trailing space to finish this record
-              ofs << "                                       \n";
+            if ((currentValence % 4) == 0) {
+              if (currentValence > 0) 
+                // Add the trailing space to finish the previous record
+                ofs << "                                       \n";
               // write the start of a new CONECT record
               snprintf(buffer, BUFF_SIZE, "CONECT%5d", i);
               ofs << buffer;
             }
+            currentValence++;
+            snprintf(buffer, BUFF_SIZE, "%5d", nbr->GetIdx());
+            ofs << buffer;
           }
 
         // Add trailing spaces
-        int remainingValence = atom->GetValence() % 4;
-        for (int count = 0; count < (4 - remainingValence); count++) {
-          snprintf(buffer, BUFF_SIZE, "     ");
-          ofs << buffer;
+        while ((currentValence % 4) != 0) {
+          ofs << "     ";
+          currentValence++;
         }
         ofs << "                                       \n";
       }

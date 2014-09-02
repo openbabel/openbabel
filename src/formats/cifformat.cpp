@@ -25,8 +25,8 @@ GNU General Public License for more details.
 #include <list>
 #include <map>
 #include <set>
-#include <assert.h>
-#include <cmath>
+
+#define NOCHARGE FLT_MAX
 
 #ifdef _MSC_VER
  #pragma warning( disable : 4503 )
@@ -66,7 +66,6 @@ namespace OpenBabel
         "  (the matrix used is the 2nd form listed)\n\n"
 
         "Read Options e.g. -ab:\n"
-        "  v  Verbose CIF conversion\n"
         "  s  Output single bonds only\n"
         "  b  Disable bonding entirely\n"
         "  B  Use bonds listed in CIF file from _geom_bond_etc records (overrides option b) \n\n";
@@ -171,20 +170,20 @@ namespace OpenBabel
     /// Extract lattice parameters, spacegroup (symbol or number), atomic positions,
     /// chemical name and formula if available.
     /// All other data is ignored
-    void ExtractAll(const bool verbose=false);
+    void ExtractAll();
     /// Extract name & formula for the crystal
-    void ExtractName(const bool verbose=false);
+    void ExtractName();
     /// Extract unit cell
-    void ExtractUnitCell(const bool verbose=false);
+    void ExtractUnitCell();
     /// Extract spacegroup number or symbol
-    void ExtractSpacegroup(const bool verbose=false);
+    void ExtractSpacegroup();
     /// Extract all atomic positions. Will generate cartesian from fractional
     /// coordinates or vice-versa if only cartesian coordinates are available.
-    void ExtractAtomicPositions(const bool verbose=false);
+    void ExtractAtomicPositions();
     /// Extract listed bond distances, from _geom_bond_* loops
-    void ExtractBonds(const bool verbose=false);
+    void ExtractBonds();
     //// Extract Charges information from cif file and assign it to atoms
-    void ExtractCharges(const bool verbose=false);
+    void ExtractCharges();
     /// Generate fractional coordinates from cartesian ones for all atoms
     /// CIFData::CalcMatrices() must be called first
     void Cartesian2FractionalCoord();
@@ -199,7 +198,7 @@ namespace OpenBabel
     void c2f(float &x,float &y, float &z);
     /// Calculate real space transformation matrices
     /// requires unit cell parameters
-    void CalcMatrices(const bool verbose=false);
+    void CalcMatrices();
     /// Comments from CIF file, in the order they were read
     std::list<std::string> mvComment;
     /// Individual CIF items
@@ -268,7 +267,7 @@ namespace OpenBabel
     /// Creates the CIF object from a stream
     ///
     /// \param interpret: if true, interpret all data blocks. See CIFData::ExtractAll()
-    CIF(std::istream &in, const bool interpret=true,const bool verbose=false);
+    CIF(std::istream &in, const bool interpret=true);
     //private:
     /// Separate the file in data blocks and parse them to sort tags, loops and comments.
     /// All is stored in the original strings.
@@ -286,7 +285,7 @@ namespace OpenBabel
   /// Convert one CIF value to a floating-point value
   /// Return 0 if no value can be converted (e.g. if '.' or '?' is encountered)
   int CIFNumeric2Int(const std::string &s);
-  
+
   template <typename T> string to_string(T pNumber)
   {
     ostringstream oOStrStream;
@@ -304,7 +303,7 @@ namespace OpenBabel
   CIFData::CIFData()
   {}
 
-  void CIFData::ExtractAll(const bool verbose)
+  void CIFData::ExtractAll()
   {
     {
       stringstream ss;
@@ -339,22 +338,22 @@ namespace OpenBabel
           }
     }
     // :@todo: Take care of values listed as "." and "?" instead of a real value.
-    this->ExtractName(verbose);
+    this->ExtractName();
     // Spacegroup must be extracted before unit cell
-    this->ExtractSpacegroup(verbose);
-    this->ExtractUnitCell(verbose);
-    this->ExtractAtomicPositions(verbose);
+    this->ExtractSpacegroup();
+    this->ExtractUnitCell();
+    this->ExtractAtomicPositions();
     if(mvAtom.size()==0)
       {
         stringstream ss;
         ss << "CIF Error: no atom found ! (in data block:"<<mDataBlockName<<")";
         obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
       }
-    this->ExtractBonds(verbose);
-    this->ExtractCharges(verbose);
+    this->ExtractBonds();
+    this->ExtractCharges();
   }
 
-  void CIFData::ExtractUnitCell(const bool verbose)
+  void CIFData::ExtractUnitCell()
   {
     // Use spacegroup to determine missing angle or length
     const int spgid= mSpaceGroup->GetId();
@@ -383,8 +382,10 @@ namespace OpenBabel
         positem=mvItem.find("_cell_angle_gamma");
         if(positem!=mvItem.end())
           mvLatticePar[5]=CIFNumeric2Float(positem->second);
-        if(verbose) cout<<"Found Lattice parameters:" <<mvLatticePar[0]<<" , "<<mvLatticePar[1]<<" , "<<mvLatticePar[2]
-                        <<" , "<<mvLatticePar[3]<<" , "<<mvLatticePar[4]<<" , "<<mvLatticePar[5]<<endl;
+        stringstream ss;
+        ss << "Found Lattice parameters:" << mvLatticePar[0] << " , " << mvLatticePar[1] << " , " << mvLatticePar[2]
+           << " , " << mvLatticePar[3] << " , " << mvLatticePar[4] << " , " << mvLatticePar[5];
+        obErrorLog.ThrowError(__FUNCTION__, ss.str(), obDebug);
         mvLatticePar[3] = static_cast<float> (mvLatticePar[3] * DEG_TO_RAD);// pi/180
         mvLatticePar[4] = static_cast<float> (mvLatticePar[4] * DEG_TO_RAD);
         mvLatticePar[5] = static_cast<float> (mvLatticePar[5] * DEG_TO_RAD);
@@ -493,7 +494,7 @@ namespace OpenBabel
       }
   }
 
-  void CIFData::ExtractSpacegroup(const bool verbose)
+  void CIFData::ExtractSpacegroup()
   {
     map<ci_string,string>::const_iterator positem;
     bool found = false;
@@ -502,7 +503,9 @@ namespace OpenBabel
       {
         mSpacegroupNumberIT=CIFNumeric2Int(positem->second);
         found = true;
-        if(verbose) cout<<"Found spacegroup IT number:"<<mSpacegroupNumberIT<<endl;
+        stringstream ss;
+        ss << "Found spacegroup IT number:" << mSpacegroupNumberIT;
+        obErrorLog.ThrowError(__FUNCTION__, ss.str(), obDebug);
       }
     else
       {
@@ -511,7 +514,9 @@ namespace OpenBabel
           {
             mSpacegroupNumberIT=CIFNumeric2Int(positem->second);
             found = true;
-            if(verbose) cout<<"Found spacegroup IT number (with OBSOLETE CIF #1.0 TAG):"<<mSpacegroupNumberIT<<endl;
+            stringstream ss;
+            ss << "Found spacegroup IT number (with OBSOLETE CIF #1.0 TAG):" << mSpacegroupNumberIT;
+            obErrorLog.ThrowError(__FUNCTION__, ss.str(), obDebug);
           }
         else {
           positem=mvItem.find("_symmetry_group_IT_number");
@@ -519,7 +524,9 @@ namespace OpenBabel
           {
             mSpacegroupNumberIT=CIFNumeric2Int(positem->second);
             found = true;
-            if(verbose) cout<<"Found spacegroup IT number (with NON-STANDARD CIF TAG):"<<mSpacegroupNumberIT<<endl;
+            stringstream ss;
+            ss << "Found spacegroup IT number (with NON-STANDARD CIF TAG):" << mSpacegroupNumberIT;
+            obErrorLog.ThrowError(__FUNCTION__, ss.str(), obDebug);
           }
           else
             mSpacegroupNumberIT=0;
@@ -531,7 +538,7 @@ namespace OpenBabel
       {
         mSpacegroupSymbolHall=positem->second;
         found = true;
-        if(verbose) cout<<"Found spacegroup Hall symbol:"<<mSpacegroupSymbolHall<<endl;
+        obErrorLog.ThrowError(__FUNCTION__, "Found spacegroup Hall symbol:"+mSpacegroupSymbolHall, obDebug);
       }
     else
       {
@@ -540,7 +547,7 @@ namespace OpenBabel
           {
             mSpacegroupSymbolHall=positem->second;
             found = true;
-            if(verbose) cout<<"Found spacegroup Hall symbol (with OBSOLETE CIF #1.0 TAG):"<<mSpacegroupSymbolHall<<endl;
+            obErrorLog.ThrowError(__FUNCTION__, "Found spacegroup Hall symbol (with OBSOLETE CIF #1.0 TAG):"+mSpacegroupSymbolHall, obDebug);
           }
       }
 
@@ -549,7 +556,7 @@ namespace OpenBabel
       {
         mSpacegroupHermannMauguin=positem->second;
         found = true;
-        if(verbose) cout<<"Found spacegroup Hermann-Mauguin symbol:"<<mSpacegroupHermannMauguin<<endl;
+        obErrorLog.ThrowError(__FUNCTION__, "Found spacegroup Hermann-Mauguin symbol:"+mSpacegroupHermannMauguin, obDebug);
       }
     else
       {
@@ -558,14 +565,14 @@ namespace OpenBabel
           {
             mSpacegroupHermannMauguin=positem->second;
             found = true;
-            if(verbose) cout<<"Found spacegroup Hermann-Mauguin symbol (with OBSOLETE CIF #1.0 TAG):"<<mSpacegroupHermannMauguin<<endl;
+            obErrorLog.ThrowError(__FUNCTION__, "Found spacegroup Hermann-Mauguin symbol (with OBSOLETE CIF #1.0 TAG):"+mSpacegroupHermannMauguin, obDebug);
           }
       }
     // DDL2 tag is "_space_group.IT_coordinate_system_code", converted by the cif reader to "_space_group_IT_coordinate_system_code"
     positem=mvItem.find("_space_group_IT_coordinate_system_code");
     if(positem!=mvItem.end())
       {
-        if(verbose) cout<<"Found spacegroup IT_coordinate_system_code:"<<positem->second<<endl;
+        obErrorLog.ThrowError(__FUNCTION__, "Found spacegroup IT_coordinate_system_code:"+positem->second, obDebug);
         if((mSpacegroupHermannMauguin.length()>0) && (positem->second=="1" || positem->second=="2"))
         {
           // this is a HACK which will work as long as the HM symbols in spacegroups.txt have the ":1" or ":2" extension listed, when needed
@@ -645,14 +652,14 @@ namespace OpenBabel
     mSpacegroupSymbolHall = mSpaceGroup->GetHallName();
   }
 
-  void CIFData::ExtractName(const bool verbose)
+  void CIFData::ExtractName()
   {
     map<ci_string,string>::const_iterator positem;
     positem=mvItem.find("_chemical_name_systematic");
     if(positem!=mvItem.end())
       {
         mName=positem->second;
-        if(verbose) cout<<"Found chemical name:"<<mName<<endl;
+        obErrorLog.ThrowError(__FUNCTION__, "Found chemical name:"+mName, obDebug);
       }
     else
       {
@@ -660,7 +667,7 @@ namespace OpenBabel
         if(positem!=mvItem.end())
           {
             mName=positem->second;
-            if(verbose) cout<<"Found chemical name:"<<mName<<endl;
+            obErrorLog.ThrowError(__FUNCTION__, "Found chemical name:"+mName, obDebug);
           }
         else
           {
@@ -668,7 +675,7 @@ namespace OpenBabel
             if(positem!=mvItem.end())
               {
                 mName=positem->second;
-                if(verbose) cout<<"Found chemical name:"<<mName<<endl;
+                obErrorLog.ThrowError(__FUNCTION__, "Found chemical name:"+mName, obDebug);
               }
             else
               {
@@ -676,7 +683,7 @@ namespace OpenBabel
                 if(positem!=mvItem.end())
                   {
                     mName=positem->second;
-                    if(verbose) cout<<"Found chemical name:"<<mName<<endl;
+                    obErrorLog.ThrowError(__FUNCTION__, "Found chemical name:"+mName, obDebug);
                   }
               }
           }
@@ -686,7 +693,7 @@ namespace OpenBabel
     if(positem!=mvItem.end())
       {
         mFormula=positem->second;
-        if(verbose) cout<<"Found chemical formula:"<<mFormula<<endl;
+        obErrorLog.ThrowError(__FUNCTION__, "Found chemical formula:"+mFormula, obDebug);
       }
     else
       {
@@ -694,7 +701,7 @@ namespace OpenBabel
         if(positem!=mvItem.end())
           {
             mFormula=positem->second;
-            if(verbose) cout<<"Found chemical formula:"<<mFormula<<endl;
+            obErrorLog.ThrowError(__FUNCTION__, "Found chemical formula:"+mFormula, obDebug);
           }
         else
           {
@@ -702,7 +709,7 @@ namespace OpenBabel
             if(positem!=mvItem.end())
               {
                 mFormula=positem->second;
-                if(verbose) cout<<"Found chemical formula:"<<mFormula<<endl;
+                obErrorLog.ThrowError(__FUNCTION__, "Found chemical formula:"+mFormula, obDebug);
               }
             else
               {
@@ -710,14 +717,14 @@ namespace OpenBabel
                 if(positem!=mvItem.end())
                   {
                     mFormula=positem->second;
-                    if(verbose) cout<<"Found chemical formula:"<<mFormula<<endl;
+                    obErrorLog.ThrowError(__FUNCTION__, "Found chemical formula:"+mFormula, obDebug);
                   }
               }
           }
       }
   }
 
-  void CIFData::ExtractAtomicPositions(const bool verbose)
+  void CIFData::ExtractAtomicPositions()
   {
     map<ci_string,string>::const_iterator positem;
     for(map<set<ci_string>,map<ci_string,vector<string> > >::const_iterator loop=mvLoop.begin();
@@ -796,32 +803,31 @@ namespace OpenBabel
                     mvAtom[i].mOccupancy = 1.0;
                 }
             // Now be somewhat verbose
-            if(verbose)
+            stringstream ss;
+            ss << "Found "<<nb<<" atoms."<<endl;
+            for(unsigned int i=0;i<nb;++i)
               {
-                cout << "Found "<<nb<<" atoms."<<endl;
-                for(unsigned int i=0;i<nb;++i)
+                ss<<mvAtom[i].mLabel<<" "<<mvAtom[i].mSymbol;
+                if(mvAtom[i].mCoordFrac.size()>0)
                   {
-                    cout<<mvAtom[i].mLabel<<" "<<mvAtom[i].mSymbol;
-                    if(mvAtom[i].mCoordFrac.size()>0)
-                      {
-                        cout<<" , Fractional: ";
-                        for(unsigned int j=0;j<mvAtom[i].mCoordFrac.size();++j)
-                          cout<<mvAtom[i].mCoordFrac[j]<<" ";
-                      }
-                    if(mvAtom[i].mCoordCart.size()>0)
-                      {
-                        cout<<" , Cartesian: ";
-                        for(unsigned int j=0;j<mvAtom[i].mCoordCart.size();++j)
-                          cout<<mvAtom[i].mCoordCart[j]<<" ";
-                      }
-                    cout<<" , Occupancy= "<<mvAtom[i].mOccupancy<<endl;
+                    ss<<" , Fractional: ";
+                    for(unsigned int j=0;j<mvAtom[i].mCoordFrac.size();++j)
+                      ss<<mvAtom[i].mCoordFrac[j]<<" ";
                   }
+                if(mvAtom[i].mCoordCart.size()>0)
+                  {
+                    ss<<" , Cartesian: ";
+                    for(unsigned int j=0;j<mvAtom[i].mCoordCart.size();++j)
+                      ss<<mvAtom[i].mCoordCart[j]<<" ";
+                  }
+                ss<<" , Occupancy= "<<mvAtom[i].mOccupancy<<endl;
               }
+            obErrorLog.ThrowError(__FUNCTION__, ss.str(), obDebug);
           }
       }
   }
 
-  void CIFData::ExtractBonds(const bool verbose)
+  void CIFData::ExtractBonds()
   {
     map<ci_string,string>::const_iterator positem;
     for(map<set<ci_string>,map<ci_string,vector<string> > >::const_iterator loop=mvLoop.begin(); loop!=mvLoop.end();++loop)
@@ -833,7 +839,7 @@ namespace OpenBabel
         posdist=loop->second.find("_geom_bond_distance");
         if( (poslabel1!=loop->second.end()) && (poslabel2!=loop->second.end()) && (posdist!=loop->second.end()))
           {
-            if(verbose) cout<<"Found _geom_bond* record..."<<endl;
+            obErrorLog.ThrowError(__FUNCTION__, "Found _geom_bond* record...", obDebug);
             const unsigned long nb=poslabel1->second.size();
             mvBond.resize(nb);
             for(unsigned int i=0;i<nb;++i)
@@ -841,17 +847,19 @@ namespace OpenBabel
                 mvBond[i].mLabel1=poslabel1->second[i];
                 mvBond[i].mLabel2=poslabel2->second[i];
                 mvBond[i].mDistance=CIFNumeric2Float(posdist->second[i]);
-                if(verbose) cout<<"  d("<<mvBond[i].mLabel1<<"-"<<mvBond[i].mLabel2<<")="<<mvBond[i].mDistance<<endl;
+                stringstream ss;
+                ss << "  d(" << mvBond[i].mLabel1 << "-" << mvBond[i].mLabel2 << ")=" << mvBond[i].mDistance;
+                obErrorLog.ThrowError(__FUNCTION__, ss.str(), obDebug);
               }
           }
       }
   }
-  
-  void CIFData::ExtractCharges(const bool verbose)
+
+  void CIFData::ExtractCharges()
   {
     map<ci_string,string>::const_iterator positem;
-    
-    map<std::string, double> lbl2ox;            
+
+    map<std::string, double> lbl2ox;
     for(map<set<ci_string>, map<ci_string, vector<string> > >::const_iterator loop=mvLoop.begin(); loop!=mvLoop.end(); loop++)
     {
       //if(mvBond.size()>0) break;// Only allow one bond list
@@ -860,37 +868,32 @@ namespace OpenBabel
       pos_ox_number =loop->second.find("_atom_type_oxidation_number");
       if( (pos_symbol != loop->second.end()) && (pos_ox_number != loop->second.end()) )
       {
-        if(verbose) cout<<" Found _atom_type* record with oxydation number..."<<endl;
+        obErrorLog.ThrowError(__FUNCTION__, " Found _atom_type* record with oxydation number...", obDebug);
         const unsigned long nl = pos_symbol->second.size();
-	
+
         for(unsigned int i = 0; i < nl; i++)
         {
           lbl2ox[pos_symbol->second[i]] = CIFNumeric2Float(pos_ox_number->second[i]);
-          if(verbose) 
-	    cout << pos_symbol->second[i] << " has oxydation " << pos_ox_number->second[i] << endl;
+          obErrorLog.ThrowError(__FUNCTION__, " has oxydation "+pos_ox_number->second[i], obDebug);
         }
       }
     }
-    
-    assert(mvAtom.size() > 0);
-    ///Assign charges to Atoms by labels
-    
+
     for (std::vector<CIFAtom>::iterator it = mvAtom.begin() ; it != mvAtom.end(); it++)
-    {  
+    {
       string label = (*it).mLabel;
-      
+
       if( lbl2ox.count(label) > 0 )
         (*it).mCharge = lbl2ox[label];
       else
       {
-        (*it).mCharge = NAN;
-        if( verbose )
-          std::cout << "Charge for label: " + label + " cannot be found." << endl;
-      }  
+        (*it).mCharge = NOCHARGE;
+        obErrorLog.ThrowError(__FUNCTION__, "Charge for label: "+label+" cannot be found.", obDebug);
+      }
     }
   }
 
-  void CIFData::CalcMatrices(const bool verbose)
+  void CIFData::CalcMatrices()
   {
     if(mvLatticePar.size()==0) return;//:@todo: throw error
     float a,b,c,alpha,beta,gamma;//direct space parameters
@@ -956,22 +959,16 @@ namespace OpenBabel
         for(long k=0;k<3;k++) mOrthMatrixInvert[i][k] /= a;
         for(long k=0;k<3;k++) cm[i][k] /= a;
       }
-    if(verbose)
-      {
-        cout <<"Fractional2Cartesian matrix:"<<endl
-             <<mOrthMatrix[0][0]<<" "<<mOrthMatrix[0][1]<<" "<<mOrthMatrix[0][2]<<endl
-             <<mOrthMatrix[1][0]<<" "<<mOrthMatrix[1][1]<<" "<<mOrthMatrix[1][2]<<endl
-             <<mOrthMatrix[2][0]<<" "<<mOrthMatrix[2][1]<<" "<<mOrthMatrix[2][2]<<endl<<endl;
-        /*
-          cout <<cm[0][0]<<" "<<cm[0][1]<<" "<<cm[0][2]<<endl
-          <<cm[1][0]<<" "<<cm[1][1]<<" "<<cm[1][2]<<endl
-          <<cm[2][0]<<" "<<cm[2][1]<<" "<<cm[2][2]<<endl<<endl;
-        */
-        cout <<"Cartesian2Fractional matrix:"<<endl
-             <<mOrthMatrixInvert[0][0]<<" "<<mOrthMatrixInvert[0][1]<<" "<<mOrthMatrixInvert[0][2]<<endl
-             <<mOrthMatrixInvert[1][0]<<" "<<mOrthMatrixInvert[1][1]<<" "<<mOrthMatrixInvert[1][2]<<endl
-             <<mOrthMatrixInvert[2][0]<<" "<<mOrthMatrixInvert[2][1]<<" "<<mOrthMatrixInvert[2][2]<<endl<<endl;
-      }
+      stringstream ss;
+      ss <<"Fractional2Cartesian matrix:"<<endl
+           <<mOrthMatrix[0][0]<<" "<<mOrthMatrix[0][1]<<" "<<mOrthMatrix[0][2]<<endl
+           <<mOrthMatrix[1][0]<<" "<<mOrthMatrix[1][1]<<" "<<mOrthMatrix[1][2]<<endl
+           <<mOrthMatrix[2][0]<<" "<<mOrthMatrix[2][1]<<" "<<mOrthMatrix[2][2]<<endl<<endl;
+      ss <<"Cartesian2Fractional matrix:"<<endl
+           <<mOrthMatrixInvert[0][0]<<" "<<mOrthMatrixInvert[0][1]<<" "<<mOrthMatrixInvert[0][2]<<endl
+           <<mOrthMatrixInvert[1][0]<<" "<<mOrthMatrixInvert[1][1]<<" "<<mOrthMatrixInvert[1][2]<<endl
+           <<mOrthMatrixInvert[2][0]<<" "<<mOrthMatrixInvert[2][1]<<" "<<mOrthMatrixInvert[2][2];
+      obErrorLog.ThrowError(__FUNCTION__, ss.str(), obDebug);
   }
 
   void CIFData::f2c(float &x,float &y, float &z)
@@ -1019,7 +1016,7 @@ namespace OpenBabel
   /////
 
 
-  CIF::CIF(istream &is, const bool interpret,const bool verbose)
+  CIF::CIF(istream &is, const bool interpret)
   {
     bool found_atoms=false;
     while(!found_atoms)
@@ -1031,7 +1028,7 @@ namespace OpenBabel
       if(interpret)
         for(map<string,CIFData>::iterator posd=mvData.begin();posd!=mvData.end();++posd)
         {
-          posd->second.ExtractAll(verbose);
+          posd->second.ExtractAll();
           if(posd->second.mvAtom.size()>0) found_atoms=true;
         }
     }
@@ -1083,8 +1080,8 @@ namespace OpenBabel
           }
         if (!warning)
           in.get(lastc);
-        if(vv) cout<<"SemiColonTextField:"<<value<<endl;
-        if(warning && !vv) cout<<"SemiColonTextField:"<<value<<endl;
+        if(vv) obErrorLog.ThrowError(__FUNCTION__, "SemiColonTextField:"+value, obDebug);
+        if(warning && !vv) obErrorLog.ThrowError(__FUNCTION__, "SemiColonTextField:"+value, obDebug);
         return value;
       }
     if((in.peek()=='\'') || (in.peek()=='\"'))
@@ -1097,12 +1094,12 @@ namespace OpenBabel
             in.get(lastc);
             value+=lastc;
           }
-        if(vv) cout<<"QuotedString:"<<value<<endl;
+        if(vv) obErrorLog.ThrowError(__FUNCTION__, "QuotedString:"+value, obDebug);
         return value.substr(0,value.size()-1);
       }
     // If we got here, we have an ordinary value, numeric or unquoted string
     in>>value;
-    if(vv) cout<<"NormalValue:"<<value<<endl;
+    if(vv) obErrorLog.ThrowError(__FUNCTION__, "NormalValue:"+value, obDebug);
     return value;
   }
 
@@ -1114,7 +1111,6 @@ namespace OpenBabel
     while(!in.eof())
       {
         while(!isgraph(in.peek()) && !in.eof()) in.get(lastc);
-        if(vv) cout<<endl;
         if(in.peek()=='#')
           {//Comment
             string tmp;
@@ -1133,7 +1129,12 @@ namespace OpenBabel
               tag.replace(pos, 1, 1, '_');
             value=CIFReadValue(in,lastc);
             mvData[block].mvItem[ci_string(tag.c_str())]=value;
-            if(vv)cout<<"New Tag:"<<tag<<" ("<<value.size()<<"):"<<value<<endl;
+            if(vv)
+            {
+              stringstream ss;
+              ss<<"New Tag:"<<tag<<" ("<<value.size()<<"):"<<value;
+              obErrorLog.ThrowError(__FUNCTION__, ss.str(), obDebug);
+            }
             continue;
           }
         if((in.peek()=='d') || (in.peek()=='D'))
@@ -1143,9 +1144,12 @@ namespace OpenBabel
             string tmp;
             in>>tmp;
             block=tmp.substr(5);
-            if(vv) cout<<endl<<endl<<"NEW BLOCK DATA: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ->"<<block<<endl<<endl<<endl;
-
-
+            if(vv)
+            {
+              stringstream ss;
+              ss<<endl<<endl<<"NEW BLOCK DATA: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ->"<<block<<endl<<endl;
+              obErrorLog.ThrowError(__FUNCTION__, ss.str(), obDebug);
+            }
             mvData[block]=CIFData();
             mvData[block].mDataBlockName=tmp;
             continue;
@@ -1155,7 +1159,7 @@ namespace OpenBabel
             vector<ci_string> tit;
             string tmp;
             in>>tmp; //should be loop_
-            if(vv) cout<<"LOOP : "<<tmp;
+            if(vv) obErrorLog.ThrowError(__FUNCTION__, "LOOP : "+tmp, obDebug);
             while(true)
               {//read titles
                 while(!isgraph(in.peek()) && !in.eof()) in.get(lastc);
@@ -1168,7 +1172,9 @@ namespace OpenBabel
                   }
                 if(in.peek()!='_')
                   {
-                    if(vv) cout<<endl<<"End of loop titles:"<<(char)in.peek()<<endl;
+                    stringstream ss;
+                    ss << "End of loop titles:"<<(char)in.peek();
+                    if(vv) obErrorLog.ThrowError(__FUNCTION__, ss.str(), obDebug);
                     break;
                   }
                 in>>tmp;
@@ -1176,9 +1182,8 @@ namespace OpenBabel
                 for (string::size_type pos = tmp.find('.'); pos != string::npos; pos = tmp.find('.', ++ pos))
                   tmp.replace(pos, 1, 1, '_');
                 tit.push_back(ci_string(tmp.c_str()));
-                if(vv) cout<<" , "<<tmp;
+                if(vv) obErrorLog.ThrowError(__FUNCTION__, " , "+tmp, obDebug);
               }
-            if(vv) cout<<endl;
             map<ci_string,vector<string> > lp;
             while(true)
               {
@@ -1195,7 +1200,7 @@ namespace OpenBabel
                     if(block=="") mvComment.push_back(tmp);
                     else mvData[block].mvComment.push_back(tmp);
                     lastc='\r';
-                    if(vv) cout<<"Comment in a loop (?):"<<tmp<<endl;
+                    if(vv) obErrorLog.ThrowError(__FUNCTION__, "Comment in a loop (?):"+tmp, obDebug);
                     //in.seekg(pos);
                     break;
                   }
@@ -1205,7 +1210,9 @@ namespace OpenBabel
                   {//go back and continue
                     in.clear();
                     in.seekg(pos0,std::ios::beg);
-                    if(vv) cout<<endl<<"END OF LOOP :"<<tmp<<","<<(char)in.peek()<<","<<in.tellg()<<endl;
+                    stringstream ss;
+                    ss <<"END OF LOOP :"<<tmp<<","<<(char)in.peek()<<","<<in.tellg();
+                    if(vv) obErrorLog.ThrowError(__FUNCTION__, ss.str(), obDebug);
                     break;
                   }
                 if(tmp.size()>=5)
@@ -1213,14 +1220,18 @@ namespace OpenBabel
                     {//go back and continue
                       in.clear();
                       in.seekg(pos0,std::ios::beg);
-                      if(vv) cout<<endl<<"END OF LOOP :"<<tmp<<","<<(char)in.peek()<<","<<in.tellg()<<endl;
+                      stringstream ss;
+                      ss <<"END OF LOOP :"<<tmp<<","<<(char)in.peek()<<","<<in.tellg();
+                      if(vv) obErrorLog.ThrowError(__FUNCTION__, ss.str(), obDebug);
                       break;
                     }
                 for(unsigned int i=0;i<tit.size();++i)
                   {//Read all values
                     if(i>0) tmp=CIFReadValue(in,lastc);
                     lp[tit[i]].push_back(tmp);
-                    if(vv) cout<<" LOOP VALUE    #"<<lp[tit[i]].size()<<","<<i<<" :  "<<tmp<<endl;
+                    stringstream ss;
+                    ss <<" LOOP VALUE    #"<<lp[tit[i]].size()<<","<<i<<" :  "<<tmp;
+                    if(vv) obErrorLog.ThrowError(__FUNCTION__, ss.str(), obDebug);
                   }
               }
             // The key to the mvLoop map is the set of column titles
@@ -1265,7 +1276,7 @@ namespace OpenBabel
   bool is_double(const std::string& s, double& r_double)
   {
     std::istringstream i(s);
-  
+
     if (i >> r_double)
       return true;
 
@@ -1373,10 +1384,8 @@ namespace OpenBabel
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
       return false;
-    bool verbose=false;
-    if (pConv->IsOption("v",OBConversion::INOPTIONS)) verbose=true;
 
-    CIF cif(*pConv->GetInStream(),true,verbose);
+    CIF cif(*pConv->GetInStream(),true);
     // Loop on all data blocks until we find one structure :@todo: handle multiple structures
     for(map<string,CIFData>::iterator pos=cif.mvData.begin();pos!=cif.mvData.end();++pos)
       if(pos->second.mvAtom.size()>0)
@@ -1444,7 +1453,9 @@ namespace OpenBabel
                   if(0!=sign) // no sign, no charge
                     {
                       if(charge==0) charge=1;
-                      cout<<tmpSymbol<<" / symbol="<<tmpSymbol.substr(0,nbc)<<" charge= "<<sign*charge<<endl;
+                      stringstream ss;
+                      ss << tmpSymbol<<" / symbol="<<tmpSymbol.substr(0,nbc)<<" charge= "<<sign*charge;
+                      obErrorLog.ThrowError(__FUNCTION__, ss.str(), obDebug);
                       atom->SetFormalCharge(sign*charge);
                     }
                 }
@@ -1475,8 +1486,8 @@ namespace OpenBabel
               occup_data->SetValue(posat->mOccupancy);
               occup_data->SetOrigin(fileformatInput);
               atom->SetData(occup_data);
-              
-              if( !isnan(posat->mCharge) )
+
+              if( posat->mCharge != NOCHARGE )
               {
                 OBPairFloatingPoint *charge_data = new OBPairFloatingPoint;
                 charge_data->SetAttribute("input_charge");
@@ -1496,17 +1507,19 @@ namespace OpenBabel
                   posat2=vLabelOBatom.find(posbond->mLabel2);
                   if(posat1!=vLabelOBatom.end() && posat2!=vLabelOBatom.end())
                     {
-                      if(verbose) cout<<"  Adding cif bond ? "<<posat1->first<<"-"<<posat2->first;
+                      stringstream ss;
+                      ss << "  Adding cif bond ? "<<posat1->first<<"-"<<posat2->first;
+                      obErrorLog.ThrowError(__FUNCTION__, ss.str(), obDebug);
                       if(pmol->GetBond(posat1->second,posat2->second)==NULL)
                         {
-                           if(verbose) cout<<"  :Bond added !"<<endl;
+                           obErrorLog.ThrowError(__FUNCTION__, "  :Bond added !", obDebug);
                            OBBond * bond=pmol->NewBond();
                            bond->SetBegin(posat1->second);
                            bond->SetEnd(posat2->second);
                            bond->SetBondOrder(1);
                            bond->SetLength(double(posbond->mDistance));
                         }
-                       else if(verbose) cout<<"  :Bond already present.. "<<endl;
+                       else obErrorLog.ThrowError(__FUNCTION__, "  :Bond already present.. ", obDebug);
                     }
                 }
             }
@@ -1585,8 +1598,10 @@ namespace OpenBabel
       {
          double X, Y, Z; //atom coordinates
          vector3 v = atom->GetVector();
-         v = pUC->CartesianToFractional(v);
-         v = pUC->WrapFractionalCoordinate(v);
+         if (pUC != NULL) {
+           v = pUC->CartesianToFractional(v);
+           v = pUC->WrapFractionalCoordinate(v);
+         }
          X = v.x();
          Y = v.y();
          Z = v.z();

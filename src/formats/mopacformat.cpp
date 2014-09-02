@@ -116,6 +116,30 @@ namespace OpenBabel
                 tokenize(vs,buffer);
               }
           }
+        else if(strstr(buffer,"(ANGSTROMS)") != NULL)
+          { // newer versions don't print CARTESIAN for final geometry
+            mol.Clear();
+            mol.BeginModify();
+            ifs.getline(buffer,BUFF_SIZE);	// blank
+            ifs.getline(buffer,BUFF_SIZE);
+            tokenize(vs,buffer);
+            while (vs.size() == 8)
+              {
+                if (strcmp(vs[1].c_str(), "Tv") != 0)
+                  {
+                    atom = mol.NewAtom();
+                    atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
+                    x = atof((char*)vs[2].c_str());
+                    y = atof((char*)vs[4].c_str());
+                    z = atof((char*)vs[6].c_str());
+                    atom->SetVector(x,y,z);
+                  }
+
+                if (!ifs.getline(buffer,BUFF_SIZE))
+                  break;
+                tokenize(vs,buffer);
+              }
+          }
         else if(strstr(buffer,"UNIT CELL TRANSLATION") != NULL)
           {
             numTranslationVectors = 0; // ignore old translationVectors
@@ -220,7 +244,8 @@ namespace OpenBabel
               {
                 if (vs.size() < 3) break;
                 atom = mol.GetAtom(atoi(vs[0].c_str()));
-                atom->SetPartialCharge(atof(vs[2].c_str()));
+                if (atom != NULL)
+                  atom->SetPartialCharge(atof(vs[2].c_str()));
                 charges.push_back(atof(vs[2].c_str()));
 
                 if (!ifs.getline(buffer,BUFF_SIZE))
@@ -366,14 +391,6 @@ namespace OpenBabel
     // Attach unit cell translation vectors if found
     if (numTranslationVectors == 3) {
       OBUnitCell* uc = new OBUnitCell;
-      // Translation vectors are actually the translated positions of the
-      // first listed atom, so adjust for this:
-      if (mol.NumAtoms() > 0) {
-        const vector3 &atom1Pos = mol.GetAtomById(0)->GetVector();
-        translationVectors[0] -= atom1Pos;
-        translationVectors[1] -= atom1Pos;
-        translationVectors[2] -= atom1Pos;
-      }
       uc->SetData(translationVectors[0], translationVectors[1], translationVectors[2]);
       uc->SetOrigin(fileformatInput);
       mol.SetData(uc);
@@ -705,7 +722,7 @@ namespace OpenBabel
 
     OBUnitCell *uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
     if (uc && writeUnitCell) {
-      uc->FillUnitCell(&mol); // complete the unit cell with symmetry-derived atoms
+      //      uc->FillUnitCell(&mol); // complete the unit cell with symmetry-derived atoms
 
       vector<vector3> cellVectors = uc->GetCellVectors();
       for (vector<vector3>::iterator i = cellVectors.begin(); i != cellVectors.end(); ++i) {

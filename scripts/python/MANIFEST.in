@@ -1,0 +1,5 @@
+include README.rst
+include *.py
+include *.i
+include *.html
+recursive-include examples *

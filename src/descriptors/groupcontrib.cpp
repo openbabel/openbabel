@@ -180,7 +180,7 @@ namespace OpenBabel
         int Hcount = tmpmol.GetAtom(index + 1)->GetValence() - tmpmol.GetAtom(index + 1)->GetHvyValence();
         debugMessage << "   " << Hcount << " hydrogens = " << hydrogenValues[index] << " ";
         if (!seenHydrogen.BitIsSet(index + 1)) debugMessage << "un";
-        debugMessage << "matched\n";        
+        debugMessage << "matched\n";
       }
     }
 

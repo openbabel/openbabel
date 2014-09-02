@@ -22,7 +22,8 @@ namespace OpenBabel
 {
 
   // The ".out" format:
-  // Detect GAMESS, GAMESS-UK, Q-Chem, PWSCF, Gaussian, or MOPAC output files
+  // Detect GAMESS, GAMESS-UK, Q-Chem, PWSCF, Gaussian,  or MOPAC output files
+  // also detect ORCA output files now     --- added 14.03.2014 by D.Lenk
   class OutputFormat : public OBMoleculeFormat
   {
   public:
@@ -41,7 +42,7 @@ namespace OpenBabel
         "Generic Output file format\n"
         "Automatically detect and read computational chemistry output files\n\n"
         "This format can be used to read ADF, Gaussian, GAMESS, PWSCF, Q-Chem,\n"
-        "MOPAC, etc. output files by automatically detecting the file type.\n\n"
+        "MOPAC, ORCA etc. output files by automatically detecting the file type.\n\n"
         "Read Options e.g. -as\n"
         " s  Output single bonds only\n"
         " b  Disable bonding entirely\n\n";
@@ -143,6 +144,10 @@ namespace OpenBabel
                  strstr(buffer, "CRYSTAL09") != NULL) {
         // CRYSTAL09
         formatName = "c09out";
+        break;
+      } else if (strstr(buffer, "* O   R   C   A *") != NULL) {
+        // ORCA
+        formatName = "orca";
         break;
       }
     }

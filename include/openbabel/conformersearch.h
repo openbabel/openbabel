@@ -113,7 +113,7 @@ namespace OpenBabel {
   {
     public:
       OBStericConformerFilter ();
-      OBStericConformerFilter (double cutoff, double vdw_factor = 0.6, bool check_hydrogens = true);
+      OBStericConformerFilter (double cutoff, double vdw_factor = 0.5, bool check_hydrogens = true);
       bool IsGood(const OBMol &mol, const RotorKey &key, double *coords);
     private:
       double m_cutoff; //!< Internal cutoff (used as a squared distance)
@@ -246,8 +246,8 @@ namespace OpenBabel {
   class OBAPI OBMinimizingRMSDConformerScore : public OBConformerScore
   {
     public:
-      Preferred GetPreferred() { return LowScore; }
-      Convergence GetConvergence() { return Lowest; }
+      Preferred GetPreferred() { return HighScore; }
+      Convergence GetConvergence() { return Average; }
       double Score(OBMol &mol, unsigned int index, const RotorKeys &keys,
           const std::vector<double*> &conformers);
   };

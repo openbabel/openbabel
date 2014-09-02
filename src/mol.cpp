@@ -180,7 +180,8 @@ namespace OpenBabel
       return(_title.c_str());
 
     //Only multiline titles use the following to replace newlines by spaces
-    static string title(_title); //potential problems in calling code with multiple molecules!
+    static string title;
+    title=_title;
     string::size_type j;
     for ( ; (j = title.find_first_of( "\n\r" )) != string::npos ; ) {
       title.replace( j, 1, " ");
@@ -230,51 +231,15 @@ namespace OpenBabel
     for (j = 0 ; (unsigned)j < atoms.size() ; j++ )
       atoms[j] = (atoms[j] - 1) * 3;
 
-    double v1x,v1y,v1z,v2x,v2y,v2z,v3x,v3y,v3z;
-    double c1x,c1y,c1z,c2x,c2y,c2z,c3x,c3y,c3z;
-    double c1mag,c2mag,radang,costheta,m[9];
+    double v2x,v2y,v2z;
+    double radang,m[9];
     double x,y,z,mag,rotang,sn,cs,t,tx,ty,tz;
 
     //calculate the torsion angle
-
-    v1x = _c[tor[0]]   - _c[tor[1]];
-    v2x = _c[tor[1]]   - _c[tor[2]];
-    v1y = _c[tor[0]+1] - _c[tor[1]+1];
-    v2y = _c[tor[1]+1] - _c[tor[2]+1];
-    v1z = _c[tor[0]+2] - _c[tor[1]+2];
-    v2z = _c[tor[1]+2] - _c[tor[2]+2];
-    v3x = _c[tor[2]]   - _c[tor[3]];
-    v3y = _c[tor[2]+1] - _c[tor[3]+1];
-    v3z = _c[tor[2]+2] - _c[tor[3]+2];
-
-
-    c1x = v1y*v2z - v1z*v2y;
-    c2x = v2y*v3z - v2z*v3y;
-    c1y = -v1x*v2z + v1z*v2x;
-    c2y = -v2x*v3z + v2z*v3x;
-    c1z = v1x*v2y - v1y*v2x;
-    c2z = v2x*v3y - v2y*v3x;
-    c3x = c1y*c2z - c1z*c2y;
-    c3y = -c1x*c2z + c1z*c2x;
-    c3z = c1x*c2y - c1y*c2x;
-
-    c1mag = SQUARE(c1x)+SQUARE(c1y)+SQUARE(c1z);
-    c2mag = SQUARE(c2x)+SQUARE(c2y)+SQUARE(c2z);
-    if (c1mag*c2mag < 0.01)
-      costheta = 1.0; //avoid div by zero error
-    else
-      costheta = (c1x*c2x + c1y*c2y + c1z*c2z)/(sqrt(c1mag*c2mag));
-
-    if (costheta < -0.999999)
-      costheta = -0.999999;
-    if (costheta >  0.999999)
-      costheta =  0.999999;
-
-    if ((v2x*c3x + v2y*c3y + v2z*c3z) > 0.0)
-      radang = -acos(costheta);
-    else
-      radang = acos(costheta);
-
+    radang = CalcTorsionAngle(a->GetVector(),
+                              b->GetVector(),
+                              c->GetVector(),
+                              d->GetVector()) / RAD_TO_DEG;
     //
     // now we have the torsion angle (radang) - set up the rot matrix
     //
@@ -285,7 +250,12 @@ namespace OpenBabel
     sn = sin(rotang);
     cs = cos(rotang);
     t = 1 - cs;
-    //normalize the rotation vector
+
+    v2x = _c[tor[1]]   - _c[tor[2]];
+    v2y = _c[tor[1]+1] - _c[tor[2]+1];
+    v2z = _c[tor[1]+2] - _c[tor[2]+2];
+
+   //normalize the rotation vector
     mag = sqrt(SQUARE(v2x)+SQUARE(v2y)+SQUARE(v2z));
     x = v2x/mag;
     y = v2y/mag;
@@ -1131,7 +1101,6 @@ namespace OpenBabel
     dp->SetValue( sformula );
     dp->SetOrigin( perceived ); // internal generation
     SetData(dp);
-
     return sformula;
   }
 
@@ -1139,17 +1108,15 @@ namespace OpenBabel
   {
     string attr = "Formula";
     OBPairData *dp = (OBPairData *) GetData(attr);
-
     if (dp == NULL)
       {
         dp = new OBPairData;
         dp->SetAttribute(attr);
+        SetData(dp);
       }
     dp->SetValue(molFormula);
     // typically file input, but this needs to be revisited
     dp->SetOrigin(fileformatInput);
-
-    SetData(dp);
   }
 
   void OBMol::SetTotalCharge(int charge)
@@ -3529,16 +3496,22 @@ namespace OpenBabel
             cutoff = SQUARE(rad[j] + rad[k] + 0.45);
 
             zd  = SQUARE(c[idx1*3+2] - c[idx2*3+2]);
-            if (zd > 25.0 )
-              break; // bigger than max cutoff
+            // bigger than max cutoff
+            // since we sort by z, anything beyond k will also fail
+            if (zd > cutoff )
+              break;
 
             d2  = SQUARE(c[idx1*3]   - c[idx2*3]);
+            if (d2 > cutoff)
+              continue; // x's bigger than cutoff
             d2 += SQUARE(c[idx1*3+1] - c[idx2*3+1]);
+            if (d2 > cutoff)
+              continue; // x^2 + y^2 bigger than cutoff
             d2 += zd;
 
             if (d2 > cutoff)
               continue;
-            if (d2 < 0.40)
+            if (d2 < 0.16) // 0.4 * 0.4 = 0.16
               continue;
 
             atom = GetAtom(idx1+1);
@@ -3605,8 +3578,6 @@ namespace OpenBabel
             maxlength = maxbond->GetLength();
             for (bond = atom->NextBond(l);bond;bond = atom->NextBond(l))
               {
-                if (!bond)
-                  break;
                 if (bond->GetLength() > maxlength)
                   {
                     maxbond = bond;
@@ -3782,7 +3753,7 @@ namespace OpenBabel
       {
         typed = false;
         loopSize = (*ringit)->PathSize();
-        if (loopSize == 5 || loopSize == 6)
+        if (loopSize == 5 || loopSize == 6 || loopSize == 7)
           {
             path = (*ringit)->_path;
             for(loop = 0; loop < loopSize; ++loop)
@@ -3807,6 +3778,23 @@ namespace OpenBabel
       }
     _flags &= (~(OB_KEKULE_MOL));
     Kekulize();
+
+    // Quick pass.. eliminate inter-ring sulfur atom multiple bonds
+    for (atom = BeginAtom(i); atom; atom = NextAtom(i)) {
+      // Don't build multiple bonds to ring sulfurs
+      //  except thiopyrylium
+      if (atom->IsInRing() && atom->GetAtomicNum() == 16) {
+        if (_totalCharge > 1 && atom->GetFormalCharge() == 0)
+          atom->SetFormalCharge(+1);
+        else {
+          // remove any ring bonds with multiple bond order
+          FOR_BONDS_OF_ATOM(bond, &*atom) {
+            if (bond->IsInRing() && bond->GetBondOrder() > 1)
+              bond->SetBondOrder(1);
+          }
+        }
+      }
+    }
 
     // Pass 6: Assign remaining bond types, ordered by atom electronegativity
     vector<pair<OBAtom*,double> > sortedAtoms;
@@ -3837,7 +3825,9 @@ namespace OpenBabel
     for (iter = 0 ; iter < max ; iter++ )
       {
         atom = sortedAtoms[iter].first;
-        //        cout << " atom->Hyb " << atom->GetAtomicNum() << " " << atom->GetHyb() << endl;
+        // Debugging statement
+        //        cout << " atom->Hyb " << atom->GetAtomicNum() << " " << atom->GetIdx() << " " << atom->GetHyb()
+        //             << " BO: " << atom->BOSum() << endl;
 
         // Possible sp-hybrids
         if ( (atom->GetHyb() == 1 || atom->GetValence() == 1)
@@ -3894,6 +3884,15 @@ namespace OpenBabel
                 (atom->GetAtomicNum() == 7 && atom->BOSum() + 1 > 3))
               continue;
 
+            // Don't build multiple bonds to ring sulfurs
+            //  except thiopyrylium
+            if (atom->IsInRing() && atom->GetAtomicNum() == 16) {
+              if (_totalCharge > 1 && atom->GetFormalCharge() == 0)
+                atom->SetFormalCharge(+1);
+              else
+                continue;
+            }
+
             maxElNeg = 0.0;
             shortestBond = 5000.0;
             c = NULL;
@@ -3903,16 +3902,18 @@ namespace OpenBabel
                 if ( (b->GetHyb() == 2 || b->GetValence() == 1)
                      && b->BOSum() + 1 <= static_cast<unsigned int>(etab.GetMaxBonds(b->GetAtomicNum()))
                      && (GetBond(atom, b))->IsDoubleBondGeometry()
-                     && (currentElNeg > maxElNeg ||
-                         ((IsApprox(currentElNeg,maxElNeg, 1.0e-6)
-                          // If only the bond length counts, prefer double bonds in the ring
-                          && (((atom->GetBond(b))->GetLength() < shortestBond)
-                              && (!atom->IsInRing() || !c || !c->IsInRing() || b->IsInRing())))
-                          || (atom->IsInRing() && c && !c->IsInRing() && b->IsInRing()))))
+                     && (currentElNeg > maxElNeg || (IsApprox(currentElNeg,maxElNeg, 1.0e-6)) ) )
                   {
                     if (b->HasNonSingleBond() ||
                         (b->GetAtomicNum() == 7 && b->BOSum() + 1 > 3))
                       continue;
+
+                    if (b->IsInRing() && b->GetAtomicNum() == 16) {
+                      if (_totalCharge > 1 && b->GetFormalCharge() == 0)
+                        b->SetFormalCharge(+1);
+                      else
+                        continue;
+                    }
 
                     // Test terminal bonds against expected double bond lengths
                     bondLength = (atom->GetBond(b))->GetLength();
@@ -3923,11 +3924,20 @@ namespace OpenBabel
                         continue; // too long, ignore it
                     }
 
-                    shortestBond = (atom->GetBond(b))->GetLength();
-                    maxElNeg = etab.GetElectroNeg(b->GetAtomicNum());
-                    c = b; // save this atom for later use
+                    // OK, see if this is better than the previous choice
+                    // If it's much shorter, pick it (e.g., fulvene)
+                    // If they're close (0.1A) then prefer the bond in the ring
+                    double difference = shortestBond - (atom->GetBond(b))->GetLength();
+                    if ( (difference > 0.1)
+                         || ( (difference > -0.01) &&
+                              ( (!atom->IsInRing() || !c || !c->IsInRing() || b->IsInRing())
+                                || (atom->IsInRing() && c && !c->IsInRing() && b->IsInRing()) ) ) ) {
+                      shortestBond = (atom->GetBond(b))->GetLength();
+                      maxElNeg = etab.GetElectroNeg(b->GetAtomicNum());
+                      c = b; // save this atom for later use
+                    } // is this bond better than previous choices
                   }
-              }
+              } // loop through neighbors
             if (c)
               (atom->GetBond(c))->SetBO(2);
           }
@@ -3945,7 +3955,7 @@ namespace OpenBabel
     //deficient and which have implicit valency definitions (essentially the
     //organic subset in SMILES). There are assumed to no implicit hydrogens.
     AssignSpinMultiplicity(true);
-  }
+    }
 
   void OBMol::Center()
   {
@@ -4217,6 +4227,20 @@ namespace OpenBabel
     return converted;
   }
 
+  /**
+   *  This function is useful when writing to legacy formats (such as MDL MOL) that do
+   *  not support zero-order bonds. It is worth noting that some compounds cannot be
+   *  well represented using just single, double and triple bonds, even with adjustments
+   *  to adjacent charges. In these cases, simply converting zero-order bonds to single
+   *  bonds is all that can be done.
+   *
+   @verbatim
+   Algorithm from:
+   Clark, A. M. Accurate Specification of Molecular Structures: The Case for
+   Zero-Order Bonds and Explicit Hydrogen Counting. Journal of Chemical Information
+   and Modeling, 51, 3149-3157 (2011). http://pubs.acs.org/doi/abs/10.1021/ci200488k
+   @endverbatim
+  */
   bool OBMol::ConvertZeroBonds()
   {
     // TODO: Option to just remove zero-order bonds entirely
@@ -4333,6 +4357,35 @@ namespace OpenBabel
   {
     ++i;
     return((i == _vbond.end()) ? (OBBond*)NULL : (OBBond*)*i);
+  }
+
+  //! \since version 2.4
+  int OBMol::AreInSameRing(OBAtom *a, OBAtom *b)
+  {
+    bool a_in, b_in;
+    vector<OBRing*> vr;
+    vr = GetLSSR();
+
+    vector<OBRing*>::iterator i;
+    vector<int>::iterator j;
+
+    for (i = vr.begin();i != vr.end();++i) {
+      a_in = false;
+      b_in = false;
+      // Go through the path of the ring and see if a and/or b match
+      // each node in the path
+      for(j = (*i)->_path.begin();j != (*i)->_path.end();++j) {
+        if ((unsigned)(*j) == a->GetIdx())
+          a_in = true;
+        if ((unsigned)(*j) == b->GetIdx())
+          b_in = true;
+      }
+
+      if (a_in && b_in)
+        return (*i)->Size();
+    }
+
+    return 0;
   }
 
   vector<OBMol> OBMol::Separate(int StartIndex)

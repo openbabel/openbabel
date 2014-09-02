@@ -31,14 +31,14 @@ quit                 quit							done
 
 Copyright (C) 2006 Tim Vandermeersch
 Some portions Copyright (C) 2006 Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -64,7 +64,7 @@ using namespace OpenBabel;
 
 int main(int argc,char **argv)
 {
-  OBForceField* pFF = OBForceField::FindForceField("Ghemical");
+  OBForceField* pFF = OBForceField::FindForceField("MMFF94");
   pFF->SetLogFile(&cout);
   pFF->SetLogLevel(OBFF_LOGLVL_LOW);
 
@@ -92,7 +92,7 @@ int main(int argc,char **argv)
       cout << "bye." << endl;
       exit(0);
     }
-    
+
     if (EQn(commandline, "help", 4) || cin.eof()) {
       cout << endl;
       cout << "commands:            description:" << endl;
@@ -189,7 +189,7 @@ int main(int argc,char **argv)
       cout << endl << "  Van der Waals energy = " << pFF->E_VDW() << " " << pFF->GetUnit() << endl << endl;
       continue;
     }
-    
+
     if (EQn(commandline, "eeq", 3)) {
       if (mol.Empty()) {
         cout << "no molecule loaded." << endl;
@@ -198,47 +198,47 @@ int main(int argc,char **argv)
       cout << endl << "  electrostatic energy = " << pFF->E_Electrostatic() << " " << pFF->GetUnit() << endl << endl;
       continue;
     }
-    
+
     if (EQn(commandline, "addH", 4)) {
       int num1, num2;
       num1 = mol.NumAtoms();
       mol.AddHydrogens(false, true);
       num2 = mol.NumAtoms();
       cout << (num2 - num1) << " hydrogens added." << endl;
-      
+
       if (!pFF->Setup(mol)) {
         cout << "error while initializing the force field for this molecule." <<endl;
         continue;
       }
       continue;
     }
-    
+
     if (EQn(commandline, "delH", 4)) {
       int num1, num2;
       num1 = mol.NumAtoms();
       mol.DeleteHydrogens();
       num2 = mol.NumAtoms();
       cout << (num1 - num2) << " hydrogens deleted." << endl;
-      
+
       if (!pFF->Setup(mol)) {
         cout << "error while initializing the force field for this molecule." <<endl;
         continue;
       }
       continue;
     }
-    
+
     if (EQn(commandline, "gen", 3)) {
       //pFF->GenerateCoordinates();
       pFF->UpdateCoordinates(mol);
       continue;
     }
-    
+
     if (EQn(commandline, "rs", 2)) {
       pFF->SystematicRotorSearch();
       pFF->UpdateCoordinates(mol);
       continue;
     }
-    
+
     if (EQn(commandline, "nconf", 5)) {
       cout << endl << "  number of conformers = " << mol.NumConformers() << endl << endl;
       continue;
@@ -249,14 +249,14 @@ int main(int argc,char **argv)
     // commands with parameters
     //
     tokenize(vs, commandline);
-    
+
     // select forcefield
     if (EQn(commandline, "ff", 2)) {
       if (vs.size() < 2) {
         cout << "no <forcefield> specified." << endl;
         continue;
       }
-      
+
       pFF = OBForceField::FindForceField(vs[1]);
 
       if (!mol.Empty())
@@ -266,35 +266,35 @@ int main(int argc,char **argv)
       continue;
     }
 
-   
+
     // load <filename>
     if (EQn(commandline, "load", 4)) {
       if (vs.size() < 2) {
         cout << "no <filename> specified." << endl;
         continue;
       }
-      
+
       ifstream ifs;
       OBConversion conv;
       OBFormat *format_in = conv.FormatFromExt(vs[1].c_str());
-   
+
       if (!format_in || !conv.SetInFormat(format_in)) {
         cout << "could not detect format." << endl;
         continue;
       }
-       
+
       ifs.open(vs[1].c_str());
       if (!ifs) {
         cout << "could not open '" << vs[1] << "'." <<endl;
         continue;
       }
-      
+
       mol.Clear();
       if (!conv.Read(&mol, &ifs)) {
         cout << "could not read a molecule from '" << vs[1] << "'." <<endl;
         continue;
       }
-      
+
       if (mol.Empty()) {
         cout << "this molecule is empty." <<endl;
         continue;
@@ -310,43 +310,43 @@ int main(int argc,char **argv)
       cout << "  " << mol.NumBonds() << " bonds" << endl;
 
       ifs.close();
- 
+
       continue;
     }
-    
+
     // save <filename>
     if (EQn(commandline, "save", 4)) {
       if (vs.size() < 2) {
         cout << "no <filename> specified." << endl;
         continue;
       }
-      
+
       ofstream ofs;
       OBConversion conv;
       OBFormat *format_out = conv.FormatFromExt(vs[1].c_str());
-   
+
       if (!format_out || !conv.SetOutFormat(format_out)) {
         cout << "could not detect format." << endl;
         continue;
       }
-       
+
       ofs.open(vs[1].c_str());
       if (!ofs) {
         cout << "could not open '" << vs[1] << "'." <<endl;
         continue;
       }
-      
+
       if (!conv.Write(&mol, &ofs)) {
         cout << "could not read a molecule from '" << vs[1] << "'." <<endl;
         continue;
       }
-      
+
       cout << "molecule succesfully saved." << endl;
       cout << "  " << mol.NumAtoms() << " atoms" << endl;
       cout << "  " << mol.NumBonds() << " bonds" << endl;
 
       ofs.close();
- 
+
       continue;
     }
 

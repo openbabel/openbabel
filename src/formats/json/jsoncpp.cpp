@@ -2619,7 +2619,16 @@ Value::operator[]( ArrayIndex index )
       return (*it).second;
 
    ObjectValues::value_type defaultValue( key, null );
-   it = value_.map_->insert( it, defaultValue );
+   if ( it != value_.map_->end() )
+   {
+      it = value_.map_->insert( it, defaultValue );
+   }
+   else
+   {
+      std::pair<ObjectValues::iterator,bool> ret;
+      ret = value_.map_->insert( defaultValue );
+      it = ret.first;
+   }
    return (*it).second;
 #else
    return value_.array_->resolveReference( index );
@@ -2684,7 +2693,16 @@ Value::resolveReference( const char *key,
       return (*it).second;
 
    ObjectValues::value_type defaultValue( actualKey, null );
-   it = value_.map_->insert( it, defaultValue );
+   if ( it != value_.map_->end() )
+   {
+      it = value_.map_->insert( it, defaultValue );
+   }
+   else
+   {
+      std::pair<ObjectValues::iterator,bool> ret;
+      ret = value_.map_->insert( defaultValue );
+      it = ret.first;
+   }
    Value &value = (*it).second;
    return value;
 #else
