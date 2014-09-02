@@ -139,10 +139,10 @@ namespace OpenBabel
      * we skip this
      */
     
-    ifs.getline(buffer,BUFF_SIZE);
-    ifs.getline(buffer,BUFF_SIZE);
-    ifs.getline(buffer,BUFF_SIZE);
-    return true;
+    //ifs.getline(buffer,BUFF_SIZE);
+    //ifs.getline(buffer,BUFF_SIZE);
+    //ifs.getline(buffer,BUFF_SIZE);
+    //return true;
 
     bool ok;
     double x,y,z;
