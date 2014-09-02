@@ -191,7 +191,7 @@ namespace OpenBabel {
     for (size_t i = 0; i < atom_t_prop.size(); ++i) 
     {  
       atom_t_prop[i].atom_symbol = vs[i];
-      atom_t_prop[i].atom_symbol = OpenBabel::etab.GetAtomicNum(atom_t_prop[i].atom_symbol.c_str());
+      atom_t_prop[i].atom_etab_num = OpenBabel::etab.GetAtomicNum(atom_t_prop[i].atom_symbol.c_str());
     }  
  
     // Fetch next line to get stoichiometry
@@ -284,7 +284,8 @@ namespace OpenBabel {
     {
       stringstream errorMsg;      
       errorMsg << "Problems reading a MDFF file: "
-               << "The number of atoms read is not right.";
+               << "The number of atoms read is not right."
+               <<  "atomCount = " << atomCount << " totalAtoms_fl = " << totalAtoms_fl << endl;
       obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
       
       pmol->EndModify();
