@@ -338,7 +338,13 @@ namespace OpenBabel {
     }
 
     ostream& ofs = *pConv->GetOutStream();
-    OBMol &mol = *pmol;
+    OBMol mol(*pmol);
+    
+    if(mol.HasData(OBGenericDataType::UnitCell))
+    {
+      OBUnitCell *uc = static_cast<OBUnitCell*>(mol.GetData(OBGenericDataType::UnitCell));
+      uc->FillUnitCell(&mol);
+    }            
 
     char buffer[BUFF_SIZE];
     OBUnitCell *uc = NULL;
