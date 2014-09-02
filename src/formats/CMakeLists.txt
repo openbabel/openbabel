@@ -101,6 +101,7 @@ set(formats_misc
       groformat
       lmpdatformat
       lpmdformat
+      mdffformat 
       mmcifformat
       mmodformat
       moldenformat
