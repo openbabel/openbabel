@@ -116,7 +116,7 @@ namespace OpenBabel {
     vector<string> vs;
     vector<atm_t_prop> atom_t_prop;
 
-    // Get path of CONTCAR/POSCAR:
+    // Get path of input file:
     //    ifs_path.getline(buffer,BUFF_SIZE);
     //    path = buffer;
     string full_path = pConv->GetInFilename();
@@ -125,7 +125,7 @@ namespace OpenBabel {
     string short_fn = full_path.substr(path.length(), string::npos);
 
     // Open files
-    string posff_filename = pConv->GetInFilename(); // POSCAR _OR_ CONTCAR
+    string posff_filename = pConv->GetInFilename(); 
     ifstream ifs_posff (posff_filename.c_str());
     if (!ifs_posff) {
       return false; // No geometry file?
@@ -184,7 +184,7 @@ namespace OpenBabel {
     
     if(vs.size() != atom_t_prop.size() )
     {
-      obErrorLog.ThrowError(__FUNCTION__, "Number of types is wrong. Format is not readed.", obError);
+      obErrorLog.ThrowError(__FUNCTION__, "Number of types is wrong. Format is not read.", obError);
       pmol->EndModify();
       return false;
     }  
@@ -424,7 +424,10 @@ namespace OpenBabel {
         ofs << buffer << endl;
       }
     }
-
+    //Print the number of atoms types
+    snprintf(buffer, BUFF_SIZE, "%-3u ", atypes_def.size());
+    ofs << buffer ;
+    
     for (int i = 0; i < atypes_def.size(); i++)
     {
       snprintf(buffer, BUFF_SIZE, "%-3s ", atypes_def[i].first.c_str());
