@@ -470,10 +470,18 @@ class Molecule(object):
                    $d.imolecule.create($d, {drawingType: '%s',
                                             cameraType: '%s'});
                    $d.imolecule.draw(%s);
+
+                   $d.resizable({
+                       aspectRatio: %d / %d,
+                       resize: function (evt, ui) {
+                           $d.imolecule.renderer.setSize(ui.size.width,
+                                                         ui.size.height);
+                       }
+                   });
                });
                </script>""" % (div_id, local_path[:-3], remote_path[:-3],
                                div_id, size[0], size[1], drawing_type,
-                               camera_type, json_mol)
+                               camera_type, json_mol, size[0], size[1])
 
     def calcdesc(self, descnames=[]):
         """Calculate descriptor values.
