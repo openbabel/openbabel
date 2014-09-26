@@ -113,6 +113,8 @@ public:
       "    but it is if the rows and columns have been specified as 1: ``-xr1 -xc1``\n"
       " x omit XML declaration (not displayed in GUI)\n"
       "    Useful if the output is to be embedded in another xml file.\n"
+      " X All atoms are explicitly declared \n"
+      "    Useful if we don't want any extra hydrogens drawn to fill the valence.\n"
       " A display aliases, if present\n"
       "    This applies to structures which have an alternative, usually\n"
       "    shorter, representation already present. This might have been input\n"
@@ -500,6 +502,11 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       depictor.SetOption(OBDepict::drawTermC);// on by default
     if(pConv->IsOption("a"))
       depictor.SetOption(OBDepict::drawAllC);
+    // LPW: This option means that OBDepict will not add any
+    // extra atoms.  Assumes that all hydrogens that are intended
+    // to be drawn are explicitly declared.
+    if(pConv->IsOption("X"))
+      depictor.SetOption(OBDepict::allExplicit);
 
     if(pConv->IsOption("A"))
     {
