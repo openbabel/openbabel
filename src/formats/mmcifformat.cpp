@@ -595,6 +595,7 @@ namespace OpenBabel
            CIFResidueMap ResidueMap;
            unsigned long chain_num = 1, residue_num = 1;
            string residue_name, atom_label, atom_mol_label;
+           OBPairData *label;
            while (token.type == CIFLexer::ValueToken) // Read in the Fields
              {
              if (column_idx == 0)
@@ -605,7 +606,13 @@ namespace OpenBabel
              switch (columns[column_idx])
                {
              case CIFTagID::_atom_site_label: // The atomic label within the molecule
+               label = new OBPairData;
+               label->SetAttribute("_atom_site_label");
+               label->SetValue(token.as_text);
+               label->SetOrigin(fileformatInput);
+               atom->SetData(label);
                atom_mol_label.assign(token.as_text);
+
                if (atom_type_tag != CIFTagID::_atom_site_label)
                  break;
                // Else remove digits and drop through to _atom_site_type_symbol
