@@ -5406,8 +5406,8 @@ namespace OpenBabel {
     // LPW: Nearly horizontal molecules were being scaled which resulted in
     // some nonsensical structures.  This code ensures that coordinates with 
     // "almost" horizontal or vertical geometries don't get scaled.
-    bool Xeq = (abs(xMax - xMin) < 0.01);
-    bool Yeq = (abs(yMax - yMin) < 0.01);
+    bool Xeq = (fabs(xMax - xMin) < 0.01);
+    bool Yeq = (fabs(yMax - yMin) < 0.01);
     if ((Xeq) && (Yeq)) {
       for (i=0; i<atomList->size(); i++) {
         n=(*atomList)[i];
