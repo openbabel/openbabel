@@ -1381,6 +1381,11 @@ namespace OpenBabel
   /////////////////////////////////////////////////////////////////
   bool CIFFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
+    // If installed, use the mmCIF parser to read CIF
+    OBFormat *obformat = OBFormat::FindType("mmcif");
+    if (obformat) { return obformat->ReadMolecule(pOb, pConv); }
+    obErrorLog.ThrowError(__FUNCTION__, "mmCIF parser not found. Using CIF parser.", obDebug);
+
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
       return false;
