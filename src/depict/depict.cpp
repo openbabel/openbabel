@@ -542,6 +542,10 @@ namespace OpenBabel
           atomSymbol = etab.GetSymbol(atom->GetAtomicNum());
 
         unsigned int hCount = atom->ImplicitHydrogenCount();
+        // LPW: The allExplicit option will omit the drawing of extra hydrogens
+        // to fill the valence.
+        if(!(d->options & allExplicit))
+            hCount = 0;
         // rightAligned:
         //   false  CH3
         //   true   H3C

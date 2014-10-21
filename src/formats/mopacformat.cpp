@@ -722,7 +722,7 @@ namespace OpenBabel
 
     OBUnitCell *uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
     if (uc && writeUnitCell) {
-      uc->FillUnitCell(&mol); // complete the unit cell with symmetry-derived atoms
+      //      uc->FillUnitCell(&mol); // complete the unit cell with symmetry-derived atoms
 
       vector<vector3> cellVectors = uc->GetCellVectors();
       for (vector<vector3>::iterator i = cellVectors.begin(); i != cellVectors.end(); ++i) {

@@ -107,6 +107,7 @@
  #pragma warning( disable : 4251 )
 
 
+ #include <algorithm>  // std::min and std::max were moved here in C++11
  #include <crtdbg.h>
 
  #ifdef _DEBUG

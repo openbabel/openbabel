@@ -30,8 +30,8 @@ namespace OpenBabel {
 
   OBStericConformerFilter::OBStericConformerFilter ()
   {
-    m_cutoff = 1.0;
-    m_vdw_factor = 0.6;
+    m_cutoff = 0.8;
+    m_vdw_factor = 0.5;
     m_check_hydrogens = true;
   }
 
@@ -57,8 +57,8 @@ namespace OpenBabel {
         atom1 = mol.GetAtom(a1+1);
         atom2 = mol.GetAtom(a2+1);
         // Default should be to recognize H clashes too
-	if (!m_check_hydrogens  && (atom1->IsHydrogen() || atom2->IsHydrogen() ))
-    	  continue;
+        if (!m_check_hydrogens  && (atom1->IsHydrogen() || atom2->IsHydrogen() ))
+          continue;
 
         // skip connected atoms
         if (atom1->IsConnected(atom2))
@@ -68,11 +68,12 @@ namespace OpenBabel {
         dy = conformer[a1*3+1] - conformer[a2*3+1];
         dz = conformer[a1*3+2] - conformer[a2*3+2];
         distanceSquared = dx*dx + dy*dy + dz*dz;
-	// As we don't check 1-3 and 1-4 bonded atoms, apply a
-	// factor of to the sum of VdW radii
+        // As we don't check 1-3 and 1-4 bonded atoms, apply a
+        // factor of to the sum of VdW radii
         vdwCutoff = m_vdw_factor * (etab.GetVdwRad(atom1->GetAtomicNum())
-				  + etab.GetVdwRad(atom2->GetAtomicNum()));
+                                    + etab.GetVdwRad(atom2->GetAtomicNum()));
         vdwCutoff *= vdwCutoff; // compare squared distances
+        //cout << vdwCutoff << " " << m_vdw_factor << " " << m_cutoff << " " <<  distanceSquared << endl ;
 
         // check distance
         if (distanceSquared < m_cutoff || distanceSquared < vdwCutoff)
@@ -92,7 +93,7 @@ namespace OpenBabel {
   OBConformerScore::~OBConformerScore() {}
 
   double OBRMSDConformerScore::Score(OBMol &mol, unsigned int index,
-      const RotorKeys &keys, const std::vector<double*> &conformers)
+                                     const RotorKeys &keys, const std::vector<double*> &conformers)
   {
     unsigned int numAtoms = mol.NumAtoms();
 
@@ -131,16 +132,16 @@ namespace OpenBabel {
   }
 
   double OBEnergyConformerScore::Score(OBMol &mol, unsigned int index,
-      const RotorKeys &keys, const std::vector<double*> &conformers)
+                                       const RotorKeys &keys, const std::vector<double*> &conformers)
   {
     energy_nrequest++;
     RotorKey cur_key = keys[index];
     if (energy_map.size () > 0)
       {
-	// Check that we haven't already computed this energy);
-	mapRotorEnergy::iterator it = energy_map.find (cur_key);
-	if (it != energy_map.end ())
-	  return it->second;
+        // Check that we haven't already computed this energy);
+        mapRotorEnergy::iterator it = energy_map.find (cur_key);
+        if (it != energy_map.end ())
+          return it->second;
       }
     energy_ncompute++;
 
@@ -179,10 +180,10 @@ namespace OpenBabel {
     RotorKey cur_key = keys[index];
     if (energy_map.size () > 0)
       {
-	// Check that we haven't already computed this energy);
-	mapRotorEnergy::iterator it = energy_map.find (cur_key);
-	if (it != energy_map.end ())
-	  return it->second;
+        // Check that we haven't already computed this energy);
+        mapRotorEnergy::iterator it = energy_map.find (cur_key);
+        if (it != energy_map.end ())
+          return it->second;
       }
     energy_ncompute++;
 
@@ -201,7 +202,7 @@ namespace OpenBabel {
       if (!ff->Setup(mol))
         return 10e10;
     }
-    ff->SteepestDescent(50);
+    ff->ConjugateGradients(50);
     double score = ff->Energy();
 
     // copy original coordinates back
@@ -234,7 +235,7 @@ namespace OpenBabel {
       if (!ff->Setup(mol))
         return 10e10;
     }
-    ff->SteepestDescent(50);
+    ff->ConjugateGradients(50);
     double score = ff->Energy();
 
     // copy original coordinates back
@@ -283,7 +284,7 @@ namespace OpenBabel {
 
   OBConformerSearch::OBConformerSearch()
   {
-    m_filter = static_cast<OBConformerFilter*>(new OBStericConformerFilter(1.0));
+    m_filter = static_cast<OBConformerFilter*>(new OBStericConformerFilter());
     m_score = static_cast<OBConformerScore*>(new OBRMSDConformerScore());
     //m_score = static_cast<OBConformerScore*>(new OBEnergyConformerScore());
     m_numConformers = 30;
@@ -340,7 +341,7 @@ namespace OpenBabel {
       m_rotorKeys.push_back(rotorKey);
     else {
       if (m_logstream != NULL)
-	(*m_logstream) << "Initial conformer does not pass filter!" << endl;
+        (*m_logstream) << "Initial conformer does not pass filter!" << endl;
     }
 
     int tries = 0, ndup = 0, nbad = 0;
@@ -355,16 +356,16 @@ namespace OpenBabel {
       }
       // duplicates are always rejected
       if (!IsUniqueKey(m_rotorKeys, rotorKey))
-	{
-	  ndup++;
-	  continue;
-	}
+        {
+          ndup++;
+          continue;
+        }
       // execute filter(s)
       if (!IsGood(rotorKey))
-	{
-	  nbad++;
-	  continue;
-	}
+        {
+          nbad++;
+          continue;
+        }
       // add the key
       m_rotorKeys.push_back(rotorKey);
     }
@@ -372,13 +373,13 @@ namespace OpenBabel {
     // print out initial conformers
     if (m_logstream != NULL)
       {
-	(*m_logstream) << "Initial conformer count: " << m_rotorKeys.size() << endl;
-	(*m_logstream) << tries << " attempts,  " << ndup << " duplicates, " << nbad << " failed filter." << endl;
-	for (unsigned int i = 0; i < m_rotorKeys.size(); ++i) {
-	  for (unsigned int j = 1; j < m_rotorKeys[i].size(); ++j)
-	    (*m_logstream) << m_rotorKeys[i][j] << " ";
-	  (*m_logstream) << std::endl;
-	}
+        (*m_logstream) << "Initial conformer count: " << m_rotorKeys.size() << endl;
+        (*m_logstream) << tries << " attempts,  " << ndup << " duplicates, " << nbad << " failed filter." << endl;
+        for (unsigned int i = 0; i < m_rotorKeys.size(); ++i) {
+          for (unsigned int j = 1; j < m_rotorKeys[i].size(); ++j)
+            (*m_logstream) << m_rotorKeys[i][j] << " ";
+          (*m_logstream) << std::endl;
+        }
       }
 
     // Setup some default values for dynamic niche sharing according to the molecule.
@@ -492,34 +493,34 @@ namespace OpenBabel {
     m_rotorKeys.clear();
     for (unsigned int i = 0; i < conformer_scores.size(); ++i) {
       switch (m_score->GetConvergence()) {
-        case OBConformerScore::Highest:
-          if (!i || conformer_scores[i].score > highest) {
-            highest = conformer_scores[i].score;
-          }
-          break;
-        case OBConformerScore::Lowest:
-          if (!i || conformer_scores[i].score < lowest) {
-            lowest = conformer_scores[i].score;
-          }
-          break;
-        default:
-          sum += conformer_scores[i].score;
-          break;
+      case OBConformerScore::Highest:
+        if (!i || conformer_scores[i].score > highest) {
+          highest = conformer_scores[i].score;
+        }
+        break;
+      case OBConformerScore::Lowest:
+        if (!i || conformer_scores[i].score < lowest) {
+          lowest = conformer_scores[i].score;
+        }
+        break;
+      default:
+        sum += conformer_scores[i].score;
+        break;
       }
       // store the best keys
       m_rotorKeys.push_back(conformer_scores[i].rotorKey);
     }
 
     switch (m_score->GetConvergence()) {
-      case OBConformerScore::Highest:
-        return highest;
-      case OBConformerScore::Lowest:
-        return lowest;
-      case OBConformerScore::Sum:
-        return sum;
-      case OBConformerScore::Average:
-      default:
-        return sum / m_rotorKeys.size();
+    case OBConformerScore::Highest:
+      return highest;
+    case OBConformerScore::Lowest:
+      return lowest;
+    case OBConformerScore::Sum:
+      return sum;
+    case OBConformerScore::Average:
+    default:
+      return sum / m_rotorKeys.size();
     }
   }
 
@@ -532,100 +533,100 @@ namespace OpenBabel {
 
     if (m_logstream != NULL)
       {
-	(*m_logstream) << endl << "=====> Starting conformers search with a Genetic Algorithm <=====" << endl;
-	if (use_sharing)
-	  {
-	    (*m_logstream) << "Uses fitness sharing (with dynamic niche identification)" << endl;
-	    (*m_logstream) << "Population size :" << m_rotorKeys.size() << endl;
-	    (*m_logstream) << nb_niches << " niches searched, with a key distance radius of " << niche_radius << endl;
-	    (*m_logstream) << "Fitness sharing parameter alpha: " << alpha_share << " \t sigma:" << sigma_share << endl;
-	    (*m_logstream) << "Uniform crossover probability: " << p_crossover << endl;
-	    (*m_logstream) << "Mutation probability: " << (1.0 / (double) m_mutability) << endl;
-	    (*m_logstream) << "Niche mating probability: " << niche_mating << endl;
-	    if (local_opt_rate)
-	      {
-		(*m_logstream) << "Trying to improve best indivual with local search every ";
-		(*m_logstream) << local_opt_rate<< "generations" << endl;
-	      }
-	  }
-	else
-	  {
-	    (*m_logstream) << "Perform elitist generation replacement with mutation only" << endl;
-	    (*m_logstream) << "Mutation probability: " << (1.0 / (double) m_mutability) << endl;
-	  }
-	(*m_logstream) << "Will stop after " << m_convergence << " generations without improvement."  << endl  << endl;
-       }
+        (*m_logstream) << endl << "=====> Starting conformers search with a Genetic Algorithm <=====" << endl;
+        if (use_sharing)
+          {
+            (*m_logstream) << "Uses fitness sharing (with dynamic niche identification)" << endl;
+            (*m_logstream) << "Population size :" << m_rotorKeys.size() << endl;
+            (*m_logstream) << nb_niches << " niches searched, with a key distance radius of " << niche_radius << endl;
+            (*m_logstream) << "Fitness sharing parameter alpha: " << alpha_share << " \t sigma:" << sigma_share << endl;
+            (*m_logstream) << "Uniform crossover probability: " << p_crossover << endl;
+            (*m_logstream) << "Mutation probability: " << (1.0 / (double) m_mutability) << endl;
+            (*m_logstream) << "Niche mating probability: " << niche_mating << endl;
+            if (local_opt_rate)
+              {
+                (*m_logstream) << "Trying to improve best indivual with local search every ";
+                (*m_logstream) << local_opt_rate<< "generations" << endl;
+              }
+          }
+        else
+          {
+            (*m_logstream) << "Perform elitist generation replacement with mutation only" << endl;
+            (*m_logstream) << "Mutation probability: " << (1.0 / (double) m_mutability) << endl;
+          }
+        (*m_logstream) << "Will stop after " << m_convergence << " generations without improvement."  << endl  << endl;
+      }
     if (use_sharing)
       score_population ();
 
     for (int i = 0; i < 1000; i++) {
-       // keep copy of rotor keys if next generation is less fit
+      // keep copy of rotor keys if next generation is less fit
       RotorKeys rotorKeys = m_rotorKeys;
 
       if (use_sharing)
-	{
-	  if (local_opt_rate && (i % local_opt_rate) == 0)
-	    local_opt ();		// Try to locally improve the best from times to times
-	  share_fitness ();
-	  score = sharing_generation ();
-	}
+        {
+          if (local_opt_rate && (i % local_opt_rate) == 0)
+            local_opt ();		// Try to locally improve the best from times to times
+          share_fitness ();
+          score = sharing_generation ();
+        }
       else
-	{
-	  // create the children
-	  NextGeneration();
-	  // make the selection
-	  score = MakeSelection();
-	}
+        {
+          // create the children
+          NextGeneration();
+          // make the selection
+          score = MakeSelection();
+        }
       if (i == 0)
-	last_score = score;
+        last_score = score;
 
       if (IsNear(last_score, score)) {
         identicalGenerations++;
         last_score = score;
       } else {
-	if (m_score->GetPreferred() == OBConformerScore::HighScore)
-	  {
-	    // Maximize score
-	    if (score < last_score) {
-	      if (!use_sharing)
-		m_rotorKeys = rotorKeys;
-	      identicalGenerations++;
-	    } else {
-	      last_score = score;
-	      identicalGenerations = 0;
-	    }
-	  }
-	else
-	  {
-	    // Minimize score
-	    if (score > last_score) {
-	      if (!use_sharing)
-		m_rotorKeys = rotorKeys;
-	      identicalGenerations++;
-	    } else {
-	      last_score = score;
-	      identicalGenerations = 0;
-	    }
-	  }
+        if (m_score->GetPreferred() == OBConformerScore::HighScore)
+          {
+            // Maximize score
+            if (score < last_score) {
+              if (!use_sharing)
+                m_rotorKeys = rotorKeys;
+              identicalGenerations++;
+            } else {
+              last_score = score;
+              identicalGenerations = 0;
+            }
+          }
+        else
+          {
+            // Minimize score
+            if (score > last_score) {
+              if (!use_sharing)
+                m_rotorKeys = rotorKeys;
+              identicalGenerations++;
+            } else {
+              last_score = score;
+              identicalGenerations = 0;
+            }
+          }
       }
       if (m_logstream != NULL)
-	{
-	  if (vscores.size ())
-	    (*m_logstream) << "Generation #" << i + 1 << "  " << last_score << "\t best " << vscores[0] << std::endl;
-	  else
-	    (*m_logstream) << "Generation #" << i + 1 << "  " << last_score << std::endl;
-	}
-    if (identicalGenerations > m_convergence)
+        {
+          if (vscores.size ())
+            (*m_logstream) << "Generation #" << i + 1 << "  " << last_score << "\t best " << vscores[0] << std::endl;
+          else
+            (*m_logstream) << "Generation #" << i + 1 << "  " << last_score << std::endl;
+        }
+      if (identicalGenerations > m_convergence)
         break;
     }
 
     if (m_logstream != NULL)
       {
-	for (unsigned int i = 0; i < m_rotorKeys.size(); ++i) {
-	  for (unsigned int j = 1; j < m_rotorKeys[i].size(); ++j)
-	    (*m_logstream) << m_rotorKeys[i][j] << " ";
-	  (*m_logstream) << std::endl;
-	}
+        for (unsigned int i = 0; i < m_rotorKeys.size(); ++i) {
+          for (unsigned int j = 1; j < m_rotorKeys[i].size(); ++j)
+            (*m_logstream) << m_rotorKeys[i][j] << " ";
+          (*m_logstream) << std::endl;
+        }
       }
   }
 
@@ -699,14 +700,14 @@ namespace OpenBabel {
     // Skip first values, since  meaningfull valaues are starting at index 1 (Fortran translation inside ;-))
     for (++it1, ++it2; it1 != key1.end ();++it1, ++it2)
       if (*it1 != *it2)
-	dist++;
+        dist++;
     return dist;
   }
 
   /*! @brief Make a local search on the best individual.
-      Randomly change each rotor key in the key vector.
-      This is not a complete coverage of all "neighbors" vectors,
-      since not all possible key values are tested.
+    Randomly change each rotor key in the key vector.
+    This is not a complete coverage of all "neighbors" vectors,
+    since not all possible key values are tested.
   */
   int
   OBConformerSearch::local_opt ()
@@ -726,25 +727,25 @@ namespace OpenBabel {
     rotor = m_rotorList.BeginRotor(ri);
     for (i = 1; i <= m_rotorList.Size(); ++i, rotor = m_rotorList.NextRotor(ri))
       {
-	neighbor = best;
-	new_val = unique_generator.NextInt() % rotor->GetResolution().size();
-	while (new_val == best[i])
-	  new_val = unique_generator.NextInt() % rotor->GetResolution().size();
-	neighbor[i] = new_val;
-	if (IsUniqueKey(backup_population, neighbor) && IsGood(neighbor))
-	  m_rotorKeys.push_back (neighbor);
+        neighbor = best;
+        new_val = unique_generator.NextInt() % rotor->GetResolution().size();
+        while (new_val == best[i])
+          new_val = unique_generator.NextInt() % rotor->GetResolution().size();
+        neighbor[i] = new_val;
+        if (IsUniqueKey(backup_population, neighbor) && IsGood(neighbor))
+          m_rotorKeys.push_back (neighbor);
       }
     score_population ();
     opt_score = vscores[0];
     if ( (max_flag && (opt_score > backup_scores[0]))  || (!max_flag && (opt_score < backup_scores[0])) )
       {				// Found a better conformer
-	opt_key = m_rotorKeys[0];
-	flag_improved = true;
-	if (m_logstream != NULL)
-	  {
-	    (*m_logstream) << "    => Best individual improved with local search: ";
-	    (*m_logstream) << backup_scores[0] << "  --> " <<  opt_score << endl;
-	  }
+        opt_key = m_rotorKeys[0];
+        flag_improved = true;
+        if (m_logstream != NULL)
+          {
+            (*m_logstream) << "    => Best individual improved with local search: ";
+            (*m_logstream) << backup_scores[0] << "  --> " <<  opt_score << endl;
+          }
       }
     // Set back population and score vector
     m_rotorKeys.clear ();
@@ -753,8 +754,8 @@ namespace OpenBabel {
     vscores = backup_scores;
     if (flag_improved)
       { // Replace best one
-	m_rotorKeys[0] = opt_key;
-	vscores[0] = opt_score;
+        m_rotorKeys[0] = opt_key;
+        vscores[0] = opt_score;
       }
 
     return (int) flag_improved;
@@ -762,94 +763,94 @@ namespace OpenBabel {
 
   /*! @brief  Produces one or two offsprings
 
-      @param key1: reference to the first offspring key
-      @param key2: reference to the second offspring key
+    @param key1: reference to the first offspring key
+    @param key2: reference to the second offspring key
 
-      @return: 0 if no valid offspring, 1 if first only, 2 if second only, and 3 if 2 are valid offsprings.
+    @return: 0 if no valid offspring, 1 if first only, 2 if second only, and 3 if 2 are valid offsprings.
   */
   int
   OBConformerSearch::reproduce (RotorKey &key1, RotorKey &key2)
   {
-     unsigned int i = 0, iniche = 0, j = 0, pop_size = vscores.size ();
-     unsigned int rnd1 = 0, rnd2 = 0, parent1 = 0, parent2 = 0, nsize = 0;
-     int ret_code = 0;
-     bool flag_crossover = false;
-     OBRotorIterator ri;
-     OBRotor *rotor = NULL;
+    unsigned int i = 0, iniche = 0, j = 0, pop_size = vscores.size ();
+    unsigned int rnd1 = 0, rnd2 = 0, parent1 = 0, parent2 = 0, nsize = 0;
+    int ret_code = 0;
+    bool flag_crossover = false;
+    OBRotorIterator ri;
+    OBRotor *rotor = NULL;
 
-     if (pop_size < 2)
-       return 0;
+    if (pop_size < 2)
+      return 0;
 
-     // Make a 2-tournament selection to choose first parent
-     i = unique_generator.NextInt() % pop_size;
-     j = unique_generator.NextInt() % pop_size;
-     parent1 = vshared_fitnes[i] > vshared_fitnes[j] ? i : j;
-     iniche = niche_map[parent1];
-     if (iniche > -1)
-       nsize = dynamic_niches[iniche].size (); // Belongs to a specific niche
+    // Make a 2-tournament selection to choose first parent
+    i = unique_generator.NextInt() % pop_size;
+    j = unique_generator.NextInt() % pop_size;
+    parent1 = vshared_fitnes[i] > vshared_fitnes[j] ? i : j;
+    iniche = niche_map[parent1];
+    if (iniche > -1)
+      nsize = dynamic_niches[iniche].size (); // Belongs to a specific niche
 
-     // Do we apply crossover here?
-     flag_crossover = (unique_generator.NextFloat () <= p_crossover);
-     if (flag_crossover && (unique_generator.NextFloat () <= niche_mating)  &&  nsize > 1)
-       {
-	 // Apply niche mating: draw second parent in the same niche, if its has
-	 // at least 2 members. Make a 2-tournament selection whithin this niche
-	 rnd1 =  unique_generator.NextInt() % nsize;
-	 i =  dynamic_niches[iniche][rnd1];
-	 rnd2 =  unique_generator.NextInt() % nsize;
-	 j = dynamic_niches[iniche][rnd2];
-	 parent2 = vshared_fitnes[i] > vshared_fitnes[j] ? i : j;
-       }
-     else
-       {
-	 // Draw second in the whole population
-	 i = unique_generator.NextInt() % pop_size;
-	 j = unique_generator.NextInt() % pop_size;
-	 parent2 = vshared_fitnes[i] > vshared_fitnes[j] ? i : j;
-       }
+    // Do we apply crossover here?
+    flag_crossover = (unique_generator.NextFloat () <= p_crossover);
+    if (flag_crossover && (unique_generator.NextFloat () <= niche_mating)  &&  nsize > 1)
+      {
+        // Apply niche mating: draw second parent in the same niche, if its has
+        // at least 2 members. Make a 2-tournament selection whithin this niche
+        rnd1 =  unique_generator.NextInt() % nsize;
+        i =  dynamic_niches[iniche][rnd1];
+        rnd2 =  unique_generator.NextInt() % nsize;
+        j = dynamic_niches[iniche][rnd2];
+        parent2 = vshared_fitnes[i] > vshared_fitnes[j] ? i : j;
+      }
+    else
+      {
+        // Draw second in the whole population
+        i = unique_generator.NextInt() % pop_size;
+        j = unique_generator.NextInt() % pop_size;
+        parent2 = vshared_fitnes[i] > vshared_fitnes[j] ? i : j;
+      }
 
-     if (flag_crossover)
-       {
-	 // Cross the 2 vectors: toss a coin for each position (i.e. uniform crossover)
-	 for (i = 1; i < key1.size(); i++)
-	   {
-	     if ( unique_generator.NextInt() % 2)
-	       { // Copy parent1 to offspring 1
-		 key1[i] = m_rotorKeys[parent1][i];
-		 key2[i] = m_rotorKeys[parent2][i];
-	       }
-	     else
-	       { // invert
-		 key2[i] = m_rotorKeys[parent1][i];
-		 key1[i] = m_rotorKeys[parent2][i];
-	       }
-	   }
-       }
-     else
-       {
-	 key1 =  m_rotorKeys[parent1];
-	 key2 =  m_rotorKeys[parent2];
-       }
+    if (flag_crossover)
+      {
+        // Cross the 2 vectors: toss a coin for each position (i.e. uniform crossover)
+        for (i = 1; i < key1.size(); i++)
+          {
+            if ( unique_generator.NextInt() % 2)
+              { // Copy parent1 to offspring 1
+                key1[i] = m_rotorKeys[parent1][i];
+                key2[i] = m_rotorKeys[parent2][i];
+              }
+            else
+              { // invert
+                key2[i] = m_rotorKeys[parent1][i];
+                key1[i] = m_rotorKeys[parent2][i];
+              }
+          }
+      }
+    else
+      {
+        key1 =  m_rotorKeys[parent1];
+        key2 =  m_rotorKeys[parent2];
+      }
 
-     // perform random mutation(s)
-     rotor = m_rotorList.BeginRotor(ri);
-     for (i = 1; i <= m_rotorList.Size(); ++i, rotor = m_rotorList.NextRotor(ri))
-       {
-	 if (unique_generator.NextInt() % m_mutability == 0)
-	   key1[i] = unique_generator.NextInt() % rotor->GetResolution().size();
-	 if (unique_generator.NextInt() % m_mutability == 0)
-	   key2[i] = unique_generator.NextInt() % rotor->GetResolution().size();
-       }
-     if (IsUniqueKey(m_rotorKeys, key1) && IsGood(key1))
-       ret_code += 1;
-     if (IsUniqueKey(m_rotorKeys, key2) && IsGood(key2))
-       ret_code += 2;
-     return ret_code;		// Returns number of new distinct individuals (i.e. rotor keys)
+    // perform random mutation(s)
+    rotor = m_rotorList.BeginRotor(ri);
+    for (i = 1; i <= m_rotorList.Size(); ++i, rotor = m_rotorList.NextRotor(ri))
+      {
+        if (unique_generator.NextInt() % m_mutability == 0)
+          key1[i] = unique_generator.NextInt() % rotor->GetResolution().size();
+        if (unique_generator.NextInt() % m_mutability == 0)
+          key2[i] = unique_generator.NextInt() % rotor->GetResolution().size();
+      }
+    if (IsUniqueKey(m_rotorKeys, key1) && IsGood(key1))
+      ret_code += 1;
+    if (IsUniqueKey(m_rotorKeys, key2) && IsGood(key2))
+      ret_code += 2;
+    return ret_code;		// Returns number of new distinct individuals (i.e. rotor keys)
   }
 
   /*! @brief  Score and sort the current population
 
-     @return: 0 when OK, 1 or more if not
+    @return: 0 when OK, 1 or more if not
   */
   int
   OBConformerSearch::score_population ()
@@ -875,13 +876,13 @@ namespace OpenBabel {
     // Score each conformer
     for (i = 0; i < conformers.size(); ++i)
       {
-	score = m_score->Score(m_mol, i, m_rotorKeys, conformers);
-	conformer_scores.push_back(ConformerScore(m_rotorKeys[i], score));
+        score = m_score->Score(m_mol, i, m_rotorKeys, conformers);
+        conformer_scores.push_back(ConformerScore(m_rotorKeys[i], score));
       }
 
     // delete the conformers
     for (i = 0; i < conformers.size(); ++i)
-	delete [] conformers[i];
+      delete [] conformers[i];
 
     // Sort conformers
     if (max_flag)
@@ -895,8 +896,8 @@ namespace OpenBabel {
     m_rotorKeys.clear();
     for (i = 0; i < pop_size; i++)
       {
-	vscores.push_back (conformer_scores[i].score);
-	m_rotorKeys.push_back(conformer_scores[i].rotorKey);
+        vscores.push_back (conformer_scores[i].score);
+        m_rotorKeys.push_back(conformer_scores[i].rotorKey);
       }
     return 0;
   }
@@ -905,7 +906,7 @@ namespace OpenBabel {
   /*! @brief   Compute shared fitness values for a given population.
     Assume the population was order prior to this call.
 
-     @return: 0 when OK, 1 or more if not
+    @return: 0 when OK, 1 or more if not
   */
   int
   OBConformerSearch::share_fitness ()
@@ -928,10 +929,10 @@ namespace OpenBabel {
     dtmp = 1.0 - min_score;
     if (max_flag)
       for (dit =  vscores.begin (); dit != vscores.end (); ++dit)
-	vshared_fitnes.push_back (*dit + dtmp);
+        vshared_fitnes.push_back (*dit + dtmp);
     else			// Minimization: invert score so best has 1.0, others lower values
       for (dit =  vscores.begin (); dit != vscores.end (); ++dit)
-	vshared_fitnes.push_back (1.0 / (*dit + dtmp));
+        vshared_fitnes.push_back (1.0 / (*dit + dtmp));
 
     // Use a vector to keep track of assigned indivivduals
     vshared.resize (pop_size);
@@ -939,73 +940,73 @@ namespace OpenBabel {
     dynamic_niches.clear ();
     for (k = 0; k < pop_size; k++)
       {
-	imax = -1;
-	if ((dynamic_niches.size () < nb_niches) && (dynamic_niches.size () %2))
-	  {
-	    // Get the most distant individual to current list heads, wihtin the first 2/3 of the population
-	    // The idea is to find some explicit niches, with maximum disimilarity form existing ones,
-	    // still with some reasonable head fitness score.
-	    max_dist = 0;
-	    for (i = 0; i < ((pop_size * 2) / 3); i++)
-	      {
-		if (vshared[i])
-		  continue;
-		min_dist = 1000000;
-		for(iniche = 0; iniche < dynamic_niches.size (); iniche++)
-		  {
-		    j = dynamic_niches[iniche][0];
-		    dist = key_distance (m_rotorKeys[j], m_rotorKeys[i]);
-		    if (dist < min_dist )
-		      min_dist = dist;
-		  }
-		if (min_dist > max_dist)
-		  {
-		    imax = i;
-		    max_dist = min_dist;
-		  }
-	      }
-	    i = imax;
-	  }
+        imax = -1;
+        if ((dynamic_niches.size () < nb_niches) && (dynamic_niches.size () %2))
+          {
+            // Get the most distant individual to current list heads, wihtin the first 2/3 of the population
+            // The idea is to find some explicit niches, with maximum disimilarity form existing ones,
+            // still with some reasonable head fitness score.
+            max_dist = 0;
+            for (i = 0; i < ((pop_size * 2) / 3); i++)
+              {
+                if (vshared[i])
+                  continue;
+                min_dist = 1000000;
+                for(iniche = 0; iniche < dynamic_niches.size (); iniche++)
+                  {
+                    j = dynamic_niches[iniche][0];
+                    dist = key_distance (m_rotorKeys[j], m_rotorKeys[i]);
+                    if (dist < min_dist )
+                      min_dist = dist;
+                  }
+                if (min_dist > max_dist)
+                  {
+                    imax = i;
+                    max_dist = min_dist;
+                  }
+              }
+            i = imax;
+          }
 
-	// Get the best unassigned individual
-	if (imax == -1)
-	  for (i = 0; i < pop_size; i++)
-	    if (!vshared[i])
-	      break;
+        // Get the best unassigned individual
+        if (imax == -1)
+          for (i = 0; i < pop_size; i++)
+            if (!vshared[i])
+              break;
 
-	for (iniche = 0; iniche < dynamic_niches.size (); iniche++)
-	  {
-	    j = dynamic_niches[iniche][0];
-	    if (key_distance (m_rotorKeys[j], m_rotorKeys[i]) <= niche_radius)
-	      {
-		dynamic_niches[iniche].push_back (i);
-		break;
-	      }
-	  }
-	if (iniche == dynamic_niches.size ())
-	  {  // Could not find a niche for this one
-	    if (dynamic_niches.size () < nb_niches)
-	      { // Create a new niche.
-		iniche = dynamic_niches.size ();
-		dynamic_niches.resize (iniche + 1);
-		dynamic_niches[iniche].push_back (i);
-	      }
-	    else
-	      { // Do it the hard way: compute sharing factor with all the population
-		sh_count = 0.0;
-		for (j = 0; j < pop_size; j++)
-		  {
-		    dist = key_distance (m_rotorKeys[i], m_rotorKeys[j]);
-		    if (dist < sigma_share)
-		      {
-			sh_ij = 1.0 - pow (((double) dist) / ((double ) sigma_share), alpha_share);
-			sh_count += sh_ij;
-		      }
-		  }
-		vshared_fitnes[i] /= sh_count; // Classical shared fitness
-	      }
-	  }
-	vshared[i] = 1;
+        for (iniche = 0; iniche < dynamic_niches.size (); iniche++)
+          {
+            j = dynamic_niches[iniche][0];
+            if (key_distance (m_rotorKeys[j], m_rotorKeys[i]) <= niche_radius)
+              {
+                dynamic_niches[iniche].push_back (i);
+                break;
+              }
+          }
+        if (iniche == dynamic_niches.size ())
+          {  // Could not find a niche for this one
+            if (dynamic_niches.size () < nb_niches)
+              { // Create a new niche.
+                iniche = dynamic_niches.size ();
+                dynamic_niches.resize (iniche + 1);
+                dynamic_niches[iniche].push_back (i);
+              }
+            else
+              { // Do it the hard way: compute sharing factor with all the population
+                sh_count = 0.0;
+                for (j = 0; j < pop_size; j++)
+                  {
+                    dist = key_distance (m_rotorKeys[i], m_rotorKeys[j]);
+                    if (dist < sigma_share)
+                      {
+                        sh_ij = 1.0 - pow (((double) dist) / ((double ) sigma_share), alpha_share);
+                        sh_count += sh_ij;
+                      }
+                  }
+                vshared_fitnes[i] /= sh_count; // Classical shared fitness
+              }
+          }
+        vshared[i] = 1;
       }
 
     // Build the niche map: provided an invididual index, provides the niche index it belongs to.
@@ -1014,14 +1015,14 @@ namespace OpenBabel {
     niche_map.resize (pop_size, -1);
     for (iniche = 0; iniche < dynamic_niches.size (); iniche++)
       {
-	// Divide each dynamic niche member score by the niche size: i.e. each niche member has the same
-	// penalty, i.e. the order is unchanged whitin this niche.
-	dtmp = 1.0 / ((double) dynamic_niches[iniche].size ());
-	for (nit = dynamic_niches[iniche].begin (); nit != dynamic_niches[iniche].end (); ++nit)
-	  {
-	    vshared_fitnes[*nit] *= dtmp;
-	    niche_map[*nit] = iniche;
-	  }
+        // Divide each dynamic niche member score by the niche size: i.e. each niche member has the same
+        // penalty, i.e. the order is unchanged whitin this niche.
+        dtmp = 1.0 / ((double) dynamic_niches[iniche].size ());
+        for (nit = dynamic_niches[iniche].begin (); nit != dynamic_niches[iniche].end (); ++nit)
+          {
+            vshared_fitnes[*nit] *= dtmp;
+            niche_map[*nit] = iniche;
+          }
       }
 
     return 0;
@@ -1029,7 +1030,7 @@ namespace OpenBabel {
 
   /*! @brief  Create a new generation with fitness sharing
 
-     @return: generation score (lowest, highest, average or sum of fitness)
+    @return: generation score (lowest, highest, average or sum of fitness)
   */
   double
   OBConformerSearch::sharing_generation ()
@@ -1059,12 +1060,12 @@ namespace OpenBabel {
     // Build the list of individuals out of the niches
     for (i = 0; i < pop_size; i++)
       if (niche_map[i] == -1)
-	out_niches.push_back (i);
+        out_niches.push_back (i);
 
     if (m_logstream != NULL)
       {
-	(*m_logstream) << "  ==> Number of niches: " << dynamic_niches.size ();
-	(*m_logstream) << "   # out of niches :" << out_niches.size ()  << "\t Best :" << vscores[0] << endl;
+        (*m_logstream) << "  ==> Number of niches: " << dynamic_niches.size ();
+        (*m_logstream) << "   # out of niches :" << out_niches.size ()  << "\t Best :" << vscores[0] << endl;
       }
 
     // Save each niche 1set element, then 2nd until we have half of the population
@@ -1075,86 +1076,86 @@ namespace OpenBabel {
     iround = 0;
     while (ninsert < ((half_pop * 2) / 3))
       {
-	last_ninsert = ninsert;
-	for (iniche = 0; iniche < dynamic_niches.size (); iniche++)
-	  {
-	    nsize = dynamic_niches[iniche].size ();
-	    imax = nsize / 2;
-	    if (nsize % 2)
-	      imax++;
-	    if (iround < imax)
-	      {
-		i = dynamic_niches[iniche][iround];
-		if (!vflag[i])
-		  {
-		    new_generation.push_back (m_rotorKeys[i]);
-		    vflag[i] = 1;
-		    ninsert++;
-		    if (ninsert >= half_pop)
-		      break;
-		  }
-	      }
-	  }
-	if (ninsert == last_ninsert)
-	  {
-	    for (i = 0; i < out_niches.size () ; i++)
-	      {
-		j = out_niches[i];
-		if (!vflag[j])
-		  {
-		    new_generation.push_back (m_rotorKeys[j]);
-		    vflag[j] = 1;
-		    ninsert++;
-		    break;
+        last_ninsert = ninsert;
+        for (iniche = 0; iniche < dynamic_niches.size (); iniche++)
+          {
+            nsize = dynamic_niches[iniche].size ();
+            imax = nsize / 2;
+            if (nsize % 2)
+              imax++;
+            if (iround < imax)
+              {
+                i = dynamic_niches[iniche][iround];
+                if (!vflag[i])
+                  {
+                    new_generation.push_back (m_rotorKeys[i]);
+                    vflag[i] = 1;
+                    ninsert++;
+                    if (ninsert >= half_pop)
+                      break;
+                  }
+              }
+          }
+        if (ninsert == last_ninsert)
+          {
+            for (i = 0; i < out_niches.size () ; i++)
+              {
+                j = out_niches[i];
+                if (!vflag[j])
+                  {
+                    new_generation.push_back (m_rotorKeys[j]);
+                    vflag[j] = 1;
+                    ninsert++;
+                    break;
 
-		  }
-	      }
-	  }
-	if (ninsert == last_ninsert)
-	  break;
-	iround++;
+                  }
+              }
+          }
+        if (ninsert == last_ninsert)
+          break;
+        iround++;
       }
     // Now add most distant individuals: force genetic diversity in the new population at the cost of higher energies.
     while (ninsert < half_pop)
       {
-	dist_max = 0;
-	imax = 0;
-	for (i = 0; i < pop_size; i++)
-	  {
-	    if (vflag[i])
-	      continue;
-	    dist_min = 1000000;
-	    for (j = 1; j < pop_size; j++)
-	      {
-		// Get closest neigbhor distance for this key
-		if (!vflag[j])
-		  continue;
-		dist = key_distance (m_rotorKeys[i], m_rotorKeys[j]);
-		if (dist < dist_min)
-		  dist_min = dist;
-	      }
-	    if (dist_min > dist_max)
-	      {			// Find the most distant to its clostest neighbor
-		imax = i;
-		dist_max = dist_min;
-	      }
-	  }
-	 new_generation.push_back (m_rotorKeys[imax]);
-	 vflag[imax] = 1;
-	 ninsert++;
+        dist_max = 0;
+        imax = 0;
+        for (i = 0; i < pop_size; i++)
+          {
+            if (vflag[i])
+              continue;
+            dist_min = 1000000;
+            for (j = 1; j < pop_size; j++)
+              {
+                // Get closest neigbhor distance for this key
+                if (!vflag[j])
+                  continue;
+                dist = key_distance (m_rotorKeys[i], m_rotorKeys[j]);
+                if (dist < dist_min)
+                  dist_min = dist;
+              }
+            if (dist_min > dist_max)
+              {			// Find the most distant to its clostest neighbor
+                imax = i;
+                dist_max = dist_min;
+              }
+          }
+        new_generation.push_back (m_rotorKeys[imax]);
+        vflag[imax] = 1;
+        ninsert++;
       }
 
     // Now generate offsprings
     offsprings.clear ();
     while (offsprings.size () < pop_size)
       {
-	ret_code = reproduce (key1, key2);
-	// Add the first offspring if valid... and not already in the new generation
-	if ((ret_code % 2) && IsUniqueKey(new_generation, key1))
-	  offsprings.push_back (key1);
-	// Add the second if valid, and enough space in the new population
-	if ((ret_code > 1) && IsUniqueKey(new_generation, key2))
-	  offsprings.push_back (key2);
+        ret_code = reproduce (key1, key2);
+        // Add the first offspring if valid... and not already in the new generation
+        if ((ret_code % 2) && IsUniqueKey(new_generation, key1))
+          offsprings.push_back (key1);
+        // Add the second if valid, and enough space in the new population
+        if ((ret_code > 1) && IsUniqueKey(new_generation, key2))
+          offsprings.push_back (key2);
       }
 
     // Score the offsprings and the best in the new population
@@ -1174,15 +1175,15 @@ namespace OpenBabel {
     sum = 0.0;
     if (0) {
       for (iniche = 0; iniche <  dynamic_niches.size (); iniche++)
-	{
-	  i = dynamic_niches[iniche][0];
-	  sum += vscores[i];
-	}
-       return sum / ((double) dynamic_niches.size ());
+        {
+          i = dynamic_niches[iniche][0];
+          sum += vscores[i];
+        }
+      return sum / ((double) dynamic_niches.size ());
     }
     imax = pop_size / 2;
     for (i = 0; i < imax; i++)
-	sum += vscores[i];
+      sum += vscores[i];
 
     // Convergence criterion: best half population score
     return sum / ((double) imax);

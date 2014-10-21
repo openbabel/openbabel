@@ -18,6 +18,7 @@ GNU General Public License for more details.
 #include <openbabel/obmolecformat.h>
 #include <regex.h>
 #include <iomanip>
+
 #define notFound string::npos
 using namespace std;
 namespace OpenBabel
@@ -115,8 +116,8 @@ namespace OpenBabel
     double energy=0;
     //Vibrational data
     std::vector< std::vector< vector3 > > Lx;
-    std::vector<double> Frequencies, Intensities, RamanActivities;
-
+    std::vector<double> Frequencies, Intensities, RamanActivities, UVWavelength, UVForces, UVEDipole;
+    std::vector<double> CDWavelength, CDVelosity, CDStrengthsLength;
     // frequencies and normal modes
     std::vector<double> FrequenciesAll;
     int nModeAll = 0;
@@ -348,13 +349,59 @@ namespace OpenBabel
             ifs.getline(buffer, BUFF_SIZE);
             tokenize(vs,buffer);
 
-            while (vs.size() == 4) {
+            while (vs.size() == 4 ) {
                 RamanActivities.push_back(atof(vs[2].c_str()));
                 ifs.getline(buffer, BUFF_SIZE);
                 tokenize(vs,buffer);
             }
         } // if "RAMAN SPECTRUM"
 
+        if (checkKeywords.find("ABSORPTION SPECTRUM VIA TRANSITION ELECTRIC DIPOLE MOMENTS") != notFound) {
+//        if(strstr(buffer,"ABSORPTION SPECTRUM VIA TRANSITION ELECTRIC DIPOLE MOMENTS") != NULL)
+//        {
+            UVWavelength.resize(0);
+            UVForces.resize(0);
+            UVEDipole.resize(0);
+            ifs.getline(buffer, BUFF_SIZE); // skip ---------------------
+            ifs.getline(buffer, BUFF_SIZE); // skip header
+            ifs.getline(buffer, BUFF_SIZE); // skip header
+            ifs.getline(buffer, BUFF_SIZE); // skip ---------------------
+            ifs.getline(buffer, BUFF_SIZE);
+            tokenize(vs,buffer);
+
+            while (vs.size() == 8) {
+                UVForces.push_back(0.0);        // ORCA doesn't have these values
+                UVWavelength.push_back(atof(vs[2].c_str()));
+                UVEDipole.push_back(atof(vs[3].c_str()));
+                ifs.getline(buffer, BUFF_SIZE);
+                tokenize(vs,buffer);
+            }
+        } // if "ABSORPTION SPECTRUM VIA TRANSITION ELECTRIC DIPOLE MOMENTS"
+
+        if (checkKeywords.find("CD SPECTRUM") != notFound) {
+//        if(strstr(buffer,"CD SPECTRUM") != NULL)
+//        {
+            std::cout << "CD spectrum found" << endl;
+            CDWavelength.resize(0);
+            CDVelosity.resize(0);
+            CDStrengthsLength.resize(0);
+            ifs.getline(buffer, BUFF_SIZE); // skip ---------------------
+            ifs.getline(buffer, BUFF_SIZE); // skip header
+            ifs.getline(buffer, BUFF_SIZE); // skip header
+            ifs.getline(buffer, BUFF_SIZE); // skip ---------------------
+            ifs.getline(buffer, BUFF_SIZE);
+            tokenize(vs,buffer);
+
+            while (vs.size() == 7) {
+                CDVelosity.push_back(0.0);        // ORCA doesn't calculate these values
+                CDWavelength.push_back(atof(vs[2].c_str()));
+                CDStrengthsLength.push_back(atof(vs[3].c_str()));
+                ifs.getline(buffer, BUFF_SIZE);
+                tokenize(vs,buffer);
+            }
+            std::cout << CDWavelength.size() << endl;
+            std::cout << CDStrengthsLength.size() << endl;
+        } // if "CD SPECTRUM"
 
         if (checkKeywords.find("UNIT CELL (ANGSTROM)") != notFound) { // file contains unit cell information
             unitCellVectors.resize(0);
@@ -463,6 +510,33 @@ namespace OpenBabel
         }
         mol.SetData(vd);
     }
+
+    // Attach UV / CD spectra data if there are any
+
+    if(UVWavelength.size() > 0 || CDWavelength.size() > 0)
+    {
+        OBElectronicTransitionData* etd = new OBElectronicTransitionData;
+
+        if (UVWavelength.size() > 0) {
+            // UV spectrum has been found
+            etd->SetData(UVWavelength, UVForces);
+            if (UVEDipole.size() == UVWavelength.size())
+                etd->SetEDipole(UVEDipole);
+            // additional CD spectrum has also been found
+            if (CDWavelength.size() == UVWavelength.size()) {
+                etd->SetRotatoryStrengthsLength(CDStrengthsLength);
+                etd->SetRotatoryStrengthsVelocity(CDVelosity); // just vector with 0.0 because ORCA doesn't calculate these values
+            }
+        } else {
+            // only CD spectrum has been found
+            etd->SetData(CDWavelength, CDVelosity); // ony wavelengths information are known , 2nd vector just contains 0.0
+            etd->SetRotatoryStrengthsLength(CDStrengthsLength);
+            etd->SetRotatoryStrengthsVelocity(CDVelosity); // just vector with 0.0 because ORCA doesn't calculate these values
+        }
+        etd->SetOrigin(fileformatInput);
+        mol.SetData(etd);
+    }
+
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
