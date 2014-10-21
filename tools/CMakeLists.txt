@@ -42,6 +42,7 @@ if(BUILD_SHARED)
                     ARCHIVE DESTINATION lib${LIB_SUFFIX}
     )
   endforeach(tool)
+  TARGET_LINK_LIBRARIES(obrms boost_iostreams boost_program_options)
 
   if(NOT MINIMAL_BUILD)
     # obspectrophore -- requires getopt

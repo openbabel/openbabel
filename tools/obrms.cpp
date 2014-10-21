@@ -37,23 +37,28 @@
 #include <unistd.h>
 #endif
 
-#include <cassert>
 #include <sstream>
+#include <boost/unordered_map.hpp>
+#include <boost/program_options.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
+#include <boost/iostreams/filtering_stream.hpp>
 
 using namespace std;
+using namespace boost;
+using namespace boost::program_options;
 using namespace OpenBabel;
 
 class AtomDistanceSorter
 {
 	vector3 ref;
-public:
+	public:
 	AtomDistanceSorter(OBAtom *r) :
 			ref(r->GetVector())
 	{
 
 	}
 	bool operator()(OBAtom *l, OBAtom *r) const
-	{
+			{
 		double ld = ref.distSq(l->GetVector());
 		double rd = ref.distSq(r->GetVector());
 
@@ -77,27 +82,73 @@ class Matcher
 		const OBMol& ref;
 		const OBMol& test;
 		double bestRMSD;
-	public:
-		MapRMSDFunctor(const OBMol& r, const OBMol& t) :
-				ref(r), test(t), bestRMSD(HUGE_VAL)
+		bool minimize;
+		public:
+		MapRMSDFunctor(const OBMol& r, const OBMol& t, bool min = false) :
+				ref(r), test(t), bestRMSD(HUGE_VAL), minimize(min)
 		{
 		}
 
 		bool operator()(OBIsomorphismMapper::Mapping &map)
 		{
-			double rmsd = 0;
-			for (unsigned i = 0, n = map.size(); i < n; i++)
+			unsigned N = map.size();
+			double refcoord[N * 3];
+			double testcoord[N * 3];
+
+			for (unsigned i = 0; i < N; i++)
 			{
 				//obmol indices are 1-indexed while the mapper is zero indexed
 				const OBAtom *ratom = ref.GetAtom(map[i].first + 1);
 				const OBAtom *tatom = test.GetAtom(map[i].second + 1);
 				assert(ratom && tatom);
-				vector3 rvec = ratom->GetVector();
-				vector3 tvec = tatom->GetVector();
-				rmsd += rvec.distSq(tvec);
+
+				for (unsigned c = 0; c < 3; c++)
+				{
+					refcoord[3 * i + c] = ratom->GetVector()[c];
+					testcoord[3 * i + c] = tatom->GetVector()[c];
+				}
 			}
-			rmsd /= map.size();
-			rmsd = sqrt(rmsd);
+
+			if (minimize)
+			{
+				double rmatrix[3][3] =
+						{ 0 };
+
+				double rave[3] =
+						{ 0, 0, 0 };
+				double tave[3] =
+						{ 0, 0, 0 };
+				//center
+				for (unsigned i = 0; i < N; i++)
+				{
+					for (unsigned c = 0; c < 3; c++)
+					{
+						rave[c] += refcoord[3 * i + c];
+						tave[c] += testcoord[3 * i + c];
+					}
+				}
+
+				for (unsigned c = 0; c < 3; c++)
+				{
+					rave[c] /= N;
+					tave[c] /= N;
+				}
+
+				for (unsigned i = 0; i < N; i++)
+				{
+					for (unsigned c = 0; c < 3; c++)
+					{
+						refcoord[3 * i + c] -= rave[c];
+						testcoord[3 * i + c] -= tave[c];
+					}
+				}
+
+				qtrfit(refcoord, testcoord, N, rmatrix);
+				rotate_coords(testcoord, rmatrix, N);
+			}
+
+			double rmsd = calc_rms(refcoord, testcoord, N);
+
 			if (rmsd < bestRMSD)
 				bestRMSD = rmsd;
 			// check all possible mappings
@@ -128,9 +179,9 @@ public:
 
 	//computes a correspondence between the ref mol and test (exhaustively)
 	//and returns the rmsd; returns infinity if unmatchable
-	double computeRMSD(OBMol& test)
+	double computeRMSD(OBMol& test, bool minimize = false)
 	{
-		MapRMSDFunctor funct(ref, test);
+		MapRMSDFunctor funct(ref, test, minimize);
 
 		mapper->MapGeneric(funct, &test);
 		return funct.getRMSD();
@@ -143,15 +194,15 @@ static void processMol(OBMol& mol)
 	//isomorphismmapper wants isomorphic atoms to have the same aromatic and ring state,
 	//but these proporties aren't reliable enough to be trusted in evaluating molecules
 	//should be considered the same based solely on connectivity
-	
+
 	mol.DeleteHydrogens(); //heavy atom rmsd
-	for(OBAtomIterator aitr = mol.BeginAtoms(); aitr != mol.EndAtoms(); aitr++)
+	for (OBAtomIterator aitr = mol.BeginAtoms(); aitr != mol.EndAtoms(); aitr++)
 	{
 		OBAtom *a = *aitr;
 		a->UnsetAromatic();
 		a->SetInRing();
 	}
-	for(OBBondIterator bitr = mol.BeginBonds(); bitr != mol.EndBonds(); bitr++)
+	for (OBBondIterator bitr = mol.BeginBonds(); bitr != mol.EndBonds(); bitr++)
 	{
 		OBBond *b = *bitr;
 		b->UnsetAromatic();
@@ -168,32 +219,44 @@ static void processMol(OBMol& mol)
 int main(int argc, char **argv)
 {
 	bool firstOnly = false;
-	if (argc != 3 && argc != 4)
+	bool minimize = false;
+	bool help = false;
+	string fileRef;
+	string fileTest;
+
+	program_options::options_description desc("Allowed options");
+	desc.add_options()
+	("reference", value<string>(&fileRef)->required(),
+			"reference structure(s) file")
+	("test", value<string>(&fileTest)->required(), "test structure(s) file")
+	("firstonly,f", bool_switch(&firstOnly),
+			"use only the first structure in the reference file")
+	("minimize,m", bool_switch(&minimize), "compute minimum RMSD")
+	("help", bool_switch(&help), "produce help message");
+
+	positional_options_description pd;
+	pd.add("reference", 1).add("test", 1);
+
+	variables_map vm;
+	try
 	{
-		cerr << "Usage: " << argv[0]
-				<< " [-firstonly] <reference structure(s)> <comparison structure(s)>\n";
-		cerr << "Computes the heavy-atom RMSD of identical compound structures.\n";
-		cerr << "Structures in multi-structure files are compared one-by-one unless -firstonly\n" 
-		<< "is passed, in which case only the first structure in the reference file is used.\n";
+		store(
+				command_line_parser(argc, argv).options(desc).positional(pd).run(),
+				vm);
+		notify(vm);
+	} catch (boost::program_options::error& e)
+	{
+		std::cerr << "Command line parse error: " << e.what() << '\n' << desc
+				<< '\n';
 		exit(-1);
 	}
 
-	char *fileRef = argv[1];
-	char *fileTest = argv[2];
-
-	if (argc == 4)
+	if (help)
 	{
-		//if iterate is passed as first command, try to match structures in first file to strucutres in second
-		if (strcmp("-firstonly", argv[1]) != 0)
-		{
-			cerr << "Usage: " << argv[0]
-					<< " [-firstonly] <reference structure(s)> <comparison structure(s)>\n";
-			exit(-1);
-		}
-
-		fileRef = argv[2];
-		fileTest = argv[3];
-		firstOnly = true;
+		cout
+		<< "Computes the heavy-atom RMSD of identical compound structures.\n";
+		cout << desc;
+		exit(0);
 	}
 
 	//open mols
@@ -215,20 +278,33 @@ int main(int argc, char **argv)
 	}
 
 	//read reference
-	ifstream ifsref;
 	OBMol molref;
+	std::ifstream uncompressed_inmol(fileRef.c_str());
+	iostreams::filtering_stream<iostreams::input> ifsref;
+	string::size_type pos = fileRef.rfind(".gz");
+	if (pos != string::npos)
+	{
+		ifsref.push(iostreams::gzip_decompressor());
+	}
+	ifsref.push(uncompressed_inmol);
 
-	ifsref.open(fileRef);
-	if (!ifsref)
+	if (!ifsref || !uncompressed_inmol)
 	{
 		cerr << "Cannot read fixed molecule file: " << fileRef << endl;
 		exit(-1);
 	}
 
 	//check comparison file
-	ifstream ifstest;
-	ifstest.open(fileTest);
-	if (!ifstest)
+	std::ifstream uncompressed_test(fileTest.c_str());
+	iostreams::filtering_stream<iostreams::input> ifstest;
+	pos = fileTest.rfind(".gz");
+	if (pos != string::npos)
+	{
+		ifstest.push(iostreams::gzip_decompressor());
+	}
+	ifstest.push(uncompressed_test);
+
+	if (!ifstest || !uncompressed_test)
 	{
 		cerr << "Cannot read file: " << fileTest << endl;
 		exit(-1);
@@ -237,7 +313,7 @@ int main(int argc, char **argv)
 	while (refconv.Read(&molref, &ifsref))
 	{
 		processMol(molref);
-		Matcher matcher(molref);// create the matcher
+		Matcher matcher(molref); // create the matcher
 		OBMol moltest;
 		while (testconv.Read(&moltest, &ifstest))
 		{
@@ -246,7 +322,7 @@ int main(int argc, char **argv)
 
 			processMol(moltest);
 
-			double rmsd = matcher.computeRMSD(moltest);
+			double rmsd = matcher.computeRMSD(moltest, minimize);
 
 			cout << "RMSD " << moltest.GetTitle() << " " << rmsd << "\n";
 			if (!firstOnly)
