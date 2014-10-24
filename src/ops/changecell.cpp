@@ -136,6 +136,8 @@ bool OpChangeCell::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBCo
                      (vcvs[1].mult ? b : 1.0) * vcvs[1].value, 
                      (vcvs[2].mult ? c : 1.0) * vcvs[2].value,
                      alpha, beta, gamma );
+  new_cell->SetSpaceGroup(1);
+  
   
   if( keep_fract )
   {
