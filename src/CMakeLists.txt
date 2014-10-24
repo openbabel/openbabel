@@ -63,6 +63,7 @@ set(ops
   ops/addpolarh.cpp
   ops/addnonpolarh.cpp
   ops/canonical.cpp
+  ops/changecell.cpp
   ops/delpolarh.cpp
   ops/delnonpolarh.cpp
   ops/gen2D.cpp
