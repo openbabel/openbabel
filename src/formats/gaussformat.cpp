@@ -806,7 +806,7 @@ namespace OpenBabel
           tokenize(vs, buffer);
           vector<vector3> vib1, vib2, vib3;
           double x, y, z;
-          while(vs.size() > 5) {
+          while(vs.size() >= 5) {
             for (unsigned int i = 2; i < vs.size()-2; i += 3) {
               x = atof(vs[i].c_str());
               y = atof(vs[i+1].c_str());
