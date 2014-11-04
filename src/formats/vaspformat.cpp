@@ -392,16 +392,16 @@ namespace OpenBabel {
           while (!strstr(buffer, "Eigenvectors")) {
             vector<vector3> vib;
             tokenize(vs, buffer);
-            if (vs.size() < 2) {
-              // No more frequencies
-              break;
-            }
             int freqnum = atoi(vs[0].c_str());
-            if (strstr(vs[1].c_str(), "f/i=")) {
+            if (vs[1].size() == 1 and vs[1].compare("f") == 0) {
+              // Real frequency
+              Frequencies.push_back(atof(vs[7].c_str()));
+            } else if (strstr(vs[1].c_str(), "f/i=")) {
               // Imaginary frequency
               Frequencies.push_back(-atof(vs[6].c_str()));
             } else {
-              Frequencies.push_back(atof(vs[7].c_str()));
+              // No more frequencies
+              break;
             }
             // TODO: Intensities not parsed yet
             Intensities.push_back(0.0);
