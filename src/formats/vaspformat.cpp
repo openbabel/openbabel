@@ -17,6 +17,7 @@ GNU General Public License for more details.
 
 #include <limits.h>
 #include <locale> // For isalpha(int)
+#include <cassert>
 
 #define EV_TO_KCAL_PER_MOL 23.060538
 
@@ -122,11 +123,12 @@ namespace OpenBabel {
     string key, value; // store the info about constraints
     OBPairData *cp;    // in this PairData
     bool hasEnthalpy=false;
+    bool hasVibrations=false;
     bool needSymbolsInGeometryFile = false;
     double enthalpy_eV, pv_eV;
     vector<vector <vector3> > Lx;
-    vector<double> Frequencies, Intensities;
-
+    vector<double> Frequencies;
+    vector<matrix3x3> dipGrad;
 
     // Get path of CONTCAR/POSCAR:
     //    ifs_path.getline(buffer,BUFF_SIZE);
@@ -366,6 +368,12 @@ namespace OpenBabel {
 
     ifs_dos.close();
 
+    // Vibration intensities
+    vector3 prevDm;
+    vector<vector3> prevXyz;
+    vector3 currDm;
+    vector<vector3> currXyz;
+
     // Read in optional information from outcar
     if (ifs_out) {
       while (ifs_out.getline(buffer,BUFF_SIZE)) {
@@ -382,8 +390,10 @@ namespace OpenBabel {
           tokenize(vs, buffer);
           pmol->SetEnergy(atof(vs[4].c_str()) * EV_TO_KCAL_PER_MOL);
         }
+
         // Frequencies
         if (strstr(buffer, "Eigenvectors") && Frequencies.size() == 0) {
+          hasVibrations = true;
           double x, y, z;
           ifs_out.getline(buffer,BUFF_SIZE);  // dash line
           ifs_out.getline(buffer,BUFF_SIZE);  // blank line
@@ -403,11 +413,10 @@ namespace OpenBabel {
               // No more frequencies
               break;
             }
-            // TODO: Intensities not parsed yet
-            Intensities.push_back(0.0);
             ifs_out.getline(buffer,BUFF_SIZE);  // header line
             ifs_out.getline(buffer,BUFF_SIZE);  // first displacement line
             tokenize(vs, buffer);
+            // normal modes
             while (vs.size() == 6) {
               x = atof(vs[3].c_str());
               y = atof(vs[4].c_str());
@@ -419,13 +428,75 @@ namespace OpenBabel {
             Lx.push_back(vib);
             ifs_out.getline(buffer,BUFF_SIZE);  // next frequency line
           }
-          OBVibrationData* vd = new OBVibrationData;
-          vd->SetData(Lx, Frequencies, Intensities);
-          pmol->SetData(vd);
+        }
+
+        if (strstr(buffer, "dipolmoment")) {
+          tokenize(vs, buffer);
+          x = atof(vs[1].c_str());
+          y = atof(vs[2].c_str());
+          z = atof(vs[3].c_str());
+          currDm.Set(x, y, z);
+        }
+        if (strstr(buffer, "TOTAL-FORCE")) {
+          currXyz.clear();
+          ifs_out.getline(buffer, BUFF_SIZE);  // header line
+          ifs_out.getline(buffer, BUFF_SIZE);
+          tokenize(vs, buffer);
+          while (vs.size() == 6) {
+            x = atof(vs[0].c_str());
+            y = atof(vs[1].c_str());
+            z = atof(vs[2].c_str());
+            currXyz.push_back(vector3(x, y, z));
+            ifs_out.getline(buffer, BUFF_SIZE);  // next line
+            tokenize(vs, buffer);
+          }
+          assert(currXyz.size() == pmol->NumAtoms());
+        }
+        if (strstr(buffer, "BORN EFFECTIVE CHARGES")) {
+          // IBRION = 7; IBRION = 8
+          dipGrad.clear();
+          ifs_out.getline(buffer, BUFF_SIZE);  // header line
+          ifs_out.getline(buffer, BUFF_SIZE);  // `ion    #`
+          tokenize(vs, buffer);
+          while (vs.size() == 2) {
+            matrix3x3 dmudq;
+            for (int row = 0; row < 3; ++row) {
+              ifs_out.getline(buffer, BUFF_SIZE);
+              tokenize(vs, buffer);
+              x = atof(vs[1].c_str());
+              y = atof(vs[2].c_str());
+              z = atof(vs[3].c_str());
+              dmudq.SetRow(row, vector3(x, y, z));
+            }
+            dipGrad.push_back(dmudq);
+            ifs_out.getline(buffer, BUFF_SIZE);  // next line
+            tokenize(vs, buffer);
+          }
+          assert(dipGrad.size() == pmol->NumAtoms());
+        } else if (strstr(buffer, "free  energy")) {
+          // IBRION = 5
+          // reached the end of an iteration, use the values
+          if (dipGrad.empty()) {
+            // first iteration: nondisplaced ions
+            dipGrad.resize(pmol->NumAtoms());
+          } else if (prevXyz.empty()) {
+            // even iteration: store values
+            prevXyz = currXyz;
+            prevDm = currDm;
+          } else {
+            // odd iteration: compute dipGrad = dmu / dxyz for moved ion
+            for (size_t natom = 0; natom < pmol->NumAtoms(); ++natom) {
+              const vector3 dxyz = currXyz[natom] - prevXyz[natom];
+              vector3::const_iterator iter = std::find_if(dxyz.begin(), dxyz.end(),
+                      std::bind2nd(std::not_equal_to<double>(), 0.0));
+              if (iter != dxyz.end()) dipGrad[natom].SetRow(iter - dxyz.begin(),
+                                                            (currDm - prevDm) / *iter);
+            }
+            prevXyz.clear();
+          }
         }
       }
     }
-
     ifs_out.close();
 
     // Set enthalpy
@@ -452,6 +523,33 @@ namespace OpenBabel {
       pmol->SetData(enthalpyPD_pv);
       pmol->SetData(enthalpyPD_eV);
       pmol->SetData(enthalpyPD_pv_eV);
+    }
+
+    // Set vibrations
+    if (hasVibrations) {
+      assert(dipGrad.size() == pmol->NumAtoms() || dipGrad.empty());
+      // compute dDip/dQ
+      vector<double> Intensities;
+      for (vector<vector<vector3> >::const_iterator
+           lxIter = Lx.begin(); lxIter != Lx.end(); ++lxIter) {
+        vector3 intensity;
+        for (size_t natom = 0; natom < dipGrad.size(); ++natom) {
+          intensity += dipGrad[natom].transpose() * lxIter->at(natom)
+              / sqrt(pmol->GetAtomById(natom)->GetAtomicMass());
+        }
+        Intensities.push_back(dot(intensity, intensity));
+      }
+      const double max = *max_element(Intensities.begin(), Intensities.end());
+      if (max != 0.0) {
+        // Normalize
+        std::transform(Intensities.begin(), Intensities.end(), Intensities.begin(),
+                       std::bind2nd(std::divides<double>(), max / 100.0));
+      } else {
+        Intensities.clear();
+      }
+      OBVibrationData* vd = new OBVibrationData;
+      vd->SetData(Lx, Frequencies, Intensities);
+      pmol->SetData(vd);
     }
 
     pmol->EndModify();
