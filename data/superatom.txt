@@ -42,6 +42,7 @@ OR       RO       O*
 OBz      BzO      OCc1ccccc1
 THPO     THPO     O[C@@H]1OCCCC1
 NOH      HON      NO 
+CO2H     HO2C     C(=O)O
 CO2Me    MeO2C    C(=O)OC
 COOMe    MeOOC    C(=O)OC
 SO2Me    MeO2S    S(=O)(=O)C
