@@ -42,7 +42,7 @@ namespace OpenBabel
   class OBRandom; // declared in rand.h
 
   // class introduction in vector3.cpp
-  class	OBAPI vector3
+  class OBAPI vector3
   {
   private :
     double _vx, _vy, _vz ;
@@ -62,6 +62,27 @@ namespace OpenBabel
 
     //! Destructor
     ~vector3() { }
+
+    //! A random access iterator over x, y, z
+    typedef double* iterator;
+
+    //! A random access iterator over const x, y, z
+    typedef const double* const_iterator;
+
+    //! A signed integral type for differences between two iterators
+    typedef std::ptrdiff_t difference_type;
+
+    //! \return iterator to beginning
+    iterator begin() { return &_vx; }
+
+    //! \return iterator to end
+    iterator end() { return &_vx + 3; }
+
+    //! /return const_iterator to beginning
+    const_iterator begin() const { return &_vx; }
+
+    //! /return const_iterator to end
+    const_iterator end() const { return &_vx + 3; }
 
     //! Set x,y and z-component of a vector
     void Set(const double inX, const double inY, const double inZ)
