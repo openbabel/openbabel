@@ -97,7 +97,7 @@ namespace OpenBabel
   void OBElementTable::ParseLine(const char *buffer)
   {
     int num,maxbonds;
-    char symbol[4];
+    char symbol[5];
     char name[256];
     double Rcov,Rvdw,mass, elNeg, ARENeg, ionize, elAffin;
     double red, green, blue;
