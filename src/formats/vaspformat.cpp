@@ -17,7 +17,6 @@ GNU General Public License for more details.
 
 #include <limits.h>
 #include <locale> // For isalpha(int)
-#include <cassert>
 
 #define EV_TO_KCAL_PER_MOL 23.060538
 
@@ -450,7 +449,6 @@ namespace OpenBabel {
             ifs_out.getline(buffer, BUFF_SIZE);  // next line
             tokenize(vs, buffer);
           }
-          assert(currXyz.size() == pmol->NumAtoms());
         }
         if (strstr(buffer, "BORN EFFECTIVE CHARGES")) {
           // IBRION = 7; IBRION = 8
@@ -472,7 +470,6 @@ namespace OpenBabel {
             ifs_out.getline(buffer, BUFF_SIZE);  // next line
             tokenize(vs, buffer);
           }
-          assert(dipGrad.size() == pmol->NumAtoms());
         } else if (strstr(buffer, "free  energy")) {
           // IBRION = 5
           // reached the end of an iteration, use the values
@@ -527,7 +524,6 @@ namespace OpenBabel {
 
     // Set vibrations
     if (hasVibrations) {
-      assert(dipGrad.size() == pmol->NumAtoms() || dipGrad.empty());
       // compute dDip/dQ
       vector<double> Intensities;
       for (vector<vector<vector3> >::const_iterator
