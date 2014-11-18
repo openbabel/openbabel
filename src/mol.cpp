@@ -3543,7 +3543,7 @@ namespace OpenBabel
     double maxlength;
     vector<OBBond*>::iterator l;
     int valCount;
-
+    BeginModify(); //prevent needless re-perception in DeleteBond
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       {
         while (atom->BOSum() > static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum()))
@@ -3587,7 +3587,7 @@ namespace OpenBabel
             DeleteBond(maxbond); // delete the new bond with the longest length
           }
       }
-
+    EndModify();
     if (unset)
       {
         _c = NULL;
