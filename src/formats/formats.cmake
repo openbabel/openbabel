@@ -20,6 +20,7 @@ set(formats_compchem
       abinitformat
       acesformat
       adfformat
+      aoforceformat
       castepformat
       dmolformat
       fchkformat

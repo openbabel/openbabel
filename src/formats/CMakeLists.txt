@@ -31,6 +31,7 @@ set(formats_compchem
       acesformat
       abinitformat
       adfformat
+      aoforceformat
       castepformat
       crystal09format
       daltonformat

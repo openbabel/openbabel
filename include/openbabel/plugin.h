@@ -382,6 +382,7 @@ public:
   OB_STATIC_PLUGIN(ADFInputFormat, theADFInputFormat)
   OB_STATIC_PLUGIN(AlchemyFormat, theAlchemyFormat)
   OB_STATIC_PLUGIN(AmberPrepFormat, theAmberPrepFormat)
+  OB_STATIC_PLUGIN(AoforceFormat, theAoforceFormat)
   OB_STATIC_PLUGIN(OBAPIInterface, theOBAPIInterface)
   OB_STATIC_PLUGIN(BallStickFormat, theBallStickFormat)
   OB_STATIC_PLUGIN(BGFFormat, theBGFFormat)
