@@ -139,10 +139,10 @@ namespace OpenBabel
      * we skip this
      */
     
-    ifs.getline(buffer,BUFF_SIZE);
-    ifs.getline(buffer,BUFF_SIZE);
-    ifs.getline(buffer,BUFF_SIZE);
-    return true;
+    //ifs.getline(buffer,BUFF_SIZE);
+    //ifs.getline(buffer,BUFF_SIZE);
+    //ifs.getline(buffer,BUFF_SIZE);
+    //return true;
 
     bool ok;
     double x,y,z;
@@ -170,6 +170,7 @@ namespace OpenBabel
     // Add the Unit Cell to the molecule
     OBUnitCell * unitcell = new OBUnitCell();
     unitcell->SetData( vx, vy, vz );
+    unitcell->SetSpaceGroup(1);
     //std::cout << "Set unit cell " << vx << vy << vz << std::endl;
     mol.BeginModify();
     mol.SetData( unitcell );

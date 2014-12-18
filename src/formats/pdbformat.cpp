@@ -848,7 +848,8 @@ namespace OpenBabel
         // fix: #2002557
         if (atmid[0] == 'H' &&
             (atmid[1] == 'D' || atmid[1] == 'E' ||
-             atmid[1] == 'G' || atmid[1] == 'H')) // HD, HE, HG, HH, ..
+             atmid[1] == 'G' || atmid[1] == 'H' ||
+             atmid[1] == 'N')) // HD, HE, HG, HH, HN...
           type = "H";
       } else { //must be hetatm record
         if (isalpha(element[1]) && (isalpha(element[0]) || (element[0] == ' '))) {

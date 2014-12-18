@@ -20,11 +20,13 @@ if os.path.exists('README.rst'):
     long_description = open('README.rst').read()
 else:
     long_description = '''
-        The Open Babel package provides a Python wrapper to the Open Babel C++ chemistry library. Open Babel is a
-        chemical toolbox designed to speak the many languages of chemical data. It's an open, collaborative project
-        allowing anyone to search, convert, analyze, or store data from molecular modeling, chemistry, solid-state
-        materials, biochemistry, or related areas. It provides a broad base of chemical functionality for custom
-        development.
+        The Open Babel package provides a Python wrapper to the Open Babel C++
+        chemistry library. Open Babel is a chemical toolbox designed to speak
+        the many languages of chemical data. It's an open, collaborative
+        project allowing anyone to search, convert, analyze, or store data from
+        molecular modeling, chemistry, solid-state materials, biochemistry, or
+        related areas. It provides a broad base of chemical functionality for
+        custom development.
     '''
 
 
@@ -35,7 +37,9 @@ class PkgConfigError(Exception):
 def pkgconfig(package, option):
     """Wrapper around pkg-config command line tool."""
     try:
-        p = subprocess.Popen(['pkg-config', option, package], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        p = subprocess.Popen(['pkg-config', option, package],
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                             universal_newlines=True)
         stdout, stderr = p.communicate()
         if stderr:
             raise PkgConfigError('package %s could not be found by pkg-config' % package)
@@ -133,6 +137,6 @@ setup(name='openbabel',
           'Programming Language :: Python',
           'Topic :: Scientific/Engineering :: Bio-Informatics',
           'Topic :: Scientific/Engineering :: Chemistry',
-          'Topic :: Software Development :: Libraries',
-      ],
+          'Topic :: Software Development :: Libraries'
+      ]
 )

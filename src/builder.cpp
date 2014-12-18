@@ -123,19 +123,22 @@ namespace OpenBabel
     double bondLength = 0.0;
 
     // We create an estimate of the bond length based on the two atoms
-    bondLength += etab.CorrectedBondRad(atom1->GetAtomicNum(), atom1->GetHyb());
-    bondLength += etab.CorrectedBondRad(atom2->GetAtomicNum(), atom2->GetHyb());
+    // Scaling is performed by the bond order corrections below
+    //  .. so we will use the straight covalent radii
+    bondLength += etab.GetCovalentRad(atom1->GetAtomicNum());
+    bondLength += etab.GetCovalentRad(atom2->GetAtomicNum());
 
     if (bondLength < 1.0)
       bondLength = 1.0;
 
     // These are based on OBBond::GetEquibLength
+    // Numbers come from averaged values of Pyykko and Atsumi
     if (bondOrder == -1) // aromatic
-      bondLength *= 0.93;
+      bondLength *= 0.9475;   // 0.9475 = average of 1.0 and 0.8950
     else if (bondOrder == 2)
-      bondLength *= 0.91;
+      bondLength *= 0.8950;   // 0.8950
     else if (bondOrder == 3)
-      bondLength *= 0.87;
+      bondLength *= 0.8578;   // 0.8578
 
     return OBBuilder::GetNewBondVector(atom1, bondLength);
   }
