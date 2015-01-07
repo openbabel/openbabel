@@ -82,8 +82,8 @@
 
 # isonitrile / isocyano
 [#6D1][#7D2^1]*  0 1 3 1 2 1
-# NR2 in ring with hybridized carbon neighbors
-[#7D2R][#6D3^2] 0 1 2
+# NR2 in ring with hybridized carbon neighbors - dkoes: this messes things up
+#[#7D2R][#6D3^2] 0 1 2
 
 # if three N are present in R-N-guanidine-ish, prefer double bond to the
 #  non-terminal N (i.e. D2 if present)

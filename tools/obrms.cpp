@@ -324,7 +324,7 @@ int main(int argc, char **argv)
 
 			double rmsd = matcher.computeRMSD(moltest, minimize);
 
-			cout << "RMSD " << moltest.GetTitle() << " " << rmsd << "\n";
+			cout << "RMSD " << molref.GetTitle() << ":" <<  moltest.GetTitle() << " " << rmsd << "\n";
 			if (!firstOnly)
 			{
 				break;
