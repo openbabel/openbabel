@@ -3454,6 +3454,7 @@ namespace OpenBabel
                           "Ran OpenBabel::ConnectTheDots", obAuditMsg);
 
     int j,k,max;
+    double maxrad = 0;
     bool unset = false;
     OBAtom *atom,*nbr;
     vector<OBAtom*>::iterator i;
@@ -3480,6 +3481,7 @@ namespace OpenBabel
       {
         atom   = zsortedAtoms[j].first;
         rad[j] = etab.GetCovalentRad(atom->GetAtomicNum());
+        maxrad = std::max(rad[j],maxrad);
         zsorted.push_back(atom->GetIdx()-1);
       }
 
@@ -3487,6 +3489,7 @@ namespace OpenBabel
     double d2,cutoff,zd;
     for (j = 0 ; j < max ; ++j)
       {
+    	double maxcutoff = SQUARE(rad[j]+maxrad+0.45);
         idx1 = zsorted[j];
         for (k = j + 1 ; k < max ; k++ )
           {
@@ -3496,9 +3499,10 @@ namespace OpenBabel
             cutoff = SQUARE(rad[j] + rad[k] + 0.45);
 
             zd  = SQUARE(c[idx1*3+2] - c[idx2*3+2]);
-            // bigger than max cutoff
+            // bigger than max cutoff, which is determined using largest radius,
+            // not the radius of k (which might be small, ie H, and cause an early  termination)
             // since we sort by z, anything beyond k will also fail
-            if (zd > cutoff )
+            if (zd > maxcutoff )
               break;
 
             d2  = SQUARE(c[idx1*3]   - c[idx2*3]);
