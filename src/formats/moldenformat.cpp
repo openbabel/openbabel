@@ -185,17 +185,20 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
          } // "[FR-COORD]"
         if( lineBuffer.find( "[FR-NORM-COORD]" ) != string::npos ) {
           getline( ifs, lineBuffer );
+          vector<string> vs;
           while( ifs && lineBuffer.find( "ibration") != string::npos )
             {
               vector<vector3> vib;
               getline( ifs, lineBuffer );
-              while( ifs && lineBuffer.find( "ibration") == string::npos )
+              tokenize(vs, lineBuffer);
+              while( ifs && vs.size() == 3)
                 {
                   istringstream is( lineBuffer );
                   double x, y, z;
                   is >> x >> y >> z;
                   vib.push_back( vector3( x, y, z ) );
                   getline( ifs, lineBuffer );
+                  tokenize(vs, lineBuffer);
                 }
               Lx.push_back( vib );
            } // while

@@ -5403,7 +5403,12 @@ namespace OpenBabel {
       if ((sm->getAtom(n)->ry < yMin) || (yMin == RUNDEF)) yMin=sm->getAtom(n)->ry;
       if ((sm->getAtom(n)->ry > yMax) || (yMax == RUNDEF)) yMax=sm->getAtom(n)->ry;
     };
-    if ((xMax == xMin) && (yMax == yMin)) {
+    // LPW: Nearly horizontal molecules were being scaled which resulted in
+    // some nonsensical structures.  This code ensures that coordinates with 
+    // "almost" horizontal or vertical geometries don't get scaled.
+    bool Xeq = (fabs(xMax - xMin) < 0.01);
+    bool Yeq = (fabs(yMax - yMin) < 0.01);
+    if ((Xeq) && (Yeq)) {
       for (i=0; i<atomList->size(); i++) {
         n=(*atomList)[i];
         sm->getAtom(n)->rx=(pf.fragLeft+pf.fragWidth/2);
@@ -5411,9 +5416,9 @@ namespace OpenBabel {
       };
       return;
     };
-    if (xMin == xMax) {         //y should be scaled
+    if (Xeq) {         //y should be scaled
       scale=(pf.fragHeight-2*offset)/(yMax-yMin);
-    } else if (yMin == yMax) { //x should be scaled
+    } else if (Yeq) { //x should be scaled
       scale=(pf.fragWidth-2*offset)/(xMax-xMin);
     } else {
       r1=(pf.fragHeight-2*offset)/(yMax-yMin);
