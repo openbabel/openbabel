@@ -127,8 +127,10 @@ else()
   if(MSVC)
     # set cl flags for static compiling
     set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
+    set(CMAKE_C_FLAGS_DEBUG "/MTd")
     set(CMAKE_EXE_LINKER_FLAGS_DEBUG "/INCREMENTAL:NO /NODEFAULTLIB:MSVCRT")
     set(CMAKE_CXX_FLAGS_RELEASE	"/MT /O2 /Ob2 /D NDEBUG")
+    set(CMAKE_C_FLAGS_RELEASE	"/MT /O2 /Ob2 /D NDEBUG")
     set(CMAKE_EXE_LINKER_FLAGS_RELEASE "/INCREMENTAL:NO /NODEFAULTLIB:MSVCRT")
     # note: static libraries are specified when running cmake
   else()
