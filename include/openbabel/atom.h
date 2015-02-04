@@ -215,7 +215,7 @@ namespace OpenBabel
       //! \return the atomic mass of this atom given by standard IUPAC
       //!  average molar mass
       double     GetAtomicMass()    const;
-      //! \return the atomic mass of given by the isotope
+      //! \return the atomic mass of this atom given by the isotope
       //! (default of 0 gives the most abundant isotope)
       double     GetExactMass()     const;
       //! \return the internal atom index (e.g., inside an OBMol)
