@@ -33,6 +33,8 @@ namespace OpenBabel
       OBConversion::RegisterFormat("mol2",this, "chemical/x-mol2");
       OBConversion::RegisterFormat("ml2",this);
       OBConversion::RegisterFormat("sy2",this);
+      OBConversion::RegisterOptionParam("c", NULL, 0, OBConversion::INOPTIONS);
+      OBConversion::RegisterOptionParam("c", NULL, 0, OBConversion::OUTOPTIONS);
       OBConversion::RegisterOptionParam("l", NULL, 0, OBConversion::OUTOPTIONS);
     }
 
@@ -40,8 +42,11 @@ namespace OpenBabel
     {
       return
         "Sybyl Mol2 format\n"
+        "Read Options e.g. -ac\n"
+        "  c               Read UCSF Dock scores saved in comments preceeding molecules\n\n";
         "Write Options e.g. -xl\n"
         "  l               Output ignores residue information (only ligands)\n\n";
+        "  c               Write UCSF Dock scores saved in comments preceeding molecules\n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -85,12 +90,23 @@ namespace OpenBabel
     vector<string> vstr;
     int len;
 
+
     mol.BeginModify();
 
     for (;;)
       {
         if (!ifs.getline(buffer,BUFF_SIZE))
           return(false);
+        if (pConv->IsOption("c", OBConversion::INOPTIONS)!=NULL && EQn(buffer,"###########",10))
+          {
+            char attr[32], val[32];
+            sscanf(buffer, "########## %[^:]:%s", attr, val);
+            OBPairData *dd = new OBPairData;
+            dd->SetAttribute(attr);
+            dd->SetValue(val);
+            dd->SetOrigin(fileformatInput);
+            mol.SetData(dd);
+          }
         if (EQn(buffer,"@<TRIPOS>MOLECULE",17))
           break;
       }
@@ -508,6 +524,22 @@ namespace OpenBabel
     string str,str1;
     char buffer[BUFF_SIZE],label[BUFF_SIZE];
     char rnum[BUFF_SIZE],rlabel[BUFF_SIZE];
+
+    //Check if UCSF Dock style coments are on
+    if(pConv->IsOption("c", OBConversion::OUTOPTIONS)!=NULL) {
+        vector<OBGenericData*>::iterator k;
+        vector<OBGenericData*> vdata = mol.GetData();
+        ofs << endl;
+        for (k = vdata.begin();k != vdata.end();k++) {
+            if ((*k)->GetDataType() == OBGenericDataType::PairData
+            && (*k)->GetOrigin()!=local //internal OBPairData is not written
+            && (*k)->GetAttribute()!="PartialCharges")
+            {
+                ofs << "##########\t" << (*k)->GetAttribute() << ":\t" << ((OBPairData*)(*k))->GetValue() << endl;
+            }
+        }
+        ofs << endl;
+    }
 
     ofs << "@<TRIPOS>MOLECULE" << endl;
     str = mol.GetTitle();
