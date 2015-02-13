@@ -249,13 +249,13 @@ class Outputfile(object):
         if not formatok:
             raise ValueError("%s is not a recognised Open Babel format" %
                              format)
-
+        if filename and filename.split('.')[-1] == 'gz':
+            self.obConversion.AddOption('z', self.obConversion.GENOPTIONS)
         for k, v in opt.items():
             if v is None:
                 self.obConversion.AddOption(k, self.obConversion.OUTOPTIONS)
             else:
-                self.obConversion.AddOption(
-                    k, self.obConversion.OUTOPTIONS, str(v))
+                self.obConversion.AddOption(k, self.obConversion.OUTOPTIONS, str(v))
         self.total = 0  # The total number of molecules written to the file
 
     def write(self, molecule):
@@ -582,6 +582,8 @@ class Molecule(object):
         if not formatok:
             raise ValueError("%s is not a recognised Open Babel format" %
                              format)
+        if filename and filename.split('.')[-1] == 'gz':
+            obconversion.AddOption('z', self.obConversion.GENOPTIONS)
         for k, v in opt.items():
             if v is None:
                 obconversion.AddOption(k, obconversion.OUTOPTIONS)
