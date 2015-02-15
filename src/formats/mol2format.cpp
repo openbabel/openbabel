@@ -404,7 +404,8 @@ namespace OpenBabel
 
       // only bother for 6 membered rings (e.g., pyridinium)
       // 5-membered rings like pyrrole, imidazole, or triazole are OK with nH
-      if ( (bond->FindSmallestRing())->Size() != 6 )
+      OBRing *ring = bond->FindSmallestRing();
+      if ( !ring || ring->Size() != 6 )
         continue;
 
       if ((bond->GetBeginAtom()->IsCarbon() && bond->GetEndAtom()->IsNitrogen())
