@@ -98,10 +98,17 @@ namespace OpenBabel
             mol.Clear();
             mol.BeginModify();
             ifs.getline(buffer,BUFF_SIZE);	// blank
-            ifs.getline(buffer,BUFF_SIZE);	// column headings
-            ifs.getline(buffer,BUFF_SIZE);	// blank
+
+            // could either be columns or real data
             ifs.getline(buffer,BUFF_SIZE);
-            tokenize(vs,buffer);
+            tokenize(vs, buffer);
+            if (vs.size() != 5 || vs[0][0] != '1') { // first character should be atom 1
+              // those were column headings
+              ifs.getline(buffer,BUFF_SIZE);	// blank
+              ifs.getline(buffer,BUFF_SIZE);
+              tokenize(vs,buffer);
+            }
+            // now we're at real data
             while (vs.size() == 5)
               {
                 atom = mol.NewAtom();
