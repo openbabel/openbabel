@@ -594,7 +594,9 @@ namespace OpenBabel
            double x = 0.0, y = 0.0, z = 0.0;
            CIFResidueMap ResidueMap;
            unsigned long chain_num = 1, residue_num = 1;
-           string residue_name, atom_label, atom_mol_label;
+           unsigned int nbc=0;
+           string residue_name, atom_label, atom_mol_label, tmpSymbol;
+           int atomicNum;
            OBPairData *label;
            while (token.type == CIFLexer::ValueToken) // Read in the Fields
              {
@@ -619,8 +621,78 @@ namespace OpenBabel
                token.as_text.erase(remove_if(token.as_text.begin(), token.as_text.end(), ::isdigit),
                                    token.as_text.end());
              case CIFTagID::_atom_site_type_symbol:
-               atom->SetAtomicNum(etab.GetAtomicNum(token.as_text.c_str()));
-               atom->SetType(token.as_text);
+               // Problem: posat->mSymbol is not guaranteed to actually be a 
+               // symbol see http://www.iucr.org/iucr-top/cif/cifdic_html/1/cif_core.dic/Iatom_type_symbol.html
+               // Try to strip the string to have a better chance to have a 
+               // valid symbol
+               // This is not guaranteed to work still, as the CIF standard 
+               // allows about any string...
+               tmpSymbol=token.as_text.c_str();
+               if((tmpSymbol.size()==1) && isalpha(tmpSymbol[0]))
+                 {
+                 nbc=1;
+                 }
+               else if(tmpSymbol.size()>=2)
+                 {
+                 if(isalpha(tmpSymbol[0]) && isalpha(tmpSymbol[1]))
+                   {
+                   nbc=2;
+                   }
+                 else if(isalpha(tmpSymbol[0]))
+                   {
+                   nbc=1;
+                   }
+                 }
+               else
+                 {
+                 nbc = 0;
+                 }
+               if(tmpSymbol.size()>nbc)
+                 {// Try to find a formal charge in the symbol
+                 int charge=0;
+                 int sign=0;
+                 for(unsigned int i=nbc;i<tmpSymbol.size();++i)
+                   {// Use first number found as formal charge
+                   if(isdigit(tmpSymbol[i]) && (charge==0))
+                     {
+                     charge=atoi(tmpSymbol.substr(i,1).c_str());
+                     }
+                   if('-'==tmpSymbol[i])
+                     {
+                     sign-=1;
+                     }
+                   if('+'==tmpSymbol[i])
+                     { 
+                     sign+=1;
+                     }
+                   }
+                   if(0!=sign) // no sign, no charge
+                     {
+                     if(charge==0)
+                       { 
+                       charge=1;
+                       }
+                     cout<<tmpSymbol<<" / symbol="<<tmpSymbol.substr(0,nbc)<<" charge= "<<sign*charge<<endl;
+                     atom->SetFormalCharge(sign*charge);
+                     }
+                 }
+               if(nbc>0)
+                 {
+                 tmpSymbol=tmpSymbol.substr(0,nbc);
+                 }
+               else
+                 {
+                 tmpSymbol="C";//Something went wrong, no symbol ! Default to C ??
+                 }
+               atomicNum = etab.GetAtomicNum(tmpSymbol.c_str());
+               // Test for some oxygens with subscripts
+               if (atomicNum == 0 && tmpSymbol[0] == 'O')
+                 {
+                 atomicNum = 8; // e.g. Ob, OH, etc.
+                 }
+
+               atom->SetAtomicNum(atomicNum); //set atomic number, or '0' if the atom type is not recognized
+               atom->SetType(tmpSymbol); //set atomic number, or '0' if the atom type is not recognized
                break;
              case CIFTagID::_atom_site_fract_x:
              case CIFTagID::_atom_site_Cartn_x:
