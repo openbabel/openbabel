@@ -628,17 +628,17 @@ namespace OpenBabel
                // This is not guaranteed to work still, as the CIF standard 
                // allows about any string...
                tmpSymbol=token.as_text.c_str();
-               if((tmpSymbol.size()==1) && isalpha(tmpSymbol[0]))
+               if ((tmpSymbol.size()==1) && isalpha(tmpSymbol[0]))
                  {
                  nbc=1;
                  }
-               else if(tmpSymbol.size()>=2)
+               else if (tmpSymbol.size()>=2)
                  {
-                 if(isalpha(tmpSymbol[0]) && isalpha(tmpSymbol[1]))
+                 if (isalpha(tmpSymbol[0]) && isalpha(tmpSymbol[1]))
                    {
                    nbc=2;
                    }
-                 else if(isalpha(tmpSymbol[0]))
+                 else if (isalpha(tmpSymbol[0]))
                    {
                    nbc=1;
                    }
@@ -647,42 +647,50 @@ namespace OpenBabel
                  {
                  nbc = 0;
                  }
-               if(tmpSymbol.size()>nbc)
+               if (tmpSymbol.size()>nbc)
                  {// Try to find a formal charge in the symbol
                  int charge=0;
                  int sign=0;
                  for(unsigned int i=nbc;i<tmpSymbol.size();++i)
                    {// Use first number found as formal charge
-                   if(isdigit(tmpSymbol[i]) && (charge==0))
+                   if (isdigit(tmpSymbol[i]) && (charge==0))
                      {
                      charge=atoi(tmpSymbol.substr(i,1).c_str());
                      }
-                   if('-'==tmpSymbol[i])
+                   if ('-'==tmpSymbol[i])
                      {
                      sign-=1;
                      }
-                   if('+'==tmpSymbol[i])
+                   if ('+'==tmpSymbol[i])
                      { 
                      sign+=1;
                      }
                    }
-                   if(0!=sign) // no sign, no charge
+                   if (0!=sign) // no sign, no charge
                      {
-                     if(charge==0)
+                     if (charge==0)
                        { 
                        charge=1;
                        }
-                     cout<<tmpSymbol<<" / symbol="<<tmpSymbol.substr(0,nbc)<<" charge= "<<sign*charge<<endl;
+                     stringstream ss;
+                     ss<< tmpSymbol <<" / symbol="<<tmpSymbol.substr(0,nbc)
+                       <<" charge= "<<sign*charge;
+                     obErrorLog.ThrowError(__FUNCTION__, ss.str(), obDebug);
                      atom->SetFormalCharge(sign*charge);
                      }
                  }
-               if(nbc>0)
+               if (nbc>0)
                  {
                  tmpSymbol=tmpSymbol.substr(0,nbc);
                  }
                else
                  {
-                 tmpSymbol="C";//Something went wrong, no symbol ! Default to C ??
+                 stringstream ss;
+                 ss<< tmpSymbol <<" / could not derive a symbol" 
+                   <<" for atomic number. Setting it to default "
+                   <<" Xx(atomic number 0)";
+                 obErrorLog.ThrowError(__FUNCTION__, ss.str(), obDebug);
+                 tmpSymbol="Xx";//Something went wrong, no symbol ! Default to Xx
                  }
                atomicNum = etab.GetAtomicNum(tmpSymbol.c_str());
                // Test for some oxygens with subscripts
@@ -692,7 +700,7 @@ namespace OpenBabel
                  }
 
                atom->SetAtomicNum(atomicNum); //set atomic number, or '0' if the atom type is not recognized
-               atom->SetType(tmpSymbol); //set atomic number, or '0' if the atom type is not recognized
+               atom->SetType(tmpSymbol);
                break;
              case CIFTagID::_atom_site_fract_x:
              case CIFTagID::_atom_site_Cartn_x:
