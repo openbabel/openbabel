@@ -34,7 +34,7 @@ namespace OpenBabel
 {
 
   //! Default step resolution for a dihedral angle (in degrees)
-#define OB_DEFAULT_DELTA 10.0
+#define OB_DEFAULT_DELTA 15.0
   static bool GetDFFVector(OBMol&,vector<int>&,OBBitVec&);
   static bool CompareRotor(const pair<OBBond*,int>&,const pair<OBBond*,int>&);
 
