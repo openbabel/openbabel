@@ -153,7 +153,7 @@ namespace OpenBabel {
       if(conv.SetInFormat("smi") && conv.Read(&mol))
          // ...
       @endcode
-      
+
       An alternative way is more convenient if using bindings from another language:
       @code
       std::string SmilesString;
@@ -376,8 +376,10 @@ namespace OpenBabel {
         pInStream = zIn;
         CheckedForGzip = true;
       }
-      else
+      else {
         delete zIn;
+        zIn = NULL;
+      }
     }
 #ifndef DISABLE_WRITE_COMPRESSION //Unsolved problem with compression under Windows
     zlib_stream::zip_ostream zOut(*pOutStream);
@@ -402,9 +404,9 @@ namespace OpenBabel {
 
     pOutStream = pOrigOutStream;
 #ifdef HAVE_LIBZ
-    if ( CheckedForGzip ){ // Bug reported by Gert Thijs
-		delete zIn;
-		pInStream = is;
+    if ( CheckedForGzip && zIn != NULL){ // Bug reported by Gert Thijs
+      delete zIn;
+      pInStream = is;
 	}
 #endif
     return count;
@@ -958,7 +960,7 @@ namespace OpenBabel {
 
     ios_base::openmode imode = ios_base::in|ios_base::binary; //now always binary because may be gzipped
 //      pInFormat->Flags() & READBINARY ? ios_base::in|ios_base::binary : ios_base::in;
-      
+
     ifs->open(filePath.c_str(),imode);
     if(!ifs || !ifs->good())
       {
@@ -1416,7 +1418,7 @@ namespace OpenBabel {
         if(SetFormat || SetInFormat("smi"))
           {
             ss->clear();
-            ss->str(InFilename); 
+            ss->str(InFilename);
             return true;
           }
       }

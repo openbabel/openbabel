@@ -163,7 +163,7 @@ namespace OpenBabel
     } else { // GA-based searching
       int numChildren = 5;
       int mutability = 5;
-      int convergence = 25;
+      int convergence = 5;
       std::string score = "rmsd";
 
       iter = pmap->find("children");

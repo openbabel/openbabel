@@ -21,7 +21,7 @@ GNU General Public License for more details.
   #define obsharedptr boost::shared_ptr
 #else
   #include <memory>
-  #if __GNUC__ == 4  //&& __GNUC_MINOR__ < 3  removed at the suggestion of Konstantin Tokarev
+  #if __GNUC__ >= 4  //&& __GNUC_MINOR__ < 3  removed at the suggestion of Konstantin Tokarev
     #ifdef _LIBCPP_VERSION
       #include <memory>
     #else
