@@ -1708,6 +1708,7 @@ namespace OpenBabel
     // So each rotor is considered in isolation
     IF_OBFF_LOGLVL_LOW
       OBFFLog("  INITIAL WEIGHTING OF ROTAMERS...\n\n");
+
     rotor = rl.BeginRotor(ri);
     for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
       rotorKey[i] = -1; // no rotation (new in 2.2)

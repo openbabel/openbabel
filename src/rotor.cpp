@@ -476,6 +476,24 @@ namespace OpenBabel
   {
   }
 
+  void OBRotor::SetRings(OBBond *bond)
+  {
+    _rings.clear();
+    if (_bond == NULL)
+      return; // nothing to do
+
+    vector<OBRing*> rlist;
+    vector<OBRing*>::iterator i;
+
+    OBMol *mol = _bond->GetParent();
+
+    rlist = mol->GetSSSR();
+    for (i = rlist.begin();i != rlist.end();++i) {
+      if ((*i)->IsMember(_bond))
+        _rings.push_back(*i);
+    }
+  }
+
   double OBRotor::CalcTorsion(double *c)
   {
     double v1x,v1y,v1z,v2x,v2y,v2z,v3x,v3y,v3z;

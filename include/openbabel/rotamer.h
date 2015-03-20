@@ -46,15 +46,6 @@ namespace OpenBabel
     //! Individual rotamer states (i.e., the array of rotor settings)
     std::vector<unsigned char*>          _vrotamer;
 
-    /*Because contains OBAtom*, these aren't meaningful without knowing the parent molecule
-      OBRotamerList(const OBRotamerList &cpy) : OBGenericData(cpy)
-      {}
-      OBRotamerList& operator =(const OBRotamerList &)
-      {
-      return *this;
-      }
-		*/
-
   public:
     OBRotamerList()
       {

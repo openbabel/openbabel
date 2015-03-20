@@ -188,6 +188,8 @@ namespace OpenBabel
     rotatable = rotatable && (_bgn->GetHyb() != 1 && _end->GetHyb() != 1);
     // not just an -OH or -NH2, etc.
     // maybe we want to add this as an option
+    //    rotatable = rotatable && ((_bgn->IsHeteroatom() || _bgn->GetHvyValence() > 1)
+    //                               && (_end->IsHeteroatom() || _end->GetHvyValence() > 1) );
     rotatable = rotatable && (_bgn->GetHvyValence() > 1 && _end->GetHvyValence() > 1);
     return rotatable;
   }
