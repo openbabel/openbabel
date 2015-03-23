@@ -45,6 +45,10 @@ namespace OpenBabel
     std::vector<std::vector<double> >    _vres;
     //! Individual rotamer states (i.e., the array of rotor settings)
     std::vector<unsigned char*>          _vrotamer;
+    //! Rotors in rings
+    std::vector<std::vector<int> >       _vrings;
+    //! Dihedral angles of ring bonds
+    std::vector<std::vector<double> >    _vringTors;
 
   public:
     OBRotamerList()
@@ -106,7 +110,7 @@ namespace OpenBabel
     //! \return The set of coordinates as a reference in @p confs
     void ExpandConformerList(OBMol&mol,std::vector<double*>& confs);
 
-    void SetCurrentCoordinates(OBMol &mol, std::vector<int> arr);
+    bool SetCurrentCoordinates(OBMol &mol, std::vector<int> arr);
 
     //! \brief Copies the mol's conformers (the coordinates, NOT the pointers)
     //! into the object as base coordinates

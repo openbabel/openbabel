@@ -77,8 +77,7 @@ namespace OpenBabel
 
   bool OBRotorList::FindRotors(OBMol &mol)
   {
-    // Find ring atoms & bonds, ring bonds are not rotatable
-    // and will be ignored.
+    // Find ring atoms & bonds
     // This function will set OBBond::IsRotor().
     mol.FindRingAtomsAndBonds();
 
@@ -99,13 +98,18 @@ namespace OpenBabel
     vector<OBBond*>::iterator i;
     vector<pair<OBBond*,int> > vtmp;
     for (OBBond *bond = mol.BeginBond(i);bond;bond = mol.NextBond(i)) {
-      // check if the bond is in a ring
+      // check if the bond is "rotatable"
       if (bond->IsRotor()) {
         // check if the bond is fixed (using deprecated fixed atoms or new fixed bonds)
         if ((HasFixedAtoms() || HasFixedBonds()) && IsFixedBond(bond))
           continue;
-        // compute the GTD bond score as sum of atom GTD scores
+
+        if (bond->IsInRing()) {
+          _ringRotors = true; // just know if we're dealing with this
+        }
+
         int score = gtd[bond->GetBeginAtomIdx()-1] + gtd[bond->GetEndAtomIdx()-1];
+        // compute the GTD bond score as sum of atom GTD scores
         vtmp.push_back(pair<OBBond*,int> (bond,score));
       }
     }
@@ -442,8 +446,9 @@ namespace OpenBabel
   OBRotorList::OBRotorList()
   {
     _rotor.clear();
-    _quiet=true;
-    _removesym=true;
+    _quiet = true;
+    _removesym = true;
+    _ringRotors = false;
   }
 
   OBRotorList::~OBRotorList()
@@ -459,6 +464,7 @@ namespace OpenBabel
     for (i = _rotor.begin();i != _rotor.end();++i)
       delete *i;
     _rotor.clear();
+    _ringRotors = false;
     //_fix.Clear();
   }
 

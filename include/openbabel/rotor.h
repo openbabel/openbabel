@@ -447,6 +447,7 @@ namespace OpenBabel
   {
     bool _quiet;                    //!< Control debugging output
     bool _removesym;                //!< Control removal of symmetric rotations
+    bool _ringRotors;               //!< Are there ring rotors
     OBBitVec _fixedatoms, _fixedbonds; //!< Bit vector of fixed (i.e., invariant) atoms
     OBRotorRules _rr;               //!< Database of rotatable bonds and dihedral angles to test
     std::vector<int> _dffv;         //!< Distance from fixed
@@ -495,6 +496,12 @@ namespace OpenBabel
     //! values are removed from consideration during a search
     void RemoveSymVals(OBMol&);
 
+    /**
+     * @return True if this rotor list has any ring bonds.
+     * @since version 2.4
+     */
+    bool HasRingRotors()
+    { return _ringRotors; }
 
     ///@name Setup
     /**
