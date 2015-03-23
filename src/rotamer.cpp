@@ -385,6 +385,42 @@ namespace OpenBabel
     if (arr.size() != (_vrotor.size() + 1))
       return; // wrong size key
 
+    // gotta check for weird ring torsion combinations
+    if (_vrings.size()) {
+      // go through each ring and update the possible torsions
+      for (unsigned int j = 0; j < _vrings.size(); ++j) {
+        vector<int> path = _vrings[j];
+        double torsionSum = 0.0;
+
+        // go around the loop and add up the torsions
+        for (unsigned int i = 0; i < path.size(); ++i) {
+          if (path[i] == -1) {
+            // not a rotor, use the fixed value
+            torsionSum += _vringTors[j][i];
+            continue;
+          }
+
+          // what angle are we trying to use with this key?
+          angle = _vres[ path[i] ][arr[ path[i]+1 ]]*res;
+          while (angle < 0.0)
+          	angle += 360.0;
+        	while (angle > 360.0)
+          	angle -= 360.0;
+
+          // update the ring torsion for this setting
+          _vringTors[j][i] = angle;
+          torsionSum += angle;
+        }
+
+        // if the sum of the ring torsions is not ~0, bad move
+        if (fabs(torsionSum) > 45.0) {
+          //          cerr << " Bad move! " << fabs(torsionSum) << endl;
+          return; // don't make the move
+        }
+        //        cerr << " Good move!" << endl;
+      }
+    }
+
     unsigned char *rot = new unsigned char [_vrotor.size()+1];
     rot[0] = (unsigned char)arr[0];
 

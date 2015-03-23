@@ -1804,10 +1804,10 @@ namespace OpenBabel
             total += rotorWeights[i][j];
         }
       }
-      if (rotamers.SetCurrentCoordinates(_mol, rotorKey))
-        ++c;
-      else
-        continue; // rotor setting is invalid (e.g., weird torsions for rings)
+
+      //FIXME: for now, allow even invalid ring conformers
+      rotamers.SetCurrentCoordinates(_mol, rotorKey);
+      ++c;
 
       SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
 
