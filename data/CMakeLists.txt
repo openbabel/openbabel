@@ -52,7 +52,7 @@ set(to_install
 )
 
 if(NOT MSVC)
-  install(FILES ${to_install} DESTINATION share/openbabel/${BABEL_VERSION})
+  install(FILES ${to_install} DESTINATION "${BABEL_DATADIR}/${BABEL_VERSION}")
 else(NOT MSVC)
   install(FILES ${to_install} DESTINATION bin/data)
 endif(NOT MSVC)
