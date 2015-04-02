@@ -38,7 +38,9 @@ if(EMBED_OPENBABEL)
 else()
   set(BABEL_VERSION  "${BABEL_MAJ_VER}.${BABEL_MIN_VER}.${BABEL_PATCH_VER}")
 endif()
-set(BABEL_DATADIR  "${CMAKE_INSTALL_PREFIX}/share/openbabel")
+set(BABEL_DATAROOTDIR "${CMAKE_INSTALL_PREFIX}/share"
+    CACHE PATH "Install dir for arch independent data")
+set(BABEL_DATADIR  "${BABEL_DATAROOTDIR}/openbabel")
 
 option(ENABLE_VERSIONED_FORMATS
   "Enable versioning of the format plugin directory" ON)
