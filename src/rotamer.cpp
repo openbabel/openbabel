@@ -546,7 +546,7 @@ namespace OpenBabel
         }
 
         // if the sum of the ring torsions is not ~0, bad move
-        if (fabs(torsionSum) > 10.0) {
+        if (fabs(torsionSum) > 45.0) {
           //          cerr << " Bad move!" << endl;
           return false; // don't make the move
         }
