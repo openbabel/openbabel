@@ -530,7 +530,6 @@ namespace OpenBabel
     if(pConv->IsOption("c", OBConversion::OUTOPTIONS)!=NULL) {
         vector<OBGenericData*>::iterator k;
         vector<OBGenericData*> vdata = mol.GetData();
-        ofs << endl;
         for (k = vdata.begin();k != vdata.end();k++) {
             if ((*k)->GetDataType() == OBGenericDataType::PairData
             && (*k)->GetOrigin()!=local //internal OBPairData is not written
@@ -539,7 +538,6 @@ namespace OpenBabel
                 ofs << "##########\t" << (*k)->GetAttribute() << ":\t" << ((OBPairData*)(*k))->GetValue() << endl;
             }
         }
-        ofs << endl;
     }
 
     ofs << "@<TRIPOS>MOLECULE" << endl;
