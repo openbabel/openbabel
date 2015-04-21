@@ -23,6 +23,7 @@ import os.path
 import tempfile
 import json
 import uuid
+import xml.etree.ElementTree as ET
 
 if sys.platform[:4] == "java":
     import org.openbabel as ob
@@ -408,7 +409,15 @@ class Molecule(object):
         if ipython_3d:
             return None
 
-        return self.clone.write("svg")
+        # Open babel returns a nested svg, which IPython unpacks and treats as
+        # two SVGs, messing with the display location. This parses out the
+        # inner svg before handing over to IPython.
+        namespace = "http://www.w3.org/2000/svg"
+        ET.register_namespace("", namespace)
+        obsvg = self.clone.write("svg")
+        tree = ET.fromstring(obsvg)
+        svg = tree.find("{{{ns}}}g/{{{ns}}}svg".format(ns=namespace))
+        return ET.tostring(svg).decode("utf-8")
 
     def _repr_html_(self):
         """For IPython notebook, renders 3D pybel.Molecule webGL objects."""
