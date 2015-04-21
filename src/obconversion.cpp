@@ -301,7 +301,7 @@ namespace OpenBabel {
       if(pInStream) pInStream->rdbuf(pLineEndBuf->GetSource()); //restore original buffer
       delete pLineEndBuf;
     }
-    pLineEndBuf=NULL;
+    pLineEndBuf = NULL;
 
   }
   //////////////////////////////////////////////////////
