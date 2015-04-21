@@ -249,13 +249,13 @@ class Outputfile(object):
         if not formatok:
             raise ValueError("%s is not a recognised Open Babel format" %
                              format)
-
+        if filename and filename.split('.')[-1] == 'gz':
+            self.obConversion.AddOption('z', self.obConversion.GENOPTIONS)
         for k, v in opt.items():
             if v is None:
                 self.obConversion.AddOption(k, self.obConversion.OUTOPTIONS)
             else:
-                self.obConversion.AddOption(
-                    k, self.obConversion.OUTOPTIONS, str(v))
+                self.obConversion.AddOption(k, self.obConversion.OUTOPTIONS, str(v))
         self.total = 0  # The total number of molecules written to the file
 
     def write(self, molecule):
@@ -382,6 +382,10 @@ class Molecule(object):
             raise AttributeError("Molecule has no attribute 'unitcell'")
 
     @property
+    def clone(self):
+        return Molecule(ob.OBMol(self.OBMol))
+
+    @property
     def _exchange(self):
         if self.OBMol.HasNonZeroCoords():
             return (1, self.write("mol"))
@@ -404,7 +408,7 @@ class Molecule(object):
         if ipython_3d:
             return None
 
-        return self.write("svg")
+        return self.clone.write("svg")
 
     def _repr_html_(self):
         """For IPython notebook, renders 3D pybel.Molecule webGL objects."""
@@ -434,23 +438,26 @@ class Molecule(object):
         drawing_type = "ball and stick"
         camera_type = "perspective"
 
+        # Clone molecule
+        mol = self.clone
+
         # Infer structure in cases where the input format has no specification
-        if not self.OBMol.HasNonZeroCoords():
-            self.make3D()
-        self.OBMol.Center()
+        if not mol.OBMol.HasNonZeroCoords():
+            mol.make3D()
+        mol.OBMol.Center()
 
         # Convert the relevant parts of `self` into JSON for rendering
         table = ob.OBElementTable()
         atoms = [{"element": table.GetSymbol(atom.atomicnum),
                   "location": atom.coords}
-                 for atom in self.atoms]
+                 for atom in mol.atoms]
         bonds = [{"atoms": [bond.GetBeginAtom().GetIndex(),
                             bond.GetEndAtom().GetIndex()],
                   "order": bond.GetBondOrder()}
-                 for bond in ob.OBMolBondIter(self.OBMol)]
+                 for bond in ob.OBMolBondIter(mol.OBMol)]
         mol = {"atoms": atoms, "bonds": bonds}
-        if hasattr(self, "unitcell"):
-            uc = self.unitcell
+        if hasattr(mol, "unitcell"):
+            uc = mol.unitcell
             mol["unitcell"] = [[v.GetX(), v.GetY(), v.GetZ()]
                                for v in uc.GetCellVectors()]
             # Support for previous naming scheme
@@ -575,6 +582,8 @@ class Molecule(object):
         if not formatok:
             raise ValueError("%s is not a recognised Open Babel format" %
                              format)
+        if filename and filename.split('.')[-1] == 'gz':
+            obconversion.AddOption('z', self.obConversion.GENOPTIONS)
         for k, v in opt.items():
             if v is None:
                 obconversion.AddOption(k, obconversion.OUTOPTIONS)

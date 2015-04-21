@@ -80,11 +80,12 @@ class Matcher
 	{
 	private:
 		const OBMol& ref;
-		const OBMol& test;
+		OBMol& test;
 		double bestRMSD;
 		bool minimize;
 		public:
-		MapRMSDFunctor(const OBMol& r, const OBMol& t, bool min = false) :
+		//while modify t if min is true
+		MapRMSDFunctor(const OBMol& r, OBMol& t, bool min = false) :
 				ref(r), test(t), bestRMSD(HUGE_VAL), minimize(min)
 		{
 		}
@@ -145,6 +146,13 @@ class Matcher
 
 				qtrfit(refcoord, testcoord, N, rmatrix);
 				rotate_coords(testcoord, rmatrix, N);
+				
+				for (unsigned i = 0; i < N; i++)
+				{
+					//with minimize on, change coordinates
+					OBAtom *tatom = test.GetAtom(map[i].second + 1);
+					tatom->SetVector(testcoord[3*i], testcoord[3*i+1], testcoord[3*i+2]);
+				}
 			}
 
 			double rmsd = calc_rms(refcoord, testcoord, N);
@@ -223,7 +231,8 @@ int main(int argc, char **argv)
 	bool help = false;
 	string fileRef;
 	string fileTest;
-
+	string fileOut;
+	
 	program_options::options_description desc("Allowed options");
 	desc.add_options()
 	("reference", value<string>(&fileRef)->required(),
@@ -232,6 +241,7 @@ int main(int argc, char **argv)
 	("firstonly,f", bool_switch(&firstOnly),
 			"use only the first structure in the reference file")
 	("minimize,m", bool_switch(&minimize), "compute minimum RMSD")
+	("out", value<string>(&fileOut), "re-oriented test structure output")
 	("help", bool_switch(&help), "produce help message");
 
 	positional_options_description pd;
@@ -277,6 +287,17 @@ int main(int argc, char **argv)
 		exit(-1);
 	}
 
+	OBConversion outconv;
+	OBFormat *outFormat = outconv.FormatFromExt(fileOut);
+	if(fileOut.size() > 0)
+	{
+		if(!outFormat || !outconv.SetInAndOutFormats(outFormat, outFormat))
+		{
+			cerr << "Do not understand output format!" << endl;
+			exit(-1);
+		}
+	}
+	
 	//read reference
 	OBMol molref;
 	std::ifstream uncompressed_inmol(fileRef.c_str());
@@ -309,6 +330,12 @@ int main(int argc, char **argv)
 		cerr << "Cannot read file: " << fileTest << endl;
 		exit(-1);
 	}
+	
+	std::ofstream out;
+	if(fileOut.size() > 0)
+	{
+		out.open(fileOut.c_str());
+	}
 
 	while (refconv.Read(&molref, &ifsref))
 	{
@@ -325,6 +352,11 @@ int main(int argc, char **argv)
 			double rmsd = matcher.computeRMSD(moltest, minimize);
 
 			cout << "RMSD " << molref.GetTitle() << ":" <<  moltest.GetTitle() << " " << rmsd << "\n";
+			
+			if(out)
+			{
+				outconv.Write(&moltest, &out);
+			}
 			if (!firstOnly)
 			{
 				break;
