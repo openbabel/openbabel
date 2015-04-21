@@ -544,7 +544,7 @@ namespace OpenBabel
         unsigned int hCount = atom->ImplicitHydrogenCount();
         // LPW: The allExplicit option will omit the drawing of extra hydrogens
         // to fill the valence.
-        if(!(d->options & allExplicit))
+        if((d->options & allExplicit))
             hCount = 0;
         // rightAligned:
         //   false  CH3

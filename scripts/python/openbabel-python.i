@@ -1,1 +1,0 @@
-../openbabel-python.i

@@ -38,7 +38,9 @@ if(EMBED_OPENBABEL)
 else()
   set(BABEL_VERSION  "${BABEL_MAJ_VER}.${BABEL_MIN_VER}.${BABEL_PATCH_VER}")
 endif()
-set(BABEL_DATADIR  "${CMAKE_INSTALL_PREFIX}/share/openbabel")
+set(BABEL_DATAROOTDIR "${CMAKE_INSTALL_PREFIX}/share"
+    CACHE PATH "Install dir for arch independent data")
+set(BABEL_DATADIR  "${BABEL_DATAROOTDIR}/openbabel")
 
 option(ENABLE_VERSIONED_FORMATS
   "Enable versioning of the format plugin directory" ON)
@@ -127,8 +129,10 @@ else()
   if(MSVC)
     # set cl flags for static compiling
     set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
+    set(CMAKE_C_FLAGS_DEBUG "/MTd")
     set(CMAKE_EXE_LINKER_FLAGS_DEBUG "/INCREMENTAL:NO /NODEFAULTLIB:MSVCRT")
     set(CMAKE_CXX_FLAGS_RELEASE	"/MT /O2 /Ob2 /D NDEBUG")
+    set(CMAKE_C_FLAGS_RELEASE	"/MT /O2 /Ob2 /D NDEBUG")
     set(CMAKE_EXE_LINKER_FLAGS_RELEASE "/INCREMENTAL:NO /NODEFAULTLIB:MSVCRT")
     # note: static libraries are specified when running cmake
   else()
@@ -147,7 +151,7 @@ if(OPENBABEL_USE_SYSTEM_INCHI)
   endif()
 else()
   message(STATUS "Using included inchi library.")
-  set(INCHI_LIBRARIES inchi)
+  set(INCHI_LIBRARY inchi)
 endif()
 
 if(WIN32)

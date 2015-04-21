@@ -231,6 +231,7 @@ std::vector<std::string> EnableStaticPlugins()
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&t41Format__)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theAlchemyFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theAmberPrepFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theAoforceFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOBAPIInterface)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theBallStickFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theBGFFormat)->GetID());

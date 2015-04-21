@@ -179,7 +179,7 @@ CAST_GENERICDATA_TO(VirtualBond)
 
 %import <openbabel/math/spacegroup.h>
 
-# CloneData should be used instead of the following method
+%# CloneData should be used instead of the following method
 %ignore OpenBabel::OBBase::SetData;
 %rename(_local) OpenBabel::local;
 %include <openbabel/base.h>
@@ -224,7 +224,7 @@ namespace std { class stringbuf {}; }
 %ignore OpenBabel::OBForceField::DiverseConfGen;
 #endif
 
-# Ignore shadowed methods
+%# Ignore shadowed methods
 %ignore OpenBabel::OBForceField::VectorSubtract(const double *const, const double *const, double *);
 %ignore OpenBabel::OBForceField::VectorMultiply(const double *const, const double, double *);
 %include <openbabel/forcefield.h>
@@ -234,20 +234,20 @@ namespace std { class stringbuf {}; }
 
 %warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
 %include <openbabel/bitvec.h>
-# Ignore shadowed method
+%# Ignore shadowed method
 %ignore OpenBabel::OBRotor::GetRotAtoms() const;
 %warnfilter(314); // 'next' is a Perl keyword
 %include <openbabel/rotor.h>
 %ignore OpenBabel::Swab;
 %include <openbabel/rotamer.h>
 
-# The following %ignores avoid warning messages due to shadowed classes.
-# This does not imply a loss of functionality as (in this case)
-# the shadowed class is identical (from the point of view of SWIG) to
-# the shadowing class.
-# This is because C++ references (&) are transformed by SWIG back into
-# pointers, so that OBAtomIter(OBMol &) would be treated the same as
-# OBAtomIter(OBMol *).
+%# The following %ignores avoid warning messages due to shadowed classes.
+%# This does not imply a loss of functionality as (in this case)
+%# the shadowed class is identical (from the point of view of SWIG) to
+%# the shadowing class.
+%# This is because C++ references (&) are transformed by SWIG back into
+%# pointers, so that OBAtomIter(OBMol &) would be treated the same as
+%# OBAtomIter(OBMol *).
 
 %ignore OBAtomAtomIter(OBAtom &);
 %ignore OBAtomBondIter(OBAtom &);

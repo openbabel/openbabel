@@ -3,7 +3,7 @@
 # Compensate for the fact that Ruby will try to build universal
 # binaries on OS X by default
 require 'rbconfig'
-if Config::CONFIG["arch"] =~ /universal-darwin/
+if RbConfig::CONFIG["arch"] =~ /universal-darwin/
   ENV['ARCHFLAGS'] = case `uname -smr`.chomp
     when "i386" then '-arch i386'
     when "ppc"  then '-arch ppc'
