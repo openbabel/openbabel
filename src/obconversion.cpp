@@ -270,7 +270,7 @@ namespace OpenBabel {
     SkippedMolecules = o.SkippedMolecules;
     NeedToFreeInStream = o.NeedToFreeInStream;
     NeedToFreeOutStream = o.NeedToFreeOutStream;
-    pLineEndBuf    = o.pLineEndBuf;
+    pLineEndBuf    = o.pLineEndBuf; //questionable - dkoes
     pAuxConv       = NULL;
   }
   ///////////////////////////////////////////////
@@ -296,8 +296,12 @@ namespace OpenBabel {
       pOutStream=NULL;
       NeedToFreeOutStream = false;
     }
-//    delete pLineEndBuf;
-//   pLineEndBuf=NULL;
+
+    if(pLineEndBuf) {
+    	if(pInStream) pInStream->rdbuf(pLineEndBuf->GetSource()); //restore original buffer
+    	delete pLineEndBuf;
+    }
+    pLineEndBuf=NULL;
   }
   //////////////////////////////////////////////////////
 
