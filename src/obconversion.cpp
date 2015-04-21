@@ -296,8 +296,10 @@ namespace OpenBabel {
       pOutStream=NULL;
       NeedToFreeOutStream = false;
     }
-//    delete pLineEndBuf;
-//   pLineEndBuf=NULL;
+    if(pLineEndBuf) {
+      if(pInStream) pInStream->rdbuf(pLineEndBuf->GetSource()); //restore original buffer
+      delete pLineEndBuf;
+    }
   }
   //////////////////////////////////////////////////////
 
