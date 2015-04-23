@@ -19,6 +19,12 @@
 #  For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 #
 
+# Set CMake Policy regarding the use of the @VARNAME@ below
+if(POLICY CMP0053)
+  cmake_policy(PUSH) # Note the corresponding POP at the end of the file
+  cmake_policy(SET CMP0053 NEW)
+endif()
+
 # Need python interpreter:
 FIND_PACKAGE(PythonInterp)
 MARK_AS_ADVANCED(PYTHON_EXECUTABLE)
@@ -71,3 +77,6 @@ MACRO(ADD_PYTHON_COMPILEALL_TEST DIRNAME)
   ADD_TEST(COMPILE_ALL-${DIRNAME} ${PYTHON_EXECUTABLE} "${PYTHON_COMPILE_ALL_PY}" -q ${DIRNAME})
 ENDMACRO(ADD_PYTHON_COMPILEALL_TEST)
 
+if(POLICY CMP0053)
+  cmake_policy(POP)
+endif()
