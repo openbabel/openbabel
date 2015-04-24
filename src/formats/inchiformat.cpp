@@ -277,7 +277,11 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   //Use any existing InChI, probably from an InChIformat input,
   //in preference to determining it from the structure.
-  if(!pConv->IsOption("r") && pmol->HasData("inchi"))
+  //but only if no InChI output option has been specified that would
+  //modify a standard InChI
+  if (pmol->HasData("inchi") && pConv->IsOption("r")==NULL && pConv->IsOption("a")==NULL &&
+    pConv->IsOption("s")==NULL && pConv->IsOption("X")==NULL && pConv->IsOption("F")==NULL &&
+    pConv->IsOption("M")==NULL)
   {
     //All origins for the data are currently acceptable.
     //Possibly this may need to be restricted to data with a local origin.

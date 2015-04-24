@@ -1,5 +1,5 @@
 include README.rst
 include *.py
-include *.i
+exclude openbabel.py
 include *.html
 recursive-include examples *
