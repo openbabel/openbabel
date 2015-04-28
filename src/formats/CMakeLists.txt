@@ -77,7 +77,7 @@ if(NOT MSVC OR JSON_LIBRARY)
   )
   set(json_additional_sources json/customwriter.cpp)
   if(NOT MSVC) # With MSVC, we link to the .dll rather than compiling it in
-    set(json_additional_sources json/jsoncpp.cpp ${json_additional_source})
+    set(json_additional_sources json/jsoncpp.cpp ${json_additional_sources})
   endif()
 endif()
 
