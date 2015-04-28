@@ -1,6 +1,8 @@
 //
-// Molekel - Molecular Visualization Program
-// Copyright (C) 2006, 2007 Swiss National Supercomputing Centre (CSCS)
+// Point Cloud Plugin for Open Babel
+// Copyright (C) 2015 M J Harvey, 
+// Acellera Ltd 
+// m.j.harvey ( at ) acellera.com
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License

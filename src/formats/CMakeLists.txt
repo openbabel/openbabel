@@ -122,6 +122,7 @@ set(formats_misc
       outformat
       pcmodelformat
       pdbqtformat
+			pointcloudformat
       posformat
       pqrformat
       shelxformat
