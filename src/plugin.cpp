@@ -309,6 +309,7 @@ std::vector<std::string> EnableStaticPlugins()
 #ifdef HAVE_LIBZ
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thePNGFormat)->GetID());
 #endif
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thePointCloudFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thePovrayFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thePQRFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thePQSFormat)->GetID());
@@ -413,6 +414,7 @@ std::vector<std::string> EnableStaticPlugins()
   // charges
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGasteigerCharges)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theMMFF94Charges)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theNoCharges)->GetID());
 #ifdef HAVE_EIGEN
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theQEqCharges)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theQTPIECharges)->GetID());
