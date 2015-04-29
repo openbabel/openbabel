@@ -35,6 +35,7 @@ set(formats_compchem
       molproformat
       mopacformat
       nwchemformat
+      pointcloudformat
       pwscfformat
       qchemformat
       turbomoleformat
