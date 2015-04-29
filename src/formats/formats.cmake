@@ -93,6 +93,7 @@ set(formats_misc
       pdbqtformat
       pqrformat
       shelxformat
+      stlformat
       thermoformat
       tinkerformat
       unichemformat
