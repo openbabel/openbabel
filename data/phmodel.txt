@@ -65,6 +65,10 @@ TRANSFORM [#6^2+0:1](~[N^2:2])(~[N^2:3])* >> [#6+:1](~[N:2])(~[N:3])*		12.5
 TRANSFORM [PD4](=O)([OD2])([OD2])[OD1:1] >> [PD4](=O)([OD2])([OD2])[O-:1]	2.0
 #TRANSFORM [PD4](=O)([OD2])([OD2])[OD1:1][#1:2] >> [PD4](=O)([OD2])([OD2])[O-:1]	2.0
 
+# phosphonate
+TRANSFORM [PD4](=O)([OD2])([!#8])[OD1:1] >> [PD4](=O)([OD2])([!#8])[O-:1]	2.2
+# http://research.chem.psu.edu/brpgroup/pKa_compilation.pdf
+
 #phosphoric acid
 #TRANSFORM O=P([!D1])([O:1][#1:2])[O:3][#1:4] >> O=P([*D2,*D3])([O:1])[O:3]	2.12
 TRANSFORM O=P([!D1])([O:1][#1:2])[OD1]       >> O=P([!D1])([O:1])O		2.12
