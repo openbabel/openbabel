@@ -111,7 +111,7 @@ namespace OpenBabel
   //==============================================================================
 
   double rv( void ){
-    return ((double)random()) / RAND_MAX;
+    return ((double)std::rand()) / RAND_MAX; // C++11 provides a better <random> but I think this will do here
   }
 
   vector3 surface_point( double cx, double cy, double cz, double radius ) {
@@ -169,7 +169,7 @@ namespace OpenBabel
 
 
     int total_points = 0;
-    srandom(0); // let's be deterministic(FSVO)
+    std::srand(0); // let's be deterministic(FSVO)
 
     vector< vector3 > filtered_points;
 
