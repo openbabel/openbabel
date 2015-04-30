@@ -133,6 +133,7 @@ set(formats_misc
       pqrformat
       shelxformat
       smileyformat
+      stlformat
       thermoformat
       tinkerformat
       unichemformat

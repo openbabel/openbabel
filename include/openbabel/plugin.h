@@ -473,6 +473,7 @@ public:
   OB_STATIC_PLUGIN(RXNFormat, theRXNFormat)
   OB_STATIC_PLUGIN(ShelXFormat, theShelXFormat)
   OB_STATIC_PLUGIN(SMIFormat, theSMIFormat)
+  OB_STATIC_PLUGIN(STLFormat, theSTLFormat)
   OB_STATIC_PLUGIN(CANSMIFormat, theCANSMIFormat)
   OB_STATIC_PLUGIN(FIXFormat, theFIXFormat)
   OB_STATIC_PLUGIN(SVGFormat, theSVGFormat)
