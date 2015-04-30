@@ -36,8 +36,6 @@ class OBAPI OBChemTsfm
     std::vector<std::pair<std::pair<int,int>,int> >  _vbond;
     OBSmartsPattern _bgn,_end;
 public:
-std::string transform_start;
-std::string transform_end;
     OBChemTsfm()    {}
     ~OBChemTsfm()   {}
     //! Initialize this transformation with the supplied SMARTS patterns
