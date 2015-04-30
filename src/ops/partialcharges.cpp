@@ -22,6 +22,7 @@ GNU General Public License for more details.
 #include<openbabel/chargemodel.h>
 #include <openbabel/obconversion.h>
 
+#include <string.h>
 namespace OpenBabel
 {
 
@@ -46,18 +47,33 @@ OpPartialCharge theOpPartialCharge("partialcharge"); //Global instance
 /////////////////////////////////////////////////////////////////
 bool OpPartialCharge::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConversion* pConv)
 {
+	char *arg = NULL;
+	const char *tok1= NULL; 
+ 	const char *tok2= NULL; 
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+
   if(!pmol)
     return false;
 
-  _pChargeModel = OBChargeModel::FindType(OptionText);
+
+	if( OptionText ) { 
+		arg = strdup( OptionText ); 
+		tok1 = strtok( arg, ":" );
+		tok2 = strtok( NULL, "\0" );
+	}
+	else {
+		tok1 = OptionText;
+	}
+	
+  _pChargeModel = OBChargeModel::FindType(tok1);
+
+	
   if(!_pChargeModel)
     {
       obErrorLog.ThrowError(__FUNCTION__,
-                            std::string("Unknown charge model ") + OptionText, obError, onceOnly);
-      return false;
+                            std::string("Unknown charge model ") + tok1, obError, onceOnly);
+			return false;
     }
-
-  return _pChargeModel->ComputeCharges(*pmol);
+  return _pChargeModel->ComputeCharges(*pmol, tok2);
 }
 }//namespace
