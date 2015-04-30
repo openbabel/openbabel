@@ -38,7 +38,7 @@ class OBAPI OBChargeModel : public OBPlugin
 
     /// \return whether partial charges were successfully assigned to this molecule
     /// \note The method should fill m_partialCharges and m_formalCharges as well
-    virtual bool ComputeCharges(OBMol &) { return false; }
+    virtual bool ComputeCharges(OBMol &, const char *args=NULL) { return false; }
 
     /// \return a vector of the formal charges on each atom, indexed from 0
     /// This method returns floating point formal charges since some
