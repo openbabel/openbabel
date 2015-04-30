@@ -7,6 +7,7 @@ set(charges
   charges/gasteiger.cpp
   charges/none.cpp
   charges/mmff94.cpp
+  charges/fromfile.cpp
 )
 
 if (EIGEN2_FOUND OR EIGEN3_FOUND)
