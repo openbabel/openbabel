@@ -291,6 +291,28 @@ namespace OpenBabel
             sscanf(buffer,"%*s%*s%*s%*s%*s%lf",&energy);
             mol.SetEnergy(energy);
           }
+        else if(strstr(buffer,"ELECTROSTATIC POTENTIAL CHARGES") != NULL)
+          {
+            hasPartialCharges = true;
+            charges.clear(); // Mulliken Charges
+            ifs.getline(buffer,BUFF_SIZE);	// blank
+            ifs.getline(buffer,BUFF_SIZE);	// column headings
+            ifs.getline(buffer,BUFF_SIZE);
+            tokenize(vs,buffer);
+            if (vs.size() < 1) return false; // timvdm 18/06/2008
+            while (vs.size() > 0 && strstr(vs[0].c_str(),"DIPOLE") == NULL)
+              {
+                if (vs.size() < 3) break;
+                atom = mol.GetAtom(atoi(vs[0].c_str()));
+                if (atom != NULL)
+                  atom->SetPartialCharge(atof(vs[2].c_str()));
+                charges.push_back(atof(vs[2].c_str()));
+
+                if (!ifs.getline(buffer,BUFF_SIZE))
+                  break;
+                tokenize(vs,buffer);
+              }
+          }
         else if(strstr(buffer,"NET ATOMIC CHARGES") != NULL)
           {
             hasPartialCharges = true;

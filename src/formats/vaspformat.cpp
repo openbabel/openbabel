@@ -17,6 +17,7 @@ GNU General Public License for more details.
 
 #include <limits.h>
 #include <locale> // For isalpha(int)
+#include <functional>
 
 #define EV_TO_KCAL_PER_MOL 23.060538
 
