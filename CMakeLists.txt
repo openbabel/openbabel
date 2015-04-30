@@ -492,6 +492,13 @@ if(ENABLE_TESTS)
   add_subdirectory(test)
 endif()
 
+# To build the JSON formats, you need to provide an import library for MSVC
+if(MSVC)
+  if (NOT JSON_LIBRARY)
+    message(STATUS "JSON formats will NOT be built. To build, specify the location of the jsoncpp library with -DJSON_LIBRARY")
+  endif()
+endif()
+
 # Should the language bindings be regenereted?
 option(RUN_SWIG "Generate language bindings with SWIG" OFF)
 
