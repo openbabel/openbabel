@@ -2990,13 +2990,13 @@ namespace OpenBabel
 
   bool OBMol::AddBond(int first,int second,int order,int flags,int insertpos)
   {
-    if (first == second)
+    // Don't add the bond if it already exists
+    if (first == second || GetBond(first, second) != NULL)
       return(false);
 
     //    BeginModify();
 
-    if ((unsigned)first <= NumAtoms() && (unsigned)second <= NumAtoms()
-        && !GetBond(first, second))
+    if ((unsigned)first <= NumAtoms() && (unsigned)second <= NumAtoms())
       //atoms exist and bond doesn't
       {
         OBBond *bond = CreateBond();

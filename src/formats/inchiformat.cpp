@@ -133,7 +133,8 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     int j;
     for(j=0;j<piat->num_bonds;++j)
     {
-      pmol->AddBond(i+1, piat->neighbor[j]+1, piat->bond_type[j]);
+      if (i < piat->neighbor[j]) // Only add the bond in one direction
+        pmol->AddBond(i+1, piat->neighbor[j]+1, piat->bond_type[j]);
     }
 
     //Now use the implicit H info provided by InChI code to make explicit H in OBMol,
