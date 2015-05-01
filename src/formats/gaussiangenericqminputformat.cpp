@@ -99,26 +99,38 @@ namespace OpenBabel
 		os << "# " << theory << "/" << basis  << endl; 
 		switch( opt ) {
 			case OPT_NONE:
+				if( frozen.size() ) {
+					os << "# opt(modredundant)" << endl;
+				}
 				break;
 			case OPT_NORMAL: 
-				os << "# opt"  <<endl; 
+				os << "# opt" ; 
+				if( frozen.size() ) {
+					os << "(modredundant)";
+				}
+				os << endl;
 				break;
 			case OPT_LOOSE:  
-				os << "# opt=loose" <<endl ; 
+				os << "# opt(loose" ; 
+				if( frozen.size() ) {
+					os << ",modredundant";
+				}
+				os << ")" << endl;
 				break;
 			case OPT_TIGHT:  
-				os << "# opt=tight" <<endl ; 
+				os << "# opt(tight" ; 
+				if( frozen.size() ) {
+					os << ",modredundant";
+				}
+				os << ")" << endl;
 				break;
 			default:
 				return false;
 		}
-
+		
 
 		os << "# symmetry=None" << endl ;
 
-		if( frozen.size() ) {
-			os << "# modredundant" << endl;
-		}
 
 		if( espgrid ) {
 			os << "# prop=(read,field)"  << endl;
@@ -155,7 +167,7 @@ namespace OpenBabel
 
 			for( std::vector< std::vector<int> >::iterator i = frozen.begin(); i!=frozen.end(); i++ ) {
 
-				if( i->size() == 3 ) {
+				if( i->size() == 4 ) {
 					os << "D " << (*i)[0] << " " << (*i)[1] << " " <<  (*i)[2] << " " << (*i)[3] << " F" << endl ;
 				}
 			}
