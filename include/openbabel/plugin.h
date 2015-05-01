@@ -421,6 +421,8 @@ public:
   OB_STATIC_PLUGIN(GaussianOutputFormat, theGaussianOutputFormat)
   OB_STATIC_PLUGIN(GaussianInputFormat, theGaussianInputFormat)
   OB_STATIC_PLUGIN(GaussianZMatrixInputFormat, theGaussianZMatrixInputFormat)
+  OB_STATIC_PLUGIN(GaussianGQMInputFormat, theGaussianGenericQMInputFormat)
+  OB_STATIC_PLUGIN(PSI4GQMInputFormat, thePSI4GenericQMInputFormat)
   OB_STATIC_PLUGIN(GenBankFormat, theGenBankFormat)
   OB_STATIC_PLUGIN(GhemicalFormat, theGhemicalFormat)
   OB_STATIC_PLUGIN(GROFormat, theGROFormat)

@@ -29,6 +29,9 @@ set(formats_compchem
       gaussformat
       gausscubeformat
       gausszmatformat
+      genericqminputformat
+      gaussiangenericqminputformat
+      psi4genericqminputformat
       gulpformat
       hinformat
       jaguarformat
