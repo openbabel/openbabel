@@ -78,11 +78,10 @@ namespace OpenBabel
   //////////////////////////////////////////////////////////
   OpConformer theOpConformer("conformer"); //Global instance
 
-  bool getInteger(const std::string &str, int &value)
+  void getInteger(const std::string &str, int &value)
   {
     std::istringstream iss(str);
-    bool ret = iss >> value;
-    return ret;
+    iss >> value;
   }
 
   //////////////////////////////////////////////////////////
