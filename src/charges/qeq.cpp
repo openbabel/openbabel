@@ -23,8 +23,8 @@ GNU General Public License for more details.
 
 using namespace std;
 
-#ifdef _MSC_VER
-// MSVC doesn't have error function erf, use local implementation
+#if _MSC_VER < 1800
+// Older MSVC doesn't have error function erf, use local implementation
 #include <openbabel/math/erf.h>
 using temperf::erf;
 #endif
