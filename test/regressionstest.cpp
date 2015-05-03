@@ -31,6 +31,20 @@ void test_Issue135_UniversalSmiles()
   OB_COMPARE(res, "C(=O)(C(=O)[O-])O");
 }
 
+// Reading an InChI and then adding hydrogens messed up the structure
+void test_Issue134_InChI_addH()
+{
+  OBConversion conv;
+  conv.SetInFormat("inchi");
+  OBMol mol;
+  conv.ReadString(&mol, "InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m0/s1");
+  OB_ASSERT(!mol.HasData(OBGenericDataType::VirtualBondData));
+  mol.AddHydrogens();
+  conv.SetOutFormat("smi");
+  std::string res = conv.WriteString(&mol, true);
+  OB_COMPARE(res, "C[C@@H](N)O");
+}
+
 int regressionstest(int argc, char* argv[])
 {
   int defaultchoice = 1;
@@ -53,6 +67,9 @@ int regressionstest(int argc, char* argv[])
   switch(choice) {
   case 1:
     test_Issue135_UniversalSmiles();
+    break;
+  case 221:
+    test_Issue134_InChI_addH();
     break;
   //case N:
   //  YOUR_TEST_HERE();
