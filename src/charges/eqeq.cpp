@@ -23,7 +23,7 @@ GNU General Public License for more details.
 
 using namespace std;
 
-#if _MSC_VER < 1800
+#if defined(_MSC_VER) && _MSC_VER < 1800
 // Older MSVC doesn't have error function erfc, use local implementation
 #include <openbabel/math/erf.h>
 using temperf::erfc;
