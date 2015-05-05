@@ -73,6 +73,8 @@ namespace OpenBabel
 			string  basis ; // =  basis_default;
 			string  theory;
 			int  opt      ; //= OPT_NONE;
+			int  charge   ;  
+			bool charge_set;
 
 
 		public:

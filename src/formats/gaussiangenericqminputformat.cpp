@@ -87,6 +87,9 @@ namespace OpenBabel
 
 		int qi = (int) round(q);
 
+    if( charge_set ) { qi = charge; }
+
+
 		os << std::setprecision(10);
 		os << "%nprocshared="  << ncpus << endl;
 		os << "%mem="  << mem << "GB" << endl;

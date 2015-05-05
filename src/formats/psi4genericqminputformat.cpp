@@ -89,6 +89,8 @@ namespace OpenBabel
 
 		int qi = (int) round(q);
 
+		if( charge_set ) { qi = charge; }
+
 		os << std::setprecision(10);
 
 		if( is_hf ) {

@@ -55,6 +55,7 @@ namespace OpenBabel {
 		OBConversion::RegisterOptionParam("M"      , this, 1, OBConversion::OUTOPTIONS);
 		OBConversion::RegisterOptionParam("O"      , this, 1, OBConversion::OUTOPTIONS);
 		OBConversion::RegisterOptionParam("F"      , this, 1, OBConversion::OUTOPTIONS);
+		OBConversion::RegisterOptionParam("Q"      , this, 1, OBConversion::OUTOPTIONS);
 		OBConversion::RegisterOptionParam("m"      , this, 1, OBConversion::OUTOPTIONS);
 		OBConversion::RegisterOptionParam("p"      , this, 1, OBConversion::OUTOPTIONS);
 
@@ -76,6 +77,8 @@ namespace OpenBabel {
 		basis = basis_default;
 		theory= theory_default;
 		opt   = OPT_NONE;
+		charge= 0;
+		charge_set = false;
 	}
 
 	/// Return description.
@@ -97,6 +100,7 @@ namespace OpenBabel {
 		}
 
 		o <<  "  M#                   Multiplicity of the molecule          (default 1)\n"
+		o <<  "  Q#                   Charge of the the molecule  (default sum of partial charges)\n"
 			<<  "  E                    Calculate field and potential on points from grid.dat\n"
 			<<  "  O<type>              Optimise geometry. Options:           (default none)\n"
 			<<  "                         none  loose  normal  tight\n"
@@ -191,6 +195,11 @@ err:
 				return false;
 			}
 		}
+
+		if( pConv->IsOption( "Q" , OBConversion::OUTOPTIONS ) ) {
+			charge = atoi( pConv->IsOption( "Q", OBConversion::OUTOPTIONS) );
+			charge_set = true;
+		} 
 
 
 		if( pConv->IsOption( "m" , OBConversion::OUTOPTIONS ) ) {
