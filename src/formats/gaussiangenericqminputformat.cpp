@@ -51,13 +51,16 @@ namespace OpenBabel
 		public:
 			GaussianGQMInputFormat() : GenericQMInputFormat( "Gaussian", "gaussianin" ) {
 
-		OpenBabel::OBConversion::RegisterFormat( "gjf", this );
-		OpenBabel::OBConversion::RegisterFormat( "gjc", this );
-		OpenBabel::OBConversion::RegisterFormat( "gau", this );
-		OpenBabel::OBConversion::RegisterFormat( "com", this, "chemical/x-gaussian-input" );
+				OpenBabel::OBConversion::RegisterFormat( "gjf", this );
+				OpenBabel::OBConversion::RegisterFormat( "gjc", this );
+				OpenBabel::OBConversion::RegisterFormat( "gau", this );
+				OpenBabel::OBConversion::RegisterFormat( "com", this, "chemical/x-gaussian-input" );
 
-				OBConversion::RegisterOptionParam("b"      , this, 0, OBConversion::OUTOPTIONS);
-				OBConversion::RegisterOptionParam("u"      , this, 0, OBConversion::OUTOPTIONS);
+				OBConversion::RegisterOptionParam("b" , this, 0, OBConversion::OUTOPTIONS);
+				OBConversion::RegisterOptionParam("u" , this, 0, OBConversion::OUTOPTIONS);
+				OBConversion::RegisterOptionParam("k", this, 1, OBConversion::OUTOPTIONS);
+				OBConversion::RegisterOptionParam("f", this, 1, OBConversion::OUTOPTIONS);    
+
 
 			}
 
@@ -65,6 +68,8 @@ namespace OpenBabel
 				string ss = string( GenericQMInputFormat::Description() );
 				stringstream o;
 				o << ss;
+				o << "  k <string>           Keywords to include (overrides T,B,E,O,F)\n";
+				o << "  f <file>             Keywords to include (can specify k and f)\n";
 				o << "  b                    Include bonding information\n";
 				o << "  u                    Include crystallographic unit cell, if present\n\n";
 				return strdup( o.str().c_str() );
@@ -146,6 +151,10 @@ namespace OpenBabel
 		}
 
 		bool writeUnitCell = (NULL != pConv->IsOption("u", OBConversion::OUTOPTIONS));
+		bool has_keywordss  = (pConv->IsOption("k",OBConversion::OUTOPTIONS) != NULL);
+		bool has_keywordsf  = (pConv->IsOption("f",OBConversion::OUTOPTIONS) != NULL);
+		const char *keywordss = pConv->IsOption("k",OBConversion::OUTOPTIONS);
+		const char *keywordsf = pConv->IsOption("f",OBConversion::OUTOPTIONS);
 
 
 		OBMol* mol = dynamic_cast< OBMol* >(pOb);
@@ -174,45 +183,67 @@ namespace OpenBabel
 
 		// the route
 
-		os << "# " << theory << "/" << basis  << endl; 
-		switch( opt ) {
-			case OPT_NONE:
-				if( frozen.size() ) {
-					os << "# opt(modredundant)" << endl;
+		if( ! has_keywordss && ! has_keywordsf ) {
+
+			os << "# " << theory << "/" << basis  << endl; 
+			switch( opt ) {
+				case OPT_NONE:
+					if( frozen.size() ) {
+						os << "# opt(modredundant)" << endl;
+					}
+					break;
+				case OPT_NORMAL: 
+					os << "# opt" ; 
+					if( frozen.size() ) {
+						os << "(modredundant)";
+					}
+					os << endl;
+					break;
+				case OPT_LOOSE:  
+					os << "# opt(loose" ; 
+					if( frozen.size() ) {
+						os << ",modredundant";
+					}
+					os << ")" << endl;
+					break;
+				case OPT_TIGHT:  
+					os << "# opt(tight" ; 
+					if( frozen.size() ) {
+						os << ",modredundant";
+					}
+					os << ")" << endl;
+					break;
+				default:
+					return false;
+			}
+
+
+			os << "# symmetry=None" << endl ;
+
+
+
+			if( espgrid ) {
+				os << "# prop=(read,field)"  << endl;
+			}
+		}
+		else {
+			// If keywords are speficied, use those instead of 
+			// the route assembled from parameters
+			if ( has_keywordss ) {
+				os << keywordss << endl;
+			}
+			if ( has_keywordsf ) {
+				ifstream kfstream(keywordsf);
+				string keyBuffer;
+				if (kfstream)
+				{
+					while (getline(kfstream, keyBuffer))
+						os << keyBuffer << endl;
 				}
-				break;
-			case OPT_NORMAL: 
-				os << "# opt" ; 
-				if( frozen.size() ) {
-					os << "(modredundant)";
-				}
-				os << endl;
-				break;
-			case OPT_LOOSE:  
-				os << "# opt(loose" ; 
-				if( frozen.size() ) {
-					os << ",modredundant";
-				}
-				os << ")" << endl;
-				break;
-			case OPT_TIGHT:  
-				os << "# opt(tight" ; 
-				if( frozen.size() ) {
-					os << ",modredundant";
-				}
-				os << ")" << endl;
-				break;
-			default:
-				return false;
+			}
 		}
 
 
-		os << "# symmetry=None" << endl ;
-
-
-		if( espgrid ) {
-			os << "# prop=(read,field)"  << endl;
-		}
 
 
 		os << endl;
