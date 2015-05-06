@@ -79,6 +79,7 @@ namespace OpenBabel {
 		opt   = OPT_NONE;
 		charge= 0;
 		charge_set = false;
+		mult_set   = false;
 	}
 
 	/// Return description.
@@ -99,8 +100,8 @@ namespace OpenBabel {
 			o << "                         " << i->first << "\n";
 		}
 
-		o <<  "  M#                   Multiplicity of the molecule          (default 1)\n"
-		 <<  "  Q#                   Charge of the the molecule  (default sum of partial charges)\n"
+		o <<  "  M#                   Multiplicity of the molecule (default to Babel's guess)\n"
+			<<  "  Q#                   Charge of the the molecule  (default sum of partial charges)\n"
 			<<  "  E                    Calculate field and potential on points from grid.dat\n"
 			<<  "  O<type>              Optimise geometry. Options:           (default none)\n"
 			<<  "                         none  loose  normal  tight\n"
@@ -175,6 +176,7 @@ err:
 
 		if( pConv->IsOption( "M" , OBConversion::OUTOPTIONS ) ) {
 			mult = atoi( pConv->IsOption( "M", OBConversion::OUTOPTIONS) );
+			mult_set = true;
 			if( mult < 1 ) {
 				obErrorLog.ThrowError(__FUNCTION__, "Invalid value for argument 'M'", obError );
 				return false;

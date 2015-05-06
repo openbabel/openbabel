@@ -88,6 +88,7 @@ namespace OpenBabel
 		int qi = (int) round(q);
 
     if( charge_set ) { qi = charge; }
+    if( !mult_set )  { mult = mol.GetTotalSpinMultiplicity(); }
 
 
 		os << std::setprecision(10);
@@ -148,9 +149,15 @@ namespace OpenBabel
 
 		FOR_ATOMS_OF_MOL(a, mol) {
 			double *c = a->GetCoordinate();
-			sprintf( line, "%s %f %f %f", etab.GetSymbol(a->GetAtomicNum()), c[0], c[1], c[2] ); 
+			if( a->GetIsotope() == 0 ) {
+				sprintf( line, "%s %f %f %f", etab.GetSymbol(a->GetAtomicNum()), c[0], c[1], c[2] ); 
+			}
+			else {
+				sprintf( line, "%s(Iso=%d) %f %f %f", etab.GetSymbol(a->GetAtomicNum()), a->GetIsotope(), c[0], c[1], c[2] ); 
+			}
 			os <<  line << endl;
 		}
+
 
 
 		os << endl;

@@ -90,6 +90,8 @@ namespace OpenBabel
 		int qi = (int) round(q);
 
 		if( charge_set ) { qi = charge; }
+    if( !mult_set )  { mult = mol.GetTotalSpinMultiplicity(); }
+
 
 		os << std::setprecision(10);
 

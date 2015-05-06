@@ -75,6 +75,7 @@ namespace OpenBabel
 			int  opt      ; //= OPT_NONE;
 			int  charge   ;  
 			bool charge_set;
+			bool mult_set;
 
 
 		public:
