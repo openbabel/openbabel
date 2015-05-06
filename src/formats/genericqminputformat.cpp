@@ -110,7 +110,7 @@ namespace OpenBabel {
 			<<  "                       Eg freezing one angle, one dihedral: \n"
 			<<  "                          -xF 1,2,3:3,5,6,7\n"
 			<<  "  m#                   Amount of memory to allocate (GB)     (default 2.0)\n"
-			<<  "  n#                   Number of CPUs/threads to allocate    (default 1)\n\n";
+			<<  "  p#                   Number of CPUs/threads to allocate    (default 1)\n\n";
 		return strdup( o.str().c_str() );
 	}
 
