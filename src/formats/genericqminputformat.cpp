@@ -100,7 +100,7 @@ namespace OpenBabel {
 		}
 
 		o <<  "  M#                   Multiplicity of the molecule          (default 1)\n"
-		o <<  "  Q#                   Charge of the the molecule  (default sum of partial charges)\n"
+		 <<  "  Q#                   Charge of the the molecule  (default sum of partial charges)\n"
 			<<  "  E                    Calculate field and potential on points from grid.dat\n"
 			<<  "  O<type>              Optimise geometry. Options:           (default none)\n"
 			<<  "                         none  loose  normal  tight\n"
