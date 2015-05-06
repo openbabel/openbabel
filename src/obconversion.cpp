@@ -297,10 +297,7 @@ namespace OpenBabel {
       NeedToFreeOutStream = false;
     }
 
-    if(pLineEndBuf) {
-      if(pInStream) pInStream->rdbuf(pLineEndBuf->GetSource()); //restore original buffer
-      delete pLineEndBuf;
-    }
+    //there is an intentional memory leak here
     pLineEndBuf = NULL;
 
   }
@@ -616,7 +613,6 @@ namespace OpenBabel {
           ReadyToInput=false; //stops any more objects being read
 
         rInlen = pInStream ? pInStream->tellg() - rInpos : 0;
-         // - (pLineEndBuf ? pLineEndBuf->getCorrection() : 0); //correction for CRLF
 
         if(pOb)
           {
