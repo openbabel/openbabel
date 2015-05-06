@@ -86,7 +86,7 @@ namespace OpenBabel {
 	const char* GenericQMInputFormat::Description() 
 	{
 		stringstream o; 
-		o << "Generate a " << format_type << " Input file. \n"
+		o << format_type << " input format \n"
 			<< "Write Options:\n"
 			<<	 "  T<theory>            Theory level for calculation. Options:   (" << theory_default << ")\n";
 

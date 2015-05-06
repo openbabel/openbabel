@@ -50,6 +50,24 @@ namespace OpenBabel
 	{
 		public:
 			GaussianGQMInputFormat() : GenericQMInputFormat( "Gaussian", "gaussianin" ) {
+
+		OpenBabel::OBConversion::RegisterFormat( "gjf", this );
+		OpenBabel::OBConversion::RegisterFormat( "gjc", this );
+		OpenBabel::OBConversion::RegisterFormat( "gau", this );
+		OpenBabel::OBConversion::RegisterFormat( "com", this, "chemical/x-gaussian-input" );
+
+				OBConversion::RegisterOptionParam("b"      , this, 0, OBConversion::OUTOPTIONS);
+				OBConversion::RegisterOptionParam("u"      , this, 0, OBConversion::OUTOPTIONS);
+
+			}
+
+			virtual const char* Description() {
+				string ss = string( GenericQMInputFormat::Description() );
+				stringstream o;
+				o << ss;
+				o << "  b                    Include bonding information\n";
+				o << "  u                    Include crystallographic unit cell, if present\n\n";
+				return strdup( o.str().c_str() );
 			}
 
 			virtual const char* SpecificationURL() {
@@ -64,7 +82,60 @@ namespace OpenBabel
 	// Global variable used to register GaussianGQMInput format.
 	GaussianGQMInputFormat theGaussianGenericQMInputFormat;
 
+	static void write_unit_cell( OBMol &mol, ostream &ofs ) {
 
+		char buffer[BUFF_SIZE];
+		// Translation vectors
+		OBUnitCell *uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
+		if (uc ) {
+			uc->FillUnitCell(&mol); // complete the unit cell with symmetry-derived atoms
+
+			vector<vector3> cellVectors = uc->GetCellVectors();
+			for (vector<vector3>::iterator i = cellVectors.begin(); i != cellVectors.end(); ++i) {
+				snprintf(buffer, BUFF_SIZE, "TV       %10.5f      %10.5f      %10.5f",
+						i->x(),
+						i->y(),
+						i->z());
+				ofs << buffer << '\n';
+			}
+		}
+
+	}
+
+	static void write_bonds( OBMol &mol, ostream &ofs ) {
+		char buffer[BUFF_SIZE];
+
+		// Bonds, contributed by Daniel Mansfield
+		// first, make begin.GetIdx < end.GetIdx
+		OBBond* bond;
+		OBAtom *atom;
+		vector<OBEdgeBase*>::iterator j;
+		vector<OBNodeBase*>::iterator i;
+		OBAtom *bgn, *end;
+		for (bond = mol.BeginBond(j); bond; bond = mol.NextBond(j))
+		{
+			if (bond->GetBeginAtomIdx() > bond->GetEndAtomIdx()) {
+				bgn = bond->GetBeginAtom();
+				end = bond->GetEndAtom();
+				bond->SetBegin(end);
+				bond->SetEnd(bgn);
+			}
+		}
+
+		// this seems inefficient -- perhaps using atom neighbor iterators?
+		// -GRH
+		for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
+		{
+			ofs << endl << atom->GetIdx() << " ";
+			for (bond = mol.BeginBond(j); bond; bond = mol.NextBond(j))
+			{
+				if (bond->GetBeginAtomIdx() == atom->GetIdx()) {
+					snprintf(buffer, BUFF_SIZE, "%d %1.1f ", bond->GetEndAtomIdx(), (float) bond->GetBondOrder());
+					ofs << buffer;
+				}
+			}
+		} // iterate through atoms
+	}
 
 	//------------------------------------------------------------------------------
 	bool GaussianGQMInputFormat::WriteMolecule( OBBase* pOb, OBConversion* pConv )
@@ -73,6 +144,9 @@ namespace OpenBabel
 		if( ! ParseOptions( pOb, pConv ) ) {
 			return false;
 		}
+
+		bool writeUnitCell = (NULL != pConv->IsOption("u", OBConversion::OUTOPTIONS));
+
 
 		OBMol* mol = dynamic_cast< OBMol* >(pOb);
 		if( mol == 0 ) return false;
@@ -87,8 +161,8 @@ namespace OpenBabel
 
 		int qi = (int) round(q);
 
-    if( charge_set ) { qi = charge; }
-    if( !mult_set )  { mult = mol.GetTotalSpinMultiplicity(); }
+		if( charge_set ) { qi = charge; }
+		if( !mult_set )  { mult = mol->GetTotalSpinMultiplicity(); }
 
 
 		os << std::setprecision(10);
@@ -131,7 +205,7 @@ namespace OpenBabel
 			default:
 				return false;
 		}
-		
+
 
 		os << "# symmetry=None" << endl ;
 
@@ -157,8 +231,12 @@ namespace OpenBabel
 			}
 			os <<  line << endl;
 		}
-
-
+		if( writeUnitCell ) {
+			write_unit_cell( *mol, os );
+		}
+		if( pConv->IsOption( "b", OBConversion::OUTOPTIONS)) {
+			write_bonds( *mol, os );
+		}
 
 		os << endl;
 
