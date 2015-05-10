@@ -1889,7 +1889,7 @@ namespace OpenBabel
                           obAuditMsg);
 
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if (atom->IsPolarHydrogen())
+      if (atom->IsPolarHydrogen() && atom->GetIsotope() == 0 && atom->GetHvyValence() == 1)
         delatoms.push_back(atom);
 
     if (delatoms.empty())
@@ -1919,7 +1919,7 @@ namespace OpenBabel
                           obAuditMsg);
 
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if (atom->IsNonPolarHydrogen())
+      if (atom->IsNonPolarHydrogen() && atom->GetIsotope() == 0 && atom->GetHvyValence() == 1)
         delatoms.push_back(atom);
 
     if (delatoms.empty())
@@ -1959,7 +1959,7 @@ namespace OpenBabel
                           "Ran OpenBabel::DeleteHydrogens", obAuditMsg);
 
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if (atom->IsHydrogen())
+      if (atom->IsHydrogen() && atom->GetIsotope()==0 && atom->GetHvyValence()==1)
         delatoms.push_back(atom);
 
     UnsetHydrogensAdded();
@@ -1999,7 +1999,7 @@ namespace OpenBabel
     vector<OBAtom*> delatoms;
 
     for (nbr = atom->BeginNbrAtom(k);nbr;nbr = atom->NextNbrAtom(k))
-      if (nbr->IsHydrogen())
+      if (nbr->IsHydrogen() && nbr->GetIsotope() == 0 && nbr->GetHvyValence() == 1)
         delatoms.push_back(nbr);
 
     if (delatoms.empty())
