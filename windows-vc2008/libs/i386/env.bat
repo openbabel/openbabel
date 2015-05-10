@@ -1,1 +1,0 @@
-set PATH=%CD%;%PATH%

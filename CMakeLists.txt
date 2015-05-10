@@ -200,9 +200,9 @@ if(MSVC)
 endif()
 
 if(MSVC AND OB_USE_PREBUILT_BINARIES)
-  include_directories(${openbabel_SOURCE_DIR}/windows-vc2008/include)
+  include_directories(${XDR_INCLUDE_DIR})
   # The following line is required for check_include_file(rpc/xdr.h ...) below
-  set(CMAKE_REQUIRED_INCLUDES ${openbabel_SOURCE_DIR}/windows-vc2008/include)
+  set(CMAKE_REQUIRED_INCLUDES ${XDR_INCLUDE_DIR})
   # Force OPENBABEL_USE_SYSTEM_INCHI to ON, as this should be using the binary
   set(OPENBABEL_USE_SYSTEM_INCHI ON CACHE BOOL
     "Forced to ON for prebuilt binaries" FORCE)
