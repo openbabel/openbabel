@@ -209,10 +209,12 @@ namespace OpenBabel
             continue;
 
           FOR_NBORS_OF_ATOM (nbr2, &*nbr) {
-            if (&*nbr2 != atom)
+            if (&*nbr2 != atom) {
               bond2 = nbr->GetVector() - nbr2->GetVector();
-            if (isCarboxylateO && nbr2->IsOxygen())
-              break; // make sure that the hydrogen is trans to the C=O
+
+              if (isCarboxylateO && nbr2->IsOxygen())
+                break; // make sure that the hydrogen is trans to the C=O
+            }
           }
         }
 
