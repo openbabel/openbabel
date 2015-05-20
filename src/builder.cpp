@@ -230,11 +230,8 @@ namespace OpenBabel
           }
           // there is no a-2 atom
           v1 = cross(bond1, vrand); // so find a perpendicular, given the random vector (this doesn't matter here)
-          v2 = cross(bond1, v1);
-        } else {
-          v1 = cross(bond1, bond2);
-          v2 = cross(bond1, v1);
         }
+        v2 = cross(bond1, v1);
         v2 = v2.normalize();
 
         // check to see if atom is a square planar in disguise
