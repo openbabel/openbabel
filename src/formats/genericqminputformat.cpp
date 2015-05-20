@@ -102,6 +102,7 @@ namespace OpenBabel {
 
 		o <<  "  M#                   Multiplicity of the molecule (default to Babel's guess)\n"
 			<<  "  Q#                   Charge of the the molecule  (default sum of partial charges)\n"
+      <<  "                        (prepend with a 'q' if charge -ve, to avoid misinterp as arg)\n"
 			<<  "  E                    Calculate field and potential on points from grid.dat\n"
 			<<  "  O<type>              Optimise geometry. Options:           (default none)\n"
 			<<  "                         none  loose  normal  tight\n"
@@ -199,7 +200,9 @@ err:
 		}
 
 		if( pConv->IsOption( "Q" , OBConversion::OUTOPTIONS ) ) {
-			charge = atoi( pConv->IsOption( "Q", OBConversion::OUTOPTIONS) );
+			const char *charge_str = ( pConv->IsOption( "Q", OBConversion::OUTOPTIONS) );
+			if( charge_str[0] == 'q' ) { charge=atoi( charge_str+1 ); } 
+			else { charge=atoi( charge_str ); }
 			charge_set = true;
 		} 
 
