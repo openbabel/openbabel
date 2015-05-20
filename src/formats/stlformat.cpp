@@ -1,7 +1,7 @@
 //
 // STL Plugin for Open Babel
-// Copyright (C) 2015 M J Harvey, 
-// Acellera Ltd 
+// Copyright (C) 2015 M J Harvey,
+// Acellera Ltd
 // m.j.harvey ( at ) acellera.com
 //
 // This program is free software; you can redistribute it and/or
@@ -52,9 +52,11 @@ namespace OpenBabel
       STLFormat()
       {
         OpenBabel::OBConversion::RegisterFormat( "stl", this );
+        /*
         OBConversion::RegisterOptionParam("p", this, 1, OBConversion::OUTOPTIONS);
         OBConversion::RegisterOptionParam("s", this, 1, OBConversion::OUTOPTIONS);
         OBConversion::RegisterOptionParam("c", this, 1, OBConversion::OUTOPTIONS);
+        */
       }
 
       /// Return description.
@@ -150,8 +152,8 @@ namespace OpenBabel
 
   static uint16_t stl_colour( int atomicnum ) {
     // CPK colouring
-    // STL format: 5 bits per col, bit 15 set  
-#define COL( R,G,B ) ( 0x800 | (((R)&0x1F)<<10) | (((G)&0x1F)<<5) | ((B)&0x1F) ); 
+    // STL format: 5 bits per col, bit 15 set
+#define COL( R,G,B ) ( 0x800 | (((R)&0x1F)<<10) | (((G)&0x1F)<<5) | ((B)&0x1F) );
 
     switch( atomicnum ) {
       case 1:  return COL( 0x1F, 0x1F, 0x1F ); // H, WHITE
@@ -188,12 +190,12 @@ namespace OpenBabel
       os.write( (const char*) &tok1, 1);
 
       tok1=0;
-      for( int i=0; i < 70; i++ ) { 
+      for( int i=0; i < 70; i++ ) {
         os.write( (const char*) &tok1, 1);
       }
     }
     else {
-      for( int i=0; i < 80; i++ ) { 
+      for( int i=0; i < 80; i++ ) {
         os.write( (const char*) &tok1, 1);
       }
     }

@@ -1,7 +1,7 @@
 //
 // Point Cloud Plugin for Open Babel
-// Copyright (C) 2015 M J Harvey, 
-// Acellera Ltd 
+// Copyright (C) 2015 M J Harvey,
+// Acellera Ltd
 // m.j.harvey ( at ) acellera.com
 //
 // This program is free software; you can redistribute it and/or
@@ -52,11 +52,12 @@ namespace OpenBabel
       PointCloudFormat()
       {
         OpenBabel::OBConversion::RegisterFormat( "pointcloud", this );
+        /*
         OBConversion::RegisterOptionParam("r", this, 1, OBConversion::OUTOPTIONS);
         OBConversion::RegisterOptionParam("d", this, 1, OBConversion::OUTOPTIONS);
         OBConversion::RegisterOptionParam("p", this, 1, OBConversion::OUTOPTIONS);
         OBConversion::RegisterOptionParam("x", this, 1, OBConversion::OUTOPTIONS);
-
+        */
       }
 
       /// Return description.
@@ -128,7 +129,7 @@ namespace OpenBabel
   // Only add a point if it's more than densit_r away from all others
   bool conditional_add( vector<vector3> &list, vector3 point, double density_r ) {
 
-    double density_r2 = density_r * density_r; 
+    double density_r2 = density_r * density_r;
     for( std::vector<vector3>::iterator it = list.begin(); it != list.end(); it++ ) {
       vector3 r = *it - point;
       double r2 = dot(r,r);
@@ -149,7 +150,7 @@ namespace OpenBabel
     ostream& os = *pConv->GetOutStream();
 
     const char *radius_list_str  = NULL;
-    const char *density_list_str = NULL; 
+    const char *density_list_str = NULL;
     double probe_radius = 0.;
     bool format_xyz = false;
 
@@ -176,7 +177,7 @@ namespace OpenBabel
     vector<double> radius_mult_list;
     vector<double> density_list;
 
-    // Extract the any lists of radii and point densities   
+    // Extract the any lists of radii and point densities
     if( radius_list_str ) {
       char*a = strdup( radius_list_str );
       const char * x = strtok( a, "," );
@@ -215,7 +216,7 @@ namespace OpenBabel
 
 
         // for each atom generate a cloud of points
-        // on the atom-centred spherical surface r_VDW * radius_multiplier 
+        // on the atom-centred spherical surface r_VDW * radius_multiplier
         // ensuring each point is >= density_r from all others
         const double* c = a->GetCoordinate();
         double vdwrad   = probe_radius + ( etab.GetVdwRad( a->GetAtomicNum() ) * radius_mult );
@@ -226,14 +227,14 @@ namespace OpenBabel
         int count = 0;
         while ( count < estimate_number_of_points ) {
           vector3 p = surface_point( c[0], c[1], c[2], vdwrad );
-          if( conditional_add( pt, p, density_r ) ) { 
-            count++; 
+          if( conditional_add( pt, p, density_r ) ) {
+            count++;
             total_points++;
           }
         }
 
         // now cull any points on that surface that are within r_VDW * radius_multiplier
-        // of any other atom 
+        // of any other atom
         for( std::vector< vector3 >::iterator it = pt.begin(); it != pt.end(); it++ ) {
           bool exclude = false;
           FOR_ATOMS_OF_MOL( a, *pmol )
