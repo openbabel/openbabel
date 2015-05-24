@@ -22,6 +22,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/rotamer.h>
 #include <openbabel/phmodel.h>
+#include <openbabel/atomclass.h>
 #include <openbabel/bondtyper.h>
 #include <openbabel/builder.h>
 #include <openbabel/math/matrix3x3.h>
@@ -1878,6 +1879,16 @@ namespace OpenBabel
     return (true);
   }
 
+  // Convenience function used by the DeleteHydrogens methods
+  static bool IsSuppressibleHydrogen(OBAtom *atom, OBAtomClassData *pac)
+  {
+    if (atom->GetIsotope() == 0 && atom->GetHvyValence() == 1 && atom->GetFormalCharge() == 0
+        && (pac == NULL || !pac->HasClass(atom->GetIdx())))
+      return true;
+    else
+      return false;
+  }
+
   bool OBMol::DeletePolarHydrogens()
   {
     OBAtom *atom;
@@ -1888,8 +1899,12 @@ namespace OpenBabel
                           "Ran OpenBabel::DeleteHydrogens -- polar",
                           obAuditMsg);
 
+    OBAtomClassData *pac = NULL;
+    if (this->HasData("Atom Class"))
+      pac = static_cast<OBAtomClassData*>(this->GetData("Atom Class"));
+
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if (atom->IsPolarHydrogen() && atom->GetIsotope() == 0 && atom->GetHvyValence() == 1)
+      if (atom->IsPolarHydrogen() && IsSuppressibleHydrogen(atom, pac))
         delatoms.push_back(atom);
 
     if (delatoms.empty())
@@ -1918,8 +1933,13 @@ namespace OpenBabel
                           "Ran OpenBabel::DeleteHydrogens -- nonpolar",
                           obAuditMsg);
 
+    
+    OBAtomClassData *pac = NULL;
+    if (this->HasData("Atom Class"))
+      pac = static_cast<OBAtomClassData*>(this->GetData("Atom Class"));
+
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if (atom->IsNonPolarHydrogen() && atom->GetIsotope() == 0 && atom->GetHvyValence() == 1)
+      if (atom->IsNonPolarHydrogen() && IsSuppressibleHydrogen(atom, pac))
         delatoms.push_back(atom);
 
     if (delatoms.empty())
@@ -1958,8 +1978,12 @@ namespace OpenBabel
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::DeleteHydrogens", obAuditMsg);
 
+    OBAtomClassData *pac = NULL;
+    if (this->HasData("Atom Class"))
+      pac = static_cast<OBAtomClassData*>(this->GetData("Atom Class"));
+
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if (atom->IsHydrogen() && atom->GetIsotope()==0 && atom->GetHvyValence()==1)
+      if (atom->IsHydrogen() && IsSuppressibleHydrogen(atom, pac))
         delatoms.push_back(atom);
 
     UnsetHydrogensAdded();
@@ -1998,8 +2022,12 @@ namespace OpenBabel
     vector<OBBond*>::iterator k;
     vector<OBAtom*> delatoms;
 
+    OBAtomClassData *pac = NULL;
+    if (this->HasData("Atom Class"))
+      pac = static_cast<OBAtomClassData*>(this->GetData("Atom Class"));
+
     for (nbr = atom->BeginNbrAtom(k);nbr;nbr = atom->NextNbrAtom(k))
-      if (nbr->IsHydrogen() && nbr->GetIsotope() == 0 && nbr->GetHvyValence() == 1)
+      if (nbr->IsHydrogen() && IsSuppressibleHydrogen(atom, pac))
         delatoms.push_back(nbr);
 
     if (delatoms.empty())
