@@ -1,5 +1,6 @@
 #include "obtest.h"
 #include <openbabel/mol.h>
+#include <openbabel/atomclass.h>
 #include <openbabel/obconversion.h>
 
 #include <iostream>
@@ -45,6 +46,56 @@ void test_Issue134_InChI_addH()
   OB_COMPARE(res, "C[C@@H](N)O");
 }
 
+// Delete hydrogens should not remove charged or isotopic hydrogens or [H][H] or [Cu][H][Cu]
+// or hydrogens with assigned atom classes
+void test_Issue178_DeleteHydrogens()
+{
+  OBConversion conv;
+  conv.SetInFormat("smi");
+  OBMol mol;
+  // Test DeleteHydrogens() and DeleteNonPolarHydrogens()
+  static const char *smi[] = { "C[H]", "[H][H]", "C[1H]", "C[H]C", "C[H+]" };
+  int numHs[] = { 0, 2, 1, 1, 1 };
+  for (int i = 0; i < 5; ++i) {
+    for (int j = 0; j < 2; ++j) {
+      conv.ReadString(&mol, smi[i]);
+      if (j == 0)
+        mol.DeleteHydrogens();
+      else
+        mol.DeleteNonPolarHydrogens();
+      int myNumHs = 0;
+      FOR_ATOMS_OF_MOL(atom, mol)
+        if (atom->IsHydrogen())
+          myNumHs++;
+      OB_COMPARE(myNumHs, numHs[i]);
+    }
+  }
+  // Test DeletePolarHydrogens()
+  static const char *smiB[] = { "N[H]", "[H][H]", "N[1H]", "N[H]C", "N[H+]" };
+  int numHsB[] = { 0, 2, 1, 1, 1 };
+  for (int i = 0; i < 5; ++i) {
+    conv.ReadString(&mol, smiB[i]);
+    mol.DeletePolarHydrogens();
+    int myNumHs = 0;
+    FOR_ATOMS_OF_MOL(atom, mol)
+      if (atom->IsHydrogen())
+        myNumHs++;
+    OB_COMPARE(myNumHs, numHsB[i]);
+  }
+  // Test atom class
+  // Currently, the SMILES parser does not retain atom classes for hydrogens on reading so...
+  conv.ReadString(&mol, "C[H]");
+  OBAtomClassData *ac = new OBAtomClassData;
+  ac->Add(2, 99); // Assign the hydrogen (atom 2) a class of 99
+  mol.SetData(ac);
+  mol.DeleteHydrogens();
+  int myNumHs = 0;
+  FOR_ATOMS_OF_MOL(atom, mol)
+    if (atom->IsHydrogen())
+      myNumHs++;
+  OB_COMPARE(myNumHs, 1);
+}
+
 int regressionstest(int argc, char* argv[])
 {
   int defaultchoice = 1;
@@ -71,7 +122,10 @@ int regressionstest(int argc, char* argv[])
   case 221:
     test_Issue134_InChI_addH();
     break;
-  //case N:
+  case 222:
+    test_Issue178_DeleteHydrogens();
+    break;
+    //case N:
   //  YOUR_TEST_HERE();
   //  Remember to update CMakeLists.txt with the number of your test
   //  break;
