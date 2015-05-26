@@ -30,7 +30,9 @@ GNU General Public License for more details.
 #include <Eigen/SVD>
 
 #define TABLE_OF_ELEMENTS_SIZE 84 // Number of atoms in data/eqeqIonizations.txt
-#define PI 3.1415926535897932384626433832795 // 32 digist of pi
+#define PI 3.1415926535897932384626433832795 // 32 digits of pi
+
+static bool _paramFileLoaded = false; // Flipped after parameter file is loaded
 
 // The following constants are functionalized in EQeq's original implementation,
 // but rarely ever changed in practice.
