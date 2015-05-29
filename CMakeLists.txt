@@ -105,7 +105,6 @@ if(GLIBC_24_COMPATIBLE AND UNIX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--wrap=memcpy")
 endif()
 
-
 option(BUILD_SHARED "enable shared build support" ON)
 option(BUILD_MIXED "enable linux relocatable binaries support" OFF)
 option(WITH_STATIC_INCHI "enable static inchi and related plugins" OFF)
@@ -496,6 +495,16 @@ endif()
 if(MSVC)
   if (NOT JSON_LIBRARY)
     message(STATUS "JSON formats will NOT be built. To build, specify the location of the jsoncpp library with -DJSON_LIBRARY")
+  endif()
+endif()
+
+# Should we enable optimizations for the native architecture?
+# (this will speed up similarity calculations and maybe those involving Eigen)
+if(NOT MSVC)
+  option(OPTIMIZE_NATIVE "Optimize for native architecture. Turn off if cross-compiling." ON)
+  if(OPTIMIZE_NATIVE)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
+    message(STATUS "Optimizing code for this machine's architecture. Use -DOPTIMIZE_NATIVE=OFF if cross-compiling.")
   endif()
 endif()
 
