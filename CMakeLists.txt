@@ -458,6 +458,16 @@ else(CAIRO_FOUND)
   message(STATUS "Could NOT find Cairo. PNG output will NOT be supported.")
 endif(CAIRO_FOUND)
 
+# Should we enable optimizations for the native architecture?
+# (this will speed up similarity calculations and maybe those involving Eigen)
+if(NOT MSVC)
+  option(OPTIMIZE_NATIVE "Optimize for native architecture. Turn off if cross-compiling." ON)
+  if(OPTIMIZE_NATIVE)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
+    message(STATUS "Optimizing code for this machine's architecture. Use -DOPTIMIZE_NATIVE=OFF if cross-compiling.")
+  endif()
+endif()
+
 add_subdirectory(include)
 add_subdirectory(data)
 add_subdirectory(doc)
@@ -495,16 +505,6 @@ endif()
 if(MSVC)
   if (NOT JSON_LIBRARY)
     message(STATUS "JSON formats will NOT be built. To build, specify the location of the jsoncpp library with -DJSON_LIBRARY")
-  endif()
-endif()
-
-# Should we enable optimizations for the native architecture?
-# (this will speed up similarity calculations and maybe those involving Eigen)
-if(NOT MSVC)
-  option(OPTIMIZE_NATIVE "Optimize for native architecture. Turn off if cross-compiling." ON)
-  if(OPTIMIZE_NATIVE)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
-    message(STATUS "Optimizing code for this machine's architecture. Use -DOPTIMIZE_NATIVE=OFF if cross-compiling.")
   endif()
 endif()
 
