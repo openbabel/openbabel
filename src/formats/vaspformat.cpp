@@ -188,6 +188,7 @@ namespace OpenBabel {
     // Build unit cell
     OBUnitCell *cell = new OBUnitCell;
     cell->SetData(x_vec, y_vec, z_vec);
+    cell->SetSpaceGroup(1);
     pmol->SetData(cell);
 
     // Next comes either a list of numbers that represent the stoichiometry of
@@ -600,14 +601,31 @@ namespace OpenBabel {
       atomicNums.push_back(atom->GetAtomicNum());
     }
 
-    if (sortAtoms != NULL) {
+    if (sortAtoms != NULL) 
+    {
+      vector<string> vs;
+      tokenize(vs, sortAtoms);
+      map<int, int> nm_map;
+      for(size_t i = 0; i < vs.size(); ++i) 
+        nm_map[etab.GetAtomicNum(vs[i].c_str())] = i + 1;
+       
       // Sort the ids by atomic number
-      for (size_t i = 0; i < atomids.size() - 1; ++i) {
+      for (size_t i = 0; i < atomids.size() - 1; ++i) 
+      {
         unsigned int atomicNum_i = atomicNums[i];
-        for (size_t j = i+1; j < atomids.size(); ++j) {
+        
+        for (size_t j = i+1; j < atomids.size(); ++j) 
+        {
           unsigned int atomicNum_j = atomicNums[j];
-
-          if (atomicNum_j < atomicNum_i) {
+          
+          bool swap_d = false;
+          if( nm_map[atomicNum_j] != nm_map[atomicNum_i] )
+            swap_d = nm_map[atomicNum_j] < nm_map[atomicNum_i];
+          else
+            swap_d = atomicNum_j < atomicNum_i;
+                          
+          if ( swap_d )  
+          {
             swap(atomids[i], atomids[j]);
             swap(atomicNums[i], atomicNums[j]);
             swap(atomicNum_i, atomicNum_j);
