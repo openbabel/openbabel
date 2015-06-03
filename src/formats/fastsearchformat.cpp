@@ -481,12 +481,10 @@ virtual const char* Description() //required
       {
         clog << " Estimated completion time ";
         double secs = sw.Elapsed() * nmols / 400; //
-        streamsize op = clog.precision(0);
         if(secs>150)
           clog << secs/60 << " minutes" << endl;
     else
           clog << secs << " seconds" << endl;
-        clog.precision(op);
       }
     }
     else
