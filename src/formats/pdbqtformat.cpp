@@ -81,7 +81,9 @@ namespace OpenBabel
       "  r  Output as a rigid molecule (i.e. no branches or torsion tree)\n"
       "  c  Combine separate molecular pieces of input into a single rigid molecule (requires \"r\" option or will have no effect)\n"
       "  s  Output as a flexible residue\n"
-      "  p  Preserve atom indices from input file (default is to renumber atoms sequentially)\n\n";
+      "  p  Preserve atom indices from input file (default is to renumber atoms sequentially)\n"
+      "  h  Preserve hydrogens\n"
+			"  n  Preserve atom names\n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -778,7 +780,9 @@ namespace OpenBabel
 
     if (pConv->IsOption("b",OBConversion::OUTOPTIONS)) {mol.ConnectTheDots(); mol.PerceiveBondOrders();}
     vector <OBMol> all_pieces;
-    if ((pConv->IsOption("c",OBConversion::OUTOPTIONS)!=NULL) && (pConv->IsOption("r",OBConversion::OUTOPTIONS)!=NULL))
+    if ( ((pConv->IsOption("c",OBConversion::OUTOPTIONS)!=NULL) && (pConv->IsOption("r",OBConversion::OUTOPTIONS)!=NULL))
+			|| (pConv->IsOption("n",OBConversion::OUTOPTIONS))
+		)
     {
       mol.SetAutomaticPartialCharge(false);
       all_pieces.push_back(mol);
@@ -805,7 +809,9 @@ namespace OpenBabel
       }
 
       all_pieces.at(i).SetAutomaticPartialCharge(false);
-      DeleteHydrogens(all_pieces.at(i));
+      if (!(pConv->IsOption("h",OBConversion::OUTOPTIONS))) {
+      	DeleteHydrogens(all_pieces.at(i));
+			}
 
       int model_num = 0;
       char buffer[BUFF_SIZE];

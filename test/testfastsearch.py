@@ -50,6 +50,9 @@ c12[C]3([C@H]4([N@@](CCc1c1ccccc1[nH]2)C[C@H](C=C4CC)C3))C(=O)OC"""
         query = "Nc2nc(c1ccccc1)nc3ccccc23"
         output, error = run_exec("babel ten.fs -ifs -s %s -osmi" % query)
         self.assertConverted(error, 1)
+
+        output, error = run_exec("babel ten.fs -ifs -s %s -at 0.5 -aa -osmi" % query)
+        self.assertConverted(error, 1)
         
 
 

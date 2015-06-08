@@ -104,7 +104,7 @@ public:
     "/formula   formula only\n"
     "/connect   formula and connectivity only\n"
     "/nostereo  ignore E/Z and sp3 stereochemistry\n"
-    "/sp3       ignore sp3 stereochemistry\n"
+    "/nosp3       ignore sp3 stereochemistry\n"
     "/noEZ      ignore E/Z steroeochemistry\n"
     "/nochg     ignore charge and protonation\n"
     "/noiso     ignore isotopes\n\n"

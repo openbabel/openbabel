@@ -35,6 +35,7 @@ set(formats_compchem
       molproformat
       mopacformat
       nwchemformat
+      pointcloudformat
       pwscfformat
       qchemformat
       turbomoleformat
@@ -93,6 +94,7 @@ set(formats_misc
       pdbqtformat
       pqrformat
       shelxformat
+      stlformat
       thermoformat
       tinkerformat
       unichemformat

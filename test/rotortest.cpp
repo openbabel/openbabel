@@ -11,6 +11,18 @@
 using namespace std;
 using namespace OpenBabel;
 
+//! Comparison for doubles with a modulus: returns mod(a - b,m) < epsilon
+bool IsNear_mod(const double &a, const double &b, const double &m, const double epsilon)
+{
+  double arg=a-b;
+  while(arg<-m/2)
+    arg+=m;
+  while(arg>=m/2)
+    arg-=m;
+
+  return (fabs(arg) < epsilon);
+}
+
 void testOBRotorGetSet()
 {
   OBBond bond;
@@ -74,7 +86,7 @@ void testOBRotorSetToAngle()
     atoms[i] = (atoms[i] - 1) * 3;
   rotor.SetRotAtoms(atoms);
 
-  OB_ASSERT(IsNear(fabs(RAD_TO_DEG * rotor.CalcTorsion(mol->GetCoordinates())), 180.0, 1.0));
+  OB_ASSERT(IsNear_mod(fabs(RAD_TO_DEG * rotor.CalcTorsion(mol->GetCoordinates())), 180.0, 360.0, 1.0));
 
   // rotate
   rotor.SetToAngle(mol->GetCoordinates(), 60.0 * DEG_TO_RAD);
@@ -106,7 +118,7 @@ void testOBRotorSetRotor()
     atoms[i] = (atoms[i] - 1) * 3;
   rotor.SetRotAtoms(atoms);
 
-  OB_ASSERT(IsNear(fabs(RAD_TO_DEG * rotor.CalcTorsion(mol->GetCoordinates())), 180.0, 1.0));
+  OB_ASSERT(IsNear_mod(fabs(RAD_TO_DEG * rotor.CalcTorsion(mol->GetCoordinates())), 180.0, 360.0, 1.0));
   rotor.SetToAngle(mol->GetCoordinates(), 60.0 * DEG_TO_RAD);
 
   // set torsion values
@@ -120,7 +132,7 @@ void testOBRotorSetRotor()
   OB_ASSERT(IsNear(RAD_TO_DEG * rotor.CalcTorsion(mol->GetCoordinates()), 0.0, 1.0));
   // rotate to 3.1415 radians
   rotor.SetRotor(mol->GetCoordinates(), 1);
-  OB_ASSERT(IsNear(RAD_TO_DEG * rotor.CalcTorsion(mol->GetCoordinates()), 180.0, 1.0));
+  OB_ASSERT(IsNear_mod(RAD_TO_DEG * rotor.CalcTorsion(mol->GetCoordinates()), 180.0, 360.0, 1.0));
    // rotate to 0.0 radians
   rotor.SetRotor(mol->GetCoordinates(), 0, 1);
   OB_ASSERT(IsNear(RAD_TO_DEG * rotor.CalcTorsion(mol->GetCoordinates()), 0.0, 1.0)); 

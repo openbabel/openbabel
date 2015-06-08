@@ -4282,6 +4282,7 @@ namespace OpenBabel {
     tokenize(vs, inchi);
     MolConv.SetInFormat(pInChIFormat);
     success = MolConv.ReadString(mol, vs.at(0));
+    mol->DeleteData("inchi"); // Tidy up this side-effect
     return success;
   }
 

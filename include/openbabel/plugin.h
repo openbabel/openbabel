@@ -461,6 +461,7 @@ public:
 #ifdef HAVE_LIBZ
   OB_STATIC_PLUGIN(PNGFormat, thePNGFormat)
 #endif
+  OB_STATIC_PLUGIN(PointCloudFormat, thePointCloudFormat)
   OB_STATIC_PLUGIN(PovrayFormat, thePovrayFormat)
   OB_STATIC_PLUGIN(PQRFormat, thePQRFormat)
   OB_STATIC_PLUGIN(PQSFormat, thePQSFormat)
@@ -472,6 +473,7 @@ public:
   OB_STATIC_PLUGIN(RXNFormat, theRXNFormat)
   OB_STATIC_PLUGIN(ShelXFormat, theShelXFormat)
   OB_STATIC_PLUGIN(SMIFormat, theSMIFormat)
+  OB_STATIC_PLUGIN(STLFormat, theSTLFormat)
   OB_STATIC_PLUGIN(CANSMIFormat, theCANSMIFormat)
   OB_STATIC_PLUGIN(FIXFormat, theFIXFormat)
   OB_STATIC_PLUGIN(SVGFormat, theSVGFormat)
@@ -566,6 +568,7 @@ public:
   // charges
   OB_STATIC_PLUGIN(GasteigerCharges, theGasteigerCharges)
   OB_STATIC_PLUGIN(MMFF94Charges, theMMFF94Charges)
+  OB_STATIC_PLUGIN(NoCharges, theNoCharges)
 #ifdef HAVE_EIGEN
   OB_STATIC_PLUGIN(QEqCharges, theQEqCharges)
   OB_STATIC_PLUGIN(QTPIECharges, theQTPIECharges)
