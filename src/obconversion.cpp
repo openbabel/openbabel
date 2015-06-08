@@ -270,7 +270,7 @@ namespace OpenBabel {
     SkippedMolecules = o.SkippedMolecules;
     NeedToFreeInStream = o.NeedToFreeInStream;
     NeedToFreeOutStream = o.NeedToFreeOutStream;
-    pLineEndBuf    = o.pLineEndBuf;
+    pLineEndBuf    = o.pLineEndBuf; //questionable - dkoes
     pAuxConv       = NULL;
   }
   ///////////////////////////////////////////////
@@ -296,8 +296,10 @@ namespace OpenBabel {
       pOutStream=NULL;
       NeedToFreeOutStream = false;
     }
-//    delete pLineEndBuf;
-//   pLineEndBuf=NULL;
+
+    //there is an intentional memory leak here
+    pLineEndBuf = NULL;
+
   }
   //////////////////////////////////////////////////////
 
@@ -611,7 +613,6 @@ namespace OpenBabel {
           ReadyToInput=false; //stops any more objects being read
 
         rInlen = pInStream ? pInStream->tellg() - rInpos : 0;
-         // - (pLineEndBuf ? pLineEndBuf->getCorrection() : 0); //correction for CRLF
 
         if(pOb)
           {

@@ -10,6 +10,7 @@ else(MINIMAL_BUILD)
         obconformer
         obenergy
         obfit
+	obfitall
         obgen
         obminimize
         obprobe
