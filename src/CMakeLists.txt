@@ -226,9 +226,9 @@ else(WIN32)
     endif(HAVE_LIBDL)
   endif(BUILD_SHARED)
 
-  if(ZLIB_FOUND)
-    set(libs ${libs} ${ZLIB_LIBRARY})
-  endif(ZLIB_FOUND)
+  if(Boost_FOUND)
+    set(libs ${libs} ${Boost_LIBRARIES})
+  endif(Boost_FOUND)
 endif(WIN32)
 
 add_library(openbabel ${BUILD_TYPE}

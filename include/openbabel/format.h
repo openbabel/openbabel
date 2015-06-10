@@ -148,6 +148,9 @@ std::cerr << "Not a valid input format"; return false;}
 
     static OBFormat* FormatFromMIME(const char* MIME);
 
+    enum CompressionType {NONE,GZIP}; //someday we will support bzip2
+    virtual CompressionType GetCompression() const { return compression; }
+    virtual void SetCompression(CompressionType val) { compression = val; }
 private:
     static PluginMapType &FormatsMIMEMap()
     {
@@ -156,7 +159,7 @@ private:
     }
 
     const char* pMime;
-
+    CompressionType compression;
 /* Functions provided by the MAKE_PLUGIN macro
 
   ///Constructor that registers the ID of the format

@@ -166,15 +166,11 @@ if(NOT LIBXML2_FOUND)
   message(WARNING "libxml2 not found - disabling CML support!")
 endif()
 
-find_package(ZLIB)
-if(ZLIB_FOUND)
-  add_definitions(-DHAVE_LIBZ)
-  include_directories(${ZLIB_INCLUDE_DIR})
-  # Longstanding unsolved problem with compression under Windows
-  if(WIN32)
-    add_definitions(-DDISABLE_WRITE_COMPRESSION)
-  endif()
+find_package(Boost 1.36.0 COMPONENTS iostreams)
+if(Boost_FOUND)
+  include_directories(${Boost_INCLUDE_DIRS})
 endif()
+
 
 # wxWidgets instructions based on http://wiki.wxwidgets.org/CMake
 #find_package(wxWidgets COMPONENTS base core REQUIRED)

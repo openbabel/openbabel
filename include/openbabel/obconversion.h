@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <cassert>
 
 #include <string>
 #include <vector>
@@ -95,25 +96,16 @@ namespace OpenBabel {
       static const char* Description(); //generic conversion options
       //@}
 
+      /// These return a filtered stream for reading/writing (possible filters include compression, decompression, and newline transformation)
       /// @name Parameter get and set
       //@{
-      std::istream* GetInStream() const {return pInStream;};
-      std::ostream* GetOutStream() const {return pOutStream;};
-      void          SetInStream(std::istream* pIn)
-        {
-          if (pInStream && NeedToFreeInStream) {
-            delete pInStream; NeedToFreeInStream = false;
-          }
-          pInStream=pIn;
-          CheckedForGzip = false; // haven't tried to gzip decode this stream
-        };
-      void          SetOutStream(std::ostream* pOut)
-        {
-          if (pOutStream && NeedToFreeOutStream) {
-            delete pOutStream; NeedToFreeOutStream = false;
-          }
-          pOutStream=pOut;
-        };
+      std::istream* GetInStream() const {return pInput;};
+      std::ostream* GetOutStream() const {return pOutput;};
+
+      /// @brief Set input stream.  If takeOwnership is true, will deallocate when done.
+      void          SetInStream(std::istream* pIn, bool takeOwnership=false);
+      void          SetOutStream(std::ostream* pOut, bool takeOwnership=false);
+
       /// Sets the formats from their ids, e g CML
       bool        SetInAndOutFormats(const char* inID, const char* outID);
       bool        SetInAndOutFormats(OBFormat* pIn, OBFormat* pOut);
@@ -298,6 +290,7 @@ namespace OpenBabel {
       /// Part of "API" interface.
       /// \return false and pOb=NULL on error
       /// This method is primarily intended for scripting languages without "stream" classes
+      /// Any existing input stream will be replaced by stringstream.
       bool	ReadString(OBBase* pOb, std::string input);
 
       /// @brief Reads an object of a class derived from OBBase into pOb from the file specified
@@ -336,22 +329,47 @@ protected:
       static std::string IncrementedFileName(std::string& BaseName, const int Count);
       ///Checks for misunderstandings when using the -m option
       static bool CheckForUnintendedBatch(const std::string& infile, const std::string& outfile);
-      ///Adds a filtering rdbuffer to handle line endings if not already installed and not a binary or xml format.
-      void InstallStreamFilter();
 
+      void ClearInStreams();
       //@}
 
     protected:
+
+      //helper class for saving stream state
+      struct StreamState
+      {
+          std::ios *pStream; //active stream
+          std::vector<std::ios *> ownedStreams; //streams we own the memory to
+
+          StreamState(): pStream(NULL) {}
+          ~StreamState()
+          {
+            assert(ownedStreams.size() == 0); //should be popped
+          }
+
+          void pushOutput(OBConversion& conv);
+          void popOutput(OBConversion& conv);
+      };
+
       bool             SetStartAndEnd();
 //      static FMapType& FormatsMap();///<contains ID and pointer to all OBFormat classes
 //      static FMapType& FormatsMIMEMap();///<contains MIME and pointer to all OBFormat classes
       typedef std::map<std::string,int> OPAMapType;
       static OPAMapType& OptionParamArray(Option_type typ);
       bool             OpenAndSetFormat(bool SetFormat, std::ifstream* is, std::stringstream* ss=NULL);
+      bool             LooksLikeGZip(std::istream *pIn) const;
 
       std::string	  InFilename, OutFilename; //OutFileName added v2.4.0
-      std::istream*     pInStream;
-      std::ostream*     pOutStream;
+
+      typedef   FilteringInputStream< LineEndingExtractor > LEInStream;
+
+      std::istream *pInput; //input stream, may be filtered
+      std::vector<std::istream *> ownedInStreams; //streams we own the memory to
+
+      std::ostream *pOutput; //output stream, may have filters applied
+      std::vector<std::ostream *> ownedOutStreams; //streams we own the memory to
+
+
       static OBFormat*  pDefaultFormat;
       OBFormat* 	  pInFormat;
       OBFormat*	  pOutFormat;
@@ -367,12 +385,8 @@ protected:
       bool		  MoreFilesToCome;
       bool		  OneObjectOnly;
       bool		  ReadyToInput;
-      bool      CheckedForGzip;      ///< input stream is gzip-encoded
       bool      SkippedMolecules;    /// skip molecules using -f and -l
-      bool      NeedToFreeInStream;
-      bool      NeedToFreeOutStream;
-      typedef   FilteringInputStreambuf< LineEndingExtractor > LErdbuf;
-      LErdbuf*  pLineEndBuf;
+
 
       OBBase*		  pOb1;
       std::streampos wInpos; ///<position in the input stream of the object being written

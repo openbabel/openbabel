@@ -186,6 +186,24 @@ public:
   void finalize( std::streambuf& ) {}
 };
 
+/*! \class FilteringInputStream lineend.h <openbabel/lineend.h>
+  \brief A stream interface for FilteringInputStreambuf
+  */
+template <class Extractor >
+class  FilteringInputStream :
+    public FilteringInputStreambuf<Extractor>,
+    public std::istream
+{
+public:
+    typedef std::istream& istream_reference;
+    typedef std::istream istream_type;
+
+    explicit FilteringInputStream(istream_reference istream):
+        FilteringInputStreambuf<Extractor>(istream.rdbuf()),std::istream(this) {}
+    virtual ~FilteringInputStream() {}
+
+};
+
 } //namespace
 
 #endif //OB_LINEEND_H
