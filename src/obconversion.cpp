@@ -254,6 +254,10 @@ namespace OpenBabel {
     //the original obconversion retains ownership of any allocated streams
     //this means if the original gets destroyed, bad things may happen
     //by doing this first, format isn't initialized, so we add no additional filters
+    pInFormat = NULL;
+    inFormatGzip = false;
+    pOutFormat = NULL;
+    outFormatGzip = false;
     SetInStream(o.pInput, false);
     SetOutStream(o.pOutput, false);
 
@@ -262,7 +266,9 @@ namespace OpenBabel {
     StartNumber    = o.StartNumber;
     EndNumber      = o.EndNumber;
     pInFormat      = o.pInFormat;
+    inFormatGzip   = o.inFormatGzip;
     pOutFormat     = o.pOutFormat;
+    outFormatGzip  = o.outFormatGzip;
     OptionsArray[0]= o.OptionsArray[0];
     OptionsArray[1]= o.OptionsArray[1];
     OptionsArray[2]= o.OptionsArray[2];
@@ -346,6 +352,9 @@ namespace OpenBabel {
 
   /// Set output stream, removing/deallocating previous stream if necessary.
   /// If takeOwnership is true, takes responsibility for freeing pOut
+  /// Be aware that if the output stream is gzipped format, then this outstream
+  /// either needs to be replaced (e.g., SetOutStream(NULL)) or the OBConversion
+  /// destroyed before the underlying outputstream is deallocated.
   void OBConversion::SetOutStream(std::ostream* pOut, bool takeOwnership)
   {
     //clear and deallocate any existing streams
@@ -367,7 +376,8 @@ namespace OpenBabel {
       if (IsOption("z", GENOPTIONS) || outFormatGzip)
       {
         zlib_stream::zip_ostream *zOut = new zlib_stream::zip_ostream(*pOutput, true);
-        ownedOutStreams.push_back(zOut);
+        //we need to delete the zstream _before_ the underlying stream so it can add the footer
+        ownedOutStreams.insert(ownedOutStreams.begin(),zOut);
         pOutput = zOut;
       }
 #endif
@@ -426,13 +436,27 @@ namespace OpenBabel {
 
   //////////////////////////////////////////////////////
   /// Convert molecules from is into os.  If either is null, uses existing streams.
-  /// Unlike other methods that take a stream, if a stream is specified, it does _not_ replace the existing stream.
+  /// If streams are specified, they do _not_ replace any existing streams.
   int OBConversion::Convert(istream* is, ostream* os)
   {
-    if (is) SetInStream(is, false);
-    if (os) SetOutStream(os, false);
+    StreamState savedIn, savedOut;
+    if (is)
+    {
+      savedIn.pushInput(*this);
+      SetInStream(is, false);
+    }
+
+    if (os)
+    {
+      savedOut.pushOutput(*this);
+      SetOutStream(os, false);
+    }
 
     int count = Convert();
+
+    if(savedIn.isSet()) savedIn.popInput(*this);
+    if(savedOut.isSet()) savedOut.popOutput(*this);
+
     return count;
   }
 
@@ -785,9 +809,7 @@ namespace OpenBabel {
       {
         inFormatGzip = true;
       }
-
-       SetInStream(pin, false);
-
+      SetInStream(pin, false);
     }
 
     if(!pInFormat || !pInput) return false;
@@ -860,6 +882,37 @@ namespace OpenBabel {
     pOutput->imbue(originalLocale);
 
     return success;
+  }
+
+  //save the current input state to this streamstate and clear conv
+  void OBConversion::StreamState::pushInput(OBConversion& conv)
+  {
+    assert(ownedStreams.size() == 0); //should be empty
+
+    pStream = conv.pInput;
+    std::copy(conv.ownedInStreams.begin(), conv.ownedInStreams.end(), std::back_inserter(ownedStreams));
+
+    conv.pInput = NULL;
+    conv.ownedInStreams.clear();
+  }
+
+  //restore state, blowing away whatever is in conv
+  void OBConversion::StreamState::popInput(OBConversion& conv)
+  {
+    conv.SetInStream(NULL);
+    conv.pInput =  dynamic_cast<std::istream*>(pStream);
+
+    assert(conv.ownedInStreams.size() == 0); //should be empty
+
+    for(unsigned i = 0, n = conv.ownedInStreams.size(); i < n; i++)
+    {
+      std::istream *s = dynamic_cast<std::istream*>(conv.ownedInStreams[i]);
+      assert(s);
+      conv.ownedInStreams.push_back(s);
+    }
+
+    pStream = NULL;
+    ownedStreams.clear();
   }
 
   //save the current output state to this streamstate and clear conv

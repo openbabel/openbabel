@@ -326,6 +326,7 @@ namespace OpenBabel
     //@todo worry about non-ascii coding
     XMLConversion* pConv = static_cast<XMLConversion*>(context);
     istream* ifs = pConv->GetInStream();
+
     if(!ifs->good() || ifs->eof())
       return 0;
 

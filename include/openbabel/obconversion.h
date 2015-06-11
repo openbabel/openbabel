@@ -351,8 +351,13 @@ protected:
             assert(ownedStreams.size() == 0); //should be popped
           }
 
+          void pushInput(OBConversion& conv);
+          void popInput(OBConversion& conv);
+
           void pushOutput(OBConversion& conv);
           void popOutput(OBConversion& conv);
+
+          bool isSet() const { return pStream != NULL; }
       };
 
       bool             SetStartAndEnd();
