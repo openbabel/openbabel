@@ -79,9 +79,11 @@ namespace OpenBabel {
       static OBFormat*  FindFormat(const std::string ID);
       /// @brief Searches registered formats for an ID the same as the file extension
       static OBFormat*	FormatFromExt(const char* filename);
+      static OBFormat*	FormatFromExt(const char* filename, bool& isgzip);
       /// @brief Searches registered formats for an ID the same as the file extension
       /// \since version 2.3
       static OBFormat*	FormatFromExt(const std::string filename);
+      static OBFormat*	FormatFromExt(const std::string filename, bool& isgzip);
       /// @brief Searches registered formats for a MIME the same as the chemical MIME type passed
       static OBFormat*        FormatFromMIME(const char* MIME);
 
@@ -103,18 +105,20 @@ namespace OpenBabel {
       std::ostream* GetOutStream() const {return pOutput;};
 
       /// @brief Set input stream.  If takeOwnership is true, will deallocate when done.
+      /// If isGzipped is true, will treat as a gzipped stream regardless of option settings,
+      //  if false, then will be treated as gzipped stream only if z/zin is set.
       void          SetInStream(std::istream* pIn, bool takeOwnership=false);
       void          SetOutStream(std::ostream* pOut, bool takeOwnership=false);
 
       /// Sets the formats from their ids, e g CML
-      bool        SetInAndOutFormats(const char* inID, const char* outID);
-      bool        SetInAndOutFormats(OBFormat* pIn, OBFormat* pOut);
+      bool        SetInAndOutFormats(const char* inID, const char* outID, bool ingzip=false, bool outgzip=false);
+      bool        SetInAndOutFormats(OBFormat* pIn, OBFormat* pOut, bool ingzip=false, bool outgzip=false);
       /// Sets the input format from an id e.g. CML
-      bool	      SetInFormat(const char* inID);
-      bool	      SetInFormat(OBFormat* pIn);
+      bool	      SetInFormat(const char* inID, bool isgzip=false);
+      bool	      SetInFormat(OBFormat* pIn, bool isgzip=false);
       /// Sets the output format from an id e.g. CML
-      bool	      SetOutFormat(const char* outID);
-      bool	      SetOutFormat(OBFormat* pOut);
+      bool	      SetOutFormat(const char* outID, bool isgzip=false);
+      bool	      SetOutFormat(OBFormat* pOut, bool isgzip=false);
 
       OBFormat*   GetInFormat() const{return pInFormat;};
       OBFormat*   GetOutFormat() const{return pOutFormat;};
@@ -357,7 +361,6 @@ protected:
       typedef std::map<std::string,int> OPAMapType;
       static OPAMapType& OptionParamArray(Option_type typ);
       bool             OpenAndSetFormat(bool SetFormat, std::ifstream* is, std::stringstream* ss=NULL);
-      bool             LooksLikeGZip(std::istream *pIn) const;
 
       std::string	  InFilename, OutFilename; //OutFileName added v2.4.0
 
@@ -387,6 +390,10 @@ protected:
       bool		  ReadyToInput;
       bool      SkippedMolecules;    /// skip molecules using -f and -l
 
+      //these are set to true if there are indications that a stream is gzipped (e.g., .gz extension)
+      //unlike the z and zin options, these are not sticky - setting formats or reading/writing different streams will reset them
+      bool gzipInDetected;
+      bool gzipOutDetected;
 
       OBBase*		  pOb1;
       std::streampos wInpos; ///<position in the input stream of the object being written

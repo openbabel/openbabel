@@ -166,11 +166,15 @@ if(NOT LIBXML2_FOUND)
   message(WARNING "libxml2 not found - disabling CML support!")
 endif()
 
-find_package(Boost 1.36.0 COMPONENTS iostreams)
-if(Boost_FOUND)
-  include_directories(${Boost_INCLUDE_DIRS})
+find_package(ZLIB)
+if(ZLIB_FOUND)
+  add_definitions(-DHAVE_LIBZ)
+  include_directories(${ZLIB_INCLUDE_DIR})
+  # Longstanding unsolved problem with compression under Windows
+  if(WIN32)
+    add_definitions(-DDISABLE_WRITE_COMPRESSION)
+  endif()
 endif()
-
 
 # wxWidgets instructions based on http://wiki.wxwidgets.org/CMake
 #find_package(wxWidgets COMPONENTS base core REQUIRED)
@@ -413,7 +417,7 @@ endif()
 if(CMAKE_COMPILER_IS_GNUCXX)
   set (CMAKE_CXX_FLAGS_RELEASE        "${CMAKE_CXX_FLAGS_RELEASE} -O2 -DNDEBUG")
   set (CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -O2 -g")
-  set (CMAKE_CXX_FLAGS_DEBUG          "${CMAKE_CXX_FLAGS_DEBUG} -g3 -fno-inline")
+  set (CMAKE_CXX_FLAGS_DEBUG          "${CMAKE_CXX_FLAGS_DEBUG} -D_GLIBCXX_DEBUG -g3 -fno-inline")
 endif()
 
 file(GLOB_RECURSE headers include/openbabel/*.h)
