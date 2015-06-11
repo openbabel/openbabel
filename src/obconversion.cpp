@@ -237,7 +237,7 @@ namespace OpenBabel {
     pInFormat(NULL),pOutFormat(NULL), Index(0), StartNumber(1),
     EndNumber(0), Count(-1), m_IsFirstInput(true), m_IsLast(true),
     MoreFilesToCome(false), OneObjectOnly(false), SkippedMolecules(false),
-    gzipInDetected(false), gzipOutDetected(true),
+    inFormatGzip(false), outFormatGzip(false),
     pOb1(NULL), pAuxConv(NULL),wInpos(0),wInlen(0)
   {
    	SetInStream(is);
@@ -326,7 +326,7 @@ namespace OpenBabel {
           pInput = pIn; //simplest case
 
   #ifdef HAVE_LIBZ
-          if(IsOption("zin", GENOPTIONS) || gzipInDetected)
+          if(IsOption("zin", GENOPTIONS) || inFormatGzip)
           {
             zlib_stream::zip_istream *zIn = new zlib_stream::zip_istream(*pInput);
             ownedInStreams.push_back(zIn);
@@ -364,7 +364,7 @@ namespace OpenBabel {
 
 #ifdef HAVE_LIBZ
 
-      if (IsOption("z", GENOPTIONS) || gzipOutDetected)
+      if (IsOption("z", GENOPTIONS) || outFormatGzip)
       {
         zlib_stream::zip_ostream *zOut = new zlib_stream::zip_ostream(*pOutput, true);
         ownedOutStreams.push_back(zOut);
@@ -393,7 +393,7 @@ namespace OpenBabel {
   //////////////////////////////////////////////////////
   bool OBConversion::SetInFormat(OBFormat* pIn, bool gzip)
   {
-    gzipInDetected = gzip;
+    inFormatGzip = gzip;
     if(pIn==NULL)
       return true;
     pInFormat=pIn;
@@ -402,14 +402,14 @@ namespace OpenBabel {
   //////////////////////////////////////////////////////
   bool OBConversion::SetOutFormat(OBFormat* pOut, bool gzip)
   {
-    gzipOutDetected = gzip;
+    outFormatGzip = gzip;
     pOutFormat=pOut;
     return pOut && !(pOutFormat->Flags() & NOTWRITABLE);
   }
   //////////////////////////////////////////////////////
   bool OBConversion::SetInFormat(const char* inID, bool gzip)
   {
-    gzipInDetected = gzip;
+    inFormatGzip = gzip;
     if(inID)
       pInFormat = FindFormat(inID);
     return pInFormat && !(pInFormat->Flags() & NOTREADABLE);
@@ -418,7 +418,7 @@ namespace OpenBabel {
 
   bool OBConversion::SetOutFormat(const char* outID, bool gzip)
   {
-    gzipOutDetected = gzip;
+    outFormatGzip = gzip;
     if(outID)
       pOutFormat= FindFormat(outID);
     return pOutFormat && !(pOutFormat->Flags() & NOTWRITABLE);
@@ -783,7 +783,7 @@ namespace OpenBabel {
       //for backwards compatibility, attempt to detect a gzip file
       if(pInFormat && zlib_stream::isGZip(*pin))
       {
-        gzipInDetected = true;
+        inFormatGzip = true;
       }
 
        SetInStream(pin, false);
@@ -932,7 +932,7 @@ namespace OpenBabel {
     if(!pOutFormat)
     {
       //attempt to autodetect format
-      pOutFormat = FormatFromExt(filePath.c_str(), gzipOutDetected);
+      pOutFormat = FormatFromExt(filePath.c_str(), outFormatGzip);
       if(!pOutFormat)
         return false;
     }
@@ -969,7 +969,7 @@ namespace OpenBabel {
     if(!pInFormat)
     {
       //attempt to auto-detect file format from extension
-      pInFormat = FormatFromExt(filePath.c_str(), gzipInDetected);
+      pInFormat = FormatFromExt(filePath.c_str(), inFormatGzip);
       if(!pInFormat)
         return false;
     }
@@ -1339,7 +1339,7 @@ namespace OpenBabel {
                     if(pInFormat && zlib_stream::isGZip(*pIs))
                     {
                       //for backwards compat, attempt to autodetect gzip
-                      gzipInDetected = true;
+                      inFormatGzip = true;
                     }
                     SetInStream(pIs, false);
 

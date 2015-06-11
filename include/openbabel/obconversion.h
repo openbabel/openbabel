@@ -390,10 +390,9 @@ protected:
       bool		  ReadyToInput;
       bool      SkippedMolecules;    /// skip molecules using -f and -l
 
-      //these are set to true if there are indications that a stream is gzipped (e.g., .gz extension)
-      //unlike the z and zin options, these are not sticky - setting formats or reading/writing different streams will reset them
-      bool gzipInDetected;
-      bool gzipOutDetected;
+      //unlike the z and zin options, these are not sticky - setting formats will reset them
+      bool inFormatGzip;
+      bool outFormatGzip;
 
       OBBase*		  pOb1;
       std::streampos wInpos; ///<position in the input stream of the object being written
