@@ -251,6 +251,12 @@ namespace OpenBabel {
   /////////////////////////////////////////////////
   OBConversion::OBConversion(const OBConversion& o)
   {
+    *this = o;
+  }
+
+
+  OBConversion& OBConversion::operator=(const OBConversion& o)
+  {
     //the original obconversion retains ownership of any allocated streams
     //this means if the original gets destroyed, bad things may happen
     //by doing this first, format isn't initialized, so we add no additional filters

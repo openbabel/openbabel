@@ -64,8 +64,11 @@ namespace OpenBabel {
       /// @name Construction
       //@{
       OBConversion(std::istream* is=NULL, std::ostream* os=NULL);
-      /// @brief Copy constructor
+      /// @brief Copy constructor.  Stream *ownership* is not copied. Source remains responsible for the memory.
       OBConversion(const OBConversion& o);
+      /// @brief Assignment.  Stream *ownership* is not copied.  Source remains responsible for the memory.
+      OBConversion& operator=(const OBConversion& rhs);
+
       virtual     ~OBConversion();
       //@}
       /// @name Collection of formats
