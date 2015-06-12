@@ -290,7 +290,7 @@ namespace OpenBabel {
     ReadyToInput   = o.ReadyToInput;
     m_IsFirstInput = o.m_IsFirstInput;
     SkippedMolecules = o.SkippedMolecules;
-    pAuxConv       = NULL;
+    pAuxConv       = o.pAuxConv;
   }
   ///////////////////////////////////////////////
 
