@@ -60,9 +60,7 @@ namespace OpenBabel
   {
   public:
     FilteringInputStreambuf(
-      std::streambuf*        source = NULL ,
-      bool                   deleteWhenFinished = false
-      ) ;
+      std::istream*        source = NULL) ;
     virtual                 ~FilteringInputStreambuf()
     {
       //sync(); comment out so can be deleted in OBConversion destructor
@@ -75,7 +73,9 @@ namespace OpenBabel
     virtual std::streampos   seekoff(std::streamoff off, std::ios_base::seekdir way,
       std::ios_base::openmode which = std::ios_base::in | std::ios_base::out )
     {
-      std::streampos ret = mySource->pubseekoff(off, way, which);
+      setg( NULL , NULL , NULL ) ; //ensure next character is from new position
+      mySource->seekg(off, way);
+      std::streampos ret = mySource->tellg();
 //      sync();
       return ret;
     };
@@ -83,19 +83,21 @@ namespace OpenBabel
     virtual std::streampos   seekpos(std::streampos sp,
       std::ios_base::openmode which = std::ios_base::in | std::ios_base::out )
     {
-      std::streampos ret = mySource->pubseekpos(sp, which);
+      setg( NULL , NULL , NULL ) ;
+      mySource->seekg(sp);
+      std::streampos ret = mySource->tellg();
 //      sync();
       return ret;
     };
 
     /// Returns current source.
-    std::streambuf* GetSource()const
+    std::istream* GetSource()const
     {
       return mySource;
     };
 
     ///Changes the source
-    void SetSource(std::streambuf* newsource)
+    void SetSource(std::istream* newsource)
     {
       mySource = newsource;
       setg( &myBuffer , &myBuffer , &myBuffer + 1 ) ;
@@ -104,18 +106,16 @@ namespace OpenBabel
 //    Extractor&   extractor() {return myExtractor;};
 
   private:
-    std::streambuf*          mySource ;
+    std::istream*          mySource ;
     Extractor                myExtractor ;
     char                     myBuffer ;
-    bool                     myDeleteWhenFinished ;
   } ;
 
 //*******************************************************
   template< class Extractor >
   FilteringInputStreambuf< Extractor >::FilteringInputStreambuf(
-    std::streambuf*        source ,
-    bool                   deleteWhenFinished)
-    : mySource(source), myDeleteWhenFinished(deleteWhenFinished)
+    std::istream*        source )
+    : mySource(source)
   {
     setg( &myBuffer , &myBuffer , &myBuffer ) ;
   }
@@ -151,12 +151,11 @@ namespace OpenBabel
     if ( mySource != NULL )
     {
       if ( gptr() < egptr() )
-      {
-        result = mySource->sputbackc( *gptr() ) ;
-        setg( NULL , NULL , NULL ) ;
+      { //have read something but not provided it
+        mySource->putback(*gptr() ) ;
+        setg( &myBuffer , &myBuffer , &myBuffer ) ;
       }
-      if ( mySource->pubsync() == EOF )
-          result = EOF ;
+      result = mySource->sync();
     }
     return result ;
   }
@@ -167,14 +166,14 @@ namespace OpenBabel
 class OBCONV LineEndingExtractor
 {
 public:
-  int operator()( std::streambuf& src )
+  int operator()( std::istream& src )
   {
-    int ch( src.sbumpc() ) ;
+    int ch( src.get() ) ;
     switch (ch)
     {
       case 13: //CR or CRLF
-        if(src.sgetc() == 10)
-          src.sbumpc(); //CRLF
+        if(src.peek() == 10)
+          src.get(); //CRLF
         //fall through
       case 10: //LF
         return '\n';
@@ -191,7 +190,7 @@ public:
   */
 template <class Extractor >
 class  FilteringInputStream :
-    public FilteringInputStreambuf<Extractor>,
+    virtual private FilteringInputStreambuf<Extractor>,
     public std::istream
 {
 public:
@@ -199,7 +198,7 @@ public:
     typedef std::istream istream_type;
 
     explicit FilteringInputStream(istream_reference istream):
-        FilteringInputStreambuf<Extractor>(istream.rdbuf()),std::istream(this) {}
+        FilteringInputStreambuf<Extractor>(&istream),std::istream(this) {}
     virtual ~FilteringInputStream() {}
 
 };

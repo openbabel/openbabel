@@ -103,7 +103,7 @@ int charge_mmff94(int argc, char* argv[])
         mol.Clear();
         conv.Read(&mol);
         if (mol.Empty())
-          continue;
+          continue; //dkoes - this should totally be break
         if (!difs.getline(buffer,BUFF_SIZE))
           {
             cout << "Bail out! error reading reference data" << endl;
