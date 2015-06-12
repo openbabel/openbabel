@@ -812,7 +812,14 @@ namespace OpenBabel {
       SetInStream(pin, false);
     }
 
+
     if(!pInFormat || !pInput) return false;
+
+    //mysterious line to ensure backwards compatibility
+    //previously, even an open istream would have the gzip check applied
+    //this meant that a stream at the eof position would end up in an error state
+    //code has come to depend on this behavior
+    if(pInput->eof()) pInput->get();
 
     // Set the locale for number parsing to avoid locale issues: PR#1785463
     obLocale.SetLocale();
