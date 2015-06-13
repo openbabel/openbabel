@@ -73,7 +73,7 @@ namespace OpenBabel
     virtual std::streampos   seekoff(std::streamoff off, std::ios_base::seekdir way,
       std::ios_base::openmode which = std::ios_base::in | std::ios_base::out )
     {
-      setg( NULL , NULL , NULL ) ; //ensure next character is from new position
+      setg(  &myBuffer , &myBuffer , &myBuffer  ) ; //ensure next character is from new position
       mySource->seekg(off, way);
       std::streampos ret = mySource->tellg();
 //      sync();
@@ -83,7 +83,10 @@ namespace OpenBabel
     virtual std::streampos   seekpos(std::streampos sp,
       std::ios_base::openmode which = std::ios_base::in | std::ios_base::out )
     {
-      setg( NULL , NULL , NULL ) ;
+      setg(  &myBuffer , &myBuffer , &myBuffer  ) ;
+      //slight hack - if mySource has read past the end, won't let us seek
+      //and there's no good way to propagate a clear to the original stream
+      mySource->clear();
       mySource->seekg(sp);
       std::streampos ret = mySource->tellg();
 //      sync();
