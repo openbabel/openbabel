@@ -248,6 +248,23 @@ namespace OpenBabel {
     RegisterOptionParam("l", NULL, 1,GENOPTIONS);
   }
 
+  /// Convenience constructor.  Sets up streams from specified files.
+  /// If format can not be determined from filename, a stream is not opened.
+  OBConversion::OBConversion(string infile, string outfile):
+        pInput(NULL), pOutput(NULL),
+        pInFormat(NULL),pOutFormat(NULL), Index(0), StartNumber(1),
+        EndNumber(0), Count(-1), m_IsFirstInput(true), m_IsLast(true),
+        MoreFilesToCome(false), OneObjectOnly(false), SkippedMolecules(false),
+        inFormatGzip(false), outFormatGzip(false),
+        pOb1(NULL), pAuxConv(NULL),wInpos(0),wInlen(0)
+  {
+    //These options take a parameter
+    RegisterOptionParam("f", NULL, 1,GENOPTIONS);
+    RegisterOptionParam("l", NULL, 1,GENOPTIONS);
+
+    OpenInAndOutFiles(infile, outfile);
+  }
+
   /////////////////////////////////////////////////
   OBConversion::OBConversion(const OBConversion& o)
   {
@@ -826,7 +843,7 @@ namespace OpenBabel {
     //this meant that a stream at the eof position would end up in an error state
     //code has come to depend on this behavior
     if(pInput->eof()) pInput->get();
-
+cout << pInput->tellg() << " " << pInput->eof() << "\n";
     // Set the locale for number parsing to avoid locale issues: PR#1785463
     obLocale.SetLocale();
 
@@ -994,7 +1011,6 @@ namespace OpenBabel {
   /// Returns true if successful.
   bool OBConversion::WriteFile(OBBase* pOb, string filePath)
   {
-    bool isgzip = false;
     if(!pOutFormat)
     {
       //attempt to autodetect format
@@ -1058,6 +1074,12 @@ namespace OpenBabel {
   ////////////////////////////////////////////
   bool OBConversion::OpenInAndOutFiles(std::string infilepath, std::string outfilepath)
   {
+
+    if(!pInFormat)
+    {
+      //attempt to auto-detect file format from extension
+      pInFormat = FormatFromExt(infilepath.c_str(), inFormatGzip);
+    }
     ifstream *ifs = new ifstream(infilepath.c_str(),ios_base::in|ios_base::binary);  //always open in binary mode
     if(!ifs || !ifs->good())
     {
@@ -1071,6 +1093,11 @@ namespace OpenBabel {
     if(outfilepath.empty())//Don't open an outfile with an empty name.
       return true;
 
+    if(!pOutFormat)
+    {
+      //attempt to autodetect format
+      pOutFormat = FormatFromExt(outfilepath.c_str(), outFormatGzip);
+    }
     ofstream *ofs = new ofstream(outfilepath.c_str(),ios_base::out|ios_base::binary);//always open in binary mode
     if(!ofs || !ofs->good())
     {
@@ -1487,7 +1514,7 @@ namespace OpenBabel {
       }
     else if(!SetFormat)
       {
-        pInFormat = FormatFromExt(InFilename.c_str());
+        pInFormat = FormatFromExt(InFilename.c_str(), inFormatGzip);
         if(pInFormat==NULL)
           {
             string::size_type pos = InFilename.rfind('.');

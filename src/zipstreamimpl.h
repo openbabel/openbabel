@@ -568,7 +568,18 @@ basic_unzip_streambuf<charT, traits>::unzip_from_stream(char_type* buffer,
 
     // check if it is the end
     if (_err == Z_STREAM_END)
-        put_back_from_zip_stream();
+    { //dkoes, support concatenated zip files
+      put_back_from_zip_stream();
+      // we do _not_ reset the zipstream since seeking requires we keep a running total
+      //read footer
+
+      for(unsigned i = 0; i < 8; i++)
+      {
+        get_istream().get(); //but ignore since for some reason check_footer is in the stream class.. and isn't called anyway
+      }
+
+      _err = check_header();
+    }
 
     return n_read;
 }

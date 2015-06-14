@@ -64,6 +64,7 @@ namespace OpenBabel {
       /// @name Construction
       //@{
       OBConversion(std::istream* is=NULL, std::ostream* os=NULL);
+      OBConversion(std::string inFilename, std::string outFilename="");
       /// @brief Copy constructor.  Stream *ownership* is not copied. Source remains responsible for the memory.
       OBConversion(const OBConversion& o);
       /// @brief Assignment.  Stream *ownership* is not copied.  Source remains responsible for the memory.
@@ -125,6 +126,8 @@ namespace OpenBabel {
 
       OBFormat*   GetInFormat() const{return pInFormat;};
       OBFormat*   GetOutFormat() const{return pOutFormat;};
+      bool GetInGzipped() const{return inFormatGzip;};
+      bool GetOutGzipped() const{return outFormatGzip;};
       std::string GetInFilename() const{return InFilename;};
       std::string GetOutFilename() const{return OutFilename;};
 
@@ -314,6 +317,8 @@ namespace OpenBabel {
       /// Open the files and update the streams in the OBConversion object.
       /// This method is primarily intended for scripting languages without "stream" classes
       /// and will usually followed by a call to Convert().
+      /// Will set format from file extension if format has not already been set.
+      /// Files will be opened even if format cannot be determined, but not if file path is empty.
       /// \return false if unsucessful.
       bool OpenInAndOutFiles(std::string infilepath, std::string outfilepath);
 

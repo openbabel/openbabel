@@ -145,6 +145,7 @@ namespace OpenBabel
     if(ForReading)
       {
         streampos pos = pConv->GetInStream()->tellg();
+
         if(pos < pxmlConv->_lastpos || pxmlConv->_lastpos<0)
           {
             //Probably a new file; copy some member vars and renew the current reader
@@ -182,7 +183,7 @@ namespace OpenBabel
 
     //**Parse
     int result=1;
-    while(!GetInStream()->bad() && (_SkipNextRead || (result=xmlTextReaderRead(_reader))==1)) //read may not be called
+    while(!GetInStream()->bad() && !GetInStream()->eof() && (_SkipNextRead || (result=xmlTextReaderRead(_reader))==1)) //read may not be called
     {
       _SkipNextRead=false;
       if(_LookingForNamespace)
