@@ -308,7 +308,8 @@ basic_unzip_streambuf<charT, traits>::basic_unzip_streambuf(istream_reference is
       _istream(istream),
       _input_buffer(input_buffer_size),
       _buffer(read_buffer_size),
-      _crc(0)
+      _crc(0),
+      _unzipped_component_bytes(0)
 {
   initialize(window_size);
 }
@@ -382,7 +383,7 @@ template <class charT, class traits>
 std::streampos
   basic_unzip_streambuf<charT, traits>::currentpos()
 {
-  return _zip_stream.total_out - std::streamoff(this->egptr() - this->gptr());
+  return _unzipped_component_bytes + _zip_stream.total_out - std::streamoff(this->egptr() - this->gptr());
 }
 
 template <class charT, class traits>
@@ -427,6 +428,7 @@ std::streampos
     _istream.seekg(0);
     this->initialize(-15);
     this->check_header();
+    _unzipped_component_bytes = 0;
   }
 
   // Now we keep going, throwing away the data until we get to the right place
@@ -446,6 +448,7 @@ std::streampos
 
   _istream.clear(std::ios::goodbit);
   _istream.seekg(0);
+  _unzipped_component_bytes = 0;
   this->initialize(-15);
   this->check_header();
 
@@ -570,9 +573,9 @@ basic_unzip_streambuf<charT, traits>::unzip_from_stream(char_type* buffer,
     if (_err == Z_STREAM_END)
     { //dkoes, support concatenated zip files
       put_back_from_zip_stream();
-      // we do _not_ reset the zipstream since seeking requires we keep a running total
+      _unzipped_component_bytes += _zip_stream.total_out; //needed for seeking
+      inflateReset(&_zip_stream);
       //read footer
-
       for(unsigned i = 0; i < 8; i++)
       {
         get_istream().get(); //but ignore since for some reason check_footer is in the stream class.. and isn't called anyway

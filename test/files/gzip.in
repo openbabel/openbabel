@@ -1,3 +1,6 @@
+#many.sdf.gz contains concatenated gzip files
+[O-][N+](=O)[O-].[O-][N+](=O)[O-].[Co+2]
+ClCCCCCC(=O)OCC
 # c3.cml.gz
 CC(Cn1cnc2c1c(=O)n(C)c(=O)n2C)O
 CN(CCc1c[nH]c2c1c(O)ccc2)C
@@ -26,9 +29,6 @@ O=C(N(C)C)Nc1ccc(c(c1)Cl)Cl
 CCCC(C(=O)O)CCC
 NC(C(=O)O)CCCCCP(=O)(O)O
 NC(C(=O)O)CCCCCCP(=O)(O)O
-#many.sdf.gz contains concatenated gzip files
-[O-][N+](=O)[O-].[O-][N+](=O)[O-].[Co+2]
-ClCCCCCC(=O)OCC
 #five_obabel.sdf.gz is the output of older babel versions
 Clc1cccc(c1)Cn1c(C)nc2c(c1=O)cc(cc2)NC(=O)c1cccc(c1)Cl
 O=C(C1CCCCC1)Nc1ccc2c(c1)c(=O)n(c(n2)C)Cc1ccc(cc1)F
