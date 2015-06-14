@@ -843,7 +843,7 @@ namespace OpenBabel {
     //this meant that a stream at the eof position would end up in an error state
     //code has come to depend on this behavior
     if(pInput->eof()) pInput->get();
-cout << pInput->tellg() << " " << pInput->eof() << "\n";
+
     // Set the locale for number parsing to avoid locale issues: PR#1785463
     obLocale.SetLocale();
 
