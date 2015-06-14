@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <cassert>
 
 #include <string>
 #include <vector>
@@ -63,8 +64,12 @@ namespace OpenBabel {
       /// @name Construction
       //@{
       OBConversion(std::istream* is=NULL, std::ostream* os=NULL);
-      /// @brief Copy constructor
+      OBConversion(std::string inFilename, std::string outFilename="");
+      /// @brief Copy constructor.  Stream *ownership* is not copied. Source remains responsible for the memory.
       OBConversion(const OBConversion& o);
+      /// @brief Assignment.  Stream *ownership* is not copied.  Source remains responsible for the memory.
+      OBConversion& operator=(const OBConversion& rhs);
+
       virtual     ~OBConversion();
       //@}
       /// @name Collection of formats
@@ -78,9 +83,11 @@ namespace OpenBabel {
       static OBFormat*  FindFormat(const std::string ID);
       /// @brief Searches registered formats for an ID the same as the file extension
       static OBFormat*	FormatFromExt(const char* filename);
+      static OBFormat*	FormatFromExt(const char* filename, bool& isgzip);
       /// @brief Searches registered formats for an ID the same as the file extension
       /// \since version 2.3
       static OBFormat*	FormatFromExt(const std::string filename);
+      static OBFormat*	FormatFromExt(const std::string filename, bool& isgzip);
       /// @brief Searches registered formats for a MIME the same as the chemical MIME type passed
       static OBFormat*        FormatFromMIME(const char* MIME);
 
@@ -95,37 +102,32 @@ namespace OpenBabel {
       static const char* Description(); //generic conversion options
       //@}
 
+      /// These return a filtered stream for reading/writing (possible filters include compression, decompression, and newline transformation)
       /// @name Parameter get and set
       //@{
-      std::istream* GetInStream() const {return pInStream;};
-      std::ostream* GetOutStream() const {return pOutStream;};
-      void          SetInStream(std::istream* pIn)
-        {
-          if (pInStream && NeedToFreeInStream) {
-            delete pInStream; NeedToFreeInStream = false;
-          }
-          pInStream=pIn;
-          CheckedForGzip = false; // haven't tried to gzip decode this stream
-        };
-      void          SetOutStream(std::ostream* pOut)
-        {
-          if (pOutStream && NeedToFreeOutStream) {
-            delete pOutStream; NeedToFreeOutStream = false;
-          }
-          pOutStream=pOut;
-        };
+      std::istream* GetInStream() const {return pInput;};
+      std::ostream* GetOutStream() const {return pOutput;};
+
+      /// @brief Set input stream.  If takeOwnership is true, will deallocate when done.
+      /// If isGzipped is true, will treat as a gzipped stream regardless of option settings,
+      //  if false, then will be treated as gzipped stream only if z/zin is set.
+      void          SetInStream(std::istream* pIn, bool takeOwnership=false);
+      void          SetOutStream(std::ostream* pOut, bool takeOwnership=false);
+
       /// Sets the formats from their ids, e g CML
-      bool        SetInAndOutFormats(const char* inID, const char* outID);
-      bool        SetInAndOutFormats(OBFormat* pIn, OBFormat* pOut);
+      bool        SetInAndOutFormats(const char* inID, const char* outID, bool ingzip=false, bool outgzip=false);
+      bool        SetInAndOutFormats(OBFormat* pIn, OBFormat* pOut, bool ingzip=false, bool outgzip=false);
       /// Sets the input format from an id e.g. CML
-      bool	      SetInFormat(const char* inID);
-      bool	      SetInFormat(OBFormat* pIn);
+      bool	      SetInFormat(const char* inID, bool isgzip=false);
+      bool	      SetInFormat(OBFormat* pIn, bool isgzip=false);
       /// Sets the output format from an id e.g. CML
-      bool	      SetOutFormat(const char* outID);
-      bool	      SetOutFormat(OBFormat* pOut);
+      bool	      SetOutFormat(const char* outID, bool isgzip=false);
+      bool	      SetOutFormat(OBFormat* pOut, bool isgzip=false);
 
       OBFormat*   GetInFormat() const{return pInFormat;};
       OBFormat*   GetOutFormat() const{return pOutFormat;};
+      bool GetInGzipped() const{return inFormatGzip;};
+      bool GetOutGzipped() const{return outFormatGzip;};
       std::string GetInFilename() const{return InFilename;};
       std::string GetOutFilename() const{return OutFilename;};
 
@@ -298,6 +300,7 @@ namespace OpenBabel {
       /// Part of "API" interface.
       /// \return false and pOb=NULL on error
       /// This method is primarily intended for scripting languages without "stream" classes
+      /// Any existing input stream will be replaced by stringstream.
       bool	ReadString(OBBase* pOb, std::string input);
 
       /// @brief Reads an object of a class derived from OBBase into pOb from the file specified
@@ -314,6 +317,8 @@ namespace OpenBabel {
       /// Open the files and update the streams in the OBConversion object.
       /// This method is primarily intended for scripting languages without "stream" classes
       /// and will usually followed by a call to Convert().
+      /// Will set format from file extension if format has not already been set.
+      /// Files will be opened even if format cannot be determined, but not if file path is empty.
       /// \return false if unsucessful.
       bool OpenInAndOutFiles(std::string infilepath, std::string outfilepath);
 
@@ -336,12 +341,33 @@ protected:
       static std::string IncrementedFileName(std::string& BaseName, const int Count);
       ///Checks for misunderstandings when using the -m option
       static bool CheckForUnintendedBatch(const std::string& infile, const std::string& outfile);
-      ///Adds a filtering rdbuffer to handle line endings if not already installed and not a binary or xml format.
-      void InstallStreamFilter();
 
+      void ClearInStreams();
       //@}
 
     protected:
+
+      //helper class for saving stream state
+      struct StreamState
+      {
+          std::ios *pStream; //active stream
+          std::vector<std::ios *> ownedStreams; //streams we own the memory to
+
+          StreamState(): pStream(NULL) {}
+          ~StreamState()
+          {
+            assert(ownedStreams.size() == 0); //should be popped
+          }
+
+          void pushInput(OBConversion& conv);
+          void popInput(OBConversion& conv);
+
+          void pushOutput(OBConversion& conv);
+          void popOutput(OBConversion& conv);
+
+          bool isSet() const { return pStream != NULL; }
+      };
+
       bool             SetStartAndEnd();
 //      static FMapType& FormatsMap();///<contains ID and pointer to all OBFormat classes
 //      static FMapType& FormatsMIMEMap();///<contains MIME and pointer to all OBFormat classes
@@ -350,8 +376,16 @@ protected:
       bool             OpenAndSetFormat(bool SetFormat, std::ifstream* is, std::stringstream* ss=NULL);
 
       std::string	  InFilename, OutFilename; //OutFileName added v2.4.0
-      std::istream*     pInStream;
-      std::ostream*     pOutStream;
+
+      typedef   FilteringInputStream< LineEndingExtractor > LEInStream;
+
+      std::istream *pInput; //input stream, may be filtered
+      std::vector<std::istream *> ownedInStreams; //streams we own the memory to
+
+      std::ostream *pOutput; //output stream, may have filters applied
+      std::vector<std::ostream *> ownedOutStreams; //streams we own the memory to
+
+
       static OBFormat*  pDefaultFormat;
       OBFormat* 	  pInFormat;
       OBFormat*	  pOutFormat;
@@ -367,12 +401,11 @@ protected:
       bool		  MoreFilesToCome;
       bool		  OneObjectOnly;
       bool		  ReadyToInput;
-      bool      CheckedForGzip;      ///< input stream is gzip-encoded
       bool      SkippedMolecules;    /// skip molecules using -f and -l
-      bool      NeedToFreeInStream;
-      bool      NeedToFreeOutStream;
-      typedef   FilteringInputStreambuf< LineEndingExtractor > LErdbuf;
-      LErdbuf*  pLineEndBuf;
+
+      //unlike the z and zin options, these are not sticky - setting formats will reset them
+      bool inFormatGzip;
+      bool outFormatGzip;
 
       OBBase*		  pOb1;
       std::streampos wInpos; ///<position in the input stream of the object being written
