@@ -156,7 +156,6 @@ private:
     }
 
     const char* pMime;
-
 /* Functions provided by the MAKE_PLUGIN macro
 
   ///Constructor that registers the ID of the format

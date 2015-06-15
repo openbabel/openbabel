@@ -27,7 +27,6 @@ namespace OpenBabel
       _reader(NULL), _writer(NULL),
       _LookingForNamespace(false), _SkipNextRead(false)
   {
-    pLineEndBuf=NULL;
     _pConv = pConv;
     pConv->SetAuxConv(this);//marks original OBConversion object as having been extended
     SetAuxConv(this);//marks this new object as extended (for use with OBConversion pointer)
@@ -327,6 +326,7 @@ namespace OpenBabel
     //@todo worry about non-ascii coding
     XMLConversion* pConv = static_cast<XMLConversion*>(context);
     istream* ifs = pConv->GetInStream();
+
     if(!ifs->good() || ifs->eof())
       return 0;
 
