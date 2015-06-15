@@ -56,12 +56,6 @@ GNU General Public License for more details.
 extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
 #endif
 
-#include <boost/iostreams/filter/gzip.hpp>
-#include <boost/iostreams/filter/bzip2.hpp>
-#include <boost/iostreams/filter/newline.hpp>
-#include <boost/iostreams/filtering_stream.hpp>
-#include <boost/iostreams/stream.hpp>
-
 #ifndef BUFF_SIZE
 #define BUFF_SIZE 32768
 #endif
