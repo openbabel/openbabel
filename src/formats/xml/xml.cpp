@@ -145,6 +145,7 @@ namespace OpenBabel
     if(ForReading)
       {
         streampos pos = pConv->GetInStream()->tellg();
+
         if(pos < pxmlConv->_lastpos || pxmlConv->_lastpos<0)
           {
             //Probably a new file; copy some member vars and renew the current reader
@@ -182,7 +183,8 @@ namespace OpenBabel
 
     //**Parse
     int result=1;
-    while(!GetInStream()->bad() && (_SkipNextRead || (result=xmlTextReaderRead(_reader))==1)) //read may not be called
+    unsigned elementCnt = 0;
+    while(!GetInStream()->bad() && !GetInStream()->eof() && (_SkipNextRead || (result=xmlTextReaderRead(_reader))==1)) //read may not be called
     {
       _SkipNextRead=false;
       if(_LookingForNamespace)
@@ -203,8 +205,7 @@ namespace OpenBabel
                     _LookingForNamespace=false;
                     _SkipNextRead=true;
                     SetInFormat(pNewFormat);
-                    pNewFormat->ReadMolecule(pOb,this);
-                    return true;
+                    return pNewFormat->ReadMolecule(pOb,this);
                   }
               }
           }
@@ -219,7 +220,10 @@ namespace OpenBabel
       //Pass the node on to the appropriate format class
       bool ret;
       if(typ==XML_READER_TYPE_ELEMENT)
+      {
+        elementCnt++;
         ret= pFormat->DoElement(ElName);
+      }
       else if(typ==XML_READER_TYPE_END_ELEMENT)
         ret= pFormat->EndElement(ElName);
       else
@@ -234,7 +238,7 @@ namespace OpenBabel
             _LookingForNamespace = true;
             return true;
           }
-      }
+    }
 
     if(result==-1)
     {
@@ -246,6 +250,11 @@ namespace OpenBabel
         }
       xmlResetError(perr);
       GetInStream()->setstate(ios::eofbit);
+      return false;
+    }
+    else if(elementCnt == 0)
+    {
+      //didn't actually read any data (e.g., </cml> end tag)
       return false;
     }
     return GetInStream()->good() && result!=0;
