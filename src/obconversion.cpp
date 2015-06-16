@@ -302,6 +302,8 @@ namespace OpenBabel {
     m_IsFirstInput = o.m_IsFirstInput;
     SkippedMolecules = o.SkippedMolecules;
     pAuxConv       = o.pAuxConv;
+
+    return *this;
   }
   ///////////////////////////////////////////////
 
@@ -799,7 +801,7 @@ namespace OpenBabel {
   OBFormat* OBConversion::FormatFromExt(const char* filename)
   {
     bool isgzip;
-    FormatFromExt(filename, isgzip);
+    return FormatFromExt(filename, isgzip);
   }
 
   OBFormat* OBConversion::FormatFromExt(const std::string filename)
