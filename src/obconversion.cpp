@@ -232,7 +232,7 @@ namespace OpenBabel {
     EndNumber(0), Count(-1), m_IsFirstInput(true), m_IsLast(true),
     MoreFilesToCome(false), OneObjectOnly(false), SkippedMolecules(false),
     inFormatGzip(false), outFormatGzip(false),
-    pOb1(NULL), pAuxConv(NULL),wInpos(0),wInlen(0)
+    pOb1(NULL),wInpos(0),wInlen(0),pAuxConv(NULL)
   {
    	SetInStream(is);
    	SetOutStream(os);
@@ -250,7 +250,7 @@ namespace OpenBabel {
         EndNumber(0), Count(-1), m_IsFirstInput(true), m_IsLast(true),
         MoreFilesToCome(false), OneObjectOnly(false), SkippedMolecules(false),
         inFormatGzip(false), outFormatGzip(false),
-        pOb1(NULL), pAuxConv(NULL),wInpos(0),wInlen(0)
+        pOb1(NULL), wInpos(0),wInlen(0), pAuxConv(NULL)
   {
     //These options take a parameter
     RegisterOptionParam("f", NULL, 1,GENOPTIONS);
@@ -303,7 +303,7 @@ namespace OpenBabel {
     SkippedMolecules = o.SkippedMolecules;
     pAuxConv       = o.pAuxConv;
 
-    return *this;
+     return *this;
   }
   ///////////////////////////////////////////////
 
@@ -860,7 +860,7 @@ namespace OpenBabel {
     // catch last molecule acording to -l
     Count++;
     bool success = false;
-    if (EndNumber==0 || Count<=EndNumber) {
+    if (EndNumber==0 || (unsigned)Count<=EndNumber) {
         success = pInFormat->ReadMolecule(pOb, this);
     }
 
