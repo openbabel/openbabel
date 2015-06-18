@@ -461,6 +461,10 @@ namespace OpenBabel {
     StreamState savedIn, savedOut;
     if (is)
     {
+      if(!inFormatGzip && pInFormat && zlib_stream::isGZip(*is))
+      {
+        inFormatGzip = true;
+      }
       savedIn.pushInput(*this);
       SetInStream(is, false);
     }
@@ -824,7 +828,7 @@ namespace OpenBabel {
   {
     if(pin) {
       //for backwards compatibility, attempt to detect a gzip file
-      if(pInFormat && zlib_stream::isGZip(*pin))
+      if(!inFormatGzip && pInFormat && zlib_stream::isGZip(*pin))
       {
         inFormatGzip = true;
       }
@@ -1050,6 +1054,12 @@ namespace OpenBabel {
       pInFormat = FormatFromExt(filePath.c_str(), inFormatGzip);
       if(!pInFormat)
         return false;
+    }
+
+    if(!inFormatGzip && pInFormat && zlib_stream::isGZip(*pInput))
+    {
+      //for backwards compat, attempt to autodetect gzip
+      inFormatGzip = true;
     }
 
     // save the filename
