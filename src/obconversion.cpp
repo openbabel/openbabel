@@ -232,7 +232,7 @@ namespace OpenBabel {
     EndNumber(0), Count(-1), m_IsFirstInput(true), m_IsLast(true),
     MoreFilesToCome(false), OneObjectOnly(false), SkippedMolecules(false),
     inFormatGzip(false), outFormatGzip(false),
-    pOb1(NULL), pAuxConv(NULL),wInpos(0),wInlen(0)
+    pOb1(NULL),wInpos(0),wInlen(0),pAuxConv(NULL)
   {
    	SetInStream(is);
    	SetOutStream(os);
@@ -250,7 +250,7 @@ namespace OpenBabel {
         EndNumber(0), Count(-1), m_IsFirstInput(true), m_IsLast(true),
         MoreFilesToCome(false), OneObjectOnly(false), SkippedMolecules(false),
         inFormatGzip(false), outFormatGzip(false),
-        pOb1(NULL), pAuxConv(NULL),wInpos(0),wInlen(0)
+        pOb1(NULL), wInpos(0),wInlen(0), pAuxConv(NULL)
   {
     //These options take a parameter
     RegisterOptionParam("f", NULL, 1,GENOPTIONS);
@@ -302,6 +302,8 @@ namespace OpenBabel {
     m_IsFirstInput = o.m_IsFirstInput;
     SkippedMolecules = o.SkippedMolecules;
     pAuxConv       = o.pAuxConv;
+
+     return *this;
   }
   ///////////////////////////////////////////////
 
@@ -459,6 +461,10 @@ namespace OpenBabel {
     StreamState savedIn, savedOut;
     if (is)
     {
+      if(!inFormatGzip && pInFormat && zlib_stream::isGZip(*is))
+      {
+        inFormatGzip = true;
+      }
       savedIn.pushInput(*this);
       SetInStream(is, false);
     }
@@ -799,7 +805,7 @@ namespace OpenBabel {
   OBFormat* OBConversion::FormatFromExt(const char* filename)
   {
     bool isgzip;
-    FormatFromExt(filename, isgzip);
+    return FormatFromExt(filename, isgzip);
   }
 
   OBFormat* OBConversion::FormatFromExt(const std::string filename)
@@ -822,7 +828,7 @@ namespace OpenBabel {
   {
     if(pin) {
       //for backwards compatibility, attempt to detect a gzip file
-      if(pInFormat && zlib_stream::isGZip(*pin))
+      if(!inFormatGzip && pInFormat && zlib_stream::isGZip(*pin))
       {
         inFormatGzip = true;
       }
@@ -858,7 +864,7 @@ namespace OpenBabel {
     // catch last molecule acording to -l
     Count++;
     bool success = false;
-    if (EndNumber==0 || Count<=EndNumber) {
+    if (EndNumber==0 || (unsigned)Count<=EndNumber) {
         success = pInFormat->ReadMolecule(pOb, this);
     }
 
@@ -1048,6 +1054,12 @@ namespace OpenBabel {
       pInFormat = FormatFromExt(filePath.c_str(), inFormatGzip);
       if(!pInFormat)
         return false;
+    }
+
+    if(!inFormatGzip && pInFormat && zlib_stream::isGZip(*pInput))
+    {
+      //for backwards compat, attempt to autodetect gzip
+      inFormatGzip = true;
     }
 
     // save the filename
