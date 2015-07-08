@@ -61,6 +61,8 @@ int main(int argc,char *argv[])
 
   OBFormat* pInFormat = NULL;
   OBFormat* pOutFormat = NULL;
+  bool inGzip = false;
+  bool outGzip = false;
   vector<string> FileList, OutputFileList;
   string OutputFileName;
 
@@ -305,7 +307,7 @@ int main(int argc,char *argv[])
 
   if (!gotOutType)
     {
-      pOutFormat = Conv.FormatFromExt(OutputFileName.c_str());
+      pOutFormat = Conv.FormatFromExt(OutputFileName.c_str(), outGzip);
       if(pOutFormat==NULL)
         {
           cerr << program_name << ": cannot write output format!" << endl;
@@ -318,7 +320,7 @@ int main(int argc,char *argv[])
       cerr << "Invalid input format" << endl;
       usage();
     }
-    if(!Conv.SetOutFormat(pOutFormat))
+    if(!Conv.SetOutFormat(pOutFormat, outGzip))
     {
       cerr << "Invalid output format" << endl;
       usage();
