@@ -6272,7 +6272,7 @@ x-y,-y,z
 
 186
 P 6c -2c
- 63 m c
+P 63 m c
 x,y,z
 -y,x-y,z
 y-x,-x,z
