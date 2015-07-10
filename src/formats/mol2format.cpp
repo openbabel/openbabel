@@ -417,6 +417,9 @@ namespace OpenBabel
           if (bond2->GetBO() != 5)
             continue;
           partner = (bond2->GetBeginAtom() == carbon ? bond2->GetEndAtom() : bond2->GetBeginAtom());
+          if (!ring->IsMember(partner))
+            continue; // not in the same 6-membered ring
+
           if (partner->IsNitrogen() && partner->GetValence() == 3 && partner->GetFormalCharge() == 0) {
             int n_h_bonded = 0;
             FOR_BONDS_OF_ATOM(bond3, partner) {
