@@ -1056,12 +1056,6 @@ namespace OpenBabel {
         return false;
     }
 
-    if(!inFormatGzip && pInFormat && zlib_stream::isGZip(*pInput))
-    {
-      //for backwards compat, attempt to autodetect gzip
-      inFormatGzip = true;
-    }
-
     // save the filename
     InFilename = filePath;
     ios_base::openmode imode = ios_base::in|ios_base::binary; //now always binary because may be gzipped
@@ -1071,6 +1065,12 @@ namespace OpenBabel {
         if(ifs) delete ifs;
         obErrorLog.ThrowError(__FUNCTION__,"Cannot read from " + filePath, obError);
         return false;
+    }
+
+    if(!inFormatGzip && pInFormat && zlib_stream::isGZip(*ifs))
+    {
+      //for backwards compat, attempt to autodetect gzip
+      inFormatGzip = true;
     }
 
     SetInStream(ifs, true);
