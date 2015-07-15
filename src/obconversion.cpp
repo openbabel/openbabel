@@ -461,10 +461,12 @@ namespace OpenBabel {
     StreamState savedIn, savedOut;
     if (is)
     {
+#ifdef HAVE_LIBZ
       if(!inFormatGzip && pInFormat && zlib_stream::isGZip(*is))
       {
         inFormatGzip = true;
       }
+#endif
       savedIn.pushInput(*this);
       SetInStream(is, false);
     }
@@ -828,10 +830,12 @@ namespace OpenBabel {
   {
     if(pin) {
       //for backwards compatibility, attempt to detect a gzip file
-      if(!inFormatGzip && pInFormat && zlib_stream::isGZip(*pin))
+#ifdef HAVE_LIBZ
+		if(!inFormatGzip && pInFormat && zlib_stream::isGZip(*pin))
       {
         inFormatGzip = true;
       }
+#endif
       SetInStream(pin, false);
     }
 
@@ -1056,12 +1060,6 @@ namespace OpenBabel {
         return false;
     }
 
-    if(!inFormatGzip && pInFormat && zlib_stream::isGZip(*pInput))
-    {
-      //for backwards compat, attempt to autodetect gzip
-      inFormatGzip = true;
-    }
-
     // save the filename
     InFilename = filePath;
     ios_base::openmode imode = ios_base::in|ios_base::binary; //now always binary because may be gzipped
@@ -1072,6 +1070,13 @@ namespace OpenBabel {
         obErrorLog.ThrowError(__FUNCTION__,"Cannot read from " + filePath, obError);
         return false;
     }
+#ifdef HAVE_LIBZ
+    if(!inFormatGzip && pInFormat && zlib_stream::isGZip(*ifs))
+    {
+      //for backwards compat, attempt to autodetect gzip
+      inFormatGzip = true;
+    }
+#endif
 
     SetInStream(ifs, true);
     return Read(pOb);
@@ -1434,12 +1439,13 @@ namespace OpenBabel {
                     //Output is put in a temporary stream and written to a file
                     //with an augmenting name only when it contains a valid object.
                     int Indx=1;
-
+#ifdef HAVE_LIBZ
                     if(pInFormat && zlib_stream::isGZip(*pIs))
                     {
                       //for backwards compat, attempt to autodetect gzip
                       inFormatGzip = true;
                     }
+#endif
                     SetInStream(pIs, false);
 
 
