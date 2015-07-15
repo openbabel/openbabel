@@ -38,9 +38,9 @@ using namespace OpenBabel;
 int main(int argc,char **argv)
 {
   char  *program_name = argv[0];
-  int    c, Nsymm = 0, Nrot = 0;
-  bool   bKJ      = false;
-  double dBdT     = 0;
+  int    Nsymm = 0, Nrot = 0;
+  bool   bKJ   = false;
+  double dBdT  = 0;
   string filename, option;
   OBConversion conv;
   double unit_factor = 1;
@@ -142,7 +142,8 @@ int main(int argc,char **argv)
       if (extract_thermochemistry(mol, 
                                   true,
                                   &Nsymm,
-                                  Nrot,dBdT,
+                                  Nrot,
+                                  dBdT,
                                   &temperature,
                                   &DeltaHf0,
                                   &DeltaHfT,
