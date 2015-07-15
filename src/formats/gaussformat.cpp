@@ -16,6 +16,7 @@ GNU General Public License for more details.
 
 #include <openbabel/obmolecformat.h>
 #include <openbabel/pointgroup.h>
+#include <openbabel/data.h>
 
 using namespace std;
 namespace OpenBabel
@@ -303,7 +304,6 @@ namespace OpenBabel
     OpenBabel::OBAtomIterator OBai;
     OpenBabel::OBAtom *OBa;
     OpenBabel::OBElementTable *OBet;
-    OpenBabel::OBPairData *OBpd0;
     char valbuf[128];
     int ii,atomid,atomicnumber,found,foundall;
     double dhofM0, dhofMT, S0MT, DeltaSMT;
@@ -434,7 +434,7 @@ namespace OpenBabel
     OBMol &mol = *pmol;
     const char* title = pConv->GetTitle();
 
-    char buffer[BUFF_SIZE],method[BUFF_SIZE];
+    char buffer[BUFF_SIZE];
     string str,str1,str2,thermo_method;
     double x,y,z;
     OBAtom *atom;
