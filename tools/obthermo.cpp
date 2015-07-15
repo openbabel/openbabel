@@ -98,8 +98,8 @@ int main(int argc,char **argv)
         i += 1;
       }
       else {
-          filename.assign(argv[i]);
-          i += 1;
+        filename.assign(argv[i]);
+        i += 1;
       }
     }
   }
