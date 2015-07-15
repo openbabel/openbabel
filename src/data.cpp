@@ -435,81 +435,294 @@ namespace OpenBabel
     Init();
   }
 
+  double energyToKcal(std::string unit)
+  {
+      if ((unit.compare("kJ/mol") == 0) ||
+          (unit.compare("J/mol K") == 0))
+        {
+            return 1.0/4.184;
+        }
+      else if (unit.compare("Hartree") == 0)
+        {
+            return 627.509469;
+        }
+      else if (unit.compare("Rydberg") == 0)
+        {
+            return 313.755026;
+        }
+      else if ((unit.compare("eV") == 0) ||
+               (unit.compare("electronvolt") == 0))
+        {
+            return 23.060538;
+        }
+      else if (unit.compare("kcal/mol") == 0)
+        {
+            return 1;
+        }
+      fprintf(stderr, "Unknown energy unit %s in file %s, line %d\n", 
+              unit.c_str(), __FILE__, __LINE__);
+      
+      return 1;
+  }
+
   void OBAtomicHeatOfFormationTable::ParseLine(const char *line)
   {
-    const char *ptr;
+    char *ptr;
     vector<string> vs;
-    int mult;
     OBAtomHOF *oba;
 
-    ptr = strchr(line,'#');
+    ptr = const_cast<char*>( strchr(line,'#'));
     if (NULL != ptr)
-      ptr = '\0';
+      ptr[0] = '\0';
     if (strlen(line) > 0)
       {
         tokenize(vs,line,"|");
-        if (vs.size() >= 5)
+        if (vs.size() >= 8)
           {
-            mult = 1;
-            if (vs.size() > 5)
-              mult = atoi(vs[5].c_str());
-            oba = new OBAtomHOF(vs[0],vs[1],vs[2],
-                                atof(vs[3].c_str()),atof(vs[4].c_str()),mult);
+              oba = new OBAtomHOF(vs[0],
+                                  atoi(vs[1].c_str()),
+                                  vs[2],
+                                  vs[3],
+                                  atof(vs[4].c_str()),
+                                  atof(vs[5].c_str()),
+                                  atoi(vs[6].c_str()),
+                                  vs[7]);
             _atomhof.push_back(*oba);
           }
       }
   }
 
-  int OBAtomicHeatOfFormationTable::GetHeatOfFormation(const char *elem,char *meth,
-                                                       int multiplicity,
-                                                       double *dhof0,double *dhof298)
+  int OBAtomicHeatOfFormationTable::GetHeatOfFormation(std::string elem,
+                                                       int charge,
+                                                       std::string meth,
+                                                       double T,
+                                                       double *dhof0,
+                                                       double *dhofT,
+                                                       double *S0T)
   {
     int    found;
-    double vm,ve,vdh;
+    double Ttol = 0.05; /* Kelvin */
+    double Vmodel, Vdhf, S0, HexpT;
     std::vector<OBAtomHOF>::iterator it;
-    const char *dhf0 = "DHf(0K)";
-    const char *dhf1 = "H(0K)-H(298.15K)";
-    const char *exp  = "exp";
     char desc[128];
 
     found = 0;
-    vm = ve = vdh = 0;
-    sprintf(desc,"%s(0K)",meth);
+    Vmodel = Vdhf = S0 = HexpT = 0;
+    snprintf(desc,sizeof(desc),"%s(0K)",meth.c_str());
 
     for(it = _atomhof.begin(); it != _atomhof.end(); ++it)
-      {
-        if (0 == strcasecmp(it->Element().c_str(),elem))
-          {
-            if ((0 == strcasecmp(it->Method().c_str(),meth)) &&
-                (0 == strcasecmp(it->Desc().c_str(),desc)))
-              {
-                vm += it->Value();
-                found++;
-              }
-            if ((0 == strcasecmp(it->Method().c_str(),exp)) &&
-                (0 == strcasecmp(it->Desc().c_str(),dhf0)))
-              {
-                ve += it->Value();
-                found++;
-              }
-            if ((0 == strcasecmp(it->Method().c_str(),exp)) &&
-                (0 == strcasecmp(it->Desc().c_str(),dhf1)))
-              {
-                vdh += it->Value();
-                found++;
-              }
-          }
-      }
+    {
+        if ((0 == it->Element().compare(elem)) &&
+            (it->Charge() == charge))
+        {
+            double eFac = energyToKcal(it->Unit());
+            if (fabs(T - it->T()) < Ttol)
+            {
+                if (0 == it->Method().compare("exp"))
+                {
+                    if (0 == it->Desc().compare("H(0)-H(T)"))
+                    {
+                        HexpT += it->Value()*eFac;
+                        found++;
+                    }
+                    else if (0 == it->Desc().compare("S0(T)"))
+                    {
+                        S0 += it->Value();
+                        found++;
+                    }
+                }
+            }
+            else if (0 == it->T()) 
+            {
+                if ((0 == it->Method().compare(meth)) &&
+                    (0 == it->Desc().compare(desc)))
+                {
+                    Vmodel += it->Value()*eFac;
+                    found++;
+                }
+                if (0 == it->Method().compare("exp"))
+                {
+                    if (0 == it->Desc().compare("DHf(T)"))
+                    {
+                        Vdhf += it->Value()*eFac;
+                        found++;
+                    }
+                }
+            }
+        }
+    }
 
-    if (3 == found)
-      {
-        *dhof0   = ve-vm;
-        *dhof298 = ve-vm-vdh;
+    if (found == 4)
+    {
+        *dhof0 = Vdhf-Vmodel;
+        *dhofT = Vdhf-Vmodel-HexpT;
+        *S0T   = -S0/4.184;
         return 1;
-      }
-    else
-      return 0;
+    }
+    return 0;
   }
+
+bool extract_thermochemistry(OBMol  &mol,
+                             bool    bVerbose,
+                             int    *Nsymm,
+                             int     Nrotbonds,
+                             double  dBdT,
+                             double *temperature,
+                             double *DeltaHf0,
+                             double *DeltaHfT,
+                             double *DeltaGfT,
+                             double *DeltaSfT,
+                             double *S0T,
+                             double *CVT,
+                             double *CPT,
+                             std::vector<double> &Scomponents)
+{
+    enum kkTYPE { kkDH, kkDG, kkDS, kkS0, kkCV, kkSt, kkSr, kkSv };
+    typedef struct {
+        string term;
+        kkTYPE kk;
+    } energy_unit;
+    double St = 0, Sr = 0, Sv = 0, Sconf = 0, Ssymm = 0;
+    double Rgas      = 1.9872041; 
+    int    RotSymNum = 1;
+    OBRotationData* rd = (OBRotationData*)mol.GetData("RotationData");
+    if (NULL != rd)
+    {
+        RotSymNum = rd->GetSymmetryNumber();
+        if (bVerbose)
+        {
+            printf("Found symmetry number %d in input file.\n", RotSymNum);
+        }
+    }
+    else if (bVerbose)
+    {
+        printf("Using default symmetry number %d\n", RotSymNum);
+    }
+    if ((*Nsymm > 0) && (*Nsymm != RotSymNum))
+    {
+        // Rgas in cal/mol K http://en.wikipedia.org/wiki/Gas_constant
+        Ssymm = -Rgas*log((1.0* *Nsymm)/RotSymNum);
+        RotSymNum = *Nsymm;
+        if (bVerbose)
+        {
+            printf("Changing symmetry number to %d\n", RotSymNum);
+        }
+    }
+    else if (*Nsymm == 0)
+    {
+        *Nsymm = RotSymNum;
+    }
+    if (Nrotbonds > 0) 
+    {
+        Sconf = Rgas*Nrotbonds*log(3.0);
+    }
+    energy_unit eu[] = {
+        { "DeltaHform", kkDH },
+        { "DeltaGform", kkDG },
+        { "DeltaSform", kkDS },
+        { "S0",         kkS0 },
+        { "cv",         kkCV },
+        { "Strans",     kkSt },
+        { "Srot",       kkSr },
+        { "Svib",       kkSv }
+    };
+#define NEU (sizeof(eu)/sizeof(eu[0]))
+    int found = 0;
+    std::vector<OBGenericData*> obdata = mol.GetData();
+    for(std::vector<OBGenericData*>::iterator j = obdata.begin(); (j<obdata.end()); ++j)
+    {
+        string term  = (*j)->GetAttribute();
+        double value = atof((*j)->GetValue().c_str());
+        double T     = 0;
+        {
+            size_t lh = term.find("(");
+            size_t rh = term.find("K)");
+            double TT = atof(term.substr(lh+1,rh-lh-1).c_str());
+            if (0 != TT)
+            {
+                if (0 == T)
+                {
+                    T            = TT;
+                    *temperature = TT;
+                }
+                else
+                {
+                    cerr << "Different T in the input file, found " << T << " before and now " << TT << ". Output maybe inconsistent.";
+                    T = TT;
+                }
+            }
+        }
+        for(int i = 0; (i<NEU); i++)
+        {
+            if (strstr(term.c_str(), eu[i].term.c_str()) != 0)
+            {
+                switch (eu[i].kk)
+                {
+                case kkDH:
+                    if (0 == T)
+                    {
+                        *DeltaHf0 = value;
+                    }
+                    else
+                    {
+                        *DeltaHfT = value;
+                    }
+                    found ++;
+                    break;
+                case kkDG:
+                    *DeltaGfT = value - T*(Ssymm+Sconf)/1000;
+                    found ++;
+                    break;
+                case kkDS:
+                    *DeltaSfT = value + Ssymm + Sconf;
+                    found ++;
+                    break;
+                case kkS0:
+                    *S0T = value + Ssymm + Sconf;
+                    found ++;
+                    break;
+                case kkSt:
+                    St = value;
+                    found ++;
+                    break;
+                case kkSr:
+                    Sr = value;
+                    found ++;
+                    break;
+                case kkSv:
+                    Sv = value;
+                    found ++;
+                    break;
+                case kkCV:
+                    *CVT = value;
+                    found++;
+                    break;
+                default:
+                    break;
+                }
+            }
+        }
+    }
+    double P   = 16.605/4.184; // Convert pressure to kcal/mol
+    *CPT       = *CVT + Rgas + (2*P*dBdT + pow(P*dBdT, 2.0)/Rgas);
+
+    Scomponents.push_back(St);
+    Scomponents.push_back(Sr);
+    Scomponents.push_back(Sv);
+    Scomponents.push_back(Ssymm);
+    Scomponents.push_back(Sconf);
+    if (bVerbose && (Ssymm != 0))
+    {
+        printf("Applyied symmetry correction to free energy of %g kcal/mol\n",
+               -(*temperature*Ssymm)/1000);
+    }
+    if (bVerbose && (Sconf != 0))
+    {
+        printf("Applyied conformational correction to free energy of %g kcal/mol\n",
+               -(*temperature*Sconf)/1000);
+    }
+    return (found == 9);
+}
 
   /** \class OBTypeTable data.h <openbabel/data.h>
       \brief Atom Type Translation Table
