@@ -2141,8 +2141,12 @@ namespace OpenBabel
 
     // Make sure we have conformers (PR#1665519)
     if (!_vconf.empty()) {
-      BeginModify();
-      EndModify();
+      OBAtom *atom;
+      vector<OBAtom*>::iterator i;
+      for (atom = BeginAtom(i);atom;atom = NextAtom(i))
+        {
+          atom->SetVector();
+        }
     }
 
     SetHydrogensAdded(); // This must come after EndModify() as EndModify() wipes the flags
