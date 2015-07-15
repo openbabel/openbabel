@@ -184,6 +184,7 @@ namespace OpenBabel
     double x,y,z,pcharge;
     char temp_type[BUFF_SIZE], resname[BUFF_SIZE], atmid[BUFF_SIZE];
     int elemno, resnum = -1;
+    int isotope = 0;
 
     ttab.SetFromType("SYB");
     for (i = 0;i < natoms;i++)
@@ -243,6 +244,17 @@ namespace OpenBabel
         // it's a malformed atom type, but it may be the element symbol
         // GaussView does this (PR#1739905)
         if ( !elemno ) {
+          // check if it's "Du" or "Xx" and the element is in the atom name
+          if (str == "Du" || str == "Xx") {
+            str = atmid;
+            for (unsigned int i = 0; i < str.length(); ++i)
+              if (!isalpha(str[i])) {
+                str.erase(i);
+                break; // we've erased the end of the string
+              }
+          }
+
+
           std::stringstream errorMsg;
           errorMsg << "This Mol2 file is non-standard. Problem with molecule: "
                    << mol.GetTitle()
@@ -252,11 +264,13 @@ namespace OpenBabel
 
           string::size_type dotPos = str.find('.');
           if (dotPos == string::npos) {
-            elemno = etab.GetAtomicNum(str.c_str());
+            elemno = etab.GetAtomicNum(str.c_str(), isotope);
           }
         }
 
         atom.SetAtomicNum(elemno);
+        if (isotope)
+          atom.SetIsotope(isotope);
         ttab.SetToType("INT");
         ttab.Translate(str1,str);
         atom.SetType(str1);
@@ -417,6 +431,9 @@ namespace OpenBabel
           if (bond2->GetBO() != 5)
             continue;
           partner = (bond2->GetBeginAtom() == carbon ? bond2->GetEndAtom() : bond2->GetBeginAtom());
+          if (!ring->IsMember(partner))
+            continue; // not in the same 6-membered ring
+
           if (partner->IsNitrogen() && partner->GetValence() == 3 && partner->GetFormalCharge() == 0) {
             int n_h_bonded = 0;
             FOR_BONDS_OF_ATOM(bond3, partner) {
