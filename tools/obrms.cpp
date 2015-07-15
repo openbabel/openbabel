@@ -21,6 +21,7 @@
  obrms ref.sdf test.sdf
  */
 
+#undef _GLIBCXX_DEBUG /* unless you have boost libraries built with this, you do _not_ want this defined */
 // used to set import/export for Cygwin DLLs
 #ifdef WIN32
 #define USING_OBDLL
