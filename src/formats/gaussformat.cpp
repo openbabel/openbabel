@@ -15,6 +15,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/data.h>
+#include <openbabel/data_utilities.h>
 #include <openbabel/obmolecformat.h>
 #include <openbabel/pointgroup.h>
 

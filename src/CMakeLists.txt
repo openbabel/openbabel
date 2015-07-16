@@ -113,6 +113,7 @@ set(openbabel_srcs
   chargemodel.cpp
   chiral.cpp
   data.cpp
+  data_utilities.cpp
   descriptor.cpp
   fingerprint.cpp
   forcefield.cpp

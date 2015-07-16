@@ -1,0 +1,75 @@
+/**********************************************************************
+data_utilities.h - Global data and resource file parsers.
+
+Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+Copyright (C) 2015 by David van der Spoel
+
+This file is part of the Open Babel project.
+For more information, see <http://openbabel.org/>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation version 2 of the License.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+***********************************************************************/
+
+#ifndef OB_DATA_UTILITIES_H
+#define OB_DATA_UTILITIES_H
+
+#include <openbabel/babelconfig.h>
+
+#include <openbabel/mol.h>
+#include <vector>
+#include <string>
+
+/*! \brief
+ * Convenience function to convert energy units.
+ *
+ * \param[in] unit The energy unit to be converted, e.g. "kJ/mol", 
+ *                 "Hartree", "Rydberg", "eV" or "electronvolt"
+ * \return a factor to multiply energies with.
+ */
+extern double energyToKcal(std::string unit);
+    
+/*! \brief
+ * Convenience function to extract thermochemistry from a molecule structure
+ *
+ * \param[in] mol          The molecule structure
+ * \param[in] bVerbose     If true will print information 
+ * \param[inout] Nsymm     If not zero and differing from the rotational symmetry
+ *                         in the input molecule, corrections to the entropy and
+ *                         free energy will be applied. If zero will hold the symmetry
+ *                         number from the input molecule on return.
+ * \param[out] temperature The temperature
+ * \param[out] DeltaHf0    Enthalpy of formation at T = 0
+ * \param[out] DeltaHfT    Enthalpy of formation at T
+ * \param[out] DeltaGfT    Gibbs energy of formation at T
+ * \param[out] DeltaSfT    Entropy of formation at T
+ * \param[out] S0T         Standard entropy at T
+ * \param[out] CVT         Heat capacity at T and constant Volume
+ * \param[out] Scomponents Translational, Rotational and Vibrational components of S0
+ * \return true if all values were found, false otherwise.
+ */
+extern bool extract_thermochemistry(OpenBabel::OBMol  &mol,
+                                    bool    bVerbose,
+                                    int    *Nsymm,
+                                    int     Nrotbonds,
+                                    double  dbdt,
+                                    double *temperature,
+                                    double *DeltaHf0,
+                                    double *DeltaHfT,
+                                    double *DeltaGfT,
+                                    double *DeltaSfT,
+                                    double *S0T,
+                                    double *CVT,
+                                    double *CPT,
+                                    std::vector<double> &Scomponents);
+
+#endif //DATA_UTILITIES_H
+
+//! \file data_utilities.h
+//! \brief Data related tools and utilities
