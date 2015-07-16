@@ -307,7 +307,8 @@ namespace OpenBabel
     char valbuf[128];
     int ii,atomid,atomicnumber,found,foundall;
     double dhofM0, dhofMT, S0MT, DeltaSMT;
-    double eFactor = energyToKcal("Hartree");
+    std::string defunit("Hartree");
+    double eFactor = energyToKcal(defunit);
 
     OBet = new OpenBabel::OBElementTable();
 

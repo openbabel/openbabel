@@ -139,8 +139,9 @@ int main(int argc,char **argv)
       }
       printf("Point group according to OpenBabel: %s\n", 
              obPG.IdentifyPointGroup());
+      bool bVerbose = true;
       if (extract_thermochemistry(mol, 
-                                  true,
+                                  bVerbose,
                                   &Nsymm,
                                   Nrot,
                                   dBdT,
