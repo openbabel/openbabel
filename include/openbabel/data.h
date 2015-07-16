@@ -417,49 +417,6 @@ namespace OpenBabel
 
 } // end namespace OpenBabel
   
-/*! \brief
- * Convenience function to convert energy units.
- *
- * \param[in] unit The energy unit to be converted, e.g. "kJ/mol", 
- *                 "Hartree", "Rydberg", "eV" or "electronvolt"
- * \return a factor to multiply energies with.
- */
-extern double energyToKcal(std::string unit);
-    
-/*! \brief
- * Convenience function to extract thermochemistry from a molecule structure
- *
- * \param[in] mol          The molecule structure
- * \param[in] bVerbose     If true will print information 
- * \param[inout] Nsymm     If not zero and differing from the rotational symmetry
- *                         in the input molecule, corrections to the entropy and
- *                         free energy will be applied. If zero will hold the symmetry
- *                         number from the input molecule on return.
- * \param[out] temperature The temperature
- * \param[out] DeltaHf0    Enthalpy of formation at T = 0
- * \param[out] DeltaHfT    Enthalpy of formation at T
- * \param[out] DeltaGfT    Gibbs energy of formation at T
- * \param[out] DeltaSfT    Entropy of formation at T
- * \param[out] S0T         Standard entropy at T
- * \param[out] CVT         Heat capacity at T and constant Volume
- * \param[out] Scomponents Translational, Rotational and Vibrational components of S0
- * \return true if all values were found, false otherwise.
- */
-extern bool extract_thermochemistry(OpenBabel::OBMol  &mol,
-                                    bool    bVerbose,
-                                    int    *Nsymm,
-                                    int     Nrotbonds,
-                                    double  dbdt,
-                                    double *temperature,
-                                    double *DeltaHf0,
-                                    double *DeltaHfT,
-                                    double *DeltaGfT,
-                                    double *DeltaSfT,
-                                    double *S0T,
-                                    double *CVT,
-                                    double *CPT,
-                                    std::vector<double> &Scomponents);
-
 #endif //DATA_H
 
 //! \file data.h
