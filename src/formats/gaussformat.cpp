@@ -14,9 +14,9 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 
+#include <openbabel/data.h>
 #include <openbabel/obmolecformat.h>
 #include <openbabel/pointgroup.h>
-#include <openbabel/data.h>
 
 using namespace std;
 namespace OpenBabel
@@ -268,7 +268,7 @@ namespace OpenBabel
     int i;
     vector<string> vs;
     OpenBabel::OBPairData *pd;
-    std::string method;
+    string method;
 
     tokenize(vs,buffer);
     if (vs.size() >= start)
@@ -295,7 +295,7 @@ namespace OpenBabel
         }
   }
 
-  static int extract_thermo(OpenBabel::OBMol *mol,std::string method,double temperature,
+  static int extract_thermo(OpenBabel::OBMol *mol,string method,double temperature,
                             double ezpe,double Hcorr,double Gcorr,double E0,double CV,
                             int RotSymNum,std::vector<double> Scomponents)
   {
@@ -307,7 +307,7 @@ namespace OpenBabel
     char valbuf[128];
     int ii,atomid,atomicnumber,found,foundall;
     double dhofM0, dhofMT, S0MT, DeltaSMT;
-    std::string defunit("Hartree");
+    string defunit("Hartree");
     double eFactor = energyToKcal(defunit);
 
     OBet = new OpenBabel::OBElementTable();
