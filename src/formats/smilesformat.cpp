@@ -425,8 +425,6 @@ namespace OpenBabel {
 
     for (_ptr=_buffer;*_ptr;_ptr++)
       {
-        //cerr << " parsing " << _ptr << endl;
-
         if (*_ptr<0 || isspace(*_ptr))
           continue;
         else if (isdigit(*_ptr) || *_ptr == '%') //ring open/close

@@ -2140,7 +2140,7 @@ namespace OpenBabel
                             "Ran OpenBabel::AddHydrogens -- nonpolar only", obAuditMsg);
 
     // Make sure we have conformers (PR#1665519)
-    if (!_vconf.empty()) {
+    if (!_vconf.empty() && !Empty()) {
       OBAtom *atom;
       vector<OBAtom*>::iterator i;
       for (atom = BeginAtom(i);atom;atom = NextAtom(i))
