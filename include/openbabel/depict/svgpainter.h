@@ -20,10 +20,13 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <iostream>
+#include <set>
 #include <openbabel/depict/painter.h>
 
 namespace OpenBabel
 {
+  typedef std::pair<OBColor,OBColor> ColorGradient;
+
   class OBDEPICT SVGPainter : public OBPainter
   {
     public:
@@ -38,12 +41,14 @@ namespace OpenBabel
       void SetFontFamily(const std::string &fontFamily);
       void SetFontSize(int pointSize);
       void SetFillColor(const OBColor &color);
+      void SetFillRadial(const OBColor &start, const OBColor &end);
       void SetPenColor(const OBColor &color);
       void SetPenWidth(double width);
       double GetPenWidth();
       void DrawLine(double x1, double y1, double x2, double y2);
       void DrawPolygon(const std::vector<std::pair<double,double> > &points);
       void DrawCircle(double x, double y, double r);
+      void DrawBall(double x, double y, double r);
       void DrawText(double x, double y, const std::string &text);
       OBFontMetrics GetFontMetrics(const std::string &text);
       //@}
@@ -53,15 +58,21 @@ namespace OpenBabel
       void WriteImage(const std::string &filename);
       //@}
     private:
+      std::string RGBcode(OBColor color);
       std::string MakeRGB(OBColor color);
+      void WriteDefs();
 
     private:
       std::ostream& m_ofs;
+      std::stringstream m_mems;
       bool m_withViewBox;
       double m_width, m_height, m_x, m_y;
       OBColor m_Pencolor;
       OBColor m_OrigBondcolor;
       OBColor m_Fillcolor;
+      ColorGradient m_Gradientcolor;
+      std::set<ColorGradient> m_Gradients;
+      bool m_isFillcolor;
       double m_PenWidth;
       int m_fontPointSize;
       std::string m_fontFamily;

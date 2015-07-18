@@ -36,6 +36,7 @@ namespace OpenBabel
    */
   struct OBDEPICT OBColor
   {
+  public:
     OBColor()
     {
       *this = OBColor(0.0, 0.0, 0.0);
@@ -87,6 +88,21 @@ namespace OpenBabel
     bool operator !=(const OBColor& other)
     {
       return red!=other.red || green!=other.green || blue!=other.blue;
+    }
+
+    bool operator <(const OBColor& other) const
+    {
+      if (red < other.red)
+        return true;
+      else if (red > other.red)
+        return false;
+      else if (green < other.green)
+        return true;
+      else if (green > other.green)
+        return false;
+      else if (blue<other.blue)
+        return true;
+      return false;
     }
 
     double red, green, blue, alpha;
@@ -143,6 +159,11 @@ namespace OpenBabel
        */
       virtual void SetFillColor(const OBColor &color) = 0;
       /**
+       * Set the painter's fill as a radial gradient.
+       */
+      virtual void SetFillRadial(const OBColor &start, const OBColor &end) = 0;
+
+      /**
        * Set the painter's pen color.
        */
       virtual void SetPenColor(const OBColor &color) = 0;
@@ -167,6 +188,13 @@ namespace OpenBabel
        * fill color.
        */
       virtual void DrawPolygon(const std::vector<std::pair<double,double> > &points) = 0;
+
+      /**
+       * Draw a pseudo 3D ball, centered on (@p x,@p y) of radius @p r
+       * filled with the current Fill color or gradient
+       */
+      virtual void DrawBall(double x, double y, double r) = 0;
+
       virtual void DrawText(double x, double y, const std::string &text) = 0;
       virtual OBFontMetrics GetFontMetrics(const std::string &text) = 0;
   };

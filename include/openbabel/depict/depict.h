@@ -61,9 +61,10 @@ namespace OpenBabel
       };
 
       /**
-       * Constructor.
+       * Constructors.
        */
       OBDepict(OBPainter *painter);
+      OBDepict(OBPainter *painter, bool symbolOnBall);
       /**
        * Destructor.
        */
