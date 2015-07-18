@@ -18,45 +18,32 @@ GNU General Public License for more details.
 #include <openbabel/depict/svgpainter.h>
 
 #include <iostream>
+#include <iomanip>
 #include <sstream>
 using namespace std;
 
 namespace OpenBabel
 {
 
-  SVGPainter::SVGPainter(ostream& ofs, bool withViewBox,
-    double width, double height, double x, double y)
+  SVGPainter::SVGPainter(ostream& ofs, std::set<ColorGradient>* gradients, bool withViewBox,
+    double width, double height)
     :  m_ofs(ofs), m_withViewBox(withViewBox), m_width(width), m_height(height),
-       m_x(x), m_y(y), m_Pencolor("black"), m_Fillcolor("white"), m_PenWidth(1),
-       m_fontPointSize(16)  {}
+       m_Pencolor("black"), m_Fillcolor("white"), m_Gradientcolor(make_pair(OBColor("white"),OBColor("white"))), m_PenWidth(1),
+       m_fontPointSize(16), m_isFillcolor(true), m_Gradients(gradients)  {}
 
   SVGPainter::~SVGPainter()
   {
-    m_ofs << "</svg>\n";
-    if(m_withViewBox)
-      m_ofs << "</g>\n";
+
   }
 
   void SVGPainter::NewCanvas(double width, double height)
   {
-    //Using withViewBox to supress xml header and xmlns attributes. May need another way.
-    if(!m_withViewBox)
-      m_ofs << "<?xml version=\"1.0\"?>\n";
-
     if(m_withViewBox)
-      m_ofs << "<g transform=\"translate(" << m_x << "," << m_y << ")\">\n";
-
-    m_ofs << "<svg ";
-    if(!m_withViewBox)
-      m_ofs << "xmlns=\"http://www.w3.org/2000/svg\"\n"
-               "xmlns:xlink=\"http://www.w3.org/1999/xlink\" "
-               "xmlns:cml=\"http://www.xml-cml.org/schema\" ";
-    if(m_withViewBox)
-      m_ofs << "width=\"" << m_width << "\" height=\"" << m_height << "\" "
+      m_ofs << "<svg width=\"" << m_width << "\" height=\"" << m_height << "\" "
             << "x=\"0\" y=\"0\" "
             << "viewBox=\"0 0 " << width << ' ' << height << "\"\n";
     else
-      m_ofs << "width=\"" << width << "\" height=\"" << height << "\" "
+      m_ofs << "<svg width=\"" << width << "\" height=\"" << height << "\" "
             << "x=\"0\" y=\"0\" ";
 
     //Bond color and width are the initial m_Pencolor and m_PenWidth
@@ -69,6 +56,10 @@ namespace OpenBabel
     m_OrigBondcolor = m_Pencolor;
   }
 
+  void SVGPainter::EndCanvas()
+  {
+    m_ofs << "</svg>\n";
+  }
   bool SVGPainter::IsGood() const
   {
     return true;
@@ -87,6 +78,14 @@ namespace OpenBabel
   void SVGPainter::SetFillColor(const OBColor &color)
   {
     m_Fillcolor = color; //value when NewCanvas called used for background
+    m_isFillcolor = true;
+  }
+
+  void SVGPainter::SetFillRadial(const OBColor &start, const OBColor &end)
+  {
+    m_Gradientcolor = make_pair(start,end);
+    m_Gradients->insert(m_Gradientcolor);
+    m_isFillcolor = false;
   }
 
   void SVGPainter::SetPenColor(const OBColor &color)
@@ -160,12 +159,49 @@ namespace OpenBabel
   {
   }
 
+  void SVGPainter::DrawBall(double x, double y, double r)
+  {
+    m_ofs << "<circle cx=\"" << x << "\" cy=\"" << y << "\" r=\"" << r << "\" ";
+    if (m_isFillcolor) {
+      m_ofs << "style=\"stroke:black;fill:" << MakeRGB(m_Fillcolor) << "\"/>\n";
+    } else
+    {
+      m_ofs << "style=\"stroke:black;fill:url(#radial";
+      m_ofs << RGBcode(m_Gradientcolor.first)<< RGBcode(m_Gradientcolor.second) << ")\"/>\n";
+    }
+  }
+
+  void   SVGPainter::WriteDefs()
+  {
+    if (!m_Gradients->empty()) {
+      m_ofs << "<defs>\n";
+      for (std::set<ColorGradient>::iterator it=m_Gradients->begin(); it!=m_Gradients->end(); ++it) {
+        m_ofs << "<radialGradient id='radial";
+        m_ofs << RGBcode(it->first)<< RGBcode(it->second) << "' ";
+        m_ofs << "cx='50%' cy='50%' r='50%' fx='30%' fy='30%'>\n";
+        m_ofs << "  <stop offset=' 0%' stop-color=" << MakeRGB(it->first) << " stop-opacity='0.8'/>\n";
+        m_ofs << "  <stop offset='100%' stop-color=" << MakeRGB(it->second) << " stop-opacity ='1.0'/>\n";
+        m_ofs << "</radialGradient>\n";
+      }
+      m_ofs << "</defs>\n";
+    }
+  }
+
   string SVGPainter::MakeRGB(OBColor color)
   {
     stringstream ss;
     ss << "\"rgb(" << (int)(255*color.red) << ',' << (int)(255*color.green)
        << ',' << (int)(255*color.blue) << ")\" ";
     return ss.str();
+  }
+
+  string SVGPainter::RGBcode(OBColor color)
+  {
+    stringstream ss;
+    ss << std::hex << std::setfill('0') << std::setw(2) << (int)(255*color.red) << (int)(255*color.green)
+       <<  (int)(255*color.blue);
+    return ss.str();
+
   }
 }
 

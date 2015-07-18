@@ -57,6 +57,13 @@ namespace OpenBabel
     m_ofs << "SetFillColor " << color.red << " " << color.green << " " << color.blue << " " << color.alpha << " (rgba)" << endl;
   }
 
+  void CommandPainter::SetFillRadial(const OBColor &start, const OBColor &end)
+  {
+    m_ofs << "SetFillRadial" << start.red << " " << start.green << " " << start.blue << " " << start.alpha << " (rgba) to ";
+    m_ofs << end.red << " " << end.green << " " << end.blue << " " << end.alpha << " (rgba)" << endl;
+  }
+
+
   void CommandPainter::SetPenColor(const OBColor &color)
   {
     m_ofs << "SetPenColor " << color.red << " " << color.green << " " << color.blue << " " << color.alpha << " (rgba)" << endl;
@@ -95,6 +102,11 @@ namespace OpenBabel
   void CommandPainter::DrawCircle(double x, double y, double r)
   {
     m_ofs << "DrawCircle " << x << " " << y << " radius " << r << endl;
+  }
+
+  void CommandPainter::DrawBall(double x, double y, double r)
+  {
+    m_ofs << "DrawBall " << x << " " << y << " radius " << r << endl;
   }
 
   void CommandPainter::DrawText(double x, double y, const std::string &text)

@@ -99,6 +99,11 @@ namespace OpenBabel
     cairo_set_source_rgb(m_cairo, color.red, color.green, color.blue);
   }
 
+  void CairoPainter::SetFillRadial(const OBColor &start, const OBColor &end)
+  {
+    cairo_set_source_rgb(m_cairo, end.red, end.green, end.blue);
+  }
+
   void CairoPainter::SetPenColor(const OBColor &color)
   {
     cairo_set_source_rgb(m_cairo, color.red, color.green, color.blue);
@@ -175,6 +180,11 @@ namespace OpenBabel
     for (unsigned int i = 0; i < length; ++i)
       in->push_back(data[i]);
     return CAIRO_STATUS_SUCCESS;
+  }
+
+  void CairoPainter::DrawBall(double x, double y, double r)
+  {
+
   }
 
   void CairoPainter::WriteImage(std::ostream& ofs)

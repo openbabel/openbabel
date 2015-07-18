@@ -59,6 +59,11 @@ namespace OpenBabel
   {
   }
 
+  void ASCIIPainter::SetFillRadial(const OBColor &start, const OBColor &end)
+  {
+  }
+
+
   void ASCIIPainter::SetPenColor(const OBColor &color)
   {
   }
@@ -99,6 +104,10 @@ namespace OpenBabel
   }
 
   void ASCIIPainter::DrawCircle(double x, double y, double r)
+  {
+  }
+
+  void ASCIIPainter::DrawBall(double x, double y, double r)
   {
   }
 
