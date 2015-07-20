@@ -191,7 +191,7 @@ namespace OpenBabel
         m_ofs << "<radialGradient id='radial";
         m_ofs << RGBcode(it->first)<< RGBcode(it->second) << "' ";
         m_ofs << "cx='50%' cy='50%' r='50%' fx='30%' fy='30%'>\n";
-        m_ofs << "  <stop offset=' 0%' start-color=" << MakeRGB(it->first) << " stop-opacity='0.8'/>\n";
+        m_ofs << "  <stop offset=' 0%' stop-color=" << MakeRGB(it->first) << " stop-opacity='0.8'/>\n";
         m_ofs << "  <stop offset='100%' stop-color=" << MakeRGB(it->second) << " stop-opacity ='1.0'/>\n";
         m_ofs << "</radialGradient>\n";
       }
