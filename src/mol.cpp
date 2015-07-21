@@ -1933,7 +1933,7 @@ namespace OpenBabel
                           "Ran OpenBabel::DeleteHydrogens -- nonpolar",
                           obAuditMsg);
 
-    
+
     OBAtomClassData *pac = NULL;
     if (this->HasData("Atom Class"))
       pac = static_cast<OBAtomClassData*>(this->GetData("Atom Class"));
@@ -3628,7 +3628,8 @@ namespace OpenBabel
         _vconf.resize(_vconf.size()-1);
       }
 
-    delete [] c;
+    if (_c != NULL)
+      delete [] c;
   }
 
   /*! This method uses bond angles and geometries from current
