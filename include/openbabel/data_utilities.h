@@ -33,8 +33,8 @@ GNU General Public License for more details.
  *                 "Hartree", "Rydberg", "eV" or "electronvolt"
  * \return a factor to multiply energies with.
  */
-double energyToKcal(std::string unit);
-    
+extern "C" double energyToKcal(std::string unit);
+ 
 /*! \brief
  * Convenience function to extract thermochemistry from a molecule structure
  *
@@ -54,20 +54,20 @@ double energyToKcal(std::string unit);
  * \param[out] Scomponents Translational, Rotational and Vibrational components of S0
  * \return true if all values were found, false otherwise.
  */
-bool extract_thermochemistry(OpenBabel::OBMol  &mol,
-                                    bool    bVerbose,
-                                    int    *Nsymm,
-                                    int     Nrotbonds,
-                                    double  dbdt,
-                                    double *temperature,
-                                    double *DeltaHf0,
-                                    double *DeltaHfT,
-                                    double *DeltaGfT,
-                                    double *DeltaSfT,
-                                    double *S0T,
-                                    double *CVT,
-                                    double *CPT,
-                                    std::vector<double> &Scomponents);
+extern "C" bool extract_thermochemistry(OpenBabel::OBMol  &mol,
+                                        bool    bVerbose,
+                                        int    *Nsymm,
+                                        int     Nrotbonds,
+                                        double  dbdt,
+                                        double *temperature,
+                                        double *DeltaHf0,
+                                        double *DeltaHfT,
+                                        double *DeltaGfT,
+                                        double *DeltaSfT,
+                                        double *S0T,
+                                        double *CVT,
+                                        double *CPT,
+                                        std::vector<double> &Scomponents);
 
 #endif //DATA_UTILITIES_H
 
