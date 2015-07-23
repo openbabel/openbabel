@@ -31,12 +31,13 @@ namespace OpenBabel
   {
     public:
       SVGPainter();
-      SVGPainter(std::ostream& ofs, bool withViewBox=false,
-        double width=0.0, double height=0.0, double x=0.0, double y=0.0);
+      SVGPainter(std::ostream& ofs, std::set<ColorGradient> *gradients, bool withViewBox=false,
+        double width=0.0, double height=0.0);
       ~SVGPainter();
       //! @name OBPainter methods
       //@{
       void NewCanvas(double width, double height);
+      void EndCanvas();
       bool IsGood() const;
       void SetFontFamily(const std::string &fontFamily);
       void SetFontSize(int pointSize);
@@ -51,6 +52,7 @@ namespace OpenBabel
       void DrawBall(double x, double y, double r);
       void DrawText(double x, double y, const std::string &text);
       OBFontMetrics GetFontMetrics(const std::string &text);
+      void WriteDefs();
       //@}
 
       //! @name CairoPainter specific
@@ -60,18 +62,16 @@ namespace OpenBabel
     private:
       std::string RGBcode(OBColor color);
       std::string MakeRGB(OBColor color);
-      void WriteDefs();
 
     private:
       std::ostream& m_ofs;
-      std::stringstream m_mems;
       bool m_withViewBox;
-      double m_width, m_height, m_x, m_y;
+      double m_width, m_height;
       OBColor m_Pencolor;
       OBColor m_OrigBondcolor;
       OBColor m_Fillcolor;
       ColorGradient m_Gradientcolor;
-      std::set<ColorGradient> m_Gradients;
+      std::set<ColorGradient> *m_Gradients;
       bool m_isFillcolor;
       double m_PenWidth;
       int m_fontPointSize;

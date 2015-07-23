@@ -26,7 +26,7 @@ namespace OpenBabel
 class SVGBSFormat : public OBFormat
 {
 public:
-  SVGBSFormat() : _ncols(0), _nrows(0), _nmax(0)
+  SVGBSFormat() : _ncols(0), _nrows(0), _nmax(0), _ptext(0), _textpos(0)
   {
     OBConversion::RegisterFormat("svgbs",this);
     OBConversion::RegisterOptionParam("N", this, 1, OBConversion::OUTOPTIONS);

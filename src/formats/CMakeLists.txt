@@ -16,7 +16,6 @@ set(formats_utility
   povrayformat
   reportformat
   svgformat
-  svgbsformat
   textformat
   titleformat
   )

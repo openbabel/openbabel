@@ -25,41 +25,25 @@ using namespace std;
 namespace OpenBabel
 {
 
-  SVGPainter::SVGPainter(ostream& ofs, bool withViewBox,
-    double width, double height, double x, double y)
+  SVGPainter::SVGPainter(ostream& ofs, std::set<ColorGradient>* gradients, bool withViewBox,
+    double width, double height)
     :  m_ofs(ofs), m_withViewBox(withViewBox), m_width(width), m_height(height),
-       m_x(x), m_y(y), m_Pencolor("black"), m_Fillcolor("white"), m_Gradientcolor(make_pair(OBColor("white"),OBColor("white"))), m_PenWidth(1),
-       m_fontPointSize(16), m_isFillcolor(true)  {}
+       m_Pencolor("black"), m_Fillcolor("white"), m_Gradientcolor(make_pair(OBColor("white"),OBColor("white"))), m_PenWidth(1),
+       m_fontPointSize(16), m_isFillcolor(true), m_Gradients(gradients)  {}
 
   SVGPainter::~SVGPainter()
   {
-    WriteDefs();
-    m_ofs << m_mems.str();
-    m_ofs << "</svg>\n";
-    if(m_withViewBox)
-      m_ofs << "</g>\n";
+
   }
 
   void SVGPainter::NewCanvas(double width, double height)
   {
-    //Using withViewBox to supress xml header and xmlns attributes. May need another way.
-    if(!m_withViewBox)
-      m_ofs << "<?xml version=\"1.0\"?>\n";
-
     if(m_withViewBox)
-      m_ofs << "<g transform=\"translate(" << m_x << "," << m_y << ")\">\n";
-
-    m_ofs << "<svg ";
-    if(!m_withViewBox)
-      m_ofs << "xmlns=\"http://www.w3.org/2000/svg\"\n"
-               "xmlns:xlink=\"http://www.w3.org/1999/xlink\" "
-               "xmlns:cml=\"http://www.xml-cml.org/schema\" ";
-    if(m_withViewBox)
-      m_ofs << "width=\"" << m_width << "\" height=\"" << m_height << "\" "
+      m_ofs << "<svg width=\"" << m_width << "\" height=\"" << m_height << "\" "
             << "x=\"0\" y=\"0\" "
             << "viewBox=\"0 0 " << width << ' ' << height << "\"\n";
     else
-      m_ofs << "width=\"" << width << "\" height=\"" << height << "\" "
+      m_ofs << "<svg width=\"" << width << "\" height=\"" << height << "\" "
             << "x=\"0\" y=\"0\" ";
 
     //Bond color and width are the initial m_Pencolor and m_PenWidth
@@ -67,11 +51,15 @@ namespace OpenBabel
           << "stroke-width=\"" << m_PenWidth << "\"  stroke-linecap=\"round\"" << ">\n";
 
     if(!m_withViewBox && m_Fillcolor.alpha!=0.0)//Background color for single molecule. Handled by outer svg when table.
-      m_mems << "<rect x=\"0%\" y=\"0%\" width=\"100%\" height=\"100%\" stroke-width=\"0\" fill="
+      m_ofs << "<rect x=\"0%\" y=\"0%\" width=\"100%\" height=\"100%\" stroke-width=\"0\" fill="
             << MakeRGB(m_Fillcolor) << " />\n";
     m_OrigBondcolor = m_Pencolor;
   }
 
+  void SVGPainter::EndCanvas()
+  {
+    m_ofs << "</svg>\n";
+  }
   bool SVGPainter::IsGood() const
   {
     return true;
@@ -96,7 +84,7 @@ namespace OpenBabel
   void SVGPainter::SetFillRadial(const OBColor &start, const OBColor &end)
   {
     m_Gradientcolor = make_pair(start,end);
-    m_Gradients.insert(m_Gradientcolor);
+    m_Gradients->insert(m_Gradientcolor);
     m_isFillcolor = false;
   }
 
@@ -117,37 +105,37 @@ namespace OpenBabel
 
   void SVGPainter::DrawLine(double x1, double y1, double x2, double y2)
   {
-    streamsize oldprec = m_mems.precision(1);
-    m_mems << fixed << "<line x1=\"" << x1 << "\" y1=\"" << y1 << "\" x2=\""
+    streamsize oldprec = m_ofs.precision(1);
+    m_ofs << fixed << "<line x1=\"" << x1 << "\" y1=\"" << y1 << "\" x2=\""
       << x2 << "\" y2=\"" << y2 << "\"";
     // if(m_Pencolor!=m_OrigBondcolor) // TODO: Bring this line back once Pybel is fine with this
-      m_mems << " stroke=" << MakeRGB(m_Pencolor);
-    m_mems << " stroke-width=\"" << m_PenWidth << "\"";
-    m_mems << "/>\n";
-    m_mems.precision(oldprec);
+      m_ofs << " stroke=" << MakeRGB(m_Pencolor);
+    m_ofs << " stroke-width=\"" << m_PenWidth << "\"";
+    m_ofs << "/>\n";
+    m_ofs.precision(oldprec);
   }
 
   void SVGPainter::DrawPolygon(const std::vector<std::pair<double,double> > &points)
   {
-    m_mems << "<polygon points=\"";
+    m_ofs << "<polygon points=\"";
       std::vector<std::pair<double,double> >::const_iterator i;
     for (i = points.begin(); i != points.end(); ++i)
-      m_mems << i->first << ' ' << i->second << ' ';
-    m_mems << "\"";
-    m_mems << " stroke-width=\"" << m_PenWidth << "\"";
-    m_mems << " fill=" << MakeRGB(m_Pencolor);
-    m_mems << " stroke=" << MakeRGB(m_Pencolor);
-    m_mems << "/>\n";
+      m_ofs << i->first << ' ' << i->second << ' ';
+    m_ofs << "\"";
+    m_ofs << " stroke-width=\"" << m_PenWidth << "\"";
+    m_ofs << " fill=" << MakeRGB(m_Pencolor);
+    m_ofs << " stroke=" << MakeRGB(m_Pencolor);
+    m_ofs << "/>\n";
   }
 
   void SVGPainter::DrawCircle(double x, double y, double r)
   {
-    m_mems << "<circle cx=\"" << x << "\" y=\"" << y << "\" r=\"" << r << "\" />\n";
+    m_ofs << "<circle cx=\"" << x << "\" y=\"" << y << "\" r=\"" << r << "\" />\n";
   }
 
   void SVGPainter::DrawText(double x, double y, const std::string &text)
   {
-    m_mems << "<text x=\"" << x << "\" y=\"" << y << "\""
+    m_ofs << "<text x=\"" << x << "\" y=\"" << y << "\""
       << " fill=" << MakeRGB(m_Pencolor) << " stroke=" << MakeRGB(m_Pencolor) << "stroke-width=\"1\" "
       << "font-size=\"" << m_fontPointSize << "\" >"
       << text << "</text>\n";
@@ -173,21 +161,21 @@ namespace OpenBabel
 
   void SVGPainter::DrawBall(double x, double y, double r)
   {
-    m_mems << "<circle cx=\"" << x << "\" cy=\"" << y << "\" r=\"" << r << "\" ";
+    m_ofs << "<circle cx=\"" << x << "\" cy=\"" << y << "\" r=\"" << r << "\" ";
     if (m_isFillcolor) {
-      m_mems << "style=\"stroke:black;fill:" << MakeRGB(m_Fillcolor) << "\"/>\n";
+      m_ofs << "style=\"stroke:black;fill:" << MakeRGB(m_Fillcolor) << "\"/>\n";
     } else
     {
-      m_mems << "style=\"stroke:black;fill:url(#radial";
-      m_mems << RGBcode(m_Gradientcolor.first)<< RGBcode(m_Gradientcolor.second) << ")\"/>\n";
+      m_ofs << "style=\"stroke:black;fill:url(#radial";
+      m_ofs << RGBcode(m_Gradientcolor.first)<< RGBcode(m_Gradientcolor.second) << ")\"/>\n";
     }
   }
 
   void   SVGPainter::WriteDefs()
   {
-    if (!m_Gradients.empty()) {
+    if (!m_Gradients->empty()) {
       m_ofs << "<defs>\n";
-      for (std::set<ColorGradient>::iterator it=m_Gradients.begin(); it!=m_Gradients.end(); ++it) {
+      for (std::set<ColorGradient>::iterator it=m_Gradients->begin(); it!=m_Gradients->end(); ++it) {
         m_ofs << "<radialGradient id='radial";
         m_ofs << RGBcode(it->first)<< RGBcode(it->second) << "' ";
         m_ofs << "cx='50%' cy='50%' r='50%' fx='30%' fy='30%'>\n";
