@@ -162,7 +162,6 @@ namespace OpenBabel
        * Set the painter's fill as a radial gradient.
        */
       virtual void SetFillRadial(const OBColor &start, const OBColor &end) = 0;
-
       /**
        * Set the painter's pen color.
        */
@@ -179,7 +178,7 @@ namespace OpenBabel
        * Draw a line from @p x1, @p y1 to @p x2, @p y2. The line is drawn using
        * the current pen color and width.
        */
-      virtual void DrawLine(double x1, double y1, double x2, double y2) = 0;
+      virtual void DrawLine(double x1, double y1, double x2, double y2, const std::vector<double> & dashes=std::vector<double>()) = 0;
       virtual void DrawCircle(double x, double y, double r) = 0;
       /**
        * Draw a polygon by connecting consecutive points. The last point will be
