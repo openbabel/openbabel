@@ -80,11 +80,19 @@ namespace OpenBabel
     return m_pen_width;
   }
 
-  void CommandPainter::DrawLine(double x1, double y1, double x2, double y2)
+  void CommandPainter::DrawLine(double x1, double y1, double x2, double y2,  const std::vector<double> & dashes)
   {
     
     m_ofs << fixed << "DrawLine " << x1 << " " << y1 << " to "
-                                  << x2 << " " << y2 << endl;
+                                  << x2 << " " << y2;
+    if (!dashes.empty()) {
+      std::vector<double>::const_iterator it;
+      m_ofs << " dashes";
+      for (it=dashes.begin(); it!=dashes.end() ; ++it)
+        m_ofs << " " << *it;
+
+    }
+    m_ofs << endl;
   }
 
   void CommandPainter::DrawPolygon(const std::vector<std::pair<double,double> > &points)

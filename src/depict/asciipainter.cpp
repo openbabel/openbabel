@@ -77,7 +77,7 @@ namespace OpenBabel
     return 0.0;
   }
 
-  void ASCIIPainter::DrawLine(double x1, double y1, double x2, double y2)
+  void ASCIIPainter::DrawLine(double x1, double y1, double x2, double y2, const std::vector<double> & dashes)
   {
     vector<pair<int, int> > coords;
     vector<pair<int, int> >::iterator vp_it;

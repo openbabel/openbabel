@@ -119,10 +119,11 @@ namespace OpenBabel
     return m_pen_width;
   }
 
-  void CairoPainter::DrawLine(double x1, double y1, double x2, double y2)
+  void CairoPainter::DrawLine(double x1, double y1, double x2, double y2, const std::vector<double>& dashes)
   {
     cairo_set_line_width(m_cairo, m_pen_width);
     cairo_set_line_cap(m_cairo, CAIRO_LINE_CAP_ROUND);
+    cairo_set_dash(m_cairo, (dashes.size()?&dashes[0]:NULL), dashes.size(), 0.0);
     cairo_move_to(m_cairo, x1, y1);
     cairo_line_to(m_cairo, x2, y2);
     cairo_stroke(m_cairo);

@@ -103,7 +103,7 @@ namespace OpenBabel
     return m_PenWidth;
   }
 
-  void SVGPainter::DrawLine(double x1, double y1, double x2, double y2)
+  void SVGPainter::DrawLine(double x1, double y1, double x2, double y2, const std::vector<double>& dashes)
   {
     streamsize oldprec = m_ofs.precision(1);
     m_ofs << fixed << "<line x1=\"" << x1 << "\" y1=\"" << y1 << "\" x2=\""
@@ -111,6 +111,14 @@ namespace OpenBabel
     // if(m_Pencolor!=m_OrigBondcolor) // TODO: Bring this line back once Pybel is fine with this
       m_ofs << " stroke=" << MakeRGB(m_Pencolor);
     m_ofs << " stroke-width=\"" << m_PenWidth << "\"";
+    if (!dashes.empty()) {
+      std::vector<double>::const_iterator it = dashes.begin();
+      m_ofs << " stroke-dasharray=\"" << *it;
+      for (; it!=dashes.end() ; ++it)
+        m_ofs << "," << *it;
+      m_ofs << "\"";
+
+    }
     m_ofs << "/>\n";
     m_ofs.precision(oldprec);
   }

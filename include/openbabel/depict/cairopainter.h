@@ -22,7 +22,7 @@ namespace OpenBabel
       void SetPenColor(const OBColor &color);
       void SetPenWidth(double width);
       double GetPenWidth();
-      void DrawLine(double x1, double y1, double x2, double y2);
+      void DrawLine(double x1, double y1, double x2, double y2, const std::vector<double> & dashes=std::vector<double>());
       void DrawPolygon(const std::vector<std::pair<double,double> > &points);
       void DrawCircle(double x, double y, double r);
       void DrawBall(double x, double y, double r);
