@@ -16,5 +16,5 @@ before_script:
  - cmake -DPYTHON_BINDINGS=ON  -DRUN_SWIG=ON ..
 
 script:
- - make
+ - make -j2
  - ctest
