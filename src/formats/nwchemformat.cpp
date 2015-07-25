@@ -137,7 +137,8 @@ namespace OpenBabel
                 atom->SetVector(x,y,z); //set coordinates
 
                 //set atomic number
-                atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
+                size_t end_of_atom_symbol = vs[1].find_last_not_of("1234567890") + 1;
+                atom->SetAtomicNum(etab.GetAtomicNum(vs[1].substr(0,end_of_atom_symbol).c_str()));
 
                 if (!ifs.getline(buffer,BUFF_SIZE))
                   break;
