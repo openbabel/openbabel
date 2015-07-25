@@ -60,6 +60,7 @@ namespace OpenBabel
       virtual void DrawAtomLabel(const std::string &label, int alignment, const vector3 &pos);
 
       virtual void DrawRing(OBRing *ring, OBBitVec &drawnBonds);
+      virtual void DrawAromaticRing(OBRing *ring, OBBitVec &drawnBonds);
 
       bool HasLabel(OBAtom *atom);
       void SetWedgeAndHash(OBMol* mol);
@@ -94,6 +95,12 @@ namespace OpenBabel
         void DrawAtomLabel(const std::string &label, int alignment, const vector3 &pos);
 
         void DrawRing(OBRing *ring, OBBitVec &drawnBonds);
+        void DrawAromaticRing(OBRing *ring, OBBitVec &drawnBonds);
+
+  private:
+        void DrawAromaticRingBond(OBAtom *prevAtom, OBAtom *beginAtom, OBAtom *endAtom, OBAtom *nextAtom, const vector3 &center, double dist);
+        double GetAtomRadius(OBAtom* atom);
+
   };
 
   OBDepict::OBDepict(OBPainter *painter) : d(new OBDepictPrivate)
@@ -335,6 +342,11 @@ namespace OpenBabel
     }
   }
 
+  void OBDepictPrivate::DrawAromaticRing(OBRing *ring, OBBitVec &drawnBonds)
+  {
+    DrawRing(ring, drawnBonds);
+  }
+
   bool OBDepict::DrawMolecule(OBMol *mol)
   {
     if (!d->painter)
@@ -466,7 +478,7 @@ namespace OpenBabel
     for (std::vector<OBRing*>::iterator k = rings.begin(); k != rings.end(); ++k) {
       OBRing *ring = *k;
       if (ring->IsAromatic())
-        d->DrawRing(ring, drawnBonds);
+        d->DrawAromaticRing(ring, drawnBonds);
     }
     // draw aliphatic rings
     for (std::vector<OBRing*>::iterator k = rings.begin(); k != rings.end(); ++k) {
@@ -1081,14 +1093,17 @@ namespace OpenBabel
     OBDepictPrivate::DrawRing(ring, drawnBonds);
   }
 
-/*inline void OBDepictPrivateBallAndStick::DrawAromaticRing()
+inline void OBDepictPrivateBallAndStick::DrawAromaticRing(OBRing* ring,
+OBBitVec& drawnBonds)
   {
 
     std::vector<int> indexes = ring->_path;
     const size_t ringSize = indexes.size();
     vector3 center(VZero);
+    double maxdist =0.;
     for (std::vector<int>::iterator l = indexes.begin(); l != indexes.end(); ++l) {
       center += mol->GetAtom(*l)->GetVector();
+      maxdist = max(maxdist, GetAtomRadius(mol->GetAtom(*l)));
     }
     center /= ringSize;
 
@@ -1105,17 +1120,53 @@ namespace OpenBabel
       else
         painter->SetPenColor(bondColor);
 
-      DrawRingBond(begin, end, center, ringBond->GetBondOrder());
+      DrawAromaticRingBond(prev,begin, end, next, center, maxdist * 1.2);
       drawnBonds.SetBitOn(ringBond->GetId());
     }
   }
-*/
+
+  inline void OBDepictPrivateBallAndStick::DrawAromaticRingBond(OBAtom *prevAtom, OBAtom *beginAtom, OBAtom *endAtom, OBAtom *nextAtom, const vector3 &center, double dist)
+  {
+    vector3 prev  = prevAtom->GetVector();
+    vector3 begin = beginAtom->GetVector();
+    vector3 end   = endAtom->GetVector();
+    vector3 next  = nextAtom->GetVector();
+
+    vector3 b1 = (prev- begin).normalize();
+    vector3 b2 = (end - begin).normalize();
+    vector3 b_med = (b1 + b2);
+    vector3 orthogonalLine = cross(b2, VZ).normalize();
+    double brestrict = dot(orthogonalLine, b_med);
+    double bd = dist;
+    if (brestrict !=  0.0)
+      bd = dist / abs(brestrict);
+    vector3 b_arom = begin + b_med * bd;
+
+    vector3 b3 = (next - end).normalize();
+    vector3 e_med = (b3 - b2);
+    double erestrict = dot(orthogonalLine, e_med);
+    double ed = dist;
+    if (erestrict != 0.0)
+      ed = dist  / abs(erestrict);
+      vector3 e_arom = end + e_med * ed;
+
+    painter->DrawLine(begin.x(), begin.y(), end.x(), end.y());
+    static const float dashpattern[] = {5., 5.};
+    static const vector<double> pat = vector<double>(dashpattern,dashpattern + sizeof(dashpattern)/sizeof(double));
+    painter->DrawLine(b_arom.x(), b_arom.y(), e_arom.x(), e_arom.y(), pat);
+  }
   void OBDepictPrivateBallAndStick::DrawAtom(OBAtom *atom)
   {
     OBColor atomColor = etab.GetRGB(atom->GetAtomicNum());
-    double radius = etab.GetCovalentRad(atom->GetAtomicNum());
+
     painter->SetFillRadial(OBColor("white"),atomColor);
-    painter->DrawBall(atom->GetVector().x(), atom->GetVector().y(),radius* bondLength / 3.0);
+    painter->DrawBall(atom->GetVector().x(), atom->GetVector().y(),GetAtomRadius(atom));
+  }
+
+  double OBDepictPrivateBallAndStick::GetAtomRadius(OBAtom *atom)
+  {
+    double radius = etab.GetCovalentRad(atom->GetAtomicNum());
+    return radius* bondLength / 3.0;
   }
 
   void OBDepictPrivateBallAndStick::DrawAtomLabel(const std::string &label, int alignment, const vector3 &pos)
