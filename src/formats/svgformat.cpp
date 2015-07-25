@@ -453,18 +453,20 @@ bool SVGFormat::WriteSVG(OBConversion* pConv, vector<OBBase*>& molecules)
     molfs << "<g transform=\"translate(" << innerX << "," << innerY << ")\">\n";
 
     depictor.DrawMolecule(pmol);
-    painter.EndCanvas();
 
-    molfs <<"</g>\n";
 
     //Draw atom indices if requested
     if(pConv->IsOption("i"))
       depictor.AddAtomLabels(OBDepict::AtomIndex);
 
+    painter.EndCanvas();
+
 
     //Embed CML of molecule if requested
     if(pConv->IsOption("e"))
       EmbedCML(pmol, pConv, &molfs);
+
+    molfs <<"</g>\n";
 
     //*** Write molecule name ***
     if(!pConv->IsOption("d"))

@@ -1074,12 +1074,42 @@ namespace OpenBabel
     OBDepictPrivate::DrawRingBond(beginAtom, endAtom, center, order);
   }
 
+
   inline void OBDepictPrivateBallAndStick::DrawRing(OBRing* ring,
   OBBitVec& drawnBonds)
   {
     OBDepictPrivate::DrawRing(ring, drawnBonds);
   }
 
+/*inline void OBDepictPrivateBallAndStick::DrawAromaticRing()
+  {
+
+    std::vector<int> indexes = ring->_path;
+    const size_t ringSize = indexes.size();
+    vector3 center(VZero);
+    for (std::vector<int>::iterator l = indexes.begin(); l != indexes.end(); ++l) {
+      center += mol->GetAtom(*l)->GetVector();
+    }
+    center /= ringSize;
+
+    for (unsigned int l = 0; l < indexes.size(); ++l) {
+      OBAtom *prev  = mol->GetAtom(indexes[l]);
+      OBAtom *begin = mol->GetAtom(indexes[(l+1) % ringSize]);
+      OBAtom *end   = mol->GetAtom(indexes[(l+2) % ringSize]);
+      OBAtom *next  = mol->GetAtom(indexes[(l+3) % ringSize]);
+
+      OBBond *ringBond = mol->GetBond(begin, end);
+
+      if((options & OBDepict::internalColor) && ringBond->HasData("color"))
+        painter->SetPenColor(OBColor(ringBond->GetData("color")->GetValue()));
+      else
+        painter->SetPenColor(bondColor);
+
+      DrawRingBond(begin, end, center, ringBond->GetBondOrder());
+      drawnBonds.SetBitOn(ringBond->GetId());
+    }
+  }
+*/
   void OBDepictPrivateBallAndStick::DrawAtom(OBAtom *atom)
   {
     OBColor atomColor = etab.GetRGB(atom->GetAtomicNum());
