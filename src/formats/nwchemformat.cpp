@@ -16,6 +16,9 @@ GNU General Public License for more details.
 
 #include <openbabel/obmolecformat.h>
 
+//Required for double abs(double)
+#include <cmath> 
+
 using namespace std;
 namespace OpenBabel
 {
@@ -177,7 +180,7 @@ namespace OpenBabel
               tokenize(vs,buffer);
             } // while
             for (unsigned int i = 0; i < freq.size(); i++) {
-              if (freq[i] > 10.0) {
+              if (abs(freq[i]) > 10.0) {
                 // skip rotational and translational modes
 	        Frequencies.push_back(freq[i]);
                 Lx.push_back(vib[i]);
@@ -191,7 +194,7 @@ namespace OpenBabel
            ifs.getline(buffer, BUFF_SIZE);
            tokenize(vs,buffer);
            while (vs.size() == 7) {
-             if (atof(vs[1].c_str()) > 10.0)
+             if (abs(atof(vs[1].c_str())) > 10.0)
                 Intensities.push_back(atof(vs[5].c_str()));
              ifs.getline(buffer, BUFF_SIZE);
              tokenize(vs,buffer);
