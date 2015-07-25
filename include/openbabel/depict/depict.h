@@ -64,7 +64,7 @@ namespace OpenBabel
        * Constructors.
        */
       OBDepict(OBPainter *painter);
-      OBDepict(OBPainter *painter, bool symbolOnBall);
+      OBDepict(OBPainter *painter, bool withBall, bool symbolOnBall=false);
       /**
        * Destructor.
        */
@@ -112,7 +112,7 @@ namespace OpenBabel
       void SetBondColor(const std::string& scolor);
 
     private:
-      OBDepictPrivate * const d;
+      OBDepictPrivate * d;
   };
 
 }

@@ -290,7 +290,7 @@ bool SVGFormat::WriteSVG(OBConversion* pConv, vector<OBBase*>& molecules)
     fixedpx= pConv->IsOption("px", OBConversion::GENOPTIONS);
   //If WriteMolecule called directly, e.g. from OBConversion::Write()
   //the default mode is a fixed image size of 200px square
-  if(!fixedpx && !pConv->IsOption("svgbswritechemobject"))
+  if(!fixedpx && molecules.size()==1)
     fixedpx = "200";
   if(fixedpx)
   {
@@ -363,6 +363,10 @@ bool SVGFormat::WriteSVG(OBConversion* pConv, vector<OBBase*>& molecules)
   if(pConv->IsOption("X"))
     opts |= OBDepict::allExplicit;
 
+  bool balldepict = false;
+  if(pConv->IsOption("S"))
+    balldepict = true;
+
   double factor = 1.0;
   int nc = _ncols ? _ncols : 1;
   int nr = (_nrows ? _nrows : 1);
@@ -429,7 +433,7 @@ bool SVGFormat::WriteSVG(OBConversion* pConv, vector<OBBase*>& molecules)
     }
 
     SVGPainter painter(molfs, &gradients, true, cellsize, cellsize);
-    OBDepict depictor(&painter, false);
+    OBDepict depictor(&painter, balldepict);
 
     depictor.SetOption(opts);
 

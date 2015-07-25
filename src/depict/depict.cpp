@@ -101,8 +101,12 @@ namespace OpenBabel
     d->painter = painter;
   }
 
-  OBDepict::OBDepict(OBPainter *painter, bool symbolOnBall) : d(new OBDepictPrivateBallAndStick(symbolOnBall))
+  OBDepict::OBDepict(OBPainter *painter, bool withBall, bool symbolOnBall)
   {
+    if(withBall)
+      d = new OBDepictPrivateBallAndStick(symbolOnBall);
+    else
+      d = new OBDepictPrivate();
     d->painter = painter;
   }
 
@@ -1067,7 +1071,22 @@ namespace OpenBabel
   inline void OBDepictPrivateBallAndStick::DrawRingBond(OBAtom* beginAtom,
   OBAtom* endAtom, const vector3& center, int order)
   {
-    DrawSimpleBond(beginAtom, endAtom, 1);
+    vector3 begin = beginAtom->GetVector();
+    vector3 end = endAtom->GetVector();
+
+    vector3 vb = (end - begin).normalize();
+    vector3 orthogonalLine = cross(vb, VZ)/*.normalize()*/;
+    vector3 spacing = orthogonalLine * bondSpacing * 1.8;
+    vector3 offset = vb * bondSpacing;
+    if ((begin + spacing - center).length() > (begin - spacing - center).length())
+      spacing *= -1.0;
+
+    painter->DrawLine(begin.x(), begin.y(), end.x(), end.y());
+
+    static const double dashesarr[] = {5., 5.};
+    painter->DrawLine(begin.x() + spacing.x() + offset.x(), begin.y() + spacing.y() + offset.y(),
+                      end.x() + spacing.x() - offset.x(), end.y() + spacing.y() - offset.y(),
+                      std::vector<double>(dashesarr, dashesarr + sizeof(dashesarr) / sizeof(double)));
   }
 
   inline void OBDepictPrivateBallAndStick::DrawRing(OBRing* ring,
