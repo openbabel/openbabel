@@ -56,8 +56,10 @@ namespace OpenBabel
     ////////////////////////////////////////////////////
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    
+
   private:
+    OBMol* ReadCoordinates(istream *ifs);
+
     enum CalculationType
     {
         SinglePoint,
@@ -68,6 +70,7 @@ namespace OpenBabel
         Property,
         Unknown
     };
+
   };
 
   //Make an instance of the format class
@@ -108,6 +111,47 @@ namespace OpenBabel
   //Make an instance of the format class
   NWChemInputFormat theNWChemInputFormat;
 
+  //////////////////////////////////////////////////////
+  /*
+  Method reads coordinates from input stream (ifs) and creates
+  new OBMol object then return reference to it.
+  Input stream must be set to begining of coordinates
+  table in nwo file.
+  */
+  OBMol* NWChemOutputFormat::ReadCoordinates(istream *ifs)
+  {
+    OBMol* atoms;
+    atoms = new OBMol;
+    vector<string> vs;
+    char buffer[BUFF_SIZE];
+    double x, y, z;
+    atoms->BeginModify();
+    ifs->getline(buffer,BUFF_SIZE);	// blank
+    ifs->getline(buffer,BUFF_SIZE);	// column headings
+    ifs->getline(buffer,BUFF_SIZE);	// ---- ----- ----
+    ifs->getline(buffer,BUFF_SIZE);
+    tokenize(vs,buffer);
+    for (unsigned int i=0; vs.size() == 6;i++)
+      {
+        OBAtom* atom = atoms->NewAtom();
+
+        x = atof((char*)vs[3].c_str());
+        y = atof((char*)vs[4].c_str());
+        z = atof((char*)vs[5].c_str());
+        atom->SetVector(x,y,z); //set coordinates
+
+        //set atomic number
+        size_t end_of_atom_symbol = vs[1].find_last_not_of("1234567890") + 1;
+        atom->SetAtomicNum(etab.GetAtomicNum(vs[1].substr(0,end_of_atom_symbol).c_str()));
+        if (!ifs->getline(buffer,BUFF_SIZE))
+          break;
+        tokenize(vs,buffer);
+      }
+
+    atoms->EndModify();
+
+    return atoms;
+  }
 
   /////////////////////////////////////////////////////////////////
   bool NWChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
@@ -184,29 +228,18 @@ namespace OpenBabel
         if(strstr(buffer,"Output coordinates") != NULL)
           {
             // mol.EndModify();
+            OBMol* atoms = ReadCoordinates(&ifs);
             mol.Clear();
             mol.BeginModify();
-            ifs.getline(buffer,BUFF_SIZE);	// blank
-            ifs.getline(buffer,BUFF_SIZE);	// column headings
-            ifs.getline(buffer,BUFF_SIZE);	// ---- ----- ----
-            ifs.getline(buffer,BUFF_SIZE);
-            tokenize(vs,buffer);
-            while (vs.size() == 6)
+            mol.ReserveAtoms(atoms->NumAtoms());
+            for(unsigned int i = 0;i < atoms->NumAtoms();i++)
               {
-                atom = mol.NewAtom();
-                x = atof((char*)vs[3].c_str());
-                y = atof((char*)vs[4].c_str());
-                z = atof((char*)vs[5].c_str());
-                atom->SetVector(x,y,z); //set coordinates
-
-                //set atomic number
-                size_t end_of_atom_symbol = vs[1].find_last_not_of("1234567890") + 1;
-                atom->SetAtomicNum(etab.GetAtomicNum(vs[1].substr(0,end_of_atom_symbol).c_str()));
-
-                if (!ifs.getline(buffer,BUFF_SIZE))
-                  break;
-                tokenize(vs,buffer);
+                OBAtom* atom = atoms->GetAtomById(i);
+                OBAtom* writeatom = mol.NewAtom();
+                writeatom->SetVector(atom->GetVector());
+                writeatom->SetAtomicNum(atom->GetAtomicNum());
               }
+            delete atoms;
           } // if "output coordinates"
         if(strstr(buffer,"P.Frequency") != NULL)
           {
