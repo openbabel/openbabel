@@ -62,7 +62,11 @@ namespace OpenBabel
     {
         SinglePoint,
         GeometryOptimization,
-        VibrationalAnalysis
+        VibrationalAnalysis,
+        ZTS,
+        MEP,
+        Property,
+        Unknown
     };
   };
 
@@ -135,19 +139,38 @@ namespace OpenBabel
     // recognition futher output
     string theory;
     string energy_pattern;
+    CalculationType current_calculation = SinglePoint;
     while	(ifs.getline(buffer,BUFF_SIZE))
       {
         if(strstr(buffer,"NWChem SCF Module") != NULL)
           {
             theory = "SCF";
             break;
-          }
+          }// if "SCF Module"
         else if(strstr(buffer,"NWChem DFT Module") != NULL)
           {
             theory = "DFT";
             break;
-          }
+          }// if "DFT Module"
+        else if(strstr(buffer,"NWChem Geometry Optimization") != NULL)
+          {
+            current_calculation = GeometryOptimization;
+          }// if "Geometry Optimization"
+        else if(strstr(buffer,"NWChem Nuclear Hessian and Frequency Analysis") != NULL)
+          {
+            current_calculation = VibrationalAnalysis;
+          }// if "Frequency Analysis"
+        else if(strstr(buffer,"@ String method.") != NULL)
+          {
+            current_calculation = ZTS;
+          }// if "String method"
+        else if(strstr(buffer,"NWChem Property Module") != NULL)
+          {
+            current_calculation = Property;
+          }// if "Property"
+          
       }//while
+    
     if (!theory.empty())
     {
         stringstream ss;
