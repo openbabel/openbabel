@@ -59,6 +59,7 @@ namespace OpenBabel
 
   private:
     OBMol* ReadCoordinates(istream *ifs);
+    OBVibrationData* ReadFrequencies(istream* ifs, OBVibrationData* vibration_data);
 
     enum CalculationType
     {
@@ -116,7 +117,7 @@ namespace OpenBabel
   Method reads coordinates from input stream (ifs) and creates
   new OBMol object then return reference to it.
   Input stream must be set to begining of coordinates
-  table in nwo file.
+  table in nwo file. (Line after "Output coordinates...")
   */
   OBMol* NWChemOutputFormat::ReadCoordinates(istream *ifs)
   {
@@ -153,6 +154,96 @@ namespace OpenBabel
     return atoms;
   }
 
+  //////////////////////////////////////////////////////
+  /*
+  Method reads vibration data from input stream (ifs) and writes it to existent
+  OBVibrationData object or creates new OBVibrationData object when it does
+  not exist.
+  Input stream must be set to begining of frequency table in nwo file. (Line after
+  "(Projected Frequencies expressed in cm-1)")
+  Method returns true when vibration data read and written to OBVibrationData successful
+  or returns false when supplied OBVibrationData object contain frequencies not related to
+  read ones.
+  */
+  OBVibrationData* NWChemOutputFormat::ReadFrequencies(istream* ifs, OBVibrationData* vibration_data)
+  {
+
+    vector<double>  Frequencies;
+    vector<vector<vector3> > Lx;
+    vector<string> vs;
+    char buffer[BUFF_SIZE];
+
+    ifs->getline(buffer, BUFF_SIZE); // blank line
+    ifs->getline(buffer, BUFF_SIZE); // frequency counting
+    ifs->getline(buffer, BUFF_SIZE); // blank line
+    ifs->getline(buffer, BUFF_SIZE); // P.Frequency  etc.
+    while (strstr(buffer,"P.Frequency") != NULL)
+      {
+        vector<double> freq;
+        vector<vector<vector3> > vib;
+        // freq and vib are auxiliary vectors which hold the data for
+        // every block of 6 vibrations.
+        tokenize(vs,buffer);
+        for(unsigned int i=1; i<vs.size(); ++i)
+            freq.push_back(atof(vs[i].c_str()));
+        ifs->getline(buffer,BUFF_SIZE);     // blank line
+        ifs->getline(buffer,BUFF_SIZE);
+        tokenize(vs,buffer);
+        while(vs.size() > 2) {
+          vector<double> x, y, z;
+          for (unsigned int i = 1; i < vs.size(); i++)
+            x.push_back(atof(vs[i].c_str()));
+          ifs->getline(buffer, BUFF_SIZE);
+          tokenize(vs,buffer);
+          for (unsigned int i = 1; i < vs.size(); i++)
+            y.push_back(atof(vs[i].c_str()));
+          ifs->getline(buffer, BUFF_SIZE);
+          tokenize(vs,buffer);
+          for (unsigned int i = 1; i < vs.size(); i++)
+            z.push_back(atof(vs[i].c_str()));
+          for (unsigned int i = 0; i < freq.size(); i++) {
+            vib.push_back(vector<vector3>());
+            vib[i].push_back(vector3(x[i], y[i], z[i]));
+          }
+          ifs->getline(buffer, BUFF_SIZE);
+          tokenize(vs,buffer);
+        } // while
+
+        for (unsigned int i = 0; i < freq.size(); i++)
+          {
+            if (abs(freq[i]) > 10.0)
+             {
+               // skip rotational and translational modes
+               Frequencies.push_back(freq[i]);
+               Lx.push_back(vib[i]);
+             }// if abs(freq[i]) > 10.0
+          }// for
+
+        ifs->getline(buffer, BUFF_SIZE); // frequency counting
+        ifs->getline(buffer, BUFF_SIZE); // blank line
+        ifs->getline(buffer, BUFF_SIZE); // P.Frequency  etc.
+      }//while P.Frequency
+
+    if (vibration_data == NULL)
+        vibration_data = new OBVibrationData;
+    else
+      {
+        //Check if read frequencies is not related to supplied OBVibrationData
+        if (vibration_data->GetNumberOfFrequencies() != Frequencies.size())
+            return NULL;
+        vector<double> supplied_frequencies = vibration_data->GetFrequencies();
+        for (unsigned int i = 0;i < supplied_frequencies.size();i++)
+          {
+            if (supplied_frequencies[i] != Frequencies[i])
+                return NULL;
+          }//for
+      } // if !vibration_data
+
+    vibration_data->SetData(Lx, Frequencies, vibration_data->GetIntensities());
+
+    return vibration_data;
+  }
+
   /////////////////////////////////////////////////////////////////
   bool NWChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
@@ -167,8 +258,8 @@ namespace OpenBabel
     const char* title = pConv->GetTitle();
 
     //Vibrational data
-    std::vector< std::vector< vector3 > > Lx;
-    std::vector<double> Frequencies, Intensities;
+    OBVibrationData* vibration_data = NULL;
+    std::vector<double> Intensities;
 
     char buffer[BUFF_SIZE];
     string str;
@@ -241,47 +332,12 @@ namespace OpenBabel
               }
             delete atoms;
           } // if "output coordinates"
-        if(strstr(buffer,"P.Frequency") != NULL)
+        if(strstr(buffer,"(Projected Frequencies expressed in cm-1)") != NULL)
           {
-            // freq and vib are auxiliary vectors which hold the data for
-            // every block of 6 vibrations.
-            vector<double> freq;
-            vector<vector<vector3> > vib;
-            tokenize(vs,buffer);
-            for(unsigned int i=1; i<vs.size(); ++i)
-                freq.push_back(atof(vs[i].c_str()));
-            ifs.getline(buffer,BUFF_SIZE);     // blank line
-            ifs.getline(buffer,BUFF_SIZE);
-            tokenize(vs,buffer);
-	    while(vs.size() > 2) {
-              vector<double> x, y, z;
-              for (unsigned int i = 1; i < vs.size(); i++)
-                x.push_back(atof(vs[i].c_str()));
-              ifs.getline(buffer, BUFF_SIZE);
-              tokenize(vs,buffer);
-              for (unsigned int i = 1; i < vs.size(); i++)
-                y.push_back(atof(vs[i].c_str()));
-              ifs.getline(buffer, BUFF_SIZE);
-              tokenize(vs,buffer);
-              for (unsigned int i = 1; i < vs.size(); i++)
-                z.push_back(atof(vs[i].c_str()));
-              for (unsigned int i = 0; i < freq.size(); i++) {
-                vib.push_back(vector<vector3>());
-                vib[i].push_back(vector3(x[i], y[i], z[i]));
-              }
-              ifs.getline(buffer, BUFF_SIZE);
-              tokenize(vs,buffer);
-            } // while
-            for (unsigned int i = 0; i < freq.size(); i++) {
-              if (abs(freq[i]) > 10.0) {
-                // skip rotational and translational modes
-	        Frequencies.push_back(freq[i]);
-                Lx.push_back(vib[i]);
-              }
-            }
-         } // if "P.Frequency"
-       if(strstr(buffer,"Projected Infra Red Intensities") != NULL)
-         {
+            vibration_data = ReadFrequencies(&ifs, vibration_data);
+          } // if "P.Frequency"
+        if(strstr(buffer,"Projected Infra Red Intensities") != NULL)
+          {
            ifs.getline(buffer, BUFF_SIZE); // table header
            ifs.getline(buffer, BUFF_SIZE); // table delimiter
            ifs.getline(buffer, BUFF_SIZE);
@@ -306,11 +362,11 @@ namespace OpenBabel
     }
 
     //Attach vibrational data, if there is any, to molecule
-    if(Frequencies.size()>0)
+    if(vibration_data != NULL)
     {
-      OBVibrationData* vd = new OBVibrationData;
-      vd->SetData(Lx, Frequencies, Intensities);
-      mol.SetData(vd);
+      if ((Intensities.size() > 0) && (vibration_data->GetNumberOfFrequencies() == Intensities.size()))
+        vibration_data->SetData(vibration_data->GetLx(),vibration_data->GetFrequencies(),Intensities);
+      mol.SetData(vibration_data);
     }
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
