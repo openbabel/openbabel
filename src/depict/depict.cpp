@@ -984,29 +984,27 @@ namespace OpenBabel
   void OBDepictPrivateBallAndStick::DrawSimpleBond(OBAtom* beginAtom,
   OBAtom* endAtom, int order, bool crossed_bond)
   {
-    vector3 begin = beginAtom->GetVector();
-    vector3 end = endAtom->GetVector();
-    vector3 vb = end - begin;
-
-    vb.normalize();
+    const vector3 begin = beginAtom->GetVector();
+    const vector3 end = endAtom->GetVector();
+    const vector3 vb = (end - begin).normalize();
 
     if (order == 1) {
       painter->DrawLine(begin.x(), begin.y(), end.x(), end.y());
     } else if (order == 2) {
-      vector3 orthogonalLine = cross(end - begin, VZ).normalize();
+      const vector3 orthogonalLine = cross(end - begin, VZ).normalize();
 
         // style1
         //
         // -----------
         // -----------
-        vector3 offset = orthogonalLine * 0.5 * bondSpacing;
+        const vector3 offset = orthogonalLine * 0.5 * bondSpacing;
         painter->DrawLine(begin.x() + offset.x(), begin.y() + offset.y(),
                             end.x() + offset.x(), end.y() + offset.y());
         painter->DrawLine(begin.x() - offset.x(), begin.y() - offset.y(),
                             end.x() - offset.x(), end.y() - offset.y());
     } else if (order == 3) {
-      vector3 orthogonalLine = cross(end - begin, VZ).normalize();
-      vector3 offset = orthogonalLine * 0.7 * bondSpacing;
+      const vector3 orthogonalLine = cross(end - begin, VZ).normalize();
+      const vector3 offset = orthogonalLine * 0.7 * bondSpacing;
       painter->DrawLine(begin.x(), begin.y(), end.x(), end.y());
       painter->DrawLine(begin.x() + offset.x(), begin.y() + offset.y(),
                         end.x() + offset.x(), end.y() + offset.y());
@@ -1019,18 +1017,10 @@ namespace OpenBabel
   inline void OBDepictPrivateBallAndStick::DrawWedge(OBAtom* beginAtom,
   OBAtom* endAtom)
   {
-    vector3 begin = beginAtom->GetVector();
-    vector3 end = endAtom->GetVector();
-    vector3 vb = end - begin;
-
-    /*if (HasLabel(beginAtom))
-      begin += 0.33 * vb;
-    if (HasLabel(endAtom))
-      end -= 0.33 * vb; */
-
-    vector3 orthogonalLine = cross(vb, VZ);
-    orthogonalLine.normalize();
-    orthogonalLine *= 0.5 * bondWidth;
+    const vector3 begin = beginAtom->GetVector();
+    const vector3 end = endAtom->GetVector();
+    const vector3 vb = end - begin;
+    const vector3 orthogonalLine = cross(vb, VZ).normalize() * 0.5 * bondWidth;
     std::vector<std::pair<double,double> > points;
 
     points.push_back(std::pair<double,double>(begin.x(), begin.y()));
@@ -1045,26 +1035,15 @@ namespace OpenBabel
   inline void OBDepictPrivateBallAndStick::DrawHash(OBAtom* beginAtom,
   OBAtom* endAtom)
   {
-    vector3 begin = beginAtom->GetVector();
-    vector3 end = endAtom->GetVector();
-    vector3 vb = end - begin;
-
-/*    if (HasLabel(beginAtom))
-      begin += 0.33 * vb;
-    if (HasLabel(endAtom))
-      end -= 0.33 * vb;
-*/
-    vb = end - begin; // Resize the extents of the vb vector
-
-    vector3 orthogonalLine = cross(vb, VZ);
-    orthogonalLine.normalize();
-    orthogonalLine *= 0.5 * bondWidth;
-
-    double lines[6] = { 0.20, 0.36, 0.52, 0.68, 0.84, 1.0 };
-    double oldwidth = painter->GetPenWidth();
+    const vector3 begin = beginAtom->GetVector();
+    const vector3 end = endAtom->GetVector();
+    const vector3 vb = end - begin;
+    const vector3 orthogonalLine = cross(vb, VZ).normalize() * 0.5 * bondWidth;
+    const double lines[6] = { 0.20, 0.36, 0.52, 0.68, 0.84, 1.0 };
+    const double oldwidth = painter->GetPenWidth();
     painter->SetPenWidth(1);
     for (int k = 0; k < 6; ++k) {
-      double w = lines[k];
+      const double w = lines[k];
       painter->DrawLine(begin.x() + vb.x() * w + orthogonalLine.x() * w,
                         begin.y() + vb.y() * w + orthogonalLine.y() * w,
                         begin.x() + vb.x() * w - orthogonalLine.x() * w,
@@ -1097,11 +1076,11 @@ inline void OBDepictPrivateBallAndStick::DrawAromaticRing(OBRing* ring,
 OBBitVec& drawnBonds)
   {
 
-    std::vector<int> indexes = ring->_path;
+    const std::vector<int> indexes = ring->_path;
     const size_t ringSize = indexes.size();
     vector3 center(VZero);
     double maxdist =0.;
-    for (std::vector<int>::iterator l = indexes.begin(); l != indexes.end(); ++l) {
+    for (std::vector<int>::const_iterator l = indexes.begin(); l != indexes.end(); ++l) {
       center += mol->GetAtom(*l)->GetVector();
       maxdist = max(maxdist, GetAtomRadius(mol->GetAtom(*l)));
     }
@@ -1127,34 +1106,31 @@ OBBitVec& drawnBonds)
 
   inline void OBDepictPrivateBallAndStick::DrawAromaticRingBond(OBAtom *prevAtom, OBAtom *beginAtom, OBAtom *endAtom, OBAtom *nextAtom, const vector3 &center, double dist)
   {
-    vector3 prev  = prevAtom->GetVector();
-    vector3 begin = beginAtom->GetVector();
-    vector3 end   = endAtom->GetVector();
-    vector3 next  = nextAtom->GetVector();
+    const vector3 prev  = prevAtom->GetVector();
+    const vector3 begin = beginAtom->GetVector();
+    const vector3 end   = endAtom->GetVector();
+    const vector3 next  = nextAtom->GetVector();
 
-    vector3 b1 = (prev- begin).normalize();
-    vector3 b2 = (end - begin).normalize();
-    vector3 b_med = (b1 + b2);
-    vector3 orthogonalLine = cross(b2, VZ).normalize();
-    double brestrict = dot(orthogonalLine, b_med);
-    double bd = dist;
-    if (brestrict !=  0.0)
-      bd = dist / abs(brestrict);
-    vector3 b_arom = begin + b_med * bd;
+    const vector3 b1 = (prev- begin).normalize();
+    const vector3 b2 = (end - begin).normalize();
+    const vector3 b_med = (b1 + b2);
+    const vector3 orthogonalLine = cross(b2, VZ).normalize();
+    const double brestrict = dot(orthogonalLine, b_med);
+    const double bd = brestrict? dist/abs(brestrict):dist;
+    const vector3 b_arom = begin + b_med * bd;
 
-    vector3 b3 = (next - end).normalize();
-    vector3 e_med = (b3 - b2);
-    double erestrict = dot(orthogonalLine, e_med);
-    double ed = dist;
-    if (erestrict != 0.0)
-      ed = dist  / abs(erestrict);
-      vector3 e_arom = end + e_med * ed;
+    const vector3 b3 = (next - end).normalize();
+    const vector3 e_med = (b3 - b2);
+    const double erestrict = dot(orthogonalLine, e_med);
+    const double ed = erestrict? dist/abs(erestrict):dist;
+    const vector3 e_arom = end + e_med * ed;
 
     painter->DrawLine(begin.x(), begin.y(), end.x(), end.y());
     static const float dashpattern[] = {5., 5.};
     static const vector<double> pat = vector<double>(dashpattern,dashpattern + sizeof(dashpattern)/sizeof(double));
     painter->DrawLine(b_arom.x(), b_arom.y(), e_arom.x(), e_arom.y(), pat);
   }
+
   void OBDepictPrivateBallAndStick::DrawAtom(OBAtom *atom)
   {
     OBColor atomColor = etab.GetRGB(atom->GetAtomicNum());

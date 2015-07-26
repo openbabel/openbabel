@@ -207,16 +207,6 @@ bool SVGFormat::WriteChemObject(OBConversion* pConv)
     const char* pmax =pConv->IsOption("N");
     if(pmax)
       _nmax = atoi(pmax);
-
-/*
-    _ptext = dynamic_cast<OBText*>(pOb);
-    if(_ptext)
-    {
-      pConv->AddOption("x");//omit XML header
-      _textpos = 0;
-      return true;
-    }
-*/
   }
 
   OBMoleculeFormat::DoOutputOptions(pOb, pConv);
