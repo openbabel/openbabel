@@ -339,8 +339,8 @@ bool SVGFormat::WriteSVG(OBConversion* pConv, vector<OBBase*>& molecules)
 
   if (hasTable)
     ofs << "<title>Multiple Molecules - Open Babel Depiction</title>\n";
-  else
-    ofs << "<title>" << molecules.front()->GetTitle() << " - Open Babel Depiction</title>\n";
+  else if(molecules.size() == 1)
+    ofs << "<title>" << molecules[0]->GetTitle() << " - Open Babel Depiction</title>\n";
 
   // Draw the background unless transparent
   if(!transparent)
@@ -388,6 +388,8 @@ bool SVGFormat::WriteSVG(OBConversion* pConv, vector<OBBase*>& molecules)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(*iter);
 
+    if (!pmol)
+      continue;
     //*** Coordinate generation ***
     //Generate coordinates only if no existing 2D coordinates
     if( (pConv->IsOption("y") || !pmol->Has2D(true)) && !pConv->IsOption("n") )
