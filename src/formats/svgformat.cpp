@@ -452,7 +452,7 @@ bool SVGFormat::WriteSVG(OBConversion* pConv, vector<OBBase*>& molecules)
 
     molfs << "<g transform=\"translate(" << innerX << "," << innerY << ")\">\n";
 
-    depictor.DrawMolecule(pmol);
+    ret = depictor.DrawMolecule(pmol);
 
 
     //Draw atom indices if requested
@@ -505,7 +505,7 @@ bool SVGFormat::WriteSVG(OBConversion* pConv, vector<OBBase*>& molecules)
     EmbedScript(ofs);
 
   ofs << "</svg>\n";
-return true;
+return ret;
 }
 
 /////////////////////////////////////////////////////////////
