@@ -19,6 +19,8 @@ GNU General Public License for more details.
 //Required for double abs(double)
 #include <cmath> 
 
+#define HARTREE_TO_KCAL 627.509469
+
 using namespace std;
 namespace OpenBabel
 {
@@ -54,6 +56,14 @@ namespace OpenBabel
     ////////////////////////////////////////////////////
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    
+  private:
+    enum CalculationType
+    {
+        SinglePoint,
+        GeometryOptimization,
+        VibrationalAnalysis
+    };
   };
 
   //Make an instance of the format class
@@ -117,7 +127,34 @@ namespace OpenBabel
     double x,y,z;
     OBAtom *atom;
     vector<string> vs;
-
+    
+    
+    
+    // Reading inital parameters of calculation such as
+    // used theory and calculation type for better
+    // recognition futher output
+    string theory;
+    string energy_pattern;
+    while	(ifs.getline(buffer,BUFF_SIZE))
+      {
+        if(strstr(buffer,"NWChem SCF Module") != NULL)
+          {
+            theory = "SCF";
+            break;
+          }
+        else if(strstr(buffer,"NWChem DFT Module") != NULL)
+          {
+            theory = "DFT";
+            break;
+          }
+      }//while
+    if (!theory.empty())
+    {
+        stringstream ss;
+        ss << "Total " << theory << " energy";
+        energy_pattern = ss.str();
+    }
+    // "Task  times  cpu" End marker
     mol.BeginModify();
     while	(ifs.getline(buffer,BUFF_SIZE))
       {
@@ -200,6 +237,11 @@ namespace OpenBabel
              tokenize(vs,buffer);
            }
          } // if "Projected Infra Red Intensities"
+       if((!energy_pattern.empty()) && (strstr(buffer, energy_pattern.c_str()) != NULL))
+         {
+            tokenize(vs,buffer);
+            mol.SetEnergy(atof(vs[3].c_str()) * HARTREE_TO_KCAL);
+         }// if "Total energy"
       } // while
 
     if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
