@@ -2282,7 +2282,6 @@ namespace OpenBabel
       }
 
     DecrementMod();
-    SetConformer(0);
 
     //reset atom type and partial charge flags
     _flags &= (~(OB_PCHARGE_MOL|OB_ATOMTYPES_MOL|OB_SSSR_MOL|OB_AROMATIC_MOL));
