@@ -69,9 +69,22 @@ namespace OpenBabel
     OBMol* ReadGeometryOptimizationCalculation(istream* ifs);
     OBMol* ReadSinglePointCalculation(istream *ifs);
 
-
-
   };
+
+static const char* COORDINATES_PATTERN = "Output coordinates";
+static const char* GEOMETRY_OPTIMIZATION_PATTERN = "NWChem Geometry Optimization";
+static const char* PROPERTY_CALCULATION_PATTERN = "NWChem Property Module";
+static const char* ZTS_CALCULATION_PATTERN = "@ String method.";
+static const char* SCF_CALCULATION_PATTERN = "NWChem SCF Module";
+static const char* DFT_CALCULATION_PATTERN = "NWChem DFT Module";
+static const char* SCF_ENERGY_PATTERN = "Total SCF energy";
+static const char* DFT_ENERGY_PATTERN = "Total DFT energy";
+static const char* FREQUENCY_PATTERN = "NWChem Nuclear Hessian and Frequency Analysis";
+static const char* OPTIMIZATION_STEP_PATTERN = "Step       Energy";
+static const char* VIBRATIONS_TABLE_PATTERN = "P.Frequency";
+static const char* INTENSITIES_TABLE_PATTERN = "Projected Infra Red Intensities";
+static const char* DIGITS = "1234567890";
+static const char* END_OF_CALCULATION_PATTERN = "Task  times  cpu";
 
   //Make an instance of the format class
   NWChemOutputFormat theNWChemOutputFormat;
@@ -132,7 +145,7 @@ namespace OpenBabel
   static void goto_calculation_end(istream *ifs)
   {
   char buffer[BUFF_SIZE];
-    while ( (strstr(buffer,"Task  times  cpu") == NULL))
+    while ( (strstr(buffer,END_OF_CALCULATION_PATTERN) == NULL))
         if (ifs->getline(buffer,BUFF_SIZE) == NULL)
             break;
   }
@@ -168,7 +181,7 @@ namespace OpenBabel
         atom->SetVector(x,y,z); //set coordinates
 
         //set atomic number
-        size_t end_of_atom_symbol = vs[1].find_last_not_of("1234567890") + 1;
+        size_t end_of_atom_symbol = vs[1].find_last_not_of(DIGITS) + 1;
         atom->SetAtomicNum(etab.GetAtomicNum(vs[1].substr(0,end_of_atom_symbol).c_str()));
         if (!ifs->getline(buffer,BUFF_SIZE))
           break;
@@ -195,14 +208,14 @@ namespace OpenBabel
 
     while (ifs->getline(buffer, BUFF_SIZE))
     {
-        if ((strstr(buffer, "Total DFT energy") != NULL) || (strstr(buffer, "Total SCF energy") != NULL))
+        if ((strstr(buffer, DFT_ENERGY_PATTERN) != NULL) || (strstr(buffer, SCF_ENERGY_PATTERN) != NULL))
         {
             cout << buffer << endl;
             tokenize(vs, buffer);
             cout << vs[4] << endl;
             return atof(vs[4].c_str()) * HARTREE_TO_KCAL;
         }
-        else if (strstr(buffer, "Task  times  cpu") != NULL)
+        else if (strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
             return 0;
     }
     return 0;
@@ -227,7 +240,7 @@ namespace OpenBabel
 
     while (ifs->getline(buffer, BUFF_SIZE) != NULL)
     {
-        if(strstr(buffer,"Output coordinates") != NULL)
+        if(strstr(buffer,COORDINATES_PATTERN) != NULL)
         {
             OBMol* geometry = ReadCoordinates(ifs);
             unsigned int natoms = geometry->NumAtoms();
@@ -246,7 +259,7 @@ namespace OpenBabel
                 pmol->AddConformer(conformer);
             }
         }
-        else if(strstr(buffer,"Step       Energy") != NULL)
+        else if(strstr(buffer, OPTIMIZATION_STEP_PATTERN) != NULL)
         {
             // Extract energy
             ifs->getline(buffer, BUFF_SIZE); // ------
@@ -254,7 +267,7 @@ namespace OpenBabel
             tokenize(vs, buffer);
             energies.push_back(atof(vs[2].c_str()));
         }
-        else if(strstr(buffer, "Task  times  cpu") != NULL)
+        else if(strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
         {
             // End of task
             break;
@@ -284,7 +297,7 @@ namespace OpenBabel
 
     while (ifs->getline(buffer, BUFF_SIZE) != NULL)
     {
-        if (strstr(buffer,"P.Frequency") != NULL)
+        if (strstr(buffer, VIBRATIONS_TABLE_PATTERN) != NULL)
         {
             vector<double> freq;
             vector<vector<vector3> > vib;
@@ -327,7 +340,7 @@ namespace OpenBabel
                 }// if abs(freq[i]) > 10.0
               }// for (unsigned int i = 0; i < freq.size(); i++)
         }// if P.Frequency
-        else if(strstr(buffer,"Projected Infra Red Intensities") != NULL)
+        else if(strstr(buffer, INTENSITIES_TABLE_PATTERN) != NULL)
         {
             ifs->getline(buffer, BUFF_SIZE); // table header
             ifs->getline(buffer, BUFF_SIZE); // table delimiter
@@ -341,7 +354,7 @@ namespace OpenBabel
               tokenize(vs,buffer);
             }
         } // if "Projected Infra Red Intensities"
-        else if(strstr(buffer, "Task  times  cpu") != NULL)
+        else if(strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
         {
             // End of task
             break;
@@ -406,7 +419,7 @@ namespace OpenBabel
     // recognition futher output
     while	(ifs.getline(buffer,BUFF_SIZE) != NULL)
     {
-        if(strstr(buffer,"Output coordinates") != NULL)
+        if(strstr(buffer,COORDINATES_PATTERN) != NULL)
         {
             // Input coordinates for calculation
             if ((mol.NumAtoms() == 0) | (pConv->IsOption("f",OBConversion::INOPTIONS) != NULL))
@@ -429,7 +442,7 @@ namespace OpenBabel
                 break;
             }
         }
-        else if(strstr(buffer,"NWChem Geometry Optimization") != NULL)
+        else if(strstr(buffer, GEOMETRY_OPTIMIZATION_PATTERN) != NULL)
         {
             OBMol* result = ReadGeometryOptimizationCalculation(&ifs);
             if (result != NULL)
@@ -460,13 +473,13 @@ namespace OpenBabel
                 delete result;
             }
         }// if "Geometry Optimization"
-        else if(strstr(buffer,"NWChem Nuclear Hessian and Frequency Analysis") != NULL)
+        else if(strstr(buffer, FREQUENCY_PATTERN) != NULL)
         {
             OBVibrationData* result = ReadFrequencyCalculation(&ifs);
             if (result != NULL)
                 mol.SetData(result);
         }// if "Frequency Analysis"
-        else if(strstr(buffer,"NWChem SCF Module") != strstr(buffer,"NWChem DFT Module"))
+        else if(strstr(buffer, SCF_CALCULATION_PATTERN) != strstr(buffer, DFT_CALCULATION_PATTERN))
         {
             OBMol* result = ReadSinglePointCalculation(&ifs);
             if (result != NULL)
@@ -474,12 +487,12 @@ namespace OpenBabel
                 mol.SetEnergy(result->GetEnergy());
                 delete result;
             }
-        }
+        }// if "SinglePoint"
         // These calculation handlers still not implemented
         // so we just skip them
-        else if(strstr(buffer,"@ String method.") != NULL)
+        else if(strstr(buffer, ZTS_CALCULATION_PATTERN) != NULL)
             goto_calculation_end(&ifs); 
-        else if(strstr(buffer,"NWChem Property Module") != NULL)
+        else if(strstr(buffer, PROPERTY_CALCULATION_PATTERN) != NULL)
             goto_calculation_end(&ifs);
     }//while
 
