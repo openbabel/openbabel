@@ -190,8 +190,6 @@ namespace OpenBabel
             }
             else
             {
-                //for(unsigned int i = 0;i < natoms;i++)
-                //    pmol->GetAtomById(i)->SetVector(geometry->GetAtomById(i)->GetVector());
                 delete geometry;
                 pmol->AddConformer(conformer);
             }
@@ -209,13 +207,6 @@ namespace OpenBabel
             // End of task
             break;
         } // if "Task  times  cpu"
-    }
-    for(unsigned int i = 0;i < pmol->NumAtoms();i++)
-    {
-        double *geometry = pmol->GetConformer(pmol->NumConformers() - 1);
-        pmol->GetAtomById(i)->SetVector(geometry[i*3+0],
-                                        geometry[i*3+1],
-                                        geometry[i*3+2]);
     }
     pmol->SetEnergies(energies);
     return pmol;
@@ -351,7 +342,6 @@ namespace OpenBabel
     double x,y,z;
     OBAtom *atom;
     vector<string> vs;
-    double last_calculated_energy;
 
     mol.BeginModify();
 
@@ -371,6 +361,7 @@ namespace OpenBabel
                 // all previous calculations. Otherwise calculations for
                 // new geometry will be considered as new molecule.
                 mol.Clear();
+                mol.BeginModify();
                 mol += *geometry;
                 delete geometry;
             }
@@ -409,10 +400,7 @@ namespace OpenBabel
                 }
                 vector<double> energies = result->GetEnergies();
                 mol.SetEnergies(energies);
-                last_calculated_energy = energies[energies.size() -1];
                 mol.SetConformer(mol.NumConformers() - 1);
-                for(unsigned int i = 0;i < natoms;i++)
-                    mol.GetAtomById(i)->SetVector(result->GetAtomById(i)->GetVector());
                 delete result;
             }
         }// if "Geometry Optimization"
@@ -441,10 +429,10 @@ namespace OpenBabel
       mol.PerceiveBondOrders();
 
     mol.EndModify();
-    // EndModify adds new conformer equals to current molecule geometry
-    // so we will just assign last calculated energy to this conformer
+    // EndModify adds new conformer equals to current
+    // molecule geometry so we will just delete it
+    mol.DeleteConformer(mol.NumConformers() - 1);
     mol.SetConformer(mol.NumConformers() - 1);
-    mol.SetEnergy(last_calculated_energy);
 
     mol.SetTitle(title);
     return(true);
