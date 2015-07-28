@@ -325,7 +325,7 @@ namespace OpenBabel
     return true;
   }
 
-  static void rewind_to_calculation_end(istream *ifs)
+  static void goto_calculation_end(istream *ifs)
   {
   char buffer[BUFF_SIZE];
     while ( (strstr(buffer,"Task  times  cpu") == NULL))
@@ -363,18 +363,24 @@ namespace OpenBabel
         if(strstr(buffer,"Output coordinates") != NULL)
         {
             // Input coordinates for calculation
-            OBMol* geometry = ReadCoordinates(&ifs);
-            if (pConv->IsOption("f",OBConversion::INOPTIONS))
+            if ((mol.NumAtoms() == 0) | (pConv->IsOption("f",OBConversion::INOPTIONS) != NULL))
             {
-                // If coordinates will be redefined while calculation
-                // in input file and "f" option supplied then overwrite
+                OBMol* geometry = ReadCoordinates(&ifs);
+                // If coordinates had redefined while calculation
+                // in input file and "f" option had supplied then overwrite
                 // all previous calculations. Otherwise calculations for
-                // new geometry will be ignored.
+                // new geometry will be considered as new molecule.
                 mol.Clear();
-            }
-            if (mol.NumAtoms() == 0)
                 mol += *geometry;
-            delete geometry;
+                delete geometry;
+            }
+            else
+            {
+                unsigned int i;
+                for(i=0; buffer[i] != '\0';i++);
+                ifs.seekg(-i, ios_base::cur);
+                break;
+            }
         }
         else if(strstr(buffer,"NWChem Geometry Optimization") != NULL)
         {
@@ -419,9 +425,9 @@ namespace OpenBabel
         // These calculation handlers still not implemented
         // so we just skip them
         else if(strstr(buffer,"@ String method.") != NULL)
-            rewind_to_calculation_end(&ifs); 
+            goto_calculation_end(&ifs); 
         else if(strstr(buffer,"NWChem Property Module") != NULL)
-            rewind_to_calculation_end(&ifs);
+            goto_calculation_end(&ifs);
     }//while
 
     if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
