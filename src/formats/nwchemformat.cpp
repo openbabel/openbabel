@@ -63,19 +63,13 @@ namespace OpenBabel
 
   private:
     OBMol* ReadCoordinates(istream *ifs);
+    double GetSinglePointEnergy(istream *ifs);
+
     OBVibrationData* ReadFrequencyCalculation(istream* ifs);
     OBMol* ReadGeometryOptimizationCalculation(istream* ifs);
+    OBMol* ReadSinglePointCalculation(istream *ifs);
 
-    enum CalculationType
-    {
-        SinglePoint,
-        GeometryOptimization,
-        VibrationalAnalysis,
-        ZTS,
-        MEP,
-        Property,
-        Unknown
-    };
+
 
   };
 
@@ -117,12 +111,39 @@ namespace OpenBabel
   //Make an instance of the format class
   NWChemInputFormat theNWChemInputFormat;
 
+  /////////////////////////////////////////////////////////////////
+  /**
+  Returns true if molecules contains same atoms regardless of
+  their coordinates.
+  */
+  static bool CheckMoleculesEqual(OBMol* mol1, OBMol* mol2)
+  {
+    if (mol1->NumAtoms() != mol2->NumAtoms())
+        return false;
+    for(unsigned int i = 0; i < mol1->NumAtoms();i++)
+        if(mol1->GetAtomById(i)->GetAtomicNum() != mol2->GetAtomById(i)->GetAtomicNum())
+            return false;
+    return true;
+  }
+  /////////////////////////////////////////////////////////////////
+  /**
+  Moves stream (ifs) position to end of calculation. 
+  */
+  static void goto_calculation_end(istream *ifs)
+  {
+  char buffer[BUFF_SIZE];
+    while ( (strstr(buffer,"Task  times  cpu") == NULL))
+        if (ifs->getline(buffer,BUFF_SIZE) == NULL)
+            break;
+  }
+
   //////////////////////////////////////////////////////
-  /*
+  /**
   Method reads coordinates from input stream (ifs) and creates
   new OBMol object then return reference to it.
   Input stream must be set to begining of coordinates
   table in nwo file. (Line after "Output coordinates...")
+  Stream will be set at next line after geometry table.
   */
   OBMol* NWChemOutputFormat::ReadCoordinates(istream *ifs)
   {
@@ -157,6 +178,36 @@ namespace OpenBabel
     return atoms;
   }
 
+  /////////////////////////////////////////////////////////////////
+  /**
+  Method reads single point energy from input stream (ifs)
+  and returns it in kcal/mol.
+  Input stream must be set to begining of energy calculation
+  in nwo file. (Line after "NWChem <theory> Module")
+  If energy not found then 0 will be returned.
+  Stream will be set at next line after line containing
+  energy.
+  */
+  double NWChemOutputFormat::GetSinglePointEnergy(istream *ifs)
+  {
+    vector<string> vs;
+    char buffer[BUFF_SIZE];
+
+    while (ifs->getline(buffer, BUFF_SIZE))
+    {
+        if ((strstr(buffer, "Total DFT energy") != NULL) || (strstr(buffer, "Total SCF energy") != NULL))
+        {
+            cout << buffer << endl;
+            tokenize(vs, buffer);
+            cout << vs[4] << endl;
+            return atof(vs[4].c_str()) * HARTREE_TO_KCAL;
+        }
+        else if (strstr(buffer, "Task  times  cpu") != NULL)
+            return 0;
+    }
+    return 0;
+  }
+
   //////////////////////////////////////////////////////
   /**
   Method reads optimization steps from input stream (ifs)
@@ -164,6 +215,7 @@ namespace OpenBabel
   Input stream must be set to begining of geometry optimization
   calculation in nwo file. (Line after "NWChem Geometry Optimization")
   If no geometry data found then NULL will be returned.
+  Stream will be set at the end of calculation.
   */
   OBMol* NWChemOutputFormat::ReadGeometryOptimizationCalculation(istream* ifs)
   {
@@ -220,6 +272,7 @@ namespace OpenBabel
   Input stream must be set to begining of frequency
   calculation in nwo file. (Line after "NWChem <theory> Module")
   If vibration data not found then NULL will be returned.
+  Stream will be set at the end of calculation.
   */
   OBVibrationData* NWChemOutputFormat::ReadFrequencyCalculation(istream* ifs)
   {
@@ -306,22 +359,26 @@ namespace OpenBabel
   }
 
   /////////////////////////////////////////////////////////////////
-  static bool CheckMoleculesEqual(OBMol* mol1, OBMol* mol2)
+  /**
+  Method reads single point energy from input stream (ifs)
+  and returns OBMol object containg all related to calculation
+  data.
+  Input stream must be set to begining of energy calculation
+  in nwo file. (Line after "NWChem <theory> Module")
+  If energy not found then NULL will be returned.
+  */
+  OBMol* NWChemOutputFormat::ReadSinglePointCalculation(istream *ifs)
   {
-    if (mol1->NumAtoms() != mol2->NumAtoms())
-        return false;
-    for(unsigned int i = 0; i < mol1->NumAtoms();i++)
-        if(mol1->GetAtomById(i)->GetAtomicNum() != mol2->GetAtomById(i)->GetAtomicNum())
-            return false;
-    return true;
-  }
+    double energy;
+    energy = GetSinglePointEnergy(ifs);
+    if (energy == 0)
+        return NULL;
+    OBMol *mol = new OBMol;
 
-  static void goto_calculation_end(istream *ifs)
-  {
-  char buffer[BUFF_SIZE];
-    while ( (strstr(buffer,"Task  times  cpu") == NULL))
-        if (ifs->getline(buffer,BUFF_SIZE) == NULL)
-            break;
+    mol->SetEnergy(energy);
+    // There is a place for orbital data search
+    goto_calculation_end(ifs);
+    return mol;
   }
 
   /////////////////////////////////////////////////////////////////
@@ -341,7 +398,6 @@ namespace OpenBabel
     string str;
     double x,y,z;
     OBAtom *atom;
-    vector<string> vs;
 
     mol.BeginModify();
 
@@ -410,6 +466,15 @@ namespace OpenBabel
             if (result != NULL)
                 mol.SetData(result);
         }// if "Frequency Analysis"
+        else if(strstr(buffer,"NWChem SCF Module") != strstr(buffer,"NWChem DFT Module"))
+        {
+            OBMol* result = ReadSinglePointCalculation(&ifs);
+            if (result != NULL)
+            {
+                mol.SetEnergy(result->GetEnergy());
+                delete result;
+            }
+        }
         // These calculation handlers still not implemented
         // so we just skip them
         else if(strstr(buffer,"@ String method.") != NULL)
@@ -431,8 +496,10 @@ namespace OpenBabel
     mol.EndModify();
     // EndModify adds new conformer equals to current
     // molecule geometry so we will just delete it
-    mol.DeleteConformer(mol.NumConformers() - 1);
-    mol.SetConformer(mol.NumConformers() - 1);
+    unsigned int nconformers = mol.NumConformers();
+    if (nconformers > 1)
+        mol.DeleteConformer(nconformers - 1);
+    mol.SetConformer(nconformers - 1);
 
     mol.SetTitle(title);
     return(true);
