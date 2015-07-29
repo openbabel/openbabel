@@ -150,6 +150,55 @@ static const char* END_OF_CALCULATION_PATTERN = "Task  times  cpu";
             break;
   }
 
+  /////////////////////////////////////////////////////////////////
+  /**
+  Adds data from "source" OBMol object to "destination" and returns it then.
+  "source" object can be randomly modified while merging.
+  If "source" object has incompatible data, "destination" will be returned
+  without changes
+  */
+  static OBMol* MergeMolecules(OBMol *destination, OBMol *source)
+  {
+    if ((destination->NumAtoms() == 0))
+    {
+        *destination += *source;
+        return destination; //Will generic data be copied?
+    }
+
+    if (source->NumAtoms() != 0)
+        if (!CheckMoleculesEqual(destination, source))
+            return destination;
+
+    if (source->GetEnergy() != 0)
+        destination->SetEnergy(source->GetEnergy());
+
+    // Conformers
+    if (source->NumConformers() > 0)
+    {
+        unsigned int natoms = source->NumAtoms();
+        unsigned int nconformers = source->NumConformers();
+        for (unsigned int i = 0; i < nconformers; i++)
+        {
+            double *conformer = new double[3*natoms];
+            source->SetConformer(i);
+            double *coordinates = source->GetCoordinates();
+            memcpy(conformer, coordinates, sizeof(double)*3*natoms);
+            destination->AddConformer(conformer);
+            destination->SetConformer(destination->NumConformers() - 1);
+            destination->SetEnergy(source->GetEnergy());
+        }
+    }
+
+    // Datas
+    vector<OBGenericData* > datas = source->GetData();
+    for(unsigned int i = 0;i < datas.size();i++)
+    {
+        destination->CloneData(datas[i]);
+    }
+
+    return destination;
+  }
+
   //////////////////////////////////////////////////////
   /**
   Method reads coordinates from input stream (ifs) and creates
@@ -236,28 +285,15 @@ static const char* END_OF_CALCULATION_PATTERN = "Task  times  cpu";
     vector<string> vs;
     char buffer[BUFF_SIZE];
 
-    OBMol *pmol = NULL;
+    OBMol *pmol = new OBMol;
 
     while (ifs->getline(buffer, BUFF_SIZE) != NULL)
     {
         if(strstr(buffer,COORDINATES_PATTERN) != NULL)
         {
             OBMol* geometry = ReadCoordinates(ifs);
-            unsigned int natoms = geometry->NumAtoms();
-            double *conformer = new double[3*natoms];
-            double *coordinates = geometry->GetCoordinates();
-            memcpy(conformer, coordinates, sizeof(double)*3*natoms);
-
-            if (pmol == NULL)
-            {
-                pmol = geometry;
-                delete [] conformer;
-            }
-            else
-            {
-                delete geometry;
-                pmol->AddConformer(conformer);
-            }
+            MergeMolecules(pmol, geometry);
+            delete geometry;
         }
         else if(strstr(buffer, OPTIMIZATION_STEP_PATTERN) != NULL)
         {
@@ -431,7 +467,7 @@ static const char* END_OF_CALCULATION_PATTERN = "Task  times  cpu";
                 // new geometry will be considered as new molecule.
                 mol.Clear();
                 mol.BeginModify();
-                mol += *geometry;
+                MergeMolecules(&mol, geometry);
                 delete geometry;
             }
             else
@@ -447,28 +483,7 @@ static const char* END_OF_CALCULATION_PATTERN = "Task  times  cpu";
             OBMol* result = ReadGeometryOptimizationCalculation(&ifs);
             if (result != NULL)
             {
-                if (mol.NumAtoms() == 0)
-                {
-                    mol += *result;
-                    delete result;
-                    continue;
-                }
-                else if (!CheckMoleculesEqual(&mol, result))
-                {
-                    delete result;
-                    continue;
-                }
-                unsigned int natoms = result->NumAtoms();
-                vector<double*> conformers;
-                conformers.reserve(result->NumConformers());
-                for(unsigned int i = 0;i < result->NumConformers();i++)
-                {
-                    double * conformer = new double[natoms*3];
-                    memcpy(conformer, result->GetConformer(i),sizeof(double)*3*natoms);
-                    mol.AddConformer(conformer);
-                }
-                vector<double> energies = result->GetEnergies();
-                mol.SetEnergies(energies);
+                MergeMolecules(&mol, result);
                 mol.SetConformer(mol.NumConformers() - 1);
                 delete result;
             }
@@ -484,7 +499,7 @@ static const char* END_OF_CALCULATION_PATTERN = "Task  times  cpu";
             OBMol* result = ReadSinglePointCalculation(&ifs);
             if (result != NULL)
             {
-                mol.SetEnergy(result->GetEnergy());
+                MergeMolecules(&mol, result);
                 delete result;
             }
         }// if "SinglePoint"
