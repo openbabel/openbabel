@@ -31,7 +31,7 @@ namespace OpenBabel
 {
   /**
    * @class OBColor painter.h <openbabel/depict/painter.h>
-   * @brief Color class used by OBDepict. 
+   * @brief Color class used by OBDepict.
    * @since version 2.3
    */
   struct OBDEPICT OBColor
@@ -192,7 +192,7 @@ namespace OpenBabel
        * Draw a pseudo 3D ball, centered on (@p x,@p y) of radius @p r
        * filled with the current Fill color or gradient
        */
-      virtual void DrawBall(double x, double y, double r) = 0;
+      virtual void DrawBall(double x, double y, double r, double opacity = 1.0) = 0;
 
       virtual void DrawText(double x, double y, const std::string &text) = 0;
       virtual OBFontMetrics GetFontMetrics(const std::string &text) = 0;

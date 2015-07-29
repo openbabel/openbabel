@@ -354,8 +354,9 @@ bool SVGFormat::WriteSVG(OBConversion* pConv, vector<OBBase*>& molecules)
     opts |= OBDepict::allExplicit;
 
   bool balldepict = false;
-  if(pConv->IsOption("S"))
+  if(pConv->IsOption("S")) {
     balldepict = true;
+  }
 
   double factor = 1.0;
   int nc = _ncols ? _ncols : 1;
@@ -366,7 +367,7 @@ bool SVGFormat::WriteSVG(OBConversion* pConv, vector<OBBase*>& molecules)
   std::set<ColorGradient> gradients;
 
   OBOp* pOp = OBOp::FindType("gen2D");
-  if(!pOp)
+  if(!balldepict && !pOp)
   {
     obErrorLog.ThrowError("SVGFormat", "gen2D not found", obError, onceOnly);
     return false;
@@ -381,8 +382,8 @@ bool SVGFormat::WriteSVG(OBConversion* pConv, vector<OBBase*>& molecules)
     if (!pmol)
       continue;
     //*** Coordinate generation ***
-    //Generate coordinates only if no existing 2D coordinates
-    if( (pConv->IsOption("y") || !pmol->Has2D(true)) && !pConv->IsOption("n") )
+    //Generate coordinates only if no existing 2D coordinates and we're not doing ball-and-stick style
+    if( (pConv->IsOption("y") || !pmol->Has2D(true)) && (!pConv->IsOption("n") && !balldepict))
     {
       if(!pOp->Do(pmol))
       {
@@ -461,17 +462,19 @@ bool SVGFormat::WriteSVG(OBConversion* pConv, vector<OBBase*>& molecules)
     molfs <<"</g>\n";
 
     //*** Write molecule name ***
-    if(!pConv->IsOption("d"))
-      if(hasTable)
+    if(!pConv->IsOption("d")) {
+      if(hasTable) {
         molfs << "<text text-anchor=\"middle\" font-size=\"" << 0.06*cellsize << "\""
         << " fill =\"" << bondcolor << "\" font-family=\"sans-serif\"\n"
         << "x=\"" << innerX + cellsize * 0.5 << "\" y=\"" << innerY + cellsize - 2.0/nr << "\" >"
         << pmol->GetTitle() << "</text>\n";
-      else
+      } else {
         molfs << "<text font-size=\"" << 18 * factor  << "\""
         << " fill =\"" << bondcolor << "\" font-family=\"sans-serif\"\n"
         << "x=\"" << 10 * factor << "\" y=\"" << 20 * factor << "\" >"
         << pmol->GetTitle() << "</text>\n";
+      }
+    }
   }
 
   // finally write svg defs
@@ -592,4 +595,3 @@ with the real script in morescript.js.
 */
 
 }//namespace
-

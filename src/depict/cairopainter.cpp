@@ -42,7 +42,7 @@ namespace OpenBabel
         OBColor bg = OBColor(m_fillcolor);
         cairo_set_source_rgb (m_cairo, bg.red, bg.green, bg.blue);
       }
-      
+
       cairo_paint (m_cairo);
       cairo_set_line_width(m_cairo, m_pen_width);
     }
@@ -78,7 +78,7 @@ namespace OpenBabel
       cairo_translate(m_cairo, cellwidth/2.0 - scale*width/2.0 + cellwidth*(col-1), 0 + cellheight*(row-1));
     cairo_scale(m_cairo, scale, scale); // Set a scaling transformation
   }
-  
+
   bool CairoPainter::IsGood() const
   {
     if (!m_cairo)
@@ -87,7 +87,7 @@ namespace OpenBabel
       return false;
     return true;
   }
-      
+
   void CairoPainter::SetFontSize(int pointSize)
   {
     m_fontPointSize = pointSize;
@@ -108,7 +108,7 @@ namespace OpenBabel
   {
     cairo_set_source_rgb(m_cairo, color.red, color.green, color.blue);
   }
-      
+
   void CairoPainter::SetPenWidth(double width)
   {
     m_pen_width = width;
@@ -133,8 +133,8 @@ namespace OpenBabel
   {
     std::vector<std::pair<double,double> >::const_iterator i;
     for (i = points.begin(); i != points.end(); ++i)
-      cairo_line_to(m_cairo, i->first, i->second); // note: when called without previous point, 
-                                                   //       this function behaves like cairo_move_to 
+      cairo_line_to(m_cairo, i->first, i->second); // note: when called without previous point,
+                                                   //       this function behaves like cairo_move_to
     cairo_line_to(m_cairo, points.begin()->first, points.begin()->second);
     cairo_fill(m_cairo);
   }
@@ -166,12 +166,12 @@ namespace OpenBabel
     metrics.height = te.height;
     return metrics;
   }
-      
+
   void CairoPainter::WriteImage(const std::string &filename)
   {
     if (!m_cairo || !m_surface)
       return;
-    
+
     cairo_surface_write_to_png(m_surface, filename.c_str());
   }
 
@@ -183,7 +183,7 @@ namespace OpenBabel
     return CAIRO_STATUS_SUCCESS;
   }
 
-  void CairoPainter::DrawBall(double x, double y, double r)
+  void CairoPainter::DrawBall(double x, double y, double r, double opacity)
   {
 
   }
@@ -199,4 +199,3 @@ namespace OpenBabel
   }
 
 }
-

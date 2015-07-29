@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <math.h>
 using namespace std;
 
 namespace OpenBabel
@@ -167,13 +168,18 @@ namespace OpenBabel
   {
   }
 
-  void SVGPainter::DrawBall(double x, double y, double r)
+  void SVGPainter::DrawBall(double x, double y, double r, double opacity)
   {
+    if (!isfinite(opacity))
+      opacity = 1.0;
+    if (opacity < 0.25)
+      opacity = 0.25;
+
     m_ofs << "<circle cx=\"" << x << "\" cy=\"" << y << "\" r=\"" << r << "\" ";
+    m_ofs << "opacity=\"" << opacity << "\" ";
     if (m_isFillcolor) {
       m_ofs << "style=\"stroke:black;fill:" << MakeRGB(m_Fillcolor) << "\"/>\n";
-    } else
-    {
+    } else {
       m_ofs << "style=\"stroke:black;fill:url(#radial";
       m_ofs << RGBcode(m_Gradientcolor.first)<< RGBcode(m_Gradientcolor.second) << ")\"/>\n";
     }
@@ -212,4 +218,3 @@ namespace OpenBabel
 
   }
 }
-

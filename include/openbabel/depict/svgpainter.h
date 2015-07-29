@@ -49,7 +49,7 @@ namespace OpenBabel
       void DrawLine(double x1, double y1, double x2, double y2, const std::vector<double>& dashes=std::vector<double>());
       void DrawPolygon(const std::vector<std::pair<double,double> > &points);
       void DrawCircle(double x, double y, double r);
-      void DrawBall(double x, double y, double r);
+      void DrawBall(double x, double y, double r, double opacity = 1.0);
       void DrawText(double x, double y, const std::string &text);
       OBFontMetrics GetFontMetrics(const std::string &text);
       void WriteDefs();
