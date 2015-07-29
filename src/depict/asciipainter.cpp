@@ -59,6 +59,11 @@ namespace OpenBabel
   {
   }
 
+  void ASCIIPainter::SetFillRadial(const OBColor &start, const OBColor &end)
+  {
+  }
+
+
   void ASCIIPainter::SetPenColor(const OBColor &color)
   {
   }
@@ -72,7 +77,7 @@ namespace OpenBabel
     return 0.0;
   }
 
-  void ASCIIPainter::DrawLine(double x1, double y1, double x2, double y2)
+  void ASCIIPainter::DrawLine(double x1, double y1, double x2, double y2, const std::vector<double> & dashes)
   {
     vector<pair<int, int> > coords;
     vector<pair<int, int> >::iterator vp_it;
@@ -99,6 +104,10 @@ namespace OpenBabel
   }
 
   void ASCIIPainter::DrawCircle(double x, double y, double r)
+  {
+  }
+
+  void ASCIIPainter::DrawBall(double x, double y, double r)
   {
   }
 
