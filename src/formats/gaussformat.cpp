@@ -308,8 +308,7 @@ namespace OpenBabel
     char valbuf[128];
     int ii,atomid,atomicnumber,found,foundall;
     double dhofM0, dhofMT, S0MT, DeltaSMT;
-    string defunit("Hartree");
-    double eFactor = energyToKcal(defunit);
+    double eFactor = HARTEE_TO_KCALPERMOL;
 
     OBet = new OpenBabel::OBElementTable();
 
@@ -1040,7 +1039,7 @@ namespace OpenBabel
         else if(strstr(buffer,"SCF Done:") != NULL)
           {
             tokenize(vs,buffer);
-            mol.SetEnergy(atof(vs[4].c_str()) * energyToKcal("Hartree"));
+            mol.SetEnergy(atof(vs[4].c_str()) * HARTEE_TO_KCALPERMOL);
             confEnergies.push_back(mol.GetEnergy());
           }
 /* Temporarily commented out until the handling of energy in OBMol is sorted out

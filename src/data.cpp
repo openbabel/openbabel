@@ -436,6 +436,43 @@ namespace OpenBabel
     Init();
   }
 
+  static double UnitNameToConversionFactor(const char* unit) {
+    const char* p = unit;
+    switch(p[0]) {
+    case 'e':
+      if (p[1]=='V' && p[2]=='\0')
+        return ELECTRONVOLT_TO_KCALPERMOL; // eV
+      if (p[1]=='l' && p[2]=='e' && p[3]=='c' && p[4]=='t' && p[5]=='r' && p[6]=='o' && p[7]=='n' &&
+          p[8]=='v' && p[9]=='o' && p[10]=='l' && p[11]=='t' && p[12]=='\0')
+        return ELECTRONVOLT_TO_KCALPERMOL; // electronvolt
+      break;
+    case 'k':
+      if (p[1]=='J' && p[2]=='/' && p[3]=='m' && p[4]=='o' && p[5]=='l' && p[6]=='\0')
+        return KJPERMOL_TO_KCALPERMOL; // kJ/mol
+      if (p[1]=='c' && p[2]=='a' && p[3]=='l' && p[4]=='/' && p[5]=='m' && p[6]=='o' && p[7]=='l' && p[8]=='\0')
+        return 1.0; // kcal/mol
+      break;
+    case 'H':
+      if (p[1]=='a' && p[2]=='r' && p[3]=='t' && p[4]=='r' && p[5]=='e' && p[6]=='e' && p[7]=='\0')
+        return HARTEE_TO_KCALPERMOL; // Hartree
+      break;
+    case 'J':
+      if (p[1]=='/' && p[2]=='m' && p[3]=='o' && p[4]=='l' && p[5]==' ' && p[6]=='K' && p[7]=='\0')
+        return KJPERMOL_TO_KCALPERMOL; // J/mol K
+      break;
+    case 'R':
+      if (p[1]=='y' && p[2]=='d' && p[3]=='b' && p[4]=='e' && p[5]=='r' && p[6]=='g' && p[7]=='\0')
+        return RYDBERG_TO_KCALPERMOL; // Rydberg
+      break;
+    }
+
+    std::stringstream errorMsg;
+    errorMsg << "WARNING: Unknown energy unit in thermochemistry file\n";
+    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+
+    return 1.0;
+  }
+
   void OBAtomicHeatOfFormationTable::ParseLine(const char *line)
   {
     char *ptr;
@@ -486,7 +523,7 @@ namespace OpenBabel
         if ((0 == it->Element().compare(elem)) &&
             (it->Charge() == charge))
         {
-            double eFac = energyToKcal(it->Unit());
+            double eFac = UnitNameToConversionFactor(it->Unit().c_str());
             if (fabs(T - it->T()) < Ttol)
             {
                 if (0 == it->Method().compare("exp"))

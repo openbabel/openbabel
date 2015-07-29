@@ -28,34 +28,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/locale.h>
 
-double energyToKcal(std::string unit)
-{
-    if ((unit.compare("kJ/mol") == 0) ||
-        (unit.compare("J/mol K") == 0))
-    {
-        return 1.0/4.184;
-    }
-    else if (unit.compare("Hartree") == 0)
-    {
-        return 627.509469;
-    }
-    else if (unit.compare("Rydberg") == 0)
-    {
-        return 313.755026;
-    }
-    else if ((unit.compare("eV") == 0) ||
-             (unit.compare("electronvolt") == 0))
-    {
-        return 23.060538;
-    }
-    else if (unit.compare("kcal/mol") == 0)
-    {
-        return 1;
-    }
-    std::cerr << "Unknown energy unit " << unit << "in file " << __FILE__ << " line " << __LINE__ << std::endl;
-    
-    return 1;
-}
+namespace OpenBabel {
 
 bool extract_thermochemistry(OpenBabel::OBMol  &mol,
                              bool    bVerbose,
@@ -219,6 +192,8 @@ bool extract_thermochemistry(OpenBabel::OBMol  &mol,
                -(*temperature*Sconf)/1000);
     }
     return (found == 9);
+}
+
 }
 
 //! \file data_utilities.cpp
