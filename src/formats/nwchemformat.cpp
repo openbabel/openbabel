@@ -142,7 +142,7 @@ static const char* END_OF_CALCULATION_PATTERN = "Task  times  cpu";
   /**
   Moves stream (ifs) position to end of calculation. 
   */
-  static void goto_calculation_end(istream *ifs)
+  static void GotoCalculationEnd(istream *ifs)
   {
   char buffer[BUFF_SIZE];
     while ( (strstr(buffer,END_OF_CALCULATION_PATTERN) == NULL))
@@ -390,7 +390,7 @@ static const char* END_OF_CALCULATION_PATTERN = "Task  times  cpu";
 
     mol->SetEnergy(energy);
     // There is a place for orbital data search
-    goto_calculation_end(ifs);
+    GotoCalculationEnd(ifs);
     return mol;
   }
 
@@ -491,9 +491,9 @@ static const char* END_OF_CALCULATION_PATTERN = "Task  times  cpu";
         // These calculation handlers still not implemented
         // so we just skip them
         else if(strstr(buffer, ZTS_CALCULATION_PATTERN) != NULL)
-            goto_calculation_end(&ifs); 
+            GotoCalculationEnd(&ifs); 
         else if(strstr(buffer, PROPERTY_CALCULATION_PATTERN) != NULL)
-            goto_calculation_end(&ifs);
+            GotoCalculationEnd(&ifs);
     }//while
 
     if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
