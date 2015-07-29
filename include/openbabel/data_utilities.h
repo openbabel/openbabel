@@ -26,15 +26,13 @@ GNU General Public License for more details.
 #include <vector>
 #include <string>
 
-/*! \brief
- * Convenience function to convert energy units.
- *
- * \param[in] unit The energy unit to be converted, e.g. "kJ/mol", 
- *                 "Hartree", "Rydberg", "eV" or "electronvolt"
- * \return a factor to multiply energies with.
- */
-extern "C" double energyToKcal(std::string unit);
- 
+namespace OpenBabel {
+
+ const double HARTEE_TO_KCALPERMOL = 627.509469;
+ const double KJPERMOL_TO_KCALPERMOL = 1.0/4.184;
+ const double RYDBERG_TO_KCALPERMOL = 313.755026;
+ const double ELECTRONVOLT_TO_KCALPERMOL = 23.060538;
+  
 /*! \brief
  * Convenience function to extract thermochemistry from a molecule structure
  *
@@ -54,7 +52,7 @@ extern "C" double energyToKcal(std::string unit);
  * \param[out] Scomponents Translational, Rotational and Vibrational components of S0
  * \return true if all values were found, false otherwise.
  */
-extern "C" bool extract_thermochemistry(OpenBabel::OBMol  &mol,
+ OBAPI bool extract_thermochemistry(OpenBabel::OBMol  &mol,
                                         bool    bVerbose,
                                         int    *Nsymm,
                                         int     Nrotbonds,
@@ -68,6 +66,8 @@ extern "C" bool extract_thermochemistry(OpenBabel::OBMol  &mol,
                                         double *CVT,
                                         double *CPT,
                                         std::vector<double> &Scomponents);
+
+}
 
 #endif //DATA_UTILITIES_H
 

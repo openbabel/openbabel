@@ -28,6 +28,8 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/locale.h>
 
+namespace OpenBabel {
+
 double energyToKcal(std::string unit)
 {
     if ((unit.compare("kJ/mol") == 0) ||
@@ -219,6 +221,8 @@ bool extract_thermochemistry(OpenBabel::OBMol  &mol,
                -(*temperature*Sconf)/1000);
     }
     return (found == 9);
+}
+
 }
 
 //! \file data_utilities.cpp
