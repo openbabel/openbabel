@@ -57,6 +57,13 @@ namespace OpenBabel
     m_ofs << "SetFillColor " << color.red << " " << color.green << " " << color.blue << " " << color.alpha << " (rgba)" << endl;
   }
 
+  void CommandPainter::SetFillRadial(const OBColor &start, const OBColor &end)
+  {
+    m_ofs << "SetFillRadial" << start.red << " " << start.green << " " << start.blue << " " << start.alpha << " (rgba) to ";
+    m_ofs << end.red << " " << end.green << " " << end.blue << " " << end.alpha << " (rgba)" << endl;
+  }
+
+
   void CommandPainter::SetPenColor(const OBColor &color)
   {
     m_ofs << "SetPenColor " << color.red << " " << color.green << " " << color.blue << " " << color.alpha << " (rgba)" << endl;
@@ -73,11 +80,19 @@ namespace OpenBabel
     return m_pen_width;
   }
 
-  void CommandPainter::DrawLine(double x1, double y1, double x2, double y2)
+  void CommandPainter::DrawLine(double x1, double y1, double x2, double y2,  const std::vector<double> & dashes)
   {
     
     m_ofs << fixed << "DrawLine " << x1 << " " << y1 << " to "
-                                  << x2 << " " << y2 << endl;
+                                  << x2 << " " << y2;
+    if (!dashes.empty()) {
+      std::vector<double>::const_iterator it;
+      m_ofs << " dashes";
+      for (it=dashes.begin(); it!=dashes.end() ; ++it)
+        m_ofs << " " << *it;
+
+    }
+    m_ofs << endl;
   }
 
   void CommandPainter::DrawPolygon(const std::vector<std::pair<double,double> > &points)
@@ -95,6 +110,11 @@ namespace OpenBabel
   void CommandPainter::DrawCircle(double x, double y, double r)
   {
     m_ofs << "DrawCircle " << x << " " << y << " radius " << r << endl;
+  }
+
+  void CommandPainter::DrawBall(double x, double y, double r)
+  {
+    m_ofs << "DrawBall " << x << " " << y << " radius " << r << endl;
   }
 
   void CommandPainter::DrawText(double x, double y, const std::string &text)
