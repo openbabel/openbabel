@@ -127,7 +127,10 @@ public:
       "    would add a aliases COOH and CHO to represent the carboxyl and\n"
       "    aldehyde groups and would display them as such in the svg diagram.\n"
       "    The aliases which are recognized are in data/superatom.txt, which\n"
-      "    can be edited.\n\n"
+      "    can be edited.\n"
+      " S Ball and stick depiction of molecules\n"
+      "    Depicts the molecules as balls and sticks instead of the\n"
+      "    normal line style.\n\n"
 
 
       "If the input molecule(s) contain explicit hydrogen, you could consider\n"
