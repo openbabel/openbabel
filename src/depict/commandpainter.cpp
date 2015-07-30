@@ -41,12 +41,12 @@ namespace OpenBabel
   {
     m_ofs << "NewCanvas " << width << " " << height << endl;
   }
-  
+
   bool CommandPainter::IsGood() const
   {
     return true;
   }
-      
+
   void CommandPainter::SetFontSize(int pointSize)
   {
     m_ofs << "SetFontSize " << pointSize << endl;
@@ -68,7 +68,7 @@ namespace OpenBabel
   {
     m_ofs << "SetPenColor " << color.red << " " << color.green << " " << color.blue << " " << color.alpha << " (rgba)" << endl;
   }
-      
+
   void CommandPainter::SetPenWidth(double width)
   {
     m_pen_width = width;
@@ -82,7 +82,7 @@ namespace OpenBabel
 
   void CommandPainter::DrawLine(double x1, double y1, double x2, double y2,  const std::vector<double> & dashes)
   {
-    
+
     m_ofs << fixed << "DrawLine " << x1 << " " << y1 << " to "
                                   << x2 << " " << y2;
     if (!dashes.empty()) {
@@ -112,7 +112,7 @@ namespace OpenBabel
     m_ofs << "DrawCircle " << x << " " << y << " radius " << r << endl;
   }
 
-  void CommandPainter::DrawBall(double x, double y, double r)
+  void CommandPainter::DrawBall(double x, double y, double r, double opacity)
   {
     m_ofs << "DrawBall " << x << " " << y << " radius " << r << endl;
   }
@@ -133,4 +133,3 @@ namespace OpenBabel
     return metrics;
   }
 }
-

@@ -45,12 +45,12 @@ namespace OpenBabel
     double sy = m_height*m_aspect/height;
     m_scale = std::min(sx ,sy);
   }
-  
+
   bool ASCIIPainter::IsGood() const
   {
     return true;
   }
-      
+
   void ASCIIPainter::SetFontSize(int pointSize)
   {
   }
@@ -67,7 +67,7 @@ namespace OpenBabel
   void ASCIIPainter::SetPenColor(const OBColor &color)
   {
   }
-      
+
   void ASCIIPainter::SetPenWidth(double width)
   {
   }
@@ -107,7 +107,7 @@ namespace OpenBabel
   {
   }
 
-  void ASCIIPainter::DrawBall(double x, double y, double r)
+  void ASCIIPainter::DrawBall(double x, double y, double r, double opacity)
   {
   }
 
@@ -144,10 +144,10 @@ namespace OpenBabel
       ofs << endl;
     }
   }
-  
+
   int ASCIIPainter::round(double r)
   {
-    return static_cast<int>( (r > 0.0) ? r + 0.5 : r - 0.5 ); 
+    return static_cast<int>( (r > 0.0) ? r + 0.5 : r - 0.5 );
   }
 
   // Helper function for Bresenham
@@ -225,7 +225,7 @@ namespace OpenBabel
     ans.append(d>=0 ? symbols.substr(1,1): symbols.substr(0,1));
     int tmp_delta = d>=0 ? delta : 0; // Correction for / and \ in some cases
     coords.push_back(pair<int,int>(x2, y2 + tmp_delta));
-    
+
     // Correction for top end of vertical bars
     if (coords.size() > 1) {
       if (coords.at(0).second < coords.at(1).second) {
@@ -244,4 +244,3 @@ namespace OpenBabel
     return ans;
   }
 }
-
