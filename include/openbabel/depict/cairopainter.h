@@ -25,7 +25,7 @@ namespace OpenBabel
       void DrawLine(double x1, double y1, double x2, double y2, const std::vector<double> & dashes=std::vector<double>());
       void DrawPolygon(const std::vector<std::pair<double,double> > &points);
       void DrawCircle(double x, double y, double r);
-      void DrawBall(double x, double y, double r);
+      void DrawBall(double x, double y, double r, double opacity);
       void DrawText(double x, double y, const std::string &text);
       OBFontMetrics GetFontMetrics(const std::string &text);
       //@}
@@ -44,7 +44,7 @@ namespace OpenBabel
       void SetTransparent(bool tr) {m_transparent=tr;}
       void SetCropping(bool cr) {m_cropping=cr;}
      //@}
- 
+
     private:
       cairo_surface_t *m_surface;
       cairo_t *m_cairo;

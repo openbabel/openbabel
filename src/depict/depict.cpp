@@ -71,6 +71,9 @@ namespace OpenBabel
       double     penWidth;
       double     bondSpacing;
       double     bondWidth;
+    // for z-scaling the opacity
+      double     zScale;
+      double     zMin;
       //bool       drawTerminalC;
       int        fontSize, subscriptSize;
       bool       aliasMode;
@@ -381,20 +384,24 @@ namespace OpenBabel
       const double averageBondLength = bondLengthSum / mol->NumBonds();
       const double f = mol->NumBonds() ? d->bondLength / averageBondLength : 1.0;
       for (atom = d->mol->BeginAtom(i); atom; atom = d->mol->NextAtom(i))
-        atom->SetVector(atom->GetX() * f, - atom->GetY() * f, 0.0);
+        atom->SetVector(atom->GetX() * f, - atom->GetY() * f, atom->GetZ());
 
       // find min/max values
       double min_x, max_x;
       double min_y, max_y;
+      double min_z, max_z;
       atom = d->mol->BeginAtom(i);
       if (atom != NULL) {
         min_x = max_x = atom->GetX();
         min_y = max_y = atom->GetY();
+        min_z = max_z = atom->GetZ();
         for (atom = d->mol->NextAtom(i); atom; atom = d->mol->NextAtom(i)) {
           min_x = std::min(min_x, atom->GetX());
           max_x = std::max(max_x, atom->GetX());
           min_y = std::min(min_y, atom->GetY());
           max_y = std::max(max_y, atom->GetY());
+          min_z = std::min(min_z, atom->GetZ());
+          max_z = std::max(max_z, atom->GetZ());
         }
       }
 
@@ -405,10 +412,15 @@ namespace OpenBabel
         margin = 40.0;
       // translate all atoms so the bottom-left atom is at margin,margin
       for (atom = d->mol->BeginAtom(i); atom; atom = d->mol->NextAtom(i))
-        atom->SetVector(atom->GetX() - min_x + margin, atom->GetY() - min_y + margin, 0.0);
+        atom->SetVector(atom->GetX() - min_x + margin, atom->GetY() - min_y + margin, atom->GetZ());
 
       width  = max_x - min_x + 2*margin;
       height = max_y - min_y + 2*margin;
+
+      d->zScale = max_z - min_z;
+      if (fabs(d->zScale) < 1.0e-1)
+        d->zScale = 0.0;
+      d->zMin = min_z;
 
       //d->painter->SetPenWidth(d->penWidth);
       //d->painter->SetPenColor(d->pen));
@@ -1134,15 +1146,23 @@ OBBitVec& drawnBonds)
   void OBDepictPrivateBallAndStick::DrawAtom(OBAtom *atom)
   {
     OBColor atomColor = etab.GetRGB(atom->GetAtomicNum());
+    // TODO: enable opacity as an option
+    double opacity = 1.0;
 
     painter->SetFillRadial(OBColor("white"),atomColor);
-    painter->DrawBall(atom->GetVector().x(), atom->GetVector().y(),GetAtomRadius(atom));
+    painter->DrawBall(atom->GetVector().x(), atom->GetVector().y(),GetAtomRadius(atom), opacity);
   }
 
   double OBDepictPrivateBallAndStick::GetAtomRadius(OBAtom *atom)
   {
     double radius = etab.GetCovalentRad(atom->GetAtomicNum());
-    return radius* bondLength / 3.0;
+    double perspective = 1.0;
+    if (fabs(zScale) > 1.0e-1)
+      perspective = (atom->GetZ() - zMin) / zScale;
+    if (perspective < 0.5)
+      perspective = 0.5;
+
+    return perspective * radius * bondLength / 3.0;
   }
 
   void OBDepictPrivateBallAndStick::DrawAtomLabel(const std::string &label, int alignment, const vector3 &pos)
