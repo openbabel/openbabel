@@ -63,7 +63,7 @@ namespace OpenBabel
 
   private:
     OBMol* ReadCoordinates(istream *ifs);
-    double GetSinglePointEnergy(istream *ifs);
+    vector<OBOrbital> ReadOrbitals(istream *ifs);
 
     OBVibrationData* ReadFrequencyCalculation(istream* ifs);
     OBMol* ReadGeometryOptimizationCalculation(istream* ifs);
@@ -195,7 +195,6 @@ static const char* END_OF_CALCULATION_PATTERN = "Task  times  cpu";
     {
         destination->CloneData(datas[i]);
     }
-
     return destination;
   }
 
@@ -240,34 +239,6 @@ static const char* END_OF_CALCULATION_PATTERN = "Task  times  cpu";
     return atoms;
   }
 
-  /////////////////////////////////////////////////////////////////
-  /**
-  Method reads single point energy from input stream (ifs)
-  and returns it in kcal/mol.
-  Input stream must be set to begining of energy calculation
-  in nwo file. (Line after "NWChem <theory> Module")
-  If energy not found then 0 will be returned.
-  Stream will be set at next line after line containing
-  energy.
-  */
-  double NWChemOutputFormat::GetSinglePointEnergy(istream *ifs)
-  {
-    vector<string> vs;
-    char buffer[BUFF_SIZE];
-
-    while (ifs->getline(buffer, BUFF_SIZE))
-    {
-        if ((strstr(buffer, DFT_ENERGY_PATTERN) != NULL) || (strstr(buffer, SCF_ENERGY_PATTERN) != NULL))
-        {
-            tokenize(vs, buffer);
-            return atof(vs[4].c_str()) * HARTREE_TO_KCAL;
-        }
-        else if (strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
-            return 0;
-    }
-    return 0;
-  }
-
   //////////////////////////////////////////////////////
   /**
   Method reads orbital information from input stream (ifs)
@@ -293,15 +264,15 @@ static const char* END_OF_CALCULATION_PATTERN = "Task  times  cpu";
         // Vector   N  Occ=X  E= Y  Symmetry=a'
         //   0      1    2    3  4  5(optional)
         if (vs.size() < 5)
-            return NULL;
+            return orbitals;
 
-        double energy = atof(vs[4].c_str());
+        double energy = atof(vs[4].c_str()) * HARTREE_TO_KCAL;
         double occupation = atof(vs[2].c_str()+4); // Start from symbol after '='
         string symbol;
         if (vs.size() > 5)
             symbol = vs[5].substr(9, string::npos);
         else
-            symbol = " ";
+            symbol = " "; // Symmetry is unknown
         OBOrbital orbital;
         orbital.SetData(energy, occupation, symbol);
         orbitals.push_back(orbital);
@@ -468,14 +439,42 @@ static const char* END_OF_CALCULATION_PATTERN = "Task  times  cpu";
   OBMol* NWChemOutputFormat::ReadSinglePointCalculation(istream *ifs)
   {
     double energy;
-    energy = GetSinglePointEnergy(ifs);
+    vector<string> vs;
+    char buffer[BUFF_SIZE];
+    OBOrbitalData *orbital_data = NULL;
+
+    while (ifs->getline(buffer, BUFF_SIZE))
+    {
+        if ((strstr(buffer, DFT_ENERGY_PATTERN) != NULL) || (strstr(buffer, SCF_ENERGY_PATTERN) != NULL))
+        {
+            tokenize(vs, buffer);
+            energy = atof(vs[4].c_str()) * HARTREE_TO_KCAL;
+        }
+        else if ((strstr(buffer, "Analysis") != NULL)&&(strstr(buffer, "rbital") != NULL))
+        {
+            if (orbital_data == NULL)
+                orbital_data = new OBOrbitalData;
+
+            vector<OBOrbital> orbitals = ReadOrbitals(ifs);
+
+            if (strstr(buffer, "Beta"))
+            {
+                orbital_data->SetOpenShell(true);
+                orbital_data->SetBetaOrbitals(orbitals);
+            }
+            else
+                orbital_data->SetAlphaOrbitals(orbitals);
+        }
+        else if (strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
+            break;
+    }
     if (energy == 0)
         return NULL;
     OBMol *mol = new OBMol;
 
     mol->SetEnergy(energy);
-    // There is a place for orbital data search
-    GotoCalculationEnd(ifs);
+    if (orbital_data != NULL)
+        mol->SetData(orbital_data);
     return mol;
   }
 
