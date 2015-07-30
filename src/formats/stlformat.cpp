@@ -116,24 +116,24 @@ namespace OpenBabel
     }
   };
 
-  void map_sphere ( vector<Triangle> &triangles, vector3 origin, float r, uint16_t col )
+  void map_sphere ( vector<Triangle> &triangles, vector3 origin, double r, uint16_t col )
   {
     vector<vector3> points;
 
     int  longitude_steps = 144;
     int  latitude_steps  = longitude_steps / 2;
-    float theta =  ( 2*M_PI / longitude_steps );
+    double theta =  ( 2*M_PI / longitude_steps );
     int p2 = longitude_steps / 2;
     int r2 = latitude_steps / 2;
     for(int y = -r2; y < r2; ++y) {
-      float cy = cos(y*theta);
-      float cy1 = cos((y+1)*theta);
-      float sy = sin(y*theta);
-      float sy1 = sin((y+1)*theta);
+      double cy = cos(y*theta);
+      double cy1 = cos((y+1)*theta);
+      double sy = sin(y*theta);
+      double sy1 = sin((y+1)*theta);
 
       for(int i = -p2; i < p2; ++i) {
-        float ci = cos(i*theta);
-        float si = sin(i*theta);
+        double ci = cos(i*theta);
+        double si = sin(i*theta);
         points.push_back(vector3( origin[0] + r * ci*cy , origin[1] + r*sy , origin[2] + r * si*cy));
         points.push_back(vector3( origin[0] + r * ci*cy1, origin[1] + r*sy1, origin[2] + r * si*cy1));
       }
@@ -215,7 +215,7 @@ namespace OpenBabel
       //		nz /= r;
 
       //  Turns out we don't have to specify a normal
-      nx = ny = nz = 0.;
+      nx = ny = nz = 0.f;
 
       os.write( (const char*) &nx, sizeof(float) );
       os.write( (const char*) &ny, sizeof(float) );
