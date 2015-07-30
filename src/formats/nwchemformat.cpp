@@ -85,6 +85,10 @@ static const char* VIBRATIONS_TABLE_PATTERN = "P.Frequency";
 static const char* INTENSITIES_TABLE_PATTERN = "Projected Infra Red Intensities";
 static const char* DIGITS = "1234567890";
 static const char* END_OF_CALCULATION_PATTERN = "Task  times  cpu";
+static const char* ORBITAL_START_PATTERN = "Vector";
+static const char* ORBITAL_SECTION_PATTERN_1 = "Analysis";
+static const char* ORBITAL_SECTION_PATTERN_2 = "rbital";
+static const char* BETA_ORBITAL_PATTERN = "Beta";
 
   //Make an instance of the format class
   NWChemOutputFormat theNWChemOutputFormat;
@@ -258,7 +262,7 @@ static const char* END_OF_CALCULATION_PATTERN = "Task  times  cpu";
 
     ifs->getline(buffer,BUFF_SIZE);
 
-    while (strstr(buffer, "Vector"))
+    while (strstr(buffer, ORBITAL_START_PATTERN))
     {
         tokenize(vs, buffer);
         // Vector   N  Occ=X  E= Y  Symmetry=a'
@@ -450,14 +454,14 @@ static const char* END_OF_CALCULATION_PATTERN = "Task  times  cpu";
             tokenize(vs, buffer);
             energy = atof(vs[4].c_str()) * HARTREE_TO_KCAL;
         }
-        else if ((strstr(buffer, "Analysis") != NULL)&&(strstr(buffer, "rbital") != NULL))
+        else if ((strstr(buffer, ORBITAL_SECTION_PATTERN_2) != NULL)&&(strstr(buffer, ORBITAL_SECTION_PATTERN_1) != NULL))
         {
             if (orbital_data == NULL)
                 orbital_data = new OBOrbitalData;
 
             vector<OBOrbital> orbitals = ReadOrbitals(ifs);
 
-            if (strstr(buffer, "Beta"))
+            if (strstr(buffer, BETA_ORBITAL_PATTERN))
             {
                 orbital_data->SetOpenShell(true);
                 orbital_data->SetBetaOrbitals(orbitals);
