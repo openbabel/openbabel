@@ -259,9 +259,7 @@ static const char* END_OF_CALCULATION_PATTERN = "Task  times  cpu";
     {
         if ((strstr(buffer, DFT_ENERGY_PATTERN) != NULL) || (strstr(buffer, SCF_ENERGY_PATTERN) != NULL))
         {
-            cout << buffer << endl;
             tokenize(vs, buffer);
-            cout << vs[4] << endl;
             return atof(vs[4].c_str()) * HARTREE_TO_KCAL;
         }
         else if (strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
@@ -269,6 +267,57 @@ static const char* END_OF_CALCULATION_PATTERN = "Task  times  cpu";
     }
     return 0;
   }
+
+  //////////////////////////////////////////////////////
+  /**
+  Method reads orbital information from input stream (ifs)
+  and returns vector of OBOrbital objects.
+  Input stream must be set to begining of orbital data
+  section in nwo file. (Line after "... Molecular Orbital Analysis")
+  Stream will be set at next line after end of orbital section.
+  */
+  vector<OBOrbital> NWChemOutputFormat::ReadOrbitals(istream *ifs)
+  {
+    vector<string> vs;
+    char buffer[BUFF_SIZE];
+    vector<OBOrbital> orbitals;
+
+    ifs->getline(buffer, BUFF_SIZE); // ---------
+    ifs->getline(buffer, BUFF_SIZE); // blank line
+
+    ifs->getline(buffer,BUFF_SIZE);
+
+    while (strstr(buffer, "Vector"))
+    {
+        tokenize(vs, buffer);
+        // Vector   N  Occ=X  E= Y  Symmetry=a'
+        //   0      1    2    3  4  5(optional)
+        if (vs.size() < 5)
+            return NULL;
+
+        double energy = atof(vs[4].c_str());
+        double occupation = atof(vs[2].c_str()+4); // Start from symbol after '='
+        string symbol;
+        if (vs.size() > 5)
+            symbol = vs[5].substr(9, string::npos);
+        else
+            symbol = " ";
+        OBOrbital orbital;
+        orbital.SetData(energy, occupation, symbol);
+        orbitals.push_back(orbital);
+
+        ifs->getline(buffer, BUFF_SIZE); // MO Center ...
+        ifs->getline(buffer, BUFF_SIZE); // Table header
+        ifs->getline(buffer,BUFF_SIZE); // ----------
+        while (ifs->getline(buffer,BUFF_SIZE) != NULL)
+            if (strlen(buffer) < 2) // If blank line detected
+                break;
+        ifs->getline(buffer,BUFF_SIZE); // New line that can contain "Vector"
+    }
+
+    return orbitals;
+  }
+
 
   //////////////////////////////////////////////////////
   /**
