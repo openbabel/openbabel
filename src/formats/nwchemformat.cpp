@@ -233,8 +233,7 @@ static const char* BETA_ORBITAL_PATTERN = "Beta";
         atom->SetVector(x,y,z); //set coordinates
 
         //set atomic number
-        size_t end_of_atom_symbol = vs[1].find_last_not_of(DIGITS) + 1;
-        atom->SetAtomicNum(etab.GetAtomicNum(vs[1].substr(0,end_of_atom_symbol).c_str()));
+        atom->SetAtomicNum(atof(vs[2].c_str()));
         if (!ifs->getline(buffer,BUFF_SIZE))
           break;
         tokenize(vs,buffer);
