@@ -313,11 +313,11 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
   //////////////////////////////////////////////////////
   /**
   Method reads optimization steps from input stream (ifs)
-  and writes it to new OBMol object, then returns it.
+  and writes it to supplied OBMol object (molecule).
   Input stream must be set to begining of geometry optimization
   calculation in nwo file. (Line after "NWChem Geometry Optimization")
-  If no geometry data found then NULL will be returned.
-  Stream will be set at the end of calculation.
+  If no geometry data found then "molecule" wont be changed.
+  After all stream will be set at the end of calculation.
   */
   void NWChemOutputFormat::ReadGeometryOptimizationCalculation(istream* ifs, OBMol* molecule)
   {
@@ -473,12 +473,11 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
 
   /////////////////////////////////////////////////////////////////
   /**
-  Method reads single point energy from input stream (ifs)
-  and returns OBMol object containg all related to calculation
-  data.
+  Method reads single point energy and all avalible data from input
+  stream (ifs) and writes it to supplied OBMol object (molecule) 
   Input stream must be set to begining of energy calculation
   in nwo file. (Line after "NWChem <theory> Module")
-  If energy not found then NULL will be returned.
+  If energy not found then "molecule" wont be changed.
   */
   void NWChemOutputFormat::ReadSinglePointCalculation(istream *ifs, OBMol* molecule)
   {
