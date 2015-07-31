@@ -67,7 +67,7 @@ namespace OpenBabel
     vector<OBOrbital> ReadOrbitals(istream *ifs);
 
     OBVibrationData* ReadFrequencyCalculation(istream* ifs);
-    OBMol* ReadGeometryOptimizationCalculation(istream* ifs);
+    void ReadGeometryOptimizationCalculation(istream* ifs, OBMol* molecule);
     void ReadSinglePointCalculation(istream *ifs, OBMol* molecule);
 
   };
@@ -319,25 +319,26 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
   If no geometry data found then NULL will be returned.
   Stream will be set at the end of calculation.
   */
-  OBMol* NWChemOutputFormat::ReadGeometryOptimizationCalculation(istream* ifs)
+  void NWChemOutputFormat::ReadGeometryOptimizationCalculation(istream* ifs, OBMol* molecule)
   {
-    vector<double> energies;
+    if (molecule == NULL)
+        return;
     vector<string> vs;
     char buffer[BUFF_SIZE];
-    vector<double *> steps;
+    vector<double> energies;
 
-    OBMol *pmol = new OBMol;
     while (ifs->getline(buffer, BUFF_SIZE) != NULL)
     {
         if(strstr(buffer,COORDINATES_PATTERN) != NULL)
         {
             OBMol* geometry = ReadCoordinates(ifs);
-            if (AddNonExistentData(pmol, geometry) != NULL)
+            if (AddNonExistentData(molecule, geometry) != NULL)
             {
-                unsigned int natoms = pmol->NumAtoms();
+                unsigned int natoms = molecule->NumAtoms();
                 double *step = new double[natoms*3];
                 memcpy(step, geometry->GetCoordinates(), sizeof(double)*natoms*3);
-                steps.push_back(step);
+                molecule->AddConformer(step);
+                molecule->SetConformer(molecule->NumConformers() - 1);
             }
             delete geometry;
         }
@@ -347,33 +348,33 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
             ifs->getline(buffer, BUFF_SIZE); // ------
             ifs->getline(buffer, BUFF_SIZE);
             tokenize(vs, buffer);
-            energies.push_back(atof(vs[2].c_str()));
+            molecule->SetConformer(molecule->NumConformers() - 1);
+            if (vs.size() > 2) // @ NStep   Energy...
+                energies.push_back(atof(vs[2].c_str()) * HARTREE_TO_KCAL);
         }
         else if(strstr(buffer, MULLIKEN_CHARGES_PATTERN) != NULL)
         {
             OBMol *result = ReadPartialCharges(ifs);
             // result will not be NULL
-            if (AddNonExistentData(pmol, result) != NULL)
+            if (AddNonExistentData(molecule, result) != NULL)
             {
                 unsigned int natoms = result->NumAtoms();
                 for(unsigned int i = 1; i<=natoms; i++)
                 {
                     OBAtom* new_atom = result->GetAtom(i);
-                    OBAtom* atom = pmol->GetAtom(i);
+                    OBAtom* atom = molecule->GetAtom(i);
                     atom->SetPartialCharge(new_atom->GetPartialCharge());
                 }
             }
             delete result;
         }
         else if(strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
-        {
-            // End of task
             break;
-        } // if "Task  times  cpu"
     }
-    pmol->SetEnergies(energies);
-    pmol->SetConformers(steps);
-    return pmol;
+    vector<double> old_energies = molecule->GetEnergies();
+    old_energies.reserve(old_energies.size() + energies.size());
+    old_energies.insert(old_energies.end(), energies.begin(), energies.end());
+    molecule->SetEnergies(old_energies);
   }
 
   //////////////////////////////////////////////////////
@@ -481,6 +482,8 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
   */
   void NWChemOutputFormat::ReadSinglePointCalculation(istream *ifs, OBMol* molecule)
   {
+    if (molecule == NULL)
+        return;
     double energy;
     vector<string> vs;
     char buffer[BUFF_SIZE];
@@ -584,31 +587,7 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
             }
         }
         else if(strstr(buffer, GEOMETRY_OPTIMIZATION_PATTERN) != NULL)
-        {
-            OBMol* result = ReadGeometryOptimizationCalculation(&ifs);
-            if (result != NULL)
-            {
-                if (AddNonExistentData(&mol, result) != NULL)
-                {
-                    unsigned int nconformers = result->NumConformers();
-                    if (nconformers > 0)
-                    {
-                        unsigned int natoms = result->NumAtoms();
-                        for (unsigned int i = 0; i < nconformers; i++)
-                        {
-                            double *conformer = new double[3*natoms];
-                            result->SetConformer(i);
-                            double *coordinates = result->GetCoordinates();
-                            memcpy(conformer, coordinates, sizeof(double)*3*natoms);
-                            mol.AddConformer(conformer);
-                            mol.SetConformer(mol.NumConformers() - 1);
-                            mol.SetEnergy(result->GetEnergy());
-                        }
-                    }
-                }
-                delete result;
-            }
-        }// if "Geometry Optimization"
+            ReadGeometryOptimizationCalculation(&ifs, &mol);
         else if(strstr(buffer, FREQUENCY_PATTERN) != NULL)
         {
             OBVibrationData* result = ReadFrequencyCalculation(&ifs);
