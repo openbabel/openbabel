@@ -63,11 +63,12 @@ namespace OpenBabel
 
   private:
     OBMol* ReadCoordinates(istream *ifs);
+    OBMol* ReadPartialCharges(istream *ifs);
     vector<OBOrbital> ReadOrbitals(istream *ifs);
 
     OBVibrationData* ReadFrequencyCalculation(istream* ifs);
     OBMol* ReadGeometryOptimizationCalculation(istream* ifs);
-    OBMol* ReadSinglePointCalculation(istream *ifs);
+    void ReadSinglePointCalculation(istream *ifs, OBMol* molecule);
 
   };
 
@@ -89,6 +90,7 @@ static const char* ORBITAL_START_PATTERN = "Vector";
 static const char* ORBITAL_SECTION_PATTERN_1 = "Analysis";
 static const char* ORBITAL_SECTION_PATTERN_2 = "rbital";
 static const char* BETA_ORBITAL_PATTERN = "Beta";
+static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total density";
 
   //Make an instance of the format class
   NWChemOutputFormat theNWChemOutputFormat;
@@ -223,6 +225,42 @@ static const char* BETA_ORBITAL_PATTERN = "Beta";
 
   //////////////////////////////////////////////////////
   /**
+  Method reads partial charges from input stream (ifs) and creates
+  new OBMol object then return reference to it.
+  Input stream must be set to begining of charges
+  table in nwo file. (Line after "Mulliken analysis of the total density")
+  Stream will be set at next line after charges table.
+  */
+  OBMol* NWChemOutputFormat::ReadPartialCharges(istream *ifs)
+  {
+    OBMol *molecule = new OBMol;
+    vector<string> vs;
+    char buffer[BUFF_SIZE];
+
+    ifs->getline(buffer,BUFF_SIZE); // ---- ----- ----
+    ifs->getline(buffer,BUFF_SIZE);	// blank
+    ifs->getline(buffer,BUFF_SIZE);	// column headings
+    ifs->getline(buffer,BUFF_SIZE);	// ---- ----- ----
+    ifs->getline(buffer,BUFF_SIZE);
+    tokenize(vs, buffer);
+
+    // N Symbol    Charge     PartialCharge+Charge   ShellCharges
+    // 0   1          2                3                4,etc
+    while (vs.size() >= 4)
+    {
+        OBAtom *atom = molecule->NewAtom();
+        int charge = atoi(vs[2].c_str());
+        atom->SetAtomicNum(charge);
+        atom->SetPartialCharge(atof(vs[3].c_str()) - charge);
+        ifs->getline(buffer,BUFF_SIZE);
+        tokenize(vs, buffer);
+    }
+    return molecule;
+  }
+
+
+  //////////////////////////////////////////////////////
+  /**
   Method reads orbital information from input stream (ifs)
   and returns vector of OBOrbital objects.
   Input stream must be set to begining of orbital data
@@ -310,6 +348,22 @@ static const char* BETA_ORBITAL_PATTERN = "Beta";
             ifs->getline(buffer, BUFF_SIZE);
             tokenize(vs, buffer);
             energies.push_back(atof(vs[2].c_str()));
+        }
+        else if(strstr(buffer, MULLIKEN_CHARGES_PATTERN) != NULL)
+        {
+            OBMol *result = ReadPartialCharges(ifs);
+            // result will not be NULL
+            if (AddNonExistentData(pmol, result) != NULL)
+            {
+                unsigned int natoms = result->NumAtoms();
+                for(unsigned int i = 1; i<=natoms; i++)
+                {
+                    OBAtom* new_atom = result->GetAtom(i);
+                    OBAtom* atom = pmol->GetAtom(i);
+                    atom->SetPartialCharge(new_atom->GetPartialCharge());
+                }
+            }
+            delete result;
         }
         else if(strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
         {
@@ -425,7 +479,7 @@ static const char* BETA_ORBITAL_PATTERN = "Beta";
   in nwo file. (Line after "NWChem <theory> Module")
   If energy not found then NULL will be returned.
   */
-  OBMol* NWChemOutputFormat::ReadSinglePointCalculation(istream *ifs)
+  void NWChemOutputFormat::ReadSinglePointCalculation(istream *ifs, OBMol* molecule)
   {
     double energy;
     vector<string> vs;
@@ -454,17 +508,34 @@ static const char* BETA_ORBITAL_PATTERN = "Beta";
             else
                 orbital_data->SetAlphaOrbitals(orbitals);
         }
+        else if(strstr(buffer, MULLIKEN_CHARGES_PATTERN) != NULL)
+        {
+            OBMol *result = ReadPartialCharges(ifs);
+            // result will not be NULL
+            if (AddNonExistentData(molecule, result) != NULL)
+            {
+                unsigned int natoms = result->NumAtoms();
+                for(unsigned int i = 1; i<=natoms; i++)
+                {
+                    OBAtom* new_atom = result->GetAtom(i);
+                    OBAtom* atom = molecule->GetAtom(i);
+                    atom->SetPartialCharge(new_atom->GetPartialCharge());
+                }
+            }
+            delete result;
+        }
         else if (strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
             break;
     }
     if (energy == 0)
-        return NULL;
-    OBMol *mol = new OBMol;
-
-    mol->SetEnergy(energy);
+    {
+        if (orbital_data != NULL)
+            delete orbital_data;
+        return;
+    }
+    molecule->SetEnergy(energy);
     if (orbital_data != NULL)
-        mol->SetData(orbital_data);
-    return mol;
+        molecule->SetData(orbital_data);
   }
 
   /////////////////////////////////////////////////////////////////
@@ -548,15 +619,7 @@ static const char* BETA_ORBITAL_PATTERN = "Beta";
                 mol.SetData(result);
         }// if "Frequency Analysis"
         else if(strstr(buffer, SCF_CALCULATION_PATTERN) != strstr(buffer, DFT_CALCULATION_PATTERN))
-        {
-            OBMol* result = ReadSinglePointCalculation(&ifs);
-            if (result != NULL)
-            {
-                AddNonExistentData(&mol, result);
-                mol.SetEnergy(result->GetEnergy());
-                delete result;
-            }
-        }// if "SinglePoint"
+            ReadSinglePointCalculation(&ifs, &mol);
         // These calculation handlers still not implemented
         // so we just skip them
         else if(strstr(buffer, ZTS_CALCULATION_PATTERN) != NULL)
