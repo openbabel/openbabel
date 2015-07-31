@@ -62,13 +62,13 @@ namespace OpenBabel
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
 
   private:
-    OBMol* ReadCoordinates(istream *ifs);
-    OBMol* ReadPartialCharges(istream *ifs);
-    vector<OBOrbital> ReadOrbitals(istream *ifs);
+    OBMol* ReadCoordinates(istream* ifs);
+    void ReadPartialCharges(istream* ifs, OBMol* molecule);
+    vector<OBOrbital> ReadOrbitals(istream* ifs);
 
     OBVibrationData* ReadFrequencyCalculation(istream* ifs);
     void ReadGeometryOptimizationCalculation(istream* ifs, OBMol* molecule);
-    void ReadSinglePointCalculation(istream *ifs, OBMol* molecule);
+    void ReadSinglePointCalculation(istream* ifs, OBMol* molecule);
 
   };
 
@@ -148,7 +148,7 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
   /**
   Moves stream (ifs) position to end of calculation. 
   */
-  static void GotoCalculationEnd(istream *ifs)
+  static void GotoCalculationEnd(istream* ifs)
   {
   char buffer[BUFF_SIZE];
     while ( (strstr(buffer,END_OF_CALCULATION_PATTERN) == NULL))
@@ -162,7 +162,7 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
   and returns it then.
   If "source" object has incompatible data, NULL will be returned
   */
-  static OBMol* AddNonExistentData(OBMol *destination, OBMol *source)
+  static OBMol* AddNonExistentData(OBMol* destination, OBMol* source)
   {
     if ((destination->NumAtoms() == 0))
     {
@@ -191,7 +191,7 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
   table in nwo file. (Line after "Output coordinates...")
   Stream will be set at next line after geometry table.
   */
-  OBMol* NWChemOutputFormat::ReadCoordinates(istream *ifs)
+  OBMol* NWChemOutputFormat::ReadCoordinates(istream* ifs)
   {
     OBMol* atoms;
     atoms = new OBMol;
@@ -225,18 +225,28 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
 
   //////////////////////////////////////////////////////
   /**
-  Method reads partial charges from input stream (ifs) and creates
-  new OBMol object then return reference to it.
+  Method reads partial charges from input stream (ifs)
+  and writes them to supplied OBMol object (molecule)
   Input stream must be set to begining of charges
   table in nwo file. (Line after "Mulliken analysis of the total density")
   Stream will be set at next line after charges table.
+  If reading charges failed or "molecule" contains
+  data incompatible with read charges then "molecule"
+  wont be changed.
   */
-  OBMol* NWChemOutputFormat::ReadPartialCharges(istream *ifs)
+  void NWChemOutputFormat::ReadPartialCharges(istream* ifs, OBMol* molecule)
   {
-    OBMol *molecule = new OBMol;
+    if ((molecule == NULL) || (ifs == NULL))
+        return;
     vector<string> vs;
     char buffer[BUFF_SIZE];
+    bool from_scratch = false;
+    vector<int> charges;
+    vector<double> partial_charges;
+    unsigned int natoms = molecule->NumAtoms();
 
+    if (natoms == 0)
+        from_scratch = true;
     ifs->getline(buffer,BUFF_SIZE); // ---- ----- ----
     ifs->getline(buffer,BUFF_SIZE);	// blank
     ifs->getline(buffer,BUFF_SIZE);	// column headings
@@ -246,16 +256,38 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
 
     // N Symbol    Charge     PartialCharge+Charge   ShellCharges
     // 0   1          2                3                4,etc
+    unsigned int i = 1;
     while (vs.size() >= 4)
     {
-        OBAtom *atom = molecule->NewAtom();
         int charge = atoi(vs[2].c_str());
-        atom->SetAtomicNum(charge);
-        atom->SetPartialCharge(atof(vs[3].c_str()) - charge);
+        if (!from_scratch)
+        {
+            if (i > natoms)
+                return;
+            if (molecule->GetAtom(i++)->GetAtomicNum() != charge)
+                return;
+        }
+        else
+            charges.push_back(charge);
+        partial_charges.push_back(atof(vs[3].c_str()) - charge);
         ifs->getline(buffer,BUFF_SIZE);
         tokenize(vs, buffer);
     }
-    return molecule;
+
+    if (from_scratch)
+    {
+        molecule->ReserveAtoms(charges.size());
+        natoms = molecule->NumAtoms();
+    }
+    if (natoms != partial_charges.size())
+        return;
+    for(unsigned int j = 0;j < molecule->NumAtoms();j++)
+    {
+        OBAtom *atom = molecule->GetAtom(j+1);
+        if (from_scratch)
+            atom->SetAtomicNum(charges[j]);
+        atom->SetPartialCharge(partial_charges[j]);
+    }
   }
 
 
@@ -267,7 +299,7 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
   section in nwo file. (Line after "... Molecular Orbital Analysis")
   Stream will be set at next line after end of orbital section.
   */
-  vector<OBOrbital> NWChemOutputFormat::ReadOrbitals(istream *ifs)
+  vector<OBOrbital> NWChemOutputFormat::ReadOrbitals(istream* ifs)
   {
     vector<string> vs;
     char buffer[BUFF_SIZE];
@@ -321,7 +353,7 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
   */
   void NWChemOutputFormat::ReadGeometryOptimizationCalculation(istream* ifs, OBMol* molecule)
   {
-    if (molecule == NULL)
+    if ((molecule == NULL) || (ifs == NULL))
         return;
     vector<string> vs;
     char buffer[BUFF_SIZE];
@@ -353,21 +385,7 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
                 energies.push_back(atof(vs[2].c_str()) * HARTREE_TO_KCAL);
         }
         else if(strstr(buffer, MULLIKEN_CHARGES_PATTERN) != NULL)
-        {
-            OBMol *result = ReadPartialCharges(ifs);
-            // result will not be NULL
-            if (AddNonExistentData(molecule, result) != NULL)
-            {
-                unsigned int natoms = result->NumAtoms();
-                for(unsigned int i = 1; i<=natoms; i++)
-                {
-                    OBAtom* new_atom = result->GetAtom(i);
-                    OBAtom* atom = molecule->GetAtom(i);
-                    atom->SetPartialCharge(new_atom->GetPartialCharge());
-                }
-            }
-            delete result;
-        }
+            ReadPartialCharges(ifs, molecule);
         else if(strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
             break;
     }
@@ -479,9 +497,9 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
   in nwo file. (Line after "NWChem <theory> Module")
   If energy not found then "molecule" wont be changed.
   */
-  void NWChemOutputFormat::ReadSinglePointCalculation(istream *ifs, OBMol* molecule)
+  void NWChemOutputFormat::ReadSinglePointCalculation(istream* ifs, OBMol* molecule)
   {
-    if (molecule == NULL)
+    if ((molecule == NULL) || (ifs == NULL))
         return;
     double energy;
     vector<string> vs;
@@ -511,21 +529,7 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
                 orbital_data->SetAlphaOrbitals(orbitals);
         }
         else if(strstr(buffer, MULLIKEN_CHARGES_PATTERN) != NULL)
-        {
-            OBMol *result = ReadPartialCharges(ifs);
-            // result will not be NULL
-            if (AddNonExistentData(molecule, result) != NULL)
-            {
-                unsigned int natoms = result->NumAtoms();
-                for(unsigned int i = 1; i<=natoms; i++)
-                {
-                    OBAtom* new_atom = result->GetAtom(i);
-                    OBAtom* atom = molecule->GetAtom(i);
-                    atom->SetPartialCharge(new_atom->GetPartialCharge());
-                }
-            }
-            delete result;
-        }
+            ReadPartialCharges(ifs, molecule);
         else if (strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
             break;
     }
