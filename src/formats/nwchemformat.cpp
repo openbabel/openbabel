@@ -161,37 +161,17 @@ static const char* BETA_ORBITAL_PATTERN = "Beta";
   If "source" object has incompatible data, "destination" will be returned
   without changes
   */
-  static OBMol* MergeMolecules(OBMol *destination, OBMol *source)
+  static OBMol* AddNonExistentData(OBMol *destination, OBMol *source)
   {
     if ((destination->NumAtoms() == 0))
     {
         *destination += *source;
-        return destination; //Will generic data be copied?
+        return destination;
     }
 
     if (source->NumAtoms() != 0)
         if (!CheckMoleculesEqual(destination, source))
-            return destination;
-
-    if (source->GetEnergy() != 0)
-        destination->SetEnergy(source->GetEnergy());
-
-    // Conformers
-    if (source->NumConformers() > 0)
-    {
-        unsigned int natoms = source->NumAtoms();
-        unsigned int nconformers = source->NumConformers();
-        for (unsigned int i = 0; i < nconformers; i++)
-        {
-            double *conformer = new double[3*natoms];
-            source->SetConformer(i);
-            double *coordinates = source->GetCoordinates();
-            memcpy(conformer, coordinates, sizeof(double)*3*natoms);
-            destination->AddConformer(conformer);
-            destination->SetConformer(destination->NumConformers() - 1);
-            destination->SetEnergy(source->GetEnergy());
-        }
-    }
+            return NULL;
 
     // Datas
     vector<OBGenericData* > datas = source->GetData();
@@ -307,15 +287,21 @@ static const char* BETA_ORBITAL_PATTERN = "Beta";
     vector<double> energies;
     vector<string> vs;
     char buffer[BUFF_SIZE];
+    vector<double *> steps;
 
     OBMol *pmol = new OBMol;
-
     while (ifs->getline(buffer, BUFF_SIZE) != NULL)
     {
         if(strstr(buffer,COORDINATES_PATTERN) != NULL)
         {
             OBMol* geometry = ReadCoordinates(ifs);
-            MergeMolecules(pmol, geometry);
+            if (AddNonExistentData(pmol, geometry) != NULL)
+            {
+                unsigned int natoms = pmol->NumAtoms();
+                double *step = new double[natoms*3];
+                memcpy(step, geometry->GetCoordinates(), sizeof(double)*natoms*3);
+                steps.push_back(step);
+            }
             delete geometry;
         }
         else if(strstr(buffer, OPTIMIZATION_STEP_PATTERN) != NULL)
@@ -333,6 +319,7 @@ static const char* BETA_ORBITAL_PATTERN = "Beta";
         } // if "Task  times  cpu"
     }
     pmol->SetEnergies(energies);
+    pmol->SetConformers(steps);
     return pmol;
   }
 
@@ -518,7 +505,7 @@ static const char* BETA_ORBITAL_PATTERN = "Beta";
                 // new geometry will be considered as new molecule.
                 mol.Clear();
                 mol.BeginModify();
-                MergeMolecules(&mol, geometry);
+                AddNonExistentData(&mol, geometry);
                 delete geometry;
             }
             else
@@ -534,8 +521,24 @@ static const char* BETA_ORBITAL_PATTERN = "Beta";
             OBMol* result = ReadGeometryOptimizationCalculation(&ifs);
             if (result != NULL)
             {
-                MergeMolecules(&mol, result);
-                mol.SetConformer(mol.NumConformers() - 1);
+                if (AddNonExistentData(&mol, result) != NULL)
+                {
+                    unsigned int nconformers = result->NumConformers();
+                    if (nconformers > 0)
+                    {
+                        unsigned int natoms = result->NumAtoms();
+                        for (unsigned int i = 0; i < nconformers; i++)
+                        {
+                            double *conformer = new double[3*natoms];
+                            result->SetConformer(i);
+                            double *coordinates = result->GetCoordinates();
+                            memcpy(conformer, coordinates, sizeof(double)*3*natoms);
+                            mol.AddConformer(conformer);
+                            mol.SetConformer(mol.NumConformers() - 1);
+                            mol.SetEnergy(result->GetEnergy());
+                        }
+                    }
+                }
                 delete result;
             }
         }// if "Geometry Optimization"
@@ -550,7 +553,8 @@ static const char* BETA_ORBITAL_PATTERN = "Beta";
             OBMol* result = ReadSinglePointCalculation(&ifs);
             if (result != NULL)
             {
-                MergeMolecules(&mol, result);
+                AddNonExistentData(&mol, result);
+                mol.SetEnergy(result->GetEnergy());
                 delete result;
             }
         }// if "SinglePoint"
