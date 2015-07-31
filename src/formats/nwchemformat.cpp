@@ -552,9 +552,6 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
     const char* title = pConv->GetTitle();
 
     char buffer[BUFF_SIZE];
-    string str;
-    double x,y,z;
-    OBAtom *atom;
 
     mol.BeginModify();
 
