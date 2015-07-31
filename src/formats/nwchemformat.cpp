@@ -156,10 +156,9 @@ static const char* BETA_ORBITAL_PATTERN = "Beta";
 
   /////////////////////////////////////////////////////////////////
   /**
-  Adds data from "source" OBMol object to "destination" and returns it then.
-  "source" object can be randomly modified while merging.
-  If "source" object has incompatible data, "destination" will be returned
-  without changes
+  Adds non existent data from "source" OBMol object to "destination"
+  and returns it then.
+  If "source" object has incompatible data, NULL will be returned
   */
   static OBMol* AddNonExistentData(OBMol *destination, OBMol *source)
   {
