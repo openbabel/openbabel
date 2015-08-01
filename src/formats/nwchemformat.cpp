@@ -65,7 +65,7 @@ namespace OpenBabel
   private:
     void ReadCoordinates(istream* ifs, OBMol* molecule);
     void ReadPartialCharges(istream* ifs, OBMol* molecule);
-    vector<OBOrbital> ReadOrbitals(istream* ifs);
+    void ReadOrbitals(istream* ifs, OBMol* molecule);
 
     void ReadFrequencyCalculation(istream* ifs, OBMol* molecule);
     void ReadGeometryOptimizationCalculation(istream* ifs, OBMol* molecule);
@@ -294,51 +294,69 @@ static const char* NBEADS_PATTERN = "@ Number of replicas";
   //////////////////////////////////////////////////////
   /**
   Method reads orbital information from input stream (ifs)
-  and returns vector of OBOrbital objects.
+  and writes them to supplied OBMol object (molecule).
   Input stream must be set to begining of orbital data
   section in nwo file. (Line after "... Molecular Orbital Analysis")
   Stream will be set at next line after end of orbital section.
   */
-  vector<OBOrbital> NWChemOutputFormat::ReadOrbitals(istream* ifs)
+  void NWChemOutputFormat::ReadOrbitals(istream* ifs, OBMol* molecule)
   {
+    if ((ifs == NULL) || (molecule == NULL))
+        return;
     vector<string> vs;
     char buffer[BUFF_SIZE];
     vector<OBOrbital> orbitals;
-
+    OBOrbitalData* orbital_data = new OBOrbitalData;
     ifs->getline(buffer, BUFF_SIZE); // ---------
     ifs->getline(buffer, BUFF_SIZE); // blank line
 
-    ifs->getline(buffer,BUFF_SIZE);
-
-    while (strstr(buffer, ORBITAL_START_PATTERN))
+    while (ifs->getline(buffer,BUFF_SIZE) != NULL)
     {
-        tokenize(vs, buffer);
-        // Vector   N  Occ=X  E= Y  Symmetry=a'
-        //   0      1    2    3  4  5(optional)
-        if (vs.size() < 5)
-            return orbitals;
+        if (strstr(buffer, ORBITAL_START_PATTERN))
+        {
+            tokenize(vs, buffer);
+            // Vector   N  Occ=X  E= Y  Symmetry=a'
+            //   0      1    2    3  4  5(optional)
+            if (vs.size() < 5)
+                break; // Orbital data is broken
 
-        double energy = atof(vs[4].c_str()) * HARTREE_TO_KCAL;
-        double occupation = atof(vs[2].c_str()+4); // Start from symbol after '='
-        string symbol;
-        if (vs.size() > 5)
-            symbol = vs[5].substr(9, string::npos);
+            double energy = atof(vs[4].c_str()) * HARTREE_TO_KCAL;
+            double occupation = atof(vs[2].c_str()+4); // Start from symbol after '='
+            string symbol;
+            if (vs.size() > 5)
+                symbol = vs[5].substr(9, string::npos);
+            else
+                symbol = " "; // Symmetry is unknown
+            OBOrbital orbital;
+            orbital.SetData(energy, occupation, symbol);
+            orbitals.push_back(orbital);
+
+            ifs->getline(buffer, BUFF_SIZE); // MO Center ...
+            ifs->getline(buffer, BUFF_SIZE); // Table header
+            ifs->getline(buffer,BUFF_SIZE); // ----------
+            while (ifs->getline(buffer,BUFF_SIZE) != NULL)
+                if (strlen(buffer) < 2) // If blank line detected
+                    break;
+        }// if Vector ...
+        else if ((strstr(buffer, ORBITAL_SECTION_PATTERN_2) != NULL)&&(strstr(buffer, ORBITAL_SECTION_PATTERN_1) != NULL))
+        {
+            orbital_data->SetAlphaOrbitals(orbitals);
+            orbital_data->SetOpenShell(true);
+            orbitals.clear();
+            ifs->getline(buffer, BUFF_SIZE); // ---------
+            ifs->getline(buffer, BUFF_SIZE); // blank line
+        }// if beta orbital section found
         else
-            symbol = " "; // Symmetry is unknown
-        OBOrbital orbital;
-        orbital.SetData(energy, occupation, symbol);
-        orbitals.push_back(orbital);
-
-        ifs->getline(buffer, BUFF_SIZE); // MO Center ...
-        ifs->getline(buffer, BUFF_SIZE); // Table header
-        ifs->getline(buffer,BUFF_SIZE); // ----------
-        while (ifs->getline(buffer,BUFF_SIZE) != NULL)
-            if (strlen(buffer) < 2) // If blank line detected
-                break;
-        ifs->getline(buffer,BUFF_SIZE); // New line that can contain "Vector"
+        {
+            if (orbital_data->IsOpenShell())
+                orbital_data->SetBetaOrbitals(orbitals);
+            else
+                orbital_data->SetAlphaOrbitals(orbitals);
+            molecule->SetData(orbital_data);
+            return;
+        }
     }
-
-    return orbitals;
+  delete orbital_data;
   }
 
 
@@ -366,6 +384,8 @@ static const char* NBEADS_PATTERN = "@ Number of replicas";
             ReadCoordinates(ifs, molecule);
             molecule->SetConformer(molecule->NumConformers() - 1);
         }
+        else if ((strstr(buffer, ORBITAL_SECTION_PATTERN_2) != NULL)&&(strstr(buffer, ORBITAL_SECTION_PATTERN_1) != NULL))
+            ReadOrbitals(ifs, molecule);
         else if(strstr(buffer, OPTIMIZATION_STEP_PATTERN) != NULL)
         {
             // Extract energy
@@ -409,7 +429,6 @@ static const char* NBEADS_PATTERN = "@ Number of replicas";
     if (molecule->NumAtoms() == 0)
         return;
     OBVibrationData* vibration_data = NULL;
-    OBOrbitalData* orbital_data = NULL;
     vector<double>  Frequencies, Intensities;
     vector<vector<vector3> > Lx;
     vector<string> vs;
@@ -477,26 +496,10 @@ static const char* NBEADS_PATTERN = "@ Number of replicas";
         else if(strstr(buffer, MULLIKEN_CHARGES_PATTERN) != NULL)
             ReadPartialCharges(ifs, molecule);
         else if ((strstr(buffer, ORBITAL_SECTION_PATTERN_2) != NULL)&&(strstr(buffer, ORBITAL_SECTION_PATTERN_1) != NULL))
-        {
-            if (orbital_data == NULL)
-                orbital_data = new OBOrbitalData;
-
-            vector<OBOrbital> orbitals = ReadOrbitals(ifs);
-
-            if (strstr(buffer, BETA_ORBITAL_PATTERN))
-            {
-                orbital_data->SetOpenShell(true);
-                orbital_data->SetBetaOrbitals(orbitals);
-            }
-            else
-                orbital_data->SetAlphaOrbitals(orbitals);
-        }
+            ReadOrbitals(ifs, molecule);
         else if(strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL) // End of task
             break;
     }
-
-    if (orbital_data != NULL)
-        molecule->SetData(orbital_data);
     if (Frequencies.size() == 0)
         return;
 
@@ -520,7 +523,6 @@ static const char* NBEADS_PATTERN = "@ Number of replicas";
     double energy;
     vector<string> vs;
     char buffer[BUFF_SIZE];
-    OBOrbitalData *orbital_data = NULL;
 
     while (ifs->getline(buffer, BUFF_SIZE))
     {
@@ -530,34 +532,15 @@ static const char* NBEADS_PATTERN = "@ Number of replicas";
             energy = atof(vs[4].c_str()) * HARTREE_TO_KCAL;
         }
         else if ((strstr(buffer, ORBITAL_SECTION_PATTERN_2) != NULL)&&(strstr(buffer, ORBITAL_SECTION_PATTERN_1) != NULL))
-        {
-            if (orbital_data == NULL)
-                orbital_data = new OBOrbitalData;
-
-            vector<OBOrbital> orbitals = ReadOrbitals(ifs);
-
-            if (strstr(buffer, BETA_ORBITAL_PATTERN))
-            {
-                orbital_data->SetOpenShell(true);
-                orbital_data->SetBetaOrbitals(orbitals);
-            }
-            else
-                orbital_data->SetAlphaOrbitals(orbitals);
-        }
+            ReadOrbitals(ifs, molecule);
         else if(strstr(buffer, MULLIKEN_CHARGES_PATTERN) != NULL)
             ReadPartialCharges(ifs, molecule);
         else if (strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
             break;
     }
     if (energy == 0)
-    {
-        if (orbital_data != NULL)
-            delete orbital_data;
         return;
-    }
     molecule->SetEnergy(energy);
-    if (orbital_data != NULL)
-        molecule->SetData(orbital_data);
   }
 
   /////////////////////////////////////////////////////////////////
