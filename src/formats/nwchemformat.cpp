@@ -16,9 +16,10 @@ GNU General Public License for more details.
 
 #include <openbabel/obmolecformat.h>
 
-//Required for double abs(double)
+// Required for imaginary frequencies detection
 #include <cmath> 
-
+// Required for TS detection in ZTS calculation
+#include <algorithm>
 #define HARTREE_TO_KCAL 627.509469
 
 using namespace std;
@@ -69,6 +70,7 @@ namespace OpenBabel
     OBVibrationData* ReadFrequencyCalculation(istream* ifs);
     void ReadGeometryOptimizationCalculation(istream* ifs, OBMol* molecule);
     void ReadSinglePointCalculation(istream* ifs, OBMol* molecule);
+    void ReadZTSCalculation(istream* ifs, OBMol* molecule);
 
   };
 
@@ -85,13 +87,15 @@ static const char* OPTIMIZATION_STEP_PATTERN = "Step       Energy";
 static const char* VIBRATIONS_TABLE_PATTERN = "P.Frequency";
 static const char* INTENSITIES_TABLE_PATTERN = "Projected Infra Red Intensities";
 static const char* DIGITS = "1234567890";
-static const char* END_OF_CALCULATION_PATTERN = "Task  times  cpu";
+static const char* END_OF_CALCULATION_PATTERN = "times  cpu";
 static const char* ORBITAL_START_PATTERN = "Vector";
 static const char* ORBITAL_SECTION_PATTERN_1 = "Analysis";
 static const char* ORBITAL_SECTION_PATTERN_2 = "rbital";
 static const char* BETA_ORBITAL_PATTERN = "Beta";
 static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total density";
 static const char* GEOMETRY_PATTERN = "Geometry \"geometry\"";
+static const char* ZTS_CONVERGED_PATTERN = "@ The string calculation converged";
+static const char* NBEADS_PATTERN = "@ Number of replicas";
 
   //Make an instance of the format class
   NWChemOutputFormat theNWChemOutputFormat;
@@ -570,6 +574,105 @@ static const char* GEOMETRY_PATTERN = "Geometry \"geometry\"";
   }
 
   /////////////////////////////////////////////////////////////////
+  /**
+  Method reads beads and their energies from ZTS calculation from
+  input stream (ifs) and writes them to supplied OBMol object (molecule)
+  Input stream must be set to begining of ZTS calculation
+  in nwo file. (Line after "@ String method.")
+  If method failed then "molecule" wont be changed.
+  */
+  void NWChemOutputFormat::ReadZTSCalculation(istream* ifs, OBMol* molecule)
+  {
+    if ((ifs == NULL) || (molecule == NULL))
+        return;
+    unsigned int natoms = molecule->NumAtoms();
+    // Inital geometry must be supplied
+    if (natoms == 0)
+        return;
+    char buffer[BUFF_SIZE];
+    vector<string> vs;
+    vector<double*> beads;
+    vector<double> energies;
+    unsigned int nbeads;
+    while(ifs->getline(buffer, BUFF_SIZE) != NULL)
+    {
+        if (strstr(buffer, NBEADS_PATTERN) != NULL)
+        {
+            tokenize(vs, buffer);
+            // @ Number of replicas   =        24
+            // 0   1     2    3       4        5
+            if (vs.size() < 6)
+                break; // Line with number of beads is incomplete
+            nbeads = atoi(vs[5].c_str());
+            beads.reserve(nbeads);
+        }// @ Number of replicas
+        else if (strstr(buffer, ZTS_CONVERGED_PATTERN) != NULL)
+        {
+            // NWChem does not mark end in this type of calculation,
+            // so end will be there, where all nessesary data have
+            // obtained
+            ifs->getline(buffer, BUFF_SIZE); // blank line
+            ifs->getline(buffer, BUFF_SIZE);
+            // @ Bead number =     <N>  Potential Energy =     <Energy>
+            // 0  1     2    3      4       5       6    7        8
+            tokenize(vs, buffer);
+            while (vs.size() == 9)
+            {
+                unsigned int bead_number = atoi(vs[4].c_str());
+                double bead_energy = atof(vs[8].c_str()) * HARTREE_TO_KCAL;
+                ifs->getline(buffer, BUFF_SIZE); // natoms
+                if (atoi(buffer) != natoms)
+                    break; // table contains geometry of different molecule
+                ifs->getline(buffer, BUFF_SIZE); // comment
+                double* bead = new double[natoms*3];
+                for(unsigned int i = 0; i<natoms; i++)
+                {
+                    ifs->getline(buffer, BUFF_SIZE);
+                    tokenize(vs, buffer);
+                    //  Symbol              X     Y     Z
+                    //    0                 1     2     3
+                    if ((vs.size() < 4) || (molecule->GetAtom(i+1)->GetAtomicNum() != etab.GetAtomicNum(vs[0].c_str())))
+                        break; // molecule has no such atom or table row incomplete
+
+                    unsigned int atom_idx = i*3;
+                    bead[atom_idx] = atof(vs[1].c_str()); // X
+                    bead[atom_idx+1] = atof(vs[2].c_str()); // Y
+                    bead[atom_idx+2] = atof(vs[3].c_str()); // Z
+                }
+                beads.push_back(bead);
+                energies.push_back(bead_energy);
+                ifs->getline(buffer, BUFF_SIZE);
+                tokenize(vs, buffer);
+                if (vs.size() <= 1) // blank line
+                {
+                    // Looks like it's end of calculation.
+                    if (bead_number != nbeads)
+                        break;
+                    molecule->SetEnergies(energies);
+                    molecule->SetConformers(beads);
+                    unsigned int ts_position = distance(energies.begin(), max_element(energies.begin(), energies.end()));
+                    molecule->SetConformer(ts_position);
+                    return;
+                }
+            }
+            break;// It is the end of calculation anyway
+        }//@ Bead number
+        else if (strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
+        {
+            // End of all calculations still required to handle
+            molecule->SetEnergies(energies);
+            molecule->SetConformers(beads);
+            unsigned int ts_position = distance(energies.begin(), max_element(energies.begin(), energies.end()));
+            molecule->SetConformer(ts_position);
+            return;
+        }
+    }
+    // Something went wrong. Do some cleanup and exit
+    for(unsigned int i = 0; i < beads.size();i++)
+        delete beads[i];
+  }
+
+  /////////////////////////////////////////////////////////////////
   bool NWChemOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
 
@@ -594,7 +697,7 @@ static const char* GEOMETRY_PATTERN = "Geometry \"geometry\"";
         if(strstr(buffer,GEOMETRY_PATTERN) != NULL)
         {
             // Input coordinates for calculation
-            if ((mol.NumAtoms() == 0) | (pConv->IsOption("f",OBConversion::INOPTIONS) != NULL))
+            if ((mol.NumAtoms() == 0) || (pConv->IsOption("f",OBConversion::INOPTIONS) != NULL))
             {
                 // If coordinates had redefined while calculation
                 // in input file and "f" option had supplied then overwrite
@@ -625,10 +728,10 @@ static const char* GEOMETRY_PATTERN = "Geometry \"geometry\"";
         }// if "Frequency Analysis"
         else if(strstr(buffer, SCF_CALCULATION_PATTERN) != strstr(buffer, DFT_CALCULATION_PATTERN))
             ReadSinglePointCalculation(&ifs, &mol);
+        else if(strstr(buffer, ZTS_CALCULATION_PATTERN) != NULL)
+            ReadZTSCalculation(&ifs, &mol);
         // These calculation handlers still not implemented
         // so we just skip them
-        else if(strstr(buffer, ZTS_CALCULATION_PATTERN) != NULL)
-            GotoCalculationEnd(&ifs); 
         else if(strstr(buffer, PROPERTY_CALCULATION_PATTERN) != NULL)
             GotoCalculationEnd(&ifs);
     }//while
@@ -649,7 +752,6 @@ static const char* GEOMETRY_PATTERN = "Geometry \"geometry\"";
     unsigned int nconformers = mol.NumConformers();
     if (nconformers > 1)
         mol.DeleteConformer(nconformers - 1);
-    mol.SetConformer(nconformers - 1);
 
     mol.SetTitle(title);
     return(true);
