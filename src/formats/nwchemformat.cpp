@@ -140,20 +140,6 @@ static const char* NBEADS_PATTERN = "@ Number of replicas";
 
   /////////////////////////////////////////////////////////////////
   /**
-  Returns true if molecules contains same atoms regardless of
-  their coordinates.
-  */
-  static bool CheckMoleculesEqual(OBMol* mol1, OBMol* mol2)
-  {
-    if (mol1->NumAtoms() != mol2->NumAtoms())
-        return false;
-    for(unsigned int i = 0; i < mol1->NumAtoms();i++)
-        if(mol1->GetAtomById(i)->GetAtomicNum() != mol2->GetAtomById(i)->GetAtomicNum())
-            return false;
-    return true;
-  }
-  /////////////////////////////////////////////////////////////////
-  /**
   Moves stream (ifs) position to end of calculation. 
   */
   static void GotoCalculationEnd(istream* ifs)
@@ -164,32 +150,6 @@ static const char* NBEADS_PATTERN = "@ Number of replicas";
             break;
   }
 
-  /////////////////////////////////////////////////////////////////
-  /**
-  Adds non existent data from "source" OBMol object to "destination"
-  and returns it then.
-  If "source" object has incompatible data, NULL will be returned
-  */
-  static OBMol* AddNonExistentData(OBMol* destination, OBMol* source)
-  {
-    if ((destination->NumAtoms() == 0))
-    {
-        *destination += *source;
-        return destination;
-    }
-
-    if (source->NumAtoms() != 0)
-        if (!CheckMoleculesEqual(destination, source))
-            return NULL;
-
-    // Datas
-    vector<OBGenericData* > datas = source->GetData();
-    for(unsigned int i = 0;i < datas.size();i++)
-    {
-        destination->CloneData(datas[i]);
-    }
-    return destination;
-  }
 
   //////////////////////////////////////////////////////
   /**
