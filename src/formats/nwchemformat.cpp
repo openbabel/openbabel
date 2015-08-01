@@ -78,6 +78,8 @@ static const char* COORDINATES_PATTERN = "Output coordinates";
 static const char* GEOMETRY_OPTIMIZATION_PATTERN = "NWChem Geometry Optimization";
 static const char* PROPERTY_CALCULATION_PATTERN = "NWChem Property Module";
 static const char* ZTS_CALCULATION_PATTERN = "@ String method.";
+static const char* PYTHON_CALCULATION_PATTERN = "NWChem Python program";
+static const char* ESP_CALCULATION_PATTERN = "NWChem Electrostatic Potential Fit Module";
 static const char* SCF_CALCULATION_PATTERN = "SCF Module";
 static const char* DFT_CALCULATION_PATTERN = "DFT Module";
 static const char* SCF_ENERGY_PATTERN = "SCF energy =";
@@ -96,6 +98,7 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
 static const char* GEOMETRY_PATTERN = "Geometry \"geometry\"";
 static const char* ZTS_CONVERGED_PATTERN = "@ The string calculation converged";
 static const char* NBEADS_PATTERN = "@ Number of replicas";
+
 
   //Make an instance of the format class
   NWChemOutputFormat theNWChemOutputFormat;
@@ -733,6 +736,10 @@ static const char* NBEADS_PATTERN = "@ Number of replicas";
         // These calculation handlers still not implemented
         // so we just skip them
         else if(strstr(buffer, PROPERTY_CALCULATION_PATTERN) != NULL)
+            GotoCalculationEnd(&ifs);
+        else if (strstr(buffer, ESP_CALCULATION_PATTERN) != NULL)
+            GotoCalculationEnd(&ifs);
+        else if (strstr(buffer, PYTHON_CALCULATION_PATTERN) != NULL)
             GotoCalculationEnd(&ifs);
     }//while
 
