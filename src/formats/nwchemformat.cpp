@@ -62,7 +62,7 @@ namespace OpenBabel
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
 
   private:
-    OBMol* ReadCoordinates(istream* ifs);
+    void ReadCoordinates(istream* ifs, OBMol* molecule);
     void ReadPartialCharges(istream* ifs, OBMol* molecule);
     vector<OBOrbital> ReadOrbitals(istream* ifs);
 
@@ -185,42 +185,70 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
 
   //////////////////////////////////////////////////////
   /**
-  Method reads coordinates from input stream (ifs) and creates
-  new OBMol object then return reference to it.
+  Method reads coordinates from input stream (ifs) and 
+  writes it into supplied OBMol object (molecule).
   Input stream must be set to begining of coordinates
   table in nwo file. (Line after "Output coordinates...")
   Stream will be set at next line after geometry table.
+  If one of input arguments is NULL method returns without
+  any changes
+  If "molecule" already contain geometry - method will write
+  new geometry as conformer.
+  If "molecule" contain geometry which incompatible with read
+  data method returns without changes.
   */
-  OBMol* NWChemOutputFormat::ReadCoordinates(istream* ifs)
+  void NWChemOutputFormat::ReadCoordinates(istream* ifs, OBMol* molecule)
   {
-    OBMol* atoms;
-    atoms = new OBMol;
+    if ((molecule == NULL) || (ifs == NULL))
+        return;
     vector<string> vs;
     char buffer[BUFF_SIZE];
     double x, y, z;
-    atoms->BeginModify();
+    unsigned int natoms = molecule->NumAtoms();
+    bool from_scratch = false;
+    double* coordinates;
+    if (natoms == 0)
+        from_scratch = true;
+    else
+        coordinates = new double[3*natoms];
     ifs->getline(buffer,BUFF_SIZE);	// blank
     ifs->getline(buffer,BUFF_SIZE);	// column headings
     ifs->getline(buffer,BUFF_SIZE);	// ---- ----- ----
     ifs->getline(buffer,BUFF_SIZE);
     tokenize(vs,buffer);
-    for (unsigned int i=0; vs.size() == 6;i++)
-      {
-        OBAtom* atom = atoms->NewAtom();
-
+    unsigned int i=0;
+    while (vs.size() == 6)
+    {
         x = atof((char*)vs[3].c_str());
         y = atof((char*)vs[4].c_str());
         z = atof((char*)vs[5].c_str());
-        atom->SetVector(x,y,z); //set coordinates
-
-        //set atomic number
-        atom->SetAtomicNum(atof(vs[2].c_str()));
+        if (from_scratch)
+        {
+            // set atomic number
+            OBAtom* atom = molecule->NewAtom();
+            atom->SetAtomicNum(atoi(vs[2].c_str()));
+            atom->SetVector(x,y,z);
+        }
+        else
+        {
+            // check atomic number
+            if ((i>=natoms) || (molecule->GetAtom(i+1)->GetAtomicNum() != atoi(vs[2].c_str())))
+            {
+                delete coordinates;
+                return;
+            }
+            coordinates[i*3] = x;
+            coordinates[i*3+1] = y;
+            coordinates[i*3+2] = z;
+            i++;
+        }
         if (!ifs->getline(buffer,BUFF_SIZE))
           break;
         tokenize(vs,buffer);
-      }
-    atoms->EndModify();
-    return atoms;
+    }
+    if ((from_scratch)||(i != natoms))
+        return;
+    molecule->AddConformer(coordinates);
   }
 
   //////////////////////////////////////////////////////
@@ -275,17 +303,21 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
     }
 
     if (from_scratch)
-    {
-        molecule->ReserveAtoms(charges.size());
-        natoms = molecule->NumAtoms();
-    }
-    if (natoms != partial_charges.size())
+        molecule->ReserveAtoms(partial_charges.size());
+    else if (partial_charges.size() != natoms)
         return;
-    for(unsigned int j = 0;j < molecule->NumAtoms();j++)
+    for(unsigned int j=0;j<partial_charges.size();j++)
     {
-        OBAtom *atom = molecule->GetAtom(j+1);
+        OBAtom* atom;
         if (from_scratch)
+        {
+            atom = molecule->NewAtom();
             atom->SetAtomicNum(charges[j]);
+        }
+        else
+        {
+            atom = molecule->GetAtom(j+1);
+        }
         atom->SetPartialCharge(partial_charges[j]);
     }
   }
@@ -363,16 +395,8 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
     {
         if(strstr(buffer,COORDINATES_PATTERN) != NULL)
         {
-            OBMol* geometry = ReadCoordinates(ifs);
-            if (AddNonExistentData(molecule, geometry) != NULL)
-            {
-                unsigned int natoms = molecule->NumAtoms();
-                double *step = new double[natoms*3];
-                memcpy(step, geometry->GetCoordinates(), sizeof(double)*natoms*3);
-                molecule->AddConformer(step);
-                molecule->SetConformer(molecule->NumConformers() - 1);
-            }
-            delete geometry;
+            ReadCoordinates(ifs, molecule);
+            molecule->SetConformer(molecule->NumConformers() - 1);
         }
         else if(strstr(buffer, OPTIMIZATION_STEP_PATTERN) != NULL)
         {
@@ -571,15 +595,13 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
             // Input coordinates for calculation
             if ((mol.NumAtoms() == 0) | (pConv->IsOption("f",OBConversion::INOPTIONS) != NULL))
             {
-                OBMol* geometry = ReadCoordinates(&ifs);
                 // If coordinates had redefined while calculation
                 // in input file and "f" option had supplied then overwrite
                 // all previous calculations. Otherwise calculations for
                 // new geometry will be considered as new molecule.
                 mol.Clear();
                 mol.BeginModify();
-                AddNonExistentData(&mol, geometry);
-                delete geometry;
+                ReadCoordinates(&ifs, &mol);
             }
             else
             {
