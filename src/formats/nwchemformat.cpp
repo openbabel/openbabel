@@ -67,7 +67,7 @@ namespace OpenBabel
     void ReadPartialCharges(istream* ifs, OBMol* molecule);
     vector<OBOrbital> ReadOrbitals(istream* ifs);
 
-    OBVibrationData* ReadFrequencyCalculation(istream* ifs);
+    void ReadFrequencyCalculation(istream* ifs, OBMol* molecule);
     void ReadGeometryOptimizationCalculation(istream* ifs, OBMol* molecule);
     void ReadSinglePointCalculation(istream* ifs, OBMol* molecule);
     void ReadZTSCalculation(istream* ifs, OBMol* molecule);
@@ -429,17 +429,27 @@ static const char* NBEADS_PATTERN = "@ Number of replicas";
 
   //////////////////////////////////////////////////////
   /**
-  Method reads vibration data from input stream (ifs)
-  and writes it to new OBVibrationData object, then
-  returns it.
+  Method reads vibration data and all other avalible data
+  from input stream (ifs) and writes it to supplied OBMol
+  object (molecule).
+  If any of arguments are NULL method will quit without changes.
+  If molecule does not contain geometry data method quits
+  without changes.
   Input stream must be set to begining of frequency
-  calculation in nwo file. (Line after "NWChem <theory> Module")
-  If vibration data not found then NULL will be returned.
-  Stream will be set at the end of calculation.
+  calculation in nwo file.
+  (Line after "NWChem Nuclear Hessian and Frequency Analysis")
+  If vibration data not found then only avalible data will be
+  attached.
+  Input stream will be set at the end of calculation.
   */
-  OBVibrationData* NWChemOutputFormat::ReadFrequencyCalculation(istream* ifs)
+  void NWChemOutputFormat::ReadFrequencyCalculation(istream* ifs, OBMol* molecule)
   {
+    if ((ifs == NULL) || (molecule == NULL))
+        return;
+    if (molecule->NumAtoms() == 0)
+        return;
     OBVibrationData* vibration_data = NULL;
+    OBOrbitalData* orbital_data = NULL;
     vector<double>  Frequencies, Intensities;
     vector<vector<vector3> > Lx;
     vector<string> vs;
@@ -461,34 +471,34 @@ static const char* NBEADS_PATTERN = "@ Number of replicas";
             tokenize(vs,buffer);
             while(vs.size() > 2)
             {
-              vector<double> x, y, z;
-              for (unsigned int i = 1; i < vs.size(); i++)
-                x.push_back(atof(vs[i].c_str()));
-              ifs->getline(buffer, BUFF_SIZE);
-              tokenize(vs,buffer);
-              for (unsigned int i = 1; i < vs.size(); i++)
-                y.push_back(atof(vs[i].c_str()));
-              ifs->getline(buffer, BUFF_SIZE);
-              tokenize(vs,buffer);
-              for (unsigned int i = 1; i < vs.size(); i++)
-                z.push_back(atof(vs[i].c_str()));
-              for (unsigned int i = 0; i < freq.size(); i++)
-              {
-                vib.push_back(vector<vector3>());
-                vib[i].push_back(vector3(x[i], y[i], z[i]));
-              }
-              ifs->getline(buffer, BUFF_SIZE);
-              tokenize(vs,buffer);
+                vector<double> x, y, z;
+                for (unsigned int i = 1; i < vs.size(); i++)
+                    x.push_back(atof(vs[i].c_str()));
+                ifs->getline(buffer, BUFF_SIZE);
+                tokenize(vs,buffer);
+                for (unsigned int i = 1; i < vs.size(); i++)
+                    y.push_back(atof(vs[i].c_str()));
+                ifs->getline(buffer, BUFF_SIZE);
+                tokenize(vs,buffer);
+                for (unsigned int i = 1; i < vs.size(); i++)
+                    z.push_back(atof(vs[i].c_str()));
+                for (unsigned int i = 0; i < freq.size(); i++)
+                {
+                    vib.push_back(vector<vector3>());
+                    vib[i].push_back(vector3(x[i], y[i], z[i]));
+                }
+                ifs->getline(buffer, BUFF_SIZE);
+                tokenize(vs,buffer);
             }// while vs.size() > 2
             for (unsigned int i = 0; i < freq.size(); i++)
-              {
+            {
                 if (abs(freq[i]) > 10.0)
                 {
                    // skip rotational and translational modes
                    Frequencies.push_back(freq[i]);
                    Lx.push_back(vib[i]);
                 }// if abs(freq[i]) > 10.0
-              }// for (unsigned int i = 0; i < freq.size(); i++)
+            }// for (unsigned int i = 0; i < freq.size(); i++)
         }// if P.Frequency
         else if(strstr(buffer, INTENSITIES_TABLE_PATTERN) != NULL)
         {
@@ -498,27 +508,41 @@ static const char* NBEADS_PATTERN = "@ Number of replicas";
             tokenize(vs,buffer);
             while (vs.size() == 7)
             {
-              if (abs(atof(vs[1].c_str())) > 10.0)
-                 Intensities.push_back(atof(vs[5].c_str()));
-              ifs->getline(buffer, BUFF_SIZE);
-              tokenize(vs,buffer);
+                if (abs(atof(vs[1].c_str())) > 10.0)
+                    Intensities.push_back(atof(vs[5].c_str()));
+                ifs->getline(buffer, BUFF_SIZE);
+                tokenize(vs,buffer);
             }
         } // if "Projected Infra Red Intensities"
-        else if(strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
+        else if(strstr(buffer, MULLIKEN_CHARGES_PATTERN) != NULL)
+            ReadPartialCharges(ifs, molecule);
+        else if ((strstr(buffer, ORBITAL_SECTION_PATTERN_2) != NULL)&&(strstr(buffer, ORBITAL_SECTION_PATTERN_1) != NULL))
         {
-            // End of task
+            if (orbital_data == NULL)
+                orbital_data = new OBOrbitalData;
+
+            vector<OBOrbital> orbitals = ReadOrbitals(ifs);
+
+            if (strstr(buffer, BETA_ORBITAL_PATTERN))
+            {
+                orbital_data->SetOpenShell(true);
+                orbital_data->SetBetaOrbitals(orbitals);
+            }
+            else
+                orbital_data->SetAlphaOrbitals(orbitals);
+        }
+        else if(strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL) // End of task
             break;
-        } // if "Task  times  cpu"
     }
 
-
+    if (orbital_data != NULL)
+        molecule->SetData(orbital_data);
     if (Frequencies.size() == 0)
-        return NULL;
+        return;
 
     vibration_data = new OBVibrationData;
     vibration_data->SetData(Lx, Frequencies, Intensities);
-
-    return vibration_data;
+    molecule->SetData(vibration_data);
   }
 
   /////////////////////////////////////////////////////////////////
@@ -724,11 +748,7 @@ static const char* NBEADS_PATTERN = "@ Number of replicas";
         else if(strstr(buffer, GEOMETRY_OPTIMIZATION_PATTERN) != NULL)
             ReadGeometryOptimizationCalculation(&ifs, &mol);
         else if(strstr(buffer, FREQUENCY_PATTERN) != NULL)
-        {
-            OBVibrationData* result = ReadFrequencyCalculation(&ifs);
-            if (result != NULL)
-                mol.SetData(result);
-        }// if "Frequency Analysis"
+            ReadFrequencyCalculation(&ifs, &mol);
         else if(strstr(buffer, SCF_CALCULATION_PATTERN) != strstr(buffer, DFT_CALCULATION_PATTERN))
             ReadSinglePointCalculation(&ifs, &mol);
         else if(strstr(buffer, ZTS_CALCULATION_PATTERN) != NULL)
