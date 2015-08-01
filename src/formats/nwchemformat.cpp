@@ -91,6 +91,7 @@ static const char* ORBITAL_SECTION_PATTERN_1 = "Analysis";
 static const char* ORBITAL_SECTION_PATTERN_2 = "rbital";
 static const char* BETA_ORBITAL_PATTERN = "Beta";
 static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total density";
+static const char* GEOMETRY_PATTERN = "Geometry \"geometry\"";
 
   //Make an instance of the format class
   NWChemOutputFormat theNWChemOutputFormat;
@@ -590,7 +591,7 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
     // recognition futher output
     while	(ifs.getline(buffer,BUFF_SIZE) != NULL)
     {
-        if(strstr(buffer,COORDINATES_PATTERN) != NULL)
+        if(strstr(buffer,GEOMETRY_PATTERN) != NULL)
         {
             // Input coordinates for calculation
             if ((mol.NumAtoms() == 0) | (pConv->IsOption("f",OBConversion::INOPTIONS) != NULL))
@@ -601,6 +602,9 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
                 // new geometry will be considered as new molecule.
                 mol.Clear();
                 mol.BeginModify();
+                ifs.getline(buffer,BUFF_SIZE);// -------------------------
+                ifs.getline(buffer,BUFF_SIZE);// blank
+                ifs.getline(buffer,BUFF_SIZE);// Output coordinates...
                 ReadCoordinates(&ifs, &mol);
             }
             else
