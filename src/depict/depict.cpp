@@ -43,6 +43,9 @@ namespace OpenBabel
     Down
   };
 
+  // defined in mol.cpp
+  extern bool SortAtomZ(const pair<OBAtom*,double> &a, const pair<OBAtom*,double> &b);
+
   class OBDepictPrivate
   {
     public:
@@ -499,7 +502,18 @@ namespace OpenBabel
         d->DrawRing(ring, drawnBonds);
     }
 
-    for (atom = d->mol->BeginAtom(i); atom; atom = d->mol->NextAtom(i)) {
+    vector<pair<OBAtom*,double> > zsortedAtoms;
+    vector<int> zsorted;
+    unsigned int a;
+    for (a = 0, atom = d->mol->BeginAtom(i) ; atom ; atom = d->mol->NextAtom(i), ++a)
+      {
+        pair<OBAtom*,double> entry(atom, atom->GetVector().z());
+        zsortedAtoms.push_back(entry);
+      }
+    sort(zsortedAtoms.begin(), zsortedAtoms.end(), SortAtomZ);
+    unsigned int max = zsortedAtoms.size();
+    for (a = 0 ; a < max ; a++ ) {
+      atom   = zsortedAtoms[a].first;
       double x = atom->GetX();
       double y = atom->GetY();
 
