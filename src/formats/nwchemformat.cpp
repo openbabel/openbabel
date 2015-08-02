@@ -21,6 +21,7 @@ GNU General Public License for more details.
 // Required for TS detection in ZTS calculation
 #include <algorithm>
 #define HARTREE_TO_KCAL 627.509469
+#define EV_TO_NM(x) 1239.84193/x
 
 using namespace std;
 namespace OpenBabel
@@ -71,7 +72,7 @@ namespace OpenBabel
     void ReadGeometryOptimizationCalculation(istream* ifs, OBMol* molecule);
     void ReadSinglePointCalculation(istream* ifs, OBMol* molecule);
     void ReadZTSCalculation(istream* ifs, OBMol* molecule);
-
+    void ReadTDDFTCalculation(istream* ifs, OBMol* molecule);
   };
 
 static const char* COORDINATES_PATTERN = "Output coordinates";
@@ -82,6 +83,7 @@ static const char* PYTHON_CALCULATION_PATTERN = "NWChem Python program";
 static const char* ESP_CALCULATION_PATTERN = "NWChem Electrostatic Potential Fit Module";
 static const char* SCF_CALCULATION_PATTERN = "SCF Module";
 static const char* DFT_CALCULATION_PATTERN = "DFT Module";
+static const char* TDDFT_CALCULATION_PATTERN = "TDDFT Module";
 static const char* SCF_ENERGY_PATTERN = "SCF energy =";
 static const char* DFT_ENERGY_PATTERN = "DFT energy =";
 static const char* FREQUENCY_PATTERN = "NWChem Nuclear Hessian and Frequency Analysis";
@@ -98,7 +100,9 @@ static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total de
 static const char* GEOMETRY_PATTERN = "Geometry \"geometry\"";
 static const char* ZTS_CONVERGED_PATTERN = "@ The string calculation converged";
 static const char* NBEADS_PATTERN = "@ Number of replicas";
-
+static const char* ROOT_PATTERN = "Root";
+static const char* OSCILATOR_STRENGTH_PATTERN = "Oscillator Strength";
+static const char* SPIN_FORBIDDEN_PATTERN = "Spin forbidden";
 
   //Make an instance of the format class
   NWChemOutputFormat theNWChemOutputFormat;
@@ -217,6 +221,59 @@ static const char* NBEADS_PATTERN = "@ Number of replicas";
     if ((from_scratch)||(i != natoms))
         return;
     molecule->AddConformer(coordinates);
+  }
+
+  //////////////////////////////////////////////////////
+  /**
+  Method reads UV Spectra from input stream (ifs)
+  and writes them to supplied OBMol object (molecule)
+  Input stream must be set to begining of TDDFT
+  calculation in nwo file. (Line after "NWChem TDDFT Module")
+  Stream will be set to the end of calculation.
+  */
+  void NWChemOutputFormat::ReadTDDFTCalculation(istream* ifs, OBMol* molecule)
+  {
+    if ((ifs == NULL) || (molecule == NULL))
+        return;
+
+    char buffer[BUFF_SIZE];
+    vector<string> vs;
+    vector<double> wavelengths;
+    vector<double> oscilator_strengths;
+
+    while (ifs->getline(buffer, BUFF_SIZE) != NULL)
+    {
+        if (strstr(buffer, ROOT_PATTERN) != NULL)
+        {
+            tokenize(vs, buffer);
+            //  Root   1 singlet b2             0.294221372 a.u.                8.0062 eV
+            //   0     1    2    3                  4        5                    6    7
+            if (vs.size() < 8)
+                break;
+            wavelengths.push_back(EV_TO_NM(atof(vs[6].c_str())));
+        }
+        else if (strstr(buffer, OSCILATOR_STRENGTH_PATTERN) != NULL)
+        {
+            if (strstr(buffer, SPIN_FORBIDDEN_PATTERN) != NULL)
+                oscilator_strengths.push_back(0);
+            else
+            {
+                tokenize(vs, buffer);
+                // Dipole Oscillator Strength                         0.01418
+                //   0        1         2                                3
+                if (vs.size() < 4)
+                    break;
+                oscilator_strengths.push_back(atof(vs[3].c_str()));
+            }
+        }
+        else if (strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
+            break;
+    }
+    if (wavelengths.size() != oscilator_strengths.size())
+        return;
+    OBElectronicTransitionData* et_data = new OBElectronicTransitionData;
+    et_data->SetData(wavelengths, oscilator_strengths);
+    molecule->SetData(et_data);
   }
 
   //////////////////////////////////////////////////////
@@ -533,8 +590,10 @@ static const char* NBEADS_PATTERN = "@ Number of replicas";
         }
         else if ((strstr(buffer, ORBITAL_SECTION_PATTERN_2) != NULL)&&(strstr(buffer, ORBITAL_SECTION_PATTERN_1) != NULL))
             ReadOrbitals(ifs, molecule);
-        else if(strstr(buffer, MULLIKEN_CHARGES_PATTERN) != NULL)
+        else if (strstr(buffer, MULLIKEN_CHARGES_PATTERN) != NULL)
             ReadPartialCharges(ifs, molecule);
+        else if (strstr(buffer, TDDFT_CALCULATION_PATTERN) != NULL)
+            ReadTDDFTCalculation(ifs, molecule);
         else if (strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
             break;
     }
