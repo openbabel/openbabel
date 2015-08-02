@@ -152,7 +152,7 @@ static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
   {
   char buffer[BUFF_SIZE];
     while ( (strstr(buffer,END_OF_CALCULATION_PATTERN) == NULL))
-        if (ifs->getline(buffer,BUFF_SIZE) == NULL)
+        if (!ifs->getline(buffer,BUFF_SIZE))
             break;
   }
 
@@ -278,7 +278,7 @@ static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
     vector<double> wavelengths;
     vector<double> oscilator_strengths;
 
-    while (ifs->getline(buffer, BUFF_SIZE) != NULL)
+    while (ifs->getline(buffer, BUFF_SIZE))
     {
         if (strstr(buffer, ROOT_PATTERN) != NULL)
         {
@@ -404,7 +404,7 @@ static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
     ifs->getline(buffer, BUFF_SIZE); // ---------
     ifs->getline(buffer, BUFF_SIZE); // blank line
 
-    while (ifs->getline(buffer,BUFF_SIZE) != NULL)
+    while (ifs->getline(buffer,BUFF_SIZE))
     {
         if (strstr(buffer, ORBITAL_START_PATTERN))
         {
@@ -428,7 +428,7 @@ static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
             ifs->getline(buffer, BUFF_SIZE); // MO Center ...
             ifs->getline(buffer, BUFF_SIZE); // Table header
             ifs->getline(buffer,BUFF_SIZE); // ----------
-            while (ifs->getline(buffer,BUFF_SIZE) != NULL)
+            while (ifs->getline(buffer,BUFF_SIZE))
                 if (strlen(buffer) < 2) // If blank line detected
                     break;
         }// if Vector ...
@@ -471,7 +471,7 @@ static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
     char buffer[BUFF_SIZE];
     vector<double> energies;
 
-    while (ifs->getline(buffer, BUFF_SIZE) != NULL)
+    while (ifs->getline(buffer, BUFF_SIZE))
     {
         if(strstr(buffer,COORDINATES_PATTERN) != NULL)
         {
@@ -530,7 +530,7 @@ static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
     vector<string> vs;
     char buffer[BUFF_SIZE];
 
-    while (ifs->getline(buffer, BUFF_SIZE) != NULL)
+    while (ifs->getline(buffer, BUFF_SIZE))
     {
         if (strstr(buffer, VIBRATIONS_TABLE_PATTERN) != NULL)
         {
@@ -666,7 +666,7 @@ static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
     vector<double*> beads;
     vector<double> energies;
     unsigned int nbeads;
-    while(ifs->getline(buffer, BUFF_SIZE) != NULL)
+    while(ifs->getline(buffer, BUFF_SIZE))
     {
         if (strstr(buffer, NBEADS_PATTERN) != NULL)
         {
