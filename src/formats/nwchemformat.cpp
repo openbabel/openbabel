@@ -784,7 +784,7 @@ static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
             }
             else
             {
-                unsigned int i;
+                int i;
                 for(i=0; buffer[i] != '\0';i++);
                 ifs.seekg(-i, ios_base::cur);
                 break;
