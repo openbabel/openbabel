@@ -67,6 +67,7 @@ namespace OpenBabel
     void ReadCoordinates(istream* ifs, OBMol* molecule);
     void ReadPartialCharges(istream* ifs, OBMol* molecule);
     void ReadOrbitals(istream* ifs, OBMol* molecule);
+    void ReadDipoleMoment(istream* ifs, OBMol* molecule);
 
     void ReadFrequencyCalculation(istream* ifs, OBMol* molecule);
     void ReadGeometryOptimizationCalculation(istream* ifs, OBMol* molecule);
@@ -103,6 +104,7 @@ static const char* NBEADS_PATTERN = "@ Number of replicas";
 static const char* ROOT_PATTERN = "Root";
 static const char* OSCILATOR_STRENGTH_PATTERN = "Oscillator Strength";
 static const char* SPIN_FORBIDDEN_PATTERN = "Spin forbidden";
+static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
 
   //Make an instance of the format class
   NWChemOutputFormat theNWChemOutputFormat;
@@ -221,6 +223,41 @@ static const char* SPIN_FORBIDDEN_PATTERN = "Spin forbidden";
     if ((from_scratch)||(i != natoms))
         return;
     molecule->AddConformer(coordinates);
+  }
+
+//////////////////////////////////////////////////////
+  /**
+  Method reads dipole moment from input stream (ifs)
+  and writes them to supplied OBMol object (molecule)
+  Input stream must be set to begining of dipole moment
+  section in nwo file. (Line after "Nuclear Dipole moment (a.u.)")
+  Stream will be set to the end of dipole moment section.
+  */
+  void NWChemOutputFormat::ReadDipoleMoment(istream* ifs, OBMol* molecule)
+  {
+    if ((ifs == NULL) || (molecule == NULL))
+        return;
+
+    char buffer[BUFF_SIZE];
+    vector<string> vs;
+    double x, y, z;
+
+    ifs->getline(buffer, BUFF_SIZE); // -------
+    ifs->getline(buffer, BUFF_SIZE); // Header
+    ifs->getline(buffer, BUFF_SIZE); // -------
+    ifs->getline(buffer, BUFF_SIZE); // Dipole moment
+    tokenize(vs, buffer);
+    // X                 Y               Z
+    // 0                 1               2
+    if (vs.size() < 3)
+        return;
+    x = atof(vs[0].c_str());
+    y = atof(vs[1].c_str());
+    z = atof(vs[2].c_str());
+    OBVectorData* dipole_moment = new OBVectorData;
+    dipole_moment->SetData(x, y, z);
+    dipole_moment->SetAttribute("Dipole Moment");
+    molecule->SetData(dipole_moment);
   }
 
   //////////////////////////////////////////////////////
@@ -453,6 +490,8 @@ static const char* SPIN_FORBIDDEN_PATTERN = "Spin forbidden";
             if (vs.size() > 2) // @ NStep   Energy...
                 energies.push_back(atof(vs[2].c_str()) * HARTREE_TO_KCAL);
         }
+        else if(strstr(buffer, DIPOLE_MOMENT_PATTERN) != NULL)
+            ReadDipoleMoment(ifs, molecule);
         else if(strstr(buffer, MULLIKEN_CHARGES_PATTERN) != NULL)
             ReadPartialCharges(ifs, molecule);
         else if(strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
@@ -552,6 +591,8 @@ static const char* SPIN_FORBIDDEN_PATTERN = "Spin forbidden";
         } // if "Projected Infra Red Intensities"
         else if(strstr(buffer, MULLIKEN_CHARGES_PATTERN) != NULL)
             ReadPartialCharges(ifs, molecule);
+        else if(strstr(buffer, DIPOLE_MOMENT_PATTERN) != NULL)
+            ReadDipoleMoment(ifs, molecule);
         else if ((strstr(buffer, ORBITAL_SECTION_PATTERN_2) != NULL)&&(strstr(buffer, ORBITAL_SECTION_PATTERN_1) != NULL))
             ReadOrbitals(ifs, molecule);
         else if(strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL) // End of task
@@ -590,6 +631,8 @@ static const char* SPIN_FORBIDDEN_PATTERN = "Spin forbidden";
         }
         else if ((strstr(buffer, ORBITAL_SECTION_PATTERN_2) != NULL)&&(strstr(buffer, ORBITAL_SECTION_PATTERN_1) != NULL))
             ReadOrbitals(ifs, molecule);
+        else if(strstr(buffer, DIPOLE_MOMENT_PATTERN) != NULL)
+            ReadDipoleMoment(ifs, molecule);
         else if (strstr(buffer, MULLIKEN_CHARGES_PATTERN) != NULL)
             ReadPartialCharges(ifs, molecule);
         else if (strstr(buffer, TDDFT_CALCULATION_PATTERN) != NULL)
