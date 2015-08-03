@@ -74,6 +74,7 @@ namespace OpenBabel
     void ReadSinglePointCalculation(istream* ifs, OBMol* molecule);
     void ReadZTSCalculation(istream* ifs, OBMol* molecule);
     void ReadTDDFTCalculation(istream* ifs, OBMol* molecule);
+    void ReadMEPCalculation(istream* ifs, OBMol* molecule);
   };
 
 static const char* COORDINATES_PATTERN = "Output coordinates";
@@ -85,6 +86,7 @@ static const char* ESP_CALCULATION_PATTERN = "NWChem Electrostatic Potential Fit
 static const char* SCF_CALCULATION_PATTERN = "SCF Module";
 static const char* DFT_CALCULATION_PATTERN = "DFT Module";
 static const char* TDDFT_CALCULATION_PATTERN = "TDDFT Module";
+static const char* MEP_CALCULATION_PATTERN = "Gonzalez & Schlegel IRC Optimization";
 static const char* SCF_ENERGY_PATTERN = "SCF energy =";
 static const char* DFT_ENERGY_PATTERN = "DFT energy =";
 static const char* FREQUENCY_PATTERN = "NWChem Nuclear Hessian and Frequency Analysis";
@@ -105,6 +107,9 @@ static const char* ROOT_PATTERN = "Root";
 static const char* OSCILATOR_STRENGTH_PATTERN = "Oscillator Strength";
 static const char* SPIN_FORBIDDEN_PATTERN = "Spin forbidden";
 static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
+static const char* MEP_STEP_END_PATTERN = "&  Point";
+// Two spaces are nessesary to avoid matching "IRC Optimization converged"
+static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
 
   //Make an instance of the format class
   NWChemOutputFormat theNWChemOutputFormat;
@@ -456,6 +461,65 @@ static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
 
   //////////////////////////////////////////////////////
   /**
+  Method reads IRC steps from input stream (ifs)
+  and writes it to supplied OBMol object (molecule).
+  Input stream must be set to begining of Minimal Energy
+  Path IRC calculation in nwo file.
+  (Line after "Gonzalez & Schlegel IRC Optimization")
+  Method wont work if "molecule" already contains data
+  about conformers.
+  After all stream will be set at the end of calculation.
+  */
+  void NWChemOutputFormat::ReadMEPCalculation(istream* ifs, OBMol* molecule)
+  {
+    if ((molecule == NULL) || (ifs == NULL))
+        return;
+    if (molecule->NumConformers() > 0)
+        return;
+
+    vector<string> vs;
+    char buffer[BUFF_SIZE];
+    vector<double> energies;
+
+    while (ifs->getline(buffer, BUFF_SIZE))
+    {
+        if(strstr(buffer, OPTIMIZATION_END_PATTERN) != NULL)
+        {
+            while(ifs->getline(buffer, BUFF_SIZE))
+            {
+                if (strstr(buffer, COORDINATES_PATTERN))
+                    ReadCoordinates(ifs, molecule);
+                else if (strstr(buffer, OPTIMIZATION_STEP_PATTERN))
+                {
+                    ifs->getline(buffer, BUFF_SIZE); // ------
+                    ifs->getline(buffer, BUFF_SIZE);
+                    tokenize(vs, buffer);
+                    molecule->SetConformer(molecule->NumConformers() - 1);
+                    if (vs.size() > 2) // @ NStep   Energy...
+                        energies.push_back(atof(vs[2].c_str()) * HARTREE_TO_KCAL);
+                }
+                else if (strstr(buffer, DIPOLE_MOMENT_PATTERN) != NULL)
+                    ReadDipoleMoment(ifs, molecule);
+                else if (strstr(buffer, MEP_STEP_END_PATTERN) != NULL)
+                    break;
+            }
+        }
+        else if(strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
+            break;
+    }
+    if (energies.size() != molecule->NumConformers())
+    {
+        cerr << "Number of read energies (" << energies.size();
+        cerr << ") does not match number of read conformers (";
+        cerr << molecule->NumConformers() << ")!" << endl;
+        return;
+    }
+    molecule->SetEnergies(energies);
+  }
+
+
+  //////////////////////////////////////////////////////
+  /**
   Method reads optimization steps from input stream (ifs)
   and writes it to supplied OBMol object (molecule).
   Input stream must be set to begining of geometry optimization
@@ -798,6 +862,8 @@ static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
             ReadSinglePointCalculation(&ifs, &mol);
         else if(strstr(buffer, ZTS_CALCULATION_PATTERN) != NULL)
             ReadZTSCalculation(&ifs, &mol);
+        else if(strstr(buffer, MEP_CALCULATION_PATTERN) != NULL)
+            ReadMEPCalculation(&ifs, &mol);
         // These calculation handlers still not implemented
         // so we just skip them
         else if(strstr(buffer, PROPERTY_CALCULATION_PATTERN) != NULL)
