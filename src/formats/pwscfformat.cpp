@@ -117,6 +117,9 @@ namespace OpenBabel {
         if (strstr(vs[1].c_str(), "alat")) {
           conv = alat * BOHR_TO_ANGSTROM;
         }
+        else if (strstr(vs[1].c_str(), "bohr")) {
+          conv = BOHR_TO_ANGSTROM;
+        }
         // Add others if needed
 
         double v11, v12, v13,
