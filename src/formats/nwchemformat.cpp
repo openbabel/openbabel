@@ -75,12 +75,14 @@ namespace OpenBabel
     void ReadZTSCalculation(istream* ifs, OBMol* molecule);
     void ReadTDDFTCalculation(istream* ifs, OBMol* molecule);
     void ReadMEPCalculation(istream* ifs, OBMol* molecule);
+    void ReadNEBCalculation(istream* ifs, OBMol* molecule);
   };
 
 static const char* COORDINATES_PATTERN = "Output coordinates";
 static const char* GEOMETRY_OPTIMIZATION_PATTERN = "NWChem Geometry Optimization";
 static const char* PROPERTY_CALCULATION_PATTERN = "NWChem Property Module";
 static const char* ZTS_CALCULATION_PATTERN = "@ String method.";
+static const char* NEB_CALCULATION_PATTERN = "NWChem Minimum Energy Pathway Program (NEB)";
 static const char* PYTHON_CALCULATION_PATTERN = "NWChem Python program";
 static const char* ESP_CALCULATION_PATTERN = "NWChem Electrostatic Potential Fit Module";
 static const char* SCF_CALCULATION_PATTERN = "SCF Module";
@@ -108,6 +110,10 @@ static const char* OSCILATOR_STRENGTH_PATTERN = "Oscillator Strength";
 static const char* SPIN_FORBIDDEN_PATTERN = "Spin forbidden";
 static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
 static const char* MEP_STEP_END_PATTERN = "&  Point";
+static const char* NEB_BEAD_START_PATTERN = "neb: running bead";
+static const char* NEB_BEAD_ENERGY_PATTERN = "neb: final energy";
+static const char* NEB_NBEADS_PATTERN = "number of images in path";
+static const char* GRADIENT_PATTERN = "ENERGY GRADIENTS";
 // Two spaces are nessesary to avoid matching "IRC Optimization converged"
 static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
 
@@ -709,6 +715,106 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
     molecule->SetEnergy(energy);
   }
 
+  /**
+  Method reads beads and their energies from NEB calculation from
+  input stream (ifs) and writes them to supplied OBMol object (molecule)
+  Input stream must be set to begining of NEB calculation
+  in nwo file. (Line after "NWChem Minimum Energy Pathway Program (NEB)")
+  If method failed then "molecule" wont be changed.
+  */
+  void NWChemOutputFormat::ReadNEBCalculation(istream* ifs, OBMol* molecule)
+  {
+    if ((ifs == NULL) || (molecule == NULL))
+        return;
+    unsigned int natoms = molecule->NumAtoms();
+    // Inital geometry must be supplied
+    if (natoms == 0)
+        return;
+    char buffer[BUFF_SIZE];
+    vector<string> vs;
+    vector<double*> beads;
+    vector<double> energies;
+    unsigned int nbeads = 0;
+    unsigned int current_bead = UINT_MAX;
+
+    while(ifs->getline(buffer, BUFF_SIZE))
+    {
+        if (strstr(buffer, NEB_BEAD_START_PATTERN) != NULL)
+        {
+            tokenize(vs, buffer);
+            // neb: running bead                    N
+            //  0      1      2                     3
+            if (vs.size() < 4)
+                break;
+            current_bead = atoi(vs[3].c_str());
+        }
+        else if (strstr(buffer, NEB_BEAD_ENERGY_PATTERN) != NULL)
+        {
+            tokenize(vs, buffer);
+            // neb: final energy  N
+            //  0     1      2    3
+
+            if (vs.size() < 4)
+                break;
+            if (current_bead >= nbeads)
+                break; // Something strange is happening
+            energies[current_bead] = atof(vs[3].c_str());
+        }
+        else if (strstr(buffer, GRADIENT_PATTERN) != NULL)
+        {
+            ifs->getline(buffer, BUFF_SIZE); // blank line
+            ifs->getline(buffer, BUFF_SIZE); // 1st level header
+            ifs->getline(buffer, BUFF_SIZE); // 2nd level header
+            for (unsigned int i = 0; i<natoms; i++)
+            {
+                ifs->getline(buffer, BUFF_SIZE);
+                tokenize(vs, buffer);
+                // N Symbol     x   y  z    x_grad  y_grad  z_grad
+                // 0   1        2   3  4       5      6       7
+                if (vs.size() < 8)
+                    break;
+                unsigned int end_of_symbol = vs[1].find_last_not_of(DIGITS) + 1;
+                if (etab.GetAtomicNum(vs[1].substr(0, end_of_symbol).c_str()) != molecule->GetAtom(i+1)->GetAtomicNum())
+                    break;
+                if (current_bead >= nbeads)
+                    break; // Something strange is happening
+                double x, y, z;
+                x = atof(vs[2].c_str());
+                y = atof(vs[3].c_str());
+                z = atof(vs[4].c_str());
+                beads[current_bead][0] = x;
+                beads[current_bead][1] = y;
+                beads[current_bead][2] = z;
+            }
+        }
+        else if (strstr(buffer, NEB_NBEADS_PATTERN) != NULL)
+        {
+            tokenize(vs, buffer);
+            // number of images in path         (nbeads) =   N
+            //   0    1     2    3   4             5     6   7
+            if (vs.size() < 8)
+                break;
+            nbeads = atoi(vs[7].c_str());
+            beads.reserve(nbeads);
+            energies.reserve(nbeads);
+            for (unsigned int i = 0;i<nbeads;i++)
+            {
+                beads.push_back(new double[natoms*3]);
+                energies.push_back(0.0);
+            }
+        }
+        else if (strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
+        {
+            molecule->SetConformers(beads);
+            molecule->SetEnergies(energies);
+            return;
+        }
+    }
+    cerr << "Failed to read NEB calculation!" << endl;
+    for(unsigned int i = 0; i < beads.size();i++)
+        delete beads[i];
+  }
+
   /////////////////////////////////////////////////////////////////
   /**
   Method reads beads and their energies from ZTS calculation from
@@ -864,6 +970,8 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
             ReadZTSCalculation(&ifs, &mol);
         else if(strstr(buffer, MEP_CALCULATION_PATTERN) != NULL)
             ReadMEPCalculation(&ifs, &mol);
+        else if(strstr(buffer, NEB_CALCULATION_PATTERN) != NULL)
+            ReadNEBCalculation(&ifs, &mol);
         // These calculation handlers still not implemented
         // so we just skip them
         else if(strstr(buffer, PROPERTY_CALCULATION_PATTERN) != NULL)
