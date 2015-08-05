@@ -67,7 +67,7 @@ namespace OpenBabel
     void ReadCoordinates(istream* ifs, OBMol* molecule);
     void ReadPartialCharges(istream* ifs, OBMol* molecule);
     void ReadOrbitals(istream* ifs, OBMol* molecule);
-    void ReadDipoleMoment(istream* ifs, OBMol* molecule);
+    void ReadMultipoleMoment(istream* ifs, OBMol* molecule);
 
     void ReadFrequencyCalculation(istream* ifs, OBMol* molecule);
     void ReadGeometryOptimizationCalculation(istream* ifs, OBMol* molecule);
@@ -108,7 +108,7 @@ static const char* NBEADS_PATTERN = "@ Number of replicas";
 static const char* ROOT_PATTERN = "Root";
 static const char* OSCILATOR_STRENGTH_PATTERN = "Oscillator Strength";
 static const char* SPIN_FORBIDDEN_PATTERN = "Spin forbidden";
-static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
+static const char* MULTIPOLE_MOMENT_PATTERN = "Multipole analysis of the density";
 static const char* MEP_STEP_END_PATTERN = "&  Point";
 static const char* NEB_BEAD_START_PATTERN = "neb: running bead";
 static const char* NEB_BEAD_ENERGY_PATTERN = "neb: final energy";
@@ -238,37 +238,78 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
 
 //////////////////////////////////////////////////////
   /**
-  Method reads dipole moment from input stream (ifs)
+  Method reads charge, dipole and quadrupole moment from input stream (ifs)
   and writes them to supplied OBMol object (molecule)
-  Input stream must be set to begining of dipole moment
-  section in nwo file. (Line after "Nuclear Dipole moment (a.u.)")
-  Stream will be set to the end of dipole moment section.
+  Input stream must be set to begining of Multipole moment
+  section in nwo file. (Line after "Multipole analysis of the density")
+  Stream will be set to the end of multipole moment section.
   */
-  void NWChemOutputFormat::ReadDipoleMoment(istream* ifs, OBMol* molecule)
+  void NWChemOutputFormat::ReadMultipoleMoment(istream* ifs, OBMol* molecule)
   {
     if ((ifs == NULL) || (molecule == NULL))
         return;
 
     char buffer[BUFF_SIZE];
     vector<string> vs;
-    double x, y, z;
+    matrix3x3 quadrupole;
+    double dipole[3];
+    double charge;
+    bool blank_line = false;
 
     ifs->getline(buffer, BUFF_SIZE); // -------
+    ifs->getline(buffer, BUFF_SIZE); // blank
     ifs->getline(buffer, BUFF_SIZE); // Header
     ifs->getline(buffer, BUFF_SIZE); // -------
-    ifs->getline(buffer, BUFF_SIZE); // Dipole moment
-    tokenize(vs, buffer);
-    // X                 Y               Z
-    // 0                 1               2
-    if (vs.size() < 3)
-        return;
-    x = atof(vs[0].c_str());
-    y = atof(vs[1].c_str());
-    z = atof(vs[2].c_str());
-    OBVectorData* dipole_moment = new OBVectorData;
-    dipole_moment->SetData(x, y, z);
-    dipole_moment->SetAttribute("Dipole Moment");
-    molecule->SetData(dipole_moment);
+
+    while (ifs->getline(buffer, BUFF_SIZE))
+    {
+        tokenize(vs, buffer);
+        // L   x y z        total         alpha         beta         nuclear
+        // L   x y z        total         open         nuclear
+        // 0   1 2 3          4             5            6             7
+        if (vs.size() < 7)
+        {
+            if (blank_line)
+            {
+                molecule->SetTotalCharge(charge);
+                OBVectorData* dipole_moment = new OBVectorData;
+                dipole_moment->SetData(vector3(dipole));
+                dipole_moment->SetAttribute("Dipole Moment");
+                molecule->SetData(dipole_moment);
+                OBMatrixData* quadrupole_moment = new OBMatrixData;
+                quadrupole_moment->SetData(quadrupole);
+                quadrupole_moment->SetAttribute("Quadrupole Moment");
+                molecule->SetData(quadrupole_moment);
+                return;
+            }
+            // Second blank line means end of multipole section
+            blank_line = true;
+            continue;
+        }
+        blank_line = false;
+        double value = atof(vs[4].c_str());
+        if (vs[0][0] == '0')
+            charge = value;
+        else if (vs[0][0] == '1')
+            for (unsigned int i = 0; i < 3; i++)
+                if (vs[i+1][0] == '1')
+                    dipole[i] = atof(vs[4].c_str());
+        else if (vs[0][0] == '2')
+        {
+            unsigned int i[2], j = 0;
+            for (unsigned int k = 0 ; k<3; k++)
+            {
+                if (vs[k+1][0] == '2')
+                    i[0] = i[1] = k; // Diagonal elements
+                else if (vs[k+1][0] == '1')
+                    i[j++] = k;
+            }
+            quadrupole.Set(i[0], i[1], value);
+            quadrupole.Set(i[1], i[0], value);
+        }
+        else
+            return;
+    }
   }
 
   //////////////////////////////////////////////////////
@@ -504,8 +545,8 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
                     if (vs.size() > 2) // @ NStep   Energy...
                         energies.push_back(atof(vs[2].c_str()) * HARTREE_TO_KCAL);
                 }
-                else if (strstr(buffer, DIPOLE_MOMENT_PATTERN) != NULL)
-                    ReadDipoleMoment(ifs, molecule);
+                else if (strstr(buffer, MULTIPOLE_MOMENT_PATTERN) != NULL)
+                    ReadMultipoleMoment(ifs, molecule);
                 else if (strstr(buffer, MEP_STEP_END_PATTERN) != NULL)
                     break;
             }
@@ -560,8 +601,8 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
             if (vs.size() > 2) // @ NStep   Energy...
                 energies.push_back(atof(vs[2].c_str()) * HARTREE_TO_KCAL);
         }
-        else if(strstr(buffer, DIPOLE_MOMENT_PATTERN) != NULL)
-            ReadDipoleMoment(ifs, molecule);
+        else if(strstr(buffer, MULTIPOLE_MOMENT_PATTERN) != NULL)
+            ReadMultipoleMoment(ifs, molecule);
         else if(strstr(buffer, MULLIKEN_CHARGES_PATTERN) != NULL)
             ReadPartialCharges(ifs, molecule);
         else if(strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
@@ -661,8 +702,8 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
         } // if "Projected Infra Red Intensities"
         else if(strstr(buffer, MULLIKEN_CHARGES_PATTERN) != NULL)
             ReadPartialCharges(ifs, molecule);
-        else if(strstr(buffer, DIPOLE_MOMENT_PATTERN) != NULL)
-            ReadDipoleMoment(ifs, molecule);
+        else if(strstr(buffer, MULTIPOLE_MOMENT_PATTERN) != NULL)
+            ReadMultipoleMoment(ifs, molecule);
         else if ((strstr(buffer, ORBITAL_SECTION_PATTERN_2) != NULL)&&(strstr(buffer, ORBITAL_SECTION_PATTERN_1) != NULL))
             ReadOrbitals(ifs, molecule);
         else if(strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL) // End of task
@@ -701,8 +742,8 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
         }
         else if ((strstr(buffer, ORBITAL_SECTION_PATTERN_2) != NULL)&&(strstr(buffer, ORBITAL_SECTION_PATTERN_1) != NULL))
             ReadOrbitals(ifs, molecule);
-        else if(strstr(buffer, DIPOLE_MOMENT_PATTERN) != NULL)
-            ReadDipoleMoment(ifs, molecule);
+        else if(strstr(buffer, MULTIPOLE_MOMENT_PATTERN) != NULL)
+            ReadMultipoleMoment(ifs, molecule);
         else if (strstr(buffer, MULLIKEN_CHARGES_PATTERN) != NULL)
             ReadPartialCharges(ifs, molecule);
         else if (strstr(buffer, TDDFT_CALCULATION_PATTERN) != NULL)
