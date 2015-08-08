@@ -18,7 +18,7 @@ set (cpptests
      automorphism builder canonconsistent canonstable carspacegroup
      cistrans graphsym gzip
      implicitH lssr isomorphism multicml regressions rotor shuffle smiles spectrophore
-     squareplanar stereo stereoperception tetrahedral
+     squareplanar stereo stereoperception tautomer tetrahedral
      tetranonplanar tetraplanar uniqueid
     )
 set (automorphism_parts 1 2 3 4 5 6 7 8 9 10)
@@ -28,7 +28,7 @@ set (canonstable_parts 1)
 set (carspacegroup_parts 1 2 3 4)
 set (cistrans_parts 1 2 3 4 5 6 7 8 9)
 set (graphsym_parts 1 2 3 4 5)
-set (gzip_parts 1) 
+set (gzip_parts 1)
 set (implicitH_parts 1)
 set (lssr_parts 1 2 3 4 5)
 set (isomorphism_parts 1 2 3 4 5 6 7 8)
@@ -41,6 +41,7 @@ set (spectrophore_parts 1 2 3 4 5)
 set (squareplanar_parts 1 2 3 4 5)
 set (stereo_parts 1 2 3 4 5 6)
 set (stereoperception_parts 1 2 3 4)
+set (tautomer_parts 1 2)
 set (tetrahedral_parts 1 2 3 4 5)
 set (tetranonplanar_parts 1)
 set (tetraplanar_parts 1)
