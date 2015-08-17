@@ -267,7 +267,6 @@ bool SVGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   _nmax =_nrows = _ncols = 1;
   _objects.push_back(pOb);
   bool ret = WriteSVG(pConv,_objects);
-  delete _objects.front();
   _objects.clear();
   return true;
 }
