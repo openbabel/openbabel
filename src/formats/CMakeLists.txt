@@ -50,6 +50,7 @@ set(formats_compchem
       nwchemformat
       pwscfformat
       qchemformat
+      siestaformat
       turbomoleformat
       vaspformat
       xsfformat
@@ -116,7 +117,7 @@ set(formats_misc
       groformat
       lmpdatformat
       lpmdformat
-      mdffformat 
+      mdffformat
       mmcifformat
       mmodformat
       moldenformat
@@ -309,7 +310,7 @@ if(MSVC)
                   OUTPUT_NAME formats_xml
                   PREFIX ""
                   SUFFIX ${MODULE_EXTENSION})
-                  
+
   if(JSON_LIBRARY)
     set(jsonsources "")
     foreach(format ${formats_json})
@@ -327,7 +328,7 @@ if(MSVC)
                           PREFIX ""
                           SUFFIX ${MODULE_EXTENSION})
   endif(JSON_LIBRARY)
-                                
+
 else(MSVC)
 foreach(format ${formats_xml})
   add_library(${format} ${PLUGIN_TYPE} xml/${format}.cpp xml/xml.cpp)
@@ -341,7 +342,7 @@ foreach(format ${formats_xml})
                         PREFIX ""
                         SUFFIX ${MODULE_EXTENSION})
 endforeach(format)
-  
+
 foreach(format ${formats_json})
   add_library(${format} ${PLUGIN_TYPE} json/${format}.cpp ${json_additional_sources}
               "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h")

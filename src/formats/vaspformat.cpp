@@ -137,8 +137,8 @@ namespace OpenBabel {
     if (path.empty()) return false; // Should be using ReadFile, not Read!
     size_t found;
     found = path.rfind("/");
-    if (found == string::npos) return false; // No "/" in path?
-    path = path.substr(0,found);
+    path = path.substr(0, found);
+    if (found == string::npos) path = "./"; // No "/" in path?
 
     // Open files
     string potcar_filename = path + "/POTCAR";
@@ -601,30 +601,30 @@ namespace OpenBabel {
       atomicNums.push_back(atom->GetAtomicNum());
     }
 
-    if (sortAtoms != NULL) 
+    if (sortAtoms != NULL)
     {
       vector<string> vs;
       tokenize(vs, sortAtoms);
       map<int, int> nm_map;
-      for(size_t i = 0; i < vs.size(); ++i) 
+      for(size_t i = 0; i < vs.size(); ++i)
         nm_map[etab.GetAtomicNum(vs[i].c_str())] = i + 1;
-       
+
       // Sort the ids by atomic number
-      for (size_t i = 0; i < atomids.size() - 1; ++i) 
+      for (size_t i = 0; i < atomids.size() - 1; ++i)
       {
         unsigned int atomicNum_i = atomicNums[i];
-        
-        for (size_t j = i+1; j < atomids.size(); ++j) 
+
+        for (size_t j = i+1; j < atomids.size(); ++j)
         {
           unsigned int atomicNum_j = atomicNums[j];
-          
+
           bool swap_d = false;
           if( nm_map[atomicNum_j] != nm_map[atomicNum_i] )
             swap_d = nm_map[atomicNum_j] < nm_map[atomicNum_i];
           else
             swap_d = atomicNum_j < atomicNum_i;
-                          
-          if ( swap_d )  
+
+          if ( swap_d )
           {
             swap(atomids[i], atomids[j]);
             swap(atomicNums[i], atomicNums[j]);
