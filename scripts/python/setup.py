@@ -13,7 +13,7 @@ from setuptools import setup, Extension
 
 __author__ = 'Noel O\'Boyle'
 __email__ = 'openbabel-discuss@lists.sourceforge.net'
-__version__ = '1.8.2'
+__version__ = '1.8.3'
 __license__ = 'GPL'
 
 
@@ -93,14 +93,13 @@ class CustomBuildExt(build_ext):
     def finalize_options(self):
         # Setting include_dirs, library_dirs, swig_opts here instead of in Extension constructor allows them to be
         # overridden using -I and -L command line options to python setup.py build_ext.
-        if not self.include_dirs and not self.library_dirs:
-            self.include_dirs, self.library_dirs = locate_ob()
-        else:
-            print('Open Babel location manually specified:')
-        print('- include_dirs: %s\n- library_dirs: %s' % (self.include_dirs, self.library_dirs))
         build_ext.finalize_options(self)
+        include_dirs, library_dirs = locate_ob()
+        self.include_dirs.append(include_dirs)
+        self.library_dirs.append(library_dirs)
         self.swig_opts = ['-c++', '-small', '-O', '-templatereduce', '-naturalvar']
         self.swig_opts += ['-I%s' % i for i in self.include_dirs]
+        print('- include_dirs: %s\n- library_dirs: %s' % (self.include_dirs, self.library_dirs))
 
     def swig_sources(self, sources, extension):
         try:
