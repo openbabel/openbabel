@@ -175,6 +175,7 @@ void fingerprint2::getFragments(vector<int> levels, vector<int> curfrag,
 				//and save in ringset
 				curfrag[0] = bo;
 				ringset.insert(curfrag);
+ 				curfrag[0] = 0;
 			}
 		}
 		else //no ring
