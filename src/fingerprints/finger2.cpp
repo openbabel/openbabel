@@ -173,7 +173,7 @@ void fingerprint2::getFragments(vector<int> levels, vector<int> curfrag,
 			{
 				//If complete ring (last bond is back to starting atom) add bond at front
 				//and save in ringset
-				curfrag[0] = bo;
+				curfrag[0] = pnewbond->IsAromatic() ? 5 : pnewbond->GetBO();
 				ringset.insert(curfrag);
  				curfrag[0] = 0;
 			}

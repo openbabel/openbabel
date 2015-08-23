@@ -41,6 +41,7 @@ GNU General Public License for more details.
 #include <locale>
 #include <limits>
 #include <typeinfo>
+#include <iterator>
 
 #include <stdlib.h>
 
