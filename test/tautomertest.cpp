@@ -75,15 +75,38 @@ void testCanonicalTautomers(const std::string &smiles)
 }
 
 
-int main() {
+int tautomertest(int argc, char* argv[]) {
   // Define location of file formats for testing
-  #ifdef FORMATDIR
+#ifdef FORMATDIR
     char env[BUFF_SIZE];
     snprintf(env, BUFF_SIZE, "BABEL_LIBDIR=%s", FORMATDIR);
     putenv(env);
-  #endif
+#endif
 
-  // guanine
-  testEnumerateTautomers("Nc1nc2ncnc2c([nH]1)O", 15);
-  testCanonicalTautomers("Nc1nc2ncnc2c([nH]1)O");
+
+    int defaultchoice = 1;
+
+    int choice = defaultchoice;
+
+    if (argc > 1) {
+      if(sscanf(argv[1], "%d", &choice) != 1) {
+        std::cout << "Couldn't parse that input as a number\n";
+        return -1;
+      }
+    }
+
+    // guanine
+    switch (choice) {
+    case 1:
+      testEnumerateTautomers("Nc1nc2ncnc2c([nH]1)O", 15);
+      break;
+    case 2:
+      testCanonicalTautomers("Nc1nc2ncnc2c([nH]1)O");
+      break;
+    default:
+      std::cout << "Test number " << choice << " does not exist!\n";
+      return -1;
+    }
+
+  return 0;
 }

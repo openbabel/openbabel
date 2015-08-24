@@ -149,6 +149,10 @@ namespace OpenBabel
         // ORCA
         formatName = "orca";
         break;
+      } else if (strstr(buffer, "WELCOME TO SIESTA") != NULL) {
+        // SIESTA
+        formatName = "siesta";
+        break;
       }
     }
 
