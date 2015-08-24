@@ -21,6 +21,7 @@ GNU General Public License for more details.
 // Required for TS detection in ZTS calculation
 #include <algorithm>
 #define HARTREE_TO_KCAL 627.509469
+#define AU_TO_ANGSTROM 0.529177249
 #define EV_TO_NM(x) 1239.84193/x
 
 using namespace std;
@@ -787,18 +788,22 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
             //  0      1      2                     3
             if (vs.size() < 4)
                 break;
-            current_bead = atoi(vs[3].c_str());
+            current_bead = atoi(vs[3].c_str()) - 1;
+            // Bead index in array starts from 0
+            // but in log it starts from 1
         }
         else if (strstr(buffer, NEB_BEAD_ENERGY_PATTERN) != NULL)
         {
             tokenize(vs, buffer);
             // neb: final energy  N
             //  0     1      2    3
-
             if (vs.size() < 4)
                 break;
             if (current_bead >= nbeads)
-                break; // Something strange is happening
+            {
+                cerr << "Current bead out of range: " << current_bead << " of " << nbeads << endl;
+                break;
+            }
             energies[current_bead] = atof(vs[3].c_str());
         }
         else if (strstr(buffer, GRADIENT_PATTERN) != NULL)
@@ -818,14 +823,13 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
                 if (etab.GetAtomicNum(vs[1].substr(0, end_of_symbol).c_str()) != molecule->GetAtom(i+1)->GetAtomicNum())
                     break;
                 if (current_bead >= nbeads)
-                    break; // Something strange is happening
-                double x, y, z;
-                x = atof(vs[2].c_str());
-                y = atof(vs[3].c_str());
-                z = atof(vs[4].c_str());
-                beads[current_bead][0] = x;
-                beads[current_bead][1] = y;
-                beads[current_bead][2] = z;
+                {
+                    cerr << "Current bead out of range: " << current_bead << " of " << nbeads << endl;
+                    break;
+                }
+                beads[current_bead][i*3] = atof(vs[2].c_str())*AU_TO_ANGSTROM;
+                beads[current_bead][1+i*3] = atof(vs[3].c_str())*AU_TO_ANGSTROM;
+                beads[current_bead][2+i*3] = atof(vs[4].c_str())*AU_TO_ANGSTROM;
             }
         }
         else if (strstr(buffer, NEB_NBEADS_PATTERN) != NULL)
