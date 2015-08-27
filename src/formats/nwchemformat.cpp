@@ -17,7 +17,7 @@ GNU General Public License for more details.
 #include <openbabel/obmolecformat.h>
 
 // Required for imaginary frequencies detection
-#include <cmath> 
+#include <cmath>
 // Required for TS detection in ZTS calculation
 #include <algorithm>
 #define HARTREE_TO_KCAL 627.509469
@@ -158,7 +158,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
 
   /////////////////////////////////////////////////////////////////
   /**
-  Moves stream (ifs) position to end of calculation. 
+  Moves stream (ifs) position to end of calculation.
   */
   static void GotoCalculationEnd(istream* ifs)
   {
@@ -171,7 +171,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
 
   //////////////////////////////////////////////////////
   /**
-  Method reads coordinates from input stream (ifs) and 
+  Method reads coordinates from input stream (ifs) and
   writes it into supplied OBMol object (molecule).
   Input stream must be set to begining of coordinates
   table in nwo file. (Line after "Output coordinates...")
@@ -288,15 +288,15 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
             continue;
         }
         blank_line = false;
-        double value = atof(vs[4].c_str());
         if (vs[0][0] == '0')
-            charge = value;
+            charge = atoi(vs[4].c_str());
         else if (vs[0][0] == '1')
             for (unsigned int i = 0; i < 3; i++)
                 if (vs[i+1][0] == '1')
                     dipole[i] = atof(vs[4].c_str());
         else if (vs[0][0] == '2')
         {
+            double value = atof(vs[4].c_str());
             unsigned int i[2], j = 0;
             for (unsigned int k = 0 ; k<3; k++)
             {
@@ -721,7 +721,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   /////////////////////////////////////////////////////////////////
   /**
   Method reads single point energy and all avalible data from input
-  stream (ifs) and writes it to supplied OBMol object (molecule) 
+  stream (ifs) and writes it to supplied OBMol object (molecule)
   Input stream must be set to begining of energy calculation
   in nwo file. (Line after "NWChem <theory> Module")
   If energy not found then "molecule" wont be changed.
