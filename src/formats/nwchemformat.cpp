@@ -254,7 +254,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
     vector<string> vs;
     matrix3x3 quadrupole;
     double dipole[3];
-    double charge;
+    int charge;
     bool blank_line = false;
 
     ifs->getline(buffer, BUFF_SIZE); // -------
