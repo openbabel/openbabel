@@ -235,6 +235,7 @@ endif(NOT MINGW AND NOT CYGWIN)
 ###############################
 
 if (PYTHON_BINDINGS)
+  include(UsePythonTest)
   set(pybindtests
       bindings _pybel example)
   foreach(pybindtest ${pybindtests})
