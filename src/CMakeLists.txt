@@ -7,6 +7,7 @@ set(charges
   charges/gasteiger.cpp
   charges/none.cpp
   charges/mmff94.cpp
+  charges/fromfile.cpp
 )
 
 if (EIGEN2_FOUND OR EIGEN3_FOUND)
@@ -113,6 +114,7 @@ set(openbabel_srcs
   chargemodel.cpp
   chiral.cpp
   data.cpp
+  data_utilities.cpp
   descriptor.cpp
   fingerprint.cpp
   forcefield.cpp

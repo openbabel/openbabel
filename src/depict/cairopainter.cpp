@@ -42,7 +42,7 @@ namespace OpenBabel
         OBColor bg = OBColor(m_fillcolor);
         cairo_set_source_rgb (m_cairo, bg.red, bg.green, bg.blue);
       }
-      
+
       cairo_paint (m_cairo);
       cairo_set_line_width(m_cairo, m_pen_width);
     }
@@ -78,7 +78,7 @@ namespace OpenBabel
       cairo_translate(m_cairo, cellwidth/2.0 - scale*width/2.0 + cellwidth*(col-1), 0 + cellheight*(row-1));
     cairo_scale(m_cairo, scale, scale); // Set a scaling transformation
   }
-  
+
   bool CairoPainter::IsGood() const
   {
     if (!m_cairo)
@@ -87,7 +87,7 @@ namespace OpenBabel
       return false;
     return true;
   }
-      
+
   void CairoPainter::SetFontSize(int pointSize)
   {
     m_fontPointSize = pointSize;
@@ -99,11 +99,16 @@ namespace OpenBabel
     cairo_set_source_rgb(m_cairo, color.red, color.green, color.blue);
   }
 
+  void CairoPainter::SetFillRadial(const OBColor &start, const OBColor &end)
+  {
+    cairo_set_source_rgb(m_cairo, end.red, end.green, end.blue);
+  }
+
   void CairoPainter::SetPenColor(const OBColor &color)
   {
     cairo_set_source_rgb(m_cairo, color.red, color.green, color.blue);
   }
-      
+
   void CairoPainter::SetPenWidth(double width)
   {
     m_pen_width = width;
@@ -114,10 +119,11 @@ namespace OpenBabel
     return m_pen_width;
   }
 
-  void CairoPainter::DrawLine(double x1, double y1, double x2, double y2)
+  void CairoPainter::DrawLine(double x1, double y1, double x2, double y2, const std::vector<double>& dashes)
   {
     cairo_set_line_width(m_cairo, m_pen_width);
     cairo_set_line_cap(m_cairo, CAIRO_LINE_CAP_ROUND);
+    cairo_set_dash(m_cairo, (dashes.size()?&dashes[0]:NULL), dashes.size(), 0.0);
     cairo_move_to(m_cairo, x1, y1);
     cairo_line_to(m_cairo, x2, y2);
     cairo_stroke(m_cairo);
@@ -127,8 +133,8 @@ namespace OpenBabel
   {
     std::vector<std::pair<double,double> >::const_iterator i;
     for (i = points.begin(); i != points.end(); ++i)
-      cairo_line_to(m_cairo, i->first, i->second); // note: when called without previous point, 
-                                                   //       this function behaves like cairo_move_to 
+      cairo_line_to(m_cairo, i->first, i->second); // note: when called without previous point,
+                                                   //       this function behaves like cairo_move_to
     cairo_line_to(m_cairo, points.begin()->first, points.begin()->second);
     cairo_fill(m_cairo);
   }
@@ -160,12 +166,12 @@ namespace OpenBabel
     metrics.height = te.height;
     return metrics;
   }
-      
+
   void CairoPainter::WriteImage(const std::string &filename)
   {
     if (!m_cairo || !m_surface)
       return;
-    
+
     cairo_surface_write_to_png(m_surface, filename.c_str());
   }
 
@@ -175,6 +181,11 @@ namespace OpenBabel
     for (unsigned int i = 0; i < length; ++i)
       in->push_back(data[i]);
     return CAIRO_STATUS_SUCCESS;
+  }
+
+  void CairoPainter::DrawBall(double x, double y, double r, double opacity)
+  {
+
   }
 
   void CairoPainter::WriteImage(std::ostream& ofs)
@@ -188,4 +199,3 @@ namespace OpenBabel
   }
 
 }
-

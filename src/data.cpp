@@ -23,6 +23,7 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/data.h>
+#include <openbabel/data_utilities.h>
 #include <openbabel/mol.h>
 #include <openbabel/locale.h>
 
@@ -435,80 +436,138 @@ namespace OpenBabel
     Init();
   }
 
+  static double UnitNameToConversionFactor(const char* unit) {
+    const char* p = unit;
+    switch(p[0]) {
+    case 'e':
+      if (p[1]=='V' && p[2]=='\0')
+        return ELECTRONVOLT_TO_KCALPERMOL; // eV
+      if (p[1]=='l' && p[2]=='e' && p[3]=='c' && p[4]=='t' && p[5]=='r' && p[6]=='o' && p[7]=='n' &&
+          p[8]=='v' && p[9]=='o' && p[10]=='l' && p[11]=='t' && p[12]=='\0')
+        return ELECTRONVOLT_TO_KCALPERMOL; // electronvolt
+      break;
+    case 'k':
+      if (p[1]=='J' && p[2]=='/' && p[3]=='m' && p[4]=='o' && p[5]=='l' && p[6]=='\0')
+        return KJPERMOL_TO_KCALPERMOL; // kJ/mol
+      if (p[1]=='c' && p[2]=='a' && p[3]=='l' && p[4]=='/' && p[5]=='m' && p[6]=='o' && p[7]=='l' && p[8]=='\0')
+        return 1.0; // kcal/mol
+      break;
+    case 'H':
+      if (p[1]=='a' && p[2]=='r' && p[3]=='t' && p[4]=='r' && p[5]=='e' && p[6]=='e' && p[7]=='\0')
+        return HARTEE_TO_KCALPERMOL; // Hartree
+      break;
+    case 'J':
+      if (p[1]=='/' && p[2]=='m' && p[3]=='o' && p[4]=='l' && p[5]==' ' && p[6]=='K' && p[7]=='\0')
+        return KJPERMOL_TO_KCALPERMOL; // J/mol K
+      break;
+    case 'R':
+      if (p[1]=='y' && p[2]=='d' && p[3]=='b' && p[4]=='e' && p[5]=='r' && p[6]=='g' && p[7]=='\0')
+        return RYDBERG_TO_KCALPERMOL; // Rydberg
+      break;
+    }
+
+    std::stringstream errorMsg;
+    errorMsg << "WARNING: Unknown energy unit in thermochemistry file\n";
+    obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
+
+    return 1.0;
+  }
+
   void OBAtomicHeatOfFormationTable::ParseLine(const char *line)
   {
-    const char *ptr;
+    char *ptr;
     vector<string> vs;
-    int mult;
     OBAtomHOF *oba;
 
-    ptr = strchr(line,'#');
+    ptr = const_cast<char*>( strchr(line,'#'));
     if (NULL != ptr)
-      ptr = '\0';
+      ptr[0] = '\0';
     if (strlen(line) > 0)
       {
         tokenize(vs,line,"|");
-        if (vs.size() >= 5)
+        if (vs.size() >= 8)
           {
-            mult = 1;
-            if (vs.size() > 5)
-              mult = atoi(vs[5].c_str());
-            oba = new OBAtomHOF(vs[0],vs[1],vs[2],
-                                atof(vs[3].c_str()),atof(vs[4].c_str()),mult);
+              oba = new OBAtomHOF(vs[0],
+                                  atoi(vs[1].c_str()),
+                                  vs[2],
+                                  vs[3],
+                                  atof(vs[4].c_str()),
+                                  atof(vs[5].c_str()),
+                                  atoi(vs[6].c_str()),
+                                  vs[7]);
             _atomhof.push_back(*oba);
           }
       }
   }
 
-  int OBAtomicHeatOfFormationTable::GetHeatOfFormation(const char *elem,char *meth,
-                                                       int multiplicity,
-                                                       double *dhof0,double *dhof298)
+  int OBAtomicHeatOfFormationTable::GetHeatOfFormation(std::string elem,
+                                                       int charge,
+                                                       std::string meth,
+                                                       double T,
+                                                       double *dhof0,
+                                                       double *dhofT,
+                                                       double *S0T)
   {
     int    found;
-    double vm,ve,vdh;
+    double Ttol = 0.05; /* Kelvin */
+    double Vmodel, Vdhf, S0, HexpT;
     std::vector<OBAtomHOF>::iterator it;
-    const char *dhf0 = "DHf(0K)";
-    const char *dhf1 = "H(0K)-H(298.15K)";
-    const char *exp  = "exp";
     char desc[128];
 
     found = 0;
-    vm = ve = vdh = 0;
-    sprintf(desc,"%s(0K)",meth);
+    Vmodel = Vdhf = S0 = HexpT = 0;
+    snprintf(desc,sizeof(desc),"%s(0K)",meth.c_str());
 
     for(it = _atomhof.begin(); it != _atomhof.end(); ++it)
-      {
-        if (0 == strcasecmp(it->Element().c_str(),elem))
-          {
-            if ((0 == strcasecmp(it->Method().c_str(),meth)) &&
-                (0 == strcasecmp(it->Desc().c_str(),desc)))
-              {
-                vm += it->Value();
-                found++;
-              }
-            if ((0 == strcasecmp(it->Method().c_str(),exp)) &&
-                (0 == strcasecmp(it->Desc().c_str(),dhf0)))
-              {
-                ve += it->Value();
-                found++;
-              }
-            if ((0 == strcasecmp(it->Method().c_str(),exp)) &&
-                (0 == strcasecmp(it->Desc().c_str(),dhf1)))
-              {
-                vdh += it->Value();
-                found++;
-              }
-          }
-      }
+    {
+        if ((0 == it->Element().compare(elem)) &&
+            (it->Charge() == charge))
+        {
+            double eFac = UnitNameToConversionFactor(it->Unit().c_str());
+            if (fabs(T - it->T()) < Ttol)
+            {
+                if (0 == it->Method().compare("exp"))
+                {
+                    if (0 == it->Desc().compare("H(0)-H(T)"))
+                    {
+                        HexpT += it->Value()*eFac;
+                        found++;
+                    }
+                    else if (0 == it->Desc().compare("S0(T)"))
+                    {
+                        S0 += it->Value();
+                        found++;
+                    }
+                }
+            }
+            else if (0 == it->T()) 
+            {
+                if ((0 == it->Method().compare(meth)) &&
+                    (0 == it->Desc().compare(desc)))
+                {
+                    Vmodel += it->Value()*eFac;
+                    found++;
+                }
+                if (0 == it->Method().compare("exp"))
+                {
+                    if (0 == it->Desc().compare("DHf(T)"))
+                    {
+                        Vdhf += it->Value()*eFac;
+                        found++;
+                    }
+                }
+            }
+        }
+    }
 
-    if (3 == found)
-      {
-        *dhof0   = ve-vm;
-        *dhof298 = ve-vm-vdh;
+    if (found == 4)
+    {
+        *dhof0 = Vdhf-Vmodel;
+        *dhofT = Vdhf-Vmodel-HexpT;
+        *S0T   = -S0/4.184;
         return 1;
-      }
-    else
-      return 0;
+    }
+    return 0;
   }
 
   /** \class OBTypeTable data.h <openbabel/data.h>
