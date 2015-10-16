@@ -124,6 +124,9 @@ public:
   ///Returns the map of the subtypes
   virtual PluginMapType& GetMap() const =0;
 
+  ///Load all plugins (formats, fingerprints, forcefields etc.)
+  static void LoadAllPlugins();
+
 protected:
   ///\brief Returns a reference to the map of the plugin types.
   /// Is a function rather than a static member variable to avoid initialization problems.
@@ -135,9 +138,6 @@ protected:
 
   ///Keep a record if all plugins have been loaded
   static int AllPluginsLoaded;
-
-  ///Load all plugins (formats, fingerprints, forcefields etc.)
-  static void LoadAllPlugins();
 
   ///Returns the map of a particular plugin type, e.g. GetMapType("fingerprints")
   static PluginMapType& GetTypeMap(const char* PluginID);

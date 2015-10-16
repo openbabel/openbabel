@@ -73,6 +73,9 @@ int main(int argc,char *argv[])
   char *oext = NULL;
   char *iext = NULL;
 
+  //load plugs to fully initialize option parameters
+  OBPlugin::LoadAllPlugins();
+
   //Save name of program without its path (and .exe)
   string pn(argv[0]);
   string::size_type pos;
