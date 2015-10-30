@@ -186,18 +186,18 @@ namespace OpenBabel
   static double parseAtomCharge(char *buffer, OBMol &mol)
   // In PQR format, either:
   // Field name, atom number, atom name, residue name, residue number
-  //    x y z charge radius
+  //    x y z charge radius element
   // OR
-  // Field, atom number, atom name, chain id, residue number, X, Y, Z, chg, rad
+  // Field, atom number, atom name, chain id, residue number, X, Y, Z, chg, rad, ele
   {
     vector<string> vs;
     tokenize(vs,buffer);
 
     OBAtom *atom = mol.GetAtom(mol.NumAtoms());
 
-    if (vs.size() == 10)
+    if (vs.size() == 11)//add element, Zhixiong Zhao
       return atof(vs[8].c_str());
-    else if (vs.size() == 11)
+    else if (vs.size() == 12)
       return atof(vs[9].c_str());
 
     return 0.0;
@@ -210,9 +210,9 @@ namespace OpenBabel
 
     OBAtom *atom = mol.GetAtom(mol.NumAtoms());
 
-    if (vs.size() == 10)
+    if (vs.size() == 11)
       return atof(vs[9].c_str());
-    else if (vs.size() == 11)
+    else if (vs.size() == 12)
       return atof(vs[10].c_str());
 
     return 0.0;
