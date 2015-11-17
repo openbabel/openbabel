@@ -27,7 +27,7 @@ GNU General Public License for more details.
 
 #include <openbabel/parsmart.h>
 #include <openbabel/data.h>
-
+#include <boost/thread/mutex.hpp>
 namespace OpenBabel
 {
 
@@ -43,9 +43,13 @@ class OBAPI OBAtomTyper : public OBGlobalDataBase
   std::vector<std::pair<OBSmartsPattern*,int> >            _vimpval; //!< internal implicit valence rules
   std::vector<std::pair<OBSmartsPattern*,std::string> >    _vexttyp; //!< external atom type rules
 
+  boost::mutex typer_mutex;
 public:
     OBAtomTyper();
+    OBAtomTyper(const OBAtomTyper& rhs);
     ~OBAtomTyper();
+
+    const OBAtomTyper& operator=(const OBAtomTyper& rhs);
 
     void ParseLine(const char*);
     //! \return the number of implicit valence rules
