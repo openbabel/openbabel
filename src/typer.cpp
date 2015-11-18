@@ -78,6 +78,7 @@ namespace OpenBabel
 	  //don't actually copy data - regen if needed
 	    if (_init)
 	      Init();
+	    return *this;
   }
 
   void OBAtomTyper::ParseLine(const char *buffer)
@@ -171,7 +172,7 @@ namespace OpenBabel
 
   void OBAtomTyper::AssignTypes(OBMol &mol)
   {
-    boost::lock_guard<boost::mutex> lock(typer_mutex);
+    boost::lock_guard<boost::mutex> lock(types_mutex);
     if (!_init)
       Init();
 
@@ -216,7 +217,7 @@ namespace OpenBabel
 
   void OBAtomTyper::AssignHyb(OBMol &mol)
   {
-    boost::lock_guard<boost::mutex> lock(typer_mutex);
+    boost::lock_guard<boost::mutex> lock(hyb_mutex);
 
     if (!_init)
       Init();
@@ -246,7 +247,7 @@ namespace OpenBabel
 
   void OBAtomTyper::AssignImplicitValence(OBMol &mol, bool CanBeLessThanActual)
   {
-    boost::lock_guard<boost::mutex> lock(typer_mutex);
+    boost::lock_guard<boost::mutex> lock(impval_mutex);
 
     // FF Make sure that valence has not been perceived
     if(mol.HasImplicitValencePerceived())
@@ -299,8 +300,6 @@ namespace OpenBabel
   //! \deprecated Currently unused for anything significant.
   void OBAtomTyper::CorrectAromaticNitrogens(OBMol &mol)
   {
-    boost::lock_guard<boost::mutex> lock(typer_mutex);
-
     if (!_init)
       Init();
 
