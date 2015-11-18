@@ -27,7 +27,7 @@ GNU General Public License for more details.
 
 #include <openbabel/parsmart.h>
 #include <openbabel/data.h>
-#include <boost/thread/mutex.hpp>
+#include <boost/thread/recursive_mutex.hpp>
 namespace OpenBabel
 {
 
@@ -43,9 +43,9 @@ class OBAPI OBAtomTyper : public OBGlobalDataBase
   std::vector<std::pair<OBSmartsPattern*,int> >            _vimpval; //!< internal implicit valence rules
   std::vector<std::pair<OBSmartsPattern*,std::string> >    _vexttyp; //!< external atom type rules
 
-  boost::mutex types_mutex;
-  boost::mutex hyb_mutex;
-  boost::mutex impval_mutex;
+  boost::recursive_mutex types_mutex;
+  boost::recursive_mutex hyb_mutex;
+  boost::recursive_mutex impval_mutex;
 
 public:
     OBAtomTyper();
