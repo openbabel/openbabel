@@ -245,7 +245,14 @@ add_library(openbabel ${BUILD_TYPE}
 target_link_libraries(openbabel ${libs})
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS}) 
-    target_link_libraries(openbabel ${Boost_LIBRARIES})
+    target_link_libraries(openbabel ${Boost_LIBRARIES} )
+    find_package(Threads REQUIRED)
+    if(THREADS_HAVE_PTHREAD_ARG)
+      target_compile_options(PUBLIC openbabel "-pthread")
+    endif()
+    if(CMAKE_THREAD_LIBS_INIT)
+      target_link_libraries(openbabel "${CMAKE_THREAD_LIBS_INIT}")
+    endif()
 endif()
 
 set_target_properties(openbabel PROPERTIES
