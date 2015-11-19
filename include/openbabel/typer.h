@@ -43,9 +43,7 @@ class OBAPI OBAtomTyper : public OBGlobalDataBase
   std::vector<std::pair<OBSmartsPattern*,int> >            _vimpval; //!< internal implicit valence rules
   std::vector<std::pair<OBSmartsPattern*,std::string> >    _vexttyp; //!< external atom type rules
 
-  boost::recursive_mutex types_mutex;
-  boost::recursive_mutex hyb_mutex;
-  boost::recursive_mutex impval_mutex;
+  boost::recursive_mutex typer_mutex; //in particular, protect _mlist
 
 public:
     OBAtomTyper();

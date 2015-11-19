@@ -172,7 +172,7 @@ namespace OpenBabel
 
   void OBAtomTyper::AssignTypes(OBMol &mol)
   {
-    boost::lock_guard<boost::recursive_mutex> lock(types_mutex);
+    boost::lock_guard<boost::recursive_mutex> lock(typer_mutex);
     if (!_init)
       Init();
 
@@ -217,7 +217,7 @@ namespace OpenBabel
 
   void OBAtomTyper::AssignHyb(OBMol &mol)
   {
-    boost::lock_guard<boost::recursive_mutex> lock(hyb_mutex);
+    boost::lock_guard<boost::recursive_mutex> lock(typer_mutex);
 
     if (!_init)
       Init();
@@ -247,7 +247,7 @@ namespace OpenBabel
 
   void OBAtomTyper::AssignImplicitValence(OBMol &mol, bool CanBeLessThanActual)
   {
-    boost::lock_guard<boost::recursive_mutex> lock(impval_mutex);
+    boost::lock_guard<boost::recursive_mutex> lock(typer_mutex);
 
     // FF Make sure that valence has not been perceived
     if(mol.HasImplicitValencePerceived())
