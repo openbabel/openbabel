@@ -21,6 +21,11 @@ GNU General Public License for more details.
 #include <map>
 #include <stdexcept>
 
+#ifdef _MSC_VER
+#define INFINITY (DBL_MAX+DBL_MAX)
+#define NAN (INFINITY-INFINITY)
+#endif
+
 using namespace std;
 namespace OpenBabel {
   class MDFFFormat : public OBMoleculeFormat

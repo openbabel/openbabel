@@ -21,6 +21,7 @@
  obrms ref.sdf test.sdf
  */
 
+#undef _GLIBCXX_DEBUG /* unless you have boost libraries built with this, you do _not_ want this defined */
 // used to set import/export for Cygwin DLLs
 #ifdef WIN32
 #define USING_OBDLL
@@ -84,7 +85,7 @@ class Matcher
 		double bestRMSD;
 		bool minimize;
 		public:
-		//while modify t if min is true
+		//will modify t if min is true
 		MapRMSDFunctor(const OBMol& r, OBMol& t, bool min = false) :
 				ref(r), test(t), bestRMSD(HUGE_VAL), minimize(min)
 		{
@@ -151,7 +152,7 @@ class Matcher
 				{
 					//with minimize on, change coordinates
 					OBAtom *tatom = test.GetAtom(map[i].second + 1);
-					tatom->SetVector(testcoord[3*i], testcoord[3*i+1], testcoord[3*i+2]);
+					tatom->SetVector(testcoord[3*i]+rave[0], testcoord[3*i+1]+rave[1], testcoord[3*i+2]+rave[2]);
 				}
 			}
 

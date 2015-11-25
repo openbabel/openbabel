@@ -21,3 +21,4 @@ system.
 * obrotamer   Generate random rotamer/conformer coordinates
 * obrotate    Rotate dihedral angles defined by particular SMARTS patterns
 * obspectrophore Generate spectrophores
+* obthermo    Extract thermochemistry data from quantum chemistry calculations

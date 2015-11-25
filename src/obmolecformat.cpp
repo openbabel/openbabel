@@ -31,8 +31,8 @@ namespace OpenBabel
 
   bool OBMoleculeFormat::ReadChemObjectImpl(OBConversion* pConv, OBFormat* pFormat)
   {
-    std::istream &ifs = *pConv->GetInStream();
-    if (!ifs.good())
+    std::istream *ifs = pConv->GetInStream();
+    if (!ifs || !ifs->good())
       return false;
 
     OBMol* pmol = new OBMol;

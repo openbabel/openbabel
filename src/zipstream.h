@@ -210,6 +210,7 @@ private:
     byte_vector_type    _input_buffer;
     char_vector_type    _buffer;
     unsigned long       _crc;
+    unsigned long       _unzipped_component_bytes; //keep track of bytes that were in separately zipped sections for seeking purposes
 };
 
 //*****************************************************************************

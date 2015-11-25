@@ -95,9 +95,16 @@ namespace OpenBabel
     OBAtom *atom;
 
     // If parameters have not yet been loaded, do that
-    if (!_ionizations[1][0] != hi_0)
-      if (!ParseParamFile())
+    if (!_paramFileLoaded)
+    {
+      if (ParseParamFile())
+      {
+        _paramFileLoaded = true;
+      } else
+      {
         return false;
+      }
+    }
 
     // Calculate atomic properties based around their ionic charge
     for (i = 0; i < N; i++)

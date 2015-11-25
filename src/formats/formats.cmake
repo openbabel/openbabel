@@ -47,6 +47,9 @@ if(MSVC OR HAVE_REGEX_H)
   set(formats_compchem
       ${formats_compchem} gamessukformat
   )
+  set(formats_compchem
+      ${formats_compchem} orcaformat
+  )  
 endif(MSVC OR HAVE_REGEX_H)
 
 set(formats_misc
@@ -71,6 +74,7 @@ set(formats_misc
       crkformat
       cssrformat
       dlpolyformat
+      exyzformat      
       fastsearchformat
       fastaformat
       featformat

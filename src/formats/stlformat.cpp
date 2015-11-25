@@ -1,7 +1,7 @@
 //
 // STL Plugin for Open Babel
-// Copyright (C) 2015 M J Harvey, 
-// Acellera Ltd 
+// Copyright (C) 2015 M J Harvey,
+// Acellera Ltd
 // m.j.harvey ( at ) acellera.com
 //
 // This program is free software; you can redistribute it and/or
@@ -52,9 +52,11 @@ namespace OpenBabel
       STLFormat()
       {
         OpenBabel::OBConversion::RegisterFormat( "stl", this );
+        /*
         OBConversion::RegisterOptionParam("p", this, 1, OBConversion::OUTOPTIONS);
         OBConversion::RegisterOptionParam("s", this, 1, OBConversion::OUTOPTIONS);
         OBConversion::RegisterOptionParam("c", this, 1, OBConversion::OUTOPTIONS);
+        */
       }
 
       /// Return description.
@@ -114,24 +116,24 @@ namespace OpenBabel
     }
   };
 
-  void map_sphere ( vector<Triangle> &triangles, vector3 origin, float r, uint16_t col )
+  void map_sphere ( vector<Triangle> &triangles, vector3 origin, double r, uint16_t col )
   {
     vector<vector3> points;
 
     int  longitude_steps = 144;
     int  latitude_steps  = longitude_steps / 2;
-    float theta =  ( 2*M_PI / longitude_steps );
+    double theta =  ( 2*M_PI / longitude_steps );
     int p2 = longitude_steps / 2;
     int r2 = latitude_steps / 2;
     for(int y = -r2; y < r2; ++y) {
-      float cy = cos(y*theta);
-      float cy1 = cos((y+1)*theta);
-      float sy = sin(y*theta);
-      float sy1 = sin((y+1)*theta);
+      double cy = cos(y*theta);
+      double cy1 = cos((y+1)*theta);
+      double sy = sin(y*theta);
+      double sy1 = sin((y+1)*theta);
 
       for(int i = -p2; i < p2; ++i) {
-        float ci = cos(i*theta);
-        float si = sin(i*theta);
+        double ci = cos(i*theta);
+        double si = sin(i*theta);
         points.push_back(vector3( origin[0] + r * ci*cy , origin[1] + r*sy , origin[2] + r * si*cy));
         points.push_back(vector3( origin[0] + r * ci*cy1, origin[1] + r*sy1, origin[2] + r * si*cy1));
       }
@@ -150,8 +152,8 @@ namespace OpenBabel
 
   static uint16_t stl_colour( int atomicnum ) {
     // CPK colouring
-    // STL format: 5 bits per col, bit 15 set  
-#define COL( R,G,B ) ( 0x800 | (((R)&0x1F)<<10) | (((G)&0x1F)<<5) | ((B)&0x1F) ); 
+    // STL format: 5 bits per col, bit 15 set
+#define COL( R,G,B ) ( 0x800 | (((R)&0x1F)<<10) | (((G)&0x1F)<<5) | ((B)&0x1F) );
 
     switch( atomicnum ) {
       case 1:  return COL( 0x1F, 0x1F, 0x1F ); // H, WHITE
@@ -188,12 +190,12 @@ namespace OpenBabel
       os.write( (const char*) &tok1, 1);
 
       tok1=0;
-      for( int i=0; i < 70; i++ ) { 
+      for( int i=0; i < 70; i++ ) {
         os.write( (const char*) &tok1, 1);
       }
     }
     else {
-      for( int i=0; i < 80; i++ ) { 
+      for( int i=0; i < 80; i++ ) {
         os.write( (const char*) &tok1, 1);
       }
     }
@@ -213,7 +215,7 @@ namespace OpenBabel
       //		nz /= r;
 
       //  Turns out we don't have to specify a normal
-      nx = ny = nz = 0.;
+      nx = ny = nz = 0.f;
 
       os.write( (const char*) &nx, sizeof(float) );
       os.write( (const char*) &ny, sizeof(float) );

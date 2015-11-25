@@ -21,6 +21,8 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/typer.h>
 
+#include <boost/thread/lock_guard.hpp>
+
 // private data headers with default parameters
 #include "atomtyp.h"
 #include "aromatic.h"
@@ -60,6 +62,23 @@ namespace OpenBabel
     _filename = "atomtyp.txt";
     _subdir = "data";
     _dataptr = AtomTypeData;
+  }
+
+  OBAtomTyper::OBAtomTyper(const OBAtomTyper& rhs)
+  {
+	  //need a custom copy constructor to avoid copying mutex
+	  *this = rhs;
+  }
+
+  const OBAtomTyper& OBAtomTyper::operator=(const OBAtomTyper& rhs)
+  {
+	  if(this == &rhs) return *this;
+
+	  OBGlobalDataBase::operator=(rhs);
+	  //don't actually copy data - regen if needed
+	    if (_init)
+	      Init();
+	    return *this;
   }
 
   void OBAtomTyper::ParseLine(const char *buffer)
@@ -153,6 +172,7 @@ namespace OpenBabel
 
   void OBAtomTyper::AssignTypes(OBMol &mol)
   {
+    boost::lock_guard<boost::recursive_mutex> lock(typer_mutex);
     if (!_init)
       Init();
 
@@ -197,6 +217,8 @@ namespace OpenBabel
 
   void OBAtomTyper::AssignHyb(OBMol &mol)
   {
+    boost::lock_guard<boost::recursive_mutex> lock(typer_mutex);
+
     if (!_init)
       Init();
 
@@ -225,6 +247,8 @@ namespace OpenBabel
 
   void OBAtomTyper::AssignImplicitValence(OBMol &mol, bool CanBeLessThanActual)
   {
+    boost::lock_guard<boost::recursive_mutex> lock(typer_mutex);
+
     // FF Make sure that valence has not been perceived
     if(mol.HasImplicitValencePerceived())
       return;

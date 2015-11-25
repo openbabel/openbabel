@@ -10,6 +10,7 @@ else(MINIMAL_BUILD)
         obconformer
         obenergy
         obfit
+	obfitall
         obgen
         obminimize
         obprobe
@@ -18,6 +19,7 @@ else(MINIMAL_BUILD)
         obrotate
         obsym
         obtautomer
+        obthermo
      )
   if(EIGEN3_FOUND)
     set(tools

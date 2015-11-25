@@ -124,6 +124,9 @@ public:
   ///Returns the map of the subtypes
   virtual PluginMapType& GetMap() const =0;
 
+  ///Load all plugins (formats, fingerprints, forcefields etc.)
+  static void LoadAllPlugins();
+
 protected:
   ///\brief Returns a reference to the map of the plugin types.
   /// Is a function rather than a static member variable to avoid initialization problems.
@@ -135,9 +138,6 @@ protected:
 
   ///Keep a record if all plugins have been loaded
   static int AllPluginsLoaded;
-
-  ///Load all plugins (formats, fingerprints, forcefields etc.)
-  static void LoadAllPlugins();
 
   ///Returns the map of a particular plugin type, e.g. GetMapType("fingerprints")
   static PluginMapType& GetTypeMap(const char* PluginID);
@@ -407,6 +407,7 @@ public:
   OB_STATIC_PLUGIN(DlpolyConfigFormat, theDlpolyConfigFormat)
   OB_STATIC_PLUGIN(DlpolyHISTORYFormat, theDlpolyHISTORYFormat)
   OB_STATIC_PLUGIN(DMolFormat, theDMolFormat)
+  OB_STATIC_PLUGIN(EXYZFormat, theEXYZFormat)
   OB_STATIC_PLUGIN(FASTAFormat, theFASTAFormat)
   OB_STATIC_PLUGIN(FastSearchFormat, theFastSearchFormat)
   OB_STATIC_PLUGIN(FCHKFormat, theFCHKFormat)
@@ -454,6 +455,8 @@ public:
   OB_STATIC_PLUGIN(NWChemOutputFormat, theNWChemOutputFormat)
   OB_STATIC_PLUGIN(NWChemInputFormat, theNWChemInputFormat)
   OB_STATIC_PLUGIN(OBOpenDXCubeFormat, theOpenDXCubeFormat)
+  OB_STATIC_PLUGIN(OrcaOutputFormat, theOrcaOutputFormat)
+  OB_STATIC_PLUGIN(OrcaInputFormat, theOrcaInputFormat)
   OB_STATIC_PLUGIN(OutputFormat, theOutputFormat)
   OB_STATIC_PLUGIN(PCModelFormat, thePCModelFormat)
   OB_STATIC_PLUGIN(PDBFormat, thePDBFormat)
@@ -569,6 +572,7 @@ public:
   OB_STATIC_PLUGIN(GasteigerCharges, theGasteigerCharges)
   OB_STATIC_PLUGIN(MMFF94Charges, theMMFF94Charges)
   OB_STATIC_PLUGIN(NoCharges, theNoCharges)
+  OB_STATIC_PLUGIN(FromFileCharges, theFromFileCharges)
 #ifdef HAVE_EIGEN
   OB_STATIC_PLUGIN(QEqCharges, theQEqCharges)
   OB_STATIC_PLUGIN(QTPIECharges, theQTPIECharges)
