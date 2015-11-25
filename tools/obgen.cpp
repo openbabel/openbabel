@@ -51,7 +51,7 @@ int main(int argc,char **argv)
   list<string>::iterator optff = find(argl.begin(), argl.end(), "-ff");
   if (optff != argl.end()) {
     list<string>::iterator optffarg = optff;
-    optffarg++;
+    ++optffarg;
 
     if (optffarg != argl.end()) {
       ff = *optffarg;
