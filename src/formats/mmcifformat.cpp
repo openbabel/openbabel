@@ -25,6 +25,8 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel
 {
+ static const string UNKNOWN_VALUE = "?";
+
  class mmCIFFormat : public OBMoleculeFormat
  {
  public:
@@ -813,7 +815,8 @@ namespace OpenBabel
            size_t column_idx = 0;
            while (token.type == CIFLexer::ValueToken) // Read in the Fields
              {
-             if (columns[column_idx] == CIFTagID::_symmetry_equiv_pos_as_xyz)
+             if ((columns[column_idx] == CIFTagID::_symmetry_equiv_pos_as_xyz)
+               && token.as_text.find(UNKNOWN_VALUE) == string::npos)
                space_group.AddTransform(token.as_text);
              ++ column_idx;
              if (column_idx == column_count)
