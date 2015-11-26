@@ -3556,8 +3556,6 @@ namespace OpenBabel
 
             if (atom->IsConnected(nbr))
               continue;
-            if (atom->IsHydrogen() && nbr->IsHydrogen())
-              continue;
 
             AddBond(idx1+1,idx2+1,1);
           }
@@ -3578,8 +3576,9 @@ namespace OpenBabel
     // Cleanup -- delete long bonds that exceed max valence
     OBBond *maxbond, *bond;
     double maxlength;
-    vector<OBBond*>::iterator l;
+    vector<OBBond*>::iterator l, m;
     int valCount;
+    bool changed;
     BeginModify(); //prevent needless re-perception in DeleteBond
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       {
@@ -3611,6 +3610,32 @@ namespace OpenBabel
             }
             if (!bond) // no new bonds added for this atom, just skip it
               break;
+
+            // delete bonds between hydrogens when over max valence
+            if (atom->IsHydrogen())
+              {
+                m = l;
+                changed = false;
+                for (;bond;bond = atom->NextBond(m))
+                  {
+                    if (bond->GetNbrAtom(atom)->IsHydrogen())
+                      {
+                        DeleteBond(bond);
+                        changed = true;
+                        break;
+                      }
+                  }
+                if (changed)
+                  {
+                    // bond deleted, reevaluate BOSum
+                    continue;
+                  }
+                else
+                  {
+                    // reset to first new bond
+                    bond = maxbond;
+                  }
+              }
 
             maxlength = maxbond->GetLength();
             for (bond = atom->NextBond(l);bond;bond = atom->NextBond(l))
