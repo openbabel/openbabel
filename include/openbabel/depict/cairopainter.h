@@ -2,7 +2,7 @@
 #define OB_CAIROPAINTER_H
 
 #include <openbabel/depict/painter.h>
-#include <cairo.h>
+#include "cairo.h"
 
 namespace OpenBabel
 {

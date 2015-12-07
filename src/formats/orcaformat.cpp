@@ -16,7 +16,12 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/obmolecformat.h>
+#ifdef _MSC_VER
+#include <regex>
+#else
 #include <regex.h>
+#endif
+
 #include <iomanip>
 
 #define notFound string::npos
@@ -474,7 +479,7 @@ namespace OpenBabel
         OBOrbitalData *od = new OBOrbitalData();
 
         std::vector<OBOrbital> alphaOrbitals;
-        int alphaHomo, betaHomo = 0;
+        int alphaHomo = 0, betaHomo = 0;
         for (unsigned int i = 0; i < energyEh.size(); i++) {
             if (occ[i]>0) alphaHomo++;
             OBOrbital orb;
@@ -587,7 +592,26 @@ namespace OpenBabel
 
 // small function to avoid wrong parsing
 // if there is no whitespace between the numbers in the column structure
-
+#ifdef _MSC_VER
+  string OrcaOutputFormat::checkColumns(string checkBuffer)
+  {
+    string pattern ("[0-9]-");
+    std::tr1::regex myregex;
+    std::smatch pm;
+    try {
+      myregex.assign(pattern,
+                     std::tr1::regex_constants::extended);
+      //iok = true;
+    } catch (std::tr1::regex_error ex) {
+        return (checkBuffer); // do nothing
+      //iok = false;
+    }
+    while (std::regex_search (checkBuffer,pm,myregex)) {
+        checkBuffer.insert(pm.position(0)+1, " ");
+    }
+    return (checkBuffer);
+  }
+#else
   string OrcaOutputFormat::checkColumns(string checkBuffer)
   {
       string pattern ("[0-9]-");
@@ -601,4 +625,5 @@ namespace OpenBabel
       }
       return (checkBuffer);
   }
+#endif
 } //namespace OpenBabel

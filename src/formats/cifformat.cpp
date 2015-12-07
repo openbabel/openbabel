@@ -860,7 +860,7 @@ namespace OpenBabel
     map<ci_string,string>::const_iterator positem;
 
     map<std::string, double> lbl2ox;
-    for(map<set<ci_string>, map<ci_string, vector<string> > >::const_iterator loop=mvLoop.begin(); loop!=mvLoop.end(); loop++)
+    for(map<set<ci_string>, map<ci_string, vector<string> > >::const_iterator loop=mvLoop.begin(); loop!=mvLoop.end(); ++loop)
     {
       //if(mvBond.size()>0) break;// Only allow one bond list
       map<ci_string,vector<string> >::const_iterator pos_symbol, pos_ox_number, posdist;
@@ -879,7 +879,7 @@ namespace OpenBabel
       }
     }
 
-    for (std::vector<CIFAtom>::iterator it = mvAtom.begin() ; it != mvAtom.end(); it++)
+    for (std::vector<CIFAtom>::iterator it = mvAtom.begin() ; it != mvAtom.end(); ++it)
     {
       string label = (*it).mLabel;
 
