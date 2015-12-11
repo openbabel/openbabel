@@ -239,12 +239,6 @@ void fingerprint2::DoRings()
 			if(t1>maxring)
 				maxring=t1;
 
-			//Add the non-ring form of all ring rotations
-			int tmp = t1[0];
-			t1[0] = 0;
-			fragset.insert(t1);
-			t1[0] = tmp;
-
 			//reverse the direction around ring
 			vector<int> t2(t1);
 			reverse(t2.begin()+1, t2.end());
