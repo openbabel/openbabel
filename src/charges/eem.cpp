@@ -305,7 +305,7 @@ namespace OpenBabel
   void
   EEMCharges::_luSolve(double** A, std::vector<int>& I, double* B, unsigned int dim)
   {
-    unsigned int i, k;
+    int i, k;
 
     for (i = 0; i < dim; ++i) _swapRows(B, i, I[i]);
 
