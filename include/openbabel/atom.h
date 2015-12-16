@@ -468,6 +468,8 @@ namespace OpenBabel
       bool IsPhosphateOxygen();
       //! \return Is this atom an oxygen in a sulfate (-SO3) group?
       bool IsSulfateOxygen();
+      //! \return Is this atom an oxygen in a sulfone (R1-SO2-R2) group?
+      bool IsSulfoneOxygen();
       //! \return Is this atom an oxygen in a nitro (-NO2) group?
       bool IsNitroOxygen();
       //! \return Is this atom a nitrogen in an amide (-C(=O)NR2) group?
@@ -497,9 +499,11 @@ namespace OpenBabel
       bool HasChiralitySpecified() { return(HasFlag(OB_CSTEREO_ATOM|OB_ACSTEREO_ATOM)); }
       //! \deprecated
       bool HasChiralVolume() { return(HasFlag(OB_POS_CHIRAL_ATOM|OB_NEG_CHIRAL_ATOM)); }
-      //! \return Is this atom a hydrogen-bond acceptor (receptor)?
+      //! \return Is this atom a hydrogen-bond acceptor  (considering also atom surrounding)
       bool IsHbondAcceptor();
-      //! \return Is this atom a hydrogen-bond donor?
+      //! \return Is this atom a hydrogen-bond acceptor (old function)?
+      bool IsHbondAcceptorSimple();
+            //! \return Is this atom a hydrogen-bond donor?
       bool IsHbondDonor();
       //! \return Is this a hydrogen atom attached to a hydrogen-bond donor?
       bool IsHbondDonorH();
