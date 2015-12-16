@@ -37,8 +37,8 @@ namespace OpenBabel
   class EEMCharges : public OBChargeModel
   {
   public:
-    EEMCharges(const char* ID) : OBChargeModel(ID, false){};
-    const char* Description(){ return "Assign Electronegativity Equilization Method (EEM) atomic partial charges"; }
+    EEMCharges(const char* ID, std::string parameters, std::string type);
+    const char *Description(void);
 
     /// \return whether partial charges were successfully assigned to this molecule
     bool ComputeCharges(OBMol &mol);
@@ -46,6 +46,9 @@ namespace OpenBabel
     double DipoleScalingFactor() { return 1.0; } // fit from regression
 
   private:
+    std::string _description;
+    std::string _type;
+    std::string _parameters_file;
     std::vector<struct EEMParameter> _parameters;
     double _kappa;
 
@@ -57,16 +60,36 @@ namespace OpenBabel
     void _swapRows(double**, unsigned int, unsigned int, unsigned int);
   };
 
-  /////////////////////////////////////////////////////////////////
-  EEMCharges theEEMCharges("eem"); //Global instance
 
-  /////////////////////////////////////////////////////////////////
+  EEMCharges theEEMCharges_bultinck("eem", "eem.txt", "Bultinck B3LYP/6-31G*/MPA");
+  EEMCharges theEEMCharges_2015ha("eem2015ha", "eem2015ha.txt", "Cheminf HF/6-311G/AIM");
+  EEMCharges theEEMCharges_2015hm("eem2015hm", "eem2015hm.txt", "Cheminf HF/6-311G/MPA");
+  EEMCharges theEEMCharges_2015hn("eem2015hn", "eem2015hn.txt", "Cheminf HF/6-311G/NPA");
+  EEMCharges theEEMCharges_2015ba("eem2015ba", "eem2015ba.txt", "Cheminf B3LYP/6-311G/AIM");
+  EEMCharges theEEMCharges_2015bm("eem2015bm", "eem2015bm.txt", "Cheminf B3LYP/6-311G/MPA");
+  EEMCharges theEEMCharges_2015bn("eem2015bn", "eem2015bn.txt", "Cheminf B3LYP/6-311G/NPA");
+
+
+  EEMCharges::EEMCharges(const char* ID, std::string parameters, std::string type) : OBChargeModel(ID, false)
+  {
+    _parameters_file = parameters;
+    _type = type;
+  }
+
+
+  const char *EEMCharges::Description(void)
+  {
+    _description = "Assign Electronegativity Equilization Method (EEM) atomic partial charges. ";
+    _description.append(_type);
+    return _description.c_str();
+  }
+
 
   void EEMCharges::_loadParameters()
   {
     std::ifstream ifs;
-    if (!OpenDatafile(ifs, "eem.txt").length()) {
-      obErrorLog.ThrowError(__FUNCTION__, "Cannot open eem.txt", obError);
+    if (!OpenDatafile(ifs, _parameters_file).length()) {
+      obErrorLog.ThrowError(__FUNCTION__, std::string("Cannot open file with parameters: ").append(_parameters_file), obError);
       return;
     }
     std::string line;
