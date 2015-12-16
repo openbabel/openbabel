@@ -297,6 +297,18 @@ namespace OpenBabel
     return(count);
   }
 
+  int OBAtom::HighestBondOrder()
+  {
+    int highest = 0;
+    OBBond *bond;
+    OBBondIterator i;
+    for(bond = BeginBond(i); bond; bond = NextBond(i))
+      if(bond->GetBO() > highest)
+        highest = bond->GetBO();
+
+    return(highest);
+  }
+
   bool OBAtom::HasNonSingleBond()
   {
     OBBond *bond;

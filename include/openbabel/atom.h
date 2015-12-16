@@ -519,6 +519,8 @@ namespace OpenBabel
       bool HasBondOfOrder(unsigned int bo);
       //! \return The count of bonds connected to this atom with order == @p bo
       int  CountBondsOfOrder(unsigned int bo);
+      //! \return The maximum bond order for this atom
+      int  HighestBondOrder();
       //! \return Whether this atom is connected to any bond with order >1
       bool HasNonSingleBond();
       //! \return Does this atom have a single bond
