@@ -202,6 +202,12 @@ namespace OpenBabel
 
     OBChargeModel::FillChargeVectors(mol);
 
+    // Cleanup
+    for(int i = 0; i < dim; i++)
+      delete [] ETA[i];
+
+    delete [] ETA;
+
     return true;
   }
 
