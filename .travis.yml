@@ -13,7 +13,7 @@ install:
 before_script:
  - mkdir build
  - cd build
- - cmake -DPYTHON_BINDINGS=ON  -DRUN_SWIG=ON ..
+ - cmake -DCMAKE_CXX_FLAGS="-march=native -mno-avx" -DPYTHON_BINDINGS=ON  -DRUN_SWIG=ON ..
 
 script:
  - make -j2
