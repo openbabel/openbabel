@@ -541,6 +541,13 @@ virtual const char* Description() //required
       vector<string> vec;
       tokenize(vec, p);
 
+      if(vec.size() == 0)
+      {
+    	  obErrorLog.ThrowError(__FUNCTION__,
+    			  "Missing argument for -s/-S", obError);
+          return false;
+      }
+
       //ignore leading ~ (not relevant to fastsearch)
       if(vec[0][0]=='~')
         vec[0].erase(0,1);
