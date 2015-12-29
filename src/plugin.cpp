@@ -67,6 +67,9 @@ void OBPlugin::LoadAllPlugins()
     if(DLHandler::openLib(*itr))
       count++;
   }
+  if(!count) {
+    return;
+  }
 #else
   count = 1; // Avoid calling this function several times
 #endif //USING_DYNAMIC_LIBS
