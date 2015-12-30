@@ -678,7 +678,6 @@ namespace OpenBabel
       return(false);
     if (GetHvyValence() != 1)
       return(false);
-
     OBAtom *atom;
     OBBond *bond;
     OBBondIterator i;
@@ -727,6 +726,54 @@ namespace OpenBabel
     //of 2 attached free oxygens
     return(true);
   }
+
+  bool OBAtom::IsSulfoneOxygen()
+  // Stefano Forli 
+  //atom is connected to a sulfur that has a total
+  //of 2 attached free oxygens, and it's not a sulfonamide
+  //e.g. C-SO2-C
+  {
+    if (!IsOxygen())
+      return(false);
+    if (GetHvyValence() != 1){
+      //cerr << "sulfone> O valence is not 1\n";
+      return(false);
+      }
+
+    OBAtom *atom;
+    OBBond *bond1,*bond2;
+    OBBondIterator i,j;
+
+    atom = NULL;
+    // searching for attached sulfur
+    for (bond1 = BeginBond(i);bond1;bond1 = NextBond(i))
+      if ((bond1->GetNbrAtom(this))->IsSulfur())
+        { atom = bond1->GetNbrAtom(this);
+          break; }
+    if (!atom){
+      //cerr << "sulfone> atom null\n" ;
+      return(false); }
+
+    // check for sulfate
+    //cerr << "sulfone> If we're here... " << atom->GetAtomicNum() <<"\n" << atom->IsSulfur() << "\n";
+    //cerr << "sulfone> number of free oxygens:" << atom->CountFreeOxygens() << "\n";
+    if (atom->CountFreeOxygens() != 2){
+      //cerr << "sulfone> count of free oxygens not 2" << atom->CountFreeOxygens() << '\n' ;
+      return(false); }
+
+    // check for sulfonamide
+    for (bond2 = atom->BeginBond(j);bond2;bond2 = atom->NextBond(j)){
+      //cerr<<"NEIGH: " << (bond2->GetNbrAtom(atom))->GetAtomicNum()<<"\n";
+      if ((bond2->GetNbrAtom(atom))->IsNitrogen()){ 
+        //cerr << "sulfone> sulfonamide null\n" ;
+        return(false);}}
+    //cerr << "sulfone> none of the above\n";
+    return(true); // true sulfone
+  }
+
+
+
+
 
   bool OBAtom::IsNitroOxygen()
   {
@@ -1770,7 +1817,7 @@ namespace OpenBabel
   }
   */
 
-  bool OBAtom::IsHbondAcceptor()
+  bool OBAtom::IsHbondAcceptorSimple()
   {
     // Changes from Liu Zhiguo
     if (_ele == 8 || _ele == 9)
@@ -1785,6 +1832,100 @@ namespace OpenBabel
     if (_ele == 16 && GetFormalCharge() == -1)
       return true;
     return false;
+  }
+
+  // new function, Stefano Forli
+  // Incorporate ideas and data from Kubyni and others. 
+  // [1] Kubinyi, H. "Changing paradigms in drug discovery.
+  //    "SPECIAL PUBLICATION-ROYAL SOCIETY OF CHEMISTRY 304.1 (2006): 219-232.
+  //
+  // [2] Kingsbury, Charles A. "Why are the Nitro and Sulfone 
+  //     Groups Poor Hydrogen Bonders?." (2015).
+  //
+  // [3] Per Restorp, Orion B. Berryman, Aaron C. Sather, Dariush Ajami 
+  //     and Julius Rebek Jr., Chem. Commun., 2009, 5692 DOI: 10.1039/b914171e
+  //
+  // [4] Dunitz, Taylor. "Organic fluorine hardly ever accepts
+  //     hydrogen bonds." Chemistry-A European Journal 3.1 (1997): 83-92.
+  //
+  // This function has a finer grain than the original
+  // implementation, checking also the neighbor atoms. 
+  // Accordingly to these rules, the function will return:
+  //
+  //    aliph-O-aliph ether   -> true   [1]
+  //    hydroxy O-sp3         -> true   [1]
+  //    aro-O-aliph ether     -> true   [1]
+  //    ester O-sp2           -> true   [1]
+  //    sulfate O (R-SO3)     -> true   [2]
+  //    sulfoxyde O (R-SO-R)  -> true   [2]
+  //    organoboron-F (R-BF3) -> true   [3]
+  //    ester O-sp3           -> false  [1]
+  //    sulfone (R1-SO2-R2 )  -> false  [2]
+  //    aro-O-aro             -> false  [1]
+  //    aromatic O            -> false  [1]
+  //    O-nitro               -> false  [2]
+  //    organic F (R-F)       -> false  [4]
+  //    
+  bool OBAtom::IsHbondAcceptor() {
+      if (_ele == 8) {
+        // oxygen; this should likely be a separate function
+        // something like IsHbondAcceptorOxygen()
+        unsigned int aroCount = 0;
+        OBAtom *nbr;
+        OBBond *bond;
+        OBBondIterator i;
+        if (IsNitroOxygen()){ // maybe could be a bool option in the function?
+          return (false);
+          }
+        if (IsAromatic()){ // aromatic oxygen (furan) (NO)
+          return(false);
+          }
+        if (IsSulfoneOxygen()){ // sulfone (NO)
+          return(false);
+          }
+        FOR_NBORS_OF_ATOM(nbr, this){
+          if (nbr->IsAromatic()){ 
+            aroCount += 1;
+            if (aroCount == 2){ // aromatic ether (aro-O-aro) (NO)
+              return(false); 
+            }
+          }
+          else { 
+            if (nbr->IsHydrogen()) { // hydroxyl (YES)
+              return(true); 
+            }
+            else {
+              bond = nbr->GetBond(this);
+              if ( (bond->IsEster()) && (!(IsCarboxylOxygen()))) 
+                 return(false); 
+            }
+          }
+        }
+        return(true); // any other oxygen
+    } // oxygen END
+    // fluorine
+    if (_ele == 9 ) {
+        OBAtom *nbr; 
+        OBBond *bond;
+        OBBondIterator i;
+        // organic fluorine (NO)
+        for (nbr = BeginNbrAtom(i);nbr;nbr=NextNbrAtom(i))
+          if (nbr->GetAtomicNum() == 6)
+            return (false);
+        else
+            return (true);
+    };
+    if (_ele == 7) {
+      // N+ ions and sp2 hybrid N with 3 valences should not be Hbond acceptors
+      if (!((GetValence() == 4 && GetHyb() == 3)
+        || (GetValence() == 3 && GetHyb() == 2)))
+        return true;
+    };
+    // Changes from Paolo Tosco
+    if (_ele == 16 && GetFormalCharge() == -1){
+          return (true); }
+    // everything else
+    return (false);
   }
 
   bool OBAtom::IsHbondDonor()
