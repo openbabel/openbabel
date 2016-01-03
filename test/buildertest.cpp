@@ -69,7 +69,7 @@ bool doMultiMoleculeFile(const std::string &filename)
   OBFormat *format = conv.FormatFromExt(file.c_str());
   OB_REQUIRE(format);
   OB_REQUIRE(conv.SetInFormat(format));
- 
+
   bool result = true;
   while (conv.Read(&mol, &ifs)) {
     bool res = doBuildMoleculeTest(mol);
@@ -95,14 +95,14 @@ bool doSMILESBuilderTest(string smiles)
   OB_REQUIRE(conv.ReadString(&mol, smiles));
 
   OBBuilder builder;
-  OB_REQUIRE(builder.Build(mol));
+  OB_REQUIRE(builder.Build(mol, false)); // some stereo errors are known
   return mol.Has3D();
 }
 
 int buildertest(int argc, char* argv[])
 {
   int defaultchoice = 1;
-  
+
   int choice = defaultchoice;
 
   if (argc > 1) {
@@ -117,7 +117,7 @@ int buildertest(int argc, char* argv[])
     char env[BUFF_SIZE];
     snprintf(env, BUFF_SIZE, "BABEL_LIBDIR=%s", FORMATDIR);
     putenv(env);
-  #endif  
+  #endif
 
 
 
@@ -154,4 +154,3 @@ int buildertest(int argc, char* argv[])
 
   return 0;
 }
-
