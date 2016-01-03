@@ -16,6 +16,9 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
+#include <string>
+#include <vector>
+
 #include <openbabel/babelconfig.h>
 #include <openbabel/chargemodel.h>
 #include <openbabel/mol.h>
@@ -24,11 +27,18 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
+  struct EEMParameter {
+    int Z;
+    int bond_order;
+    double A;
+    double B;
+  };
+
   class EEMCharges : public OBChargeModel
   {
   public:
-    EEMCharges(const char* ID) : OBChargeModel(ID, false){};
-    const char* Description(){ return "Assign Electronegativity Equilization Method (EEM) atomic partial charges"; }
+    EEMCharges(const char* ID, std::string parameters, std::string type);
+    const char *Description(void);
 
     /// \return whether partial charges were successfully assigned to this molecule
     bool ComputeCharges(OBMol &mol);
@@ -36,6 +46,13 @@ namespace OpenBabel
     double DipoleScalingFactor() { return 1.0; } // fit from regression
 
   private:
+    std::string _description;
+    std::string _type;
+    std::string _parameters_file;
+    std::vector<struct EEMParameter> _parameters;
+    double _kappa;
+
+    void _loadParameters();
     void _solveMatrix(double**, double*, unsigned int);
     void _luDecompose(double**, std::vector<int>&, unsigned int);
     void _luSolve(double**, std::vector<int>&, double*, unsigned int);
@@ -43,14 +60,62 @@ namespace OpenBabel
     void _swapRows(double**, unsigned int, unsigned int, unsigned int);
   };
 
-  /////////////////////////////////////////////////////////////////
-  EEMCharges theEEMCharges("eem"); //Global instance
 
-  /////////////////////////////////////////////////////////////////
+  EEMCharges theEEMCharges_bultinck("eem", "eem.txt", "Bultinck B3LYP/6-31G*/MPA");
+  EEMCharges theEEMCharges_2015ha("eem2015ha", "eem2015ha.txt", "Cheminf HF/6-311G/AIM");
+  EEMCharges theEEMCharges_2015hm("eem2015hm", "eem2015hm.txt", "Cheminf HF/6-311G/MPA");
+  EEMCharges theEEMCharges_2015hn("eem2015hn", "eem2015hn.txt", "Cheminf HF/6-311G/NPA");
+  EEMCharges theEEMCharges_2015ba("eem2015ba", "eem2015ba.txt", "Cheminf B3LYP/6-311G/AIM");
+  EEMCharges theEEMCharges_2015bm("eem2015bm", "eem2015bm.txt", "Cheminf B3LYP/6-311G/MPA");
+  EEMCharges theEEMCharges_2015bn("eem2015bn", "eem2015bn.txt", "Cheminf B3LYP/6-311G/NPA");
+
+
+  EEMCharges::EEMCharges(const char* ID, std::string parameters, std::string type) : OBChargeModel(ID, false)
+  {
+    _parameters_file = parameters;
+    _type = type;
+  }
+
+
+  const char *EEMCharges::Description(void)
+  {
+    _description = "Assign Electronegativity Equilization Method (EEM) atomic partial charges. ";
+    _description.append(_type);
+    return _description.c_str();
+  }
+
+
+  void EEMCharges::_loadParameters()
+  {
+    std::ifstream ifs;
+    if (!OpenDatafile(ifs, _parameters_file).length()) {
+      obErrorLog.ThrowError(__FUNCTION__, std::string("Cannot open file with parameters: ").append(_parameters_file), obError);
+      return;
+    }
+    std::string line;
+    std::getline(ifs, line);
+    std::stringstream ss(line);
+    std::string dummy;
+    ss >> dummy >>_kappa;
+    while(std::getline(ifs, line)) {
+      ss.str(line);
+      ss.clear();
+      std::string symbol;
+      std::string bond_order;
+      struct EEMParameter parameter;
+      ss >> symbol >> bond_order >> parameter.A >> parameter.B;
+      parameter.Z = symbol == "*" ? -1 : etab.GetAtomicNum(symbol.c_str());
+      parameter.bond_order = bond_order == "*" ? -1 : std::atoi(bond_order.c_str());
+      _parameters.push_back(parameter);
+    }
+  }
 
   bool EEMCharges::ComputeCharges(OBMol &mol)
   {
     mol.SetPartialChargesPerceived();
+
+    if(_parameters.empty())
+      _loadParameters();
 
     // Copied from spectrophore.cpp
     // CHI and ETA
@@ -64,109 +129,41 @@ namespace OpenBabel
       }
     double totalCharge(0.0);
     unsigned int i(0);
-    unsigned int n;
     double hardness;
     double electronegativity;
-    for (OpenBabel::OBMolAtomIter atom(mol); atom; ++atom)
-      {
-        n = (unsigned int) atom->GetAtomicNum();
-        switch (n) // this should move to a parameter file
-          {
-          case 1:  // H
-            hardness = 0.65971;
-            electronegativity = 0.20606;
-            break;
-          case 3:  // Li
-            hardness = 0.32966;
-            electronegativity = 0.36237;
-            break;
-          case 5:  // B
-            hardness = 0.32966;
-            electronegativity = 0.36237;
-            break;
-          case 6:  // C
-            hardness = 0.32966;
-            electronegativity = 0.36237;
-            break;
-          case 7:  // N
-            hardness = 0.34519;
-            electronegativity = 0.49279;
-            break;
-          case 8:  // O
-            hardness = 0.54428;
-            electronegativity = 0.73013;
-            break;
-          case 9:  // F
-            hardness = 0.72664;
-            electronegativity = 0.72052;
-            break;
-          case 11: // Na
-            hardness = 0.32966;
-            electronegativity = 0.36237;
-            break;
-          case 12: // Mg
-            hardness = 0.32966;
-            electronegativity = 0.36237;
-            break;
-          case 14: // Si
-            hardness = 0.32966;
-            electronegativity = 0.36237;
-            break;
-          case 15: // P
-            hardness = 0.32966;
-            electronegativity = 0.36237;
-            break;
-          case 16: // S
-            hardness = 0.20640;
-            electronegativity = 0.62020;
-            break;
-          case 17: // Cl
-            hardness = 0.32966;
-            electronegativity = 0.36237;
-            break;
-          case 19: // K
-            hardness = 0.32966;
-            electronegativity = 0.36237;
-            break;
-          case 20: // Ca
-            hardness = 0.32966;
-            electronegativity = 0.36237;
-            break;
-          case 26: // Fe
-            hardness = 0.32966;
-            electronegativity = 0.36237;
-            break;
-          case 29: // Cu
-            hardness = 0.32966;
-            electronegativity = 0.36237;
-            break;
-          case 30: // Zn
-            hardness = 0.32966;
-            electronegativity = 0.36237;
-            break;
-          case 35: // Br
-            hardness = 0.54554;
-            electronegativity = 0.70052;
-            break;
-          case 53: // I
-            hardness = 0.30664;
-            electronegativity = 0.68052;
-            break;
-          default:
-            hardness = 0.65971;
-            electronegativity = 0.20606;
-            break;
-          }
+    for (OpenBabel::OBMolAtomIter atom(mol); atom; atom++, i++) {
 
-        CHI[i] = -electronegativity;
-        ETA[i][i] = 2.0 * hardness;
+      int n = atom->GetAtomicNum();
+      int b = atom->HighestBondOrder();
 
-        // Adjust the total molecular charge
-        totalCharge += atom->GetFormalCharge();
+      // Search for parameters for a particular atom type
+      bool found = false;
+      for(int j = 0; j < _parameters.size(); j++) {
+        if((_parameters[j].Z == n && _parameters[j].bond_order == b) ||
+            (_parameters[j].Z == n && _parameters[j].bond_order == - 1) ||
+            (_parameters[j].Z == -1 && _parameters[j].bond_order == -1)) {
 
-        // Increment
-        ++i;
+          electronegativity = _parameters[j].A;
+          hardness = _parameters[j].B;
+          found = true;
+          break;
+        }
       }
+
+      if(!found) {
+        std::stringstream ss;
+        ss << "No parameters found for: " << etab.GetSymbol(n) << " " << b
+           << ". EEM charges were not calculated for the molecule." << std::endl;
+        obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
+        return false;
+      }
+
+      CHI[i] = -electronegativity;
+      ETA[i][i] = hardness;
+
+      // Adjust the total molecular charge
+      totalCharge += atom->GetFormalCharge();
+    }
 
     // Complete CHI
     CHI[_nAtoms] = totalCharge;
@@ -179,7 +176,7 @@ namespace OpenBabel
         for (unsigned int c = r + 1; c < _nAtoms; ++c)
           {
             cAtom = mol.GetAtom(c+1); // Atom index
-            ETA[r][c] = 0.529176 / cAtom->GetDistance(rAtom);     // 0.529176: Angstrom to au
+            ETA[r][c] = _kappa / cAtom->GetDistance(rAtom);
             ETA[c][r] = ETA[r][c];
           }
       }
@@ -201,6 +198,12 @@ namespace OpenBabel
       }
 
     OBChargeModel::FillChargeVectors(mol);
+
+    // Cleanup
+    for(int i = 0; i < dim; i++)
+      delete [] ETA[i];
+
+    delete [] ETA;
 
     return true;
   }
@@ -299,7 +302,7 @@ namespace OpenBabel
   void
   EEMCharges::_luSolve(double** A, std::vector<int>& I, double* B, unsigned int dim)
   {
-    unsigned int i, k;
+    int i, k;
 
     for (i = 0; i < dim; ++i) _swapRows(B, i, I[i]);
 
