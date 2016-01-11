@@ -631,9 +631,10 @@ namespace OpenBabel
 
                if (atom_type_tag != CIFTagID::_atom_site_label)
                  break;
-               // Else remove digits and drop through to _atom_site_type_symbol
-               token.as_text.erase(remove_if(token.as_text.begin(), token.as_text.end(), ::isdigit),
-                                   token.as_text.end());
+               // Else remove everything starting from the first digit
+               // and drop through to _atom_site_type_symbol
+               if(string::npos != token.as_text.find_first_of("0123456789"))
+                 {token.as_text.erase(token.as_text.find_first_of("0123456789"), token.as_text.size());}
              case CIFTagID::_atom_site_type_symbol:
                // Problem: posat->mSymbol is not guaranteed to actually be a 
                // symbol see http://www.iucr.org/iucr-top/cif/cifdic_html/1/cif_core.dic/Iatom_type_symbol.html
