@@ -220,7 +220,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
             // check atomic number
             if ((i>=natoms) || (molecule->GetAtom(i+1)->GetAtomicNum() != atoi(vs[2].c_str())))
             {
-                delete coordinates;
+                delete[] coordinates;
                 return;
             }
             coordinates[i*3] = x;
@@ -233,7 +233,10 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
         tokenize(vs,buffer);
     }
     if ((from_scratch)||(i != natoms))
+      {
+        delete[] coordinates;
         return;
+      }
     molecule->AddConformer(coordinates);
   }
 
