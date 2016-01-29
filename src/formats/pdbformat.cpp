@@ -66,6 +66,7 @@ namespace OpenBabel
 
   ////////////////////////////////////////////////////
   /// Utility functions
+  static void fixRhombohedralSpaceGroup(string &strHM);
   static bool parseAtomRecord(char *buffer, OBMol & mol, int chainNum);
   static bool parseConectRecord(char *buffer, OBMol & mol);
   static bool readIntegerFromRecord(char *buffer, unsigned int columnAsSpecifiedInPDB, long int *target);
@@ -734,6 +735,24 @@ namespace OpenBabel
   }
 
   ////////////////////////////////////////////////////////////////
+  static void fixRhombohedralSpaceGroup(string &strHM)
+  {
+    /* Requirment of PDB to name rhombohedral groups starting with H 
+       (http://deposit.rcsb.org/adit/docs/pdb_atom_format.html) */
+
+    const int SIZE = 7;
+    const string groups[SIZE]  =   {"R 3 :H",
+                                    "R -3 :H",
+                                    "R 3 2 :H",
+                                    "R 3 m :H",
+                                    "R 3 c :H",
+                                    "R -3 m :H",
+                                    "R -3 c :H"};
+
+    if (std::find(groups, groups+SIZE, strHM))
+      strHM[0] = 'H';
+  }
+
   static bool parseAtomRecord(char *buffer, OBMol &mol,int /*chainNum*/)
   /* ATOMFORMAT "(i5,1x,a4,a1,a3,1x,a1,i4,a1,3x,3f8.3,2f6.2,a2,a2)" */
   {
