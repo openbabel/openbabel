@@ -508,9 +508,10 @@ namespace OpenBabel
      * Setup this rotor list for the supplied molecule. This method calls
      * FindRotors(), SetEvalAtoms(), and AssignTorVals().
      * @param mol The molecule.
+     * @param ignoreRings Whether to sample ring conformers - default = true
      * @return True if rotatable bonds were found.
      */
-    bool Setup(OBMol &mol);
+    bool Setup(OBMol &mol, bool ignoreRings = true);
     /**
      * Set the bonds that will be fixed.
      */
@@ -542,15 +543,16 @@ namespace OpenBabel
     /**
      * Find all potentially rotatable bonds in the molecule. This method uses
      * OBBond::IsRotor() for initial evaluation which depends on ring perception
-     * (i.e. ring bonds are not rotatable). Fixed bonds, specified using the
+     * (i.e. ring bonds are considered rotatable). Fixed bonds, specified using the
      * deprecated fixed atoms or the new fixed bonds methods are not added to
      * the list. All rotatable bonds will be sorted by their graph theoretical
      * distance (GTD) score (see OBMol::GetGTDVector()). This results in the
      * the rotors going from the inside to the outside of the mol.
      * @param mol The molecule.
+     * @param ignoreRingBonds whether to ignore ring bonds from analysis (default = true)
      * @return True.
      */
-    bool FindRotors(OBMol &mol);
+    bool FindRotors(OBMol &mol, bool ignoreRingBonds = true);
     //! Determines which atoms should be used to calculate the internal energy
     //! if the dihedral angle of the rotor is modified
     //! \return True

@@ -43,11 +43,11 @@ namespace OpenBabel
   //**** OBRotorList Member Functions ****
   //**************************************
 
-  bool OBRotorList::Setup(OBMol &mol)
+  bool OBRotorList::Setup(OBMol &mol, bool ignoreRingBonds)
   {
     Clear();
     // find the rotatable bonds
-    FindRotors(mol);
+    FindRotors(mol, ignoreRingBonds);
     if (!Size())
       return(false);
 
@@ -75,7 +75,7 @@ namespace OpenBabel
     return(true);
   }
 
-  bool OBRotorList::FindRotors(OBMol &mol)
+  bool OBRotorList::FindRotors(OBMol &mol, bool ignoreRingBonds)
   {
     // Find ring atoms & bonds
     // This function will set OBBond::IsRotor().
@@ -105,7 +105,11 @@ namespace OpenBabel
           continue;
 
         if (bond->IsInRing()) {
-          _ringRotors = true; // just know if we're dealing with this
+          if (ignoreRingBonds)
+            continue; // ignore it
+
+          //otherwise mark that we have them and add it to the pile
+          _ringRotors = true;
         }
 
         int score = gtd[bond->GetBeginAtomIdx()-1] + gtd[bond->GetEndAtomIdx()-1];
@@ -492,6 +496,9 @@ namespace OpenBabel
     vector<OBRing*>::iterator i;
 
     OBMol *mol = _bond->GetParent();
+
+    if (mol == NULL)
+      return; // nothing to do
 
     rlist = mol->GetSSSR();
     for (i = rlist.begin();i != rlist.end();++i) {
