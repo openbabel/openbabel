@@ -87,7 +87,7 @@ namespace OpenBabel
     random number generator obRand, or uses the system number
     generator with a time seed if obRand == NULL.
 
-    @param obRandP random number generator to use, or NULL, if the
+    @param obRandP random number generator to use, or NULL, if a singleton
     system random number generator (with time seed) should be used
   */
   void vector3::randomUnitVector(OBRandom *obRandP)
@@ -95,7 +95,8 @@ namespace OpenBabel
     OBRandom *ptr;
     if (!obRandP)
       {
-        ptr = new OBRandom(true);
+    	static OBRandom singleRand(true);
+        ptr = &singleRand;
         ptr->TimeSeed();
       }
     else
@@ -111,9 +112,6 @@ namespace OpenBabel
       }
     while ( (l > 1.0) || (l < 1e-4) );
     this->normalize();
-
-    if (!obRandP)
-      delete ptr;
   }
 
   OBAPI ostream& operator<< ( ostream& co, const vector3& v )

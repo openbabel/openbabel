@@ -71,7 +71,7 @@ namespace OpenBabel
     double Lap()
     {
       stop= clock();
-      return((stop - start) / CLOCKS_PER_SEC);
+      return((stop - start) / (double) CLOCKS_PER_SEC);
     }
 #else
     //! Mark the start of "stopwatch" timing

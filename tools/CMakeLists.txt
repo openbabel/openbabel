@@ -18,6 +18,7 @@ else(MINIMAL_BUILD)
         obrotate
         obsym
         obtautomer
+        obthermo
      )
   if(EIGEN3_FOUND)
     set(tools

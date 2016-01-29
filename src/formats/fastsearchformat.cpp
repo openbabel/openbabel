@@ -481,12 +481,10 @@ virtual const char* Description() //required
       {
         clog << " Estimated completion time ";
         double secs = sw.Elapsed() * nmols / 400; //
-        streamsize op = clog.precision(0);
         if(secs>150)
           clog << secs/60 << " minutes" << endl;
     else
           clog << secs << " seconds" << endl;
-        clog.precision(op);
       }
     }
     else
@@ -542,6 +540,13 @@ virtual const char* Description() //required
     {
       vector<string> vec;
       tokenize(vec, p);
+
+      if(vec.size() == 0)
+      {
+    	  obErrorLog.ThrowError(__FUNCTION__,
+    			  "Missing argument for -s/-S", obError);
+          return false;
+      }
 
       //ignore leading ~ (not relevant to fastsearch)
       if(vec[0][0]=='~')

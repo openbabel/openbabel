@@ -890,7 +890,23 @@ namespace OpenBabel
 
   void ob_make_rmat(double a[3][3],double rmat[9])
   {
-    double onorm, dnorm;
+  	/*
+  	onorm, dnorm - hold the sum of diagonals and off diagonals to check Jacobi completion
+  	d[3] - holds the diagonals of the input vector, which transofrm to become the Eigenvalues
+  	r1, r2 - hold 1st two Eigenvectors
+  	v1,v2,v3 - hold orthogonal unit vectors derived from Eigenvectors
+  	
+  	The junction performs a Jacobi Eigenvalue/vector determination 
+  	(https://en.wikipedia.org/wiki/Jacobi_eigenvalue_algorithm) on the supplied
+  	Inertial Tensor in a, and returns a unit transform matrix rmat as a row matrix.
+  	To work, a must be diagonally symmetric (i.e a[i][j] = a[j][i])
+  	v starts out holding the unit matrix (i.e. no transform in co-ordinate frame), 
+  	and undergoes the same rotations as applied to the Inertial Tensor in the Jacobi
+  	process to arrive at the new co-ordinate frame.
+  	Finally, the eigenvalues are sorted in order that the largest principal moment aligns to the 
+  	new x-axis
+  	*/
+    double onorm, dnorm; 
     double b, dma, q, t, c, s,d[3];
     double atemp, vtemp, dtemp,v[3][3];
     double r1[3],r2[3],v1[3],v2[3],v3[3];
@@ -921,6 +937,7 @@ namespace OpenBabel
           }
 
         if((onorm/dnorm) <= 1.0e-12)
+        /* Completion achieved (i.e. off-diagonals are all 0.0 within error)*/
           goto Exit_now;
         for (j = 1; j < 3; ++j)
           {
@@ -942,6 +959,7 @@ namespace OpenBabel
                     c = 1.0/(double)sqrt(t * t + 1.0);
                     s = t * c;
                     a[i][j] = 0.0;
+                    /* Perform a Jacobi rotation on the supplied matrix*/
                     for (k = 0; k <= i-1; ++k)
                       {
                         atemp = c * a[k][i] - s * a[k][j];
@@ -960,6 +978,7 @@ namespace OpenBabel
                         a[j][k] = s * a[i][k] + c * a[j][k];
                         a[i][k] = atemp;
                       }
+                      /* Rotate the reference frame */
                     for (k = 0; k < 3; ++k)
                       {
                         vtemp = c * v[k][i] - s * v[k][j];
@@ -978,6 +997,7 @@ namespace OpenBabel
 
     /* max_sweeps = l;*/
 
+/* Now sort the eigenvalues and eigenvectors*/
     for (j = 0; j < 3-1; ++j)
       {
         k = j;
@@ -1002,6 +1022,7 @@ namespace OpenBabel
           }
       }
 
+	/* Transfer the 1st two eigenvectors into r1 and r2*/
     r1[0] = v[0][0];
     r1[1] = v[1][0];
     r1[2] = v[2][0];
@@ -1009,30 +1030,37 @@ namespace OpenBabel
     r2[1] = v[1][1];
     r2[2] = v[2][1];
 
+	/* Generate the 3rd unit vector for the new co-ordinate frame by cross product of r1 and r2*/
     v3[0] =  r1[1]*r2[2] - r1[2]*r2[1];
     v3[1] = -r1[0]*r2[2] + r1[2]*r2[0];
     v3[2] =  r1[0]*r2[1] - r1[1]*r2[0];
+	/* Ensure it is normalised |v3|=1 */
     s = (double)sqrt(v3[0]*v3[0] + v3[1]*v3[1] + v3[2]*v3[2]);
     v3[0] /= s;
-    v3[0] /= s;
-    v3[0] /= s;
+    v3[1] /= s;
+    v3[2] /= s;
 
+	/* Generate the 2nd unit vector for the new co-ordinate frame by cross product of v3 and r1*/
     v2[0] =  v3[1]*r1[2] - v3[2]*r1[1];
     v2[1] = -v3[0]*r1[2] + v3[2]*r1[0];
     v2[2] =  v3[0]*r1[1] - v3[1]*r1[0];
+    /* Ensure it is normalised |v2|=1 */
     s = (double)sqrt(v2[0]*v2[0] + v2[1]*v2[1] + v2[2]*v2[2]);
     v2[0] /= s;
-    v2[0] /= s;
-    v2[0] /= s;
+    v2[1] /= s;
+    v2[2] /= s;
 
+	/* Generate the 1st unit vector for the new co-ordinate frame by cross product of v2 and v3*/
     v1[0] =  v2[1]*v3[2] - v2[2]*v3[1];
     v1[1] = -v2[0]*v3[2] + v2[2]*v3[0];
     v1[2] =  v2[0]*v3[1] - v2[1]*v3[0];
+     /* Ensure it is normalised |v1|=1 */
     s = (double)sqrt(v1[0]*v1[0] + v1[1]*v1[1] + v1[2]*v1[2]);
     v1[0] /= s;
-    v1[0] /= s;
-    v1[0] /= s;
+    v1[1] /= s;
+    v1[2] /= s;
 
+	/* Transfer to the row matrix form for the result*/
     rmat[0] = v1[0];
     rmat[1] = v1[1];
     rmat[2] = v1[2];

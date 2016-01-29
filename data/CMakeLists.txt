@@ -7,6 +7,13 @@ set(to_install
     babel_povray3.inc
     bondtyp.txt
     element.txt
+    eem.txt
+    eem2015ba.txt
+    eem2015bm.txt
+    eem2015bn.txt
+    eem2015ha.txt
+    eem2015hm.txt
+    eem2015hn.txt
     eqeqIonizations.txt
     fragments.txt
     gaff.dat

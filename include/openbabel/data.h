@@ -221,7 +221,7 @@ namespace OpenBabel
       //! \return the exact masss of the isotope
       //!   (or by default (i.e. "isotope 0") the most abundant isotope)
       double	GetExactMass(const unsigned int atomicNum,
-                           const unsigned int isotope = 0);
+                             const unsigned int isotope = 0);
     };
 
   /** \class OBAtomHOF data.h <openbabel/data.h>
@@ -235,29 +235,56 @@ namespace OpenBabel
   class OBAPI OBAtomHOF
   {
   private:
-    std::string _element,_method,_desc;
+      std::string _element,_method,_desc,_unit;
     double _T,_value;
+    int _charge;
     int _multiplicity;
 
   public:
-    OBAtomHOF(std::string element,std::string method,std::string desc,
-              double T,double value,int multiplicity)
+    /** \brief Initialize Heat of Formation for atom
+        
+     @param element The element string
+     @param charge  The formal charge of the particle (if an ion)
+     @param method  The method used for determining the value
+     @param desc    Description of the value
+     @param T       Temperature
+     @param value   The value of the property (energy)
+     @param multiplicity The multiplicity of the atomic system
+     @param unit    The (energy) unit
+    */
+    OBAtomHOF(std::string element,int charge,
+              std::string method,std::string desc,
+              double T,double value,int multiplicity,
+              std::string unit)
       {
         _element      = element;
+        _charge       = charge;
         _method       = method;
         _desc         = desc;
         _T            = T;
         _value        = value;
         _multiplicity = multiplicity;
+        _unit         = unit;
       }
 
+    /** \brief Destructor */
     ~OBAtomHOF() {}
+    /** \brief Return the chemical element */
     std::string Element() { return _element; }
+    /** \brief Return the formal charge */
+    int Charge()          { return _charge; }
+    /** \brief Return the method used for the measurement/calculation */
     std::string Method()  { return _method; }
+    /** \brief Return specification of the measurement/calculation type */
     std::string Desc()    { return _desc; }
+    /** \brief Return the temperature */
     double T()            { return _T; }
+    /** \brief Return the (energy) value */
     double Value()        { return _value; }
+    /** \brief Return the multiplicity */
     int Multiplicity()    { return _multiplicity; }
+    /** \brief Return the (energy) unit */
+    std::string Unit()    { return _unit; }
   };
 
   /** \class OBAtomicHeatOfFormationTable data.h <openbabel/data.h>
@@ -276,22 +303,35 @@ namespace OpenBabel
     std::vector<OBAtomHOF> _atomhof;
 
     public:
-
+      /** \brief Constructor */
       OBAtomicHeatOfFormationTable(void);
-      ~OBAtomicHeatOfFormationTable()
-      {
-        //delete _atomhof;
-      }
+      /** \brief Destructor */
+      ~OBAtomicHeatOfFormationTable() {}
 
       //! \return the number of elements in the Atomic Heat Of Formation table
       size_t GetSize() { return _atomhof.size(); }
 
+      /** \brief Read one line in the file and parse it 
+          @param Unnamed the line to be parsed
+      */
       void	ParseLine(const char*);
-      //! \return 1 if the contribution to the Heat of Formation for this atom
-      //!   is known at temperatures 0K and 298.15K. If 1 the values
-      //!   including all corrections are returned in the respective double variables.
-      int	GetHeatOfFormation(const char *elem,char *method,
-                                   int multiplicity,double *dhof0,double *dhof298);
+      /** \brief Extract heat of formation and entropy for an atom
+       @param elem         The chemical element we're looking for
+       @param charge       At this formal charge
+       @param method       The method used for computing/measuring
+       @param T            The temperature
+       @param dhof0        The output energy at 0K
+       @param dhof1        The output energy at T
+       @param S0T          The entropy at T (it is 0 at 0K)
+       \return 1 if the contribution to the Heat of Formation for this atom
+       is known at temperature T. If 1 the values
+       including all corrections are returned in the dhof variable.
+      */
+      int	GetHeatOfFormation(std::string elem, 
+                               int charge,
+                               std::string method,
+                               double T, double *dhof0,
+                               double *dhofT,double *S0T);
     };
 
   // class introduction in data.cpp
@@ -376,7 +416,7 @@ namespace OpenBabel
     };
 
 } // end namespace OpenBabel
-
+  
 #endif //DATA_H
 
 //! \file data.h

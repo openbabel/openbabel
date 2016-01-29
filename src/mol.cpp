@@ -1,4 +1,4 @@
-/**********************************************************************
+/********************************************************************** 
 mol.cpp - Handle molecules.
 
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
@@ -22,6 +22,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/rotamer.h>
 #include <openbabel/phmodel.h>
+#include <openbabel/atomclass.h>
 #include <openbabel/bondtyper.h>
 #include <openbabel/builder.h>
 #include <openbabel/math/matrix3x3.h>
@@ -1878,6 +1879,16 @@ namespace OpenBabel
     return (true);
   }
 
+  // Convenience function used by the DeleteHydrogens methods
+  static bool IsSuppressibleHydrogen(OBAtom *atom, OBAtomClassData *pac)
+  {
+    if (atom->GetIsotope() == 0 && atom->GetHvyValence() == 1 && atom->GetFormalCharge() == 0
+        && (pac == NULL || !pac->HasClass(atom->GetIdx())))
+      return true;
+    else
+      return false;
+  }
+
   bool OBMol::DeletePolarHydrogens()
   {
     OBAtom *atom;
@@ -1888,8 +1899,12 @@ namespace OpenBabel
                           "Ran OpenBabel::DeleteHydrogens -- polar",
                           obAuditMsg);
 
+    OBAtomClassData *pac = NULL;
+    if (this->HasData("Atom Class"))
+      pac = static_cast<OBAtomClassData*>(this->GetData("Atom Class"));
+
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if (atom->IsPolarHydrogen())
+      if (atom->IsPolarHydrogen() && IsSuppressibleHydrogen(atom, pac))
         delatoms.push_back(atom);
 
     if (delatoms.empty())
@@ -1918,8 +1933,13 @@ namespace OpenBabel
                           "Ran OpenBabel::DeleteHydrogens -- nonpolar",
                           obAuditMsg);
 
+
+    OBAtomClassData *pac = NULL;
+    if (this->HasData("Atom Class"))
+      pac = static_cast<OBAtomClassData*>(this->GetData("Atom Class"));
+
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if (atom->IsNonPolarHydrogen())
+      if (atom->IsNonPolarHydrogen() && IsSuppressibleHydrogen(atom, pac))
         delatoms.push_back(atom);
 
     if (delatoms.empty())
@@ -1958,8 +1978,12 @@ namespace OpenBabel
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::DeleteHydrogens", obAuditMsg);
 
+    OBAtomClassData *pac = NULL;
+    if (this->HasData("Atom Class"))
+      pac = static_cast<OBAtomClassData*>(this->GetData("Atom Class"));
+
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if (atom->IsHydrogen())
+      if (atom->IsHydrogen() && IsSuppressibleHydrogen(atom, pac))
         delatoms.push_back(atom);
 
     UnsetHydrogensAdded();
@@ -1998,8 +2022,12 @@ namespace OpenBabel
     vector<OBBond*>::iterator k;
     vector<OBAtom*> delatoms;
 
+    OBAtomClassData *pac = NULL;
+    if (this->HasData("Atom Class"))
+      pac = static_cast<OBAtomClassData*>(this->GetData("Atom Class"));
+
     for (nbr = atom->BeginNbrAtom(k);nbr;nbr = atom->NextNbrAtom(k))
-      if (nbr->IsHydrogen())
+      if (nbr->IsHydrogen() && IsSuppressibleHydrogen(atom, pac))
         delatoms.push_back(nbr);
 
     if (delatoms.empty())
@@ -2112,9 +2140,15 @@ namespace OpenBabel
                             "Ran OpenBabel::AddHydrogens -- nonpolar only", obAuditMsg);
 
     // Make sure we have conformers (PR#1665519)
-    if (!_vconf.empty()) {
-      BeginModify();
-      EndModify();
+    if (!_vconf.empty() && !Empty() && !_mod)
+    {
+      if(!_c) _c = _vconf[0];
+      OBAtom *atom;
+      vector<OBAtom*>::iterator i;
+      for (atom = BeginAtom(i); atom; atom = NextAtom(i))
+      {
+        atom->SetVector();
+      }
     }
 
     SetHydrogensAdded(); // This must come after EndModify() as EndModify() wipes the flags
@@ -2250,7 +2284,6 @@ namespace OpenBabel
       }
 
     DecrementMod();
-    SetConformer(0);
 
     //reset atom type and partial charge flags
     _flags &= (~(OB_PCHARGE_MOL|OB_ATOMTYPES_MOL|OB_SSSR_MOL|OB_AROMATIC_MOL));
@@ -2990,13 +3023,13 @@ namespace OpenBabel
 
   bool OBMol::AddBond(int first,int second,int order,int flags,int insertpos)
   {
-    if (first == second)
+    // Don't add the bond if it already exists
+    if (first == second || GetBond(first, second) != NULL)
       return(false);
 
     //    BeginModify();
 
-    if ((unsigned)first <= NumAtoms() && (unsigned)second <= NumAtoms()
-        && !GetBond(first, second))
+    if ((unsigned)first <= NumAtoms() && (unsigned)second <= NumAtoms())
       //atoms exist and bond doesn't
       {
         OBBond *bond = CreateBond();
@@ -3523,8 +3556,6 @@ namespace OpenBabel
 
             if (atom->IsConnected(nbr))
               continue;
-            if (atom->IsHydrogen() && nbr->IsHydrogen())
-              continue;
 
             AddBond(idx1+1,idx2+1,1);
           }
@@ -3545,8 +3576,9 @@ namespace OpenBabel
     // Cleanup -- delete long bonds that exceed max valence
     OBBond *maxbond, *bond;
     double maxlength;
-    vector<OBBond*>::iterator l;
+    vector<OBBond*>::iterator l, m;
     int valCount;
+    bool changed;
     BeginModify(); //prevent needless re-perception in DeleteBond
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       {
@@ -3579,6 +3611,32 @@ namespace OpenBabel
             if (!bond) // no new bonds added for this atom, just skip it
               break;
 
+            // delete bonds between hydrogens when over max valence
+            if (atom->IsHydrogen())
+              {
+                m = l;
+                changed = false;
+                for (;bond;bond = atom->NextBond(m))
+                  {
+                    if (bond->GetNbrAtom(atom)->IsHydrogen())
+                      {
+                        DeleteBond(bond);
+                        changed = true;
+                        break;
+                      }
+                  }
+                if (changed)
+                  {
+                    // bond deleted, reevaluate BOSum
+                    continue;
+                  }
+                else
+                  {
+                    // reset to first new bond
+                    bond = maxbond;
+                  }
+              }
+
             maxlength = maxbond->GetLength();
             for (bond = atom->NextBond(l);bond;bond = atom->NextBond(l))
               {
@@ -3600,7 +3658,8 @@ namespace OpenBabel
         _vconf.resize(_vconf.size()-1);
       }
 
-    delete [] c;
+    if (_c != NULL)
+      delete [] c;
   }
 
   /*! This method uses bond angles and geometries from current

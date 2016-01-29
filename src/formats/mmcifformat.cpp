@@ -25,6 +25,8 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel
 {
+ static const string UNKNOWN_VALUE = "?";
+
  class mmCIFFormat : public OBMoleculeFormat
  {
  public:
@@ -79,6 +81,7 @@ namespace OpenBabel
      symmetry,
      symmetry_equiv,
      space_group,
+     atom_type,
      MAX_CIFCatName
      };
    enum CIFDataName
@@ -97,6 +100,7 @@ namespace OpenBabel
      _atom_site_label_asym_id, // The unique chain id
      _atom_site_label_seq_id, // The sequence number of the residue, within the chain, e.g. 12
      _atom_site_type_symbol, // Atomic symbol, e.g. C
+     _atom_site_occupancy,
      MAX_atom_site,
      _cell_length_a, // Unit-cell length a in Angstroms
      _cell_length_b, // Unit-cell length b in Angstroms
@@ -127,6 +131,9 @@ namespace OpenBabel
      _space_group_name_Hall,
      _space_group_name_H_M_alt,
      MAX_space_group,
+     _atom_type_symbol,
+     _atom_type_oxidation_number,
+     MAX_atom_type,
      MAX_CIFDataName
      };
    char  tagname[76];
@@ -169,6 +176,7 @@ namespace OpenBabel
    { "_atom_site_cartn_y", CIFTagID::_atom_site_Cartn_y },
    { "_atom_site_cartn_z", CIFTagID::_atom_site_Cartn_z },
    { "_atom_site_type_symbol", CIFTagID::_atom_site_type_symbol },
+   { "_atom_site_occupancy", CIFTagID::_atom_site_occupancy},
    { "_atom_site_id", CIFTagID::_atom_site_label },
    { "_atom_site_label", CIFTagID::_atom_site_label },
    { "_atom_site_label_atom_id", CIFTagID::_atom_site_label_atom_id },
@@ -197,6 +205,8 @@ namespace OpenBabel
    { "_symmetry_space_group_name_hall", CIFTagID::_symmetry_space_group_name_Hall },
    { "_symmetry_space_group_name_h-m", CIFTagID::_symmetry_space_group_name_H_M },
    { "_symmetry_equiv_pos_as_xyz", CIFTagID::_symmetry_equiv_pos_as_xyz },
+   { "_atom_type_symbol", CIFTagID::_atom_type_symbol },    
+   { "_atom_type_oxidation_number",CIFTagID::_atom_type_oxidation_number },
    { "", CIFTagID::unread_CIFDataName }
    };
 
@@ -294,6 +304,8 @@ namespace OpenBabel
        catid = CIFTagID::symmetry_equiv;
      else if (tagid < CIFTagID::MAX_space_group)
        catid = CIFTagID::space_group;
+     else if (tagid < CIFTagID::MAX_atom_type)
+       catid = CIFTagID::atom_type;
      }
    return catid;
  }
@@ -495,6 +507,7 @@ namespace OpenBabel
      int use_cell = 0, use_fract = 0;
      string space_group_name("P1");
      SpaceGroup space_group;
+     std::map<string, double> atomic_charges;
      while (!finished && (token_peeked || lexer.next_token(token)))
        {
        token_peeked = false;
@@ -598,6 +611,7 @@ namespace OpenBabel
            string residue_name, atom_label, atom_mol_label, tmpSymbol;
            int atomicNum;
            OBPairData *label;
+           OBPairFloatingPoint * occup;
            while (token.type == CIFLexer::ValueToken) // Read in the Fields
              {
              if (column_idx == 0)
@@ -617,9 +631,10 @@ namespace OpenBabel
 
                if (atom_type_tag != CIFTagID::_atom_site_label)
                  break;
-               // Else remove digits and drop through to _atom_site_type_symbol
-               token.as_text.erase(remove_if(token.as_text.begin(), token.as_text.end(), ::isdigit),
-                                   token.as_text.end());
+               // Else remove everything starting from the first digit
+               // and drop through to _atom_site_type_symbol
+               if(string::npos != token.as_text.find_first_of("0123456789"))
+                 {token.as_text.erase(token.as_text.find_first_of("0123456789"), token.as_text.size());}
              case CIFTagID::_atom_site_type_symbol:
                // Problem: posat->mSymbol is not guaranteed to actually be a 
                // symbol see http://www.iucr.org/iucr-top/cif/cifdic_html/1/cif_core.dic/Iatom_type_symbol.html
@@ -753,6 +768,13 @@ namespace OpenBabel
              case CIFTagID::_atom_site_label_seq_id: // The sequence number of the residue, within the chain, e.g. 12
                residue_num = token.as_unsigned();
                break;
+             case CIFTagID::_atom_site_occupancy: // The occupancy of the site.
+               occup = new OBPairFloatingPoint;
+               occup->SetAttribute("_atom_site_occupancy");
+               occup->SetValue(token.as_number());
+               occup->SetOrigin(fileformatInput);
+               atom->SetData(occup);
+               break;
              case CIFTagID::unread_CIFDataName:
              default:
                break;
@@ -794,7 +816,8 @@ namespace OpenBabel
            size_t column_idx = 0;
            while (token.type == CIFLexer::ValueToken) // Read in the Fields
              {
-             if (columns[column_idx] == CIFTagID::_symmetry_equiv_pos_as_xyz)
+             if ((columns[column_idx] == CIFTagID::_symmetry_equiv_pos_as_xyz)
+               && token.as_text.find(UNKNOWN_VALUE) == string::npos)
                space_group.AddTransform(token.as_text);
              ++ column_idx;
              if (column_idx == column_count)
@@ -803,6 +826,30 @@ namespace OpenBabel
              }
            }
            break;
+
+         case CIFTagID::atom_type: //Atoms oxidations
+           {
+           size_t column_idx = 0;
+           string atom_label = "";
+           double charge = 0;
+           while (token.type == CIFLexer::ValueToken) // Read in the Fields
+             {
+             if (columns[column_idx] == CIFTagID::_atom_type_symbol)
+               atom_label = token.as_text;
+             if (columns[column_idx] == CIFTagID::_atom_type_oxidation_number)
+               charge = token.as_number();
+             ++ column_idx;
+             if (column_idx == column_count)
+             {  
+               atomic_charges[atom_label] = charge;
+               column_idx = 0;
+             }  
+             token_peeked = lexer.next_token(token);
+             }
+           }
+           break;
+           
+           
          case CIFTagID::unread_CIFCatName:
          default:
            while (token.type == CIFLexer::ValueToken) // Eat the values, we don't want them
@@ -917,6 +964,23 @@ namespace OpenBabel
              }
            }
          }
+       for (OBAtomIterator atom_x = pmol->BeginAtoms(), atom_y = pmol->EndAtoms(); atom_x != atom_y; ++atom_x )
+       {
+         OBAtom * atom = (* atom_x);
+         OBPairData * pd = dynamic_cast<OBPairData *>( atom->GetData( "_atom_site_label" ) );
+         if ( pd != NULL )
+         {
+           if( atomic_charges.count( pd->GetValue() ) > 0 )
+           {
+               OBPairFloatingPoint * charge_obd = new OBPairFloatingPoint;
+               charge_obd->SetAttribute("input_charge");
+               charge_obd->SetValue(atomic_charges[pd->GetValue()] );
+               charge_obd->SetOrigin(fileformatInput);
+               atom->SetData(charge_obd);
+           }  
+         }  
+       }
+       
        if (!pConv->IsOption("b",OBConversion::INOPTIONS))
          {
          pmol->ConnectTheDots();
