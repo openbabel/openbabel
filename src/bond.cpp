@@ -62,6 +62,7 @@ namespace OpenBabel
     _bgn=NULL;
     _end=NULL;
     _vdata.clear();
+    _parent=(OBMol*)NULL;
   }
 
   OBBond::~OBBond()
@@ -175,9 +176,23 @@ namespace OpenBabel
 
   bool OBBond::IsRotor()
   {
-    return(_bgn->GetHvyValence() > 1 && _end->GetHvyValence() > 1 &&
-           _order == 1 && !IsInRing() && _bgn->GetHyb() != 1 &&
-           _end->GetHyb() != 1);
+    // This could be one hellish conditional, but let's break it down
+    // .. the bond is a single bond
+    bool rotatable = (_order == 1);
+
+    // not in a ring, or a large ring
+    // and if it's a ring, not sp2
+    OBRing *ring = FindSmallestRing();
+    rotatable = rotatable && ((ring == NULL || ring->Size() > 3)
+                              && (_bgn->GetHyb() != 2 && _end->GetHyb() != 2));
+    // atoms are not sp hybrids
+    rotatable = rotatable && (_bgn->GetHyb() != 1 && _end->GetHyb() != 1);
+    // not just an -OH or -NH2, etc.
+    // maybe we want to add this as an option
+    //    rotatable = rotatable && ((_bgn->IsHeteroatom() || _bgn->GetHvyValence() > 1)
+    //                               && (_end->IsHeteroatom() || _end->GetHvyValence() > 1) );
+    rotatable = rotatable && (_bgn->GetHvyValence() > 1 && _end->GetHvyValence() > 1);
+    return rotatable;
   }
 
    bool OBBond::IsAmide()
@@ -694,7 +709,7 @@ namespace OpenBabel
     OBMol *mol = (OBMol*)GetParent();
     if (!mol)
       return false;
-    if (!mol->HasClosureBondsPerceived()) 
+    if (!mol->HasClosureBondsPerceived())
       mol->FindRingAtomsAndBonds();
     return HasFlag(OB_CLOSURE_BOND);
   }
