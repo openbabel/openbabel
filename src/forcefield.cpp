@@ -16,49 +16,6 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
-      development status:
-      - src/forcefield.cpp
-      - LineSearch(): finished
-      - SteepestDescent(): finished
-      - ConjugateGradients(): finished
-      - GenerateCoordinates():  removed, use OBBuilder
-      - SystematicRotorSearch(): finished
-      - RandomRotorSearch(): finished
-      - WeightedRotorSearch: finished
-      - DistanceGeometry(): needs matrix operations (Eigen)
-
-      Constraints:
-      - Fix Atom: working
-      - Fix Atom X: working
-      - Fix Atom Y: working
-      - Fix Atom Z: working
-      - Distance: working
-      - Angle: working
-      - Torsion: working
-      - Chirality: TODO
-
-      src/forcefields/forcefieldghemical.cpp
-      - Atom typing: finished
-      - Charges: finished
-      - Energy terms: finished
-      - Analytical gradients: finished
-      - Validation: finished
-
-      src/forcefields/forcefieldmmff94.cpp
-      - Atom typing: done.
-      - Charges: done.
-      - Energy terms: finished (small problems with SSSR
-        algorithm not finding all bridged rings)
-      - Analytical gradients: finished
-      - Validation: http://home.scarlet.be/timvdm/MMFF94_validation_output.gz
-
-      src/forcefields/forcefielduff.cpp
-      - Energy terms: finished
-      - OOP: needs validation
-      - Gradients: need OOP gradient
-      - Validation in progress...
-
-
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 
@@ -1204,7 +1161,7 @@ namespace OpenBabel
   //
   //////////////////////////////////////////////////////////////////////////////////
 
-  int OBForceField::SystematicRotorSearchInitialize(unsigned int geomSteps)
+  int OBForceField::SystematicRotorSearchInitialize(unsigned int geomSteps, bool sampleRingBonds)
   {
     if (!_validSetup)
       return 0;
@@ -1218,7 +1175,7 @@ namespace OpenBabel
 
     OBBitVec fixed = _constraints.GetFixedBitVec();
     rl.SetFixAtoms(fixed);
-    rl.Setup(_mol);
+    rl.Setup(_mol, sampleRingBonds);
     rotamers.SetBaseCoordinateSets(_mol);
     rotamers.Setup(_mol, rl);
 
@@ -1313,9 +1270,9 @@ namespace OpenBabel
     return true;
   }
 
-  void OBForceField::SystematicRotorSearch(unsigned int geomSteps)
+  void OBForceField::SystematicRotorSearch(unsigned int geomSteps, bool sampleRingBonds)
   {
-    if (SystematicRotorSearchInitialize(geomSteps))
+    if (SystematicRotorSearchInitialize(geomSteps, sampleRingBonds))
       while (SystematicRotorSearchNextConformer(geomSteps)) {}
   }
 
@@ -1462,7 +1419,8 @@ namespace OpenBabel
     return true;
   }
 
-  void OBForceField::RandomRotorSearchInitialize(unsigned int conformers, unsigned int geomSteps)
+  void OBForceField::RandomRotorSearchInitialize(unsigned int conformers, unsigned int geomSteps,
+                                                 bool sampleRingBonds)
   {
     if (!_validSetup)
       return;
@@ -1481,7 +1439,7 @@ namespace OpenBabel
 
     OBBitVec fixed = _constraints.GetFixedBitVec();
     rl.SetFixAtoms(fixed);
-    rl.Setup(_mol);
+    rl.Setup(_mol, sampleRingBonds);
     rotamers.SetBaseCoordinateSets(_mol);
     rotamers.Setup(_mol, rl);
 
@@ -1578,9 +1536,10 @@ namespace OpenBabel
     return true;
   }
 
-  void OBForceField::RandomRotorSearch(unsigned int conformers, unsigned int geomSteps)
+  void OBForceField::RandomRotorSearch(unsigned int conformers, unsigned int geomSteps,
+                                       bool sampleRingBonds)
   {
-    RandomRotorSearchInitialize(conformers, geomSteps);
+    RandomRotorSearchInitialize(conformers, geomSteps, sampleRingBonds);
     while (RandomRotorSearchNextConformer(geomSteps)) {}
   }
 
@@ -1630,7 +1589,8 @@ namespace OpenBabel
   }
 
 
-  void OBForceField::WeightedRotorSearch(unsigned int conformers, unsigned int geomSteps)
+  void OBForceField::WeightedRotorSearch(unsigned int conformers, unsigned int geomSteps,
+                                         bool sampleRingBonds)
   {
     if (!_validSetup)
       return;
@@ -1657,7 +1617,7 @@ namespace OpenBabel
 
     OBBitVec fixed = _constraints.GetFixedBitVec();
     rl.SetFixAtoms(fixed);
-    rl.Setup(_mol);
+    rl.Setup(_mol, sampleRingBonds);
     rotamers.SetBaseCoordinateSets(_mol);
     rotamers.Setup(_mol, rl);
 
