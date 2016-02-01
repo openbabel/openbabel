@@ -27,6 +27,8 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
+  std::string RemoveWhiteSpaceUnderscore(const std::string &in);
+
   /** \class SpaceGroup spacegroup.h <openbabel/math/spacegroup.h>
       \brief Handle crystallographic space group symmetry
       \since version 2.2
