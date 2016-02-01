@@ -15,6 +15,7 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/math/spacegroup.h>
 
 #include <vector>
 #include <map>
