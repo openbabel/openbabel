@@ -242,12 +242,15 @@ namespace OpenBabel
                   case '+':
                     neg = false;
                     break;
+                  case 'X':
                   case 'x':
                     m(i, 0) = (neg)? -1.: 1.;
                   break;
+                  case 'Y':
                   case 'y':
                     m(i, 1) = (neg)? -1.: 1.;
                   break;
+                  case 'Z':
                   case 'z':
                     m(i, 2) = (neg)? -1.: 1.;
                   break;
