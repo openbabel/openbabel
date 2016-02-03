@@ -31,6 +31,9 @@ MARK_AS_ADVANCED(PYTHON_EXECUTABLE)
 
 # Make sure we handle systems w/o python (e.g. chroot)
 if(NOT PYTHON_EXECUTABLE)
+  if(POLICY CMP0053)
+    cmake_policy(POP)
+  endif()
   return()
 endif(NOT PYTHON_EXECUTABLE)
 

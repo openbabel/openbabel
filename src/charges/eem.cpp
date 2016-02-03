@@ -138,7 +138,7 @@ namespace OpenBabel
 
       // Search for parameters for a particular atom type
       bool found = false;
-      for(int j = 0; j < _parameters.size(); j++) {
+      for(unsigned int j = 0; j < _parameters.size(); j++) {
         if((_parameters[j].Z == n && _parameters[j].bond_order == b) ||
             (_parameters[j].Z == n && _parameters[j].bond_order == - 1) ||
             (_parameters[j].Z == -1 && _parameters[j].bond_order == -1)) {
@@ -200,7 +200,7 @@ namespace OpenBabel
     OBChargeModel::FillChargeVectors(mol);
 
     // Cleanup
-    for(int i = 0; i < dim; i++)
+    for(unsigned int i = 0; i < dim; i++)
       delete [] ETA[i];
 
     delete [] ETA;
@@ -302,7 +302,7 @@ namespace OpenBabel
   void
   EEMCharges::_luSolve(double** A, std::vector<int>& I, double* B, unsigned int dim)
   {
-    int i, k;
+    unsigned int i, k;
 
     for (i = 0; i < dim; ++i) _swapRows(B, i, I[i]);
 
@@ -316,7 +316,7 @@ namespace OpenBabel
       }
 
     // do the backsubstitution
-    for (i = dim - 1; i >= 0; --i)
+    for (i = dim; i-- != 0; )
       {
         B[i] /= A[i][i];
         for (k = 0; k < i; ++k)

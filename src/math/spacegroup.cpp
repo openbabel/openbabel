@@ -242,12 +242,15 @@ namespace OpenBabel
                   case '+':
                     neg = false;
                     break;
+                  case 'X':
                   case 'x':
                     m(i, 0) = (neg)? -1.: 1.;
                   break;
+                  case 'Y':
                   case 'y':
                     m(i, 1) = (neg)? -1.: 1.;
                   break;
+                  case 'Z':
                   case 'z':
                     m(i, 2) = (neg)? -1.: 1.;
                   break;
@@ -342,12 +345,13 @@ namespace OpenBabel
 
   /*!
    */
-  const SpaceGroup * SpaceGroup::GetSpaceGroup (const string &name)
+  const SpaceGroup * SpaceGroup::GetSpaceGroup (const string &name_in)
   {
     if (!_SpaceGroups.Inited())
       _SpaceGroups.Init();
 
     // This needs to be more forgiving
+    string name = RemoveWhiteSpaceUnderscore(name_in);
     const SpaceGroup *match = (_SpaceGroups.sgbn.find(name)!=_SpaceGroups.sgbn.end())? _SpaceGroups.sgbn[name]: NULL;
     if (!match) {
       // Try another search, e.g. Fm-3m instead of Fm3m
