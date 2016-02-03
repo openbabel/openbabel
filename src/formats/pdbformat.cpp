@@ -15,7 +15,6 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
-#include <openbabel/math/spacegroup.h>
 
 #include <vector>
 #include <map>
@@ -67,8 +66,8 @@ namespace OpenBabel
 
   ////////////////////////////////////////////////////
   /// Utility functions
-  static void fixRhombohedralSpaceGroupReader(string &strHM);
   static void fixRhombohedralSpaceGroupWriter(string &strHM);
+  static void fixRhombohedralSpaceGroupReader(string &strHM);
   static bool parseAtomRecord(char *buffer, OBMol & mol, int chainNum);
   static bool parseConectRecord(char *buffer, OBMol & mol);
   static bool readIntegerFromRecord(char *buffer, unsigned int columnAsSpecifiedInPDB, long int *target);
@@ -744,15 +743,16 @@ namespace OpenBabel
     /* This is due to the requirment of PDB to name rhombohedral groups
        with H (http://deposit.rcsb.org/adit/docs/pdb_atom_format.html) */
     const int SIZE = 7;
-    const string groups[SIZE]  =   {"R 3 :H",
-                                    "R -3 :H",
-                                    "R 3 2 :H",
-                                    "R 3 m :H",
-                                    "R 3 c :H",
-                                    "R -3 m :H",
-                                    "R -3 c :H"};
+    const char* groups[SIZE]  =   {"R 3:H",
+                                   "R -3:H",
+                                   "R 3 2:H",
+                                   "R 3 m:H",
+                                   "R 3 c:H",
+                                   "R -3 m:H",
+                                   "R -3 c:H"};
 
-    if (find(groups, groups+SIZE, strHM))
+    std::vector<string> vec(groups, groups + SIZE);
+    if(std::find(vec.begin(), vec.end(), strHM) != vec.end())
     {
       strHM[0] = 'H';
     }
@@ -763,16 +763,17 @@ namespace OpenBabel
     /* This is due to the requirment of PDB to name rhombohedral groups
        with H (http://deposit.rcsb.org/adit/docs/pdb_atom_format.html) */
     const int SIZE = 7;
-    const string groups[SIZE]  =   {"H3",
-                                    "H-3",
-                                    "H32",
-                                    "H3m",
-                                    "H3c",
-                                    "H-3m",
-                                    "H-3c"};
+    const char* groups[SIZE]  =   {"H 3",
+                                   "H -3",
+                                   "H 3 2",
+                                   "H 3 m",
+                                   "H 3 c",
+                                   "H -3 m",
+                                   "H -3 c"};
 
-    strHM = RemoveWhiteSpaceUnderscore(strHM);
-    if (find(groups, groups+SIZE, strHM))
+    std::vector<string> vec(groups, groups + SIZE);
+
+    if(std::find(vec.begin(), vec.end(), strHM) != vec.end())
     {
       strHM[0] = 'R';
       strHM += ":H";
