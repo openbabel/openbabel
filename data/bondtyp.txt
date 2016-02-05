@@ -56,8 +56,18 @@
 # Sulfur dioxide
 [#16D2]([#8D1])([#8D1])				0 1 2 0 2 2
 
+#Phosphite
+[#15D3]([#8D1])([#8D1])([#8D2])		0 1 2 0 2 2 0 3 1
+
+#oxophosphane
+#[#15D2]([#8D1])([#1])      0 1 2 0 2 1
+
+#Nitrosyl Hydride
+[#7D2]([#8D1])([#1])		0 1 2 0 2 1
+
 # Phosphone
 [#15D4]([#8D1])(*)(*)(*)	0 1 2 0 2 1 0 3 1 0 4 1
+
 
 # Carboxylic Acid, ester, etc.
 [#6D3^2]([#8D1])([#8])*		0 1 2 0 2 1 0 3 1
@@ -79,11 +89,14 @@
 [#6^2][#6D2^1][#6^2]		0 1 2 1 2 2
 # ene-one C=C=O
 [#6^2][#6D2^1][#8D1]		0 1 2 1 2 2
+# C=C=C=C
+[#6D3][#6D2][#6D2][#6D3]        0 1 2 1 2 2 2 3 2 3 4 2  
 
 # isonitrile / isocyano
 [#6D1][#7D2^1]*  0 1 3 1 2 1
 # NR2 in ring with hybridized carbon neighbors
-[#7D2R][#6D3^2] 0 1 2
+[#7D2R][#6D3^2][#8D2] 0 1 2 1 2 1
+[#7D2R][#6D3^2][#7D2] 0 1 2 1 2 1
 
 # if three N are present in R-N-guanidine-ish, prefer double bond to the
 #  non-terminal N (i.e. D2 if present)
