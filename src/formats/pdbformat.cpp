@@ -66,6 +66,8 @@ namespace OpenBabel
 
   ////////////////////////////////////////////////////
   /// Utility functions
+  static void fixRhombohedralSpaceGroupWriter(string &strHM);
+  static void fixRhombohedralSpaceGroupReader(string &strHM);
   static bool parseAtomRecord(char *buffer, OBMol & mol, int chainNum);
   static bool parseConectRecord(char *buffer, OBMol & mol);
   static bool readIntegerFromRecord(char *buffer, unsigned int columnAsSpecifiedInPDB, long int *target);
@@ -155,6 +157,7 @@ namespace OpenBabel
           buffer[66] = '\0';
           group += &(buffer[55]);
           Trim (group);
+          fixRhombohedralSpaceGroupReader(group);
 
           OBUnitCell *pCell=new OBUnitCell;
           pCell->SetOrigin(fileformatInput);
@@ -555,6 +558,7 @@ namespace OpenBabel
         OBUnitCell *pUC = (OBUnitCell*)pmol->GetData(OBGenericDataType::UnitCell);
         if(pUC->GetSpaceGroup()){
           string tmpHM=pUC->GetSpaceGroup()->GetHMName();
+          fixRhombohedralSpaceGroupWriter(tmpHM);
           // Do we have an extended HM symbol, with origin choice as ":1" or ":2" ? If so, remove it.
           size_t n=tmpHM.find(":");
           if(n!=string::npos) tmpHM=tmpHM.substr(0,n);
@@ -734,6 +738,48 @@ namespace OpenBabel
   }
 
   ////////////////////////////////////////////////////////////////
+  static void fixRhombohedralSpaceGroupWriter(string &strHM)
+  {
+    /* This is due to the requirment of PDB to name rhombohedral groups
+       with H (http://deposit.rcsb.org/adit/docs/pdb_atom_format.html) */
+    const int SIZE = 7;
+    const char* groups[SIZE]  =   {"R 3:H",
+                                   "R -3:H",
+                                   "R 3 2:H",
+                                   "R 3 m:H",
+                                   "R 3 c:H",
+                                   "R -3 m:H",
+                                   "R -3 c:H"};
+
+    std::vector<string> vec(groups, groups + SIZE);
+    if(std::find(vec.begin(), vec.end(), strHM) != vec.end())
+    {
+      strHM[0] = 'H';
+    }
+  }
+
+  static void fixRhombohedralSpaceGroupReader(string &strHM)
+  {
+    /* This is due to the requirment of PDB to name rhombohedral groups
+       with H (http://deposit.rcsb.org/adit/docs/pdb_atom_format.html) */
+    const int SIZE = 7;
+    const char* groups[SIZE]  =   {"H 3",
+                                   "H -3",
+                                   "H 3 2",
+                                   "H 3 m",
+                                   "H 3 c",
+                                   "H -3 m",
+                                   "H -3 c"};
+
+    std::vector<string> vec(groups, groups + SIZE);
+
+    if(std::find(vec.begin(), vec.end(), strHM) != vec.end())
+    {
+      strHM[0] = 'R';
+      strHM += ":H";
+    }
+  }
+
   static bool parseAtomRecord(char *buffer, OBMol &mol,int /*chainNum*/)
   /* ATOMFORMAT "(i5,1x,a4,a1,a3,1x,a1,i4,a1,3x,3f8.3,2f6.2,a2,a2)" */
   {
