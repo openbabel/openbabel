@@ -734,6 +734,29 @@ namespace OpenBabel
   }
 
   ////////////////////////////////////////////////////////////////
+  /*
+
+     From http://deposit.rcsb.org/adit/docs/pdb_atom_format.html
+
+	COLUMNS        DATA TYPE       CONTENTS
+	--------------------------------------------------------------------------------
+	 1 -  6        Record name     "ATOM  "
+	 7 - 11        Integer         Atom serial number.
+	13 - 16        Atom            Atom name.
+	17             Character       Alternate location indicator.
+	18 - 20        Residue name    Residue name.
+	22             Character       Chain identifier.
+	23 - 26        Integer         Residue sequence number.
+	27             AChar           Code for insertion of residues.
+	31 - 38        Real(8.3)       Orthogonal coordinates for X in Angstroms.
+	39 - 46        Real(8.3)       Orthogonal coordinates for Y in Angstroms.
+	47 - 54        Real(8.3)       Orthogonal coordinates for Z in Angstroms.
+	55 - 60        Real(6.2)       Occupancy.
+	61 - 66        Real(6.2)       Temperature factor (Default = 0.0).
+	73 - 76        LString(4)      Segment identifier, left-justified.
+	77 - 78        LString(2)      Element symbol, right-justified.
+	79 - 80        LString(2)      Charge on the atom.
+  */
   static bool parseAtomRecord(char *buffer, OBMol &mol,int /*chainNum*/)
   /* ATOMFORMAT "(i5,1x,a4,a1,a3,1x,a1,i4,a1,3x,3f8.3,2f6.2,a2,a2)" */
   {
@@ -752,6 +775,10 @@ namespace OpenBabel
 
     /* chain */
     char chain = sbuf.substr(15,1)[0];
+
+    /* insertion code */
+    char insertioncode = sbuf.substr(27-6-1,1)[0];
+    if (' '==insertioncode) insertioncode=0;
 
     /* element */
     string element = "  ";
@@ -950,20 +977,25 @@ namespace OpenBabel
     if (res == NULL
         || res->GetName() != resname
         || res->GetNumString() != resnum
-        || res->GetChain() != chain)
+        || res->GetChain() != chain
+        || res->GetInsertionCode() != insertioncode)
       {
         vector<OBResidue*>::iterator ri;
         for (res = mol.BeginResidue(ri) ; res ; res = mol.NextResidue(ri))
           if (res->GetName() == resname
               && res->GetNumString() == resnum
-              && static_cast<int>(res->GetChain()) == chain)
+              && static_cast<int>(res->GetChain()) == chain
+              && static_cast<int>(res->GetInsertionCode()) == insertioncode) {
+            if (insertioncode) fprintf(stderr,"I: identified residue wrt insertion code: '%c'\n",insertioncode);
             break;
+          }
 
         if (res == NULL) {
           res = mol.NewResidue();
           res->SetChain(chain);
           res->SetName(resname);
           res->SetNum(resnum);
+          res->SetInsertionCode(insertioncode);
         }
       }
 
