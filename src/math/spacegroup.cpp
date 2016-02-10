@@ -279,7 +279,23 @@ namespace OpenBabel
 			v.z() += 1.;
 		else if (v.z() >= 1.)
 			v.z() -= 1.;
-    m_transforms.push_back (new transform3d (m, v));
+
+    // only push_back unique transformations
+    transform3dIterator i, iend = m_transforms.end();
+    transform3d* candidate = new transform3d (m, v);
+    bool transform_exists = false;
+
+    for (i = m_transforms.begin(); i!= iend; i++)
+    {
+      if (candidate->DescribeAsString() == (*i)->DescribeAsString())
+      {
+        transform_exists = true;
+        break;
+      }
+    }
+
+    if (!transform_exists)
+      m_transforms.push_back (candidate);
   }
 
   /*!
