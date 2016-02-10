@@ -481,6 +481,7 @@ namespace OpenBabel
     char the_chain = ' ';
     const char *element_name;
     int res_num;
+    char the_insertioncode = ' ';
     bool het=true;
     int model_num = 0;
     if (!pConv->IsLast() || pConv->GetOutputIndex() > 1)
@@ -654,6 +655,8 @@ namespace OpenBabel
                   }
               }
             res_num = res->GetNum();
+            the_insertioncode = res->GetInsertionCode();
+            if (0 == the_insertioncode) the_insertioncode=' ';
           }
         else
           {
@@ -663,6 +666,7 @@ namespace OpenBabel
             strncpy(type_name,padded_name,4);
             type_name[4] = '\0';
             res_num = 1;
+            the_insertioncode=' ';
           }
 
         element_name = etab.GetSymbol(atom->GetAtomicNum());
@@ -676,13 +680,14 @@ namespace OpenBabel
             scharge[1] = scharge[0];
             scharge[0] = tmp;
           }
-        snprintf(buffer, BUFF_SIZE, "%s%5d %-4s %-3s %c%4d    %8.3f%8.3f%8.3f  1.00  0.00          %2s%2s\n",
+        snprintf(buffer, BUFF_SIZE, "%s%5d %-4s %-3s %c%4d%c   %8.3f%8.3f%8.3f  1.00  0.00          %2s%2s\n",
                  het?"HETATM":"ATOM  ",
                  i,
                  type_name,
                  the_res,
                  the_chain,
                  res_num,
+                 the_insertioncode,
                  atom->GetX(),
                  atom->GetY(),
                  atom->GetZ(),
