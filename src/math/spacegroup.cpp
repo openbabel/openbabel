@@ -243,8 +243,9 @@ namespace OpenBabel
                         *t = ((double) (row[j] - '0')) / (row[j+2] - '0');
                         if (neg)
                           *t = - *t;
+
+                        j +=2;
                       }
-                    j +=2;
                     break;
                   case '-':
                     neg = true;
