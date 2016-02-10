@@ -215,6 +215,10 @@ namespace OpenBabel
                   case '3':
                   case '4':
                   case '5':
+                  case '6':
+                  case '7':
+                  case '8':
+                  case '9':
                     if (row[j+1] == '/')
                       {
                         double *t = NULL;
@@ -230,6 +234,12 @@ namespace OpenBabel
                             t = &v.z();
                             break;
                           }
+                        // Cover cases like 7/6
+                        double numerator = (double) (row[j] - '0');
+                        double denumerator = (double) (row[j+2] - '0');
+                        if (numerator > denumerator)
+                          numerator -= ((int)numerator % (int)denumerator) * denumerator;
+
                         *t = ((double) (row[j] - '0')) / (row[j+2] - '0');
                         if (neg)
                           *t = - *t;
