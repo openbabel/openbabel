@@ -17,6 +17,7 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/op.h>
 
 #include <iostream>
 #include <algorithm>
@@ -507,6 +508,7 @@ namespace OpenBabel
      int use_cell = 0, use_fract = 0;
      string space_group_name("P1");
      SpaceGroup space_group;
+     bool space_group_failed = false;
      std::map<string, double> atomic_charges;
      while (!finished && (token_peeked || lexer.next_token(token)))
        {
@@ -953,6 +955,8 @@ namespace OpenBabel
          const SpaceGroup * pSpaceGroup = SpaceGroup::Find( & space_group);
          if (pSpaceGroup)
            pCell->SetSpaceGroup(pSpaceGroup);
+         else
+           space_group_failed = true;
          pmol->SetData(pCell);
          if (use_fract)
            {
@@ -988,6 +992,26 @@ namespace OpenBabel
            pmol->PerceiveBondOrders();
          }
        }
+
+       if (space_group_failed)
+       {
+         string transformations;
+         transform3dIterator ti;
+         const transform3d *t = space_group.BeginTransform(ti);
+         while(t){
+           transformations += t->DescribeAsString() + " ";
+           t = space_group.NextTransform(ti);
+         }
+  
+         OBOp* pOp = OBOp::FindType("fillUC");
+         if (pOp)
+         {
+           map<string, string> m;
+           m.insert(pair<string, string>("transformations", transformations));
+           pOp->Do(pmol, "strict", &m);
+         }
+       }
+
      pmol->EndModify();
      }
    return (pmol->NumAtoms() > 0 ? true : false);
