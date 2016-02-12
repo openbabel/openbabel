@@ -66,7 +66,7 @@ void testSpaceGroupClean()
 
 int cifspacegrouptest(int argc, char* argv[])
 {
-  int defaultchoice = 2;
+  int defaultchoice = 1;
 
   int choice = defaultchoice;
 
