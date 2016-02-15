@@ -76,9 +76,30 @@ void testSpaceGroupClean()
   OB_ASSERT( pSG->GetId() == 166 );
 }
 
+void testSymmetryTransformations()
+{
+  // See https://github.com/openbabel/openbabel/pull/259
+  OBConversion conv;
+  OBMol mol;
+  conv.SetInFormat("cif");
+  conv.ReadFile(&mol, GetFilename("test03.cif"));
+  OBUnitCell* pUC = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
+  const SpaceGroup* pSG = pUC->GetSpaceGroup();
+  SpaceGroup* sg = new SpaceGroup(*pSG);
+  pSG = SpaceGroup::Find(sg);
+  OB_ASSERT( pSG != NULL );
+
+  // Check also for errors and warnings
+  string summary = obErrorLog.GetMessageSummary();
+  OB_ASSERT( summary.find("error") == string::npos );
+  OB_ASSERT( summary.find("warning") == string::npos );
+
+  OB_ASSERT( pSG->GetId() == 167 );
+}
+
 int cifspacegrouptest(int argc, char* argv[])
 {
-  int defaultchoice = 1;
+  int defaultchoice = 3;
 
   int choice = defaultchoice;
 
@@ -102,6 +123,9 @@ int cifspacegrouptest(int argc, char* argv[])
     break;
   case 2:
     testSpaceGroupClean();
+    break;
+  case 3:
+    testSymmetryTransformations();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
