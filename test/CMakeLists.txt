@@ -15,7 +15,7 @@ add_definitions(-DFORMATDIR="\\"${FORMATDIR}/\\"")
 
 ################ Add new tests here
 set (cpptests
-     automorphism builder canonconsistent canonstable carspacegroup
+     automorphism builder canonconsistent canonstable carspacegroup cifspacegroup
      cistrans graphsym gzip
      implicitH lssr isomorphism multicml regressions rotor shuffle smiles spectrophore
      squareplanar stereo stereoperception tautomer tetrahedral
