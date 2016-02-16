@@ -76,6 +76,20 @@ void testSpaceGroupClean()
   OB_ASSERT( pSG->GetId() == 166 );
 }
 
+void testSpaceGroupTransformations()
+{
+  // See https://github.com/openbabel/openbabel/pull/254
+  SpaceGroup space_group;
+  OB_ASSERT( pSG != NULL );
+
+  // Check also for errors and warnings
+  string summary = obErrorLog.GetMessageSummary();
+  OB_ASSERT( summary.find("error") == string::npos);
+  OB_ASSERT( summary.find("warning") == string::npos);
+
+  OB_ASSERT( pSG->GetId() == 166 );
+}
+
 int cifspacegrouptest(int argc, char* argv[])
 {
   int defaultchoice = 1;
