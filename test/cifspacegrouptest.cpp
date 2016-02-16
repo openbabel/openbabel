@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #include <openbabel/obconversion.h>
 
 #include <string>
+#include <algorithm>
 
 using namespace std;
 using namespace OpenBabel;
@@ -79,20 +80,70 @@ void testSpaceGroupClean()
 void testSpaceGroupTransformations()
 {
   // See https://github.com/openbabel/openbabel/pull/254
-  SpaceGroup space_group;
-  OB_ASSERT( pSG != NULL );
+  SpaceGroup group;
+  vector<string> trans;
+  vector<string> trans_exp;
+  vector<string> trans_got;
 
-  // Check also for errors and warnings
-  string summary = obErrorLog.GetMessageSummary();
-  OB_ASSERT( summary.find("error") == string::npos);
-  OB_ASSERT( summary.find("warning") == string::npos);
+  // Same transformation
+  trans_exp.push_back("x,y,z");
+  trans.push_back("x,y,z");
+  trans.push_back(" x , y , z ");
+  trans.push_back("x,y+1,z");
+  trans.push_back("x,y-1,z-1");
+  trans.push_back("x,y-1,z");
+  // Same transformation
+  trans_exp.push_back("x,-y,z");
+  trans.push_back("x,-y,z");
+  trans.push_back("x,1-y,z");
+  trans.push_back("x,-y+1,z");
+  // Same transformation
+  trans_exp.push_back("x,-y,-z");
+  trans.push_back("x,-y,-z");
+  trans.push_back("x,1-y,1-z");
+  trans.push_back("x,-y+1,-z+1");
+  // Same transformation
+  trans_exp.push_back("x,-y,-y-z");
+  trans.push_back("x,-y,-z-y");
+  trans.push_back("x,1-y,-y+1-z");
+  trans.push_back("x,-y+1,-y-z+1");
+  // Same transformation
+  trans_exp.push_back("x,-y,1/6-y-z");
+  trans.push_back("x,-y,-z-y+1/6");
+  trans.push_back("x,-y,-z-y+7/6");
+  trans.push_back("x,1-y,7/6-y+1-z");
+  trans.push_back("x,-y+1,-y-z+1+1/6");
+  trans.push_back("x,-y+1,-y+1/6-z+1");
+  // Same transformation
+  trans_exp.push_back("x,3/4-y+z,5/6-y-z");
+  trans.push_back("x,3/4-y+z,-1/6-z-y");
+  trans.push_back("x,-y+3/4+z,-z-y-1/6");
+  trans.push_back("x,z-y+3/4,-z-y-7/6");
+  trans.push_back("x,1+z+3/4-y,-7/6-y-z");
+  trans.push_back("X , 3 / 4 - Y + 1 + z , - Y - Z - 1 / 6 ");
+  trans.push_back("x,z-y+1+3/4,-y-1/6-z+1");
 
-  OB_ASSERT( pSG->GetId() == 166 );
+  vector<string>::const_iterator i, iend;
+  iend = trans.end();
+  for (i = trans.begin(); i != iend; ++i)
+    group.AddTransform(i->c_str());
+
+  // Loop over symmetry operators
+  transform3dIterator ti;
+  const transform3d *t = group.BeginTransform(ti);
+  while(t){
+    trans_got.push_back(t->DescribeAsString());
+    //cout << t->DescribeAsString() << "\n";
+    t = group.NextTransform(ti);
+  }
+
+  OB_ASSERT( trans_exp.size() == trans_got.size() );
+  OB_ASSERT( equal(trans_exp.begin(), trans_exp.end(), trans_got.begin()) );
 }
 
 int cifspacegrouptest(int argc, char* argv[])
 {
-  int defaultchoice = 1;
+  int defaultchoice = 3;
 
   int choice = defaultchoice;
 
@@ -116,6 +167,9 @@ int cifspacegrouptest(int argc, char* argv[])
     break;
   case 2:
     testSpaceGroupClean();
+    break;
+  case 3:
+    testSpaceGroupTransformations();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
