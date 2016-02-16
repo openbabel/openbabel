@@ -143,7 +143,7 @@ void testSpaceGroupTransformations()
 
 int cifspacegrouptest(int argc, char* argv[])
 {
-  int defaultchoice = 3;
+  int defaultchoice = 1;
 
   int choice = defaultchoice;
 
