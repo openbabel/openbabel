@@ -168,12 +168,14 @@ namespace OpenBabel
   {
     matrix3x3 m;
     vector3 v;
-    istringstream iss(s);
     locale cLocale("C");
-    iss.imbue(cLocale);
 
     if (s.find(',') != string::npos)
       {
+        string s1 = RemoveWhiteSpaceUnderscore(s);
+        istringstream iss(s1);
+        iss.imbue(cLocale);
+
         string row;
         int i;
         size_t j;
@@ -215,7 +217,11 @@ namespace OpenBabel
                   case '3':
                   case '4':
                   case '5':
-                    if (row[j+1] == '/')
+                  case '6':
+                  case '7':
+                  case '8':
+                  case '9':
+                    if (j+2 < row.length() && row[j+1] == '/')
                       {
                         double *t = NULL;
                         switch (i)
@@ -233,8 +239,9 @@ namespace OpenBabel
                         *t = ((double) (row[j] - '0')) / (row[j+2] - '0');
                         if (neg)
                           *t = - *t;
+
+                        j +=2;
                       }
-                    j +=2;
                     break;
                   case '-':
                     neg = true;
@@ -261,6 +268,8 @@ namespace OpenBabel
       }
     else if (s.find(' ') != string::npos)
       {
+        istringstream iss(s);
+        iss.imbue(cLocale);
         /* supposing the string is a list of at least 12 float values. If there are
            16, the last four are 0., 0., 0. and 1. and are not needed */
         iss >> m(0,0) >> m(0,1) >> m(0,2) >> v.x();
