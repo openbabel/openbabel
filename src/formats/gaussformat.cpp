@@ -440,8 +440,8 @@ namespace OpenBabel
     double x,y,z;
     OBAtom *atom;
     vector<string> vs,vs2;
-    int charge = 0;
-    unsigned int spin = 1;
+    int total_charge = 0;
+    unsigned int spin_multiplicity = 1;
     bool hasPartialCharges = false;
     string chargeModel; // descriptor for charges (e.g. "Mulliken")
 
@@ -576,10 +576,8 @@ namespace OpenBabel
             tokenize(vs, buffer, " \t\n");
             if (vs.size() == 6)
               {
-                charge = atoi(vs[2].c_str());
-                spin = atoi(vs[5].c_str());
-                mol.SetTotalCharge(charge);
-                mol.SetTotalSpinMultiplicity(spin);
+                total_charge = atoi(vs[2].c_str());
+                spin_multiplicity = atoi(vs[5].c_str());
               }
 
             ifs.getline(buffer,BUFF_SIZE);
@@ -1257,6 +1255,8 @@ namespace OpenBabel
       dp->SetOrigin(fileformatInput);
       mol.SetData(dp);
     }
+    mol.SetTotalCharge(total_charge);
+    mol.SetTotalSpinMultiplicity(spin_multiplicity);
 
     mol.SetTitle(title);
     return(true);
