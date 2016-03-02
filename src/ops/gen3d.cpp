@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #include <openbabel/op.h>
 #include <openbabel/mol.h>
 #include <openbabel/builder.h>
+#include <openbabel/distgeom.h>
 #include <openbabel/forcefield.h>
 
 namespace OpenBabel
@@ -50,7 +51,9 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
   // 3 is balance   (FF cleanup + FastRotorSearch)
   // 4 is fast      (OBBuilder + FF cleanup)
   // 5 is fastest   (only OBBuilder)
+  // 6 is DistanceGeometry
   int speed;
+  bool useDistGeom = false;
 
   // first try converting OptionText to an integer
   char *endptr;
@@ -70,6 +73,10 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
     else if ( (strncasecmp(OptionText, "slow", 4) == 0)
               || (strncasecmp(OptionText, "better", 6) == 0) )
       speed = 2;
+    else if ( (strncasecmp(OptionText, "dist", 4) == 0)
+               || (strncasecmp(OptionText, "dg", 2) == 0) ) {
+      useDistGeom = true;
+    }
   }
 
   // Give some limits so we can use switch statements
@@ -78,9 +85,21 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
   else if (speed > 5)
     speed = 5;
 
-  // This is done for all speed levels
+  // This is done for all speed levels (i.e., create the structure)
   OBBuilder builder;
-  builder.Build(*pmol);
+  OBDistanceGeometry dg;
+  bool attemptBuild = !useDistGeom;
+  if (attemptBuild && !builder.Build(*pmol) ) {
+    std::cerr << "Warning: Stereochemistry is wrong, using the distance geometry method instead" << std::endl;
+    useDistGeom = true;
+  }
+
+  if (useDistGeom) {
+    dg.Setup(*pmol, attemptBuild); // use the bond lengths and angles if we ran the builder
+    dg.GetGeometry(*pmol); // ensured to have correct stereo
+  }
+
+  // rule-based builder worked
   pmol->SetDimension(3);
   pmol->AddHydrogens(false, false); // Add some hydrogens before running MMFF
 
@@ -119,7 +138,7 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
   }
 
   // Initial cleanup for every level
-  pFF->SteepestDescent(iterations, 1.0e-4);
+  pFF->ConjugateGradients(iterations, 1.0e-4);
 
   if (speed == 4)
     return true; // no conformer searching
