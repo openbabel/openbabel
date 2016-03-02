@@ -1170,16 +1170,18 @@ namespace OpenBabel
     // we only succeed if we corrected all stereochemistry
     success = success && CorrectStereoAtoms(workMol, stereoWarnings);
 
+    /*
     // if the stereo failed, we should use distance geometry instead
     OBDistanceGeometry dg;
     dg.Setup(workMol);
     dg.GetGeometry(workMol); // ensured to have correct stereo
+    */
 
     mol = workMol;
     mol.SetChiralityPerceived();
     mol.SetDimension(3);
 
-    return true;
+    return success;
   }
 
   void OBBuilder::ConnectFrags(OBMol &mol, OBMol &workMol, vector<int> match, vector<vector3> coords,

@@ -35,7 +35,7 @@ bool doBuildMoleculeTest(OBMol &mol)
   testCount++;
 
   OBBuilder builder;
-  OB_REQUIRE(builder.Build(mol));
+  OB_REQUIRE(builder.Build(mol, false));
   // Does not need clearMolFlags -- crash still happens if you clear here
   // and not after AddHydrogens()
   OB_REQUIRE(mol.AddHydrogens());
