@@ -87,17 +87,19 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
 
   // This is done for all speed levels (i.e., create the structure)
   OBBuilder builder;
-  OBDistanceGeometry dg;
   bool attemptBuild = !useDistGeom;
   if (attemptBuild && !builder.Build(*pmol) ) {
     std::cerr << "Warning: Stereochemistry is wrong, using the distance geometry method instead" << std::endl;
     useDistGeom = true;
   }
 
+#ifdef HAVE_EIGEN
+  OBDistanceGeometry dg;
   if (useDistGeom) {
     dg.Setup(*pmol, attemptBuild); // use the bond lengths and angles if we ran the builder
     dg.GetGeometry(*pmol); // ensured to have correct stereo
   }
+#endif
 
   // rule-based builder worked
   pmol->SetDimension(3);
