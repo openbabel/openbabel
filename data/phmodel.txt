@@ -40,10 +40,8 @@ TRANSFORM [nD2-0]1[nD2:1]([#1:2])[nD2-0][nD2-0]c1 >> n1[n-:1]nnc1	4.89 #pKa from
 TRANSFORM [nD2-0:1]1[nD2-0][nD2-0][nD2-0]c1 >> [n-:1]1nnnc1		4.89 #pKa from acid (AH)
 
 #azide
-#TRANSFORM [ND1:1]=[ND2:2]=A >> [N-:1]=[N+:2]=A				1E+10 # always apply transformation
-#TRANSFORM [ND2:1]=[ND2:2]=A >> N=[N+:2]=A				1E+10 # always apply this transformation
 TRANSFORM [ND1:1]=[ND2:2]=N-A >> [N-:1]=[N+:2]=N-A				1E+10 # always apply transformation
-TRANSFORM [ND2:1]=[ND2:2]=N-A >> [N-1]=[N+:2]=N-A				1E+10 # always apply this transformation
+TRANSFORM [HND2:1]=[ND2:2]=N-A >> [N-1]=[N+:2]=N-A				1E+10 # always apply this transformation
 
 
 
