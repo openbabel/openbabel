@@ -376,8 +376,14 @@ namespace OpenBabel
       _SpaceGroups.Init();
 
     // This needs to be more forgiving
+    // First, try it without removing the white space
+    const SpaceGroup *match = (_SpaceGroups.sgbn.find(name_in)!=_SpaceGroups.sgbn.end())? _SpaceGroups.sgbn[name_in]: NULL;
+    if (match) return match;
+
+    // If a match wasn't found, remove the white space and try again
     string name = RemoveWhiteSpaceUnderscore(name_in);
-    const SpaceGroup *match = (_SpaceGroups.sgbn.find(name)!=_SpaceGroups.sgbn.end())? _SpaceGroups.sgbn[name]: NULL;
+    match = (_SpaceGroups.sgbn.find(name)!=_SpaceGroups.sgbn.end())? _SpaceGroups.sgbn[name]: NULL;
+
     if (!match) {
       // Try another search, e.g. Fm-3m instead of Fm3m
       string search = name;
