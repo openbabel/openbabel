@@ -39,11 +39,11 @@ TRANSFORM [nD2:1]([#1:2])1[nD2-0][nD2-0][nD2-0]c1 >> [n-:1]1nnnc1	4.89 #pKa from
 TRANSFORM [nD2-0]1[nD2:1]([#1:2])[nD2-0][nD2-0]c1 >> n1[n-:1]nnc1	4.89 #pKa from acid (AH)
 TRANSFORM [nD2-0:1]1[nD2-0][nD2-0][nD2-0]c1 >> [n-:1]1nnnc1		4.89 #pKa from acid (AH)
 
-#azide
-TRANSFORM [ND1:1]=[ND2:2]=N-A >> [N-:1]=[N+:2]=N-A				1E+10 # always apply transformation
-TRANSFORM [HND2:1]=[ND2:2]=N-A >> [N-1]=[N+:2]=N-A				1E+10 # always apply this transformation
-
-
+#azide (always apply these transformations)
+TRANSFORM [ND1:1]~[ND2:2]~[ND1:3] >> [N-:1]=[N+:2]=[N-:3] 1E+10	    # azide ion
+TRANSFORM [ND1:1]~[ND2:2]~[ND1:3]~* >> [N-:1]=[N+:2]=[N:3]-* 1E+10   # azide group
+TRANSFORM [NH2:1]~[NH1:2]~[NH1:3]~* >> [N-:1]=[N+:2]=[N:3]-* 1E+10	# azide group
+TRANSFORM [NH1:1]~[ND2:2]~[NH1:3]~* >> [N-:1]=[N+:2]=[N:3]-* 1E+10	# azide group
 
 #hydroxamic acid
 #TRANSFORM O=CN[OD1-0:1][#1:2] >> O=CN[O-:1]				8.0
