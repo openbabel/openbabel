@@ -14,7 +14,9 @@
 // [SMARTS] [atomtype id number] [description]
 // must be sorted according to the ELEMENT and COMPLEXITY OF THE TYPERULE!
 //
-// Be careful lines do not exceed the maximum length of 80!
+// Upadted (2016) by Mohammad Mehdi Ghahremanpour <mohammad.ghahremanpour@icm.uu.se>
+//
+// Be careful lines do not exceed the maximum length of 150!
 
 
 // SMARTS rules for hydrogens
@@ -232,8 +234,8 @@ atom [#15;a]                  	     					    pb "aromatic P"
 atom [#15X3]                  						    p3 "other sp3 P"
 atom [#15X3](=*)-*=*          	     					    px "sp2 P of conjugated system"
 atom [#15X3](=*)-*#*          	     					    px "sp2 P of conjugated system"
+atom [#15X3](=[#8])(=[#8])[#8] 						    p4 ""
 atom [#15X3]=[O,S]            	     					    p4 "hypervalent P"
-atom [#15X3](=[#8])(=[#8])[#8] 						    p3 ""
 atom [#15X4]                  						    p5 "hypervalent P"
 atom [#15X4](=*)-*=*          						    py "P of conjugated system"
 atom [#15X4](=*)-*#*          	    					    py "P of conjugated system"
@@ -260,7 +262,7 @@ atom [#7X2;R](:[#6])[#7] 						    nd "sp2 N of conjugated ring"
 atom [#7X2;R]=[#6][#7]        						    nd "sp2 N of conjugated ring"
 atom [#7X2;R]=[#6][#8]        						    nd "sp2 N of conjugated ring"
 atom [#7X2;R]=[#6][#16]        						    nd "sp2 N of conjugated ring"
-atom [#7X2r5](:[#6])[#6]						    nd "N in aromatic ring due to lone pairs of size 5"
+atom [#7X2r5](:[#6])[#6]						    nb "N in aromatic ring due to lone pairs of size 5"
 atom [nX2r6](:[#6X3][NX3])([#6X3]=[O])					    nd "N in Cytosine"
 atom [nX2r5]([#6])[#8,#16]						    nc "N in aromatic ring due to lone pairs of size 5"
 atom [#7X2;R](-[#7X3]-[#6X3])=[#6X3]    				    nc "sp2 N of conjugated ring"

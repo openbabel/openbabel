@@ -40,17 +40,12 @@ INTHYB  [$([#8D1][#6][#8D1])]     2       #sp2 oxygen
 INTHYB  [$(O#*)]                  1       #sp  oxygen
 
 INTHYB  [P]                       3       #sp3 phosphorus
-INTHYB  [#15]                     3       #sp3 phosphorus
 INTHYB  [#15;$([PD1]=*)]          2       #sp2 phosphorus
-INTHYB  [P;$([PD1]=*)]            2       #sp2 phosphorusINTHYB  [PD5]			  5	  #sp3d phosphorus, as in PF5
+INTHYB  [PD5]			  5	  #sp3d phosphorus, as in PF5
 INTHYB  [Pv5]			  5	  #sp3d phosphorus, as in H3PO4
-INTHYB  [#15v5]			  5	  #sp3d phosphorus, as in H3PO4
 INTHYB  [S]                       3       #sp3 sulfur
-INTHYB  [#16]                     3       #sp3 sulfur
 INTHYB  [#16;s,$([SD1]=*)]        2       #sp2 sulfur
-INTHYB  [S;s,$([SD1]=*)]          2       #sp2 sulfur
 INTHYB  [SD6]			  6	  #sp3d2 sulfur, as in SF6
-INTHYB  [#16D6]			  6	  #sp3d2 sulfur, as in SF6
 INTHYB  [B]                       2       #sp2 boron
 INTHYB  [BD4]                     3       #sp3 boron
 
@@ -146,9 +141,7 @@ IMPVAL [#8^1+]                    1 # carbon monoxide
 IMPVAL [$([#8]#*)]                1
 
 IMPVAL  [#9D0]                    1
-IMPVAL  [FD0]                     1
 IMPVAL  [#9D0-]                   0 #[F-]
-IMPVAL  [FD0-]                    0 #[F-]
 
 IMPVAL  [#13]                     3 # generic Al
 
@@ -178,11 +171,8 @@ IMPVAL  [$([#16D3](=O)(=O)-O)]    4 #e.g. O[S](=O)=O
 IMPVAL  [$([#16D2](=O)-O)]        3 # e.g. O[S]=O
 IMPVAL  [#16D1-]                  1
 
-
-IMPVAL  [ClD0]                    1
 IMPVAL  [#17D0]                   1
 IMPVAL  [#17D0-]                  0 #[Cl-]
-IMPVAL  [ClD0-]                  0 #[Cl-]
 
 IMPVAL  [#31]                     3
 IMPVAL  [#32]                     4
@@ -193,20 +183,15 @@ IMPVAL  [as]                      3
 IMPVAL  [#34]                     2
 
 IMPVAL  [#35D0]                   1
-IMPVAL  [BrD0]                    1
 IMPVAL  [#35D0-]                  0 #[Br-]
-IMPVAL  [BrD0-]                   0 #[Br-]
 
 #IMPVAL  [#49,#81]                 3 # In, Tl, like Ga
 #IMPVAL  [#50,#82]                 4 # Sn, Pb, like Ge
 #IMPVAL  [#51,#83]                 3 # Sb, Bi, like As
 
-IMPVAL  [#53]                     2
-IMPVAL  [I]                       2
+IMPVAL  [#52]                     2
 IMPVAL  [#53D0]                   1
-IMPVAL  [ID0]                     1
 IMPVAL  [#53D0-]                  0 #[I-]
-IMPVAL  [ID0-]                    0 #[I-]
 
 #
 #EXTERNAL TYPE RULES
