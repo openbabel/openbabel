@@ -769,6 +769,11 @@ namespace OpenBabel
     return OBResidueIndex::UNK;
   }
 
+  void    OBResidue::SetInsertionCode(const char insertioncode) {
+	_insertioncode=insertioncode;
+  }
+
+
   static void SetResidueKeys(const char   *residue,
                              unsigned int &reskey,
                              unsigned int &aakey)
@@ -855,7 +860,7 @@ namespace OpenBabel
     _resnum   = "";
     _resname  = "";
     _vdata.clear();
-
+_insertioncode=0;
   }
 
   OBResidue::OBResidue(const OBResidue &src) :
@@ -869,6 +874,7 @@ namespace OpenBabel
     _atomid   = src._atomid;
     _hetatm   = src._hetatm;
     _sernum   = src._sernum;
+_insertioncode=src._insertioncode;
 
   }
 
@@ -899,6 +905,7 @@ namespace OpenBabel
         _atomid   = src._atomid;
         _hetatm   = src._hetatm;
         _sernum   = src._sernum;
+   _insertioncode = src._insertioncode;
       }
 
     return(*this);
@@ -955,6 +962,7 @@ namespace OpenBabel
     _reskey  = OBResidueIndex::UNK;
     _resnum  = "";
     _resname = "";
+    _insertioncode=0;
 
     _atoms.clear();
     _atomid.clear();
@@ -1097,6 +1105,11 @@ namespace OpenBabel
   unsigned int OBResidue::GetResKey(void) const
   {
     return(_reskey);
+  }
+
+  char OBResidue::GetInsertionCode(void) const
+  {
+    return(_insertioncode);
   }
 
   string OBResidue::GetAtomID(OBAtom *atom) const
