@@ -57,11 +57,11 @@ private:
 
 //***********************************************
 //Make the global instances
-  fingerprintECFP theECFP2("ECFP2",false, 2, false);
-  fingerprintECFP theECFP4("ECFP4",false, 4, false);
-  fingerprintECFP theECFP6("ECFP6",false, 6, false);
-  fingerprintECFP theECFP8("ECFP8",false, 8, false);
-  fingerprintECFP theECFP10("ECFP10",false, 10, false);
+  fingerprintECFP theECFP2("ECFP2",false, 1, true);
+  fingerprintECFP theECFP4("ECFP4",false, 2, true);
+  fingerprintECFP theECFP6("ECFP6",false, 3, true);
+  fingerprintECFP theECFP8("ECFP8",false, 4, true);
+  fingerprintECFP theECFP10("ECFP10",false, 5, true);
 //***********************************************
 
 #define mix32(a,b,c) \
