@@ -386,6 +386,12 @@ std::vector<std::string> EnableStaticPlugins()
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thefingerprint2)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&FP3PatternFP)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&FP4PatternFP)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theECFP0)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theECFP2)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theECFP4)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theECFP6)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theECFP8)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theECFP10)->GetID());
 
   // forcefields
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theForceFieldGaff)->GetID());
