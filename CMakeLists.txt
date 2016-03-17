@@ -150,7 +150,7 @@ if(OPENBABEL_USE_SYSTEM_INCHI)
   endif()
 else()
   message(STATUS "Using included inchi library.")
-#  set(INCHI_LIBRARY inchi)				... set INCHI_LIBRARY amd INCH_INCLUDE_DIR by commandline
+  set(INCHI_LIBRARY inchi)
 endif()
 
 if(WIN32)
