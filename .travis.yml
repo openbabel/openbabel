@@ -1,5 +1,9 @@
 language: cpp
 
+env:
+ - FLAGS="-DBUILD_SHARED=OFF -DWITH_INCHI=ON -DWITH_STATIC_INCHI=ON"
+ - FLAGS="-DPYTHON_BINDINGS=ON -DRUN_SWIG=ON"
+
 compiler:
  - gcc
  - clang
@@ -13,7 +17,7 @@ install:
 before_script:
  - mkdir build
  - cd build
- - cmake -DCMAKE_CXX_FLAGS="-march=native -mno-avx" -DPYTHON_BINDINGS=ON  -DRUN_SWIG=ON ..
+ - cmake ${FLAGS} ..
 
 script:
  - make -j2
