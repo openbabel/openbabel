@@ -1,12 +1,16 @@
 language: cpp
 
-env:
- - RUN_CTEST='false' FLAGS="-DBUILD_SHARED=OFF -DWITH_INCHI=ON -DWITH_STATIC_INCHI=ON"
- - RUN_CTEST='true' FLAGS="-DPYTHON_BINDINGS=ON -DRUN_SWIG=ON"
-
-compiler:
- - gcc
- - clang
+matrix:
+  include:
+    - GCC-static
+      compiler: gcc
+      env: RUN_CTEST='false' FLAGS="-DBUILD_SHARED=OFF -DWITH_INCHI=ON -DWITH_STATIC_INCHI=ON"
+    - GCC-python
+      compiler: gcc
+      env: RUN_CTEST='true' FLAGS="-DPYTHON_BINDINGS=ON -DRUN_SWIG=ON"
+    - Clang-python
+      compiler: clang
+      env: RUN_CTEST='true' FLAGS="-DPYTHON_BINDINGS=ON -DRUN_SWIG=ON"
 
 before_install:
  - sudo apt-get update -qq
