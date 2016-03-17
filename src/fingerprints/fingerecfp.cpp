@@ -57,6 +57,7 @@ private:
 
 //***********************************************
 //Make the global instances
+  fingerprintECFP theECFP0("ECFP0",false, 0, true);
   fingerprintECFP theECFP2("ECFP2",false, 1, true);
   fingerprintECFP theECFP4("ECFP4",false, 2, true);
   fingerprintECFP theECFP6("ECFP6",false, 3, true);

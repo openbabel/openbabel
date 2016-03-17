@@ -535,6 +535,12 @@ public:
   OB_STATIC_PLUGIN(fingerprint2, thefingerprint2)
   OB_STATIC_PLUGIN(PatternFP, FP3PatternFP)
   OB_STATIC_PLUGIN(PatternFP, FP4PatternFP)
+  OB_STATIC_PLUGIN(fingerprintECFP, theECFP0)
+  OB_STATIC_PLUGIN(fingerprintECFP, theECFP2)
+  OB_STATIC_PLUGIN(fingerprintECFP, theECFP4)
+  OB_STATIC_PLUGIN(fingerprintECFP, theECFP6)
+  OB_STATIC_PLUGIN(fingerprintECFP, theECFP8)
+  OB_STATIC_PLUGIN(fingerprintECFP, theECFP10)
 
   // forcefields
   OB_STATIC_PLUGIN(OBForceFieldGaff, theForceFieldGaff)
@@ -548,7 +554,7 @@ public:
   OB_STATIC_PLUGIN(OpAddPolarH, theOpAddPolarH)
   OB_STATIC_PLUGIN(OpAddNonPolarH, theOpAddNonPolarH)
   OB_STATIC_PLUGIN(OpChangeCell, theOpChangeCell)
-  OB_STATIC_PLUGIN(OpCanonical, theOpCanonical)          
+  OB_STATIC_PLUGIN(OpCanonical, theOpCanonical)
   OB_STATIC_PLUGIN(OpDelPolarH, theOpDelPolarH)
   OB_STATIC_PLUGIN(OpDelNonPolarH, theOpDelNonPolarH)
   OB_STATIC_PLUGIN(OpFillUC, theOpFillUC)
