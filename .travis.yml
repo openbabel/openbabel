@@ -1,8 +1,8 @@
 language: cpp
 
 env:
- - FLAGS="-DBUILD_SHARED=OFF -DWITH_INCHI=ON -DWITH_STATIC_INCHI=ON"
- - FLAGS="-DPYTHON_BINDINGS=ON -DRUN_SWIG=ON"
+ - RUN_CTEST='false' FLAGS="-DBUILD_SHARED=OFF -DWITH_INCHI=ON -DWITH_STATIC_INCHI=ON"
+ - RUN_CTEST='true' FLAGS="-DPYTHON_BINDINGS=ON -DRUN_SWIG=ON"
 
 compiler:
  - gcc
@@ -21,4 +21,4 @@ before_script:
 
 script:
  - make -j2
- - ctest -j 2
+ - test ${RUN_CTEST} = 'true' && ctest -j 2
