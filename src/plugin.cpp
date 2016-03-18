@@ -306,8 +306,6 @@ std::vector<std::string> EnableStaticPlugins()
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theNWChemOutputFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theNWChemInputFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpenDXCubeFormat)->GetID());
-  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOrcaOutputFormat)->GetID());
-  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOrcaInputFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOutputFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thePCModelFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thePDBFormat)->GetID());
@@ -360,6 +358,8 @@ std::vector<std::string> EnableStaticPlugins()
 #ifdef HAVE_REGEX_H
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGAMESSUKInputFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGAMESSUKOutputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOrcaOutputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOrcaInputFormat)->GetID());
 #endif
 
   // descriptors
