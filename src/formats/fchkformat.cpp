@@ -164,8 +164,10 @@ namespace OpenBabel
 
     /* variables for storing the read data */
     int  Natoms = -1, MxBond = -1;
+    int  numAOrb = -1, numBOrb = -1;
+    int  numAElec = -1, numBElec = -1;
     vector<int>    atomnos, NBond, IBond;
-    vector<double> coords, hessian, dipder;
+    vector<double> coords, hessian, dipder, alphaorb, betaorb;
 
     /*** start reading ***/
     pmol->BeginModify();
@@ -406,6 +408,104 @@ namespace OpenBabel
             continue;
           }
 
+        if (buff == strstr(buff, "Number of alpha electrons"))
+          {
+            if (!FCHKFormat::read_int(buff, &numAElec))
+              {
+                error_msg << "Could not read the number of alpha electrons"
+                          << " from line #" << lineno << ".";
+
+                obErrorLog.ThrowError("FCHKFormat::ReadMolecule()",
+                                      error_msg.str(),
+                                      obError);
+                return false;
+              }
+            if (0 >= numAElec)
+              {
+                error_msg << "Invalid number of alpha electrons: "
+                          << MxBond << ".";
+                obErrorLog.ThrowError("FCHKFormat::ReadMolecule()",
+                                      error_msg.str(),
+                                      obError);
+                return false;
+              }
+            continue;
+          }
+
+        if (buff == strstr(buff, "Number of beta electrons"))
+          {
+            if (!FCHKFormat::read_int(buff, &numBElec))
+              {
+                error_msg << "Could not read the number of beta electrons"
+                          << " from line #" << lineno << ".";
+
+                obErrorLog.ThrowError("FCHKFormat::ReadMolecule()",
+                                      error_msg.str(),
+                                      obError);
+                return false;
+              }
+            if (0 >= numBElec)
+              {
+                error_msg << "Invalid number of beta electrons: "
+                          << MxBond << ".";
+                obErrorLog.ThrowError("FCHKFormat::ReadMolecule()",
+                                      error_msg.str(),
+                                      obError);
+                return false;
+              }
+            continue;
+          }
+
+        /* start of the alpha orbitals section */
+        if (buff == strstr(buff, "Alpha Orbital Energies"))
+          {
+            if (!FCHKFormat::read_int(buff, &numAOrb))
+              {
+                error_msg << "Could not read the number of alpha orbitals"
+                          << " from line #" << lineno << ".";
+
+                obErrorLog.ThrowError("FCHKFormat::ReadMolecule()",
+                                      error_msg.str(),
+                                      obError);
+                return false;
+              }
+            if (0 >= numAOrb)
+              {
+                error_msg << "Invalid number of alpha orbitals: "
+                          << MxBond << ".";
+                obErrorLog.ThrowError("FCHKFormat::ReadMolecule()",
+                                      error_msg.str(),
+                                      obError);
+                return false;
+              }
+            continue;
+          }
+
+        /* start of the beta orbitals section */
+        if (buff == strstr(buff, "Beta Orbital Energies"))
+          {
+            if (!FCHKFormat::read_int(buff, &numBOrb))
+              {
+                error_msg << "Could not read the number of beta orbitals"
+                          << " from line #" << lineno << ".";
+
+                obErrorLog.ThrowError("FCHKFormat::ReadMolecule()",
+                                      error_msg.str(),
+                                      obError);
+                return false;
+              }
+            if (0 >= numBOrb)
+              {
+                error_msg << "Invalid number of beta orbitals: "
+                          << MxBond << ".";
+                obErrorLog.ThrowError("FCHKFormat::ReadMolecule()",
+                                      error_msg.str(),
+                                      obError);
+                return false;
+              }
+            continue;
+          }
+
         /* reading the atomic numbers */
         if (atomnos_found && Natoms > (int)atomnos.size())
           {
@@ -474,6 +574,50 @@ namespace OpenBabel
               return false;
 
             dipder_found = !finished;
+            continue;
+          }
+
+        /* reading the alpha orbital energies */
+        if (numAOrb != -1)
+          {
+            if (!FCHKFormat::read_section(buff, alphaorb,
+                                          numAOrb,
+                                          &finished,
+                                          "alpha orbital energies", lineno))
+              return false;
+
+            OBOrbitalData *od;
+            if (pmol->HasData(OBGenericDataType::ElectronicData))
+              od = (OpenBabel::OBOrbitalData *)pmol->GetData(OBGenericDataType::ElectronicData);
+            else
+              OBOrbitalData *od = new OBOrbitalData; // create new store
+            vector<string> symmetries;
+            od->LoadAlphaOrbitals(alphaorb, symmetries, numAElec);
+            od->SetOrigin(fileformatInput);
+            pmol->SetData(od);
+
+            continue;
+          }
+
+        /* reading the beta orbital energies */
+        if (numBOrb != -1)
+          {
+            if (!FCHKFormat::read_section(buff, betaorb,
+                                          numBOrb,
+                                          &finished,
+                                          "beta orbital energies", lineno))
+              return false;
+
+            OBOrbitalData *od;
+            if (pmol->HasData(OBGenericDataType::ElectronicData))
+              od = (OpenBabel::OBOrbitalData *)pmol->GetData(OBGenericDataType::ElectronicData);
+            else
+              OBOrbitalData *od = new OBOrbitalData; // create new store
+            vector<string> symmetries;
+            od->LoadBetaOrbitals(betaorb, symmetries, numBElec);
+            od->SetOrigin(fileformatInput);
+            pmol->SetData(od);
+
             continue;
           }
 
@@ -799,4 +943,3 @@ namespace OpenBabel
   }
 
 } /* namespace OpenBabel */
-
