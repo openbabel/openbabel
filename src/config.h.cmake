@@ -149,6 +149,12 @@
 /* have struct clock_t */
 #cmakedefine HAVE_CLOCK_T 1
 
+/* shared pointer implementation to be used */
+#cmakedefine OB_SHARED_PTR_IMPLEMENTATION @OB_SHARED_PTR_IMPLEMENTATION@
+
+/* header to be included for shared pointers */
+#cmakedefine OB_SHARED_PTR_HEADER <@OB_SHARED_PTR_HEADER@>
+
 #if defined(WIN32)
  #ifndef HAVE_ISFINITE
   #define isfinite _finite
