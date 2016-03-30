@@ -226,6 +226,7 @@ namespace OpenBabel
       std::vector<OBFFElectrostaticCalculationMMFF94> _electrostaticcalculations;
 
       bool mmff94s;
+      bool noESP;
 
     public:
       //! Constructor
@@ -242,9 +243,15 @@ namespace OpenBabel
         _grad1 = NULL;
 	if (!strncmp(ID, "MMFF94s", 7)) {
           mmff94s = true;
+          noESP = false;
           _parFile = std::string("mmff94s.ff");
-	} else {
+	} else if (!strncmp(ID, "MMFF94ne", )) {
+    mmff94s = false;
+    noESP = true;
+          _parFile = std::string("mmff94.ff");
+  } else {
           mmff94s = false;
+          noESP = false;
           _parFile = std::string("mmff94.ff");
 	}
       }
@@ -266,7 +273,9 @@ namespace OpenBabel
       {
         if (mmff94s)
           return "MMFF94s force field.";
-	else
+        else if (noESP)
+          return "MMFF94 force field (no electrostatics)";
+        else
           return "MMFF94 force field.";
       }
 
@@ -329,10 +338,9 @@ namespace OpenBabel
       //! Compare and print the numerical and analytical gradients
       bool ValidateGradients();
 
-  }; // class OBForceFieldMM2
+  }; // class OBForceFieldMMFF94
 
 }// namespace OpenBabel
 
 //! \file forcefieldmmff94.h
 //! \brief MMFF94 force field
-
