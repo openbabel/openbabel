@@ -37,11 +37,14 @@ namespace OpenBabel
     virtual const char* Description()
     {
       return
-        "DALTON Output\n";
+        "DALTON Output\n"
+        "Read Options e.g. -as\n"
+        "  s  Output single bonds only\n"
+        "  b  Disable bonding entirely\n";
     };
 
     virtual const char* SpecificationURL()
-    {return "http://daltonprogram.org/www/resources/dalton2011manual.pdf";}; //optional
+    {return "http://daltonprogram.org/www/resources/dalton2016manual.pdf";}; //optional
 
     virtual const char* GetMIMEType()
     { return "chemical/x-dalton-output"; };
@@ -70,19 +73,26 @@ namespace OpenBabel
     {
       OBConversion::RegisterFormat("dalmol",this, "chemical/x-dalton-input");
       OBConversion::RegisterOptionParam("a", NULL, 0, OBConversion::OUTOPTIONS); // write atomic units
+      OBConversion::RegisterOptionParam("b", NULL, 0, OBConversion::OUTOPTIONS); // write atombasis format
+      OBConversion::RegisterOptionParam("k", NULL, 1, OBConversion::OUTOPTIONS); // specify basis set in .mol file
     }
 
 
     virtual const char* Description() //required
     {
       return
-        "DALTON Input\n"
+        "DALTON Input File Format\n"
         "Write Options e.g. -xa\n"
-        "  a                write input in atomic units instead of Angstrom\n";
+        "  a                write input in atomic units instead of Angstrom\n"
+        "  b                write input using the ATOMBASIS format\n"
+        "  k                specify basis set to use in .mol file, i.e. -xk STO-3G\n\n"
+        "Read Options e.g. -as\n"
+        "  s  Output single bonds only\n"
+        "  b  Disable bonding entirely\n";
     };
 
     virtual const char* SpecificationURL()
-    {return "http://daltonprogram.org/www/resources/dalton2011manual.pdf";}; //optional
+    {return "http://daltonprogram.org/www/resources/dalton2016manual.pdf";}; //optional
 
     virtual const char* GetMIMEType()
     { return "chemical/x-dalton-input"; };
@@ -98,6 +108,9 @@ namespace OpenBabel
     /// The "API" interface functions
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+  private:
+    enum BasisFormat_t {BASIS, ATOMBASIS, INTGRL};
+    BasisFormat_t basisformat;
   };
 
   //Make an instance of the format class
@@ -117,96 +130,117 @@ namespace OpenBabel
     OBMol &mol = *pmol;
 
     char buffer[BUFF_SIZE];
-    const char bb = '=';
     string str,str1;
     double x,y,z;
     OBAtom *atom;
     vector<string> vs;
 
+    int molcharge = 0; // overall molecular charge.
     int atomtypes = 0;
     int atomcount = 0; // for each atom type
-    int atomcharge = 0; // for each atom type
+    int atomcharge = 0; // for each atom type. nuclear charge
     double factor = 1.0f;
+
+    basisformat = BASIS; // Always assume BASIS format. We change it below otherwise
 
     mol.BeginModify();
     while(ifs.getline(buffer,BUFF_SIZE))
     {
       if(strstr(buffer,"INTGRL") != NULL)
       {
+        basisformat = INTGRL;
         cout << "Cannot read INTGRL format" << endl;
         return(false);
       }
       if(strstr(buffer,"ATOMBASIS") != NULL)
       {
-        cout << "Cannot read ATOMBASIS format" << endl;
+        basisformat = ATOMBASIS;
+      }
+
+      // parse the file
+      if (basisformat == BASIS) {
+        ifs.getline(buffer,BUFF_SIZE); // read basis set line
+      }
+      // There are always two title lines in the DALTON .mol file format
+      ifs.getline(buffer,BUFF_SIZE); // title line 1
+      mol.SetTitle(buffer);
+      ifs.getline(buffer,BUFF_SIZE); // title line 2. Ignore.
+
+      // reading the first real option
+      ifs.getline(buffer,BUFF_SIZE); // options
+
+      // first check if there are any atoms specified. otherwise bail out
+      if(strstr(buffer,"AtomTypes") != NULL)
+      {
+        tokenize(vs,(strstr(buffer,"AtomTypes=")), " \t\n=");
+        atomtypes = atoi(vs[1].c_str());
+      }
+      else
+      {
+        cout << "AtomTypes not specified in file." << endl;
         return(false);
       }
-      if(strstr(buffer,"BASIS") != NULL)
+
+      // then check if there is a NoSymmetry line. otherwise bail out
+      if(strstr(buffer,"NoSymmetry") == NULL)
       {
-        ifs.getline(buffer,BUFF_SIZE); // basis
-        ifs.getline(buffer,BUFF_SIZE); // title line 1
-        mol.SetTitle(buffer);
-        ifs.getline(buffer,BUFF_SIZE); // title line 2
+        cout << "Only molecules with NoSymmetry can be read" << endl;
+        return(false);
+      }
 
-        // reading the first real option
-        ifs.getline(buffer,BUFF_SIZE); // options
+      if(strstr(buffer,"Charge") != NULL)
+      {
+        tokenize(vs,(strstr(buffer,"Charge=")), " \t\n=");
+        molcharge = atoi(vs[1].c_str());
+      }
 
-        // first check if there are any atoms specified. otherwise bail out
-        if(strstr(buffer,"AtomTypes") != NULL)
+      // if input is in bohr, convert to angstrom
+      if(strstr(buffer,"Angstrom") == NULL)
+        factor = BOHR_TO_ANGSTROM;
+
+      while(atomtypes >= 0 && ifs.getline(buffer, BUFF_SIZE))
+      {
+        if(strstr(buffer, "Atoms") != NULL && strstr(buffer, "Charge") != NULL)
         {
-          tokenize(vs,(strstr(buffer,"AtomTypes=")), " \t\n=");
-          atomtypes = atoi(vs[1].c_str());
+           tokenize(vs,(strstr(buffer,"Atoms=")), " \t\n=");
+           atomcount = atoi(vs[1].c_str());
+           tokenize(vs,(strstr(buffer,"Charge=")), " \t\n=");
+           atomcharge = atoi(vs[1].c_str());
+           atomtypes--;
+           continue;
         }
-        else
+        if(strstr(buffer, "ZMAT") != NULL)
         {
-          cout << "AtomTypes not specified in file." << endl;
-          return(false);
+           cout << "ZMAT format not supported" << endl;
+           return(false);
         }
-
-        // then check if there is a NoSymmetry line. otherwise bail out
-        if(strstr(buffer,"NoSymmetry") == NULL)
+        tokenize(vs,buffer);
+        if(vs.size() == 4)
         {
-          cout << "Only molecules with NoSymmetry can be read" << endl;
-          return(false);
-        }
-
-        // if input is in bohr, convert to angstrom
-        if(strstr(buffer,"Angstrom") == NULL)
-          factor = BOHR_TO_ANGSTROM;
-
-        while(atomtypes >= 0 && ifs.getline(buffer, BUFF_SIZE))
-        {
-          if(strstr(buffer, "Atoms") != NULL && strstr(buffer, "Charge") != NULL)
-          {
-             tokenize(vs,(strstr(buffer,"Atoms=")), " \t\n=");
-             atomcount = atoi(vs[1].c_str());
-             tokenize(vs,(strstr(buffer,"Charge=")), " \t\n=");
-             atomcharge = atoi(vs[1].c_str());
-             atomtypes--;
-             continue;
-          }
-          if(strstr(buffer, "ZMAT") != NULL)
-          {
-             cout << "ZMAT format not supported" << endl;
-             return(false);
-          }
-          tokenize(vs,buffer);
-          if(vs.size() == 4)
-          {
-            atom = mol.NewAtom();
-            atom->SetAtomicNum(atomcharge);
-            x = atof((char*)vs[1].c_str()) * factor;
-            y = atof((char*)vs[2].c_str()) * factor;
-            z = atof((char*)vs[3].c_str()) * factor;
-            atom->SetVector(x,y,z);
-          }
+          atom = mol.NewAtom();
+          atom->SetAtomicNum(atomcharge);
+          x = atof((char*)vs[1].c_str()) * factor;
+          y = atof((char*)vs[2].c_str()) * factor;
+          z = atof((char*)vs[3].c_str()) * factor;
+          atom->SetVector(x,y,z);
         }
       }
     }
-    // always find bonds and figure out bond orders
+
     mol.EndModify();
-    mol.ConnectTheDots();
-    mol.PerceiveBondOrders();
+    if (!pConv->IsOption("b",OBConversion::INOPTIONS)) {
+      mol.ConnectTheDots();
+    }
+
+    if (!pConv->IsOption("s",OBConversion::INOPTIONS)
+        && !pConv->IsOption("b",OBConversion::INOPTIONS)) {
+      mol.PerceiveBondOrders();
+    }
+
+    // Set properties that would otherwise be overwritten
+    // by EndModify
+    mol.SetTotalCharge(molcharge);
+
     return(true);
   }
 
@@ -216,6 +250,8 @@ namespace OpenBabel
   bool DALTONInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+    basisformat = BASIS; // Always assume BASIS format. We change it below otherwise
+
     if(pmol==NULL)
       return false;
 
@@ -226,6 +262,18 @@ namespace OpenBabel
     char buffer[BUFF_SIZE];
     double factor = 1.0f;
     bool writeatomicunit = pConv->IsOption("a", OBConversion::OUTOPTIONS) != NULL;
+    const char *keywords = pConv->IsOption("k",OBConversion::OUTOPTIONS);
+    string atombasis_str = "";
+    string basisset = "6-31G*";
+
+    if (pConv->IsOption("b",OBConversion::OUTOPTIONS)) {
+        basisformat = ATOMBASIS;
+    }
+
+    if (keywords) {
+      basisset = keywords;
+    }
+
     if (writeatomicunit)
       factor *= ANGSTROM_TO_BOHR;
 
@@ -233,10 +281,15 @@ namespace OpenBabel
     std::vector<int> groupcounts;
     std::vector<int> groupcharges;
 
-    ofs << "BASIS" << endl;
-    ofs << "6-31G*" << endl;
+    if (basisformat == ATOMBASIS) {
+      ofs << "ATOMBASIS" << endl;
+      atombasis_str = " Basis=" + basisset;
+    } else {
+      ofs << "BASIS" << endl;
+      ofs << basisset << endl;
+    }
     ofs << mol.GetTitle() << endl;
-    ofs << "Generated by Open Babel" << endl;
+    ofs << "Generated by Open Babel. Check overall charge below." << endl;
 
     // dalton needs some additional information
     //   AtomTypes: the number of atom types you want to include.
@@ -257,7 +310,9 @@ namespace OpenBabel
       }
       groupcounts[atomtypes-1] += 1;
     }
-    ofs << "AtomTypes=" << atomtypes << " NoSymmetry";
+    ofs << "AtomTypes=" << atomtypes;
+    ofs << " Charge=" << mol.GetTotalCharge();
+    ofs << " NoSymmetry";
     if (!writeatomicunit) ofs << " Angstrom";
     ofs << endl;
 
@@ -270,9 +325,10 @@ namespace OpenBabel
       {
         atomtype = atom->GetAtomicNum();
         atomtypes++;
-        snprintf(buffer, BUFF_SIZE, "Charge=%d.0 Atoms=%i",
+        snprintf(buffer, BUFF_SIZE, "Charge=%d.0 Atoms=%i%s",
                  groupcharges[atomtypes-1],
-                 groupcounts[atomtypes-1]);
+                 groupcounts[atomtypes-1],
+                 atombasis_str.c_str());
         ofs << buffer << endl;
       }
       snprintf(buffer, BUFF_SIZE, "%-3s %22.10f  %14.10f  %14.10f ",
@@ -334,10 +390,17 @@ namespace OpenBabel
         }
       }
     }
-    // always find bonds and figure out bond orders
+
     mol.EndModify();
-    mol.ConnectTheDots();
-    mol.PerceiveBondOrders();
+    if (!pConv->IsOption("b",OBConversion::INOPTIONS)) {
+      mol.ConnectTheDots();
+    }
+
+    if (!pConv->IsOption("s",OBConversion::INOPTIONS)
+        && !pConv->IsOption("b",OBConversion::INOPTIONS)) {
+      mol.PerceiveBondOrders();
+    }
+
     return(true);
   }
 } //namespace OpenBabel
