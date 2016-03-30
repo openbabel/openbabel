@@ -75,7 +75,9 @@ else() # Windows - bin dir = lib dir to load libraries
     endif(ENABLE_VERSIONED_FORMATS)
   endif()
 endif()
-set(OB_INCLUDE_DIRS "include/openbabel-2.0")
+if(NOT DEFINED OB_INCLUDE_DIRS)
+  set(OB_INCLUDE_DIRS "include/openbabel-2.0")
+endif()
 set(OB_EXPORTS_FILE "${openbabel_BINARY_DIR}/OpenBabel2_EXPORTS.cmake")
 # Ensure a fresh file is made each time CMake is run
 file(REMOVE "${OB_EXPORTS_FILE}")
@@ -433,7 +435,7 @@ file(GLOB_RECURSE headers include/openbabel/*.h)
 configure_file(${openbabel_SOURCE_DIR}/src/config.h.cmake
   ${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h)
 install(FILES ${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h
-  DESTINATION include/openbabel-2.0/openbabel)
+  DESTINATION ${OB_INCLUDE_DIRS}/openbabel)
 if(NOT MSVC)
   configure_file(${openbabel_SOURCE_DIR}/openbabel-2.0.pc.cmake
     ${openbabel_BINARY_DIR}/openbabel-2.0.pc @ONLY)
