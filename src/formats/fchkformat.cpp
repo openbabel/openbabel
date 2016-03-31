@@ -161,6 +161,8 @@ namespace OpenBabel
     bool ibond_found = false;
     bool hessian_found = false;
     bool dipder_found = false;
+    bool alphaorb_found = false;
+    bool betaorb_found = false;
 
     /* variables for storing the read data */
     int  Natoms = -1, MxBond = -1;
@@ -478,6 +480,8 @@ namespace OpenBabel
                                       obError);
                 return false;
               }
+
+            alphaorb_found = true;
             continue;
           }
 
@@ -503,6 +507,8 @@ namespace OpenBabel
                                       obError);
                 return false;
               }
+
+            betaorb_found = true;
             continue;
           }
 
@@ -578,7 +584,7 @@ namespace OpenBabel
           }
 
         /* reading the alpha orbital energies */
-        if (numAOrb != -1)
+        if (alphaorb_found && (numAOrb > alphaorb.size()))
           {
             if (!FCHKFormat::read_section(buff, alphaorb,
                                           numAOrb,
@@ -586,21 +592,12 @@ namespace OpenBabel
                                           "alpha orbital energies", lineno))
               return false;
 
-            OBOrbitalData *od;
-            if (pmol->HasData(OBGenericDataType::ElectronicData))
-              od = (OpenBabel::OBOrbitalData *)pmol->GetData(OBGenericDataType::ElectronicData);
-            else
-              OBOrbitalData *od = new OBOrbitalData; // create new store
-            vector<string> symmetries;
-            od->LoadAlphaOrbitals(alphaorb, symmetries, numAElec);
-            od->SetOrigin(fileformatInput);
-            pmol->SetData(od);
-
+            alphaorb_found = !finished; // if we've read once, don't re-read
             continue;
           }
 
         /* reading the beta orbital energies */
-        if (numBOrb != -1)
+        if (betaorb_found &&  (numBOrb > betaorb.size()))
           {
             if (!FCHKFormat::read_section(buff, betaorb,
                                           numBOrb,
@@ -608,16 +605,7 @@ namespace OpenBabel
                                           "beta orbital energies", lineno))
               return false;
 
-            OBOrbitalData *od;
-            if (pmol->HasData(OBGenericDataType::ElectronicData))
-              od = (OpenBabel::OBOrbitalData *)pmol->GetData(OBGenericDataType::ElectronicData);
-            else
-              OBOrbitalData *od = new OBOrbitalData; // create new store
-            vector<string> symmetries;
-            od->LoadBetaOrbitals(betaorb, symmetries, numBElec);
-            od->SetOrigin(fileformatInput);
-            pmol->SetData(od);
-
+            betaorb_found = !finished;
             continue;
           }
 
@@ -699,6 +687,15 @@ namespace OpenBabel
 
     /*** finished ***/
     pmol->EndModify();
+
+    if (numAOrb > 0 && numBOrb > 0) {
+      OBOrbitalData *od = new OBOrbitalData; // create new store
+      vector<string> symmetries;
+      od->LoadAlphaOrbitals(alphaorb, symmetries, numAElec);
+      od->LoadBetaOrbitals(betaorb, symmetries, numBElec);
+      od->SetOrigin(fileformatInput);
+      pmol->SetData(od);
+    }
 
     return true;
   }
