@@ -592,6 +592,8 @@ namespace OpenBabel
                                           "alpha orbital energies", lineno))
               return false;
 
+            cerr << " reading alpha " << endl;
+
             alphaorb_found = !finished; // if we've read once, don't re-read
             continue;
           }
@@ -604,6 +606,8 @@ namespace OpenBabel
                                           &finished,
                                           "beta orbital energies", lineno))
               return false;
+
+            cerr << " reading beta " << endl;
 
             betaorb_found = !finished;
             continue;
@@ -688,11 +692,19 @@ namespace OpenBabel
     /*** finished ***/
     pmol->EndModify();
 
-    if (numAOrb > 0 && numBOrb > 0) {
+    if (numAOrb > 0 && alphaorb.size() == numAOrb) {
+
+      cerr << " setting energies " << endl;
+
       OBOrbitalData *od = new OBOrbitalData; // create new store
       vector<string> symmetries;
-      od->LoadAlphaOrbitals(alphaorb, symmetries, numAElec);
-      od->LoadBetaOrbitals(betaorb, symmetries, numBElec);
+
+      if (numBOrb > 0 && betaorb.size() == numBOrb) {  // open shell calculation
+        od->LoadAlphaOrbitals(alphaorb, symmetries, numAElec);
+        od->LoadBetaOrbitals(betaorb, symmetries, numBElec);
+      } else {
+        od->LoadClosedShellOrbitals(alphaorb, symmetries, numAElec);
+      }
       od->SetOrigin(fileformatInput);
       pmol->SetData(od);
     }
