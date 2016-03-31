@@ -592,8 +592,6 @@ namespace OpenBabel
                                           "alpha orbital energies", lineno))
               return false;
 
-            cerr << " reading alpha " << endl;
-
             alphaorb_found = !finished; // if we've read once, don't re-read
             continue;
           }
@@ -606,8 +604,6 @@ namespace OpenBabel
                                           &finished,
                                           "beta orbital energies", lineno))
               return false;
-
-            cerr << " reading beta " << endl;
 
             betaorb_found = !finished;
             continue;
@@ -693,9 +689,6 @@ namespace OpenBabel
     pmol->EndModify();
 
     if (numAOrb > 0 && alphaorb.size() == numAOrb) {
-
-      cerr << " setting energies " << endl;
-
       OBOrbitalData *od = new OBOrbitalData; // create new store
       vector<string> symmetries;
 
