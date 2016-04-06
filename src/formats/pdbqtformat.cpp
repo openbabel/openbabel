@@ -497,12 +497,21 @@ namespace OpenBabel
     }
 
     multimap <unsigned int, unsigned int>::iterator it=how_many_atoms_move.begin();
-    if ((!moves_many) && !how_many_atoms_move.empty()) {it=how_many_atoms_move.end(); --it;}
+    if ((!moves_many) && !how_many_atoms_move.empty()) {
+      it=how_many_atoms_move.end();
+      if (it!=how_many_atoms_move.begin()) // don't move past begin
+        --it;
+    }
     for (unsigned int i = 1; i <= depth; i++)
     {
       free_bonds.insert((*it).second);
-      if (!moves_many) {--it;}
-      else{++it;}
+      if (!moves_many) {
+        if (it!=how_many_atoms_move.begin())
+          --it;
+      }
+      else{
+        ++it;
+      }
     }
 
 
