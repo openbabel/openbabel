@@ -57,6 +57,9 @@
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/stereo/squareplanar.h>
 #include <openbabel/stereo/bindings.h>
+
+#include <openbabel/bondtyper.h>
+#include <openbabel/phmodel.h>
 %}
 
 
