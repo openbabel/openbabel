@@ -78,6 +78,7 @@ int main(int argc,char **argv)
   }
 
   OBMol mol;
+  OBForceField* pFF = OBForceField::FindForceField("mmff94");
 
   for (c=1;;c++) {
       mol.Clear();
@@ -86,13 +87,36 @@ int main(int argc,char **argv)
       if (mol.Empty())
         break;
 
-      mol.AddHydrogens(); // hydrogens must be added before Setup(mol) is called
+      // hydrogens must be added before Setup(mol) is called
+      //  to ensure stereochemistry
+      mol.AddHydrogens();
 
       OBDistanceGeometry dg;
       dg.Setup(mol);
-      dg.AddConformer();
-      dg.GetConformers(mol);
 
+      for (unsigned int i = 1; i < 2; ++i) {
+        //        cout << i << endl;
+        dg.AddConformer();
+      }
+      dg.GetConformers(mol);
+      //      cout << " Conformers: " << mol.NumConformers() << endl;
+      // Check the energies
+      pFF->Setup(mol);
+      // load through all the conformers
+      unsigned int minConf = 0;
+      double e, minE = 1.0e10;
+      for (unsigned int n = 0; n < mol.NumConformers();++n)
+        {
+          mol.SetConformer(n);
+          pFF->SetCoordinates(mol);
+          e = pFF->Energy(false);
+          //          cout << " Conformer: " << n << " " << e << endl;
+          if (e < minE) {
+            minE = e;
+            minConf = n;
+          }
+        }
+      mol.SetConformer(minConf);
       conv.Write(&mol, &cout);
   } // end for loop
 

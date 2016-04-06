@@ -129,7 +129,7 @@ int ffgaff(int argc, char* argv[])
 
       // compare the calculated energy to our reference data
       energy = pFF->Energy(false);
-      if ( fabs(atof(buffer) - energy ) > 1.0e-3)
+      if (fabs(atof(buffer) - energy) > 1.0e-3)
         {
           cout << "not ok " << ++currentTest << " # calculated energy incorrect "
                << " for molecule " << mol.GetTitle() << "\n";

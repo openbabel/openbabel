@@ -1028,7 +1028,8 @@ namespace OpenBabel
 
     //! \name Methods for structure generation
     //@{
-    //! Generate coordinates for the molecule (distance geometry). (OB 3.0).
+    //! Generate coordinates for the molecule (distance geometry)
+    //! \deprecated Use OBDistanceGeometry class instead
     void DistanceGeometry();
     /*! Generate conformers for the molecule (systematicaly rotating torsions).
      *
@@ -1039,6 +1040,7 @@ namespace OpenBabel
      *  lowest energy conformer is selected.
      *
      *  \param geomSteps The number of steps to take during geometry optimization.
+     *  \param sampleRingBonds Whether to sample ring torsions.
      *
      *	\par Output to log:
      *  This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
@@ -1049,7 +1051,7 @@ namespace OpenBabel
      *  OBFF_LOGLVL_MEDIUM: See note above. \n
      *  OBFF_LOGLVL_HIGH:   See note above. \n
      */
-    void SystematicRotorSearch(unsigned int geomSteps = 2500);
+    void SystematicRotorSearch(unsigned int geomSteps = 2500, bool sampleRingBonds = false);
     /*! Generate conformers for the molecule by systematicaly rotating torsions. To be used in combination with
      *  SystematicRotorSearchNexConformer().
      *
@@ -1065,9 +1067,10 @@ namespace OpenBabel
      *  If you don't need any updating in your program, SystematicRotorSearch() is recommended.
      *
      *  \param geomSteps The number of steps to take during geometry optimization.
+     *  \param sampleRingBonds Whether to sample ring torsions.
      *  \return The number of conformers.
      */
-    int SystematicRotorSearchInitialize(unsigned int geomSteps = 2500);
+    int SystematicRotorSearchInitialize(unsigned int geomSteps = 2500, bool sampleRingBonds = false);
     /*! Evaluate the next conformer.
      *  \param geomSteps The number of steps to take during geometry optimization.
      *  \return True if there are more conformers.
@@ -1083,6 +1086,7 @@ namespace OpenBabel
      *
      *  \param conformers The number of random conformers to consider during the search.
      *  \param geomSteps The number of steps to take during geometry optimization for each conformer.
+     *  \param sampleRingBonds Whether to sample ring torsions.
      *
      *	\par Output to log:
      *  This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
@@ -1093,7 +1097,8 @@ namespace OpenBabel
      *  OBFF_LOGLVL_MEDIUM: See note above. \n
      *  OBFF_LOGLVL_HIGH:   See note above. \n
      */
-    void RandomRotorSearch(unsigned int conformers, unsigned int geomSteps = 2500);
+    void RandomRotorSearch(unsigned int conformers, unsigned int geomSteps = 2500,
+                           bool sampleRingBonds = false);
     /*! Generate conformers for the molecule by randomly rotating torsions. To be used in combination with
      *  RandomRotorSearchNexConformer().
      *
@@ -1110,8 +1115,10 @@ namespace OpenBabel
      *
      *  \param conformers The number of random conformers to consider during the search
      *  \param geomSteps The number of steps to take during geometry optimization
+     *  \param sampleRingBonds Whether to sample ring torsions.
      */
-    void RandomRotorSearchInitialize(unsigned int conformers, unsigned int geomSteps = 2500);
+    void RandomRotorSearchInitialize(unsigned int conformers, unsigned int geomSteps = 2500,
+                                     bool sampleRingBonds = false);
     /*! Evaluate the next conformer.
      *  \param geomSteps The number of steps to take during geometry optimization.
      *  \return True if there are more conformers.
@@ -1128,6 +1135,7 @@ namespace OpenBabel
      *
      * \param conformers The number of random conformers to consider during the search.
      * \param geomSteps The number of steps to take during geometry optimization for each conformer.
+     *  \param sampleRingBonds Whether to sample ring torsions.
      *
      *	\par Output to log:
      *  This function should only be called with the log level set to OBFF_LOGLVL_NONE or OBFF_LOGLVL_LOW. Otherwise
@@ -1138,7 +1146,8 @@ namespace OpenBabel
      *  OBFF_LOGLVL_MEDIUM: See note above. \n
      *  OBFF_LOGLVL_HIGH:   See note above. \n
      */
-    void WeightedRotorSearch(unsigned int conformers, unsigned int geomSteps);
+    void WeightedRotorSearch(unsigned int conformers, unsigned int geomSteps,
+                             bool sampleRingBonds = false);
     /**
      * @brief A fast rotor search to find low energy conformations
      *

@@ -67,6 +67,9 @@ void OBPlugin::LoadAllPlugins()
     if(DLHandler::openLib(*itr))
       count++;
   }
+  if(!count) {
+    return;
+  }
 #else
   count = 1; // Avoid calling this function several times
 #endif //USING_DYNAMIC_LIBS
@@ -303,8 +306,6 @@ std::vector<std::string> EnableStaticPlugins()
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theNWChemOutputFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theNWChemInputFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOpenDXCubeFormat)->GetID());
-  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOrcaOutputFormat)->GetID());
-  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOrcaInputFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOutputFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thePCModelFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thePDBFormat)->GetID());
@@ -357,6 +358,8 @@ std::vector<std::string> EnableStaticPlugins()
 #ifdef HAVE_REGEX_H
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGAMESSUKInputFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGAMESSUKOutputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOrcaOutputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theOrcaInputFormat)->GetID());
 #endif
 
   // descriptors
@@ -383,6 +386,12 @@ std::vector<std::string> EnableStaticPlugins()
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thefingerprint2)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&FP3PatternFP)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&FP4PatternFP)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theECFP0)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theECFP2)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theECFP4)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theECFP6)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theECFP8)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theECFP10)->GetID());
 
   // forcefields
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theForceFieldGaff)->GetID());

@@ -17,6 +17,7 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/op.h>
 
 #include <iostream>
 #include <algorithm>
@@ -25,6 +26,8 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel
 {
+ static const string UNKNOWN_VALUE = "?";
+
  class mmCIFFormat : public OBMoleculeFormat
  {
  public:
@@ -505,6 +508,7 @@ namespace OpenBabel
      int use_cell = 0, use_fract = 0;
      string space_group_name("P1");
      SpaceGroup space_group;
+     bool space_group_failed = false;
      std::map<string, double> atomic_charges;
      while (!finished && (token_peeked || lexer.next_token(token)))
        {
@@ -629,9 +633,10 @@ namespace OpenBabel
 
                if (atom_type_tag != CIFTagID::_atom_site_label)
                  break;
-               // Else remove digits and drop through to _atom_site_type_symbol
-               token.as_text.erase(remove_if(token.as_text.begin(), token.as_text.end(), ::isdigit),
-                                   token.as_text.end());
+               // Else remove everything starting from the first digit
+               // and drop through to _atom_site_type_symbol
+               if(string::npos != token.as_text.find_first_of("0123456789"))
+                 {token.as_text.erase(token.as_text.find_first_of("0123456789"), token.as_text.size());}
              case CIFTagID::_atom_site_type_symbol:
                // Problem: posat->mSymbol is not guaranteed to actually be a 
                // symbol see http://www.iucr.org/iucr-top/cif/cifdic_html/1/cif_core.dic/Iatom_type_symbol.html
@@ -813,7 +818,8 @@ namespace OpenBabel
            size_t column_idx = 0;
            while (token.type == CIFLexer::ValueToken) // Read in the Fields
              {
-             if (columns[column_idx] == CIFTagID::_symmetry_equiv_pos_as_xyz)
+             if ((columns[column_idx] == CIFTagID::_symmetry_equiv_pos_as_xyz)
+               && token.as_text.find(UNKNOWN_VALUE) == string::npos)
                space_group.AddTransform(token.as_text);
              ++ column_idx;
              if (column_idx == column_count)
@@ -949,6 +955,8 @@ namespace OpenBabel
          const SpaceGroup * pSpaceGroup = SpaceGroup::Find( & space_group);
          if (pSpaceGroup)
            pCell->SetSpaceGroup(pSpaceGroup);
+         else
+           space_group_failed = true;
          pmol->SetData(pCell);
          if (use_fract)
            {
@@ -984,6 +992,26 @@ namespace OpenBabel
            pmol->PerceiveBondOrders();
          }
        }
+
+       if (space_group_failed)
+       {
+         string transformations;
+         transform3dIterator ti;
+         const transform3d *t = space_group.BeginTransform(ti);
+         while(t){
+           transformations += t->DescribeAsString() + " ";
+           t = space_group.NextTransform(ti);
+         }
+  
+         OBOp* pOp = OBOp::FindType("fillUC");
+         if (pOp && transformations.length())
+         {
+           map<string, string> m;
+           m.insert(pair<string, string>("transformations", transformations));
+           pOp->Do(pmol, "strict", &m);
+         }
+       }
+
      pmol->EndModify();
      }
    return (pmol->NumAtoms() > 0 ? true : false);

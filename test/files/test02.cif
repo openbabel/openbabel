@@ -1,0 +1,95 @@
+#------------------------------------------------------------------------------
+#$Date: 2014-07-12 08:06:43 +0000 (Sat, 12 Jul 2014) $
+#$Revision: 120115 $
+#$URL: file:///home/coder/svn-repositories/cod/cif/9/01/53/9015328.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/. The original data for this entry
+# were provided the American Mineralogist Crystal Structure Database,
+# http://rruff.geo.arizona.edu/AMS/amcsd.php
+#
+# The file may be used within the scientific community so long as
+# proper attribution is given to the journal article from which the
+# data were obtained.
+#
+data_9015328
+loop_
+_publ_author_name
+'Hahn, H.'
+'Harder, B.'
+_publ_section_title
+;
+ Zur Kristallstruktur der Titansulfide
+;
+_journal_name_full
+'Zeitschrift fur Anorganische und Allgemeine Chemie'
+_journal_page_first              241
+_journal_page_last               256
+_journal_volume                  288
+_journal_year                    1956
+_chemical_compound_source        Synthetic
+_chemical_formula_sum            'S Ti'
+_chemical_name_mineral           Wassonite
+_symmetry_space_group_name_Hall  '-R 3 2"  __'
+_symmetry_space_group_name_H-M   'R__-3 __ m :H__'
+_cell_angle_alpha                90
+_cell_angle_beta                 90
+_cell_angle_gamma                120
+_cell_length_a                   3.417
+_cell_length_b                   3.417
+_cell_length_c                   26.455
+_cell_volume                     267.503
+_database_code_amcsd             0018877
+_exptl_crystal_density_diffrn    4.466
+_[local]_cod_cif_authors_sg_H-M  'R -3 m'
+_[local]_cod_chemical_formula_sum_orig 'Ti S'
+_cod_database_code               9015328
+loop_
+_space_group_symop_operation_xyz
+x,y,z
+2/3+x,1/3+y,1/3+z
+1/3+x,2/3+y,2/3+z
+x,x-y,z
+2/3+x,1/3+x-y,1/3+z
+1/3+x,2/3+x-y,2/3+z
+y,x,-z
+2/3+y,1/3+x,1/3-z
+1/3+y,2/3+x,2/3-z
+-x+y,y,z
+2/3-x+y,1/3+y,1/3+z
+1/3-x+y,2/3+y,2/3+z
+-x,-x+y,-z
+2/3-x,1/3-x+y,1/3-z
+1/3-x,2/3-x+y,2/3-z
+-y,-x,z
+2/3-y,1/3-x,1/3+z
+1/3-y,2/3-x,2/3+z
+x-y,-y,-z
+2/3+x-y,1/3-y,1/3-z
+1/3+x-y,2/3-y,2/3-z
+y,-x+y,-z
+2/3+y,1/3-x+y,1/3-z
+1/3+y,2/3-x+y,2/3-z
+-x+y,-x,z
+2/3-x+y,1/3-x,1/3+z
+1/3-x+y,2/3-x,2/3+z
+-x,-y,-z
+2/3-x,1/3-y,1/3-z
+1/3-x,2/3-y,2/3-z
+-y,x-y,z
+2/3-y,1/3+x-y,1/3+z
+1/3-y,2/3+x-y,2/3+z
+x-y,x,-z
+2/3+x-y,1/3+x,1/3-z
+1/3+x-y,2/3+x,2/3-z
+loop_
+_atom_site_label
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+Ti1 0.00000 0.00000 0.50000
+Ti2 0.00000 0.00000 0.37800
+S1 0.00000 0.00000 0.00000
+S2 0.00000 0.00000 0.22600
+_journal_paper_doi 10.1002/zaac.19572880502

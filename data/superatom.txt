@@ -7,7 +7,7 @@
 # the right-aligned form may be used in 2D depiction.
 # The whole list is used to look up alias names;
 # only the part up to a line starting with ## is used to generate aliases.
-# and here the largest fragments should be first; 
+# and here the largest fragments should be first;
 #left    right    SMILES		color
 CO2Et    EtO2C    C(=O)OCC
 COOEt    EtOOC    C(=O)OCC
@@ -24,6 +24,7 @@ CN       NC       C#N
 NC       CN       [N+]#[C-]
 N(OH)CH3 CH3(OH)N N(O)C
 NO2      O2N      N(=O)=O
+NO2    O2N      [N+]([O-])=O
 NO       ON       N=O
 SO3H     HO3S     S(=O)(=O)O
 COOH     HOOC     C(=O)O		blue
@@ -41,7 +42,7 @@ Ph       Ph       c1ccccc1
 OR       RO       O*
 OBz      BzO      OCc1ccccc1
 THPO     THPO     O[C@@H]1OCCCC1
-NOH      HON      NO 
+NOH      HON      NO
 CO2H     HO2C     C(=O)O
 CO2Me    MeO2C    C(=O)OC
 COOMe    MeOOC    C(=O)OC
@@ -110,7 +111,7 @@ CH       HC       [CH]
 CH-      HC-      [CH-]
 D        D        [2H]
 ND2      D2N      [N]([2H])[2H]
-DS       SD       [S][2H]  
+DS       SD       [S][2H]
 CH3      H3C      C
 C2H5     C2H5     CC
 #Updates 3 Dec 2012 from Chris Swain

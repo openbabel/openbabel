@@ -60,6 +60,7 @@ namespace OpenBabel
           " --random         randomly generate conformers\n"
           " --weighted       weighted rotor search for lowest energy conformer\n"
           " --ff #           select a forcefield (default = MMFF94)\n"
+          " --rings          sample ring torsions\n"
           " genetic algorithm based methods (default):\n"
           " --children #     number of children to generate for each parent (default = 5)\n"
           " --mutability #   mutation frequency (default = 5)\n"
@@ -98,6 +99,7 @@ namespace OpenBabel
     bool random = false;
     bool weighted = false;
     bool fast = false;
+    bool rings = false;
     int numConformers = 30;
 
     iter = pmap->find("log");
@@ -124,6 +126,14 @@ namespace OpenBabel
     if(iter!=pmap->end())
       weighted = true;
 
+    iter = pmap->find("ring");
+    if(iter!=pmap->end())
+        rings = true;
+
+    iter = pmap->find("rings");
+    if(iter!=pmap->end())
+        rings = true;
+
     if (systematic || random || fast || weighted) {
       std::string ff = "MMFF94";
       iter = pmap->find("ff");
@@ -149,13 +159,13 @@ namespace OpenBabel
 
       // Perform search
       if (systematic) {
-        pFF->SystematicRotorSearch(10); // 10 steepest-descent forcfield steps per conformer
+        pFF->SystematicRotorSearch(10, rings); // 10 steepest-descent forcfield steps per conformer
       } else if (fast) {
         pFF->FastRotorSearch(true); // permute rotors
       } else if (random) {
-        pFF->RandomRotorSearch(numConformers, 10);
+        pFF->RandomRotorSearch(numConformers, 10, rings);
       } else if (weighted) {
-        pFF->WeightedRotorSearch(numConformers, 10);
+        pFF->WeightedRotorSearch(numConformers, 10, rings);
       }
       pFF->GetConformers(*pmol);
 
