@@ -44,6 +44,8 @@
 #include <openbabel/rotor.h>
 #include <openbabel/rotamer.h>
 
+#include <openbabel/bondtyper.h>
+#include <openbabel/phmodel.h>
 %}
 
 %include "std_list.i"
