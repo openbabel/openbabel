@@ -33,6 +33,9 @@ namespace OpenBabel
       OBBondPrivate() {}
   };
 
+#if __cplusplus >= 201103L
+  thread_local //this is required for correct multi-threading
+#endif
   extern OBAromaticTyper  aromtyper;
 
   /** \class OBBond bond.h <openbabel/bond.h>

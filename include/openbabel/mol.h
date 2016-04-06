@@ -27,6 +27,14 @@ GNU General Public License for more details.
 #ifndef EXTERN
 #  define EXTERN extern
 #endif
+#ifndef THREAD_LOCAL
+# if __cplusplus >= 201103L
+//this is required for correct multi-threading
+#  define THREAD_LOCAL thread_local
+# else
+#  define THREAD_LOCAL
+# endif
+#endif
 
 #include <math.h>
 #include <float.h>
@@ -54,6 +62,7 @@ GNU General Public License for more details.
 #include <openbabel/obiter.h>
 #include <openbabel/internalcoord.h>
 
+
 namespace OpenBabel
 {
 
@@ -61,6 +70,8 @@ namespace OpenBabel
   class OBBond;
   class OBInternalCoord;
   class OBConversion; //used only as a pointer
+  class OBBondTyper;
+  class OBPhModel;
 
   // Class OBMol
   //MOL Property Macros (flags) -- 32+ bits
@@ -752,10 +763,14 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
   //! Global OBIsotopeTable for isotope properties
   EXTERN  OBIsotopeTable   isotab;
   //! Global OBAromaticTyper for detecting aromatic atoms and bonds
-  EXTERN  OBAromaticTyper  aromtyper;
+	THREAD_LOCAL EXTERN  OBAromaticTyper  aromtyper;
   //! Global OBAtomTyper for marking internal valence, hybridization,
   //!  and atom types (for internal and external use)
-  EXTERN  OBAtomTyper      atomtyper;
+	THREAD_LOCAL EXTERN  OBAtomTyper      atomtyper;
+  //! Global OBBondTyper
+	THREAD_LOCAL EXTERN  OBBondTyper      bondtyper;
+  //! Global OBPhModel for assigning formal charges and hydrogen addition rules
+	THREAD_LOCAL EXTERN OBPhModel        phmodel;
   //! Global OBChainsParser for detecting macromolecular chains and residues
   EXTERN  OBChainsParser   chainsparser;
   //! Global OBMessageHandler error handler

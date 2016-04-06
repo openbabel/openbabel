@@ -95,8 +95,17 @@ namespace OpenBabel
       \endcode
   */
 
+#if __cplusplus >= 201103L
+  thread_local //this is required for correct multi-threading
+#endif
   extern OBAromaticTyper  aromtyper;
+#if __cplusplus >= 201103L
+  thread_local //this is required for correct multi-threading
+#endif
   extern OBAtomTyper      atomtyper;
+#if __cplusplus >= 201103L
+  thread_local //this is required for correct multi-threading
+#endif
   extern OBPhModel        phmodel;
 
   //

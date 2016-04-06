@@ -33,9 +33,8 @@ using namespace std;
 
 namespace OpenBabel
 {
-
-  OBAromaticTyper  aromtyper;
-  OBAtomTyper      atomtyper;
+  THREAD_LOCAL OBAromaticTyper  aromtyper;
+  THREAD_LOCAL OBAtomTyper      atomtyper;
 
   /*! \class OBAtomTyper typer.h <openbabel/typer.h>
     \brief Assigns atom types, hybridization, implicit valence and formal charges
