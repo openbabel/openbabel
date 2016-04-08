@@ -271,7 +271,7 @@ int UnmarkNonStereo( sp_ATOM *at, int num_atoms, const AT_RANK *nRank, const AT_
                             }
                         }
                         if ( num_implicit_H > 1 ) {
-                            if ( bIsotopic && (at[jc].num_iso_H[0] > 1 || 
+                            if ( ((bIsotopic && (at[jc].num_iso_H[0] > 1)) ||
                                                at[jc].num_iso_H[1] > 1 ||
                                                at[jc].num_iso_H[2] > 1 ) ||
                                   num_implicit_H > NUM_H_ISOTOPES        ||
@@ -386,7 +386,7 @@ int FillSingleStereoDescriptors(sp_ATOM *at, int i, int num_trans, const AT_RANK
                     nStereoNeigh[num_stereo] = n-1;
                     num_allene += IS_ALLENE_CHAIN(at[i].stereo_bond_parity[num_stereo]);
                 }
-                if ( bAllene > 0 && !num_allene || bAllene == 0 && num_allene ) {
+                if ( (bAllene > 0 && !num_allene) || (bAllene == 0 && num_allene) ) {
                     return 0;
                 }
                 /*  sort stereo bonds according to the ranks of the neighbors */
@@ -774,7 +774,7 @@ int MarkKnownEqualStereoBondParities( sp_ATOM *at, int num_atoms,
         for ( n1 = 0, i2 = 0; n1 < MAX_NUM_STEREO_BONDS && (i2=(int)at[i1].stereo_bond_neighbor[n1]); n1++ ) {
             i2 --;
             nAtomRank2         = nRank[i2];
-            if ( nAtomRank2 < nAtomRank1 || nAtomRank2 == nAtomRank1 && i1 < i2 ) {
+            if ( nAtomRank2 < nAtomRank1 || (nAtomRank2 == nAtomRank1 && i1 < i2) ) {
                 /*  An attempt to reduce unnecessary repetitions. */
                 /*  We still have repetitions because we do not accumulate a list of */
                 /*  processed (nAtomRank2, nAtomRank1) pairs. */
@@ -1035,7 +1035,7 @@ AT_RANK PathsHaveIdenticalKnownParities( sp_ATOM *at, AT_RANK prev1, AT_RANK cur
     nVisited2[cur2] = nLength;
     /*  the atoms must be either both stereogenic and have well-defined parities or non-stereogenic at all. */
     if ( at[cur1].stereo_atom_parity != at[cur2].stereo_atom_parity ||
-         at[cur1].stereo_atom_parity && !PARITY_WELL_DEF (at[cur1].stereo_atom_parity) 
+         (at[cur1].stereo_atom_parity && !PARITY_WELL_DEF (at[cur1].stereo_atom_parity))
           ) {
         return 0;  /*  Reject: Different or unknown in advance parities */
     }
@@ -1658,4 +1658,3 @@ int GetStereoCenterParity(sp_ATOM *at, int i, AT_RANK *nRank )
 
     return parity;
 }
-

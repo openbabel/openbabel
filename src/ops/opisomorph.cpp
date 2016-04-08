@@ -345,7 +345,7 @@ bool OpNewS::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* 
     }
   }
 
-  if(!showAll && (!match && !inv) || (match && inv))
+  if((!showAll && (!match && !inv)) || (match && inv))
   {
     //delete a non-matching mol
     delete pmol;
@@ -396,4 +396,3 @@ bool OpNewS::ProcessVec(std::vector<OBBase*>& Extravec)
 }
 
 }//namespace
-

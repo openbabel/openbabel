@@ -731,8 +731,8 @@ int EliminatePlusMinusChargeAmbiguity( BN_STRUCT *pBNS, int num_atoms )
             */
             v2 = edge->neighbor12 ^ v1;
             if ( v1 < num_atoms &&
-                 ( v0 >= num_atoms && ( pBNS->vert[v0].type & BNS_VERT_TYPE_C_GROUP ) ||
-                   v2 >= num_atoms && ( pBNS->vert[v2].type & BNS_VERT_TYPE_C_GROUP ) ) ) {
+                 ( (v0 >= num_atoms && ( pBNS->vert[v0].type & BNS_VERT_TYPE_C_GROUP )) ||
+                   (v2 >= num_atoms && ( pBNS->vert[v2].type & BNS_VERT_TYPE_C_GROUP )) ) ) {
                 int        cgPos, cgNeg;
                 int        neighPos = -1, neighNeg = -1;
                 BNS_EDGE *edgePos, *edgeNeg;
@@ -1188,14 +1188,14 @@ int MarkAtomsAtTautGroups(  BN_STRUCT *pBNS, int num_atoms, BN_AATG *pAATG, int 
                 }
             } else
             /* special case when the testing 'dot' was placed on an atom (should be nEnd1 only) */
-            if ( 0 <= v1 && v1 == nEnd1 || v1 == nEnd2 && 0 <= v2 && v2 < num_atoms ) {
+            if ( ((0 <= v1) && (v1 == nEnd1)) || ((v1 == nEnd2) && (0 <= v2) && (v2 < num_atoms)) ) {
                 if ( nLenDelta < MAX_ALT_AATG_ARRAY_LEN ) {
                     cDelta[nLenDelta]  = -delta;
                     nVertex[nLenDelta] = v1;
                     nLenDelta ++;
                 }
             } else
-            if ( 0 <= v2 && v2 == nEnd1 || v2 == nEnd2 && 0 <= v1 && v1 < num_atoms ) {
+            if ( ((0 <= v2) && (v2 == nEnd1)) || ((v2 == nEnd2) && (0 <= v1) && (v1 < num_atoms)) ) {
                 if ( nLenDelta < MAX_ALT_AATG_ARRAY_LEN ) {
                     cDelta[nLenDelta]  = -delta;
                     nVertex[nLenDelta] = v2;
@@ -1214,8 +1214,8 @@ int MarkAtomsAtTautGroups(  BN_STRUCT *pBNS, int num_atoms, BN_AATG *pAATG, int 
                 /* ignore sequences (-1,+1) and (+1,-1) in cDelta[] because they  */
                 /* describe ordinary aug. paths of moving a single attachment     */
                 /* we are looking for aug. paths describing movement of 2 or more */
-                if ( cDelta[j] > 0 && cDelta[i] > 0 ||
-                     cDelta[j] < 0 && cDelta[i] < 0 ) {
+                if ( ((cDelta[j] > 0) && (cDelta[i] > 0)) ||
+                     ((cDelta[j] < 0) && (cDelta[i] < 0)) ) {
                     if ( j == last_i ) {
                         /* three attachments moved */
                         return 0;
@@ -1245,8 +1245,8 @@ int MarkAtomsAtTautGroups(  BN_STRUCT *pBNS, int num_atoms, BN_AATG *pAATG, int 
                 /* ignore sequences (-1,+1) and (+1,-1) in cDelta[] because they  */
                 /* describe ordinary aug. paths of moving a single attachment     */
                 /* we are looking for aug. paths describing movement of 2 or more */
-                if ( cDelta[j] > 0 && cDelta[i] > 0 ||
-                     cDelta[j] < 0 && cDelta[i] < 0 ) {
+                if ( ((cDelta[j] > 0) && (cDelta[i] > 0)) ||
+                     ((cDelta[j] < 0) && (cDelta[i] < 0)) ) {
                     v1 = nVertex[i-1];
                     if ( !(pAATG->nMarkedAtom[v1] & AATG_MARK_IN_PATH) ) {
                         pAATG->nMarkedAtom[v1] |= AATG_MARK_IN_PATH;
@@ -1825,7 +1825,7 @@ int fix_special_bonds( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms, int forbidd
     if ( !ne ) { /* one time initialization */
         const char *b, *e;
         int  len;
-        for ( b = el; e = strchr( b, ';'); b = e+1 ) {
+        for ( b = el; (e = strchr( b, ';')); b = e+1 ) {
             len = e-b;
             memcpy( elname, b, len );
             elname[len] = '\0';
@@ -2124,7 +2124,7 @@ int fix_special_bonds( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms, int forbidd
                     num_N ++;
                     if ( (0 == at[n1].charge
 #if ( S_VI_O_PLUS_METAL_FIX_BOND == 1 )
-                          || 1 == at[n1].charge && 2 == at[n1].valence
+                          || ((1 == at[n1].charge) && (2 == at[n1].valence))
 #endif
                          ) && 0 == at[n1].radical &&
                          0 == num_of_H( at, n1 ) &&
@@ -2211,7 +2211,7 @@ int fix_special_bonds( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms, int forbidd
                     num_N ++;
                     if ( (0 == at[n1].charge
 #if ( S_VI_O_PLUS_METAL_FIX_BOND == 1 )
-                          || 1 == at[n1].charge && 2 == at[n1].valence
+                          || ((1 == at[n1].charge) && (2 == at[n1].valence))
 #endif
                           )                        
                          && 0 == at[n1].radical &&
@@ -2435,16 +2435,16 @@ int GetAtomChargeType( inp_ATOM *atom, int at_no, int nAtTypeTotals[], int *pMas
     }
 #if ( HAL_ACID_H_XCHG == 1 )
     /* halogen/chalcogen acid */
-    if ( !at->valence && at->charge == 0 && 1 == at->num_H && !at->radical &&
+    if ( (!at->valence && at->charge == 0 && 1 == at->num_H && !at->radical &&
          ( at->el_number == el_number_F  ||
            at->el_number == el_number_Cl ||
            at->el_number == el_number_Br ||
-           at->el_number == el_number_I ) ||
-         !at->valence && at->charge == 0 && 2 == at->num_H && !at->radical &&
+           at->el_number == el_number_I )) ||
+         (!at->valence && at->charge == 0 && 2 == at->num_H && !at->radical &&
          ( at->el_number == el_number_O  ||
            at->el_number == el_number_S ||
            at->el_number == el_number_Se ||
-           at->el_number == el_number_Te )
+           at->el_number == el_number_Te ))
          ) {
         /* a halogen/chalcogen acid (#3) */
         type = ATT_HalAcid;
@@ -2583,8 +2583,9 @@ int GetAtomChargeType( inp_ATOM *atom, int at_no, int nAtTypeTotals[], int *pMas
                     /*nAtTypeTotals[ATTOT_NUM_Errors] ++;*/
                 }
             } else
-            if ( atom[neigh].el_number == el_number_N &&
-                 atom[neigh].valence == 2 && (!atom[neigh].num_H || atom[neigh].num_H == 1 && atom[neigh].charge == 1) ) {
+            if ( (atom[neigh].el_number == el_number_N) &&
+                 (atom[neigh].valence == 2) &&
+                 (!atom[neigh].num_H || ((atom[neigh].num_H == 1) && (atom[neigh].charge == 1))) ) {
                  /* N or N(-) or NH(+) neighbor */
                 type = ATT_NO; /* single bond only */
                 if ( at->num_H == 1 ) {
@@ -3016,7 +3017,7 @@ int CreateCGroupInBnStruct( inp_ATOM *at, int num_atoms,
 #endif
         /* nCharge = +1: mark edge to c-point having no (+)-moveable charge with flow=1 */
         /* nCharge = -1: mark edge to c-point having -1 moveable charge with flow=1 */
-        if ( nCharge==1 && at[c_point].charge != 1 || nCharge==-1 && at[c_point].charge == -1 )
+        if ( (nCharge==1 && (at[c_point].charge != 1)) || (nCharge==-1 && (at[c_point].charge == -1)) )
         /*if ( !CHARGED_CPOINT(at,c_point) )*/
         {
             /* increment new edge flow, update st_edges of the adjacent vertices */
@@ -4108,7 +4109,7 @@ int RemoveNPProtonsAndAcidCharges( inp_ATOM *at, int num_atoms, BN_AATG *pAATG, 
     /* o TECHMAN-5.1. Remove protons from charged heteroatoms */
 
     /* (TECHMAN-5.1a) Simple remove of protons from N, P, and O,S,Se,Te */	
-    if ( num = pAATG->nAtTypeTotals[ATTOT_NUM_NP_Proton] + pAATG->nAtTypeTotals[ATTOT_NUM_OH_Plus] ) 
+    if ( (num = pAATG->nAtTypeTotals[ATTOT_NUM_NP_Proton] + pAATG->nAtTypeTotals[ATTOT_NUM_OH_Plus]) ) 
     {
         ret = SimpleRemoveHplusNPO(at, num_atoms, pAATG->nAtTypeTotals, t_group_info);
         if ( ret != num ) 
@@ -6022,7 +6023,7 @@ int bRestoreBnsAfterCheckAltPath( BN_STRUCT *pBNS, ALT_PATH_CHANGES *apc, int bC
         }
         /* Restore changed caps of old vertices */
         for ( i = sizeof(apc->bSetOldCapsVert)/sizeof(apc->bSetOldCapsVert[0])-1; 0 <= i; i -- ) {
-            if ( n = apc->bSetOldCapsVert[i] ) {
+            if ( (n = apc->bSetOldCapsVert[i]) ) {
                 pOldVert   = pBNS->vert + apc->vOldVert[i];
                 if ( pOldVert->st_edge.flow <= apc->nOldCapsVert[i][0] ) { 
                     pOldVert->st_edge.cap = apc->nOldCapsVert[i][0];
@@ -6038,7 +6039,7 @@ int bRestoreBnsAfterCheckAltPath( BN_STRUCT *pBNS, ALT_PATH_CHANGES *apc, int bC
      } else {
         /* Restore changed caps of old vertices */
         for ( i = sizeof(apc->bSetOldCapsVert)/sizeof(apc->bSetOldCapsVert[0])-1; 0 <= i; i -- ) {
-            if ( n = apc->bSetOldCapsVert[i] ) {
+            if ( (n = apc->bSetOldCapsVert[i]) ) {
                 pOldVert   = pBNS->vert + apc->vOldVert[i];
                 pOldVert->st_edge.cap = apc->nOldCapsVert[i][0];
                 n --;
@@ -6979,8 +6980,8 @@ int bExistsAltPath( BN_STRUCT *pBNS, BN_DATA *pBD, BN_AATG *pAATG, inp_ATOM *at,
                 if ( !(ret & 1) && !(ret_val & 1) ) {
                     bSuccess = 1;
                 } else
-                if ( ((ret & 1) || (ret_val & 1)) &&
-                     (bChangeFlow & BNS_EF_ALTR_BONDS) || (bChangeFlow & BNS_EF_UPD_H_CHARGE) ) {
+                if ( (((ret & 1) || (ret_val & 1)) &&
+                     (bChangeFlow & BNS_EF_ALTR_BONDS)) || (bChangeFlow & BNS_EF_UPD_H_CHARGE) ) {
                     /* some bonds have been changed to alternating */
                     bSuccess = 3;
                 } else {
@@ -8403,7 +8404,7 @@ int bIgnoreVertexNonTACN_group( BN_STRUCT* pBNS, Vertex v, Vertex w, Edge *Switc
     if ( u == NO_VERTEX || iuv < 0 )
         return 0; /* should not happen */
     /* check edge adjacency */
-    if ( pBNS->edge[iuv].neighbor1  != (u/2-1)  && pBNS->edge[iuv].neighbor1 != v/2-1 ||
+    if ( (pBNS->edge[iuv].neighbor1  != (u/2-1)  && pBNS->edge[iuv].neighbor1 != v/2-1) ||
          (pBNS->edge[iuv].neighbor12 ^ (u/2-1)) != (v/2-1) ) {
         return 0; /* !!! should not happen !!! */
     }
@@ -9287,7 +9288,7 @@ int MarkRingSystemsAltBns( BN_STRUCT* pBNS, int bUnknAltAsNoStereo )
     nBondStack = (AT_NUMB *) (num_edges? inchi_malloc(num_edges*sizeof(nBondStack[0])):NULL); /* special case: no bonds 2006-03 */
     cNeighNumb = (S_CHAR  *) inchi_malloc(num_atoms*sizeof(cNeighNumb[0]));
     /*  check allocation */
-    if ( !nStackAtom || !nRingStack || !nDfsNumber || !nLowNumber || !nBondStack && num_edges || !cNeighNumb 
+    if ( !nStackAtom || !nRingStack || !nDfsNumber || !nLowNumber || (!nBondStack && num_edges) || !cNeighNumb
         ) {
         nNumRingSystems = CT_OUT_OF_RAM;  /*  program error */ /*   <BRKPT> */
         goto exit_function;
@@ -9405,8 +9406,8 @@ found_alt:
                         w = nBondStack[nTopBondStack--];
                         bond[w].nBlockNumberAltBns  = nNumRingSystems; /*  mark the bond */
                         bond[w].nNumAtInBlockAltBns = nNumAtInRingSystem;
-                        if ( i == bond[w].neighbor1 && u == (i ^ bond[w].neighbor12) ||
-                             u == bond[w].neighbor1 && i == (u ^ bond[w].neighbor12)) {
+                        if ( (i == bond[w].neighbor1 && u == (i ^ bond[w].neighbor12)) ||
+                             (u == bond[w].neighbor1 && i == (u ^ bond[w].neighbor12))) {
                             break;
                         }
                     }
@@ -9820,7 +9821,7 @@ int AddRemoveProtonsRestr( inp_ATOM *at, int num_atoms, int *num_protons_to_add,
 
             if ( type ) {
                 for ( bSuccess = 0, j = 0; j < max_j_Aa; j ++ ) {
-                    if ( bSuccess = (type & AaTypMask[2*j]) && (mask && AaTypMask[2*j+1]) ) {
+                    if ( (bSuccess = (type & AaTypMask[2*j])) && (mask && AaTypMask[2*j+1]) ) {
                         break; /* the proton may be added to this atom */
                     }
                 }
@@ -9915,7 +9916,7 @@ int AddRemoveProtonsRestr( inp_ATOM *at, int num_atoms, int *num_protons_to_add,
             
             if ( type ) {
                 for ( bSuccess = 0, j = 0; j < max_j_Ar; j ++ ) {
-                    if ( bSuccess = (type & ArTypMask[2*j]) && (mask && ArTypMask[2*j+1]) ) {
+                    if ( (bSuccess = (type & ArTypMask[2*j])) && (mask && ArTypMask[2*j+1]) ) {
                         break;
                     }
                 }
@@ -10091,4 +10092,3 @@ exit_function:
 }
 
 #endif
-

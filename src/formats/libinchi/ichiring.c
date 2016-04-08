@@ -214,7 +214,7 @@ int GetMinRingSize( inp_ATOM* atom, QUEUE *q, AT_RANK *nAtomLevel, S_CHAR *cSour
     qInt at_no, next;
     int  iat_no, inext;
     
-    while ( qLen = QueueLength( q ) ) {
+    while ( (qLen = QueueLength( q )) ) {
         /*  traverse the next level (next outer ring) */
         for ( i = 0; i < qLen; i ++ ) {
             if ( 0 <= QueueGet( q, &at_no ) ) {

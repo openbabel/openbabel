@@ -420,7 +420,7 @@ int Needs2addXmlEntityRefs( const char *s )
     const char  *p;
     if ( s && *s ) {
         for ( q = xmlRef, len = 0; q->nChar; q ++ ) {
-            for ( p = s; p = strchr( p, q->nChar ); p ++ ) {
+            for ( p = s; (p = strchr( p, q->nChar )); p ++ ) {
                 if ( q->nChar == '&' ) {
                     for ( r = xmlRef; r->nChar; r ++ ) {
                         if ( !memcmp( p, r->pRef, strlen(r->pRef) ) )
@@ -527,14 +527,14 @@ int OutputINChIXmlStructStartTag( INCHI_IOSTREAM *output_file, char *pStr, int i
         inchi_ios_print( output_file, "%s\n", pStr );
         ret = 1; /*  success */
     } else {
-        if ( len = Needs2addXmlEntityRefs( szSdfLabel ) ) {
-            if ( p = (char*) inchi_malloc( len+1 ) ) {
+        if ( (len = Needs2addXmlEntityRefs( szSdfLabel )) ) {
+            if ( (p = (char*) inchi_malloc( len+1 )) ) {
                 AddXmlEntityRefs( szSdfLabel, p );
                 szSdfLabel = pSdfLabel = p;
             }
         }
-        if ( len = Needs2addXmlEntityRefs( szSdfValue ) ) {
-            if ( p = (char*) inchi_malloc( len+1 ) ) {
+        if ( (len = Needs2addXmlEntityRefs( szSdfValue )) ) {
+            if ( (p = (char*) inchi_malloc( len+1 )) ) {
                 AddXmlEntityRefs( szSdfValue, p );
                 szSdfValue = pSdfValue = p;
             }
@@ -605,8 +605,8 @@ int OutputINChIXmlError( INCHI_IOSTREAM *output_file, char *pStr, int nStrLen, i
 
 #if ( ENTITY_REFS_IN_XML_MESSAGES == 1 )
     /*  insert xml entity references if necessary */
-    if ( len = Needs2addXmlEntityRefs( szErrorText ) ) {
-        if ( pNewErrorText = (char*) inchi_malloc( len+1 ) ) {
+    if ( (len = Needs2addXmlEntityRefs( szErrorText )) ) {
+        if ( (pNewErrorText = (char*) inchi_malloc( len+1 )) ) {
             AddXmlEntityRefs( szErrorText, pNewErrorText );
             szErrorText = pNewErrorText;
         }
@@ -1514,9 +1514,9 @@ int OutputINChI1(char *pStr, int nStrLen,
                 bCompExists ++;
                 bCurTaut            = (pINChI->lenTautomer > 0);
                 bCurIso             = (pINChI->nNumberOfIsotopicAtoms>0 || pINChI->nNumberOfIsotopicTGroups > 0 );
-                bCurIsoHPos         = (pINChI->nPossibleLocationsOfIsotopicH && pINChI->nPossibleLocationsOfIsotopicH[0] > 1 || pINChI->lenTautomer > 1);
+                bCurIsoHPos         = ((pINChI->nPossibleLocationsOfIsotopicH && pINChI->nPossibleLocationsOfIsotopicH[0] > 1) || pINChI->lenTautomer > 1);
                 /* present isotopic H + their possible positions AND/OR isotopic atoms */
-                bCurIsoHStereo      = bCurIsoHPos && (bTautIsoHNum || bTautIsoAt) || bCurIso;
+                bCurIsoHStereo      = (bCurIsoHPos && (bTautIsoHNum || bTautIsoAt)) || bCurIso;
                 if ( jj == j && pINChI->bDeleted )
                 {
                     num_comp[j] --;
@@ -1587,14 +1587,14 @@ int OutputINChI1(char *pStr, int nStrLen,
 #endif
                 if ( bRequestedRelativeStereo )
                 {
-                    bCurStereoSp3     = bCurRelative || bCurStereoSp3 && (pINChI->Stereo->nNumberOfStereoCenters > 1 ); /* Fix11 */
+                    bCurStereoSp3     = bCurRelative || (bCurStereoSp3 && (pINChI->Stereo->nNumberOfStereoCenters > 1 )); /* Fix11 */
                     bCurIsoStereoSp3  = bCurIsoRelative   ? bCurIsoStereoSp3 : 0;
                 }
                 else
                 {
                     if ( bRequestedRacemicStereo )
                     {
-                        bCurStereoSp3     = bCurRacemic    > 1 || bCurStereoSp3 && (pINChI->Stereo->nNumberOfStereoCenters > 1 ); /* Fix11 */
+                        bCurStereoSp3     = bCurRacemic    > 1 || (bCurStereoSp3 && (pINChI->Stereo->nNumberOfStereoCenters > 1 )); /* Fix11 */
                         bCurIsoStereoSp3  = bCurIsoRacemic > 1? bCurIsoStereoSp3 : 0;
                     }
                 }
@@ -1614,15 +1614,15 @@ int OutputINChI1(char *pStr, int nStrLen,
                 bStereoAbs[ii]                  |= bCurStereoSp3 && (pINChI->Stereo->nCompInv2Abs != 0);
                 bStereoAbsInverted[ii]          |= bCurStereoSp3 && (pINChI->Stereo->nCompInv2Abs < 0);
                 /* Fix08: missing isotopic inverted flag if isotopic = inverted non-isotopic */
-                bIsotopicStereoAbsInverted[ii]  |= bCurIsoStereoSp3 && (pINChI->StereoIsotopic->nCompInv2Abs < 0) ||
-                                                   !bCurIsoStereoSp3  && pINChI->StereoIsotopic  && pINChI->Stereo &&
+                bIsotopicStereoAbsInverted[ii]  |= (bCurIsoStereoSp3 && (pINChI->StereoIsotopic->nCompInv2Abs < 0)) ||
+                                                   (!bCurIsoStereoSp3  && pINChI->StereoIsotopic  && pINChI->Stereo &&
                                                    pINChI->StereoIsotopic->nCompInv2Abs &&
-                                                   pINChI->StereoIsotopic->nCompInv2Abs != pINChI->Stereo->nCompInv2Abs;
+                                                   pINChI->StereoIsotopic->nCompInv2Abs != pINChI->Stereo->nCompInv2Abs);
                 /* Fix 11: missing /s1 if only isotopic stereo is inverted */
-                bIsotopicStereoAbs[ii]          |= bCurIsoStereoSp3 && (pINChI->StereoIsotopic->nCompInv2Abs != 0) ||
-                                                   !bCurIsoStereoSp3  && pINChI->StereoIsotopic  && pINChI->Stereo &&
+                bIsotopicStereoAbs[ii]          |= (bCurIsoStereoSp3 && (pINChI->StereoIsotopic->nCompInv2Abs != 0)) ||
+                                                   (!bCurIsoStereoSp3  && pINChI->StereoIsotopic  && pINChI->Stereo &&
                                                    pINChI->StereoIsotopic->nCompInv2Abs &&
-                                                   pINChI->StereoIsotopic->nCompInv2Abs != pINChI->Stereo->nCompInv2Abs;
+                                                   pINChI->StereoIsotopic->nCompInv2Abs != pINChI->Stereo->nCompInv2Abs);
 
                 bRelativeStereo[ii]             |= bCurRelative;
                 bIsotopicRelativeStereo[ii]     |= bCurIsoRelative;
@@ -1792,7 +1792,7 @@ int OutputINChI1(char *pStr, int nStrLen,
         }
         tot_len = sprintf(pStr, "%s<%s %s=\"%s\"",
             SP(ind), x_basic, x_ver, x_curr_ver);
-        if ( INCHI_REC == iINChI || INCHI_BAS == iINChI && bDisconnectedCoord )
+        if ( INCHI_REC == iINChI || (INCHI_BAS == iINChI && bDisconnectedCoord) )
         {
             tot_len += sprintf(pStr+tot_len, " %s=\"%d\"", x_reconnected, iINChI );
         }
@@ -2016,7 +2016,7 @@ repeat_INChI_output:
 
         /*  sp2 */
         /*if ( bStereoSp2[iCurTautMode]  )*/
-        if ( nSegmAction = INChI_SegmentAction( sDifSegs[nCurINChISegment][DIFS_b_SBONDS] ) )
+        if ( (nSegmAction = INChI_SegmentAction( sDifSegs[nCurINChISegment][DIFS_b_SBONDS] )) )
         {
             szGetTag( IdentLbl, nTag,  bTag2 = bTag1 | IL_DBND, szTag2, &bAlways );
             tot_len = str_LineStart( szTag2, NULL, 0, pStr, ind );
@@ -2041,7 +2041,7 @@ repeat_INChI_output:
 
         /*  sp3 */
         /*if ( bStereoSp3[iCurTautMode]  )*/
-        if ( nSegmAction = INChI_SegmentAction( sDifSegs[nCurINChISegment][DIFS_t_SATOMS] ) )
+        if ( (nSegmAction = INChI_SegmentAction( sDifSegs[nCurINChISegment][DIFS_t_SATOMS] )) )
         {
             bRelRac     = bRelativeStereo[iCurTautMode] || bRacemicStereo[iCurTautMode];
             szGetTag( IdentLbl, nTag,  bTag2 = bTag1 | IL_SP3S, szTag2, &bAlways );
@@ -2068,7 +2068,7 @@ repeat_INChI_output:
         /* bStereoAbsInverted[iCurTautMode]  */
 
         /* if ( bStereoAbs[iCurTautMode]  ) */
-        if ( nSegmAction = INChI_SegmentAction( sDifSegs[nCurINChISegment][DIFS_m_SP3INV] ) )
+        if ( (nSegmAction = INChI_SegmentAction( sDifSegs[nCurINChISegment][DIFS_m_SP3INV] )) )
         {
             szGetTag( IdentLbl, nTag,  bTag2 = bTag1 | IL_INVS, szTag2, &bAlways );
             tot_len = str_LineStart( szTag2, NULL, 0, pStr, ind );
@@ -2092,7 +2092,7 @@ repeat_INChI_output:
 
         /* stereo type */
         /*if ( bRacemicStereo[iCurTautMode] || bRelativeStereo[iCurTautMode] || bStereoAbs[iCurTautMode] )*/
-        if ( nSegmAction = INChI_SegmentAction( sDifSegs[nCurINChISegment][DIFS_s_STYPE] ) )
+        if ( (nSegmAction = INChI_SegmentAction( sDifSegs[nCurINChISegment][DIFS_s_STYPE] )) )
         {
             const char *p_stereo = bRelativeStereo[iCurTautMode]? x_rel :
                                    bRacemicStereo[iCurTautMode] ? x_rac : x_abs;
@@ -2152,7 +2152,7 @@ repeat_INChI_output:
          * Previous condition if( bHasIsotopicAtoms[iCurTautMode] || bIsotopic && !bXml)
          * did not optput /i in case of only mobile isotopic H
          */
-        if ( nSegmAction = INChI_SegmentAction( sDifSegs[nCurINChISegment][DIFS_i_IATOMS] ) )
+        if ( (nSegmAction = INChI_SegmentAction( sDifSegs[nCurINChISegment][DIFS_i_IATOMS] )) )
         {
             szGetTag( IdentLbl, nTag,  bTag2 = bTag1 | IL_ATMS, szTag2, &bAlways );
             tot_len = str_LineStart( szTag2, NULL, 0, pStr, ind );
@@ -2178,7 +2178,7 @@ repeat_INChI_output:
 
         /*  isotopic #1a:  composition -- exchangeable isotopic H (mobile H only) */
         /*if ( !bSecondNonTautPass && bHasIsoH )*/
-        if ( nSegmAction = INChI_SegmentAction( sDifSegs[nCurINChISegment][DIFS_h_H_ATOMS] ) )
+        if ( (nSegmAction = INChI_SegmentAction( sDifSegs[nCurINChISegment][DIFS_h_H_ATOMS] )) )
         {
             szGetTag( IdentLbl, nTag,  bTag2 = bTag1 | IL_XCGA, szTag2, &bAlways );
             tot_len = str_LineStart( szTag2, NULL, 0, pStr, ind );
@@ -2214,7 +2214,7 @@ repeat_INChI_output:
               isotopic #2:  sp2
              ************************/
             /*if ( bIsotopicStereoSp2[iCurTautMode]  )*/
-            if ( nSegmAction = INChI_SegmentAction( sDifSegs[nCurINChISegment][DIFS_b_SBONDS] ) )
+            if ( (nSegmAction = INChI_SegmentAction( sDifSegs[nCurINChISegment][DIFS_b_SBONDS] )) )
             {
                 szGetTag( IdentLbl, nTag,  bTag3 = bTag2 | IL_DBND, szTag3, &bAlways );
                 tot_len = str_LineStart( szTag3, NULL, 0, pStr, ind );
@@ -2240,7 +2240,7 @@ repeat_INChI_output:
               isotopic #3:  sp3
              ************************/
             /*if ( bIsotopicStereoSp3[iCurTautMode]  )*/
-            if ( nSegmAction = INChI_SegmentAction( sDifSegs[nCurINChISegment][DIFS_t_SATOMS] ) )
+            if ( (nSegmAction = INChI_SegmentAction( sDifSegs[nCurINChISegment][DIFS_t_SATOMS] )) )
             {
                 bRelRac = bIsotopicRelativeStereo[iCurTautMode] || bIsotopicRacemicStereo[iCurTautMode];
                 szGetTag( IdentLbl, nTag,  bTag3 = bTag2 | IL_SP3S, szTag3, &bAlways );
@@ -2264,7 +2264,7 @@ repeat_INChI_output:
             }
 
             /* isotopic #4: abs inverted */
-            if ( nSegmAction = INChI_SegmentAction( sDifSegs[nCurINChISegment][DIFS_m_SP3INV] ) )
+            if ( (nSegmAction = INChI_SegmentAction( sDifSegs[nCurINChISegment][DIFS_m_SP3INV] )) )
             {
                 szGetTag( IdentLbl, nTag,  bTag3 = bTag2 | IL_INVS, szTag3, &bAlways );
                 tot_len = str_LineStart( szTag3, NULL, 0, pStr, ind );
@@ -2287,7 +2287,7 @@ repeat_INChI_output:
             }
 
             /* isotopic #5: stereo type. Do not output if it has already been output in non-iso */
-            if ( nSegmAction = INChI_SegmentAction( sDifSegs[nCurINChISegment][DIFS_s_STYPE] ) )
+            if ( (nSegmAction = INChI_SegmentAction( sDifSegs[nCurINChISegment][DIFS_s_STYPE] )) )
             {
                 const char *p_stereo = bIsotopicRelativeStereo[iCurTautMode]? x_rel :
                                        bIsotopicRacemicStereo[iCurTautMode] ? x_rac : x_abs;
@@ -2593,7 +2593,7 @@ output_aux_info:
             /*  basic.aux-info title, version */
             tot_len = sprintf(pStr, "%s<%s %s=\"%s\"",
                 SP(ind), x_aux_basic, x_ver, x_curr_ver );
-            if ( INCHI_REC == iINChI || INCHI_BAS == iINChI && bDisconnectedCoord )
+            if ( INCHI_REC == iINChI || (INCHI_BAS == iINChI && bDisconnectedCoord) )
             {
                 tot_len += sprintf(pStr+tot_len, " %s=\"%d\"", x_reconnected, iINChI );
             }
@@ -2829,9 +2829,9 @@ repeat_INChI_Aux_Iso_output:
         if ( bIsotopic && !i &&
                           (bIsotopicOrigNumb[iCurTautMode] ||
                            bIsotopicAtomEqu[iCurTautMode] ||
-                           bTautomericOutputAllowed && bTautomeric && bIsotopicTautEqu[iCurTautMode] ||
+                           (bTautomericOutputAllowed && bTautomeric && bIsotopicTautEqu[iCurTautMode]) ||
                            bInvIsotopicStereo[iCurTautMode] ||
-                           bXml && ( bIgn_UU_Sp3_Iso[iCurTautMode] || bIgn_UU_Sp2_Iso[iCurTautMode] ) ) )
+                           (bXml && ( bIgn_UU_Sp3_Iso[iCurTautMode] || bIgn_UU_Sp2_Iso[iCurTautMode] )) ) )
         {
             /*************************************/
             /*   isotopic aux info header        */
@@ -3558,7 +3558,7 @@ int CleanOrigCoord( MOL_COORD szCoord, int delim )
             /* fst = (first mantissa digit); fst=1 if the sign is present, otherwise 0 */
             fst = (szVal[0]!='.' && !isdigit( UCINT szVal[0] ));
             /* dec_pnt = (decimal point position) or last */
-            if ( q = strchr(szVal, '.') ) {
+            if ( (q = strchr(szVal, '.')) ) {
                 dec_pnt = q - szVal;
             } else {
                 dec_pnt = last;
@@ -3610,7 +3610,7 @@ int WriteOrigCoord( int num_inp_atoms, MOL_COORD *szMolCoord, int *i, char *szBu
         if ( NUM_COORD == num_zer ) {
             len = 0;
         } else {
-            if ( p = (char *)memchr( szCurCoord, '\0', sizeof(szCurCoord)) ) {
+            if ( (p = (char *)memchr( szCurCoord, '\0', sizeof(szCurCoord))) ) {
                 len = p - szCurCoord;
             } else {
                 len = sizeof(szCurCoord);
@@ -3712,18 +3712,18 @@ int WriteOrigAtoms( int num_inp_atoms, inp_ATOM *at, int *i, char *szBuf, int bu
                 len += sprintf( szCurAtom + len, "%d", val > 0? val : 0 );
             }
             /* charge */
-            if ( val = at[j].charge ) {
+            if ( (val = at[j].charge) ) {
                 szCurAtom[len++] = val>0? '+' : '-';
                 if ( (val = abs(val)) > 1 ) {
                     len += sprintf( szCurAtom + len, "%d", val );
                 }
             }
             /* radical */
-            if ( val = at[j].radical ) {
+            if ( (val = at[j].radical) ) {
                 len += sprintf(szCurAtom + len, ".%d", val);
             }
             /* isotopic shift */
-            if ( val = at[j].iso_atw_diff ) {
+            if ( (val = at[j].iso_atw_diff) ) {
                 mw = get_atw_from_elnum( at[j].el_number );
                 if ( val == 1 )
                     val = mw;
@@ -3745,7 +3745,7 @@ int WriteOrigAtoms( int num_inp_atoms, inp_ATOM *at, int *i, char *szBuf, int bu
             /* implicit isotopic H */
             if ( NUM_ISO_H(at,j) ) {
                 for ( k = 0; k < NUM_H_ISOTOPES; k ++ ) {
-                    if ( val = at[j].num_iso_H[k] ) {
+                    if ( (val = at[j].num_iso_H[k]) ) {
                         len += sprintf( szCurAtom + len, "%s%c", len == len0? ".":"", szIsoH[k] );
                         if ( val > 1 ) {
                             len += sprintf(szCurAtom + len, "%d", val);
@@ -3907,8 +3907,8 @@ int WriteOrigBonds( int num_inp_atoms, inp_ATOM *at, int *i, char *szBuf, int bu
                         }
                     }
                 }
-                if ( chain_len == 1 && chain_len2 == 1 ||  /* regular stereobond */
-                     chain_len  > 1 && j  > pnxt_atom ) {  /* j  is a cumulene endpoint */
+                if ( (chain_len == 1 && chain_len2 == 1) ||  /* regular stereobond */
+                     (chain_len  > 1 && j  > pnxt_atom) ) {  /* j  is a cumulene endpoint */
                     int m;
                     pcur_atom = j;  /* pcur_atom > pnxt_atom */
                     picur2nxt = k;
@@ -4069,8 +4069,8 @@ int FillOutOrigStruct( ORIG_ATOM_DATA *orig_inp_data, ORIG_STRUCT *pOrigStruct, 
 
     if (orig_inp_data->szCoord) {
 
-        while ( len = WriteOrigCoord( orig_inp_data->num_inp_atoms,
-                                      orig_inp_data->szCoord, &i, szBuf, sizeof(szBuf) )) {
+        while ( (len = WriteOrigCoord( orig_inp_data->num_inp_atoms,
+                                      orig_inp_data->szCoord, &i, szBuf, sizeof(szBuf) )) ) {
             len_coord += len;
         }
         pOrigStruct->szCoord = (char*) inchi_malloc( (len_coord + 1)*sizeof(pOrigStruct->szCoord[0]) );
@@ -4092,8 +4092,8 @@ int FillOutOrigStruct( ORIG_ATOM_DATA *orig_inp_data, ORIG_STRUCT *pOrigStruct, 
 
     /* atoms */
     len_atoms = i = 0;
-    while ( len = WriteOrigAtoms( orig_inp_data->num_inp_atoms,
-                                  orig_inp_data->at, &i, szBuf, sizeof(szBuf), sd)) {
+    while ( (len = WriteOrigAtoms( orig_inp_data->num_inp_atoms,
+                                  orig_inp_data->at, &i, szBuf, sizeof(szBuf), sd)) ) {
         len_atoms += len;
         if ( !orig_inp_data->num_inp_atoms )
             break;
@@ -4111,8 +4111,8 @@ int FillOutOrigStruct( ORIG_ATOM_DATA *orig_inp_data, ORIG_STRUCT *pOrigStruct, 
     /* bonds */
     len_bonds = 0;
     i = 1;
-    while ( len = WriteOrigBonds( orig_inp_data->num_inp_atoms,
-                                  orig_inp_data->at, &i, szBuf, sizeof(szBuf), NULL)) {
+    while ( (len = WriteOrigBonds( orig_inp_data->num_inp_atoms,
+                                  orig_inp_data->at, &i, szBuf, sizeof(szBuf), NULL)) ) {
         len_bonds += len;
         if ( !orig_inp_data->num_inp_atoms )
             break;
@@ -4152,11 +4152,11 @@ Get the two letters encoding the saved InChI creation options.
 
 The first one encodes RecMet/FixedH/SUU/SLUUD options.
 Each of options is a binary switch {ON,OFF}, so it totals to 2*2*2*2=16 values
-which are encoded by capital letters ‘A’ through ‘P’.
+which are encoded by capital letters ï¿½Aï¿½ through ï¿½Pï¿½.
 
 The second character encodes experimental (InChI 1 extension) options KET and 15T.
 Each of these options is a binary switch ON/OFF, so there are 2*2=4 combinations,
-currently encoded by ‘A’ through ‘D’.
+currently encoded by ï¿½Aï¿½ through ï¿½Dï¿½.
 Note that anything but 'A' here would indicate "extended" InChI 1 Also, there is a
 reservation for future needs: the 2nd memo char may accommodate two more ON/OFF
 binary options (at 26-base encoding).
