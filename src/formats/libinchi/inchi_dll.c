@@ -305,12 +305,13 @@ repeat:
         argv[1] = NULL;
     }
 
-    if ( argc == 1
+    if ( (argc == 1
 #ifdef TARGET_API_LIB
         && (!inp || inp->num_atoms <= 0 || !inp->atom)
-#endif        
-        || argc==2 && ( argv[1][0]==INCHI_OPTION_PREFX ) &&
-        (!strcmp(argv[1]+1, "?") || !stricmp(argv[1]+1, "help") ) ) {
+#endif   
+        )
+        || (argc==2 && ( argv[1][0]==INCHI_OPTION_PREFX ) &&
+        (!strcmp(argv[1]+1, "?") || !stricmp(argv[1]+1, "help") )) ) {
         HelpCommandLineParms(log_file);
         out->szLog = log_file->s.pStr;
         memset( log_file, 0, sizeof(*log_file) );
@@ -731,10 +732,10 @@ int AddMOLfileError( char *pStrErr, const char *szMsg )
         int lenStrErr = strlen( pStrErr );
         int lenMsg    = strlen( szMsg );
         char *p = strstr( pStrErr, szMsg );
-        if ( p && (p==pStrErr || *(p-1) == ' ' && (*(p-2) == ';' || *(p-2) == ':' )) &&
+        if ( p && (p==pStrErr || (*(p-1) == ' ' && (*(p-2) == ';' || *(p-2) == ':' ))) &&
                   (p+lenMsg == pStrErr+lenStrErr || 
-                  p[lenMsg] == ';' && p[lenMsg+1] == ' ' ||
-                  p[lenMsg-1]==':' && p[lenMsg]==' ') ) {
+                  (p[lenMsg] == ';' && p[lenMsg+1] == ' ') ||
+                  (p[lenMsg-1]==':' && p[lenMsg]==' ')) ) {
             return 1; /*  reject duplicates */
         }
         if ( lenStrErr + lenMsg + 2*(lenStrErr > 0) < STR_ERR_LEN ) {
@@ -1228,8 +1229,8 @@ int SetBondProperties( inp_ATOM *at, inchi_Atom *ati, int a1, int j,
     if ( p1 && p2 ) {
         n1 = (p1 - at[a1].neighbor);
         n2 = (p2 - at[a2].neighbor);
-        if ( n1+1 < at[a1].valence && is_in_the_list( at[a1].neighbor+n1+1, (AT_NUMB)a2, at[a1].valence-n1-1 ) ||
-             n2+1 < at[a2].valence && is_in_the_list( at[a2].neighbor+n2+1, (AT_NUMB)a1, at[a2].valence-n2-1 ) ) {
+        if ( (n1+1 < at[a1].valence && is_in_the_list( at[a1].neighbor+n1+1, (AT_NUMB)a2, at[a1].valence-n1-1 )) ||
+             (n2+1 < at[a2].valence && is_in_the_list( at[a2].neighbor+n2+1, (AT_NUMB)a1, at[a2].valence-n2-1 )) ) {
             MOLFILE_ERR_SET (*err, 0, "Multiple bonds between two atoms");
             *err |= 2; /*  multiple bonds between atoms */
         } else
@@ -1248,8 +1249,8 @@ int SetBondProperties( inp_ATOM *at, inchi_Atom *ati, int a1, int j,
         n1 = p1? (p1 - at[a1].neighbor) : at[a1].valence ++;
         n2 = p2? (p2 - at[a2].neighbor) : at[a2].valence ++;
         /* the bond is present in one atom only: possibly program error */
-        if ( p1 && (cBondType != at[a1].bond_type[n1] || at[a1].bond_stereo[n1] != cStereoType1 )||
-             p2 && (cBondType != at[a2].bond_type[n2] || at[a2].bond_stereo[n2] != cStereoType2 ) ) {
+        if ( (p1 && (cBondType != at[a1].bond_type[n1] || at[a1].bond_stereo[n1] != cStereoType1)) ||
+             (p2 && (cBondType != at[a2].bond_type[n2] || at[a2].bond_stereo[n2] != cStereoType2)) ) {
             MOLFILE_ERR_SET (*err, 0, "Multiple bonds between two atoms");
             *err |= 2; /*  multiple bonds between atoms */
         } else {
@@ -1332,8 +1333,8 @@ int SetAtomAndBondProperties( inp_ATOM *at, inchi_Atom *ati, int a1,
     if ( ERR_ELEM == (n1 = get_periodic_table_number( at[a1].elname ) ) ) {
         /*  Case when elname contains more than 1 element: extract number of H if possible */
         if ( extract_ChargeRadical( at[a1].elname, &nRadical, &nCharge ) ) {
-            if ( nRadical && at[a1].radical && nRadical != at[a1].radical ||
-                 nCharge  && at[a1].charge  && nCharge  != at[a1].charge ) {
+            if ( (nRadical && at[a1].radical && nRadical != at[a1].radical) ||
+                 (nCharge  && at[a1].charge  && nCharge  != at[a1].charge) ) {
                 MOLFILE_ERR_SET (*err, 0, "Ignored charge/radical redefinition:");
                 MOLFILE_ERR_SET (*err, 0, ati[a1].elname);
             } else {
@@ -1492,7 +1493,7 @@ int InpAtom0DToInchiAtom( inp_ATOM *at, int num_atoms, inchi_OutputStruct *outSt
     if ( num_stereo0D > 0 ) {
         outStruct->stereo0D = (inchi_Stereo0D *)inchi_calloc( num_stereo0D, sizeof(outStruct->stereo0D[0]));
     }
-    if ( num_atoms && !outStruct->atom || num_stereo0D > 0 && !outStruct->stereo0D ) {
+    if ( (num_atoms && !outStruct->atom) || (num_stereo0D > 0 && !outStruct->stereo0D) ) {
         /* allocation failed */
         ret = -1;
         goto exit_function;
@@ -1889,12 +1890,13 @@ repeat:
         argv[1] = NULL;
     }
 
-    if ( argc == 1
+    if ( (argc == 1
 #ifdef TARGET_API_LIB
         && (!inpInChI || !inpInChI->szInChI)
-#endif        
-        || argc==2 && ( argv[1][0]==INCHI_OPTION_PREFX ) &&
-        (!strcmp(argv[1]+1, "?") || !stricmp(argv[1]+1, "help") ) ) {
+#endif   
+        )
+        || (argc==2 && ( argv[1][0]==INCHI_OPTION_PREFX ) &&
+        (!strcmp(argv[1]+1, "?") || !stricmp(argv[1]+1, "help") )) ) {
         HelpCommandLineParms(log_file);
         out->szLog = log_file->s.pStr;
         memset( log_file, 0, sizeof(*log_file) );
@@ -2200,12 +2202,13 @@ repeat:
         argv[1] = NULL;
     }
 
-    if ( argc == 1
+    if ( (argc == 1
 #ifdef TARGET_API_LIB
         && (!inpInChI || !inpInChI->szInChI)
-#endif        
-        || argc==2 && ( argv[1][0]==INCHI_OPTION_PREFX ) &&
-        (!strcmp(argv[1]+1, "?") || !stricmp(argv[1]+1, "help") ) ) {
+#endif   
+        )
+        || (argc==2 && ( argv[1][0]==INCHI_OPTION_PREFX ) &&
+        (!strcmp(argv[1]+1, "?") || !stricmp(argv[1]+1, "help") )) ) {
         HelpCommandLineParms(log_file);
         outStruct->szLog = log_file->s.pStr;
         nRet = _IS_EOF;
