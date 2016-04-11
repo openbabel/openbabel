@@ -148,5 +148,5 @@ int main(int argc,char **argv)
       conv.Write(&mol, &cout);
   } // end for loop
 
-  return(1);
+  return(0);
 }
