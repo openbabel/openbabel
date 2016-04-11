@@ -171,13 +171,13 @@ int Eql_INChI_Isotopic( INChI *i1, INChI *i2 )
               i1->nNumberOfIsotopicAtoms == i2->nNumberOfIsotopicAtoms &&
               i1->nNumberOfIsotopicTGroups == i2->nNumberOfIsotopicTGroups &&
              ( !i1->nNumberOfIsotopicAtoms   ||
-               i1->IsotopicAtom && i2->IsotopicAtom &&
+               (i1->IsotopicAtom && i2->IsotopicAtom &&
                !memcmp( i1->IsotopicAtom,  i2->IsotopicAtom,
-                        i1->nNumberOfIsotopicAtoms  * sizeof(i1->IsotopicAtom[0]) ) ) &&
+                        i1->nNumberOfIsotopicAtoms  * sizeof(i1->IsotopicAtom[0]) )) ) &&
              ( !i1->nNumberOfIsotopicTGroups ||
-               i1->IsotopicTGroup && i2->IsotopicTGroup &&
+               (i1->IsotopicTGroup && i2->IsotopicTGroup &&
                !memcmp( i1->IsotopicTGroup, i2->IsotopicTGroup,
-                        i1->nNumberOfIsotopicTGroups * sizeof(i1->IsotopicAtom[0]) ) );
+                        i1->nNumberOfIsotopicTGroups * sizeof(i1->IsotopicAtom[0]) )) );
     return eq;
 
 }
@@ -243,8 +243,8 @@ int Eql_INChI_Aux_Num( INChI_Aux *a1, int eql1, INChI_Aux *a2, int eql2 )
     if ( (len = a1->nNumberOfAtoms) <= 0 || len != a2->nNumberOfAtoms || a1->bDeleted || a2->bDeleted ) {
         return 0;
     }
-    if ( (eql1 & EQL_NUM_ISO) && !a1->bIsIsotopic ||
-         (eql2 & EQL_NUM_ISO) && !a2->bIsIsotopic ) {
+    if ( ((eql1 & EQL_NUM_ISO) && !a1->bIsIsotopic) ||
+         ((eql2 & EQL_NUM_ISO) && !a2->bIsIsotopic) ) {
         return 0;
     }
 
@@ -527,7 +527,7 @@ int MakeCtStringOld( AT_NUMB *LinearCT, int nLenCT, int bAddDelim,
         for ( i = 0; i < nLenCT && nLen < nLen_szLinearCT; i ++ ) {
             bLessThanPrev = 0;
             if ( !(nCtMode & CT_MODE_NO_ORPHANS) || ((bLessThanPrev=LinearCT[i] < nMax) ||
-                  i+1 < nLenCT && LinearCT[i+1] < (nMax=LinearCT[i])) ) {
+                  (i+1 < nLenCT && LinearCT[i+1] < (nMax=LinearCT[i]))) ) {
                 nValue = LinearCT[i];
                 if ( nCtMode & CT_MODE_ABC_NUMBERS ) {
                     len = MakeAbcNumber( szValue, (int)sizeof(szValue), (!bNext && bAddDelim)? ITEM_DELIMETER : NULL, nValue );
@@ -1479,7 +1479,7 @@ int MakeAbcNumber( char *szString, int nStringLen, const char *szLeadingDelim, i
         nValue = -nValue;
     }
     for ( q = p; nValue && --nStringLen; nValue /= ALPHA_BASE ) {
-        if ( nChar = nValue % ALPHA_BASE ) {
+        if ( (nChar = nValue % ALPHA_BASE) ) {
             nChar = ALPHA_ONE + nChar - 1;
         } else {
             nChar = ALPHA_ZERO;
@@ -1592,7 +1592,7 @@ int MakeDecNumber( char *szString, int nStringLen, const char *szLeadingDelim, i
         nValue = -nValue;
     }
     for ( q = p; nValue && --nStringLen; nValue /= DECIMAL_BASE ) {
-        if ( nChar = nValue % DECIMAL_BASE ) {
+        if ( (nChar = nValue % DECIMAL_BASE) ) {
             nChar = DECIMAL_ONE + nChar - 1;
         } else {
             nChar = DECIMAL_ZERO;

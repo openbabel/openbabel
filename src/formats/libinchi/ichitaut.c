@@ -277,7 +277,7 @@ void AddAtom2DA( AT_RANK num_DA[], inp_ATOM *atom, int at_no, int bSubtract )
     inp_ATOM *at = atom + at_no;
     int       nDelta, nAcidic_O;
 
-    if (at->charge < -1 || at->charge == 1 && !at->c_point || at->charge > 1 )
+    if (at->charge < -1 || (at->charge == 1 && !at->c_point) || at->charge > 1 )
         return;
 
     nDelta = ( bSubtract == 1 )? -1 : 1;
@@ -292,9 +292,9 @@ void AddAtom2DA( AT_RANK num_DA[], inp_ATOM *atom, int at_no, int bSubtract )
     if ( bSubtract == 2 ) { /* 2: fill, otherwise add */
         memset( num_DA, 0, TG_NUM_DA * sizeof(num_DA[0]) );
     }
-    if ( at->charge <= 0 && at->valence == at->chem_bonds_valence ||
+    if ( (at->charge <= 0 && at->valence == at->chem_bonds_valence) ||
          /* neutral or negative donor */
-         at->charge > 0  && at->valence + 1 == at->chem_bonds_valence
+         (at->charge > 0  && at->valence + 1 == at->chem_bonds_valence)
          /* positively charged donor */ 
        ) {
         if ( at->charge < 0 ) {
@@ -306,8 +306,8 @@ void AddAtom2DA( AT_RANK num_DA[], inp_ATOM *atom, int at_no, int bSubtract )
             num_DA[TG_Num_dO] += nAcidic_O;
         }
     } else
-    if ( at->charge <= 0 && at->valence + 1 == at->chem_bonds_valence ||
-         at->charge > 0  && at->valence + 2 == at->chem_bonds_valence ) {
+    if ( (at->charge <= 0 && at->valence + 1 == at->chem_bonds_valence) ||
+         (at->charge > 0  && at->valence + 2 == at->chem_bonds_valence) ) {
         /* acceptor */
         if ( at->charge < 0 ) {
             num_DA[TG_Num_aM] += nDelta;
@@ -544,7 +544,7 @@ int RegisterEndPoints( T_GROUP_INFO *t_group_info,
     prev_group        = EndPoint[0].nGroupNumber;
     prev_eqnum        = EndPoint[0].nEquNumber;
     for ( i = j = k = 0; i < nNumEndPoints; i ++ ) {
-        if ( group = EndPoint[i].nGroupNumber ) {
+        if ( (group = EndPoint[i].nGroupNumber) ) {
             if ( group < nLeastGroupNumber ) {
                 nLeastGroupNumber = group;
             }
@@ -644,7 +644,7 @@ int RegisterEndPoints( T_GROUP_INFO *t_group_info,
 
      nNumGroups = 0; /* counts the groups to be renumbered */
      for ( i = j = 0; i < nNumEndPoints; i ++ ) {
-         if ( group = EndPoint[i].nGroupNumber ) {
+         if ( (group = EndPoint[i].nGroupNumber) ) {
              if ( group == EndPoint[i].nEquNumber ) {
                 continue; /* ignore: the endpoint belongs to the same t-group as before */
              }
@@ -794,7 +794,7 @@ int RegisterEndPoints( T_GROUP_INFO *t_group_info,
 #endif
          /* renumber endpoints */
          for ( i = 0; i < num_atoms; i ++ ) {
-             if ( group = at[i].endpoint ) {
+             if ( (group = at[i].endpoint) ) {
                  if ( !(at[i].endpoint = nNewTgNumber[group]) || nNextGroupNumber <= nNewTgNumber[group] ) {
                      ret = -1; /* program error */
                      goto exit_function;
@@ -935,7 +935,7 @@ int GetNeutralRepsIfNeeded( AT_NUMB *pri, AT_NUMB *prj, inp_ATOM *at, int num_at
                        when looking for the alt path to discover the tautomerism.
                        Therefore we need to find a neutral t-group representative */
                     /* at[rj] */
-                    if ( endpoint = at[rj].endpoint ) {
+                    if ( (endpoint = at[rj].endpoint) ) {
                         for ( i = 0; i < nNumEndPoints; i ++ ) {
                             if ( (r=EndPoint[i].nAtomNumber) == *prj )
                                 continue; /* ignore at[*prj] */
@@ -971,7 +971,7 @@ int GetNeutralRepsIfNeeded( AT_NUMB *pri, AT_NUMB *prj, inp_ATOM *at, int num_at
                         }
                     }
                     /* at[ri] */
-                    if ( endpoint = at[ri].endpoint ) {
+                    if ( (endpoint = at[ri].endpoint) ) {
                         for ( i = 0; i < nNumEndPoints; i ++ ) {
                             if ( (r=EndPoint[i].nAtomNumber) == *pri )
                                 continue;
@@ -1115,9 +1115,9 @@ int FindAccessibleEndPoints( T_ENDPOINT *EndPoint, int *nNumEndPoints, T_BONDPOS
     /* check whether each pair belongs to the same group and establish the equivalence(s) */
     for ( i = 0, nNumFoundEqu=0; i < nNumTgroupNumbers; i ++ ) {
         for ( j = i+1; j < nNumTgroupNumbers; j ++ ) {
-            if ( nTGroupEqu[i] != nTGroupEqu[j] && (i>=nNumDiffTGroupNumbers || j>=nNumDiffTGroupNumbers) ||
+            if ( (nTGroupEqu[i] != nTGroupEqu[j] && (i>=nNumDiffTGroupNumbers || j>=nNumDiffTGroupNumbers)) ||
                  /* equivalence of a t-group and a non-t-group atom */
-                 !nTGroupEqu[i] && !nTGroupEqu[j]
+                 (!nTGroupEqu[i] && !nTGroupEqu[j])
                  /* equivalence of two non-t-group atoms */
                ) {
                 ri = nTGroupRepresenative[i];
@@ -1406,7 +1406,7 @@ int GetChargeType( inp_ATOM *atom, int iat, S_CHAR *cChargeSubtype )
     /* find candidates */
     for ( i = 0; i < NUM_C_TYPES; i ++ ) {
         if ( !strcmp( at->elname, CType[i].elname ) &&
-             (!CType[i].num_bonds || CType[i].num_bonds==at->valence && at->nNumAtInRingSystem >= 5) ) {
+             (!CType[i].num_bonds || (CType[i].num_bonds==at->valence && at->nNumAtInRingSystem >= 5)) ) {
             nEndpointValence = (S_CHAR)get_endpoint_valence(at->el_number );
             if ( bCanBeACPoint( at, CType[i].charge, CType[i].cChangeValence, CType[i].neutral_bonds_valence,
                                 CType[i].neutral_valence, nEndpointValence, cChargeSubtype ) ) {
@@ -1424,9 +1424,9 @@ int CmpCCandidates( const void *a1, const void *a2 )
     const C_CANDIDATE *c1 = (const C_CANDIDATE *)a1;
     const C_CANDIDATE *c2 = (const C_CANDIDATE *)a2;
     int ret;
-    if ( ret = (int)c1->type - (int)c2->type )
+    if ( (ret = (int)c1->type - (int)c2->type) )
         return ret;
-    if ( ret = (int)c1->subtype - (int)c2->subtype )
+    if ( (ret = (int)c1->subtype - (int)c2->subtype) )
         return ret;
     ret = (int)c1->atnumber - (int)c2->atnumber;
     return ret;
@@ -1722,9 +1722,9 @@ int GetSaltChargeType(inp_ATOM *at, int at_no, T_GROUP_INFO *t_group_info, int *
     *s_subtype = 0; /* initialize the output */
     /* check whether it is a candidate */
     if ( at[at_no].valence != 1 ||
-         at[at_no].radical && at[at_no].radical != RADICAL_SINGLET ||
+         (at[at_no].radical && at[at_no].radical != RADICAL_SINGLET) ||
          at[at_no].charge < -1 ||
-         at[at_no].charge > 0 && !at[at_no].c_point ) {
+         (at[at_no].charge > 0 && !at[at_no].c_point) ) {
         return -1;
     }
     
@@ -1749,7 +1749,7 @@ int GetSaltChargeType(inp_ATOM *at, int at_no, T_GROUP_INFO *t_group_info, int *
     if ( at[iC].el_number != el_number_C ||
          at[iC].chem_bonds_valence + at[iC].num_H != 4 || /* allow =C(H)-OH or -C(H)=O */
          at[iC].charge         ||
-         at[iC].radical && at[iC].radical != RADICAL_SINGLET ||
+         (at[iC].radical && at[iC].radical != RADICAL_SINGLET) ||
          at[iC].valence == at[iC].chem_bonds_valence ) {
         return -1; /* oxigen is connected to a wrong atom */
     }
@@ -1883,18 +1883,18 @@ int GetOtherSaltChargeType( inp_ATOM *at, int at_no, T_GROUP_INFO *t_group_info,
         for ( j = 0; j < at[at_no].valence; j ++ ) {
             bond_type   = (int)at[at_no].bond_type[j] & BOND_TYPE_MASK;
             centerpoint = (int)at[at_no].neighbor[j];  /*  a centerpoint candidate */
-            if ( ( eif.cAcceptor && (bond_type == BOND_DOUBLE  || 
+            if ( ( (eif.cAcceptor && (bond_type == BOND_DOUBLE  ||
                                      bond_type == BOND_ALTERN  || /* possibly double */
                                      bond_type == BOND_ALT12NS ||
-                                     bond_type == BOND_TAUTOM   )  ||
-                   eif.cDonor    && (bond_type == BOND_SINGLE  ||
+                                     bond_type == BOND_TAUTOM   ))  ||
+                   (eif.cDonor    && (bond_type == BOND_SINGLE  ||
                                      bond_type == BOND_ALTERN  || /* possibly single */
                                      bond_type == BOND_ALT12NS ||
-                                     bond_type == BOND_TAUTOM   )  ) &&
+                                     bond_type == BOND_TAUTOM   ))  ) &&
                    (at[centerpoint].chem_bonds_valence >  at[centerpoint].valence ||
                    /* check for possible endpoint added 2004-02-24 */
-                    at[centerpoint].chem_bonds_valence == at[centerpoint].valence &&
-                    (at[centerpoint].endpoint || at[centerpoint].c_point) /* tautomerism or charge may increment at[centerpoint].chem_bonds_valence*/ ) && 
+                    (at[centerpoint].chem_bonds_valence == at[centerpoint].valence &&
+                    (at[centerpoint].endpoint || at[centerpoint].c_point)) /* tautomerism or charge may increment at[centerpoint].chem_bonds_valence*/ ) &&
                    is_centerpoint_elem( at[centerpoint].el_number ) ) {
                 num_centerpoints ++;
                 break; /* at least one possibly centerpoint neighbor has been found */
@@ -1993,7 +1993,7 @@ int GetOtherSaltType( inp_ATOM *at, int at_no, int *s_subtype )
     type = 2; /* non-tautomeric p-donor or acceptor: C-SH, C-S(-) */
 
     if ( !(endpoint_valence = nGetEndpointInfo( at, at_no, &eif )) ||
-         eif.cMoveableCharge && !at[at_no].c_point || !eif.cDonor || eif.cAcceptor ) {
+         (eif.cMoveableCharge && !at[at_no].c_point) || !eif.cDonor || eif.cAcceptor ) {
         return -1; /* not a possible -SH or -S(-) */
     } else {
         /* at[at_no] is not not in a tautomeric group; use eif previously filled out by nGetEndpointInfo */
@@ -2002,7 +2002,7 @@ int GetOtherSaltType( inp_ATOM *at, int at_no, int *s_subtype )
         bond_type   = (int)at[at_no].bond_type[0] & BOND_TYPE_MASK;
         if ( at[centerpoint].el_number != el_number_C ||
              at[centerpoint].charge ||
-             at[centerpoint].radical && at[centerpoint].radical != RADICAL_SINGLET ||
+             (at[centerpoint].radical && at[centerpoint].radical != RADICAL_SINGLET) ||
              at[centerpoint].valence != at[centerpoint].chem_bonds_valence ) {
             return -1; /* not a carbon with all single bonds */
         }
@@ -2291,8 +2291,8 @@ bFound2Pairs:
         for ( i = 0; i < nNumLeftCandidates; i ++ ) {
             nCurDonorPairs = nCurAcceptorPairs = 0;
             for ( j = 0; j <= i; j ++ ) {
-                bAlreadyTested = (i < i1 || i == i1 && j <= j1);
-                if ( bAlreadyTested && (cPAIR(i,j) & ACCEPTOR_PAIR) || !bAlreadyTested ) {
+                bAlreadyTested = (i < i1 || (i == i1 && j <= j1));
+                if ( (bAlreadyTested && (cPAIR(i,j) & ACCEPTOR_PAIR)) || !bAlreadyTested ) {
                     /* checking for acceptor pair */
                     if ( (s_candidate[i].subtype & SALT_ACCEPTOR) && (s_candidate[j].subtype & SALT_ACCEPTOR) &&
                          (ret = bExistsAltPath( pBNS, pBD, NULL, at, num_atoms, s_candidate[i].atnumber,
@@ -2334,7 +2334,7 @@ bFound2Pairs:
                         }
                     }
                 }
-                if ( bAlreadyTested && (cPAIR(i,j) & DONOR_PAIR) || !bAlreadyTested ) {
+                if ( (bAlreadyTested && (cPAIR(i,j) & DONOR_PAIR)) || !bAlreadyTested ) {
                     /* checking for donor pair */
                     if ( (s_candidate[i].subtype & SALT_DONOR) && (s_candidate[j].subtype & SALT_DONOR) &&
                          (ret = bExistsAltPath( pBNS, pBD, NULL, at, num_atoms, s_candidate[i].atnumber,
@@ -2936,8 +2936,8 @@ int MergeSaltTautGroups( inp_ATOM *at, int num_atoms, S_GROUP_INFO *s_group_info
                  /* >C-SH, >C-S(-); S=S,Se,Te */
                  
                  /* other proton donor or acceptor */
-                 bHasAcidicHydrogen( at, i)    && ((s_type=3), (s_subtype = SALT_p_DONOR)) ||
-                 bHasAcidicMinus( at, i)       && ((s_type=3), (s_subtype = SALT_p_ACCEPTOR))
+                 (bHasAcidicHydrogen( at, i)    && ((s_type=3), (s_subtype = SALT_p_DONOR))) ||
+                 (bHasAcidicMinus( at, i)       && ((s_type=3), (s_subtype = SALT_p_ACCEPTOR)))
                ) {
 
                 if ( nNumCandidates >= nMaxNumCandidates ) {
@@ -2950,7 +2950,7 @@ int MergeSaltTautGroups( inp_ATOM *at, int num_atoms, S_GROUP_INFO *s_group_info
                     continue; /* ignore non-tautomeric N */
                 }
                 if ( !( s_subtype & SALT_DONOR_ALL ) ||
-                     (s_subtype & SALT_ACCEPTOR) && !at[i].endpoint ) {
+                     ((s_subtype & SALT_ACCEPTOR) && !at[i].endpoint) ) {
                     continue;  /* do not include non-taut acceptors like -C=O */
                 }
                 s_candidate[nNumCandidates].atnumber = i;
@@ -2984,8 +2984,8 @@ int MergeSaltTautGroups( inp_ATOM *at, int num_atoms, S_GROUP_INFO *s_group_info
              (t_group_info->tni.bNormalizationFlags & FLAG_FORCE_SALT_TAUT) ) {
             /* force merge even though no negative charges are present */
             if ( nNumCandidates <= 1 ||
-                 (!(s_subtype_all & SALT_DONOR_Neg2) || !(s_subtype_all & SALT_DONOR_H2)) &&
-                 !t_group_info->num_t_groups ) {
+                 ((!(s_subtype_all & SALT_DONOR_Neg2) || !(s_subtype_all & SALT_DONOR_H2)) &&
+                 !t_group_info->num_t_groups) ) {
                 s_group_info->num_candidates = -1; /* no candidate exists */
                 return 0;
             }
@@ -3100,13 +3100,13 @@ int MakeIsotopicHGroup(inp_ATOM *at, int num_atoms, S_GROUP_INFO *s_group_info,
             } else {
                 bHasH = (int)at[i].num_H;
             }
-            if ( bHasH && at[i].endpoint || /* tautomeric atoms */
+            if ( (bHasH && at[i].endpoint) || /* tautomeric atoms */
 
                  /* non-tautomeric heteroatoms that 
                     (a) have H and 
                     (b) may be donors of H
                     therefore may exchange isotopic-non-isotopic H */
-                 bHasH &&
+                 (bHasH &&
                  (0 == (s_type = GetSaltChargeType( at, i, t_group_info, &s_subtype )) ||
                  /* -C=O or =C-OH, O = S, Se, Te */
                  
@@ -3118,9 +3118,9 @@ int MakeIsotopicHGroup(inp_ATOM *at, int num_atoms, S_GROUP_INFO *s_group_info,
                  /* >C-SH, >C-S(-); S=S,Se,Te */
                  
                  /* other proton donor or acceptor */
-                 bHasAcidicHydrogen( at, i) && ((s_type=3), (s_subtype = SALT_p_DONOR)) ||
-                 bHasAcidicMinus( at, i)    && ((s_type=3), (s_subtype = SALT_p_ACCEPTOR)) ||
-                 bHasOtherExchangableH (at, i) && ((s_type=3), (s_subtype = SALT_DONOR_H)) )
+                 (bHasAcidicHydrogen( at, i) && ((s_type=3), (s_subtype = SALT_p_DONOR))) ||
+                 (bHasAcidicMinus( at, i)    && ((s_type=3), (s_subtype = SALT_p_ACCEPTOR))) ||
+                 (bHasOtherExchangableH (at, i) && ((s_type=3), (s_subtype = SALT_DONOR_H))) ))
                  
                ) {
 
@@ -3276,7 +3276,7 @@ int MarkTautomerGroups( inp_ATOM *at, int num_atoms, T_GROUP_INFO *t_group_info,
     /*  1-3 tautomers */
     for ( i = 0; i < num_atoms; i ++ ) {
         /*  find possible endpoint Z = at[i] */
-        if ( endpoint_valence = nGetEndpointInfo( at, i, &eif1 ) ) {
+        if ( (endpoint_valence = nGetEndpointInfo( at, i, &eif1 )) ) {
             /*  1st endpoint candidate found. Find centerpoint candidate */
             for ( j = 0; j < at[i].valence; j ++ ) {
                 bond_type   = (int)at[i].bond_type[j] & ~BOND_MARK_ALL;
@@ -3420,7 +3420,7 @@ int MarkTautomerGroups( inp_ATOM *at, int num_atoms, T_GROUP_INFO *t_group_info,
         /* 1,3 keto-enol tautomerism */
         for ( i = 0; i < num_atoms; i ++ ) {
             /*  find possible endpoint Z = at[i] */
-            if ( endpoint_valence = nGetEndpointInfo_KET( at, i, &eif1 ) ) {
+            if ( (endpoint_valence = nGetEndpointInfo_KET( at, i, &eif1 )) ) {
                 /*  1st endpoint candidate found. Find centerpoint candidate */
                 for ( j = 0; j < at[i].valence; j ++ ) {
                     bond_type   = (int)at[i].bond_type[j] & ~BOND_MARK_ALL;
@@ -3729,10 +3729,10 @@ int MarkTautomerGroups( inp_ATOM *at, int num_atoms, T_GROUP_INFO *t_group_info,
                         continue;
                     
                     bond_type = (at[i1].bond_type[j] & ~BOND_MARK_ALL);
-                    if ( bond_type != BOND_SINGLE &&
+                    if ( (bond_type != BOND_SINGLE &&
                          bond_type != BOND_TAUTOM &&
                          bond_type != BOND_ALT12NS &&
-                         bond_type != BOND_ALTERN ||  /* added 1-15-2002 */
+                         bond_type != BOND_ALTERN) ||  /* added 1-15-2002 */
                          2 != at[i2].valence      ||
                          3 != (endpoint_valence2 = nGetEndpointInfo( at, i2, &eif2 ) ) ) {
                         continue; /*  not a nitrogen atom or a wrong valence or not a single bond */
@@ -4026,8 +4026,8 @@ int make_a_copy_of_t_group_info( T_GROUP_INFO *t_group_info, T_GROUP_INFO *t_gro
     free_t_group_info( t_group_info );
     if ( t_group_info_orig && t_group_info ) {
         if ( (len=t_group_info_orig->max_num_t_groups) > 0 ) {
-            if (t_group_info->t_group =
-                (T_GROUP*) inchi_malloc( len * sizeof(t_group_info->t_group[0]))) {
+            if ( (t_group_info->t_group =
+                 (T_GROUP*) inchi_malloc( len * sizeof(t_group_info->t_group[0]))) ) {
                 memcpy(t_group_info->t_group,
                        t_group_info_orig->t_group,
                        len * sizeof(t_group_info->t_group[0]));
@@ -4036,8 +4036,8 @@ int make_a_copy_of_t_group_info( T_GROUP_INFO *t_group_info, T_GROUP_INFO *t_gro
             }
         }
         if ( (len = t_group_info_orig->nNumEndpoints) > 0 ) {
-            if (t_group_info->nEndpointAtomNumber =
-                (AT_NUMB*) inchi_malloc( len * sizeof(t_group_info->nEndpointAtomNumber[0]))) {
+            if ( (t_group_info->nEndpointAtomNumber =
+                 (AT_NUMB*) inchi_malloc( len * sizeof(t_group_info->nEndpointAtomNumber[0]))) ) {
                 memcpy(t_group_info->nEndpointAtomNumber,
                        t_group_info_orig->nEndpointAtomNumber,
                        len * sizeof(t_group_info->nEndpointAtomNumber[0]));
@@ -4046,8 +4046,8 @@ int make_a_copy_of_t_group_info( T_GROUP_INFO *t_group_info, T_GROUP_INFO *t_gro
             }
         }
         if ( (len = t_group_info_orig->num_t_groups) > 0 ) {
-            if (t_group_info->tGroupNumber =
-                (AT_NUMB*) inchi_malloc( len * TGSO_TOTAL_LEN * sizeof(t_group_info->tGroupNumber[0]))) {
+            if ( (t_group_info->tGroupNumber =
+                 (AT_NUMB*) inchi_malloc( len * TGSO_TOTAL_LEN * sizeof(t_group_info->tGroupNumber[0]))) ) {
                 memcpy(t_group_info->tGroupNumber,
                        t_group_info_orig->tGroupNumber,
                        len * TGSO_TOTAL_LEN * sizeof(t_group_info->tGroupNumber[0]));
@@ -4056,8 +4056,8 @@ int make_a_copy_of_t_group_info( T_GROUP_INFO *t_group_info, T_GROUP_INFO *t_gro
             }
         }
         if ( (len = t_group_info_orig->nNumIsotopicEndpoints) > 0 ) {
-            if (t_group_info->nIsotopicEndpointAtomNumber =
-                (AT_NUMB*) inchi_malloc( len * sizeof(t_group_info->nIsotopicEndpointAtomNumber[0]))) {
+            if ( (t_group_info->nIsotopicEndpointAtomNumber =
+                 (AT_NUMB*) inchi_malloc( len * sizeof(t_group_info->nIsotopicEndpointAtomNumber[0]))) ) {
                 memcpy(t_group_info->nIsotopicEndpointAtomNumber,
                        t_group_info_orig->nIsotopicEndpointAtomNumber,
                        len * sizeof(t_group_info->nIsotopicEndpointAtomNumber[0]));
@@ -4273,7 +4273,7 @@ int CountTautomerGroups( sp_ATOM *at, int num_atoms, T_GROUP_INFO *t_group_info 
      * nCurrEndpointAtNoPos[j] is an index of the atom number in the nEndpointAtomNumber[]
      */
     for ( i = 0; i < num_atoms; i ++ ) {
-        if ( j = (int)at[i].endpoint ) {
+        if ( (j = (int)at[i].endpoint) ) {
             j = (int)(at[i].endpoint = nTautomerGroupNumber[j])-1; /*  new t_group number */
             if ( j >= 0 ) { /*  j=-1 in case of no mobile hydrogen atoms (charges only), group being removed */
                 if ( nCurrEndpointAtNoPos[j] >=   /*  debug only */
@@ -4309,7 +4309,7 @@ exit_function:
     t_group_info->nNumEndpoints = 0;
     t_group_info->num_t_groups  = 0;
     if ( !ret && ((t_group_info->tni.bNormalizationFlags & FLAG_NORM_CONSIDER_TAUT) ||
-                   t_group_info->nNumIsotopicEndpoints>1 && (t_group_info->bTautFlagsDone & (TG_FLAG_FOUND_ISOTOPIC_H_DONE | TG_FLAG_FOUND_ISOTOPIC_ATOM_DONE))) ) {
+                   (t_group_info->nNumIsotopicEndpoints>1 && (t_group_info->bTautFlagsDone & (TG_FLAG_FOUND_ISOTOPIC_H_DONE | TG_FLAG_FOUND_ISOTOPIC_ATOM_DONE)))) ) {
         ret = 1; /* only protons have been (re)moved or neitralization happened */
     }
     return ret;

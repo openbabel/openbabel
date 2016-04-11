@@ -114,9 +114,9 @@ int InChI2Atom( ICHICONST INPUT_PARMS *ip,  STRUCT_DATA *sd, const char *szCurHd
             OneInput->nNumProtons[iINChI][TAUT_YES].pNumProtons[iComponent].nNumRemovedProtons;
     }
 
-    if ( bMobileH == TAUT_NON || bMobileH == TAUT_YES && OneInput->pInpInChI[iINChI][TAUT_NON] &&
+    if ( bMobileH == TAUT_NON || (bMobileH == TAUT_YES && OneInput->pInpInChI[iINChI][TAUT_NON] &&
          OneInput->pInpInChI[iINChI][TAUT_NON][iComponent].nNumberOfAtoms > 0 &&
-        !OneInput->pInpInChI[iINChI][TAUT_NON][iComponent].bDeleted ) {
+        !OneInput->pInpInChI[iINChI][TAUT_NON][iComponent].bDeleted) ) {
         pStruct->bFixedHExists = 1;
     }
     if ( bMobileH == TAUT_NON && iComponent < OneInput->nNumComponents[iINChI][TAUT_YES] &&
@@ -183,7 +183,7 @@ int MarkDisconectedIdenticalToReconnected ( InpInChI *pOneInput )
                     !CompareReversedINChI( pOneInput->pInpInChI[INCHI_REC][TAUT_NON]+k2,
                                            pOneInput->pInpInChI[INCHI_BAS][TAUT_NON]+k1,
                                            NULL, NULL );
-        if ( eqM && (!isF1 && !isF2 || eqF ) ) {
+        if ( eqM && ((!isF1 && !isF2) || eqF ) ) {
             pOneInput->pInpInChI[INCHI_BAS][TAUT_YES][k1].nLink = -(k2+1);
             pOneInput->pInpInChI[INCHI_REC][TAUT_YES][k2].nLink =  (k1+1);
             if ( eqF ) {
@@ -253,19 +253,19 @@ int MergeStructureComponents( ICHICONST INPUT_PARMS *ip, STRUCT_DATA *sd, long n
     ret = 0;
     pOneInput->num_atoms = 0;
     /* select highest detail level */
-    if ( num_components = pOneInput->nNumComponents[INCHI_REC][TAUT_NON] ) {
+    if ( (num_components = pOneInput->nNumComponents[INCHI_REC][TAUT_NON]) ) {
         iInchiRec = INCHI_REC;
         iMobileH  = TAUT_NON;
     } else
-    if ( num_components = pOneInput->nNumComponents[INCHI_REC][TAUT_YES] ) {
+    if ( (num_components = pOneInput->nNumComponents[INCHI_REC][TAUT_YES]) ) {
         iInchiRec = INCHI_REC;
         iMobileH  = TAUT_YES;
     } else
-    if ( num_components = pOneInput->nNumComponents[INCHI_BAS][TAUT_NON] ) {
+    if ( (num_components = pOneInput->nNumComponents[INCHI_BAS][TAUT_NON]) ) {
         iInchiRec = INCHI_BAS;
         iMobileH  = TAUT_NON;
     } else
-    if ( num_components = pOneInput->nNumComponents[INCHI_BAS][TAUT_YES] ) {
+    if ( (num_components = pOneInput->nNumComponents[INCHI_BAS][TAUT_YES]) ) {
         iInchiRec = INCHI_BAS;
         iMobileH  = TAUT_YES;
     } else {
@@ -316,9 +316,9 @@ int MergeStructureComponents( ICHICONST INPUT_PARMS *ip, STRUCT_DATA *sd, long n
         pStruct1 = pStruct[iInchiRec][iMobileH][k].num_atoms? pStruct[iInchiRec][iMobileH]+k :
                    iAlternH>=0 &&
                    pStruct[iInchiRec][iAlternH][k].num_atoms? pStruct[iInchiRec][iAlternH]+k : NULL;
-        if ( len = nAtomOffs[k+1] - nAtomOffs[k] ) {
+        if ( (len = nAtomOffs[k+1] - nAtomOffs[k]) ) {
             memcpy( at + nAtomOffs[k], pStruct1->at2, len * sizeof(at[0]) );
-            if ( len2 = nDelHOffs[k+1] - nDelHOffs[k] ) {
+            if ( (len2 = nDelHOffs[k+1] - nDelHOffs[k]) ) {
                 memcpy( at + nDelHOffs[k], pStruct1->at2+len, len2 * sizeof(at[0]) );
             }
         }
@@ -746,7 +746,7 @@ int AllInchiToStructure( ICHICONST INPUT_PARMS *ip_inp, STRUCT_DATA *sd_inp, lon
             }
             /* InChI --> structure conversion for all components except duplicated */
             for ( k = 0; k < cur_num_comp; k ++ ) { /* components */
-                if ( !iMobileH && !pOneInput->pInpInChI[iInchiRec][iMobileH][k].nNumberOfAtoms ||
+                if ( (!iMobileH && !pOneInput->pInpInChI[iInchiRec][iMobileH][k].nNumberOfAtoms) ||
                      pOneInput->pInpInChI[iInchiRec][iMobileH][k].bDeleted ||
                      pOneInput->pInpInChI[iInchiRec][iMobileH][k].nLink < 0 ) {
 
@@ -847,7 +847,7 @@ int AddProtonAndIsoHBalanceToMobHStruct( ICHICONST INPUT_PARMS *ip, STRUCT_DATA 
             }
             nRemovedProtonsByNormFromRevrs = 0; /* Num protons removed from the Restored Structure by InChI Normalization */
             nRemovedProtonsByRevrs         = 0; /* Num protons removed by the Reconstruction from the Restored Structure */
-            if ( iInchiRec == INCHI_REC || iInchiRec == INCHI_BAS && (k1=pStruct[iInchiRec][TAUT_YES][k].nLink) >= 0 ) {
+            if ( iInchiRec == INCHI_REC || (iInchiRec == INCHI_BAS && (k1=pStruct[iInchiRec][TAUT_YES][k].nLink) >= 0) ) {
                 
                 REV_INCHI  *pRevInChI   = &pStruct[iInchiRec][TAUT_YES][k].RevInChI;
                 INChI_Aux  **pINChI_Aux2 = pRevInChI->pINChI_Aux[iInchiRec][0]; /* component 0*/
@@ -1626,8 +1626,8 @@ int CompareOneOrigInchiToRevInChI(StrFromINChI *pStruct, INChI *pInChI[TAUT_NUM]
             return 0;
         }
 
-        if ( pStruct->RevInChI.num_components[i] > 1 && 
-             !pStruct->RevInChI.pINChI[i][1][b]->bDeleted ||
+        if ( (pStruct->RevInChI.num_components[i] > 1 &&
+             !pStruct->RevInChI.pINChI[i][1][b]->bDeleted) ||
              pStruct->RevInChI.num_components[i] < 1 ) {
             CompareInchiFlags[bMobileH] |= INCHIDIFF_COMP_NUMBER;
         }
@@ -1648,9 +1648,9 @@ int CompareOneOrigInchiToRevInChI(StrFromINChI *pStruct, INChI *pInChI[TAUT_NUM]
                 }
             }
             if ( b == b0 && b == TAUT_NON ) {
-                if ( pStruct->RevInChI.pINChI[i][0][TAUT_YES] &&
-                     !pStruct->RevInChI.pINChI[i][0][TAUT_YES]->bDeleted ||
-                     pInChI[1] && !pInChI[1]->bDeleted ) {
+                if ( (pStruct->RevInChI.pINChI[i][0][TAUT_YES] &&
+                     !pStruct->RevInChI.pINChI[i][0][TAUT_YES]->bDeleted) ||
+                     (pInChI[1] && !pInChI[1]->bDeleted) ) {
 
                     /* in addition to fixed-H also compare mobile-H InChI */
                     cmp = CompareReversedINChI3( pStruct->RevInChI.pINChI[i][0][TAUT_YES], pInChI[1], NULL, NULL, &err );
@@ -1808,7 +1808,7 @@ INCHI_MODE CompareReversedStereoINChI3( INChI_Stereo *s1/* InChI from reversed s
                 j2 ++;
             } else
             if ( s1->nBondAtom1[j1] <  s2->nBondAtom1[j2] ||
-                 s1->nBondAtom1[j1] == s2->nBondAtom1[j2] && s1->nBondAtom2[j1] <  s2->nBondAtom2[j2]) {
+                 (s1->nBondAtom1[j1] == s2->nBondAtom1[j2] && s1->nBondAtom2[j1] <  s2->nBondAtom2[j2])) {
                 num_in1_only ++;
                 if ( s1->b_parity[j1] == AB_PARITY_UNDF ) {
                     num_extra_undf ++;

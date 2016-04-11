@@ -177,9 +177,9 @@ int bIsCenterPointStrict( inp_ATOM *atom, int iat )
 {
     if ( atom[iat].valence == atom[iat].chem_bonds_valence ) {
         int endpoint_valence = get_endpoint_valence(atom[iat].el_number);
-        if ( endpoint_valence && (endpoint_valence > atom[iat].valence && /* added a check for negative charge or H 3-31-03 */
-                                   (atom[iat].num_H || atom[iat].charge == -1) ||
-                                 !atom[iat].charge && atom[iat].c_point) ) {
+        if ( endpoint_valence && ((endpoint_valence > atom[iat].valence && /* added a check for negative charge or H 3-31-03 */
+                                   (atom[iat].num_H || atom[iat].charge == -1)) ||
+                                 (!atom[iat].charge && atom[iat].c_point)) ) {
             return 1; /*  may appear to be tautomeric or chargable
                           (this increases chem_bonds_valence), should be explored */
         }
@@ -538,7 +538,7 @@ int DFS_FindTautAltPath( inp_ATOM *atom, int nStartAtom, int nStartAtomNeighbor,
             if ( nxt_at == nDoNotTouchAtom1 || /* forbidden */
                  nxt_at == nDoNotTouchAtom2 || /* forbidden */
                  nDfsPathPos[nxt_at]        || /* ring closure */
-                 nLenDfsPath && nxt_at == (int)DfsPath[nLenDfsPath-1].at_no /* step backwards */
+                 (nLenDfsPath && nxt_at == (int)DfsPath[nLenDfsPath-1].at_no) /* step backwards */
                  ) {
                 ; /* ignore nxt_at */
             } else
@@ -652,10 +652,10 @@ int AddBondsPos( inp_ATOM *atom, T_BONDPOS *BondPosTmp, int nNumBondPosTmp, T_BO
     /*  add new tautomeric bonds */
     for ( j = 0; j < nNumBondPosTmp; j += 2 ) {
         for ( i = 0; i < nNumBondPos; i ++ ) {
-            if ( BondPos[i].nAtomNumber    == BondPosTmp[j].nAtomNumber &&
-                 BondPos[i].neighbor_index == BondPosTmp[j].neighbor_index ||
-                 BondPos[i].nAtomNumber    == BondPosTmp[j+1].nAtomNumber &&
-                 BondPos[i].neighbor_index == BondPosTmp[j+1].neighbor_index ) {
+            if ( (BondPos[i].nAtomNumber    == BondPosTmp[j].nAtomNumber &&
+                 BondPos[i].neighbor_index == BondPosTmp[j].neighbor_index) ||
+                 (BondPos[i].nAtomNumber    == BondPosTmp[j+1].nAtomNumber &&
+                 BondPos[i].neighbor_index == BondPosTmp[j+1].neighbor_index) ) {
                 break; /*  bond has already been added */
             }
         }
@@ -828,9 +828,9 @@ int Check7MembTautRing( inp_ATOM *atom, DFS_PATH *DfsPath, int nLenDfsPath, int 
     /* j is a bond type of the last bond to o2_at, the first bond from o1_at is 2-j if j=1 or 2 */
 
               /* single bond at o2_at: it should have a mobile atom, o1_at should not */
-    if ( j == BOND_SINGLE && (!atom[o2_at].endpoint && !eif2.cDonor || !atom[o1_at].endpoint && !eif1.cAcceptor) ||
+    if ( (j == BOND_SINGLE && ((!atom[o2_at].endpoint && !eif2.cDonor) || (!atom[o1_at].endpoint && !eif1.cAcceptor))) ||
               /* double bond at o2_at: it should not have a mobile atom, o1_at should */
-         j == BOND_DOUBLE && (!atom[o2_at].endpoint && !eif2.cAcceptor || !atom[o1_at].endpoint && !eif1.cDonor) ) {
+         (j == BOND_DOUBLE && ((!atom[o2_at].endpoint && !eif2.cAcceptor) || (!atom[o1_at].endpoint && !eif1.cDonor))) ) {
          return 0; /* bond pattern does not fit */
     }
  
@@ -839,7 +839,7 @@ int Check7MembTautRing( inp_ATOM *atom, DFS_PATH *DfsPath, int nLenDfsPath, int 
     nNumEndPoint = AddEndPoints( EndPointTmp, nNumEndPointTmp, EndPoint, nMaxNumEndPoint, nNumEndPoint);
 
     if ( nNumBondPos >= 0 && nNumEndPoint >= 0 ) {
-        if (ret = (nNumBondPos > *pnNumBondPos) || (nNumEndPoint > *pnNumEndPoint)) {
+        if ( (ret = (nNumBondPos > *pnNumBondPos) || (nNumEndPoint > *pnNumEndPoint)) ) {
             *pnNumBondPos  = nNumBondPos  ;
             *pnNumEndPoint = nNumEndPoint ;
         }
@@ -1079,7 +1079,7 @@ int Check6MembTautRing( inp_ATOM *atom, DFS_PATH *DfsPath, int nLenDfsPath, int 
     nNumEndPoint = AddEndPoints( EndPointTmp, nNumEndPointTmp, EndPoint, nMaxNumEndPoint, nNumEndPoint);
 
     if ( nNumBondPos >= 0 && nNumEndPoint >= 0 ) {
-        if (ret = (nNumBondPos > *pnNumBondPos) || (nNumEndPoint > *pnNumEndPoint)) {
+        if ( (ret = (nNumBondPos > *pnNumBondPos) || (nNumEndPoint > *pnNumEndPoint)) ) {
             *pnNumBondPos  = nNumBondPos  ;
             *pnNumEndPoint = nNumEndPoint ;
         }
@@ -1274,7 +1274,7 @@ int Check15TautPath( inp_ATOM *atom, DFS_PATH *DfsPath, int nLenDfsPath, int jNx
     nNumEndPoint = AddEndPoints( EndPointTmp, nNumEndPointTmp, EndPoint, nMaxNumEndPoint, nNumEndPoint);
 
     if ( nNumBondPos >= 0 && nNumEndPoint >= 0 ) {
-        if (ret = (nNumBondPos > *pnNumBondPos) || (nNumEndPoint > *pnNumEndPoint)) {
+        if ( (ret = (nNumBondPos > *pnNumBondPos) || (nNumEndPoint > *pnNumEndPoint)) ) {
             *pnNumBondPos  = nNumBondPos  ;
             *pnNumEndPoint = nNumEndPoint ;
         }
@@ -1413,9 +1413,9 @@ int Check5MembTautRing( inp_ATOM *atom, DFS_PATH *DfsPath, int nLenDfsPath, int 
     /* i is a bond type of the last bond to at_n1, the first bond from at_n2 is 2-i if i=1 or 2 */
 
               /* single bond at n1_at: it should have a mobile atom, n2_at should not */
-    if ( i == BOND_SINGLE && (!atom[n1_at].endpoint && !eif1.cDonor    || !atom[n2_at].endpoint && !eif2.cAcceptor ) ||
+    if ( (i == BOND_SINGLE && ((!atom[n1_at].endpoint && !eif1.cDonor)    || (!atom[n2_at].endpoint && !eif2.cAcceptor) )) ||
               /* double bond at n1_at: it should not have a mobile atom, n2_at should */
-         i == BOND_DOUBLE && (!atom[n1_at].endpoint && !eif1.cAcceptor || !atom[n2_at].endpoint && !eif2.cDonor) ) {
+         (i == BOND_DOUBLE && ((!atom[n1_at].endpoint && !eif1.cAcceptor) || (!atom[n2_at].endpoint && !eif2.cDonor))) ) {
          return 0; /* bond pattern does not fit */
     }
                      
@@ -1423,7 +1423,7 @@ int Check5MembTautRing( inp_ATOM *atom, DFS_PATH *DfsPath, int nLenDfsPath, int 
     nNumEndPoint = AddEndPoints( EndPointTmp, nNumEndPointTmp, EndPoint, nMaxNumEndPoint, nNumEndPoint);
 
     if ( nNumBondPos >= 0 && nNumEndPoint >= 0 ) {
-        if (ret = (nNumBondPos > *pnNumBondPos) || (nNumEndPoint > *pnNumEndPoint)) {
+        if ( (ret = (nNumBondPos > *pnNumBondPos) || (nNumEndPoint > *pnNumEndPoint)) ) {
             *pnNumBondPos  = nNumBondPos  ;
             *pnNumEndPoint = nNumEndPoint ;
         }
