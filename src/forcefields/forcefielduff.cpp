@@ -1677,6 +1677,9 @@ namespace OpenBabel {
         if (organomet)
           a->SetType("P_3+q");
       }
+      else if (a->GetAtomicNum() > 102) { // superheavy
+        a->SetType("Lw6+3"); // prevent a crash with atoms beyond the parameterization Avogadro PR#741
+      }
     }
 
     IF_OBFF_LOGLVL_LOW {
