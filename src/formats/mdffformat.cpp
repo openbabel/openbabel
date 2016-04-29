@@ -230,7 +230,7 @@ namespace OpenBabel {
         ifs_ions.getline(buffer, BUFF_SIZE); 
         tokenize(vs, buffer);
         vs.erase(find(vs.begin(), vs.end(), "!") ,vs.end());
-        remove(vs.begin(), vs.end(), "=");        
+        vs.erase(remove(vs.begin(), vs.end(), "="));
                 
         if(vs.size() == 0)
           continue;
