@@ -309,6 +309,8 @@ namespace OpenBabel {
       vector3 coords (x,y,z);
       if (!cartesian)
         coords = cell->FractionalToCartesian( coords );
+      // If we have Cartesian coordinates, we need to apply the scaling factor
+      else coords *= scale;
       atom->SetVector(coords);
       //if the selective dynamics info is present then read it into OBPairData
       //this needs to be kept somehow to be able to write out the same as input
