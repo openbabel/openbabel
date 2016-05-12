@@ -672,22 +672,22 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
                 tokenize(vs,buffer);
                 for (unsigned int i = 1; i < vs.size(); i++)
                     z.push_back(atof(vs[i].c_str()));
-                for (unsigned int i = 0; i < freq.size(); i++)
-                {
-                    vib.push_back(vector<vector3>());
-                    vib[i].push_back(vector3(x[i], y[i], z[i]));
-                }
                 ifs->getline(buffer, BUFF_SIZE);
                 tokenize(vs,buffer);
+                if (x.size() == y.size() && y.size() == z.size()) {
+                  // make sure the arrays are equal or we'll crash
+                  // not sure how to recover if it's not true
+                  for (unsigned int i = 0; i < freq.size(); i++)
+                  {
+                    vib.push_back(vector<vector3>());
+                    vib[i].push_back(vector3(x[i], y[i], z[i]));
+                  }
+                }
             }// while vs.size() > 2
             for (unsigned int i = 0; i < freq.size(); i++)
             {
-                if (abs(freq[i]) > 10.0)
-                {
-                   // skip rotational and translational modes
-                   Frequencies.push_back(freq[i]);
-                   Lx.push_back(vib[i]);
-                }// if abs(freq[i]) > 10.0
+              Frequencies.push_back(freq[i]);
+              Lx.push_back(vib[i]);
             }// for (unsigned int i = 0; i < freq.size(); i++)
         }// if P.Frequency
         else if(strstr(buffer, INTENSITIES_TABLE_PATTERN) != NULL)
