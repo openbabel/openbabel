@@ -379,5 +379,5 @@ int main(int argc,char **argv)
     cout << "invalid command." << endl;
   }
 
-  return(1);
+  return(0);
 }

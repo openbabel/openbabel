@@ -284,7 +284,7 @@ int main(int argc,char **argv)
       cout << numMatching << endl;
     }
 
-  return(1);
+  return(0);
 }
 
 

@@ -246,7 +246,7 @@ int main(int argc,char **argv)
     cerr << "Time: " << timeElapsed << "seconds. Iterations per second: " <<  double(totalSteps) / timeElapsed << endl;
   } // end for loop
 
-  return(1);
+  return(0);
 }
 
 //
