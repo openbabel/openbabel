@@ -1529,6 +1529,24 @@ namespace OpenBabel {
     return true;
   }
 
+  bool OBForceFieldUFF::SetupPointers()
+  {
+    for (unsigned int i = 0; i < _bondcalculations.size(); ++i)
+      _bondcalculations[i].SetupPointers();
+    for (unsigned int i = 0; i < _anglecalculations.size(); ++i)
+      _anglecalculations[i].SetupPointers();
+    for (unsigned int i = 0; i < _torsioncalculations.size(); ++i)
+      _torsioncalculations[i].SetupPointers();
+     for (unsigned int i = 0; i < _oopcalculations.size(); ++i)
+      _oopcalculations[i].SetupPointers();
+    for (unsigned int i = 0; i < _vdwcalculations.size(); ++i)
+      _vdwcalculations[i].SetupPointers();
+    for (unsigned int i = 0; i < _electrostaticcalculations.size(); ++i)
+      _electrostaticcalculations[i].SetupPointers();
+
+    return true;
+  }
+
   bool OBForceFieldUFF::ParseParamFile()
   {
     vector<string> vs;
