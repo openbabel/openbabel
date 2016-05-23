@@ -41,7 +41,7 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Orca output format\n"
+        "ORCA output format\n"
         "Read Options e.g. -as\n"
         " s  Output single bonds only\n"
         " b  Disable bonding entirely\n\n";
@@ -79,7 +79,7 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Orca input format\n"
+        "ORCA input format\n"
         "This can be used as a template file for orca calculations\n";
     }
 

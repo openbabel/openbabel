@@ -44,9 +44,9 @@ namespace OpenBabel
         "Read Options e.g. -as\n"
         " s  Output single bonds only\n"
         " f  Overwrite molecule if more than one\n"
-        "calculations with different molecules\n"
-        "input in one output file detected\n"
-        "(last calculation will be prefered)\n"
+        "    calculation with different molecules\n"
+        "    is present in the output file\n"
+        "    (last calculation will be prefered)\n"
         " b  Disable bonding entirely\n\n";
     };
 

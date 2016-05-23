@@ -65,12 +65,22 @@ namespace OpenBabel
       {
         return
           "Point cloud on VDW surface\n"
-          "Generates a point cloud on the VDW surface around the molecule\n"
-          "Output is a list of {x,y,z} tuples in Angstrom (in xyz format if -x specified)\n\n"
-          "Write Options, e.g. -xr\n"
-          "  r comma-separated list of VDW radius multiples (Angstrom) (default 1.0)\n"
-          "  d comma-separated list of point densities (Angstom^2)     (default 1.0)\n"
-          "  p probe radius in Angstrom (default 0.0)\n"
+          "Generates a point cloud on the VDW surface around the molecule\n\n"
+
+          "The surface location is calculated by adding the probe atom radius\n"
+          "(if specified) to the Van der Waal radius of the particular atom multipled\n"
+          "by the specified multiple (1.0 if unspecified)."
+
+          "Output is a list of {x,y,z} tuples in Angstrom. Alternatively, if the ``x``\n"
+          "option is specified, the :ref:`XYZ_cartesian_coordinates_format` is used\n"
+          "instead.\n\n"
+
+          "Write Options, e.g. -xx\n"
+          "  r <radii> create a surface for each VDS radius (default 1.0)\n"
+          "        A comma-separated list of VDW radius multiples\n"
+          "  d <densities> for each surface, specify the point density (default 1.0 Angstrom^2)\n"
+          "        A comma-separated list of densities\n"
+          "  p <radius> radius of the probe atom in Angstrom (default 0.0)\n"
           "  x output in xyz format\n\n";
       }
 

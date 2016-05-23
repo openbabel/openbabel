@@ -37,22 +37,21 @@ namespace OpenBabel {
       OBConversion::RegisterFormat("POSFF",this);
       OBConversion::RegisterFormat("CONTFF",this);
       OBConversion::RegisterFormat("MDFF",this);      
-      OBConversion::RegisterOptionParam("w", this, 0, OBConversion::OUTOPTIONS);
-      OBConversion::RegisterOptionParam("u", this, 0, OBConversion::OUTOPTIONS);
-      OBConversion::RegisterOptionParam("i", this, 0, OBConversion::OUTOPTIONS);      
     }
 
     virtual const char* Description()
     {
       return
         "MDFF format\n"
-        "Reads in data from POSFF and CONTFF to obtain information from "
-        "MDFF calculations.\n\n. The program will try to read IONS.POT file if the name of"
-        "input structure is POSFF or CONTFF"
+        "The format used in the POSFF and CONTFF files used by MDFF\n\n"
+
+        "POSFF and CONTFF are read to obtain information from MDFF calculations.\n"
+        "The program will try to read the IONS.POT file if the name of the\n"
+        "input file is POSFF or CONTFF.\n"
 
         "Write Options e.g. -xw\n"
         "  w Sort atoms by atomic number\n"
-        "  u Sort atoms by list of element symbol provided in comma-separated string w/o spaces\n"
+        "  u <elementlist> Sort atoms by list of element symbols provided in comma-separated string w/o spaces\n"
         "  i Write IONS.POT file\n"              
         ;
 
