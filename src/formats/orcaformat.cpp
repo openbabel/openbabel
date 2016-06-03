@@ -134,43 +134,95 @@ namespace OpenBabel
     std::vector<double>  energyBEh, energyBeV;
     std::vector<double>  occB;
 
+    // Conformer data
+    bool newMol = false;
+    double* confCoords;
+
     // Unit cell
     bool unitCell = false;
     std::vector<vector3> unitCellVectors;
 
     bool hasPartialCharges = false;
+    bool geoOptRun = false;
+
 
     char buffer[BUFF_SIZE];
     string str;
     double x,y,z;
     OBAtom *atom;
+
+    int nAtoms = 0;
+
     vector<string> vs;
 
     mol.BeginModify();
     while	(ifs.getline(buffer,BUFF_SIZE)) {
 
         string checkKeywords(buffer);
+
+        if (checkKeywords.find("* O   R   C   A *") != notFound) {
+            mol.Clear();
+        } // if "new orca output section"
+
+        if (checkKeywords.find("Geometry Optimization Run") != notFound) {
+            geoOptRun = true;
+            while	(ifs.getline(buffer,BUFF_SIZE)) {
+                string checkNAtoms(buffer);
+
+                if (checkNAtoms.find("Number of atoms") != notFound) {
+                    tokenize(vs,buffer);
+                    nAtoms = atoi((char*)vs[4].c_str());
+                    break;
+                }
+            }
+        } // if "geometry optimization run"
+
         if (checkKeywords.find("CARTESIAN COORDINATES (ANGSTROEM)") != notFound) {
             //        if(strstr(buffer,"CARTESIAN COORDINATES (ANGSTROEM)") != NULL) {
             if (unitCell) break; // dont't overwrite unit cell coordinate informations
-            mol.Clear();
-
+            if (mol.NumAtoms() == 0) {
+                newMol = true;
+            }
+            if (geoOptRun) {
+                confCoords = new double[nAtoms*3];
+            }
             ifs.getline(buffer,BUFF_SIZE);	// ---- ----- ----
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
+            int i=0;
             while (vs.size() == 4) {
-                atom = mol.NewAtom();
+
                 x = atof((char*)vs[1].c_str());
                 y = atof((char*)vs[2].c_str());
                 z = atof((char*)vs[3].c_str());
-                atom->SetVector(x,y,z); //set coordinates
 
-                //set atomic number
-                atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
+                if (newMol){
+                    atom = mol.NewAtom();
+                    atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));                //set atomic number
+                    atom->SetVector(x,y,z); //set atom coordinates
+                }
+                if (geoOptRun){
+                    confCoords[i*3] = x;
+                    confCoords[i*3+1] = y;
+                    confCoords[i*3+2] = z;
+                    i++;
+                } else {
+                    atom->SetVector(x,y,z); //set atom coordinates
+                }
 
                 if (!ifs.getline(buffer,BUFF_SIZE))
-                  break;
+                    break;
                 tokenize(vs,buffer);
+            }
+            newMol = false;
+            if (geoOptRun){
+//                cout << confCoords << endl;
+//                for (int j=0;j<3;j++){
+//                    cout << confCoords[j*3] << " " << confCoords[j*3+1] << " " << confCoords[j*3+2] << endl;
+//                }
+
+                mol.AddConformer(confCoords);
+                mol.SetConformer(mol.NumConformers());
             }
         } // if "output coordinates"
 
@@ -334,7 +386,7 @@ namespace OpenBabel
             ifs.getline(buffer, BUFF_SIZE);
             tokenize(vs,buffer);
 
-            while (vs.size() == 7) {
+            while (vs.size() >= 6) {
                 //                std::cout << (atof(vs[1].c_str())) << endl;
                 //                std::cout << (atof(vs[2].c_str())) << endl;
                 Frequencies.push_back(atof(vs[1].c_str()));
@@ -383,10 +435,30 @@ namespace OpenBabel
             }
         } // if "ABSORPTION SPECTRUM VIA TRANSITION ELECTRIC DIPOLE MOMENTS"
 
+        // uv spectrum from  sTDA
+        if (checkKeywords.find("excitation energies, transition moments and amplitudes") != notFound) {
+
+            UVWavelength.resize(0);
+            UVForces.resize(0);
+            UVEDipole.resize(0);
+            ifs.getline(buffer, BUFF_SIZE); // skip blank line
+            ifs.getline(buffer, BUFF_SIZE); // skip molecuar weight
+            ifs.getline(buffer, BUFF_SIZE); // skip headline
+            ifs.getline(buffer, BUFF_SIZE);
+            tokenize(vs,buffer);
+
+            while (vs.size() >= 7) {
+                UVForces.push_back(0.0);        // ORCA doesn't have these values
+                UVWavelength.push_back(atof(vs[2].c_str()));
+                UVEDipole.push_back(atof(vs[3].c_str()));
+                ifs.getline(buffer, BUFF_SIZE);
+                tokenize(vs,buffer);
+            }
+        } // if "excitation energies, transition moments and amplitudes"
+
         if (checkKeywords.find("CD SPECTRUM") != notFound) {
 //        if(strstr(buffer,"CD SPECTRUM") != NULL)
 //        {
-            std::cout << "CD spectrum found" << endl;
             CDWavelength.resize(0);
             CDVelosity.resize(0);
             CDStrengthsLength.resize(0);
@@ -404,8 +476,8 @@ namespace OpenBabel
                 ifs.getline(buffer, BUFF_SIZE);
                 tokenize(vs,buffer);
             }
-            std::cout << CDWavelength.size() << endl;
-            std::cout << CDStrengthsLength.size() << endl;
+//            std::cout << CDWavelength.size() << endl;
+//            std::cout << CDStrengthsLength.size() << endl;
         } // if "CD SPECTRUM"
 
         if (checkKeywords.find("UNIT CELL (ANGSTROM)") != notFound) { // file contains unit cell information
@@ -550,6 +622,9 @@ namespace OpenBabel
 
     mol.EndModify();
 
+
+//    cout << "num conformers = " << mol.NumConformers() << endl;
+    //cout << "Atom index 0 = " << mol.GetAtom(0)->GetX() << " " << mol.GetAtom(0)->GetY() << " " << mol.GetAtom(0)->GetZ() << endl;
     if (hasPartialCharges)
       mol.SetPartialChargesPerceived();
     mol.SetTitle(title);
