@@ -178,21 +178,28 @@ namespace OpenBabel
   {
     // This could be one hellish conditional, but let's break it down
     // .. the bond is a single bond
-    bool rotatable = (_order == 1);
+    if (_order != 1)
+      return false;
 
-    // not in a ring, or a large ring
+    // not in a ring, or in a large ring
     // and if it's a ring, not sp2
     OBRing *ring = FindSmallestRing();
-    rotatable = rotatable && ((ring == NULL || ring->Size() > 3)
-                              && (_bgn->GetHyb() != 2 && _end->GetHyb() != 2));
+    if (ring != NULL) {
+      if (ring->Size() <= 3)
+        return false;
+      if (_bgn->GetHyb() == 2 || _end->GetHyb() == 2)
+        return false;
+    }
+
     // atoms are not sp hybrids
-    rotatable = rotatable && (_bgn->GetHyb() != 1 && _end->GetHyb() != 1);
+    if (_bgn->GetHyb() == 1 || _end->GetHyb() == 1)
+      return false;
+
     // not just an -OH or -NH2, etc.
     // maybe we want to add this as an option
     //    rotatable = rotatable && ((_bgn->IsHeteroatom() || _bgn->GetHvyValence() > 1)
     //                               && (_end->IsHeteroatom() || _end->GetHvyValence() > 1) );
-    rotatable = rotatable && (_bgn->GetHvyValence() > 1 && _end->GetHvyValence() > 1);
-    return rotatable;
+    return (_bgn->GetHvyValence() > 1 && _end->GetHvyValence() > 1);
   }
 
    bool OBBond::IsAmide()

@@ -96,6 +96,12 @@ void test_Issue178_DeleteHydrogens()
   OB_COMPARE(myNumHs, 1);
 }
 
+void test_Issue305_NumRotors()
+{
+  OBMolPtr mol = OBTestUtil::ReadFile("regressiontest_numrotors.mol");
+  OB_COMPARE(mol->NumRotors(), 9); // was returning 4
+}
+
 int regressionstest(int argc, char* argv[])
 {
   int defaultchoice = 1;
@@ -125,6 +131,8 @@ int regressionstest(int argc, char* argv[])
   case 222:
     test_Issue178_DeleteHydrogens();
     break;
+  case 223:
+    test_Issue305_NumRotors();
     //case N:
   //  YOUR_TEST_HERE();
   //  Remember to update CMakeLists.txt with the number of your test
