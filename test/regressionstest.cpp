@@ -133,6 +133,7 @@ int regressionstest(int argc, char* argv[])
     break;
   case 223:
     test_Issue305_NumRotors();
+    break;
     //case N:
   //  YOUR_TEST_HERE();
   //  Remember to update CMakeLists.txt with the number of your test
