@@ -15,9 +15,10 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
 
-#include <limits.h>
+#include <limits>
 #include <locale> // For isalpha(int)
 #include <functional>
+#include <iostream>
 
 #define EV_TO_KCAL_PER_MOL 23.060538
 
@@ -25,6 +26,30 @@ using namespace std;
 namespace OpenBabel {
   class VASPFormat : public OBMoleculeFormat
   {
+  protected:
+    class compare_sort_items
+    {
+      std::vector<int> csm;
+      bool num_sort;
+    public:
+      compare_sort_items(const std::vector<int> &_custom_sort_nums, bool _num_sort):
+                         csm(_custom_sort_nums), num_sort(_num_sort) {};
+      bool operator()(const OBAtom *a, const OBAtom *b)
+      {
+        int a_num = a->GetAtomicNum();
+        int b_num = b->GetAtomicNum();
+        int dist = std::distance(std::find(csm.begin(), csm.end(), b_num),
+                                 std::find(csm.begin(), csm.end(), a_num));
+        
+        if ( dist != 0)
+          return dist < 0;
+
+        if( (num_sort) && ( a_num - b_num != 0 ) )
+          return a_num < b_num;
+        
+        return false;
+      }
+    };
   public:
 
     VASPFormat()
@@ -36,6 +61,7 @@ namespace OpenBabel {
       OBConversion::RegisterOptionParam("s", this, 0, OBConversion::INOPTIONS);
       OBConversion::RegisterOptionParam("b", this, 0, OBConversion::INOPTIONS);
       OBConversion::RegisterOptionParam("w", this, 0, OBConversion::OUTOPTIONS);
+      OBConversion::RegisterOptionParam("z", this, 0, OBConversion::OUTOPTIONS);
       OBConversion::RegisterOptionParam("4", this, 0, OBConversion::OUTOPTIONS);
     }
 
@@ -60,7 +86,11 @@ namespace OpenBabel {
         "  b Disable bonding entirely\n\n"
 
         "Write Options e.g. -xw\n"
-        "  w Sort atoms by atomic number (this helps keep POTCAR files compact)\n"
+        "  Atoms soring:\n"
+        "    no option: default order (presumably this is the order of atoms in the input molecule)\n"
+        "    -xw : Sort atoms by atomic number\n"
+        "    -xz 'atom1 atom2 ..': atom1 first, atom2 second ..., then default order\n"
+        "    -xw -xz 'atom1 atom2': atom1 first, atom2 second ..., then sort atoms by atomic number\n"
         "  4 Write a POSCAR using the VASP 4.x specification.\n"
         "    The default is to use the VASP 5.x specification.\n\n"
         ;
@@ -589,72 +619,57 @@ namespace OpenBabel {
 
     bool selective;
 
-    const char * sortAtoms = pConv->IsOption("w", OBConversion::OUTOPTIONS);
+    const char * sortAtomsNum = pConv->IsOption("w", OBConversion::OUTOPTIONS);
+    const char * sortAtomsCustom = pConv->IsOption("z", OBConversion::OUTOPTIONS);
 
     // Create a list of ids. These may be sorted by atomic number depending
     // on the value of keepOrder.
-    vector<unsigned long> atomids;
-    atomids.reserve(mol.NumAtoms());
-    vector<unsigned int> atomicNums;
-    atomicNums.reserve(mol.NumAtoms());
+    std::vector<OBAtom *> atoms_sorted;
+    atoms_sorted.reserve(mol.NumAtoms());
 
     FOR_ATOMS_OF_MOL(atom, mol) {
-      atomids.push_back(atom->GetId());
-      atomicNums.push_back(atom->GetAtomicNum());
+      atoms_sorted.push_back(&(*atom));
     }
 
-    if (sortAtoms != NULL)
+    std::vector<int> custom_sort_nums;
+    
+    if (sortAtomsCustom != NULL)
     {
       vector<string> vs;
-      tokenize(vs, sortAtoms);
-      map<int, int> nm_map;
+      tokenize(vs, sortAtomsCustom);
       for(size_t i = 0; i < vs.size(); ++i)
-        nm_map[etab.GetAtomicNum(vs[i].c_str())] = i + 1;
-
-      // Sort the ids by atomic number
-      for (size_t i = 0; i < atomids.size() - 1; ++i)
-      {
-        unsigned int atomicNum_i = atomicNums[i];
-
-        for (size_t j = i+1; j < atomids.size(); ++j)
-        {
-          unsigned int atomicNum_j = atomicNums[j];
-
-          bool swap_d = false;
-          if( nm_map[atomicNum_j] != nm_map[atomicNum_i] )
-            swap_d = nm_map[atomicNum_j] < nm_map[atomicNum_i];
-          else
-            swap_d = atomicNum_j < atomicNum_i;
-
-          if ( swap_d )
-          {
-            swap(atomids[i], atomids[j]);
-            swap(atomicNums[i], atomicNums[j]);
-            swap(atomicNum_i, atomicNum_j);
-          }
-        }
-      }
+        custom_sort_nums.push_back(etab.GetAtomicNum(vs[i].c_str()));
     }
+
+    compare_sort_items csi(custom_sort_nums, sortAtomsNum != NULL);
+    std::stable_sort(atoms_sorted.begin(), atoms_sorted.end(), csi);
 
     // Use the atomicNums vector to determine the composition line.
     // atomicNumsCondensed and atomCounts contain the same data as atomicNums:
     // if:
-    //   atomicNums          = [ 3 3 3 2 2 8 2 6 6 ]
+    //   atoms_sorted[i]->GetAtomicNum() = [ 3 3 3 2 2 8 2 6 6 ]
     // then:
-    //   atomicNumsCondensed = [ 3 2 8 2 6 ] // Adjacent duplicates removed
-    //   atomCounts          = [ 3 2 1 1 2 ] // Number of atoms in "block"
-    vector<unsigned int> atomicNumsCondensed;
-    vector<unsigned int> atomCounts;
-    for (size_t i = 0; i < atomicNums.size(); ++i) {
-      const unsigned int currentAtomicNumber = atomicNums[i];
-      atomicNumsCondensed.push_back(currentAtomicNumber);
-      atomCounts.push_back(1);
-      for (++i;
-           i < atomicNums.size() && atomicNums[i] == currentAtomicNumber;
-           ++i) {
-        ++(atomCounts.back());
+    //   atomicNums =  [(3 3) (2 2) (8 1) (2 1) (6 2)] 
+    
+    std::vector<std::pair<int, int> > atomicNums;    
+    
+    int prev_anum = -20; //not a periodic table number
+    for(int i = 0; i < atoms_sorted.size(); i++)
+    {
+      const int anum = atoms_sorted[i]->GetAtomicNum();
+      
+      if( prev_anum != anum )
+      {
+        std::pair<int, int> x(anum, 1);
+        atomicNums.push_back(x);
       }
-      --i; // Undo the final increment since the outer loop will redo it.
+      else
+      {    
+        if(atomicNums.size() > 0);  
+          atomicNums.rbegin()->second++;
+      }  
+      
+      prev_anum = anum;
     }
 
     // write title
@@ -688,20 +703,20 @@ namespace OpenBabel {
     // VASP 5 format
     const char *vasp4Format = pConv->IsOption("4", OBConversion::OUTOPTIONS);
     if (!vasp4Format) {
-      for (vector<unsigned int>::const_iterator
-           it = atomicNumsCondensed.begin(),
-           it_end = atomicNumsCondensed.end(); it != it_end; ++it) {
-        snprintf(buffer, BUFF_SIZE, "%-3s ",etab.GetSymbol(*it));
+      for (vector< std::pair<int, int> >::const_iterator
+           it = atomicNums.begin(),
+           it_end = atomicNums.end(); it != it_end; ++it) {
+        snprintf(buffer, BUFF_SIZE, "%-3s ", etab.GetSymbol(it->first));
         ofs << buffer ;
       }
       ofs << endl;
     }
 
     // then do the same to write out the number of ions of each element
-    for (vector<unsigned int>::const_iterator
-         it = atomCounts.begin(),
-         it_end = atomCounts.end(); it != it_end; ++it) {
-      snprintf(buffer, BUFF_SIZE, "%-3u ", *it);
+    for (vector< std::pair<int, int> >::const_iterator
+           it = atomicNums.begin(),
+           it_end = atomicNums.end(); it != it_end; ++it) {
+      snprintf(buffer, BUFF_SIZE, "%-3u ", it->second);
       ofs << buffer ;
     }
     ofs << endl;
@@ -723,20 +738,19 @@ namespace OpenBabel {
     // print the atomic coordinates in \AA
     ofs << "Cartesian" << endl;
 
-    for (vector<unsigned long>::const_iterator it = atomids.begin(),
-         it_end = atomids.end();
-         it != it_end && (atom = mol.GetAtomById(*it)); ++it) {
-
+    for (std::vector<OBAtom *>::const_iterator it = atoms_sorted.begin();
+         it != atoms_sorted.end(); ++it) 
+    {
       // Print coordinates
       snprintf(buffer,BUFF_SIZE, "%26.19f %26.19f %26.19f",
-               atom->GetX(), atom->GetY(), atom->GetZ());
+               (*it)->GetX(), (*it)->GetY(), (*it)->GetZ());
       ofs << buffer;
 
       // if at least one atom has info about constraints
       if (selective) {
         // if this guy has, write it out
         if (atom->HasData("move")) {
-          OBGenericData *cp = atom->GetData("move");
+          OBGenericData *cp = (*it)->GetData("move");
           // seemingly ridiculous number of digits is written out
           // but sometimes you just don't want to change them
           ofs << " " << cp->GetValue().c_str();
