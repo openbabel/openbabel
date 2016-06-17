@@ -413,7 +413,7 @@ void deprecation()
   cout << "WARNING: babel is deprecated and will be removed in a future release" << endl
     << "         of Open Babel. You should use obabel instead. For information" << endl
     << "         on the differences please see:"
-    << endl << "             http://openbabel.org/docs/current/Command-line_tools"
+    << endl << "             http://openbabel.org/docs/current/Command-line_tools/babel.html"
     << endl;
 }
 
