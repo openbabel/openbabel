@@ -69,10 +69,11 @@ namespace OpenBabel
       virtual const char* Description() //required
       {
         return
-          "VDW surface in binary STL format suitable for 3D printing\n"
-          "Write Options, e.g. -xr\n"
-          "  p radius for probe particle   (default 0.0 AA)\n"
-          "  s scale-factor for VDW radius (default 1.0 AA)\n"
+          "STL 3D-printing format\n"
+          "The STereoLithography format developed by 3D Systems\n\n"
+          "Write Options, e.g. -xc\n"
+          "  p <radius> radius for probe particle (default 0.0 A)\n"
+          "  s <scale> scale-factor for VDW radius (default 1.0 A)\n"
           "  c add CPK colours\n\n";
       }
 
