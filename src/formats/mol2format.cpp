@@ -72,7 +72,6 @@ namespace OpenBabel
   
   // Helper function for ReadMolecule
   // \return Is this atom a sulfur in a (di)thiocarboxyl (-CS2, -COS, CS2H or COSH) group?
-  bool IsThiocarboxylSulfur();
   static bool IsThiocarboxylSulfur(OBAtom* queryatom)
   {
     if (!queryatom->IsSulfur())
