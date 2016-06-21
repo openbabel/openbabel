@@ -655,35 +655,6 @@ namespace OpenBabel
     return(true);
   }
 
-  bool OBAtom::IsThiocarboxylSulfur()
-  {
-    if (!IsSulfur())
-      return(false);
-    if (GetHvyValence() != 1)
-      return(false);
-
-    OBAtom *atom;
-    OBBond *bond;
-    OBBondIterator i;
-
-    atom = NULL;
-    for (bond = BeginBond(i);bond;bond = NextBond(i))
-      if ((bond->GetNbrAtom(this))->IsCarbon())
-        {
-          atom = bond->GetNbrAtom(this);
-          break;
-        }
-    if (!atom)
-      return(false);
-    if (!(atom->CountFreeSulfurs() == 2)
-      && !(atom->CountFreeOxygens() == 1 && atom->CountFreeSulfurs() == 1))
-      return(false);
-
-    //atom is connected to a carbon that has a total
-    //of 2 attached free sulfurs or 1 free oxygen and 1 free sulfur
-    return(true);
-  }
-
   bool OBAtom::IsPhosphateOxygen()
   {
     if (!IsOxygen())

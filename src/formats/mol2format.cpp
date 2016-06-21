@@ -69,6 +69,38 @@ namespace OpenBabel
 
   //Make an instance of the format class
   MOL2Format theMOL2Format;
+  
+  // Helper function for ReadMolecule
+  // \return Is this atom a sulfur in a (di)thiocarboxyl (-CS2, -COS, CS2H or COSH) group?
+  bool IsThiocarboxylSulfur();
+  static bool IsThiocarboxylSulfur(OBAtom* queryatom)
+  {
+    if (!queryatom->IsSulfur())
+      return(false);
+    if (queryatom->GetHvyValence() != 1)
+      return(false);
+
+    OBAtom *atom = NULL;
+    OBBond *bond;
+    OBBondIterator i;
+
+    for (bond = queryatom->BeginBond(i); bond; bond = queryatom->NextBond(i))
+      if ((bond->GetNbrAtom(queryatom))->IsCarbon())
+      {
+        atom = bond->GetNbrAtom(queryatom);
+        break;
+      }
+    if (!atom)
+      return(false);
+    if (!(atom->CountFreeSulfurs() == 2)
+      && !(atom->CountFreeOxygens() == 1 && atom->CountFreeSulfurs() == 1))
+      return(false);
+
+    //atom is connected to a carbon that has a total
+    //of 2 attached free sulfurs or 1 free oxygen and 1 free sulfur
+    return(true);
+  }
+
 
   /////////////////////////////////////////////////////////////////
   bool MOL2Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
@@ -379,10 +411,11 @@ namespace OpenBabel
         if (bond->GetBO() != 5)
           continue;
 
-        if (bond->GetBeginAtom()->IsCarboxylOxygen() || bond->GetBeginAtom()->IsThiocarboxylSulfur()) {
+        if (bond->GetBeginAtom()->IsCarboxylOxygen() || IsThiocarboxylSulfur(bond->GetBeginAtom())) {
           carboxylCarbon = bond->GetEndAtom();
           oxysulf = bond->GetBeginAtom();
-        } else if (bond->GetEndAtom()->IsCarboxylOxygen() || bond->GetEndAtom()->IsThiocarboxylSulfur()) {
+        }
+        else if (bond->GetEndAtom()->IsCarboxylOxygen() || IsThiocarboxylSulfur(bond->GetEndAtom())) {
           carboxylCarbon = bond->GetBeginAtom();
           oxysulf = bond->GetEndAtom();
         } else // not a carboxylate
