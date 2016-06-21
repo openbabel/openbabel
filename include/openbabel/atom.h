@@ -468,8 +468,6 @@ namespace OpenBabel
       bool IsPhosphateOxygen();
       //! \return Is this atom an oxygen in a sulfate (-SO3) group?
       bool IsSulfateOxygen();
-      //! \return Is this atom an oxygen in a sulfone (R1-SO2-R2) group?
-      bool IsSulfoneOxygen();
       //! \return Is this atom an oxygen in a nitro (-NO2) group?
       bool IsNitroOxygen();
       //! \return Is this atom a nitrogen in an amide (-C(=O)NR2) group?
