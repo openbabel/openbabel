@@ -20,7 +20,7 @@ GNU General Public License for more details.
 #define OB_MOLECULEFORMAT_H
 
 #ifdef _MSC_VER
-  #include <hash_map>
+  #include <unordered_map>
 #endif
 
 #include <ciso646>  // detect std::lib
@@ -143,7 +143,7 @@ public:
 #endif
 
 #ifdef _MSC_VER
-  typedef stdext::hash_map<std::string, unsigned> NameIndexType;
+  typedef stdext::unordered_map<std::string, unsigned> NameIndexType;
 #elif defined(_LIBCPP_VERSION)
   typedef std::unordered_map<std::string, unsigned> NameIndexType;
 #elif (__GNUC__ == 4 && __GNUC_MINOR__ >= 1 && !defined(__APPLE_CC__)) || defined (USE_BOOST)
