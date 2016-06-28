@@ -143,7 +143,7 @@ public:
 #endif
 
 #ifdef _MSC_VER
-  typedef stdext::unordered_map<std::string, unsigned> NameIndexType;
+  typedef std::tr1::unordered_map<std::string, unsigned> NameIndexType;
 #elif defined(_LIBCPP_VERSION)
   typedef std::unordered_map<std::string, unsigned> NameIndexType;
 #elif (__GNUC__ == 4 && __GNUC_MINOR__ >= 1 && !defined(__APPLE_CC__)) || defined (USE_BOOST)
