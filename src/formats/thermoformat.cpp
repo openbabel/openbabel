@@ -165,10 +165,8 @@ bool ThermoFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   }
   ostream &ofs = *pConv->GetOutStream();
   unsigned int i;
-#ifdef _MSC_VER
-#if _MSC_VER < 1900
+#if defined(_MSC_VER) && (_MSC_VER < 1900)
   unsigned oldf = _set_output_format(_TWO_DIGIT_EXPONENT);
-#endif
 #endif
   string formula = pmol->GetSpacedFormula();
   vector<string> toks;
