@@ -672,7 +672,7 @@ namespace OpenBabel
   {
     string pattern ("[0-9]-");
     std::tr1::regex myregex;
-    std::smatch pm;
+    smatch pm;
     try {
       myregex.assign(pattern,
                      std::tr1::regex_constants::extended);
@@ -681,7 +681,7 @@ namespace OpenBabel
         return (checkBuffer); // do nothing
       //iok = false;
     }
-    while (std::regex_search (checkBuffer,pm,myregex)) {
+    while (regex_search (checkBuffer,pm,myregex)) {
         checkBuffer.insert(pm.position(0)+1, " ");
     }
     return (checkBuffer);
