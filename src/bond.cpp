@@ -336,38 +336,6 @@ namespace OpenBabel
       return(false);
    }
 
-   bool OBBond::IsAmidine()
-   {
-      OBAtom *c,*n;
-      c = n = NULL;
-
-      // Look for C-N bond
-      if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 7)
-      {
-         c = (OBAtom*)_bgn;
-         n = (OBAtom*)_end;
-      }
-      if (_bgn->GetAtomicNum() == 7 && _end->GetAtomicNum() == 6)
-      {
-         c = (OBAtom*)_end;
-         n = (OBAtom*)_bgn;
-      }
-      if (!c || !n) return(false);
-      if (GetBondOrder() != 1) return(false);
-      if (n->GetImplicitValence() != 3) return(false);
-
-      // Make sure C is attached to =N
-      OBBond *bond;
-      vector<OBBond*>::iterator i;
-      for (bond = c->BeginBond(i); bond; bond = c->NextBond(i))
-      {
-         if (bond->IsImide()) return(true);
-      }
-
-      // Return
-      return(false);
-   }
-
 /*
   bool OBBond::IsAmide()
   {
@@ -503,18 +471,6 @@ namespace OpenBabel
 
     if ((_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 8) ||
         (_bgn->GetAtomicNum() == 8 && _end->GetAtomicNum() == 6))
-      return(true);
-
-    return(false);
-  }
-
-  bool OBBond::IsImide()
-  {
-    if (GetBO() != 2)
-      return(false);
-
-    if ((_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 7) ||
-        (_bgn->GetAtomicNum() == 7 && _end->GetAtomicNum() == 6))
       return(true);
 
     return(false);
