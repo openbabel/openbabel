@@ -739,44 +739,45 @@ namespace OpenBabel
     return(true);
   }
 
-  bool OBAtom::IsSulfoneOxygen()
+  // Helper function for IsHBondAcceptor
+  static bool IsSulfoneOxygen(OBAtom* atm)
   // Stefano Forli 
   //atom is connected to a sulfur that has a total
   //of 2 attached free oxygens, and it's not a sulfonamide
   //e.g. C-SO2-C
+  // Is this atom an oxygen in a sulfone(R1 - SO2 - R2) group ?
   {
-    if (!IsOxygen())
+    if (!atm->IsOxygen())
       return(false);
-    if (GetHvyValence() != 1){
+    if (atm->GetHvyValence() != 1){
       //cerr << "sulfone> O valence is not 1\n";
       return(false);
       }
 
-    OBAtom *atom;
+    OBAtom *nbr = NULL;
     OBBond *bond1,*bond2;
     OBBondIterator i,j;
 
-    atom = NULL;
     // searching for attached sulfur
-    for (bond1 = BeginBond(i);bond1;bond1 = NextBond(i))
-      if ((bond1->GetNbrAtom(this))->IsSulfur())
-        { atom = bond1->GetNbrAtom(this);
+    for (bond1 = atm->BeginBond(i); bond1; bond1 = atm->NextBond(i))
+      if ((bond1->GetNbrAtom(atm))->IsSulfur())
+        { nbr = bond1->GetNbrAtom(atm);
           break; }
-    if (!atom){
+    if (!nbr){
       //cerr << "sulfone> atom null\n" ;
       return(false); }
 
     // check for sulfate
     //cerr << "sulfone> If we're here... " << atom->GetAtomicNum() <<"\n" << atom->IsSulfur() << "\n";
     //cerr << "sulfone> number of free oxygens:" << atom->CountFreeOxygens() << "\n";
-    if (atom->CountFreeOxygens() != 2){
+    if (nbr->CountFreeOxygens() != 2){
       //cerr << "sulfone> count of free oxygens not 2" << atom->CountFreeOxygens() << '\n' ;
       return(false); }
 
     // check for sulfonamide
-    for (bond2 = atom->BeginBond(j);bond2;bond2 = atom->NextBond(j)){
+    for (bond2 = nbr->BeginBond(j);bond2;bond2 = nbr->NextBond(j)){
       //cerr<<"NEIGH: " << (bond2->GetNbrAtom(atom))->GetAtomicNum()<<"\n";
-      if ((bond2->GetNbrAtom(atom))->IsNitrogen()){ 
+      if ((bond2->GetNbrAtom(nbr))->IsNitrogen()){
         //cerr << "sulfone> sulfonamide null\n" ;
         return(false);}}
     //cerr << "sulfone> none of the above\n";
@@ -1883,7 +1884,7 @@ namespace OpenBabel
         // oxygen; this should likely be a separate function
         // something like IsHbondAcceptorOxygen()
         unsigned int aroCount = 0;
-        OBAtom *nbr;
+
         OBBond *bond;
         OBBondIterator i;
         if (IsNitroOxygen()){ // maybe could be a bool option in the function?
@@ -1892,7 +1893,7 @@ namespace OpenBabel
         if (IsAromatic()){ // aromatic oxygen (furan) (NO)
           return(false);
           }
-        if (IsSulfoneOxygen()){ // sulfone (NO)
+        if (IsSulfoneOxygen(this)){ // sulfone (NO)
           return(false);
           }
         FOR_NBORS_OF_ATOM(nbr, this){
@@ -1917,14 +1918,12 @@ namespace OpenBabel
     } // oxygen END
     // fluorine
     if (_ele == 9 ) {
-        OBAtom *nbr; 
-        OBBond *bond;
         OBBondIterator i;
         // organic fluorine (NO)
-        for (nbr = BeginNbrAtom(i);nbr;nbr=NextNbrAtom(i))
+        for (OBAtom* nbr = BeginNbrAtom(i);nbr;nbr=NextNbrAtom(i))
           if (nbr->GetAtomicNum() == 6)
             return (false);
-        else
+          else
             return (true);
     };
     if (_ele == 7) {
