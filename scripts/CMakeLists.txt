@@ -131,6 +131,25 @@ if (DO_PYTHON_BINDINGS)
             OUTPUT_NAME _openbabel
             PREFIX ""
             SUFFIX .pyd )
+        execute_process(
+          COMMAND
+          ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_python_lib(1,0,prefix='${CMAKE_INSTALL_PREFIX}'))"
+          OUTPUT_VARIABLE PYTHON_INSTDIR
+          OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
+        if(NOT BINDINGS_ONLY)
+            add_dependencies(bindings_python openbabel)
+        endif()
+
+        install(TARGETS bindings_python
+                LIBRARY DESTINATION ${PYTHON_INSTDIR}
+                COMPONENT bindings_python)
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
+                DESTINATION ${PYTHON_INSTDIR}
+                COMPONENT bindings_python)
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/pybel.py
+                DESTINATION ${PYTHON_INSTDIR}
+                COMPONENT bindings_python)
         add_custom_command(TARGET bindings_python POST_BUILD
           COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py ${openbabel_BINARY_DIR}/bin/${CMAKE_CFG_INTDIR}
           )
