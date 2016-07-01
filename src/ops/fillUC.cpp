@@ -120,7 +120,7 @@ bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConver
     obErrorLog.ThrowError(__FUNCTION__, "Cannot fill unit cell without a unit cell !" , obWarning);
     return false;
   }
-  
+
   OBUnitCell *pUC = (OBUnitCell*)pmol->GetData(OBGenericDataType::UnitCell);
   SpaceGroup spacegroup;
   const SpaceGroup* pSG;
@@ -146,7 +146,7 @@ bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConver
   {
     pSG = pUC->GetSpaceGroup();
   }
-  
+
   if (pSG == NULL)
   {
     obErrorLog.ThrowError(__FUNCTION__, "Cannot fill unit cell without spacegroup information !" , obWarning);
@@ -265,8 +265,6 @@ bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConver
     }
   }
 
-  // Set spacegroup to P1, since we generated all symmetrics
-  pUC->SetSpaceGroup("P1");
   return true;
 }
 }//namespace
