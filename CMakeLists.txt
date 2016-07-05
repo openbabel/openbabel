@@ -613,3 +613,14 @@ install(FILES "${openbabel_BINARY_DIR}/OpenBabel2ConfigInstall.cmake"
 install(FILES "${openbabel_BINARY_DIR}/OpenBabel2ConfigVersion.cmake"
   DESTINATION ${OB_CONFIG_DIR}
   COMPONENT Development)
+
+# from https://cmake.org/Wiki/RecipeAddUninstallTarget
+########### Add uninstall target ###############
+if (NOT DEFINED EMBED_OPENBABEL)
+CONFIGURE_FILE(
+  "${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/cmake/cmake_uninstall.cmake"
+  IMMEDIATE @ONLY)
+ADD_CUSTOM_TARGET(uninstall
+  "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake/cmake_uninstall.cmake")
+endif()

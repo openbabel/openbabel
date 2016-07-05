@@ -184,7 +184,7 @@ int main(int argc,char **argv)
       // then with code like the above they are just ignored.
     } // end for loop
   
-  return(1);
+  return(0);
 }
 
 

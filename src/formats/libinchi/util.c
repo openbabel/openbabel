@@ -187,7 +187,7 @@ const ELDATA ElData[] = {
     Reference:
         M. E. WIESER AND T. B. COPLEN.
         Atomic weights of the elements 2009 (IUPAC Technical Report).
-        Pure Appl. Chem., Vol. 83, No. 2, pp. 359–396, 2011.
+        Pure Appl. Chem., Vol. 83, No. 2, pp. 359ï¿½396, 2011.
     When available, the mass is given for isotope with the longest half-life.
 */
 /* 105 dubnium Db */		/* ? Like: Ta */
@@ -425,7 +425,7 @@ int extract_ChargeRadical( char *elname, int *pnRadical, int *pnCharge )
     p = elname;
 
     /*  extract radicals & charges */
-    while ( q = strpbrk( p, "+-^" ) ) {
+    while ( (q = strpbrk( p, "+-^" )) ) {
         switch ( *q ) {
         case '+':
         case '-':
@@ -433,7 +433,7 @@ int extract_ChargeRadical( char *elname, int *pnRadical, int *pnCharge )
                 nVal += (nLastSign = nSign);
                 charge_len ++;
             }
-            if ( nSign = (int)strtol( q+k, &r, 10 ) ) { /*  fixed 12-5-2001 */
+            if ( (nSign = (int)strtol( q+k, &r, 10 )) ) { /*  fixed 12-5-2001 */
                 nVal += nLastSign * (nSign-1);
             }
             charge_len = r - q;
@@ -553,7 +553,7 @@ int get_num_H (const char* elname, int inp_num_H, S_CHAR inp_num_iso_H[],
          !ElData[el_number].bDoNotAddH && !bDoNotAddH ) {
         /* add hydrogen atoms according to standard element valence */
         if ( radical && radical != RADICAL_SINGLET ) {
-            if ( val = ElData[el_number].cValence[NEUTRAL_STATE+charge][0] ) {
+            if ( (val = ElData[el_number].cValence[NEUTRAL_STATE+charge][0]) ) {
                 val -= (radical==RADICAL_DOUBLET)? 1 :
                        (radical==RADICAL_SINGLET || radical==RADICAL_TRIPLET )? 2 : val;
                 /* if unknown radical then do not add H */
@@ -740,7 +740,7 @@ int mystrncpy(char *target,const char *source,unsigned maxlen)
 
     if (target==NULL || maxlen == 0 || source == NULL)
         return 0;
-    if ( p = (const char*)memchr(source, 0, maxlen) ) {
+    if ( (p = (const char*)memchr(source, 0, maxlen)) ) {
         len = p-source; /*  maxlen does not include the found zero termination */
     } else {
         len = maxlen-1; /*  reduced length does not include one more byte for zero termination */
@@ -1168,5 +1168,3 @@ char *_strdup( const char *string )
 }
 #endif
 #endif
-
-

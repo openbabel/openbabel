@@ -734,10 +734,10 @@ int HalfStereoBondParity( sp_ATOM *at, int at_no1, int i_sb_neigh, const AT_RANK
     if ( iNeigh < 0 || iNeigh != at[at_no1].stereo_bond_ord[i_sb_neigh] ) {
         return CT_STEREOBOND_ERROR;  /*   <BRKPT> */
     }
-    if ( j > 0 && !r[0] || j > 1 && !r[1] )
+    if ( (j > 0 && !r[0]) || (j > 1 && !r[1]) )
         return 0; /*  undefined ranks */
 
-    if ( j == 2 && r[0] == r[1] || iNeigh < 0 ) {
+    if ( (j == 2 && r[0] == r[1]) || iNeigh < 0 ) {
         parity = AB_PARITY_CALC;  /*  cannot calculate bond parity without additional breaking ties. */
     } else {
         parity = 2 - (at[at_no1].parity + iNeigh + (r[1] < r[0])) % 2;
@@ -1228,9 +1228,9 @@ int BreakNeighborsTie(  sp_ATOM *at, int num_atoms, int num_at_tg, int ib, int i
     int other_neigh[2], other_neig_ord[2], num_other_neigh;
     /*  asymmetric calculation */
 
-    if ( mode == MAP_MODE_S4  && in1 || /* for S4 we need only (in1,in2) = (0,1) (0,2) (0,3) pairs of neighbors */
-         mode != MAP_MODE_STD && at[ia].valence != MAX_NUM_STEREO_ATOM_NEIGH ||
-         mode != MAP_MODE_STD && nSymmRank[n1]  != nSymmRank[n2] ) {
+    if ( (mode == MAP_MODE_S4  && in1) || /* for S4 we need only (in1,in2) = (0,1) (0,2) (0,3) pairs of neighbors */
+         (mode != MAP_MODE_STD && at[ia].valence != MAX_NUM_STEREO_ATOM_NEIGH) ||
+         (mode != MAP_MODE_STD && nSymmRank[n1]  != nSymmRank[n2]) ) {
         return 0;
     }
     /*  1. Create initial ranks from equivalence information stored in nSymmRank */
@@ -1250,8 +1250,8 @@ int BreakNeighborsTie(  sp_ATOM *at, int num_atoms, int num_at_tg, int ib, int i
             }
         }
     }
-    if ( mode != MAP_MODE_STD && nSymmRank[other_neigh[0]] != nSymmRank[other_neigh[1]] ||
-         mode == MAP_MODE_S4  && nSymmRank[n1]             != nSymmRank[other_neigh[1]] ) {
+    if ( (mode != MAP_MODE_STD && nSymmRank[other_neigh[0]] != nSymmRank[other_neigh[1]]) ||
+         (mode == MAP_MODE_S4  && nSymmRank[n1]             != nSymmRank[other_neigh[1]]) ) {
         return 0;
     }
 
@@ -1876,8 +1876,8 @@ int CalculatedPathsParitiesAreIdentical( sp_ATOM *at, int num_atoms, const AT_RA
     not_well_def_parities = 0;
     nNumEqStereogenic = 0;
 
-    if ( nNeighMode != NEIGH_MODE_RING &&
-         bParitiesInverted != 0 || abs(bParitiesInverted) != 1 ) {
+    if ( (nNeighMode != NEIGH_MODE_RING &&
+         bParitiesInverted != 0) || abs(bParitiesInverted) != 1 ) {
         bParitiesInverted = 0;
     }
 
@@ -1901,8 +1901,8 @@ int CalculatedPathsParitiesAreIdentical( sp_ATOM *at, int num_atoms, const AT_RA
             nAtomNumberCanon2[i] = MAX_ATOMS+1;  /*  mark unchanged */
         }
     }
-    if ( bParitiesInverted  > 0 && !(mode == MAP_MODE_C2v || mode == MAP_MODE_S4) ||
-         bParitiesInverted == 0 && !(mode == MAP_MODE_C2  || mode == MAP_MODE_STD)) {
+    if ( (bParitiesInverted  > 0 && !(mode == MAP_MODE_C2v || mode == MAP_MODE_S4)) ||
+         (bParitiesInverted == 0 && !(mode == MAP_MODE_C2  || mode == MAP_MODE_STD))) {
         return 0;
     }
     /**************************************************************************************
@@ -2132,13 +2132,13 @@ int CalculatedPathsParitiesAreIdentical( sp_ATOM *at, int num_atoms, const AT_RA
             if ( s1+s2 != 1 ) {
                 return -1; /*  program error: only one out of s1 and s2 must be 1, another must be 0. */
             }
-            if ( s1 && !at[i11].parity || s2 && !at[i12].parity ) {
+            if ( (s1 && !at[i11].parity) || (s2 && !at[i12].parity) ) {
                 return 0; /*  another atom does not have parity (it might have been removed) 9-11-2002 */
             }
         }
         
         parity  = pCS->LinearCTStereoCarb[i].parity;
-        if ( nNeighMode == NEIGH_MODE_RING  && (i11 != i01) && (i12 != i01) ||
+        if ( (nNeighMode == NEIGH_MODE_RING  && (i11 != i01) && (i12 != i01)) ||
              /*  in NEIGH_MODE_RING case we know that i11 == i12 except bCurParityInv1 == 1 */
              nNeighMode == NEIGH_MODE_CHAIN 
              /*  in NEIGH_MODE_CHAIN case here we always have 2 different atoms */
@@ -2156,10 +2156,10 @@ int CalculatedPathsParitiesAreIdentical( sp_ATOM *at, int num_atoms, const AT_RA
                     int parity1orig = GetStereoCenterParity( at, i11, nCanonRank ); 
                     int parity2orig = GetStereoCenterParity( at, i12, nCanonRank ); 
                     if ( i11 == i12 ||
-                         (parity1 == parity1orig || parity2 == parity2orig || parity1 != parity2) &&
-                         ATOM_PARITY_WELL_DEF(parity1) ||
-                         parity1 != parity2 && (!ATOM_PARITY_WELL_DEF(parity1) ||
-                                                !ATOM_PARITY_WELL_DEF(parity2)) )
+                         ((parity1 == parity1orig || parity2 == parity2orig || parity1 != parity2) &&
+                         ATOM_PARITY_WELL_DEF(parity1)) ||
+                         (parity1 != parity2 && (!ATOM_PARITY_WELL_DEF(parity1) ||
+                                                !ATOM_PARITY_WELL_DEF(parity2))) )
                         /*return -1; */ /* should be different atoms with inverted parities */
                         nNumDiff ++;
                 } else {
@@ -2260,8 +2260,8 @@ int CalculatedPathsParitiesAreIdentical( sp_ATOM *at, int num_atoms, const AT_RA
         }
 
         if ( nCheckingMode == CHECKING_STEREOBOND ) {
-            switch ( (i11 == cur && i12 == prev_sb_neigh || i12 == cur && i11 == prev_sb_neigh) +
-                     (i21 == cur && i22 == prev_sb_neigh || i22 == cur && i21 == prev_sb_neigh) ) {
+            switch ( ((i11 == cur && i12 == prev_sb_neigh) || (i12 == cur && i11 == prev_sb_neigh)) +
+                     ((i21 == cur && i22 == prev_sb_neigh) || (i22 == cur && i21 == prev_sb_neigh)) ) {
             case 2:
                 continue; /*  do not recheck the starting bond/cumulene */
             case 1:
@@ -2287,8 +2287,8 @@ int CalculatedPathsParitiesAreIdentical( sp_ATOM *at, int num_atoms, const AT_RA
             if ( s1+s2 != 1 ) {
                 return -1; /*  program error: only one out of s1 and s2 must be 1, another must be 0. */
             }
-            if ( s1 && 0 > GetStereoNeighborPos( at, i11, i12 ) ||
-                 s2 && 0 > GetStereoNeighborPos( at, i21, i22 ) ) {
+            if ( (s1 && 0 > GetStereoNeighborPos( at, i11, i12 )) ||
+                 (s2 && 0 > GetStereoNeighborPos( at, i21, i22 )) ) {
                 return 0; /*  another bond is not stereo (the stereo might have been removed) 9-11-2002 */
             }
         }
@@ -2297,7 +2297,7 @@ int CalculatedPathsParitiesAreIdentical( sp_ATOM *at, int num_atoms, const AT_RA
         /* bMustBeIdentical  = ATOM_PARITY_ILL_DEF(parity); */
         /* nNumEqStereogenic = 0; */
 
-        if ( nNeighMode == NEIGH_MODE_RING  && (i11 != i01 || i12 != i02) && (i11 != i02 || i12 != i01) ||
+        if ( (nNeighMode == NEIGH_MODE_RING  && (i11 != i01 || i12 != i02) && (i11 != i02 || i12 != i01)) ||
              nNeighMode == NEIGH_MODE_CHAIN                    /*  in NEIGH_MODE_CHAIN case here we always have 2 different atoms */
         ) {
             /*******************************************/
@@ -2307,7 +2307,7 @@ int CalculatedPathsParitiesAreIdentical( sp_ATOM *at, int num_atoms, const AT_RA
             if ( !ATOM_PARITY_KNOWN(parity1) && !ATOM_PARITY_KNOWN(parity2) ) {
                 return -1; /*  should not happen: must have been detected at the time of traversal */
             }
-            if ( s1 && s2 && ((i11 != i21 || i12 != i22) && (i11 != i22 || i12 != i21) || parity1 != parity2 ) ) {
+            if ( s1 && s2 && (((i11 != i21 || i12 != i22) && (i11 != i22 || i12 != i21)) || parity1 != parity2 ) ) {
                 return -1; /*  program error: must be the same bond/cumulene */
             }
             parity12 = s1? parity1 : parity2;
@@ -2317,8 +2317,8 @@ int CalculatedPathsParitiesAreIdentical( sp_ATOM *at, int num_atoms, const AT_RA
                 if ( nCheckingMode == CHECKING_STEREOBOND && nNeighMode == NEIGH_MODE_RING ) {
                     /*  all 3 bonds: cur-prev_sb_neigh, i01-i02, i11-i12 are different */
                     /*  (here <i11,i12>==<i21,i22> compared as unordered pairs) */
-                    if ( nSymmRank[cur] == nSymmRank[i01] && nSymmRank[prev_sb_neigh] == nSymmRank[i02] ||
-                         nSymmRank[cur] == nSymmRank[i02] && nSymmRank[prev_sb_neigh] == nSymmRank[i01] ) {
+                    if ( (nSymmRank[cur] == nSymmRank[i01] && nSymmRank[prev_sb_neigh] == nSymmRank[i02]) ||
+                         (nSymmRank[cur] == nSymmRank[i02] && nSymmRank[prev_sb_neigh] == nSymmRank[i01]) ) {
                         nNumEqStereogenic ++;
                     }
                 }
@@ -2525,7 +2525,7 @@ second_pass:
                 if ( ret2 & ( NOT_WELL_DEF_UNKN | NOT_WELL_DEF_UNDF ) ) {
                     /*  possibly change the parity to unknown or undefined */
                     int new_parity = (ret2 & NOT_WELL_DEF_UNKN)? vABParityUnknown /*AB_PARITY_UNKN*/: AB_PARITY_UNDF;
-                    if ( PARITY_ILL_DEF(at[i1].stereo_bond_parity[n1]) && PARITY_VAL(at[i1].stereo_bond_parity[n1]) > new_parity ||
+                    if ( (PARITY_ILL_DEF(at[i1].stereo_bond_parity[n1]) && PARITY_VAL(at[i1].stereo_bond_parity[n1]) > new_parity) ||
                          PARITY_CALCULATE(at[i1].stereo_bond_parity[n1]) ) {
                         /*  set new unknown or undefined parity */
                         SetOneStereoBondIllDefParity( at, i1, /* atom number*/ n1 /* stereo bond ord. number*/, new_parity );
@@ -2753,8 +2753,8 @@ second_pass:
                         if ( ret2 & ( NOT_WELL_DEF_UNKN | NOT_WELL_DEF_UNDF ) ) {
                             /*  possibly change the parity to unknown or undefined */
                             int new_parity = (ret2 & NOT_WELL_DEF_UNKN)? vABParityUnknown /*AB_PARITY_UNKN*/: AB_PARITY_UNDF;
-                            if ( PARITY_ILL_DEF(at[i].stereo_atom_parity) &&
-                                 PARITY_VAL(at[i].stereo_atom_parity) > new_parity ||
+                            if ( (PARITY_ILL_DEF(at[i].stereo_atom_parity) &&
+                                 PARITY_VAL(at[i].stereo_atom_parity) > new_parity) ||
                                  PARITY_CALCULATE(at[i].stereo_atom_parity) ) {
                                 /*  set new unknown or undefined parity */
                                 at[i].stereo_atom_parity = (at[i].stereo_atom_parity ^ PARITY_VAL(at[i].stereo_atom_parity)) | PARITY_VAL(new_parity);

@@ -25,7 +25,7 @@ GNU General Public License for more details.
 #include <vector>
 #include <string>
 
-#if defined(_MSC_VER) && _MSC_VER < 1600
+#if defined(_MSC_VER) && _MSC_VER <= 1600
   // Assuming 32bit integer
   typedef unsigned uint32_t;
 #else

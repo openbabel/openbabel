@@ -299,7 +299,7 @@ int FixRestoredStructureStereo( INCHI_MODE cmpInChI, ICR *icr, INCHI_MODE cmpInC
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             /*
@@ -384,7 +384,7 @@ int FixRestoredStructureStereo( INCHI_MODE cmpInChI, ICR *icr, INCHI_MODE cmpInC
                                                         ppt_group_info, ppat_norm, ppat_prep ) ) ) {
             goto exit_function;
         }
-        if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+        if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
             goto exit_function;
         }
         /*
@@ -440,7 +440,7 @@ int FixRestoredStructureStereo( INCHI_MODE cmpInChI, ICR *icr, INCHI_MODE cmpInC
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             /*
@@ -550,24 +550,24 @@ int FixRestoredStructureStereo( INCHI_MODE cmpInChI, ICR *icr, INCHI_MODE cmpInC
                 for ( j = 0; j < pStruct->num_atoms; j ++ ) {
                     if ( (k=pVA[j].nCMinusGroupEdge-1) >= 0 && !pBNS->edge[k].forbidden ) {
                         if ( !pStruct->endpoint[j] ) {
-                            if (ret = AddToEdgeList( &AllChargeEdges, k, INC_ADD_EDGE ) ) {
+                            if ( (ret = AddToEdgeList( &AllChargeEdges, k, INC_ADD_EDGE )) ) {
                                 goto exit_function;
                             }
                         } else
                         if ( pVA[j].cNumValenceElectrons == 6 ) {
                             /* O */
-                            if (ret = AddToEdgeList( TautMinusEdges+0, k, INC_ADD_EDGE ) ) {
+                            if ( (ret = AddToEdgeList( TautMinusEdges+0, k, INC_ADD_EDGE )) ) {
                                 goto exit_function;
                             }
                         } else {
                             /* N */
-                            if (ret = AddToEdgeList( TautMinusEdges+1, k, INC_ADD_EDGE ) ) {
+                            if ( (ret = AddToEdgeList( TautMinusEdges+1, k, INC_ADD_EDGE )) ) {
                                 goto exit_function;
                             }
                         }
                     }
                     if ( (k=pVA[j].nCPlusGroupEdge-1) >= 0 && !pBNS->edge[k].forbidden ) {
-                        if ( ret = AddToEdgeList( &AllChargeEdges, k, INC_ADD_EDGE ) ) {
+                        if ( (ret = AddToEdgeList( &AllChargeEdges, k, INC_ADD_EDGE )) ) {
                             goto exit_function;
                         }
                         /* in addition, disallow N(V) creation by forbidding charge flower edge that has flow=1 */
@@ -575,7 +575,7 @@ int FixRestoredStructureStereo( INCHI_MODE cmpInChI, ICR *icr, INCHI_MODE cmpInC
                              NO_VERTEX != (k = GetChargeFlowerUpperEdge( pBNS, pVA, k ))) {
 
                             if ( !pBNS->edge[j].forbidden && pBNS->edge[k].flow ) {
-                                if ( ret = AddToEdgeList( &AllChargeEdges, k, INC_ADD_EDGE ) ) {
+                                if ( (ret = AddToEdgeList( &AllChargeEdges, k, INC_ADD_EDGE )) ) {
                                     goto exit_function;
                                 }
                             }
@@ -613,8 +613,8 @@ int FixRestoredStructureStereo( INCHI_MODE cmpInChI, ICR *icr, INCHI_MODE cmpInC
                     ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                           &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                    if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                      vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == 0 ) {
+                    if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                      (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == 0 ) {
                         /* Negative charge has been moved, no change in number of charges */
                         ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                         if ( ret > 0 ) {
@@ -646,7 +646,7 @@ int FixRestoredStructureStereo( INCHI_MODE cmpInChI, ICR *icr, INCHI_MODE cmpInC
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             /*
@@ -742,27 +742,27 @@ int FixRestoredStructureStereo( INCHI_MODE cmpInChI, ICR *icr, INCHI_MODE cmpInC
             if ( !AllChargeEdges.num_edges && !TautMinusEdges[0].num_edges && !TautMinusEdges[1].num_edges ) {
                 for ( j = 0; j < pStruct->num_atoms; j ++ ) {
                     if ( (k=pVA[j].nCMinusGroupEdge-1) >= 0 && !pBNS->edge[k].forbidden ) {
-                        if (ret = AddToEdgeList( &AllChargeEdges, k, INC_ADD_EDGE ) ) {
+                        if ( (ret = AddToEdgeList( &AllChargeEdges, k, INC_ADD_EDGE )) ) {
                             goto exit_function;
                         }
                     }
                     if ( (k=pVA[j].nCPlusGroupEdge-1) >= 0 && !pBNS->edge[k].forbidden ) {
                         int bMayBeUnfixed = !at2[j].num_H && !(pStruct->endpoint && pStruct->endpoint[j]);
-                        if ( bMayBeUnfixed && pVA[j].cNumValenceElectrons == 6 || 
-                             pVA[j].cNumValenceElectrons == 5 && pVA[j].cPeriodicRowNumber > 1 ) {
+                        if ( (bMayBeUnfixed && pVA[j].cNumValenceElectrons == 6) ||
+                             (pVA[j].cNumValenceElectrons == 5 && pVA[j].cPeriodicRowNumber > 1) ) {
                             /* O & P */
-                            if (ret = AddToEdgeList( TautMinusEdges+0, k, INC_ADD_EDGE ) ) {
+                            if ( (ret = AddToEdgeList( TautMinusEdges+0, k, INC_ADD_EDGE )) ) {
                                 goto exit_function;
                             }
                         } else
                         if ( bMayBeUnfixed &&
                              pVA[j].cNumValenceElectrons == 5 && pVA[j].cPeriodicRowNumber == 1 ) {
                             /* N */
-                            if (ret = AddToEdgeList( TautMinusEdges+1, k, INC_ADD_EDGE ) ) {
+                            if ( (ret = AddToEdgeList( TautMinusEdges+1, k, INC_ADD_EDGE )) ) {
                                 goto exit_function;
                             }
                         } else {
-                            if ( ret = AddToEdgeList( &AllChargeEdges, k, INC_ADD_EDGE ) ) {
+                            if ( (ret = AddToEdgeList( &AllChargeEdges, k, INC_ADD_EDGE )) ) {
                                 goto exit_function;
                             }
                         }
@@ -770,7 +770,7 @@ int FixRestoredStructureStereo( INCHI_MODE cmpInChI, ICR *icr, INCHI_MODE cmpInC
                         if ( pVA[j].cNumValenceElectrons == 5 && !pVA[j].cMetal && /* N, P, As */
                              NO_VERTEX != (k = GetChargeFlowerUpperEdge( pBNS, pVA, k ))) {
                             if ( !pBNS->edge[j].forbidden && pBNS->edge[k].flow ) {
-                                if ( ret = AddToEdgeList( &AllChargeEdges, k, INC_ADD_EDGE ) ) {
+                                if ( (ret = AddToEdgeList( &AllChargeEdges, k, INC_ADD_EDGE )) ) {
                                     goto exit_function;
                                 }
                             }
@@ -809,8 +809,8 @@ int FixRestoredStructureStereo( INCHI_MODE cmpInChI, ICR *icr, INCHI_MODE cmpInC
                     ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                           &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                    if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                      vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == 0 ) {
+                    if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                      (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == 0 ) {
                         /* Negative charge has been moved, no change in number of charges */
                         ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                         if ( ret > 0 ) {
@@ -842,7 +842,7 @@ int FixRestoredStructureStereo( INCHI_MODE cmpInChI, ICR *icr, INCHI_MODE cmpInC
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             /*
@@ -940,7 +940,7 @@ int FixRestoredStructureStereo( INCHI_MODE cmpInChI, ICR *icr, INCHI_MODE cmpInC
                  pVA[v1].cNumValenceElectrons == 5 && pVA[v1].cPeriodicRowNumber == 1;
             i2 = at2[v2].valence == 1 && at2[v2].num_H == 1 && !at2[v2].endpoint &&
                  pVA[v2].cNumValenceElectrons == 5 && pVA[v2].cPeriodicRowNumber == 1;
-            if ( !i1 && !i2  || i1 && i2 ) {
+            if ( (!i1 && !i2)  || (i1 && i2) ) {
                 continue;
             }
             /* find the edge between v1 and v2 */
@@ -982,18 +982,18 @@ int FixRestoredStructureStereo( INCHI_MODE cmpInChI, ICR *icr, INCHI_MODE cmpInC
             if ( !AllChargeEdges.num_edges ) {
                 for ( j = 0; j < pStruct->num_atoms; j ++ ) {
                     if ( (k=pVA[j].nCMinusGroupEdge-1) >= 0 && !pBNS->edge[k].forbidden ) {
-                        if (ret = AddToEdgeList( &AllChargeEdges, k, INC_ADD_EDGE ) ) {
+                        if ( (ret = AddToEdgeList( &AllChargeEdges, k, INC_ADD_EDGE )) ) {
                             goto exit_function;
                         }
                     }
                     if ( (k=pVA[j].nCPlusGroupEdge-1) >= 0 && !pBNS->edge[k].forbidden ) {
                         if ( pVA[j].cNumValenceElectrons == 5 && pVA[j].cPeriodicRowNumber == 1 &&
                              !at2[j].num_H && at2[j].valence == 3 &&
-                             !(at2[j].endpoint || pStruct->endpoint && pStruct->endpoint[j]) ) {
+                             !(at2[j].endpoint || (pStruct->endpoint && pStruct->endpoint[j])) ) {
                                  ; /* do not fix -N< or =N(+)< */
                         } else {
                             /* all others */
-                            if (ret = AddToEdgeList( TautMinusEdges+0, k, INC_ADD_EDGE ) ) {
+                            if ( (ret = AddToEdgeList( TautMinusEdges+0, k, INC_ADD_EDGE )) ) {
                                 goto exit_function;
                             }
                         } 
@@ -1001,7 +1001,7 @@ int FixRestoredStructureStereo( INCHI_MODE cmpInChI, ICR *icr, INCHI_MODE cmpInC
                         if ( pVA[j].cNumValenceElectrons == 5 && !pVA[j].cMetal && /* N, P, As */
                              NO_VERTEX != (k = GetChargeFlowerUpperEdge( pBNS, pVA, k ))) {
                             if ( !pBNS->edge[j].forbidden && pBNS->edge[k].flow ) {
-                                if ( ret = AddToEdgeList( &AllChargeEdges, k, INC_ADD_EDGE ) ) {
+                                if ( (ret = AddToEdgeList( &AllChargeEdges, k, INC_ADD_EDGE )) ) {
                                     goto exit_function;
                                 }
                             }
@@ -1017,7 +1017,7 @@ int FixRestoredStructureStereo( INCHI_MODE cmpInChI, ICR *icr, INCHI_MODE cmpInC
             pBNS->vert[vPlusMinus].st_edge.cap += delta; /* create radical on (+/-) */
             pBNS->tot_st_flow           -=  2*delta;
             /* fix C-NH bond */
-            if ( ret = AddToEdgeList( &AllChargeEdges, e, INC_ADD_EDGE ) ) {
+            if ( (ret = AddToEdgeList( &AllChargeEdges, e, INC_ADD_EDGE )) ) {
                 goto exit_function;
             }
             /* pBNS->tot_st_cap is unchanged */
@@ -1028,8 +1028,8 @@ int FixRestoredStructureStereo( INCHI_MODE cmpInChI, ICR *icr, INCHI_MODE cmpInC
             ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                   &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-            if ( ret == 1 && (vPathEnd == vPlusMinus && vPathStart == aC ||
-                              vPathEnd == aC && vPathStart == vPlusMinus) && nDeltaCharge == 1 ) {
+            if ( ret == 1 && ((vPathEnd == vPlusMinus && vPathStart == aC) ||
+                              (vPathEnd == aC && vPathStart == vPlusMinus)) && nDeltaCharge == 1 ) {
                 /* Negative charge has been moved, no change in number of charges */
                 ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                 if ( ret > 0 ) {
@@ -1063,7 +1063,7 @@ int FixRestoredStructureStereo( INCHI_MODE cmpInChI, ICR *icr, INCHI_MODE cmpInC
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             /*
@@ -1150,7 +1150,7 @@ int FixRestoredStructureStereo( INCHI_MODE cmpInChI, ICR *icr, INCHI_MODE cmpInC
                  pVA[v1].cNumValenceElectrons == 5 && pVA[v1].cPeriodicRowNumber == 1;
             i2 = at2[v2].valence == 1 && at2[v2].num_H == 2 && !at2[v2].endpoint &&
                  pVA[v2].cNumValenceElectrons == 5 && pVA[v2].cPeriodicRowNumber == 1;
-            if ( !i1 && !i2  || i1 && i2 ) {
+            if ( (!i1 && !i2)  || (i1 && i2) ) {
                 continue;
             }
             /* find the edge between v1 and v2 */
@@ -1179,18 +1179,18 @@ int FixRestoredStructureStereo( INCHI_MODE cmpInChI, ICR *icr, INCHI_MODE cmpInC
             if ( !AllChargeEdges.num_edges ) {
                 for ( j = 0; j < pStruct->num_atoms; j ++ ) {
                     if ( (k=pVA[j].nCMinusGroupEdge-1) >= 0 && !pBNS->edge[k].forbidden ) {
-                        if (ret = AddToEdgeList( &AllChargeEdges, k, INC_ADD_EDGE ) ) {
+                        if ( (ret = AddToEdgeList( &AllChargeEdges, k, INC_ADD_EDGE )) ) {
                             goto exit_function;
                         }
                     }
                     if ( (k=pVA[j].nCPlusGroupEdge-1) >= 0 && !pBNS->edge[k].forbidden ) {
                         if ( pVA[j].cNumValenceElectrons == 5 && pVA[j].cPeriodicRowNumber == 1 &&
                              !at2[j].num_H && at2[j].valence == 3 &&
-                             !(at2[j].endpoint || pStruct->endpoint && pStruct->endpoint[j]) ) {
+                             !(at2[j].endpoint || (pStruct->endpoint && pStruct->endpoint[j])) ) {
                                  ; /* do not fix -N< or =N(+)< */
                         } else {
                             /* all others */
-                            if (ret = AddToEdgeList( TautMinusEdges+0, k, INC_ADD_EDGE ) ) {
+                            if ( (ret = AddToEdgeList( TautMinusEdges+0, k, INC_ADD_EDGE )) ) {
                                 goto exit_function;
                             }
                         } 
@@ -1198,7 +1198,7 @@ int FixRestoredStructureStereo( INCHI_MODE cmpInChI, ICR *icr, INCHI_MODE cmpInC
                         if ( pVA[j].cNumValenceElectrons == 5 && !pVA[j].cMetal && /* N, P, As */
                              NO_VERTEX != (k = GetChargeFlowerUpperEdge( pBNS, pVA, k ))) {
                             if ( !pBNS->edge[j].forbidden && pBNS->edge[k].flow ) {
-                                if ( ret = AddToEdgeList( &AllChargeEdges, k, INC_ADD_EDGE ) ) {
+                                if ( (ret = AddToEdgeList( &AllChargeEdges, k, INC_ADD_EDGE )) ) {
                                     goto exit_function;
                                 }
                             }
@@ -1226,8 +1226,8 @@ int FixRestoredStructureStereo( INCHI_MODE cmpInChI, ICR *icr, INCHI_MODE cmpInC
             ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                   &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-            if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                              vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == 0 ) {
+            if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                              (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == 0 ) {
                 /* (+)charge was just moved, no change in number of charges */
                 ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                 if ( ret > 0 ) {
@@ -1251,7 +1251,7 @@ int FixRestoredStructureStereo( INCHI_MODE cmpInChI, ICR *icr, INCHI_MODE cmpInC
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             /*

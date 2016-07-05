@@ -719,7 +719,7 @@ int inchi_fgetsLfTab( char *szLine, int len, FILE *f )
         LtrimRtrim( szLine, &length );
     } while ( !length );
     if ( bTooLongLine ) {
-        while ( p = inchi_fgetsTab( szSkip, sizeof(szSkip)-1, f ) ) {
+        while ( (p = inchi_fgetsTab( szSkip, sizeof(szSkip)-1, f )) ) {
             if ( strchr( szSkip, '\n' ) )
                 break;
         }

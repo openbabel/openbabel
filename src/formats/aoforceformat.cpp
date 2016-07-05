@@ -25,16 +25,15 @@ class AoforceFormat : public OBMoleculeFormat {
 
     virtual const char* Description() {  // required
       return
-          "Aoforce output format\n"
-          "Calculation of vibrational frequencies and vibrational spectra\n"
-          "using the aoforce module from TurboMole.\n";
+          "Turbomole AOFORCE output format\n"
+          "Read vibrational frequencies and intensities\n";
     }
 
     virtual const char* SpecificationURL() {
       return "http://www.turbomole-gmbh.com/manuals/";
     }
 
-    virtual unsigned int Flags() { return READONEONLY; }
+    virtual unsigned int Flags() { return READONEONLY | NOTWRITABLE; }
 
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
 };
