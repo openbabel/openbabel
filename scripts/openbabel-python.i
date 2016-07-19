@@ -1,5 +1,9 @@
 %module openbabel
 
+%begin %{
+#define SWIG_PYTHON_2_UNICODE
+%}
+
 %{
 // used to set import/export for Cygwin DLLs
 #ifdef WIN32
@@ -78,7 +82,7 @@
 
 namespace std {
 
-%define VVTEMPLATE_WRAP(name, T) 
+%define VVTEMPLATE_WRAP(name, T)
 %feature("ignore") vector< vector<T> >::append;
 %feature("ignore") vector< vector<T> >::assign;
 %feature("ignore") vector< vector<T> >::back;
@@ -103,7 +107,7 @@ namespace std {
 %template(vectorv ## name) vector< vector<T> >;
 %enddef
 
-%define VECTORTEMPLATE_WRAP(vectorname, T) 
+%define VECTORTEMPLATE_WRAP(vectorname, T)
 %feature("ignore") vector<T>::append;
 %feature("ignore") vector<T>::assign;
 %feature("ignore") vector<T>::back;
@@ -128,7 +132,7 @@ namespace std {
 %template(vector ## vectorname) vector<T>;
 %enddef
 
-%define VECTORPAIRTEMPLATE_WRAP(vectorname, T1, T2) 
+%define VECTORPAIRTEMPLATE_WRAP(vectorname, T1, T2)
 %feature("ignore") vector< pair<T1, T2> >::append;
 %feature("ignore") vector< pair<T1, T2> >::assign;
 %feature("ignore") vector< pair<T1, T2> >::back;
@@ -240,9 +244,9 @@ CAST_GENERICDATA_TO(SquarePlanarStereo)
 %include <openbabel/typer.h>
 
 // To avoid warning in plugin.h about "Nothing known about std::binary_function"
-namespace std { 
+namespace std {
         template <T1, T2, T3>
-        class binary_function {}; 
+        class binary_function {};
 }
 %template(dummy) std::binary_function <const char *, const char *, bool>;
 %include <openbabel/plugin.h>
@@ -472,22 +476,22 @@ aromtyper = cvar.aromtyper
 %}
 
 // Functions to set the log file to std::cout and std::cerr
-       
+
 %ignore OBForceField::SetLogFile(std::ostream *pos);
 %extend OpenBabel::OBForceField {
-  void SetLogToStdOut() 
+  void SetLogToStdOut()
   {
     self->SetLogFile(&std::cout);
   }
 
-  void SetLogToStdErr() 
+  void SetLogToStdErr()
   {
     self->SetLogFile(&std::cerr);
   }
 };
 
 %extend OpenBabel::OBMol {
-  void SetTorsion(int i, int j, int k, int l, double ang) 
+  void SetTorsion(int i, int j, int k, int l, double ang)
   {
     self->SetTorsion(self->GetAtom(i), self->GetAtom(j),
                      self->GetAtom(k), self->GetAtom(l), ang);
