@@ -802,6 +802,7 @@ namespace OpenBabel
     if (!ok)
       return;
     obconv.AddOption("w", obconv.OUTOPTIONS, "78");
+    obconv.AddOption("a", obconv.OUTOPTIONS, "2.0");
     std::string ascii = obconv.WriteString(pmol);
 
     // Add a "." as prefix to each line as otherwise OB
