@@ -102,6 +102,83 @@ void test_Issue305_NumRotors()
   OB_COMPARE(mol->NumRotors(), 9); // was returning 4
 }
 
+void test_PR329_Molfile_RGroups()
+{
+  // There are several way to get an R Group into a mol file
+  // 1. The existing use of atom maps on dummy atoms in SMILES
+  OBConversion conv;
+  OBMol mol;
+  conv.SetInAndOutFormats("smi", "mol");
+  conv.ReadString(&mol, "C([*:1]CO[*:2]");
+  obErrorLog.SetOutputLevel(obMessageLevel::obError); // avoid warning about no 2D or 3D coords
+  std::string molfileWithRGP = conv.WriteString(&mol);
+  obErrorLog.SetOutputLevel(obMessageLevel::obWarning);
+  OB_ASSERT( molfileWithRGP.find("R#") != std::string::npos );
+  OB_ASSERT( molfileWithRGP.find("M  RGP  2   2   1   5   2") != std::string::npos); // i.e. atom 2 is labelled R1, atom 5 is labelled R2
+  // Check negative case
+  conv.ReadString(&mol, "C([*]CO[*]");
+  std::string molfileb = conv.WriteString(&mol);
+  OB_ASSERT( molfileb.find("R#") == std::string::npos );
+  OB_ASSERT( molfileb.find("M  RGP") == std::string::npos);
+
+  // 2. By reading a molfile that use the R#, RGP notation
+  conv.SetInAndOutFormats("mol", "mol");
+  conv.ReadString(&mol, molfileWithRGP);
+  molfileb = conv.WriteString(&mol);
+  OB_ASSERT( molfileb.find("R#") != std::string::npos );
+  OB_ASSERT( molfileb.find("M  RGP  2   2   1   5   2") != std::string::npos); // i.e. atom 2 is labelled R1, atom 5 is labelled R2
+
+  // 3. By reading a molfile that specifies the atom alias as Rn, where n is an integer
+  std::string molfileWithAlias = "\n"
+" OpenBabel07211621152D\n"
+"\n"
+"  2  1  0  0  0  0  0  0  0  0999 V2000\n"
+"    1.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+"    0.0000    1.0000    0.0000 *   0  0  0  0  0  0  0  0  0  0  0  0\n"
+"  1  2  1  0  0  0  0\n"
+"A    2\n"
+"R1\n"
+"M  END";
+  conv.SetInAndOutFormats("mol", "mol");
+  conv.ReadString(&mol, molfileWithAlias);
+  std::string molfile = conv.WriteString(&mol);
+  OB_ASSERT( molfile.find("R#") != std::string::npos );
+  OB_ASSERT( molfile.find("M  RGP  1   2   1") != std::string::npos); // i.e. atom 2 is labelled R1
+  // Check negative case
+  molfileWithAlias = "\n"
+" OpenBabel07211621152D\n"
+"\n"
+"  2  1  0  0  0  0  0  0  0  0999 V2000\n"
+"    1.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+"    0.0000    1.0000    0.0000 *   0  0  0  0  0  0  0  0  0  0  0  0\n"
+"  1  2  1  0  0  0  0\n"
+"A    2\n"
+"R\n"
+"M  END";
+  conv.SetInAndOutFormats("mol", "mol");
+  obErrorLog.SetOutputLevel(obMessageLevel::obError); // avoid warning "Alias R was not chemically interpreted"
+  conv.ReadString(&mol, molfileWithAlias);
+  obErrorLog.SetOutputLevel(obMessageLevel::obError);
+  molfile = conv.WriteString(&mol);
+  OB_ASSERT( molfile.find("R#") == std::string::npos );
+  OB_ASSERT( molfile.find("M  RGP") == std::string::npos);
+
+  // 4. By reading a molfile that specifies the element name as R1, etc.
+  std::string molfileWithRGroupElementName = "\n"
+" OpenBabel07211621152D\n"
+"\n"
+"  2  1  0  0  0  0  0  0  0  0999 V2000\n"
+"    1.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+"    0.0000    1.0000    0.0000 R1  0  0  0  0  0  0  0  0  0  0  0  0\n"
+"  1  2  1  0  0  0  0\n"
+"M  END";
+  conv.SetInAndOutFormats("mol", "mol");
+  conv.ReadString(&mol, molfileWithRGroupElementName);
+  molfile = conv.WriteString(&mol);
+  OB_ASSERT( molfile.find("R#") != std::string::npos );
+  OB_ASSERT( molfile.find("M  RGP  1   2   1") != std::string::npos); // i.e. atom 2 is labelled R1
+}
+
 int regressionstest(int argc, char* argv[])
 {
   int defaultchoice = 1;
@@ -133,6 +210,9 @@ int regressionstest(int argc, char* argv[])
     break;
   case 223:
     test_Issue305_NumRotors();
+    break;
+  case 224:
+    test_PR329_Molfile_RGroups();
     break;
     //case N:
   //  YOUR_TEST_HERE();
