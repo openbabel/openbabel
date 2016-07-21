@@ -592,7 +592,8 @@ namespace OpenBabel
 
         if ((line.substr(0, 6) != "M  CHG") && (line.substr(0, 6) != "M  RAD") &&
             (line.substr(0, 6) != "M  ISO") && (line.substr(0, 6) != "M  ZCH") &&
-            (line.substr(0, 6) != "M  HYD") && (line.substr(0, 6) != "M  ZBO"))
+            (line.substr(0, 6) != "M  HYD") && (line.substr(0, 6) != "M  ZBO") &&
+            (line.substr(0, 6) != "M  RGP"))
           continue;
         unsigned int n = 0;
         if (line.size() >= 9)
@@ -642,6 +643,17 @@ namespace OpenBabel
               // Save HYD counts to hydMap, and use to set implicit valence later on
               hydMap[number] = value;
               foundHYD = true;
+            } else if (line.substr(3, 3) == "RGP") {
+              // Numbered R groups were already added to AliasData as R#. Now we
+              // need to correct these to R1, etc.
+              if (!at->HasData(AliasDataType))
+                obErrorLog.ThrowError(__FUNCTION__, "Invalid line: M RGP must only refer to pseudoatoms\n" + line, obWarning);
+              else {
+                AliasData* ad = static_cast<AliasData*>(at->GetData(AliasDataType));
+                char buffer[6];
+                snprintf(buffer, 6, "R%d", value);
+                ad->SetAlias(buffer);
+              }
             }
           }
         }
@@ -830,6 +842,41 @@ namespace OpenBabel
     pmol->SetData(pd);
   }
 
+  // If this atom should be considered an RGroup Alias this function
+  // returns 0 or a positive integer, but -1 otherwise
+  static int GetNumberedRGroup(OBMol* pmol, OBAtom* atom)
+  {
+    if (atom->GetAtomicNum() == 0) { // Must be a pseudoatom
+      if(atom->HasData(AliasDataType)) {
+        // must have an alias Rn or Rnn
+        AliasData* ad = static_cast<AliasData*>(atom->GetData(AliasDataType));
+        if(!ad->IsExpanded()) { //do nothing with an expanded alias
+          std::string alias = ad->GetAlias();
+          const char* p = alias.c_str();
+          // Rn or Rnn
+          if (p[0]=='R' && (isdigit(p[1]) && (p[2]=='\0' || (isdigit(p[2]) && p[3]=='\0'))))
+            return atoi(p+1);
+        }
+      }
+      else {
+        //Atoms with no AliasData, but 0 atomicnum and atomclass==n are given an alias Rn
+        OBAtomClassData* pac = static_cast<OBAtomClassData*>(pmol->GetData("Atom Class"));
+        if(pac && pac->HasClass(atom->GetIdx()))
+          return pac->GetClass(atom->GetIdx());
+      }
+    }
+    return -1;
+  }
+
+  // Return the element symbol, unless it's a pseudoatom
+  // in which case return * or R# if it can be identified as an R Group
+  static const char* AtomSymbol(OBMol* pmol, OBAtom* atom)
+  {
+    if (atom->GetAtomicNum())
+      return etab.GetSymbol(atom->GetAtomicNum());
+    return (GetNumberedRGroup(pmol, atom) == -1) ? "* " : "R#";
+  }
+
   /////////////////////////////////////////////////////////////////
   bool MDLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
@@ -1012,7 +1059,7 @@ namespace OpenBabel
 
         snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d",
           atom->GetX(), atom->GetY(), atom->GetZ(),
-          atom->GetAtomicNum() ? etab.GetSymbol(atom->GetAtomicNum()) : "* ",
+          AtomSymbol(pmol, atom),
           0,charge,stereo,0,0,valence,0,0,0,aclass,0,0);
         ofs << buff << endl;
       }
@@ -1071,6 +1118,7 @@ namespace OpenBabel
       vector<OBAtom*>::iterator itr;
       vector<pair<int,int> > zchs, hyds;
       vector<pair<int,int> >::iterator zitr;
+      vector<pair<int, int>> numberedRGroups;
       for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) {
         if(atom->GetSpinMultiplicity()>0 && atom->GetSpinMultiplicity()<4)
           rads.push_back(atom);
@@ -1093,16 +1141,17 @@ namespace OpenBabel
           }
         }
 
-        if(atom->HasData(AliasDataType)) {
-          AliasData* ad = static_cast<AliasData*>(atom->GetData(AliasDataType));
-          if(!ad->IsExpanded()) //do nothing with an expanded alias
-            ofs << "A  " << setw(3) << right << atom->GetIdx() << '\n' << ad->GetAlias() << endl;
-        } else if (atom->GetAtomicNum()==0) {
-          //Atoms with no AliasData, but 0 atomicnum and atomclass==n are given an alias Rn
-          OBAtomClassData* pac = static_cast<OBAtomClassData*>(mol.GetData("Atom Class"));
-          if(pac && pac->HasClass(atom->GetIdx()))
-            ofs << "A  " << setw(3) << right << atom->GetIdx() << '\n'
-                << 'R' << pac->GetClass(atom->GetIdx()) << endl;
+        // A numbered R group is a special case of an alias and is handled differently
+        int rgroupIdx = GetNumberedRGroup(pmol, atom);
+        if (rgroupIdx == -1) {
+          if (atom->HasData(AliasDataType)) {
+            AliasData* ad = static_cast<AliasData*>(atom->GetData(AliasDataType));
+            if(!ad->IsExpanded()) //do nothing with an expanded alias
+              ofs << "A  " << setw(3) << right << atom->GetIdx() << '\n' << ad->GetAlias() << endl;
+          }
+        }
+        else {
+          numberedRGroups.push_back(make_pair(atom->GetIdx(), rgroupIdx));
         }
       }
 
@@ -1169,6 +1218,17 @@ namespace OpenBabel
             ofs << "M  ZBO" << setw(3) << min(static_cast<unsigned long int>(zbos.size() - counter), static_cast<unsigned long int>(8));
           }
           ofs << setw(4) << *it << setw(4) << 0;
+        }
+        ofs << endl;
+      }
+      if(numberedRGroups.size()) {
+        int counter = 0;
+        for (zitr=numberedRGroups.begin(); zitr != numberedRGroups.end(); ++zitr, counter++) {
+          if (counter % 8 == 0) {
+            if (counter > 0) ofs << endl;
+            ofs << "M  RGP" << setw(3) << min(static_cast<unsigned long int>(numberedRGroups.size() - counter), static_cast<unsigned long int>(8));
+          }
+          ofs << setw(4) << zitr->first << setw(4) << zitr->second;
         }
         ofs << endl;
       }
@@ -1826,11 +1886,11 @@ namespace OpenBabel
 
   bool MDLFormat::TestForAlias(const string& symbol, OBAtom* at, vector<pair<AliasData*,OBAtom*> >& aliases)
   {
-  /*If symbol is R R' R'' R¢ R¢¢ or Rn Rnn where n is an digit
+  /*If symbol is R R' R'' R# R¢ R¢¢ or Rn Rnn where n is an digit
     the atom is added to the alias list and the atomic number set to zero. Returns false.
     Otherwise, e.g Rh or Ru, returns true.
   */
-    if(symbol.size()==1 || isdigit(symbol[1]) || symbol[1]=='\'' || symbol[1]=='¢')
+    if(symbol.size()==1 || isdigit(symbol[1]) || symbol[1]=='\'' || symbol[1]=='¢' || symbol[1]=='#')
     {
       AliasData* ad = new AliasData();
       ad->SetAlias(symbol);
