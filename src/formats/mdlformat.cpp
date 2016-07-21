@@ -824,10 +824,11 @@ namespace OpenBabel
       pd = (OBPairData*)pmol->GetData("ASCII depiction");
     else {
       pd = new OBPairData();
+      pmol->SetData(pd);
       pd->SetAttribute("ASCII depiction");
     }
     pd->SetValue(mod.substr(0, lastNonBlank+1));
-    pmol->SetData(pd);
+
   }
 
   /////////////////////////////////////////////////////////////////
