@@ -1118,7 +1118,7 @@ namespace OpenBabel
       vector<OBAtom*>::iterator itr;
       vector<pair<int,int> > zchs, hyds;
       vector<pair<int,int> >::iterator zitr;
-      vector<pair<int, int>> numberedRGroups;
+      vector<pair<int, int> > numberedRGroups;
       for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) {
         if(atom->GetSpinMultiplicity()>0 && atom->GetSpinMultiplicity()<4)
           rads.push_back(atom);
