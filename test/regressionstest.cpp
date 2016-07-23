@@ -110,9 +110,9 @@ void test_PR329_Molfile_RGroups()
   OBMol mol;
   conv.SetInAndOutFormats("smi", "mol");
   conv.ReadString(&mol, "C([*:1]CO[*:2]");
-  obErrorLog.SetOutputLevel(obMessageLevel::obError); // avoid warning about no 2D or 3D coords
+  obErrorLog.SetOutputLevel(obError); // avoid warning about no 2D or 3D coords
   std::string molfileWithRGP = conv.WriteString(&mol);
-  obErrorLog.SetOutputLevel(obMessageLevel::obWarning);
+  obErrorLog.SetOutputLevel(obWarning);
   OB_ASSERT( molfileWithRGP.find("R#") != std::string::npos );
   OB_ASSERT( molfileWithRGP.find("M  RGP  2   2   1   5   2") != std::string::npos); // i.e. atom 2 is labelled R1, atom 5 is labelled R2
   // Check negative case
@@ -156,9 +156,9 @@ void test_PR329_Molfile_RGroups()
 "R\n"
 "M  END";
   conv.SetInAndOutFormats("mol", "mol");
-  obErrorLog.SetOutputLevel(obMessageLevel::obError); // avoid warning "Alias R was not chemically interpreted"
+  obErrorLog.SetOutputLevel(obError); // avoid warning "Alias R was not chemically interpreted"
   conv.ReadString(&mol, molfileWithAlias);
-  obErrorLog.SetOutputLevel(obMessageLevel::obError);
+  obErrorLog.SetOutputLevel(obWarning);
   molfile = conv.WriteString(&mol);
   OB_ASSERT( molfile.find("R#") == std::string::npos );
   OB_ASSERT( molfile.find("M  RGP") == std::string::npos);
