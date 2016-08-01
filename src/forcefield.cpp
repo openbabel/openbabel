@@ -1825,7 +1825,7 @@ namespace OpenBabel
       }
     }
 
-    _current_conformer = best_conformer + 1; // Initial coords are stored in _vconf[0]
+    _current_conformer = best_conformer; // Initial coords are stored in _vconf[0]
     _mol.SetConformer(_current_conformer);
     SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
   }

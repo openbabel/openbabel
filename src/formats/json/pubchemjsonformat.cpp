@@ -43,8 +43,9 @@ class PubChemJSONFormat : public OBMoleculeFormat
     {
       return
       "PubChem JSON\n"
-      "This is the format returned by the PubChem PUG REST service when\n"
-      "requesting JSON. It closely resembles PubChem's internal data structure.\n\n"
+      "The JSON format returned by the PubChem PUG REST service\n\n"
+
+      "The data contained in this format closely resembles PubChem's internal data structure.\n\n"
       
       "Read Options, e.g. -as\n"
       " s  disable stereo perception and just read stereo information from input\n\n"

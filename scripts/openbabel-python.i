@@ -1,5 +1,9 @@
 %module openbabel
 
+%begin %{
+#define SWIG_PYTHON_2_UNICODE
+%}
+
 %{
 // used to set import/export for Cygwin DLLs
 #ifdef WIN32
@@ -78,7 +82,7 @@
 
 namespace std {
 
-%define VVTEMPLATE_WRAP(name, T) 
+%define VVTEMPLATE_WRAP(name, T)
 %feature("ignore") vector< vector<T> >::append;
 %feature("ignore") vector< vector<T> >::assign;
 %feature("ignore") vector< vector<T> >::back;
@@ -103,7 +107,7 @@ namespace std {
 %template(vectorv ## name) vector< vector<T> >;
 %enddef
 
-%define VECTORTEMPLATE_WRAP(vectorname, T) 
+%define VECTORTEMPLATE_WRAP(vectorname, T)
 %feature("ignore") vector<T>::append;
 %feature("ignore") vector<T>::assign;
 %feature("ignore") vector<T>::back;
@@ -128,7 +132,7 @@ namespace std {
 %template(vector ## vectorname) vector<T>;
 %enddef
 
-%define VECTORPAIRTEMPLATE_WRAP(vectorname, T1, T2) 
+%define VECTORPAIRTEMPLATE_WRAP(vectorname, T1, T2)
 %feature("ignore") vector< pair<T1, T2> >::append;
 %feature("ignore") vector< pair<T1, T2> >::assign;
 %feature("ignore") vector< pair<T1, T2> >::back;
@@ -229,7 +233,7 @@ CAST_GENERICDATA_TO(SquarePlanarStereo)
 %include <openbabel/math/transform3d.h>
 %include <openbabel/math/spacegroup.h>
 
-%# CloneData should be used instead of the following method
+// CloneData should be used instead of the following method
 %ignore OpenBabel::OBBase::SetData;
 %include <openbabel/base.h>
 
@@ -240,9 +244,9 @@ CAST_GENERICDATA_TO(SquarePlanarStereo)
 %include <openbabel/typer.h>
 
 // To avoid warning in plugin.h about "Nothing known about std::binary_function"
-namespace std { 
+namespace std {
         template <T1, T2, T3>
-        class binary_function {}; 
+        class binary_function {};
 }
 %template(dummy) std::binary_function <const char *, const char *, bool>;
 %include <openbabel/plugin.h>
@@ -291,7 +295,7 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 %ignore OpenBabel::OBDescriptor::LessThan;
 %include <openbabel/descriptor.h>
 
-%# Ignore shadowed methods
+// Ignore shadowed methods
 %ignore OpenBabel::OBForceField::VectorSubtract(const double *const, const double *const, double *);
 %ignore OpenBabel::OBForceField::VectorMultiply(const double *const, const double, double *);
 %include <openbabel/forcefield.h>
@@ -312,7 +316,7 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 
 %warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
 %include <openbabel/bitvec.h>
-%# Ignore shadowed method
+// Ignore shadowed method
 %ignore OpenBabel::OBRotor::GetRotAtoms() const;
 %include <openbabel/rotor.h>
 %ignore OpenBabel::Swab;
@@ -323,13 +327,13 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 %include <openbabel/math/align.h>
 #endif
 
-%# The following %ignores avoid warning messages due to shadowed classes.
-%# This does not imply a loss of functionality as (in this case)
-%# the shadowed class is identical (from the point of view of SWIG) to
-%# the shadowing class.
-%# This is because C++ references (&) are transformed by SWIG back into
-%# pointers, so that OBAtomIter(OBMol &) would be treated the same as
-%# OBAtomIter(OBMol *).
+// The following %ignores avoid warning messages due to shadowed classes.
+// This does not imply a loss of functionality as (in this case)
+// the shadowed class is identical (from the point of view of SWIG) to
+// the shadowing class.
+// This is because C++ references (&) are transformed by SWIG back into
+// pointers, so that OBAtomIter(OBMol &) would be treated the same as
+// OBAtomIter(OBMol *).
 
 %ignore OBAtomAtomIter(OBAtom &);
 %ignore OBAtomBondIter(OBAtom &);
@@ -348,9 +352,9 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 %ignore OBResidueIter(OBMol &);
 %ignore OBResidueAtomIter(OBResidue &);
 
-%# These classes are renamed so that they can be replaced by Python
-%# classes of the same name which provide Pythonic iterators
-%# (see %pythoncode section below)
+// These classes are renamed so that they can be replaced by Python
+// classes of the same name which provide Pythonic iterators
+// (see %pythoncode section below)
 
 %rename(_OBAtomAtomIter) OpenBabel::OBAtomAtomIter;
 %rename(_OBAtomBondIter) OpenBabel::OBAtomBondIter;
@@ -369,8 +373,8 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 
 %include <openbabel/obiter.h>
 
-%# The following class, OBiter, is subclassed to provide Python iterators
-%# equivalent to the C++ iterators in obiter.h and the plugin iterators
+// The following class, OBiter, is subclassed to provide Python iterators
+// equivalent to the C++ iterators in obiter.h and the plugin iterators
 
 %pythoncode %{
 class OBIter(object):
@@ -460,7 +464,7 @@ def double_array(mylist):
     return c
 %}
 
-%# Copy some of the global variables in cvar into the openbabel namespace
+// Copy some of the global variables in cvar into the openbabel namespace
 
 %pythoncode %{
 obErrorLog = cvar.obErrorLog
@@ -471,23 +475,23 @@ atomtyper = cvar.atomtyper
 aromtyper = cvar.aromtyper
 %}
 
-%# Functions to set the log file to std::cout and std::cerr
-       
+// Functions to set the log file to std::cout and std::cerr
+
 %ignore OBForceField::SetLogFile(std::ostream *pos);
 %extend OpenBabel::OBForceField {
-  void SetLogToStdOut() 
+  void SetLogToStdOut()
   {
     self->SetLogFile(&std::cout);
   }
 
-  void SetLogToStdErr() 
+  void SetLogToStdErr()
   {
     self->SetLogFile(&std::cerr);
   }
 };
 
 %extend OpenBabel::OBMol {
-  void SetTorsion(int i, int j, int k, int l, double ang) 
+  void SetTorsion(int i, int j, int k, int l, double ang)
   {
     self->SetTorsion(self->GetAtom(i), self->GetAtom(j),
                      self->GetAtom(k), self->GetAtom(l), ang);

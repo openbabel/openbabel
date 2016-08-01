@@ -1962,7 +1962,7 @@ int str_AuxInvIsoSp3(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr
         if ( !bSecondNonTautPass && bOmitRepetitions && pINChI &&
                (pINChI->nNumberOfIsotopicAtoms > 0 ||
                 pINChI->nNumberOfIsotopicTGroups > 0 ||
-                pINChI->nPossibleLocationsOfIsotopicH && pINChI->nPossibleLocationsOfIsotopicH[0] > 1) ) {
+                (pINChI->nPossibleLocationsOfIsotopicH && pINChI->nPossibleLocationsOfIsotopicH[0] > 1)) ) {
             /* compare tautomeric isotopic stereo-inverted to:
              *    a) tautomeric stereo-inverted
              *    b) Inverted(tautomeric stereo)
@@ -2591,7 +2591,7 @@ int str_Charge2(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int
                 if ( bNext ++ ) {
                     tot_len += MakeDelim( sCompDelim, pStr + tot_len, nStrLen-tot_len, bOverflow);
                 }
-                if ( nTotalCharge_Prev = pINChI_Prev->nTotalCharge ) {
+                if ( (nTotalCharge_Prev = pINChI_Prev->nTotalCharge) ) {
                     tot_len += MakeMult(  mult+1, "*", pStr + tot_len, nStrLen-tot_len, 0, bOverflow);
                     tot_len += sprintf( pStr + tot_len, "%+d", nTotalCharge_Prev );
                 }
@@ -2660,7 +2660,7 @@ int str_Charge2(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int
                     tot_len += MakeDelim( sCompDelim, pStr + tot_len, nStrLen-tot_len, bOverflow);
                 }
                 if ( pINChI_Prev && pINChI_Prev->nNumberOfAtoms ) {
-                    if ( nTotalCharge_Prev = pINChI_Prev->nTotalCharge ) {
+                    if ( (nTotalCharge_Prev = pINChI_Prev->nTotalCharge) ) {
                         /* pINChI_Prev exists and has charge info */
                         tot_len += MakeMult(  mult+1, "*", pStr + tot_len, nStrLen-tot_len, 0, bOverflow);
                         tot_len += sprintf( pStr + tot_len, "%+d", nTotalCharge_Prev );
@@ -2668,7 +2668,7 @@ int str_Charge2(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2, char *pStr, int
                     /* else charge is not present in pINChI_Prev */
                 } else
                 if ( bSecondNonTautPass && pINChI_Taut_Prev && pINChI_Taut_Prev->nNumberOfAtoms && !pINChI_Taut_Prev->bDeleted ) {
-                     if ( nTotalCharge_Taut_Prev = pINChI_Taut_Prev->nTotalCharge ) {
+                     if ( (nTotalCharge_Taut_Prev = pINChI_Taut_Prev->nTotalCharge) ) {
                         /* since pINChI_Prev does not exist, pINChI_Taut_Prev is non-tautomeric */
                         /* and it has charge info. This info has already been printed in the main section */
                         /*
@@ -2977,8 +2977,8 @@ int bin_AuxTautTrans(INCHI_SORT *pINChISort, INCHI_SORT *pINChISort2,
              /* different components save equal new ord. numbers: */
              is->ord_number != is2->ord_number ) {
             if ( (nTrans_n && nTrans_s) || 
-                 (nTrans_n  = (AT_NUMB *)inchi_calloc( num_components+1, sizeof(nTrans_n[0]))) &&
-                 (nTrans_s  = (AT_NUMB *)inchi_calloc( num_components+1, sizeof(nTrans_s[0]))) ) {
+                 ((nTrans_n  = (AT_NUMB *)inchi_calloc( num_components+1, sizeof(nTrans_n[0]))) &&
+                 (nTrans_s  = (AT_NUMB *)inchi_calloc( num_components+1, sizeof(nTrans_s[0])))) ) {
                 /* new ordering number for original non-tautomeric component number is->ord_number */
                 nTrans_n[is->ord_number] = /*nTrans_t[is2->ord_number] =*/ i+1;
             }

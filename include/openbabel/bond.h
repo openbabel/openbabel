@@ -269,16 +269,10 @@ namespace OpenBabel
       //! \return Is the bond a teriary amide (i.e., between a carbonyl C and a NH0)?
       //!  \since version 2.3.
       bool IsTertiaryAmide();
-      //! \return Is the bond an amidine link (i.e., between an imide C and a N)?
-      //! \since version 2.4
-      bool IsAmidine();
       //! \return Is the bond an ester link (i.e., between a carbonyl C and an O)?
       bool IsEster();
       //! \return Is the bond a carbonyl C=O?
       bool IsCarbonyl();
-      //! \return Is the bond an imide C=N?
-      //! \since version 2.4
-      bool IsImide();
       //! \return Is the bond a single bond?
       bool IsSingle();
       //! \return Is the bond is a double bond?

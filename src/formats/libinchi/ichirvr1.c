@@ -684,11 +684,11 @@ int cmp_charge_val( const void *a1, const void *a2 )
     const CHARGE_VAL *p2 = (const CHARGE_VAL *) a2;
     int    diff;
     
-    if ( diff = (int)p1->nValence - (int)p2->nValence )  /* smaller valence first */
+    if ( (diff = (int)p1->nValence - (int)p2->nValence) )  /* smaller valence first */
         return diff;
-    if ( diff = abs((int)p1->nCharge) - abs((int)p2->nCharge )) /* smaller abs charge first */
+    if ( (diff = abs((int)p1->nCharge) - abs((int)p2->nCharge)) ) /* smaller abs charge first */
         return diff;
-    if ( diff = (int)p2->nCharge - (int)p1->nCharge ) /* (+) first, (-) second */
+    if ( (diff = (int)p2->nCharge - (int)p1->nCharge) ) /* (+) first, (-) second */
         return diff;
     return (int)p1->nValenceOrderingNumber - (int)p2->nValenceOrderingNumber;
 }
@@ -708,7 +708,7 @@ int bMayBeACationInMobileHLayer( inp_ATOM *at, VAL_AT *pVA, int iat, int bMobile
         const char *b, *e;
         int  len;
         char elname[ATOM_EL_LEN];
-        for ( b = szEl; e = strchr( b, ';'); b = e+1 ) {
+        for ( b = szEl; (e = strchr( b, ';')); b = e+1 ) {
             len = e-b;
             memcpy( elname, b, len );
             elname[len] = '\0';
@@ -716,7 +716,7 @@ int bMayBeACationInMobileHLayer( inp_ATOM *at, VAL_AT *pVA, int iat, int bMobile
         }
         en[ne] = '\0';
     }
-    if ( p = (char *)memchr( en, at[iat].el_number, ne ) ) {
+    if ( (p = (char *)memchr( en, at[iat].el_number, ne )) ) {
         i = p - en;
         /* >B(-)< exception */
         if ( at[iat].valence + at[iat].num_H <= cVal[i] ) {
@@ -777,7 +777,7 @@ int clean_charge_val( CHARGE_VAL *pChargeVal, int len, inp_ATOM *atom, VAL_AT *p
         if ( BOND_TYPE_TRIPLE + BOND_TYPE_DOUBLE * (min_valence - 1) < pChargeVal[i].nValence ) {
             continue; /* not more than one triple and the rest - double bonds per atom */
         }
-        if ( (bTautomeric || j && bFixedHTautomeric) && pChargeVal[i].nCharge < 0 ) {
+        if ( (bTautomeric || (j && bFixedHTautomeric)) && pChargeVal[i].nCharge < 0 ) {
             continue; /* negative charge must be included in the tautomeric group */
         }
         if ( (bTautomeric || bFixedHTautomeric) && pChargeVal[i].nCharge > 0 ) {
@@ -1501,7 +1501,7 @@ int BondFlowMaxcapMinorder( inp_ATOM *atom, VAL_AT *pVA, ICHICONST SRM *pSrm, in
         bond_type = BOND_TYPE_SINGLE;
     }
     /* M=metal, A=non-metal atom, e=endpoint */
-    if ( nStereo && pSrm->bFixStereoBonds || !nMetal || !pSrm->bMetalAddFlower ) {
+    if ( (nStereo && pSrm->bFixStereoBonds) || !nMetal || !pSrm->bMetalAddFlower ) {
         /* atom-atom rules, no metal atoms involved (1: A-A, A-Ae, Ae-Ae) */
         nMinorder  = BOND_TYPE_SINGLE;
         nInitorder = bond_type;
@@ -1521,8 +1521,8 @@ int BondFlowMaxcapMinorder( inp_ATOM *atom, VAL_AT *pVA, ICHICONST SRM *pSrm, in
         }
         bNeedsFlower = (0 != pVA[iat].cMetal);
     } else
-    if ( pVA[iat].cMetal   && !at->endpoint         && !pVA[neigh].cMetal && atom[neigh].endpoint||
-         pVA[neigh].cMetal && !atom[neigh].endpoint && !pVA[iat].cMetal   && at->endpoint ) {
+    if ( (pVA[iat].cMetal   && !at->endpoint         && !pVA[neigh].cMetal && atom[neigh].endpoint) ||
+         (pVA[neigh].cMetal && !atom[neigh].endpoint && !pVA[iat].cMetal   && at->endpoint) ) {
         /* M-ae */
         /* metal connected to a non-metal endpoint (3: M-Ae) */
         nMinorder  = pSrm->nMetal2EndpointMinBondOrder;
@@ -1996,7 +1996,7 @@ int nAddSuperCGroups( ALL_TC_GROUPS *pTCGroups )
                 ret = RI_ERR_PROGR; /* unexpected group type */
                 goto exit_function;
             }
-            if ( pTCGroups->nGroup[k] >= 0 || pTCGroups->pTCG[i].ord_num && !IS_BNS_VT_M_GR(pTCGroups->pTCG[i].type) ) {
+            if ( pTCGroups->nGroup[k] >= 0 || (pTCGroups->pTCG[i].ord_num && !IS_BNS_VT_M_GR(pTCGroups->pTCG[i].type)) ) {
                 ret = RI_ERR_PROGR;
                 goto exit_function;
             }
@@ -2982,8 +2982,8 @@ int AddCGroups2TCGBnStruct( BN_STRUCT *pBNS, StrFromINChI *pStruct, VAL_AT *pVA,
                     j2 = pv2 - pBNS->vert;
                     /* create a new edge connecting pv1 and pv2 */
                     edge = pBNS->edge + cur_num_edges;
-                    if ( IS_BNS_VT_M_GR( pCN[i1].v.type ) && IS_BNS_VT_ATOM( pCN[i2].v.type ) ||
-                         IS_BNS_VT_M_GR( pCN[i2].v.type ) && IS_BNS_VT_ATOM( pCN[i1].v.type ) ) {
+                    if ( (IS_BNS_VT_M_GR( pCN[i1].v.type ) && IS_BNS_VT_ATOM( pCN[i2].v.type )) ||
+                         (IS_BNS_VT_M_GR( pCN[i2].v.type ) && IS_BNS_VT_ATOM( pCN[i1].v.type )) ) {
                         /* at[c_point] is a metal or is treated as a metal; connect it to M-group */
                         /* metal - M-group (i.e. Metal-Flower) edge */
                         int nStCap, nStFlow;
@@ -3070,8 +3070,8 @@ int AddCGroups2TCGBnStruct( BN_STRUCT *pBNS, StrFromINChI *pStruct, VAL_AT *pVA,
                 max_edge_flow = inchi_min( st_cap, st_cap2 );
                 /* bond order <= triple bond (flow=2) */
                 if ( pSrm->bMetalAddFlower && !pSrm->nMetalMinBondOrder &&
-                    (pVA[c_point].cMetal && pVA[c_point].cNumBondsToMetal ||
-                     pVA[c_neigh].cMetal && pVA[c_neigh].cNumBondsToMetal) ) {
+                    ((pVA[c_point].cMetal && pVA[c_point].cNumBondsToMetal) ||
+                     (pVA[c_neigh].cMetal && pVA[c_neigh].cNumBondsToMetal)) ) {
                     max_edge_flow = inchi_min( max_edge_flow, MAX_BOND_EDGE_CAP+1 );
                 } else {
                     max_edge_flow = inchi_min( max_edge_flow, MAX_BOND_EDGE_CAP );
@@ -3841,15 +3841,15 @@ int comp_cc_cand( const void *a1, const void *a2 )
     const CC_CAND *p1 = (const CC_CAND *) a1;
     const CC_CAND *p2 = (const CC_CAND *) a2;
     int            ret;
-    if ( ret = (int)p2->cMetal - (int)p1->cMetal )
+    if ( (ret = (int)p2->cMetal - (int)p1->cMetal) )
         return ret; /* metal first */
-    if ( ret = (int)p2->cNumBondsToMetal - (int)p1->cNumBondsToMetal )
+    if ( (ret = (int)p2->cNumBondsToMetal - (int)p1->cNumBondsToMetal) )
         return ret; /* connected to metal first */
-    if ( ret = (int)p2->cPeriodicRowNumber - (int)p1->cPeriodicRowNumber )
+    if ( (ret = (int)p2->cPeriodicRowNumber - (int)p1->cPeriodicRowNumber) )
         return ret; /* heaviest first */
-    if ( ret = (int)p2->num_bonds - (int)p1->num_bonds )
+    if ( (ret = (int)p2->num_bonds - (int)p1->num_bonds) )
         return ret; /* more bonds first */
-    if ( ret = (int)p1->chem_valence - (int)p2->chem_valence )
+    if ( (ret = (int)p1->chem_valence - (int)p2->chem_valence) )
         return ret; /* less bond order first */
     if ( !p1->cNumValenceElectrons && p2->cNumValenceElectrons )
         return -1; /* no valence electrons first */
@@ -3963,7 +3963,7 @@ int AddToEdgeList( EDGE_LIST *pEdges, int iedge, int nAddLen )
         if ( nAddLen <= 0 ) {
             return RI_ERR_PROGR;
         }
-        if ( ret = AllocEdgeList( pEdges, pEdges->num_alloc + nAddLen ) ) {
+        if ( (ret = AllocEdgeList( pEdges, pEdges->num_alloc + nAddLen )) ) {
             return ret;
         }
     }
@@ -4003,7 +4003,7 @@ int RemoveFromEdgeListByValue( EDGE_LIST *pEdges, int iedge )
     EdgeIndex ie = iedge;
     for ( i = pEdges->num_edges-1; 0 <= i; i -- ) {
         if ( ie == pEdges->pnEdges[i] ) {
-            if ( ret = RemoveFromEdgeListByIndex( pEdges, i ) ) {
+            if ( (ret = RemoveFromEdgeListByIndex( pEdges, i )) ) {
                 return ret;
             }
             n ++;
@@ -4363,7 +4363,7 @@ int MakeOneInChIOutOfStrFromINChI( ICHICONST INPUT_PARMS *ip, STRUCT_DATA *sd, S
 
     bTautFlagsDone &= ~(TG_FLAG_FOUND_ISOTOPIC_H_DONE | TG_FLAG_FOUND_ISOTOPIC_ATOM_DONE);
 
-    if ( i = bNumHeterAtomHasIsotopicH( at3, num_atoms ) ) {
+    if ( (i = bNumHeterAtomHasIsotopicH( at3, num_atoms )) ) {
         if ( i & 1 ) {
             bTautFlagsDone |= TG_FLAG_FOUND_ISOTOPIC_H_DONE;
         }
@@ -4385,8 +4385,8 @@ int MakeOneInChIOutOfStrFromINChI( ICHICONST INPUT_PARMS *ip, STRUCT_DATA *sd, S
                                                  TG_FLAG_FOUND_ISOTOPIC_ATOM_DONE ))?
                              (ip->nMode & REQ_MODE_ISO):0;
 
-            if ( k==TAUT_NON && (ip->nMode & REQ_MODE_BASIC ) ||
-                 k==TAUT_YES && (ip->nMode & REQ_MODE_TAUT )     ) {
+            if ( (k==TAUT_NON && (ip->nMode & REQ_MODE_BASIC )) ||
+                 (k==TAUT_YES && (ip->nMode & REQ_MODE_TAUT ))     ) {
                 /*  alloc INChI and INChI_Aux only if ip->nMode allows this */
                 cur_INChI[k]     = Alloc_INChI( inp_cur_data->at, inp_cur_data->num_at, &inp_cur_data->num_bonds,
                                               &inp_cur_data->num_isotopic, nAllocMode );

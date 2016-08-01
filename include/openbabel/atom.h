@@ -461,15 +461,10 @@ namespace OpenBabel
       bool IsOneFour(OBAtom*);
       //! \return Is this atom an oxygen in a carboxyl (-CO2 or CO2H) group?
       bool IsCarboxylOxygen();
-      //! \return Is this atom a sulfur in a (di)thiocarboxyl (-CS2, -COS, CS2H or COSH) group?
-      //! \since version 2.4
-      bool IsThiocarboxylSulfur();
       //! \return Is this atom an oxygen in a phosphate (R-PO3) group?
       bool IsPhosphateOxygen();
       //! \return Is this atom an oxygen in a sulfate (-SO3) group?
       bool IsSulfateOxygen();
-      //! \return Is this atom an oxygen in a sulfone (R1-SO2-R2) group?
-      bool IsSulfoneOxygen();
       //! \return Is this atom an oxygen in a nitro (-NO2) group?
       bool IsNitroOxygen();
       //! \return Is this atom a nitrogen in an amide (-C(=O)NR2) group?

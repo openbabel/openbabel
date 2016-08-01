@@ -176,8 +176,8 @@ long InchiTimeMsecDiff( inchiTime *TickEnd, inchiTime *TickStart )
         FillMaxMinClock( );
         if ( !TickEnd || !TickStart )
             return 0;
-        if ( TickEnd->clockTime >= 0 && TickStart->clockTime >= 0 ||
-             TickEnd->clockTime <= 0 && TickStart->clockTime <= 0) {
+        if ( (TickEnd->clockTime >= 0 && TickStart->clockTime >= 0) ||
+             (TickEnd->clockTime <= 0 && TickStart->clockTime <= 0)) {
             delta = TickEnd->clockTime - TickStart->clockTime;
         } else
         if ( TickEnd->clockTime >= HalfMaxPositiveClock &&
@@ -257,8 +257,8 @@ int bInchiTimeIsOver( inchiTime *TickStart )
         if ( !TickStart )
             return 0;
         clockCurrTime = InchiClock();
-        if ( clockCurrTime >= 0 && TickStart->clockTime >= 0 ||
-             clockCurrTime <= 0 && TickStart->clockTime <= 0) {
+        if ( (clockCurrTime >= 0 && TickStart->clockTime >= 0) ||
+             (clockCurrTime <= 0 && TickStart->clockTime <= 0)) {
             return (clockCurrTime > TickStart->clockTime);
         } else
         if ( clockCurrTime >= HalfMaxPositiveClock &&
@@ -528,7 +528,8 @@ int AllocateCS( CANON_STAT *pCS, int num_at, int num_at_tg, int nLenCT, int nLen
     }
     /* isotopic atoms & t-groups */
     if ( (nMode & CMODE_ISO) /*&& nLenIsotopic > 0*/ ||
-         (nMode & CMODE_ISO) && CANON_MODE_TAUT == (nMode & CANON_MODE_TAUT) && nLenLinearCTIsotopicTautomer > 0
+         ((nMode & CMODE_ISO) && CANON_MODE_TAUT == (nMode & CANON_MODE_TAUT) &&
+         nLenLinearCTIsotopicTautomer > 0)
         ) {
         num_err += !pCS_CALLOC(nSymmRankIsotopic, AT_RANK, num_at_tg);
         num_err += !pCS_CALLOC(nCanonOrdIsotopic, AT_RANK, num_at_tg); 
@@ -577,8 +578,8 @@ int AllocateCS( CANON_STAT *pCS, int num_at, int num_at_tg, int nLenCT, int nLen
             num_err += !pCS_CALLOC(nCanonOrdIsotopicStereoTaut, AT_RANK, num_t_groups);
         }
     }
-    if ( (nMode & CMODE_STEREO) && (nLenLinearCTStereoDble > 0 || nLenLinearCTStereoCarb > 0 ) ||
-         (nMode & CMODE_ISO_STEREO) && (nLenLinearCTIsotopicStereoDble > 0 || nLenLinearCTIsotopicStereoCarb > 0 ) ) {
+    if ( ((nMode & CMODE_STEREO) && (nLenLinearCTStereoDble > 0 || nLenLinearCTStereoCarb > 0 )) ||
+         ((nMode & CMODE_ISO_STEREO) && (nLenLinearCTIsotopicStereoDble > 0 || nLenLinearCTIsotopicStereoCarb > 0 )) ) {
         num_err += !pCS_CALLOC(bRankUsedForStereo, S_CHAR, num_at);
         num_err += !pCS_CALLOC(bAtomUsedForStereo, S_CHAR, num_at);
     }

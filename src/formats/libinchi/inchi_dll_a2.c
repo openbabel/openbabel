@@ -644,8 +644,8 @@ COMPONENT_TREAT_INFO *cti = NULL;
                                              TG_FLAG_FOUND_ISOTOPIC_ATOM_DONE ))?
                          (ip->nMode & REQ_MODE_ISO):0;
 
-        if ( k==TAUT_NON && (ip->nMode & REQ_MODE_BASIC ) ||
-             k==TAUT_YES && (ip->nMode & REQ_MODE_TAUT )     ) 
+        if ( (k==TAUT_NON && (ip->nMode & REQ_MODE_BASIC )) ||
+             (k==TAUT_YES && (ip->nMode & REQ_MODE_TAUT ))     )
         {
             /*  alloc INChI and INChI_Aux */
             cur_INChI[k]     = Alloc_INChI( inp_cur_data->at, inp_cur_data->num_at, &inp_cur_data->num_bonds,
@@ -768,8 +768,8 @@ COMPONENT_TREAT_INFO *cti = NULL;
         /*  find where the current processed structure is located */
         int cur_is_in_non_taut = (pINChI[i][TAUT_NON] && pINChI[i][TAUT_NON]->nNumberOfAtoms>0);
         int cur_is_in_taut     = (pINChI[i][TAUT_YES] && pINChI[i][TAUT_YES]->nNumberOfAtoms>0);
-        int cur_is_non_taut = cur_is_in_non_taut && 0 == pINChI[i][TAUT_NON]->lenTautomer ||
-                              cur_is_in_taut     && 0 == pINChI[i][TAUT_YES]->lenTautomer;
+        int cur_is_non_taut = (cur_is_in_non_taut && 0 == pINChI[i][TAUT_NON]->lenTautomer) ||
+                              (cur_is_in_taut     && 0 == pINChI[i][TAUT_YES]->lenTautomer);
         int cur_is_taut     = cur_is_in_taut     && 0 <  pINChI[i][TAUT_YES]->lenTautomer;
 
         if ( cur_is_non_taut + cur_is_taut ) 
@@ -784,7 +784,7 @@ COMPONENT_TREAT_INFO *cti = NULL;
             {
                 int bIsotopic = (pINChI[i][j]->nNumberOfIsotopicAtoms ||
                                  pINChI[i][j]->nNumberOfIsotopicTGroups ||
-                                 pINChI[i][j]->nPossibleLocationsOfIsotopicH && pINChI[i][j]->nPossibleLocationsOfIsotopicH[0]>1);
+                                 (pINChI[i][j]->nPossibleLocationsOfIsotopicH && pINChI[i][j]->nPossibleLocationsOfIsotopicH[0]>1));
                 if ( j == TAUT_YES ) {
                     bIsotopic |= (0 < pINChI_Aux[i][j]->nNumRemovedIsotopicH[0] + 
                                       pINChI_Aux[i][j]->nNumRemovedIsotopicH[1] +
@@ -954,8 +954,8 @@ COMPONENT_TREAT_INFO *cti = NULL;
         /*  find where the current processed structure is located */
         int cur_is_in_non_taut = (pINChI[i][TAUT_NON] && pINChI[i][TAUT_NON]->nNumberOfAtoms>0);
         int cur_is_in_taut     = (pINChI[i][TAUT_YES] && pINChI[i][TAUT_YES]->nNumberOfAtoms>0);
-        int cur_is_non_taut = cur_is_in_non_taut && 0 == pINChI[i][TAUT_NON]->lenTautomer ||
-                              cur_is_in_taut     && 0 == pINChI[i][TAUT_YES]->lenTautomer;
+        int cur_is_non_taut = (cur_is_in_non_taut && 0 == pINChI[i][TAUT_NON]->lenTautomer) ||
+                              (cur_is_in_taut     && 0 == pINChI[i][TAUT_YES]->lenTautomer);
         int cur_is_taut     = cur_is_in_taut     && 0 <  pINChI[i][TAUT_YES]->lenTautomer;
 
         if ( cur_is_non_taut + cur_is_taut ) 
@@ -970,7 +970,7 @@ COMPONENT_TREAT_INFO *cti = NULL;
             {
                 int bIsotopic = (pINChI[i][j]->nNumberOfIsotopicAtoms ||
                                  pINChI[i][j]->nNumberOfIsotopicTGroups ||
-                                 pINChI[i][j]->nPossibleLocationsOfIsotopicH && pINChI[i][j]->nPossibleLocationsOfIsotopicH[0]>1);
+                                 (pINChI[i][j]->nPossibleLocationsOfIsotopicH && pINChI[i][j]->nPossibleLocationsOfIsotopicH[0]>1));
                 if ( j == TAUT_YES ) {
                     bIsotopic |= (0 < pINChI_Aux[i][j]->nNumRemovedIsotopicH[0] + 
                                       pINChI_Aux[i][j]->nNumRemovedIsotopicH[1] +
@@ -1069,7 +1069,7 @@ T_GROUP_INFO * /*const*/  t_group_info_orig   = &(z->vt_group_info_orig);
 
     }
 
-    if ( !out_norm_data[TAUT_NON]->at && !out_norm_data[TAUT_YES]->at || !inp_at || ret ) 
+    if ( (!out_norm_data[TAUT_NON]->at && !out_norm_data[TAUT_YES]->at) || !inp_at || ret )
     {
         ret = -1;
         goto exit_function;
@@ -1365,14 +1365,14 @@ T_GROUP_INFO * /*const*/  t_group_info_orig   = &(z->vt_group_info_orig);
 /*^^^ */
     if (z->fix_isofixedh)  /* 2008-03-21 DT */
         z->bHasIsotopicAtoms     = z->bHasIsotopicAtoms ||
-                                z->s[TAUT_YES].nLenLinearCTTautomer > 0 && t_group_info &&
+                                (z->s[TAUT_YES].nLenLinearCTTautomer > 0 && t_group_info &&
                                 (0 < NUM_H_ISOTOPES && t_group_info->tni.nNumRemovedProtonsIsotopic[0] ||
-                                 1 < NUM_H_ISOTOPES && t_group_info->tni.nNumRemovedProtonsIsotopic[1] ||
-                                 2 < NUM_H_ISOTOPES && t_group_info->tni.nNumRemovedProtonsIsotopic[2]) ;
+                                 (1 < NUM_H_ISOTOPES && t_group_info->tni.nNumRemovedProtonsIsotopic[1]) ||
+                                 (2 < NUM_H_ISOTOPES && t_group_info->tni.nNumRemovedProtonsIsotopic[2])) );
 /*^^^ */
         z->bHasIsotopicAtoms     = z->bHasIsotopicAtoms ||
-                                z->s[TAUT_YES].nLenIsotopicEndpoints > 1 && t_group_info &&
-                                (t_group_info->bTautFlagsDone & (TG_FLAG_FOUND_ISOTOPIC_H_DONE|TG_FLAG_FOUND_ISOTOPIC_ATOM_DONE));
+                                (z->s[TAUT_YES].nLenIsotopicEndpoints > 1 && t_group_info &&
+                                (t_group_info->bTautFlagsDone & (TG_FLAG_FOUND_ISOTOPIC_H_DONE|TG_FLAG_FOUND_ISOTOPIC_ATOM_DONE)));
 
 
 
@@ -1584,10 +1584,10 @@ CANON_STAT *pCS2 = &CS2;  /*  save all allocations to avoid memory leaks in case
                 z->nMode |= (z->nUserMode & REQ_MODE_SB_IGN_ALL_UU  )? CMODE_SB_IGN_ALL_UU  : 0;
             }
             
-            if ( ret= AllocateCS( pCS, z->num_atoms, z->num_atoms, z->s[TAUT_NON].nLenCT, z->s[TAUT_NON].nLenCTAtOnly,
+            if ( (ret= AllocateCS( pCS, z->num_atoms, z->num_atoms, z->s[TAUT_NON].nLenCT, z->s[TAUT_NON].nLenCTAtOnly,
                              z->s[TAUT_NON].nLenLinearCTStereoDble, z->s[TAUT_NON].nMaxNumStereoBonds,
                              z->s[TAUT_NON].nLenLinearCTStereoCarb, z->s[TAUT_NON].nMaxNumStereoAtoms,
-                             0, 0, z->s[TAUT_NON].nLenIsotopic, z->nMode, pBCN ) ) 
+                             0, 0, z->s[TAUT_NON].nLenIsotopic, z->nMode, pBCN )) ) 
             {
                 goto exit_function;
             }
@@ -1619,11 +1619,11 @@ CANON_STAT *pCS2 = &CS2;  /*  save all allocations to avoid memory leaks in case
                 z->nMode |= (z->nUserMode & REQ_MODE_SB_IGN_ALL_UU  )? CMODE_SB_IGN_ALL_UU  : 0;
             }
             
-            if ( ret= AllocateCS( pCS, z->num_atoms, z->num_at_tg, z->s[TAUT_YES].nLenCT, z->s[TAUT_YES].nLenCTAtOnly,
+            if ( (ret= AllocateCS( pCS, z->num_atoms, z->num_at_tg, z->s[TAUT_YES].nLenCT, z->s[TAUT_YES].nLenCTAtOnly,
                              z->s[TAUT_YES].nLenLinearCTStereoDble, z->s[TAUT_YES].nMaxNumStereoBonds,
                              z->s[TAUT_YES].nLenLinearCTStereoCarb, z->s[TAUT_YES].nMaxNumStereoAtoms,
                              z->s[TAUT_YES].nLenLinearCTTautomer, z->s[TAUT_YES].nLenLinearCTIsotopicTautomer,
-                             z->s[TAUT_YES].nLenIsotopic, z->nMode, pBCN ) ) 
+                             z->s[TAUT_YES].nLenIsotopic, z->nMode, pBCN )) ) 
             {
                 goto exit_function;
             }
@@ -1827,9 +1827,9 @@ int CreateCompositeNormAtom(COMP_ATOM_DATA *composite_norm_data, INP_ATOM_DATA2 
         for ( i = 0, j=TAUT_YES; i < num_components; i ++ ) {
             if ( all_inp_norm_data[i][j].bExists &&
                 (all_inp_norm_data[i][j].bDeleted ||
-                 all_inp_norm_data[i][j].bTautomeric &&
+                 (all_inp_norm_data[i][j].bTautomeric &&
                  all_inp_norm_data[i][j].at_fixed_bonds &&
-                 all_inp_norm_data[i][j].bTautPreprocessed) ) {
+                 all_inp_norm_data[i][j].bTautPreprocessed)) ) {
                 num_comp[TAUT_INI] ++;
             }
         }
@@ -2083,8 +2083,8 @@ int FillOutINChIReducedWarn( INChI *pINChI, INChI_Aux *pINChI_Aux,
     /* abs or rel stereo may establish one of two canonical numberings */
     if ( (pCS->nLenLinearCTStereoCarb > 0 || pCS->nLenLinearCTStereoDble > 0) &&
           pCS->nLenCanonOrdStereo > 0 &&
-         (pCS->LinearCTStereoCarb && pCS->LinearCTStereoCarbInv ||
-          pCS->LinearCTStereoDble && pCS->LinearCTStereoDbleInv) &&
+         ((pCS->LinearCTStereoCarb && pCS->LinearCTStereoCarbInv) ||
+          (pCS->LinearCTStereoDble && pCS->LinearCTStereoDbleInv)) &&
           pCS->nCanonOrdStereo    && pCS->nCanonOrdStereoInv
        ) {
 
@@ -2270,8 +2270,8 @@ int FillOutINChIReducedWarn( INChI *pINChI, INChI_Aux *pINChI_Aux,
         pINChI->lenTautomer = 0;
         pINChI_Aux->nNumberOfTGroups = 0;
         if ( t_group_info && ((t_group_info->tni.bNormalizationFlags & FLAG_NORM_CONSIDER_TAUT) ||
-                              t_group_info->nNumIsotopicEndpoints>1 &&
-                              (t_group_info->bTautFlagsDone & (TG_FLAG_FOUND_ISOTOPIC_H_DONE | TG_FLAG_FOUND_ISOTOPIC_ATOM_DONE)))
+                              (t_group_info->nNumIsotopicEndpoints>1 &&
+                              (t_group_info->bTautFlagsDone & (TG_FLAG_FOUND_ISOTOPIC_H_DONE | TG_FLAG_FOUND_ISOTOPIC_ATOM_DONE))))
            ) {
             /* only protons (re)moved or added */
             pINChI->lenTautomer  = 1;
@@ -2334,7 +2334,7 @@ int FillOutINChIReducedWarn( INChI *pINChI, INChI_Aux *pINChI_Aux,
         goto exit_function;
     }
 
-    if ( nStereoUnmarkMode = UnmarkAllUndefinedUnknownStereo( pINChI->Stereo, nUserMode ) ) {
+    if ( (nStereoUnmarkMode = UnmarkAllUndefinedUnknownStereo( pINChI->Stereo, nUserMode )) ) {
         pINChI->nFlags |= (nStereoUnmarkMode & REQ_MODE_SC_IGN_ALL_UU)? INCHI_FLAG_SC_IGN_ALL_UU : 0;    
         pINChI->nFlags |= (nStereoUnmarkMode & REQ_MODE_SB_IGN_ALL_UU)? INCHI_FLAG_SB_IGN_ALL_UU : 0;
         if ( (nStereoUnmarkMode & REQ_MODE_SC_IGN_ALL_UU) ||
@@ -2358,8 +2358,8 @@ int FillOutINChIReducedWarn( INChI *pINChI, INChI_Aux *pINChI_Aux,
     /* abs or rel stereo may establish one of two canonical numberings */
     if ( (pCS->nLenLinearCTIsotopicStereoCarb > 0 || pCS->nLenLinearCTIsotopicStereoDble > 0) &&
           pCS->nLenCanonOrdIsotopicStereo > 0 &&
-         (pCS->LinearCTIsotopicStereoCarb && pCS->LinearCTIsotopicStereoCarbInv ||
-          pCS->LinearCTIsotopicStereoDble && pCS->LinearCTIsotopicStereoDbleInv) &&
+         ((pCS->LinearCTIsotopicStereoCarb && pCS->LinearCTIsotopicStereoCarbInv) ||
+          (pCS->LinearCTIsotopicStereoDble && pCS->LinearCTIsotopicStereoDbleInv)) &&
           pCS->nCanonOrdIsotopicStereo    && pCS->nCanonOrdIsotopicStereoInv
           ) {
         /* found isotopic stereo */
@@ -2495,7 +2495,7 @@ int FillOutINChIReducedWarn( INChI *pINChI, INChI_Aux *pINChI_Aux,
         pINChI->nPossibleLocationsOfIsotopicH[0] = (AT_NUMB)j; /* length including the 0th element */
     }
 
-    if ( nStereoUnmarkMode = UnmarkAllUndefinedUnknownStereo( pINChI->StereoIsotopic, nUserMode ) ) {
+    if ( (nStereoUnmarkMode = UnmarkAllUndefinedUnknownStereo( pINChI->StereoIsotopic, nUserMode )) ) {
         pINChI->nFlags |= (nStereoUnmarkMode & REQ_MODE_SC_IGN_ALL_UU)? INCHI_FLAG_SC_IGN_ALL_ISO_UU : 0;    
         pINChI->nFlags |= (nStereoUnmarkMode & REQ_MODE_SB_IGN_ALL_UU)? INCHI_FLAG_SC_IGN_ALL_ISO_UU : 0;    
         if ( (nStereoUnmarkMode & REQ_MODE_SC_IGN_ALL_UU) ||

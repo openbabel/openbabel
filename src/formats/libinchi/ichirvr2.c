@@ -183,7 +183,7 @@ int RestoreAtomConnectionsSetStereo( StrFromINChI *pStruct, int iComponent, int 
     }
     INCHI_HEAPCHK
     /* tautomeric groups */
-    if ( ret = GetTgroupInfoFromInChI( &pStruct->ti, at, NULL, pInChI ) ) {
+    if ( (ret = GetTgroupInfoFromInChI( &pStruct->ti, at, NULL, pInChI )) ) {
         goto exit_function;
     }
 
@@ -285,7 +285,7 @@ int RestoreAtomConnectionsSetStereo( StrFromINChI *pStruct, int iComponent, int 
             if ( i < len1 && i2 < len2 ) {
                 diff  = (int)pStereo->nBondAtom1[i] - (int)pStereo2->nBondAtom1[i2];
                 diff2 = (int)pStereo->nBondAtom2[i] - (int)pStereo2->nBondAtom2[i2];
-                if ( diff < 0 || diff == 0 && diff2 <= 0) {
+                if ( diff < 0 || (diff == 0 && diff2 <= 0)) {
                     n_vertex = pStereo->nBondAtom1[i]-1;
                     n_neigh  = pStereo->nBondAtom2[i]-1;
                     i ++;
@@ -766,14 +766,14 @@ int CopyBnsToAtom( StrFromINChI *pStruct, BN_STRUCT  *pBNS, VAL_AT *pVA, ALL_TC_
         at[i].charge = pVA[i].cInitCharge;
         if ( pVA[i].nCMinusGroupEdge ) {
             pe = pBNS->edge + pVA[i].nCMinusGroupEdge - 1;
-            if ( charge = pe->flow ) {
+            if ( (charge = pe->flow) ) {
                 at[i].charge  -= charge;
                 atom_charge   -= charge;
             }
         }
         if ( pVA[i].nCPlusGroupEdge ) {
             pe = pBNS->edge + pVA[i].nCPlusGroupEdge - 1;
-            if ( charge = pe->cap - pe->flow ) {
+            if ( (charge = pe->cap - pe->flow) ) {
                 at[i].charge += charge;
                 atom_charge  += charge;
             }
@@ -785,7 +785,7 @@ int CopyBnsToAtom( StrFromINChI *pStruct, BN_STRUCT  *pBNS, VAL_AT *pVA, ALL_TC_
     /* find charge excess */
     for ( i = num_at; i < pBNS->num_vertices; i ++ ) {
         pv = pBNS->vert + i;
-        if ( charge = pv->st_edge.cap - pv->st_edge.flow ) {
+        if ( (charge = pv->st_edge.cap - pv->st_edge.flow) ) {
             if ( IS_BNS_VT_C_OR_CSUPER_GR(pv->type) ) {
                 left_charge -= charge;
             } else 
@@ -1334,7 +1334,7 @@ int set_cumulene_0D_parity( inp_ATOM *at, inp_ATOM_STEREO *st, int num_at, int i
     /* stereo bond end atom neighbors */
     sn_orig_at_num1[m1] = at[idelH1].orig_at_number;
     if ( idelH1 < num_at ) {
-        if ( p1 = is_in_the_list( at[i1].neighbor, (AT_NUMB)idelH1, at[i1].valence ) ) {
+        if ( (p1 = is_in_the_list( at[i1].neighbor, (AT_NUMB)idelH1, at[i1].valence )) ) {
             sn_ord1[m1] = p1 - at[i1].neighbor;
         } else {
             return RI_ERR_PROGR;
@@ -1345,7 +1345,7 @@ int set_cumulene_0D_parity( inp_ATOM *at, inp_ATOM_STEREO *st, int num_at, int i
     
     sn_orig_at_num2[m2] = at[idelH2].orig_at_number;
     if ( idelH2 < num_at ) {
-        if ( p2 = is_in_the_list( at[i2].neighbor, (AT_NUMB)idelH2, at[i2].valence ) ) {
+        if ( (p2 = is_in_the_list( at[i2].neighbor, (AT_NUMB)idelH2, at[i2].valence )) ) {
             sn_ord2[m2] = p2 - at[i2].neighbor;
         } else {
             return RI_ERR_PROGR;
@@ -1522,7 +1522,7 @@ int MoveRadToAtomsAddCharges( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStru
         /* find reqired charge */
         extra_charge = 0;
         for ( i = pBNS->num_atoms, pv=pBNS->vert+i; i < pBNS->num_vertices; i ++, pv++ ) {
-            if ( delta = pv->st_edge.cap - pv->st_edge.flow ) {
+            if ( (delta = pv->st_edge.cap - pv->st_edge.flow) ) {
                 if ( IS_BNS_VT_C_OR_CSUPER_GR(pv->type) ) {
                     extra_charge -= delta;
                 } else
@@ -1593,7 +1593,7 @@ int MoveRadToAtomsAddCharges( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStru
             added_charge                  += this_atom_add_charge;
             if ( this_atom_add_charge ) {
                 for ( i = pBNS->num_vertices-1, pv = pBNS->vert + i; this_atom_add_charge && pBNS->num_atoms <= i; i --, pv -- ) {
-                    if ( delta = pv->st_edge.cap - pv->st_edge.flow ) {
+                    if ( (delta = pv->st_edge.cap - pv->st_edge.flow) ) {
                         if ( this_atom_add_charge < 0 && IS_BNS_VT_C_OR_CSUPER_GR(pv->type) ) {
                             if ( delta + this_atom_add_charge > 0 ) {
                                 delta = -this_atom_add_charge;
@@ -1787,8 +1787,8 @@ int AdjustTgroupsToForbiddenEdges2( BN_STRUCT *pBNS, inp_ATOM *at, VAL_AT *pVA,
             }
         }
         if ( !num_acceptors || !num_donors || /* num_acceptors > 2 ||*/
-             num_eql_mobile_gr == num_endpoints && !num_forbidden ||
-             !tg_number && !has_mobile_H ) {
+             (num_eql_mobile_gr == num_endpoints && !num_forbidden) ||
+             (!tg_number && !has_mobile_H) ) {
             continue; /* nothing to do */
         }
         
@@ -2289,8 +2289,8 @@ case_5_8b_to_9b: /* #1 */
                     }
                 } else
                 if ( !((MobileGr[j].atom_type_pVA & (EL_TYPE_N | EL_TYPE_P)) ||
-                       (MobileGr[j].atom_type_pVA & (EL_TYPE_O | EL_TYPE_S)) &&
-                        MobileGr[j].num_bonds > 1 ) &&
+                       ((MobileGr[j].atom_type_pVA & (EL_TYPE_O | EL_TYPE_S)) &&
+                        MobileGr[j].num_bonds > 1) ) &&
                      (MobileGr[j].forbidden & forbidden_mask) &&
                      MobileGr[j].bond_type == BOND_TYPE_SINGLE &&
                      jX < 0 ) {
@@ -2473,8 +2473,8 @@ case_5_9b_to_8b: /* #3 */
                     }
                 } else
                 if ( !((MobileGr[j].atom_type_pVA & (EL_TYPE_N | EL_TYPE_P)) ||
-                       (MobileGr[j].atom_type_pVA & (EL_TYPE_O | EL_TYPE_S)) &&
-                        MobileGr[j].num_bonds > 1 ) &&
+                       ((MobileGr[j].atom_type_pVA & (EL_TYPE_O | EL_TYPE_S)) &&
+                        MobileGr[j].num_bonds > 1) ) &&
                      !(MobileGr[j].forbidden & forbidden_mask) &&
                      MobileGr[j].bond_type == BOND_TYPE_SINGLE &&
                      jX < 0 ) {
@@ -2742,7 +2742,7 @@ int RearrangePlusMinusEdgesFlow( BN_STRUCT *pBNS, BN_DATA *pBD, VAL_AT *pVA,
     if ( !num_found ) {
         goto exit_function;
     }
-    if ( ret = AllocEdgeList( &NewlyFixedEdges, num_tot + pBNS->num_bonds ) ) {
+    if ( (ret = AllocEdgeList( &NewlyFixedEdges, num_tot + pBNS->num_bonds )) ) {
         goto exit_function;
     }
 
@@ -2775,7 +2775,7 @@ int RearrangePlusMinusEdgesFlow( BN_STRUCT *pBNS, BN_DATA *pBD, VAL_AT *pVA,
             /* fix charges */
             pMinus = pBNS->edge + eMinus;
             pMinus->forbidden |= forbidden_edge_mask;
-            if ( ret = AddToEdgeList( &NewlyFixedEdges, eMinus, 0 )) {
+            if ( (ret = AddToEdgeList( &NewlyFixedEdges, eMinus, 0 )) ) {
                 goto exit_function;
             }
         } else
@@ -2783,14 +2783,14 @@ int RearrangePlusMinusEdgesFlow( BN_STRUCT *pBNS, BN_DATA *pBD, VAL_AT *pVA,
             /* fix charges */
             pPlus  = pBNS->edge + ePlus;
             pPlus->forbidden  |= forbidden_edge_mask;
-            if ( ret = AddToEdgeList( &NewlyFixedEdges, ePlus, 0 )) {
+            if ( (ret = AddToEdgeList( &NewlyFixedEdges, ePlus, 0 )) ) {
                 goto exit_function;
             }
         }
     }
     for ( i = 0; i < pBNS->num_bonds; i ++ ) {
         pBNS->edge[i].forbidden |= forbidden_edge_mask;
-        if ( ret = AddToEdgeList( &NewlyFixedEdges, i, 0 )) {
+        if ( (ret = AddToEdgeList( &NewlyFixedEdges, i, 0 )) ) {
             goto exit_function;
         }
     }
@@ -2881,7 +2881,7 @@ int IncrementZeroOrderBondsToHeteroat( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINC
                 for ( k = 0; k < at2[i].valence; k ++ ) {
                     pe = pBNS->edge + pBNS->vert[i].iedge[k];
                     if ( pe->flow == 1 && !(pe->forbidden & forbidden_edge_mask) ) {
-                        if ( ret = AddToEdgeList( &NewlyFixedEdges, pe - pBNS->edge, FIX_BOND_ADD_ALLOC )) {
+                        if ( (ret = AddToEdgeList( &NewlyFixedEdges, pe - pBNS->edge, FIX_BOND_ADD_ALLOC )) ) {
                             goto exit_function;
                         }
                         pe->forbidden |= forbidden_edge_mask;
@@ -2895,7 +2895,7 @@ int IncrementZeroOrderBondsToHeteroat( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINC
                          (pe=pBNS->edge + pVA[k].nCPlusGroupEdge-1)->flow==1 &&
                          !(pe->forbidden & forbidden_edge_mask)) {
 
-                        if ( ret = AddToEdgeList( &NewlyFixedEdges, pe - pBNS->edge, FIX_BOND_ADD_ALLOC )) {
+                        if ( (ret = AddToEdgeList( &NewlyFixedEdges, pe - pBNS->edge, FIX_BOND_ADD_ALLOC )) ) {
                             goto exit_function;
                         }
                         pe->forbidden |= forbidden_edge_mask;
@@ -2933,8 +2933,8 @@ int IncrementZeroOrderBondsToHeteroat( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINC
                 ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret == 1 && (vPathEnd == vMeFlower0 && vPathStart == vNeighMeigh ||
-                                  vPathEnd == vNeighMeigh && vPathStart == vMeFlower0) && abs(nDeltaCharge) <= 2 ) {
+                if ( ret == 1 && ((vPathEnd == vMeFlower0 && vPathStart == vNeighMeigh) ||
+                                  (vPathEnd == vNeighMeigh && vPathStart == vMeFlower0)) && abs(nDeltaCharge) <= 2 ) {
                     ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                     if ( ret > 0 ) {
                         (*pnNumRunBNS) ++;
@@ -2942,7 +2942,7 @@ int IncrementZeroOrderBondsToHeteroat( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINC
                         num_changes ++;
                         bSuccess = ret;
                     }
-                    if ( ret = AddToEdgeList( &NewlyFixedEdges, peZero - pBNS->edge, FIX_BOND_ADD_ALLOC )) {
+                    if ( (ret = AddToEdgeList( &NewlyFixedEdges, peZero - pBNS->edge, FIX_BOND_ADD_ALLOC )) ) {
                         goto exit_function;
                     }
                 } else {
@@ -3084,8 +3084,8 @@ int MovePlusFromS2DiaminoCarbon( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pS
             ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                   &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-            if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                              vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == -1 ) {
+            if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                              (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == -1 ) {
                 /* Remover (+)charge from S => nDeltaCharge == -1 */
                 /* Flow change on pe (+)charge edge (atom S) is not known to RunBnsTestOnce()) */
                 ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -3215,8 +3215,8 @@ int EliminateChargeSeparationOnHeteroatoms( BN_STRUCT *pBNS, BN_DATA *pBD, StrFr
                 if ( ret < 0 ) {
                     goto exit_function;
                 }
-                if ( ret == 1 && (vPathEnd == vPlusSuper && vPathStart == vPlusMinus ||
-                                  vPathEnd == vPlusMinus && vPathStart == vPlusSuper) && nDeltaCharge < 0 ) {
+                if ( ret == 1 && ((vPathEnd == vPlusSuper && vPathStart == vPlusMinus) ||
+                                  (vPathEnd == vPlusMinus && vPathStart == vPlusSuper)) && nDeltaCharge < 0 ) {
                     ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                     (*pnNumRunBNS) ++;
                     if ( ret < 0 ) {
@@ -3715,8 +3715,8 @@ int RestoreCyanoGroup( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
             ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                   &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-            if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                              vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == 1 ) {
+            if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                              (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == 1 ) {
                 ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                 (*pnNumRunBNS) ++;
                 *pnTotalDelta += ret;
@@ -3782,12 +3782,12 @@ int RestoreIsoCyanoGroup( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
         if ( (eNMinusEdge = pVA[i].nCMinusGroupEdge - 1)>= 0 &&
              !pBNS->edge[eNMinusEdge].forbidden ) {
             if ( bIsCarbon ) {
-                if ( ret = AddToEdgeList( &CarbonChargeEdges, eNMinusEdge, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &CarbonChargeEdges, eNMinusEdge, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
             } else
             if ( !pVA[i].cMetal && !at2[i].endpoint && at2[i].charge != -1 ) {
-                if ( ret = AddToEdgeList( &AllChargeEdges, eNMinusEdge, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &AllChargeEdges, eNMinusEdge, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
             }
@@ -3795,18 +3795,18 @@ int RestoreIsoCyanoGroup( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
         if ( (eNPlusEdge = pVA[i].nCPlusGroupEdge - 1)>= 0 &&
              !pBNS->edge[eNPlusEdge].forbidden ) {
             if ( bIsCarbon ) {
-                if ( ret = AddToEdgeList( &CarbonChargeEdges, eNPlusEdge, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &CarbonChargeEdges, eNPlusEdge, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
             } else
             if ( !pVA[i].cMetal && !at2[i].endpoint  ) {
-                if ( ret = AddToEdgeList( &AllChargeEdges, eNPlusEdge, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &AllChargeEdges, eNPlusEdge, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
                 if ( pVA[i].cNumValenceElectrons == 5 &&
                      NO_VERTEX != (eNFlowerEdge1 = GetChargeFlowerUpperEdge( pBNS, pVA, eNPlusEdge )) &&
                      !pBNS->edge[eNFlowerEdge1].flow ) {
-                    if ( ret = AddToEdgeList( &AllChargeEdges, eNFlowerEdge1, INC_EDGE_LIST ) ) {
+                    if ( (ret = AddToEdgeList( &AllChargeEdges, eNFlowerEdge1, INC_EDGE_LIST )) ) {
                         goto exit_function;
                     }
                 }
@@ -3886,13 +3886,13 @@ int RestoreIsoCyanoGroup( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
                 continue;
             }
             /* save 3 edges: 6-3, 4-5, and 3-4 in this order */
-            if ( ret = AddToEdgeList( &IsoCyanoCarbonChargeEdges, eNMinusEdge, INC_EDGE_LIST ) ) {
+            if ( (ret = AddToEdgeList( &IsoCyanoCarbonChargeEdges, eNMinusEdge, INC_EDGE_LIST )) ) {
                 goto exit_function;
             }
-            if ( ret = AddToEdgeList( &IsoCyanoCarbonChargeEdges, eNPlusEdge, INC_EDGE_LIST ) ) {
+            if ( (ret = AddToEdgeList( &IsoCyanoCarbonChargeEdges, eNPlusEdge, INC_EDGE_LIST )) ) {
                 goto exit_function;
             }
-            if ( ret = AddToEdgeList( &IsoCyanoCarbonChargeEdges, eN34Edge, INC_EDGE_LIST ) ) {
+            if ( (ret = AddToEdgeList( &IsoCyanoCarbonChargeEdges, eN34Edge, INC_EDGE_LIST )) ) {
                 goto exit_function;
             }
         }
@@ -3922,8 +3922,8 @@ int RestoreIsoCyanoGroup( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
         ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                               &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-        if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                          vPathEnd == v2 && vPathStart == v1) && nDeltaCharge <= -2 ) {
+        if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                          (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge <= -2 ) {
             ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
             (*pnNumRunBNS) ++;
             *pnTotalDelta += ret;
@@ -3961,8 +3961,8 @@ int RestoreIsoCyanoGroup( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
             ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                   &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-            if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                              vPathEnd == v2 && vPathStart == v1) && nDeltaCharge <= 2 ) {
+            if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                              (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge <= 2 ) {
                 ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                 (*pnNumRunBNS) ++;
                 *pnTotalDelta += ret;
@@ -4054,19 +4054,19 @@ int FixMetal_Nminus_Ominus( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct
                 for ( n = 0; n < num_at; n ++ ) {
                     if ( (e = pVA[n].nCMinusGroupEdge - 1)>= 0 &&
                          !pBNS->edge[e].forbidden ) {
-                        if ( ret = AddToEdgeList( &AllChargeEdges, e, num_at ) ) {
+                        if ( (ret = AddToEdgeList( &AllChargeEdges, e, num_at )) ) {
                             goto exit_function;
                         }
                     }
                     if ( (e = pVA[n].nCPlusGroupEdge - 1)>= 0 &&
                          !pBNS->edge[e].forbidden ) {
-                        if ( ret = AddToEdgeList( &AllChargeEdges, e, num_at ) ) {
+                        if ( (ret = AddToEdgeList( &AllChargeEdges, e, num_at )) ) {
                             goto exit_function;
                         }
                         if ( pVA[n].cNumValenceElectrons == 6 &&
                              NO_VERTEX != (e = GetChargeFlowerUpperEdge( pBNS, pVA, e )) &&
                              pBNS->edge[e].flow == 0 ) {
-                            if ( ret = AddToEdgeList( &AllChargeEdges, e, num_at ) ) {
+                            if ( (ret = AddToEdgeList( &AllChargeEdges, e, num_at )) ) {
                                 goto exit_function;
                             }
                         }
@@ -4105,8 +4105,8 @@ int FixMetal_Nminus_Ominus( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct
             ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                   &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-            if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                              vPathEnd == v2 && vPathStart == v1) /*&& nDeltaCharge == nDeltaChargeMax*/ ) {
+            if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                              (vPathEnd == v2 && vPathStart == v1)) /*&& nDeltaCharge == nDeltaChargeMax*/ ) {
                 ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                 (*pnNumRunBNS) ++;
                 *pnTotalDelta += ret;
@@ -4221,17 +4221,17 @@ int RestoreNNNgroup( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
             ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                   &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-            if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                              vPathEnd == v2 && vPathStart == v1) && nDeltaCharge <= 0 ) {
+            if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                              (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge <= 0 ) {
                 ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                 (*pnNumRunBNS) ++;
                 *pnTotalDelta += ret;
                 num_success ++;
                 /* fix charges on N(-)=N(+)=N- */
-                if ( ret = AddToEdgeList( &CarbonChargeEdges, eNMinusEdge, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &CarbonChargeEdges, eNMinusEdge, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
-                if ( ret = AddToEdgeList( &CarbonChargeEdges, eNPlusEdge, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &CarbonChargeEdges, eNPlusEdge, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
             } else {
@@ -4260,7 +4260,7 @@ int RestoreNNNgroup( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
     for ( i = 0; i < num_at && 0 <= ret; i ++ ) {
         if ( (eNMinusEdge = pVA[i].nCMinusGroupEdge - 1)>= 0 &&
              !pBNS->edge[eNMinusEdge].forbidden ) {
-            if ( ret = AddToEdgeList( &AllChargeEdges, eNMinusEdge, INC_EDGE_LIST ) ) {
+            if ( (ret = AddToEdgeList( &AllChargeEdges, eNMinusEdge, INC_EDGE_LIST )) ) {
                 goto exit_function;
             }
         } else {
@@ -4268,11 +4268,11 @@ int RestoreNNNgroup( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
         }
         if ( (eNPlusEdge = pVA[i].nCPlusGroupEdge - 1)>= 0 &&
              !pBNS->edge[eNPlusEdge].forbidden ) {
-            if ( ret = AddToEdgeList( &AllChargeEdges, eNPlusEdge, INC_EDGE_LIST ) ) {
+            if ( (ret = AddToEdgeList( &AllChargeEdges, eNPlusEdge, INC_EDGE_LIST )) ) {
                 goto exit_function;
             }
             if ( pVA[i].cNumValenceElectrons == 5 && at2[i].valence == 3 && at2[i].chem_bonds_valence == 3) {
-                if ( ret = AddToEdgeList( &AllNIIIChargeEdges, eNPlusEdge, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &AllNIIIChargeEdges, eNPlusEdge, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
             }
@@ -4322,7 +4322,7 @@ int RestoreNNNgroup( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
                 continue; /* already good */
             }
             /* accumulate terminal atoms of all other NNN */
-            if ( ret = AddToEdgeList( &AllNNNTermAtoms, i, INC_EDGE_LIST ) ) {
+            if ( (ret = AddToEdgeList( &AllNNNTermAtoms, i, INC_EDGE_LIST )) ) {
                 goto exit_function;
             }
             /* 2. N#N(+)-N= */
@@ -4330,7 +4330,7 @@ int RestoreNNNgroup( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
                  pBNS->edge[eNMinusEdge1].flow == 0 && pBNS->edge[eNPlusEdge1].flow == 0 && /* N(+) */
                  pBNS->edge[eNMinusEdge2].flow == 0 && pBNS->edge[eNPlusEdge2].flow == 1    /* N */ ) {
                 /* unfix (-) edge on terminal N# */
-                if ( ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
                 continue;
@@ -4340,7 +4340,7 @@ int RestoreNNNgroup( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
                  pBNS->edge[eNMinusEdge1].flow == 0 && pBNS->edge[eNPlusEdge1].flow == 1 && /* N */
                  pBNS->edge[eNMinusEdge2].flow == 0 && pBNS->edge[eNPlusEdge2].flow == 1    /* N */ ) {
                 /* unfix (+) edge on middle N */
-                if ( ret = AddToEdgeList( &NNNChargeEdges, eNPlusEdge1, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &NNNChargeEdges, eNPlusEdge1, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
                 continue;
@@ -4350,10 +4350,10 @@ int RestoreNNNgroup( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
                  pBNS->edge[eNMinusEdge1].flow == 0 && pBNS->edge[eNPlusEdge1].flow == 0 && /* N(+) */
                  pBNS->edge[eNMinusEdge2].flow == 1 && pBNS->edge[eNPlusEdge2].flow == 1    /* N(-) */ ) {
                 /* unfix (-) edge on the 1st and 3rd N */
-                if ( ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
-                if ( ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge2, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge2, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
                 continue;
@@ -4363,10 +4363,10 @@ int RestoreNNNgroup( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
                  pBNS->edge[eNMinusEdge1].flow == 0 && pBNS->edge[eNPlusEdge1].flow == 0 && /* N(+) */
                  pBNS->edge[eNMinusEdge2].flow == 0 && pBNS->edge[eNPlusEdge2].flow == 0    /* N(+) */ ) {
                 /* unfix (-) edge on the 1st and (+) edge on the 3rd N */
-                if ( ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
-                if ( ret = AddToEdgeList( &NNNChargeEdges, eNPlusEdge2, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &NNNChargeEdges, eNPlusEdge2, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
                 continue;
@@ -4443,8 +4443,8 @@ int RestoreNNNgroup( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
             ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                   &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-            if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                              vPathEnd == v2 && vPathStart == v1) /*&& nDeltaCharge <= 2*/ ) {
+            if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                              (vPathEnd == v2 && vPathStart == v1)) /*&& nDeltaCharge <= 2*/ ) {
                 ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                 (*pnNumRunBNS) ++;
                 *pnTotalDelta += ret;
@@ -4517,19 +4517,19 @@ int RestoreNNNgroup( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
                  pBNS->edge[eNMinusEdge1].flow == 0 && pBNS->edge[eNPlusEdge1].flow == 0 && /* N(+) */
                  pBNS->edge[eNMinusEdge2].flow == 0 && pBNS->edge[eNPlusEdge2].flow == 1    /* N */ ) {
                 /* fix charges on N(-)=N(+)=N- */
-                if ( ret = AddToEdgeList( &CarbonChargeEdges, eNMinusEdge, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &CarbonChargeEdges, eNMinusEdge, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
-                if ( ret = AddToEdgeList( &CarbonChargeEdges, eNPlusEdge1, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &CarbonChargeEdges, eNPlusEdge1, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
-                if ( ret = AddToEdgeList( &CarbonChargeEdges, eNMinusEdge1, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &CarbonChargeEdges, eNMinusEdge1, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
-                if ( ret = AddToEdgeList( &CarbonChargeEdges, eNPlusEdge2, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &CarbonChargeEdges, eNPlusEdge2, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
-                if ( ret = AddToEdgeList( &CarbonChargeEdges, eNMinusEdge2, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &CarbonChargeEdges, eNMinusEdge2, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
                 continue; /* already good */
@@ -4539,16 +4539,16 @@ int RestoreNNNgroup( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
                  pBNS->edge[eNMinusEdge1].flow == 0 && pBNS->edge[eNPlusEdge1].flow == 0 && /* N(+) */
                  pBNS->edge[eNMinusEdge2].flow == 0 && pBNS->edge[eNPlusEdge2].flow == 1    /* N */ ) {
                 /* unfix (-) edge on terminal N# */
-                if ( ret = AddToEdgeList( &NNNChargeEdges, eNPlusEdge1, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &NNNChargeEdges, eNPlusEdge1, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
-                if ( ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge1, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge1, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
-                if ( ret = AddToEdgeList( &NNNChargeEdges, eNPlusEdge2, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &NNNChargeEdges, eNPlusEdge2, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
-                if ( ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge2, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge2, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
                 pe = pBNS->edge + pBNS->vert[i].iedge[0];
@@ -4560,16 +4560,16 @@ int RestoreNNNgroup( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
                  pBNS->edge[eNMinusEdge1].flow == 0 && pBNS->edge[eNPlusEdge1].flow == 1 && /* N */
                  pBNS->edge[eNMinusEdge2].flow == 0 && pBNS->edge[eNPlusEdge2].flow == 1    /* N */ ) {
                 /* unfix (+) edge on middle N */
-                if ( ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
-                if ( ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge1, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge1, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
-                if ( ret = AddToEdgeList( &NNNChargeEdges, eNPlusEdge2, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &NNNChargeEdges, eNPlusEdge2, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
-                if ( ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge2, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge2, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
                 if ( NO_VERTEX != eNFlowerEdge1 &&
@@ -4585,13 +4585,13 @@ int RestoreNNNgroup( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
                  pBNS->edge[eNMinusEdge1].flow == 0 && pBNS->edge[eNPlusEdge1].flow == 0 && /* N(+) */
                  pBNS->edge[eNMinusEdge2].flow == 1 && pBNS->edge[eNPlusEdge2].flow == 1    /* N(-) */ ) {
                 /* unfix (-) edge on the 1st and 3rd N */
-                if ( ret = AddToEdgeList( &NNNChargeEdges, eNPlusEdge1, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &NNNChargeEdges, eNPlusEdge1, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
-                if ( ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge1, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge1, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
-                if ( ret = AddToEdgeList( &NNNChargeEdges, eNPlusEdge2, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &NNNChargeEdges, eNPlusEdge2, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
                 /* decrement triple bond on terminal N# */
@@ -4603,13 +4603,13 @@ int RestoreNNNgroup( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
                  pBNS->edge[eNMinusEdge1].flow == 0 && pBNS->edge[eNPlusEdge1].flow == 0 && /* N(+) */
                  pBNS->edge[eNMinusEdge2].flow == 0 && pBNS->edge[eNPlusEdge2].flow == 0    /* N(+) */ ) {
                 /* unfix (-) edge on the 1st and (+) edge on the 3rd N */
-                if ( ret = AddToEdgeList( &NNNChargeEdges, eNPlusEdge1, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &NNNChargeEdges, eNPlusEdge1, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
-                if ( ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge1, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge1, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
-                if ( ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge2, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &NNNChargeEdges, eNMinusEdge2, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
                 /* decrement triple bond on terminal N# */
@@ -4620,12 +4620,12 @@ int RestoreNNNgroup( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
             }
 
             if ( NO_VERTEX != eNFlowerEdge1 && !pBNS->edge[eNFlowerEdge1].flow ) {
-                if ( ret = AddToEdgeList( &NNNChargeEdges, eNFlowerEdge1, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &NNNChargeEdges, eNFlowerEdge1, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
             }
             if ( NO_VERTEX != eNFlowerEdge2 && !pBNS->edge[eNFlowerEdge2].flow ) {
-                if ( ret = AddToEdgeList( &NNNChargeEdges, eNFlowerEdge2, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &NNNChargeEdges, eNFlowerEdge2, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
             }
@@ -4653,26 +4653,26 @@ int RestoreNNNgroup( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
             ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                   &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-            if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                              vPathEnd == v2 && vPathStart == v1) && nDeltaCharge <= nDeltaChargeMax ) {
+            if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                              (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge <= nDeltaChargeMax ) {
                 ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                 (*pnNumRunBNS) ++;
                 *pnTotalDelta += ret;
                 num_success ++;
                 /* fix charges on N(-)=N(+)=N- */
-                if ( ret = AddToEdgeList( &CarbonChargeEdges, eNMinusEdge, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &CarbonChargeEdges, eNMinusEdge, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
-                if ( ret = AddToEdgeList( &CarbonChargeEdges, eNPlusEdge1, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &CarbonChargeEdges, eNPlusEdge1, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
-                if ( ret = AddToEdgeList( &CarbonChargeEdges, eNMinusEdge1, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &CarbonChargeEdges, eNMinusEdge1, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
-                if ( ret = AddToEdgeList( &CarbonChargeEdges, eNPlusEdge2, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &CarbonChargeEdges, eNPlusEdge2, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
-                if ( ret = AddToEdgeList( &CarbonChargeEdges, eNMinusEdge2, INC_EDGE_LIST ) ) {
+                if ( (ret = AddToEdgeList( &CarbonChargeEdges, eNMinusEdge2, INC_EDGE_LIST )) ) {
                     goto exit_function;
                 }
             } else {
@@ -4756,7 +4756,7 @@ int EliminateNitrogen5Val3Bonds(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pSt
     for ( i = 0; i < num_at; i ++ ) {
         if ( pVA[i].cNumValenceElectrons == 5 && at2[i].valence == 3 &&
              at2[i].chem_bonds_valence == 5 && !at2[i].charge && !at2[i].radical &&
-             !(at2[i].endpoint || pStruct->endpoint && pStruct->endpoint[i]) && pVA[i].cnListIndex > 0 &&
+             !(at2[i].endpoint || (pStruct->endpoint && pStruct->endpoint[i])) && pVA[i].cnListIndex > 0 &&
              cnList[pVA[i].cnListIndex-1].bits == cn_bits_NPN &&
              pVA[i].nCPlusGroupEdge > 0 ) {
             
@@ -4921,7 +4921,7 @@ int Convert_SIV_to_SVI(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
              6 == pVA[i].cNumValenceElectrons + pBNS->edge[k].flow ) {
 
             pBNS->edge[k].forbidden |= forbidden_edge_mask;
-            if ( ret = AddToEdgeList( &FlowerEdgesList, k, 64 )) {
+            if ( (ret = AddToEdgeList( &FlowerEdgesList, k, 64 )) ) {
                 goto exit_function;
             }
         } else
@@ -4930,7 +4930,7 @@ int Convert_SIV_to_SVI(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
                 if ( BOND_TYPE_SINGLE == (at2[i].bond_type[j] & BOND_TYPE_MASK) ) {
 
                     pBNS->edge[k=pBNS->vert[i].iedge[j]].forbidden |= forbidden_edge_mask;
-                    if ( ret = AddToEdgeList( &FlowerEdgesList, k, 64 )) {
+                    if ( (ret = AddToEdgeList( &FlowerEdgesList, k, 64 )) ) {
                         goto exit_function;
                     }
                 }
@@ -4950,7 +4950,7 @@ int Convert_SIV_to_SVI(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
                 if ( pVA[neigh].cNumValenceElectrons != 6 && at2[neigh].valence > 1 ) {
                     k = pBNS->vert[i].iedge[j];
                     if ( !pBNS->edge[k].forbidden ) {
-                        if ( ret = AddToEdgeList( &FlowerEdgesList, k, 64 )) {
+                        if ( (ret = AddToEdgeList( &FlowerEdgesList, k, 64 )) ) {
                             goto exit_function;
                         }
                         pBNS->edge[k].forbidden |= forbidden_edge_mask;
@@ -5016,7 +5016,7 @@ int Convert_SIV_to_SVI(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
             ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                   &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
             if ( ret == 1 && 
-                 (vPathEnd == v1 && vPathStart == v2 || vPathEnd == v2 && vPathStart == v1) &&
+                 ((vPathEnd == v1 && vPathStart == v2) || (vPathEnd == v2 && vPathStart == v1)) &&
                  nDeltaCharge <= (pVA[i].cNumBondsToMetal? 2:0) ) {
                 ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
             } else {
@@ -5038,7 +5038,7 @@ int Convert_SIV_to_SVI(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
                     goto exit_function;
                 }
                 /* store the fixed edge to unfix it upon exit */
-                if ( ret = AddToEdgeList( &FlowerEdgesList, nFlowerEdge, 64 )) {
+                if ( (ret = AddToEdgeList( &FlowerEdgesList, nFlowerEdge, 64 )) ) {
                     goto exit_function;
                 }
             }
@@ -5100,12 +5100,12 @@ int PlusFromDB_N_DB_O_to_Metal(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStr
     for ( i = 0; i < num_at; i ++ ) {
         if ( !pVA[i].cMetal ) {
             if ( (k = pVA[i].nCPlusGroupEdge-1) >= 0 && !pBNS->edge[k].forbidden ) {
-                if ( ret = AddToEdgeList( &CarbonChargeEdges, k, 64 ) ) {
+                if ( (ret = AddToEdgeList( &CarbonChargeEdges, k, 64 )) ) {
                     goto exit_function;
                 }
             }
             if ( (k = pVA[i].nCMinusGroupEdge-1) >= 0 && !pBNS->edge[k].forbidden ) {
-                if ( ret = AddToEdgeList( &CarbonChargeEdges, k, 64 ) ) {
+                if ( (ret = AddToEdgeList( &CarbonChargeEdges, k, 64 )) ) {
                     goto exit_function;
                 }
             }
@@ -5142,7 +5142,7 @@ int PlusFromDB_N_DB_O_to_Metal(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStr
                 }
                 k = pBNS->vert[i].iedge[0];  /* N(+)=O bond */
                 if ( !pBNS->edge[k].forbidden ) { 
-                    if ( ret = AddToEdgeList( &NO_EdgeList, k, 64 ) ) {
+                    if ( (ret = AddToEdgeList( &NO_EdgeList, k, 64 )) ) {
                         goto exit_function;
                     }
                     num_NO ++;
@@ -5170,7 +5170,7 @@ int PlusFromDB_N_DB_O_to_Metal(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStr
             ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                   &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
             if ( ret == 1 && 
-                 (vPathEnd == v1 && vPathStart == v2 || vPathEnd == v2 && vPathStart == v1) &&
+                 ((vPathEnd == v1 && vPathStart == v2) || (vPathEnd == v2 && vPathStart == v1)) &&
                  nDeltaCharge == 0 ) {
                 ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
             } else {
@@ -5364,16 +5364,16 @@ int RemoveRadFromMobileHEndpoint(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pS
                             /* compare centerpoints */
                             if ( !pCentp_found ||
                                  /* try to avoid carbons */
-                                 (pVA[centerpoint].cNumValenceElectrons != 4 ||
+                                 ((pVA[centerpoint].cNumValenceElectrons != 4 ||
                                   pVA[centerpoint].cPeriodicRowNumber   != 1) &&
                                  pVA[centerpoint_found].cNumValenceElectrons == 4 &&
-                                 pVA[centerpoint_found].cPeriodicRowNumber   == 1 ||
+                                 pVA[centerpoint_found].cPeriodicRowNumber   == 1) ||
                                  /* try a better non-carbon */
-                                 (pVA[centerpoint].cNumValenceElectrons != 4 ||
+                                 ((pVA[centerpoint].cNumValenceElectrons != 4 ||
                                   pVA[centerpoint].cPeriodicRowNumber   != 1  ) &&
                                  (at[centerpoint].valence >  at[centerpoint_found].valence ||
-                                  at[centerpoint].valence == at[centerpoint_found].valence &&
-                                  at[centerpoint].el_number > at[centerpoint_found].el_number) ) {
+                                  (at[centerpoint].valence == at[centerpoint_found].valence &&
+                                  at[centerpoint].el_number > at[centerpoint_found].el_number))) ) {
 
                                 pCentp_found = pCentp;
                                 etg1_found   = etg1;
@@ -5487,16 +5487,16 @@ int RemoveRadFromMobileHEndpoint(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pS
                             /* compare centerpoints */
                             if ( !pCentp_found ||
                                  /* try to avoid carbons */
-                                 (pVA[centerpoint].cNumValenceElectrons != 4 ||
+                                 ((pVA[centerpoint].cNumValenceElectrons != 4 ||
                                   pVA[centerpoint].cPeriodicRowNumber   != 1) &&
                                  pVA[centerpoint_found].cNumValenceElectrons == 4 &&
-                                 pVA[centerpoint_found].cPeriodicRowNumber   == 1 ||
+                                 pVA[centerpoint_found].cPeriodicRowNumber   == 1) ||
                                  /* try a better non-carbon */
-                                 (pVA[centerpoint].cNumValenceElectrons != 4 ||
+                                 ((pVA[centerpoint].cNumValenceElectrons != 4 ||
                                   pVA[centerpoint].cPeriodicRowNumber   != 1  ) &&
                                  (at[centerpoint].valence >  at[centerpoint_found].valence ||
-                                  at[centerpoint].valence == at[centerpoint_found].valence &&
-                                  at[centerpoint].el_number > at[centerpoint_found].el_number) ) {
+                                  (at[centerpoint].valence == at[centerpoint_found].valence &&
+                                  at[centerpoint].el_number > at[centerpoint_found].el_number))) ) {
 
                                 pCentp_found = pCentp;
                                 etg1_found   = etg1;
@@ -5574,8 +5574,8 @@ int RemoveRadFromMobileHEndpoint(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pS
                         ret2 = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                               &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                        if ( ret2 == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                           vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == 0 ) {
+                        if ( ret2 == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                           (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == 0 ) {
                             ret2 = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                             if ( ret2 > 0 ) {
                                 num_fixes ++;
@@ -5765,16 +5765,16 @@ int RemoveRadFromMobileHEndpointFixH(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI
                             /* compare centerpoints */
                             if ( !pCentp_found ||
                                  /* try to avoid carbons */
-                                 (pVA[centerpoint].cNumValenceElectrons != 4 ||
+                                 ((pVA[centerpoint].cNumValenceElectrons != 4 ||
                                   pVA[centerpoint].cPeriodicRowNumber   != 1) &&
                                  pVA[centerpoint_found].cNumValenceElectrons == 4 &&
-                                 pVA[centerpoint_found].cPeriodicRowNumber   == 1 ||
+                                 pVA[centerpoint_found].cPeriodicRowNumber   == 1) ||
                                  /* try a better non-carbon */
-                                 (pVA[centerpoint].cNumValenceElectrons != 4 ||
+                                 ((pVA[centerpoint].cNumValenceElectrons != 4 ||
                                   pVA[centerpoint].cPeriodicRowNumber   != 1  ) &&
                                  (at[centerpoint].valence >  at[centerpoint_found].valence ||
-                                  at[centerpoint].valence == at[centerpoint_found].valence &&
-                                  at[centerpoint].el_number > at[centerpoint_found].el_number) ) {
+                                  (at[centerpoint].valence == at[centerpoint_found].valence &&
+                                  at[centerpoint].el_number > at[centerpoint_found].el_number))) ) {
 
                                 pCentp_found = pCentp;
                                 ecp0_found   = ecp0;
@@ -5877,16 +5877,16 @@ int RemoveRadFromMobileHEndpointFixH(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI
                             /* compare centerpoints */
                             if ( !pCentp_found ||
                                  /* try to avoid carbons */
-                                 (pVA[centerpoint].cNumValenceElectrons != 4 ||
+                                 ((pVA[centerpoint].cNumValenceElectrons != 4 ||
                                   pVA[centerpoint].cPeriodicRowNumber   != 1) &&
                                  pVA[centerpoint_found].cNumValenceElectrons == 4 &&
-                                 pVA[centerpoint_found].cPeriodicRowNumber   == 1 ||
+                                 pVA[centerpoint_found].cPeriodicRowNumber   == 1) ||
                                  /* try a better non-carbon */
-                                 (pVA[centerpoint].cNumValenceElectrons != 4 ||
+                                 ((pVA[centerpoint].cNumValenceElectrons != 4 ||
                                   pVA[centerpoint].cPeriodicRowNumber   != 1  ) &&
                                  (at[centerpoint].valence >  at[centerpoint_found].valence ||
-                                  at[centerpoint].valence == at[centerpoint_found].valence &&
-                                  at[centerpoint].el_number > at[centerpoint_found].el_number) ) {
+                                  (at[centerpoint].valence == at[centerpoint_found].valence &&
+                                  at[centerpoint].el_number > at[centerpoint_found].el_number))) ) {
 
                                 pCentp_found = pCentp;
                                 ecp1_found   = ecp1;
@@ -5911,8 +5911,8 @@ int RemoveRadFromMobileHEndpointFixH(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI
                 ret3 = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret3 == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                   vPathEnd == v2 && vPathStart == v1) && nDeltaCharge % 2 == 0 ) {
+                if ( ret3 == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                   (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge % 2 == 0 ) {
                     ret3 = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                     if ( ret3 > 0 ) {
                         num_fixes ++;
@@ -6011,9 +6011,9 @@ int RemoveRadFromMobileHEndpointFixH(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI
                         /* compare centerpoints */
                         if ( !pCentp_found ||
                              /* try to find carbons */
-                             !IS_C(endpoint2_found) && IS_C(endpoint2) ||
-                             IS_C(endpoint2_found) && IS_C(endpoint2) &&
-                             !IS_C(centerpoint_found) && IS_C(centerpoint) ) {
+                             (!IS_C(endpoint2_found) && IS_C(endpoint2)) ||
+                             (IS_C(endpoint2_found) && IS_C(endpoint2) &&
+                             !IS_C(centerpoint_found) && IS_C(centerpoint)) ) {
 
                             pCentp_found = pCentp;
                             centerpoint_found = centerpoint;
@@ -6081,8 +6081,8 @@ int RemoveRadFromMobileHEndpointFixH(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI
                 ret2 = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret2 == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                   vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == 0 ) {
+                if ( ret2 == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                   (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == 0 ) {
                     ret2 = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                     if ( ret2 > 0 ) {
                         num_fixes ++;
@@ -6158,9 +6158,9 @@ int RemoveRadFromMobileHEndpointFixH(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI
                         }
                         if ( !pEndp2_found ||
                              /* try to find carbons */
-                             !IS_C(endpoint2_found) && IS_C(endpoint1) ||
-                             IS_C(endpoint2_found) && IS_C(endpoint1) &&
-                             !IS_C(centerpoint_found) && IS_C(centerpoint) ) {
+                             (!IS_C(endpoint2_found) && IS_C(endpoint1)) ||
+                             (IS_C(endpoint2_found) && IS_C(endpoint1) &&
+                             !IS_C(centerpoint_found) && IS_C(centerpoint)) ) {
                             pEndp2_found      = pEndp1;
                             pCentp_found      = pCentp;
                             endpoint2_found   = endpoint1;
@@ -6276,7 +6276,7 @@ int MoveChargeToMakeCenerpoints(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pSt
                 }
                 ret = 0;
                 /* set new flow to run BNS Search */
-                if ( delta = pEdgePlus->flow ) {
+                if ( (delta = pEdgePlus->flow) ) {
                     /* positive charge <=> flow=0 on (=) edge */
                     pEdgePlus->flow -= delta;
                     pv1p->st_edge.flow -= delta;
@@ -6291,8 +6291,8 @@ int MoveChargeToMakeCenerpoints(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pSt
                     if ( ret < 0 ) {
                         goto exit_function;
                     }
-                    if ( ret == 1 && (vPathEnd == v1p && vPathStart == v2p ||
-                                      vPathEnd == v2p && vPathStart == v1p) &&
+                    if ( ret == 1 && ((vPathEnd == v1p && vPathStart == v2p) ||
+                                      (vPathEnd == v2p && vPathStart == v1p)) &&
                                       nDeltaCharge == -1 /* charge moving to this atom disappers*/ ) {
                         ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                         (*pnNumRunBNS) ++;
@@ -6330,8 +6330,8 @@ int MoveChargeToMakeCenerpoints(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pSt
                     if ( ret < 0 ) {
                         goto exit_function;
                     }
-                    if ( ret == 1 && (vPathEnd == v1m && vPathStart == v2m ||
-                                      vPathEnd == v2m && vPathStart == v1m) &&
+                    if ( ret == 1 && ((vPathEnd == v1m && vPathStart == v2m) ||
+                                      (vPathEnd == v2m && vPathStart == v1m)) &&
                                       nDeltaCharge == -1  /* charge moving to this atom disappers*/ ) {
                         ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                         (*pnNumRunBNS) ++;

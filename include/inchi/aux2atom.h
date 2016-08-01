@@ -405,7 +405,7 @@ int INChITo_Atom(INCHI_IOSTREAM *inp_molfile, MOL_COORD **szCoord,
                 if ( *p ) {
                     /* has label name */
                     /*p ++;*/
-                    if ( q = strchr( p, '=' ) ) {
+                    if ( (q = strchr( p, '=' )) ) {
                         /* '=' separates label name from the value */
                         len = inchi_min( q-p+1, MAX_SDF_HEADER-1);
                         if ( pSdfLabel ) {
@@ -423,7 +423,7 @@ int INChITo_Atom(INCHI_IOSTREAM *inp_molfile, MOL_COORD **szCoord,
                         }
 
                     } else
-                    if ( q = strstr( p, sStructHdrPlnNoLblVal ) ) {
+                    if ( (q = strstr( p, sStructHdrPlnNoLblVal )) ) {
                         len = inchi_min( q-p+1, MAX_SDF_HEADER-1);
                         if ( pSdfLabel ) {
                             mystrncpy( pSdfLabel, p, len );
@@ -626,7 +626,7 @@ int INChITo_Atom(INCHI_IOSTREAM *inp_molfile, MOL_COORD **szCoord,
                         }
                         i ++;
                     }
-                    if ( !bItemIsOver || i != num_atoms || s && p != s ) {
+                    if ( !bItemIsOver || i != num_atoms || (s && p != s) ) {
                         num_atoms = INCHI_INP_ERROR_RET; /* error */
                         *err      = INCHI_INP_ERROR_ERR;
                         MOLFILE_ERR_SET (*err, 0, "Wrong number of atoms");
@@ -658,7 +658,7 @@ int INChITo_Atom(INCHI_IOSTREAM *inp_molfile, MOL_COORD **szCoord,
                     while ( i < num_atoms ) {
                         p = LoadLine( inp_molfile, &bTooLongLine, &bItemIsOver, &s,
                                       szLine, sizeof(szLine), INCHI_LINE_ADD, p, &res );
-                        if ( i >= num_atoms || s && p >= s ) {
+                        if ( i >= num_atoms || (s && p >= s) ) {
                             break; /* end of bonds (plain) */
                         }
                         /* bond, first char */
@@ -831,7 +831,7 @@ int INChITo_Atom(INCHI_IOSTREAM *inp_molfile, MOL_COORD **szCoord,
                             len_stereo0D ++;
                         }
                     }
-                    if ( !bItemIsOver || i != num_atoms || s && p != s ) {
+                    if ( !bItemIsOver || i != num_atoms || (s && p != s) ) {
                         num_atoms = INCHI_INP_ERROR_RET; /* error */
                         *err      = INCHI_INP_ERROR_ERR;
                         MOLFILE_ERR_SET (*err, 0, "Wrong number of bonds");
@@ -852,7 +852,7 @@ int INChITo_Atom(INCHI_IOSTREAM *inp_molfile, MOL_COORD **szCoord,
                     goto bypass_end_of_INChI_plain;
                 } else {
                     /* coordinates block started */
-                    if ( pszCoord = (MOL_COORD*) inchi_malloc(inchi_max(num_atoms,1) * sizeof(MOL_COORD)) ) {
+                    if ( (pszCoord = (MOL_COORD*) inchi_malloc(inchi_max(num_atoms,1) * sizeof(MOL_COORD))) ) {
                         memset( pszCoord, ' ', inchi_max(num_atoms,1) * sizeof(MOL_COORD));
                     } else {
                         num_atoms = INCHI_INP_FATAL_RET; /* allocation error */
@@ -866,7 +866,7 @@ int INChITo_Atom(INCHI_IOSTREAM *inp_molfile, MOL_COORD **szCoord,
                     while ( i < num_atoms ) {
                         p = LoadLine( inp_molfile, &bTooLongLine, &bItemIsOver, &s,
                                       szLine, sizeof(szLine), INCHI_LINE_ADD, p, &res );
-                        if ( i >= num_atoms || s && p >= s ) {
+                        if ( i >= num_atoms || (s && p >= s) ) {
                             break; /* end of bonds (plain) */
                         }
 
@@ -928,7 +928,7 @@ int INChITo_Atom(INCHI_IOSTREAM *inp_molfile, MOL_COORD **szCoord,
                             goto bypass_end_of_INChI_plain;
                         }
                     }
-                    if ( !bItemIsOver || s && p != s || i != num_atoms ) {
+                    if ( !bItemIsOver || (s && p != s) || i != num_atoms ) {
                         num_atoms = INCHI_INP_ERROR_RET; /* error */
                         *err      = INCHI_INP_ERROR_ERR;
                         MOLFILE_ERR_SET (*err, 0, "Wrong number of coordinates");
@@ -1357,7 +1357,7 @@ bypass_end_of_INChI_plain:
                 longID = 0;
                 num_atoms = 0;
                 /* structure number */
-                if ( q = strstr( p, sStructHdrXmlNumber ) ) {
+                if ( (q = strstr( p, sStructHdrXmlNumber )) ) {
                     p = q + sizeof(sStructHdrXmlNumber)-1;
                     longID = strtol( p, &q, 10);
                     if ( q && *q == '\"' )
@@ -1370,7 +1370,7 @@ bypass_end_of_INChI_plain:
                     pSdfValue[0] = '\0';
                 }
                 /* pSdfLabel */
-                if ( q = strstr( p, sStructHdrXmlIdName ) ) {
+                if ( (q = strstr( p, sStructHdrXmlIdName )) ) {
                     p = q + sizeof(sStructHdrXmlIdName)-1;
                     q = strchr( p, '\"' );
                     if ( q ) {
@@ -1382,7 +1382,7 @@ bypass_end_of_INChI_plain:
                     }
                 }
                 /* pSdfValue */
-                if ( q = strstr( p, sStructHdrXmlIdValue ) ) {
+                if ( (q = strstr( p, sStructHdrXmlIdValue )) ) {
                     p = q + sizeof(sStructHdrXmlIdValue)-1;
                     q = strchr( p, '\"' );
                     if ( q ) {
@@ -1398,8 +1398,8 @@ bypass_end_of_INChI_plain:
                 bHeaderRead = 1;
                 bErrorMsg = bRestoreInfo = 0;
             } else
-            if ( bHeaderRead && (bFatal=0, len=sizeof(sStructMsgXmlErr)-1,      !memcmp(szLine, sStructMsgXmlErr, len)) ||
-                 bHeaderRead && (len=sizeof(sStructMsgXmlErrFatal)-1, !memcmp(szLine, sStructMsgXmlErrFatal, len))&&(bFatal=1)) {
+            if ( (bHeaderRead && (bFatal=0, len=sizeof(sStructMsgXmlErr)-1,      !memcmp(szLine, sStructMsgXmlErr, len))) ||
+                 (bHeaderRead && (len=sizeof(sStructMsgXmlErrFatal)-1, !memcmp(szLine, sStructMsgXmlErrFatal, len))&&(bFatal=1))) {
                 p = szLine+len;
                 q = strchr( p, '\"' );
                 if ( q && !bFindNext ) {
@@ -1854,7 +1854,7 @@ bypass_end_of_INChI_plain:
                     goto bypass_end_of_INChI;
                 }
                 /********************** coordinates xml ****************************/
-                if ( pszCoord = (MOL_COORD*) inchi_malloc(inchi_max(num_atoms,1) * sizeof(MOL_COORD)) ) {
+                if ( (pszCoord = (MOL_COORD*) inchi_malloc(inchi_max(num_atoms,1) * sizeof(MOL_COORD))) ) {
                     memset( pszCoord, ' ', inchi_max(num_atoms,1) * sizeof(MOL_COORD));
                     res = inchi_ios_gets( szLine, sizeof(szLine)-1, inp_molfile, &bTooLongLine );
                     if ( res <= 0  ||
@@ -2552,8 +2552,8 @@ int Extract0DParities( inp_ATOM *at, int nNumAtoms, inchi_Stereo0D *stereo0D,
             parity   = (stereo0D[i0D].parity & SB_PARITY_MASK);
             parityNM = (stereo0D[i0D].parity & SB_PARITY_FLAG) >> SB_PARITY_SHFT;
             if ( parity == INCHI_PARITY_NONE ||
-                 parity != INCHI_PARITY_ODD && parity != INCHI_PARITY_EVEN &&
-                 parity != INCHI_PARITY_UNKNOWN && parity != INCHI_PARITY_UNDEFINED ) {
+                 (parity != INCHI_PARITY_ODD && parity != INCHI_PARITY_EVEN &&
+                 parity != INCHI_PARITY_UNKNOWN && parity != INCHI_PARITY_UNDEFINED) ) {
                 char szTemp[16];
                 sprintf( szTemp, "#%d", i0D+1 );
                 MOLFILE_ERR_SET (*err, 0, "Wrong 0D stereo descriptor(s):");
@@ -2567,11 +2567,11 @@ int Extract0DParities( inp_ATOM *at, int nNumAtoms, inchi_Stereo0D *stereo0D,
             sb_ord_from_i1 = sb_ord_from_i2 = sn_ord_from_i1 = sn_ord_from_i2 = -1;
             i1n = i2n = i1 = i2 = MAX_ATOMS+1;
 
-            if ( (type == INCHI_StereoType_Tetrahedral ||
+            if ( ((type == INCHI_StereoType_Tetrahedral ||
                   type == INCHI_StereoType_Allene ) &&
-                  0 <= a2 && a2 < nNumAtoms ||
-                  type == INCHI_StereoType_DoubleBond &&
-                  a2 == NO_ATOM) {
+                  0 <= a2 && a2 < nNumAtoms) ||
+                  (type == INCHI_StereoType_DoubleBond &&
+                  a2 == NO_ATOM)) {
                 /* test the quadruplet */
                 for ( j = 0, k_prev = -1; j < 4; j ++, k_prev = k ) {
                     k = stereo0D[i0D].neighbor[j];
@@ -2774,7 +2774,7 @@ int Extract0DParities( inp_ATOM *at, int nNumAtoms, inchi_Stereo0D *stereo0D,
 
 #ifdef TARGET_API_LIB
 
-        if ( k = ReconcileAllCmlBondParities( at, nNumAtoms, 0 ) ) {
+        if ( (k = ReconcileAllCmlBondParities( at, nNumAtoms, 0 )) ) {
             char szErrCode[16];
             sprintf( szErrCode, "%d", k);
             AddMOLfileError( pStrErr, "0D Parities Reconciliation failed:" );
@@ -2788,4 +2788,3 @@ int Extract0DParities( inp_ATOM *at, int nNumAtoms, inchi_Stereo0D *stereo0D,
 }
 
 #endif
-

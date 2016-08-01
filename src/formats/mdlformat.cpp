@@ -88,6 +88,7 @@ namespace OpenBabel
                " w  use wedge and hash bonds from input (2D only)\n"
                " S  do not store cis/trans stereochemistry in 0D MOL files\n"
                " A  output in Alias form, e.g. Ph, if present\n"
+               " E  add an ASCII depiction of the molecule as a property\n"
                " H  use HYD extension (always on if mol contains zero-order bonds)\n\n";
       }
 
@@ -794,6 +795,41 @@ namespace OpenBabel
     return true;
   }
 
+  static void GenerateAsciiDepiction(OBMol* pmol)
+  {
+    OBConversion obconv;
+    bool ok = obconv.SetOutFormat("ascii");
+    if (!ok)
+      return;
+    obconv.AddOption("w", obconv.OUTOPTIONS, "78");
+    std::string ascii = obconv.WriteString(pmol);
+
+    // Add a "." as prefix to each line as otherwise OB
+    // will strip leading spaces on reading
+    std::string mod = ".";
+    const char* p = ascii.c_str();
+    unsigned int lastNonBlank = 0;
+    while (*p) {
+      mod += *p++;
+      if (*p) {
+        if (*p != ' ' && *p != '\n')
+          lastNonBlank = mod.size(); // We will trim up to the last non-blank
+        if (*(p - 1) == '\n')
+          mod += '.';
+      }
+    }
+
+    OBPairData* pd;
+    if (pmol->HasData("ASCII depiction"))
+      pd = (OBPairData*)pmol->GetData("ASCII depiction");
+    else {
+      pd = new OBPairData();
+      pd->SetAttribute("ASCII depiction");
+    }
+    pd->SetValue(mod.substr(0, lastNonBlank+1));
+    pmol->SetData(pd);
+  }
+
   /////////////////////////////////////////////////////////////////
   bool MDLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
@@ -1142,6 +1178,9 @@ namespace OpenBabel
     //For SD files only, write properties unless option m
     if(pConv->IsOption("sd") && !pConv->IsOption("m"))
     {
+      if (pConv->IsOption("E"))
+        GenerateAsciiDepiction(pmol);
+
       vector<OBGenericData*>::iterator k;
       vector<OBGenericData*> vdata = mol.GetData();
       for (k = vdata.begin();k != vdata.end();k++)
