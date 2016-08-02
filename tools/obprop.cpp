@@ -157,6 +157,7 @@ int main(int argc,char **argv)
       cout << "num_atoms        " << mol.NumAtoms() << endl;
       cout << "num_bonds        " << mol.NumBonds() << endl;
       cout << "num_residues     " << mol.NumResidues() << endl;
+      cout << "num_rotors       " << mol.NumRotors() << endl;
       if (mol.NumResidues() > 0)
         cout << "sequence         " << sequence(mol) << endl;
       else
