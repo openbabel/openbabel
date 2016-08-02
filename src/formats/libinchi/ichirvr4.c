@@ -76,7 +76,7 @@ int ForbidCarbonChargeEdges( BN_STRUCT *pBNS, ALL_TC_GROUPS *pTCGroups, EDGE_LIS
 #define MAX_NUM_CARBON_CHARGE_EDGES 2
     int nType, i, k, ret;
     BNS_EDGE   *pEdge;
-    if ( ret = AllocEdgeList( pCarbonChargeEdges, MAX_NUM_CARBON_CHARGE_EDGES ) ) {
+    if ( (ret = AllocEdgeList( pCarbonChargeEdges, MAX_NUM_CARBON_CHARGE_EDGES )) ) {
         goto exit_function;
     }
     pCarbonChargeEdges->num_edges = 0;
@@ -98,7 +98,7 @@ int ForbidCarbonChargeEdges( BN_STRUCT *pBNS, ALL_TC_GROUPS *pTCGroups, EDGE_LIS
                 pEdge = pBNS->edge + k;
                 if ( !(pEdge->forbidden & forbidden_edge_mask) ) {
                     pEdge->forbidden |= forbidden_edge_mask;
-                    if ( ret = AddToEdgeList( pCarbonChargeEdges, k, 0 ) ) {
+                    if ( (ret = AddToEdgeList( pCarbonChargeEdges, k, 0 )) ) {
                         goto exit_function;
                     }
                 }
@@ -135,7 +135,7 @@ int ForbidNintrogenPlus2BondsInSmallRings( BN_STRUCT *pBNS, inp_ATOM *at, int nu
             e = pBNS->edge + (j = pVA[i].nCPlusGroupEdge - 1);
             if ( !(e->forbidden & forbidden_edge_mask) ) {
                 e->forbidden |= forbidden_edge_mask;
-                if ( ret = AddToEdgeList( pNplus2BondsEdges, j, 128 ) ) {
+                if ( (ret = AddToEdgeList( pNplus2BondsEdges, j, 128 )) ) {
                     goto exit_function;
                 }
             }
@@ -172,18 +172,18 @@ int FixLessHydrogenInFormula( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStru
     int        nPathLen, nDeltaH, nDeltaCharge, nNumVisitedAtoms;
 
     AllocEdgeList( &NewlyFixedEdges, EDGE_LIST_CLEAR );
-    if ( ret = AllocEdgeList( &NewlyFixedEdges, 2*num_at ) ) {
+    if ( (ret = AllocEdgeList( &NewlyFixedEdges, 2*num_at )) ) {
         goto exit_function;
     }
     for ( i = 0; i < num_at; i ++ ) {
         if ( (j = pVA[i].nCMinusGroupEdge-1) >= 0 ) {
-            if ( ret = AddToEdgeList( &NewlyFixedEdges, j, 0 )) {
+            if ( (ret = AddToEdgeList( &NewlyFixedEdges, j, 0 )) ) {
                 goto exit_function;
             }
             pBNS->edge[j].forbidden |= forbidden_edge_mask;
         }
         if ( (j = pVA[i].nCPlusGroupEdge-1) >= 0 ) {
-            if ( ret = AddToEdgeList( &NewlyFixedEdges, j, 0 )) {
+            if ( (ret = AddToEdgeList( &NewlyFixedEdges, j, 0 )) ) {
                 goto exit_function;
             }
             pBNS->edge[j].forbidden |= forbidden_edge_mask;
@@ -265,8 +265,8 @@ int FixLessHydrogenInFormula( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStru
             /* a simple alt path from NH-= to =N(+) has been found */
             if ( iBPlus || iNV ) {
                 /* move (+) charge from N(+) to iNV or, if iBPlus, then to iNH */
-                if ( iNV >= 0 && (j = pVA[iNV].nCPlusGroupEdge-1) > 0 && pBNS->edge[j].flow > 0 ||
-                     iNH >= 0 && (j = pVA[iNH].nCPlusGroupEdge-1) > 0 && pBNS->edge[j].flow > 0 ) {
+                if ( (iNV >= 0 && (j = pVA[iNV].nCPlusGroupEdge-1) > 0 && pBNS->edge[j].flow > 0) ||
+                     (iNH >= 0 && (j = pVA[iNH].nCPlusGroupEdge-1) > 0 && pBNS->edge[j].flow > 0) ) {
                     int          ieFlower;
                     BNS_EDGE    *pe  = pBNS->edge + j, *peFlower = NULL;
                     Vertex      v1   = pe->neighbor1;
@@ -281,7 +281,7 @@ int FixLessHydrogenInFormula( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStru
                         peFlower = pBNS->edge + ieFlower;
                         if ( peFlower->flow == delta ) {
                             peFlower->forbidden |= forbidden_edge_mask;
-                            if ( ret = AddToEdgeList( &NewlyFixedEdges, ieFlower, 0 )) {
+                            if ( (ret = AddToEdgeList( &NewlyFixedEdges, ieFlower, 0 )) ) {
                                 goto exit_function;
                             }
                         }
@@ -296,8 +296,8 @@ int FixLessHydrogenInFormula( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStru
                     if ( ret < 0 ) {
                         goto exit_function;
                     }
-                    if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                      vPathEnd == v2 && vPathStart == v1) &&
+                    if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                      (vPathEnd == v2 && vPathStart == v1)) &&
                                       nDeltaCharge <= 0  /* charge moving to this atom disappers*/ ) {
                         ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                         (*pnNumRunBNS) ++;
@@ -352,19 +352,19 @@ int FixMoreHydrogenInFormula( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStru
     BNS_EDGE *pe, *pe2;
 
     AllocEdgeList( &NewlyFixedEdges, EDGE_LIST_CLEAR );
-    if ( ret = AllocEdgeList( &NewlyFixedEdges, 2*num_at ) ) {
+    if ( (ret = AllocEdgeList( &NewlyFixedEdges, 2*num_at )) ) {
         goto exit_function;
     }
     /* fix all charges */
     for ( i = 0; i < num_at; i ++ ) {
         if ( (j = pVA[i].nCMinusGroupEdge-1) >= 0 ) {
-            if ( ret = AddToEdgeList( &NewlyFixedEdges, j, 0 )) {
+            if ( (ret = AddToEdgeList( &NewlyFixedEdges, j, 0 )) ) {
                 goto exit_function;
             }
             pBNS->edge[j].forbidden |= forbidden_edge_mask;
         }
         if ( (j = pVA[i].nCPlusGroupEdge-1) >= 0 ) {
-            if ( ret = AddToEdgeList( &NewlyFixedEdges, j, 0 )) {
+            if ( (ret = AddToEdgeList( &NewlyFixedEdges, j, 0 )) ) {
                 goto exit_function;
             }
             pBNS->edge[j].forbidden |= forbidden_edge_mask;
@@ -413,8 +413,8 @@ int FixMoreHydrogenInFormula( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStru
                 if ( ret < 0 ) {
                     goto exit_function;
                 }
-                if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                  vPathEnd == v2 && vPathStart == v1) &&
+                if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                  (vPathEnd == v2 && vPathStart == v1)) &&
                                   nDeltaCharge <= 1 ) {
                     ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                     (*pnNumRunBNS) ++;
@@ -500,19 +500,19 @@ int FixRemoveExtraTautEndpoints( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pS
     ret = 0;
 
     AllocEdgeList( &NewlyFixedEdges, EDGE_LIST_CLEAR );
-    if ( ret = AllocEdgeList( &NewlyFixedEdges, 2*num_at ) ) {
+    if ( (ret = AllocEdgeList( &NewlyFixedEdges, 2*num_at )) ) {
         goto exit_function;
     }
     /* fix all charges */
     for ( i = 0; i < num_at; i ++ ) {
         if ( (j = pVA[i].nCMinusGroupEdge-1) >= 0 ) {
-            if ( ret = AddToEdgeList( &NewlyFixedEdges, j, 0 )) {
+            if ( (ret = AddToEdgeList( &NewlyFixedEdges, j, 0 )) ) {
                 goto exit_function;
             }
             pBNS->edge[j].forbidden |= forbidden_edge_mask;
         }
         if ( (j = pVA[i].nCPlusGroupEdge-1) >= 0 ) {
-            if ( ret = AddToEdgeList( &NewlyFixedEdges, j, 0 )) {
+            if ( (ret = AddToEdgeList( &NewlyFixedEdges, j, 0 )) ) {
                 goto exit_function;
             }
             pBNS->edge[j].forbidden |= forbidden_edge_mask;
@@ -575,8 +575,8 @@ int FixRemoveExtraTautEndpoints( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pS
                 if ( ret < 0 ) {
                     goto exit_function;
                 }
-                if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                  vPathEnd == v2 && vPathStart == v1) &&
+                if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                  (vPathEnd == v2 && vPathStart == v1)) &&
                                   nDeltaCharge <= 1 ) {
                     ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                     (*pnNumRunBNS) ++;
@@ -625,10 +625,10 @@ int  FillOutExtraFixedHDataRestr( StrFromINChI *pStruct )
         }
         if ( pNum ) {
             len = pStruct->num_atoms * sizeof(pStruct->nCanon2Atno[0][0]);
-            if ( !pStruct->nCanon2Atno[i] &&
-                 !(pStruct->nCanon2Atno[i] = (AT_NUMB *) inchi_malloc( len )) ||
-                 !pStruct->nAtno2Canon[i] &&
-                 !(pStruct->nAtno2Canon[i] = (AT_NUMB *) inchi_malloc( len ))) {
+            if ( (!pStruct->nCanon2Atno[i] &&
+                 !(pStruct->nCanon2Atno[i] = (AT_NUMB *) inchi_malloc( len ))) ||
+                 (!pStruct->nAtno2Canon[i] &&
+                 !(pStruct->nAtno2Canon[i] = (AT_NUMB *) inchi_malloc( len ))) ) {
                 ret = RI_ERR_ALLOC;
                 goto exit_function;
             }
@@ -1448,7 +1448,7 @@ int CheckAndRefixStereobonds(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruc
             pv1->st_edge.flow --;
             pv2->st_edge.flow --;
             pBNS->tot_st_flow -= 2;
-            if ( ret = AddToEdgeList( &WrongEdges, ne, 0 )) {
+            if ( (ret = AddToEdgeList( &WrongEdges, ne, 0 )) ) {
                 goto exit_function;
             }
         }
@@ -1508,7 +1508,7 @@ int MoveChargeToRemoveCenerpoints(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *p
     int num_deleted_H = pStruct->num_deleted_H;
     int len_at = num_at + num_deleted_H;
     int forbidden_edge_test = BNS_EDGE_FORBIDDEN_TEST;
-    int bPossiblyIgnore = pStruct->charge >= 0 && (!pTCGroups->num_tgroups || pStruct->iMobileH == TAUT_NON && pStruct->ti.num_t_groups);
+    int bPossiblyIgnore = pStruct->charge >= 0 && (!pTCGroups->num_tgroups || (pStruct->iMobileH == TAUT_NON && pStruct->ti.num_t_groups));
     S_CHAR MobileChargeNeigh[MAXVAL], DoubleBondAcceptors[MAXVAL], DoubleBondNotONeigh[MAXVAL];
     int    numMobileChargeNeigh, numDoubleBondAcceptors, numDoubleBondNotONeigh, numOtherDoubleBondOAcceptors=0;
     EDGE_LIST ChargeListAllExcept_DB_O;
@@ -1527,7 +1527,7 @@ int MoveChargeToRemoveCenerpoints(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *p
         goto exit_function;
     }
     */
-    if ( ret = AllocEdgeList( &ChargeListAllExcept_DB_O, EDGE_LIST_CLEAR ) ) {
+    if ( (ret = AllocEdgeList( &ChargeListAllExcept_DB_O, EDGE_LIST_CLEAR )) ) {
         goto exit_function;
     }
 
@@ -1557,7 +1557,7 @@ int MoveChargeToRemoveCenerpoints(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *p
 
     for ( i = 0; i < num_at; i ++ ) {
         if ( pVA[i].cNumValenceElectrons != 4 && /* not C, Si, Ge */
-             !(pVA[i].nTautGroupEdge || pStruct->iMobileH == TAUT_NON && pStruct->endpoint && pStruct->endpoint[i] ) &&
+             !(pVA[i].nTautGroupEdge || (pStruct->iMobileH == TAUT_NON && pStruct->endpoint && pStruct->endpoint[i]) ) &&
              !at2[i].num_H && !at2[i].charge && at2[i].valence >= 2 &&
              at2[i].valence < at2[i].chem_bonds_valence &&
              is_centerpoint_elem( at2[i].el_number ) ) {
@@ -1569,7 +1569,8 @@ int MoveChargeToRemoveCenerpoints(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *p
             num_known_endpoints = num_wrong_neigh = 0;
             for ( j = 0, num_endpoints = 0; j < at2[i].valence; j ++ ) {
                 neigh = at2[i].neighbor[j];
-                if ( (at2[neigh].endpoint || pStruct->iMobileH == TAUT_NON && pStruct->endpoint && pStruct->endpoint[neigh]) || at2[neigh].charge > 0 ) {
+                if ( (at2[neigh].endpoint || (pStruct->iMobileH == TAUT_NON && pStruct->endpoint && pStruct->endpoint[neigh])) ||
+                      at2[neigh].charge > 0 ) {
                     num_known_endpoints ++;
                     continue;
                 }
@@ -1631,14 +1632,14 @@ int MoveChargeToRemoveCenerpoints(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *p
                 if ( !ChargeListAllExcept_DB_O.num_edges ) {
                     numOtherDoubleBondOAcceptors = 0;
                     for ( k = 0; k < num_at; k ++ ) {
-                        if ( 1 == at2[k].valence && pBNS->edge[pBNS->vert[k].iedge[0]].flow &&
+                        if ( (1 == at2[k].valence && pBNS->edge[pBNS->vert[k].iedge[0]].flow &&
                              !pBNS->edge[pBNS->vert[k].iedge[0]].forbidden &&
                              !((e=pVA[k].nCMinusGroupEdge-1) >= 0 && pBNS->edge[e].flow) &&
                              !((e=pVA[k].nCPlusGroupEdge-1) >= 0 && !pBNS->edge[e].flow) &&
                              /* 0 == at2[k].charge && */
                              pVA[k].cNumValenceElectrons == 6 && !pVA[k].cMetal &&
-                             pStruct->endpoint && pStruct->endpoint[k] ||
-                             pStruct->fixed_H && pStruct->fixed_H[k] ) {
+                             pStruct->endpoint && pStruct->endpoint[k]) ||
+                             (pStruct->fixed_H && pStruct->fixed_H[k]) ) {
                             numOtherDoubleBondOAcceptors ++;  /* do not fix this minus edge */
                         } else
                         if ( (e=pVA[k].nCMinusGroupEdge-1) >= 0 && !pBNS->edge[e].flow &&
@@ -1680,8 +1681,8 @@ int MoveChargeToRemoveCenerpoints(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *p
                     if ( ret < 0 ) {
                         goto exit_function;
                     }
-                    if ( ret == 1 && (vPathEnd == v1m && vPathStart == v2m ||
-                                      vPathEnd == v2m && vPathStart == v1m) &&
+                    if ( ret == 1 && ((vPathEnd == v1m && vPathStart == v2m) ||
+                                      (vPathEnd == v2m && vPathStart == v1m)) &&
                                       nDeltaCharge == 0  /* (-) moving from one to another atom*/ ) {
                         ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                         (*pnNumRunBNS) ++;
@@ -1705,7 +1706,7 @@ int MoveChargeToRemoveCenerpoints(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *p
                 }
                 RemoveForbiddenEdgeMask( pBNS, &ChargeListAllExcept_DB_O, forbidden_edge_mask);
             } else
-            if ( !bPossiblyIgnore || !num_known_endpoints && !num_wrong_neigh && (num_acceptors_O + num_donors_O) >=3  ) {
+            if ( !bPossiblyIgnore || (!num_known_endpoints && !num_wrong_neigh && (num_acceptors_O + num_donors_O) >=3)  ) {
                 /* remove negative charges from the neighbors */
                 pBNS->vert[i].st_edge.cap += num_donors; /* enough to make all bonds to donors double */
                 pBNS->tot_st_cap          += num_donors;
@@ -1972,7 +1973,7 @@ int SaltBondsToCoordBonds(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
                         /* ie, pe - tautomeric atom edge; pv2 - endpoint vertex */
                         /* Note: pe, pv2, v1 are not used here; they are to show how to traverse t-group */
                         pv2 = pBNS->vert + (pe = pBNS->edge + (ie=pv1->iedge[k]))->neighbor1;
-                        if ( ret = AddToEdgeList( &AllChargeEdges, ie, num_edges ) ) {
+                        if ( (ret = AddToEdgeList( &AllChargeEdges, ie, num_edges )) ) {
                             goto exit_function;
                         }
                     }
@@ -2022,8 +2023,8 @@ int SaltBondsToCoordBonds(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
                     ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                           &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                    if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                      vPathEnd == v2 && vPathStart == v1) /*&& nDeltaCharge > 0*/ ) {
+                    if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                      (vPathEnd == v2 && vPathStart == v1)) /*&& nDeltaCharge > 0*/ ) {
                         /* (+)charge was just moved, no change in number of charges */
                         ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                         if ( ret > 0 ) {
@@ -2090,8 +2091,8 @@ int SaltBondsToCoordBonds(BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pStruct,
                     ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                           &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
                     cur_success = 0;
-                    if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                      vPathEnd == v2 && vPathStart == v1) /*&& nDeltaCharge == 1*/ ) {
+                    if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                      (vPathEnd == v2 && vPathStart == v1)) /*&& nDeltaCharge == 1*/ ) {
                         /* Added (+)charge to -N< => nDeltaCharge == 1 */
                         /* Flow change on pe (-)charge edge (atom B-O(-)) is not known to RunBnsTestOnce()) */
                         ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -2228,8 +2229,8 @@ int RunBnsRestore1( ICHICONST INPUT_PARMS *ip, STRUCT_DATA *sd, BN_STRUCT *pBNS,
         goto exit_function;
     }
 
-    if ( !at2 && !(at2 = (inp_ATOM *) inchi_malloc((num_at + num_deleted_H)*sizeof(at2[0]))) ||
-         !at3 && !(at3 = (inp_ATOM *) inchi_malloc((num_at + num_deleted_H)*sizeof(at3[0])))) {
+    if ( (!at2 && !(at2 = (inp_ATOM *) inchi_malloc((num_at + num_deleted_H)*sizeof(at2[0])))) ||
+         (!at3 && !(at3 = (inp_ATOM *) inchi_malloc((num_at + num_deleted_H)*sizeof(at3[0])))) ) {
         return RI_ERR_ALLOC;
     }
 

@@ -29,6 +29,7 @@
 #include <vector>
 #include <sstream>
 #include <cstring>
+#include <cstdlib>
 // reference: http://www.cmbi.ru.nl/molden/molden_format.html
 
 #include <openbabel/obconversion.h>
@@ -112,6 +113,10 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     std::vector< std::vector< vector3 > > Lx;
     std::vector<double> Frequencies, Intensities;
 
+    std::vector< std::vector< vector3 > > conformers; // multiple geometries
+    std::vector< std::vector< vector3 > > forces;
+    std::vector<double> energies;
+
     pmol->BeginModify();
     pmol->SetDimension( 3 );
     string lineBuffer;
@@ -138,6 +143,76 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
               atom->SetVector( x * factor, y * factor, z * factor );
             }
         } // "[Atoms]" || "[ATOMS]"
+        if ( lineBuffer.find( "[GEOMETRIES] (XYZ)" ) != string::npos ) {
+          while( getline( ifs, lineBuffer ) ) {
+              if( lineBuffer == "" ) continue;
+              if( lineBuffer.find( "[" ) != string::npos ) break;
+
+              // should give us a number of atoms (i.e., this is an XYZ-format file)
+              unsigned int natoms;
+              bool createAtoms = false;
+
+              if (sscanf(lineBuffer.c_str(), "%d", &natoms) == 0 || !natoms) {
+                obErrorLog.ThrowError(__FUNCTION__,
+                                      "Problems reading an XYZ geometry: The first line must contain the number of atoms.", obWarning);
+//                return(false);
+              }
+              if (pmol->NumAtoms() != 0 && pmol->NumAtoms() != natoms) {
+                obErrorLog.ThrowError(__FUNCTION__,
+                                      "Problems reading an XYZ geometry: The first line must contain the number of atoms.", obWarning);
+//                return(false);
+              } else if (pmol->NumAtoms() == 0) {
+                createAtoms = true;
+              }
+
+              // next line should be the energy
+              double energy;
+              getline( ifs, lineBuffer );
+              energy = atof(lineBuffer.c_str());
+              if (fabs(energy) < 1.0e-8 ) {
+                obErrorLog.ThrowError(__FUNCTION__,
+                                      "Problems reading an XYZ geometry: The second line should contain the energy.", obWarning);
+              }
+              energies.push_back(energy);
+
+              vector<vector3> coordinates;
+              vector<string> vs;
+              for (unsigned int a = 0; a < natoms; ++a) {
+                if (!getline(ifs, lineBuffer) )
+                  break;
+                tokenize(vs, lineBuffer);
+                if (vs.size() != 4)
+                  break;
+
+                double x, y, z;
+                x = atof(vs[1].c_str());
+                y = atof(vs[2].c_str());
+                z = atof(vs[3].c_str());
+                vector3 point(x, y, z);
+                coordinates.push_back(point);
+
+                if (createAtoms) {
+                  int atomicNum = etab.GetAtomicNum(vs[0].c_str());
+                  //set atomic number, or '0' if the atom type is not recognized
+                  if (atomicNum == 0) {
+                    // Sometimes people call this an XYZ file, but it's actually Unichem
+                    // i.e., the first column is the atomic number, not a symbol
+                    // so we'll try to convert this to an element number
+                    atomicNum = atoi(vs[0].c_str());
+                  }
+
+                  OBAtom* atom = pmol->NewAtom();
+                  if( !atom ) break;
+                  atom->SetAtomicNum( atomicNum );
+                  atom->SetVector( x, y, z );
+                } // end creating atoms
+
+              } // end reading this set of coords
+              conformers.push_back(coordinates);
+          } // end GEOM block
+
+        }
+
         if( lineBuffer.find( "[FREQ]" ) != string::npos ) {
           while( getline( ifs, lineBuffer ) )
             {
@@ -225,6 +300,25 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
       OBVibrationData* vd = new OBVibrationData;
       vd->SetData(Lx, Frequencies, Intensities);
       pmol->SetData(vd);
+    }
+
+    if (energies.size() > 0)
+      pmol->SetEnergies(energies);
+
+    if (conformers.size() > 0) {
+      for (unsigned int i = 0; i < conformers.size(); ++i) {
+        double *confCoord = new double [3*pmol->NumAtoms()];
+        vector<vector3> coordinates = conformers[i];
+        if (coordinates.size() != pmol->NumAtoms())
+          cerr << " Wrong number of coordinates! " << endl;
+        for (unsigned int a = 0; a < coordinates.size(); ++a) {
+          confCoord[3*a] = coordinates[a].x();
+          confCoord[3*a+1] = coordinates[a].y();
+          confCoord[3*a+2] = coordinates[a].z();
+        } // finished atoms
+        pmol->AddConformer(confCoord);
+      } // finished iteration through conformers
+      pmol->SetConformer(pmol->NumConformers());
     }
 
     if( !pConv->IsOption( "b", OBConversion::INOPTIONS ) ) pmol->ConnectTheDots();

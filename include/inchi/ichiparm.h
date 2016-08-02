@@ -736,7 +736,7 @@ int ReadCommandLineParms(int argc, const char *argv[], INPUT_PARMS *ip,
                             k ++;
                         }
                         t = strtod( pArg+k+1, (char**)&q ); /*  cast deliberately discards 'const' qualifier */
-                        if ( q > pArg+k+1 && errno == ERANGE || t < 0.0 || t*1000.0 > (double)ULONG_MAX) 
+                        if ( (q > pArg+k+1 && errno == ERANGE) || t < 0.0 || t*1000.0 > (double)ULONG_MAX)
                         {
                             ul = 0;
                         } 
@@ -1410,7 +1410,7 @@ int ReadCommandLineParms(int argc, const char *argv[], INPUT_PARMS *ip,
             char *sz;
             if ( argv[i] && argv[i][0] ) 
             {
-                if ( sz = (char*) inchi_malloc( (strlen(argv[i]) + 1)*sizeof(sz[0])) ) 
+                if ( (sz = (char*) inchi_malloc( (strlen(argv[i]) + 1)*sizeof(sz[0]))) )
                 {
                     strcpy( sz, argv[i] );
                 }
@@ -1500,7 +1500,7 @@ int ReadCommandLineParms(int argc, const char *argv[], INPUT_PARMS *ip,
             if ( !ip->path[i] || !ip->path[i][0] ) 
             {
                 len = strlen( p ) + strlen(szNameSuffix) + strlen( ext[i] );
-                if ( sz = (char*) inchi_malloc( (len+1)*sizeof(sz[0]) ) ) 
+                if ( (sz = (char*) inchi_malloc( (len+1)*sizeof(sz[0]) )) )
                 {
                     strcpy( sz, p );
                     strcat( sz, szNameSuffix );

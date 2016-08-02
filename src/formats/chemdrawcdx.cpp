@@ -299,7 +299,7 @@ bool ChemDrawBinaryXFormat::TopLevelParse
 
     else if(ok && tag==kCDXObj_Graphic)
     {
-      while(tag = cdxr.ReadNext())
+      while( (tag = cdxr.ReadNext()) )
       {
         stringstream& ss = cdxr.data();
         if(tag == kCDXProp_Arrow_Type)
@@ -323,7 +323,7 @@ bool ChemDrawBinaryXFormat::DoReaction(CDXReader& cdxr, OBReaction* pReact)
 {
   CDXTag tag;
   CDXObjectID id;
-  while(tag = cdxr.ReadNext())
+  while( (tag = cdxr.ReadNext()) )
   {
     if(tag ==	kCDXProp_ReactionStep_Reactants)
     {
@@ -457,7 +457,7 @@ bool ChemDrawBinaryXFormat::DoFragmentImpl(CDXReader& cdxr, OBMol* pmol,
       string aliastext;
 
       //Read all node properties
-      while(tag = cdxr.ReadNext())
+      while( (tag = cdxr.ReadNext()) )
       {
         switch(tag)
         {
@@ -550,7 +550,7 @@ bool ChemDrawBinaryXFormat::DoFragmentImpl(CDXReader& cdxr, OBMol* pmol,
       int order=1, bgnIdx, endIdx ;
       UINT16 stereo=0;
 
-      while(tag = cdxr.ReadNext())
+      while( (tag = cdxr.ReadNext()) )
       {
         switch(tag)
         {
@@ -613,7 +613,7 @@ string ChemDrawBinaryXFormat::DoText(CDXReader& cdxr)
 {
   CDXTag tag;
   string text;
-  while(tag=cdxr.ReadNext())
+  while( (tag=cdxr.ReadNext()) )
   {
     stringstream& ss = cdxr.data();
     switch(tag)
@@ -833,4 +833,3 @@ string CDXReader::TagName(map<CDXTag, string>& enummap, CDXTag tag)
 }
 
 } //namespace
-

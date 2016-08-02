@@ -248,7 +248,7 @@ int INChIToInchi_Input( INCHI_IOSTREAM *inp_molfile, inchi_Input *orig_at_data, 
                 orig_at_data->stereo0D     = stereo0D_new;      stereo0D_new      = NULL;
                 orig_at_data->num_stereo0D = num_inp_0D_new;    num_inp_0D_new    = 0;
             } else
-            if ( orig_at_data->atom = CreateInchi_Atom( nNumAtoms ) ) {
+            if ( (orig_at_data->atom = CreateInchi_Atom( nNumAtoms )) ) {
                 /*  switch at_new <--> orig_at_data->at; */
                 if ( orig_at_data->num_atoms ) {
                     memcpy( orig_at_data->atom, at_old, orig_at_data->num_atoms * sizeof(orig_at_data->atom[0]) );
@@ -266,7 +266,7 @@ int INChIToInchi_Input( INCHI_IOSTREAM *inp_molfile, inchi_Input *orig_at_data, 
                         num_inp_atoms_new * sizeof(orig_at_data->atom[0]) );
                 /*  copy newly read 0D stereo */
                 if ( num_inp_0D_new > 0 && stereo0D_new ) {
-                    if ( orig_at_data->stereo0D = CreateInchi_Stereo0D( nNumStereo0D ) ) {
+                    if ( (orig_at_data->stereo0D = CreateInchi_Stereo0D( nNumStereo0D )) ) {
                         memcpy( orig_at_data->stereo0D, stereo0D_old, orig_at_data->num_stereo0D * sizeof(orig_at_data->stereo0D[0]) );
                         /*  adjust numbering in the newly read structure */
                         for ( i = 0; i < num_inp_0D_new; i ++ ) {
@@ -344,4 +344,3 @@ int INChIToInchi_Input( INCHI_IOSTREAM *inp_molfile, inchi_Input *orig_at_data, 
     }
     return orig_at_data? orig_at_data->num_atoms : nNumAtoms;
 }
-
