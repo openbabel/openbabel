@@ -792,14 +792,14 @@ namespace OpenBabel
     return(count);
   }
 
-  unsigned int OBMol::NumRotors(bool sampleRingBonds)
+  unsigned int OBMol::NumRotors(bool includeRingBonds)
   {
     OBBond *bond;
     vector<OBBond*>::iterator i;
 
     unsigned int count = 0;
     for (bond = BeginBond(i);bond;bond = NextBond(i)) {
-      if (bond->IsRotor(sampleRingBonds))
+      if (bond->IsRotor(includeRingBonds))
         count++;
     }
     return(count);

@@ -253,10 +253,11 @@ namespace OpenBabel
       //! \return Is the bond a rotatable bond?
       /**  Currently, this function classifies any bond with at least one heavy
            atom, no sp-hybrid atoms (e.g., a triple bond somewhere) not in a ring
-           as a potential rotor. No other bond typing is attempted.
+           as a potential rotor if includeRingsBonds is false.  If true, rotors in
+           rings with more than 3 atoms may be included. No other bond typing is attempted.
            For more detailed rotor detection, check the OBRotorList and
            OBRotorRules classes **/
-      bool IsRotor(bool sampleRingBonds=false);
+      bool IsRotor(bool includeRingBonds=false);
       /** \return Is the bond an amide link (i.e., between a carbonyl C and a N)?
            No distinction is made between primary, secondary, and tertiary amides. **/
       bool IsAmide();
