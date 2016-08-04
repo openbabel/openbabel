@@ -99,15 +99,12 @@ namespace OpenBabel
     vector<pair<OBBond*,int> > vtmp;
     for (OBBond *bond = mol.BeginBond(i);bond;bond = mol.NextBond(i)) {
       // check if the bond is "rotatable"
-      if (bond->IsRotor()) {
+      if (bond->IsRotor(sampleRingBonds)) {
         // check if the bond is fixed (using deprecated fixed atoms or new fixed bonds)
         if ((HasFixedAtoms() || HasFixedBonds()) && IsFixedBond(bond))
           continue;
 
         if (bond->IsInRing()) {
-          if (!sampleRingBonds)
-            continue; // ignore it
-
           //otherwise mark that we have them and add it to the pile
           _ringRotors = true;
         }
@@ -308,7 +305,7 @@ namespace OpenBabel
                 a1 = mol.GetAtom(j);
                 for (a2 = a1->BeginNbrAtom(k);a2;a2 = a1->NextNbrAtom(k))
                   if (!eval[a2->GetIdx()])
-                    if (!((OBBond*)*k)->IsRotor()||((HasFixedAtoms()||HasFixedBonds())&&IsFixedBond((OBBond*)*k)))
+                    if (!((OBBond*)*k)->IsRotor(_ringRotors)||((HasFixedAtoms()||HasFixedBonds())&&IsFixedBond((OBBond*)*k)))
                       {
                         next.SetBitOn(a2->GetIdx());
                         eval.SetBitOn(a2->GetIdx());

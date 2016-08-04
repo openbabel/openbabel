@@ -174,7 +174,7 @@ namespace OpenBabel
     SetLength(atom2, length);
   }
 
-  bool OBBond::IsRotor()
+  bool OBBond::IsRotor(bool sampleRingBonds)
   {
     // This could be one hellish conditional, but let's break it down
     // .. the bond is a single bond
@@ -185,6 +185,8 @@ namespace OpenBabel
     // and if it's a ring, not sp2
     OBRing *ring = FindSmallestRing();
     if (ring != NULL) {
+      if(!sampleRingBonds)
+        return false;
       if (ring->Size() <= 3)
         return false;
       if (_bgn->GetHyb() == 2 || _end->GetHyb() == 2)

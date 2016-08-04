@@ -256,7 +256,7 @@ namespace OpenBabel
            as a potential rotor. No other bond typing is attempted.
            For more detailed rotor detection, check the OBRotorList and
            OBRotorRules classes **/
-      bool IsRotor();
+      bool IsRotor(bool sampleRingBonds=false);
       /** \return Is the bond an amide link (i.e., between a carbonyl C and a N)?
            No distinction is made between primary, secondary, and tertiary amides. **/
       bool IsAmide();

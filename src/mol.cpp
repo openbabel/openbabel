@@ -794,9 +794,15 @@ namespace OpenBabel
 
   unsigned int OBMol::NumRotors(bool sampleRingBonds)
   {
-    OBRotorList rl;
-    rl.FindRotors(*this, sampleRingBonds);
-    return rl.Size();
+    OBBond *bond;
+    vector<OBBond*>::iterator i;
+
+    unsigned int count = 0;
+    for (bond = BeginBond(i);bond;bond = NextBond(i)) {
+      if (bond->IsRotor(sampleRingBonds))
+        count++;
+    }
+    return(count);
   }
 
   //! Returns a pointer to the atom after a safety check
