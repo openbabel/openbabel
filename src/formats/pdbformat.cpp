@@ -734,10 +734,15 @@ namespace OpenBabel
     snprintf(buffer, BUFF_SIZE, "%4d    0 %4d    0\n",mol.NumAtoms(),mol.NumAtoms());
     ofs << buffer;
 
-    ofs << "END\n";
     if (model_num) {
       ofs << "ENDMDL" << endl;
+	  if (pConv->IsLast()) {
+	    ofs << "END\n";
+	  }
     }
+	else {
+	  ofs << "END\n";
+	}
 
     return(true);
   }
