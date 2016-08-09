@@ -120,33 +120,31 @@ bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConver
     obErrorLog.ThrowError(__FUNCTION__, "Cannot fill unit cell without a unit cell !" , obWarning);
     return false;
   }
-  
+
   OBUnitCell *pUC = (OBUnitCell*)pmol->GetData(OBGenericDataType::UnitCell);
   SpaceGroup spacegroup;
   const SpaceGroup* pSG;
   map<string,string>::const_iterator itr;
 
-  if(pOptions)
+  if(pOptions && pOptions->find("transformations") != pOptions->end())
   {
     itr = pOptions->find("transformations");
-    if(itr!=pOptions->end())
+    vector<string> vec;
+    tokenize(vec, itr->second.c_str());
+    for(vector<string>::iterator iter = vec.begin(); iter != vec.end(); ++ iter)
     {
-      vector<string> vec;
-      tokenize(vec, itr->second.c_str());
-      for(vector<string>::iterator iter = vec.begin(); iter != vec.end(); ++ iter)
-      {
-        if (iter == vec.begin()) // Warn user about converting only once
-          obErrorLog.ThrowError(__FUNCTION__, "Converting to P 1 cell using available symmetry transformations." , obWarning);
-        spacegroup.AddTransform(iter->c_str());
-      }
+      if (iter == vec.begin()) // Warn user about converting only once
+        obErrorLog.ThrowError(__FUNCTION__, "Converting to P 1 cell using available symmetry transformations." , obWarning);
+      spacegroup.AddTransform(iter->c_str());
     }
+
     pSG = &spacegroup;
   }
   else
   {
     pSG = pUC->GetSpaceGroup();
   }
-  
+
   if (pSG == NULL)
   {
     obErrorLog.ThrowError(__FUNCTION__, "Cannot fill unit cell without spacegroup information !" , obWarning);
