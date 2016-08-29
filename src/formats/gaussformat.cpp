@@ -391,6 +391,8 @@ namespace OpenBabel
             sprintf(valbuf,"%f", result[ii]);
             add_unique_pairdata_to_mol(mol, attr[ii], valbuf, 0);
         }
+	sprintf(valbuf, "%f", ezpe*eFactor);
+        add_unique_pairdata_to_mol(mol, "zpe", valbuf, 0);
         sprintf(valbuf, "%f", CV);
         add_unique_pairdata_to_mol(mol, "cv", valbuf, 0);
         sprintf(valbuf, "%f", CV+Rgas);
