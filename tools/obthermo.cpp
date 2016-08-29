@@ -146,6 +146,7 @@ int main(int argc,char **argv)
                                   Nrot,
                                   dBdT,
                                   &temperature,
+				  &ZPVE,
                                   &DeltaHf0,
                                   &DeltaHfT,
                                   &DeltaGfT,
