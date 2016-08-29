@@ -127,7 +127,7 @@ int main(int argc,char **argv)
   if ((conv.Read(&mol, &ifs)) && ! mol.Empty())
   {
       OBPointGroup obPG;
-      double temperature, DeltaHf0, DeltaHfT, DeltaGfT, DeltaSfT, S0T, CVT, CPT;
+      double temperature, DeltaHf0, DeltaHfT, DeltaGfT, DeltaSfT, S0T, CVT, CPT, ZPVE;
       std::vector<double> Scomponents;
       
       obPG.Setup(&mol);
@@ -146,6 +146,7 @@ int main(int argc,char **argv)
                                   Nrot,
                                   dBdT,
                                   &temperature,
+				  &ZPVE,
                                   &DeltaHf0,
                                   &DeltaHfT,
                                   &DeltaGfT,
