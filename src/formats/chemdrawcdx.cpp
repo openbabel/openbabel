@@ -698,7 +698,9 @@ puts("found name");
         {
           ifs->read(&tmp_charge, size);
           charge = int(tmp_charge);
-         
+#if __BYTE_ORDER == __BIG_ENDIAN
+          charge = charge >> 24;
+#endif
         }
       else
         return 0;
