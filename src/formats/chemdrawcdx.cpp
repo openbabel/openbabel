@@ -686,7 +686,8 @@ puts("found name");
 
   int getCharge(istream *ifs, UINT32 size)
   {
-    int charge;
+    int charge = 0;
+    char tmp_charge;
 
     if(size == 4)		// Bug in ChemDraw 8.0, see http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/properties/Atom_Charge.htm
       {
@@ -695,7 +696,8 @@ puts("found name");
     else
       if(size == 1)
         {
-          ifs->read((char *)&charge, size);
+          ifs->read(&tmp_charge, size);
+          charge = int(tmp_charge);
 #if __BYTE_ORDER == __BIG_ENDIAN
           charge = charge >> 24;
 #endif
