@@ -67,7 +67,11 @@ namespace OpenBabel
 
     virtual const char* Description() //required
     {
-      return "Jaguar input format\n \n";
+      return
+        "Jaguar input format\n"
+        "Read Options e.g. -as\n"
+        " s  Output single bonds only\n"
+        " b  Disable bonding entirely\n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -75,17 +79,18 @@ namespace OpenBabel
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
-    {return NOTREADABLE | WRITEONEONLY;};
+    virtual unsigned int Flags() {return WRITEONEONLY;};
 
-    ////////////////////////////////////////////////////
     /// The "API" interface functions
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
 
   };
 
   //Make an instance of the format class
   JaguarInputFormat theJaguarInputFormat;
+
+
 
   /////////////////////////////////////////////////////////////////
   bool JaguarOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
@@ -188,7 +193,6 @@ namespace OpenBabel
   }
 
   ////////////////////////////////////////////////////////////////
-
   bool JaguarInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
@@ -219,6 +223,64 @@ namespace OpenBabel
       }
 
     ofs << "&" << endl;
+    return(true);
+  }
+
+  /////////////////////////////////////////////////////////////////
+  bool JaguarInputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  {
+
+    OBMol* pmol = pOb->CastAndClear<OBMol>();
+    if(pmol==NULL) return false;
+
+    //Define some references so we can use the old parameter names
+    istream &ifs = *pConv->GetInStream();
+    OBMol &mol = *pmol;
+    const char* title = pConv->GetTitle();
+
+    char buffer[BUFF_SIZE];
+    string str,str1;
+    double x,y,z;
+    unsigned int i;
+    OBAtom *atom;
+    vector<string> vs;
+
+    mol.BeginModify();
+    mol.Clear();
+    while (ifs.getline(buffer,BUFF_SIZE))
+      {
+        if (strstr(buffer,"&zmat") != NULL)
+          {
+            ifs.getline(buffer,BUFF_SIZE);  //   AtomLabel, X, Y, Z
+            tokenize(vs,buffer);
+            while (vs.size() == 4)
+              {
+                atom = mol.NewAtom();
+                str = vs[0]; // Separate out the Symbol# into just Symbol ...
+                for (i = 0;i < str.size();i++)
+                  if (isdigit(str[i]))
+                    str[i] = '\0';
+
+                atom->SetAtomicNum(etab.GetAtomicNum(str.c_str()));
+                x = atof((char*)vs[1].c_str());
+                y = atof((char*)vs[2].c_str());
+                z = atof((char*)vs[3].c_str());
+                atom->SetVector(x,y,z);
+
+                if (!ifs.getline(buffer,BUFF_SIZE)) break;
+                tokenize(vs,buffer);
+              }
+          }
+      }
+
+    if (!pConv->IsOption("b",OBConversion::INOPTIONS))
+      mol.ConnectTheDots();
+    if (!pConv->IsOption("s",OBConversion::INOPTIONS)
+        && !pConv->IsOption("b",OBConversion::INOPTIONS))
+      mol.PerceiveBondOrders();
+
+    mol.EndModify();
+    mol.SetTitle(title);
     return(true);
   }
 
