@@ -59,7 +59,6 @@ namespace OpenBabel {
 				    int                Nrotbonds,
 				    double             dbdt,
 				    double            *temperature,
-				    double            *ZPVE,
 				    double            *DeltaHf0,
 				    double            *DeltaHfT,
 				    double            *DeltaGfT,
@@ -67,7 +66,8 @@ namespace OpenBabel {
 				    double            *S0T,
 				    double            *CVT,
 				    double            *CPT,
-				    std::vector<double> &Scomponents);
+				    std::vector<double> &Scomponents,
+				    double            *ZPVE);
 
 }
 
