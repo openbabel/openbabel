@@ -45,6 +45,9 @@ TRANSFORM [ND1:1]~[ND2:2]~[ND1:3]~* >> [N-:1]=[N+:2]=[N:3]-* 1E+10   # azide gro
 TRANSFORM [NH2:1]~[NH1:2]~[NH1:3]~* >> [N-:1]=[N+:2]=[N:3]-* 1E+10	# azide group
 TRANSFORM [NH1:1]~[ND2:2]~[NH1:3]~* >> [N-:1]=[N+:2]=[N:3]-* 1E+10	# azide group
 
+#nitro group (-NO2)
+TRANSFORM [O:1]=[N:2]-[O:3] >> [O:1]=[N+:2]-[O-:3]  1E+10
+
 #hydroxamic acid
 #TRANSFORM O=CN[OD1-0:1][#1:2] >> O=CN[O-:1]				8.0
 TRANSFORM O=CN[OD1-0:1]     >> O=CN[O-:1]				8.0
