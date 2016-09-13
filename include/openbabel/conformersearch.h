@@ -3,6 +3,7 @@ conformersearch.h - Conformer searching using genetic algorithm.
 
 Copyright (C) 2010 Tim Vandermeersch
 Some portions Copyright (C) 2012 Materials Design, Inc.
+Some portions Copyright (C) 2016 Torsten Sachse
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
@@ -336,6 +337,11 @@ namespace OpenBabel {
       }
 
       /**
+      * Set whether or not you want rotors to be printed prior to the conformer search.
+      */
+      void PrintRotors(bool printrotors) { m_printrotors = printrotors; }
+
+      /**
        * Perform conformer search using a genetic algorithm.
        */
       void Search();
@@ -452,6 +458,7 @@ namespace OpenBabel {
       OBMol         m_mol; //!< The molecule with starting coordinates
       OBRotorList   m_rotorList; //!< The OBRotorList for the molecule
       RotorKeys     m_rotorKeys; //!< The current population
+      bool          m_printrotors; //!< Wheter or not to print all rotors that are found instead of performing the conformer search
 
       OBConformerFilter *m_filter;
       OBConformerScore  *m_score;
