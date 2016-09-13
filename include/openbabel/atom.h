@@ -101,6 +101,7 @@ namespace OpenBabel
       OBResidue                    *_residue;   //!< parent residue (if applicable)
 
       unsigned long                 _id;        //!< unique id
+      unsigned int                  _ecp;       //!< number of electrons cored by ecp
 
       //! \return All flags
       int  GetFlag() const    {  return(_flags);  }
@@ -199,6 +200,8 @@ namespace OpenBabel
       void SetChiral()         { SetFlag(OB_CHIRAL_ATOM); }
       //! Clear the internal coordinate pointer
       void ClearCoordPtr()     { _c = NULL; _cidx=0; }
+      //! Sets the number of electrons cored by an ecp
+      void SetEcp(int ecp){_ecp = ecp;}
       //@}
 
       //! \name Methods to retrieve atomic information
@@ -296,6 +299,8 @@ namespace OpenBabel
       //! \deprecated Use any of the other iterator methods. This
       //!    method will be removed in the future.
       OBAtom    *GetNextAtom();
+      //! \return the number of electrons cored by an ecp
+      int       GetEcp(){return _ecp;}
       //@}
 
       //! \name Iterator methods

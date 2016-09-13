@@ -135,10 +135,13 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
               string atomName;
               int atomId;
               int atomicNumber;
+              int valenceCharge;
               double x, y, z;
-              is >> atomName >> atomId >> atomicNumber >> x >> y >> z;
+              is >> atomName >> atomId >> valenceCharge >> x >> y >> z;
               OBAtom* atom = pmol->NewAtom();
               if( !atom ) break;
+              atomicNumber = etab.GetAtomicNum(atomName.c_str());
+              atom->SetEcp( atomicNumber-valenceCharge );
               atom->SetAtomicNum( atomicNumber );
               atom->SetVector( x * factor, y * factor, z * factor );
             }
