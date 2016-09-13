@@ -5,6 +5,7 @@ mol.h - Handle molecules. Declarations of OBMol, OBAtom, OBBond, OBResidue.
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2006 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2003 by Michael Banck
+Some portions Copyright (C) 2016 by Torsten Sachse
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
@@ -212,6 +213,56 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! Add the specified residue to this molecule and update connections
     //! \return Whether the method was successful
     bool AddResidue(OBResidue&);
+
+    //! Rotate a molecule using only doubles
+    void Rotate(const double axis[3], const double angle);
+    //! Rotate using a vector3 object as axis
+    void Rotate(const vector3 axis, const double angle);
+    //! Rotate only the atoms in the given vector
+    void Rotate(std::vector<OBAtom*> &atom_vec, const matrix3x3 m);
+    //! Rotate a molecule around one of its main axes
+    void Rotate(const int main_axis_nr, const double angle);
+    //! Torate only the atoms in the given vector around their main axis
+    void Rotate(std::vector<OBAtom*> &atom_vec, const int main_axis_nr, const double angle);
+    //! Translate a molecule using only doubles
+    void Translate(const double vector[3]);
+    //! Translate only the atoms in the given vector
+    void Translate(std::vector<OBAtom*> &atom_vec, const double vector[3]);
+    //! Align a molecule with a plane as good as possible
+    //! The plane is given by the poitn p which will be the molecule's new centre
+    //! and two axes v1 and v2 which are the third main axis and the second main axis respectively
+    void Align(const double p[3], const double v1[3], const double v2[3]);
+    void Align(const vector3 p, const vector3 v1, const vector3 v2);
+    //! Align only the atoms in the given vector with their main axes
+    void Align(std::vector<OBAtom*> &atom_vec, const vector3 p, const vector3 v1, const vector3 v2);
+    //! Set the dihedral angle defined by the four atom indices to angle
+    //! A cis-configurations corresponds to angle=0 whereas a trans configuration corresponds to angle=180
+    bool SetDihedralAngle(const double idxa1, const double idxa2, const double idxa3, const double idxa4, const double angle);
+    double GetDihedralAngle(const double idxa1, const double idxa2, const double idxa3, const double idxa4);
+    //! Set the angle defined by three atoms to angle
+    //! Atom 1 will be kept fixed in its position
+    bool SetAngle(const double idxa1, const double idxa2, const double idxa3, const double angle);
+    double GetAngle(const double idxa1, const double idxa2, const double idxa3);
+    //! Parts the molecule using a plane in Hessian normal form
+    //! WARNING: bonds will not be copied over
+    void PartMolecule(OBMol &dest, const double direction[3], const double point[3]);
+    //! Mirrors the molecule at a point (inversion, if normal=(0,0,0)) or plane in Hessian normal form
+    void Mirror(const double normal[3], const double point[3], bool center_it=false);
+    void Mirror(const vector3 normal, const vector3 point, bool center_it=false);
+    //! Mirror only the atoms in the given vector
+    void Mirror(std::vector<OBAtom*> &atom_vec, const vector3 normal, const vector3 point, bool center_it=false);
+    //! Bonds another molecule to this one using the provided atom indices.
+    //! The indices i1 and i2 are for the current molecule (i.e., this) and m1 and m2 for the to-be-connected one.
+    //! Everything connected to the atoms indexed by i2 and m2 will be cut off. The atoms indexed by i1 and m1
+    //! will be part of the new molecule, the atoms indexed by i2 and m2 will not.
+    //! This automatically rotated 'mol' so that the bonds i1-i2 and m1-m2 are parallel to each other.
+    bool BondMolecule(OBMol &mol, int i1, int i2, int m1, int m2);
+    //! Cleave off part of a molecule that is connected to the atom indexed by i2 but leaving present
+    //! everything that is connected to the atom indexed by i1.
+    bool CleaveOff(int i1, int i2);
+    //! Append the atoms and bonds stored in one molecule to another. This does not automatically bond
+    //! those two bits together and does not allow for modifications of the to-be-appended molecule.
+    void AppendMolecule(OBMol &mol);
 
     //! Create a new OBAtom in this molecule and ensure connections
     //! (e.g. OBAtom::GetParent(). A new unique id will be assigned
@@ -637,7 +688,9 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! Set the entire set of conformers for this molecule to @p v
     void    SetConformers(std::vector<double*> &v);
     //! Add a new set of coordinates @p f as a new conformer
-    void    AddConformer(double *f)    {  _vconf.push_back(f);    }
+    //OLD VERSION: void    AddConformer(double *f)    {  _vconf.push_back(f);    }
+    //! You can also force to deep-copy the data
+    void    AddConformer(double *f, bool deepcopy=false);
     //! Set the molecule's current conformer to @p i
     //! Does nothing if @p i is less than 0 or i is larger than NumConformers()
     void    SetConformer(int i);
@@ -646,6 +699,8 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     void    CopyConformer(double* c,int nconf);
     //! Delete the conformer @p nconf
     void    DeleteConformer(int nconf);
+    //! Delete all conformers in molecule
+    void    DeleteConformers(int start_idx, int end_idx);
     //! \return the coordinates to conformer @p i
     double  *GetConformer(int i)       {  return(_vconf[i]);      }
     //! Set the entire set of conformer energies
