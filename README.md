@@ -1,4 +1,4 @@
-Open Babel README version 2.3.0
+Open Babel README version 2.4.0
 -------------------------------
 
 Open Babel is a chemical toolbox designed to speak the many languages
