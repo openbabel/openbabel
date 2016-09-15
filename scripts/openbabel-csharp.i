@@ -108,7 +108,7 @@
 		else if(index == 2)
 			return z();
 		else
-			throw new IndexOutOfRangeException("Largest allowable index is 2");		
+			throw new System.IndexOutOfRangeException("Largest allowable index is 2");		
 		}
 	}
 	
@@ -151,7 +151,7 @@
       System.Reflection.MethodInfo castMethod = typeof(OBGenericData).GetMethod(castMethodName, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
       
       if(castMethod == null)
-        throw new InvalidCastException("No explicit downcast is defined for " + derivedType);
+        throw new System.InvalidCastException("No explicit downcast is defined for " + derivedType);
       
       return (DType)castMethod.Invoke(this,null);
    }
@@ -163,7 +163,7 @@
 %{
   public override DType Downcast<DType>()
   {
-      throw new NotImplementedException("Downcast<DTYPE> is not implemented in " + "CSCLASS");
+      throw new System.NotImplementedException("Downcast<DTYPE> is not implemented in " + "CSCLASS");
    }
 %}
 %enddef
@@ -215,9 +215,9 @@ DISABLE_DOWNCAST(OBVirtualBond);
 %typemap(cstype) TYPE * "NAME"
 %typemap(csout, excode=SWIGEXCODE) TYPE * 
 {
-	IntPtr cPtr = $imcall;$excode
+	System.IntPtr cPtr = $imcall;$excode
 	$csclassname ret = null;
-	if (cPtr != IntPtr.Zero)
+	if (cPtr != System.IntPtr.Zero)
 	{
         ret = new $csclassname(cPtr,true);
 	}
@@ -236,7 +236,7 @@ set
 %typemap(csvarout, excode=SWIGEXCODE2) TYPE * %{
 get
 {
-    IntPtr cPtr = $imcall;$excode;
+    System.IntPtr cPtr = $imcall;$excode;
     $csclassname tmp = new $csclassname(cPtr,true);$excode
     return NAME.frompointer(tmp);
 } %}
@@ -731,7 +731,7 @@ using System.Runtime.InteropServices;
 %warnfilter(516) OpenBabel::SpaceGroup; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/math/spacegroup.h>
 
-# CloneData should be used instead of the following method
+// CloneData should be used instead of the following method
 %ignore OpenBabel::OBBase::SetData;
 %warnfilter(516) OpenBabel::OBBase; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/base.h>
@@ -839,6 +839,7 @@ namespace std { class stringbuf {}; }
 %include <openbabel/format.h>
 %ignore OpenBabel::OBConversion::FindFormat(const char *);
 %ignore OpenBabel::OBConversion::FormatFromExt(const char *);
+%ignore OpenBabel::OBConversion::FormatFromExt(const char *, bool &);
 %include <openbabel/obconversion.h>
 %include <openbabel/residue.h>
 %include <openbabel/internalcoord.h>
@@ -858,7 +859,7 @@ namespace std { class stringbuf {}; }
 %include <openbabel/fingerprint.h>
 %include <openbabel/descriptor.h>
 
-# Ignore shadowed methods
+// Ignore shadowed methods
 %ignore OpenBabel::OBForceField::VectorSubtract(const double *const, const double *const, double *);
 %ignore OpenBabel::OBForceField::VectorMultiply(const double *const, const double, double *);
 %warnfilter(516) OpenBabel::OBForceField; // Ignoring std::string methods in favour of char* ones
@@ -882,13 +883,13 @@ namespace std { class stringbuf {}; }
 //SWIG_SHARED_PTR_TYPEMAPS(OBMolSharedPtr, ,OpenBabel::OBMol)
 //%include <openbabel/reaction.h>
 
-# The following %ignores avoid warning messages due to shadowed classes.
-# This does not imply a loss of functionality as (in this case)
-# the shadowed class is identical (from the point of view of SWIG) to
-# the shadowing class.
-# This is because C++ references (&) are transformed by SWIG back into
-# pointers, so that OBAtomIter(OBMol &) would be treated the same as
-# OBAtomIter(OBMol *).
+// The following %ignores avoid warning messages due to shadowed classes.
+// This does not imply a loss of functionality as (in this case)
+// the shadowed class is identical (from the point of view of SWIG) to
+// the shadowing class.
+// This is because C++ references (&) are transformed by SWIG back into
+// pointers, so that OBAtomIter(OBMol &) would be treated the same as
+// OBAtomIter(OBMol *).
 
 %ignore OBAtomAtomIter(OBAtom &);
 %ignore OBAtomBondIter(OBAtom &);

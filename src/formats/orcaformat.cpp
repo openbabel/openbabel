@@ -41,7 +41,7 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Orca output format\n"
+        "ORCA output format\n"
         "Read Options e.g. -as\n"
         " s  Output single bonds only\n"
         " b  Disable bonding entirely\n\n";
@@ -79,7 +79,7 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Orca input format\n"
+        "ORCA input format\n"
         "This can be used as a template file for orca calculations\n";
     }
 
@@ -672,7 +672,7 @@ namespace OpenBabel
   {
     string pattern ("[0-9]-");
     std::tr1::regex myregex;
-    std::smatch pm;
+    std::tr1::smatch pm;
     try {
       myregex.assign(pattern,
                      std::tr1::regex_constants::extended);
@@ -681,7 +681,7 @@ namespace OpenBabel
         return (checkBuffer); // do nothing
       //iok = false;
     }
-    while (std::regex_search (checkBuffer,pm,myregex)) {
+    while (std::tr1::regex_search (checkBuffer,pm,myregex)) {
         checkBuffer.insert(pm.position(0)+1, " ");
     }
     return (checkBuffer);

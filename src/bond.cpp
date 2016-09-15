@@ -174,25 +174,34 @@ namespace OpenBabel
     SetLength(atom2, length);
   }
 
-  bool OBBond::IsRotor()
+  bool OBBond::IsRotor(bool includeRingBonds)
   {
     // This could be one hellish conditional, but let's break it down
     // .. the bond is a single bond
-    bool rotatable = (_order == 1);
+    if (_order != 1)
+      return false;
 
-    // not in a ring, or a large ring
+    // not in a ring, or in a large ring
     // and if it's a ring, not sp2
     OBRing *ring = FindSmallestRing();
-    rotatable = rotatable && ((ring == NULL || ring->Size() > 3)
-                              && (_bgn->GetHyb() != 2 && _end->GetHyb() != 2));
+    if (ring != NULL) {
+      if(!includeRingBonds)
+        return false;
+      if (ring->Size() <= 3)
+        return false;
+      if (_bgn->GetHyb() == 2 || _end->GetHyb() == 2)
+        return false;
+    }
+
     // atoms are not sp hybrids
-    rotatable = rotatable && (_bgn->GetHyb() != 1 && _end->GetHyb() != 1);
+    if (_bgn->GetHyb() == 1 || _end->GetHyb() == 1)
+      return false;
+
     // not just an -OH or -NH2, etc.
     // maybe we want to add this as an option
     //    rotatable = rotatable && ((_bgn->IsHeteroatom() || _bgn->GetHvyValence() > 1)
     //                               && (_end->IsHeteroatom() || _end->GetHvyValence() > 1) );
-    rotatable = rotatable && (_bgn->GetHvyValence() > 1 && _end->GetHvyValence() > 1);
-    return rotatable;
+    return (_bgn->GetHvyValence() > 1 && _end->GetHvyValence() > 1);
   }
 
    bool OBBond::IsAmide()
@@ -326,38 +335,6 @@ namespace OpenBabel
          if (bond->IsCarbonyl()) return(true);
       }
 
-      return(false);
-   }
-
-   bool OBBond::IsAmidine()
-   {
-      OBAtom *c,*n;
-      c = n = NULL;
-
-      // Look for C-N bond
-      if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 7)
-      {
-         c = (OBAtom*)_bgn;
-         n = (OBAtom*)_end;
-      }
-      if (_bgn->GetAtomicNum() == 7 && _end->GetAtomicNum() == 6)
-      {
-         c = (OBAtom*)_end;
-         n = (OBAtom*)_bgn;
-      }
-      if (!c || !n) return(false);
-      if (GetBondOrder() != 1) return(false);
-      if (n->GetImplicitValence() != 3) return(false);
-
-      // Make sure C is attached to =N
-      OBBond *bond;
-      vector<OBBond*>::iterator i;
-      for (bond = c->BeginBond(i); bond; bond = c->NextBond(i))
-      {
-         if (bond->IsImide()) return(true);
-      }
-
-      // Return
       return(false);
    }
 
@@ -496,18 +473,6 @@ namespace OpenBabel
 
     if ((_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 8) ||
         (_bgn->GetAtomicNum() == 8 && _end->GetAtomicNum() == 6))
-      return(true);
-
-    return(false);
-  }
-
-  bool OBBond::IsImide()
-  {
-    if (GetBO() != 2)
-      return(false);
-
-    if ((_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 7) ||
-        (_bgn->GetAtomicNum() == 7 && _end->GetAtomicNum() == 6))
       return(true);
 
     return(false);

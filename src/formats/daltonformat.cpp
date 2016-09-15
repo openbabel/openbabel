@@ -37,7 +37,7 @@ namespace OpenBabel
     virtual const char* Description()
     {
       return
-        "DALTON Output\n"
+        "DALTON output format\n"
         "Read Options e.g. -as\n"
         "  s  Output single bonds only\n"
         "  b  Disable bonding entirely\n";
@@ -81,14 +81,16 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "DALTON Input File Format\n"
+        "DALTON input format\n"
+        "Read Options e.g. -as\n"
+        "  s  Output single bonds only\n"
+        "  b  Disable bonding entirely\n\n"
+
         "Write Options e.g. -xa\n"
         "  a                write input in atomic units instead of Angstrom\n"
         "  b                write input using the ATOMBASIS format\n"
-        "  k                specify basis set to use in .mol file, i.e. -xk STO-3G\n\n"
-        "Read Options e.g. -as\n"
-        "  s  Output single bonds only\n"
-        "  b  Disable bonding entirely\n";
+        "  k <basis>        specify basis set to use\n"
+        "                     e.g. ``-xk STO-3G``\n\n";
     };
 
     virtual const char* SpecificationURL()

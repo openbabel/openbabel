@@ -1056,6 +1056,10 @@ namespace OpenBabel
     // Check return value from OpenDatafile
     // Suggestion from Zhiguo Liu
     string fn_open = OpenDatafile(ifs, _filename, _envvar);
+    
+    // Check _subdir directory
+    if (fn_open == "")
+      string fn_open = OpenDatafile(ifs, _filename, _subdir);
 
     if (fn_open != "" && (ifs))
       {

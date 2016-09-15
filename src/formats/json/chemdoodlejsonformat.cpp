@@ -39,8 +39,7 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
     {
       return
       "ChemDoodle JSON\n"
-      "ChemDoodle JSON format is the native way to present data to \n"
-      "the ChemDoodle Web Components.\n\n"
+      "The native way to present data to the ChemDoodle Web Components\n\n"
       
       "Read Options, e.g. -ac\n"
       " c<num>  coordinate multiplier (default: 20)\n\n"

@@ -279,8 +279,8 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     unsigned int NumHvyAtoms();
     //! \return the number of residues (i.e. OBResidue substituents)
     unsigned int NumResidues() const      { return(static_cast<unsigned int> (_residue.size())); }
-    //! \return the number of rotatable bonds. See OBBond::IsRotor() for details
-    unsigned int NumRotors();
+    //! \return the number of rotatable bonds. If sampleRingBonds is true, will include rotors within rings (see OBBond::IsRotor() for details)
+    unsigned int NumRotors(bool sampleRingBonds=false);
 
     //! \return the atom at index @p idx or NULL if it does not exist.
     //! \warning Atom indexing will change. Use iterator methods instead.
