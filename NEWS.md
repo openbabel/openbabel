@@ -1,12 +1,11 @@
-Open Babel 2.4.0 (2016-9-21)
+# Open Babel 2.4.0 (2016-9-21)
 
 This release represents a major update and should be a stable upgrade,
 strongly recommended for all users.
 
-Note that this release deprecates the babel executable in favor of obabel. A future release will remove babel entirely. For information on the differences, please see http://openbabel.org/docs/current/Command-line_tools/babel.html.
+Note that this release deprecates the babel executable in favor of obabel. A future release will remove babel entirely. For information on the differences, please see [the documentation](http://openbabel.org/docs/current/Command-line_tools/babel.html).
 
-New file formats
-~~~~~~~~~~~~~~~~
+## New file formats
 
 * DALTON output files (read only) and DALTON input files (read/write) (Casper Steinmann)
 * JSON format used by ChemDoodle (read/write) (Matt Swain)
@@ -22,8 +21,7 @@ New file formats
 * Turbomole AOFORCE output (read only) (Mathias Laurin)
 * A representation of the VDW surface as a point cloud (write only) (Matt Harvey)
 
-New file format capabilities and options
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## New file format capabilities and options
 
 * AutoDock PDBQT: Options to preserve hydrogens and/or atom names (Matt Harvey)
 * CAR: Improved space group support in .car files (kartlee)
@@ -53,8 +51,7 @@ New file format capabilities and options
 * VASP: Vibration intensities are calculated (Christian Neiss, Mathias Laurin)
 * VASP: Custom atom element sorting on writing (Kirill Okhotnikov)
 
-Other new features and improvements
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Other new features and improvements
 
 * 2D layout: Improved the choice of which bonds to designate as hash/wedge bonds around a stereo center (Craig James)
 * 3D builder: Use bond length corrections based on bond order from Pyykko and Atsumi (http://dx.doi.org/10.1002/chem.200901472) (Geoff Hutchison)
@@ -81,8 +78,7 @@ Other new features and improvements
 * SMARTS matching: The "-s" option now accepts an integer specifying the number of matches required (Chris Morley)
 * UFF: Update to use traditional Rappe angle potential (Geoff Hutchison)
 
-Language bindings
-~~~~~~~~~~~~~~~~~
+## Language bindings
 
 * Bindings: Support compiling only the bindings against system libopenbabel (Reinis Danne)
 * Java bindings: Add example Scala program using the Java bindings (Reinis Danne)
@@ -93,11 +89,14 @@ Language bindings
 * Python bindings, Pybel: compress output if filename ends with .gz (Maciej Wójcikowski)
 * Python bindings, Pybel: Residue support (Maciej Wójcikowski)
 
-Development/Build/Install Improvements
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Development/Build/Install Improvements
 
 * Version control: move to git and GitHub from subversion and SourceForge
 * Continuous integration: Travis for Linux builds and Appveyor for Windows builds (David Lonie and Noel O'Boyle)
 * Python installer: Improvements to the Python setup.py installer and "pip install openbabel" (David Hall, Matt Swain, Joshua Swamidass)
 * Compilation speedup: Speed up compilation by combining the tests (Noel O'Boyle)
 * MacOSX: Support compiling with libc++ on MacOSX (Matt Swain)
+
+## Cast of contributors
+
+Alexandr Fonari, Anders Steen Christensen, Andreas Kempe, arkose, Benoit Leblanc, Björn Grüning, Casper Steinmann, Chris Morley, Christoph Willing, Craig James, Dagmar Lenk, David Hall, David Koes, David Lonie, David van der Spoel, Dmitriy Fomichev, Fulvio Ciriaco, Fredrik Wallner, Geoff Hutchison, Heiko Becker, Itay Zandbank, Jean-Noel Avila, Jeff Janes, Joaquin Peralta, Joshua Swamidass, Julien Nabet, Karol Langner, Karthik Rajagopalan, Katsuhiko Nishimra, Kevin Horan, Kirill Okhotnikov, Lee-Ping, Matt Harvey, Maciej Wójcikowski, Marcus Hanwell, Mathias Laurin, Matt Swain, Mohamad Mohebifar, Mohammad Ghahremanpour, Noel O'Boyle, Patrick Avery, Patrick Fuller, Paul van Maaren, Peng Bai, Philipp Thiel, Reinis Danne, Ronald Cohen, Scott McKechnie, Stefano Forli, Steve Roughley, Steffen Moeller, Tim Vandermeersch, Tomas Racek, Tomáš Trnka, Tor Colvin, Torsten Sachse, Yi-Shu Tu, Zhixiong Zhao
