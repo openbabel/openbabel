@@ -217,6 +217,11 @@ namespace OpenBabel
                             ((OBAtom*)_vatom[d-1])->GetVector()));
   }
 
+  //! \brief Set a torsion angle (i.e., dihedral angle).
+  //!
+  //! Set the dihedral angle around the bond between atoms 2 and 3 to angle in radians.
+  //! The direction is defined by atoms 1 and 4. A dihedral angle of 0 means a
+  //! cis-configuration whereas PI means a trans configuration.
   void OBMol::SetTorsion(OBAtom *a,OBAtom *b,OBAtom *c, OBAtom *d, double ang)
   {
     vector<int> tor;
@@ -2247,83 +2252,26 @@ namespace OpenBabel
 
   //! \brief Set a dihedral angle.
   //!
-  //! Rotate around the bond between atoms 2 and 3 by angle.
+  //! Set the dihedral angle around the bond between atoms 2 and 3 to angle.
   //! The direction is defined by atoms 1 and 4. A dihedral angle of 0 means a
   //! cis-configuration whereas 180 means a trans configuration.
   bool OBMol::SetDihedralAngle(const double idxa1, const double idxa2, const double idxa3, const double idxa4, const double angle)
   {
-    vector<int> children;
-    vector3 tempvec, translation, v1, v2, v3, n1, n2;
-    matrix3x3 m;
     OBBond *bond;
-    OBAtom *a1, *a2, *a3, *a4, *atom;
-    vector<int>::iterator i;
-    double currentangle;
+    OBAtom *a1, *a2, *a3, *a4;
 
     a1=GetAtom(idxa1);
     a2=GetAtom(idxa2);
     a3=GetAtom(idxa3);
     a4=GetAtom(idxa4);
-    v1=a2->GetVector()-a1->GetVector();
-    v2=a3->GetVector()-a2->GetVector();
-    v3=a4->GetVector()-a3->GetVector();
 
     bond=a2->GetBond(a3);
 
     if (bond == NULL){cerr << "Warning: atoms " << idxa2 << " and " << idxa3 << " form no bond.\n";};
     if (not(bond->IsRotor())){cerr << "Warning: bond between atoms " << idxa2 << " and " << idxa3 << " is no rotor.\n";};
 
-    n1=cross(v2,v1);
-    n2=cross(v2,v3);
-    currentangle=vectorAngle(n1,n2);
-
-    //find which atoms to rotate
-    FindChildren(children,a2->GetIdx(),a3->GetIdx());
-    children.push_back(a3->GetIdx());
-
-    translation=a3->GetVector();
-
-    m.RotAboutAxisByAngle(v2,-angle+currentangle-180);
-
-    BeginModify();
-    //rotate atoms
-    for (i = children.begin();i != children.end();++i)
-    {
-      atom = GetAtom(*i);
-      tempvec = atom->GetVector();
-      tempvec-=translation;
-      tempvec *= m;   //rotate the point
-      tempvec+=translation;
-      atom->SetVector(tempvec);
-    }
-    EndModify();
+    SetTorsion(a1, a2, a3, a4, angle*DEG_TO_RAD);
     return true;
-  }
-
-  //! \brief Get a dihedral angle.
-  //!
-  //! Rotate around the bond between atoms 2 and 3 by angle.
-  //! The direction is defined by atoms 1 and 4. A dihedral angle of 0 means a
-  //! cis-configuration whereas 180 means a trans configuration.
-  double OBMol::GetDihedralAngle(const double idxa1, const double idxa2, const double idxa3, const double idxa4)
-  {
-    vector3 v1, v2, v3, n1, n2;
-    OBAtom *a1, *a2, *a3, *a4;
-    double currentangle;
-
-    a1=GetAtom(idxa1);
-    a2=GetAtom(idxa2);
-    a3=GetAtom(idxa3);
-    a4=GetAtom(idxa4);
-    v1=a2->GetVector()-a1->GetVector();
-    v2=a3->GetVector()-a2->GetVector();
-    v3=a4->GetVector()-a3->GetVector();
-
-    n1=cross(v2,v1);
-    n2=cross(v2,v3);
-    currentangle=vectorAngle(n1,n2);
-
-    return -currentangle+180;
   }
 
   //! \brief Set an angle.

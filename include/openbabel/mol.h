@@ -238,7 +238,6 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! Set the dihedral angle defined by the four atom indices to angle
     //! A cis-configurations corresponds to angle=0 whereas a trans configuration corresponds to angle=180
     bool SetDihedralAngle(const double idxa1, const double idxa2, const double idxa3, const double idxa4, const double angle);
-    double GetDihedralAngle(const double idxa1, const double idxa2, const double idxa3, const double idxa4);
     //! Set the angle defined by three atoms to angle
     //! Atom 1 will be kept fixed in its position
     bool SetAngle(const double idxa1, const double idxa2, const double idxa3, const double angle);
