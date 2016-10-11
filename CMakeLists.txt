@@ -415,18 +415,15 @@ if(UNIX AND BUILD_SHARED)
   endif()
 endif()
 
-# this is adapted from KDE's FindKDE4Internal.cmake : default the build type to
-# "release with debug info".
-#
-# We will define two other build types: Debug and Release.
-# These names are case-insensitive i.e. you can do -DCMAKE_BUILD_TYPE=debug
+# Three build types are available: Release, Debug, RelWithDebInfo.
+# We default to Release.
 if(NOT CMAKE_BUILD_TYPE)
-   set(CMAKE_BUILD_TYPE RelWithDebInfo)
+   set(CMAKE_BUILD_TYPE Release)
 endif()
 
 #define various build types
 if(CMAKE_COMPILER_IS_GNUCXX)
-  set (CMAKE_CXX_FLAGS_RELEASE        "${CMAKE_CXX_FLAGS_RELEASE} -O2 -DNDEBUG")
+  set (CMAKE_CXX_FLAGS_RELEASE        "${CMAKE_CXX_FLAGS_RELEASE} -O3 -DNDEBUG")
   set (CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -O2 -g")
   set (CMAKE_CXX_FLAGS_DEBUG          "${CMAKE_CXX_FLAGS_DEBUG} -D_GLIBCXX_DEBUG -g3 -fno-inline")
 endif()
