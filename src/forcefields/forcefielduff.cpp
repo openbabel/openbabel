@@ -1106,7 +1106,7 @@ namespace OpenBabel {
 
 			// Equation 13 from paper -- corrected by Towhee
 			// Note that 1/(rij * rjk) cancels with rij*rjk in eqn. 13
-			anglecalc.ka = (644.12 * KCAL_TO_KJ) * (anglecalc.zi * anglecalc.zk / (pow(rac, 5.0)));
+			anglecalc.ka = (664.12 * KCAL_TO_KJ) * (anglecalc.zi * anglecalc.zk / (pow(rac, 5.0)));
 			anglecalc.ka *= (3.0*rab*rbc*(1.0 - anglecalc.cosT0*anglecalc.cosT0) - rac*rac*anglecalc.cosT0);
       // Make sure to divide by n^2 to save CPU cycles
       switch (anglecalc.coord) {
