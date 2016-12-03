@@ -1014,6 +1014,24 @@ namespace OpenBabel
     const vector3 end = endAtom->GetVector();
     const vector3 vb = (end - begin).normalize();
 
+    // calculate the expected opacity and width
+    // to simulate perspective
+
+    penWidth = 3.0;
+    bondColor.alpha = 1.0;
+
+    if (fabs(zScale) > 1.0e-1) {
+      double beginAtomScale = (beginAtom->GetZ() - zMin) / zScale;
+      double endAtomScale = (endAtom->GetZ() - zMin) / zScale;
+      double averageScale = (beginAtomScale + endAtomScale)/2.0;
+      if (averageScale < 0.15)
+        averageScale = 0.15;
+
+      penWidth = 3.0 * averageScale;
+      bondColor.alpha = averageScale;
+    }
+    painter->SetPenWidth(penWidth)
+
     if (order == 1) {
       painter->DrawLine(begin.x(), begin.y(), end.x(), end.y());
     } else if (order == 2) {
@@ -1160,8 +1178,11 @@ OBBitVec& drawnBonds)
   void OBDepictPrivateBallAndStick::DrawAtom(OBAtom *atom)
   {
     OBColor atomColor = etab.GetRGB(atom->GetAtomicNum());
-    // TODO: enable opacity as an option
     double opacity = 1.0;
+    if (fabs(zScale) > 1.0e-1)
+      opacity = (atom->GetZ() - zMin) / zScale;
+    if (opacity < 0.2)
+      opacity = 0.2;
 
     painter->SetFillRadial(OBColor("white"),atomColor);
     painter->DrawBall(atom->GetVector().x(), atom->GetVector().y(),GetAtomRadius(atom), opacity);
@@ -1176,7 +1197,7 @@ OBBitVec& drawnBonds)
     if (perspective < 0.5)
       perspective = 0.5;
 
-    return perspective * radius * bondLength / 3.0;
+    return perspective * radius * bondLength / 2.0;
   }
 
   void OBDepictPrivateBallAndStick::DrawAtomLabel(const std::string &label, int alignment, const vector3 &pos)
