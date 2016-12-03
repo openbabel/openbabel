@@ -1016,7 +1016,6 @@ namespace OpenBabel
 
     // calculate the expected opacity and width
     // to simulate perspective
-
     penWidth = 3.0;
     bondColor.alpha = 1.0;
 
@@ -1030,7 +1029,7 @@ namespace OpenBabel
       penWidth = 3.0 * averageScale;
       bondColor.alpha = averageScale;
     }
-    painter->SetPenWidth(penWidth)
+    painter->SetPenWidth(penWidth);
 
     if (order == 1) {
       painter->DrawLine(begin.x(), begin.y(), end.x(), end.y());
@@ -1138,12 +1137,29 @@ OBBitVec& drawnBonds)
 
       OBBond *ringBond = mol->GetBond(begin, end);
 
+      // calculate the expected opacity and width
+      // to simulate perspective
+      penWidth = 3.0;
+      bondColor.alpha = 1.0;
+
+      if (fabs(zScale) > 1.0e-1) {
+        double beginAtomScale = (begin->GetZ() - zMin) / zScale;
+        double endAtomScale = (end->GetZ() - zMin) / zScale;
+        double averageScale = (beginAtomScale + endAtomScale)/2.0;
+        if (averageScale < 0.15)
+          averageScale = 0.15;
+
+        penWidth = 3.0 * averageScale;
+        bondColor.alpha = averageScale;
+      }
+      painter->SetPenWidth(penWidth);
+
       if((options & OBDepict::internalColor) && ringBond->HasData("color"))
         painter->SetPenColor(OBColor(ringBond->GetData("color")->GetValue()));
       else
         painter->SetPenColor(bondColor);
 
-      DrawAromaticRingBond(prev,begin, end, next, center, maxdist * 1.2);
+      DrawAromaticRingBond(prev,begin, end, next, center, maxdist);
       drawnBonds.SetBitOn(ringBond->GetId());
     }
   }
@@ -1155,24 +1171,15 @@ OBBitVec& drawnBonds)
     const vector3 end   = endAtom->GetVector();
     const vector3 next  = nextAtom->GetVector();
 
-    const vector3 b1 = (prev- begin).normalize();
-    const vector3 b2 = (end - begin).normalize();
-    const vector3 b_med = (b1 + b2);
-    const vector3 orthogonalLine = cross(b2, VZ).normalize();
-    const double brestrict = dot(orthogonalLine, b_med);
-    const double bd = brestrict? dist/abs(brestrict):dist;
-    const vector3 b_arom = begin + b_med * bd;
+    const vector3 orthogonalLine = cross(end - begin, VZ).normalize();
+    const vector3 offset = orthogonalLine * 0.5 * bondSpacing;
+    painter->DrawLine(begin.x() - offset.x(), begin.y() - offset.y(),
+                      end.x() - offset.x(), end.y() - offset.y());
 
-    const vector3 b3 = (next - end).normalize();
-    const vector3 e_med = (b3 - b2);
-    const double erestrict = dot(orthogonalLine, e_med);
-    const double ed = erestrict? dist/abs(erestrict):dist;
-    const vector3 e_arom = end + e_med * ed;
-
-    painter->DrawLine(begin.x(), begin.y(), end.x(), end.y());
     static const float dashpattern[] = {5., 5.};
     static const vector<double> pat = vector<double>(dashpattern,dashpattern + sizeof(dashpattern)/sizeof(double));
-    painter->DrawLine(b_arom.x(), b_arom.y(), e_arom.x(), e_arom.y(), pat);
+    painter->DrawLine(begin.x() + offset.x(), begin.y() + offset.y(),
+                      end.x() + offset.x(), end.y() + offset.y(), pat);
   }
 
   void OBDepictPrivateBallAndStick::DrawAtom(OBAtom *atom)
@@ -1197,7 +1204,7 @@ OBBitVec& drawnBonds)
     if (perspective < 0.5)
       perspective = 0.5;
 
-    return perspective * radius * bondLength / 2.0;
+    return perspective * radius * bondLength / 1.1;
   }
 
   void OBDepictPrivateBallAndStick::DrawAtomLabel(const std::string &label, int alignment, const vector3 &pos)
