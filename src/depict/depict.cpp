@@ -1187,7 +1187,7 @@ OBBitVec& drawnBonds)
     OBColor atomColor = etab.GetRGB(atom->GetAtomicNum());
     double opacity = 1.0;
     if (fabs(zScale) > 1.0e-1)
-      opacity = (atom->GetZ() - zMin) / zScale;
+      opacity = sqrt((atom->GetZ() - zMin) / zScale);
     if (opacity < 0.2)
       opacity = 0.2;
 
