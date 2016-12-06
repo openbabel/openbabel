@@ -95,7 +95,7 @@ namespace OpenBabel
   bool getValue(const std::string &str, T &value)
   {
     std::istringstream iss(str);
-    bool ret = (iss >> value);
+    bool ret = static_cast<bool>(iss >> value);
     return ret;
   }
 
