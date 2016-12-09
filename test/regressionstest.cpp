@@ -201,6 +201,62 @@ void test_PR329_Molfile_RGroups()
   OB_ASSERT( molfile.find("M  RGP  1   2   1") != std::string::npos); // i.e. atom 2 is labelled R1
 }
 
+struct SmilesData {
+  const char* inp;
+  const char* out;
+  const char* out_hoption; // if you specify -xh, i.e. "output explicit Hydrogens as such"
+};
+
+void test_SMILES_Valence()
+{
+  static const SmilesData smilesData[] = {
+    { "[H]", "", "" },
+    { "[H][H]", "", "" },
+    { "[HH]", "", "" },
+    { "C", "", "" },
+    { "[C]", "", "" },
+    { "[CH]", "", "" },
+    { "[CH3]", "", "" },
+    { "[CH4]", "C", "C" },
+    { "[CH5]", "", "" },
+    { "C[H]", "C", "" },
+    { "[C][H]", "[CH]", "" },
+    { "[CH3][H]", "C", "C[H]" },
+    { "[U][H]", "[UH]", "" },
+    { "[UH2]", "", "" },
+    { "[C@@H](Br)(Cl)I", "", "" },
+    { "Br[C@@H](Cl)I", "", "" },
+    { "[C@@](F)(Br)(Cl)I", "", "" },
+    { "[H][C@@](Br)(Cl)I", "[C@@H](Br)(Cl)I", "" },
+    { "C[H:1]", "C", "C[H]" }, // atom class only shown with -xa
+    { "C[2H]", "", "" } // atom class only shown with -xa
+  };
+  OBConversion conv;
+  OB_ASSERT(conv.SetInAndOutFormats("smi", "smi"));
+  unsigned int size = (unsigned int)(sizeof(smilesData) / sizeof(smilesData[0]));
+  for (unsigned int rep = 0; rep < 2; ++rep) {
+    if (rep == 0)
+      printf("First repetition: default SMILES output:\n");
+    else
+      printf("Second repetition: -xh used for SMILES output:\n");
+    for (unsigned int i = 0; i < size; ++i) {
+      OBMol mol;
+      OB_ASSERT(conv.ReadString(&mol, smilesData[i].inp));
+      std::string out = conv.WriteString(&mol, true);
+      const char* mout = rep == 0 ? smilesData[i].out : smilesData[i].out_hoption;
+      std::string ans = mout[0] ? mout : smilesData[i].inp;
+      printf("  %d %s --> %s\n", i, smilesData[i].inp, ans.c_str());
+      OB_COMPARE(out, ans);
+    }
+    conv.SetOptions("h", conv.OUTOPTIONS); // set the -xh option for the second repetition
+  }
+
+  conv.SetOptions("a", conv.OUTOPTIONS); // write out alias explicitly
+  OBMol mol;
+  conv.ReadString(&mol, "C[H:1]");
+  OB_COMPARE(conv.WriteString(&mol, true), "C[H:1]");
+}
+
 int regressionstest(int argc, char* argv[])
 {
   int defaultchoice = 1;
@@ -238,6 +294,9 @@ int regressionstest(int argc, char* argv[])
     break;
   case 225:
     test_AromaticTripleBond();
+    break;
+  case 226:
+    test_SMILES_Valence();
     break;
     //case N:
   //  YOUR_TEST_HERE();

@@ -31,6 +31,8 @@ GNU General Public License for more details.
 #include <openbabel/graphsym.h>
 #include <openbabel/canon.h>
 
+#include "smilesvalence.h"
+
 #include <limits>
 #include <iostream>
 #include <cassert>
@@ -250,6 +252,7 @@ namespace OpenBabel {
     vector<int>             _path;
     vector<bool>            _avisit;
     vector<bool>            _bvisit;
+    vector<int>             _hcount;
     char                    _buffer[BUFF_SIZE];
     vector<int> PosDouble; //for extension: lc atoms as conjugated double bonds
     OBAtomClassData _classdata; // to hold atom class data like [C:2]
@@ -284,7 +287,7 @@ namespace OpenBabel {
     void FindAromaticBonds(OBMol &mol,OBAtom*,int);
     void FindAromaticBonds(OBMol&);
     void FindOrphanAromaticAtoms(OBMol &mol); //CM 18 Sept 2003
-    int NumConnections(OBAtom *);
+    int NumConnections(OBAtom *, bool isImplicitRef=false);
     void CreateCisTrans(OBMol &mol);
     char SetRingClosureStereo(StereoRingBond rcstereo, OBBond* dbl_bond);
     void InsertTetrahedralRef(OBMol &mol, unsigned long id);
@@ -518,6 +521,26 @@ namespace OpenBabel {
       return false; // invalid SMILES since rings aren't properly closed
     }
 
+    // Apply the SMILES valence model
+    FOR_ATOMS_OF_MOL(atom, mol) {
+      unsigned int idx = atom->GetIdx();
+      int hcount = _hcount[idx - 1];
+      if (hcount == -1) { // implicit valence
+        unsigned int count = 0;
+        unsigned int expval = 0;
+        FOR_BONDS_OF_ATOM(bond, &(*atom)) {
+          expval += bond->GetBondOrder();
+          count++;
+        }
+        unsigned int impval = SmilesValence(atom->GetAtomicNum(), expval);
+        atom->SetImplicitValence(impval - (expval - count));
+      }
+      else { // valence is explicit e.g. [CH3]
+        atom->SetImplicitValence(atom->GetValence() + hcount);
+      }
+    }
+    mol.SetImplicitValencePerceived(); // We have applied the SMILES valence model
+
     //set aromatic bond orders
     mol.SetAromaticPerceived();
     FindAromaticBonds(mol);
@@ -526,6 +549,8 @@ namespace OpenBabel {
     mol.UnsetAromaticPerceived();
 
     mol.EndModify();
+
+    mol.SetImplicitValencePerceived(); // We have applied the SMILES valence model
 
     //Extension which interprets cccc with conjugated double bonds if niether
     //of its atoms is aromatic.
@@ -883,7 +908,7 @@ namespace OpenBabel {
     ChiralSearch = _tetrahedralMap.find(mol.GetAtom(_prev));
     if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL)
     {
-      int insertpos = NumConnections(ChiralSearch->first) - 2;
+      int insertpos = NumConnections(ChiralSearch->first, id == OBStereo::ImplicitRef) - 2; // -1 indicates "from"
       if (insertpos > 2)
         return;
       if (insertpos < 0) {
@@ -1104,6 +1129,7 @@ namespace OpenBabel {
     _prev = mol.NumAtoms();
     _order = 1;
     _updown = ' ';
+    _hcount.push_back(-1); // Mark as having implicit hydrogens
 
     mol.UnsetAromaticPerceived(); //undo
     return(true);
@@ -2028,26 +2054,15 @@ namespace OpenBabel {
     _prev = mol.NumAtoms();
     _order = 1;
     _updown = ' ';
+    
+    if (hcount > 0) {
+      if (chiralWatch)
+        InsertTetrahedralRef(mol, OBStereo::ImplicitRef);
+      if (squarePlanarWatch)
+        InsertSquarePlanarRef(mol, OBStereo::ImplicitRef);
+    }
+    _hcount.push_back(hcount);
 
-    //now add hydrogens
-    if(hcount==0)
-      atom->ForceNoH();//ensure AssignMultiplicity regards [C] as C atom
-
-    for (int i = 0;i < hcount;i++)
-      {
-        atom = mol.NewAtom();
-        atom->SetAtomicNum(1);
-        atom->SetType("H");
-        mol.AddBond(_prev, mol.NumAtoms(), 1);
-        // store up/down
-        if (_updown == BondUpChar || _updown == BondDownChar)
-          _upDownMap[mol.GetBond(_prev, mol.NumAtoms())] = _updown;
-
-        if(chiralWatch)
-          InsertTetrahedralRef(mol, atom->GetId());
-        if (squarePlanarWatch)
-          InsertSquarePlanarRef(mol, atom->GetId());
-      }
     chiralWatch=false;
     squarePlanarWatch = false;
     return(true);
@@ -2304,9 +2319,19 @@ namespace OpenBabel {
   // NumConnections finds the number of connections already made to
   // a particular atom. This is used to figure out the correct position
   // to insert an atom ID into atom4refs
-  int OBSmilesParser::NumConnections(OBAtom *atom) {
+  int OBSmilesParser::NumConnections(OBAtom *atom, bool isImplicitRef)
+  {
     int val = atom->GetValence();
+    // The implicit H is not included in "val" so we need to adjust by 1
+    if (isImplicitRef)
+      return val+1;
+
     int idx = atom->GetIdx();
+    // Need to adjust for any implicit H (e.g. [C@@H]) but only for atoms after the H.
+    // The following line controls for this. It uses the fact the _hcount is only set
+    // after this function is called to handle inserting the stereo ref for the implicit H.
+    if (idx-1 < _hcount.size() && _hcount[idx-1] != -1)
+      val += _hcount[idx-1];
     vector<RingClosureBond>::iterator bond;
     //correct for multiple closure bonds to a single atom
     for (bond = _rclose.begin(); bond != _rclose.end(); ++bond)
@@ -2788,28 +2813,6 @@ namespace OpenBabel {
   }
 
 
-  // Helper function
-  // Is this atom an oxygen in a water molecule
-  // We know the oxygen is connected to one ion, but check for non-hydrogens
-  // Returns: true if the atom is an oxygen and connected to two hydrogens + one coordinated atom
-  bool isWaterOxygen(OBAtom *atom)
-  {
-    if (!atom->IsOxygen())
-      return false;
-
-    int nonHydrogenCount = 0;
-    int hydrogenCount = 0;
-    FOR_NBORS_OF_ATOM(neighbor, *atom) {
-      if (!neighbor->IsHydrogen())
-        nonHydrogenCount++;
-      else
-        hydrogenCount++;
-    }
-
-    return (hydrogenCount == 2 && nonHydrogenCount == 1);
-  }
-
-
   /***************************************************************************
    * FUNCTION: GetSmilesElement
    *
@@ -2834,51 +2837,39 @@ namespace OpenBabel {
     bool writeExplicitHydrogen = false;
 
     OBAtom *atom = node->GetAtom();
-
-    int bosum = atom->KBOSum();
-    int maxBonds = etab.GetMaxBonds(atom->GetAtomicNum());
-    // default -- bracket if we have more bonds than possible
-    // we have some special cases below
-    bracketElement = !(normalValence = (bosum <= maxBonds));
-
     int element = atom->GetAtomicNum();
-    switch (element) {
-    case 0:	// pseudo '*' atom has no normal valence, needs brackets if it has any hydrogens
-      normalValence = (atom->ExplicitHydrogenCount() == 0);
-      bracketElement = !normalValence;
-      break;
-    case 5:
-      bracketElement = !(normalValence = (bosum == 3));
-      break;
-    case 6: break;
-    case 7:
-      if (atom->IsAromatic()
-          && atom->GetHvyValence() == 2
-          && atom->GetImplicitValence() == 3) {
-#ifdef __INTEL_COMPILER
-#pragma warning (disable:187)
-#endif
-// warning #187 is use of "=" where "==" may have been intended
-        bracketElement = !(normalValence = false);
-#ifdef __INTEL_COMPILER
-#pragma warning (default:187)
-#endif
-        break;
-      }
+
+    // Handle SMILES Valence model
+    int explicitValence = 0;
+    int numExplicitBonds = 0;
+    FOR_BONDS_OF_ATOM(bond, &(*atom)) {
+      numExplicitBonds++; 
+      if (bond->IsKDouble())
+        explicitValence += 2;
+      else if (bond->IsKTriple())
+        explicitValence += 3;
       else
-        bracketElement = !(normalValence = (bosum == 3 || bosum == 5));
-      break;
-    case 8: break;
-    case 9: break;
-    case 15: break;
-    case 16:
-      bracketElement = !(normalValence = (bosum == 2 || bosum == 4 || bosum == 6));
-      break;
-    case 17: break;
-    case 35: break;
-    case 53: break;
-    default: bracketElement = true;
+        explicitValence++;
     }
+    
+    unsigned int numExplicitHsToSuppress = 0;
+    // Don't suppress any explicit Hs attached if the atom is an H itself (e.g. [H][H]) or -xh was specified
+    if (!atom->IsHydrogen() && !_pconv->IsOption("h")) {
+      FOR_NBORS_OF_ATOM(nbr, atom) {
+        if (nbr->IsHydrogen() && (!isomeric || nbr->GetIsotope() == 0) && nbr->GetValence() == 1 &&
+          nbr->GetFormalCharge() == 0 && (!_pconv->IsOption("a") || _pac == NULL || !_pac->HasClass(nbr->GetIdx())))
+          numExplicitHsToSuppress++;
+      }
+    }
+    explicitValence -= numExplicitHsToSuppress;
+    numExplicitBonds -= numExplicitHsToSuppress;
+
+    unsigned int implicitValence = SmilesValence(element, explicitValence);
+    unsigned int defaultInternalImpval = implicitValence - (explicitValence - numExplicitBonds);
+    unsigned int numImplicitHs = atom->GetImplicitValence() - numExplicitBonds;
+    bool isOutsideOrganicSubset = SmilesValence(element, 0) == 0;
+    if (isOutsideOrganicSubset || atom->GetImplicitValence() != defaultInternalImpval)
+      bracketElement = true;
 
     if (atom->GetFormalCharge() != 0) //bracket charged elements
       bracketElement = true;
@@ -2900,33 +2891,11 @@ namespace OpenBabel {
     if (stereo[0] != '\0')
       bracketElement = true;
 
-
-    if (atom->GetSpinMultiplicity()) {
-      //For radicals output bracket form anyway unless r option specified
-      if(!(_pconv && _pconv->IsOption ("r")))
-        bracketElement = true;
-    }
-
-    // Add brackets and explicit hydrogens for coordinated water molecules
-    // PR#2505562
-    if (isWaterOxygen(atom)) {
-      bracketElement = true;
-      writeExplicitHydrogen = true;
-    }
-
-      //Output explicit hydrogens as such (for SMARTS) See line 3008 approx
-    if(_pconv) {
-      const char* hoption = _pconv->IsOption("h");
-      if (!bracketElement && hoption && atom->ExplicitHydrogenCount() > 0) {
-        bracketElement = true;
-        writeExplicitHydrogen = true;
-      }
-
-      // When h option has any parameter, always use only explicit H in H counts.
-      // Used in opisomorph to avoid implicit H being added when writing SMARTS [N+](=O)[O-]
-      if(hoption && *hoption)
-        writeExplicitHydrogen = true;
-    }
+    //if (atom->GetSpinMultiplicity()) {
+    //  //For radicals output bracket form anyway unless r option specified
+    //  if(!(_pconv && _pconv->IsOption ("r")))
+    //    bracketElement = true;
+    //}
 
     if (!bracketElement) {
 
@@ -3005,41 +2974,16 @@ namespace OpenBabel {
     if (stereo[0] != '\0')
       strcat(bracketBuffer, stereo);
 
-    // don't try to handle implicit hydrogens for metals
-    if ( (element >= 21 && element <= 30)
-         || (element >= 39 && element <= 49)
-         || (element >= 71 && element <= 82) )
-      writeExplicitHydrogen = true;
-
-    // Add extra hydrogens.  If this is a bracket-atom *only* because the
-    // "-xh" option was specified, then we're writing a SMARTS, so we
-    // write the explicit hydrogen atom count only.  Otherwise we write
-    // the proper total number of hydrogens.
-    if (!atom->IsHydrogen()) {
-      int hcount;
-      if (writeExplicitHydrogen)
-        hcount = atom->ExplicitHydrogenCount();
-      else
-        // if "isomeric", doesn't count isotopic H
-        hcount = atom->ImplicitHydrogenCount() + atom->ExplicitHydrogenCount(isomeric);
-
-      // OK, see if we need to decrease the H-count due to hydrogens we'll write later
-      FOR_NBORS_OF_ATOM(nbr, atom) {
-        if (nbr->IsHydrogen() && ( (nbr->GetFormalCharge() != 0)
-                                   || (nbr->GetValence() > 1) ) ) {
-            hcount--;
-        }
-      }
-      if ((atom == _endatom || atom == _startatom) && hcount>0) // Leave a free valence for attachment
-        hcount--;
-
-      if (hcount != 0) {
-        strcat(bracketBuffer,"H");
-        if (hcount > 1) {
-          char tcount[10];
-          sprintf(tcount,"%d", hcount);
-          strcat(bracketBuffer,tcount);
-        }
+    // Add extra hydrogens.
+    int hcount = numImplicitHs;
+    if ((atom == _endatom || atom == _startatom) && hcount>0) // Leave a free valence for attachment
+      hcount--;
+    if (hcount != 0) {
+      strcat(bracketBuffer,"H");
+      if (hcount > 1) {
+        char tcount[10];
+        sprintf(tcount,"%d", hcount);
+        strcat(bracketBuffer,tcount);
       }
     }
 
@@ -3059,8 +3003,8 @@ namespace OpenBabel {
       strcat(bracketBuffer, _pac->GetClassString(atom->GetIdx()).c_str());
 
     // Check if this is an aromatic "n" or "s" that doesn't need a hydrogen after all
-    if (atom->IsAromatic() && strlen(bracketBuffer) == 1 && atom->GetSpinMultiplicity()==0)
-      bracketElement = false;
+    //if (atom->IsAromatic() && strlen(bracketBuffer) == 1 && atom->GetSpinMultiplicity()==0)
+    //  bracketElement = false;
 
     // if the element is supposed to be bracketed (e.g., [U]), *always* use brackets
     if (strlen(bracketBuffer) > 1 || bracketElement) {
@@ -3324,10 +3268,10 @@ namespace OpenBabel {
     for (nbr = atom->BeginNbrAtom(i); nbr; nbr = atom->NextNbrAtom(i)) {
 
       idx = nbr->GetIdx();
-      if (nbr->IsHydrogen() && IsSuppressedHydrogen(nbr)) {
-        _uatoms.SetBitOn(nbr->GetIdx());        // mark suppressed hydrogen, so it won't be considered
-        continue;                               // later when looking for more fragments.
-      }
+      //if (nbr->IsHydrogen() && IsSuppressedHydrogen(nbr)) {
+      //  _uatoms.SetBitOn(nbr->GetIdx());        // mark suppressed hydrogen, so it won't be considered
+      //  continue;                               // later when looking for more fragments.
+      //}
       if (_uatoms[idx] || !frag_atoms.BitIsOn(idx))
         continue;
 
@@ -3633,11 +3577,13 @@ namespace OpenBabel {
       // that will appear explicitly in the SMILES as a separate atom is
       // treated like any other atom when calculating the chirality.)
 
-      FOR_NBORS_OF_ATOM(i_nbr, atom) {
-        OBAtom *nbr = &(*i_nbr);
-        if (nbr->IsHydrogen() && IsSuppressedHydrogen(nbr) ) {
-          chiral_neighbors.push_back(nbr);
-          break;        // quit loop: only be one H if atom is chiral
+      if (!_pconv->IsOption("h")) {
+        FOR_NBORS_OF_ATOM(i_nbr, atom) {
+          OBAtom *nbr = &(*i_nbr);
+          if (nbr->IsHydrogen() && IsSuppressedHydrogen(nbr)) {
+            chiral_neighbors.push_back(nbr);
+            break;        // quit loop: only be one H if atom is chiral
+          }
         }
       }
 
@@ -4117,8 +4063,8 @@ namespace OpenBabel {
       if (root_atom == NULL) {
         for (atom = mol.BeginAtom(ai); atom; atom = mol.NextAtom(ai)) {
           int idx = atom->GetIdx();
-          if (!atom->IsHydrogen()       // don't start with a hydrogen
-              && !_uatoms[idx]          // skip atoms already used (for fragments)
+          if (//!atom->IsHydrogen()       // don't start with a hydrogen
+              !_uatoms[idx]          // skip atoms already used (for fragments)
               && frag_atoms.BitIsOn(idx)// skip atoms not in this fragment
               //&& !atom->IsChiral()    // don't use chiral atoms as root node
               && canonical_order[idx-1] < lowest_canorder) {
@@ -4143,20 +4089,20 @@ namespace OpenBabel {
         }
       }
 
-      // If we didn't pick an atom, it is because the fragment is made
-      // entirely of hydrogen atoms (e.g. [H][H]).  Repeat the loop but
-      // allow hydrogens this time.
-      if (root_atom == NULL) {
-        for (atom = mol.BeginAtom(ai); atom; atom = mol.NextAtom(ai)) {
-          int idx = atom->GetIdx();
-          if (!_uatoms[idx]           // skip atoms already used (for fragments)
-              && frag_atoms.BitIsOn(idx)// skip atoms not in this fragment
-              && canonical_order[idx-1] < lowest_canorder) {
-            root_atom = atom;
-            lowest_canorder = canonical_order[idx-1];
-          }
-        }
-      }
+      //// If we didn't pick an atom, it is because the fragment is made
+      //// entirely of hydrogen atoms (e.g. [H][H]).  Repeat the loop but
+      //// allow hydrogens this time.
+      //if (root_atom == NULL) {
+      //  for (atom = mol.BeginAtom(ai); atom; atom = mol.NextAtom(ai)) {
+      //    int idx = atom->GetIdx();
+      //    if (!_uatoms[idx]           // skip atoms already used (for fragments)
+      //        && frag_atoms.BitIsOn(idx)// skip atoms not in this fragment
+      //        && canonical_order[idx-1] < lowest_canorder) {
+      //      root_atom = atom;
+      //      lowest_canorder = canonical_order[idx-1];
+      //    }
+      //  }
+      //}
 
       // No atom found?  We've done all fragments.
       if (root_atom == NULL)
@@ -4216,7 +4162,7 @@ namespace OpenBabel {
 
   void CreateCansmiString(OBMol &mol, char *buffer, OBBitVec &frag_atoms, bool iso, OBConversion* pConv)
   {
-    bool canonical = pConv->IsOption("c")!=NULL;
+    bool canonical = pConv->IsOption("c") != NULL;
 
     OBMol2Cansmi m2s;
     m2s.Init(canonical, pConv);
@@ -4228,7 +4174,8 @@ namespace OpenBabel {
     if (iso) {
       PerceiveStereo(&mol);
       m2s.CreateCisTrans(mol); // No need for this if not iso
-    } else {
+    }
+    else {
       // Not isomeric - be sure there are no Z coordinates, clear
       // all stereo-center and cis/trans information.
       OBBond *bond;
@@ -4242,14 +4189,16 @@ namespace OpenBabel {
       }
     }
 
-    // If the fragment includes ordinary hydrogens, get rid of them.
-    // They won't appear in the SMILES anyway (unless they're attached to
-    // a chiral center, or it's something like [H][H]).
-    FOR_ATOMS_OF_MOL(iatom, mol) {
-      OBAtom *atom = &(*iatom);
-      if (frag_atoms.BitIsOn(atom->GetIdx()) && atom->IsHydrogen()
+    if (!pConv->IsOption("h")) {
+      // If the fragment includes explicit hydrogens, exclude them.
+      // They won't appear in the SMILES anyway (unless they're attached to
+      // a chiral center, or it's something like [H][H]).
+      FOR_ATOMS_OF_MOL(iatom, mol) {
+        OBAtom *atom = &(*iatom);
+        if (frag_atoms.BitIsOn(atom->GetIdx()) && atom->IsHydrogen()
           && (!iso || m2s.IsSuppressedHydrogen(atom))) {
-        frag_atoms.SetBitOff(atom->GetIdx());
+          frag_atoms.SetBitOff(atom->GetIdx());
+        }
       }
     }
 

@@ -29,7 +29,7 @@ static unsigned int SmilesValence(unsigned int elem, unsigned int val)
     break;
   case  7: // N
   case 15: // P
-    switch(val) {
+    switch (val) {
     case 0:
     case 1:
     case 2:
@@ -44,7 +44,7 @@ static unsigned int SmilesValence(unsigned int elem, unsigned int val)
     if (val <= 2) return 2;
     break;
   case 16:  // S
-    switch(val) {
+    switch (val) {
     case 0:
     case 1:
     case 2:
@@ -64,3 +64,5 @@ static unsigned int SmilesValence(unsigned int elem, unsigned int val)
     if (val <= 1) return 1;
     break;
   }
+  return val;
+}
