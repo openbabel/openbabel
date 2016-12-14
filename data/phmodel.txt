@@ -30,9 +30,17 @@ TRANSFORM [N^3;!$(N~[!#6;!#1]):1] >> [N+:1]				10.0 # pKa from conjugated acid (
 #imidazole: note pKa=7.0
 #if you uncomment this, also uncomment the seedcharge statement below
 TRANSFORM [nD2:1]1c[nH]cc1 >> [n+:1]1c[nH]cc1				7.0
+TRANSFORM [nD2:1]1cn(-[#1,C^3])cc1 >> [n+:1]1c[nH]cc1				7.0
+
 
 #imine
 TRANSFORM [ND3+0:1]=[#6] >> [ND3+:1]=[#6]				4.0 # pKa from conjugated acid (BH+)
+
+#pyridine
+TRANSFORM c1cc[nD2:1]cc1 >> c1cc[nH+:1]cc1				5.2
+
+#aniline
+TRANSFORM [N^3]c1ccccc1 >> [N+:1]c1ccccc1				4.6
 
 #tetrazole
 TRANSFORM [nD2:1]([#1:2])1[nD2-0][nD2-0][nD2-0]c1 >> [n-:1]1nnnc1	4.89 #pKa from acid (AH)
@@ -61,7 +69,8 @@ TRANSFORM [SD4]([!D1])(=O)(=O)[O:1][#1:2] >> [SD4]([!D1])(=O)(=O)[O-:1]	-2.6
 #TRANSFORM [SD4]([!D1])(=O)(=O)[O:1][#1:2] >> [SD4]([!D1])(=O)(=O)[O-:1]
 
 #guanidine or amidine
-TRANSFORM [#6^2+0:1](~[N^2:2])(~[N^2:3])* >> [#6+:1](~[N:2])(~[N:3])*		12.5
+TRANSFORM [#6^2+0:1](~[N^2:2])(~[N^2:3])* >> [#6:1](~[N:2])(~[N+:3])*		12.5
+#TRANSFORM [#6^2+0:1](~[N^2:2])(~[N^2:3])* >> [#6+:1](~[N:2])(~[N:3])*		12.5
 
 #phosphate ester
 TRANSFORM [PD4](=O)([OD2])([OD2])[OD1:1] >> [PD4](=O)([OD2])([OD2])[O-:1]	2.0
@@ -76,6 +85,9 @@ TRANSFORM [PD4](=O)([OD2])([!#8])[OD1:1] >> [PD4](=O)([OD2])([!#8])[O-:1]	2.2
 TRANSFORM O=P([!D1])([O:1][#1:2])[OD1]       >> O=P([!D1])([O:1])O		2.12
 TRANSFORM O=P([*D2,*D3])([OD1:1])[OD1:2] >> O=P([*D2,*D3])([O-:1])[O-:2]	2.12
 #phosphate
+
+#Phenol
+TRANSFORM c1ccccc1[OD1-0:1] >> c1ccccc1[O-:1]		10
 
 #
 #	Amino acids
@@ -173,3 +185,6 @@ SEEDCHARGE	O=CN([OD1])NC=O		-0.33	0.0	0.0	-0.33	0.0 0.0	-0.33
 #imidazole: note pKa=7.0, histidine pKa=6.0
 #if you uncomment this, also uncomment the transform statement above
 SEEDCHARGE	[n+H]1c[nH]cc1		0.5	0.0	0.5	0.0	0.0
+
+#phenol
+SEEDCHARGE	[O-]c1ccccc1	-1.0	0.0	0.0	0.0	0.0	0.0	0.0
