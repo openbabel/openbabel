@@ -2835,23 +2835,16 @@ namespace OpenBabel {
     bool bracketElement = false;
     bool normalValence = true;
     bool writeExplicitHydrogen = false;
+    bool smarts = _pconv->IsOption("s");
 
     OBAtom *atom = node->GetAtom();
     int element = atom->GetAtomicNum();
 
-    // Handle SMILES Valence model
-    int explicitValence = 0;
-    int numExplicitBonds = 0;
-    FOR_BONDS_OF_ATOM(bond, &(*atom)) {
-      numExplicitBonds++; 
-      if (bond->IsKDouble())
-        explicitValence += 2;
-      else if (bond->IsKTriple())
-        explicitValence += 3;
-      else
-        explicitValence++;
-    }
-    
+    // Handle SMILES Valence model, and explicit and implicit hydrogens
+    bool isOutsideOrganicSubset = SmilesValence(element, 0) == 0;
+    if (isOutsideOrganicSubset)
+      bracketElement = true;
+
     unsigned int numExplicitHsToSuppress = 0;
     // Don't suppress any explicit Hs attached if the atom is an H itself (e.g. [H][H]) or -xh was specified
     if (!atom->IsHydrogen() && !_pconv->IsOption("h")) {
@@ -2861,15 +2854,37 @@ namespace OpenBabel {
           numExplicitHsToSuppress++;
       }
     }
-    explicitValence -= numExplicitHsToSuppress;
-    numExplicitBonds -= numExplicitHsToSuppress;
 
-    unsigned int implicitValence = SmilesValence(element, explicitValence);
-    unsigned int defaultInternalImpval = implicitValence - (explicitValence - numExplicitBonds);
-    unsigned int numImplicitHs = atom->GetImplicitValence() - numExplicitBonds;
-    bool isOutsideOrganicSubset = SmilesValence(element, 0) == 0;
-    if (isOutsideOrganicSubset || atom->GetImplicitValence() != defaultInternalImpval)
-      bracketElement = true;
+    unsigned int numImplicitHs = 0;
+    if (smarts) {
+      if (numExplicitHsToSuppress > 0) {
+        bracketElement = true;
+        numImplicitHs = numExplicitHsToSuppress;
+      }
+    }
+    else {
+      int explicitValence = 0;
+      int numExplicitBonds = 0;
+      FOR_BONDS_OF_ATOM(bond, &(*atom)) {
+        numExplicitBonds++;
+        if (bond->IsKDouble())
+          explicitValence += 2;
+        else if (bond->IsKTriple())
+          explicitValence += 3;
+        else
+          explicitValence++;
+      }
+
+      explicitValence -= numExplicitHsToSuppress;
+      numExplicitBonds -= numExplicitHsToSuppress;
+
+      unsigned int implicitValence = SmilesValence(element, explicitValence);
+      unsigned int defaultInternalImpval = implicitValence - (explicitValence - numExplicitBonds);
+      numImplicitHs = atom->GetImplicitValence() - numExplicitBonds;
+
+      if (atom->GetImplicitValence() != defaultInternalImpval)
+        bracketElement = true;
+    }
 
     if (atom->GetFormalCharge() != 0) //bracket charged elements
       bracketElement = true;
@@ -2964,14 +2979,18 @@ namespace OpenBabel {
     if (!atom->GetAtomicNum())
       strcpy(symbol,"*");
     else {
-      strcpy(symbol,etab.GetSymbol(atom->GetAtomicNum()));
-      if (atom->IsAromatic())
-        symbol[0] = tolower(symbol[0]);
+      if (atom->IsHydrogen() && smarts)
+        strcpy(symbol, "#1");
+      else {
+        strcpy(symbol, etab.GetSymbol(atom->GetAtomicNum()));
+        if (atom->IsAromatic())
+          symbol[0] = tolower(symbol[0]);
+      }
     }
     strcat(bracketBuffer,symbol);
 
-    // If chiral, append '@' or '@@'
-    if (stereo[0] != '\0')
+    // If chiral, append '@' or '@@'...unless we're creating a SMARTS ("s") and it's @H or @@H
+    if (stereo[0] != '\0' && !(smarts && atom->ImplicitHydrogenCount() > 0))
       strcat(bracketBuffer, stereo);
 
     // Add extra hydrogens.
@@ -2979,11 +2998,23 @@ namespace OpenBabel {
     if ((atom == _endatom || atom == _startatom) && hcount>0) // Leave a free valence for attachment
       hcount--;
     if (hcount != 0) {
-      strcat(bracketBuffer,"H");
-      if (hcount > 1) {
+      if (smarts && stereo[0]=='\0') {
         char tcount[10];
-        sprintf(tcount,"%d", hcount);
-        strcat(bracketBuffer,tcount);
+        std::string tmp;
+        for (int i = 0; i < hcount; ++i) {
+          tmp += "!H";
+          sprintf(tcount, "%d", i);
+          tmp += tcount;
+        }
+        strcat(bracketBuffer, tmp.c_str());
+      }
+      else {
+        strcat(bracketBuffer, "H");
+        if (hcount > 1) {
+          char tcount[10];
+          sprintf(tcount, "%d", hcount);
+          strcat(bracketBuffer, tcount);
+        }
       }
     }
 

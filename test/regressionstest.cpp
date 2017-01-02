@@ -205,53 +205,63 @@ struct SmilesData {
   const char* inp;
   const char* out;
   const char* out_hoption; // if you specify -xh, i.e. "output explicit Hydrogens as such"
+  const char* out_soption; // if you specify -xs, create SMARTS for substructure searching
 };
 
 void test_SMILES_Valence()
 {
   static const SmilesData smilesData[] = {
-    { "[H]", "", "" },
-    { "[H][H]", "", "" },
-    { "[HH]", "", "" },
-    { "C", "", "" },
-    { "[C]", "", "" },
-    { "[CH]", "", "" },
-    { "[CH3]", "", "" },
-    { "[CH4]", "C", "C" },
-    { "[CH5]", "", "" },
-    { "C[H]", "C", "" },
-    { "[C][H]", "[CH]", "" },
-    { "[CH3][H]", "C", "C[H]" },
-    { "[U][H]", "[UH]", "" },
-    { "[UH2]", "", "" },
-    { "[C@@H](Br)(Cl)I", "", "" },
-    { "Br[C@@H](Cl)I", "", "" },
-    { "[C@@](F)(Br)(Cl)I", "", "" },
-    { "[H][C@@](Br)(Cl)I", "[C@@H](Br)(Cl)I", "" },
-    { "C[H:1]", "C", "C[H]" }, // atom class only shown with -xa
-    { "C[2H]", "", "" } // atom class only shown with -xa
+    { "[H]", "", "", "[#1]" }, // 4th perhaps should be [*H], but not implemented at the moment
+    { "[H][H]", "", "", "[#1][#1]" },
+    { "[HH]", "", "", "[#1]" },
+    { "C", "", "", "" },
+    { "[C]", "", "", "C" },
+    { "[CH]", "", "", "C" },
+    { "[CH3]", "", "", "C" },
+    { "[CH4]", "C", "C", "C" },
+    { "[CH5]", "", "", "C" },
+    { "C[H]", "C", "", "[C!H0]" },
+    { "[C][H]", "[CH]", "", "[C!H0]" },
+    { "[CH3][H]", "C", "C[H]", "[C!H0]" },
+    { "[CH2]([H])[H]", "C", "C([H])[H]", "[C!H0!H1]" },
+    { "[U][H]", "[UH]", "", "[U!H0]" },
+    { "[UH2]", "", "", "[U]" },
+    { "[C@@H](Br)(Cl)I", "", "", "[C](Br)(Cl)I" }, // Note: if OB supported it, 4th should be [C@@?](Br)(Cl)I
+    { "Br[C@@H](Cl)I", "", "", "Br[C](Cl)I" }, // Note: if OB supported it, 4th should be Br[C@@?](Cl)I
+    { "[C@@](F)(Br)(Cl)I", "", "", "" },
+    { "F[C@@](Br)(Cl)I", "", "", "" },
+    { "[H][C@@](Br)(Cl)I", "[C@@H](Br)(Cl)I", "", "[C@@H](Br)(Cl)I" },
+    { "C[H:1]", "C", "C[H]", "[C!H0]" }, // atom class only shown with -xa
+    { "C[2H]", "", "", "C[2#1]" }
   };
-  OBConversion conv;
-  OB_ASSERT(conv.SetInAndOutFormats("smi", "smi"));
   unsigned int size = (unsigned int)(sizeof(smilesData) / sizeof(smilesData[0]));
-  for (unsigned int rep = 0; rep < 2; ++rep) {
-    if (rep == 0)
-      printf("First repetition: default SMILES output:\n");
-    else
-      printf("Second repetition: -xh used for SMILES output:\n");
+  for (unsigned int rep = 0; rep < 3; ++rep) {
+    printf("Rep: %d\n", rep);
+    OBConversion conv;
+    OB_ASSERT(conv.SetInAndOutFormats("smi", "smi"));
+    switch (rep) {
+    case 1: conv.SetOptions("h", conv.OUTOPTIONS); break;
+    case 2: conv.SetOptions("s", conv.OUTOPTIONS); break;
+    }
     for (unsigned int i = 0; i < size; ++i) {
       OBMol mol;
       OB_ASSERT(conv.ReadString(&mol, smilesData[i].inp));
       std::string out = conv.WriteString(&mol, true);
-      const char* mout = rep == 0 ? smilesData[i].out : smilesData[i].out_hoption;
+      const char* mout;
+      switch (rep) {
+      case 0: mout = smilesData[i].out; break;
+      case 1: mout = smilesData[i].out_hoption; break;
+      case 2: mout = smilesData[i].out_soption; break;
+      }
       std::string ans = mout[0] ? mout : smilesData[i].inp;
-      printf("  %d %s --> %s\n", i, smilesData[i].inp, ans.c_str());
+      printf("  %d %s --> %s (%s)\n", i, smilesData[i].inp, ans.c_str(), out.c_str());
       OB_COMPARE(out, ans);
     }
-    conv.SetOptions("h", conv.OUTOPTIONS); // set the -xh option for the second repetition
   }
 
-  conv.SetOptions("a", conv.OUTOPTIONS); // write out alias explicitly
+  OBConversion conv;
+  OB_ASSERT(conv.SetInAndOutFormats("smi", "smi"));
+  conv.SetOptions("ah", conv.OUTOPTIONS); // write out alias explicitly
   OBMol mol;
   conv.ReadString(&mol, "C[H:1]");
   OB_COMPARE(conv.WriteString(&mol, true), "C[H:1]");
