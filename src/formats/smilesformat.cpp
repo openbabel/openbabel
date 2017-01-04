@@ -525,7 +525,11 @@ namespace OpenBabel {
     FOR_ATOMS_OF_MOL(atom, mol) {
       unsigned int idx = atom->GetIdx();
       int hcount = _hcount[idx - 1];
-      if (hcount == -1) { // implicit valence
+      switch (hcount) {
+      case -2: // aromatic carbon
+        atom->SetImplicitValence(3);
+        break;
+      case -1: { // Apply SMILES implicit valence model
         unsigned int count = 0;
         unsigned int expval = 0;
         FOR_BONDS_OF_ATOM(bond, &(*atom)) {
@@ -534,9 +538,11 @@ namespace OpenBabel {
         }
         unsigned int impval = SmilesValence(atom->GetAtomicNum(), expval);
         atom->SetImplicitValence(impval - (expval - count));
+        break;
       }
-      else { // valence is explicit e.g. [CH3]
+      default: // valence is explicit e.g. [CH3]
         atom->SetImplicitValence(atom->GetValence() + hcount);
+        break;
       }
     }
     mol.SetImplicitValencePerceived(); // We have applied the SMILES valence model
@@ -1129,7 +1135,14 @@ namespace OpenBabel {
     _prev = mol.NumAtoms();
     _order = 1;
     _updown = ' ';
-    _hcount.push_back(-1); // Mark as having implicit hydrogens
+
+    // If aromatic (and ParseSimple), then the implicit hydrogen count is 0 for all non-C.
+    // For "c" it is either 0 or 1, but this can only be assigned later (mark it as -2).
+    // For all non-aromatic, mark as having implicit hydrogens to be assigned later (-1).
+    int hcount = -1;
+    if (arom)
+      hcount = (*_ptr == 'c') ? -2 : 0;
+    _hcount.push_back(hcount);
 
     mol.UnsetAromaticPerceived(); //undo
     return(true);
@@ -2330,7 +2343,7 @@ namespace OpenBabel {
     // Need to adjust for any implicit H (e.g. [C@@H]) but only for atoms after the H.
     // The following line controls for this. It uses the fact the _hcount is only set
     // after this function is called to handle inserting the stereo ref for the implicit H.
-    if (idx-1 < _hcount.size() && _hcount[idx-1] != -1)
+    if (idx-1 < _hcount.size() && _hcount[idx-1] > 0)
       val += _hcount[idx-1];
     vector<RingClosureBond>::iterator bond;
     //correct for multiple closure bonds to a single atom
