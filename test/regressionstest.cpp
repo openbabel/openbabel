@@ -232,7 +232,10 @@ void test_SMILES_Valence()
     { "F[C@@](Br)(Cl)I", "", "", "" },
     { "[H][C@@](Br)(Cl)I", "[C@@H](Br)(Cl)I", "", "[C@@H](Br)(Cl)I" },
     { "C[H:1]", "C", "C[H]", "[C!H0]" }, // atom class only shown with -xa
-    { "C[2H]", "", "", "C[2#1]" }
+    { "C[2H]", "", "", "C[2#1]" },
+    { "c1ccccc1", "", "", "" },
+    { "c1cnccc1", "", "", "" },
+    { "c1c[nH]cc1", "", "", "c1cncc1" }
   };
   unsigned int size = (unsigned int)(sizeof(smilesData) / sizeof(smilesData[0]));
   for (unsigned int rep = 0; rep < 3; ++rep) {

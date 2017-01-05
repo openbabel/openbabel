@@ -2895,7 +2895,7 @@ namespace OpenBabel {
       unsigned int defaultInternalImpval = implicitValence - (explicitValence - numExplicitBonds);
       numImplicitHs = atom->GetImplicitValence() - numExplicitBonds;
 
-      if (atom->GetImplicitValence() != defaultInternalImpval)
+      if (atom->GetImplicitValence() != defaultInternalImpval || (element != 6 && atom->IsAromatic() && numImplicitHs != 0))
         bracketElement = true;
     }
 
