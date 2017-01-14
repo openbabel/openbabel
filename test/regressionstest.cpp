@@ -205,56 +205,60 @@ struct SmilesData {
   const char* inp;
   const char* out;
   const char* out_hoption; // if you specify -xh, i.e. "output explicit Hydrogens as such"
+  const char* out_addh_hoption; // if you add hydrogens and then specify "-xh"
   const char* out_soption; // if you specify -xs, create SMARTS for substructure searching
 };
 
 void test_SMILES_Valence()
 {
   static const SmilesData smilesData[] = {
-    { "[H]", "", "", "[#1]" }, // 4th perhaps should be [*H], but not implemented at the moment
-    { "[H][H]", "", "", "[#1][#1]" },
-    { "[HH]", "", "", "[#1]" },
-    { "C", "", "", "" },
-    { "[C]", "", "", "C" },
-    { "[CH]", "", "", "C" },
-    { "[CH3]", "", "", "C" },
-    { "[CH4]", "C", "C", "C" },
-    { "[CH5]", "", "", "C" },
-    { "C[H]", "C", "", "[C!H0]" },
-    { "[C][H]", "[CH]", "", "[C!H0]" },
-    { "[CH3][H]", "C", "C[H]", "[C!H0]" },
-    { "[CH2]([H])[H]", "C", "C([H])[H]", "[C!H0!H1]" },
-    { "[U][H]", "[UH]", "", "[U!H0]" },
-    { "[UH2]", "", "", "[U]" },
-    { "[C@@H](Br)(Cl)I", "", "", "[C](Br)(Cl)I" }, // Note: if OB supported it, 4th should be [C@@?](Br)(Cl)I
-    { "Br[C@@H](Cl)I", "", "", "Br[C](Cl)I" }, // Note: if OB supported it, 4th should be Br[C@@?](Cl)I
-    { "[C@@](F)(Br)(Cl)I", "", "", "" },
-    { "F[C@@](Br)(Cl)I", "", "", "" },
-    { "[H][C@@](Br)(Cl)I", "[C@@H](Br)(Cl)I", "", "[C@@H](Br)(Cl)I" },
-    { "C[H:1]", "C", "C[H]", "[C!H0]" }, // atom class only shown with -xa
-    { "C[2H]", "", "", "C[2#1]" },
-    { "c1ccccc1", "", "", "" },
-    { "c1cnccc1", "", "", "" },
-    { "c1c[nH]cc1", "", "", "c1cncc1" }
+    { "[H]", "", "", "", "[#1]" }, // SMARTS perhaps should be [*H], but not implemented at the moment
+    { "[H][H]", "", "", "","[#1][#1]" },
+    { "[HH]", "", "", "[H][H]", "[#1]" },
+    { "C", "", "", "C([H])([H])([H])[H]", "" },
+    { "[C]", "", "", "", "C" },
+    { "[CH]", "", "", "[C][H]", "C" },
+    { "[CH3]", "", "", "[C]([H])([H])[H]", "C" },
+    { "[CH4]", "C", "C", "C([H])([H])([H])[H]", "C" },
+    { "[CH5]", "", "", "C([H])([H])([H])([H])[H]", "C" },
+    { "C[H]", "C", "", "C([H])([H])([H])[H]", "[C!H0]" },
+    { "[C][H]", "[CH]", "", "", "[C!H0]" },
+    { "[CH3][H]", "C", "C[H]", "C([H])([H])([H])[H]", "[C!H0]" },
+    { "[CH2]([H])[H]", "C", "C([H])[H]", "C([H])([H])([H])[H]", "[C!H0!H1]" },
+    { "[U][H]", "[UH]", "", "", "[U!H0]" },
+    { "[UH2]", "", "", "[U]([H])[H]", "[U]" },
+    { "[C@@H](Br)(Cl)I", "", "", "[C@](Br)(Cl)(I)[H]", "[C](Br)(Cl)I" }, // Note: if OB supported it, SMARTS should be [C@@?](Br)(Cl)I
+    { "Br[C@@H](Cl)I", "", "", "Br[C@@](Cl)(I)[H]", "Br[C](Cl)I" }, // Note: if OB supported it, SMARTS should be Br[C@@?](Cl)I
+    { "[C@@](F)(Br)(Cl)I", "", "", "", "" },
+    { "F[C@@](Br)(Cl)I", "", "", "", "" },
+    { "[H][C@@](Br)(Cl)I", "[C@@H](Br)(Cl)I", "", "", "[C@@H](Br)(Cl)I" },
+    { "C[H:1]", "C", "C[H]", "C([H])([H])([H])[H]", "[C!H0]" }, // atom class only shown with -xa
+    { "C[2H]", "", "", "C([2H])([H])([H])[H]", "C[2#1]" },
+    { "c1ccccc1", "", "", "c1(c(c(c(c(c1[H])[H])[H])[H])[H])[H]", "" },
+    { "c1cnccc1", "", "", "c1(c(nc(c(c1[H])[H])[H])[H])[H]", "" },
+    { "c1c[nH]cc1", "", "", "c1(c(n(c(c1[H])[H])[H])[H])[H]", "c1cncc1" }
   };
   unsigned int size = (unsigned int)(sizeof(smilesData) / sizeof(smilesData[0]));
-  for (unsigned int rep = 0; rep < 3; ++rep) {
+  for (unsigned int rep = 0; rep < 4; ++rep) {
     printf("Rep: %d\n", rep);
     OBConversion conv;
     OB_ASSERT(conv.SetInAndOutFormats("smi", "smi"));
     switch (rep) {
-    case 1: conv.SetOptions("h", conv.OUTOPTIONS); break;
-    case 2: conv.SetOptions("s", conv.OUTOPTIONS); break;
+    case 1: case 2: conv.SetOptions("h", conv.OUTOPTIONS); break;
+    case 3: conv.SetOptions("s", conv.OUTOPTIONS); break;
     }
     for (unsigned int i = 0; i < size; ++i) {
       OBMol mol;
       OB_ASSERT(conv.ReadString(&mol, smilesData[i].inp));
+      if (rep == 2)
+        mol.AddHydrogens();
       std::string out = conv.WriteString(&mol, true);
       const char* mout;
       switch (rep) {
       case 0: mout = smilesData[i].out; break;
       case 1: mout = smilesData[i].out_hoption; break;
-      case 2: mout = smilesData[i].out_soption; break;
+      case 2: mout = smilesData[i].out_addh_hoption; break;
+      case 3: mout = smilesData[i].out_soption; break;
       }
       std::string ans = mout[0] ? mout : smilesData[i].inp;
       printf("  %d %s --> %s (%s)\n", i, smilesData[i].inp, ans.c_str(), out.c_str());

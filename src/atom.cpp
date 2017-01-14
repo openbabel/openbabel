@@ -167,6 +167,7 @@ namespace OpenBabel
     _hyb = src->GetHyb();
     _ele = src->GetAtomicNum();
     _isotope = src->GetIsotope();
+    _impval = src->GetImplicitValence();
     _fcharge = src->GetFormalCharge();
     _spinmultiplicity = src->GetSpinMultiplicity();
     strncpy(_type,src->GetType(), sizeof(_type) - 1);
@@ -513,16 +514,16 @@ namespace OpenBabel
 
   unsigned int OBAtom::GetImplicitValence() const
   {
-    //Special case for [H] to avoid infite loop: SMARTS Match() <-> AssignSpinMultiplicity()
-    if(GetAtomicNum() == 1) {
-      unsigned int val = GetValence();
-      if (val == 0 && GetFormalCharge() == 0 && GetSpinMultiplicity() == 0)
-        return 1;
-      return val;
-    }
-    OBMol *mol = (OBMol*)((OBAtom*)this)->GetParent();
-    if (mol && !mol->HasImplicitValencePerceived())
-      atomtyper.AssignImplicitValence(*((OBMol*)((OBAtom*)this)->GetParent()));
+    ////Special case for [H] to avoid infite loop: SMARTS Match() <-> AssignSpinMultiplicity()
+    //if(GetAtomicNum() == 1) {
+    //  unsigned int val = GetValence();
+    //  if (val == 0 && GetFormalCharge() == 0 && GetSpinMultiplicity() == 0)
+    //    return 1;
+    //  return val;
+    //}
+    //OBMol *mol = (OBMol*)((OBAtom*)this)->GetParent();
+    //if (mol && !mol->HasImplicitValencePerceived())
+    //  atomtyper.AssignImplicitValence(*((OBMol*)((OBAtom*)this)->GetParent()));
 
     return((unsigned int)_impval);
   }

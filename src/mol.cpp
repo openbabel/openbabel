@@ -1257,6 +1257,8 @@ namespace OpenBabel
       this->SetFlag(OB_TCHARGE_MOL);
     if (src.HasFlag(OB_PCHARGE_MOL))
       this->SetFlag(OB_PCHARGE_MOL);
+    if (src.HasFlag(OB_IMPVAL_MOL))
+      this->SetFlag(OB_IMPVAL_MOL);
 
     //this->_flags = src.GetFlags(); //Copy all flags. Perhaps too drastic a change
 
@@ -2185,14 +2187,14 @@ namespace OpenBabel
 
         hcount = atom->GetImplicitValence() - atom->GetValence();
 
-        //Jan 05 Implicit valency now left alone; use spin multiplicity for implicit Hs
-        int mult = atom->GetSpinMultiplicity();
-        if(mult==2) //radical
-          hcount-=1;
-        else if(mult==1 || mult==3) //carbene
-          hcount-=2;
-        else if(mult>=4) // as in CH, C etc
-          hcount -= mult-1;
+        ////Jan 05 Implicit valency now left alone; use spin multiplicity for implicit Hs
+        //int mult = atom->GetSpinMultiplicity();
+        //if(mult==2) //radical
+        //  hcount-=1;
+        //else if(mult==1 || mult==3) //carbene
+        //  hcount-=2;
+        //else if(mult>=4) // as in CH, C etc
+        //  hcount -= mult-1;
 
         if (hcount < 0)
           hcount = 0;
@@ -2264,6 +2266,7 @@ namespace OpenBabel
             h = NewAtom();
             h->SetType("H");
             h->SetAtomicNum(1);
+            h->SetImplicitValence(1);
 
             // copy parent atom residue to added hydrogen     REG 6/30/02
 
