@@ -21,7 +21,7 @@ GNU General Public License for more details.
 static unsigned int SmilesValence(unsigned int elem, unsigned int val)
 {
   switch (elem) {
-  case  3: // B
+  case  5: // B
     if (val <= 3) return 3;
     break;
   case  6: // C
