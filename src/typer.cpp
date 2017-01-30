@@ -551,7 +551,7 @@ namespace OpenBabel
         if (nbr_elem != 6)
           return 99; // Can return straight-away as has priority
         ans |= 1;
-        break;
+        // no break - fall through
       case 1:
         if (nbr_elem == 8)
           ans |= 2;
@@ -559,6 +559,18 @@ namespace OpenBabel
     }
 
     return ans;
+  }
+  static bool IsNotSP2(OBAtom * atm, unsigned int elem)
+  {
+    // phosphorus and sulfur may be initially typed as sp3
+    switch (elem) {
+    case 6:
+    case 7:
+    case 8:
+      if (atm->GetHyb() != 2)
+        return false;
+    }
+    return true;
   }
   // End of predicates for AssignOBAromaticityModel
 
@@ -574,11 +586,12 @@ namespace OpenBabel
     // are now implemented in the code below, but are included in the comments
     // for reference (Case 1->22).
 
-    if (!atm->IsInRing()) {
+    unsigned int elem = atm->GetAtomicNum();
+    if (!atm->IsInRing() || atm->GetImplicitValence() > 3 || IsNotSP2(atm, elem)) {
       min = 0; max = 0; mcase = 0;
       return false;
     }
-    unsigned int elem = atm->GetAtomicNum();
+    
     unsigned int deg = atm->GetHvyValence();
     int chg = atm->GetFormalCharge();
     unsigned int threeNTests, threeCTests;
@@ -758,6 +771,8 @@ namespace OpenBabel
 
     // New code using lookups instead of SMARTS patterns
     FOR_ATOMS_OF_MOL(atom, mol) {
+      if (atom->GetImplicitValence() > 3)
+        continue;
       unsigned int idx = atom->GetIdx();
       int mycase, mymin, mymax;
       // _vpa[idx] = AssignOBAromaticityModel(&(*atom), _velec[idx].first, _velec[idx].second);
