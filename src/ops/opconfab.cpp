@@ -152,12 +152,16 @@ namespace OpenBabel
 
     pff->GetConformers(mol);
     int nconfs = include_original ? mol.NumConformers() : mol.NumConformers() - 1;
-    nconfs = mol.NumRotors() == 0 ? 1 : nconfs;
+    unsigned int c = include_original ? 0 : 1;
+
+    // If mol.NumRotors is 0 and originals have not been included, then nconfs
+    // may be 0. Here, if nconfs is 0, we include the original input conformer
+    if (nconfs == 0) {
+      nconfs = mol.NumConformers();
+      c = 0;
+    }
 
     cout << "..generated " << nconfs << " conformers" << endl;
-
-    unsigned int c = include_original ? 0 : 1;
-    c = mol.NumRotors() == 0 ? 0 : c;
 
     for (; c < mol.NumConformers(); ++c) {
       mol.SetConformer(c);
