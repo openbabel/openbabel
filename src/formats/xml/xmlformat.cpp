@@ -81,7 +81,7 @@ public:
   bool ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     XMLBaseFormat* pDefault = XMLConversion::GetDefaultXMLClass();
-    if(pConv->GetOutFormat()->GetType() == pDefault->GetType())
+    if(pConv->GetOutFormat() != NULL && pConv->GetOutFormat()->GetType() == pDefault->GetType())
     {
       XMLConversion* pxmlConv = XMLConversion::GetDerived(pConv);
       pxmlConv->LookForNamespace();
