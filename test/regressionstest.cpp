@@ -11,6 +11,28 @@
 using namespace std;
 using namespace OpenBabel;
 
+// Open Babel was previously disappearing triple bonds when provided with SMILES
+// containing a triple bond in an aromatic ring
+void test_AromaticTripleBond()
+{
+  const char* smis[] = {
+    "CCc1n[c]#[c]n1CC2CC(C(=O)O2)(c3ccccc3)c4ccccc4",
+    "CCc1nc#cn1CC2CC(C(=O)O2)(c3ccccc3)c4ccccc4" };
+  
+  OBConversion conv;
+  conv.SetInFormat("smi");
+
+  for(int i=0; i<2; ++i) {
+    OBMol mol;
+    conv.ReadString(&mol, smis[i]);
+    bool hasTripleBond = false;
+    FOR_BONDS_OF_MOL(bond, mol) {
+      if (bond->GetBondOrder()==3)
+        hasTripleBond = true;
+    }
+    OB_ASSERT(hasTripleBond);
+  }
+}
 
 // A segfault was occuring when a Universal SMILES was output after an InChIfied SMILES.
 // This was due to short-circuit caching of InChIs on reading. The fix was to limit
@@ -213,6 +235,9 @@ int regressionstest(int argc, char* argv[])
     break;
   case 224:
     test_PR329_Molfile_RGroups();
+    break;
+  case 225:
+    test_AromaticTripleBond();
     break;
     //case N:
   //  YOUR_TEST_HERE();
