@@ -77,15 +77,18 @@ class Matcher
 		const OBMol& ref;
 		const OBMol& test;
 		double bestRMSD;
+		int closeAtoms;
+		double closeCutoff;
 	public:
-		MapRMSDFunctor(const OBMol& r, const OBMol& t) :
-				ref(r), test(t), bestRMSD(HUGE_VAL)
+		MapRMSDFunctor(const OBMol& r, const OBMol& t, double close=0.1) :
+				ref(r), test(t), bestRMSD(HUGE_VAL),closeAtoms(0),closeCutoff(close)
 		{
 		}
 
 		bool operator()(OBIsomorphismMapper::Mapping &map)
 		{
 			double rmsd = 0;
+			int close = 0;
 			for (unsigned i = 0, n = map.size(); i < n; i++)
 			{
 				//obmol indices are 1-indexed while the mapper is zero indexed
@@ -94,12 +97,17 @@ class Matcher
 				assert(ratom && tatom);
 				vector3 rvec = ratom->GetVector();
 				vector3 tvec = tatom->GetVector();
-				rmsd += rvec.distSq(tvec);
+				double dist = rvec.distSq(tvec);
+				rmsd += dist;
+				if(dist < closeCutoff)
+					close++;
 			}
 			rmsd /= map.size();
 			rmsd = sqrt(rmsd);
-			if (rmsd < bestRMSD)
+			if (rmsd < bestRMSD) {
 				bestRMSD = rmsd;
+				closeAtoms = close;
+			}
 			// check all possible mappings
 			return false;
 		}
@@ -107,6 +115,16 @@ class Matcher
 		double getRMSD() const
 		{
 			return bestRMSD;
+		}
+
+		int getCloseCnt() const
+		{
+			return closeAtoms;
+		}
+
+		double getClosePerc() const
+		{
+			return closeAtoms/(double)ref.NumAtoms();
 		}
 	};
 
@@ -128,11 +146,12 @@ public:
 
 	//computes a correspondence between the ref mol and test (exhaustively)
 	//and returns the rmsd; returns infinity if unmatchable
-	double computeRMSD(OBMol& test)
+	double computeRMSD(OBMol& test, double& closeperc)
 	{
 		MapRMSDFunctor funct(ref, test);
 
 		mapper->MapGeneric(funct, &test);
+		closeperc = funct.getClosePerc();
 		return funct.getRMSD();
 	}
 };
@@ -245,10 +264,10 @@ int main(int argc, char **argv)
 				break;
 
 			processMol(moltest);
+			double close = 0;
+			double rmsd = matcher.computeRMSD(moltest,close);
 
-			double rmsd = matcher.computeRMSD(moltest);
-
-			cout << "RMSD " << moltest.GetTitle() << " " << rmsd << "\n";
+			cout << "RMSD " << moltest.GetTitle() << " " << rmsd << "\t" << 100*close << "\n";
 			if (!firstOnly)
 			{
 				break;
