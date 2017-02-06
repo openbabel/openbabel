@@ -479,7 +479,6 @@ namespace OpenBabel
 
   double OBRandom::NextFloat()
   {
-
     if (OBRandomUseSysRand)
       {
         return(double(rand())/double(RAND_MAX));
@@ -493,6 +492,22 @@ namespace OpenBabel
     while( x >= p );
 
     return((double)x/p);
+  }
+
+  // https://en.wikipedia.org/wiki/Marsaglia_polar_method
+  // www.alanzucconi.com/2015/09/16/how-to-sample-from-a-gaussian-distribution
+  double OBRandom::NextGaussian(double mean, double std)
+  {
+    double v1, v2, s;
+    do
+      {
+        v1 = 2.0 * this->NextFloat() - 1.0;
+        v2 = 2.0 * this->NextFloat() - 1.0;
+        s = v1 * v1 + v2 * v2;
+      }
+    while( s >= 1.0 || s == 0.0);
+    s = sqrt((-2.0 * log(s)) / s);
+    return v1 * s;
   }
 
   void OBRandom::TimeSeed()

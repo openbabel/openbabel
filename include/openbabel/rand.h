@@ -90,6 +90,9 @@ namespace OpenBabel
     int NextInt();
     //! \return a random floating-point number between 0.0 and 1.0
     double NextFloat();
+    //! \return a random Gaussian value with mean @p mean
+    //! and standard deviation @p std
+    double NextGaussian(double mean = 0.0, double std = 1.0);
   };
 
 } // end namespace OpenBabel
