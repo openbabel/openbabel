@@ -400,8 +400,8 @@ namespace OpenBabel
   /*! \class OBAromaticTyper typer.h <openbabel/typer.h>
     \brief Assigns aromatic typing to atoms and bonds
 
-    The OBAromaticTyper class is designed to read in a list of
-    aromatic perception rules and apply them to molecules. The code
+    The OBAromaticTyper class applies a set of
+    aromatic perception rules to molecules. The code
     that performs typing is not usually used directly -- it is usually
     done automatically when their corresponding values are requested of atoms
     or bonds.
@@ -413,7 +413,8 @@ namespace OpenBabel
   */
   OBAromaticTyper::OBAromaticTyper()
   {
-    _init = false;
+    _init = true;
+    // The following values are no longer used by this class
     _dir = BABEL_DATADIR;
     _envvar = "BABEL_DATADIR";
     _filename = "aromatic.txt";
@@ -423,48 +424,11 @@ namespace OpenBabel
 
   void OBAromaticTyper::ParseLine(const char *buffer)
   {
-    OBSmartsPattern *sp;
-    char temp_buffer[BUFF_SIZE];
-
-    if (buffer[0] == '#' || !*buffer) //comment and empty lines
-      return;
-    vector<string> vs;
-    tokenize(vs,buffer);
-    if (vs.empty())
-      return;
-
-    if (vs.size() == 3)
-      {
-        strncpy(temp_buffer,vs[0].c_str(), BUFF_SIZE - 1);
-        temp_buffer[BUFF_SIZE - 1] = '\0';
-        sp = new OBSmartsPattern();
-        if (sp->Init(temp_buffer))
-          {
-            _vsp.push_back(sp);
-            _verange.push_back(pair<int,int>
-                               (atoi((char*)vs[1].c_str()),
-                                atoi((char*)vs[2].c_str())));
-          }
-        else
-          {
-            obErrorLog.ThrowError(__FUNCTION__, " Could not parse line in aromatic typer from aromatic.txt", obInfo);
-            delete sp;
-            sp = NULL;
-            return;
-          }
-      }
-    else
-      obErrorLog.ThrowError(__FUNCTION__, " Could not parse line in aromatic typer from aromatic.txt", obInfo);
+    // This function is no longer used by this class
   }
 
   OBAromaticTyper::~OBAromaticTyper()
   {
-    vector<OBSmartsPattern*>::iterator i;
-    for (i = _vsp.begin();i != _vsp.end();++i)
-      {
-        delete *i;
-        *i = NULL;
-      }
   }
 
   // Start of predicates for AssignOBAromaticityModel
