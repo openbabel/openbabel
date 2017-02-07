@@ -560,7 +560,7 @@ namespace OpenBabel
 
     return ans;
   }
-  static bool IsNotSP2(OBAtom * atm, unsigned int elem)
+  static bool IsSP2(OBAtom * atm, unsigned int elem)
   {
     // phosphorus and sulfur may be initially typed as sp3
     switch (elem) {
@@ -574,7 +574,7 @@ namespace OpenBabel
   }
   // End of predicates for AssignOBAromaticityModel
 
-  static bool AssignOBAromaticityModel(OBAtom *atm, int &min, int &max, int &mcase)
+  static bool AssignOBAromaticityModel(OBAtom *atm, int &min, int &max)
   {
     // The Open Babel aromaticity model
     //
@@ -587,12 +587,13 @@ namespace OpenBabel
     // for reference (Case 1->22).
 
     unsigned int elem = atm->GetAtomicNum();
-    if (!atm->IsInRing() || atm->GetImplicitValence() > 3 || IsNotSP2(atm, elem)) {
-      min = 0; max = 0; mcase = 0;
+    if (!atm->IsInRing() || atm->GetImplicitValence() > 3 || !IsSP2(atm, elem)) {
+      min = 0; max = 0;
       return false;
     }
     
     unsigned int deg = atm->GetHvyValence();
+    unsigned int allatomdeg = atm->GetImplicitValence();
     int chg = atm->GetFormalCharge();
     unsigned int threeNTests, threeCTests;
     switch (elem) {
@@ -600,34 +601,34 @@ namespace OpenBabel
       switch (chg) {
       case 0:
         if (HasRingDblBond(atm)) {
-          min = 1; max = 1; mcase = 4;  return true; // Case 4 [#6r+0]=@*
+          min = 1; max = 1; return true; // Case 4 [#6r+0]=@*
         }
         switch (deg) {
         case 2:
-          min = 1; max = 1; mcase = 1; return true; // Case 1 [#6rD2+0]
+          min = 1; max = 1; return true; // Case 1 [#6rD2+0]
         case 3:
           threeCTests = ThreeCarbonTestsInOne(atm);
           switch (threeCTests) {
           case 99: // HasAcyclicDblBondToNonCarbon (priority 1)
             // external double bonds to hetero atoms contribute no electrons to the
             // aromatic systems -- quinoid systems are non - aromatic, e.g. 1, 4 - benzoquinone
-            min = 0; max = 0; mcase = 6; return true; // Case 6 [#6rD3+0]=!@[!#6]
+            min = 0; max = 0; return true; // Case 6 [#6rD3+0]=!@[!#6]
           case 1: // HasAcyclicDblBond (priority 2)
           case 3:
-            min = 1; max = 1; mcase = 5; return true; // Case 5 [#6rD3+0]=!@*
+            min = 1; max = 1; return true; // Case 5 [#6rD3+0]=!@*
           case 2: // HasAcyclicBondToOxygen (priority 3)
-            min = 0; max = 1; mcase = 2; return true; // Case 2 [#6rD3+0]~!@[#8] (exo ketone or alcohol -- don't know which)
+            min = 0; max = 1; return true; // Case 2 [#6rD3+0]~!@[#8] (exo ketone or alcohol -- don't know which)
           }
         }
         break;
       case 1:
-        if (deg == 2 || deg == 3) {
-          min = 1; max = 1; mcase = 3;  return true; // Case 3 [#6rD2+,#6rD3+]
+        if (allatomdeg == 2 || allatomdeg == 3) {
+          min = 1; max = 1; return true; // Case 3 [#6rD2+,#6rD3+]
         }
         break;
       case -1:
-        if (deg == 3) {
-          min = 2; max = 2; mcase = 7; return true; // Case 7 [#6rD3-]
+        if (allatomdeg == 3) {
+          min = 2; max = 2; return true; // Case 7 [#6rD3-]
         }
       }
       break;
@@ -636,41 +637,41 @@ namespace OpenBabel
       case 0:
         threeNTests = ThreeNitrogenTestsInOne(atm);
         if (deg == 3 && (threeNTests & 1)) { // HasAcyclicDblBondToOxygen(atm))
-          min = 1; max = 1; mcase = 13; return true; // Case 13 [#7rD3+0]=O
+          min = 1; max = 1; return true; // Case 13 [#7rD3+0]=O
         }
         if (threeNTests & 2) { // HasTwoSingleRingBonds(atm))
-          min = 1; max = 2; mcase = 10; return true; // Case 10 [#7r+0](-@*)-@*
+          min = 1; max = 2; return true; // Case 10 [#7r+0](-@*)-@*
         }
         switch (deg) {
         case 2:
           if (threeNTests & 4) { // HasRingDblBond(atm))
-            min = 1; max = 1; mcase = 11; return true; // Case 11 [#7rD2+0]=@*
+            min = 1; max = 1; return true; // Case 11 [#7rD2+0]=@*
           }
           else {
-            min = 1; max = 2; mcase = 8; return true; // Case 8 [#7rD2+0]
+            min = 1; max = 2; return true; // Case 8 [#7rD2+0]
           }
           break;
         case 3:
-          min = 1; max = 2; mcase = 9; return true; // Case 9 [#7rD3+0]
+          min = 1; max = 2; return true; // Case 9 [#7rD3+0]
         }
         break;
       case -1:
         if (deg == 2) {
-          min = 2; max = 2; mcase = 14; return true; // Case 14 [#7rD2-]
+          min = 2; max = 2; return true; // Case 14 [#7rD2-]
         }
         break;
       case 1:
-        if (deg == 3) {
-          min = 1; max = 1; mcase = 12; return true; // Case 12 [#7rD3+]
+        if ((deg==2 && (atm->ImplicitHydrogenCount() + atm->BOSum())==4) || deg == 3) { // tried deg 2 or 3 but fails on emolecules 6884346
+          min = 1; max = 1; return true; // Case 12 [#7rD3+]
         }
       }
       break;
     case 8: // oxygen
       switch (chg) {
       case 0:
-        min = 2; max = 2; mcase = 15; return true; // Case 15 [#8r+0]
+        min = 2; max = 2; return true; // Case 15 [#8r+0]
       case 1:
-        min = 1; max = 1; mcase = 16; return true; // Case 16 [#8r+]
+        min = 1; max = 1; return true; // Case 16 [#8r+]
       }
       break;
     case 15: // phosphorus
@@ -678,10 +679,10 @@ namespace OpenBabel
       // phosphole, phosphabenzene(not v.aromatic)
       if (deg == 3) {
         if (HasTwoRingOxygens(atm)) {
-          min = 0; max = 0; mcase = 21; return true; // Case 21 [#15rD3]([#8r])[#8r]
+          min = 0; max = 0; return true; // Case 21 [#15rD3]([#8r])[#8r]
         }
         if (chg == 0) {
-          min = 2; max = 2; mcase = 20; return true; // Case 20 [#15rD3+0]
+          min = 2; max = 2; return true; // Case 20 [#15rD3+0]
         }
       }
       break;
@@ -690,22 +691,22 @@ namespace OpenBabel
       case 0:
         switch (deg) {
         case 2:
-          min = 2; max = 2; mcase = 17; return true; // Case 17 [#16rD2+0]
+          min = 2; max = 2; return true; // Case 17 [#16rD2+0]
         case 3:
           if (HasAcyclicDblBondToOxygen(atm)) {
-            min = 2; max = 2; mcase = 19; return true; // Case 19 [#16rD3+0]=!@O
+            min = 2; max = 2; return true; // Case 19 [#16rD3+0]=!@O
           }
         }
         break;
       case 1:
-        if (deg == 2) {
-          min = 1; max = 1; mcase = 18; return true; // Case 18 [#16rD2+]
+        if (allatomdeg == 2) {
+          min = 1; max = 1; return true; // Case 18 [#16rD2+]
         }
       }
       break;
     case 34: // selenium (selenophene)
       if (chg == 0 && deg == 2) {
-        min = 2; max = 2; mcase = 22; return true; // Case 22 [#34rD2+0]
+        min = 2; max = 2; return true; // Case 22 [#34rD2+0]
       }
     }
 
@@ -713,11 +714,11 @@ namespace OpenBabel
     // arsabenzene, etc. (*really* not v.aromatic)
     // [#33rD3+0]		2	2
     // tellurophene, etc. (*really* not v.aromatic)
-    //[#52rD2+0]		2	2
+    // [#52rD2+0]		2	2
     // stilbabenzene, etc. (very little aromatic character)
     // [#51rD3+0]		2	2
 
-    min = 0; max = 0; mcase = 0;// nothing matched
+    min = 0; max = 0; // nothing matched
     return false;
   }
 
@@ -750,63 +751,10 @@ namespace OpenBabel
     for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
       bond->UnsetAromatic();
 
-    int idx;
-    vector<vector<int> >::iterator m;
-    vector<OBSmartsPattern*>::iterator k;
-
-    //mark atoms as potentially aromatic
-    std::vector<unsigned int> debug_matchedpatterns;
-    debug_matchedpatterns.resize(mol.NumAtoms() + 1, 0);
-    for (idx=0,k = _vsp.begin();k != _vsp.end();++k,++idx)
-      if ((*k)->Match(mol))
-        {
-          _mlist = (*k)->GetMapList();
-          for (m = _mlist.begin();m != _mlist.end();++m)
-            {
-              _vpa[(*m)[0]] = true;
-              _velec[(*m)[0]] = _verange[idx];
-              debug_matchedpatterns[(*m)[0]] = idx+1;
-            }
-        }
-
     // New code using lookups instead of SMARTS patterns
     FOR_ATOMS_OF_MOL(atom, mol) {
-      if (atom->GetImplicitValence() > 3)
-        continue;
       unsigned int idx = atom->GetIdx();
-      int mycase, mymin, mymax;
-      // _vpa[idx] = AssignOBAromaticityModel(&(*atom), _velec[idx].first, _velec[idx].second);
-      bool myvpa = AssignOBAromaticityModel(&(*atom), mymin, mymax, mycase);
-      if (mycase != debug_matchedpatterns[idx])
-        fprintf(stderr, "mycase is %d but pattern is %d for atom %d of %s\n", mycase, debug_matchedpatterns[idx], idx, mol.GetTitle());
-      if (myvpa != _vpa[idx])
-        fprintf(stderr, "myvpa != vpa for atom %d of %s\n", idx, mol.GetTitle());
-      if (mymin != _velec[idx].first)
-        fprintf(stderr, "mymin is %d but is supposed to be %d for atom %d of %s\n", mymin, _velec[idx].first, idx, mol.GetTitle());
-      if (mymax != _velec[idx].second)
-        fprintf(stderr, "mymax is %d but is supposed to be %d for atom %d of %s\n", mymax, _velec[idx].second, idx, mol.GetTitle());
-    }
-
-
-    //sanity check - exclude all 4 substituted atoms and sp centers
-    for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-      {
-        if (atom->GetImplicitValence() > 3)
-          {
-            _vpa[atom->GetIdx()] = false;
-            continue;
-          }
-
-        switch(atom->GetAtomicNum())
-          {
-            //phosphorus and sulfur may be initially typed as sp3
-          case 6:
-          case 7:
-          case 8:
-            if (atom->GetHyb() != 2)
-              _vpa[atom->GetIdx()] = false;
-            break;
-          }
+      _vpa[idx] = AssignOBAromaticityModel(&(*atom), _velec[idx].first, _velec[idx].second);
       }
 
     //propagate potentially aromatic atoms
