@@ -68,8 +68,6 @@ class OBAPI OBAromaticTyper : public OBGlobalDataBase
     std::vector<bool>             _vpa;   //!< potentially aromatic atoms
     std::vector<bool>             _visit;
     std::vector<bool>             _root;
-    std::vector<std::vector<int> >     _mlist;
-    std::vector<OBSmartsPattern*> _vsp;   //!< SMARTS of potentially aromatic atoms
     std::vector<std::pair<int,int> >   _verange; //!< min and max number of electrons
     std::vector<std::pair<int,int> >   _velec;   //!< # electrons an atom contributes
 public:
@@ -77,7 +75,7 @@ public:
     ~OBAromaticTyper();
 
     //! \return the number of SMARTS patterns
-    size_t GetSize()                 { return _vsp.size();}
+    size_t GetSize()                 { return 0;} // SMARTS are no longer used by this class
 
     void ParseLine(const char*);
     //! Assign aromaticity flag to atoms and bonds
