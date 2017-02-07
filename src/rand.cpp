@@ -507,7 +507,7 @@ namespace OpenBabel
       }
     while( s >= 1.0 || s == 0.0);
     s = sqrt((-2.0 * log(s)) / s);
-    return v1 * s;
+    return ((v1 * s * std) + mean);
   }
 
   void OBRandom::TimeSeed()
