@@ -469,7 +469,7 @@ namespace OpenBabel
     //   2 -> HasTwoSingleRingBonds
     //   4 -> HasRingDblBond
 
-    unsigned int ans;
+    unsigned int ans = 0;
     unsigned int totSingleRingBonds = 0;
 
     FOR_BONDS_OF_ATOM(bond, atm) {
