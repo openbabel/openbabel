@@ -22,9 +22,8 @@ GNU General Public License for more details.
 #include <openbabel/typer.h>
 #include <openbabel/obiter.h>
 
-// private data headers with default parameters
+// private data header with default parameters
 #include "atomtyp.h"
-#include "aromatic.h"
 
 #ifdef WIN32
 #pragma warning (disable : 4786)
@@ -419,7 +418,7 @@ namespace OpenBabel
     _envvar = "BABEL_DATADIR";
     _filename = "aromatic.txt";
     _subdir = "data";
-    _dataptr = AromaticData;
+    _dataptr = (const char*)0; // AromaticData;
   }
 
   void OBAromaticTyper::ParseLine(const char *buffer)
