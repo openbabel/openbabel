@@ -468,10 +468,10 @@ namespace OpenBabel
     //   1 -> HasAcyclicDblBondToOxygen
     //   2 -> HasTwoSingleRingBonds
     //   4 -> HasRingDblBond
-    unsigned int hasAcyclicDblBondToOxygen = false; 
+
+    unsigned int ans;
     unsigned int totSingleRingBonds = 0;
-    bool hasRingDblBond = false;
-    
+
     FOR_BONDS_OF_ATOM(bond, atm) {
       OBAtom *nbr = bond->GetNbrAtom(atm);
       unsigned int nbr_elem = nbr->GetAtomicNum();
@@ -480,19 +480,19 @@ namespace OpenBabel
       if (bond->IsInRing()) {
         switch (bo) {
         case 2:
-          hasRingDblBond = true; break;
+          ans |= 4; break; // HasRingDblBond
         case 1:
           totSingleRingBonds++; break;
         }
       } else { // acyclic
         if (bo == 2 && nbr_elem == 8)
-          hasAcyclicDblBondToOxygen = true;
+          ans |= 1; // HasAcyclicDblBondToOxygen
       }
     }
     
-    unsigned int ans = (totSingleRingBonds >= 2) ? 2 : 0;
-    ans |= hasAcyclicDblBondToOxygen;
-    ans |= hasRingDblBond << 2;
+    if (totSingleRingBonds >= 2)
+      ans |= 2;
+
     return ans;
   }
   static unsigned int ThreeCarbonTestsInOne(OBAtom *atm)
