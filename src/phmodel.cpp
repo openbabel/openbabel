@@ -127,11 +127,11 @@ namespace OpenBabel
     for (i = _vschrg.begin();i != _vschrg.end();++i)
       if (i->first->Match(mol))
         {
-          _mlist = i->first->GetUMapList();
+          std::vector<std::vector<int> > mlist = i->first->GetUMapList();
           unsigned int k;
           vector<vector<int> >::iterator j;
 
-          for (j = _mlist.begin();j != _mlist.end();++j)
+          for (j = mlist.begin();j != mlist.end();++j)
             for (k = 0;k < j->size();++k)
               mol.GetAtom((*j)[k])->SetPartialCharge(i->second[k]);
         }
