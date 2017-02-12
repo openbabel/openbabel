@@ -37,8 +37,6 @@ namespace OpenBabel
 // class introduction in typer.cpp
 class OBAPI OBAtomTyper : public OBGlobalDataBase
 {
-  //    int                                                      _rc;
-  std::vector<std::vector<int> >                           _mlist; //!< match list for atom typing
   std::vector<std::pair<OBSmartsPattern*,int> >            _vinthyb; //!< internal hybridization rules
   std::vector<std::pair<OBSmartsPattern*,int> >            _vimpval; //!< internal implicit valence rules
   std::vector<std::pair<OBSmartsPattern*,std::string> >    _vexttyp; //!< external atom type rules
@@ -83,7 +81,6 @@ public:
 // class introduction in typer.cpp
 class OBAPI OBRingTyper : public OBGlobalDataBase
 {
-  std::vector<std::vector<int> >                           _mlist; //!< match list for atom typing
   std::vector<std::pair<OBSmartsPattern*,std::string> >    _ringtyp; //!< ring type rules
 
 public:

@@ -167,8 +167,8 @@ namespace OpenBabel
     for (i = _vexttyp.begin();i != _vexttyp.end();++i)
       if (i->first->Match(mol))
         {
-          _mlist = i->first->GetMapList();
-          for (j = _mlist.begin();j != _mlist.end();++j)
+          std::vector<std::vector<int> > mlist = i->first->GetMapList();
+          for (j = mlist.begin();j != mlist.end();++j)
             mol.GetAtom((*j)[0])->SetType(i->second);
         }
 
@@ -217,8 +217,8 @@ namespace OpenBabel
     for (i = _vinthyb.begin();i != _vinthyb.end();++i)
       if (i->first->Match(mol))
         {
-          _mlist = i->first->GetMapList();
-          for (j = _mlist.begin();j != _mlist.end();++j)
+          std::vector<std::vector<int> > mlist = i->first->GetMapList();
+          for (j = mlist.begin();j != mlist.end();++j)
             mol.GetAtom((*j)[0])->SetHyb(i->second);
         }
   }
@@ -251,8 +251,8 @@ namespace OpenBabel
     for (i = _vimpval.begin();i != _vimpval.end();++i)
       if (i->first->Match(mol))
         {
-          _mlist = i->first->GetMapList();
-          for (j = _mlist.begin();j != _mlist.end();++j)
+          std::vector<std::vector<int> > mlist = i->first->GetMapList();
+          for (j = mlist.begin();j != mlist.end();++j)
             mol.GetAtom((*j)[0])->SetImplicitValence(i->second);
         }
 
@@ -376,8 +376,8 @@ namespace OpenBabel
     unsigned int member_count;
     for (i2 = _ringtyp.begin();i2 != _ringtyp.end();++i2) { // for each ring type
       if (i2->first->Match(mol)) {
-        _mlist = i2->first->GetMapList();
-        for (j2 = _mlist.begin();j2 != _mlist.end();++j2) { // for each found match
+        std::vector<std::vector<int> > mlist = i2->first->GetMapList();
+        for (j2 = mlist.begin();j2 != mlist.end();++j2) { // for each found match
 
           for (i = rlist.begin();i != rlist.end();++i) { // for each ring
             member_count = 0;
@@ -448,8 +448,8 @@ namespace OpenBabel
     for (idx = 0, k = _aromtyper->_vsp.begin(); k != _aromtyper->_vsp.end(); ++k, ++idx)
       if ((*k)->Match(mol))
       {
-        std::vector<std::vector<int> > _mlist = (*k)->GetMapList();
-        for (vector<vector<int> >::iterator m = _mlist.begin(); m != _mlist.end(); ++m)
+        std::vector<std::vector<int> > mlist = (*k)->GetMapList();
+        for (vector<vector<int> >::iterator m = mlist.begin(); m != mlist.end(); ++m)
         {
           _vpa[(*m)[0]] = true;
           _velec[(*m)[0]] = _aromtyper->_verange[idx];
