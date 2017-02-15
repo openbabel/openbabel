@@ -30,7 +30,7 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel
 {
-#if defined(__CYGWIN32__) || defined(__MINGW32__)
+#if defined(__CYGWIN__) || defined(__MINGW32__)
   // macro to implement static OBPlugin::PluginMapType& Map()
   PLUGIN_CPP_FILE(OBFingerprint)
 #endif

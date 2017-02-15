@@ -1558,8 +1558,8 @@ int CreateOneComponentINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, INP_ATOM_DATA *in
                                              TG_FLAG_FOUND_ISOTOPIC_ATOM_DONE ))?
                          (ip->nMode & REQ_MODE_ISO):0;
 
-        if ( k==TAUT_NON && (ip->nMode & REQ_MODE_BASIC ) ||
-             k==TAUT_YES && (ip->nMode & REQ_MODE_TAUT )     ) {
+        if ( (k==TAUT_NON && (ip->nMode & REQ_MODE_BASIC )) ||
+             (k==TAUT_YES && (ip->nMode & REQ_MODE_TAUT ))     ) {
             /*  alloc INChI and INChI_Aux */
             cur_INChI[k]     = Alloc_INChI( inp_cur_data->at, inp_cur_data->num_at, &inp_cur_data->num_bonds,
                                           &inp_cur_data->num_isotopic, nAllocMode );
@@ -1684,8 +1684,8 @@ int CreateOneComponentINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, INP_ATOM_DATA *in
         /*  find where the current processed structure is located */
         int cur_is_in_non_taut = (pINChI[i][TAUT_NON] && pINChI[i][TAUT_NON]->nNumberOfAtoms>0);
         int cur_is_in_taut     = (pINChI[i][TAUT_YES] && pINChI[i][TAUT_YES]->nNumberOfAtoms>0);
-        int cur_is_non_taut = cur_is_in_non_taut && 0 == pINChI[i][TAUT_NON]->lenTautomer ||
-                              cur_is_in_taut     && 0 == pINChI[i][TAUT_YES]->lenTautomer;
+        int cur_is_non_taut = (cur_is_in_non_taut && 0 == pINChI[i][TAUT_NON]->lenTautomer) ||
+                              (cur_is_in_taut     && 0 == pINChI[i][TAUT_YES]->lenTautomer);
         int cur_is_taut     = cur_is_in_taut     && 0 <  pINChI[i][TAUT_YES]->lenTautomer;
         /*
         sd->bTautFlags[iINChI]     |= bTautFlags;
@@ -1701,7 +1701,7 @@ int CreateOneComponentINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, INP_ATOM_DATA *in
             for ( j = j1; j <= j2; j ++ ) {
                 int bIsotopic = (pINChI[i][j]->nNumberOfIsotopicAtoms ||
                                  pINChI[i][j]->nNumberOfIsotopicTGroups ||
-                                 pINChI[i][j]->nPossibleLocationsOfIsotopicH && pINChI[i][j]->nPossibleLocationsOfIsotopicH[0]>1);
+                                 (pINChI[i][j]->nPossibleLocationsOfIsotopicH && pINChI[i][j]->nPossibleLocationsOfIsotopicH[0]>1));
                 if ( j == TAUT_YES ) {
                     bIsotopic |= (0 < pINChI_Aux[i][j]->nNumRemovedIsotopicH[0] + 
                                       pINChI_Aux[i][j]->nNumRemovedIsotopicH[1] +
@@ -2403,7 +2403,7 @@ int PreprocessOneStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, ORIG_ATOM_DATA *or
         if ( sd->nErrorType < _IS_WARNING ) {
             sd->nErrorType = _IS_WARNING;
         }
-        if ( i = ReconcileAllCmlBondParities( prep_inp_data->at, prep_inp_data->num_inp_atoms, 0 ) ) {
+        if ( (i = ReconcileAllCmlBondParities( prep_inp_data->at, prep_inp_data->num_inp_atoms, 0 )) ) {
             char szErrCode[16];
             sprintf( szErrCode, "%d", i);
             AddMOLfileError( sd->pStrErrStruct, "0D Parities Reconciliation failed:" );
@@ -2434,7 +2434,7 @@ int PreprocessOneStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, ORIG_ATOM_DATA *or
     /* for global isotopic tautomerism                         */
     /***********************************************************/
 
-    if ( i = bNumHeterAtomHasIsotopicH( prep_inp_data->at, prep_inp_data->num_inp_atoms ) ) {
+    if ( (i = bNumHeterAtomHasIsotopicH( prep_inp_data->at, prep_inp_data->num_inp_atoms )) ) {
         if ( i & 1 ) {
             sd->bTautFlagsDone[INCHI_BAS] |= TG_FLAG_FOUND_ISOTOPIC_H_DONE;
         }
@@ -2528,7 +2528,7 @@ int PreprocessOneStructure( STRUCT_DATA *sd, INPUT_PARMS *ip, ORIG_ATOM_DATA *or
                 }
             }
 
-            if ( i = ReconcileAllCmlBondParities( prep_inp_data->at, prep_inp_data->num_inp_atoms, 1 ) ) {
+            if ( (i = ReconcileAllCmlBondParities( prep_inp_data->at, prep_inp_data->num_inp_atoms, 1 )) ) {
                 char szErrCode[16];
                 sprintf( szErrCode, "%d", i);
                 AddMOLfileError( sd->pStrErrStruct, "0D Parities Reconciliation failed:" );
@@ -3418,7 +3418,7 @@ int CreateOneStructureINChI( STRUCT_DATA *sd, INPUT_PARMS *ip, char *szTitle,
         }
 #ifndef TARGET_LIB_FOR_WINCHI  /* { */
 #if ( bREUSE_INCHI == 1 )
-        if ( iINChI == INCHI_REC && (!ip->bDisplay && !ip->bDisplayCompositeResults && !(ip->bCompareComponents & CMP_COMPONENTS) ||
+        if ( iINChI == INCHI_REC && ((!ip->bDisplay && !ip->bDisplayCompositeResults && !(ip->bCompareComponents & CMP_COMPONENTS)) ||
                                    sd->bUserQuitComponentDisplay) ) {
             /* reconnected structure (06-20-2005: added "&& !ip->bDisplayCompositeResults" to display composite structure) */
             int m = iINChI-1;
@@ -4003,5 +4003,3 @@ exit_error:
     return ret;
 }
 #endif /* } COMPILE_ANSI_ONLY */
-
-

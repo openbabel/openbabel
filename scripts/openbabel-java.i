@@ -58,6 +58,9 @@
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/stereo/squareplanar.h>
 #include <openbabel/stereo/bindings.h>
+
+#include <openbabel/bondtyper.h>
+#include <openbabel/phmodel.h>
 %}
 
 #ifdef HAVE_EIGEN
@@ -233,7 +236,7 @@ CAST_GENERICDATA_TO(VirtualBond)
 %warnfilter(516) OpenBabel::SpaceGroup; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/math/spacegroup.h>
 
-# CloneData should be used instead of the following method
+// CloneData should be used instead of the following method
 %ignore OpenBabel::OBBase::SetData;
 %ignore OpenBabel::OBBase::GetData(char const *);
 %ignore OpenBabel::OBBase::HasData(char const *);
@@ -313,7 +316,7 @@ IGNORE_ITER(OBMol, Residue)
 %ignore OpenBabel::OBForceField::DiverseConfGen;
 #endif
 
-# Ignore shadowed methods
+// Ignore shadowed methods
 %ignore OpenBabel::OBForceField::VectorSubtract(const double *const, const double *const, double *);
 %ignore OpenBabel::OBForceField::VectorMultiply(const double *const, const double, double *);
 %warnfilter(516) OpenBabel::OBForceField; // Ignoring std::string methods in favour of char* ones
@@ -331,20 +334,20 @@ IGNORE_ITER(OBMol, Residue)
 
 %warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
 %include <openbabel/bitvec.h>
-# Ignore shadowed method
+// Ignore shadowed method
 %ignore OpenBabel::OBRotor::GetRotAtoms() const;
 %include <openbabel/rotor.h>
 %ignore OpenBabel::Swab;
 %include <openbabel/rotamer.h>
 %include <openbabel/spectrophore.h>
 
-# The following %ignores avoid warning messages due to shadowed classes.
-# This does not imply a loss of functionality as (in this case)
-# the shadowed class is identical (from the point of view of SWIG) to
-# the shadowing class.
-# This is because C++ references (&) are transformed by SWIG back into
-# pointers, so that OBAtomIter(OBMol &) would be treated the same as
-# OBAtomIter(OBMol *).
+// The following %ignores avoid warning messages due to shadowed classes.
+// This does not imply a loss of functionality as (in this case)
+// the shadowed class is identical (from the point of view of SWIG) to
+// the shadowing class.
+// This is because C++ references (&) are transformed by SWIG back into
+// pointers, so that OBAtomIter(OBMol &) would be treated the same as
+// OBAtomIter(OBMol *).
 
 %ignore OBAtomAtomIter(OBAtom &);
 %ignore OBAtomBondIter(OBAtom &);

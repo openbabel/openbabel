@@ -41,6 +41,7 @@ set(descriptors
 set(fingerprints
   fingerprints/finger2.cpp
   fingerprints/finger3.cpp
+  fingerprints/fingerecfp.cpp
 )
 
 set(forcefields

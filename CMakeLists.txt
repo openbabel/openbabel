@@ -20,6 +20,17 @@ if(COMMAND cmake_policy)
 endif()
 
 include (CheckCXXCompilerFlag)
+
+CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+if(COMPILER_SUPPORTS_CXX11)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+elseif(COMPILER_SUPPORTS_CXX0X)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+else()
+        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Multi-threaded applications may experience race conditions.")
+endif()
+
 include (MacroEnsureVersion)
 
 # Version numbering - should be bumped for each release
@@ -75,7 +86,9 @@ else() # Windows - bin dir = lib dir to load libraries
     endif(ENABLE_VERSIONED_FORMATS)
   endif()
 endif()
-set(OB_INCLUDE_DIRS "include/openbabel-2.0")
+if(NOT DEFINED OB_INCLUDE_DIRS)
+  set(OB_INCLUDE_DIRS "include/openbabel-2.0")
+endif()
 set(OB_EXPORTS_FILE "${openbabel_BINARY_DIR}/OpenBabel2_EXPORTS.cmake")
 # Ensure a fresh file is made each time CMake is run
 file(REMOVE "${OB_EXPORTS_FILE}")
@@ -150,7 +163,7 @@ if(OPENBABEL_USE_SYSTEM_INCHI)
   endif()
 else()
   message(STATUS "Using included inchi library.")
-#  set(INCHI_LIBRARY inchi)				... set INCHI_LIBRARY amd INCH_INCLUDE_DIR by commandline
+  set(INCHI_LIBRARY inchi)
 endif()
 
 if(WIN32)
@@ -308,26 +321,45 @@ if(MINGW)
   set (CMAKE_EXE_LINKER_FLAGS "-Wl,--enable-auto-import ${CMAKE_EXE_LINKER_FLAGS}")
 endif()
 
-if(CMAKE_COMPILER_IS_GNUCXX)
-  if(NOT GCC_IS_NEWER_THAN_4_0) # GCC 3.x
-    find_package(Boost)
-    if(Boost_FOUND)
-      include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
-      add_definitions(-DUSE_BOOST -DHAVE_SHARED_POINTER)
-      set(SHARED_POINTER true)
-    else()
-      message(FATAL_ERROR "Boost is required to compile OpenBabel with GCC 3.x")
-    endif()
-  else()
-    add_definitions(-DHAVE_SHARED_POINTER)
+message(STATUS "Checking available shared pointer...")
+include(CheckCXXSourceCompiles)
+check_cxx_source_compiles("#include <memory>
+                           int main(){ std::shared_ptr<int> p; return 0; }"
+                           HAVE_STD_SHARED_PTR)
+check_cxx_source_compiles("#include <memory>
+                           int main(){ std::tr1::shared_ptr<int> p; return 0; }"
+                           HAVE_STD_TR1_SHARED_PTR)
+check_cxx_source_compiles("#include <tr1/memory>
+                           int main(){ std::tr1::shared_ptr<int> p; return 0; }"
+                           HAVE_STD_TR1_SHARED_PTR_IN_TR1_HEADER)
+if(HAVE_STD_SHARED_PTR)
+  set(OB_SHARED_PTR_IMPLEMENTATION "std::shared_ptr")
+  set(OB_SHARED_PTR_HEADER "memory")
+  set(SHARED_POINTER true)
+  add_definitions(-DHAVE_SHARED_POINTER)
+elseif(HAVE_STD_TR1_SHARED_PTR)
+  set(OB_SHARED_PTR_IMPLEMENTATION "std::tr1::shared_ptr")
+  set(OB_SHARED_PTR_HEADER "memory")
+  set(SHARED_POINTER true)
+  add_definitions(-DHAVE_SHARED_POINTER)
+elseif(HAVE_STD_TR1_SHARED_PTR_IN_TR1_HEADER)
+  set(OB_SHARED_PTR_IMPLEMENTATION "std::tr1::shared_ptr")
+  set(OB_SHARED_PTR_HEADER "tr1/memory")
+  set(SHARED_POINTER true)
+  add_definitions(-DHAVE_SHARED_POINTER)
+else()
+  find_package(Boost)
+  if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
+    add_definitions(-DUSE_BOOST -DHAVE_SHARED_POINTER)
     set(SHARED_POINTER true)
+  else()
+    message(FATAL_ERROR "Boost is required to compile OpenBabel with GCC 3.x")
   endif()
+  set(OB_SHARED_PTR_IMPLEMENTATION "boost::shared_ptr")
+  set(OB_SHARED_PTR_HEADER "boost/memory")
 endif()
-
-if (${CMAKE_CXX_COMPILER_ID} MATCHES Clang)
-   set(SHARED_POINTER true)
-   add_definitions(-DHAVE_SHARED_POINTER)
-endif()
+message(STATUS "Use ${OB_SHARED_PTR_IMPLEMENTATION} in ${OB_SHARED_PTR_HEADER}")
 
 # Intel C++ Compiler
 # Note: Windows version uses different options!
@@ -381,16 +413,6 @@ if(ENABLE_OPENMP)
   endif()
 endif()
 
-if(MSVC)
-  message(STATUS "MSVC_VERSION =" ${MSVC_VERSION})
-  if (${MSVC_VERSION} EQUAL 1600)
-    # To be added: AND SP1  OR gcc>4.0
-    add_definitions(-DHAVE_SHARED_POINTER)
-    set(SHARED_POINTER true)
-    message("SHARED_POINTER set")
-  endif()
-endif()
-
 # Some rpath handling for Linux and Mac
 if(UNIX AND BUILD_SHARED)
   if(APPLE)
@@ -424,7 +446,7 @@ file(GLOB_RECURSE headers include/openbabel/*.h)
 configure_file(${openbabel_SOURCE_DIR}/src/config.h.cmake
   ${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h)
 install(FILES ${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h
-  DESTINATION include/openbabel-2.0/openbabel)
+  DESTINATION ${OB_INCLUDE_DIRS}/openbabel)
 if(NOT MSVC)
   configure_file(${openbabel_SOURCE_DIR}/openbabel-2.0.pc.cmake
     ${openbabel_BINARY_DIR}/openbabel-2.0.pc @ONLY)
@@ -458,13 +480,13 @@ else(CAIRO_FOUND)
   message(STATUS "Could NOT find Cairo. PNG output will NOT be supported.")
 endif(CAIRO_FOUND)
 
-# Should we enable optimizations for the native architecture?
+# Should we enable optimizations for the native CPU architecture?
 # (this will speed up similarity calculations and maybe those involving Eigen)
 if(NOT MSVC)
-  option(OPTIMIZE_NATIVE "Optimize for native architecture. Turn off if cross-compiling." ON)
+  option(OPTIMIZE_NATIVE "Optimize for native CPU architecture. Turn off if compiling for distribution/reuse on other machines." OFF)
   if(OPTIMIZE_NATIVE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
-    message(STATUS "Optimizing code for this machine's architecture. Use -DOPTIMIZE_NATIVE=OFF if cross-compiling.")
+    message(STATUS "Optimizing code for this machine's CPU architecture. Use -DOPTIMIZE_NATIVE=OFF if compiling for distribution/reuse on other machines.")
   endif()
 endif()
 
@@ -591,3 +613,14 @@ install(FILES "${openbabel_BINARY_DIR}/OpenBabel2ConfigInstall.cmake"
 install(FILES "${openbabel_BINARY_DIR}/OpenBabel2ConfigVersion.cmake"
   DESTINATION ${OB_CONFIG_DIR}
   COMPONENT Development)
+
+# from https://cmake.org/Wiki/RecipeAddUninstallTarget
+########### Add uninstall target ###############
+if (NOT DEFINED EMBED_OPENBABEL)
+CONFIGURE_FILE(
+  "${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/cmake/cmake_uninstall.cmake"
+  IMMEDIATE @ONLY)
+ADD_CUSTOM_TARGET(uninstall
+  "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake/cmake_uninstall.cmake")
+endif()

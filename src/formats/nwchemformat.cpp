@@ -17,10 +17,11 @@ GNU General Public License for more details.
 #include <openbabel/obmolecformat.h>
 
 // Required for imaginary frequencies detection
-#include <cmath> 
+#include <cmath>
 // Required for TS detection in ZTS calculation
 #include <algorithm>
 #define HARTREE_TO_KCAL 627.509469
+#define AU_TO_ANGSTROM 0.529177249
 #define EV_TO_NM(x) 1239.84193/x
 
 using namespace std;
@@ -43,9 +44,9 @@ namespace OpenBabel
         "Read Options e.g. -as\n"
         " s  Output single bonds only\n"
         " f  Overwrite molecule if more than one\n"
-        "calculations with different molecules\n"
-        "input in one output file detected\n"
-        "(last calculation will be prefered)\n"
+        "    calculation with different molecules\n"
+        "    is present in the output file\n"
+        "    (last calculation will be prefered)\n"
         " b  Disable bonding entirely\n\n";
     };
 
@@ -67,24 +68,28 @@ namespace OpenBabel
     void ReadCoordinates(istream* ifs, OBMol* molecule);
     void ReadPartialCharges(istream* ifs, OBMol* molecule);
     void ReadOrbitals(istream* ifs, OBMol* molecule);
-    void ReadDipoleMoment(istream* ifs, OBMol* molecule);
+    void ReadMultipoleMoment(istream* ifs, OBMol* molecule);
 
     void ReadFrequencyCalculation(istream* ifs, OBMol* molecule);
     void ReadGeometryOptimizationCalculation(istream* ifs, OBMol* molecule);
     void ReadSinglePointCalculation(istream* ifs, OBMol* molecule);
     void ReadZTSCalculation(istream* ifs, OBMol* molecule);
     void ReadTDDFTCalculation(istream* ifs, OBMol* molecule);
+    void ReadMEPCalculation(istream* ifs, OBMol* molecule);
+    void ReadNEBCalculation(istream* ifs, OBMol* molecule);
   };
 
 static const char* COORDINATES_PATTERN = "Output coordinates";
 static const char* GEOMETRY_OPTIMIZATION_PATTERN = "NWChem Geometry Optimization";
 static const char* PROPERTY_CALCULATION_PATTERN = "NWChem Property Module";
 static const char* ZTS_CALCULATION_PATTERN = "@ String method.";
+static const char* NEB_CALCULATION_PATTERN = "NWChem Minimum Energy Pathway Program (NEB)";
 static const char* PYTHON_CALCULATION_PATTERN = "NWChem Python program";
 static const char* ESP_CALCULATION_PATTERN = "NWChem Electrostatic Potential Fit Module";
 static const char* SCF_CALCULATION_PATTERN = "SCF Module";
 static const char* DFT_CALCULATION_PATTERN = "DFT Module";
 static const char* TDDFT_CALCULATION_PATTERN = "TDDFT Module";
+static const char* MEP_CALCULATION_PATTERN = "Gonzalez & Schlegel IRC Optimization";
 static const char* SCF_ENERGY_PATTERN = "SCF energy =";
 static const char* DFT_ENERGY_PATTERN = "DFT energy =";
 static const char* FREQUENCY_PATTERN = "NWChem Nuclear Hessian and Frequency Analysis";
@@ -104,7 +109,14 @@ static const char* NBEADS_PATTERN = "@ Number of replicas";
 static const char* ROOT_PATTERN = "Root";
 static const char* OSCILATOR_STRENGTH_PATTERN = "Oscillator Strength";
 static const char* SPIN_FORBIDDEN_PATTERN = "Spin forbidden";
-static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
+static const char* MULTIPOLE_MOMENT_PATTERN = "Multipole analysis of the density";
+static const char* MEP_STEP_END_PATTERN = "&  Point";
+static const char* NEB_BEAD_START_PATTERN = "neb: running bead";
+static const char* NEB_BEAD_ENERGY_PATTERN = "neb: final energy";
+static const char* NEB_NBEADS_PATTERN = "number of images in path";
+static const char* GRADIENT_PATTERN = "ENERGY GRADIENTS";
+// Two spaces are nessesary to avoid matching "IRC Optimization converged"
+static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
 
   //Make an instance of the format class
   NWChemOutputFormat theNWChemOutputFormat;
@@ -146,7 +158,7 @@ static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
 
   /////////////////////////////////////////////////////////////////
   /**
-  Moves stream (ifs) position to end of calculation. 
+  Moves stream (ifs) position to end of calculation.
   */
   static void GotoCalculationEnd(istream* ifs)
   {
@@ -159,7 +171,7 @@ static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
 
   //////////////////////////////////////////////////////
   /**
-  Method reads coordinates from input stream (ifs) and 
+  Method reads coordinates from input stream (ifs) and
   writes it into supplied OBMol object (molecule).
   Input stream must be set to begining of coordinates
   table in nwo file. (Line after "Output coordinates...")
@@ -208,7 +220,7 @@ static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
             // check atomic number
             if ((i>=natoms) || (molecule->GetAtom(i+1)->GetAtomicNum() != atoi(vs[2].c_str())))
             {
-                delete coordinates;
+                delete[] coordinates;
                 return;
             }
             coordinates[i*3] = x;
@@ -221,43 +233,87 @@ static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
         tokenize(vs,buffer);
     }
     if ((from_scratch)||(i != natoms))
+      {
+        delete[] coordinates;
         return;
+      }
     molecule->AddConformer(coordinates);
   }
 
 //////////////////////////////////////////////////////
   /**
-  Method reads dipole moment from input stream (ifs)
+  Method reads charge, dipole and quadrupole moment from input stream (ifs)
   and writes them to supplied OBMol object (molecule)
-  Input stream must be set to begining of dipole moment
-  section in nwo file. (Line after "Nuclear Dipole moment (a.u.)")
-  Stream will be set to the end of dipole moment section.
+  Input stream must be set to begining of Multipole moment
+  section in nwo file. (Line after "Multipole analysis of the density")
+  Stream will be set to the end of multipole moment section.
   */
-  void NWChemOutputFormat::ReadDipoleMoment(istream* ifs, OBMol* molecule)
+  void NWChemOutputFormat::ReadMultipoleMoment(istream* ifs, OBMol* molecule)
   {
     if ((ifs == NULL) || (molecule == NULL))
         return;
 
     char buffer[BUFF_SIZE];
     vector<string> vs;
-    double x, y, z;
+    matrix3x3 quadrupole;
+    double dipole[3];
+    int charge;
+    bool blank_line = false;
 
     ifs->getline(buffer, BUFF_SIZE); // -------
+    ifs->getline(buffer, BUFF_SIZE); // blank
     ifs->getline(buffer, BUFF_SIZE); // Header
     ifs->getline(buffer, BUFF_SIZE); // -------
-    ifs->getline(buffer, BUFF_SIZE); // Dipole moment
-    tokenize(vs, buffer);
-    // X                 Y               Z
-    // 0                 1               2
-    if (vs.size() < 3)
-        return;
-    x = atof(vs[0].c_str());
-    y = atof(vs[1].c_str());
-    z = atof(vs[2].c_str());
-    OBVectorData* dipole_moment = new OBVectorData;
-    dipole_moment->SetData(x, y, z);
-    dipole_moment->SetAttribute("Dipole Moment");
-    molecule->SetData(dipole_moment);
+
+    while (ifs->getline(buffer, BUFF_SIZE))
+    {
+        tokenize(vs, buffer);
+        // L   x y z        total         alpha         beta         nuclear
+        // L   x y z        total         open         nuclear
+        // 0   1 2 3          4             5            6             7
+        if (vs.size() < 7)
+        {
+            if (blank_line)
+            {
+                molecule->SetTotalCharge(charge);
+                OBVectorData* dipole_moment = new OBVectorData;
+                dipole_moment->SetData(vector3(dipole));
+                dipole_moment->SetAttribute("Dipole Moment");
+                molecule->SetData(dipole_moment);
+                OBMatrixData* quadrupole_moment = new OBMatrixData;
+                quadrupole_moment->SetData(quadrupole);
+                quadrupole_moment->SetAttribute("Quadrupole Moment");
+                molecule->SetData(quadrupole_moment);
+                return;
+            }
+            // Second blank line means end of multipole section
+            blank_line = true;
+            continue;
+        }
+        blank_line = false;
+        if (vs[0][0] == '0')
+            charge = atoi(vs[4].c_str());
+        else if (vs[0][0] == '1')
+            for (unsigned int i = 0; i < 3; i++)
+                if (vs[i+1][0] == '1')
+                    dipole[i] = atof(vs[4].c_str());
+        else if (vs[0][0] == '2')
+        {
+            double value = atof(vs[4].c_str());
+            unsigned int i[2], j = 0;
+            for (unsigned int k = 0 ; k<3; k++)
+            {
+                if (vs[k+1][0] == '2')
+                    i[0] = i[1] = k; // Diagonal elements
+                else if (vs[k+1][0] == '1')
+                    i[j++] = k;
+            }
+            quadrupole.Set(i[0], i[1], value);
+            quadrupole.Set(i[1], i[0], value);
+        }
+        else
+            return;
+    }
   }
 
   //////////////////////////////////////////////////////
@@ -456,6 +512,65 @@ static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
 
   //////////////////////////////////////////////////////
   /**
+  Method reads IRC steps from input stream (ifs)
+  and writes it to supplied OBMol object (molecule).
+  Input stream must be set to begining of Minimal Energy
+  Path IRC calculation in nwo file.
+  (Line after "Gonzalez & Schlegel IRC Optimization")
+  Method wont work if "molecule" already contains data
+  about conformers.
+  After all stream will be set at the end of calculation.
+  */
+  void NWChemOutputFormat::ReadMEPCalculation(istream* ifs, OBMol* molecule)
+  {
+    if ((molecule == NULL) || (ifs == NULL))
+        return;
+    if (molecule->NumConformers() > 0)
+        return;
+
+    vector<string> vs;
+    char buffer[BUFF_SIZE];
+    vector<double> energies;
+
+    while (ifs->getline(buffer, BUFF_SIZE))
+    {
+        if(strstr(buffer, OPTIMIZATION_END_PATTERN) != NULL)
+        {
+            while(ifs->getline(buffer, BUFF_SIZE))
+            {
+                if (strstr(buffer, COORDINATES_PATTERN))
+                    ReadCoordinates(ifs, molecule);
+                else if (strstr(buffer, OPTIMIZATION_STEP_PATTERN))
+                {
+                    ifs->getline(buffer, BUFF_SIZE); // ------
+                    ifs->getline(buffer, BUFF_SIZE);
+                    tokenize(vs, buffer);
+                    molecule->SetConformer(molecule->NumConformers() - 1);
+                    if (vs.size() > 2) // @ NStep   Energy...
+                        energies.push_back(atof(vs[2].c_str()) * HARTREE_TO_KCAL);
+                }
+                else if (strstr(buffer, MULTIPOLE_MOMENT_PATTERN) != NULL)
+                    ReadMultipoleMoment(ifs, molecule);
+                else if (strstr(buffer, MEP_STEP_END_PATTERN) != NULL)
+                    break;
+            }
+        }
+        else if(strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
+            break;
+    }
+    if (energies.size() != molecule->NumConformers())
+    {
+        cerr << "Number of read energies (" << energies.size();
+        cerr << ") does not match number of read conformers (";
+        cerr << molecule->NumConformers() << ")!" << endl;
+        return;
+    }
+    molecule->SetEnergies(energies);
+  }
+
+
+  //////////////////////////////////////////////////////
+  /**
   Method reads optimization steps from input stream (ifs)
   and writes it to supplied OBMol object (molecule).
   Input stream must be set to begining of geometry optimization
@@ -490,8 +605,8 @@ static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
             if (vs.size() > 2) // @ NStep   Energy...
                 energies.push_back(atof(vs[2].c_str()) * HARTREE_TO_KCAL);
         }
-        else if(strstr(buffer, DIPOLE_MOMENT_PATTERN) != NULL)
-            ReadDipoleMoment(ifs, molecule);
+        else if(strstr(buffer, MULTIPOLE_MOMENT_PATTERN) != NULL)
+            ReadMultipoleMoment(ifs, molecule);
         else if(strstr(buffer, MULLIKEN_CHARGES_PATTERN) != NULL)
             ReadPartialCharges(ifs, molecule);
         else if(strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
@@ -557,22 +672,22 @@ static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
                 tokenize(vs,buffer);
                 for (unsigned int i = 1; i < vs.size(); i++)
                     z.push_back(atof(vs[i].c_str()));
-                for (unsigned int i = 0; i < freq.size(); i++)
-                {
-                    vib.push_back(vector<vector3>());
-                    vib[i].push_back(vector3(x[i], y[i], z[i]));
-                }
                 ifs->getline(buffer, BUFF_SIZE);
                 tokenize(vs,buffer);
+                if (x.size() == y.size() && y.size() == z.size()) {
+                  // make sure the arrays are equal or we'll crash
+                  // not sure how to recover if it's not true
+                  for (unsigned int i = 0; i < freq.size(); i++)
+                  {
+                    vib.push_back(vector<vector3>());
+                    vib[i].push_back(vector3(x[i], y[i], z[i]));
+                  }
+                }
             }// while vs.size() > 2
             for (unsigned int i = 0; i < freq.size(); i++)
             {
-                if (abs(freq[i]) > 10.0)
-                {
-                   // skip rotational and translational modes
-                   Frequencies.push_back(freq[i]);
-                   Lx.push_back(vib[i]);
-                }// if abs(freq[i]) > 10.0
+              Frequencies.push_back(freq[i]);
+              Lx.push_back(vib[i]);
             }// for (unsigned int i = 0; i < freq.size(); i++)
         }// if P.Frequency
         else if(strstr(buffer, INTENSITIES_TABLE_PATTERN) != NULL)
@@ -591,8 +706,8 @@ static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
         } // if "Projected Infra Red Intensities"
         else if(strstr(buffer, MULLIKEN_CHARGES_PATTERN) != NULL)
             ReadPartialCharges(ifs, molecule);
-        else if(strstr(buffer, DIPOLE_MOMENT_PATTERN) != NULL)
-            ReadDipoleMoment(ifs, molecule);
+        else if(strstr(buffer, MULTIPOLE_MOMENT_PATTERN) != NULL)
+            ReadMultipoleMoment(ifs, molecule);
         else if ((strstr(buffer, ORBITAL_SECTION_PATTERN_2) != NULL)&&(strstr(buffer, ORBITAL_SECTION_PATTERN_1) != NULL))
             ReadOrbitals(ifs, molecule);
         else if(strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL) // End of task
@@ -609,7 +724,7 @@ static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
   /////////////////////////////////////////////////////////////////
   /**
   Method reads single point energy and all avalible data from input
-  stream (ifs) and writes it to supplied OBMol object (molecule) 
+  stream (ifs) and writes it to supplied OBMol object (molecule)
   Input stream must be set to begining of energy calculation
   in nwo file. (Line after "NWChem <theory> Module")
   If energy not found then "molecule" wont be changed.
@@ -631,8 +746,8 @@ static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
         }
         else if ((strstr(buffer, ORBITAL_SECTION_PATTERN_2) != NULL)&&(strstr(buffer, ORBITAL_SECTION_PATTERN_1) != NULL))
             ReadOrbitals(ifs, molecule);
-        else if(strstr(buffer, DIPOLE_MOMENT_PATTERN) != NULL)
-            ReadDipoleMoment(ifs, molecule);
+        else if(strstr(buffer, MULTIPOLE_MOMENT_PATTERN) != NULL)
+            ReadMultipoleMoment(ifs, molecule);
         else if (strstr(buffer, MULLIKEN_CHARGES_PATTERN) != NULL)
             ReadPartialCharges(ifs, molecule);
         else if (strstr(buffer, TDDFT_CALCULATION_PATTERN) != NULL)
@@ -643,6 +758,109 @@ static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
     if (energy == 0)
         return;
     molecule->SetEnergy(energy);
+  }
+
+  /**
+  Method reads beads and their energies from NEB calculation from
+  input stream (ifs) and writes them to supplied OBMol object (molecule)
+  Input stream must be set to begining of NEB calculation
+  in nwo file. (Line after "NWChem Minimum Energy Pathway Program (NEB)")
+  If method failed then "molecule" wont be changed.
+  */
+  void NWChemOutputFormat::ReadNEBCalculation(istream* ifs, OBMol* molecule)
+  {
+    if ((ifs == NULL) || (molecule == NULL))
+        return;
+    unsigned int natoms = molecule->NumAtoms();
+    // Inital geometry must be supplied
+    if (natoms == 0)
+        return;
+    char buffer[BUFF_SIZE];
+    vector<string> vs;
+    vector<double*> beads;
+    vector<double> energies;
+    unsigned int nbeads = 0;
+    unsigned int current_bead = UINT_MAX;
+
+    while(ifs->getline(buffer, BUFF_SIZE))
+    {
+        if (strstr(buffer, NEB_BEAD_START_PATTERN) != NULL)
+        {
+            tokenize(vs, buffer);
+            // neb: running bead                    N
+            //  0      1      2                     3
+            if (vs.size() < 4)
+                break;
+            current_bead = atoi(vs[3].c_str()) - 1;
+            // Bead index in array starts from 0
+            // but in log it starts from 1
+        }
+        else if (strstr(buffer, NEB_BEAD_ENERGY_PATTERN) != NULL)
+        {
+            tokenize(vs, buffer);
+            // neb: final energy  N
+            //  0     1      2    3
+            if (vs.size() < 4)
+                break;
+            if (current_bead >= nbeads)
+            {
+                cerr << "Current bead out of range: " << current_bead << " of " << nbeads << endl;
+                break;
+            }
+            energies[current_bead] = atof(vs[3].c_str());
+        }
+        else if (strstr(buffer, GRADIENT_PATTERN) != NULL)
+        {
+            ifs->getline(buffer, BUFF_SIZE); // blank line
+            ifs->getline(buffer, BUFF_SIZE); // 1st level header
+            ifs->getline(buffer, BUFF_SIZE); // 2nd level header
+            for (unsigned int i = 0; i<natoms; i++)
+            {
+                ifs->getline(buffer, BUFF_SIZE);
+                tokenize(vs, buffer);
+                // N Symbol     x   y  z    x_grad  y_grad  z_grad
+                // 0   1        2   3  4       5      6       7
+                if (vs.size() < 8)
+                    break;
+                unsigned int end_of_symbol = vs[1].find_last_not_of(DIGITS) + 1;
+                if (etab.GetAtomicNum(vs[1].substr(0, end_of_symbol).c_str()) != molecule->GetAtom(i+1)->GetAtomicNum())
+                    break;
+                if (current_bead >= nbeads)
+                {
+                    cerr << "Current bead out of range: " << current_bead << " of " << nbeads << endl;
+                    break;
+                }
+                beads[current_bead][i*3] = atof(vs[2].c_str())*AU_TO_ANGSTROM;
+                beads[current_bead][1+i*3] = atof(vs[3].c_str())*AU_TO_ANGSTROM;
+                beads[current_bead][2+i*3] = atof(vs[4].c_str())*AU_TO_ANGSTROM;
+            }
+        }
+        else if (strstr(buffer, NEB_NBEADS_PATTERN) != NULL)
+        {
+            tokenize(vs, buffer);
+            // number of images in path         (nbeads) =   N
+            //   0    1     2    3   4             5     6   7
+            if (vs.size() < 8)
+                break;
+            nbeads = atoi(vs[7].c_str());
+            beads.reserve(nbeads);
+            energies.reserve(nbeads);
+            for (unsigned int i = 0;i<nbeads;i++)
+            {
+                beads.push_back(new double[natoms*3]);
+                energies.push_back(0.0);
+            }
+        }
+        else if (strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
+        {
+            molecule->SetConformers(beads);
+            molecule->SetEnergies(energies);
+            return;
+        }
+    }
+    cerr << "Failed to read NEB calculation!" << endl;
+    for(unsigned int i = 0; i < beads.size();i++)
+        delete beads[i];
   }
 
   /////////////////////////////////////////////////////////////////
@@ -798,6 +1016,10 @@ static const char* DIPOLE_MOMENT_PATTERN = "Nuclear Dipole moment (a.u.)";
             ReadSinglePointCalculation(&ifs, &mol);
         else if(strstr(buffer, ZTS_CALCULATION_PATTERN) != NULL)
             ReadZTSCalculation(&ifs, &mol);
+        else if(strstr(buffer, MEP_CALCULATION_PATTERN) != NULL)
+            ReadMEPCalculation(&ifs, &mol);
+        else if(strstr(buffer, NEB_CALCULATION_PATTERN) != NULL)
+            ReadNEBCalculation(&ifs, &mol);
         // These calculation handlers still not implemented
         // so we just skip them
         else if(strstr(buffer, PROPERTY_CALCULATION_PATTERN) != NULL)

@@ -246,7 +246,7 @@ int FillTgDiffHChgFH( TgDiffHChgFH tdhc[], int max_tdhc, inp_ATOM at2[],
                         if ( !num ++ ) {
                             tdhc[i].i[type] = pAtomIndList->num_edges;
                         }
-                        if ( ret = AddToEdgeList( pAtomIndList, IndList.pnEdges[j+2], INC_ADD_EDGE )) {
+                        if ( (ret = AddToEdgeList( pAtomIndList, IndList.pnEdges[j+2], INC_ADD_EDGE )) ) {
                             goto exit_function;
                         }
                     }
@@ -324,7 +324,7 @@ int FixFixedHRestoredStructure(ICHICONST INPUT_PARMS *ip, STRUCT_DATA *sd, BN_ST
             goto exit_function;
         }
         if ( (e=pVA[i].nCPlusGroupEdge-1) >= 0 && !pBNS->edge[e].forbidden ) {
-            if ( ret = AddToEdgeList( &AllChargeEdges, e, INC_ADD_EDGE ) ) {
+            if ( (ret = AddToEdgeList( &AllChargeEdges, e, INC_ADD_EDGE )) ) {
                 goto exit_function;
             }
 
@@ -337,14 +337,14 @@ int FixFixedHRestoredStructure(ICHICONST INPUT_PARMS *ip, STRUCT_DATA *sd, BN_ST
                 }
 
                 if ( pBNS->edge[j].flow ) {
-                    if ( ret = AddToEdgeList( &AllChargeEdges, j, INC_ADD_EDGE ) ) {
+                    if ( (ret = AddToEdgeList( &AllChargeEdges, j, INC_ADD_EDGE )) ) {
                         goto exit_function;
                     }
-                    if ( ret = AddToEdgeList( &NFlowerEdges, j, INC_ADD_EDGE ) ) {
+                    if ( (ret = AddToEdgeList( &NFlowerEdges, j, INC_ADD_EDGE )) ) {
                         goto exit_function;
                     }
                 } else {
-                    if ( ret = AddToEdgeList( &OtherNFlowerEdges, j, INC_ADD_EDGE ) ) {
+                    if ( (ret = AddToEdgeList( &OtherNFlowerEdges, j, INC_ADD_EDGE )) ) {
                         goto exit_function;
                     }
                 }
@@ -358,7 +358,7 @@ int FixFixedHRestoredStructure(ICHICONST INPUT_PARMS *ip, STRUCT_DATA *sd, BN_ST
                 }
 
                 if ( pBNS->edge[j].flow ) {
-                    if ( ret = AddToEdgeList( &SFlowerEdges, j, INC_ADD_EDGE ) ) {
+                    if ( (ret = AddToEdgeList( &SFlowerEdges, j, INC_ADD_EDGE )) ) {
                         goto exit_function;
                     }
                 }
@@ -368,7 +368,7 @@ int FixFixedHRestoredStructure(ICHICONST INPUT_PARMS *ip, STRUCT_DATA *sd, BN_ST
         for ( j = 0; j < at2[i].valence; j ++ ) {
             k = at2[i].neighbor[j];
             if ( k < i && !pBNS->edge[e=pBNS->vert[i].iedge[j]].forbidden ) {
-                if ( ret = AddToEdgeList( &AllBondEdges, e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &AllBondEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             }
@@ -390,21 +390,21 @@ int FixFixedHRestoredStructure(ICHICONST INPUT_PARMS *ip, STRUCT_DATA *sd, BN_ST
     }
 
     INCHI_HEAPCHK
-    if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+    if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
         goto exit_function;
     }
     INCHI_HEAPCHK
-    if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+    if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
         goto exit_function;
     }
 
     INCHI_HEAPCHK
 
     if ( !pc2i->bHasDifference ||
-         !pc2i->len_c2at && pc2i->nNumTgRevrs == pc2i->nNumTgInChI &&
+         (!pc2i->len_c2at && pc2i->nNumTgRevrs == pc2i->nNumTgInChI &&
          pc2i->nNumEndpRevrs == pc2i->nNumRemHInChI &&
          pc2i->nNumEndpRevrs == pc2i->nNumEndpInChI &&
-         !pc2i->nNumTgDiffMinus && !pc2i->nNumTgDiffH ) {
+         !pc2i->nNumTgDiffMinus && !pc2i->nNumTgDiffH) ) {
         goto exit_function; /* nothing to do */
     }
 
@@ -434,7 +434,7 @@ int FixFixedHRestoredStructure(ICHICONST INPUT_PARMS *ip, STRUCT_DATA *sd, BN_ST
                      pc2i->c2at[i].nAtChargeRevrs == -1 && !at2[iat].num_H && /* at2 is Fixed-H */
                      at2[iat].valence == 1 && at2[iat].chem_bonds_valence == 1 ) {
                     iat_SB_O_Minus[num_SB_O_Minus ++] = iat;
-                    if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                    if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                         goto exit_function;
                     }
                 } else
@@ -446,13 +446,13 @@ int FixFixedHRestoredStructure(ICHICONST INPUT_PARMS *ip, STRUCT_DATA *sd, BN_ST
                      pc2i->c2at[i].nAtChargeRevrs == 0 && !at2[iat].num_H &&
                      at2[iat].valence == 1 && at2[iat].chem_bonds_valence == 2 ) {
                     iat_DB_O[num_DB_O ++] = iat;
-                    if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                    if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                         goto exit_function;
                     }
                 }
             }
         }
-        if ( num_try = inchi_min( num_SB_O_Minus, num_DB_O ) ) {
+        if ( (num_try = inchi_min( num_SB_O_Minus, num_DB_O )) ) {
             /* detected; attempt to fix */
             SetForbiddenEdgeMask( pBNS, &AllChargeEdges, forbidden_edge_mask );
             RemoveForbiddenEdgeMask( pBNS, &CurrEdges, forbidden_edge_mask  );
@@ -474,8 +474,8 @@ int FixFixedHRestoredStructure(ICHICONST INPUT_PARMS *ip, STRUCT_DATA *sd, BN_ST
                 ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                  vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == 1 ) {
+                if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                  (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == 1 ) {
                     /* Added (-)charge to O=AB => nDeltaCharge == -1 */
                     /* Flow change on pe (-)charge edge (atom B-O(-)) is not known to RunBnsTestOnce()) */
                     ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -502,13 +502,13 @@ int FixFixedHRestoredStructure(ICHICONST INPUT_PARMS *ip, STRUCT_DATA *sd, BN_ST
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -537,7 +537,7 @@ int FixFixedHRestoredStructure(ICHICONST INPUT_PARMS *ip, STRUCT_DATA *sd, BN_ST
             iat = pc2i->c2at[i].atomNumber;
             if ( /* orig. InChI info: =NH2(+), =OH(+) */
                  num_SB_NH < MAX_DIFF_FIXH &&
-                 (pc2i->c2at[i].nValElectr == 5 && pc2i->c2at[i].nPeriodNum == 1 ||
+                 ((pc2i->c2at[i].nValElectr == 5 && pc2i->c2at[i].nPeriodNum == 1) ||
                   pc2i->c2at[i].nValElectr == 6 ) /* N, O, S, Se, Te */ &&
                  /*!pc2i->c2at[i].endptInChI &&*/ /* <=== relaxation */
                  (e=pVA[iat].nCPlusGroupEdge-1) >= 0 && !pBNS->edge[e].forbidden &&
@@ -547,7 +547,7 @@ int FixFixedHRestoredStructure(ICHICONST INPUT_PARMS *ip, STRUCT_DATA *sd, BN_ST
                  pc2i->c2at[i].nAtChargeRevrs == 0 && at2[iat].num_H &&
                  at2[iat].valence == at2[iat].chem_bonds_valence ) {
                 iat_SB_NH[num_SB_NH ++] = iat;
-                if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             }
@@ -559,7 +559,7 @@ int FixFixedHRestoredStructure(ICHICONST INPUT_PARMS *ip, STRUCT_DATA *sd, BN_ST
                  at2[iat].charge == 1 && !at2[iat].num_H &&
                  at2[iat].valence < at2[iat].chem_bonds_valence && !pVA[iat].cMetal &&
                  (pVA[iat].cNumValenceElectrons == 6 || pVA[iat].cNumValenceElectrons == 7 ||
-                  pVA[iat].cNumValenceElectrons == 5 && pVA[iat].cPeriodicRowNumber > 1) &&
+                  (pVA[iat].cNumValenceElectrons == 5 && pVA[iat].cPeriodicRowNumber > 1)) &&
                  /* in orig.InChI: not an endpoint, has no H */
                  !pStruct->endpoint[i] && 
                  !(pStruct->fixed_H && pStruct->fixed_H[i]) &&
@@ -567,12 +567,12 @@ int FixFixedHRestoredStructure(ICHICONST INPUT_PARMS *ip, STRUCT_DATA *sd, BN_ST
                  /* has (+) edge */
                  (e=pVA[iat].nCPlusGroupEdge-1) >= 0 && !pBNS->edge[e].forbidden ) {
                 iat_DB_O_Plus[num_DB_O_Plus ++] = iat;
-                if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             }
         }
-        if ( num_try = inchi_min( num_DB_O_Plus, num_SB_NH ) ) {
+        if ( (num_try = inchi_min( num_DB_O_Plus, num_SB_NH )) ) {
             /* detected; attempt to fix */
             SetForbiddenEdgeMask( pBNS, &AllChargeEdges, forbidden_edge_mask );
             RemoveForbiddenEdgeMask( pBNS, &CurrEdges, forbidden_edge_mask  );
@@ -595,8 +595,8 @@ repeat_02_allow_NV:
                 ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
                 
-                if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                  vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == -1 ) {
+                if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                  (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == -1 ) {
                     /* Removed charge from O(+) => nDeltaCharge == -1 */
                     /* Flow change on pe (+)charge edge (atom NH2) is not known to RunBnsTestOnce()) */
                     ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -630,13 +630,13 @@ repeat_02_allow_NV:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -682,7 +682,7 @@ repeat_02_allow_NV:
                  pc2i->c2at[i].nAtChargeRevrs == 0 && !at2[iat].num_H &&
                  at2[iat].valence == 1 && at2[iat].chem_bonds_valence == 2 ) {
                 iat_DB_O[num_DB_O ++] = iat;
-                if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             }
@@ -704,12 +704,12 @@ repeat_02_allow_NV:
                  /* has (-) edge */
                  (e=pVA[iat].nCMinusGroupEdge-1) >= 0 && !pBNS->edge[e].forbidden ) {
                 iat_SB_N_Minus[num_SB_N_Minus ++] = iat;
-                if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             }
         }
-        if ( num_try = inchi_min( num_SB_N_Minus, num_DB_O ) ) {
+        if ( (num_try = inchi_min( num_SB_N_Minus, num_DB_O )) ) {
             /* detected; attempt to fix */
             SetForbiddenEdgeMask( pBNS, &AllChargeEdges, forbidden_edge_mask );
             RemoveForbiddenEdgeMask( pBNS, &CurrEdges, forbidden_edge_mask  );
@@ -731,8 +731,8 @@ repeat_02_allow_NV:
                 ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                  vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == 1 ) {
+                if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                  (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == 1 ) {
                     /* Added (-) charge to =O => nDeltaCharge == 1 */
                     /* Flow change on pe (-)charge edge (atom -N(-)-) is not known to RunBnsTestOnce()) */
                     ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -759,13 +759,13 @@ repeat_02_allow_NV:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -817,16 +817,16 @@ repeat_02_allow_NV:
                  pVA[iat].cNumValenceElectrons == 6 &&
                  at_Mobile_H_Revrs && at_Mobile_H_Revrs[iat].endpoint && /* endpoint in Reconstructed */
                  (pStruct->endpoint[i] || /* endpoint or H(+) acceptor in original */
-                  pnMobHInChI && pnMobHInChI[i] == 1 && pnFixHInChI && pnFixHInChI[i] == -1 ) &&
+                  (pnMobHInChI && pnMobHInChI[i] == 1 && pnFixHInChI && pnFixHInChI[i] == -1) ) &&
                  /* has (-) edge */
                  (e=pVA[iat].nCMinusGroupEdge-1) >= 0 && !pBNS->edge[e].forbidden ) {
                 iat_DB_O[num_DB_O ++] = iat;
-                if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             }    
         }
-        if ( num_try = inchi_min( num_SB_N_Minus, num_DB_O ) ) {
+        if ( (num_try = inchi_min( num_SB_N_Minus, num_DB_O )) ) {
             /* detected; attempt to fix */
             SetForbiddenEdgeMask( pBNS, &AllChargeEdges, forbidden_edge_mask );
             /* allow charge transfer to all found =O */
@@ -849,8 +849,8 @@ repeat_02_allow_NV:
                 ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                  vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == 1 ) {
+                if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                  (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == 1 ) {
                     /* Added (-) charge to =O => nDeltaCharge == 1 */
                     /* Flow change on pe (-)charge edge (atom -N(-)-) is not known to RunBnsTestOnce()) */
                     ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -877,13 +877,13 @@ repeat_02_allow_NV:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -916,7 +916,7 @@ repeat_02_allow_NV:
                  at2[iat].charge == 1 && at2[iat].num_H &&
                  at2[iat].valence < at2[iat].chem_bonds_valence && !pVA[iat].cMetal &&
                  (pVA[iat].cNumValenceElectrons == 6 ||
-                  pVA[iat].cNumValenceElectrons == 5 && pVA[iat].cPeriodicRowNumber == 1) &&
+                  (pVA[iat].cNumValenceElectrons == 5 && pVA[iat].cPeriodicRowNumber == 1)) &&
                  /* in orig.InChI: an endpoint, has fixed-H */
                  pStruct->endpoint[i] && 
                  (pStruct->fixed_H && pStruct->fixed_H[i]) &&
@@ -926,7 +926,7 @@ repeat_02_allow_NV:
 
                 iat_DB_Charged[num_DB_Charged ++] = iat;
                 
-                if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             } else
@@ -946,12 +946,12 @@ repeat_02_allow_NV:
 
                 iat_SB_Neutr[num_SB_Neutr ++] = iat;
                 
-                if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             }
         }
-        if ( num_try = inchi_min( num_SB_Neutr, num_DB_Charged ) ) {
+        if ( (num_try = inchi_min( num_SB_Neutr, num_DB_Charged )) ) {
             /* detected; attempt to fix */
             SetForbiddenEdgeMask( pBNS, &AllChargeEdges, forbidden_edge_mask );
             RemoveForbiddenEdgeMask( pBNS, &CurrEdges, forbidden_edge_mask  );
@@ -973,8 +973,8 @@ repeat_02_allow_NV:
                 ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                  vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == -1 ) {
+                if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                  (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == -1 ) {
                     /* Removed charge from O(+) => nDeltaCharge == -1 */
                     /* Flow change on pe (+)charge edge (atom NH2) is not known to RunBnsTestOnce()) */
                     ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -1001,13 +1001,13 @@ repeat_02_allow_NV:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -1031,7 +1031,7 @@ repeat_02_allow_NV:
             iat = pc2i->c2at[i].atomNumber;
             if ( /* orig. InChI info: =NH2(+), =OH(+) */
                  num_SB_NH < MAX_DIFF_FIXH &&
-                 (pc2i->c2at[i].nValElectr == 5 && pc2i->c2at[i].nPeriodNum == 1 ||
+                 ((pc2i->c2at[i].nValElectr == 5 && pc2i->c2at[i].nPeriodNum == 1) ||
                   pc2i->c2at[i].nValElectr == 6 ) /* N, O, S, Se, Te */ &&
                  !pc2i->c2at[i].endptInChI &&
                  (e=pVA[iat].nCPlusGroupEdge-1) >= 0 && !pBNS->edge[e].forbidden &&
@@ -1042,7 +1042,7 @@ repeat_02_allow_NV:
                  !pc2i->c2at[i].endptRevrs &&
                  at2[iat].valence == at2[iat].chem_bonds_valence ) {
                 iat_SB_NH[num_SB_NH ++] = iat;
-                if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             } else
@@ -1058,12 +1058,12 @@ repeat_02_allow_NV:
                  !pc2i->c2at[i].endptRevrs &&
                  at2[iat].valence + 1 == at2[iat].chem_bonds_valence ) {
                 iat_DB_O[num_DB_O ++] = iat;
-                if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             }
         }
-        if ( num_try = inchi_min( num_DB_O, num_SB_NH ) ) {
+        if ( (num_try = inchi_min( num_DB_O, num_SB_NH )) ) {
             /* detected; attempt to fix */
             SetForbiddenEdgeMask( pBNS, &AllChargeEdges, forbidden_edge_mask );
             RemoveForbiddenEdgeMask( pBNS, &CurrEdges, forbidden_edge_mask  );
@@ -1085,8 +1085,8 @@ repeat_02_allow_NV:
                 ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                  vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == 1 ) {
+                if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                  (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == 1 ) {
                     /* Added charge to =O => nDeltaCharge == 1 */
                     /* Flow change on pe (+)charge edge (atom NH2) is not known to RunBnsTestOnce()) */
                     ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -1113,13 +1113,13 @@ repeat_02_allow_NV:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -1160,7 +1160,7 @@ repeat_02_allow_NV:
             /* atoms -NH- from which H(+) were removed by the Normalization in orig. InChI */
             iat = pc2i->c2at[i].atomNumber;
             if ( (pc2i->c2at[i].nValElectr == 6 ||
-                  pc2i->c2at[i].nValElectr == 5 && pc2i->c2at[i].nPeriodNum == 1) &&
+                  (pc2i->c2at[i].nValElectr == 5 && pc2i->c2at[i].nPeriodNum == 1)) &&
                  !pc2i->c2at[i].endptInChI &&
                  (e=pVA[iat].nCPlusGroupEdge-1) >= 0 && !pBNS->edge[e].forbidden ) {
                 if ( /* orig. InChI info: -NH- */
@@ -1169,7 +1169,7 @@ repeat_02_allow_NV:
                      pc2i->c2at[i].nFixHRevrs == 0 && pc2i->c2at[i].nMobHRevrs == 1 && /* was not removed */
                      /*pc2i->c2at[i].nAtChargeRevrs == 0 &&*/ at2[iat].num_H && /* at2 is Fixed-H */
                      at2[iat].valence == at2[iat].chem_bonds_valence ) {
-                    if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                    if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                         goto exit_function;
                     }
                 }
@@ -1200,7 +1200,7 @@ repeat_02_allow_NV:
                 }
             }
         }
-        if ( num_try = inchi_min( CurrEdges.num_edges, CurChargeEdges.num_edges ) ) {
+        if ( (num_try = inchi_min( CurrEdges.num_edges, CurChargeEdges.num_edges )) ) {
             /* detected; attempt to fix */
             SetForbiddenEdgeMask( pBNS, &AllChargeEdges, forbidden_edge_mask );
             RemoveForbiddenEdgeMask( pBNS, &CurChargeEdges, forbidden_edge_mask  );
@@ -1221,8 +1221,8 @@ repeat_02_allow_NV:
                 ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                  vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == -1 ) {
+                if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                  (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == -1 ) {
                     /* Removed (+)charge from -NH- => nDeltaCharge == -1 */
                     /* Flow change on pe (+)charge edge (atom NHm(+)) is not known to RunBnsTestOnce()) */
                     ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -1253,13 +1253,13 @@ exit_case_06c:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -1303,11 +1303,11 @@ exit_case_06c:
                  pc2i->c2at[i].nFixHRevrs > 0 && !pc2i->c2at[i].endptRevrs &&
                  pc2i->c2at[i].nAtChargeRevrs == 1 &&
                  /* original InChI: non-taut & has H or an endpoint, has Fixed H */
-                 (!pc2i->c2at[i].nFixHInChI && pc2i->c2at[i].nMobHInChI == pc2i->c2at[i].nFixHRevrs ||
-                 pc2i->c2at[i].nFixHInChI == pc2i->c2at[i].nFixHRevrs && pc2i->c2at[i].endptInChI ))  &&
+                 ((!pc2i->c2at[i].nFixHInChI && pc2i->c2at[i].nMobHInChI == pc2i->c2at[i].nFixHRevrs) ||
+                 (pc2i->c2at[i].nFixHInChI == pc2i->c2at[i].nFixHRevrs && pc2i->c2at[i].endptInChI) ))  &&
                  0 <= (e=pVA[iat].nCPlusGroupEdge-1) && !pBNS->edge[e].forbidden && !pBNS->edge[e].flow) {
 
-                if (ret = AddToEdgeList( &CurChargeEdges, e, INC_ADD_EDGE )) {
+                if ( (ret = AddToEdgeList( &CurChargeEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_case_06d;
                 }
             } else
@@ -1317,17 +1317,17 @@ exit_case_06c:
                  pc2i->c2at[i].nFixHInChI > 0 && !pc2i->c2at[i].endptInChI &&
                  pc2i->c2at[i].nAtChargeRevrs == 0 &&
                  /* reconstructed InChI: non-taut & has H or an endpoint, has Fixed H */
-                 (!pc2i->c2at[i].nFixHRevrs && pc2i->c2at[i].nMobHRevrs == pc2i->c2at[i].nFixHInChI ||
-                 pc2i->c2at[i].nFixHRevrs == pc2i->c2at[i].nFixHInChI && pc2i->c2at[i].endptRevrs ))  &&
+                 ((!pc2i->c2at[i].nFixHRevrs && pc2i->c2at[i].nMobHRevrs == pc2i->c2at[i].nFixHInChI) ||
+                 (pc2i->c2at[i].nFixHRevrs == pc2i->c2at[i].nFixHInChI && pc2i->c2at[i].endptRevrs) ))  &&
                  0 <= (e=pVA[iat].nCPlusGroupEdge-1) && !pBNS->edge[e].forbidden && 
                  pBNS->edge[e].flow) {
 
-                if (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) {
+                if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_case_06d;
                 }
             }
         }
-        if ( num_try = inchi_min( CurrEdges.num_edges, CurChargeEdges.num_edges ) ) {
+        if ( (num_try = inchi_min( CurrEdges.num_edges, CurChargeEdges.num_edges )) ) {
             /* detected; attempt to fix */
             int bSFlowerEdgesMayBeForbidden = (SFlowerEdges.num_edges > 0);
             int bSFlowerEdgesIsForbidden;
@@ -1356,8 +1356,8 @@ exit_case_06c:
                     ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                           &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                    if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                      vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == -1 ) {
+                    if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                      (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == -1 ) {
                         /* Removed (+)charge from -NH- => nDeltaCharge == -1 */
                         /* Flow change on pe (+)charge edge (atom NHm(+)) is not known to RunBnsTestOnce()) */
                         ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -1388,13 +1388,13 @@ exit_case_06d:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -1418,7 +1418,7 @@ exit_case_06d:
         for ( i = 0; i < pc2i->len_c2at; i ++ ) {
             iat = pc2i->c2at[i].atomNumber;
             if ( (pc2i->c2at[i].nValElectr == 6 ||
-                  pc2i->c2at[i].nValElectr == 5 && pc2i->c2at[i].nPeriodNum == 1) &&
+                  (pc2i->c2at[i].nValElectr == 5 && pc2i->c2at[i].nPeriodNum == 1)) &&
                  !pc2i->c2at[i].endptInChI &&
                  (e=pVA[iat].nCPlusGroupEdge-1) >= 0 && !pBNS->edge[e].forbidden ) {
                 if ( /* orig. InChI info: NHm */
@@ -1429,7 +1429,7 @@ exit_case_06d:
                      pc2i->c2at[i].nAtChargeRevrs == 0 && at2[iat].num_H && /* at2 is Fixed-H */
                      at2[iat].valence == at2[iat].chem_bonds_valence ) {
                     iat_SB_NHm_Neutr[num_SB_NHm_Neutr ++] = iat;
-                    if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                    if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                         goto exit_function;
                     }
                 } else
@@ -1441,13 +1441,13 @@ exit_case_06d:
                      pc2i->c2at[i].nAtChargeRevrs == 1 && at2[iat].num_H &&
                      at2[iat].valence < at2[iat].chem_bonds_valence ) {
                     iat_DB_NHn_Plus[num_DB_NHn_Plus ++] = iat;
-                    if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                    if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                         goto exit_function;
                     }
                 }
             }
         }
-        if ( num_try = inchi_min( num_SB_NHm_Neutr, num_DB_NHn_Plus ) ) {
+        if ( (num_try = inchi_min( num_SB_NHm_Neutr, num_DB_NHn_Plus )) ) {
             /* detected; attempt to fix */
             SetForbiddenEdgeMask( pBNS, &AllChargeEdges, forbidden_edge_mask );
             RemoveForbiddenEdgeMask( pBNS, &CurrEdges, forbidden_edge_mask  );
@@ -1469,8 +1469,8 @@ exit_case_06d:
                 ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                  vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == -1 ) {
+                if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                  (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == -1 ) {
                     /* Removed (+)charge from -NHn => nDeltaCharge == -1 */
                     /* Flow change on pe (+)charge edge (atom NHm(+)) is not known to RunBnsTestOnce()) */
                     ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -1497,13 +1497,13 @@ exit_case_06d:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -1512,7 +1512,7 @@ exit_case_06d:
         }
     }
 
-    if ( (pc2i->nNumTgInChI > pc2i->nNumTgRevrs && pc2i->nNumTgRevrs == 1 ||
+    if ( ((pc2i->nNumTgInChI > pc2i->nNumTgRevrs && pc2i->nNumTgRevrs == 1) ||
           pc2i->nNumEndpInChI < pc2i->nNumEndpRevrs ) &&
           pStruct->nNumRemovedProtonsMobHInChI == pStruct->One_ti.tni.nNumRemovedProtons &&
           pStruct->fixed_H && pStruct->endpoint && pStruct->pOne_norm_data[TAUT_YES]->at_fixed_bonds ) {
@@ -1561,7 +1561,7 @@ exit_case_06d:
                 goto exit_case_06a;
             }
         }
-        if ( num_try = inchi_min( CurrEdges.num_edges, CurChargeEdges.num_edges ) ) {
+        if ( (num_try = inchi_min( CurrEdges.num_edges, CurChargeEdges.num_edges )) ) {
             /* detected; attempt to fix */
             SetForbiddenEdgeMask( pBNS, &AllChargeEdges, forbidden_edge_mask );
             RemoveForbiddenEdgeMask( pBNS, &CurChargeEdges, forbidden_edge_mask  );
@@ -1582,8 +1582,8 @@ exit_case_06d:
                 ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                  vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == -1 ) {
+                if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                  (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == -1 ) {
                     /* Removed (+)charge from -NH- => nDeltaCharge == -1 */
                     /* Flow change on pe (+)charge edge (atom NHm(+)) is not known to RunBnsTestOnce()) */
                     ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -1611,13 +1611,13 @@ exit_case_06a:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -1625,7 +1625,7 @@ exit_case_06a:
             }
         }
     }
-    if ( (pc2i->nNumTgInChI > pc2i->nNumTgRevrs && pc2i->nNumTgRevrs == 1 ||
+    if ( ((pc2i->nNumTgInChI > pc2i->nNumTgRevrs && pc2i->nNumTgRevrs == 1) ||
           pc2i->nNumEndpInChI < pc2i->nNumEndpRevrs ) &&
           (pStruct->nNumRemovedProtonsMobHInChI == pStruct->One_ti.tni.nNumRemovedProtons ||
            pStruct->nNumRemovedProtonsMobHInChI > pStruct->One_ti.tni.nNumRemovedProtons ) &&
@@ -1676,7 +1676,7 @@ exit_case_06a:
                 goto exit_case_06b;
             }
         }
-        if ( num_try = inchi_min( CurrEdges.num_edges, CurChargeEdges.num_edges ) ) {
+        if ( (num_try = inchi_min( CurrEdges.num_edges, CurChargeEdges.num_edges )) ) {
             /* detected; attempt to fix */
             int bSFlowerEdgesMayBeForbidden = (SFlowerEdges.num_edges > 0);
             int bSFlowerEdgesIsForbidden;
@@ -1705,8 +1705,8 @@ exit_case_06a:
                     ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                           &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                    if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                      vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == -1 ) {
+                    if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                      (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == -1 ) {
                         /* Removed (+)charge from -NH- => nDeltaCharge == -1 */
                         /* Flow change on pe (+)charge edge (atom NHm(+)) is not known to RunBnsTestOnce()) */
                         ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -1737,13 +1737,13 @@ exit_case_06b:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -1828,7 +1828,7 @@ exit_case_06b:
                 for ( jj = 0; jj < tdhc[i].n[fNumRPosChgH]; jj ++ ) {
                     iat = EndpList.pnEdges[ jjoffs + jj ];
                     e = pVA[iat].nCPlusGroupEdge-1;
-                    if ( ret = AddToEdgeList( &CurChargeEdges, e, INC_ADD_EDGE ) ) {
+                    if ( (ret = AddToEdgeList( &CurChargeEdges, e, INC_ADD_EDGE )) ) {
                         goto exit_case_06e;
                     }
                 }
@@ -1842,7 +1842,7 @@ exit_case_06b:
                 for ( jj = 0; jj < tdhc[i].n[fNumRNeutrlH]; jj ++ ) {
                     iat = EndpList.pnEdges[ jjoffs + jj ];
                     e = pVA[iat].nCPlusGroupEdge-1;
-                    if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                    if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                         goto exit_case_06e;
                     }
                 }
@@ -1901,8 +1901,8 @@ exit_case_06b:
                         ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                               &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                        if ( ret == 1 && (vPathEnd == v1n && vPathStart == v2n ||
-                                          vPathEnd == v2n && vPathStart == v1n) &&
+                        if ( ret == 1 && ((vPathEnd == v1n && vPathStart == v2n) ||
+                                          (vPathEnd == v2n && vPathStart == v1n)) &&
                                           (nDeltaCharge == 0 || nDeltaCharge == 1) ) {
                             ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                             if ( ret > 0 ) {
@@ -1919,7 +1919,7 @@ exit_case_06b:
                             pv2n->st_edge.flow += delta;
                             pBNS->tot_st_flow += 2*delta;
                         }
-                        if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                        if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                             goto exit_case_06e;
                         }
                     }
@@ -1938,13 +1938,13 @@ exit_case_06e:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -1986,7 +1986,7 @@ exit_case_06e:
                  pc2i->c2at[i].nAtChargeRevrs == 0 && !at2[iat].num_H &&
                  at2[iat].valence < at2[iat].chem_bonds_valence ) {
                 iat_DB_O_Neutr[num_DB_O_Neutr ++] = iat;
-                if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             }
@@ -2006,12 +2006,12 @@ exit_case_06e:
                  /* has (-) edge */
                  (e=pVA[iat].nCMinusGroupEdge-1) >= 0 && !pBNS->edge[e].forbidden ) {
                 iat_SB_O_Minus[num_SB_O_Minus ++] = iat;
-                if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             }
         }
-        if ( num_try = inchi_min( num_SB_O_Minus, num_DB_O_Neutr ) ) {
+        if ( (num_try = inchi_min( num_SB_O_Minus, num_DB_O_Neutr )) ) {
             /* detected; attempt to fix */
             SetForbiddenEdgeMask( pBNS, &AllChargeEdges, forbidden_edge_mask );
             RemoveForbiddenEdgeMask( pBNS, &CurrEdges, forbidden_edge_mask  );
@@ -2033,8 +2033,8 @@ exit_case_06e:
                 ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                  vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == 1 ) {
+                if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                  (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == 1 ) {
                     /* Moved (-) charge to AB=O => nDeltaCharge == 1 */
                     /* Flow change on pe (-)charge edge (O(-)-AB) is not known to RunBnsTestOnce()) */
                     ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -2061,13 +2061,13 @@ exit_case_06e:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -2105,7 +2105,7 @@ exit_case_06e:
                  pc2i->c2at[i].nAtChargeRevrs == 0 && !at2[iat].num_H &&
                  at2[iat].valence < at2[iat].chem_bonds_valence ) {
                 iat_DB_O_Neutr[num_DB_O_Neutr ++] = iat;
-                if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             }
@@ -2128,12 +2128,12 @@ exit_case_06e:
                  /* has (-) edge */
                  (e=pVA[iat].nCMinusGroupEdge-1) >= 0 && !pBNS->edge[e].forbidden ) {
                 iat_SB_O_Minus[num_SB_O_Minus ++] = iat;
-                if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             }
         }
-        if ( num_try = inchi_min( num_SB_O_Minus, num_DB_O_Neutr ) ) {
+        if ( (num_try = inchi_min( num_SB_O_Minus, num_DB_O_Neutr )) ) {
             /* detected; attempt to fix */
             SetForbiddenEdgeMask( pBNS, &AllChargeEdges, forbidden_edge_mask );
             RemoveForbiddenEdgeMask( pBNS, &CurrEdges, forbidden_edge_mask  );
@@ -2155,8 +2155,8 @@ exit_case_06e:
                 ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                  vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == 1 ) {
+                if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                  (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == 1 ) {
                     /* Moved (-) charge to AB=O => nDeltaCharge == 1 */
                     /* Flow change on pe (-)charge edge (O(-)-AB) is not known to RunBnsTestOnce()) */
                     ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -2183,13 +2183,13 @@ exit_case_06e:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -2230,7 +2230,7 @@ exit_case_06e:
 
                 iat_SB_O_Minus[num_SB_O_Minus ++] = iat;
                 
-                if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             } else
@@ -2249,12 +2249,12 @@ exit_case_06e:
 
                 iat_DB_N_Neutr[num_DB_N_Neutr ++] = iat;
                 
-                if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             }
         }
-        if ( num_try = inchi_min( num_DB_N_Neutr, num_SB_O_Minus ) ) {
+        if ( (num_try = inchi_min( num_DB_N_Neutr, num_SB_O_Minus )) ) {
             /* detected; attempt to fix */
             SetForbiddenEdgeMask( pBNS, &AllChargeEdges, forbidden_edge_mask );
             RemoveForbiddenEdgeMask( pBNS, &CurrEdges, forbidden_edge_mask  );
@@ -2280,8 +2280,8 @@ exit_case_06e:
                 ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                  vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == 1 ) {
+                if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                  (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == 1 ) {
                     /* Moved (-) charge to =N- => nDeltaCharge == 1 */
                     /* Flow change on pe (-)charge edge (atom (-)O-) is not known to RunBnsTestOnce()) */
                     ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -2310,13 +2310,13 @@ exit_case_06e:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -2386,10 +2386,10 @@ exit_case_06e:
                          at2[iatNH2].valence == at2[iatNH2].chem_bonds_valence ) {
                         /* we have found NH2(+)=, =C<, and bond between them */
  
-                        if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                        if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                             goto exit_function;
                         }
-                        if ( ret = AddToEdgeList( &CurrEdges, eCPlusC, INC_ADD_EDGE ) ) {
+                        if ( (ret = AddToEdgeList( &CurrEdges, eCPlusC, INC_ADD_EDGE )) ) {
                             goto exit_function;
                         }
                         SetForbiddenEdgeMask( pBNS, &AllChargeEdges, forbidden_edge_mask );
@@ -2411,8 +2411,8 @@ exit_case_06e:
                         ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                               &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                        if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                          vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == 0 ) {
+                        if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                          (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == 0 ) {
                             /* Removed (+)charge from -NHn => nDeltaCharge == -1 */
                             /* Flow change on pe (+)charge edge (atom NHm(+)) is not known to RunBnsTestOnce()) */
                             ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -2442,13 +2442,13 @@ exit_case_06e:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -2473,7 +2473,7 @@ exit_case_06e:
                 continue;
             iat = pc2i->c2at[i].atomNumber;
             if ( (pc2i->c2at[i].nValElectr == 6 ||
-                  pc2i->c2at[i].nValElectr == 5 && pc2i->c2at[i].nPeriodNum == 1) &&
+                  (pc2i->c2at[i].nValElectr == 5 && pc2i->c2at[i].nPeriodNum == 1)) &&
                  /* orig. InChI info: */
                  pc2i->c2at[i].endptInChI &&
                  pc2i->c2at[i].nFixHInChI && !pc2i->c2at[i].nMobHInChI &&
@@ -2526,7 +2526,7 @@ exit_case_06e:
                                         } else {
                                             continue; /* none of the two -X(+)- bonds may be changed */
                                         }
-                                        if ( ret = AddToEdgeList( &CurrEdges, eCPlusC, INC_ADD_EDGE ) ) {
+                                        if ( (ret = AddToEdgeList( &CurrEdges, eCPlusC, INC_ADD_EDGE )) ) {
                                             goto exit_function;
                                         }
                                         SetForbiddenEdgeMask( pBNS, &AllChargeEdges, forbidden_edge_mask );
@@ -2545,8 +2545,8 @@ exit_case_06e:
                                         ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                                               &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                                        if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                                          vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == -1 ) {
+                                        if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                                          (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == -1 ) {
                                             /* Removed (+)charge from -NHn => nDeltaCharge == -1 */
                                             /* Flow change on pe (+)charge edge (atom NHm(+)) is not known to RunBnsTestOnce()) */
                                             ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -2589,13 +2589,13 @@ exit_case_06e:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -2629,7 +2629,7 @@ exit_case_06e:
                  num_DB_Charged < MAX_DIFF_FIXH &&
                  at2[iat].charge == 1 && at2[iat].num_H &&
                  at2[iat].valence < at2[iat].chem_bonds_valence && !pVA[iat].cMetal &&
-                 (pVA[iat].cNumValenceElectrons == 5 && pVA[iat].cPeriodicRowNumber == 1 ||
+                 ((pVA[iat].cNumValenceElectrons == 5 && pVA[iat].cPeriodicRowNumber == 1) ||
                   pVA[iat].cNumValenceElectrons == 6 ) &&
                  /* in orig.InChI: an endpoint, has fixed-H */
                  /*pStruct->endpoint[i] &&*/
@@ -2659,12 +2659,12 @@ exit_case_06e:
                  (e=pVA[iat].nCPlusGroupEdge-1) >= 0 && 0 == pBNS->edge[e].forbidden ) {
 
                 iat_SB_Neutr[num_SB_Neutr ++] = iat;
-                if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             }
         }
-        if ( num_try = inchi_min( num_SB_Neutr, num_DB_Charged ) ) {
+        if ( (num_try = inchi_min( num_SB_Neutr, num_DB_Charged )) ) {
             /* detected; attempt to fix */
             BNS_VERTEX *pv1n, *pv2n;
             BNS_EDGE   *pe1n, *pe2n;
@@ -2710,8 +2710,8 @@ exit_case_06e:
                 ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret == 1 && (vPathEnd == v1n && vPathStart == v2n ||
-                                  vPathEnd == v2n && vPathStart == v1n) &&
+                if ( ret == 1 && ((vPathEnd == v1n && vPathStart == v2n) ||
+                                  (vPathEnd == v2n && vPathStart == v1n)) &&
                                   (nDeltaCharge == 0 || nDeltaCharge == 1) ) {
                     /* before setting flows the structure could be:
                        [NH+ neigh, v1n]=e1n=[NH+,v1]-pe-[+,v2]=e2n=[another at or its chargeStruct]
@@ -2771,13 +2771,13 @@ exit_case_06e:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -2817,8 +2817,8 @@ exit_case_06e:
                 if ( /* orig. InChI info: -O(-) */
                      num_DB_O < MAX_DIFF_FIXH &&
                      (pc2i->c2at[i].nValElectr == 6 /* O, S, Se, Te */ ||
-                      pc2i->c2at[i].nValElectr == 5 &&
-                      pc2i->c2at[i].nPeriodNum == 1 /* N */ ) &&
+                      (pc2i->c2at[i].nValElectr == 5 &&
+                      pc2i->c2at[i].nPeriodNum == 1) /* N */ ) &&
                      pc2i->c2at[i].endptInChI &&
                      (e=pVA[iat].nCMinusGroupEdge-1) >= 0 && !pBNS->edge[e].forbidden &&
                      pc2i->c2at[i].nFixHInChI == 0 && pc2i->c2at[i].nMobHInChI == 0 &&
@@ -2868,29 +2868,29 @@ exit_case_06e:
                         }
                         iat_SB_N_Neutr[num_SB_N_Neutr ++] = iat;
                         num_N_V ++;
-                        if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                        if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                             goto exit_function;
                         }
-                        if ( ret = AddToEdgeList( &CurrEdges, j, INC_ADD_EDGE ) ) {
+                        if ( (ret = AddToEdgeList( &CurrEdges, j, INC_ADD_EDGE )) ) {
                             goto exit_function;
                         }
                     } else
                     if ( !num_N_V ) {
                         iat_SB_N_Neutr[num_SB_N_Neutr ++] = iat;
-                        if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                        if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                             goto exit_function;
                         }
                         /* in addition, permit N(V)=>N(IV)(+) change by allowing charge flower edge change flow */
                         if ( bN_V && NO_VERTEX != (j = GetChargeFlowerUpperEdge( pBNS, pVA, e )) &&
                              !pBNS->edge[j].forbidden && !pBNS->edge[j].flow ) {
-                            if ( ret = AddToEdgeList( &CurrEdges, j, INC_ADD_EDGE ) ) {
+                            if ( (ret = AddToEdgeList( &CurrEdges, j, INC_ADD_EDGE )) ) {
                                 goto exit_function;
                             }
                         }
                     }
                 }
             }
-            if ( num_try = inchi_min( num_SB_N_Neutr, num_DB_O ) ) {
+            if ( (num_try = inchi_min( num_SB_N_Neutr, num_DB_O )) ) {
                 /* detected; attempt to fix */
                 BNS_EDGE *pe_CMinus;
                 SetForbiddenEdgeMask( pBNS, &AllChargeEdges, forbidden_edge_mask );
@@ -2916,8 +2916,8 @@ exit_case_06e:
                     ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                           &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                    if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                      vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == 2 ) {
+                    if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                      (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == 2 ) {
                         /* Added (-) charge to =O and (+) charge to N => nDeltaCharge == 2 */
                         ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                         if ( ret > 0 ) {
@@ -2943,13 +2943,13 @@ exit_case_06e:
                                                                 ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                     goto exit_function;
                 }
-                if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+                if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                     goto exit_function;
                 }
                 if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                     goto exit_function;  /* no fixed-H found */
                 }
-                if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+                if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                     goto exit_function;
                 }
                 if ( !pc2i->bHasDifference ) {
@@ -3044,12 +3044,12 @@ exit_case_06e:
                          (e=pVA[iat].nCPlusGroupEdge-1) >= 0 && !pBNS->edge[e].forbidden ) {
 
                         iat_SB_N_Neutr[num_SB_N_Neutr ++] = iat;
-                        if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                        if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                             goto exit_function;
                         }
                     }
                 }
-                if ( num_try = inchi_min( num_SB_N_Neutr, num_DB_O ) ) {
+                if ( (num_try = inchi_min( num_SB_N_Neutr, num_DB_O )) ) {
                     /* detected; attempt to fix */
                     BNS_EDGE *pe_CMinus;
                     SetForbiddenEdgeMask( pBNS, &AllChargeEdges, forbidden_edge_mask );
@@ -3075,8 +3075,8 @@ exit_case_06e:
                         ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                               &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                        if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                          vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == 2 ) {
+                        if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                          (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == 2 ) {
                             /* Added (-) charge to =O and (+) charge to N => nDeltaCharge == 2 */
                             ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                             if ( ret > 0 ) {
@@ -3102,13 +3102,13 @@ exit_case_06e:
                                                                     ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                         goto exit_function;
                     }
-                    if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+                    if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                         goto exit_function;
                     }
                     if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                         goto exit_function;  /* no fixed-H found */
                     }
-                    if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+                    if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                         goto exit_function;
                     }
                     if ( !pc2i->bHasDifference ) {
@@ -3125,8 +3125,8 @@ exit_case_06e:
         }
     }
 
-    if ( (pc2i->nNumTgInChI <= 1 &&
-        pc2i->nNumRemHInChI > pc2i->nNumRemHRevrs || pc2i->len_c2at) &&
+    if ( ((pc2i->nNumTgInChI <= 1 &&
+        pc2i->nNumRemHInChI > pc2i->nNumRemHRevrs) || pc2i->len_c2at) &&
          bHas_N_V( at2, pStruct->num_atoms) ) {
         /*-----------------------------------------------------------------*/
         /*                         |                         |             */
@@ -3192,7 +3192,7 @@ exit_case_06e:
                  /*!pStruct->endpoint[i] &&*/
                  !(nMobHInChI && nMobHInChI[i]) && !pStruct->fixed_H[i] ) {
 
-                if ( ret = AddToEdgeList( &iat_N_III_List, iat, 32 ) ) {
+                if ( (ret = AddToEdgeList( &iat_N_III_List, iat, 32 )) ) {
                     goto exit_case_14;
                 }
             } else
@@ -3200,7 +3200,7 @@ exit_case_06e:
             if ( /* restored structure */
                  at2[iat].chem_bonds_valence == at2[iat].valence &&
                  !at2[iat].charge && !at2[iat].radical &&
-                 (pVA[iat].cNumValenceElectrons == 5 && pVA[iat].cPeriodicRowNumber == 1 ||
+                 ((pVA[iat].cNumValenceElectrons == 5 && pVA[iat].cPeriodicRowNumber == 1) ||
                  pVA[iat].cNumValenceElectrons == 6 ) &&
                  at2[iat].num_H &&
                  (e = pVA[iat].nCPlusGroupEdge-1) >= 0 && !pBNS->edge[e].forbidden &&
@@ -3208,7 +3208,7 @@ exit_case_06e:
                  /* orig. InChI */
                  !(nMobHInChI && nMobHInChI[i]) && pStruct->fixed_H[i] ) {
 
-                if ( ret = AddToEdgeList( &iat_X_List, iat, 32 ) ) {
+                if ( (ret = AddToEdgeList( &iat_X_List, iat, 32 )) ) {
                     goto exit_case_14;
                 }
             }
@@ -3302,8 +3302,8 @@ exit_case_06e:
                         if ( ret < 0 ) {
                             goto exit_case_14;
                         } else
-                        if ( ret == 1 && (vPathEnd == v1n && vPathStart == v2n ||
-                                          vPathEnd == v2n && vPathStart == v1n) &&
+                        if ( ret == 1 && ((vPathEnd == v1n && vPathStart == v2n) ||
+                                          (vPathEnd == v2n && vPathStart == v1n)) &&
                                           nDeltaCharge == 2 ) {
                             ; /* success */
                         } else {
@@ -3333,8 +3333,8 @@ exit_case_06e:
                             /* test #2 */
                             ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                               &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
-                            if ( ret == 1 && (vPathEnd == v1n && vPathStart == v2n ||
-                                              vPathEnd == v2n && vPathStart == v1n) &&
+                            if ( ret == 1 && ((vPathEnd == v1n && vPathStart == v2n) ||
+                                              (vPathEnd == v2n && vPathStart == v1n)) &&
                                               nDeltaCharge == 2 ) {
                                 /* success; actually change charges */
                                 ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -3391,13 +3391,13 @@ exit_case_14:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -3410,7 +3410,7 @@ exit_case_14:
     if ( pc2i->nNumTgMRevrs > pc2i->nNumTgMInChI ||
          pc2i->nNumRemHRevrs < pc2i->nNumRemHInChI ||
          pc2i->nNumEndpRevrs < pc2i->nNumEndpInChI ||
-         pc2i->nNumTgInChI <= 1 && pc2i->nNumTgRevrs > pc2i->nNumTgInChI ) {
+         (pc2i->nNumTgInChI <= 1 && pc2i->nNumTgRevrs > pc2i->nNumTgInChI) ) {
         /*--------------------------------------------------------------*/
         /* case 15: restored: -(+)O=AB-N<  orig: -O-AB=N(+)<            */
         /* (a) restored t-groups have more (-) than in original InChI   */
@@ -3463,12 +3463,12 @@ exit_case_14:
                  (e=pVA[iat].nCPlusGroupEdge-1) >= 0 && 0 == pBNS->edge[e].forbidden ) {
 
                 iat_SB_Neutr[num_SB_Neutr ++] = iat;
-                if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             }
         }
-        if ( num_try = inchi_min( num_SB_Neutr, num_DB_Charged ) ) {
+        if ( (num_try = inchi_min( num_SB_Neutr, num_DB_Charged )) ) {
             /* detected; attempt to fix */
             BNS_VERTEX *pv1n, *pv2n;
             BNS_EDGE   *pe1n, *pe2n;
@@ -3514,8 +3514,8 @@ exit_case_14:
                 ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret == 1 && (vPathEnd == v1n && vPathStart == v2n ||
-                                  vPathEnd == v2n && vPathStart == v1n) &&
+                if ( ret == 1 && ((vPathEnd == v1n && vPathStart == v2n) ||
+                                  (vPathEnd == v2n && vPathStart == v1n)) &&
                                   (nDeltaCharge == 0 || nDeltaCharge == 1) ) {
                     /* Moved charge from O(+) to -N< => nDeltaCharge == 1 or 0 if pe2n = -N< charge edge */
                     /* Flow change on pe (+)charge edge (atom NH2) is not known to RunBnsTestOnce()) */
@@ -3544,13 +3544,13 @@ exit_case_14:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -3597,7 +3597,7 @@ exit_case_14:
 
                     iat_DB_O_Neutr[num_DB_O_Neutr ++] = iat;
                     
-                    if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                    if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                         goto exit_function;
                     }
                     
@@ -3623,7 +3623,7 @@ exit_case_14:
                     */
                 }
             }
-            if ( num_try = inchi_min( num_SB_N_Minus, num_DB_O_Neutr ) ) {
+            if ( (num_try = inchi_min( num_SB_N_Minus, num_DB_O_Neutr )) ) {
                 /* detected; attempt to fix */
                 SetForbiddenEdgeMask( pBNS, &AllChargeEdges, forbidden_edge_mask );
                 RemoveForbiddenEdgeMask( pBNS, &CurrEdges, forbidden_edge_mask  );
@@ -3650,8 +3650,8 @@ exit_case_14:
                     ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                           &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                    if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                      vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == 1 ) {
+                    if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                      (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == 1 ) {
                         /* Moved (-) charge to =O => nDeltaCharge == 1 */
                         /* Flow change on pe (-)charge edge (atom -NH(-)) is not known to RunBnsTestOnce()) */
                         ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -3682,13 +3682,13 @@ exit_case_14:
                                                                 ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                     goto exit_function;
                 }
-                if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+                if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                     goto exit_function;
                 }
                 if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                     goto exit_function;  /* no fixed-H found */
                 }
-                if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+                if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                     goto exit_function;
                 }
                 if ( !pc2i->bHasDifference ) {
@@ -3718,7 +3718,7 @@ exit_case_14:
                  at2[iat].charge == 1 && at2[iat].num_H &&
                  at2[iat].valence < at2[iat].chem_bonds_valence && !pVA[iat].cMetal &&
                  (pVA[iat].cNumValenceElectrons == 6 ||
-                  pVA[iat].cNumValenceElectrons == 5 && pVA[iat].cPeriodicRowNumber == 1) &&
+                  (pVA[iat].cNumValenceElectrons == 5 && pVA[iat].cPeriodicRowNumber == 1)) &&
                  /* has (+) edge */
                  (e=pVA[iat].nCPlusGroupEdge-1) >= 0 && !pBNS->edge[e].forbidden ) {
 
@@ -3734,7 +3734,7 @@ exit_case_14:
                  at2[iat].charge == 0 && !at2[iat].num_H &&
                  at2[iat].valence == at2[iat].chem_bonds_valence && !pVA[iat].cMetal &&
                  (pVA[iat].cNumValenceElectrons == 6 || pVA[iat].cNumValenceElectrons == 7 ||
-                  pVA[iat].cNumValenceElectrons == 5 && pVA[iat].cPeriodicRowNumber > 1 ) &&
+                  (pVA[iat].cNumValenceElectrons == 5 && pVA[iat].cPeriodicRowNumber > 1) ) &&
                  /* in orig.InChI: not an endpoint */
                  !pStruct->endpoint[i] &&
                  !(pStruct->fixed_H && pStruct->fixed_H[i]) &&
@@ -3745,12 +3745,12 @@ exit_case_14:
 
                 iat_SB_Neutr[num_SB_Neutr ++] = iat;
                 
-                if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             }
         }
-        if ( num_try = inchi_min( num_SB_Neutr, num_DB_Charged ) ) {
+        if ( (num_try = inchi_min( num_SB_Neutr, num_DB_Charged )) ) {
             BNS_VERTEX *pv1n, *pv2n;
             BNS_EDGE   *pe1n, *pe2n;
             Vertex      v1n, v2n;
@@ -3798,8 +3798,8 @@ exit_case_14:
                 ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret == 1 && (vPathEnd == v1n && vPathStart == v2n ||
-                                  vPathEnd == v2n && vPathStart == v1n) &&
+                if ( ret == 1 && ((vPathEnd == v1n && vPathStart == v2n) ||
+                                  (vPathEnd == v2n && vPathStart == v1n)) &&
                                   (nDeltaCharge == 0 || nDeltaCharge == 1) ) {
                     /* Moved charge from OH(+) to -O- => nDeltaCharge == 1 or 0 if pe2n = -O- charge edge */
                     /* Flow change on pe (+)charge edge (atom OH(+)) is not known to RunBnsTestOnce()) */
@@ -3828,13 +3828,13 @@ exit_case_14:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -3880,12 +3880,12 @@ exit_case_14:
                 if ( !pStruct->endpoint[i] || !at_Mobile_H_Revrs || at_Mobile_H_Revrs[iat].endpoint ||
                      pVA[i].cNumValenceElectrons != 5 || pVA[i].cPeriodicRowNumber != 1 ||
                      2 != at2[iat].valence || at2[iat].num_H || at2[iat].radical ||
-                     0 <= (e1=pVA[iat].nCPlusGroupEdge-1) && !pBNS->edge[e1].flow ||
+                     (0 <= (e1=pVA[iat].nCPlusGroupEdge-1) && !pBNS->edge[e1].flow) ||
                      0 > (e=pVA[iat].nCMinusGroupEdge-1) || pBNS->edge[e].forbidden || pBNS->edge[e].flow ) {
                     continue;
                 }
                 /* found -N= */
-                if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             }
@@ -3898,7 +3898,7 @@ exit_case_14:
             iat =  nCanon2AtnoRevrs[i];
             if ( pStruct->endpoint[i] || !pVA[i].cNumValenceElectrons || pVA[i].cNumValenceElectrons == 4 ||
                  at2[iat].num_H || at2[iat].radical ||
-                 0 <= (e1=pVA[iat].nCMinusGroupEdge-1) && !pBNS->edge[e1].flow ||
+                 (0 <= (e1=pVA[iat].nCMinusGroupEdge-1) && !pBNS->edge[e1].flow) ||
                  0 > (e=pVA[iat].nCPlusGroupEdge-1) || pBNS->edge[e].forbidden || pBNS->edge[e].flow != 1 ) {
                 continue;
             }
@@ -3922,8 +3922,8 @@ exit_case_14:
             ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                   &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-            if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                              vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == 1 ) {
+            if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                              (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == 1 ) {
                 /* Created (-) charge on -N= => nDeltaCharge == 1 */
                 /* Flow change on pe (+)charge edge (atom X) is not known to RunBnsTestOnce()) */
                 ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -3953,13 +3953,13 @@ exit_case_18:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -4002,7 +4002,7 @@ exit_case_18:
                  ) {
 
                 /* -OH charge edges */
-                if ( ret = AddToEdgeList( &CurrEdges, iat, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &CurrEdges, iat, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             }
@@ -4052,8 +4052,8 @@ exit_case_18:
                 ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                  vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == DeltaChargeExpected ) {
+                if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                  (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == DeltaChargeExpected ) {
                     ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                     if ( ret > 0 ) {
                         nNumRunBNS ++;
@@ -4083,13 +4083,13 @@ exit_case_18:
                                                                 ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                     goto exit_function;
                 }
-                if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+                if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                     goto exit_function;
                 }
                 if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                     goto exit_function;  /* no fixed-H found */
                 }
-                if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+                if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                     goto exit_function;
                 }
                 if ( !pc2i->bHasDifference ) {
@@ -4138,7 +4138,7 @@ exit_case_18:
                  pc2i->c2at[i].nAtChargeRevrs == 0 && !at2[iat].num_H &&
                  at2[iat].valence + 1 == at2[iat].chem_bonds_valence ) {
                 iat_DB_N[num_DB_N ++] = iat;
-                if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             } else
@@ -4176,13 +4176,13 @@ exit_case_18:
                      !pBNS->edge[e].flow ) {
 
                     iat_DB_N[num_DB_N ++] = iat;
-                    if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                    if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                         goto exit_function;
                     }
                 }
             }
         }
-        if ( num_try = inchi_min( num_SB_O_Minus, num_DB_N ) ) {
+        if ( (num_try = inchi_min( num_SB_O_Minus, num_DB_N )) ) {
             /* detected; attempt to fix */
             SetForbiddenEdgeMask( pBNS, &AllChargeEdges, forbidden_edge_mask );
             RemoveForbiddenEdgeMask( pBNS, &CurrEdges, forbidden_edge_mask  );
@@ -4203,8 +4203,8 @@ exit_case_18:
                 ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                  vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == 1 ) {
+                if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                  (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == 1 ) {
                     /* Added (-) charge to =N- => nDeltaCharge == 1 */
                     /* Flow change on pe (-)charge edge (atom -O(-)) is not known to RunBnsTestOnce()) */
                     ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -4230,13 +4230,13 @@ exit_case_18:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -4284,7 +4284,7 @@ exit_case_18:
                  pc2i->c2at[i].nAtChargeRevrs == 0 && !at2[iat].num_H &&
                  at2[iat].valence == 1 && at2[iat].chem_bonds_valence == 2 ) {
                 iat_DB_O[num_DB_O ++] = iat;
-                if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             }
@@ -4350,7 +4350,7 @@ exit_case_18:
                 iat_Central[num_SB_O_Minus ++] = iS;
             }
         }
-        if ( num_try = inchi_min( num_SB_O_Minus, num_DB_O ) ) {
+        if ( (num_try = inchi_min( num_SB_O_Minus, num_DB_O )) ) {
             /* detected; attempt to fix */
             SetForbiddenEdgeMask( pBNS, &AllChargeEdges, forbidden_edge_mask );
             RemoveForbiddenEdgeMask( pBNS, &CurrEdges, forbidden_edge_mask  );
@@ -4372,8 +4372,8 @@ exit_case_18:
                 ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                  vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == 1 ) {
+                if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                  (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == 1 ) {
                     /* Added (-) charge to =O => nDeltaCharge == 1 */
                     /* Flow change on pe (-)charge edge (atom -N(-)-) is not known to RunBnsTestOnce()) */
                     ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -4399,13 +4399,13 @@ exit_case_18:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -4511,26 +4511,26 @@ exit_case_18:
                              0 <= (e=pVA[k].nCMinusGroupEdge-1) && !pBNS->edge[e].forbidden ) {
                             if ( bond_type == BOND_TYPE_DOUBLE && !at2[k].charge && !pBNS->edge[e].flow) {
                                 /* charges to be unchanged */
-                                if ( ret = AddToEdgeList( &OtherSO, e, INC_ADD_EDGE ) ) {
+                                if ( (ret = AddToEdgeList( &OtherSO, e, INC_ADD_EDGE )) ) {
                                     goto exit_case_21a;
                                 }
                             } else
                             if ( bond_type == BOND_TYPE_SINGLE && at2[k].charge == -1 && pBNS->edge[e].flow ) {
                                 /* charges to be removed */
-                                if ( ret = AddToEdgeList( &SOMinus, e, INC_ADD_EDGE ) ) {
+                                if ( (ret = AddToEdgeList( &SOMinus, e, INC_ADD_EDGE )) ) {
                                     goto exit_case_21a;
                                 }
                             }
                         }
                     }
-                    if ( ret = AddToEdgeList( &CentralS, iS, INC_ADD_EDGE ) ) {
+                    if ( (ret = AddToEdgeList( &CentralS, iS, INC_ADD_EDGE )) ) {
                         goto exit_case_21a;
                     }
                 } else
                 if ( at2[iat].charge == 0 && !pBNS->edge[e].flow &&
                      at2[iat].valence + 1 == at2[iat].chem_bonds_valence ) {
                     /* changeable charges */
-                    if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                    if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                         goto exit_function;
                     }
                 }
@@ -4541,7 +4541,7 @@ exit_case_18:
             RemoveFromEdgeListByValue( &CurrEdges, OtherSO.pnEdges[i] );
         }
 
-        if ( num_try = inchi_min( SOMinus.num_edges, CurrEdges.num_edges ) ) {
+        if ( (num_try = inchi_min( SOMinus.num_edges, CurrEdges.num_edges )) ) {
             /* detected; attempt to fix */
             SetForbiddenEdgeMask( pBNS, &AllChargeEdges, forbidden_edge_mask );
             RemoveForbiddenEdgeMask( pBNS, &CurrEdges, forbidden_edge_mask  );
@@ -4562,8 +4562,8 @@ exit_case_18:
                 ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                  vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == 1 ) {
+                if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                  (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == 1 ) {
                     /* Added (-) charge to =O => nDeltaCharge == 1 */
                     /* Flow change on pe (-)charge edge (atom -N(-)-) is not known to RunBnsTestOnce()) */
                     ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -4594,13 +4594,13 @@ exit_case_21a:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -4660,12 +4660,12 @@ exit_case_21a:
                  at2[iN2].charge == 1 && at2[iN2].valence == 2 && at2[iN2].chem_bonds_valence == 4 &&
                  pVA[iC=at2[iN2].neighbor[at2[iN2].neighbor[0]==iN2]].cNumValenceElectrons == 4 ) {
                 
-                if ( ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &CurrEdges, e, INC_ADD_EDGE )) ) {
                     goto exit_function;
                 }
             }
         }
-        if ( num_try = inchi_min( CurrEdges.num_edges, num_DB_O ) ) {
+        if ( (num_try = inchi_min( CurrEdges.num_edges, num_DB_O )) ) {
             /* detected; attempt to fix */
             SetForbiddenEdgeMask( pBNS, &AllChargeEdges, forbidden_edge_mask );
             RemoveForbiddenEdgeMask( pBNS, &CurrEdges, forbidden_edge_mask  );
@@ -4691,8 +4691,8 @@ exit_case_21a:
                 ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                  vPathEnd == v2 && vPathStart == v1) && nDeltaCharge == 0 ) {
+                if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                  (vPathEnd == v2 && vPathStart == v1)) && nDeltaCharge == 0 ) {
                     /* Added (-) charge to =O and removed from =N(-) => nDeltaCharge == 0 */
                     ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
                     if ( ret > 0 ) {
@@ -4719,13 +4719,13 @@ exit_case_21a:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -4847,7 +4847,7 @@ exit_case_21a:
                     iat_DB_O[num_DB_O ++] = iat;
                 }
                 /* save the edge to avoid interference */
-                if ( ret = AddToEdgeList( &ChangeableEdges[CHG_SET_O_FIXED], e, INC_ADD_EDGE ) ) {
+                if ( (ret = AddToEdgeList( &ChangeableEdges[CHG_SET_O_FIXED], e, INC_ADD_EDGE )) ) {
                     goto exit_case_23;
                 }
             }
@@ -4989,8 +4989,8 @@ exit_case_21a:
                     ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                           &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                    if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                      vPathEnd == v2 && vPathStart == v1) &&
+                    if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                      (vPathEnd == v2 && vPathStart == v1)) &&
                                       nDeltaCharge == nDeltaChargeExpected ) {
                         /* Move (-) charge to =O and remove it an endpoint => nDeltaCharge == 0 */
                         ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -5027,13 +5027,13 @@ exit_case_23:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -5236,8 +5236,8 @@ exit_case_23:
                 ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                  vPathEnd == v2 && vPathStart == v1) &&
+                if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                  (vPathEnd == v2 && vPathStart == v1)) &&
                                   nDeltaCharge == nDeltaChargeExpected ) {
                     /* Move (-) charge to =O and remove it an endpoint => nDeltaCharge == 0 */
                     ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -5272,13 +5272,13 @@ exit_case_24:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {
@@ -5348,8 +5348,8 @@ exit_case_24:
                      0 <= FindInEdgeList( &ChangeableEdges[CHG_SET_AVOID], e ) ) {
                     continue;
                 }
-                bFirst = ( pVA[iat].cNumValenceElectrons == 5 && pc2i->nNumTgInChI == 1 ||
-                           pVA[iat].cNumValenceElectrons == 6 && pc2i->nNumTgInChI != 1  );
+                bFirst = ( (pVA[iat].cNumValenceElectrons == 5 && pc2i->nNumTgInChI == 1) ||
+                           (pVA[iat].cNumValenceElectrons == 6 && pc2i->nNumTgInChI != 1)  );
                     /* many or no t-groups -> try O only first */
                     /* single t-group -> try only N first */
                 if ( !(at_Mobile_H_Revrs && at_Mobile_H_Revrs[i].endpoint) ) {
@@ -5358,7 +5358,7 @@ exit_case_24:
                          (ret = AddToEdgeList( &ChangeableEdges[CHG_SET_MISSED_TAUT_1], e, INC_ADD_EDGE ))) {
                         goto exit_case_25;
                     }
-                    if (ret = AddToEdgeList( &ChangeableEdges[CHG_SET_MISSED_TAUT_ALL], e, INC_ADD_EDGE )) {
+                    if ( (ret = AddToEdgeList( &ChangeableEdges[CHG_SET_MISSED_TAUT_ALL], e, INC_ADD_EDGE )) ) {
                         goto exit_case_25;
                     }
                 }
@@ -5366,10 +5366,10 @@ exit_case_24:
                      (ret = AddToEdgeList( &ChangeableEdges[CHG_SET_OTHER_TAUT_1], e, INC_ADD_EDGE ))) {
                     goto exit_case_25;
                 }
-                if (ret = AddToEdgeList( &ChangeableEdges[CHG_SET_OTHER_TAUT_ALL], e, INC_ADD_EDGE )) {
+                if ( (ret = AddToEdgeList( &ChangeableEdges[CHG_SET_OTHER_TAUT_ALL], e, INC_ADD_EDGE )) ) {
                     goto exit_case_25;
                 }
-                if (ret = AddToEdgeList( &ChangeableEdges[CHG_SET_AVOID], e, INC_ADD_EDGE )) {
+                if ( (ret = AddToEdgeList( &ChangeableEdges[CHG_SET_AVOID], e, INC_ADD_EDGE )) ) {
                     goto exit_case_25;
                 }
             } else
@@ -5457,8 +5457,8 @@ exit_case_24:
                 ret = RunBnsTestOnce( pBNS, pBD, pVA, &vPathStart, &vPathEnd, &nPathLen,
                                       &nDeltaH, &nDeltaCharge, &nNumVisitedAtoms );
 
-                if ( ret == 1 && (vPathEnd == v1 && vPathStart == v2 ||
-                                  vPathEnd == v2 && vPathStart == v1) &&
+                if ( ret == 1 && ((vPathEnd == v1 && vPathStart == v2) ||
+                                  (vPathEnd == v2 && vPathStart == v1)) &&
                                   nDeltaCharge == nDeltaChargeExpected ) {
                     /* Move (-) charge to =O and remove it an endpoint => nDeltaCharge == 0 */
                     ret = RunBnsRestoreOnce( pBNS, pBD, pVA, pTCGroups );
@@ -5493,13 +5493,13 @@ exit_case_25:
                                                             ppt_group_info, ppat_norm, ppat_prep ) ) ) {
                 goto exit_function;
             }
-            if ( ret = FillOutExtraFixedHDataRestr( pStruct ) ) {
+            if ( (ret = FillOutExtraFixedHDataRestr( pStruct )) ) {
                 goto exit_function;
             }
             if ( !pInChI[0]->nNum_H_fixed && !pStruct->pOneINChI[0]->nNum_H_fixed ) {
                 goto exit_function;  /* no fixed-H found */
             }
-            if ( ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i ) ) {
+            if ( (ret = FillOutCMP2FHINCHI( pStruct, at2, pVA, pInChI, pc2i )) ) {
                 goto exit_function;
             }
             if ( !pc2i->bHasDifference ) {

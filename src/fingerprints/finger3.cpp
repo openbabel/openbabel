@@ -64,11 +64,11 @@ public:
     static string desc;
     //Read patterns file if it has not been done already,
     //because we need _bitcount and _version updated
-    
+
     // _bitcount and _version are available only after the datafile has been parsed.
     // This is a burden on normal operation (Description() gets called on startup from OBDefine),
     // so the secondline is present only after the fingerprint has been used.
-    // the 
+    // the
     string secondline;
     if(!_pats.empty())
       secondline = "\n" + toString(_bitcount) + " bits. Datafile version = " +  _version;
@@ -258,7 +258,7 @@ public:
         num -= ngrp;
         if(GetBit(fp, n) == bSet)
         {
-          ss << ppat->description; 
+          ss << ppat->description;
           if(div>0)
             ss << '*' << div+1;
           ss << '\t' ;
@@ -306,7 +306,6 @@ public:
 //***********************************************
 //Make a global instance
 PatternFP FP3PatternFP("FP3");
-
 PatternFP FP4PatternFP("FP4", "SMARTS_InteLigand.txt");
 //***********************************************
 

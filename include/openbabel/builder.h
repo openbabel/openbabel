@@ -43,10 +43,11 @@ namespace OpenBabel
       //@{
       /*! The mol object contains all connectivity information (atomic numbers, bonds, bond orders, ..)
        *  but no 3D coordinates. Build generates these coordinates and assigns them.
-       *  \param mol Molecule with the connectivity (from smiles for example). The coordinates are also
+       *  \param mol Molecule with the connectivity (from SMILES for example). The coordinates are also
        *         changed in this mol.
+       *  \param stereoWarnings Warn if the stereochemistry is incorrect (default is true)
        */
-      bool Build(OBMol &mol);
+    bool Build(OBMol &mol, bool stereoWarnings = true);
       //@}
 
       ///@name Setup build parameters
@@ -133,12 +134,16 @@ namespace OpenBabel
        */
       //bool Insert(OBMol &mol, int a, int b, std::string smiles, int c, int d);
       /*! Correct double bond stereochemistry
+       *
+       * \returns Success or failure
        */
-      static void CorrectStereoBonds(OBMol &mol);
+      static bool CorrectStereoBonds(OBMol &mol);
       /*! Correct stereochemistry at tetrahedral atoms with at least two non-ring
        * bonds. It also works for spiro atoms.
+       *
+       * \returns Success or failure
        */
-      static void CorrectStereoAtoms(OBMol &mol);
+      static bool CorrectStereoAtoms(OBMol &mol, bool warn = true);
       /*! Does this atom connect two rings which are not otherwise connected?
       */
       static bool IsSpiroAtom(unsigned long atomId, OBMol &mol);

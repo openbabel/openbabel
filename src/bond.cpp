@@ -33,6 +33,9 @@ namespace OpenBabel
       OBBondPrivate() {}
   };
 
+#if __cplusplus >= 201103L
+  thread_local //this is required for correct multi-threading
+#endif
   extern OBAromaticTyper  aromtyper;
 
   /** \class OBBond bond.h <openbabel/bond.h>
@@ -62,6 +65,7 @@ namespace OpenBabel
     _bgn=NULL;
     _end=NULL;
     _vdata.clear();
+    _parent=(OBMol*)NULL;
   }
 
   OBBond::~OBBond()
@@ -175,9 +179,30 @@ namespace OpenBabel
 
   bool OBBond::IsRotor()
   {
-    return(_bgn->GetHvyValence() > 1 && _end->GetHvyValence() > 1 &&
-           _order == 1 && !IsInRing() && _bgn->GetHyb() != 1 &&
-           _end->GetHyb() != 1);
+    // This could be one hellish conditional, but let's break it down
+    // .. the bond is a single bond
+    if (_order != 1)
+      return false;
+
+    // not in a ring, or in a large ring
+    // and if it's a ring, not sp2
+    OBRing *ring = FindSmallestRing();
+    if (ring != NULL) {
+      if (ring->Size() <= 3)
+        return false;
+      if (_bgn->GetHyb() == 2 || _end->GetHyb() == 2)
+        return false;
+    }
+
+    // atoms are not sp hybrids
+    if (_bgn->GetHyb() == 1 || _end->GetHyb() == 1)
+      return false;
+
+    // not just an -OH or -NH2, etc.
+    // maybe we want to add this as an option
+    //    rotatable = rotatable && ((_bgn->IsHeteroatom() || _bgn->GetHvyValence() > 1)
+    //                               && (_end->IsHeteroatom() || _end->GetHvyValence() > 1) );
+    return (_bgn->GetHvyValence() > 1 && _end->GetHvyValence() > 1);
   }
 
    bool OBBond::IsAmide()
@@ -311,38 +336,6 @@ namespace OpenBabel
          if (bond->IsCarbonyl()) return(true);
       }
 
-      return(false);
-   }
-
-   bool OBBond::IsAmidine()
-   {
-      OBAtom *c,*n;
-      c = n = NULL;
-
-      // Look for C-N bond
-      if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 7)
-      {
-         c = (OBAtom*)_bgn;
-         n = (OBAtom*)_end;
-      }
-      if (_bgn->GetAtomicNum() == 7 && _end->GetAtomicNum() == 6)
-      {
-         c = (OBAtom*)_end;
-         n = (OBAtom*)_bgn;
-      }
-      if (!c || !n) return(false);
-      if (GetBondOrder() != 1) return(false);
-      if (n->GetImplicitValence() != 3) return(false);
-
-      // Make sure C is attached to =N
-      OBBond *bond;
-      vector<OBBond*>::iterator i;
-      for (bond = c->BeginBond(i); bond; bond = c->NextBond(i))
-      {
-         if (bond->IsImide()) return(true);
-      }
-
-      // Return
       return(false);
    }
 
@@ -481,18 +474,6 @@ namespace OpenBabel
 
     if ((_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 8) ||
         (_bgn->GetAtomicNum() == 8 && _end->GetAtomicNum() == 6))
-      return(true);
-
-    return(false);
-  }
-
-  bool OBBond::IsImide()
-  {
-    if (GetBO() != 2)
-      return(false);
-
-    if ((_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 7) ||
-        (_bgn->GetAtomicNum() == 7 && _end->GetAtomicNum() == 6))
       return(true);
 
     return(false);
@@ -694,7 +675,7 @@ namespace OpenBabel
     OBMol *mol = (OBMol*)GetParent();
     if (!mol)
       return false;
-    if (!mol->HasClosureBondsPerceived()) 
+    if (!mol->HasClosureBondsPerceived())
       mol->FindRingAtomsAndBonds();
     return HasFlag(OB_CLOSURE_BOND);
   }

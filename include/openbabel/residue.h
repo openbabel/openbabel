@@ -87,6 +87,11 @@ namespace OpenBabel {
     //! Set the internal index of this residue in the parent OBMol.
     //! Intended mostly for internal use
     void    SetIdx(const unsigned int idx);
+    //! Set  PDB insertion code information for this residue. This allows
+    //! consecutive residues to have the same number. Some communities
+    //! that work in a well-conserved structural world use this, e.g.
+    //! for immunoglobulins.
+    void    SetInsertionCode(const char insertioncode);
 
     //! Set the character code ID for an ATOM record for the supplied atom
     //! This does nothing if the supplied atom is not found in the residue
@@ -122,6 +127,9 @@ namespace OpenBabel {
     std::string    GetAtomID(OBAtom *atom)        const;
     //! \return the serial number of the supplied atom (uses OBSerialNums)
     unsigned       GetSerialNum(OBAtom *atom)     const;
+    //! \return The Insertion Code (i.e., an extra position motivated by a
+    //! multiple sequence alignment against a template with defined numbers)
+    char           GetInsertionCode(void)	  const;
 
     //! \return Whether this residue has the supplied amino acid property
     //!  defined from the OBAminoAcidProperty namespace
@@ -161,6 +169,7 @@ namespace OpenBabel {
     unsigned int              _reskey;//!< Residue key ID -- see SetResidueKeys()
     std::string               _resnum;//!< Residue number (i.e., in file) 23, 1B, etc.
     std::string               _resname;//!<Residue text name
+    char                _insertioncode;//!<PBB insertion code
 
     std::vector<bool>         _hetatm;//!< Is a given atom a HETAM
     std::vector<std::string>  _atomid;//!< Residue atom text IDs

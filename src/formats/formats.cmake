@@ -45,7 +45,7 @@ set(formats_compchem
 
 if(MSVC OR HAVE_REGEX_H)
   set(formats_compchem
-      ${formats_compchem} gamessukformat
+      ${formats_compchem} gamessukformat orcaformat
   )
   set(formats_compchem
       ${formats_compchem} orcaformat

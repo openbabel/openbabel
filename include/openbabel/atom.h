@@ -461,9 +461,6 @@ namespace OpenBabel
       bool IsOneFour(OBAtom*);
       //! \return Is this atom an oxygen in a carboxyl (-CO2 or CO2H) group?
       bool IsCarboxylOxygen();
-      //! \return Is this atom a sulfur in a (di)thiocarboxyl (-CS2, -COS, CS2H or COSH) group?
-      //! \since version 2.4
-      bool IsThiocarboxylSulfur();
       //! \return Is this atom an oxygen in a phosphate (R-PO3) group?
       bool IsPhosphateOxygen();
       //! \return Is this atom an oxygen in a sulfate (-SO3) group?
@@ -497,9 +494,11 @@ namespace OpenBabel
       bool HasChiralitySpecified() { return(HasFlag(OB_CSTEREO_ATOM|OB_ACSTEREO_ATOM)); }
       //! \deprecated
       bool HasChiralVolume() { return(HasFlag(OB_POS_CHIRAL_ATOM|OB_NEG_CHIRAL_ATOM)); }
-      //! \return Is this atom a hydrogen-bond acceptor (receptor)?
+      //! \return Is this atom a hydrogen-bond acceptor  (considering also atom surrounding)
       bool IsHbondAcceptor();
-      //! \return Is this atom a hydrogen-bond donor?
+      //! \return Is this atom a hydrogen-bond acceptor (old function)?
+      bool IsHbondAcceptorSimple();
+            //! \return Is this atom a hydrogen-bond donor?
       bool IsHbondDonor();
       //! \return Is this a hydrogen atom attached to a hydrogen-bond donor?
       bool IsHbondDonorH();
@@ -515,6 +514,8 @@ namespace OpenBabel
       bool HasBondOfOrder(unsigned int bo);
       //! \return The count of bonds connected to this atom with order == @p bo
       int  CountBondsOfOrder(unsigned int bo);
+      //! \return The maximum bond order for this atom
+      int  HighestBondOrder();
       //! \return Whether this atom is connected to any bond with order >1
       bool HasNonSingleBond();
       //! \return Does this atom have a single bond
