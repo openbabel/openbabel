@@ -137,6 +137,7 @@ namespace OpenBabel
     _isotope = 0;
     _spinmultiplicity=0; // CM 18 Sept 2003
     _impval = 0;
+    _imph = 0;
     _fcharge = 0;
     _type[0] = '\0';
     _pcharge = 0.0;
@@ -166,6 +167,7 @@ namespace OpenBabel
 
     _hyb = src->GetHyb();
     _ele = src->GetAtomicNum();
+    _imph = src->GetImplicitHydrogen();
     _isotope = src->GetIsotope();
     _impval = src->GetImplicitValence();
     _fcharge = src->GetFormalCharge();

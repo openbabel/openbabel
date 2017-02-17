@@ -83,6 +83,7 @@ namespace OpenBabel
     protected:
       unsigned char                 _ele;       //!< atomic number (type unsigned char to minimize space -- allows for 0..255 elements)
       char                          _impval;    //!< implicit valence
+      unsigned char                 _imph;      //!< number of implicit hydrogens
       char                          _type[OBATOM_TYPE_LEN];   //!< atomic type
       short                         _fcharge;   //!< formal charge
       unsigned short                _isotope;   //!< isotope (0 = most abundant)
@@ -144,6 +145,8 @@ namespace OpenBabel
       void SetAtomicNum(int atomicnum)    { _ele = (char)atomicnum; }
       //! Set isotope number (actual atomic weight is tabulated automatically, 0 = most abundant)
       void SetIsotope(unsigned int iso);
+      //! Set the implicit hydrogen count to @p val
+      void SetImplicitHydrogen(unsigned int val)    { _imph = (unsigned char)val; }
       //! Set the implicit valence to @p val
       void SetImplicitValence(int val)    { _impval = (char)val; }
       //! Increase the implicit valence by one
@@ -233,6 +236,8 @@ namespace OpenBabel
       unsigned int GetHyb()             const;
       //! \return The implicit valence of this atom type (i.e. maximum number of connections expected)
       unsigned int GetImplicitValence() const;
+      //! \return The number of implicit hydrogens attached to this atom
+      unsigned char GetImplicitHydrogen() const { return _imph; };
       //! \return The number of non-hydrogens connected to this atom
       unsigned int GetHvyValence()      const;
       //! \return The number of heteroatoms connected to an atom
