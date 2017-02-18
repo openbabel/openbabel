@@ -398,14 +398,14 @@ namespace OpenBabel
   class OBAromaticTyperMolState
   {
   public:
-    OBAromaticTyperMolState::OBAromaticTyperMolState(OBAromaticTyper *aromtyper, OBMol &mol) : _aromtyper(aromtyper), mol(mol)
+    OBAromaticTyperMolState(OBAromaticTyper *aromtyper, OBMol &mol) : _aromtyper(aromtyper), mol(mol)
     {
       _vpa.resize(mol.NumAtoms() + 1);
       _velec.resize(mol.NumAtoms() + 1);
       _root.resize(mol.NumAtoms() + 1);
       _visit.resize(mol.NumAtoms() + 1);
     }
-    void OBAromaticTyperMolState::AssignAromaticFlags();
+    void AssignAromaticFlags();
   private:
     OBAromaticTyper* _aromtyper;
     OBMol &mol;
