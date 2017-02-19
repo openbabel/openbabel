@@ -164,13 +164,14 @@ namespace OpenBabel
     vector<vector<int> >::iterator j;
     vector<pair<OBSmartsPattern*,string> >::iterator i;
 
-    for (i = _vexttyp.begin();i != _vexttyp.end();++i)
-      if (i->first->Match(mol))
-        {
-          std::vector<std::vector<int> > mlist = i->first->GetMapList();
-          for (j = mlist.begin();j != mlist.end();++j)
-            mol.GetAtom((*j)[0])->SetType(i->second);
-        }
+    for (i = _vexttyp.begin(); i != _vexttyp.end(); ++i) {
+      std::vector<std::vector<int> > mlist;
+      if (i->first->Match(mol, mlist))
+      {
+        for (j = mlist.begin(); j != mlist.end(); ++j)
+          mol.GetAtom((*j)[0])->SetType(i->second);
+      }
+    }
 
     // Special cases
     vector<OBAtom*>::iterator a;
@@ -214,13 +215,14 @@ namespace OpenBabel
     vector<vector<int> >::iterator j;
     vector<pair<OBSmartsPattern*,int> >::iterator i;
 
-    for (i = _vinthyb.begin();i != _vinthyb.end();++i)
-      if (i->first->Match(mol))
-        {
-          std::vector<std::vector<int> > mlist = i->first->GetMapList();
-          for (j = mlist.begin();j != mlist.end();++j)
-            mol.GetAtom((*j)[0])->SetHyb(i->second);
-        }
+    for (i = _vinthyb.begin(); i != _vinthyb.end(); ++i) {
+      std::vector<std::vector<int> > mlist;
+      if (i->first->Match(mol, mlist))
+      {
+        for (j = mlist.begin(); j != mlist.end(); ++j)
+          mol.GetAtom((*j)[0])->SetHyb(i->second);
+      }
+    }
   }
 
   void OBAtomTyper::AssignImplicitValence(OBMol &mol, bool CanBeLessThanActual)
@@ -248,13 +250,14 @@ namespace OpenBabel
     vector<vector<int> >::iterator j;
     vector<pair<OBSmartsPattern*,int> >::iterator i;
 
-    for (i = _vimpval.begin();i != _vimpval.end();++i)
-      if (i->first->Match(mol))
-        {
-          std::vector<std::vector<int> > mlist = i->first->GetMapList();
-          for (j = mlist.begin();j != mlist.end();++j)
-            mol.GetAtom((*j)[0])->SetImplicitValence(i->second);
-        }
+    for (i = _vimpval.begin(); i != _vimpval.end(); ++i) {
+      std::vector<std::vector<int> > mlist;
+      if (i->first->Match(mol, mlist))
+      {
+        for (j = mlist.begin(); j != mlist.end(); ++j)
+          mol.GetAtom((*j)[0])->SetImplicitValence(i->second);
+      }
+    }
 
     if (!mol.HasAromaticCorrected())
       CorrectAromaticNitrogens(mol);
@@ -375,8 +378,8 @@ namespace OpenBabel
 
     unsigned int member_count;
     for (i2 = _ringtyp.begin();i2 != _ringtyp.end();++i2) { // for each ring type
-      if (i2->first->Match(mol)) {
-        std::vector<std::vector<int> > mlist = i2->first->GetMapList();
+      std::vector<std::vector<int> > mlist;
+      if (i2->first->Match(mol, mlist)) {
         for (j2 = mlist.begin();j2 != mlist.end();++j2) { // for each found match
 
           for (i = rlist.begin();i != rlist.end();++i) { // for each ring
@@ -445,16 +448,17 @@ namespace OpenBabel
     vector<OBSmartsPattern*>::iterator k;
 
     //mark atoms as potentially aromatic
-    for (idx = 0, k = _aromtyper->_vsp.begin(); k != _aromtyper->_vsp.end(); ++k, ++idx)
-      if ((*k)->Match(mol))
+    for (idx = 0, k = _aromtyper->_vsp.begin(); k != _aromtyper->_vsp.end(); ++k, ++idx) {
+      std::vector<std::vector<int> > mlist;
+      if ((*k)->Match(mol, mlist))
       {
-        std::vector<std::vector<int> > mlist = (*k)->GetMapList();
         for (vector<vector<int> >::iterator m = mlist.begin(); m != mlist.end(); ++m)
         {
           _vpa[(*m)[0]] = true;
           _velec[(*m)[0]] = _aromtyper->_verange[idx];
         }
       }
+    }
 
     //sanity check - exclude all 4 substituted atoms and sp centers
     for (atom = mol.BeginAtom(i); atom; atom = mol.NextAtom(i))

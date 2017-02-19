@@ -124,17 +124,18 @@ namespace OpenBabel
       return;
 
     vector<pair<OBSmartsPattern*,vector<double> > >::iterator i;
-    for (i = _vschrg.begin();i != _vschrg.end();++i)
-      if (i->first->Match(mol))
-        {
-          std::vector<std::vector<int> > mlist = i->first->GetUMapList();
-          unsigned int k;
-          vector<vector<int> >::iterator j;
+    for (i = _vschrg.begin(); i != _vschrg.end(); ++i) {
+      std::vector<std::vector<int> > mlist;
+      if (i->first->Match(mol, mlist, OBSmartsPattern::AllUnique))
+      {
+        unsigned int k;
+        vector<vector<int> >::iterator j;
 
-          for (j = mlist.begin();j != mlist.end();++j)
-            for (k = 0;k < j->size();++k)
-              mol.GetAtom((*j)[k])->SetPartialCharge(i->second[k]);
-        }
+        for (j = mlist.begin(); j != mlist.end(); ++j)
+          for (k = 0; k < j->size(); ++k)
+            mol.GetAtom((*j)[k])->SetPartialCharge(i->second[k]);
+      }
+    }
   }
 
   void OBPhModel::CorrectForPH(OBMol &mol, double pH)
