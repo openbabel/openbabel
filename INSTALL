@@ -8,7 +8,7 @@ installation instructions, please see:
 Requirements
 ============
  -- CMake 2.4.8 or later
- -- Eigen 2.0.3 or later (optional)
+ -- Eigen 3.0 or later (optional)
  -- libxml2 (optional)
  -- zlib (optional)
  -- wxWidgets 2.8 (optional, needed to build GUI)
@@ -22,7 +22,7 @@ and/or libraries are not automatically detected please consult the 'Advanced'
 section.
 
 The following instructions assume that the Open Babel source distribution is in
-the directory ~/openbabel-2.3.0.
+the directory ~/openbabel-2.4.0.
 
 1. Create a 'build' directory:
 
@@ -32,7 +32,7 @@ the directory ~/openbabel-2.3.0.
 2. Configure the build system. You can specify additional build
 options at this time (see below):
 
-   cmake ~/openbabel-2.3.0
+   cmake ..
 
 3. Compile:
 
@@ -59,7 +59,7 @@ components.
    -DLIB_INSTALL_DIR : specify the install location for libraries
                        (default ${CMAKE_INSTALL_PREFIX}/lib)
 
-   -DEIGEN2_INCLUDE_DIR : specify the Eigen include directory
+   -DEIGEN3_INCLUDE_DIR : specify the Eigen include directory
 
    -DRUN_SWIG : specify whether to regenerate language bindings
 

@@ -52,7 +52,7 @@ class myTestCase(unittest.TestCase):
                   (msg or '%r != %r within %r places' % (first, second, places)))
 
 class TestToolkit(myTestCase):
-    
+
     def setUp(self):
         self.mols = [self.toolkit.readstring("smi", "CCCC"),
                      self.toolkit.readstring("smi", "CCCN")]
@@ -76,7 +76,7 @@ class TestToolkit(myTestCase):
         """Test the calculation of the Tanimoto coefficient"""
         fps = [x.calcfp() for x in self.mols]
         self.assertEqual(fps[0] | fps[1], self.tanimotoresult)
-        
+
     def testFPstringrepr(self):
         """Test the string representation and corner cases."""
         self.assertRaises(ValueError, self.mols[0].calcfp, "Nosuchname")
@@ -84,7 +84,7 @@ class TestToolkit(myTestCase):
         r = str(self.mols[0].calcfp())
         t = r.split(", ")
         self.assertEqual(len(t), self.Nfpbits)
-        
+
     def testFPbits(self):
         """Test whether the bits are set correctly."""
         bits = [x.calcfp().bits for x in self.mols]
@@ -186,14 +186,14 @@ M  END
 
     def RFformaterror(self):
         mol = getattr(self.toolkit.readfile("noel", "head.sdf"), nextmethod)()
-    
+
     def testRFformaterror(self):
         """Test that invalid formats raise an error"""
         self.assertRaises(ValueError, self.RFformaterror)
 
     def RFunitcellerror(self):
         unitcell = self.mols[0].unitcell
-    
+
     def testRFunitcellerror(self):
         """Test that accessing the unitcell raises an error"""
         self.assertRaises(AttributeError, self.RFunitcellerror)
@@ -221,7 +221,7 @@ M  END
         self.assertRaises(IOError, mol.write, "smi", "testoutput.txt")
         os.remove("testoutput.txt")
         self.assertRaises(ValueError, mol.write, "noel", "testoutput.txt")
-    
+
     def testRFoutputfile(self):
         """Test the Outputfile class"""
         self.assertRaises(ValueError, self.toolkit.Outputfile, "noel", "testoutput.txt")
@@ -328,7 +328,7 @@ M  END
         self.assertEqual(len(self.mols[0].atoms),14)
         self.mols[0].removeh()
         self.assertEqual(len(self.mols[0].atoms),4)
-        
+
 class TestPybel(TestToolkit):
     toolkit = pybel
     tanimotoresult = 1/3.
@@ -370,10 +370,10 @@ SMALL
 GASTEIGER
 
 @<TRIPOS>ATOM
-      1 C           0.0000    0.0000    0.0000 C.3     1  LIG1        0.0000
-      2 C           0.0000    0.0000    0.0000 C.3     1  LIG1        0.0000
-      3 C           0.0000    0.0000    0.0000 C.3     1  LIG1        0.0000
-      4 C           0.0000    0.0000    0.0000 C.3     1  LIG1        0.0000
+      1 C           0.0000    0.0000    0.0000 C.3     1  UNL1        0.0000
+      2 C           0.0000    0.0000    0.0000 C.3     1  UNL1        0.0000
+      3 C           0.0000    0.0000    0.0000 C.3     1  UNL1        0.0000
+      4 C           0.0000    0.0000    0.0000 C.3     1  UNL1        0.0000
 @<TRIPOS>BOND
      1     1     2    1
      2     2     3    1

@@ -3,6 +3,7 @@ conformer.cpp - A OBOp to calculate and minimize the energy using a
                  forcefield (re-wrap of obminimize and obenergy)
 
 Copyright (C) 2010 by Tim Vandermeersch
+Some portions Copyright (C) 2016 Torsten Sachse
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
@@ -26,6 +27,8 @@ Compile with tools/obabel.cpp rather than tools/babel.cpp
 
 #include <openbabel/babelconfig.h>
 #include <iostream>
+#include <vector>
+#include <stdio.h>
 #include <openbabel/op.h>
 #include <openbabel/mol.h>
 #include <openbabel/forcefield.h>
@@ -60,11 +63,21 @@ namespace OpenBabel
           " --random         randomly generate conformers\n"
           " --weighted       weighted rotor search for lowest energy conformer\n"
           " --ff #           select a forcefield (default = MMFF94)\n"
-          " genetic algorithm based methods (default):\n"
+          " --rings          sample ring torsions\n"
+          " genetic algorithm (GA) based methods (default):\n"
           " --children #     number of children to generate for each parent (default = 5)\n"
           " --mutability #   mutation frequency (default = 5)\n"
-          " --converge #     number of identical generations before convergence is reached\n"
+          " --convergence #  number of identical generations before convergence is reached\n"
           " --score #        scoring function [rmsd|energy|minrmsd|minenergy] (default = rmsd)\n"
+          " customize the filter used to sort out wrong conformers\n"
+          " --csfilter #     the filtering algorithm [steric] (default=steric)\n"
+          " --cutoff #       absolute distance in Anstroms below which atoms are considered to clash\n"
+          " --vdw-factor #   apply this factor to all van-der-Waals radii before detecting clashes\n"
+          " --ignore-H       do not detect clashes with hydrogen atoms\n"
+          " customize rotors for GA based method (a rotor is given as a-b where a and b are indices)\n"
+          " --printrot       print all possible rotors and do not perform a conformer search\n"
+          " --onlyrot        declare a comma-separated list of rotors, all but these will be disregarded\n"
+          " --norot          declare a comma-separated list of rotors that shall be disregarded\n"
           ;
       }
 
@@ -78,10 +91,11 @@ namespace OpenBabel
   //////////////////////////////////////////////////////////
   OpConformer theOpConformer("conformer"); //Global instance
 
-  bool getInteger(const std::string &str, int &value)
+  template<typename T>
+  bool getValue(const std::string &str, T &value)
   {
     std::istringstream iss(str);
-    bool ret = iss >> value;
+    bool ret = static_cast<bool>(iss >> value);
     return ret;
   }
 
@@ -99,6 +113,7 @@ namespace OpenBabel
     bool random = false;
     bool weighted = false;
     bool fast = false;
+    bool rings = false;
     int numConformers = 30;
 
     iter = pmap->find("log");
@@ -107,7 +122,7 @@ namespace OpenBabel
 
     iter = pmap->find("nconf");
     if(iter!=pmap->end())
-      getInteger(iter->second, numConformers);
+      getValue<int>(iter->second, numConformers);
 
     iter = pmap->find("systematic");
     if(iter!=pmap->end())
@@ -124,6 +139,14 @@ namespace OpenBabel
     iter = pmap->find("weighted");
     if(iter!=pmap->end())
       weighted = true;
+
+    iter = pmap->find("ring");
+    if(iter!=pmap->end())
+        rings = true;
+
+    iter = pmap->find("rings");
+    if(iter!=pmap->end())
+        rings = true;
 
     if (systematic || random || fast || weighted) {
       std::string ff = "MMFF94";
@@ -150,33 +173,42 @@ namespace OpenBabel
 
       // Perform search
       if (systematic) {
-        pFF->SystematicRotorSearch(10); // 10 steepest-descent forcfield steps per conformer
+        pFF->SystematicRotorSearch(10, rings); // 10 steepest-descent forcfield steps per conformer
       } else if (fast) {
         pFF->FastRotorSearch(true); // permute rotors
       } else if (random) {
-        pFF->RandomRotorSearch(numConformers, 10);
+        pFF->RandomRotorSearch(numConformers, 10, rings);
       } else if (weighted) {
-        pFF->WeightedRotorSearch(numConformers, 10);
+        pFF->WeightedRotorSearch(numConformers, 10, rings);
       }
       pFF->GetConformers(*pmol);
 
     } else { // GA-based searching
+      //default values for score
       int numChildren = 5;
       int mutability = 5;
-      int convergence = 25;
+      int convergence = 5;
       std::string score = "rmsd";
+      //default values for filter
+      double cutoff = 0.8 ;
+      double vdw_factor = 0.5 ;
+      bool check_hydrogens = true ;
+      std::string filter = "steric";
+      bool rotchange = false;
+      bool rotorsoff = false;
+      OBBitVec extrotors;
 
       iter = pmap->find("children");
       if(iter!=pmap->end())
-        getInteger(iter->second, numChildren);
+        getValue<int>(iter->second, numChildren);
 
       iter = pmap->find("mutability");
       if(iter!=pmap->end())
-        getInteger(iter->second, mutability);
+        getValue<int>(iter->second, mutability);
 
       iter = pmap->find("convergence");
       if(iter!=pmap->end())
-        getInteger(iter->second, convergence);
+        getValue<int>(iter->second, convergence);
 
       iter = pmap->find("score");
       if(iter!=pmap->end())
@@ -185,10 +217,99 @@ namespace OpenBabel
       OBConformerSearch cs;
       if (score == "energy")
         cs.SetScore(new OBEnergyConformerScore);
-      //else if (score.find("mine") != std::string::npos)
-      //  cs.SetScore(new OBMinimizingEnergyConformerScore);
-      //else if (score.find("minr") != std::string::npos)
-      //  cs.SetScore(new OBMinimizingRMSDConformerScore);
+      else if (score == "mine" || score == "minenergy")
+        cs.SetScore(new OBMinimizingEnergyConformerScore);
+      else if (score == "minr" || score == "minrmsd")
+        cs.SetScore(new OBMinimizingRMSDConformerScore);
+
+      iter = pmap->find("csfilter");
+      if(iter!=pmap->end())
+        filter = iter->second;
+ 
+      iter = pmap->find("vdw-factor");
+      if(iter!=pmap->end())
+        getValue<double>(iter->second, vdw_factor);
+ 
+      iter = pmap->find("cutoff");
+      if(iter!=pmap->end())
+        getValue<double>(iter->second, cutoff);
+      
+      iter = pmap->find("ignore-H");
+      if(iter!=pmap->end())
+        check_hydrogens = false;
+ 
+      if (filter == "steric")
+        cs.SetFilter(new OBStericConformerFilter(cutoff, vdw_factor, check_hydrogens));
+
+      iter = pmap->find("printrot");
+      if(iter!=pmap->end())
+        cs.PrintRotors(true);
+
+      iter = pmap->find("onlyrot");
+      if(iter!=pmap->end()){
+        rotchange = true;
+        rotorsoff = false;
+      }
+      iter = pmap->find("norot");
+      if(iter!=pmap->end()){
+        rotchange = true;
+        rotorsoff = true;
+      }
+      if (rotchange){
+        if (rotorsoff){
+          iter = pmap->find("norot");
+        }else{
+          iter = pmap->find("onlyrot");
+        }
+        OBBitVec fixbonds;
+        if (rotorsoff){
+          fixbonds.SetRangeOff(0,pmol->NumBonds()-1);
+        }else{
+          fixbonds.SetRangeOn( 0,pmol->NumBonds()-1);
+          int end_it = fixbonds.EndBit();
+          int it = fixbonds.FirstBit();
+          while(it!=end_it){
+            OBBond* b = pmol->GetBond(it);
+            if (!(b->IsRotor())){
+              fixbonds.SetBitOff(it);
+            }
+            it = fixbonds.NextBit(it);
+          }
+        }
+        std::stringstream input(iter->second);
+        std::string segment;
+        while (std::getline(input, segment, ',')){
+          int p1, p2;
+          char additional;
+          int converted = sscanf(segment.c_str(), "%d-%d%c", &p1, &p2, &additional);
+          if (converted==2 && p1>0 && p2>0){
+            if (p1>pmol->NumAtoms() || p2>pmol->NumAtoms()){
+              std::cerr << "ERROR at least one of the atom indices " << p1 << " or " << p2 
+                        << " is greater than the number of atoms " << pmol->NumAtoms() << "." << std::endl << std::flush;
+              return false;
+            }
+            OBBond* b = pmol->GetBond(p1,p2);
+            if (!b){
+              std::cerr << "ERROR atoms " << p1 << " and " << p2 << " form no bond." << std::endl << std::flush;
+              return false;
+            }
+            if (!(b->IsRotor())){
+                std::cerr << "ERROR bond formed by atoms " << p1 << " and " << p2 << " is not rotable." << std::endl << std::flush;
+                return false;
+            }
+            int idx = b->GetIdx();
+            if (rotorsoff){
+              fixbonds.SetBitOn(idx);
+            }else{
+              fixbonds.SetBitOff(idx);
+            }
+          }else{
+              std::cerr << "ERROR parsing '" << segment << "' as rotor (must be i-j where i and j are indices >0)" << std::endl << std::flush;
+              return false;
+          }
+        }
+        cs.SetFixedBonds(fixbonds);
+      }
 
       if (cs.Setup(*pmol, numConformers, numChildren, mutability, convergence)) {
         cs.Search();

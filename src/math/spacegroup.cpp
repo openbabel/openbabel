@@ -168,12 +168,14 @@ namespace OpenBabel
   {
     matrix3x3 m;
     vector3 v;
-    istringstream iss(s);
     locale cLocale("C");
-    iss.imbue(cLocale);
 
     if (s.find(',') != string::npos)
       {
+        string s1 = RemoveWhiteSpaceUnderscore(s);
+        istringstream iss(s1);
+        iss.imbue(cLocale);
+
         string row;
         int i;
         size_t j;
@@ -215,7 +217,11 @@ namespace OpenBabel
                   case '3':
                   case '4':
                   case '5':
-                    if (row[j+1] == '/')
+                  case '6':
+                  case '7':
+                  case '8':
+                  case '9':
+                    if (j+2 < row.length() && row[j+1] == '/')
                       {
                         double *t = NULL;
                         switch (i)
@@ -233,8 +239,9 @@ namespace OpenBabel
                         *t = ((double) (row[j] - '0')) / (row[j+2] - '0');
                         if (neg)
                           *t = - *t;
+
+                        j +=2;
                       }
-                    j +=2;
                     break;
                   case '-':
                     neg = true;
@@ -242,12 +249,15 @@ namespace OpenBabel
                   case '+':
                     neg = false;
                     break;
+                  case 'X':
                   case 'x':
                     m(i, 0) = (neg)? -1.: 1.;
                   break;
+                  case 'Y':
                   case 'y':
                     m(i, 1) = (neg)? -1.: 1.;
                   break;
+                  case 'Z':
                   case 'z':
                     m(i, 2) = (neg)? -1.: 1.;
                   break;
@@ -258,6 +268,8 @@ namespace OpenBabel
       }
     else if (s.find(' ') != string::npos)
       {
+        istringstream iss(s);
+        iss.imbue(cLocale);
         /* supposing the string is a list of at least 12 float values. If there are
            16, the last four are 0., 0., 0. and 1. and are not needed */
         iss >> m(0,0) >> m(0,1) >> m(0,2) >> v.x();
@@ -276,7 +288,23 @@ namespace OpenBabel
 			v.z() += 1.;
 		else if (v.z() >= 1.)
 			v.z() -= 1.;
-    m_transforms.push_back (new transform3d (m, v));
+
+    // only push_back unique transformations
+    transform3dIterator i, iend = m_transforms.end();
+    transform3d* candidate = new transform3d (m, v);
+    bool transform_exists = false;
+
+    for (i = m_transforms.begin(); i!= iend; i++)
+    {
+      if (candidate->DescribeAsString() == (*i)->DescribeAsString())
+      {
+        transform_exists = true;
+        break;
+      }
+    }
+
+    if (!transform_exists)
+      m_transforms.push_back (candidate);
   }
 
   /*!
@@ -342,13 +370,20 @@ namespace OpenBabel
 
   /*!
    */
-  const SpaceGroup * SpaceGroup::GetSpaceGroup (const string &name)
+  const SpaceGroup * SpaceGroup::GetSpaceGroup (const string &name_in)
   {
     if (!_SpaceGroups.Inited())
       _SpaceGroups.Init();
 
     // This needs to be more forgiving
-    const SpaceGroup *match = (_SpaceGroups.sgbn.find(name)!=_SpaceGroups.sgbn.end())? _SpaceGroups.sgbn[name]: NULL;
+    // First, try it without removing the white space
+    const SpaceGroup *match = (_SpaceGroups.sgbn.find(name_in)!=_SpaceGroups.sgbn.end())? _SpaceGroups.sgbn[name_in]: NULL;
+    if (match) return match;
+
+    // If a match wasn't found, remove the white space and try again
+    string name = RemoveWhiteSpaceUnderscore(name_in);
+    match = (_SpaceGroups.sgbn.find(name)!=_SpaceGroups.sgbn.end())? _SpaceGroups.sgbn[name]: NULL;
+
     if (!match) {
       // Try another search, e.g. Fm-3m instead of Fm3m
       string search = name;

@@ -16,49 +16,6 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
-      development status:
-      - src/forcefield.cpp
-      - LineSearch(): finished
-      - SteepestDescent(): finished
-      - ConjugateGradients(): finished
-      - GenerateCoordinates():  removed, use OBBuilder
-      - SystematicRotorSearch(): finished
-      - RandomRotorSearch(): finished
-      - WeightedRotorSearch: finished
-      - DistanceGeometry(): needs matrix operations (Eigen)
-
-      Constraints:
-      - Fix Atom: working
-      - Fix Atom X: working
-      - Fix Atom Y: working
-      - Fix Atom Z: working
-      - Distance: working
-      - Angle: working
-      - Torsion: working
-      - Chirality: TODO
-
-      src/forcefields/forcefieldghemical.cpp
-      - Atom typing: finished
-      - Charges: finished
-      - Energy terms: finished
-      - Analytical gradients: finished
-      - Validation: finished
-
-      src/forcefields/forcefieldmmff94.cpp
-      - Atom typing: done.
-      - Charges: done.
-      - Energy terms: finished (small problems with SSSR
-        algorithm not finding all bridged rings)
-      - Analytical gradients: finished
-      - Validation: http://home.scarlet.be/timvdm/MMFF94_validation_output.gz
-
-      src/forcefields/forcefielduff.cpp
-      - Energy terms: finished
-      - OOP: needs validation
-      - Gradients: need OOP gradient
-      - Validation in progress...
-
-
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 
@@ -192,7 +149,7 @@ namespace OpenBabel
       }
 
       // Perform the actual minimization, maximum 1000 steps
-      pFF->SteepestDescent(1000);
+      pFF->ConjugateGradients(1000);
       \endcode
 
       Minimize a ligand molecule in a binding pocket.
@@ -238,7 +195,7 @@ namespace OpenBabel
       }
 
       // Perform the actual minimization, maximum 1000 steps
-      pFF->SteepestDescent(1000);
+      pFF->ConjugateGradients(1000);
       \endcode
 
   **/
@@ -1204,7 +1161,7 @@ namespace OpenBabel
   //
   //////////////////////////////////////////////////////////////////////////////////
 
-  int OBForceField::SystematicRotorSearchInitialize(unsigned int geomSteps)
+  int OBForceField::SystematicRotorSearchInitialize(unsigned int geomSteps, bool sampleRingBonds)
   {
     if (!_validSetup)
       return 0;
@@ -1218,7 +1175,7 @@ namespace OpenBabel
 
     OBBitVec fixed = _constraints.GetFixedBitVec();
     rl.SetFixAtoms(fixed);
-    rl.Setup(_mol);
+    rl.Setup(_mol, sampleRingBonds);
     rotamers.SetBaseCoordinateSets(_mol);
     rotamers.Setup(_mol, rl);
 
@@ -1313,9 +1270,9 @@ namespace OpenBabel
     return true;
   }
 
-  void OBForceField::SystematicRotorSearch(unsigned int geomSteps)
+  void OBForceField::SystematicRotorSearch(unsigned int geomSteps, bool sampleRingBonds)
   {
-    if (SystematicRotorSearchInitialize(geomSteps))
+    if (SystematicRotorSearchInitialize(geomSteps, sampleRingBonds))
       while (SystematicRotorSearchNextConformer(geomSteps)) {}
   }
 
@@ -1462,7 +1419,8 @@ namespace OpenBabel
     return true;
   }
 
-  void OBForceField::RandomRotorSearchInitialize(unsigned int conformers, unsigned int geomSteps)
+  void OBForceField::RandomRotorSearchInitialize(unsigned int conformers, unsigned int geomSteps,
+                                                 bool sampleRingBonds)
   {
     if (!_validSetup)
       return;
@@ -1481,7 +1439,7 @@ namespace OpenBabel
 
     OBBitVec fixed = _constraints.GetFixedBitVec();
     rl.SetFixAtoms(fixed);
-    rl.Setup(_mol);
+    rl.Setup(_mol, sampleRingBonds);
     rotamers.SetBaseCoordinateSets(_mol);
     rotamers.Setup(_mol, rl);
 
@@ -1578,9 +1536,10 @@ namespace OpenBabel
     return true;
   }
 
-  void OBForceField::RandomRotorSearch(unsigned int conformers, unsigned int geomSteps)
+  void OBForceField::RandomRotorSearch(unsigned int conformers, unsigned int geomSteps,
+                                       bool sampleRingBonds)
   {
-    RandomRotorSearchInitialize(conformers, geomSteps);
+    RandomRotorSearchInitialize(conformers, geomSteps, sampleRingBonds);
     while (RandomRotorSearchNextConformer(geomSteps)) {}
   }
 
@@ -1630,7 +1589,8 @@ namespace OpenBabel
   }
 
 
-  void OBForceField::WeightedRotorSearch(unsigned int conformers, unsigned int geomSteps)
+  void OBForceField::WeightedRotorSearch(unsigned int conformers, unsigned int geomSteps,
+                                         bool sampleRingBonds)
   {
     if (!_validSetup)
       return;
@@ -1657,7 +1617,7 @@ namespace OpenBabel
 
     OBBitVec fixed = _constraints.GetFixedBitVec();
     rl.SetFixAtoms(fixed);
-    rl.Setup(_mol);
+    rl.Setup(_mol, sampleRingBonds);
     rotamers.SetBaseCoordinateSets(_mol);
     rotamers.Setup(_mol, rl);
 
@@ -1708,6 +1668,7 @@ namespace OpenBabel
     // So each rotor is considered in isolation
     IF_OBFF_LOGLVL_LOW
       OBFFLog("  INITIAL WEIGHTING OF ROTAMERS...\n\n");
+
     rotor = rl.BeginRotor(ri);
     for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
       rotorKey[i] = -1; // no rotation (new in 2.2)
@@ -1726,7 +1687,7 @@ namespace OpenBabel
         SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
 
         _loglvl = OBFF_LOGLVL_NONE;
-        SteepestDescent(geomSteps); // energy minimization for conformer
+        ConjugateGradients(geomSteps); // energy minimization for conformer
         _loglvl = origLogLevel;
         currentE = Energy(false);
 
@@ -1779,7 +1740,8 @@ namespace OpenBabel
     }
 
     double defaultRotor = 1.0/sqrt((double)rl.Size());
-    for (unsigned int c = 0; c < conformers; ++c) {
+    unsigned c = 0;
+    while (c < conformers) {
       _mol.SetCoordinates(initialCoord);
 
       // Choose the rotor key based on current weightings
@@ -1802,11 +1764,15 @@ namespace OpenBabel
             total += rotorWeights[i][j];
         }
       }
+
+      //FIXME: for now, allow even invalid ring conformers
       rotamers.SetCurrentCoordinates(_mol, rotorKey);
+      ++c;
+
       SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
 
       _loglvl = OBFF_LOGLVL_NONE;
-      SteepestDescent(geomSteps); // energy minimization for conformer
+      ConjugateGradients(geomSteps); // energy minimization for conformer
       _loglvl = origLogLevel;
       currentE = Energy(false);
       _energies.push_back(currentE);
@@ -1859,7 +1825,7 @@ namespace OpenBabel
       }
     }
 
-    _current_conformer = best_conformer + 1; // Initial coords are stored in _vconf[0]
+    _current_conformer = best_conformer; // Initial coords are stored in _vconf[0]
     _mol.SetConformer(_current_conformer);
     SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
   }
@@ -2435,7 +2401,7 @@ namespace OpenBabel
     double opt_step = 0.0;
     double opt_e = _e_n1; // get energy calculated by sd or cg
     const double def_step = 0.025; // default step
-    const double max_step = 5.0; // don't move further than 0.3 Angstroms
+    const double max_step = 4.5; // don't go too far
 
     double sum = 0.0;
     for (unsigned int c = 0; c < _ncoords; ++c) {
@@ -2449,7 +2415,7 @@ namespace OpenBabel
 
     double scale = sqrt(sum);
     if (IsNearZero(scale)) {
-      cout << "WARNING: too small \"scale\" at Newton2NumLineSearch" << endl;
+      //      cout << "WARNING: too small \"scale\" at Newton2NumLineSearch" << endl;
       scale = 1.0e-70; // try to avoid "division by zero" conditions
     }
 
@@ -2486,7 +2452,7 @@ namespace OpenBabel
       if (denom != 0.0) {
         step = fabs(step - delta * (e_n2 - e_n1) / denom);
         if (step > max_scl) {
-          cout << "WARNING: damped steplength " << step << " to " << max_scl << endl;
+          //          cout << "WARNING: damped steplength " << step << " to " << max_scl << endl;
           step = max_scl;
         }
       } else {
@@ -2510,6 +2476,8 @@ namespace OpenBabel
 
     // Take optimal step
     LineSearchTakeStep(origCoords, direction, opt_step);
+
+    //    cout << " scale: " << scale << " step: " << opt_step*scale << " maxstep " << max_scl*scale << endl;
 
     delete [] origCoords;
 
@@ -2772,6 +2740,7 @@ namespace OpenBabel
     _nsteps = steps;
     _cstep = 0;
     _econv = econv;
+    _gconv = 1.0e-2; // gradient convergence (0.1) squared
 
     if (_cutoff)
       UpdatePairsSimple(); // Update the non-bonded pairs (Cut-off)
@@ -2798,9 +2767,11 @@ namespace OpenBabel
     _ncoords = _mol.NumAtoms() * 3;
     double e_n2;
     vector3 dir;
+    double maxgrad; // for convergence
 
     for (int i = 1; i <= n; i++) {
       _cstep++;
+      maxgrad = 1.0e20;
 
       FOR_ATOMS_OF_MOL (a, _mol) {
         unsigned int idx = a->GetIdx();
@@ -2818,6 +2789,10 @@ namespace OpenBabel
             // use analytical gradients
             dir = GetGradient(&*a) + _constraints.GetGradient(a->GetIdx());
           }
+
+          // check to see how large the gradients are
+          if (dir.length_2() > maxgrad)
+            maxgrad = dir.length_2();
 
           if (!_constraints.IsXFixed(idx))
             _gradientPtr[coordIdx] = dir.x();
@@ -2857,7 +2832,8 @@ namespace OpenBabel
         }
       }
 
-      if (IsNear(e_n2, _e_n1, _econv)) {
+      if (IsNear(e_n2, _e_n1, _econv)
+          && (maxgrad < _gconv)) { // gradient criteria (0.1) squared
         IF_OBFF_LOGLVL_LOW
           OBFFLog("    STEEPEST DESCENT HAS CONVERGED\n");
         return false;
@@ -2893,6 +2869,7 @@ namespace OpenBabel
     _cstep = 0;
     _nsteps = steps;
     _econv = econv;
+    _gconv = 1.0e-2; // gradient convergence (0.1) squared
     _ncoords = _mol.NumAtoms() * 3;
 
     if (_cutoff)
@@ -2979,6 +2956,7 @@ namespace OpenBabel
     double g2g2, g1g1, beta;
     vector3 grad2, dir2;
     vector3 grad1, dir1; // temporaries to perform dot product, etc.
+    double maxgrad; // for convergence
 
     if (_ncoords != _mol.NumAtoms() * 3)
       return false;
@@ -2987,6 +2965,7 @@ namespace OpenBabel
 
     for (int i = 1; i <= n; i++) {
       _cstep++;
+      maxgrad = 1.0e20;
 
       FOR_ATOMS_OF_MOL (a, _mol) {
         unsigned int idx = a->GetIdx();
@@ -3016,6 +2995,10 @@ namespace OpenBabel
             beta = g2g2 / g1g1;
             grad2 += beta * grad1;
           }
+
+          // check to see how large the gradients are
+          if (grad2.length_2() > maxgrad)
+            maxgrad = grad2.length_2();
 
           if (!_constraints.IsXFixed(idx))
             _grad1[coordIdx] = grad2.x();
@@ -3051,7 +3034,8 @@ namespace OpenBabel
       if ((_cstep % _pairfreq == 0) && _cutoff)
         UpdatePairsSimple(); // Update the non-bonded pairs (Cut-off)
 
-      if (IsNear(e_n2, _e_n1, _econv)) {
+      if (IsNear(e_n2, _e_n1, _econv)
+          && (maxgrad < _gconv)) { // gradient criteria (0.1) squared
         IF_OBFF_LOGLVL_LOW {
           snprintf(_logbuf, BUFF_SIZE, " %4d    %8.3f    %8.3f\n", _cstep, e_n2, _e_n1);
           OBFFLog(_logbuf);

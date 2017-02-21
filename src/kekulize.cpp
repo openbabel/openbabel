@@ -515,6 +515,7 @@ namespace OpenBabel
     int idx;
     OBAtom *atom;
     OBBond *bond;
+    int charge = _totalCharge; // if set (e.g., from quantum calculations
 
     // Figure out which atoms are in this ring system and whether or not each
     // atom can donate an electron.
@@ -527,11 +528,22 @@ namespace OpenBabel
         atomState[idx] = DOUBLE_PROHIBITED;	// No electrons to contribute to aromatic system
       }
 
-      if (atomState[idx] == DOUBLE_ALLOWED && atom->IsNitrogen() && atom->GetFormalCharge() == 0 && atom->GetValence() == 3) {
+      // Special cases for NR3
+      if (atom->IsNitrogen() && atom->GetFormalCharge() == 0 && atom->GetValence() == 3) {
         // Correct N with three explicit bonds, if we haven't already
-        atomState[idx] = DOUBLE_PROHIBITED;
-        if (DEBUG) { cout << "atom " << idx << " rejected NR3 double bonds " << endl; }
+        if (charge == 0 && atomState[idx] == DOUBLE_ALLOWED) {
+          atomState[idx] = DOUBLE_PROHIBITED;
+          if (DEBUG) { cout << "atom " << idx << " rejected NR3 double bonds " << endl; }
+        }
+        if (charge > 0) {
+          // TODO: See if there's an easy way to rank the NR3 atoms (e.g., based on most likely double bond)
+          charge--; // it has an electron it can donate because of the total charge
+          atom->SetFormalCharge(+1); // to make this explicit
+          atomState[idx] = DOUBLE_ALLOWED;
+          if (DEBUG) { cout << "atom " << idx << " assigned NR3+ based on totalcharge " << endl; }
+        }
       }
+
       if (DEBUG) {cout << "atom " << idx << ": initial state = " << atomState[idx] << endl;}
     }
 

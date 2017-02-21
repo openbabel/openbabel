@@ -20,6 +20,7 @@ set(formats_compchem
       abinitformat
       acesformat
       adfformat
+      aoforceformat
       castepformat
       dmolformat
       fchkformat
@@ -34,6 +35,7 @@ set(formats_compchem
       molproformat
       mopacformat
       nwchemformat
+      pointcloudformat
       pwscfformat
       qchemformat
       turbomoleformat
@@ -43,7 +45,7 @@ set(formats_compchem
 
 if(MSVC OR HAVE_REGEX_H)
   set(formats_compchem
-      ${formats_compchem} gamessukformat
+      ${formats_compchem} gamessukformat orcaformat
   )
 endif(MSVC OR HAVE_REGEX_H)
 
@@ -69,6 +71,7 @@ set(formats_misc
       crkformat
       cssrformat
       dlpolyformat
+      exyzformat
       fastsearchformat
       fastaformat
       featformat
@@ -92,6 +95,7 @@ set(formats_misc
       pdbqtformat
       pqrformat
       shelxformat
+      stlformat
       thermoformat
       tinkerformat
       unichemformat

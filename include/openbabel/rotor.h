@@ -87,7 +87,7 @@ namespace OpenBabel
   //! Use to automatically evaluate potentially rotatable bonds to generate
   //! lists of dihedral angles to consider.
   //! e.g., rotamer/conformer energy calculations
- class OBAPI OBRotorRules : public OBGlobalDataBase
+  class OBAPI OBRotorRules : public OBGlobalDataBase
   {
     bool                       _quiet;  //!< Control debugging output from GetRotorIncrements()
     std::vector<OBRotorRule*>  _vr;     //!< Database of specific OBRotorRules defined by SMARTS patterns
@@ -132,6 +132,7 @@ namespace OpenBabel
     std::vector<double> _torsionAngles;  //!< torsion resolution
     std::vector<double> _invmag; //!< the inverse magnitudes (see Precalc)
     std::vector<std::vector<double> > _sn,_cs,_t; //!< the rotation matrix (see Precalc())
+    std::vector<OBRing *> _rings; //!< the parent ring (if this is a rotor in a ring)
   public:
     /**
      * Constructor.
@@ -141,8 +142,8 @@ namespace OpenBabel
      * Destructor.
      */
     ~OBRotor()
-    {
-    }
+      {
+      }
 
     ///@name Setup
     ///@{
@@ -152,7 +153,13 @@ namespace OpenBabel
     void SetBond(OBBond *bond)
     {
       _bond = bond;
+      SetRings(bond);
     }
+    /**
+     * Set the rings associated with this bond (if it's a ring bond)
+     * \since Version 2.4
+     */
+    void SetRings(OBBond *bond);
     /**
      * Set the index for this rotor. Used by OBRotorList
      */
@@ -350,9 +357,9 @@ namespace OpenBabel
      * Get the dihedral atom indexes. These indexes start from 1.
      */
     std::vector<int> &GetDihedralAtoms()
-    {
-      return _ref;
-    }
+      {
+        return _ref;
+      }
     /**
      * Get the atom indexes that will be displaced when this rotor changes
      * torsion angle. These indexes start from 1.
@@ -373,9 +380,9 @@ namespace OpenBabel
      * Bonds are indexed from 0.
      */
     OBBitVec &GetFixedBonds()
-    {
-      return _fixedbonds;
-    }
+      {
+        return _fixedbonds;
+      }
     /**
      * Calculate the torsion for this OBRotor using the specified coordinates.
      * @param coordinates The coordinates (e.g. OBMol::GetCoordinates()).
@@ -393,13 +400,13 @@ namespace OpenBabel
     ///@name Iterator methods
     ///@{
     std::vector<double>::iterator BeginTorIncrement()
-    {
-      return _torsionAngles.begin();
-    }
+      {
+        return _torsionAngles.begin();
+      }
     std::vector<double>::iterator EndTorIncrement()
-    {
-      return _torsionAngles.end();
-    }
+      {
+        return _torsionAngles.end();
+      }
     ///@}
 
     void RemoveSymTorsionValues(int);
@@ -440,6 +447,7 @@ namespace OpenBabel
   {
     bool _quiet;                    //!< Control debugging output
     bool _removesym;                //!< Control removal of symmetric rotations
+    bool _ringRotors;               //!< Are there ring rotors
     OBBitVec _fixedatoms, _fixedbonds; //!< Bit vector of fixed (i.e., invariant) atoms
     OBRotorRules _rr;               //!< Database of rotatable bonds and dihedral angles to test
     std::vector<int> _dffv;         //!< Distance from fixed
@@ -488,15 +496,22 @@ namespace OpenBabel
     //! values are removed from consideration during a search
     void RemoveSymVals(OBMol&);
 
+    /**
+     * @return True if this rotor list has any ring bonds.
+     * @since version 2.4
+     */
+    bool HasRingRotors()
+    { return _ringRotors; }
 
     ///@name Setup
     /**
      * Setup this rotor list for the supplied molecule. This method calls
      * FindRotors(), SetEvalAtoms(), and AssignTorVals().
      * @param mol The molecule.
+     * @param sampleRings Whether to sample ring conformers - default = false
      * @return True if rotatable bonds were found.
      */
-    bool Setup(OBMol &mol);
+    bool Setup(OBMol &mol, bool sampleRings = false);
     /**
      * Set the bonds that will be fixed.
      */
@@ -528,15 +543,16 @@ namespace OpenBabel
     /**
      * Find all potentially rotatable bonds in the molecule. This method uses
      * OBBond::IsRotor() for initial evaluation which depends on ring perception
-     * (i.e. ring bonds are not rotatable). Fixed bonds, specified using the
+     * (i.e. ring bonds are considered rotatable). Fixed bonds, specified using the
      * deprecated fixed atoms or the new fixed bonds methods are not added to
      * the list. All rotatable bonds will be sorted by their graph theoretical
      * distance (GTD) score (see OBMol::GetGTDVector()). This results in the
      * the rotors going from the inside to the outside of the mol.
      * @param mol The molecule.
+     * @param sampleRingBonds whether to sample ring bonds from analysis (default = false)
      * @return True.
      */
-    bool FindRotors(OBMol &mol);
+    bool FindRotors(OBMol &mol, bool sampleRingBonds = false);
     //! Determines which atoms should be used to calculate the internal energy
     //! if the dihedral angle of the rotor is modified
     //! \return True
@@ -617,57 +633,57 @@ namespace OpenBabel
 
   /// @cond DEV
   class rotor_digit {
-    public:
-      rotor_digit(unsigned int rs)
+  public:
+    rotor_digit(unsigned int rs)
       {
         resolution_size = rs;
         state = 0;
       }
 
-      rotor_digit()
+    rotor_digit()
       {
         resolution_size = 0;
         state = 0;
       }
 
-      void set_size(unsigned int rs)
-      {
-        resolution_size = rs;
+    void set_size(unsigned int rs)
+    {
+      resolution_size = rs;
+      state = 0;
+    }
+
+    void set_state(int st)
+    {
+      state = st;
+    }
+
+    int get_state()
+    {
+      return state;
+    }
+
+    unsigned int size()
+    {
+      return resolution_size;
+    }
+
+    bool next()
+    {
+      if (state < static_cast<int>(resolution_size - 1)) {
+        ++state;
+        return false;
+      } else
         state = 0;
-      }
 
-      void set_state(int st)
-      {
-        state = st;
-      }
-
-      int get_state()
-      {
-        return state;
-      }
-
-      unsigned int size()
-      {
-        return resolution_size;
-      }
-
-      bool next()
-      {
-        if (state < static_cast<int>(resolution_size - 1)) {
-          ++state;
-          return false;
-        } else
-          state = 0;
-
-	return true;
-      }
-    private:
-      unsigned int resolution_size;
-      int state;
+      return true;
+    }
+  private:
+    unsigned int resolution_size;
+    int state;
 #ifndef SWIG
   } typedef rotor_digit;
 #else
-  };
+};
 #endif
   /// @endcond
 
@@ -675,7 +691,7 @@ namespace OpenBabel
   //! \brief A class to generate all possible rotorKeys
   class OBAPI OBRotorKeys
   {
-      /** 
+      /**
       \brief A class to generate all possible rotorKeys
 
       This class can generate all possible rotor keys for a set of OBRotors
@@ -735,12 +751,12 @@ namespace OpenBabel
       //! Number of rotor keys (= number of possible conformers)
       unsigned int NumKeys()
       {
-	unsigned int numKeys = 0;
+        unsigned int numKeys = 0;
 
-	while (Next())
-	  numKeys++;
+        while (Next())
+          numKeys++;
 
-	return numKeys;
+        return numKeys;
       }
 
       //! Add a rotor
@@ -758,13 +774,13 @@ namespace OpenBabel
         if(_vr.size() == 0)
           return false;
 
-	bool carry = _vr[0].next();
+        bool carry = _vr[0].next();
         unsigned int i = 1;
         while (carry) {
           if(i == _vr.size())
             return false;
 
-	  carry = _vr[i].next();
+          carry = _vr[i].next();
           i++;
         }
         return true;
@@ -781,7 +797,7 @@ namespace OpenBabel
           rt.push_back(_vr[i].get_state());
         }
 
-	return rt;
+        return rt;
       }
 
     private:

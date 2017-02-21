@@ -3,6 +3,7 @@ conformersearch.h - Conformer searching using genetic algorithm.
 
 Copyright (C) 2010 Tim Vandermeersch
 Some portions Copyright (C) 2012 Materials Design, Inc.
+Some portions Copyright (C) 2016 Torsten Sachse
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
@@ -113,7 +114,7 @@ namespace OpenBabel {
   {
     public:
       OBStericConformerFilter ();
-      OBStericConformerFilter (double cutoff, double vdw_factor = 0.6, bool check_hydrogens = true);
+      OBStericConformerFilter (double cutoff, double vdw_factor = 0.5, bool check_hydrogens = true);
       bool IsGood(const OBMol &mol, const RotorKey &key, double *coords);
     private:
       double m_cutoff; //!< Internal cutoff (used as a squared distance)
@@ -246,8 +247,8 @@ namespace OpenBabel {
   class OBAPI OBMinimizingRMSDConformerScore : public OBConformerScore
   {
     public:
-      Preferred GetPreferred() { return LowScore; }
-      Convergence GetConvergence() { return Lowest; }
+      Preferred GetPreferred() { return HighScore; }
+      Convergence GetConvergence() { return Average; }
       double Score(OBMol &mol, unsigned int index, const RotorKeys &keys,
           const std::vector<double*> &conformers);
   };
@@ -334,6 +335,11 @@ namespace OpenBabel {
         delete m_score;
         m_score = score;
       }
+
+      /**
+      * Set whether or not you want rotors to be printed prior to the conformer search.
+      */
+      void PrintRotors(bool printrotors) { m_printrotors = printrotors; }
 
       /**
        * Perform conformer search using a genetic algorithm.
@@ -452,6 +458,7 @@ namespace OpenBabel {
       OBMol         m_mol; //!< The molecule with starting coordinates
       OBRotorList   m_rotorList; //!< The OBRotorList for the molecule
       RotorKeys     m_rotorKeys; //!< The current population
+      bool          m_printrotors; //!< Wheter or not to print all rotors that are found instead of performing the conformer search
 
       OBConformerFilter *m_filter;
       OBConformerScore  *m_score;

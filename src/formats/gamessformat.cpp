@@ -512,8 +512,12 @@ namespace OpenBabel {
           if (numFreq > lowFreqModesEnd)
             frequencies.push_back(atof(vs[i].c_str()));
         }
-        ifs.getline(buffer, BUFF_SIZE); // reduced mass
-        ifs.getline(buffer, BUFF_SIZE);
+        ifs.getline(buffer, BUFF_SIZE); // possibly symmetry or red. mass
+        if (strstr(buffer, "SYMMETRY:") != NULL) {
+          // parse the vibrational symmetry
+          ifs.getline(buffer, BUFF_SIZE); // reduced mass
+        }
+        ifs.getline(buffer, BUFF_SIZE); // intensities
         tokenize(vs, buffer);
         for (unsigned int i=2; i < vs.size(); ++i) {
           ++numIntens;
@@ -547,6 +551,8 @@ namespace OpenBabel {
         while (modeCount >= 1) {
           // 1/sqrt(atomic mass)
           atom = mol.GetAtom(atoi(vs[0].c_str()));
+          if (!atom)
+            break; // something is very wrong
           massNormalization = 1 / sqrt( atom->GetAtomicMass() );
 
           x.clear();

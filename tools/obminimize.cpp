@@ -48,7 +48,7 @@ int main(int argc,char **argv)
   double rvdw = 6.0;
   double rele = 10.0;
   int freq = 10;
-  string basename, filename = "", option, option2, ff = "Ghemical";
+  string basename, filename = "", option, option2, ff = "MMFF94";
   char *oext;
   OBConversion conv;
   OBFormat *format_out = conv.FindFormat("pdb"); // default output format
@@ -246,7 +246,7 @@ int main(int argc,char **argv)
     cerr << "Time: " << timeElapsed << "seconds. Iterations per second: " <<  double(totalSteps) / timeElapsed << endl;
   } // end for loop
 
-  return(1);
+  return(0);
 }
 
 //

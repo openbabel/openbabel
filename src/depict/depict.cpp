@@ -43,19 +43,27 @@ namespace OpenBabel
     Down
   };
 
+  // defined in mol.cpp
+  extern bool SortAtomZ(const pair<OBAtom*,double> &a, const pair<OBAtom*,double> &b);
+
   class OBDepictPrivate
   {
     public:
       OBDepictPrivate() : mol(0), painter(0), bondLength(40.0), penWidth(2.0),
           bondSpacing(6.0), bondWidth(8.0), fontSize(16), subscriptSize(13),
           aliasMode(false), bondColor("black"), options(0){}
+      virtual ~OBDepictPrivate(){};
 
-      void DrawSimpleBond(OBAtom *beginAtom, OBAtom *endAtom, int order, bool crossed_bond=false);
-      void DrawWedge(OBAtom *beginAtom, OBAtom *endAtom);
-      void DrawHash(OBAtom *beginAtom, OBAtom *endAtom);
-      void DrawWobblyBond(OBAtom *beginAtom, OBAtom *endAtom);
-      void DrawRingBond(OBAtom *beginAtom, OBAtom *endAtom, const vector3 &center, int order);
-      void DrawAtomLabel(const std::string &label, int alignment, const vector3 &pos);
+      virtual void DrawSimpleBond(OBAtom *beginAtom, OBAtom *endAtom, int order, bool crossed_bond=false);
+      virtual void DrawWedge(OBAtom *beginAtom, OBAtom *endAtom);
+      virtual void DrawHash(OBAtom *beginAtom, OBAtom *endAtom);
+      virtual void DrawWobblyBond(OBAtom *beginAtom, OBAtom *endAtom);
+      virtual void DrawRingBond(OBAtom *beginAtom, OBAtom *endAtom, const vector3 &center, int order);
+      virtual void DrawAtom(OBAtom* atom);
+      virtual void DrawAtomLabel(const std::string &label, int alignment, const vector3 &pos);
+
+      virtual void DrawRing(OBRing *ring, OBBitVec &drawnBonds);
+      virtual void DrawAromaticRing(OBRing *ring, OBBitVec &drawnBonds);
 
       bool HasLabel(OBAtom *atom);
       void SetWedgeAndHash(OBMol* mol);
@@ -66,6 +74,9 @@ namespace OpenBabel
       double     penWidth;
       double     bondSpacing;
       double     bondWidth;
+    // for z-scaling the opacity
+      double     zScale;
+      double     zMin;
       //bool       drawTerminalC;
       int        fontSize, subscriptSize;
       bool       aliasMode;
@@ -74,8 +85,41 @@ namespace OpenBabel
       unsigned   options;
   };
 
+  class OBDepictPrivateBallAndStick : public OBDepictPrivate
+  {
+  public:
+        OBDepictPrivateBallAndStick(bool symbolOnBall) : m_symbolOnBall(symbolOnBall){}
+
+        bool m_symbolOnBall;
+
+        void DrawSimpleBond(OBAtom *beginAtom, OBAtom *endAtom, int order, bool crossed_bond=false);
+        void DrawWedge(OBAtom *beginAtom, OBAtom *endAtom);
+        void DrawHash(OBAtom *beginAtom, OBAtom *endAtom);
+        void DrawWobblyBond(OBAtom *beginAtom, OBAtom *endAtom);
+        void DrawRingBond(OBAtom *beginAtom, OBAtom *endAtom, const vector3 &center, int order);
+        void DrawAtom(OBAtom *atom);
+        void DrawAtomLabel(const std::string &label, int alignment, const vector3 &pos);
+
+        void DrawRing(OBRing *ring, OBBitVec &drawnBonds);
+        void DrawAromaticRing(OBRing *ring, OBBitVec &drawnBonds);
+
+  private:
+        void DrawAromaticRingBond(OBAtom *prevAtom, OBAtom *beginAtom, OBAtom *endAtom, OBAtom *nextAtom, const vector3 &center, double dist);
+        double GetAtomRadius(OBAtom* atom);
+
+  };
+
   OBDepict::OBDepict(OBPainter *painter) : d(new OBDepictPrivate)
   {
+    d->painter = painter;
+  }
+
+  OBDepict::OBDepict(OBPainter *painter, bool withBall, bool symbolOnBall)
+  {
+    if(withBall)
+      d = new OBDepictPrivateBallAndStick(symbolOnBall);
+    else
+      d = new OBDepictPrivate();
     d->painter = painter;
   }
 
@@ -273,6 +317,42 @@ namespace OpenBabel
     return true;
   }
 
+  void OBDepictPrivate::DrawRing(OBRing *ring, OBBitVec &drawnBonds)
+  {
+    std::vector<int> indexes = ring->_path;
+    vector3 center(VZero);
+    for (std::vector<int>::iterator l = indexes.begin(); l != indexes.end(); ++l) {
+      center += mol->GetAtom(*l)->GetVector();
+    }
+    center /= indexes.size();
+
+    for (unsigned int l = 0; l < indexes.size(); ++l) {
+      OBAtom *begin = mol->GetAtom(indexes[l]);
+      OBAtom *end;
+      if (l+1 < indexes.size())
+        end = mol->GetAtom(indexes[l+1]);
+      else
+        end = mol->GetAtom(indexes[0]);
+
+      OBBond *ringBond = mol->GetBond(begin, end);
+      if (drawnBonds.BitIsSet(ringBond->GetId()))
+        continue;
+
+      if((options & OBDepict::internalColor) && ringBond->HasData("color"))
+        painter->SetPenColor(OBColor(ringBond->GetData("color")->GetValue()));
+      else
+        painter->SetPenColor(bondColor);
+
+      DrawRingBond(begin, end, center, ringBond->GetBO());
+      drawnBonds.SetBitOn(ringBond->GetId());
+    }
+  }
+
+  void OBDepictPrivate::DrawAromaticRing(OBRing *ring, OBBitVec &drawnBonds)
+  {
+    DrawRing(ring, drawnBonds);
+  }
+
   bool OBDepict::DrawMolecule(OBMol *mol)
   {
     if (!d->painter)
@@ -307,20 +387,24 @@ namespace OpenBabel
       const double averageBondLength = bondLengthSum / mol->NumBonds();
       const double f = mol->NumBonds() ? d->bondLength / averageBondLength : 1.0;
       for (atom = d->mol->BeginAtom(i); atom; atom = d->mol->NextAtom(i))
-        atom->SetVector(atom->GetX() * f, - atom->GetY() * f, 0.0);
+        atom->SetVector(atom->GetX() * f, - atom->GetY() * f, atom->GetZ());
 
       // find min/max values
       double min_x, max_x;
       double min_y, max_y;
+      double min_z, max_z;
       atom = d->mol->BeginAtom(i);
       if (atom != NULL) {
         min_x = max_x = atom->GetX();
         min_y = max_y = atom->GetY();
+        min_z = max_z = atom->GetZ();
         for (atom = d->mol->NextAtom(i); atom; atom = d->mol->NextAtom(i)) {
           min_x = std::min(min_x, atom->GetX());
           max_x = std::max(max_x, atom->GetX());
           min_y = std::min(min_y, atom->GetY());
           max_y = std::max(max_y, atom->GetY());
+          min_z = std::min(min_z, atom->GetZ());
+          max_z = std::max(max_z, atom->GetZ());
         }
       }
 
@@ -331,10 +415,15 @@ namespace OpenBabel
         margin = 40.0;
       // translate all atoms so the bottom-left atom is at margin,margin
       for (atom = d->mol->BeginAtom(i); atom; atom = d->mol->NextAtom(i))
-        atom->SetVector(atom->GetX() - min_x + margin, atom->GetY() - min_y + margin, 0.0);
+        atom->SetVector(atom->GetX() - min_x + margin, atom->GetY() - min_y + margin, atom->GetZ());
 
       width  = max_x - min_x + 2*margin;
       height = max_y - min_y + 2*margin;
+
+      d->zScale = max_z - min_z;
+      if (fabs(d->zScale) < 1.0e-1)
+        d->zScale = 0.0;
+      d->zMin = min_z;
 
       //d->painter->SetPenWidth(d->penWidth);
       //d->painter->SetPenColor(d->pen));
@@ -399,48 +488,44 @@ namespace OpenBabel
 
     // draw ring bonds
     OBBitVec drawnBonds;
+    // draw aromatic rings first, looks better since all double bonds will
+    // be inside aromatic rings
     for (std::vector<OBRing*>::iterator k = rings.begin(); k != rings.end(); ++k) {
       OBRing *ring = *k;
-      std::vector<int> indexes = ring->_path;
-      vector3 center(VZero);
-      for (std::vector<int>::iterator l = indexes.begin(); l != indexes.end(); ++l) {
-        center += d->mol->GetAtom(*l)->GetVector();
-      }
-      center /= indexes.size();
-
-      for (unsigned int l = 0; l < indexes.size(); ++l) {
-        OBAtom *begin = d->mol->GetAtom(indexes[l]);
-        OBAtom *end;
-        if (l+1 < indexes.size())
-          end = d->mol->GetAtom(indexes[l+1]);
-        else
-          end = d->mol->GetAtom(indexes[0]);
-
-        OBBond *ringBond = d->mol->GetBond(begin, end);
-        if (drawnBonds.BitIsSet(ringBond->GetId()))
-          continue;
-
-        if((d->options & internalColor) && ringBond->HasData("color"))
-          d->painter->SetPenColor(OBColor(ringBond->GetData("color")->GetValue()));
-        else
-          d->painter->SetPenColor(d->bondColor);
-
-        d->DrawRingBond(begin, end, center, ringBond->GetBO());
-        drawnBonds.SetBitOn(ringBond->GetId());
-      }
-
+      if (ring->IsAromatic())
+        d->DrawAromaticRing(ring, drawnBonds);
+    }
+    // draw aliphatic rings
+    for (std::vector<OBRing*>::iterator k = rings.begin(); k != rings.end(); ++k) {
+      OBRing *ring = *k;
+      if (!ring->IsAromatic())
+        d->DrawRing(ring, drawnBonds);
     }
 
-    // draw atom labels
-    for (atom = d->mol->BeginAtom(i); atom; atom = d->mol->NextAtom(i)) {
+    vector<pair<OBAtom*,double> > zsortedAtoms;
+    vector<int> zsorted;
+    unsigned int a;
+    for (a = 0, atom = d->mol->BeginAtom(i) ; atom ; atom = d->mol->NextAtom(i), ++a)
+      {
+        pair<OBAtom*,double> entry(atom, atom->GetVector().z());
+        zsortedAtoms.push_back(entry);
+      }
+    sort(zsortedAtoms.begin(), zsortedAtoms.end(), SortAtomZ);
+    unsigned int max = zsortedAtoms.size();
+    for (a = 0 ; a < max ; a++ ) {
+      atom   = zsortedAtoms[a].first;
       double x = atom->GetX();
       double y = atom->GetY();
 
+      d->DrawAtom(atom);
+
+      // draw atom labels
       int alignment = GetLabelAlignment(atom);
       bool rightAligned = false;
       switch (alignment) {
         case Right:
           rightAligned = true;
+          /* no break */
         default:
           break;
       }
@@ -527,6 +612,10 @@ namespace OpenBabel
           atomSymbol = etab.GetSymbol(atom->GetAtomicNum());
 
         unsigned int hCount = atom->ImplicitHydrogenCount();
+        // LPW: The allExplicit option will omit the drawing of extra hydrogens
+        // to fill the valence.
+        if((d->options & allExplicit))
+            hCount = 0;
         // rightAligned:
         //   false  CH3
         //   true   H3C
@@ -747,6 +836,10 @@ namespace OpenBabel
                       end.x() + spacing.x() - offset.x(), end.y() + spacing.y() - offset.y());
   }
 
+  void OBDepictPrivate::DrawAtom(OBAtom *atom)
+  {
+  }
+
   void OBDepictPrivate::DrawAtomLabel(const std::string &label, int alignment, const vector3 &pos)
   {
    /*
@@ -914,6 +1007,211 @@ namespace OpenBabel
         pbond->SetWedge();
     }
   }
+  void OBDepictPrivateBallAndStick::DrawSimpleBond(OBAtom* beginAtom,
+  OBAtom* endAtom, int order, bool crossed_bond)
+  {
+    const vector3 begin = beginAtom->GetVector();
+    const vector3 end = endAtom->GetVector();
+    const vector3 vb = (end - begin).normalize();
+
+    // calculate the expected opacity and width
+    // to simulate perspective
+    penWidth = 3.0;
+    bondColor.alpha = 1.0;
+
+    if (fabs(zScale) > 1.0e-1) {
+      double beginAtomScale = (beginAtom->GetZ() - zMin) / zScale;
+      double endAtomScale = (endAtom->GetZ() - zMin) / zScale;
+      double averageScale = (beginAtomScale + endAtomScale)/2.0;
+      if (averageScale < 0.15)
+        averageScale = 0.15;
+
+      penWidth = 3.0 * averageScale;
+      bondColor.alpha = averageScale;
+    }
+    painter->SetPenWidth(penWidth);
+
+    if (order == 1) {
+      painter->DrawLine(begin.x(), begin.y(), end.x(), end.y());
+    } else if (order == 2) {
+      const vector3 orthogonalLine = cross(end - begin, VZ).normalize();
+
+        // style1
+        //
+        // -----------
+        // -----------
+        const vector3 offset = orthogonalLine * 0.5 * bondSpacing;
+        painter->DrawLine(begin.x() + offset.x(), begin.y() + offset.y(),
+                            end.x() + offset.x(), end.y() + offset.y());
+        painter->DrawLine(begin.x() - offset.x(), begin.y() - offset.y(),
+                            end.x() - offset.x(), end.y() - offset.y());
+    } else if (order == 3) {
+      const vector3 orthogonalLine = cross(end - begin, VZ).normalize();
+      const vector3 offset = orthogonalLine * 0.7 * bondSpacing;
+      painter->DrawLine(begin.x(), begin.y(), end.x(), end.y());
+      painter->DrawLine(begin.x() + offset.x(), begin.y() + offset.y(),
+                        end.x() + offset.x(), end.y() + offset.y());
+      painter->DrawLine(begin.x() - offset.x(), begin.y() - offset.y(),
+                        end.x() - offset.x(), end.y() - offset.y());
+    }
+
+  }
+
+  inline void OBDepictPrivateBallAndStick::DrawWedge(OBAtom* beginAtom,
+  OBAtom* endAtom)
+  {
+    const vector3 begin = beginAtom->GetVector();
+    const vector3 end = endAtom->GetVector();
+    const vector3 vb = end - begin;
+    const vector3 orthogonalLine = cross(vb, VZ).normalize() * 0.5 * bondWidth;
+    std::vector<std::pair<double,double> > points;
+
+    points.push_back(std::pair<double,double>(begin.x(), begin.y()));
+    points.push_back(std::pair<double,double>(end.x() + orthogonalLine.x(),
+                                              end.y() + orthogonalLine.y()));
+    points.push_back(std::pair<double,double>(end.x() - orthogonalLine.x(),
+                                              end.y() - orthogonalLine.y()));
+    painter->DrawPolygon(points);
+
+  }
+
+  inline void OBDepictPrivateBallAndStick::DrawHash(OBAtom* beginAtom,
+  OBAtom* endAtom)
+  {
+    const vector3 begin = beginAtom->GetVector();
+    const vector3 end = endAtom->GetVector();
+    const vector3 vb = end - begin;
+    const vector3 orthogonalLine = cross(vb, VZ).normalize() * 0.5 * bondWidth;
+    const double lines[6] = { 0.20, 0.36, 0.52, 0.68, 0.84, 1.0 };
+    const double oldwidth = painter->GetPenWidth();
+    painter->SetPenWidth(1);
+    for (int k = 0; k < 6; ++k) {
+      const double w = lines[k];
+      painter->DrawLine(begin.x() + vb.x() * w + orthogonalLine.x() * w,
+                        begin.y() + vb.y() * w + orthogonalLine.y() * w,
+                        begin.x() + vb.x() * w - orthogonalLine.x() * w,
+                        begin.y() + vb.y() * w - orthogonalLine.y() * w);
+    }
+    painter->SetPenWidth(oldwidth);
+
+  }
+
+  inline void OBDepictPrivateBallAndStick::DrawWobblyBond(OBAtom* beginAtom,
+  OBAtom* endAtom)
+  {
+    DrawSimpleBond(beginAtom, endAtom, 1);
+  }
+
+  inline void OBDepictPrivateBallAndStick::DrawRingBond(OBAtom* beginAtom,
+  OBAtom* endAtom, const vector3& center, int order)
+  {
+    OBDepictPrivate::DrawRingBond(beginAtom, endAtom, center, order);
+  }
+
+
+  inline void OBDepictPrivateBallAndStick::DrawRing(OBRing* ring,
+  OBBitVec& drawnBonds)
+  {
+    OBDepictPrivate::DrawRing(ring, drawnBonds);
+  }
+
+inline void OBDepictPrivateBallAndStick::DrawAromaticRing(OBRing* ring,
+OBBitVec& drawnBonds)
+  {
+
+    const std::vector<int> indexes = ring->_path;
+    const size_t ringSize = indexes.size();
+    vector3 center(VZero);
+    double maxdist =0.;
+    for (std::vector<int>::const_iterator l = indexes.begin(); l != indexes.end(); ++l) {
+      center += mol->GetAtom(*l)->GetVector();
+      maxdist = max(maxdist, GetAtomRadius(mol->GetAtom(*l)));
+    }
+    center /= ringSize;
+
+    for (unsigned int l = 0; l < indexes.size(); ++l) {
+      OBAtom *prev  = mol->GetAtom(indexes[l]);
+      OBAtom *begin = mol->GetAtom(indexes[(l+1) % ringSize]);
+      OBAtom *end   = mol->GetAtom(indexes[(l+2) % ringSize]);
+      OBAtom *next  = mol->GetAtom(indexes[(l+3) % ringSize]);
+
+      OBBond *ringBond = mol->GetBond(begin, end);
+
+      // calculate the expected opacity and width
+      // to simulate perspective
+      penWidth = 3.0;
+      bondColor.alpha = 1.0;
+
+      if (fabs(zScale) > 1.0e-1) {
+        double beginAtomScale = (begin->GetZ() - zMin) / zScale;
+        double endAtomScale = (end->GetZ() - zMin) / zScale;
+        double averageScale = (beginAtomScale + endAtomScale)/2.0;
+        if (averageScale < 0.15)
+          averageScale = 0.15;
+
+        penWidth = 3.0 * averageScale;
+        bondColor.alpha = averageScale;
+      }
+      painter->SetPenWidth(penWidth);
+
+      if((options & OBDepict::internalColor) && ringBond->HasData("color"))
+        painter->SetPenColor(OBColor(ringBond->GetData("color")->GetValue()));
+      else
+        painter->SetPenColor(bondColor);
+
+      DrawAromaticRingBond(prev,begin, end, next, center, maxdist);
+      drawnBonds.SetBitOn(ringBond->GetId());
+    }
+  }
+
+  inline void OBDepictPrivateBallAndStick::DrawAromaticRingBond(OBAtom *prevAtom, OBAtom *beginAtom, OBAtom *endAtom, OBAtom *nextAtom, const vector3 &center, double dist)
+  {
+    const vector3 prev  = prevAtom->GetVector();
+    const vector3 begin = beginAtom->GetVector();
+    const vector3 end   = endAtom->GetVector();
+    const vector3 next  = nextAtom->GetVector();
+
+    const vector3 orthogonalLine = cross(end - begin, VZ).normalize();
+    const vector3 offset = orthogonalLine * 0.5 * bondSpacing;
+    painter->DrawLine(begin.x() - offset.x(), begin.y() - offset.y(),
+                      end.x() - offset.x(), end.y() - offset.y());
+
+    static const float dashpattern[] = {5., 5.};
+    static const vector<double> pat = vector<double>(dashpattern,dashpattern + sizeof(dashpattern)/sizeof(double));
+    painter->DrawLine(begin.x() + offset.x(), begin.y() + offset.y(),
+                      end.x() + offset.x(), end.y() + offset.y(), pat);
+  }
+
+  void OBDepictPrivateBallAndStick::DrawAtom(OBAtom *atom)
+  {
+    OBColor atomColor = etab.GetRGB(atom->GetAtomicNum());
+    double opacity = 1.0;
+    if (fabs(zScale) > 1.0e-1)
+      opacity = sqrt((atom->GetZ() - zMin) / zScale);
+    if (opacity < 0.2)
+      opacity = 0.2;
+
+    painter->SetFillRadial(OBColor("white"),atomColor);
+    painter->DrawBall(atom->GetVector().x(), atom->GetVector().y(),GetAtomRadius(atom), opacity);
+  }
+
+  double OBDepictPrivateBallAndStick::GetAtomRadius(OBAtom *atom)
+  {
+    double radius = etab.GetCovalentRad(atom->GetAtomicNum());
+    double perspective = 1.0;
+    if (fabs(zScale) > 1.0e-1)
+      perspective = (atom->GetZ() - zMin) / zScale;
+    if (perspective < 0.5)
+      perspective = 0.5;
+
+    return perspective * radius * bondLength / 1.1;
+  }
+
+  void OBDepictPrivateBallAndStick::DrawAtomLabel(const std::string &label, int alignment, const vector3 &pos)
+    {
+      if (m_symbolOnBall)
+        OBDepictPrivate::DrawAtomLabel(label,alignment,pos);
+    }
 
 }
 

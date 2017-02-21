@@ -1,4 +1,4 @@
-/**********************************************************************
+/********************************************************************** 
 mol.cpp - Handle molecules.
 
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
@@ -22,6 +22,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/rotamer.h>
 #include <openbabel/phmodel.h>
+#include <openbabel/atomclass.h>
 #include <openbabel/bondtyper.h>
 #include <openbabel/builder.h>
 #include <openbabel/math/matrix3x3.h>
@@ -180,7 +181,8 @@ namespace OpenBabel
       return(_title.c_str());
 
     //Only multiline titles use the following to replace newlines by spaces
-    static string title(_title); //potential problems in calling code with multiple molecules!
+    static string title;
+    title=_title;
     string::size_type j;
     for ( ; (j = title.find_first_of( "\n\r" )) != string::npos ; ) {
       title.replace( j, 1, " ");
@@ -790,16 +792,16 @@ namespace OpenBabel
     return(count);
   }
 
-  unsigned int OBMol::NumRotors()
+  unsigned int OBMol::NumRotors(bool includeRingBonds)
   {
     OBBond *bond;
     vector<OBBond*>::iterator i;
 
     unsigned int count = 0;
-    for (bond = BeginBond(i);bond;bond = NextBond(i))
-      if (bond->IsRotor())
+    for (bond = BeginBond(i);bond;bond = NextBond(i)) {
+      if (bond->IsRotor(includeRingBonds))
         count++;
-
+    }
     return(count);
   }
 
@@ -1877,6 +1879,16 @@ namespace OpenBabel
     return (true);
   }
 
+  // Convenience function used by the DeleteHydrogens methods
+  static bool IsSuppressibleHydrogen(OBAtom *atom, OBAtomClassData *pac)
+  {
+    if (atom->GetIsotope() == 0 && atom->GetHvyValence() == 1 && atom->GetFormalCharge() == 0
+        && (pac == NULL || !pac->HasClass(atom->GetIdx())))
+      return true;
+    else
+      return false;
+  }
+
   bool OBMol::DeletePolarHydrogens()
   {
     OBAtom *atom;
@@ -1887,8 +1899,12 @@ namespace OpenBabel
                           "Ran OpenBabel::DeleteHydrogens -- polar",
                           obAuditMsg);
 
+    OBAtomClassData *pac = NULL;
+    if (this->HasData("Atom Class"))
+      pac = static_cast<OBAtomClassData*>(this->GetData("Atom Class"));
+
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if (atom->IsPolarHydrogen())
+      if (atom->IsPolarHydrogen() && IsSuppressibleHydrogen(atom, pac))
         delatoms.push_back(atom);
 
     if (delatoms.empty())
@@ -1917,8 +1933,13 @@ namespace OpenBabel
                           "Ran OpenBabel::DeleteHydrogens -- nonpolar",
                           obAuditMsg);
 
+
+    OBAtomClassData *pac = NULL;
+    if (this->HasData("Atom Class"))
+      pac = static_cast<OBAtomClassData*>(this->GetData("Atom Class"));
+
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if (atom->IsNonPolarHydrogen())
+      if (atom->IsNonPolarHydrogen() && IsSuppressibleHydrogen(atom, pac))
         delatoms.push_back(atom);
 
     if (delatoms.empty())
@@ -1957,8 +1978,12 @@ namespace OpenBabel
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::DeleteHydrogens", obAuditMsg);
 
+    OBAtomClassData *pac = NULL;
+    if (this->HasData("Atom Class"))
+      pac = static_cast<OBAtomClassData*>(this->GetData("Atom Class"));
+
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if (atom->IsHydrogen())
+      if (atom->IsHydrogen() && IsSuppressibleHydrogen(atom, pac))
         delatoms.push_back(atom);
 
     UnsetHydrogensAdded();
@@ -1997,8 +2022,12 @@ namespace OpenBabel
     vector<OBBond*>::iterator k;
     vector<OBAtom*> delatoms;
 
+    OBAtomClassData *pac = NULL;
+    if (this->HasData("Atom Class"))
+      pac = static_cast<OBAtomClassData*>(this->GetData("Atom Class"));
+
     for (nbr = atom->BeginNbrAtom(k);nbr;nbr = atom->NextNbrAtom(k))
-      if (nbr->IsHydrogen())
+      if (nbr->IsHydrogen() && IsSuppressibleHydrogen(atom, pac))
         delatoms.push_back(nbr);
 
     if (delatoms.empty())
@@ -2111,9 +2140,15 @@ namespace OpenBabel
                             "Ran OpenBabel::AddHydrogens -- nonpolar only", obAuditMsg);
 
     // Make sure we have conformers (PR#1665519)
-    if (!_vconf.empty()) {
-      BeginModify();
-      EndModify();
+    if (!_vconf.empty() && !Empty() && !_mod)
+    {
+      if(!_c) _c = _vconf[0];
+      OBAtom *atom;
+      vector<OBAtom*>::iterator i;
+      for (atom = BeginAtom(i); atom; atom = NextAtom(i))
+      {
+        atom->SetVector();
+      }
     }
 
     SetHydrogensAdded(); // This must come after EndModify() as EndModify() wipes the flags
@@ -2249,7 +2284,6 @@ namespace OpenBabel
       }
 
     DecrementMod();
-    SetConformer(0);
 
     //reset atom type and partial charge flags
     _flags &= (~(OB_PCHARGE_MOL|OB_ATOMTYPES_MOL|OB_SSSR_MOL|OB_AROMATIC_MOL));
@@ -2989,13 +3023,13 @@ namespace OpenBabel
 
   bool OBMol::AddBond(int first,int second,int order,int flags,int insertpos)
   {
-    if (first == second)
+    // Don't add the bond if it already exists
+    if (first == second || GetBond(first, second) != NULL)
       return(false);
 
     //    BeginModify();
 
-    if ((unsigned)first <= NumAtoms() && (unsigned)second <= NumAtoms()
-        && !GetBond(first, second))
+    if ((unsigned)first <= NumAtoms() && (unsigned)second <= NumAtoms())
       //atoms exist and bond doesn't
       {
         OBBond *bond = CreateBond();
@@ -3453,6 +3487,7 @@ namespace OpenBabel
                           "Ran OpenBabel::ConnectTheDots", obAuditMsg);
 
     int j,k,max;
+    double maxrad = 0;
     bool unset = false;
     OBAtom *atom,*nbr;
     vector<OBAtom*>::iterator i;
@@ -3479,6 +3514,7 @@ namespace OpenBabel
       {
         atom   = zsortedAtoms[j].first;
         rad[j] = etab.GetCovalentRad(atom->GetAtomicNum());
+        maxrad = std::max(rad[j],maxrad);
         zsorted.push_back(atom->GetIdx()-1);
       }
 
@@ -3486,6 +3522,7 @@ namespace OpenBabel
     double d2,cutoff,zd;
     for (j = 0 ; j < max ; ++j)
       {
+    	double maxcutoff = SQUARE(rad[j]+maxrad+0.45);
         idx1 = zsorted[j];
         for (k = j + 1 ; k < max ; k++ )
           {
@@ -3495,24 +3532,29 @@ namespace OpenBabel
             cutoff = SQUARE(rad[j] + rad[k] + 0.45);
 
             zd  = SQUARE(c[idx1*3+2] - c[idx2*3+2]);
-            if (zd > 25.0 )
-              break; // bigger than max cutoff
+            // bigger than max cutoff, which is determined using largest radius,
+            // not the radius of k (which might be small, ie H, and cause an early  termination)
+            // since we sort by z, anything beyond k will also fail
+            if (zd > maxcutoff )
+              break;
 
             d2  = SQUARE(c[idx1*3]   - c[idx2*3]);
+            if (d2 > cutoff)
+              continue; // x's bigger than cutoff
             d2 += SQUARE(c[idx1*3+1] - c[idx2*3+1]);
+            if (d2 > cutoff)
+              continue; // x^2 + y^2 bigger than cutoff
             d2 += zd;
 
             if (d2 > cutoff)
               continue;
-            if (d2 < 0.40)
+            if (d2 < 0.16) // 0.4 * 0.4 = 0.16
               continue;
 
             atom = GetAtom(idx1+1);
             nbr  = GetAtom(idx2+1);
 
             if (atom->IsConnected(nbr))
-              continue;
-            if (atom->IsHydrogen() && nbr->IsHydrogen())
               continue;
 
             AddBond(idx1+1,idx2+1,1);
@@ -3534,9 +3576,10 @@ namespace OpenBabel
     // Cleanup -- delete long bonds that exceed max valence
     OBBond *maxbond, *bond;
     double maxlength;
-    vector<OBBond*>::iterator l;
+    vector<OBBond*>::iterator l, m;
     int valCount;
-
+    bool changed;
+    BeginModify(); //prevent needless re-perception in DeleteBond
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       {
         while (atom->BOSum() > static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum()))
@@ -3568,6 +3611,32 @@ namespace OpenBabel
             if (!bond) // no new bonds added for this atom, just skip it
               break;
 
+            // delete bonds between hydrogens when over max valence
+            if (atom->IsHydrogen())
+              {
+                m = l;
+                changed = false;
+                for (;bond;bond = atom->NextBond(m))
+                  {
+                    if (bond->GetNbrAtom(atom)->IsHydrogen())
+                      {
+                        DeleteBond(bond);
+                        changed = true;
+                        break;
+                      }
+                  }
+                if (changed)
+                  {
+                    // bond deleted, reevaluate BOSum
+                    continue;
+                  }
+                else
+                  {
+                    // reset to first new bond
+                    bond = maxbond;
+                  }
+              }
+
             maxlength = maxbond->GetLength();
             for (bond = atom->NextBond(l);bond;bond = atom->NextBond(l))
               {
@@ -3580,7 +3649,7 @@ namespace OpenBabel
             DeleteBond(maxbond); // delete the new bond with the longest length
           }
       }
-
+    EndModify();
     if (unset)
       {
         _c = NULL;
@@ -3589,7 +3658,8 @@ namespace OpenBabel
         _vconf.resize(_vconf.size()-1);
       }
 
-    delete [] c;
+    if (_c != NULL)
+      delete [] c;
   }
 
   /*! This method uses bond angles and geometries from current
@@ -3746,7 +3816,7 @@ namespace OpenBabel
       {
         typed = false;
         loopSize = (*ringit)->PathSize();
-        if (loopSize == 5 || loopSize == 6)
+        if (loopSize == 5 || loopSize == 6 || loopSize == 7)
           {
             path = (*ringit)->_path;
             for(loop = 0; loop < loopSize; ++loop)
@@ -3771,6 +3841,23 @@ namespace OpenBabel
       }
     _flags &= (~(OB_KEKULE_MOL));
     Kekulize();
+
+    // Quick pass.. eliminate inter-ring sulfur atom multiple bonds
+    for (atom = BeginAtom(i); atom; atom = NextAtom(i)) {
+      // Don't build multiple bonds to ring sulfurs
+      //  except thiopyrylium
+      if (atom->IsInRing() && atom->GetAtomicNum() == 16) {
+        if (_totalCharge > 1 && atom->GetFormalCharge() == 0)
+          atom->SetFormalCharge(+1);
+        else {
+          // remove any ring bonds with multiple bond order
+          FOR_BONDS_OF_ATOM(bond, &*atom) {
+            if (bond->IsInRing() && bond->GetBondOrder() > 1)
+              bond->SetBondOrder(1);
+          }
+        }
+      }
+    }
 
     // Pass 6: Assign remaining bond types, ordered by atom electronegativity
     vector<pair<OBAtom*,double> > sortedAtoms;
@@ -3801,7 +3888,9 @@ namespace OpenBabel
     for (iter = 0 ; iter < max ; iter++ )
       {
         atom = sortedAtoms[iter].first;
-        //        cout << " atom->Hyb " << atom->GetAtomicNum() << " " << atom->GetHyb() << endl;
+        // Debugging statement
+        //        cout << " atom->Hyb " << atom->GetAtomicNum() << " " << atom->GetIdx() << " " << atom->GetHyb()
+        //             << " BO: " << atom->BOSum() << endl;
 
         // Possible sp-hybrids
         if ( (atom->GetHyb() == 1 || atom->GetValence() == 1)
@@ -3858,6 +3947,15 @@ namespace OpenBabel
                 (atom->GetAtomicNum() == 7 && atom->BOSum() + 1 > 3))
               continue;
 
+            // Don't build multiple bonds to ring sulfurs
+            //  except thiopyrylium
+            if (atom->IsInRing() && atom->GetAtomicNum() == 16) {
+              if (_totalCharge > 1 && atom->GetFormalCharge() == 0)
+                atom->SetFormalCharge(+1);
+              else
+                continue;
+            }
+
             maxElNeg = 0.0;
             shortestBond = 5000.0;
             c = NULL;
@@ -3867,16 +3965,18 @@ namespace OpenBabel
                 if ( (b->GetHyb() == 2 || b->GetValence() == 1)
                      && b->BOSum() + 1 <= static_cast<unsigned int>(etab.GetMaxBonds(b->GetAtomicNum()))
                      && (GetBond(atom, b))->IsDoubleBondGeometry()
-                     && (currentElNeg > maxElNeg ||
-                         ((IsApprox(currentElNeg,maxElNeg, 1.0e-6)
-                          // If only the bond length counts, prefer double bonds in the ring
-                          && (((atom->GetBond(b))->GetLength() < shortestBond)
-                              && (!atom->IsInRing() || !c || !c->IsInRing() || b->IsInRing())))
-                          || (atom->IsInRing() && c && !c->IsInRing() && b->IsInRing()))))
+                     && (currentElNeg > maxElNeg || (IsApprox(currentElNeg,maxElNeg, 1.0e-6)) ) )
                   {
                     if (b->HasNonSingleBond() ||
                         (b->GetAtomicNum() == 7 && b->BOSum() + 1 > 3))
                       continue;
+
+                    if (b->IsInRing() && b->GetAtomicNum() == 16) {
+                      if (_totalCharge > 1 && b->GetFormalCharge() == 0)
+                        b->SetFormalCharge(+1);
+                      else
+                        continue;
+                    }
 
                     // Test terminal bonds against expected double bond lengths
                     bondLength = (atom->GetBond(b))->GetLength();
@@ -3887,11 +3987,20 @@ namespace OpenBabel
                         continue; // too long, ignore it
                     }
 
-                    shortestBond = (atom->GetBond(b))->GetLength();
-                    maxElNeg = etab.GetElectroNeg(b->GetAtomicNum());
-                    c = b; // save this atom for later use
+                    // OK, see if this is better than the previous choice
+                    // If it's much shorter, pick it (e.g., fulvene)
+                    // If they're close (0.1A) then prefer the bond in the ring
+                    double difference = shortestBond - (atom->GetBond(b))->GetLength();
+                    if ( (difference > 0.1)
+                         || ( (difference > -0.01) &&
+                              ( (!atom->IsInRing() || !c || !c->IsInRing() || b->IsInRing())
+                                || (atom->IsInRing() && c && !c->IsInRing() && b->IsInRing()) ) ) ) {
+                      shortestBond = (atom->GetBond(b))->GetLength();
+                      maxElNeg = etab.GetElectroNeg(b->GetAtomicNum());
+                      c = b; // save this atom for later use
+                    } // is this bond better than previous choices
                   }
-              }
+              } // loop through neighbors
             if (c)
               (atom->GetBond(c))->SetBO(2);
           }
@@ -3909,7 +4018,7 @@ namespace OpenBabel
     //deficient and which have implicit valency definitions (essentially the
     //organic subset in SMILES). There are assumed to no implicit hydrogens.
     AssignSpinMultiplicity(true);
-  }
+    }
 
   void OBMol::Center()
   {
@@ -4181,6 +4290,20 @@ namespace OpenBabel
     return converted;
   }
 
+  /**
+   *  This function is useful when writing to legacy formats (such as MDL MOL) that do
+   *  not support zero-order bonds. It is worth noting that some compounds cannot be
+   *  well represented using just single, double and triple bonds, even with adjustments
+   *  to adjacent charges. In these cases, simply converting zero-order bonds to single
+   *  bonds is all that can be done.
+   *
+   @verbatim
+   Algorithm from:
+   Clark, A. M. Accurate Specification of Molecular Structures: The Case for
+   Zero-Order Bonds and Explicit Hydrogen Counting. Journal of Chemical Information
+   and Modeling, 51, 3149-3157 (2011). http://pubs.acs.org/doi/abs/10.1021/ci200488k
+   @endverbatim
+  */
   bool OBMol::ConvertZeroBonds()
   {
     // TODO: Option to just remove zero-order bonds entirely

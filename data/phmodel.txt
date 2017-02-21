@@ -39,9 +39,15 @@ TRANSFORM [nD2:1]([#1:2])1[nD2-0][nD2-0][nD2-0]c1 >> [n-:1]1nnnc1	4.89 #pKa from
 TRANSFORM [nD2-0]1[nD2:1]([#1:2])[nD2-0][nD2-0]c1 >> n1[n-:1]nnc1	4.89 #pKa from acid (AH)
 TRANSFORM [nD2-0:1]1[nD2-0][nD2-0][nD2-0]c1 >> [n-:1]1nnnc1		4.89 #pKa from acid (AH)
 
-#azide
-TRANSFORM [ND1:1]=[ND2:2]=A >> [N-:1]=[N+:2]=A				1E+10 # always apply transformation
-TRANSFORM [ND2:1]=[ND2:2]=A >> N=[N+:2]=A				1E+10 # always apply this transformation
+#azide (always apply these transformations)
+TRANSFORM [ND1:1]~[ND2:2]~[ND1:3] >> [N-:1]=[N+:2]=[N-:3] 1E+10	    # azide ion
+TRANSFORM [ND1:1]~[ND2:2]~[ND1:3]~* >> [N-:1]=[N+:2]=[N:3]-* 1E+10   # azide group
+TRANSFORM [NH2:1]~[NH1:2]~[NH1:3]~* >> [N-:1]=[N+:2]=[N:3]-* 1E+10	# azide group
+TRANSFORM [NH1:1]~[ND2:2]~[NH1:3]~* >> [N-:1]=[N+:2]=[N:3]-* 1E+10	# azide group
+
+#nitro group (-NO2)
+TRANSFORM [O:1]=[N:2]-[O:3] >> [O:1]=[N+:2]-[O-:3]  1E+10
+TRANSFORM [O:1]-[N:2]-[O:3] >> [O:1]=[N+:2]-[O-:3]  1E+10
 
 #hydroxamic acid
 #TRANSFORM O=CN[OD1-0:1][#1:2] >> O=CN[O-:1]				8.0
@@ -64,6 +70,10 @@ TRANSFORM [#6^2+0:1](~[N^2:2])(~[N^2:3])* >> [#6+:1](~[N:2])(~[N:3])*		12.5
 #phosphate ester
 TRANSFORM [PD4](=O)([OD2])([OD2])[OD1:1] >> [PD4](=O)([OD2])([OD2])[O-:1]	2.0
 #TRANSFORM [PD4](=O)([OD2])([OD2])[OD1:1][#1:2] >> [PD4](=O)([OD2])([OD2])[O-:1]	2.0
+
+# phosphonate
+TRANSFORM [PD4](=O)([OD2])([!#8])[OD1:1] >> [PD4](=O)([OD2])([!#8])[O-:1]	2.2
+# http://research.chem.psu.edu/brpgroup/pKa_compilation.pdf
 
 #phosphoric acid
 #TRANSFORM O=P([!D1])([O:1][#1:2])[O:3][#1:4] >> O=P([*D2,*D3])([O:1])[O:3]	2.12

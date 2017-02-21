@@ -1,12 +1,13 @@
 # Library versioning
-set(SOVERSION 4)
-set(LIBRARY_VERSION 4.0.0)
+set(SOVERSION 5)
+set(LIBRARY_VERSION 5.0.0)
 
 set(charges
   charges/eem.cpp
   charges/gasteiger.cpp
   charges/none.cpp
   charges/mmff94.cpp
+  charges/fromfile.cpp
 )
 
 if (EIGEN2_FOUND OR EIGEN3_FOUND)
@@ -35,6 +36,7 @@ set(descriptors
 set(fingerprints
   fingerprints/finger2.cpp
   fingerprints/finger3.cpp
+  fingerprints/fingerecfp.cpp
 )
 
 set(forcefields
@@ -63,6 +65,7 @@ set(ops
   ops/addpolarh.cpp
   ops/addnonpolarh.cpp
   ops/canonical.cpp
+  ops/changecell.cpp
   ops/delpolarh.cpp
   ops/delnonpolarh.cpp
   ops/gen2D.cpp
@@ -112,6 +115,7 @@ set(openbabel_srcs
   chargemodel.cpp
   chiral.cpp
   data.cpp
+  data_utilities.cpp
   descriptor.cpp
   fingerprint.cpp
   forcefield.cpp
@@ -205,7 +209,9 @@ set(openbabel_library_srcs
   )
 
 if(WIN32)
-  set(libs ${libs} ${ZLIB_LIBRARY})
+  if(ZLIB_FOUND)
+    set(libs ${libs} ${ZLIB_LIBRARY})
+  endif(ZLIB_FOUND)
 else(WIN32)
   # the C math library
   if(BUILD_MIXED)

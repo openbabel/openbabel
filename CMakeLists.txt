@@ -14,6 +14,9 @@ set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS 1)
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
   cmake_policy(SET CMP0005 OLD) # add_definitions need updating to set to NEW
+  if(POLICY CMP0042)
+    cmake_policy(SET CMP0042 OLD)
+  endif()
 endif()
 
 include (CheckCXXCompilerFlag)
@@ -23,8 +26,8 @@ include (MacroEnsureVersion)
 # Note that for "beta" releases, we should start at x.90.0 -- we've
 # had too many 1.100.1 releases. :-)
 set(BABEL_MAJ_VER   2)
-set(BABEL_MIN_VER   3)
-set(BABEL_PATCH_VER 90)
+set(BABEL_MIN_VER   4)
+set(BABEL_PATCH_VER 1)
 
 # This should be phased out in preference for just using the target name
 set(BABEL_LIBRARY openbabel)
@@ -35,7 +38,9 @@ if(EMBED_OPENBABEL)
 else()
   set(BABEL_VERSION  "${BABEL_MAJ_VER}.${BABEL_MIN_VER}.${BABEL_PATCH_VER}")
 endif()
-set(BABEL_DATADIR  "${CMAKE_INSTALL_PREFIX}/share/openbabel")
+set(BABEL_DATAROOTDIR "${CMAKE_INSTALL_PREFIX}/share"
+    CACHE PATH "Install dir for arch independent data")
+set(BABEL_DATADIR  "${BABEL_DATAROOTDIR}/openbabel")
 
 option(ENABLE_VERSIONED_FORMATS
   "Enable versioning of the format plugin directory" ON)
@@ -70,7 +75,9 @@ else() # Windows - bin dir = lib dir to load libraries
     endif(ENABLE_VERSIONED_FORMATS)
   endif()
 endif()
-set(OB_INCLUDE_DIRS "include/openbabel-2.0")
+if(NOT DEFINED OB_INCLUDE_DIRS)
+  set(OB_INCLUDE_DIRS "include/openbabel-2.0")
+endif()
 set(OB_EXPORTS_FILE "${openbabel_BINARY_DIR}/OpenBabel2_EXPORTS.cmake")
 # Ensure a fresh file is made each time CMake is run
 file(REMOVE "${OB_EXPORTS_FILE}")
@@ -100,7 +107,6 @@ if(GLIBC_24_COMPATIBLE AND UNIX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--wrap=memcpy")
 endif()
 
-
 option(BUILD_SHARED "enable shared build support" ON)
 option(BUILD_MIXED "enable linux relocatable binaries support" OFF)
 option(WITH_STATIC_INCHI "enable static inchi and related plugins" OFF)
@@ -124,8 +130,10 @@ else()
   if(MSVC)
     # set cl flags for static compiling
     set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
+    set(CMAKE_C_FLAGS_DEBUG "/MTd")
     set(CMAKE_EXE_LINKER_FLAGS_DEBUG "/INCREMENTAL:NO /NODEFAULTLIB:MSVCRT")
     set(CMAKE_CXX_FLAGS_RELEASE	"/MT /O2 /Ob2 /D NDEBUG")
+    set(CMAKE_C_FLAGS_RELEASE	"/MT /O2 /Ob2 /D NDEBUG")
     set(CMAKE_EXE_LINKER_FLAGS_RELEASE "/INCREMENTAL:NO /NODEFAULTLIB:MSVCRT")
     # note: static libraries are specified when running cmake
   else()
@@ -144,7 +152,7 @@ if(OPENBABEL_USE_SYSTEM_INCHI)
   endif()
 else()
   message(STATUS "Using included inchi library.")
-  set(INCHI_LIBRARIES inchi)
+  set(INCHI_LIBRARY inchi)
 endif()
 
 if(WIN32)
@@ -193,9 +201,9 @@ if(MSVC)
 endif()
 
 if(MSVC AND OB_USE_PREBUILT_BINARIES)
-  include_directories(${openbabel_SOURCE_DIR}/windows-vc2008/include)
+  include_directories(${XDR_INCLUDE_DIR})
   # The following line is required for check_include_file(rpc/xdr.h ...) below
-  set(CMAKE_REQUIRED_INCLUDES ${openbabel_SOURCE_DIR}/windows-vc2008/include)
+  set(CMAKE_REQUIRED_INCLUDES ${XDR_INCLUDE_DIR})
   # Force OPENBABEL_USE_SYSTEM_INCHI to ON, as this should be using the binary
   set(OPENBABEL_USE_SYSTEM_INCHI ON CACHE BOOL
     "Forced to ON for prebuilt binaries" FORCE)
@@ -231,7 +239,7 @@ check_type_size(clock_t CLOCK_T)
 # Get the GCC version - from KDE4 cmake files
 if(CMAKE_COMPILER_IS_GNUCXX)
   exec_program(${CMAKE_C_COMPILER} ARGS --version OUTPUT_VARIABLE _gcc_version_info)
-  string(REGEX MATCH "[345]\\.[0-9]\\.[0-9]" _gcc_version "${_gcc_version_info}")
+  string(REGEX MATCH "[34567]\\.[0-9]\\.[0-9]" _gcc_version "${_gcc_version_info}")
   # gcc on mac just reports: "gcc (GCC) 3.3 20030304 ..." without the
   # patch level, handle this here:
   if (NOT _gcc_version)
@@ -302,26 +310,45 @@ if(MINGW)
   set (CMAKE_EXE_LINKER_FLAGS "-Wl,--enable-auto-import ${CMAKE_EXE_LINKER_FLAGS}")
 endif()
 
-if(CMAKE_COMPILER_IS_GNUCXX)
-  if(NOT GCC_IS_NEWER_THAN_4_0) # GCC 3.x
-    find_package(Boost)
-    if(Boost_FOUND)
-      include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
-      add_definitions(-DUSE_BOOST -DHAVE_SHARED_POINTER)
-      set(SHARED_POINTER true)
-    else()
-      message(FATAL_ERROR "Boost is required to compile OpenBabel with GCC 3.x")
-    endif()
-  else()
-    add_definitions(-DHAVE_SHARED_POINTER)
+message(STATUS "Checking available shared pointer...")
+include(CheckCXXSourceCompiles)
+check_cxx_source_compiles("#include <memory>
+                           int main(){ std::shared_ptr<int> p; return 0; }"
+                           HAVE_STD_SHARED_PTR)
+check_cxx_source_compiles("#include <memory>
+                           int main(){ std::tr1::shared_ptr<int> p; return 0; }"
+                           HAVE_STD_TR1_SHARED_PTR)
+check_cxx_source_compiles("#include <tr1/memory>
+                           int main(){ std::tr1::shared_ptr<int> p; return 0; }"
+                           HAVE_STD_TR1_SHARED_PTR_IN_TR1_HEADER)
+if(HAVE_STD_SHARED_PTR)
+  set(OB_SHARED_PTR_IMPLEMENTATION "std::shared_ptr")
+  set(OB_SHARED_PTR_HEADER "memory")
+  set(SHARED_POINTER true)
+  add_definitions(-DHAVE_SHARED_POINTER)
+elseif(HAVE_STD_TR1_SHARED_PTR)
+  set(OB_SHARED_PTR_IMPLEMENTATION "std::tr1::shared_ptr")
+  set(OB_SHARED_PTR_HEADER "memory")
+  set(SHARED_POINTER true)
+  add_definitions(-DHAVE_SHARED_POINTER)
+elseif(HAVE_STD_TR1_SHARED_PTR_IN_TR1_HEADER)
+  set(OB_SHARED_PTR_IMPLEMENTATION "std::tr1::shared_ptr")
+  set(OB_SHARED_PTR_HEADER "tr1/memory")
+  set(SHARED_POINTER true)
+  add_definitions(-DHAVE_SHARED_POINTER)
+else()
+  find_package(Boost)
+  if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
+    add_definitions(-DUSE_BOOST -DHAVE_SHARED_POINTER)
     set(SHARED_POINTER true)
+  else()
+    message(FATAL_ERROR "Boost is required to compile OpenBabel with GCC 3.x")
   endif()
+  set(OB_SHARED_PTR_IMPLEMENTATION "boost::shared_ptr")
+  set(OB_SHARED_PTR_HEADER "boost/memory")
 endif()
-
-if (${CMAKE_CXX_COMPILER_ID} MATCHES Clang)
-   set(SHARED_POINTER true)
-   add_definitions(-DHAVE_SHARED_POINTER)
-endif()
+message(STATUS "Use ${OB_SHARED_PTR_IMPLEMENTATION} in ${OB_SHARED_PTR_HEADER}")
 
 # Intel C++ Compiler
 # Note: Windows version uses different options!
@@ -375,16 +402,6 @@ if(ENABLE_OPENMP)
   endif()
 endif()
 
-if(MSVC)
-  message(STATUS "MSVC_VERSION =" ${MSVC_VERSION})
-  if (${MSVC_VERSION} EQUAL 1600)
-    # To be added: AND SP1  OR gcc>4.0
-    add_definitions(-DHAVE_SHARED_POINTER)
-    set(SHARED_POINTER true)
-    message("SHARED_POINTER set")
-  endif()
-endif()
-
 # Some rpath handling for Linux and Mac
 if(UNIX AND BUILD_SHARED)
   if(APPLE)
@@ -398,27 +415,24 @@ if(UNIX AND BUILD_SHARED)
   endif()
 endif()
 
-# this is adapted from KDE's FindKDE4Internal.cmake : default the build type to
-# "release with debug info".
-#
-# We will define two other build types: Debug and Release.
-# These names are case-insensitive i.e. you can do -DCMAKE_BUILD_TYPE=debug
+# Three build types are available: Release, Debug, RelWithDebInfo.
+# We default to Release.
 if(NOT CMAKE_BUILD_TYPE)
-   set(CMAKE_BUILD_TYPE RelWithDebInfo)
+   set(CMAKE_BUILD_TYPE Release)
 endif()
 
 #define various build types
 if(CMAKE_COMPILER_IS_GNUCXX)
-  set (CMAKE_CXX_FLAGS_RELEASE        "${CMAKE_CXX_FLAGS_RELEASE} -O2 -DNDEBUG")
+  set (CMAKE_CXX_FLAGS_RELEASE        "${CMAKE_CXX_FLAGS_RELEASE} -O3 -DNDEBUG")
   set (CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -O2 -g")
-  set (CMAKE_CXX_FLAGS_DEBUG          "${CMAKE_CXX_FLAGS_DEBUG} -g3 -fno-inline")
+  set (CMAKE_CXX_FLAGS_DEBUG          "${CMAKE_CXX_FLAGS_DEBUG} -D_GLIBCXX_DEBUG -g3 -fno-inline")
 endif()
 
 file(GLOB_RECURSE headers include/openbabel/*.h)
 configure_file(${openbabel_SOURCE_DIR}/src/config.h.cmake
   ${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h)
 install(FILES ${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h
-  DESTINATION include/openbabel-2.0/openbabel)
+  DESTINATION ${OB_INCLUDE_DIRS}/openbabel)
 if(NOT MSVC)
   configure_file(${openbabel_SOURCE_DIR}/openbabel-2.0.pc.cmake
     ${openbabel_BINARY_DIR}/openbabel-2.0.pc @ONLY)
@@ -452,6 +466,16 @@ else(CAIRO_FOUND)
   message(STATUS "Could NOT find Cairo. PNG output will NOT be supported.")
 endif(CAIRO_FOUND)
 
+# Should we enable optimizations for the native CPU architecture?
+# (this will speed up similarity calculations and maybe those involving Eigen)
+if(NOT MSVC)
+  option(OPTIMIZE_NATIVE "Optimize for native CPU architecture. Turn off if compiling for distribution/reuse on other machines." OFF)
+  if(OPTIMIZE_NATIVE)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
+    message(STATUS "Optimizing code for this machine's CPU architecture. Use -DOPTIMIZE_NATIVE=OFF if compiling for distribution/reuse on other machines.")
+  endif()
+endif()
+
 add_subdirectory(include)
 add_subdirectory(data)
 add_subdirectory(doc)
@@ -483,6 +507,13 @@ if(ENABLE_TESTS)
   include(CTest)
   enable_testing()
   add_subdirectory(test)
+endif()
+
+# To build the JSON formats, you need to provide an import library for MSVC
+if(MSVC)
+  if (NOT JSON_LIBRARY)
+    message(STATUS "JSON formats will NOT be built. To build, specify the location of the jsoncpp library with -DJSON_LIBRARY")
+  endif()
 endif()
 
 # Should the language bindings be regenereted?
@@ -568,3 +599,14 @@ install(FILES "${openbabel_BINARY_DIR}/OpenBabel2ConfigInstall.cmake"
 install(FILES "${openbabel_BINARY_DIR}/OpenBabel2ConfigVersion.cmake"
   DESTINATION ${OB_CONFIG_DIR}
   COMPONENT Development)
+
+# from https://cmake.org/Wiki/RecipeAddUninstallTarget
+########### Add uninstall target ###############
+if (NOT DEFINED EMBED_OPENBABEL)
+CONFIGURE_FILE(
+  "${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/cmake/cmake_uninstall.cmake"
+  IMMEDIATE @ONLY)
+ADD_CUSTOM_TARGET(uninstall
+  "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake/cmake_uninstall.cmake")
+endif()

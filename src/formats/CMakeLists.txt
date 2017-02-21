@@ -31,6 +31,7 @@ set(formats_compchem
       acesformat
       abinitformat
       adfformat
+      aoforceformat
       castepformat
       crystal09format
       daltonformat
@@ -49,23 +50,34 @@ set(formats_compchem
       nwchemformat
       pwscfformat
       qchemformat
+      siestaformat
       turbomoleformat
       vaspformat
       xsfformat
       zindoformat
   )
 
+
 if(MSVC OR HAVE_REGEX_H)
   set(formats_compchem
       ${formats_compchem} gamessukformat
   )
+  set(formats_compchem
+      ${formats_compchem} orcaformat
+  )
 endif(MSVC OR HAVE_REGEX_H)
 
-set(formats_json
-  chemdoodlejsonformat
-  pubchemjsonformat
-)
-set(json_additional_sources json/jsoncpp.cpp json/customwriter.cpp)
+# Support JSON format with MSVC only if JSON_LIBRARY is specified
+if(NOT MSVC OR JSON_LIBRARY)
+  set(formats_json
+    chemdoodlejsonformat
+    pubchemjsonformat
+  )
+  set(json_additional_sources json/customwriter.cpp)
+  if(NOT MSVC) # With MSVC, we link to the .dll rather than compiling it in
+    set(json_additional_sources json/jsoncpp.cpp ${json_additional_sources})
+  endif()
+endif()
 
 set(formats_misc
       APIInterface
@@ -89,6 +101,7 @@ set(formats_misc
       crkformat
       cssrformat
       dlpolyformat
+      exyzformat
       fastsearchformat
       fastaformat
       featformat
@@ -101,6 +114,7 @@ set(formats_misc
       groformat
       lmpdatformat
       lpmdformat
+      mdffformat
       mmcifformat
       mmodformat
       moldenformat
@@ -112,10 +126,12 @@ set(formats_misc
       outformat
       pcmodelformat
       pdbqtformat
+      pointcloudformat
       posformat
       pqrformat
       shelxformat
       smileyformat
+      stlformat
       thermoformat
       tinkerformat
       unichemformat
@@ -291,23 +307,25 @@ if(MSVC)
                   OUTPUT_NAME formats_xml
                   PREFIX ""
                   SUFFIX ${MODULE_EXTENSION})
-                  
-  set(jsonsources "")
-  foreach(format ${formats_json})
-    set(jsonsources ${jsonsources} json/${format}.cpp)
-  endforeach(format)
-  add_library(formats_json ${PLUGIN_TYPE} ${jsonsources} ${json_additional_sources}
-              "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h")
-  target_link_libraries(formats_json ${libs} ${XDR_LIBRARY} openbabel)
-  install(TARGETS formats_json
-          RUNTIME DESTINATION ${BIN_INSTALL_DIR}
-          LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
-          ARCHIVE DESTINATION ${OB_PLUGIN_INSTALL_DIR})
-  set_target_properties(formats_json PROPERTIES
-                        OUTPUT_NAME formats_json
-                        PREFIX ""
-                        SUFFIX ${MODULE_EXTENSION})  
-                                
+
+  if(JSON_LIBRARY)
+    set(jsonsources "")
+    foreach(format ${formats_json})
+      set(jsonsources ${jsonsources} json/${format}.cpp)
+    endforeach(format)
+    add_library(formats_json ${PLUGIN_TYPE} ${jsonsources} ${json_additional_sources}
+                "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h")
+    target_link_libraries(formats_json ${libs} ${JSON_LIBRARY} openbabel)
+    install(TARGETS formats_json
+            RUNTIME DESTINATION ${BIN_INSTALL_DIR}
+            LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
+            ARCHIVE DESTINATION ${OB_PLUGIN_INSTALL_DIR})
+    set_target_properties(formats_json PROPERTIES
+                          OUTPUT_NAME formats_json
+                          PREFIX ""
+                          SUFFIX ${MODULE_EXTENSION})
+  endif(JSON_LIBRARY)
+
 else(MSVC)
 foreach(format ${formats_xml})
   add_library(${format} ${PLUGIN_TYPE} xml/${format}.cpp xml/xml.cpp)
@@ -321,7 +339,7 @@ foreach(format ${formats_xml})
                         PREFIX ""
                         SUFFIX ${MODULE_EXTENSION})
 endforeach(format)
-  
+
 foreach(format ${formats_json})
   add_library(${format} ${PLUGIN_TYPE} json/${format}.cpp ${json_additional_sources}
               "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h")

@@ -154,7 +154,7 @@ double get_z_coord( inp_ATOM* at, int cur_atom, int neigh_no,  int *nType, int b
     double z         = at[neigh].z - at[cur_atom].z;
     int    bFlat;
 
-    if ( bFlat = (fabs(z) < ZERO_LENGTH) ) {
+    if ( (bFlat = (fabs(z) < ZERO_LENGTH)) ) {
         int i;
         for ( i = 0; i < at[cur_atom].valence; i ++ ) {
             if ( fabs(at[cur_atom].z - at[(int)at[cur_atom].neighbor[i]].z) > ZERO_LENGTH ) {
@@ -718,8 +718,8 @@ int  ret=0;
                             dAlpha = dBondDirection[nBondOrder[(first_Up + 2) % nNumNeigh]] -
                                      dBondDirection[nBondOrder[(first_Up + 1) % nNumNeigh]];
                             dAlpha = fabs(dAlpha);
-                            if ( dAngle < 2.0 * ZERO_ANGLE && dAlpha > MIN_ANGLE ||
-                                 dAlpha < 2.0 * ZERO_ANGLE && dAngle > MIN_ANGLE  ) 
+                            if ( (dAngle < 2.0 * ZERO_ANGLE && dAlpha > MIN_ANGLE) ||
+                                 (dAlpha < 2.0 * ZERO_ANGLE && dAngle > MIN_ANGLE)  )
                             {
                                 ret = (T2D_OKAY | T2D_WARN);
                             } 
@@ -1170,8 +1170,8 @@ int bInpAtomHasRequirdNeigh ( inp_ATOM *at, int cur_at, int RequirdNeighType, in
         return 0;
     }
 
-    if ( NumDbleBonds && NumDbleBonds > num_mult ||
-         !NumDbleBonds && at[cur_at].valence != num_1s ) {
+    if ( (NumDbleBonds && NumDbleBonds > num_mult) ||
+         (!NumDbleBonds && at[cur_at].valence != num_1s) ) {
         return 0;
     }
     return 1;
@@ -1353,8 +1353,8 @@ int bIsSuitableHeteroInpAtom( inp_ATOM  *at )
                     return 0; /* =O */
                 break;        /* not found */
             case 3: /* N */
-                if ( 1 == at->valence && 1 == num_H ||
-                     2 == at->valence && 0 == num_H  )
+                if ( (1 == at->valence && 1 == num_H) ||
+                     (2 == at->valence && 0 == num_H)  )
                     return 1; /* =N- or =NH */
                 break;        /* not found */
             }
@@ -1812,8 +1812,8 @@ int half_stereo_bond_parity( inp_ATOM *at, int cur_at, inp_ATOM *at_removed_H,
      * This makes sense only in case chem. valence = 4. In case of chem. valence = 3, do not check.
      */
     if ( at[cur_at].valence + num_eH == MIN_NUM_STEREO_BOND_NEIGH && !bValence3 &&
-         !(/*(a)*/ 1 == num_nH && !num_iso_H[0] ||
-           /*(b)*/ 1 == num_H  && !num_eH) 
+         !(/*(a)*/ (1 == num_nH && !num_iso_H[0]) ||
+           /*(b)*/ (1 == num_H  && !num_eH))
        ) {
         goto exit_function;
         /* return num_H == 1? AB_PARITY_UNDF : -AB_PARITY_UNDF; */
@@ -2163,7 +2163,7 @@ int can_be_a_stereo_bond_with_isotopic_H( inp_ATOM *at, int cur_at, INCHI_MODE n
         if ( bond_type != BOND_SINGLE && bond_type != BOND_TAUTOM ) {
             num_wrong_bonds_1 ++;
 #if ( ONE_BAD_SB_NEIGHBOR == 1 )
-            if ( num_wrong_bonds_1 > 1 || num_wrong_bonds_1 && 2 >= at[cur_at].valence ) {
+            if ( num_wrong_bonds_1 > 1 || (num_wrong_bonds_1 && 2 >= at[cur_at].valence) ) {
                 return 0; /* wrong bond type */
             } else {
                 continue;
@@ -2211,7 +2211,7 @@ int can_be_a_stereo_bond_with_isotopic_H( inp_ATOM *at, int cur_at, INCHI_MODE n
                 if ( bond_type != BOND_SINGLE && bond_type != BOND_TAUTOM ) {
                     num_wrong_bonds_2 ++;
 #if ( ONE_BAD_SB_NEIGHBOR == 1 )
-                    if ( num_wrong_bonds_1 > 1 || num_wrong_bonds_1 && 2 >= at[cur_at].valence ) {
+                    if ( num_wrong_bonds_1 > 1 || (num_wrong_bonds_1 && 2 >= at[cur_at].valence) ) {
                         break; /* wrong bond type */
                     } else {
                         continue;
@@ -2225,8 +2225,8 @@ int can_be_a_stereo_bond_with_isotopic_H( inp_ATOM *at, int cur_at, INCHI_MODE n
 
 #if ( N_V_STEREOBONDS == 1 )
             if ( 3 == (type_N | type_N_next) &&
-                 ( 2 == type_N && !bIsOxide( at, cur_at ) ||
-                   2 == type_N_next && !bIsOxide( at, next_at ) ) ) {
+                 ( (2 == type_N && !bIsOxide( at, cur_at )) ||
+                   (2 == type_N_next && !bIsOxide( at, next_at )) ) ) {
                 bFound = 0;
             } else
 #endif
@@ -2569,7 +2569,7 @@ int set_stereo_bonds_parity( sp_ATOM *out_at, inp_ATOM *at, int at_1, inp_ATOM *
             }
             if ( 
 #if ( ONE_BAD_SB_NEIGHBOR == 1 )
-                 num_wrong_bonds_2 > 1 || num_wrong_bonds_2 && 2 >= at[at_2].valence ||
+                 num_wrong_bonds_2 > 1 || (num_wrong_bonds_2 && 2 >= at[at_2].valence) ||
 #else
                  j < at[at_2].valence /* "next" has a wrong bond type*/ ||
 #endif
@@ -2586,8 +2586,8 @@ int set_stereo_bonds_parity( sp_ATOM *out_at, inp_ATOM *at, int at_1, inp_ATOM *
             } else
 #if ( N_V_STEREOBONDS == 1 )
             if ( 3 == (type_N | type_N_next) &&
-                 ( 2 == type_N && !bIsOxide( at, at_1 ) ||
-                   2 == type_N_next && !bIsOxide( at, at_2 ) ) ) {
+                 ( (2 == type_N && !bIsOxide( at, at_1 )) ||
+                   (2 == type_N_next && !bIsOxide( at, at_2 )) ) ) {
                 bFound = 0;
             } else
 #endif
@@ -2648,7 +2648,7 @@ int set_stereo_bonds_parity( sp_ATOM *out_at, inp_ATOM *at, int at_1, inp_ATOM *
         return 0; /*  cannot be more than 1 cumulene chain. */
     }
 #if ( ONE_BAD_SB_NEIGHBOR == 1 )
-    if ( num_wrong_bonds_1 > 1 || num_wrong_bonds_1 && 2 >= at[at_1].valence ) {
+    if ( num_wrong_bonds_1 > 1 || (num_wrong_bonds_1 && 2 >= at[at_1].valence) ) {
         return 0; /* wrong bond type */
     }
 #endif
@@ -2880,12 +2880,12 @@ int set_stereo_bonds_parity( sp_ATOM *out_at, inp_ATOM *at, int at_1, inp_ATOM *
                                      out_at[at_2].stereo_bond_ord, out_at[at_2].stereo_bond_z_prod,
                                      out_at[at_2].stereo_bond_parity) ) {
                     if ( !out_at[at_1].parity ||
-                         cur_parity_defined && !ATOM_PARITY_WELL_DEF(abs(out_at[at_1].parity)) ) {
+                         (cur_parity_defined && !ATOM_PARITY_WELL_DEF(abs(out_at[at_1].parity))) ) {
                         out_at[at_1].parity = cur_parity;
                         memcpy( out_at[at_1].z_dir, z_dir1, sizeof(out_at[0].z_dir) );
                     }
                     if ( !out_at[at_2].parity ||
-                         next_parity_defined && !ATOM_PARITY_WELL_DEF(abs(out_at[at_2].parity)) ) {
+                         (next_parity_defined && !ATOM_PARITY_WELL_DEF(abs(out_at[at_2].parity))) ) {
                         out_at[at_2].parity = next_parity;
                         memcpy( out_at[at_2].z_dir, z_dir2, sizeof(out_at[0].z_dir) );
                     }
@@ -2913,14 +2913,14 @@ int set_stereo_bonds_parity( sp_ATOM *out_at, inp_ATOM *at, int at_1, inp_ATOM *
                                      out_at[at_2].stereo_bond_ord2, out_at[at_2].stereo_bond_z_prod2,
                                      out_at[at_2].stereo_bond_parity2) ) {
                     if ( !out_at[at_1].parity2 ||
-                         cur_parity_defined && !ATOM_PARITY_WELL_DEF(abs(out_at[at_1].parity2)) ) {
+                         (cur_parity_defined && !ATOM_PARITY_WELL_DEF(abs(out_at[at_1].parity2))) ) {
                         out_at[at_1].parity2 = cur_parity /*| chain_len_bits*/;
                         if ( !out_at[at_1].parity ) {
                             memcpy( out_at[at_1].z_dir, z_dir1, sizeof(out_at[0].z_dir) );
                         }
                     }
                     if ( !out_at[at_2].parity2 || /* next line changed from abs(out_at[at_2].parity) 2006-03-05 */
-                         next_parity_defined && !ATOM_PARITY_WELL_DEF(abs(out_at[at_2].parity2)) ) {
+                         (next_parity_defined && !ATOM_PARITY_WELL_DEF(abs(out_at[at_2].parity2))) ) {
                         out_at[at_2].parity2 = next_parity /*| chain_len_bits*/;
                         if ( !out_at[at_2].parity ) {
                             memcpy( out_at[at_2].z_dir, z_dir2, sizeof(out_at[0].z_dir) );
@@ -3399,7 +3399,7 @@ int set_stereo_atom_parity( sp_ATOM *out_at, inp_ATOM *at, int cur_at, inp_ATOM 
     /*
      * check for tetrahedral ambiguity -- leave it out for now
      */
-    if ( fabs(triple_product) > ZERO_FLOAT && (min_sine > MIN_SINE || fabs(min_sine) > ZERO_FLOAT && (n2DTetrahedralAmbiguity & T2D_OKAY ) ) ) {
+    if ( fabs(triple_product) > ZERO_FLOAT && (min_sine > MIN_SINE || (fabs(min_sine) > ZERO_FLOAT && (n2DTetrahedralAmbiguity & T2D_OKAY )) ) ) {
          /* Even => sorted in correct order, Odd=>transposed */
         parity = triple_product > 0.0? AB_PARITY_EVEN : AB_PARITY_ODD;
         /* if ( num_explicit_H && at[cur_at].removed_H_parity % 2 )  */
@@ -3695,7 +3695,7 @@ int ReconcileAllCmlBondParities( inp_ATOM *at, int num_atoms, int bDisconnected 
         return -1; /* out of RAM */
     for ( i = 0; i < num_atoms; i ++ ) {
         if ( at[i].sb_parity[0] && !visited[i] && !(bDisconnected && is_el_a_metal(at[i].el_number)) ) {
-            if ( ret = ReconcileCmlIncidentBondParities( at, i, -1, visited, bDisconnected ) ) {
+            if ( (ret = ReconcileCmlIncidentBondParities( at, i, -1, visited, bDisconnected )) ) {
                 break; /* error */
             }
         }

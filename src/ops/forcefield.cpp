@@ -165,13 +165,13 @@ namespace OpenBabel
     double crit = 1e-6;
     bool sd = false;
     bool cut = false;
-    bool newton = false;
+    bool newton = true;
     double rvdw = 6.0;
     double rele = 10.0;
     int freq = 10;
     bool log = false;
 
-    string ff = "Ghemical";
+    string ff = "MMFF94";
     OpMap::const_iterator iter = pmap->find("ff");
     if(iter!=pmap->end())
       ff = iter->second;
@@ -206,8 +206,11 @@ namespace OpenBabel
       rele = atof(iter->second.c_str());
 
     iter = pmap->find("pf");
-    if(iter!=pmap->end())
+    if(iter!=pmap->end()) {
       freq = atoi(iter->second.c_str());
+      if (freq < 1)
+        freq = 10; // don't divide by zero
+    }
 
     iter = pmap->find("log");
     if(iter!=pmap->end())
@@ -231,23 +234,11 @@ namespace OpenBabel
 
     bool done = true;
     if (sd)
-      pFF->SteepestDescentInitialize(steps, crit);
+      pFF->SteepestDescent(steps, crit);
     else
-      pFF->ConjugateGradientsInitialize(steps, crit);
+      pFF->ConjugateGradients(steps, crit);
 
-    while(done) {
-      if (sd)
-        done = pFF->SteepestDescentTakeNSteps(1);
-      else
-        done = pFF->ConjugateGradientsTakeNSteps(1);
-
-      if (pFF->DetectExplosion()) {
-        cerr << "explosion has occurred!" << endl;
-        break;
-      }
-      else
-        pFF->GetCoordinates(*pmol);
-    }
+    pFF->GetCoordinates(*pmol);
 
     //Put the energy in a OBPairData object
     OBPairData *dp = new OBPairData;

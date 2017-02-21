@@ -60,6 +60,7 @@ int main(int argc,char *argv[])
 
   OBFormat* pInFormat = NULL;
   OBFormat* pOutFormat = NULL;
+  bool outGzip = false;
   vector<string> FileList, OutputFileList;
   string OutputFileName;
 
@@ -318,7 +319,7 @@ int main(int argc,char *argv[])
   if (!gotOutType)
     {
       //check there is a valid output format, but the extension will be re-interpreted in OBConversion
-      pOutFormat = Conv.FormatFromExt(OutputFileName.c_str());
+      pOutFormat = Conv.FormatFromExt(OutputFileName.c_str(), outGzip);
       if(OutputFileName.empty() || pOutFormat==NULL)
         {
           cerr << "Missing or unknown output file or format spec or possibly a misplaced option.\n"
@@ -327,12 +328,12 @@ int main(int argc,char *argv[])
         }
     }
   
-    if(!Conv.SetInFormat(pInFormat))
+    if(!Conv.SetInFormat(pInFormat)) //rely on autodetection for gzipped input
     {
       cerr << "Invalid input format" << endl;
       usage();
     }
-    if(!Conv.SetOutFormat(pOutFormat))
+    if(!Conv.SetOutFormat(pOutFormat, outGzip))
     {
       cerr << "Invalid output format" << endl;
       usage();

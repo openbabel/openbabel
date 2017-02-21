@@ -1,4 +1,4 @@
-#-*. coding: utf-8 -*-
+# -*. coding: utf-8 -*-
 # Copyright (c) 2008-2012, Noel O'Boyle; 2012, Adrià Cereto-Massagué
 # All rights reserved.
 #
@@ -22,6 +22,8 @@ import sys
 import os.path
 import tempfile
 import json
+import uuid
+import xml.etree.ElementTree as ET
 
 if sys.platform[:4] == "java":
     import org.openbabel as ob
@@ -79,7 +81,7 @@ def _getpluginnames(ptype):
     ob.OBPlugin.ListAsVector(ptype, None, plugins)
     if sys.platform[:4] == "java":
         plugins = [plugins.get(i) for i in range(plugins.size())]
-    return [x.split()[0] for x in plugins]
+    return [x.split()[0] for x in plugins if x.strip()]
 
 _obconv = ob.OBConversion()
 _builder = ob.OBBuilder()
@@ -111,9 +113,6 @@ _operations = _getplugins(ob.OBOp.FindType, operations)
 
 ipython_3d = False
 """Toggles 2D vs 3D molecule representations in IPython notebook"""
-
-# Javascript imports for IPython rendering
-_js_drawer = ""
 
 
 def readfile(format, filename, opt=None):
@@ -251,13 +250,13 @@ class Outputfile(object):
         if not formatok:
             raise ValueError("%s is not a recognised Open Babel format" %
                              format)
-
+        if filename and filename.split('.')[-1] == 'gz':
+            self.obConversion.AddOption('z', self.obConversion.GENOPTIONS)
         for k, v in opt.items():
             if v is None:
                 self.obConversion.AddOption(k, self.obConversion.OUTOPTIONS)
             else:
-                self.obConversion.AddOption(
-                    k, self.obConversion.OUTOPTIONS, str(v))
+                self.obConversion.AddOption(k, self.obConversion.OUTOPTIONS, str(v))
         self.total = 0  # The total number of molecules written to the file
 
     def write(self, molecule):
@@ -384,6 +383,10 @@ class Molecule(object):
             raise AttributeError("Molecule has no attribute 'unitcell'")
 
     @property
+    def clone(self):
+        return Molecule(ob.OBMol(self.OBMol))
+
+    @property
     def _exchange(self):
         if self.OBMol.HasNonZeroCoords():
             return (1, self.write("mol"))
@@ -406,58 +409,29 @@ class Molecule(object):
         if ipython_3d:
             return None
 
-        return self.write("svg")
+        # Open babel returns a nested svg, which IPython unpacks and treats as
+        # two SVGs, messing with the display location. This parses out the
+        # inner svg before handing over to IPython.
+        namespace = "http://www.w3.org/2000/svg"
+        ET.register_namespace("", namespace)
+        obsvg = self.clone.write("svg")
+        tree = ET.fromstring(obsvg)
+        svg = tree.find("{{{ns}}}g/{{{ns}}}svg".format(ns=namespace))
+        return ET.tostring(svg).decode("utf-8")
 
-    def _repr_javascript_(self):
+    def _repr_html_(self):
         """For IPython notebook, renders 3D pybel.Molecule webGL objects."""
 
         # Returning None defers to _repr_svg_
         if not ipython_3d:
             return None
 
-        # If the javascript files have not yet been loaded, do so
-        global _js_drawer
-        if not _js_drawer:
-            import urllib2
-            url = ("https://raw.github.com/openbabel/contributed/master/"
-                   "web/imolecule/build/imolecule.min.js")
-            _js_drawer = urllib2.urlopen(url).read()
-
-        # Some exposed parameters. Leaving this unfunctionalized for now.
-        size = (400, 300)
-        drawing_type = "ball and stick"
-        camera_type = "perspective"
-
-        # Infer structure in cases where the input format has no specification
-        if not self.OBMol.HasNonZeroCoords():
-            self.make3D()
-        self.OBMol.Center()
-
-        # Convert the relevant parts of `self` into JSON for rendering
-        table = ob.OBElementTable()
-        atoms = [{"element": table.GetSymbol(atom.atomicnum),
-                  "location": atom.coords}
-                 for atom in self.atoms]
-        bonds = [{"atoms": [bond.GetBeginAtom().GetIndex(),
-                            bond.GetEndAtom().GetIndex()],
-                  "order": bond.GetBondOrder()}
-                 for bond in ob.OBMolBondIter(self.OBMol)]
-        mol = {"atoms": atoms, "bonds": bonds}
-        if hasattr(self, "unitcell"):
-            uc = self.unitcell
-            mol["periodic_connections"] = [[v.GetX(), v.GetY(), v.GetZ()]
-                                           for v in uc.GetCellVectors()]
-        json_mol = json.dumps(mol, separators=(",", ":"))
-
-        js = ("var $d = $('<div/>').attr('id', 'molecule_' + utils.uuid());"
-              "$d.width(%d); $d.height(%d);"
-              "imolecule.create($d, {drawingType: '%s', cameraType: '%s'});"
-              "imolecule.draw(%s);"
-              "container.show();"
-              "element.append($d);" % (size + (drawing_type, camera_type,
-                                       json_mol)))
-
-        return _js_drawer + js
+        try:
+            import imolecule
+        except ImportError:
+            raise ImportError("Cannot import 3D rendering. Please install "
+                              "with `pip install imolecule`.")
+        return imolecule.draw(self.clone, format="pybel", display_html=False)
 
     def calcdesc(self, descnames=[]):
         """Calculate descriptor values.
@@ -551,6 +525,8 @@ class Molecule(object):
         if not formatok:
             raise ValueError("%s is not a recognised Open Babel format" %
                              format)
+        if filename and filename.split('.')[-1] == 'gz':
+            obconversion.AddOption('z', self.obConversion.GENOPTIONS)
         for k, v in opt.items():
             if v is None:
                 obconversion.AddOption(k, obconversion.OUTOPTIONS)
@@ -992,7 +968,7 @@ class MoleculeData(object):
         return answer
 
     def _testforkey(self, key):
-        if not key in self:
+        if key not in self:
             raise KeyError("'%s'" % key)
 
     def keys(self):

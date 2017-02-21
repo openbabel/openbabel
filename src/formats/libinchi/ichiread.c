@@ -1476,7 +1476,7 @@ int OutputInChIAsRequested(INCHI_IOSTREAM *pOut, INCHI_IOSTREAM *pLog,
     {
         for ( j = 0; j < TAUT_NUM; j ++ ) 
         {
-            if ( bReqNonTaut || j != TAUT_NON && OneInput->pInpInChI[iINChI][j] ) 
+            if ( bReqNonTaut || (j != TAUT_NON && OneInput->pInpInChI[iINChI][j]) )
             {
                 for ( k = 0; k < num_components[iINChI]; k ++ ) 
                 {
@@ -1512,9 +1512,9 @@ int OutputInChIAsRequested(INCHI_IOSTREAM *pOut, INCHI_IOSTREAM *pLog,
                             }
                             INCHI_HEAPCHK
                         } 
-                        else if ( !k && nModeProtonIsoExchgH[iINChI] == MODE_PIXH_ADD_TO_FIRST ||
-                             k+1 == OneInput->nNumComponents[iINChI][j] &&
-                             nModeProtonIsoExchgH[iINChI] == MODE_PIXH_ADD_A_PIXH_COMPONENT ) 
+                        else if ( (!k && nModeProtonIsoExchgH[iINChI] == MODE_PIXH_ADD_TO_FIRST) ||
+                             (k+1 == OneInput->nNumComponents[iINChI][j] &&
+                             nModeProtonIsoExchgH[iINChI] == MODE_PIXH_ADD_A_PIXH_COMPONENT) ) 
                         {
                             /* add protons and exchangeable isotopic H to the first component's AuxInfo */
                             pINChI_Aux[iINChI][k][j]->nNumRemovedProtons = OneInput->nNumProtons[iINChI][j].nNumRemovedProtons;
@@ -1613,8 +1613,8 @@ int OutputInChIAsRequested(INCHI_IOSTREAM *pOut, INCHI_IOSTREAM *pLog,
                     /*  find where the current processed structure is located */
                     int cur_is_in_non_taut = (pINChI[iINChI][k][TAUT_NON] && pINChI[iINChI][k][TAUT_NON]->nNumberOfAtoms>0);
                     int cur_is_in_taut     = (pINChI[iINChI][k][TAUT_YES] && pINChI[iINChI][k][TAUT_YES]->nNumberOfAtoms>0);
-                    int cur_is_non_taut = cur_is_in_non_taut && 0 == pINChI[iINChI][k][TAUT_NON]->lenTautomer ||
-                                          cur_is_in_taut     && 0 == pINChI[iINChI][k][TAUT_YES]->lenTautomer;
+                    int cur_is_non_taut = (cur_is_in_non_taut && 0 == pINChI[iINChI][k][TAUT_NON]->lenTautomer) ||
+                                          (cur_is_in_taut     && 0 == pINChI[iINChI][k][TAUT_YES]->lenTautomer);
                     int cur_is_taut     = cur_is_in_taut     && 0 <  pINChI[iINChI][k][TAUT_YES]->lenTautomer;
                     if ( cur_is_non_taut + cur_is_taut ) 
                     {
@@ -1649,8 +1649,8 @@ int OutputInChIAsRequested(INCHI_IOSTREAM *pOut, INCHI_IOSTREAM *pLog,
                         /*  find where the current processed structure is located */
                         int cur_is_in_non_taut = (pINChI[iINChI][k][TAUT_NON] && pINChI[iINChI][k][TAUT_NON]->nNumberOfAtoms>0);
                         int cur_is_in_taut     = (pINChI[iINChI][k][TAUT_YES] && pINChI[iINChI][k][TAUT_YES]->nNumberOfAtoms>0);
-                        int cur_is_non_taut = cur_is_in_non_taut && 0 == pINChI[iINChI][k][TAUT_NON]->lenTautomer ||
-                                              cur_is_in_taut     && 0 == pINChI[iINChI][k][TAUT_YES]->lenTautomer;
+                        int cur_is_non_taut = (cur_is_in_non_taut && 0 == pINChI[iINChI][k][TAUT_NON]->lenTautomer) ||
+                                              (cur_is_in_taut     && 0 == pINChI[iINChI][k][TAUT_YES]->lenTautomer);
                         int cur_is_taut     = cur_is_in_taut     && 0 <  pINChI[iINChI][k][TAUT_YES]->lenTautomer;
                         if ( cur_is_non_taut + cur_is_taut ) {
                             /*  count tautomeric and non-tautomeric components of the structures */
@@ -1869,8 +1869,8 @@ int CountStereoTypes( INChI *pInChI, int *num_known_SB, int *num_known_SC,
 /**************************************************************************************/
 int bInpInchiComponentExists( InpInChI *pOneInput, int iInChI, int bMobileH, int k )
 {
-    if ( INCHI_BAS != iInChI   && iInChI != INCHI_REC  ||
-         TAUT_NON  != bMobileH && TAUT_YES != bMobileH || k < 0 ) {
+    if ( (INCHI_BAS != iInChI   && iInChI != INCHI_REC)  ||
+         (TAUT_NON  != bMobileH && TAUT_YES != bMobileH) || k < 0 ) {
         return 0;
     }
     return ( k < pOneInput->nNumComponents[iInChI][bMobileH] &&
@@ -1881,8 +1881,8 @@ int bInpInchiComponentExists( InpInChI *pOneInput, int iInChI, int bMobileH, int
 /**************************************************************************************/
 int bInpInchiComponentDeleted( InpInChI *pOneInput, int iInChI, int bMobileH, int k )
 {
-    if ( INCHI_BAS != iInChI   && iInChI != INCHI_REC  ||
-         TAUT_NON  != bMobileH && TAUT_YES != bMobileH || k < 0 ) {
+    if ( (INCHI_BAS != iInChI   && iInChI != INCHI_REC)  ||
+         (TAUT_NON  != bMobileH && TAUT_YES != bMobileH) || k < 0 ) {
         return 0;
     }
     return ( k < pOneInput->nNumComponents[iInChI][bMobileH] &&
@@ -1894,8 +1894,8 @@ int bInpInchiComponentDeleted( InpInChI *pOneInput, int iInChI, int bMobileH, in
 int bRevInchiComponentExists( StrFromINChI *pStruct, int iInChI, int bMobileH, int k )
 {
     if ( !pStruct || /*!pStruct->at2 ||*/ !pStruct->num_atoms ||
-         INCHI_BAS != iInChI   && iInChI != INCHI_REC  ||
-         TAUT_NON  != bMobileH && TAUT_YES != bMobileH || k < 0 ) {
+         (INCHI_BAS != iInChI   && iInChI != INCHI_REC)  ||
+         (TAUT_NON  != bMobileH && TAUT_YES != bMobileH) || k < 0 ) {
         return 0;
     }
     return ( k < pStruct->RevInChI.num_components[iInChI] &&
@@ -1909,8 +1909,8 @@ int bRevInchiComponentExists( StrFromINChI *pStruct, int iInChI, int bMobileH, i
 int bRevInchiComponentDeleted( StrFromINChI *pStruct, int iInChI, int bMobileH, int k )
 {
     if ( !pStruct || /*!pStruct->at2 ||*/ !pStruct->num_atoms ||
-         INCHI_BAS != iInChI   && iInChI != INCHI_REC  ||
-         TAUT_NON  != bMobileH && TAUT_YES != bMobileH || k < 0 ) {
+         (INCHI_BAS != iInChI   && iInChI != INCHI_REC)  ||
+         (TAUT_NON  != bMobileH && TAUT_YES != bMobileH) || k < 0 ) {
         return 0;
     }
     return ( k < pStruct->RevInChI.num_components[iInChI] &&
@@ -2037,7 +2037,7 @@ int bInChIHasReconnectedMetal( INChI *pInChI )
         {
             if ( is_el_a_metal( (int)pInChI->nAtom[i] ) ) 
             {
-                if ( pInChI->nNumberOfAtoms > 1 || pInChI->nNum_H && pInChI->nNum_H[0] ) 
+                if ( pInChI->nNumberOfAtoms > 1 || (pInChI->nNum_H && pInChI->nNum_H[0]) )
                 {
                     return 1;
                 }
@@ -2136,12 +2136,12 @@ int SetProtonsAndXchgIsoH( int bInChI2Structure, int bReqSplitOutputInChI, int b
         }
 #endif
         /* add one more component containing only /p and /i/h */
-        if ( nModeProtonIsoExchgH[iINChI] == MODE_PIXH_ADD_A_PIXH_COMPONENT &&
-             OneInput->nNumComponents[iINChI][TAUT_YES]       ||
+        if ( (nModeProtonIsoExchgH[iINChI] == MODE_PIXH_ADD_A_PIXH_COMPONENT &&
+             OneInput->nNumComponents[iINChI][TAUT_YES])       ||
              /* always add one deleted component if no non-taut InChI is available */
-             bInChI2Structure && !bAvailableProtonsForEachComponent &&
+             (bInChI2Structure && !bAvailableProtonsForEachComponent &&
              !OneInput->nNumComponents[iINChI][TAUT_NON] &&
-             OneInput->nNumComponents[iINChI][TAUT_YES] ) {
+             OneInput->nNumComponents[iINChI][TAUT_YES]) ) {
             int nPrevLen, nLen=0;
             j = TAUT_YES;
             nPrevLen = OneInput->nNumComponents[iINChI][j];
@@ -2508,15 +2508,15 @@ int InChILine2Data(INCHI_IOSTREAM *pInp, SEGM_LINE *pLine,
                                    (pInChI->StereoIsotopic &&
                                     pInChI->StereoIsotopic->nNumberOfStereoCenters 
                                   + pInChI->StereoIsotopic->nNumberOfStereoBonds) ||
-                                  pInChI_Alt && pInChI_Alt->nNumberOfIsotopicAtoms;
+                                  (pInChI_Alt && pInChI_Alt->nNumberOfIsotopicAtoms);
 
                             /* non-isotopic Mobile H => isotopic Mobile H */
                             if ( bIso ) {
                                 if ( pInChI->Stereo && pInChI->Stereo->nNumberOfStereoCenters &&
                                      (!pInChI->StereoIsotopic || !pInChI->StereoIsotopic->t_parity) ) {
                                     if ( 0 > (ret2 = CopySegment( pInChI, pInChI, CPY_SP3, 1, 0)) ||
-                                         (!pInChI->StereoIsotopic->nCompInv2Abs || NO_VALUE_INT == pInChI->StereoIsotopic->nCompInv2Abs) &&
-                                         0 > (ret2 = CopySegment( pInChI, pInChI, CPY_SP3_M, 1, 0))) {
+                                         ((!pInChI->StereoIsotopic->nCompInv2Abs || NO_VALUE_INT == pInChI->StereoIsotopic->nCompInv2Abs) &&
+                                         0 > (ret2 = CopySegment( pInChI, pInChI, CPY_SP3_M, 1, 0)))) {
                                         goto exit_function;
                                     }
                                     if ( (nFlags & (INCHI_FLAG_REL_STEREO | INCHI_FLAG_RAC_STEREO)) ) {
@@ -2587,7 +2587,7 @@ int InChILine2Data(INCHI_IOSTREAM *pInp, SEGM_LINE *pLine,
                                                (pInChI->StereoIsotopic &&
                                                 pInChI->StereoIsotopic->nNumberOfStereoCenters 
                                               + pInChI->StereoIsotopic->nNumberOfStereoBonds) ||
-                                               pInChI_Alt && pInChI_Alt->nNumberOfIsotopicAtoms;
+                                               (pInChI_Alt && pInChI_Alt->nNumberOfIsotopicAtoms);
                                         if ( bIso ){
                                             if ( !pInChI_Alt->StereoIsotopic &&  /* create zero/NULL-initialized pInChI_Alt->StereoIsotopic */
                                                  0 > (ret2 = CopySegment( pInChI_Alt, pInChI_Alt, CPY_SP3_M, 1, -1))) {
@@ -2623,7 +2623,7 @@ int InChILine2Data(INCHI_IOSTREAM *pInp, SEGM_LINE *pLine,
                                    (pInChI->StereoIsotopic &&
                                     pInChI->StereoIsotopic->nNumberOfStereoCenters 
                                   + pInChI->StereoIsotopic->nNumberOfStereoBonds) ||
-                                   pInChI_Alt && pInChI_Alt->nNumberOfIsotopicAtoms;
+                                   (pInChI_Alt && pInChI_Alt->nNumberOfIsotopicAtoms);
                             /* non-isotopic Fixed H => isotopic Fixed H */
                             if ( bIso ) {
                                 if ( pInChI->Stereo && pInChI->Stereo->nNumberOfStereoCenters &&
@@ -2700,11 +2700,11 @@ int InChILine2Data(INCHI_IOSTREAM *pInp, SEGM_LINE *pLine,
                                    (pInChI->StereoIsotopic &&
                                     pInChI->StereoIsotopic->nNumberOfStereoCenters 
                                   + pInChI->StereoIsotopic->nNumberOfStereoBonds) ||
-                                   pAltInChI && (
+                                   (pAltInChI && (
                                    pAltInChI->nNumberOfIsotopicAtoms || 
                                    (pAltInChI->StereoIsotopic &&
                                     pAltInChI->StereoIsotopic->nNumberOfStereoCenters 
-                                  + pAltInChI->StereoIsotopic->nNumberOfStereoBonds) );
+                                  + pAltInChI->StereoIsotopic->nNumberOfStereoBonds)) );
                             int bNo_InChI_t = (!pInChI->Stereo || !pInChI->Stereo->t_parity);
                             int bNo_InChI_m = (!pInChI->Stereo || NO_VALUE_INT == pInChI->Stereo->nCompInv2Abs);
 
@@ -2727,8 +2727,8 @@ int InChILine2Data(INCHI_IOSTREAM *pInp, SEGM_LINE *pLine,
                                 /* copy stereo anyway ... */
 #endif
                                 if ( 0 > (ret2 = CopySegment( pInChI, pAltInChI, CPY_SP3, 0, 0)) ||
-                                     (!pInChI->Stereo->nCompInv2Abs || NO_VALUE_INT == pInChI->Stereo->nCompInv2Abs) &&
-                                     0 > (ret2 = CopySegment( pInChI, pAltInChI, CPY_SP3_M, 0, 0)) ) 
+                                     ((!pInChI->Stereo->nCompInv2Abs || NO_VALUE_INT == pInChI->Stereo->nCompInv2Abs) &&
+                                     0 > (ret2 = CopySegment( pInChI, pAltInChI, CPY_SP3_M, 0, 0))) )
                                 {
                                     goto exit_function;
                                 }
@@ -2782,9 +2782,9 @@ int InChILine2Data(INCHI_IOSTREAM *pInp, SEGM_LINE *pLine,
                                     {
                                         if ( bIso ) {
                                             /* create two zero/NULL-initialized isotopic stereo if they do not exist */
-                                            if ( !pInChI->StereoIsotopic    && 0 > (ret2 = CopySegment( pInChI,    pAltInChI, CPY_SP3_M, 1, -1)) 
+                                            if ( (!pInChI->StereoIsotopic    && 0 > (ret2 = CopySegment( pInChI,    pAltInChI, CPY_SP3_M, 1, -1)))
                                                 /* -- the following will be created later, in TAUT_YES part of the code -- */
-                                                || !pAltInChI->StereoIsotopic && 0 > (ret2 = CopySegment( pAltInChI, pAltInChI, CPY_SP3_M, 1, -1)) ) {
+                                                || (!pAltInChI->StereoIsotopic && 0 > (ret2 = CopySegment( pAltInChI, pAltInChI, CPY_SP3_M, 1, -1))) ) {
                                                 goto exit_function;
                                             }
                                             /* same value = 2 for MI and FI; here we assign only FI */
@@ -2866,8 +2866,8 @@ int InChILine2Data(INCHI_IOSTREAM *pInp, SEGM_LINE *pLine,
                                      (!pInChI->StereoIsotopic || !pInChI->StereoIsotopic->t_parity) ) {                  /* !FH_IsoStereo */
                                     /* copy sp3 iso stereo MI->FI (/t) and, if FH nCompInv2Abs (/m) is missing, copy it, too, MI->FI */ 
                                     if ( 0 > (ret2 = CopySegment( pInChI, pAltInChI, CPY_SP3, 1, 1)) ||
-                                         (!pInChI->StereoIsotopic->nCompInv2Abs || NO_VALUE_INT == pInChI->StereoIsotopic->nCompInv2Abs) &&
-                                         0 > (ret2 = CopySegment( pInChI, pAltInChI, CPY_SP3_M, 1, 1)) ) {
+                                         ((!pInChI->StereoIsotopic->nCompInv2Abs || NO_VALUE_INT == pInChI->StereoIsotopic->nCompInv2Abs) &&
+                                         0 > (ret2 = CopySegment( pInChI, pAltInChI, CPY_SP3_M, 1, 1))) ) {
                                         goto exit_function;
                                     }
                                     /* in case of missing nCompInv2Abs, Relative or Racemic stereo 2005-05-10 */
@@ -2920,8 +2920,8 @@ int InChILine2Data(INCHI_IOSTREAM *pInp, SEGM_LINE *pLine,
 
                                     /* added 05-09-2006: copy sp3 FH=>FH_Iso */
                                     if ( 0 > (ret2 = CopySegment( pInChI, pInChI, CPY_SP3, 1, 0)) ||
-                                         (!pInChI->StereoIsotopic->nCompInv2Abs || NO_VALUE_INT == pInChI->StereoIsotopic->nCompInv2Abs) &&
-                                         0 > (ret2 = CopySegment( pInChI, pInChI, CPY_SP3_M, 1, 0)) ) {
+                                         ((!pInChI->StereoIsotopic->nCompInv2Abs || NO_VALUE_INT == pInChI->StereoIsotopic->nCompInv2Abs) &&
+                                         0 > (ret2 = CopySegment( pInChI, pInChI, CPY_SP3_M, 1, 0))) ) {
                                         goto exit_function;
                                     }
                                     /* in case of missing nCompInv2Abs, Relative or Racemic stereo, /sN in Fixed-H, 2005-05-10 */
@@ -3002,8 +3002,8 @@ int InChILine2Data(INCHI_IOSTREAM *pInp, SEGM_LINE *pLine,
                             }
                         }
                         /* added 02-07-2006 */
-                        if ( pInChI->Stereo && pInChI->Stereo->nCompInv2Abs == NO_VALUE_INT ||
-                             pInChI->StereoIsotopic && pInChI->StereoIsotopic->nCompInv2Abs == NO_VALUE_INT ) {
+                        if ( (pInChI->Stereo && pInChI->Stereo->nCompInv2Abs == NO_VALUE_INT) ||
+                             (pInChI->StereoIsotopic && pInChI->StereoIsotopic->nCompInv2Abs == NO_VALUE_INT) ) {
                             ret2 = RI_ERR_PROGR;
                             goto exit_function;
                         }
@@ -3528,8 +3528,8 @@ int ParseAuxSegmentNumbers( const char *str, int bMobileH, INChI *pInpInChI[], i
         }
         pInChI    = pInpInChI[bMobileH] + iComponent;
         pAltInChI = pInpInChI[ALT_TAUT(bMobileH)] + iComponent;
-        if ( (isdigit(UCINT *pStart) &&
-             0 < (val = (int)inchi_strtol( pStart, &q, 10)) ||
+        if ( ((isdigit(UCINT *pStart) &&
+             0 < (val = (int)inchi_strtol( pStart, &q, 10))) ||
              (q = pStart, val=1) )&&
              (t=strchr(mult_type, *q)) && q+1 == pEnd ) {
             
@@ -4051,7 +4051,7 @@ int ReadInChICoord( INCHI_IOSTREAM *pInp,
         pLine->len = 0;
         goto exit_error;
     }
-    if ( pLine->len == 0 || c != SEG_END && c != RI_ERR_EOF && !INCHI_INP_EOL(c) ) {
+    if ( pLine->len == 0 || (c != SEG_END && c != RI_ERR_EOF && !INCHI_INP_EOL(c)) ) {
         *pState = -1;
         pLine->len = 0;
         ret = RI_ERR_PROGR;
@@ -4334,7 +4334,7 @@ next_line:
     }
     INCHI_HEAPCHK
 
-    if ( pLine->len == 0 || c != SEG_END && c != RI_ERR_EOF || !(p = strstr(pLine->str, "InChI=1")) ) 
+    if ( pLine->len == 0 || (c != SEG_END && c != RI_ERR_EOF) || !(p = strstr(pLine->str, "InChI=1")) )
     {
         if ( pLine->str && pLine->str == strstr ( pLine->str, "Structure" ) ) 
         {
@@ -4913,8 +4913,8 @@ int ParseSegmentIsoAtoms( const char *str, int bMobileH, INChI *pInpInChI[], int
     iComponent = 0;
     nNumComponents = ppnNumComponents[bMobileH];
 
-    if ( !(bMobileH==TAUT_YES && state == IST_MOBILE_H_ISO_ATOMS ||
-           bMobileH==TAUT_NON && state == IST_FIXED_H_ISO_ATOMS ) ) {
+    if ( !((bMobileH==TAUT_YES && state == IST_MOBILE_H_ISO_ATOMS) ||
+           (bMobileH==TAUT_NON && state == IST_FIXED_H_ISO_ATOMS) ) ) {
         return RI_ERR_PROGR; /* program error */
     }
     if ( !*pStart ) {
@@ -4940,8 +4940,8 @@ int ParseSegmentIsoAtoms( const char *str, int bMobileH, INChI *pInpInChI[], int
 #endif
             p ++; /* move to the 1st character of the component */
         } else
-        if ( (isdigit(*pStart) &&
-             0 < (val = (int)inchi_strtol( pStart, &q, 10)) ||
+        if ( ((isdigit(*pStart) &&
+             0 < (val = (int)inchi_strtol( pStart, &q, 10))) ||
              (q = pStart, val=1))&&
              (t=strchr(mult_type, *q)) && q+1 == pEnd ) {
             /* process the abbreviation */
@@ -5056,7 +5056,7 @@ one_more_time:
                         p = q;
                     }
                 }
-                if ( p > pEnd || !isoAtom.nIsoDifference && !isoAtom.nNum_T && !isoAtom.nNum_D && !isoAtom.nNum_H ) {
+                if ( p > pEnd || (!isoAtom.nIsoDifference && !isoAtom.nNum_T && !isoAtom.nNum_D && !isoAtom.nNum_H) ) {
                     ret = RI_ERR_SYNTAX; /* syntax error */
                     goto exit_function;
                 }
@@ -5232,10 +5232,10 @@ int ParseSegmentSp3s( const char *str, int bMobileH, INChI *pInpInChI[], int s[T
                 goto exit_function;
             }
             /* allocate empty sp3 stereo */
-            if ( !pStereo[0]->t_parity && 
-                 !(pStereo[0]->t_parity = (S_CHAR *)inchi_calloc( len+1, sizeof(pStereo[0]->b_parity[0]) ) ) ||
-                 !pStereo[0]->nNumber &&
-                 !(pStereo[0]->nNumber = (AT_NUMB *)inchi_calloc( len+1, sizeof(pStereo[0]->nNumber[0]) ) ) ) {
+            if ( (!pStereo[0]->t_parity &&
+                 !(pStereo[0]->t_parity = (S_CHAR *)inchi_calloc( len+1, sizeof(pStereo[0]->b_parity[0]) ) )) ||
+                 (!pStereo[0]->nNumber &&
+                 !(pStereo[0]->nNumber = (AT_NUMB *)inchi_calloc( len+1, sizeof(pStereo[0]->nNumber[0]) ) )) ) {
                 /* cleanup */
                 if ( pStereo[0]->t_parity ) {
                     INCHI_HEAPCHK
@@ -5336,7 +5336,7 @@ int ParseSegmentSp3m( const char *str, int bMobileH, INChI *pInpInChI[], int ppn
         }
         if ( !bIsSp3LayerNotEmpty( pInpInChI, bMobileHFrom, bIsoFrom, ppnNumComponents[/*bMobileH*/ bMobileHFrom] ) ) {
             /* nothing to copy; check whether it should have inherited from a preceding layer */
-            if ( !bMobileHFrom && bIsoFrom || bMobileHFrom && !bIsoFrom ) {
+            if ( (!bMobileHFrom && bIsoFrom) || (bMobileHFrom && !bIsoFrom) ) {
                 /* MI or F inherit stereo from M */
                 bMobileHFrom = TAUT_YES;
                 bIsoFrom     = 0;
@@ -5395,10 +5395,10 @@ int ParseSegmentSp3m( const char *str, int bMobileH, INChI *pInpInChI[], int ppn
             }
 #endif
             /* allocate empty sp3 stereo */
-            if ( !pStereo[0]->t_parity && 
-                 !(pStereo[0]->t_parity = (S_CHAR *)inchi_calloc( len+1, sizeof(pStereo[0]->b_parity[0]) ) ) ||
-                 !pStereo[0]->nNumber &&
-                 !(pStereo[0]->nNumber = (AT_NUMB *)inchi_calloc( len+1, sizeof(pStereo[0]->nNumber[0]) ) ) ) {
+            if ( (!pStereo[0]->t_parity &&
+                 !(pStereo[0]->t_parity = (S_CHAR *)inchi_calloc( len+1, sizeof(pStereo[0]->b_parity[0]) ) )) ||
+                 (!pStereo[0]->nNumber &&
+                 !(pStereo[0]->nNumber = (AT_NUMB *)inchi_calloc( len+1, sizeof(pStereo[0]->nNumber[0]) ) )) ) {
                 /* cleanup */
                 if ( pStereo[0]->t_parity ) {
                     INCHI_HEAPCHK
@@ -5501,12 +5501,12 @@ int ParseSegmentSp3( const char *str, int bMobileH, INChI *pInpInChI[], int ppnN
                 }
             }
             /* allocate empty sp3 stereo */
-            if ( !pStereo[0]->b_parity && 
-                 !(pStereo[0]->b_parity = (S_CHAR *)inchi_calloc( len0+1, sizeof(pStereo[0]->b_parity[0]) ) ) ||
-                 !pStereo[0]->nBondAtom1 &&
-                 !(pStereo[0]->nBondAtom1 = (AT_NUMB *)inchi_calloc( len0+1, sizeof(pStereo[0]->nBondAtom1[0]) ) ) ||
-                 !pStereo[0]->nBondAtom2 &&
-                 !(pStereo[0]->nBondAtom2 = (AT_NUMB *)inchi_calloc( len0+1, sizeof(pStereo[0]->nBondAtom2[0]) ) ) ) {
+            if ( (!pStereo[0]->b_parity &&
+                 !(pStereo[0]->b_parity = (S_CHAR *)inchi_calloc( len0+1, sizeof(pStereo[0]->b_parity[0]) ) )) ||
+                 (!pStereo[0]->nBondAtom1 &&
+                 !(pStereo[0]->nBondAtom1 = (AT_NUMB *)inchi_calloc( len0+1, sizeof(pStereo[0]->nBondAtom1[0]) ) )) ||
+                 (!pStereo[0]->nBondAtom2 &&
+                 !(pStereo[0]->nBondAtom2 = (AT_NUMB *)inchi_calloc( len0+1, sizeof(pStereo[0]->nBondAtom2[0]) ) )) ) {
                 /* cleanup */
                 if ( pStereo[0]->b_parity ) {
                     INCHI_HEAPCHK
@@ -5537,8 +5537,8 @@ int ParseSegmentSp3( const char *str, int bMobileH, INChI *pInpInChI[], int ppnN
         if ( !(pEnd = strchr( pStart, ';' )) ) {
             pEnd = pStart + strlen(pStart);
         }
-        if ( (isdigit(*pStart) &&
-             0 < (val = (int)inchi_strtol( pStart, &q, 10)) ||
+        if ( ((isdigit(*pStart) &&
+             0 < (val = (int)inchi_strtol( pStart, &q, 10))) ||
              (q = pStart, val=1))&&
              (t=strchr(mult_type, *q)) && q+1 == pEnd ) {
             /* process the abbreviation */
@@ -5894,8 +5894,8 @@ int ParseSegmentSp2( const char *str, int bMobileH, INChI *pInpInChI[], int ppnN
             pEnd = pStart + strlen(pStart);
         }
 
-        if ( (isdigit(*pStart) &&
-             0 < (val = (int)inchi_strtol( pStart, &q, 10)) ||
+        if ( ((isdigit(*pStart) &&
+             0 < (val = (int)inchi_strtol( pStart, &q, 10))) ||
              (q = pStart, val=1))&&
              (t=strchr(mult_type, *q)) && q+1 == pEnd ) {
             /* process the abbreviation */
@@ -6129,8 +6129,8 @@ int ParseSegmentSp2( const char *str, int bMobileH, INChI *pInpInChI[], int ppnN
 
                 if ( iBond && 
                      !(pStereo[0]->nBondAtom1[iBond-1] <  nAtom1 ||
-                       pStereo[0]->nBondAtom1[iBond-1] == nAtom1 &&
-                       pStereo[0]->nBondAtom2[iBond-1] <  nAtom2 ) ) {
+                       (pStereo[0]->nBondAtom1[iBond-1] == nAtom1 &&
+                       pStereo[0]->nBondAtom2[iBond-1] <  nAtom2) ) ) {
                     ret = RI_ERR_SYNTAX; /* syntax error: wrong bond order */
                     goto exit_function;
                 }
@@ -6156,8 +6156,8 @@ int ParseSegmentSp2( const char *str, int bMobileH, INChI *pInpInChI[], int ppnN
 
                 if ( iBond && 
                      !(pStereo[0]->nBondAtom1[iBond-1] <  nAtom1 ||
-                       pStereo[0]->nBondAtom1[iBond-1] == nAtom1 &&
-                       pStereo[0]->nBondAtom2[iBond-1] <  nAtom2 ) ) {
+                       (pStereo[0]->nBondAtom1[iBond-1] == nAtom1 &&
+                       pStereo[0]->nBondAtom2[iBond-1] <  nAtom2) ) ) {
                     ret = RI_ERR_SYNTAX; /* syntax error: wrong bond order */
                     goto exit_function;
                 }
@@ -6275,8 +6275,8 @@ int ParseSegmentCharge( const char *str, int bMobileH, INChI *pInpInChI[], int p
             pEnd = pStart + strlen(pStart);
         }
 
-        if ( (isdigit(UCINT *pStart) &&
-             0 < (val = (int)inchi_strtol( pStart, &q, 10)) ||
+        if ( ((isdigit(UCINT *pStart) &&
+             0 < (val = (int)inchi_strtol( pStart, &q, 10))) ||
              (q = pStart, val=1) )&&
              (t=strchr(mult_type, *q)) && q+1 == pEnd ) {
             /* process the abbreviation */
@@ -6539,7 +6539,7 @@ int ParseSegmentMobileH( const char *str, int bMobileH, INChI *pInpInChI[], int 
                     ret = RI_ERR_SYNTAX; /* syntax error */
                     goto exit_function;
                 }
-                if ( curAtom = nxtAtom = (int)inchi_strtol( p, &q, base ) ) {
+                if ( (curAtom = nxtAtom = (int)inchi_strtol( p, &q, base )) ) {
                     p = q;
                     if ( isupper( UCINT *p ) ) {
                         nxtAtom = (int)inchi_strtol( p, &q, base );
@@ -6645,7 +6645,7 @@ int ParseSegmentMobileH( const char *str, int bMobileH, INChI *pInpInChI[], int 
         INCHI_HEAPCHK
         /* ) -> (, H, N, [-, N,], AtNum,... AtNum) */ 
         lenTautomer = 0;
-        if ( p = t ) {
+        if ( (p = t) ) {
             if ( *pbAbc == 1 ) {
                 /* tautomeric groups: pass 1 */
                 iTGroup = 0;
@@ -6738,7 +6738,7 @@ int ParseSegmentMobileH( const char *str, int bMobileH, INChI *pInpInChI[], int 
                         pInChI[iComponent].nTautomer[lenTautomer ++] = val;
                         p = q;
                     }
-                    if ( !num_Atoms || p < pEnd && !isdigit( UCINT *p)  ) {
+                    if ( !num_Atoms || (p < pEnd && !isdigit( UCINT *p))  ) {
                         ret = RI_ERR_PROGR; /* wrong tautomer array length */
                         goto exit_function;
                     }
@@ -7249,15 +7249,15 @@ int ParseSegmentConnections( const char *str, int bMobileH, INChI **pInpInChI, i
                 }
                 if ( isupper( UCINT *p ) ) {
                     curAtom = (AT_NUMB)inchi_strtol( p, &q, base );
-                    if ( ret = AddLinkedBond( last_atom[num_open], curAtom, (AT_NUMB)nNumAtoms, pLB ) ) {
+                    if ( (ret = AddLinkedBond( last_atom[num_open], curAtom, (AT_NUMB)nNumAtoms, pLB )) ) {
                         goto exit_function;
                     }
                     p = q;
                     if ( bPrevVersion == 1 ) {
                         while ( p < pEnd && *p == '-' ) {
                             p ++;
-                            if ( curAtom = (AT_NUMB)inchi_strtol( p, &q, base ) ) {
-                                if ( ret = AddLinkedBond( last_atom[num_open], curAtom, (AT_NUMB)nNumAtoms, pLB ) ) {
+                            if ( (curAtom = (AT_NUMB)inchi_strtol( p, &q, base )) ) {
+                                if ( (ret = AddLinkedBond( last_atom[num_open], curAtom, (AT_NUMB)nNumAtoms, pLB )) ) {
                                     goto exit_function;
                                 }
                                 p = q;
@@ -7271,8 +7271,8 @@ int ParseSegmentConnections( const char *str, int bMobileH, INChI **pInpInChI, i
                         num_neigh = (int)inchi_strtol( p, &q, 10 );
                         p = q;
                         while( num_neigh -- && p < pEnd ) {
-                            if ( curAtom = (AT_NUMB)inchi_strtol( p, &q, base ) ) {
-                                if ( ret = AddLinkedBond( last_atom[num_open], curAtom, (AT_NUMB)nNumAtoms, pLB ) ) {
+                            if ( (curAtom = (AT_NUMB)inchi_strtol( p, &q, base )) ) {
+                                if ( (ret = AddLinkedBond( last_atom[num_open], curAtom, (AT_NUMB)nNumAtoms, pLB )) ) {
                                     goto exit_function;
                                 }
                                 p = q;
@@ -7315,7 +7315,7 @@ int ParseSegmentConnections( const char *str, int bMobileH, INChI **pInpInChI, i
                             state = 'N';
                             break;
                         case '(':
-                            if ( ret = AddLinkedBond( last_atom[num_open], curAtom, (AT_NUMB)nNumAtoms, pLB ) ) {
+                            if ( (ret = AddLinkedBond( last_atom[num_open], curAtom, (AT_NUMB)nNumAtoms, pLB )) ) {
                                 goto exit_function;
                             }
                             if ( ++ num_open >= LAST_AT_LEN ) {
@@ -7331,7 +7331,7 @@ int ParseSegmentConnections( const char *str, int bMobileH, INChI **pInpInChI, i
                                 ret = RI_ERR_SYNTAX; /* syntax error */
                                 goto exit_function;
                             }
-                            if ( ret = AddLinkedBond( last_atom[--num_open], curAtom, (AT_NUMB)nNumAtoms, pLB ) ) {
+                            if ( (ret = AddLinkedBond( last_atom[--num_open], curAtom, (AT_NUMB)nNumAtoms, pLB )) ) {
                                 goto exit_function;
                             }
                             last_atom[num_open] = curAtom;
@@ -7343,14 +7343,14 @@ int ParseSegmentConnections( const char *str, int bMobileH, INChI **pInpInChI, i
                                 ret = RI_ERR_SYNTAX; /* syntax error */
                                 goto exit_function;
                             }
-                            if ( ret = AddLinkedBond( last_atom[num_open-1], curAtom, (AT_NUMB)nNumAtoms, pLB ) ) {
+                            if ( (ret = AddLinkedBond( last_atom[num_open-1], curAtom, (AT_NUMB)nNumAtoms, pLB )) ) {
                                 goto exit_function;
                             }
                             last_atom[num_open] = curAtom;
                             state = 'N';
                             break;
                         case '-':
-                            if ( ret = AddLinkedBond( last_atom[num_open], curAtom, (AT_NUMB)nNumAtoms, pLB ) ) {
+                            if ( (ret = AddLinkedBond( last_atom[num_open], curAtom, (AT_NUMB)nNumAtoms, pLB )) ) {
                                 goto exit_function;
                             }
                             last_atom[num_open] = curAtom;
@@ -7372,7 +7372,7 @@ int ParseSegmentConnections( const char *str, int bMobileH, INChI **pInpInChI, i
         if ( lenConnTable > 1 ) {
             for ( i = 0, m = 0; i < nNumAtoms; i ++ ) {
                 k = 0;
-                if ( j = pLB->pBond[i+1].prev ) {
+                if ( (j = pLB->pBond[i+1].prev) ) {
                     while( k < MAXVAL ) {
                         neighbor[k++] = pLB->pBond[j].neigh;
                         if ( j == i+1 )
@@ -7569,7 +7569,7 @@ int ParseSegmentFormula( const char *str, int bMobileH, INChI *pInpInChI[], int 
                     if ( pInpInChI[bMobileH][i].nAtom ) {
                         inchi_free( pInpInChI[bMobileH][i].nAtom );
                     }
-                    if ( pInpInChI[bMobileH][i].nAtom = (U_CHAR *) inchi_malloc( (len + 1) * sizeof(pInpInChI[0][0].nAtom[0]) ) ) {
+                    if ( (pInpInChI[bMobileH][i].nAtom = (U_CHAR *) inchi_malloc( (len + 1) * sizeof(pInpInChI[0][0].nAtom[0]) )) ) {
                         memcpy(pInpInChI[bMobileH][i].nAtom, pInpInChI[nAltMobileH][i].nAtom, len);
                         pInpInChI[bMobileH][i].nAtom[len] = 0;
                     } else {
@@ -7580,7 +7580,7 @@ int ParseSegmentFormula( const char *str, int bMobileH, INChI *pInpInChI[], int 
                     if ( pInpInChI[bMobileH][i].szHillFormula ) {
                         inchi_free( pInpInChI[bMobileH][i].szHillFormula );
                     }
-                    if ( pInpInChI[bMobileH][i].szHillFormula = (char *) inchi_malloc( inchi_max(len,2) ) ) {
+                    if ( (pInpInChI[bMobileH][i].szHillFormula = (char *) inchi_malloc( inchi_max(len,2) )) ) {
                         memcpy( pInpInChI[bMobileH][i].szHillFormula, pInpInChI[nAltMobileH][i].szHillFormula, len);
                     } else {
                         return RI_ERR_ALLOC; /* alloc failure */
@@ -7802,9 +7802,9 @@ int CopySegment( INChI *pInChITo, INChI *pInChIFrom, int SegmentType, int bIsoto
         if ( stereoFrom || bIsotopicFrom < 0 ) {
             if ( SegmentType==CPY_SP2 ) {
                 if ( bIsotopicFrom < 0 ||
-                     stereoFrom->b_parity &&
+                     (stereoFrom->b_parity &&
                      stereoFrom->nBondAtom1 &&
-                     stereoFrom->nBondAtom2 ) {
+                     stereoFrom->nBondAtom2) ) {
 
                     len = (bIsotopicFrom < 0)? 0 : stereoFrom->nNumberOfStereoBonds;
                     pstereoTo = bIsotopicTo? &pInChITo->StereoIsotopic : &pInChITo->Stereo;
@@ -7856,8 +7856,8 @@ int CopySegment( INChI *pInChITo, INChI *pInChIFrom, int SegmentType, int bIsoto
             } else
             if ( SegmentType==CPY_SP3 ) {
                 if ( bIsotopicFrom < 0 ||
-                     stereoFrom->t_parity &&
-                     stereoFrom->nNumber ) {
+                     (stereoFrom->t_parity &&
+                     stereoFrom->nNumber) ) {
 
                     len = (bIsotopicFrom < 0)? 0 : stereoFrom->nNumberOfStereoCenters;
                     pstereoTo = bIsotopicTo? &pInChITo->StereoIsotopic : &pInChITo->Stereo;

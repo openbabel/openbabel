@@ -4,14 +4,14 @@ obgen.cpp - test program for SMILES 3D coordinate generation
 
 Copyright (C) 2006 Tim Vandermeersch
 Some portions Copyright (C) 2006 Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -22,6 +22,8 @@ GNU General Public License for more details.
 #ifdef WIN32
 #define USING_OBDLL
 #endif
+
+#include <list>
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/base.h>
@@ -44,7 +46,23 @@ int main(int argc,char **argv)
   int c;
   string basename, filename = "", option, option2, ff = "MMFF94";
 
-  if (argc < 2) {
+  list<string> argl(argv+1, argv+argc);
+
+  list<string>::iterator optff = find(argl.begin(), argl.end(), "-ff");
+  if (optff != argl.end()) {
+    list<string>::iterator optffarg = optff;
+    ++optffarg;
+
+    if (optffarg != argl.end()) {
+      ff = *optffarg;
+
+      argl.erase(optff,++optffarg);
+    } else {
+      argl.erase(optff);
+    }
+  }
+
+  if (argl.empty()) {
     cout << "Usage: obgen <filename> [options]" << endl;
     cout << endl;
     cout << "options:      description:" << endl;
@@ -53,26 +71,20 @@ int main(int argc,char **argv)
     cout << endl;
     OBPlugin::List("forcefields", "verbose");
     exit(-1);
-  } else {
-    basename = filename = argv[1];
-    size_t extPos = filename.rfind('.');
+  }
 
-    if (extPos!= string::npos) {
-      basename = filename.substr(0, extPos);
-    }
+  basename = filename = *argl.begin();
+  size_t extPos = filename.rfind('.');
 
-    for (int i = 2; i < argc; i++) {
-      option = argv[i];
-      if ((option == "-ff") && (argc > (i+1)))
-        ff = argv[i+1];
-    }
+  if (extPos!= string::npos) {
+    basename = filename.substr(0, extPos);
   }
 
   // Find Input filetype
   OBConversion conv;
   OBFormat *format_in = conv.FormatFromExt(filename.c_str());
   OBFormat *format_out = conv.FindFormat("sdf");
-    
+
   if (!format_in || !format_out || !conv.SetInAndOutFormats(format_in, format_out)) {
     cerr << program_name << ": cannot read input/output format!" << endl;
     exit (-1);
@@ -102,23 +114,23 @@ int main(int argc,char **argv)
         cerr << program_name << ": could not find forcefield '" << ff << "'." <<endl;
         exit (-1);
       }
- 
+
       //mol.AddHydrogens(false, true); // hydrogens must be added before Setup(mol) is called
-      
+
       pFF->SetLogFile(&cerr);
       pFF->SetLogLevel(OBFF_LOGLVL_LOW);
-   
+
       //pFF->GenerateCoordinates();
       OBBuilder builder;
       builder.Build(mol);
- 
+
       mol.AddHydrogens(false, true); // hydrogens must be added before Setup(mol) is called
       if (!pFF->Setup(mol)) {
         cerr << program_name << ": could not setup force field." << endl;
         exit (-1);
       }
- 
-      pFF->SteepestDescent(500, 1.0e-4); 
+
+      pFF->SteepestDescent(500, 1.0e-4);
       pFF->WeightedRotorSearch(250, 50);
       pFF->SteepestDescent(500, 1.0e-6);
 
@@ -126,7 +138,7 @@ int main(int argc,char **argv)
       //pFF->ValidateGradients();
       //pFF->SetLogLevel(OBFF_LOGLVL_HIGH);
       //pFF->Energy();
-      
+
 
       //char FileOut[32];
       //sprintf(FileOut, "%s_obgen.pdb", basename.c_str());
@@ -136,5 +148,5 @@ int main(int argc,char **argv)
       conv.Write(&mol, &cout);
   } // end for loop
 
-  return(1);
+  return(0);
 }

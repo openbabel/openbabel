@@ -1,4 +1,4 @@
-# 2008-03-15
+# Open Babel data files
 
 set(to_install
     aromatic.txt
@@ -7,6 +7,13 @@ set(to_install
     babel_povray3.inc
     bondtyp.txt
     element.txt
+    eem.txt
+    eem2015ba.txt
+    eem2015bm.txt
+    eem2015bn.txt
+    eem2015ha.txt
+    eem2015hm.txt
+    eem2015hn.txt
     eqeqIonizations.txt
     fragments.txt
     gaff.dat
@@ -45,13 +52,14 @@ set(to_install
     space-groups.txt
     superatom.txt
     svgformat.script
+    templates.sdf
     torlib.txt
     types.txt
     UFF.prm
 )
 
 if(NOT MSVC)
-  install(FILES ${to_install} DESTINATION share/openbabel/${BABEL_VERSION})
+  install(FILES ${to_install} DESTINATION "${BABEL_DATADIR}/${BABEL_VERSION}")
 else(NOT MSVC)
   install(FILES ${to_install} DESTINATION bin/data)
 endif(NOT MSVC)

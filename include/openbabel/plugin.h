@@ -124,6 +124,9 @@ public:
   ///Returns the map of the subtypes
   virtual PluginMapType& GetMap() const =0;
 
+  ///Load all plugins (formats, fingerprints, forcefields etc.)
+  static void LoadAllPlugins();
+
 protected:
   ///\brief Returns a reference to the map of the plugin types.
   /// Is a function rather than a static member variable to avoid initialization problems.
@@ -135,9 +138,6 @@ protected:
 
   ///Keep a record if all plugins have been loaded
   static int AllPluginsLoaded;
-
-  ///Load all plugins (formats, fingerprints, forcefields etc.)
-  static void LoadAllPlugins();
 
   ///Returns the map of a particular plugin type, e.g. GetMapType("fingerprints")
   static PluginMapType& GetTypeMap(const char* PluginID);
@@ -382,6 +382,7 @@ public:
   OB_STATIC_PLUGIN(ADFInputFormat, theADFInputFormat)
   OB_STATIC_PLUGIN(AlchemyFormat, theAlchemyFormat)
   OB_STATIC_PLUGIN(AmberPrepFormat, theAmberPrepFormat)
+  OB_STATIC_PLUGIN(AoforceFormat, theAoforceFormat)
   OB_STATIC_PLUGIN(OBAPIInterface, theOBAPIInterface)
   OB_STATIC_PLUGIN(BallStickFormat, theBallStickFormat)
   OB_STATIC_PLUGIN(BGFFormat, theBGFFormat)
@@ -406,6 +407,7 @@ public:
   OB_STATIC_PLUGIN(DlpolyConfigFormat, theDlpolyConfigFormat)
   OB_STATIC_PLUGIN(DlpolyHISTORYFormat, theDlpolyHISTORYFormat)
   OB_STATIC_PLUGIN(DMolFormat, theDMolFormat)
+  OB_STATIC_PLUGIN(EXYZFormat, theEXYZFormat)
   OB_STATIC_PLUGIN(FASTAFormat, theFASTAFormat)
   OB_STATIC_PLUGIN(FastSearchFormat, theFastSearchFormat)
   OB_STATIC_PLUGIN(FCHKFormat, theFCHKFormat)
@@ -453,6 +455,8 @@ public:
   OB_STATIC_PLUGIN(NWChemOutputFormat, theNWChemOutputFormat)
   OB_STATIC_PLUGIN(NWChemInputFormat, theNWChemInputFormat)
   OB_STATIC_PLUGIN(OBOpenDXCubeFormat, theOpenDXCubeFormat)
+  OB_STATIC_PLUGIN(OrcaOutputFormat, theOrcaOutputFormat)
+  OB_STATIC_PLUGIN(OrcaInputFormat, theOrcaInputFormat)
   OB_STATIC_PLUGIN(OutputFormat, theOutputFormat)
   OB_STATIC_PLUGIN(PCModelFormat, thePCModelFormat)
   OB_STATIC_PLUGIN(PDBFormat, thePDBFormat)
@@ -460,6 +464,7 @@ public:
 #ifdef HAVE_LIBZ
   OB_STATIC_PLUGIN(PNGFormat, thePNGFormat)
 #endif
+  OB_STATIC_PLUGIN(PointCloudFormat, thePointCloudFormat)
   OB_STATIC_PLUGIN(PovrayFormat, thePovrayFormat)
   OB_STATIC_PLUGIN(PQRFormat, thePQRFormat)
   OB_STATIC_PLUGIN(PQSFormat, thePQSFormat)
@@ -471,6 +476,7 @@ public:
   OB_STATIC_PLUGIN(RXNFormat, theRXNFormat)
   OB_STATIC_PLUGIN(ShelXFormat, theShelXFormat)
   OB_STATIC_PLUGIN(SMIFormat, theSMIFormat)
+  OB_STATIC_PLUGIN(STLFormat, theSTLFormat)
   OB_STATIC_PLUGIN(CANSMIFormat, theCANSMIFormat)
   OB_STATIC_PLUGIN(FIXFormat, theFIXFormat)
   OB_STATIC_PLUGIN(SVGFormat, theSVGFormat)
@@ -529,6 +535,12 @@ public:
   OB_STATIC_PLUGIN(fingerprint2, thefingerprint2)
   OB_STATIC_PLUGIN(PatternFP, FP3PatternFP)
   OB_STATIC_PLUGIN(PatternFP, FP4PatternFP)
+  OB_STATIC_PLUGIN(fingerprintECFP, theECFP0)
+  OB_STATIC_PLUGIN(fingerprintECFP, theECFP2)
+  OB_STATIC_PLUGIN(fingerprintECFP, theECFP4)
+  OB_STATIC_PLUGIN(fingerprintECFP, theECFP6)
+  OB_STATIC_PLUGIN(fingerprintECFP, theECFP8)
+  OB_STATIC_PLUGIN(fingerprintECFP, theECFP10)
 
   // forcefields
   OB_STATIC_PLUGIN(OBForceFieldGaff, theForceFieldGaff)
@@ -541,6 +553,7 @@ public:
   OB_STATIC_PLUGIN(OpAddInIndex, theOpAddInIndex)
   OB_STATIC_PLUGIN(OpAddPolarH, theOpAddPolarH)
   OB_STATIC_PLUGIN(OpAddNonPolarH, theOpAddNonPolarH)
+  OB_STATIC_PLUGIN(OpChangeCell, theOpChangeCell)
   OB_STATIC_PLUGIN(OpCanonical, theOpCanonical)
   OB_STATIC_PLUGIN(OpDelPolarH, theOpDelPolarH)
   OB_STATIC_PLUGIN(OpDelNonPolarH, theOpDelNonPolarH)
@@ -564,11 +577,15 @@ public:
   // charges
   OB_STATIC_PLUGIN(GasteigerCharges, theGasteigerCharges)
   OB_STATIC_PLUGIN(MMFF94Charges, theMMFF94Charges)
+  OB_STATIC_PLUGIN(NoCharges, theNoCharges)
+  OB_STATIC_PLUGIN(FromFileCharges, theFromFileCharges)
 #ifdef HAVE_EIGEN
   OB_STATIC_PLUGIN(QEqCharges, theQEqCharges)
   OB_STATIC_PLUGIN(QTPIECharges, theQTPIECharges)
 #endif
-
+#ifdef HAVE_EIGEN3
+  OB_STATIC_PLUGIN(EQEqCharges, theEQEqCharges)
+#endif
   OBAPI std::vector<std::string> EnableStaticPlugins();
 
 #endif // USING_DYNAMIC_LIBS

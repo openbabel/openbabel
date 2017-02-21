@@ -61,6 +61,8 @@ int main(int argc,char *argv[])
 
   OBFormat* pInFormat = NULL;
   OBFormat* pOutFormat = NULL;
+  bool inGzip = false;
+  bool outGzip = false;
   vector<string> FileList, OutputFileList;
   string OutputFileName;
 
@@ -70,6 +72,9 @@ int main(int argc,char *argv[])
 
   char *oext = NULL;
   char *iext = NULL;
+
+  //load plugs to fully initialize option parameters
+  OBPlugin::LoadAllPlugins();
 
   //Save name of program without its path (and .exe)
   string pn(argv[0]);
@@ -305,7 +310,7 @@ int main(int argc,char *argv[])
 
   if (!gotOutType)
     {
-      pOutFormat = Conv.FormatFromExt(OutputFileName.c_str());
+      pOutFormat = Conv.FormatFromExt(OutputFileName.c_str(), outGzip);
       if(pOutFormat==NULL)
         {
           cerr << program_name << ": cannot write output format!" << endl;
@@ -318,7 +323,7 @@ int main(int argc,char *argv[])
       cerr << "Invalid input format" << endl;
       usage();
     }
-    if(!Conv.SetOutFormat(pOutFormat))
+    if(!Conv.SetOutFormat(pOutFormat, outGzip))
     {
       cerr << "Invalid output format" << endl;
       usage();
@@ -403,6 +408,15 @@ void DoOption(const char* p, OBConversion& Conv,
   }
 }
 
+void deprecation()
+{
+  cout << "WARNING: babel is deprecated and will be removed in a future release" << endl
+    << "         of Open Babel. You should use obabel instead. For information" << endl
+    << "         on the differences please see:"
+    << endl << "             http://openbabel.org/docs/current/Command-line_tools/babel.html"
+    << endl;
+}
+
 void usage()
 {
   cout << "Open Babel " << BABEL_VERSION << " -- " << __DATE__ << " -- "
@@ -410,6 +424,8 @@ void usage()
   cout << "Usage: " << program_name
        << " [-i<input-type>] <name> [-o<output-type>] <name>" << endl;
   cout << "Try  -H option for more information." << endl;
+  cout << endl;
+  deprecation();
 
 #ifdef _DEBUG
   //CM keep window open
@@ -424,6 +440,10 @@ void help()
 {
   cout << "Open Babel converts chemical structures from one file format to another"<< endl << endl;
   cout << "Usage: " << program_name << " <input spec> <output spec> [Options]" << endl << endl;
+
+  deprecation();
+  cout << endl;
+
   cout << "Each spec can be a file whose extension decides the format." << endl;
   cout << "Optionally the format can be specified by preceding the file by" << endl;
   cout << "-i<format-type> e.g. -icml, for input and -o<format-type> for output" << endl << endl;

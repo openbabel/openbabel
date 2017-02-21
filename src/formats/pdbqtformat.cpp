@@ -81,7 +81,9 @@ namespace OpenBabel
       "  r  Output as a rigid molecule (i.e. no branches or torsion tree)\n"
       "  c  Combine separate molecular pieces of input into a single rigid molecule (requires \"r\" option or will have no effect)\n"
       "  s  Output as a flexible residue\n"
-      "  p  Preserve atom indices from input file (default is to renumber atoms sequentially)\n\n";
+      "  p  Preserve atom indices from input file (default is to renumber atoms sequentially)\n"
+      "  h  Preserve hydrogens\n"
+			"  n  Preserve atom names\n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -495,12 +497,21 @@ namespace OpenBabel
     }
 
     multimap <unsigned int, unsigned int>::iterator it=how_many_atoms_move.begin();
-    if ((!moves_many) && !how_many_atoms_move.empty()) {it=how_many_atoms_move.end(); --it;}
+    if ((!moves_many) && !how_many_atoms_move.empty()) {
+      it=how_many_atoms_move.end();
+      if (it!=how_many_atoms_move.begin()) // don't move past begin
+        --it;
+    }
     for (unsigned int i = 1; i <= depth; i++)
     {
       free_bonds.insert((*it).second);
-      if (!moves_many) {--it;}
-      else{++it;}
+      if (!moves_many) {
+        if (it!=how_many_atoms_move.begin())
+          --it;
+      }
+      else{
+        ++it;
+      }
     }
 
 
@@ -665,13 +676,61 @@ namespace OpenBabel
     return count;
   }
 
+  static bool IsImide(OBBond* querybond)
+  {
+    if (querybond->GetBO() != 2)
+      return(false);
+
+    OBAtom* bgn = querybond->GetBeginAtom();
+    OBAtom* end = querybond->GetEndAtom();
+    if ((bgn->GetAtomicNum() == 6 && end->GetAtomicNum() == 7) ||
+      (bgn->GetAtomicNum() == 7 && end->GetAtomicNum() == 6))
+      return(true);
+
+    return(false);
+  }
+
+  static bool IsAmidine(OBBond* querybond)
+  {
+    OBAtom *c, *n;
+    c = n = NULL;
+
+    // Look for C-N bond
+    OBAtom* bgn = querybond->GetBeginAtom();
+    OBAtom* end = querybond->GetEndAtom();
+    if (bgn->GetAtomicNum() == 6 && end->GetAtomicNum() == 7)
+    {
+      c = bgn;
+      n = end;
+    }
+    if (bgn->GetAtomicNum() == 7 && end->GetAtomicNum() == 6)
+    {
+      c = end;
+      n =bgn;
+    }
+    if (!c || !n) return(false);
+    if (querybond->GetBondOrder() != 1) return(false);
+    if (n->GetImplicitValence() != 3) return(false);
+
+    // Make sure C is attached to =N
+    OBBond *bond;
+    vector<OBBond*>::iterator i;
+    for (bond = c->BeginBond(i); bond; bond = c->NextBond(i))
+    {
+      if (IsImide(bond)) return(true);
+    }
+
+    // Return
+    return(false);
+  }
+
 
   /////////////////////////////////////////////////////////////////////////
   bool IsRotBond_PDBQT(OBBond * the_bond)
   //identifies a bond as rotatable if it is a single bond, not amide, not in a ring,
   //and if both atoms it connects have at least one other atom bounded to them
   {
-    if ( !the_bond->IsSingle() || the_bond->IsAmide() || the_bond->IsAmidine() || the_bond->IsInRing() ) {return false;}
+    if ( !the_bond->IsSingle() || the_bond->IsAmide() || IsAmidine(the_bond) || the_bond->IsInRing() ) {return false;}
     if ( ((the_bond->GetBeginAtom())->GetValence() == 1) || ((the_bond->GetEndAtom())->GetValence() == 1) ) {return false;}
     return true;
   }
@@ -778,7 +837,9 @@ namespace OpenBabel
 
     if (pConv->IsOption("b",OBConversion::OUTOPTIONS)) {mol.ConnectTheDots(); mol.PerceiveBondOrders();}
     vector <OBMol> all_pieces;
-    if ((pConv->IsOption("c",OBConversion::OUTOPTIONS)!=NULL) && (pConv->IsOption("r",OBConversion::OUTOPTIONS)!=NULL))
+    if ( ((pConv->IsOption("c",OBConversion::OUTOPTIONS)!=NULL) && (pConv->IsOption("r",OBConversion::OUTOPTIONS)!=NULL))
+			|| (pConv->IsOption("n",OBConversion::OUTOPTIONS))
+		)
     {
       mol.SetAutomaticPartialCharge(false);
       all_pieces.push_back(mol);
@@ -805,7 +866,9 @@ namespace OpenBabel
       }
 
       all_pieces.at(i).SetAutomaticPartialCharge(false);
-      DeleteHydrogens(all_pieces.at(i));
+      if (!(pConv->IsOption("h",OBConversion::OUTOPTIONS))) {
+      	DeleteHydrogens(all_pieces.at(i));
+			}
 
       int model_num = 0;
       char buffer[BUFF_SIZE];
