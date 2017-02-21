@@ -148,7 +148,10 @@ namespace OpenBabel {
         "     This atom will be used to begin the SMILES string.\n"
         "  l  <atomno> Specify the last atom\n"
         "     The output will be rearranged so that any additional\n"
-        "     SMILES added to the end will be attached to this atom.\n\n";
+        "     SMILES added to the end will be attached to this atom.\n\n"
+        "  T  <max seconds> Specify the canonicalization timeout\n"
+        "     Canonicalization can take a while for symmetric molecules and a\n"
+        "     timeout is used. The default is 5 seconds.\n\n";
     }
 
 
@@ -4054,7 +4057,18 @@ namespace OpenBabel {
       gs.GetSymmetry(symmetry_classes);
       */
 
-      CanonicalLabels(&mol, symmetry_classes, canonical_order, frag_atoms);
+      // Was a canonicalization timeout given?
+      unsigned int maxSeconds = 5;
+      const char *timeoutString = _pconv->IsOption("T");
+      if (timeoutString) {
+        std::stringstream ss(timeoutString);
+        if (!(ss >> maxSeconds)) {
+          obErrorLog.ThrowError(__FUNCTION__, "Canonicalization timeout should be a number", obWarning);
+          maxSeconds = 5;
+        }
+      }
+
+      CanonicalLabels(&mol, symmetry_classes, canonical_order, frag_atoms, maxSeconds);
     }
     else {
       if (_pconv->IsOption("C")) {      // "C" == "anti-canonical form"
