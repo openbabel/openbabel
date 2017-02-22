@@ -74,7 +74,7 @@ virtual const char* Description() //required
   "      obabel index.fs -O outfile.yyy -at0.7,0.9 -sSMILES\n"
   "      #     Tanimoto >0.7 && Tanimoto < 0.9\n\n"
   "The datafile plus the ``-ifs`` option can be used instead of the index file.\n\n"
-  "NOTE that the datafile MUST NOT be larger than 4GB. (A 32 pointer is used.)\n\n"
+  "NOTE on 32-bit systems the datafile MUST NOT be larger than 4GB.\n\n"
   "Dative bonds like -[N+][O-](=O) are indexed as -N(=O)(=O), and when searching\n"
   "the target molecule should be in the second form.\n\n"
 
@@ -444,7 +444,7 @@ virtual const char* Description() //required
           streampos origpos = is->tellg();
           is->seekg(0,ios_base::end);
           long long filesize = is->tellg();
-          if(filesize > 4294967295u)
+          if(sizeof(void*) < 8 && filesize > 4294967295u)
           {
             obErrorLog.ThrowError(__FUNCTION__, "The datafile must not be larger than 4GB", obError);
             return false;
