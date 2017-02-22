@@ -106,7 +106,6 @@ public:
  */
 class OBAPI OBPhModel : public OBGlobalDataBase
 {
-    std::vector<std::vector<int> >                      _mlist;
     std::vector<OBChemTsfm*>                            _vtsfm;
     std::vector<double>                                 _vpKa;
     std::vector<std::pair<OBSmartsPattern*,std::vector<double> > > _vschrg;

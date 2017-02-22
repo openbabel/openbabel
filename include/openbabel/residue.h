@@ -187,10 +187,8 @@ namespace OpenBabel {
   ///////////////////////////////////////////////////////////////////////////////
 
 #define MAXSETNO 40
-#define MAXELEM  1024
-#define MINELEM  29
-#define MAXRES   100
-#define MINRES   54
+#define MAXELEM  29
+#define MAXRES   54
 
   ///////////////////////////////////////////////////////////////////////////////
   // Amino Acid Definitions
@@ -385,14 +383,6 @@ namespace OpenBabel {
     };
   }
 
-  ////////////////////////////////////////////////////////////////////////////////
-  // Global Variables
-  ////////////////////////////////////////////////////////////////////////////////
-
-  EXTERN char Residue[MAXRES][4];
-  EXTERN char ElemDesc[MAXELEM][4];
-  EXTERN unsigned int ResNo;
-  EXTERN unsigned int ElemNo;
 } // end namespace OpenBabel
 
 #endif
