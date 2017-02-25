@@ -81,7 +81,7 @@ def _getpluginnames(ptype):
     ob.OBPlugin.ListAsVector(ptype, None, plugins)
     if sys.platform[:4] == "java":
         plugins = [plugins.get(i) for i in range(plugins.size())]
-    return [x.split()[0] for x in plugins]
+    return [x.split()[0] for x in plugins if x.strip()]
 
 _obconv = ob.OBConversion()
 _builder = ob.OBBuilder()

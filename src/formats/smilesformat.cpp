@@ -148,7 +148,10 @@ namespace OpenBabel {
         "     This atom will be used to begin the SMILES string.\n"
         "  l  <atomno> Specify the last atom\n"
         "     The output will be rearranged so that any additional\n"
-        "     SMILES added to the end will be attached to this atom.\n\n";
+        "     SMILES added to the end will be attached to this atom.\n\n"
+        "  T  <max seconds> Specify the canonicalization timeout\n"
+        "     Canonicalization can take a while for symmetric molecules and a\n"
+        "     timeout is used. The default is 5 seconds.\n\n";
     }
 
 
@@ -848,13 +851,13 @@ namespace OpenBabel {
       {
         int j = depth-1;
         bond=mol.GetBond(_path[j--]);
-        if (bond->GetBO() != 2) { // don't rewrite explicit double bonds
+        if (bond->GetBO() < 2) { // don't rewrite explicit double bonds
           bond->SetBO(5);
         }
         while( j >= 0 )
           {
             bond=mol.GetBond(_path[j--]);
-            if (bond->GetBO() != 2) { // don't rewrite explicit double bonds
+            if (bond->GetBO() < 2) { // don't rewrite explicit double bonds
               bond->SetBO(5);
             }
             if(bond->GetBeginAtom() == atom || bond->GetEndAtom() == atom)
@@ -1075,9 +1078,9 @@ namespace OpenBabel {
         assert(prevatom);
         if(arom && prevatom->IsAromatic())
           {
-            if (_order != 2) _order=5; //Potential aromatic bond -- but flag explicit double bonds
+            if (_order < 2) _order=5; //Potential aromatic bond -- but flag explicit double bonds
 
-            if (prevatom->GetSpinMultiplicity())
+            if (prevatom->GetSpinMultiplicity() && _order != 3)
               {
                 //Previous atom had been marked, so bond is potentially a double bond
                 //if it is not part of an aromatic ring. This will be decided when all
@@ -1981,7 +1984,7 @@ namespace OpenBabel {
         mol.SetAromaticPerceived();             // prevent aromaticity analysis
         if(arom && prevatom->IsAromatic())
           {
-            _order=5; //Potential aromatic bond
+            if (_order < 2) _order=5; //Potential aromatic bond
 
             if (prevatom->GetSpinMultiplicity())
               {
@@ -4054,7 +4057,18 @@ namespace OpenBabel {
       gs.GetSymmetry(symmetry_classes);
       */
 
-      CanonicalLabels(&mol, symmetry_classes, canonical_order, frag_atoms);
+      // Was a canonicalization timeout given?
+      unsigned int maxSeconds = 5;
+      const char *timeoutString = _pconv->IsOption("T");
+      if (timeoutString) {
+        std::stringstream ss(timeoutString);
+        if (!(ss >> maxSeconds)) {
+          obErrorLog.ThrowError(__FUNCTION__, "Canonicalization timeout should be a number", obWarning);
+          maxSeconds = 5;
+        }
+      }
+
+      CanonicalLabels(&mol, symmetry_classes, canonical_order, frag_atoms, maxSeconds);
     }
     else {
       if (_pconv->IsOption("C")) {      // "C" == "anti-canonical form"

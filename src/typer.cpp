@@ -164,13 +164,14 @@ namespace OpenBabel
     vector<vector<int> >::iterator j;
     vector<pair<OBSmartsPattern*,string> >::iterator i;
 
-    for (i = _vexttyp.begin();i != _vexttyp.end();++i)
-      if (i->first->Match(mol))
-        {
-          _mlist = i->first->GetMapList();
-          for (j = _mlist.begin();j != _mlist.end();++j)
-            mol.GetAtom((*j)[0])->SetType(i->second);
-        }
+    for (i = _vexttyp.begin(); i != _vexttyp.end(); ++i) {
+      std::vector<std::vector<int> > mlist;
+      if (i->first->Match(mol, mlist))
+      {
+        for (j = mlist.begin(); j != mlist.end(); ++j)
+          mol.GetAtom((*j)[0])->SetType(i->second);
+      }
+    }
 
     // Special cases
     vector<OBAtom*>::iterator a;
@@ -214,13 +215,14 @@ namespace OpenBabel
     vector<vector<int> >::iterator j;
     vector<pair<OBSmartsPattern*,int> >::iterator i;
 
-    for (i = _vinthyb.begin();i != _vinthyb.end();++i)
-      if (i->first->Match(mol))
-        {
-          _mlist = i->first->GetMapList();
-          for (j = _mlist.begin();j != _mlist.end();++j)
-            mol.GetAtom((*j)[0])->SetHyb(i->second);
-        }
+    for (i = _vinthyb.begin(); i != _vinthyb.end(); ++i) {
+      std::vector<std::vector<int> > mlist;
+      if (i->first->Match(mol, mlist))
+      {
+        for (j = mlist.begin(); j != mlist.end(); ++j)
+          mol.GetAtom((*j)[0])->SetHyb(i->second);
+      }
+    }
   }
 
   void OBAtomTyper::AssignImplicitValence(OBMol &mol, bool CanBeLessThanActual)
@@ -248,13 +250,14 @@ namespace OpenBabel
     vector<vector<int> >::iterator j;
     vector<pair<OBSmartsPattern*,int> >::iterator i;
 
-    for (i = _vimpval.begin();i != _vimpval.end();++i)
-      if (i->first->Match(mol))
-        {
-          _mlist = i->first->GetMapList();
-          for (j = _mlist.begin();j != _mlist.end();++j)
-            mol.GetAtom((*j)[0])->SetImplicitValence(i->second);
-        }
+    for (i = _vimpval.begin(); i != _vimpval.end(); ++i) {
+      std::vector<std::vector<int> > mlist;
+      if (i->first->Match(mol, mlist))
+      {
+        for (j = mlist.begin(); j != mlist.end(); ++j)
+          mol.GetAtom((*j)[0])->SetImplicitValence(i->second);
+      }
+    }
 
     if (!mol.HasAromaticCorrected())
       CorrectAromaticNitrogens(mol);
@@ -375,9 +378,9 @@ namespace OpenBabel
 
     unsigned int member_count;
     for (i2 = _ringtyp.begin();i2 != _ringtyp.end();++i2) { // for each ring type
-      if (i2->first->Match(mol)) {
-        _mlist = i2->first->GetMapList();
-        for (j2 = _mlist.begin();j2 != _mlist.end();++j2) { // for each found match
+      std::vector<std::vector<int> > mlist;
+      if (i2->first->Match(mol, mlist)) {
+        for (j2 = mlist.begin();j2 != mlist.end();++j2) { // for each found match
 
           for (i = rlist.begin();i != rlist.end();++i) { // for each ring
             member_count = 0;
@@ -395,6 +398,113 @@ namespace OpenBabel
     }
   }
 
+  class OBAromaticTyperMolState
+  {
+  public:
+    OBAromaticTyperMolState(OBAromaticTyper *aromtyper, OBMol &mol) : _aromtyper(aromtyper), mol(mol)
+    {
+      _vpa.resize(mol.NumAtoms() + 1);
+      _velec.resize(mol.NumAtoms() + 1);
+      _root.resize(mol.NumAtoms() + 1);
+      _visit.resize(mol.NumAtoms() + 1);
+    }
+    void AssignAromaticFlags();
+  private:
+    OBAromaticTyper* _aromtyper;
+    OBMol &mol;
+    std::vector<bool>             _vpa;   //!< potentially aromatic atoms
+    std::vector<bool>             _visit;
+    std::vector<bool>             _root;
+    std::vector<std::pair<int, int> >   _velec;   //!< # electrons an atom contributes
+
+    //! "Anti-alias" potentially aromatic flags around a molecule
+    //! (aromatic atoms need to have >= 2 neighboring ring atoms)
+    void PropagatePotentialAromatic(OBAtom*);
+    // Documentation in typer.cpp
+    void SelectRootAtoms(bool avoidInnerRingAtoms = true);
+    //! Remove 3-member rings from consideration
+    void ExcludeSmallRing();
+    //! Check aromaticity starting from the root atom, up to a specified depth
+    void CheckAromaticity(OBAtom *root, int searchDepth);
+    // Documentation in typer.cpp
+    bool TraverseCycle(OBAtom *root, OBAtom *atom, OBBond *prev,
+      std::pair<int, int> &er, int depth);
+  };
+
+  void OBAromaticTyperMolState::AssignAromaticFlags()
+  {
+    OBBond *bond;
+    OBAtom *atom;
+    vector<OBAtom*>::iterator i;
+    vector<OBBond*>::iterator j;
+
+    //unset all aromatic flags
+    for (atom = mol.BeginAtom(i); atom; atom = mol.NextAtom(i))
+      atom->UnsetAromatic();
+    for (bond = mol.BeginBond(j); bond; bond = mol.NextBond(j))
+      bond->UnsetAromatic();
+
+    int idx;
+    vector<OBSmartsPattern*>::iterator k;
+
+    //mark atoms as potentially aromatic
+    for (idx = 0, k = _aromtyper->_vsp.begin(); k != _aromtyper->_vsp.end(); ++k, ++idx) {
+      std::vector<std::vector<int> > mlist;
+      if ((*k)->Match(mol, mlist))
+      {
+        for (vector<vector<int> >::iterator m = mlist.begin(); m != mlist.end(); ++m)
+        {
+          _vpa[(*m)[0]] = true;
+          _velec[(*m)[0]] = _aromtyper->_verange[idx];
+        }
+      }
+    }
+
+    //sanity check - exclude all 4 substituted atoms and sp centers
+    for (atom = mol.BeginAtom(i); atom; atom = mol.NextAtom(i))
+    {
+      if (atom->GetImplicitValence() > 3)
+      {
+        _vpa[atom->GetIdx()] = false;
+        continue;
+      }
+
+      switch (atom->GetAtomicNum())
+      {
+        //phosphorus and sulfur may be initially typed as sp3
+      case 6:
+      case 7:
+      case 8:
+        if (atom->GetHyb() != 2)
+          _vpa[atom->GetIdx()] = false;
+        break;
+      }
+    }
+
+    //propagate potentially aromatic atoms
+    for (atom = mol.BeginAtom(i); atom; atom = mol.NextAtom(i))
+      if (_vpa[atom->GetIdx()])
+        PropagatePotentialAromatic(atom);
+
+    //select root atoms
+    SelectRootAtoms();
+
+    ExcludeSmallRing(); //remove 3 membered rings from consideration
+
+    //loop over root atoms and look for aromatic rings
+
+    for (atom = mol.BeginAtom(i); atom; atom = mol.NextAtom(i))
+      if (_root[atom->GetIdx()])
+        CheckAromaticity(atom, 14);
+
+    //for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
+    //	  if (atom->IsAromatic())
+    //		  cerr << "aro = " <<atom->GetIdx()  << endl;
+
+    //for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
+    //if (bond->IsAromatic())
+    //cerr << bond->GetIdx() << ' ' << bond->IsAromatic() << endl;
+  }
 
   /*! \class OBAromaticTyper typer.h <openbabel/typer.h>
     \brief Assigns aromatic typing to atoms and bonds
@@ -477,85 +587,8 @@ namespace OpenBabel
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::AssignAromaticFlags", obAuditMsg);
 
-    _vpa.clear();
-    _vpa.resize(mol.NumAtoms()+1);
-    _velec.clear();
-    _velec.resize(mol.NumAtoms()+1);
-    _root.clear();
-    _root.resize(mol.NumAtoms()+1);
-
-    OBBond *bond;
-    OBAtom *atom;
-    vector<OBAtom*>::iterator i;
-    vector<OBBond*>::iterator j;
-
-    //unset all aromatic flags
-    for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-      atom->UnsetAromatic();
-    for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
-      bond->UnsetAromatic();
-
-    int idx;
-    vector<vector<int> >::iterator m;
-    vector<OBSmartsPattern*>::iterator k;
-
-    //mark atoms as potentially aromatic
-    for (idx=0,k = _vsp.begin();k != _vsp.end();++k,++idx)
-      if ((*k)->Match(mol))
-        {
-          _mlist = (*k)->GetMapList();
-          for (m = _mlist.begin();m != _mlist.end();++m)
-            {
-              _vpa[(*m)[0]] = true;
-              _velec[(*m)[0]] = _verange[idx];
-            }
-        }
-
-    //sanity check - exclude all 4 substituted atoms and sp centers
-    for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-      {
-        if (atom->GetImplicitValence() > 3)
-          {
-            _vpa[atom->GetIdx()] = false;
-            continue;
-          }
-
-        switch(atom->GetAtomicNum())
-          {
-            //phosphorus and sulfur may be initially typed as sp3
-          case 6:
-          case 7:
-          case 8:
-            if (atom->GetHyb() != 2)
-              _vpa[atom->GetIdx()] = false;
-            break;
-          }
-      }
-
-    //propagate potentially aromatic atoms
-    for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-      if (_vpa[atom->GetIdx()])
-        PropagatePotentialAromatic(atom);
-
-    //select root atoms
-    SelectRootAtoms(mol);
-
-    ExcludeSmallRing(mol); //remove 3 membered rings from consideration
-
-    //loop over root atoms and look for aromatic rings
-    _visit.clear();
-    _visit.resize(mol.NumAtoms()+1);
-    for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-      if (_root[atom->GetIdx()])
-        CheckAromaticity(atom,14);
-
-    //for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-    //	  if (atom->IsAromatic())
-    //		  cerr << "aro = " <<atom->GetIdx()  << endl;
-
-    //for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
-    //if (bond->IsAromatic())
-    //cerr << bond->GetIdx() << ' ' << bond->IsAromatic() << endl;
+    OBAromaticTyperMolState molstate(this, mol);
+    molstate.AssignAromaticFlags();
   }
 
   /** \brief Traverse a potentially aromatic cycle starting at @p root.
@@ -571,7 +604,7 @@ namespace OpenBabel
       the Huekel 4n+2 rule is checked to see if there is a possible electronic
       configuration which corresponds to aromaticity.
   **/
-  bool OBAromaticTyper::TraverseCycle(OBAtom *root, OBAtom *atom, OBBond *prev,
+  bool OBAromaticTyperMolState::TraverseCycle(OBAtom *root, OBAtom *atom, OBBond *prev,
                                       std::pair<int,int> &er,int depth)
   {
     if (atom == root)
@@ -616,7 +649,7 @@ namespace OpenBabel
     return(result);
   }
 
-  void OBAromaticTyper::CheckAromaticity(OBAtom *atom,int depth)
+  void OBAromaticTyperMolState::CheckAromaticity(OBAtom *atom,int depth)
   {
     OBAtom *nbr;
     vector<OBBond*>::iterator i;
@@ -635,7 +668,7 @@ namespace OpenBabel
         }
   }
 
-  void OBAromaticTyper::PropagatePotentialAromatic(OBAtom *atom)
+  void OBAromaticTyperMolState::PropagatePotentialAromatic(OBAtom *atom)
   {
     int count = 0;
     OBAtom *nbr;
@@ -672,7 +705,7 @@ namespace OpenBabel
    * @param avoidInnerRingAtoms inner closure ring atoms with more than 2 neighbours will be avoided
    *
    */
-  void OBAromaticTyper::SelectRootAtoms(OBMol &mol, bool avoidInnerRingAtoms)
+  void OBAromaticTyperMolState::SelectRootAtoms(bool avoidInnerRingAtoms)
   {
     OBBond *bond;
     OBAtom *atom, *nbr, *nbr2;
@@ -850,7 +883,7 @@ namespace OpenBabel
       } // end for(closure bonds)
   }
 
-  void OBAromaticTyper::ExcludeSmallRing(OBMol &mol)
+  void OBAromaticTyperMolState::ExcludeSmallRing()
   {
     OBAtom *atom,*nbr1,*nbr2;
     vector<OBAtom*>::iterator i;

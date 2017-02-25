@@ -26,8 +26,8 @@ include (MacroEnsureVersion)
 # Note that for "beta" releases, we should start at x.90.0 -- we've
 # had too many 1.100.1 releases. :-)
 set(BABEL_MAJ_VER   2)
-set(BABEL_MIN_VER   3)
-set(BABEL_PATCH_VER 90)
+set(BABEL_MIN_VER   4)
+set(BABEL_PATCH_VER 1)
 
 # This should be phased out in preference for just using the target name
 set(BABEL_LIBRARY openbabel)
@@ -239,7 +239,7 @@ check_type_size(clock_t CLOCK_T)
 # Get the GCC version - from KDE4 cmake files
 if(CMAKE_COMPILER_IS_GNUCXX)
   exec_program(${CMAKE_C_COMPILER} ARGS --version OUTPUT_VARIABLE _gcc_version_info)
-  string(REGEX MATCH "[345]\\.[0-9]\\.[0-9]" _gcc_version "${_gcc_version_info}")
+  string(REGEX MATCH "[34567]\\.[0-9]\\.[0-9]" _gcc_version "${_gcc_version_info}")
   # gcc on mac just reports: "gcc (GCC) 3.3 20030304 ..." without the
   # patch level, handle this here:
   if (NOT _gcc_version)
@@ -415,18 +415,15 @@ if(UNIX AND BUILD_SHARED)
   endif()
 endif()
 
-# this is adapted from KDE's FindKDE4Internal.cmake : default the build type to
-# "release with debug info".
-#
-# We will define two other build types: Debug and Release.
-# These names are case-insensitive i.e. you can do -DCMAKE_BUILD_TYPE=debug
+# Three build types are available: Release, Debug, RelWithDebInfo.
+# We default to Release.
 if(NOT CMAKE_BUILD_TYPE)
-   set(CMAKE_BUILD_TYPE RelWithDebInfo)
+   set(CMAKE_BUILD_TYPE Release)
 endif()
 
 #define various build types
 if(CMAKE_COMPILER_IS_GNUCXX)
-  set (CMAKE_CXX_FLAGS_RELEASE        "${CMAKE_CXX_FLAGS_RELEASE} -O2 -DNDEBUG")
+  set (CMAKE_CXX_FLAGS_RELEASE        "${CMAKE_CXX_FLAGS_RELEASE} -O3 -DNDEBUG")
   set (CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -O2 -g")
   set (CMAKE_CXX_FLAGS_DEBUG          "${CMAKE_CXX_FLAGS_DEBUG} -D_GLIBCXX_DEBUG -g3 -fno-inline")
 endif()
