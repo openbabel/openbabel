@@ -224,7 +224,7 @@ virtual const char* Description() //required
     if(p)
       {
         //Do a similarity search
-        multimap<double, unsigned int> SeekposMap;
+        multimap<double, unsigned long> SeekposMap;
         string txt=p;
         if(txt.find('.')==string::npos)
           {
@@ -249,7 +249,7 @@ virtual const char* Description() //required
         //also because op names are case independent
         pConv->RemoveOption("S", OBConversion::GENOPTIONS);
 
-        multimap<double, unsigned int>::reverse_iterator itr;
+        multimap<double, unsigned long>::reverse_iterator itr;
         for(itr=SeekposMap.rbegin();itr!=SeekposMap.rend();++itr)
           {
             datastream.seekg(itr->second);
@@ -279,7 +279,7 @@ virtual const char* Description() //required
       if(p && atoi(p))
         MaxCandidates = atoi(p);
 
-      vector<unsigned int> SeekPositions;
+      vector<unsigned long> SeekPositions;
 
       if(exactmatch)
       {
@@ -301,7 +301,7 @@ virtual const char* Description() //required
         clog << SeekPositions.size() << " candidates from fingerprint search phase" << endl;
       }
 
-      vector<unsigned int>::iterator seekitr,
+      vector<unsigned long>::iterator seekitr,
           begin = SeekPositions.begin(), end = SeekPositions.end();
 
       if(patternMols.size()>1)//only sort and eliminate duplicates if necessary

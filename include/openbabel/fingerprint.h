@@ -140,7 +140,8 @@ struct OBFPRT FptIndexHeader
   unsigned int headerlength;///<offset to data: sizeof(FptIndexHeader)
   unsigned int nEntries;    ///<number of fingerprints
   unsigned int words;				///<number 32bit words per fingerprint
-  char fpid[16];            ///<ID of the fingerprint type
+  char fpid[15];            ///<ID of the fingerprint type
+  char seek64; //if true, seek data consists of 64bit long values (only zero in legacy indices)
   char datafilename[256];   ///<the data that this is an index to
 };
 
@@ -150,7 +151,7 @@ struct OBFPRT FptIndex
 {
   FptIndexHeader header;
   std::vector<unsigned int> fptdata;
-  std::vector<unsigned int> seekdata;
+  std::vector<unsigned long> seekdata;
   bool Read(std::istream* pIndexstream);
   bool ReadIndex(std::istream* pIndexstream);
   bool ReadHeader(std::istream* pIndexstream);
@@ -172,21 +173,21 @@ public:
   virtual ~FastSearch(){};
 
   /// \brief Does substructure search and returns vector of the file positions of matches
-  bool    Find(OBBase* pOb, std::vector<unsigned int>& SeekPositions, unsigned int MaxCandidates);
+  bool    Find(OBBase* pOb, std::vector<unsigned long>& SeekPositions, unsigned int MaxCandidates);
 
   /// \brief Similar to Find() but all bits of matching fingerprints have to be the same
   /// \since version 2.1
-  bool    FindMatch(OBBase* pOb, std::vector<unsigned int>& SeekPositions,
+  bool    FindMatch(OBBase* pOb, std::vector<unsigned long>& SeekPositions,
                             unsigned int MaxCandidates);
 
   /// \return A multimap containing objects whose Tanimoto coefficients with the target
   /// is greater than the value specified.
-  bool    FindSimilar(OBBase* pOb, std::multimap<double, unsigned int>& SeekposMap,
+  bool    FindSimilar(OBBase* pOb, std::multimap<double, unsigned long>& SeekposMap,
     double MinTani, double MaxTani = 1.1 );
 
   /// \return A multimap containing the nCandidates objects with largest Tanimoto
   ///  coefficients with the target.
-  bool    FindSimilar(OBBase* pOb, std::multimap<double, unsigned int>& SeekposMap,
+  bool    FindSimilar(OBBase* pOb, std::multimap<double, unsigned long>& SeekposMap,
     int nCandidates=0);
 
   /// \return a pointer to the fingerprint type used to constuct the index
