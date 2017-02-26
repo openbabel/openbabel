@@ -764,9 +764,6 @@ namespace OpenBabel
 
   void OBAromaticTyper::AssignAromaticFlags(OBMol &mol)
   {
-    if (!_init)
-      Init();
-
     if (mol.HasAromaticPerceived())
       return;
     mol.SetAromaticPerceived();
