@@ -2185,7 +2185,8 @@ namespace OpenBabel
                            atom->IsSulfur() || atom->IsPhosphorus()))
           continue;
 
-        hcount = atom->GetImplicitValence() - atom->GetValence();
+        hcount = atom->GetImplicitHydrogen();
+        atom->SetImplicitHydrogen(0);
 
         ////Jan 05 Implicit valency now left alone; use spin multiplicity for implicit Hs
         //int mult = atom->GetSpinMultiplicity();
@@ -2196,8 +2197,6 @@ namespace OpenBabel
         //else if(mult>=4) // as in CH, C etc
         //  hcount -= mult-1;
 
-        if (hcount < 0)
-          hcount = 0;
         if (hcount)
           {
             vhadd.push_back(pair<OBAtom*,int>(atom,hcount));

@@ -526,22 +526,25 @@ namespace OpenBabel {
       unsigned int idx = atom->GetIdx();
       int hcount = _hcount[idx - 1];
       switch (hcount) {
-      case -2: // aromatic carbon
-        atom->SetImplicitValence(3);
+      case -2: { // aromatic carbon
+        unsigned int numbonds = atom->EndBonds() - atom->BeginBonds();
+        if (numbonds < 3)
+          atom->SetImplicitHydrogen(3 - numbonds);
+        else
+          atom->SetImplicitHydrogen(0);
         break;
+      }
       case -1: { // Apply SMILES implicit valence model
-        unsigned int count = 0;
-        unsigned int expval = 0;
+        unsigned int bosum = 0;
         FOR_BONDS_OF_ATOM(bond, &(*atom)) {
-          expval += bond->GetBondOrder();
-          count++;
+          bosum += bond->GetBondOrder();
         }
-        unsigned int impval = SmilesValence(atom->GetAtomicNum(), expval);
-        atom->SetImplicitValence(impval - (expval - count));
+        unsigned int impval = SmilesValence(atom->GetAtomicNum(), bosum);
+        atom->SetImplicitHydrogen(impval - bosum);
         break;
       }
       default: // valence is explicit e.g. [CH3]
-        atom->SetImplicitValence(atom->GetValence() + hcount);
+        atom->SetImplicitHydrogen(hcount);
         break;
       }
     }
@@ -2876,26 +2879,22 @@ namespace OpenBabel {
       }
     }
     else {
-      int explicitValence = 0;
-      int numExplicitBonds = 0;
+      int bosum = 0;
       FOR_BONDS_OF_ATOM(bond, &(*atom)) {
-        numExplicitBonds++;
         if (bond->IsKDouble())
-          explicitValence += 2;
+          bosum += 2;
         else if (bond->IsKTriple())
-          explicitValence += 3;
+          bosum += 3;
         else
-          explicitValence++;
+          bosum++;
       }
+      bosum -= numExplicitHsToSuppress;
 
-      explicitValence -= numExplicitHsToSuppress;
-      numExplicitBonds -= numExplicitHsToSuppress;
+      unsigned int implicitValence = SmilesValence(element, bosum);
+      unsigned int defaultNumImplicitHs = implicitValence - bosum;
+      numImplicitHs = atom->GetImplicitHydrogen() + numExplicitHsToSuppress;
 
-      unsigned int implicitValence = SmilesValence(element, explicitValence);
-      unsigned int defaultInternalImpval = implicitValence - (explicitValence - numExplicitBonds);
-      numImplicitHs = atom->GetImplicitValence() - numExplicitBonds;
-
-      if (atom->GetImplicitValence() != defaultInternalImpval || (element != 6 && atom->IsAromatic() && numImplicitHs != 0))
+      if (numImplicitHs != defaultNumImplicitHs || (element != 6 && atom->IsAromatic() && numImplicitHs != 0))
         bracketElement = true;
     }
 
@@ -3003,7 +3002,7 @@ namespace OpenBabel {
     strcat(bracketBuffer,symbol);
 
     // If chiral, append '@' or '@@'...unless we're creating a SMARTS ("s") and it's @H or @@H
-    if (stereo[0] != '\0' && !(smarts && atom->ImplicitHydrogenCount() > 0))
+    if (stereo[0] != '\0' && !(smarts && atom->GetImplicitHydrogen() > 0))
       strcat(bracketBuffer, stereo);
 
     // Add extra hydrogens.
@@ -3632,7 +3631,7 @@ namespace OpenBabel {
       }
 
       // Handle implict H by adding a NULL OBAtom*
-      if(atom->ImplicitHydrogenCount() == 1)
+      if(atom->GetImplicitHydrogen() == 1)
         chiral_neighbors.push_back(static_cast<OBAtom*> (NULL));
 
       // Ok, done with H. Now we need to consider the case where there is a chiral
