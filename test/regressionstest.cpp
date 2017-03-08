@@ -220,7 +220,7 @@ void test_SMILES_Valence()
     { "[CH]", "", "", "[C][H]", "C" },
     { "[CH3]", "", "", "[C]([H])([H])[H]", "C" },
     { "[CH4]", "C", "C", "C([H])([H])([H])[H]", "C" },
-    { "[CH5]", "", "", "C([H])([H])([H])([H])[H]", "C" },
+    { "[CH5]", "", "", "[C]([H])([H])([H])([H])[H]", "C" },
     { "C[H]", "C", "", "C([H])([H])([H])[H]", "[C!H0]" },
     { "[C][H]", "[CH]", "", "", "[C!H0]" },
     { "[CH3][H]", "C", "C[H]", "C([H])([H])([H])[H]", "[C!H0]" },
@@ -236,7 +236,8 @@ void test_SMILES_Valence()
     { "C[2H]", "", "", "C([2H])([H])([H])[H]", "C[2#1]" },
     { "c1ccccc1", "", "", "c1(c(c(c(c(c1[H])[H])[H])[H])[H])[H]", "" },
     { "c1cnccc1", "", "", "c1(c(nc(c(c1[H])[H])[H])[H])[H]", "" },
-    { "c1c[nH]cc1", "", "", "c1(c(n(c(c1[H])[H])[H])[H])[H]", "c1cncc1" }
+    { "c1c[nH]cc1", "", "", "c1(c(n(c(c1[H])[H])[H])[H])[H]", "c1cncc1" },
+    { "F[I]F", "", "", "", "FIF" },
   };
   unsigned int size = (unsigned int)(sizeof(smilesData) / sizeof(smilesData[0]));
   for (unsigned int rep = 0; rep < 4; ++rep) {

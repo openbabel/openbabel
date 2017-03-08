@@ -1,7 +1,7 @@
 /**********************************************************************
 smilesvalence.h - Implement SMILES valence model.
 
-Copyright (C) 2016 by Noel O'Boyle
+Copyright (C) 2016,2017 by Noel O'Boyle
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
@@ -16,9 +16,29 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
+static bool IsOutsideOrganicSubset(unsigned int elem)
+{
+  switch (elem) {
+  case  5: // B
+  case  6: // C
+  case  7: // N
+  case 15: // P
+  case  8: // O
+  case 16: // S
+  case  9: // F
+  case 17: // Cl
+  case 35: // Br
+  case 53: // I
+    return false;
+  default:
+    return true;
+  }
+}
+
 /* Return the implicit Smiles valence for element "elem" with neutral charge
- * and "val" explicit nbrs.  */
-static unsigned int SmilesValence(unsigned int elem, unsigned int val)
+ * and "val" explicit nbrs. When writing SMILES, a return value of 0 indicates a hypervalent structure
+ */
+static unsigned int SmilesValence(unsigned int elem, unsigned int val, bool reading=true)
 {
   switch (elem) {
   case  5: // B
@@ -64,5 +84,5 @@ static unsigned int SmilesValence(unsigned int elem, unsigned int val)
     if (val <= 1) return 1;
     break;
   }
-  return val;
+  return reading ? val : 0;
 }

@@ -2857,8 +2857,7 @@ namespace OpenBabel {
     int element = atom->GetAtomicNum();
 
     // Handle SMILES Valence model, and explicit and implicit hydrogens
-    bool isOutsideOrganicSubset = SmilesValence(element, 0) == 0;
-    if (isOutsideOrganicSubset)
+    if (IsOutsideOrganicSubset(element))
       bracketElement = true;
 
     unsigned int numExplicitHsToSuppress = 0;
@@ -2879,33 +2878,30 @@ namespace OpenBabel {
       }
     }
     else {
-      int bosum = 0;
-      FOR_BONDS_OF_ATOM(bond, &(*atom)) {
-        if (bond->IsKDouble())
-          bosum += 2;
-        else if (bond->IsKTriple())
-          bosum += 3;
-        else
-          bosum++;
-      }
-      bosum -= numExplicitHsToSuppress;
-
-      unsigned int implicitValence = SmilesValence(element, bosum);
-      unsigned int defaultNumImplicitHs = implicitValence - bosum;
       numImplicitHs = atom->GetImplicitHydrogen() + numExplicitHsToSuppress;
-
-      if (numImplicitHs != defaultNumImplicitHs || (element != 6 && atom->IsAromatic() && numImplicitHs != 0))
-        bracketElement = true;
+      if (!bracketElement) {
+        int bosum = 0;
+        FOR_BONDS_OF_ATOM(bond, &(*atom)) {
+          if (bond->IsKDouble())
+            bosum += 2;
+          else if (bond->IsKTriple())
+            bosum += 3;
+          else
+            bosum++;
+        }
+        bosum -= numExplicitHsToSuppress;
+        unsigned int implicitValence = SmilesValence(element, bosum, false);
+        unsigned int defaultNumImplicitHs = implicitValence - bosum;
+        if (implicitValence == 0 // hypervalent
+           ||  numImplicitHs != defaultNumImplicitHs // undervalent
+           || (element != 6 && atom->IsAromatic() && numImplicitHs != 0) ) // aromatic nitrogen/phosphorus
+          bracketElement = true;
+      }
     }
 
-    if (atom->GetFormalCharge() != 0) //bracket charged elements
-      bracketElement = true;
-
-    if(isomeric && atom->GetIsotope())
-      bracketElement = true;
-
-    //If the molecule has Atom Class data and -xa option set and atom has data
-    if(_pac && _pac->HasClass(atom->GetIdx()))
+    if (atom->GetFormalCharge() != 0 // charged elements
+      || (isomeric && atom->GetIsotope()) // isotopes
+      || (_pac && _pac->HasClass(atom->GetIdx())) ) // If the molecule has Atom Class data and -xa option set and atom has data
       bracketElement = true;
 
     char stereo[5] = "";
