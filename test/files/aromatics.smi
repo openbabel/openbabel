@@ -46,3 +46,6 @@ c16.c21.c32.c43.c54.c65 benzene
 c1[cH][cH]ccc1 benzene
 C1(N23)=CC=CC2=CC=CC3=CC=C1 pyrido[2,1,6-de]quinolizine
 c12c3c(ccc2)c(ccc4)c5c4cccc5c3ccc1 perylene
+C1=[C+]N=CN1 PubChem CID59426909
+C1=CC=C[C+]=C1 PubChem CID128221
+c1cccc2c1C=c1ccccc1=[NH+]2 CHEMBL606782

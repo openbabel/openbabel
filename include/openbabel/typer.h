@@ -63,15 +63,13 @@ public:
 // class introduction in typer.cpp
 class OBAPI OBAromaticTyper : public OBGlobalDataBase
 {
-    std::vector<OBSmartsPattern*> _vsp;   //!< SMARTS of potentially aromatic atoms
-    std::vector<std::pair<int,int> >   _verange; //!< min and max number of electrons
     friend class OBAromaticTyperMolState;
 public:
     OBAromaticTyper();
     ~OBAromaticTyper();
 
     //! \return the number of SMARTS patterns
-    size_t GetSize()                 { return _vsp.size();}
+    size_t GetSize()                 { return 0;} // SMARTS are no longer used by this class
 
     void ParseLine(const char*);
     //! Assign aromaticity flag to atoms and bonds
