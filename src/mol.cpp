@@ -2014,8 +2014,13 @@ namespace OpenBabel
     //  and to delete a set of bonds
     // Calling this sequentially does result in correct behavior
     //  (e.g., fixing PR# 1704551)
-    for (i = delatoms.begin();i != delatoms.end();++i)
+    OBBondIterator bi;
+    for (i = delatoms.begin(); i != delatoms.end(); ++i) {
+      OBAtom* nbr = (*i)->BeginNbrAtom(bi);
+      if (nbr) // defensive
+        nbr->SetImplicitHydrogen(nbr->GetImplicitHydrogen() + 1);
       DeleteAtom((OBAtom *)*i);
+    }
 
     DecrementMod();
 
