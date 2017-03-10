@@ -527,7 +527,7 @@ namespace OpenBabel {
       int hcount = _hcount[idx - 1];
       switch (hcount) {
       case -2: { // aromatic carbon
-        unsigned int numbonds = atom->EndBonds() - atom->BeginBonds();
+        unsigned int numbonds = atom->GetValence();
         if (numbonds < 3)
           atom->SetImplicitHydrogen(3 - numbonds);
         else

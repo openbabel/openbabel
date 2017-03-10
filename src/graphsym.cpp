@@ -149,7 +149,7 @@ namespace OpenBabel {
 
   static unsigned int TotalNumberOfBonds(OBAtom* atom)
   {
-    return atom->GetImplicitHydrogen() + (atom->EndBonds() - atom->BeginBonds());
+    return atom->GetImplicitHydrogen() + atom->GetValence();
   }
 
   /**

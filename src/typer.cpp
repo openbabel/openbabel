@@ -517,7 +517,7 @@ namespace OpenBabel
     // for reference (Case 1->22).
 
     unsigned int elem = atm->GetAtomicNum();
-    unsigned int allatomdeg = atm->GetImplicitHydrogen() + (atm->EndBonds() - atm->BeginBonds()); // total no. of bonds
+    unsigned int allatomdeg = atm->GetImplicitHydrogen() + atm->GetValence(); // total no. of bonds
 
     if (!atm->IsInRing() || allatomdeg > 3 || !IsSP2(atm, elem)) {
       min = 0; max = 0;
