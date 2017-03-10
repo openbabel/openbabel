@@ -941,18 +941,12 @@ namespace OpenBabel
     OBAtom *atom;
     vector<OBAtom*>::iterator i;
 
-    bool UseImplicitH = NumHvyAtoms() && (NumBonds()!=0 || NumAtoms()==1);
-    // Do not use implicit hydrogens if explicitly required not to
-    if (!implicitH) UseImplicitH = false;
-    for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      {
-        if(UseImplicitH)
-          {
-            if (! atom->IsHydrogen())
-              molwt += etab.GetMass(1) * atom->ImplicitHydrogenCount();
-          }
-        molwt += atom->GetAtomicMass();
-      }
+    double hmass = etab.GetMass(1);
+    for (atom = BeginAtom(i);atom;atom = NextAtom(i)) {
+      molwt += atom->GetAtomicMass();
+      if (implicitH)
+        molwt += atom->GetImplicitHydrogen() * hmass;
+    }
     return(molwt);
   }
 
@@ -962,18 +956,13 @@ namespace OpenBabel
     OBAtom *atom;
     vector<OBAtom*>::iterator i;
 
-    bool UseImplicitH = NumHvyAtoms() && (NumBonds()!=0 || NumAtoms()==1);
-    // Do not use implicit hydrogens if explicitly required not to
-    if (!implicitH) UseImplicitH = false;
-    for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      {
-        if(UseImplicitH)
-          {
-            if (!atom->IsHydrogen())
-              mass += isotab.GetExactMass(1,1) * atom->ImplicitHydrogenCount();
-          }
-        mass += atom->GetExactMass();
-      }
+    double hmass = isotab.GetExactMass(1, 1);
+    for (atom = BeginAtom(i); atom; atom = NextAtom(i)) {
+      mass += atom->GetExactMass();
+      if (implicitH)
+        mass += atom->GetImplicitHydrogen() * hmass;
+    }
+
     return(mass);
   }
 
@@ -1029,7 +1018,7 @@ namespace OpenBabel
                   --atomicCount[0]; //one of the implicit hydrogens is now explicit
               }
             else
-              atomicCount[0] += a->ImplicitHydrogenCount() + a->ExplicitHydrogenCount();
+              atomicCount[0] += a->GetImplicitHydrogen() + a->ExplicitHydrogenCount();
           }
         if (IsHiso)
           anum = NumElements + a->GetIsotope() - 3; //pseudo AtNo for D, T
@@ -4367,9 +4356,9 @@ namespace OpenBabel
             } else if ((lb.first > 0 && le.second > 0) && (lb.second > 0 && le.first > 0)) {
               score -= 1000;  // Lewis acid/base direction is mono-directional
             }
-            int bcount = bgn->ImplicitHydrogenCount();
+            int bcount = bgn->GetImplicitHydrogen();
             FOR_BONDS_OF_ATOM(b, bgn) { bcount += 1; }
-            int ecount = end->ImplicitHydrogenCount();
+            int ecount = end->GetImplicitHydrogen();
             FOR_BONDS_OF_ATOM(b, end) { ecount += 1; }
             if (bcount == 1 || ecount == 1) {
               score -= 10; // If the start or end atoms have only 1 neighbour
