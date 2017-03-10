@@ -2174,7 +2174,7 @@ namespace OpenBabel
                  !atom->IsAromatic();
         case AE_HCOUNT:
           return expr->leaf.value == ((int)atom->ExplicitHydrogenCount() +
-                                      (int)atom->ImplicitHydrogenCount());
+                                      (int)atom->GetImplicitHydrogen());
         case AE_CHARGE:
           return expr->leaf.value == atom->GetFormalCharge();
         case AE_CONNECT:
@@ -2182,7 +2182,7 @@ namespace OpenBabel
         case AE_DEGREE:
           return expr->leaf.value == (int)atom->GetValence();
         case AE_IMPLICIT:
-          return expr->leaf.value == (int)atom->ImplicitHydrogenCount();
+          return expr->leaf.value == (int)atom->GetImplicitHydrogen();
         case AE_RINGS:
           return expr->leaf.value == (int)atom->MemberOfRingCount();
         case AE_SIZE:

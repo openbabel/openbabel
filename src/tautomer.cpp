@@ -141,7 +141,7 @@ namespace OpenBabel {
           case Nitrogen:
             if (atom->HasDoubleBond())
               types.push_back(Acceptor);
-            else if (atom->ImplicitHydrogenCount())
+            else if (atom->GetImplicitHydrogen())
               types.push_back(Donor);
             else
               types.push_back(Other);
@@ -153,7 +153,7 @@ namespace OpenBabel {
           case Tellurium:
             if (atom->HasDoubleBond())
               types.push_back(Acceptor);
-            else if (atom->ImplicitHydrogenCount())
+            else if (atom->GetImplicitHydrogen())
               types.push_back(Donor);
             else
               types.push_back(Other);

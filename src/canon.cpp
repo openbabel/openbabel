@@ -802,10 +802,10 @@ namespace OpenBabel {
         int hydrogens_to_include = atom->ExplicitHydrogenCount();
 
         // We also include any implicit hydrogen on a stereocenter.
-        hydrogens_to_include += (facade.HasTetrahedralStereo(atom->GetId()) && atom->ImplicitHydrogenCount()==1) ? 1 : 0;
+        hydrogens_to_include += (facade.HasTetrahedralStereo(atom->GetId()) && atom->GetImplicitHydrogen()==1) ? 1 : 0;
 
 	// Include implicit H on an aromatic nitrogen, e.g. distinguish the two nitrogens in c1ncc[nH]1
-	hydrogens_to_include += (atom->IsAromatic() && atom->GetAtomicNum() == 7) ? atom->ImplicitHydrogenCount() : 0;
+	hydrogens_to_include += (atom->IsAromatic() && atom->GetAtomicNum() == 7) ? atom->GetImplicitHydrogen() : 0;
 
         unsigned int c = 10000 * atom->GetSpinMultiplicity() +
                           1000 * hydrogens_to_include +

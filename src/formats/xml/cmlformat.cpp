@@ -1517,7 +1517,7 @@ namespace OpenBabel
                 int spin = patom->GetSpinMultiplicity();
                 int isotope =patom->GetIsotope();
 
-                int hcount=patom->ImplicitHydrogenCount() + patom->ExplicitHydrogenCount(); //includes H isotopes
+                int hcount=patom->GetImplicitHydrogen() + patom->ExplicitHydrogenCount(); //includes H isotopes
 
                 X = patom->GetX();
                 Y = patom->GetY();
