@@ -730,7 +730,7 @@ namespace OpenBabel
         }
       } else {
         unsigned int impval = MDLValence(elem, charge, expval);
-        atom->SetImplicitValence(impval-(expval-count));
+        atom->SetImplicitHydrogen(impval - expval);
       }
     }
 
@@ -741,7 +741,7 @@ namespace OpenBabel
     if (foundZBO || foundZCH || foundHYD) {
       mol.SetImplicitValencePerceived();
     }
-    mol.AssignSpinMultiplicity();
+    //mol.AssignSpinMultiplicity();
     mol.EndModify();
     mol.SetImplicitValencePerceived();
 
@@ -1135,11 +1135,11 @@ namespace OpenBabel
           if (foundZBO && origatom->GetFormalCharge() != atom->GetFormalCharge()) {
             zchs.push_back(make_pair(origatom->GetIdx(), origatom->GetFormalCharge()));
           }
-          int hcount = atom->ExplicitHydrogenCount() + atom->ImplicitHydrogenCount();
+          int hcount = atom->ExplicitHydrogenCount() + atom->GetImplicitHydrogen();
           int autohcount = HYDValence(origatom->GetAtomicNum(), origatom->GetFormalCharge(), origatom->BOSum())
                              - origatom->BOSum() + atom->ExplicitHydrogenCount();
           if (hcount != autohcount) {
-            hyds.push_back(make_pair(origatom->GetIdx(), atom->ImplicitHydrogenCount()));
+            hyds.push_back(make_pair(origatom->GetIdx(), atom->GetImplicitHydrogen()));
           }
         }
 
