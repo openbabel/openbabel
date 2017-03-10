@@ -4021,7 +4021,7 @@ namespace OpenBabel
     //Set _spinMultiplicity other than zero for atoms which are hydrogen
     //deficient and which have implicit valency definitions (essentially the
     //organic subset in SMILES). There are assumed to no implicit hydrogens.
-    AssignSpinMultiplicity(true);
+    //AssignSpinMultiplicity(true); // TODO: sort out radicals
     }
 
   void OBMol::Center()
