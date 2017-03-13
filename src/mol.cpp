@@ -2424,6 +2424,8 @@ namespace OpenBabel
     // The following functions now uses the flag OB_ATOMSPIN_MOL rather than OB_TSPIN_MOL.
     // OB_TSPIN_MOL is set when the total spin of a molecule is set, which prevented
     // the hydrogen deficiency of individual atoms being set in this function.
+    return true;
+
     if (HasSpinMultiplicityAssigned())//
       return(true);
 
