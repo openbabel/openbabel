@@ -36,6 +36,873 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel
 {
+  // Note that while N can have valence 5, i.e. doesn't make sense to round up to 5 when adding hydrogens
+  unsigned int GetTypicalValence(unsigned int element, unsigned int bosum, int charge)
+  {
+    switch (element) {
+    case 1:
+      switch (charge) {
+      case 0:
+        if (bosum <= 1) return 1;
+        break;
+      case 1:
+        if (bosum == 0) return 0;
+        break;
+      }
+      break;
+    case 2:
+      if (charge == 0) {
+        if (bosum == 0) return 0;
+      }
+      break;
+    case 3:
+      switch (charge) {
+      case 0:
+        if (bosum <= 1) return 1;
+        break;
+      case 1:
+        if (bosum == 0) return 0;
+        break;
+      }
+      break;
+    case 4:
+      switch (charge) {
+      case 0:
+        if (bosum <= 2) return 2;
+        break;
+      case 1:
+        if (bosum <= 1) return 1;
+        break;
+      case 2:
+        if (bosum == 0) return 0;
+        break;
+      }
+      break;
+    case 5:
+      switch (charge) {
+      case -2:
+        if (bosum <= 3) return 3;
+        break;
+      case -1:
+        if (bosum <= 4) return 4;
+        break;
+      case 0:
+        if (bosum <= 3) return 3;
+        break;
+      case 1:
+        if (bosum <= 2) return 2;
+        break;
+      case 2:
+        if (bosum <= 1) return 1;
+        break;
+      }
+      break;
+    case 6:
+      switch (charge) {
+      case -2:
+        if (bosum <= 2) return 2;
+        break;
+      case -1:
+        if (bosum <= 3) return 3;
+        break;
+      case 0:
+        if (bosum <= 4) return 4;
+        break;
+      case 1:
+        if (bosum <= 3) return 3;
+        break;
+      case 2:
+        if (bosum <= 2) return 2;
+        break;
+      }
+      break;
+    case 7:
+      switch (charge) {
+      case -2:
+        if (bosum <= 1) return 1;
+        break;
+      case -1:
+        if (bosum <= 2) return 2;
+        break;
+      case 0:
+        switch (bosum) {
+        case 0: case 1: case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        }
+        break;
+      case 1:
+        if (bosum <= 4) return 4;
+        break;
+      case 2:
+        if (bosum <= 3) return 3;
+        break;
+      }
+      break;
+    case 8:
+      switch (charge) {
+      case -2:
+        if (bosum == 0) return 0;
+        break;
+      case -1:
+        if (bosum <= 1) return 1;
+        break;
+      case 0:
+        if (bosum <= 2) return 2;
+        break;
+      case 1:
+        switch (bosum) {
+        case 0: case 1: case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        }
+        break;
+      }
+      break;
+    case 9:
+      switch (charge) {
+      case -1:
+        if (bosum == 0) return 0;
+        break;
+      case 0:
+        if (bosum <= 1) return 1;
+        break;
+      case 1:
+        if (bosum <= 2) return 2;
+        break;
+      case 2:
+        switch (bosum) {
+        case 0: case 1: case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        }
+        break;
+      }
+      break;
+    case 10:
+      if (charge == 0) {
+        if (bosum == 0) return 0;
+      }
+      break;
+    case 11:
+      switch (charge) {
+      case -1:
+        if (bosum == 0) return 0;
+        break;
+      case 0:
+        if (bosum <= 1) return 1;
+        break;
+      case 1:
+        if (bosum == 0) return 0;
+        break;
+      }
+      break;
+    case 12:
+      switch (charge) {
+      case 0:
+        if (bosum <= 2) return 2;
+        break;
+      case 2:
+        if (bosum == 0) return 0;
+        break;
+      }
+      break;
+    case 13:
+      switch (charge) {
+      case -2:
+        switch (bosum) {
+        case 0: case 1: case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        }
+        break;
+      case -1:
+        if (bosum <= 4) return 4;
+        break;
+      case 0:
+        if (bosum <= 3) return 3;
+        break;
+      case 1:
+        if (bosum <= 2) return 2;
+        break;
+      case 2:
+        if (bosum <= 1) return 1;
+        break;
+      case 3:
+        if (bosum == 0) return 0;
+        break;
+      }
+      break;
+    case 14:
+      switch (charge) {
+      case -2:
+        if (bosum <= 2) return 2;
+        break;
+      case -1:
+        switch (bosum) {
+        case 0: case 1: case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        }
+        break;
+      case 0:
+        if (bosum <= 4) return 4;
+        break;
+      case 1:
+        if (bosum <= 3) return 3;
+        break;
+      case 2:
+        if (bosum <= 2) return 2;
+        break;
+      }
+      break;
+    case 15:
+      switch (charge) {
+      case -2:
+        switch (bosum) {
+        case 0: case 1: return 1;
+        case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        case 6: case 7: return 7;
+        }
+        break;
+      case -1:
+        switch (bosum) {
+        case 0: case 1: case 2: return 2;
+        case 3: case 4: return 4;
+        case 5: case 6: return 6;
+        }
+        break;
+      case 0:
+        switch (bosum) {
+        case 0: case 1: case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        }
+        break;
+      case 1:
+        if (bosum <= 4) return 4;
+        break;
+      case 2:
+        if (bosum <= 3) return 3;
+        break;
+      }
+      break;
+    case 16:
+      switch (charge) {
+      case -2:
+        if (bosum == 0) return 0;
+        break;
+      case -1:
+        switch (bosum) {
+        case 0: case 1: return 1;
+        case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        case 6: case 7: return 7;
+        }
+        break;
+      case 0:
+        switch (bosum) {
+        case 0: case 1: case 2: return 2;
+        case 3: case 4: return 4;
+        case 5: case 6: return 6;
+        }
+        break;
+      case 1:
+        switch (bosum) {
+        case 0: case 1: case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        }
+        break;
+      case 2:
+        if (bosum <= 4) return 4;
+        break;
+      }
+      break;
+    case 17:
+      switch (charge) {
+      case -1:
+        if (bosum == 0) return 0;
+        break;
+      case 0:
+        switch (bosum) {
+        case 0: case 1: return 1;
+        case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        case 6: case 7: return 7;
+        }
+        break;
+      case 1:
+        switch (bosum) {
+        case 0: case 1: case 2: return 2;
+        case 3: case 4: return 4;
+        case 5: case 6: return 6;
+        }
+        break;
+      case 2:
+        switch (bosum) {
+        case 0: case 1: case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        }
+        break;
+      }
+      break;
+    case 18:
+      if (charge == 0) {
+        if (bosum == 0) return 0;
+      }
+      break;
+    case 19:
+      switch (charge) {
+      case -1:
+        if (bosum == 0) return 0;
+        break;
+      case 0:
+        if (bosum <= 1) return 1;
+        break;
+      case 1:
+        if (bosum == 0) return 0;
+        break;
+      }
+      break;
+    case 20:
+      switch (charge) {
+      case 0:
+        if (bosum <= 2) return 2;
+        break;
+      case 1:
+        if (bosum <= 1) return 1;
+        break;
+      case 2:
+        if (bosum == 0) return 0;
+        break;
+      }
+      break;
+    case 31:
+      switch (charge) {
+      case -2:
+        switch (bosum) {
+        case 0: case 1: case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        }
+        break;
+      case -1:
+        if (bosum <= 4) return 4;
+        break;
+      case 0:
+        if (bosum <= 3) return 3;
+        break;
+      case 1:
+        if (bosum == 0) return 0;
+        break;
+      case 2:
+        if (bosum <= 1) return 1;
+        break;
+      case 3:
+        if (bosum == 0) return 0;
+        break;
+      }
+      break;
+    case 32:
+      switch (charge) {
+      case -2:
+        switch (bosum) {
+        case 0: case 1: case 2: return 2;
+        case 3: case 4: return 4;
+        case 5: case 6: return 6;
+        }
+        break;
+      case -1:
+        switch (bosum) {
+        case 0: case 1: case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        }
+        break;
+      case 0:
+        if (bosum <= 4) return 4;
+        break;
+      case 1:
+        if (bosum <= 3) return 3;
+        break;
+      case 4:
+        if (bosum == 0) return 0;
+        break;
+      }
+      break;
+    case 33:
+      switch (charge) {
+      case -3:
+        if (bosum == 0) return 0;
+        break;
+      case -2:
+        switch (bosum) {
+        case 0: case 1: return 1;
+        case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        case 6: case 7: return 7;
+        }
+        break;
+      case -1:
+        switch (bosum) {
+        case 0: case 1: case 2: return 2;
+        case 3: case 4: return 4;
+        case 5: case 6: return 6;
+        }
+        break;
+      case 0:
+        switch (bosum) {
+        case 0: case 1: case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        }
+        break;
+      case 1:
+        if (bosum <= 4) return 4;
+        break;
+      case 2:
+        if (bosum <= 3) return 3;
+        break;
+      }
+      break;
+    case 34:
+      switch (charge) {
+      case -2:
+        if (bosum == 0) return 0;
+        break;
+      case -1:
+        switch (bosum) {
+        case 0: case 1: return 1;
+        case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        case 6: case 7: return 7;
+        }
+        break;
+      case 0:
+        switch (bosum) {
+        case 0: case 1: case 2: return 2;
+        case 3: case 4: return 4;
+        case 5: case 6: return 6;
+        }
+        break;
+      case 1:
+        switch (bosum) {
+        case 0: case 1: case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        }
+        break;
+      case 2:
+        if (bosum <= 4) return 4;
+        break;
+      }
+      break;
+    case 35:
+      switch (charge) {
+      case -1:
+        if (bosum == 0) return 0;
+        break;
+      case 0:
+        switch (bosum) {
+        case 0: case 1: return 1;
+        case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        case 6: case 7: return 7;
+        }
+        break;
+      case 1:
+        switch (bosum) {
+        case 0: case 1: case 2: return 2;
+        case 3: case 4: return 4;
+        case 5: case 6: return 6;
+        }
+        break;
+      case 2:
+        switch (bosum) {
+        case 0: case 1: case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        }
+        break;
+      }
+      break;
+    case 36:
+      if (charge == 0) {
+        switch (bosum) {
+        case 0: return 0;
+        case 1: case 2: return 2;
+        }
+      }
+      break;
+    case 37:
+      switch (charge) {
+      case -1:
+        if (bosum == 0) return 0;
+        break;
+      case 0:
+        if (bosum <= 1) return 1;
+        break;
+      case 1:
+        if (bosum == 0) return 0;
+        break;
+      }
+      break;
+    case 38:
+      switch (charge) {
+      case 0:
+        if (bosum <= 2) return 2;
+        break;
+      case 1:
+        if (bosum <= 1) return 1;
+        break;
+      case 2:
+        if (bosum == 0) return 0;
+        break;
+      }
+      break;
+    case 49:
+      switch (charge) {
+      case -2:
+        switch (bosum) {
+        case 0: case 1: case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        }
+        break;
+      case -1:
+        switch (bosum) {
+        case 0: case 1: case 2: return 2;
+        case 3: case 4: return 4;
+        }
+        break;
+      case 0:
+        if (bosum <= 3) return 3;
+        break;
+      case 1:
+        if (bosum == 0) return 0;
+        break;
+      case 2:
+        if (bosum <= 1) return 1;
+        break;
+      case 3:
+        if (bosum == 0) return 0;
+        break;
+      }
+      break;
+    case 50:
+      switch (charge) {
+      case -2:
+        switch (bosum) {
+        case 0: case 1: case 2: return 2;
+        case 3: case 4: return 4;
+        case 5: case 6: return 6;
+        }
+        break;
+      case -1:
+        switch (bosum) {
+        case 0: case 1: case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        }
+        break;
+      case 0:
+        switch (bosum) {
+        case 0: case 1: case 2: return 2;
+        case 3: case 4: return 4;
+        }
+        break;
+      case 1:
+        if (bosum <= 3) return 3;
+        break;
+      case 2:
+        if (bosum == 0) return 0;
+        break;
+      case 4:
+        if (bosum == 0) return 0;
+        break;
+      }
+      break;
+    case 51:
+      switch (charge) {
+      case -2:
+        switch (bosum) {
+        case 0: case 1: return 1;
+        case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        case 6: case 7: return 7;
+        }
+        break;
+      case -1:
+        switch (bosum) {
+        case 0: case 1: case 2: return 2;
+        case 3: case 4: return 4;
+        case 5: case 6: return 6;
+        }
+        break;
+      case 0:
+        switch (bosum) {
+        case 0: case 1: case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        }
+        break;
+      case 1:
+        switch (bosum) {
+        case 0: case 1: case 2: return 2;
+        case 3: case 4: return 4;
+        }
+        break;
+      case 2:
+        if (bosum <= 3) return 3;
+        break;
+      case 3:
+        if (bosum == 0) return 0;
+        break;
+      }
+      break;
+    case 52:
+      switch (charge) {
+      case -2:
+        if (bosum == 0) return 0;
+        break;
+      case -1:
+        switch (bosum) {
+        case 0: case 1: return 1;
+        case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        case 6: case 7: return 7;
+        }
+        break;
+      case 0:
+        switch (bosum) {
+        case 0: case 1: case 2: return 2;
+        case 3: case 4: return 4;
+        case 5: case 6: return 6;
+        }
+        break;
+      case 1:
+        switch (bosum) {
+        case 0: case 1: case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        }
+        break;
+      case 2:
+        switch (bosum) {
+        case 0: case 1: case 2: return 2;
+        case 3: case 4: return 4;
+        }
+        break;
+      }
+      break;
+    case 53:
+      switch (charge) {
+      case -1:
+        if (bosum == 0) return 0;
+        break;
+      case 0:
+        switch (bosum) {
+        case 0: case 1: return 1;
+        case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        case 6: case 7: return 7;
+        }
+        break;
+      case 1:
+        switch (bosum) {
+        case 0: case 1: case 2: return 2;
+        case 3: case 4: return 4;
+        case 5: case 6: return 6;
+        }
+        break;
+      case 2:
+        switch (bosum) {
+        case 0: case 1: case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        }
+        break;
+      }
+      break;
+    case 54:
+      if (charge == 0) {
+        switch (bosum) {
+        case 0: return 0;
+        case 1: case 2: return 2;
+        case 3: case 4: return 4;
+        case 5: case 6: return 6;
+        case 7: case 8: return 8;
+        }
+      }
+      break;
+    case 55:
+      switch (charge) {
+      case -1:
+        if (bosum == 0) return 0;
+        break;
+      case 0:
+        if (bosum <= 1) return 1;
+        break;
+      case 1:
+        if (bosum == 0) return 0;
+        break;
+      }
+      break;
+    case 56:
+      switch (charge) {
+      case 0:
+        if (bosum <= 2) return 2;
+        break;
+      case 1:
+        if (bosum <= 1) return 1;
+        break;
+      case 2:
+        if (bosum == 0) return 0;
+        break;
+      }
+      break;
+    case 81:
+      if (charge == 0) {
+        switch (bosum) {
+        case 0: case 1: return 1;
+        case 2: case 3: return 3;
+        }
+      }
+      break;
+    case 82:
+      switch (charge) {
+      case -2:
+        switch (bosum) {
+        case 0: case 1: case 2: return 2;
+        case 3: case 4: return 4;
+        case 5: case 6: return 6;
+        }
+        break;
+      case -1:
+        switch (bosum) {
+        case 0: case 1: case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        }
+        break;
+      case 0:
+        switch (bosum) {
+        case 0: case 1: case 2: return 2;
+        case 3: case 4: return 4;
+        }
+        break;
+      case 1:
+        if (bosum <= 3) return 3;
+        break;
+      case 2:
+        if (bosum == 0) return 0;
+        break;
+      }
+      break;
+    case 83:
+      switch (charge) {
+      case -2:
+        switch (bosum) {
+        case 0: case 1: return 1;
+        case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        case 6: case 7: return 7;
+        }
+        break;
+      case -1:
+        switch (bosum) {
+        case 0: case 1: case 2: return 2;
+        case 3: case 4: return 4;
+        case 5: case 6: return 6;
+        }
+        break;
+      case 0:
+        switch (bosum) {
+        case 0: case 1: case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        }
+        break;
+      case 1:
+        switch (bosum) {
+        case 0: case 1: case 2: return 2;
+        case 3: case 4: return 4;
+        }
+        break;
+      case 2:
+        if (bosum <= 3) return 3;
+        break;
+      case 3:
+        if (bosum == 0) return 0;
+        break;
+      }
+      break;
+    case 84:
+      if (charge == 0) {
+        switch (bosum) {
+        case 0: case 1: case 2: return 2;
+        case 3: case 4: return 4;
+        case 5: case 6: return 6;
+        }
+      }
+      break;
+    case 85:
+      switch (charge) {
+      case -1:
+        if (bosum == 0) return 0;
+        break;
+      case 0:
+        switch (bosum) {
+        case 0: case 1: return 1;
+        case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        case 6: case 7: return 7;
+        }
+        break;
+      case 1:
+        switch (bosum) {
+        case 0: case 1: case 2: return 2;
+        case 3: case 4: return 4;
+        case 5: case 6: return 6;
+        }
+        break;
+      case 2:
+        switch (bosum) {
+        case 0: case 1: case 2: case 3: return 3;
+        case 4: case 5: return 5;
+        }
+        break;
+      }
+      break;
+    case 86:
+      if (charge == 0) {
+        switch (bosum) {
+        case 0: return 0;
+        case 1: case 2: return 2;
+        case 3: case 4: return 4;
+        case 5: case 6: return 6;
+        case 7: case 8: return 8;
+        }
+      }
+      break;
+    case 87:
+      switch (charge) {
+      case 0:
+        if (bosum <= 1) return 1;
+        break;
+      case 1:
+        if (bosum == 0) return 0;
+        break;
+      }
+      break;
+    case 88:
+      switch (charge) {
+      case 0:
+        if (bosum <= 2) return 2;
+        break;
+      case 1:
+        if (bosum <= 1) return 1;
+        break;
+      case 2:
+        if (bosum == 0) return 0;
+        break;
+      }
+      break;
+    }
+
+    return bosum;
+  }
+
+  // Set the count of implicit hydrogens according to typical valences.
+  void AssignTypicalImplicitHydrogens(OBAtom* atom)
+  {
+    unsigned int bosum = atom->BOSum();
+    unsigned int valence = GetTypicalValence(atom->GetAtomicNum(), bosum, atom->GetFormalCharge());
+    atom->SetImplicitHydrogen(valence - bosum);
+  }
 
   class CMLFormat : public XMLMoleculeFormat
   {
@@ -181,7 +1048,7 @@ namespace OpenBabel
     map<string,int> AtomMap; //key=atom id, value= ob atom index
     cmlArray AtomArray;
     cmlArray BondArray;
-    map<int, int> HCounts;
+    vector<int> HCounts; // for each atom, either -1 or the value of the hydrogenCount
     vector< pair<string,string> > cmlBondOrAtom; //for cml1 only
     vector< pair<string,string> > molWideData;
     bool inBondArray; //for cml1 only
@@ -583,6 +1450,7 @@ namespace OpenBabel
         OBAtom* pAtom = _pmol->NewAtom();
         nAtoms++;
         int nhvy = nAtoms;
+        int hcount = -1; // default value which may be overridden by hydrogenCount below
 
         double x=0,y=0,z=0;
         bool using3=false, using2=false, usingFract=false;
@@ -673,7 +1541,7 @@ namespace OpenBabel
               {
                 //Actually adding H atoms to the structure is deferred until the explicit
                 //structure is complete, because hydrogenCount may include explicit H, bug#3014855
-                HCounts[nAtoms] = atoi(value.c_str());
+                hcount = atoi(value.c_str());
 
                /* int nhvy = nAtoms;
                   int i;
@@ -752,6 +1620,9 @@ namespace OpenBabel
               pAtom->SetIsotope(atoi(value.c_str()));
 
           } //each attribute
+
+          //Save hydrogen count
+          HCounts.push_back(hcount);
 
           //Save atom coordinates
           if(using3 || usingFract)
@@ -902,38 +1773,28 @@ namespace OpenBabel
   bool CMLFormat::DoHCounts()
   {
     //Add extra H atoms so that each atom has the value of its attribute hydrogenCount
-    map<int,int>::iterator iter;
-    for(iter=HCounts.begin();iter!=HCounts.end();++iter)
+    FOR_ATOMS_OF_MOL(atom, _pmol)
     {
-      int idx = iter->first;
-      int explH = _pmol->GetAtom(idx)->ExplicitHydrogenCount(false); //excludes H isotopes
-      if(explH > iter->second)
+      int hcount = HCounts[atom->GetIdx() - 1];
+      if (hcount == -1)
+      {
+        AssignTypicalImplicitHydrogens(&*atom);
+        continue;
+      }
+
+      int explH = atom->ExplicitHydrogenCount(); // includes H isotopes
+      if(explH > hcount)
       {
         map<string,int>::iterator it;
         for(it=AtomMap.begin();it!=AtomMap.end();++it)
-          if(it->second == idx)
+          if(it->second == atom->GetIdx())
             break;
         stringstream ss;
         ss << "In atom " << it->first << " the number of explicit hydrogens exceeds the hydrogenCount attribute.";
-          obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
-          return false;
+        obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
+        return false;
       }
-
-      if(iter->second == 0)
-        //ensure no Hs are ever added
-        _pmol->GetAtom(idx)->ForceNoH();
-
-      else
-      {
-        //add extra hydrogens
-        for(unsigned i=0;i<iter->second - explH;++i)
-        {
-          OBAtom* hatom = _pmol->NewAtom();
-          hatom->SetAtomicNum(1);
-          hatom->SetType("H");
-          _pmol->AddBond(idx, _pmol->NumAtoms(), 1);
-        }
-      }
+      atom->SetImplicitHydrogen(hcount - explH);
     }
     return true;
   }
@@ -1411,13 +2272,7 @@ namespace OpenBabel
 
     OBMol &mol = *pmol;
 
-    int numbonds = mol.NumBonds(); //Capture this before deleting Hs
-    bool UseHydrogenCount=false;
-    if(_pxmlConv->IsOption("h"))
-      {
-        pmol->DeleteHydrogens();
-        UseHydrogenCount=true;
-      }
+    int numbonds = mol.NumBonds();
 
     bool UseFormulaWithNoBonds=false; //before 2.3.1 was true;
 
@@ -1574,8 +2429,7 @@ namespace OpenBabel
                         if(spin)
                           xmlTextWriterWriteFormatAttribute(writer(), C_SPINMULTIPLICITY,"%d", spin);
 
-                        if(UseHydrogenCount && hcount)
-                          xmlTextWriterWriteFormatAttribute(writer(), C_HYDROGENCOUNT,"%d", hcount);
+                        xmlTextWriterWriteFormatAttribute(writer(), C_HYDROGENCOUNT,"%d", hcount);
 
                         if(patom->HasData("label"))
                             xmlTextWriterWriteFormatAttribute(writer(), C_LABEL,"%s",
@@ -1647,13 +2501,10 @@ namespace OpenBabel
                             xmlTextWriterEndElement(writer());
                           }
 
-                        if(UseHydrogenCount && hcount)
-                          {
-                            xmlTextWriterStartElementNS(writer(), prefix, C_INTEGER, NULL);
-                            xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "hydrogenCount");
-                            xmlTextWriterWriteFormatString(writer(),"%d", hcount);
-                            xmlTextWriterEndElement(writer());
-                          }
+                        xmlTextWriterStartElementNS(writer(), prefix, C_INTEGER, NULL);
+                        xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "hydrogenCount");
+                        xmlTextWriterWriteFormatString(writer(),"%d", hcount);
+                        xmlTextWriterEndElement(writer());
 
                         if(dim==2 || dim==3)
                           {
@@ -1697,8 +2548,7 @@ namespace OpenBabel
                     if(anySpin)
                       xmlTextWriterWriteFormatAttribute(writer(), C_SPINMULTIPLICITY,"%s", spn.str().c_str());
 
-                    if(UseHydrogenCount)
-                      xmlTextWriterWriteFormatAttribute(writer(), C_HYDROGENCOUNT,"%s", hct.str().c_str());
+                    xmlTextWriterWriteFormatAttribute(writer(), C_HYDROGENCOUNT,"%s", hct.str().c_str());
 
                     if(dim==2)
                       {
@@ -1733,13 +2583,10 @@ namespace OpenBabel
                         xmlTextWriterEndElement(writer());
                       }
 
-                    if(UseHydrogenCount)
-                      {
-                        xmlTextWriterStartElementNS(writer(), prefix, C_INTEGERARRAY, NULL);
-                        xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "hydrogenCount");
-                        xmlTextWriterWriteFormatString(writer(),"%s", hct.str().c_str());
-                        xmlTextWriterEndElement(writer());
-                      }
+                    xmlTextWriterStartElementNS(writer(), prefix, C_INTEGERARRAY, NULL);
+                    xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "hydrogenCount");
+                    xmlTextWriterWriteFormatString(writer(),"%s", hct.str().c_str());
+                    xmlTextWriterEndElement(writer());
 
                     if(dim==2 || dim==3)
                       {
