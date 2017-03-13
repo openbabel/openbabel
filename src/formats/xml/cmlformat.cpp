@@ -922,7 +922,6 @@ namespace OpenBabel
 			OBConversion::RegisterOptionParam("N", this, 1);
 			OBConversion::RegisterOptionParam("m", this);
 			OBConversion::RegisterOptionParam("x", this);
-			OBConversion::RegisterOptionParam("h", this);
 			OBConversion::RegisterOptionParam("c", this);
 			OBConversion::RegisterOptionParam("p", this);
 			OBConversion::RegisterOptionParam("2", this, 0, OBConversion::INOPTIONS);
@@ -970,7 +969,6 @@ namespace OpenBabel
         "  1  write CML1 (rather than CML2)\n"
         "  a  write array format for atoms and bonds\n"
         "  A  write aromatic bonds as such, not Kekule form\n"
-        "  h  use hydrogenCount for all hydrogens\n"
         "  m  write metadata\n"
         "  x  omit XML and namespace declarations\n"
         "  c  continuous output: no formatting\n"
