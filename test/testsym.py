@@ -352,13 +352,8 @@ class TestStereoConversion(BaseTest):
         smi = "[S@](=O)(=N)(C)O"
         output, error = run_exec(smi, "babel -ismi -osmi")
         self.assertEqual(output.rstrip(), smi)
+
+del TestSym # remove base class to avoid tests
         
 if __name__ == "__main__":
-    testsuite = []
-    allclasses = [TestConversions, TestCisTransSym, TestTetSym,
-                  TestLonePairTetSym, TestStereoConversion,
-                  TestRingBondCisTransSym]
-    for myclass in allclasses:
-        suite = unittest.TestLoader().loadTestsFromTestCase(myclass)
-        testsuite.append(suite)
-    unittest.TextTestRunner().run(unittest.TestSuite(testsuite))
+    unittest.main()
