@@ -15,6 +15,7 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/obfunctions.h>
 
 #include <vector>
 #include <map>
@@ -218,6 +219,10 @@ namespace OpenBabel
 
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
+
+    // Guess how many hydrogens are present on each atom based on typical valencies
+    FOR_ATOMS_OF_MOL(matom, mol)
+      OBAtomAssignTypicalImplicitHydrogens(&*matom);
 
     // clean out remaining blank lines
     while(ifs.peek() != EOF && ifs.good() &&
@@ -995,7 +1000,6 @@ namespace OpenBabel
     string zstr = sbuf.substr(40,8);
     vector3 v(atof(xstr.c_str()),atof(ystr.c_str()),atof(zstr.c_str()));
     atom.SetVector(v);
-    atom.ForceImplH();
 
     // useful for debugging unknown atom types (e.g., PR#1577238)
     //    cout << mol.NumAtoms() + 1  << " : '" << element << "'" << " " << etab.GetAtomicNum(element.c_str()) << endl;

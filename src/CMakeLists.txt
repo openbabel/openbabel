@@ -133,6 +133,7 @@ set(openbabel_srcs
   mol.cpp
   obconversion.cpp
   oberror.cpp
+  obfunctions.cpp
   obiter.cpp
   obutil.cpp
   op.cpp
