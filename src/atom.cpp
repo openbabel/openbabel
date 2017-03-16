@@ -165,20 +165,20 @@ namespace OpenBabel
     if (!src)
       return;
 
-    _hyb = src->GetHyb();
-    _ele = src->GetAtomicNum();
-    _imph = src->GetImplicitHydrogen();
-    _isotope = src->GetIsotope();
-    _impval = src->GetImplicitValence();
-    _fcharge = src->GetFormalCharge();
-    _spinmultiplicity = src->GetSpinMultiplicity();
-    strncpy(_type,src->GetType(), sizeof(_type) - 1);
+    _hyb = src->_hyb;
+    _ele = src->_ele;
+    _imph = src->_imph;
+    _isotope = src->_isotope;
+    _impval = src->_impval;
+    _fcharge = src->_fcharge;
+    _spinmultiplicity = src->_spinmultiplicity;
+    strncpy(_type,src->_type, sizeof(_type) - 1);
     _type[sizeof(_type) - 1] = '\0';
-    _pcharge = src->GetPartialCharge();
-    _v = src->GetVector();
-    _flags = src->GetFlag();
+    _pcharge = src->_pcharge;
+    _v = src->_v;
+    _flags = src->_flags;
     _residue = (OBResidue*)NULL;
-    _id = src->GetId();
+    _id = src->_id;
 
     _vdata.clear();
     //Copy all the OBGenericData, providing the new atom
@@ -1054,14 +1054,16 @@ namespace OpenBabel
     unsigned int bosum;
     OBBondIterator i;
 
-    bosum = GetImplicitValence();
+    bosum = GetImplicitHydrogen();
 
     for (bond = ((OBAtom*)this)->BeginBond(i);bond;bond = ((OBAtom*)this)->NextBond(i))
       {
         if (bond->IsKDouble())
-          bosum++;
-        else if (bond->IsKTriple())
           bosum += 2;
+        else if (bond->IsKTriple())
+          bosum += 3;
+        else
+          bosum++;
       }
 
     return(bosum);
