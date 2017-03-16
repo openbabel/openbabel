@@ -175,7 +175,7 @@ namespace OpenBabel
     strncpy(_type,src->_type, sizeof(_type) - 1);
     _type[sizeof(_type) - 1] = '\0';
     _pcharge = src->_pcharge;
-    _v = src->_v;
+    _v = src->GetVector();
     _flags = src->_flags;
     _residue = (OBResidue*)NULL;
     _id = src->_id;
