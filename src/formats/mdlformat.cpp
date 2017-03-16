@@ -684,14 +684,6 @@ namespace OpenBabel
         }
     }
 
-    //Expand aliases
-    for(vector<pair<AliasData*,OBAtom*> >::iterator iter=aliases.begin();iter!=aliases.end();++iter)
-    {
-      AliasData* ad = (*iter).first;
-      unsigned atomnum = (*iter).second->GetIdx();
-      ad->Expand(mol, atomnum); //Make chemically meaningful, if possible.
-    }
-
     // Set up the updown map we are going to use to derive stereo info
     FOR_BONDS_OF_MOL(bond, mol) {
       OBStereo::BondDirection bd = OBStereo::NotStereo;;
@@ -730,8 +722,29 @@ namespace OpenBabel
         }
       } else {
         unsigned int impval = MDLValence(elem, charge, expval);
-        atom->SetImplicitHydrogen(impval - expval);
+        int mult = atom->GetSpinMultiplicity();
+        int delta;
+        switch (mult) {
+        case 0:
+          delta = 0; break;
+        case 1: case 3: //carbene
+          delta = 2; break;
+        case 2: //radical
+          delta = 1; break;
+        default: // >= 4, CH, Catom
+          delta = mult - 1;
+        }
+        int nimpval = impval - expval - delta;
+        atom->SetImplicitHydrogen(nimpval > 0 ? nimpval : 0);
       }
+    }
+
+    //Expand aliases (implicit hydrogens already set on these as read from SMILES)
+    for (vector<pair<AliasData*, OBAtom*> >::iterator iter = aliases.begin(); iter != aliases.end(); ++iter)
+    {
+      AliasData* ad = (*iter).first;
+      unsigned atomnum = (*iter).second->GetIdx();
+      ad->Expand(mol, atomnum); //Make chemically meaningful, if possible.
     }
 
     // I think SetImplicitValencePerceived needs to be set before AssignSpinMultiplicity
