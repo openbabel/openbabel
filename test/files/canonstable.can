@@ -961,7 +961,7 @@ CC[N+](CCCOC(=O)[C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3)(C)C
 CC[N+](CCOC(=O)[C@@H]([C@]1(O)CC[C@@H](CC1)C)c1ccccc1)(CC)C
 CC[N+](CCCNC(=O)[C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3)(CC)CC
 CC[N+]1(C)C[C@@H]2CC[C@H](C1)CC2
-FP(F)(F)(F)(F)F.CC[N+]1(CC)CCN2[Pd@+]1(Cl)[N+](CC)(CC)CC2
+F[P](F)(F)(F)(F)F.CC[N+]1(CC)CCN2[Pd@+]1(Cl)[N+](CC)(CC)CC2
 CC[N@+]12CN3CN(C2)CN(C1)C3
 CC[OH+][Ti]([OH+]c1ccccc1/C=N/[C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3)([OH+]c1ccccc1/C=N/[C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3)[OH+]CC
 CC[OH+][Ti]12([O+]=C(C)[CH-]C(=[O+]2)c2ccccc2)([O+]=C(C)[CH-]C(=[O+]1)c1ccccc1)[OH+]C12C[C@]3(C)C[C@](C2)(C[C@](C1)(C3)C)C
@@ -1097,7 +1097,7 @@ CN1CN([C@@]2(C1=O)CCN(CC2)CCC[C@H]1Cc2c(O1)cccc2)c1ccccc1
 CN1C[C@H]([C@H]([C@@H](C1)c1ccccc1)OC(=O)C)c1ccccc1
 CN1C[C@@H](c2ccccc2)[C@]([C@@H](C1)c1ccccc1)(Cl)[C@@]1(CN(C)C[C@H](C1=O)c1ccccc1)c1ccccc1
 CN1C[C@@H]2CN(C[C@H](C1)[C@@]2(O)c1ccccc1)C
-FP(F)(F)(F)(F)F.CN1C[C@@H]2CN(C[C@H](C1)C2)C
+F[P](F)(F)(F)(F)F.CN1C[C@@H]2CN(C[C@H](C1)C2)C
 [O-][Cl](=O)(=O)=O.CN1NC=[N+](N1)C
 CN1[C@@H]2CC[C@H]1CC1(C2)SCCS1.[O-][N+](=O)c1cc([N+](=O)[O-])c(c(c1)[N+](=O)[O-])O
 CN1[C@@H]2CC[C@H]1CC1(C2)SCCS1
