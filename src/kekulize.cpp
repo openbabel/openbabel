@@ -53,6 +53,10 @@ using namespace std;
 
 namespace OpenBabel
 {
+  static unsigned int TotalNumberOfBonds(OBAtom* atom)
+  {
+    return atom->GetImplicitHydrogen() + atom->GetValence();
+  }
 
   //! @cond
   // Hide this from doxygen
@@ -368,7 +372,7 @@ namespace OpenBabel
             sume++; // one electron contribution for explicit double bonds into another ring
           }
 
-          if (atom->IsNitrogen() && atom->GetFormalCharge() == 0 && atom->GetValence() >= 3) {
+          if (atom->IsNitrogen() && atom->GetFormalCharge() == 0 && TotalNumberOfBonds(atom) >= 3) {
             electron[j] = 0; // no double bonds, first try to kekulize with 1 electron, add two later if it doesn't work
           }
         }
@@ -398,7 +402,7 @@ namespace OpenBabel
           bestorden=99;
           for(j=0; j< cycle.size(); ++j) {
             currentState = electron[j];
-            if (cycle[j]->IsNitrogen() && cycle[j]->GetFormalCharge() == 0 && cycle[j]->GetValence() >= 3)
+            if (cycle[j]->IsNitrogen() && cycle[j]->GetFormalCharge() == 0 && TotalNumberOfBonds(cycle[j]) >= 3)
               currentState = 1; // might need to add another electron
 
             if (currentState == 1) {
@@ -432,7 +436,7 @@ namespace OpenBabel
             for(j=0; j< cycle.size(); ++j) {
 
               currentState = electron[j];
-              if (cycle[j]->IsNitrogen() && cycle[j]->GetFormalCharge() == 0 && cycle[j]->GetValence() >= 3)
+              if (cycle[j]->IsNitrogen() && cycle[j]->GetFormalCharge() == 0 && TotalNumberOfBonds(cycle[j]) >= 3)
                 currentState = 1; // might need to add another electron
 
               if (currentState == 1) {
@@ -529,7 +533,7 @@ namespace OpenBabel
       }
 
       // Special cases for NR3
-      if (atom->IsNitrogen() && atom->GetFormalCharge() == 0 && atom->GetValence() == 3) {
+      if (atom->IsNitrogen() && atom->GetFormalCharge() == 0 && TotalNumberOfBonds(atom) == 3) {
         // Correct N with three explicit bonds, if we haven't already
         if (charge == 0 && atomState[idx] == DOUBLE_ALLOWED) {
           atomState[idx] = DOUBLE_PROHIBITED;
@@ -808,7 +812,7 @@ namespace OpenBabel
     if ( atom->IsSulfur() && atom->GetFormalCharge() == 0) return 0;
     if ( atom->IsOxygen() ) return 2;
     if ( atom->GetAtomicNum() == 34 || atom->GetAtomicNum() == 52 ) return 3;
-    if ( atom->IsNitrogen() && atom->GetFormalCharge() == 0 && atom->GetValence() == 3) return 4;
+    if ( atom->IsNitrogen() && atom->GetFormalCharge() == 0 && TotalNumberOfBonds(atom) == 3) return 4;
     if ( atom->IsAmideNitrogen() ) return 5;
     if ( atom->IsNitrogen() && atom->GetFormalCharge() == -1) return 6;
     if ( atom->IsNitrogen() && atom->GetFormalCharge() == 0 && atom->IsInRingSize(5) ) return 7;
