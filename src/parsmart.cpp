@@ -30,6 +30,10 @@ using namespace std;
 
 namespace OpenBabel
 {
+  static unsigned int TotalNumberOfBonds(OBAtom* atom)
+  {
+    return atom->GetImplicitHydrogen() + atom->GetValence();
+  }
 
   /*! \class OBSmartsPattern parsmart.h <openbabel/parsmart.h>
 
@@ -2178,7 +2182,7 @@ namespace OpenBabel
         case AE_CHARGE:
           return expr->leaf.value == atom->GetFormalCharge();
         case AE_CONNECT:
-          return expr->leaf.value == (int)atom->GetImplicitValence();
+          return expr->leaf.value == (int)TotalNumberOfBonds(atom);
         case AE_DEGREE:
           return expr->leaf.value == (int)atom->GetValence();
         case AE_IMPLICIT:
