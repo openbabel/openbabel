@@ -45,8 +45,8 @@ int canonfragmenttest(int argc, char *argv[])
   test_smiles_fragment("CCc1cc(C)ccc1CC", "3 4 5 7 8 9", "c1ccccc1");
   test_smiles_fragment("CC.c1ccccc1.CC", "1 2 3 4 5 6 7 8", "c1ccccc1.CC");
   test_smiles_fragment("CC.c1ccccc1.CC", "3 4 5 6 7 8 9 10", "c1ccccc1.CC");
-  test_smiles_fragment("[nH]1cccc1.c1ccccc1", "1 2 3 4 5 6", "c1ccc[nH]1");
-  test_smiles_fragment("[nH]1cccc1.c1ccccc1", "7 8 9 10 11 12", "c1ccccc1");
+  test_smiles_fragment("[nH]1cccc1.c1ccccc1", "1 2 3 4 5", "c1ccc[nH]1");
+  test_smiles_fragment("[nH]1cccc1.c1ccccc1", "6 7 8 9 10 11", "c1ccccc1");
 
   return 0;
 }
