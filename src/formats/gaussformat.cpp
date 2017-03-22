@@ -1229,6 +1229,10 @@ namespace OpenBabel
       mol.SetData(etd);
     }
 
+    // set some default coordinates
+    // ConnectTheDots will remove conformers, so we add those later
+    mol.SetCoordinates(vconf[vconf.size() - 1]);
+
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
