@@ -324,27 +324,27 @@ namespace OpenBabel
         // Multiply by 1000 to make the unit cal/mol K
         S0MT += 1000*eFactor*(Hcorr-Gcorr)/temperature;
     }
-    
+
     // Check for symmetry
     OBPointGroup obPG;
-        
+
     obPG.Setup(mol);
     const char *pg = obPG.IdentifyPointGroup();
-    
+
     double Rgas = 1.9872041; // cal/mol K http://en.wikipedia.org/wiki/Gas_constant
     double Srot = -Rgas * log(double(RotSymNum));
 
-    
+
     //printf("DHf(M,0) = %g, DHf(M,T) = %g, S0(M,T) = %g\nPoint group = %s RotSymNum = %d Srot = %g\n",
     //       dhofM0, dhofMT, S0MT, pg, RotSymNum, Srot);
-    if (RotSymNum > 1) 
+    if (RotSymNum > 1)
     {
         // We assume Gaussian has done this correctly!
         Srot = 0;
     }
     S0MT     += Srot;
     DeltaSMT  = S0MT;
-    
+
     for (OBa = mol->BeginAtom(OBai); (NULL != OBa); OBa = mol->NextAtom(OBai))
       {
           double dhfx0, dhfxT, S0xT;
@@ -368,7 +368,7 @@ namespace OpenBabel
         std::string attr[5];
         double result[5];
         char buf[32];
-        
+
         attr[0].assign("DeltaHform(0K)");
         result[0] = dhofM0;
         snprintf(buf, sizeof(buf), "DeltaHform(%gK)", temperature);
@@ -396,10 +396,10 @@ namespace OpenBabel
         sprintf(valbuf, "%f", CV+Rgas);
         add_unique_pairdata_to_mol(mol, "cp", valbuf, 0);
         // Entropy components
-        if (Scomponents.size() == 3) 
+        if (Scomponents.size() == 3)
         {
             const char *comps[3] = { "Strans", "Srot", "Svib" };
-            for(int i=0; (i<3); i++) 
+            for(int i=0; (i<3); i++)
             {
                 sprintf(valbuf, "%f", Scomponents[i]);
                 add_unique_pairdata_to_mol(mol, comps[i], valbuf, 0);
@@ -1076,14 +1076,14 @@ namespace OpenBabel
             Gcorr = atof(vs[6].c_str());
             Gcorr_set = true;
           }
-        else if (strstr(buffer,"CV") != NULL) 
+        else if (strstr(buffer,"CV") != NULL)
           {
               ifs.getline(buffer,BUFF_SIZE); //Headers
               ifs.getline(buffer,BUFF_SIZE); //Total heat capacity
               tokenize(vs,buffer);
-              if (vs.size() == 4) 
+              if (vs.size() == 4)
               {
-                  if (vs[0].compare("Total") == 0) 
+                  if (vs[0].compare("Total") == 0)
                   {
                       CV = atof(vs[2].c_str());
                       CV_set = true;
@@ -1104,12 +1104,12 @@ namespace OpenBabel
               }
               ifs.getline(buffer,BUFF_SIZE); //Vibrational
               tokenize(vs,buffer);
-              if ((vs.size() == 4) && (vs[0].compare("Vibrational") == 0)) 
+              if ((vs.size() == 4) && (vs[0].compare("Vibrational") == 0))
               {
                   Scomponents.push_back(atof(vs[3].c_str()));
               }
           }
-        else if ((strstr(buffer,"Temperature=") != NULL) && 
+        else if ((strstr(buffer,"Temperature=") != NULL) &&
                  (strstr(buffer,"Pressure=") != NULL))
           {
               tokenize(vs,buffer);
@@ -1144,18 +1144,6 @@ namespace OpenBabel
     }
 
     mol.EndModify();
-
-    // Set conformers to all coordinates we adopted
-    // but remove last geometry -- it's a duplicate
-    if (vconf.size() > 1)
-      vconf.pop_back();
-    mol.SetConformers(vconf);
-    mol.SetConformer(mol.NumConformers() - 1);
-    // Copy the conformer data too
-    confData->SetDimension(confDimensions);
-    confData->SetEnergies(confEnergies);
-    confData->SetForces(confForces);
-    mol.SetData(confData);
 
     // Check whether we have data to extract heat of formation.
     if (ezpe_set && Hcorr_set && Gcorr_set && E0_set &&
@@ -1245,6 +1233,19 @@ namespace OpenBabel
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
+
+    // Set conformers to all coordinates we adopted
+    // but remove last geometry -- it's a duplicate
+    if (vconf.size() > 1)
+      vconf.pop_back();
+
+    mol.SetConformers(vconf);
+    mol.SetConformer(mol.NumConformers() - 1);
+    // Copy the conformer data too
+    confData->SetDimension(confDimensions);
+    confData->SetEnergies(confEnergies);
+    confData->SetForces(confForces);
+    mol.SetData(confData);
 
     if (hasPartialCharges) {
       mol.SetPartialChargesPerceived();
