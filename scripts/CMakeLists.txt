@@ -81,11 +81,8 @@ if (DO_PYTHON_BINDINGS)
             COMMAND ${SWIG_EXECUTABLE} -python -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${eigen_define} -outdir ${openbabel_SOURCE_DIR}/scripts/python ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
               COMMAND ${CMAKE_COMMAND} -E echo "import sys" > ob.py
               COMMAND ${CMAKE_COMMAND} -E echo "if sys.platform.find('linux'\) != -1:" >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "  try:" >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "    import dl" >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "  except ImportError:" >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "    import DLFCN as dl" >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "  sys.setdlopenflags(sys.getdlopenflags() | dl.RTLD_GLOBAL)" >> ob.py
+              COMMAND ${CMAKE_COMMAND} -E echo "  import ctypes" >> ob.py
+              COMMAND ${CMAKE_COMMAND} -E echo "  sys.setdlopenflags(sys.getdlopenflags() | ctypes.RTLD_GLOBAL)" >> ob.py
               COMMAND cat ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py >> ob.py
               COMMAND ${CMAKE_COMMAND} -E copy ob.py ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
               COMMAND ${CMAKE_COMMAND} -E remove ob.py
