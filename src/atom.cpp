@@ -170,7 +170,7 @@ namespace OpenBabel
     return(*this);
   }
 
-  void OBAtom::Duplicate(OBAtom *src)
+  void OBAtom::Duplicate(const OBAtom *src)
   {
     if (!src)
       return;
