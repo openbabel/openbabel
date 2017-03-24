@@ -170,6 +170,8 @@ VECTORTEMPLATE_WRAP(OBBond, OpenBabel::OBBond)
 VECTORTEMPLATE_WRAP(OBResidue, OpenBabel::OBResidue)
 VECTORTEMPLATE_WRAP(OBRing, OpenBabel::OBRing)
 VECTORTEMPLATE_WRAP(pOBRing, OpenBabel::OBRing*)
+VECTORTEMPLATE_WRAP(OBAtom, OpenBabel::OBAtom)
+VECTORTEMPLATE_WRAP(pOBAtom, OpenBabel::OBAtom*)
 VECTORTEMPLATE_WRAP(pOBGenericData, OpenBabel::OBGenericData*)
 VECTORTEMPLATE_WRAP(pOBInternalCoord, OpenBabel::OBInternalCoord*)
 
