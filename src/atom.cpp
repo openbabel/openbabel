@@ -160,14 +160,14 @@ namespace OpenBabel
   }
 
   OBAtom &OBAtom::operator=(const OBAtom &src)
-  //copy atom information
-  //bond info is not copied here as ptrs may be invalid
   {
-    if (this != &src) {
-      _idx = src.GetIdx();
-      Duplicate(&src);
+    if (this == &src) {
+        return *this;
     }
-    return(*this);
+    OBAtom &source = (OBAtom &)src;
+    _idx = source.GetIdx();
+    Duplicate(&source);
+    return *this;
   }
 
   void OBAtom::Duplicate(OBAtom *src)
