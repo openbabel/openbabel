@@ -63,6 +63,7 @@
 #include <openbabel/stereo/squareplanar.h>
 #include <openbabel/stereo/bindings.h>
 %}
+// Ignore methods that require std::vector of OBAtom.
 %ignore OpenBabel::OBMol::FindChildren(std::vector< OBAtom * > &, OBAtom *, OBAtom *);
 %ignore OpenBabel::OBResidue::GetAtoms;
 
