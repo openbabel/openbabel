@@ -63,7 +63,7 @@
 #include <openbabel/stereo/squareplanar.h>
 #include <openbabel/stereo/bindings.h>
 %}
-%ignore OpenBabel::OBMol::FindChildren(std::vector< OBAtom * >, OBAtom *, OBAtom *);
+%ignore OpenBabel::OBMol::FindChildren(std::vector< OBAtom * > &, OBAtom *, OBAtom *);
 %ignore OpenBabel::OBResidue::GetAtoms;
 
 #ifdef HAVE_EIGEN
