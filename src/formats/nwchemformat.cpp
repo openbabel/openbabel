@@ -232,11 +232,14 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
           break;
         tokenize(vs,buffer);
     }
-    if ((from_scratch)||(i != natoms))
-      {
+    if (from_scratch) 
+    {
+        return;
+    }
+    if (i != natoms) {
         delete[] coordinates;
         return;
-      }
+    }
     molecule->AddConformer(coordinates);
   }
 
