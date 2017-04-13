@@ -163,7 +163,7 @@ void testDecayToP1()
 
 void testAlternativeOrigin()
 {
-  // See https://github.com/openbabel/openbabel/pull/261
+  // See https://github.com/openbabel/openbabel/pull/1558
   OBConversion conv;
   OBMol mol;
   conv.SetInFormat("cif");
