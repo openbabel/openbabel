@@ -161,6 +161,24 @@ void testDecayToP1()
   OB_ASSERT( pSG->GetId() == 1 );
 }
 
+void testAlternativeOrigin()
+{
+  // See https://github.com/openbabel/openbabel/pull/261
+  OBConversion conv;
+  OBMol mol;
+  conv.SetInFormat("cif");
+  conv.ReadFile(&mol, GetFilename("test04.cif"));
+  OBUnitCell* pUC = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
+  const SpaceGroup* pSG = pUC->GetSpaceGroup();
+  SpaceGroup* sg = new SpaceGroup(*pSG);
+  pSG = SpaceGroup::Find(sg);
+
+  string summary = obErrorLog.GetMessageSummary();
+  OB_ASSERT( summary.find("warning") == string::npos);
+  OB_ASSERT( pSG != NULL );
+  OB_ASSERT( pSG->GetOriginAlternative() == 1);
+}
+
 int cifspacegrouptest(int argc, char* argv[])
 {
   int defaultchoice = 1;
@@ -193,6 +211,9 @@ int cifspacegrouptest(int argc, char* argv[])
     break;
   case 4:
     testDecayToP1();
+    break;
+  case 5:
+    testAlternativeOrigin();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
