@@ -94,27 +94,6 @@ namespace OpenBabel
   void OBBond::SetBondOrder(int order)
   {
     _order = (char)order;
-    if (order == 5)
-      {
-        SetAromatic();
-        if (_bgn)
-          _bgn->SetAromatic();
-        if (_end)
-          _end->SetAromatic();
-      }
-    else
-      {
-        if (order == 1)
-          SetKSingle();
-        else if (order == 2)
-          SetKDouble();
-        else if (order == 3)
-          SetKTriple();
-        else
-          UnsetFlag(OB_KSINGLE_BOND | OB_KDOUBLE_BOND | OB_KTRIPLE_BOND);
-
-        UnsetAromatic();
-      }
   }
 
   void OBBond::SetLength(OBAtom *fixed, double length)
@@ -605,32 +584,38 @@ namespace OpenBabel
 
   bool OBBond::IsKSingle()
   {
-    if (_flags & OB_KSINGLE_BOND)
-      return(true);
-    if (!((OBMol*)GetParent())->HasKekulePerceived())
-      ((OBMol*)GetParent())->NewPerceiveKekuleBonds();
+    // TODO
+    return GetBondOrder() == 1;
+    //if (_flags & OB_KSINGLE_BOND)
+    //  return(true);
+    //if (!((OBMol*)GetParent())->HasKekulePerceived())
+    //  ((OBMol*)GetParent())->NewPerceiveKekuleBonds();
 
-    return((_flags & OB_KSINGLE_BOND) != 0) ? true : false;
+    //return((_flags & OB_KSINGLE_BOND) != 0) ? true : false;
   }
 
   bool OBBond::IsKDouble()
   {
-    if (_flags & OB_KDOUBLE_BOND)
-      return(true);
-    if (!((OBMol*)GetParent())->HasKekulePerceived())
-      ((OBMol*)GetParent())->NewPerceiveKekuleBonds();
+    // TODO
+    return GetBondOrder() == 2;
+    //if (_flags & OB_KDOUBLE_BOND)
+    //  return(true);
+    //if (!((OBMol*)GetParent())->HasKekulePerceived())
+    //  ((OBMol*)GetParent())->NewPerceiveKekuleBonds();
 
-    return((_flags & OB_KDOUBLE_BOND) != 0) ? true : false;
+    //return((_flags & OB_KDOUBLE_BOND) != 0) ? true : false;
   }
 
   bool OBBond::IsKTriple()
   {
-    if (_flags & OB_KTRIPLE_BOND)
-      return(true);
-    if (!((OBMol*)GetParent())->HasKekulePerceived())
-      ((OBMol*)GetParent())->NewPerceiveKekuleBonds();
+    // TODO
+    return GetBondOrder() == 3;
+    //if (_flags & OB_KTRIPLE_BOND)
+    //  return(true);
+    //if (!((OBMol*)GetParent())->HasKekulePerceived())
+    //  ((OBMol*)GetParent())->NewPerceiveKekuleBonds();
 
-    return((_flags & OB_KTRIPLE_BOND) != 0) ? true : false;
+    //return((_flags & OB_KTRIPLE_BOND) != 0) ? true : false;
   }
 
   bool OBBond::IsInRing() const

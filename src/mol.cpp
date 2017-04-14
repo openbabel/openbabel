@@ -1510,7 +1510,6 @@ namespace OpenBabel
         vector<OBBond*>::iterator k;
         for (bond = BeginBond(k);bond;bond = NextBond(k))
           bond->SetInRing(false);
-        //bond->UnsetAromatic(); should probably also be done
       }
     _c = NULL;
 
@@ -1532,24 +1531,10 @@ namespace OpenBabel
       }
     _vconf.push_back(c);
 
-    //kekulize structure
-    SetAromaticPerceived();
-    Kekulize();
-    //kekulize();
-    UnsetAromaticPerceived();
-
-    //    for (atom = BeginAtom(j);atom;atom = NextAtom(j))
-    //      atom->UnsetAromatic();
-
-    //    OBBond *bond;
-    //      bond->UnsetAromatic();
-
     // Always remove angle and torsion data, since they will interfere with the iterators
     // PR#2812013
     DeleteData(OBGenericDataType::AngleData);
     DeleteData(OBGenericDataType::TorsionData);
-
-    UnsetImplicitValencePerceived();
   }
 
   OBAtom *OBMol::CreateAtom(void)
