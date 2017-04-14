@@ -179,6 +179,25 @@ void testAlternativeOrigin()
   OB_ASSERT( pSG->GetOriginAlternative() == 1);
 }
 
+void testPdbOutAlternativeOrigin()
+{
+  // See https://github.com/openbabel/openbabel/pull/1558
+  OBConversion conv;
+  OBMol mol;
+  conv.SetInFormat("cif");
+  conv.SetOutFormat("pdb");
+  conv.ReadFile(&mol, GetFilename("test04.cif"));
+
+  string pdb = conv.WriteString(&mol);
+  // ending space is needed to check that there is no origin set
+  OB_ASSERT(pdb.find("P 4/n b m ") != string::npos);
+
+  conv.AddOption("o", OBConversion::OUTOPTIONS);
+  pdb = conv.WriteString(&mol);
+
+  OB_ASSERT(pdb.find("P 4/n b m:1") != string::npos);
+}
+
 int cifspacegrouptest(int argc, char* argv[])
 {
   int defaultchoice = 1;
@@ -214,6 +233,9 @@ int cifspacegrouptest(int argc, char* argv[])
     break;
   case 5:
     testAlternativeOrigin();
+    break;
+  case 6:
+    testPdbOutAlternativeOrigin();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
