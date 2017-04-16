@@ -462,9 +462,6 @@ namespace OpenBabel {
       
       if(charge_smb.find(smb) == charge_smb.end() )
         charge_smb[smb] = it->second->GetFormalCharge();
-      else
-        if(charge_smb[smb] != it->second->GetFormalCharge())
-          charge_smb[smb] = NAN;
       
       ofs << buffer << endl;
     }
