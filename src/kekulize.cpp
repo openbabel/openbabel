@@ -24,10 +24,32 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
+  static unsigned int GetMaxAtomIdx(OBMol* mol)
+  {
+    OBAtom* lastatom = (OBAtom*)0;
+    FOR_ATOMS_OF_MOL(atom, mol) {
+      lastatom = &(*atom);
+    }
+    return lastatom ? lastatom->GetIdx() : 0;
+  }
+
+  static unsigned int GetMaxBondIdx(OBMol* mol)
+  {
+    OBBond* lastbond = (OBBond*)0;
+    FOR_BONDS_OF_MOL(bond, mol) {
+      lastbond = &(*bond);
+    }
+    return lastbond ? lastbond->GetIdx() : 0;
+  }
+
   class Kekulizer
   {
   public:
-    Kekulizer(OBMol* mol) : m_mol(mol), needs_dbl_bond((OBBitVec*)0), doubleBonds((OBBitVec*)0), kekule_system((OBBitVec*)0) {}
+    Kekulizer(OBMol* mol) : m_mol(mol), needs_dbl_bond((OBBitVec*)0), doubleBonds((OBBitVec*)0), kekule_system((OBBitVec*)0)
+    {
+      atomArraySize = GetMaxAtomIdx(m_mol) + 1;
+      bondArraySize = GetMaxBondIdx(m_mol) + 1;
+    }
     ~Kekulizer() {
       delete needs_dbl_bond;
       delete doubleBonds;
@@ -37,12 +59,14 @@ namespace OpenBabel
     bool BackTrack();
     void AssignDoubleBonds();
   private:
-    void FindPath(unsigned int atomidx, std::vector<unsigned int> path);
+    bool FindPath(unsigned int atomidx, unsigned int depth, OBBitVec &visited);
     OBMol* m_mol;
     OBBitVec *needs_dbl_bond;
     OBBitVec *doubleBonds;
     OBBitVec *kekule_system;
-    std::vector<unsigned int> m_found_path;
+    unsigned int atomArraySize;
+    unsigned int bondArraySize;
+    std::vector<unsigned int> m_path;
   };
 
   static unsigned int TotalNumberOfBonds(OBAtom* atom)
@@ -133,24 +157,6 @@ namespace OpenBabel
     return true; // It needs a double bond
   }
 
-  static unsigned int GetMaxAtomIdx(OBMol* mol)
-  {
-    OBAtom* lastatom = (OBAtom*)0;
-    FOR_ATOMS_OF_MOL(atom, mol) {
-      lastatom = &(*atom);
-    }
-    return lastatom ? lastatom->GetIdx() : 0;
-  }
-
-  static unsigned int GetMaxBondIdx(OBMol* mol)
-  {
-    OBBond* lastbond = (OBBond*)0;
-    FOR_BONDS_OF_MOL(bond, mol) {
-      lastbond = &(*bond);
-    }
-    return lastbond ? lastbond->GetIdx() : 0;
-  }
-
   class NodeIterator
   {
   public:
@@ -199,8 +205,6 @@ namespace OpenBabel
 
   bool Kekulizer::GreedyMatch()
   {
-    unsigned int atomArraySize = GetMaxAtomIdx(m_mol) + 1;
-    unsigned int bondArraySize = GetMaxBondIdx(m_mol) + 1;
 
     // What atoms need a double bond? The job of kekulization is
     // to give all of these atoms a single double bond.
@@ -321,27 +325,31 @@ namespace OpenBabel
     return finished;
   }
 
-  void Kekulizer::FindPath(unsigned int atomidx, std::vector<unsigned int> path)
+  // TODO: Is it faster to use a vector<bool> instead of OBBitVec?
+  //       Or indeed, a vector<char> and use it for all of the flags?
+  //       Need a large testcase to check - would be good to know in any case
+  bool Kekulizer::FindPath(unsigned int atomidx, unsigned int depth, OBBitVec &visited)
   {
-    path.push_back(atomidx);
-    if (needs_dbl_bond->BitIsOn(atomidx)) {
-      m_found_path = path;
-      return;
-    }
+    if (needs_dbl_bond->BitIsOn(atomidx))
+      return true;
+    visited.SetBitOn(atomidx);
     OBAtom* atom = m_mol->GetAtom(atomidx);
     FOR_BONDS_OF_ATOM(bond, atom) {
       if (!bond->IsAromatic()) continue;
       OBAtom *nbr = bond->GetNbrAtom(atom);
       if (!kekule_system->BitIsOn(nbr->GetIdx())) continue;
-      bool shouldBeDouble = (path.size() % 2) == 0; // alternating double/single bond path
+      bool shouldBeDouble = (depth % 2) == 1; // alternating double/single bond path
       if (doubleBonds->BitIsOn(bond->GetIdx()) == shouldBeDouble) {
-        // TODO: Make the following line more efficient if possible, e.g. visit flags
-        if (std::find(path.begin(), path.end(), nbr->GetIdx()) != path.end()) continue;
-        FindPath(nbr->GetIdx(), path);
-        if (!m_found_path.empty()) // i.e. we have found a result
-          return;
+        if (visited.BitIsOn(nbr->GetIdx())) continue;
+        bool found_path = FindPath(nbr->GetIdx(), depth + 1, visited);
+        if (found_path) {
+          m_path.push_back(nbr->GetIdx());
+          return true;
+        }
       }
     }
+    visited.SetBitOff(atomidx);
+    return false;
   }
 
   bool Kekulizer::BackTrack()
@@ -359,17 +367,19 @@ namespace OpenBabel
 
       // Our goal is to find an alternating path to another atom
       // that needs a double bond
-      std::vector<unsigned int> path;
       needs_dbl_bond->SetBitOff(idx); // to avoid the trivial null path being found
-      FindPath(idx, path);
-      if (m_found_path.empty()) { // could only happen if not kekulizable
-        needs_dbl_bond->SetBitOn(idx);
+      OBBitVec visited(atomArraySize);
+      bool found_path = FindPath(idx, 0, visited);
+      if (!found_path) { // could only happen if not kekulizable
+        needs_dbl_bond->SetBitOn(idx); // reset
         continue;
       }
       total_handled++;
-      needs_dbl_bond->SetBitOff(m_found_path.back());
-      for (int i = 0; i < m_found_path.size()-1; ++i) {
-        OBBond *bond = m_mol->GetBond(m_found_path[i], m_found_path[i + 1]);
+      m_path.push_back(idx);
+      needs_dbl_bond->SetBitOff(m_path[0]);
+      // Flip all of the bond orders on the path from double<-->single
+      for (int i = 0; i < m_path.size()-1; ++i) {
+        OBBond *bond = m_mol->GetBond(m_path[i], m_path[i + 1]);
         if (i % 2 == 0)
           doubleBonds->SetBitOn(bond->GetIdx());
         else
