@@ -163,20 +163,11 @@ else()
 endif()
 
 # configure checks
-find_package(LibXml2)
-if(NOT LIBXML2_FOUND)
-  message(WARNING "libxml2 not found - disabling CML support!")
-endif()
+SET(LIBXML2_FOUND FALSE)
+set(LIBXML2_LIBRARIES "")
 
-find_package(ZLIB)
-if(ZLIB_FOUND)
-  add_definitions(-DHAVE_LIBZ)
-  include_directories(${ZLIB_INCLUDE_DIR})
-  # Longstanding unsolved problem with compression under Windows
-  if(WIN32)
-    add_definitions(-DDISABLE_WRITE_COMPRESSION)
-  endif()
-endif()
+SET(ZLIB_FOUND FALSE)
+set(ZLIB_LIBRARY "")
 
 # wxWidgets instructions based on http://wiki.wxwidgets.org/CMake
 #find_package(wxWidgets COMPONENTS base core REQUIRED)
@@ -446,18 +437,8 @@ include_directories(${openbabel_BINARY_DIR}/include
 )
 
 #cjh
-find_package(Eigen3)
-if(EIGEN3_FOUND)
-  add_definitions(-DHAVE_EIGEN -DHAVE_EIGEN3)
-  include_directories(${EIGEN3_INCLUDE_DIR})
-else()
-  find_package(Eigen2) # find and setup Eigen2
-  if(EIGEN2_FOUND)
-    add_definitions (-DHAVE_EIGEN)
-    include_directories(${EIGEN2_INCLUDE_DIR})
-  endif()
-endif()
-#cjh
+SET(EIGEN3_FOUND FALSE)
+SET(EIGEN2_FOUND FALSE)
 
 find_package(Cairo)
 if(CAIRO_FOUND)
