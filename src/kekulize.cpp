@@ -97,12 +97,6 @@ namespace OpenBabel
     if (!atom->IsAromatic())
       return false;
 
-    // Note to self:
-    //   Bonds not in a ring should not be marked as aromatic - this should be done by the SMILES reader.
-    //   If we have written the SMILES ourselves, and we ensure that we always write out the bond
-    //   symbol between aromatic atoms, then bonds with a bond symbol cannot be aromatic - again
-    //   this should be handled by the SMILES reader.
-
     // Does it already have an explicit double bond?
     FOR_BONDS_OF_ATOM(bond, atom) {
       if (bond->IsAromatic()) continue;
@@ -325,9 +319,6 @@ namespace OpenBabel
     return finished;
   }
 
-  // TODO: Is it faster to use a vector<bool> instead of OBBitVec?
-  //       Or indeed, a vector<char> and use it for all of the flags?
-  //       Need a large testcase to check - would be good to know in any case
   bool Kekulizer::FindPath(unsigned int atomidx, unsigned int depth, OBBitVec &visited)
   {
     if (needs_dbl_bond->BitIsOn(atomidx))
@@ -388,6 +379,26 @@ namespace OpenBabel
     }
     return needs_dbl_bond->Empty();
   }
+
+// OBKekulize() implements a two-step kekulization
+// Step one: try a greedy match
+// Step two: try an exhaustive backtracking (using the results of step one)
+//
+// The greedy match algorithm is outlined in the thesis of John May
+// and indeed NeedsDoubleBond() is based on the implementation in Beam.
+// The greedy algorithm almost always works. But when it doesn't, step two is needed.
+//
+// The goal of the exhaustive backtracking is find a path of alternating single/double
+// bonds between two radicals and flip those bonds. For more information, read about
+// augmenting paths in the context of perfect matching. John's thesis instead describes
+// the use of Edmond's Blossom algorithm which scales better - this may or may not be
+// faster in practice for typical chemical graphs.
+//
+// Potential speedups:
+//   * Is OBVitVec performant? I don't know. You could try replacing all usages theoreof with
+//     std::vector<char>, where the char could handle several flags.
+//   * Before trying the exhaustive search, try a BFS. I have a feeling that this would work
+//     90% of the time.
 
   bool OBKekulize(OBMol* mol)
   {
