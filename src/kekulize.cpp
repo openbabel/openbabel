@@ -59,7 +59,7 @@ namespace OpenBabel
     bool BackTrack();
     void AssignDoubleBonds();
   private:
-    bool FindPath(unsigned int atomidx, unsigned int depth, OBBitVec &visited);
+    bool FindPath(unsigned int atomidx, bool isDoubleBond, OBBitVec &visited);
     OBMol* m_mol;
     OBBitVec *needs_dbl_bond;
     OBBitVec *doubleBonds;
@@ -319,7 +319,9 @@ namespace OpenBabel
     return finished;
   }
 
-  bool Kekulizer::FindPath(unsigned int atomidx, unsigned int depth, OBBitVec &visited)
+  // The isDoubleBond alternates between double and single, as we need to find
+  // an alternating path
+  bool Kekulizer::FindPath(unsigned int atomidx, bool isDoubleBond, OBBitVec &visited)
   {
     if (needs_dbl_bond->BitIsOn(atomidx))
       return true;
@@ -329,10 +331,9 @@ namespace OpenBabel
       if (!bond->IsAromatic()) continue;
       OBAtom *nbr = bond->GetNbrAtom(atom);
       if (!kekule_system->BitIsOn(nbr->GetIdx())) continue;
-      bool shouldBeDouble = (depth % 2) == 1; // alternating double/single bond path
-      if (doubleBonds->BitIsOn(bond->GetIdx()) == shouldBeDouble) {
+      if (doubleBonds->BitIsOn(bond->GetIdx()) == isDoubleBond) {
         if (visited.BitIsOn(nbr->GetIdx())) continue;
-        bool found_path = FindPath(nbr->GetIdx(), depth + 1, visited);
+        bool found_path = FindPath(nbr->GetIdx(), !isDoubleBond, visited);
         if (found_path) {
           m_path.push_back(nbr->GetIdx());
           return true;
@@ -360,7 +361,7 @@ namespace OpenBabel
       // that needs a double bond
       needs_dbl_bond->SetBitOff(idx); // to avoid the trivial null path being found
       OBBitVec visited(atomArraySize);
-      bool found_path = FindPath(idx, 0, visited);
+      bool found_path = FindPath(idx, false, visited);
       if (!found_path) { // could only happen if not kekulizable
         needs_dbl_bond->SetBitOn(idx); // reset
         continue;
@@ -380,9 +381,9 @@ namespace OpenBabel
     return needs_dbl_bond->Empty();
   }
 
-// OBKekulize() implements a two-step kekulization
-// Step one: try a greedy match
-// Step two: try an exhaustive backtracking (using the results of step one)
+// OBKekulize() implements a two-step kekulization:
+//   Step one: try a greedy match
+//   Step two: try an exhaustive backtracking (using the results of step one)
 //
 // The greedy match algorithm is outlined in the thesis of John May
 // and indeed NeedsDoubleBond() is based on the implementation in Beam.
@@ -395,10 +396,16 @@ namespace OpenBabel
 // faster in practice for typical chemical graphs.
 //
 // Potential speedups:
-//   * Is OBVitVec performant? I don't know. You could try replacing all usages theoreof with
+//   * Is OBBitVec performant? I don't know - it seems to do a lot of bounds checking.
+//     You could try replacing all usages theoreof with
 //     std::vector<char>, where the char could handle several flags.
 //   * Before trying the exhaustive search, try a BFS. I have a feeling that this would work
 //     90% of the time.
+//   * There's a lot of switching between atoms and atom indices (and similar for bonds).
+//     Was this completely neccessary?
+//   * The iterator over degree 2 and 3 nodes may iterate twice - it would have been
+//     faster if I just took the first degree 2 or 3 node I came across, but would
+//     it have worked as well?
 
   bool OBKekulize(OBMol* mol)
   {
