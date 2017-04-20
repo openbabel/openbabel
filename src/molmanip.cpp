@@ -150,6 +150,7 @@ namespace OpenBabel
         _c[j+1] += ty;
         _c[j+2] += tz;
       }
+    return true;
   }
 
 
