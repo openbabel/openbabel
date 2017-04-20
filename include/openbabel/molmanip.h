@@ -99,12 +99,12 @@ namespace OpenBabel
     void Align(std::vector<OBAtom*> &atom_vec, const vector3 p, const vector3 v1, const vector3 v2);
     //! Set the dihedral angle defined by the four atom indices to angle
     //! A cis-configurations corresponds to angle=0 whereas a trans configuration corresponds to angle=180
-    bool SetDihedralAngle(const double idxa1, const double idxa2, const double idxa3, const double idxa4, const double angle);
-    double GetDihedralAngle(const double idxa1, const double idxa2, const double idxa3, const double idxa4);
+    bool SetDihedralAngle(const int idxa1, const int idxa2, const int idxa3, const int idxa4, const double angle);
+    double GetDihedralAngle(const int idxa1, const int idxa2, const int idxa3, const int idxa4);
     //! Set the angle defined by three atoms to angle
     //! Atom 1 will be kept fixed in its position
-    bool SetAngle(const double idxa1, const double idxa2, const double idxa3, const double angle);
-    double GetAngle(const double idxa1, const double idxa2, const double idxa3);
+    bool SetAngle(const int idxa1, const int idxa2, const int idxa3, const double angle);
+    double GetAngle(const int idxa1, const int idxa2, const int idxa3);
     //! Partition the molecule using a plane in Hessian normal form
     //! Only keep those atoms on the side of the plane in which @a direction points (WARNING: bonds will not be copied over)
     void PartMolecule(OBMol &dest, const double direction[3], const double point[3]);

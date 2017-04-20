@@ -50,7 +50,7 @@ namespace OpenBabel
   //! Set the dihedral angle around the bond between atoms 2 and 3 to angle in degrees.
   //! The direction is defined by atoms 1 and 4. A dihedral angle of 0 means a
   //! cis-configuration whereas PI means a trans configuration.
-  bool OBMolManip::SetDihedralAngle(const double idxa1, const double idxa2, const double idxa3, const double idxa4, const double angle)
+  bool OBMolManip::SetDihedralAngle(const int idxa1, const int idxa2, const int idxa3, const int idxa4, const double angle)
   {
     MOLMANIPSANITY(false)
     double ang = angle*DEG_TO_RAD;
@@ -153,7 +153,7 @@ namespace OpenBabel
   }
 
 
-  double OBMolManip::GetDihedralAngle(const double idxa1, const double idxa2, const double idxa3, const double idxa4)
+  double OBMolManip::GetDihedralAngle(const int idxa1, const int idxa2, const int idxa3, const int idxa4)
   {
     MOLMANIPSANITY(360.0)
     OBAtom *a1, *a2, *a3, *a4;
@@ -617,7 +617,7 @@ namespace OpenBabel
   //!
   //! Change the bond defined by the three atom indices to the value given by angle.
   //! The first atom is kept fixed and everything attached to the second one is moved.
-  bool OBMolManip::SetAngle(const double idxa1, const double idxa2, const double idxa3, const double angle)
+  bool OBMolManip::SetAngle(const int idxa1, const int idxa2, const int idxa3, const double angle)
   {
     MOLMANIPSANITY(false)
     vector<int> children;
@@ -676,7 +676,7 @@ namespace OpenBabel
   //! \brief Get an angle.
   //!
   //! The bond is defined by the three atom indices.
-  double OBMolManip::GetAngle(const double idxa1, const double idxa2, const double idxa3)
+  double OBMolManip::GetAngle(const int idxa1, const int idxa2, const int idxa3)
   {
     MOLMANIPSANITY(false)
     vector3 v1, v2, n;
@@ -684,7 +684,7 @@ namespace OpenBabel
     vector<int>::iterator i;
     double currentangle;
 
-    if (idxa1 == idxa2 || idxa1 == idxa3 || idxa2 == idxa3 ){cerr << "some atoms are the same\a";return false;};
+    if (idxa1 == idxa2 || idxa1 == idxa3 || idxa2 == idxa3 ){cerr << "some atoms are the same\n";return false;};
 
     a1=_manip->GetAtom(idxa1);
     a2=_manip->GetAtom(idxa2);
@@ -753,7 +753,7 @@ namespace OpenBabel
       center /= elements;
     }
 
-    if ( not(normal.CanBeNormalized()) ){
+    if ( !(normal.CanBeNormalized()) ){
       center += point;
       for (i = atom_vec.begin(); *i != NULL && i != atom_vec.end(); ++i)
       {
