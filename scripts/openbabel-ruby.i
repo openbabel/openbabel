@@ -24,6 +24,7 @@
 
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
+#include <openbabel/molmanip.h>
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
 #include <openbabel/residue.h>
@@ -209,6 +210,7 @@ namespace std { class stringbuf {}; }
 %include <openbabel/atom.h>
 %include <openbabel/bond.h>
 %include <openbabel/mol.h>
+%include <openbabel/molmanip.h>
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
 %include <openbabel/alias.h>

@@ -617,6 +617,7 @@ using System.Runtime.InteropServices;
 
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
+#include <openbabel/molmanip.h>
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
 #include <openbabel/residue.h>
@@ -849,6 +850,7 @@ namespace std { class stringbuf {}; }
 %include <openbabel/bond.h>
 %ignore OpenBabel::OBMol::SetData;
 %include <openbabel/mol.h>
+%include <openbabel/molmanip.h>
 %include <openbabel/ring.h>
 %warnfilter(516) OpenBabel::OBSmartsPattern; // Using non-const versions of GetSMARTS
 %include <openbabel/parsmart.h>

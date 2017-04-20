@@ -159,6 +159,7 @@ WRAP_ARRAY(double,double_array)
 
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
+#include <openbabel/molmanip.h>
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
 #include <openbabel/residue.h>
@@ -302,6 +303,7 @@ CAST_GENERICDATA_TO(VirtualBond)
 %include <openbabel/bond.h>
 %ignore OpenBabel::OBMol::SetData;
 %include <openbabel/mol.h>
+%include <openbabel/molmanip.h>
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
 %include <openbabel/alias.h>

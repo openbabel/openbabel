@@ -131,6 +131,7 @@ set(openbabel_srcs
   mcdlutil.cpp
   molchrg.cpp
   mol.cpp
+  molmanip.cpp
   obconversion.cpp
   oberror.cpp
   obiter.cpp
