@@ -65,7 +65,7 @@ namespace OpenBabel
     bond=a2->GetBond(a3);
 
     if (bond == NULL){cerr << "Warning: atoms " << idxa2 << " and " << idxa3 << " form no bond.\n";};
-    if (not(bond->IsRotor())){cerr << "Warning: bond between atoms " << idxa2 << " and " << idxa3 << " is no rotor.\n";};
+    if (!(bond->IsRotor())){cerr << "Warning: bond between atoms " << idxa2 << " and " << idxa3 << " is no rotor.\n";};
 
     vector<int> tor;
     vector<int> atoms;
