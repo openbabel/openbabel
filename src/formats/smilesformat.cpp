@@ -1006,12 +1006,7 @@ namespace OpenBabel {
     atom->SetType(symbol);
 
     if (arom)
-      {
-        atom->SetAromatic();
-        atom->SetSpinMultiplicity(2); // CM 18 Sept 2003
-      }
-    else
-      atom->ForceImplH();//ensures atom is never hydrogen deficient
+      atom->SetAromatic();
 
     if (_prev) //need to add bond
       {
@@ -3095,6 +3090,24 @@ namespace OpenBabel {
       }
   }
 
+  // Do we need to write out a bond symbol for this bond?
+  // No - if it's aromatic
+  // Otherwise, yes if the bond order is not 1
+  // If the bond order *is* 1, then only if the bond is in a ring and between aromatic atoms
+  static bool NeedsBondSymbol(OBBond* bond)
+  {
+    if (bond->IsAromatic())
+      return false;
+    switch (bond->GetBondOrder()) {
+    case 1:
+      if (bond->IsInRing() && bond->GetBeginAtom()->IsAromatic() && bond->GetEndAtom()->IsAromatic())
+        return true;
+      return false;
+    default: // bond orders != 1
+      return true;
+    }
+  }
+
   /***************************************************************************
    * FUNCTION: BuildCanonTree
    *
@@ -3145,12 +3158,12 @@ namespace OpenBabel {
 
       OBBond *nbr_bond = atom->GetBond(nbr);
       unsigned int nbr_bond_order = nbr_bond->GetBondOrder();
-      int new_needs_bsymbol = nbr_bond_order==2 || nbr_bond_order==3;
+      int new_needs_bsymbol = NeedsBondSymbol(nbr_bond);
 
       for (ai = sort_nbrs.begin(); ai != sort_nbrs.end(); ++ai) {
         bond = atom->GetBond(*ai);
         unsigned int bond_order = bond->GetBondOrder();
-        int sorted_needs_bsymbol = bond_order == 2 || bond_order == 3;
+        int sorted_needs_bsymbol = NeedsBondSymbol(bond);
         if (favor_multiple && new_needs_bsymbol && !sorted_needs_bsymbol) {
           sort_nbrs.insert(ai, nbr);
           ai = sort_nbrs.begin();//insert invalidated ai; set it to fail next test
@@ -3512,9 +3525,21 @@ namespace OpenBabel {
             strcat(buffer, bs);	// append "/" or "\"
           else
           {
-            if (bci->bond->GetBO() == 2 && (kekulesmi || !bci->bond->IsAromatic()))  strcat(buffer,"=");
-            if (bci->bond->GetBO() == 3)                              strcat(buffer,"#");
-            if (bci->bond->GetBO() == 4)                              strcat(buffer,"$");
+            switch (bci->bond->GetBO())
+            {
+            case 1:
+              if (!bci->bond->IsAromatic() && bci->bond->IsInRing() && bci->bond->GetBeginAtom()->IsAromatic() && bci->bond->GetEndAtom()->IsAromatic())
+                strcat(buffer, "-");
+              break;
+            case 2:
+              if (kekulesmi || !bci->bond->IsAromatic())
+                strcat(buffer, "=");
+              break;
+            case 3:
+              strcat(buffer, "#"); break;
+            case 4:
+              strcat(buffer, "$"); break;
+            }
           }
         }
         else
@@ -3551,7 +3576,8 @@ namespace OpenBabel {
         else {
           // Write a single bond symbol if not aromatic but end atoms are both aromatic
           // This will speed up reading as it will avoid ring perception around line 563 (bond->IsInRing())
-          if (!bond->IsAromatic() && bond->GetBeginAtom()->IsAromatic() && bond->GetEndAtom()->IsAromatic())
+          // TODO: Consider making the test for IsInRing() an option
+          if (!bond->IsAromatic() && bond->IsInRing() && bond->GetBeginAtom()->IsAromatic() && bond->GetEndAtom()->IsAromatic())
             strcat(buffer, "-");
         }
         break;
