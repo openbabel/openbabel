@@ -200,8 +200,6 @@ namespace OpenBabel
     char buffer[BUFF_SIZE];
     char elmnt_typ[8], dreid_typ[8], atm_sym[16], max_val_str[8];
 
-    mol.Kekulize();
-
     ofs << "BIOGRF 200\n";
     snprintf(buffer, BUFF_SIZE, "DESCRP %s\n",mol.GetTitle());
     ofs << buffer;

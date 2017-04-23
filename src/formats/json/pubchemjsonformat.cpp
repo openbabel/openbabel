@@ -538,14 +538,6 @@ class PubChemJSONFormat : public OBMoleculeFormat
     }
 
     PerceiveStereo(pmol);
-    
-    // Kekulize any untyped aromatic bonds (5)
-    FOR_BONDS_OF_MOL(bond, pmol) {
-      if (bond->GetBondOrder() == 5) {
-        pmol->Kekulize();
-        break;
-      }
-    }
 
     // Set up all the stereochemistry information
     set<OBBond*> unspec_ctstereo = GetUnspecifiedCisTrans(*pmol);
