@@ -106,7 +106,7 @@ namespace OpenBabel
         break;
       case SPACE_GROUP_HM:
         {
-          std::string::size_type idx=linestr.find(',');
+          std::string::size_type idx = linestr.find(',');
           if (idx != std::string::npos)
             {
               std::string alt = linestr.substr(0, idx);
@@ -115,7 +115,7 @@ namespace OpenBabel
               std::string stripped_HM=RemoveWhiteSpaceUnderscore(alt);
               if (stripped_HM.length() > 0 && _SpaceGroups.sgbn[stripped_HM] == NULL)
                 _SpaceGroups.sgbn[stripped_HM] = group;
-              group->SetHMName(linestr.substr(idx+1));
+              group->SetHMName(linestr.substr(idx+1, std::string::npos));
             }
           else
             group->SetHMName(linestr);
@@ -140,7 +140,7 @@ namespace OpenBabel
   }
 
   SpaceGroup::SpaceGroup():
-    m_HM(""),m_Hall(""),m_id(0),m_OriginAlternative(0)
+    m_HM(""),m_Hall(""),m_id(0),m_OriginAlternative(0), HEXAGONAL_ORIGIN(10)
   {
   }
 
@@ -153,13 +153,18 @@ namespace OpenBabel
 
   void SpaceGroup::SetHMName(const std::string &name)
   {
-    std::string::size_type idx=name.find(':');
+    std::string::size_type idx = name.find(':');
     if (idx != std::string::npos)
       {
-        m_OriginAlternative = atoi (name.c_str () + idx + 1);
-        m_HM = name.substr (0, idx);
-	  } else
-        m_HM = name;
+        std::string origin = name.substr(idx + 1, std::string::npos);
+        if (origin == "H")
+          {
+            m_OriginAlternative = HEXAGONAL_ORIGIN;
+          } else {
+            m_OriginAlternative = atoi (origin.c_str());
+          }
+      }
+    m_HM = name;
   }
 
   /*!

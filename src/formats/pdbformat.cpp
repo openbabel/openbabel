@@ -572,15 +572,17 @@ namespace OpenBabel
         OBUnitCell *pUC = (OBUnitCell*)pmol->GetData(OBGenericDataType::UnitCell);
         if(pUC->GetSpaceGroup()){
           string tmpHM=pUC->GetSpaceGroup()->GetHMName();
-          fixRhombohedralSpaceGroupWriter(tmpHM);
+          //fixRhombohedralSpaceGroupWriter(tmpHM);
           // Do we have an extended HM symbol, with origin choice as ":1" or ":2" ? If so, remove it.
           size_t n=tmpHM.find(":");
-          if(n!=string::npos) tmpHM=tmpHM.substr(0,n);
+          if(n!=string::npos) tmpHM=tmpHM.substr(0, n);
 
           if (pConv->IsOption("o", OBConversion::OUTOPTIONS))
             {
               unsigned int origin = pUC->GetSpaceGroup()->GetOriginAlternative();
-              if (origin > 0) tmpHM += ":" + to_string(origin);
+              if (origin == pUC->GetSpaceGroup()->HEXAGONAL_ORIGIN)
+                tmpHM[0] = 'H';
+              else if (origin > 0) tmpHM += ":" + to_string(origin);
             }
 
           snprintf(buffer, BUFF_SIZE,

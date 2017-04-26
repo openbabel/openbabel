@@ -80,6 +80,8 @@ namespace OpenBabel
           }
         bool IsValid() const;
 
+        const int HEXAGONAL_ORIGIN;
+
       private:
         /**
          * Hermann-Mauguin Symbol, long version (e.g. "I m m a", "P 1 21 1")
