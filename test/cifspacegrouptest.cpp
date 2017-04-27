@@ -69,8 +69,6 @@ void testSpaceGroupClean()
   pSG = SpaceGroup::Find(sg);
   OB_ASSERT( pSG != NULL );
 
-  cout << pSG->GetOriginAlternative() << endl;
-
   // Check also for errors and warnings
   string summary = obErrorLog.GetMessageSummary();
   OB_ASSERT( summary.find("error") == string::npos);
@@ -232,6 +230,22 @@ void testPdbOutAlternativeOriginSilicon()
   OB_ASSERT(pdb.find("F d 3 m:1") != string::npos);
 }
 
+void testPdbOutHexagonalAlternativeOrigin2()
+{
+  // See https://github.com/openbabel/openbabel/pull/1558
+  OBConversion conv;
+  OBMol mol;
+  conv.SetInFormat("cif");
+  conv.SetOutFormat("pdb");
+  conv.ReadFile(&mol, GetFilename("test06.cif"));
+
+  string pdb = conv.WriteString(&mol);
+  conv.AddOption("o", OBConversion::OUTOPTIONS);
+  pdb = conv.WriteString(&mol);
+
+  OB_ASSERT(pdb.find("H -3 m") != string::npos);
+}
+
 int cifspacegrouptest(int argc, char* argv[])
 {
   int defaultchoice = 1;
@@ -276,6 +290,9 @@ int cifspacegrouptest(int argc, char* argv[])
     break;
   case 8:
     testPdbOutAlternativeOriginSilicon();
+    break;
+  case 9:
+    testPdbOutHexagonalAlternativeOrigin2();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";

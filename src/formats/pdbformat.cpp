@@ -572,7 +572,6 @@ namespace OpenBabel
         OBUnitCell *pUC = (OBUnitCell*)pmol->GetData(OBGenericDataType::UnitCell);
         if(pUC->GetSpaceGroup()){
           string tmpHM=pUC->GetSpaceGroup()->GetHMName();
-          //fixRhombohedralSpaceGroupWriter(tmpHM);
           // Do we have an extended HM symbol, with origin choice as ":1" or ":2" ? If so, remove it.
           size_t n=tmpHM.find(":");
           if(n!=string::npos) tmpHM=tmpHM.substr(0, n);

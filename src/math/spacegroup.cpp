@@ -557,8 +557,10 @@ namespace OpenBabel
         _SpaceGroups.sgbn.find(stripped_hm)!=_SpaceGroups.sgbn.end() &&
         (found = _SpaceGroups.sgbn[stripped_hm]))
       {
-        if (*found == *group)
+        if (*found == *group){
+          found = _SpaceGroups.sgbn[found->GetHallName()];
           return found;
+        }
         if (group->m_transforms.size())
           {// If transforms (symmetry operations) are listed, make sure they match the tabulated ones
             list<const SpaceGroup*>::const_iterator i, end = _SpaceGroups.sgbi[found->m_id - 1].end();
