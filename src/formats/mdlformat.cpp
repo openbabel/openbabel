@@ -33,6 +33,7 @@ GNU General Public License for more details.
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/alias.h>
 #include <openbabel/tokenst.h>
+#include <openbabel/kekulize.h>
 #include <openbabel/atomclass.h>
 
 #include "mdlvalence.h"
@@ -486,6 +487,7 @@ namespace OpenBabel
       // Bond Block
       //
       stereo = 0;
+      bool needs_kekulization = false; // Have we have found an aromatic bond?
       unsigned int begin, end, order, flag;
       for (i = 0;i < nbonds; ++i) {
         flag = 0;
@@ -508,6 +510,11 @@ namespace OpenBabel
           begin = ReadUIntField(line.substr(0, 3).c_str());
           end   = ReadUIntField(line.substr(3, 3).c_str());
           order = ReadUIntField((line.substr(6, 3)).c_str());
+          if (order == 4) {
+            flag |= OBBond::Aromatic;
+            order = 1;
+            needs_kekulization = true;
+          }
         }
         if (begin == 0 || end == 0 || order == 0 || begin > mol.NumAtoms() || end > mol.NumAtoms()) {
           errorMsg << "WARNING: Problems reading a MDL file\n";
@@ -516,8 +523,6 @@ namespace OpenBabel
           obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
           return false;
         }
-
-        order = (order == 4) ? 5 : order;
         if (line.size() >= 12) {  //handle wedge/hash data
           stereo = ReadUIntField((line.substr(9, 3)).c_str());
           if (stereo) {
@@ -551,6 +556,31 @@ namespace OpenBabel
           obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
           return false;
         }
+      }
+
+      // Kekulization is neccessary if an aromatic bond is present
+      if (needs_kekulization) {
+        mol.SetAromaticPerceived();
+        // First of all, set the atoms at the ends of the aromatic bonds to also
+        // be aromatic. This information is required for OBKekulize.
+        FOR_BONDS_OF_MOL(bond, mol) {
+          if (bond->IsAromatic()) {
+            bond->GetBeginAtom()->SetAromatic();
+            bond->GetEndAtom()->SetAromatic();
+          }
+        }
+        bool ok = OBKekulize(&mol);
+        if (!ok) {
+          stringstream errorMsg;
+          errorMsg << "Failed to kekulize aromatic bonds in MOL file";
+          std::string title = mol.GetTitle();
+          if (!title.empty())
+            errorMsg << " (title is " << title << ")";
+          errorMsg << endl;
+          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+          // return false; Should we return false for a kekulization failure?
+        }
+        mol.UnsetAromaticPerceived();
       }
 
       //
@@ -972,14 +1002,6 @@ namespace OpenBabel
         return false;
       }
 
-      // Check to see if there are any untyped aromatic bonds (GetBO == 5)
-      // These must be kekulized first
-      FOR_BONDS_OF_MOL(b, mol) {
-        if (b->GetBO() == 5) {
-          mol.Kekulize();
-          break;
-        }
-      }
       // Find which double bonds have unspecified chirality
       set<OBBond*> unspec_ctstereo = GetUnspecifiedCisTrans(mol);
 
@@ -1530,18 +1552,6 @@ namespace OpenBabel
   //////////////////////////////////////////////////////////
   bool MDLFormat::WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv)
   {
-    // Check to see if there are any untyped aromatic bonds (GetBO == 5)
-    // These must be kekulized first
-    FOR_BONDS_OF_MOL(b, mol)
-      {
-        if (b->GetBO() == 5)
-          {
-            mol.Kekulize();
-            break;
-          }
-      }
-
-
     ofs << "  0  0  0     0  0            999 V3000" << endl; //line 4
     ofs << "M  V30 BEGIN CTAB" <<endl;
     ofs << "M  V30 COUNTS " << mol.NumAtoms() << " " << mol.NumBonds()
