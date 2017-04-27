@@ -3801,6 +3801,7 @@ namespace OpenBabel
     // (Most of the current problems lie in the interface with the
     //   Kekulize code anyway, not in marking everything as potentially aromatic)
 
+    bool needs_kekulization; // are there any aromatic bonds?
     bool typed; // has this ring been typed?
     unsigned int loop, loopSize;
     for (ringit = rlist.begin(); ringit != rlist.end(); ++ringit)
@@ -3825,13 +3826,36 @@ namespace OpenBabel
               for(loop = 0; loop < loopSize; ++loop)
                 {
                   //    cout << " set aromatic " << path[loop] << endl;
-                  (GetBond(path[loop], path[(loop+1) % loopSize]))->SetBO(5);
-                  (GetBond(path[loop], path[(loop+1) % loopSize]))->UnsetKekule();
+                  (GetBond(path[loop], path[(loop+1) % loopSize]))->SetAromatic();
+                  needs_kekulization = true;
+                }
                 }
           }
+
+    // Kekulization is neccessary if an aromatic bond is present
+    if (needs_kekulization) {
+      this->SetAromaticPerceived();
+      // First of all, set the atoms at the ends of the aromatic bonds to also
+      // be aromatic. This information is required for OBKekulize.
+      FOR_BONDS_OF_MOL(bond, this) {
+        if (bond->IsAromatic()) {
+          bond->GetBeginAtom()->SetAromatic();
+          bond->GetEndAtom()->SetAromatic();
+        }
       }
-    _flags &= (~(OB_KEKULE_MOL));
-    Kekulize();
+      bool ok = OBKekulize(this);
+      if (!ok) {
+        stringstream errorMsg;
+        errorMsg << "Failed to kekulize aromatic bonds in OBMol::PerceiveBondOrders";
+        std::string title = this->GetTitle();
+        if (!title.empty())
+          errorMsg << " (title is " << title << ")";
+        errorMsg << endl;
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+        // return false; Should we return false for a kekulization failure?
+      }
+      this->UnsetAromaticPerceived();
+      }
 
     // Quick pass.. eliminate inter-ring sulfur atom multiple bonds
     for (atom = BeginAtom(i); atom; atom = NextAtom(i)) {
@@ -3999,7 +4023,6 @@ namespace OpenBabel
 
     // Now let the atom typer go to work again
     _flags &= (~(OB_HYBRID_MOL));
-    _flags &= (~(OB_KEKULE_MOL));
     _flags &= (~(OB_AROMATIC_MOL));
     _flags &= (~(OB_ATOMTYPES_MOL));
     _flags &= (~(OB_IMPVAL_MOL));
