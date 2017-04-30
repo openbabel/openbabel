@@ -2,6 +2,7 @@
 #include <openbabel/mol.h>
 #include <openbabel/atomclass.h>
 #include <openbabel/obconversion.h>
+#include <openbabel/phmodel.h>
 
 #include <iostream>
 #include <string>
@@ -10,6 +11,37 @@
 
 using namespace std;
 using namespace OpenBabel;
+
+// A basic test of functionality
+void test_OBChemTsfm()
+{
+  OBMol mol;
+  OBConversion conv;
+  conv.SetInFormat("smi");
+  conv.SetOutFormat("smi");
+  
+  // Notes to self: Problems with OBChemTsfm:
+  // tsfm.Init("Cl[C:1]-[C:2]", "[C:1]=[C:2]"); // TODO: Need to change the API to take const char
+  // Init should wipe the state so that OBChemTsfm can safely be reused
+
+  conv.ReadString(&mol, "NCCBr");
+  OBChemTsfm tsfm;
+  std::string start("[N:1]-C-C");
+  std::string end("[N+:1]");
+  tsfm.Init(start, end);
+  tsfm.Apply(mol);
+  std::string out = conv.WriteString(&mol, true);
+  OB_COMPARE(out, "[NH3+]CCBr");
+
+  conv.ReadString(&mol, "ClCCBr");
+  start = "Cl[C:1]-[C:2]";
+  end = "[C:1]=[C:2]";
+  OBChemTsfm b;
+  b.Init(start, end);
+  b.Apply(mol);
+  out = conv.WriteString(&mol, true);
+  OB_COMPARE(out, "ClC=CBr");
+}
 
 // Open Babel was previously disappearing triple bonds when provided with SMILES
 // containing a triple bond in an aromatic ring
@@ -315,6 +347,9 @@ int regressionstest(int argc, char* argv[])
     break;
   case 226:
     test_SMILES_Valence();
+    break;
+  case 227:
+    test_OBChemTsfm();
     break;
     //case N:
   //  YOUR_TEST_HERE();

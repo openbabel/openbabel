@@ -65,7 +65,7 @@ TRANSFORM [SD4]([!D1])(=O)(=O)[O:1][#1:2] >> [SD4]([!D1])(=O)(=O)[O-:1]	-2.6
 #TRANSFORM [SD4]([!D1])(=O)(=O)[O:1][#1:2] >> [SD4]([!D1])(=O)(=O)[O-:1]
 
 #guanidine or amidine
-TRANSFORM [#6^2+0:1](~[N^2:2])(~[N^2:3])* >> [#6+:1](~[N:2])(~[N:3])*		12.5
+TRANSFORM [#6^2+0:1](=[N^2+0:2])(~[N^2:3])* >> [#6:1](=[N+1:2])(~[N:3])*		12.5
 
 #phosphate ester
 TRANSFORM [PD4](=O)([OD2])([OD2])[OD1:1] >> [PD4](=O)([OD2])([OD2])[O-:1]	2.0
@@ -103,8 +103,9 @@ TRANSFORM O=C(O)C(N)CCCC[N:1] >> O=C(O)C(N)CCCC[N+:1] 			10.5
 TRANSFORM O=C(NCC=O)C(N)CCCC[N:1] >> O=C(NCC=O)C(N)CCCC[N+:1] 	        10.5
 
 # histidine
-TRANSFORM O=C(O)C(N)Cc1nc[n:1]c1  >> O=C(O)C(N)Cc1nc[n+:1]c1            6.08
-TRANSFORM O=C(NCC=O)C(N)Cc1nc[n:1]c1  >> O=C(NCC=O)C(N)Cc1nc[n+:1]c1    6.08
+TRANSFORM O=C(O)C(N)Cc1[nH0:1]c[nH]c1  >> O=C(O)C(N)Cc1[n+:1]c[nH]c1            6.08
+TRANSFORM O=C(O)C(N)Cc1[nH]c[nH0:1]c1  >> O=C(O)C(N)Cc1[nH]c[n+:1]c1            6.08
+TRANSFORM O=C(NCC=O)C(N)Cc1[nH0:1]c[nH]c1  >> O=C(NCC=O)C(N)Cc1[n+:1]c[nH]c1    6.08
 
 # cysteine
 TRANSFORM O=C(O)C(N)C[S:1]  >> O=C(O)C(N)C[S-:1]			 8.28

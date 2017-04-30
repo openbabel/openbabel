@@ -315,8 +315,12 @@ namespace OpenBabel
 
         for (i = mlist.begin();i != mlist.end();++i)
           for (j = _vchrg.begin();j != _vchrg.end();++j)
-            if (j->first < (signed)i->size()) //goof proofing
-              mol.GetAtom((*i)[j->first])->SetFormalCharge(j->second);
+            if (j->first < (signed)i->size()) { //goof proofing
+              OBAtom *atom = mol.GetAtom((*i)[j->first]);
+              unsigned int old_charge = atom->GetFormalCharge();
+              atom->SetFormalCharge(j->second);
+              atom->SetImplicitHydrogen(atom->GetImplicitHydrogen() + (j->second - old_charge));
+            }
 
         mol.UnsetImplicitValencePerceived();
       }
@@ -335,8 +339,12 @@ namespace OpenBabel
                   obErrorLog.ThrowError(__FUNCTION__, "unable to find bond", obDebug);
                   continue;
                 }
-
-              bond->SetBO(j->second);
+              unsigned int old_bond_order = bond->GetBondOrder();
+              bond->SetBondOrder(j->second);
+              for (int k = 0; k < 2; ++k) {
+                OBAtom* atom = k == 0 ? bond->GetBeginAtom() : bond->GetEndAtom();
+                atom->SetImplicitHydrogen(atom->GetImplicitHydrogen() - (j->second - old_bond_order));
+              }
             }
       }
 
