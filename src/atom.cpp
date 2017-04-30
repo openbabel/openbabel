@@ -1033,40 +1033,13 @@ namespace OpenBabel
 
   unsigned int OBAtom::BOSum() const
   {
-    unsigned int bo;
-    unsigned int bosum=0;
-    OBBond *bond;
+    unsigned int bosum = 0;
+    
     OBBondIterator i;
+    for (OBBond *bond = ((OBAtom*)this)->BeginBond(i); bond; bond = ((OBAtom*)this)->NextBond(i))
+      bosum += bond->GetBondOrder();
 
-    for (bond = ((OBAtom*)this)->BeginBond(i);bond;bond = ((OBAtom*)this)->NextBond(i))
-      {
-        bo = bond->GetBO();
-        bosum += (bo < 5) ? 2*bo : 3;
-      }
-
-    bosum /= 2;
-    return(bosum);
-  }
-
-  unsigned int OBAtom::KBOSum() const
-  {
-    OBBond *bond;
-    unsigned int bosum;
-    OBBondIterator i;
-
-    bosum = GetImplicitHydrogen();
-
-    for (bond = ((OBAtom*)this)->BeginBond(i);bond;bond = ((OBAtom*)this)->NextBond(i))
-      {
-        if (bond->IsKDouble())
-          bosum += 2;
-        else if (bond->IsKTriple())
-          bosum += 3;
-        else
-          bosum++;
-      }
-
-    return(bosum);
+    return bosum;
   }
 
   unsigned int OBAtom::ImplicitHydrogenCount() const

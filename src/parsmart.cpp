@@ -2192,7 +2192,7 @@ namespace OpenBabel
         case AE_SIZE:
           return atom->IsInRingSize(expr->leaf.value);
         case AE_VALENCE:
-          return expr->leaf.value == (int)(atom->KBOSum()
+          return expr->leaf.value == (int)(atom->BOSum()
             - (atom->GetSpinMultiplicity() ? atom->GetSpinMultiplicity()-1 : 0));
         case AE_CHIRAL:
           // always return true (i.e. accept the match) and check later

@@ -2731,16 +2731,7 @@ namespace OpenBabel {
     else {
       numImplicitHs = atom->GetImplicitHydrogen() + numExplicitHsToSuppress;
       if (!bracketElement) {
-        int bosum = 0;
-        FOR_BONDS_OF_ATOM(bond, &(*atom)) {
-          if (bond->IsKDouble())
-            bosum += 2;
-          else if (bond->IsKTriple())
-            bosum += 3;
-          else
-            bosum++;
-        }
-        bosum -= numExplicitHsToSuppress;
+        int bosum = atom->BOSum() - numExplicitHsToSuppress;
         unsigned int implicitValence = SmilesValence(element, bosum, false);
         unsigned int defaultNumImplicitHs = implicitValence - bosum;
         if (implicitValence == 0 // hypervalent

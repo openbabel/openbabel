@@ -414,9 +414,6 @@ namespace OpenBabel
       double	  AverageBondAngle();
       //! \return The sum of the bond orders of the bonds to the atom (i.e. double bond = 2...)
       unsigned int  BOSum()                 const;
-      //! \return The sum of the bond orders of bonds to the atom, considering only KDouble, KTriple bonds
-      //! \deprecated Use BOSum() instead
-      unsigned int  KBOSum()                const;
       /** Lewis acid/base vacancies for this atom
        *  \return A pair of integers, where first is acid count and second is base count
        *  \since version 2.3

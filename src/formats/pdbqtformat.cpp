@@ -730,7 +730,9 @@ namespace OpenBabel
   //identifies a bond as rotatable if it is a single bond, not amide, not in a ring,
   //and if both atoms it connects have at least one other atom bounded to them
   {
-    if ( !the_bond->IsSingle() || the_bond->IsAmide() || IsAmidine(the_bond) || the_bond->IsInRing() ) {return false;}
+    if ( the_bond->GetBondOrder() != 1 || the_bond->IsAromatic() || 
+         the_bond->IsAmide() || IsAmidine(the_bond) || the_bond->IsInRing() )
+      return false;
     if ( ((the_bond->GetBeginAtom())->GetValence() == 1) || ((the_bond->GetEndAtom())->GetValence() == 1) ) {return false;}
     return true;
   }

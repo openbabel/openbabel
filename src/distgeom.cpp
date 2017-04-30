@@ -474,7 +474,7 @@ namespace OpenBabel {
         float uBounds = _d->GetUpperBounds(path[a] - 1, path[d] - 1) - DIST14_TOL;
 
         bc = _mol.GetBond(path[b], path[c]);
-        if (bc->IsDouble() || bc->IsAromatic()) {
+        if (bc->IsAromatic() || bc->GetBondOrder() == 2) {
           uBounds = lBounds + DIST14_TOL;
           // Correct non-ring neighbors too -- these should be out of the ring
           FOR_NBORS_OF_ATOM(nbr, _mol.GetAtom(path[b])) {
@@ -492,7 +492,7 @@ namespace OpenBabel {
                                _d->GetUpperBounds(nbr->GetIdx() - 1, path[a] - 1) - DIST14_TOL);
           }
 
-        } else if (bc->IsSingle()) {
+        } else if (bc->GetBondOrder() == 1) {
           // Could be anywhere from pure-cis to halfway to trans
           uBounds = _d->GetAvgBounds(path[a] - 1, path[d] - 1);
 
@@ -638,7 +638,7 @@ namespace OpenBabel {
       // For neighbors of d
       //  Actually depends on stereo of bond C-D
       cd = _mol.GetBond(c, d);
-      if (cd && cd->IsDouble()) {
+      if (cd && cd->GetBondOrder() == 2 && !cd->IsAromatic()) {
         stereo = GetCisTransStereo(cd);
       }
       FOR_NBORS_OF_ATOM(e, d) {
@@ -675,7 +675,7 @@ namespace OpenBabel {
       //  Now depends on stereo of bond a-b
       stereo = NULL; // reset
       ab = _mol.GetBond(a, b);
-      if (ab && ab->IsDouble()) {
+      if (ab && ab->GetBondOrder() == 2 && !ab->IsAromatic()) {
         stereo = GetCisTransStereo(ab);
       }
       FOR_NBORS_OF_ATOM(z, a) {

@@ -80,8 +80,6 @@ namespace OpenBabel
 #define OB_HYBRID_MOL            (1<<8)
   //! Implicit valence has been set. See OBAtomTyper
 #define OB_IMPVAL_MOL            (1<<9)
-  //! Kekule form has been set. See OBMol::Kekulize
-#define OB_KEKULE_MOL            (1<<10)
   //! Ring "closure" bonds have been set. See OBBond::IsClosure
 #define OB_CLOSURE_MOL           (1<<11)
   //! Hyrdogen atoms have been added where needed. See OBMol::AddHydrogens
@@ -135,15 +133,6 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
 
     bool  HasFlag(int flag)    { return((_flags & flag) ? true : false); }
     void  SetFlag(int flag)    { _flags |= flag; }
-
-    //! \name Internal Kekulization routines -- see kekulize.cpp and NewPerceiveKekuleBonds()
-    //@{
-    void start_kekulize(std::vector <OBAtom*> &cycle, std::vector<int> &electron);
-    bool expand_kekulize(int bond_idx, std::vector<int> &atomState, std::vector<int> &bondState);
-    bool has_no_leftover_electrons(std::vector<int> &atomState);
-    int getorden(OBAtom *atom);
-    bool expandcycle(OBAtom *atom, OBBitVec &avisit, const OBBitVec &potAromBonds);
-    //@}
 
   public:
 
@@ -402,8 +391,6 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     void   SetHybridizationPerceived() { SetFlag(OB_HYBRID_MOL);    }
     //! Mark that the implicit hydrogen valence of all atoms has been assigned
     void   SetImplicitValencePerceived(){ SetFlag(OB_IMPVAL_MOL);   }
-    //! Mark that Kekule forms have been assigned by Kekulize()
-    void   SetKekulePerceived()      { SetFlag(OB_KEKULE_MOL);      }
     //! Mark that ring closure bonds have been assigned by graph traversal
     void   SetClosureBondsPerceived(){ SetFlag(OB_CLOSURE_MOL);     }
     //! Mark that explicit hydrogen atoms have been added
@@ -455,13 +442,6 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     void Rotate(const double m[9],int nconf);
     //! Translate to the center of all coordinates (for this conformer)
     void Center();
-    //! Transform to standard Kekule bond structure (presumably from an aromatic form)
-
-    bool Kekulize();
-    bool PerceiveKekuleBonds();
-
-    void NewPerceiveKekuleBonds();
-
     //! Delete all hydrogens from the molecule
     //! \return Success
     bool DeleteHydrogens();
@@ -610,8 +590,6 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     bool HasHybridizationPerceived() { return(HasFlag(OB_HYBRID_MOL));  }
     //! Has implicit hydrogen valence been assigned by OBAtomTyper?
     bool HasImplicitValencePerceived() { return(HasFlag(OB_IMPVAL_MOL));}
-    //! Has aromaticity and Kekule forms been assigned by Kekulize?
-    bool HasKekulePerceived() { return(HasFlag(OB_KEKULE_MOL));         }
     //! Have ring "closure" bonds been assigned? (e.g., OBBond::IsClosure())
     bool HasClosureBondsPerceived() { return(HasFlag(OB_CLOSURE_MOL));  }
     //! Have biomolecule chains and residues been assigned by OBChainsParser?

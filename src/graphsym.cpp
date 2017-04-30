@@ -173,10 +173,10 @@ namespace OpenBabel {
     for (bond = atom->BeginBond(bi); bond; bond = atom->NextBond(bi)) {
       nbr = bond->GetNbrAtom(atom);
       if (_frag_atoms.BitIsSet(nbr->GetIdx()) && !(nbr->IsHydrogen())) {
-        if (bond->IsSingle())        count += 1.0f;
-        else if (bond->IsDouble())   count += 2.0f;
-        else if (bond->IsTriple())   count += 3.0f;
-        else if (bond->IsAromatic()) count += 1.6f;
+        if (bond->IsAromatic())
+          count += 1.6f;
+        else
+          count += (float)bond->GetBondOrder();
       }
     }
     if (atom->GetAtomicNum() == 7 && atom->IsAromatic() && TotalNumberOfBonds(atom) == 3) {

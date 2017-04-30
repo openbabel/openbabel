@@ -457,54 +457,6 @@ namespace OpenBabel
     return(false);
   }
 
-  bool OBBond::IsSingle()
-  {
-    if (HasFlag(OB_AROMATIC_BOND))
-      return(false);
-
-    if (!((OBMol*)GetParent())->HasAromaticPerceived())
-      {
-        aromtyper.AssignAromaticFlags(*((OBMol*)GetParent()));
-      }
-
-    if ((this->GetBondOrder()==1) && !(HasFlag(OB_AROMATIC_BOND)))
-      return(true);
-
-    return(false);
-  }
-
-  bool OBBond::IsDouble()
-  {
-    if	(HasFlag(OB_AROMATIC_BOND))
-      return(false);
-
-    if (!((OBMol*)GetParent())->HasAromaticPerceived())
-      {
-        aromtyper.AssignAromaticFlags(*((OBMol*)GetParent()));
-      }
-
-    if ((this->GetBondOrder()==2) && !(HasFlag(OB_AROMATIC_BOND)))
-      return(true);
-
-    return(false);
-  }
-
-  bool OBBond::IsTriple()
-  {
-    if	(HasFlag(OB_AROMATIC_BOND))
-      return(false);
-
-    if (!((OBMol*)GetParent())->HasAromaticPerceived())
-      {
-        aromtyper.AssignAromaticFlags(*((OBMol*)GetParent()));
-      }
-
-    if ((this->GetBondOrder()==3) && !(HasFlag(OB_AROMATIC_BOND)))
-      return(true);
-
-    return(false);
-  }
-
   bool OBBond::IsAromatic() const
   {
     if (((OBBond*)this)->HasFlag(OB_AROMATIC_BOND))
@@ -562,60 +514,6 @@ namespace OpenBabel
           }
       } // end loop for neighbors of start
     return(true);
-  }
-
-  void OBBond::SetKSingle()
-  {
-    _flags &= (~(OB_KSINGLE_BOND|OB_KDOUBLE_BOND|OB_KTRIPLE_BOND));
-    _flags |= OB_KSINGLE_BOND;
-  }
-
-  void OBBond::SetKDouble()
-  {
-    _flags &= (~(OB_KSINGLE_BOND|OB_KDOUBLE_BOND|OB_KTRIPLE_BOND));
-    _flags |= OB_KDOUBLE_BOND;
-  }
-
-  void OBBond::SetKTriple()
-  {
-    _flags &= (~(OB_KSINGLE_BOND|OB_KDOUBLE_BOND|OB_KTRIPLE_BOND));
-    _flags |= OB_KTRIPLE_BOND;
-  }
-
-  bool OBBond::IsKSingle()
-  {
-    // TODO
-    return GetBondOrder() == 1;
-    //if (_flags & OB_KSINGLE_BOND)
-    //  return(true);
-    //if (!((OBMol*)GetParent())->HasKekulePerceived())
-    //  ((OBMol*)GetParent())->NewPerceiveKekuleBonds();
-
-    //return((_flags & OB_KSINGLE_BOND) != 0) ? true : false;
-  }
-
-  bool OBBond::IsKDouble()
-  {
-    // TODO
-    return GetBondOrder() == 2;
-    //if (_flags & OB_KDOUBLE_BOND)
-    //  return(true);
-    //if (!((OBMol*)GetParent())->HasKekulePerceived())
-    //  ((OBMol*)GetParent())->NewPerceiveKekuleBonds();
-
-    //return((_flags & OB_KDOUBLE_BOND) != 0) ? true : false;
-  }
-
-  bool OBBond::IsKTriple()
-  {
-    // TODO
-    return GetBondOrder() == 3;
-    //if (_flags & OB_KTRIPLE_BOND)
-    //  return(true);
-    //if (!((OBMol*)GetParent())->HasKekulePerceived())
-    //  ((OBMol*)GetParent())->NewPerceiveKekuleBonds();
-
-    //return((_flags & OB_KTRIPLE_BOND) != 0) ? true : false;
   }
 
   bool OBBond::IsInRing() const

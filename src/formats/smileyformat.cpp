@@ -406,7 +406,7 @@ namespace OpenBabel
     OBAtom *unspecified = 0;
 
     FOR_BONDS_OF_ATOM (bond, atom) {
-      if (bond->IsDouble())
+      if (!bond->IsAromatic() && bond->GetBondOrder() == 2)
         continue;
 
       OBAtom *nbr = bond->GetNbrAtom(atom);
@@ -463,7 +463,7 @@ namespace OpenBabel
   void SmileyFormat::CreateCisTrans(OBMol *mol, const std::vector<OpenBabelCallback::UpDown> &upDown)
   {
     FOR_BONDS_OF_MOL (doubleBond, mol) {
-      if (!doubleBond->IsDouble() || doubleBond->IsAromatic())
+      if (doubleBond->GetBondOrder() != 2 || doubleBond->IsAromatic())
         continue;
 
       OBAtom *source = doubleBond->GetBeginAtom();
