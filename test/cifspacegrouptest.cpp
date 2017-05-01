@@ -62,6 +62,7 @@ void testSpaceGroupClean()
   OBConversion conv;
   OBMol mol;
   conv.SetInFormat("cif");
+  conv.SetOutFormat("pdb");
   conv.ReadFile(&mol, GetFilename("test02.cif"));
   OBUnitCell* pUC = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
   const SpaceGroup* pSG = pUC->GetSpaceGroup();
@@ -75,6 +76,11 @@ void testSpaceGroupClean()
   OB_ASSERT( summary.find("warning") == string::npos);
 
   OB_ASSERT( pSG->GetId() == 166 );
+
+  string pdb = conv.WriteString(&mol);
+  pdb = conv.WriteString(&mol);
+
+  OB_ASSERT(pdb.find("H -3 m") != string::npos);
 }
 
 void testSpaceGroupTransformations()
