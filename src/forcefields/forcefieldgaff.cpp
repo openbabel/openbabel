@@ -1419,7 +1419,7 @@ namespace OpenBabel
   {
     //use Gasteiger charges
     _mol.SetAutomaticPartialCharge(true);
-    _mol.SetPartialChargesPerceived();
+    _mol.UnsetPartialChargesPerceived();
 
     return true;
   }
