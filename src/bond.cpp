@@ -182,6 +182,11 @@ namespace OpenBabel
     //                               && (_end->IsHeteroatom() || _end->GetHvyValence() > 1) );
     return (_bgn->GetHvyValence() > 1 && _end->GetHvyValence() > 1);
   }
+  
+  static unsigned int TotalNumberOfBonds(OBAtom* atom)
+  {
+    return atom->GetImplicitHydrogen() + atom->GetValence();
+  }
 
    bool OBBond::IsAmide()
    {
@@ -201,7 +206,7 @@ namespace OpenBabel
       }
       if (!c || !n) return(false);
       if (GetBondOrder() != 1) return(false);
-      if (n->GetImplicitValence() != 3) return(false);
+      if (TotalNumberOfBonds(n) != 3) return false; // must be a degree 3 nitrogen
 
       // Make sure C is attached to =O
       OBBond *bond;
