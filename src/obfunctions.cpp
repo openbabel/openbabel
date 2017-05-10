@@ -111,7 +111,8 @@ namespace OpenBabel
       case 0:
         switch (bosum) {
         case 0: case 1: case 2: case 3: return 3;
-        case 4: case 5: return 5;
+        case 4: return 4; // don't round up to 5 for nitrogen
+        case 5: return 5;
         }
         break;
       case 1:
