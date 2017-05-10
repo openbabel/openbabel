@@ -497,6 +497,8 @@ namespace OpenBabel
     char the_insertioncode = ' ';
     bool het=true;
     int model_num = 0;
+    const int MAX_HM_NAME_LEN = 11;
+
     if (!pConv->IsLast() || pConv->GetOutputIndex() > 1)
       { // More than one molecule record
         model_num = pConv->GetOutputIndex(); // MODEL 1-based index
@@ -583,7 +585,14 @@ namespace OpenBabel
               unsigned int origin = pUC->GetSpaceGroup()->GetOriginAlternative();
               if (origin == pUC->GetSpaceGroup()->HEXAGONAL_ORIGIN)
                 tmpHM[0] = 'H';
-              else if (origin > 0) tmpHM += ":" + to_string(origin);
+              else if (origin > 0)
+                tmpHM += ":" + to_string(origin);
+
+              if (tmpHM.length() > MAX_HM_NAME_LEN)
+              {
+                tmpHM.erase(std::remove(tmpHM.begin(), tmpHM.end(), ' '),
+                            tmpHM.end());
+              }
             }
 
           snprintf(buffer, BUFF_SIZE,

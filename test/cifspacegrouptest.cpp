@@ -252,6 +252,22 @@ void testPdbOutHexagonalAlternativeOrigin2()
   OB_ASSERT(pdb.find("H -3 m") != string::npos);
 }
 
+void testPdbRemSpacesHMName()
+{
+  // See https://github.com/openbabel/openbabel/pull/1558
+  OBConversion conv;
+  OBMol mol;
+  conv.SetInFormat("cif");
+  conv.SetOutFormat("pdb");
+  conv.ReadFile(&mol, GetFilename("test07.cif"));
+
+  string pdb = conv.WriteString(&mol);
+  conv.AddOption("o", OBConversion::OUTOPTIONS);
+  pdb = conv.WriteString(&mol);
+
+  OB_ASSERT(pdb.find("I41/amd:2") != string::npos);
+}
+
 int cifspacegrouptest(int argc, char* argv[])
 {
   int defaultchoice = 1;
@@ -300,6 +316,9 @@ int cifspacegrouptest(int argc, char* argv[])
   case 9:
     testPdbOutHexagonalAlternativeOrigin2();
     break;
+  case 10:
+    testPdbRemSpacesHMName();
+  break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
     return -1;
