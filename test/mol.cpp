@@ -196,6 +196,25 @@ int mol(int argc, char* argv[])
   }
   // Reset the formula to test for a double delete error
   testMolFormula.SetFormula(formula);
+  
+  // Test molecular formulas with large atomic numbers
+  OBMol testLgAtNo;
+  testLgAtNo.BeginModify();
+  OBAtom *lgAtom = testLgAtNo.NewAtom();
+  lgAtom->SetAtomicNum(118);
+  // Undefined atomic numbers should be ignored with an obWarning instead of segfault
+  lgAtom = testLgAtNo.NewAtom();
+  lgAtom->SetAtomicNum(200);
+  lgAtom = testLgAtNo.NewAtom();
+  lgAtom->SetAtomicNum(1);
+  lgAtom->SetIsotope(2);
+  testLgAtNo.EndModify();
+  if ( testLgAtNo.GetFormula() == "DOg" ) {
+    cout << "ok 14" << endl;
+  } else {
+    cout << "not ok 14" << endl;
+  }
+  
 
   double dihedral = CalcTorsionAngle(vector3(-1., -1.,  0.),
                                      vector3(-1.,  0.,  0.),
@@ -205,12 +224,12 @@ int mol(int argc, char* argv[])
   double dihedral_error = fabs(dihedral) - 180.0;
 
   if (fabs(dihedral_error) < 0.001) {
-      std::cout << "ok 14 " << dihedral_error << std::endl;
+      std::cout << "ok 15 " << dihedral_error << std::endl;
   } else {
 
-      std::cout << "not ok 14 # CalcTorsionAngle " << dihedral << "!= 180.0" << std::endl;
+      std::cout << "not ok 15 # CalcTorsionAngle " << dihedral << "!= 180.0" << std::endl;
   }
 
-  cout << "1..14\n"; // total number of tests for Perl's "prove" tool
+  cout << "1..15\n"; // total number of tests for Perl's "prove" tool
   return(0);
 }

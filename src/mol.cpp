@@ -984,15 +984,17 @@ namespace OpenBabel
   {
     //Default ones=0, sp=" ".
     //Using ones=1 and sp="" will give unspaced formula (and no pair data entry)
-    // These are the atomic numbers of the elements in alphabetical order.
-    const int NumElements = 112;
+    // These are the atomic numbers of the elements in alphabetical order, plus
+    // pseudo atomic numbers for D, T isotopes.
+    const int NumElements = 118 + 2;
     const int alphabetical[NumElements] = {
       89, 47, 13, 95, 18, 33, 85, 79, 5, 56, 4, 107, 83, 97, 35, 6, 20, 48,
-      58, 98, 17, 96, 27, 24, 55, 29, 111, 105, 66, 68, 99, 63, 9, 26, 100, 87, 31,
-      64, 32, 1, 2, 72, 80, 67, 108, 53, 49, 77, 19, 36, 57, 3, 103, 71, 101,
-      12, 25, 42, 109, 7, 11, 41, 60, 10, 28, 102, 93, 8, 76, 15, 91, 82, 46,
-      61, 84, 59, 78, 94, 88, 37, 75, 104, 45, 86, 44, 16, 51, 21, 34, 106, 14,
-      62, 50, 38, 112, 73, 65, 43, 52, 90, 22, 81, 69, 92, 110, 23, 74, 54, 39, 70,
+      58, 98, 17, 96, 112, 27, 24, 55, 29, NumElements-1,
+      105, 110, 66, 68, 99, 63, 9, 26, 114, 100, 87, 31,
+      64, 32, 1, 2, 72, 80, 67, 108, 53, 49, 77, 19, 36, 57, 3, 103, 71, 116, 115, 101,
+      12, 25, 42, 109, 7, 11, 41, 60, 10, 113, 28, 102, 93, 8, 118, 76, 15, 91, 82, 46,
+      61, 84, 59, 78, 94, 88, 37, 75, 104, 111, 45, 86, 44, 16, 51, 21, 34, 106, 14,
+      62, 50, 38, NumElements, 73, 65, 43, 52, 90, 22, 81, 69, 117, 92, 23, 74, 54, 39, 70,
       30, 40 };
 
     int atomicCount[NumElements];
@@ -1010,6 +1012,12 @@ namespace OpenBabel
         int anum = a->GetAtomicNum();
         if(anum==0)
           continue;
+        if(anum > (NumElements-2)) {
+          char buffer[BUFF_SIZE];  // error buffer
+          snprintf(buffer, BUFF_SIZE, "Skipping unknown element with atomic number %d", anum);
+          obErrorLog.ThrowError(__FUNCTION__, buffer, obWarning);
+          continue;
+        }
         bool IsHiso = anum == 1 && a->GetIsotope()>=2;
         if(UseImplicitH)
           {
