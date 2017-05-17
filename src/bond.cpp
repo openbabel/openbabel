@@ -238,7 +238,7 @@ namespace OpenBabel
       }
       if (!c || !n) return(false);
       if (GetBondOrder() != 1) return(false);
-      if (n->GetImplicitValence() != 3) return(false);
+      if (TotalNumberOfBonds(n) != 3) return false; // must be a degree 3 nitrogen
 
       // Make sure that N is connected to one non-H
       if (n->GetHvyValence() != 1) return(false);
@@ -272,7 +272,7 @@ namespace OpenBabel
       }
       if (!c || !n) return(false);
       if (GetBondOrder() != 1) return(false);
-      if (n->GetImplicitValence() != 3) return(false);
+      if (TotalNumberOfBonds(n) != 3) return false; // must be a degree 3 nitrogen
 
       // Make sure that N is connected to two non-H atoms
       if (n->GetHvyValence() != 2) return(false);
@@ -306,7 +306,7 @@ namespace OpenBabel
       }
       if (!c || !n) return(false);
       if (GetBondOrder() != 1) return(false);
-      if (n->GetImplicitValence() != 3) return(false);
+      if (TotalNumberOfBonds(n) != 3) return false; // must be a degree 3 nitrogen
 
       // Make sure that N is connected to three non-H atoms
       if (n->GetHvyValence() != 3) return(false);
