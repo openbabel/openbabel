@@ -53,6 +53,9 @@
 #include <openbabel/isomorphism.h>
 #include <openbabel/query.h>
 #include <openbabel/canon.h>
+
+#include <openbabel/bondtyper.h>
+#include <openbabel/phmodel.h>
 %}
 
 #ifdef HAVE_EIGEN

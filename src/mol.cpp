@@ -39,11 +39,6 @@ namespace OpenBabel
 {
 
   extern bool SwabInt;
-  extern OBPhModel  phmodel;
-  extern OBAromaticTyper  aromtyper;
-  extern OBAtomTyper      atomtyper;
-  extern OBBondTyper      bondtyper;
-
 
   /** \class OBMol mol.h <openbabel/mol.h>
       \brief Molecule Class

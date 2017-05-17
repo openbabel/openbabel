@@ -27,6 +27,7 @@
 #include <openbabel/reaction.h>
 #include <openbabel/residue.h>
 #include <openbabel/internalcoord.h>
+#include <openbabel/bondtyper.h>
 
 #include <openbabel/ring.h>
 #include <openbabel/obconversion.h>
