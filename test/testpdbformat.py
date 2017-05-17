@@ -24,12 +24,12 @@ class TestPDBFormat(BaseTest):
 
     def testInsertionCodes(self):
         """
-	Testing a PDB entry with insertion codes to distinguish residues
-	upon conversion to FASTA.
+        Testing a PDB entry with insertion codes to distinguish residues
+        upon conversion to FASTA.
         """
         self.canFindExecutable("babel")
 
-	self.entryPDBwithInsertioncodes="""ATOM    406  N   VAL L  29      58.041  17.797  48.254  1.00  0.00           N  
+        self.entryPDBwithInsertioncodes="""ATOM    406  N   VAL L  29      58.041  17.797  48.254  1.00  0.00           N  
 ATOM    407  CA  VAL L  29      57.124  18.088  47.170  1.00  0.00           C  
 ATOM    408  C   VAL L  29      55.739  17.571  47.538  1.00  0.00           C  
 ATOM    409  O   VAL L  29      55.535  16.362  47.550  1.00  0.00           O  
@@ -100,9 +100,9 @@ ATOM    473  HE1 TYR L  32      48.512  15.775  42.066  1.00  0.00           H
 ATOM    474  HE2 TYR L  32      48.145  19.172  44.648  1.00  0.00           H  
 ATOM    475  HH  TYR L  32      46.462  17.658  44.280  1.00  0.00           H  
 """
-	output, error = run_exec(self.entryPDBwithInsertioncodes,
-				     "babel -ipdb -ofasta")
-	self.assertEqual(output.rstrip().rsplit("\n",1)[1], "VSSSY")
+        output, error = run_exec(self.entryPDBwithInsertioncodes,
+                                     "babel -ipdb -ofasta")
+        self.assertEqual(output.rstrip().rsplit("\n",1)[1], "VSSSY")
 
 if __name__ == "__main__":
     testsuite = []
