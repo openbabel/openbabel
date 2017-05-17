@@ -646,7 +646,7 @@ namespace OpenBabel
         vid[i] += (unsigned int)(((atom->IsAromatic()) ? 1 : 0)*1000);
         vid[i] += (unsigned int)(((atom->IsInRing()) ? 1 : 0)*10000);
         vid[i] += (unsigned int)(atom->GetAtomicNum()*100000);
-        vid[i] += (unsigned int)(atom->GetImplicitValence()*10000000);
+        vid[i] += (unsigned int)(atom->GetImplicitHydrogen()*10000000);
       }
   }
 
@@ -2168,15 +2168,6 @@ namespace OpenBabel
         hcount = atom->GetImplicitHydrogen();
         atom->SetImplicitHydrogen(0);
 
-        ////Jan 05 Implicit valency now left alone; use spin multiplicity for implicit Hs
-        //int mult = atom->GetSpinMultiplicity();
-        //if(mult==2) //radical
-        //  hcount-=1;
-        //else if(mult==1 || mult==3) //carbene
-        //  hcount-=2;
-        //else if(mult>=4) // as in CH, C etc
-        //  hcount -= mult-1;
-
         if (hcount)
           {
             vhadd.push_back(pair<OBAtom*,int>(atom,hcount));
@@ -2293,41 +2284,21 @@ namespace OpenBabel
 
   bool OBMol::AddHydrogens(OBAtom *atom)
   {
-    OBAtom *h;
+    int hcount = atom->GetImplicitHydrogen();
+    if (hcount == 0)
+      return true;
 
-    if (atom->IsHydrogen())
-      return false;
+    atom->SetImplicitHydrogen(0);
 
-    //count up number of hydrogens to add
-    int hcount,count=0;
-    vector<pair<OBAtom*,int> > vhadd;
-
-    hcount = atom->GetImplicitValence() - atom->GetValence();
-
-    //Jan 05 Implicit valency now left alone; use spin multiplicity for implicit Hs
-    int mult = atom->GetSpinMultiplicity();
-    if(mult==2) //radical
-      hcount-=1;
-    else if(mult==1 || mult==3) //carbene
-      hcount-=2;
-
-    if (hcount < 0)
-      hcount = 0;
-    if (hcount)
-      {
-        vhadd.push_back(pair<OBAtom*,int>(atom,hcount));
-        count += hcount;
-      }
-
-    if (count == 0)
-      return(true);
+    vector<pair<OBAtom*, int> > vhadd;
+    vhadd.push_back(pair<OBAtom*,int>(atom, hcount));
 
     //realloc memory in coordinate arrays for new hydroges
     double *tmpf;
     vector<double*>::iterator j;
     for (j = _vconf.begin();j != _vconf.end();++j)
       {
-        tmpf = new double [(NumAtoms()+count)*3+10];
+        tmpf = new double [(NumAtoms()+hcount)*3+10];
         memcpy(tmpf,(*j),sizeof(double)*NumAtoms()*3);
         delete []*j;
         *j = tmpf;
@@ -2340,6 +2311,7 @@ namespace OpenBabel
     vector<pair<OBAtom*,int> >::iterator k;
     double hbrad = etab.CorrectedBondRad(1,0);
 
+    OBAtom *h;
     for (k = vhadd.begin();k != vhadd.end();++k)
       {
         atom = k->first;
