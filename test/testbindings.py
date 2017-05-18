@@ -47,11 +47,25 @@ class TestPythonBindings(PythonBindings):
         conv.SetInFormat("smi")
         conv.ReadString(mol, "CC(=O)Cl")
         self.assertAlmostEqual(mol.GetMolWt(), 78.5, 1)
-
     
 class PybelWrapper(PythonBindings):
     def testDummy(self):
         self.assertTrue(pybel is not None, "Failed to import the Pybel module")
+
+class TestSuite(PythonBindings):
+    def testOBMolAssignTotalChargeToAtoms(self):
+        """Run the test cases described in the source code"""
+        data = [("[NH4]", +1, "[NH4+]"),
+                ("CC(=O)[O]", -1, "CC(=O)[O-]"),
+                ("C[CH2]", +1, "C[CH2+]"),
+                ("C[CH2]", -1, "C[CH2-]"),
+                ("[NH3]CC(=O)[O]", 0, "[NH3+]CC(=O)[O-]"),
+                ("S(=O)(=O)([O])[O]", -2, "S(=O)(=O)([O-])[O-]"),
+                ("[NH4].[Cl]", 0, "[NH4+].[Cl-]")]
+        for smi, charge, ans in data:
+            mol = pybel.readstring("smi", smi)
+            mol.OBMol.AssignTotalChargeToAtoms(charge)
+            self.assertEqual(mol.write("smi").rstrip(), ans)
    
 if __name__ == "__main__":
     unittest.main()

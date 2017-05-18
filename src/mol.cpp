@@ -27,6 +27,7 @@ GNU General Public License for more details.
 #include <openbabel/builder.h>
 #include <openbabel/kekulize.h>
 #include <openbabel/math/matrix3x3.h>
+#include <openbabel/obfunctions.h>
 
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
@@ -2379,46 +2380,10 @@ namespace OpenBabel
 
   bool OBMol::AssignSpinMultiplicity(bool NoImplicitH)
   {
-    // The following functions now uses the flag OB_ATOMSPIN_MOL rather than OB_TSPIN_MOL.
-    // OB_TSPIN_MOL is set when the total spin of a molecule is set, which prevented
-    // the hydrogen deficiency of individual atoms being set in this function.
+    // TODO: The following functions simply returns true, as it has been made
+    // redundant by changes to the handling of implicit hydrogens, and spin.
+    // This needs to be sorted out properly at some point.
     return true;
-
-    if (HasSpinMultiplicityAssigned())//
-      return(true);
-
-    SetSpinMultiplicityAssigned();
-
-    if(HasFlag(OB_PATTERN_STRUCTURE))// not a real molecule, just a pattern
-      return true;
-
-    if(NumBonds()==0 && NumAtoms()!=1)
-      {
-        obErrorLog.ThrowError(__FUNCTION__,
-                  "Did not run OpenBabel::AssignSpinMultiplicity on molecule with no bonds", obAuditMsg);
-        return true;
-      }
-
-    obErrorLog.ThrowError(__FUNCTION__,
-                  "Ran OpenBabel::AssignSpinMultiplicity", obAuditMsg);
-
-    OBAtom *atom;
-    int diff;
-    vector<OBAtom*>::iterator k;
-    for (atom = BeginAtom(k);atom;atom = NextAtom(k))
-      {
-        if(atom->HasImplHForced()) //Probably unbracketed atoms in SMILES, which are never H deficient
-          continue;
-        if (NoImplicitH
-            || (!atom->IsHydrogen() && atom->ExplicitHydrogenCount(true)!=0)//exclude D,T
-            || atom->HasNoHForced())
-          {
-            diff=atom->GetImplicitValence() - (atom->GetHvyValence() + atom->ExplicitHydrogenCount());
-            if (diff)
-              atom->SetSpinMultiplicity(diff+1);//radicals =2; all carbenes =3
-          }
-      }
-    return (true);
   }
 
   // Used by DeleteAtom below. Code based on StereoRefToImplicit
@@ -4078,36 +4043,30 @@ namespace OpenBabel
   {
     int extraCharge = charge - GetTotalCharge(); //GetTotalCharge() gets charge on atoms
 
-    //Redo AssignImplicitValence on atoms, allowing it to be less than the actual valence.
-    UnsetImplicitValencePerceived();
-    UnsetFlag(OB_ATOMSPIN_MOL);
-    atomtyper.AssignImplicitValence(*this, true);
-
-    bool somethingDone=false;
     FOR_ATOMS_OF_MOL (atom, this)
     {
-      if(atom->HasImplHForced() || atom->IsHydrogen()) //incl unbracketed atoms in SMILES
+      unsigned int atomicnum = atom->GetAtomicNum();
+      if (atomicnum == 1)
         continue;
-      int diff=atom->GetImplicitValence() - (atom->GetHvyValence() + atom->ExplicitHydrogenCount());
-      if(diff!=0)
+      int charge = atom->GetFormalCharge();
+      unsigned bosum = atom->BOSum();
+      unsigned int totalValence = bosum + atom->GetImplicitHydrogen();
+      unsigned int typicalValence = GetTypicalValence(atomicnum, bosum, charge);
+      int diff = typicalValence - totalValence;
+      if(diff != 0)
       {
         int c;
-        if(extraCharge==0)
-          c = diff>0 ? -1 : +1; //e.g. CH3C(=O)O, NH4 respectively
+        if(extraCharge == 0)
+          c = diff > 0 ? -1 : +1; //e.g. CH3C(=O)O, NH4 respectively
         else
-          c = extraCharge<0 ? -1 : 1;
-        atom->SetFormalCharge(atom->GetFormalCharge() + c);
-        extraCharge-=c;
-        somethingDone = true;
+          c = extraCharge < 0 ? -1 : 1;
+        if (totalValence == GetTypicalValence(atomicnum, bosum, charge + c)) {
+          atom->SetFormalCharge(charge + c);
+          extraCharge -= c;
+        }
       }
     }
-    // Correct the atom spin multiplicities for the charge added
-    if(somethingDone)
-    {
-      UnsetFlag(OB_ATOMSPIN_MOL);
-      AssignSpinMultiplicity(true);
-    }
-    if(extraCharge!=0)
+    if(extraCharge != 0)
     {
       obErrorLog.ThrowError(__FUNCTION__, "Unable to assign all the charge to atoms", obWarning);
       return false;

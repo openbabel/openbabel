@@ -26,7 +26,7 @@ General Public License for more details.
 
 namespace OpenBabel
 {
-
+  OBAPI unsigned int GetTypicalValence(unsigned int element, unsigned int bosum, int charge);
   OBAPI void OBAtomAssignTypicalImplicitHydrogens(OBAtom* atom);
 
 } // end namespace OpenBabel

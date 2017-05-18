@@ -18,10 +18,8 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
-
-  // Note that while N can have valence 5, it doesn't make sense
-  // to round up to 5 when adding hydrogens
-  static unsigned int GetTypicalValence(unsigned int element, unsigned int bosum, int charge)
+  // Return the typical valence for an atom of specified element, bond order sum and formal charge
+  unsigned int GetTypicalValence(unsigned int element, unsigned int bosum, int charge)
   {
     switch (element) {
     case 1:
@@ -101,6 +99,8 @@ namespace OpenBabel
       }
       break;
     case 7:
+      // Note that while N can have valence 5, it doesn't make sense
+      // to round up to 5 when adding hydrogens
       switch (charge) {
       case -2:
         if (bosum <= 1) return 1;
