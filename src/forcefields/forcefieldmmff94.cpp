@@ -3801,7 +3801,7 @@ namespace OpenBabel
             }
           }
 
-          if (type == 77)
+          if (atoi(nbr->GetType()) == 77)
             atom->SetPartialCharge(-0.25); // O4CL
         }
       } else if (type == 61) {
