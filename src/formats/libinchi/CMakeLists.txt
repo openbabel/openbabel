@@ -6,7 +6,7 @@ set(INCHI_PATCH_VER 1)
 file(GLOB inchi_srcs "*.c")
 
 if(NOT WIN32)
-  set(libs ${libs} c)
+  set(libs ${libs} c m)
 endif(NOT WIN32)
 
 include_directories(${openbabel_SOURCE_DIR}/include/inchi)
