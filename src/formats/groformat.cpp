@@ -217,9 +217,6 @@ bool GROFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     // Get atom
     atom  = pmol->NewAtom();
 
-    // Needed for -h to work with molecules with implicit hydrogens
-    atom->ForceImplH();
-
     tempstr.assign(line,0,5);
     stringstream(tempstr) >> resid;
 

@@ -136,7 +136,6 @@ namespace OpenBabel
     _ele = (char)0;
     _isotope = 0;
     _spinmultiplicity=0; // CM 18 Sept 2003
-    _impval = 0;
     _imph = 0;
     _fcharge = 0;
     _type[0] = '\0';
@@ -169,7 +168,6 @@ namespace OpenBabel
     _ele = src->_ele;
     _imph = src->_imph;
     _isotope = src->_isotope;
-    _impval = src->_impval;
     _fcharge = src->_fcharge;
     _spinmultiplicity = src->_spinmultiplicity;
     strncpy(_type,src->_type, sizeof(_type) - 1);

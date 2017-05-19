@@ -73,8 +73,8 @@ namespace OpenBabel
 
       if (aromatic)
         atom->SetAromatic();
-      else if (hCount == -1)
-        atom->ForceImplH();
+      //else if (hCount == -1)
+      //  atom->ForceImplH();
 
       if (hCount > -1) {
         if (hCount == 0)
@@ -83,7 +83,6 @@ namespace OpenBabel
         for (int i = 0; i < hCount; ++i) {
           OBAtom *hydrogen = mol->NewAtom();
           hydrogen->SetAtomicNum(1);
-          hydrogen->SetImplicitValence(1);
           mol->AddBond(atom->GetIdx(), hydrogen->GetIdx(), 1);
           upDown.push_back(IsNotUpDown);
         }

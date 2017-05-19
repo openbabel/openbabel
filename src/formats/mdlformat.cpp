@@ -453,18 +453,11 @@ namespace OpenBabel
         parities.push_back(parity);
 
         // valence
-        bool forceNoH = false;
         if (line.size() >= 50) {
           int valence = ReadIntField(line.substr(48, 3).c_str());
-          if(valence!=0) // Now no H with any value
-            forceNoH = true;
+          //if (valence != 0) // Now no H with any value
+          //  ; // TODO: Implement this
         }
-        if (forceNoH)
-          patom->ForceNoH(); // There are no additional implicit Hs
-        else
-          patom->ForceImplH(); // There could be additional implicit Hs
-                               // - if we don't set this, then the presence of a single explicit H
-                               //   will cause AssignSpinMultiplicity to assume no additional implicit Hs
 
         if (line.size() >= 62) {
           int aclass = ReadIntField(line.substr(60, 3).c_str());
@@ -741,15 +734,15 @@ namespace OpenBabel
         expval += bond->GetBondOrder();
         count++;
       }
-      if (foundZBO || foundZCH || foundHYD) {
-        // Use HYD count to SetImplicitValence if present, otherwise HYDValence model
-        HYDMap::const_iterator hyd = hydMap.find(atom->GetIdx());
-        if (hyd == hydMap.end()) {
-          unsigned int impval = HYDValence(elem, charge, expval);
-          atom->SetImplicitValence(impval-(expval-count));
-        } else {
-          atom->SetImplicitValence(atom->GetValence() + hyd->second);
-        }
+      if (foundZBO || foundZCH || foundHYD) { // TODO: Fix this
+        //// Use HYD count to SetImplicitValence if present, otherwise HYDValence model
+        //HYDMap::const_iterator hyd = hydMap.find(atom->GetIdx());
+        //if (hyd == hydMap.end()) {
+        //  unsigned int impval = HYDValence(elem, charge, expval);
+        //  atom->SetImplicitValence(impval-(expval-count));
+        //} else {
+        //  atom->SetImplicitValence(atom->GetValence() + hyd->second);
+        //}
       } else {
         unsigned int impval = MDLValence(elem, charge, expval);
         int mult = atom->GetSpinMultiplicity();

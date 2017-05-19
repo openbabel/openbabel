@@ -70,10 +70,6 @@ namespace OpenBabel
 #define OB_POS_CHIRAL_ATOM (1<<10)
   //! Atom has - chiral volume
 #define OB_NEG_CHIRAL_ATOM (1<<11)
-  //! Atom has no hydrogen attached. Temporary use only during input of some formats
-#define OB_ATOM_HAS_NO_H   (1<<12)
-  //! Atom is not hydrogen deficient. (for SMILES input)
-#define OB_ATOM_NOT_H_DEFICIENT (1<<13)
 
   // Class OBAtom
   // class introduction in atom.cpp
@@ -82,7 +78,6 @@ namespace OpenBabel
     {
     protected:
       unsigned char                 _ele;       //!< atomic number (type unsigned char to minimize space -- allows for 0..255 elements)
-      char                          _impval;    //!< implicit valence
       unsigned char                 _imph;      //!< number of implicit hydrogens
       char                          _type[OBATOM_TYPE_LEN];   //!< atomic type
       short                         _fcharge;   //!< formal charge
@@ -147,12 +142,6 @@ namespace OpenBabel
       void SetIsotope(unsigned int iso);
       //! Set the implicit hydrogen count to @p val
       void SetImplicitHydrogen(unsigned int val)    { _imph = (unsigned char)val; }
-      //! Set the implicit valence to @p val
-      void SetImplicitValence(int val)    { _impval = (char)val; }
-      //! Increase the implicit valence by one
-      void IncrementImplicitValence()     { _impval++; }
-      //! Decrease the implicit valence by one
-      void DecrementImplicitValence()     { _impval--; }
       //! Set the formal charge of the atom to @p fcharge
       void SetFormalCharge(int fcharge)   { _fcharge = fcharge; }
       //! Set the atomic spin to @p spin. See _spinmultiplicity
@@ -376,17 +365,6 @@ namespace OpenBabel
       //! Change the hybridization of this atom and modify the geometry accordingly
       //! \return success or failure
       bool SetHybAndGeom(int);
-      //! Mark that atom has no hydrogens attached
-      void ForceNoH() {SetFlag(OB_ATOM_HAS_NO_H);}
-      //! \return if atom has been marked as having no hydrogens attached
-      bool HasNoHForced() {return HasFlag(OB_ATOM_HAS_NO_H);}
-
-      //! Mark that atom is not hydrogen deficient (For SMILES input)
-      //! \since version 2.2
-      void ForceImplH() {SetFlag(OB_ATOM_NOT_H_DEFICIENT);}
-      //! \return if atom has been marked as having no hydrogens attached
-      //! \since version 2.2
-      bool HasImplHForced() {return HasFlag(OB_ATOM_NOT_H_DEFICIENT);}
       //@}
 
       //! \name Property information

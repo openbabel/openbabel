@@ -2231,7 +2231,6 @@ namespace OpenBabel
             h = NewAtom();
             h->SetType("H");
             h->SetAtomicNum(1);
-            h->SetImplicitValence(1);
 
             // copy parent atom residue to added hydrogen     REG 6/30/02
 

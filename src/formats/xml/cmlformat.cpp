@@ -539,11 +539,6 @@ namespace OpenBabel
           if(!ParseFormula(RawFormula, _pmol))
             obErrorLog.ThrowError(_pmol->GetTitle(),"Error in formula", obError);
 
-        //ensure unbonded atoms are seen as such
-        if(_pmol->NumBonds()==0)
-          FOR_ATOMS_OF_MOL(a, *_pmol)
-            a->ForceNoH();
-
         _pmol->AssignSpinMultiplicity();
         _pmol->EndModify();
         return (--_embedlevel>=0); //false to stop parsing if no further embedded mols
@@ -1166,7 +1161,6 @@ namespace OpenBabel
         for(i=0;i<n;++i)
           {
             OBAtom* pAtom = pmol->NewAtom();
-            pAtom->ForceNoH();
             pAtom->SetAtomicNum(atno);
             if(iso)
               pAtom->SetIsotope(iso);
