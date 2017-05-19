@@ -921,7 +921,7 @@ namespace OpenBabel
         obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
         return false;
       }
-      atom->SetImplicitHydrogen(hcount - explH);
+      atom->SetImplicitHCount(hcount - explH);
     }
     return true;
   }
@@ -1498,7 +1498,7 @@ namespace OpenBabel
                 int spin = patom->GetSpinMultiplicity();
                 int isotope =patom->GetIsotope();
 
-                int hcount=patom->GetImplicitHydrogen() + patom->ExplicitHydrogenCount(); //includes H isotopes
+                int hcount=patom->GetImplicitHCount() + patom->ExplicitHydrogenCount(); //includes H isotopes
 
                 X = patom->GetX();
                 Y = patom->GetY();

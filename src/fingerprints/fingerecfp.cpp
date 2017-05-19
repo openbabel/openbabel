@@ -233,7 +233,7 @@ static void ECFPFirstPass(OpenBabel::OBMol &mol,
     buffer[2] = aptr->GetAtomicNum();
     buffer[3] = (unsigned char)aptr->GetIsotope();
     buffer[4] = (unsigned char)aptr->GetFormalCharge();
-    buffer[5] = (unsigned char)(aptr->ExplicitHydrogenCount() + aptr->GetImplicitHydrogen());
+    buffer[5] = (unsigned char)(aptr->ExplicitHydrogenCount() + aptr->GetImplicitHCount());
     buffer[6] = aptr->IsInRing() ? 1 : 0;
     buffer[7] = 0;  // aptr->IsAromatic() ? 1 : 0;
     ainfo[idx].e[0] = ECFPHash(buffer,8);

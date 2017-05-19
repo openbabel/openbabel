@@ -156,7 +156,7 @@ int mol(int argc, char* argv[])
   OBAtom *testAtom = testMolH.NewAtom();
   testAtom->SetVector(0.5f, 0.5f, 0.5f);
   testAtom->SetAtomicNum(6);
-  testAtom->SetImplicitHydrogen(4);
+  testAtom->SetImplicitHCount(4);
   testMolH.EndModify();
   testMolH.AddHydrogens();
   if (testMolH.NumAtoms() == 5) {
@@ -170,7 +170,7 @@ int mol(int argc, char* argv[])
   OBAtom *testAtom2 = testMolH2.NewAtom();
   testAtom2->SetVector(0.5f, 0.5f, 0.5f);
   testAtom2->SetAtomicNum(6);
-  testAtom2->SetImplicitHydrogen(4);
+  testAtom2->SetImplicitHCount(4);
   testMolH2.AddHydrogens();
   if (testMolH2.NumAtoms() == 5) {
     cout << "ok 11" << endl;

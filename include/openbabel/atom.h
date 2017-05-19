@@ -141,7 +141,7 @@ namespace OpenBabel
       //! Set isotope number (actual atomic weight is tabulated automatically, 0 = most abundant)
       void SetIsotope(unsigned int iso);
       //! Set the implicit hydrogen count to @p val
-      void SetImplicitHydrogen(unsigned int val)    { _imph = (unsigned char)val; }
+      void SetImplicitHCount(unsigned int val)    { _imph = (unsigned char)val; }
       //! Set the formal charge of the atom to @p fcharge
       void SetFormalCharge(int fcharge)   { _fcharge = fcharge; }
       //! Set the atomic spin to @p spin. See _spinmultiplicity
@@ -224,7 +224,7 @@ namespace OpenBabel
       //! \return The hybridization of this atom: 1 for sp, 2 for sp2, 3 for sp3, 4 for sq. planar, 5 for trig. bipy, 6 for octahedral
       unsigned int GetHyb()             const;
       //! \return The number of implicit hydrogens attached to this atom
-      unsigned char GetImplicitHydrogen() const { return _imph; };
+      unsigned char GetImplicitHCount() const { return _imph; };
       //! \return The number of non-hydrogens connected to this atom
       unsigned int GetHvyValence()      const;
       //! \return The number of heteroatoms connected to an atom

@@ -1074,7 +1074,7 @@ namespace OpenBabel
       int S = SHELL[N];
       int V = VALENCE[N];
       int C = GetFormalCharge();
-      int B = GetImplicitHydrogen() + BOSum();
+      int B = GetImplicitHCount() + BOSum();
       // TODO: Do we actually want to divide by 2 here? (counting pairs instead of single)
       counts.first = (S - V - B + C) / 2;  // Acid: Number of electrons pairs desired
       counts.second = (V - B - C) / 2;     // Base: Number of electrons pairs available

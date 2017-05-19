@@ -758,7 +758,7 @@ namespace OpenBabel
           delta = mult - 1;
         }
         int nimpval = impval - expval - delta;
-        atom->SetImplicitHydrogen(nimpval > 0 ? nimpval : 0);
+        atom->SetImplicitHCount(nimpval > 0 ? nimpval : 0);
       }
     }
 
@@ -1154,11 +1154,11 @@ namespace OpenBabel
           if (foundZBO && origatom->GetFormalCharge() != atom->GetFormalCharge()) {
             zchs.push_back(make_pair(origatom->GetIdx(), origatom->GetFormalCharge()));
           }
-          int hcount = atom->ExplicitHydrogenCount() + atom->GetImplicitHydrogen();
+          int hcount = atom->ExplicitHydrogenCount() + atom->GetImplicitHCount();
           int autohcount = HYDValence(origatom->GetAtomicNum(), origatom->GetFormalCharge(), origatom->BOSum())
                              - origatom->BOSum() + atom->ExplicitHydrogenCount();
           if (hcount != autohcount) {
-            hyds.push_back(make_pair(origatom->GetIdx(), atom->GetImplicitHydrogen()));
+            hyds.push_back(make_pair(origatom->GetIdx(), atom->GetImplicitHCount()));
           }
         }
 

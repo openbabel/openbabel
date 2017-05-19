@@ -415,7 +415,7 @@ namespace OpenBabel
     // for reference (Case 1->22).
 
     unsigned int elem = atm->GetAtomicNum();
-    unsigned int allatomdeg = atm->GetImplicitHydrogen() + atm->GetValence(); // total no. of bonds
+    unsigned int allatomdeg = atm->GetImplicitHCount() + atm->GetValence(); // total no. of bonds
 
     if (!atm->IsInRing() || allatomdeg > 3 || !IsSP2(atm, elem)) {
       min = 0; max = 0;
@@ -491,7 +491,7 @@ namespace OpenBabel
         }
         break;
       case 1:
-        if ((deg==2 && (atm->GetImplicitHydrogen() + atm->BOSum())==4) || deg == 3) { // tried deg 2 or 3 but fails on emolecules 6884346
+        if ((deg==2 && (atm->GetImplicitHCount() + atm->BOSum())==4) || deg == 3) { // tried deg 2 or 3 but fails on emolecules 6884346
           min = 1; max = 1; return true; // Case 12 [#7rD3+]
         }
       }

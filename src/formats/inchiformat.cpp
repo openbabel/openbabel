@@ -140,7 +140,7 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     //Now use the implicit H info provided by InChI code to make explicit H in OBMol,
     //assign spinMultiplicity, then remove the hydrogens to be consistent with old way.
     //Add implicit hydrogen. m=0 is non-istopic H m=1,2,3 are isotope specified
-    patom->SetImplicitHydrogen(piat->num_iso_H[0]);
+    patom->SetImplicitHCount(piat->num_iso_H[0]);
     for (int m=1; m<=3; ++m) {
       if (piat->num_iso_H[m]) {
         for (int k=0; k<piat->num_iso_H[m]; ++k) {
@@ -372,7 +372,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
       strcpy(iat.elname,etab.GetSymbol(patom->GetAtomicNum()));
       iat.num_bonds = nbonds;
-      iat.num_iso_H[0] = patom->GetImplicitHydrogen();
+      iat.num_iso_H[0] = patom->GetImplicitHCount();
       if(patom->GetIsotope())
       {
         iat.isotopic_mass = ISOTOPIC_SHIFT_FLAG +

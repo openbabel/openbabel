@@ -318,7 +318,7 @@ namespace OpenBabel
               OBAtom *atom = mol.GetAtom((*i)[j->first]);
               unsigned int old_charge = atom->GetFormalCharge();
               atom->SetFormalCharge(j->second);
-              atom->SetImplicitHydrogen(atom->GetImplicitHydrogen() + (j->second - old_charge));
+              atom->SetImplicitHCount(atom->GetImplicitHCount() + (j->second - old_charge));
             }
       }
 
@@ -340,7 +340,7 @@ namespace OpenBabel
               bond->SetBondOrder(j->second);
               for (int k = 0; k < 2; ++k) {
                 OBAtom* atom = k == 0 ? bond->GetBeginAtom() : bond->GetEndAtom();
-                atom->SetImplicitHydrogen(atom->GetImplicitHydrogen() - (j->second - old_bond_order));
+                atom->SetImplicitHCount(atom->GetImplicitHCount() - (j->second - old_bond_order));
               }
             }
       }

@@ -104,7 +104,7 @@ namespace OpenBabel
 
   static unsigned int TotalNumberOfBonds(OBAtom* atom)
   {
-    return atom->GetImplicitHydrogen() + atom->GetValence();
+    return atom->GetImplicitHCount() + atom->GetValence();
   }
   static bool IsOxygenOrSulfur(OBAtom *atom)
   {
@@ -492,7 +492,7 @@ namespace OpenBabel
       // Guess how many hydrogens are present on each atom based on typical valencies
       // TODO: implement the MOL2 valence model (if it exists)
       FOR_ATOMS_OF_MOL(matom, mol) {
-        if (matom->GetImplicitHydrogen() == 0)
+        if (matom->GetImplicitHCount() == 0)
           OBAtomAssignTypicalImplicitHydrogens(&*matom);
       }
     }

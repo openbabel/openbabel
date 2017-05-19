@@ -59,7 +59,7 @@ namespace OpenBabel {
 
   static unsigned int TotalHydrogenCount(OBAtom* atom)
   {
-    return atom->ExplicitHydrogenCount() + atom->GetImplicitHydrogen();
+    return atom->ExplicitHydrogenCount() + atom->GetImplicitHCount();
   }
 
   inline bool CompareBondPairSecond(const std::pair<OBBond*,unsigned int> &a,const std::pair<OBBond*,unsigned int> &b)

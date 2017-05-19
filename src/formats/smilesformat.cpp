@@ -541,9 +541,9 @@ namespace OpenBabel {
       case -2: { // aromatic carbon
         unsigned int numbonds = atom->GetValence();
         if (numbonds < 3)
-          atom->SetImplicitHydrogen(3 - numbonds);
+          atom->SetImplicitHCount(3 - numbonds);
         else
-          atom->SetImplicitHydrogen(0);
+          atom->SetImplicitHCount(0);
         break;
       }
       case -1: { // Apply SMILES implicit valence model
@@ -552,11 +552,11 @@ namespace OpenBabel {
           bosum += bond->GetBondOrder();
         }
         unsigned int impval = SmilesValence(atom->GetAtomicNum(), bosum);
-        atom->SetImplicitHydrogen(impval - bosum);
+        atom->SetImplicitHCount(impval - bosum);
         break;
       }
       default: // valence is explicit e.g. [CH3]
-        atom->SetImplicitHydrogen(hcount);
+        atom->SetImplicitHCount(hcount);
         break;
       }
     }
@@ -2729,7 +2729,7 @@ namespace OpenBabel {
       }
     }
     else {
-      numImplicitHs = atom->GetImplicitHydrogen() + numExplicitHsToSuppress;
+      numImplicitHs = atom->GetImplicitHCount() + numExplicitHsToSuppress;
       if (!bracketElement) {
         int bosum = atom->BOSum() - numExplicitHsToSuppress;
         unsigned int implicitValence = SmilesValence(element, bosum, false);
@@ -2834,7 +2834,7 @@ namespace OpenBabel {
     strcat(bracketBuffer,symbol);
 
     // If chiral, append '@' or '@@'...unless we're creating a SMARTS ("s") and it's @H or @@H
-    if (stereo[0] != '\0' && !(smarts && atom->GetImplicitHydrogen() > 0))
+    if (stereo[0] != '\0' && !(smarts && atom->GetImplicitHCount() > 0))
       strcat(bracketBuffer, stereo);
 
     // Add extra hydrogens.
@@ -3463,7 +3463,7 @@ namespace OpenBabel {
       }
 
       // Handle implict H by adding a NULL OBAtom*
-      if(atom->GetImplicitHydrogen() == 1)
+      if(atom->GetImplicitHCount() == 1)
         chiral_neighbors.push_back(static_cast<OBAtom*> (NULL));
 
       // Ok, done with H. Now we need to consider the case where there is a chiral

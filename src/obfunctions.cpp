@@ -886,7 +886,7 @@ namespace OpenBabel
   {
     unsigned int bosum = atom->BOSum();
     unsigned int valence = GetTypicalValence(atom->GetAtomicNum(), bosum, atom->GetFormalCharge());
-    atom->SetImplicitHydrogen(valence - bosum);
+    atom->SetImplicitHCount(valence - bosum);
   }
 
 } // end of namespace OpenBabel

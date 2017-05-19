@@ -647,7 +647,7 @@ namespace OpenBabel
         vid[i] += (unsigned int)(((atom->IsAromatic()) ? 1 : 0)*1000);
         vid[i] += (unsigned int)(((atom->IsInRing()) ? 1 : 0)*10000);
         vid[i] += (unsigned int)(atom->GetAtomicNum()*100000);
-        vid[i] += (unsigned int)(atom->GetImplicitHydrogen()*10000000);
+        vid[i] += (unsigned int)(atom->GetImplicitHCount()*10000000);
       }
   }
 
@@ -947,7 +947,7 @@ namespace OpenBabel
     for (atom = BeginAtom(i);atom;atom = NextAtom(i)) {
       molwt += atom->GetAtomicMass();
       if (implicitH)
-        molwt += atom->GetImplicitHydrogen() * hmass;
+        molwt += atom->GetImplicitHCount() * hmass;
     }
     return(molwt);
   }
@@ -962,7 +962,7 @@ namespace OpenBabel
     for (atom = BeginAtom(i); atom; atom = NextAtom(i)) {
       mass += atom->GetExactMass();
       if (implicitH)
-        mass += atom->GetImplicitHydrogen() * hmass;
+        mass += atom->GetImplicitHCount() * hmass;
     }
 
     return(mass);
@@ -1020,7 +1020,7 @@ namespace OpenBabel
                   --atomicCount[0]; //one of the implicit hydrogens is now explicit
               }
             else
-              atomicCount[0] += a->GetImplicitHydrogen() + a->ExplicitHydrogenCount();
+              atomicCount[0] += a->GetImplicitHCount() + a->ExplicitHydrogenCount();
           }
         if (IsHiso)
           anum = NumElements + a->GetIsotope() - 3; //pseudo AtNo for D, T
@@ -1992,7 +1992,7 @@ namespace OpenBabel
     for (i = delatoms.begin(); i != delatoms.end(); ++i) {
       OBAtom* nbr = (*i)->BeginNbrAtom(bi);
       if (nbr) // defensive
-        nbr->SetImplicitHydrogen(nbr->GetImplicitHydrogen() + 1);
+        nbr->SetImplicitHCount(nbr->GetImplicitHCount() + 1);
       DeleteAtom((OBAtom *)*i);
     }
 
@@ -2160,8 +2160,8 @@ namespace OpenBabel
                            atom->IsSulfur() || atom->IsPhosphorus()))
           continue;
 
-        hcount = atom->GetImplicitHydrogen();
-        atom->SetImplicitHydrogen(0);
+        hcount = atom->GetImplicitHCount();
+        atom->SetImplicitHCount(0);
 
         if (hcount)
           {
@@ -2278,11 +2278,11 @@ namespace OpenBabel
 
   bool OBMol::AddHydrogens(OBAtom *atom)
   {
-    int hcount = atom->GetImplicitHydrogen();
+    int hcount = atom->GetImplicitHCount();
     if (hcount == 0)
       return true;
 
-    atom->SetImplicitHydrogen(0);
+    atom->SetImplicitHCount(0);
 
     vector<pair<OBAtom*, int> > vhadd;
     vhadd.push_back(pair<OBAtom*,int>(atom, hcount));
@@ -3840,9 +3840,9 @@ namespace OpenBabel
             } else if ((lb.first > 0 && le.second > 0) && (lb.second > 0 && le.first > 0)) {
               score -= 1000;  // Lewis acid/base direction is mono-directional
             }
-            int bcount = bgn->GetImplicitHydrogen();
+            int bcount = bgn->GetImplicitHCount();
             FOR_BONDS_OF_ATOM(b, bgn) { bcount += 1; }
-            int ecount = end->GetImplicitHydrogen();
+            int ecount = end->GetImplicitHCount();
             FOR_BONDS_OF_ATOM(b, end) { ecount += 1; }
             if (bcount == 1 || ecount == 1) {
               score -= 10; // If the start or end atoms have only 1 neighbour
@@ -4042,7 +4042,7 @@ namespace OpenBabel
         continue;
       int charge = atom->GetFormalCharge();
       unsigned bosum = atom->BOSum();
-      unsigned int totalValence = bosum + atom->GetImplicitHydrogen();
+      unsigned int totalValence = bosum + atom->GetImplicitHCount();
       unsigned int typicalValence = GetTypicalValence(atomicnum, bosum, charge);
       int diff = typicalValence - totalValence;
       if(diff != 0)

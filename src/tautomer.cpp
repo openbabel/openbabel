@@ -141,7 +141,7 @@ namespace OpenBabel {
           case Nitrogen:
             if (atom->HasDoubleBond())
               types.push_back(Acceptor);
-            else if (atom->GetImplicitHydrogen())
+            else if (atom->GetImplicitHCount())
               types.push_back(Donor);
             else
               types.push_back(Other);
@@ -153,7 +153,7 @@ namespace OpenBabel {
           case Tellurium:
             if (atom->HasDoubleBond())
               types.push_back(Acceptor);
-            else if (atom->GetImplicitHydrogen())
+            else if (atom->GetImplicitHCount())
               types.push_back(Donor);
             else
               types.push_back(Other);
@@ -191,25 +191,25 @@ namespace OpenBabel {
       OBMol* mol = atom->GetParent();
       unsigned int totH = 0;
       FOR_ATOMS_OF_MOL(atm, mol) {
-        totH += atm->GetImplicitHydrogen();
+        totH += atm->GetImplicitHCount();
       }
       printf("Total no. of hydrogens in molecule: %d\n", totH);
     }
 
     static void DecrementImplicitHCount(OBAtom* atom)
     {
-      atom->SetImplicitHydrogen(atom->GetImplicitHydrogen() - 1);
+      atom->SetImplicitHCount(atom->GetImplicitHCount() - 1);
 #ifdef DEBUG
-      printf("Decremented %d (%d) to %d\n", atom->GetIndex(), atom->GetAtomicNum(), atom->GetImplicitHydrogen());
+      printf("Decremented %d (%d) to %d\n", atom->GetIndex(), atom->GetAtomicNum(), atom->GetImplicitHCount());
       SanityCheckHydrogens(atom);
 #endif
     }
 
     static void IncrementImplicitHCount(OBAtom* atom)
     {
-      atom->SetImplicitHydrogen(atom->GetImplicitHydrogen() + 1);
+      atom->SetImplicitHCount(atom->GetImplicitHCount() + 1);
 #ifdef DEBUG
-      printf("Incremented %d (%d) to %d\n", atom->GetIndex(), atom->GetAtomicNum(), atom->GetImplicitHydrogen());
+      printf("Incremented %d (%d) to %d\n", atom->GetIndex(), atom->GetAtomicNum(), atom->GetImplicitHCount());
       SanityCheckHydrogens(atom);
 #endif
     }
@@ -587,7 +587,7 @@ namespace OpenBabel {
       // Store original h counts
       std::vector<unsigned int> hcounts;
       FOR_ATOMS_OF_MOL(atom, mol)
-        hcounts.push_back(atom->GetImplicitHydrogen());
+        hcounts.push_back(atom->GetImplicitHCount());
 #ifdef DEBUG
       SanityCheckHydrogens(mol->GetAtom(1));
 #endif
@@ -644,7 +644,7 @@ namespace OpenBabel {
           bond->SetBondOrder(bondOrders[bond->GetIdx()]);
         // Restore original implicit H counts
         FOR_ATOMS_OF_MOL(atom, mol)
-          atom->SetImplicitHydrogen(hcounts[atom->GetIndex()]);
+          atom->SetImplicitHCount(hcounts[atom->GetIndex()]);
       }
 
     }
