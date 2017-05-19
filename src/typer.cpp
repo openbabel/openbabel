@@ -37,12 +37,12 @@ namespace OpenBabel
   OBAtomTyper      atomtyper;
 
   /*! \class OBAtomTyper typer.h <openbabel/typer.h>
-    \brief Assigns atom types, hybridization, implicit valence and formal charges
+    \brief Assigns atom types, hybridization, and formal charges
 
     The OBAtomTyper class is designed to read in a list of atom typing
     rules and apply them to molecules. The code that performs atom
     typing is not usually used directly as atom typing, hybridization
-    assignment, implicit valence assignment and charge are all done
+    assignment, and charge are all done
     automatically when their corresponding values are requested of
     atoms:
     \code
@@ -86,26 +86,6 @@ namespace OpenBabel
             return;
           }
       }
-    else if (EQn(buffer,"IMPVAL",6))
-      {
-        tokenize(vs,buffer);
-        if (vs.size() < 3)
-          {
-            obErrorLog.ThrowError(__FUNCTION__, " Could not parse IMPVAL line in atom type table from atomtyp.txt", obInfo);
-            return;
-          }
-
-        sp = new OBSmartsPattern;
-        if (sp->Init(vs[1]))
-          _vimpval.push_back(pair<OBSmartsPattern*,int> (sp,atoi((char*)vs[2].c_str())));
-        else
-          {
-            obErrorLog.ThrowError(__FUNCTION__, " Could not parse IMPVAL line in atom type table from atomtyp.txt", obInfo);
-            delete sp;
-            sp = NULL;
-            return;
-          }
-      }
     else if (EQn(buffer,"EXTTYP",6))
       {
         tokenize(vs,buffer);
@@ -131,11 +111,6 @@ namespace OpenBabel
   {
     vector<pair<OBSmartsPattern*,int> >::iterator i;
     for (i = _vinthyb.begin();i != _vinthyb.end();++i)
-      {
-        delete i->first;
-        i->first = NULL;
-      }
-    for (i = _vimpval.begin();i != _vimpval.end();++i)
       {
         delete i->first;
         i->first = NULL;
@@ -222,83 +197,6 @@ namespace OpenBabel
           mol.GetAtom((*j)[0])->SetHyb(i->second);
       }
     }
-  }
-
-  void OBAtomTyper::AssignImplicitValence(OBMol &mol, bool CanBeLessThanActual)
-  {
-    // FF Make sure that valence has not been perceived
-    if(mol.HasImplicitValencePerceived())
-      return;
-
-    if (!_init)
-      Init();
-
-    mol.SetImplicitValencePerceived();
-    obErrorLog.ThrowError(__FUNCTION__,
-                          "Ran OpenBabel::AssignImplicitValence", obAuditMsg);
-
-    // FF Ensure that the aromatic typer will not be called
-    int oldflags = mol.GetFlags(); // save the current state flags
-    mol.SetAromaticPerceived();    // and set the aromatic perceived flag on
-
-    OBAtom *atom;
-    vector<OBAtom*>::iterator k;
-    for (atom = mol.BeginAtom(k);atom;atom = mol.NextAtom(k))
-      atom->SetImplicitValence(atom->GetValence());
-
-    vector<vector<int> >::iterator j;
-    vector<pair<OBSmartsPattern*,int> >::iterator i;
-
-    for (i = _vimpval.begin(); i != _vimpval.end(); ++i) {
-      std::vector<std::vector<int> > mlist;
-      if (i->first->Match(mol, mlist))
-      {
-        for (j = mlist.begin(); j != mlist.end(); ++j)
-          mol.GetAtom((*j)[0])->SetImplicitValence(i->second);
-      }
-    }
-
-    if (!mol.HasAromaticCorrected())
-      CorrectAromaticNitrogens(mol);
-
-    if(!CanBeLessThanActual)
-      for (atom = mol.BeginAtom(k);atom;atom = mol.NextAtom(k))
-        {
-          if (atom->GetImplicitValence() < atom->GetValence())
-            atom->SetImplicitValence(atom->GetValence());
-        }
-
-    // FF Come back to the initial flags
-    mol.SetFlags(oldflags);
-
-    return;
-  }
-
-  //! Currently sets OBMol::SetAromaticCorrected and returns.
-  //! \deprecated Currently unused for anything significant.
-  void OBAtomTyper::CorrectAromaticNitrogens(OBMol &mol)
-  {
-    if (!_init)
-      Init();
-
-    if (mol.HasAromaticCorrected())
-      return;
-    mol.SetAromaticCorrected();
-
-    FOR_ATOMS_OF_MOL(atom, mol) {
-      if (atom->IsNitrogen() && atom->IsAromatic()) {
-        atom->SetHyb(2);
-        atom->SetType("Nar");
-        if (atom->HasDoubleBond()) {
-          atom->SetImplicitValence(2 + atom->GetFormalCharge());
-        } else {
-          if (atom->GetImplicitValence() == 2)
-            atom->SetImplicitValence(3 + atom->GetFormalCharge());
-        }
-      }
-    }
-
-    return;
   }
 
   /*! \class OBRingTyper typer.h <openbabel/typer.h>

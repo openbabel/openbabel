@@ -190,7 +190,6 @@ namespace OpenBabel
       }
     }
 
-    atomtyper.CorrectAromaticNitrogens(mol);
   }
 
 
@@ -321,8 +320,6 @@ namespace OpenBabel
               atom->SetFormalCharge(j->second);
               atom->SetImplicitHydrogen(atom->GetImplicitHydrogen() + (j->second - old_charge));
             }
-
-        mol.UnsetImplicitValencePerceived();
       }
 
     if (!_vbond.empty()) //modify bond orders

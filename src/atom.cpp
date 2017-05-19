@@ -514,22 +514,6 @@ namespace OpenBabel
     return(_type);
   }
 
-  unsigned int OBAtom::GetImplicitValence() const
-  {
-    ////Special case for [H] to avoid infite loop: SMARTS Match() <-> AssignSpinMultiplicity()
-    //if(GetAtomicNum() == 1) {
-    //  unsigned int val = GetValence();
-    //  if (val == 0 && GetFormalCharge() == 0 && GetSpinMultiplicity() == 0)
-    //    return 1;
-    //  return val;
-    //}
-    //OBMol *mol = (OBMol*)((OBAtom*)this)->GetParent();
-    //if (mol && !mol->HasImplicitValencePerceived())
-    //  atomtyper.AssignImplicitValence(*((OBMol*)((OBAtom*)this)->GetParent()));
-
-    return((unsigned int)_impval);
-  }
-
   unsigned int OBAtom::GetHyb() const
   {
     //hybridization is assigned when atoms are typed
@@ -1040,27 +1024,6 @@ namespace OpenBabel
       bosum += bond->GetBondOrder();
 
     return bosum;
-  }
-
-  unsigned int OBAtom::ImplicitHydrogenCount() const
-  {
-    //handles H,C,N,S,O,X
-    OBMol *mol = (OBMol*)((OBAtom*)this)->GetParent();
-    if (mol && !mol->HasImplicitValencePerceived())
-      atomtyper.AssignImplicitValence(*((OBMol*)((OBAtom*)this)->GetParent()));
-
-    // _impval is assigned by the atomtyper -- same as calling GetImplicitValence()
-    int impval = _impval - GetValence();
-
-    // we need to modify this implicit valence if we're a radical center
-    int mult = GetSpinMultiplicity();
-    if(mult==2) //radical
-      impval-=1;
-    else if(mult==1 || mult==3) //carbene
-      impval-=2;
-    else if(mult>=4) //CH, Catom
-      impval -= mult-1;
-    return((impval>0)?impval:0);
   }
 
   unsigned int OBAtom::ExplicitHydrogenCount(bool ExcludeIsotopes) const

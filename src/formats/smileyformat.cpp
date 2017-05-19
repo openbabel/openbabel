@@ -382,15 +382,6 @@ namespace OpenBabel
     // handle aromaticity
     pmol->SetAromaticPerceived();
 
-    OBAtomTyper typer;
-    typer.AssignImplicitValence(*pmol);
-
-    // fix aromatic nitrogens
-    FOR_ATOMS_OF_MOL (atom, pmol) {
-      if (atom->IsNitrogen() && atom->IsAromatic() && /*atom->IsInRingSize(6) &&*/ atom->GetValence() == 2)
-        atom->SetImplicitValence(2);
-    }
-
     // create cis/trans stereo objects
     CreateCisTrans(pmol, callback.upDown);
     StereoFrom0D(pmol);

@@ -1248,8 +1248,6 @@ namespace OpenBabel
       this->SetFlag(OB_TCHARGE_MOL);
     if (src.HasFlag(OB_PCHARGE_MOL))
       this->SetFlag(OB_PCHARGE_MOL);
-    if (src.HasFlag(OB_IMPVAL_MOL))
-      this->SetFlag(OB_IMPVAL_MOL);
 
     //this->_flags = src.GetFlags(); //Copy all flags. Perhaps too drastic a change
 
@@ -2107,7 +2105,6 @@ namespace OpenBabel
       return(true);
 
     bool hasChiralityPerceived = this->HasChiralityPerceived(); // remember
-    bool hasImplicitValencePerceived = this->HasImplicitValencePerceived(); // remember
 
     /*
     //
@@ -2146,9 +2143,6 @@ namespace OpenBabel
     // If chirality was already perceived, remember this (to avoid wiping information
     if (hasChiralityPerceived)
       this->SetChiralityPerceived();
-    // If implicit valence was already perceived, remember (e.g. custom valence model)
-    if (hasImplicitValencePerceived)
-      this->SetImplicitValencePerceived();
 
     //count up number of hydrogens to add
     OBAtom *atom,*h;
@@ -3507,7 +3501,6 @@ namespace OpenBabel
     _flags &= (~(OB_HYBRID_MOL));
     _flags &= (~(OB_AROMATIC_MOL));
     _flags &= (~(OB_ATOMTYPES_MOL));
-    _flags &= (~(OB_IMPVAL_MOL));
     //  EndModify(true); // "nuke" perceived data
 
     //Set _spinMultiplicity other than zero for atoms which are hydrogen

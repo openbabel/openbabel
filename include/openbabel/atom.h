@@ -234,8 +234,6 @@ namespace OpenBabel
       unsigned int GetValence() const { return (unsigned int)_vbond.size(); }
       //! \return The hybridization of this atom: 1 for sp, 2 for sp2, 3 for sp3, 4 for sq. planar, 5 for trig. bipy, 6 for octahedral
       unsigned int GetHyb()             const;
-      //! \return The implicit valence of this atom type (i.e. maximum number of connections expected)
-      unsigned int GetImplicitValence() const;
       //! \return The number of implicit hydrogens attached to this atom
       unsigned char GetImplicitHydrogen() const { return _imph; };
       //! \return The number of non-hydrogens connected to this atom
@@ -398,8 +396,6 @@ namespace OpenBabel
       //! \return The number of sulfur atoms connected that only have one heavy valence
       //! \since version 2.4
       unsigned int  CountFreeSulfurs()      const;
-      //! \return The number of hydrogens needed to fill the implicit valence of this atom
-      unsigned int  ImplicitHydrogenCount() const;
       //! \return The number of hydrogens explicitly bound to this atom, optionally excluding D,T and isotope explicitly set to 1
       unsigned int  ExplicitHydrogenCount(bool ExcludeIsotopes=false) const;
       //! \return The number of rings that contain this atom

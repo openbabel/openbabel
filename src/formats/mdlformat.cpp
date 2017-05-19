@@ -777,16 +777,7 @@ namespace OpenBabel
       ad->Expand(mol, atomnum); //Make chemically meaningful, if possible.
     }
 
-    // I think SetImplicitValencePerceived needs to be set before AssignSpinMultiplicity
-    // because in rare instances AssignSpinMultiplicity calls GetImplicitValence which
-    // would reset the implicit valence of all atoms using atomtyper, overriding HYDValence
-    // TODO: Is this also an issue with MDLValence?
-    if (foundZBO || foundZCH || foundHYD) {
-      mol.SetImplicitValencePerceived();
-    }
-    //mol.AssignSpinMultiplicity();
     mol.EndModify();
-    mol.SetImplicitValencePerceived();
 
     if (comment.length()) {
       OBCommentData *cd = new OBCommentData;
