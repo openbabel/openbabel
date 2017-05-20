@@ -92,7 +92,6 @@ namespace OpenBabel
     static SpaceGroup *group = NULL;
     static int step = SPACE_GROUP_ID;
     static string HMs;
-    string linestr = std::string(line);
     switch (step)
       {
       case SPACE_GROUP_ID:
@@ -101,11 +100,12 @@ namespace OpenBabel
         step++;
         break;
       case SPACE_GROUP_HALL:
-        group->SetHallName(linestr);
+        group->SetHallName(line);
         step++;
         break;
       case SPACE_GROUP_HM:
         {
+          string linestr = std::string(line);
           std::string::size_type idx = linestr.find(',');
           if (idx != std::string::npos)
             {
@@ -115,10 +115,10 @@ namespace OpenBabel
               std::string stripped_HM=RemoveWhiteSpaceUnderscore(alt);
               if (stripped_HM.length() > 0 && _SpaceGroups.sgbn[stripped_HM] == NULL)
                 _SpaceGroups.sgbn[stripped_HM] = group;
-              group->SetHMName(linestr.substr(idx+1, std::string::npos));
+              group->SetHMName(linestr.substr(idx+1, std::string::npos).c_str());
             }
           else
-            group->SetHMName(linestr);
+            group->SetHMName(line);
           step++;
           break;
         }
@@ -151,8 +151,9 @@ namespace OpenBabel
       delete *i;
   }
 
-  void SpaceGroup::SetHMName(const std::string &name)
+  void SpaceGroup::SetHMName(const char *name_in)
   {
+    string name = std::string(name_in);
     std::string::size_type idx = name.find(':');
     if (idx != std::string::npos)
       {

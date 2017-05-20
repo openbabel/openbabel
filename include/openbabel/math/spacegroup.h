@@ -38,8 +38,8 @@ namespace OpenBabel
         SpaceGroup();
         ~SpaceGroup();
 
-        void SetHMName(const std::string &name);
-        void SetHallName(const std::string &name)
+        void SetHMName(const char *name);
+        void SetHallName(const char *name)
           { m_Hall = name; }
         void SetId(unsigned n)
           { m_id = n; }
