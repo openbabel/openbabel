@@ -691,8 +691,10 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
             }// while vs.size() > 2
             for (unsigned int i = 0; i < freq.size(); i++)
             {
-              Frequencies.push_back(freq[i]);
-              Lx.push_back(vib[i]);
+              if (abs(freq[i]) > 10.0) {
+                Frequencies.push_back(freq[i]);
+                Lx.push_back(vib[i]);
+              }
             }// for (unsigned int i = 0; i < freq.size(); i++)
         }// if P.Frequency
         else if(strstr(buffer, INTENSITIES_TABLE_PATTERN) != NULL)
