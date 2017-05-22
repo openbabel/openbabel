@@ -33,6 +33,8 @@ namespace OpenBabel
     {
       OBConversion::RegisterFormat("pdb",this, "chemical/x-pdb");
       OBConversion::RegisterFormat("ent",this, "chemical/x-pdb");
+
+      OBConversion::RegisterOptionParam("o", this);
     }
 
     virtual const char* Description() //required
@@ -42,7 +44,10 @@ namespace OpenBabel
         "Read Options e.g. -as\n"
         "  s  Output single bonds only\n"
         "  b  Disable bonding entirely\n"
-        "  c  Ignore CONECT records\n\n";
+        "  c  Ignore CONECT records\n\n"
+
+        "Write Options, e.g. -xo\n"
+        "  o  Write origin in space group label (CRYST1 section)\n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -89,6 +94,14 @@ namespace OpenBabel
 
     return ifs.good() ? 1 : -1;
   }
+  /////////////////////////////////////////////////////////////////
+   template <typename T> string to_string(T pNumber)
+  {
+    ostringstream oOStrStream;
+    oOStrStream << pNumber;
+    return oOStrStream.str();
+  }
+
   /////////////////////////////////////////////////////////////////
   bool PDBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
@@ -484,6 +497,8 @@ namespace OpenBabel
     char the_insertioncode = ' ';
     bool het=true;
     int model_num = 0;
+    const int MAX_HM_NAME_LEN = 11;
+
     if (!pConv->IsLast() || pConv->GetOutputIndex() > 1)
       { // More than one molecule record
         model_num = pConv->GetOutputIndex(); // MODEL 1-based index
@@ -560,9 +575,26 @@ namespace OpenBabel
         if(pUC->GetSpaceGroup()){
           string tmpHM=pUC->GetSpaceGroup()->GetHMName();
           fixRhombohedralSpaceGroupWriter(tmpHM);
+
           // Do we have an extended HM symbol, with origin choice as ":1" or ":2" ? If so, remove it.
           size_t n=tmpHM.find(":");
-          if(n!=string::npos) tmpHM=tmpHM.substr(0,n);
+          if(n!=string::npos) tmpHM=tmpHM.substr(0, n);
+
+          if (pConv->IsOption("o", OBConversion::OUTOPTIONS))
+            {
+              unsigned int origin = pUC->GetSpaceGroup()->GetOriginAlternative();
+              if (origin == pUC->GetSpaceGroup()->HEXAGONAL_ORIGIN)
+                tmpHM[0] = 'H';
+              else if (origin > 0)
+                tmpHM += ":" + to_string(origin);
+
+              if (tmpHM.length() > MAX_HM_NAME_LEN)
+              {
+                tmpHM.erase(std::remove(tmpHM.begin(), tmpHM.end(), ' '),
+                            tmpHM.end());
+              }
+            }
+
           snprintf(buffer, BUFF_SIZE,
                    "CRYST1%9.3f%9.3f%9.3f%7.2f%7.2f%7.2f %-11s 1",
                    pUC->GetA(), pUC->GetB(), pUC->GetC(),

@@ -919,12 +919,12 @@ namespace OpenBabel
          case CIFTagID::_space_group_name_Hall:
          case CIFTagID::_symmetry_space_group_name_Hall:
            space_group_name.assign(token.as_text);
-           space_group.SetHallName(space_group_name);
+           space_group.SetHallName(space_group_name.c_str());
            break;
          case CIFTagID::_space_group_name_H_M_alt:
          case CIFTagID::_symmetry_space_group_name_H_M:
            space_group_name.assign(token.as_text);
-           space_group.SetHMName(space_group_name);
+           space_group.SetHMName(space_group_name.c_str());
            break;
          case CIFTagID::_symmetry_equiv_pos_as_xyz:
            space_group.AddTransform(token.as_text);
