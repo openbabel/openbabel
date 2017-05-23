@@ -1,7 +1,7 @@
 /**********************************************************************
 kekulize.cpp - Kekulize a molecule
 
-Copyright (C) 2016 Noel M. O'Boyle
+Copyright (C) 2017 Noel M. O'Boyle
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
@@ -26,20 +26,12 @@ namespace OpenBabel
 {
   static unsigned int GetMaxAtomIdx(OBMol* mol)
   {
-    OBAtom* lastatom = (OBAtom*)0;
-    FOR_ATOMS_OF_MOL(atom, mol) {
-      lastatom = &(*atom);
-    }
-    return lastatom ? lastatom->GetIdx() : 0;
+    return mol->NumAtoms() + 1;
   }
 
   static unsigned int GetMaxBondIdx(OBMol* mol)
   {
-    OBBond* lastbond = (OBBond*)0;
-    FOR_BONDS_OF_MOL(bond, mol) {
-      lastbond = &(*bond);
-    }
-    return lastbond ? lastbond->GetIdx() : 0;
+    return mol->NumBonds();
   }
 
   class Kekulizer
@@ -381,6 +373,10 @@ namespace OpenBabel
     return needs_dbl_bond->Empty();
   }
 
+// I'd like to thank John Mayfield for many helpful discussions on the topic of
+// kekulization, without which this implementation would not have been
+// possible.
+//
 // OBKekulize() implements a two-step kekulization:
 //   Step one: try a greedy match
 //   Step two: try an exhaustive backtracking (using the results of step one)
@@ -398,11 +394,11 @@ namespace OpenBabel
 // Potential speedups:
 //   * Is OBBitVec performant? I don't know - it seems to do a lot of bounds checking.
 //     You could try replacing all usages theoreof with
-//     std::vector<char>, where the char could handle several flags.
+//     std::vector<char>, where the char could possibly handle several flags.
 //   * Before trying the exhaustive search, try a BFS. I have a feeling that this would work
 //     90% of the time.
 //   * There's a lot of switching between atoms and atom indices (and similar for bonds).
-//     Was this completely neccessary?
+//     Was this completely necessary?
 //   * The iterator over degree 2 and 3 nodes may iterate twice - it would have been
 //     faster if I just took the first degree 2 or 3 node I came across, but would
 //     it have worked as well?

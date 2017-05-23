@@ -735,14 +735,15 @@ namespace OpenBabel
         count++;
       }
       if (foundZBO || foundZCH || foundHYD) { // TODO: Fix this
-        //// Use HYD count to SetImplicitValence if present, otherwise HYDValence model
-        //HYDMap::const_iterator hyd = hydMap.find(atom->GetIdx());
-        //if (hyd == hydMap.end()) {
-        //  unsigned int impval = HYDValence(elem, charge, expval);
-        //  atom->SetImplicitValence(impval-(expval-count));
-        //} else {
-        //  atom->SetImplicitValence(atom->GetValence() + hyd->second);
-        //}
+        // Use HYD count to SetImplicitValence if present, otherwise HYDValence model
+        HYDMap::const_iterator hyd = hydMap.find(atom->GetIdx());
+        if (hyd == hydMap.end()) {
+          unsigned int impval = HYDValence(elem, charge, expval);
+          int nimpval = impval - expval;
+          atom->SetImplicitHCount(nimpval > 0 ? nimpval : 0);
+        } else {
+          atom->SetImplicitHCount(hyd->second); // TODO: I have no idea
+        }
       } else {
         unsigned int impval = MDLValence(elem, charge, expval);
         int mult = atom->GetSpinMultiplicity();
