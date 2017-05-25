@@ -206,6 +206,7 @@ namespace OpenBabel
    { "_symmetry_space_group_name_hall", CIFTagID::_symmetry_space_group_name_Hall },
    { "_symmetry_space_group_name_h-m", CIFTagID::_symmetry_space_group_name_H_M },
    { "_symmetry_equiv_pos_as_xyz", CIFTagID::_symmetry_equiv_pos_as_xyz },
+   { "_space_group_symop_operation_xyz", CIFTagID::_symmetry_equiv_pos_as_xyz },
    { "_atom_type_symbol", CIFTagID::_atom_type_symbol },    
    { "_atom_type_oxidation_number",CIFTagID::_atom_type_oxidation_number },
    { "", CIFTagID::unread_CIFDataName }
