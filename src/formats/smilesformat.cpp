@@ -572,7 +572,7 @@ namespace OpenBabel {
       }
     }
 
-    // TODO: Only Kekulize if the molecule has a lower case atom (and an even number thereof?)
+    // TODO: Only Kekulize if the molecule has a lower case atom
     bool ok = OBKekulize(&mol);
     if (!ok) {
       stringstream errorMsg;
@@ -3613,7 +3613,7 @@ namespace OpenBabel {
 
   /***************************************************************************
    * FUNCTION: RandomLabels
-   *OB
+   *
    * DESCRIPTION:
    *    Creates a set of random labels for the fragment atoms.  Primarily
    *    for testing: you can create a bunch of random SMILES for the same
@@ -3989,21 +3989,6 @@ namespace OpenBabel {
         }
       }
 
-      //// If we didn't pick an atom, it is because the fragment is made
-      //// entirely of hydrogen atoms (e.g. [H][H]).  Repeat the loop but
-      //// allow hydrogens this time.
-      //if (root_atom == NULL) {
-      //  for (atom = mol.BeginAtom(ai); atom; atom = mol.NextAtom(ai)) {
-      //    int idx = atom->GetIdx();
-      //    if (!_uatoms[idx]           // skip atoms already used (for fragments)
-      //        && frag_atoms.BitIsOn(idx)// skip atoms not in this fragment
-      //        && canonical_order[idx-1] < lowest_canorder) {
-      //      root_atom = atom;
-      //      lowest_canorder = canonical_order[idx-1];
-      //    }
-      //  }
-      //}
-
       // No atom found?  We've done all fragments.
       if (root_atom == NULL)
         break;
@@ -4281,8 +4266,6 @@ namespace OpenBabel {
     OBMol2Cansmi m2s;
 
     m2s.Init(true, pConv);
-    // From 2.1 code.
-    // m2s.CorrectAromaticAmineCharge(mol);
 
     // We're outputting a full molecule
     // so we pass a bitvec for all atoms
