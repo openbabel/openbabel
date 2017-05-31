@@ -45,6 +45,8 @@ public:
     ~OBAtomTyper();
 
     void ParseLine(const char*);
+    //! \return the number of internal hybridization rules
+    size_t GetSize()                 { return _vinthyb.size(); }
 
     //! Assign atomic hybridization (1 = sp, 2 = sp2, 3 = sp3...)
     void AssignHyb(OBMol&);
