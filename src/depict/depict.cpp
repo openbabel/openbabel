@@ -388,23 +388,27 @@ namespace OpenBabel
       double f;
       if(mol->NumBonds()>0) {
         f = d->bondLength / averageBondLength;
-      } else {
-        f = d->bondLength;
+      } else if(mol->NumAtoms()>1){
+        /* In molecules without bonds but more than one atom,
+           use the minimum atom distance as a substitute for average bond length. */
+        f = DBL_MAX;
         OBAtomIterator i2;
         OBAtom *atom2;
+        vector3 a1pos;
+        double currdist;
         for (atom = d->mol->BeginAtom(i); atom; atom = d->mol->NextAtom(i)) {
+          a1pos = atom->GetVector();
           for (atom2 = d->mol->BeginAtom(i2); atom2; atom2 = d->mol->NextAtom(i2)) {
             if(atom != atom2) {
-              f = std::min(f, sqrt(
-                ((atom->GetY() - atom2->GetY()) * (atom->GetY() - atom2->GetY())) +
-                ((atom->GetX() - atom2->GetX()) * (atom->GetX() - atom2->GetX()))
-              ));
+              currdist = a1pos.distSq(atom2->GetVector());
+              if(currdist < f && currdist != 0)
+                f = currdist;
             }
           }
         }
-        f = d->bondLength / f;
-      }
-
+        f = d->bondLength / sqrt(f);
+      } else
+        f = 1.0;
       for (atom = d->mol->BeginAtom(i); atom; atom = d->mol->NextAtom(i))
         atom->SetVector(atom->GetX() * f, - atom->GetY() * f, atom->GetZ());
 
