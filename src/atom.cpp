@@ -159,6 +159,17 @@ namespace OpenBabel
     return(*this);
   }
 
+  OBAtom &OBAtom::operator=(const OBAtom &src)
+  {
+    if (this == &src) {
+        return *this;
+    }
+    OBAtom &source = (OBAtom &)src;
+    _idx = source.GetIdx();
+    Duplicate(&source);
+    return *this;
+  }
+
   void OBAtom::Duplicate(OBAtom *src)
   {
     if (!src)

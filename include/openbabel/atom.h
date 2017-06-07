@@ -124,6 +124,7 @@ namespace OpenBabel
       virtual ~OBAtom();
       //! Assignment
       OBAtom &operator = (OBAtom &);
+      OBAtom &operator = (const OBAtom &);
       //! Equivalence
       bool operator==(const OBAtom * other) const {  return (GetIdx() == other->GetIdx()); }
       //! Duplicate another atom. Copies all information with the exception of index
