@@ -2751,7 +2751,9 @@ namespace OpenBabel {
           // 6. If two bonds are overlapping, choose one of these
           //    (otherwise the InChI code will mark it as ambiguous)
 
-          unsigned int max_bond_score = 0;
+          int max_bond_score = 0;   // The test below (score > max_bond_score)
+          // gave incorrect results when score < 0 and max_bond_score was an unsigned int
+          // see https://stackoverflow.com/questions/5416414/signed-unsigned-comparisons#5416498
           FOR_BONDS_OF_ATOM(b, center) {
             if (alreadyset.find(&*b) != alreadyset.end()) continue;
 
@@ -2939,4 +2941,3 @@ namespace OpenBabel {
   }
 
 }
-
