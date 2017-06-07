@@ -1184,29 +1184,26 @@ namespace OpenBabel
   }
 
   //! Returns the total spin multiplicity -- if it has not previously been set
-  //!  It is calculated from the atomic spin multiplicity information
-  //!  assuming the high-spin case (i.e. it simply sums the number of unpaired
-  //!  electrons assuming no further pairing of spins.
+  //! calculating from atomic formal charge
   unsigned int OBMol::GetTotalSpinMultiplicity()
   {
     if (HasFlag(OB_TSPIN_MOL))
       return(_totalSpin);
-    else // calculate from atomic spin information (assuming high-spin case)
+    else // calculate from total charge information
       {
         obErrorLog.ThrowError(__FUNCTION__,
-                              "Ran OpenBabel::GetTotalSpinMultiplicity -- calculating from atomic spins assuming high spin case",
+                              "Ran OpenBabel::GetTotalSpinMultiplicity -- calculating from atomic formal charge",
                               obAuditMsg);
-
         OBAtom *atom;
         vector<OBAtom*>::iterator i;
-        unsigned int unpaired_electrons = 0;
+        int chg = 0;
+        int spin = 0;
 
         for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-          {
-            if (atom->GetSpinMultiplicity() > 1)
-              unpaired_electrons += (atom->GetSpinMultiplicity() - 1);
-          }
-        return (unpaired_electrons + 1);
+          chg += atom->GetFormalCharge();
+
+        spin = 2 - (abs(chg) % 2);
+        return spin;
       }
   }
 

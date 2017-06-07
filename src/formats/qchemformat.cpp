@@ -345,8 +345,12 @@ namespace OpenBabel
 
     FOR_ATOMS_OF_MOL(atom, mol)
       {
-        ofs << atom->GetAtomicNum() << " "
-            << atom->GetX() << " " << atom->GetY() << " " << atom->GetZ() << endl;
+        snprintf(buffer, BUFF_SIZE, "%3d%15.5f%15.5f%15.5f\n",
+                atom->GetAtomicNum(),
+                atom->GetX(),
+                atom->GetY(),
+                atom->GetZ());
+        ofs << buffer;
       }
     ofs << "$end" << endl;
     ofs << endl << "$rem" << endl;
