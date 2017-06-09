@@ -21,6 +21,15 @@ GNU General Public License for more details.
 #include <openbabel/math/align.h>
 #include <openbabel/forcefield.h>
 
+#if defined(_MSC_VER)
+#if _MSC_VER < 1800
+namespace std {
+  template <typename T>
+  bool isnan(const T &x) { return _isnan(x); }
+}
+#endif
+#endif
+
 namespace OpenBabel {
 
   //////////////////////////////////////////////////////////
