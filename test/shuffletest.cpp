@@ -59,7 +59,7 @@ void compareMolecules(OBMol *mol1, OBMol *mol2)
     OB_ASSERT( a1->GetValence() == a2->GetValence() );
     OB_ASSERT( a1->GetHvyValence() == a2->GetHvyValence() );
     OB_ASSERT( a1->GetHeteroValence() == a2->GetHeteroValence() );
-    OB_ASSERT( a1->GetImplicitValence() == a2->GetImplicitValence() );
+    OB_ASSERT( a1->GetImplicitHCount() == a2->GetImplicitHCount() );
   }
 
 }

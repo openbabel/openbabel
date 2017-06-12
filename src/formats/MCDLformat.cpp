@@ -562,7 +562,7 @@ private:
   nbStore=pmol->NumBonds();
   for (i=1; i<=naStore; i++) {
     atom=pmol->GetAtom(i);
-    nHydr[i-1]=atom->ImplicitHydrogenCount()+atom->ExplicitHydrogenCount();
+    nHydr[i-1]=atom->GetImplicitHCount()+atom->ExplicitHydrogenCount();
     aCharge[i-1]=atom->GetFormalCharge();
     aRadical[i-1]=atom->GetSpinMultiplicity();
     aSymb[i-1]=etab.GetSymbol(atom->GetAtomicNum());

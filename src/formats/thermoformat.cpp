@@ -100,7 +100,6 @@ bool ThermoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       OBAtom atom;
       atom.SetAtomicNum(etab.GetAtomicNum(toks[i].c_str()));
       elnum = atoi(toks[i+1].c_str());
-      atom.ForceNoH();
       for(;elnum>0;--elnum)
         pmol->AddAtom(atom);
     }
@@ -118,7 +117,6 @@ bool ThermoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
           elname[1]=0;
         OBAtom atom;
         atom.SetAtomicNum(etab.GetAtomicNum(elname));
-        atom.ForceNoH();
         for(;elnum>0;--elnum)
           pmol->AddAtom(atom);
       }

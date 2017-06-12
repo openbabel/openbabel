@@ -38,7 +38,6 @@ namespace OpenBabel
 class OBAPI OBAtomTyper : public OBGlobalDataBase
 {
   std::vector<std::pair<OBSmartsPattern*,int> >            _vinthyb; //!< internal hybridization rules
-  std::vector<std::pair<OBSmartsPattern*,int> >            _vimpval; //!< internal implicit valence rules
   std::vector<std::pair<OBSmartsPattern*,std::string> >    _vexttyp; //!< external atom type rules
 
 public:
@@ -46,18 +45,13 @@ public:
     ~OBAtomTyper();
 
     void ParseLine(const char*);
-    //! \return the number of implicit valence rules
-    size_t GetSize()                 { return _vimpval.size();}
+    //! \return the number of internal hybridization rules
+    size_t GetSize()                 { return _vinthyb.size(); }
 
     //! Assign atomic hybridization (1 = sp, 2 = sp2, 3 = sp3...)
     void AssignHyb(OBMol&);
     //! Assign external atomic types (i.e., EXTTYP lines in atomtyp.txt)
     void AssignTypes(OBMol&);
-    //! Assign implicit valence (i.e., given an atomic type, what is the
-    //! expected number of bonds to this atom
-    void AssignImplicitValence(OBMol&, bool CanBeLessThanActual=false);
-    //! Correct typing, valence, and hybridization for aromatic nitrogen atoms
-    void CorrectAromaticNitrogens(OBMol&);
 };
 
 // class introduction in typer.cpp

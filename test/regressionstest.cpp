@@ -2,6 +2,7 @@
 #include <openbabel/mol.h>
 #include <openbabel/atomclass.h>
 #include <openbabel/obconversion.h>
+#include <openbabel/phmodel.h>
 
 #include <iostream>
 #include <string>
@@ -10,6 +11,37 @@
 
 using namespace std;
 using namespace OpenBabel;
+
+// A basic test of functionality
+void test_OBChemTsfm()
+{
+  OBMol mol;
+  OBConversion conv;
+  conv.SetInFormat("smi");
+  conv.SetOutFormat("smi");
+  
+  // Notes to self: Problems with OBChemTsfm:
+  // tsfm.Init("Cl[C:1]-[C:2]", "[C:1]=[C:2]"); // TODO: Need to change the API to take const char
+  // Init should wipe the state so that OBChemTsfm can safely be reused
+
+  conv.ReadString(&mol, "NCCBr");
+  OBChemTsfm tsfm;
+  std::string start("[N:1]-C-C");
+  std::string end("[N+:1]");
+  tsfm.Init(start, end);
+  tsfm.Apply(mol);
+  std::string out = conv.WriteString(&mol, true);
+  OB_COMPARE(out, "[NH3+]CCBr");
+
+  conv.ReadString(&mol, "ClCCBr");
+  start = "Cl[C:1]-[C:2]";
+  end = "[C:1]=[C:2]";
+  OBChemTsfm b;
+  b.Init(start, end);
+  b.Apply(mol);
+  out = conv.WriteString(&mol, true);
+  OB_COMPARE(out, "ClC=CBr");
+}
 
 // Open Babel was previously disappearing triple bonds when provided with SMILES
 // containing a triple bond in an aromatic ring
@@ -201,6 +233,80 @@ void test_PR329_Molfile_RGroups()
   OB_ASSERT( molfile.find("M  RGP  1   2   1") != std::string::npos); // i.e. atom 2 is labelled R1
 }
 
+struct SmilesData {
+  const char* inp;
+  const char* out;
+  const char* out_hoption; // if you specify -xh, i.e. "output explicit Hydrogens as such"
+  const char* out_addh_hoption; // if you add hydrogens and then specify "-xh"
+  const char* out_soption; // if you specify -xs, create SMARTS for substructure searching
+};
+
+void test_SMILES_Valence()
+{
+  static const SmilesData smilesData[] = {
+    { "[H]", "", "", "", "[#1]" }, // SMARTS perhaps should be [*H], but not implemented at the moment
+    { "[H][H]", "", "", "","[#1][#1]" },
+    { "[HH]", "", "", "[H][H]", "[#1]" },
+    { "C", "", "", "C([H])([H])([H])[H]", "" },
+    { "[C]", "", "", "", "C" },
+    { "[CH]", "", "", "[C][H]", "C" },
+    { "[CH3]", "", "", "[C]([H])([H])[H]", "C" },
+    { "[CH4]", "C", "C", "C([H])([H])([H])[H]", "C" },
+    { "[CH5]", "", "", "[C]([H])([H])([H])([H])[H]", "C" },
+    { "C[H]", "C", "", "C([H])([H])([H])[H]", "[C!H0]" },
+    { "[C][H]", "[CH]", "", "", "[C!H0]" },
+    { "[CH3][H]", "C", "C[H]", "C([H])([H])([H])[H]", "[C!H0]" },
+    { "[CH2]([H])[H]", "C", "C([H])[H]", "C([H])([H])([H])[H]", "[C!H0!H1]" },
+    { "[U][H]", "[UH]", "", "", "[U!H0]" },
+    { "[UH2]", "", "", "[U]([H])[H]", "[U]" },
+    { "[C@@H](Br)(Cl)I", "", "", "[C@](Br)(Cl)(I)[H]", "[C](Br)(Cl)I" }, // Note: if OB supported it, SMARTS should be [C@@?](Br)(Cl)I
+    { "Br[C@@H](Cl)I", "", "", "Br[C@@](Cl)(I)[H]", "Br[C](Cl)I" }, // Note: if OB supported it, SMARTS should be Br[C@@?](Cl)I
+    { "[C@@](F)(Br)(Cl)I", "", "", "", "" },
+    { "F[C@@](Br)(Cl)I", "", "", "", "" },
+    { "[H][C@@](Br)(Cl)I", "[C@@H](Br)(Cl)I", "", "", "[C@@H](Br)(Cl)I" },
+    { "C[H:1]", "C", "C[H]", "C([H])([H])([H])[H]", "[C!H0]" }, // atom class only shown with -xa
+    { "C[2H]", "", "", "C([2H])([H])([H])[H]", "C[2#1]" },
+    { "c1ccccc1", "", "", "c1(c(c(c(c(c1[H])[H])[H])[H])[H])[H]", "" },
+    { "c1cnccc1", "", "", "c1(c(nc(c(c1[H])[H])[H])[H])[H]", "" },
+    { "c1c[nH]cc1", "", "", "c1(c(n(c(c1[H])[H])[H])[H])[H]", "c1cncc1" },
+    { "F[I]F", "", "", "", "FIF" },
+  };
+  unsigned int size = (unsigned int)(sizeof(smilesData) / sizeof(smilesData[0]));
+  for (unsigned int rep = 0; rep < 4; ++rep) {
+    printf("Rep: %d\n", rep);
+    OBConversion conv;
+    OB_ASSERT(conv.SetInAndOutFormats("smi", "smi"));
+    switch (rep) {
+    case 1: case 2: conv.SetOptions("h", conv.OUTOPTIONS); break;
+    case 3: conv.SetOptions("s", conv.OUTOPTIONS); break;
+    }
+    for (unsigned int i = 0; i < size; ++i) {
+      OBMol mol;
+      OB_ASSERT(conv.ReadString(&mol, smilesData[i].inp));
+      if (rep == 2)
+        mol.AddHydrogens();
+      std::string out = conv.WriteString(&mol, true);
+      const char* mout;
+      switch (rep) {
+      case 0: mout = smilesData[i].out; break;
+      case 1: mout = smilesData[i].out_hoption; break;
+      case 2: mout = smilesData[i].out_addh_hoption; break;
+      case 3: mout = smilesData[i].out_soption; break;
+      }
+      std::string ans = mout[0] ? mout : smilesData[i].inp;
+      printf("  %d %s --> %s (%s)\n", i, smilesData[i].inp, ans.c_str(), out.c_str());
+      OB_COMPARE(out, ans);
+    }
+  }
+
+  OBConversion conv;
+  OB_ASSERT(conv.SetInAndOutFormats("smi", "smi"));
+  conv.SetOptions("ah", conv.OUTOPTIONS); // write out alias explicitly
+  OBMol mol;
+  conv.ReadString(&mol, "C[H:1]");
+  OB_COMPARE(conv.WriteString(&mol, true), "C[H:1]");
+}
+
 int regressionstest(int argc, char* argv[])
 {
   int defaultchoice = 1;
@@ -238,6 +344,12 @@ int regressionstest(int argc, char* argv[])
     break;
   case 225:
     test_AromaticTripleBond();
+    break;
+  case 226:
+    test_SMILES_Valence();
+    break;
+  case 227:
+    test_OBChemTsfm();
     break;
     //case N:
   //  YOUR_TEST_HERE();

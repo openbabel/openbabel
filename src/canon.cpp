@@ -57,6 +57,11 @@ void print_vector(const std::string &label, const std::vector<T> &v)
 
 namespace OpenBabel {
 
+  static unsigned int TotalHydrogenCount(OBAtom* atom)
+  {
+    return atom->ExplicitHydrogenCount() + atom->GetImplicitHCount();
+  }
+
   inline bool CompareBondPairSecond(const std::pair<OBBond*,unsigned int> &a,const std::pair<OBBond*,unsigned int> &b)
   {
     return(a.second < b.second);
@@ -798,14 +803,8 @@ namespace OpenBabel {
         if (atom->GetFormalCharge())
           hasCharge = true;
 
-	// Include all explicit hydrogens
-        int hydrogens_to_include = atom->ExplicitHydrogenCount();
-
-        // We also include any implicit hydrogen on a stereocenter.
-        hydrogens_to_include += (facade.HasTetrahedralStereo(atom->GetId()) && atom->ImplicitHydrogenCount()==1) ? 1 : 0;
-
-	// Include implicit H on an aromatic nitrogen, e.g. distinguish the two nitrogens in c1ncc[nH]1
-	hydrogens_to_include += (atom->IsAromatic() && atom->GetAtomicNum() == 7) ? atom->ImplicitHydrogenCount() : 0;
+	      // Include all hydrogens
+        int hydrogens_to_include = TotalHydrogenCount(atom);
 
         unsigned int c = 10000 * atom->GetSpinMultiplicity() +
                           1000 * hydrogens_to_include +
@@ -1432,7 +1431,7 @@ namespace OpenBabel {
         unsigned int rank = 10000 * symmetry_classes[i]  +
                              1000 * atom->GetSpinMultiplicity() +
                                10 * (atom->GetFormalCharge() + 7) +
-                                    atom->ExplicitHydrogenCount();
+                                    TotalHydrogenCount(atom);
 
         ranks.push_back(rank);
       }
@@ -1448,7 +1447,7 @@ namespace OpenBabel {
         unsigned int rank = 10000 * symmetry_classes[i]  +
                              1000 * atom->GetSpinMultiplicity() +
                                10 * (atom->GetFormalCharge() + 7) +
-                                    atom->ExplicitHydrogenCount();
+                                    TotalHydrogenCount(atom);
 
         if (rank == lowestRank)
           result.push_back(atom);

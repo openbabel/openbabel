@@ -92,6 +92,8 @@ namespace OpenBabel
       bool SetupCalculations();
       //! Setup pointers in OBFFXXXCalculation vectors
       bool SetupPointers();
+      //! Calculate Gasteiger charges 'out of order' before atom typing
+      bool SetPartialChargesBeforeAtomTyping();
       // GetParameterOOP for improper-dihedrals
       // This specialization is needed because improper-dihedral have different symmetry as dihedrals
       OBFFParameter* GetParameterOOP(const char* a, const char* b, const char* c, const char* d,

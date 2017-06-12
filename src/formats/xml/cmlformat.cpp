@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/atomclass.h>
+#include <openbabel/obfunctions.h>
 #include <openbabel/xml.h>
 #include <float.h>
 #ifdef HAVE_SHARED_POINTER
@@ -55,7 +56,6 @@ namespace OpenBabel
 			OBConversion::RegisterOptionParam("N", this, 1);
 			OBConversion::RegisterOptionParam("m", this);
 			OBConversion::RegisterOptionParam("x", this);
-			OBConversion::RegisterOptionParam("h", this);
 			OBConversion::RegisterOptionParam("c", this);
 			OBConversion::RegisterOptionParam("p", this);
 			OBConversion::RegisterOptionParam("2", this, 0, OBConversion::INOPTIONS);
@@ -103,7 +103,6 @@ namespace OpenBabel
         "  1  write CML1 (rather than CML2)\n"
         "  a  write array format for atoms and bonds\n"
         "  A  write aromatic bonds as such, not Kekule form\n"
-        "  h  use hydrogenCount for all hydrogens\n"
         "  m  write metadata\n"
         "  x  omit XML and namespace declarations\n"
         "  c  continuous output: no formatting\n"
@@ -181,7 +180,7 @@ namespace OpenBabel
     map<string,int> AtomMap; //key=atom id, value= ob atom index
     cmlArray AtomArray;
     cmlArray BondArray;
-    map<int, int> HCounts;
+    vector<int> HCounts; // for each atom, either -1 or the value of the hydrogenCount
     vector< pair<string,string> > cmlBondOrAtom; //for cml1 only
     vector< pair<string,string> > molWideData;
     bool inBondArray; //for cml1 only
@@ -540,11 +539,6 @@ namespace OpenBabel
           if(!ParseFormula(RawFormula, _pmol))
             obErrorLog.ThrowError(_pmol->GetTitle(),"Error in formula", obError);
 
-        //ensure unbonded atoms are seen as such
-        if(_pmol->NumBonds()==0)
-          FOR_ATOMS_OF_MOL(a, *_pmol)
-            a->ForceNoH();
-
         _pmol->AssignSpinMultiplicity();
         _pmol->EndModify();
         return (--_embedlevel>=0); //false to stop parsing if no further embedded mols
@@ -583,6 +577,7 @@ namespace OpenBabel
         OBAtom* pAtom = _pmol->NewAtom();
         nAtoms++;
         int nhvy = nAtoms;
+        int hcount = -1; // default value which may be overridden by hydrogenCount below
 
         double x=0,y=0,z=0;
         bool using3=false, using2=false, usingFract=false;
@@ -673,7 +668,7 @@ namespace OpenBabel
               {
                 //Actually adding H atoms to the structure is deferred until the explicit
                 //structure is complete, because hydrogenCount may include explicit H, bug#3014855
-                HCounts[nAtoms] = atoi(value.c_str());
+                hcount = atoi(value.c_str());
 
                /* int nhvy = nAtoms;
                   int i;
@@ -752,6 +747,9 @@ namespace OpenBabel
               pAtom->SetIsotope(atoi(value.c_str()));
 
           } //each attribute
+
+          //Save hydrogen count
+          HCounts.push_back(hcount);
 
           //Save atom coordinates
           if(using3 || usingFract)
@@ -902,38 +900,28 @@ namespace OpenBabel
   bool CMLFormat::DoHCounts()
   {
     //Add extra H atoms so that each atom has the value of its attribute hydrogenCount
-    map<int,int>::iterator iter;
-    for(iter=HCounts.begin();iter!=HCounts.end();++iter)
+    FOR_ATOMS_OF_MOL(atom, _pmol)
     {
-      int idx = iter->first;
-      int explH = _pmol->GetAtom(idx)->ExplicitHydrogenCount(false); //excludes H isotopes
-      if(explH > iter->second)
+      int hcount = HCounts[atom->GetIdx() - 1];
+      if (hcount == -1)
+      {
+        OBAtomAssignTypicalImplicitHydrogens(&*atom);
+        continue;
+      }
+
+      int explH = atom->ExplicitHydrogenCount(); // includes H isotopes
+      if(explH > hcount)
       {
         map<string,int>::iterator it;
         for(it=AtomMap.begin();it!=AtomMap.end();++it)
-          if(it->second == idx)
+          if(it->second == atom->GetIdx())
             break;
         stringstream ss;
         ss << "In atom " << it->first << " the number of explicit hydrogens exceeds the hydrogenCount attribute.";
-          obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
-          return false;
+        obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
+        return false;
       }
-
-      if(iter->second == 0)
-        //ensure no Hs are ever added
-        _pmol->GetAtom(idx)->ForceNoH();
-
-      else
-      {
-        //add extra hydrogens
-        for(unsigned i=0;i<iter->second - explH;++i)
-        {
-          OBAtom* hatom = _pmol->NewAtom();
-          hatom->SetAtomicNum(1);
-          hatom->SetType("H");
-          _pmol->AddBond(idx, _pmol->NumAtoms(), 1);
-        }
-      }
+      atom->SetImplicitHCount(hcount - explH);
     }
     return true;
   }
@@ -1173,7 +1161,6 @@ namespace OpenBabel
         for(i=0;i<n;++i)
           {
             OBAtom* pAtom = pmol->NewAtom();
-            pAtom->ForceNoH();
             pAtom->SetAtomicNum(atno);
             if(iso)
               pAtom->SetIsotope(iso);
@@ -1411,13 +1398,7 @@ namespace OpenBabel
 
     OBMol &mol = *pmol;
 
-    int numbonds = mol.NumBonds(); //Capture this before deleting Hs
-    bool UseHydrogenCount=false;
-    if(_pxmlConv->IsOption("h"))
-      {
-        pmol->DeleteHydrogens();
-        UseHydrogenCount=true;
-      }
+    int numbonds = mol.NumBonds();
 
     bool UseFormulaWithNoBonds=false; //before 2.3.1 was true;
 
@@ -1517,7 +1498,7 @@ namespace OpenBabel
                 int spin = patom->GetSpinMultiplicity();
                 int isotope =patom->GetIsotope();
 
-                int hcount=patom->ImplicitHydrogenCount() + patom->ExplicitHydrogenCount(); //includes H isotopes
+                int hcount=patom->GetImplicitHCount() + patom->ExplicitHydrogenCount(); //includes H isotopes
 
                 X = patom->GetX();
                 Y = patom->GetY();
@@ -1574,8 +1555,7 @@ namespace OpenBabel
                         if(spin)
                           xmlTextWriterWriteFormatAttribute(writer(), C_SPINMULTIPLICITY,"%d", spin);
 
-                        if(UseHydrogenCount && hcount)
-                          xmlTextWriterWriteFormatAttribute(writer(), C_HYDROGENCOUNT,"%d", hcount);
+                        xmlTextWriterWriteFormatAttribute(writer(), C_HYDROGENCOUNT,"%d", hcount);
 
                         if(patom->HasData("label"))
                             xmlTextWriterWriteFormatAttribute(writer(), C_LABEL,"%s",
@@ -1647,13 +1627,10 @@ namespace OpenBabel
                             xmlTextWriterEndElement(writer());
                           }
 
-                        if(UseHydrogenCount && hcount)
-                          {
-                            xmlTextWriterStartElementNS(writer(), prefix, C_INTEGER, NULL);
-                            xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "hydrogenCount");
-                            xmlTextWriterWriteFormatString(writer(),"%d", hcount);
-                            xmlTextWriterEndElement(writer());
-                          }
+                        xmlTextWriterStartElementNS(writer(), prefix, C_INTEGER, NULL);
+                        xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "hydrogenCount");
+                        xmlTextWriterWriteFormatString(writer(),"%d", hcount);
+                        xmlTextWriterEndElement(writer());
 
                         if(dim==2 || dim==3)
                           {
@@ -1697,8 +1674,7 @@ namespace OpenBabel
                     if(anySpin)
                       xmlTextWriterWriteFormatAttribute(writer(), C_SPINMULTIPLICITY,"%s", spn.str().c_str());
 
-                    if(UseHydrogenCount)
-                      xmlTextWriterWriteFormatAttribute(writer(), C_HYDROGENCOUNT,"%s", hct.str().c_str());
+                    xmlTextWriterWriteFormatAttribute(writer(), C_HYDROGENCOUNT,"%s", hct.str().c_str());
 
                     if(dim==2)
                       {
@@ -1733,13 +1709,10 @@ namespace OpenBabel
                         xmlTextWriterEndElement(writer());
                       }
 
-                    if(UseHydrogenCount)
-                      {
-                        xmlTextWriterStartElementNS(writer(), prefix, C_INTEGERARRAY, NULL);
-                        xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "hydrogenCount");
-                        xmlTextWriterWriteFormatString(writer(),"%s", hct.str().c_str());
-                        xmlTextWriterEndElement(writer());
-                      }
+                    xmlTextWriterStartElementNS(writer(), prefix, C_INTEGERARRAY, NULL);
+                    xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "hydrogenCount");
+                    xmlTextWriterWriteFormatString(writer(),"%s", hct.str().c_str());
+                    xmlTextWriterEndElement(writer());
 
                     if(dim==2 || dim==3)
                       {

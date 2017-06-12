@@ -1724,7 +1724,7 @@ namespace OpenBabel
                   continue;
 
                 bond = _mol.GetBond(&*nbrNbr, &*nbrNbrNbr);
-                if (bond->IsDouble()) {
+                if (!bond->IsAromatic() && bond->GetBondOrder() == 2) {
                   if (nbrNbrNbr->IsOxygen()) {
                     return 24; // Hydroxyl hydrogen in carboxylic acids (HOCO)
                   }
@@ -1785,7 +1785,7 @@ namespace OpenBabel
                 continue;
 
               bond = _mol.GetBond(&*nbr, &*nbrNbr);
-              if (bond->IsDouble()) {
+              if (!bond->IsAromatic() && bond->GetBondOrder() == 2) {
                 if (nbrNbr->IsCarbon() || nbrNbr->IsNitrogen()) {
                   return 27; // Hydrogen on imine nitrogen, Hydrogen on azo nitrogen (HN=C, HN=N)
                 }
@@ -1809,7 +1809,7 @@ namespace OpenBabel
                   continue;
 
                 bond = _mol.GetBond(&*nbrNbr, &*nbrNbrNbr);
-                if (bond->IsDouble()) {
+                if (!bond->IsAromatic() && bond->GetBondOrder() == 2) {
                   if (nbrNbrNbr->IsCarbon() || nbrNbrNbr->IsNitrogen() || nbrNbrNbr->IsOxygen() || nbrNbrNbr->IsSulfur()) {
                     return 28; // Hydrogen on amide nitrogen, Hydrogen on thioamide nitrogen,
                     // Hydrogen on enamine nitrogen, Hydrogen in H-N-C=N moiety (HNCO, HNCS, HNCC, HNCN)
@@ -1823,7 +1823,7 @@ namespace OpenBabel
                   continue;
 
                 bond = _mol.GetBond(&*nbrNbr, &*nbrNbrNbr);
-                if (bond->IsDouble()) {
+                if (!bond->IsAromatic() && bond->GetBondOrder() == 2) {
                   if (nbrNbrNbr->IsCarbon() || nbrNbrNbr->IsNitrogen()) {
                     return 28; // Hydrogen in H-N-N=C moiety, Hydrogen in H-N-N=N moiety (HNNC, HNNN)
                   }
@@ -1888,7 +1888,7 @@ namespace OpenBabel
 
         FOR_NBORS_OF_ATOM (nbr, atom) {
           bond = _mol.GetBond(&*nbr, atom);
-          if (bond->IsDouble()) {
+          if (!bond->IsAromatic() && bond->GetBondOrder() == 2) {
             doubleBondTo = nbr->GetAtomicNum();
           }
 
@@ -1903,7 +1903,7 @@ namespace OpenBabel
               N3fcharge += nbr->GetFormalCharge();
               N3count++;
             }
-          } else if ((nbr->GetValence() == 2) && bond->IsDouble()) {
+          } else if ((nbr->GetValence() == 2) && !bond->IsAromatic() && bond->GetBondOrder() == 2) {
             if (nbr->IsNitrogen()) {
               N2count++;
             }
@@ -1972,13 +1972,13 @@ namespace OpenBabel
             }
             if (nbr->IsNitrogen()) {
               bond = _mol.GetBond(&*nbr, atom);
-              if (bond->IsDouble()) {
+              if (!bond->IsAromatic() && bond->GetBondOrder() == 2) {
                 doubleBondTo = 7;
               }
             }
             if (nbr->IsCarbon()) {
               bond = _mol.GetBond(&*nbr, atom);
-              if (bond->IsDouble()) {
+              if (!bond->IsAromatic() && bond->GetBondOrder() == 2) {
                 FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
                   if (nbrNbr->IsNitrogen() && (nbrNbr->GetValence() == 3)) {
                     nitrogenCount++;
@@ -2037,7 +2037,7 @@ namespace OpenBabel
             if (nbr->IsCarbon()) {
               FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
                 bond = _mol.GetBond(&*nbr, &*nbrNbr);
-                if (bond->IsDouble() && (nbrNbr->IsOxygen() || nbrNbr->IsSulfur())) {
+                if (!bond->IsAromatic() && bond->GetBondOrder() == 2 && (nbrNbr->IsOxygen() || nbrNbr->IsSulfur())) {
                   IsAmide = true;
                   //return 10; // Amide nitrogen, Thioamide nitrogen (NC=O, NC=S)
                 }
@@ -2053,7 +2053,7 @@ namespace OpenBabel
 
               FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
                 bond = _mol.GetBond(&*nbr, &*nbrNbr);
-                if (bond->IsDouble()) {
+                if (!bond->IsAromatic() && bond->GetBondOrder() == 2) {
                   doubleBondTo = nbrNbr->GetAtomicNum();
                 }
                 if (bond->IsAromatic()) {
@@ -2061,7 +2061,7 @@ namespace OpenBabel
                     doubleBondTo = nbrNbr->GetAtomicNum();
                   }
                 }
-                if (bond->IsTriple()) {
+                if (!bond->IsAromatic() && bond->GetBondOrder() == 3) {
                   tripleBondTo = nbrNbr->GetAtomicNum();
                 }
                 if (nbrNbr->IsNitrogen() && (nbrNbr->GetValence() == 3)) {
@@ -2075,7 +2075,7 @@ namespace OpenBabel
                     N3count++;
                   }
                 }
-                if (nbrNbr->IsNitrogen() && (nbrNbr->GetValence() == 2) && (bond->IsDouble() || bond->IsAromatic())) {
+                if (nbrNbr->IsNitrogen() && (nbrNbr->GetValence() == 2) && (bond->GetBondOrder() == 2 || bond->IsAromatic())) {
                   N2count++;
                 }
                 if (nbrNbr->IsAromatic()) {
@@ -2104,7 +2104,7 @@ namespace OpenBabel
               nitrogenCount = 0;
               FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
                 bond = _mol.GetBond(&*nbr, &*nbrNbr);
-                if (bond->IsDouble()) {
+                if (!bond->IsAromatic() && bond->GetBondOrder() == 2) {
                   if (nbrNbr->IsCarbon()) {
                     oxygenCount = sulphurCount = 0;
                     FOR_NBORS_OF_ATOM (nbrNbrNbr, &*nbrNbr) {
@@ -2179,7 +2179,7 @@ namespace OpenBabel
               isNbrCarbon = nbr->IsCarbon();
             bond = _mol.GetBond(&*nbr, atom);
             if (!isBondTriple)
-              isBondTriple = bond->IsTriple();
+              isBondTriple = !bond->IsAromatic() && bond->GetBondOrder() == 3;
           }
           if (isBondTriple && isNbrCarbon)
             return 61; // Isonitrile nitrogen (NR%)
@@ -2192,10 +2192,10 @@ namespace OpenBabel
 
           FOR_NBORS_OF_ATOM (nbr, atom) {
             bond = _mol.GetBond(&*nbr, atom);
-            if (nbr->IsOxygen() && bond->IsDouble() && (nbr->GetValence() == 1)) {
+            if (nbr->IsOxygen() && !bond->IsAromatic() && bond->GetBondOrder() == 2 && (nbr->GetValence() == 1)) {
               return 46; // Nitrogen in nitroso group (N=O)
             }
-            if ((nbr->IsCarbon() || nbr->IsNitrogen()) && bond->IsDouble()) {
+            if ((nbr->IsCarbon() || nbr->IsNitrogen()) && !bond->IsAromatic() && bond->GetBondOrder() == 2) {
               return 9; // Iminie nitrogen, Azo-group nitrogen (N=C, N=N)
             }
           }
@@ -2238,7 +2238,7 @@ namespace OpenBabel
       if (atom->GetValence() == 1) {
        	FOR_NBORS_OF_ATOM (nbr, atom) {
           bond = _mol.GetBond(&*nbr, atom);
-          if (bond->IsTriple()) {
+          if (!bond->IsAromatic() && bond->GetBondOrder() == 3) {
             FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
               if (atom != &*nbrNbr && !(nbr->IsNitrogen()
                 && nbrNbr->IsNitrogen() && nbrNbr->GetValence() == 2)) {
@@ -2318,7 +2318,7 @@ namespace OpenBabel
               // O-?-C-?-O
               return 32; // Oxygen in carboxylate group (O2CM)
             }
-            if (bond->IsSingle()) {
+            if (!bond->IsAromatic() && bond->GetBondOrder() == 1) {
               // O--C
               return 35; // Oxide oxygen on sp3 carbon, Oxide oxygen on sp2 carbon (OM, OM2)
             } else {
@@ -2335,7 +2335,7 @@ namespace OpenBabel
               return 32; // Oxygen in nitro group, Nitro-group oxygen in nitrate,
               // Nitrate anion oxygen (O2N, O2NO, O3N)
             }
-            if (bond->IsSingle()) {
+            if (!bond->IsAromatic() && bond->GetBondOrder() == 1) {
 	      if ((nbr->GetValence() == 2) || (nbr->BOSum() == 3))
 	      // O(-)--N
 	        return 35;
@@ -2364,7 +2364,7 @@ namespace OpenBabel
               // O1-?-S-?-S1
               return 32; // Terminal oxygen in thiosulfinate anion (OSMS)
             }
-            if (bond->IsSingle()) {
+            if (!bond->IsAromatic() && bond->GetBondOrder() == 1) {
               // O--S
               return 32; // Single terminal oxygen on sulfur, One of 2 terminal O's on sulfur,
               // One of 3 terminal O's on sulfur, Terminal O in sulfate anion,
@@ -2385,8 +2385,8 @@ namespace OpenBabel
               FOR_NBORS_OF_ATOM (nbr2, &*nbr) {
                 if (atom == &*nbr2)
                   continue;
-
-                if (nbr->GetBond(&*nbr2)->IsDouble()
+                OBBond* bond = nbr->GetBond(&*nbr2);
+                if (!bond->IsAromatic() && bond->GetBondOrder() == 2
                   && nbr2->IsCarbon() && oxygenBoundToSulfur == 1)
                   isSulfoxide = false; // O=S on sulfur doubly bonded to, e.g., C (O=S=)
 
@@ -2477,9 +2477,9 @@ namespace OpenBabel
 
         FOR_NBORS_OF_ATOM (nbr, atom) {
           bond = _mol.GetBond(&*nbr, atom);
-          if (bond->IsDouble()) {
+          if (!bond->IsAromatic() && bond->GetBondOrder() == 2) {
             if (nbr->GetAtomicNum() == 6)
-	      doubleBondTo = 6;
+	            doubleBondTo = 6;
           }
 
           if (nbr->GetValence() == 1) {
@@ -2510,7 +2510,7 @@ namespace OpenBabel
         FOR_NBORS_OF_ATOM (nbr, atom) {
           if (nbr->IsOxygen()) {
             bond = _mol.GetBond(&*nbr, atom);
-            if (bond->IsDouble()) {
+            if (!bond->IsAromatic() && bond->GetBondOrder() == 2) {
               doubleBondTo = 8;
             }
           }
@@ -2532,7 +2532,7 @@ namespace OpenBabel
             }
           }
           bond = _mol.GetBond(&*nbr, atom);
-          if (bond->IsDouble()) {
+          if (!bond->IsAromatic() && bond->GetBondOrder() == 2) {
             doubleBondTo = nbr->GetAtomicNum();
           }
         }
@@ -3185,8 +3185,8 @@ namespace OpenBabel
        	  double Ub, Uc, pi_bc, beta;
           Ub = GetUParam(b);
           Uc = GetUParam(c);
-
-          if (((GetMltb(type_b) == 2) && (GetMltb(type_c) == 2)) && a->GetBond(b)->IsDouble())
+          OBBond *bond = a->GetBond(b);
+          if (((GetMltb(type_b) == 2) && (GetMltb(type_c) == 2)) && !bond->IsAromatic() && bond->GetBondOrder() == 2)
             pi_bc = 1.0;
           else
             pi_bc = 0.4;
@@ -3240,11 +3240,12 @@ namespace OpenBabel
           }
 
         // rule (g) page 632
-        if (!found_rule)
-          if (b->GetBond(c)->IsSingle() && (
-                                            (GetMltb(type_b) && GetMltb(type_c)) ||
-                                            (GetMltb(type_b) && HasPilpSet(type_c)) ||
-                                            (GetMltb(type_c) && HasPilpSet(type_b))  )) {
+        if (!found_rule) {
+          OBBond *bond = b->GetBond(c);
+          if (!bond->IsAromatic() && bond->GetBondOrder() == 1 && (
+            (GetMltb(type_b) && GetMltb(type_c)) ||
+            (GetMltb(type_b) && HasPilpSet(type_c)) ||
+            (GetMltb(type_c) && HasPilpSet(type_b)))) {
             if (HasPilpSet(type_b) && HasPilpSet(type_c)) // case (1)
               continue;
 
@@ -3287,6 +3288,7 @@ namespace OpenBabel
             torsioncalc.v3 = 0.0;
             found_rule = true;
           }
+        }
 
         // rule (h) page 632
         if (!found_rule) {
@@ -3766,7 +3768,8 @@ namespace OpenBabel
               s_count++;
             if (nbr2->IsNitrogen() && !nbr2->IsAromatic())
               sulfonamide = true;
-            if (nbr2->IsCarbon() && nbr->GetBond(&*nbr2)->IsDouble())
+            OBBond *bond = nbr->GetBond(&*nbr2);
+            if (nbr2->IsCarbon() && !bond->IsAromatic() && bond->GetBondOrder() == 2)
               sulfone_s_c = true;
           }
 
@@ -3805,9 +3808,11 @@ namespace OpenBabel
             atom->SetPartialCharge(-0.25); // O4CL
         }
       } else if (type == 61) {
-        FOR_NBORS_OF_ATOM(nbr, &*atom)
-          if (atom->GetBond(&*nbr)->IsTriple() && nbr->IsNitrogen())
+        FOR_BONDS_OF_ATOM(bond, &*atom) {
+          OBAtom *nbr = bond->GetNbrAtom(&*atom);
+          if (!bond->IsAromatic() && bond->GetBondOrder() == 3 && nbr->IsNitrogen())
             atom->SetPartialCharge(1.0);
+        }
       } else if (type == 72) {
         int s_count = 0;
 
@@ -4469,12 +4474,12 @@ namespace OpenBabel
   //
   int OBForceFieldMMFF94::GetBondType(OBAtom* a, OBAtom* b)
   {
-    if (!_mol.GetBond(a,b)->IsSingle())
+    OBBond *bond = _mol.GetBond(a, b);
+    if (bond->GetBondOrder() != 1 || bond->IsAromatic())
       return 0;
 
-    if (!_mol.GetBond(a,b)->IsAromatic())
-      if (HasAromSet(atoi(a->GetType())) && HasAromSet(atoi(b->GetType())))
-        return 1;
+    if (HasAromSet(atoi(a->GetType())) && HasAromSet(atoi(b->GetType())))
+      return 1;
 
     if (HasSbmbSet(atoi(a->GetType())) && HasSbmbSet(atoi(b->GetType())))
       return 1;
@@ -4619,7 +4624,8 @@ namespace OpenBabel
       if (IsInSameRing(a,b) && IsInSameRing(b,c) && IsInSameRing(c,d))
         return 4;
 
-    if (_mol.GetBond(b,c)->IsSingle()) {
+    OBBond *bond = _mol.GetBond(b, c);
+    if (bond->GetBondOrder() == 1 && !bond->IsAromatic()) {
       if (btab || btcd)
         return 2;
       /*

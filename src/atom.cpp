@@ -136,7 +136,7 @@ namespace OpenBabel
     _ele = (char)0;
     _isotope = 0;
     _spinmultiplicity=0; // CM 18 Sept 2003
-    _impval = 0;
+    _imph = 0;
     _fcharge = 0;
     _type[0] = '\0';
     _pcharge = 0.0;
@@ -164,18 +164,19 @@ namespace OpenBabel
     if (!src)
       return;
 
-    _hyb = src->GetHyb();
-    _ele = src->GetAtomicNum();
-    _isotope = src->GetIsotope();
-    _fcharge = src->GetFormalCharge();
-    _spinmultiplicity = src->GetSpinMultiplicity();
-    strncpy(_type,src->GetType(), sizeof(_type) - 1);
+    _hyb = src->_hyb;
+    _ele = src->_ele;
+    _imph = src->_imph;
+    _isotope = src->_isotope;
+    _fcharge = src->_fcharge;
+    _spinmultiplicity = src->_spinmultiplicity;
+    strncpy(_type,src->_type, sizeof(_type) - 1);
     _type[sizeof(_type) - 1] = '\0';
-    _pcharge = src->GetPartialCharge();
+    _pcharge = src->_pcharge;
     _v = src->GetVector();
-    _flags = src->GetFlag();
+    _flags = src->_flags;
     _residue = (OBResidue*)NULL;
-    _id = src->GetId();
+    _id = src->_id;
 
     _vdata.clear();
     //Copy all the OBGenericData, providing the new atom
@@ -509,22 +510,6 @@ namespace OpenBabel
       snprintf(_type, 6, "%s", "D");
 
     return(_type);
-  }
-
-  unsigned int OBAtom::GetImplicitValence() const
-  {
-    //Special case for [H] to avoid infite loop: SMARTS Match() <-> AssignSpinMultiplicity()
-    if(GetAtomicNum() == 1) {
-      unsigned int val = GetValence();
-      if (val == 0 && GetFormalCharge() == 0 && GetSpinMultiplicity() == 0)
-        return 1;
-      return val;
-    }
-    OBMol *mol = (OBMol*)((OBAtom*)this)->GetParent();
-    if (mol && !mol->HasImplicitValencePerceived())
-      atomtyper.AssignImplicitValence(*((OBMol*)((OBAtom*)this)->GetParent()));
-
-    return((unsigned int)_impval);
   }
 
   unsigned int OBAtom::GetHyb() const
@@ -1030,59 +1015,13 @@ namespace OpenBabel
 
   unsigned int OBAtom::BOSum() const
   {
-    unsigned int bo;
-    unsigned int bosum=0;
-    OBBond *bond;
+    unsigned int bosum = 0;
+    
     OBBondIterator i;
+    for (OBBond *bond = ((OBAtom*)this)->BeginBond(i); bond; bond = ((OBAtom*)this)->NextBond(i))
+      bosum += bond->GetBondOrder();
 
-    for (bond = ((OBAtom*)this)->BeginBond(i);bond;bond = ((OBAtom*)this)->NextBond(i))
-      {
-        bo = bond->GetBO();
-        bosum += (bo < 5) ? 2*bo : 3;
-      }
-
-    bosum /= 2;
-    return(bosum);
-  }
-
-  unsigned int OBAtom::KBOSum() const
-  {
-    OBBond *bond;
-    unsigned int bosum;
-    OBBondIterator i;
-
-    bosum = GetImplicitValence();
-
-    for (bond = ((OBAtom*)this)->BeginBond(i);bond;bond = ((OBAtom*)this)->NextBond(i))
-      {
-        if (bond->IsKDouble())
-          bosum++;
-        else if (bond->IsKTriple())
-          bosum += 2;
-      }
-
-    return(bosum);
-  }
-
-  unsigned int OBAtom::ImplicitHydrogenCount() const
-  {
-    //handles H,C,N,S,O,X
-    OBMol *mol = (OBMol*)((OBAtom*)this)->GetParent();
-    if (mol && !mol->HasImplicitValencePerceived())
-      atomtyper.AssignImplicitValence(*((OBMol*)((OBAtom*)this)->GetParent()));
-
-    // _impval is assigned by the atomtyper -- same as calling GetImplicitValence()
-    int impval = _impval - GetValence();
-
-    // we need to modify this implicit valence if we're a radical center
-    int mult = GetSpinMultiplicity();
-    if(mult==2) //radical
-      impval-=1;
-    else if(mult==1 || mult==3) //carbene
-      impval-=2;
-    else if(mult>=4) //CH, Catom
-      impval -= mult-1;
-    return((impval>0)?impval:0);
+    return bosum;
   }
 
   unsigned int OBAtom::ExplicitHydrogenCount(bool ExcludeIsotopes) const
@@ -1135,7 +1074,7 @@ namespace OpenBabel
       int S = SHELL[N];
       int V = VALENCE[N];
       int C = GetFormalCharge();
-      int B = ImplicitHydrogenCount() + BOSum();
+      int B = GetImplicitHCount() + BOSum();
       // TODO: Do we actually want to divide by 2 here? (counting pairs instead of single)
       counts.first = (S - V - B + C) / 2;  // Acid: Number of electrons pairs desired
       counts.second = (V - B - C) / 2;     // Base: Number of electrons pairs available

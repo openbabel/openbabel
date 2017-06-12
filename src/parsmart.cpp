@@ -30,6 +30,10 @@ using namespace std;
 
 namespace OpenBabel
 {
+  static unsigned int TotalNumberOfBonds(OBAtom* atom)
+  {
+    return atom->GetImplicitHCount() + atom->GetValence();
+  }
 
   /*! \class OBSmartsPattern parsmart.h <openbabel/parsmart.h>
 
@@ -2174,22 +2178,21 @@ namespace OpenBabel
                  !atom->IsAromatic();
         case AE_HCOUNT:
           return expr->leaf.value == ((int)atom->ExplicitHydrogenCount() +
-                                      (int)atom->ImplicitHydrogenCount());
+                                      (int)atom->GetImplicitHCount());
         case AE_CHARGE:
           return expr->leaf.value == atom->GetFormalCharge();
         case AE_CONNECT:
-          return expr->leaf.value == (int)atom->GetImplicitValence();
+          return expr->leaf.value == (int)TotalNumberOfBonds(atom);
         case AE_DEGREE:
           return expr->leaf.value == (int)atom->GetValence();
         case AE_IMPLICIT:
-          return expr->leaf.value == (int)atom->ImplicitHydrogenCount();
+          return expr->leaf.value == (int)atom->GetImplicitHCount();
         case AE_RINGS:
           return expr->leaf.value == (int)atom->MemberOfRingCount();
         case AE_SIZE:
           return atom->IsInRingSize(expr->leaf.value);
         case AE_VALENCE:
-          return expr->leaf.value == (int)(atom->KBOSum()
-            - (atom->GetSpinMultiplicity() ? atom->GetSpinMultiplicity()-1 : 0));
+          return expr->leaf.value == (int)(atom->BOSum() + atom->GetImplicitHCount());
         case AE_CHIRAL:
           // always return true (i.e. accept the match) and check later
           return true;

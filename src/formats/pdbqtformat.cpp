@@ -690,6 +690,11 @@ namespace OpenBabel
     return(false);
   }
 
+  static unsigned int TotalNumberOfBonds(OBAtom* atom)
+  {
+    return atom->GetImplicitHCount() + atom->GetValence();
+  }
+
   static bool IsAmidine(OBBond* querybond)
   {
     OBAtom *c, *n;
@@ -710,7 +715,7 @@ namespace OpenBabel
     }
     if (!c || !n) return(false);
     if (querybond->GetBondOrder() != 1) return(false);
-    if (n->GetImplicitValence() != 3) return(false);
+    if (TotalNumberOfBonds(n) != 3) return false; // must be a degree 3 nitrogen
 
     // Make sure C is attached to =N
     OBBond *bond;
@@ -730,7 +735,9 @@ namespace OpenBabel
   //identifies a bond as rotatable if it is a single bond, not amide, not in a ring,
   //and if both atoms it connects have at least one other atom bounded to them
   {
-    if ( !the_bond->IsSingle() || the_bond->IsAmide() || IsAmidine(the_bond) || the_bond->IsInRing() ) {return false;}
+    if ( the_bond->GetBondOrder() != 1 || the_bond->IsAromatic() || 
+         the_bond->IsAmide() || IsAmidine(the_bond) || the_bond->IsInRing() )
+      return false;
     if ( ((the_bond->GetBeginAtom())->GetValence() == 1) || ((the_bond->GetEndAtom())->GetValence() == 1) ) {return false;}
     return true;
   }
@@ -1144,7 +1151,6 @@ namespace OpenBabel
     string zstr = sbuf.substr(40,8);
     vector3 v(atof(xstr.c_str()),atof(ystr.c_str()),atof(zstr.c_str()));
     atom.SetVector(v);
-    atom.ForceImplH();
 
     // useful for debugging unknown atom types (e.g., PR#1577238)
     //    cout << mol.NumAtoms() + 1  << " : '" << element << "'" << " " << etab.GetAtomicNum(element.c_str()) << endl;

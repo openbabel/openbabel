@@ -94,27 +94,6 @@ namespace OpenBabel
   void OBBond::SetBondOrder(int order)
   {
     _order = (char)order;
-    if (order == 5)
-      {
-        SetAromatic();
-        if (_bgn)
-          _bgn->SetAromatic();
-        if (_end)
-          _end->SetAromatic();
-      }
-    else
-      {
-        if (order == 1)
-          SetKSingle();
-        else if (order == 2)
-          SetKDouble();
-        else if (order == 3)
-          SetKTriple();
-        else
-          UnsetFlag(OB_KSINGLE_BOND | OB_KDOUBLE_BOND | OB_KTRIPLE_BOND);
-
-        UnsetAromatic();
-      }
   }
 
   void OBBond::SetLength(OBAtom *fixed, double length)
@@ -203,6 +182,11 @@ namespace OpenBabel
     //                               && (_end->IsHeteroatom() || _end->GetHvyValence() > 1) );
     return (_bgn->GetHvyValence() > 1 && _end->GetHvyValence() > 1);
   }
+  
+  static unsigned int TotalNumberOfBonds(OBAtom* atom)
+  {
+    return atom->GetImplicitHCount() + atom->GetValence();
+  }
 
    bool OBBond::IsAmide()
    {
@@ -222,7 +206,7 @@ namespace OpenBabel
       }
       if (!c || !n) return(false);
       if (GetBondOrder() != 1) return(false);
-      if (n->GetImplicitValence() != 3) return(false);
+      if (TotalNumberOfBonds(n) != 3) return false; // must be a degree 3 nitrogen
 
       // Make sure C is attached to =O
       OBBond *bond;
@@ -254,7 +238,7 @@ namespace OpenBabel
       }
       if (!c || !n) return(false);
       if (GetBondOrder() != 1) return(false);
-      if (n->GetImplicitValence() != 3) return(false);
+      if (TotalNumberOfBonds(n) != 3) return false; // must be a degree 3 nitrogen
 
       // Make sure that N is connected to one non-H
       if (n->GetHvyValence() != 1) return(false);
@@ -288,7 +272,7 @@ namespace OpenBabel
       }
       if (!c || !n) return(false);
       if (GetBondOrder() != 1) return(false);
-      if (n->GetImplicitValence() != 3) return(false);
+      if (TotalNumberOfBonds(n) != 3) return false; // must be a degree 3 nitrogen
 
       // Make sure that N is connected to two non-H atoms
       if (n->GetHvyValence() != 2) return(false);
@@ -322,7 +306,7 @@ namespace OpenBabel
       }
       if (!c || !n) return(false);
       if (GetBondOrder() != 1) return(false);
-      if (n->GetImplicitValence() != 3) return(false);
+      if (TotalNumberOfBonds(n) != 3) return false; // must be a degree 3 nitrogen
 
       // Make sure that N is connected to three non-H atoms
       if (n->GetHvyValence() != 3) return(false);
@@ -478,54 +462,6 @@ namespace OpenBabel
     return(false);
   }
 
-  bool OBBond::IsSingle()
-  {
-    if (HasFlag(OB_AROMATIC_BOND))
-      return(false);
-
-    if (!((OBMol*)GetParent())->HasAromaticPerceived())
-      {
-        aromtyper.AssignAromaticFlags(*((OBMol*)GetParent()));
-      }
-
-    if ((this->GetBondOrder()==1) && !(HasFlag(OB_AROMATIC_BOND)))
-      return(true);
-
-    return(false);
-  }
-
-  bool OBBond::IsDouble()
-  {
-    if	(HasFlag(OB_AROMATIC_BOND))
-      return(false);
-
-    if (!((OBMol*)GetParent())->HasAromaticPerceived())
-      {
-        aromtyper.AssignAromaticFlags(*((OBMol*)GetParent()));
-      }
-
-    if ((this->GetBondOrder()==2) && !(HasFlag(OB_AROMATIC_BOND)))
-      return(true);
-
-    return(false);
-  }
-
-  bool OBBond::IsTriple()
-  {
-    if	(HasFlag(OB_AROMATIC_BOND))
-      return(false);
-
-    if (!((OBMol*)GetParent())->HasAromaticPerceived())
-      {
-        aromtyper.AssignAromaticFlags(*((OBMol*)GetParent()));
-      }
-
-    if ((this->GetBondOrder()==3) && !(HasFlag(OB_AROMATIC_BOND)))
-      return(true);
-
-    return(false);
-  }
-
   bool OBBond::IsAromatic() const
   {
     if (((OBBond*)this)->HasFlag(OB_AROMATIC_BOND))
@@ -583,54 +519,6 @@ namespace OpenBabel
           }
       } // end loop for neighbors of start
     return(true);
-  }
-
-  void OBBond::SetKSingle()
-  {
-    _flags &= (~(OB_KSINGLE_BOND|OB_KDOUBLE_BOND|OB_KTRIPLE_BOND));
-    _flags |= OB_KSINGLE_BOND;
-  }
-
-  void OBBond::SetKDouble()
-  {
-    _flags &= (~(OB_KSINGLE_BOND|OB_KDOUBLE_BOND|OB_KTRIPLE_BOND));
-    _flags |= OB_KDOUBLE_BOND;
-  }
-
-  void OBBond::SetKTriple()
-  {
-    _flags &= (~(OB_KSINGLE_BOND|OB_KDOUBLE_BOND|OB_KTRIPLE_BOND));
-    _flags |= OB_KTRIPLE_BOND;
-  }
-
-  bool OBBond::IsKSingle()
-  {
-    if (_flags & OB_KSINGLE_BOND)
-      return(true);
-    if (!((OBMol*)GetParent())->HasKekulePerceived())
-      ((OBMol*)GetParent())->NewPerceiveKekuleBonds();
-
-    return((_flags & OB_KSINGLE_BOND) != 0) ? true : false;
-  }
-
-  bool OBBond::IsKDouble()
-  {
-    if (_flags & OB_KDOUBLE_BOND)
-      return(true);
-    if (!((OBMol*)GetParent())->HasKekulePerceived())
-      ((OBMol*)GetParent())->NewPerceiveKekuleBonds();
-
-    return((_flags & OB_KDOUBLE_BOND) != 0) ? true : false;
-  }
-
-  bool OBBond::IsKTriple()
-  {
-    if (_flags & OB_KTRIPLE_BOND)
-      return(true);
-    if (!((OBMol*)GetParent())->HasKekulePerceived())
-      ((OBMol*)GetParent())->NewPerceiveKekuleBonds();
-
-    return((_flags & OB_KTRIPLE_BOND) != 0) ? true : false;
   }
 
   bool OBBond::IsInRing() const

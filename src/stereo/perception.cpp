@@ -112,6 +112,11 @@ namespace OpenBabel {
     return false;
   }
 
+  static unsigned int TotalNoOfBonds(OBAtom* atom)
+  {
+    return atom->GetImplicitHCount() + atom->GetValence();
+  }
+
   /**
    * Check if the specified atom is a potential stereogenic atom.
    *
@@ -129,7 +134,7 @@ namespace OpenBabel {
   {
     // consider only potential steroecenters
     if ((atom->GetHyb() != 3 && !(atom->GetHyb() == 5 && atom->IsPhosphorus()))
-        || atom->GetImplicitValence() > 4 || atom->GetHvyValence() < 3 || atom->GetHvyValence() > 4)
+        || TotalNoOfBonds(atom) > 4 || atom->GetHvyValence() < 3 || atom->GetHvyValence() > 4)
       return false;
     // skip non-chiral N
     if (atom->IsNitrogen() && atom->GetFormalCharge()==0) {
@@ -685,7 +690,6 @@ namespace OpenBabel {
 
   }
 
-
   /**
    * Find the stereogenic units in a molecule using a set of rules.
    *
@@ -764,7 +768,7 @@ namespace OpenBabel {
         if (!begin || !end)
           continue;
 
-        if (begin->GetImplicitValence() > 3 || end->GetImplicitValence() > 3)
+        if (TotalNoOfBonds(begin) > 3 || TotalNoOfBonds(end) > 3)
           continue; // e.g. C=Ru where the Ru has four substituents
 
         // Needs to have at least one explicit single bond at either end
