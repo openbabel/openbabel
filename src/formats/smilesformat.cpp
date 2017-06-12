@@ -896,10 +896,8 @@ namespace OpenBabel {
 
   bool OBSmilesParser::ParseSimple(OBMol &mol)
   {
-    char symbol[3];
     int element;
     bool arom=false;
-    memset(symbol,'\0',sizeof(char)*3);
 
     if (isupper(*_ptr))
       switch(*_ptr)
@@ -908,12 +906,10 @@ namespace OpenBabel {
           _ptr++;
           if (*_ptr == 'l')
             {
-              strcpy(symbol,"Cl");
               element = 17;
             }
           else
             {
-              symbol[0] = 'C';
               element = 6;
               _ptr--;
             }
@@ -921,27 +917,21 @@ namespace OpenBabel {
 
         case 'N':
           element = 7;
-          symbol[0] = 'N';
           break;
         case 'O':
           element = 8;
-          symbol[0] = 'O';
           break;
         case 'S':
           element = 16;
-          symbol[0] = 'S';
           break;
         case 'P':
           element = 15;
-          symbol[0] = 'P';
           break;
         case 'F':
           element = 9;
-          symbol[0] = 'F';
           break;
         case 'I':
           element = 53;
-          symbol[0] = 'I';
           break;
 
         case 'B':
@@ -949,12 +939,10 @@ namespace OpenBabel {
           if (*_ptr == 'r')
             {
               element = 35;
-              strcpy(symbol,"Br");
             }
           else
             {
               element = 5;
-              symbol[0] = 'B';
               _ptr--;
             }
           break;
@@ -968,33 +956,26 @@ namespace OpenBabel {
           {
           case 'c':
             element = 6;
-            symbol[0] = 'C';
             break;
           case 'n':
             element = 7;
-            symbol[0] = 'N';
             break;
           case 'o':
             element = 8;
-            symbol[0] = 'O';
             break;
           case 'p':
             element = 15;
-            symbol[0] = 'P';
             break;
           case 's':
             element = 16;
-            symbol[0] = 'S';
             break;
           case '*':
             element = 0;
-            strcpy(symbol,"Du");
             arom = false;
             break;
           case 'b':
             obErrorLog.ThrowError(__FUNCTION__, "Illegal aromatic element b", obWarning);
             element = 5;
-            strcpy(symbol,"B");
             break;
           default:
             return(false);
@@ -1003,7 +984,6 @@ namespace OpenBabel {
 
     OBAtom *atom = mol.NewAtom();
     atom->SetAtomicNum(element);
-    atom->SetType(symbol);
 
     if (arom)
       atom->SetAromatic();
@@ -1042,749 +1022,634 @@ namespace OpenBabel {
 
   bool OBSmilesParser::ParseComplex(OBMol &mol)
   {
-    char symbol[7];
     int element=0;
-    int isotope=0;
-    int isoPtr=0;
     bool arom=false;
-    memset(symbol,'\0',sizeof(char)*7);
 
     _ptr++;
 
-    //grab isotope information
-    for (;*_ptr && isdigit(*_ptr) && (isoPtr <= 6);_ptr++)
-      {
-        symbol[isoPtr] = *_ptr;
-        isoPtr++;
-      }
-    if (isoPtr >= 6)
+    // Parse isotope information
+    // - we parse anything with 1 to 4 digits
+    // - any bigger and we risk overflowing the short int used to
+    //   store the isotope information (max 65536)
+    int isotope = 0;
+    unsigned int size = 0;
+    for (;*_ptr && isdigit(*_ptr) && size < 5;_ptr++) {
+      isotope *= 10;
+      isotope += *_ptr - '0';
+      size++;
+    }
+    if (size == 5)
       return false;
-    isotope = atoi(symbol);
-    memset(symbol, '\0', 7*sizeof(char)); // PR#3165083 (Andrew Dalke)
 
     //parse element data
-    if (isupper(*_ptr))
-      switch(*_ptr)
-        {
-        case 'C':
-          _ptr++;
-          switch(*_ptr)
-            {
-            case 'a':
-              element = 20;
-              strcpy(symbol,"Ca");
-              break;
-            case 'd':
-              element = 48;
-              strcpy(symbol,"Cd");
-              break;
-            case 'e':
-              element = 58;
-              strcpy(symbol,"Ce");
-              break;
-            case 'f':
-              element = 98;
-              strcpy(symbol,"Cf");
-              break;
-            case 'l':
-              element = 17;
-              strcpy(symbol,"Cl");
-              break;
-            case 'm':
-              element = 96;
-              strcpy(symbol,"Cm");
-              break;
-            case 'n':
-              element = 112;
-              strcpy(symbol,"Cn");
-              break;
-            case 'o':
-              element = 27;
-              strcpy(symbol,"Co");
-              break;
-            case 'r':
-              element = 24;
-              strcpy(symbol,"Cr");
-              break;
-            case 's':
-              element = 55;
-              strcpy(symbol,"Cs");
-              break;
-            case 'u':
-              element = 29;
-              strcpy(symbol,"Cu");
-              break;
-            default:
-              element =  6;
-              symbol[0] = 'C';
-              _ptr--;
-            }
-          break;
+    switch(*_ptr)
+    {
+      case '*':
+        element = 0;
+        break;
+    
+      case 'C':
+        _ptr++;
+        switch(*_ptr)
+          {
+          case 'a':
+            element = 20;
+            break;
+          case 'd':
+            element = 48;
+            break;
+          case 'e':
+            element = 58;
+            break;
+          case 'f':
+            element = 98;
+            break;
+          case 'l':
+            element = 17;
+            break;
+          case 'm':
+            element = 96;
+            break;
+          case 'n':
+            element = 112;
+            break;
+          case 'o':
+            element = 27;
+            break;
+          case 'r':
+            element = 24;
+            break;
+          case 's':
+            element = 55;
+            break;
+          case 'u':
+            element = 29;
+            break;
+          default:
+            element =  6;
+            _ptr--;
+          }
+        break;
 
-        case 'N':
-          _ptr++;
-          switch(*_ptr)
-            {
-            case 'a':
-              element =  11;
-              strcpy(symbol,"Na");
-              break;
-            case 'b':
-              element =  41;
-              strcpy(symbol,"Nb");
-              break;
-            case 'd':
-              element =  60;
-              strcpy(symbol,"Nd");
-              break;
-            case 'e':
-              element =  10;
-              strcpy(symbol,"Ne");
-              break;
-            case 'i':
-              element =  28;
-              strcpy(symbol,"Ni");
-              break;
-            case 'o':
-              element = 102;
-              strcpy(symbol,"No");
-              break;
-            case 'p':
-              element =  93;
-              strcpy(symbol,"Np");
-              break;
-            default:
-              element =   7;
-              symbol[0] = 'N';
-              _ptr--;
-            }
-          break;
+      case 'N':
+        _ptr++;
+        switch(*_ptr)
+          {
+          case 'a':
+            element =  11;
+            break;
+          case 'b':
+            element =  41;
+            break;
+          case 'd':
+            element =  60;
+            break;
+          case 'e':
+            element =  10;
+            break;
+          case 'h':
+            element = 113;
+            break;
+          case 'i':
+            element =  28;
+            break;
+          case 'o':
+            element = 102;
+            break;
+          case 'p':
+            element =  93;
+            break;
+          default:
+            element =   7;
+            _ptr--;
+          }
+        break;
 
-        case('O'):
-          _ptr++;
-          if(*_ptr == 's')
-            {
-              element = 76;
-              strcpy(symbol,"Os");
-            }
-          else
-            {
-              element = 8;
-              symbol[0] = 'O';
-              _ptr--;
-            }
+      case 'O':
+        _ptr++;
+        switch(*_ptr) {
+        case 'g':
+          element = 118;
           break;
-
-        case 'P':
-          _ptr++;
-          switch(*_ptr)
-            {
-            case 'a':
-              element = 91;
-              strcpy(symbol,"Pa");
-              break;
-            case 'b':
-              element = 82;
-              strcpy(symbol,"Pb");
-              break;
-            case 'd':
-              element = 46;
-              strcpy(symbol,"Pd");
-              break;
-            case 'm':
-              element = 61;
-              strcpy(symbol,"Pm");
-              break;
-            case 'o':
-              element = 84;
-              strcpy(symbol,"Po");
-              break;
-            case 'r':
-              element = 59;
-              strcpy(symbol,"Pr");
-              break;
-            case 't':
-              element = 78;
-              strcpy(symbol,"Pt");
-              break;
-            case 'u':
-              element = 94;
-              strcpy(symbol,"Pu");
-              break;
-            default:
-              element = 15;
-              symbol[0] = 'P';
-              _ptr--;
-            }
+        case 's':
+          element = 76;
           break;
-
-        case('S'):
-          _ptr++;
-          switch(*_ptr)
-            {
-            case 'b':
-              element = 51;
-              strcpy(symbol,"Sb");
-              break;
-            case 'c':
-              element = 21;
-              strcpy(symbol,"Sc");
-              break;
-            case 'e':
-              element = 34;
-              strcpy(symbol,"Se");
-              break;
-            case 'g':
-              element = 106;
-              strcpy(symbol,"Sg");
-              break;
-            case 'i':
-              element = 14;
-              strcpy(symbol,"Si");
-              break;
-            case 'm':
-              element = 62;
-              strcpy(symbol,"Sm");
-              break;
-            case 'n':
-              element = 50;
-              strcpy(symbol,"Sn");
-              break;
-            case 'r':
-              element = 38;
-              strcpy(symbol,"Sr");
-              break;
-            default:
-              element = 16;
-              symbol[0] = 'S';
-              _ptr--;
-            }
-          break;
-
-        case 'B':
-          _ptr++;
-          switch(*_ptr)
-            {
-            case 'a':
-              element = 56;
-              strcpy(symbol,"Ba");
-              break;
-            case 'e':
-              element =  4;
-              strcpy(symbol,"Be");
-              break;
-            case 'h':
-              element =  107;
-              strcpy(symbol,"Bh");
-              break;
-            case 'i':
-              element = 83;
-              strcpy(symbol,"Bi");
-              break;
-            case 'k':
-              element = 97;
-              strcpy(symbol,"Bk");
-              break;
-            case 'r':
-              element = 35;
-              strcpy(symbol,"Br");
-              break;
-            default:
-              element = 5;
-              symbol[0] = 'B';
-              _ptr--;
-            }
-          break;
-
-        case 'F':
-          _ptr++;
-          switch(*_ptr)
-            {
-            case 'e':
-              element = 26;
-              strcpy(symbol,"Fe");
-              break;
-            case 'm':
-              element = 100;
-              strcpy(symbol,"Fm");
-              break;
-            case 'r':
-              element = 87;
-              strcpy(symbol,"Fr");
-              break;
-            default:
-              element = 9;
-              symbol[0] = 'F';
-              _ptr--;
-            }
-          break;
-
-        case 'I':
-          _ptr++;
-          switch(*_ptr)
-            {
-            case 'n':
-              element = 49;
-              strcpy(symbol,"In");
-              break;
-            case 'r':
-              element = 77;
-              strcpy(symbol,"Ir");
-              break;
-            default:
-              element = 53;
-              symbol[0] = 'I';
-              _ptr--;
-            }
-          break;
-
-        case 'A':
-          _ptr++;
-          switch(*_ptr)
-            {
-            case 'c':
-              element = 89;
-              strcpy(symbol,"Ac");
-              break;
-            case 'g':
-              element = 47;
-              strcpy(symbol,"Ag");
-              break;
-            case 'l':
-              element = 13;
-              strcpy(symbol,"Al");
-              break;
-            case 'm':
-              element = 95;
-              strcpy(symbol,"Am");
-              break;
-            case 'r':
-              element = 18;
-              strcpy(symbol,"Ar");
-              break;
-            case 's':
-              element = 33;
-              strcpy(symbol,"As");
-              break;
-            case 't':
-              element = 85;
-              strcpy(symbol,"At");
-              break;
-            case 'u':
-              element = 79;
-              strcpy(symbol,"Au");
-              break;
-            default:
-              _ptr--;
-              return(false);
-            }
-          break;
-
-        case 'D':
-          _ptr++;
-          switch(*_ptr)
-            {
-            case 'b':
-              element = 105;
-              strcpy(symbol,"Db");
-              break;
-            case 's':
-              element = 110;
-              strcpy(symbol,"Ds");
-              break;
-            case 'y':
-              element = 66;
-              strcpy(symbol,"Dy");
-              break;
-            default:
-              _ptr--;
-              return(false);
-            }
-          break;
-
-        case 'E':
-          _ptr++;
-          switch(*_ptr)
-            {
-            case 'r':
-              element = 68;
-              strcpy(symbol,"Er");
-              break;
-            case 's':
-              element = 99;
-              strcpy(symbol,"Es");
-              break;
-            case 'u':
-              element = 63;
-              strcpy(symbol,"Eu");
-              break;
-            default:
-              _ptr--;
-              return(false);
-            }
-          break;
-
-        case 'G':
-          _ptr++;
-          switch (*_ptr)
-            {
-            case 'a':
-              element = 31;
-              strcpy(symbol,"Ga");
-              break;
-            case 'd':
-              element = 64;
-              strcpy(symbol,"Gd");
-              break;
-            case 'e':
-              element = 32;
-              strcpy(symbol,"Ge");
-              break;
-            default:
-              _ptr--;
-              return(false);
-            }
-          break;
-
-        case 'H':
-          _ptr++;
-          switch (*_ptr)
-            {
-            case 'e':
-              element =  2;
-              strcpy(symbol,"He");
-              break;
-            case 'f':
-              element = 72;
-              strcpy(symbol,"Hf");
-              break;
-            case 'g':
-              element = 80;
-              strcpy(symbol,"Hg");
-              break;
-            case 'o':
-              element = 67;
-              strcpy(symbol,"Ho");
-              break;
-            case 's':
-              element = 108;
-              strcpy(symbol,"Hs");
-              break;
-            default:
-              element = 1;
-              symbol[0] = 'H';
-              _ptr--;
-            }
-          break;
-
-        case 'K':
-          _ptr++;
-          if(*_ptr == 'r')
-            {
-              element = 36;
-              strcpy(symbol,"Kr");
-            }
-          else
-            {
-              element = 19;
-              symbol[0] = 'K';
-              _ptr--;
-            }
-          break;
-
-        case 'L':
-          _ptr++;
-          switch(*_ptr)
-            {
-            case 'a':
-              element =  57;
-              strcpy(symbol,"La");
-              break;
-            case 'i':
-              element =   3;
-              strcpy(symbol,"Li");
-              break;
-            case 'r':
-              element = 103;
-              strcpy(symbol,"Lr");
-              break;
-            case 'u':
-              element =  71;
-              strcpy(symbol,"Lu");
-              break;
-            default:
-              _ptr--;
-              return(false);
-            }
-          break;
-
-        case 'M':
-          _ptr++;
-          switch(*_ptr)
-            {
-            case 'd':
-              element = 101;
-              strcpy(symbol,"Md");
-              break;
-            case 'g':
-              element =  12;
-              strcpy(symbol,"Mg");
-              break;
-            case 'n':
-              element =  25;
-              strcpy(symbol,"Mn");
-              break;
-            case 'o':
-              element =  42;
-              strcpy(symbol,"Mo");
-              break;
-            case 't':
-              element =  109;
-              strcpy(symbol,"Mt");
-              break;
-            default:
-              _ptr--;
-              return(false);
-            }
-          break;
-
-        case 'R':
-          _ptr++;
-          switch(*_ptr)
-            {
-            case 'a':
-              element = 88;
-              strcpy(symbol,"Ra");
-              break;
-            case 'b':
-              element = 37;
-              strcpy(symbol,"Rb");
-              break;
-            case 'e':
-              element = 75;
-              strcpy(symbol,"Re");
-              break;
-            case 'f':
-              element = 104;
-              strcpy(symbol,"Rf");
-              break;
-            case 'g':
-              element = 111;
-              strcpy(symbol,"Rg");
-              break;
-            case 'h':
-              element = 45;
-              strcpy(symbol,"Rh");
-              break;
-            case 'n':
-              element = 86;
-              strcpy(symbol,"Rn");
-              break;
-            case 'u':
-              element = 44;
-              strcpy(symbol,"Ru");
-              break;
-            default:
-              _ptr--;
-              return(false);
-            }
-          break;
-
-        case 'T':
-          _ptr++;
-          switch(*_ptr)
-            {
-            case 'a':
-              element = 73;
-              strcpy(symbol,"Ta");
-              break;
-            case 'b':
-              element = 65;
-              strcpy(symbol,"Tb");
-              break;
-            case 'c':
-              element = 43;
-              strcpy(symbol,"Tc");
-              break;
-            case 'e':
-              element = 52;
-              strcpy(symbol,"Te");
-              break;
-            case 'h':
-              element = 90;
-              strcpy(symbol,"Th");
-              break;
-            case 'i':
-              element = 22;
-              strcpy(symbol,"Ti");
-              break;
-            case 'l':
-              element = 81;
-              strcpy(symbol,"Tl");
-              break;
-            case 'm':
-              element = 69;
-              strcpy(symbol,"Tm");
-              break;
-            default:
-              _ptr--;
-              return(false);
-            }
-          break;
-
-        case('U'):  element = 92;
-          symbol[0] = 'U';
-          break;
-        case('V'):  element = 23;
-          symbol[0] = 'V';
-          break;
-        case('W'):  element = 74;
-          symbol[0] = 'W';
-          break;
-
-        case('X'):
-          _ptr++;
-          if (*_ptr == 'e')
-            {
-              element = 54;
-              strcpy(symbol,"Xe");
-            }
-          else
-            {
-              _ptr--;
-              return(false);
-            }
-          break;
-
-        case('Y'):
-          _ptr++;
-          if (*_ptr == 'b')
-            {
-              element = 70;
-              strcpy(symbol,"Yb");
-            }
-          else
-            {
-              element = 39;
-              symbol[0] = 'Y';
-              _ptr--;
-            }
-          break;
-
-        case('Z'):
-          _ptr++;
-          switch(*_ptr)
-            {
-            case 'n':
-              element = 30;
-              strcpy(symbol,"Zn");
-              break;
-            case 'r':
-              element = 40;
-              strcpy(symbol,"Zr");
-              break;
-            default:
-              _ptr--;
-              return(false);
-            }
-          break;
+        default:
+          element = 8;
+          _ptr--;
         }
-    else
-      {
-        arom = true;
+        break;
+
+      case 'P':
+        _ptr++;
+        switch(*_ptr)
+          {
+          case 'a':
+            element = 91;
+            break;
+          case 'b':
+            element = 82;
+            break;
+          case 'd':
+            element = 46;
+            break;
+          case 'm':
+            element = 61;
+            break;
+          case 'o':
+            element = 84;
+            break;
+          case 'r':
+            element = 59;
+            break;
+          case 't':
+            element = 78;
+            break;
+          case 'u':
+            element = 94;
+            break;
+          default:
+            element = 15;
+            _ptr--;
+          }
+        break;
+
+      case('S'):
+        _ptr++;
+        switch(*_ptr)
+          {
+          case 'b':
+            element = 51;
+            break;
+          case 'c':
+            element = 21;
+            break;
+          case 'e':
+            element = 34;
+            break;
+          case 'g':
+            element = 106;
+            break;
+          case 'i':
+            element = 14;
+            break;
+          case 'm':
+            element = 62;
+            break;
+          case 'n':
+            element = 50;
+            break;
+          case 'r':
+            element = 38;
+            break;
+          default:
+            element = 16;
+            _ptr--;
+          }
+        break;
+
+      case 'B':
+        _ptr++;
+        switch(*_ptr)
+          {
+          case 'a':
+            element = 56;
+            break;
+          case 'e':
+            element =  4;
+            break;
+          case 'h':
+            element =  107;
+            break;
+          case 'i':
+            element = 83;
+            break;
+          case 'k':
+            element = 97;
+            break;
+          case 'r':
+            element = 35;
+            break;
+          default:
+            element = 5;
+            _ptr--;
+          }
+        break;
+
+      case 'F':
+        _ptr++;
+        switch(*_ptr)
+          {
+          case 'e':
+            element = 26;
+            break;
+          case 'l':
+            element = 114;
+            break;
+          case 'm':
+            element = 100;
+            break;
+          case 'r':
+            element = 87;
+            break;
+          default:
+            element = 9;
+            _ptr--;
+          }
+        break;
+
+      case 'I':
+        _ptr++;
+        switch(*_ptr)
+          {
+          case 'n':
+            element = 49;
+            break;
+          case 'r':
+            element = 77;
+            break;
+          default:
+            element = 53;
+            _ptr--;
+          }
+        break;
+
+      case 'A':
+        _ptr++;
         switch(*_ptr)
           {
           case 'c':
-            element = 6;
-            symbol[0] = 'C';
+            element = 89;
             break;
-          case 'n':
-            element = 7;
-            symbol[0] = 'N';
+          case 'g':
+            element = 47;
+            break;
+          case 'l':
+            element = 13;
+            break;
+          case 'm':
+            element = 95;
+            break;
+          case 'r':
+            element = 18;
+            break;
+          case 's':
+            element = 33;
+            break;
+          case 't':
+            element = 85;
+            break;
+          case 'u':
+            element = 79;
+            break;
+          default:
+            return(false);
+          }
+        break;
+
+      case 'D':
+        _ptr++;
+        switch(*_ptr)
+          {
+          case 'b':
+            element = 105;
+            break;
+          case 's':
+            element = 110;
+            break;
+          case 'y':
+            element = 66;
+            break;
+          default:
+            return(false);
+          }
+        break;
+
+      case 'E':
+        _ptr++;
+        switch(*_ptr)
+          {
+          case 'r':
+            element = 68;
+            break;
+          case 's':
+            element = 99;
+            break;
+          case 'u':
+            element = 63;
+            break;
+          default:
+            return(false);
+          }
+        break;
+
+      case 'G':
+        _ptr++;
+        switch (*_ptr)
+          {
+          case 'a':
+            element = 31;
+            break;
+          case 'd':
+            element = 64;
+            break;
+          case 'e':
+            element = 32;
+            break;
+          default:
+            return(false);
+          }
+        break;
+
+      case 'H':
+        _ptr++;
+        switch (*_ptr)
+          {
+          case 'e':
+            element =  2;
+            break;
+          case 'f':
+            element = 72;
+            break;
+          case 'g':
+            element = 80;
             break;
           case 'o':
-            element = 8;
-            symbol[0] = 'O';
+            element = 67;
             break;
-          case 'p':
-            element = 15;
-            symbol[0] = 'P';
+          case 's':
+            element = 108;
             break;
-          case 'a':
-            _ptr++;
-            if (*_ptr == 's')
-              {
-                element = 33;
-                strcpy(symbol,"As");
-              }
-            else
-              return(false);
-            break;
-          case '*':
-            element = 0;
-            strcpy(symbol,"Du");
-            arom = false;
-            break;
-          case 's': //note fall through
-            _ptr++;
-            if (*_ptr == 'e')
-              {
-                element = 34;
-                strcpy(symbol,"Se");
-                break;
-              }
-            else if (*_ptr == 'i' || *_ptr == 'n' || *_ptr == 'b')
-              {
-                _ptr--;
-              }
-            else
-              {
-                element = 16;
-                symbol[0] = 'S';
-                _ptr--;
-                break;
-              }
-            //fall through
           default:
-            strncpy(symbol, _ptr, 2);
-            string symb(symbol);
-            symbol[0] = toupper(symbol[0]);
-            obErrorLog.ThrowError(__FUNCTION__, "Illegal aromatic element " + symb, obWarning);
-            //But convert anyway
-            ++_ptr;
-            if(symb=="si")
-              {
-                element = 14;
-                break;
-              }
-            else if(symb=="ge")
-              {
-                element = 32;
-                break;
-              }
-            else if(symb=="sb")
-              {
-                element = 51;
-                break;
-              }
-            else if(symb=="bi")
-              {
-                element = 83;
-                break;
-              }
-            else if(symb=="te")
-              {
-                element = 52;
-                break;
-              }
-            else if(symb=="sn")
-              {
-                element = 50;
-                break;
-              }
-            else
-              return(false);
+            element = 1;
+            _ptr--;
           }
+        break;
+
+      case 'K':
+        _ptr++;
+        if(*_ptr == 'r')
+          {
+            element = 36;
+          }
+        else
+          {
+            element = 19;
+            _ptr--;
+          }
+        break;
+
+      case 'L':
+        _ptr++;
+        switch(*_ptr)
+          {
+          case 'a':
+            element =  57;
+            break;
+          case 'i':
+            element =   3;
+            break;
+          case 'r':
+            element = 103;
+            break;
+          case 'u':
+            element =  71;
+            break;
+          case 'v':
+            element = 116;
+            break;
+          default:
+            return(false);
+          }
+        break;
+
+      case 'M':
+        _ptr++;
+        switch(*_ptr)
+          {
+          case 'c':
+            element = 115;
+            break;
+          case 'd':
+            element = 101;
+            break;
+          case 'g':
+            element =  12;
+            break;
+          case 'n':
+            element =  25;
+            break;
+          case 'o':
+            element =  42;
+            break;
+          case 't':
+            element =  109;
+            break;
+          default:
+            return(false);
+          }
+        break;
+
+      case 'R':
+        _ptr++;
+        switch(*_ptr)
+          {
+          case 'a':
+            element = 88;
+            break;
+          case 'b':
+            element = 37;
+            break;
+          case 'e':
+            element = 75;
+            break;
+          case 'f':
+            element = 104;
+            break;
+          case 'g':
+            element = 111;
+            break;
+          case 'h':
+            element = 45;
+            break;
+          case 'n':
+            element = 86;
+            break;
+          case 'u':
+            element = 44;
+            break;
+          default:
+            return(false);
+          }
+        break;
+
+      case 'T':
+        _ptr++;
+        switch(*_ptr)
+          {
+          case 'a':
+            element = 73;
+            break;
+          case 'b':
+            element = 65;
+            break;
+          case 'c':
+            element = 43;
+            break;
+          case 'e':
+            element = 52;
+            break;
+          case 'h':
+            element = 90;
+            break;
+          case 'i':
+            element = 22;
+            break;
+          case 'l':
+            element = 81;
+            break;
+          case 'm':
+            element = 69;
+            break;
+          case 's':
+            element = 117;
+            break;
+          default:
+            return(false);
+          }
+        break;
+
+      case('U'):  element = 92;
+        break;
+      case('V'):  element = 23;
+        break;
+      case('W'):  element = 74;
+        break;
+
+      case('X'):
+        _ptr++;
+        if (*_ptr == 'e')
+          {
+            element = 54;
+          }
+        else
+          {
+            return(false);
+          }
+        break;
+
+      case('Y'):
+        _ptr++;
+        if (*_ptr == 'b')
+          {
+            element = 70;
+          }
+        else
+          {
+            element = 39;
+            _ptr--;
+          }
+        break;
+
+      case('Z'):
+        _ptr++;
+        switch(*_ptr)
+          {
+          case 'n':
+            element = 30;
+            break;
+          case 'r':
+            element = 40;
+            break;
+          default:
+            return false;
+          }
+        break;
+
+      case 'a':
+        _ptr++;
+        if (*_ptr == 's') {
+          arom = true;
+          element = 33;
+        }
+        else
+          return false;
+        break;
+
+      case 'b':
+        _ptr++;
+        if (*_ptr == 'i') {
+          arom = true;
+          element = 83;
+        }
+        else
+          return false;
+        break;
+
+      case 'c':
+        arom = true;
+        element = 6;
+        break;
+
+      case 'g':
+        _ptr++;
+        if (*_ptr == 'e') {
+          arom = true;
+          element = 32;
+        }
+        else
+          return false;
+        break;
+
+      case 'n':
+        arom = true;
+        element = 7;
+        break;
+
+      case 'o':
+        arom = true;
+        element = 8;
+        break;
+
+      case 'p':
+        arom = true;
+        element = 15;
+        break;
+
+      case 's':
+        arom = true;
+        _ptr++;
+        switch (*_ptr) {
+        case 'e':
+          element = 34;
+          break;
+        case 'i':
+          element = 14;
+          break;
+        case 'n':
+          element = 50;
+          break;
+        case 'b':
+          element = 51;
+          break;
+        default:
+          element = 16;
+          _ptr--;
+        }
+        break;
+
+      case 't':
+        _ptr++;
+        if (*_ptr == 'e') {
+          arom = true;
+          element = 52;
+        }
+        else
+          return false;
+        break;
+
+      default:
+        return false;
       }
 
     //handle hydrogen count, stereochemistry, and charge
@@ -1905,7 +1770,6 @@ namespace OpenBabel {
       atom->SetSpinMultiplicity(rad);
     atom->SetAtomicNum(element);
     atom->SetIsotope(isotope);
-    atom->SetType(symbol);
     if (arom)
       atom->SetAromatic();
 
@@ -1971,7 +1835,6 @@ namespace OpenBabel {
       // create new dummy atom
       atom = mol.NewAtom();
       atom->SetAtomicNum(0);
-      atom->SetType("*");
 
       // bond dummy atom to mol via external bond
       mol.AddBond(bond->prev, atom->GetIdx(), bond->order);
@@ -2815,8 +2678,13 @@ namespace OpenBabel {
 
     // Bracketed atoms, e.g. [Pb], [OH-], [C@]
     bracketBuffer[0] = '\0';
-    if (isomeric && atom->GetIsotope()) {
-      char iso[4];
+    unsigned short iso = atom->GetIsotope();
+    if (isomeric && iso) {
+      if (iso >= 10000) { // max 4 characters
+        obErrorLog.ThrowError(__FUNCTION__, "Isotope value larger than 9999", obError);
+        return false;
+      }
+      char iso[5]; // 4 characters plus null
       sprintf(iso,"%d",atom->GetIsotope());
       strcat(bracketBuffer,iso);
     }

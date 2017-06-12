@@ -66,6 +66,39 @@ class TestSuite(PythonBindings):
             mol = pybel.readstring("smi", smi)
             mol.OBMol.AssignTotalChargeToAtoms(charge)
             self.assertEqual(mol.write("smi").rstrip(), ans)
-   
+
+    def testSmilesParsingOfAllElements(self):
+        smi = "[*][H][He][Li][Be][B][C][N][O][F][Ne][Na][Mg][Al][Si][P][S][Cl][Ar][K][Ca][Sc][Ti][V][Cr][Mn][Fe][Co][Ni][Cu][Zn][Ga][Ge][As][Se][Br][Kr][Rb][Sr][Y][Zr][Nb][Mo][Tc][Ru][Rh][Pd][Ag][Cd][In][Sn][Sb][Te][I][Xe][Cs][Ba][La][Ce][Pr][Nd][Pm][Sm][Eu][Gd][Tb][Dy][Ho][Er][Tm][Yb][Lu][Hf][Ta][W][Re][Os][Ir][Pt][Au][Hg][Tl][Pb][Bi][Po][At][Rn][Fr][Ra][Ac][Th][Pa][U][Np][Pu][Am][Cm][Bk][Cf][Es][Fm][Md][No][Lr][Rf][Db][Sg][Bh][Hs][Mt][Ds][Rg][Cn][Nh][Fl][Mc][Lv][Ts][Og]"
+        roundtrip = pybel.readstring("smi", smi).write("smi").rstrip()
+        self.assertEqual(roundtrip, smi.replace("[O]", "O").replace("[S]", "S"))
+        # aromatic
+        # - like C
+        elems = ["C", "Si", "Ge", "Sn"]
+        for elem in elems:
+            mol = pybel.readstring("smi", "c1ccc[%sH]c1" % elem.lower(), opt={"a": True})
+            self.assertNotEqual(0, mol.OBMol.NumAtoms())
+        # - like N
+        elems = ["N", "P", "As", "Sb", "Bi"]
+        for elem in elems:
+            mol = pybel.readstring("smi", "c1cc[%sH]c1" % elem.lower(), opt={"a": True})
+            self.assertNotEqual(0, mol.OBMol.NumAtoms())
+        # - like O
+        elems = ["O", "S", "Se", "Te"]
+        for elem in elems:
+            mol = pybel.readstring("smi", "c1cc[%s]c1" % elem.lower(), opt={"a": True})
+            self.assertNotEqual(0, mol.OBMol.NumAtoms())
+        # - untested and unsupported at the moment, aromatic B
+
+
+    def testSmilesParsingAndWritingOfLargeIsotopes(self):
+        smis = ["[1C]", "[11C]", "[111C]", "[1111C]"]
+        for smi in smis:
+            mol = pybel.readstring("smi", smi)
+            self.assertEqual(mol.write("smi").rstrip(), smi)
+        self.assertRaises(IOError, pybel.readstring, "smi", "[11111C]")
+        mol = pybel.readstring("smi", "[C]")
+        mol.atoms[0].OBAtom.SetIsotope(65535)
+        self.assertEqual(mol.write("smi").rstrip(), "")
+
 if __name__ == "__main__":
     unittest.main()
