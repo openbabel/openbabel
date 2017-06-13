@@ -899,87 +899,85 @@ namespace OpenBabel {
     int element;
     bool arom=false;
 
-    if (isupper(*_ptr))
-      switch(*_ptr)
-        {
-        case 'C':
-          _ptr++;
-          if (*_ptr == 'l')
-            {
-              element = 17;
-            }
-          else
-            {
-              element = 6;
-              _ptr--;
-            }
-          break;
-
-        case 'N':
-          element = 7;
-          break;
-        case 'O':
-          element = 8;
-          break;
-        case 'S':
-          element = 16;
-          break;
-        case 'P':
-          element = 15;
-          break;
-        case 'F':
-          element = 9;
-          break;
-        case 'I':
-          element = 53;
-          break;
-
-        case 'B':
-          _ptr++;
-          if (*_ptr == 'r')
-            {
-              element = 35;
-            }
-          else
-            {
-              element = 5;
-              _ptr--;
-            }
-          break;
-        default:
-          return(false);
-        }
-    else
+    switch(*_ptr)
       {
-        arom = true;
-        switch(*_ptr)
+      case '*':
+        element = 0;
+        arom = false;
+        break;
+
+      case 'C':
+        _ptr++;
+        if (*_ptr == 'l')
           {
-          case 'c':
-            element = 6;
-            break;
-          case 'n':
-            element = 7;
-            break;
-          case 'o':
-            element = 8;
-            break;
-          case 'p':
-            element = 15;
-            break;
-          case 's':
-            element = 16;
-            break;
-          case '*':
-            element = 0;
-            arom = false;
-            break;
-          case 'b':
-            obErrorLog.ThrowError(__FUNCTION__, "Illegal aromatic element b", obWarning);
-            element = 5;
-            break;
-          default:
-            return(false);
+            element = 17;
           }
+        else
+          {
+            element = 6;
+            _ptr--;
+          }
+        break;
+
+      case 'N':
+        element = 7;
+        break;
+      case 'O':
+        element = 8;
+        break;
+      case 'S':
+        element = 16;
+        break;
+      case 'P':
+        element = 15;
+        break;
+      case 'F':
+        element = 9;
+        break;
+      case 'I':
+        element = 53;
+        break;
+
+      case 'B':
+        _ptr++;
+        if (*_ptr == 'r')
+          {
+            element = 35;
+          }
+        else
+          {
+            element = 5;
+            _ptr--;
+          }
+        break;
+
+      // aromatics
+      case 'b':
+        arom = true;
+        element = 5;
+        break;
+      case 'c':
+        arom = true;
+        element = 6;
+        break;
+      case 'n':
+        arom = true;
+        element = 7;
+        break;
+      case 'o':
+        arom = true;
+        element = 8;
+        break;
+      case 'p':
+        arom = true;
+        element = 15;
+        break;
+      case 's':
+        arom = true;
+        element = 16;
+        break;
+      default:
+        return false;
       }
 
     OBAtom *atom = mol.NewAtom();
@@ -1582,8 +1580,11 @@ namespace OpenBabel {
           arom = true;
           element = 83;
         }
-        else
-          return false;
+        else {
+          arom = true;
+          element = 5;
+          _ptr--;
+        }
         break;
 
       case 'c':

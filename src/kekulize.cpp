@@ -113,7 +113,7 @@ namespace OpenBabel
       if (deg == 3 && (chg == 1 || chg == -1))
         return false;
       break;
-    case 7: case 15: case 33: case 51: case 83:
+    case 5: case 7: case 15: case 33: case 51: case 83:
       switch (chg) {
       case 0: // e.g. a pyrrole-type nitrogen
         if (deg == 3 || deg > 4)

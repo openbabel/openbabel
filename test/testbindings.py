@@ -78,17 +78,26 @@ class TestSuite(PythonBindings):
             mol = pybel.readstring("smi", "c1ccc[%sH]c1" % elem.lower(), opt={"a": True})
             self.assertNotEqual(0, mol.OBMol.NumAtoms())
         # - like N
-        elems = ["N", "P", "As", "Sb", "Bi"]
+        elems = ["B", "N", "P", "As", "Sb", "Bi"]
         for elem in elems:
-            mol = pybel.readstring("smi", "c1cc[%sH]c1" % elem.lower(), opt={"a": True})
+            mol = pybel.readstring("smi", "c1cc[%sH]c1" % elem.lower())
             self.assertNotEqual(0, mol.OBMol.NumAtoms())
         # - like O
         elems = ["O", "S", "Se", "Te"]
         for elem in elems:
-            mol = pybel.readstring("smi", "c1cc[%s]c1" % elem.lower(), opt={"a": True})
+            mol = pybel.readstring("smi", "c1cc[%s]c1" % elem.lower())
             self.assertNotEqual(0, mol.OBMol.NumAtoms())
-        # - untested and unsupported at the moment, aromatic B
-
+        # Organic subset aromatics
+        # - like N
+        elems = ["B", "N", "P"]
+        for elem in elems:
+            mol = pybel.readstring("smi", "c1cc%scc1" % elem.lower())
+            self.assertNotEqual(0, mol.OBMol.NumAtoms())
+        # - like O
+        elems = ["O", "S"]
+        for elem in elems:
+            mol = pybel.readstring("smi", "c1cc%sc1" % elem.lower())
+            self.assertNotEqual(0, mol.OBMol.NumAtoms())
 
     def testSmilesParsingAndWritingOfLargeIsotopes(self):
         smis = ["[1C]", "[11C]", "[111C]", "[1111C]"]
