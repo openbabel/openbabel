@@ -430,11 +430,6 @@ namespace OpenBabel
 
   void OBAtom::SetIsotope(unsigned int iso)
   {
-    if (_ele == 1 && iso == 2)
-      SetType("D");
-    else if (_ele == 1 && (iso == 1 || iso == 0))
-      SetType("H");
-
     _isotope = iso;
   }
 
