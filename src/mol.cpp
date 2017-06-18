@@ -28,6 +28,7 @@ GNU General Public License for more details.
 #include <openbabel/kekulize.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/obfunctions.h>
+#include <openbabel/elements.h>
 
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
@@ -2825,7 +2826,7 @@ namespace OpenBabel
     vector<OBAtom*>::iterator i;
 
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if ((atom->IsCarbon() || atom->IsNitrogen()) && atom->GetHvyValence() > 2 && atom->IsChiral())
+      if ((atom->GetAtomicNum() == OBElements::Carbon || atom->IsNitrogen()) && atom->GetHvyValence() > 2 && atom->IsChiral())
         return(true);
 
     return(false);

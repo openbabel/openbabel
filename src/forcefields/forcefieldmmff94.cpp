@@ -31,6 +31,7 @@ GNU General Public License for more details.
 #include <openbabel/obconversion.h>
 #include <openbabel/mol.h>
 #include <openbabel/locale.h>
+#include <openbabel/elements.h>
 
 #include <iomanip>
 #include "forcefieldmmff94.h"
@@ -1413,8 +1414,8 @@ namespace OpenBabel
             continue;
 
           if (!nbr->IsAromatic()) {
-            if (ringatom->IsCarbon() && ringatom->IsInRingSize(5)
-                && ringatom->IsInRingSize(6) && nbr->IsCarbon() && nbr->IsInRingSize(5)
+            if (ringatom->GetAtomicNum() == OBElements::Carbon && ringatom->IsInRingSize(5)
+                && ringatom->IsInRingSize(6) && nbr->GetAtomicNum() == OBElements::Carbon && nbr->IsInRingSize(5)
                 && nbr->IsInRingSize(6)) {
               c60++;
             } else {
@@ -1576,10 +1577,10 @@ namespace OpenBabel
             }
           }
           if (!alphaAtoms.size() && !betaAtoms.size()) {
-            if (atom->IsCarbon()) {
+            if (atom->GetAtomicNum() == OBElements::Carbon) {
               bool c60 = true; // special case to ensure c60 is typed correctly -- Paolo Tosco
               FOR_NBORS_OF_ATOM (nbr, atom) {
-                if (!(nbr->IsCarbon() && nbr->IsAromatic() && nbr->IsInRingSize(6)))
+                if (!(nbr->GetAtomicNum() == OBElements::Carbon && nbr->IsAromatic() && nbr->IsInRingSize(6)))
                   c60 = false;
               }
               if (c60)
@@ -1598,7 +1599,7 @@ namespace OpenBabel
             }
           }
           if (alphaAtoms.size() == 2) {
-            if (atom->IsCarbon() && IsInSameRing(alphaAtoms[0], alphaAtoms[1])) {
+            if (atom->GetAtomicNum() == OBElements::Carbon && IsInSameRing(alphaAtoms[0], alphaAtoms[1])) {
               if (alphaAtoms[0]->IsNitrogen() && alphaAtoms[1]->IsNitrogen()) {
                 if ((alphaAtoms[0]->GetValence() == 3) && (alphaAtoms[1]->GetValence() == 3)) {
                   return 80; // Aromatic carbon between N's in imidazolium (CIM+)
@@ -1607,7 +1608,7 @@ namespace OpenBabel
             }
           }
           if (alphaAtoms.size() && !betaAtoms.size()) {
-            if (atom->IsCarbon()) {
+            if (atom->GetAtomicNum() == OBElements::Carbon) {
               return 63; // Aromatic 5-ring C, alpha to N:, O:, or S: (C5A)
             } else if (atom->IsNitrogen()) {
               if (atom->GetValence() == 3) {
@@ -1618,7 +1619,7 @@ namespace OpenBabel
             }
           }
           if (!alphaAtoms.size() && betaAtoms.size()) {
-            if (atom->IsCarbon()) {
+            if (atom->GetAtomicNum() == OBElements::Carbon) {
               return 64; // Aromatic 5-ring C, beta to N:, O:, or S: (C5B)
             } else if (atom->IsNitrogen()) {
               if (atom->GetValence() == 3) {
@@ -1632,7 +1633,7 @@ namespace OpenBabel
             for (unsigned int i = 0; i < alphaAtoms.size(); i++) {
               for (unsigned int j = 0; j < betaAtoms.size(); j++) {
                 if (!IsInSameRing(alphaAtoms[i], betaAtoms[j])) {
-                  if (atom->IsCarbon()) {
+                  if (atom->GetAtomicNum() == OBElements::Carbon) {
                     return 78; // General carbon in 5-membered aromatic ring (C5)
                   } else if (atom->IsNitrogen()) {
                     return 79; // General nitrogen in 5-membered aromatic ring (N5)
@@ -1642,7 +1643,7 @@ namespace OpenBabel
             }
             for (unsigned int i = 0; i < alphaAtoms.size(); i++) {
               if (alphaAtoms[i]->IsSulfur() || alphaAtoms[i]->IsOxygen()) {
-                if (atom->IsCarbon()) {
+                if (atom->GetAtomicNum() == OBElements::Carbon) {
                   return 63; // Aromatic 5-ring C, alpha to N:, O:, or S: (C5A)
                 } else if (atom->IsNitrogen()) {
                   return 65; // Aromatic 5-ring N, alpha to N:, O:, or S: (N5A)
@@ -1651,7 +1652,7 @@ namespace OpenBabel
             }
             for (unsigned int i = 0; i < betaAtoms.size(); i++) {
               if (betaAtoms[i]->IsSulfur() || betaAtoms[i]->IsOxygen()) {
-                if (atom->IsCarbon()) {
+                if (atom->GetAtomicNum() == OBElements::Carbon) {
                   return 64; // Aromatic 5-ring C, beta to N:, O:, or S: (C5B)
                 } else if (atom->IsNitrogen()) {
                   return 66; // Aromatic 5-ring N, beta to N:, O:, or S: (N5B)
@@ -1659,7 +1660,7 @@ namespace OpenBabel
               }
             }
 
-            if (atom->IsCarbon()) {
+            if (atom->GetAtomicNum() == OBElements::Carbon) {
               return 78; // General carbon in 5-membered aromatic ring (C5)
             } else if (atom->IsNitrogen()) {
               return 79; // General nitrogen in 5-membered aromatic ring (N5)
@@ -1670,7 +1671,7 @@ namespace OpenBabel
 
       if (atom->IsInRingSize(6)) {
 
-        if (atom->IsCarbon()) {
+        if (atom->GetAtomicNum() == OBElements::Carbon) {
           return 37; // Aromatic carbon, e.g., in benzene (CB)
         } else if (atom->IsNitrogen()) {
           FOR_NBORS_OF_ATOM (nbr, atom) {
@@ -1693,7 +1694,7 @@ namespace OpenBabel
     ////////////////////////////////
     if (atom->GetAtomicNum() == 1) {
       FOR_NBORS_OF_ATOM (nbr, atom) {
-        if (nbr->IsCarbon()) {
+        if (nbr->GetAtomicNum() == OBElements::Carbon) {
           return 5; // Hydrogen attatched to carbon (HC)
         }
         if (nbr->GetAtomicNum() == 14) {
@@ -1714,7 +1715,7 @@ namespace OpenBabel
               hydrogenCount++;
               continue;
             }
-            if (nbrNbr->IsCarbon()) {
+            if (nbrNbr->GetAtomicNum() == OBElements::Carbon) {
               if (nbrNbr->IsAromatic()) {
                 return 29; // phenol
               }
@@ -1728,7 +1729,7 @@ namespace OpenBabel
                   if (nbrNbrNbr->IsOxygen()) {
                     return 24; // Hydroxyl hydrogen in carboxylic acids (HOCO)
                   }
-                  if (nbrNbrNbr->IsCarbon() || nbrNbrNbr->IsNitrogen()) {
+                  if (nbrNbrNbr->GetAtomicNum() == OBElements::Carbon || nbrNbrNbr->IsNitrogen()) {
                     return 29; // Enolic or phenolic hydroxyl hydrogen,
                     // Hydroxyl hydrogen in HO-C=N moiety (HOCC, HOCN)
                   }
@@ -1786,7 +1787,7 @@ namespace OpenBabel
 
               bond = _mol.GetBond(&*nbr, &*nbrNbr);
               if (!bond->IsAromatic() && bond->GetBondOrder() == 2) {
-                if (nbrNbr->IsCarbon() || nbrNbr->IsNitrogen()) {
+                if (nbrNbr->GetAtomicNum() == OBElements::Carbon || nbrNbr->IsNitrogen()) {
                   return 27; // Hydrogen on imine nitrogen, Hydrogen on azo nitrogen (HN=C, HN=N)
                 }
 
@@ -1799,7 +1800,7 @@ namespace OpenBabel
             if (nbrNbr->IsHydrogen())
               continue;
 
-            if (nbrNbr->IsCarbon()) {
+            if (nbrNbr->GetAtomicNum() == OBElements::Carbon) {
               if (nbrNbr->IsAromatic()) {
                 return 28; // deloc. lp pair
               }
@@ -1810,7 +1811,7 @@ namespace OpenBabel
 
                 bond = _mol.GetBond(&*nbrNbr, &*nbrNbrNbr);
                 if (!bond->IsAromatic() && bond->GetBondOrder() == 2) {
-                  if (nbrNbrNbr->IsCarbon() || nbrNbrNbr->IsNitrogen() || nbrNbrNbr->IsOxygen() || nbrNbrNbr->IsSulfur()) {
+                  if (nbrNbrNbr->GetAtomicNum() == OBElements::Carbon || nbrNbrNbr->IsNitrogen() || nbrNbrNbr->IsOxygen() || nbrNbrNbr->IsSulfur()) {
                     return 28; // Hydrogen on amide nitrogen, Hydrogen on thioamide nitrogen,
                     // Hydrogen on enamine nitrogen, Hydrogen in H-N-C=N moiety (HNCO, HNCS, HNCC, HNCN)
                   }
@@ -1824,7 +1825,7 @@ namespace OpenBabel
 
                 bond = _mol.GetBond(&*nbrNbr, &*nbrNbrNbr);
                 if (!bond->IsAromatic() && bond->GetBondOrder() == 2) {
-                  if (nbrNbrNbr->IsCarbon() || nbrNbrNbr->IsNitrogen()) {
+                  if (nbrNbrNbr->GetAtomicNum() == OBElements::Carbon || nbrNbrNbr->IsNitrogen()) {
                     return 28; // Hydrogen in H-N-N=C moiety, Hydrogen in H-N-N=N moiety (HNNC, HNNN)
                   }
                 }
@@ -1976,7 +1977,7 @@ namespace OpenBabel
                 doubleBondTo = 7;
               }
             }
-            if (nbr->IsCarbon()) {
+            if (nbr->GetAtomicNum() == OBElements::Carbon) {
               bond = _mol.GetBond(&*nbr, atom);
               if (!bond->IsAromatic() && bond->GetBondOrder() == 2) {
                 FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
@@ -2034,7 +2035,7 @@ namespace OpenBabel
           }
 
           FOR_NBORS_OF_ATOM (nbr, atom) {
-            if (nbr->IsCarbon()) {
+            if (nbr->GetAtomicNum() == OBElements::Carbon) {
               FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
                 bond = _mol.GetBond(&*nbr, &*nbrNbr);
                 if (!bond->IsAromatic() && bond->GetBondOrder() == 2 && (nbrNbr->IsOxygen() || nbrNbr->IsSulfur())) {
@@ -2046,7 +2047,7 @@ namespace OpenBabel
           }
 
           FOR_NBORS_OF_ATOM (nbr, atom) {
-            if (nbr->IsCarbon()) {
+            if (nbr->GetAtomicNum() == OBElements::Carbon) {
               int N2count = 0;
               int N3count = 0;
               oxygenCount = sulphurCount = 0;
@@ -2105,7 +2106,7 @@ namespace OpenBabel
               FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
                 bond = _mol.GetBond(&*nbr, &*nbrNbr);
                 if (!bond->IsAromatic() && bond->GetBondOrder() == 2) {
-                  if (nbrNbr->IsCarbon()) {
+                  if (nbrNbr->GetAtomicNum() == OBElements::Carbon) {
                     oxygenCount = sulphurCount = 0;
                     FOR_NBORS_OF_ATOM (nbrNbrNbr, &*nbrNbr) {
                       if (nbrNbrNbr->IsOxygen()) {
@@ -2121,7 +2122,7 @@ namespace OpenBabel
                     if (!oxygenCount && !sulphurCount && (nitrogenCount == 1)) {
                       bool bondToAromC = false;
                       FOR_NBORS_OF_ATOM (nbr2, atom) {
-                        if (nbr2->IsAromatic() && nbr2->IsCarbon() && nbr2->IsInRingSize(6)) {
+                        if (nbr2->IsAromatic() && nbr2->GetAtomicNum() == OBElements::Carbon && nbr2->IsInRingSize(6)) {
                           bondToAromC = true;
                         }
                       }
@@ -2133,7 +2134,7 @@ namespace OpenBabel
                   if (nbrNbr->IsNitrogen()) {
                     bool bondToAromC = false;
                     FOR_NBORS_OF_ATOM (nbr2, atom) {
-                      if (nbr2->IsAromatic() && nbr2->IsCarbon() && nbr2->IsInRingSize(6)) {
+                      if (nbr2->IsAromatic() && nbr2->GetAtomicNum() == OBElements::Carbon && nbr2->IsInRingSize(6)) {
                         bondToAromC = true;
                       }
                     }
@@ -2176,7 +2177,7 @@ namespace OpenBabel
           bool isBondTriple = false;
           FOR_NBORS_OF_ATOM (nbr, atom) {
             if (!isNbrCarbon)
-              isNbrCarbon = nbr->IsCarbon();
+              isNbrCarbon = nbr->GetAtomicNum() == OBElements::Carbon;
             bond = _mol.GetBond(&*nbr, atom);
             if (!isBondTriple)
               isBondTriple = !bond->IsAromatic() && bond->GetBondOrder() == 3;
@@ -2195,7 +2196,7 @@ namespace OpenBabel
             if (nbr->IsOxygen() && !bond->IsAromatic() && bond->GetBondOrder() == 2 && (nbr->GetValence() == 1)) {
               return 46; // Nitrogen in nitroso group (N=O)
             }
-            if ((nbr->IsCarbon() || nbr->IsNitrogen()) && !bond->IsAromatic() && bond->GetBondOrder() == 2) {
+            if ((nbr->GetAtomicNum() == OBElements::Carbon || nbr->IsNitrogen()) && !bond->IsAromatic() && bond->GetBondOrder() == 2) {
               return 9; // Iminie nitrogen, Azo-group nitrogen (N=C, N=N)
             }
           }
@@ -2298,7 +2299,7 @@ namespace OpenBabel
         FOR_NBORS_OF_ATOM (nbr, atom) {
           bond = _mol.GetBond(&*nbr, atom);
 
-          if (nbr->IsCarbon() || nbr->IsNitrogen()) {
+          if (nbr->GetAtomicNum() == OBElements::Carbon || nbr->IsNitrogen()) {
             FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
               if (nbrNbr->IsOxygen() && (nbrNbr->GetValence() == 1)) {
                 oxygenCount++;
@@ -2313,7 +2314,7 @@ namespace OpenBabel
             return 35;
           }
           // O-?-C
-          if (nbr->IsCarbon()) {
+          if (nbr->GetAtomicNum() == OBElements::Carbon) {
             if (oxygenCount == 2) {
               // O-?-C-?-O
               return 32; // Oxygen in carboxylate group (O2CM)
@@ -2387,7 +2388,7 @@ namespace OpenBabel
                   continue;
                 OBBond* bond = nbr->GetBond(&*nbr2);
                 if (!bond->IsAromatic() && bond->GetBondOrder() == 2
-                  && nbr2->IsCarbon() && oxygenBoundToSulfur == 1)
+                  && nbr2->GetAtomicNum() == OBElements::Carbon && oxygenBoundToSulfur == 1)
                   isSulfoxide = false; // O=S on sulfur doubly bonded to, e.g., C (O=S=)
 
                 if ((nbr2->IsOxygen() && nbr2->GetValence() == 1)
@@ -3275,7 +3276,7 @@ namespace OpenBabel
             }
 
             if (!found_rule)
-              if (((GetMltb(type_b) == 1) || (GetMltb(type_c) == 1)) && (!b->IsCarbon() || !c->IsCarbon())) {
+              if (((GetMltb(type_b) == 1) || (GetMltb(type_c) == 1)) && (b->GetAtomicNum() != OBElements::Carbon || c->GetAtomicNum() != OBElements::Carbon)) {
                 pi_bc = 0.4;
                 found_rule = true;
               }
@@ -3769,11 +3770,11 @@ namespace OpenBabel
             if (nbr2->IsNitrogen() && !nbr2->IsAromatic())
               sulfonamide = true;
             OBBond *bond = nbr->GetBond(&*nbr2);
-            if (nbr2->IsCarbon() && !bond->IsAromatic() && bond->GetBondOrder() == 2)
+            if (nbr2->GetAtomicNum() == OBElements::Carbon && !bond->IsAromatic() && bond->GetBondOrder() == 2)
               sulfone_s_c = true;
           }
 
-          if (nbr->IsCarbon())
+          if (nbr->GetAtomicNum() == OBElements::Carbon)
             atom->SetPartialCharge(-0.5); // O2CM
 
           if (nbr->IsNitrogen() && (o_count == 3))
@@ -3827,7 +3828,7 @@ namespace OpenBabel
           } else
             atom->SetPartialCharge(-1.0);
 
-          if (nbr->IsCarbon())
+          if (nbr->GetAtomicNum() == OBElements::Carbon)
             FOR_NBORS_OF_ATOM(nbr2, &*nbr)
               if (nbr2->IsSulfur() && (nbr2->GetValence() == 1) && (atom->GetIdx() != nbr2->GetIdx()))
                 atom->SetPartialCharge(-0.5); // SSMO
@@ -4827,28 +4828,30 @@ namespace OpenBabel
   // MMFF part V - TABLE VI
   double OBForceFieldMMFF94::GetZParam(OBAtom* atom)
   {
-    if (atom->IsHydrogen())
+    switch (atom->GetAtomicNum()) {
+    case OBElements::Hydrogen:
       return 1.395;
-    if (atom->IsCarbon())
+    case OBElements::Carbon:
       return 2.494;
-    if (atom->IsNitrogen())
+    case OBElements::Nitrogen:
       return 2.711;
-    if (atom->IsOxygen())
+    case OBElements::Oxygen:
       return 3.045;
-    if (atom->GetAtomicNum() == 9) // F
+    case OBElements::Fluorine:
       return 2.847;
-    if (atom->GetAtomicNum() == 14) // Si
+    case OBElements::Silicon:
       return 2.350;
-    if (atom->IsPhosphorus())
+    case OBElements::Phosphorus:
       return 2.350;
-    if (atom->IsSulfur())
+    case OBElements::Sulfur:
       return 2.980;
-    if (atom->GetAtomicNum() == 17) // Cl
+    case OBElements::Chlorine:
       return 2.909;
-    if (atom->GetAtomicNum() == 35) // Br
+    case OBElements::Bromine:
       return 3.017;
-    if (atom->GetAtomicNum() == 53) // I
+    case OBElements::Iodine:
       return 3.086;
+    }
 
     return 0.0;
   }
@@ -4856,24 +4859,26 @@ namespace OpenBabel
   // MMFF part V - TABLE VI
   double OBForceFieldMMFF94::GetCParam(OBAtom* atom)
   {
-    if (atom->GetAtomicNum() == 5) // B
+    switch (atom->GetAtomicNum()) {
+    case OBElements::Boron:
       return 0.704;
-    if (atom->IsCarbon())
+    case OBElements::Carbon:
       return 1.016;
-    if (atom->IsNitrogen())
+    case OBElements::Nitrogen:
       return 1.113;
-    if (atom->IsOxygen())
+    case OBElements::Oxygen:
       return 1.337;
-    if (atom->GetAtomicNum() == 14) // Si
+    case OBElements::Silicon:
       return 0.811;
-    if (atom->IsPhosphorus())
+    case OBElements::Phosphorus:
       return 1.068;
-    if (atom->IsSulfur())
+    case OBElements::Sulfur:
       return 1.249;
-    if (atom->GetAtomicNum() == 17) // Cl
+    case OBElements::Chlorine:
       return 1.078;
-    if (atom->GetAtomicNum() == 33) // As
+    case OBElements::Arsenic:
       return 0.825;
+    }
 
     return 0.0;
   }
@@ -4881,18 +4886,20 @@ namespace OpenBabel
   // MMFF part V - TABLE X
   double OBForceFieldMMFF94::GetUParam(OBAtom* atom)
   {
-    if (atom->IsCarbon())
+    switch (atom->GetAtomicNum()) {
+    case OBElements::Carbon:
       return 2.0;
-    if (atom->IsNitrogen())
+    case OBElements::Nitrogen:
       return 2.0;
-    if (atom->IsOxygen())
+    case OBElements::Oxygen:
       return 2.0;
-    if (atom->GetAtomicNum() == 14) // Si
+    case OBElements::Silicon:
       return 1.25;
-    if (atom->IsPhosphorus())
+    case OBElements::Phosphorus:
       return 1.25;
-    if (atom->IsSulfur())
+    case OBElements::Sulfur:
       return 1.25;
+    }
 
     return 0.0;
   }
@@ -4900,18 +4907,20 @@ namespace OpenBabel
   // MMFF part V - TABLE X
   double OBForceFieldMMFF94::GetVParam(OBAtom* atom)
   {
-    if (atom->IsCarbon())
+    switch (atom->GetAtomicNum()) {
+    case OBElements::Carbon:
       return 2.12;
-    if (atom->IsNitrogen())
+    case OBElements::Nitrogen:
       return 1.5;
-    if (atom->IsOxygen())
+    case OBElements::Oxygen:
       return 0.2;
-    if (atom->GetAtomicNum() == 14) // Si
+    case OBElements::Silicon:
       return 1.22;
-    if (atom->IsPhosphorus())
+    case OBElements::Phosphorus:
       return 2.4;
-    if (atom->IsSulfur())
+    case OBElements::Sulfur:
       return 0.49;
+    }
 
     return 0.0;
   }

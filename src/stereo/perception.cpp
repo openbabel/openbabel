@@ -22,12 +22,14 @@
   02110-1301, USA.
  **********************************************************************/
 
+
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/mol.h>
 #include <openbabel/graphsym.h>
 #include <openbabel/canon.h>
 #include <openbabel/oberror.h>
+#include <openbabel/elements.h>
 #include <cassert>
 
 #include "stereoutil.h"
@@ -146,7 +148,7 @@ namespace OpenBabel {
       if (nbrRingAtomCount < 3)
         return false;
     }
-    if (atom->IsCarbon()) {
+    if (atom->GetAtomicNum() == OBElements::Carbon) {
       if (atom->GetFormalCharge())
         return false;
       FOR_NBORS_OF_ATOM (nbr, atom) {
@@ -2778,7 +2780,7 @@ namespace OpenBabel {
 	      score -= nbr_nbonds - 2;	// bond to atom with many bonds is penalized
 	    if (nbr->IsHydrogen())
 	      score += 2;		// prefer H
-	    else if (nbr->IsCarbon())
+	    else if (nbr->GetAtomicNum() == OBElements::Carbon)
 	      score += 1;		// then C
             if (&*b==close_bond_a || &*b==close_bond_b)
               score += 16;

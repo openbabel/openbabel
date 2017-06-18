@@ -86,7 +86,7 @@ namespace OpenBabel
     OBBondIterator i;
 
     for (bond = queryatom->BeginBond(i); bond; bond = queryatom->NextBond(i))
-      if ((bond->GetNbrAtom(queryatom))->IsCarbon())
+      if ((bond->GetNbrAtom(queryatom))->GetAtomicNum() == OBElements::Carbon)
       {
         atom = bond->GetNbrAtom(queryatom);
         break;

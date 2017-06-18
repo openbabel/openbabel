@@ -22,6 +22,7 @@ GNU General Public License for more details.
 
 #include <openbabel/mol.h> // implements some OBMol methods
 #include <openbabel/ring.h>
+#include <openbabel/elements.h>
 
 using namespace std;
 
@@ -605,7 +606,7 @@ namespace OpenBabel
 
     if (Size() == 6)
       for (i = _path.begin();i != _path.end();++i)
-        if (!(mol->GetAtom(*i))->IsCarbon())
+        if (mol->GetAtom(*i)->GetAtomicNum() != OBElements::Carbon)
 	  return (*i);
 
     if (Size() == 5)

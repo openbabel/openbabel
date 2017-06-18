@@ -373,7 +373,7 @@ namespace OpenBabel
     element_name_final[2] = '\0';
 
     if (atom->IsHydrogen()) {element_name_final[0]='H'; element_name_final[1]='D';}
-    else if ((atom->IsCarbon()) && (atom->IsAromatic())) {element_name_final[0]='A'; element_name_final[1]=' ';}
+    else if ((atom->GetAtomicNum() == OBElements::Carbon) && (atom->IsAromatic())) {element_name_final[0]='A'; element_name_final[1]=' ';}
     else if (atom->IsOxygen())  {element_name_final[0]='O'; element_name_final[1]='A';}
     else if ((atom->IsNitrogen()) && (atom->IsHbondAcceptor())) {element_name_final[0]='N'; element_name_final[1]='A';}
     else if ((atom->IsSulfur()) && (atom->IsHbondAcceptor())) {element_name_final[0]='S'; element_name_final[1]='A';}

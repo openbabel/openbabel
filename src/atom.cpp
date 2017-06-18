@@ -25,6 +25,7 @@ GNU General Public License for more details.
 #include <openbabel/molchrg.h>
 #include <openbabel/phmodel.h>
 #include <openbabel/builder.h>
+#include <openbabel/elements.h>
 
 #include <openbabel/math/matrix3x3.h>
 
@@ -619,7 +620,7 @@ namespace OpenBabel
 
     atom = NULL;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
-      if ((bond->GetNbrAtom(this))->IsCarbon())
+      if ((bond->GetNbrAtom(this))->GetAtomicNum() == OBElements::Carbon)
         {
           atom = bond->GetNbrAtom(this);
           break;

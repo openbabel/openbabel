@@ -22,6 +22,7 @@ GNU General Public License for more details.
 #include <openbabel/atomclass.h>
 #include <openbabel/depict/depict.h>
 #include <openbabel/depict/painter.h>
+#include <openbabel/elements.h>
 #include <algorithm> // std::reverse
 #include <iterator> // std::istream_iterator
 #include <openbabel/stereo/stereo.h>
@@ -597,7 +598,7 @@ namespace OpenBabel
         d->painter->SetFontSize(metrics.fontSize);//restore
       }
 
-      if (atom->IsCarbon()) {
+      if (atom->GetAtomicNum() == OBElements::Carbon) {
         if(!(d->options & drawAllC))
         {
           if (atom->GetValence() > 1)
@@ -1002,7 +1003,7 @@ namespace OpenBabel
 
   bool OBDepictPrivate::HasLabel(OBAtom *atom)
   {
-    if (!atom->IsCarbon())
+    if (atom->GetAtomicNum() != OBElements::Carbon)
       return true;
     if ((options & OBDepict::drawAllC) || ((options & OBDepict::drawTermC) && (atom->GetValence() == 1)))
       return true;

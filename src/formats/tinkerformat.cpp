@@ -237,7 +237,7 @@ namespace OpenBabel
           return 48;// ammonium
         return 23; // default amine/imine
       }
-      if (b->IsCarbon() && b->GetHyb() == 1)
+      if (b->GetAtomicNum() == OBElements::Carbon && b->GetHyb() == 1)
         return 124; // acetylene
 
       if (b->IsOxygen()) {
@@ -338,7 +338,7 @@ namespace OpenBabel
         return 49; // epoxy
 
       b = atom->BeginNbrAtom(j);
-      if (atom->HasBondOfOrder(2) && b->IsCarbon()) { // O=C
+      if (atom->HasBondOfOrder(2) && b->GetAtomicNum() == OBElements::Carbon) { // O=C
         return 7;
       }
 
