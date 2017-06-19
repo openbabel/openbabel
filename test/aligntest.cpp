@@ -3,6 +3,7 @@
 #include <openbabel/math/align.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/builder.h>
+#include <openbabel/elements.h>
 
 using namespace std;
 using namespace OpenBabel;

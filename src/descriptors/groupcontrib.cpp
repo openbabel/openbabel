@@ -28,6 +28,7 @@ GNU General Public License for more details.
 #include <openbabel/parsmart.h>
 #include <openbabel/groupcontrib.h>
 #include <openbabel/locale.h>
+#include <openbabel/elements.h>
 
 using namespace std;
 

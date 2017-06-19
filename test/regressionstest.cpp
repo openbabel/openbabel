@@ -3,6 +3,7 @@
 #include <openbabel/atomclass.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/phmodel.h>
+#include <openbabel/elements.h>
 
 #include <iostream>
 #include <string>

@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include <openbabel/fingerprint.h>
 #include <set>
 #include <vector>
+#include <openbabel/elements.h>
 
 using namespace std;
 namespace OpenBabel

@@ -15,6 +15,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/fingerprint.h>
 #include <openbabel/obiter.h>
+#include <openbabel/elements.h>
 
 #include <vector>
 
