@@ -4978,7 +4978,7 @@ namespace OpenBabel
     case 83:
       return 1.55;
     default:
-      return etab.GetCovalentRad(a->GetAtomicNum());
+      return OBElements::GetCovalentRad(a->GetAtomicNum());
     }
   }
 

@@ -1221,7 +1221,7 @@ OBBitVec& drawnBonds)
 
   double OBDepictPrivateBallAndStick::GetAtomRadius(OBAtom *atom)
   {
-    double radius = etab.GetCovalentRad(atom->GetAtomicNum());
+    double radius = OBElements::GetCovalentRad(atom->GetAtomicNum());
     double perspective = 1.0;
     if (fabs(zScale) > 1.0e-1)
       perspective = (atom->GetZ() - zMin) / zScale;

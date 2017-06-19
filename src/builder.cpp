@@ -125,8 +125,8 @@ namespace OpenBabel
     // We create an estimate of the bond length based on the two atoms
     // Scaling is performed by the bond order corrections below
     //  .. so we will use the straight covalent radii
-    bondLength += etab.GetCovalentRad(atom1->GetAtomicNum());
-    bondLength += etab.GetCovalentRad(atom2->GetAtomicNum());
+    bondLength += OBElements::GetCovalentRad(atom1->GetAtomicNum());
+    bondLength += OBElements::GetCovalentRad(atom2->GetAtomicNum());
 
     if (bondLength < 1.0)
       bondLength = 1.0;

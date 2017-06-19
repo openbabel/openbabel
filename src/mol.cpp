@@ -2989,7 +2989,7 @@ namespace OpenBabel
     for ( j = 0 ; j < max ; j++ )
       {
         atom   = zsortedAtoms[j].first;
-        rad[j] = etab.GetCovalentRad(atom->GetAtomicNum());
+        rad[j] = OBElements::GetCovalentRad(atom->GetAtomicNum());
         maxrad = std::max(rad[j],maxrad);
         zsorted.push_back(atom->GetIdx()-1);
       }
