@@ -215,7 +215,7 @@ namespace OpenBabel
       {
         atom = mol.GetAtom(i);
         snprintf(buffer, BUFF_SIZE, "  %s%d   %12.7f  %12.7f  %12.7f",
-                 etab.GetSymbol(atom->GetAtomicNum()), i,
+                 OBElements::GetSymbol(atom->GetAtomicNum()), i,
                  atom->GetX(),
                  atom->GetY(),
                  atom->GetZ());

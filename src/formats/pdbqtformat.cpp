@@ -321,7 +321,7 @@ namespace OpenBabel
     bool het=false;
 
     OBResidue *res;
-    strncpy(type_name, etab.GetSymbol(atom->GetAtomicNum()), sizeof(type_name));
+    strncpy(type_name, OBElements::GetSymbol(atom->GetAtomicNum()), sizeof(type_name));
     type_name[sizeof(type_name) - 1] = '\0';
     //two char. elements are on position 13 and 14 one char. start at 14
 
@@ -342,7 +342,7 @@ namespace OpenBabel
       the_chain = res->GetChain();
 
       //two char. elements are on position 13 and 14 one char. start at 14
-      if (strlen(etab.GetSymbol(atom->GetAtomicNum())) == 1)
+      if (strlen(OBElements::GetSymbol(atom->GetAtomicNum())) == 1)
       {
         if (strlen(type_name) < 4)
         {
@@ -368,7 +368,7 @@ namespace OpenBabel
       res_num = 1;
     }
 
-    element_name = etab.GetSymbol(atom->GetAtomicNum());
+    element_name = OBElements::GetSymbol(atom->GetAtomicNum());
     char element_name_final[3];
     element_name_final[2] = '\0';
 
@@ -919,7 +919,7 @@ namespace OpenBabel
             for (bondAtomNum=0; bondAtomNum < 2; bondAtomNum++)
             {
               memset(type_name, 0, sizeof(type_name));
-              strncpy(type_name, etab.GetSymbol(rotBondTable[rotBondId][bondAtomNum]->GetAtomicNum()), sizeof(type_name));
+              strncpy(type_name, OBElements::GetSymbol(rotBondTable[rotBondId][bondAtomNum]->GetAtomicNum()), sizeof(type_name));
               if (strlen(type_name) > 1)
                 type_name[1] = toupper(type_name[1]);
               if ((res = rotBondTable[rotBondId][bondAtomNum]->GetResidue()) != 0)

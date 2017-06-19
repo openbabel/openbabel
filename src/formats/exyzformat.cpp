@@ -440,7 +440,7 @@ namespace OpenBabel
     FOR_ATOMS_OF_MOL(atom, mol)
       {
         ofs << setw(4) << right
-            << OpenBabel::etab.GetSymbol(atom->GetAtomicNum())
+            << OpenBabel::OBElements::GetSymbol(atom->GetAtomicNum())
             << setw(15) << setprecision(5) << fixed << showpoint
             << right << atom->GetX() << " " << setw(15) << atom->GetY() << " "
             << setw(15) << atom->GetZ() << endl;

@@ -256,7 +256,7 @@ namespace OpenBabel
           v = uc->CartesianToFractional(v);
 
         snprintf(buffer, BUFF_SIZE, "%s %10.5f%10.5f%10.5f",
-                 etab.GetSymbol(atom->GetAtomicNum()),
+                 OBElements::GetSymbol(atom->GetAtomicNum()),
                  v.x(),
                  v.y(),
                  v.z());

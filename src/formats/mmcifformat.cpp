@@ -1097,14 +1097,14 @@ namespace OpenBabel
    for (OBAtomIterator atom_x = pmol->BeginAtoms(), atom_y = pmol->EndAtoms(); atom_x != atom_y; ++ atom_x, ++ site_id)
      {
      OBAtom * atom = (* atom_x);
-     ofs << '\t' << site_id << '\t' << etab.GetSymbol(atom->GetAtomicNum());
+     ofs << '\t' << site_id << '\t' << OBElements::GetSymbol(atom->GetAtomicNum());
      if (has_residues)
        {
        OBResidue * pRes = atom->GetResidue();
        string resname(pRes->GetName()), atomname(pRes->GetAtomID(atom));
        if (atomname.empty())
          {
-         snprintf(buffer, BUFF_SIZE, "%s%lu", etab.GetSymbol(atom->GetAtomicNum()), (unsigned long)site_id);
+         snprintf(buffer, BUFF_SIZE, "%s%lu", OBElements::GetSymbol(atom->GetAtomicNum()), (unsigned long)site_id);
          atomname.assign(buffer);
          }
        if (resname.empty())

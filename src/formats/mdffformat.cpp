@@ -396,7 +396,7 @@ namespace OpenBabel {
     string last_atom_smb = "";
     for(map<aindx, OBAtom *>::const_iterator it = amap.begin(); it != amap.end(); ++it)
     {
-      string curr_atom_smb = OpenBabel::etab.GetSymbol(it->second->GetAtomicNum());
+      string curr_atom_smb = OpenBabel::OBElements::GetSymbol(it->second->GetAtomicNum());
       if( last_atom_smb != curr_atom_smb )
       {  
         last_atom_smb = curr_atom_smb;
@@ -456,7 +456,7 @@ namespace OpenBabel {
                                               it != amap.end(); ++it)
     {  
       // Print coordinates
-      string smb = OpenBabel::etab.GetSymbol(it->second->GetAtomicNum());
+      string smb = OpenBabel::OBElements::GetSymbol(it->second->GetAtomicNum());
       snprintf(buffer, BUFF_SIZE, "%-3s %26.19f %26.19f %26.19f", smb.c_str(),
                it->second->GetX(), it->second->GetY(), it->second->GetZ());
       

@@ -565,7 +565,7 @@ private:
     nHydr[i-1]=atom->GetImplicitHCount()+atom->ExplicitHydrogenCount();
     aCharge[i-1]=atom->GetFormalCharge();
     aRadical[i-1]=atom->GetSpinMultiplicity();
-    aSymb[i-1]=etab.GetSymbol(atom->GetAtomicNum());
+    aSymb[i-1]=OBElements::GetSymbol(atom->GetAtomicNum());
     nConn[i-1]=atom->GetHvyValence();
     aNumber[i-1]=i-1;
   };
@@ -1417,9 +1417,9 @@ bool MCDLFormat::parseFormula(const string formulaString, std::vector <int>& enu
 
   for (i=0; i<etab.GetNumberOfElements(); i++) enumber[i]=0;
 
-  for (i=1; i<etab.GetNumberOfElements(); i++) if (strlen(etab.GetSymbol(i))==2) {
+  for (i=1; i<etab.GetNumberOfElements(); i++) if (strlen(OBElements::GetSymbol(i))==2) {
       test=true;
-    asym=etab.GetSymbol(i);
+    asym=OBElements::GetSymbol(i);
       while (test) {
         test=false;
         n=indexOf(value,asym);
@@ -1440,9 +1440,9 @@ bool MCDLFormat::parseFormula(const string formulaString, std::vector <int>& enu
         };
       };
     };
-  for (i=1; i<etab.GetNumberOfElements(); i++) if (strlen(etab.GetSymbol(i))==1) {
+  for (i=1; i<etab.GetNumberOfElements(); i++) if (strlen(OBElements::GetSymbol(i))==1) {
       test=true;
-    asym=etab.GetSymbol(i);
+    asym=OBElements::GetSymbol(i);
       while (test) {
         test=false;
         n=indexOf(value,asym);

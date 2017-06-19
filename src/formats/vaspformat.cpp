@@ -706,7 +706,7 @@ namespace OpenBabel {
       for (vector< std::pair<int, int> >::const_iterator
            it = atomicNums.begin(),
            it_end = atomicNums.end(); it != it_end; ++it) {
-        snprintf(buffer, BUFF_SIZE, "%-3s ", etab.GetSymbol(it->first));
+        snprintf(buffer, BUFF_SIZE, "%-3s ", OBElements::GetSymbol(it->first));
         ofs << buffer ;
       }
       ofs << endl;

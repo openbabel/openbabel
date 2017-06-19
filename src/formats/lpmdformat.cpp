@@ -377,7 +377,7 @@ bool LpmdFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
  {
   OBAtom *atom = mol.GetAtom(i + 1);
   vector3 tmp=uc->CartesianToFractional(vector3(atom->GetX(),atom->GetY(),atom->GetZ()));
-  snprintf(buffer, BUFF_SIZE, "%-3s%15.5f%15.5f%15.5f",etab.GetSymbol(atom->GetAtomicNum()),
+  snprintf(buffer, BUFF_SIZE, "%-3s%15.5f%15.5f%15.5f",OBElements::GetSymbol(atom->GetAtomicNum()),
    tmp.GetX(),
    tmp.GetY(),
    tmp.GetZ());

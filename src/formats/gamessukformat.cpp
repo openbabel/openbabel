@@ -671,7 +671,7 @@ namespace OpenBabel
 		 atom->GetY(),
 		 atom->GetZ(),
 		 atom->GetAtomicNum(),
-		 etab.GetSymbol(atom->GetAtomicNum())
+		 OBElements::GetSymbol(atom->GetAtomicNum())
 		 );
 	ofs << buffer;
       }

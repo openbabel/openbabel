@@ -563,7 +563,7 @@ class PubChemJSONFormat : public OBMoleculeFormat
       doc["atoms"]["aid"].append(id);
       // Element
       if (patom->GetAtomicNum()) {
-        string el = etab.GetSymbol(patom->GetAtomicNum());
+        string el = OBElements::GetSymbol(patom->GetAtomicNum());
         std::transform(el.begin(), el.end(), el.begin(), ::tolower);
         doc["atoms"]["element"].append(el);
       } else {

@@ -428,7 +428,7 @@ namespace OpenBabel
 
         int id=atm->GetIdx(),atomnum=atm->GetAtomicNum();
         double x=atm->GetX(),y=atm->GetY(),z=atm->GetZ();
-        const char *element=etab.GetSymbol(atomnum);
+        const char *element=OBElements::GetSymbol(atomnum);
         double charge=0;
         if (!GroupCharges)
           charge=atm->GetFormalCharge();

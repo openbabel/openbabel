@@ -176,7 +176,7 @@ namespace OpenBabel
         atom = mol.GetAtom(i);
         snprintf(buffer, BUFF_SIZE, "atom %d - %-3s **  - %8.5f %8.5f  %8.5f  %8.5f %d ",
                 i,
-                etab.GetSymbol(atom->GetAtomicNum()),
+                OBElements::GetSymbol(atom->GetAtomicNum()),
                 atom->GetPartialCharge(),
                 atom->GetX(),
                 atom->GetY(),

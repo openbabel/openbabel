@@ -158,7 +158,7 @@ bool FHIaimsFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
                atom->GetX(),
                atom->GetY(),
                atom->GetZ(),
-               etab.GetSymbol(atom->GetAtomicNum()));
+               OBElements::GetSymbol(atom->GetAtomicNum()));
         ofs << buffer << '\n';
     }
 

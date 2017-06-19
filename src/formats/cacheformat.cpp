@@ -96,7 +96,7 @@ namespace OpenBabel
     for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       {
         // 16 = sizeof(type_name)
-        strncpy(type_name,etab.GetSymbol(atom->GetAtomicNum()), 16);
+        strncpy(type_name,OBElements::GetSymbol(atom->GetAtomicNum()), 16);
         // sizeof(type_name) - 1)
         type_name[15] = '\0';
 

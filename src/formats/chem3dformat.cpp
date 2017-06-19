@@ -297,7 +297,7 @@ namespace OpenBabel
             type_num = atnum * 10 + atom->GetValence();
             snprintf(type_name, sizeof(type_num), "%d",type_num);
           }
-        strncpy(ele_type, etab.GetSymbol(atom->GetAtomicNum()), sizeof(ele_type));
+        strncpy(ele_type, OBElements::GetSymbol(atom->GetAtomicNum()), sizeof(ele_type));
         ele_type[sizeof(ele_type) - 1] = '\0';
         snprintf(buffer, BUFF_SIZE, "%-3s %-5d %8.4f  %8.4f  %8.4f %5s",
                 ele_type,

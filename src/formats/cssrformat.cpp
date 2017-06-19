@@ -108,7 +108,7 @@ namespace OpenBabel
         vtmp[atom->GetAtomicNum()]++;
         snprintf(buffer, BUFF_SIZE, "%4d%2s%-3d  %9.5f %9.5f %9.5f ",
                  atom->GetIdx(),
-                 etab.GetSymbol(atom->GetAtomicNum()),
+                 OBElements::GetSymbol(atom->GetAtomicNum()),
                  vtmp[atom->GetAtomicNum()],
                  atom->x(),
                  atom->y(),

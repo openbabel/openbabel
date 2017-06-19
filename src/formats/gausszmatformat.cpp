@@ -150,7 +150,7 @@ namespace OpenBabel
         b = vic[atom->GetIdx()]->_b;
         c = vic[atom->GetIdx()]->_c;
 
-				type = etab.GetSymbol(atom->GetAtomicNum());
+				type = OBElements::GetSymbol(atom->GetAtomicNum());
 				if (atom->GetIsotope() != 0) {
 					snprintf(buffer, BUFF_SIZE, "(Iso=%d)", atom->GetIsotope());
 					type += buffer;

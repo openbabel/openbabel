@@ -366,7 +366,7 @@ namespace OpenBabel
     FOR_ATOMS_OF_MOL(atom, mol)
       {
         
-        ofs << std::setw(8) << etab.GetSymbol(atom->GetAtomicNum()) << std::setw(10) << ++idx << std::setw(10) << atom->GetAtomicNum() << std::endl;
+        ofs << std::setw(8) << OBElements::GetSymbol(atom->GetAtomicNum()) << std::setw(10) << ++idx << std::setw(10) << atom->GetAtomicNum() << std::endl;
         snprintf(buffer, BUFF_SIZE, "%20.15f %20.15f %20.15f\n",
                  atom->GetX(),
                  atom->GetY(),

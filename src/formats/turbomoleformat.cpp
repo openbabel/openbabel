@@ -164,7 +164,7 @@ bool TurbomoleFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
       char symb[8];
-      strcpy(symb,etab.GetSymbol(atom->GetAtomicNum()));
+      strcpy(symb,OBElements::GetSymbol(atom->GetAtomicNum()));
         snprintf(buff, BUFF_SIZE, "%20.14f  %20.14f  %20.14f      %s",
                 atom->GetX()/UnitConv,
                 atom->GetY()/UnitConv,

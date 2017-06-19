@@ -877,7 +877,7 @@ namespace OpenBabel
       atom = mol.GetAtom(i+1); // WARNING: ATOM INDEX ISSUE
 
       if (atomids[i] == -1) {
-        symbol = etab.GetSymbol(atom->GetAtomicNum());
+        symbol = OBElements::GetSymbol(atom->GetAtomicNum());
         if ( symbol[1] ) {
           buffer[0] = symbol[0];
           buffer[1] = (char) toupper(symbol[1]);

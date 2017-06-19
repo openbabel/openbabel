@@ -370,7 +370,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         nbonds++;
       }
 
-      strcpy(iat.elname,etab.GetSymbol(patom->GetAtomicNum()));
+      strcpy(iat.elname,OBElements::GetSymbol(patom->GetAtomicNum()));
       iat.num_bonds = nbonds;
       iat.num_iso_H[0] = patom->GetImplicitHCount();
       if(patom->GetIsotope())

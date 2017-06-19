@@ -1134,7 +1134,7 @@ namespace OpenBabel {
 
     FOR_ATOMS_OF_MOL(atom, mol) {
       snprintf(buffer, BUFF_SIZE, "%-3s %4d.0    %14.10f  %14.10f  %14.10f ",
-               etab.GetSymbol(atom->GetAtomicNum()),
+               OBElements::GetSymbol(atom->GetAtomicNum()),
                atom->GetAtomicNum(),
                atom->GetX(),
                atom->GetY(),

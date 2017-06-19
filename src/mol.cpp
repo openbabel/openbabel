@@ -1061,7 +1061,7 @@ namespace OpenBabel
             else if (alph==NumElements-2)
               symb = DT; //D
             else
-              symb = etab.GetSymbol(alphabetical[j]);
+              symb = OBElements::GetSymbol(alphabetical[j]);
 
             formula << symb << sp;
             if(atomicCount[alph] > ones)

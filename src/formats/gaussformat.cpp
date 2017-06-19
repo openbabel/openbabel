@@ -198,11 +198,11 @@ namespace OpenBabel
       {
         if (atom->GetIsotope() == 0)
           snprintf(buffer, BUFF_SIZE, "%-3s      %10.5f      %10.5f      %10.5f",
-                   etab.GetSymbol(atom->GetAtomicNum()),
+                   OBElements::GetSymbol(atom->GetAtomicNum()),
                    atom->GetX(), atom->GetY(), atom->GetZ());
         else
           snprintf(buffer, BUFF_SIZE, "%-3s(Iso=%d) %10.5f      %10.5f      %10.5f",
-                   etab.GetSymbol(atom->GetAtomicNum()),
+                   OBElements::GetSymbol(atom->GetAtomicNum()),
                    atom->GetIsotope(),
                    atom->GetX(), atom->GetY(), atom->GetZ());
 

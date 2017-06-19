@@ -351,7 +351,7 @@ bool OBMoldenFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     FOR_ATOMS_OF_MOL(atom, mol)
       {
         snprintf(buffer, BUFF_SIZE, "%2s%6d%3d%13.6f%13.6f%13.6f\n",
-                etab.GetSymbol(atom->GetAtomicNum()),
+                OBElements::GetSymbol(atom->GetAtomicNum()),
 		i++,
                 atom->GetAtomicNum(),
                 atom->GetX(),
@@ -380,7 +380,7 @@ bool OBMoldenFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       FOR_ATOMS_OF_MOL(atom, mol)
         {
           snprintf(buffer, BUFF_SIZE, "%2s%13.6f%13.6f%13.6f\n",
-                  etab.GetSymbol(atom->GetAtomicNum()),
+                  OBElements::GetSymbol(atom->GetAtomicNum()),
                   atom->GetX()*ANGSTROM_TO_BOHR,
                   atom->GetY()*ANGSTROM_TO_BOHR,
                   atom->GetZ()*ANGSTROM_TO_BOHR);

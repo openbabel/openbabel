@@ -409,7 +409,7 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
       // Element
       if (patom->GetAtomicNum()) {
         if (patom->GetAtomicNum() != 6 || pConv->IsOption("v", pConv->OUTOPTIONS)) {
-          atom["l"] = etab.GetSymbol(patom->GetAtomicNum());
+          atom["l"] = OBElements::GetSymbol(patom->GetAtomicNum());
         }
       } else {
         // No atomic number, could be an r group or a * atom

@@ -2624,7 +2624,7 @@ namespace OpenBabel {
 
       // Ordinary non-bracket element
       if (element) {
-        strcpy(symbol,etab.GetSymbol(atom->GetAtomicNum()));
+        strcpy(symbol,OBElements::GetSymbol(atom->GetAtomicNum()));
         if (!kekulesmi && atom->IsAromatic())
           symbol[0] = tolower(symbol[0]);
 
@@ -2695,7 +2695,7 @@ namespace OpenBabel {
       if (atom->GetAtomicNum() == OBElements::Hydrogen && smarts)
         strcpy(symbol, "#1");
       else {
-        strcpy(symbol, etab.GetSymbol(atom->GetAtomicNum()));
+        strcpy(symbol, OBElements::GetSymbol(atom->GetAtomicNum()));
         if (!kekulesmi && atom->IsAromatic())
           symbol[0] = tolower(symbol[0]);
       }
@@ -2992,7 +2992,7 @@ namespace OpenBabel {
     atom = node->GetAtom();
 
 #if DEBUG
-    cout << "BuildCanonTree: " << etab.GetSymbol(atom->GetAtomicNum()) << ", " << atom->GetIdx() << ", canorder " << canonical_order[atom->GetIdx()-1] << "\n";
+    cout << "BuildCanonTree: " << OBElements::GetSymbol(atom->GetAtomicNum()) << ", " << atom->GetIdx() << ", canorder " << canonical_order[atom->GetIdx()-1] << "\n";
 #endif
 
     // Create a vector of neighbors sorted by canonical order, but favor

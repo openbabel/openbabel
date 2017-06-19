@@ -624,7 +624,7 @@ namespace OpenBabel
         //
 
         snprintf(label,BUFF_SIZE, "%s%d",
-                 etab.GetSymbol(atom->GetAtomicNum()),
+                 OBElements::GetSymbol(atom->GetAtomicNum()),
                  ++labelcount[atom->GetAtomicNum()]);
         strcpy(rlabel,"<1>");
         strcpy(rnum,"1");

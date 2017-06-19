@@ -1490,7 +1490,7 @@ namespace OpenBabel
             vector<OBAtom*>::iterator i;
             for (patom = mol.BeginAtom(i);patom;patom = mol.NextAtom(i))
               {
-               string el(etab.GetSymbol(patom->GetAtomicNum()));
+               string el(OBElements::GetSymbol(patom->GetAtomicNum()));
                 if(el=="Xx")
                   el="R";
 

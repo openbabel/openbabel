@@ -1626,12 +1626,12 @@ namespace OpenBabel
            }
          else
            {
-             label_str = etab.GetSymbol(atom->GetAtomicNum()) + to_string(i);
+             label_str = OBElements::GetSymbol(atom->GetAtomicNum()) + to_string(i);
              i++;
            }
 
          snprintf(buffer, BUFF_SIZE, "    %-8s%-5s%.5f%10.5f%10.5f%8.3f\n",
-                  label_str.c_str(), etab.GetSymbol(atom->GetAtomicNum()),
+                  label_str.c_str(), OBElements::GetSymbol(atom->GetAtomicNum()),
                   X, Y, Z, occup);
 
          ofs << buffer;

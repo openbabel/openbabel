@@ -145,7 +145,7 @@ namespace OpenBabel
 
     for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       {
-        strncpy(tmptype,etab.GetSymbol(atom->GetAtomicNum()), sizeof(tmptype));
+        strncpy(tmptype,OBElements::GetSymbol(atom->GetAtomicNum()), sizeof(tmptype));
         tmptype[15] = '\0';
         if (strlen(tmptype) > 1)
           tmptype[1] = toupper(tmptype[1]);

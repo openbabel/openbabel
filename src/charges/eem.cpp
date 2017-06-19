@@ -152,7 +152,7 @@ namespace OpenBabel
 
       if(!found) {
         std::stringstream ss;
-        ss << "No parameters found for: " << etab.GetSymbol(n) << " " << b
+        ss << "No parameters found for: " << OBElements::GetSymbol(n) << " " << b
            << ". EEM charges were not calculated for the molecule." << std::endl;
         obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
         return false;

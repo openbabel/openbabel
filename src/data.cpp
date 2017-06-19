@@ -61,7 +61,7 @@ namespace OpenBabel
       definition to etab. The following code sample demonstrates the use
       of the OBElementTable class:
       \code
-      cout << "The symbol for element 6 is " << etab.GetSymbol(6) << endl;
+      cout << "The symbol for element 6 is " << OBElements::GetSymbol(6) << endl;
       cout << "The atomic number for Sulfur is " << etab.GetAtomicNum(16) << endl;
       cout << "The van der Waal radius for Nitrogen is " << etab.GetVdwRad(7);
       \endcode

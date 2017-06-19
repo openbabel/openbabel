@@ -795,7 +795,7 @@ namespace OpenBabel
     FOR_ATOMS_OF_MOL(atom, mol)
       {
         snprintf(buffer,BUFF_SIZE,"%-3s%8.5f 1 %8.5f 1 %8.5f 1",
-                 etab.GetSymbol(atom->GetAtomicNum()),
+                 OBElements::GetSymbol(atom->GetAtomicNum()),
                  atom->GetX(),
                  atom->GetY(),
                  atom->GetZ());
@@ -1000,7 +1000,7 @@ namespace OpenBabel
       w = vic[atom->GetIdx()]->_ang;
       t = vic[atom->GetIdx()]->_tor;
 
-      strncpy(type, etab.GetSymbol(atom->GetAtomicNum()), 16);
+      strncpy(type, OBElements::GetSymbol(atom->GetAtomicNum()), 16);
       type[15] = '\0';
 
       if (t < 0)

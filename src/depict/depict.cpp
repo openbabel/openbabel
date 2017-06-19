@@ -633,7 +633,7 @@ namespace OpenBabel
         if(atom->GetAtomicNum() == OBElements::Hydrogen && atom->GetIsotope()>1)
           atomSymbol = atom->GetIsotope()==2 ? "D" : "T";
         else
-          atomSymbol = etab.GetSymbol(atom->GetAtomicNum());
+          atomSymbol = OBElements::GetSymbol(atom->GetAtomicNum());
 
         unsigned int hCount = atom->GetImplicitHCount();
         // LPW: The allExplicit option will omit the drawing of extra hydrogens

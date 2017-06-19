@@ -81,7 +81,7 @@ namespace OpenBabel
         snprintf(buffer, BUFF_SIZE, " %9.4f %9.4f    0.0000 %-1s",
                  atom->x(),
                  atom->y(),
-                 etab.GetSymbol(atom->GetAtomicNum()));
+                 OBElements::GetSymbol(atom->GetAtomicNum()));
         ofs << buffer << endl;
       }
 

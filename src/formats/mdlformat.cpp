@@ -903,7 +903,7 @@ namespace OpenBabel
   static const char* AtomSymbol(OBMol* pmol, OBAtom* atom)
   {
     if (atom->GetAtomicNum())
-      return etab.GetSymbol(atom->GetAtomicNum());
+      return OBElements::GetSymbol(atom->GetAtomicNum());
     return (GetNumberedRGroup(pmol, atom) == -1) ? "* " : "R#";
   }
 
@@ -1550,7 +1550,7 @@ namespace OpenBabel
       {
         ofs     << "M  V30 "
                 << index++ << " "
-                << etab.GetSymbol(atom->GetAtomicNum()) << " "
+                << OBElements::GetSymbol(atom->GetAtomicNum()) << " "
                 << atom->GetX() << " "
                 << atom->GetY() << " "
                 << atom->GetZ()
