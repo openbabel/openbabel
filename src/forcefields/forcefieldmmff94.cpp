@@ -1484,7 +1484,7 @@ namespace OpenBabel
         vector<OBAtom*> alphaPos, betaPos;
         vector<OBAtom*> alphaAtoms, betaAtoms;
 
-        if (atom->IsSulfur()) {
+        if (atom->GetAtomicNum() == OBElements::Sulfur) {
           return 44; // Aromatic 5-ring sulfur with pi lone pair (STHI)
         }
         if (atom->GetAtomicNum() == OBElements::Oxygen) {
@@ -1526,7 +1526,7 @@ namespace OpenBabel
 
 
           for (unsigned int i = 0; i < alphaPos.size(); i++) {
-            if (alphaPos[i]->IsSulfur()) {
+            if (alphaPos[i]->GetAtomicNum() == OBElements::Sulfur) {
               alphaAtoms.push_back(alphaPos[i]);
             } else if (alphaPos[i]->GetAtomicNum() == OBElements::Oxygen) {
               alphaAtoms.push_back(alphaPos[i]);
@@ -1544,7 +1544,7 @@ namespace OpenBabel
             }
           }
           for (unsigned int i = 0; i < betaPos.size(); i++) {
-            if (betaPos[i]->IsSulfur()) {
+            if (betaPos[i]->GetAtomicNum() == OBElements::Sulfur) {
               betaAtoms.push_back(betaPos[i]);
             } else if (betaPos[i]->GetAtomicNum() == OBElements::Oxygen) {
               betaAtoms.push_back(betaPos[i]);
@@ -1642,7 +1642,7 @@ namespace OpenBabel
               }
             }
             for (unsigned int i = 0; i < alphaAtoms.size(); i++) {
-              if (alphaAtoms[i]->IsSulfur() || alphaAtoms[i]->GetAtomicNum() == OBElements::Oxygen) {
+              if (alphaAtoms[i]->GetAtomicNum() == OBElements::Sulfur || alphaAtoms[i]->GetAtomicNum() == OBElements::Oxygen) {
                 if (atom->GetAtomicNum() == OBElements::Carbon) {
                   return 63; // Aromatic 5-ring C, alpha to N:, O:, or S: (C5A)
                 } else if (atom->GetAtomicNum() == OBElements::Nitrogen) {
@@ -1651,7 +1651,7 @@ namespace OpenBabel
               }
             }
             for (unsigned int i = 0; i < betaAtoms.size(); i++) {
-              if (betaAtoms[i]->IsSulfur() || betaAtoms[i]->GetAtomicNum() == OBElements::Oxygen) {
+              if (betaAtoms[i]->GetAtomicNum() == OBElements::Sulfur || betaAtoms[i]->GetAtomicNum() == OBElements::Oxygen) {
                 if (atom->GetAtomicNum() == OBElements::Carbon) {
                   return 64; // Aromatic 5-ring C, beta to N:, O:, or S: (C5B)
                 } else if (atom->GetAtomicNum() == OBElements::Nitrogen) {
@@ -1739,7 +1739,7 @@ namespace OpenBabel
             if (nbrNbr->IsPhosphorus()) {
               return 24; // Hydroxyl hydrogen in H-O-P moiety (HOP)
             }
-            if (nbrNbr->IsSulfur()) {
+            if (nbrNbr->GetAtomicNum() == OBElements::Sulfur) {
               return 33; // Hydrogen on oxygen attached to sulfur (HOS)
             }
 
@@ -1811,7 +1811,7 @@ namespace OpenBabel
 
                 bond = _mol.GetBond(&*nbrNbr, &*nbrNbrNbr);
                 if (!bond->IsAromatic() && bond->GetBondOrder() == 2) {
-                  if (nbrNbrNbr->GetAtomicNum() == OBElements::Carbon || nbrNbrNbr->GetAtomicNum() == OBElements::Nitrogen || nbrNbrNbr->GetAtomicNum() == OBElements::Oxygen || nbrNbrNbr->IsSulfur()) {
+                  if (nbrNbrNbr->GetAtomicNum() == OBElements::Carbon || nbrNbrNbr->GetAtomicNum() == OBElements::Nitrogen || nbrNbrNbr->GetAtomicNum() == OBElements::Oxygen || nbrNbrNbr->GetAtomicNum() == OBElements::Sulfur) {
                     return 28; // Hydrogen on amide nitrogen, Hydrogen on thioamide nitrogen,
                     // Hydrogen on enamine nitrogen, Hydrogen in H-N-C=N moiety (HNCO, HNCS, HNCC, HNCN)
                   }
@@ -1831,7 +1831,7 @@ namespace OpenBabel
                 }
               }
             }
-            if (nbrNbr->IsSulfur()) {
+            if (nbrNbr->GetAtomicNum() == OBElements::Sulfur) {
               FOR_NBORS_OF_ATOM (nbrNbrNbr, &*nbrNbr) {
                 if (nbrNbrNbr->GetIdx() == nbr->GetIdx())
                   continue;
@@ -1847,7 +1847,7 @@ namespace OpenBabel
           // Hydrogen on nitrogen in pyrrole, Hydrogen in ammonia,
           // Hydrogen on N in N-oxide (HNR, HPYL, H3N, HNOX)
         }
-        if (nbr->IsSulfur() || nbr->IsPhosphorus()) {
+        if (nbr->GetAtomicNum() == OBElements::Sulfur || nbr->IsPhosphorus()) {
           return 71; // Hydrogen attached to sulfur, Hydrogen attached to >S= sulfur doubly bonded to N,
           // Hydrogen attached to phosphorus (HS, HS=N, HP)
         }
@@ -1896,7 +1896,7 @@ namespace OpenBabel
           if (nbr->GetValence() == 1) {
             if (nbr->GetAtomicNum() == OBElements::Oxygen) {
               oxygenCount++;
-            } else if (nbr->IsSulfur()) {
+            } else if (nbr->GetAtomicNum() == OBElements::Sulfur) {
               sulphurCount++;
             }
           } else if (nbr->GetValence() == 3) {
@@ -2019,7 +2019,7 @@ namespace OpenBabel
           doubleBondTo = 0;
 
           FOR_NBORS_OF_ATOM (nbr, atom) {
-            if (nbr->IsSulfur() || nbr->IsPhosphorus()) {
+            if (nbr->GetAtomicNum() == OBElements::Sulfur || nbr->IsPhosphorus()) {
               oxygenCount = 0;
 
               FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
@@ -2038,7 +2038,7 @@ namespace OpenBabel
             if (nbr->GetAtomicNum() == OBElements::Carbon) {
               FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
                 bond = _mol.GetBond(&*nbr, &*nbrNbr);
-                if (!bond->IsAromatic() && bond->GetBondOrder() == 2 && (nbrNbr->GetAtomicNum() == OBElements::Oxygen || nbrNbr->IsSulfur())) {
+                if (!bond->IsAromatic() && bond->GetBondOrder() == 2 && (nbrNbr->GetAtomicNum() == OBElements::Oxygen || nbrNbr->GetAtomicNum() == OBElements::Sulfur)) {
                   IsAmide = true;
                   //return 10; // Amide nitrogen, Thioamide nitrogen (NC=O, NC=S)
                 }
@@ -2083,7 +2083,7 @@ namespace OpenBabel
                   if (nbrNbr->GetAtomicNum() == OBElements::Oxygen) {
                     oxygenCount++;
                   }
-                  if (nbrNbr->IsSulfur()) {
+                  if (nbrNbr->GetAtomicNum() == OBElements::Sulfur) {
                     sulphurCount++;
                   }
                 }
@@ -2112,10 +2112,10 @@ namespace OpenBabel
                       if (nbrNbrNbr->GetAtomicNum() == OBElements::Oxygen) {
                         oxygenCount++;
                       }
-                      if (nbrNbrNbr->IsSulfur()) {
+                      if (nbrNbrNbr->GetAtomicNum() == OBElements::Sulfur) {
                         sulphurCount++;
                       }
-                      if (nbrNbrNbr->IsSulfur()) {
+                      if (nbrNbrNbr->GetAtomicNum() == OBElements::Sulfur) {
                         nitrogenCount++;
                       }
                     }
@@ -2201,7 +2201,7 @@ namespace OpenBabel
             }
           }
           FOR_NBORS_OF_ATOM (nbr, atom) {
-            if (nbr->IsSulfur()) {
+            if (nbr->GetAtomicNum() == OBElements::Sulfur) {
               oxygenCount = 0;
 
               FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
@@ -2220,7 +2220,7 @@ namespace OpenBabel
           oxygenCount = sulphurCount = 0;
 
           FOR_NBORS_OF_ATOM (nbr, atom) {
-            if (nbr->IsSulfur()) {
+            if (nbr->GetAtomicNum() == OBElements::Sulfur) {
               FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
                 if (nbrNbr->GetAtomicNum() == OBElements::Oxygen && (nbrNbr->GetValence() == 1)) {
                   oxygenCount++;
@@ -2304,7 +2304,7 @@ namespace OpenBabel
               if (nbrNbr->GetAtomicNum() == OBElements::Oxygen && (nbrNbr->GetValence() == 1)) {
                 oxygenCount++;
               }
-              if (nbrNbr->IsSulfur() && (nbrNbr->GetValence() == 1)) {
+              if (nbrNbr->GetAtomicNum() == OBElements::Sulfur && (nbrNbr->GetValence() == 1)) {
                 sulphurCount++;
               }
             }
@@ -2360,7 +2360,7 @@ namespace OpenBabel
             }
           }
           // O-?-S
-          if (nbr->IsSulfur()) {
+          if (nbr->GetAtomicNum() == OBElements::Sulfur) {
             if (sulphurCount == 1) {
               // O1-?-S-?-S1
               return 32; // Terminal oxygen in thiosulfinate anion (OSMS)
@@ -2486,7 +2486,7 @@ namespace OpenBabel
           if (nbr->GetValence() == 1) {
             if (nbr->GetAtomicNum() == OBElements::Oxygen) {
               oxygenCount++;
-            } else if (nbr->IsSulfur()) {
+            } else if (nbr->GetAtomicNum() == OBElements::Sulfur) {
               sulphurCount++;
             }
           }
@@ -2528,7 +2528,7 @@ namespace OpenBabel
 
         FOR_NBORS_OF_ATOM (nbr, atom) {
           FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
-            if (nbrNbr->IsSulfur() && (nbrNbr->GetValence() == 1)) {
+            if (nbrNbr->GetAtomicNum() == OBElements::Sulfur && (nbrNbr->GetValence() == 1)) {
               sulphurCount++;
             }
           }
@@ -3293,7 +3293,7 @@ namespace OpenBabel
 
         // rule (h) page 632
         if (!found_rule) {
-          if ((b->GetAtomicNum() == OBElements::Oxygen || b->IsSulfur()) && (c->GetAtomicNum() == OBElements::Oxygen || c->IsSulfur())) {
+          if ((b->GetAtomicNum() == OBElements::Oxygen || b->GetAtomicNum() == OBElements::Sulfur) && (c->GetAtomicNum() == OBElements::Oxygen || c->GetAtomicNum() == OBElements::Sulfur)) {
             double Wb, Wc;
 
             if (b->GetAtomicNum() == OBElements::Oxygen) {
@@ -3765,7 +3765,7 @@ namespace OpenBabel
           FOR_NBORS_OF_ATOM(nbr2, &*nbr) {
             if (nbr2->GetAtomicNum() == OBElements::Oxygen && (nbr2->GetValence() == 1))
               o_count++;
-            if (nbr2->IsSulfur() && (nbr2->GetValence() == 1))
+            if (nbr2->GetAtomicNum() == OBElements::Sulfur && (nbr2->GetValence() == 1))
               s_count++;
             if (nbr2->GetAtomicNum() == OBElements::Nitrogen && !nbr2->IsAromatic())
               sulfonamide = true;
@@ -3780,7 +3780,7 @@ namespace OpenBabel
           if (nbr->GetAtomicNum() == OBElements::Nitrogen && (o_count == 3))
             atom->SetPartialCharge(-1.0 / o_count);  // O3N
 
-          if (nbr->IsSulfur() && !sulfonamide) {
+          if (nbr->GetAtomicNum() == OBElements::Sulfur && !sulfonamide) {
             if (((o_count + s_count) == 2) && (nbr->GetValence() == 3)
                 && (nbr->BOSum() >= 3) && !sulfone_s_c) {
               atom->SetPartialCharge(-0.5); // O2S (sulfinate)
@@ -3818,19 +3818,19 @@ namespace OpenBabel
         int s_count = 0;
 
         FOR_NBORS_OF_ATOM(nbr, &*atom) {
-          if (nbr->IsSulfur())
+          if (nbr->GetAtomicNum() == OBElements::Sulfur)
             s_count++;
 
-          if (nbr->IsPhosphorus() || nbr->IsSulfur()) {
+          if (nbr->IsPhosphorus() || nbr->GetAtomicNum() == OBElements::Sulfur) {
             FOR_NBORS_OF_ATOM(nbr2, &*nbr)
-              if ((nbr2->IsSulfur() || nbr2->GetAtomicNum() == OBElements::Oxygen) && (nbr2->GetValence() == 1) && (atom->GetIdx() != nbr2->GetIdx()))
+              if ((nbr2->GetAtomicNum() == OBElements::Sulfur || nbr2->GetAtomicNum() == OBElements::Oxygen) && (nbr2->GetValence() == 1) && (atom->GetIdx() != nbr2->GetIdx()))
                 atom->SetPartialCharge(-0.5);
           } else
             atom->SetPartialCharge(-1.0);
 
           if (nbr->GetAtomicNum() == OBElements::Carbon)
             FOR_NBORS_OF_ATOM(nbr2, &*nbr)
-              if (nbr2->IsSulfur() && (nbr2->GetValence() == 1) && (atom->GetIdx() != nbr2->GetIdx()))
+              if (nbr2->GetAtomicNum() == OBElements::Sulfur && (nbr2->GetValence() == 1) && (atom->GetIdx() != nbr2->GetIdx()))
                 atom->SetPartialCharge(-0.5); // SSMO
 
           if (s_count >= 2)

@@ -3845,7 +3845,7 @@ namespace OpenBabel {
         //          Ditto for [S-] and =S.
         if ((_pconv->IsOption("I") || _pconv->IsOption("U"))
              && root_atom && root_atom->GetFormalCharge()==-1  && root_atom->GetValence() == 1
-             && root_atom->HasSingleBond() && (root_atom->GetAtomicNum() == OBElements::Oxygen || root_atom->IsSulfur())) {
+             && root_atom->HasSingleBond() && (root_atom->GetAtomicNum() == OBElements::Oxygen || root_atom->GetAtomicNum() == OBElements::Sulfur)) {
           OBBondIterator bi = root_atom->BeginBonds();
           OBAtom* central = root_atom->BeginNbrAtom(bi);
           FOR_NBORS_OF_ATOM(nbr, central) {

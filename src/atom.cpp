@@ -268,7 +268,7 @@ namespace OpenBabel
     OBBondIterator i,j;
 
     for (a1 = BeginNbrAtom(i);a1;a1 = NextNbrAtom(i))
-      if (includePandS || (!a1->IsPhosphorus() && !a1->IsSulfur()))
+      if (includePandS || (a1->GetAtomicNum() != OBElements::Phosphorus && a1->GetAtomicNum() != OBElements::Sulfur))
         for (a2 = a1->BeginNbrAtom(j);a2;a2 = a1->NextNbrAtom(j))
           if (a2 != this && ((*j)->GetBO() == 2 || (*j)->GetBO() == 3 || (*j)->GetBO() == 5))
             return(true);
@@ -676,7 +676,7 @@ namespace OpenBabel
 
     atom = NULL;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
-      if ((bond->GetNbrAtom(this))->IsSulfur())
+      if ((bond->GetNbrAtom(this))->GetAtomicNum() == OBElements::Sulfur)
         {
           atom = bond->GetNbrAtom(this);
           break;
@@ -712,7 +712,7 @@ namespace OpenBabel
 
     // searching for attached sulfur
     for (bond1 = atm->BeginBond(i); bond1; bond1 = atm->NextBond(i))
-      if ((bond1->GetNbrAtom(atm))->IsSulfur())
+      if ((bond1->GetNbrAtom(atm))->GetAtomicNum() == OBElements::Sulfur)
         { nbr = bond1->GetNbrAtom(atm);
           break; }
     if (!nbr){
@@ -720,7 +720,7 @@ namespace OpenBabel
       return(false); }
 
     // check for sulfate
-    //cerr << "sulfone> If we're here... " << atom->GetAtomicNum() <<"\n" << atom->IsSulfur() << "\n";
+    //cerr << "sulfone> If we're here... " << atom->GetAtomicNum() <<"\n" << atom->GetAtomicNum() == OBElements::Sulfur << "\n";
     //cerr << "sulfone> number of free oxygens:" << atom->CountFreeOxygens() << "\n";
     if (nbr->CountFreeOxygens() != 2){
       //cerr << "sulfone> count of free oxygens not 2" << atom->CountFreeOxygens() << '\n' ;
@@ -1002,7 +1002,7 @@ namespace OpenBabel
     for (bond = ((OBAtom*)this)->BeginBond(i);bond;bond = ((OBAtom*)this)->NextBond(i))
       {
         atom = bond->GetNbrAtom((OBAtom*)this);
-        if (atom->IsSulfur() && atom->GetHvyValence() == 1)
+        if (atom->GetAtomicNum() == OBElements::Sulfur && atom->GetHvyValence() == 1)
           count++;
       }
 

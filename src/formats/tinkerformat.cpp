@@ -228,7 +228,7 @@ namespace OpenBabel
       b = atom->BeginNbrAtom(j);
       if (b->IsCarboxylOxygen())
         return 24;
-      if (b->IsSulfur())
+      if (b->GetAtomicNum() == OBElements::Sulfur)
         return 44;
       if (b->GetAtomicNum() == OBElements::Nitrogen) {
         if (b->IsAmideNitrogen())
