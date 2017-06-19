@@ -230,7 +230,7 @@ namespace OpenBabel
         return 24;
       if (b->IsSulfur())
         return 44;
-      if (b->IsNitrogen()) {
+      if (b->GetAtomicNum() == OBElements::Nitrogen) {
         if (b->IsAmideNitrogen())
           return 28;
         if (b->GetValence() > 3)

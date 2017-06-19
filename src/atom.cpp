@@ -571,7 +571,7 @@ namespace OpenBabel
   //! Returns true if nitrogen is part of an amide
   bool OBAtom::IsAmideNitrogen()
   {
-    if (!IsNitrogen())
+    if (GetAtomicNum() != OBElements::Nitrogen)
       return(false);
 
     OBAtom *nbratom,*atom;
@@ -594,7 +594,7 @@ namespace OpenBabel
 
   bool OBAtom::IsAromaticNOxide()
   {
-    if (!IsNitrogen() || !IsAromatic())
+    if (GetAtomicNum() != OBElements::Nitrogen || !IsAromatic())
       return(false);
 
     OBAtom *atom;
@@ -729,7 +729,7 @@ namespace OpenBabel
     // check for sulfonamide
     for (bond2 = nbr->BeginBond(j);bond2;bond2 = nbr->NextBond(j)){
       //cerr<<"NEIGH: " << (bond2->GetNbrAtom(atom))->GetAtomicNum()<<"\n";
-      if ((bond2->GetNbrAtom(nbr))->IsNitrogen()){
+      if ((bond2->GetNbrAtom(nbr))->GetAtomicNum() == OBElements::Nitrogen){
         //cerr << "sulfone> sulfonamide null\n" ;
         return(false);}}
     //cerr << "sulfone> none of the above\n";
@@ -753,7 +753,7 @@ namespace OpenBabel
 
     atom = NULL;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
-      if ((bond->GetNbrAtom(this))->IsNitrogen())
+      if ((bond->GetNbrAtom(this))->GetAtomicNum() == OBElements::Nitrogen)
         {
           atom = bond->GetNbrAtom(this);
           break;

@@ -139,7 +139,7 @@ namespace OpenBabel {
         || TotalNoOfBonds(atom) > 4 || atom->GetHvyValence() < 3 || atom->GetHvyValence() > 4)
       return false;
     // skip non-chiral N
-    if (atom->IsNitrogen() && atom->GetFormalCharge()==0) {
+    if (atom->GetAtomicNum() == OBElements::Nitrogen && atom->GetFormalCharge()==0) {
       int nbrRingAtomCount = 0;
       FOR_NBORS_OF_ATOM (nbr, atom) {
         if (nbr->IsInRing())

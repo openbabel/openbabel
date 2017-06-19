@@ -2097,6 +2097,19 @@ namespace OpenBabel
     return(AddNewHydrogens(polaronly ? PolarHydrogen : AllHydrogen, correctForPH, pH));
   }
 
+  static bool AtomIsNSOP(OBAtom *atom)
+  {
+    switch (atom->GetAtomicNum()) {
+    case OBElements::Nitrogen:
+    case OBElements::Sulfur:
+    case OBElements::Oxygen:
+    case OBElements::Phosphorus:
+      return true;
+    default:
+      return false;
+    }
+  }
+
   bool OBMol::AddNewHydrogens(HydrogenType whichHydrogen, bool correctForPH, double pH)
   {
     if (!IsCorrectedForPH() && correctForPH)
@@ -2152,13 +2165,9 @@ namespace OpenBabel
     vector<OBAtom*>::iterator i;
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       {
-        if (whichHydrogen == PolarHydrogen
-                           && !(atom->IsNitrogen() || atom->IsOxygen() ||
-                           atom->IsSulfur() || atom->IsPhosphorus()))
+        if (whichHydrogen == PolarHydrogen && !AtomIsNSOP(atom))
           continue;
-        if (whichHydrogen == NonPolarHydrogen
-                           && (atom->IsNitrogen() || atom->IsOxygen() ||
-                           atom->IsSulfur() || atom->IsPhosphorus()))
+        if (whichHydrogen == NonPolarHydrogen && AtomIsNSOP(atom))
           continue;
 
         hcount = atom->GetImplicitHCount();
@@ -2826,7 +2835,7 @@ namespace OpenBabel
     vector<OBAtom*>::iterator i;
 
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if ((atom->GetAtomicNum() == OBElements::Carbon || atom->IsNitrogen()) && atom->GetHvyValence() > 2 && atom->IsChiral())
+      if ((atom->GetAtomicNum() == OBElements::Carbon || atom->GetAtomicNum() == OBElements::Nitrogen) && atom->GetHvyValence() > 2 && atom->IsChiral())
         return(true);
 
     return(false);
@@ -3167,7 +3176,7 @@ namespace OpenBabel
           atom->SetHyb(2);
 
         // special case for imines
-        if (atom->IsNitrogen()
+        if (atom->GetAtomicNum() == OBElements::Nitrogen
             && atom->ExplicitHydrogenCount() == 1
             && atom->GetValence() == 2
             && angle > 109.5)
@@ -3748,7 +3757,7 @@ namespace OpenBabel
     vector<OBAtom*>::iterator ai;
     for (patom = BeginAtom(ai);patom;patom = NextAtom(ai)) //all atoms
     {
-      if(patom->IsNitrogen() // || patom->IsPhosphorus()) not phosphorus!
+      if(patom->GetAtomicNum() == OBElements::Nitrogen // || patom->IsPhosphorus()) not phosphorus!
         && (patom->BOSum()==5 || (patom->BOSum()==4 && patom->GetFormalCharge()==0)))
       {
         // Find the bond to be modified. Prefer a bond to a hetero-atom,
