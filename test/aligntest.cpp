@@ -195,7 +195,7 @@ void test_alignWithoutHydrogens() {
   // Move one of the hydrogens and rotate molecule
   OBMol clone = mol;
   OBAtom *atom = clone.GetAtom(8);
-  OB_REQUIRE( atom->IsHydrogen() );
+  OB_REQUIRE( atom->GetAtomicNum() == OBElements::Hydrogen );
   atom->SetVector(atom->GetVector() + vector3(0.1, 0.1, 0.1));
 
   matrix3x3 rot;

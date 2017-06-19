@@ -2778,7 +2778,7 @@ namespace OpenBabel {
 		score += 8;		// strongly prefer terminal atoms
 	    else
 	      score -= nbr_nbonds - 2;	// bond to atom with many bonds is penalized
-	    if (nbr->IsHydrogen())
+	    if (nbr->GetAtomicNum() == OBElements::Hydrogen)
 	      score += 2;		// prefer H
 	    else if (nbr->GetAtomicNum() == OBElements::Carbon)
 	      score += 1;		// then C

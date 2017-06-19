@@ -1028,7 +1028,7 @@ namespace OpenBabel
     OBAtom *atom;
     OBBondIterator i;
     for (atom = ((OBAtom*)this)->BeginNbrAtom(i);atom;atom = ((OBAtom*)this)->NextNbrAtom(i))
-      if (atom->IsHydrogen() && !(ExcludeIsotopes && atom->GetIsotope()!=0))
+      if (atom->GetAtomicNum() == OBElements::Hydrogen && !(ExcludeIsotopes && atom->GetIsotope()!=0))
         numH++;
 
     return(numH);
@@ -1280,7 +1280,7 @@ namespace OpenBabel
     OBBondIterator i;
 
     for (nbr = BeginNbrAtom(i);nbr;nbr = NextNbrAtom(i))
-      if (nbr->IsHydrogen())
+      if (nbr->GetAtomicNum() == OBElements::Hydrogen)
         delatm.push_back(nbr);
 
     //delete attached hydrogens
@@ -1810,7 +1810,7 @@ namespace OpenBabel
             }
           }
           else { 
-            if (nbr->IsHydrogen()) { // hydroxyl (YES)
+            if (nbr->GetAtomicNum() == OBElements::Hydrogen) { // hydroxyl (YES)
               return(true); 
             }
             else {
@@ -1854,7 +1854,7 @@ namespace OpenBabel
     OBAtom *nbr;
     OBBondIterator i;
     for (nbr = BeginNbrAtom(i);nbr;nbr = NextNbrAtom(i))
-      if (nbr->IsHydrogen())
+      if (nbr->GetAtomicNum() == OBElements::Hydrogen)
         return true;
 
     return false;

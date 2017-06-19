@@ -54,7 +54,7 @@ void NegativeTestCases(int &molCount, unsigned int &testCount)
     molCount++;
     bool found_non_aromatic = false;
     FOR_ATOMS_OF_MOL(atom, mol) {
-      if (atom->IsHydrogen())
+      if (atom->GetAtomicNum() == OBElements::Hydrogen)
         continue;
       if (!atom->IsAromatic()) {
         found_non_aromatic = true;
@@ -158,7 +158,7 @@ int aromatest(int argc, char* argv[])
             mol.DeleteHydrogens();
           FOR_ATOMS_OF_MOL(atom, mol)
           {
-            if (atom->IsHydrogen())
+            if (atom->GetAtomicNum() == OBElements::Hydrogen)
               continue;
 
             if (atom->IsAromatic())

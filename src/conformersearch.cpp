@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #include <openbabel/conformersearch.h>
 #include <openbabel/math/align.h>
 #include <openbabel/forcefield.h>
+#include <openbabel/elements.h>
 
 namespace OpenBabel {
 
@@ -58,7 +59,7 @@ namespace OpenBabel {
         atom1 = mol.GetAtom(a1+1);
         atom2 = mol.GetAtom(a2+1);
         // Default should be to recognize H clashes too
-        if (!m_check_hydrogens  && (atom1->IsHydrogen() || atom2->IsHydrogen() ))
+        if (!m_check_hydrogens  && (atom1->GetAtomicNum() == OBElements::Hydrogen || atom2->GetAtomicNum() == OBElements::Hydrogen ))
           continue;
 
         // skip connected atoms

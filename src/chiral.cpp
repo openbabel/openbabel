@@ -109,7 +109,7 @@ namespace OpenBabel
        vector<OBBond*>::iterator i;
        for (nbr = atm->BeginNbrAtom(i);nbr;nbr = atm->NextNbrAtom(i))
        {
-       if (nbr->IsHydrogen()){Hid=nbr->GetIdx();continue;}
+       if (nbr->GetAtomicNum() == OBElements::Hydrogen){Hid=nbr->GetIdx();continue;}
        nbr_atms.push_back(nbr->GetIdx());
        }
        sort(nbr_atms.begin(),nbr_atms.end());

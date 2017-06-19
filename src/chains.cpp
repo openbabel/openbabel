@@ -888,7 +888,7 @@ namespace OpenBabel
         buffer[2] = ' ';
         buffer[3] = ' ';
         buffer[4] = '\0';
-      } else if (atom->IsHydrogen()) {
+      } else if (atom->GetAtomicNum() == OBElements::Hydrogen) {
         if (hcounts[i]) {
           snprintf(buffer, BUFF_SIZE, "H%.2s%c", ChainsAtomName[atomids[i]]+2, hcounts[i]+'0');
           if (buffer[1] == ' ') {
@@ -1065,7 +1065,7 @@ namespace OpenBabel
 
     // find un-connected atoms (e.g., HOH oxygen atoms)
     for (atom = mol.BeginAtom(a) ; atom ; atom = mol.NextAtom(a)) {
-      if (atom->IsHydrogen() || atom->GetHvyValence() != 0)
+      if (atom->GetAtomicNum() == OBElements::Hydrogen || atom->GetHvyValence() != 0)
         continue;
 
       unsigned int idx = atom->GetIdx() - 1;
@@ -1143,7 +1143,7 @@ namespace OpenBabel
     atom = mol.GetAtom(i + 1);
 
     // ignore hydrogens
-    if (atom->IsHydrogen() )
+    if (atom->GetAtomicNum() == OBElements::Hydrogen )
       return 0;
 
     result    = 1;
@@ -1571,7 +1571,7 @@ namespace OpenBabel
           atom = mol.GetAtom(curr+1); // WARNING, potential atom index issue
           for (nbr = atom->BeginNbrAtom(b); nbr; nbr = atom->NextNbrAtom(b))
             {
-              if (nbr->IsHydrogen())
+              if (nbr->GetAtomicNum() == OBElements::Hydrogen)
                 continue;
 
               j = nbr->GetIdx() - 1;
@@ -1817,7 +1817,7 @@ namespace OpenBabel
     vector<OBBond*>::iterator b;
 
     for(atom = mol.BeginAtom(a); atom ; atom = mol.NextAtom(a))
-      if(atom->IsHydrogen())
+      if(atom->GetAtomicNum() == OBElements::Hydrogen)
         {
           nbr = atom->BeginNbrAtom(b);
           if (nbr != NULL)
@@ -1837,7 +1837,7 @@ namespace OpenBabel
     /* Second Pass */
 
     for(atom = mol.BeginAtom(a) ; atom ; atom = mol.NextAtom(a))
-      if (atom->IsHydrogen())
+      if (atom->GetAtomicNum() == OBElements::Hydrogen)
         {
           nbr = atom->BeginNbrAtom(b);
           if (nbr != NULL && hcounts[nbr->GetIdx()-1] == 1)

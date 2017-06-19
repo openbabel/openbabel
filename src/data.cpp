@@ -883,7 +883,7 @@ namespace OpenBabel
             a1->SetType("O3");
             continue;
           }
-        if (a1->IsHydrogen())
+        if (a1->GetAtomicNum() == OBElements::Hydrogen)
           {
             a1->SetType("H");
             continue;

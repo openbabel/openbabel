@@ -119,7 +119,7 @@ void test_Issue178_DeleteHydrogens()
         mol.DeleteNonPolarHydrogens();
       int myNumHs = 0;
       FOR_ATOMS_OF_MOL(atom, mol)
-        if (atom->IsHydrogen())
+        if (atom->GetAtomicNum() == OBElements::Hydrogen)
           myNumHs++;
       OB_COMPARE(myNumHs, numHs[i]);
     }
@@ -132,7 +132,7 @@ void test_Issue178_DeleteHydrogens()
     mol.DeletePolarHydrogens();
     int myNumHs = 0;
     FOR_ATOMS_OF_MOL(atom, mol)
-      if (atom->IsHydrogen())
+      if (atom->GetAtomicNum() == OBElements::Hydrogen)
         myNumHs++;
     OB_COMPARE(myNumHs, numHsB[i]);
   }
@@ -145,7 +145,7 @@ void test_Issue178_DeleteHydrogens()
   mol.DeleteHydrogens();
   int myNumHs = 0;
   FOR_ATOMS_OF_MOL(atom, mol)
-    if (atom->IsHydrogen())
+    if (atom->GetAtomicNum() == OBElements::Hydrogen)
       myNumHs++;
   OB_COMPARE(myNumHs, 1);
 }

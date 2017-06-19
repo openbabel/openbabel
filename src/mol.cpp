@@ -381,7 +381,7 @@ namespace OpenBabel
     unique_angle = 0;
 
     FOR_ATOMS_OF_MOL(atom, this) {
-      if(atom->IsHydrogen())
+      if(atom->GetAtomicNum() == OBElements::Hydrogen)
         continue;
 
       b = (OBAtom*) &*atom;
@@ -427,7 +427,7 @@ namespace OpenBabel
       {
         b = bond->GetBeginAtom();
         c = bond->GetEndAtom();
-        if(b->IsHydrogen() || c->IsHydrogen())
+        if(b->GetAtomicNum() == OBElements::Hydrogen || c->GetAtomicNum() == OBElements::Hydrogen)
           continue;
 
         for(a = b->BeginNbrAtom(bi2);a;a = b->NextNbrAtom(bi2))
@@ -1968,7 +1968,7 @@ namespace OpenBabel
       pac = static_cast<OBAtomClassData*>(this->GetData("Atom Class"));
 
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if (atom->IsHydrogen() && IsSuppressibleHydrogen(atom, pac))
+      if (atom->GetAtomicNum() == OBElements::Hydrogen && IsSuppressibleHydrogen(atom, pac))
         delatoms.push_back(atom);
 
     UnsetHydrogensAdded();
@@ -2017,7 +2017,7 @@ namespace OpenBabel
       pac = static_cast<OBAtomClassData*>(this->GetData("Atom Class"));
 
     for (nbr = atom->BeginNbrAtom(k);nbr;nbr = atom->NextNbrAtom(k))
-      if (nbr->IsHydrogen() && IsSuppressibleHydrogen(atom, pac))
+      if (nbr->GetAtomicNum() == OBElements::Hydrogen && IsSuppressibleHydrogen(atom, pac))
         delatoms.push_back(nbr);
 
     if (delatoms.empty())
@@ -2421,7 +2421,7 @@ namespace OpenBabel
 
   bool OBMol::DeleteAtom(OBAtom *atom, bool destroyAtom)
   {
-    if (atom->IsHydrogen())
+    if (atom->GetAtomicNum() == OBElements::Hydrogen)
       return(DeleteHydrogen(atom));
 
     BeginModify();
@@ -3088,13 +3088,13 @@ namespace OpenBabel
               break;
 
             // delete bonds between hydrogens when over max valence
-            if (atom->IsHydrogen())
+            if (atom->GetAtomicNum() == OBElements::Hydrogen)
               {
                 m = l;
                 changed = false;
                 for (;bond;bond = atom->NextBond(m))
                   {
-                    if (bond->GetNbrAtom(atom)->IsHydrogen())
+                    if (bond->GetNbrAtom(atom)->GetAtomicNum() == OBElements::Hydrogen)
                       {
                         DeleteBond(bond);
                         changed = true;

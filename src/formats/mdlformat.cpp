@@ -1577,7 +1577,7 @@ namespace OpenBabel
                 vector<OBBond*>::iterator i;
                 for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
                   {
-                    if (nbr->IsHydrogen()){Hid=nbr->GetIdx();continue;}
+                    if (nbr->GetAtomicNum() == OBElements::Hydrogen){Hid=nbr->GetIdx();continue;}
                     nbr_atms.push_back(nbr->GetIdx());
                   }
                 sort(nbr_atms.begin(),nbr_atms.end());
@@ -1769,11 +1769,11 @@ namespace OpenBabel
 
           unsigned long maxref = OBStereo::NoRef;
           // Search for an explicit Hydrogen in the cfg refs...
-          if (cfg.from != OBStereo::ImplicitRef && mol.GetAtomById(cfg.from)->IsHydrogen())
+          if (cfg.from != OBStereo::ImplicitRef && mol.GetAtomById(cfg.from)->GetAtomicNum() == OBElements::Hydrogen)
             maxref = cfg.from;
           else
             for (OBStereo::RefIter ref_it = refs.begin(); ref_it != refs.end(); ++ref_it)
-              if ((*ref_it) != OBStereo::ImplicitRef && mol.GetAtomById(*ref_it)->IsHydrogen())
+              if ((*ref_it) != OBStereo::ImplicitRef && mol.GetAtomById(*ref_it)->GetAtomicNum() == OBElements::Hydrogen)
                 maxref = *ref_it;
           // ...otherwise, find the maximum ref (note that ImplicitRef will be max if present)
           if (maxref == OBStereo::NoRef)

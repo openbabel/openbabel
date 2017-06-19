@@ -2579,7 +2579,7 @@ namespace OpenBabel {
     // Don't suppress any explicit Hs attached if the atom is an H itself (e.g. [H][H]) or -xh was specified
     if (atom->GetAtomicNum() != OBElements::Hydrogen && !_pconv->IsOption("h")) {
       FOR_NBORS_OF_ATOM(nbr, atom) {
-        if (nbr->IsHydrogen() && (!isomeric || nbr->GetIsotope() == 0) && nbr->GetValence() == 1 &&
+        if (nbr->GetAtomicNum() == OBElements::Hydrogen && (!isomeric || nbr->GetIsotope() == 0) && nbr->GetValence() == 1 &&
           nbr->GetFormalCharge() == 0 && (!_pconv->IsOption("a") || _pac == NULL || !_pac->HasClass(nbr->GetIdx())))
           numExplicitHsToSuppress++;
       }
@@ -2692,7 +2692,7 @@ namespace OpenBabel {
     if (!atom->GetAtomicNum())
       strcpy(symbol,"*");
     else {
-      if (atom->IsHydrogen() && smarts)
+      if (atom->GetAtomicNum() == OBElements::Hydrogen && smarts)
         strcpy(symbol, "#1");
       else {
         strcpy(symbol, etab.GetSymbol(atom->GetAtomicNum()));
@@ -3009,7 +3009,7 @@ namespace OpenBabel {
     for (nbr = atom->BeginNbrAtom(i); nbr; nbr = atom->NextNbrAtom(i)) {
 
       idx = nbr->GetIdx();
-      //if (nbr->IsHydrogen() && IsSuppressedHydrogen(nbr)) {
+      //if (nbr->GetAtomicNum() == OBElements::Hydrogen && IsSuppressedHydrogen(nbr)) {
       //  _uatoms.SetBitOn(nbr->GetIdx());        // mark suppressed hydrogen, so it won't be considered
       //  continue;                               // later when looking for more fragments.
       //}
@@ -3142,7 +3142,7 @@ namespace OpenBabel {
       nbr1 = bond1->GetNbrAtom(atom);
       // Skip hydrogens before checking canonical_order
       // PR#1999348
-      if (   (nbr1->IsHydrogen() && IsSuppressedHydrogen(nbr1))
+      if (   (nbr1->GetAtomicNum() == OBElements::Hydrogen && IsSuppressedHydrogen(nbr1))
              || !frag_atoms.BitIsOn(nbr1->GetIdx()))
         continue;
 
@@ -3239,7 +3239,7 @@ namespace OpenBabel {
   {
     int count = 0;
 
-    if (atom->IsHydrogen())
+    if (atom->GetAtomicNum() == OBElements::Hydrogen)
       return atom->GetValence();
 
     if (_pconv && _pconv->IsOption("h"))
@@ -3324,7 +3324,7 @@ namespace OpenBabel {
       if (!_pconv->IsOption("h")) {
         FOR_NBORS_OF_ATOM(i_nbr, atom) {
           OBAtom *nbr = &(*i_nbr);
-          if (nbr->IsHydrogen() && IsSuppressedHydrogen(nbr)) {
+          if (nbr->GetAtomicNum() == OBElements::Hydrogen && IsSuppressedHydrogen(nbr)) {
             chiral_neighbors.push_back(nbr);
             break;        // quit loop: only be one H if atom is chiral
           }
@@ -3800,7 +3800,7 @@ namespace OpenBabel {
           }
         for (int i=0; i<canonical_order.size(); ++i)
           if (canonical_order[i] == 0) { // Explicit hydrogens
-            if (mol.GetAtom(i+1)->IsHydrogen() && mol.GetAtom(i+1)->GetIsotope()!=0) { // [2H] or [3H]
+            if (mol.GetAtom(i+1)->GetAtomicNum() == OBElements::Hydrogen && mol.GetAtom(i+1)->GetIsotope()!=0) { // [2H] or [3H]
               canonical_order[i] = mol.GetAtom(i+1)->GetIsotope() - 1; // i.e. 1 or 2
               symmetry_classes[i] = canonical_order[i];
             }
@@ -3945,7 +3945,7 @@ namespace OpenBabel {
       // a chiral center, or it's something like [H][H]).
       FOR_ATOMS_OF_MOL(iatom, mol) {
         OBAtom *atom = &(*iatom);
-        if (frag_atoms.BitIsOn(atom->GetIdx()) && atom->IsHydrogen()
+        if (frag_atoms.BitIsOn(atom->GetIdx()) && atom->GetAtomicNum() == OBElements::Hydrogen
           && (!iso || m2s.IsSuppressedHydrogen(atom))) {
           frag_atoms.SetBitOff(atom->GetIdx());
         }

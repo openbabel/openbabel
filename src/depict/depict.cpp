@@ -630,7 +630,7 @@ namespace OpenBabel
 
       else {
         const char* atomSymbol;
-        if(atom->IsHydrogen() && atom->GetIsotope()>1)
+        if(atom->GetAtomicNum() == OBElements::Hydrogen && atom->GetIsotope()>1)
           atomSymbol = atom->GetIsotope()==2 ? "D" : "T";
         else
           atomSymbol = etab.GetSymbol(atom->GetAtomicNum());

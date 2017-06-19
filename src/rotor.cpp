@@ -919,14 +919,14 @@ namespace OpenBabel
         OBAtom *a1,*a2,*a3,*a4,*r;
         a1 = mol.GetAtom(ref[0]);
         a4 = mol.GetAtom(ref[3]);
-        if (a1->IsHydrogen() && a4->IsHydrogen())
+        if (a1->GetAtomicNum() == OBElements::Hydrogen && a4->GetAtomicNum() == OBElements::Hydrogen)
           continue; //don't allow hydrogens at both ends
-        if (a1->IsHydrogen() || a4->IsHydrogen()) //need a heavy atom reference - can use hydrogen
+        if (a1->GetAtomicNum() == OBElements::Hydrogen || a4->GetAtomicNum() == OBElements::Hydrogen) //need a heavy atom reference - can use hydrogen
           {
             bool swapped = false;
             a2 = mol.GetAtom(ref[1]);
             a3 = mol.GetAtom(ref[2]);
-            if (a4->IsHydrogen())
+            if (a4->GetAtomicNum() == OBElements::Hydrogen)
               {
                 swap(a1,a4);
                 swap(a2,a3);

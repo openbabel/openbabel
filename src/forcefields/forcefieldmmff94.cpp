@@ -1711,7 +1711,7 @@ namespace OpenBabel
 
           int hydrogenCount = 0;
           FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
-            if (nbrNbr->IsHydrogen()) {
+            if (nbrNbr->GetAtomicNum() == OBElements::Hydrogen) {
               hydrogenCount++;
               continue;
             }
@@ -1782,7 +1782,7 @@ namespace OpenBabel
 
           if (nbr->GetValence() == 2) {
             FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
-              if (nbrNbr->IsHydrogen())
+              if (nbrNbr->GetAtomicNum() == OBElements::Hydrogen)
                 continue;
 
               bond = _mol.GetBond(&*nbr, &*nbrNbr);
@@ -1797,7 +1797,7 @@ namespace OpenBabel
           }
 
           FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
-            if (nbrNbr->IsHydrogen())
+            if (nbrNbr->GetAtomicNum() == OBElements::Hydrogen)
               continue;
 
             if (nbrNbr->GetAtomicNum() == OBElements::Carbon) {
@@ -2267,7 +2267,7 @@ namespace OpenBabel
       if (atom->GetValence() == 2) {
         int hydrogenCount = 0;
         FOR_NBORS_OF_ATOM (nbr, atom) {
-          if (nbr->IsHydrogen()) {
+          if (nbr->GetAtomicNum() == OBElements::Hydrogen) {
             hydrogenCount++;
           }
         }
@@ -2310,7 +2310,7 @@ namespace OpenBabel
             }
           }
           // O---H
-          if (nbr->IsHydrogen()) {
+          if (nbr->GetAtomicNum() == OBElements::Hydrogen) {
             return 35;
           }
           // O-?-C
@@ -5007,12 +5007,12 @@ namespace OpenBabel
     Xb = etab.GetAllredRochowElectroNeg(b->GetAtomicNum());
 
 
-    if (a->IsHydrogen())
+    if (a->GetAtomicNum() == OBElements::Hydrogen)
       r0a = 0.33;
-    if (b->IsHydrogen())
+    if (b->GetAtomicNum() == OBElements::Hydrogen)
       r0b = 0.33;
 
-    if (a->IsHydrogen() || b->IsHydrogen())
+    if (a->GetAtomicNum() == OBElements::Hydrogen || b->GetAtomicNum() == OBElements::Hydrogen)
       c = 0.050;
     else
       c = 0.085;

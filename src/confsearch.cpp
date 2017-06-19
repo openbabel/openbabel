@@ -138,7 +138,7 @@ namespace OpenBabel
     // Remember the hydrogens
     hydrogens.Resize(natoms);
     for (int i=1; i<=natoms; i++)
-      if (ref.GetAtom(i)->IsHydrogen())
+      if (ref.GetAtom(i)->GetAtomicNum() == OBElements::Hydrogen)
         hydrogens.SetBitOn(i - 1);
   }
 
