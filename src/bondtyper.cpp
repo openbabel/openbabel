@@ -19,6 +19,7 @@ GNU General Public License for more details.
 
 #include <openbabel/mol.h>
 #include <openbabel/bondtyper.h>
+#include <openbabel/elements.h>
 
 // data header with default parameters
 #include "bondtyp.h"
@@ -215,7 +216,7 @@ namespace OpenBabel
             dist2 = a2->GetDistance(a3);
 
             // isocyanate geometry or Isothiocyanate geometry ?
-            if (a1->IsOxygen())
+            if (a1->GetAtomicNum() == OBElements::Oxygen)
               dist1OK =  dist1 < 1.28;
             else
               dist1OK =  dist1 < 1.72;

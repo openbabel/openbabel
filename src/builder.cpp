@@ -31,6 +31,7 @@ GNU General Public License for more details.
 #include <openbabel/obconversion.h>
 #include <openbabel/locale.h>
 #include <openbabel/distgeom.h>
+#include <openbabel/elements.h>
 
 #include <openbabel/stereo/stereo.h>
 #include <openbabel/stereo/cistrans.h>
@@ -211,7 +212,7 @@ namespace OpenBabel
             if (&*nbr2 != atom) {
               bond2 = nbr->GetVector() - nbr2->GetVector();
 
-              if (isCarboxylateO && nbr2->IsOxygen())
+              if (isCarboxylateO && nbr2->GetAtomicNum() == OBElements::Oxygen)
                 break; // make sure that the hydrogen is trans to the C=O
             }
           }

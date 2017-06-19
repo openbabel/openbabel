@@ -32,6 +32,7 @@ GNU General Public License for more details.
 
 #include <openbabel/mol.h>
 #include <openbabel/chains.h>
+#include <openbabel/elements.h>
 
 using namespace std;
 
@@ -1069,7 +1070,7 @@ namespace OpenBabel
 
       unsigned int idx = atom->GetIdx() - 1;
 
-      if (atom->IsOxygen()) {
+      if (atom->GetAtomicNum() == OBElements::Oxygen) {
         resids[idx]   = 1;
         hetflags[idx] = true;
       }
@@ -1101,7 +1102,7 @@ namespace OpenBabel
 
         // size = number of heavy atoms in residue chain
         if (size < 4) { // small ligand, probably
-          if (size == 1 && atom->IsOxygen())
+          if (size == 1 && atom->GetAtomicNum() == OBElements::Oxygen)
             resid = 1; /* HOH */
           else
             resid = 2; /* Unknown ligand */

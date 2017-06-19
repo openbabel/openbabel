@@ -607,17 +607,25 @@ namespace OpenBabel
     if (Size() == 6)
       for (i = _path.begin();i != _path.end();++i)
         if (mol->GetAtom(*i)->GetAtomicNum() != OBElements::Carbon)
-	  return (*i);
+	        return (*i);
 
     if (Size() == 5)
       for (i = _path.begin();i != _path.end();++i) {
         OBAtom *atom = mol->GetAtom(*i);
-        if (atom->IsSulfur() && (atom->GetValence() == 2))
-	  return (*i);
-        if (atom->IsOxygen() && (atom->GetValence() == 2))
-	  return (*i);
-        if (atom->IsNitrogen() && (atom->BOSum() == atom->GetValence()))
-	  return (*i);
+        switch (atom->GetAtomicNum()) {
+        case OBElements::Sulfur:
+          if (atom->GetValence() == 2)
+            return (*i);
+          break;
+        case OBElements::Oxygen:
+          if (atom->GetValence() == 2)
+            return (*i);
+          break;
+        case OBElements::Nitrogen:
+          if (atom->BOSum() == atom->GetValence())
+            return (*i);
+          break;
+        }
       }
 
     return 0;

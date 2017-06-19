@@ -1296,7 +1296,7 @@ namespace OpenBabel
   // Returns: true if the atom is an oxygen and connected to two hydrogens and up to one other atom
   bool CIFisWaterOxygen(OBAtom *atom)
   {
-    if (!atom->IsOxygen())
+    if (atom->GetAtomicNum() != OBElements::Oxygen)
       return false;
 
     int nonHydrogenCount = 0;

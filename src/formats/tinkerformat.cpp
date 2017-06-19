@@ -240,7 +240,7 @@ namespace OpenBabel
       if (b->GetAtomicNum() == OBElements::Carbon && b->GetHyb() == 1)
         return 124; // acetylene
 
-      if (b->IsOxygen()) {
+      if (b->GetAtomicNum() == OBElements::Oxygen) {
         if (b->HasAlphaBetaUnsat())
           return 73; // includes non-enol/phenol, but has the right spirit
         return 21; // default alcohol

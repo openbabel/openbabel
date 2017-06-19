@@ -220,10 +220,10 @@ namespace OpenBabel
         if (atom->IsHydrogen()) {
           type = 41;
           if ((nbr = atom->BeginNbrAtom(j))) {
-            if (nbr->IsOxygen()) {
+            if (nbr->GetAtomicNum() == OBElements::Oxygen) {
               type = 42;
             }
-            else if (nbr->IsNitrogen()) {
+            else if (nbr->GetAtomicNum() == OBElements::Nitrogen) {
               type = 43;
             }
           }

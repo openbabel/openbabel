@@ -601,7 +601,7 @@ namespace OpenBabel
     OBBondIterator i;
 
     for (atom = BeginNbrAtom(i);atom;atom = NextNbrAtom(i))
-      if (atom->IsOxygen() && !(*i)->IsInRing() && (*i)->GetBO() == 2)
+      if (atom->GetAtomicNum() == OBElements::Oxygen && !(*i)->IsInRing() && (*i)->GetBO() == 2)
         return(true);
 
     return(false);
@@ -609,7 +609,7 @@ namespace OpenBabel
 
   bool OBAtom::IsCarboxylOxygen()
   {
-    if (!IsOxygen())
+    if (GetAtomicNum() != OBElements::Oxygen)
       return(false);
     if (GetHvyValence() != 1)
       return(false);
@@ -638,7 +638,7 @@ namespace OpenBabel
 
   bool OBAtom::IsPhosphateOxygen()
   {
-    if (!IsOxygen())
+    if (GetAtomicNum() != OBElements::Oxygen)
       return(false);
     if (GetHvyValence() != 1)
       return(false);
@@ -665,7 +665,7 @@ namespace OpenBabel
 
   bool OBAtom::IsSulfateOxygen()
   {
-    if (!IsOxygen())
+    if (GetAtomicNum() != OBElements::Oxygen)
       return(false);
     if (GetHvyValence() != 1)
       return(false);
@@ -699,7 +699,7 @@ namespace OpenBabel
   //e.g. C-SO2-C
   // Is this atom an oxygen in a sulfone(R1 - SO2 - R2) group ?
   {
-    if (!atm->IsOxygen())
+    if (atm->GetAtomicNum() != OBElements::Oxygen)
       return(false);
     if (atm->GetHvyValence() != 1){
       //cerr << "sulfone> O valence is not 1\n";
@@ -742,7 +742,7 @@ namespace OpenBabel
 
   bool OBAtom::IsNitroOxygen()
   {
-    if (!IsOxygen())
+    if (GetAtomicNum() != OBElements::Oxygen)
       return(false);
     if (GetHvyValence() != 1)
       return(false);
@@ -985,7 +985,7 @@ namespace OpenBabel
     for (bond = ((OBAtom*)this)->BeginBond(i);bond;bond = ((OBAtom*)this)->NextBond(i))
       {
         atom = bond->GetNbrAtom((OBAtom*)this);
-        if (atom->IsOxygen() && atom->GetHvyValence() == 1)
+        if (atom->GetAtomicNum() == OBElements::Oxygen && atom->GetHvyValence() == 1)
           count++;
       }
 
