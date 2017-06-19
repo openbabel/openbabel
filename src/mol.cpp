@@ -3745,6 +3745,17 @@ namespace OpenBabel
     return converted; //false if no changes made
   }
 
+  static bool IsNotCorH(OBAtom* atom)
+  {
+    switch (atom->GetAtomicNum())
+    {
+    case OBElements::Hydrogen:
+    case OBElements::Carbon:
+      return false;
+    }
+    return true;
+  }
+
   //This maybe would be better using smirks from a datafile
   bool OBMol::MakeDativeBonds()
   {
@@ -3769,8 +3780,8 @@ namespace OpenBabel
           int bo = bond->GetBO();
           if(bo>=2 && bo<=4)
           {
-            bool het = bond->GetNbrAtom(patom)->IsNotCorH();
-            bool oldhet = bestbond->GetNbrAtom(patom)->IsNotCorH();
+            bool het = IsNotCorH(bond->GetNbrAtom(patom));
+            bool oldhet = IsNotCorH(bestbond->GetNbrAtom(patom));
             bool higherorder = bo > bestbond->GetBondOrder();
             if((het && !oldhet) || (((het && oldhet) || (!het && !oldhet)) && higherorder))
               bestbond = bond;

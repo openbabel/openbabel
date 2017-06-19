@@ -787,17 +787,6 @@ namespace OpenBabel
     return(false);
   }
 
-  bool OBAtom::IsNotCorH()
-  {
-    switch(GetAtomicNum())
-      {
-      case 1:
-      case 6:
-        return(false);
-      }
-    return(true);
-  }
-
   bool OBAtom::IsAromatic() const
   {
     if (((OBAtom*)this)->HasFlag(OB_AROMATIC_ATOM))
