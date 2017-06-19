@@ -63,7 +63,7 @@ namespace OpenBabel
       \code
       cout << "The symbol for element 6 is " << OBElements::GetSymbol(6) << endl;
       cout << "The atomic number for Sulfur is " << etab.GetAtomicNum(16) << endl;
-      cout << "The van der Waal radius for Nitrogen is " << etab.GetVdwRad(7);
+      cout << "The van der Waal radius for Nitrogen is " << OBElements::GetVdwRad(7);
       \endcode
 
       Stored information in the OBElementTable includes elemental:

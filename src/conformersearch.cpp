@@ -72,8 +72,8 @@ namespace OpenBabel {
         distanceSquared = dx*dx + dy*dy + dz*dz;
         // As we don't check 1-3 and 1-4 bonded atoms, apply a
         // factor of to the sum of VdW radii
-        vdwCutoff = m_vdw_factor * (etab.GetVdwRad(atom1->GetAtomicNum())
-                                    + etab.GetVdwRad(atom2->GetAtomicNum()));
+        vdwCutoff = m_vdw_factor * (OBElements::GetVdwRad(atom1->GetAtomicNum())
+                                    + OBElements::GetVdwRad(atom2->GetAtomicNum()));
         vdwCutoff *= vdwCutoff; // compare squared distances
         //cout << vdwCutoff << " " << m_vdw_factor << " " << m_cutoff << " " <<  distanceSquared << endl ;
 

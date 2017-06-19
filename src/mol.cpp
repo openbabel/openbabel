@@ -3058,7 +3058,7 @@ namespace OpenBabel
     BeginModify(); //prevent needless re-perception in DeleteBond
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       {
-        while (atom->BOSum() > static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum()))
+        while (atom->BOSum() > static_cast<unsigned int>(OBElements::GetMaxBonds(atom->GetAtomicNum()))
                || atom->SmallestBondAngle() < 45.0)
           {
             bond = atom->BeginBond(l);
@@ -3378,7 +3378,7 @@ namespace OpenBabel
                                         std::min(shortestBond,(atom->GetBond(b))->GetLength());
           }
         pair<OBAtom*,double> entry(atom,
-                                   etab.GetElectroNeg(atom->GetAtomicNum())*1e6+shortestBond);
+                                   OBElements::GetElectroNeg(atom->GetAtomicNum())*1e6+shortestBond);
 
         sortedAtoms.push_back(entry);
       }
@@ -3394,7 +3394,7 @@ namespace OpenBabel
 
         // Possible sp-hybrids
         if ( (atom->GetHyb() == 1 || atom->GetValence() == 1)
-             && atom->BOSum() + 2  <= static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum()))
+             && atom->BOSum() + 2  <= static_cast<unsigned int>(OBElements::GetMaxBonds(atom->GetAtomicNum()))
              )
           {
 
@@ -3410,9 +3410,9 @@ namespace OpenBabel
             c = NULL;
             for (b = atom->BeginNbrAtom(j); b; b = atom->NextNbrAtom(j))
               {
-                currentElNeg = etab.GetElectroNeg(b->GetAtomicNum());
+                currentElNeg = OBElements::GetElectroNeg(b->GetAtomicNum());
                 if ( (b->GetHyb() == 1 || b->GetValence() == 1)
-                     && b->BOSum() + 2 <= static_cast<unsigned int>(etab.GetMaxBonds(b->GetAtomicNum()))
+                     && b->BOSum() + 2 <= static_cast<unsigned int>(OBElements::GetMaxBonds(b->GetAtomicNum()))
                      && (currentElNeg > maxElNeg ||
                          (IsApprox(currentElNeg,maxElNeg, 1.0e-6)
                           && (atom->GetBond(b))->GetLength() < shortestBond)) )
@@ -3431,7 +3431,7 @@ namespace OpenBabel
                     }
 
                     shortestBond = bondLength;
-                    maxElNeg = etab.GetElectroNeg(b->GetAtomicNum());
+                    maxElNeg = OBElements::GetElectroNeg(b->GetAtomicNum());
                     c = b; // save this atom for later use
                   }
               }
@@ -3440,7 +3440,7 @@ namespace OpenBabel
           }
         // Possible sp2-hybrid atoms
         else if ( (atom->GetHyb() == 2 || atom->GetValence() == 1)
-                  && atom->BOSum() + 1 <= static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum())) )
+                  && atom->BOSum() + 1 <= static_cast<unsigned int>(OBElements::GetMaxBonds(atom->GetAtomicNum())) )
           {
             // as above
             if (atom->HasNonSingleBond() ||
@@ -3461,9 +3461,9 @@ namespace OpenBabel
             c = NULL;
             for (b = atom->BeginNbrAtom(j); b; b = atom->NextNbrAtom(j))
               {
-                currentElNeg = etab.GetElectroNeg(b->GetAtomicNum());
+                currentElNeg = OBElements::GetElectroNeg(b->GetAtomicNum());
                 if ( (b->GetHyb() == 2 || b->GetValence() == 1)
-                     && b->BOSum() + 1 <= static_cast<unsigned int>(etab.GetMaxBonds(b->GetAtomicNum()))
+                     && b->BOSum() + 1 <= static_cast<unsigned int>(OBElements::GetMaxBonds(b->GetAtomicNum()))
                      && (GetBond(atom, b))->IsDoubleBondGeometry()
                      && (currentElNeg > maxElNeg || (IsApprox(currentElNeg,maxElNeg, 1.0e-6)) ) )
                   {
@@ -3496,7 +3496,7 @@ namespace OpenBabel
                               ( (!atom->IsInRing() || !c || !c->IsInRing() || b->IsInRing())
                                 || (atom->IsInRing() && c && !c->IsInRing() && b->IsInRing()) ) ) ) {
                       shortestBond = (atom->GetBond(b))->GetLength();
-                      maxElNeg = etab.GetElectroNeg(b->GetAtomicNum());
+                      maxElNeg = OBElements::GetElectroNeg(b->GetAtomicNum());
                       c = b; // save this atom for later use
                     } // is this bond better than previous choices
                   }

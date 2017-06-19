@@ -549,7 +549,7 @@ namespace OpenBabel
                  atom->GetPartialCharge(),
                  atom->HasData("Radius")//use atom radius data,Zhixiong Zhao
 				 	?atof(atom->GetData("Radius")->GetValue().c_str())
-					:etab.GetVdwRad(atom->GetAtomicNum()),
+					:OBElements::GetVdwRad(atom->GetAtomicNum()),
                  element_name);
         ofs << buffer;
       }
