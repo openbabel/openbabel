@@ -2577,7 +2577,7 @@ namespace OpenBabel {
 
     unsigned int numExplicitHsToSuppress = 0;
     // Don't suppress any explicit Hs attached if the atom is an H itself (e.g. [H][H]) or -xh was specified
-    if (!atom->IsHydrogen() && !_pconv->IsOption("h")) {
+    if (atom->GetAtomicNum() != OBElements::Hydrogen && !_pconv->IsOption("h")) {
       FOR_NBORS_OF_ATOM(nbr, atom) {
         if (nbr->IsHydrogen() && (!isomeric || nbr->GetIsotope() == 0) && nbr->GetValence() == 1 &&
           nbr->GetFormalCharge() == 0 && (!_pconv->IsOption("a") || _pac == NULL || !_pac->HasClass(nbr->GetIdx())))
@@ -3246,7 +3246,7 @@ namespace OpenBabel {
       return atom->GetValence();
 
     FOR_NBORS_OF_ATOM(nbr, atom) {
-      if (  !nbr->IsHydrogen()
+      if (nbr->GetAtomicNum() != OBElements::Hydrogen
             || nbr->GetIsotope() != 0
             || nbr->GetValence() != 1)
         count++;
@@ -3832,7 +3832,7 @@ namespace OpenBabel {
       if (root_atom == NULL) {
         for (atom = mol.BeginAtom(ai); atom; atom = mol.NextAtom(ai)) {
           int idx = atom->GetIdx();
-          if (//!atom->IsHydrogen()       // don't start with a hydrogen
+          if (//atom->GetAtomicNum() != OBElements::Hydrogen       // don't start with a hydrogen
               !_uatoms[idx]          // skip atoms already used (for fragments)
               && frag_atoms.BitIsOn(idx)// skip atoms not in this fragment
               //&& !atom->IsChiral()    // don't use chiral atoms as root node

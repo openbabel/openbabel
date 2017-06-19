@@ -22,6 +22,7 @@ GNU General Public License for more details.
 #include <openbabel/graphsym.h>
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
+#include <openbabel/elements.h>
 
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/stereo/tetrahedral.h>
@@ -1514,13 +1515,13 @@ namespace OpenBabel {
 
             // Add the neighbor atom indexes.
             OBAtom *from = mol->GetAtomById(config.from);
-            if (from && !from->IsHydrogen())
+            if (from && from->GetAtomicNum() != OBElements::Hydrogen)
               stereoCenters.back().nbrIndexes1.push_back(from->GetIndex());
             else
               stereoCenters.back().nbrIndexes1.push_back(std::numeric_limits<unsigned int>::max());
             for (std::size_t j = 0; j < config.refs.size(); ++j) {
               OBAtom *ref = mol->GetAtomById(config.refs[j]);
-              if (ref && !ref->IsHydrogen())
+              if (ref && ref->GetAtomicNum() != OBElements::Hydrogen)
                 stereoCenters.back().nbrIndexes1.push_back(ref->GetIndex());
               else
                 stereoCenters.back().nbrIndexes1.push_back(std::numeric_limits<unsigned int>::max());
@@ -1547,7 +1548,7 @@ namespace OpenBabel {
             // Add the neighbor atom indexes.
             for (std::size_t j = 0; j < config.refs.size(); ++j) {
               OBAtom *ref = mol->GetAtomById(config.refs[j]);
-              unsigned int r = (ref && !ref->IsHydrogen()) ? ref->GetIndex() : std::numeric_limits<unsigned int>::max();
+              unsigned int r = (ref && ref->GetAtomicNum() != OBElements::Hydrogen) ? ref->GetIndex() : std::numeric_limits<unsigned int>::max();
               if (stereoCenters.back().nbrIndexes1.size() < 2)
                 stereoCenters.back().nbrIndexes1.push_back(r);
               else

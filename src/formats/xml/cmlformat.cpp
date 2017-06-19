@@ -1014,14 +1014,14 @@ namespace OpenBabel
                     OBAtom* pAt2 = pDBond->GetEndAtom();
                     FOR_NBORS_OF_ATOM(a1,pAt1)
                       {
-                        if(!a1->IsHydrogen() && &*a1!=pAt2)
+                        if (a1->GetAtomicNum() != OBElements::Hydrogen && &*a1 != pAt2)
                           break;
                         pbond1 = _pmol->GetBond(pAt1->GetIdx(),a1->GetIdx());
                       }
 
                     FOR_NBORS_OF_ATOM(a2,pAt2)
                       {
-                        if(!a2->IsHydrogen() && &*a2!=pAt1)
+                        if (a2->GetAtomicNum() != OBElements::Hydrogen && &*a2 != pAt1)
                           break;
                         pbond2 = _pmol->GetBond(pAt2->GetIdx(),a2->GetIdx());
                       }

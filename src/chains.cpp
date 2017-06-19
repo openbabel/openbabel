@@ -1097,7 +1097,7 @@ namespace OpenBabel
     vector<OBAtom *>::iterator a;
     for (atom = mol.BeginAtom(a) ; atom ; atom = mol.NextAtom(a)) {
       idx = atom->GetIdx() - 1;
-      if (!hetflags[idx] && chains[idx] == ' ' && !atom->IsHydrogen()) {
+      if (!hetflags[idx] && chains[idx] == ' ' && atom->GetAtomicNum() != OBElements::Hydrogen) {
         size = RecurseChain(mol, idx, 'A' + count);
 
         // size = number of heavy atoms in residue chain
@@ -1250,7 +1250,7 @@ namespace OpenBabel
               {
                 count = 0;
                 for (nbr = atom->BeginNbrAtom(b) ; nbr ; nbr = atom->NextNbrAtom(b))
-                  if (!nbr->IsHydrogen())
+                  if (nbr->GetAtomicNum() != OBElements::Hydrogen)
                     neighbour[count++] = nbr;
 
                 if (count >= 1)
@@ -1374,7 +1374,7 @@ namespace OpenBabel
 
     count = 0;
     for (nbr = atom->BeginNbrAtom(b) ; nbr ; nbr = atom->NextNbrAtom(b))
-      if (!nbr->IsHydrogen())
+      if (nbr->GetAtomicNum() != OBElements::Hydrogen)
         neighbour[count++] = nbr->GetIdx()-1;
 
     resnos[idx] = r;
@@ -1666,7 +1666,7 @@ namespace OpenBabel
     count = 0;
     atom  = mol.GetAtom(i + 1);
     for (nbr = atom->BeginNbrAtom(b) ; nbr ; nbr = atom->NextNbrAtom(b))
-      if (!nbr->IsHydrogen())
+      if (nbr->GetAtomicNum() != OBElements::Hydrogen)
         neighbour[count++] = nbr->GetIdx() - 1;
 
     resnos[i] = r;

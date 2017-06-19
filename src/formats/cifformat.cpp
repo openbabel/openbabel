@@ -1302,7 +1302,7 @@ namespace OpenBabel
     int nonHydrogenCount = 0;
     int hydrogenCount = 0;
     FOR_NBORS_OF_ATOM(neighbor, *atom) {
-      if (!neighbor->IsHydrogen())
+      if (neighbor->GetAtomicNum() != OBElements::Hydrogen)
         nonHydrogenCount++;
       else
         hydrogenCount++;

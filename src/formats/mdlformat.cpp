@@ -1809,7 +1809,7 @@ namespace OpenBabel
       OBStereo::Refs refs;
       unsigned long towards = OBStereo::ImplicitRef;
       FOR_NBORS_OF_ATOM(nbr, mol.GetAtomById(i)) {
-        if (!nbr->IsHydrogen())
+        if (nbr->GetAtomicNum() != OBElements::Hydrogen)
           refs.push_back(nbr->GetId());
         else
           towards = nbr->GetId(); // Look towards the H

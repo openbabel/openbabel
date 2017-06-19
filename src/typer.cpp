@@ -20,6 +20,7 @@ GNU General Public License for more details.
 
 #include <openbabel/mol.h>
 #include <openbabel/typer.h>
+#include <openbabel/elements.h>
 
 // private data headers with default parameters
 #include "atomtyp.h"
@@ -859,7 +860,7 @@ namespace OpenBabel
                 // we can get this from atom->GetHvyValence()
                 // but we need to find neighbors in rings too
                 // so let's save some time
-                if (!nbr->IsHydrogen())
+                if (nbr->GetAtomicNum() != OBElements::Hydrogen)
                   {
                     heavyNbrs++;
                     if (nbr->IsInRing())
@@ -931,7 +932,7 @@ namespace OpenBabel
                                 for (nbr2 = (mol.GetAtom(tmp[m]))->BeginNbrAtom(nbr2Iter);
                                      nbr2;nbr2 = (mol.GetAtom(tmp[m]))->NextNbrAtom(nbr2Iter))
                                   {
-                                    if (!nbr2->IsHydrogen())
+                                    if (nbr2->GetAtomicNum() != OBElements::Hydrogen)
                                       {
                                         heavyNbrs++;
 

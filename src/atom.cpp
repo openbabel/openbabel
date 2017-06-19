@@ -324,7 +324,7 @@ namespace OpenBabel
 
   bool OBAtom::IsPolarHydrogen()
   {
-    if (!IsHydrogen())
+    if (GetAtomicNum() != OBElements::Hydrogen)
       return(false);
 
     OBAtom *atom;
@@ -348,7 +348,7 @@ namespace OpenBabel
 
   bool OBAtom::IsNonPolarHydrogen()
   {
-    if (!IsHydrogen())
+    if (GetAtomicNum() != OBElements::Hydrogen)
       return(false);
 
     OBAtom *atom;
@@ -526,7 +526,7 @@ namespace OpenBabel
     OBBond *bond;
     OBBondIterator i;
     for (bond = ((OBAtom*)this)->BeginBond(i); bond; bond = ((OBAtom*)this)->NextBond(i))
-      if (!(bond->GetNbrAtom((OBAtom*)this)->IsHydrogen()))
+      if (bond->GetNbrAtom((OBAtom*)this)->GetAtomicNum() != OBElements::Hydrogen)
         count++;
 
     return(count);
@@ -1186,7 +1186,7 @@ namespace OpenBabel
 
   bool OBAtom::HtoMethyl()
   {
-    if (!IsHydrogen())
+    if (GetAtomicNum() != OBElements::Hydrogen)
       return(false);
 
     obErrorLog.ThrowError(__FUNCTION__,
@@ -1862,7 +1862,7 @@ namespace OpenBabel
 
   bool OBAtom::IsHbondDonorH()
   {
-    if (!IsHydrogen()) return(false);
+    if (GetAtomicNum() != OBElements::Hydrogen) return(false);
 
     // Recursive definition -- this atom is an H atom
     // are any neighbors HbondDonors?

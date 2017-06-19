@@ -610,7 +610,7 @@ namespace OpenBabel
                 atom1 = GetAtom(natom);
                 for (bond = atom1->BeginBond(j);bond;bond = atom1->NextBond(j))
                   if (!used.BitIsOn(bond->GetNbrAtomIdx(atom1)) && !curr.BitIsOn(bond->GetNbrAtomIdx(atom1)))
-                    if (!(bond->GetNbrAtom(atom1))->IsHydrogen())
+                    if (bond->GetNbrAtom(atom1)->GetAtomicNum() != OBElements::Hydrogen)
                       next.SetBitOn(bond->GetNbrAtomIdx(atom1));
               }
 
@@ -788,7 +788,7 @@ namespace OpenBabel
 
     for(atom = this->BeginAtom(i);atom;atom = this->NextAtom(i))
       {
-        if(!atom->IsHydrogen())
+        if (atom->GetAtomicNum() != OBElements::Hydrogen)
           count++;
       }
 
@@ -1934,7 +1934,7 @@ namespace OpenBabel
       int idx1,idx2;
       vector<double*>::iterator j;
       for (idx1=0,idx2=0,atom = BeginAtom(i);atom;atom = NextAtom(i),++idx1)
-      if (!atom->IsHydrogen())
+      if (atom->GetAtomicNum() != OBElements::Hydrogen)
       {
       for (j = _vconf.begin();j != _vconf.end();++j)
       memcpy((char*)&((*j)[idx2*3]),(char*)&((*j)[idx1*3]),sizeof(double)*3);
@@ -2038,7 +2038,7 @@ namespace OpenBabel
   bool OBMol::DeleteHydrogen(OBAtom *atom)
   //deletes the hydrogen atom passed to the function
   {
-    if (!atom->IsHydrogen())
+    if (atom->GetAtomicNum() != OBElements::Hydrogen)
       return false;
 
     //find bonds to delete
