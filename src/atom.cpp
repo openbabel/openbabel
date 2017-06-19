@@ -648,7 +648,7 @@ namespace OpenBabel
 
     atom = NULL;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
-      if ((bond->GetNbrAtom(this))->IsPhosphorus())
+      if ((bond->GetNbrAtom(this))->GetAtomicNum() == OBElements::Phosphorus)
         {
           atom = bond->GetNbrAtom(this);
           break;

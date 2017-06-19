@@ -3757,7 +3757,7 @@ namespace OpenBabel
     vector<OBAtom*>::iterator ai;
     for (patom = BeginAtom(ai);patom;patom = NextAtom(ai)) //all atoms
     {
-      if(patom->GetAtomicNum() == OBElements::Nitrogen // || patom->IsPhosphorus()) not phosphorus!
+      if(patom->GetAtomicNum() == OBElements::Nitrogen // || patom->GetAtomicNum() == OBElements::Phosphorus) not phosphorus!
         && (patom->BOSum()==5 || (patom->BOSum()==4 && patom->GetFormalCharge()==0)))
       {
         // Find the bond to be modified. Prefer a bond to a hetero-atom,

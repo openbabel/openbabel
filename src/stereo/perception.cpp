@@ -135,7 +135,7 @@ namespace OpenBabel {
   bool isPotentialTetrahedral(OBAtom *atom)
   {
     // consider only potential steroecenters
-    if ((atom->GetHyb() != 3 && !(atom->GetHyb() == 5 && atom->IsPhosphorus()))
+    if ((atom->GetHyb() != 3 && !(atom->GetHyb() == 5 && atom->GetAtomicNum() == OBElements::Phosphorus))
         || TotalNoOfBonds(atom) > 4 || atom->GetHvyValence() < 3 || atom->GetHvyValence() > 4)
       return false;
     // skip non-chiral N

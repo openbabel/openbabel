@@ -1736,7 +1736,7 @@ namespace OpenBabel
                 }
               }
             }
-            if (nbrNbr->IsPhosphorus()) {
+            if (nbrNbr->GetAtomicNum() == OBElements::Phosphorus) {
               return 24; // Hydroxyl hydrogen in H-O-P moiety (HOP)
             }
             if (nbrNbr->GetAtomicNum() == OBElements::Sulfur) {
@@ -1847,7 +1847,7 @@ namespace OpenBabel
           // Hydrogen on nitrogen in pyrrole, Hydrogen in ammonia,
           // Hydrogen on N in N-oxide (HNR, HPYL, H3N, HNOX)
         }
-        if (nbr->GetAtomicNum() == OBElements::Sulfur || nbr->IsPhosphorus()) {
+        if (nbr->GetAtomicNum() == OBElements::Sulfur || nbr->GetAtomicNum() == OBElements::Phosphorus) {
           return 71; // Hydrogen attached to sulfur, Hydrogen attached to >S= sulfur doubly bonded to N,
           // Hydrogen attached to phosphorus (HS, HS=N, HP)
         }
@@ -2019,7 +2019,7 @@ namespace OpenBabel
           doubleBondTo = 0;
 
           FOR_NBORS_OF_ATOM (nbr, atom) {
-            if (nbr->GetAtomicNum() == OBElements::Sulfur || nbr->IsPhosphorus()) {
+            if (nbr->GetAtomicNum() == OBElements::Sulfur || nbr->GetAtomicNum() == OBElements::Phosphorus) {
               oxygenCount = 0;
 
               FOR_NBORS_OF_ATOM (nbrNbr, &*nbr) {
@@ -3793,7 +3793,7 @@ namespace OpenBabel
             }
           }
 
-          if (nbr->IsPhosphorus()) {
+          if (nbr->GetAtomicNum() == OBElements::Phosphorus) {
             if ((o_count + s_count) == 2) {
               atom->SetPartialCharge(-0.5); // O2P
             }
@@ -3821,7 +3821,7 @@ namespace OpenBabel
           if (nbr->GetAtomicNum() == OBElements::Sulfur)
             s_count++;
 
-          if (nbr->IsPhosphorus() || nbr->GetAtomicNum() == OBElements::Sulfur) {
+          if (nbr->GetAtomicNum() == OBElements::Phosphorus || nbr->GetAtomicNum() == OBElements::Sulfur) {
             FOR_NBORS_OF_ATOM(nbr2, &*nbr)
               if ((nbr2->GetAtomicNum() == OBElements::Sulfur || nbr2->GetAtomicNum() == OBElements::Oxygen) && (nbr2->GetValence() == 1) && (atom->GetIdx() != nbr2->GetIdx()))
                 atom->SetPartialCharge(-0.5);
