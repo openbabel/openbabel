@@ -376,7 +376,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       if(patom->GetIsotope())
       {
         iat.isotopic_mass = ISOTOPIC_SHIFT_FLAG +
-          patom->GetIsotope() - (int)(etab.GetMass(patom->GetAtomicNum())+0.5);
+          patom->GetIsotope() - (int)(OBElements::GetMass(patom->GetAtomicNum())+0.5);
       }
       else
         iat.isotopic_mass = 0 ;

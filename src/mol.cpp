@@ -944,7 +944,7 @@ namespace OpenBabel
     OBAtom *atom;
     vector<OBAtom*>::iterator i;
 
-    double hmass = etab.GetMass(1);
+    double hmass = OBElements::GetMass(1);
     for (atom = BeginAtom(i);atom;atom = NextAtom(i)) {
       molwt += atom->GetAtomicMass();
       if (implicitH)

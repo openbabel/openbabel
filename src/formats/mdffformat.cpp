@@ -494,7 +494,7 @@ namespace OpenBabel {
         if( (i == 0) || (i == 2) )
           ofs_ions << atypes_def[j].first << "  ";
         else if (i == 1)
-          ofs_ions << etab.GetMass(etab.GetAtomicNum(atypes_def[j].first.c_str())) << "d0 ";
+          ofs_ions << OBElements::GetMass(etab.GetAtomicNum(atypes_def[j].first.c_str())) << "d0 ";
         else if (i == 3)
           ofs_ions << charge_smb[atypes_def[j].first] << "d0 ";
       }

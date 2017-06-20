@@ -5003,8 +5003,8 @@ namespace OpenBabel
     int Ha, Hb, BOab;
     r0a = GetCovalentRadius(a);
     r0b = GetCovalentRadius(b);
-    Xa = etab.GetAllredRochowElectroNeg(a->GetAtomicNum());
-    Xb = etab.GetAllredRochowElectroNeg(b->GetAtomicNum());
+    Xa = OBElements::GetAllredRochowElectroNeg(a->GetAtomicNum());
+    Xb = OBElements::GetAllredRochowElectroNeg(b->GetAtomicNum());
 
 
     if (a->GetAtomicNum() == OBElements::Hydrogen)

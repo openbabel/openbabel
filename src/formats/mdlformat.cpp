@@ -688,7 +688,7 @@ namespace OpenBabel
         FOR_ATOMS_OF_MOL (a, mol) {
           int massDifference = massDiffs.at(a->GetIndex());
           if (massDifference)
-            a->SetIsotope((int)(etab.GetMass(a->GetAtomicNum()) + massDifference));
+            a->SetIsotope((int)(OBElements::GetMass(a->GetAtomicNum()) + massDifference));
         }
 
       // If no CHG, RAD, ZBO, ZCH or HYD properties are found, use the charges from the atom block

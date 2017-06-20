@@ -471,7 +471,7 @@ namespace OpenBabel
   double OBAtom::GetAtomicMass() const
   {
     if (_isotope == 0)
-      return etab.GetMass(_ele);
+      return OBElements::GetMass(_ele);
     else
       return isotab.GetExactMass(_ele, _isotope);
   }

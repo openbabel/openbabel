@@ -53,7 +53,7 @@ int datatest(int argc, char* argv[])
 
   cout << "ok 1\n"; // for loading tests
 
-  double mass = etab.GetMass(2);
+  double mass = OBElements::GetMass(2);
   if ( fabs(mass - 4.0026 ) < 2e-3 )
     cout << "ok 2\n";
   else
