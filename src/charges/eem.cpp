@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #include <openbabel/chargemodel.h>
 #include <openbabel/mol.h>
 #include <openbabel/molchrg.h>
+#include <openbabel/elements.h>
 
 namespace OpenBabel
 {

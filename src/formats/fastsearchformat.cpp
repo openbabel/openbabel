@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include <openbabel/obconversion.h>
 #include <openbabel/fingerprint.h>
 #include <openbabel/op.h>
+#include <openbabel/elements.h>
 
 using namespace std;
 namespace OpenBabel {
