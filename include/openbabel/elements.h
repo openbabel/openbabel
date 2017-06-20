@@ -24,7 +24,7 @@ namespace OpenBabel
 
     OBAPI const char* GetSymbol(unsigned int atomic_number);
     OBAPI const char* GetName(unsigned int atomic_number);
-    OBAPI double GetAtomicMass(unsigned int atomic_number);
+    OBAPI double GetMass(unsigned int atomic_number);
     OBAPI unsigned int GetAtomicNum(const char* ptr);
     OBAPI double GetAllredRochowElectroNeg(unsigned int atomic_number);
     OBAPI double GetCovalentRad(unsigned int atomic_number);

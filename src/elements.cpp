@@ -99,7 +99,7 @@ namespace OpenBabel
       return element_name[atomic_number];
     }
 
-    double GetAtomicMass(unsigned int atomic_number)
+    double GetMass(unsigned int atomic_number)
     {
       if (atomic_number > NUMELEMENTS)
         return 0.0;
