@@ -29,6 +29,7 @@ GNU General Public License for more details.
 
 #include <openbabel/mol.h>
 #include <openbabel/data.h>
+#include <openbabel/elements.h>
 
 using namespace std;
 using namespace OpenBabel;
