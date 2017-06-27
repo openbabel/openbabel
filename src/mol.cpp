@@ -1178,6 +1178,8 @@ namespace OpenBabel
   //!  It is calculated from the atomic spin multiplicity information
   //!  assuming the high-spin case (i.e. it simply sums the number of unpaired
   //!  electrons assuming no further pairing of spins.
+  //!  if it fails (gives singlet for odd number of electronic systems),
+  //!  then assign wrt parity of the total electrons.
   unsigned int OBMol::GetTotalSpinMultiplicity()
   {
     if (HasFlag(OB_TSPIN_MOL))
@@ -1191,13 +1193,17 @@ namespace OpenBabel
         OBAtom *atom;
         vector<OBAtom*>::iterator i;
         unsigned int unpaired_electrons = 0;
-
+        int chg = GetTotalCharge();
         for (atom = BeginAtom(i);atom;atom = NextAtom(i))
           {
             if (atom->GetSpinMultiplicity() > 1)
               unpaired_electrons += (atom->GetSpinMultiplicity() - 1);
+           chg += atom->GetAtomicNum();
           }
-        return (unpaired_electrons + 1);
+        if (chg % 2 != unpaired_electrons %2)
+          return ((abs(chg) % 2) + 1);
+        else
+          return (unpaired_electrons + 1);
       }
   }
 
