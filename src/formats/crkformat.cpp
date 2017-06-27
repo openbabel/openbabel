@@ -327,7 +327,7 @@ namespace OpenBabel
                     element[0]=tag[9];
                     if (tag[10]>='a' && tag[10]<='z')
                       element[1]=tag[10];
-                    atomNumber=etab.GetAtomicNum(element);
+                    atomNumber=OBElements::GetAtomicNum(element);
                   }
                 tag=strstr(buffer,"<Charge>");
                 if (tag)

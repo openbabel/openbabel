@@ -95,7 +95,7 @@ bool FHIaimsFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         atom->SetVector(x,y,z); //set coordinates
 
         //set atomic number
-        int atomicNum = etab.GetAtomicNum(vs[4].c_str());
+        int atomicNum = OBElements::GetAtomicNum(vs[4].c_str());
         atom->SetAtomicNum(atomicNum);
 
       } else if (strstr(buffer, "lattice_vector") != NULL) {

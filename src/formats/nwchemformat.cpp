@@ -826,7 +826,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
                 if (vs.size() < 8)
                     break;
                 unsigned int end_of_symbol = vs[1].find_last_not_of(DIGITS) + 1;
-                if (etab.GetAtomicNum(vs[1].substr(0, end_of_symbol).c_str()) != molecule->GetAtom(i+1)->GetAtomicNum())
+                if (OBElements::GetAtomicNum(vs[1].substr(0, end_of_symbol).c_str()) != molecule->GetAtom(i+1)->GetAtomicNum())
                     break;
                 if (current_bead >= nbeads)
                 {
@@ -924,7 +924,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
                     tokenize(vs, buffer);
                     //  Symbol              X     Y     Z
                     //    0                 1     2     3
-                    if ((vs.size() < 4) || (molecule->GetAtom(i+1)->GetAtomicNum() != etab.GetAtomicNum(vs[0].c_str())))
+                    if ((vs.size() < 4) || (molecule->GetAtom(i+1)->GetAtomicNum() != OBElements::GetAtomicNum(vs[0].c_str())))
                         break; // molecule has no such atom or table row incomplete
 
                     unsigned int atom_idx = i*3;

@@ -112,7 +112,7 @@ bool ViewMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
                 y = atof((char*)vs[1].c_str()) * factor;
                 z = atof((char*)vs[2].c_str()) * factor;
                 atom->SetVector(x,y,z); //set coordinates
-                atom->SetAtomicNum(etab.GetAtomicNum(vs[3].c_str()));
+                atom->SetAtomicNum(OBElements::GetAtomicNum(vs[3].c_str()));
             }
         }
         else if (strstr(buffer,"$bonds") != NULL)

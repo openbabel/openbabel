@@ -192,7 +192,7 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
                 coordinates.push_back(point);
 
                 if (createAtoms) {
-                  int atomicNum = etab.GetAtomicNum(vs[0].c_str());
+                  int atomicNum = OBElements::GetAtomicNum(vs[0].c_str());
                   //set atomic number, or '0' if the atom type is not recognized
                   if (atomicNum == 0) {
                     // Sometimes people call this an XYZ file, but it's actually Unichem
@@ -249,7 +249,7 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
                 is >> atomName >> x >> y >> z;
                 OBAtom* atom = pmol->NewAtom();
                 if( !atom ) break;
-                atom->SetAtomicNum( etab.GetAtomicNum(atomName.c_str()));
+                atom->SetAtomicNum( OBElements::GetAtomicNum(atomName.c_str()));
                 // Vibrational equilibrium geometry is mandated to be
                 // in Bohr.
                 atom->SetVector( x * BOHR_TO_ANGSTROM,

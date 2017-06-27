@@ -128,7 +128,7 @@ namespace OpenBabel
         v.Set(x,y,z);
         v = uc->FractionalToCartesian(v);
 
-        atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
+        atom->SetAtomicNum(OBElements::GetAtomicNum(vs[0].c_str()));
         atom->SetVector(v);
       }
 

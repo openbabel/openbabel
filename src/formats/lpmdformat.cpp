@@ -226,7 +226,7 @@ bool LpmdFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
    if(headers.at(i).compare("FHG")==0) from_string<double>(FCH, tokens.at(i-1), std::dec);
   }
   atom->SetVector(unitcell->FractionalToCartesian(vector3(X,Y,Z)));
-  int atomicNum = etab.GetAtomicNum(symbol.c_str());
+  int atomicNum = OBElements::GetAtomicNum(symbol.c_str());
   atom->SetAtomicNum(atomicNum);
   //Conditional or zero??
   if( CHG!=0.0e0 ) atom->SetPartialCharge(CHG);

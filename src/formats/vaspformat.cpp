@@ -250,7 +250,7 @@ namespace OpenBabel {
     if (symbolsInGeometryFile) {
       atomTypes.clear();
       for (size_t i = 0; i < vs.size(); ++i) {
-        atomTypes.push_back(OpenBabel::etab.GetAtomicNum(vs.at(i).c_str()));
+        atomTypes.push_back(OpenBabel::OBElements::GetAtomicNum(vs.at(i).c_str()));
       }
       // Fetch next line to get stoichiometry
       ifs_cont.getline(buffer,BUFF_SIZE);
@@ -270,7 +270,7 @@ namespace OpenBabel {
               str.erase(i,1);
               --i;
             }
-          atomTypes.push_back(OpenBabel::etab.GetAtomicNum(str.c_str()));
+          atomTypes.push_back(OpenBabel::OBElements::GetAtomicNum(str.c_str()));
         }
       }
       ifs_pot.close();
@@ -638,7 +638,7 @@ namespace OpenBabel {
       vector<string> vs;
       tokenize(vs, sortAtomsCustom);
       for(size_t i = 0; i < vs.size(); ++i)
-        custom_sort_nums.push_back(etab.GetAtomicNum(vs[i].c_str()));
+        custom_sort_nums.push_back(OBElements::GetAtomicNum(vs[i].c_str()));
     }
 
     compare_sort_items csi(custom_sort_nums, sortAtomsNum != NULL);

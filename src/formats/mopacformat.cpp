@@ -111,7 +111,7 @@ namespace OpenBabel
             while (vs.size() == 5)
               {
                 atom = mol.NewAtom();
-                atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
+                atom->SetAtomicNum(OBElements::GetAtomicNum(vs[1].c_str()));
                 x = atof((char*)vs[2].c_str());
                 y = atof((char*)vs[3].c_str());
                 z = atof((char*)vs[4].c_str());
@@ -134,7 +134,7 @@ namespace OpenBabel
                 if (strcmp(vs[1].c_str(), "Tv") != 0)
                   {
                     atom = mol.NewAtom();
-                    atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
+                    atom->SetAtomicNum(OBElements::GetAtomicNum(vs[1].c_str()));
                     x = atof((char*)vs[2].c_str());
                     y = atof((char*)vs[4].c_str());
                     z = atof((char*)vs[6].c_str());
@@ -239,7 +239,7 @@ namespace OpenBabel
               indices.push_back(atoi(vs[10].c_str()));
 
               // symbol in column 1
-              atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
+              atom->SetAtomicNum(OBElements::GetAtomicNum(vs[1].c_str()));
             }
             // read the z-matrix
 
@@ -726,7 +726,7 @@ namespace OpenBabel
             atom = mol.NewAtom();
             atom->SetVector(x,y,z); //set coordinates
             //set atomic number
-            atom->SetAtomicNum(etab.GetAtomicNum(elementSymbol.c_str()));
+            atom->SetAtomicNum(OBElements::GetAtomicNum(elementSymbol.c_str()));
           }
       }
 
@@ -899,7 +899,7 @@ namespace OpenBabel
       indices.push_back(atoi(vs[8].c_str()));
       indices.push_back(atoi(vs[9].c_str()));
 
-      atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
+      atom->SetAtomicNum(OBElements::GetAtomicNum(vs[0].c_str()));
     }
 
     unsigned int idx = 0;

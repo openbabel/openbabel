@@ -198,7 +198,7 @@ namespace OpenBabel
 
                 if (newMol){
                     atom = mol.NewAtom();
-                    atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));                //set atomic number
+                    atom->SetAtomicNum(OBElements::GetAtomicNum(vs[0].c_str()));                //set atomic number
                     atom->SetVector(x,y,z); //set atom coordinates
                 }
                 if (geoOptRun){
@@ -517,7 +517,7 @@ namespace OpenBabel
                     atom->SetVector(x,y,z); //set coordinates
 
                     //set atomic number
-                    atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
+                    atom->SetAtomicNum(OBElements::GetAtomicNum(vs[0].c_str()));
 
                     if (!ifs.getline(buffer,BUFF_SIZE))
                         break;

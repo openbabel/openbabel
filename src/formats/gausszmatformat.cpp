@@ -317,7 +317,7 @@ namespace OpenBabel
         j = i+1;
         tokenize(vs, atomLines[i]);
         atom = mol.NewAtom();
-        atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
+        atom->SetAtomicNum(OBElements::GetAtomicNum(vs[0].c_str()));
 
         if (j == 1) {
           continue; // first atom, just create it

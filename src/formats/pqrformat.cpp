@@ -381,7 +381,7 @@ namespace OpenBabel
 
     // useful for debugging unknown atom types (e.g., PR#1577238)
     //    cout << mol.NumAtoms() + 1 << " " << atmid << " type: " << type << endl;
-    atom.SetAtomicNum(etab.GetAtomicNum(type.c_str()));
+    atom.SetAtomicNum(OBElements::GetAtomicNum(type.c_str()));
 
     /* residue sequence number */
     string resnum = sbuf.substr(16,4);

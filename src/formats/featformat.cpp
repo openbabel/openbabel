@@ -100,7 +100,7 @@ namespace OpenBabel
         CleanAtomType(type);
         atom = mol.NewAtom();
         atom->SetVector(x,y,z);
-        atom->SetAtomicNum(etab.GetAtomicNum(type));
+        atom->SetAtomicNum(OBElements::GetAtomicNum(type));
       }
 
     // clean out remaining blank lines

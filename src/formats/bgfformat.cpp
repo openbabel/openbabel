@@ -118,7 +118,7 @@ namespace OpenBabel
         atom->SetType(tmp);
 
         CleanAtomType(tmptyp);
-        atom->SetAtomicNum(etab.GetAtomicNum(tmptyp));
+        atom->SetAtomicNum(OBElements::GetAtomicNum(tmptyp));
 
         atom->SetVector(x,y,z);
       }

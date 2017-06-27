@@ -134,7 +134,7 @@ namespace OpenBabel
                   if (isdigit(str[i]))
                     str[i] = '\0';
 
-                atom->SetAtomicNum(etab.GetAtomicNum(str.c_str()));
+                atom->SetAtomicNum(OBElements::GetAtomicNum(str.c_str()));
                 x = atof((char*)vs[1].c_str());
                 y = atof((char*)vs[2].c_str());
                 z = atof((char*)vs[3].c_str());
@@ -261,7 +261,7 @@ namespace OpenBabel
                   if (isdigit(str[i]))
                     str[i] = '\0';
 
-                atom->SetAtomicNum(etab.GetAtomicNum(str.c_str()));
+                atom->SetAtomicNum(OBElements::GetAtomicNum(str.c_str()));
                 x = atof((char*)vs[1].c_str());
                 y = atof((char*)vs[2].c_str());
                 z = atof((char*)vs[3].c_str());

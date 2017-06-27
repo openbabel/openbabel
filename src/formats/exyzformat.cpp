@@ -212,7 +212,7 @@ namespace OpenBabel
         // something "special" in mind.
         OBAtom *atom  = mol.NewAtom();
 
-        int atomicNum = etab.GetAtomicNum(vs[0].c_str());
+        int atomicNum = OBElements::GetAtomicNum(vs[0].c_str());
         //set atomic number, or '0' if the atom type is not recognized
         if (atomicNum == 0) {
           // Sometimes people call this an XYZ file, but it's actually Unichem

@@ -1468,7 +1468,7 @@ namespace OpenBabel
               if(nbc>0) tmpSymbol=tmpSymbol.substr(0,nbc);
               else tmpSymbol="C";//Something went wrong, no symbol ! Default to C ??
 
-              int atomicNum = etab.GetAtomicNum(tmpSymbol.c_str());
+              int atomicNum = OBElements::GetAtomicNum(tmpSymbol.c_str());
               // Test for some oxygens with subscripts
               if (atomicNum == 0 && tmpSymbol[0] == 'O') {
                 atomicNum = 8; // e.g. Ob, OH, etc.

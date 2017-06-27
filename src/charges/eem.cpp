@@ -105,7 +105,7 @@ namespace OpenBabel
       std::string bond_order;
       struct EEMParameter parameter;
       ss >> symbol >> bond_order >> parameter.A >> parameter.B;
-      parameter.Z = symbol == "*" ? -1 : etab.GetAtomicNum(symbol.c_str());
+      parameter.Z = symbol == "*" ? -1 : OBElements::GetAtomicNum(symbol.c_str());
       parameter.bond_order = bond_order == "*" ? -1 : std::atoi(bond_order.c_str());
       _parameters.push_back(parameter);
     }

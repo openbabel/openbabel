@@ -383,7 +383,7 @@ namespace OpenBabel
           if(vs.size() == 11)
           {
             atom = mol.NewAtom();
-            atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
+            atom->SetAtomicNum(OBElements::GetAtomicNum(vs[0].c_str()));
             x = atof((char*)vs[4].c_str()) * BOHR_TO_ANGSTROM;
             y = atof((char*)vs[7].c_str()) * BOHR_TO_ANGSTROM;
             z = atof((char*)vs[10].c_str()) * BOHR_TO_ANGSTROM;

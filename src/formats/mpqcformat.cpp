@@ -146,7 +146,7 @@ namespace OpenBabel
                   }
                 atom = mol.NewAtom();
                 atom->SetVector(x,y,z);
-                atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
+                atom->SetAtomicNum(OBElements::GetAtomicNum(vs[1].c_str()));
 
                 if (!ifs.getline(buffer,BUFF_SIZE))
                   break;

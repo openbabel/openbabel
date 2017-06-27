@@ -1034,11 +1034,11 @@ namespace OpenBabel
     atom.SetVector(v);
 
     // useful for debugging unknown atom types (e.g., PR#1577238)
-    //    cout << mol.NumAtoms() + 1  << " : '" << element << "'" << " " << etab.GetAtomicNum(element.c_str()) << endl;
+    //    cout << mol.NumAtoms() + 1  << " : '" << element << "'" << " " << OBElements::GetAtomicNum(element.c_str()) << endl;
     if (elementFound)
-      atom.SetAtomicNum(etab.GetAtomicNum(element.c_str()));
+      atom.SetAtomicNum(OBElements::GetAtomicNum(element.c_str()));
     else // use our old-style guess from athe atom type
-      atom.SetAtomicNum(etab.GetAtomicNum(type.c_str()));
+      atom.SetAtomicNum(OBElements::GetAtomicNum(type.c_str()));
 
     if ( (! scharge.empty()) && "  " != scharge )
       {

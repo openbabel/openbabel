@@ -183,13 +183,13 @@ namespace OpenBabel
 
         // check to see if first column is number or element symbol
         // (PCModel has files of the form X Y Z symbol)
-        atomicNum = etab.GetAtomicNum(vs[0].c_str());
+        atomicNum = OBElements::GetAtomicNum(vs[0].c_str());
         if (atomicNum == 0 && (isdigit(vs[0][0]) || ispunct(vs[0][0])))
           {
             x = atof(vs[0].c_str());
             y = atof(vs[1].c_str());
             z = atof(vs[2].c_str());
-            atomicNum = etab.GetAtomicNum(vs[3].c_str());
+            atomicNum = OBElements::GetAtomicNum(vs[3].c_str());
           }
         else
           {

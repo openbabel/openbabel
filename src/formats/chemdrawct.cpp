@@ -141,7 +141,7 @@ namespace OpenBabel
         z = atof((char*)vs[2].c_str());
 
         atom->SetVector(x,y,z); //set coordinates
-        atom->SetAtomicNum(etab.GetAtomicNum(vs[3].c_str()));
+        atom->SetAtomicNum(OBElements::GetAtomicNum(vs[3].c_str()));
       }
 
     if (nbonds != 0)

@@ -105,7 +105,7 @@ bool TurbomoleFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             return false;
 
         atom.SetVector(x*UnitConv, y*UnitConv, z*UnitConv);
-        atom.SetAtomicNum(etab.GetAtomicNum(atomtype));
+        atom.SetAtomicNum(OBElements::GetAtomicNum(atomtype));
         atom.SetType(atomtype);
 
         if(!mol.AddAtom(atom))

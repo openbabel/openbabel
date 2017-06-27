@@ -116,7 +116,7 @@ namespace OpenBabel
         atom->SetVector(x,y,z); //set coordinates
 
         //set atomic number
-        atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
+        atom->SetAtomicNum(OBElements::GetAtomicNum(vs[1].c_str()));
 
         // add bonding
         if (vs.size() > 6)

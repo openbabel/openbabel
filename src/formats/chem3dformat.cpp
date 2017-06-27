@@ -247,7 +247,7 @@ namespace OpenBabel
         ttab.Translate(tmp1,tmp);
         atom->SetType(tmp1);
         atom->SetVector(v);
-        atom->SetAtomicNum(etab.GetAtomicNum(atomic_type));
+        atom->SetAtomicNum(OBElements::GetAtomicNum(atomic_type));
 
         for (k = 6;k < vs.size(); k++)
           mol.AddBond(atom->GetIdx(),atoi((char*)vs[k].c_str()),1);
