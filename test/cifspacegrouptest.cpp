@@ -218,6 +218,15 @@ void testPdbOutHexagonalAlternativeOrigin()
   pdb = conv.WriteString(&mol);
 
   OB_ASSERT(pdb.find("H -3 m") != string::npos);
+
+  // Test with missing Hall name in the CIF
+  // https://github.com/openbabel/openbabel/pull/1578
+  OBMol mol_nohall;
+  conv.ReadFile(&mol_nohall, GetFilename("test02.nohall.cif"));
+
+  pdb = conv.WriteString(&mol_nohall);
+
+  OB_ASSERT(pdb.find("H -3 m") != string::npos);
 }
 
 void testPdbOutAlternativeOriginSilicon()
