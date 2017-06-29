@@ -153,7 +153,7 @@ int DLHandler::findFiles (std::vector<std::string>& file_list,
 bool DLHandler :: openLib(const string& lib_name)
 {
 
-    if(LoadLibrary(TEXT(lib_name.c_str())))
+    if(LoadLibrary( (PTCHAR) lib_name.c_str()))
         return true;
 
     unsigned long err = GetLastError();
