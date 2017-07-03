@@ -114,6 +114,26 @@ namespace OpenBabel
     }
   }
 
+  static unsigned int GetAtomicNumAndIsotope(const char* symbol, int *isotope)
+  {
+    const char* p = symbol;
+    switch (p[0]) {
+    case 'D':
+      if (p[1] == '\0') {
+        *isotope = 2;
+        return 1;
+      }
+      break;
+    case 'T':
+      if (p[1] == '\0') {
+        *isotope = 3;
+        return 1;
+      }
+      break;
+    }
+    return OBElements::GetAtomicNum(symbol);
+  }
+
   /////////////////////////////////////////////////////////////////
   bool MOL2Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
@@ -309,7 +329,7 @@ namespace OpenBabel
 
           string::size_type dotPos = str.find('.');
           if (dotPos == string::npos) {
-            elemno = etab.GetAtomicNum(str.c_str(), isotope);
+            elemno = GetAtomicNumAndIsotope(str.c_str(), &isotope);
           }
         }
 

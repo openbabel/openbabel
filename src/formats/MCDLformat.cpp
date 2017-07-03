@@ -1231,8 +1231,7 @@ private:
     temp=s.substr(0,n1);
     if (n1<s.length()) sstore=s.substr(n1,s.length()); else sstore="";
     n1=nF[i];
-    int iso=0;
-    n2=etab.GetAtomicNum(temp.c_str(),iso);//Atom.positionofAtom(temp);
+    n2=OBElements::GetAtomicNum(temp.c_str());//Atom.positionofAtom(temp);
     nPrev=acount;
 
     for (j=1; j<=n1; j++) {

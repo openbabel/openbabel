@@ -69,7 +69,7 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
   };
   
   ChemDoodleJSONFormat theChemDoodleJSONFormat;
-  
+
   bool ChemDoodleJSONFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
@@ -166,12 +166,7 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
         // q and rg indicate an "any" atom or an rgroup
         patom->SetAtomicNum(0);
       } else {
-        int isotope = 0;
-        patom->SetAtomicNum(etab.GetAtomicNum(symbol, isotope));
-        if (isotope != 0) {
-          // isotope gets set for e.g. 'D' or 'T' symbol
-          patom->SetIsotope(isotope);
-        }
+        patom->SetAtomicNum(OBElements::GetAtomicNum(symbol.c_str()));
       }
       // Charge
       if (atom["c"].isIntegral()) {

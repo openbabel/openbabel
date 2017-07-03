@@ -204,6 +204,28 @@ namespace OpenBabel
     return std::find(metals, metals+78, atom->GetAtomicNum())!=metals+78;
   }
 
+  static void SetAtomicNumAndIsotope(OBAtom *patom, const char* symbol)
+  {
+    const char* p = symbol;
+    switch (p[0]) {
+    case 'D':
+      if (p[1] == '\0') {
+        patom->SetIsotope(2);
+        patom->SetAtomicNum(1);
+        return;
+      }
+      break;
+    case 'T':
+      if (p[1] == '\0') {
+        patom->SetIsotope(3);
+        patom->SetAtomicNum(1);
+        return;
+      }
+      break;
+    }
+    patom->SetAtomicNum(OBElements::GetAtomicNum(symbol));
+  }
+
   /////////////////////////////////////////////////////////////////
   bool MDLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
@@ -376,7 +398,7 @@ namespace OpenBabel
       //
       // Atom Block
       //
-      int massdiff, charge, stereo, isotope;
+      int massdiff, charge, stereo;
       vector<int> massDiffs, charges;
       Parity parity;
       for (i = 0; i < natoms; ++i) {
@@ -419,10 +441,7 @@ namespace OpenBabel
         Trim(symbol);
         if(symbol[0]!='R' || TestForAlias(symbol, patom, aliases))
         {
-          isotope = 0;
-          patom->SetAtomicNum(etab.GetAtomicNum(symbol, isotope));
-          if (isotope != 0) // e.g. 'D' or 'T' atom symbol
-            patom->SetIsotope(isotope);
+          SetAtomicNumAndIsotope(patom, symbol.c_str());
         }
         // mass difference
         if (line.size() >= 35)
@@ -1386,10 +1405,7 @@ namespace OpenBabel
           }
         else
           {
-          int iso=0;
-          atom.SetAtomicNum(etab.GetAtomicNum(type,iso));
-          if(iso)
-            atom.SetIsotope(iso);
+          SetAtomicNumAndIsotope(&atom, type);
           atom.SetType(type); //takes a char not a const char!
           //mapping vs[7] not implemented
 

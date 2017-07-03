@@ -562,6 +562,27 @@ namespace OpenBabel
 
   /////////////////////////////////////////////////////////
 
+  static unsigned int GetAtomicNumAndIsotope(const char* symbol, int *isotope)
+  {
+    const char* p = symbol;
+    switch (p[0]) {
+    case 'D':
+      if (p[1] == '\0') {
+        *isotope = 2;
+        return 1;
+      }
+      break;
+    case 'T':
+      if (p[1] == '\0') {
+        *isotope = 3;
+        return 1;
+      }
+      break;
+    }
+    return OBElements::GetAtomicNum(symbol);
+  }
+
+
   ///Interprets atoms from AtomArray and writes then to an OBMol
   bool CMLFormat::DoAtoms()
   {
@@ -603,7 +624,7 @@ namespace OpenBabel
             else if(attrname=="elementType")
               {
                 int atno, iso=0;
-                atno=etab.GetAtomicNum(value.c_str(),iso);
+                atno = GetAtomicNumAndIsotope(value.c_str(), &iso);
                 pAtom->SetAtomicNum(atno);
                 if(iso)
                   pAtom->SetIsotope(iso);
@@ -1154,7 +1175,7 @@ namespace OpenBabel
           return false;
         int n=atoi(iNumber->c_str());
         int atno, iso=0;
-        atno=etab.GetAtomicNum(iSymbol++->c_str(),iso);
+        atno = GetAtomicNumAndIsotope(iSymbol++->c_str(), &iso);
         if(atno<=0 || n<=0)
           return false;
         int i;
