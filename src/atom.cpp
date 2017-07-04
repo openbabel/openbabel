@@ -1173,6 +1173,21 @@ namespace OpenBabel
     return(true);
   }
 
+  //! \return a "corrected" bonding radius based on the hybridization.
+  //! Scales the covalent radius by 0.95 for sp2 and 0.90 for sp hybrids
+  static double CorrectedBondRad(unsigned int elem, unsigned int hyb)
+  {
+    double rad = OBElements::GetCovalentRad(elem);
+    switch (hyb) {
+    case 2:
+      return rad * 0.95;
+    case 1:
+      return rad * 0.90;
+    default:
+      return rad;
+    }
+  }
+
   bool OBAtom::HtoMethyl()
   {
     if (GetAtomicNum() != OBElements::Hydrogen)
@@ -1201,12 +1216,12 @@ namespace OpenBabel
       }
 
     double br1,br2;
-    br1 = etab.CorrectedBondRad(6,3);
-    br2 = etab.CorrectedBondRad(atom->GetAtomicNum(),atom->GetHyb());
+    br1 = CorrectedBondRad(6,3);
+    br2 = CorrectedBondRad(atom->GetAtomicNum(),atom->GetHyb());
     bond->SetLength(atom,br1+br2);
 
     OBAtom *hatom;
-    br2 = etab.CorrectedBondRad(1,0);
+    br2 = CorrectedBondRad(1,0);
     vector3 v;
 
     for (int j = 0;j < 3;++j)
@@ -1294,11 +1309,11 @@ namespace OpenBabel
 
     //adjust attached acyclic bond lengths
     double br1,br2, length;
-    br1 = etab.CorrectedBondRad(GetAtomicNum(),hyb);
+    br1 = CorrectedBondRad(GetAtomicNum(),hyb);
     for (nbr = BeginNbrAtom(i);nbr;nbr = NextNbrAtom(i))
       if (!(*i)->IsInRing())
         {
-          br2 = etab.CorrectedBondRad(nbr->GetAtomicNum(),nbr->GetHyb());
+          br2 = CorrectedBondRad(nbr->GetAtomicNum(),nbr->GetHyb());
           length = br1 + br2;
           if ((*i)->IsAromatic())
             length *= 0.93;
@@ -1566,8 +1581,8 @@ namespace OpenBabel
         int k;
         vector3 v;
         OBAtom *atom;
-        double brsum = etab.CorrectedBondRad(1,0)+
-          etab.CorrectedBondRad(GetAtomicNum(),GetHyb());
+        double brsum = CorrectedBondRad(1,0)+
+          CorrectedBondRad(GetAtomicNum(),GetHyb());
         SetHyb(hyb);
 
         mol->BeginModify();

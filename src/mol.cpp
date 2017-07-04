@@ -2110,6 +2110,21 @@ namespace OpenBabel
     }
   }
 
+  //! \return a "corrected" bonding radius based on the hybridization.
+  //! Scales the covalent radius by 0.95 for sp2 and 0.90 for sp hybrids
+  static double CorrectedBondRad(unsigned int elem, unsigned int hyb)
+  {
+    double rad = OBElements::GetCovalentRad(elem);
+    switch (hyb) {
+    case 2:
+      return rad * 0.95;
+    case 1:
+      return rad * 0.90;
+    default:
+      return rad;
+    }
+  }
+
   bool OBMol::AddNewHydrogens(HydrogenType whichHydrogen, bool correctForPH, double pH)
   {
     if (!IsCorrectedForPH() && correctForPH)
@@ -2205,12 +2220,12 @@ namespace OpenBabel
     int m,n;
     vector3 v;
     vector<pair<OBAtom*,int> >::iterator k;
-    double hbrad = etab.CorrectedBondRad(1,0);
+    double hbrad = CorrectedBondRad(1, 0);
 
     for (k = vhadd.begin();k != vhadd.end();++k)
       {
         atom = k->first;
-        double bondlen = hbrad+etab.CorrectedBondRad(atom->GetAtomicNum(),atom->GetHyb());
+        double bondlen = hbrad + CorrectedBondRad(atom->GetAtomicNum(), atom->GetHyb());
         for (m = 0;m < k->second;++m)
           {
             for (n = 0;n < NumConformers();++n)
@@ -2313,13 +2328,13 @@ namespace OpenBabel
     int m,n;
     vector3 v;
     vector<pair<OBAtom*,int> >::iterator k;
-    double hbrad = etab.CorrectedBondRad(1,0);
+    double hbrad = CorrectedBondRad(1,0);
 
     OBAtom *h;
     for (k = vhadd.begin();k != vhadd.end();++k)
       {
         atom = k->first;
-        double bondlen = hbrad+etab.CorrectedBondRad(atom->GetAtomicNum(),atom->GetHyb());
+        double bondlen = hbrad + CorrectedBondRad(atom->GetAtomicNum(),atom->GetHyb());
         for (m = 0;m < k->second;++m)
           {
             for (n = 0;n < NumConformers();++n)
@@ -3424,8 +3439,8 @@ namespace OpenBabel
                     // Test terminal bonds against expected triple bond lengths
                     bondLength = (atom->GetBond(b))->GetLength();
                     if (atom->GetValence() == 1 || b->GetValence() == 1) {
-                      testLength = etab.CorrectedBondRad(atom->GetAtomicNum(), atom->GetHyb())
-                        + etab.CorrectedBondRad(b->GetAtomicNum(), b->GetHyb());
+                      testLength = CorrectedBondRad(atom->GetAtomicNum(), atom->GetHyb())
+                        + CorrectedBondRad(b->GetAtomicNum(), b->GetHyb());
                       if (bondLength > 0.9 * testLength)
                         continue; // too long, ignore it
                     }
@@ -3481,8 +3496,8 @@ namespace OpenBabel
                     // Test terminal bonds against expected double bond lengths
                     bondLength = (atom->GetBond(b))->GetLength();
                     if (atom->GetValence() == 1 || b->GetValence() == 1) {
-                      testLength = etab.CorrectedBondRad(atom->GetAtomicNum(), atom->GetHyb())
-                        + etab.CorrectedBondRad(b->GetAtomicNum(), b->GetHyb());
+                      testLength = CorrectedBondRad(atom->GetAtomicNum(), atom->GetHyb())
+                        + CorrectedBondRad(b->GetAtomicNum(), b->GetHyb());
                       if (bondLength > 0.93 * testLength)
                         continue; // too long, ignore it
                     }
