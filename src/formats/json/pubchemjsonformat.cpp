@@ -166,15 +166,14 @@ class PubChemJSONFormat : public OBMoleculeFormat
     Json::Value elements = molRoot["atoms"]["element"];
     pmol->ReserveAtoms(eAids.size());
     for(Json::ArrayIndex i = 0; i < eAids.size(); i++) {
-      if (eAids[i].isInt() && elements[i].isString()) {
-        string elementstring = elements[i].asString();
+      if (eAids[i].isInt() && elements[i].isInt()) {
+        int atomicNum = elements[i].asInt();
         OBAtom* patom = pmol->NewAtom((unsigned long)eAids[i].asInt());
-        if (elementstring == "a" || elementstring == "d" || elementstring == "r" || elementstring == "lp") {
+        if (atomicNum == 255 || atomicNum == 254 || atomicNum == 253 || atomicNum == 252) {
           patom->SetAtomicNum(0);
         } else {
-          patom->SetAtomicNum(OBElements::GetAtomicNum(elements[i].asCString()));
+          patom->SetAtomicNum(atomicNum);
         }
-        
       } else {
         obErrorLog.ThrowError("PubChemJSONFormat", "Invalid atom", obWarning);
       }
@@ -558,11 +557,9 @@ class PubChemJSONFormat : public OBMoleculeFormat
       doc["atoms"]["aid"].append(id);
       // Element
       if (patom->GetAtomicNum()) {
-        string el = OBElements::GetSymbol(patom->GetAtomicNum());
-        std::transform(el.begin(), el.end(), el.begin(), ::tolower);
-        doc["atoms"]["element"].append(el);
+        doc["atoms"]["element"].append(patom->GetAtomicNum());
       } else {
-        doc["atoms"]["element"].append("a");
+        doc["atoms"]["element"].append(255);
       }
       // Charge
       int c = patom->GetFormalCharge();
