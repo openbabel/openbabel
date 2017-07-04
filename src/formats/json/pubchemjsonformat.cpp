@@ -256,33 +256,36 @@ class PubChemJSONFormat : public OBMoleculeFormat
     Json::Value oAid2s = molRoot["bonds"]["aid2"];
     Json::Value orders = molRoot["bonds"]["order"];
     for(Json::ArrayIndex i = 0; i < oAid1s.size(); i++) {
-      if (oAid1s[i].isInt() && oAid2s[i].isInt() && orders[i].isString()) {
-        int order = 0; // Use zero bond order for other bond types (complex, ionic, dative, unknown)
-        string orderstring = orders[i].asString();
-        if (orderstring == "single") {
-          order = 1;
-        } else if (orderstring == "double") {
-          order = 2;
-        } else if (orderstring == "triple") {
-          order = 3;
-        } else if (orderstring == "quadruple") {
-          order = 4;
-        }
+      if (oAid1s[i].isInt() && oAid2s[i].isInt() && orders[i].isInt()) {
         OBAtom* beginAtom = pmol->GetAtomById(oAid1s[i].asInt());
         OBAtom* endAtom = pmol->GetAtomById(oAid2s[i].asInt());
         if (beginAtom && endAtom) {
           OBBond* pbond = pmol->NewBond();
           pbond->SetBegin(beginAtom);
           pbond->SetEnd(endAtom);
+          int order = orders[i].asInt();
+          // Other bond types: dative (5), complex (6), ionic (7), unknown (255)
+          if (order > 4) {
+            // Save type string as generic data on bond for non-standard bonds
+            string orderstring = "unknown";
+            if (order == 5) {
+              orderstring = "dative";
+            } else if (order == 6) {
+              orderstring = "complex";
+            } else if (order == 7) {
+              orderstring = "ionic";
+            }
+            OBPairData *bondType = new OBPairData;
+            bondType->SetAttribute("type");
+            bondType->SetValue(orderstring);
+            bondType->SetOrigin(fileformatInput);
+            pbond->SetData(bondType);
+            // Use zero bond order for non-standard bonds
+            order = 0;
+          }
           pbond->SetBondOrder(order);
           beginAtom->AddBond(pbond);
           endAtom->AddBond(pbond);
-          // Save type string as generic data on bond (useful for non-standard bonds)
-          OBPairData *bondType = new OBPairData;
-          bondType->SetAttribute("type");
-          bondType->SetValue(orderstring);
-          bondType->SetOrigin(fileformatInput);
-          pbond->SetData(bondType);
         } else {
           obErrorLog.ThrowError("PubChemJSONFormat", "Invalid bond", obWarning);
         }
@@ -626,20 +629,18 @@ class PubChemJSONFormat : public OBMoleculeFormat
         if (pbond->HasData("type")) {
           // Check to see if a "type" string exists
           OBPairData *id = dynamic_cast<OBPairData*>(pbond->GetData("type"));
-          doc["bonds"]["order"].append(id->GetValue());
-        } else {
-          doc["bonds"]["order"].append("unknown");
+          string orderstring = id->GetValue();
+          if (orderstring == "dative") {
+            order = 5;
+          } else if (orderstring =="complex") {
+            order = 6;
+          } else if (orderstring == "ionic") {
+            order = 7;
+          }
         }
-      } else if (order == 1) {
-        doc["bonds"]["order"].append("single");
-      } else if (order == 2) {
-        doc["bonds"]["order"].append("double");
-      } else if (order == 3) {
-        doc["bonds"]["order"].append("triple");
-      } else if (order == 4) {
-        doc["bonds"]["order"].append("quadruple");
       }
-      
+      doc["bonds"]["order"].append(order);
+
       // Styles and annotations
       vector<string> annotations;
       if (pConv->IsOption("w", pConv->OUTOPTIONS)) {
