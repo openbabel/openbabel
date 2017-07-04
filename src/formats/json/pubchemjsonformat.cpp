@@ -329,7 +329,7 @@ class PubChemJSONFormat : public OBMoleculeFormat
     Json::Value aid2s = conf["style"]["aid2"];
     Json::Value styles = conf["style"]["annotation"];
     for(Json::ArrayIndex i = 0; i < aid1s.size(); i++) {
-      if (aid1s[i].isInt() && aid2s[i].isInt() && styles[i].isString()) {
+      if (aid1s[i].isInt() && aid2s[i].isInt() && styles[i].isInt()) {
         OBAtom* beginAtom = pmol->GetAtomById(aid1s[i].asInt());
         OBAtom* endAtom = pmol->GetAtomById(aid2s[i].asInt());
         if (beginAtom && endAtom) {
@@ -343,21 +343,18 @@ class PubChemJSONFormat : public OBMoleculeFormat
           }
           // Use annotations to add stereo information
           unsigned int flags = pbond->GetFlags();
-          string stylestring = styles[i].asString();
-          if (stylestring == "aromatic") {
+          int style = styles[i].asInt();
+          if (style == 8) {
             flags |= OBBond::Aromatic;
-          } else if (stylestring == "wedge-up") {
+          } else if (style == 5) {
             flags |= OBBond::Wedge;
-          } else if (stylestring == "wedge-down") {
+          } else if (style == 6) {
             flags |= OBBond::Hash;
-          } else if (stylestring == "crossed") {
+          } else if (style == 1) {
             flags |= OBBond::CisOrTrans;
-          } else if (stylestring == "wavy") {
+          } else if (style == 3) {
             flags |= OBBond::WedgeOrHash;
-          } else if (stylestring == "dashed" || stylestring == "dotted" || 
-                     stylestring == "arrow" || stylestring == "resonance" || 
-                     stylestring == "bold" || stylestring == "fischer" || 
-                     stylestring == "closeContact" || stylestring == "unknown") {
+          } else {
             // Save non-standard annotations as generic data on bond (multiple possible)
             vector<string> val;
             if (pbond->HasData("style")) {
@@ -368,6 +365,22 @@ class PubChemJSONFormat : public OBMoleculeFormat
             AnnotationData *data = new AnnotationData;
             data->SetAttribute("style");
             data->SetOrigin(fileformatInput);
+            string stylestring = "unknown";
+            if (style == 2) {
+              stylestring = "dashed";
+            } else if (style == 4) {
+              stylestring = "dotted";
+            } else if (style == 7) {
+              stylestring = "arrow";
+            } else if (style == 9) {
+              stylestring = "resonance";
+            } else if (style == 10) {
+              stylestring = "bold";
+            } else if (style == 11) {
+              stylestring = "fischer";
+            } else if (style == 12) {
+              stylestring = "closeContact";
+            }
             val.push_back(stylestring);
             data->SetValue(val);
             pbond->SetData(data);
@@ -642,17 +655,17 @@ class PubChemJSONFormat : public OBMoleculeFormat
       doc["bonds"]["order"].append(order);
 
       // Styles and annotations
-      vector<string> annotations;
+      vector<int> annotations;
       if (pConv->IsOption("w", pConv->OUTOPTIONS)) {
         // option w means just use input bond stereo annotations
         if (pbond->IsWedge()) {
-          annotations.push_back("wedge-up");
+          annotations.push_back(5);
         } else if (pbond->IsHash()) {
-          annotations.push_back("wedge-down");
+          annotations.push_back(6);
         } else if (pbond->IsWedgeOrHash()) {
-          annotations.push_back("wavy");
+          annotations.push_back(3);
         } else if (pbond->IsCisOrTrans()) {
-          annotations.push_back("crossed");
+          annotations.push_back(1);
         }
       } else {
         // No option w means use stereochemistry information
@@ -661,30 +674,47 @@ class PubChemJSONFormat : public OBMoleculeFormat
           swap(aid1, aid2);  // Swap start and end atom if necessary
         }
         if (unspec_ctstereo.find(&*pbond) != unspec_ctstereo.end()) {
-          annotations.push_back("crossed");
+          annotations.push_back(1);
         }  
         if (updown.find(&*pbond) != updown.end()) {
           if (updown[&*pbond] == 1) {
-            annotations.push_back("wedge-up");
+            annotations.push_back(5);
           } else if (updown[&*pbond] == 4) {
-            annotations.push_back("wavy");
+            annotations.push_back(3);
           } else if (updown[&*pbond] == 6) {
-            annotations.push_back("wedge-down");
+            annotations.push_back(6);
           }
         }
       }
       if (pbond->IsAromatic()) {
-        annotations.push_back("aromatic");
+        annotations.push_back(8);
       }
       if (pbond->HasData("style")) {
         AnnotationData *data = dynamic_cast<AnnotationData*>(pbond->GetData("style"));
         vector<string> styles = data->GetGenericValue();
         for(vector<string>::const_iterator i = styles.begin(); i != styles.end(); ++i) {
-          annotations.push_back(*i);
+            string stylestring = *i;
+            int style = 255;
+            if (stylestring == "dashed") {
+              style = 2;
+            } else if (stylestring == "dotted") {
+              style = 4;
+            } else if (stylestring == "arrow") {
+              style = 7;
+            } else if (stylestring == "resonance") {
+              style = 9;
+            } else if (stylestring == "bold") {
+              style = 10;
+            } else if (stylestring == "fischer") {
+              style = 11;
+            } else if (stylestring == "closeContact") {
+              style = 12;
+            }
+          annotations.push_back(style);
         }
       }
       annotations.erase(unique(annotations.begin(), annotations.end()), annotations.end());
-      for(vector<string>::const_iterator i = annotations.begin(); i != annotations.end(); ++i) {
+      for(vector<int>::const_iterator i = annotations.begin(); i != annotations.end(); ++i) {
         doc["coords"][0]["conformers"][0]["style"]["aid1"].append(aid1);
         doc["coords"][0]["conformers"][0]["style"]["aid2"].append(aid2);
         doc["coords"][0]["conformers"][0]["style"]["annotation"].append(*i);
