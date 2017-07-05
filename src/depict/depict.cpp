@@ -1212,7 +1212,7 @@ OBBitVec& drawnBonds)
   void OBDepictPrivateBallAndStick::DrawAtom(OBAtom *atom)
   {
     double r, g, b;
-    OBElements::GetRGB(atom->GetAtomicNum());
+    OBElements::GetRGB(atom->GetAtomicNum(), &r, &g, &b);
     OBColor atomColor = OBColor(r, g, b);
     double opacity = 1.0;
     if (fabs(zScale) > 1.0e-1)
