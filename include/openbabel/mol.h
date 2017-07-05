@@ -710,8 +710,6 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
   OBAPI std::string NewExtension(std::string&,char*);
 
   //global definitions
-  //! Global OBElementTable for element properties
-  EXTERN  OBElementTable   etab;
   //! Global OBTypeTable for translating between different atom types
   //! (e.g., Sybyl <-> MM2)
   EXTERN  OBTypeTable      ttab;

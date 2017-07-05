@@ -472,7 +472,6 @@ def double_array(mylist):
 %pythoncode %{
 obErrorLog = cvar.obErrorLog
 ttab = cvar.ttab
-etab = cvar.etab
 isotab = cvar.isotab
 atomtyper = cvar.atomtyper
 aromtyper = cvar.aromtyper
