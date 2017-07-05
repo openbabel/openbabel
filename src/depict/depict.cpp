@@ -558,8 +558,11 @@ namespace OpenBabel
         d->painter->SetPenColor(OBColor(atom->GetData("color")->GetValue()));
       else if(d->options & bwAtoms)
         d->painter->SetPenColor(d->bondColor);
-      else
-        d->painter->SetPenColor(OBColor(etab.GetRGB(atom->GetAtomicNum())));
+      else {
+        double r, g, b;
+        OBElements::GetRGB(atom->GetAtomicNum(), &r, &g, &b);
+        d->painter->SetPenColor(OBColor(r, g, b));
+      }
 
       //charge and radical
       int charge = atom->GetFormalCharge();
@@ -1208,7 +1211,9 @@ OBBitVec& drawnBonds)
 
   void OBDepictPrivateBallAndStick::DrawAtom(OBAtom *atom)
   {
-    OBColor atomColor = etab.GetRGB(atom->GetAtomicNum());
+    double r, g, b;
+    OBElements::GetRGB(atom->GetAtomicNum());
+    OBColor atomColor = OBColor(r, g, b);
     double opacity = 1.0;
     if (fabs(zScale) > 1.0e-1)
       opacity = sqrt((atom->GetZ() - zMin) / zScale);
