@@ -20,21 +20,62 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
+  /** \brief Functions and methods for handling the elements of the periodic table and associated data
+
+  Translating element data is a common task given that many file
+  formats give either element symbol or atomic number information, but
+  not both. The OBElementTable class facilitates conversion between
+  textual and numeric element information. An instance of the
+  OBElementTable class (etab) is declared as external in data.cpp. Source
+  files that include the header file mol.h automatically have an extern
+  definition to etab. The following code sample demonstrates the use
+  of the OBElementTable class:
+  \code
+  cout << "The symbol for element 6 is " << OBElements::GetSymbol(6) << endl;
+  cout << "The atomic number for Sulfur is " << OBElements::GetAtomicNum(16) << endl;
+  cout << "The van der Waal radius for Nitrogen is " << OBElements::GetVdwRad(7);
+  \endcode
+
+  Stored information in the OBElementTable includes elemental:
+  - symbols
+  - covalent radii
+  - van der Waal radii
+  - expected maximum bonding valence
+  - molar mass (by IUPAC recommended atomic masses)
+  - electronegativity (Pauling and Allred-Rochow)
+  - ionization potential
+  - electron affinity
+  - RGB colors for visualization programs
+  - names (by IUPAC recommendation)
+  **/
   namespace OBElements {
 
+    //! \return the element symbol matching the atomic number passed
     OBAPI const char* GetSymbol(unsigned int atomic_number);
+    //! \return the name of this element
     OBAPI const char* GetName(unsigned int atomic_number);
+    //! \return the average atomic mass for this element.
+    //! For exact isotope masses, use OpenBabel::OBIsotopeTable
     OBAPI double GetMass(unsigned int atomic_number);
+    //  //! \return the atomic number matching the element symbol
     OBAPI unsigned int GetAtomicNum(const char* ptr);
+    //! \return the Allred-Rochow electronegativity for this element
     OBAPI double GetAllredRochowElectroNeg(unsigned int atomic_number);
+    //! \return the covalent radius (in Angstrom) for this atomic number
     OBAPI double GetCovalentRad(unsigned int atomic_number);
+    //! \return the van der Waals radius (in Angstrom) for this atomic number
     OBAPI double GetVdwRad(unsigned int atomic_number);
+    //! \return the electron affinity (in eV) for this element
     OBAPI double GetElectronAffinity(unsigned int atomic_number);
+    //! \return the ionization potential (in eV) for this element
     OBAPI double GetIonization(unsigned int atomic_number);
+    //! \return the maximum expected number of bonds to this element
     OBAPI unsigned int GetMaxBonds(unsigned int atomic_number);
+    //! \return the Pauling electronegativity for this element
     OBAPI double GetElectroNeg(unsigned int atomic_number);
+    //! Sets the red, green, and blue color values for this element
     OBAPI void GetRGB(unsigned int atomic_number, double *r, double *g, double *b);
-
+    //! The atomic numbers of the elements
     const unsigned int Hydrogen = 1; // H
     const unsigned int Helium = 2; // He
     const unsigned int Lithium = 3; // Li

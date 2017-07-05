@@ -21,69 +21,70 @@ GNU General Public License for more details.
 
 #define NUMELEMENTS 118
 
-namespace OpenBabel
-{
-  namespace OBElements {
-
 // Use the C++ preprocessor to turn a CSV into separate arrays per column
 // - FYI, the "#B" means put the B in quotes. In you do it directly (i.e. "B")
 //   the macro argument is not expanded and every element is set to the letter B.
 // - NUMELEMENTS + 1 is used as there is a dummy atom at the start. Also for
 //   direct array lookup using the atomic number (starts at 1).
 #define ELEMTABLE(A, B, C, D, E, F, G, H, I, J, K, L, M, N, O) #B
-    const char* element_symbols[NUMELEMENTS + 1] = {
+const char* element_symbols[NUMELEMENTS + 1] = {
 #include "elementtable.h"
-    };
+};
 #undef ELEMTABLE
 #define ELEMTABLE(A, B, C, D, E, F, G, H, I, J, K, L, M, N, O) C
-    double eneg_allred[NUMELEMENTS + 1] = {
+double eneg_allred[NUMELEMENTS + 1] = {
 #include "elementtable.h"
-    };
+};
 #undef ELEMTABLE
 #define ELEMTABLE(A, B, C, D, E, F, G, H, I, J, K, L, M, N, O) D
-    double cov_rad[NUMELEMENTS + 1] = {
+double cov_rad[NUMELEMENTS + 1] = {
 #include "elementtable.h"
-    };
+};
 #undef ELEMTABLE
 #define ELEMTABLE(A, B, C, D, E, F, G, H, I, J, K, L, M, N, O) F
-    double vdw_rad[NUMELEMENTS + 1] = {
+double vdw_rad[NUMELEMENTS + 1] = {
 #include "elementtable.h"
-    };
+};
 #undef ELEMTABLE
 #define ELEMTABLE(A, B, C, D, E, F, G, H, I, J, K, L, M, N, O) G
-    unsigned int maxbonds[NUMELEMENTS + 1] = {
+unsigned int maxbonds[NUMELEMENTS + 1] = {
 #include "elementtable.h"
-    };
+};
 #undef ELEMTABLE
 #define ELEMTABLE(A, B, C, D, E, F, G, H, I, J, K, L, M, N, O) H
-    double atomic_mass[NUMELEMENTS + 1] = {
+double atomic_mass[NUMELEMENTS + 1] = {
 #include "elementtable.h"
-    };
+};
 #undef ELEMTABLE
 #define ELEMTABLE(A, B, C, D, E, F, G, H, I, J, K, L, M, N, O) I
-    double eneg_pauling[NUMELEMENTS + 1] = {
+double eneg_pauling[NUMELEMENTS + 1] = {
 #include "elementtable.h"
-    };
+};
 #undef ELEMTABLE
 #define ELEMTABLE(A, B, C, D, E, F, G, H, I, J, K, L, M, N, O) J
-    double ionization[NUMELEMENTS + 1] = {
+double ionization[NUMELEMENTS + 1] = {
 #include "elementtable.h"
-    };
+};
 #undef ELEMTABLE
 #define ELEMTABLE(A, B, C, D, E, F, G, H, I, J, K, L, M, N, O) K
-    double electron_affinity[NUMELEMENTS + 1] = {
+double electron_affinity[NUMELEMENTS + 1] = {
 #include "elementtable.h"
-    };
+};
 #undef ELEMTABLE
 #define ELEMTABLE(A, B, C, D, E, F, G, H, I, J, K, L, M, N, O) {L, M, N}
-    double rgb[NUMELEMENTS + 1][3] = {
+double rgb[NUMELEMENTS + 1][3] = {
 #include "elementtable.h"
-    };
+};
 #undef ELEMTABLE
 #define ELEMTABLE(A, B, C, D, E, F, G, H, I, J, K, L, M, N, O) #O
-    const char* element_name[NUMELEMENTS + 1] = {
+const char* element_name[NUMELEMENTS + 1] = {
 #include "elementtable.h"
-    };
+};
+
+
+namespace OpenBabel
+{
+  namespace OBElements {
 
     const char* GetSymbol(unsigned int atomic_number)
     {
