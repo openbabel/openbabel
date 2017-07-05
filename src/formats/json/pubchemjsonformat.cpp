@@ -199,31 +199,14 @@ class PubChemJSONFormat : public OBMoleculeFormat
     Json::Value radicals = molRoot["atoms"]["radical"];
     for(Json::ArrayIndex i = 0; i < radicals.size(); i++) {
       Json::Value radical = radicals[i];
-      if (radical["aid"].isInt() && radical["type"].isString()) {
+      if (radical["aid"].isInt() && radical["type"].isInt()) {
         OBAtom* patom = pmol->GetAtomById(radical["aid"].asInt());
         if (patom) {
-          string radicalstring = radical["type"].asString();
-          if (radicalstring == "singlet") {
-            patom->SetSpinMultiplicity(1);
-          } else if (radicalstring == "doublet") {
-            patom->SetSpinMultiplicity(2); 
-          } else if (radicalstring == "triplet") {
-            patom->SetSpinMultiplicity(3);
-          } else if (radicalstring == "quartet") {
-            patom->SetSpinMultiplicity(4);
-          } else if (radicalstring == "quintet") {
-            patom->SetSpinMultiplicity(5);
-          } else if (radicalstring == "hextet") {
-            patom->SetSpinMultiplicity(6);
-          } else if (radicalstring == "heptet") {
-            patom->SetSpinMultiplicity(7);
-          } else if (radicalstring == "octet") {
-            patom->SetSpinMultiplicity(8);
-          } else if (radicalstring == "none") {
-            patom->SetSpinMultiplicity(0);
-          } else {
-            obErrorLog.ThrowError("PubChemJSONFormat", "Invalid atom radical", obWarning);
+          int sm = radical["type"].asInt();
+          if (sm == 255) {
+            sm = 0;
           }
+          patom->SetSpinMultiplicity(sm);
         } else {
           obErrorLog.ThrowError("PubChemJSONFormat", "Invalid atom radical", obWarning);
         }
@@ -598,23 +581,7 @@ class PubChemJSONFormat : public OBMoleculeFormat
       if (sm > 0 && sm < 9) {
         Json::Value radical;
         radical["aid"] = id;
-        if (sm == 1) {
-          radical["type"] = "singlet";
-        } else if (sm == 2) {
-          radical["type"] = "doublet";
-        } else if (sm == 3) {
-          radical["type"] = "triplet";
-        } else if (sm == 4) {
-          radical["type"] = "quartet";
-        } else if (sm == 5) {
-          radical["type"] = "quintet";
-        } else if (sm == 6) {
-          radical["type"] = "hextet";
-        } else if (sm == 7) {
-          radical["type"] = "heptet";
-        } else if (sm == 8) {
-          radical["type"] = "octet";
-        }
+        radical["type"] = sm;
         doc["atoms"]["radical"].append(radical);
       }
       // Coordinates
