@@ -411,12 +411,12 @@ class PubChemJSONFormat : public OBMoleculeFormat
           config.center = tet["center"].asInt();
           config.from = (tet["top"].asInt() == -1) ? OBStereo::ImplicitRef : tet["top"].asInt();
           config.refs.push_back((tet["below"].asInt() == -1) ? OBStereo::ImplicitRef : tet["below"].asInt());
-          if (tet["parity"].asString() == "clockwise") {
+          if (tet["parity"].asInt() == 1) {  // "clockwise"
             config.specified = true;
             config.winding = OBStereo::Clockwise;
             config.refs.push_back((tet["bottom"].asInt() == -1) ? OBStereo::ImplicitRef : tet["bottom"].asInt());
             config.refs.push_back((tet["above"].asInt() == -1) ? OBStereo::ImplicitRef : tet["above"].asInt());
-          } else if (tet["parity"].asString() == "counterclockwise") {
+          } else if (tet["parity"].asInt() == 2) {  // "counterclockwise"
             config.specified = true;
             config.winding = OBStereo::AntiClockwise;
             config.refs.push_back((tet["above"].asInt() == -1) ? OBStereo::ImplicitRef : tet["above"].asInt());
@@ -439,7 +439,7 @@ class PubChemJSONFormat : public OBMoleculeFormat
           config.refs.push_back((pl["rtop"].asInt() == -1) ? OBStereo::ImplicitRef : pl["rtop"].asInt());
           config.refs.push_back((pl["rbottom"].asInt() == -1) ? OBStereo::ImplicitRef : pl["rbottom"].asInt());
           config.refs.push_back((pl["lbottom"].asInt() == -1) ? OBStereo::ImplicitRef : pl["lbottom"].asInt());
-          if (pl["parity"].asString() == "any" || pl["parity"].asString() == "unknown") {
+          if (pl["parity"].asInt() == 3 || pl["parity"].asInt() == 255) {  // "any" or "unknown"
             config.specified = false;
           } else {
             config.specified = true;
@@ -456,7 +456,7 @@ class PubChemJSONFormat : public OBMoleculeFormat
           config.refs.push_back((sq["rbelow"].asInt() == -1) ? OBStereo::ImplicitRef : sq["rbelow"].asInt());
           config.refs.push_back((sq["rabove"].asInt()) ? OBStereo::ImplicitRef : sq["rabove"].asInt());
           config.refs.push_back((sq["labove"].asInt() == -1) ? OBStereo::ImplicitRef : sq["labove"].asInt());
-          if (sq["parity"].asString() == "any" || sq["parity"].asString() == "unknown") {
+          if (sq["parity"].asInt() == 4 || sq["parity"].asInt() == 255) {  // "any" or "unknown"
             config.specified = false;
           } else {
             config.specified = true;
@@ -694,18 +694,18 @@ class PubChemJSONFormat : public OBMoleculeFormat
       if (facade.HasTetrahedralStereo(patom->GetId())) {
         OBTetrahedralStereo::Config config = facade.GetTetrahedralStereo(patom->GetId())->GetConfig();
         Json::Value tet;
-        tet["tetrahedral"]["type"] = "tetrahedral";
+        tet["tetrahedral"]["type"] = 1;  // "tetrahedral"
         tet["tetrahedral"]["center"] = (int)config.center;
         tet["tetrahedral"]["top"] = (int)config.from;
         tet["tetrahedral"]["below"] = (int)config.refs[0];
         tet["tetrahedral"]["bottom"] = (int)config.refs[1];
         tet["tetrahedral"]["above"] = (int)config.refs[2];
         if (config.winding == OBStereo::UnknownWinding || !config.specified) {
-          tet["tetrahedral"]["parity"] = "any";
+          tet["tetrahedral"]["parity"] = 3;  // "any"
         } else if (config.winding == OBStereo::Clockwise){
-          tet["tetrahedral"]["parity"] = "clockwise";
+          tet["tetrahedral"]["parity"] = 1;  // "clockwise"
         } else if (config.winding == OBStereo::AntiClockwise){
-          tet["tetrahedral"]["parity"] = "counterclockwise";
+          tet["tetrahedral"]["parity"] = 2;  // "counterclockwise"
           tet["tetrahedral"]["bottom"] = (int)config.refs[2];
           tet["tetrahedral"]["above"] = (int)config.refs[1];
         }
@@ -718,26 +718,26 @@ class PubChemJSONFormat : public OBMoleculeFormat
         sq["squareplanar"]["center"] = (int)config.center;
         if (config.specified) {
           if (config.shape == OBStereo::ShapeU) {
-            sq["squareplanar"]["parity"] = "u-shape";
+            sq["squareplanar"]["parity"] = 1;  // "u-shape"
             sq["squareplanar"]["lbelow"] = (int)config.refs[0];
             sq["squareplanar"]["rbelow"] = (int)config.refs[1];
             sq["squareplanar"]["rabove"] = (int)config.refs[2];
             sq["squareplanar"]["labove"] = (int)config.refs[3];
           } else if (config.shape == OBStereo::ShapeZ) {
-            sq["squareplanar"]["parity"] = "z-shape";
+            sq["squareplanar"]["parity"] = 2;  // "z-shape"
             sq["squareplanar"]["lbelow"] = (int)config.refs[0];
             sq["squareplanar"]["rbelow"] = (int)config.refs[1];
             sq["squareplanar"]["labove"] = (int)config.refs[2];
             sq["squareplanar"]["rabove"] = (int)config.refs[3];
           } else if (config.shape == OBStereo::Shape4) {
-            sq["squareplanar"]["parity"] = "x-shape";
+            sq["squareplanar"]["parity"] = 3;  // "x-shape"
             sq["squareplanar"]["lbelow"] = (int)config.refs[0];
             sq["squareplanar"]["rabove"] = (int)config.refs[1];
             sq["squareplanar"]["rbelow"] = (int)config.refs[2];
             sq["squareplanar"]["labove"] = (int)config.refs[3];
           }
         } else {
-          sq["squareplanar"]["parity"] = "any";
+          sq["squareplanar"]["parity"] = 4;  // "any"
           sq["squareplanar"]["lbelow"] = (int)config.refs[0];
           sq["squareplanar"]["rbelow"] = (int)config.refs[1];
           sq["squareplanar"]["rabove"] = (int)config.refs[2];
@@ -750,7 +750,7 @@ class PubChemJSONFormat : public OBMoleculeFormat
         OBCisTransStereo *cts = facade.GetCisTransStereo(pbond->GetId());
         OBCisTransStereo::Config config = cts->GetConfig();
         Json::Value ct;
-        ct["planar"]["type"] = "planar";
+        ct["planar"]["type"] = 1;  // "planar"
         ct["planar"]["ltop"] = (int)config.refs[0];
         OBAtom *begin = pmol->GetAtomById(config.begin);
         OBAtom *ltop = pmol->GetAtomById(config.refs[0]);
@@ -767,9 +767,9 @@ class PubChemJSONFormat : public OBMoleculeFormat
           ct["planar"]["rtop"] = (int)cts->GetTransRef(ct["planar"]["lbottom"].asInt());
           if (config.specified) {
             // Open babel is not capable of determining parity? (need CIP rules?)
-            ct["planar"]["parity"] = "unknown";
+            ct["planar"]["parity"] = 255;  // "unknown"
           } else {
-            ct["planar"]["parity"] = "any";
+            ct["planar"]["parity"] = 3;  // "any"
           }        
           doc["stereo"].append(ct);
         }
