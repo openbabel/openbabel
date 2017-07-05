@@ -1414,9 +1414,9 @@ bool MCDLFormat::parseFormula(const string formulaString, std::vector <int>& enu
   string asym;
   string value=formulaString;
 
-  for (i=0; i<etab.GetNumberOfElements(); i++) enumber[i]=0;
+  for (i = 0; i<NELEMMCDL; i++) enumber[i] = 0;
 
-  for (i=1; i<etab.GetNumberOfElements(); i++) if (strlen(OBElements::GetSymbol(i))==2) {
+  for (i = 1; i<NELEMMCDL; i++) if (strlen(OBElements::GetSymbol(i)) == 2) {
       test=true;
     asym=OBElements::GetSymbol(i);
       while (test) {
@@ -1439,7 +1439,7 @@ bool MCDLFormat::parseFormula(const string formulaString, std::vector <int>& enu
         };
       };
     };
-  for (i=1; i<etab.GetNumberOfElements(); i++) if (strlen(OBElements::GetSymbol(i))==1) {
+  for (i = 1; i<NELEMMCDL; i++) if (strlen(OBElements::GetSymbol(i)) == 1) {
       test=true;
     asym=OBElements::GetSymbol(i);
       while (test) {

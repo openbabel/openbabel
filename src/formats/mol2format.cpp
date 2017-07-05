@@ -630,8 +630,7 @@ namespace OpenBabel
     OBResidue *res;
 
     vector<OBAtom*>::iterator i;
-    vector<int> labelcount;
-    labelcount.resize( etab.GetNumberOfElements() );
+    std::map<int, int> labelcount;
 
     ttab.SetFromType("INT");
     ttab.SetToType("SYB");
