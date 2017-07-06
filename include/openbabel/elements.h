@@ -20,20 +20,20 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
-  /** \brief Functions and methods for handling the elements of the periodic table and associated data
+  /** \brief Functions and constants for handling the elements of the periodic table and associated data
 
   Translating element data is a common task given that many file
   formats give either element symbol or atomic number information, but
-  not both. The OBElementTable class facilitates conversion between
-  textual and numeric element information. An instance of the
-  OBElementTable class (etab) is declared as external in data.cpp. Source
-  files that include the header file mol.h automatically have an extern
-  definition to etab. The following code sample demonstrates the use
-  of the OBElementTable class:
+  not both. The OBElements namespace contains functions to handle this conversion,
+  as well as providing information associated with particular elements.
+  The following code sample demonstrates the use of members of this namespace:
   \code
   cout << "The symbol for element 6 is " << OBElements::GetSymbol(6) << endl;
   cout << "The atomic number for Sulfur is " << OBElements::GetAtomicNum(16) << endl;
   cout << "The van der Waal radius for Nitrogen is " << OBElements::GetVdwRad(7);
+  if (atom->GetAtomicNum() == OBElements::Carbon) {
+    // then do something
+  }
   \endcode
 
   Stored information in the OBElementTable includes elemental:
@@ -42,6 +42,7 @@ namespace OpenBabel
   - van der Waal radii
   - expected maximum bonding valence
   - molar mass (by IUPAC recommended atomic masses)
+  - isotopic mass
   - electronegativity (Pauling and Allred-Rochow)
   - ionization potential
   - electron affinity
@@ -55,8 +56,11 @@ namespace OpenBabel
     //! \return the name of this element
     OBAPI const char* GetName(unsigned int atomic_number);
     //! \return the average atomic mass for this element.
-    //! For exact isotope masses, use OpenBabel::OBIsotopeTable
+    //! For exact isotope masses, use GetExactMass()
     OBAPI double GetMass(unsigned int atomic_number);
+    //! \return the exact masss of the isotope
+    //!   (or by default (i.e. "isotope 0") the most abundant isotope)
+    OBAPI double GetExactMass(unsigned int atomic_number, unsigned int isotope=0);
     //  //! \return the atomic number matching the element symbol
     OBAPI unsigned int GetAtomicNum(const char* ptr);
     //! \return the Allred-Rochow electronegativity for this element

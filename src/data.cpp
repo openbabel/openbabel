@@ -29,7 +29,6 @@ GNU General Public License for more details.
 #include <openbabel/elements.h>
 
 // data headers with default parameters
-#include "element.h"
 #include "types.h"
 #include "isotope.h"
 #include "resdata.h"
