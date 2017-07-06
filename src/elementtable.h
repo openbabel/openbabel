@@ -155,3 +155,9 @@ ELEMTABLE(115, Mc, 0.00, 1.60, 1.60, 2.00,  6,     288.19, 0.00,       0,       
 ELEMTABLE(116, Lv, 0.00, 1.60, 1.60, 2.00,  6,        293, 0.00,       0,          0, 0.99, 0.00, 0.08, Livermorium),
 ELEMTABLE(117, Ts, 0.00, 1.60, 1.60, 2.00,  6,        294, 0.00,       0,          0, 0.99, 0.00, 0.07, Tennessine),
 ELEMTABLE(118, Og, 0.00, 1.60, 1.60, 2.00,  6,        294, 0.00,       0,          0, 0.99, 0.00, 0.06, Oganesson),
+// If you add a new element here, please update:
+//     1. NUMELEMENTS in elements.cpp
+//     2. Add a new const to the end of elements.h
+//     3. Update the switch statement for symbol reading in elements.cpp, GetAtomicNum()
+//     4. Ditto for the SMILES parser (which has its own switch statement)
+//     5. Update the isotope table in elements.cpp, GetExactMass(). Remember to support the '0' value.
