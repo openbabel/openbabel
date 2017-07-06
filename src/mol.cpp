@@ -959,7 +959,7 @@ namespace OpenBabel
     OBAtom *atom;
     vector<OBAtom*>::iterator i;
 
-    double hmass = isotab.GetExactMass(1, 1);
+    double hmass = OBElements::GetExactMass(1, 1);
     for (atom = BeginAtom(i); atom; atom = NextAtom(i)) {
       mass += atom->GetExactMass();
       if (implicitH)

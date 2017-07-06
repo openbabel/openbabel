@@ -122,7 +122,7 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     patom->SetAtomicNum(OBElements::GetAtomicNum(piat->elname));
     if(piat->isotopic_mass)
       patom->SetIsotope(piat->isotopic_mass - ISOTOPIC_SHIFT_FLAG +
-          (int)(isotab.GetExactMass(patom->GetAtomicNum())+0.5));
+          (int)(OBElements::GetExactMass(patom->GetAtomicNum())+0.5));
 
     patom->SetSpinMultiplicity(piat->radical);
     patom->SetFormalCharge(piat->charge);

@@ -73,26 +73,6 @@ namespace OpenBabel
       virtual void ParseLine(const char*)          {}
     };
 
-  // class introduction in data.cpp
-  class OBAPI OBIsotopeTable : public OBGlobalDataBase
-    {
-      std::vector<std::vector<std::pair <unsigned int, double> > > _isotopes;
-
-    public:
-
-      OBIsotopeTable(void);
-      ~OBIsotopeTable()    {}
-
-      //! \return the number of elements in the isotope table
-      size_t GetSize() { return _isotopes.size(); }
-
-      void	ParseLine(const char*);
-      //! \return the exact masss of the isotope
-      //!   (or by default (i.e. "isotope 0") the most abundant isotope)
-      double	GetExactMass(const unsigned int atomicNum,
-                             const unsigned int isotope = 0);
-    };
-
   /** \class OBAtomHOF data.h <openbabel/data.h>
       \brief helper class for OBAtomicHeatOfFormationTable
 

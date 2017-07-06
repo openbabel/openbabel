@@ -713,8 +713,6 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
   //! Global OBTypeTable for translating between different atom types
   //! (e.g., Sybyl <-> MM2)
   EXTERN  OBTypeTable      ttab;
-  //! Global OBIsotopeTable for isotope properties
-  EXTERN  OBIsotopeTable   isotab;
   //! Global OBAromaticTyper for detecting aromatic atoms and bonds
   EXTERN  OBAromaticTyper  aromtyper;
   //! Global OBAtomTyper for marking internal valence, hybridization,

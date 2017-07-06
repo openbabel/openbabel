@@ -30,7 +30,6 @@ GNU General Public License for more details.
 
 // data headers with default parameters
 #include "types.h"
-#include "isotope.h"
 #include "resdata.h"
 
 
@@ -44,67 +43,7 @@ namespace OpenBabel
 {
 
   OBTypeTable      ttab;
-  OBIsotopeTable   isotab;
   OBResidueData    resdat;
-
-  /** \class OBIsotopeTable data.h <openbabel/data.h>
-      \brief Table of atomic isotope masses
-  */
-
-  OBIsotopeTable::OBIsotopeTable()
-  {
-    _init = false;
-    _dir = BABEL_DATADIR;
-    _envvar = "BABEL_DATADIR";
-    _filename = "isotope.txt";
-    _subdir = "data";
-    _dataptr = IsotopeData;
-  }
-
-  void OBIsotopeTable::ParseLine(const char *buffer)
-  {
-    unsigned int i;
-    vector<string> vs;
-
-    pair <unsigned int, double> entry;
-    vector <pair <unsigned int, double> > row;
-
-    if (buffer[0] != '#') // skip comment line (at the top)
-      {
-        tokenize(vs,buffer);
-        if (vs.size() > 3) // atomic number, 0, most abundant mass (...)
-          {
-            for (i = 1; i < vs.size() - 1; i += 2) // make sure i+1 still exists
-              {
-                entry.first = atoi(vs[i].c_str()); // isotope
-                entry.second = atof(vs[i + 1].c_str()); // exact mass
-                row.push_back(entry);
-              }
-            _isotopes.push_back(row);
-          }
-        else
-          obErrorLog.ThrowError(__FUNCTION__, " Could not parse line in isotope table isotope.txt", obInfo);
-      }
-  }
-
-  double        OBIsotopeTable::GetExactMass(const unsigned int ele,
-                                             const unsigned int isotope)
-  {
-    if (!_init)
-      Init();
-
-    if (ele > _isotopes.size())
-      return 0.0;
-    if (_isotopes[ele].size() == 0)
-      return 0.0; // PR#2996661
-
-    unsigned int iso;
-    for (iso = 0; iso < _isotopes[ele].size(); ++iso)
-      if (isotope == _isotopes[ele][iso].first)
-        return _isotopes[ele][iso].second;
-
-    return 0.0;
-  }
 
   OBAtomicHeatOfFormationTable::OBAtomicHeatOfFormationTable(void)
   {
