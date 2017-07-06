@@ -815,8 +815,23 @@ namespace OpenBabel
       return 0;
     }
 
+//#  CAUTION: Masses have been zero - padded to 9 decimal places               #
+//#   (we don't currently have a math package that can deal with sig. fig.)    #
+//#   so trailing zeros may not be significant and / or useful                 #
+//#                                                                            #
+//#  Values are compiled from :                                                #
+//#      "The Ame2003 atomic mass evaluation (II)"                             #
+//#        by G.Audi, A.H.Wapstra and C.Thibault                               #
+//#          Nuclear Physics A729 p. 337 - 676, December 22, 2003.             #
+//#  as made available in the mass.mas03round file                             #
+//#  (these are values for publication)                                        #
+//#                                                                            #
+//#  Note that since element 0 often represents a dummy atom, the default      #
+//#  mass is 0 amu, *not* the mass of a neutron, accessible as isotope 1       #
     double GetExactMass(unsigned int atomic_num, unsigned int isotope)
     {
+      // Note that an isotope value of 0 (the default) should return the mass
+      // of the most abundant isotope
       switch(atomic_num) {
       case 0:
         switch (isotope) {

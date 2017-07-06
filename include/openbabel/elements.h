@@ -58,8 +58,8 @@ namespace OpenBabel
     //! \return the average atomic mass for this element.
     //! For exact isotope masses, use GetExactMass()
     OBAPI double GetMass(unsigned int atomic_number);
-    //! \return the exact masss of the isotope
-    //!   (or by default (i.e. "isotope 0") the most abundant isotope)
+    //! \return the exact mass of the specified isotope
+    //!         or by default (i.e. "isotope 0") the mass of the most abundant isotope
     OBAPI double GetExactMass(unsigned int atomic_number, unsigned int isotope=0);
     //  //! \return the atomic number matching the element symbol
     OBAPI unsigned int GetAtomicNum(const char* ptr);
