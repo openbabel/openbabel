@@ -109,5 +109,23 @@ class TestSuite(PythonBindings):
         mol.atoms[0].OBAtom.SetIsotope(65535)
         self.assertEqual(mol.write("smi").rstrip(), "")
 
+    def testWhetherAllElementsAreSupported(self):
+        """Check whether a new element has been correctly added"""
+        N = 0
+        while ob.GetSymbol(N+1):
+            N += 1
+            # Is the symbol parsed?
+            symbol = ob.GetSymbol(N)
+            self.assertEqual(N, ob.GetAtomicNum(symbol))
+            # Has an exact mass been set?
+            self.assertNotEqual(0.0, ob.GetExactMass(N))
+            # Has the symbol been added to the SMILES parser?
+            numatoms = pybel.readstring("smi", "[%s]" % symbol).OBMol.NumAtoms()
+            self.assertEqual(numatoms, 1)
+            # Check whether the element is available as a constant
+            self.assertEqual(N, getattr(ob, ob.GetName(N)))
+
+        self.assertTrue(N > 100)
+
 if __name__ == "__main__":
     unittest.main()
