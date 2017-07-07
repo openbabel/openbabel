@@ -29,6 +29,7 @@ GNU General Public License for more details.
 namespace OpenBabel {
 
  const double HARTEE_TO_KCALPERMOL = 627.509469;
+ const double HARTREE_TO_KJPERMOL = 2625.49962;
  const double KJPERMOL_TO_KCALPERMOL = 1.0/4.184;
  const double RYDBERG_TO_KCALPERMOL = 313.755026;
  const double ELECTRONVOLT_TO_KCALPERMOL = 23.060538;
@@ -53,19 +54,20 @@ namespace OpenBabel {
  * \return true if all values were found, false otherwise.
  */
  OBAPI bool extract_thermochemistry(OpenBabel::OBMol  &mol,
-                                        bool    bVerbose,
-                                        int    *Nsymm,
-                                        int     Nrotbonds,
-                                        double  dbdt,
-                                        double *temperature,
-                                        double *DeltaHf0,
-                                        double *DeltaHfT,
-                                        double *DeltaGfT,
-                                        double *DeltaSfT,
-                                        double *S0T,
-                                        double *CVT,
-                                        double *CPT,
-                                        std::vector<double> &Scomponents);
+				    bool               bVerbose,
+				    int               *Nsymm,
+				    int                Nrotbonds,
+				    double             dbdt,
+				    double            *temperature,
+				    double            *DeltaHf0,
+				    double            *DeltaHfT,
+				    double            *DeltaGfT,
+				    double            *DeltaSfT,
+				    double            *S0T,
+				    double            *CVT,
+				    double            *CPT,
+				    std::vector<double> &Scomponents,
+				    double            *ZPVE);
 
 }
 
