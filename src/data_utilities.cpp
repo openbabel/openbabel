@@ -44,9 +44,9 @@ bool extract_thermochemistry(OpenBabel::OBMol  &mol,
                              double *CVT,
                              double *CPT,
                              std::vector<double> &Scomponents,
-			     double *ZPVE)
+                             double *ZPVE)
 {
-  enum kkTYPE {kkDH, kkDG, kkDS, kkS0, kkCV, kkSt, kkSr, kkSv, kkZP};
+    enum kkTYPE {kkDH, kkDG, kkDS, kkS0, kkCV, kkSt, kkSr, kkSv, kkZP};
     typedef struct {
         std::string term;
         kkTYPE kk;
@@ -130,11 +130,11 @@ bool extract_thermochemistry(OpenBabel::OBMol  &mol,
             {
                 switch (eu[i].kk)
                 {
-		case kkZP:
-		    {
-		        *ZPVE = value;
-		    }
-		    break;
+		            case kkZP:
+		                {
+		                    *ZPVE = value;
+		                }
+		                break;
                 case kkDH:
                     if (0 == T)
                     {
