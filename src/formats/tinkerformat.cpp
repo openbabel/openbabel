@@ -333,7 +333,7 @@ namespace OpenBabel
       if (atom->IsPhosphateOxygen())
         return 159;
       if (atom->IsCarboxylOxygen())
-        return 47;
+        return 75;
       if (atom->IsInRingSize(3))
         return 49; // epoxy
 
