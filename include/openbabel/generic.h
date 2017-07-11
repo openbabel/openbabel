@@ -1185,9 +1185,71 @@ namespace OpenBabel
 
   };
 
- //! A standard iterator over vectors of OBGenericData (e.g., inherited from OBBase)
-  typedef std::vector<OBGenericData*>::iterator OBDataIterator;
+  class OBAPI OBPcharge
+  {
+  protected:
+    int         _atomIndex;
+    double      _q;
+  public:
+    OBPcharge() {};
+    OBPcharge(int atomIndex, double q) {_atomIndex = atomIndex; _q = q ;}
+    ~OBPcharge() {};
 
+    double GetQ() {return _q;}
+    int    GetAtomIndex() {return _atomIndex;}
+    void   SetQ(double q) {_q = q;}
+    void   SetAtomIndex(int atomIndex) {_atomIndex = atomIndex;}
+    
+  };
+
+  typedef std::vector<OBPcharge*>::iterator OBPchargeIterator;
+  
+  class OBAPI OBPcharges: public OBGenericData
+  {
+  protected:
+    std::vector<OBPcharge*> _PartialCharges;
+  public:
+    OBPcharges(){};
+    ~OBPcharges(){};
+
+    int NumPartialCharges() 
+    { 
+      return _PartialCharges.size(); 
+    }
+    
+    void AddPcharge(int atomIndex, double q)
+    {
+      _PartialCharges.push_back(new OpenBabel::OBPcharge(atomIndex, q));
+    }
+
+    OBPchargeIterator BeginPartialCharges() 
+    { 
+      return _PartialCharges.begin(); 
+    }
+    
+    OBPchargeIterator EndPartialCharges() 
+    {
+      return _PartialCharges.begin() + NumPartialCharges(); 
+    }
+    
+    OBPcharge *BeginPartialCharge(OBPchargeIterator &i)
+    {
+      i = _PartialCharges.begin();
+      return((i == _PartialCharges.end()) ? (OBPcharge*)NULL : (OBPcharge*)*i);
+    }
+
+    OBPcharge *NextPartialCharge(OBPchargeIterator &i)
+    {
+      ++i;
+      return((i == _PartialCharges.end()) ? (OBPcharge*)NULL : (OBPcharge*)*i);
+    }
+
+    bool FindPcharge(int atomIndex, double *q);
+    
+  };
+
+  //! A standard iterator over vectors of OBGenericData (e.g., inherited from OBBase)
+  typedef std::vector<OBGenericData*>::iterator OBDataIterator;
 } //end namespace OpenBabel
 
 #endif // OB_GENERIC_H
