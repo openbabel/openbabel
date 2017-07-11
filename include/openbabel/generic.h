@@ -1156,6 +1156,11 @@ namespace OpenBabel
       _points.push_back(new OpenBabel::OBFreeGridPoint(x,y,z,V));
     }
 
+    void ErasePoints()
+    {
+      _points.clear();
+    }
+
     OBFreeGridPointIterator BeginPoints() 
     { 
       return _points.begin(); 
