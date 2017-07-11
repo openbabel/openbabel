@@ -496,6 +496,9 @@ namespace OpenBabel
     bool no_symmetry=false;
     char coords_type[25];
 
+    bool grids_are_read_once  = false;
+    bool grids_are_read_twice = false;
+
     //Prescan file to find second instance of "orientation:"
     //This will be the kind of coords used in the chk/fchk file
     //Unless the "nosym" keyword has been requested
@@ -701,7 +704,8 @@ namespace OpenBabel
               if (!ifs.getline(buffer,BUFF_SIZE)) break;
             }
         else if(strstr(buffer,"Total atomic charges") != NULL ||
-                strstr(buffer,"Mulliken atomic charges") != NULL)
+                strstr(buffer,"Mulliken atomic charges") != NULL ||
+                strstr(buffer, "Mulliken charges") != NULL)
           {
             hasPartialCharges = true;
             chargeModel = "Mulliken";
@@ -720,12 +724,18 @@ namespace OpenBabel
                 tokenize(vs,buffer);
               }
           }
-        else if (strstr(buffer, "Atomic Center") != NULL)
+        else if (strstr(buffer, "Atomic Center") != NULL && !grids_are_read_twice)
           {
             // Data points for ESP calculation
             tokenize(vs,buffer);
             if (NULL == esp)
-              esp = new OpenBabel::OBFreeGrid();
+              {
+                 esp = new OpenBabel::OBFreeGrid();
+              }
+            else if (NULL != esp && grids_are_read_once)
+              {
+                 esp = new OpenBabel::OBFreeGrid();
+              }
             if (vs.size() == 8)
               {
                 esp->AddPoint(atof(vs[5].c_str()),atof(vs[6].c_str()),
@@ -740,7 +750,7 @@ namespace OpenBabel
                   }
               }
           }
-        else if (strstr(buffer, "ESP Fit Center") != NULL)
+        else if (strstr(buffer, "ESP Fit Center") != NULL && !grids_are_read_twice)
           {
             // Data points for ESP calculation
             tokenize(vs,buffer);
@@ -760,7 +770,7 @@ namespace OpenBabel
                   }
               }
           }
-        else if (strstr(buffer, "Electrostatic Properties (Atomic Units)") != NULL)
+        else if (strstr(buffer, "Electrostatic Properties (Atomic Units)") != NULL && !grids_are_read_twice)
           {
             int i,np;
             OpenBabel::OBFreeGridPoint *fgp;
@@ -786,8 +796,19 @@ namespace OpenBabel
               }
             if (i == np)
               {
-                esp->SetAttribute("Electrostatic Potential");
-                mol.SetData(esp);
+                if (mol.HasData("Electrostatic Potential"))
+                  {
+                    mol.DeleteData("Electrostatic Potential");    // Delete the old esp
+                    esp->SetAttribute("Electrostatic Potential");
+                    mol.SetData(esp); // Add the new esp
+                    grids_are_read_twice = true;
+                  }
+                else
+                  {
+                    esp->SetAttribute("Electrostatic Potential");
+                    mol.SetData(esp);
+                    grids_are_read_once = true;
+                  }
               }
             else
               {
