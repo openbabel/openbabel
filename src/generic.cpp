@@ -1642,6 +1642,23 @@ unsigned int OBVibrationData::GetNumberOfFrequencies() const
   return this->_vFrequencies.size();
 }
 
+bool OBPcharges::FindPcharge(int    atomIndex,
+                             double *q)
+{
+  OBPcharge        *pc;
+  OBPchargeIterator pci;     
+  pci = BeginPartialCharges();
+  for (pc = BeginPartialCharge(pci); (NULL != pc); pc = NextPartialCharge(pci))
+    {
+      if (atomIndex == pc->GetAtomIndex())
+        {
+          *q = pc->GetQ();
+          return true;
+        }
+    }
+  return false;
+}
+
 } //end namespace OpenBabel
 
 //! \file generic.cpp
