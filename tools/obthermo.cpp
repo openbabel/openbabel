@@ -154,7 +154,7 @@ int main(int argc,char **argv)
                                   &CVT,
                                   &CPT,
                                   Scomponents,
-				  &ZPVE))
+                                  &ZPVE))
       {
           double Rgas  = 1.9872041; // cal/mol K
           printf("DeltaHform(0K)  %10g  %s\n", DeltaHf0*unit_factor, e_unit.c_str());
