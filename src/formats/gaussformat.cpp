@@ -496,8 +496,9 @@ namespace OpenBabel
     bool no_symmetry=false;
     char coords_type[25];
 
-    bool grids_are_read_once = false;
-    int number_of_esp_calcs  = 0;
+
+    bool grids_are_read_once  = false;
+    bool grids_are_read_twice = false;
 
     //Prescan file to find second instance of "orientation:"
     //This will be the kind of coords used in the chk/fchk file
@@ -780,7 +781,7 @@ namespace OpenBabel
             mol.SetData(Hirsh_Q);
             mol.SetData(CM5_Q);
           }
-        else if (strstr(buffer, "Atomic Center") != NULL && number_of_esp_calcs < 2)
+        else if (strstr(buffer, "Atomic Center") != NULL && !grids_are_read_twice)
           {
             // Data points for ESP calculation
             tokenize(vs,buffer);
@@ -806,7 +807,7 @@ namespace OpenBabel
                   }
               }
           }
-        else if (strstr(buffer, "ESP Fit Center") != NULL && number_of_esp_calcs < 2)
+        else if (strstr(buffer, "ESP Fit Center") != NULL && !grids_are_read_twice)
           {
             // Data points for ESP calculation
             tokenize(vs,buffer);
@@ -826,7 +827,7 @@ namespace OpenBabel
                   }
               }
           }
-        else if (strstr(buffer, "Electrostatic Properties (Atomic Units)") != NULL && number_of_esp_calcs < 2)
+        else if (strstr(buffer, "Electrostatic Properties (Atomic Units)") != NULL && !grids_are_read_twice)
           {
             int i,np;
             OpenBabel::OBFreeGridPoint *fgp;
@@ -852,17 +853,19 @@ namespace OpenBabel
               }
             if (i == np)
               {
-                if (number_of_esp_calcs == 0)
+                if (mol.HasData("Electrostatic Potential"))
                   {
-                    esp->SetAttribute("Input Electrostatic Potential");
+                    mol.DeleteData("Electrostatic Potential");    // Delete the old esp
+                    esp->SetAttribute("Electrostatic Potential");
+                    mol.SetData(esp); // Add the new esp
+                    grids_are_read_twice = true;
                   }
-                else if (number_of_esp_calcs == 1)
+                else
                   {
-                    esp->SetAttribute("Optimized Electrostatic Potential");
+                    esp->SetAttribute("Electrostatic Potential");
+                    mol.SetData(esp);
+                    grids_are_read_once = true;
                   }
-                mol.SetData(esp);
-                grids_are_read_once = true;
-                number_of_esp_calcs++;
               }
             else
               {
