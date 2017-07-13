@@ -496,6 +496,7 @@ namespace OpenBabel
     bool no_symmetry=false;
     char coords_type[25];
 
+
     bool grids_are_read_once  = false;
     bool grids_are_read_twice = false;
 
