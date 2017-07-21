@@ -1179,6 +1179,109 @@ namespace OpenBabel
     }
 
   };
+  //! \class OBXrayORCAData generic.h <openbabel/generic.h>
+  //! \brief Used to hold information about Xray absorption and emission spectra
+  class OBAPI OBXrayORCAData: public OBGenericData
+  {
+  protected:
+    bool _bXRayData;
+    //! Wavelengths (nm)
+    std::vector<double>  _vAbsWavelengths;
+    std::vector<double>  _vEmWavelengths;
+
+    //! Absorption spectrum combined / Xray or normal
+    std::vector<double>  _vAbsCombined;
+
+    //! Emission spectrum combined / Xray or normal
+    std::vector<double>  _vEmCombined;
+
+    //! Absorption spectrum combined / Xray or normal
+    std::vector<double>  _vAbsD2;
+    std::vector<double>  _vAbsM2;
+    std::vector<double>  _vAbsQ2;
+
+    //! Emission spectrum combined / Xray or normal
+    std::vector<double>  _vEmD2;
+    std::vector<double>  _vEmM2;
+    std::vector<double>  _vEmQ2;
+
+    //! Xray absorption spectrum - electric dipole
+    std::vector<double>  _vAbsEDipole;
+
+    //! Xray absorption spectrum - velosity
+    std::vector<double>  _vAbsVelocity;
+
+    //! Xray emission spectrum - electric dipole
+    std::vector<double>  _vEmEDipole;
+
+    //! Xray emission spectrum - velosity
+    std::vector<double>  _vEmVelocity;
+
+
+  public:
+    OBXrayORCAData(): OBGenericData("ORCASpectraData", OBGenericDataType::CustomData0) {}
+    virtual ~OBXrayORCAData() {}
+    virtual OBGenericData* Clone(OBBase*) const
+         {return new OBXrayORCAData(*this);}
+
+    OBXrayORCAData & operator=(const OBXrayORCAData &);
+
+    void SetXRayData (const bool &);
+
+    void SetData(const std::vector<double> & wavelengths,
+                 const std::vector<double> & forces);
+
+    void SetAbsWavelength(const std::vector<double> &);
+    void SetEmWavelength(const std::vector<double> &);
+    void SetAbsEDipole(const std::vector<double> &);
+    void SetAbsVelocity(const std::vector<double> &);
+    void SetEmEDipole(const std::vector<double> &);
+    void SetEmVelosity(const std::vector<double> &);
+
+    void SetAbsCombined(const std::vector<double> &);
+    void SetAbsD2(const std::vector<double> &);
+    void SetAbsM2(const std::vector<double> &);
+    void SetAbsQ2(const std::vector<double> &);
+
+    void SetEmCombined(const std::vector<double> &);
+    void SetEmD2(const std::vector<double> &);
+    void SetEmM2(const std::vector<double> &);
+    void SetEmQ2(const std::vector<double> &);
+
+    bool GetXRayData () const
+    { return this->_bXRayData; }
+    std::vector<double> GetAbsWavelengths() const
+      { return this->_vAbsWavelengths; }
+    std::vector<double> GetEmWavelengths() const
+      { return this->_vEmWavelengths; }
+    std::vector<double> GetAbsEDipole() const
+      { return this->_vAbsEDipole; }
+    std::vector<double> GetEmEDipole() const
+      { return this->_vEmEDipole; }
+    std::vector<double> GetAbsVelocity() const
+      { return this->_vAbsVelocity; }
+    std::vector<double> GetEmVelosity() const
+      { return this->_vEmVelocity; }
+
+
+    std::vector<double> GetAbsCombined() const
+      { return this->_vAbsCombined; }
+    std::vector<double> GetAbsD2() const
+      { return this->_vAbsD2; }
+    std::vector<double> GetAbsM2() const
+      { return this->_vAbsM2; }
+    std::vector<double> GetAbsQ2() const
+      { return this->_vAbsQ2; }
+    std::vector<double> GetEmCombined() const
+      { return this->_vEmCombined; }
+    std::vector<double> GetEmD2() const
+      { return this->_vEmD2; }
+    std::vector<double> GetEmM2() const
+      { return this->_vEmM2; }
+    std::vector<double> GetEmQ2() const
+      { return this->_vEmQ2; }
+  };
+
 
  //! A standard iterator over vectors of OBGenericData (e.g., inherited from OBBase)
   typedef std::vector<OBGenericData*>::iterator OBDataIterator;

@@ -1633,7 +1633,6 @@ void OBVibrationData::SetData(const std::vector< std::vector< vector3 > > & vLx,
   this->_vRamanActivities = vRamanActivities;
 }
 
-
 /*!
 **\brief Get the number of frequencies
 */
@@ -1641,6 +1640,131 @@ unsigned int OBVibrationData::GetNumberOfFrequencies() const
 {
   return this->_vFrequencies.size();
 }
+//
+//member functions for OBXrayORCAData class
+//
+/*!
+**\brief Check if XRay data are stored
+**\param bXRayData true or false
+*/
+void OBXrayORCAData::SetXRayData(const bool & bXRayData)
+{
+  this->_bXRayData = bXRayData;
+}
+    void SetXRayData (const bool &);
+/*!
+**\brief Assign the wavelength data for absorption
+**\param vAbsWavelengths Wavelengths in nm
+*/
+void OBXrayORCAData::SetAbsWavelength(const std::vector<double> & wavelengths)
+{
+  this->_vAbsWavelengths = wavelengths;
+}
+/*!
+**\brief Assign the wavelength data for emission
+**\param vWavelengths Wavelengths in nm
+*/
+void OBXrayORCAData::SetEmWavelength(const std::vector<double> & wavelengths)
+{
+  this->_vEmWavelengths = wavelengths;
+}
+/*!
+**\brief Assign the absorption electronic dipole
+**\param vAbsEDipole absorption electronic dipole moment
+*/
+void OBXrayORCAData::SetAbsEDipole(const std::vector<double> & vEDipole)
+{
+  this->_vAbsEDipole = vEDipole;
+}
+/*!
+**\brief Assign the emission electronic dipole
+**\param vAbsEDipole emission electronic dipole moment
+*/
+void OBXrayORCAData::SetEmEDipole(const std::vector<double> & vEDipole)
+{
+  this->_vEmEDipole = vEDipole;
+}
+/*!
+**\brief Assign the absorption velosity
+**\param vAbsVelosity absorption velosity
+*/
+void OBXrayORCAData::SetAbsVelocity(const std::vector<double> & vVelosity)
+{
+  this->_vAbsVelocity = vVelosity;
+}
+/*!
+**\brief Assign the emission velosity
+**\param vEmVelosity emission velosity
+*/
+void OBXrayORCAData::SetEmVelosity(const std::vector<double> & vVelosity)
+{
+  this->_vEmVelocity = vVelosity;
+}
+/*!
+**\brief Assign the absorption combined data
+**\param vAbsEDipole absorption combined data
+*/
+void OBXrayORCAData::SetAbsCombined(const std::vector<double> & vAbsCombined)
+{
+  this->_vAbsCombined = vAbsCombined;
+}
+/*!
+**\brief Assign the emission combined data
+**\param vAbsEDipole emission combined data
+*/
+void OBXrayORCAData::SetEmCombined(const std::vector<double> & vEmCombined)
+{
+  this->_vEmCombined = vEmCombined;
+}
+/*!
+**\brief Assign the absorption electric dipole
+**\param vAbsD2 absorption D2
+*/
+void OBXrayORCAData::SetAbsD2(const std::vector<double> & vAbsD2)
+{
+  this->_vAbsD2 = vAbsD2;
+}
+/*!
+**\brief Assign the absorption magnetic dipole
+**\param vAbsM2 absorption M2
+*/
+void OBXrayORCAData::SetAbsM2(const std::vector<double> & vAbsM2)
+{
+  this->_vAbsM2 = vAbsM2;
+}
+/*!
+**\brief Assign the absorption electric quadrupole data
+**\param vAbsQ2 absorption Q2
+*/
+void OBXrayORCAData::SetAbsQ2(const std::vector<double> & vAbsQ2)
+{
+  this->_vAbsQ2 = vAbsQ2;
+}
+/*!
+**\brief Assign the emission electric dipole
+**\param vAbsD2 emission D2
+*/
+void OBXrayORCAData::SetEmD2(const std::vector<double> & vEmD2)
+{
+  this->_vEmD2 = vEmD2;
+}
+/*!
+**\brief Assign the emission magnetic dipole
+**\param vAbsM2 emission M2
+*/
+void OBXrayORCAData::SetEmM2(const std::vector<double> & vEmM2)
+{
+  this->_vEmM2 = vEmM2;
+}
+/*!
+**\brief Assign the emission electric quadrupole data
+**\param vAbsQ2 emission Q2
+*/
+void OBXrayORCAData::SetEmQ2(const std::vector<double> & vEmQ2)
+{
+  this->_vEmQ2 = vEmQ2;
+}
+
 
 } //end namespace OpenBabel
 
