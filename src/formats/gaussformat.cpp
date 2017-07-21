@@ -643,6 +643,10 @@ namespace OpenBabel
               if (vs.size() >= 6)
                 {
                   OBVectorData *dipoleMoment = new OBVectorData;
+                  if (mol.HasData("Dipole Moment"))
+                    {
+                      mol.DeleteData("Dipole Moment"); // Delete the old one to add the new one
+                    }
                   dipoleMoment->SetAttribute("Dipole Moment");
                   double x, y, z;
                   x = atof(vs[1].c_str());
@@ -673,6 +677,10 @@ namespace OpenBabel
                   Q[2][1] = Q[1][2] = atof(vs2[5].c_str());
                   matrix3x3 quad(Q);
 
+                  if (mol.HasData("Traceless Quadrupole Moment"))
+                    {
+                      mol.DeleteData("Traceless Quadrupole Moment"); // Delete the old one to add the new one
+                    }
                   quadrupoleMoment->SetAttribute("Traceless Quadrupole Moment");
                   quadrupoleMoment->SetData(quad);
                   quadrupoleMoment->SetOrigin(fileformatInput);
@@ -697,6 +705,10 @@ namespace OpenBabel
                   Q[2][1] = Q[1][2] = atof(vs[6].c_str());
                   matrix3x3 pol(Q);
 
+                  if (mol.HasData("Exact polarizability"))
+                    {
+                      mol.DeleteData("Exact polarizability"); // Delete the old one to add the new one
+                    }
                   pol_tensor->SetAttribute("Exact polarizability");
                   pol_tensor->SetData(pol);
                   pol_tensor->SetOrigin(fileformatInput);
