@@ -867,15 +867,23 @@ namespace OpenBabel
               {
                 if (mol.HasData("Electrostatic Potential"))
                   {
-                    mol.DeleteData("Electrostatic Potential");    // Delete the old esp
-                    esp->SetAttribute("Electrostatic Potential");
-                    mol.SetData(esp); // Add the new esp
+                    // the number of ESP grids must be more than the number of atoms.
+                    if (np > mol.NumAtoms())
+                      {
+                        mol.DeleteData("Electrostatic Potential");    // Delete the old esp
+                        esp->SetAttribute("Electrostatic Potential");
+                        mol.SetData(esp); // Add the new esp
+                      }
                     grids_are_read_twice = true;
                   }
                 else
                   {
-                    esp->SetAttribute("Electrostatic Potential");
-                    mol.SetData(esp);
+                    // the number of ESP grids must be more than the number of atoms.
+                    if (np > mol.NumAtoms())
+                      {
+                        esp->SetAttribute("Electrostatic Potential");
+                        mol.SetData(esp);                       
+                      }
                     grids_are_read_once = true;
                   }
               }
