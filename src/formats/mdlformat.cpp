@@ -87,6 +87,14 @@ namespace OpenBabel
                " a  write atomclass if available\n"
                " m  write no properties\n"
                " w  use wedge and hash bonds from input (2D only)\n"
+               " v  always specify the valence in the valence field\n"
+               "      The default behavior is to only specify the valence if it\n"
+               "      is not consistent with the MDL valence model.\n"
+               "      So, for CH4 we don't specify it, but we do for CH3.\n"
+               "      This option may be useful to preserve the correct number of\n"
+               "      implicit hydrogens if a downstream tool does not correctly\n"
+               "      implement the MDL valence model (but does honor the valence\n"
+               "      field).\n"
                " S  do not store cis/trans stereochemistry in 0D MOL files\n"
                " A  output in Alias form, e.g. Ph, if present\n"
                " E  add an ASCII depiction of the molecule as a property\n"
@@ -946,6 +954,8 @@ namespace OpenBabel
                    " be stored using an Open Babel extension. To generate 2D or 3D coordinates instead use --gen2D or --gen3D.", obWarning, onceOnly);
     }
 
+    bool alwaysSpecifyValence = pConv->IsOption("v");
+
     // Make a copy of mol (origmol) then ConvertZeroBonds() in mol
     // TODO: Do we need to worry about modifying mol? (It happens anyway in Kekulize etc?)
     // If so, instead make mol the copy: OBMol &origmol = *pmol; OBMol mol = origmol;
@@ -1088,10 +1098,15 @@ namespace OpenBabel
         if (parity.find(atom) != parity.end())
           stereo = parity[atom];
 
-        int valence = 0; //Only non-zero when RAD value would be >=4 (outside spec)
-        //or an unbonded metal
-        if (atom->GetSpinMultiplicity()>=4 || (IsMetal(atom) && atom->GetValence()==0))
-          valence = atom->GetValence()==0 ? 15 : atom->GetValence();
+        
+        int expval = atom->BOSum();
+        int impval = MDLValence(atom->GetAtomicNum(), atom->GetFormalCharge(), expval);
+        int actual_impval = expval + atom->GetImplicitHCount();
+        int valence;
+        if (!alwaysSpecifyValence && actual_impval == impval)
+          valence = 0;
+        else
+          valence = actual_impval == 0 ? 15 : actual_impval;
 
         if (pac && pac->HasClass(atom->GetIdx()))
           aclass = pac->GetClass(atom->GetIdx());

@@ -127,5 +127,16 @@ class TestSuite(PythonBindings):
 
         self.assertTrue(N > 100)
 
+class Radicals(PythonBindings):
+    def testSmilesToMol(self):
+        smis = ["C", "[CH3]", "[CH2]", "[CH2]C"]
+        valences = [0, 3, 2, 3]
+        for smi, valence in zip(smis, valences):
+            mol = pybel.readstring("smi", smi)
+            molfile = mol.write("mol")
+            firstcarbon = molfile.split("\n")[4]
+            mvalence = int(firstcarbon[48:53])
+            self.assertEqual(valence, mvalence)
+
 if __name__ == "__main__":
     unittest.main()
