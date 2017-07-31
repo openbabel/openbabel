@@ -129,14 +129,33 @@ class TestSuite(PythonBindings):
 
 class Radicals(PythonBindings):
     def testSmilesToMol(self):
-        smis = ["C", "[CH3]", "[CH2]", "[CH2]C"]
-        valences = [0, 3, 2, 3]
+        smis = ["C", "[CH3]", "[CH2]", "[CH2]C", "[C]"]
+        valences = [0, 3, 2, 3, 15]
+        # Note to self: why is this loop so slow? 2.8s for this test!
         for smi, valence in zip(smis, valences):
             mol = pybel.readstring("smi", smi)
             molfile = mol.write("mol")
             firstcarbon = molfile.split("\n")[4]
             mvalence = int(firstcarbon[48:53])
             self.assertEqual(valence, mvalence)
+            # test molfile->smiles
+            msmi = pybel.readstring("mol", molfile).write("smi").rstrip()
+            self.assertEqual(smi, msmi)
+    def testMolfileInvalidValencyToSmiles(self):
+        """Should trigger warning about invalid valency field
+        Unfortunately - there's no way to test this from Python as it requires
+        streams :-/"""
+        molfile = """
+ OpenBabel07291719012D
+
+  2  1  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 C   0  0  0  0  0 15  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  4  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+M  END
+"""
+        mol = pybel.readstring("mol", molfile)
+        self.assertEqual("[C]C", mol.write("smi").rstrip())
 
 if __name__ == "__main__":
     unittest.main()

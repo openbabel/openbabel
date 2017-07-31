@@ -391,6 +391,7 @@ namespace OpenBabel
         "the file may contains Atom Lists, which are ignored\n",
         obWarning);
 
+    std::map<OBAtom*, int> specified_valence;
     mol.BeginModify();
     if(line.find("V3000") != string::npos) {
       // V3000
@@ -425,7 +426,7 @@ namespace OpenBabel
         // 36..38   ccc = charge  ('M  CHG' and 'M  RAD' lines take precedence)
         // 39..41   sss = atom stereo parity (ignored)
         //          ... = query/reaction related
-        // 48..50   vvv = valence (ignored unless 15, which means 0)
+        // 48..50   vvv = valence (0 means use implicit valence, while 15 means valence of 0)
         massdiff = charge = 0;
         parity = NotStereo;
         if (line.size() < 34) {
@@ -482,8 +483,8 @@ namespace OpenBabel
         // valence
         if (line.size() >= 50) {
           int valence = ReadIntField(line.substr(48, 3).c_str());
-          //if (valence != 0) // Now no H with any value
-          //  ; // TODO: Implement this
+          if (valence != 0)
+            specified_valence[patom] = valence == 15 ? 0 : valence;
         }
 
         if (line.size() >= 62) {
@@ -772,7 +773,21 @@ namespace OpenBabel
           atom->SetImplicitHCount(hyd->second); // TODO: I have no idea
         }
       } else {
-        unsigned int impval = MDLValence(elem, charge, expval);
+        // If the valence field was specified use that, otherwise
+        // use the implicit valence
+        std::map<OBAtom*, int>::const_iterator mit = specified_valence.find(&*atom);
+        unsigned int impval;
+        if (mit == specified_valence.end())
+          impval = MDLValence(elem, charge, expval);
+        else {
+          impval = mit->second;
+          if (impval < expval) {
+            errorMsg << "WARNING: Problem interpreting the valence field of an atom\n"
+              "The valence field specifies a valence " << impval << " that is\n"
+              "less than the observed explicit valence " << expval << ".\n";
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+          }
+        }
         int mult = atom->GetSpinMultiplicity();
         int delta;
         switch (mult) {
