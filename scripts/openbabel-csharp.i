@@ -132,7 +132,13 @@
 		get{return new OBVector3(0,0,0);}
 	}
 %}
-  
+%typemap(cscode) OpenBabel::matrix3x3
+%{
+  public static OBVector3 Mul(OBMatrix3x3 m, OBVector3 v)
+  {
+    return new OBVector3(v.x()*m.Get(0,0) + v.y()*m.Get(0,1) + v.z()*m.Get(0,2), v.x()*m.Get(1,0) + v.y()*m.Get(1,1) + v.z()*m.Get(1,2), v.x()*m.Get(2,0) + v.y()*m.Get(2,1) + v.z()*m.Get(2,2));
+  }
+%}
 //simplified public Downcast method
 //this is defined up here because something
 //lower down in the file interferes with it
