@@ -976,8 +976,8 @@ WRAPITERATOR(OBMolBondBFSIter,OpenBabel::OBMolBondBFSIter,OBBond);
 WRAPITERATOR(OBMolAngleIter,OpenBabel::OBMolAngleIter,VectorUInt);
 WRAPITERATOR(OBAtomAtomIter,OpenBabel::OBAtomAtomIter,OBAtom)
 WRAPITERATOR(OBAtomBondIter,OpenBabel::OBAtomBondIter,OBBond);
-WRAPITERATOR(OBMolRingIter,OpenBabel::OBRingIter,OBRing);
-WRAPITERATOR(OBMolTorsionIter,OpenBabel::OBTorsionIter,VectorUInt);
+WRAPITERATOR(OBMolRingIter,OpenBabel::OBMolRingIter,OBRing);
+WRAPITERATOR(OBMolTorsionIter,OpenBabel::OBMolTorsionIter,VectorUInt);
 WRAPITERATOR(OBResidueIter,OpenBabel::OBResidueIter,OBResidue);
 WRAPITERATOR(OBResidueAtomIter,OpenBabel::OBResidueAtomIter,OBAtom);
 WRAPITERATOR(OBMolPairIter,OpenBabel::OBMolPairIter,VectorUInt)
