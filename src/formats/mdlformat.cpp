@@ -773,13 +773,14 @@ namespace OpenBabel
           atom->SetImplicitHCount(hyd->second); // TODO: I have no idea
         }
       } else {
-        // If the valence field was specified use that, otherwise
-        // use the implicit valence
+        // By testing with Symyx Draw (Accelrys Draw 4.0), if the
+        // valence field is specified then the M RAD is ignored for
+        // the purposes of setting hydrogen count.
+        // So, if the valence field was specified use that, otherwise
+        // use the implicit valence adjusted by any M RAD.
         std::map<OBAtom*, int>::const_iterator mit = specified_valence.find(&*atom);
         unsigned int impval;
-        if (mit == specified_valence.end())
-          impval = MDLValence(elem, charge, expval);
-        else {
+        if (mit != specified_valence.end()) {
           impval = mit->second;
           if (impval < expval) {
             errorMsg << "WARNING: Problem interpreting the valence field of an atom\n"
@@ -788,19 +789,24 @@ namespace OpenBabel
             obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
           }
         }
-        int mult = atom->GetSpinMultiplicity();
-        int delta;
-        switch (mult) {
-        case 0:
-          delta = 0; break;
-        case 1: case 3: //carbene
-          delta = 2; break;
-        case 2: //radical
-          delta = 1; break;
-        default: // >= 4, CH, Catom
-          delta = mult - 1;
+        else {
+          impval = MDLValence(elem, charge, expval) - expval;
+          // adjust for M RAD
+          int mult = atom->GetSpinMultiplicity();
+          int delta;
+          switch (mult) {
+          case 0:
+            delta = 0; break;
+          case 1: case 3: //carbene
+            delta = 2; break;
+          case 2: //radical
+            delta = 1; break;
+          default: // >= 4, CH, Catom
+            delta = mult - 1;
+          }
+          impval -= delta;
         }
-        int nimpval = impval - expval - delta;
+        int nimpval = impval - expval;
         atom->SetImplicitHCount(nimpval > 0 ? nimpval : 0);
       }
     }
