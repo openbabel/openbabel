@@ -28,6 +28,7 @@
 
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/stereo/tetrahedral.h>
+#include <openbabel/elements.h>
 
 #include <iterator> // std::istream_iterator
 #include <cassert>
@@ -140,7 +141,7 @@ namespace OpenBabel {
     vector<OBEdgeBase*>::iterator bi;
     for (bond = atom->BeginBond(bi); bond; bond = atom->NextBond(bi)) {
       nbr = bond->GetNbrAtom(atom);
-      if (_frag_atoms.BitIsSet(nbr->GetIdx()) && !(nbr->IsHydrogen()))
+      if (_frag_atoms.BitIsSet(nbr->GetIdx()) && nbr->GetAtomicNum() != OBElements::Hydrogen)
         count++;
     }
 
@@ -172,7 +173,7 @@ namespace OpenBabel {
     vector<OBEdgeBase*>::iterator bi;
     for (bond = atom->BeginBond(bi); bond; bond = atom->NextBond(bi)) {
       nbr = bond->GetNbrAtom(atom);
-      if (_frag_atoms.BitIsSet(nbr->GetIdx()) && !(nbr->IsHydrogen())) {
+      if (_frag_atoms.BitIsSet(nbr->GetIdx()) && nbr->GetAtomicNum() != OBElements::Hydrogen) {
         if (bond->IsAromatic())
           count += 1.6f;
         else
@@ -237,7 +238,7 @@ namespace OpenBabel {
             if (   _frag_atoms.BitIsOn(nbr_idx)
                 && !used.BitIsOn(nbr_idx)
                 && !curr.BitIsOn(nbr_idx)
-                && !(bond->GetNbrAtom(atom1))->IsHydrogen())
+                && bond->GetNbrAtom(atom1)->GetAtomicNum() != OBElements::Hydrogen)
               next.SetBitOn(nbr_idx);
           }
         }

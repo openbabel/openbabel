@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
+#include <openbabel/elements.h>
 
 #if !HAVE_STRNCASECMP
 extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
@@ -54,7 +55,7 @@ void NegativeTestCases(int &molCount, unsigned int &testCount)
     molCount++;
     bool found_non_aromatic = false;
     FOR_ATOMS_OF_MOL(atom, mol) {
-      if (atom->IsHydrogen())
+      if (atom->GetAtomicNum() == OBElements::Hydrogen)
         continue;
       if (!atom->IsAromatic()) {
         found_non_aromatic = true;
@@ -158,7 +159,7 @@ int aromatest(int argc, char* argv[])
             mol.DeleteHydrogens();
           FOR_ATOMS_OF_MOL(atom, mol)
           {
-            if (atom->IsHydrogen())
+            if (atom->GetAtomicNum() == OBElements::Hydrogen)
               continue;
 
             if (atom->IsAromatic())

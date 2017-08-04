@@ -117,6 +117,7 @@ set(openbabel_srcs
   data.cpp
   data_utilities.cpp
   descriptor.cpp
+  elements.cpp
   fingerprint.cpp
   forcefield.cpp
   format.cpp

@@ -76,7 +76,7 @@ namespace OpenBabel
   // \return Is this atom a sulfur in a (di)thiocarboxyl (-CS2, -COS, CS2H or COSH) group?
   static bool IsThiocarboxylSulfur(OBAtom* queryatom)
   {
-    if (!queryatom->IsSulfur())
+    if (queryatom->GetAtomicNum() != OBElements::Sulfur)
       return(false);
     if (queryatom->GetHvyValence() != 1)
       return(false);
@@ -86,7 +86,7 @@ namespace OpenBabel
     OBBondIterator i;
 
     for (bond = queryatom->BeginBond(i); bond; bond = queryatom->NextBond(i))
-      if ((bond->GetNbrAtom(queryatom))->IsCarbon())
+      if ((bond->GetNbrAtom(queryatom))->GetAtomicNum() == OBElements::Carbon)
       {
         atom = bond->GetNbrAtom(queryatom);
         break;
@@ -112,6 +112,26 @@ namespace OpenBabel
     case 8: case 16: return true;
     default: return false;
     }
+  }
+
+  static unsigned int GetAtomicNumAndIsotope(const char* symbol, int *isotope)
+  {
+    const char* p = symbol;
+    switch (p[0]) {
+    case 'D':
+      if (p[1] == '\0') {
+        *isotope = 2;
+        return 1;
+      }
+      break;
+    case 'T':
+      if (p[1] == '\0') {
+        *isotope = 3;
+        return 1;
+      }
+      break;
+    }
+    return OBElements::GetAtomicNum(symbol);
   }
 
   /////////////////////////////////////////////////////////////////
@@ -309,7 +329,7 @@ namespace OpenBabel
 
           string::size_type dotPos = str.find('.');
           if (dotPos == string::npos) {
-            elemno = etab.GetAtomicNum(str.c_str(), isotope);
+            elemno = GetAtomicNumAndIsotope(str.c_str(), &isotope);
           }
         }
 
@@ -610,8 +630,7 @@ namespace OpenBabel
     OBResidue *res;
 
     vector<OBAtom*>::iterator i;
-    vector<int> labelcount;
-    labelcount.resize( etab.GetNumberOfElements() );
+    std::map<int, int> labelcount;
 
     ttab.SetFromType("INT");
     ttab.SetToType("SYB");
@@ -624,7 +643,7 @@ namespace OpenBabel
         //
 
         snprintf(label,BUFF_SIZE, "%s%d",
-                 etab.GetSymbol(atom->GetAtomicNum()),
+                 OBElements::GetSymbol(atom->GetAtomicNum()),
                  ++labelcount[atom->GetAtomicNum()]);
         strcpy(rlabel,"<1>");
         strcpy(rnum,"1");

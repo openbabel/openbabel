@@ -5,6 +5,7 @@
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/stereo/cistrans.h>
+#include <openbabel/elements.h>
 
 using namespace std;
 using namespace OpenBabel;
@@ -181,10 +182,10 @@ void test_IsOnSameAtom1()
   OB_ASSERT( mol.NumAtoms() == 6 );
   
   OB_ASSERT( mol.GetAtomById(1) );
-  OB_ASSERT( mol.GetAtomById(1)->IsCarbon() );
+  OB_ASSERT( mol.GetAtomById(1)->GetAtomicNum() == OBElements::Carbon );
   OB_ASSERT( mol.GetAtomById(1)->GetValence() == 3);
   OB_ASSERT( mol.GetAtomById(3) );
-  OB_ASSERT( mol.GetAtomById(3)->IsCarbon() );
+  OB_ASSERT( mol.GetAtomById(3)->GetAtomicNum() == OBElements::Carbon );
   OB_ASSERT( mol.GetAtomById(3)->GetValence() == 3);
 
   OB_ASSERT( mol.GetAtomById(4) );

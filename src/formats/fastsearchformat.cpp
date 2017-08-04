@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include <openbabel/obconversion.h>
 #include <openbabel/fingerprint.h>
 #include <openbabel/op.h>
+#include <openbabel/elements.h>
 
 using namespace std;
 namespace OpenBabel {
@@ -579,7 +580,7 @@ virtual const char* Description() //required
           pos2 = txt.find(']');
           int atno;
           if(pos2!=string::npos &&  (atno = atoi(txt.substr(pos1+2, pos2-pos1-2).c_str())) && atno>0)
-            txt.replace(pos1, pos2-pos1+1, etab.GetSymbol(atno));
+            txt.replace(pos1, pos2-pos1+1, OBElements::GetSymbol(atno));
           else
           {
             obErrorLog.ThrowError(__FUNCTION__,"Ill-formed [#n] atom in SMARTS", obError);

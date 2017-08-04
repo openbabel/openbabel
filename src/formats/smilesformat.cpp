@@ -2562,9 +2562,9 @@ namespace OpenBabel {
 
     unsigned int numExplicitHsToSuppress = 0;
     // Don't suppress any explicit Hs attached if the atom is an H itself (e.g. [H][H]) or -xh was specified
-    if (!atom->IsHydrogen() && !_pconv->IsOption("h")) {
+    if (atom->GetAtomicNum() != OBElements::Hydrogen && !_pconv->IsOption("h")) {
       FOR_NBORS_OF_ATOM(nbr, atom) {
-        if (nbr->IsHydrogen() && (!isomeric || nbr->GetIsotope() == 0) && nbr->GetValence() == 1 &&
+        if (nbr->GetAtomicNum() == OBElements::Hydrogen && (!isomeric || nbr->GetIsotope() == 0) && nbr->GetValence() == 1 &&
           nbr->GetFormalCharge() == 0 && (!_pconv->IsOption("a") || _pac == NULL || !_pac->HasClass(nbr->GetIdx())))
           numExplicitHsToSuppress++;
       }
@@ -2609,7 +2609,7 @@ namespace OpenBabel {
 
       // Ordinary non-bracket element
       if (element) {
-        strcpy(symbol,etab.GetSymbol(atom->GetAtomicNum()));
+        strcpy(symbol,OBElements::GetSymbol(atom->GetAtomicNum()));
         if (!kekulesmi && atom->IsAromatic())
           symbol[0] = tolower(symbol[0]);
 
@@ -2677,10 +2677,10 @@ namespace OpenBabel {
     if (!atom->GetAtomicNum())
       strcpy(symbol,"*");
     else {
-      if (atom->IsHydrogen() && smarts)
+      if (atom->GetAtomicNum() == OBElements::Hydrogen && smarts)
         strcpy(symbol, "#1");
       else {
-        strcpy(symbol, etab.GetSymbol(atom->GetAtomicNum()));
+        strcpy(symbol, OBElements::GetSymbol(atom->GetAtomicNum()));
         if (!kekulesmi && atom->IsAromatic())
           symbol[0] = tolower(symbol[0]);
       }
@@ -2977,7 +2977,7 @@ namespace OpenBabel {
     atom = node->GetAtom();
 
 #if DEBUG
-    cout << "BuildCanonTree: " << etab.GetSymbol(atom->GetAtomicNum()) << ", " << atom->GetIdx() << ", canorder " << canonical_order[atom->GetIdx()-1] << "\n";
+    cout << "BuildCanonTree: " << OBElements::GetSymbol(atom->GetAtomicNum()) << ", " << atom->GetIdx() << ", canorder " << canonical_order[atom->GetIdx()-1] << "\n";
 #endif
 
     // Create a vector of neighbors sorted by canonical order, but favor
@@ -2994,7 +2994,7 @@ namespace OpenBabel {
     for (nbr = atom->BeginNbrAtom(i); nbr; nbr = atom->NextNbrAtom(i)) {
 
       idx = nbr->GetIdx();
-      //if (nbr->IsHydrogen() && IsSuppressedHydrogen(nbr)) {
+      //if (nbr->GetAtomicNum() == OBElements::Hydrogen && IsSuppressedHydrogen(nbr)) {
       //  _uatoms.SetBitOn(nbr->GetIdx());        // mark suppressed hydrogen, so it won't be considered
       //  continue;                               // later when looking for more fragments.
       //}
@@ -3127,7 +3127,7 @@ namespace OpenBabel {
       nbr1 = bond1->GetNbrAtom(atom);
       // Skip hydrogens before checking canonical_order
       // PR#1999348
-      if (   (nbr1->IsHydrogen() && IsSuppressedHydrogen(nbr1))
+      if (   (nbr1->GetAtomicNum() == OBElements::Hydrogen && IsSuppressedHydrogen(nbr1))
              || !frag_atoms.BitIsOn(nbr1->GetIdx()))
         continue;
 
@@ -3224,14 +3224,14 @@ namespace OpenBabel {
   {
     int count = 0;
 
-    if (atom->IsHydrogen())
+    if (atom->GetAtomicNum() == OBElements::Hydrogen)
       return atom->GetValence();
 
     if (_pconv && _pconv->IsOption("h"))
       return atom->GetValence();
 
     FOR_NBORS_OF_ATOM(nbr, atom) {
-      if (  !nbr->IsHydrogen()
+      if (nbr->GetAtomicNum() != OBElements::Hydrogen
             || nbr->GetIsotope() != 0
             || nbr->GetValence() != 1)
         count++;
@@ -3309,7 +3309,7 @@ namespace OpenBabel {
       if (!_pconv->IsOption("h")) {
         FOR_NBORS_OF_ATOM(i_nbr, atom) {
           OBAtom *nbr = &(*i_nbr);
-          if (nbr->IsHydrogen() && IsSuppressedHydrogen(nbr)) {
+          if (nbr->GetAtomicNum() == OBElements::Hydrogen && IsSuppressedHydrogen(nbr)) {
             chiral_neighbors.push_back(nbr);
             break;        // quit loop: only be one H if atom is chiral
           }
@@ -3785,7 +3785,7 @@ namespace OpenBabel {
           }
         for (int i=0; i<canonical_order.size(); ++i)
           if (canonical_order[i] == 0) { // Explicit hydrogens
-            if (mol.GetAtom(i+1)->IsHydrogen() && mol.GetAtom(i+1)->GetIsotope()!=0) { // [2H] or [3H]
+            if (mol.GetAtom(i+1)->GetAtomicNum() == OBElements::Hydrogen && mol.GetAtom(i+1)->GetIsotope()!=0) { // [2H] or [3H]
               canonical_order[i] = mol.GetAtom(i+1)->GetIsotope() - 1; // i.e. 1 or 2
               symmetry_classes[i] = canonical_order[i];
             }
@@ -3817,7 +3817,7 @@ namespace OpenBabel {
       if (root_atom == NULL) {
         for (atom = mol.BeginAtom(ai); atom; atom = mol.NextAtom(ai)) {
           int idx = atom->GetIdx();
-          if (//!atom->IsHydrogen()       // don't start with a hydrogen
+          if (//atom->GetAtomicNum() != OBElements::Hydrogen       // don't start with a hydrogen
               !_uatoms[idx]          // skip atoms already used (for fragments)
               && frag_atoms.BitIsOn(idx)// skip atoms not in this fragment
               //&& !atom->IsChiral()    // don't use chiral atoms as root node
@@ -3830,7 +3830,7 @@ namespace OpenBabel {
         //          Ditto for [S-] and =S.
         if ((_pconv->IsOption("I") || _pconv->IsOption("U"))
              && root_atom && root_atom->GetFormalCharge()==-1  && root_atom->GetValence() == 1
-             && root_atom->HasSingleBond() && (root_atom->IsOxygen() || root_atom->IsSulfur())) {
+             && root_atom->HasSingleBond() && (root_atom->GetAtomicNum() == OBElements::Oxygen || root_atom->GetAtomicNum() == OBElements::Sulfur)) {
           OBBondIterator bi = root_atom->BeginBonds();
           OBAtom* central = root_atom->BeginNbrAtom(bi);
           FOR_NBORS_OF_ATOM(nbr, central) {
@@ -3930,7 +3930,7 @@ namespace OpenBabel {
       // a chiral center, or it's something like [H][H]).
       FOR_ATOMS_OF_MOL(iatom, mol) {
         OBAtom *atom = &(*iatom);
-        if (frag_atoms.BitIsOn(atom->GetIdx()) && atom->IsHydrogen()
+        if (frag_atoms.BitIsOn(atom->GetIdx()) && atom->GetAtomicNum() == OBElements::Hydrogen
           && (!iso || m2s.IsSuppressedHydrogen(atom))) {
           frag_atoms.SetBitOff(atom->GetIdx());
         }

@@ -28,6 +28,7 @@ GNU General Public License for more details.
 #include <openbabel/kekulize.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/obfunctions.h>
+#include <openbabel/elements.h>
 
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
@@ -380,7 +381,7 @@ namespace OpenBabel
     unique_angle = 0;
 
     FOR_ATOMS_OF_MOL(atom, this) {
-      if(atom->IsHydrogen())
+      if(atom->GetAtomicNum() == OBElements::Hydrogen)
         continue;
 
       b = (OBAtom*) &*atom;
@@ -426,7 +427,7 @@ namespace OpenBabel
       {
         b = bond->GetBeginAtom();
         c = bond->GetEndAtom();
-        if(b->IsHydrogen() || c->IsHydrogen())
+        if(b->GetAtomicNum() == OBElements::Hydrogen || c->GetAtomicNum() == OBElements::Hydrogen)
           continue;
 
         for(a = b->BeginNbrAtom(bi2);a;a = b->NextNbrAtom(bi2))
@@ -609,7 +610,7 @@ namespace OpenBabel
                 atom1 = GetAtom(natom);
                 for (bond = atom1->BeginBond(j);bond;bond = atom1->NextBond(j))
                   if (!used.BitIsOn(bond->GetNbrAtomIdx(atom1)) && !curr.BitIsOn(bond->GetNbrAtomIdx(atom1)))
-                    if (!(bond->GetNbrAtom(atom1))->IsHydrogen())
+                    if (bond->GetNbrAtom(atom1)->GetAtomicNum() != OBElements::Hydrogen)
                       next.SetBitOn(bond->GetNbrAtomIdx(atom1));
               }
 
@@ -787,7 +788,7 @@ namespace OpenBabel
 
     for(atom = this->BeginAtom(i);atom;atom = this->NextAtom(i))
       {
-        if(!atom->IsHydrogen())
+        if (atom->GetAtomicNum() != OBElements::Hydrogen)
           count++;
       }
 
@@ -943,7 +944,7 @@ namespace OpenBabel
     OBAtom *atom;
     vector<OBAtom*>::iterator i;
 
-    double hmass = etab.GetMass(1);
+    double hmass = OBElements::GetMass(1);
     for (atom = BeginAtom(i);atom;atom = NextAtom(i)) {
       molwt += atom->GetAtomicMass();
       if (implicitH)
@@ -958,7 +959,7 @@ namespace OpenBabel
     OBAtom *atom;
     vector<OBAtom*>::iterator i;
 
-    double hmass = isotab.GetExactMass(1, 1);
+    double hmass = OBElements::GetExactMass(1, 1);
     for (atom = BeginAtom(i); atom; atom = NextAtom(i)) {
       mass += atom->GetExactMass();
       if (implicitH)
@@ -1060,7 +1061,7 @@ namespace OpenBabel
             else if (alph==NumElements-2)
               symb = DT; //D
             else
-              symb = etab.GetSymbol(alphabetical[j]);
+              symb = OBElements::GetSymbol(alphabetical[j]);
 
             formula << symb << sp;
             if(atomicCount[alph] > ones)
@@ -1933,7 +1934,7 @@ namespace OpenBabel
       int idx1,idx2;
       vector<double*>::iterator j;
       for (idx1=0,idx2=0,atom = BeginAtom(i);atom;atom = NextAtom(i),++idx1)
-      if (!atom->IsHydrogen())
+      if (atom->GetAtomicNum() != OBElements::Hydrogen)
       {
       for (j = _vconf.begin();j != _vconf.end();++j)
       memcpy((char*)&((*j)[idx2*3]),(char*)&((*j)[idx1*3]),sizeof(double)*3);
@@ -1967,7 +1968,7 @@ namespace OpenBabel
       pac = static_cast<OBAtomClassData*>(this->GetData("Atom Class"));
 
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if (atom->IsHydrogen() && IsSuppressibleHydrogen(atom, pac))
+      if (atom->GetAtomicNum() == OBElements::Hydrogen && IsSuppressibleHydrogen(atom, pac))
         delatoms.push_back(atom);
 
     UnsetHydrogensAdded();
@@ -2016,7 +2017,7 @@ namespace OpenBabel
       pac = static_cast<OBAtomClassData*>(this->GetData("Atom Class"));
 
     for (nbr = atom->BeginNbrAtom(k);nbr;nbr = atom->NextNbrAtom(k))
-      if (nbr->IsHydrogen() && IsSuppressibleHydrogen(atom, pac))
+      if (nbr->GetAtomicNum() == OBElements::Hydrogen && IsSuppressibleHydrogen(atom, pac))
         delatoms.push_back(nbr);
 
     if (delatoms.empty())
@@ -2037,7 +2038,7 @@ namespace OpenBabel
   bool OBMol::DeleteHydrogen(OBAtom *atom)
   //deletes the hydrogen atom passed to the function
   {
-    if (!atom->IsHydrogen())
+    if (atom->GetAtomicNum() != OBElements::Hydrogen)
       return false;
 
     //find bonds to delete
@@ -2096,6 +2097,34 @@ namespace OpenBabel
     return(AddNewHydrogens(polaronly ? PolarHydrogen : AllHydrogen, correctForPH, pH));
   }
 
+  static bool AtomIsNSOP(OBAtom *atom)
+  {
+    switch (atom->GetAtomicNum()) {
+    case OBElements::Nitrogen:
+    case OBElements::Sulfur:
+    case OBElements::Oxygen:
+    case OBElements::Phosphorus:
+      return true;
+    default:
+      return false;
+    }
+  }
+
+  //! \return a "corrected" bonding radius based on the hybridization.
+  //! Scales the covalent radius by 0.95 for sp2 and 0.90 for sp hybrids
+  static double CorrectedBondRad(unsigned int elem, unsigned int hyb)
+  {
+    double rad = OBElements::GetCovalentRad(elem);
+    switch (hyb) {
+    case 2:
+      return rad * 0.95;
+    case 1:
+      return rad * 0.90;
+    default:
+      return rad;
+    }
+  }
+
   bool OBMol::AddNewHydrogens(HydrogenType whichHydrogen, bool correctForPH, double pH)
   {
     if (!IsCorrectedForPH() && correctForPH)
@@ -2151,13 +2180,9 @@ namespace OpenBabel
     vector<OBAtom*>::iterator i;
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       {
-        if (whichHydrogen == PolarHydrogen
-                           && !(atom->IsNitrogen() || atom->IsOxygen() ||
-                           atom->IsSulfur() || atom->IsPhosphorus()))
+        if (whichHydrogen == PolarHydrogen && !AtomIsNSOP(atom))
           continue;
-        if (whichHydrogen == NonPolarHydrogen
-                           && (atom->IsNitrogen() || atom->IsOxygen() ||
-                           atom->IsSulfur() || atom->IsPhosphorus()))
+        if (whichHydrogen == NonPolarHydrogen && AtomIsNSOP(atom))
           continue;
 
         hcount = atom->GetImplicitHCount();
@@ -2195,12 +2220,12 @@ namespace OpenBabel
     int m,n;
     vector3 v;
     vector<pair<OBAtom*,int> >::iterator k;
-    double hbrad = etab.CorrectedBondRad(1,0);
+    double hbrad = CorrectedBondRad(1, 0);
 
     for (k = vhadd.begin();k != vhadd.end();++k)
       {
         atom = k->first;
-        double bondlen = hbrad+etab.CorrectedBondRad(atom->GetAtomicNum(),atom->GetHyb());
+        double bondlen = hbrad + CorrectedBondRad(atom->GetAtomicNum(), atom->GetHyb());
         for (m = 0;m < k->second;++m)
           {
             for (n = 0;n < NumConformers();++n)
@@ -2303,13 +2328,13 @@ namespace OpenBabel
     int m,n;
     vector3 v;
     vector<pair<OBAtom*,int> >::iterator k;
-    double hbrad = etab.CorrectedBondRad(1,0);
+    double hbrad = CorrectedBondRad(1,0);
 
     OBAtom *h;
     for (k = vhadd.begin();k != vhadd.end();++k)
       {
         atom = k->first;
-        double bondlen = hbrad+etab.CorrectedBondRad(atom->GetAtomicNum(),atom->GetHyb());
+        double bondlen = hbrad + CorrectedBondRad(atom->GetAtomicNum(),atom->GetHyb());
         for (m = 0;m < k->second;++m)
           {
             for (n = 0;n < NumConformers();++n)
@@ -2411,7 +2436,7 @@ namespace OpenBabel
 
   bool OBMol::DeleteAtom(OBAtom *atom, bool destroyAtom)
   {
-    if (atom->IsHydrogen())
+    if (atom->GetAtomicNum() == OBElements::Hydrogen)
       return(DeleteHydrogen(atom));
 
     BeginModify();
@@ -2825,7 +2850,7 @@ namespace OpenBabel
     vector<OBAtom*>::iterator i;
 
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if ((atom->IsCarbon() || atom->IsNitrogen()) && atom->GetHvyValence() > 2 && atom->IsChiral())
+      if ((atom->GetAtomicNum() == OBElements::Carbon || atom->GetAtomicNum() == OBElements::Nitrogen) && atom->GetHvyValence() > 2 && atom->IsChiral())
         return(true);
 
     return(false);
@@ -2979,7 +3004,7 @@ namespace OpenBabel
     for ( j = 0 ; j < max ; j++ )
       {
         atom   = zsortedAtoms[j].first;
-        rad[j] = etab.GetCovalentRad(atom->GetAtomicNum());
+        rad[j] = OBElements::GetCovalentRad(atom->GetAtomicNum());
         maxrad = std::max(rad[j],maxrad);
         zsorted.push_back(atom->GetIdx()-1);
       }
@@ -3048,7 +3073,7 @@ namespace OpenBabel
     BeginModify(); //prevent needless re-perception in DeleteBond
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       {
-        while (atom->BOSum() > static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum()))
+        while (atom->BOSum() > static_cast<unsigned int>(OBElements::GetMaxBonds(atom->GetAtomicNum()))
                || atom->SmallestBondAngle() < 45.0)
           {
             bond = atom->BeginBond(l);
@@ -3078,13 +3103,13 @@ namespace OpenBabel
               break;
 
             // delete bonds between hydrogens when over max valence
-            if (atom->IsHydrogen())
+            if (atom->GetAtomicNum() == OBElements::Hydrogen)
               {
                 m = l;
                 changed = false;
                 for (;bond;bond = atom->NextBond(m))
                   {
-                    if (bond->GetNbrAtom(atom)->IsHydrogen())
+                    if (bond->GetNbrAtom(atom)->GetAtomicNum() == OBElements::Hydrogen)
                       {
                         DeleteBond(bond);
                         changed = true;
@@ -3166,7 +3191,7 @@ namespace OpenBabel
           atom->SetHyb(2);
 
         // special case for imines
-        if (atom->IsNitrogen()
+        if (atom->GetAtomicNum() == OBElements::Nitrogen
             && atom->ExplicitHydrogenCount() == 1
             && atom->GetValence() == 2
             && angle > 109.5)
@@ -3368,7 +3393,7 @@ namespace OpenBabel
                                         std::min(shortestBond,(atom->GetBond(b))->GetLength());
           }
         pair<OBAtom*,double> entry(atom,
-                                   etab.GetElectroNeg(atom->GetAtomicNum())*1e6+shortestBond);
+                                   OBElements::GetElectroNeg(atom->GetAtomicNum())*1e6+shortestBond);
 
         sortedAtoms.push_back(entry);
       }
@@ -3384,7 +3409,7 @@ namespace OpenBabel
 
         // Possible sp-hybrids
         if ( (atom->GetHyb() == 1 || atom->GetValence() == 1)
-             && atom->BOSum() + 2  <= static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum()))
+             && atom->BOSum() + 2  <= static_cast<unsigned int>(OBElements::GetMaxBonds(atom->GetAtomicNum()))
              )
           {
 
@@ -3400,9 +3425,9 @@ namespace OpenBabel
             c = NULL;
             for (b = atom->BeginNbrAtom(j); b; b = atom->NextNbrAtom(j))
               {
-                currentElNeg = etab.GetElectroNeg(b->GetAtomicNum());
+                currentElNeg = OBElements::GetElectroNeg(b->GetAtomicNum());
                 if ( (b->GetHyb() == 1 || b->GetValence() == 1)
-                     && b->BOSum() + 2 <= static_cast<unsigned int>(etab.GetMaxBonds(b->GetAtomicNum()))
+                     && b->BOSum() + 2 <= static_cast<unsigned int>(OBElements::GetMaxBonds(b->GetAtomicNum()))
                      && (currentElNeg > maxElNeg ||
                          (IsApprox(currentElNeg,maxElNeg, 1.0e-6)
                           && (atom->GetBond(b))->GetLength() < shortestBond)) )
@@ -3414,14 +3439,14 @@ namespace OpenBabel
                     // Test terminal bonds against expected triple bond lengths
                     bondLength = (atom->GetBond(b))->GetLength();
                     if (atom->GetValence() == 1 || b->GetValence() == 1) {
-                      testLength = etab.CorrectedBondRad(atom->GetAtomicNum(), atom->GetHyb())
-                        + etab.CorrectedBondRad(b->GetAtomicNum(), b->GetHyb());
+                      testLength = CorrectedBondRad(atom->GetAtomicNum(), atom->GetHyb())
+                        + CorrectedBondRad(b->GetAtomicNum(), b->GetHyb());
                       if (bondLength > 0.9 * testLength)
                         continue; // too long, ignore it
                     }
 
                     shortestBond = bondLength;
-                    maxElNeg = etab.GetElectroNeg(b->GetAtomicNum());
+                    maxElNeg = OBElements::GetElectroNeg(b->GetAtomicNum());
                     c = b; // save this atom for later use
                   }
               }
@@ -3430,7 +3455,7 @@ namespace OpenBabel
           }
         // Possible sp2-hybrid atoms
         else if ( (atom->GetHyb() == 2 || atom->GetValence() == 1)
-                  && atom->BOSum() + 1 <= static_cast<unsigned int>(etab.GetMaxBonds(atom->GetAtomicNum())) )
+                  && atom->BOSum() + 1 <= static_cast<unsigned int>(OBElements::GetMaxBonds(atom->GetAtomicNum())) )
           {
             // as above
             if (atom->HasNonSingleBond() ||
@@ -3451,9 +3476,9 @@ namespace OpenBabel
             c = NULL;
             for (b = atom->BeginNbrAtom(j); b; b = atom->NextNbrAtom(j))
               {
-                currentElNeg = etab.GetElectroNeg(b->GetAtomicNum());
+                currentElNeg = OBElements::GetElectroNeg(b->GetAtomicNum());
                 if ( (b->GetHyb() == 2 || b->GetValence() == 1)
-                     && b->BOSum() + 1 <= static_cast<unsigned int>(etab.GetMaxBonds(b->GetAtomicNum()))
+                     && b->BOSum() + 1 <= static_cast<unsigned int>(OBElements::GetMaxBonds(b->GetAtomicNum()))
                      && (GetBond(atom, b))->IsDoubleBondGeometry()
                      && (currentElNeg > maxElNeg || (IsApprox(currentElNeg,maxElNeg, 1.0e-6)) ) )
                   {
@@ -3471,8 +3496,8 @@ namespace OpenBabel
                     // Test terminal bonds against expected double bond lengths
                     bondLength = (atom->GetBond(b))->GetLength();
                     if (atom->GetValence() == 1 || b->GetValence() == 1) {
-                      testLength = etab.CorrectedBondRad(atom->GetAtomicNum(), atom->GetHyb())
-                        + etab.CorrectedBondRad(b->GetAtomicNum(), b->GetHyb());
+                      testLength = CorrectedBondRad(atom->GetAtomicNum(), atom->GetHyb())
+                        + CorrectedBondRad(b->GetAtomicNum(), b->GetHyb());
                       if (bondLength > 0.93 * testLength)
                         continue; // too long, ignore it
                     }
@@ -3486,7 +3511,7 @@ namespace OpenBabel
                               ( (!atom->IsInRing() || !c || !c->IsInRing() || b->IsInRing())
                                 || (atom->IsInRing() && c && !c->IsInRing() && b->IsInRing()) ) ) ) {
                       shortestBond = (atom->GetBond(b))->GetLength();
-                      maxElNeg = etab.GetElectroNeg(b->GetAtomicNum());
+                      maxElNeg = OBElements::GetElectroNeg(b->GetAtomicNum());
                       c = b; // save this atom for later use
                     } // is this bond better than previous choices
                   }
@@ -3735,6 +3760,17 @@ namespace OpenBabel
     return converted; //false if no changes made
   }
 
+  static bool IsNotCorH(OBAtom* atom)
+  {
+    switch (atom->GetAtomicNum())
+    {
+    case OBElements::Hydrogen:
+    case OBElements::Carbon:
+      return false;
+    }
+    return true;
+  }
+
   //This maybe would be better using smirks from a datafile
   bool OBMol::MakeDativeBonds()
   {
@@ -3747,7 +3783,7 @@ namespace OpenBabel
     vector<OBAtom*>::iterator ai;
     for (patom = BeginAtom(ai);patom;patom = NextAtom(ai)) //all atoms
     {
-      if(patom->IsNitrogen() // || patom->IsPhosphorus()) not phosphorus!
+      if(patom->GetAtomicNum() == OBElements::Nitrogen // || patom->GetAtomicNum() == OBElements::Phosphorus) not phosphorus!
         && (patom->BOSum()==5 || (patom->BOSum()==4 && patom->GetFormalCharge()==0)))
       {
         // Find the bond to be modified. Prefer a bond to a hetero-atom,
@@ -3759,8 +3795,8 @@ namespace OpenBabel
           int bo = bond->GetBO();
           if(bo>=2 && bo<=4)
           {
-            bool het = bond->GetNbrAtom(patom)->IsNotCorH();
-            bool oldhet = bestbond->GetNbrAtom(patom)->IsNotCorH();
+            bool het = IsNotCorH(bond->GetNbrAtom(patom));
+            bool oldhet = IsNotCorH(bestbond->GetNbrAtom(patom));
             bool higherorder = bo > bestbond->GetBondOrder();
             if((het && !oldhet) || (((het && oldhet) || (!het && !oldhet)) && higherorder))
               bestbond = bond;

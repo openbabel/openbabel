@@ -119,12 +119,10 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBAtom* patom = pmol->GetAtom(i+1); //index starts at 1
     inchi_Atom* piat = &out.atom[i];
-    int iso=0;
-    patom->SetAtomicNum(etab.GetAtomicNum(piat->elname,iso));
-    patom->SetIsotope(iso);
+    patom->SetAtomicNum(OBElements::GetAtomicNum(piat->elname));
     if(piat->isotopic_mass)
       patom->SetIsotope(piat->isotopic_mass - ISOTOPIC_SHIFT_FLAG +
-          (int)(isotab.GetExactMass(patom->GetAtomicNum())+0.5));
+          (int)(OBElements::GetExactMass(patom->GetAtomicNum())+0.5));
 
     patom->SetSpinMultiplicity(piat->radical);
     patom->SetFormalCharge(piat->charge);
@@ -370,13 +368,13 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         nbonds++;
       }
 
-      strcpy(iat.elname,etab.GetSymbol(patom->GetAtomicNum()));
+      strcpy(iat.elname,OBElements::GetSymbol(patom->GetAtomicNum()));
       iat.num_bonds = nbonds;
       iat.num_iso_H[0] = patom->GetImplicitHCount();
       if(patom->GetIsotope())
       {
         iat.isotopic_mass = ISOTOPIC_SHIFT_FLAG +
-          patom->GetIsotope() - (int)(etab.GetMass(patom->GetAtomicNum())+0.5);
+          patom->GetIsotope() - (int)(OBElements::GetMass(patom->GetAtomicNum())+0.5);
       }
       else
         iat.isotopic_mass = 0 ;

@@ -256,7 +256,7 @@ namespace OpenBabel {
              return false;
           }
 
-          atomicNum = etab.GetAtomicNum(it->second.c_str());
+          atomicNum = OBElements::GetAtomicNum(it->second.c_str());
 
           x = atof(vs.at(0).c_str());
           y = atof(vs.at(1).c_str());
@@ -297,7 +297,7 @@ namespace OpenBabel {
         size_t size = vs.size();
         // All of these are 6 words in length!
         while (size == 6) {
-          atomicNum = etab.GetAtomicNum(vs.at(5).c_str());
+          atomicNum = OBElements::GetAtomicNum(vs.at(5).c_str());
 
           x = atof(vs.at(0).c_str());
           y = atof(vs.at(1).c_str());

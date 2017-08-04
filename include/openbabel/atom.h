@@ -403,19 +403,6 @@ namespace OpenBabel
         else
           return _residue->IsHetAtom(this);
       }
-      //! \return Is the atom hydrogen?
-      bool IsHydrogen()    { return(GetAtomicNum() == 1); }
-      bool IsHydrogen() const { return(GetAtomicNum() == 1); }
-      //! \return Is the atom carbon?
-      bool IsCarbon()      { return(GetAtomicNum() == 6); }
-      //! \return Is the atom nitrogen?
-      bool IsNitrogen()    { return(GetAtomicNum() == 7); }
-      //! \return Is the atom oxygen?
-      bool IsOxygen()      { return(GetAtomicNum() == 8); }
-      //! \return Is the atom sulfur?
-      bool IsSulfur()      { return(GetAtomicNum() == 16);}
-      //! \return Is the atom phosphorus?
-      bool IsPhosphorus()  { return(GetAtomicNum() == 15);}
       //! \return Is the atom aromatic?
       bool IsAromatic()      const;
       //! \return Is the atom in a ring?
@@ -425,8 +412,6 @@ namespace OpenBabel
       //! \return Is this atom an element in the 15th or 16th main groups
       //!  (i.e., N, O, P, S ...) ?
       bool IsHeteroatom();
-      //! \return Is this atom any element except carbon or hydrogen?
-      bool IsNotCorH();
       //! \return Is this atom directly connected to the supplied OBAtom?
       bool IsConnected(OBAtom*);
       //! \return Is this atom related to the supplied OBAtom in

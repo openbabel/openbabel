@@ -710,7 +710,7 @@ namespace OpenBabel
                  obErrorLog.ThrowError(__FUNCTION__, ss.str(), obDebug);
                  tmpSymbol="Xx";//Something went wrong, no symbol ! Default to Xx
                  }
-               atomicNum = etab.GetAtomicNum(tmpSymbol.c_str());
+               atomicNum = OBElements::GetAtomicNum(tmpSymbol.c_str());
                // Test for some oxygens with subscripts
                if (atomicNum == 0 && tmpSymbol[0] == 'O')
                  {
@@ -745,7 +745,7 @@ namespace OpenBabel
                      break;
                      }
                    }
-                 atom->SetAtomicNum(etab.GetAtomicNum(token.as_text.c_str()));
+                 atom->SetAtomicNum(OBElements::GetAtomicNum(token.as_text.c_str()));
                  atom->SetType(token.as_text);
                  }
                break;
@@ -1098,14 +1098,14 @@ namespace OpenBabel
    for (OBAtomIterator atom_x = pmol->BeginAtoms(), atom_y = pmol->EndAtoms(); atom_x != atom_y; ++ atom_x, ++ site_id)
      {
      OBAtom * atom = (* atom_x);
-     ofs << '\t' << site_id << '\t' << etab.GetSymbol(atom->GetAtomicNum());
+     ofs << '\t' << site_id << '\t' << OBElements::GetSymbol(atom->GetAtomicNum());
      if (has_residues)
        {
        OBResidue * pRes = atom->GetResidue();
        string resname(pRes->GetName()), atomname(pRes->GetAtomID(atom));
        if (atomname.empty())
          {
-         snprintf(buffer, BUFF_SIZE, "%s%lu", etab.GetSymbol(atom->GetAtomicNum()), (unsigned long)site_id);
+         snprintf(buffer, BUFF_SIZE, "%s%lu", OBElements::GetSymbol(atom->GetAtomicNum()), (unsigned long)site_id);
          atomname.assign(buffer);
          }
        if (resname.empty())

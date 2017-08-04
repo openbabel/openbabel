@@ -4,6 +4,7 @@
 #include <openbabel/obconversion.h>
 #include <openbabel/isomorphism.h>
 #include <openbabel/query.h>
+#include <openbabel/elements.h>
 
 using namespace std;
 using namespace OpenBabel;
@@ -225,7 +226,7 @@ void testAutomorphismMask2()
   Automorphisms _aut;
   OBBitVec _frag_atoms;
   FOR_ATOMS_OF_MOL(a, mol) {
-    if(!(a->IsHydrogen()))
+    if (a->GetAtomicNum() != OBElements::Hydrogen)
       _frag_atoms.SetBitOn(a->GetIdx());
   }
   FindAutomorphisms((OBMol*)&mol, _aut, _frag_atoms);

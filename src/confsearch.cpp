@@ -26,6 +26,7 @@ GNU General Public License for more details.
 #include <openbabel/tree/tree.hh>
 #include <openbabel/tree/tree_util.hh>
 #include <openbabel/math/vector3.h>
+#include <openbabel/elements.h>
 
 #include <float.h> // For DBL_MAX
 #include <algorithm> // For min
@@ -137,7 +138,7 @@ namespace OpenBabel
     // Remember the hydrogens
     hydrogens.Resize(natoms);
     for (int i=1; i<=natoms; i++)
-      if (ref.GetAtom(i)->IsHydrogen())
+      if (ref.GetAtom(i)->GetAtomicNum() == OBElements::Hydrogen)
         hydrogens.SetBitOn(i - 1);
   }
 
@@ -276,7 +277,7 @@ namespace OpenBabel
 vector<vector3> GetHeavyAtomCoords(const OBMol* mol, const vector<vector3> &all_coords) {
   vector<vector3> v_hvyatoms;
   for (unsigned int a = 1; a <= mol->NumAtoms(); ++a)
-    if (!mol->GetAtom(a)->IsHydrogen())
+    if (mol->GetAtom(a)->GetAtomicNum() != OBElements::Hydrogen)
       v_hvyatoms.push_back(all_coords[a]);
   return v_hvyatoms;
 }

@@ -18,6 +18,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 
+#include <openbabel/elements.h>
 #include <openbabel/bond.h>
 #include <openbabel/mol.h>
 #include <climits>
@@ -567,26 +568,40 @@ namespace OpenBabel
     return HasFlag(OB_CLOSURE_BOND);
   }
 
+  //! \return a "corrected" bonding radius based on the hybridization.
+  //! Scales the covalent radius by 0.95 for sp2 and 0.90 for sp hybrids
+  static double CorrectedBondRad(unsigned int elem, unsigned int hyb)
+  {
+    double rad = OBElements::GetCovalentRad(elem);
+    switch (hyb) {
+    case 2:
+      return rad * 0.95;
+    case 1:
+      return rad * 0.90;
+    default:
+      return rad;
+    }
+  }
+
   double OBBond::GetEquibLength() const
   {
-    double length;
     const OBAtom *begin, *end;
-    // CorrectedBondRad will always return a # now
-    //  if (!CorrectedBondRad(GetBeginAtom(),rad1)) return(0.0);
-    //  if (!CorrectedBondRad(GetEndAtom(),rad2))   return(0.0);
 
     begin = GetBeginAtom();
     end = GetEndAtom();
-    length = etab.CorrectedBondRad(begin->GetAtomicNum(), begin->GetHyb())
-      + etab.CorrectedBondRad(end->GetAtomicNum(), end->GetHyb());
+    double length = CorrectedBondRad(begin->GetAtomicNum(), begin->GetHyb())
+                  + CorrectedBondRad(end->GetAtomicNum(), end->GetHyb());
 
     if (IsAromatic())
-      length *= 0.93;
-    else if (GetBO() == 2)
-      length *= 0.91;
-    else if (GetBO() == 3)
-      length *= 0.87;
-    return(length);
+      return length * 0.93;
+    
+    switch (_order) {
+    case 3:
+      return length * 0.87;
+    case 2:
+      return length * 0.91;
+    }
+    return length;
   }
 
   double OBBond::GetLength() const

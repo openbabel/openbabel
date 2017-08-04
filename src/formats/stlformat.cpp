@@ -289,7 +289,7 @@ namespace OpenBabel
     vector<Triangle> triangles;
     FOR_ATOMS_OF_MOL(a, *pmol) {
       const double *coord = a->GetCoordinate();
-      const double vdwrad = scale_factor * etab.GetVdwRad( a->GetAtomicNum() ) + probe_radius;
+      const double vdwrad = scale_factor * OBElements::GetVdwRad( a->GetAtomicNum() ) + probe_radius;
       if( cpk_colours ) {
         col =  stl_colour(  a->GetAtomicNum() ) ;
       }

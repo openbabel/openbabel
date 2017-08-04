@@ -22,6 +22,7 @@ GNU General Public License for more details.
 #include <openbabel/atomclass.h>
 #include <openbabel/depict/depict.h>
 #include <openbabel/depict/painter.h>
+#include <openbabel/elements.h>
 #include <algorithm> // std::reverse
 #include <iterator> // std::istream_iterator
 #include <openbabel/stereo/stereo.h>
@@ -557,8 +558,11 @@ namespace OpenBabel
         d->painter->SetPenColor(OBColor(atom->GetData("color")->GetValue()));
       else if(d->options & bwAtoms)
         d->painter->SetPenColor(d->bondColor);
-      else
-        d->painter->SetPenColor(OBColor(etab.GetRGB(atom->GetAtomicNum())));
+      else {
+        double r, g, b;
+        OBElements::GetRGB(atom->GetAtomicNum(), &r, &g, &b);
+        d->painter->SetPenColor(OBColor(r, g, b));
+      }
 
       //charge and radical
       int charge = atom->GetFormalCharge();
@@ -597,7 +601,7 @@ namespace OpenBabel
         d->painter->SetFontSize(metrics.fontSize);//restore
       }
 
-      if (atom->IsCarbon()) {
+      if (atom->GetAtomicNum() == OBElements::Carbon) {
         if(!(d->options & drawAllC))
         {
           if (atom->GetValence() > 1)
@@ -629,10 +633,10 @@ namespace OpenBabel
 
       else {
         const char* atomSymbol;
-        if(atom->IsHydrogen() && atom->GetIsotope()>1)
+        if(atom->GetAtomicNum() == OBElements::Hydrogen && atom->GetIsotope()>1)
           atomSymbol = atom->GetIsotope()==2 ? "D" : "T";
         else
-          atomSymbol = etab.GetSymbol(atom->GetAtomicNum());
+          atomSymbol = OBElements::GetSymbol(atom->GetAtomicNum());
 
         unsigned int hCount = atom->GetImplicitHCount();
         // LPW: The allExplicit option will omit the drawing of extra hydrogens
@@ -1002,7 +1006,7 @@ namespace OpenBabel
 
   bool OBDepictPrivate::HasLabel(OBAtom *atom)
   {
-    if (!atom->IsCarbon())
+    if (atom->GetAtomicNum() != OBElements::Carbon)
       return true;
     if ((options & OBDepict::drawAllC) || ((options & OBDepict::drawTermC) && (atom->GetValence() == 1)))
       return true;
@@ -1207,7 +1211,9 @@ OBBitVec& drawnBonds)
 
   void OBDepictPrivateBallAndStick::DrawAtom(OBAtom *atom)
   {
-    OBColor atomColor = etab.GetRGB(atom->GetAtomicNum());
+    double r, g, b;
+    OBElements::GetRGB(atom->GetAtomicNum(), &r, &g, &b);
+    OBColor atomColor = OBColor(r, g, b);
     double opacity = 1.0;
     if (fabs(zScale) > 1.0e-1)
       opacity = sqrt((atom->GetZ() - zMin) / zScale);
@@ -1220,7 +1226,7 @@ OBBitVec& drawnBonds)
 
   double OBDepictPrivateBallAndStick::GetAtomRadius(OBAtom *atom)
   {
-    double radius = etab.GetCovalentRad(atom->GetAtomicNum());
+    double radius = OBElements::GetCovalentRad(atom->GetAtomicNum());
     double perspective = 1.0;
     if (fabs(zScale) > 1.0e-1)
       perspective = (atom->GetZ() - zMin) / zScale;

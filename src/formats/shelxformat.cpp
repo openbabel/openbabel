@@ -136,7 +136,7 @@ namespace OpenBabel
         type[sizeof(type) - 1] = '\0';
         j = strpbrk(type, "0123456789");
         j[0] = '\0';
-        atom->SetAtomicNum(etab.GetAtomicNum(type));
+        atom->SetAtomicNum(OBElements::GetAtomicNum(type));
         atom->SetVector(v);
 
         //skip next line if anisotropic atoms.

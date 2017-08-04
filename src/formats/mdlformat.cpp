@@ -204,6 +204,28 @@ namespace OpenBabel
     return std::find(metals, metals+78, atom->GetAtomicNum())!=metals+78;
   }
 
+  static void SetAtomicNumAndIsotope(OBAtom *patom, const char* symbol)
+  {
+    const char* p = symbol;
+    switch (p[0]) {
+    case 'D':
+      if (p[1] == '\0') {
+        patom->SetIsotope(2);
+        patom->SetAtomicNum(1);
+        return;
+      }
+      break;
+    case 'T':
+      if (p[1] == '\0') {
+        patom->SetIsotope(3);
+        patom->SetAtomicNum(1);
+        return;
+      }
+      break;
+    }
+    patom->SetAtomicNum(OBElements::GetAtomicNum(symbol));
+  }
+
   /////////////////////////////////////////////////////////////////
   bool MDLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
@@ -376,7 +398,7 @@ namespace OpenBabel
       //
       // Atom Block
       //
-      int massdiff, charge, stereo, isotope;
+      int massdiff, charge, stereo;
       vector<int> massDiffs, charges;
       Parity parity;
       for (i = 0; i < natoms; ++i) {
@@ -419,10 +441,7 @@ namespace OpenBabel
         Trim(symbol);
         if(symbol[0]!='R' || TestForAlias(symbol, patom, aliases))
         {
-          isotope = 0;
-          patom->SetAtomicNum(etab.GetAtomicNum(symbol, isotope));
-          if (isotope != 0) // e.g. 'D' or 'T' atom symbol
-            patom->SetIsotope(isotope);
+          SetAtomicNumAndIsotope(patom, symbol.c_str());
         }
         // mass difference
         if (line.size() >= 35)
@@ -688,7 +707,7 @@ namespace OpenBabel
         FOR_ATOMS_OF_MOL (a, mol) {
           int massDifference = massDiffs.at(a->GetIndex());
           if (massDifference)
-            a->SetIsotope((int)(etab.GetMass(a->GetAtomicNum()) + massDifference));
+            a->SetIsotope((int)(OBElements::GetMass(a->GetAtomicNum()) + massDifference));
         }
 
       // If no CHG, RAD, ZBO, ZCH or HYD properties are found, use the charges from the atom block
@@ -903,7 +922,7 @@ namespace OpenBabel
   static const char* AtomSymbol(OBMol* pmol, OBAtom* atom)
   {
     if (atom->GetAtomicNum())
-      return etab.GetSymbol(atom->GetAtomicNum());
+      return OBElements::GetSymbol(atom->GetAtomicNum());
     return (GetNumberedRGroup(pmol, atom) == -1) ? "* " : "R#";
   }
 
@@ -1386,10 +1405,7 @@ namespace OpenBabel
           }
         else
           {
-          int iso=0;
-          atom.SetAtomicNum(etab.GetAtomicNum(type,iso));
-          if(iso)
-            atom.SetIsotope(iso);
+          SetAtomicNumAndIsotope(&atom, type);
           atom.SetType(type); //takes a char not a const char!
           //mapping vs[7] not implemented
 
@@ -1550,7 +1566,7 @@ namespace OpenBabel
       {
         ofs     << "M  V30 "
                 << index++ << " "
-                << etab.GetSymbol(atom->GetAtomicNum()) << " "
+                << OBElements::GetSymbol(atom->GetAtomicNum()) << " "
                 << atom->GetX() << " "
                 << atom->GetY() << " "
                 << atom->GetZ()
@@ -1577,7 +1593,7 @@ namespace OpenBabel
                 vector<OBBond*>::iterator i;
                 for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
                   {
-                    if (nbr->IsHydrogen()){Hid=nbr->GetIdx();continue;}
+                    if (nbr->GetAtomicNum() == OBElements::Hydrogen){Hid=nbr->GetIdx();continue;}
                     nbr_atms.push_back(nbr->GetIdx());
                   }
                 sort(nbr_atms.begin(),nbr_atms.end());
@@ -1769,11 +1785,11 @@ namespace OpenBabel
 
           unsigned long maxref = OBStereo::NoRef;
           // Search for an explicit Hydrogen in the cfg refs...
-          if (cfg.from != OBStereo::ImplicitRef && mol.GetAtomById(cfg.from)->IsHydrogen())
+          if (cfg.from != OBStereo::ImplicitRef && mol.GetAtomById(cfg.from)->GetAtomicNum() == OBElements::Hydrogen)
             maxref = cfg.from;
           else
             for (OBStereo::RefIter ref_it = refs.begin(); ref_it != refs.end(); ++ref_it)
-              if ((*ref_it) != OBStereo::ImplicitRef && mol.GetAtomById(*ref_it)->IsHydrogen())
+              if ((*ref_it) != OBStereo::ImplicitRef && mol.GetAtomById(*ref_it)->GetAtomicNum() == OBElements::Hydrogen)
                 maxref = *ref_it;
           // ...otherwise, find the maximum ref (note that ImplicitRef will be max if present)
           if (maxref == OBStereo::NoRef)
@@ -1809,7 +1825,7 @@ namespace OpenBabel
       OBStereo::Refs refs;
       unsigned long towards = OBStereo::ImplicitRef;
       FOR_NBORS_OF_ATOM(nbr, mol.GetAtomById(i)) {
-        if (!nbr->IsHydrogen())
+        if (nbr->GetAtomicNum() != OBElements::Hydrogen)
           refs.push_back(nbr->GetId());
         else
           towards = nbr->GetId(); // Look towards the H

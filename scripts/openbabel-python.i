@@ -19,6 +19,7 @@
 
 #include <openbabel/generic.h>
 #include <openbabel/griddata.h>
+#include <openbabel/elements.h>
 
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
@@ -297,6 +298,7 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 %include <openbabel/fingerprint.h>
 %ignore OpenBabel::OBDescriptor::LessThan;
 %include <openbabel/descriptor.h>
+%include <openbabel/elements.h>
 
 // Ignore shadowed methods
 %ignore OpenBabel::OBForceField::VectorSubtract(const double *const, const double *const, double *);
@@ -472,8 +474,6 @@ def double_array(mylist):
 %pythoncode %{
 obErrorLog = cvar.obErrorLog
 ttab = cvar.ttab
-etab = cvar.etab
-isotab = cvar.isotab
 atomtyper = cvar.atomtyper
 aromtyper = cvar.aromtyper
 %}

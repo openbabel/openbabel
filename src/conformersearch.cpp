@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #include <openbabel/conformersearch.h>
 #include <openbabel/math/align.h>
 #include <openbabel/forcefield.h>
+#include <openbabel/elements.h>
 
 #if defined(_MSC_VER) && (_MSC_VER < 1800)
  #define OB_ISNAN _isnan
@@ -64,7 +65,7 @@ namespace OpenBabel {
         atom1 = mol.GetAtom(a1+1);
         atom2 = mol.GetAtom(a2+1);
         // Default should be to recognize H clashes too
-        if (!m_check_hydrogens  && (atom1->IsHydrogen() || atom2->IsHydrogen() ))
+        if (!m_check_hydrogens  && (atom1->GetAtomicNum() == OBElements::Hydrogen || atom2->GetAtomicNum() == OBElements::Hydrogen ))
           continue;
 
         // skip connected atoms
@@ -77,8 +78,8 @@ namespace OpenBabel {
         distanceSquared = dx*dx + dy*dy + dz*dz;
         // As we don't check 1-3 and 1-4 bonded atoms, apply a
         // factor of to the sum of VdW radii
-        vdwCutoff = m_vdw_factor * (etab.GetVdwRad(atom1->GetAtomicNum())
-                                    + etab.GetVdwRad(atom2->GetAtomicNum()));
+        vdwCutoff = m_vdw_factor * (OBElements::GetVdwRad(atom1->GetAtomicNum())
+                                    + OBElements::GetVdwRad(atom2->GetAtomicNum()));
         vdwCutoff *= vdwCutoff; // compare squared distances
         //cout << vdwCutoff << " " << m_vdw_factor << " " << m_cutoff << " " <<  distanceSquared << endl ;
 

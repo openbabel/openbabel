@@ -196,7 +196,7 @@ namespace OpenBabel {
     for (size_t i = 0; i < atom_t_prop.size(); ++i) 
     {  
       atom_t_prop[i].atom_symbol = vs[i];
-      atom_t_prop[i].atom_etab_num = OpenBabel::etab.GetAtomicNum(atom_t_prop[i].atom_symbol.c_str());
+      atom_t_prop[i].atom_etab_num = OpenBabel::OBElements::GetAtomicNum(atom_t_prop[i].atom_symbol.c_str());
     }  
  
     // Fetch next line to get stoichiometry
@@ -378,7 +378,7 @@ namespace OpenBabel {
       vector<string> vs;
       tokenize(vs, sortAtomsList);
       for(int i = 0; i < vs.size(); i++)
-        indl[etab.GetAtomicNum(vs[i].c_str())] = i;
+        indl[OBElements::GetAtomicNum(vs[i].c_str())] = i;
     }
     
     map<aindx, OBAtom *> amap;
@@ -396,7 +396,7 @@ namespace OpenBabel {
     string last_atom_smb = "";
     for(map<aindx, OBAtom *>::const_iterator it = amap.begin(); it != amap.end(); ++it)
     {
-      string curr_atom_smb = OpenBabel::etab.GetSymbol(it->second->GetAtomicNum());
+      string curr_atom_smb = OpenBabel::OBElements::GetSymbol(it->second->GetAtomicNum());
       if( last_atom_smb != curr_atom_smb )
       {  
         last_atom_smb = curr_atom_smb;
@@ -456,7 +456,7 @@ namespace OpenBabel {
                                               it != amap.end(); ++it)
     {  
       // Print coordinates
-      string smb = OpenBabel::etab.GetSymbol(it->second->GetAtomicNum());
+      string smb = OpenBabel::OBElements::GetSymbol(it->second->GetAtomicNum());
       snprintf(buffer, BUFF_SIZE, "%-3s %26.19f %26.19f %26.19f", smb.c_str(),
                it->second->GetX(), it->second->GetY(), it->second->GetZ());
       
@@ -494,7 +494,7 @@ namespace OpenBabel {
         if( (i == 0) || (i == 2) )
           ofs_ions << atypes_def[j].first << "  ";
         else if (i == 1)
-          ofs_ions << etab.GetMass(etab.GetAtomicNum(atypes_def[j].first.c_str())) << "d0 ";
+          ofs_ions << OBElements::GetMass(OBElements::GetAtomicNum(atypes_def[j].first.c_str())) << "d0 ";
         else if (i == 3)
           ofs_ions << charge_smb[atypes_def[j].first] << "d0 ";
       }

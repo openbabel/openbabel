@@ -119,7 +119,7 @@ int main(int argc,char **argv)
              vector<OBBond*>::iterator i;
              for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
              {
-             if (nbr->IsHydrogen()){Hid=nbr->GetIdx();continue;}
+             if (nbr->GetAtomicNum() == OBElements::Hydrogen){Hid=nbr->GetIdx();continue;}
              nbr_atms.push_back(nbr->GetIdx());
              }
              sort(nbr_atms.begin(),nbr_atms.end());

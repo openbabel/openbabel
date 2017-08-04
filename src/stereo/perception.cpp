@@ -22,12 +22,14 @@
   02110-1301, USA.
  **********************************************************************/
 
+
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/mol.h>
 #include <openbabel/graphsym.h>
 #include <openbabel/canon.h>
 #include <openbabel/oberror.h>
+#include <openbabel/elements.h>
 #include <cassert>
 
 #include "stereoutil.h"
@@ -133,11 +135,11 @@ namespace OpenBabel {
   bool isPotentialTetrahedral(OBAtom *atom)
   {
     // consider only potential steroecenters
-    if ((atom->GetHyb() != 3 && !(atom->GetHyb() == 5 && atom->IsPhosphorus()))
+    if ((atom->GetHyb() != 3 && !(atom->GetHyb() == 5 && atom->GetAtomicNum() == OBElements::Phosphorus))
         || TotalNoOfBonds(atom) > 4 || atom->GetHvyValence() < 3 || atom->GetHvyValence() > 4)
       return false;
     // skip non-chiral N
-    if (atom->IsNitrogen() && atom->GetFormalCharge()==0) {
+    if (atom->GetAtomicNum() == OBElements::Nitrogen && atom->GetFormalCharge()==0) {
       int nbrRingAtomCount = 0;
       FOR_NBORS_OF_ATOM (nbr, atom) {
         if (nbr->IsInRing())
@@ -146,7 +148,7 @@ namespace OpenBabel {
       if (nbrRingAtomCount < 3)
         return false;
     }
-    if (atom->IsCarbon()) {
+    if (atom->GetAtomicNum() == OBElements::Carbon) {
       if (atom->GetFormalCharge())
         return false;
       FOR_NBORS_OF_ATOM (nbr, atom) {
@@ -2776,9 +2778,9 @@ namespace OpenBabel {
 		score += 8;		// strongly prefer terminal atoms
 	    else
 	      score -= nbr_nbonds - 2;	// bond to atom with many bonds is penalized
-	    if (nbr->IsHydrogen())
+	    if (nbr->GetAtomicNum() == OBElements::Hydrogen)
 	      score += 2;		// prefer H
-	    else if (nbr->IsCarbon())
+	    else if (nbr->GetAtomicNum() == OBElements::Carbon)
 	      score += 1;		// then C
             if (&*b==close_bond_a || &*b==close_bond_b)
               score += 16;

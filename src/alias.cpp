@@ -22,6 +22,7 @@ GNU General Public License for more details.
 #include <openbabel/mcdlutil.h>
 #include <openbabel/atomclass.h>
 #include <openbabel/shared_ptr.h>
+#include <openbabel/elements.h>
 
 using namespace std;
 namespace OpenBabel
@@ -56,13 +57,14 @@ namespace OpenBabel
       int iso;
       std::string el;
       ss >> iso >>el;
-      if(etab.GetAtomicNum(el.c_str())>0)
+      unsigned int elemno = OBElements::GetAtomicNum(el.c_str());
+      if(elemno > 0)
       {
         OBAtom* pAtom = mol.GetAtom(atomindex);
         if(!pAtom)
           return false;
         pAtom->SetIsotope(iso);
-        pAtom->SetAtomicNum(etab.GetAtomicNum(el.c_str(),iso));
+        pAtom->SetAtomicNum(elemno);
         return true;
       }
     }

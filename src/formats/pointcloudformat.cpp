@@ -229,7 +229,7 @@ namespace OpenBabel
         // on the atom-centred spherical surface r_VDW * radius_multiplier
         // ensuring each point is >= density_r from all others
         const double* c = a->GetCoordinate();
-        double vdwrad   = probe_radius + ( etab.GetVdwRad( a->GetAtomicNum() ) * radius_mult );
+        double vdwrad   = probe_radius + ( OBElements::GetVdwRad( a->GetAtomicNum() ) * radius_mult );
 
         // estimate # of points by dividing area of VDW sphere
         // by the required density
@@ -250,7 +250,7 @@ namespace OpenBabel
           FOR_ATOMS_OF_MOL( a, *pmol )
           {
             const double* c = a->GetCoordinate();
-            double vdwrad   =  probe_radius + ( etab.GetVdwRad( a->GetAtomicNum() ) * radius_mult );
+            double vdwrad   =  probe_radius + ( OBElements::GetVdwRad( a->GetAtomicNum() ) * radius_mult );
             vdwrad *= vdwrad;
             vector3 r = *it - vector3( c[0], c[1], c[2] );
             double r2 = r[0]*r[0] + r[1]*r[1] + r[2] * r[2];

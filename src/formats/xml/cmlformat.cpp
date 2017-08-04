@@ -562,6 +562,27 @@ namespace OpenBabel
 
   /////////////////////////////////////////////////////////
 
+  static unsigned int GetAtomicNumAndIsotope(const char* symbol, int *isotope)
+  {
+    const char* p = symbol;
+    switch (p[0]) {
+    case 'D':
+      if (p[1] == '\0') {
+        *isotope = 2;
+        return 1;
+      }
+      break;
+    case 'T':
+      if (p[1] == '\0') {
+        *isotope = 3;
+        return 1;
+      }
+      break;
+    }
+    return OBElements::GetAtomicNum(symbol);
+  }
+
+
   ///Interprets atoms from AtomArray and writes then to an OBMol
   bool CMLFormat::DoAtoms()
   {
@@ -603,7 +624,7 @@ namespace OpenBabel
             else if(attrname=="elementType")
               {
                 int atno, iso=0;
-                atno=etab.GetAtomicNum(value.c_str(),iso);
+                atno = GetAtomicNumAndIsotope(value.c_str(), &iso);
                 pAtom->SetAtomicNum(atno);
                 if(iso)
                   pAtom->SetIsotope(iso);
@@ -1014,14 +1035,14 @@ namespace OpenBabel
                     OBAtom* pAt2 = pDBond->GetEndAtom();
                     FOR_NBORS_OF_ATOM(a1,pAt1)
                       {
-                        if(!a1->IsHydrogen() && &*a1!=pAt2)
+                        if (a1->GetAtomicNum() != OBElements::Hydrogen && &*a1 != pAt2)
                           break;
                         pbond1 = _pmol->GetBond(pAt1->GetIdx(),a1->GetIdx());
                       }
 
                     FOR_NBORS_OF_ATOM(a2,pAt2)
                       {
-                        if(!a2->IsHydrogen() && &*a2!=pAt1)
+                        if (a2->GetAtomicNum() != OBElements::Hydrogen && &*a2 != pAt1)
                           break;
                         pbond2 = _pmol->GetBond(pAt2->GetIdx(),a2->GetIdx());
                       }
@@ -1154,7 +1175,7 @@ namespace OpenBabel
           return false;
         int n=atoi(iNumber->c_str());
         int atno, iso=0;
-        atno=etab.GetAtomicNum(iSymbol++->c_str(),iso);
+        atno = GetAtomicNumAndIsotope(iSymbol++->c_str(), &iso);
         if(atno<=0 || n<=0)
           return false;
         int i;
@@ -1490,7 +1511,7 @@ namespace OpenBabel
             vector<OBAtom*>::iterator i;
             for (patom = mol.BeginAtom(i);patom;patom = mol.NextAtom(i))
               {
-               string el(etab.GetSymbol(patom->GetAtomicNum()));
+               string el(OBElements::GetSymbol(patom->GetAtomicNum()));
                 if(el=="Xx")
                   el="R";
 

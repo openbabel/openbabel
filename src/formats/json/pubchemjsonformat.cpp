@@ -172,12 +172,7 @@ class PubChemJSONFormat : public OBMoleculeFormat
         if (elementstring == "a" || elementstring == "d" || elementstring == "r" || elementstring == "lp") {
           patom->SetAtomicNum(0);
         } else {
-          int isotope = 0;
-          patom->SetAtomicNum(etab.GetAtomicNum(elements[i].asString(), isotope));
-          if (isotope != 0) {
-            // isotope gets set for e.g. 'D' or 'T' symbol
-            patom->SetIsotope(isotope);
-          }
+          patom->SetAtomicNum(OBElements::GetAtomicNum(elements[i].asCString()));
         }
         
       } else {
@@ -563,7 +558,7 @@ class PubChemJSONFormat : public OBMoleculeFormat
       doc["atoms"]["aid"].append(id);
       // Element
       if (patom->GetAtomicNum()) {
-        string el = etab.GetSymbol(patom->GetAtomicNum());
+        string el = OBElements::GetSymbol(patom->GetAtomicNum());
         std::transform(el.begin(), el.end(), el.begin(), ::tolower);
         doc["atoms"]["element"].append(el);
       } else {

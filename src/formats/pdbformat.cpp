@@ -647,7 +647,7 @@ namespace OpenBabel
     for (i = 1; i <= mol.NumAtoms(); i++)
       {
         atom = mol.GetAtom(i);
-        strncpy(type_name, etab.GetSymbol(atom->GetAtomicNum()), sizeof(type_name));
+        strncpy(type_name, OBElements::GetSymbol(atom->GetAtomicNum()), sizeof(type_name));
         type_name[sizeof(type_name) - 1] = '\0';
 
         //two char. elements are on position 13 and 14 one char. start at 14
@@ -669,7 +669,7 @@ namespace OpenBabel
             the_chain = res->GetChain();
 
             //two char. elements are on position 13 and 14 one char. start at 14
-            if (strlen(etab.GetSymbol(atom->GetAtomicNum())) == 1)
+            if (strlen(OBElements::GetSymbol(atom->GetAtomicNum())) == 1)
               {
                 if (strlen(type_name) < 4)
                   {
@@ -706,7 +706,7 @@ namespace OpenBabel
             the_insertioncode=' ';
           }
 
-        element_name = etab.GetSymbol(atom->GetAtomicNum());
+        element_name = OBElements::GetSymbol(atom->GetAtomicNum());
 
         int charge = atom->GetFormalCharge();
         char scharge[3] = { ' ', ' ', '\0' };
@@ -1034,11 +1034,11 @@ namespace OpenBabel
     atom.SetVector(v);
 
     // useful for debugging unknown atom types (e.g., PR#1577238)
-    //    cout << mol.NumAtoms() + 1  << " : '" << element << "'" << " " << etab.GetAtomicNum(element.c_str()) << endl;
+    //    cout << mol.NumAtoms() + 1  << " : '" << element << "'" << " " << OBElements::GetAtomicNum(element.c_str()) << endl;
     if (elementFound)
-      atom.SetAtomicNum(etab.GetAtomicNum(element.c_str()));
+      atom.SetAtomicNum(OBElements::GetAtomicNum(element.c_str()));
     else // use our old-style guess from athe atom type
-      atom.SetAtomicNum(etab.GetAtomicNum(type.c_str()));
+      atom.SetAtomicNum(OBElements::GetAtomicNum(type.c_str()));
 
     if ( (! scharge.empty()) && "  " != scharge )
       {

@@ -22,6 +22,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/rotor.h>
 #include <openbabel/graphsym.h>
+#include <openbabel/elements.h>
 
 #include <set>
 #include <assert.h>
@@ -213,7 +214,7 @@ namespace OpenBabel
                 for (bond = atom1->BeginBond(j);bond;bond = atom1->NextBond(j))
                   if (!used.BitIsOn(bond->GetNbrAtomIdx(atom1)) &&
                       !curr.BitIsOn(bond->GetNbrAtomIdx(atom1)))
-                    if (!(bond->GetNbrAtom(atom1))->IsHydrogen())
+                      if (bond->GetNbrAtom(atom1)->GetAtomicNum() != OBElements::Hydrogen)
                       next.SetBitOn(bond->GetNbrAtomIdx(atom1));
               }
 
@@ -918,14 +919,14 @@ namespace OpenBabel
         OBAtom *a1,*a2,*a3,*a4,*r;
         a1 = mol.GetAtom(ref[0]);
         a4 = mol.GetAtom(ref[3]);
-        if (a1->IsHydrogen() && a4->IsHydrogen())
+        if (a1->GetAtomicNum() == OBElements::Hydrogen && a4->GetAtomicNum() == OBElements::Hydrogen)
           continue; //don't allow hydrogens at both ends
-        if (a1->IsHydrogen() || a4->IsHydrogen()) //need a heavy atom reference - can use hydrogen
+        if (a1->GetAtomicNum() == OBElements::Hydrogen || a4->GetAtomicNum() == OBElements::Hydrogen) //need a heavy atom reference - can use hydrogen
           {
             bool swapped = false;
             a2 = mol.GetAtom(ref[1]);
             a3 = mol.GetAtom(ref[2]);
-            if (a4->IsHydrogen())
+            if (a4->GetAtomicNum() == OBElements::Hydrogen)
               {
                 swap(a1,a4);
                 swap(a2,a3);
@@ -934,7 +935,7 @@ namespace OpenBabel
 
             vector<OBBond*>::iterator k;
             for (r = a2->BeginNbrAtom(k);r;r = a2->NextNbrAtom(k))
-              if (!r->IsHydrogen() && r != a3)
+              if (r->GetAtomicNum() != OBElements::Hydrogen && r != a3)
                 break;
 
             if (!r)
@@ -991,10 +992,10 @@ namespace OpenBabel
     vector<OBBond*>::iterator k;
 
     for (a1 = a2->BeginNbrAtom(k);a1;a1 = a2->NextNbrAtom(k))
-      if (!a1->IsHydrogen() && a1 != a3)
+      if (a1->GetAtomicNum() != OBElements::Hydrogen && a1 != a3)
         break;
     for (a4 = a3->BeginNbrAtom(k);a4;a4 = a3->NextNbrAtom(k))
-      if (!a4->IsHydrogen() && a4 != a2)
+      if (a4->GetAtomicNum() != OBElements::Hydrogen && a4 != a2)
         break;
 
     ref[0] = a1->GetIdx();

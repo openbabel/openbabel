@@ -198,11 +198,11 @@ namespace OpenBabel
       {
         if (atom->GetIsotope() == 0)
           snprintf(buffer, BUFF_SIZE, "%-3s      %10.5f      %10.5f      %10.5f",
-                   etab.GetSymbol(atom->GetAtomicNum()),
+                   OBElements::GetSymbol(atom->GetAtomicNum()),
                    atom->GetX(), atom->GetY(), atom->GetZ());
         else
           snprintf(buffer, BUFF_SIZE, "%-3s(Iso=%d) %10.5f      %10.5f      %10.5f",
-                   etab.GetSymbol(atom->GetAtomicNum()),
+                   OBElements::GetSymbol(atom->GetAtomicNum()),
                    atom->GetIsotope(),
                    atom->GetX(), atom->GetY(), atom->GetZ());
 
@@ -304,13 +304,10 @@ namespace OpenBabel
     OpenBabel::OBAtomicHeatOfFormationTable *ahof = new OpenBabel::OBAtomicHeatOfFormationTable();
     OpenBabel::OBAtomIterator OBai;
     OpenBabel::OBAtom *OBa;
-    OpenBabel::OBElementTable *OBet;
     char valbuf[128];
     int ii,atomid,atomicnumber,found,foundall;
     double dhofM0, dhofMT, S0MT, DeltaSMT;
     double eFactor = HARTEE_TO_KCALPERMOL;
-
-    OBet = new OpenBabel::OBElementTable();
 
     // Now loop over atoms in order to correct the Delta H formation
     OBai     = mol->BeginAtoms();
@@ -349,7 +346,7 @@ namespace OpenBabel
       {
           double dhfx0, dhfxT, S0xT;
         atomicnumber = OBa->GetAtomicNum();
-        found = ahof->GetHeatOfFormation(OBet->GetSymbol(atomicnumber),
+        found = ahof->GetHeatOfFormation(OBElements::GetSymbol(atomicnumber),
                                          0,
                                          method,
                                          temperature,
@@ -413,7 +410,6 @@ namespace OpenBabel
         // Debug message?
       }
     // Clean up
-    delete OBet;
     delete ahof;
 
     if (foundall == atomid)

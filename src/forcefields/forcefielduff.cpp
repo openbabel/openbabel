@@ -15,11 +15,12 @@ This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
-***********************************************************************/
+*************************h**********************************************/
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
 #include <openbabel/locale.h>
+#include <openbabel/elements.h>
 
 #include "forcefielduff.h"
 
@@ -700,7 +701,7 @@ namespace OpenBabel {
       coordination = b->GetValence() + sites;
       if (coordination <= 4) { // normal valency
         coordination = ipar;
-      } else if (b->IsSulfur() && b->CountFreeOxygens() == 3) {
+      } else if (b->GetAtomicNum() == OBElements::Sulfur && b->CountFreeOxygens() == 3) {
         // SO3, should be planar
         // PR#2971473, thanks to Philipp Rumpf
         coordination = 2; // i.e., sp2

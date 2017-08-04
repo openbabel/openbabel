@@ -77,10 +77,10 @@ namespace OpenBabel
     if ( it != labelToZ.end() ) return it-> second;
     
     // See if the first 2 characters give us a valid atomic number
-    int Z=etab.GetAtomicNum(label.substr(0,2).c_str());
+    int Z=OBElements::GetAtomicNum(label.substr(0,2).c_str());
     
     // If not try the first one
-    if (Z==0) Z=etab.GetAtomicNum(label.substr(0,1).c_str());
+    if (Z==0) Z=OBElements::GetAtomicNum(label.substr(0,1).c_str());
     
     if (Z==0){
       // Houston...
@@ -366,7 +366,7 @@ namespace OpenBabel
     FOR_ATOMS_OF_MOL(atom, mol)
       {
         
-        ofs << std::setw(8) << etab.GetSymbol(atom->GetAtomicNum()) << std::setw(10) << ++idx << std::setw(10) << atom->GetAtomicNum() << std::endl;
+        ofs << std::setw(8) << OBElements::GetSymbol(atom->GetAtomicNum()) << std::setw(10) << ++idx << std::setw(10) << atom->GetAtomicNum() << std::endl;
         snprintf(buffer, BUFF_SIZE, "%20.15f %20.15f %20.15f\n",
                  atom->GetX(),
                  atom->GetY(),

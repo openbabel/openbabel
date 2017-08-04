@@ -381,7 +381,7 @@ namespace OpenBabel
 
     // useful for debugging unknown atom types (e.g., PR#1577238)
     //    cout << mol.NumAtoms() + 1 << " " << atmid << " type: " << type << endl;
-    atom.SetAtomicNum(etab.GetAtomicNum(type.c_str()));
+    atom.SetAtomicNum(OBElements::GetAtomicNum(type.c_str()));
 
     /* residue sequence number */
     string resnum = sbuf.substr(16,4);
@@ -487,7 +487,7 @@ namespace OpenBabel
     for (i = 1; i <= mol.NumAtoms(); i++)
       {
         atom = mol.GetAtom(i);
-        strncpy(type_name, etab.GetSymbol(atom->GetAtomicNum()), sizeof(type_name));
+        strncpy(type_name, OBElements::GetSymbol(atom->GetAtomicNum()), sizeof(type_name));
         type_name[sizeof(type_name) - 1] = '\0';
 
         //two char. elements are on position 13 and 14 one char. start at 14
@@ -508,7 +508,7 @@ namespace OpenBabel
             the_chain = res->GetChain();
 
             //two char. elements are on position 13 and 14 one char. start at 14
-            if (strlen(etab.GetSymbol(atom->GetAtomicNum())) == 1)
+            if (strlen(OBElements::GetSymbol(atom->GetAtomicNum())) == 1)
               {
                 if (strlen(type_name) < 4)
                   {
@@ -534,7 +534,7 @@ namespace OpenBabel
             res_num = 1;
           }
 
-        element_name = etab.GetSymbol(atom->GetAtomicNum());
+        element_name = OBElements::GetSymbol(atom->GetAtomicNum());
         //snprintf(buffer, BUFF_SIZE, "%s%5d %-4s %-3s %c%4d    %8.3f%8.3f%8.3f  1.00  0.00          %2s  \n",
         snprintf(buffer, BUFF_SIZE, "%s%5d %-4s %-3s %c%4d    %8.3f%8.3f%8.3f %11.8f%8.3f %2s  \n",
                  het?"HETATM":"ATOM  ",
@@ -549,7 +549,7 @@ namespace OpenBabel
                  atom->GetPartialCharge(),
                  atom->HasData("Radius")//use atom radius data,Zhixiong Zhao
 				 	?atof(atom->GetData("Radius")->GetValue().c_str())
-					:etab.GetVdwRad(atom->GetAtomicNum()),
+					:OBElements::GetVdwRad(atom->GetAtomicNum()),
                  element_name);
         ofs << buffer;
       }

@@ -15,6 +15,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/fingerprint.h>
 #include <openbabel/obiter.h>
+#include <openbabel/elements.h>
 
 #include <vector>
 
@@ -166,7 +167,7 @@ static void ECFPPass(OpenBabel::OBMol &mol,
                      AtomInfo *ainfo, unsigned int pass)
 {
   FOR_ATOMS_OF_MOL(atom, mol) {
-    if (atom->IsHydrogen())
+    if (atom->GetAtomicNum() == OBElements::Hydrogen)
       continue;
     OpenBabel::OBAtom* aptr = &(*atom);
     unsigned int idx = aptr->GetIdx()-1;
@@ -175,7 +176,7 @@ static void ECFPPass(OpenBabel::OBMol &mol,
     std::vector<NborInfo> nbrs;
     FOR_BONDS_OF_ATOM(bptr, aptr) {
       OpenBabel::OBAtom* nptr = bptr->GetNbrAtom(aptr);
-      if (nptr->IsHydrogen())
+      if (nptr->GetAtomicNum() == OBElements::Hydrogen)
         continue;
       unsigned int order;
       if (!bptr->IsAromatic()) {
@@ -224,7 +225,7 @@ static void ECFPFirstPass(OpenBabel::OBMol &mol,
 
   /* First Pass: ECFP_0 */
   FOR_ATOMS_OF_MOL(atom, mol) {
-    if (atom->IsHydrogen())
+    if (atom->GetAtomicNum() == OBElements::Hydrogen)
       continue;
     OpenBabel::OBAtom* aptr = &(*atom);
     unsigned int idx = aptr->GetIdx()-1;
@@ -263,7 +264,7 @@ bool fingerprintECFP::GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int n
 
   // Duplicate removal - this is a simplified version of what's in the paper
   FOR_ATOMS_OF_MOL(atom, pmol) {
-    if (atom->IsHydrogen())
+    if (atom->GetAtomicNum() == OBElements::Hydrogen)
       continue;
     unsigned int idx = atom->GetIdx()-1;
     if (_keepdups) {

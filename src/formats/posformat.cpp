@@ -190,7 +190,7 @@ namespace OpenBabel
           atom = mol.NewAtom();
           // check to see if first column is number or element symbol
           // (PCModel has files of the form X Y Z symbol)
-          atomicNum = etab.GetAtomicNum(vs[0].c_str());
+          atomicNum = OBElements::GetAtomicNum(vs[0].c_str());
           x = atof(vs[4].c_str());
           y = atof(vs[5].c_str());
           z = atof(vs[6].c_str());
