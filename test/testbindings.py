@@ -53,6 +53,13 @@ class PybelWrapper(PythonBindings):
         self.assertTrue(pybel is not None, "Failed to import the Pybel module")
 
 class TestSuite(PythonBindings):
+
+    def testKekulizationOfcn(self):
+        """We were previously not reading 'cn' correctly, or at least how
+        Daylight would"""
+        mol = pybel.readstring("smi", "cn")
+        self.assertEqual("C=N", mol.write("smi").rstrip())
+
     def testOBMolAssignTotalChargeToAtoms(self):
         """Run the test cases described in the source code"""
         data = [("[NH4]", +1, "[NH4+]"),
