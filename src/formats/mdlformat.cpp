@@ -790,7 +790,7 @@ namespace OpenBabel
           }
         }
         else {
-          impval = MDLValence(elem, charge, expval) - expval;
+          impval = MDLValence(elem, charge, expval);
           // adjust for M RAD
           int mult = atom->GetSpinMultiplicity();
           int delta;
@@ -806,8 +806,8 @@ namespace OpenBabel
           }
           impval -= delta;
         }
-        int nimpval = impval - expval;
-        atom->SetImplicitHCount(nimpval > 0 ? nimpval : 0);
+        int numH = impval - expval;
+        atom->SetImplicitHCount(numH > 0 ? numH : 0);
       }
     }
 
