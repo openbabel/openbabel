@@ -22,6 +22,12 @@ GNU General Public License for more details.
 #include <openbabel/forcefield.h>
 #include <openbabel/elements.h>
 
+#if defined(_MSC_VER) && (_MSC_VER < 1800)
+ #define OB_ISNAN _isnan
+#else
+ #define OB_ISNAN std::isnan
+#endif
+
 namespace OpenBabel {
 
   //////////////////////////////////////////////////////////
@@ -621,7 +627,7 @@ namespace OpenBabel {
           // make the selection
           score = MakeSelection();
         }
-      if (std::isnan(score)) {
+      if (OB_ISNAN(score)) {
           (*m_logstream) << "The current score is not a number, will not continue."  << endl  << endl;
           return;
       }

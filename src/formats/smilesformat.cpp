@@ -537,28 +537,19 @@ namespace OpenBabel {
     FOR_ATOMS_OF_MOL(atom, mol) {
       unsigned int idx = atom->GetIdx();
       int hcount = _hcount[idx - 1];
-      switch (hcount) {
-      case -2: { // aromatic carbon
-        unsigned int numbonds = atom->GetValence();
-        if (numbonds < 3)
-          atom->SetImplicitHCount(3 - numbonds);
-        else
-          atom->SetImplicitHCount(0);
-        break;
-      }
-      case -1: { // Apply SMILES implicit valence model
+      if (hcount == -1) { // Apply SMILES implicit valence model
         unsigned int bosum = 0;
         FOR_BONDS_OF_ATOM(bond, &(*atom)) {
           bosum += bond->GetBondOrder();
         }
         unsigned int impval = SmilesValence(atom->GetAtomicNum(), bosum);
-        atom->SetImplicitHCount(impval - bosum);
-        break;
+        unsigned int imph = impval - bosum;
+        if (imph > 0 && atom->IsAromatic())
+          imph--;
+        atom->SetImplicitHCount(imph);
       }
-      default: // valence is explicit e.g. [CH3]
+      else // valence is explicit e.g. [CH3]
         atom->SetImplicitHCount(hcount);
-        break;
-      }
     }
 
     mol.EndModify(false);
@@ -1007,13 +998,7 @@ namespace OpenBabel {
     _order = 0; // the default is that no bond symbol has been seen
     _updown = ' ';
 
-    // If aromatic (and ParseSimple), then the implicit hydrogen count is 0 for all non-C.
-    // For "c" it is either 0 or 1, but this can only be assigned later (mark it as -2).
-    // For all non-aromatic, mark as having implicit hydrogens to be assigned later (-1).
-    int hcount = -1;
-    if (arom)
-      hcount = (*_ptr == 'c') ? -2 : 0;
-    _hcount.push_back(hcount);
+    _hcount.push_back(-1); // implicit hydrogen count
 
     return(true);
   }

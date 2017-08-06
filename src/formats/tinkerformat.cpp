@@ -354,7 +354,7 @@ namespace OpenBabel
     case 12: // Mg
       return 59; break;
     case 14: // Si
-      return 59; break;
+      return 19; break;
 
     case 15: // P
       if (atom->CountFreeOxygens() > 0)

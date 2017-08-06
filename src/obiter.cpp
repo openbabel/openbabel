@@ -145,9 +145,11 @@ namespace OpenBabel
   OBMolAtomDFSIter::OBMolAtomDFSIter(OBMol *mol, int StartIndex):
     _parent(mol), _ptr(_parent->GetAtom(StartIndex))
   {
+    if (!_ptr) return;
+
     _notVisited.Resize(_parent->NumAtoms());
     _notVisited.SetRangeOn(0, _parent->NumAtoms() - 1);
-    if (!_ptr) return;
+    
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
     vector<OBBond*>::iterator i;
@@ -163,9 +165,11 @@ namespace OpenBabel
   OBMolAtomDFSIter::OBMolAtomDFSIter(OBMol &mol, int StartIndex):
     _parent(&mol), _ptr(_parent->GetAtom(StartIndex))
   {
+    if (!_ptr) return;
+
     _notVisited.Resize(_parent->NumAtoms());
     _notVisited.SetRangeOn(0, _parent->NumAtoms() - 1);
-    if (!_ptr) return;
+    
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
     vector<OBBond*>::iterator i;
@@ -283,10 +287,11 @@ namespace OpenBabel
   OBMolAtomBFSIter::OBMolAtomBFSIter(OBMol *mol, int StartIndex):
     _parent(mol), _ptr(_parent->GetAtom(StartIndex))
   {
+    if (!_ptr) return;
+
     _notVisited.Resize(_parent->NumAtoms());
     _notVisited.SetRangeOn(0, _parent->NumAtoms() - 1);
-
-    if (!_ptr) return;
+    
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
     // Set up storage for the depths
@@ -307,10 +312,11 @@ namespace OpenBabel
   OBMolAtomBFSIter::OBMolAtomBFSIter(OBMol &mol, int StartIndex):
     _parent(&mol), _ptr(_parent->GetAtom(StartIndex))
   {
+    if (!_ptr) return;
+
     _notVisited.Resize(_parent->NumAtoms());
     _notVisited.SetRangeOn(0, _parent->NumAtoms() - 1);
-
-    if (!_ptr) return;
+    
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
     // Set up storage for the depths
@@ -446,10 +452,11 @@ namespace OpenBabel
   OBMolBondBFSIter::OBMolBondBFSIter(OBMol *mol, int StartIndex):
     _parent(mol), _ptr(_parent->GetBond(StartIndex))
   {
+    if (!_ptr) return;
+    
     _notVisited.Resize(_parent->NumBonds());
     _notVisited.SetRangeOn(0, _parent->NumBonds() - 1);
-
-    if (!_ptr) return;
+    
     _notVisited.SetBitOff(_ptr->GetIdx());
 
     // Set up storage for the depths
@@ -477,10 +484,11 @@ namespace OpenBabel
   OBMolBondBFSIter::OBMolBondBFSIter(OBMol &mol, int StartIndex):
     _parent(&mol), _ptr(_parent->GetBond(StartIndex))
   {
+    if (!_ptr) return;
+
     _notVisited.Resize(_parent->NumBonds());
     _notVisited.SetRangeOn(0, _parent->NumBonds() - 1);
-
-    if (!_ptr) return;
+    
     _notVisited.SetBitOff(_ptr->GetIdx());
 
     // Set up storage for the depths
