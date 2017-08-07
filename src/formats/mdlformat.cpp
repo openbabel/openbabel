@@ -1124,7 +1124,8 @@ namespace OpenBabel
         int impval = MDLValence(atom->GetAtomicNum(), atom->GetFormalCharge(), expval);
         int actual_impval = expval + atom->GetImplicitHCount();
         int valence;
-        if (!alwaysSpecifyValence && actual_impval == impval)
+        int spin = atom->GetSpinMultiplicity(); // the spin condition below is used for "M  RAD"
+        if (!alwaysSpecifyValence && actual_impval == impval && (spin == 0 || spin >= 4))
           valence = 0;
         else
           valence = actual_impval == 0 ? 15 : actual_impval;

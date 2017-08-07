@@ -169,6 +169,17 @@ M  END
 """
         mol = pybel.readstring("mol", molfile)
         self.assertEqual("[C]C", mol.write("smi").rstrip())
+    def testSettingSpinMult(self):
+        """Set spin and read/write it"""
+        mol = pybel.readstring("smi", "C")
+        mol.atoms[0].OBAtom.SetSpinMultiplicity(2)
+        molfile = mol.write("mol")
+        self.assertEqual("M  RAD  1   1   2", molfile.split("\n")[5])
+        molb = pybel.readstring("mol", molfile)
+        self.assertEqual(2, molb.atoms[0].OBAtom.GetSpinMultiplicity())
+        self.assertEqual(4, molb.atoms[0].OBAtom.GetImplicitHCount())
+        
+
 
 if __name__ == "__main__":
     unittest.main()
