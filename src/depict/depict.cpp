@@ -28,6 +28,7 @@ GNU General Public License for more details.
 #include <openbabel/stereo/stereo.h>
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/obiter.h>
+#include <openbabel/obfunctions.h>
 
 #include <cmath>
 
@@ -354,6 +355,25 @@ namespace OpenBabel
     DrawRing(ring, drawnBonds);
   }
 
+  enum Radical { NOT_RADICAL, ONE_DOT, TWO_DOT };
+
+  // Assign 0, 1, or 2 radical dots
+  // - if spin is specified, then this determines the number of dots
+  // - otherwise, the degree of undervalence determines it
+  static Radical AssignRadicalDots(OBAtom* atom)
+  {
+    unsigned int spin = atom->GetSpinMultiplicity();
+    if (spin)
+      return spin == 2 ? TWO_DOT : ONE_DOT;
+
+    unsigned int actualvalence = atom->BOSum() + atom->GetImplicitHCount();
+    unsigned int typicalvalence = GetTypicalValence(atom->GetAtomicNum(), actualvalence, atom->GetFormalCharge());
+    int diff = typicalvalence - actualvalence;
+    if (diff <= 0)
+      return NOT_RADICAL;
+    return diff == 2 ? TWO_DOT : ONE_DOT;
+  }
+
   bool OBDepict::DrawMolecule(OBMol *mol)
   {
     if (!d->painter)
@@ -566,8 +586,8 @@ namespace OpenBabel
 
       //charge and radical
       int charge = atom->GetFormalCharge();
-      int spin = atom->GetSpinMultiplicity();
-      if(charge || spin) {
+      Radical radical = AssignRadicalDots(atom); // none, one or two
+      if(charge || radical != NOT_RADICAL) {
         OBFontMetrics metrics = d->painter->GetFontMetrics("N");
         double yoffset = d->HasLabel(atom) ? -0.2 * metrics.height : -0.2 * metrics.height;
         /*switch (GetLabelAlignment(atom)) {
@@ -591,12 +611,12 @@ namespace OpenBabel
           }
         }
         d->painter->DrawText(x + 0.4*metrics.width, y+yoffset, ss.str());
-        if(spin) {
-          string radchars = (spin==2 ? "." : "..");
-          //yoffset += 0.5 * metrics.height;
+        if (radical != NOT_RADICAL) {
+          string radchars;
+          radchars = radical == ONE_DOT ? "." : "..";
           d->painter->SetFontSize(2 * metrics.fontSize);
           d->painter->DrawText(x + (0.4 + ss.str().size())*metrics.width,
-            y+yoffset, radchars);
+            y + yoffset, radchars);
         }
         d->painter->SetFontSize(metrics.fontSize);//restore
       }
