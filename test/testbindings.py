@@ -144,7 +144,6 @@ class Radicals(PythonBindings):
     def testSmilesToMol(self):
         smis = ["C", "[CH3]", "[CH2]", "[CH2]C", "[C]"]
         valences = [0, 3, 2, 3, 15]
-        # Note to self: why is this loop so slow? 2.8s for this test!
         for smi, valence in zip(smis, valences):
             mol = pybel.readstring("smi", smi)
             molfile = mol.write("mol")
@@ -178,8 +177,6 @@ M  END
         molb = pybel.readstring("mol", molfile)
         self.assertEqual(2, molb.atoms[0].OBAtom.GetSpinMultiplicity())
         self.assertEqual(4, molb.atoms[0].OBAtom.GetImplicitHCount())
-        
-
 
 if __name__ == "__main__":
     unittest.main()
