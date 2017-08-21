@@ -16,7 +16,6 @@ install:
  - sudo apt-get install -qq swig libeigen3-dev
 
 before_script:
- - mkdir build
  - cd build
  - cmake ${FLAGS} ..
 

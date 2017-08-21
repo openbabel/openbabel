@@ -1,5 +1,6 @@
 *.py[cod]
-build
+build/*
+!build/.keep
 nbproject
 scripts/*/*.cpp
 scripts/python/openbabel.py
