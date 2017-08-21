@@ -5,7 +5,6 @@ set(to_install
     atomtyp.txt
     babel_povray3.inc
     bondtyp.txt
-    element.txt
     eem.txt
     eem2015ba.txt
     eem2015bm.txt
@@ -18,8 +17,6 @@ set(to_install
     gaff.dat
     gaff.prm
     ghemical.prm
-    isotope-small.txt
-    isotope.txt
     logp.txt
     MACCS.txt
     mmff94.ff
