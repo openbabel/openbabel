@@ -93,7 +93,7 @@ namespace OpenBabel
     FOR_BONDS_OF_ATOM(bond, atom) {
       if (bond->IsAromatic()) continue;
       OBAtom *nbr = bond->GetNbrAtom(atom);
-      switch (bond->GetBondOrder()) {
+      switch ((int) bond->GetBondOrder()) {
       case -1: case 0: case 1:
         continue;
       case 2:

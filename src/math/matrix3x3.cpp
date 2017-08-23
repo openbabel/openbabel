@@ -563,7 +563,7 @@ namespace OpenBabel
     double onorm, dnorm;
     double b, dma, q, t, c, s;
     double  atemp, vtemp, dtemp;
-    register int i, j, k, l;
+    int i, j, k, l;
     int nrot;
 
     int MAX_SWEEPS=50;
