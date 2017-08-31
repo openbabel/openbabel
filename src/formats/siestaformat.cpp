@@ -99,7 +99,7 @@ namespace OpenBabel {
     // for atomic positions and cell coordinates.
     string filePath = pConv->GetInFilename();
     if (filePath.empty()) {
-      cout << "Invalid path specified for siesta output file.\n";
+      cerr << "Invalid path specified for siesta output file.\n";
       delete cell;
       return false;
     }
@@ -132,10 +132,11 @@ namespace OpenBabel {
 
     // If these failed, we'll just look for the coordinates in the .out file
     // Send a message to the user if the .STRUCT_OUT was not found
-    if (!struct_out_found) cout << "Could not find " << fileName <<
-                                   ".STRUCT_OUT\nAttempting to read " <<
-                                   "coordinates from " << fileName << ".out " <<
-                                   "instead.\n";
+    if (!struct_out_found) {
+      cerr << "Could not find " << fileName
+           << ".STRUCT_OUT\nAttempting to read " << "coordinates from "
+           << fileName << ".out " << "instead.\n";
+    }
 
     // Read the .STRUCT_OUT file if it was found
     else if (struct_out_found) {
@@ -190,7 +191,7 @@ namespace OpenBabel {
         atomsIterated++;
       }
       if (atomsIterated != numAtoms) {
-        cout << "Error reading the .STRUCT_OUT file. Make sure it was " <<
+        cerr << "Error reading the .STRUCT_OUT file. Make sure it was " <<
                 "saved correctly\n";
         delete cell;
         return false;
@@ -250,7 +251,7 @@ namespace OpenBabel {
           it = atomTypeLabels.find(atoi(vs.at(3).c_str()));
           // Just a basic find() error check
           if(it == atomTypeLabels.end()) {
-             cout << "Error reading AtomicSpecies\n";
+             cerr << "Error reading AtomicSpecies\n";
              delete cell;
              pmol->EndModify();
              return false;
@@ -376,7 +377,7 @@ namespace OpenBabel {
     }
 
     if (!EOFReached) {
-      cout << "Error! The EOF for siesta was not reached. Check the file " <<
+      cerr << "Error! The EOF for siesta was not reached. Check the file " <<
               "to see if it was saved properly.\n";
       delete cell;
       pmol->EndModify();
