@@ -247,10 +247,12 @@ namespace OpenBabel
 
     ofs << '>';
 
-    obsharedptr<OBMol> spAgent = pReact->GetAgent();
-    if(spAgent.get())
-      if(!pSmiFormat->WriteMolecule(spAgent.get(), pConv))
-        return false;
+    OBMol jAgents;
+    for (int i = 0; i<pReact->NumAgents(); ++i)
+      jAgents += *(pReact->GetAgent(i));
+
+    if(!pSmiFormat->WriteMolecule(&jAgents, pConv))
+      return false;
 
     ofs << '>';
 
