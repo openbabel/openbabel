@@ -117,6 +117,7 @@ namespace OpenBabel
       }
   }
 
+  // TODO: Figure out how to consider periodicity, etc.
   void OBBond::SetLength(OBAtom *fixed, double length)
   {
     unsigned int i;
@@ -200,6 +201,11 @@ namespace OpenBabel
     //    rotatable = rotatable && ((_bgn->IsHeteroatom() || _bgn->GetHvyValence() > 1)
     //                               && (_end->IsHeteroatom() || _end->GetHvyValence() > 1) );
     return (_bgn->GetHvyValence() > 1 && _end->GetHvyValence() > 1);
+  }
+
+  bool OBBond::IsPeriodic()
+  {
+    return ((OBMol*)GetParent())->IsPeriodic();
   }
 
    bool OBBond::IsAmide()
@@ -608,10 +614,7 @@ namespace OpenBabel
               {
                 if (nbrEnd != _bgn)
                   {
-                    torsion=fabs(CalcTorsionAngle(nbrStart->GetVector(),
-                                                  static_cast<OBAtom*>(_bgn)->GetVector(),
-                                                  static_cast<OBAtom*>(_end)->GetVector(),
-                                                  nbrEnd->GetVector()));
+                    torsion=fabs(_parent->GetTorsion(nbrStart, _bgn, _end, nbrEnd));
 
                     // >12&&<168 not enough
                     if (torsion > 15.0  && torsion < 160.0)
@@ -743,18 +746,56 @@ namespace OpenBabel
     return(length);
   }
 
-  double OBBond::GetLength() const
+  double OBBond::GetLength()
   {
     double	d2;
-    const OBAtom *begin, *end;
+    OBAtom *begin, *end;
     begin = GetBeginAtom();
     end = GetEndAtom();
 
-    d2 = SQUARE(begin->GetX() - end->GetX());
-    d2 += SQUARE(begin->GetY() - end->GetY());
-    d2 += SQUARE(begin->GetZ() - end->GetZ());
+    if (!IsPeriodic())
+      {
+        d2 = SQUARE(begin->GetX() - end->GetX());
+        d2 += SQUARE(begin->GetY() - end->GetY());
+        d2 += SQUARE(begin->GetZ() - end->GetZ());
+        return(sqrt(d2));
+      }
+    else
+      {
+        return(begin->GetDistance(end));
+      }
+  }
 
-    return(sqrt(d2));
+  std::vector<int> OBBond::GetPeriodicDirection()
+  {
+    std::vector<int> direction;
+    direction.push_back(0);
+    direction.push_back(0);
+    direction.push_back(0);
+    if (IsPeriodic())  // Otherwise, return all zeros
+      {
+        OBUnitCell *box = ((OBMol*)GetParent())->GetPeriodicLattice();
+        vector3 coord_1, coord_2, wrapped_diff, abs_diff, f_direction;
+        coord_1 = box->CartesianToFractional(GetBeginAtom()->GetVector());
+        coord_2 = box->CartesianToFractional(GetEndAtom()->GetVector());
+        wrapped_diff = box->PBCFractionalDifference(coord_2, coord_1);
+        abs_diff = coord_2 - coord_1;
+        // To get the signs right, consider the example {0, 0.7}.  We want -1 as the periodic direction.
+        // TODO: Think about edge cases, particularly atoms on the border of the unit cell.
+        f_direction = wrapped_diff - abs_diff;
+        for (int i = 0; i < 3; ++i) {
+            double raw_cell = f_direction[i];
+            int round_cell = static_cast<int>(lrint(raw_cell));
+            if (fabs(raw_cell - static_cast<double>(round_cell)) > 1e-4)
+              {
+                // TODO: this could be more informative
+                // This error is a sanity check and should never happen if PBC is operating correctly.
+                obErrorLog.ThrowError(__FUNCTION__, "Non-integer value of periodic cell", obError);
+              }
+            direction[i] = round_cell;
+        }
+      }
+    return direction;
   }
 
   /*Now in OBBase

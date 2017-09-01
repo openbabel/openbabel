@@ -485,6 +485,8 @@ namespace OpenBabel
       bool IsAromaticNOxide();
       //! \return Is this atom chiral?
       bool IsChiral();
+      //! \return Is the atom part of a periodic unit cell?
+      bool IsPeriodic();
       //! \return Is this atom an axial atom in a ring
       bool IsAxial();
       //! \deprecated

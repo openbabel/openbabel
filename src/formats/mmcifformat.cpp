@@ -40,6 +40,7 @@ namespace OpenBabel
      // OBConversion::RegisterFormat("cif", this, "chemical/x-cif");
 
      OBConversion::RegisterOptionParam("s", this);
+     OBConversion::RegisterOptionParam("p", this);
      OBConversion::RegisterOptionParam("b", this);
    }
 
@@ -49,6 +50,7 @@ namespace OpenBabel
        "Macromolecular Crystallographic Info\n "
        "Read Options e.g. -as\n"
        "  s  Output single bonds only\n"
+       "  p  Apply periodic boundary conditions for bonds\n"
        "  b  Disable bonding entirely\n\n";
    };
 
@@ -944,7 +946,7 @@ namespace OpenBabel
        {
        if (use_cell >= 6)
          {
-         OBUnitCell * pCell = new OBUnitCell;
+         OBUnitCell * pCell = new OBUnitCell;  // No matching "delete" because it's saved in pmol->SetData
          pCell->SetOrigin(fileformatInput);
          pCell->SetData(cell_a, cell_b, cell_c,
                         cell_alpha,
@@ -964,9 +966,11 @@ namespace OpenBabel
              {
              OBAtom * atom = (* atom_x);
              atom->SetVector(pCell->FractionalToCartesian(
-                             pCell->WrapFractionalCoordinate(atom->GetVector())));
+                             pCell->WrapFractionalCoordinate(atom->GetVector())));  // TODO: this is where we could copy Cartesian to fractional
              }
            }
+         if (pConv->IsOption("p",OBConversion::INOPTIONS))
+           pmol->SetPeriodicLattice(pCell);  // Make the molecule periodic
          }
        for (OBAtomIterator atom_x = pmol->BeginAtoms(), atom_y = pmol->EndAtoms(); atom_x != atom_y; ++atom_x )
        {

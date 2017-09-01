@@ -208,10 +208,10 @@ namespace OpenBabel
 
   double OBMol::GetTorsion(int a,int b,int c,int d)
   {
-    return(CalcTorsionAngle(((OBAtom*)_vatom[a-1])->GetVector(),
-                            ((OBAtom*)_vatom[b-1])->GetVector(),
-                            ((OBAtom*)_vatom[c-1])->GetVector(),
-                            ((OBAtom*)_vatom[d-1])->GetVector()));
+    return(GetTorsion((OBAtom*)_vatom[a-1],
+                      (OBAtom*)_vatom[b-1],
+                      (OBAtom*)_vatom[c-1],
+                      (OBAtom*)_vatom[d-1]));
   }
 
   void OBMol::SetTorsion(OBAtom *a,OBAtom *b,OBAtom *c, OBAtom *d, double ang)
@@ -237,6 +237,7 @@ namespace OpenBabel
     double x,y,z,mag,rotang,sn,cs,t,tx,ty,tz;
 
     //calculate the torsion angle
+    // TODO: fix this calculation for periodic systems
     radang = CalcTorsionAngle(a->GetVector(),
                               b->GetVector(),
                               c->GetVector(),
@@ -302,10 +303,35 @@ namespace OpenBabel
 
   double OBMol::GetTorsion(OBAtom *a,OBAtom *b,OBAtom *c,OBAtom *d)
   {
-    return(CalcTorsionAngle(a->GetVector(),
-                            b->GetVector(),
-                            c->GetVector(),
-                            d->GetVector()));
+    if (!IsPeriodic())
+      {
+        return(CalcTorsionAngle(a->GetVector(),
+                                b->GetVector(),
+                                c->GetVector(),
+                                d->GetVector()));
+      }
+    else
+      {
+        vector3 v1, v2, v3, v4;
+        // Wrap the atomic positions in a continuous chain that makes sense based on the unit cell
+        // Consider redefining this as a "wrap nonperiodic molecule" function based on an array vector
+        // Start by extracting the absolute Cartesian coordinates
+        v1 = a->GetVector();
+        v2 = b->GetVector();
+        v3 = c->GetVector();
+        v4 = d->GetVector();
+        // Then redefine the positions as a series of vector differences
+        // Work backwards so that all differences are based on original coordinates
+        v4 = _unitCell->PBCCartesianDifference(v4, v3);
+        v3 = _unitCell->PBCCartesianDifference(v3, v2);
+        v2 = _unitCell->PBCCartesianDifference(v2, v1);
+        // Finally, apply these "diffs" going forwards to build a continuous chain
+        // of expanded Cartesian coordinates
+        v2 += v1;
+        v3 += v2;
+        v4 += v3;
+        return(CalcTorsionAngle(v1, v2, v3, v4));
+      }
   }
 
   void OBMol::ContigFragList(std::vector<std::vector<int> >&cfl)
@@ -1079,6 +1105,17 @@ namespace OpenBabel
     return (Trim(f_str));
   }
 
+  void OBMol::SetPeriodicLattice(OBUnitCell* pCell)
+  {
+    if (pCell)
+      {
+        if (_unitCell == NULL)  // Have we already allocated a lattice?
+          _unitCell = new OBUnitCell;
+        *_unitCell = *pCell;  // Copy data from pCell into our allocation
+      }
+    SetFlag(OB_PERIODIC_MOL);
+  }
+
   //! Stochoimetric formula (e.g., C4H6O).
   //!   This is either set by OBMol::SetFormula() or generated on-the-fly
   //!   using the "Hill order" -- i.e., C first if present, then H if present
@@ -1238,6 +1275,7 @@ namespace OpenBabel
     this->_dimension = src.GetDimension();
     this->SetTotalCharge(src.GetTotalCharge()); //also sets a flag
     this->SetTotalSpinMultiplicity(src.GetTotalSpinMultiplicity()); //also sets a flag
+    this->SetPeriodicLattice(src.GetPeriodicLattice());  // FIXME: probably needs to be based on the internal GetData pointer, not a reference to the old object
 
     EndModify(); //zeros flags!
 
@@ -1249,6 +1287,8 @@ namespace OpenBabel
       this->SetFlag(OB_TCHARGE_MOL);
     if (src.HasFlag(OB_PCHARGE_MOL))
       this->SetFlag(OB_PCHARGE_MOL);
+    if (src.HasFlag(OB_PERIODIC_MOL))
+      this->SetFlag(OB_PERIODIC_MOL);
 
     //this->_flags = src.GetFlags(); //Copy all flags. Perhaps too drastic a change
 
@@ -1408,6 +1448,9 @@ namespace OpenBabel
     // We should do something to update the src coordinates if they're not 3D
     if(src.GetDimension()<_dimension)
       _dimension = src.GetDimension();
+    // TODO: Periodicity is similarly weird (e.g., adding nonperiodic data to
+    // a crystal, or two incompatible lattice parameters).  For now, just assume
+    // we intend to keep the lattice of the source (no updates necessary)
 
     EndModify();
 
@@ -1455,6 +1498,7 @@ namespace OpenBabel
 
     _c = (double*) NULL;
     _mod = 0;
+    DestroyPeriodicLattice(); // FIXME: check how it's allocated first.  Double "free" with SetData?
 
     // Clean up generic data via the base class
     return(OBBase::Clear());
@@ -1507,6 +1551,10 @@ namespace OpenBabel
     if (nukePerceivedData)
       {
         _flags = 0;
+        if (GetPeriodicLattice())
+          {
+            SetFlag(OB_PERIODIC_MOL);
+          }
         OBBond *bond;
         vector<OBBond*>::iterator k;
         for (bond = BeginBond(k);bond;bond = NextBond(k))
@@ -1592,6 +1640,15 @@ namespace OpenBabel
       {
         delete residue;
         residue = NULL;
+      }
+  }
+
+  void OBMol::DestroyPeriodicLattice(void)
+  {
+    if (_unitCell)
+      {
+        delete _unitCell;
+        _unitCell = NULL;
       }
   }
 
@@ -3245,6 +3302,7 @@ namespace OpenBabel
     _vdata.clear();
     _title = "";
     _c = (double*)NULL;
+    _unitCell = (OBUnitCell*)NULL;
     _flags = 0;
     _vconf.clear();
     _autoPartialCharge = true;
@@ -3265,6 +3323,7 @@ namespace OpenBabel
     _vdata.clear();
     _title = "";
     _c = (double*)NULL;
+    _unitCell = (OBUnitCell*)NULL;
     _flags = 0;
     _vconf.clear();
     _autoPartialCharge = true;
@@ -3288,6 +3347,7 @@ namespace OpenBabel
       DestroyBond(bond);
     for (residue = BeginResidue(r);residue;residue = NextResidue(r))
       DestroyResidue(residue);
+    DestroyPeriodicLattice();
 
     //clear out the multiconformer data
     vector<double*>::iterator k;
@@ -3364,7 +3424,6 @@ namespace OpenBabel
 
     return(false);
   }
-
 
   void OBMol::SetCoordinates(double *newCoords)
   {
@@ -3483,8 +3542,14 @@ namespace OpenBabel
       return;
     if (_dimension != 3) return; // not useful on non-3D structures
 
-    obErrorLog.ThrowError(__FUNCTION__,
-                          "Ran OpenBabel::ConnectTheDots", obAuditMsg);
+    if (IsPeriodic())
+      obErrorLog.ThrowError(__FUNCTION__,
+                            "Ran OpenBabel::ConnectTheDots -- using periodic boundary conditions",
+                            obAuditMsg);
+    else
+      obErrorLog.ThrowError(__FUNCTION__,
+                            "Ran OpenBabel::ConnectTheDots", obAuditMsg);
+
 
     int j,k,max;
     double maxrad = 0;
@@ -3520,6 +3585,7 @@ namespace OpenBabel
 
     int idx1, idx2;
     double d2,cutoff,zd;
+    vector3 atom1, atom2, wrapped_coords;  // Only used for periodic coords
     for (j = 0 ; j < max ; ++j)
       {
     	double maxcutoff = SQUARE(rad[j]+maxrad+0.45);
@@ -3531,20 +3597,32 @@ namespace OpenBabel
             // bonded if closer than elemental Rcov + tolerance
             cutoff = SQUARE(rad[j] + rad[k] + 0.45);
 
-            zd  = SQUARE(c[idx1*3+2] - c[idx2*3+2]);
-            // bigger than max cutoff, which is determined using largest radius,
-            // not the radius of k (which might be small, ie H, and cause an early  termination)
-            // since we sort by z, anything beyond k will also fail
-            if (zd > maxcutoff )
-              break;
+            // Use minimum image convention if the unit cell is periodic
+            // Otherwise, use a simpler (faster) distance calculation based on raw coordinates
+            if (IsPeriodic())
+              {
+                atom1 = vector3(c[idx1*3], c[idx1*3+1], c[idx1*3+2]);
+                atom2 = vector3(c[idx2*3], c[idx2*3+1], c[idx2*3+2]);
+                wrapped_coords = _unitCell->PBCCartesianDifference(atom1, atom2);
+                d2 = wrapped_coords.length_2();
+              }
+            else
+              {
+                zd  = SQUARE(c[idx1*3+2] - c[idx2*3+2]);
+                // bigger than max cutoff, which is determined using largest radius,
+                // not the radius of k (which might be small, ie H, and cause an early  termination)
+                // since we sort by z, anything beyond k will also fail
+                if (zd > maxcutoff )
+                  break;
 
-            d2  = SQUARE(c[idx1*3]   - c[idx2*3]);
-            if (d2 > cutoff)
-              continue; // x's bigger than cutoff
-            d2 += SQUARE(c[idx1*3+1] - c[idx2*3+1]);
-            if (d2 > cutoff)
-              continue; // x^2 + y^2 bigger than cutoff
-            d2 += zd;
+                d2  = SQUARE(c[idx1*3]   - c[idx2*3]);
+                if (d2 > cutoff)
+                  continue; // x's bigger than cutoff
+                d2 += SQUARE(c[idx1*3+1] - c[idx2*3+1]);
+                if (d2 > cutoff)
+                  continue; // x^2 + y^2 bigger than cutoff
+                d2 += zd;
+              }
 
             if (d2 > cutoff)
               continue;
@@ -4471,6 +4549,7 @@ namespace OpenBabel
     if( ! iter ) return false;
 
     newmol.SetDimension(GetDimension());
+    newmol.SetPeriodicLattice(GetPeriodicLattice());  // FIXME: probably has the same problem as operator=
     map<OBAtom*, OBAtom*> AtomMap;//key is from old mol; value from new mol
     do { //for each atom in fragment
       OBAtom* pnext = &*iter;

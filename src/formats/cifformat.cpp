@@ -68,7 +68,10 @@ namespace OpenBabel
         "Read Options e.g. -ab:\n"
         "  s  Output single bonds only\n"
         "  b  Disable bonding entirely\n"
-        "  B  Use bonds listed in CIF file from _geom_bond_etc records (overrides option b) \n\n";
+        "  B  Use bonds listed in CIF file from _geom_bond_etc records (overrides option b)\n\n"
+
+        "Write Options e.g. -xg:\n"
+        "  g  Write bonds using _geom_bond_etc fields \n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -1598,6 +1601,7 @@ namespace OpenBabel
         << "    _atom_site_fract_y"     << endl
         << "    _atom_site_fract_z"     << endl
         << "    _atom_site_occupancy"   << endl;
+    std::map<OBAtom*,std::string> label_table;
     unsigned int i = 0;
     FOR_ATOMS_OF_MOL(atom, *pmol)
       {
@@ -1629,12 +1633,84 @@ namespace OpenBabel
              label_str = etab.GetSymbol(atom->GetAtomicNum()) + to_string(i);
              i++;
            }
+         // Save the existing or generated label for optional bonding
+         label_table[&*atom] = label_str;
 
          snprintf(buffer, BUFF_SIZE, "    %-8s%-5s%.5f%10.5f%10.5f%8.3f\n",
                   label_str.c_str(), etab.GetSymbol(atom->GetAtomicNum()),
                   X, Y, Z, occup);
 
          ofs << buffer;
+      }
+
+    if (pConv->IsOption("g", OBConversion::OUTOPTIONS))
+      {
+        if (pmol->NumBonds() > 0) {
+            obErrorLog.ThrowError(__FUNCTION__, "Writing bonds to output CIF", obDebug);
+            ofs << "loop_"                            << endl
+                << "    _geom_bond_atom_site_label_1" << endl
+                << "    _geom_bond_atom_site_label_2" << endl
+                << "    _geom_bond_distance"          << endl
+                << "    _geom_bond_site_symmetry_2"   << endl
+                << "    _ccdc_geom_bond_type"         << endl;
+        } else {
+            obErrorLog.ThrowError(__FUNCTION__, "No bonds defined in molecule for CIF export", obDebug);
+        }
+
+        FOR_BONDS_OF_MOL(bond, *pmol)
+        {
+          std::string label_1 = label_table[bond->GetBeginAtom()];
+          std::string label_2 = label_table[bond->GetEndAtom()];
+
+          std::string sym_key;
+          std::vector<int> uc = bond->GetPeriodicDirection();
+          // uc will automatically be {0,0,0} for non-periodic systems
+          int symmetry_num = 555 + 100*uc[0] + 10*uc[1] + 1*uc[2];
+          if (symmetry_num == 555)
+            {
+              sym_key = ".";
+            }
+          else
+            {
+              stringstream ss;
+              ss << "1_" << symmetry_num;
+              sym_key = ss.str();
+            }
+
+          std::string bond_type;
+          int bond_order = bond->GetBondOrder();
+          switch (bond_order)
+          {
+            case 1:
+              bond_type = "S";
+              break;
+            case 2:
+              bond_type = "D";
+              break;
+            case 3:
+              bond_type = "T";
+              break;
+            case 5:  // FIXME: this will be different in upstream code
+              bond_type = "A";  // aromatic, per OBBond::_order
+              break;
+            default:
+              stringstream ss;
+              ss << "Unexpected bond order " << bond_order
+                 << " for bond" << label_1 << "-" << label_2 << std::endl
+                 << "Defaulting to single bond.";
+              obErrorLog.ThrowError(__FUNCTION__, ss.str(), obWarning);
+              bond_type = "S";
+          }
+
+
+          //printf("%p: %s\n", &*atom, label_table[&*atom].c_str());
+          snprintf(buffer, BUFF_SIZE, "    %-7s%-7s%10.5f%7s%4s\n",
+                   label_1.c_str(), label_2.c_str(),
+                   bond->GetLength(), sym_key.c_str(),
+                   bond_type.c_str());
+
+          ofs << buffer;
+        }
       }
     return true;
   }//WriteMolecule

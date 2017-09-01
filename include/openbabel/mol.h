@@ -104,7 +104,9 @@ namespace OpenBabel
 #define OB_LSSR_MOL              (1<<20)
   //! SpinMultiplicities on atoms have been set in OBMol::AssignSpinMultiplicity()
 #define OB_ATOMSPIN_MOL          (1<<21)
-  // flags 22-32 unspecified
+  //! Molecule is repeating in a periodic unit cell. See OBMol::_unitCell
+#define OB_PERIODIC_MOL          (1<<22)
+  // flags 23-32 unspecified
 #define OB_CURRENT_CONFORMER	 -1
 
 enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
@@ -122,6 +124,7 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     std::vector<OBBond*>          _vbond;      	//!< vector of bonds
     std::vector<OBBond*>          _bondIds;     //!< vector of bonds
     unsigned short int            _dimension;   //!< Dimensionality of coordinates
+    OBUnitCell                    *_unitCell;    //!< Periodic unit cell parameters
     int				  _totalCharge; //!< Total charge on the molecule
     unsigned int                  _totalSpin;   //!< Total spin on the molecule (if not specified, assumes lowest possible spin)
     double                        *_c;	        //!< coordinate array
@@ -188,6 +191,8 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! Free an OBResidue pointer if defined. Does no bookkeeping
     //! \see DeleteResidue which ensures internal connections
     virtual void DestroyResidue(OBResidue*);
+    //! Free the internal OBUnitCell pointer if defined. Does no bookkeeping or flags
+    virtual void DestroyPeriodicLattice(void);
 
     //! Add the specified atom to this molecule
     //! \param atom        the atom to add
@@ -321,6 +326,10 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! \return the size of the smallest ring if a and b are in the same ring, 0 otherwise
     //! \since version 2.4
     int AreInSameRing(OBAtom *a, OBAtom *b);
+    //! \return a pointer to the lattice parameters for periodic systems, or NULL if undefined.
+    //! This is an alternative to
+    //! \verbatim OBUnitCell * pCell = (OBUnitCell * )pmol->GetData(OBGenericDataType::UnitCell);\endverbatim
+    OBUnitCell  *GetPeriodicLattice() const { return _unitCell; }
     //! \return the stochoimetric formula (e.g., C4H6O)
     std::string  GetFormula();
     //! \return the stochoimetric formula in spaced format e.g. C 4 H 6 O 1
@@ -356,6 +365,8 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     void   SetTitle(const char *title);
     //! Set the title of this molecule to @p title
     void   SetTitle(std::string &title);
+    //! Set the lattice parameters for this molecule.  Does not recalculate bonding
+    void   SetPeriodicLattice(OBUnitCell* pCell);
     //! Set the stochiometric formula for this molecule
     void   SetFormula(std::string molFormula);
     //! Set the heat of formation for this molecule (in kcal/mol)
@@ -626,6 +637,8 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     bool HasSpinMultiplicityAssigned() { return(HasFlag(OB_ATOMSPIN_MOL)); }
     //! Is this molecule chiral?
     bool IsChiral();
+    //! Is this molecule periodic? Should periodic boundary conditions be applied?
+    bool IsPeriodic() { return(HasFlag(OB_PERIODIC_MOL)); }
     //! Are there any atoms in this molecule?
     bool Empty()                       { return(_natoms == 0);          }
     //@}
