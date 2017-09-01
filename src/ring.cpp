@@ -99,7 +99,7 @@ namespace OpenBabel
     OBRing *ring;
     vector<OBRing*>::iterator j;
 
-    //get frerejaque taking int account multiple possible spanning graphs
+    //get Frèrejacque taking int account multiple possible spanning graphs
     int frj = DetermineFRJ(*this);
     if (frj)
       {
