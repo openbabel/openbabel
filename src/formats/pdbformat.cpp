@@ -888,6 +888,7 @@ namespace OpenBabel
             else if (isalpha(element[0]))
               {
                 elementFound = true;
+                element[1] = tolower(element[1]);
               }
           }
       }

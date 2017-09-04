@@ -59,7 +59,8 @@ set(origtests
     aromatest atom bond cansmi charge_mmff94 charge_gasteiger conversion
     datatest ffgaff ffghemical ffmmff94 ffuff formalcharge format formula
     internalcoord invalidsmarts invalidsmiles iterators logp_psa math mol
-    phmodel residue ringtest smartstest smartsparse smilesmatch unitcell
+    pdbreadfile phmodel residue ringtest smartstest smartsparse smilesmatch
+    unitcell
     )
 set (atom_parts 1 2 3 4)
 set (ffmmff94_parts 1 2)
