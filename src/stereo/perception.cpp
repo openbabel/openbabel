@@ -2218,7 +2218,7 @@ namespace OpenBabel {
           continue;
         config.refs.push_back(nbr->GetId());
         if (uc)
-          bondVecs.push_back(uc->PBCCartesianDifference(nbr->GetVector(), begin->GetVector()));
+          bondVecs.push_back(uc->MinimumImageCartesian(nbr->GetVector() - begin->GetVector()));
         else
           bondVecs.push_back(nbr->GetVector() - begin->GetVector());
       }
@@ -2228,7 +2228,7 @@ namespace OpenBabel {
         mol->GetAtomById(config.refs.at(0))->GetNewBondVector(pos, 1.0);
         // WARNING: GetNewBondVector code has not yet been checked, since it's part of builder.cpp
         if (uc)
-          bondVecs.push_back(uc->PBCCartesianDifference(pos, begin->GetVector()));
+          bondVecs.push_back(uc->MinimumImageCartesian(pos - begin->GetVector()));
         else
           bondVecs.push_back(pos - begin->GetVector());
       }
@@ -2242,7 +2242,7 @@ namespace OpenBabel {
           continue;
         config.refs.push_back(nbr->GetId());
         if (uc)
-          bondVecs.push_back(uc->PBCCartesianDifference(nbr->GetVector(), end_vec));
+          bondVecs.push_back(uc->MinimumImageCartesian(nbr->GetVector() - end_vec));
         else
           bondVecs.push_back(nbr->GetVector() - end_vec);
       }
@@ -2251,7 +2251,7 @@ namespace OpenBabel {
         vector3 pos;
         mol->GetAtomById(config.refs.at(2))->GetNewBondVector(pos, 1.0);
         if (uc)
-          bondVecs.push_back(uc->PBCCartesianDifference(pos, end_vec));
+          bondVecs.push_back(uc->MinimumImageCartesian(pos - end_vec));
         else
           bondVecs.push_back(pos - end_vec);
       }
@@ -2346,14 +2346,13 @@ namespace OpenBabel {
   {
    vector3 v1,v2;
 
-    if (!a->IsPeriodic()) {  // Adapted from OBAtom.GetAngle
-      v1 = a->GetVector() - b->GetVector();
-      v2 = c->GetVector() - b->GetVector();
-    } else {
+    v1 = a->GetVector() - b->GetVector();
+    v2 = c->GetVector() - b->GetVector();
+    if (a->IsPeriodic()) {  // Adapted from OBAtom.GetAngle
       OBMol *mol = (OBMol*)a->GetParent();
       OBUnitCell *box = (OBUnitCell*)mol->GetPeriodicLattice();
-      v1 = box->PBCCartesianDifference(a->GetVector(), b->GetVector());
-      v2 = box->PBCCartesianDifference(c->GetVector(), b->GetVector());
+      v1 = box->MinimumImageCartesian(v1);
+      v2 = box->MinimumImageCartesian(v2);
     }
     if (IsNearZero(v1.length(), 1.0e-3)
       || IsNearZero(v2.length(), 1.0e-3)) {

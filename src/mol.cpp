@@ -314,22 +314,16 @@ namespace OpenBabel
       {
         vector3 v1, v2, v3, v4;
         // Wrap the atomic positions in a continuous chain that makes sense based on the unit cell
-        // Consider redefining this as a "wrap nonperiodic molecule" function based on an array vector
         // Start by extracting the absolute Cartesian coordinates
         v1 = a->GetVector();
         v2 = b->GetVector();
         v3 = c->GetVector();
         v4 = d->GetVector();
-        // Then redefine the positions as a series of vector differences
-        // Work backwards so that all differences are based on original coordinates
-        v4 = _unitCell->PBCCartesianDifference(v4, v3);
-        v3 = _unitCell->PBCCartesianDifference(v3, v2);
-        v2 = _unitCell->PBCCartesianDifference(v2, v1);
-        // Finally, apply these "diffs" going forwards to build a continuous chain
-        // of expanded Cartesian coordinates
-        v2 += v1;
-        v3 += v2;
-        v4 += v3;
+        // Then redefine the positions based on proximity to the previous atom
+        // to build a continuous chain of expanded Cartesian coordinates
+        v2 = _unitCell->UnwrapCartesianNear(v2, v1);
+        v3 = _unitCell->UnwrapCartesianNear(v3, v2);
+        v4 = _unitCell->UnwrapCartesianNear(v4, v3);
         return(CalcTorsionAngle(v1, v2, v3, v4));
       }
   }
@@ -3603,7 +3597,7 @@ namespace OpenBabel
               {
                 atom1 = vector3(c[idx1*3], c[idx1*3+1], c[idx1*3+2]);
                 atom2 = vector3(c[idx2*3], c[idx2*3+1], c[idx2*3+2]);
-                wrapped_coords = _unitCell->PBCCartesianDifference(atom1, atom2);
+                wrapped_coords = _unitCell->MinimumImageCartesian(atom1 - atom2);
                 d2 = wrapped_coords.length_2();
               }
             else

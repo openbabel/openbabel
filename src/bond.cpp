@@ -778,7 +778,7 @@ namespace OpenBabel
         vector3 coord_1, coord_2, wrapped_diff, abs_diff, f_direction;
         coord_1 = box->CartesianToFractional(GetBeginAtom()->GetVector());
         coord_2 = box->CartesianToFractional(GetEndAtom()->GetVector());
-        wrapped_diff = box->PBCFractionalDifference(coord_2, coord_1);
+        wrapped_diff = box->MinimumImageFractional(coord_2 - coord_1);
         abs_diff = coord_2 - coord_1;
         // To get the signs right, consider the example {0, 0.7}.  We want -1 as the periodic direction.
         // TODO: Think about edge cases, particularly atoms on the border of the unit cell.

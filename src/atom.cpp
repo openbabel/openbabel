@@ -1236,14 +1236,14 @@ namespace OpenBabel
     else
       {
         OBUnitCell *box = ((OBMol*)GetParent())->GetPeriodicLattice();
-        return (box->PBCCartesianDifference(this->GetVector(), b->GetVector())).length();
+        return (box->MinimumImageCartesian(this->GetVector() - b->GetVector())).length();
       }
   }
 
   double OBAtom::GetDistance(int b)
   {
     OBMol *mol = (OBMol*)GetParent();
-    return(( this->GetVector() - mol->GetAtom(b)->GetVector() ).length());
+    return( this->GetDistance(mol->GetAtom(b)) );
   }
 
   double OBAtom::GetDistance(vector3 *v)
@@ -1255,17 +1255,14 @@ namespace OpenBabel
   {
     vector3 v1,v2;
 
-    if (!IsPeriodic())
-      {
-        v1 = this->GetVector() - b->GetVector();
-        v2 = c->GetVector() - b->GetVector();
-      }
-    else
+    v1 = this->GetVector() - b->GetVector();
+    v2 = c->GetVector() - b->GetVector();
+    if (IsPeriodic())
       {
         OBMol *mol = (OBMol*)GetParent();
         OBUnitCell *box = (OBUnitCell*)mol->GetPeriodicLattice();
-        v1 = box->PBCCartesianDifference(this->GetVector(), b->GetVector());
-        v2 = box->PBCCartesianDifference(c->GetVector(), b->GetVector());
+        v1 = box->MinimumImageCartesian(v1);
+        v2 = box->MinimumImageCartesian(v2);
       }
 
     if (IsNearZero(v1.length(), 1.0e-3)
