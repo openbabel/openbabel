@@ -1663,9 +1663,25 @@ namespace OpenBabel
           std::string label_2 = label_table[bond->GetEndAtom()];
 
           std::string sym_key;
-          std::vector<int> uc = bond->GetPeriodicDirection();
-          // uc will automatically be {0,0,0} for non-periodic systems
-          int symmetry_num = 555 + 100*uc[0] + 10*uc[1] + 1*uc[2];
+          int symmetry_num = 555;
+          if (bond->IsPeriodic()) {
+              OBUnitCell *box = pmol->GetPeriodicLattice();
+              vector3 begin, end_orig, end_expected, uc_direction;
+              begin = box->CartesianToFractional(bond->GetBeginAtom()->GetVector());
+              end_orig = box->CartesianToFractional(bond->GetEndAtom()->GetVector());
+              end_expected = box->UnwrapFractionalNear(end_orig, begin);
+
+              // To get the signs right, consider the example {0, 0.7}.  We want -1 as the periodic direction.
+              // TODO: Think about edge cases, particularly atoms on the border of the unit cell.
+              uc_direction = end_expected - end_orig;
+
+              std:vector<int> uc;
+              for (int i = 0; i < 3; ++i) {
+                  double raw_cell = uc_direction[i];
+                  uc.push_back(static_cast<int>(lrint(raw_cell)));
+              }
+              symmetry_num += 100*uc[0] + 10*uc[1] + 1*uc[2];  // Unit cell directionality vs. 555, per CIF spec
+          }
           if (symmetry_num == 555)
             {
               sym_key = ".";

@@ -766,38 +766,6 @@ namespace OpenBabel
       }
   }
 
-  std::vector<int> OBBond::GetPeriodicDirection()
-  {
-    std::vector<int> direction;
-    direction.push_back(0);
-    direction.push_back(0);
-    direction.push_back(0);
-    if (IsPeriodic())  // Otherwise, return all zeros
-      {
-        OBUnitCell *box = ((OBMol*)GetParent())->GetPeriodicLattice();
-        vector3 coord_1, coord_2, wrapped_diff, abs_diff, f_direction;
-        coord_1 = box->CartesianToFractional(GetBeginAtom()->GetVector());
-        coord_2 = box->CartesianToFractional(GetEndAtom()->GetVector());
-        wrapped_diff = box->MinimumImageFractional(coord_2 - coord_1);
-        abs_diff = coord_2 - coord_1;
-        // To get the signs right, consider the example {0, 0.7}.  We want -1 as the periodic direction.
-        // TODO: Think about edge cases, particularly atoms on the border of the unit cell.
-        f_direction = wrapped_diff - abs_diff;
-        for (int i = 0; i < 3; ++i) {
-            double raw_cell = f_direction[i];
-            int round_cell = static_cast<int>(lrint(raw_cell));
-            if (fabs(raw_cell - static_cast<double>(round_cell)) > 1e-4)
-              {
-                // TODO: this could be more informative
-                // This error is a sanity check and should never happen if PBC is operating correctly.
-                obErrorLog.ThrowError(__FUNCTION__, "Non-integer value of periodic cell", obError);
-              }
-            direction[i] = round_cell;
-        }
-      }
-    return direction;
-  }
-
   /*Now in OBBase
   // OBGenericData methods
   bool OBBond::HasData(string &s)
