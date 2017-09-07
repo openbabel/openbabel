@@ -771,9 +771,7 @@ namespace OpenBabel
     string defaultKeywords = "PUT KEYWORDS HERE";
 
     if(keywords)
-      {
-        defaultKeywords = keywords;
-      }
+      defaultKeywords = keywords;
 
     if (keywordFile)
       {
@@ -785,8 +783,14 @@ namespace OpenBabel
               ofs << keyBuffer << endl;
           }
       }
-    else
-      ofs << defaultKeywords << endl;
+    else {
+      ofs << defaultKeywords;
+      if (mol.GetTotalCharge() != 0)
+        ofs << " CHARGE=" << mol.GetTotalCharge();
+      
+      // should handle GetTotalSpinMultiplicity() too
+      ofs << endl;
+    }
 
     ofs << mol.GetTitle() << endl;
     ofs << endl; // comment
