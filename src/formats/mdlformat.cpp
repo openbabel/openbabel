@@ -87,6 +87,14 @@ namespace OpenBabel
                " a  write atomclass if available\n"
                " m  write no properties\n"
                " w  use wedge and hash bonds from input (2D only)\n"
+               " v  always specify the valence in the valence field\n"
+               "      The default behavior is to only specify the valence if it\n"
+               "      is not consistent with the MDL valence model.\n"
+               "      So, for CH4 we don't specify it, but we do for CH3.\n"
+               "      This option may be useful to preserve the correct number of\n"
+               "      implicit hydrogens if a downstream tool does not correctly\n"
+               "      implement the MDL valence model (but does honor the valence\n"
+               "      field).\n"
                " S  do not store cis/trans stereochemistry in 0D MOL files\n"
                " A  output in Alias form, e.g. Ph, if present\n"
                " E  add an ASCII depiction of the molecule as a property\n"
@@ -383,6 +391,7 @@ namespace OpenBabel
         "the file may contains Atom Lists, which are ignored\n",
         obWarning);
 
+    std::map<OBAtom*, int> specified_valence;
     mol.BeginModify();
     if(line.find("V3000") != string::npos) {
       // V3000
@@ -417,7 +426,7 @@ namespace OpenBabel
         // 36..38   ccc = charge  ('M  CHG' and 'M  RAD' lines take precedence)
         // 39..41   sss = atom stereo parity (ignored)
         //          ... = query/reaction related
-        // 48..50   vvv = valence (ignored unless 15, which means 0)
+        // 48..50   vvv = valence (0 means use implicit valence, while 15 means valence of 0)
         massdiff = charge = 0;
         parity = NotStereo;
         if (line.size() < 34) {
@@ -474,8 +483,8 @@ namespace OpenBabel
         // valence
         if (line.size() >= 50) {
           int valence = ReadIntField(line.substr(48, 3).c_str());
-          //if (valence != 0) // Now no H with any value
-          //  ; // TODO: Implement this
+          if (valence != 0)
+            specified_valence[patom] = valence == 15 ? 0 : valence;
         }
 
         if (line.size() >= 62) {
@@ -764,21 +773,41 @@ namespace OpenBabel
           atom->SetImplicitHCount(hyd->second); // TODO: I have no idea
         }
       } else {
-        unsigned int impval = MDLValence(elem, charge, expval);
-        int mult = atom->GetSpinMultiplicity();
-        int delta;
-        switch (mult) {
-        case 0:
-          delta = 0; break;
-        case 1: case 3: //carbene
-          delta = 2; break;
-        case 2: //radical
-          delta = 1; break;
-        default: // >= 4, CH, Catom
-          delta = mult - 1;
+        // By testing with Symyx Draw (Accelrys Draw 4.0), if the
+        // valence field is specified then the M RAD is ignored for
+        // the purposes of setting hydrogen count.
+        // So, if the valence field was specified use that, otherwise
+        // use the implicit valence adjusted by any M RAD.
+        std::map<OBAtom*, int>::const_iterator mit = specified_valence.find(&*atom);
+        unsigned int impval;
+        if (mit != specified_valence.end()) {
+          impval = mit->second;
+          if (impval < expval) {
+            errorMsg << "WARNING: Problem interpreting the valence field of an atom\n"
+              "The valence field specifies a valence " << impval << " that is\n"
+              "less than the observed explicit valence " << expval << ".\n";
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+          }
         }
-        int nimpval = impval - expval - delta;
-        atom->SetImplicitHCount(nimpval > 0 ? nimpval : 0);
+        else {
+          impval = MDLValence(elem, charge, expval);
+          // adjust for M RAD
+          int mult = atom->GetSpinMultiplicity();
+          int delta;
+          switch (mult) {
+          case 0:
+            delta = 0; break;
+          case 1: case 3: //carbene
+            delta = 2; break;
+          case 2: //radical
+            delta = 1; break;
+          default: // >= 4, CH, Catom
+            delta = mult - 1;
+          }
+          impval -= delta;
+        }
+        int numH = impval - expval;
+        atom->SetImplicitHCount(numH > 0 ? numH : 0);
       }
     }
 
@@ -946,6 +975,8 @@ namespace OpenBabel
                    " be stored using an Open Babel extension. To generate 2D or 3D coordinates instead use --gen2D or --gen3D.", obWarning, onceOnly);
     }
 
+    bool alwaysSpecifyValence = pConv->IsOption("v");
+
     // Make a copy of mol (origmol) then ConvertZeroBonds() in mol
     // TODO: Do we need to worry about modifying mol? (It happens anyway in Kekulize etc?)
     // If so, instead make mol the copy: OBMol &origmol = *pmol; OBMol mol = origmol;
@@ -1088,10 +1119,16 @@ namespace OpenBabel
         if (parity.find(atom) != parity.end())
           stereo = parity[atom];
 
-        int valence = 0; //Only non-zero when RAD value would be >=4 (outside spec)
-        //or an unbonded metal
-        if (atom->GetSpinMultiplicity()>=4 || (IsMetal(atom) && atom->GetValence()==0))
-          valence = atom->GetValence()==0 ? 15 : atom->GetValence();
+        
+        int expval = atom->BOSum();
+        int impval = MDLValence(atom->GetAtomicNum(), atom->GetFormalCharge(), expval);
+        int actual_impval = expval + atom->GetImplicitHCount();
+        int valence;
+        int spin = atom->GetSpinMultiplicity(); // the spin condition below is used for "M  RAD"
+        if (!alwaysSpecifyValence && actual_impval == impval && (spin == 0 || spin >= 4))
+          valence = 0;
+        else
+          valence = actual_impval == 0 ? 15 : actual_impval;
 
         if (pac && pac->HasClass(atom->GetIdx()))
           aclass = pac->GetClass(atom->GetIdx());
