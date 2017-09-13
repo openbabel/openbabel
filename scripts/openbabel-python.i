@@ -420,6 +420,8 @@ class OBIterWithDepth(OBIter):
         else:
             raise StopIteration
 
+    __next__ = next
+
 class OBAtomAtomIter(OBIter):
     """Iterator over the atoms attached to an atom."""
     OBiterator = _OBAtomAtomIter
