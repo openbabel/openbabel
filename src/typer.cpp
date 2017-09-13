@@ -296,110 +296,62 @@ namespace OpenBabel
     }
   }
 
-  // Start of predicates for AssignOBAromaticityModel
-  static bool HasRingDblBond(OBAtom *atm)
+  // Start of helper functions for AssignOBAromaticityModel
+  enum ExocyclicAtom { NO_EXOCYCLIC_ATOM, EXO_OXYGEN, EXO_NONOXYGEN };
+  
+  static ExocyclicAtom FindExocyclicAtom(OBAtom *atm)
   {
     FOR_BONDS_OF_ATOM(bond, atm) {
-      if (bond->GetBondOrder() == 2 && bond->IsInRing())
+      if (bond->GetBondOrder() == 2 && !bond->IsInRing()) {
+        unsigned int atomicnum = bond->GetNbrAtom(atm)->GetAtomicNum();
+        switch (atomicnum) {
+        case OBElements::Oxygen:
+          return EXO_OXYGEN;
+        default:
+          return EXO_NONOXYGEN;
+        }
+      }
+    }
+    return NO_EXOCYCLIC_ATOM;
+  }
+
+  static bool HasExocyclicBondToOxygenMinus(OBAtom *atm)
+  {
+    FOR_BONDS_OF_ATOM(bond, atm) {
+      if (bond->GetBondOrder() == 1 && !bond->IsInRing()) {
+        OBAtom* nbr = bond->GetNbrAtom(atm);
+        if (nbr->GetAtomicNum() == OBElements::Oxygen && nbr->GetFormalCharge() == -1)
+          return true;
+      }
+    }
+    return false;
+  }
+  
+  static bool HasExocyclicDblBondToOxygen(OBAtom *atm)
+  {
+    FOR_BONDS_OF_ATOM(bond, atm) {
+      if (bond->GetBondOrder() == 2 && !bond->IsInRing() &&
+          bond->GetNbrAtom(atm)->GetAtomicNum() == OBElements::Oxygen)
         return true;
     }
     return false;
   }
-  static bool HasAcyclicDblBondToOxygen(OBAtom *atm)
+
+  static bool HasExocyclicDblBondToHet(OBAtom *atm)
   {
     FOR_BONDS_OF_ATOM(bond, atm) {
-      if (bond->GetBondOrder() == 2 && !bond->IsInRing() && bond->GetNbrAtom(atm)->GetAtomicNum() == 8)
-        return true;
-    }
-    return false;
-  }
-  static bool HasTwoRingOxygens(OBAtom *atm)
-  {
-    unsigned int totRingOxygens = 0;
-    FOR_BONDS_OF_ATOM(bond, atm) {
-      if (bond->GetBondOrder()==1) {
-        OBAtom *nbr = bond->GetNbrAtom(atm);
-        if (nbr->IsInRing() && nbr->GetAtomicNum() == 8) {
-          if (totRingOxygens == 1)
-            return true;
-          totRingOxygens++;
+      if (bond->GetBondOrder() == 2 && !bond->IsInRing()) {
+        unsigned int atomicnum = bond->GetNbrAtom(atm)->GetAtomicNum();
+        switch (atomicnum) {
+        case OBElements::Carbon:
+        case OBElements::Hydrogen:
+          break;
+        default:
+          return true;
         }
       }
     }
     return false;
-  }
-  static unsigned int ThreeNitrogenTestsInOne(OBAtom *atm)
-  {
-    // Return a bitwise combination of 
-    //   1 -> HasAcyclicDblBondToOxygen
-    //   2 -> HasTwoSingleRingBonds
-    //   4 -> HasRingDblBond
-
-    unsigned int ans = 0;
-    unsigned int totSingleRingBonds = 0;
-
-    FOR_BONDS_OF_ATOM(bond, atm) {
-      OBAtom *nbr = bond->GetNbrAtom(atm);
-      unsigned int nbr_elem = nbr->GetAtomicNum();
-      if (nbr_elem == 1) continue;
-      unsigned int bo = bond->GetBondOrder();
-      if (bond->IsInRing()) {
-        switch (bo) {
-        case 2:
-          ans |= 4; break; // HasRingDblBond
-        case 1:
-          totSingleRingBonds++; break;
-        }
-      } else { // acyclic
-        if (bo == 2 && nbr_elem == 8)
-          ans |= 1; // HasAcyclicDblBondToOxygen
-      }
-    }
-    
-    if (totSingleRingBonds >= 2)
-      ans |= 2;
-
-    return ans;
-  }
-  static unsigned int ThreeCarbonTestsInOne(OBAtom *atm)
-  {
-    // Return a bitwise combination of 
-    //   1 -> HasAcyclicDblBond
-    //   2 -> HasAcyclicBondToOxygen
-    //   or just return 
-    //   99 -> HasAcyclicDblBondToNonCarbon
-
-    unsigned int ans = 0;
-
-    FOR_BONDS_OF_ATOM(bond, atm) {
-      if (bond->IsInRing()) continue;
-      unsigned int nbr_elem = bond->GetNbrAtom(atm)->GetAtomicNum();
-      unsigned int bo = bond->GetBondOrder();
-      switch (bo) {
-      case 2:
-        if (nbr_elem != 6)
-          return 99; // Can return straight-away as has priority
-        ans |= 1;
-        // no break - fall through
-      case 1:
-        if (nbr_elem == 8)
-          ans |= 2;
-      }
-    }
-
-    return ans;
-  }
-  static bool IsSP2(OBAtom * atm, unsigned int elem)
-  {
-    // phosphorus and sulfur may be initially typed as sp3
-    switch (elem) {
-    case 6:
-    case 7:
-    case 8:
-      if (atm->GetHyb() != 2)
-        return false;
-    }
-    return true;
   }
   // End of predicates for AssignOBAromaticityModel
 
@@ -415,139 +367,165 @@ namespace OpenBabel
     // are now implemented in the code below, but are included in the comments
     // for reference (Case 1->22).
 
-    unsigned int elem = atm->GetAtomicNum();
-    unsigned int allatomdeg = atm->GetImplicitHCount() + atm->GetValence(); // total no. of bonds
-
-    if (!atm->IsInRing() || allatomdeg > 3 || !IsSP2(atm, elem)) {
-      min = 0; max = 0;
-      return false;
+    if (!atm->IsInRing()) {
+      min = 0; max = 0; return false;
     }
-    
-    unsigned int deg = atm->GetHvyValence();
-    
+
+    unsigned int elem = atm->GetAtomicNum();
     int chg = atm->GetFormalCharge();
-    unsigned int threeNTests, threeCTests;
+    unsigned int deg = atm->GetValence() + atm->GetImplicitHCount();
+    unsigned int val = atm->BOSum() + atm->GetImplicitHCount();
+
     switch (elem) {
-    case 6: // carbon
+    case OBElements::Carbon:
       switch (chg) {
       case 0:
-        if (HasRingDblBond(atm)) {
-          min = 1; max = 1; return true; // Case 4 [#6r+0]=@*
-        }
-        switch (deg) {
-        case 2:
-          min = 1; max = 1; return true; // Case 1 [#6rD2+0]
-        case 3:
-          threeCTests = ThreeCarbonTestsInOne(atm);
-          switch (threeCTests) {
-          case 99: // HasAcyclicDblBondToNonCarbon (priority 1)
-            // external double bonds to hetero atoms contribute no electrons to the
-            // aromatic systems -- quinoid systems are non - aromatic, e.g. 1, 4 - benzoquinone
-            min = 0; max = 0; return true; // Case 6 [#6rD3+0]=!@[!#6]
-          case 1: // HasAcyclicDblBond (priority 2)
-          case 3:
-            min = 1; max = 1; return true; // Case 5 [#6rD3+0]=!@*
-          case 2: // HasAcyclicBondToOxygen (priority 3)
-            min = 0; max = 1; return true; // Case 2 [#6rD3+0]~!@[#8] (exo ketone or alcohol -- don't know which)
+        if (val == 4 && deg == 3) {
+          if (HasExocyclicDblBondToHet(atm)) {
+            min = 0; max = 0; return true;
+          }
+          else {
+            min = 1; max = 1; return true;
           }
         }
         break;
       case 1:
-        if (allatomdeg == 2 || allatomdeg == 3) {
-          min = 1; max = 1; return true; // Case 3 [#6rD2+,#6rD3+]
+        if (val == 3) {
+          switch (deg) {
+          case 3:
+            min = 0; max = 0; return true;
+          case 2:
+            min = 1; max = 1; return true;
+          }
         }
         break;
       case -1:
-        if (allatomdeg == 3) {
-          min = 2; max = 2; return true; // Case 7 [#6rD3-]
+        if (val == 3) {
+          switch (deg) {
+          case 3:
+            min = 2; max = 2; return true;
+          case 2:
+            min = 1; max = 1; return true;
+          }
+        }
+        break;
+      }
+      break;
+
+    case OBElements::Nitrogen: // nitrogen
+    case OBElements::Phosphorus: // phosphorus
+      switch (chg) {
+      case 0:
+        switch (val) {
+        case 3:
+          switch (deg) {
+          case 3:
+            min = 2; max = 2; return true;
+          case 2:
+            min = 1; max = 1; return true;
+          }
+          break;
+        case 5:
+          if (deg == 3) {
+            ExocyclicAtom exoatom = FindExocyclicAtom(atm);
+            switch (exoatom) {
+            case EXO_OXYGEN:
+              min = 1; max = 1; return true;
+            case EXO_NONOXYGEN:
+              min = 2; max = 2; return true;
+            default:
+              ;
+            }
+          }
+        }
+        break;
+      case 1:
+        if (val == 4 && deg == 3) {
+          min = 1; max = 1; return true;
+        }
+        break;
+      case -1:
+        if (val == 2 && deg == 2) {
+          min = 2; max = 2; return true;
         }
       }
       break;
-    case 7: // nitrogen
+
+    case OBElements::Oxygen:
+    case OBElements::Selenium:
       switch (chg) {
       case 0:
-        threeNTests = ThreeNitrogenTestsInOne(atm);
-        if (deg == 3 && (threeNTests & 1)) { // HasAcyclicDblBondToOxygen(atm))
-          min = 1; max = 1; return true; // Case 13 [#7rD3+0]=O
+        if (val == 2 && deg == 2) {
+          min = 2; max = 2; return true;
         }
-        if (threeNTests & 2) { // HasTwoSingleRingBonds(atm))
-          min = 1; max = 2; return true; // Case 10 [#7r+0](-@*)-@*
+      case 1:
+        if (val == 3 && deg == 2) {
+          min = 1; max = 1; return true;
         }
+      }
+      break;
+
+    case OBElements::Sulfur:
+      switch (chg) {
+      case 0:
+        switch (val) {
+        case 2:
+          if (deg == 2) {
+            min = 2; max = 2; return true;
+          }
+          break;
+        case 4:
+          if (deg == 3 && HasExocyclicDblBondToOxygen(atm)) {
+            min = 2; max = 2; return true;
+          }
+        }
+        break;
+      case 1:
+        if (val == 3) {
+          switch (deg) {
+          case 2:
+            min = 1; max = 1; return true;
+          case 3:
+            if (HasExocyclicBondToOxygenMinus(atm)) {
+              min = 2; max = 2; return true;
+            }
+          }
+        }
+      }
+      break;
+
+    case OBElements::Boron:
+      if (chg == 0 && val == 3) {
         switch (deg) {
         case 2:
-          if (threeNTests & 4) { // HasRingDblBond(atm))
-            min = 1; max = 1; return true; // Case 11 [#7rD2+0]=@*
-          }
-          else {
-            min = 1; max = 2; return true; // Case 8 [#7rD2+0]
+          min = 1; max = 1; return true;
+        case 3:
+          min = 0; max = 0; return true;
+        }
+      }
+      break;
+
+    case 0: // Asterisk
+      if (chg == 0) {
+        switch (val) {
+        case 2:
+          switch (deg) {
+          case 2:
+          case 3:
+            min = 0; max = 2; return true;
           }
           break;
         case 3:
-          min = 1; max = 2; return true; // Case 9 [#7rD3+0]
-        }
-        break;
-      case -1:
-        if (deg == 2) {
-          min = 2; max = 2; return true; // Case 14 [#7rD2-]
-        }
-        break;
-      case 1:
-        if ((deg==2 && (atm->GetImplicitHCount() + atm->BOSum())==4) || deg == 3) { // tried deg 2 or 3 but fails on emolecules 6884346
-          min = 1; max = 1; return true; // Case 12 [#7rD3+]
-        }
-      }
-      break;
-    case 8: // oxygen
-      switch (chg) {
-      case 0:
-        min = 2; max = 2; return true; // Case 15 [#8r+0]
-      case 1:
-        min = 1; max = 1; return true; // Case 16 [#8r+]
-      }
-      break;
-    case 15: // phosphorus
-      // Accounts Chem Res 1978 11 p. 153
-      // phosphole, phosphabenzene(not v.aromatic)
-      if (deg == 3) {
-        if (HasTwoRingOxygens(atm)) {
-          min = 0; max = 0; return true; // Case 21 [#15rD3]([#8r])[#8r]
-        }
-        if (chg == 0) {
-          min = 2; max = 2; return true; // Case 20 [#15rD3+0]
-        }
-      }
-      break;
-    case 16: // sulfur
-      switch (chg) {
-      case 0:
-        switch (deg) {
-        case 2:
-          min = 2; max = 2; return true; // Case 17 [#16rD2+0]
-        case 3:
-          if (HasAcyclicDblBondToOxygen(atm)) {
-            min = 2; max = 2; return true; // Case 19 [#16rD3+0]=!@O
+          switch (deg) {
+          case 2:
+          case 3:
+            min = 0; max = 1; return true;
           }
-        }
-        break;
-      case 1:
-        if (allatomdeg == 2) {
-          min = 1; max = 1; return true; // Case 18 [#16rD2+]
+          break;
         }
       }
       break;
-    case 34: // selenium (selenophene)
-      if (chg == 0 && deg == 2) {
-        min = 2; max = 2; return true; // Case 22 [#34rD2+0]
-      }
     }
-
-    // Considered and excluded:
-    // arsabenzene, etc. (*really* not v.aromatic)
-    // [#33rD3+0]		2	2
-    // tellurophene, etc. (*really* not v.aromatic)
-    // [#52rD2+0]		2	2
-    // stilbabenzene, etc. (very little aromatic character)
-    // [#51rD3+0]		2	2
 
     min = 0; max = 0; // nothing matched
     return false;
