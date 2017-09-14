@@ -44,6 +44,7 @@ void NegativeTestCases(int &molCount, unsigned int &testCount)
   const char* smiles[] = { "c1ccc2[N+]=c3ccccc3=Nc2c1", // N radical found in eMolecules
                            "N1S[SH+]C=C1",
                            "S1C=[NH+]=[NH+]=C1",
+                           "C1(N23)=CC=CC2=CC=CC3=CC=C1", // pyrido[2,1,6-de]quinolizine - no atom is Daylight aromatic
                            0 };
   OBMol mol;
   OBConversion conv;
@@ -68,21 +69,6 @@ void NegativeTestCases(int &molCount, unsigned int &testCount)
       cout << "not ok " << ++testCount << " # all atoms are aromatic in molecule " << molCount << " "
       << mol.GetTitle() << "\n";
   }
-
-  // I don't think Daylight's aromaticity model agrees with OB here, but if
-  // we ever change we can consider and update this test.
-  const char* smi = "Cc1ccc(cc1)[N+]1=[CH-]C(=NC(=O)OC)ON1";
-  mol.Clear();
-  conv.ReadString(&mol, smi);
-  FOR_ATOMS_OF_MOL(atom, mol) {
-    if (atom->GetFormalCharge() == -1) {
-      if (!atom->IsAromatic())
-        cout << "not ok " << ++testCount << "# [CH-] in testcase should be aromatic\n";
-      else
-        cout << "ok " << ++testCount << "\n";
-    }
-  }
-
 }
 
 int aromatest(int argc, char* argv[])
