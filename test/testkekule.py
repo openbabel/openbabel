@@ -47,7 +47,7 @@ class TestKekuleAssignment(BaseTest):
             'c1(NC(=O)C2CC2)nc2-c3c(cccc3)CCc2cn1',
             'O=C1N(CCCC)C(=O)NC2C1C1N(N2)CCN1',
             'Cn1cccnc1=O',
-            'O=c1n(C)c(=O)nc2c1c1n([nH]2)cc[nH]1',
+            'O=c1n(C)c(=O)nc2-c1c1n([nH]2)cc[nH]1',
             'Cn1ccn2c1nc1c2c(=O)n(C)c(=O)n1C'
             ]
         for i in range(0, len(self.smiles)):
