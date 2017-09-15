@@ -40,7 +40,6 @@ private:
   std::vector<obsharedptr<OBMol> > _products;
   std::vector<obsharedptr<OBMol> > _agents;
   obsharedptr<OBMol> _ts;
-  obsharedptr<OBMol> _agent;
   std::string _title;
   std::string _comment;
   bool _reversible;
@@ -115,7 +114,6 @@ public:
     _products.clear();
     _agents.clear();
     _ts.reset();
-    _agent.reset();
     _title.clear();
     _comment.clear();
     _reversible = false;
