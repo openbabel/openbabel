@@ -505,6 +505,26 @@ namespace OpenBabel
       }
       break;
 
+    case OBElements::Arsenic:
+      switch (chg) {
+      case 0:
+        if (val == 3) {
+          switch (deg) {
+          case 2:
+            min = 1; max = 1; return true;
+          case 3:
+            min = 2; max = 2; return true;
+          }
+        }
+        break;
+      case 1:
+        if (val == 4 && deg == 3) {
+          min = 1; max = 1; return true;
+        }
+      }
+      break;
+
+
     case 0: // Asterisk
       if (chg == 0) {
         switch (val) {
