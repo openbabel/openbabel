@@ -65,6 +65,7 @@ set(origtests
 set (atom_parts 1 2 3 4)
 set (ffmmff94_parts 1 2)
 set (math_parts 1 2 3 4)
+set (pdbreadfile_parts 1 2 3 4)
 
 if(BUILD_SHARED)
   if(LIBXML2_FOUND)

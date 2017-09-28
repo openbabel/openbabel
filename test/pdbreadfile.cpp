@@ -32,7 +32,6 @@ GNU General Public License for more details.
 using namespace std;
 using namespace OpenBabel;
 
-string pdbfile = "00T_ideal.pdb";
 
 int pdbreadfile(int argc, char* argv[])
 {
@@ -40,11 +39,31 @@ int pdbreadfile(int argc, char* argv[])
 
   int choice = defaultchoice;
 
+  string pdbfile;
+
   if (argc > 1) {
     if(sscanf(argv[1], "%d", &choice) != 1) {
       printf("Couldn't parse that input as a number\n");
       return -1;
     }
+  }
+
+  switch(choice) {
+  case 1:
+    pdbfile = "00T_ideal.pdb";
+    break;
+  case 2:
+    pdbfile = "00T_nonstandard.pdb";
+    break;
+  case 3:
+    pdbfile = "00T_ideal_het.pdb";
+    break;
+  case 4:
+    pdbfile = "00T_nonstandard_het.pdb";
+    break;
+  default:
+    cout << "Test number " << choice << " does not exist!\n";
+    return -1;
   }
 
   #ifdef FORMATDIR
@@ -81,6 +100,26 @@ int pdbreadfile(int argc, char* argv[])
   else
           cout << "not ok 4" << endl;
 
+  if (obmol.GetAtom(6)->GetAtomicNum() == OBElements::Nitrogen)
+          cout << "ok 5!" << endl;
+  else
+          cout << "not ok 5" << endl;
+
+  if (obmol.GetAtom(12)->GetAtomicNum() == OBElements::Hydrogen)
+          cout << "ok 6!" << endl;
+  else
+          cout << "not ok 6" << endl;
+
+  if (obmol.GetAtom(13)->GetAtomicNum() == OBElements::Hydrogen)
+          cout << "ok 7!" << endl;
+  else
+          cout << "not ok 7" << endl;
+
+  if (obmol.GetAtom(14)->GetAtomicNum() == OBElements::Hydrogen)
+          cout << "ok 8!" << endl;
+  else
+          cout << "not ok 8" << endl;
+
   // Test that there are no remaining molecules
   // (this test fails on Linux)
   // if (!obconv.Read(&obmol))
@@ -90,7 +129,7 @@ int pdbreadfile(int argc, char* argv[])
 
   // the total number of tests for "prove"
   // update when you add more tests!
-  cout << "1..4\n";
+  cout << "1..6\n";
 
   return 0;
 }
