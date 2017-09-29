@@ -253,6 +253,12 @@ int InChIFormat::SkipObjects(int n, OBConversion* pConv)
   return ifs.good() ? 1 : -1;
 }
 
+// Convert the atom Ids used by the stereorefs to inchi atom ids
+static AT_NUM  OBAtomIdToInChIAtomId(OBMol &mol, OBStereo::Ref atomid)
+{
+  return (AT_NUM)(mol.GetAtomById(atomid)->GetIdx() - 1);
+}
+
 /////////////////////////////////////////////////////////////////
 bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
@@ -403,7 +409,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
           if(config.specified) {
             inchi_Stereo0D stereo;
             stereo.type = INCHI_StereoType_Tetrahedral;
-            stereo.central_atom = static_cast<AT_NUM> (config.center);
+            stereo.central_atom = OBAtomIdToInChIAtomId(mol, config.center);
 
             bool has_implicit = false; // Does chirality involve implicit lone pair?
             if (config.from == OBStereo::ImplicitRef || config.refs[0] == OBStereo::ImplicitRef) {
@@ -412,11 +418,11 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
             }
 
             if (!has_implicit)
-              stereo.neighbor[0] = static_cast<AT_NUM> (config.from);
+              stereo.neighbor[0] = OBAtomIdToInChIAtomId(mol, config.from);
             else
               stereo.neighbor[0] = stereo.central_atom;
             for(int i=0; i<3; ++i)
-              stereo.neighbor[i + 1] = static_cast<AT_NUM> (config.refs[i]);
+              stereo.neighbor[i + 1] = OBAtomIdToInChIAtomId(mol, config.refs[i]);
 
             if (config.winding == OBStereo::Clockwise)
               stereo.parity = INCHI_PARITY_EVEN;
@@ -447,10 +453,10 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
             if (refs[3]==OBStereo::ImplicitRef)
               end = refs[2];
 
-            stereo.neighbor[0] = static_cast<AT_NUM> (start);
-            stereo.neighbor[1] = static_cast<AT_NUM> (config.begin);
-            stereo.neighbor[2] = static_cast<AT_NUM> (config.end);
-            stereo.neighbor[3] = static_cast<AT_NUM> (end);
+            stereo.neighbor[0] = OBAtomIdToInChIAtomId(mol, start);
+            stereo.neighbor[1] = OBAtomIdToInChIAtomId(mol, config.begin);
+            stereo.neighbor[2] = OBAtomIdToInChIAtomId(mol, config.end);
+            stereo.neighbor[3] = OBAtomIdToInChIAtomId(mol, end);
 
             if (ts->IsTrans(start, end))
               stereo.parity = INCHI_PARITY_EVEN;
@@ -467,7 +473,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     inp.szOptions = opts;
 
     inp.num_atoms = mol.NumAtoms();
-    inp.num_stereo0D = stereoVec.size();
+    inp.num_stereo0D = (AT_NUM) stereoVec.size();
     if(inp.num_stereo0D>0)
       inp.stereo0D = &stereoVec[0];
 
