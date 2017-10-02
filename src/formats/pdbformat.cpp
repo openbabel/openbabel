@@ -888,6 +888,7 @@ namespace OpenBabel
             else if (isalpha(element[0]))
               {
                 elementFound = true;
+                element[1] = tolower(element[1]);
               }
           }
       }
@@ -971,6 +972,10 @@ namespace OpenBabel
              atmid[1] == 'G' || atmid[1] == 'H' ||
              atmid[1] == 'N')) // HD, HE, HG, HH, HN...
           type = "H";
+
+        if (type.size() == 2)
+          type[1] = tolower(type[1]);
+
       } else { //must be hetatm record
         if (isalpha(element[1]) && (isalpha(element[0]) || (element[0] == ' '))) {
           if (isalpha(element[0]))
@@ -982,7 +987,7 @@ namespace OpenBabel
             type[1] = tolower(type[1]);
         } else { // no element column to use
           if (isalpha(atmid[0])) {
-            if (atmid.size() > 2 && (atmid[2] == '\0' || atmid[2] == ' '))
+            if (atmid.size() > 2)
               type = atmid.substr(0,2);
             else if (atmid[0] == 'A') // alpha prefix
               type = atmid.substr(1, atmid.size() - 1);
@@ -1037,8 +1042,14 @@ namespace OpenBabel
     //    cout << mol.NumAtoms() + 1  << " : '" << element << "'" << " " << OBElements::GetAtomicNum(element.c_str()) << endl;
     if (elementFound)
       atom.SetAtomicNum(OBElements::GetAtomicNum(element.c_str()));
-    else // use our old-style guess from athe atom type
-      atom.SetAtomicNum(OBElements::GetAtomicNum(type.c_str()));
+    else { // use our old-style guess from athe atom type
+      unsigned int atomic_num = OBElements::GetAtomicNum(type.c_str());
+      if (atomic_num ==  0) { //try one character if two character element not found
+        type = type.substr(0,1);
+        atomic_num = OBElements::GetAtomicNum(type.c_str());
+      }
+      atom.SetAtomicNum(atomic_num);
+    }
 
     if ( (! scharge.empty()) && "  " != scharge )
       {
