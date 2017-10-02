@@ -353,6 +353,7 @@ namespace OpenBabel
       // that needs a double bond
       needs_dbl_bond->SetBitOff(idx); // to avoid the trivial null path being found
       OBBitVec visited(atomArraySize);
+      m_path.clear();
       bool found_path = FindPath(idx, false, visited);
       if (!found_path) { // could only happen if not kekulizable
         needs_dbl_bond->SetBitOn(idx); // reset
