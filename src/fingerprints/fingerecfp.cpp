@@ -33,9 +33,13 @@ public:
       _radius(radius), _keepdups(keepdups), _flags(0){};
 
 	virtual const char* Description()
-	{ return "Extended-Connectivity Fingerprints (ECFPs)\n"
-      "Circular topological fingerprints of specified radius\n"
-  ;}
+	{ 
+          // Important! The second line is used by some output formats (e.g. FPS)
+	  // to determine the default size
+	  return "Extended-Connectivity Fingerprints (ECFPs)\n"
+                 "4096 bits.\n"
+                 "Circular topological fingerprints of specified radius\n";
+	}
 
 	//Calculates the fingerprint
 	virtual bool GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbits=0);
@@ -234,6 +238,11 @@ bool fingerprintECFP::GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int n
 {
 	OBMol* pmol = dynamic_cast<OBMol*>(pOb);
 	if(!pmol) return false;
+	
+	// default fingeprint size
+	if (nbits <= 0)
+	  nbits = 4096;
+
 	fp.resize(nbits/Getbitsperint());
 	
   _ss.str("");
