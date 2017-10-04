@@ -207,17 +207,6 @@ static void ECFPPass(OpenBabel::OBMol &mol,
   }
 }
 
-
-static void ECFPInsert(std::vector<unsigned int> &fp, unsigned int val)
-{
-  std::vector<unsigned int>::const_iterator i;
-  for (i=fp.begin(); i!=fp.end(); ++i)
-    if (*i == val)
-      return;
-  fp.push_back(val);
-}
-
-
 static void ECFPFirstPass(OpenBabel::OBMol &mol,
                           AtomInfo *ainfo)
 {
@@ -245,8 +234,8 @@ bool fingerprintECFP::GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int n
 {
 	OBMol* pmol = dynamic_cast<OBMol*>(pOb);
 	if(!pmol) return false;
-	fp.resize(1024/Getbitsperint());
-
+	fp.resize(nbits/Getbitsperint());
+	
   _ss.str("");
 
   unsigned int pass;
@@ -265,24 +254,17 @@ bool fingerprintECFP::GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int n
   // Duplicate removal - this is a simplified version of what's in the paper
   FOR_ATOMS_OF_MOL(atom, pmol) {
     if (atom->GetAtomicNum() == OBElements::Hydrogen)
-      continue;
+      continue;    
     unsigned int idx = atom->GetIdx()-1;
-    if (_keepdups) {
-      for (pass=0; pass<= _radius; pass++)
-        fp.push_back(ainfo[idx].e[pass]);
-    } else
-      for (pass=0; pass<= _radius; pass++)
-        ECFPInsert(fp,ainfo[idx].e[pass]);
+    for (pass=0; pass <= _radius; pass++) {
+      unsigned int bit = (ainfo[idx].e[pass] % nbits) & 0x7fffffff; 
+      SetBit(fp, bit);
+    }
   }
 
   delete[] ainfo;
 
-  std::sort(fp.begin(),fp.end());
-
-  if(nbits)
-		Fold(fp, nbits);
-
-	return true;
+  return true;
 }
 
 } //namespace OpenBabel
