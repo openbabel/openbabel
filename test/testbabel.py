@@ -111,8 +111,8 @@ class testBabel(BaseTest):
         self.assertEqual(output.rstrip(), "InChI=1S/C2H3ClO/c1-2(3)4/h1H3")
 
     def sort(self, rsmi):
-        """TODO: Change OBMol.Separate to preserve the order. This
-        function shouldn't be necessary."""
+        # TODO: Change OBMol.Separate to preserve the order. This
+        # function shouldn't be necessary.
         tmp = rsmi.split(">")
         r = ".".join(sorted(tmp[0].split(".")))
         p = ".".join(sorted(tmp[2].split(".")))
