@@ -191,7 +191,7 @@ bool RXNFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         return false;
     }
 
-    if(nReactants + nProducts)
+    if(nReactants + nProducts + nAgents)
     {
       //Read the first $MOL. The others are read at the end of the previous MOL
       if(!getline(ifs, ln))

@@ -123,6 +123,7 @@ class testOBabel(BaseTest):
         for rsmi, error in zip(data, errors):
             output, errormsg = run_exec('obabel -:%s -irsmi -orsmi' % rsmi)
             self.assertTrue(error in errormsg)
+
     def sort(self, rsmi):
         # TODO: Change OBMol.Separate to preserve the order. This
         # function shouldn't be necessary.
@@ -133,9 +134,8 @@ class testOBabel(BaseTest):
 
     def testRoundtripThroughRXN(self):
         self.canFindExecutable("obabel")
-        data = ["C>N>O", "C>>O", "C.N>>O", "C>>O.N"]
-        # TODO - when partial reaction support is merged:
-        # ["C>>O", ">>O", "C>>", ">N>", ">>"]
+        data = ["C>N>O", "C>>O", "C.N>>O", "C>>O.N",
+                "C>>O", ">>O", "C>>", ">N>", ">>"]
         for rsmi in data:
             output, error = run_exec("obabel -irsmi -:%s -orxn" % rsmi)
             moutput, error = run_exec(output, "obabel -irxn -orsmi")
