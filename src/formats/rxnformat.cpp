@@ -124,6 +124,21 @@ public:
 //Make an instance of the format class
 RXNFormat theRXNFormat;
 
+static bool ParseComponent(const char* t, unsigned int *ans)
+{
+  const char *p = t;
+  while (*p == ' ')
+    p++;
+  while (p - t < 3) {
+    if (*p < '0' || *p > '9')
+      return false;
+    *ans *= 10;
+    *ans += *p - '0';
+    p++;
+  }
+  return true;
+}
+
 /////////////////////////////////////////////////////////////////
 bool RXNFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
@@ -160,9 +175,21 @@ bool RXNFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       return(false); //comment
     pReact->SetComment(Trim(ln));
 
-    int nReactants, nProducts, i;
-    ifs >> setw(3) >> nReactants >> setw(3) >> nProducts >> ws;
-    if(!ifs) return false;
+    if (!getline(ifs, ln))
+      return false; // num reactants, products, and optionally agents
+
+    unsigned int nReactants = 0, nProducts = 0, nAgents = 0;
+    bool ok = ParseComponent(ln.c_str() + 0, &nReactants);
+    if (!ok)
+      return false;
+    ok = ParseComponent(ln.c_str() + 3, &nProducts);
+    if (!ok)
+      return false;
+    if (ln[6] != '\0') { // optional agents
+      ok = ParseComponent(ln.c_str() + 6, &nAgents);
+      if (!ok)
+        return false;
+    }
 
     if(nReactants + nProducts)
     {
@@ -175,7 +202,7 @@ bool RXNFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     OBMol* pmol;
 
-    for(i=0;i<nReactants;i++)
+    for(int i=0;i<nReactants;i++)
     {
       //Read a MOL file	using the same OBConversion object but with a different format
       pmol=new OBMol;
@@ -188,7 +215,7 @@ bool RXNFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       }
     }
 
-    for(i=0;i<nProducts;i++)
+    for(int i=0;i<nProducts;i++)
     {
       //Read a MOL file
       pmol=new OBMol;
@@ -196,11 +223,24 @@ bool RXNFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         obErrorLog.ThrowError(__FUNCTION__, "Failed to read a product", obWarning);
       else
       {
-        //        pReact->products.push_back(pmol);
         obsharedptr<OBMol> p(pmol);
         pReact->AddProduct(p);
       }
     }
+
+    for(int i=0;i<nAgents;i++)
+    {
+      //Read a MOL file
+      pmol=new OBMol;
+      if(!pMolFormat->ReadMolecule(pmol,pConv))
+        obErrorLog.ThrowError(__FUNCTION__, "Failed to read an agent", obWarning);
+      else
+      {
+        obsharedptr<OBMol> p(pmol);
+        pReact->AddAgent(p);
+      }
+    }
+
 
     return(true);
 }
