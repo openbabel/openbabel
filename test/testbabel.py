@@ -102,13 +102,27 @@ class BaseTest(unittest.TestCase):
                          "Number of molecules converted is %d "
                          "but should be %d" % (conversion_no, N))        
 
-class testBabel(BaseTest):
-    """A series of tests relating to the Babel executable"""
+class testOBabel(BaseTest):
+    """A series of tests relating to the obabel executable"""
         
     def testSMItoInChI(self):
-        self.canFindExecutable("babel")
-        output, error = run_exec("CC(=O)Cl", "babel -ismi -oinchi")
+        self.canFindExecutable("obabel")
+        output, error = run_exec("CC(=O)Cl", "obabel -ismi -oinchi")
         self.assertEqual(output.rstrip(), "InChI=1S/C2H3ClO/c1-2(3)4/h1H3")
+
+    def testRSMItoRSMI(self):
+        # Check possible combinations of missing rxn components
+        data = ["O>N>S", "O>>S", "O>N>", "O>>",
+                ">N>S", ">>S", ">>"]
+        for rsmi in data:
+            output, error = run_exec('obabel -:%s -irsmi -orsmi' % rsmi)
+            self.assertEqual(output.rstrip(), rsmi)
+        # Check handling of invalid rxn components
+        data = ["Noel>N>S", "O>Noel>S", "O>N>Noel"]
+        errors = ["reactant", "agent", "product"]
+        for rsmi, error in zip(data, errors):
+            output, errormsg = run_exec('obabel -:%s -irsmi -orsmi' % rsmi)
+            self.assertTrue(error in errormsg)
 
 if __name__ == "__main__":
     unittest.main()
