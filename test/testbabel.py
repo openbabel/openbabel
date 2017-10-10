@@ -124,34 +124,5 @@ class testOBabel(BaseTest):
             output, errormsg = run_exec('obabel -:%s -irsmi -orsmi' % rsmi)
             self.assertTrue(error in errormsg)
 
-    def sort(self, rsmi):
-        # TODO: Change OBMol.Separate to preserve the order. This
-        # function shouldn't be necessary.
-        tmp = rsmi.split(">")
-        r = ".".join(sorted(tmp[0].split(".")))
-        p = ".".join(sorted(tmp[2].split(".")))
-        return "%s>%s>%s" % (r, tmp[1], p)
-
-    def testRoundtripThroughRXN(self):
-        self.canFindExecutable("obabel")
-        data = ["C>N>O", "C>>O", "C.N>>O", "C>>O.N"]
-        # TODO - when partial reaction support is merged:
-        # ["C>>O", ">>O", "C>>", ">N>", ">>"]
-        for rsmi in data:
-            output, error = run_exec("obabel -irsmi -:%s -orxn" % rsmi)
-            moutput, error = run_exec(output, "obabel -irxn -orsmi")
-            self.assertEqual(self.sort(moutput.rstrip()), self.sort(rsmi))
-        rsmi = "C>N>O"
-        ans = {"agent": "C>N>O",
-               "reactant": "C.N>>O",
-               "product": "C>>O.N",
-               "both": "C.N>>O.N",
-               "ignore": "C>>O"}
-        for option, result in ans.iteritems():
-            output, error = run_exec("obabel -irsmi -:%s -orxn -xG %s" %
-                                     (rsmi, option))
-            moutput, error = run_exec(output, "obabel -irxn -orsmi")
-            self.assertEqual(self.sort(moutput.rstrip()), self.sort(result))
-
 if __name__ == "__main__":
     unittest.main()
