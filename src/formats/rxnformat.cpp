@@ -285,6 +285,12 @@ static void WriteMolFile(OBMol* pmol, OBConversion* pconv, OBFormat* pformat)
   pformat->WriteMolecule(pmol, pconv);
 }
 
+static void WriteAgents(OBReaction* reaction, OBConversion* pconv, OBFormat* pformat)
+{
+  for(unsigned int i=0; i<reaction->NumAgents(); i++)
+    WriteMolFile(reaction->GetAgent(i).get(), pconv, pformat);
+}
+
 /////////////////////////////////////////////////////////////////
 bool RXNFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
@@ -304,14 +310,13 @@ bool RXNFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     }
 
     HandleAgent handleagent = ReadAgentOption(pConv->IsOption("G"));
-    obsharedptr<OBMol> agent = pReact->GetAgent();
-    bool agentInReactants;
-    if (agent && (handleagent==BOTH_REACT_AND_PROD || handleagent==AS_REACT))
+    bool hasAgent = pReact->NumAgents() > 0;
+    bool agentInReactants, agentInProducts;
+    if (hasAgent && (handleagent==BOTH_REACT_AND_PROD || handleagent==AS_REACT))
       agentInReactants = true;
     else
       agentInReactants = false;
-    bool agentInProducts;
-    if (agent && (handleagent==BOTH_REACT_AND_PROD || handleagent==AS_PROD))
+    if (hasAgent && (handleagent==BOTH_REACT_AND_PROD || handleagent==AS_PROD))
       agentInProducts = true;
     else
       agentInProducts = false;
@@ -325,33 +330,33 @@ bool RXNFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     ofs << setw(3);
     if (agentInReactants)
-      ofs << pReact->NumReactants() + 1;
+      ofs << pReact->NumReactants() + pReact->NumAgents();
     else
       ofs << pReact->NumReactants();
     ofs << setw(3);
     if (agentInProducts)
-      ofs << pReact->NumProducts() + 1;
+      ofs << pReact->NumProducts() + pReact->NumAgents();
     else
       ofs << pReact->NumProducts();
-    if (agent && handleagent==AS_AGENT)
-      ofs << setw(3) << 1;
+    if (hasAgent && handleagent==AS_AGENT)
+      ofs << setw(3) << pReact->NumAgents();
     ofs << '\n';
 
     // Write reactants
     for(unsigned int i=0; i<pReact->NumReactants(); i++)
       WriteMolFile(pReact->GetReactant(i).get(), pConv, pMolFormat);
     if (agentInReactants)
-      WriteMolFile(pReact->GetAgent().get(), pConv, pMolFormat);
+      WriteAgents(pReact, pConv, pMolFormat);
 
     // Write products
     for(unsigned int i=0; i<pReact->NumProducts(); i++)
       WriteMolFile(pReact->GetProduct(i).get(), pConv, pMolFormat);
     if (agentInProducts)
-      WriteMolFile(pReact->GetAgent().get(), pConv, pMolFormat);
+      WriteAgents(pReact, pConv, pMolFormat);
 
     // Write agent out (if treating AS_AGENT)
-    if(agent && handleagent==AS_AGENT)
-      WriteMolFile(pReact->GetAgent().get(), pConv, pMolFormat);
+    if(hasAgent && handleagent==AS_AGENT)
+      WriteAgents(pReact, pConv, pMolFormat);
 
     return true;
 }
