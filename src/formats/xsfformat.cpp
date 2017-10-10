@@ -81,6 +81,7 @@ namespace OpenBabel
     vector<string> vs;
     vector<vector3> atomPositions;
     bool createdAtoms = false;
+    int atomicNum;
 
     mol.BeginModify();
 
@@ -96,7 +97,11 @@ namespace OpenBabel
             if (!createdAtoms) {
               atom = mol.NewAtom();
               //set atomic number
-              atom->SetAtomicNum(atoi(vs[0].c_str()));
+              atomicNum = OBElements::GetAtomicNum(vs[0].c_str());
+              if (atomicNum == 0) {
+                atomicNum = atoi(vs[0].c_str());
+              }
+              atom->SetAtomicNum(atomicNum);
             }
             x = atof((char*)vs[1].c_str());
             y = atof((char*)vs[2].c_str());
@@ -137,7 +142,11 @@ namespace OpenBabel
             if (!createdAtoms) {
               atom = mol.NewAtom();
               //set atomic number
-              atom->SetAtomicNum(atoi(vs[0].c_str()));
+              atomicNum = OBElements::GetAtomicNum(vs[0].c_str());
+              if (atomicNum == 0) {
+                atomicNum = atoi(vs[0].c_str());
+              }
+              atom->SetAtomicNum(atomicNum);
             }
             x = atof((char*)vs[1].c_str());
             y = atof((char*)vs[2].c_str());
