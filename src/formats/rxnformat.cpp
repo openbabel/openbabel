@@ -39,9 +39,17 @@ public:
   {
       return
         "MDL RXN format\n"
-        "The MDL reaction format is used to store information on chemical reactions.\n"
+        "The MDL reaction format is used to store information on chemical reactions.\n\n"
         "Output Options, e.g. -xA\n"
-        " A  output in Alias form, e.g. Ph, if present\n\n";
+        " A  output in Alias form, e.g. Ph, if present\n"
+        " G <option> how to handle any agents present\n\n"
+        "            One of the following options should be specifed:\n\n"
+        "            - agent - Treat as an agent (default). Note that some programs\n"
+        "                      may not read agents in RXN files.\n"
+        "            - reactant - Treat any agent as a reactant\n"
+        "            - product - Treat any agent as a product\n"
+        "            - ignore - Ignore any agent\n"
+        "            - both - Treat as both a reactant and a product\n\n";
   };
 
   virtual const char* GetMIMEType()
@@ -116,6 +124,21 @@ public:
 //Make an instance of the format class
 RXNFormat theRXNFormat;
 
+static bool ParseComponent(const char* t, unsigned int *ans)
+{
+  const char *p = t;
+  while (*p == ' ')
+    p++;
+  while (p - t < 3) {
+    if (*p < '0' || *p > '9')
+      return false;
+    *ans *= 10;
+    *ans += *p - '0';
+    p++;
+  }
+  return true;
+}
+
 /////////////////////////////////////////////////////////////////
 bool RXNFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
@@ -152,11 +175,23 @@ bool RXNFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       return(false); //comment
     pReact->SetComment(Trim(ln));
 
-    int nReactants, nProducts, i;
-    ifs >> setw(3) >> nReactants >> setw(3) >> nProducts >> ws;
-    if(!ifs) return false;
+    if (!getline(ifs, ln))
+      return false; // num reactants, products, and optionally agents
 
-    if(nReactants + nProducts)
+    unsigned int nReactants = 0, nProducts = 0, nAgents = 0;
+    bool ok = ParseComponent(ln.c_str() + 0, &nReactants);
+    if (!ok)
+      return false;
+    ok = ParseComponent(ln.c_str() + 3, &nProducts);
+    if (!ok)
+      return false;
+    if (ln[6] != '\0') { // optional agents
+      ok = ParseComponent(ln.c_str() + 6, &nAgents);
+      if (!ok)
+        return false;
+    }
+
+    if(nReactants + nProducts + nAgents)
     {
       //Read the first $MOL. The others are read at the end of the previous MOL
       if(!getline(ifs, ln))
@@ -167,7 +202,7 @@ bool RXNFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     OBMol* pmol;
 
-    for(i=0;i<nReactants;i++)
+    for(int i=0;i<nReactants;i++)
     {
       //Read a MOL file	using the same OBConversion object but with a different format
       pmol=new OBMol;
@@ -180,7 +215,7 @@ bool RXNFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       }
     }
 
-    for(i=0;i<nProducts;i++)
+    for(int i=0;i<nProducts;i++)
     {
       //Read a MOL file
       pmol=new OBMol;
@@ -188,13 +223,72 @@ bool RXNFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         obErrorLog.ThrowError(__FUNCTION__, "Failed to read a product", obWarning);
       else
       {
-        //        pReact->products.push_back(pmol);
         obsharedptr<OBMol> p(pmol);
         pReact->AddProduct(p);
       }
     }
 
+    for(int i=0;i<nAgents;i++)
+    {
+      //Read a MOL file
+      pmol=new OBMol;
+      if(!pMolFormat->ReadMolecule(pmol,pConv))
+        obErrorLog.ThrowError(__FUNCTION__, "Failed to read an agent", obWarning);
+      else
+      {
+        obsharedptr<OBMol> p(pmol);
+        pReact->AddAgent(p);
+      }
+    }
+
+
     return(true);
+}
+
+enum HandleAgent {
+  AS_AGENT, IGNORE, AS_REACT, AS_PROD, BOTH_REACT_AND_PROD
+};
+
+static HandleAgent ReadAgentOption(const char* t)
+{
+  if (!t)
+    return AS_AGENT; // default
+  switch(t[0]) {
+  case 'a':
+    if (t[1]=='g' && t[2]=='e' && t[3]=='n' && t[4]=='t' && t[5]=='\0')
+      return AS_AGENT;
+    break;
+  case 'i':
+    if (t[1]=='g' && t[2]=='n' && t[3]=='o' && t[4]=='r' && t[5]=='e' && t[6]=='\0')
+      return IGNORE;
+    break;
+  case 'r':
+    if (t[1]=='e' && t[2]=='a' && t[3]=='c' && t[4]=='t' && t[5]=='a' && t[6]=='n' && t[7]=='t' && t[8]=='\0')
+      return AS_REACT;
+    break;
+  case 'p':
+    if (t[1]=='r' && t[2]=='o' && t[3]=='d' && t[4]=='u' && t[5]=='c' && t[6]=='t' && t[7]=='\0')
+      return AS_PROD;
+    break;
+  case 'b':
+    if (t[1]=='o' && t[2]=='t' && t[3]=='h' && t[4]=='\0')
+      return BOTH_REACT_AND_PROD;
+    break;
+  }
+  return AS_AGENT;
+}
+
+static void WriteMolFile(OBMol* pmol, OBConversion* pconv, OBFormat* pformat)
+{
+  ostream &ofs = *pconv->GetOutStream();
+  ofs << "$MOL" << '\n';
+  pformat->WriteMolecule(pmol, pconv);
+}
+
+static void WriteAgents(OBReaction* reaction, OBConversion* pconv, OBFormat* pformat)
+{
+  for(unsigned int i=0; i<reaction->NumAgents(); i++)
+    WriteMolFile(reaction->GetAgent(i).get(), pconv, pformat);
 }
 
 /////////////////////////////////////////////////////////////////
@@ -215,29 +309,54 @@ bool RXNFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         return false;
     }
 
+    HandleAgent handleagent = ReadAgentOption(pConv->IsOption("G"));
+    bool hasAgent = pReact->NumAgents() > 0;
+    bool agentInReactants, agentInProducts;
+    if (hasAgent && (handleagent==BOTH_REACT_AND_PROD || handleagent==AS_REACT))
+      agentInReactants = true;
+    else
+      agentInReactants = false;
+    if (hasAgent && (handleagent==BOTH_REACT_AND_PROD || handleagent==AS_PROD))
+      agentInProducts = true;
+    else
+      agentInProducts = false;
+
     ostream &ofs = *pConv->GetOutStream();
 
-    ofs << "$RXN" << endl;
-    ofs << pReact->GetTitle() << endl;
-    ofs << "      OpenBabel" << endl;
-    ofs << pReact->GetComment() <<endl;
+    ofs << "$RXN" << '\n';
+    ofs << pReact->GetTitle() << '\n';
+    ofs << "      OpenBabel" << '\n';
+    ofs << pReact->GetComment() << '\n';
 
-    ofs << setw(3) << pReact->NumReactants() << setw(3) << pReact->NumProducts() << endl;
+    ofs << setw(3);
+    if (agentInReactants)
+      ofs << pReact->NumReactants() + pReact->NumAgents();
+    else
+      ofs << pReact->NumReactants();
+    ofs << setw(3);
+    if (agentInProducts)
+      ofs << pReact->NumProducts() + pReact->NumAgents();
+    else
+      ofs << pReact->NumProducts();
+    if (hasAgent && handleagent==AS_AGENT)
+      ofs << setw(3) << pReact->NumAgents();
+    ofs << '\n';
 
-    unsigned i;
-    for(i=0;i<pReact->NumReactants();i++)
-    {
-      ofs << "$MOL" << endl;
-      //Write reactant in MOL format
-      pMolFormat->WriteMolecule(pReact->GetReactant(i).get(), pConv);
-    }
+    // Write reactants
+    for(unsigned int i=0; i<pReact->NumReactants(); i++)
+      WriteMolFile(pReact->GetReactant(i).get(), pConv, pMolFormat);
+    if (agentInReactants)
+      WriteAgents(pReact, pConv, pMolFormat);
 
-    for(i=0;i<pReact->NumProducts();i++)
-    {
-      ofs << "$MOL" << endl;
-      //Write reactant in MOL format
-      pMolFormat->WriteMolecule(pReact->GetProduct(i).get(), pConv);
-    }
+    // Write products
+    for(unsigned int i=0; i<pReact->NumProducts(); i++)
+      WriteMolFile(pReact->GetProduct(i).get(), pConv, pMolFormat);
+    if (agentInProducts)
+      WriteAgents(pReact, pConv, pMolFormat);
+
+    // Write agent out (if treating AS_AGENT)
+    if(hasAgent && handleagent==AS_AGENT)
+      WriteAgents(pReact, pConv, pMolFormat);
 
     return true;
 }
