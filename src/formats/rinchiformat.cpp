@@ -22,6 +22,8 @@ GNU General Public License for more details.
 
 using namespace std;
 
+#define RINCHI_VERSION_STRING "RInChI=1.00.1S/"
+
 namespace OpenBabel
 {
   class ReactionInChIFormat : public OBFormat
@@ -128,6 +130,12 @@ namespace OpenBabel
     stringstream ss;
     inchiconv.SetOutStream(&ss);
 
+    if (pReact->NumReactants() == 0 && pReact->NumProducts() == 0 && pReact->NumAgents() == 0) {
+      // Special-case the empty RInChI
+      ofs << RINCHI_VERSION_STRING << "/d+\n";
+      return true;
+    }
+
 #define REACTANTS 0
 #define PRODUCTS 1
 #define AGENTS 2
@@ -178,9 +186,9 @@ namespace OpenBabel
       products_string += inchis[PRODUCTS][i];
     }
 
-    bool reactants_first = reactants_string < products_string;
+    bool reactants_first = reactants_string <= products_string;
 
-    ofs << "RInChI=1.00.1S/";
+    ofs << RINCHI_VERSION_STRING;
     ofs << (reactants_first ? reactants_string : products_string);
     ofs << "<>";
     ofs << (reactants_first ? products_string : reactants_string);
