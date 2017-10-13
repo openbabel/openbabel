@@ -141,6 +141,8 @@ namespace OpenBabel
 #define AGENTS 2
 
     std::vector<std::vector<std::string> > inchis(3);
+    unsigned int nonInchi[3] = { 0, 0, 0 };
+    bool hasNonInchi = false;
     for (int part = 0; part <= 2; ++part) {
       unsigned int N;
       switch (part) {
@@ -156,13 +158,16 @@ namespace OpenBabel
         case AGENTS: mol = &*(pReact->GetAgent(i)); break;
         }
         bool ok = inchiconv.Write(mol);
-        if (!ok)
-          return false;
-
-        string inchi = ss.str();
-        if (strncmp(inchi.c_str(), "InChI=1S/", 9) != 0)
-          return false;
-        inchis[part].push_back(TrimInChI(inchi.c_str()));
+        if (!ok) {
+          nonInchi[part]++;
+          hasNonInchi = true;
+        }
+        else {
+          string inchi = ss.str();
+          if (strncmp(inchi.c_str(), "InChI=1S/", 9) != 0)
+            return false;
+          inchis[part].push_back(TrimInChI(inchi.c_str()));
+        }
         ss.str("");
       }
     }
@@ -201,6 +206,11 @@ namespace OpenBabel
       }
     }
     ofs << "/d" << (reactants_first ? "+" : "-");
+    if (hasNonInchi) {
+      ofs << "/u" << (reactants_first ? nonInchi[REACTANTS] : nonInchi[PRODUCTS]) << '-'
+        << (reactants_first ? nonInchi[PRODUCTS] : nonInchi[REACTANTS]) << '-'
+        << nonInchi[AGENTS];
+    }
 
     ofs << '\n';
     return true;

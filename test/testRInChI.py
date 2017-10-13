@@ -38,6 +38,11 @@ class TestReactionInChIWriter(BaseTest):
                 ("C1CC=C(O)CC1>>", "RInChI=1.00.1S/<>C6H10O/c7-6-4-2-1-3-5-6/h4,7H,1-3,5H2/d-"),
                 # The empty reaction
                 (">>", "RInChI=1.00.1S//d+"),
+                # Test 'no-structure'
+                ("c1ccccc1C=C>>*", "RInChI=1.00.1S/<>C8H8/c1-2-8-6-4-3-5-7-8/h2-7H,1H2/d-/u1-0-0"),
+                ("*>>C1CC=C(O)CC1", "RInChI=1.00.1S/<>C6H10O/c7-6-4-2-1-3-5-6/h4,7H,1-3,5H2/d+/u1-0-0"),
+                ("O>*>C", "RInChI=1.00.1S/CH4/h1H4<>H2O/h1H2/d-/u0-0-1"),
+                ("*.O>>C", "RInChI=1.00.1S/CH4/h1H4<>H2O/h1H2/d-/u0-1-0"),
                 ]
         for rsmi, rinchi in data:
             output, error = run_exec('obabel -:%s -irsmi -orinchi' % rsmi)
