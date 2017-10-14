@@ -38,9 +38,10 @@ namespace OpenBabel
     virtual const char* Description()
     {
       return
-        "Reaction SMILES format\n"
-        "Write Options e.g. -xt\n"
-        "  r radicals lower case eg ethyl is Cc\n"
+        "Reaction InChI format\n"
+        "Write Options e.g. -xe\n"
+        "  e Treat this reaction as an equilibrium reaction\n"
+        "    Layer 5 of the generated RInChI will have /d=\n"
         "\n";
 
     }
@@ -125,16 +126,18 @@ namespace OpenBabel
     if (!pInChIFormat)
       return false;
 
+    bool isEquilibrium = pReact->IsReversible() || pConv->IsOption("e");
+
     OBConversion inchiconv;
     inchiconv.SetOutFormat(pInChIFormat);
     stringstream ss;
     inchiconv.SetOutStream(&ss);
 
-    if (pReact->NumReactants() == 0 && pReact->NumProducts() == 0 && pReact->NumAgents() == 0) {
-      // Special-case the empty RInChI
-      ofs << RINCHI_VERSION_STRING << "/d+\n";
-      return true;
-    }
+    //if (pReact->NumReactants() == 0 && pReact->NumProducts() == 0 && pReact->NumAgents() == 0) {
+    //  // Special-case the empty RInChI
+    //  ofs << RINCHI_VERSION_STRING << "/d+\n";
+    //  return true;
+    //}
 
 #define REACTANTS 0
 #define PRODUCTS 1
@@ -194,18 +197,24 @@ namespace OpenBabel
     bool reactants_first = reactants_string <= products_string;
 
     ofs << RINCHI_VERSION_STRING;
-    ofs << (reactants_first ? reactants_string : products_string);
-    ofs << "<>";
-    ofs << (reactants_first ? products_string : reactants_string);
-    if (!inchis[AGENTS].empty()) {
+    if (rsize > 0 || psize > 0 || !inchis[AGENTS].empty()) {
+      ofs << (reactants_first ? reactants_string : products_string);
       ofs << "<>";
-      for (std::vector<std::string>::const_iterator vit = inchis[AGENTS].begin(); vit != inchis[AGENTS].end(); ++vit) {
-        if (vit != inchis[AGENTS].begin())
-          ofs << '!';
-        ofs << *vit;
+      ofs << (reactants_first ? products_string : reactants_string);
+      if (!inchis[AGENTS].empty()) {
+        ofs << "<>";
+        for (std::vector<std::string>::const_iterator vit = inchis[AGENTS].begin(); vit != inchis[AGENTS].end(); ++vit) {
+          if (vit != inchis[AGENTS].begin())
+            ofs << '!';
+          ofs << *vit;
+        }
       }
     }
-    ofs << "/d" << (reactants_first ? "+" : "-");
+    ofs << "/d";
+    if (isEquilibrium)
+      ofs << '=';
+    else
+      ofs << (reactants_first ? '+' : '-');
     if (hasNonInchi) {
       ofs << "/u" << (reactants_first ? nonInchi[REACTANTS] : nonInchi[PRODUCTS]) << '-'
         << (reactants_first ? nonInchi[PRODUCTS] : nonInchi[REACTANTS]) << '-'

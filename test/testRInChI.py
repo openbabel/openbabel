@@ -43,10 +43,18 @@ class TestReactionInChIWriter(BaseTest):
                 ("*>>C1CC=C(O)CC1", "RInChI=1.00.1S/<>C6H10O/c7-6-4-2-1-3-5-6/h4,7H,1-3,5H2/d+/u1-0-0"),
                 ("O>*>C", "RInChI=1.00.1S/CH4/h1H4<>H2O/h1H2/d-/u0-0-1"),
                 ("*.O>>C", "RInChI=1.00.1S/CH4/h1H4<>H2O/h1H2/d-/u0-1-0"),
+                # Empty except for 'no-structures' (assumed)
+                ("*>*>*", "RInChI=1.00.1S//d+/u1-1-1"),
                 ]
-        for rsmi, rinchi in data:
-            output, error = run_exec('obabel -:%s -irsmi -orinchi' % rsmi)
-            self.assertEqual(output.rstrip(), rinchi)
+        for eqm in [False, True]:
+            for rsmi, rinchi in data:
+                if eqm:
+                    output, error = run_exec('obabel -:%s -irsmi -orinchi -xe' % rsmi)
+                    ans = rinchi.replace("/d-", "/d=").replace("/d+", "/d=")
+                    self.assertEqual(output.rstrip(), ans)
+                else:
+                    output, error = run_exec('obabel -:%s -irsmi -orinchi' % rsmi)
+                    self.assertEqual(output.rstrip(), rinchi)
 
 if __name__ == "__main__":
     unittest.main()
