@@ -90,7 +90,8 @@ namespace OpenBabel
         if (buffer[0] == '#')
           continue; // comment
         if (strstr(buffer, "ATOMS") != NULL) {
-          // Minimum of 4 columns -- atomic number, x, y, z (forces)
+          // Minimum of 4 columns -- AtNum, x, y, z (forces)
+          // where AtNum stands for atomic number (or symbol), while X Y Z are
           ifs.getline(buffer, BUFF_SIZE);
           tokenize(vs, buffer);
           while (vs.size() >= 4) {
