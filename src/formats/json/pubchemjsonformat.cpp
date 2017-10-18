@@ -167,12 +167,24 @@ class PubChemJSONFormat : public OBMoleculeFormat
     pmol->ReserveAtoms(eAids.size());
     for(Json::ArrayIndex i = 0; i < eAids.size(); i++) {
       if (eAids[i].isInt() && elements[i].isInt()) {
+        // Element provided as integer atomic number
         int atomicNum = elements[i].asInt();
         OBAtom* patom = pmol->NewAtom((unsigned long)eAids[i].asInt());
         if (atomicNum == 255 || atomicNum == 254 || atomicNum == 253 || atomicNum == 252) {
           patom->SetAtomicNum(0);
         } else {
           patom->SetAtomicNum(atomicNum);
+        }
+      } else if (eAids[i].isInt() && elements[i].isString()) {
+        // Element provided as string (old format)
+        string elementstring = elements[i].asString();
+        OBAtom* patom = pmol->NewAtom((unsigned long)eAids[i].asInt());
+        if (elementstring == "a" || elementstring == "d" || elementstring == "r" || elementstring == "lp") {
+          patom->SetAtomicNum(0);
+        } else {
+          // Ensure first letter is uppercase
+          elementstring[0] = toupper(elementstring[0]);
+          patom->SetAtomicNum(OBElements::GetAtomicNum(elementstring.c_str()));
         }
       } else {
         obErrorLog.ThrowError("PubChemJSONFormat", "Invalid atom", obWarning);
@@ -200,6 +212,7 @@ class PubChemJSONFormat : public OBMoleculeFormat
     for(Json::ArrayIndex i = 0; i < radicals.size(); i++) {
       Json::Value radical = radicals[i];
       if (radical["aid"].isInt() && radical["type"].isInt()) {
+        // Radical provided as integer
         OBAtom* patom = pmol->GetAtomById(radical["aid"].asInt());
         if (patom) {
           int sm = radical["type"].asInt();
@@ -207,6 +220,35 @@ class PubChemJSONFormat : public OBMoleculeFormat
             sm = 0;
           }
           patom->SetSpinMultiplicity(sm);
+        } else {
+          obErrorLog.ThrowError("PubChemJSONFormat", "Invalid atom radical", obWarning);
+        }
+      } else if (radical["aid"].isInt() && radical["type"].isString()) {
+        // Radical provided as string (old format)
+        OBAtom* patom = pmol->GetAtomById(radical["aid"].asInt());
+        if (patom) {
+          string radicalstring = radical["type"].asString();
+          if (radicalstring == "singlet") {
+            patom->SetSpinMultiplicity(1);
+          } else if (radicalstring == "doublet") {
+            patom->SetSpinMultiplicity(2); 
+          } else if (radicalstring == "triplet") {
+            patom->SetSpinMultiplicity(3);
+          } else if (radicalstring == "quartet") {
+            patom->SetSpinMultiplicity(4);
+          } else if (radicalstring == "quintet") {
+            patom->SetSpinMultiplicity(5);
+          } else if (radicalstring == "hextet") {
+            patom->SetSpinMultiplicity(6);
+          } else if (radicalstring == "heptet") {
+            patom->SetSpinMultiplicity(7);
+          } else if (radicalstring == "octet") {
+            patom->SetSpinMultiplicity(8);
+          } else if (radicalstring == "none") {
+            patom->SetSpinMultiplicity(0);
+          } else {
+            obErrorLog.ThrowError("PubChemJSONFormat", "Invalid atom radical", obWarning);
+          }
         } else {
           obErrorLog.ThrowError("PubChemJSONFormat", "Invalid atom radical", obWarning);
         }
@@ -240,6 +282,7 @@ class PubChemJSONFormat : public OBMoleculeFormat
     Json::Value orders = molRoot["bonds"]["order"];
     for(Json::ArrayIndex i = 0; i < oAid1s.size(); i++) {
       if (oAid1s[i].isInt() && oAid2s[i].isInt() && orders[i].isInt()) {
+        // Bond order provided as integer
         OBAtom* beginAtom = pmol->GetAtomById(oAid1s[i].asInt());
         OBAtom* endAtom = pmol->GetAtomById(oAid2s[i].asInt());
         if (beginAtom && endAtom) {
@@ -269,6 +312,37 @@ class PubChemJSONFormat : public OBMoleculeFormat
           pbond->SetBondOrder(order);
           beginAtom->AddBond(pbond);
           endAtom->AddBond(pbond);
+        } else {
+          obErrorLog.ThrowError("PubChemJSONFormat", "Invalid bond", obWarning);
+        }
+      } else if (oAid1s[i].isInt() && oAid2s[i].isInt() && orders[i].isString()) {
+        // Bond order provided as string (old format)
+        int order = 0; // Use zero bond order for other bond types (complex, ionic, dative, unknown)
+        string orderstring = orders[i].asString();
+        if (orderstring == "single") {
+          order = 1;
+        } else if (orderstring == "double") {
+          order = 2;
+        } else if (orderstring == "triple") {
+          order = 3;
+        } else if (orderstring == "quadruple") {
+          order = 4;
+        }
+        OBAtom* beginAtom = pmol->GetAtomById(oAid1s[i].asInt());
+        OBAtom* endAtom = pmol->GetAtomById(oAid2s[i].asInt());
+        if (beginAtom && endAtom) {
+          OBBond* pbond = pmol->NewBond();
+          pbond->SetBegin(beginAtom);
+          pbond->SetEnd(endAtom);
+          pbond->SetBondOrder(order);
+          beginAtom->AddBond(pbond);
+          endAtom->AddBond(pbond);
+          // Save type string as generic data on bond (useful for non-standard bonds)
+          OBPairData *bondType = new OBPairData;
+          bondType->SetAttribute("type");
+          bondType->SetValue(orderstring);
+          bondType->SetOrigin(fileformatInput);
+          pbond->SetData(bondType);
         } else {
           obErrorLog.ThrowError("PubChemJSONFormat", "Invalid bond", obWarning);
         }
@@ -312,7 +386,7 @@ class PubChemJSONFormat : public OBMoleculeFormat
     Json::Value aid2s = conf["style"]["aid2"];
     Json::Value styles = conf["style"]["annotation"];
     for(Json::ArrayIndex i = 0; i < aid1s.size(); i++) {
-      if (aid1s[i].isInt() && aid2s[i].isInt() && styles[i].isInt()) {
+      if (aid1s[i].isInt() && aid2s[i].isInt()) {
         OBAtom* beginAtom = pmol->GetAtomById(aid1s[i].asInt());
         OBAtom* endAtom = pmol->GetAtomById(aid2s[i].asInt());
         if (beginAtom && endAtom) {
@@ -326,47 +400,82 @@ class PubChemJSONFormat : public OBMoleculeFormat
           }
           // Use annotations to add stereo information
           unsigned int flags = pbond->GetFlags();
-          int style = styles[i].asInt();
-          if (style == 8) {
-            flags |= OBBond::Aromatic;
-          } else if (style == 5) {
-            flags |= OBBond::Wedge;
-          } else if (style == 6) {
-            flags |= OBBond::Hash;
-          } else if (style == 1) {
-            flags |= OBBond::CisOrTrans;
-          } else if (style == 3) {
-            flags |= OBBond::WedgeOrHash;
-          } else {
-            // Save non-standard annotations as generic data on bond (multiple possible)
-            vector<string> val;
-            if (pbond->HasData("style")) {
-              AnnotationData *data = dynamic_cast<AnnotationData*>(pbond->GetData("style"));
-              val = data->GetGenericValue();
-              pbond->DeleteData("style");
+
+          if (styles[i].isInt()) {
+            // Bond style provided as integer
+            int style = styles[i].asInt();
+            if (style == 8) {
+              flags |= OBBond::Aromatic;
+            } else if (style == 5) {
+              flags |= OBBond::Wedge;
+            } else if (style == 6) {
+              flags |= OBBond::Hash;
+            } else if (style == 1) {
+              flags |= OBBond::CisOrTrans;
+            } else if (style == 3) {
+              flags |= OBBond::WedgeOrHash;
+            } else {
+              // Save non-standard annotations as generic data on bond (multiple possible)
+              vector<string> val;
+              if (pbond->HasData("style")) {
+                AnnotationData *data = dynamic_cast<AnnotationData*>(pbond->GetData("style"));
+                val = data->GetGenericValue();
+                pbond->DeleteData("style");
+              }
+              AnnotationData *data = new AnnotationData;
+              data->SetAttribute("style");
+              data->SetOrigin(fileformatInput);
+              string stylestring = "unknown";
+              if (style == 2) {
+                stylestring = "dashed";
+              } else if (style == 4) {
+                stylestring = "dotted";
+              } else if (style == 7) {
+                stylestring = "arrow";
+              } else if (style == 9) {
+                stylestring = "resonance";
+              } else if (style == 10) {
+                stylestring = "bold";
+              } else if (style == 11) {
+                stylestring = "fischer";
+              } else if (style == 12) {
+                stylestring = "closeContact";
+              }
+              val.push_back(stylestring);
+              data->SetValue(val);
+              pbond->SetData(data);
             }
-            AnnotationData *data = new AnnotationData;
-            data->SetAttribute("style");
-            data->SetOrigin(fileformatInput);
-            string stylestring = "unknown";
-            if (style == 2) {
-              stylestring = "dashed";
-            } else if (style == 4) {
-              stylestring = "dotted";
-            } else if (style == 7) {
-              stylestring = "arrow";
-            } else if (style == 9) {
-              stylestring = "resonance";
-            } else if (style == 10) {
-              stylestring = "bold";
-            } else if (style == 11) {
-              stylestring = "fischer";
-            } else if (style == 12) {
-              stylestring = "closeContact";
+          } else if (styles[i].isString()) {
+            // Bond style provided as string (old format)
+            string stylestring = styles[i].asString();
+            if (stylestring == "aromatic") {
+              flags |= OBBond::Aromatic;
+            } else if (stylestring == "wedge-up") {
+              flags |= OBBond::Wedge;
+            } else if (stylestring == "wedge-down") {
+              flags |= OBBond::Hash;
+            } else if (stylestring == "crossed") {
+              flags |= OBBond::CisOrTrans;
+            } else if (stylestring == "wavy") {
+              flags |= OBBond::WedgeOrHash;
+            } else if (stylestring == "dashed" || stylestring == "dotted" || 
+                       stylestring == "arrow" || stylestring == "resonance" || 
+                       stylestring == "bold" || stylestring == "fischer" || 
+                       stylestring == "closeContact" || stylestring == "unknown") {
+              // Save non-standard annotations as generic data on bond (multiple possible)
+              vector<string> val;
+              if (pbond->HasData("style")) {
+                AnnotationData *data = dynamic_cast<AnnotationData*>(pbond->GetData("style"));
+                val = data->GetGenericValue();
+                pbond->DeleteData("style");
+              }
+              AnnotationData *data = new AnnotationData;
+              data->SetAttribute("style");
+              data->SetOrigin(fileformatInput);
+              val.push_back(stylestring);
+              data->SetValue(val);
+              pbond->SetData(data);
             }
-            val.push_back(stylestring);
-            data->SetValue(val);
-            pbond->SetData(data);
           }
           pbond->Set(pbond->GetIdx(), beginAtom, endAtom, pbond->GetBondOrder(), flags);    
         } else {
@@ -411,12 +520,14 @@ class PubChemJSONFormat : public OBMoleculeFormat
           config.center = tet["center"].asInt();
           config.from = (tet["top"].asInt() == -1) ? OBStereo::ImplicitRef : tet["top"].asInt();
           config.refs.push_back((tet["below"].asInt() == -1) ? OBStereo::ImplicitRef : tet["below"].asInt());
-          if (tet["parity"].asInt() == 1) {  // "clockwise"
+          if ((tet["parity"].isInt() && tet["parity"].asInt() == 1) || 
+              (tet["parity"].isString() && tet["parity"].asString() == "clockwise")) {
             config.specified = true;
             config.winding = OBStereo::Clockwise;
             config.refs.push_back((tet["bottom"].asInt() == -1) ? OBStereo::ImplicitRef : tet["bottom"].asInt());
             config.refs.push_back((tet["above"].asInt() == -1) ? OBStereo::ImplicitRef : tet["above"].asInt());
-          } else if (tet["parity"].asInt() == 2) {  // "counterclockwise"
+          } else if ((tet["parity"].isInt() && tet["parity"].asInt() == 2) || 
+                     (tet["parity"].isString() && tet["parity"].asString() == "counterclockwise")) {
             config.specified = true;
             config.winding = OBStereo::AntiClockwise;
             config.refs.push_back((tet["above"].asInt() == -1) ? OBStereo::ImplicitRef : tet["above"].asInt());
@@ -439,7 +550,8 @@ class PubChemJSONFormat : public OBMoleculeFormat
           config.refs.push_back((pl["rtop"].asInt() == -1) ? OBStereo::ImplicitRef : pl["rtop"].asInt());
           config.refs.push_back((pl["rbottom"].asInt() == -1) ? OBStereo::ImplicitRef : pl["rbottom"].asInt());
           config.refs.push_back((pl["lbottom"].asInt() == -1) ? OBStereo::ImplicitRef : pl["lbottom"].asInt());
-          if (pl["parity"].asInt() == 3 || pl["parity"].asInt() == 255) {  // "any" or "unknown"
+          if ((pl["parity"].isInt() && (pl["parity"].asInt() == 3 || pl["parity"].asInt() == 255)) ||
+              (pl["parity"].isString() && (pl["parity"].asString() == "any" || pl["parity"].asString() == "unknown"))) {
             config.specified = false;
           } else {
             config.specified = true;
@@ -456,7 +568,8 @@ class PubChemJSONFormat : public OBMoleculeFormat
           config.refs.push_back((sq["rbelow"].asInt() == -1) ? OBStereo::ImplicitRef : sq["rbelow"].asInt());
           config.refs.push_back((sq["rabove"].asInt()) ? OBStereo::ImplicitRef : sq["rabove"].asInt());
           config.refs.push_back((sq["labove"].asInt() == -1) ? OBStereo::ImplicitRef : sq["labove"].asInt());
-          if (sq["parity"].asInt() == 4 || sq["parity"].asInt() == 255) {  // "any" or "unknown"
+          if ((sq["parity"].isInt() && (sq["parity"].asInt() == 4 || sq["parity"].asInt() == 255)) ||
+              (sq["parity"].isString() && (sq["parity"].asString() == "any" || sq["parity"].asString() == "unknown"))) {
             config.specified = false;
           } else {
             config.specified = true;
