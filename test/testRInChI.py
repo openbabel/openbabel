@@ -14,9 +14,13 @@ In both cases, the test file is run directly from the source folder,
 and so you can quickly develop the tests and try them out.
 """
 
+import os
+import glob
 import unittest
 
 from testbabel import run_exec, executable, log, BaseTest
+
+here = os.path.dirname(__file__)
 
 class TestReactionInChIWriter(BaseTest):
     """A series of tests relating to writing Reaction InChI"""
@@ -55,6 +59,14 @@ class TestReactionInChIWriter(BaseTest):
                 else:
                     output, error = run_exec('obabel -:%s -irsmi -orinchi' % rsmi)
                     self.assertEqual(output.rstrip(), rinchi)
+
+    def testRInChIOfficialExamples(self):
+        """These test RXN to RInChI using the examples in the RInChI distrib"""
+        for rxnfile in glob.glob(os.path.join(here, "rinchi", "*.rxn")):
+            dirname, fname = os.path.split(rxnfile)
+            output, error = run_exec('obabel %s -orinchi' % rxnfile)
+            ans = open(os.path.join(dirname, fname.split(".")[0]+".txt")).readlines()[0]
+            self.assertEqual(output.rstrip(), ans.rstrip())
 
 if __name__ == "__main__":
     unittest.main()

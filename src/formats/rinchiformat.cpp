@@ -38,21 +38,33 @@ namespace OpenBabel
     virtual const char* Description()
     {
       return
-        "Reaction InChI format\n"
+        "RInChI\n"
+        "The Reaction InChI (or RInChI) is intended to be a unique\n"
+        "string that describes a reaction. This may be useful for\n"
+        "indexing and searching reaction databases. As with the InChI\n"
+        "it is recommended that you always keep the original reaction\n"
+        "information and use the RInChI in addition.\n\n"
+
+        "The RInChI format is a hierarchical, layered description of a\n"
+        "reaction with different levels based on the Standard InChI\n"
+        "representation of each structural component participating in\n"
+        "the reaction.\n\n"
+
         "Write Options e.g. -xe\n"
         "  e Treat this reaction as an equilibrium reaction\n"
         "    Layer 5 of the generated RInChI will have /d=\n"
         "\n";
-
     }
-
-    virtual const char* GetMIMEType()
-    { return "chemical/x-daylight-smiles"; }; // not right, need something else
 
     virtual const char* TargetClassDescription()
     {
       return OBReaction::ClassDescription();
     }
+
+    virtual unsigned int Flags()
+    {
+      return NOTREADABLE;
+    };
 
     const type_info& GetType()
     {
@@ -160,18 +172,24 @@ namespace OpenBabel
         case PRODUCTS: mol = &*(pReact->GetProduct(i)); break;
         case AGENTS: mol = &*(pReact->GetAgent(i)); break;
         }
-        bool ok = inchiconv.Write(mol);
-        if (!ok) {
+        if (mol->NumAtoms() == 0) {
           nonInchi[part]++;
           hasNonInchi = true;
         }
         else {
-          string inchi = ss.str();
-          if (strncmp(inchi.c_str(), "InChI=1S/", 9) != 0)
-            return false;
-          inchis[part].push_back(TrimInChI(inchi.c_str()));
+          bool ok = inchiconv.Write(mol);
+          if (!ok) {
+            nonInchi[part]++;
+            hasNonInchi = true;
+          }
+          else {
+            string inchi = ss.str();
+            if (strncmp(inchi.c_str(), "InChI=1S/", 9) != 0)
+              return false;
+            inchis[part].push_back(TrimInChI(inchi.c_str()));
+          }
+          ss.str("");
         }
-        ss.str("");
       }
     }
 
