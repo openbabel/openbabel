@@ -5,7 +5,7 @@ in the build folder with:
 "C:\Program Files\CMake 2.6\bin\ctest.exe" -C CTestTestfile.cmake
                                            -R pybindtest -VV
 
-The runtime directory is ${CMAKE_SRC_DIR}/test. 
+The runtime directory is ${CMAKE_SRC_DIR}/test.
 
 You could also "chdir" into build and run the test file directly:
 python ../../test/testbindings.py
@@ -47,7 +47,7 @@ class TestPythonBindings(PythonBindings):
         conv.SetInFormat("smi")
         conv.ReadString(mol, "CC(=O)Cl")
         self.assertAlmostEqual(mol.GetMolWt(), 78.5, 1)
-    
+
 class PybelWrapper(PythonBindings):
     def testDummy(self):
         self.assertTrue(pybel is not None, "Failed to import the Pybel module")
@@ -177,6 +177,53 @@ M  END
         molb = pybel.readstring("mol", molfile)
         self.assertEqual(2, molb.atoms[0].OBAtom.GetSpinMultiplicity())
         self.assertEqual(4, molb.atoms[0].OBAtom.GetImplicitHCount())
+
+class TestBFSiter(PythonBindings):
+    def testZeroDepth(self):
+        mol_txt = """
+ OpenBabel09261715552D
+
+ 12 12  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  1  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7 12  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+M  END
+$$$$
+"""
+        mol = pybel.readstring('sdf', mol_txt)
+
+        fp = []
+        for i in range(len(mol.atoms)):
+            envs = {}
+            for atom, current_depth in pybel.ob.OBMolAtomBFSIter(mol.OBMol, i + 1):
+                if current_depth not in envs:
+                    envs[current_depth] = []
+                envs[current_depth].append(atom.GetIdx())
+
+                if current_depth == 1:
+                    self.assertEqual(1, len(envs[current_depth]))
+
 
 if __name__ == "__main__":
     unittest.main()
