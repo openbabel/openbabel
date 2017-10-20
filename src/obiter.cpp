@@ -149,7 +149,7 @@ namespace OpenBabel
 
     _notVisited.Resize(_parent->NumAtoms());
     _notVisited.SetRangeOn(0, _parent->NumAtoms() - 1);
-    
+
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
     vector<OBBond*>::iterator i;
@@ -169,7 +169,7 @@ namespace OpenBabel
 
     _notVisited.Resize(_parent->NumAtoms());
     _notVisited.SetRangeOn(0, _parent->NumAtoms() - 1);
-    
+
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
     vector<OBBond*>::iterator i;
@@ -291,7 +291,7 @@ namespace OpenBabel
 
     _notVisited.Resize(_parent->NumAtoms());
     _notVisited.SetRangeOn(0, _parent->NumAtoms() - 1);
-    
+
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
     // Set up storage for the depths
@@ -316,7 +316,7 @@ namespace OpenBabel
 
     _notVisited.Resize(_parent->NumAtoms());
     _notVisited.SetRangeOn(0, _parent->NumAtoms() - 1);
-    
+
     _notVisited.SetBitOff(_ptr->GetIdx() - 1);
 
     // Set up storage for the depths
@@ -363,19 +363,8 @@ namespace OpenBabel
         _ptr = _queue.front();
         _queue.pop();
       }
-    else // are there any disconnected subgraphs?
-      {
-        int next = _notVisited.FirstBit();
-        if (next != _notVisited.EndBit())
-          {
-            _ptr = _parent->GetAtom(next + 1); // Atom index issue
-            if (_ptr != NULL)
-              _depth[_ptr->GetIdx()] = 1; // new island
-            _notVisited.SetBitOff(next);
-          }
-        else
-          _ptr = NULL;
-      }
+    else
+        _ptr = NULL;
 
     if (_ptr)
       {
@@ -453,10 +442,10 @@ namespace OpenBabel
     _parent(mol), _ptr(_parent->GetBond(StartIndex))
   {
     if (!_ptr) return;
-    
+
     _notVisited.Resize(_parent->NumBonds());
     _notVisited.SetRangeOn(0, _parent->NumBonds() - 1);
-    
+
     _notVisited.SetBitOff(_ptr->GetIdx());
 
     // Set up storage for the depths
@@ -488,7 +477,7 @@ namespace OpenBabel
 
     _notVisited.Resize(_parent->NumBonds());
     _notVisited.SetRangeOn(0, _parent->NumBonds() - 1);
-    
+
     _notVisited.SetBitOff(_ptr->GetIdx());
 
     // Set up storage for the depths
