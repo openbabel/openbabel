@@ -298,7 +298,12 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 %include <openbabel/fingerprint.h>
 %ignore OpenBabel::OBDescriptor::LessThan;
 %include <openbabel/descriptor.h>
+// wrap GetRGB parameters
+%include "typemaps.i"
+%apply double *OUTPUT { double *r, double *g, double *b };
 %include <openbabel/elements.h>
+// void GetRGB(unsigned int atomic_number, double *r, double *g, double *b);
+%clear double *r, double *g, double *b;
 
 // Ignore shadowed methods
 %ignore OpenBabel::OBForceField::VectorSubtract(const double *const, const double *const, double *);
