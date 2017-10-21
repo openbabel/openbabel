@@ -913,10 +913,14 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
             // @ Bead number =     <N>  Potential Energy =     <Energy>
             // 0  1     2    3      4       5       6    7        8
             tokenize(vs, buffer);
-            while (vs.size() == 9)
+            // Thanks to the commit jeffhammond/nwchem@76d2b8c the beads
+            // output was broken (in nwchem 6.6+ there is no equal sign after
+            // 'number'. So all indicies will be counted from the end.
+            unsigned int vsize = vs.size();
+            while (vsize > 7)
             {
-                unsigned int bead_number = atoi(vs[4].c_str());
-                double bead_energy = atof(vs[8].c_str()) * HARTREE_TO_KCAL;
+                unsigned int bead_number = atoi(vs[vsize-5].c_str());
+                double bead_energy = atof(vs[vsize-1].c_str()) * HARTREE_TO_KCAL;
                 ifs->getline(buffer, BUFF_SIZE); // natoms
                 if (atoi(buffer) != natoms)
                     break; // table contains geometry of different molecule
