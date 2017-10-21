@@ -81,7 +81,7 @@ class PubChemJSONFormat : public OBMoleculeFormat
     if (pmol == NULL) return false;
     istream& ifs = *pConv->GetInStream();
     
-    if ( !ifs.good() || ifs.peek() == EOF )
+    if (!ifs.good())
       return false;
       
     map<OBBond*, OBStereo::BondDirection> updown;
@@ -90,14 +90,15 @@ class PubChemJSONFormat : public OBMoleculeFormat
     
     // Parse entire file into memory once, then reuse inRoot for subsequent molecules
     // (It's really tricky to stream json)
-    if (inRoot.empty()) {
+    if (!(ifs.peek() == EOF)) {
       Json::Reader reader;
       if (!reader.parse(ifs, inRoot)) {
         obErrorLog.ThrowError("PubChemJSONFormat", reader.getFormattedErrorMessages(), obError);
         return false;
       }
+      // Clear ifs flags so it is "good" and any subsequent mols are read, but leave it at EOF position.
+      // Therefore, when not at EOF position we know to parse next file and reset currentMolIndex 
       ifs.clear();
-      ifs.seekg(0, ios::beg);
       currentMolIndex = 0;
     }
     
