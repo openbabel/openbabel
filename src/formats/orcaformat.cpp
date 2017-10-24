@@ -643,8 +643,6 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
-    char buffer[BUFF_SIZE];
-
     ofs << "# ORCA input file" << endl;
     ofs << "# " << mol.GetTitle() << endl;
     ofs << "! insert inline commands here " << endl;
