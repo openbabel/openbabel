@@ -665,7 +665,7 @@ namespace OpenBabel {
       }
       else
       {    
-        if(atomicNums.size() > 0);  
+        if(atomicNums.size() > 0)  
           atomicNums.rbegin()->second++;
       }  
       
