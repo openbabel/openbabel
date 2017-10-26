@@ -3,17 +3,20 @@
 .Dt obrms 1 URM
 .Sh NAME
 .Nm obrms
-.Nd "calculate the RMS between two chemically identical structures"
+.Nd "calculate the RMSD between two chemically identical structures"
 .Sh SYNOPSIS
 .Nm
+.Op Ar -firstonly
 .Ar filename1
 .Ar filename2
 .Sh DESCRIPTION
-Returns the RMS between two chemically identical structures.
+Computes the heavy-atom RMSD of identical compound structures.
+Structures in multi-structure files are compared one-by-one unless -firstonly
+is passed, in which case only the first structure in the reference file is used.
 .Sh EXAMPLES
 .Dl "obrms ref.sdf test.sdf"
 .Pp
-Calculate the RMS between ref.sdf and test.sdf
+Calculate the RMSD between ref.sdf and test.sdf
 .Sh SEE ALSO
 .Xr obfit 1 .
 .Pp
