@@ -1,31 +1,32 @@
-.TH OBTHERMO "1" "October 2017" "obthermo 2.4.1" "User Commands"
-.SH NAME
-obthermo \- extract the thermochemistry for a molecule
-.SH SYNOPSIS
-.B obthermo
-[\fI\,options\/\fR] \fI\,<filename>\/\fR
-.SH DESCRIPTION
+.Dd October 26, 2017
+.Os "Open Babel" 2.4.1
+.Dt obthermo 1 URM
+.Sh NAME
+.Nm obthermo
+.Nd "extract the thermochemistry for a molecule"
+.Sh SYNOPSIS
+.Nm
+.Op options
+.Ar filename
+.Sh DESCRIPTION
 The obthermo tool can be used to extract the thermochemistry, e.g. Delta H formation
 Delta G formation and the standard entropy from e.g. a Gaussian calculation.
-.SH OPTIONS
-.TP
-\fB\-\-symm\fR N
+.Sh OPTIONS
+.Bl -tag -width flag
+.It Fl --symm Ar N
 override symmetry number used in input file
-.TP
-\fB\-\-nrot\fR N
+.It Fl --nrot Ar N
 number of rotatable bonds for conformational entropy
-.TP
-\fB\-\-dbdt\fR x
+.It Fl --dbdt Ar x
 temperature derivative of second virial coefficient for cp calculation
-.TP
-\fB\-\-kj\fR
+.It Fl --kj
 output kJ/mol related units (default kcal/mol)
-.SH SEE ALSO
+.Sh SEE ALSO
 .Xr babel 1 ,
 .Pp
 The web pages for Open Babel can be found at:
 \%<\fBhttp://openbabel.org/\fR>
-.SH AUTHORS
+.Sh AUTHORS
 .An -nosplit
 Open Babel is developed by a cast of many, including currrent maintainers
 .An Geoff Hutchison ,
