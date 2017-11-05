@@ -531,9 +531,6 @@ namespace OpenBabel
         if(!DoAtoms() || !DoBonds() || !DoHCounts() || !DoMolWideData())
           return false;
 
-        if (_pmol->GetDimension()==0)
-          StereoFrom0D(_pmol); // Remove any spurious stereos (due to symmetry)
-
         //Use formula only if nothing else provided
         if(_pmol->NumAtoms()==0 && !RawFormula.empty())
           if(!ParseFormula(RawFormula, _pmol))
@@ -541,6 +538,10 @@ namespace OpenBabel
 
         _pmol->AssignSpinMultiplicity();
         _pmol->EndModify();
+
+        if (_pmol->GetDimension() == 0)
+          _pmol->SetChiralityPerceived();
+
         return (--_embedlevel>=0); //false to stop parsing if no further embedded mols
         //		return false;//means stop parsing
       }

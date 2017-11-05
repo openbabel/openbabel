@@ -875,9 +875,9 @@ namespace OpenBabel
       // unless you specified the S option (but not s).
       if (pConv->IsOption("s", OBConversion::INOPTIONS) || pConv->IsOption("S", OBConversion::INOPTIONS)==NULL)
         TetStereoFromParity(mol, parities);
-      StereoFrom0D(&mol);
       if (pConv->IsOption("S", OBConversion::INOPTIONS)==NULL)
         CisTransFromUpDown(&mol, &updown);
+      mol.SetChiralityPerceived();
     }
 
     return true;
