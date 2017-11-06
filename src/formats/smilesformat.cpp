@@ -2228,6 +2228,8 @@ namespace OpenBabel {
 
     bool          _canonicalOutput; // regular or canonical SMILES
 
+    OBMol* _pmol;
+    OBStereoFacade *_stereoFacade;
     OBConversion* _pconv;
     OBAtomClassData* _pac;
 
@@ -2238,9 +2240,12 @@ namespace OpenBabel {
     OBMol2Cansmi()
     {
     }
-    ~OBMol2Cansmi() {}
+    ~OBMol2Cansmi()
+    {
+      delete _stereoFacade;
+    }
 
-    void         Init(bool canonicalOutput = true, OBConversion* pconv=NULL);
+    void         Init(OBMol* pmol, bool canonicalOutput = true, OBConversion* pconv=NULL);
 
     void         CreateCisTrans(OBMol&);
     char         GetCisTransBondSymbol(OBBond *, OBCanSmiNode *);
@@ -2298,7 +2303,7 @@ namespace OpenBabel {
    *       Initializes the OBMol2Cansmi writer object.
    ***************************************************************************/
 
-  void OBMol2Cansmi::Init(bool canonical, OBConversion* pconv)
+  void OBMol2Cansmi::Init(OBMol* pmol, bool canonical, OBConversion* pconv)
   {
     _atmorder.clear();
     _uatoms.Clear();
@@ -2307,6 +2312,8 @@ namespace OpenBabel {
     _canorder.clear();
     _pac = NULL;
 
+    _pmol = pmol;
+    _stereoFacade = new OBStereoFacade(_pmol); // needs to be destroyed in dtor
     _pconv = pconv;
     _canonicalOutput = canonical;
 
@@ -2783,9 +2790,7 @@ namespace OpenBabel {
 
   bool OBMol2Cansmi::AtomIsChiral(OBAtom *atom)
   {
-    OBMol *mol = dynamic_cast<OBMol*>(atom->GetParent());
-    OBStereoFacade stereoFacade(mol);
-    return stereoFacade.HasTetrahedralStereo(atom->GetId()) || stereoFacade.HasSquarePlanarStereo(atom->GetId());
+    return _stereoFacade->HasTetrahedralStereo(atom->GetId()) || _stereoFacade->HasSquarePlanarStereo(atom->GetId());
   }
 
   /***************************************************************************
@@ -2808,9 +2813,7 @@ namespace OpenBabel {
     if (chiral_neighbors.size() < 4)
       return false;
 
-    // OBStereoFacade will run symmetry analysis & stereo perception if needed
-    OBStereoFacade stereoFacade(mol);
-    OBTetrahedralStereo *ts = stereoFacade.GetTetrahedralStereo(atom->GetId());
+    OBTetrahedralStereo *ts = _stereoFacade->GetTetrahedralStereo(atom->GetId());
     // If atom is not a tetrahedral center, we're done
     if (!ts)
       return false;
@@ -3934,7 +3937,7 @@ namespace OpenBabel {
     bool canonical = pConv->IsOption("c") != NULL;
 
     OBMol2Cansmi m2s;
-    m2s.Init(canonical, pConv);
+    m2s.Init(&mol, canonical, pConv);
 
     if (iso) {
       PerceiveStereo(&mol);
@@ -4149,7 +4152,7 @@ namespace OpenBabel {
     char buffer[BUFF_SIZE];
     OBMol2Cansmi m2s;
 
-    m2s.Init(true, pConv);
+    m2s.Init(pmol, true, pConv);
 
     // We're outputting a full molecule
     // so we pass a bitvec for all atoms
