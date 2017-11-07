@@ -2806,13 +2806,11 @@ namespace OpenBabel {
                                           vector<unsigned int> &symmetry_classes,
                                           char *stereo)
   {
-    OBAtom *atom = node->GetAtom();
-    OBMol *mol = (OBMol*) atom->GetParent();
-
     // If not enough chiral neighbors were passed in, we're done
     if (chiral_neighbors.size() < 4)
       return false;
 
+    OBAtom *atom = node->GetAtom();
     OBTetrahedralStereo *ts = _stereoFacade->GetTetrahedralStereo(atom->GetId());
     // If atom is not a tetrahedral center, we're done
     if (!ts)
@@ -2868,16 +2866,13 @@ namespace OpenBabel {
                                            vector<unsigned int> &symmetry_classes,
                                            char *stereo)
   {
-    OBAtom *atom = node->GetAtom();
-    OBMol *mol = (OBMol*) atom->GetParent();
-
     // If no chiral neighbors were passed in, we're done
     if (chiral_neighbors.size() < 4)
       return false;
+    
+    OBAtom *atom = node->GetAtom();
 
-    // OBStereoFacade will run symmetry analysis & stereo perception if needed
-    OBStereoFacade stereoFacade(mol);
-    OBSquarePlanarStereo *sp = stereoFacade.GetSquarePlanarStereo(atom->GetId());
+    OBSquarePlanarStereo *sp = _stereoFacade->GetSquarePlanarStereo(atom->GetId());
     // If atom is not a square-planar center, we're done
     if (!sp)
       return false;
