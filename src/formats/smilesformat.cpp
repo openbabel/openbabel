@@ -1948,30 +1948,44 @@ namespace OpenBabel {
 
   bool OBSmilesParser::ParseRingBond(OBMol &mol)
   {
-    int digit;
-    char str[10];
-
     // The ring closure must be associated with a 'prev' atom
     OBAtom* prevatom = mol.GetAtom(_prev);
     if (!prevatom) {
       obErrorLog.ThrowError(__FUNCTION__,"Number not parsed correctly as a ring bond", obWarning);
       return false;
-    }
+    } 
 
-    if (*_ptr == '%')
-      {
+    // Parse the ring closure digit or digits
+    int digit = 0;
+    if (*_ptr == '%') {
+      _ptr++;
+      if (*_ptr == '(') { // %(NNN) extension to OpenSMILES
         _ptr++;
-        str[0] = *_ptr;
-        _ptr++;
-        str[1] = *_ptr;
-        str[2] = '\0';
+        char* start = _ptr;
+        while (isdigit(*_ptr)) {
+          digit += *_ptr - '0';
+          _ptr++;
+          if (_ptr - start > 5) {
+            obErrorLog.ThrowError(__FUNCTION__, "Ring closure numbers with more than 5 digits are not supported", obWarning);
+            return false;
+          }
+        }
+        if (*_ptr != ')') {
+          obErrorLog.ThrowError(__FUNCTION__, "Matching close parenthesis not found for ring closure number", obWarning);
+          return false;
+        }
       }
-    else
-      {
-        str[0] = *_ptr;
-        str[1] = '\0';
+      else { // % followed by two-digit ring closure
+        if (!isdigit(*_ptr) || !isdigit(*(_ptr + 1))) {
+          obErrorLog.ThrowError(__FUNCTION__, "Two digits expected after %", obWarning);
+          return false;
+        }
+        digit = (*_ptr - '0') * 10 + *(++_ptr) - '0';
       }
-    digit = atoi(str);
+    }
+    else {
+      digit = *_ptr - '0';
+    }
 
     vector<RingClosureBond>::iterator bond;
     int upDown, bondOrder;
@@ -3359,10 +3373,10 @@ namespace OpenBabel {
     // Write ring-closure digits
     if (!vclose_bonds.empty()) {
       vector<OBBondClosureInfo>::iterator bci;
-      for (bci = vclose_bonds.begin();bci != vclose_bonds.end();++bci) {
+      for (bci = vclose_bonds.begin(); bci != vclose_bonds.end(); ++bci) {
         if (!bci->is_open)
         { // Ring closure
-          char bs[2] = {'\0', '\0'};
+          char bs[2] = { '\0', '\0' };
           // Only get symbol for ring closures on the dbl bond
           if (HasStereoDblBond(bci->bond, node->GetAtom()))
             bs[0] = GetCisTransBondSymbol(bci->bond, node);
@@ -3389,15 +3403,23 @@ namespace OpenBabel {
         }
         else
         { // Ring opening
-          char bs[2] = {'\0', '\0'};
+          char bs[2] = { '\0', '\0' };
           // Only get symbol for ring openings on the dbl bond
           if (!HasStereoDblBond(bci->bond, bci->bond->GetNbrAtom(node->GetAtom())))
             bs[0] = GetCisTransBondSymbol(bci->bond, node);
           if (bs[0])
             strcat(buffer, bs);	// append "/" or "\"
         }
-        if (bci->ringdigit > 9) strcat(buffer,"%");
-        sprintf(buffer+strlen(buffer), "%d", bci->ringdigit);
+        if (bci->ringdigit > 9) {
+          strcat(buffer, "%");
+          if (bci->ringdigit > 99)
+            strcat(buffer, "(");
+          sprintf(buffer + strlen(buffer), "%d", bci->ringdigit);
+          if (bci->ringdigit > 99)
+            strcat(buffer, ")");
+        }
+        else
+          sprintf(buffer + strlen(buffer), "%d", bci->ringdigit);
       }
     }
 

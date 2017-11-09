@@ -81,7 +81,7 @@ class PubChemJSONFormat : public OBMoleculeFormat
     if (pmol == NULL) return false;
     istream& ifs = *pConv->GetInStream();
     
-    if ( !ifs.good() || ifs.peek() == EOF )
+    if (!ifs.good())
       return false;
       
     map<OBBond*, OBStereo::BondDirection> updown;
@@ -90,14 +90,15 @@ class PubChemJSONFormat : public OBMoleculeFormat
     
     // Parse entire file into memory once, then reuse inRoot for subsequent molecules
     // (It's really tricky to stream json)
-    if (inRoot.empty()) {
+    if (!(ifs.peek() == EOF)) {
       Json::Reader reader;
       if (!reader.parse(ifs, inRoot)) {
         obErrorLog.ThrowError("PubChemJSONFormat", reader.getFormattedErrorMessages(), obError);
         return false;
       }
+      // Clear ifs flags so it is "good" and any subsequent mols are read, but leave it at EOF position.
+      // Therefore, when not at EOF position we know to parse next file and reset currentMolIndex 
       ifs.clear();
-      ifs.seekg(0, ios::beg);
       currentMolIndex = 0;
     }
     
@@ -166,15 +167,26 @@ class PubChemJSONFormat : public OBMoleculeFormat
     Json::Value elements = molRoot["atoms"]["element"];
     pmol->ReserveAtoms(eAids.size());
     for(Json::ArrayIndex i = 0; i < eAids.size(); i++) {
-      if (eAids[i].isInt() && elements[i].isString()) {
+      if (eAids[i].isInt() && elements[i].isInt()) {
+        // Element provided as integer atomic number
+        int atomicNum = elements[i].asInt();
+        OBAtom* patom = pmol->NewAtom((unsigned long)eAids[i].asInt());
+        if (atomicNum == 255 || atomicNum == 254 || atomicNum == 253 || atomicNum == 252) {
+          patom->SetAtomicNum(0);
+        } else {
+          patom->SetAtomicNum(atomicNum);
+        }
+      } else if (eAids[i].isInt() && elements[i].isString()) {
+        // Element provided as string (old format)
         string elementstring = elements[i].asString();
         OBAtom* patom = pmol->NewAtom((unsigned long)eAids[i].asInt());
         if (elementstring == "a" || elementstring == "d" || elementstring == "r" || elementstring == "lp") {
           patom->SetAtomicNum(0);
         } else {
-          patom->SetAtomicNum(OBElements::GetAtomicNum(elements[i].asCString()));
+          // Ensure first letter is uppercase
+          elementstring[0] = toupper(elementstring[0]);
+          patom->SetAtomicNum(OBElements::GetAtomicNum(elementstring.c_str()));
         }
-        
       } else {
         obErrorLog.ThrowError("PubChemJSONFormat", "Invalid atom", obWarning);
       }
@@ -200,7 +212,20 @@ class PubChemJSONFormat : public OBMoleculeFormat
     Json::Value radicals = molRoot["atoms"]["radical"];
     for(Json::ArrayIndex i = 0; i < radicals.size(); i++) {
       Json::Value radical = radicals[i];
-      if (radical["aid"].isInt() && radical["type"].isString()) {
+      if (radical["aid"].isInt() && radical["type"].isInt()) {
+        // Radical provided as integer
+        OBAtom* patom = pmol->GetAtomById(radical["aid"].asInt());
+        if (patom) {
+          int sm = radical["type"].asInt();
+          if (sm == 255) {
+            sm = 0;
+          }
+          patom->SetSpinMultiplicity(sm);
+        } else {
+          obErrorLog.ThrowError("PubChemJSONFormat", "Invalid atom radical", obWarning);
+        }
+      } else if (radical["aid"].isInt() && radical["type"].isString()) {
+        // Radical provided as string (old format)
         OBAtom* patom = pmol->GetAtomById(radical["aid"].asInt());
         if (patom) {
           string radicalstring = radical["type"].asString();
@@ -257,7 +282,42 @@ class PubChemJSONFormat : public OBMoleculeFormat
     Json::Value oAid2s = molRoot["bonds"]["aid2"];
     Json::Value orders = molRoot["bonds"]["order"];
     for(Json::ArrayIndex i = 0; i < oAid1s.size(); i++) {
-      if (oAid1s[i].isInt() && oAid2s[i].isInt() && orders[i].isString()) {
+      if (oAid1s[i].isInt() && oAid2s[i].isInt() && orders[i].isInt()) {
+        // Bond order provided as integer
+        OBAtom* beginAtom = pmol->GetAtomById(oAid1s[i].asInt());
+        OBAtom* endAtom = pmol->GetAtomById(oAid2s[i].asInt());
+        if (beginAtom && endAtom) {
+          OBBond* pbond = pmol->NewBond();
+          pbond->SetBegin(beginAtom);
+          pbond->SetEnd(endAtom);
+          int order = orders[i].asInt();
+          // Other bond types: dative (5), complex (6), ionic (7), unknown (255)
+          if (order > 4) {
+            // Save type string as generic data on bond for non-standard bonds
+            string orderstring = "unknown";
+            if (order == 5) {
+              orderstring = "dative";
+            } else if (order == 6) {
+              orderstring = "complex";
+            } else if (order == 7) {
+              orderstring = "ionic";
+            }
+            OBPairData *bondType = new OBPairData;
+            bondType->SetAttribute("type");
+            bondType->SetValue(orderstring);
+            bondType->SetOrigin(fileformatInput);
+            pbond->SetData(bondType);
+            // Use zero bond order for non-standard bonds
+            order = 0;
+          }
+          pbond->SetBondOrder(order);
+          beginAtom->AddBond(pbond);
+          endAtom->AddBond(pbond);
+        } else {
+          obErrorLog.ThrowError("PubChemJSONFormat", "Invalid bond", obWarning);
+        }
+      } else if (oAid1s[i].isInt() && oAid2s[i].isInt() && orders[i].isString()) {
+        // Bond order provided as string (old format)
         int order = 0; // Use zero bond order for other bond types (complex, ionic, dative, unknown)
         string orderstring = orders[i].asString();
         if (orderstring == "single") {
@@ -327,7 +387,7 @@ class PubChemJSONFormat : public OBMoleculeFormat
     Json::Value aid2s = conf["style"]["aid2"];
     Json::Value styles = conf["style"]["annotation"];
     for(Json::ArrayIndex i = 0; i < aid1s.size(); i++) {
-      if (aid1s[i].isInt() && aid2s[i].isInt() && styles[i].isString()) {
+      if (aid1s[i].isInt() && aid2s[i].isInt()) {
         OBAtom* beginAtom = pmol->GetAtomById(aid1s[i].asInt());
         OBAtom* endAtom = pmol->GetAtomById(aid2s[i].asInt());
         if (beginAtom && endAtom) {
@@ -341,34 +401,82 @@ class PubChemJSONFormat : public OBMoleculeFormat
           }
           // Use annotations to add stereo information
           unsigned int flags = pbond->GetFlags();
-          string stylestring = styles[i].asString();
-          if (stylestring == "aromatic") {
-            flags |= OBBond::Aromatic;
-          } else if (stylestring == "wedge-up") {
-            flags |= OBBond::Wedge;
-          } else if (stylestring == "wedge-down") {
-            flags |= OBBond::Hash;
-          } else if (stylestring == "crossed") {
-            flags |= OBBond::CisOrTrans;
-          } else if (stylestring == "wavy") {
-            flags |= OBBond::WedgeOrHash;
-          } else if (stylestring == "dashed" || stylestring == "dotted" || 
-                     stylestring == "arrow" || stylestring == "resonance" || 
-                     stylestring == "bold" || stylestring == "fischer" || 
-                     stylestring == "closeContact" || stylestring == "unknown") {
-            // Save non-standard annotations as generic data on bond (multiple possible)
-            vector<string> val;
-            if (pbond->HasData("style")) {
-              AnnotationData *data = dynamic_cast<AnnotationData*>(pbond->GetData("style"));
-              val = data->GetGenericValue();
-              pbond->DeleteData("style");
+
+          if (styles[i].isInt()) {
+            // Bond style provided as integer
+            int style = styles[i].asInt();
+            if (style == 8) {
+              flags |= OBBond::Aromatic;
+            } else if (style == 5) {
+              flags |= OBBond::Wedge;
+            } else if (style == 6) {
+              flags |= OBBond::Hash;
+            } else if (style == 1) {
+              flags |= OBBond::CisOrTrans;
+            } else if (style == 3) {
+              flags |= OBBond::WedgeOrHash;
+            } else {
+              // Save non-standard annotations as generic data on bond (multiple possible)
+              vector<string> val;
+              if (pbond->HasData("style")) {
+                AnnotationData *data = dynamic_cast<AnnotationData*>(pbond->GetData("style"));
+                val = data->GetGenericValue();
+                pbond->DeleteData("style");
+              }
+              AnnotationData *data = new AnnotationData;
+              data->SetAttribute("style");
+              data->SetOrigin(fileformatInput);
+              string stylestring = "unknown";
+              if (style == 2) {
+                stylestring = "dashed";
+              } else if (style == 4) {
+                stylestring = "dotted";
+              } else if (style == 7) {
+                stylestring = "arrow";
+              } else if (style == 9) {
+                stylestring = "resonance";
+              } else if (style == 10) {
+                stylestring = "bold";
+              } else if (style == 11) {
+                stylestring = "fischer";
+              } else if (style == 12) {
+                stylestring = "closeContact";
+              }
+              val.push_back(stylestring);
+              data->SetValue(val);
+              pbond->SetData(data);
             }
-            AnnotationData *data = new AnnotationData;
-            data->SetAttribute("style");
-            data->SetOrigin(fileformatInput);
-            val.push_back(stylestring);
-            data->SetValue(val);
-            pbond->SetData(data);
+          } else if (styles[i].isString()) {
+            // Bond style provided as string (old format)
+            string stylestring = styles[i].asString();
+            if (stylestring == "aromatic") {
+              flags |= OBBond::Aromatic;
+            } else if (stylestring == "wedge-up") {
+              flags |= OBBond::Wedge;
+            } else if (stylestring == "wedge-down") {
+              flags |= OBBond::Hash;
+            } else if (stylestring == "crossed") {
+              flags |= OBBond::CisOrTrans;
+            } else if (stylestring == "wavy") {
+              flags |= OBBond::WedgeOrHash;
+            } else if (stylestring == "dashed" || stylestring == "dotted" || 
+                       stylestring == "arrow" || stylestring == "resonance" || 
+                       stylestring == "bold" || stylestring == "fischer" || 
+                       stylestring == "closeContact" || stylestring == "unknown") {
+              // Save non-standard annotations as generic data on bond (multiple possible)
+              vector<string> val;
+              if (pbond->HasData("style")) {
+                AnnotationData *data = dynamic_cast<AnnotationData*>(pbond->GetData("style"));
+                val = data->GetGenericValue();
+                pbond->DeleteData("style");
+              }
+              AnnotationData *data = new AnnotationData;
+              data->SetAttribute("style");
+              data->SetOrigin(fileformatInput);
+              val.push_back(stylestring);
+              data->SetValue(val);
+              pbond->SetData(data);
+            }
           }
           pbond->Set(pbond->GetIdx(), beginAtom, endAtom, pbond->GetBondOrder(), flags);    
         } else {
@@ -413,12 +521,14 @@ class PubChemJSONFormat : public OBMoleculeFormat
           config.center = tet["center"].asInt();
           config.from = (tet["top"].asInt() == -1) ? OBStereo::ImplicitRef : tet["top"].asInt();
           config.refs.push_back((tet["below"].asInt() == -1) ? OBStereo::ImplicitRef : tet["below"].asInt());
-          if (tet["parity"].asString() == "clockwise") {
+          if ((tet["parity"].isInt() && tet["parity"].asInt() == 1) || 
+              (tet["parity"].isString() && tet["parity"].asString() == "clockwise")) {
             config.specified = true;
             config.winding = OBStereo::Clockwise;
             config.refs.push_back((tet["bottom"].asInt() == -1) ? OBStereo::ImplicitRef : tet["bottom"].asInt());
             config.refs.push_back((tet["above"].asInt() == -1) ? OBStereo::ImplicitRef : tet["above"].asInt());
-          } else if (tet["parity"].asString() == "counterclockwise") {
+          } else if ((tet["parity"].isInt() && tet["parity"].asInt() == 2) || 
+                     (tet["parity"].isString() && tet["parity"].asString() == "counterclockwise")) {
             config.specified = true;
             config.winding = OBStereo::AntiClockwise;
             config.refs.push_back((tet["above"].asInt() == -1) ? OBStereo::ImplicitRef : tet["above"].asInt());
@@ -441,7 +551,8 @@ class PubChemJSONFormat : public OBMoleculeFormat
           config.refs.push_back((pl["rtop"].asInt() == -1) ? OBStereo::ImplicitRef : pl["rtop"].asInt());
           config.refs.push_back((pl["rbottom"].asInt() == -1) ? OBStereo::ImplicitRef : pl["rbottom"].asInt());
           config.refs.push_back((pl["lbottom"].asInt() == -1) ? OBStereo::ImplicitRef : pl["lbottom"].asInt());
-          if (pl["parity"].asString() == "any" || pl["parity"].asString() == "unknown") {
+          if ((pl["parity"].isInt() && (pl["parity"].asInt() == 3 || pl["parity"].asInt() == 255)) ||
+              (pl["parity"].isString() && (pl["parity"].asString() == "any" || pl["parity"].asString() == "unknown"))) {
             config.specified = false;
           } else {
             config.specified = true;
@@ -458,7 +569,8 @@ class PubChemJSONFormat : public OBMoleculeFormat
           config.refs.push_back((sq["rbelow"].asInt() == -1) ? OBStereo::ImplicitRef : sq["rbelow"].asInt());
           config.refs.push_back((sq["rabove"].asInt()) ? OBStereo::ImplicitRef : sq["rabove"].asInt());
           config.refs.push_back((sq["labove"].asInt() == -1) ? OBStereo::ImplicitRef : sq["labove"].asInt());
-          if (sq["parity"].asString() == "any" || sq["parity"].asString() == "unknown") {
+          if ((sq["parity"].isInt() && (sq["parity"].asInt() == 4 || sq["parity"].asInt() == 255)) ||
+              (sq["parity"].isString() && (sq["parity"].asString() == "any" || sq["parity"].asString() == "unknown"))) {
             config.specified = false;
           } else {
             config.specified = true;
@@ -558,11 +670,9 @@ class PubChemJSONFormat : public OBMoleculeFormat
       doc["atoms"]["aid"].append(id);
       // Element
       if (patom->GetAtomicNum()) {
-        string el = OBElements::GetSymbol(patom->GetAtomicNum());
-        std::transform(el.begin(), el.end(), el.begin(), ::tolower);
-        doc["atoms"]["element"].append(el);
+        doc["atoms"]["element"].append(patom->GetAtomicNum());
       } else {
-        doc["atoms"]["element"].append("a");
+        doc["atoms"]["element"].append(255);
       }
       // Charge
       int c = patom->GetFormalCharge();
@@ -585,23 +695,7 @@ class PubChemJSONFormat : public OBMoleculeFormat
       if (sm > 0 && sm < 9) {
         Json::Value radical;
         radical["aid"] = id;
-        if (sm == 1) {
-          radical["type"] = "singlet";
-        } else if (sm == 2) {
-          radical["type"] = "doublet";
-        } else if (sm == 3) {
-          radical["type"] = "triplet";
-        } else if (sm == 4) {
-          radical["type"] = "quartet";
-        } else if (sm == 5) {
-          radical["type"] = "quintet";
-        } else if (sm == 6) {
-          radical["type"] = "hextet";
-        } else if (sm == 7) {
-          radical["type"] = "heptet";
-        } else if (sm == 8) {
-          radical["type"] = "octet";
-        }
+        radical["type"] = sm;
         doc["atoms"]["radical"].append(radical);
       }
       // Coordinates
@@ -629,32 +723,30 @@ class PubChemJSONFormat : public OBMoleculeFormat
         if (pbond->HasData("type")) {
           // Check to see if a "type" string exists
           OBPairData *id = dynamic_cast<OBPairData*>(pbond->GetData("type"));
-          doc["bonds"]["order"].append(id->GetValue());
-        } else {
-          doc["bonds"]["order"].append("unknown");
+          string orderstring = id->GetValue();
+          if (orderstring == "dative") {
+            order = 5;
+          } else if (orderstring =="complex") {
+            order = 6;
+          } else if (orderstring == "ionic") {
+            order = 7;
+          }
         }
-      } else if (order == 1) {
-        doc["bonds"]["order"].append("single");
-      } else if (order == 2) {
-        doc["bonds"]["order"].append("double");
-      } else if (order == 3) {
-        doc["bonds"]["order"].append("triple");
-      } else if (order == 4) {
-        doc["bonds"]["order"].append("quadruple");
       }
-      
+      doc["bonds"]["order"].append(order);
+
       // Styles and annotations
-      vector<string> annotations;
+      vector<int> annotations;
       if (pConv->IsOption("w", pConv->OUTOPTIONS)) {
         // option w means just use input bond stereo annotations
         if (pbond->IsWedge()) {
-          annotations.push_back("wedge-up");
+          annotations.push_back(5);
         } else if (pbond->IsHash()) {
-          annotations.push_back("wedge-down");
+          annotations.push_back(6);
         } else if (pbond->IsWedgeOrHash()) {
-          annotations.push_back("wavy");
+          annotations.push_back(3);
         } else if (pbond->IsCisOrTrans()) {
-          annotations.push_back("crossed");
+          annotations.push_back(1);
         }
       } else {
         // No option w means use stereochemistry information
@@ -663,30 +755,47 @@ class PubChemJSONFormat : public OBMoleculeFormat
           swap(aid1, aid2);  // Swap start and end atom if necessary
         }
         if (unspec_ctstereo.find(&*pbond) != unspec_ctstereo.end()) {
-          annotations.push_back("crossed");
+          annotations.push_back(1);
         }  
         if (updown.find(&*pbond) != updown.end()) {
           if (updown[&*pbond] == 1) {
-            annotations.push_back("wedge-up");
+            annotations.push_back(5);
           } else if (updown[&*pbond] == 4) {
-            annotations.push_back("wavy");
+            annotations.push_back(3);
           } else if (updown[&*pbond] == 6) {
-            annotations.push_back("wedge-down");
+            annotations.push_back(6);
           }
         }
       }
       if (pbond->IsAromatic()) {
-        annotations.push_back("aromatic");
+        annotations.push_back(8);
       }
       if (pbond->HasData("style")) {
         AnnotationData *data = dynamic_cast<AnnotationData*>(pbond->GetData("style"));
         vector<string> styles = data->GetGenericValue();
         for(vector<string>::const_iterator i = styles.begin(); i != styles.end(); ++i) {
-          annotations.push_back(*i);
+            string stylestring = *i;
+            int style = 255;
+            if (stylestring == "dashed") {
+              style = 2;
+            } else if (stylestring == "dotted") {
+              style = 4;
+            } else if (stylestring == "arrow") {
+              style = 7;
+            } else if (stylestring == "resonance") {
+              style = 9;
+            } else if (stylestring == "bold") {
+              style = 10;
+            } else if (stylestring == "fischer") {
+              style = 11;
+            } else if (stylestring == "closeContact") {
+              style = 12;
+            }
+          annotations.push_back(style);
         }
       }
       annotations.erase(unique(annotations.begin(), annotations.end()), annotations.end());
-      for(vector<string>::const_iterator i = annotations.begin(); i != annotations.end(); ++i) {
+      for(vector<int>::const_iterator i = annotations.begin(); i != annotations.end(); ++i) {
         doc["coords"][0]["conformers"][0]["style"]["aid1"].append(aid1);
         doc["coords"][0]["conformers"][0]["style"]["aid2"].append(aid2);
         doc["coords"][0]["conformers"][0]["style"]["annotation"].append(*i);
@@ -699,18 +808,18 @@ class PubChemJSONFormat : public OBMoleculeFormat
       if (facade.HasTetrahedralStereo(patom->GetId())) {
         OBTetrahedralStereo::Config config = facade.GetTetrahedralStereo(patom->GetId())->GetConfig();
         Json::Value tet;
-        tet["tetrahedral"]["type"] = "tetrahedral";
+        tet["tetrahedral"]["type"] = 1;  // "tetrahedral"
         tet["tetrahedral"]["center"] = (int)config.center;
         tet["tetrahedral"]["top"] = (int)config.from;
         tet["tetrahedral"]["below"] = (int)config.refs[0];
         tet["tetrahedral"]["bottom"] = (int)config.refs[1];
         tet["tetrahedral"]["above"] = (int)config.refs[2];
         if (config.winding == OBStereo::UnknownWinding || !config.specified) {
-          tet["tetrahedral"]["parity"] = "any";
+          tet["tetrahedral"]["parity"] = 3;  // "any"
         } else if (config.winding == OBStereo::Clockwise){
-          tet["tetrahedral"]["parity"] = "clockwise";
+          tet["tetrahedral"]["parity"] = 1;  // "clockwise"
         } else if (config.winding == OBStereo::AntiClockwise){
-          tet["tetrahedral"]["parity"] = "counterclockwise";
+          tet["tetrahedral"]["parity"] = 2;  // "counterclockwise"
           tet["tetrahedral"]["bottom"] = (int)config.refs[2];
           tet["tetrahedral"]["above"] = (int)config.refs[1];
         }
@@ -723,26 +832,26 @@ class PubChemJSONFormat : public OBMoleculeFormat
         sq["squareplanar"]["center"] = (int)config.center;
         if (config.specified) {
           if (config.shape == OBStereo::ShapeU) {
-            sq["squareplanar"]["parity"] = "u-shape";
+            sq["squareplanar"]["parity"] = 1;  // "u-shape"
             sq["squareplanar"]["lbelow"] = (int)config.refs[0];
             sq["squareplanar"]["rbelow"] = (int)config.refs[1];
             sq["squareplanar"]["rabove"] = (int)config.refs[2];
             sq["squareplanar"]["labove"] = (int)config.refs[3];
           } else if (config.shape == OBStereo::ShapeZ) {
-            sq["squareplanar"]["parity"] = "z-shape";
+            sq["squareplanar"]["parity"] = 2;  // "z-shape"
             sq["squareplanar"]["lbelow"] = (int)config.refs[0];
             sq["squareplanar"]["rbelow"] = (int)config.refs[1];
             sq["squareplanar"]["labove"] = (int)config.refs[2];
             sq["squareplanar"]["rabove"] = (int)config.refs[3];
           } else if (config.shape == OBStereo::Shape4) {
-            sq["squareplanar"]["parity"] = "x-shape";
+            sq["squareplanar"]["parity"] = 3;  // "x-shape"
             sq["squareplanar"]["lbelow"] = (int)config.refs[0];
             sq["squareplanar"]["rabove"] = (int)config.refs[1];
             sq["squareplanar"]["rbelow"] = (int)config.refs[2];
             sq["squareplanar"]["labove"] = (int)config.refs[3];
           }
         } else {
-          sq["squareplanar"]["parity"] = "any";
+          sq["squareplanar"]["parity"] = 4;  // "any"
           sq["squareplanar"]["lbelow"] = (int)config.refs[0];
           sq["squareplanar"]["rbelow"] = (int)config.refs[1];
           sq["squareplanar"]["rabove"] = (int)config.refs[2];
@@ -755,7 +864,7 @@ class PubChemJSONFormat : public OBMoleculeFormat
         OBCisTransStereo *cts = facade.GetCisTransStereo(pbond->GetId());
         OBCisTransStereo::Config config = cts->GetConfig();
         Json::Value ct;
-        ct["planar"]["type"] = "planar";
+        ct["planar"]["type"] = 1;  // "planar"
         ct["planar"]["ltop"] = (int)config.refs[0];
         OBAtom *begin = pmol->GetAtomById(config.begin);
         OBAtom *ltop = pmol->GetAtomById(config.refs[0]);
@@ -772,9 +881,9 @@ class PubChemJSONFormat : public OBMoleculeFormat
           ct["planar"]["rtop"] = (int)cts->GetTransRef(ct["planar"]["lbottom"].asInt());
           if (config.specified) {
             // Open babel is not capable of determining parity? (need CIP rules?)
-            ct["planar"]["parity"] = "unknown";
+            ct["planar"]["parity"] = 255;  // "unknown"
           } else {
-            ct["planar"]["parity"] = "any";
+            ct["planar"]["parity"] = 3;  // "any"
           }        
           doc["stereo"].append(ct);
         }

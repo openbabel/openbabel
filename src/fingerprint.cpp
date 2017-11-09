@@ -58,9 +58,16 @@ namespace OpenBabel
       obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
       return;
     }
-    while(vec.size()*Getbitsperint()/2 >= nbits)
-      vec.erase(transform(vec.begin(),vec.begin()+vec.size()/2,
-                          vec.begin()+vec.size()/2, vec.begin(), bit_or()), vec.end());
+    // "folding" to a larger # of bits
+    if (nbits > vec.size()*Getbitsperint()) {
+      vec.resize(nbits/Getbitsperint(), 0);
+    }
+    else {
+      // normal folding to smaller vector sizes
+      while(vec.size()*Getbitsperint()/2 >= nbits)
+        vec.erase(transform(vec.begin(),vec.begin()+vec.size()/2,
+                            vec.begin()+vec.size()/2, vec.begin(), bit_or()), vec.end());
+    }
   }
 
   ////////////////////////////////////////
@@ -149,7 +156,7 @@ namespace OpenBabel
     unsigned int* p;
     unsigned int* ppat;
     unsigned int a;
-    unsigned int i; 
+    unsigned int i;
     for(i=0;i<dataSize; ++i) //speed critical section
       {
         p=nextp;
@@ -328,11 +335,11 @@ namespace OpenBabel
     seekdata.resize(header.nEntries);
 
     pIndexstream->read((char*)&(fptdata[0]), sizeof(unsigned int) * nwords);
-    if(header.seek64) 
+    if(header.seek64)
       {
     	pIndexstream->read((char*)&(seekdata[0]), sizeof(unsigned long) * header.nEntries);
       }
-    else 
+    else
       { //legacy format
 	 vector<unsigned int> tmp(header.nEntries);
          pIndexstream->read((char*)&(tmp[0]), sizeof(unsigned int) * header.nEntries);
