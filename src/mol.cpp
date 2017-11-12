@@ -3301,7 +3301,7 @@ namespace OpenBabel
     // (Most of the current problems lie in the interface with the
     //   Kekulize code anyway, not in marking everything as potentially aromatic)
 
-    bool needs_kekulization; // are there any aromatic bonds?
+    bool needs_kekulization = false; // are there any aromatic bonds?
     bool typed; // has this ring been typed?
     unsigned int loop, loopSize;
     for (ringit = rlist.begin(); ringit != rlist.end(); ++ringit)
