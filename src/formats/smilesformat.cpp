@@ -649,13 +649,8 @@ namespace OpenBabel {
       }
     }
 
-    if (!_preserve_aromaticity) {
+    if (!_preserve_aromaticity)
       mol.UnsetAromaticPerceived();
-      FOR_ATOMS_OF_MOL(atom, mol)
-        atom->UnsetAromatic();
-      FOR_BONDS_OF_MOL(bond, mol)
-        bond->UnsetAromatic();
-    }
 
     CreateCisTrans(mol);
 
