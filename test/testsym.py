@@ -309,11 +309,16 @@ class TestConversions(BaseTest):
         data = [
 ([0, 0, 0, 0, 1], [0, 0, 0, 0]), # 'Cl[C@@](Br)(F)I'
 ([0, 0, 0, 0, 2], [0, 0, 0, 0]), # 'Cl[C@](Br)(F)I'
-([0, 0, 0, 0, 3], [0, 0, 0, 0])  # 'ClC(Br)(F)I'
+([0, 0, 0, 0, 0], [0, 0, 0, 0]), # 'ClC(Br)(F)I'
+([0, 0, 0, 0, 3], [0, 0, 0, 0])  # 'ClC(Br)(F)I' option 'S' when reading
 ]
         for i, (atompar, bondstereo) in enumerate(data):
-            smiles, can = self.data[i + 4][0:2]
-            output, error = run_exec(smiles, "babel -ismi -osdf")
+            if i == 3:
+                smiles, can = self.data[6][0:2]
+                output, error = run_exec(smiles, "babel -ismi -osdf -aS")
+            else:
+                smiles, can = self.data[i + 4][0:2]
+                output, error = run_exec(smiles, "babel -ismi -osdf")
             atoms, bonds = self.parseMDL(output)
             parities = [atom['parity'] for atom in atoms]
             parities.sort()
