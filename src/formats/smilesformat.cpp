@@ -2785,7 +2785,7 @@ namespace OpenBabel {
   {
     OBMol *mol = dynamic_cast<OBMol*>(atom->GetParent());
     OBStereoFacade stereoFacade(mol);
-    return stereoFacade.HasTetrahedralStereo(atom->GetId());
+    return stereoFacade.HasTetrahedralStereo(atom->GetId()) || stereoFacade.HasSquarePlanarStereo(atom->GetId());
   }
 
   /***************************************************************************
