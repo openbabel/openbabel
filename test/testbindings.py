@@ -178,5 +178,23 @@ M  END
         self.assertEqual(2, molb.atoms[0].OBAtom.GetSpinMultiplicity())
         self.assertEqual(4, molb.atoms[0].OBAtom.GetImplicitHCount())
 
+class AcceptStereoAsGiven(PythonBindings):
+    """Tests to ensure that stereo is accepted as given in input from
+    SMILES and Mol files"""
+    def testSmiToSmi(self):
+        # Should preserve stereo
+        tet = "[C@@H](Br)(Br)Br"
+        out = pybel.readstring("smi", tet).write("smi")
+        self.assertTrue("@" in out)
+        cistrans = r"C/C=C(\C)/C"
+        out = pybel.readstring("smi", cistrans).write("smi")
+        self.assertTrue("/" in out)
+        # Should wipe stereo
+        out = pybel.readstring("smi", tet, opt={"S": True}).write("smi")
+        self.assertFalse("@" in out)
+        cistrans = r"C/C=C(\C)/C"
+        out = pybel.readstring("smi", cistrans, opt={"S": True}).write("smi")
+        self.assertFalse("/" in out)
+
 if __name__ == "__main__":
     unittest.main()
