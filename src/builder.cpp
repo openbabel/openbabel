@@ -981,6 +981,9 @@ namespace OpenBabel
     vector<vector3>::iterator l;
     vector<vector<int> > mlist; // match list for fragments
 
+    // Trigger hybridisation perception now so it will be copied to workMol
+    mol.GetFirstAtom()->GetHyb();
+
     // copy the molecule to private data
     OBMol workMol = mol;
 
@@ -1013,6 +1016,9 @@ namespace OpenBabel
       while (workMol.NumBonds())
         workMol.DeleteBond(workMol.GetBond(0));
 
+    // Deleting the bonds unsets HybridizationPerceived. To prevent our
+    // perceived values being reperceived (incorrectly), we must set
+    // this flag again.
     workMol.SetHybridizationPerceived();
 
     if (ratoms && !_keeprings) {
