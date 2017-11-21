@@ -1013,6 +1013,8 @@ namespace OpenBabel
       while (workMol.NumBonds())
         workMol.DeleteBond(workMol.GetBond(0));
 
+    workMol.SetHybridizationPerceived();
+
     if (ratoms && !_keeprings) {
       //datafile is read only on first use of Build()
       if(_fragments.empty())
