@@ -465,18 +465,14 @@ namespace OpenBabel
 
   bool OBBond::IsAromatic() const
   {
-    if (((OBBond*)this)->HasFlag(OB_AROMATIC_BOND))
-      return(true);
-
-    OBMol *mol = (OBMol*)((OBBond*)this)->GetParent();
+    OBMol *mol = ((OBBond*)this)->GetParent();
     if (!mol->HasAromaticPerceived())
-      {
         aromtyper.AssignAromaticFlags(*mol);
-        if (((OBBond*)this)->HasFlag(OB_AROMATIC_BOND))
-          return(true);
-      }
 
-    return(false);
+    if (this->HasFlag(OB_AROMATIC_BOND))
+      return true;
+
+    return false;
   }
 
   /*! This method checks if the geometry around this bond looks unsaturated

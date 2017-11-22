@@ -1208,7 +1208,7 @@ namespace OpenBabel
   //Residue information are copied, MM 4-27-01
   //All OBGenericData incl OBRotameterList is copied, CM 2006
   //OBChiralData for all atoms copied, TV 2008
-  //Zeros all flags except OB_TCHARGE_MOL, OB_PCHARGE_MOL,
+  //Zeros all flags except OB_TCHARGE_MOL, OB_PCHARGE_MOL, OB_HYBRID_MOL
   //OB_TSPIN_MOL and OB_PATTERN_STRUCTURE which are copied
   {
     if (this == &source)
@@ -1249,6 +1249,8 @@ namespace OpenBabel
       this->SetFlag(OB_TCHARGE_MOL);
     if (src.HasFlag(OB_PCHARGE_MOL))
       this->SetFlag(OB_PCHARGE_MOL);
+    if (src.HasFlag(OB_HYBRID_MOL))
+      this->SetFlag(OB_HYBRID_MOL);
 
     //this->_flags = src.GetFlags(); //Copy all flags. Perhaps too drastic a change
 
@@ -3343,7 +3345,7 @@ namespace OpenBabel
     // (Most of the current problems lie in the interface with the
     //   Kekulize code anyway, not in marking everything as potentially aromatic)
 
-    bool needs_kekulization; // are there any aromatic bonds?
+    bool needs_kekulization = false; // are there any aromatic bonds?
     bool typed; // has this ring been typed?
     unsigned int loop, loopSize;
     for (ringit = rlist.begin(); ringit != rlist.end(); ++ringit)

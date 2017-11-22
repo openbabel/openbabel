@@ -458,6 +458,9 @@ namespace OpenBabel
     p = 70092;
     DetermineSequence(p,&m,&a,&c);
     x = 0;  /* seed */
+
+    if (useSysRand)
+      this->TimeSeed();
   }
 
   int OBRandom::NextInt()

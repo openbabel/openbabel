@@ -789,19 +789,14 @@ namespace OpenBabel
 
   bool OBAtom::IsAromatic() const
   {
-    if (((OBAtom*)this)->HasFlag(OB_AROMATIC_ATOM))
-      return(true);
-
-    OBMol	*mol = (OBMol*)((OBAtom*)this)->GetParent();
-
+    OBMol *mol = ((OBAtom*)this)->GetParent();
     if (!mol->HasAromaticPerceived())
-      {
-        aromtyper.AssignAromaticFlags(*mol);
-        if (((OBAtom*)this)->HasFlag(OB_AROMATIC_ATOM))
-          return(true);
-      }
+      aromtyper.AssignAromaticFlags(*mol);
 
-    return(false);
+    if (((OBAtom*)this)->HasFlag(OB_AROMATIC_ATOM))
+      return true;
+
+    return false;
   }
 
   bool OBAtom::IsInRing() const

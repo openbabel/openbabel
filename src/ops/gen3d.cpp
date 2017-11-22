@@ -46,6 +46,13 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
   if(!pmol)
     return false;
 
+  // As with gen2D, we need to perceive the stereo if coming from 0D.
+  // Otherwise, unspecified cis/trans stereobonds become specified.
+  if (pmol->GetDimension() == 0) {
+    pmol->UnsetFlag(OB_CHIRALITY_MOL);
+    StereoFrom0D(pmol);
+  }
+
   // 1 is best quality, slowest
   // 2 is good quality, slow
   // 3 is balance   (FF cleanup + FastRotorSearch)

@@ -229,11 +229,9 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
   pmol->DeleteHydrogens(); // Explicit H included for stereo H
 
-  // Tidy up the stereo chemistry by removing any objects that are not
-  // consistent with OB's symmetry analysis
-  StereoFrom0D(pmol);
-
   pmol->EndModify();
+  pmol->SetChiralityPerceived();
+
   FreeStructFromINCHI( &out );
   return true;
 }
