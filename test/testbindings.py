@@ -54,6 +54,40 @@ class PybelWrapper(PythonBindings):
 
 class TestSuite(PythonBindings):
 
+    def testAtomMapsAfterCopying(self):
+        """Copying a molecule should copy the atom maps"""
+        smi = "C[CH2:2]O[Cl:6]"
+        obmol = pybel.readstring("smi", smi).OBMol
+        copy = pybel.ob.OBMol(obmol)
+        copysmi = pybel.Molecule(copy).write("smi", opt={"a": True})
+        self.assertEqual(copysmi.rstrip(), smi)
+
+    def testAtomMapsAfterAddition(self):
+        """Adding two molecules should not mess up the atom maps"""
+        data = [
+                ("C", "[OH2:2]"),
+                ("[OH2:2]", "C"),
+                ("[CH4:6]", "[OH2:2]"),
+                ("C", "O"),
+               ]
+        for a, b in data:
+            mols = [pybel.readstring("smi", x) for x in [a, b]]
+            mols[0].OBMol += mols[1].OBMol
+            joined = mols[0].write("smi", opt={"a":True}).rstrip()
+            self.assertEqual(joined, "%s.%s" % (a, b))
+
+    def testAtomMapsAfterDeletion(self):
+        """Removing atoms/hydrogens should not mess up the atom maps"""
+        smis = ["C[NH2:2]", "[CH3:1][NH2:2]"]
+        for smi in smis:
+            mol = pybel.readstring("smi", smi)
+            mol.OBMol.DeleteAtom(mol.OBMol.GetAtom(1))
+            self.assertEqual(mol.write("smi", opt={"a":True}).rstrip(), "[NH2:2]")
+        smi = "[H]C[NH:2]"
+        mol = pybel.readstring("smi", smi)
+        mol.removeh()
+        self.assertEqual(mol.write("smi", opt={"a":True}).rstrip(), "C[NH:2]")
+
     def testKekulizationOfcn(self):
         """We were previously not reading 'cn' correctly, or at least how
         Daylight would"""
