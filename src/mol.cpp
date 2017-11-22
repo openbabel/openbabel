@@ -1404,6 +1404,21 @@ namespace OpenBabel
       }
     }
 
+    // Copy the atom maps
+    OBAtomClassData* src_am = (OBAtomClassData*) src.GetData("Atom Class");
+    if (src_am != (OBAtomClassData*)0) {
+      OBAtomClassData* dst_am = (OBAtomClassData*) GetData("Atom Class");
+      if (dst_am == (OBAtomClassData*)0) {
+        dst_am = new OBAtomClassData();
+        SetData(dst_am);
+      }
+      FOR_ATOMS_OF_MOL(atom, src) {
+        unsigned int idx = atom->GetIdx();
+        if (src_am->HasClass(idx))
+          dst_am->Add(idx + prevatms, src_am->GetClass(idx));
+      }
+    }
+    
     // TODO: This is actually a weird situation (e.g., adding a 2D mol to 3D one)
     // We should do something to update the src coordinates if they're not 3D
     if(src.GetDimension()<_dimension)
@@ -2034,12 +2049,33 @@ namespace OpenBabel
     return(true);
   }
 
+  static void UpdateAtomMapsForAtomDeletion(OBMol* mol, unsigned int atomidx)
+  {
+    OBAtomClassData *pac = (OBAtomClassData*)mol->GetData("Atom Class");
+    if (pac != (OBAtomClassData*) 0) {
+      // Handle the deleted atom first
+      if (pac->HasClass(atomidx))
+        pac->Add(atomidx, 0);
+      // Now handle all of the atoms with indices >= deleted atom
+      FOR_ATOMS_OF_MOL(matom, mol) {
+        unsigned int midx = matom->GetIdx();
+        if (midx < atomidx) continue; // these ones are unaffected
+        if (pac->HasClass(midx+1)) {
+          unsigned int val = pac->GetClass(midx+1);
+          pac->Add(midx+1, 0); // wipe from old idx
+          pac->Add(midx, val); // assign map value to new idx
+        }
+      }
+    }
+  }
 
   bool OBMol::DeleteHydrogen(OBAtom *atom)
   //deletes the hydrogen atom passed to the function
   {
     if (atom->GetAtomicNum() != OBElements::Hydrogen)
       return false;
+
+    unsigned atomidx = atom->GetIdx();
 
     //find bonds to delete
     OBAtom *nbr;
@@ -2054,7 +2090,7 @@ namespace OpenBabel
     DecrementMod();
 
     int idx;
-    if (atom->GetIdx() != NumAtoms())
+    if (atomidx != NumAtoms())
       {
         idx = atom->GetCIdx();
         int size = NumAtoms()-atom->GetIdx();
@@ -2071,7 +2107,7 @@ namespace OpenBabel
     StereoRefToImplicit(*this, id);
 
     _atomIds[id] = (OBAtom*)NULL;
-    _vatom.erase(_vatom.begin()+(atom->GetIdx()-1));
+    _vatom.erase(_vatom.begin()+(atomidx-1));
     _natoms--;
 
     //reset all the indices to the atoms
@@ -2083,6 +2119,9 @@ namespace OpenBabel
     UnsetHydrogensAdded();
 
     DestroyAtom(atom);
+
+    // If the molecule has atom maps, these may need to be updated
+    UpdateAtomMapsForAtomDeletion(this, atomidx);
 
     UnsetSSSRPerceived();
     UnsetLSSRPerceived();
@@ -2469,6 +2508,9 @@ namespace OpenBabel
     // Delete any stereo objects involving this atom
     OBStereo::Ref id = atom->GetId();
     DeleteStereoOnAtom(*this, id);
+
+    // If the molecule has atom maps, these may need to be updated
+    UpdateAtomMapsForAtomDeletion(this, atom->GetIdx());
 
     if (destroyAtom)
       DestroyAtom(atom);

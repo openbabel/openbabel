@@ -35,7 +35,8 @@ namespace OpenBabel
       Class for attaching to OBMol to hold the info from SMILES like [C:2]
       Useful for reaction SMILES (SMIRKS). It influences the atom id attribute in CML.
       Not all atoms need have an atom class.
-      The atom class can be any positive or negative integer.
+      The atom class can be any positive integer. A value of zero is default and can
+      be used to remove an entry from the map.
   */
 class OBAPI OBAtomClassData : public OBGenericData
 {
@@ -49,7 +50,12 @@ public:
   void Clear(){ _map.clear(); }
 
   ///Add an individual value
-  void Add(int indx, int cl) { _map[indx] = cl;}
+  void Add(int indx, int cl) {
+    if (cl==0)
+      _map.erase(indx);
+    else
+      _map[indx] = cl;
+  }
 
   /// \return true if there is an entry for atom index
   bool HasClass(int indx)const { return _map.find(indx)!=_map.end(); }
@@ -59,7 +65,7 @@ public:
     std::map<int,int>::const_iterator pos = _map.find(indx);
     if(pos!=_map.end())
       return pos->second;
-    return -9999;
+    return 0;
   }
 
   /// If there is an entry for indx, return ":n" where n is the atomclass value;
