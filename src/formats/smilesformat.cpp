@@ -2638,13 +2638,16 @@ namespace OpenBabel {
 
       // Ordinary non-bracket element
       if (element) {
-        strcpy(symbol,OBElements::GetSymbol(atom->GetAtomicNum()));
-        if (!kekulesmi && atom->IsAromatic())
-          symbol[0] = tolower(symbol[0]);
-
-        //Radical centres lc if r option set
-        if(atom->GetSpinMultiplicity() && _pconv && _pconv->IsOption ("r"))
-          symbol[0] = tolower(symbol[0]);
+        const char* symbol = OBElements::GetSymbol(atom->GetAtomicNum());
+        if ((!kekulesmi && atom->IsAromatic()) || // aromatic atom
+            (atom->GetSpinMultiplicity() && _pconv->IsOption("r"))) //Radical centres lowercase if r option set
+        {
+          buffer += symbol[0] + ('a' - 'A');
+          if (symbol[1])
+            buffer += symbol[1];
+        }
+        else
+          buffer += symbol;
       }
 
       // Atomic number zero - either '*' or an external atom
@@ -2684,11 +2687,12 @@ namespace OpenBabel {
           }
 
         if(!external)
-          strcpy(symbol,"*");
+          buffer += '*';
+        else
+          buffer += symbol;
       }
 
-      buffer += symbol;
-      return(true);
+      return true;
     }
 
     // Bracketed atoms, e.g. [Pb], [OH-], [C@]
@@ -2764,7 +2768,7 @@ namespace OpenBabel {
     if (strlen(bracketBuffer) > 1 || bracketElement) {
       buffer += '[';
       buffer += bracketBuffer;
-      buffer += '[';
+      buffer += ']';
     } else {
       buffer += bracketBuffer;
     }
@@ -2790,7 +2794,8 @@ namespace OpenBabel {
 
   bool OBMol2Cansmi::AtomIsChiral(OBAtom *atom)
   {
-    return _stereoFacade->HasTetrahedralStereo(atom->GetId()) || _stereoFacade->HasSquarePlanarStereo(atom->GetId());
+    unsigned long atomid = atom->GetId();
+    return _stereoFacade->HasTetrahedralStereo(atomid) || _stereoFacade->HasSquarePlanarStereo(atomid);
   }
 
   /***************************************************************************
