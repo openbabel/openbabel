@@ -2228,6 +2228,8 @@ namespace OpenBabel {
 
     bool          _canonicalOutput; // regular or canonical SMILES
 
+    OBMol* _pmol;
+    OBStereoFacade *_stereoFacade;
     OBConversion* _pconv;
     OBAtomClassData* _pac;
 
@@ -2238,9 +2240,12 @@ namespace OpenBabel {
     OBMol2Cansmi()
     {
     }
-    ~OBMol2Cansmi() {}
+    ~OBMol2Cansmi()
+    {
+      delete _stereoFacade;
+    }
 
-    void         Init(bool canonicalOutput = true, OBConversion* pconv=NULL);
+    void         Init(OBMol* pmol, bool canonicalOutput = true, OBConversion* pconv=NULL);
 
     void         CreateCisTrans(OBMol&);
     char         GetCisTransBondSymbol(OBBond *, OBCanSmiNode *);
@@ -2248,19 +2253,17 @@ namespace OpenBabel {
     bool         BuildCanonTree(OBMol &mol, OBBitVec &frag_atoms,
                                 vector<unsigned int> &canonical_order,
                                 OBCanSmiNode *node);
-    void         CreateFragCansmiString(OBMol&, OBBitVec&, bool isomeric, bool kekulesmi, char *);
-    bool         GetTetrahedralStereo(OBCanSmiNode*,
+    void         CreateFragCansmiString(OBMol&, OBBitVec&, bool isomeric, bool kekulesmi, std::string&);
+    const char * GetTetrahedralStereo(OBCanSmiNode*,
                                       vector<OBAtom*>&chiral_neighbors,
-                                      vector<unsigned int> &symmetry_classes,
-                                      char*);
-    bool         GetSquarePlanarStereo(OBCanSmiNode*,
+                                      vector<unsigned int> &symmetry_classes);
+    const char*  GetSquarePlanarStereo(OBCanSmiNode*,
                                        vector<OBAtom*>&chiral_neighbors,
-                                       vector<unsigned int> &symmetry_classes,
-                                       char*);
+                                       vector<unsigned int> &symmetry_classes);
     bool         GetSmilesElement(OBCanSmiNode*,
                                   vector<OBAtom*>&chiral_neighbors,
                                   vector<unsigned int> &symmetry_classes,
-                                  char*,
+                                  std::string&,
                                   bool isomeric,
                                   bool kekulesmi);
     int          GetSmilesValence(OBAtom *atom);
@@ -2271,7 +2274,7 @@ namespace OpenBabel {
                           vector<unsigned int> &canonical_order);
     bool         IsSuppressedHydrogen(OBAtom *atom);
     void         ToCansmilesString(OBCanSmiNode *node,
-                                   char *buffer,
+                                   std::string &buffer,
                                    OBBitVec &frag_atoms,
                                    vector<unsigned int> &symmetry_classes,
                                    vector<unsigned int> &canonical_order,
@@ -2298,7 +2301,7 @@ namespace OpenBabel {
    *       Initializes the OBMol2Cansmi writer object.
    ***************************************************************************/
 
-  void OBMol2Cansmi::Init(bool canonical, OBConversion* pconv)
+  void OBMol2Cansmi::Init(OBMol* pmol, bool canonical, OBConversion* pconv)
   {
     _atmorder.clear();
     _uatoms.Clear();
@@ -2307,6 +2310,8 @@ namespace OpenBabel {
     _canorder.clear();
     _pac = NULL;
 
+    _pmol = pmol;
+    _stereoFacade = new OBStereoFacade(_pmol); // needs to be destroyed in dtor
     _pconv = pconv;
     _canonicalOutput = canonical;
 
@@ -2563,13 +2568,13 @@ namespace OpenBabel {
   bool OBMol2Cansmi::GetSmilesElement(OBCanSmiNode *node,
                                       vector<OBAtom*>&chiral_neighbors,
                                       vector<unsigned int> &symmetry_classes,
-                                      char *buffer,
+                                      std::string &buffer,
                                       bool isomeric,
                                       bool kekulesmi)
   {
     char symbol[10];
     symbol[0] = '\0'; // make sure to initialize for all paths below
-    char bracketBuffer[32];
+
     bool bracketElement = false;
     bool normalValence = true;
     bool writeExplicitHydrogen = false;
@@ -2617,27 +2622,29 @@ namespace OpenBabel {
       || (_pac && _pac->HasClass(atom->GetIdx())) ) // If the molecule has Atom Class data and -xa option set and atom has data
       bracketElement = true;
 
-    char stereo[5] = "";
+    const char* stereo = (const char*)0;
     if (GetSmilesValence(atom) > 2 && isomeric) {
-      if (GetTetrahedralStereo(node, chiral_neighbors, symmetry_classes, stereo))
-        strcat(buffer,stereo);
-      if (GetSquarePlanarStereo(node, chiral_neighbors, symmetry_classes, stereo))
-        strcat(buffer,stereo);
+      stereo = GetTetrahedralStereo(node, chiral_neighbors, symmetry_classes);
+      if (stereo == (const char*)0)
+        stereo = GetSquarePlanarStereo(node, chiral_neighbors, symmetry_classes);
     }
-    if (stereo[0] != '\0')
+    if (stereo != (const char*)0)
       bracketElement = true;
 
     if (!bracketElement) {
 
       // Ordinary non-bracket element
       if (element) {
-        strcpy(symbol,OBElements::GetSymbol(atom->GetAtomicNum()));
-        if (!kekulesmi && atom->IsAromatic())
-          symbol[0] = tolower(symbol[0]);
-
-        //Radical centres lc if r option set
-        if(atom->GetSpinMultiplicity() && _pconv && _pconv->IsOption ("r"))
-          symbol[0] = tolower(symbol[0]);
+        const char* symbol = OBElements::GetSymbol(atom->GetAtomicNum());
+        if ((!kekulesmi && atom->IsAromatic()) || // aromatic atom
+            (atom->GetSpinMultiplicity() && _pconv->IsOption("r"))) //Radical centres lowercase if r option set
+        {
+          buffer += symbol[0] + ('a' - 'A');
+          if (symbol[1])
+            buffer += symbol[1];
+        }
+        else
+          buffer += symbol;
       }
 
       // Atomic number zero - either '*' or an external atom
@@ -2651,118 +2658,125 @@ namespace OpenBabel {
           for(externalBond = externalBonds->begin();externalBond != externalBonds->end();++externalBond) {
             if (externalBond->second.first == atom) {
               external = true;
-              strcpy(symbol,"&");
+              buffer += '&';
               OBBond *bond = externalBond->second.second;
               if (bond->IsUp()) {
                 if ( (bond->GetBeginAtom())->HasDoubleBond() ||
                      (bond->GetEndAtom())->HasDoubleBond() )
-                  strcat(symbol,"\\");
+                  buffer += '\\';
               }
               if (bond->IsDown()) {
                 if ( (bond->GetBeginAtom())->HasDoubleBond() ||
                      (bond->GetEndAtom())->HasDoubleBond() )
-                  strcat(symbol,"/");
+                  buffer += '/';
               }
               if (bond->GetBO() == 2 && !bond->IsAromatic()) // TODO: need to check for kekulesmi
-                strcat(symbol,"=");
+                buffer += '=';
               if (bond->GetBO() == 2 && bond->IsAromatic())
-                strcat(symbol,":");
+                buffer += ':';
               if (bond->GetBO() == 3)
-                strcat(symbol,"#");
+                buffer += '#';
               if (bond->GetBO() == 4)
-                strcat(symbol,"$");
-              sprintf(symbol+strlen(symbol),"%d",externalBond->first);
+                buffer += '$';
+              char tmp[10];
+              snprintf(tmp, 10, "%d", externalBond->first);
+              buffer += tmp;
               break;
             }
           }
 
         if(!external)
-          strcpy(symbol,"*");
+          buffer += '*';
       }
 
-      strcpy(buffer, symbol);
-      return(true);
+      return true;
     }
 
     // Bracketed atoms, e.g. [Pb], [OH-], [C@]
-    bracketBuffer[0] = '\0';
+    buffer += '[';
     unsigned short iso = atom->GetIsotope();
     if (isomeric && iso) {
-      if (iso >= 10000) { // max 4 characters
-        obErrorLog.ThrowError(__FUNCTION__, "Isotope value larger than 9999", obError);
-        return false;
+      if (iso >= 10000) // max 4 characters
+        obErrorLog.ThrowError(__FUNCTION__, "Isotope value larger than 9999. Ignoring value.", obWarning);
+      else {
+        char iso[5]; // 4 characters plus null
+        sprintf(iso, "%d", atom->GetIsotope());
+        buffer += iso;
       }
-      char iso[5]; // 4 characters plus null
-      sprintf(iso,"%d",atom->GetIsotope());
-      strcat(bracketBuffer,iso);
     }
     if (!atom->GetAtomicNum())
-      strcpy(symbol,"*");
+      buffer += '*';
     else {
       if (atom->GetAtomicNum() == OBElements::Hydrogen && smarts)
-        strcpy(symbol, "#1");
+        buffer += "#1";
       else {
-        strcpy(symbol, OBElements::GetSymbol(atom->GetAtomicNum()));
-        if (!kekulesmi && atom->IsAromatic())
-          symbol[0] = tolower(symbol[0]);
+        const char* symbol = OBElements::GetSymbol(atom->GetAtomicNum());
+        if (!kekulesmi && atom->IsAromatic()) { // aromatic atom
+          buffer += symbol[0] + ('a' - 'A');
+          if (symbol[1])
+            buffer += symbol[1];
+        }
+        else
+          buffer += symbol;
       }
     }
-    strcat(bracketBuffer,symbol);
 
     // If chiral, append '@' or '@@'...unless we're creating a SMARTS ("s") and it's @H or @@H
-    if (stereo[0] != '\0' && !(smarts && atom->GetImplicitHCount() > 0))
-      strcat(bracketBuffer, stereo);
+    if (stereo != (const char*)0 && !(smarts && atom->GetImplicitHCount() > 0))
+      buffer += stereo;
 
     // Add extra hydrogens.
     int hcount = numImplicitHs;
-    if ((atom == _endatom || atom == _startatom) && hcount>0) // Leave a free valence for attachment
+    if (hcount > 0 && (atom == _endatom || atom == _startatom)) // Leave a free valence for attachment
       hcount--;
-    if (hcount != 0) {
-      if (smarts && stereo[0]=='\0') {
+    if (hcount > 0) {
+      if (smarts && stereo == (const char*)0) {
         char tcount[10];
-        std::string tmp;
         for (int i = 0; i < hcount; ++i) {
-          tmp += "!H";
-          sprintf(tcount, "%d", i);
-          tmp += tcount;
+          buffer += "!H";
+          snprintf(tcount, 10, "%d", i);
+          buffer += tcount;
         }
-        strcat(bracketBuffer, tmp.c_str());
       }
       else {
-        strcat(bracketBuffer, "H");
+        buffer += 'H';
         if (hcount > 1) {
           char tcount[10];
-          sprintf(tcount, "%d", hcount);
-          strcat(bracketBuffer, tcount);
+          snprintf(tcount, 10, "%d", hcount);
+          buffer += tcount;
         }
       }
     }
 
     // Append charge to the end
-    if (atom->GetFormalCharge() != 0) {
-      if (atom->GetFormalCharge() > 0)
-        strcat(bracketBuffer,"+");
+    int charge = atom->GetFormalCharge();
+    if (charge != 0) {
+      if (charge > 0)
+        buffer += '+';
       else
-        strcat(bracketBuffer,"-");
+        buffer += '-';
 
-      if (abs(atom->GetFormalCharge()) > 1)
-        sprintf(bracketBuffer+strlen(bracketBuffer), "%d", abs(atom->GetFormalCharge()));
+      if (abs(charge) > 1) {
+        char tchar[10];
+        snprintf(tchar, 10, "%d", abs(charge));
+        buffer += tchar;
+      }
     }
 
     //atom class e.g. [C:2]
-    if (_pac)
-      strcat(bracketBuffer, _pac->GetClassString(atom->GetIdx()).c_str());
-
-    // if the element is supposed to be bracketed (e.g., [U]), *always* use brackets
-    if (strlen(bracketBuffer) > 1 || bracketElement) {
-      strcpy(buffer, "[");
-      strcat(buffer, bracketBuffer);
-      strcat(buffer,"]");
-    } else {
-      strcpy(buffer, bracketBuffer);
+    if (_pac) {
+      unsigned int ac = _pac->GetClass(atom->GetIdx());
+      if (ac != 0) {
+        buffer += ':';
+        char tchar[10];
+        snprintf(tchar, 10, "%d", ac);
+        buffer += tchar;
+      }
     }
 
-    return(true);
+    buffer += ']';
+
+    return true;
   }
 
   /***************************************************************************
@@ -2783,46 +2797,37 @@ namespace OpenBabel {
 
   bool OBMol2Cansmi::AtomIsChiral(OBAtom *atom)
   {
-    OBMol *mol = dynamic_cast<OBMol*>(atom->GetParent());
-    OBStereoFacade stereoFacade(mol);
-    return stereoFacade.HasTetrahedralStereo(atom->GetId()) || stereoFacade.HasSquarePlanarStereo(atom->GetId());
+    unsigned long atomid = atom->GetId();
+    return _stereoFacade->HasTetrahedralStereo(atomid) || _stereoFacade->HasSquarePlanarStereo(atomid);
   }
 
   /***************************************************************************
    * FUNCTION: GetTetrahedralStereo
    *
    * DESCRIPTION:
-   *       If the atom is chiral, fills in the string with either '@', '@@'
-   *       or '@?' and returns true, otherwise returns false.
+   *       If the atom is chiral, return either "@" or "@@". Otherwise 0.
    ***************************************************************************/
 
-  bool OBMol2Cansmi::GetTetrahedralStereo(OBCanSmiNode *node,
+  const char* OBMol2Cansmi::GetTetrahedralStereo(OBCanSmiNode *node,
                                           vector<OBAtom*> &chiral_neighbors,
-                                          vector<unsigned int> &symmetry_classes,
-                                          char *stereo)
+                                          vector<unsigned int> &symmetry_classes)
   {
-    OBAtom *atom = node->GetAtom();
-    OBMol *mol = (OBMol*) atom->GetParent();
-
     // If not enough chiral neighbors were passed in, we're done
     if (chiral_neighbors.size() < 4)
-      return false;
+      return (const char*)0;
 
-    // OBStereoFacade will run symmetry analysis & stereo perception if needed
-    OBStereoFacade stereoFacade(mol);
-    OBTetrahedralStereo *ts = stereoFacade.GetTetrahedralStereo(atom->GetId());
+    OBAtom *atom = node->GetAtom();
+    OBTetrahedralStereo *ts = _stereoFacade->GetTetrahedralStereo(atom->GetId());
     // If atom is not a tetrahedral center, we're done
     if (!ts)
-      return false;
+      return (const char*)0;
 
     // get the Config struct defining the stereochemistry
     OBTetrahedralStereo::Config atomConfig = ts->GetConfig();
 
-    // Don't write '@?' for unspecified or unknown stereochemistry
-    if (!atomConfig.specified || (atomConfig.specified && atomConfig.winding==OBStereo::UnknownWinding)) {
-      // strcpy(stereo, "@?");
-      return true;
-    }
+    // Unspecified or unknown stereochemistry
+    if (!atomConfig.specified || (atomConfig.specified && atomConfig.winding==OBStereo::UnknownWinding))
+      return (const char*)0;
 
     // create a Config struct with the chiral_neighbors in canonical output order
     OBStereo::Refs canonRefs;
@@ -2840,54 +2845,41 @@ namespace OpenBabel {
       canConfig.from = OBStereo::ImplicitRef;
     canConfig.refs = canonRefs;
 
-    //cout << "atomConfig = " << atomConfig << endl;
-    //cout << "canConfig = " << canConfig << endl;
-
     // canConfig is clockwise
     if (atomConfig == canConfig)
-      strcpy(stereo, "@@");
+      return "@@";
     else
-      strcpy(stereo, "@");
-
-    return true;
+      return "@";
   }
 
   /***************************************************************************
    * FUNCTION: GetSquarePlanarStereo
    *
    * DESCRIPTION:
-   *       If the atom is chiral, fills in the string with either '@', '@@'
-   *       or '@?' and returns true, otherwise returns false.
+   *       If the atom is chiral, return either '@SP1', '@SP2' or '@SP'.
+   *       Otherwise, return 0.
    ***************************************************************************/
 
-  bool OBMol2Cansmi::GetSquarePlanarStereo(OBCanSmiNode *node,
+  const char* OBMol2Cansmi::GetSquarePlanarStereo(OBCanSmiNode *node,
                                            vector<OBAtom*> &chiral_neighbors,
-                                           vector<unsigned int> &symmetry_classes,
-                                           char *stereo)
+                                           vector<unsigned int> &symmetry_classes)
   {
-    OBAtom *atom = node->GetAtom();
-    OBMol *mol = (OBMol*) atom->GetParent();
-
     // If no chiral neighbors were passed in, we're done
     if (chiral_neighbors.size() < 4)
       return false;
+    
+    OBAtom *atom = node->GetAtom();
 
-    // OBStereoFacade will run symmetry analysis & stereo perception if needed
-    OBStereoFacade stereoFacade(mol);
-    OBSquarePlanarStereo *sp = stereoFacade.GetSquarePlanarStereo(atom->GetId());
+    OBSquarePlanarStereo *sp = _stereoFacade->GetSquarePlanarStereo(atom->GetId());
     // If atom is not a square-planar center, we're done
     if (!sp)
-      return false;
+      return (const char*)0;
 
     // get the Config struct defining the stereochemistry
     OBSquarePlanarStereo::Config atomConfig = sp->GetConfig();
 
-    if (!atomConfig.specified) {
-      // write '@?' for unspecified (unknown) stereochemistry
-      // strcpy(stereo, "@?");
-      //return true;
-      return false;
-    }
+    if (!atomConfig.specified)
+      return (const char*)0;
 
     // create a Config struct with the chiral_neighbors in canonical output order
     OBStereo::Refs canonRefs = OBStereo::MakeRefs(chiral_neighbors[0]->GetId(),
@@ -2896,30 +2888,19 @@ namespace OpenBabel {
     canConfig.center = atom->GetId();
     canConfig.refs = canonRefs;
 
-    //cout << "atomConfig = " << atomConfig << endl;
-    //cout << "canConfig = " << canConfig << endl;
-
     // canConfig is U shape
-    if (atomConfig == canConfig) {
-      strcpy(stereo, "@SP1");
-      return true;
-    }
+    if (atomConfig == canConfig)
+      return "@SP1";
 
     canConfig.shape = OBStereo::Shape4;
-    //cout << "canConfig = " << canConfig << endl;
-    if (atomConfig == canConfig) {
-      strcpy(stereo, "@SP2");
-      return true;
-    }
+    if (atomConfig == canConfig)
+      return "@SP2";
 
     canConfig.shape = OBStereo::ShapeZ;
-    //cout << "canConfig = " << canConfig << endl;
-    if (atomConfig == canConfig) {
-      strcpy(stereo, "@SP3");
-      return true;
-    }
+    if (atomConfig == canConfig)
+      return "@SP3";
 
-    return false;
+    return (const char*)0;
   }
 
   //! Adaptation of OBMol::FindChildren to allow a vector of OBAtoms to be passed in
@@ -3283,7 +3264,7 @@ namespace OpenBabel {
    ***************************************************************************/
 
   void OBMol2Cansmi::ToCansmilesString(OBCanSmiNode *node,
-                                       char *buffer,
+                                       std::string &buffer,
                                        OBBitVec &frag_atoms,
                                        vector<unsigned int> &symmetry_classes,
                                        vector<unsigned int> &canonical_order,
@@ -3374,7 +3355,7 @@ namespace OpenBabel {
     }
 
     // Write the current atom to the string
-    GetSmilesElement(node, chiral_neighbors, symmetry_classes, buffer+strlen(buffer), isomeric, kekulesmi);
+    GetSmilesElement(node, chiral_neighbors, symmetry_classes, buffer, isomeric, kekulesmi);
 
     _atmorder.push_back(atom->GetIdx());  //store the atom ordering
 
@@ -3389,23 +3370,23 @@ namespace OpenBabel {
           if (HasStereoDblBond(bci->bond, node->GetAtom()))
             bs[0] = GetCisTransBondSymbol(bci->bond, node);
           if (bs[0])
-            strcat(buffer, bs);	// append "/" or "\"
+            buffer += bs;	// append "/" or "\"
           else
           {
             switch (bci->bond->GetBO())
             {
             case 1:
               if (!bci->bond->IsAromatic() && bci->bond->IsInRing() && bci->bond->GetBeginAtom()->IsAromatic() && bci->bond->GetEndAtom()->IsAromatic())
-                strcat(buffer, "-");
+                buffer += '-';
               break;
             case 2:
               if (kekulesmi || !bci->bond->IsAromatic())
-                strcat(buffer, "=");
+                buffer += '=';
               break;
             case 3:
-              strcat(buffer, "#"); break;
+              buffer += '#'; break;
             case 4:
-              strcat(buffer, "$"); break;
+              buffer += '$'; break;
             }
           }
         }
@@ -3416,18 +3397,20 @@ namespace OpenBabel {
           if (!HasStereoDblBond(bci->bond, bci->bond->GetNbrAtom(node->GetAtom())))
             bs[0] = GetCisTransBondSymbol(bci->bond, node);
           if (bs[0])
-            strcat(buffer, bs);	// append "/" or "\"
+            buffer += bs;	// append "/" or "\"
         }
         if (bci->ringdigit > 9) {
-          strcat(buffer, "%");
+          buffer += '%';
           if (bci->ringdigit > 99)
-            strcat(buffer, "(");
-          sprintf(buffer + strlen(buffer), "%d", bci->ringdigit);
+            buffer += '(';
+          char digits[8];
+          snprintf(digits, 8, "%d", bci->ringdigit);
+          buffer += digits;
           if (bci->ringdigit > 99)
-            strcat(buffer, ")");
+            buffer += ')';
         }
         else
-          sprintf(buffer + strlen(buffer), "%d", bci->ringdigit);
+          buffer += (char)(bci->ringdigit + '0');
       }
     }
 
@@ -3438,7 +3421,7 @@ namespace OpenBabel {
     for (int i = 0;i < node->Size();i++) {
       bond = node->GetChildBond(i);
       if (i+1 < node->Size() || node->GetAtom() == _endatom)
-        strcat(buffer,"(");
+        buffer += '(';
 
       switch (bond->GetBO()) {
       case 1:
@@ -3446,30 +3429,30 @@ namespace OpenBabel {
         cc[0] = GetCisTransBondSymbol(bond, node);
         if (cc[0] != '\0') {
           cc[1] = '\0';
-          strcat(buffer, cc);
+          buffer += cc;
         }
         else {
           // Write a single bond symbol if not aromatic but end atoms are both aromatic
           // This will speed up reading as it will avoid ring perception around line 563 (bond->IsInRing())
           // TODO: Consider making the test for IsInRing() an option
           if (!bond->IsAromatic() && bond->IsInRing() && bond->GetBeginAtom()->IsAromatic() && bond->GetEndAtom()->IsAromatic())
-            strcat(buffer, "-");
+            buffer += '-';
         }
         break;
       case 2:
         if (kekulesmi || !bond->IsAromatic())
-          strcat(buffer, "=");
+          buffer += '=';
         break;
       case 3:
-        strcat(buffer, "#");
+        buffer += '#';
         break;
       case 4:
-        strcat(buffer, "$");
+        buffer += '$';
       }
 
       ToCansmilesString(node->GetChildNode(i),buffer, frag_atoms, symmetry_classes, canonical_order, isomeric, kekulesmi);
       if (i+1 < node->Size() || node->GetAtom() == _endatom)
-        strcat(buffer,")");
+        buffer += ')';
     }
   }
 
@@ -3709,7 +3692,7 @@ namespace OpenBabel {
    *       atoms and repeats the process.
    ***************************************************************************/
 
-  void OBMol2Cansmi::CreateFragCansmiString(OBMol &mol, OBBitVec &frag_atoms, bool isomeric, bool kekulesmi, char *buffer)
+  void OBMol2Cansmi::CreateFragCansmiString(OBMol &mol, OBBitVec &frag_atoms, bool isomeric, bool kekulesmi, std::string &buffer)
   {
     //cout << "CreateFragCansmiString()" << endl;
     OBAtom *atom;
@@ -3882,7 +3865,8 @@ namespace OpenBabel {
       _vopen.clear();
 
       // Dot disconnected structure?
-      if (strlen(buffer) > 0) strcat(buffer,".");
+      if (!buffer.empty())
+        buffer += '.';
       root = new OBCanSmiNode (root_atom);
 
       BuildCanonTree(mol, frag_atoms, canonical_order, root);
@@ -3929,12 +3913,12 @@ namespace OpenBabel {
    *
    ***************************************************************************/
 
-  void CreateCansmiString(OBMol &mol, char *buffer, OBBitVec &frag_atoms, bool iso, bool kekulesmi, OBConversion* pConv)
+  void CreateCansmiString(OBMol &mol, std::string &buffer, OBBitVec &frag_atoms, bool iso, bool kekulesmi, OBConversion* pConv)
   {
     bool canonical = pConv->IsOption("c") != NULL;
 
     OBMol2Cansmi m2s;
-    m2s.Init(canonical, pConv);
+    m2s.Init(&mol, canonical, pConv);
 
     if (iso) {
       PerceiveStereo(&mol);
@@ -4039,8 +4023,7 @@ namespace OpenBabel {
       return true;
     }
 
-    char buffer[BUFF_SIZE];
-    *buffer = '\0'; // clear the buffer
+    std::string buffer;
 
     // If there is data attached called "SMILES_Fragment", then it's
     // an ascii OBBitVec, representing the atoms of a fragment.  The
@@ -4146,10 +4129,10 @@ namespace OpenBabel {
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
-    char buffer[BUFF_SIZE];
+    std::string buffer;
     OBMol2Cansmi m2s;
 
-    m2s.Init(true, pConv);
+    m2s.Init(pmol, true, pConv);
 
     // We're outputting a full molecule
     // so we pass a bitvec for all atoms
@@ -4172,6 +4155,7 @@ namespace OpenBabel {
 
     int j;
     int atomIdx;
+    char coords[100];
     for (j = 0;j < mol.NumConformers();j++)
       {
         mol.SetConformer(j);
@@ -4179,8 +4163,8 @@ namespace OpenBabel {
              ++index) {
           atomIdx = atoi(canonical_order[index].c_str());
           atom = mol.GetAtom(atomIdx);
-          sprintf(buffer,"%9.3f %9.3f %9.3f",atom->GetX(),atom->GetY(),atom->GetZ());
-          ofs << buffer<< endl;
+          snprintf(coords, 100, "%9.3f %9.3f %9.3f", atom->GetX(), atom->GetY(), atom->GetZ());
+          ofs << coords << endl;
         }
       }
     return(true);

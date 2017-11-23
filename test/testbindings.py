@@ -154,7 +154,7 @@ class TestSuite(PythonBindings):
         self.assertRaises(IOError, pybel.readstring, "smi", "[11111C]")
         mol = pybel.readstring("smi", "[C]")
         mol.atoms[0].OBAtom.SetIsotope(65535)
-        self.assertEqual(mol.write("smi").rstrip(), "")
+        self.assertEqual(mol.write("smi").rstrip(), "[C]")
 
     def testWhetherAllElementsAreSupported(self):
         """Check whether a new element has been correctly added"""
