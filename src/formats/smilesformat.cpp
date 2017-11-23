@@ -2696,13 +2696,13 @@ namespace OpenBabel {
     buffer += '[';
     unsigned short iso = atom->GetIsotope();
     if (isomeric && iso) {
-      if (iso >= 10000) { // max 4 characters
-        obErrorLog.ThrowError(__FUNCTION__, "Isotope value larger than 9999", obError);
-        return false;
+      if (iso >= 10000) // max 4 characters
+        obErrorLog.ThrowError(__FUNCTION__, "Isotope value larger than 9999. Ignoring value.", obWarning);
+      else {
+        char iso[5]; // 4 characters plus null
+        sprintf(iso, "%d", atom->GetIsotope());
+        buffer += iso;
       }
-      char iso[5]; // 4 characters plus null
-      sprintf(iso,"%d",atom->GetIsotope());
-      buffer += iso;
     }
     if (!atom->GetAtomicNum())
       buffer += '*';
