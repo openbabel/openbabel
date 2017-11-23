@@ -2658,35 +2658,35 @@ namespace OpenBabel {
           for(externalBond = externalBonds->begin();externalBond != externalBonds->end();++externalBond) {
             if (externalBond->second.first == atom) {
               external = true;
-              strcpy(symbol,"&");
+              buffer += '&';
               OBBond *bond = externalBond->second.second;
               if (bond->IsUp()) {
                 if ( (bond->GetBeginAtom())->HasDoubleBond() ||
                      (bond->GetEndAtom())->HasDoubleBond() )
-                  strcat(symbol,"\\");
+                  buffer += '\\';
               }
               if (bond->IsDown()) {
                 if ( (bond->GetBeginAtom())->HasDoubleBond() ||
                      (bond->GetEndAtom())->HasDoubleBond() )
-                  strcat(symbol,"/");
+                  buffer += '/';
               }
               if (bond->GetBO() == 2 && !bond->IsAromatic()) // TODO: need to check for kekulesmi
-                strcat(symbol,"=");
+                buffer += '=';
               if (bond->GetBO() == 2 && bond->IsAromatic())
-                strcat(symbol,":");
+                buffer += ':';
               if (bond->GetBO() == 3)
-                strcat(symbol,"#");
+                buffer += '#';
               if (bond->GetBO() == 4)
-                strcat(symbol,"$");
-              sprintf(symbol+strlen(symbol),"%d",externalBond->first);
+                buffer += '$';
+              char tmp[10];
+              snprintf(tmp, 10, "%d", externalBond->first);
+              buffer += tmp;
               break;
             }
           }
 
         if(!external)
           buffer += '*';
-        else
-          buffer += symbol;
       }
 
       return true;
