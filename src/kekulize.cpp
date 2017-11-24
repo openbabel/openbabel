@@ -206,7 +206,11 @@ namespace OpenBabel
     unsigned int *degrees = (unsigned int*)malloc(sizeof(unsigned int)*atomArraySize);
     std::vector<OBAtom*> degreeOneAtoms;
     FOR_ATOMS_OF_MOL(atom, m_mol) {
-      if (!needs_dbl_bond->BitIsOn(atom->GetIdx())) continue;
+      unsigned int atom_idx = atom->GetIdx();
+      if (!needs_dbl_bond->BitIsOn(atom_idx)) {
+        degrees[atom_idx] = 0;
+        continue;
+      }
       unsigned int mdeg = 0;
       FOR_BONDS_OF_ATOM(bond, &*atom) {
         if (!bond->IsAromatic()) continue;
@@ -214,7 +218,7 @@ namespace OpenBabel
         if (needs_dbl_bond->BitIsOn(nbr->GetIdx()))
           mdeg++;
       }
-      degrees[atom->GetIdx()] = mdeg;
+      degrees[atom_idx] = mdeg;
       if (mdeg == 1)
         degreeOneAtoms.push_back(&*atom);
     }
