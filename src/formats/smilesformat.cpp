@@ -2866,7 +2866,7 @@ namespace OpenBabel {
   {
     // If no chiral neighbors were passed in, we're done
     if (chiral_neighbors.size() < 4)
-      return false;
+      return (const char*)0;
     
     OBAtom *atom = node->GetAtom();
 
