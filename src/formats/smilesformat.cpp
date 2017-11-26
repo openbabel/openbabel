@@ -4019,7 +4019,7 @@ namespace OpenBabel {
 
     // Title only option?
     if(pConv->IsOption("t")) {
-      ofs << pmol->GetTitle() <<endl;
+      ofs << pmol->GetTitle() << "\n";
       return true;
     }
 
@@ -4052,31 +4052,37 @@ namespace OpenBabel {
       CreateCansmiString(*pmol, buffer, fragatoms, !pConv->IsOption("i"), pConv->IsOption("k"), pConv);
     }
 
-    ofs << buffer;
     if(!pConv->IsOption("smilesonly")) {
 
-      if(!pConv->IsOption("n"))
-        ofs << '\t' <<  pmol->GetTitle();
+      if(!pConv->IsOption("n")) {
+        buffer += '\t';
+        buffer += pmol->GetTitle();
+      }
 
       if (pConv->IsOption("x") && pmol->HasData("SMILES Atom Order")) {
         vector<string> vs;
         string canorder = pmol->GetData("SMILES Atom Order")->GetValue();
         tokenize(vs, canorder);
-        ofs << '\t';
+        buffer += '\t';
+        char tmp[15];
         for (unsigned int i = 0; i < vs.size(); i++) {
           int idx = atoi(vs[i].c_str());
           OBAtom *atom = pmol->GetAtom(idx);
           if (i > 0)
-            ofs << ",";
-          ofs << atom->GetX() << "," << atom->GetY();
+            buffer += ',';
+          snprintf(tmp, 15, "%.4f", atom->GetX());
+          buffer += tmp;
+          buffer += ',';
+          snprintf(tmp, 15, "%.4f", atom->GetY());
+          buffer += tmp;
         }
       }
 
       if(!pConv->IsOption("nonewline"))
-        ofs << endl;
+        buffer += "\n";
     }
 
-    //cout << "end SMIBaseFromat::WriteMolecule()" << endl;
+    ofs << buffer;
     return true;
   }
 
@@ -4120,7 +4126,6 @@ namespace OpenBabel {
 
   bool FIXFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
-    //cout << "FIXFromat::WriteMolecule()" << endl;
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==NULL)
       return false;
