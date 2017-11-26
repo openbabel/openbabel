@@ -145,6 +145,8 @@ namespace OpenBabel {
         "     This gives canonical labels 1,2,3,4 to atoms 4,2,1,3 respectively,\n"
         "     so that atom 4 will be visited first and the remaining atoms\n"
         "     visited in a depth-first manner following the lowest canonical labels.\n"
+        "  O  Store the SMILES atom order as a space-separated string in an\n"
+        "     OBPairData with the name 'SMILES Atom Order'\n"
         "  F  <atom numbers> Generate SMILES for a fragment\n"
         "     The atom numbers should be specified like \"1 2 4 7\".\n"
         "  R  Do not reuse bond closure symbols\n"
@@ -2222,7 +2224,6 @@ namespace OpenBabel {
     OBBitVec _uatoms,_ubonds;
     std::vector<OBBondClosureInfo> _vopen;
     unsigned int _bcdigit; // Unused unless option "R" is specified
-    std::string       _canorder;
     std::vector<OBCisTransStereo> _cistrans, _unvisited_cistrans;
     std::map<OBBond *, bool> _isup;
 
@@ -2282,10 +2283,7 @@ namespace OpenBabel {
                                    bool kekulesmi);
     bool         HasStereoDblBond(OBBond *, OBAtom *atom);
     void MyFindChildren(OBMol &mol, vector<OBAtom*> &children, OBBitVec &seen, OBAtom *end);
-    std::string &GetOutputOrder()
-    {
-      return _canorder;
-    }
+    void GetOutputOrder(std::string &outorder);
     bool         ParseInChI(OBMol &mol, vector<int> &atom_order);
   };
 
@@ -2307,7 +2305,6 @@ namespace OpenBabel {
     _uatoms.Clear();
     _ubonds.Clear();
     _vopen.clear();
-    _canorder.clear();
     _pac = NULL;
 
     _pmol = pmol;
@@ -3784,28 +3781,30 @@ namespace OpenBabel {
       CanonicalLabels(&mol, symmetry_classes, canonical_order, frag_atoms, maxSeconds);
     }
     else {
-      if (_pconv->IsOption("C")) {      // "C" == "anti-canonical form"
-        RandomLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
-      } else if (ppo || _pconv->IsOption("U")) { // user-specified or InChI canonical labels
-        canonical_order.resize(mol.NumAtoms());
-        symmetry_classes.resize(mol.NumAtoms());
-        int idx = 3; // Start the labels at 3 (to leave space for special values 0, 1 and 2)
-        for (int i=0; i<atom_order.size(); ++i)
-          if (canonical_order[atom_order[i] - 1] == 0) { // Ignore ring closures (for "U")
-            canonical_order[atom_order[i] - 1] = idx;
-            symmetry_classes[atom_order[i] - 1] = idx;
-            ++idx;
-          }
-        for (int i=0; i<canonical_order.size(); ++i)
-          if (canonical_order[i] == 0) { // Explicit hydrogens
-            if (mol.GetAtom(i+1)->GetAtomicNum() == OBElements::Hydrogen && mol.GetAtom(i+1)->GetIsotope()!=0) { // [2H] or [3H]
-              canonical_order[i] = mol.GetAtom(i+1)->GetIsotope() - 1; // i.e. 1 or 2
-              symmetry_classes[i] = canonical_order[i];
-            }
-          }
-      } else {
-        StandardLabels(&mol, &frag_atoms, symmetry_classes, canonical_order);
+if (_pconv->IsOption("C")) {      // "C" == "anti-canonical form"
+  RandomLabels(&mol, frag_atoms, symmetry_classes, canonical_order);
+}
+else if (ppo || _pconv->IsOption("U")) { // user-specified or InChI canonical labels
+  canonical_order.resize(mol.NumAtoms());
+  symmetry_classes.resize(mol.NumAtoms());
+  int idx = 3; // Start the labels at 3 (to leave space for special values 0, 1 and 2)
+  for (int i = 0; i < atom_order.size(); ++i)
+    if (canonical_order[atom_order[i] - 1] == 0) { // Ignore ring closures (for "U")
+      canonical_order[atom_order[i] - 1] = idx;
+      symmetry_classes[atom_order[i] - 1] = idx;
+      ++idx;
+    }
+  for (int i = 0; i < canonical_order.size(); ++i)
+    if (canonical_order[i] == 0) { // Explicit hydrogens
+      if (mol.GetAtom(i + 1)->GetAtomicNum() == OBElements::Hydrogen && mol.GetAtom(i + 1)->GetIsotope() != 0) { // [2H] or [3H]
+        canonical_order[i] = mol.GetAtom(i + 1)->GetIsotope() - 1; // i.e. 1 or 2
+        symmetry_classes[i] = canonical_order[i];
       }
+    }
+}
+else {
+  StandardLabels(&mol, &frag_atoms, symmetry_classes, canonical_order);
+}
     }
 
     // OUTER LOOP: Handles dot-disconnected structures.  Finds the
@@ -3831,19 +3830,19 @@ namespace OpenBabel {
         for (atom = mol.BeginAtom(ai); atom; atom = mol.NextAtom(ai)) {
           int idx = atom->GetIdx();
           if (//atom->GetAtomicNum() != OBElements::Hydrogen       // don't start with a hydrogen
-              !_uatoms[idx]          // skip atoms already used (for fragments)
-              && frag_atoms.BitIsOn(idx)// skip atoms not in this fragment
-              //&& !atom->IsChiral()    // don't use chiral atoms as root node
-              && canonical_order[idx-1] < lowest_canorder) {
+            !_uatoms[idx]          // skip atoms already used (for fragments)
+            && frag_atoms.BitIsOn(idx)// skip atoms not in this fragment
+            //&& !atom->IsChiral()    // don't use chiral atoms as root node
+            && canonical_order[idx - 1] < lowest_canorder) {
             root_atom = atom;
-            lowest_canorder = canonical_order[idx-1];
+            lowest_canorder = canonical_order[idx - 1];
           }
         }
         // For Inchified or Universal SMILES, if the start atom is an [O-] attached to atom X, choose any =O attached to X instead.
         //          Ditto for [S-] and =S.
         if ((_pconv->IsOption("I") || _pconv->IsOption("U"))
-             && root_atom && root_atom->GetFormalCharge()==-1  && root_atom->GetValence() == 1
-             && root_atom->HasSingleBond() && (root_atom->GetAtomicNum() == OBElements::Oxygen || root_atom->GetAtomicNum() == OBElements::Sulfur)) {
+          && root_atom && root_atom->GetFormalCharge() == -1 && root_atom->GetValence() == 1
+          && root_atom->HasSingleBond() && (root_atom->GetAtomicNum() == OBElements::Oxygen || root_atom->GetAtomicNum() == OBElements::Sulfur)) {
           OBBondIterator bi = root_atom->BeginBonds();
           OBAtom* central = root_atom->BeginNbrAtom(bi);
           FOR_NBORS_OF_ATOM(nbr, central) {
@@ -3867,28 +3866,27 @@ namespace OpenBabel {
       // Dot disconnected structure?
       if (!buffer.empty())
         buffer += '.';
-      root = new OBCanSmiNode (root_atom);
+      root = new OBCanSmiNode(root_atom);
 
       BuildCanonTree(mol, frag_atoms, canonical_order, root);
       ToCansmilesString(root, buffer, frag_atoms, symmetry_classes, canonical_order, isomeric, kekulesmi);
       delete root;
     }
 
-    // save the canonical order as a space-separated string
-    // which will be returned by GetOutputOrder() for incorporation
-    // into an OBPairData keyed "canonical order"
-    if (_atmorder.size()) {
-      stringstream temp;
-      vector<int>::iterator can_iter = _atmorder.begin();
-      if (can_iter != _atmorder.end()) {
-        temp << (*can_iter++);
-      }
+  }
 
-      for (; can_iter != _atmorder.end(); ++can_iter) {
-        if (*can_iter <= mol.NumAtoms())
-          temp << " " << (*can_iter);
+  void OBMol2Cansmi::GetOutputOrder(std::string &outorder)
+  {
+    std::vector<int>::iterator it = _atmorder.begin();
+    if (it != _atmorder.end()) {
+      char tmp[15];
+      snprintf(tmp, 15, "%d", *it);
+      outorder += tmp;
+      for (; it != _atmorder.end(); ++it) {
+        snprintf(tmp, 15, "%d", *it);
+        outorder += ' ';
+        outorder += tmp;
       }
-      _canorder = temp.str(); // returned by GetOutputOrder()
     }
   }
 
@@ -3953,20 +3951,25 @@ namespace OpenBabel {
 
     m2s.CreateFragCansmiString(mol, frag_atoms, iso, kekulesmi, buffer);
 
-    // This atom order data is useful not just for canonical SMILES
-    // Could also save canonical bond order if anyone desires
-    OBPairData *canData;
-    if (!mol.HasData("SMILES Atom Order")) {
-      // Create new OBPairData
-      canData = new OBPairData;
-      canData->SetAttribute("SMILES Atom Order");
-      canData->SetOrigin(OpenBabel::local);
-      mol.SetData(canData);
-    } else {
-      // Recanonicalizing - update existing new OBPairData
-      canData = (OBPairData *) mol.GetData("SMILES Atom Order");
+    if (pConv->IsOption("O")) { // record smiles atom order info
+      // This atom order data is useful not just for canonical SMILES
+      // Could also save canonical bond order if anyone desires
+      OBPairData *canData;
+      if (!mol.HasData("SMILES Atom Order")) {
+        // Create new OBPairData
+        canData = new OBPairData;
+        canData->SetAttribute("SMILES Atom Order");
+        canData->SetOrigin(OpenBabel::local);
+        mol.SetData(canData);
+      }
+      else {
+        // Recanonicalizing - update existing new OBPairData
+        canData = (OBPairData *)mol.GetData("SMILES Atom Order");
+      }
+      std::string atmorder;
+      m2s.GetOutputOrder(atmorder);
+      canData->SetValue(atmorder);
     }
-    canData->SetValue(m2s.GetOutputOrder());
   }
 
   bool SMIBaseFormat::GetInchifiedSMILESMolecule(OBMol *mol, bool useFixedHRecMet)
@@ -4149,7 +4152,8 @@ namespace OpenBabel {
     OBAtom *atom;
     vector<int>::iterator i;
     // Retrieve the canonical order of the molecule
-    string orderString = m2s.GetOutputOrder();
+    std::string orderString;
+    m2s.GetOutputOrder(orderString);
     vector<string> canonical_order;
     tokenize(canonical_order, orderString);
 
