@@ -3998,6 +3998,15 @@ namespace OpenBabel {
     return success;
   }
 
+  static const char* NewLine()
+  {
+#ifdef _WIN32
+    return "\r\n";
+#else
+    return "\n";
+#endif
+  }
+
   //////////////////////////////////////////////////
   bool SMIBaseFormat::WriteMolecule(OBBase* pOb,OBConversion* pConv)
   {
@@ -4011,7 +4020,7 @@ namespace OpenBabel {
     if (pConv->IsOption("I")) {
       bool success = GetInchifiedSMILESMolecule(pmol, false);
       if (!success) {
-        ofs << "\n";
+        ofs << NewLine();
         obErrorLog.ThrowError(__FUNCTION__, "Cannot generate Universal NSMILES for this molecule", obError);
         return false;
       }
@@ -4019,7 +4028,7 @@ namespace OpenBabel {
 
     // Title only option?
     if(pConv->IsOption("t")) {
-      ofs << pmol->GetTitle() << "\n";
+      ofs << pmol->GetTitle() << NewLine();
       return true;
     }
 
@@ -4052,6 +4061,7 @@ namespace OpenBabel {
       CreateCansmiString(*pmol, buffer, fragatoms, !pConv->IsOption("i"), pConv->IsOption("k"), pConv);
     }
 
+    bool writenewline = false;
     if(!pConv->IsOption("smilesonly")) {
 
       if(!pConv->IsOption("n")) {
@@ -4079,10 +4089,13 @@ namespace OpenBabel {
       }
 
       if(!pConv->IsOption("nonewline"))
-        buffer += "\n";
+        writenewline = true;
     }
 
     ofs << buffer;
+    if (writenewline)
+      ofs << NewLine();
+
     return true;
   }
 
