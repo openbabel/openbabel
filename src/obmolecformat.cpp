@@ -37,13 +37,6 @@ namespace OpenBabel
 
     OBMol* pmol = new OBMol;
 
-    std::string auditMsg = "OpenBabel::Read molecule ";
-    std::string description(pFormat->Description());
-    auditMsg += description.substr(0,description.find('\n'));
-    obErrorLog.ThrowError(__FUNCTION__,
-                          auditMsg,
-                          obAuditMsg);
-
     if(pConv->IsOption("C",OBConversion::GENOPTIONS))
       return DeferMolOutput(pmol, pConv, pFormat);
 
@@ -168,13 +161,6 @@ namespace OpenBabel
                                   obInfo);
           }
         ret=true;
-
-        std::string auditMsg = "OpenBabel::Write molecule ";
-        std::string description(pFormat->Description());
-        auditMsg += description.substr(0,description.find('\n'));
-        obErrorLog.ThrowError(__FUNCTION__,
-                              auditMsg,
-                              obAuditMsg);
 
         ret = DoOutputOptions(pOb, pConv);
 
@@ -403,11 +389,6 @@ namespace OpenBabel
         pConv->SetOutputIndex(i);
         if(itr==lastitr)
           pConv->SetOneObjectOnly(); //to set IsLast
-
-        std::string auditMsg = "OpenBabel::Write molecule ";
-        std::string description((pConv->GetOutFormat())->Description());
-        auditMsg += description.substr(0,description.find('\n'));
-        obErrorLog.ThrowError(__FUNCTION__, auditMsg,  obAuditMsg);
 
         ret = pConv->GetOutFormat()->WriteMolecule(itr->second, pConv);
 
