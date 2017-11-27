@@ -54,6 +54,19 @@ class PybelWrapper(PythonBindings):
 
 class TestSuite(PythonBindings):
 
+    def testSmilesAtomOrder(self):
+        """Ensure that SMILES atom order is written correctly"""
+        data = [("CC", "1 2"),
+                ("O=CCl", "3 2 1")]
+        for smi, atomorder in data:
+            mol = pybel.readstring("smi", smi)
+            mol.write("can", opt={"O": True})
+            res = mol.data["SMILES Atom Order"]
+            self.assertEqual(res, atomorder)
+        mol = pybel.readstring("smi", "CC")
+        mol.write("can")
+        self.assertFalse("SMILES Atom Order" in mol.data)
+
     def testAtomMapsAfterCopying(self):
         """Copying a molecule should copy the atom maps"""
         smi = "C[CH2:2]O[Cl:6]"
