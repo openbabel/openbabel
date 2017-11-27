@@ -3882,6 +3882,7 @@ else {
       char tmp[15];
       snprintf(tmp, 15, "%d", *it);
       outorder += tmp;
+      ++it;
       for (; it != _atmorder.end(); ++it) {
         snprintf(tmp, 15, "%d", *it);
         outorder += ' ';
@@ -4025,6 +4026,12 @@ else {
       ofs << pmol->GetTitle() <<endl;
       return true;
     }
+
+    // Option 'x' needs "SMILES Atom Order" to be set
+    // FIXME: When we support features of CXN extended SMILES
+    //        we can rewrite this
+    if (pConv->IsOption("x"))
+      pConv->AddOption("O");
 
     std::string buffer;
 
