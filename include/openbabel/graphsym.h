@@ -49,7 +49,7 @@ namespace OpenBabel {
       //! Constructor
       OBGraphSym(OBMol* pmol, const OBBitVec* frag_atoms = NULL);
       //! Destructor
-      virtual ~OBGraphSym();
+      ~OBGraphSym();
 
       static const unsigned int NoSymmetryClass;
 
