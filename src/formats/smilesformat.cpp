@@ -145,6 +145,8 @@ namespace OpenBabel {
         "     This gives canonical labels 1,2,3,4 to atoms 4,2,1,3 respectively,\n"
         "     so that atom 4 will be visited first and the remaining atoms\n"
         "     visited in a depth-first manner following the lowest canonical labels.\n"
+        "  O  Store the SMILES atom order as a space-separated string in an\n"
+        "     OBPairData with the name 'SMILES Atom Order'\n"
         "  F  <atom numbers> Generate SMILES for a fragment\n"
         "     The atom numbers should be specified like \"1 2 4 7\".\n"
         "  R  Do not reuse bond closure symbols\n"
@@ -2222,7 +2224,6 @@ namespace OpenBabel {
     OBBitVec _uatoms,_ubonds;
     std::vector<OBBondClosureInfo> _vopen;
     unsigned int _bcdigit; // Unused unless option "R" is specified
-    std::string       _canorder;
     std::vector<OBCisTransStereo> _cistrans, _unvisited_cistrans;
     std::map<OBBond *, bool> _isup;
 
@@ -2282,10 +2283,7 @@ namespace OpenBabel {
                                    bool kekulesmi);
     bool         HasStereoDblBond(OBBond *, OBAtom *atom);
     void MyFindChildren(OBMol &mol, vector<OBAtom*> &children, OBBitVec &seen, OBAtom *end);
-    std::string &GetOutputOrder()
-    {
-      return _canorder;
-    }
+    void GetOutputOrder(std::string &outorder);
     bool         ParseInChI(OBMol &mol, vector<int> &atom_order);
   };
 
@@ -2307,7 +2305,6 @@ namespace OpenBabel {
     _uatoms.Clear();
     _ubonds.Clear();
     _vopen.clear();
-    _canorder.clear();
     _pac = NULL;
 
     _pmol = pmol;
@@ -3874,21 +3871,21 @@ namespace OpenBabel {
       delete root;
     }
 
-    // save the canonical order as a space-separated string
-    // which will be returned by GetOutputOrder() for incorporation
-    // into an OBPairData keyed "canonical order"
-    if (_atmorder.size()) {
-      stringstream temp;
-      vector<int>::iterator can_iter = _atmorder.begin();
-      if (can_iter != _atmorder.end()) {
-        temp << (*can_iter++);
-      }
+  }
 
-      for (; can_iter != _atmorder.end(); ++can_iter) {
-        if (*can_iter <= mol.NumAtoms())
-          temp << " " << (*can_iter);
+  void OBMol2Cansmi::GetOutputOrder(std::string &outorder)
+  {
+    std::vector<int>::iterator it = _atmorder.begin();
+    if (it != _atmorder.end()) {
+      char tmp[15];
+      snprintf(tmp, 15, "%d", *it);
+      outorder += tmp;
+      ++it;
+      for (; it != _atmorder.end(); ++it) {
+        snprintf(tmp, 15, "%d", *it);
+        outorder += ' ';
+        outorder += tmp;
       }
-      _canorder = temp.str(); // returned by GetOutputOrder()
     }
   }
 
@@ -3953,20 +3950,25 @@ namespace OpenBabel {
 
     m2s.CreateFragCansmiString(mol, frag_atoms, iso, kekulesmi, buffer);
 
-    // This atom order data is useful not just for canonical SMILES
-    // Could also save canonical bond order if anyone desires
-    OBPairData *canData;
-    if (!mol.HasData("SMILES Atom Order")) {
-      // Create new OBPairData
-      canData = new OBPairData;
-      canData->SetAttribute("SMILES Atom Order");
-      canData->SetOrigin(OpenBabel::local);
-      mol.SetData(canData);
-    } else {
-      // Recanonicalizing - update existing new OBPairData
-      canData = (OBPairData *) mol.GetData("SMILES Atom Order");
+    if (pConv->IsOption("O")) { // record smiles atom order info
+      // This atom order data is useful not just for canonical SMILES
+      // Could also save canonical bond order if anyone desires
+      OBPairData *canData;
+      if (!mol.HasData("SMILES Atom Order")) {
+        // Create new OBPairData
+        canData = new OBPairData;
+        canData->SetAttribute("SMILES Atom Order");
+        canData->SetOrigin(OpenBabel::local);
+        mol.SetData(canData);
+      }
+      else {
+        // Recanonicalizing - update existing new OBPairData
+        canData = (OBPairData *)mol.GetData("SMILES Atom Order");
+      }
+      std::string atmorder;
+      m2s.GetOutputOrder(atmorder);
+      canData->SetValue(atmorder);
     }
-    canData->SetValue(m2s.GetOutputOrder());
   }
 
   bool SMIBaseFormat::GetInchifiedSMILESMolecule(OBMol *mol, bool useFixedHRecMet)
@@ -4022,6 +4024,12 @@ namespace OpenBabel {
       ofs << pmol->GetTitle() <<endl;
       return true;
     }
+
+    // Option 'x' needs "SMILES Atom Order" to be set
+    // FIXME: When we support features of CXN extended SMILES
+    //        we can rewrite this
+    if (pConv->IsOption("x"))
+      pConv->AddOption("O");
 
     std::string buffer;
 
@@ -4149,7 +4157,8 @@ namespace OpenBabel {
     OBAtom *atom;
     vector<int>::iterator i;
     // Retrieve the canonical order of the molecule
-    string orderString = m2s.GetOutputOrder();
+    std::string orderString;
+    m2s.GetOutputOrder(orderString);
     vector<string> canonical_order;
     tokenize(canonical_order, orderString);
 
