@@ -1356,6 +1356,7 @@ namespace OpenBabel
       OBAtom *addedAtom = GetAtom(NumAtoms());
       correspondingId[atom->GetId()] = addedAtom->GetId();
     }
+    correspondingId[OBStereo::ImplicitRef] = OBStereo::ImplicitRef;
 
     for (bond = src.BeginBond(j) ; bond ; bond = src.NextBond(j)) {
       bond->SetId(NoId);//Need to remove ID which relates to source mol rather than this mol
