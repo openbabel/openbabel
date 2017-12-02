@@ -762,7 +762,7 @@ namespace OpenBabel
              */
             hasPartialCharges = true;
             chargeModel = "Hirshfeld";
-            if (mol.HasData("Hirshfeld harges"))
+            if (mol.HasData("Hirshfeld charges"))
               {
                 mol.DeleteData("Hirshfeld charges");
               }
@@ -804,6 +804,7 @@ namespace OpenBabel
             else if (NULL != esp && grids_are_read_once)
               {
                  esp = new OpenBabel::OBFreeGrid();
+                 grids_are_read_once = false;
               }
             if (vs.size() == 8)
               {

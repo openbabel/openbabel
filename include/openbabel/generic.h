@@ -1158,7 +1158,11 @@ namespace OpenBabel
 
     void ErasePoints()
     {
-      _points.clear();
+      OBFreeGridPointIterator fgpi;
+      for (fgpi = _points.begin(); fgpi != _points.end();)
+        {
+          fgpi = _points.erase(fgpi);
+        } 
     }
 
     OBFreeGridPointIterator BeginPoints() 
