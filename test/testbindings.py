@@ -88,6 +88,21 @@ class TestSuite(PythonBindings):
         mol.removeh()
         self.assertEqual(mol.write("smi", opt={"a":True}).rstrip(), "C[NH:2]")
 
+    def testImplicitCisDblBond(self):
+        """Ensure that dbl bonds in rings of size 8 or less are always
+        implicitly cis"""
+        smi = "C1/C=C/C"
+        for i in range(5): # from size 4 to 8
+            ringsize = i + 4
+            ringsmi = smi + "1"
+            roundtrip = pybel.readstring("smi", ringsmi).write("smi")
+            self.assertTrue("/" not in roundtrip)
+            smi += "C"
+        ringsize = 9
+        ringsmi = smi + "1"
+        roundtrip = pybel.readstring("smi", ringsmi).write("smi")
+        self.assertTrue("/" in roundtrip)
+
     def testKekulizationOfcn(self):
         """We were previously not reading 'cn' correctly, or at least how
         Daylight would"""
