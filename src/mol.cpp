@@ -1433,8 +1433,9 @@ namespace OpenBabel
 
   bool OBMol::Clear()
   {
-    obErrorLog.ThrowError(__FUNCTION__,
-                          "Ran OpenBabel::Clear Molecule", obAuditMsg);
+    if (obErrorLog.GetOutputLevel() >= obAuditMsg)
+      obErrorLog.ThrowError(__FUNCTION__,
+                            "Ran OpenBabel::Clear Molecule", obAuditMsg);
 
     vector<OBAtom*>::iterator i;
     vector<OBBond*>::iterator j;
