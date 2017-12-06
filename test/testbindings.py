@@ -156,6 +156,21 @@ class TestSuite(PythonBindings):
         mol.atoms[0].OBAtom.SetIsotope(65535)
         self.assertEqual(mol.write("smi").rstrip(), "[C]")
 
+    def testStereoRefsAfterAddingOBMols(self):
+        """The stereo ref for an implicit H ref was being set to 0"""
+        smis = ["C", "[C@@H](Br)(Cl)I"]
+        mols = [pybel.readstring("smi", smi) for smi in smis]
+        # FIXME - does not seem to be possible to work out whether
+        # tetrahedral or not from Python?
+        stereodata = mols[1].OBMol.GetData(ob.StereoData)
+        config = ob.toTetrahedralStereo(stereodata).GetConfig()
+        self.assertEqual(config.from_or_towards, 4294967294)
+        mols[0].OBMol += mols[1].OBMol
+        self.assertEqual(mols[0].write("smi").rstrip(), ".".join(smis))
+        stereodata = mols[0].OBMol.GetData(ob.StereoData)
+        config = ob.toTetrahedralStereo(stereodata).GetConfig()
+        self.assertEqual(config.from_or_towards, 4294967294)
+
     def testWhetherAllElementsAreSupported(self):
         """Check whether a new element has been correctly added"""
         N = 0
