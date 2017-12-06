@@ -94,6 +94,15 @@ class TestSuite(PythonBindings):
         mol = pybel.readstring("smi", "cn")
         self.assertEqual("C=N", mol.write("smi").rstrip())
 
+    def testInvalidCharsInSmiles(self):
+        """Check that inserting a comma in a SMILES string in various positions
+        does not result in a valid SMILES"""
+        data = "C, ,C [C,] [,C] [1,C] [C:,1] [C:1,] [CH,] [C+,] [C++,]"
+        data += " [C@,](Br)(Cl)(I)F C1,CC1 C%1,1CC%11 C%(1,1)CC%11"
+        data += " C=,C"
+        for smi in data.split(" "):
+            self.assertRaises(IOError, pybel.readstring, "smi", smi)
+
     def testOBMolAssignTotalChargeToAtoms(self):
         """Run the test cases described in the source code"""
         data = [("[NH4]", +1, "[NH4+]"),

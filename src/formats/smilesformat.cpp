@@ -348,13 +348,6 @@ namespace OpenBabel {
       else
         smiles = ln;
     }
-    pos= smiles.find_first_of(",<\"\'!^&_|{}");
-    if(pos!=string::npos)
-    {
-      obErrorLog.ThrowError(__FUNCTION__,
-        smiles + " contained a character '" + smiles[pos] + "' which is invalid in SMILES", obError);
-      return false;
-    }
 
     pmol->SetDimension(0);
     OBSmilesParser sp(pConv->IsOption("a", OBConversion::INOPTIONS));
@@ -976,7 +969,15 @@ namespace OpenBabel {
         element = 16;
         break;
       default:
+        {
+        std::string err;
+        err += "SMILES string contains a character '";
+        err += *_ptr;
+        err += "' which is invalid";
+        obErrorLog.ThrowError(__FUNCTION__,
+          err, obError);
         return false;
+        }
       }
 
     OBAtom *atom = mol.NewAtom();
@@ -1643,7 +1644,15 @@ namespace OpenBabel {
         break;
 
       default:
-        return false;
+        {
+          std::string err;
+          err += "SMILES string contains a character '";
+          err += *_ptr;
+          err += "' which is invalid";
+          obErrorLog.ThrowError(__FUNCTION__,
+            err, obError);
+          return false;
+        }
       }
 
     //handle hydrogen count, stereochemistry, and charge
