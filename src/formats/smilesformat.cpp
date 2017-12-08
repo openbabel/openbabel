@@ -1982,6 +1982,7 @@ namespace OpenBabel {
         _ptr++;
         char* start = _ptr;
         while (isdigit(*_ptr)) {
+          digit *= 10;
           digit += *_ptr - '0';
           _ptr++;
           if (_ptr - start > 5) {
@@ -1999,7 +2000,8 @@ namespace OpenBabel {
           obErrorLog.ThrowError(__FUNCTION__, "Two digits expected after %", obWarning);
           return false;
         }
-        digit = (*_ptr - '0') * 10 + *(++_ptr) - '0';
+        digit = (*_ptr - '0') * 10 + *(_ptr+1) - '0';
+        _ptr++;
       }
     }
     else {
