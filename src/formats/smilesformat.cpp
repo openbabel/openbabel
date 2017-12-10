@@ -2218,9 +2218,12 @@ namespace OpenBabel {
     bool kekulesmi;
     bool showexplicitH;
     bool smarts;
-    OutOptions(bool _isomeric, bool _kekulesmi, bool _showexplicitH, bool _smarts):
+    const char* ordering; // This is a pointer to the string in the original map
+    OutOptions(bool _isomeric, bool _kekulesmi, bool _showexplicitH, bool _smarts,
+               const char* _ordering):
       isomeric(_isomeric), kekulesmi(_kekulesmi), showexplicitH(_showexplicitH),
-      smarts(_smarts)
+      smarts(_smarts),
+      ordering(_ordering)
       {}
   };
 
@@ -2998,7 +3001,7 @@ namespace OpenBabel {
     // ordered insertion rather than sorting.
 
     bool favor_multiple = true; // Visit 'multiple' bonds first
-    if (_pconv->IsOption("o"))
+    if (options.ordering)
       favor_multiple = false; // Visit in strict canonical order (if using user-specified order)
 
     for (nbr = atom->BeginNbrAtom(i); nbr; nbr = atom->NextNbrAtom(i)) {
@@ -3722,7 +3725,7 @@ namespace OpenBabel {
       _startatom = mol.GetAtom(atom_idx);
 
     // Was an atom ordering specified?
-    const char* ppo = _pconv->IsOption("o");
+    const char* ppo = options.ordering;
     vector<string> s_atom_order;
     vector<int> atom_order;
     if (ppo) {
@@ -3924,7 +3927,8 @@ namespace OpenBabel {
     bool canonical = pConv->IsOption("c") != NULL;
 
     OutOptions options(!pConv->IsOption("i"), pConv->IsOption("k"),
-      pConv->IsOption("h"), pConv->IsOption("s"));
+      pConv->IsOption("h"), pConv->IsOption("s"),
+      pConv->IsOption("o"));
 
     OBMol2Cansmi m2s(options);
     m2s.Init(&mol, canonical, pConv);
@@ -4158,7 +4162,8 @@ namespace OpenBabel {
 
     std::string buffer;
     OutOptions options(!pConv->IsOption("i"), pConv->IsOption("k"),
-      pConv->IsOption("h"), pConv->IsOption("s"));
+      pConv->IsOption("h"), pConv->IsOption("s"),
+      pConv->IsOption("o"));
     OBMol2Cansmi m2s(options);
 
     m2s.Init(pmol, true, pConv);
