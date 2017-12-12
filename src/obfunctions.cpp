@@ -15,9 +15,64 @@ GNU General Public License for more details.
 ***********************************************************************/  
 
 #include <openbabel/obfunctions.h>
+#include <openbabel/bitvec.h>
+#include <openbabel/obiter.h>
+#include <openbabel/bond.h>
+#include <openbabel/mol.h>
 
 namespace OpenBabel
 {
+  unsigned int OBBondGetSmallestRingSize(OBBond *bond, unsigned int bound)
+  {
+    // A bounded BFS from one side of a bond trying to find the other side.
+    //   - The required queue is implemented using a std::vector for efficiency
+    //   - Note that items are never popped from the queue, I just move a pointer
+    //     along to mark the left hand side
+    //   - A potential improvement would be to BFS from both sides at the same time
+
+    if (!bond->IsInRing()) return 0;
+    OBAtom* start = bond->GetBeginAtom();
+    OBAtom* end = bond->GetEndAtom();
+    std::vector<OBAtom*> qatoms;
+    unsigned int numatoms = bond->GetParent()->NumAtoms();
+    qatoms.reserve(numatoms < 42 ? numatoms : 42); // Value chosen by inspection on ChEMBL when using bound of 8
+    OBBitVec seen(numatoms + 1);
+    seen.SetBitOn(start->GetIdx());
+    FOR_BONDS_OF_ATOM(nbond, start) {
+      if (&*nbond == bond) continue;
+      if (!nbond->IsInRing()) continue;
+      OBAtom* nbr = nbond->GetNbrAtom(start);
+      qatoms.push_back(nbr);
+    }
+    unsigned int depthmarker = qatoms.size(); // when qstart reaches this, increment the depth
+    unsigned int qstart = 0;
+    unsigned int depth = 2;
+    while (qatoms.size() - qstart) { // While queue not empty
+      OBAtom* curr = qatoms[qstart];
+      if (qstart == depthmarker) {
+        depth++;
+        depthmarker = qatoms.size();
+      }
+      qstart++;
+      if (seen.BitIsSet(curr->GetIdx()))
+        continue;
+      seen.SetBitOn(curr->GetIdx());
+      if (depth < bound) {
+        FOR_BONDS_OF_ATOM(nbond, curr) {
+          if (!nbond->IsInRing()) continue;
+          OBAtom* nbr = nbond->GetNbrAtom(curr);
+          if (nbr == end)
+            return depth + 1;
+          if (!seen.BitIsSet(nbr->GetIdx())) {
+            qatoms.push_back(nbr);
+          }
+        }
+      }
+    }
+    return 0;
+  }
+
+
   // Return the typical valence for an atom of specified element, bond order sum and formal charge
   unsigned int GetTypicalValence(unsigned int element, unsigned int bosum, int charge)
   {

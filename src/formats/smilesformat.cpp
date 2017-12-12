@@ -27,7 +27,7 @@ GNU General Public License for more details.
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/stereo/squareplanar.h>
 #include <openbabel/stereo/stereo.h>
-
+#include <openbabel/obfunctions.h>
 #include <openbabel/graphsym.h>
 #include <openbabel/kekulize.h>
 #include <openbabel/canon.h>
@@ -2364,57 +2364,6 @@ namespace OpenBabel {
     return(idx);
   }
 
-  // Is this dbl bond in a ring that is of size <= IMPLICIT_CIS_RING_SIZE?
-  //
-  // A bounded BFS from one side of a bond trying to find the other side.
-  //   - The required queue is implemented using a std::vector for efficiency
-  //   - Note that items are never popped from the queue, I just move a pointer
-  //     along to mark the left hand side
-  //   - A potential improvement would be to BFS from both sides at the same time
-  static bool IsNotInRingOfSizeThatImpliesCis(OBMol *mol, OBBond *bond)
-  {
-    if (!bond->IsInRing()) return true;
-    OBAtom* start = bond->GetBeginAtom();
-    OBAtom* end = bond->GetEndAtom();
-    std::vector<OBAtom*> qatoms;
-    unsigned int numatoms = mol->NumAtoms();
-    qatoms.reserve(numatoms < 42 ? numatoms : 42); // Value chosen by inspection on ChEMBL when using maxsize of 8
-    OBBitVec seen(mol->NumAtoms() + 1);
-    seen.SetBitOn(start->GetIdx());
-    FOR_BONDS_OF_ATOM(nbond, start) {
-      if (&*nbond == bond) continue;
-      if (!nbond->IsInRing()) continue;
-      OBAtom* nbr = nbond->GetNbrAtom(start);
-      qatoms.push_back(nbr);
-    }
-    unsigned int depthmarker = qatoms.size(); // when qstart reaches this, increment the depth
-    unsigned int qstart = 0;
-    unsigned int depth = 2;
-    while (qatoms.size() - qstart) { // While queue not empty
-      OBAtom* curr = qatoms[qstart];
-      if (qstart == depthmarker) {
-        depth++;
-        depthmarker = qatoms.size();
-      }
-      qstart++;
-      if (seen.BitIsSet(curr->GetIdx()))
-        continue;
-      seen.SetBitOn(curr->GetIdx());
-      if (depth < IMPLICIT_CIS_RING_SIZE) {
-        FOR_BONDS_OF_ATOM(nbond, curr) {
-          if (!nbond->IsInRing()) continue;
-          OBAtom* nbr = nbond->GetNbrAtom(curr);
-          if (nbr == end)
-            return false;
-          if (!seen.BitIsSet(nbr->GetIdx())) {
-            qatoms.push_back(nbr);
-          }
-        }
-      }
-    }
-    return true;
-  }
-
   void OBMol2Cansmi::CreateCisTrans(OBMol &mol)
   {
     std::vector<OBGenericData*> vdata = mol.GetAllData(OBGenericDataType::StereoData);
@@ -2428,7 +2377,8 @@ namespace OpenBabel {
         if (!dbl_bond)
           continue;
         // Do not output cis/trans bond symbols for double bonds in rings of size IMPLICIT_CIS_RING_SIZE or less
-        if (IsNotInRingOfSizeThatImpliesCis(&mol, dbl_bond))
+        unsigned int boundedringsize = OBBondGetSmallestRingSize(dbl_bond, IMPLICIT_CIS_RING_SIZE);
+        if (boundedringsize > 0)
           _cistrans.push_back(*ct);
       }
     }
