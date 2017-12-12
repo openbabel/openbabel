@@ -2311,6 +2311,7 @@ namespace OpenBabel {
   void OBMol2Cansmi::Init(OBMol* pmol, bool canonical, OBConversion* pconv)
   {
     _atmorder.clear();
+    _atmorder.reserve(pmol->NumAtoms());
     _uatoms.Clear();
     _ubonds.Clear();
     _vopen.clear();
@@ -3706,6 +3707,8 @@ namespace OpenBabel {
     buffer[0] = '\0';
     vector<OBNodeBase*>::iterator ai;
     vector<unsigned int> symmetry_classes, canonical_order;
+    symmetry_classes.reserve(mol.NumAtoms());
+    canonical_order.reserve(mol.NumAtoms());
 
     //Pointer to Atom Class data set if -xa option and the molecule has any; NULL otherwise.
     if(_pconv->IsOption("a"))
@@ -4050,6 +4053,7 @@ namespace OpenBabel {
       pConv->AddOption("O");
 
     std::string buffer;
+    buffer.reserve(1000);
 
     // If there is data attached called "SMILES_Fragment", then it's
     // an ascii OBBitVec, representing the atoms of a fragment.  The
