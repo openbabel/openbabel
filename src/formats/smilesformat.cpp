@@ -434,77 +434,71 @@ namespace OpenBabel {
     mol.BeginModify();
 
     for (_ptr=smiles.c_str();*_ptr;_ptr++)
+    {
+      switch(*_ptr)
       {
-        //cerr << " parsing " << _ptr << endl;
-
-        if (*_ptr<0 || isspace(*_ptr))
-          continue;
-        else if (isdigit(*_ptr) || *_ptr == '%') //ring open/close
-          {
-            if(!ParseRingBond(mol))
-              return false;
-            continue;
-          }
-        else if(*_ptr == '&') //external bond
-          {
-            ParseExternalBond(mol);
-            continue;
-          }
-        else
-          switch(*_ptr)
-            {
-            case '.':
-              _prev=0;
-              break;
-            case '(':
-              _vprev.push_back(_prev);
-              break;
-            case ')':
-              if(_vprev.empty()) //CM
-                return false;
-              _prev = _vprev.back();
-              _vprev.pop_back();
-              break;
-            case '[':
-              if (!ParseComplex(mol))
-                {
-                  mol.EndModify();
-                  mol.Clear();
-                  return(false);
-                }
-              break;
-            case '-':
-              _order = 1;
-              break;
-            case '=':
-              _order = 2;
-              break;
-            case '#':
-              _order = 3;
-              break;
-            case '$':
-              _order = 4;
-              break;
-            case ':':
-              _order = 0; // no-op
-              break;
-            case '/':
-              _order = 1;
-              _updown = BondDownChar;
-              break;
-            case '\\':
-              _order = 1;
-              _updown = BondUpChar;
-              break;
-            default:
-              if (!ParseSimple(mol))
-                {
-                  mol.EndModify();
-                  mol.Clear();
-                  return(false);
-                }
-            } // end switch
-      } // end for _ptr
+      case '0': case '1': case '2': case '3': case '4':
+      case '5': case '6': case '7': case '8': case '9':
+      case '%':  //ring open/close
+        if (!ParseRingBond(mol))
+          return false;
+        break;
+      case '&': //external bond
+        if (!ParseExternalBond(mol))
+          return false;
+        break;
+      case '.':
+        _prev=0;
+        break;
+      case '(':
+        _vprev.push_back(_prev);
+        break;
+      case ')':
+        if(_vprev.empty()) //CM
+          return false;
+        _prev = _vprev.back();
+        _vprev.pop_back();
+        break;
+      case '[':
+        if (!ParseComplex(mol))
+        {
+          mol.EndModify();
+          mol.Clear();
+          return false;
+        }
+        break;
+      case '-':
+        _order = 1;
+        break;
+      case '=':
+        _order = 2;
+        break;
+      case '#':
+        _order = 3;
+        break;
+      case '$':
+        _order = 4;
+        break;
+      case ':':
+        _order = 0; // no-op
+        break;
+      case '/':
+        _order = 1;
+        _updown = BondDownChar;
+        break;
+      case '\\':
+        _order = 1;
+        _updown = BondUpChar;
+        break;
+      default:
+        if (!ParseSimple(mol))
+        {
+          mol.EndModify();
+          mol.Clear();
+          return false;
+        }
+      } // end switch
+    } // end for _ptr
 
     // place dummy atoms for each unfilled external bond
     if(!_extbond.empty())
