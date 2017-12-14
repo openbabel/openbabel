@@ -2378,7 +2378,7 @@ namespace OpenBabel {
           continue;
         // Do not output cis/trans bond symbols for double bonds in rings of size IMPLICIT_CIS_RING_SIZE or less
         unsigned int boundedringsize = OBBondGetSmallestRingSize(dbl_bond, IMPLICIT_CIS_RING_SIZE);
-        if (boundedringsize > 0)
+        if (boundedringsize == 0) // either not in ring at all, or not in small ring
           _cistrans.push_back(*ct);
       }
     }
