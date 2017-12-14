@@ -134,14 +134,14 @@ class testOBabel(BaseTest):
 
     def testRingClosures(self):
         # Test positives
-        data = ["c1ccccc1", "c%11ccccc%11", "c%(1)ccccc%(1)",
+        data = ["c1ccccc1", "c%11ccccc%11", "c%(1)ccccc%(1)", "c%(51)ccccc%51",
                 "c%(99999)ccccc%(99999)"]
         for smi in data:
             output, error = run_exec("obabel -:%s -osmi" % smi)
             self.assertEqual("c1ccccc1", output.rstrip())
         # Test negatives
         data = ["c%1ccccc%1", "c%a1cccc%a1", "c%(a1)ccccc%(a1)",
-                "c%(000001)ccccc%(000001)"]
+                "c%(000001)ccccc%(000001)", "c%(51)ccccc%(15)"]
         for smi in data:
             output, error = run_exec("obabel -:%s -osmi" % smi)
             self.assertTrue("0 molecules converted" in error)
