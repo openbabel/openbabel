@@ -364,6 +364,27 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 %ignore OBResidueIter(OBMol &);
 %ignore OBResidueAtomIter(OBResidue &);
 
+// SWIG treats operator-> specially (see 6.24 "Smart pointers and operator->()").
+// If we leave this in, it adds
+// all of the methods of the underlying object (e.g. OBAtom) to the
+// iterator object, causing bloat.
+%ignore OpenBabel::OBAtomAtomIter::operator->;
+%ignore OpenBabel::OBAtomBondIter::operator->;
+%ignore OpenBabel::OBMolAngleIter::operator->;
+%ignore OpenBabel::OBMolAtomIter::operator->;
+%ignore OpenBabel::OBMolAtomBFSIter::operator->;
+%ignore OpenBabel::OBMolAtomDFSIter::operator->;
+%ignore OpenBabel::OBMolAtomBFSIter::operator->;
+%ignore OpenBabel::OBMolAtomDFSIter::operator->;
+%ignore OpenBabel::OBMolBondIter::operator->;
+%ignore OpenBabel::OBMolBondBFSIter::operator->;
+%ignore OpenBabel::OBMolBondBFSIter::operator->;
+%ignore OpenBabel::OBMolPairIter::operator->;
+%ignore OpenBabel::OBMolRingIter::operator->;
+%ignore OpenBabel::OBMolTorsionIter::operator->;
+%ignore OpenBabel::OBResidueIter::operator->;
+%ignore OpenBabel::OBResidueAtomIter::operator->;
+
 // These classes are renamed so that they can be replaced by Python
 // classes of the same name which provide Pythonic iterators
 // (see %pythoncode section below)
