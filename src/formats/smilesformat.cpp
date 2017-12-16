@@ -264,7 +264,7 @@ namespace OpenBabel {
     char _updown;
     int _order;
     int _prev;
-    char *_ptr;
+    const char *_ptr;
     bool _preserve_aromaticity;
     vector<int>             _vprev;
     vector<RingClosureBond> _rclose;
@@ -273,7 +273,6 @@ namespace OpenBabel {
     vector<bool>            _avisit;
     vector<bool>            _bvisit;
     vector<int>             _hcount;
-    char                    _buffer[BUFF_SIZE];
     vector<int> PosDouble; //for extension: lc atoms as conjugated double bonds
     OBAtomClassData _classdata; // to hold atom class data like [C:2]
 
@@ -298,7 +297,7 @@ namespace OpenBabel {
     ~OBSmilesParser() { }
 
     bool SmiToMol(OBMol&,const string&);
-    bool ParseSmiles(OBMol&);
+    bool ParseSmiles(OBMol&, const string&);
     bool ParseSimple(OBMol&);
     bool ParseComplex(OBMol&);
     bool ParseRingBond(OBMol&);
@@ -401,22 +400,13 @@ namespace OpenBabel {
 
   bool OBSmilesParser::SmiToMol(OBMol &mol,const string &s)
   {
-    if (s.length() > BUFF_SIZE)  {
-      stringstream errorMsg;
-      errorMsg << "Invalid SMILES string: string is too long (" << s.length() << " characters).  Limit is " << BUFF_SIZE << " characters.";
-      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
-      return false;
-    }
-    strncpy(_buffer,s.c_str(), BUFF_SIZE);
-    _buffer[BUFF_SIZE - 1] = '\0';
-
     _vprev.clear();
     _rclose.clear();
     _prev=0;
     chiralWatch=false;
     squarePlanarWatch = false;
 
-    if (!ParseSmiles(mol) || mol.NumAtoms() == 0)
+    if (!ParseSmiles(mol, s) || mol.NumAtoms() == 0)
       {
         mol.Clear();
         return(false);
@@ -438,12 +428,12 @@ namespace OpenBabel {
     return(true);
   }
 
-  bool OBSmilesParser::ParseSmiles(OBMol &mol)
+  bool OBSmilesParser::ParseSmiles(OBMol &mol, const std::string &smiles)
   {
     mol.SetAromaticPerceived(); // Turn off perception until the end of this function
     mol.BeginModify();
 
-    for (_ptr=_buffer;*_ptr;_ptr++)
+    for (_ptr=smiles.c_str();*_ptr;_ptr++)
       {
         //cerr << " parsing " << _ptr << endl;
 
@@ -1980,7 +1970,7 @@ namespace OpenBabel {
       _ptr++;
       if (*_ptr == '(') { // %(NNN) extension to OpenSMILES
         _ptr++;
-        char* start = _ptr;
+        const char* start = _ptr;
         while (isdigit(*_ptr)) {
           digit *= 10;
           digit += *_ptr - '0';
