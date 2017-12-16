@@ -1,7 +1,7 @@
 /**********************************************************************
 obfunctions.h - Various global functions
 
-Copyright (C) 2017 by Noel O'B oyle
+Copyright (C) 2017 by Noel O'Boyle
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
@@ -23,6 +23,21 @@ General Public License for more details.
 
 namespace OpenBabel
 {
+  /**
+  \brief Return the size of the smallest ring in which a bond appears
+
+  This function returns the size of the smallest ring in which a bond appears. The
+  search is bounded by the specified bound. A value of 0 is returned if the bond
+  is not in a ring or if no ring is found of size less than or equal to the bound.
+
+  Note that alternative algorithms may be more appropriate if you wish to calculate
+  this value for all atoms in a molecule.
+
+  \return The size of the smallest ring, or 0
+  **/
+
+  OBAPI unsigned int OBBondGetSmallestRingSize(OBBond *bond, unsigned int bound);
+
   /**
    \brief Return the typical valence of an atom of a particular element
 

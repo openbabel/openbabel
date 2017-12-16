@@ -27,7 +27,7 @@ GNU General Public License for more details.
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/stereo/squareplanar.h>
 #include <openbabel/stereo/stereo.h>
-
+#include <openbabel/obfunctions.h>
 #include <openbabel/graphsym.h>
 #include <openbabel/kekulize.h>
 #include <openbabel/canon.h>
@@ -2388,8 +2388,8 @@ namespace OpenBabel {
         if (!dbl_bond)
           continue;
         // Do not output cis/trans bond symbols for double bonds in rings of size IMPLICIT_CIS_RING_SIZE or less
-        OBRing* ring = dbl_bond->FindSmallestRing();
-        if (!ring || ring->Size()>IMPLICIT_CIS_RING_SIZE)
+        unsigned int boundedringsize = OBBondGetSmallestRingSize(dbl_bond, IMPLICIT_CIS_RING_SIZE);
+        if (boundedringsize == 0) // either not in ring at all, or not in small ring
           _cistrans.push_back(*ct);
       }
     }
