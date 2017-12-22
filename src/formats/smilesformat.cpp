@@ -21,7 +21,6 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
 #include <openbabel/chiral.h>
-#include <openbabel/atomclass.h>
 
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
@@ -274,7 +273,6 @@ namespace OpenBabel {
     vector<bool>            _bvisit;
     vector<int>             _hcount;
     vector<int> PosDouble; //for extension: lc atoms as conjugated double bonds
-    OBAtomClassData _classdata; // to hold atom class data like [C:2]
 
     struct StereoRingBond
     {
@@ -509,10 +507,6 @@ namespace OpenBabel {
     // place dummy atoms for each unfilled external bond
     if(!_extbond.empty())
       CapExternalBonds(mol);
-
-    //Save atom class values in OBGenericData object if there are any
-    if(_classdata.size()>0)
-      mol.SetData(new OBAtomClassData(_classdata));
 
     // Check to see if we've balanced out all ring closures
     // They are removed from _rclose when matched
@@ -1739,10 +1733,16 @@ namespace OpenBabel {
                 obErrorLog.ThrowError(__FUNCTION__,"The atom class following : must be a number", obWarning);
                 return false;
               }
-            while( isdigit(*_ptr) )
+            while( isdigit(*_ptr) && clval < 100000000)
               clval = clval*10 + ((*_ptr++)-'0');
             --_ptr;
-            _classdata.Add(atom->GetIdx(), clval);
+            { // a block is needed here to scope the OBPairInteger assignment
+              OBPairInteger *atomclass = new OBPairInteger();
+              atomclass->SetAttribute("Atom Class"); 
+              atomclass->SetValue(clval);
+              atomclass->SetOrigin(fileformatInput);
+              atom->SetData(atomclass);
+            }
             break;
 
           default:
@@ -2219,12 +2219,13 @@ namespace OpenBabel {
   {
     bool isomeric;
     bool kekulesmi;
+    bool showatomclass;
     bool showexplicitH;
     bool smarts;
     const char* ordering; // This is a pointer to the string in the original map
-    OutOptions(bool _isomeric, bool _kekulesmi, bool _showexplicitH, bool _smarts,
+    OutOptions(bool _isomeric, bool _kekulesmi, bool _showatomclass, bool _showexplicitH, bool _smarts,
                const char* _ordering):
-      isomeric(_isomeric), kekulesmi(_kekulesmi), showexplicitH(_showexplicitH),
+      isomeric(_isomeric), kekulesmi(_kekulesmi), showatomclass(_showatomclass), showexplicitH(_showexplicitH),
       smarts(_smarts),
       ordering(_ordering)
       {}
@@ -2248,7 +2249,6 @@ namespace OpenBabel {
     OBMol* _pmol;
     OBStereoFacade *_stereoFacade;
     OBConversion* _pconv;
-    OBAtomClassData* _pac;
 
     OBAtom* _endatom;
     OBAtom* _startatom;
@@ -2320,7 +2320,6 @@ namespace OpenBabel {
     _uatoms.Clear();
     _ubonds.Clear();
     _vopen.clear();
-    _pac = NULL;
 
     _pmol = pmol;
     _stereoFacade = new OBStereoFacade(_pmol); // needs to be destroyed in dtor
@@ -2601,7 +2600,7 @@ namespace OpenBabel {
     if (atom->GetAtomicNum() != OBElements::Hydrogen && !options.showexplicitH) {
       FOR_NBORS_OF_ATOM(nbr, atom) {
         if (nbr->GetAtomicNum() == OBElements::Hydrogen && (!options.isomeric || nbr->GetIsotope() == 0) && nbr->GetValence() == 1 &&
-          nbr->GetFormalCharge() == 0 && (!_pconv->IsOption("a") || _pac == NULL || !_pac->HasClass(nbr->GetIdx())))
+          nbr->GetFormalCharge() == 0 && (!options.showatomclass || !nbr->GetData("Atom Class")))
           numExplicitHsToSuppress++;
       }
     }
@@ -2628,7 +2627,7 @@ namespace OpenBabel {
 
     if (atom->GetFormalCharge() != 0 // charged elements
       || (options.isomeric && atom->GetIsotope()) // isotopes
-      || (_pac && _pac->HasClass(atom->GetIdx())) ) // If the molecule has Atom Class data and -xa option set and atom has data
+      || (options.showatomclass && atom->HasData("Atom Class")) ) // If the molecule has Atom Class data and -xa option set and atom has data
       bracketElement = true;
 
     const char* stereo = (const char*)0;
@@ -2773,13 +2772,19 @@ namespace OpenBabel {
     }
 
     //atom class e.g. [C:2]
-    if (_pac) {
-      unsigned int ac = _pac->GetClass(atom->GetIdx());
-      if (ac != 0) {
-        buffer += ':';
-        char tchar[10];
-        snprintf(tchar, 10, "%d", ac);
-        buffer += tchar;
+    if (options.showatomclass) {
+      OBGenericData *data = atom->GetData("Atom Class");
+      if (data) {
+        OBPairInteger* acdata = dynamic_cast<OBPairInteger*>(data); // Could replace with C-style cast if willing to live dangerously
+        if (acdata) {
+          int ac = acdata->GetGenericValue();
+          if (ac >= 0) { // Allow 0, why not?
+            buffer += ':';
+            char tchar[12]; // maxint has 10 digits
+            snprintf(tchar, 12, "%d", ac);
+            buffer += tchar;
+          }
+        }
       }
     }
 
@@ -3710,10 +3715,6 @@ namespace OpenBabel {
     symmetry_classes.reserve(mol.NumAtoms());
     canonical_order.reserve(mol.NumAtoms());
 
-    //Pointer to Atom Class data set if -xa option and the molecule has any; NULL otherwise.
-    if(_pconv->IsOption("a"))
-      _pac = static_cast<OBAtomClassData*>(mol.GetData("Atom Class"));
-
     // Remember the desired endatom, if specified
     const char* pp = _pconv->IsOption("l");
     unsigned int atom_idx  = pp ? atoi(pp) : 0;
@@ -3928,6 +3929,7 @@ namespace OpenBabel {
     bool canonical = pConv->IsOption("c") != NULL;
 
     OutOptions options(!pConv->IsOption("i"), pConv->IsOption("k"),
+      pConv->IsOption("a"),
       pConv->IsOption("h"), pConv->IsOption("s"),
       pConv->IsOption("o"));
 
@@ -4175,6 +4177,7 @@ namespace OpenBabel {
 
     std::string buffer;
     OutOptions options(!pConv->IsOption("i"), pConv->IsOption("k"),
+      pConv->IsOption("a"),
       pConv->IsOption("h"), pConv->IsOption("s"),
       pConv->IsOption("o"));
     OBMol2Cansmi m2s(options);

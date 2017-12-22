@@ -20,7 +20,6 @@ GNU General Public License for more details.
 #include <openbabel/kinetics.h>
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
-#include <openbabel/atomclass.h>
 #include <openbabel/obfunctions.h>
 #include <openbabel/xml.h>
 #include <float.h>
@@ -586,7 +585,6 @@ namespace OpenBabel
   ///Interprets atoms from AtomArray and writes then to an OBMol
   bool CMLFormat::DoAtoms()
   {
-    OBAtomClassData aclass;
     int dim=0; //dimension of molecule
     bool use2d = _pxmlConv->IsOption("2", OBConversion::INOPTIONS);
 
@@ -617,8 +615,13 @@ namespace OpenBabel
                 AtomMap[value] = nhvy;//nAtoms;
 
                 //If the id begins with "aa", "ab", etc, the number that follows  is taken as an atom class
-                if(value[0]=='a' && value[1]>='a' && value[1]<='z')
-                  aclass.Add(nAtoms, atoi(value.c_str()+2));
+                if(value[0]=='a' && value[1]>='a' && value[1]<='z') {
+                  OBPairInteger *atomclass = new OBPairInteger();
+                  atomclass->SetAttribute("Atom Class");
+                  atomclass->SetValue(atoi(value.c_str() + 2));
+                  atomclass->SetOrigin(fileformatInput);
+                  pAtom->SetData(atomclass);
+                }
                 continue;
               }
             else if(attrname=="elementType")
@@ -793,9 +796,6 @@ namespace OpenBabel
           else
             pAtom->SetVector(x, y, z);
       }//each atom
-
-    if(aclass.size()>0)
-      _pmol->SetData((new OBAtomClassData(aclass)));
 
     _pmol->SetDimension(dim);
     return true;
@@ -1945,22 +1945,27 @@ namespace OpenBabel
 
     stringstream ss;
     map<int,char> acmap; //key=atom calss; value=last letter used as second in id
-    OBAtomClassData* pac = static_cast<OBAtomClassData*>(mol.GetData("Atom Class"));
     atomIDs.push_back("Error"); //atom idex stats at 1. atomIDs[0] is not used
     for (unsigned int idx=1; idx<=mol.NumAtoms(); ++idx)
     {
       ss.str("");
       ss << 'a';
-      if(pac && pac->HasClass(idx))
+      OBGenericData* pac = mol.GetAtom(idx)->GetData("Atom Class");
+      if(pac)
       {
-        int ac = pac->GetClass(idx);
-        char ch2='a'; //default 2nd char
-        if(acmap.count(ac)>0)
-          ch2 = acmap[ac]+1;
-        if(ch2>'z')
-          obErrorLog.ThrowError(_pmol->GetTitle(),"CML: too many atoms with same atom class." , obError);
-        ss << ch2 << ac;
-        acmap[ac] = ch2;
+        OBPairInteger* acdata = dynamic_cast<OBPairInteger*>(pac);
+        if (acdata) {
+          int ac = acdata->GetGenericValue();
+          if (ac >= 0) { // Allow 0, why not?
+            char ch2='a'; //default 2nd char
+            if(acmap.count(ac)>0)
+              ch2 = acmap[ac]+1;
+            if(ch2>'z')
+              obErrorLog.ThrowError(_pmol->GetTitle(),"CML: too many atoms with same atom class." , obError);
+            ss << ch2 << ac;
+            acmap[ac] = ch2;
+          }
+        }
       }
       else
         ss << idx;

@@ -292,5 +292,56 @@ class AcceptStereoAsGiven(PythonBindings):
         out = pybel.readstring("smi", cistrans, opt={"S": True}).write("smi")
         self.assertFalse("/" in out)
 
+class AtomClass(PythonBindings):
+    """Tests to ensure that refactoring the atom class handling retains
+    functionality"""
+
+    def testSMILES(self):
+        mol = pybel.readstring("smi", "C[CH3:6]")
+        atom = mol.OBMol.GetAtom(2)
+        data = atom.GetData("Atom Class")
+        self.assertTrue(data)
+        self.assertEqual(6, ob.toPairInteger(data).GetGenericValue())
+
+        atom.DeleteData("Atom Class")
+        ac = ob.obpairtemplateint()
+        ac.SetAttribute("Atom Class")
+        ac.SetValue(2)
+        mol.OBMol.GetAtom(1).CloneData(ac)
+        out = mol.write("smi", opt={"a":True, "n":True, "nonewline":True})
+        self.assertEqual("[CH3:2]C", out)
+
+    def testMOL(self):
+        """Roundtrip thru MOL file"""
+        smi = "C[CH3:6]"
+        mol = pybel.readstring("smi", smi)
+        molfile = mol.write("mol", opt={"a":True})
+        molb = pybel.readstring("mol", molfile)
+        out = mol.write("smi", opt={"a":True, "n":True, "nonewline":True})
+        self.assertEqual(smi, out)
+
+    def testRGroup(self):
+        """[*:1] is converted to R1 in MOL file handling"""
+        smi = "[*:6]C"
+        mol = pybel.readstring("smi", smi)
+        molfile = mol.write("mol")
+        self.assertTrue("M  RGP  1   1   6" in molfile)
+        molb = pybel.readstring("mol", molfile)
+        out = mol.write("smi", opt={"a":True, "n":True, "nonewline":True})
+        self.assertEqual(smi, out)
+
+    def testCML(self):
+        """Atom classes map onto CML atom ids in OB's implementation"""
+        # CH3:6 --> aa6
+        # OH:6  --> ab6 (second use of an atom class)
+        smis = ["[CH3:6]C", "[CH3:6][OH:6]"]
+        for smi in smis:
+            mol = pybel.readstring("smi", smi)
+            cml = mol.write("cml")
+            self.assertTrue("aa6" in cml)
+            molb = pybel.readstring("mol", cml)
+            out = mol.write("smi", opt={"a":True, "n":True, "nonewline":True})
+            self.assertEqual(smi, out)
+        
 if __name__ == "__main__":
     unittest.main()
