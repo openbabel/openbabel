@@ -16,6 +16,7 @@ GNU General Public License for more details.
 
 #include <openbabel/obmolecformat.h>
 #include <openbabel/forcefield.h>
+#include <openbabel/atomclass.h>
 
 using namespace std;
 namespace OpenBabel
@@ -37,9 +38,10 @@ namespace OpenBabel
         "The cartesian XYZ file format used by the molecular mechanics package TINKER.\n"
         "By default, the MM2 atom types are used for writiting files.\n\n"
         "Read Options e.g. -as\n"
-        "  s  Output single bonds only\n\n"
+        "  s  Generate single bonds only\n\n"
         "Write Options e.g. -xm\n"
         "  m  Write an input file for the CNDO/INDO program.\n"
+        "  c  Write atom types using custom atom classes, if available\n"
         "  3  Write atom types for the MM3 forcefield.\n\n";
     };
 
@@ -146,8 +148,12 @@ namespace OpenBabel
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
+    bool mm2Types = false;
     bool mmffTypes = pConv->IsOption("m",OBConversion::OUTOPTIONS) != NULL;
     bool mm3Types = pConv->IsOption("3",OBConversion::OUTOPTIONS) != NULL;
+    bool classTypes = pConv->IsOption("c", OBConversion::OUTOPTIONS) != NULL;
+    if (pmol->GetData("Atom Class") == NULL)
+      classTypes = false;
 
     unsigned int i;
     char buffer[BUFF_SIZE];
@@ -161,10 +167,14 @@ namespace OpenBabel
     else
       mmffTypes = false; // either the force field isn't available, or it doesn't work
 
-    if (!mmffTypes && !mm3Types)
+    if (!mmffTypes && !mm3Types && !classTypes) {
       snprintf(buffer, BUFF_SIZE, "%6d %-20s   MM2 parameters\n",mol.NumAtoms(),mol.GetTitle());
+      mm2Types = true;
+    }
     else if (mm3Types)
       snprintf(buffer, BUFF_SIZE, "%6d %-20s   MM3 parameters\n",mol.NumAtoms(),mol.GetTitle());
+    else if (classTypes)
+      snprintf(buffer, BUFF_SIZE, "%6d %-20s   Custom parameters\n",mol.NumAtoms(),mol.GetTitle());
     else
       snprintf(buffer, BUFF_SIZE, "%6d %-20s   MMFF94 parameters\n",mol.NumAtoms(),mol.GetTitle());
     ofs << buffer;
@@ -174,24 +184,35 @@ namespace OpenBabel
     OBAtom *atom;
     string str,str1;
     int atomType;
+    // we check above - if classTypes is set, this is non-null
+    OBAtomClassData* classes = (OBAtomClassData*) pmol->GetData("Atom Class");
     for(i = 1;i <= mol.NumAtoms(); i++)
       {
         atom = mol.GetAtom(i);
         str = atom->GetType();
-        ttab.SetToType("MM2");
-        ttab.Translate(str1,str);
+        atomType = 0; // Something is very wrong if this doesn't get set below
 
-        if (mmffTypes && !mm3Types) {
+        if (mm2Types) {
+          ttab.SetToType("MM2");
+          ttab.Translate(str1,str);
+          atomType = atoi((char*)str1.c_str());
+        }
+        if (mmffTypes) {
           // Override the MM2 typing
           OBPairData *type = (OpenBabel::OBPairData*)atom->GetData("FFAtomType");
-          if (type)
+          if (type) {
             str1 = type->GetValue().c_str();
+            atomType = atoi((char*)str1.c_str());
+          }
         }
-
-        // convert to integer for MM3 typing
-        atomType = atoi((char*)str1.c_str());
         if (mm3Types) {
+          // convert to integer for MM3 typing
           atomType = SetMM3Type(atom);
+        }
+        if (classTypes) {
+          // Atom classes are set by the user, so use those
+          if (classes->GetClass(atom->GetIdx()))
+            atomType = classes->GetClass(atom->GetIdx());
         }
 
         snprintf(buffer, BUFF_SIZE, "%6d %2s  %12.6f%12.6f%12.6f %5d",
