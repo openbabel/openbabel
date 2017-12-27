@@ -22,7 +22,7 @@
 TRANSFORM O=C[OD1-0:1] >> O=C[O-:1]					4.0 # pKa from acid (AH)
 
 #uncomment for vinylogous carboxylic acids (e.g. ascorbic acid)
-TRANSFORM [O:1]=[C:2][C:3]=[C:4][O:5] >> [O-:1][C:2]=[C:3][C:4]=[O:5]	4.0 # pKa from acid (AH)
+TRANSFORM [O:1]=[C:2][C:3]=[C:4][O:5] >> [O:1]=[C:2][C:3]=[C:4][O-:5]   4.0 # pKa from acid (AH)
 
 #charged amine
 TRANSFORM [N^3;!$(N~[!#6;!#1]):1] >> [N+:1]				10.0 # pKa from conjugated acid (BH+)
