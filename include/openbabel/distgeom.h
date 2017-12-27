@@ -53,6 +53,7 @@ namespace OpenBabel {
      */
     bool Setup(const OBMol &mol, bool useCurrentGeom = false);
 
+    void Generate();
     void AddConformer();
     void GetConformers(OBMol &mol);
 
