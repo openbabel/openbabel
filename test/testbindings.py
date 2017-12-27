@@ -226,6 +226,16 @@ class TestSuite(PythonBindings):
 
         self.assertTrue(N > 100)
 
+    def testIterators(self):
+        """Basic check that at least two iterators are working"""
+        mol = pybel.readstring("smi", "c1ccccc1C(=O)Cl")
+        atoms = list(ob.OBMolAtomIter(mol.OBMol))
+        self.assertEqual(len(atoms), 9)
+        elements = [atom.GetAtomicNum() for atom in atoms]
+        self.assertEqual(elements, [6,6,6,6,6,6,6,8,17])
+        bonds = list(ob.OBMolBondIter(mol.OBMol))
+        self.assertEqual(len(bonds), 9)
+
 class Radicals(PythonBindings):
     def testSmilesToMol(self):
         smis = ["C", "[CH3]", "[CH2]", "[CH2]C", "[C]"]
