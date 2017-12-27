@@ -1991,8 +1991,8 @@ namespace OpenBabel
               self_consistent = false;
             }
 
-            if (l_ac < (l_ab - u_bc)) {// l_ac >= l_ab - u_bc
-              l_ac = l_ab - u_bc;
+            if (l_ac < (l_ab - l_bc)) {// l_ac >= l_ab - l_bc
+              l_ac = l_ab - l_bc;
       	      self_consistent = false;
             }
 

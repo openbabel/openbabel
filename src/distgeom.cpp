@@ -783,11 +783,11 @@ namespace OpenBabel {
           }
 
           // Triangle rule: length can't be shorter than the difference between the legs
-          if (l_bc < (l_ab - u_ac)) {
-            l_bc = l_ab - u_ac;
+          if (l_bc < (l_ab - l_ac)) {
+            l_bc = l_ab - l_ac;
             _d->SetLowerBounds(b, c, l_bc);
-          } else if (l_bc < (l_ac - u_ab)) {
-            l_bc = l_ac - u_ab;
+          } else if (l_bc < (l_ac - l_ab)) {
+            l_bc = l_ac - l_ab;
             _d->SetLowerBounds(b, c, l_bc);
           }
 
