@@ -801,18 +801,14 @@ namespace OpenBabel
 
   bool OBAtom::IsInRing() const
   {
-    if (((OBAtom*)this)->HasFlag(OB_RING_ATOM))
-      return(true);
-
-    OBMol *mol = (OBMol*)((OBAtom*)this)->GetParent();
+    OBMol *mol = ((OBAtom*)this)->GetParent();
     if (!mol->HasRingAtomsAndBondsPerceived())
-      {
-        mol->FindRingAtomsAndBonds();
-        if (((OBAtom*)this)->HasFlag(OB_RING_ATOM))
-          return(true);
-      }
+      mol->FindRingAtomsAndBonds();
 
-    return(false);
+    if (((OBAtom*)this)->HasFlag(OB_RING_ATOM))
+      return true;
+
+    return false;
   }
 
   //! @todo
