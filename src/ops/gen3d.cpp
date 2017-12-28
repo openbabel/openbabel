@@ -85,6 +85,7 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
     else if ( (strncasecmp(OptionText, "dist", 4) == 0)
                || (strncasecmp(OptionText, "dg", 2) == 0) ) {
       useDistGeom = true;
+      speed = 5;
     }
   }
 
