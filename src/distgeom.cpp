@@ -49,7 +49,7 @@ public:
   DistanceGeometryPrivate(const unsigned int N) {
     bounds = Eigen::MatrixXf(static_cast<int>(N), static_cast<int>(N));
     preMet = Eigen::MatrixXf(bounds);
-    debug = false;
+    debug = true;
   }
   ~DistanceGeometryPrivate() {}
 
@@ -953,7 +953,7 @@ bool OBDistanceGeometry::CheckStereoConstraints() {
   // Check all stereo constraints
   // Grab the saved, initial stereo
   std::vector<OBCisTransStereo *> cistrans = _d->cistrans;
-  OBStereoUnitSet ctSunits = _d->ctSunits;
+  const OBStereoUnitSet ctSunits = _d->ctSunits;
 
   // We'll check cis/trans first
   std::vector<OBCisTransStereo *> newcistrans;
@@ -961,6 +961,9 @@ bool OBDistanceGeometry::CheckStereoConstraints() {
   std::vector<OBCisTransStereo *>::iterator origct, newct;
   for (origct = cistrans.begin(), newct = newcistrans.begin();
        origct != cistrans.end(); ++origct, ++newct) {
+
+    cerr << "Old: " << *(*origct) << endl;
+    cerr << "New: " << *(*newct) << endl;
     if ((*origct)->GetConfig(OBStereo::ShapeU) !=
         (*newct)->GetConfig(OBStereo::ShapeU)) {
       // Wrong cis/trans stereochemistry
@@ -970,13 +973,15 @@ bool OBDistanceGeometry::CheckStereoConstraints() {
 
   // Perceive TetrahedralStereos from current geometry
   std::vector<OBTetrahedralStereo *> tetra = _d->tetra;
-  OBStereoUnitSet tetSunits = _d->tetSunits;
+  const OBStereoUnitSet tetSunits = _d->tetSunits;
   std::vector<OBTetrahedralStereo *> newtetra;
   newtetra = TetrahedralFrom3D(&_mol, tetSunits, false);
   // Iterate through original and new stereo and validate
   std::vector<OBTetrahedralStereo *>::iterator origth, newth;
   for (origth = tetra.begin(), newth = newtetra.begin(); origth != tetra.end();
        ++origth, ++newth) {
+         cerr << "Old: " << *(*origth) << endl;
+         cerr << "New: " << *(*newth) << endl;
     if ((*origth)->GetConfig(OBStereo::Clockwise, OBStereo::ViewFrom) !=
         (*newth)->GetConfig(OBStereo::Clockwise, OBStereo::ViewFrom))
 
@@ -1033,17 +1038,18 @@ void OBDistanceGeometry::Generate() {
     _d->bounds = _d->preMet; // version before partial metrization smoothing
     int origin = (generator.NextInt() % _mol.NumAtoms()) + 1;
     _mol.GetAtom(origin)->SetVector(VZero); // place it at the origin
+
     // second atom along the x axis, at a distance from the origin atom
     int second = origin;
     while (second == origin) {
       second = (generator.NextInt() % _mol.NumAtoms()) + 1;
     }
-    j = second - 1;
     // bounds between start atom and this one...
     lBounds = _d->GetLowerBounds(origin - 1, second - 1);
     uBounds = _d->GetUpperBounds(origin - 1, second - 1);
     dist = lBounds + (uBounds - lBounds) * generator.NextFloat();
     _mol.GetAtom(second)->SetVector(dist, 0.0, 0.0);
+
     // third random atom is placed by the law of cosines
     float lenA, lenB, lenC;
     int third = origin;
@@ -1091,9 +1097,11 @@ void OBDistanceGeometry::Generate() {
     for (unsigned int attempt = 0; attempt < 25; ++attempt) {
       // place atoms randomly inside the box
       FOR_ATOMS_OF_MOL(a, _mol) {
-        if (a->GetIdx() == origin || a->GetIdx() == second ||
+        if (a->GetIdx() == origin ||
+            a->GetIdx() == second ||
             a->GetIdx() == third)
           continue; // don't place atoms that we've set already
+
         vector3 newPos;
         newPos.randomUnitVector();
         newPos = newPos * _d->maxBoxSize;
@@ -1110,8 +1118,6 @@ void OBDistanceGeometry::Generate() {
         cerr << " AddConformer: new initial geometry " << endl;
     }
 
-    return;
-
     // Iterate to ensure all atoms satisfy the bounds matrix
     OBAtom *a, *b;
     float lambda;
@@ -1122,7 +1128,7 @@ void OBDistanceGeometry::Generate() {
       lambda = 1.0 - damp * count; // damp the oscillations each cycle
       converged = true;            // unless we swap atoms
       // either move atoms or correct stereo constraints
-      if (generator.NextFloat() > 0.6) {
+      if (generator.NextFloat() > 0.7) {
         // correct stereo contraints
         if (!CheckStereoConstraints()) {
           CorrectStereoConstraints(lambda);
@@ -1166,8 +1172,8 @@ void OBDistanceGeometry::Generate() {
         break; // no need to further iterate
     }          // end nudging
 
-    finished = CheckStereoConstraints();
-    //    finished = (CheckStereoConstraints() && CheckBounds());
+    //    finished = CheckStereoConstraints();
+    finished = (CheckStereoConstraints() && CheckBounds());
 
     if (_d->debug && !finished)
       cerr << "Stereo unsatisfied, trying again" << endl;
