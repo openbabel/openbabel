@@ -29,7 +29,6 @@ class TestDistanceGeomStereo(BaseTest):
         self.canFindExecutable("obabel")
 
         # A series of aromatic strings, which should convert to themselves
-        # make sure that they're input in canonical form!
         self.smiles = [
             'c1ccccc1',  # benzene
             'C/C=C\C',  # Z-butene
@@ -43,9 +42,13 @@ class TestDistanceGeomStereo(BaseTest):
             'CCCNC1=C(C)C(=O)C2=C(C1=O)[C@@H](COC(=O)N)[C@]1(N2C[C@H]2[C@H]1N2)OC',
             'CC(=O)OC[C@@]12CC[C@H]3[C@@]([C@@H]2C[C@H](O1)C1=CC(=O)O[C@H]1O)(C)CC[C@@H]1[C@]3(C)CCCC1(C)C'
             ]
-        for i in range(0, len(self.smiles)):
-            output, error = run_exec(self.smiles[i], "obabel -ismi -ocan --gen3d dg")
-            self.assertEqual(output.rstrip(), self.smiles[i])
+        for smi in self.smiles:
+            # generate a canonical SMILES in case the ordering changes
+            canSMI, error = run_exec(smi, "obabel -ismi -ocan")
+            mol2, error = run_exec(smi, "obabel -ismi -omol2 --gen3d dg")
+            output, error = run_exec(mol2, "obabel -imol2 -ocan")
+
+            self.assertEqual(output.split('\t')[0].rstrip(), canSMI.rstrip())
 
 
 if __name__ == "__main__":
