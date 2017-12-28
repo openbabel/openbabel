@@ -18,7 +18,6 @@ import os
 import re
 import sys
 import unittest
-import six
 
 from subprocess import Popen, PIPE
 
@@ -164,7 +163,7 @@ class testOBabel(BaseTest):
                "product": "C>>O.N",
                "both": "C.N>>O.N",
                "ignore": "C>>O"}
-        for option, result in six.iteritems(ans):
+        for option, result in ans.items():
             output, error = run_exec("obabel -irsmi -:%s -orxn -xG %s" %
                                      (rsmi, option))
             moutput, error = run_exec(output, "obabel -irxn -orsmi")
