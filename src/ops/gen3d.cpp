@@ -108,6 +108,7 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
   if (useDistGeom) {
     // use the bond lengths and angles if we ran the builder
     dg.GetGeometry(*pmol, attemptBuild); // ensured to have correct stereo
+    return true;
   }
 #endif
 
