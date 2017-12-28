@@ -49,7 +49,7 @@ public:
   DistanceGeometryPrivate(const unsigned int N) {
     bounds = Eigen::MatrixXf(static_cast<int>(N), static_cast<int>(N));
     preMet = Eigen::MatrixXf(bounds);
-    debug = true;
+    debug = false;
   }
   ~DistanceGeometryPrivate() {}
 
@@ -980,12 +980,10 @@ bool OBDistanceGeometry::CheckStereoConstraints() {
   std::vector<OBTetrahedralStereo *>::iterator origth, newth;
   for (origth = tetra.begin(), newth = newtetra.begin(); origth != tetra.end();
        ++origth, ++newth) {
-         cerr << "Old: " << *(*origth) << endl;
-         cerr << "New: " << *(*newth) << endl;
     if ((*origth)->GetConfig(OBStereo::Clockwise, OBStereo::ViewFrom) !=
         (*newth)->GetConfig(OBStereo::Clockwise, OBStereo::ViewFrom))
-
-      return false; // found an invalid center
+      // found an invalid center
+      return false;
   }
 
   // everything validated
