@@ -43,9 +43,11 @@ bool extract_thermochemistry(OpenBabel::OBMol  &mol,
                              double *S0T,
                              double *CVT,
                              double *CPT,
-                             std::vector<double> &Scomponents)
+                             std::vector<double> &Scomponents,
+                             double *ZPVE)
 {
-    enum kkTYPE { kkDH, kkDG, kkDS, kkS0, kkCV, kkSt, kkSr, kkSv };
+
+    enum kkTYPE {kkDH, kkDG, kkDS, kkS0, kkCV, kkSt, kkSr, kkSv, kkZP};
     typedef struct {
         std::string term;
         kkTYPE kk;
@@ -87,6 +89,7 @@ bool extract_thermochemistry(OpenBabel::OBMol  &mol,
         Sconf = Rgas*Nrotbonds*log(3.0);
     }
     energy_unit eu[] = {
+        { "zpe",        kkZP },
         { "DeltaHform", kkDH },
         { "DeltaGform", kkDG },
         { "DeltaSform", kkDS },
@@ -128,6 +131,11 @@ bool extract_thermochemistry(OpenBabel::OBMol  &mol,
             {
                 switch (eu[i].kk)
                 {
+		            case kkZP:
+		                {
+		                    *ZPVE = value;
+		                }
+		                break;
                 case kkDH:
                     if (0 == T)
                     {
