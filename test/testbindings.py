@@ -342,6 +342,24 @@ class AtomClass(PythonBindings):
             molb = pybel.readstring("mol", cml)
             out = mol.write("smi", opt={"a":True, "n":True, "nonewline":True})
             self.assertEqual(smi, out)
-        
+
+    def testTinkerXYZ(self):
+        """Atom classes are written out as the atom types (though
+        not currently read)"""
+        smi = "[CH4:23]"
+        mol = pybel.readstring("smi", smi)
+        xyz = mol.write("txyz", opt={"c": True})
+        lines = xyz.split("\n")
+        broken = lines[1].split()
+        self.assertEqual("23", broken[-1].rstrip())
+
+    def testDeleteHydrogens(self):
+        """Don't suppress a hydrogen with an atom class"""
+        smi = "C([H])([H])([H])[H:1]"
+        mol = pybel.readstring("smi", smi)
+        mol.OBMol.DeleteHydrogens()
+        nsmi = mol.write("smi", opt={"a": True, "h": True})
+        self.assertEqual("C[H:1]", nsmi.rstrip())
+
 if __name__ == "__main__":
     unittest.main()
