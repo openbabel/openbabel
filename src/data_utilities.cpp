@@ -124,7 +124,7 @@ bool extract_thermochemistry(OpenBabel::OBMol  &mol,
                 }
             }
         }
-        for(int i = 0; (i<NEU); i++)
+        for(unsigned int i = 0; (i<NEU); i++)
         {
             if (strstr(term.c_str(), eu[i].term.c_str()) != 0)
             {
