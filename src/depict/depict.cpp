@@ -19,7 +19,6 @@ GNU General Public License for more details.
 
 #include <openbabel/mol.h>
 #include <openbabel/alias.h>
-#include <openbabel/atomclass.h>
 #include <openbabel/depict/depict.h>
 #include <openbabel/depict/painter.h>
 #include <openbabel/elements.h>
@@ -383,10 +382,6 @@ namespace OpenBabel
       delete d->mol;
     d->mol = new OBMol(*mol); // Copy it
 
-    OBAtomClassData* pac = NULL;
-    if(mol->HasData("Atom Class"))
-      pac = static_cast<OBAtomClassData*>(mol->GetData("Atom Class"));
-
     double width=0.0, height=0.0;
 
     OBAtom *atom;
@@ -631,27 +626,40 @@ namespace OpenBabel
         }
       }
 
+      bool written = false;
       stringstream ss;
-      AliasData* ad = NULL;
-      if(d->aliasMode && atom->HasData(AliasDataType))
-        ad = static_cast<AliasData*>(atom->GetData(AliasDataType));
 
       //For unexpanded aliases use appropriate form of alias instead of element symbol, Hs, etc
+      AliasData* ad = NULL;
+      if (d->aliasMode && atom->HasData(AliasDataType))
+        ad = static_cast<AliasData*>(atom->GetData(AliasDataType));
       if(ad && !ad->IsExpanded())
       {
         ss <<ad->GetAlias(rightAligned);
         OBColor aliasColor = !ad->GetColor().empty() ? ad->GetColor() : d->bondColor;
           d->painter->SetPenColor(aliasColor);
+        written = true;
       }
 
-      //Atoms with no AliasData, but 0 atomic num and atomclass==n are output as Rn
-      else if(pac && atom->GetAtomicNum()==0 && pac->HasClass(atom->GetIdx()))
-      {
-        ss << 'R' << pac->GetClass(atom->GetIdx());
-        d->painter->SetPenColor(OBColor("black"));
+      if (!written) {
+        //Atoms with no AliasData, but 0 atomic num and atomclass==n are output as Rn
+        if (atom->GetAtomicNum()==0) {
+          OBGenericData *data = atom->GetData("Atom Class");
+          if (data) {
+            OBPairInteger* acdata = dynamic_cast<OBPairInteger*>(data); // Could replace with C-style cast if willing to live dangerously
+            if (acdata) {
+              int ac = acdata->GetGenericValue();
+              if (ac >= 0) {
+                ss << 'R' << ac;
+                d->painter->SetPenColor(OBColor("black"));
+                written = true;
+              }
+            }
+          }
+        }
       }
 
-      else {
+      if (!written) {
         const char* atomSymbol;
         if(atom->GetAtomicNum() == OBElements::Hydrogen && atom->GetIsotope()>1)
           atomSymbol = atom->GetIsotope()==2 ? "D" : "T";

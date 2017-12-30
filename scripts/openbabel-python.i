@@ -46,7 +46,6 @@
 #include <openbabel/data.h>
 #include <openbabel/parsmart.h>
 #include <openbabel/alias.h>
-#include <openbabel/atomclass.h>
 
 #include <openbabel/kinetics.h>
 #include <openbabel/rotor.h>
@@ -196,7 +195,6 @@ OpenBabel::AliasData *toAliasData(OpenBabel::OBGenericData *data) {
 }
 %}
 CAST_GENERICDATA_TO(AngleData)
-CAST_GENERICDATA_TO(AtomClassData)
 CAST_GENERICDATA_TO(ChiralData)
 CAST_GENERICDATA_TO(CommentData)
 CAST_GENERICDATA_TO(ConformerData)
@@ -205,6 +203,7 @@ CAST_GENERICDATA_TO(GridData)
 CAST_GENERICDATA_TO(MatrixData)
 CAST_GENERICDATA_TO(NasaThermoData)
 CAST_GENERICDATA_TO(PairData)
+CAST_GENERICDATA_TO(PairInteger)
 // CAST_GENERICDATA_TO(PairTemplate)
 CAST_GENERICDATA_TO(RateData)
 CAST_GENERICDATA_TO(RotamerList)
@@ -243,6 +242,7 @@ CAST_GENERICDATA_TO(SquarePlanarStereo)
 %include <openbabel/base.h>
 
 %include <openbabel/generic.h>
+%template(obpairtemplateint) OpenBabel::OBPairTemplate<int>;
 %include <openbabel/griddata.h>
 
 %include <openbabel/chains.h>
@@ -295,7 +295,6 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
 %include <openbabel/alias.h>
-%include <openbabel/atomclass.h>
 %ignore OpenBabel::FptIndex;
 %include <openbabel/fingerprint.h>
 %ignore OpenBabel::OBDescriptor::LessThan;

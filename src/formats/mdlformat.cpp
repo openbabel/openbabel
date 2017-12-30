@@ -34,7 +34,6 @@ GNU General Public License for more details.
 #include <openbabel/alias.h>
 #include <openbabel/tokenst.h>
 #include <openbabel/kekulize.h>
-#include <openbabel/atomclass.h>
 
 #include "mdlvalence.h"
 
@@ -490,12 +489,11 @@ namespace OpenBabel
         if (line.size() >= 62) {
           int aclass = ReadIntField(line.substr(60, 3).c_str());
           if (aclass != 0) {
-            OBAtomClassData *pac;
-            if (!mol.HasData("Atom Class")) {
-              pac = new OBAtomClassData;
-              mol.SetData(pac);
-            } else pac = (OBAtomClassData*)mol.GetData("Atom Class");
-            pac->Add(patom->GetIdx(),aclass);
+            OBPairInteger *pac = new OBPairInteger();
+            pac->SetAttribute("Atom Class");
+            pac->SetValue(aclass);
+            pac->SetOrigin(fileformatInput);
+            patom->SetData(pac);
           }
         }
 
@@ -938,9 +936,15 @@ namespace OpenBabel
       }
       else {
         //Atoms with no AliasData, but 0 atomicnum and atomclass==n are given an alias Rn
-        OBAtomClassData* pac = static_cast<OBAtomClassData*>(pmol->GetData("Atom Class"));
-        if(pac && pac->HasClass(atom->GetIdx()))
-          return pac->GetClass(atom->GetIdx());
+        OBGenericData *data = atom->GetData("Atom Class");
+        if (data) {
+          OBPairInteger* acdata = dynamic_cast<OBPairInteger*>(data); // Could replace with C-style cast if willing to live dangerously
+          if (acdata) {
+            int ac = acdata->GetGenericValue();
+            if (ac >= 0) // Allow 0, why not?
+              return ac;
+          }
+        }
       }
     }
     return -1;
@@ -976,6 +980,8 @@ namespace OpenBabel
     }
 
     bool alwaysSpecifyValence = pConv->IsOption("v");
+    bool writeAtomClass = pConv->IsOption("a");
+
 
     // Make a copy of mol (origmol) then ConvertZeroBonds() in mol
     // TODO: Do we need to worry about modifying mol? (It happens anyway in Kekulize etc?)
@@ -1094,12 +1100,6 @@ namespace OpenBabel
                mol.NumAtoms(), mol.NumBonds(), chiralFlag);
       ofs << buff;
 
-      OBAtomClassData *pac;
-      if (mol.HasData("Atom Class") && pConv->IsOption("a"))
-        pac = (OBAtomClassData*)mol.GetData("Atom Class");
-      else
-        pac = NULL;
-
       OBAtom *atom;
       vector<OBAtom*>::iterator i;
       unsigned int aclass = 0;
@@ -1130,10 +1130,19 @@ namespace OpenBabel
         else
           valence = actual_impval == 0 ? 15 : actual_impval;
 
-        if (pac && pac->HasClass(atom->GetIdx()))
-          aclass = pac->GetClass(atom->GetIdx());
-        else
-          aclass = 0; // 0 implies no class specified (see the OpenSMILES spec)
+        aclass = 0;
+        if (writeAtomClass) {
+          OBGenericData *data = atom->GetData("Atom Class");
+          if (data) {
+            OBPairInteger* acdata = dynamic_cast<OBPairInteger*>(data); // Could replace with C-style cast if willing to live dangerously
+            if (acdata) {
+              int ac = acdata->GetGenericValue();
+              if (ac > 0) {
+                aclass = (unsigned int)ac;
+              }
+            }
+          }
+        }
 
         snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d",
           atom->GetX(), atom->GetY(), atom->GetZ(),
