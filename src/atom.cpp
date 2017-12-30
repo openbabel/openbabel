@@ -301,7 +301,7 @@ namespace OpenBabel
 
   int OBAtom::HighestBondOrder()
   {
-    int highest = 0;
+    unsigned int highest = 0;
     OBBond *bond;
     OBBondIterator i;
     for(bond = BeginBond(i); bond; bond = NextBond(i))
