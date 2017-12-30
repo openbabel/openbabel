@@ -384,7 +384,7 @@ public:
 OpGenAlias theOpGenAlias("genalias"); //Global instance
 
 /////////////////////////////////////////////////////////////////
-bool OpGenAlias::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*)
+bool OpGenAlias::Do(OBBase* pOb, __attribute__((unused)) const char* OptionText, __attribute__((unused)) OpMap* pmap, OBConversion*)
 {
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   if(!pmol)
