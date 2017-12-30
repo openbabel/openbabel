@@ -973,11 +973,11 @@ namespace OpenBabel
 
     //! \brief Convenience function for common cases of closed-shell calculations -- pass the energies and symmetries
     //! This method will fill the OBOrbital objects for you
-    void LoadClosedShellOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, int alphaHOMO);
+    void LoadClosedShellOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, unsigned int alphaHOMO);
     //! \brief Convenience function to load alpha orbitals in an open-shell calculation
-    void LoadAlphaOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, int alphaHOMO);
+    void LoadAlphaOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, unsigned int alphaHOMO);
     //! \brief Convenience function to load beta orbitals in an open-shell calculation
-    void LoadBetaOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, int betaHOMO);
+    void LoadBetaOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, unsigned int betaHOMO);
 
   protected:
     std::vector<OBOrbital> _alphaOrbitals; //!< List of orbitals. In case of unrestricted calculations, this contains the alpha spin-orbitals
