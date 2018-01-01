@@ -751,6 +751,8 @@ using System.Runtime.InteropServices;
 %include <openbabel/math/transform3d.h>
 %warnfilter(516) OpenBabel::SpaceGroup; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/math/spacegroup.h>
+%warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
+%include <openbabel/bitvec.h>
 
 // CloneData should be used instead of the following method
 %ignore OpenBabel::OBBase::SetData;
@@ -886,9 +888,6 @@ namespace std { class stringbuf {}; }
 
 %include <openbabel/builder.h>
 %include <openbabel/op.h>
-
-%warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
-%include <openbabel/bitvec.h>
 
 %include <openbabel/rotor.h>
 %ignore OpenBabel::Swab;

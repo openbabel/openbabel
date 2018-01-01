@@ -251,6 +251,8 @@ SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBBond, OpenBabel::OBBond*);
 %include <openbabel/math/matrix3x3.h>
 %include <openbabel/math/transform3d.h>
 %include <openbabel/math/spacegroup.h>
+%include <openbabel/bitvec.h>
+
 %include <openbabel/base.h>
 
 %include <openbabel/generic.h>
@@ -309,8 +311,6 @@ CAST_GENERICDATA_TO(VirtualBond)
 %include <openbabel/forcefield.h>
 
 %include <openbabel/op.h>
-
-%include <openbabel/bitvec.h>
 
 // The following %ignores avoid warning messages due to shadowed classes.
 // This does not imply a loss of functionality as (in this case)
