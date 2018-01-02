@@ -190,7 +190,7 @@ namespace OpenBabel
     if(pmol) {
       if(pConv->IsOption("writeconformers", OBConversion::GENOPTIONS)) {
         //The last conformer is written in the calling function
-        unsigned int c = 0;
+        int c = 0;
         for (; c < pmol->NumConformers()-1; ++c) {
           pmol->SetConformer(c);
           if(!pConv->GetOutFormat()->WriteMolecule(pmol, pConv))
@@ -421,10 +421,9 @@ namespace OpenBabel
 
     //Collect the molecules first, just for convenience
     vector<obsharedptr<OBMol> > mols;
-    unsigned i;
-    for(i=0;i<pReact->NumReactants();i++)
+    for(int i=0;i<pReact->NumReactants();i++)
       mols.push_back(pReact->GetReactant(i));
-    for(i=0;i<pReact->NumProducts();i++)
+    for(int i=0;i<pReact->NumProducts();i++)
       mols.push_back(pReact->GetProduct(i));
     for (i = 0; i<pReact->NumAgents(); i++)
       mols.push_back(pReact->GetAgent(i));
@@ -442,7 +441,7 @@ namespace OpenBabel
       mols.resize(1);
     }
     bool ok = true;
-    for(i=0;i<mols.size() && ok;++i)
+    for(unsigned int i=0;i<mols.size() && ok;++i)
     {
       if(mols[i])
       {
