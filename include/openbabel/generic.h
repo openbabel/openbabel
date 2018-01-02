@@ -243,17 +243,17 @@ namespace OpenBabel
  class OBAPI OBVirtualBond : public OBGenericData
   {
   protected:
-    int _bgn;
-    int _end;
-    int _ord;
+    unsigned int _bgn;
+    unsigned int _end;
+    unsigned int _ord;
     int _stereo;
   public:
     OBVirtualBond();
     virtual OBGenericData* Clone(OBBase* /*parent*/) const{return new OBVirtualBond(*this);}
-    OBVirtualBond(int,int,int,int stereo=0);
-    int GetBgn()    {      return(_bgn);    }
-    int GetEnd()    {      return(_end);    }
-    int GetOrder()  {      return(_ord);    }
+    OBVirtualBond(unsigned int, unsigned int, unsigned int,int stereo=0);
+    unsigned int GetBgn()    {      return(_bgn);    }
+    unsigned int GetEnd()    {      return(_end);    }
+    unsigned int GetOrder()  {      return(_ord);    }
     int GetStereo() {      return(_stereo); }
   };
 

@@ -239,7 +239,7 @@ namespace OpenBabel
     _bgn(0), _end(0), _ord(0), _stereo(0)
   {  }
 
-  OBVirtualBond::OBVirtualBond(int bgn,int end,int ord,int stereo):
+  OBVirtualBond::OBVirtualBond(unsigned int bgn, unsigned int end, unsigned int ord, int stereo):
     OBGenericData("VirtualBondData", OBGenericDataType::VirtualBondData, perceived),
     _bgn(bgn), _end(end), _ord(ord), _stereo(stereo)
   {  }
