@@ -697,10 +697,24 @@ namespace OpenBabel
               if (!ifs.getline(buffer,BUFF_SIZE)) break;
             }
         else if(strstr(buffer,"Total atomic charges") != NULL ||
-                strstr(buffer,"Mulliken atomic charges") != NULL)
+                strstr(buffer,"Mulliken atomic charges") != NULL ||
+                strstr(buffer,"Mulliken charges:") != NULL)
           {
             hasPartialCharges = true;
             chargeModel = "Mulliken";
+            /*
+              Gaussian usually calculates the electronic 
+              properties more than once, before and after 
+              geometry optimization. The second one is what
+              we should be interested in. Thus, here, we 
+              delete the previously added Data to store the
+              new one.
+             */
+            if (mol.HasData("Mulliken charges"))
+              {
+                mol.DeleteData("Mulliken charges");
+              }
+            OBPcharge *Mulliken = new OpenBabel::OBPcharge();
             ifs.getline(buffer,BUFF_SIZE);	// column headings
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
@@ -711,10 +725,64 @@ namespace OpenBabel
                 if (!atom)
                   break;
                 atom->SetPartialCharge(atof(vs[2].c_str()));
-
+                Mulliken->AddPartialCharge(atof(vs[2].c_str()));
                 if (!ifs.getline(buffer,BUFF_SIZE)) break;
                 tokenize(vs,buffer);
+                                    
+              } 
+            if (Mulliken->NumPartialCharges() != mol.NumAtoms()) 
+            {
+                cerr << "The number of Mulliken partial charges is not equal to the number of atoms!" << endl;
+                exit (-1);
+            }
+            Mulliken->SetAttribute("Mulliken charges");
+            mol.SetData(Mulliken);    
+          }
+        else if(strstr(buffer,"Hirshfeld charges") != NULL &&
+                strstr(buffer,"CM5 charges") != NULL)
+          {
+            /*
+              Hirshfeld and CM5 charges are printed in the
+              same block in the Gaussian log file. 
+             */
+            hasPartialCharges = true;
+            chargeModel = "Hirshfeld";
+            if (mol.HasData("Hirshfeld charges"))
+              {
+                mol.DeleteData("Hirshfeld charges");
               }
+            if (mol.HasData("CM5 charges"))
+              {
+                mol.DeleteData("CM5 charges");
+              }
+            OBPcharge *Hirshfeld = new OpenBabel::OBPcharge();
+            OBPcharge *CM5       = new OpenBabel::OBPcharge();
+            ifs.getline(buffer,BUFF_SIZE);	// column headings
+            ifs.getline(buffer,BUFF_SIZE);
+            tokenize(vs,buffer);
+            while (vs.size() >= 8 &&
+                   strstr(buffer,"Tot ") == NULL)
+              {
+                atom = mol.GetAtom(atoi(vs[0].c_str()));
+                if (!atom)
+                  break;
+                atom->SetPartialCharge(atof(vs[2].c_str()));
+                Hirshfeld->AddPartialCharge(atof(vs[2].c_str()));
+                CM5->AddPartialCharge(atof(vs[7].c_str()));
+                if (!ifs.getline(buffer,BUFF_SIZE)) break;
+                tokenize(vs,buffer);
+                                    
+              }
+            if (CM5->NumPartialCharges() != mol.NumAtoms() || 
+                Hirshfeld->NumPartialCharges() != mol.NumAtoms()) 
+            {
+                cerr << "The number of Hirshfeld or CM5 partial charges is not equal to the number of atoms!" << endl;
+                exit (-1);
+            }
+            Hirshfeld->SetAttribute("Hirshfeld charges");
+            CM5->SetAttribute("CM5 charges");
+            mol.SetData(Hirshfeld);
+            mol.SetData(CM5);
           }
         else if (strstr(buffer, "Atomic Center") != NULL)
           {
@@ -794,6 +862,11 @@ namespace OpenBabel
           {
             hasPartialCharges = true;
             chargeModel = "ESP";
+            if (mol.HasData("ESP charges"))
+              {
+                mol.DeleteData("ESP charges");
+              }
+            OBPcharge *ESP = new OpenBabel::OBPcharge();
             ifs.getline(buffer,BUFF_SIZE);	// Charge / dipole line
             ifs.getline(buffer,BUFF_SIZE); // column header
             ifs.getline(buffer,BUFF_SIZE); // real charges
@@ -805,10 +878,17 @@ namespace OpenBabel
                 if (!atom)
                   break;
                 atom->SetPartialCharge(atof(vs[2].c_str()));
-
+                ESP->AddPartialCharge(atof(vs[2].c_str()));
                 if (!ifs.getline(buffer,BUFF_SIZE)) break;
                 tokenize(vs,buffer);
               }
+            if (ESP->NumPartialCharges() != mol.NumAtoms()) 
+            {
+                cerr << "The number of ESP partial charges is not equal to the number of atoms!" << endl;
+                exit (-1);
+            }
+            ESP->SetAttribute("ESP charges");
+            mol.SetData(ESP);
           }
         else if(strstr(buffer,"Natural Population") != NULL)
           {

@@ -1179,6 +1179,30 @@ namespace OpenBabel
     }
 
   };
+  
+  class OBAPI OBPcharge: public OBGenericData
+  {
+  protected:
+    std::vector<double> _PartialCharge;
+  public:
+    OBPcharge(){};
+    ~OBPcharge(){};
+
+    int NumPartialCharges() 
+    { 
+      return _PartialCharge.size(); 
+    }
+    
+    void AddPartialCharge(double q)
+    {
+      _PartialCharge.push_back(q);
+    }
+
+    std::vector<double> GetPartialCharge()
+    {
+        return _PartialCharge;
+    }
+  };
 
  //! A standard iterator over vectors of OBGenericData (e.g., inherited from OBBase)
   typedef std::vector<OBGenericData*>::iterator OBDataIterator;
