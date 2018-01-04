@@ -373,7 +373,7 @@ enum CDXDatumID {
 	kCDXObj_BracketedGroup,				// 0x8017
 	kCDXObj_BracketAttachment,			// 0x8018
 	kCDXObj_CrossingBond,				// 0x8019
-	kCDXObj_Border,						// 0x8020
+	kCDXObj_Border = 0x8020,						// 0x8020
 	kCDXObj_Geometry,					// 0x8021
 	kCDXObj_Constraint,					// 0x8022
 	kCDXObj_TLCPlate,					// 0x8023
