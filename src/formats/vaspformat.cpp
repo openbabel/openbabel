@@ -617,8 +617,6 @@ namespace OpenBabel {
     OBUnitCell *uc = NULL;
     vector<vector3> cell;
 
-    bool selective;
-
     const char * sortAtomsNum = pConv->IsOption("w", OBConversion::OUTOPTIONS);
     const char * sortAtomsCustom = pConv->IsOption("z", OBConversion::OUTOPTIONS);
 
@@ -722,12 +720,11 @@ namespace OpenBabel {
     ofs << endl;
 
     // assume that there are no constraints on the atoms
-    selective = false;
-    OBAtom *atom;
+    bool selective = false;
     // and test if any of the atoms has constraints
     FOR_ATOMS_OF_MOL(atom, mol) {
       if (atom->HasData("move")){
-        selective =true;
+        selective = true;
         break;
       }
     }
@@ -749,8 +746,8 @@ namespace OpenBabel {
       // if at least one atom has info about constraints
       if (selective) {
         // if this guy has, write it out
-        if (atom->HasData("move")) {
-          OBGenericData *cp = (*it)->GetData("move");
+        if ((*it)->HasData("move")) {
+          OBPairData *cp = (OBPairData*)(*it)->GetData("move");
           // seemingly ridiculous number of digits is written out
           // but sometimes you just don't want to change them
           ofs << " " << cp->GetValue().c_str();
