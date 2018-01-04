@@ -500,7 +500,7 @@ bool YOBFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   mem_set(buffer,0,8);
   for (i=0;i<4;i++)
   { for (j=0;j<4;j++)
-    { if (i==j) ofs.write(double1,8);
+    { if (i==j) ofs.write((char*)double1,8);
       else ofs.write(buffer,8); } }
   storeint32le(buffer,MOB_INFOEND);
   storeint32le(&buffer[4],MOB_INFOENDSIZE);
