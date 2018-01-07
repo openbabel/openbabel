@@ -492,6 +492,12 @@ namespace OpenBabel
     bool no_symmetry=false;
     char coords_type[25];
 
+    bool grids_are_read_once = false;
+    int number_of_esp_calcs  = 0;
+    
+    OBPcharges *pcharge = NULL;
+    OpenBabel::OBElementTable *OBet;
+
     //Prescan file to find second instance of "orientation:"
     //This will be the kind of coords used in the chk/fchk file
     //Unless the "nosym" keyword has been requested
@@ -697,10 +703,12 @@ namespace OpenBabel
               if (!ifs.getline(buffer,BUFF_SIZE)) break;
             }
         else if(strstr(buffer,"Total atomic charges") != NULL ||
-                strstr(buffer,"Mulliken atomic charges") != NULL)
+                strstr(buffer,"Mulliken atomic charges") != NULL ||
+                strstr(buffer,"Mulliken charges:") != NULL)
           {
             hasPartialCharges = true;
             chargeModel = "Mulliken";
+            pcharge = new OpenBabel::OBPcharges();
             ifs.getline(buffer,BUFF_SIZE);	// column headings
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
@@ -711,17 +719,26 @@ namespace OpenBabel
                 if (!atom)
                   break;
                 atom->SetPartialCharge(atof(vs[2].c_str()));
-
+                pcharge->AddPcharge(atoi(vs[0].c_str()), atof(vs[2].c_str()));
                 if (!ifs.getline(buffer,BUFF_SIZE)) break;
                 tokenize(vs,buffer);
+                                    
               }
+            pcharge->SetAttribute("Mulliken Charges");
+            mol.SetData(pcharge);      
           }
-        else if (strstr(buffer, "Atomic Center") != NULL)
+        else if (strstr(buffer, "Atomic Center") != NULL && number_of_esp_calcs < 2)
           {
             // Data points for ESP calculation
             tokenize(vs,buffer);
             if (NULL == esp)
-              esp = new OpenBabel::OBFreeGrid();
+              {
+                 esp = new OpenBabel::OBFreeGrid();
+              }
+            else if (NULL != esp && grids_are_read_once)
+              {
+                 esp = new OpenBabel::OBFreeGrid();
+              }
             if (vs.size() == 8)
               {
                 esp->AddPoint(atof(vs[5].c_str()),atof(vs[6].c_str()),
@@ -736,7 +753,7 @@ namespace OpenBabel
                   }
               }
           }
-        else if (strstr(buffer, "ESP Fit Center") != NULL)
+        else if (strstr(buffer, "ESP Fit Center") != NULL && number_of_esp_calcs < 2)
           {
             // Data points for ESP calculation
             tokenize(vs,buffer);
@@ -756,7 +773,7 @@ namespace OpenBabel
                   }
               }
           }
-        else if (strstr(buffer, "Electrostatic Properties (Atomic Units)") != NULL)
+        else if (strstr(buffer, "Electrostatic Properties (Atomic Units)") != NULL && number_of_esp_calcs < 2)
           {
             int i,np;
             OpenBabel::OBFreeGridPoint *fgp;
@@ -782,8 +799,17 @@ namespace OpenBabel
               }
             if (i == np)
               {
-                esp->SetAttribute("Electrostatic Potential");
+                if (number_of_esp_calcs == 0)
+                  {
+                    esp->SetAttribute("Input Electrostatic Potential");
+                  }
+                else if (number_of_esp_calcs == 1)
+                  {
+                    esp->SetAttribute("Optimized Electrostatic Potential");
+                  }
                 mol.SetData(esp);
+                grids_are_read_once = true;
+                number_of_esp_calcs++;
               }
             else
               {
@@ -794,6 +820,7 @@ namespace OpenBabel
           {
             hasPartialCharges = true;
             chargeModel = "ESP";
+            pcharge = new OpenBabel::OBPcharges();
             ifs.getline(buffer,BUFF_SIZE);	// Charge / dipole line
             ifs.getline(buffer,BUFF_SIZE); // column header
             ifs.getline(buffer,BUFF_SIZE); // real charges
@@ -805,10 +832,12 @@ namespace OpenBabel
                 if (!atom)
                   break;
                 atom->SetPartialCharge(atof(vs[2].c_str()));
-
+                pcharge->AddPcharge(atoi(vs[0].c_str()), atof(vs[2].c_str()));
                 if (!ifs.getline(buffer,BUFF_SIZE)) break;
                 tokenize(vs,buffer);
               }
+            pcharge->SetAttribute("ESP Charges");
+            mol.SetData(pcharge);
           }
         else if(strstr(buffer,"Natural Population") != NULL)
           {
