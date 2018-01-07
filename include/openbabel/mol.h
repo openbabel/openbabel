@@ -471,7 +471,7 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! If @p threshold is not specified or is zero, remove all but the largest
     //! contiguous fragment. If @p threshold is non-zero, remove any fragments with fewer
     //! than @p threshold atoms.
-    bool StripSalts(int threshold=0);
+    bool StripSalts(unsigned int threshold=0);
     //! Copies each disconnected fragment as a separate OBMol
     std::vector<OBMol> Separate(int StartIndex=1);
     //! Iterative component of Separate to copy one fragment at a time
@@ -605,8 +605,8 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! Add a new set of coordinates @p f as a new conformer
     void    AddConformer(double *f)    {  _vconf.push_back(f);    }
     //! Set the molecule's current conformer to @p i
-    //! Does nothing if @p i is less than 0 or i is larger than NumConformers()
-    void    SetConformer(int i);
+    //! Does nothing if @p i is larger than NumConformers()
+    void    SetConformer(unsigned int i);
     //! Copy the conformer @p nconf into the array @p c
     //! \warning Does no checking to see if @p c is large enough
     void    CopyConformer(double* c,int nconf);

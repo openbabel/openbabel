@@ -1818,7 +1818,7 @@ namespace OpenBabel
     return(true);
   }
 
-  bool OBMol::StripSalts(int threshold)
+  bool OBMol::StripSalts(unsigned int threshold)
   {
     vector<vector<int> > cfl;
     vector<vector<int> >::iterator i,max;
@@ -2399,7 +2399,7 @@ namespace OpenBabel
   }
 
   // Used by DeleteAtom below. Code based on StereoRefToImplicit
-  const void DeleteStereoOnAtom(OBMol& mol, OBStereo::Ref atomId)
+  static void DeleteStereoOnAtom(OBMol& mol, OBStereo::Ref atomId)
   {
     std::vector<OBGenericData*> vdata = mol.GetAllData(OBGenericDataType::StereoData);
     for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data) {
@@ -3680,9 +3680,9 @@ namespace OpenBabel
 
   }
 
-  void OBMol::SetConformer(int i)
+  void OBMol::SetConformer(unsigned int i)
   {
-    if (i >= 0 && i < _vconf.size())
+    if (i < _vconf.size())
       _c = _vconf[i];
   }
 
@@ -3786,7 +3786,7 @@ namespace OpenBabel
         OBBondIterator bi;
         for (bestbond = bond = patom->BeginBond(bi); bond; bond = patom->NextBond(bi))
         {
-          int bo = bond->GetBO();
+          unsigned int bo = bond->GetBO();
           if(bo>=2 && bo<=4)
           {
             bool het = IsNotCorH(bond->GetNbrAtom(patom));
@@ -3857,7 +3857,7 @@ namespace OpenBabel
         int bi = 0;
         if (bonds.size() > 1) {
           vector<int> scores(bonds.size());
-          for (int n = 0; n < bonds.size(); n++) {
+          for (unsigned int n = 0; n < bonds.size(); n++) {
             OBAtom *bgn = bonds[n]->GetBeginAtom();
             OBAtom *end = bonds[n]->GetEndAtom();
             int score = 0;
@@ -3879,7 +3879,7 @@ namespace OpenBabel
             }
             scores[n] = score;
           }
-          for (int n = 1; n < scores.size(); n++) {
+          for (unsigned int n = 1; n < scores.size(); n++) {
             if (scores[n] < scores[bi]) {
               bi = n;
             }
