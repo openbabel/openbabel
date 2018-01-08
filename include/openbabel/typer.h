@@ -59,7 +59,7 @@ class OBAPI OBAromaticTyper
 {
 public:
     OBAromaticTyper() {};
-    ~OBAromaticTyper();
+    ~OBAromaticTyper() {};
 
     //! Assign aromaticity flag to atoms and bonds
     void AssignAromaticFlags(OBMol &);
