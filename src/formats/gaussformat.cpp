@@ -449,8 +449,14 @@ namespace OpenBabel
     bool ezpe_set=false,Hcorr_set=false,Gcorr_set=false,E0_set=false,CV_set=false;
     double temperature = 0; /* Kelvin */
     std::vector<double> Scomponents;
-    // Electrostatic potential
-    OBFreeGrid *esp = NULL;
+    // Electrostatic potential. ESP is calculated 
+    // once unless the Opt and Pop jobs are combined. 
+    // In this case, ESP is calculated once before
+    // the geometry optmization and once after. If this
+    // happens, the second ESP must be added to OBMol.
+    OBFreeGrid *esp   = NULL;
+    int NumEsp        = 1; 
+    int NumEspCounter = 0;
 
     // coordinates of all steps
     // Set conformers to all coordinates we adopted
@@ -543,6 +549,12 @@ namespace OpenBabel
               else if(buffer[1]=='#')
               {
                 //the line describing the method
+                if(strstr(buffer,"Opt") != NULL)
+                {
+                    // It is expected to have two sets of ESP in 
+                    // the log file if Opt is combined with Pop. 
+                    NumEsp = 2;
+                }
                 comment += buffer;
                 OBCommentData *cd = new OBCommentData;
                 cd->SetData(comment);
@@ -716,6 +728,10 @@ namespace OpenBabel
                 tokenize(vs,buffer);
               }
           }
+        else if (strstr(buffer, "Electrostatic Properties Using The SCF Density") != NULL)
+          {
+              NumEspCounter++;
+          }
         else if (strstr(buffer, "Atomic Center") != NULL)
           {
             // Data points for ESP calculation
@@ -780,14 +796,21 @@ namespace OpenBabel
                     i++;
                   }
               }
-            if (i == np)
+            if (NumEsp == NumEspCounter)
               {
-                esp->SetAttribute("Electrostatic Potential");
-                mol.SetData(esp);
+                if (i == np)
+                  {
+                    esp->SetAttribute("Electrostatic Potential");
+                    mol.SetData(esp);
+                  }
+                else
+                  {
+                    cout << "Read " << esp->NumPoints() << " ESP points i = " << i << "\n";
+                  }
               }
             else
               {
-                cout << "Read " << esp->NumPoints() << " ESP points i = " << i << "\n";
+                esp->Clear();
               }
           }
         else if (strstr(buffer, "Charges from ESP fit") != NULL)

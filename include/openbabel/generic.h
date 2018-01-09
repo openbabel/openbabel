@@ -1177,6 +1177,8 @@ namespace OpenBabel
       ++i;
       return((i == _points.end()) ? (OBFreeGridPoint*)NULL : (OBFreeGridPoint*)*i);
     }
+    
+    void Clear();
 
   };
 
