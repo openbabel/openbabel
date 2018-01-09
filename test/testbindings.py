@@ -331,14 +331,13 @@ class AtomClass(PythonBindings):
         self.assertEqual(smi, out)
 
     def testCML(self):
-        """Atom classes map onto CML atom ids in OB's implementation"""
-        # CH3:6 --> aa6
-        # OH:6  --> ab6 (second use of an atom class)
-        smis = ["[CH3:6]C", "[CH3:6][OH:6]"]
+        """OB stores atom classes using _NN at the end of atom ids"""
+        smis = ["[CH3:6]C", "[CH3:6][OH:6]",
+                "O"+"[CH2:2]"*27+"O"
+                ]
         for smi in smis:
             mol = pybel.readstring("smi", smi)
             cml = mol.write("cml")
-            self.assertTrue("aa6" in cml)
             molb = pybel.readstring("mol", cml)
             out = mol.write("smi", opt={"a":True, "n":True, "nonewline":True})
             self.assertEqual(smi, out)

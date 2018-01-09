@@ -98,6 +98,12 @@ namespace OpenBabel
         "    atomRefs4 (for atomParity)\n"
         "  - On <bond>: atomRefs2, order, CML1: atomRef, atomRef1, atomRef2\n\n"
 
+        "Atom classes are also read and written. This is done using a specially\n"
+        "formed atom id. When reading, if the atom id is of the form aN_M (where\n"
+        "N and M are positive integers), then M is interpreted as the atom class.\n"
+        "Such atom ids are automatically generated when writing an atom with an\n"
+        "atom class.\n\n"
+
         "Write Options for CML: -x[flags] (e.g. -x1ac)\n"
         "  1  write CML1 (rather than CML2)\n"
         "  a  write array format for atoms and bonds\n"
@@ -581,6 +587,23 @@ namespace OpenBabel
     return OBElements::GetAtomicNum(symbol);
   }
 
+  static const char* FindStartOfAtomClass(const char* atomid)
+  {
+    // Try to find a match to 'a' followed by a number followed by _ followed by at least one digit
+    if (atomid[0] != 'a')
+      return (const char*)0; // Needs to start with 'a'
+    const char *p = atomid + 1;
+    while(*p >= '0' && *p <= '9')
+      p++;
+    if (p == atomid + 1)
+      return (const char*)0; // No digits
+    if (*p != '_')
+      return (const char*)0;
+    p++;
+    if (*p >= '0' && *p <= '9')
+      return p;
+    return (const char*)0;
+  }
 
   ///Interprets atoms from AtomArray and writes then to an OBMol
   bool CMLFormat::DoAtoms()
@@ -614,13 +637,14 @@ namespace OpenBabel
                   obErrorLog.ThrowError(GetMolID(),"The atom id " + value + " is not unique", obWarning);
                 AtomMap[value] = nhvy;//nAtoms;
 
-                //If the id begins with "aa", "ab", etc, the number that follows  is taken as an atom class
-                if(value[0]=='a' && value[1]>='a' && value[1]<='z') {
-                  OBPairInteger *atomclass = new OBPairInteger();
-                  atomclass->SetAttribute("Atom Class");
-                  atomclass->SetValue(atoi(value.c_str() + 2));
-                  atomclass->SetOrigin(fileformatInput);
-                  pAtom->SetData(atomclass);
+                //If the id ends with "_NUMBER", then NUMBER is taken as an atom class
+                const char* atomclass = FindStartOfAtomClass(value.c_str());
+                if (atomclass) {
+                  OBPairInteger *pi = new OBPairInteger();
+                  pi->SetAttribute("Atom Class");
+                  pi->SetValue(atoi(atomclass));
+                  pi->SetOrigin(fileformatInput);
+                  pAtom->SetData(pi);
                 }
                 continue;
               }
@@ -1939,17 +1963,15 @@ namespace OpenBabel
   void CMLFormat::MakeAtomIds(OBMol& mol, vector<string>& atomIDs)
   {
     /* If there is no atom class data for the atom, the id is a followed by the atom index.
-       If there is atom class data then it is aa followed by the atom class.
-       If a subsequent atom has the same atom class, its id is ab followed
-       by the atom class, and so on. */
+       If there is atom class data, an underscore is appended followed by the atom class.
+     */
 
     stringstream ss;
-    map<int,char> acmap; //key=atom calss; value=last letter used as second in id
     atomIDs.push_back("Error"); //atom idex stats at 1. atomIDs[0] is not used
     for (unsigned int idx=1; idx<=mol.NumAtoms(); ++idx)
     {
       ss.str("");
-      ss << 'a';
+      ss << 'a' << idx;
       OBGenericData* pac = mol.GetAtom(idx)->GetData("Atom Class");
       if(pac)
       {
@@ -1957,18 +1979,10 @@ namespace OpenBabel
         if (acdata) {
           int ac = acdata->GetGenericValue();
           if (ac >= 0) { // Allow 0, why not?
-            char ch2='a'; //default 2nd char
-            if(acmap.count(ac)>0)
-              ch2 = acmap[ac]+1;
-            if(ch2>'z')
-              obErrorLog.ThrowError(_pmol->GetTitle(),"CML: too many atoms with same atom class." , obError);
-            ss << ch2 << ac;
-            acmap[ac] = ch2;
+            ss << '_' << ac;
           }
         }
       }
-      else
-        ss << idx;
       atomIDs.push_back(ss.str());
     }
   }
