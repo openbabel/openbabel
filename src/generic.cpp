@@ -1642,6 +1642,11 @@ unsigned int OBVibrationData::GetNumberOfFrequencies() const
   return this->_vFrequencies.size();
 }
 
+void OBFreeGrid::Clear()
+{
+  _points.clear();
+}
+
 } //end namespace OpenBabel
 
 //! \file generic.cpp
