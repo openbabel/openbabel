@@ -425,7 +425,7 @@ namespace OpenBabel
       mols.push_back(pReact->GetReactant(i));
     for(int i=0;i<pReact->NumProducts();i++)
       mols.push_back(pReact->GetProduct(i));
-    for (i = 0; i<pReact->NumAgents(); i++)
+    for (int i = 0; i<pReact->NumAgents(); i++)
       mols.push_back(pReact->GetAgent(i));
 
     if(pReact->GetTransitionState())
