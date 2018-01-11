@@ -745,7 +745,6 @@ namespace OpenBabel
                   break;
                 atom->SetPartialCharge(atof(vs[2].c_str()));
                 Mulliken->AddPartialCharge(atof(vs[2].c_str()));
-                Mulliken->SetOrigin(fileformatInput);
                 if (!ifs.getline(buffer,BUFF_SIZE)) break;
                 tokenize(vs,buffer);
                                     
@@ -756,6 +755,7 @@ namespace OpenBabel
                 exit (-1);
             }
             Mulliken->SetAttribute("Mulliken charges");
+            Mulliken->SetOrigin(fileformatInput);
             mol.SetData(Mulliken);    
           }
         else if(strstr(buffer,"Hirshfeld charges") != NULL &&
