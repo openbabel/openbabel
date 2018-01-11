@@ -206,6 +206,7 @@ namespace OpenBabel
    { "_symmetry_space_group_name_hall", CIFTagID::_symmetry_space_group_name_Hall },
    { "_symmetry_space_group_name_h-m", CIFTagID::_symmetry_space_group_name_H_M },
    { "_symmetry_equiv_pos_as_xyz", CIFTagID::_symmetry_equiv_pos_as_xyz },
+   { "_space_group_symop_operation_xyz", CIFTagID::_symmetry_equiv_pos_as_xyz },
    { "_atom_type_symbol", CIFTagID::_atom_type_symbol },    
    { "_atom_type_oxidation_number",CIFTagID::_atom_type_oxidation_number },
    { "", CIFTagID::unread_CIFDataName }
@@ -709,7 +710,7 @@ namespace OpenBabel
                  obErrorLog.ThrowError(__FUNCTION__, ss.str(), obDebug);
                  tmpSymbol="Xx";//Something went wrong, no symbol ! Default to Xx
                  }
-               atomicNum = etab.GetAtomicNum(tmpSymbol.c_str());
+               atomicNum = OBElements::GetAtomicNum(tmpSymbol.c_str());
                // Test for some oxygens with subscripts
                if (atomicNum == 0 && tmpSymbol[0] == 'O')
                  {
@@ -744,7 +745,7 @@ namespace OpenBabel
                      break;
                      }
                    }
-                 atom->SetAtomicNum(etab.GetAtomicNum(token.as_text.c_str()));
+                 atom->SetAtomicNum(OBElements::GetAtomicNum(token.as_text.c_str()));
                  atom->SetType(token.as_text);
                  }
                break;
@@ -919,12 +920,12 @@ namespace OpenBabel
          case CIFTagID::_space_group_name_Hall:
          case CIFTagID::_symmetry_space_group_name_Hall:
            space_group_name.assign(token.as_text);
-           space_group.SetHallName(space_group_name);
+           space_group.SetHallName(space_group_name.c_str());
            break;
          case CIFTagID::_space_group_name_H_M_alt:
          case CIFTagID::_symmetry_space_group_name_H_M:
            space_group_name.assign(token.as_text);
-           space_group.SetHMName(space_group_name);
+           space_group.SetHMName(space_group_name.c_str());
            break;
          case CIFTagID::_symmetry_equiv_pos_as_xyz:
            space_group.AddTransform(token.as_text);
@@ -1097,14 +1098,14 @@ namespace OpenBabel
    for (OBAtomIterator atom_x = pmol->BeginAtoms(), atom_y = pmol->EndAtoms(); atom_x != atom_y; ++ atom_x, ++ site_id)
      {
      OBAtom * atom = (* atom_x);
-     ofs << '\t' << site_id << '\t' << etab.GetSymbol(atom->GetAtomicNum());
+     ofs << '\t' << site_id << '\t' << OBElements::GetSymbol(atom->GetAtomicNum());
      if (has_residues)
        {
        OBResidue * pRes = atom->GetResidue();
        string resname(pRes->GetName()), atomname(pRes->GetAtomID(atom));
        if (atomname.empty())
          {
-         snprintf(buffer, BUFF_SIZE, "%s%lu", etab.GetSymbol(atom->GetAtomicNum()), (unsigned long)site_id);
+         snprintf(buffer, BUFF_SIZE, "%s%lu", OBElements::GetSymbol(atom->GetAtomicNum()), (unsigned long)site_id);
          atomname.assign(buffer);
          }
        if (resname.empty())

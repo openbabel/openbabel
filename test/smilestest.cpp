@@ -308,7 +308,6 @@ int smilestest(int argc, char* argv[])
     break;
   case 2:
     // SquarePlanar
-    genericSmilesCanonicalTest("F[Po](Cl)(Br)I");
     genericSmilesCanonicalTest("F[Po@SP1](Cl)(Br)I");
     genericSmilesCanonicalTest("F[Po@SP2](Br)(Cl)I");
     genericSmilesCanonicalTest("F[Po@SP3](Cl)(I)Br");

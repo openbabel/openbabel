@@ -74,8 +74,6 @@ namespace OpenBabel
     char type_name[16];
     char buffer[BUFF_SIZE];
 
-    mol.Kekulize();
-
     ofs << "molstruct88_Apr_30_1993_11:02:29 <molecule> 0x1d00\n";
     ofs << "Written by Molecular Editor on <date>\n";
     ofs << "Using data dictionary         9/9/93  4:47 AM\n";
@@ -98,7 +96,7 @@ namespace OpenBabel
     for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       {
         // 16 = sizeof(type_name)
-        strncpy(type_name,etab.GetSymbol(atom->GetAtomicNum()), 16);
+        strncpy(type_name,OBElements::GetSymbol(atom->GetAtomicNum()), 16);
         // sizeof(type_name) - 1)
         type_name[15] = '\0';
 

@@ -121,7 +121,7 @@ namespace OpenBabel
       {
         snprintf(buffer, BUFF_SIZE, "ATOM: %9d %3s TYPE: %-6s HYB: %2d CHARGE: %8.4f",
                  atom->GetIdx(),
-                 etab.GetSymbol(atom->GetAtomicNum()),
+                 OBElements::GetSymbol(atom->GetAtomicNum()),
                  atom->GetType(),
                  atom->GetHyb(),
                  atom->GetPartialCharge());

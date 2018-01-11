@@ -28,6 +28,7 @@ GNU General Public License for more details.
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/rotamer.h>
 #include <openbabel/rotor.h>
+#include <openbabel/elements.h>
 
 using namespace std;
 
@@ -4386,7 +4387,7 @@ namespace OpenBabel
             FOR_ATOMS_OF_MOL (a, _mol) {
               if (a->GetIdx() == atom->GetIdx())
                 continue;
-              if (a->IsHydrogen())
+              if (a->GetAtomicNum() == OBElements::Hydrogen)
                 continue;
 
               distance = sqrt(coord.distSq(a->GetVector()));

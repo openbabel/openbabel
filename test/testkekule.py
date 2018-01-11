@@ -33,7 +33,7 @@ class TestKekuleAssignment(BaseTest):
 
         # A series of aromatic strings, which should convert to themselves
         self.smiles = [
-            'c12c3c(cc(N)cc3)Cc1cccc2',
+            'c12-c3c(cc(N)cc3)Cc1cccc2',
             'c1(=O)n(c2c(c(=O)o1)cccc2)CC(=O)OCC',
             'c1n[nH]c(=S)[nH]1',
             'O=c1[nH]ccc2nc3oc4ccccc4c(=O)c3cc12',
@@ -44,10 +44,10 @@ class TestKekuleAssignment(BaseTest):
             '[nH]1c2ccccc2c2c3C(=O)NCc3c3c4ccccc4[nH]c3c12',
             'c1c(C)c2C=c3[n-]c(=Cc4[nH]c(C=c5[n-]c(=Cc1[nH]2)c(C)c5C=C)c(C)c4CCC(=O)O)c(CCC(=O)O)c3',
             'C1=C2CCC(=Cc3ccc([nH]3)C=c3ccc(=Cc4ccc1[nH]4)[nH]3)N2',
-            'c1(NC(=O)C2CC2)nc2c3c(cccc3)CCc2cn1',
+            'c1(NC(=O)C2CC2)nc2-c3c(cccc3)CCc2cn1',
             'O=C1N(CCCC)C(=O)NC2C1C1N(N2)CCN1',
             'Cn1cccnc1=O',
-            'O=c1n(C)c(=O)nc2c1c1n([nH]2)cc[nH]1',
+            'O=c1n(C)c(=O)nc2-c1c1n([nH]2)cc[nH]1',
             'Cn1ccn2c1nc1c2c(=O)n(C)c(=O)n1C'
             ]
         for i in range(0, len(self.smiles)):
@@ -64,20 +64,21 @@ class TestKekuleIsotope(BaseTest):
         # A series of isotopamers, and their canonical forms
         self.smiles = [
             'c1ccccc1',
-            '[14cH]1ccccc1',
-            '[14cH]1[14cH]cccc1',
-            '[14cH]1[14cH]ccc[14cH]1',
-            '[14cH]1[14cH]cc[14cH][14cH]1',
-            '[14cH]1[14cH]c[14cH][14cH][14cH]1',
-            '[14cH]1[14cH][14cH][14cH][14cH][14cH]1',
-            ]
-        self.cansmis = [
-            'c1ccccc1',
             'c1[14cH]cccc1',
             'c1[14cH][14cH]ccc1',
             'c1[14cH][14cH][14cH]cc1',
             'c1[14cH][14cH][14cH][14cH]c1',
             'c1[14cH][14cH][14cH][14cH][14cH]1',
+            '[14cH]1[14cH][14cH][14cH][14cH][14cH]1',
+            ]
+        self.cansmis = [
+            'c1ccccc1',
+            '[14cH]1ccccc1',
+            '[14cH]1[14cH]cccc1',
+            '[14cH]1[14cH]ccc[14cH]1',
+            '[14cH]1[14cH][14cH]cc[14cH]1',
+            '[14cH]1[14cH][14cH]c[14cH][14cH]1',
+            '[14cH]1[14cH][14cH][14cH][14cH][14cH]1',
             '[14cH]1[14cH][14cH][14cH][14cH][14cH]1',
             ]
         for i in range(0, len(self.smiles)):

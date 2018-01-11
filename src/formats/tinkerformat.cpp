@@ -116,7 +116,7 @@ namespace OpenBabel
         atom->SetVector(x,y,z); //set coordinates
 
         //set atomic number
-        atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
+        atom->SetAtomicNum(OBElements::GetAtomicNum(vs[1].c_str()));
 
         // add bonding
         if (vs.size() > 6)
@@ -196,7 +196,7 @@ namespace OpenBabel
 
         snprintf(buffer, BUFF_SIZE, "%6d %2s  %12.6f%12.6f%12.6f %5d",
                  i,
-                 etab.GetSymbol(atom->GetAtomicNum()),
+                 OBElements::GetSymbol(atom->GetAtomicNum()),
                  atom->GetX(),
                  atom->GetY(),
                  atom->GetZ(),
@@ -228,19 +228,19 @@ namespace OpenBabel
       b = atom->BeginNbrAtom(j);
       if (b->IsCarboxylOxygen())
         return 24;
-      if (b->IsSulfur())
+      if (b->GetAtomicNum() == OBElements::Sulfur)
         return 44;
-      if (b->IsNitrogen()) {
+      if (b->GetAtomicNum() == OBElements::Nitrogen) {
         if (b->IsAmideNitrogen())
           return 28;
         if (b->GetValence() > 3)
           return 48;// ammonium
         return 23; // default amine/imine
       }
-      if (b->IsCarbon() && b->GetHyb() == 1)
+      if (b->GetAtomicNum() == OBElements::Carbon && b->GetHyb() == 1)
         return 124; // acetylene
 
-      if (b->IsOxygen()) {
+      if (b->GetAtomicNum() == OBElements::Oxygen) {
         if (b->HasAlphaBetaUnsat())
           return 73; // includes non-enol/phenol, but has the right spirit
         return 21; // default alcohol
@@ -333,12 +333,12 @@ namespace OpenBabel
       if (atom->IsPhosphateOxygen())
         return 159;
       if (atom->IsCarboxylOxygen())
-        return 47;
+        return 75;
       if (atom->IsInRingSize(3))
         return 49; // epoxy
 
       b = atom->BeginNbrAtom(j);
-      if (atom->HasBondOfOrder(2) && b->IsCarbon()) { // O=C
+      if (atom->HasBondOfOrder(2) && b->GetAtomicNum() == OBElements::Carbon) { // O=C
         return 7;
       }
 
@@ -354,7 +354,7 @@ namespace OpenBabel
     case 12: // Mg
       return 59; break;
     case 14: // Si
-      return 59; break;
+      return 19; break;
 
     case 15: // P
       if (atom->CountFreeOxygens() > 0)

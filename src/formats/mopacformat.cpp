@@ -111,7 +111,7 @@ namespace OpenBabel
             while (vs.size() == 5)
               {
                 atom = mol.NewAtom();
-                atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
+                atom->SetAtomicNum(OBElements::GetAtomicNum(vs[1].c_str()));
                 x = atof((char*)vs[2].c_str());
                 y = atof((char*)vs[3].c_str());
                 z = atof((char*)vs[4].c_str());
@@ -134,7 +134,7 @@ namespace OpenBabel
                 if (strcmp(vs[1].c_str(), "Tv") != 0)
                   {
                     atom = mol.NewAtom();
-                    atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
+                    atom->SetAtomicNum(OBElements::GetAtomicNum(vs[1].c_str()));
                     x = atof((char*)vs[2].c_str());
                     y = atof((char*)vs[4].c_str());
                     z = atof((char*)vs[6].c_str());
@@ -239,7 +239,7 @@ namespace OpenBabel
               indices.push_back(atoi(vs[10].c_str()));
 
               // symbol in column 1
-              atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
+              atom->SetAtomicNum(OBElements::GetAtomicNum(vs[1].c_str()));
             }
             // read the z-matrix
 
@@ -726,7 +726,7 @@ namespace OpenBabel
             atom = mol.NewAtom();
             atom->SetVector(x,y,z); //set coordinates
             //set atomic number
-            atom->SetAtomicNum(etab.GetAtomicNum(elementSymbol.c_str()));
+            atom->SetAtomicNum(OBElements::GetAtomicNum(elementSymbol.c_str()));
           }
       }
 
@@ -771,9 +771,7 @@ namespace OpenBabel
     string defaultKeywords = "PUT KEYWORDS HERE";
 
     if(keywords)
-      {
-        defaultKeywords = keywords;
-      }
+      defaultKeywords = keywords;
 
     if (keywordFile)
       {
@@ -785,8 +783,14 @@ namespace OpenBabel
               ofs << keyBuffer << endl;
           }
       }
-    else
-      ofs << defaultKeywords << endl;
+    else {
+      ofs << defaultKeywords;
+      if (mol.GetTotalCharge() != 0)
+        ofs << " CHARGE=" << mol.GetTotalCharge();
+      
+      // should handle GetTotalSpinMultiplicity() too
+      ofs << endl;
+    }
 
     ofs << mol.GetTitle() << endl;
     ofs << endl; // comment
@@ -795,7 +799,7 @@ namespace OpenBabel
     FOR_ATOMS_OF_MOL(atom, mol)
       {
         snprintf(buffer,BUFF_SIZE,"%-3s%8.5f 1 %8.5f 1 %8.5f 1",
-                 etab.GetSymbol(atom->GetAtomicNum()),
+                 OBElements::GetSymbol(atom->GetAtomicNum()),
                  atom->GetX(),
                  atom->GetY(),
                  atom->GetZ());
@@ -899,7 +903,7 @@ namespace OpenBabel
       indices.push_back(atoi(vs[8].c_str()));
       indices.push_back(atoi(vs[9].c_str()));
 
-      atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
+      atom->SetAtomicNum(OBElements::GetAtomicNum(vs[0].c_str()));
     }
 
     unsigned int idx = 0;
@@ -1000,7 +1004,7 @@ namespace OpenBabel
       w = vic[atom->GetIdx()]->_ang;
       t = vic[atom->GetIdx()]->_tor;
 
-      strncpy(type, etab.GetSymbol(atom->GetAtomicNum()), 16);
+      strncpy(type, OBElements::GetSymbol(atom->GetAtomicNum()), 16);
       type[15] = '\0';
 
       if (t < 0)

@@ -238,10 +238,10 @@ namespace OpenBabel
      */
 
     // See if the first 2 characters give us a valid atomic #
-    int Z=etab.GetAtomicNum(label.substr(0,2).c_str());
+    int Z=OBElements::GetAtomicNum(label.substr(0,2).c_str());
 
     // If not try the first one
-    if (Z==0) Z=etab.GetAtomicNum(label.substr(0,1).c_str());
+    if (Z==0) Z=OBElements::GetAtomicNum(label.substr(0,1).c_str());
 
     if (Z==0){
       // Check if it's an x (dummy) atom
@@ -671,7 +671,7 @@ namespace OpenBabel
 		 atom->GetY(),
 		 atom->GetZ(),
 		 atom->GetAtomicNum(),
-		 etab.GetSymbol(atom->GetAtomicNum())
+		 OBElements::GetSymbol(atom->GetAtomicNum())
 		 );
 	ofs << buffer;
       }

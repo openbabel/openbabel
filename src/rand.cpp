@@ -93,9 +93,9 @@ namespace OpenBabel
 
   static unsigned int isqrt( unsigned int val )
   {
-    register unsigned int temp;
-    register unsigned int rem;
-    register int i,result;
+    unsigned int temp;
+    unsigned int rem;
+    int i,result;
 
     i = 16;
     while( !(val&((unsigned int)3<<30)) && i )
@@ -133,8 +133,8 @@ namespace OpenBabel
 
   static int IsOddPrime( unsigned int x )
   {
-    register unsigned int root;
-    register unsigned int i;
+    unsigned int root;
+    unsigned int i;
 
     root = isqrt(x);
     for( i=2; i<MAXPRIMES-1; i++ )
@@ -201,9 +201,9 @@ namespace OpenBabel
 
   void DoubleMultiply( unsigned int x, unsigned int y, DoubleType *z )
   {
-    register unsigned int x0, x1, x2, x3;
-    register unsigned int hx, lx;
-    register unsigned int hy, ly;
+    unsigned int x0, x1, x2, x3;
+    unsigned int hx, lx;
+    unsigned int hy, ly;
 
     hx = HiPart(x);
     lx = LoPart(x);
@@ -256,9 +256,9 @@ namespace OpenBabel
 
   unsigned int DoubleModulus( DoubleType *n,  unsigned int d )
   {
-    register unsigned int d1, d0;
-    register unsigned int r1, r0;
-    register unsigned int m,s;
+    unsigned int d1, d0;
+    unsigned int r1, r0;
+    unsigned int m,s;
 
     s = LeadingZeros(d);
     if( s > 0 )
@@ -297,9 +297,9 @@ namespace OpenBabel
   static int DeterminePotency( unsigned int m, unsigned int a )
   {
     DoubleType d;
-    register unsigned int k;
-    register unsigned int b;
-    register int s;
+    unsigned int k;
+    unsigned int b;
+    int s;
 
     b = a-1;
     k = b;
@@ -315,9 +315,9 @@ namespace OpenBabel
 
   static int DetermineFactors( unsigned int x, unsigned int *factors )
   {
-    register unsigned int *ptr;
-    register unsigned int half;
-    register unsigned int i;
+    unsigned int *ptr;
+    unsigned int half;
+    unsigned int i;
 
     half = x/2;
     ptr = factors;
@@ -337,9 +337,9 @@ namespace OpenBabel
 
   static unsigned int DetermineIncrement( unsigned int m )
   {
-    register unsigned int hi,lo;
-    register unsigned int half;
-    register unsigned int i;
+    unsigned int hi,lo;
+    unsigned int half;
+    unsigned int i;
 
     /* 1/2 + sqrt(3)/6 */
     hi = (int)floor(0.7886751345948*m+0.5);
@@ -371,12 +371,12 @@ namespace OpenBabel
                          unsigned int *pc )
   {
     unsigned int fact[MAXFACT];
-    register unsigned int a=0, c;
-    register unsigned int b;
-    register int pot,best;
-    register int count;
-    register int flag;
-    register int i;
+    unsigned int a=0, c;
+    unsigned int b;
+    int pot,best;
+    int count;
+    int flag;
+    int i;
 
     do
       {
@@ -428,8 +428,8 @@ namespace OpenBabel
   void GenerateSequence( unsigned int p, unsigned int m,
                          unsigned int a, unsigned int c )
   {
-    register unsigned int i;
-    register unsigned int x;
+    unsigned int i;
+    unsigned int x;
     DoubleType d;
 
     x = 0;  /* seed */
@@ -458,6 +458,9 @@ namespace OpenBabel
     p = 70092;
     DetermineSequence(p,&m,&a,&c);
     x = 0;  /* seed */
+
+    if (useSysRand)
+      this->TimeSeed();
   }
 
   int OBRandom::NextInt()

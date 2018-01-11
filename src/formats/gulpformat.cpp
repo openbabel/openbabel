@@ -175,7 +175,7 @@ namespace OpenBabel {
             size = vs.size();
             continue;
           }
-          atomicNum = etab.GetAtomicNum(vs[1].c_str());
+          atomicNum = OBElements::GetAtomicNum(vs[1].c_str());
 
           // Gulp sometimes places extra chars between the coords, so
           // it's not so straight-forward to parse them...
@@ -244,7 +244,7 @@ namespace OpenBabel {
             size = vs.size();
             continue;
           }
-          atomicNum = etab.GetAtomicNum(vs[1].c_str());
+          atomicNum = OBElements::GetAtomicNum(vs[1].c_str());
 
           // Gulp sometimes places extra chars between the coords, so
           // it's not so straight-forward to parse them...

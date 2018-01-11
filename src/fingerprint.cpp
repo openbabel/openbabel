@@ -58,9 +58,16 @@ namespace OpenBabel
       obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
       return;
     }
-    while(vec.size()*Getbitsperint()/2 >= nbits)
-      vec.erase(transform(vec.begin(),vec.begin()+vec.size()/2,
-                          vec.begin()+vec.size()/2, vec.begin(), bit_or()), vec.end());
+    // "folding" to a larger # of bits
+    if (nbits > vec.size()*Getbitsperint()) {
+      vec.resize(nbits/Getbitsperint(), 0);
+    }
+    else {
+      // normal folding to smaller vector sizes
+      while(vec.size()*Getbitsperint()/2 >= nbits)
+        vec.erase(transform(vec.begin(),vec.begin()+vec.size()/2,
+                            vec.begin()+vec.size()/2, vec.begin(), bit_or()), vec.end());
+    }
   }
 
   ////////////////////////////////////////
@@ -146,10 +153,10 @@ namespace OpenBabel
     unsigned int words = _index.header.words;
     unsigned int* nextp = &_index.fptdata[0];
     unsigned int* ppat0 = &vecwords[0];
-    register unsigned int* p;
-    register unsigned int* ppat;
-    register unsigned int a;
-    unsigned int i; 
+    unsigned int* p;
+    unsigned int* ppat;
+    unsigned int a;
+    unsigned int i;
     for(i=0;i<dataSize; ++i) //speed critical section
       {
         p=nextp;
@@ -197,8 +204,8 @@ namespace OpenBabel
   unsigned int words = _index.header.words;
   unsigned int* nextp = &_index.fptdata[0]; // start of next FP in index
   unsigned int* ppat0 = &vecwords[0];       // start of target FP
-  register unsigned int* p;                 // current position in index
-  register unsigned int* ppat;              // current position in target FP
+  unsigned int* p;                          // current position in index
+  unsigned int* ppat;                       // current position in target FP
   unsigned int i; // need address of this, can't be register
   for(i=0;i<dataSize; ++i) //speed critical section
   {
@@ -234,8 +241,8 @@ namespace OpenBabel
     unsigned int words = _index.header.words;
     unsigned int dataSize = _index.header.nEntries;
     unsigned int* nextp = &_index.fptdata[0];
-    register unsigned int* p;
-    register unsigned int i;
+    unsigned int* p;
+    unsigned int i;
     for(i=0;i<dataSize; ++i) //speed critical section
       {
         p=nextp;
@@ -269,8 +276,8 @@ namespace OpenBabel
     unsigned int words = _index.header.words;
     unsigned int dataSize = _index.header.nEntries;
     unsigned int* nextp = &_index.fptdata[0];
-    register unsigned int* p;
-    register unsigned int i;
+    unsigned int* p;
+    unsigned int i;
     for(i=0;i<dataSize; ++i) //speed critical section
       {
         p=nextp;

@@ -148,7 +148,7 @@ namespace OpenBabel
                 int n;
                 atom->SetAtomicNum(0);
                 while (vs[1].length()!=0) { // recognize name with number
-                    n = etab.GetAtomicNum(vs[1].c_str());
+                    n = OBElements::GetAtomicNum(vs[1].c_str());
                   if (n!=0) {
                     atom->SetAtomicNum(n);
                     break;
@@ -299,7 +299,7 @@ namespace OpenBabel
     FOR_ATOMS_OF_MOL(atom, mol)
       {
         snprintf(buffer, BUFF_SIZE, "%3s,%15.5f,%15.5f,%15.5f\n",
-                etab.GetSymbol(atom->GetAtomicNum()),
+                OBElements::GetSymbol(atom->GetAtomicNum()),
                 atom->GetX(),
                 atom->GetY(),
                 atom->GetZ());

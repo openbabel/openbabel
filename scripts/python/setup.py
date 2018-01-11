@@ -13,7 +13,7 @@ from setuptools import setup, Extension
 
 __author__ = 'Noel O\'Boyle'
 __email__ = 'openbabel-discuss@lists.sourceforge.net'
-__version__ = '1.8.3'
+__version__ = '2.4.0'
 __license__ = 'GPL'
 
 
@@ -76,7 +76,7 @@ class CustomInstall(install):
     """Ensure build_ext runs first in install command."""
     def run(self):
         self.run_command('build_ext')
-        self.do_egg_install()
+        install.run(self)
 
 
 class CustomSdist(sdist):
@@ -124,7 +124,7 @@ setup(name='openbabel',
       url='http://openbabel.org/',
       description='Python interface to the Open Babel chemistry library',
       long_description=long_description,
-      zip_safe=True,
+      zip_safe=False,
       cmdclass={'build': CustomBuild, 'build_ext': CustomBuildExt, 'install': CustomInstall, 'sdist': CustomSdist},
       py_modules=['openbabel', 'pybel'],
       ext_modules=[obextension],

@@ -140,7 +140,7 @@ namespace OpenBabel
             while (vs.size() == 5)
               {
                 atom = mol.NewAtom();
-                atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
+                atom->SetAtomicNum(OBElements::GetAtomicNum(vs[1].c_str()));
                 x = atof((char*)vs[2].c_str());
                 y = atof((char*)vs[3].c_str());
                 z = atof((char*)vs[4].c_str());

@@ -100,7 +100,7 @@ namespace OpenBabel
         CleanAtomType(type);
         atom = mol.NewAtom();
         atom->SetVector(x,y,z);
-        atom->SetAtomicNum(etab.GetAtomicNum(type));
+        atom->SetAtomicNum(OBElements::GetAtomicNum(type));
       }
 
     // clean out remaining blank lines
@@ -139,7 +139,7 @@ namespace OpenBabel
     for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       {
         snprintf(buffer, BUFF_SIZE, "%-3s %8.5f  %8.5f  %8.5f ",
-                 etab.GetSymbol(atom->GetAtomicNum()),
+                 OBElements::GetSymbol(atom->GetAtomicNum()),
                  atom->x(),
                  atom->y(),
                  atom->z());

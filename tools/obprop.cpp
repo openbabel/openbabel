@@ -65,6 +65,7 @@ int main(int argc,char **argv)
         "num_atoms  NUM\n"
         "num_bonds  NUM\n"
         "num_residues  NUM\n"
+	"num_rotors NUM\n"
         "sequence RESIDUE_SEQUENCE\n"
         "num_rings NUMBER_OF_RING_(SSSR)\n"
         "logP   NUM\n"
