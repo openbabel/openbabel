@@ -687,20 +687,27 @@ namespace OpenBabel
         else if(strstr(buffer,"Exact polarizability") != NULL)
             {
               // actual components XX, YX, YY, XZ, YZ, ZZ
-              tokenize(vs,buffer);
-              if (vs.size() >= 8)
-                {
+              double xx, xy, yy, xz, yz, zz;              
+              const char *ptr = buffer+strlen("Exact polarizability:   ");
+              if (ptr &&
+                  6 == sscanf(ptr, "%8lf%8lf%8lf%8lf%8lf%8lf",
+                              &xx, &xy, &yy, &xz, &yz, &zz))
+              {
                   double Q[3][3];
                   OpenBabel::OBMatrixData *pol_tensor = new OpenBabel::OBMatrixData;
 
-                  Q[0][0] = atof(vs[2].c_str());
-                  Q[1][1] = atof(vs[4].c_str());
-                  Q[2][2] = atof(vs[7].c_str());
-                  Q[1][0] = Q[0][1] = atof(vs[3].c_str());
-                  Q[2][0] = Q[0][2] = atof(vs[5].c_str());
-                  Q[2][1] = Q[1][2] = atof(vs[6].c_str());
+                  Q[0][0] = xx;
+                  Q[1][1] = yy;
+                  Q[2][2] = zz;
+                  Q[1][0] = Q[0][1] = xy;
+                  Q[2][0] = Q[0][2] = xz;
+                  Q[2][1] = Q[1][2] = yz;
                   matrix3x3 pol(Q);
-
+                  
+                  if (mol.HasData("Exact polarizability"))
+                    {
+                      mol.DeleteData("Exact polarizability"); // Delete the old one to add the new one
+                    }
                   pol_tensor->SetAttribute("Exact polarizability");
                   pol_tensor->SetData(pol);
                   pol_tensor->SetOrigin(fileformatInput);
