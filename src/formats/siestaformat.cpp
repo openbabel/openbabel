@@ -77,6 +77,8 @@ namespace OpenBabel {
     //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
 
+    std::stringstream errorMsg;
+
     bool struct_out_found = false;
     bool coordsAreFractional = false;
     bool coordsAreAngstrom = false;
@@ -99,8 +101,9 @@ namespace OpenBabel {
     // for atomic positions and cell coordinates.
     string filePath = pConv->GetInFilename();
     if (filePath.empty()) {
-      cout << "Invalid path specified for siesta output file.\n";
       delete cell;
+      errorMsg << "Invalid path specified for siesta output file.\n";
+      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
       return false;
     }
 
@@ -132,10 +135,13 @@ namespace OpenBabel {
 
     // If these failed, we'll just look for the coordinates in the .out file
     // Send a message to the user if the .STRUCT_OUT was not found
-    if (!struct_out_found) cout << "Could not find " << fileName <<
-                                   ".STRUCT_OUT\nAttempting to read " <<
-                                   "coordinates from " << fileName << ".out " <<
-                                   "instead.\n";
+    if (!struct_out_found) {
+      errorMsg << "Could not find " << fileName
+               << ".STRUCT_OUT\nAttempting to read " << "coordinates from "
+               << fileName << ".out " << "instead.\n";
+      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+      errorMsg.clear();
+    }
 
     // Read the .STRUCT_OUT file if it was found
     else if (struct_out_found) {
@@ -190,9 +196,10 @@ namespace OpenBabel {
         atomsIterated++;
       }
       if (atomsIterated != numAtoms) {
-        cout << "Error reading the .STRUCT_OUT file. Make sure it was " <<
-                "saved correctly\n";
         delete cell;
+        errorMsg << "Error reading the .STRUCT_OUT file. Make sure it was "
+                 << "saved correctly\n";
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
         return false;
       }
     } // Done reading .STRUCT_OUT !
@@ -250,13 +257,14 @@ namespace OpenBabel {
           it = atomTypeLabels.find(atoi(vs.at(3).c_str()));
           // Just a basic find() error check
           if(it == atomTypeLabels.end()) {
-             cout << "Error reading AtomicSpecies\n";
              delete cell;
+             errorMsg << "Error reading AtomicSpecies\n";
+             obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
              pmol->EndModify();
              return false;
           }
 
-          atomicNum = etab.GetAtomicNum(it->second.c_str());
+          atomicNum = OBElements::GetAtomicNum(it->second.c_str());
 
           x = atof(vs.at(0).c_str());
           y = atof(vs.at(1).c_str());
@@ -297,7 +305,7 @@ namespace OpenBabel {
         size_t size = vs.size();
         // All of these are 6 words in length!
         while (size == 6) {
-          atomicNum = etab.GetAtomicNum(vs.at(5).c_str());
+          atomicNum = OBElements::GetAtomicNum(vs.at(5).c_str());
 
           x = atof(vs.at(0).c_str());
           y = atof(vs.at(1).c_str());
@@ -376,9 +384,10 @@ namespace OpenBabel {
     }
 
     if (!EOFReached) {
-      cout << "Error! The EOF for siesta was not reached. Check the file " <<
-              "to see if it was saved properly.\n";
       delete cell;
+      errorMsg << "Error! The EOF for siesta was not reached. Check the file "
+               << "to see if it was saved properly.\n";
+      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
       pmol->EndModify();
       return false;
     }

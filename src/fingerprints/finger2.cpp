@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include <openbabel/fingerprint.h>
 #include <set>
 #include <vector>
+#include <openbabel/elements.h>
 
 using namespace std;
 namespace OpenBabel
@@ -108,7 +109,7 @@ bool fingerprint2::GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbit
 	vector<OBNodeBase*>::iterator i;
 	for (patom = pmol->BeginAtom(i);patom;patom = pmol->NextAtom(i))
 	{
-		if(patom->IsHydrogen()) continue;
+		if(patom->GetAtomicNum() == OBElements::Hydrogen) continue;
 		vector<int> curfrag;
 		vector<int> levels(pmol->NumAtoms());
 		getFragments(levels, curfrag, 1, patom, NULL);
@@ -164,7 +165,7 @@ void fingerprint2::getFragments(vector<int> levels, vector<int> curfrag,
 	{
 		if(pnewbond==pbond) continue; //don't retrace steps
 		OBAtom* pnxtat = pnewbond->GetNbrAtom(patom);
-		if(pnxtat->IsHydrogen()) continue;
+		if(pnxtat->GetAtomicNum() == OBElements::Hydrogen) continue;
 
 		int atlevel = levels[pnxtat->GetIdx()-1];
 		if(atlevel) //ring

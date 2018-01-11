@@ -115,7 +115,7 @@ namespace OpenBabel
 			}
 			// Then try the element symbol
 			if( !found ) {
-				std::string ff  = string( etab.GetSymbol(a->GetAtomicNum()) );
+				std::string ff  = string( OBElements::GetSymbol(a->GetAtomicNum()) );
 				if( q_by_name.count( ff ) ) {
 					q = q_by_name[ string(ff) ];
 					found = true;

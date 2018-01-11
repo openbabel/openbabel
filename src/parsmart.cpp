@@ -30,6 +30,10 @@ using namespace std;
 
 namespace OpenBabel
 {
+  static unsigned int TotalNumberOfBonds(OBAtom* atom)
+  {
+    return atom->GetImplicitHCount() + atom->GetValence();
+  }
 
   /*! \class OBSmartsPattern parsmart.h <openbabel/parsmart.h>
 
@@ -174,7 +178,7 @@ namespace OpenBabel
 
   static AtomExpr *CopyAtomExpr( AtomExpr *expr )
   {
-    register AtomExpr *result;
+    AtomExpr *result;
 
     result = new AtomExpr;
     result->type = expr->type;
@@ -230,7 +234,7 @@ namespace OpenBabel
 
   static AtomExpr *BuildAtomPred( int type )
   {
-    register AtomExpr *result;
+    AtomExpr *result;
 
     result = new AtomExpr;
     result->leaf.type = type;
@@ -240,7 +244,7 @@ namespace OpenBabel
 
   static AtomExpr *BuildAtomLeaf( int type, int val )
   {
-    register AtomExpr *result;
+    AtomExpr *result;
 
     result = new AtomExpr;
     result->leaf.type = type;
@@ -250,7 +254,7 @@ namespace OpenBabel
 
   static AtomExpr *BuildAtomNot( AtomExpr *expr )
   {
-    register AtomExpr *result;
+    AtomExpr *result;
 
     result = new AtomExpr;
     result->mon.type = AE_NOT;
@@ -260,7 +264,7 @@ namespace OpenBabel
 
   static AtomExpr *BuildAtomBin( int op, AtomExpr *lft, AtomExpr *rgt )
   {
-    register AtomExpr *result;
+    AtomExpr *result;
 
     result = new AtomExpr;
     result->bin.type = op;
@@ -271,7 +275,7 @@ namespace OpenBabel
 
   static AtomExpr *BuildAtomRecurs( Pattern *pat )
   {
-    register AtomExpr *result;
+    AtomExpr *result;
 
     result = new AtomExpr;
     result->recur.type = AE_RECUR;
@@ -301,7 +305,7 @@ namespace OpenBabel
 
   static BondExpr *CopyBondExpr( BondExpr *expr )
   {
-    register BondExpr *result;
+    BondExpr *result;
 
     result = new BondExpr;
     result->type = expr->type;
@@ -384,7 +388,7 @@ namespace OpenBabel
 
   static BondExpr *BuildBondLeaf( int type )
   {
-    register BondExpr *result;
+    BondExpr *result;
 
     result = new BondExpr;
     result->type = type;
@@ -393,7 +397,7 @@ namespace OpenBabel
 
   static BondExpr *BuildBondNot( BondExpr *expr )
   {
-    register BondExpr *result;
+    BondExpr *result;
 
     result = new BondExpr;
     result->mon.type = BE_NOT;
@@ -403,7 +407,7 @@ namespace OpenBabel
 
   static BondExpr *BuildBondBin( int op, BondExpr *lft, BondExpr *rgt )
   {
-    register BondExpr *result;
+    BondExpr *result;
 
     result = new BondExpr;
     result->bin.type = op;
@@ -643,8 +647,8 @@ namespace OpenBabel
 
   AtomExpr *OBSmartsPattern::ParseComplexAtomPrimitive( void )
   {
-    register Pattern *pat;
-    register int index;
+    Pattern *pat;
+    int index;
 
     switch( *LexPtr++ )
       {
@@ -1163,9 +1167,9 @@ namespace OpenBabel
 
   AtomExpr *OBSmartsPattern::ParseAtomExpr( int level )
   {
-    register AtomExpr *expr1 = NULL;
-    register AtomExpr *expr2 = NULL;
-    register char *prev;
+    AtomExpr *expr1 = NULL;
+    AtomExpr *expr2 = NULL;
+    char *prev;
 
     switch( level )
       {
@@ -1263,9 +1267,9 @@ namespace OpenBabel
 
   BondExpr *OBSmartsPattern::ParseBondExpr( int level )
   {
-    register BondExpr *expr1 = NULL;
-    register BondExpr *expr2 = NULL;
-    register char *prev;
+    BondExpr *expr1 = NULL;
+    BondExpr *expr2 = NULL;
+    char *prev;
 
     switch( level )
       {
@@ -1364,9 +1368,9 @@ namespace OpenBabel
                                 int prev, int part )
   {
     int vb = 0;
-    register AtomExpr *aexpr;
-    register BondExpr *bexpr;
-    register int index;
+    AtomExpr *aexpr;
+    BondExpr *bexpr;
+    int index;
 
     bexpr = (BondExpr*)0;
 
@@ -1679,7 +1683,7 @@ namespace OpenBabel
 
   Pattern *OBSmartsPattern::ParseSMARTSString( char *ptr )
   {
-    register Pattern *result;
+    Pattern *result;
 
     if( !ptr || !*ptr )
       return (Pattern*)0;
@@ -1693,7 +1697,7 @@ namespace OpenBabel
 
   Pattern *OBSmartsPattern::ParseSMARTSRecord( char *ptr )
   {
-    register char *src;
+    char *src;
 
     src = ptr;
     while( *src && !isspace(*src) )
@@ -1715,7 +1719,7 @@ namespace OpenBabel
 
   static AtomExpr *NotAtomExpr( AtomExpr *expr )
   {
-    register AtomExpr *result;
+    AtomExpr *result;
 
     switch (expr->type)
       {
@@ -2174,22 +2178,21 @@ namespace OpenBabel
                  !atom->IsAromatic();
         case AE_HCOUNT:
           return expr->leaf.value == ((int)atom->ExplicitHydrogenCount() +
-                                      (int)atom->ImplicitHydrogenCount());
+                                      (int)atom->GetImplicitHCount());
         case AE_CHARGE:
           return expr->leaf.value == atom->GetFormalCharge();
         case AE_CONNECT:
-          return expr->leaf.value == (int)atom->GetImplicitValence();
+          return expr->leaf.value == (int)TotalNumberOfBonds(atom);
         case AE_DEGREE:
           return expr->leaf.value == (int)atom->GetValence();
         case AE_IMPLICIT:
-          return expr->leaf.value == (int)atom->ImplicitHydrogenCount();
+          return expr->leaf.value == (int)atom->GetImplicitHCount();
         case AE_RINGS:
           return expr->leaf.value == (int)atom->MemberOfRingCount();
         case AE_SIZE:
           return atom->IsInRingSize(expr->leaf.value);
         case AE_VALENCE:
-          return expr->leaf.value == (int)(atom->KBOSum()
-            - (atom->GetSpinMultiplicity() ? atom->GetSpinMultiplicity()-1 : 0));
+          return expr->leaf.value == (int)(atom->BOSum() + atom->GetImplicitHCount());
         case AE_CHIRAL:
           // always return true (i.e. accept the match) and check later
           return true;

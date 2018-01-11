@@ -95,9 +95,8 @@ namespace OpenBabel
     OBRandom *ptr;
     if (!obRandP)
       {
-    	static OBRandom singleRand(true);
+        static OBRandom singleRand(true);
         ptr = &singleRand;
-        ptr->TimeSeed();
       }
     else
       ptr = obRandP;

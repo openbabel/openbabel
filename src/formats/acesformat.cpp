@@ -140,7 +140,7 @@ namespace OpenBabel
                 atom = mol.NewAtom();
 
                 //set atomic number
-                atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
+                atom->SetAtomicNum(OBElements::GetAtomicNum(vs[1].c_str()));
 
 		if (vs.size() == 6 ) {
                 	x = atof((char*)vs[5].c_str());
@@ -272,7 +272,7 @@ namespace OpenBabel
     FOR_ATOMS_OF_MOL(atom, mol)
       {
         snprintf(buffer, BUFF_SIZE, "%3s%15.5f%15.5f%15.5f\n",
-                etab.GetSymbol(atom->GetAtomicNum()),
+                OBElements::GetSymbol(atom->GetAtomicNum()),
                 atom->GetX(),
                 atom->GetY(),
                 atom->GetZ());

@@ -1,6 +1,6 @@
 # Library versioning
-set(SOVERSION 4)
-set(LIBRARY_VERSION 4.0.0)
+set(SOVERSION 5)
+set(LIBRARY_VERSION 5.0.0)
 
 
 find_package(Boost 1.45.0 COMPONENTS system) 
@@ -122,6 +122,7 @@ set(openbabel_srcs
   data.cpp
   data_utilities.cpp
   descriptor.cpp
+  elements.cpp
   fingerprint.cpp
   forcefield.cpp
   format.cpp
@@ -138,6 +139,7 @@ set(openbabel_srcs
   mol.cpp
   obconversion.cpp
   oberror.cpp
+  obfunctions.cpp
   obiter.cpp
   obutil.cpp
   op.cpp
@@ -214,7 +216,9 @@ set(openbabel_library_srcs
   )
 
 if(WIN32)
-  set(libs ${libs} ${ZLIB_LIBRARY})
+  if(ZLIB_FOUND)
+    set(libs ${libs} ${ZLIB_LIBRARY})
+  endif(ZLIB_FOUND)
 else(WIN32)
   # the C math library
   if(BUILD_MIXED)

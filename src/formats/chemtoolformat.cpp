@@ -129,7 +129,7 @@ namespace OpenBabel
             snprintf(buffer, BUFF_SIZE, "%d\t%d\t%s\t%d",
                      (int)floor(atom->GetX() * conv_factor + 0.5),
                      (int)floor(atom->GetY() * conv_factor + 0.5),
-                     etab.GetSymbol(atom->GetAtomicNum()),
+                     OBElements::GetSymbol(atom->GetAtomicNum()),
                      -1 // assume centered Text
                      );
             ofs << buffer << endl;

@@ -256,7 +256,7 @@ namespace OpenBabel
 		string s;
 
 		// Append level 0 string for this item, e.g.: "-H"
-		s += (atom->IsInRing() ? "" : chain_marker) + etab.GetSymbol(atom->GetAtomicNum());
+		s += (atom->IsInRing() ? "" : chain_marker) + OBElements::GetSymbol(atom->GetAtomicNum());
 
 		if (level != 0)
 		{

@@ -60,6 +60,7 @@ More commonly, Open Babel can be used to read in molecules using the OBConversio
 <pre>
 import openbabel
 
+mol = openbabel.OBMol()
 obConversion = openbabel.OBConversion()
 obConversion.SetInAndOutFormats("smi", "mdl")
 
@@ -82,6 +83,7 @@ The following script writes out a file using a filename, rather than reading and
 <pre>
 import openbabel
 
+mol = openbabel.OBMol()
 obConversion = openbabel.OBConversion()
 obConversion.SetInAndOutFormats("pdb", "mol2")
 

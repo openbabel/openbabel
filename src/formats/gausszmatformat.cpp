@@ -150,7 +150,7 @@ namespace OpenBabel
         b = vic[atom->GetIdx()]->_b;
         c = vic[atom->GetIdx()]->_c;
 
-				type = etab.GetSymbol(atom->GetAtomicNum());
+				type = OBElements::GetSymbol(atom->GetAtomicNum());
 				if (atom->GetIsotope() != 0) {
 					snprintf(buffer, BUFF_SIZE, "(Iso=%d)", atom->GetIsotope());
 					type += buffer;
@@ -317,7 +317,7 @@ namespace OpenBabel
         j = i+1;
         tokenize(vs, atomLines[i]);
         atom = mol.NewAtom();
-        atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
+        atom->SetAtomicNum(OBElements::GetAtomicNum(vs[0].c_str()));
 
         if (j == 1) {
           continue; // first atom, just create it

@@ -819,7 +819,7 @@ bool ChemKinFormat::WriteHeader(OBConversion* pConv)
     if(strcmp(title, "M"))
       species.push_back(title);
     FOR_ATOMS_OF_MOL(atom, itr->get())
-      elements.insert(etab.GetSymbol(atom->GetAtomicNum()));
+      elements.insert(OBElements::GetSymbol(atom->GetAtomicNum()));
   }
   if(!elements.empty())
   {

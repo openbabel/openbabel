@@ -81,7 +81,7 @@ def _getpluginnames(ptype):
     ob.OBPlugin.ListAsVector(ptype, None, plugins)
     if sys.platform[:4] == "java":
         plugins = [plugins.get(i) for i in range(plugins.size())]
-    return [x.split()[0] for x in plugins]
+    return [x.split()[0] for x in plugins if x.strip()]
 
 _obconv = ob.OBConversion()
 _builder = ob.OBBuilder()
@@ -250,8 +250,13 @@ class Outputfile(object):
         if not formatok:
             raise ValueError("%s is not a recognised Open Babel format" %
                              format)
-        if filename and filename.split('.')[-1] == 'gz':
-            self.obConversion.AddOption('z', self.obConversion.GENOPTIONS)
+        if filename:
+            if isinstance(filename, bytes):
+                gzextension = b'.gz'
+            else:
+                gzextension = '.gz'
+            if os.path.splitext(filename)[1] == gzextension:
+                self.obconversion.AddOption('z', self.obConversion.GENOPTIONS)
         for k, v in opt.items():
             if v is None:
                 self.obConversion.AddOption(k, self.obConversion.OUTOPTIONS)
@@ -525,8 +530,13 @@ class Molecule(object):
         if not formatok:
             raise ValueError("%s is not a recognised Open Babel format" %
                              format)
-        if filename and filename.split('.')[-1] == 'gz':
-            obconversion.AddOption('z', self.obConversion.GENOPTIONS)
+        if filename:
+            if isinstance(filename, bytes):
+                gzextension = b'.gz'
+            else:
+                gzextension = '.gz'
+            if os.path.splitext(filename)[1] == gzextension:
+                obconversion.AddOption('z', self.obConversion.GENOPTIONS)
         for k, v in opt.items():
             if v is None:
                 obconversion.AddOption(k, obconversion.OUTOPTIONS)

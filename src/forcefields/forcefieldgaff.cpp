@@ -1219,6 +1219,7 @@ namespace OpenBabel
     OBBitVec visited;
     int BO;
 
+    SetPartialChargesBeforeAtomTyping();
     _mol.SetAtomTypesPerceived();
 
     // open data/gaff.prm
@@ -1384,8 +1385,6 @@ namespace OpenBabel
     //    FOR_ATOMS_OF_MOL (a, _mol)
     //      cout << "ATOMTYPE " << a->GetType() << endl;
 
-    SetPartialCharges();
-
     IF_OBFF_LOGLVL_LOW {
       OBFFLog("\nA T O M   T Y P E S\n\n");
       OBFFLog("IDX\tTYPE\tRING\n");
@@ -1417,8 +1416,24 @@ namespace OpenBabel
 
   bool OBForceFieldGaff::SetPartialCharges()
   {
-    //use Gasteiger charges
+    // Do nothing
+    //
+    // The Partial Charges need to be set *before* atom typing as Gasteiger Charges require the default
+    // atom types. This is done in SetPartialChargesBeforeAtomTyping()
+    return true;
+  }
+
+  bool OBForceFieldGaff::SetPartialChargesBeforeAtomTyping()
+  {
+    // Trigger calculation of Gasteiger charges
+    // Note that the Gastegier charge calculation checks for the values of particular atom types
     _mol.SetAutomaticPartialCharge(true);
+    _mol.UnsetPartialChargesPerceived();
+    // Trigger partial charge calculation
+    FOR_ATOMS_OF_MOL(atom, _mol) {
+      atom->GetPartialCharge();
+      break;
+    }
     _mol.SetPartialChargesPerceived();
 
     return true;

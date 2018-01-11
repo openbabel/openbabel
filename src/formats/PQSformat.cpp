@@ -140,7 +140,7 @@ namespace OpenBabel
             if (input_style==0)
               {
                 if (vs.size() < 4) return false; // timvdm 18/06/2008
-                atom->SetAtomicNum(etab.GetAtomicNum(str.c_str()));
+                atom->SetAtomicNum(OBElements::GetAtomicNum(str.c_str()));
                 x=atof((char*) vs[1].c_str())*bohr_to_angstrom;
                 y=atof((char*) vs[2].c_str())*bohr_to_angstrom;
                 z=atof((char*) vs[3].c_str())*bohr_to_angstrom;
@@ -149,7 +149,7 @@ namespace OpenBabel
               {
                 if (vs.size() < 5) return false; // timvdm 18/06/2008
                 str.replace (0,2,"");
-                atom->SetAtomicNum(etab.GetAtomicNum(str.c_str()));
+                atom->SetAtomicNum(OBElements::GetAtomicNum(str.c_str()));
                 x=atof((char*) vs[2].c_str())*bohr_to_angstrom;
                 y=atof((char*) vs[3].c_str())*bohr_to_angstrom;
                 z=atof((char*) vs[4].c_str())*bohr_to_angstrom;
@@ -333,7 +333,7 @@ namespace OpenBabel
       {
         atom=mol.GetAtom(i);
         snprintf(buffer, BUFF_SIZE, "%s           %10.6lf   %10.6lf   %10.6lf",
-                etab.GetSymbol(atom->GetAtomicNum()),
+                OBElements::GetSymbol(atom->GetAtomicNum()),
                 atom->GetX(),
                 atom->GetY(),
                 atom->GetZ());

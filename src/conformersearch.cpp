@@ -2,6 +2,7 @@
 conformersearch.cpp - Conformer searching using genetic algorithm.
 
 Copyright (C) 2010 Tim Vandermeersch
+Some portions Copyright (C) 2016 Torsten Sachse
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
@@ -19,6 +20,13 @@ GNU General Public License for more details.
 #include <openbabel/conformersearch.h>
 #include <openbabel/math/align.h>
 #include <openbabel/forcefield.h>
+#include <openbabel/elements.h>
+
+#if defined(_MSC_VER) && (_MSC_VER < 1800)
+ #define OB_ISNAN _isnan
+#else
+ #define OB_ISNAN std::isnan
+#endif
 
 namespace OpenBabel {
 
@@ -57,7 +65,7 @@ namespace OpenBabel {
         atom1 = mol.GetAtom(a1+1);
         atom2 = mol.GetAtom(a2+1);
         // Default should be to recognize H clashes too
-        if (!m_check_hydrogens  && (atom1->IsHydrogen() || atom2->IsHydrogen() ))
+        if (!m_check_hydrogens  && (atom1->GetAtomicNum() == OBElements::Hydrogen || atom2->GetAtomicNum() == OBElements::Hydrogen ))
           continue;
 
         // skip connected atoms
@@ -70,8 +78,8 @@ namespace OpenBabel {
         distanceSquared = dx*dx + dy*dy + dz*dz;
         // As we don't check 1-3 and 1-4 bonded atoms, apply a
         // factor of to the sum of VdW radii
-        vdwCutoff = m_vdw_factor * (etab.GetVdwRad(atom1->GetAtomicNum())
-                                    + etab.GetVdwRad(atom2->GetAtomicNum()));
+        vdwCutoff = m_vdw_factor * (OBElements::GetVdwRad(atom1->GetAtomicNum())
+                                    + OBElements::GetVdwRad(atom2->GetAtomicNum()));
         vdwCutoff *= vdwCutoff; // compare squared distances
         //cout << vdwCutoff << " " << m_vdw_factor << " " << m_cutoff << " " <<  distanceSquared << endl ;
 
@@ -302,6 +310,8 @@ namespace OpenBabel {
     unique_generator.TimeSeed();
     m_logstream = &cout; 	// Default logging send to standard output
     // m_logstream = NULL;
+    m_printrotors = false;  // By default, do not print rotors but perform the conformer search
+
   }
 
   OBConformerSearch::~OBConformerSearch()
@@ -327,6 +337,46 @@ namespace OpenBabel {
     // Initialize the OBRotorList
     m_rotorList.SetFixedBonds(m_fixedBonds);
     m_rotorList.Setup(m_mol);
+
+    // Print all available rotors if so desired
+    if (m_printrotors){
+      OBRotorIterator it;
+      OBRotorIterator end_it = m_rotorList.EndRotors();
+      OBRotor* r = m_rotorList.BeginRotor(it);
+      int rotcount = 1;
+      std::cout << "Rotors:" << std::endl;
+      while(r){
+        OBBond* b = r->GetBond();
+        int at1,at2;
+        at1 = b->GetBeginAtomIdx();
+        at2 = b->GetEndAtomIdx();
+        std::cout << at1 << "-" << at2 << "  ";
+        r = m_rotorList.NextRotor(it);
+        if (rotcount%4==0 && r){std::cout << std::endl;}
+        ++rotcount;
+      }
+      std::cout << std::endl;
+      return false;
+    }
+    // Print those that are fixed
+    if (!m_fixedBonds.IsEmpty()){
+      std::cout << "Fixed Rotors: " << std::endl;
+      int end_it = m_fixedBonds.EndBit();
+      int it = m_fixedBonds.FirstBit();
+      int rotcount = 1;
+      while(it!=end_it){
+        OBBond* b = m_mol.GetBond(it);
+        int at1,at2;
+        at1 = b->GetBeginAtomIdx();
+        at2 = b->GetEndAtomIdx();
+        std::cout << at1 << "-" << at2 << "  ";
+        it = m_fixedBonds.NextBit(it);
+        if (rotcount%4==0 && it!=end_it){std::cout << std::endl;}
+        ++rotcount;
+      }
+      std::cout << std::endl;
+    }
+
     nb_rotors = m_rotorList.Size();
     if (!nb_rotors) { // only one conformer
       return false;
@@ -577,6 +627,10 @@ namespace OpenBabel {
           // make the selection
           score = MakeSelection();
         }
+      if (OB_ISNAN(score)) {
+          (*m_logstream) << "The current score is not a number, will not continue."  << endl  << endl;
+          return;
+      }
       if (i == 0)
         last_score = score;
 

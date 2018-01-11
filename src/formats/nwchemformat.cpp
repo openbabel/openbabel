@@ -82,7 +82,7 @@ namespace OpenBabel
 static const char* COORDINATES_PATTERN = "Output coordinates";
 static const char* GEOMETRY_OPTIMIZATION_PATTERN = "NWChem Geometry Optimization";
 static const char* PROPERTY_CALCULATION_PATTERN = "NWChem Property Module";
-static const char* ZTS_CALCULATION_PATTERN = "@ String method.";
+static const char* ZTS_CALCULATION_PATTERN = " String method.";
 static const char* NEB_CALCULATION_PATTERN = "NWChem Minimum Energy Pathway Program (NEB)";
 static const char* PYTHON_CALCULATION_PATTERN = "NWChem Python program";
 static const char* ESP_CALCULATION_PATTERN = "NWChem Electrostatic Potential Fit Module";
@@ -104,8 +104,8 @@ static const char* ORBITAL_SECTION_PATTERN_2 = "rbital";
 static const char* BETA_ORBITAL_PATTERN = "Beta";
 static const char* MULLIKEN_CHARGES_PATTERN = "Mulliken analysis of the total density";
 static const char* GEOMETRY_PATTERN = "Geometry \"geometry\"";
-static const char* ZTS_CONVERGED_PATTERN = "@ The string calculation converged";
-static const char* NBEADS_PATTERN = "@ Number of replicas";
+static const char* ZTS_CONVERGED_PATTERN = " The string calculation ";
+static const char* NBEADS_PATTERN = " Number of replicas";
 static const char* ROOT_PATTERN = "Root";
 static const char* OSCILATOR_STRENGTH_PATTERN = "Oscillator Strength";
 static const char* SPIN_FORBIDDEN_PATTERN = "Spin forbidden";
@@ -232,11 +232,14 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
           break;
         tokenize(vs,buffer);
     }
-    if ((from_scratch)||(i != natoms))
-      {
+    if (from_scratch) 
+    {
+        return;
+    }
+    if (i != natoms) {
         delete[] coordinates;
         return;
-      }
+    }
     molecule->AddConformer(coordinates);
   }
 
@@ -655,7 +658,10 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
             // every block of 6 vibrations.
             tokenize(vs,buffer);
             for(unsigned int i=1; i<vs.size(); ++i)
+            {
+                vib.push_back(vector<vector3>());
                 freq.push_back(atof(vs[i].c_str()));
+            }
             ifs->getline(buffer,BUFF_SIZE);     // blank line
             ifs->getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
@@ -679,15 +685,16 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
                   // not sure how to recover if it's not true
                   for (unsigned int i = 0; i < freq.size(); i++)
                   {
-                    vib.push_back(vector<vector3>());
                     vib[i].push_back(vector3(x[i], y[i], z[i]));
                   }
                 }
             }// while vs.size() > 2
             for (unsigned int i = 0; i < freq.size(); i++)
             {
-              Frequencies.push_back(freq[i]);
-              Lx.push_back(vib[i]);
+              if (abs(freq[i]) > 10.0) {
+                Frequencies.push_back(freq[i]);
+                Lx.push_back(vib[i]);
+              }
             }// for (unsigned int i = 0; i < freq.size(); i++)
         }// if P.Frequency
         else if(strstr(buffer, INTENSITIES_TABLE_PATTERN) != NULL)
@@ -823,7 +830,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
                 if (vs.size() < 8)
                     break;
                 unsigned int end_of_symbol = vs[1].find_last_not_of(DIGITS) + 1;
-                if (etab.GetAtomicNum(vs[1].substr(0, end_of_symbol).c_str()) != molecule->GetAtom(i+1)->GetAtomicNum())
+                if (OBElements::GetAtomicNum(vs[1].substr(0, end_of_symbol).c_str()) != molecule->GetAtom(i+1)->GetAtomicNum())
                     break;
                 if (current_bead >= nbeads)
                 {
@@ -906,10 +913,14 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
             // @ Bead number =     <N>  Potential Energy =     <Energy>
             // 0  1     2    3      4       5       6    7        8
             tokenize(vs, buffer);
-            while (vs.size() == 9)
+            // Thanks to the commit jeffhammond/nwchem@76d2b8c the beads
+            // output was broken (in nwchem 6.6+ there is no equal sign after
+            // 'number'. So all indicies will be counted from the end.
+            unsigned int vsize = vs.size();
+            while (vsize > 7)
             {
-                unsigned int bead_number = atoi(vs[4].c_str());
-                double bead_energy = atof(vs[8].c_str()) * HARTREE_TO_KCAL;
+                unsigned int bead_number = atoi(vs[vsize-5].c_str());
+                double bead_energy = atof(vs[vsize-1].c_str()) * HARTREE_TO_KCAL;
                 ifs->getline(buffer, BUFF_SIZE); // natoms
                 if (atoi(buffer) != natoms)
                     break; // table contains geometry of different molecule
@@ -921,7 +932,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
                     tokenize(vs, buffer);
                     //  Symbol              X     Y     Z
                     //    0                 1     2     3
-                    if ((vs.size() < 4) || (molecule->GetAtom(i+1)->GetAtomicNum() != etab.GetAtomicNum(vs[0].c_str())))
+                    if ((vs.size() < 4) || (molecule->GetAtom(i+1)->GetAtomicNum() != OBElements::GetAtomicNum(vs[0].c_str())))
                         break; // molecule has no such atom or table row incomplete
 
                     unsigned int atom_idx = i*3;
@@ -1073,7 +1084,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
     FOR_ATOMS_OF_MOL(atom, mol)
       {
         snprintf(buffer, BUFF_SIZE, "%3s%15.5f%15.5f%15.5f\n",
-                etab.GetSymbol(atom->GetAtomicNum()),
+                OBElements::GetSymbol(atom->GetAtomicNum()),
                 atom->GetX(),
                 atom->GetY(),
                 atom->GetZ());

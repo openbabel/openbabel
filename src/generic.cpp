@@ -25,6 +25,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/generic.h>
 #include <openbabel/math/matrix3x3.h>
+#include <openbabel/elements.h>
 
 // needed for msvc to have at least one reference to AtomClass, AliasData in openbabel library
 #include <openbabel/atomclass.h>
@@ -1191,9 +1192,9 @@ namespace OpenBabel
     vector<triple<OBAtom*,OBAtom*,double> >::iterator ad;
     for(ad = _ads.begin();ad != _ads.end() && (Aprotor || Dprotor);++ad)
       {
-        if(!ad->first->IsHydrogen())
+        if (ad->first->GetAtomicNum() != OBElements::Hydrogen)
           Aprotor = false;
-        if(!ad->second->IsHydrogen())
+        if (ad->second->GetAtomicNum() != OBElements::Hydrogen)
           Dprotor = false;
       }
     return (Aprotor || Dprotor);

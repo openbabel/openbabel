@@ -251,7 +251,7 @@ namespace OpenBabel
       {
         atom = mol.GetAtom(i);
         snprintf(buffer, BUFF_SIZE, "%4s%4d   % 2.10f",
-                etab.GetSymbol(atom->GetAtomicNum()),
+                OBElements::GetSymbol(atom->GetAtomicNum()),
                 i,
                 atom->GetPartialCharge());
 
@@ -278,7 +278,7 @@ namespace OpenBabel
         atom = mol.GetAtom(min);
 
         snprintf(buffer,BUFF_SIZE,"%15s%4d",
-                etab.GetSymbol(atom->GetAtomicNum()),
+                OBElements::GetSymbol(atom->GetAtomicNum()),
                 min);
         ofs << buffer;
 
@@ -287,7 +287,7 @@ namespace OpenBabel
             {
               atom = mol.GetAtom(i);
               snprintf(buffer,BUFF_SIZE, "%7s%4d",
-                      etab.GetSymbol(atom->GetAtomicNum()),
+                      OBElements::GetSymbol(atom->GetAtomicNum()),
                       i);
               ofs << buffer;
             }
@@ -306,7 +306,7 @@ namespace OpenBabel
           {
             atom = mol.GetAtom(i);
             snprintf(buffer, BUFF_SIZE, "%4s%4d",
-                    etab.GetSymbol(atom->GetAtomicNum()),
+                    OBElements::GetSymbol(atom->GetAtomicNum()),
                     i);
             ofs << buffer;
             for (j = min; j < max; j++)
@@ -394,7 +394,7 @@ namespace OpenBabel
           {
             /* @todo
             snprintf(buffer, BUFF_SIZE, "%4s %5d is chiral: %s",
-                    etab.GetSymbol(atom->GetAtomicNum()),
+                    OBElements::GetSymbol(atom->GetAtomicNum()),
                     atom->GetIdx(),
                     (atom->IsClockwise() ? "clockwise" : "counterclockwise"));
                     */

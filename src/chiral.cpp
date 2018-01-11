@@ -109,7 +109,7 @@ namespace OpenBabel
        vector<OBBond*>::iterator i;
        for (nbr = atm->BeginNbrAtom(i);nbr;nbr = atm->NextNbrAtom(i))
        {
-       if (nbr->IsHydrogen()){Hid=nbr->GetIdx();continue;}
+       if (nbr->GetAtomicNum() == OBElements::Hydrogen){Hid=nbr->GetIdx();continue;}
        nbr_atms.push_back(nbr->GetIdx());
        }
        sort(nbr_atms.begin(),nbr_atms.end());
@@ -152,7 +152,6 @@ namespace OpenBabel
     vector<unsigned int> nbr_atms;
     vector<vector3> nbr_crds;
     bool use_central_atom = false,is2D=false;
-    //   double hbrad = etab.CorrectedBondRad(1,0);
 
     if (!ReZeroZ || !mol.Has3D()) //give pseudo Z coords if mol is 2D
       {
@@ -213,15 +212,7 @@ namespace OpenBabel
         OBAtom *tmp_atm = mol.GetAtom(nbr_atms[i]);
         nbr_crds.push_back(tmp_atm->GetVector());
       }
-    /*
-    // If we have three heavy atoms we need to calculate the position of the fourth
-    if (atm->GetHvyValence() == 3)
-    {
-    double bondlen = hbrad+etab.CorrectedBondRad(atm->GetAtomicNum(),atm->GetHyb());
-    atm->GetNewBondVector(tmp_crd,bondlen);
-    nbr_crds.push_back(tmp_crd);
-    }
-    */
+
     for(unsigned int j=0;j < nbr_crds.size();++j) // Checks for a neighbour having 0 co-ords (added hydrogen etc)
       {
         // are the coordinates zero to 6 or more significant figures

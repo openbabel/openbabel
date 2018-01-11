@@ -132,7 +132,7 @@ namespace OpenBabel {
         tokenize(vs, buffer);
         int size = vs.size();
         while (size == 7) {
-          atomicNum = etab.GetAtomicNum(vs[1].c_str());
+          atomicNum = OBElements::GetAtomicNum(vs[1].c_str());
           x = atof((char*)vs[3].c_str());
           y = atof((char*)vs[4].c_str());
           z = atof((char*)vs[5].c_str());

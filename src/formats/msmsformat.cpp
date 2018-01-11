@@ -120,7 +120,7 @@ bool OBMSMSFormat::WriteMolecule( OBBase* pOb, OBConversion* pConv )
     {
         const double* c = a->GetCoordinate();
         os << c[ 0 ] << '\t' << c[ 1 ] << '\t' << c[ 2 ] << '\t' <<
-        etab.GetVdwRad( a->GetAtomicNum() );
+        OBElements::GetVdwRad( a->GetAtomicNum() );
         if( atomNames ) os << '\t' << a->GetAtomicNum();
         os << '\n';
     }

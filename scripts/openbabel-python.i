@@ -19,6 +19,7 @@
 
 #include <openbabel/generic.h>
 #include <openbabel/griddata.h>
+#include <openbabel/elements.h>
 
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
@@ -31,6 +32,7 @@
 
 #include <openbabel/ring.h>
 #include <openbabel/obconversion.h>
+#include <openbabel/obfunctions.h>
 #include <openbabel/oberror.h>
 #include <openbabel/plugin.h>
 #include <openbabel/fingerprint.h>
@@ -64,6 +66,9 @@
 #include <openbabel/stereo/squareplanar.h>
 #include <openbabel/stereo/bindings.h>
 %}
+// Ignore methods that require std::vector of OBAtom.
+%ignore OpenBabel::OBMol::FindChildren(std::vector< OBAtom * > &, OBAtom *, OBAtom *);
+%ignore OpenBabel::OBResidue::GetAtoms;
 
 #ifdef HAVE_EIGEN
 %{
@@ -258,6 +263,7 @@ namespace std { class stringbuf {}; }
 %include <openbabel/oberror.h>
 %include <openbabel/format.h>
 %include <openbabel/obconversion.h>
+%include <openbabel/obfunctions.h>
 %include <openbabel/residue.h>
 %include <openbabel/internalcoord.h>
 %include <openbabel/atom.h>
@@ -295,6 +301,12 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 %include <openbabel/fingerprint.h>
 %ignore OpenBabel::OBDescriptor::LessThan;
 %include <openbabel/descriptor.h>
+// wrap GetRGB parameters
+%include "typemaps.i"
+%apply double *OUTPUT { double *r, double *g, double *b };
+%include <openbabel/elements.h>
+// void GetRGB(unsigned int atomic_number, double *r, double *g, double *b);
+%clear double *r, double *g, double *b;
 
 // Ignore shadowed methods
 %ignore OpenBabel::OBForceField::VectorSubtract(const double *const, const double *const, double *);
@@ -416,6 +428,8 @@ class OBIterWithDepth(OBIter):
         else:
             raise StopIteration
 
+    __next__ = next
+
 class OBAtomAtomIter(OBIter):
     """Iterator over the atoms attached to an atom."""
     OBiterator = _OBAtomAtomIter
@@ -470,8 +484,6 @@ def double_array(mylist):
 %pythoncode %{
 obErrorLog = cvar.obErrorLog
 ttab = cvar.ttab
-etab = cvar.etab
-isotab = cvar.isotab
 atomtyper = cvar.atomtyper
 aromtyper = cvar.aromtyper
 %}

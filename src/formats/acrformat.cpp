@@ -140,7 +140,7 @@ namespace OpenBabel
 
         OBAtom* a = pmol->NewAtom();
         if (*(type.c_str()) != '*')
-          a->SetAtomicNum(etab.GetAtomicNum(type.c_str()));
+          a->SetAtomicNum(OBElements::GetAtomicNum(type.c_str()));
         a->SetVector(X,Y,Z);
 
       } else if (bond_input) {

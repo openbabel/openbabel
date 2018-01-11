@@ -172,8 +172,6 @@ namespace OpenBabel
             unsigned int atomicNum = atoi(vs[3].c_str());
             if (atomicNum == 0)
               atomicNum = 1; // hydrogen ?
-            if (atomicNum <= 0 || atomicNum > etab.GetNumberOfElements())
-              continue;
 
             // valid element, so create the atom
             atom = mol.NewAtom();
