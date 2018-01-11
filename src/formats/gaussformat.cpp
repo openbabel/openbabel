@@ -745,6 +745,7 @@ namespace OpenBabel
                   break;
                 atom->SetPartialCharge(atof(vs[2].c_str()));
                 Mulliken->AddPartialCharge(atof(vs[2].c_str()));
+                Mulliken->SetOrigin(fileformatInput);
                 if (!ifs.getline(buffer,BUFF_SIZE)) break;
                 tokenize(vs,buffer);
                                     
@@ -799,7 +800,9 @@ namespace OpenBabel
                 exit (-1);
             }
             Hirshfeld->SetAttribute("Hirshfeld charges");
+            Hirshfeld->SetOrigin(fileformatInput);
             CM5->SetAttribute("CM5 charges");
+            CM5->SetOrigin(fileformatInput);
             mol.SetData(Hirshfeld);
             mol.SetData(CM5);
           }
@@ -918,6 +921,7 @@ namespace OpenBabel
                 exit (-1);
             }
             ESP->SetAttribute("ESP charges");
+            ESP->SetOrigin(fileformatInput);
             mol.SetData(ESP);
           }
         else if(strstr(buffer,"Natural Population") != NULL)
