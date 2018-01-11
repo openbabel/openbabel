@@ -186,18 +186,18 @@ namespace OpenBabel
       // make sure we place the new atom trans to a-2 (if there is an a-2 atom)
       //
       //   (a-2)             (a-2)
-      //     \                 \
+      //     \                 \                                             //
       //    (a-1)==a   --->   (a-1)==a          angle(a-1, a, *) = 120
-      //                              \
+      //                              \                                      //
       //                               *
       // hyb * = 3
       // ^^^^^^^^^
       // make sure we place the new atom trans to a-2 (if there is an a-2 atom)
       //
       //   (a-2)             (a-2)
-      //     \                 \
+      //     \                 \                                             //
       //    (a-1)--a   --->   (a-1)--a          angle(a-1, a, *) = 109
-      //                              \
+      //                              \                                      //
       //                               *
       if (atom->GetValence() == 1) {
         bool isCarboxylateO = atom->IsCarboxylOxygen();
@@ -263,7 +263,7 @@ namespace OpenBabel
       }
 
       //
-      //    \	      \
+      //    \	      \                                                     //
       //     X  --->   X--*
       //    /         /
       //
@@ -1043,7 +1043,7 @@ namespace OpenBabel
 
             // Have any atoms of this match already been added?
             int alreadydone = 0;
-            int match_idx;
+            int match_idx = 0;
             for (k = j->begin(); k != j->end(); ++k) // for all atoms of the fragment
               if (vfrag.BitIsSet(*k)) {
                 alreadydone += 1;
@@ -1219,7 +1219,7 @@ namespace OpenBabel
     //                                        \   /
     //  \        \   /    bisect  \             P    align   \                /
     //   P  and    P       --->    P--v1  and   |    --->     P--v1  and v2--P
-    //  /                         /             v2           /                \
+    //  /                         /             v2           /                \  //
 
     // Get v1 (from the existing fragment)
     vector3 bond1, bond2, bond3, bond4, v1;
@@ -1328,7 +1328,7 @@ namespace OpenBabel
         // refs[0]            refs[3]
         //        \          /
         //         begin==end
-        //        /          \
+        //        /          \                                                /
         // refs[1]            refs[2]
 
         a = mol.GetAtomById(config.refs[0]);

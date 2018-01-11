@@ -55,17 +55,12 @@ public:
 };
 
 // class introduction in typer.cpp
-class OBAPI OBAromaticTyper : public OBGlobalDataBase
+class OBAPI OBAromaticTyper
 {
-    friend class OBAromaticTyperMolState;
 public:
-    OBAromaticTyper();
-    ~OBAromaticTyper();
+    OBAromaticTyper() {};
+    ~OBAromaticTyper() {};
 
-    //! \return the number of SMARTS patterns
-    size_t GetSize()                 { return 0;} // SMARTS are no longer used by this class
-
-    void ParseLine(const char*);
     //! Assign aromaticity flag to atoms and bonds
     void AssignAromaticFlags(OBMol &);
 };

@@ -230,6 +230,8 @@ CAST_GENERICDATA_TO(VirtualBond)
 %include <openbabel/math/transform3d.h>
 %warnfilter(516) OpenBabel::SpaceGroup; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/math/spacegroup.h>
+%warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
+%include <openbabel/bitvec.h>
 
 // CloneData should be used instead of the following method
 %ignore OpenBabel::OBBase::SetData;
@@ -326,8 +328,6 @@ IGNORE_ITER(OBMol, Residue)
 %include <openbabel/canon.h>
 %include <openbabel/stereo/stereo.h>
 
-%warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
-%include <openbabel/bitvec.h>
 // Ignore shadowed method
 %ignore OpenBabel::OBRotor::GetRotAtoms() const;
 %include <openbabel/rotor.h>

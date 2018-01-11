@@ -253,7 +253,7 @@ namespace OpenBabel
           this_side = end; other_side = begin;
         }
 
-        for (int hyb=2; hyb<=3; ++hyb) { // sp2 and sp3 carbons, with explicit Hs
+        for (unsigned int hyb=2; hyb<=3; ++hyb) { // sp2 and sp3 carbons, with explicit Hs
           if (this_side->GetAtomicNum() == 6 && this_side->GetHyb() == hyb && this_side->GetValence() == (hyb + 1) ) {
             syms.clear();
             FOR_NBORS_OF_ATOM(nbr, this_side) {
@@ -484,7 +484,7 @@ namespace OpenBabel
   {
   }
 
-  void OBRotor::SetRings(OBBond *bond)
+  void OBRotor::SetRings()
   {
     _rings.clear();
     if (_bond == NULL)

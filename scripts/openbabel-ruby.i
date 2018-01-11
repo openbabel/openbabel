@@ -178,6 +178,8 @@ CAST_GENERICDATA_TO(VirtualBond)
 %include <openbabel/math/matrix3x3.h>
 
 %import <openbabel/math/spacegroup.h>
+%warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
+%include <openbabel/bitvec.h>
 
 // CloneData should be used instead of the following method
 %ignore OpenBabel::OBBase::SetData;
@@ -231,8 +233,6 @@ namespace std { class stringbuf {}; }
 %include <openbabel/builder.h>
 %include <openbabel/op.h>
 
-%warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
-%include <openbabel/bitvec.h>
 %ignore OpenBabel::OBRotor::GetRotAtoms() const;
 %include <openbabel/rotor.h>
 %ignore OpenBabel::Swab;

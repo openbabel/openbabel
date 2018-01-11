@@ -72,22 +72,22 @@ namespace OpenBabel {
     return sum;
   }
 
-  void OBStereo::Permutate(OBStereo::Refs &refs, int i, int j)
+  void OBStereo::Permutate(OBStereo::Refs &refs, unsigned int i, unsigned int j)
   {
-    if (i < 0 || i >= refs.size())
+    if (i >= refs.size())
       return;
-    if (j < 0 || j >= refs.size())
+    if (j >= refs.size())
       return;
     unsigned long id = refs.at(i);
     refs[i] = refs.at(j);
     refs[j] = id;
   }
 
-  OBStereo::Refs OBStereo::Permutated(const OBStereo::Refs &refs, int i, int j)
+  OBStereo::Refs OBStereo::Permutated(const OBStereo::Refs &refs, unsigned int i, unsigned int j)
   {
-    if (i < 0 || i >= refs.size())
+    if (i >= refs.size())
       return refs;
-    if (j < 0 || j >= refs.size())
+    if (j >= refs.size())
       return refs;
     OBStereo::Refs result(refs);
     result[i] = refs.at(j);

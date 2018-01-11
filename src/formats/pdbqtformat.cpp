@@ -153,7 +153,6 @@ namespace OpenBabel
 
     int chainNum = 1;
     char buffer[BUFF_SIZE];
-    OBBitVec bs;
     string line, key, value;
     OBPairData *dp;
 
@@ -219,7 +218,6 @@ namespace OpenBabel
             << endl << buffer << endl;
           obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obError);
         }
-        if (EQn(buffer,"ATOM",4)) {bs.SetBitOn(mol.NumAtoms());}
         continue;
       }
       if ((EQn(buffer,"REMARK",6)) || (EQn(buffer,"USER",4)))
@@ -288,7 +286,7 @@ namespace OpenBabel
       return(false);
     }
 
-    resdat.AssignBonds(mol,bs);
+    resdat.AssignBonds(mol);
     /*assign hetatm bonds based on distance*/
 
     mol.EndModify();

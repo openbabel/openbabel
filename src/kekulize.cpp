@@ -367,7 +367,7 @@ namespace OpenBabel
       m_path.push_back(idx);
       needs_dbl_bond->SetBitOff(m_path[0]);
       // Flip all of the bond orders on the path from double<-->single
-      for (int i = 0; i < m_path.size()-1; ++i) {
+      for (unsigned int i = 0; i < m_path.size()-1; ++i) {
         OBBond *bond = m_mol->GetBond(m_path[i], m_path[i + 1]);
         if (i % 2 == 0)
           doubleBonds->SetBitOn(bond->GetIdx());

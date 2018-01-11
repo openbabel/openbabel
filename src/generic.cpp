@@ -239,7 +239,7 @@ namespace OpenBabel
     _bgn(0), _end(0), _ord(0), _stereo(0)
   {  }
 
-  OBVirtualBond::OBVirtualBond(int bgn,int end,int ord,int stereo):
+  OBVirtualBond::OBVirtualBond(unsigned int bgn, unsigned int end, unsigned int ord, int stereo):
     OBGenericData("VirtualBondData", OBGenericDataType::VirtualBondData, perceived),
     _bgn(bgn), _end(end), _ord(ord), _stereo(stereo)
   {  }
@@ -1458,13 +1458,11 @@ void OBDOSData::SetData(double fermi,
 
   // member functions for OBOrbitalData
 
-  void OBOrbitalData::LoadClosedShellOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, int alphaHOMO)
+  void OBOrbitalData::LoadClosedShellOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, unsigned int alphaHOMO)
   {
     if (energies.size() < symmetries.size())
       return; // something is very weird -- it's OK to pass no symmetries (we'll assume "A")
     if (energies.size() == 0)
-      return;
-    if (alphaHOMO <= 0)
       return;
     if (alphaHOMO > energies.size())
       return;
@@ -1491,13 +1489,11 @@ void OBDOSData::SetData(double fermi,
       }
   }
 
-  void OBOrbitalData::LoadAlphaOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, int alphaHOMO)
+  void OBOrbitalData::LoadAlphaOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, unsigned int alphaHOMO)
   {
     if (energies.size() < symmetries.size())
       return; // something is very weird -- it's OK to pass no symmetries (we'll assume "A")
     if (energies.size() == 0)
-      return;
-    if (alphaHOMO <= -1)
       return;
     if (alphaHOMO > energies.size())
       return;
@@ -1522,13 +1518,11 @@ void OBDOSData::SetData(double fermi,
       }
   }
 
-  void OBOrbitalData::LoadBetaOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, int betaHOMO)
+  void OBOrbitalData::LoadBetaOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, unsigned int betaHOMO)
   {
     if (energies.size() < symmetries.size())
       return; // something is very weird -- it's OK to pass no symmetries (we'll assume "A")
     if (energies.size() == 0)
-      return;
-    if (betaHOMO <= -1)
       return;
     if (betaHOMO > energies.size())
       return;

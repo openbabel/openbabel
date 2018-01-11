@@ -153,13 +153,13 @@ namespace OpenBabel
     void SetBond(OBBond *bond)
     {
       _bond = bond;
-      SetRings(bond);
+      SetRings();
     }
     /**
      * Set the rings associated with this bond (if it's a ring bond)
      * \since Version 2.4
      */
-    void SetRings(OBBond *bond);
+    void SetRings();
     /**
      * Set the index for this rotor. Used by OBRotorList
      */
