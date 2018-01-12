@@ -457,6 +457,7 @@ namespace OpenBabel
     OBFreeGrid *esp   = NULL;
     int NumEsp        = 1; 
     int NumEspCounter = 0;
+    bool ESPisAdded   = false;
 
     // coordinates of all steps
     // Set conformers to all coordinates we adopted
@@ -808,14 +809,16 @@ namespace OpenBabel
                 if (i == np)
                   {
                     esp->SetAttribute("Electrostatic Potential");
+                    esp->SetOrigin(fileformatInput);
                     mol.SetData(esp);
+                    ESPisAdded = true;
                   }
                 else
                   {
                     cout << "Read " << esp->NumPoints() << " ESP points i = " << i << "\n";
                   }
               }
-            else
+            else if (!ESPisAdded)
               {
                 esp->Clear();
               }
