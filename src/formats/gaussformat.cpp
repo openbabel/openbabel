@@ -740,7 +740,7 @@ namespace OpenBabel
           {
               NumEspCounter++;
           }
-        else if (strstr(buffer, "Atomic Center") != NULL)
+        else if (strstr(buffer, "Atomic Center") != NULL && !ESPisAdded)
           {
             // Data points for ESP calculation
             tokenize(vs,buffer);
@@ -760,7 +760,7 @@ namespace OpenBabel
                   }
               }
           }
-        else if (strstr(buffer, "ESP Fit Center") != NULL)
+        else if (strstr(buffer, "ESP Fit Center") != NULL && !ESPisAdded)
           {
             // Data points for ESP calculation
             tokenize(vs,buffer);
@@ -780,7 +780,7 @@ namespace OpenBabel
                   }
               }
           }
-        else if (strstr(buffer, "Electrostatic Properties (Atomic Units)") != NULL)
+        else if (strstr(buffer, "Electrostatic Properties (Atomic Units)") != NULL && !ESPisAdded)
           {
             int i,np;
             OpenBabel::OBFreeGridPoint *fgp;
