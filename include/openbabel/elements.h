@@ -81,7 +81,7 @@ namespace OpenBabel
     OBAPI void GetRGB(unsigned int atomic_number, double *r, double *g, double *b);
     //! The atomic numbers of the elements
     enum Element {
-        NonExistent = 0,
+        Dummy = 0,
         Hydrogen = 1,
         H = 1,
         Helium = 2,
