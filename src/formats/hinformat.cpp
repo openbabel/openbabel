@@ -143,7 +143,7 @@ namespace OpenBabel
       ipos = ifs.tellg();
       ifs.getline(buffer,BUFF_SIZE);
     }
-    while(strlen(buffer) == 0 && ipos != EOF);
+    while(strlen(buffer) == 0 && !ifs.eof() );
     ifs.seekg(ipos);
 
 
