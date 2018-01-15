@@ -33,6 +33,7 @@ GNU General Public License for more details.
 #include <openbabel/base.h>
 #include <openbabel/residue.h>
 #include <openbabel/math/vector3.h>
+#include <openbabel/elements.h>
 
 namespace OpenBabel
 {
@@ -402,6 +403,10 @@ namespace OpenBabel
           return false;
         else
           return _residue->IsHetAtom(this);
+      }
+      //! \return Is the specified element?
+      bool IsElement(OBElements::Element e) const {
+           return (unsigned)e == _ele;
       }
       //! \return Is the atom aromatic?
       bool IsAromatic()      const;
