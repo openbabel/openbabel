@@ -92,7 +92,7 @@ foreach(origtest ${origtests})
   endif()
 endforeach()
 
-add_definitions(-DTESTDIR=${CMAKE_CURRENT_SOURCE_DIR})
+add_definitions(-DTESTDIR="${CMAKE_CURRENT_SOURCE_DIR}")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 create_test_sourcelist(srclist test_runner.cpp
