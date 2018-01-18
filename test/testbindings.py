@@ -54,6 +54,22 @@ class PybelWrapper(PythonBindings):
 
 class TestSuite(PythonBindings):
 
+    def testAsterisk(self):
+        """Ensure that asterisk in SMILES is bracketed when needed
+        and not otherwise"""
+        smis = [ # these don't need brackets for *
+                "*", "*C", "C*C",
+                # these do need brackets for *
+                "[*+]", "[*-]", "[*H]",
+                "*[H]", # this one is written as [*H]
+                "[1*]", "[*@@](F)(Cl)(Br)I", "[*:1]"]
+
+        for smi in smis:
+            needsbracket = "[" in smi
+            roundtrip = pybel.readstring("smi", smi).write("smi", opt={"a":True})
+            hasbracket = "[" in roundtrip
+            self.assertEqual(hasbracket, needsbracket)
+
     def testSmilesAtomOrder(self):
         """Ensure that SMILES atom order is written correctly"""
         data = [("CC", "1 2"),
@@ -152,7 +168,7 @@ class TestSuite(PythonBindings):
         self.assertEqual("C1=CC=CC#C1", mol.write("smi").rstrip())
 
     def testSmilesParsingOfAllElements(self):
-        smi = "[*][H][He][Li][Be][B][C][N][O][F][Ne][Na][Mg][Al][Si][P][S][Cl][Ar][K][Ca][Sc][Ti][V][Cr][Mn][Fe][Co][Ni][Cu][Zn][Ga][Ge][As][Se][Br][Kr][Rb][Sr][Y][Zr][Nb][Mo][Tc][Ru][Rh][Pd][Ag][Cd][In][Sn][Sb][Te][I][Xe][Cs][Ba][La][Ce][Pr][Nd][Pm][Sm][Eu][Gd][Tb][Dy][Ho][Er][Tm][Yb][Lu][Hf][Ta][W][Re][Os][Ir][Pt][Au][Hg][Tl][Pb][Bi][Po][At][Rn][Fr][Ra][Ac][Th][Pa][U][Np][Pu][Am][Cm][Bk][Cf][Es][Fm][Md][No][Lr][Rf][Db][Sg][Bh][Hs][Mt][Ds][Rg][Cn][Nh][Fl][Mc][Lv][Ts][Og]"
+        smi = "*[H][He][Li][Be][B][C][N][O][F][Ne][Na][Mg][Al][Si][P][S][Cl][Ar][K][Ca][Sc][Ti][V][Cr][Mn][Fe][Co][Ni][Cu][Zn][Ga][Ge][As][Se][Br][Kr][Rb][Sr][Y][Zr][Nb][Mo][Tc][Ru][Rh][Pd][Ag][Cd][In][Sn][Sb][Te][I][Xe][Cs][Ba][La][Ce][Pr][Nd][Pm][Sm][Eu][Gd][Tb][Dy][Ho][Er][Tm][Yb][Lu][Hf][Ta][W][Re][Os][Ir][Pt][Au][Hg][Tl][Pb][Bi][Po][At][Rn][Fr][Ra][Ac][Th][Pa][U][Np][Pu][Am][Cm][Bk][Cf][Es][Fm][Md][No][Lr][Rf][Db][Sg][Bh][Hs][Mt][Ds][Rg][Cn][Nh][Fl][Mc][Lv][Ts][Og]"
         roundtrip = pybel.readstring("smi", smi).write("smi").rstrip()
         self.assertEqual(roundtrip, smi.replace("[O]", "O").replace("[S]", "S"))
         # aromatic
