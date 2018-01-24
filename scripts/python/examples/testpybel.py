@@ -123,6 +123,12 @@ class TestToolkit(myTestCase):
         mol.localopt()
         self.assertNotEqual(mol.atoms[3].coords, (0., 0., 0.))
 
+    def testMake2D(self):
+        """Test that 2D coordinate generation does something"""
+        mol = self.mols[0]
+        mol.make2D()
+        self.assertNotEqual(mol.atoms[3].coords, (0., 0., 0.))
+
     def testMake3D(self):
         """Test that 3D coordinate generation does something"""
         mol = self.mols[0]
@@ -441,6 +447,10 @@ class TestCDK(TestToolkit):
 
     def testLocalOpt(self):
         """No local opt testing done"""
+        pass
+
+    def testMake2D(self):
+        """No 2D coordinate generation done"""
         pass
 
     def testMake3D(self):
