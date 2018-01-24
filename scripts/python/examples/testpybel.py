@@ -125,9 +125,10 @@ class TestToolkit(myTestCase):
 
     def testMake2D(self):
         """Test that 2D coordinate generation does something"""
-        mol = self.mols[0]
+        mol = self.mols[1]
         mol.make2D()
-        self.assertNotEqual(mol.atoms[3].coords, (0., 0., 0.))
+        self.assertNotEqual(mol.atoms[2].coords, (0., 0., 0.))
+        self.assertEqual(mol.atoms[2].coords[2], 0.)
 
     def testMake3D(self):
         """Test that 3D coordinate generation does something"""
