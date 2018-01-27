@@ -2058,21 +2058,22 @@ namespace OpenBabel {
         ChiralSearch = _tetrahedralMap.find(mol.GetAtom(bond->prev));
         if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL) {
           int insertpos = bond->numConnections - 1;
-          if (insertpos < 0) {
+          switch(insertpos) {
+          case -1:
             if (ChiralSearch->second->from != OBStereo::NoRef)
               obErrorLog.ThrowError(__FUNCTION__, "Warning: Overwriting previous from reference id.", obWarning);
-
             (ChiralSearch->second)->from = mol.GetAtom(_prev)->GetId();
-            // cerr << "Adding " << mol.GetAtom(_prev)->GetId() << " at Config.from to " << ChiralSearch->second << endl;
-          } else {
+            break;
+          case 0: case 1: case 2:
             if (ChiralSearch->second->refs[insertpos] != OBStereo::NoRef)
               obErrorLog.ThrowError(__FUNCTION__, "Warning: Overwriting previously set reference id.", obWarning);
-
             (ChiralSearch->second)->refs[insertpos] = mol.GetAtom(_prev)->GetId();
-            // cerr << "Adding " << mol.GetAtom(_prev)->GetId() << " at "
-            //     << insertpos << " to " << ChiralSearch->second << endl;
+            break;
+          default:
+            obErrorLog.ThrowError(__FUNCTION__, "Warning: Tetrahedral stereo specified for atom with more than 4 connections.", obWarning);
+            break;
           }
-       }
+        }
 
         //CM ensure neither atoms in ring closure is a radical centre
         OBAtom* patom = mol.GetAtom(_prev);
