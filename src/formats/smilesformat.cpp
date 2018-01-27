@@ -442,10 +442,14 @@ namespace OpenBabel {
       case '0': case '1': case '2': case '3': case '4':
       case '5': case '6': case '7': case '8': case '9':
       case '%':  //ring open/close
+        if (_prev == 0)
+          return false;
         if (!ParseRingBond(mol))
           return false;
         break;
       case '&': //external bond
+        if (_prev == 0)
+          return false;
         if (!ParseExternalBond(mol))
           return false;
         break;
@@ -470,25 +474,39 @@ namespace OpenBabel {
         }
         break;
       case '-':
+        if (_prev == 0)
+          return false;
         _order = 1;
         break;
       case '=':
+        if (_prev == 0)
+          return false;
         _order = 2;
         break;
       case '#':
+        if (_prev == 0)
+          return false;
         _order = 3;
         break;
       case '$':
+        if (_prev == 0)
+          return false;
         _order = 4;
         break;
       case ':':
+        if (_prev == 0)
+          return false;
         _order = 0; // no-op
         break;
       case '/':
+        if (_prev == 0)
+          return false;
         _order = 1;
         _updown = BondDownChar;
         break;
       case '\\':
+        if (_prev == 0)
+          return false;
         _order = 1;
         _updown = BondUpChar;
         break;
@@ -2000,6 +2018,11 @@ namespace OpenBabel {
     int upDown, bondOrder;
     for (bond = _rclose.begin(); bond != _rclose.end(); ++bond) {
       if (bond->digit == digit) {
+        // Check for self-bonding, e.g. C11
+        if (bond->prev == _prev) {
+          obErrorLog.ThrowError(__FUNCTION__, "Invalid SMILES: Ring closures imply atom bonded to itself.", obWarning);
+          return false;
+        }
         upDown = (_updown > bond->updown) ? _updown : bond->updown;
         bondOrder = (_order > bond->order) ? _order : bond->order;
         // Check if this ring closure bond may be aromatic and set order accordingly
