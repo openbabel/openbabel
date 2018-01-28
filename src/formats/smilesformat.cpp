@@ -1675,7 +1675,7 @@ namespace OpenBabel {
           {
           case '@':
             _ptr++;
-            if (*_ptr == 'S') {
+            if (*_ptr == 'S' && _ptr[1] == 'P') { // @SP1/2/3
               // square planar atom found
               squarePlanarWatch = true;
               if (_squarePlanarMap.find(atom)==_squarePlanarMap.end()) // Prevent memory leak for malformed smiles (PR#3428432)
@@ -1683,12 +1683,17 @@ namespace OpenBabel {
               _squarePlanarMap[atom]->refs = OBStereo::Refs(4, OBStereo::NoRef);
               _squarePlanarMap[atom]->center = atom->GetId();
               _ptr += 2;
-              if (*_ptr == '1')
-                _squarePlanarMap[atom]->shape = OBStereo::ShapeU;
-              if (*_ptr == '2')
-                _squarePlanarMap[atom]->shape = OBStereo::Shape4;
-              if (*_ptr == '3')
-                _squarePlanarMap[atom]->shape = OBStereo::ShapeZ;
+              switch(*_ptr) {
+              case '1':
+                _squarePlanarMap[atom]->shape = OBStereo::ShapeU; break;
+              case '2':
+                _squarePlanarMap[atom]->shape = OBStereo::Shape4; break;
+              case '3':
+                _squarePlanarMap[atom]->shape = OBStereo::ShapeZ; break;
+              default:
+                obErrorLog.ThrowError(__FUNCTION__, "Square planar stereochemistry must be one of SP1, SP2 or SP3", obWarning);
+                return false;
+              }
             } else {
               // tetrahedral atom found
               chiralWatch=true;
