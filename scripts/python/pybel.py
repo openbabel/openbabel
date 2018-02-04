@@ -575,10 +575,7 @@ class Molecule(object):
         ff.GetCoordinates(self.OBMol)
 
     def make2D(self):
-        """Generate 2D coordinates.
-
-        OASA is used for 2D coordinate generation.
-        """
+        """Generate 2D coordinates."""
         _operations['gen2D'].Do(self.OBMol)
 
     def make3D(self, forcefield="mmff94", steps=50):
