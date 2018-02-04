@@ -1341,7 +1341,7 @@ namespace OpenBabel
 
     char num_rotors_to_permute, num_permutations;
     if (permute)
-      num_rotors_to_permute = std::min<size_t> (4, vrotors.size());
+      num_rotors_to_permute = (char)std::min<size_t> (4, vrotors.size());
     else
       num_rotors_to_permute = 1; // i.e. just use the original order
     num_permutations = factorial[num_rotors_to_permute];
