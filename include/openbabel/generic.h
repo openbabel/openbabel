@@ -1148,7 +1148,7 @@ namespace OpenBabel
 
     int NumPoints() 
     { 
-      return _points.size(); 
+      return (int)_points.size();
     }
     
     void AddPoint(double x,double y,double z, double V) 
