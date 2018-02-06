@@ -193,6 +193,35 @@ class TestSuite(PythonBindings):
         mol.atoms[0].OBAtom.SetIsotope(65535)
         self.assertEqual(mol.write("smi").rstrip(), "[C]")
 
+    def testOBMolSeparatePreservesAtomOrder(self):
+        """Originally Separate() preserved DFS order rather
+        than atom order"""
+        # First test
+        smi = "C123.F3.Cl2.Br1"
+        mol = pybel.readstring("smi", smi)
+        atomicnums = [atom.OBAtom.GetAtomicNum() for atom in mol]
+        mols = mol.OBMol.Separate()
+        new_atomicnums = [atom.OBAtom.GetAtomicNum() for atom in pybel.Molecule(mols[0])]
+        for x, y in zip(atomicnums, new_atomicnums):
+            self.assertEqual(x, y) # check that the atoms have not been permuted
+        # Second test
+        xyz = """6
+examples/water_dimer.xyz
+O          0.12908       -0.26336        0.64798
+H          0.89795        0.28805        0.85518
+H          0.10833       -0.20468       -0.33302
+O          0.31020        0.07569       -2.07524
+H          0.64083       -0.57862       -2.71449
+H         -0.26065        0.64232       -2.62218
+"""
+        mol = pybel.readstring("xyz", xyz)
+        mols = mol.OBMol.Separate()
+        allatoms = pybel.Molecule(mols[0]).atoms + pybel.Molecule(mols[1]).atoms
+        for idx, atom in enumerate(allatoms):
+            xcoord = atom.OBAtom.GetX()
+            orig_xcoord = mol.OBMol.GetAtom(idx+1).GetX()
+            self.assertEqual(xcoord, orig_xcoord)
+
     def testStereoRefsAfterAddingOBMols(self):
         """The stereo ref for an implicit H ref was being set to 0"""
         smis = ["C", "[C@@H](Br)(Cl)I"]

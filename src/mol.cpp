@@ -3989,12 +3989,22 @@ namespace OpenBabel
     if( ! iter ) return false;
 
     newmol.SetDimension(GetDimension());
-    map<OBAtom*, OBAtom*> AtomMap;//key is from old mol; value from new mol
+
+    // We want to keep the atoms in their original order rather than use
+    // the DFS order so just record the information first
+    OBBitVec infragment(this->NumAtoms()+1);
     do { //for each atom in fragment
-      OBAtom* pnext = &*iter;
-      newmol.AddAtom(*pnext); //each subsequent atom with its bond
-      AtomMap[pnext] = newmol.GetAtom(newmol.NumAtoms());
-    }while((iter++).next());
+      infragment.SetBitOn(iter->GetIdx());
+    } while ((iter++).next());
+
+    // Now add the atoms
+    map<OBAtom*, OBAtom*> AtomMap;//key is from old mol; value from new mol
+    int bit;
+    for (bit = infragment.FirstBit(); bit != infragment.EndBit(); bit = infragment.NextBit(bit)) {
+      OBAtom* atom = this->GetAtom(bit);
+      newmol.AddAtom(*atom); // each subsequent atom
+      AtomMap[&*atom] = newmol.GetAtom(newmol.NumAtoms());
+    }
 
     // Update Stereo
     std::vector<OBGenericData*>::iterator data;
