@@ -82,9 +82,11 @@ if (DO_PYTHON_BINDINGS)
               COMMAND ${CMAKE_COMMAND} -E echo "import sys" > ob.py
               COMMAND ${CMAKE_COMMAND} -E echo "if sys.platform.find('linux'\) != -1:" >> ob.py
               COMMAND ${CMAKE_COMMAND} -E echo "  import ctypes" >> ob.py
+              COMMAND ${CMAKE_COMMAND} -E echo "  flags = sys.getdlopenflags()" >> ob.py
               COMMAND ${CMAKE_COMMAND} -E echo "  sys.setdlopenflags(sys.getdlopenflags() | ctypes.RTLD_GLOBAL)" >> ob.py
-              COMMAND cat ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E copy ob.py ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
+              COMMAND ${CMAKE_COMMAND} -E echo "  OBPlugin.LoadAllPlugins()" >> ob.py
+              COMMAND ${CMAKE_COMMAND} -E echo "  sys.setdlopenflags(flags)" >> ob.py
+              COMMAND cat ob.py >> ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
               COMMAND ${CMAKE_COMMAND} -E remove ob.py
               MAIN_DEPENDENCY openbabel-python.i
               VERBATIM
