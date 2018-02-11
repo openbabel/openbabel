@@ -382,6 +382,7 @@ if(${CMAKE_CXX_COMPILER_ID} MATCHES Intel AND UNIX)
 
   # define WITH_SSE2 to enable the SSE2 instruction set.
   # Available on Pentium 4, Athlon 64, and newer CPUs.
+  # TODO: Remove this? Should be handled by -march=native and only enabled if OPTIMIZE_NATIVE is ON
   if(CMAKE_SIZEOF_VOID_P EQUAL 8 OR WITH_SSE2)
     message(STATUS "Enabling the SSE2 instruction set")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse2")
@@ -468,12 +469,13 @@ endif(CAIRO_FOUND)
 
 # Should we enable optimizations for the native CPU architecture?
 # (this will speed up similarity calculations and maybe those involving Eigen)
-if(NOT MSVC)
-  option(OPTIMIZE_NATIVE "Optimize for native CPU architecture. Turn off if compiling for distribution/reuse on other machines." OFF)
-  if(OPTIMIZE_NATIVE)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
-    message(STATUS "Optimizing code for this machine's CPU architecture. Use -DOPTIMIZE_NATIVE=OFF if compiling for distribution/reuse on other machines.")
+option(OPTIMIZE_NATIVE "Optimize for native CPU architecture. Turn off if compiling for distribution/reuse on other machines." OFF)
+if(OPTIMIZE_NATIVE)
+  include(OptimizeNative)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${NATIVE_FLAGS}")
   endif()
+  add_definitions(-DOPTIMIZE_NATIVE)
+  message(STATUS "Optimizing code for this machine's CPU architecture. Use -DOPTIMIZE_NATIVE=OFF if compiling for distribution/reuse on other machines.")
 endif()
 
 add_subdirectory(include)
