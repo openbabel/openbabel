@@ -79,15 +79,6 @@ if (DO_PYTHON_BINDINGS)
       else(WIN32)
         add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
             COMMAND ${SWIG_EXECUTABLE} -python -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${eigen_define} -outdir ${openbabel_SOURCE_DIR}/scripts/python ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
-              COMMAND ${CMAKE_COMMAND} -E echo "import sys" > ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "if sys.platform.find('linux'\) != -1:" >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "  import ctypes" >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "  flags = sys.getdlopenflags()" >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "  sys.setdlopenflags(sys.getdlopenflags() | ctypes.RTLD_GLOBAL)" >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "  OBPlugin.LoadAllPlugins()" >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "  sys.setdlopenflags(flags)" >> ob.py
-              COMMAND cat ob.py >> ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
-              COMMAND ${CMAKE_COMMAND} -E remove ob.py
               MAIN_DEPENDENCY openbabel-python.i
               VERBATIM
               )
