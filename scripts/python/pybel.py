@@ -297,7 +297,7 @@ class Molecule(object):
     (refer to the Open Babel library documentation for more info).
 
     Methods:
-       addh(), calcfp(), calcdesc(), draw(), localopt(), make3D(),
+       addh(), calcfp(), calcdesc(), draw(), localopt(), make2D(), make3D()
        calccharges(), removeh(), write()
 
     The underlying Open Babel molecule can be accessed using the attribute:
@@ -573,6 +573,10 @@ class Molecule(object):
             return
         ff.SteepestDescent(steps)
         ff.GetCoordinates(self.OBMol)
+
+    def make2D(self):
+        """Generate 2D coordinates."""
+        _operations['gen2D'].Do(self.OBMol)
 
     def make3D(self, forcefield="mmff94", steps=50):
         """Generate 3D coordinates.

@@ -64,6 +64,21 @@
 #include <openbabel/stereo/squareplanar.h>
 #include <openbabel/stereo/bindings.h>
 %}
+
+// Set and reset dlopenflags so that plugin loading works fine for "import _openbabel"
+%pythonbegin %{
+import sys
+if sys.platform.find("linux") != -1:
+    dlflags = sys.getdlopenflags()
+    import ctypes
+    sys.setdlopenflags(dlflags | ctypes.RTLD_GLOBAL)
+%}
+%pythoncode %{
+if sys.platform.find("linux") != -1:
+    sys.setdlopenflags(dlflags)
+%}
+
+
 // Ignore methods that require std::vector of OBAtom.
 %ignore OpenBabel::OBMol::FindChildren(std::vector< OBAtom * > &, OBAtom *, OBAtom *);
 %ignore OpenBabel::OBResidue::GetAtoms;

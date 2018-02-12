@@ -442,10 +442,14 @@ namespace OpenBabel {
       case '0': case '1': case '2': case '3': case '4':
       case '5': case '6': case '7': case '8': case '9':
       case '%':  //ring open/close
+        if (_prev == 0)
+          return false;
         if (!ParseRingBond(mol))
           return false;
         break;
       case '&': //external bond
+        if (_prev == 0)
+          return false;
         if (!ParseExternalBond(mol))
           return false;
         break;
@@ -470,25 +474,39 @@ namespace OpenBabel {
         }
         break;
       case '-':
+        if (_prev == 0)
+          return false;
         _order = 1;
         break;
       case '=':
+        if (_prev == 0)
+          return false;
         _order = 2;
         break;
       case '#':
+        if (_prev == 0)
+          return false;
         _order = 3;
         break;
       case '$':
+        if (_prev == 0)
+          return false;
         _order = 4;
         break;
       case ':':
+        if (_prev == 0)
+          return false;
         _order = 0; // no-op
         break;
       case '/':
+        if (_prev == 0)
+          return false;
         _order = 1;
         _updown = BondDownChar;
         break;
       case '\\':
+        if (_prev == 0)
+          return false;
         _order = 1;
         _updown = BondUpChar;
         break;
@@ -852,23 +870,23 @@ namespace OpenBabel {
     if (ChiralSearch != _squarePlanarMap.end() && ChiralSearch->second != NULL)
     {
       int insertpos = NumConnections(ChiralSearch->first) - 1;
-      if (insertpos < 0) {
+      switch(insertpos) {
+      case -1:
         if (ChiralSearch->second->refs[0] != OBStereo::NoRef)
           obErrorLog.ThrowError(__FUNCTION__, "Warning: Overwriting previous from reference id.", obWarning);
-
         (ChiralSearch->second)->refs[0] = id;
-        //cerr << "Adding " << id << " at Config.refs[0] to " << ChiralSearch->second << endl;
-      } else {
+        break;
+      case 0: case 1: case 2: case 3:
         if (ChiralSearch->second->refs[insertpos] != OBStereo::NoRef)
           obErrorLog.ThrowError(__FUNCTION__, "Warning: Overwriting previously set reference id.", obWarning);
-
         (ChiralSearch->second)->refs[insertpos] = id;
-        //cerr << "Adding " << id << " at " << insertpos << " to " << ChiralSearch->second << endl;
+        break;
+      default:
+        obErrorLog.ThrowError(__FUNCTION__, "Warning: Square planar stereo specified for atom with more than 4 connections.", obWarning);
+        break;
       }
     }
   }
-
-
 
   bool OBSmilesParser::ParseSimple(OBMol &mol)
   {
@@ -1657,7 +1675,7 @@ namespace OpenBabel {
           {
           case '@':
             _ptr++;
-            if (*_ptr == 'S') {
+            if (*_ptr == 'S' && _ptr[1] == 'P') { // @SP1/2/3
               // square planar atom found
               squarePlanarWatch = true;
               if (_squarePlanarMap.find(atom)==_squarePlanarMap.end()) // Prevent memory leak for malformed smiles (PR#3428432)
@@ -1665,12 +1683,17 @@ namespace OpenBabel {
               _squarePlanarMap[atom]->refs = OBStereo::Refs(4, OBStereo::NoRef);
               _squarePlanarMap[atom]->center = atom->GetId();
               _ptr += 2;
-              if (*_ptr == '1')
-                _squarePlanarMap[atom]->shape = OBStereo::ShapeU;
-              if (*_ptr == '2')
-                _squarePlanarMap[atom]->shape = OBStereo::Shape4;
-              if (*_ptr == '3')
-                _squarePlanarMap[atom]->shape = OBStereo::ShapeZ;
+              switch(*_ptr) {
+              case '1':
+                _squarePlanarMap[atom]->shape = OBStereo::ShapeU; break;
+              case '2':
+                _squarePlanarMap[atom]->shape = OBStereo::Shape4; break;
+              case '3':
+                _squarePlanarMap[atom]->shape = OBStereo::ShapeZ; break;
+              default:
+                obErrorLog.ThrowError(__FUNCTION__, "Square planar stereochemistry must be one of SP1, SP2 or SP3", obWarning);
+                return false;
+              }
             } else {
               // tetrahedral atom found
               chiralWatch=true;
@@ -1753,7 +1776,7 @@ namespace OpenBabel {
 
     if (charge) {
       atom->SetFormalCharge(charge);
-      if (abs(charge) > 10 || charge > element) { // if the charge is +/- 10 or more than the number of electrons
+      if (abs(charge) > 10 || (element && charge > element)) { // if the charge is +/- 10 or more than the number of electrons
         errorMsg << "Atom " << atom->GetIdx() << " had an unrealistic charge of " << charge 
                  << "." << endl;
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
@@ -2000,6 +2023,11 @@ namespace OpenBabel {
     int upDown, bondOrder;
     for (bond = _rclose.begin(); bond != _rclose.end(); ++bond) {
       if (bond->digit == digit) {
+        // Check for self-bonding, e.g. C11
+        if (bond->prev == _prev) {
+          obErrorLog.ThrowError(__FUNCTION__, "Invalid SMILES: Ring closures imply atom bonded to itself.", obWarning);
+          return false;
+        }
         upDown = (_updown > bond->updown) ? _updown : bond->updown;
         bondOrder = (_order > bond->order) ? _order : bond->order;
         // Check if this ring closure bond may be aromatic and set order accordingly
@@ -2035,21 +2063,22 @@ namespace OpenBabel {
         ChiralSearch = _tetrahedralMap.find(mol.GetAtom(bond->prev));
         if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL) {
           int insertpos = bond->numConnections - 1;
-          if (insertpos < 0) {
+          switch(insertpos) {
+          case -1:
             if (ChiralSearch->second->from != OBStereo::NoRef)
               obErrorLog.ThrowError(__FUNCTION__, "Warning: Overwriting previous from reference id.", obWarning);
-
             (ChiralSearch->second)->from = mol.GetAtom(_prev)->GetId();
-            // cerr << "Adding " << mol.GetAtom(_prev)->GetId() << " at Config.from to " << ChiralSearch->second << endl;
-          } else {
+            break;
+          case 0: case 1: case 2:
             if (ChiralSearch->second->refs[insertpos] != OBStereo::NoRef)
               obErrorLog.ThrowError(__FUNCTION__, "Warning: Overwriting previously set reference id.", obWarning);
-
             (ChiralSearch->second)->refs[insertpos] = mol.GetAtom(_prev)->GetId();
-            // cerr << "Adding " << mol.GetAtom(_prev)->GetId() << " at "
-            //     << insertpos << " to " << ChiralSearch->second << endl;
+            break;
+          default:
+            obErrorLog.ThrowError(__FUNCTION__, "Warning: Tetrahedral stereo specified for atom with more than 4 connections.", obWarning);
+            break;
           }
-       }
+        }
 
         //CM ensure neither atoms in ring closure is a radical centre
         OBAtom* patom = mol.GetAtom(_prev);
@@ -2613,13 +2642,19 @@ namespace OpenBabel {
     else {
       numImplicitHs = atom->GetImplicitHCount() + numExplicitHsToSuppress;
       if (!bracketElement) {
-        int bosum = atom->BOSum() - numExplicitHsToSuppress;
-        unsigned int implicitValence = SmilesValence(element, bosum, false);
-        unsigned int defaultNumImplicitHs = implicitValence - bosum;
-        if (implicitValence == 0 // hypervalent
-           ||  numImplicitHs != defaultNumImplicitHs // undervalent
-           || (!options.kekulesmi && element != 6 && atom->IsAromatic() && numImplicitHs != 0) ) // aromatic nitrogen/phosphorus
-          bracketElement = true;
+        if (element == 0) { // asterisk is always hypervalent but we don't bracket it unless has Hs
+          if (numImplicitHs > 0)
+            bracketElement = true;
+        }
+        else {
+          int bosum = atom->BOSum() - numExplicitHsToSuppress;
+          unsigned int implicitValence = SmilesValence(element, bosum, false);
+          unsigned int defaultNumImplicitHs = implicitValence - bosum;
+          if (implicitValence == 0 // hypervalent
+             ||  numImplicitHs != defaultNumImplicitHs // undervalent
+             || (!options.kekulesmi && element != 6 && atom->IsAromatic() && numImplicitHs != 0) ) // aromatic nitrogen/phosphorus
+            bracketElement = true;
+        }
       }
     }
 
