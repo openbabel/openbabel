@@ -117,6 +117,46 @@ class TestSuite(PythonBindings):
         mol.removeh()
         self.assertEqual(mol.write("smi", opt={"a":True}).rstrip(), "C[NH:2]")
 
+    def testSquarePlanar(self):
+        """Tighten up the parsing of SP stereochemistry in SMILES"""
+        good = [
+                "C[S@SP1](Cl)(Br)I",
+                "C[S@SP2](Cl)(Br)I",
+                "C[S@SP3](Cl)(Br)I",
+                ]
+        bad = [ # raises error
+                "C[S@SP0](Cl)(Br)I",
+                "C[S@SP4](Cl)(Br)I",
+                "C[S@@SP1](Cl)(Br)I",
+                "C[S@SP11](Cl)(Br)I",
+                "C[S@SO1](Cl)(Br)I",
+              ]
+        alsobad = [ # just a warning
+                "C[S@SP1](Cl)(Br)(F)I",
+                "C[S@SP1](Cl)(Br)(F)1CCCC1",
+                ]
+        for smi in good:
+            mol = pybel.readstring("smi", smi)
+            self.assertTrue(mol.OBMol.GetData(ob.StereoData))
+        for smi in bad:
+            self.assertRaises(IOError, pybel.readstring, "smi", smi)
+        for smi in alsobad:
+            mol = pybel.readstring("smi", smi)
+            self.assertTrue(mol.OBMol.GetData(ob.StereoData))
+
+    def testFuzzingTestCases(self):
+        """Ensure that fuzzing testcases do not cause crashes"""
+
+        # rejected as invalid smiles
+        smis = [r"\0", "&0", "=&",
+                "[H][S][S][S@S00]0[S][S@S00H](0[S@S00][S])0n"]
+        for smi in smis:
+            self.assertRaises(IOError, pybel.readstring, "smi", smi)
+
+        smis = ["c0C[C@H](B)00O0"] # warning and stereo ignored
+        for smi in smis:
+            pybel.readstring("smi", smi)
+
     def testImplicitCisDblBond(self):
         """Ensure that dbl bonds in rings of size 8 or less are always
         implicitly cis"""
