@@ -404,9 +404,9 @@ namespace OpenBabel
         else
           return _residue->IsHetAtom(this);
       }
-      //! \return Is the specified element?
-      bool IsElement(OBElements::Element e) const {
-           return (unsigned)e == _ele;
+      //! \return Is the specified element, as specified by atom number (see OBElement namespace)?
+      bool IsElement(const unsigned int e) const {
+           return e == _ele;
       }
       //! \return Is the atom aromatic?
       bool IsAromatic()      const;
