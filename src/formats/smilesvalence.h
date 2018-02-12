@@ -19,6 +19,7 @@ GNU General Public License for more details.
 static bool IsOutsideOrganicSubset(unsigned int elem)
 {
   switch (elem) {
+  case  0: // *
   case  5: // B
   case  6: // C
   case  7: // N

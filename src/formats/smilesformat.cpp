@@ -1753,7 +1753,7 @@ namespace OpenBabel {
 
     if (charge) {
       atom->SetFormalCharge(charge);
-      if (abs(charge) > 10 || charge > element) { // if the charge is +/- 10 or more than the number of electrons
+      if (abs(charge) > 10 || (element && charge > element)) { // if the charge is +/- 10 or more than the number of electrons
         errorMsg << "Atom " << atom->GetIdx() << " had an unrealistic charge of " << charge 
                  << "." << endl;
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
@@ -2613,13 +2613,19 @@ namespace OpenBabel {
     else {
       numImplicitHs = atom->GetImplicitHCount() + numExplicitHsToSuppress;
       if (!bracketElement) {
-        int bosum = atom->BOSum() - numExplicitHsToSuppress;
-        unsigned int implicitValence = SmilesValence(element, bosum, false);
-        unsigned int defaultNumImplicitHs = implicitValence - bosum;
-        if (implicitValence == 0 // hypervalent
-           ||  numImplicitHs != defaultNumImplicitHs // undervalent
-           || (!options.kekulesmi && element != 6 && atom->IsAromatic() && numImplicitHs != 0) ) // aromatic nitrogen/phosphorus
-          bracketElement = true;
+        if (element == 0) { // asterisk is always hypervalent but we don't bracket it unless has Hs
+          if (numImplicitHs > 0)
+            bracketElement = true;
+        }
+        else {
+          int bosum = atom->BOSum() - numExplicitHsToSuppress;
+          unsigned int implicitValence = SmilesValence(element, bosum, false);
+          unsigned int defaultNumImplicitHs = implicitValence - bosum;
+          if (implicitValence == 0 // hypervalent
+             ||  numImplicitHs != defaultNumImplicitHs // undervalent
+             || (!options.kekulesmi && element != 6 && atom->IsAromatic() && numImplicitHs != 0) ) // aromatic nitrogen/phosphorus
+            bracketElement = true;
+        }
       }
     }
 
