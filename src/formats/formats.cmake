@@ -67,16 +67,12 @@ if(MSVC OR HAVE_REGEX_H)
   )
 endif(MSVC OR HAVE_REGEX_H)
 
-# Support JSON format with MSVC only if JSON_LIBRARY is specified
-if(NOT MSVC OR JSON_LIBRARY)
+
+if(WITH_JSON)
   set(formats_json
     chemdoodlejsonformat
     pubchemjsonformat
   )
-  set(json_additional_sources json/customwriter.cpp)
-  if(NOT MSVC) # With MSVC, we link to the .dll rather than compiling it in
-    set(json_additional_sources json/jsoncpp.cpp ${json_additional_sources})
-  endif()
 endif()
 
 set(formats_misc
