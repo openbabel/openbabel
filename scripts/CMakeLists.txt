@@ -70,22 +70,14 @@ if (DO_PYTHON_BINDINGS)
     )
 
     if(RUN_SWIG)
-      if(WIN32) # Skip the extra COMMANDs below as 'cat' is not present on Windows
-        add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
-            COMMAND ${SWIG_EXECUTABLE} -python -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${eigen_define} -outdir ${openbabel_SOURCE_DIR}/scripts/python ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
+      add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel.py
+      COMMAND ${SWIG_EXECUTABLE} -python -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel-python.cpp ${eigen_define} -outdir ${openbabel_SOURCE_DIR}/scripts/python/openbabel ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
               MAIN_DEPENDENCY openbabel-python.i
               VERBATIM
               )
-      else(WIN32)
-        add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
-            COMMAND ${SWIG_EXECUTABLE} -python -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${eigen_define} -outdir ${openbabel_SOURCE_DIR}/scripts/python ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
-              MAIN_DEPENDENCY openbabel-python.i
-              VERBATIM
-              )
-      endif(WIN32)
     endif(RUN_SWIG)
 
-    add_library(bindings_python MODULE ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp)
+    add_library(bindings_python MODULE ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel-python.cpp)
 
     if(APPLE)
       # Don't link against Python library on Mac
@@ -122,10 +114,10 @@ if (DO_PYTHON_BINDINGS)
         install(TARGETS bindings_python
                 LIBRARY DESTINATION ${PYTHON_INSTDIR}
                 COMPONENT bindings_python)
-        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel.py
                 DESTINATION ${PYTHON_INSTDIR}
                 COMPONENT bindings_python)
-        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/pybel.py
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/pybel.py
                 DESTINATION ${PYTHON_INSTDIR}
                 COMPONENT bindings_python)
     else(NOT WIN32)
@@ -146,10 +138,13 @@ if (DO_PYTHON_BINDINGS)
         install(TARGETS bindings_python
                 LIBRARY DESTINATION ${PYTHON_INSTDIR}
                 COMPONENT bindings_python)
-        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/__init__.py
                 DESTINATION ${PYTHON_INSTDIR}
                 COMPONENT bindings_python)
-        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/pybel.py
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel.py
+                DESTINATION ${PYTHON_INSTDIR}
+                COMPONENT bindings_python)
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/pybel.py
                 DESTINATION ${PYTHON_INSTDIR}
                 COMPONENT bindings_python)
         add_custom_command(TARGET bindings_python POST_BUILD
