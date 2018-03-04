@@ -70,10 +70,16 @@ namespace OpenBabel
   {
     switch (nbr->GetAtomicNum()) {
     case 8:
-      // e.g. pyridine N-oxide as the double bond form
-      if (atom->GetAtomicNum() == 7 && TotalNumberOfBonds(atom) == 3 &&
-          atom->GetFormalCharge() == 0)
-        return true;
+      switch(atom->GetAtomicNum()) {
+      case 7: // e.g. pyridine N-oxide as the double bond form
+        if (TotalNumberOfBonds(atom) == 3 && atom->GetFormalCharge() == 0)
+          return true;
+        break;
+      case 16: // e.g. BIOVIA's Cs1(=O)ccccn1
+        if (TotalNumberOfBonds(atom) == 4 && atom->GetFormalCharge() == 0)
+          return true;
+        break;
+      }
       break;
     case 16:
       // ?? TODO ??

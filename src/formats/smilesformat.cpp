@@ -577,7 +577,7 @@ namespace OpenBabel {
         errorMsg << " (title is " << title << ")";
       errorMsg << endl;
       obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
-      // return false; Should we return false for a kekulization failure?
+      // return false; // Should we return false for a kekulization failure?
     }
 
     // Add the data stored inside the _tetrahedralMap to the atoms now after end
