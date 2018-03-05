@@ -452,8 +452,16 @@ namespace OpenBabel
           SetAtomicNumAndIsotope(patom, symbol.c_str());
         }
         // mass difference
-        if (line.size() >= 35)
+        if (line.size() >= 35) {
           massdiff = ReadIntField(line.substr(34, 2).c_str());
+          if (massdiff < -3 || massdiff > 4) {
+            obErrorLog.ThrowError(__FUNCTION__, "Invalid value for mass difference. It should be between -3 and 4.\n" + line, obWarning);
+            massdiff = 0;
+          } else if (massdiff != 0 && patom->GetIsotope() != 0) {
+            obErrorLog.ThrowError(__FUNCTION__, "Ignoring mass difference field for explicit hydrogen isotope.\n" + line, obWarning);
+            massdiff = 0;
+          }
+        }
         massDiffs.push_back(massdiff);
         // charge
         if (line.size() >= 38)
@@ -714,7 +722,7 @@ namespace OpenBabel
         FOR_ATOMS_OF_MOL (a, mol) {
           int massDifference = massDiffs.at(a->GetIndex());
           if (massDifference)
-            a->SetIsotope((int)(OBElements::GetMass(a->GetAtomicNum()) + massDifference));
+            a->SetIsotope((int)(OBElements::GetMass(a->GetAtomicNum()) + massDifference + 0.5));
         }
 
       // If no CHG, RAD, ZBO, ZCH or HYD properties are found, use the charges from the atom block
