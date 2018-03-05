@@ -172,6 +172,17 @@ class TestSuite(PythonBindings):
         roundtrip = pybel.readstring("smi", ringsmi).write("smi")
         self.assertTrue("/" in roundtrip)
 
+    def testKekulizationOfHypervalents(self):
+        # We should support hypervalent aromatic S and N (the latter
+        # as we write them)
+        data = [("Cs1(=O)ccccn1",
+                 "CS1(=O)=NC=CC=C1"),
+                ("n1c2-c(c3cccc4cccc2c34)n(=N)c2ccccc12",
+                 "n1c2-c(c3cccc4cccc2c34)n(=N)c2ccccc12")]
+        for inp, out in data:
+            mol = pybel.readstring("smi", inp)
+            self.assertEqual(out, mol.write("smi").rstrip())
+
     def testKekulizationOfcn(self):
         """We were previously not reading 'cn' correctly, or at least how
         Daylight would"""
