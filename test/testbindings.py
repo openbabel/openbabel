@@ -172,11 +172,57 @@ class TestSuite(PythonBindings):
         roundtrip = pybel.readstring("smi", ringsmi).write("smi")
         self.assertTrue("/" in roundtrip)
 
+    def testKekulizationOfHypervalents(self):
+        # We should support hypervalent aromatic S and N (the latter
+        # as we write them)
+        data = [("Cs1(=O)ccccn1",
+                 "CS1(=O)=NC=CC=C1"),
+                ("n1c2-c(c3cccc4cccc2c34)n(=N)c2ccccc12",
+                 "n1c2-c(c3cccc4cccc2c34)n(=N)c2ccccc12")]
+        for inp, out in data:
+            mol = pybel.readstring("smi", inp)
+            self.assertEqual(out, mol.write("smi").rstrip())
+
     def testKekulizationOfcn(self):
         """We were previously not reading 'cn' correctly, or at least how
         Daylight would"""
         mol = pybel.readstring("smi", "cn")
         self.assertEqual("C=N", mol.write("smi").rstrip())
+
+    def testReadingMassDifferenceInMolfiles(self):
+        """Previously we were rounding incorrectly when reading the mass diff"""
+        template = """
+ OpenBabel02181811152D
+
+  1  0  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 %2s %2d  0  0  0  0  0  0  0  0  0  0  0
+M  END
+"""
+        # Positive test cases:
+        # These are the BIOVIA Draw answers for the first 50 elements for
+        # a mass diff of 1
+        answers = [2,5,8,10,12,13,15,17,20,21,24,25,28,29,32,33,36,41,40,41,46,49,52,53,56,57,60,60,65,66,71,74,76,80,81,85,86,89,90,92,94,97,99,102,104,107,109,113,116,120,123]
+        for idx, answer in enumerate(answers):
+            elem = idx + 1
+            molfile = template % (ob.GetSymbol(elem), 1)
+            mol = pybel.readstring("mol", molfile).OBMol
+            iso = mol.GetAtom(1).GetIsotope()
+            self.assertEqual(answer, iso)
+
+        # Also test D and T - BIOVIA Draw ignores the mass diff
+        for elem, answer in zip("DT", [2, 3]):
+            molfile = template % (elem, 1)
+            mol = pybel.readstring("mol", molfile).OBMol
+            iso = mol.GetAtom(1).GetIsotope()
+            self.assertEqual(answer, iso)
+
+        # Negative test cases:
+        # Test error message for out-of-range values
+        for value in [5, -4]:
+            molfile = template % ("C", value)
+            mol = pybel.readstring("mol", molfile).OBMol
+            iso = mol.GetAtom(1).GetIsotope()
+            self.assertEqual(0, iso)
 
     def testInvalidCharsInSmiles(self):
         """Check that inserting a comma in a SMILES string in various positions
