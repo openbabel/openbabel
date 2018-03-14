@@ -840,6 +840,10 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol & mol = *pmol;
 
+    if(!mol.HasAromaticPerceived()) { //need aromaticity for correct atom typing
+      aromtyper.AssignAromaticFlags(mol);
+    }
+
     if (pConv->IsOption("b",OBConversion::OUTOPTIONS)) {mol.ConnectTheDots(); mol.PerceiveBondOrders();}
     vector <OBMol> all_pieces;
     if ( ((pConv->IsOption("c",OBConversion::OUTOPTIONS)!=NULL) && (pConv->IsOption("r",OBConversion::OUTOPTIONS)!=NULL))
@@ -871,6 +875,7 @@ namespace OpenBabel
       }
 
       all_pieces.at(i).SetAutomaticPartialCharge(false);
+      all_pieces.at(i).SetAromaticPerceived(); //retain aromatic flags in fragments
       if (!(pConv->IsOption("h",OBConversion::OUTOPTIONS))) {
       	DeleteHydrogens(all_pieces.at(i));
 			}
@@ -1012,6 +1017,7 @@ namespace OpenBabel
 
       bool preserve_original_index = (pConv->IsOption("p",OBConversion::OUTOPTIONS));
       if (!flexible) {preserve_original_index=false;} //no need to relabel if we are preserving the original order anyway
+
       if (!OutputTree(pConv, all_pieces.at(i), ofs, tree, rotatable_bonds, false, preserve_original_index) )
 //      if (!OutputTree(mol, ofs, tree, rotatable_bonds, false, preserve_original_index) )
       {
