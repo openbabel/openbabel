@@ -312,7 +312,7 @@ namespace OpenBabel {
            * or have a non-zero nuclear charge
            */
           if (atof((char*) vs[5].c_str()) > 0.0) {
-            atomicNum = etab.GetAtomicNum(vs[0].substr(0, 1).c_str());
+            atomicNum = OBElements::GetAtomicNum(vs[0].substr(0, 1).c_str());
             // First time reading the molecule, create each atom
             if (natoms == 0) {
               atom = mol.NewAtom();
@@ -325,7 +325,7 @@ namespace OpenBabel {
             coordinates.push_back(y);
             coordinates.push_back(z);
           } else if (vs[0].substr(0, 1) == "Z") {
-            atomicNum = etab.GetAtomicNum(vs[0].substr(1, 1).c_str());
+            atomicNum = OBElements::GetAtomicNum(vs[0].substr(1, 1).c_str());
             x = atof((char*) vs[1].c_str())* BOHR_TO_ANGSTROM;
             y = atof((char*) vs[2].c_str())* BOHR_TO_ANGSTROM;
             z = atof((char*) vs[3].c_str())* BOHR_TO_ANGSTROM;
@@ -386,9 +386,9 @@ namespace OpenBabel {
                */
               int atomicNum;
               if (vs[0].substr(0, 1) == "Z")
-                atomicNum = etab.GetAtomicNum(vs[0].substr(1, 1).c_str());
+                atomicNum = OBElements::GetAtomicNum(vs[0].substr(1, 1).c_str());
               else
-                atomicNum = etab.GetAtomicNum(vs[0].substr(0, 1).c_str());
+                atomicNum = OBElements::GetAtomicNum(vs[0].substr(0, 1).c_str());
               // First time reading the molecule, create each atom
               if (natoms == 0) {
                 atom = mol.NewAtom();
@@ -512,8 +512,12 @@ namespace OpenBabel {
           if (numFreq > lowFreqModesEnd)
             frequencies.push_back(atof(vs[i].c_str()));
         }
-        ifs.getline(buffer, BUFF_SIZE); // reduced mass
-        ifs.getline(buffer, BUFF_SIZE);
+        ifs.getline(buffer, BUFF_SIZE); // possibly symmetry or red. mass
+        if (strstr(buffer, "SYMMETRY:") != NULL) {
+          // parse the vibrational symmetry
+          ifs.getline(buffer, BUFF_SIZE); // reduced mass
+        }
+        ifs.getline(buffer, BUFF_SIZE); // intensities
         tokenize(vs, buffer);
         for (unsigned int i=2; i < vs.size(); ++i) {
           ++numIntens;
@@ -541,7 +545,7 @@ namespace OpenBabel {
 
         ifs.getline(buffer, BUFF_SIZE);
         tokenize(vs, buffer);
-        unsigned int modeCount = vs.size() - 3;
+        int modeCount = vs.size() - 3;
         double massNormalization;
         vector<double> x, y, z;
         while (modeCount >= 1) {
@@ -925,9 +929,9 @@ namespace OpenBabel {
             if (vs[0].substr(0, 1) == "Z"
                 || vs[0].substr(0, 1) == "z") {
 
-              atomicNum = etab.GetAtomicNum(vs[0].substr(1, 1).c_str());
+              atomicNum = OBElements::GetAtomicNum(vs[0].substr(1, 1).c_str());
             } else {
-              atomicNum = etab.GetAtomicNum(vs[0].substr(0, 1).c_str());
+              atomicNum = OBElements::GetAtomicNum(vs[0].substr(0, 1).c_str());
             }
             atom->SetAtomicNum(atomicNum);
             x = atof((char*) vs[1].c_str());
@@ -1128,7 +1132,7 @@ namespace OpenBabel {
 
     FOR_ATOMS_OF_MOL(atom, mol) {
       snprintf(buffer, BUFF_SIZE, "%-3s %4d.0    %14.10f  %14.10f  %14.10f ",
-               etab.GetSymbol(atom->GetAtomicNum()),
+               OBElements::GetSymbol(atom->GetAtomicNum()),
                atom->GetAtomicNum(),
                atom->GetX(),
                atom->GetY(),

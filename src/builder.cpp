@@ -31,6 +31,7 @@ GNU General Public License for more details.
 #include <openbabel/obconversion.h>
 #include <openbabel/locale.h>
 #include <openbabel/distgeom.h>
+#include <openbabel/elements.h>
 
 #include <openbabel/stereo/stereo.h>
 #include <openbabel/stereo/cistrans.h>
@@ -124,8 +125,8 @@ namespace OpenBabel
     // We create an estimate of the bond length based on the two atoms
     // Scaling is performed by the bond order corrections below
     //  .. so we will use the straight covalent radii
-    bondLength += etab.GetCovalentRad(atom1->GetAtomicNum());
-    bondLength += etab.GetCovalentRad(atom2->GetAtomicNum());
+    bondLength += OBElements::GetCovalentRad(atom1->GetAtomicNum());
+    bondLength += OBElements::GetCovalentRad(atom2->GetAtomicNum());
 
     if (bondLength < 1.0)
       bondLength = 1.0;
@@ -185,18 +186,18 @@ namespace OpenBabel
       // make sure we place the new atom trans to a-2 (if there is an a-2 atom)
       //
       //   (a-2)             (a-2)
-      //     \                 \
+      //     \                 \                                             //
       //    (a-1)==a   --->   (a-1)==a          angle(a-1, a, *) = 120
-      //                              \
+      //                              \                                      //
       //                               *
       // hyb * = 3
       // ^^^^^^^^^
       // make sure we place the new atom trans to a-2 (if there is an a-2 atom)
       //
       //   (a-2)             (a-2)
-      //     \                 \
+      //     \                 \                                             //
       //    (a-1)--a   --->   (a-1)--a          angle(a-1, a, *) = 109
-      //                              \
+      //                              \                                      //
       //                               *
       if (atom->GetValence() == 1) {
         bool isCarboxylateO = atom->IsCarboxylOxygen();
@@ -211,7 +212,7 @@ namespace OpenBabel
             if (&*nbr2 != atom) {
               bond2 = nbr->GetVector() - nbr2->GetVector();
 
-              if (isCarboxylateO && nbr2->IsOxygen())
+              if (isCarboxylateO && nbr2->GetAtomicNum() == OBElements::Oxygen)
                 break; // make sure that the hydrogen is trans to the C=O
             }
           }
@@ -262,7 +263,7 @@ namespace OpenBabel
       }
 
       //
-      //    \	      \
+      //    \	      \                                                     //
       //     X  --->   X--*
       //    /         /
       //
@@ -980,6 +981,9 @@ namespace OpenBabel
     vector<vector3>::iterator l;
     vector<vector<int> > mlist; // match list for fragments
 
+    // Trigger hybridisation perception now so it will be copied to workMol
+    mol.GetFirstAtom()->GetHyb();
+
     // copy the molecule to private data
     OBMol workMol = mol;
 
@@ -1012,6 +1016,9 @@ namespace OpenBabel
       while (workMol.NumBonds())
         workMol.DeleteBond(workMol.GetBond(0));
 
+    // Deleting the bonds unsets HybridizationPerceived. To prevent our
+    // perceived values being reperceived (incorrectly), we must set
+    // this flag again.
     workMol.SetHybridizationPerceived();
 
     if (ratoms && !_keeprings) {
@@ -1036,7 +1043,7 @@ namespace OpenBabel
 
             // Have any atoms of this match already been added?
             int alreadydone = 0;
-            int match_idx;
+            int match_idx = 0;
             for (k = j->begin(); k != j->end(); ++k) // for all atoms of the fragment
               if (vfrag.BitIsSet(*k)) {
                 alreadydone += 1;
@@ -1212,7 +1219,7 @@ namespace OpenBabel
     //                                        \   /
     //  \        \   /    bisect  \             P    align   \                /
     //   P  and    P       --->    P--v1  and   |    --->     P--v1  and v2--P
-    //  /                         /             v2           /                \
+    //  /                         /             v2           /                \  //
 
     // Get v1 (from the existing fragment)
     vector3 bond1, bond2, bond3, bond4, v1;
@@ -1321,7 +1328,7 @@ namespace OpenBabel
         // refs[0]            refs[3]
         //        \          /
         //         begin==end
-        //        /          \
+        //        /          \                                                /
         // refs[1]            refs[2]
 
         a = mol.GetAtomById(config.refs[0]);

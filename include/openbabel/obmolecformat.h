@@ -42,6 +42,7 @@ GNU General Public License for more details.
 #include <openbabel/obconversion.h>
 #include <typeinfo>
 #include <openbabel/descriptor.h>
+#include <openbabel/elements.h>
 #include <set>
 
 namespace OpenBabel {

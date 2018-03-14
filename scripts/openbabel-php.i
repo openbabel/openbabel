@@ -41,7 +41,6 @@
 #include <openbabel/data.h>
 #include <openbabel/parsmart.h>
 #include <openbabel/alias.h>
-#include <openbabel/atomclass.h>
 
 #include <openbabel/kinetics.h>
 #include <openbabel/rotor.h>
@@ -180,7 +179,6 @@ OpenBabel::AliasData *toAliasData(OpenBabel::OBGenericData *data) {
 }
 %}
 CAST_GENERICDATA_TO(AngleData)
-CAST_GENERICDATA_TO(AtomClassData)
 CAST_GENERICDATA_TO(ChiralData)
 CAST_GENERICDATA_TO(CommentData)
 CAST_GENERICDATA_TO(ConformerData)
@@ -216,6 +214,8 @@ CAST_GENERICDATA_TO(VirtualBond)
 %include <openbabel/math/matrix3x3.h>
 %include <openbabel/math/transform3d.h>
 %include <openbabel/math/spacegroup.h>
+%warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
+%include <openbabel/bitvec.h>
 
 // CloneData should be used instead of the following method
 %ignore OpenBabel::OBBase::SetData;
@@ -261,7 +261,6 @@ IGNORE_ITER(OBMol, Residue)
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
 %include <openbabel/alias.h>
-%include <openbabel/atomclass.h>
 %ignore OpenBabel::FptIndex;
 %include <openbabel/fingerprint.h>
 %ignore OpenBabel::OBDescriptor::LessThan;
@@ -282,8 +281,6 @@ IGNORE_ITER(OBMol, Residue)
 %include <openbabel/canon.h>
 %include <openbabel/stereo/stereo.h>
 
-%warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
-%include <openbabel/bitvec.h>
 // Ignore shadowed method
 %ignore OpenBabel::OBRotor::GetRotAtoms() const;
 %include <openbabel/rotor.h>

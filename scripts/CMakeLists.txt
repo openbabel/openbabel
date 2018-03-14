@@ -58,7 +58,7 @@ if (PYTHON_BINDINGS)
     endif(PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND)
 
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR RUN_SWIG)
-    message(STATUS "Warning: Python bindings NOT found. Generate using -DRUN_SWIG.")
+    message(STATUS "Warning: Python bindings NOT found. Generate using -DRUN_SWIG=ON.")
 
   endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR RUN_SWIG)
 endif (PYTHON_BINDINGS)
@@ -79,16 +79,6 @@ if (DO_PYTHON_BINDINGS)
       else(WIN32)
         add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
             COMMAND ${SWIG_EXECUTABLE} -python -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${eigen_define} -outdir ${openbabel_SOURCE_DIR}/scripts/python ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
-              COMMAND ${CMAKE_COMMAND} -E echo "import sys" > ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "if sys.platform.find('linux'\) != -1:" >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "  try:" >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "    import dl" >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "  except ImportError:" >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "    import DLFCN as dl" >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "  sys.setdlopenflags(sys.getdlopenflags() | dl.RTLD_GLOBAL)" >> ob.py
-              COMMAND cat ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E copy ob.py ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
-              COMMAND ${CMAKE_COMMAND} -E remove ob.py
               MAIN_DEPENDENCY openbabel-python.i
               VERBATIM
               )
@@ -182,7 +172,7 @@ if (JAVA_BINDINGS)
     endif()
 
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp OR RUN_SWIG)
-    message(STATUS "Warning: Java bindings NOT found. Generate using -DRUN_SWIG.")
+    message(STATUS "Warning: Java bindings NOT found. Generate using -DRUN_SWIG=ON.")
 
   endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp OR RUN_SWIG)
 endif (JAVA_BINDINGS)
@@ -244,7 +234,7 @@ if (R_BINDINGS)
 
 
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp OR RUN_SWIG)
-	  message(STATUS "Warning: R bindings NOT found. Generate using -DRUN_SWIG.")
+	  message(STATUS "Warning: R bindings NOT found. Generate using -DRUN_SWIG=ON.")
 
   endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp OR RUN_SWIG)
 endif (R_BINDINGS)
@@ -317,7 +307,7 @@ if (PERL_BINDINGS)
     endif(PERL_LIBRARY)
 
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp OR RUN_SWIG)
-    message(STATUS "Warning: Perl bindings NOT found. Generate using -DRUN_SWIG.")
+    message(STATUS "Warning: Perl bindings NOT found. Generate using -DRUN_SWIG=ON.")
 
   endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp OR RUN_SWIG)
 endif (PERL_BINDINGS)
@@ -382,7 +372,7 @@ if (RUBY_BINDINGS)
     endif (RUBY_LIBRARY)
 
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp OR RUN_SWIG)
-    message(STATUS "Warning: Ruby bindings NOT found. Generate using -DRUN_SWIG.")
+    message(STATUS "Warning: Ruby bindings NOT found. Generate using -DRUN_SWIG=ON.")
 
   endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp OR RUN_SWIG)
 endif (RUBY_BINDINGS)
@@ -440,7 +430,7 @@ if (CSHARP_BINDINGS)
     endif (CSHARP_EXECUTABLE)
 
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp OR RUN_SWIG)
-    message(STATUS "Warning: Csharp bindings NOT found. Generate using -DRUN_SWIG.")
+    message(STATUS "Warning: Csharp bindings NOT found. Generate using -DRUN_SWIG=ON.")
   endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp OR RUN_SWIG)
 endif (CSHARP_BINDINGS)
 
@@ -515,7 +505,7 @@ if (PHP_BINDINGS)
     endif(PHP_CONFIG_EXECUTABLE)
 
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp OR RUN_SWIG)
-    message(STATUS "Warning: PHP bindings NOT found. Generate using -DRUN_SWIG.")
+    message(STATUS "Warning: PHP bindings NOT found. Generate using -DRUN_SWIG=ON.")
   endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp OR RUN_SWIG)
 endif (PHP_BINDINGS)
 

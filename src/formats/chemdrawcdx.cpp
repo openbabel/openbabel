@@ -182,6 +182,8 @@ private:
   std::map<CDXObjectID, graphicType> _graphicmap;
   std::map<CDXObjectID, OBMol*> _molmap;
   std::map<CDXObjectID, std::vector<CDXObjectID> > _groupmap;
+  // In case of chain A -> B -> C, B is both reactant and product
+  CDXObjectID _lastProdId;
   typedef std::map<CDXObjectID, std::vector<CDXObjectID> >::iterator GroupMapIterator;
   static const unsigned usedFlag = 1<<30;
 };
@@ -334,7 +336,22 @@ bool ChemDrawBinaryXFormat::DoReaction(CDXReader& cdxr, OBReaction* pReact)
         vector<OBMol*> molvec = LookupMol(id); //id could be a group with several mols
         for(unsigned i=0;i<molvec.size();++i)
           if(strcmp(molvec[i]->GetTitle(),"justplus"))
-            pReact->AddReactant(obsharedptr<OBMol>(molvec[i]));
+          {
+            // If there is a product with same ID,
+            // clone it since this will be deleted in WriteChemObject
+            if (_lastProdId && _lastProdId == id)
+            {
+              OBMol* pmol = new OBMol(*molvec[i]);
+              // Mark as used
+              pmol->SetFlags(molvec[i]->GetFlags());
+              pReact->AddReactant(obsharedptr<OBMol>(pmol));
+            }
+
+            else
+            {
+              pReact->AddReactant(obsharedptr<OBMol>(molvec[i]));
+            }
+          }
       }
     }
     else if(tag == kCDXProp_ReactionStep_Products)
@@ -346,7 +363,10 @@ bool ChemDrawBinaryXFormat::DoReaction(CDXReader& cdxr, OBReaction* pReact)
         vector<OBMol*> molvec = LookupMol(id); //id could be a group with several mols
         for(unsigned i=0;i<molvec.size();++i)
           if(strcmp(molvec[i]->GetTitle(),"justplus"))
+          {
             pReact->AddProduct(obsharedptr<OBMol>(molvec[i]));
+            _lastProdId = id;
+          }
       }
     }
     else if(tag==kCDXProp_ReactionStep_Arrows)

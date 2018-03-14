@@ -17,6 +17,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
+#include <string.h>
+
 #include <openbabel/babelconfig.h>
 #include <openbabel/base.h>
 
@@ -130,16 +132,21 @@ namespace OpenBabel
 
     for (i = _vdata.begin();i != _vdata.end();++i)
       if ((*i)->GetAttribute() == s)
-        return(*i);
+        return *i;
 
-    return(NULL);
+    return (OBGenericData*)0;
   }
 
   //! \return the value given an attribute name
   OBGenericData *OBBase::GetData(const char *s)
   {
-    string temp(s);
-    return(GetData(temp));
+    OBDataIterator i;
+
+    for (i = _vdata.begin(); i != _vdata.end(); ++i)
+      if (strcmp((*i)->GetAttribute().c_str(), s)==0)
+        return *i;
+
+    return (OBGenericData*)0;
   }
 
   OBGenericData *OBBase::GetData(const unsigned int dt)
@@ -477,7 +484,7 @@ namespace OpenBabel
     - OBPairData - Arbitrary text key/value data
     - OBPairTemplate - Arbitrary T key/value data
     - OBUnitCell - Storage and manipulation of crystal structure / reciprocal unit cells
-    - AliasData, OBAngleData, OBAtomClassData, OBChiralData, OBCommentData, OBConformerData, OBDOSData, OBElectronicTransitionData,
+    - AliasData, OBAngleData, OBChiralData, OBCommentData, OBConformerData, OBDOSData, OBElectronicTransitionData,
       OBExternalBondData, OBGridData, OBMatrixData, OBNasaThermoData, OBOrbitalEnergyData, OBPairData, OBRateData,
       OBRingData, OBRotamerList, OBRotationData, OBSerialNums, OBSetData, OBStereoBase, OBSymmetryData, OBTorsionData, OBUnitCell,
       OBVectorData, OBVibrationData, OBVirtualBond

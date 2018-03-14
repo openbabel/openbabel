@@ -192,7 +192,7 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
                 coordinates.push_back(point);
 
                 if (createAtoms) {
-                  int atomicNum = etab.GetAtomicNum(vs[0].c_str());
+                  int atomicNum = OBElements::GetAtomicNum(vs[0].c_str());
                   //set atomic number, or '0' if the atom type is not recognized
                   if (atomicNum == 0) {
                     // Sometimes people call this an XYZ file, but it's actually Unichem
@@ -249,7 +249,7 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
                 is >> atomName >> x >> y >> z;
                 OBAtom* atom = pmol->NewAtom();
                 if( !atom ) break;
-                atom->SetAtomicNum( etab.GetAtomicNum(atomName.c_str()));
+                atom->SetAtomicNum( OBElements::GetAtomicNum(atomName.c_str()));
                 // Vibrational equilibrium geometry is mandated to be
                 // in Bohr.
                 atom->SetVector( x * BOHR_TO_ANGSTROM,
@@ -351,7 +351,7 @@ bool OBMoldenFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     FOR_ATOMS_OF_MOL(atom, mol)
       {
         snprintf(buffer, BUFF_SIZE, "%2s%6d%3d%13.6f%13.6f%13.6f\n",
-                etab.GetSymbol(atom->GetAtomicNum()),
+                OBElements::GetSymbol(atom->GetAtomicNum()),
 		i++,
                 atom->GetAtomicNum(),
                 atom->GetX(),
@@ -380,7 +380,7 @@ bool OBMoldenFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       FOR_ATOMS_OF_MOL(atom, mol)
         {
           snprintf(buffer, BUFF_SIZE, "%2s%13.6f%13.6f%13.6f\n",
-                  etab.GetSymbol(atom->GetAtomicNum()),
+                  OBElements::GetSymbol(atom->GetAtomicNum()),
                   atom->GetX()*ANGSTROM_TO_BOHR,
                   atom->GetY()*ANGSTROM_TO_BOHR,
                   atom->GetZ()*ANGSTROM_TO_BOHR);

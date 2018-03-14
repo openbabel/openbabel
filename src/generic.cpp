@@ -25,9 +25,9 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/generic.h>
 #include <openbabel/math/matrix3x3.h>
+#include <openbabel/elements.h>
 
 // needed for msvc to have at least one reference to AtomClass, AliasData in openbabel library
-#include <openbabel/atomclass.h>
 #include <openbabel/alias.h>
 
 using namespace std;
@@ -239,7 +239,7 @@ namespace OpenBabel
     _bgn(0), _end(0), _ord(0), _stereo(0)
   {  }
 
-  OBVirtualBond::OBVirtualBond(int bgn,int end,int ord,int stereo):
+  OBVirtualBond::OBVirtualBond(unsigned int bgn, unsigned int end, unsigned int ord, int stereo):
     OBGenericData("VirtualBondData", OBGenericDataType::VirtualBondData, perceived),
     _bgn(bgn), _end(end), _ord(ord), _stereo(stereo)
   {  }
@@ -1191,9 +1191,9 @@ namespace OpenBabel
     vector<triple<OBAtom*,OBAtom*,double> >::iterator ad;
     for(ad = _ads.begin();ad != _ads.end() && (Aprotor || Dprotor);++ad)
       {
-        if(!ad->first->IsHydrogen())
+        if (ad->first->GetAtomicNum() != OBElements::Hydrogen)
           Aprotor = false;
-        if(!ad->second->IsHydrogen())
+        if (ad->second->GetAtomicNum() != OBElements::Hydrogen)
           Dprotor = false;
       }
     return (Aprotor || Dprotor);
@@ -1458,13 +1458,11 @@ void OBDOSData::SetData(double fermi,
 
   // member functions for OBOrbitalData
 
-  void OBOrbitalData::LoadClosedShellOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, int alphaHOMO)
+  void OBOrbitalData::LoadClosedShellOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, unsigned int alphaHOMO)
   {
     if (energies.size() < symmetries.size())
       return; // something is very weird -- it's OK to pass no symmetries (we'll assume "A")
     if (energies.size() == 0)
-      return;
-    if (alphaHOMO <= 0)
       return;
     if (alphaHOMO > energies.size())
       return;
@@ -1491,13 +1489,11 @@ void OBDOSData::SetData(double fermi,
       }
   }
 
-  void OBOrbitalData::LoadAlphaOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, int alphaHOMO)
+  void OBOrbitalData::LoadAlphaOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, unsigned int alphaHOMO)
   {
     if (energies.size() < symmetries.size())
       return; // something is very weird -- it's OK to pass no symmetries (we'll assume "A")
     if (energies.size() == 0)
-      return;
-    if (alphaHOMO <= -1)
       return;
     if (alphaHOMO > energies.size())
       return;
@@ -1522,13 +1518,11 @@ void OBDOSData::SetData(double fermi,
       }
   }
 
-  void OBOrbitalData::LoadBetaOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, int betaHOMO)
+  void OBOrbitalData::LoadBetaOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, unsigned int betaHOMO)
   {
     if (energies.size() < symmetries.size())
       return; // something is very weird -- it's OK to pass no symmetries (we'll assume "A")
     if (energies.size() == 0)
-      return;
-    if (betaHOMO <= -1)
       return;
     if (betaHOMO > energies.size())
       return;
@@ -1640,6 +1634,11 @@ void OBVibrationData::SetData(const std::vector< std::vector< vector3 > > & vLx,
 unsigned int OBVibrationData::GetNumberOfFrequencies() const
 {
   return this->_vFrequencies.size();
+}
+
+void OBFreeGrid::Clear()
+{
+  _points.clear();
 }
 
 } //end namespace OpenBabel

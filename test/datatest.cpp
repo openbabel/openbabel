@@ -29,6 +29,7 @@ GNU General Public License for more details.
 
 #include <openbabel/mol.h>
 #include <openbabel/data.h>
+#include <openbabel/elements.h>
 
 using namespace std;
 using namespace OpenBabel;
@@ -53,7 +54,7 @@ int datatest(int argc, char* argv[])
 
   cout << "ok 1\n"; // for loading tests
 
-  double mass = etab.GetMass(2);
+  double mass = OBElements::GetMass(2);
   if ( fabs(mass - 4.0026 ) < 2e-3 )
     cout << "ok 2\n";
   else

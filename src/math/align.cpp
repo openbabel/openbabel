@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #include <openbabel/math/align.h>
 #include <openbabel/graphsym.h>
 #include <openbabel/math/vector3.h>
+#include <openbabel/elements.h>
 
 #include <Eigen/Core>
 #include <Eigen/Geometry>
@@ -113,7 +114,7 @@ namespace OpenBabel
 
     for (unsigned int i=1; i<=refmol.NumAtoms(); ++i) {
       atom = refmol.GetAtom(i);
-      if (_includeH || !atom->IsHydrogen()) {
+      if (_includeH || atom->GetAtomicNum() != OBElements::Hydrogen) {
         _frag_atoms.SetBitOn(i);
         _newidx.push_back(i - delta);
         _refmol_coords.push_back(atom->GetVector());
@@ -136,7 +137,7 @@ namespace OpenBabel
     OBAtom const *atom;
     for (unsigned int i=1; i<=targetmol.NumAtoms(); ++i) {
       atom = targetmol.GetAtom(i);
-      if (_includeH || !atom->IsHydrogen())
+      if (_includeH || atom->GetAtomicNum() != OBElements::Hydrogen)
         _targetmol_coords.push_back(atom->GetVector());
     }
     SetTarget(_targetmol_coords);
@@ -396,7 +397,7 @@ namespace OpenBabel
       VectorsToMatrix(&target_coords, mtarget);
 
       // Subtract the centroid of the non-H atoms
-      for (vector<vector3>::size_type i=0; i<mtarget.cols(); ++i)
+      for (unsigned int i=0; i<mtarget.cols(); ++i)
         mtarget.col(i) -= _target_centr;
 
       // Rotate

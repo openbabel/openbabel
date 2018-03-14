@@ -66,7 +66,7 @@ namespace OpenBabel
 
 #ifndef LowBit
 #define LowBit(set, bit)                                        \
-  {register int m;                                              \
+  {int m;                                                       \
     if (set != 0)                                               \
       {                                                         \
         bit = 31;                                               \

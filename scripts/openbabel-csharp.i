@@ -132,7 +132,30 @@
 		get{return new OBVector3(0,0,0);}
 	}
 %}
-  
+%typemap(cscode) OpenBabel::matrix3x3
+%{
+  	public static OBVector3 Mul(OBMatrix3x3 m, OBVector3 v)
+  	{
+    		return new OBVector3(v.x()*m.Get(0,0) + v.y()*m.Get(0,1) + v.z()*m.Get(0,2), v.x()*m.Get(1,0) + v.y()*m.Get(1,1) + v.z()*m.Get(1,2), v.x()*m.Get(2,0) + v.y()*m.Get(2,1) + v.z()*m.Get(2,2));
+  	}
+	public static OBMatrix3x3 Mul(OBMatrix3x3 A, OBMatrix3x3 B)
+	{
+		OBMatrix3x3 result = new OBMatrix3x3();
+	    
+		result.Set(0,0, A.Get(0,0)*B.Get(0,0) + A.Get(0,1)*B.Get(1,0) + A.Get(0,2)*B.Get(2,0));
+		result.Set(0,1, A.Get(0,0)*B.Get(0,1) + A.Get(0,1)*B.Get(1,1) + A.Get(0,2)*B.Get(2,1));
+		result.Set(0,2, A.Get(0,0)*B.Get(0,2) + A.Get(0,1)*B.Get(1,2) + A.Get(0,2)*B.Get(2,2));
+		
+		result.Set(1,0, A.Get(1,0)*B.Get(0,0) + A.Get(1,1)*B.Get(1,0) + A.Get(1,2)*B.Get(2,0));
+		result.Set(1,1, A.Get(1,0)*B.Get(0,1) + A.Get(1,1)*B.Get(1,1) + A.Get(1,2)*B.Get(2,1));
+		result.Set(1,2, A.Get(1,0)*B.Get(0,2) + A.Get(1,1)*B.Get(1,2) + A.Get(1,2)*B.Get(2,2));
+		
+		result.Set(2,0, A.Get(2,0)*B.Get(0,0) + A.Get(2,1)*B.Get(1,0) + A.Get(2,2)*B.Get(2,0));
+		result.Set(2,1, A.Get(2,0)*B.Get(0,1) + A.Get(2,1)*B.Get(1,1) + A.Get(2,2)*B.Get(2,1));
+		result.Set(2,2, A.Get(2,0)*B.Get(0,2) + A.Get(2,1)*B.Get(1,2) + A.Get(2,2)*B.Get(2,2));
+		return(result);
+	}
+%}
 //simplified public Downcast method
 //this is defined up here because something
 //lower down in the file interferes with it
@@ -169,7 +192,6 @@
 %enddef
 DISABLE_DOWNCAST(AliasData);
 DISABLE_DOWNCAST(OBAngleData);
-DISABLE_DOWNCAST(OBAtomClassData);
 DISABLE_DOWNCAST(OBChiralData);
 DISABLE_DOWNCAST(OBCommentData);
 DISABLE_DOWNCAST(OBConformerData);
@@ -638,7 +660,6 @@ using System.Runtime.InteropServices;
 #include <openbabel/data.h>
 #include <openbabel/parsmart.h>
 #include <openbabel/alias.h>
-#include <openbabel/atomclass.h>
 
 #include <openbabel/kinetics.h>
 //OBReaction can't be mapped properly
@@ -730,6 +751,8 @@ using System.Runtime.InteropServices;
 %include <openbabel/math/transform3d.h>
 %warnfilter(516) OpenBabel::SpaceGroup; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/math/spacegroup.h>
+%warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
+%include <openbabel/bitvec.h>
 
 // CloneData should be used instead of the following method
 %ignore OpenBabel::OBBase::SetData;
@@ -794,7 +817,6 @@ using System.Runtime.InteropServices;
 
 //why is AliasData not supported?
 CAST_GENERICDATA_TO(AngleData);
-CAST_GENERICDATA_TO(AtomClassData);
 CAST_GENERICDATA_TO(ChiralData);
 CAST_GENERICDATA_TO(CommentData);
 CAST_GENERICDATA_TO(ConformerData);
@@ -854,7 +876,6 @@ namespace std { class stringbuf {}; }
 %include <openbabel/parsmart.h>
 %warnfilter(516) OpenBabel::AliasData; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/alias.h>
-%include <openbabel/atomclass.h>
 %ignore OpenBabel::FptIndex;
 %include <openbabel/fingerprint.h>
 %include <openbabel/descriptor.h>
@@ -867,9 +888,6 @@ namespace std { class stringbuf {}; }
 
 %include <openbabel/builder.h>
 %include <openbabel/op.h>
-
-%warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
-%include <openbabel/bitvec.h>
 
 %include <openbabel/rotor.h>
 %ignore OpenBabel::Swab;
@@ -976,8 +994,8 @@ WRAPITERATOR(OBMolBondBFSIter,OpenBabel::OBMolBondBFSIter,OBBond);
 WRAPITERATOR(OBMolAngleIter,OpenBabel::OBMolAngleIter,VectorUInt);
 WRAPITERATOR(OBAtomAtomIter,OpenBabel::OBAtomAtomIter,OBAtom)
 WRAPITERATOR(OBAtomBondIter,OpenBabel::OBAtomBondIter,OBBond);
-WRAPITERATOR(OBMolRingIter,OpenBabel::OBRingIter,OBRing);
-WRAPITERATOR(OBMolTorsionIter,OpenBabel::OBTorsionIter,VectorUInt);
+WRAPITERATOR(OBMolRingIter,OpenBabel::OBMolRingIter,OBRing);
+WRAPITERATOR(OBMolTorsionIter,OpenBabel::OBMolTorsionIter,VectorUInt);
 WRAPITERATOR(OBResidueIter,OpenBabel::OBResidueIter,OBResidue);
 WRAPITERATOR(OBResidueAtomIter,OpenBabel::OBResidueAtomIter,OBAtom);
 WRAPITERATOR(OBMolPairIter,OpenBabel::OBMolPairIter,VectorUInt)

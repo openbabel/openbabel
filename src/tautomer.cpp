@@ -141,7 +141,7 @@ namespace OpenBabel {
           case Nitrogen:
             if (atom->HasDoubleBond())
               types.push_back(Acceptor);
-            else if (atom->ImplicitHydrogenCount())
+            else if (atom->GetImplicitHCount())
               types.push_back(Donor);
             else
               types.push_back(Other);
@@ -153,7 +153,7 @@ namespace OpenBabel {
           case Tellurium:
             if (atom->HasDoubleBond())
               types.push_back(Acceptor);
-            else if (atom->ImplicitHydrogenCount())
+            else if (atom->GetImplicitHCount())
               types.push_back(Donor);
             else
               types.push_back(Other);
@@ -186,6 +186,34 @@ namespace OpenBabel {
       std::vector<OBBond*> propagatedBonds;
     };
 
+    static void SanityCheckHydrogens(OBAtom *atom)
+    {
+      OBMol* mol = atom->GetParent();
+      unsigned int totH = 0;
+      FOR_ATOMS_OF_MOL(atm, mol) {
+        totH += atm->GetImplicitHCount();
+      }
+      printf("Total no. of hydrogens in molecule: %d\n", totH);
+    }
+
+    static void DecrementImplicitHCount(OBAtom* atom)
+    {
+      atom->SetImplicitHCount(atom->GetImplicitHCount() - 1);
+#ifdef DEBUG
+      printf("Decremented %d (%d) to %d\n", atom->GetIndex(), atom->GetAtomicNum(), atom->GetImplicitHCount());
+      SanityCheckHydrogens(atom);
+#endif
+    }
+
+    static void IncrementImplicitHCount(OBAtom* atom)
+    {
+      atom->SetImplicitHCount(atom->GetImplicitHCount() + 1);
+#ifdef DEBUG
+      printf("Incremented %d (%d) to %d\n", atom->GetIndex(), atom->GetAtomicNum(), atom->GetImplicitHCount());
+      SanityCheckHydrogens(atom);
+#endif
+    }
+
     void print_assigned(const std::vector<Level> &levels, const std::vector<Type> &atomTypes)
     {
       for (std::size_t i = 0; i < levels.size(); ++i)
@@ -205,12 +233,16 @@ namespace OpenBabel {
 #ifdef DEBUG
       std::cout << "  Backtrack... " << lastAtom->GetIndex() << std::endl;
 #endif
+      if (atomTypes[lastAtom->GetIndex()] == Donor)
+        DecrementImplicitHCount(lastAtom); // Noel: Why no need for accompanying numHydrogens++?
       atomTypes[lastAtom->GetIndex()] = Unassigned;
 
       std::vector<OBAtom*> &propagatedAtoms = levels.back().propagatedAtoms;
       for (std::size_t i = 0; i < propagatedAtoms.size(); ++i) {
-        if (atomTypes[propagatedAtoms[i]->GetIndex()] == Donor)
+        if (atomTypes[propagatedAtoms[i]->GetIndex()] == Donor) {
+          DecrementImplicitHCount(propagatedAtoms[i]);
           numHydrogens++;
+        }
         atomTypes[propagatedAtoms[i]->GetIndex()] = Unassigned;
       }
 
@@ -258,6 +290,7 @@ namespace OpenBabel {
 
           if (allBondsSingle) {
             atomTypes[atom->GetIndex()] = Donor; 
+            IncrementImplicitHCount(&*atom);
             numHydrogens--;
             levels.back().propagatedAtoms.push_back(&*atom);
             changed = true;
@@ -448,6 +481,7 @@ namespace OpenBabel {
           if (numHydrogens) {
             // Assign it a hydrogen if there are hydrogens left
             atomTypes[canonAtoms[i]->GetIndex()] = Donor;
+            IncrementImplicitHCount(canonAtoms[i]);
             numHydrogens--;
 #ifdef DEBUG
             std::cout << "  Assigned " << canonAtoms[i]->GetIndex() << " Donor" << std::endl;
@@ -484,6 +518,8 @@ namespace OpenBabel {
 
       if (levels.size()) {
         AssignmentPropagation(mol, atomTypes, bondTypes, canonAtoms, numHydrogens, levels, functor);
+        if (m_canonical && m_foundLeafNode)
+          return; // early termination
 
 #ifdef DEBUG
         std::cout << "Change?" << std::endl;
@@ -494,6 +530,7 @@ namespace OpenBabel {
         if (atomTypes[lastAtom->GetIndex()] == Donor) {
           // Change atom to acceptor and continue the search
           atomTypes[lastAtom->GetIndex()] = Acceptor;
+          DecrementImplicitHCount(lastAtom);
           numHydrogens++;
 #ifdef DEBUG
           std::cout << "  Change " << lastAtom->GetIndex() << " to Acceptor" << std::endl;
@@ -501,8 +538,10 @@ namespace OpenBabel {
 
           std::vector<OBAtom*> &propagatedAtoms = levels.back().propagatedAtoms;
           for (std::size_t i = 0; i < propagatedAtoms.size(); ++i) {
-            if (atomTypes[propagatedAtoms[i]->GetIndex()] == Donor)
+            if (atomTypes[propagatedAtoms[i]->GetIndex()] == Donor) {
+              DecrementImplicitHCount(propagatedAtoms[i]);
               numHydrogens++;
+            }
             atomTypes[propagatedAtoms[i]->GetIndex()] = Unassigned;
           }
 
@@ -512,6 +551,8 @@ namespace OpenBabel {
 
 
           AssignmentPropagation(mol, atomTypes, bondTypes, canonAtoms, numHydrogens, levels, functor);
+          if (m_canonical && m_foundLeafNode)
+            return; // early termination
         } 
 
       // Backtrack
@@ -543,13 +584,23 @@ namespace OpenBabel {
 #ifdef DEBUG
       print_bond_types(bondTypes);
 #endif
+      // Store original h counts
+      std::vector<unsigned int> hcounts;
+      FOR_ATOMS_OF_MOL(atom, mol)
+        hcounts.push_back(atom->GetImplicitHCount());
+#ifdef DEBUG
+      SanityCheckHydrogens(mol->GetAtom(1));
+#endif
 
       // Count the number of hydrogens
       // Mark donor/acceptor atoms as unassigned
       int numHydrogens = 0;
       for (std::size_t i = 0; i < atomTypes.size(); ++i) {
-        if (atomTypes[i] == Donor)
+        if (atomTypes[i] == Donor) {
           numHydrogens++;
+          OBAtom* atm = mol->GetAtom(i + 1); // off-by-one
+          DecrementImplicitHCount(atm);
+        }
         if (atomTypes[i] == Donor || atomTypes[i] == Acceptor)
           atomTypes[i] = Unassigned;
       }
@@ -591,6 +642,9 @@ namespace OpenBabel {
         // Restore original bond orders
         FOR_BONDS_OF_MOL (bond, mol)
           bond->SetBondOrder(bondOrders[bond->GetIdx()]);
+        // Restore original implicit H counts
+        FOR_ATOMS_OF_MOL(atom, mol)
+          atom->SetImplicitHCount(hcounts[atom->GetIndex()]);
       }
 
     }

@@ -1,0 +1,80 @@
+#------------------------------------------------------------------------------
+#$Date: 2016-02-13 14:50:18 +0200 (Sat, 13 Feb 2016) $
+#$Revision: 176428 $
+#$URL: file:///home/coder/svn-repositories/cod/cif/4/12/40/4124049.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/
+#
+# All data on this site have been placed in the public domain by the
+# contributors.
+#
+data_4124049
+loop_
+_publ_author_name
+'Foster, M.D.'
+'Friedrichs, O.D.'
+'Bell, R.G.'
+'Klinowski, J.'
+'Paz, F.A.A.'
+_publ_section_title
+;
+ Chemical evaluation of hypothetical uninodal zeolites
+;
+_journal_name_full               'Journal of the American Chemical Society'
+_journal_page_first              9769
+_journal_page_last               9775
+_journal_volume                  126
+_journal_year                    2004
+_chemical_formula_sum            'O2 Si'
+_chemical_name_systematic        'Si O2'
+_space_group_IT_number           125
+_symmetry_space_group_name_Hall  'P 4 2 -1ab'
+_symmetry_space_group_name_H-M   'P 4/n b m :1'
+_cell_angle_alpha                90
+_cell_angle_beta                 90
+_cell_angle_gamma                90
+_cell_formula_units_Z            16
+_cell_length_a                   11.96453
+_cell_length_b                   11.96453
+_cell_length_c                   4.25211
+_cell_volume                     608.689
+_citation_journal_id_ASTM        JACSAT
+_cod_data_source_file            Foster_JACSAT_2004_510.cif
+_cod_data_source_block           O2Si1
+_cod_original_cell_volume        608.6895
+_cod_original_sg_symbol_Hall     '-P 4a 2b (x-1/4,y-1/4,z)'
+_cod_chemical_formula_sum_orig   'O2 Si1'
+_cod_database_code               4124049
+loop_
+_symmetry_equiv_pos_as_xyz
+x,y,z
+-y,x,z
+-x,-y,z
+y,-x,z
+x,-y,-z
+y,x,-z
+-x,y,-z
+-y,-x,-z
+-x+1/2,-y+1/2,-z
+y+1/2,-x+1/2,-z
+x+1/2,y+1/2,-z
+-y+1/2,x+1/2,-z
+-x+1/2,y+1/2,z
+-y+1/2,-x+1/2,z
+x+1/2,-y+1/2,z
+y+1/2,x+1/2,z
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_occupancy
+_atom_site_U_iso_or_equiv
+Si1 Si+4 0.39071 0.27409 0.27048 1 0.0
+O4 O-2 0.62574 0.62574 0 1 0.0
+O1 O-2 0.70979 0.70979 0.5 1 0.0
+O2 O-2 0.14821 0.35179 0.86302 1 0.0
+O3 O-2 0.5 0.27647 0.5 1 0.0

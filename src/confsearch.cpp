@@ -26,6 +26,7 @@ GNU General Public License for more details.
 #include <openbabel/tree/tree.hh>
 #include <openbabel/tree/tree_util.hh>
 #include <openbabel/math/vector3.h>
+#include <openbabel/elements.h>
 
 #include <float.h> // For DBL_MAX
 #include <algorithm> // For min
@@ -78,7 +79,7 @@ namespace OpenBabel
   inline unsigned int LFSR::GetNext()
   {
     do {
-      _lfsr = (_lfsr >> 1) ^ (unsigned int)(0 - (_lfsr & 1u) & _poly);
+      _lfsr = (_lfsr >> 1) ^ (unsigned int)(-(_lfsr & 1u) & _poly);
     } while (_lfsr > _range);
 
     return _lfsr;
@@ -108,7 +109,7 @@ namespace OpenBabel
     private:
       bool _percise;
       vector<vector3> GetHeavyAtomCoords(const vector<vector3> &all_coords);
-      int natoms;
+      unsigned int natoms;
       Tree poses;
       std::vector<double> levels;
       OBAlign* palign;
@@ -118,9 +119,10 @@ namespace OpenBabel
     };
 
   OBDiversePoses::OBDiversePoses(const OBMol &ref, double RMSD, bool percise):
-          palign(new OBAlign(false, percise)), cutoff(RMSD), _percise(percise)
+          _percise(percise), cutoff(RMSD) 
   {
     natoms = ref.NumAtoms();
+    palign = new OBAlign(false, _percise);
     palign->SetRefMol(ref);
     palign->SetMethod(OBAlign::QCP);
     n_rmsd = 0;
@@ -136,8 +138,8 @@ namespace OpenBabel
 
     // Remember the hydrogens
     hydrogens.Resize(natoms);
-    for (int i=1; i<=natoms; i++)
-      if (ref.GetAtom(i)->IsHydrogen())
+    for (unsigned int i=1; i<=natoms; i++)
+      if (ref.GetAtom(i)->GetAtomicNum() == OBElements::Hydrogen)
         hydrogens.SetBitOn(i - 1);
   }
 
@@ -246,7 +248,7 @@ namespace OpenBabel
     vector<int>::iterator c = insert_level.begin();
     for (vector<Tree_it>::iterator a = insert_pt.begin(); a != insert_pt.end(); ++a, ++b, ++c) {
       node = *a;
-      for (int k = *c; k < levels.size(); ++k) {
+      for (unsigned int k = *c; k < levels.size(); ++k) {
         node = poses.append_child(node, *b);
       }
     }
@@ -276,7 +278,7 @@ namespace OpenBabel
 vector<vector3> GetHeavyAtomCoords(const OBMol* mol, const vector<vector3> &all_coords) {
   vector<vector3> v_hvyatoms;
   for (unsigned int a = 1; a <= mol->NumAtoms(); ++a)
-    if (!mol->GetAtom(a)->IsHydrogen())
+    if (mol->GetAtom(a)->GetAtomicNum() != OBElements::Hydrogen)
       v_hvyatoms.push_back(all_coords[a]);
   return v_hvyatoms;
 }
@@ -352,8 +354,6 @@ int OBForceField::DiverseConfGen(double rmsd, unsigned int nconfs, double energy
     FastRotorSearch(true);
     double lowest_energy = Energy(false);
 
-    int origLogLevel = _loglvl;
-
     OBRotorList rl;
     OBBitVec fixed = _constraints.GetFixedBitVec();
     rl.SetFixAtoms(fixed);
@@ -376,7 +376,7 @@ int OBForceField::DiverseConfGen(double rmsd, unsigned int nconfs, double energy
     OBRotor* rotor = rl.BeginRotor(ri);
     unsigned int combinations = 1;
     vector<size_t> rotor_sizes;
-    for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) { // foreach rotor
+    for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) { // foreach rotor
       size_t size = rotor->GetResolution().size();
       rotorKeys.AddRotor(size);
       combinations *= size;
@@ -404,7 +404,7 @@ int OBForceField::DiverseConfGen(double rmsd, unsigned int nconfs, double energy
     unsigned int combination;
     OBDiversePoses divposes(_mol, rmsd, false);
     vector<int> my_rotorkey(rotor_sizes.size() + 1, 0);
-    int counter = 0;
+    unsigned int counter = 0;
 
     // Main loop over rotamers
     unsigned int N_low_energy = 0;
@@ -414,7 +414,7 @@ int OBForceField::DiverseConfGen(double rmsd, unsigned int nconfs, double energy
       combination = lfsr.GetNext();
       unsigned int t = combination;
       // Convert the combination number into a rotorkey
-      for (int i = 0 ; i < rotor_sizes.size(); ++i) {
+      for (unsigned int i = 0 ; i < rotor_sizes.size(); ++i) {
         my_rotorkey[i + 1] = t % rotor_sizes[i];
         t /= rotor_sizes[i];
       }

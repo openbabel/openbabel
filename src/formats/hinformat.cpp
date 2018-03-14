@@ -101,7 +101,7 @@ namespace OpenBabel
           }
 
         atom = mol.NewAtom();
-        atom->SetAtomicNum(etab.GetAtomicNum(vs[3].c_str()));
+        atom->SetAtomicNum(OBElements::GetAtomicNum(vs[3].c_str()));
         atom->SetPartialCharge(atof(vs[6].c_str()));
         x = atof((char*)vs[7].c_str());
         y = atof((char*)vs[8].c_str());
@@ -135,9 +135,17 @@ namespace OpenBabel
       }
 
     // clean out remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() &&
-          (ifs.peek() == '\n' || ifs.peek() == '\r'))
+    // blank lines cleaning codes rewritten for avoiding peek() and tellg() bugs
+    // https://github.com/openbabel/openbabel/issues/1569
+    std::streampos ipos;
+    do
+    {
+      ipos = ifs.tellg();
       ifs.getline(buffer,BUFF_SIZE);
+    }
+    while(strlen(buffer) == 0 && !ifs.eof() );
+    ifs.seekg(ipos);
+
 
     mol.EndModify();
 
@@ -176,7 +184,7 @@ namespace OpenBabel
         atom = mol.GetAtom(i);
         snprintf(buffer, BUFF_SIZE, "atom %d - %-3s **  - %8.5f %8.5f  %8.5f  %8.5f %d ",
                 i,
-                etab.GetSymbol(atom->GetAtomicNum()),
+                OBElements::GetSymbol(atom->GetAtomicNum()),
                 atom->GetPartialCharge(),
                 atom->GetX(),
                 atom->GetY(),

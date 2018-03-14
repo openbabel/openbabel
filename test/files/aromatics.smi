@@ -31,18 +31,20 @@ n1cnnnc1 1,2,3,5-tetrazine
 c12ccccc1cccc2 naphthalene
 c12ccccc1cc3c(cccc3)c2 anthracene
 c12cccnc1cccc2 quinoline
-n1nncc1 1H-1,2,3-triazole
-n1nnnc1 1H-tetrazole
-n1nccc1 1H-pyrazole
-n1ncnc1 1H-1,2,4-triazole
+[nH]1nncc1 1H-1,2,3-triazole
+[nH]1nnnc1 1H-tetrazole
+[nH]1nccc1 1H-pyrazole
+[nH]1ncnc1 1H-1,2,4-triazole
 c1cccc2sc3nncn3c12 benzo[4,5]thiazolo[2,3-c][1,2,4]triazole
-c1ccccc1n1cccc1c1ccccc1 1,2-diphenyl-1H-pyrrole
-c1cc(c2ccccc2)n(c2ccccc2)c1 1,2-diphenyl-1H-pyrrole
+c1ccccc1n1cccc1c1ccccc1 1,2-diphenyl-pyrrole
+c1cc(c2ccccc2)n(c2ccccc2)c1 1,2-diphenyl-pyrrole
 c1(ncc2)n2cco1 imidazo[2,1-b]oxazole
 c1(nnc2)n2ccs1 thiazolo[2,3-c][1,2,4]triazole
 c1(nnc2)n2cco1 oxazolo[2,3-c][1,2,4]triazole
 c1(n2cccc2)ccccc1 1-phenyl-1H-pyrrole
 c16.c21.c32.c43.c54.c65 benzene
 c1[cH][cH]ccc1 benzene
-C1(N23)=CC=CC2=CC=CC3=CC=C1 pyrido[2,1,6-de]quinolizine
 c12c3c(ccc2)c(ccc4)c5c4cccc5c3ccc1 perylene
+C1=[C+]N=CN1 PubChem CID59426909
+C1=CC=C[C+]=C1 PubChem CID128221
+c1cccc2c1C=c1ccccc1=[NH+]2 CHEMBL606782

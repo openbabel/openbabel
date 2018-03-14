@@ -198,7 +198,7 @@ namespace OpenBabel
 
                 if (newMol){
                     atom = mol.NewAtom();
-                    atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));                //set atomic number
+                    atom->SetAtomicNum(OBElements::GetAtomicNum(vs[0].c_str()));                //set atomic number
                     atom->SetVector(x,y,z); //set atom coordinates
                 }
                 if (geoOptRun){
@@ -517,7 +517,7 @@ namespace OpenBabel
                     atom->SetVector(x,y,z); //set coordinates
 
                     //set atomic number
-                    atom->SetAtomicNum(etab.GetAtomicNum(vs[0].c_str()));
+                    atom->SetAtomicNum(OBElements::GetAtomicNum(vs[0].c_str()));
 
                     if (!ifs.getline(buffer,BUFF_SIZE))
                         break;
@@ -643,8 +643,6 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
 
-    char buffer[BUFF_SIZE];
-
     ofs << "# ORCA input file" << endl;
     ofs << "# " << mol.GetTitle() << endl;
     ofs << "! insert inline commands here " << endl;
@@ -654,7 +652,7 @@ namespace OpenBabel
     FOR_ATOMS_OF_MOL(atom, mol)
     {
         ofs << setw(4) << right
-            << OpenBabel::etab.GetSymbol(atom->GetAtomicNum())
+            << OpenBabel::OBElements::GetSymbol(atom->GetAtomicNum())
             << setw(15) << setprecision(5) << fixed << showpoint
             << right << atom->GetX() << " " << setw(15) << atom->GetY() << " "
             << setw(15) << atom->GetZ() << endl;

@@ -58,9 +58,16 @@ namespace OpenBabel
       obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
       return;
     }
-    while(vec.size()*Getbitsperint()/2 >= nbits)
-      vec.erase(transform(vec.begin(),vec.begin()+vec.size()/2,
-                          vec.begin()+vec.size()/2, vec.begin(), bit_or()), vec.end());
+    // "folding" to a larger # of bits
+    if (nbits > vec.size()*Getbitsperint()) {
+      vec.resize(nbits/Getbitsperint(), 0);
+    }
+    else {
+      // normal folding to smaller vector sizes
+      while(vec.size()*Getbitsperint()/2 >= nbits)
+        vec.erase(transform(vec.begin(),vec.begin()+vec.size()/2,
+                            vec.begin()+vec.size()/2, vec.begin(), bit_or()), vec.end());
+    }
   }
 
   ////////////////////////////////////////
@@ -124,7 +131,7 @@ namespace OpenBabel
   }
 
   //*****************************************************************
-  bool FastSearch::Find(OBBase* pOb, vector<unsigned int>& SeekPositions,
+  bool FastSearch::Find(OBBase* pOb, vector<unsigned long>& SeekPositions,
                         unsigned int MaxCandidates)
   {
     ///Finds chemical objects in datafilename (which must previously have been indexed)
@@ -146,21 +153,25 @@ namespace OpenBabel
     unsigned int words = _index.header.words;
     unsigned int* nextp = &_index.fptdata[0];
     unsigned int* ppat0 = &vecwords[0];
-    register unsigned int* p;
-    register unsigned int* ppat;
-    register unsigned int a;
-    unsigned int i; // need address of this, can't be register
+    unsigned int* p;
+    unsigned int* ppat;
+    unsigned int i;
     for(i=0;i<dataSize; ++i) //speed critical section
       {
         p=nextp;
         nextp += words;
         ppat=ppat0;
-        a=0;
+        bool ppat_has_additional_bits = false;
         while(p<nextp)
           {
-            if ( (a=((*ppat) & (*p++)) ^ (*ppat++)) ) break;
+            if ((*ppat & *p) ^ *ppat) { // any bits in ppat that are not in p?
+              ppat_has_additional_bits = true;
+              break;
+            }
+            p++;
+            ppat++;
           }
-        if(!a)
+        if(!ppat_has_additional_bits)
           {
             candidates.push_back(i);
             if(candidates.size()>=MaxCandidates)
@@ -184,7 +195,7 @@ namespace OpenBabel
   }
 
 ////////////////////////////////////////////////////////////
- bool FastSearch::FindMatch(OBBase* pOb, vector<unsigned int>& SeekPositions,
+ bool FastSearch::FindMatch(OBBase* pOb, vector<unsigned long>& SeekPositions,
                             unsigned int MaxCandidates)
 {
 //Similar to FastSearch::Find() except that successful candidates have all bits the same as the target
@@ -197,8 +208,8 @@ namespace OpenBabel
   unsigned int words = _index.header.words;
   unsigned int* nextp = &_index.fptdata[0]; // start of next FP in index
   unsigned int* ppat0 = &vecwords[0];       // start of target FP
-  register unsigned int* p;                 // current position in index
-  register unsigned int* ppat;              // current position in target FP
+  unsigned int* p;                          // current position in index
+  unsigned int* ppat;                       // current position in target FP
   unsigned int i; // need address of this, can't be register
   for(i=0;i<dataSize; ++i) //speed critical section
   {
@@ -225,7 +236,7 @@ namespace OpenBabel
 }
 
   /////////////////////////////////////////////////////////
-  bool FastSearch::FindSimilar(OBBase* pOb, multimap<double, unsigned int>& SeekposMap,
+  bool FastSearch::FindSimilar(OBBase* pOb, multimap<double, unsigned long>& SeekposMap,
                                double MinTani, double MaxTani)
   {
     vector<unsigned int> targetfp;
@@ -234,21 +245,21 @@ namespace OpenBabel
     unsigned int words = _index.header.words;
     unsigned int dataSize = _index.header.nEntries;
     unsigned int* nextp = &_index.fptdata[0];
-    register unsigned int* p;
-    register unsigned int i;
+    unsigned int* p;
+    unsigned int i;
     for(i=0;i<dataSize; ++i) //speed critical section
       {
         p=nextp;
         nextp += words;
         double tani = OBFingerprint::Tanimoto(targetfp,p);
         if(tani>MinTani && tani < MaxTani)
-          SeekposMap.insert(pair<const double, unsigned int>(tani,_index.seekdata[i]));
+          SeekposMap.insert(pair<const double, unsigned long>(tani,_index.seekdata[i]));
       }
     return true;
   }
 
   /////////////////////////////////////////////////////////
-  bool FastSearch::FindSimilar(OBBase* pOb, multimap<double, unsigned int>& SeekposMap,
+  bool FastSearch::FindSimilar(OBBase* pOb, multimap<double, unsigned long>& SeekposMap,
                                int nCandidates)
   {
     ///If nCandidates is zero or omitted the original size of the multimap is used
@@ -258,7 +269,7 @@ namespace OpenBabel
         SeekposMap.clear();
         int i;
         for(i=0;i<nCandidates;++i)
-          SeekposMap.insert(pair<const double, unsigned int>(0,0));
+          SeekposMap.insert(pair<const double, unsigned long>(0,0));
       }
     else if(SeekposMap.size()==0)
       return false;
@@ -269,8 +280,8 @@ namespace OpenBabel
     unsigned int words = _index.header.words;
     unsigned int dataSize = _index.header.nEntries;
     unsigned int* nextp = &_index.fptdata[0];
-    register unsigned int* p;
-    register unsigned int i;
+    unsigned int* p;
+    unsigned int i;
     for(i=0;i<dataSize; ++i) //speed critical section
       {
         p=nextp;
@@ -278,7 +289,7 @@ namespace OpenBabel
         double tani = OBFingerprint::Tanimoto(targetfp,p);
         if(tani>SeekposMap.begin()->first)
           {
-            SeekposMap.insert(pair<const double, unsigned int>(tani,_index.seekdata[i]));
+            SeekposMap.insert(pair<const double, unsigned long>(tani,_index.seekdata[i]));
             SeekposMap.erase(SeekposMap.begin());
           }
       }
@@ -323,12 +334,21 @@ namespace OpenBabel
         return false;
       }
 
-    unsigned int nwords = header.nEntries * header.words;
+    unsigned long nwords = header.nEntries * header.words;
     fptdata.resize(nwords);
     seekdata.resize(header.nEntries);
 
     pIndexstream->read((char*)&(fptdata[0]), sizeof(unsigned int) * nwords);
-    pIndexstream->read((char*)&(seekdata[0]), sizeof(unsigned int) * header.nEntries);
+    if(header.seek64)
+      {
+    	pIndexstream->read((char*)&(seekdata[0]), sizeof(unsigned long) * header.nEntries);
+      }
+    else
+      { //legacy format
+	 vector<unsigned int> tmp(header.nEntries);
+         pIndexstream->read((char*)&(tmp[0]), sizeof(unsigned int) * header.nEntries);
+	 std::copy(tmp.begin(),tmp.end(),seekdata.begin());
+      }
 
     if(pIndexstream->fail())
       {
@@ -345,6 +365,7 @@ namespace OpenBabel
     pIndexstream->read( (char*)&header.nEntries,     sizeof(unsigned) );
     pIndexstream->read( (char*)&header.words,        sizeof(unsigned) );
     pIndexstream->read( (char*)&header.fpid,         sizeof(header.fpid) );
+    pIndexstream->read( (char*)&header.seek64,       sizeof(header.seek64) );
     pIndexstream->read( (char*)&header.datafilename, sizeof(header.datafilename) );
     return !pIndexstream->fail();
  }
@@ -375,7 +396,8 @@ namespace OpenBabel
     _pindex->header.headerlength = 3*sizeof(unsigned)+sizeof(_pindex->header.fpid)
                                     +sizeof(_pindex->header.datafilename);
     strncpy(_pindex->header.fpid,fpid.c_str(),15);
-    _pindex->header.fpid[15]='\0'; //ensure fpid is terminated at 15 characters.
+    _pindex->header.fpid[14]='\0'; //ensure fpid is terminated at 14 characters.
+    _pindex->header.seek64 = 1;
     strncpy(_pindex->header.datafilename, datafilename.c_str(), 255);
 
     //just a hint to reserve size of vectors; definitive value set in destructor
@@ -417,10 +439,11 @@ namespace OpenBabel
     _indexstream->write( (const char*)&hdr.nEntries,     sizeof(unsigned) );
     _indexstream->write( (const char*)&hdr.words,        sizeof(unsigned) );
     _indexstream->write( (const char*)&hdr.fpid,         sizeof(hdr.fpid) );
+    _indexstream->write( (const char*)&hdr.seek64,         sizeof(hdr.seek64) );
     _indexstream->write( (const char*)&hdr.datafilename, sizeof(hdr.datafilename) );
 
     _indexstream->write((const char*)&_pindex->fptdata[0], _pindex->fptdata.size()*sizeof(unsigned int));
-    _indexstream->write((const char*)&_pindex->seekdata[0], _pindex->seekdata.size()*sizeof(unsigned int));
+    _indexstream->write((const char*)&_pindex->seekdata[0], _pindex->seekdata.size()*sizeof(unsigned long));
     if(!_indexstream)
       obErrorLog.ThrowError(__FUNCTION__,
                             "Difficulty writing index", obWarning);

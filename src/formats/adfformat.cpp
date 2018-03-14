@@ -124,7 +124,7 @@ namespace OpenBabel {
             while (strstr(buffer, "----") == NULL && vs.size() >= 8)
               {
                 atom = mol.NewAtom();
-                atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str())); // atom number, then symbol
+                atom->SetAtomicNum(OBElements::GetAtomicNum(vs[1].c_str())); // atom number, then symbol
                 // columns 2, 3, 4 = coordinates in bohr
                 x = atof((char*)vs[5].c_str());
                 y = atof((char*)vs[6].c_str());
@@ -316,7 +316,7 @@ namespace OpenBabel {
     FOR_ATOMS_OF_MOL(atom, mol)
       {
         snprintf(buffer, BUFF_SIZE, "%-3s%15.5f%15.5f%15.5f\n",
-                 etab.GetSymbol(atom->GetAtomicNum()),
+                 OBElements::GetSymbol(atom->GetAtomicNum()),
                  atom->GetX(),
                  atom->GetY(),
                  atom->GetZ());
@@ -410,13 +410,6 @@ public:
     { return false; }
 
 private:
-    ///Maps atom name to atomic number.
-    int GetAtomicNumber( const string& name ) const
-    {
-        int iso;
-        return etab.GetAtomicNum( name.c_str(), iso );
-    }
-
     ///Utility function that eats all the remaining characters on the current and next line.
     void eol( istream& is ) const { string s; getline( is, s ); getline( is, s ); }
 
@@ -613,7 +606,7 @@ bool OBT41Format::ReadASCII( OBBase* pOb, OBConversion* pConv )
       for (unsigned int i = 0; i != numAtoms; ++i)
       {
           ifs >> buf; cout << buf << endl;
-          atoms.push_back( GetAtomicNumber( buf ) );
+          atoms.push_back( OBElements::GetAtomicNum( buf.c_str() ) );
       }
       if( atoms.size() != numAtoms )
       {

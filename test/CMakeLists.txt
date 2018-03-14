@@ -15,7 +15,7 @@ add_definitions(-DFORMATDIR="\\"${FORMATDIR}/\\"")
 
 ################ Add new tests here
 set (cpptests
-     automorphism builder canonconsistent canonstable carspacegroup cifspacegroup
+     automorphism builder canonconsistent canonfragment canonstable carspacegroup cifspacegroup
      cistrans graphsym gzip
      implicitH lssr isomorphism multicml regressions rotor shuffle smiles spectrophore
      squareplanar stereo stereoperception tautomer tetrahedral
@@ -24,9 +24,10 @@ set (cpptests
 set (automorphism_parts 1 2 3 4 5 6 7 8 9 10)
 set (builder_parts 1 2 3 4 5)
 set (canonconsistent_parts  1 2 3)
+set (canonfragment_parts 1)
 set (canonstable_parts 1)
 set (carspacegroup_parts 1 2 3 4)
-set (cifspacegroup_parts 1 2 3 4)
+set (cifspacegroup_parts 1 2 3 4 5 6 7 8 9 10)
 set (cistrans_parts 1 2 3 4 5 6 7 8 9)
 set (graphsym_parts 1 2 3 4 5)
 set (gzip_parts 1)
@@ -34,7 +35,7 @@ set (implicitH_parts 1)
 set (lssr_parts 1 2 3 4 5)
 set (isomorphism_parts 1 2 3 4 5 6 7 8)
 set (multicml_parts 1)
-set (regressions_parts 1 221 222 223 224)
+set (regressions_parts 1 221 222 223 224 225 226 227)
 set (rotor_parts 1 2 3 4)
 set (shuffle_parts 1 2 3 4 5)
 set (smiles_parts 1 2 3)
@@ -58,11 +59,13 @@ set(origtests
     aromatest atom bond cansmi charge_mmff94 charge_gasteiger conversion
     datatest ffgaff ffghemical ffmmff94 ffuff formalcharge format formula
     internalcoord invalidsmarts invalidsmiles iterators logp_psa math mol
-    phmodel residue ringtest smartstest smartsparse smilesmatch unitcell
+    pdbreadfile phmodel residue ringtest smartstest smartsparse smilesmatch
+    unitcell
     )
 set (atom_parts 1 2 3 4)
 set (ffmmff94_parts 1 2)
 set (math_parts 1 2 3 4)
+set (pdbreadfile_parts 1 2 3 4)
 
 if(BUILD_SHARED)
   if(LIBXML2_FOUND)
@@ -88,8 +91,6 @@ foreach(origtest ${origtests})
     set(${origtest}_parts "1")
   endif()
 endforeach()
-
-add_definitions(-DTESTDIR=${CMAKE_CURRENT_SOURCE_DIR})
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 create_test_sourcelist(srclist test_runner.cpp
@@ -148,7 +149,7 @@ foreach(cpptest ${cpptests})
              ${TEST_PATH}/test_runner ${cpptest}test ${part})
     set_tests_properties(test_${cpptest}_${part} PROPERTIES
       FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
-      ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}")
+      ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}")
   endforeach()
 endforeach()
 
@@ -158,7 +159,7 @@ foreach(cpptest ${origtests})
              ${TEST_PATH}/test_runner ${cpptest} ${part})
     set_tests_properties(test_${cpptest}_${part} PROPERTIES
       FAIL_REGULAR_EXPRESSION "not ok"
-      ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}")
+      ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}")
   endforeach()
 endforeach()
 
@@ -184,7 +185,7 @@ if(WITH_INCHI)
              ${TEST_PATH}/test_inchiwrite ${inchidata}/${test} ${inchidata}/${test}.txt)
     set_tests_properties(inchi${test}_Test PROPERTIES
                          FAIL_REGULAR_EXPRESSION "Not ok"
-                         ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
+                         ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}"
     )
   endforeach(test ${inchitests})
 endif(WITH_INCHI)
@@ -215,13 +216,13 @@ if(NOT MINGW AND NOT CYGWIN)
   include(UsePythonTest)
   if(PYTHON_EXECUTABLE)
     set(pytests
-        babel sym smartssym fastsearch unique kekule pdbformat)
+        babel sym smartssym fastsearch unique kekule pdbformat RInChI)
     foreach(pytest ${pytests})
     SET_SOURCE_FILES_PROPERTIES(test${pytest}.py PROPERTIES
       PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
       BABEL_LIBDIR "${FORMATDIR}"
       BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
-      LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
+      LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}"
     )
       ADD_PYTHON_TEST(pytest_${pytest} test${pytest}.py)
       set_tests_properties(pytest_${pytest} PROPERTIES
@@ -238,13 +239,13 @@ endif(NOT MINGW AND NOT CYGWIN)
 if (PYTHON_BINDINGS)
   include(UsePythonTest)
   set(pybindtests
-      bindings _pybel example)
+      bindings _pybel example cdjsonformat pcjsonformat)
   foreach(pybindtest ${pybindtests})
     SET_SOURCE_FILES_PROPERTIES(test${pybindtest}.py PROPERTIES
         PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
         BABEL_LIBDIR "${FORMATDIR}"
         BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
-        LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
+        LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}"
     )
     if(MSVC)
       SET_SOURCE_FILES_PROPERTIES(test${pybindtest}.py PROPERTIES
