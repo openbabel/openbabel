@@ -92,8 +92,6 @@ foreach(origtest ${origtests})
   endif()
 endforeach()
 
-add_definitions(-DTESTDIR=${CMAKE_CURRENT_SOURCE_DIR})
-
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 create_test_sourcelist(srclist test_runner.cpp
                        ${cpptestsrc})
@@ -241,7 +239,7 @@ endif(NOT MINGW AND NOT CYGWIN)
 if (PYTHON_BINDINGS)
   include(UsePythonTest)
   set(pybindtests
-      bindings _pybel example pcjsonformat)
+      bindings _pybel example cdjsonformat pcjsonformat)
   foreach(pybindtest ${pybindtests})
     SET_SOURCE_FILES_PROPERTIES(test${pybindtest}.py PROPERTIES
         PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"

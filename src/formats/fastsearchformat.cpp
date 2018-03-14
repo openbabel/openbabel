@@ -191,9 +191,16 @@ virtual const char* Description() //required
     pConv->SetInStream(&datastream);
 
     //Input format is currently fs; set it appropriately
-    if(!pConv->SetInAndOutFormats(pConv->FormatFromExt(datafilename.c_str()),pConv->GetOutFormat()))
+    bool isgzip = false;
+    if(!pConv->SetInAndOutFormats(pConv->FormatFromExt(datafilename.c_str(), isgzip), pConv->GetOutFormat()))
       return false;
 
+    if (isgzip)
+      {
+	errorMsg << "Index datafile must not be in gzip format: " << path << endl;
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+        return false;
+      }
     // If target has dative bonds like -[N+](=O)[O-] convert it to the uncharged form
     // (-N(=O)=O and add uncharged form to vector of mols which are sent to
     // the -s (SMARTS)filter.
@@ -337,6 +344,15 @@ virtual const char* Description() //required
     static bool NewOstreamUsed;
     if(fsi==NULL)
       {
+	// Warn that compressed files cannot be used. It's hard to seek
+	// inside of a gzip file.
+	if(pConv->GetInGzipped())
+	  {
+	    obErrorLog.ThrowError(__FUNCTION__,
+	      "Fastindex search requires an uncompressed input file so it can quickly seek to a record.",
+	      obWarning);
+	  }
+	
         //First pass sets up FastSearchIndexer object
         pOs = pConv->GetOutStream();// with named index it is already open
         NewOstreamUsed=false;

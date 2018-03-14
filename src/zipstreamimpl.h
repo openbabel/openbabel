@@ -398,7 +398,6 @@ std::streampos
   // We can't really randomly skip around, so we go to the beginning and read until we hit the right spot
   // So the first step is to calculate the final positioning
   std::streampos finalpos;
-  char ch;
   switch ( way )
     {
     case std::ios_base::beg :
@@ -408,7 +407,7 @@ std::streampos
     case std::ios_base::end:
       // find the end of the file -- might be enough if off = 0
       while(this->sgetc() != EOF) {
-        ch = this->sbumpc();
+        this->sbumpc();
       }
       finalpos = this->currentpos() + off;
       if (off == 0)
@@ -433,7 +432,7 @@ std::streampos
 
   // Now we keep going, throwing away the data until we get to the right place
   while(this->sgetc() != EOF && this->currentpos() != finalpos) {
-    ch = this->sbumpc();
+    this->sbumpc();
   }
 
   return this->currentpos();
@@ -453,9 +452,8 @@ std::streampos
   this->check_header();
 
   // Now we keep going, throwing away the data until we get to the right place
-  char ch;
   while(this->sgetc() != EOF && this->currentpos() != sp) {
-    ch = this->sbumpc();
+    this->sbumpc();
   }
 
   return this->currentpos();

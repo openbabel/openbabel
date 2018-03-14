@@ -434,7 +434,7 @@ namespace OpenBabel
     _dataptr = ResidueData;
   }
 
-  bool OBResidueData::AssignBonds(OBMol &mol,OBBitVec &bv)
+  bool OBResidueData::AssignBonds(OBMol &mol)
   {
     if (!_init)
       Init();

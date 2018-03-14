@@ -155,19 +155,23 @@ namespace OpenBabel
     unsigned int* ppat0 = &vecwords[0];
     unsigned int* p;
     unsigned int* ppat;
-    unsigned int a;
     unsigned int i;
     for(i=0;i<dataSize; ++i) //speed critical section
       {
         p=nextp;
         nextp += words;
         ppat=ppat0;
-        a=0;
+        bool ppat_has_additional_bits = false;
         while(p<nextp)
           {
-            if ( (a=((*ppat) & (*p++)) ^ (*ppat++)) ) break;
+            if ((*ppat & *p) ^ *ppat) { // any bits in ppat that are not in p?
+              ppat_has_additional_bits = true;
+              break;
+            }
+            p++;
+            ppat++;
           }
-        if(!a)
+        if(!ppat_has_additional_bits)
           {
             candidates.push_back(i);
             if(candidates.size()>=MaxCandidates)

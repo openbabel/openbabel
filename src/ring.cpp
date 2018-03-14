@@ -559,8 +559,9 @@ namespace OpenBabel
   {
     if (HasFlag(OB_RINGFLAGS_MOL))
       return;
-    obErrorLog.ThrowError(__FUNCTION__,
-                          "Ran OpenBabel::FindRingAtomsAndBonds", obAuditMsg);
+    if (obErrorLog.GetOutputLevel() >= obAuditMsg)
+      obErrorLog.ThrowError(__FUNCTION__,
+                            "Ran OpenBabel::FindRingAtomsAndBonds", obAuditMsg);
     FindRingAtomsAndBonds2(*this);
   }
 

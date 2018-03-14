@@ -266,7 +266,7 @@ double OBDescriptor::ParsePredicate(istream& optionText, char& ch1, char& ch2, s
   streampos spos = optionText.tellg();
   optionText >> val;
    //only a number when the param has no additional text or only a closing bracket
-  if(!optionText.eof() && isalpha(optionText.peek()))
+  if(!optionText.eof() && (optionText.fail() || isalpha(optionText.peek())))
     val = std::numeric_limits<double>::quiet_NaN();
   optionText.clear();
   optionText.seekg(spos);

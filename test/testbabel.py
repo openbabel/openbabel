@@ -37,20 +37,20 @@ def run_exec(*args):
         text, commandline = "", args[0]
     else:
         raise Exception("One or two arguments expected")
-    
+
     broken = commandline.encode().split()
     exe = executable(broken[0].decode())
     # Note that bufsize = -1 means default buffering
     # Without this, it's unbuffered and it takes 10x longer on MacOSX
     if text:
-        p = Popen([exe] + broken[1:], 
+        p = Popen([exe] + broken[1:],
                   stdin=PIPE, stdout=PIPE, stderr=PIPE, bufsize=1)
         stdout, stderr = p.communicate(text.encode())
     else:
-        p = Popen([exe] + broken[1:], 
+        p = Popen([exe] + broken[1:],
                   stdout=PIPE, stderr=PIPE, bufsize=-1)
         stdout, stderr = p.communicate()
-    
+
     return stdout.decode(), stderr.decode()
 
 def executable(name):
@@ -74,12 +74,12 @@ def log(text):
 class BaseTest(unittest.TestCase):
     """A base class for test classes that adds additional
     test methods"""
-    
+
     def canFindExecutable(self, name):
         fullpath = executable(name)
         self.assertTrue(os.path.isfile(fullpath),
                         "'%s' executable not found at %s" % (name, fullpath))
-        
+
     def canFindFile(self, filename):
         self.assertTrue(os.path.isfile(filename),
                         "Cannot find the file '%s'" % filename)
@@ -100,11 +100,11 @@ class BaseTest(unittest.TestCase):
         conversion_no = int(re.findall(pat, convertedline[0])[0])
         self.assertEqual(N, conversion_no,
                          "Number of molecules converted is %d "
-                         "but should be %d" % (conversion_no, N))        
+                         "but should be %d" % (conversion_no, N))
 
 class testOBabel(BaseTest):
     """A series of tests relating to the obabel executable"""
-        
+
     def testSMItoInChI(self):
         self.canFindExecutable("obabel")
         output, error = run_exec("CC(=O)Cl", "obabel -ismi -oinchi")
@@ -134,14 +134,14 @@ class testOBabel(BaseTest):
 
     def testRingClosures(self):
         # Test positives
-        data = ["c1ccccc1", "c%11ccccc%11", "c%(1)ccccc%(1)",
+        data = ["c1ccccc1", "c%11ccccc%11", "c%(1)ccccc%(1)", "c%(51)ccccc%51",
                 "c%(99999)ccccc%(99999)"]
         for smi in data:
             output, error = run_exec("obabel -:%s -osmi" % smi)
             self.assertEqual("c1ccccc1", output.rstrip())
         # Test negatives
         data = ["c%1ccccc%1", "c%a1cccc%a1", "c%(a1)ccccc%(a1)",
-                "c%(000001)ccccc%(000001)"]
+                "c%(000001)ccccc%(000001)", "c%(51)ccccc%(15)"]
         for smi in data:
             output, error = run_exec("obabel -:%s -osmi" % smi)
             self.assertTrue("0 molecules converted" in error)
@@ -163,7 +163,7 @@ class testOBabel(BaseTest):
                "product": "C>>O.N",
                "both": "C.N>>O.N",
                "ignore": "C>>O"}
-        for option, result in ans.iteritems():
+        for option, result in ans.items():
             output, error = run_exec("obabel -irsmi -:%s -orxn -xG %s" %
                                      (rsmi, option))
             moutput, error = run_exec(output, "obabel -irxn -orsmi")

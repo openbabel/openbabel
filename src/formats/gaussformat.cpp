@@ -388,6 +388,8 @@ namespace OpenBabel
             sprintf(valbuf,"%f", result[ii]);
             add_unique_pairdata_to_mol(mol, attr[ii], valbuf, 0);
         }
+        sprintf(valbuf, "%f", ezpe*eFactor);
+        add_unique_pairdata_to_mol(mol, "zpe", valbuf, 0);
         sprintf(valbuf, "%f", CV);
         add_unique_pairdata_to_mol(mol, "cv", valbuf, 0);
         sprintf(valbuf, "%f", CV+Rgas);
@@ -447,8 +449,14 @@ namespace OpenBabel
     bool ezpe_set=false,Hcorr_set=false,Gcorr_set=false,E0_set=false,CV_set=false;
     double temperature = 0; /* Kelvin */
     std::vector<double> Scomponents;
-    // Electrostatic potential
-    OBFreeGrid *esp = NULL;
+    // Electrostatic potential. ESP is calculated 
+    // once unless the Opt and Pop jobs are combined. 
+    // In this case, ESP is calculated once before
+    // the geometry optmization and once after. If this
+    // happens, the second ESP must be added to OBMol.
+    OBFreeGrid *esp   = NULL;
+    int NumEsp        = 1; 
+    int NumEspCounter = 0;
 
     // coordinates of all steps
     // Set conformers to all coordinates we adopted
@@ -541,6 +549,12 @@ namespace OpenBabel
               else if(buffer[1]=='#')
               {
                 //the line describing the method
+                if(strstr(buffer,"Opt") != NULL)
+                {
+                    // It is expected to have two sets of ESP in 
+                    // the log file if Opt is combined with Pop. 
+                    NumEsp = 2;
+                }
                 comment += buffer;
                 OBCommentData *cd = new OBCommentData;
                 cd->SetData(comment);
@@ -673,20 +687,27 @@ namespace OpenBabel
         else if(strstr(buffer,"Exact polarizability") != NULL)
             {
               // actual components XX, YX, YY, XZ, YZ, ZZ
-              tokenize(vs,buffer);
-              if (vs.size() >= 8)
-                {
+              double xx, xy, yy, xz, yz, zz;              
+              const char *ptr = buffer+strlen("Exact polarizability:   ");
+              if (ptr &&
+                  6 == sscanf(ptr, "%8lf%8lf%8lf%8lf%8lf%8lf",
+                              &xx, &xy, &yy, &xz, &yz, &zz))
+              {
                   double Q[3][3];
                   OpenBabel::OBMatrixData *pol_tensor = new OpenBabel::OBMatrixData;
 
-                  Q[0][0] = atof(vs[2].c_str());
-                  Q[1][1] = atof(vs[4].c_str());
-                  Q[2][2] = atof(vs[7].c_str());
-                  Q[1][0] = Q[0][1] = atof(vs[3].c_str());
-                  Q[2][0] = Q[0][2] = atof(vs[5].c_str());
-                  Q[2][1] = Q[1][2] = atof(vs[6].c_str());
+                  Q[0][0] = xx;
+                  Q[1][1] = yy;
+                  Q[2][2] = zz;
+                  Q[1][0] = Q[0][1] = xy;
+                  Q[2][0] = Q[0][2] = xz;
+                  Q[2][1] = Q[1][2] = yz;
                   matrix3x3 pol(Q);
-
+                  
+                  if (mol.HasData("Exact polarizability"))
+                    {
+                      mol.DeleteData("Exact polarizability"); // Delete the old one to add the new one
+                    }
                   pol_tensor->SetAttribute("Exact polarizability");
                   pol_tensor->SetData(pol);
                   pol_tensor->SetOrigin(fileformatInput);
@@ -713,6 +734,10 @@ namespace OpenBabel
                 if (!ifs.getline(buffer,BUFF_SIZE)) break;
                 tokenize(vs,buffer);
               }
+          }
+        else if (strstr(buffer, "Electrostatic Properties Using The SCF Density") != NULL)
+          {
+              NumEspCounter++;
           }
         else if (strstr(buffer, "Atomic Center") != NULL)
           {
@@ -778,14 +803,21 @@ namespace OpenBabel
                     i++;
                   }
               }
-            if (i == np)
+            if (NumEsp == NumEspCounter)
               {
-                esp->SetAttribute("Electrostatic Potential");
-                mol.SetData(esp);
+                if (i == np)
+                  {
+                    esp->SetAttribute("Electrostatic Potential");
+                    mol.SetData(esp);
+                  }
+                else
+                  {
+                    cout << "Read " << esp->NumPoints() << " ESP points i = " << i << "\n";
+                  }
               }
             else
               {
-                cout << "Read " << esp->NumPoints() << " ESP points i = " << i << "\n";
+                esp->Clear();
               }
           }
         else if (strstr(buffer, "Charges from ESP fit") != NULL)

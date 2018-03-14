@@ -67,12 +67,12 @@ if(MSVC)
                   PREFIX ""
                   SUFFIX ${MODULE_EXTENSION})
 
-  if(JSON_LIBRARY)
+  if(WITH_JSON)
     set(jsonsources "")
     foreach(format ${formats_json})
       set(jsonsources ${jsonsources} json/${format}.cpp)
     endforeach(format)
-    add_library(formats_json ${PLUGIN_TYPE} ${jsonsources} ${json_additional_sources}
+    add_library(formats_json ${PLUGIN_TYPE} ${jsonsources}
                 "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h")
     target_link_libraries(formats_json ${libs} ${JSON_LIBRARY} openbabel)
     install(TARGETS formats_json
@@ -83,7 +83,7 @@ if(MSVC)
                           OUTPUT_NAME formats_json
                           PREFIX ""
                           SUFFIX ${MODULE_EXTENSION})
-  endif(JSON_LIBRARY)
+  endif()
 
 else(MSVC)
 foreach(format ${formats_xml})
@@ -99,8 +99,9 @@ foreach(format ${formats_xml})
                         SUFFIX ${MODULE_EXTENSION})
 endforeach(format)
 
+if(WITH_JSON)
 foreach(format ${formats_json})
-  add_library(${format} ${PLUGIN_TYPE} json/${format}.cpp ${json_additional_sources}
+  add_library(${format} ${PLUGIN_TYPE} json/${format}.cpp
               "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h")
   target_link_libraries(${format} ${libs} openbabel)
   install(TARGETS ${format}
@@ -112,5 +113,6 @@ foreach(format ${formats_json})
                         PREFIX ""
                         SUFFIX ${MODULE_EXTENSION})
 endforeach(format)
+endif()
 endif(MSVC)
 endif(NOT MINIMAL_BUILD)

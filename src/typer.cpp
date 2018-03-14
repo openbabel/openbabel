@@ -638,28 +638,8 @@ namespace OpenBabel
     \code
     atom->IsAromatic();
     bond->IsAromatic();
-    bond->IsDouble(); // needs to check aromaticity and define Kekule structures
     \endcode
   */
-  OBAromaticTyper::OBAromaticTyper()
-  {
-    _init = true;
-    // The following values are no longer used by this class
-    _dir = BABEL_DATADIR;
-    _envvar = "BABEL_DATADIR";
-    _filename = "aromatic.txt";
-    _subdir = "data";
-    _dataptr = (const char*)0;
-  }
-
-  void OBAromaticTyper::ParseLine(const char *buffer)
-  {
-     // This function is no longer used by this class
-  }
-
-  OBAromaticTyper::~OBAromaticTyper()
-  {
-  }
 
   void OBAromaticTyper::AssignAromaticFlags(OBMol &mol)
   {
