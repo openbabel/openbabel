@@ -1195,9 +1195,9 @@ namespace OpenBabel
       return _PartialCharge.size(); 
     }
     
-    void AddPartialCharge(double q)
+    void AddPartialCharge(std::vector<double> q)
     {
-      _PartialCharge.push_back(q);
+      _PartialCharge = q;
     }
 
     std::vector<double> GetPartialCharge()

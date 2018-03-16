@@ -734,6 +734,8 @@ namespace OpenBabel
                 mol.DeleteData("Mulliken charges");
               }
             OBPcharge *Mulliken = new OpenBabel::OBPcharge();
+            std::vector<double> MPA_q;
+            
             ifs.getline(buffer,BUFF_SIZE);	// column headings
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
@@ -744,19 +746,22 @@ namespace OpenBabel
                 if (!atom)
                   break;
                 atom->SetPartialCharge(atof(vs[2].c_str()));
-                Mulliken->AddPartialCharge(atof(vs[2].c_str()));
+                MPA_q.push_back(atof(vs[2].c_str()));
                 if (!ifs.getline(buffer,BUFF_SIZE)) break;
                 tokenize(vs,buffer);
                                     
               } 
-            if (Mulliken->NumPartialCharges() != mol.NumAtoms()) 
+            if (MPA_q.size() == mol.NumAtoms()) 
             {
-                cerr << "The number of Mulliken partial charges is not equal to the number of atoms!" << endl;
-                exit (-1);
+                Mulliken->AddPartialCharge(MPA_q);
+                Mulliken->SetAttribute("Mulliken charges");
+                Mulliken->SetOrigin(fileformatInput);
+                mol.SetData(Mulliken); 
             }
-            Mulliken->SetAttribute("Mulliken charges");
-            Mulliken->SetOrigin(fileformatInput);
-            mol.SetData(Mulliken);    
+            else
+            {
+                cout << "Read " << MPA_q.size() << " Mulliken charges for " << mol.NumAtoms() << " atoms\n";
+            }              
           }
         else if(strstr(buffer,"Hirshfeld charges") != NULL &&
                 strstr(buffer,"CM5 charges") != NULL)
@@ -777,6 +782,8 @@ namespace OpenBabel
               }
             OBPcharge *Hirshfeld = new OpenBabel::OBPcharge();
             OBPcharge *CM5       = new OpenBabel::OBPcharge();
+            std::vector<double> HPA_q;
+            std::vector<double> CM5_q;
             ifs.getline(buffer,BUFF_SIZE);	// column headings
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
@@ -786,25 +793,29 @@ namespace OpenBabel
                 atom = mol.GetAtom(atoi(vs[0].c_str()));
                 if (!atom)
                   break;
-                atom->SetPartialCharge(atof(vs[2].c_str()));
-                Hirshfeld->AddPartialCharge(atof(vs[2].c_str()));
-                CM5->AddPartialCharge(atof(vs[7].c_str()));
+                atom->SetPartialCharge(atof(vs[2].c_str()));             
+                HPA_q.push_back(atof(vs[2].c_str()));
+                CM5_q.push_back(atof(vs[7].c_str()));
                 if (!ifs.getline(buffer,BUFF_SIZE)) break;
                 tokenize(vs,buffer);
                                     
               }
-            if (CM5->NumPartialCharges() != mol.NumAtoms() || 
-                Hirshfeld->NumPartialCharges() != mol.NumAtoms()) 
+            if (CM5_q.size() == mol.NumAtoms() and 
+                HPA_q.size() == mol.NumAtoms()) 
             {
-                cerr << "The number of Hirshfeld or CM5 partial charges is not equal to the number of atoms!" << endl;
-                exit (-1);
+                Hirshfeld->AddPartialCharge(HPA_q);
+                Hirshfeld->SetAttribute("Hirshfeld charges");
+                Hirshfeld->SetOrigin(fileformatInput);
+                CM5->AddPartialCharge(CM5_q);
+                CM5->SetAttribute("CM5 charges");
+                CM5->SetOrigin(fileformatInput);              
+                mol.SetData(CM5);
+                mol.SetData(Hirshfeld);
             }
-            Hirshfeld->SetAttribute("Hirshfeld charges");
-            Hirshfeld->SetOrigin(fileformatInput);
-            CM5->SetAttribute("CM5 charges");
-            CM5->SetOrigin(fileformatInput);
-            mol.SetData(Hirshfeld);
-            mol.SetData(CM5);
+            else
+            {
+                cout << "Read " << HPA_q.size() << " Hirshfeld charges for " << mol.NumAtoms() << " atoms\n";
+            } 
           }
         else if (strstr(buffer, "Electrostatic Properties Using The SCF Density") != NULL)
           {
@@ -900,6 +911,7 @@ namespace OpenBabel
                 mol.DeleteData("ESP charges");
               }
             OBPcharge *ESP = new OpenBabel::OBPcharge();
+            std::vector<double> ESP_q;
             ifs.getline(buffer,BUFF_SIZE);	// Charge / dipole line
             ifs.getline(buffer,BUFF_SIZE); // column header
             ifs.getline(buffer,BUFF_SIZE); // real charges
@@ -911,18 +923,21 @@ namespace OpenBabel
                 if (!atom)
                   break;
                 atom->SetPartialCharge(atof(vs[2].c_str()));
-                ESP->AddPartialCharge(atof(vs[2].c_str()));
+                ESP_q.push_back(atof(vs[2].c_str()));
                 if (!ifs.getline(buffer,BUFF_SIZE)) break;
                 tokenize(vs,buffer);
               }
-            if (ESP->NumPartialCharges() != mol.NumAtoms()) 
+            if (ESP_q.size() == mol.NumAtoms()) 
             {
-                cerr << "The number of ESP partial charges is not equal to the number of atoms!" << endl;
-                exit (-1);
+                ESP->AddPartialCharge(ESP_q);
+                ESP->SetAttribute("ESP charges");
+                ESP->SetOrigin(fileformatInput);
+                mol.SetData(ESP);
             }
-            ESP->SetAttribute("ESP charges");
-            ESP->SetOrigin(fileformatInput);
-            mol.SetData(ESP);
+            else
+            {
+                cout << "Read " << ESP_q.size() << " ESP charges for " << mol.NumAtoms() << " atoms\n";
+            }           
           }
         else if(strstr(buffer,"Natural Population") != NULL)
           {
