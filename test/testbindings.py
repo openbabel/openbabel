@@ -54,6 +54,17 @@ class PybelWrapper(PythonBindings):
 
 class TestSuite(PythonBindings):
 
+    def testInChIIsotopes(self):
+        """Ensure that we correctly set and read isotopes in InChIs"""
+        with open(os.path.join(here, "inchi", "inchi_isotopes.txt")) as inp:
+            for line in inp:
+                if line.startswith("#"): continue
+                smi, inchi = line.rstrip().split("\t")
+                minchi = pybel.readstring("smi", smi).write("inchi").rstrip()
+                self.assertEqual(minchi, inchi)
+                msmi = pybel.readstring("inchi", minchi).write("smi").rstrip()
+                self.assertEqual(msmi, smi)
+
     def testAsterisk(self):
         """Ensure that asterisk in SMILES is bracketed when needed
         and not otherwise"""
