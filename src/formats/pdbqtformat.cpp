@@ -434,34 +434,22 @@ namespace OpenBabel
         best_root_atom=i;
       }
     }
-    vector <unsigned int> bonds_to_delete;
-    {
-      OBMol  mol_pieces = mol;
-      for (OBBondIterator it=mol_pieces.BeginBonds(); it != mol_pieces.EndBonds(); it++)
-      {
-        if (IsRotBond_PDBQT((*it)))
-        {
-          bonds_to_delete.push_back((*it)->GetIdx());
-        }
-      }
 
-      if (bonds_to_delete.size() != 0) //checks there is something to delete
+    vector <OBBond*> bonds_to_delete;
+    OBMol mol_pieces = mol;
+    for (OBBondIterator it=mol_pieces.BeginBonds(); it != mol_pieces.EndBonds(); it++)
+    {
+      if (IsRotBond_PDBQT((*it)))
       {
-        vector <unsigned int>::iterator itb=bonds_to_delete.end();
-        --itb;
-        for (OBBondIterator it=mol_pieces.EndBonds(); true; )
-        {
-          it--;
-          if ( (*it)->GetIdx() == (*itb) )
-          {
-            mol_pieces.DeleteBond((*it), true);
-            if (itb == bonds_to_delete.begin()) {break;}
-            else {--itb;}
-          }
-        }
+        bonds_to_delete.push_back(*it);
       }
-      mol_pieces.ContigFragList(rigid_fragments);
     }
+    for (vector<OBBond*>::iterator bit = bonds_to_delete.begin(); bit != bonds_to_delete.end(); ++bit)
+    {
+      mol_pieces.DeleteBond(*bit, true);
+    }
+    mol_pieces.ContigFragList(rigid_fragments);
+
     return best_root_atom;
   }
 
