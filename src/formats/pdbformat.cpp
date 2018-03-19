@@ -718,8 +718,8 @@ namespace OpenBabel
         double occup = 1.0;
         if (atom->HasData("_atom_site_occupancy"))
         {
-         OBPairFloatingPoint *occup_fp = dynamic_cast<OBPairFloatingPoint *> atom->GetData("_atom_site_occupancy");
-         occup = occup_fp->GetValue();
+         OBPairFloatingPoint *occup_fp = dynamic_cast<OBPairFloatingPoint*> (atom->GetData("_atom_site_occupancy"));
+         occup = occup_fp->GetGenericValue();
         }
 
         snprintf(buffer, BUFF_SIZE, "%s%5d %-4s %-3s %c%4d%c   %8.3f%8.3f%8.3f  %3.2f  0.00          %2s%2s\n",
