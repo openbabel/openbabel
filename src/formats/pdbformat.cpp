@@ -714,7 +714,15 @@ namespace OpenBabel
             scharge[1] = scharge[0];
             scharge[0] = tmp;
           }
-        snprintf(buffer, BUFF_SIZE, "%s%5d %-4s %-3s %c%4d%c   %8.3f%8.3f%8.3f  1.00  0.00          %2s%2s\n",
+
+        double occup = 1.0;
+        if (atom->HasData("_atom_site_occupancy"))
+        {
+         OBPairFloatingPoint *occup_fp = dynamic_cast<OBPairFloatingPoint *> atom->GetData("_atom_site_occupancy");
+         occup = occup_fp->GetValue();
+        }
+
+        snprintf(buffer, BUFF_SIZE, "%s%5d %-4s %-3s %c%4d%c   %8.3f%8.3f%8.3f  %3.2f  0.00          %2s%2s\n",
                  het?"HETATM":"ATOM  ",
                  i,
                  type_name,
@@ -725,6 +733,7 @@ namespace OpenBabel
                  atom->GetX(),
                  atom->GetY(),
                  atom->GetZ(),
+                 occup,
                  element_name,
                  scharge);
         ofs << buffer;

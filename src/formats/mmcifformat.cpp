@@ -776,7 +776,7 @@ namespace OpenBabel
                occup->SetAttribute("_atom_site_occupancy");
                double occup = token.as_number();
                if (occup <= 0.0 || occup > 1.0){
-                  occup = 1.0;
+                 occup = 1.0;
                }
                occup->SetValue(occup);
                occup->SetOrigin(fileformatInput);
