@@ -774,7 +774,11 @@ namespace OpenBabel
              case CIFTagID::_atom_site_occupancy: // The occupancy of the site.
                occup = new OBPairFloatingPoint;
                occup->SetAttribute("_atom_site_occupancy");
-               occup->SetValue(token.as_number());
+               double occup = token.as_number();
+               if (occup <= 0.0 || occup > 1.0){
+                  occup = 1.0;
+               }
+               occup->SetValue(occup);
                occup->SetOrigin(fileformatInput);
                atom->SetData(occup);
                break;
