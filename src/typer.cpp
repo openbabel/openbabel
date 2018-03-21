@@ -200,9 +200,25 @@ namespace OpenBabel
     }
 
     // check all atoms to make sure *some* hybridization is assigned
+    int valence;
     for (atom = mol.BeginAtom(k);atom;atom = mol.NextAtom(k))
-      if (atom->GetHyb() == 0)
-        atom->SetHyb(atom->GetValence());
+      if (atom->GetHyb() == 0) {
+        switch (atom->GetValence()) {
+          case 0:
+          case 1:
+          case 2:
+            atom->SetHyb(1);
+            break;
+          case 3:
+            atom->SetHyb(2);
+            break;
+          case 4:
+            atom->SetHyb(3);
+            break;
+          default:
+            atom->SetHyb(atom->GetValence());
+        }
+      }
   }
 
   /*! \class OBRingTyper typer.h <openbabel/typer.h>
