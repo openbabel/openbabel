@@ -851,7 +851,7 @@ namespace OpenBabel
       bool residue=false;
       string res_name="";
       string res_chain="";
-      unsigned int res_num=1;
+      int res_num=1;
       if (pConv->IsOption("s",OBConversion::OUTOPTIONS))
       {
         residue=true;
