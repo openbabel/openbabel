@@ -1041,7 +1041,7 @@ _insertioncode=src._insertioncode;
     return _resnum;
   }
 
-  unsigned int OBResidue::GetNum(void)
+  int OBResidue::GetNum(void)
   {
     return atoi(_resnum.c_str());
   }
