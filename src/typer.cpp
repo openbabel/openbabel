@@ -200,7 +200,6 @@ namespace OpenBabel
     }
 
     // check all atoms to make sure *some* hybridization is assigned
-    int valence;
     for (atom = mol.BeginAtom(k);atom;atom = mol.NextAtom(k))
       if (atom->GetHyb() == 0) {
         switch (atom->GetValence()) {
