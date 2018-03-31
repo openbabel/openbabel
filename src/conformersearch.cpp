@@ -436,12 +436,12 @@ namespace OpenBabel {
     nb_niches = (m_rotorKeys.size()) / 10;
     if (nb_niches < 3)
       nb_niches = 3;
-    sigma_share = nb_rotors / 3;
-    if (sigma_share < 1)
-      sigma_share ++;
-    niche_radius =  nb_rotors / 4;
-    if (niche_radius < 1)
-      niche_radius++;
+    sigma_share = (double)nb_rotors / 3.0;
+    if (sigma_share < 1.0)
+      sigma_share = 1.0;
+    niche_radius =  (double)nb_rotors / 4.0;
+    if (niche_radius < 1.0)
+      niche_radius = 1.0;
 
     return true;
   }
@@ -1031,7 +1031,8 @@ namespace OpenBabel {
         for (iniche = 0; iniche < dynamic_niches.size (); iniche++)
           {
             j = dynamic_niches[iniche][0];
-            if (key_distance (m_rotorKeys[j], m_rotorKeys[i]) <= niche_radius)
+            dist = key_distance(m_rotorKeys[j], m_rotorKeys[i]);
+            if ((double)dist <= niche_radius)
               {
                 dynamic_niches[iniche].push_back (i);
                 break;
@@ -1051,7 +1052,7 @@ namespace OpenBabel {
                 for (j = 0; j < pop_size; j++)
                   {
                     dist = key_distance (m_rotorKeys[i], m_rotorKeys[j]);
-                    if (dist < sigma_share)
+                    if ((double)dist < sigma_share)
                       {
                         sh_ij = 1.0 - pow (((double) dist) / ((double ) sigma_share), alpha_share);
                         sh_count += sh_ij;
