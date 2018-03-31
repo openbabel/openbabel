@@ -474,7 +474,10 @@ namespace OpenBabel {
         tokenize(vs, buffer);
         // atom number, atomic symbol, mulliken pop, charge
         while (vs.size() >= 4) {
-          atom = mol.GetAtom(atoi(vs[0].c_str()));
+          int atomNb = atoi(vs[0].c_str());
+          if (!atomNb)
+            break;
+          atom = mol.GetAtom(atomNb);
           atom->SetPartialCharge(atof(vs[3].c_str()));
 
           if (!ifs.getline(buffer, BUFF_SIZE))
