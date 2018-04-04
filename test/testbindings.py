@@ -464,6 +464,128 @@ class AcceptStereoAsGiven(PythonBindings):
         out = pybel.readstring("smi", cistrans, opt={"S": True}).write("smi")
         self.assertFalse("/" in out)
 
+class OBMolCopySubstructure(PythonBindings):
+    """Tests for copying a component of an OBMol"""
+
+    def createBitVec(self, size, bits):
+        bv = ob.OBBitVec(size)
+        for bit in bits:
+            bv.SetBitOn(bit)
+        return bv
+
+    def testBasic(self):
+        mol = pybel.readstring("smi", "ICBr")
+        bv = self.createBitVec(4, (1, 3))
+        nmol = ob.OBMol()
+        ok = mol.OBMol.CopySubstructure(nmol, bv, None, 0)
+        self.assertTrue(ok)
+        self.assertEqual(pybel.Molecule(nmol).write("smi").rstrip(), "[I].[Br]")
+        bv = self.createBitVec(4, (2,))
+        ok = mol.OBMol.CopySubstructure(nmol, bv, None, 0)
+        self.assertTrue(ok)
+        self.assertEqual(pybel.Molecule(nmol).write("smi").rstrip(), "[I].[Br].[CH2]")
+
+    def testNonexistentAtom(self):
+        mol = pybel.readstring("smi", "ICBr")
+        bv = self.createBitVec(10, (9,))
+        nmol = ob.OBMol()
+        ok = mol.OBMol.CopySubstructure(nmol, bv)
+        self.assertFalse(ok)
+
+    def testOptions(self):
+        mol = pybel.readstring("smi", "ICBr")
+        bv = self.createBitVec(4, (1, 3))
+        ans = ["[I].[Br]", "I.Br", "I*.Br*"]
+        ans_atomorder = [[1, 3], [1, 3], [1, 3, 2, 2]]
+        ans_bondorder = [ [], [], [0, 1] ]
+        for option in range(3):
+            nmol = ob.OBMol()
+            atomorder = ob.vectorUnsignedInt()
+            bondorder = ob.vectorUnsignedInt()
+            ok = mol.OBMol.CopySubstructure(nmol, bv, None, option, atomorder, bondorder)
+            self.assertTrue(ok)
+            self.assertEqual(pybel.Molecule(nmol).write("smi").rstrip(), ans[option])
+            self.assertEqual(ans_atomorder[option], list(atomorder))
+            self.assertEqual(ans_bondorder[option], list(bondorder))
+
+    def testSpecifyBonds(self):
+        mol = pybel.readstring("smi", "ICBr")
+        bv = self.createBitVec(4, (1, 2, 3))
+        bondbv = self.createBitVec(2, (1,))
+        ans = ["I[CH2].[Br]", "IC.Br", "IC*.Br*"]
+        ans_atomorder = [[1, 2, 3], [1, 2, 3], [1, 2, 3, 3, 2]]
+        ans_bondorder = [ [0], [0], [0, 1, 1] ]
+        for option in range(3):
+            nmol = ob.OBMol()
+            atomorder = ob.vectorUnsignedInt()
+            bondorder = ob.vectorUnsignedInt()
+            ok = mol.OBMol.CopySubstructure(nmol, bv, bondbv, option, atomorder, bondorder)
+            self.assertTrue(ok)
+            self.assertEqual(pybel.Molecule(nmol).write("smi").rstrip(), ans[option])
+            self.assertEqual(ans_atomorder[option], list(atomorder))
+            self.assertEqual(ans_bondorder[option], list(bondorder))
+
+    def testSpecifyAtomsAndBonds(self):
+        # Now copy just a subset of atoms too
+        mol = pybel.readstring("smi", "ICBr")
+        bv = self.createBitVec(4, (1, 3))
+        bondbv = self.createBitVec(2, (1,))
+        ans = ["[I].[Br]", "I.Br", "I*.Br*"]
+        for option in range(3):
+            nmol = ob.OBMol()
+            ok = mol.OBMol.CopySubstructure(nmol, bv, bondbv, option)
+            self.assertTrue(ok)
+            self.assertEqual(pybel.Molecule(nmol).write("smi").rstrip(), ans[option])
+
+    def testBondOrders(self):
+        mol = pybel.readstring("smi", "O=C=O")
+        bv = self.createBitVec(3, (2, 3))
+        bondbv = self.createBitVec(2, (1,))
+        ans = ["[C].[O]", "C.O", "C(=*)=*.O=*"]
+        for option in range(3):
+            nmol = ob.OBMol()
+            ok = mol.OBMol.CopySubstructure(nmol, bv, bondbv, option)
+            self.assertTrue(ok)
+            self.assertEqual(pybel.Molecule(nmol).write("smi").rstrip(), ans[option])
+        ans = ["[C]=O", "C=O", "C(=O)=*"]
+        for option in range(3):
+            nmol = ob.OBMol()
+            ok = mol.OBMol.CopySubstructure(nmol, bv, None, option)
+            self.assertTrue(ok)
+            self.assertEqual(pybel.Molecule(nmol).write("smi").rstrip(), ans[option])
+
+    def testStereo(self):
+        data = [
+                ("FC[C@@](Br)(Cl)I",
+                    [((2, 3, 4, 5, 6), None, "C[C@@](Br)(Cl)I"),
+                    ((2, 3, 4, 5), None, "CC(Br)Cl"),
+                    ((1, 2, 3, 4, 5, 6), (4,), "FCC(Br)Cl.I")]
+                ),
+                ("[C@@H](Br)(Cl)I",
+                    [((1, 2, 3), None, "C(Br)Cl"),
+                    ((1, 2, 3, 4), (2,), "C(Br)Cl.I")]
+                ),
+                ("F/C=C/I",
+                    [
+                     ((1, 2, 3, 4), None, "F/C=C/I"),
+                     ((1, 2, 3), None, "FC=C"),
+                     ((1, 2, 3, 4), (0,), "F.C=CI"),
+                     ((1, 2, 3, 4), (1,), "FC.CI")]
+                ),
+               ]
+        for smi, d in data:
+            mol = pybel.readstring("smi", smi)
+            for a, b, ans in d:
+                nmol = ob.OBMol()
+                bv = self.createBitVec(7, a)
+                bondbv = None if b is None else self.createBitVec(5, b)
+                ok = mol.OBMol.CopySubstructure(nmol, bv, bondbv)
+                self.assertTrue(ok)
+                if "@" not in ans and "/" not in ans:
+                    self.assertFalse(nmol.GetData(ob.StereoData))
+                self.assertEqual(pybel.Molecule(nmol).write("smi").rstrip(),
+                                 ans)
+
 class AtomClass(PythonBindings):
     """Tests to ensure that refactoring the atom class handling retains
     functionality"""
