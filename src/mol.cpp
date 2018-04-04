@@ -4064,6 +4064,8 @@ namespace OpenBabel
     bool bonds_specified = excludebonds != (OBBitVec*)0;
 
     newmol.SetDimension(GetDimension());
+    // If the parent had aromaticity perceived, then retain that for the fragment
+    newmol.SetFlag(_flags & OB_AROMATIC_MOL);
 
     // Now add the atoms
     map<OBAtom*, OBAtom*> AtomMap;//key is from old mol; value from new mol
@@ -4194,7 +4196,7 @@ namespace OpenBabel
         continue;
       }
       if (posB == AtomMap.end() || posE == AtomMap.end() || skipping_bond) {
-        switch(option) {
+        switch(correctvalence) {
         case 1:
           if (posB == AtomMap.end() || (skipping_bond && posE != AtomMap.end()))
             posE->second->SetImplicitHCount(posE->second->GetImplicitHCount() + bond->GetBondOrder());
@@ -4258,10 +4260,6 @@ namespace OpenBabel
   bool OBMol::GetNextFragment( OBMolAtomDFSIter& iter, OBMol& newmol ) {
     if( ! iter ) return false;
 
-    newmol.SetDimension(GetDimension());
-    // If the parent had aromaticity perceived, then retain that for the fragment
-    newmol.SetFlag(_flags & OB_AROMATIC_MOL);
-
     // We want to keep the atoms in their original order rather than use
     // the DFS order so just record the information first
     OBBitVec infragment(this->NumAtoms()+1);
@@ -4269,73 +4267,9 @@ namespace OpenBabel
       infragment.SetBitOn(iter->GetIdx());
     } while ((iter++).next());
 
-    // Now add the atoms
-    map<OBAtom*, OBAtom*> AtomMap;//key is from old mol; value from new mol
-    int bit;
-    for (bit = infragment.FirstBit(); bit != infragment.EndBit(); bit = infragment.NextBit(bit)) {
-      OBAtom* atom = this->GetAtom(bit);
-      newmol.AddAtom(*atom); // each subsequent atom
-      AtomMap[&*atom] = newmol.GetAtom(newmol.NumAtoms());
-    }
+    bool ok = CopySubstructure(newmol, &infragment);
 
-    // Update Stereo
-    std::vector<OBGenericData*>::iterator data;
-    std::vector<OBGenericData*> stereoData = GetAllData(OBGenericDataType::StereoData);
-    for (data = stereoData.begin(); data != stereoData.end(); ++data) {
-      if (static_cast<OBStereoBase*>(*data)->GetType() == OBStereo::CisTrans) {
-        OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
-        OBCisTransStereo::Config cfg = ct->GetConfig();
-        if (AtomMap.find(GetAtomById(cfg.begin)) == AtomMap.end()) // This stereodata does not refer to this fragment
-          continue;
-
-        OBCisTransStereo::Config newcfg;
-        newcfg.specified = cfg.specified;
-        newcfg.begin = cfg.begin == OBStereo::ImplicitRef ? OBStereo::ImplicitRef : AtomMap[GetAtomById(cfg.begin)]->GetId();
-        newcfg.end = cfg.end == OBStereo::ImplicitRef ? OBStereo::ImplicitRef : AtomMap[GetAtomById(cfg.end)]->GetId();
-        OBStereo::Refs refs;
-        for(OBStereo::RefIter ri=cfg.refs.begin(); ri!=cfg.refs.end(); ++ri) {
-          OBStereo::Ref ref = *ri == OBStereo::ImplicitRef ? OBStereo::ImplicitRef : AtomMap[GetAtomById(*ri)]->GetId();
-          refs.push_back(ref);
-        }
-        newcfg.refs = refs;
-
-        OBCisTransStereo *newct = new OBCisTransStereo(this);
-        newct->SetConfig(newcfg);
-        newmol.SetData(newct);
-      }
-      else if (static_cast<OBStereoBase*>(*data)->GetType() == OBStereo::Tetrahedral) {
-        OBTetrahedralStereo *tet = dynamic_cast<OBTetrahedralStereo*>(*data);
-        OBTetrahedralStereo::Config cfg = tet->GetConfig();
-        if (AtomMap.find(GetAtomById(cfg.center)) == AtomMap.end()) // This stereodata does not refer to this fragment
-          continue;
-
-        OBTetrahedralStereo::Config newcfg;
-        newcfg.specified = cfg.specified;
-        newcfg.center = AtomMap[GetAtomById(cfg.center)]->GetId();
-        newcfg.from = cfg.from == OBStereo::ImplicitRef ? OBStereo::ImplicitRef : AtomMap[GetAtomById(cfg.from)]->GetId();
-        OBStereo::Refs refs;
-        for(OBStereo::RefIter ri=cfg.refs.begin(); ri!=cfg.refs.end(); ++ri) {
-          OBStereo::Ref ref = *ri == OBStereo::ImplicitRef ? OBStereo::ImplicitRef : AtomMap[GetAtomById(*ri)]->GetId();
-          refs.push_back(ref);
-        }
-        newcfg.refs = refs;
-
-        OBTetrahedralStereo *newtet = new OBTetrahedralStereo(this);
-        newtet->SetConfig(newcfg);
-        newmol.SetData(newtet);
-        }
-    }
-
-    FOR_BONDS_OF_MOL(b, this) {
-      map<OBAtom*, OBAtom*>::iterator pos;
-      pos = AtomMap.find(b->GetBeginAtom());
-      if(pos!=AtomMap.end() && AtomMap[b->GetEndAtom()])
-        //if bond belongs to current fragment make a similar one in new molecule
-        newmol.AddBond((pos->second)->GetIdx(), AtomMap[b->GetEndAtom()]->GetIdx(),
-                       b->GetBO(), b->GetFlags());
-    }
-
-    return( true );
+    return ok;
   }
 
   // Put the specified molecular charge on a single atom (which is expected for InChIFormat).
