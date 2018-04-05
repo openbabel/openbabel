@@ -4030,6 +4030,12 @@ namespace OpenBabel
   When used from Python, note that "None" may be used to specify an empty value for
   the \p excludebonds parameter.
 
+  \remark Some alternatives to using this function, which may be preferred in some
+          instances due to efficiency or convenience are:
+          -# Copying the entire OBMol, and then deleting the unwanted parts
+          -# Modifiying the original OBMol, and then restoring it
+          -# Using the SMILES writer option -xf to specify fragment atom idxs
+
   \return A boolean indicating success or failure. Currently failure is only reported
           if one of the specified atoms is not present.
 
