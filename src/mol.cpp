@@ -3998,8 +3998,8 @@ namespace OpenBabel
   When an atom is copied, but not all of its bonds are, by default hydrogen counts are
   adjusted to account for the missing bonds. That is, given the SMILES "CF", if we
   copy the two atoms but exclude the bond, we will end up with "C.F". This behavior
-  can be changed by specifiying a value other than 1 for the \p option parameter.
-  A value of 0 will yield "[C].[F]" while 2 will yield "C*.F*" (see \p option below
+  can be changed by specifiying a value other than 1 for the \p correctvalence parameter.
+  A value of 0 will yield "[C].[F]" while 2 will yield "C*.F*" (see \p correctvalence below
   for more information).
 
   Aromaticity is preserved as present in the original OBMol. If this is not desired,
