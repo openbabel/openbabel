@@ -4030,7 +4030,7 @@ namespace OpenBabel
       excludebonds.SetBitOn(bond->Idx());
   }
   OBMol newmol;
-  mol.CopySubstructure(&newmol, &atoms, &bonds);
+  mol.CopySubstructure(&newmol, &atoms, &excludebonds);
   \endcode
 
   When used from Python, note that "None" may be used to specify an empty value for
