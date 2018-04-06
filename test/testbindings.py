@@ -586,6 +586,37 @@ class OBMolCopySubstructure(PythonBindings):
                 self.assertEqual(pybel.Molecule(nmol).write("smi").rstrip(),
                                  ans)
 
+    def testResidueCopying(self):
+        smi = "C[C@@H](C(=O)N[C@@H](CS)C(=O)O)N" # H-Ala-Cys-OH
+        mol = pybel.readstring("smi", smi).OBMol
+        ob.cvar.chainsparser.PerceiveChains(mol)
+        mol.SetChainsPerceived()
+        residues = list(ob.OBResidueIter(mol))
+        self.assertEqual(len(residues), 2)
+
+        # Copy just the Cys N
+        bv = self.createBitVec(mol.NumAtoms() + 1, (5,))
+        nmol = ob.OBMol()
+        mol.CopySubstructure(nmol, bv)
+        self.assertEqual(len(list(ob.OBResidueIter(nmol))), 1)
+        pdb = pybel.Molecule(nmol).write("pdb")
+        atoms = [line for line in pdb.split("\n") if line.startswith("ATOM")]
+        self.assertEqual(len(atoms), 1)
+        cysN = "ATOM      1  N   CYS A   2"
+        self.assertTrue(atoms[0].startswith(cysN))
+
+        # Copy the Cys N and Ca
+        bv = self.createBitVec(mol.NumAtoms() + 1, (5, 6))
+        nmol.Clear()
+        mol.CopySubstructure(nmol, bv)
+        self.assertEqual(len(list(ob.OBResidueIter(nmol))), 1)
+
+        # Copy the Ala C and Cys N
+        bv = self.createBitVec(mol.NumAtoms() + 1, (3, 5))
+        nmol.Clear()
+        mol.CopySubstructure(nmol, bv)
+        self.assertEqual(len(list(ob.OBResidueIter(nmol))), 2)
+
 class AtomClass(PythonBindings):
     """Tests to ensure that refactoring the atom class handling retains
     functionality"""

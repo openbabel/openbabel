@@ -4009,6 +4009,12 @@ namespace OpenBabel
   the substructure. For example, all four atoms and bonds of a tetrahedral stereocenter
   must be copied.
 
+  Residue information is preserved if the original OBMol is marked as having
+  its residues perceived. If this is not desired, either call
+  OBMol::UnsetChainsPerceived() in advance on the original OBMol to avoid copying
+  the residues (and then reset it afterwards), or else call it on the new OBMol so
+  that residue information will be reperceived (when requested).
+
   Here is an example of using this method to copy ring systems to a new molecule.
   Given the molecule represented by the SMILES string, "FC1CC1c2ccccc2I", we will
   end up with a new molecule represented by the SMILES string, "C1CC1.c2ccccc2".
@@ -4072,6 +4078,10 @@ namespace OpenBabel
     newmol.SetDimension(GetDimension());
     // If the parent had aromaticity perceived, then retain that for the fragment
     newmol.SetFlag(_flags & OB_AROMATIC_MOL);
+    // The fragment will preserve the "chains perceived" flag of the parent
+    newmol.SetFlag(_flags & OB_CHAINS_MOL);
+    // We will check for residues only if the parent has chains perceived already
+    bool checkresidues = HasChainsPerceived();
 
     // Now add the atoms
     map<OBAtom*, OBAtom*> AtomMap;//key is from old mol; value from new mol
@@ -4083,6 +4093,33 @@ namespace OpenBabel
       if (record_atomorder)
         atomorder->push_back(bit);
       AtomMap[&*atom] = newmol.GetAtom(newmol.NumAtoms());
+    }
+
+    //Add the residues
+    if (checkresidues) {
+      map<OBResidue*, OBResidue*> ResidueMap; // map from old->new
+      for (int bit = atoms->FirstBit(); bit != atoms->EndBit(); bit = atoms->NextBit(bit)) {
+        OBAtom* atom = this->GetAtom(bit);
+        OBResidue* res = atom->GetResidue();
+        if (!res) continue;
+        map<OBResidue*, OBResidue*>::iterator mit = ResidueMap.find(res);
+        OBResidue *newres;
+        if (mit == ResidueMap.end()) {
+          newres = newmol.NewResidue();
+          newres->SetName(res->GetName());
+          newres->SetNum(res->GetNumString());
+          newres->SetChain(res->GetChain());
+          newres->SetChainNum(res->GetChainNum());
+          ResidueMap[res] = newres;
+        } else {
+          newres = mit->second;
+        }
+        OBAtom* newatom = AtomMap[&*atom];
+        newres->AddAtom(newatom);
+        newres->SetAtomID(newatom, res->GetAtomID(atom));
+        newres->SetHetAtom(newatom, res->IsHetAtom(atom));
+        newres->SetSerialNum(newatom, res->GetSerialNum(atom));
+      }
     }
 
     // Update Stereo
