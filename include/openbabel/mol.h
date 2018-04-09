@@ -394,6 +394,8 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     void   SetFlags(int flags)       { _flags = flags;              }
 
     void   UnsetAromaticPerceived()  { _flags &= (~(OB_AROMATIC_MOL));   }
+    //! Mark that chains perception will need to be run again if required
+    void   UnsetChainsPerceived()    { _flags &= (~(OB_CHAINS_MOL));     }
     void   UnsetSSSRPerceived()  { _flags &= (~(OB_SSSR_MOL));   }
     //! Mark that Largest Set of Smallest Rings will need to be run again if required (see OBRing class)
     void   UnsetLSSRPerceived()  { _flags &= (~(OB_LSSR_MOL));   }
