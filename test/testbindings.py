@@ -408,6 +408,17 @@ H         -0.26065        0.64232       -2.62218
         bonds = list(ob.OBMolBondIter(mol.OBMol))
         self.assertEqual(len(bonds), 9)
 
+class NewReactionHandling(PythonBindings):
+    def testBasic(self):
+        smis = ["C>N>O", "C>N>", ">N>O", ">N>", "C>>", ">>O", ">>"]
+        for smi in smis:
+            nsmi = pybel.readstring("smi", smi).write("smi").rstrip()
+            self.assertEqual(smi, nsmi)
+        badsmis = ["C>>N>O", ">>>", "C>N>O>", ">", ">N", "N>"]
+        for smi in badsmis:
+            print(smi)
+            self.assertRaises(IOError, pybel.readstring, "smi", smi)
+
 class Radicals(PythonBindings):
     def testSmilesToMol(self):
         smis = ["C", "[CH3]", "[CH2]", "[CH2]C", "[C]"]

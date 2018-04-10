@@ -99,8 +99,10 @@ namespace OpenBabel
 
     OBMol* ptmol = NULL;
     //Molecule is valid if it has some atoms
+    //or it represents a reaction
     //or the format allows zero-atom molecules and it has a title or properties
     if(ret && (pmol->NumAtoms() > 0 
+      || pmol->IsReaction()
       || (pFormat->Flags()&ZEROATOMSOK && (*pmol->GetTitle() || pmol->HasData(1)))))
     {
       ptmol = static_cast<OBMol*>(pmol->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS),pConv));
