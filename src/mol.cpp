@@ -4011,7 +4011,7 @@ namespace OpenBabel
 
   Residue information is preserved if the original OBMol is marked as having
   its residues perceived. If this is not desired, either call
-  OBMol::UnsetChainsPerceived() in advance on the original OBMol to avoid copying
+  OBMol::SetChainsPerceived(false) in advance on the original OBMol to avoid copying
   the residues (and then reset it afterwards), or else call it on the new OBMol so
   that residue information will be reperceived (when requested).
 
