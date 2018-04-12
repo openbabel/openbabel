@@ -145,6 +145,7 @@ set(openbabel_srcs
   pointgroup.cpp
   query.cpp
   rand.cpp
+  reactionfacade.cpp
   residue.cpp
   ring.cpp
   rotamer.cpp

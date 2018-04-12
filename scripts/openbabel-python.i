@@ -26,6 +26,7 @@
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
 #include <openbabel/reaction.h>
+#include <openbabel/reactionfacade.h>
 #include <openbabel/residue.h>
 #include <openbabel/internalcoord.h>
 
@@ -287,6 +288,7 @@ namespace std { class stringbuf {}; }
 %include <openbabel/atom.h>
 %include <openbabel/bond.h>
 %include <openbabel/reaction.h>
+%include <openbabel/reactionfacade.h>
 
 // Remove C++ iterators
 %pythoncode %{

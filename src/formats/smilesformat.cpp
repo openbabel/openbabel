@@ -25,13 +25,13 @@ GNU General Public License for more details.
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/stereo/squareplanar.h>
+#include <openbabel/reactionfacade.h>
 #include <openbabel/stereo/stereo.h>
 #include <openbabel/obfunctions.h>
 #include <openbabel/graphsym.h>
 #include <openbabel/kekulize.h>
 #include <openbabel/canon.h>
 
-#include "reactionfacade.h"
 #include "smilesvalence.h"
 
 #include <limits>
