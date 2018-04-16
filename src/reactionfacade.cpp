@@ -26,7 +26,7 @@ namespace OpenBabel
 {
   void OBReactionFacade::AssignComponentIds(bool wipe)
   {
-    unsigned int compid = 0;
+    unsigned int compid = 1;
 
     OBMolAtomDFSIter iter(_mol);
     while(iter) { // for each connected component
@@ -38,9 +38,9 @@ namespace OpenBabel
     }
   }
 
-  unsigned int OBReactionFacade::GetId(const char* idtype, OBAtom *atom)
+  int OBReactionFacade::GetId(const char* idtype, OBAtom *atom)
   {
-    unsigned int idval = 0;
+    int idval = 0;
     OBGenericData *data = atom->GetData(idtype);
     if (data) {
       OBPairInteger *pi = (OBPairInteger*)data;
@@ -49,7 +49,7 @@ namespace OpenBabel
     return idval;
   }
 
-  void OBReactionFacade::SetId(const char* idtype, OBAtom* atom, unsigned int idval)
+  void OBReactionFacade::SetId(const char* idtype, OBAtom* atom, int idval)
   {
     // Note: this replaces any existing data
     OBGenericData *data = atom->GetData(idtype);
@@ -71,19 +71,23 @@ namespace OpenBabel
     std::set<unsigned int> reactant_components;
     std::set<unsigned int> product_components;
     std::set<unsigned int> agent_components;
+    std::set<unsigned int> unassigned_components;
 
     FOR_ATOMS_OF_MOL(atom, _mol) {
+      OBAtom* atm = &*atom;
       unsigned int component = GetComponentId(&*atom);
       switch (GetRole(&*atom)) {
-      case 0: // reactant
+      case REACTANT:
         reactant_components.insert(component);
         break;
-      case 1: // product
+      case PRODUCT:
         product_components.insert(component);
         break;
-      case 2: // agent
+      case AGENT:
         agent_components.insert(component);
         break;
+      default:
+        unassigned_components.insert(component);
       }
     }
     // Convert to vector so we have random access - note: these will be in sorted order
@@ -93,45 +97,95 @@ namespace OpenBabel
       _product_components.push_back(*sit);
     for (std::set<unsigned int>::iterator sit = agent_components.begin(); sit != agent_components.end(); ++sit)
       _agent_components.push_back(*sit);
+    for (std::set<unsigned int>::iterator sit = unassigned_components.begin(); sit != unassigned_components.end(); ++sit)
+      _unassigned_components.push_back(*sit);
 
     _found_components = true;
   }
 
-  std::vector<unsigned int>* OBReactionFacade::GetComponentIds(unsigned int component_type)
+  std::vector<unsigned int>* OBReactionFacade::GetComponentIds(OBReactionRole rxnrole)
   {
     if (!_found_components)
       FindComponents();
 
-    switch (component_type) {
-    case 0:
+    switch (rxnrole) {
+    case REACTANT:
       return &_reactant_components;
-    case 1:
+    case PRODUCT:
       return &_product_components;
-    case 2:
+    case AGENT:
       return &_agent_components;
+    case NO_REACTIONROLE:
+      return &_unassigned_components;
     }
     return (std::vector<unsigned int>*)0;
   }
 
-  unsigned int OBReactionFacade::NumComponents(unsigned int component_type)
+  unsigned int OBReactionFacade::NumComponents(OBReactionRole rxnrole)
   {
-    std::vector<unsigned int> *component_ids = GetComponentIds(component_type);
+    std::vector<unsigned int> *component_ids = GetComponentIds(rxnrole);
     return (unsigned int) component_ids->size();
   }
 
-  bool OBReactionFacade::GetComponent(unsigned int component_type, OBMol *mol, unsigned int num)
+  bool OBReactionFacade::GetComponent(OBMol* mol, OBReactionRole rxnrole, unsigned int num)
   {
-    std::vector<unsigned int> *component_ids = GetComponentIds(component_type);
+    std::vector<unsigned int> *component_ids = GetComponentIds(rxnrole);
     if (num >= component_ids->size())
       return false;
     OBBitVec atoms;
     unsigned int componentId = (*component_ids)[num];
     FOR_ATOMS_OF_MOL(atom, _mol) {
-      if (GetRole(&*atom) == 0 && GetComponentId(&*atom) == componentId)
+      if (GetRole(&*atom) == rxnrole && GetComponentId(&*atom) == componentId)
         atoms.SetBitOn(atom->GetIdx());
     }
-    bool ok = true; // _mol->CopySubstructure(mol, atoms);
+    bool ok = _mol->CopySubstructure(*mol, &atoms);
     return ok;
+  }
+
+  bool OBReactionFacade::ReassignComponent(OBReactionRole oldrole, unsigned int num, OBReactionRole newrole)
+  {
+    std::vector<unsigned int> *component_ids = GetComponentIds(oldrole);
+    if (num >= component_ids->size())
+      return false;
+    unsigned int componentId = (*component_ids)[num];
+    FOR_ATOMS_OF_MOL(atom, _mol) {
+      if (GetRole(&*atom) == oldrole && GetComponentId(&*atom) == componentId) {
+        SetRole(&*atom, newrole);
+      }
+    }
+    // remove the entry from the original component_ids and update the new one
+    component_ids->erase(component_ids->begin() + num);
+    GetComponentIds(newrole)->push_back(componentId);
+    return true;
+  }
+
+  void OBReactionFacade::AddComponent(OBMol* mol, OBReactionRole rxnrole)
+  {
+    if (!_found_components)
+      FindComponents();
+
+    // Get the current maximum component id
+    int max_compid = INT_MIN;
+    if (!_product_components.empty())
+      max_compid = _product_components.back();
+    if (!_agent_components.empty() && _agent_components.back()>max_compid)
+      max_compid = _agent_components.back();
+    if (!_reactant_components.empty() && _reactant_components.back()>max_compid)
+      max_compid = _reactant_components.back();
+    if (!_unassigned_components.empty() && _unassigned_components.back()>max_compid)
+      max_compid = _unassigned_components.back();
+
+    int new_compid = max_compid+1;
+    if (new_compid <= 0)
+      new_compid = 1;
+
+    FOR_ATOMS_OF_MOL(atom, mol) {
+      SetRole(&*atom, rxnrole);
+      SetComponentId(&*atom, new_compid);
+    }
+    *_mol += *mol;
+
+    GetComponentIds(rxnrole)->push_back(new_compid);
   }
 
 } // namespace OpenBabel

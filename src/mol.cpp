@@ -1518,7 +1518,7 @@ namespace OpenBabel
 
     if (nukePerceivedData)
       {
-        _flags = 0;
+        _flags = _flags & OB_REACTION_MOL; // wipe all but whether it's a reaction
         OBBond *bond;
         vector<OBBond*>::iterator k;
         for (bond = BeginBond(k);bond;bond = NextBond(k))

@@ -264,7 +264,7 @@ namespace OpenBabel {
     char _updown;
     int _order;
     int _prev;
-    int _rxnrole = 0;
+    int _rxnrole = 1;
     const char *_ptr;
     bool _preserve_aromaticity;
     vector<int>             _vprev;
@@ -424,9 +424,18 @@ namespace OpenBabel {
       case '>':
         _prev = 0;
         _rxnrole++;
-        if (_rxnrole == 1)
+        if (_rxnrole == 2) {
           mol.SetIsReaction();
-        else if (_rxnrole == 3) {
+          // Handle all the reactant atoms
+          // - the remaining atoms will be handled on-the-fly
+          FOR_ATOMS_OF_MOL(atom, mol) {
+            OBPairInteger *pi = new OBPairInteger();
+            pi->SetAttribute("rxnrole");
+            pi->SetValue(1);
+            atom->SetData(pi);
+          }
+        }
+        else if (_rxnrole == 4) {
           stringstream errorMsg;
           errorMsg << "Too many greater-than signs in SMILES string";
           std::string title = mol.GetTitle();
@@ -519,12 +528,16 @@ namespace OpenBabel {
     }
 
     // Check to see if we've the right number of '>' for reactions
-    if (_rxnrole > 0 && _rxnrole !=2) {
+    if (_rxnrole > 1 && _rxnrole !=3) {
       mol.EndModify();
       stringstream errorMsg;
       errorMsg << "Invalid reaction SMILES string: only a single '>' sign found (two required to be valid).";
       obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
       return false; // invalid SMILES since rings aren't properly closed
+    }
+    if (mol.IsReaction()) {
+      OBReactionFacade facade(&mol);
+      facade.AssignComponentIds();
     }
 
     // Apply the SMILES valence model
@@ -974,11 +987,13 @@ namespace OpenBabel {
 
     OBAtom *atom = mol.NewAtom();
     atom->SetAtomicNum(element);
-    // Set reaction role
-    OBPairInteger *pi = new OBPairInteger();
-    pi->SetAttribute("rxnrole");
-    pi->SetValue(_rxnrole);
-    atom->SetData(pi);
+    if (_rxnrole > 1) { // Quick test for reaction
+      // Set reaction role
+      OBPairInteger *pi = new OBPairInteger();
+      pi->SetAttribute("rxnrole");
+      pi->SetValue(_rxnrole);
+      atom->SetData(pi);
+    }
 
     if (arom)
       atom->SetAromatic();
@@ -3855,7 +3870,7 @@ namespace OpenBabel {
     bool new_rxn_role = false; // flag to indicate whether we have started a new reaction role
     bool isrxn = mol.IsReaction();
     OBReactionFacade rxn(&mol);
-    unsigned int rxnrole = 0; // reactants/unspecified
+    unsigned int rxnrole = 1; // reactants
     while (1) {
       if (_pconv->IsOption("R"))
         _bcdigit = 0; // Reset the bond closure index for each disconnected component
@@ -3908,7 +3923,7 @@ namespace OpenBabel {
       if (root_atom == NULL) {
         if (mol.IsReaction()) {
           rxnrole++;
-          if (rxnrole==3)
+          if (rxnrole==4)
             break;
           buffer += '>';
           new_rxn_role = true;

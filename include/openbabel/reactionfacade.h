@@ -24,17 +24,25 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
+  enum OBReactionRole { NO_REACTIONROLE, REACTANT, AGENT, PRODUCT };
+
   class OBAPI OBReactionFacade
   {
   public:
     OBReactionFacade(OBMol *mol): _mol(mol), _found_components(false)
     {
     };
-    unsigned int GetRole(OBAtom *atom)
+    OBReactionRole GetRole(OBAtom *atom)
     {
-      return GetId("rxnrole", atom);
+      int rxnrole = GetId("rxnrole", atom);
+      switch(rxnrole) {
+      default: case 0: return NO_REACTIONROLE;
+      case 1: return REACTANT;
+      case 2: return AGENT;
+      case 3: return PRODUCT;
+      }
     }
-    void SetRole(OBAtom* atom, unsigned int rxnrole)
+    void SetRole(OBAtom* atom, OBReactionRole rxnrole)
     {
       SetId("rxnrole", atom, rxnrole);
     }
@@ -46,45 +54,29 @@ namespace OpenBabel
     {
       SetId("rxncomp", atom, compid);
     }
-    unsigned int NumReactants()
-    {
-      return NumComponents(0);
-    }
-    unsigned int NumProducts()
-    {
-      return NumComponents(1);
-    }
-    unsigned int NumAgents()
-    {
-      return NumComponents(2);
-    }
-    bool GetReactant(OBMol *mol, unsigned int num)
-    {
-      return GetComponent(0, mol, num);
-    }
-    bool GetProduct(OBMol *mol, unsigned int num)
-    {
-      return GetComponent(1, mol, num);
-    }
-    bool GetAgent(OBMol *mol, unsigned int num)
-    {
-      return GetComponent(2, mol, num);
-    }
+    bool GetComponent(OBMol *mol, OBReactionRole rxnrole, unsigned int num);
+    unsigned int NumComponents(OBReactionRole rxnrole);
+    bool ReassignComponent(OBReactionRole oldrole, unsigned int num, OBReactionRole newrole);
+    void AddComponent(OBMol *mol, OBReactionRole rxnrole); 
+
     void AssignComponentIds(bool wipe=true);
+    void ClearInternalState()
+    {
+      _found_components = false;
+    }
 
   private:
     OBMol* _mol;
     bool _found_components;
+    std::vector<unsigned int> _unassigned_components;
     std::vector<unsigned int> _reactant_components;
     std::vector<unsigned int> _product_components;
     std::vector<unsigned int> _agent_components;
 
-    unsigned int GetId(const char* idtype, OBAtom *atom);
-    void SetId(const char* idtype, OBAtom* atom, unsigned int idval);
+    int GetId(const char* idtype, OBAtom *atom);
+    void SetId(const char* idtype, OBAtom* atom, int idval);
     void FindComponents();
-    std::vector<unsigned int>* GetComponentIds(unsigned int component_type);
-    unsigned int NumComponents(unsigned int component_type);
-    bool GetComponent(unsigned int component_type, OBMol *mol, unsigned int num);
+    std::vector<unsigned int>* GetComponentIds(OBReactionRole rxnrole);
   };
 } // namespace OpenBabel
 #endif // OB_REACTIONFACADE_H
