@@ -610,12 +610,25 @@ class OBMolCopySubstructure(PythonBindings):
         nmol.Clear()
         mol.CopySubstructure(nmol, bv)
         self.assertEqual(len(list(ob.OBResidueIter(nmol))), 1)
+        pdb = pybel.Molecule(nmol).write("pdb")
+        atoms = [line for line in pdb.split("\n") if line.startswith("ATOM")]
+        self.assertEqual(len(atoms), 2)
+        self.assertTrue(atoms[0].startswith(cysN))
+        cysCa = "ATOM      2  CA  CYS A   2"
+        self.assertTrue(atoms[1].startswith(cysCa))
 
         # Copy the Ala C and Cys N
         bv = self.createBitVec(mol.NumAtoms() + 1, (3, 5))
         nmol.Clear()
         mol.CopySubstructure(nmol, bv)
         self.assertEqual(len(list(ob.OBResidueIter(nmol))), 2)
+        pdb = pybel.Molecule(nmol).write("pdb")
+        atoms = [line for line in pdb.split("\n") if line.startswith("ATOM")]
+        self.assertEqual(len(atoms), 2)
+        alaC = "ATOM      1  C   ALA A   1"
+        self.assertTrue(atoms[0].startswith(alaC))
+        cysN = "ATOM      2  N   CYS A   2"
+        self.assertTrue(atoms[1].startswith(cysN))
 
 class AtomClass(PythonBindings):
     """Tests to ensure that refactoring the atom class handling retains
