@@ -416,8 +416,48 @@ class NewReactionHandling(PythonBindings):
             self.assertEqual(smi, nsmi)
         badsmis = ["C>>N>O", ">>>", "C>N>O>", ">", ">N", "N>"]
         for smi in badsmis:
-            print(smi)
             self.assertRaises(IOError, pybel.readstring, "smi", smi)
+
+    def testFacade(self):
+        parts = "CNO"
+        mol = pybel.readstring("smi", ">".join(parts)).OBMol
+        facade = ob.OBReactionFacade(mol)
+
+        # basic test - copy out each component
+        comps = [ob.REACTANT, ob.AGENT, ob.PRODUCT]
+        for part, comp in zip(parts, comps):
+            nmol = ob.OBMol()
+            facade.GetComponent(nmol, comp, 0)
+            nsmi = pybel.Molecule(nmol).write("smi").rstrip()
+            self.assertEqual(nsmi, part)
+        nmol = ob.OBMol()
+        facade.GetComponent(nmol, ob.NO_REACTIONROLE, 0)
+        self.assertEqual(0, nmol.NumAtoms())
+
+        # Reassign role
+        facade.ReassignComponent(ob.AGENT, 0, ob.NO_REACTIONROLE)
+        nsmi = pybel.Molecule(mol).write("smi").rstrip()
+        self.assertEqual("C>>O", nsmi)
+        # ...and back again
+        facade.ReassignComponent(ob.NO_REACTIONROLE, 0, ob.AGENT)
+
+        # Add a new reactant
+        molb = pybel.readstring("smi", "S").OBMol
+        facade.AddComponent(molb, ob.REACTANT)
+        nsmi = pybel.Molecule(mol).write("smi").rstrip()
+        self.assertEqual("C.S>N>O", nsmi)
+
+        # ...and copy it back out
+        nmol = ob.OBMol()
+        facade.GetComponent(nmol, ob.REACTANT, 1)
+        nsmi = pybel.Molecule(nmol).write("smi").rstrip()
+        self.assertEqual("S", nsmi)
+        # ...and also copy the O
+        facade.GetComponent(nmol, ob.PRODUCT, 0)
+        nmol.SetIsReaction()
+        nsmi = pybel.Molecule(nmol).write("smi").rstrip()
+        self.assertEqual("S>>O", nsmi)
+
 
 class Radicals(PythonBindings):
     def testSmilesToMol(self):
