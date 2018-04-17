@@ -54,6 +54,7 @@ namespace OpenBabel
     {
       SetId("rxncomp", atom, compid);
     }
+    bool IsValid();
     bool GetComponent(OBMol *mol, OBReactionRole rxnrole, unsigned int num);
     unsigned int NumComponents(OBReactionRole rxnrole);
     bool ReassignComponent(OBReactionRole oldrole, unsigned int num, OBReactionRole newrole);

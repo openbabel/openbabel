@@ -66,6 +66,25 @@ namespace OpenBabel
     }
   }
 
+  bool OBReactionFacade::IsValid()
+  {
+    if (!_mol->IsReaction()) {
+      obErrorLog.ThrowError(__FUNCTION__, "The molecule is not marked as a reaction. Use SetIsReaction().", obWarning);
+      return false;
+    }
+    FOR_ATOMS_OF_MOL(atom, _mol) {
+      if (!atom->HasData("rxncomp")) {
+        obErrorLog.ThrowError(__FUNCTION__, "The molecule contains an atom that is missing reaction component information. Use SetComponentId().", obWarning);
+        return false;
+      }
+      if (!atom->HasData("rxnrole")) {
+        obErrorLog.ThrowError(__FUNCTION__, "The molecule contains an atom that is missing reaction role information. Use SetRole().", obWarning);
+        return false;
+      }
+    }
+    return true;
+  }
+
   void OBReactionFacade::FindComponents()
   {
     std::set<unsigned int> reactant_components;
