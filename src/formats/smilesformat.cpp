@@ -1798,6 +1798,13 @@ namespace OpenBabel {
     atom->SetIsotope(isotope);
     if (arom)
       atom->SetAromatic();
+    if (_rxnrole > 1) { // Quick test for reaction
+      // Set reaction role
+      OBPairInteger *pi = new OBPairInteger();
+      pi->SetAttribute("rxnrole");
+      pi->SetValue(_rxnrole);
+      atom->SetData(pi);
+    }
 
     if (_prev) //need to add bond
       {
