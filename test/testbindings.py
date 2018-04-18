@@ -485,6 +485,13 @@ class OBMolCopySubstructure(PythonBindings):
         self.assertTrue(ok)
         self.assertEqual(pybel.Molecule(nmol).write("smi").rstrip(), "[I].[Br].[CH2]")
 
+        mol = pybel.readstring("smi", "CCC")
+        bv = self.createBitVec(4, (1,))
+        bondv = self.createBitVec(2, (1,))
+        nmol = ob.OBMol()
+        ok = mol.OBMol.CopySubstructure(nmol, bv, bondv, 0)
+        self.assertTrue(ok)
+
     def testNonexistentAtom(self):
         mol = pybel.readstring("smi", "ICBr")
         bv = self.createBitVec(10, (9,))

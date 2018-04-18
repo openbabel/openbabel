@@ -4043,7 +4043,8 @@ namespace OpenBabel
           -# Using the SMILES writer option -xf to specify fragment atom idxs
 
   \return A boolean indicating success or failure. Currently failure is only reported
-          if one of the specified atoms is not present.
+          if one of the specified atoms is not present, or \p atoms is a NULL
+          pointer.
 
   \param newmol   The molecule to which to add the substructure. Note that atoms are
                   appended to this molecule.
@@ -4233,11 +4234,9 @@ namespace OpenBabel
       bool skipping_bond = bonds_specified && excludebonds->BitIsOn(bond->GetIdx());
       map<OBAtom*, OBAtom*>::iterator posB = AtomMap.find(bond->GetBeginAtom());
       map<OBAtom*, OBAtom*>::iterator posE = AtomMap.find(bond->GetEndAtom());
-      if (posB == AtomMap.end() && posE == AtomMap.end()) {
-        if (bonds_specified)
-          return false;
+      if (posB == AtomMap.end() && posE == AtomMap.end())
         continue;
-      }
+
       if (posB == AtomMap.end() || posE == AtomMap.end() || skipping_bond) {
         switch(correctvalence) {
         case 1:
