@@ -1,4 +1,5 @@
 %module OpenBabel
+%include "std_string.i"
 
 // These fields are renamed to valid constant names
 %rename(U1MA) OpenBabel::OBResidueIndex::_1MA;
@@ -73,7 +74,6 @@
 
 %include "std_map.i"
 %include "std_vector.i"
-%include "std_string.i"
 %include "std_list.i"
 %include "std_pair.i"
 
@@ -293,8 +293,6 @@ namespace std { class stringbuf {}; }
 %include <openbabel/obiter.h>
 
 %include <openbabel/chargemodel.h>
-%apply std::string& INPUT { std::string &start } // Required for OBChemTsfm.Init
-%apply std::string& INPUT { std::string &end }   // Required for OBChemTsfm.Init
 %include <openbabel/phmodel.h>
 %include <openbabel/graphsym.h>
 %include <openbabel/isomorphism.h>
