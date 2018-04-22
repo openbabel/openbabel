@@ -132,8 +132,6 @@ namespace OpenBabel
     v3 += v2;
     v4 = v3 - v1;
 
-    cerr << "v3: " << v3 << " v4: " << v4 << endl;
-
     for ( i = 0 ; i < children.size() ; i++ )
       {
         v1 = mol->GetAtom(children[i])->GetVector();
