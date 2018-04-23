@@ -434,34 +434,22 @@ namespace OpenBabel
         best_root_atom=i;
       }
     }
-    vector <unsigned int> bonds_to_delete;
-    {
-      OBMol  mol_pieces = mol;
-      for (OBBondIterator it=mol_pieces.BeginBonds(); it != mol_pieces.EndBonds(); it++)
-      {
-        if (IsRotBond_PDBQT((*it)))
-        {
-          bonds_to_delete.push_back((*it)->GetIdx());
-        }
-      }
 
-      if (bonds_to_delete.size() != 0) //checks there is something to delete
+    vector <OBBond*> bonds_to_delete;
+    OBMol mol_pieces = mol;
+    for (OBBondIterator it=mol_pieces.BeginBonds(); it != mol_pieces.EndBonds(); it++)
+    {
+      if (IsRotBond_PDBQT((*it)))
       {
-        vector <unsigned int>::iterator itb=bonds_to_delete.end();
-        --itb;
-        for (OBBondIterator it=mol_pieces.EndBonds(); true; )
-        {
-          it--;
-          if ( (*it)->GetIdx() == (*itb) )
-          {
-            mol_pieces.DeleteBond((*it), true);
-            if (itb == bonds_to_delete.begin()) {break;}
-            else {--itb;}
-          }
-        }
+        bonds_to_delete.push_back(*it);
       }
-      mol_pieces.ContigFragList(rigid_fragments);
     }
+    for (vector<OBBond*>::iterator bit = bonds_to_delete.begin(); bit != bonds_to_delete.end(); ++bit)
+    {
+      mol_pieces.DeleteBond(*bit, true);
+    }
+    mol_pieces.ContigFragList(rigid_fragments);
+
     return best_root_atom;
   }
 
@@ -840,6 +828,10 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol & mol = *pmol;
 
+    if(!mol.HasAromaticPerceived()) { //need aromaticity for correct atom typing
+      aromtyper.AssignAromaticFlags(mol);
+    }
+
     if (pConv->IsOption("b",OBConversion::OUTOPTIONS)) {mol.ConnectTheDots(); mol.PerceiveBondOrders();}
     vector <OBMol> all_pieces;
     if ( ((pConv->IsOption("c",OBConversion::OUTOPTIONS)!=NULL) && (pConv->IsOption("r",OBConversion::OUTOPTIONS)!=NULL))
@@ -859,7 +851,7 @@ namespace OpenBabel
       bool residue=false;
       string res_name="";
       string res_chain="";
-      unsigned int res_num=1;
+      int res_num=1;
       if (pConv->IsOption("s",OBConversion::OUTOPTIONS))
       {
         residue=true;
@@ -871,6 +863,7 @@ namespace OpenBabel
       }
 
       all_pieces.at(i).SetAutomaticPartialCharge(false);
+      all_pieces.at(i).SetAromaticPerceived(); //retain aromatic flags in fragments
       if (!(pConv->IsOption("h",OBConversion::OUTOPTIONS))) {
       	DeleteHydrogens(all_pieces.at(i));
 			}
@@ -1012,6 +1005,7 @@ namespace OpenBabel
 
       bool preserve_original_index = (pConv->IsOption("p",OBConversion::OUTOPTIONS));
       if (!flexible) {preserve_original_index=false;} //no need to relabel if we are preserving the original order anyway
+
       if (!OutputTree(pConv, all_pieces.at(i), ofs, tree, rotatable_bonds, false, preserve_original_index) )
 //      if (!OutputTree(mol, ofs, tree, rotatable_bonds, false, preserve_original_index) )
       {

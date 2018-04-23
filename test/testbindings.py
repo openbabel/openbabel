@@ -54,6 +54,17 @@ class PybelWrapper(PythonBindings):
 
 class TestSuite(PythonBindings):
 
+    def testInChIIsotopes(self):
+        """Ensure that we correctly set and read isotopes in InChIs"""
+        with open(os.path.join(here, "inchi", "inchi_isotopes.txt")) as inp:
+            for line in inp:
+                if line.startswith("#"): continue
+                smi, inchi = line.rstrip().split("\t")
+                minchi = pybel.readstring("smi", smi).write("inchi").rstrip()
+                self.assertEqual(minchi, inchi)
+                msmi = pybel.readstring("inchi", minchi).write("smi").rstrip()
+                self.assertEqual(msmi, smi)
+
     def testAsterisk(self):
         """Ensure that asterisk in SMILES is bracketed when needed
         and not otherwise"""
@@ -82,6 +93,36 @@ class TestSuite(PythonBindings):
         mol = pybel.readstring("smi", "CC")
         mol.write("can")
         self.assertFalse("SMILES Atom Order" in mol.data)
+
+    def testOBMolSeparatePreservesAromaticity(self):
+        """If the original molecule had aromaticity perceived,
+        then the fragments should also.
+        """
+        smi = "C.c1ccccc1"
+        # Two passes: One with aromaticity perceived on the orig mol and
+        #             one without
+        for N in range(2):
+            obmol = pybel.readstring("smi", smi).OBMol
+            # Aromaticity is perceived during the last step of reading SMILES
+            # so let's unset it here for the first pass
+            if N == 0:
+                obmol.UnsetAromaticPerceived()
+            else:
+                self.assertTrue(obmol.HasAromaticPerceived())
+
+            # After separation, is aromaticity the same as the parent?
+            mols = obmol.Separate()
+            if N == 0:
+                self.assertFalse(mols[1].HasAromaticPerceived())
+            else:
+                self.assertTrue(mols[1].HasAromaticPerceived())
+
+            atom = mols[1].GetAtom(1)
+            atom.SetImplicitHCount(0) # mess up the structure
+            if N == 0:
+                self.assertFalse(atom.IsAromatic())
+            else:
+                self.assertTrue(atom.IsAromatic())
 
     def testAtomMapsAfterCopying(self):
         """Copying a molecule should copy the atom maps"""
@@ -172,11 +213,57 @@ class TestSuite(PythonBindings):
         roundtrip = pybel.readstring("smi", ringsmi).write("smi")
         self.assertTrue("/" in roundtrip)
 
+    def testKekulizationOfHypervalents(self):
+        # We should support hypervalent aromatic S and N (the latter
+        # as we write them)
+        data = [("Cs1(=O)ccccn1",
+                 "CS1(=O)=NC=CC=C1"),
+                ("n1c2-c(c3cccc4cccc2c34)n(=N)c2ccccc12",
+                 "n1c2-c(c3cccc4cccc2c34)n(=N)c2ccccc12")]
+        for inp, out in data:
+            mol = pybel.readstring("smi", inp)
+            self.assertEqual(out, mol.write("smi").rstrip())
+
     def testKekulizationOfcn(self):
         """We were previously not reading 'cn' correctly, or at least how
         Daylight would"""
         mol = pybel.readstring("smi", "cn")
         self.assertEqual("C=N", mol.write("smi").rstrip())
+
+    def testReadingMassDifferenceInMolfiles(self):
+        """Previously we were rounding incorrectly when reading the mass diff"""
+        template = """
+ OpenBabel02181811152D
+
+  1  0  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 %2s %2d  0  0  0  0  0  0  0  0  0  0  0
+M  END
+"""
+        # Positive test cases:
+        # These are the BIOVIA Draw answers for the first 50 elements for
+        # a mass diff of 1
+        answers = [2,5,8,10,12,13,15,17,20,21,24,25,28,29,32,33,36,41,40,41,46,49,52,53,56,57,60,60,65,66,71,74,76,80,81,85,86,89,90,92,94,97,99,102,104,107,109,113,116,120,123]
+        for idx, answer in enumerate(answers):
+            elem = idx + 1
+            molfile = template % (ob.GetSymbol(elem), 1)
+            mol = pybel.readstring("mol", molfile).OBMol
+            iso = mol.GetAtom(1).GetIsotope()
+            self.assertEqual(answer, iso)
+
+        # Also test D and T - BIOVIA Draw ignores the mass diff
+        for elem, answer in zip("DT", [2, 3]):
+            molfile = template % (elem, 1)
+            mol = pybel.readstring("mol", molfile).OBMol
+            iso = mol.GetAtom(1).GetIsotope()
+            self.assertEqual(answer, iso)
+
+        # Negative test cases:
+        # Test error message for out-of-range values
+        for value in [5, -4]:
+            molfile = template % ("C", value)
+            mol = pybel.readstring("mol", molfile).OBMol
+            iso = mol.GetAtom(1).GetIsotope()
+            self.assertEqual(0, iso)
 
     def testInvalidCharsInSmiles(self):
         """Check that inserting a comma in a SMILES string in various positions

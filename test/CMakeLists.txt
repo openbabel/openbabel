@@ -27,7 +27,7 @@ set (canonconsistent_parts  1 2 3)
 set (canonfragment_parts 1)
 set (canonstable_parts 1)
 set (carspacegroup_parts 1 2 3 4)
-set (cifspacegroup_parts 1 2 3 4 5 6 7 8 9 10)
+set (cifspacegroup_parts 1 2 3 4 5 6 7 8 9 10 11)
 set (cistrans_parts 1 2 3 4 5 6 7 8 9)
 set (graphsym_parts 1 2 3 4 5)
 set (gzip_parts 1)
@@ -239,7 +239,7 @@ endif(NOT MINGW AND NOT CYGWIN)
 if (PYTHON_BINDINGS)
   include(UsePythonTest)
   set(pybindtests
-      bindings _pybel example pcjsonformat)
+      bindings _pybel example cdjsonformat pcjsonformat)
   foreach(pybindtest ${pybindtests})
     SET_SOURCE_FILES_PROPERTIES(test${pybindtest}.py PROPERTIES
         PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"

@@ -54,8 +54,8 @@ else:
     _obfuncs = _obconsts = ob
     try:
         import Tkinter as tk
-        import Image as PIL
-        import ImageTk as piltk
+        from PIL import Image as PIL
+        from PIL import ImageTk as piltk
     except ImportError:  # pragma: no cover
         tk = None
 

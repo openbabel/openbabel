@@ -359,12 +359,12 @@ namespace OpenBabel
             OBResidue *res  = (mol.NumResidues() > 0) ?
               mol.GetResidue(mol.NumResidues()-1) : NULL;
             if (res == NULL || res->GetName() != resname ||
-                static_cast<int>(res->GetNum()) != resnum)
+                res->GetNum() != resnum)
               {
                 vector<OBResidue*>::iterator ri;
                 for (res = mol.BeginResidue(ri) ; res ; res = mol.NextResidue(ri))
                   if (res->GetName() == resname &&
-                      static_cast<int>(res->GetNum()) == resnum)
+                      res->GetNum() == resnum)
                     break;
 
                 if (res == NULL)

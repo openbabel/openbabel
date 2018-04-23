@@ -103,7 +103,7 @@ namespace OpenBabel {
     //! \return The residue name
     std::string    GetName(void)                  const;
     //! \return The residue number (in the sequence)
-    unsigned int    GetNum(void);
+    int    GetNum(void);
     std::string     GetNumString(void);
     //! \return The number of atoms in this residue
     unsigned int   GetNumAtoms()                  const;

@@ -615,6 +615,7 @@ namespace OpenBabel
            int atomicNum;
            OBPairData *label;
            OBPairFloatingPoint * occup;
+           double occupancy = 1.0;
            while (token.type == CIFLexer::ValueToken) // Read in the Fields
              {
              if (column_idx == 0)
@@ -774,7 +775,11 @@ namespace OpenBabel
              case CIFTagID::_atom_site_occupancy: // The occupancy of the site.
                occup = new OBPairFloatingPoint;
                occup->SetAttribute("_atom_site_occupancy");
-               occup->SetValue(token.as_number());
+               occupancy = token.as_number();
+               if (occupancy <= 0.0 || occupancy > 1.0){
+                 occupancy = 1.0;
+               }
+               occup->SetValue(occupancy);
                occup->SetOrigin(fileformatInput);
                atom->SetData(occup);
                break;

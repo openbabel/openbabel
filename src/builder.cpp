@@ -1188,6 +1188,17 @@ namespace OpenBabel
     mol.SetChiralityPerceived();
     mol.SetDimension(3);
 
+    bool isNanExist = false;
+    FOR_ATOMS_OF_MOL(a, mol) {
+      vector3 v = a->GetVector();
+      if(IsNan(v.x()) || IsNan(v.y()) || IsNan(v.z())) {
+          isNanExist = true;
+          break;
+       }
+    }
+    if(isNanExist)
+      obErrorLog.ThrowError(__FUNCTION__, "There exists NaN in calculated coordinates.", obWarning);
+
     return success;
   }
 
