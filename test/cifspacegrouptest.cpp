@@ -371,6 +371,9 @@ int cifspacegrouptest(int argc, char* argv[])
   case 11:
     testPdbOccupancies();
   break;
+  case 12:
+    testCIFMolecules();
+  break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
     return -1;
