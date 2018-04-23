@@ -303,6 +303,20 @@ void testPdbOccupancies()
   OB_ASSERT(pdb.find("HETATM   17  O   UNL     8       1.954   8.956   3.035  1.00") != string::npos);
 }
 
+void testCIFMolecules()
+{
+  // See https://github.com/openbabel/openbabel/pull/1558
+  OBConversion conv;
+  OBMol mol;
+  conv.SetInFormat("cif");
+  conv.SetOutFormat("smi"); // check for disconnected fragments
+  conv.ReadFile(&mol, GetFilename("1519159.cif"));
+
+  string smi = conv.WriteString(&mol);
+  // never, never disconnected fragments from a molecule
+  OB_ASSERT(smi.find(".") == string::npos);
+}
+
 int cifspacegrouptest(int argc, char* argv[])
 {
   int defaultchoice = 1;
