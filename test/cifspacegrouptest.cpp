@@ -277,6 +277,33 @@ void testPdbRemSpacesHMName()
   OB_ASSERT(pdb.find("I41/amd:2") != string::npos);
 }
 
+void testPdbOccupancies()
+{
+  // See https://github.com/openbabel/openbabel/pull/1558
+  OBConversion conv;
+  OBMol mol;
+  conv.SetInFormat("cif");
+  conv.SetOutFormat("pdb");
+  conv.ReadFile(&mol, GetFilename("test08.cif"));
+
+  string pdb = conv.WriteString(&mol);
+  conv.AddOption("o", OBConversion::OUTOPTIONS);
+  pdb = conv.WriteString(&mol);
+
+  OB_ASSERT(pdb.find("HETATM    1 NA   UNL     1       0.325   0.000   4.425  0.36") != string::npos);
+  OB_ASSERT(pdb.find("HETATM    2 NA   UNL     1       0.002   8.956   1.393  0.10") != string::npos);
+  OB_ASSERT(pdb.find("HETATM   17  O   UNL     8       1.954   8.956   3.035  1.00") != string::npos);
+
+  OBMol mol_pdb;
+  conv.SetInFormat("pdb");
+  conv.ReadFile(&mol_pdb, GetFilename("test09.pdb"));
+
+  pdb = conv.WriteString(&mol_pdb);
+  OB_ASSERT(pdb.find("HETATM    1 NA   UNL     1       0.325   0.000   4.425  0.36") != string::npos);
+  OB_ASSERT(pdb.find("HETATM    2 NA   UNL     1       0.002   8.956   1.393  0.10") != string::npos);
+  OB_ASSERT(pdb.find("HETATM   17  O   UNL     8       1.954   8.956   3.035  1.00") != string::npos);
+}
+
 int cifspacegrouptest(int argc, char* argv[])
 {
   int defaultchoice = 1;
@@ -327,6 +354,9 @@ int cifspacegrouptest(int argc, char* argv[])
     break;
   case 10:
     testPdbRemSpacesHMName();
+  break;
+  case 11:
+    testPdbOccupancies();
   break;
   default:
     cout << "Test number " << choice << " does not exist!\n";

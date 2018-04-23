@@ -168,6 +168,72 @@ class testOBabel(BaseTest):
                                      (rsmi, option))
             moutput, error = run_exec(output, "obabel -irxn -orsmi")
             self.assertEqual(self.sort(moutput.rstrip()), self.sort(result))
+            
+    def testPDBQT(self):
+        self.canFindExecutable("obabel")
+        pdb = '''ATOM     77  N   TYR A   5      35.078  50.693  67.193  1.00  0.00           N  
+ATOM     78  CA  TYR A   5      35.195  51.589  66.041  1.00  0.00           C  
+ATOM     79  C   TYR A   5      33.792  51.581  65.423  1.00  0.00           C  
+ATOM     80  O   TYR A   5      33.362  50.580  64.852  1.00  0.00           O  
+ATOM     81  CB  TYR A   5      36.233  51.055  65.045  1.00  0.00           C  
+ATOM     82  CG  TYR A   5      36.534  51.990  63.891  1.00  0.00           C  
+ATOM     83  CD1 TYR A   5      37.369  53.085  64.053  1.00  0.00           C  
+ATOM     84  CD2 TYR A   5      35.949  51.786  62.644  1.00  0.00           C  
+ATOM     85  CE1 TYR A   5      37.618  53.971  62.993  1.00  0.00           C  
+ATOM     86  CE2 TYR A   5      36.180  52.653  61.580  1.00  0.00           C  
+ATOM     87  CZ  TYR A   5      37.010  53.742  61.763  1.00  0.00           C  
+ATOM     88  OH  TYR A   5      37.199  54.607  60.730  1.00  0.00           O  
+ATOM     89  H   TYR A   5      35.302  49.703  67.057  1.00  0.00           H  
+ATOM     90  HA  TYR A   5      35.457  52.597  66.383  1.00  0.00           H  
+ATOM     91  HB2 TYR A   5      35.921  50.094  64.629  1.00  0.00           H  
+ATOM     92  HB3 TYR A   5      37.173  50.847  65.572  1.00  0.00           H  
+ATOM     93  HD1 TYR A   5      37.853  53.262  65.012  1.00  0.00           H  
+ATOM     94  HD2 TYR A   5      35.274  50.955  62.515  1.00  0.00           H  
+ATOM     95  HE1 TYR A   5      38.313  54.794  63.081  1.00  0.00           H  
+ATOM     96  HE2 TYR A   5      35.711  52.433  60.627  1.00  0.00           H  
+ATOM     97  HH  TYR A   5      36.875  54.171  59.926  1.00  0.00           H  
+END
+'''
+        pdbqt = '''REMARK  Name = 
+REMARK  5 active torsions:
+REMARK  status: ('A' for Active; 'I' for Inactive)
+REMARK    1  A    between atoms: _1  and  _2
+REMARK    2  A    between atoms: _2  and  _3
+REMARK    3  A    between atoms: _2  and  _5
+REMARK    4  A    between atoms: _5  and  _6
+REMARK    5  A    between atoms: _11  and  _12
+REMARK                            x       y       z     vdW  Elec       q    Type
+REMARK                         _______ _______ _______ _____ _____    ______ ____
+ROOT
+ATOM      1  CG  TYR A   1      36.534  51.990  63.891  0.00  0.00    +0.000 A 
+ATOM      2  CD2 TYR A   1      37.369  53.085  64.053  0.00  0.00    +0.000 A 
+ATOM      3  CD1 TYR A   1      35.949  51.786  62.644  0.00  0.00    +0.000 A 
+ATOM      4  CE2 TYR A   1      37.618  53.971  62.993  0.00  0.00    +0.000 A 
+ATOM      5  CE1 TYR A   1      36.180  52.653  61.580  0.00  0.00    +0.000 A 
+ATOM      6  CZ  TYR A   1      37.010  53.742  61.763  0.00  0.00    +0.000 A 
+ENDROOT
+BRANCH   6   7
+ATOM      7  OH  TYR A   1      37.199  54.607  60.730  0.00  0.00    +0.000 OA
+ATOM      8  HH  TYR A   1      36.875  54.171  59.926  0.00  0.00    +0.000 HD
+ENDBRANCH   6   7
+BRANCH   1   9
+ATOM      9  CB  TYR A   1      36.233  51.055  65.045  0.00  0.00    +0.000 C 
+BRANCH   9  10
+ATOM     10  CA  TYR A   1      35.195  51.589  66.041  0.00  0.00    +0.000 C 
+BRANCH  10  11
+ATOM     11  N   TYR A   1      35.078  50.693  67.193  0.00  0.00    +0.000 NA
+ATOM     12  H   TYR A   1      35.302  49.703  67.057  0.00  0.00    +0.000 HD
+ENDBRANCH  10  11
+BRANCH  10  13
+ATOM     13  C   TYR A   1      33.792  51.581  65.423  0.00  0.00    +0.000 C 
+ATOM     14  O   TYR A   1      33.362  50.580  64.852  0.00  0.00    +0.000 OA
+ENDBRANCH  10  13
+ENDBRANCH   9  10
+ENDBRANCH   1   9
+TORSDOF 5
+'''
+        output, error = run_exec(pdb, "obabel -ipdb -opdbqt")
+        self.assertEqual(output, pdbqt)        
 
 if __name__ == "__main__":
     unittest.main()

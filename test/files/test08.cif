@@ -1,0 +1,85 @@
+
+
+
+
+ 
+#***************************************************************************
+#
+# Crystallographic Information File for Clinoptilolite 
+#
+# Koyama, K. and Takeuchi, Y.
+# Z. Kristallogr.,&nbsp;145,&nbsp;216-239,&nbsp;(1977)
+#
+# CIF taken from the IZA-SC Database of Zeolite Structures
+# Ch. Baerlocher and L.B. McCusker,
+# Database of Zeolite Structures: http://www.iza-structure.org/databases/ 
+#
+#***************************************************************************
+
+
+data_Clinoptilolite
+_chemical_name_systematic 
+'Clinoptilolite'
+_chemical_formula_structural
+'|Na1.84 K1.76 Mg0.2 Ca1.24 (H2 O)21.36 | [Si29.84 Al6.16 O72 ]'
+_cell_length_a      17.662
+_cell_length_b      17.911
+_cell_length_c      7.407 
+_cell_angle_alpha   90 
+_cell_angle_beta    116.4 
+_cell_angle_gamma   90
+_cell_formula_units_Z   1
+
+_space_group.name_H-M_ref   'C 1 2/m 1'
+_symmetry_space_group_name_H-M   'C 1 2/m 1'
+_symmetry_space_group_name_Hall  '-C 2y'
+_space_group.IT_number  12 
+
+ 
+ loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_B_iso_or_equiv
+_atom_site_occupancy
+NA1  Na  0.1428  0  0.667  5.49  0.36
+NA2  Na  0.0393  0.5  0.21  3.13  0.1
+K3  K  0.2413  0.5  0.049  5.1  0.44
+MG4  Mg  0  0  0.5  1.1  0.1
+CA1  Ca  0.1428  0  0.667  5.49  0.06
+CA2  Ca  0.0393  0.5  0.21  3.13  0.25
+SI1  Si  0.17906  0.16943  0.0963  1.07  0.83
+SI2  Si  0.21334  0.41099  0.504  1.1  0.69
+SI3  Si  0.20846  0.19034  0.7153  1.01  0.87
+SI4  Si  0.06623  0.29837  0.4148  1.09  0.89
+SI5  Si  0  0.21651  0  1.11  0.9
+AL1  Al  0.17906  0.16943  0.0963  1.07  0.17
+AL2  Al  0.21334  0.41099  0.504  1.1  0.31
+AL3  Al  0.20846  0.19034  0.7153  1.01  0.13
+AL4  Al  0.06623  0.29837  0.4148  1.09  0.11
+AL5  Al  0  0.21651  0  1.11  0.1
+O1  O  0.1959  0.5  0.4574  2.39  1
+O2  O  0.2336  0.1204  0.6144  2.47  1
+O3  O  0.185  0.1551  0.8559  2.64  1
+O4  O  0.2333  0.1041  0.2509  2.37  1
+O5  O  0  0.3232  0.5  2.64  1
+O6  O  0.0808  0.1627  0.0555  1.96  1
+O7  O  0.1268  0.2317  0.5492  3.05  1
+O8  O  0.0122  0.2702  0.1856  2.48  1
+O9  O  0.2123  0.252  0.186  2.31  1
+O10  O  0.1188  0.3718  0.4148  2.42  1
+H2O1  O2-(H2O)  0.211  0.5  -0.033  6.2  0.38
+H2O2  O2-(H2O)  0.084  0  0.888  14.6  0.44
+H2O3  O2-(H2O)  0.0777  0.4206  0.964  9.5  1
+H2O4  O2-(H2O)  0  0.5  0.5  7.4  1
+H2O5  O2-(H2O)  0  0.095  0.5  22.1  0.76
+H2O6  O2-(H2O)  0.073  0  0.249  19.1  0.84
+H2O7  O2-(H2O)  0.096  0  0.756  10.2  0.42
+
+# End of data for Clinoptilolite
+
+
+			
+	

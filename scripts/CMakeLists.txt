@@ -86,10 +86,22 @@ if (DO_PYTHON_BINDINGS)
     endif(RUN_SWIG)
 
     add_library(bindings_python MODULE ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp)
-    if(BINDINGS_ONLY)
-        target_link_libraries(bindings_python ${PYTHON_LIBRARIES} ${BABEL_SYSTEM_LIBRARY})
+
+    if(APPLE)
+      # Don't link against Python library on Mac
+      set_target_properties(bindings_python PROPERTIES LINK_FLAGS "-undefined dynamic_lookup")
+      if(BINDINGS_ONLY)
+        target_link_libraries(bindings_python ${BABEL_SYSTEM_LIBRARY})
+      else()
+        target_link_libraries(bindings_python ${BABEL_LIBRARY})
+      endif()
     else()
+      # Link against Python library on Linux and Windows
+      if(BINDINGS_ONLY)
+        target_link_libraries(bindings_python ${PYTHON_LIBRARIES} ${BABEL_SYSTEM_LIBRARY})
+      else()
         target_link_libraries(bindings_python ${PYTHON_LIBRARIES} ${BABEL_LIBRARY})
+      endif()
     endif()
 
     if(NOT WIN32)

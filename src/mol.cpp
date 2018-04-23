@@ -1209,7 +1209,7 @@ namespace OpenBabel
   //All OBGenericData incl OBRotameterList is copied, CM 2006
   //OBChiralData for all atoms copied, TV 2008
   //Zeros all flags except OB_TCHARGE_MOL, OB_PCHARGE_MOL, OB_HYBRID_MOL
-  //OB_TSPIN_MOL and OB_PATTERN_STRUCTURE which are copied
+  //OB_TSPIN_MOL, OB_AROMATIC_MOL and OB_PATTERN_STRUCTURE which are copied
   {
     if (this == &source)
       return *this;
@@ -1251,6 +1251,9 @@ namespace OpenBabel
       this->SetFlag(OB_PCHARGE_MOL);
     if (src.HasFlag(OB_HYBRID_MOL))
       this->SetFlag(OB_HYBRID_MOL);
+    if (src.HasFlag(OB_AROMATIC_MOL))
+      this->SetFlag(OB_AROMATIC_MOL);
+
 
     //this->_flags = src.GetFlags(); //Copy all flags. Perhaps too drastic a change
 
@@ -3984,6 +3987,8 @@ namespace OpenBabel
     if( ! iter ) return false;
 
     newmol.SetDimension(GetDimension());
+    // If the parent had aromaticity perceived, then retain that for the fragment
+    newmol.SetFlag(_flags & OB_AROMATIC_MOL);
 
     // We want to keep the atoms in their original order rather than use
     // the DFS order so just record the information first
