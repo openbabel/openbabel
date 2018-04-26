@@ -659,9 +659,16 @@ namespace OpenBabel
           {
             // use original atom names defined by residue
             snprintf(label,BUFF_SIZE,"%s",(char*)res->GetAtomID(atom).c_str());
-            // make sure that residue name includes its number
-            snprintf(rlabel,BUFF_SIZE,"%s%d",res->GetName().c_str(), res->GetNum());
+            // make sure that residue name includes its number, but check if number is already present in resname
             snprintf(rnum,BUFF_SIZE,"%d",res->GetNum());
+            string resname;
+            int resnum;
+            resname = res->GetName().c_str();
+            resnum = atoi(resname.substr(resname.find_last_not_of("0123456789") + 1).c_str());
+            if (resnum == res->GetNum())
+              snprintf(rlabel,BUFF_SIZE,"%s",res->GetName().c_str());
+            else
+              snprintf(rlabel,BUFF_SIZE, "%s%d", res->GetName().c_str(), res->GetNum());
           }
 
         snprintf(buffer,BUFF_SIZE,"%7d %-6s   %9.4f %9.4f %9.4f %-5s %3s  %-8s %9.4f",
