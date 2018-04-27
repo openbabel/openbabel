@@ -966,11 +966,11 @@ namespace OpenBabel
              {
              OBAtom * atom = (* atom_x);
              atom->SetVector(pCell->FractionalToCartesian(
-                             pCell->WrapFractionalCoordinate(atom->GetVector())));  // TODO: this is where we could copy Cartesian to fractional
+                             pCell->WrapFractionalCoordinate(atom->GetVector())));  // Note: this is where we could keep the original fractional coordinates, e.g. in a new OBCoord class
              }
            }
          if (pConv->IsOption("p",OBConversion::INOPTIONS))
-           pmol->SetPeriodicLattice(pCell);  // Make the molecule periodic
+           pmol->SetPeriodicMol();
          }
        for (OBAtomIterator atom_x = pmol->BeginAtoms(), atom_y = pmol->EndAtoms(); atom_x != atom_y; ++atom_x )
        {

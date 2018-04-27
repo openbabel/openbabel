@@ -2091,7 +2091,7 @@ namespace OpenBabel {
       const OBStereoUnitSet &stereoUnits, bool addToMol)
   {
     std::vector<OBTetrahedralStereo*> configs;
-    OBUnitCell *uc = mol->GetPeriodicLattice();
+    OBUnitCell *uc = (OBUnitCell*)mol->GetData(OBGenericDataType::UnitCell);
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::TetrahedralFrom3D", obAuditMsg);
 
     // find all tetrahedral centers
@@ -2193,7 +2193,7 @@ namespace OpenBabel {
       const OBStereoUnitSet &stereoUnits, bool addToMol)
   {
     std::vector<OBCisTransStereo*> configs;
-    OBUnitCell *uc = mol->GetPeriodicLattice();
+    OBUnitCell *uc = (OBUnitCell*)mol->GetData(OBGenericDataType::UnitCell);
     obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::CisTransFrom3D", obAuditMsg);
 
     // find all cis/trans bonds
@@ -2350,7 +2350,7 @@ namespace OpenBabel {
     v2 = c->GetVector() - b->GetVector();
     if (a->IsPeriodic()) {  // Adapted from OBAtom.GetAngle
       OBMol *mol = (OBMol*)a->GetParent();
-      OBUnitCell *box = (OBUnitCell*)mol->GetPeriodicLattice();
+      OBUnitCell *box = (OBUnitCell*)mol->GetData(OBGenericDataType::UnitCell);
       v1 = box->MinimumImageCartesian(v1);
       v2 = box->MinimumImageCartesian(v2);
     }
@@ -2747,7 +2747,7 @@ namespace OpenBabel {
 
     // This loop sets one bond of each tet stereo to up or to down (2D only)
     std::set <OBBond *> alreadyset;
-    OBUnitCell *uc = mol.GetPeriodicLattice();
+    OBUnitCell *uc = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
     for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data)
       if (((OBStereoBase*)*data)->GetType() == OBStereo::Tetrahedral) {
         OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);

@@ -1665,7 +1665,7 @@ namespace OpenBabel
           std::string sym_key;
           int symmetry_num = 555;
           if (bond->IsPeriodic()) {
-              OBUnitCell *box = pmol->GetPeriodicLattice();
+              OBUnitCell *box = (OBUnitCell*)pmol->GetData(OBGenericDataType::UnitCell);
               vector3 begin, end_orig, end_expected, uc_direction;
               begin = box->CartesianToFractional(bond->GetBeginAtom()->GetVector());
               end_orig = box->CartesianToFractional(bond->GetEndAtom()->GetVector());

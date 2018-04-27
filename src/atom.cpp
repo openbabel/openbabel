@@ -888,7 +888,7 @@ namespace OpenBabel
 
   bool OBAtom::IsPeriodic()
   {
-    OBMol *mol = (OBMol*)((OBAtom*)this)->GetParent();
+    OBMol *mol = (OBMol*) GetParent();
     return mol->IsPeriodic();
   }
 
@@ -1235,7 +1235,7 @@ namespace OpenBabel
       }
     else
       {
-        OBUnitCell *box = ((OBMol*)GetParent())->GetPeriodicLattice();
+        OBUnitCell *box = (OBUnitCell*)GetParent()->GetData(OBGenericDataType::UnitCell);
         return (box->MinimumImageCartesian(this->GetVector() - b->GetVector())).length();
       }
   }
@@ -1259,8 +1259,7 @@ namespace OpenBabel
     v2 = c->GetVector() - b->GetVector();
     if (IsPeriodic())
       {
-        OBMol *mol = (OBMol*)GetParent();
-        OBUnitCell *box = (OBUnitCell*)mol->GetPeriodicLattice();
+        OBUnitCell *box = (OBUnitCell*)GetParent()->GetData(OBGenericDataType::UnitCell);
         v1 = box->MinimumImageCartesian(v1);
         v2 = box->MinimumImageCartesian(v2);
       }

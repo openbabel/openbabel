@@ -321,9 +321,10 @@ namespace OpenBabel
         v4 = d->GetVector();
         // Then redefine the positions based on proximity to the previous atom
         // to build a continuous chain of expanded Cartesian coordinates
-        v2 = _unitCell->UnwrapCartesianNear(v2, v1);
-        v3 = _unitCell->UnwrapCartesianNear(v3, v2);
-        v4 = _unitCell->UnwrapCartesianNear(v4, v3);
+        OBUnitCell *unitCell = (OBUnitCell * ) GetData(OBGenericDataType::UnitCell);
+        v2 = unitCell->UnwrapCartesianNear(v2, v1);
+        v3 = unitCell->UnwrapCartesianNear(v3, v2);
+        v4 = unitCell->UnwrapCartesianNear(v4, v3);
         return(CalcTorsionAngle(v1, v2, v3, v4));
       }
   }
@@ -1099,17 +1100,6 @@ namespace OpenBabel
     return (Trim(f_str));
   }
 
-  void OBMol::SetPeriodicLattice(OBUnitCell* pCell)
-  {
-    if (pCell)
-      {
-        if (_unitCell == NULL)  // Have we already allocated a lattice?
-          _unitCell = new OBUnitCell;
-        *_unitCell = *pCell;  // Copy data from pCell into our allocation
-      }
-    SetFlag(OB_PERIODIC_MOL);
-  }
-
   //! Stochoimetric formula (e.g., C4H6O).
   //!   This is either set by OBMol::SetFormula() or generated on-the-fly
   //!   using the "Hill order" -- i.e., C first if present, then H if present
@@ -1240,7 +1230,8 @@ namespace OpenBabel
   //All OBGenericData incl OBRotameterList is copied, CM 2006
   //OBChiralData for all atoms copied, TV 2008
   //Zeros all flags except OB_TCHARGE_MOL, OB_PCHARGE_MOL,
-  //OB_TSPIN_MOL and OB_PATTERN_STRUCTURE which are copied
+  //OB_TSPIN_MOL, OB_PERIODIC_MOL, and OB_PATTERN_STRUCTURE
+  //which are copied
   {
     if (this == &source)
       return *this;
@@ -1269,7 +1260,6 @@ namespace OpenBabel
     this->_dimension = src.GetDimension();
     this->SetTotalCharge(src.GetTotalCharge()); //also sets a flag
     this->SetTotalSpinMultiplicity(src.GetTotalSpinMultiplicity()); //also sets a flag
-    this->SetPeriodicLattice(src.GetPeriodicLattice());  // FIXME: probably needs to be based on the internal GetData pointer, not a reference to the old object
 
     EndModify(); //zeros flags!
 
@@ -1492,7 +1482,6 @@ namespace OpenBabel
 
     _c = (double*) NULL;
     _mod = 0;
-    DestroyPeriodicLattice(); // FIXME: check how it's allocated first.  Double "free" with SetData?
 
     // Clean up generic data via the base class
     return(OBBase::Clear());
@@ -1544,10 +1533,11 @@ namespace OpenBabel
 
     if (nukePerceivedData)
       {
+        bool periodic_structure = IsPeriodic();
         _flags = 0;
-        if (GetPeriodicLattice())
+        if (periodic_structure)
           {
-            SetFlag(OB_PERIODIC_MOL);
+            SetPeriodicMol();
           }
         OBBond *bond;
         vector<OBBond*>::iterator k;
@@ -1634,15 +1624,6 @@ namespace OpenBabel
       {
         delete residue;
         residue = NULL;
-      }
-  }
-
-  void OBMol::DestroyPeriodicLattice(void)
-  {
-    if (_unitCell)
-      {
-        delete _unitCell;
-        _unitCell = NULL;
       }
   }
 
@@ -3296,7 +3277,6 @@ namespace OpenBabel
     _vdata.clear();
     _title = "";
     _c = (double*)NULL;
-    _unitCell = (OBUnitCell*)NULL;
     _flags = 0;
     _vconf.clear();
     _autoPartialCharge = true;
@@ -3317,7 +3297,6 @@ namespace OpenBabel
     _vdata.clear();
     _title = "";
     _c = (double*)NULL;
-    _unitCell = (OBUnitCell*)NULL;
     _flags = 0;
     _vconf.clear();
     _autoPartialCharge = true;
@@ -3341,7 +3320,6 @@ namespace OpenBabel
       DestroyBond(bond);
     for (residue = BeginResidue(r);residue;residue = NextResidue(r))
       DestroyResidue(residue);
-    DestroyPeriodicLattice();
 
     //clear out the multiconformer data
     vector<double*>::iterator k;
@@ -3597,7 +3575,8 @@ namespace OpenBabel
               {
                 atom1 = vector3(c[idx1*3], c[idx1*3+1], c[idx1*3+2]);
                 atom2 = vector3(c[idx2*3], c[idx2*3+1], c[idx2*3+2]);
-                wrapped_coords = _unitCell->MinimumImageCartesian(atom1 - atom2);
+                OBUnitCell *unitCell = (OBUnitCell * ) GetData(OBGenericDataType::UnitCell);
+                wrapped_coords = unitCell->MinimumImageCartesian(atom1 - atom2);
                 d2 = wrapped_coords.length_2();
               }
             else
@@ -4543,7 +4522,13 @@ namespace OpenBabel
     if( ! iter ) return false;
 
     newmol.SetDimension(GetDimension());
-    newmol.SetPeriodicLattice(GetPeriodicLattice());  // FIXME: probably has the same problem as operator=
+
+    if (IsPeriodic()) {
+      OBUnitCell* parent_uc = (OBUnitCell*)GetData(OBGenericDataType::UnitCell);
+      newmol.SetData(parent_uc->Clone(NULL));
+      newmol.SetPeriodicMol();
+    }
+
     map<OBAtom*, OBAtom*> AtomMap;//key is from old mol; value from new mol
     do { //for each atom in fragment
       OBAtom* pnext = &*iter;
