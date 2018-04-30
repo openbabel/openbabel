@@ -369,9 +369,9 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       xmlTextWriterWriteFormatAttribute(writer(), C_ORDER , "%d", n);
     }
     if (pbond->IsHash())
-      xmlTextWriterWriteFormatAttribute(writer(), C_DISPLAY , "WedgeBegin");
-    else if (pbond->IsWedge())
       xmlTextWriterWriteFormatAttribute(writer(), C_DISPLAY , "WedgedHashBegin");
+    else if (pbond->IsWedge())
+      xmlTextWriterWriteFormatAttribute(writer(), C_DISPLAY , "WedgeBegin");
     xmlTextWriterEndElement(writer());
   }
   _offset += mol.NumAtoms ();
