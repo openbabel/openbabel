@@ -588,6 +588,9 @@ class OBMolCopySubstructure(PythonBindings):
                     [((1, 2, 3), None, "C(Br)Cl"),
                     ((1, 2, 3, 4), (2,), "C(Br)Cl.I")]
                 ),
+                ("C[C@@H]1CO1",
+                    [((2, 3, 4), None, "C1CO1"),]
+                ),
                 ("F/C=C/I",
                     [
                      ((1, 2, 3, 4), None, "F/C=C/I"),
