@@ -5,7 +5,7 @@ in the build folder with:
 "C:\Program Files\CMake 2.6\bin\ctest.exe" -C CTestTestfile.cmake
                                            -R pybindtest -VV
 
-The runtime directory is ${CMAKE_SRC_DIR}/test. 
+The runtime directory is ${CMAKE_SRC_DIR}/test.
 
 You could also "chdir" into build and run the test file directly:
 python ../../test/testbindings.py
@@ -47,7 +47,7 @@ class TestPythonBindings(PythonBindings):
         conv.SetInFormat("smi")
         conv.ReadString(mol, "CC(=O)Cl")
         self.assertAlmostEqual(mol.GetMolWt(), 78.5, 1)
-    
+
 class PybelWrapper(PythonBindings):
     def testDummy(self):
         self.assertTrue(pybel is not None, "Failed to import the Pybel module")
@@ -200,6 +200,25 @@ class TestSuite(PythonBindings):
         for smi in alsobad:
             mol = pybel.readstring("smi", smi)
             self.assertTrue(mol.OBMol.GetData(ob.StereoData))
+
+    def testFFGradients(self):
+        """Support public access of FF gradients"""
+        xyz = """3
+water
+O          1.02585       -0.07579        0.08189
+H          1.99374       -0.04667        0.04572
+H          0.74700        0.50628       -0.64089
+"""
+        mol = pybel.readstring("xyz", xyz)
+        ff = pybel._forcefields["mmff94"]
+
+        self.assertTrue(ff.Setup(mol.OBMol))
+        for atom in mol.atoms:
+            # this should throw an AttributeError if not available
+            grad = ff.GetGradient(atom.OBAtom)
+            self.assertNotEqual(0.0, grad.GetX())
+            self.assertNotEqual(0.0, grad.GetY())
+            self.assertNotEqual(0.0, grad.GetZ())
 
     def testFuzzingTestCases(self):
         """Ensure that fuzzing testcases do not cause crashes"""
