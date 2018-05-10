@@ -53,11 +53,11 @@ class TestReactionInChIWriter(BaseTest):
         for eqm in [False, True]:
             for rsmi, rinchi in data:
                 if eqm:
-                    output, error = run_exec('obabel -:%s -irsmi -orinchi -xe' % rsmi)
+                    output, error = run_exec('obabel -:%s -ismi -orinchi -xe' % rsmi)
                     ans = rinchi.replace("/d-", "/d=").replace("/d+", "/d=")
                     self.assertEqual(output.rstrip(), ans)
                 else:
-                    output, error = run_exec('obabel -:%s -irsmi -orinchi' % rsmi)
+                    output, error = run_exec('obabel -:%s -ismi -orinchi' % rsmi)
                     self.assertEqual(output.rstrip(), rinchi)
 
     def testRInChIOfficialExamples(self):
@@ -65,7 +65,8 @@ class TestReactionInChIWriter(BaseTest):
         for rxnfile in glob.glob(os.path.join(here, "rinchi", "*.rxn")):
             dirname, fname = os.path.split(rxnfile)
             output, error = run_exec('obabel %s -orinchi' % rxnfile)
-            ans = open(os.path.join(dirname, fname.split(".")[0]+".txt")).readlines()[0]
+            with open(os.path.join(dirname, fname.split(".")[0]+".txt")) as inp:
+                ans = inp.readlines()[0]
             self.assertEqual(output.rstrip(), ans.rstrip())
 
 if __name__ == "__main__":
