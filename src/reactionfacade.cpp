@@ -184,7 +184,7 @@ namespace OpenBabel
       FindComponents();
 
     // Get the current maximum component id
-    int max_compid = INT_MIN;
+    unsigned int max_compid = 0;
     if (!_product_components.empty())
       max_compid = _product_components.back();
     if (!_agent_components.empty() && _agent_components.back()>max_compid)
@@ -195,7 +195,7 @@ namespace OpenBabel
       max_compid = _unassigned_components.back();
 
     int new_compid = max_compid+1;
-    if (new_compid <= 0)
+    if (new_compid == 0)
       new_compid = 1;
 
     FOR_ATOMS_OF_MOL(atom, mol) {

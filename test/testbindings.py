@@ -409,6 +409,7 @@ H         -0.26065        0.64232       -2.62218
         self.assertEqual(len(bonds), 9)
 
 class NewReactionHandling(PythonBindings):
+
     def testBasic(self):
         smis = ["C>N>O", "C>N>", ">N>O", ">N>", "C>>", ">>O", ">>"]
         for smi in smis:
@@ -457,6 +458,25 @@ class NewReactionHandling(PythonBindings):
         nmol.SetIsReaction()
         nsmi = pybel.Molecule(nmol).write("smi").rstrip()
         self.assertEqual("S>>O", nsmi)
+
+    def testRoundtripThroughRXN(self):
+        data = ["C>N>O", "C>>O", "C.N>>O", "C>>O.N",
+                "C>>O", ">>O", "C>>", ">N>", ">>"]
+        for rsmi in data:
+            rxn = pybel.readstring("smi", rsmi).write("rxn")
+            mrsmi = pybel.readstring("rxn", rxn).write("smi").rstrip()
+            self.assertEqual(mrsmi, rsmi)
+        # Test -G option, which changes the treatment of agents
+        rsmi = "C>N>O"
+        ans = {"agent": "C>N>O",
+               "reactant": "C.N>>O",
+               "product": "C>>O.N",
+               "both": "C.N>>O.N",
+               "ignore": "C>>O"}
+        for option, result in ans.items():
+            rxn = pybel.readstring("smi", rsmi).write("rxn", opt={"G":option})
+            mrsmi = pybel.readstring("rxn", rxn).write("smi").rstrip()
+            self.assertEqual(mrsmi, result)
 
 
 class Radicals(PythonBindings):
