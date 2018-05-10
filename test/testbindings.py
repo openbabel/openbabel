@@ -720,7 +720,7 @@ class AtomClass(PythonBindings):
         self.assertEqual(6, ob.toPairInteger(data).GetGenericValue())
 
         atom.DeleteData("Atom Class")
-        ac = ob.obpairtemplateint()
+        ac = ob.OBPairInteger()
         ac.SetAttribute("Atom Class")
         ac.SetValue(2)
         mol.OBMol.GetAtom(1).CloneData(ac)
