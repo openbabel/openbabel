@@ -105,6 +105,11 @@ class BaseTest(unittest.TestCase):
 class testOBabel(BaseTest):
     """A series of tests relating to the obabel executable"""
 
+    def testNoInput(self):
+        """Ensure that this does not segfault (PR#1818)"""
+        self.canFindExecutable("obabel")
+        output, error = run_exec("obabel -i")
+
     def testSMItoInChI(self):
         self.canFindExecutable("obabel")
         output, error = run_exec("CC(=O)Cl", "obabel -ismi -oinchi")
