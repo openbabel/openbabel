@@ -55,7 +55,7 @@ int main(int argc,char **argv)
   unsigned int i, t, errflg = 0;
   int c;
   string err;
-  //bool changeAll = false; // default to only change the last matching torsion
+  bool changeAll = false; // default to only change the last matching torsion
 
   // parse the command line -- optional -a flag to change all matching torsions
   if (argc < 8 || argc > 9) {
@@ -74,6 +74,12 @@ int main(int argc,char **argv)
     c = sscanf(argv[7], "%f", &angle);
     if (c != 1) {
       errflg++; // error in arguments, quit and warn user
+    }
+    if (argc == 9) {
+      if (strcmp(argv[8], "-a") == 0)
+        changeAll = true;
+      else
+        errflg++; // error in arguments, quit and warn user
     }
   }
 
@@ -142,8 +148,8 @@ int main(int argc,char **argv)
         a2 = mol.GetAtom( (*m)[ smartor[1] - 1] );
         a3 = mol.GetAtom( (*m)[ smartor[2] - 1] );
         a4 = mol.GetAtom( (*m)[ smartor[3] - 1] );
-        //if (changeAll)
-        //  mol.SetTorsion(a1, a2, a3, a4, angle * DEG_TO_RAD);
+        if (changeAll)
+          mol.SetTorsion(a1, a2, a3, a4, angle * DEG_TO_RAD);
       }
 
       if ( !a2->IsConnected(a3) ) {
@@ -151,7 +157,8 @@ int main(int argc,char **argv)
         exit(-1);
       }
 
-      mol.SetTorsion(a1, a2, a3, a4, angle * DEG_TO_RAD);
+      if (!changeAll)
+        mol.SetTorsion(a1, a2, a3, a4, angle * DEG_TO_RAD);
     } else {
       cerr << "obrotate: Found 0 matches for the SMARTS pattern." << endl;
       exit(-1);
