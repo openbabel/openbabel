@@ -73,15 +73,62 @@ namespace OpenBabel
       return false;
     }
     FOR_ATOMS_OF_MOL(atom, _mol) {
-      if (!atom->HasData("rxncomp")) {
-        obErrorLog.ThrowError(__FUNCTION__, "The molecule contains an atom that is missing reaction component information. Use SetComponentId().", obWarning);
+      OBGenericData *data;
+      OBPairInteger *pi;
+      int val;
+
+      data = atom->GetData("rxncomp");
+      if (!data) {
+        obErrorLog.ThrowError(__FUNCTION__, "The molecule contains an atom that is missing a reaction component Id. Use SetComponentId().", obWarning);
         return false;
       }
-      if (!atom->HasData("rxnrole")) {
+      pi = dynamic_cast<OBPairInteger*>(data);
+      if (!pi) {
+        obErrorLog.ThrowError(__FUNCTION__, "A reaction component Id has been stored using a data type that is not an OBPairInteger.", obWarning);
+        return false;
+      }
+      val = pi->GetGenericValue();
+      if (val <= 0) {
+        obErrorLog.ThrowError(__FUNCTION__, "Reaction component Ids should all be non-zero positive integers.", obWarning);
+        return false;
+      }
+
+      data = atom->GetData("rxnrole");
+      if (!data) {
         obErrorLog.ThrowError(__FUNCTION__, "The molecule contains an atom that is missing reaction role information. Use SetRole().", obWarning);
         return false;
       }
+      pi = dynamic_cast<OBPairInteger*>(data);
+      if (!pi) {
+        obErrorLog.ThrowError(__FUNCTION__, "Reaction role information has been stored using a data type that is not an OBPairInteger.", obWarning);
+        return false;
+      }
+      val = pi->GetGenericValue();
+      if (val < 0 || val > 3) {
+        obErrorLog.ThrowError(__FUNCTION__, "Reaction roles should be in the range 0 to 3 inclusive.", obWarning);
+        return false;
+      }
     }
+
+    // Ensure that every atom in a particular connected component has the same component Id and rxn role
+    OBMolAtomDFSIter iter(_mol);
+    while (iter) { // for each connected component
+      unsigned int rxncomp = GetComponentId(&*iter);
+      OBReactionRole rxnrole = GetRole(&*iter);
+      do { // for each atom in connected component
+        unsigned my_rxncomp = GetComponentId(&*iter);
+        if (my_rxncomp != rxncomp) {
+          obErrorLog.ThrowError(__FUNCTION__, "The molecule contains a connected component that contains atoms with different reaction component Ids. All atoms in a particular connected component should have the same value.", obWarning);
+          return false;
+        }
+        unsigned int my_rxnrole = GetRole(&*iter);
+        if (my_rxnrole != rxnrole) {
+          obErrorLog.ThrowError(__FUNCTION__, "The molecule contains a connected component that contains atoms with different reaction roles. All atoms in a particular connected component should have the same role.", obWarning);
+          return false;
+        }
+      } while ((iter++).next());
+    }
+
     return true;
   }
 
