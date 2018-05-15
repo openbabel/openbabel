@@ -459,6 +459,52 @@ class NewReactionHandling(PythonBindings):
         nsmi = pybel.Molecule(nmol).write("smi").rstrip()
         self.assertEqual("S>>O", nsmi)
 
+    def testInvalidRxn(self):
+        """IsValid() should flag up invalid reaction data"""
+        mol = pybel.readstring("smi", "CC>>O").OBMol
+        facade = ob.OBReactionFacade(mol)
+        self.assertTrue(facade.IsValid())
+        mol.SetIsReaction(False)
+        self.assertFalse(facade.IsValid())
+        mol.SetIsReaction()
+        self.assertTrue(facade.IsValid())
+
+        atom = mol.GetAtom(1)
+
+        facade.SetRole(atom, 4)
+        self.assertFalse(facade.IsValid()) # invalid role
+        facade.SetRole(atom, ob.REACTANT)
+        self.assertTrue(facade.IsValid())
+
+        data = atom.GetData("rxncomp")
+        ob.toPairInteger(data).SetValue(-1)
+        self.assertFalse(facade.IsValid()) # invalid rxn component id
+
+        atom.DeleteData(data)
+        self.assertFalse(atom.HasData("rxncomp"))
+        self.assertFalse(facade.IsValid()) # data missing
+
+        newdata = ob.OBPairData()
+        newdata.SetAttribute("rxncomp")
+        newdata.SetValue("1")
+        atom.CloneData(newdata)
+        self.assertTrue(atom.HasData("rxncomp"))
+        self.assertFalse(facade.IsValid()) # wrong type of data
+
+        # Connected component should not belong to two different
+        # rxn components or two different reaction roles
+        mol = pybel.readstring("smi", "CC>>O").OBMol
+        facade = ob.OBReactionFacade(mol)
+        self.assertTrue(facade.IsValid())
+        atom = mol.GetAtom(1)
+        facade.SetComponentId(atom, 99)
+        self.assertFalse(facade.IsValid())
+        facade.SetComponentId(atom, 1)
+        self.assertTrue(facade.IsValid())
+        facade.SetRole(atom, ob.AGENT)
+        self.assertFalse(facade.IsValid())
+
+
     def testRoundtripThroughRXN(self):
         data = ["C>N>O", "C>>O", "C.N>>O", "C>>O.N",
                 "C>>O", ">>O", "C>>", ">N>", ">>"]
