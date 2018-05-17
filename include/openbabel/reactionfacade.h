@@ -24,6 +24,10 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
+  class OBMol;
+  class OBAtom;
+  class OBReactionFacadePrivate;
+
   /**
   * The various roles a reaction component can have
   * @sa OBReactionFacade
@@ -64,9 +68,8 @@ namespace OpenBabel
      * The constructor requires an OBMol. Member functions retrieve or manipulate reaction
      * data stored in this molecule.
      */
-    OBReactionFacade(OBMol *mol): _mol(mol), _found_components(false)
-    {
-    };
+    OBReactionFacade(OBMol *mol);
+    ~OBReactionFacade();
     /**
      * @}
      * @name Low-level methods
@@ -87,37 +90,19 @@ namespace OpenBabel
     /**
      * Return the reaction role of an atom.
      */
-    OBReactionRole GetRole(OBAtom *atom)
-    {
-      int rxnrole = GetId("rxnrole", atom);
-      switch(rxnrole) {
-      default: case 0: return NO_REACTIONROLE;
-      case 1: return REACTANT;
-      case 2: return AGENT;
-      case 3: return PRODUCT;
-      }
-    }
+    OBReactionRole GetRole(OBAtom *atom);
     /**
      * Return the component Id of an atom.
      */
-    unsigned int GetComponentId(OBAtom *atom)
-    {
-      return GetId("rxncomp", atom);
-    }
+    unsigned int GetComponentId(OBAtom *atom);
     /**
      * Set the reaction role of an atom.
      */
-    void SetRole(OBAtom* atom, OBReactionRole rxnrole)
-    {
-      SetId("rxnrole", atom, rxnrole);
-    }
+    void SetRole(OBAtom* atom, OBReactionRole rxnrole);
     /**
      * Set the component Id of an atom.
      */
-    void SetComponentId(OBAtom* atom, unsigned int compid)
-    {
-      SetId("rxncomp", atom, compid);
-    }
+    void SetComponentId(OBAtom* atom, unsigned int compid);
     /**
      * @}
      * @name Check validity of reaction data
@@ -174,10 +159,7 @@ namespace OpenBabel
     * OBMol in a way that invalidates this information (e.g. using the low-level
     * methods), you should call ClearInternalState() or create a new OBReactionFacade.
     */
-    void ClearInternalState()
-    {
-      _found_components = false;
-    }
+    void ClearInternalState();
     /**
     * Copy a component from the reaction into the provided OBMol.
     
@@ -215,17 +197,7 @@ namespace OpenBabel
      */
 
   private:
-    OBMol* _mol;
-    bool _found_components;
-    std::vector<unsigned int> _unassigned_components;
-    std::vector<unsigned int> _reactant_components;
-    std::vector<unsigned int> _product_components;
-    std::vector<unsigned int> _agent_components;
-
-    int GetId(const char* idtype, OBAtom *atom);
-    void SetId(const char* idtype, OBAtom* atom, int idval);
-    void FindComponents();
-    std::vector<unsigned int>* GetComponentIds(OBReactionRole rxnrole);
+    OBReactionFacadePrivate *d;
   };
 } // namespace OpenBabel
 #endif // OB_REACTIONFACADE_H
