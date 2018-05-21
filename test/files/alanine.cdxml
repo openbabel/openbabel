@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE CDXML
+SYSTEM "http://www.camsoft.com/xml/cdxml.dtd">
+<CDXML BondLength="30">
+ <page>
+  <fragment>
+   <n id="1" p="119.999588 164.999433" Element="7"/>
+   <n id="2" p="119.999588 134.999536"/>
+   <n id="3" p="145.979499 119.999588"/>
+   <n id="4" p="104.999639 109.019626"/>
+   <n id="5" p="171.962410 134.999536" Element="8"/>
+   <n id="6" p="145.979499 89.999691" Element="8"/>
+   <n id="7" p="89.999691 134.999536" Element="1"/>
+   <b B="1" E="2"/>
+   <b B="2" E="3"/>
+   <b B="2" E="4" Display="WedgeBegin"/>
+   <b B="3" E="5"/>
+   <b B="3" E="6" Order="2"/>
+   <b B="2" E="7" Display="WedgedHashBegin"/>
+  </fragment>
+ </page>
+</CDXML>
