@@ -172,21 +172,27 @@ namespace OpenBabel
     if (err.GetLevel() <= _outputLevel &&
       (qualifier!=onceOnly || find(_messageList.begin(), _messageList.end(), err)==_messageList.end()))
     {
-      if(err.GetLevel() == obError){
-        *_outputStream << rang::fg::red << err;		      					//error
-      } else
-	      if(err.GetLevel() == obWarning){
-		      *_outputStream << rang::fg::yellow << err;	    			//warning
-	      } else
-		      if(err.GetLevel() == obInfo){
-			      *_outputStream << rang::fg::blue << err;	      			//info msg
-		      } else
-			      if(err.GetLevel() == obAuditMsg){
-				      *_outputStream << rang::fg::magenta << err;	    	//audit log msg
-			      } else
-				      if(err.GetLevel() == obDebug){
-					      *_outputStream << rang::fg::cyan << err;	      	//debug msg
-				      }
+      switch(err.GetLevel()){
+        case obError:
+          *_outputStream << rang::fg::red << err;
+          break;
+          
+        case obWarning:
+          *_outputStream << rang::fg::yellow << err;
+          break;
+          
+        case obInfo:
+          *_outputStream << rang::fg::blue << err;
+          break;
+          
+        case obAuditMsg:
+          *_outputStream << rang::fg::magenta << err;
+          break;
+          
+        case obDebug:
+          *_outputStream << rang::fg::cyan << err;
+          break;
+      }      
     }
 
     _messageList.push_back(err);
