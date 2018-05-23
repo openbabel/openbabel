@@ -56,7 +56,7 @@ namespace OpenBabel
         tmp += "*** Open Babel Warning ";
         break;
       case obInfo:
-        tmp += tmp += "*** Open Babel Information ";
+        tmp += "*** Open Babel Information ";
         break;
       case obAuditMsg:
         tmp += "*** Open Babel Audit Log ";
