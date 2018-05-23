@@ -84,3 +84,4 @@ namespace {
     }
 }
 #endif /* ifndef RANG_H*/
+
