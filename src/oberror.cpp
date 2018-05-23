@@ -24,6 +24,7 @@ General Public License for more details.
 #include <algorithm>
 
 #include <openbabel/oberror.h>
+#include <rang.h>
 
 using namespace std;
 
@@ -162,6 +163,8 @@ namespace OpenBabel
 
   void OBMessageHandler::ThrowError(OBError err, errorQualifier qualifier)
   {
+    init::rang();
+    
     if (!_logging)
       return;
 
@@ -169,7 +172,21 @@ namespace OpenBabel
     if (err.GetLevel() <= _outputLevel &&
       (qualifier!=onceOnly || find(_messageList.begin(), _messageList.end(), err)==_messageList.end()))
     {
-      *_outputStream << err;
+      if(err.GetLevel() == obError){
+        *_outputStream << rang::fg::red << err;		      //error
+	    }else
+	    if(err.GetLevel() == obWarning){
+		    *_outputStream << rang::fg::yellow << err;	    //warning
+	    }else
+	    if(err.GetLevel() == obInfo){
+		    *_outputStream << rang::fg::blue << err;	      //info msg
+	    }else
+	    if(err.GetLevel() == obAuditMsg){
+		    *_outputStream << rang::fg::magenta << err;	    //audit log msg
+	    }else
+	    if(err.GetLevel() == obDebug){
+		    *_outputStream << rang::fg::cyan << err;	      //debug msg
+      }
     }
 
     _messageList.push_back(err);
