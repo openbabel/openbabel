@@ -48,17 +48,24 @@ namespace OpenBabel
   {
     string tmp = "==============================\n";
 
-    if (_level == obError)
-      tmp += "*** Open Babel Error ";
-    else if (_level == obWarning)
-      tmp += "*** Open Babel Warning ";
-    else if (_level == obInfo)
-      tmp += "*** Open Babel Information ";
-    else if (_level == obAuditMsg)
-      tmp += "*** Open Babel Audit Log ";
-    else
-      tmp += "*** Open Babel Debugging Message ";
-
+    switch(_level){
+      case obError:
+        tmp += "*** Open Babel Error ";
+        break;
+      case obWarning:
+        tmp += "*** Open Babel Warning ";
+        break;
+      case obInfo:
+        tmp += tmp += "*** Open Babel Information ";
+        break;
+      case obAuditMsg:
+        tmp += "*** Open Babel Audit Log ";
+        break;
+      case obDebug:
+        tmp += "*** Open Babel Debugging Message ";
+        break;
+    }
+    
     if (_method.length() != 0)
       {
         tmp += " in " + _method + string("\n  ");
@@ -175,20 +182,16 @@ namespace OpenBabel
       switch(err.GetLevel()){
         case obError:
           *_outputStream << rang::fg::red << err;
-          break;
-          
+          break;          
         case obWarning:
           *_outputStream << rang::fg::yellow << err;
-          break;
-          
+          break;          
         case obInfo:
           *_outputStream << rang::fg::blue << err;
-          break;
-          
+          break;          
         case obAuditMsg:
           *_outputStream << rang::fg::magenta << err;
-          break;
-          
+          break;          
         case obDebug:
           *_outputStream << rang::fg::cyan << err;
           break;
