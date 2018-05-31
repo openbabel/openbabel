@@ -24,7 +24,7 @@ General Public License for more details.
 #include <algorithm>
 
 #include <openbabel/oberror.h>
-#include <rang.h>
+#include <color.h>
 
 using namespace std;
 
@@ -170,7 +170,7 @@ namespace OpenBabel
 
   void OBMessageHandler::ThrowError(OBError err, errorQualifier qualifier)
   {
-    init::rang();
+    init::color();
     
     if (!_logging)
       return;
@@ -181,19 +181,19 @@ namespace OpenBabel
     {
       switch(err.GetLevel()){
         case obError:
-          *_outputStream << rang::fg::red << err;
+          *_outputStream << color::fg::red << err;
           break;          
         case obWarning:
-          *_outputStream << rang::fg::yellow << err;
+          *_outputStream << color::fg::yellow << err;
           break;          
         case obInfo:
-          *_outputStream << rang::fg::blue << err;
+          *_outputStream << color::fg::blue << err;
           break;          
         case obAuditMsg:
-          *_outputStream << rang::fg::magenta << err;
+          *_outputStream << color::fg::magenta << err;
           break;          
         case obDebug:
-          *_outputStream << rang::fg::cyan << err;
+          *_outputStream << color::fg::cyan << err;
           break;
       }      
     }
