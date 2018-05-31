@@ -1,5 +1,5 @@
-#ifndef RANG_H
-#define RANG_H
+#ifndef COLOR_H
+#define COLOR_H
 
 #include <iostream>
 #include <cstdlib>
@@ -8,7 +8,7 @@ extern "C" {
 #include <unistd.h>
 }
 
-namespace rang {
+namespace color {
 
     enum class style : unsigned char {
         Reset     = 0,
@@ -50,7 +50,7 @@ namespace {
     bool isAllowed = false;
     bool isTerminal()
     {
-        return isatty(STDOUT_FILENO);
+        return isatty(STDERR_FILENO);
     }
     bool supportsColor()
     {
@@ -77,11 +77,11 @@ namespace {
         return isAllowed ? os << "\e[" << static_cast<int>(v) << "m" : os;
     }
     namespace init {
-        void rang()
+        void color()
         {
             isAllowed = isTerminal() && supportsColor() ? true : false;
         }
     }
 }
-#endif /* ifndef RANG_H*/
+#endif /* ifndef COLOR_H*/
 
