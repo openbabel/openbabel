@@ -64,15 +64,15 @@ namespace {
     	}
         return false;
     }
-    std::ostream &operator<<(std::ostream &os, rang::style v)
+    std::ostream &operator<<(std::ostream &os, color::style v)
     {
         return isAllowed ? os << "\e[" << static_cast<int>(v) << "m" : os;
     }
-    std::ostream &operator<<(std::ostream &os, rang::fg v)
+    std::ostream &operator<<(std::ostream &os, color::fg v)
     {
         return isAllowed ? os << "\e[" << static_cast<int>(v) << "m" : os;
     }
-    std::ostream &operator<<(std::ostream &os, rang::bg v)
+    std::ostream &operator<<(std::ostream &os, color::bg v)
     {
         return isAllowed ? os << "\e[" << static_cast<int>(v) << "m" : os;
     }
