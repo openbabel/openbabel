@@ -1517,13 +1517,7 @@ namespace OpenBabel
       return;
 
     if (nukePerceivedData)
-      {
-        _flags = 0;
-        OBBond *bond;
-        vector<OBBond*>::iterator k;
-        for (bond = BeginBond(k);bond;bond = NextBond(k))
-          bond->SetInRing(false);
-      }
+      _flags = _flags & OB_AROMATIC_MOL; // wipe all but whether it has aromaticity perceived
     _c = NULL;
 
     if (Empty())
