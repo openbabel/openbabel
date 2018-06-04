@@ -104,7 +104,7 @@ namespace OpenBabel
 #define OB_LSSR_MOL              (1<<20)
   //! SpinMultiplicities on atoms have been set in OBMol::AssignSpinMultiplicity()
 #define OB_ATOMSPIN_MOL          (1<<21)
-  //! Molecule is repeating in a periodic unit cell. See OBMol::_unitCell
+  //! Molecule is repeating in a periodic unit cell
 #define OB_PERIODIC_MOL          (1<<22)
   // flags 23-32 unspecified
 #define OB_CURRENT_CONFORMER	 -1
