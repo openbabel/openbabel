@@ -17,43 +17,53 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <openbabel/babelconfig.h>
-#include <openbabel/oberror.h>
-#include <openbabel/mol.h>
-#include <openbabel/obconversion.h>
 #include <openbabel/descriptor.h>
 #include <openbabel/fingerprint.h>
+#include <openbabel/mol.h>
+#include <openbabel/obconversion.h>
+#include <openbabel/oberror.h>
 
 using namespace std;
-namespace OpenBabel
-{
+namespace OpenBabel {
 //**************************************************************
 
-  class MWFilter : public OBDescriptor
-{
+class MWFilter : public OBDescriptor {
 public:
-  MWFilter(const char* ID) : OBDescriptor(ID){};
-  virtual const char* Description(){return "Molecular Weight filter";};
-  virtual double Predict(OBBase* pOb, string* param=NULL)
-  {
-    OBMol* pmol = dynamic_cast<OBMol*> (pOb);
-    if(!pmol)
+  MWFilter(const char *ID) : OBDescriptor(ID){};
+  virtual const char *Description() { return "Molecular Weight filter"; };
+  virtual double Predict(OBBase *pOb, string *param = NULL) {
+    OBMol *pmol = dynamic_cast<OBMol *>(pOb);
+    if (!pmol)
       return 0;
     return pmol->GetMolWt();
   }
 };
-//Make a global instance
+// Make a global instance
 MWFilter theMWFilter("MW");
+
+class RotatableBondsFilter : public OBDescriptor {
+public:
+  RotatableBondsFilter(const char *ID) : OBDescriptor(ID){};
+  virtual const char *Description() { return "Rotatable bonds filter"; };
+  virtual double Predict(OBBase *pOb, string *param = NULL) {
+    OBMol *pmol = dynamic_cast<OBMol *>(pOb);
+    if (!pmol)
+      return 0;
+    return pmol->NumRotors();
+  }
+};
+// Make a global instance
+RotatableBondsFilter theRBFilter("rotors");
 
 //**************************************************************
 
 /// Class to wrap SMARTS comparisons for use with --filter option
-class SmartsFilter : public OBDescriptor
-{
+class SmartsFilter : public OBDescriptor {
 public:
-  SmartsFilter(const char* ID) : OBDescriptor(ID){};
-  virtual const char* Description(){return "SMARTS filter";};
-  virtual bool Compare(OBBase* pOb, istream& optionText, bool noEval, std::string* param=NULL);
-
+  SmartsFilter(const char *ID) : OBDescriptor(ID){};
+  virtual const char *Description() { return "SMARTS filter"; };
+  virtual bool Compare(OBBase *pOb, istream &optionText, bool noEval,
+                       std::string *param = NULL);
 };
 
 /// For interpreting conditions like s!=c1ccccc1CN
@@ -64,96 +74,96 @@ public:
     To return true for a mismatch the operator is !=
     A space or tab should follow the SMARTS string.
  **/
-bool SmartsFilter::Compare(OBBase* pOb, istream& optionText, bool noEval, std::string*)
-{
-  OBMol* pmol = dynamic_cast<OBMol*> (pOb);
-  if(!pmol)
+bool SmartsFilter::Compare(OBBase *pOb, istream &optionText, bool noEval,
+                           std::string *) {
+  OBMol *pmol = dynamic_cast<OBMol *>(pOb);
+  if (!pmol)
     return false;
 
   string smarts;
   bool matchornegate = ReadStringFromFilter(optionText, smarts);
-  if(noEval)
+  if (noEval)
     return false;
   OBSmartsPattern sp;
   if (!sp.Init(smarts))
     return false; // can't initialize the SMARTS, so fail gracefully
 
-  bool ret = sp.Match(*pmol,true);//single match
-  if(!matchornegate)
+  bool ret = sp.Match(*pmol, true); // single match
+  if (!matchornegate)
     ret = !ret;
   return ret;
 }
 
-//Make a global instances with alternative IDs
+// Make a global instances with alternative IDs
 SmartsFilter firstSmartsFilter("smarts");
 SmartsFilter secondSmartsFilter("s");
 
 //**************************************************************
 
 /// Class to filter on molecule title
-class TitleFilter : public OBDescriptor
-{
+class TitleFilter : public OBDescriptor {
 public:
-  TitleFilter(const char* ID) : OBDescriptor(ID){};
-  virtual const char* Description(){return "For comparing a molecule's title";};
-  virtual bool Compare(OBBase* pOb, istream& optionText, bool noEval, std::string* param=NULL);
-  virtual double GetStringValue(OBBase* pOb, std::string& svalue, std::string* param=NULL);
-  virtual bool LessThan(OBBase* pOb1, OBBase* pOb2);
+  TitleFilter(const char *ID) : OBDescriptor(ID){};
+  virtual const char *Description() {
+    return "For comparing a molecule's title";
+  };
+  virtual bool Compare(OBBase *pOb, istream &optionText, bool noEval,
+                       std::string *param = NULL);
+  virtual double GetStringValue(OBBase *pOb, std::string &svalue,
+                                std::string *param = NULL);
+  virtual bool LessThan(OBBase *pOb1, OBBase *pOb2);
 };
 
-bool TitleFilter::Compare(OBBase* pOb, istream& optionText, bool noEval, std::string*)
-{
-  OBMol* pmol = dynamic_cast<OBMol*> (pOb);
-  if(!pmol)
+bool TitleFilter::Compare(OBBase *pOb, istream &optionText, bool noEval,
+                          std::string *) {
+  OBMol *pmol = dynamic_cast<OBMol *>(pOb);
+  if (!pmol)
     return false;
 
   string title(pmol->GetTitle());
   return CompareStringWithFilter(optionText, title, noEval);
 }
 
-double TitleFilter::GetStringValue(OBBase* pOb, std::string& svalue,std::string*)
-{
-  OBMol* pmol = dynamic_cast<OBMol*> (pOb);
-  if(pmol)
+double TitleFilter::GetStringValue(OBBase *pOb, std::string &svalue,
+                                   std::string *) {
+  OBMol *pmol = dynamic_cast<OBMol *>(pOb);
+  if (pmol)
     svalue = pmol->GetTitle();
   return std::numeric_limits<double>::quiet_NaN();
 }
 
-bool TitleFilter::LessThan(OBBase* pOb1, OBBase* pOb2)
-{
-  OBMol* pmol1 = dynamic_cast<OBMol*> (pOb1);
-  OBMol* pmol2 = dynamic_cast<OBMol*> (pOb2);
+bool TitleFilter::LessThan(OBBase *pOb1, OBBase *pOb2) {
+  OBMol *pmol1 = dynamic_cast<OBMol *>(pOb1);
+  OBMol *pmol2 = dynamic_cast<OBMol *>(pOb2);
   if (pmol1 == NULL || pmol2 == NULL)
-    return false; //as a default to prevent dereferencing NULL pointers
+    return false; // as a default to prevent dereferencing NULL pointers
 
-  return strcmp(pmol1->GetTitle(), pmol2->GetTitle())<0;
+  return strcmp(pmol1->GetTitle(), pmol2->GetTitle()) < 0;
 }
 
-//Make a global instance
+// Make a global instance
 TitleFilter theTitleFilter("title");
 
 //**************************************************************
-class FormulaDescriptor : public OBDescriptor
-{
+class FormulaDescriptor : public OBDescriptor {
 public:
-  FormulaDescriptor(const char* ID) : OBDescriptor(ID){};
-  virtual const char* Description(){return "Chemical formula";};
+  FormulaDescriptor(const char *ID) : OBDescriptor(ID){};
+  virtual const char *Description() { return "Chemical formula"; };
 
-  virtual double GetStringValue(OBBase* pOb, std::string& svalue, std::string* param=NULL)
-  {
-    OBMol* pmol = dynamic_cast<OBMol*> (pOb);
-    if(pmol)
-      svalue = pmol->GetSpacedFormula(1,"");//actually unspaced
+  virtual double GetStringValue(OBBase *pOb, std::string &svalue,
+                                std::string *param = NULL) {
+    OBMol *pmol = dynamic_cast<OBMol *>(pOb);
+    if (pmol)
+      svalue = pmol->GetSpacedFormula(1, ""); // actually unspaced
     return std::numeric_limits<double>::quiet_NaN();
   }
 
-  virtual bool Compare(OBBase* pOb, istream& optionText, bool noEval, std::string*)
-  {
+  virtual bool Compare(OBBase *pOb, istream &optionText, bool noEval,
+                       std::string *) {
     string svalue;
-    GetStringValue(pOb,svalue);
+    GetStringValue(pOb, svalue);
     return CompareStringWithFilter(optionText, svalue, noEval);
   }
-
 };
 
 FormulaDescriptor TheFormulaDescriptor("formula");
@@ -164,19 +174,20 @@ class FPCount : public OBDescriptor
 {
 public:
   FPCount(const char* ID) : OBDescriptor(ID){};
-  virtual const char* Description(){return "Count bits set in fingerprint whose ID is in the parameter";};
-  virtual double Predict(OBBase* pOb, string* param=NULL)
+  virtual const char* Description(){return "Count bits set in fingerprint whose
+ID is in the parameter";}; virtual double Predict(OBBase* pOb, string*
+param=NULL)
   {
     OBMol* pmol = dynamic_cast<OBMol*> (pOb);
     if(!pmol)
       return std::numeric_limits<double>::quiet_NaN();
 
     Trim(*param);
-    OBFingerprint* pFP = OBFingerprint::FindFingerprint(param ? param->c_str() : NULL);
-    if(!pFP)
+    OBFingerprint* pFP = OBFingerprint::FindFingerprint(param ? param->c_str() :
+NULL); if(!pFP)
     {
-      obErrorLog.ThrowError(__FUNCTION__, "Fingerprint type not available", obError, onceOnly);
-      return std::numeric_limits<double>::quiet_NaN();
+      obErrorLog.ThrowError(__FUNCTION__, "Fingerprint type not available",
+obError, onceOnly); return std::numeric_limits<double>::quiet_NaN();
     }
     vector<unsigned> FP;
     pFP->GetFingerprint(pmol,FP);
@@ -195,4 +206,4 @@ public:
 FPCount theFPCount("popcount");
 */
 //**************************************************************
-}//namespace
+} // namespace OpenBabel
