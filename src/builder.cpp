@@ -75,8 +75,8 @@ namespace OpenBabel
   void OBBuilder::LoadFragments()  {
     // open data/fragments.txt
     ifstream ifs;
-    if (OpenDatafile(ifs, "fragments.txt").length() == 0) {
-      obErrorLog.ThrowError(__FUNCTION__, "Cannot open fragments.txt", obError);
+    if (OpenDatafile(ifs, "rotation-fragments.txt").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open rotation-fragments.txt", obError);
       return;
     }
 
@@ -977,9 +977,12 @@ namespace OpenBabel
     vector3 molvec, moldir;
     vector<pair<OBSmartsPattern*, vector<vector3 > > >::iterator i;
     vector<vector<int> >::iterator j;
-    vector<int>::iterator k, k2, k3;
+    vector<int>::iterator k, k2;
     vector<vector3>::iterator l;
     vector<vector<int> > mlist; // match list for fragments
+
+    OBConversion conv;
+    conv.SetOutFormat("can"); // Canonical SMILES
 
     // Trigger hybridisation perception now so it will be copied to workMol
     mol.GetFirstAtom()->GetHyb();
@@ -991,109 +994,97 @@ namespace OpenBabel
     if (workMol.GetDimension() == 2)
       workMol.SetDimension(0);
 
-    // Count the number of ring atoms.
-    unsigned int ratoms = 0;
-    FOR_ATOMS_OF_MOL(a, mol)
-      if (a->IsInRing()) {
-        ratoms++;
-        if (_keeprings) // Mark these as fragments
-          vfrag.SetBitOn(a->GetIdx());
-      }
-
-    if (_keeprings) {
-      // Delete all non-ring bonds
-      std::vector<OBBond*> for_deletion;
-      FOR_BONDS_OF_MOL(b, workMol)
-        if (!b->IsInRing())
-          for_deletion.push_back(&(*b));
-      for(std::vector<OBBond*>::iterator it=for_deletion.begin(); it!=for_deletion.end(); ++it) {
-        workMol.DeleteBond(*it);
-      }
-    }
-    else
-      // Delete all bonds in the working molecule
-      // (we will add them back at the end)
-      while (workMol.NumBonds())
-        workMol.DeleteBond(workMol.GetBond(0));
+    // Delete all bonds in the working molecule
+    // (we will add them back at the end)
+    while (workMol.NumBonds())
+      workMol.DeleteBond(workMol.GetBond(0));
 
     // Deleting the bonds unsets HybridizationPerceived. To prevent our
     // perceived values being reperceived (incorrectly), we must set
     // this flag again.
     workMol.SetHybridizationPerceived();
 
-    if (ratoms && !_keeprings) {
-      //datafile is read only on first use of Build()
-      if(_fragments.empty())
-        LoadFragments();
 
-      // Skip all fragments that are too big to match
-      // Note: It would be faster to compare to the size of the largest
-      //       isolated ring system instead of comparing to ratoms
-      for (i = _fragments.begin();i != _fragments.end() && i->first->NumAtoms() > ratoms;++i);
+    // Get fragments using CopySubstructure
+    // Copy all atoms
+    OBBitVec atomsToCopy;
+    FOR_ATOMS_OF_MOL(atom, mol) {
+      atomsToCopy.SetBitOn(atom->GetIdx());
+    }
 
-      // Loop through  the remaining fragments and assign the coordinates from
-      // the first (most complex) fragment.
-      // Stop if there are no unassigned ring atoms (ratoms).
-      for (;i != _fragments.end() && ratoms;++i) {
+    // Exclude rotatable bonds
+    OBBitVec bondsToExclude;
+    FOR_BONDS_OF_MOL(bond, mol) {
+      if (bond->IsRotor()) {
+        bondsToExclude.SetBitOn(bond->GetIdx());
+      }
+    }
 
-        if (i->first != NULL && i->first->Match(mol)) {
-          mlist = i->first->GetUMapList();
+    // Generate fragments by copy
+    OBMol mol_copy;
+    mol.CopySubstructure(mol_copy, &atomsToCopy, &bondsToExclude);
 
-          for (j = mlist.begin();j != mlist.end();++j) { // for all matches
+    // Separate each disconnected fragments as different molecules
+    vector<OBMol> fragments = mol_copy.Separate(); 
+    vector<string> fragment_smiles;
+    vector<OBMol>::iterator f;
+    // Store canonical SMILES of fragments
+    for(f = fragments.begin(); f != fragments.end(); ++f) {
+      fragment_smiles.push_back(conv.WriteString(&(*f), true));
+    }
 
-            // Have any atoms of this match already been added?
-            int alreadydone = 0;
-            int match_idx = 0;
-            for (k = j->begin(); k != j->end(); ++k) // for all atoms of the fragment
-              if (vfrag.BitIsSet(*k)) {
-                alreadydone += 1;
-                if (alreadydone > 1) break;
-                match_idx = *k;
-              }
-            bool spiro = false;
-            if (alreadydone > 1) // At least two atoms of the found match have already been added
-              continue;
-            else if (alreadydone == 1) {
-              spiro = IsSpiroAtom(mol.GetAtom(match_idx)->GetId(), mol);
-              if (!spiro) continue;
-            }
+    //datafile is read only on first use of Build()
+    if(_fragments.empty())
+      LoadFragments();
 
-            ratoms += alreadydone - static_cast<int> (j->size()); // Update the number of available ring atoms
-            for (k = j->begin(); k != j->end(); ++k)
-              vfrag.SetBitOn(*k); // Set vfrag for all atoms of fragment
+    // Need to implement some code to skip too big fragments
 
-            if (spiro) {
-              vector<int> match_indices(1); // In future, it could be of longer length
-              match_indices[0] = match_idx;
-              ConnectFrags(mol, workMol, *j, i->second, match_indices);
-            }
-            else {
+    // Loop through the fragment database and assign the coordinates
+    for (i = _fragments.begin(); i != _fragments.end(); ++i) {
+      vector<string>::iterator f;
+      for(f = fragment_smiles.begin(); f != fragment_smiles.end(); ++f) {
+        if(*f == i->first->GetSMARTS()) { // if fragment is in database
+          if (i->first != NULL && i->first->Match(mol)) { // for all matches
+            mlist = i->first->GetUMapList();
+            for (j = mlist.begin(); j != mlist.end(); ++j) {
+              // Have any atoms of this match already been added?
+              int alreadydone = 0;
+              for (k = j->begin(); k != j->end(); ++k)
+                if (vfrag.BitIsSet(*k)) {
+                  alreadydone += 1;
+                  if (alreadydone > 1) break;
+                }
+              if (alreadydone > 1) continue;
+
+              for (k = j->begin(); k != j->end(); ++k)
+                vfrag.SetBitOn(*k); // Set vfrag for all atoms of fragment
+
               int counter;
               for (k = j->begin(), counter=0; k != j->end(); ++k, ++counter) { // for all atoms of the fragment
                 // set coordinates for atoms
                 OBAtom *atom = workMol.GetAtom(*k);
                 atom->SetVector(i->second[counter]);
               }
-            }
 
-            // add the bonds for the fragment
-            int index2;
-            for (k = j->begin(); k != j->end(); ++k) {
-              OBAtom *atom1 = mol.GetAtom(*k);
-
-              for (k2 = j->begin(); k2 != j->end(); ++k2) {
-                index2 = *k2;
-                OBAtom *atom2 = mol.GetAtom(index2);
-                OBBond *bond = atom1->GetBond(atom2);
-
-                if (bond != NULL)
-                  workMol.AddBond(*bond);
+              // add the bonds for the fragment
+              int index2;
+              for (k = j->begin(); k != j->end(); ++k) {
+                OBAtom *atom1 = mol.GetAtom(*k);
+                for (k2 = j->begin(); k2 != j->end(); ++k2) {
+                  int index2 = *k2;
+                  OBAtom *atom2 = mol.GetAtom(index2);
+                  OBBond *bond = atom1->GetBond(atom2);
+                  if (bond != NULL) {
+                    workMol.AddBond(*bond);
+                  }
+                }
               }
             }
           }
         }
       }
-    } // if (ratoms)
+    } // for all _fragments
+
 
     // iterate over all atoms to place them in 3D space
     FOR_DFS_OF_MOL (a, mol) {
@@ -1172,6 +1163,7 @@ namespace OpenBabel
       workMol.AddBond(beginIdx, endIdx, b->GetBO(), b->GetFlags());
     }
 
+    // We may have to change these success check
     // correct the chirality
     bool success = CorrectStereoBonds(workMol);
     // we only succeed if we corrected all stereochemistry

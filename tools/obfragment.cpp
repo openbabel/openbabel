@@ -24,6 +24,10 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
+#include <openbabel/graphsym.h>
+#include <openbabel/builder.h>
+#include <openbabel/parsmart.h>
+#include <openbabel/data.h>
 
 #if !HAVE_STRNCASECMP
 extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
@@ -32,6 +36,10 @@ extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
+#include <sstream>
+#include <iterator>
+#include <queue>
+#include <map>
 
 using namespace std;
 using namespace OpenBabel;
@@ -43,22 +51,24 @@ int main(int argc,char *argv[])
   // turn off slow sync with C-style output (we don't use it anyway).
   std::ios::sync_with_stdio(false);
 
-  OBConversion conv;
+  OBConversion conv, conv_sdf;
+  conv.SetOptions("O", conv.OUTOPTIONS);
   OBFormat *inFormat, *canFormat;
   OBMol mol;
   ifstream ifs;
   vector<OBMol> fragments;
   unsigned int fragmentCount = 0; // track how many in library -- give a running count
   map<string, int> index; // index of cansmi
-  string currentCAN;
+  string currentCAN, currentSMARTS;
   unsigned int size;
   OBAtom *atom;
   OBBond *bond;
-  bool nonRingAtoms, nonRingBonds;
   char buffer[BUFF_SIZE];
 
-  canFormat = conv.FindFormat("can");
+  canFormat = conv.FindFormat("can"); // Canonical SMILES format
   conv.SetOutFormat(canFormat);
+  canFormat = conv.FindFormat("sdf");
+  conv_sdf.SetOutFormat(canFormat);
 
   if (argc < 2)
     {
@@ -88,89 +98,76 @@ int main(int argc,char *argv[])
     while(ifs.peek() != EOF && ifs.good())
       {
         conv.Read(&mol, &ifs);
-        if (!mol.Has3D()) continue; // invalid coordinates!
-        mol.DeleteHydrogens(); // remove these before we do anything else
-        
-        do {
-          nonRingAtoms = false;
-          size = mol.NumAtoms();
-          for (unsigned int i = 1; i <= size; ++i)
-            {
-              atom = mol.GetAtom(i);
-              if (!atom->IsInRing()) {
-                mol.DeleteAtom(atom);
-                nonRingAtoms = true;
-                break; // don't know how many atoms there are
-              } 
-              // Previously, we changed atoms to carbon here.
-              // Now we perform this alchemy in terms of string-rewriting
-              // once the canonical SMILES is generated
-            }
-        } while (nonRingAtoms);
-        
-        if (mol.NumAtoms() < 3)
-          continue;
-        
-        if (mol.NumBonds() == 0)
-          continue;
-        
-        do {
-          nonRingBonds = false;
-          size = mol.NumBonds();
-          for (unsigned int i = 0; i < size; ++i)
-            {
-              bond = mol.GetBond(i);
-              if (!bond->IsInRing()) {
-                mol.DeleteBond(bond);
-                nonRingBonds = true;
-                break; // don't know how many bonds there are
-              }
-            }        
-        } while (nonRingBonds);
+        mol.DeleteHydrogens();
 
-        fragments = mol.Separate();
+        size = mol.NumAtoms();
+        OBBitVec atomsToCopy(size+1);
+        for (unsigned int i = 1; i <= size; ++i) {
+            atom = mol.GetAtom(i);
+            atomsToCopy.SetBitOn(atom->GetIdx());
+        }
+
+        size = mol.NumBonds();
+        OBBitVec bondsToExclude(size);
+        for (unsigned int i = 0; i < size; ++i) {
+            bond = mol.GetBond(i);
+            if (bond->IsRotor()) {
+                bondsToExclude.SetBitOn(bond->GetIdx());
+            }
+        }
+
+        OBMol mol_copy;
+        mol.CopySubstructure(mol_copy, &atomsToCopy, &bondsToExclude);
+        fragments = mol_copy.Separate(); // Copies each disconnected fragment as a separate
         for (unsigned int i = 0; i < fragments.size(); ++i)
           {
             if (fragments[i].NumAtoms() < 3) // too small to care
               continue;
               
             currentCAN = conv.WriteString(&fragments[i], true);
-            currentCAN = RewriteSMILES(currentCAN); // change elements to "a/A" for compression
-            if (index.find(currentCAN) != index.end()) { // already got this
-              index[currentCAN] += 1; // add to the count for bookkeeping
+            currentSMARTS = currentCAN;
+            std::stringstream stitle;
+            stitle << currentSMARTS << "\t" << fragments[i].NumAtoms() << "\t" << fragments[i].NumBonds();
+            std::string title = stitle.str();
+            stitle << "\t" << currentCAN;
+            if (index.find(title) != index.end()) { // already got this
+              index[title] += 1; // add to the count for bookkeeping
               continue;
             }
 
-            index[currentCAN] = 1; // don't ever write this ring fragment again
+            index[title] = 1; // don't ever write this ring fragment again
 
-            // OK, now retrieve the canonical ordering for the fragment
-            vector<string> canonical_order;
-            if (fragments[i].HasData("Canonical Atom Order")) {
-              OBPairData *data = (OBPairData*)fragments[i].GetData("Canonical Atom Order");
-              tokenize(canonical_order, data->GetValue().c_str());
-            }
+            // OK, now retrieve the canonical SMILES ordering for the fragment
+            OBPairData *pd = dynamic_cast<OBPairData*>(fragments[i].GetData("SMILES Atom Order"));
+            /*cout << "Canonical order " << pd->GetValue() << "\n";*/
+            istringstream iss(pd->GetValue());
+            vector<unsigned int> canonical_order;
+            canonical_order.clear();
+            copy(istream_iterator<unsigned int>(iss),
+                 istream_iterator<unsigned int>(),
+                 back_inserter<vector<unsigned int> >(canonical_order));
 
             // Write out an XYZ-style file with the CANSMI as the title
-            cout << fragments[i].NumAtoms() << '\n';
-            cout << currentCAN << '\n'; // endl causes a flush
+            //cout << fragments[i].NumAtoms() << '\n';
+            //cout << stitle.str() << '\n'; // endl causes a flush
+            cout << currentSMARTS << '\n'; // endl causes a flush
 
-            vector<string>::iterator can_iter;
             unsigned int order;
             OBAtom *atom;
 
-            fragments[i].Center();
-            fragments[i].ToInertialFrame();
+            fragments[i].Center(); // Translate to the center of all coordinates
+            fragments[i].ToInertialFrame(); // Translate all conformers to the inertial frame-of-reference.
 
             for (unsigned int index = 0; index < canonical_order.size(); 
                  ++index) {
-              order = atoi(canonical_order[index].c_str());
+              order = canonical_order[index];
               atom = fragments[i].GetAtom(order);
               
-              snprintf(buffer, BUFF_SIZE, "C%8.3f%8.3f%8.3f\n",
+              snprintf(buffer, BUFF_SIZE, "%d %9.3f %9.3f %9.3f\n",
+                       atom->GetAtomicNum(),
                        atom->x(), atom->y(), atom->z());
               cout << buffer;
             }
-
           }
         fragments.clear();
         if (index.size() > fragmentCount) {
@@ -186,70 +183,25 @@ int main(int argc,char *argv[])
   // loop through the map and output frequencies
   map<string, int>::const_iterator indexItr;
   for (indexItr = index.begin(); indexItr != index.end(); ++indexItr) {
-    cerr << (*indexItr).second << " INDEX " << (*indexItr).first << "\n";
+      cerr << (*indexItr).second << " INDEX " << (*indexItr).first << "\n";
   }
+
+  /*priority_queue<pair<int, string> > freq;
+  int total = 0;
+  map<string, int>::const_iterator indexItr;
+  for (indexItr = index.begin(); indexItr != index.end(); ++indexItr) {
+      freq.push(make_pair((*indexItr).second, (*indexItr).first));
+      total += (*indexItr).second;
+  }
+  for(int i = 0; i < 25; ++i) {
+      if(freq.empty()) break;
+      pair<int, string> f = freq.top();
+      freq.pop();
+      stringstream ss(f.second);
+      string smarts;
+      ss >> smarts;
+      cerr << f.second << "\t" << 100.0*f.first/total << "\n";
+  }*/
     
   return(0);
-}
-
-// Replace all instances of a string pattern with another
-// (This should be part of the STL, but isn't, sadly.)
-void FindAndReplace( string &source, const string find, const string replace )
- {
-	 size_t j;
-	 for ( ; (j = source.find( find )) != string::npos ; ) {
-		 source.replace( j, find.length(), replace );
-	 }
- }
-
-string RewriteSMILES(const string smiles)
-{
-  string fragment = smiles;
-  
-  // This is a bit tedious -- we must place all atom types here
-  // It would be much easier with a regex
-
-  // NOTE: You must replace the two-letter elements first
-  // (since the one-letter elements would match too, e.g. C replacing Cl)
-  FindAndReplace(fragment, "[Cl]", "A");
-  FindAndReplace(fragment, "[Se]", "A");
-  FindAndReplace(fragment, "[Br]", "A");
-  FindAndReplace(fragment, "[Al]", "A");
-  FindAndReplace(fragment, "[Si]", "A");
-  FindAndReplace(fragment, "[As]", "A");
-  FindAndReplace(fragment, "[Li]", "A");
-  FindAndReplace(fragment, "[Na]", "A");
-  FindAndReplace(fragment, "[Mg]", "A");
-  FindAndReplace(fragment, "[Ca]", "A");
-  FindAndReplace(fragment, "[Cr]", "A");
-  FindAndReplace(fragment, "[Mn]", "A");
-  FindAndReplace(fragment, "[Fe]", "A");
-  FindAndReplace(fragment, "[Co]", "A");
-  FindAndReplace(fragment, "[Ni]", "A");
-  FindAndReplace(fragment, "[Zn]", "A");
-  FindAndReplace(fragment, "[Cu]", "A");
-  FindAndReplace(fragment, "B", "A");
-  FindAndReplace(fragment, "C", "A");
-  FindAndReplace(fragment, "N", "A");
-  FindAndReplace(fragment, "O", "A");
-  FindAndReplace(fragment, "F", "A");
-  FindAndReplace(fragment, "P", "A");
-  FindAndReplace(fragment, "S", "A");
-  FindAndReplace(fragment, "I", "A");
-  FindAndReplace(fragment, "K", "A");
-  
-  // And now some aromatics
-  FindAndReplace(fragment, "[si]", "a");
-  FindAndReplace(fragment, "[se]", "a");
-  FindAndReplace(fragment, "b", "a");
-  FindAndReplace(fragment, "c", "a");
-  FindAndReplace(fragment, "n", "a");
-  FindAndReplace(fragment, "o", "a");
-  FindAndReplace(fragment, "p", "a");
-  FindAndReplace(fragment, "s", "a");
-  
-  // There are probably other elements which might be ignored, but these are rare
-  // (i.e., unlikely to be top ring fragment hits)
-  
-  return fragment;
 }

@@ -44,6 +44,7 @@ set(to_install
     qeq.txt
     resdata.txt
     ringtyp.txt
+    rotation-fragments.txt
     SMARTS_InteLigand.txt
     space-groups.txt
     superatom.txt
