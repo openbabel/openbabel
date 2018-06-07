@@ -94,6 +94,12 @@ int main(int argc,char **argv)
     if (c != 1) {
       errflg++; // error in arguments, quit and warn user
     }
+    if (argc == 9) {
+      if (strcmp(argv[8], "-a") == 0)
+        changeAll = true;
+      else
+        errflg++; // error in arguments, quit and warn user
+    }
   }
 
   if (errflg) {
