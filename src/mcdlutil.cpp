@@ -2033,7 +2033,7 @@ namespace OpenBabel {
             (atomDefine[atomCycle[cN][atomCycle[cN].size() - 1]]==0);
         };
         //        {now first atom in the cycle definition list must be inserted into the priority list early, and the last atom-no}
-        for (j=0;j<atomCycle[cN].size()-maxAtDef; j++) {
+        for (j=0;currNumDef < atomClean && j<atomCycle[cN].size()-maxAtDef; j++) {
           //          for each undefined atom from selected cycle}
           //atom is added to priority list}
           dsATN[currNumDef]=atomCycle[cN][maxAtDef+j];
@@ -2569,7 +2569,7 @@ namespace OpenBabel {
               uy1=getAtom(dsNA1[i])->ry-uy;
               //coordinates of all atoms for the cycle under study are calculated}
 
-              for (j=0; j<nb; j++) {
+              for (j=0; j<nb-1; j++) {
                 getAtom(dsATN[i+j-0])->rx=ux+ux1*cos((j+1)*fi)+uy1*sin((j+1)*fi);
                 getAtom(dsATN[i+j-0])->ry=uy-ux1*sin((j+1)*fi)+uy1*cos((j+1)*fi);
                 atomDefine[dsATN[i+j-0]]=1;
