@@ -518,7 +518,7 @@ namespace OpenBabel
 
   bool OBBond::IsInRing() const
   {
-    OBMol *mol = this->GetParent();
+    OBMol *mol = ((OBBond*)this)->GetParent();
     if (!mol->HasRingAtomsAndBondsPerceived())
       mol->FindRingAtomsAndBonds();
 
