@@ -10,7 +10,7 @@ extern "C" {
 
 namespace color {
 
-    enum style : unsigned char {
+    enum style {
         Reset     = 0,
         bold      = 1,
         dim       = 2,
@@ -21,7 +21,7 @@ namespace color {
         conceal   = 7,
         crossed   = 8
     };
-    enum fg : unsigned char {
+    enum fg {
         def     = 39,
         black   = 30,
         red     = 31,
@@ -32,7 +32,7 @@ namespace color {
         cyan    = 36,
         gray    = 37
     };
-    enum bg : unsigned char {
+    enum bg {
         def1     = 49,
         black1   = 40,
         red1     = 41,
