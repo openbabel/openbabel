@@ -10,7 +10,7 @@ extern "C" {
 
 namespace color {
 
-    enum class style : unsigned char {
+    enum style : unsigned char {
         Reset     = 0,
         bold      = 1,
         dim       = 2,
@@ -21,7 +21,7 @@ namespace color {
         conceal   = 7,
         crossed   = 8
     };
-    enum class fg : unsigned char {
+    enum fg : unsigned char {
         def     = 39,
         black   = 30,
         red     = 31,
@@ -32,16 +32,16 @@ namespace color {
         cyan    = 36,
         gray    = 37
     };
-    enum class bg : unsigned char {
-        def     = 49,
-        black   = 40,
-        red     = 41,
-        green   = 42,
-        yellow  = 43,
-        blue    = 44,
-        magenta = 45,
-        cyan    = 46,
-        gray    = 47
+    enum bg : unsigned char {
+        def1     = 49,
+        black1   = 40,
+        red1     = 41,
+        green1   = 42,
+        yellow1  = 43,
+        blue1    = 44,
+        magenta1 = 45,
+        cyan1    = 46,
+        gray1    = 47
     };
 }
 
@@ -58,8 +58,8 @@ namespace {
         	const char *const terms[] = {
        		    "xterm", "xterm-256", "xterm-256color", "vt100",
        		    "color", "ansi",      "cygwin",         "linux"};
-		for(auto const term: terms) {
-			if(std::strcmp(env_p, term) == 0) return true;
+		for(int i = 0; i < 8; i++ ){
+			if(std::strcmp(env_p, terms[i]) == 0) return true;
 	   	}
     	}
         return false;
