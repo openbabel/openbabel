@@ -1299,13 +1299,13 @@ namespace OpenBabel
   // Returns: true if the atom is an oxygen and connected to two hydrogens and up to one other atom
   bool CIFisWaterOxygen(OBAtom *atom)
   {
-    if (!atom->IsOxygen())
+    if (atom->GetAtomicNum() != OBElements::Oxygen)
       return false;
 
     int nonHydrogenCount = 0;
     int hydrogenCount = 0;
     FOR_NBORS_OF_ATOM(neighbor, *atom) {
-      if (!neighbor->IsHydrogen())
+      if (neighbor->GetAtomicNum() != OBElements::Hydrogen)
         nonHydrogenCount++;
       else
         hydrogenCount++;
@@ -1471,7 +1471,7 @@ namespace OpenBabel
               if(nbc>0) tmpSymbol=tmpSymbol.substr(0,nbc);
               else tmpSymbol="C";//Something went wrong, no symbol ! Default to C ??
 
-              int atomicNum = etab.GetAtomicNum(tmpSymbol.c_str());
+              int atomicNum = OBElements::GetAtomicNum(tmpSymbol.c_str());
               // Test for some oxygens with subscripts
               if (atomicNum == 0 && tmpSymbol[0] == 'O') {
                 atomicNum = 8; // e.g. Ob, OH, etc.
@@ -1630,14 +1630,14 @@ namespace OpenBabel
            }
          else
            {
-             label_str = etab.GetSymbol(atom->GetAtomicNum()) + to_string(i);
+             label_str = OBElements::GetSymbol(atom->GetAtomicNum()) + to_string(i);
              i++;
            }
          // Save the existing or generated label for optional bonding
          label_table[&*atom] = label_str;
 
          snprintf(buffer, BUFF_SIZE, "    %-8s%-5s%.5f%10.5f%10.5f%8.3f\n",
-                  label_str.c_str(), etab.GetSymbol(atom->GetAtomicNum()),
+                  label_str.c_str(), OBElements::GetSymbol(atom->GetAtomicNum()),
                   X, Y, Z, occup);
 
          ofs << buffer;

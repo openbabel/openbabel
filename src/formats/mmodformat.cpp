@@ -217,13 +217,13 @@ namespace OpenBabel
     ttab.SetToType("MMD");
 
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) {
-        if (atom->IsHydrogen()) {
+        if (atom->GetAtomicNum() == OBElements::Hydrogen) {
           type = 41;
           if ((nbr = atom->BeginNbrAtom(j))) {
-            if (nbr->IsOxygen()) {
+            if (nbr->GetAtomicNum() == OBElements::Oxygen) {
               type = 42;
             }
-            else if (nbr->IsNitrogen()) {
+            else if (nbr->GetAtomicNum() == OBElements::Nitrogen) {
               type = 43;
             }
           }

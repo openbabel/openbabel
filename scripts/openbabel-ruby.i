@@ -1,4 +1,5 @@
 %module OpenBabel
+%include "std_string.i"
 
 // These fields are renamed to valid constant names
 %rename(U1MA) OpenBabel::OBResidueIndex::_1MA;
@@ -14,23 +15,28 @@
 #define USING_OBDLL
 #endif
 
-
 #include <openbabel/obutil.h>
 #include <openbabel/rand.h>
 #include <openbabel/math/vector3.h>
 #include <openbabel/math/matrix3x3.h>
+#include <openbabel/math/transform3d.h>
+#include <openbabel/math/spacegroup.h>
+
 #include <openbabel/generic.h>
 #include <openbabel/griddata.h>
+#include <openbabel/elements.h>
 
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
+#include <openbabel/reaction.h>
 #include <openbabel/residue.h>
 #include <openbabel/internalcoord.h>
 
 #include <openbabel/ring.h>
 #include <openbabel/obconversion.h>
+#include <openbabel/obfunctions.h>
 #include <openbabel/oberror.h>
 #include <openbabel/plugin.h>
 #include <openbabel/fingerprint.h>
@@ -45,17 +51,31 @@
 #include <openbabel/data.h>
 #include <openbabel/parsmart.h>
 #include <openbabel/alias.h>
-#include <openbabel/atomclass.h>
 
 #include <openbabel/kinetics.h>
 #include <openbabel/rotor.h>
 #include <openbabel/rotamer.h>
+#include <openbabel/spectrophore.h>
 
+#include <openbabel/chargemodel.h>
+#include <openbabel/phmodel.h>
+#include <openbabel/graphsym.h>
+#include <openbabel/isomorphism.h>
+#include <openbabel/query.h>
+#include <openbabel/canon.h>
+
+#include <openbabel/stereo/tetrahedral.h>
+#include <openbabel/stereo/cistrans.h>
+#include <openbabel/stereo/squareplanar.h>
+#include <openbabel/stereo/bindings.h>
+
+#include <openbabel/kekulize.h>
 %}
 
 %include "std_map.i"
 %include "std_vector.i"
-%include "std_string.i"
+%include "std_list.i"
+%include "std_pair.i"
 
 namespace std {
 
@@ -132,7 +152,6 @@ OpenBabel::OB ## subclass *to ## subclass(OpenBabel::OBGenericData *data) {
 %}
 %enddef
 CAST_GENERICDATA_TO(AngleData)
-CAST_GENERICDATA_TO(AtomClassData)
 CAST_GENERICDATA_TO(ChiralData)
 CAST_GENERICDATA_TO(CommentData)
 CAST_GENERICDATA_TO(ConformerData)
@@ -153,6 +172,9 @@ CAST_GENERICDATA_TO(UnitCell)
 CAST_GENERICDATA_TO(VectorData)
 CAST_GENERICDATA_TO(VibrationData)
 CAST_GENERICDATA_TO(VirtualBond)
+CAST_GENERICDATA_TO(TetrahedralStereo)
+CAST_GENERICDATA_TO(CisTransStereo)
+CAST_GENERICDATA_TO(SquarePlanarStereo)
 
 // These methods are renamed to valid method names
 %rename(inc)   *::operator++;
@@ -180,8 +202,10 @@ CAST_GENERICDATA_TO(VirtualBond)
 %include <openbabel/math/matrix3x3.h>
 
 %import <openbabel/math/spacegroup.h>
+%warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
+%include <openbabel/bitvec.h>
 
-%# CloneData should be used instead of the following method
+// CloneData should be used instead of the following method
 %ignore OpenBabel::OBBase::SetData;
 %include <openbabel/base.h>
 %include <openbabel/generic.h>
@@ -212,12 +236,11 @@ namespace std { class stringbuf {}; }
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
 %include <openbabel/alias.h>
-%include <openbabel/atomclass.h>
 %ignore OpenBabel::FptIndex;
 %include <openbabel/fingerprint.h>
 %include <openbabel/descriptor.h>
 
-%# Ignore shadowed methods
+// Ignore shadowed methods
 %ignore OpenBabel::OBForceField::VectorSubtract(const double *const, const double *const, double *);
 %ignore OpenBabel::OBForceField::VectorMultiply(const double *const, const double, double *);
 #ifdef HAVE_EIGEN
@@ -234,20 +257,18 @@ namespace std { class stringbuf {}; }
 %include <openbabel/builder.h>
 %include <openbabel/op.h>
 
-%warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
-%include <openbabel/bitvec.h>
 %ignore OpenBabel::OBRotor::GetRotAtoms() const;
 %include <openbabel/rotor.h>
 %ignore OpenBabel::Swab;
 %include <openbabel/rotamer.h>
 
-%# The following %ignores avoid warning messages due to shadowed classes.
-%# This does not imply a loss of functionality as (in this case)
-%# the shadowed class is identical (from the point of view of SWIG) to
-%# the shadowing class.
-%# This is because C++ references (&) are transformed by SWIG back into
-%# pointers, so that OBAtomIter(OBMol &) would be treated the same as
-%# OBAtomIter(OBMol *).
+// The following %ignores avoid warning messages due to shadowed classes.
+// This does not imply a loss of functionality as (in this case)
+// the shadowed class is identical (from the point of view of SWIG) to
+// the shadowing class.
+// This is because C++ references (&) are transformed by SWIG back into
+// pointers, so that OBAtomIter(OBMol &) would be treated the same as
+// OBAtomIter(OBMol *).
 
 %ignore OBAtomAtomIter(OBAtom &);
 %ignore OBAtomBondIter(OBAtom &);
@@ -270,3 +291,17 @@ namespace std { class stringbuf {}; }
 %ignore *::operator=;
 
 %include <openbabel/obiter.h>
+
+%include <openbabel/chargemodel.h>
+%include <openbabel/phmodel.h>
+%include <openbabel/graphsym.h>
+%include <openbabel/isomorphism.h>
+%include <openbabel/query.h>
+%include <openbabel/canon.h>
+
+%include <openbabel/stereo/stereo.h>
+
+%include <openbabel/kekulize.h>
+%include <openbabel/obfunctions.h>
+
+%include "stereo.i"

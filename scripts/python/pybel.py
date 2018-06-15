@@ -54,8 +54,8 @@ else:
     _obfuncs = _obconsts = ob
     try:
         import Tkinter as tk
-        import Image as PIL
-        import ImageTk as piltk
+        from PIL import Image as PIL
+        from PIL import ImageTk as piltk
     except ImportError:  # pragma: no cover
         tk = None
 
@@ -81,7 +81,7 @@ def _getpluginnames(ptype):
     ob.OBPlugin.ListAsVector(ptype, None, plugins)
     if sys.platform[:4] == "java":
         plugins = [plugins.get(i) for i in range(plugins.size())]
-    return [x.split()[0] for x in plugins]
+    return [x.split()[0] for x in plugins if x.strip()]
 
 _obconv = ob.OBConversion()
 _builder = ob.OBBuilder()
@@ -250,8 +250,13 @@ class Outputfile(object):
         if not formatok:
             raise ValueError("%s is not a recognised Open Babel format" %
                              format)
-        if filename and filename.split('.')[-1] == 'gz':
-            self.obConversion.AddOption('z', self.obConversion.GENOPTIONS)
+        if filename:
+            if isinstance(filename, bytes):
+                gzextension = b'.gz'
+            else:
+                gzextension = '.gz'
+            if os.path.splitext(filename)[1] == gzextension:
+                self.obconversion.AddOption('z', self.obConversion.GENOPTIONS)
         for k, v in opt.items():
             if v is None:
                 self.obConversion.AddOption(k, self.obConversion.OUTOPTIONS)
@@ -292,7 +297,7 @@ class Molecule(object):
     (refer to the Open Babel library documentation for more info).
 
     Methods:
-       addh(), calcfp(), calcdesc(), draw(), localopt(), make3D(),
+       addh(), calcfp(), calcdesc(), draw(), localopt(), make2D(), make3D()
        calccharges(), removeh(), write()
 
     The underlying Open Babel molecule can be accessed using the attribute:
@@ -525,8 +530,13 @@ class Molecule(object):
         if not formatok:
             raise ValueError("%s is not a recognised Open Babel format" %
                              format)
-        if filename and filename.split('.')[-1] == 'gz':
-            obconversion.AddOption('z', self.obConversion.GENOPTIONS)
+        if filename:
+            if isinstance(filename, bytes):
+                gzextension = b'.gz'
+            else:
+                gzextension = '.gz'
+            if os.path.splitext(filename)[1] == gzextension:
+                obconversion.AddOption('z', self.obConversion.GENOPTIONS)
         for k, v in opt.items():
             if v is None:
                 obconversion.AddOption(k, obconversion.OUTOPTIONS)
@@ -563,6 +573,10 @@ class Molecule(object):
             return
         ff.SteepestDescent(steps)
         ff.GetCoordinates(self.OBMol)
+
+    def make2D(self):
+        """Generate 2D coordinates."""
+        _operations['gen2D'].Do(self.OBMol)
 
     def make3D(self, forcefield="mmff94", steps=50):
         """Generate 3D coordinates.

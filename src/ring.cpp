@@ -22,6 +22,7 @@ GNU General Public License for more details.
 
 #include <openbabel/mol.h> // implements some OBMol methods
 #include <openbabel/ring.h>
+#include <openbabel/elements.h>
 
 using namespace std;
 
@@ -98,7 +99,7 @@ namespace OpenBabel
     OBRing *ring;
     vector<OBRing*>::iterator j;
 
-    //get frerejaque taking int account multiple possible spanning graphs
+    //get Frèrejacque taking int account multiple possible spanning graphs
     int frj = DetermineFRJ(*this);
     if (frj)
       {
@@ -558,8 +559,9 @@ namespace OpenBabel
   {
     if (HasFlag(OB_RINGFLAGS_MOL))
       return;
-    obErrorLog.ThrowError(__FUNCTION__,
-                          "Ran OpenBabel::FindRingAtomsAndBonds", obAuditMsg);
+    if (obErrorLog.GetOutputLevel() >= obAuditMsg)
+      obErrorLog.ThrowError(__FUNCTION__,
+                            "Ran OpenBabel::FindRingAtomsAndBonds", obAuditMsg);
     FindRingAtomsAndBonds2(*this);
   }
 
@@ -605,18 +607,26 @@ namespace OpenBabel
 
     if (Size() == 6)
       for (i = _path.begin();i != _path.end();++i)
-        if (!(mol->GetAtom(*i))->IsCarbon())
-	  return (*i);
+        if (mol->GetAtom(*i)->GetAtomicNum() != OBElements::Carbon)
+	        return (*i);
 
     if (Size() == 5)
       for (i = _path.begin();i != _path.end();++i) {
         OBAtom *atom = mol->GetAtom(*i);
-        if (atom->IsSulfur() && (atom->GetValence() == 2))
-	  return (*i);
-        if (atom->IsOxygen() && (atom->GetValence() == 2))
-	  return (*i);
-        if (atom->IsNitrogen() && (atom->BOSum() == atom->GetValence()))
-	  return (*i);
+        switch (atom->GetAtomicNum()) {
+        case OBElements::Sulfur:
+          if (atom->GetValence() == 2)
+            return (*i);
+          break;
+        case OBElements::Oxygen:
+          if (atom->GetValence() == 2)
+            return (*i);
+          break;
+        case OBElements::Nitrogen:
+          if (atom->BOSum() == atom->GetValence())
+            return (*i);
+          break;
+        }
       }
 
     return 0;

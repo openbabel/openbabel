@@ -26,11 +26,10 @@ GNU General Public License for more details.
 #include <openbabel/data_utilities.h>
 #include <openbabel/mol.h>
 #include <openbabel/locale.h>
+#include <openbabel/elements.h>
 
 // data headers with default parameters
-#include "element.h"
 #include "types.h"
-#include "isotope.h"
 #include "resdata.h"
 
 
@@ -43,388 +42,8 @@ using namespace std;
 namespace OpenBabel
 {
 
-  OBElementTable   etab;
   OBTypeTable      ttab;
-  OBIsotopeTable   isotab;
   OBResidueData    resdat;
-
-  /** \class OBElementTable data.h <openbabel/data.h>
-      \brief Periodic Table of the Elements
-
-      Translating element data is a common task given that many file
-      formats give either element symbol or atomic number information, but
-      not both. The OBElementTable class facilitates conversion between
-      textual and numeric element information. An instance of the
-      OBElementTable class (etab) is declared as external in data.cpp. Source
-      files that include the header file mol.h automatically have an extern
-      definition to etab. The following code sample demonstrates the use
-      of the OBElementTable class:
-      \code
-      cout << "The symbol for element 6 is " << etab.GetSymbol(6) << endl;
-      cout << "The atomic number for Sulfur is " << etab.GetAtomicNum(16) << endl;
-      cout << "The van der Waal radius for Nitrogen is " << etab.GetVdwRad(7);
-      \endcode
-
-      Stored information in the OBElementTable includes elemental:
-      - symbols
-      - covalent radii
-      - van der Waal radii
-      - expected maximum bonding valence
-      - molar mass (by IUPAC recommended atomic masses)
-      - electronegativity (Pauling and Allred-Rochow)
-      - ionization potential
-      - electron affinity
-      - RGB colors for visualization programs
-      - names (by IUPAC recommendation)
-  */
-
-  OBElementTable::OBElementTable()
-  {
-    _init = false;
-    _dir = BABEL_DATADIR;
-    _envvar = "BABEL_DATADIR";
-    _filename = "element.txt";
-    _subdir = "data";
-    _dataptr = ElementData;
-  }
-
-  OBElementTable::~OBElementTable()
-  {
-    vector<OBElement*>::iterator i;
-    for (i = _element.begin();i != _element.end();++i)
-      delete *i;
-  }
-
-  void OBElementTable::ParseLine(const char *buffer)
-  {
-    int num,maxbonds;
-    char symbol[4];
-    char name[256];
-    double Rcov,Rvdw,mass, elNeg, ARENeg, ionize, elAffin;
-    double red, green, blue;
-
-    if (buffer[0] != '#') // skip comment line (at the top)
-      {
-        sscanf(buffer,"%d %3s %lf %lf %*f %lf %d %lf %lf %lf %lf %lf %lf %lf %255s",
-               &num,
-               symbol,
-               &ARENeg,
-               &Rcov,
-               &Rvdw,
-               &maxbonds,
-               &mass,
-               &elNeg,
-               &ionize,
-               &elAffin,
-               &red,
-               &green,
-               &blue,
-               name);
-
-        OBElement *ele = new OBElement(num,symbol,ARENeg,Rcov,Rvdw,maxbonds,mass,elNeg,
-                                       ionize, elAffin, red, green, blue, name);
-        _element.push_back(ele);
-      }
-  }
-
-  unsigned int OBElementTable::GetNumberOfElements()
-  {
-    if (!_init)
-      Init();
-
-    return _element.size();
-  }
-
-  const char *OBElementTable::GetSymbol(int atomicnum)
-  {
-    if (!_init)
-      Init();
-
-    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
-      return("\0");
-
-    return(_element[atomicnum]->GetSymbol());
-  }
-
-  int OBElementTable::GetMaxBonds(int atomicnum)
-  {
-    if (!_init)
-      Init();
-
-    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
-      return(0);
-
-    return(_element[atomicnum]->GetMaxBonds());
-  }
-
-  double OBElementTable::GetElectroNeg(int atomicnum)
-  {
-    if (!_init)
-      Init();
-
-    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
-      return(0.0);
-
-    return(_element[atomicnum]->GetElectroNeg());
-  }
-
-  double OBElementTable::GetAllredRochowElectroNeg(int atomicnum)
-  {
-    if (!_init)
-      Init();
-
-    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
-      return(0.0);
-
-    return(_element[atomicnum]->GetAllredRochowElectroNeg());
-  }
-
-
-  double OBElementTable::GetIonization(int atomicnum)
-  {
-    if (!_init)
-      Init();
-
-    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
-      return(0.0);
-
-    return(_element[atomicnum]->GetIonization());
-  }
-
-
-  double OBElementTable::GetElectronAffinity(int atomicnum)
-  {
-    if (!_init)
-      Init();
-
-    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
-      return(0.0);
-
-    return(_element[atomicnum]->GetElectronAffinity());
-  }
-
-  vector<double> OBElementTable::GetRGB(int atomicnum)
-  {
-    if (!_init)
-      Init();
-
-    vector <double> colors;
-    colors.reserve(3);
-
-    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
-      {
-        colors.push_back(0.0);
-        colors.push_back(0.0);
-        colors.push_back(0.0);
-        return(colors);
-      }
-
-    colors.push_back(_element[atomicnum]->GetRed());
-    colors.push_back(_element[atomicnum]->GetGreen());
-    colors.push_back(_element[atomicnum]->GetBlue());
-
-    return (colors);
-  }
-
-  string OBElementTable::GetName(int atomicnum)
-  {
-    if (!_init)
-      Init();
-
-    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
-      return("Unknown");
-
-    return(_element[atomicnum]->GetName());
-  }
-
-  double OBElementTable::GetVdwRad(int atomicnum)
-  {
-    if (!_init)
-      Init();
-
-    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
-      return(0.0);
-
-    return(_element[atomicnum]->GetVdwRad());
-  }
-
-  double OBElementTable::CorrectedBondRad(int atomicnum, int hyb)
-  {
-    double rad;
-    if (!_init)
-      Init();
-
-    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
-      return(1.0);
-
-    rad = _element[atomicnum]->GetCovalentRad();
-
-    if (hyb == 2)
-      rad *= 0.95;
-    else if (hyb == 1)
-      rad *= 0.90;
-
-    return(rad);
-  }
-
-  double OBElementTable::CorrectedVdwRad(int atomicnum, int hyb)
-  {
-    double rad;
-    if (!_init)
-      Init();
-
-    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
-      return(1.95);
-
-    rad = _element[atomicnum]->GetVdwRad();
-
-    if (hyb == 2)
-      rad *= 0.95;
-    else if (hyb == 1)
-      rad *= 0.90;
-
-    return(rad);
-  }
-
-  double OBElementTable::GetCovalentRad(int atomicnum)
-  {
-    if (!_init)
-      Init();
-
-    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
-      return(0.0);
-
-    return(_element[atomicnum]->GetCovalentRad());
-  }
-
-  double OBElementTable::GetMass(int atomicnum)
-  {
-    if (!_init)
-      Init();
-
-    if (atomicnum < 0 || atomicnum >= static_cast<int>(_element.size()))
-      return(0.0);
-
-    return(_element[atomicnum]->GetMass());
-  }
-
-  int OBElementTable::GetAtomicNum(const char *sym)
-  {
-    int temp;
-    return GetAtomicNum(sym, temp);
-  }
-
-  int OBElementTable::GetAtomicNum(const char *identifier, int &iso)
-  {
-    if (!_init)
-      Init();
-
-    char buffer[BUFF_SIZE]; // error buffer
-
-    // Compare to symbol
-    vector<OBElement*>::iterator i;
-    for (i = _element.begin();i != _element.end();++i)
-      if (!strncasecmp(identifier,(*i)->GetSymbol(),3))
-        return((*i)->GetAtomicNum());
-
-    // Compare to IUPAC name (an abbreviated name will also work if 5 letters or more)
-    int numCharsToTest = std::max<int>(strlen(identifier), 5);
-    for (i = _element.begin();i != _element.end();++i)
-      if (strncasecmp(identifier,(*i)->GetName().c_str(),numCharsToTest) == 0)
-        return((*i)->GetAtomicNum());
-
-    if (strcasecmp(identifier, "D") == 0 ||
-        (strcasecmp(identifier, "Deuterium") == 0) )
-      {
-        iso = 2;
-        return(1);
-      }
-    else if (strcasecmp(identifier, "T") == 0 ||
-             (strcasecmp(identifier, "Tritium") == 0) )
-      {
-        iso = 3;
-        return(1);
-      }
-    else if (strcasecmp(identifier, "Hl") == 0) // ligand hydrogen -- found in some CIF PR#3048959.
-      {
-        snprintf(buffer, BUFF_SIZE, "Cannot understand the element label %s. Guessing it's hydrogen.", identifier);
-        obErrorLog.ThrowError(__FUNCTION__, buffer, obWarning);
-        return(1);
-      }
-    else
-      iso = 0;
-
-    if(identifier[0]!='*')
-      {
-        snprintf(buffer, BUFF_SIZE, "Cannot understand the element label %s.", identifier);
-        obErrorLog.ThrowError(__FUNCTION__, buffer, obWarning);
-      }
-    return(0);
-  }
-
-  int OBElementTable::GetAtomicNum(string name, int &iso)
-  {
-    return GetAtomicNum(name.c_str(), iso);
-  }
-
-  /** \class OBIsotopeTable data.h <openbabel/data.h>
-      \brief Table of atomic isotope masses
-  */
-
-  OBIsotopeTable::OBIsotopeTable()
-  {
-    _init = false;
-    _dir = BABEL_DATADIR;
-    _envvar = "BABEL_DATADIR";
-    _filename = "isotope.txt";
-    _subdir = "data";
-    _dataptr = IsotopeData;
-  }
-
-  void OBIsotopeTable::ParseLine(const char *buffer)
-  {
-    unsigned int i;
-    vector<string> vs;
-
-    pair <unsigned int, double> entry;
-    vector <pair <unsigned int, double> > row;
-
-    if (buffer[0] != '#') // skip comment line (at the top)
-      {
-        tokenize(vs,buffer);
-        if (vs.size() > 3) // atomic number, 0, most abundant mass (...)
-          {
-            for (i = 1; i < vs.size() - 1; i += 2) // make sure i+1 still exists
-              {
-                entry.first = atoi(vs[i].c_str()); // isotope
-                entry.second = atof(vs[i + 1].c_str()); // exact mass
-                row.push_back(entry);
-              }
-            _isotopes.push_back(row);
-          }
-        else
-          obErrorLog.ThrowError(__FUNCTION__, " Could not parse line in isotope table isotope.txt", obInfo);
-      }
-  }
-
-  double        OBIsotopeTable::GetExactMass(const unsigned int ele,
-                                             const unsigned int isotope)
-  {
-    if (!_init)
-      Init();
-
-    if (ele > _isotopes.size())
-      return 0.0;
-    if (_isotopes[ele].size() == 0)
-      return 0.0; // PR#2996661
-
-    unsigned int iso;
-    for (iso = 0; iso < _isotopes[ele].size(); ++iso)
-      if (isotope == _isotopes[ele][iso].first)
-        return _isotopes[ele][iso].second;
-
-    return 0.0;
-  }
 
   OBAtomicHeatOfFormationTable::OBAtomicHeatOfFormationTable(void)
   {
@@ -579,7 +198,7 @@ namespace OpenBabel
       Sybyl mol2 atom type field. The OBTypeTable class acts as a translation
       table to convert atom types between a number of different molecular
       file formats. The constructor for OBTypeTable automatically reads the
-      text file types.txt. Just as OBElementTable, an instance of
+      text file types.txt. An instance of
       OBTypeTable (ttab) is declared external in data.cpp and is referenced as
       extern OBTypeTable ttab in mol.h.  The following code demonstrates how
       to use the OBTypeTable class to translate the internal representation
@@ -815,7 +434,7 @@ namespace OpenBabel
     _dataptr = ResidueData;
   }
 
-  bool OBResidueData::AssignBonds(OBMol &mol,OBBitVec &bv)
+  bool OBResidueData::AssignBonds(OBMol &mol)
   {
     if (!_init)
       Init();
@@ -877,19 +496,19 @@ namespace OpenBabel
     skipres = ""; // don't skip any residues right now
     for (a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i))
       {
-        if (a1->IsOxygen() && !a1->GetValence())
+        if (a1->GetAtomicNum() == OBElements::Oxygen && !a1->GetValence())
           {
             a1->SetType("O3");
             continue;
           }
-        if (a1->IsHydrogen())
+        if (a1->GetAtomicNum() == OBElements::Hydrogen)
           {
             a1->SetType("H");
             continue;
           }
 
         //***valence rule for O-
-        if (a1->IsOxygen() && a1->GetValence() == 1)
+        if (a1->GetAtomicNum() == OBElements::Oxygen && a1->GetValence() == 1)
           {
             OBBond *bond;
             bond = (OBBond*)*(a1->BeginBonds());
@@ -1056,6 +675,10 @@ namespace OpenBabel
     // Check return value from OpenDatafile
     // Suggestion from Zhiguo Liu
     string fn_open = OpenDatafile(ifs, _filename, _envvar);
+    
+    // Check _subdir directory
+    if (fn_open == "")
+      string fn_open = OpenDatafile(ifs, _filename, _subdir);
 
     if (fn_open != "" && (ifs))
       {

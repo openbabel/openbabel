@@ -38,8 +38,8 @@ class OBReaction : public OBBase
 private:
   std::vector<obsharedptr<OBMol> > _reactants;
   std::vector<obsharedptr<OBMol> > _products;
+  std::vector<obsharedptr<OBMol> > _agents;
   obsharedptr<OBMol> _ts;
-  obsharedptr<OBMol> _agent;
   std::string _title;
   std::string _comment;
   bool _reversible;
@@ -53,6 +53,11 @@ public:
   int NumProducts()const
   { return static_cast<int> (_products.size()); }
 
+  int NumAgents() const
+  {
+    return static_cast<int> (_agents.size());
+  }
+
   void AddReactant(const obsharedptr<OBMol> sp)
   { _reactants.push_back(sp); }
 
@@ -63,7 +68,7 @@ public:
   { _ts = sp; }
 
   void AddAgent(const obsharedptr<OBMol> sp)
-  { _agent = sp; }
+  { _agents.push_back(sp); }
 
   obsharedptr<OBMol> GetReactant(const unsigned i)
   {
@@ -79,12 +84,16 @@ public:
       sp = _products[i];
     return sp; //returns empty if out of range
   }
+  obsharedptr<OBMol> GetAgent(const unsigned i)
+  {
+    obsharedptr<OBMol> sp;
+    if (i<_agents.size())
+      sp = _agents[i];
+    return sp; //returns empty if out of range
+  }
 
   obsharedptr<OBMol> GetTransitionState()const
   { return _ts; }
-
-  obsharedptr<OBMol> GetAgent()const
-  { return _agent; }
 
   std::string GetTitle()	const { return _title; }
   std::string GetComment()	const { return _comment; }
@@ -103,8 +112,8 @@ public:
   {
     _reactants.clear();
     _products.clear();
+    _agents.clear();
     _ts.reset();
-    _agent.reset();
     _title.clear();
     _comment.clear();
     _reversible = false;

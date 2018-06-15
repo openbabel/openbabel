@@ -90,7 +90,7 @@ bool FenskeZmatFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         w = vic[atom->GetIdx()]->_ang;
         t = vic[atom->GetIdx()]->_tor;
         //  16 = sizeof(type)
-        strncpy(type,etab.GetSymbol(atom->GetAtomicNum()), 16);
+        strncpy(type,OBElements::GetSymbol(atom->GetAtomicNum()), 16);
         type[15] = '\0';
 
         if (atom->GetIdx() == 1)

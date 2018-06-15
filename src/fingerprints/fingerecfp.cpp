@@ -15,6 +15,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/fingerprint.h>
 #include <openbabel/obiter.h>
+#include <openbabel/elements.h>
 
 #include <vector>
 
@@ -32,9 +33,13 @@ public:
       _radius(radius), _keepdups(keepdups), _flags(0){};
 
 	virtual const char* Description()
-	{ return "Extended-Connectivity Fingerprints (ECFPs)\n"
-      "Circular topological fingerprints of specified radius\n"
-  ;}
+	{ 
+          // Important! The second line is used by some output formats (e.g. FPS)
+	  // to determine the default size
+	  return "Extended-Connectivity Fingerprints (ECFPs)\n"
+                 "4096 bits.\n"
+                 "Circular topological fingerprints of specified radius\n";
+	}
 
 	//Calculates the fingerprint
 	virtual bool GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbits=0);
@@ -166,16 +171,16 @@ static void ECFPPass(OpenBabel::OBMol &mol,
                      AtomInfo *ainfo, unsigned int pass)
 {
   FOR_ATOMS_OF_MOL(atom, mol) {
-    if (atom->IsHydrogen())
+    if (atom->GetAtomicNum() == OBElements::Hydrogen)
       continue;
     OpenBabel::OBAtom* aptr = &(*atom);
-    unsigned int idx = aptr->GetIdx()-1;
+    unsigned int idx = aptr->GetIdx();
     AtomInfo *ptr = &ainfo[idx];
 
     std::vector<NborInfo> nbrs;
     FOR_BONDS_OF_ATOM(bptr, aptr) {
       OpenBabel::OBAtom* nptr = bptr->GetNbrAtom(aptr);
-      if (nptr->IsHydrogen())
+      if (nptr->GetAtomicNum() == OBElements::Hydrogen)
         continue;
       unsigned int order;
       if (!bptr->IsAromatic()) {
@@ -187,6 +192,7 @@ static void ECFPPass(OpenBabel::OBMol &mol,
       } else order = 4;
 
       unsigned int nidx = nptr->GetIdx();
+
       nbrs.push_back(NborInfo(order,ainfo[nidx].e[pass-1]));
       // for duplicate removal as described in paper (?)
       if (pass == 1)
@@ -206,17 +212,6 @@ static void ECFPPass(OpenBabel::OBMol &mol,
   }
 }
 
-
-static void ECFPInsert(std::vector<unsigned int> &fp, unsigned int val)
-{
-  std::vector<unsigned int>::const_iterator i;
-  for (i=fp.begin(); i!=fp.end(); ++i)
-    if (*i == val)
-      return;
-  fp.push_back(val);
-}
-
-
 static void ECFPFirstPass(OpenBabel::OBMol &mol,
                           AtomInfo *ainfo)
 {
@@ -224,16 +219,16 @@ static void ECFPFirstPass(OpenBabel::OBMol &mol,
 
   /* First Pass: ECFP_0 */
   FOR_ATOMS_OF_MOL(atom, mol) {
-    if (atom->IsHydrogen())
+    if (atom->GetAtomicNum() == OBElements::Hydrogen)
       continue;
     OpenBabel::OBAtom* aptr = &(*atom);
-    unsigned int idx = aptr->GetIdx()-1;
+    unsigned int idx = aptr->GetIdx();
     buffer[0] = aptr->GetHvyValence(); // degree of heavy atom connections
     buffer[1] = aptr->BOSum() - aptr->ExplicitHydrogenCount(); // valence of heavy atom connections
     buffer[2] = aptr->GetAtomicNum();
     buffer[3] = (unsigned char)aptr->GetIsotope();
     buffer[4] = (unsigned char)aptr->GetFormalCharge();
-    buffer[5] = (unsigned char)(aptr->ExplicitHydrogenCount() + aptr->ImplicitHydrogenCount());
+    buffer[5] = (unsigned char)(aptr->ExplicitHydrogenCount() + aptr->GetImplicitHCount());
     buffer[6] = aptr->IsInRing() ? 1 : 0;
     buffer[7] = 0;  // aptr->IsAromatic() ? 1 : 0;
     ainfo[idx].e[0] = ECFPHash(buffer,8);
@@ -244,18 +239,23 @@ bool fingerprintECFP::GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int n
 {
 	OBMol* pmol = dynamic_cast<OBMol*>(pOb);
 	if(!pmol) return false;
-	fp.resize(1024/Getbitsperint());
+	
+	// default fingeprint size
+	if (nbits <= 0)
+	  nbits = 4096;
 
+  fp.resize(0); // clear without deallocating memory
+  fp.resize(nbits/Getbitsperint());
+	
   _ss.str("");
 
   unsigned int pass;
 
-  fp.clear();
-
   unsigned int count = pmol->NumAtoms();
   if (count == 0) return true;
 
-  AtomInfo *ainfo = new AtomInfo[count];
+  // Access this using the Atom::Idx()
+  AtomInfo *ainfo = new AtomInfo[count+1];
 
   ECFPFirstPass(*pmol,ainfo);
   for (pass=1; pass<= _radius; pass++)
@@ -263,25 +263,18 @@ bool fingerprintECFP::GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int n
 
   // Duplicate removal - this is a simplified version of what's in the paper
   FOR_ATOMS_OF_MOL(atom, pmol) {
-    if (atom->IsHydrogen())
-      continue;
-    unsigned int idx = atom->GetIdx()-1;
-    if (_keepdups) {
-      for (pass=0; pass<= _radius; pass++)
-        fp.push_back(ainfo[idx].e[pass]);
-    } else
-      for (pass=0; pass<= _radius; pass++)
-        ECFPInsert(fp,ainfo[idx].e[pass]);
+    if (atom->GetAtomicNum() == OBElements::Hydrogen)
+      continue;    
+    unsigned int idx = atom->GetIdx();
+    for (pass=0; pass <= _radius; pass++) {
+      unsigned int bit = (ainfo[idx].e[pass] % nbits) & 0x7fffffff; 
+      SetBit(fp, bit);
+    }
   }
 
   delete[] ainfo;
 
-  std::sort(fp.begin(),fp.end());
-
-  if(nbits)
-		Fold(fp, nbits);
-
-	return true;
+  return true;
 }
 
 } //namespace OpenBabel

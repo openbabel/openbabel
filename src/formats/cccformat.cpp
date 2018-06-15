@@ -96,7 +96,7 @@ bool CCCFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         atom.Clear();
         element[0] = buffer[0];
         element[1] = (buffer[1] != ' ') ? buffer[1]:'\0';
-        atom.SetAtomicNum(etab.GetAtomicNum(element));
+        atom.SetAtomicNum(OBElements::GetAtomicNum(element));
         sscanf(&buffer[15],"%lf%lf%lf",&x,&y,&z);
         v.Set(x,y,z);
         atom.SetVector(v);

@@ -28,6 +28,7 @@
 
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/stereo/tetrahedral.h>
+#include <openbabel/elements.h>
 
 #include <iterator> // std::istream_iterator
 #include <cassert>
@@ -140,11 +141,16 @@ namespace OpenBabel {
     vector<OBEdgeBase*>::iterator bi;
     for (bond = atom->BeginBond(bi); bond; bond = atom->NextBond(bi)) {
       nbr = bond->GetNbrAtom(atom);
-      if (_frag_atoms.BitIsSet(nbr->GetIdx()) && !(nbr->IsHydrogen()))
+      if (_frag_atoms.BitIsSet(nbr->GetIdx()) && nbr->GetAtomicNum() != OBElements::Hydrogen)
         count++;
     }
 
     return(count);
+  }
+
+  static unsigned int TotalNumberOfBonds(OBAtom* atom)
+  {
+    return atom->GetImplicitHCount() + atom->GetValence();
   }
 
   /**
@@ -167,15 +173,15 @@ namespace OpenBabel {
     vector<OBEdgeBase*>::iterator bi;
     for (bond = atom->BeginBond(bi); bond; bond = atom->NextBond(bi)) {
       nbr = bond->GetNbrAtom(atom);
-      if (_frag_atoms.BitIsSet(nbr->GetIdx()) && !(nbr->IsHydrogen())) {
-        if (bond->IsSingle())        count += 1.0f;
-        else if (bond->IsDouble())   count += 2.0f;
-        else if (bond->IsTriple())   count += 3.0f;
-        else if (bond->IsAromatic()) count += 1.6f;
+      if (_frag_atoms.BitIsSet(nbr->GetIdx()) && nbr->GetAtomicNum() != OBElements::Hydrogen) {
+        if (bond->IsAromatic())
+          count += 1.6f;
+        else
+          count += (float)bond->GetBondOrder();
       }
     }
-    if (atom->GetAtomicNum() == 7 && atom->IsAromatic() && atom->GetImplicitValence() == 3) {
-      count += 1;         // [nH] - add another bond
+    if (atom->GetAtomicNum() == 7 && atom->IsAromatic() && TotalNumberOfBonds(atom) == 3) {
+      count += 1.0f;         // [nH] - add another bond
     }
     return(int(count + 0.5));     // round to nearest int
   }
@@ -232,7 +238,7 @@ namespace OpenBabel {
             if (   _frag_atoms.BitIsOn(nbr_idx)
                 && !used.BitIsOn(nbr_idx)
                 && !curr.BitIsOn(nbr_idx)
-                && !(bond->GetNbrAtom(atom1))->IsHydrogen())
+                && bond->GetNbrAtom(atom1)->GetAtomicNum() != OBElements::Hydrogen)
               next.SetBitOn(nbr_idx);
           }
         }

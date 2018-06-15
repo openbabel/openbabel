@@ -22,12 +22,14 @@
   02110-1301, USA.
  **********************************************************************/
 
+
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/mol.h>
 #include <openbabel/graphsym.h>
 #include <openbabel/canon.h>
 #include <openbabel/oberror.h>
+#include <openbabel/elements.h>
 #include <cassert>
 
 #include "stereoutil.h"
@@ -80,8 +82,8 @@ namespace OpenBabel {
         StereoFrom0D(mol);
         break;
     }
-
-    obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::PerceiveStereo", obAuditMsg);
+    if (obErrorLog.GetOutputLevel() >= obAuditMsg)
+      obErrorLog.ThrowError(__FUNCTION__, "Ran OpenBabel::PerceiveStereo", obAuditMsg);
   }
 
   /**
@@ -112,6 +114,11 @@ namespace OpenBabel {
     return false;
   }
 
+  static unsigned int TotalNoOfBonds(OBAtom* atom)
+  {
+    return atom->GetImplicitHCount() + atom->GetValence();
+  }
+
   /**
    * Check if the specified atom is a potential stereogenic atom.
    *
@@ -128,11 +135,11 @@ namespace OpenBabel {
   bool isPotentialTetrahedral(OBAtom *atom)
   {
     // consider only potential steroecenters
-    if ((atom->GetHyb() != 3 && !(atom->GetHyb() == 5 && atom->IsPhosphorus()))
-        || atom->GetImplicitValence() > 4 || atom->GetHvyValence() < 3 || atom->GetHvyValence() > 4)
+    if ((atom->GetHyb() != 3 && !(atom->GetHyb() == 5 && atom->GetAtomicNum() == OBElements::Phosphorus))
+        || TotalNoOfBonds(atom) > 4 || atom->GetHvyValence() < 3 || atom->GetHvyValence() > 4)
       return false;
     // skip non-chiral N
-    if (atom->IsNitrogen() && atom->GetFormalCharge()==0) {
+    if (atom->GetAtomicNum() == OBElements::Nitrogen && atom->GetFormalCharge()==0) {
       int nbrRingAtomCount = 0;
       FOR_NBORS_OF_ATOM (nbr, atom) {
         if (nbr->IsInRing())
@@ -141,7 +148,7 @@ namespace OpenBabel {
       if (nbrRingAtomCount < 3)
         return false;
     }
-    if (atom->IsCarbon()) {
+    if (atom->GetAtomicNum() == OBElements::Carbon) {
       if (atom->GetFormalCharge())
         return false;
       FOR_NBORS_OF_ATOM (nbr, atom) {
@@ -685,7 +692,6 @@ namespace OpenBabel {
 
   }
 
-
   /**
    * Find the stereogenic units in a molecule using a set of rules.
    *
@@ -764,7 +770,7 @@ namespace OpenBabel {
         if (!begin || !end)
           continue;
 
-        if (begin->GetImplicitValence() > 3 || end->GetImplicitValence() > 3)
+        if (TotalNoOfBonds(begin) > 3 || TotalNoOfBonds(end) > 3)
           continue; // e.g. C=Ru where the Ru has four substituents
 
         // Needs to have at least one explicit single bond at either end
@@ -2791,7 +2797,9 @@ namespace OpenBabel {
           // 6. If two bonds are overlapping, choose one of these
           //    (otherwise the InChI code will mark it as ambiguous)
 
-          unsigned int max_bond_score = 0;
+          int max_bond_score = 0;   // The test below (score > max_bond_score)
+          // gave incorrect results when score < 0 and max_bond_score was an unsigned int
+          // see https://stackoverflow.com/questions/5416414/signed-unsigned-comparisons#5416498
           FOR_BONDS_OF_ATOM(b, center) {
             if (alreadyset.find(&*b) != alreadyset.end()) continue;
 
@@ -2810,9 +2818,9 @@ namespace OpenBabel {
 		score += 8;		// strongly prefer terminal atoms
 	    else
 	      score -= nbr_nbonds - 2;	// bond to atom with many bonds is penalized
-	    if (nbr->IsHydrogen())
+	    if (nbr->GetAtomicNum() == OBElements::Hydrogen)
 	      score += 2;		// prefer H
-	    else if (nbr->IsCarbon())
+	    else if (nbr->GetAtomicNum() == OBElements::Carbon)
 	      score += 1;		// then C
             if (&*b==close_bond_a || &*b==close_bond_b)
               score += 16;
@@ -2995,4 +3003,3 @@ namespace OpenBabel {
   }
 
 }
-

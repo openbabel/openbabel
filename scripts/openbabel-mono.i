@@ -179,7 +179,6 @@ WRAP_ARRAY(double,double_array)
 #include <openbabel/data.h>
 #include <openbabel/parsmart.h>
 #include <openbabel/alias.h>
-#include <openbabel/atomclass.h>
 
 #include <openbabel/kinetics.h>
 #include <openbabel/rotamer.h>
@@ -252,6 +251,8 @@ SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBBond, OpenBabel::OBBond*);
 %include <openbabel/math/matrix3x3.h>
 %include <openbabel/math/transform3d.h>
 %include <openbabel/math/spacegroup.h>
+%include <openbabel/bitvec.h>
+
 %include <openbabel/base.h>
 
 %include <openbabel/generic.h>
@@ -263,7 +264,6 @@ SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBBond, OpenBabel::OBBond*);
 };
 %enddef
 CAST_GENERICDATA_TO(AngleData)
-CAST_GENERICDATA_TO(AtomClassData)
 CAST_GENERICDATA_TO(ChiralData)
 CAST_GENERICDATA_TO(CommentData)
 CAST_GENERICDATA_TO(ConformerData)
@@ -305,7 +305,6 @@ CAST_GENERICDATA_TO(VirtualBond)
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
 %include <openbabel/alias.h>
-%include <openbabel/atomclass.h>
 
 %include <openbabel/fingerprint.h>
 %include <openbabel/descriptor.h>
@@ -313,15 +312,13 @@ CAST_GENERICDATA_TO(VirtualBond)
 
 %include <openbabel/op.h>
 
-%include <openbabel/bitvec.h>
-
-# The following %ignores avoid warning messages due to shadowed classes.
-# This does not imply a loss of functionality as (in this case)
-# the shadowed class is identical (from the point of view of SWIG) to
-# the shadowing class.
-# This is because C++ references (&) are transformed by SWIG back into
-# pointers, so that OBAtomIter(OBMol &) would be treated the same as
-# OBAtomIter(OBMol *).
+// The following %ignores avoid warning messages due to shadowed classes.
+// This does not imply a loss of functionality as (in this case)
+// the shadowed class is identical (from the point of view of SWIG) to
+// the shadowing class.
+// This is because C++ references (&) are transformed by SWIG back into
+// pointers, so that OBAtomIter(OBMol &) would be treated the same as
+// OBAtomIter(OBMol *).
 
 %ignore OBAtomAtomIter(OBAtom &);
 %ignore OBAtomBondIter(OBAtom &);

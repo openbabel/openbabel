@@ -13,6 +13,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
+#include <iostream>
 
 #include <openbabel/obmolecformat.h>
 
@@ -140,7 +141,7 @@ namespace OpenBabel
             while (vs.size() == 5)
               {
                 atom = mol.NewAtom();
-                atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
+                atom->SetAtomicNum(OBElements::GetAtomicNum(vs[1].c_str()));
                 x = atof((char*)vs[2].c_str());
                 y = atof((char*)vs[3].c_str());
                 z = atof((char*)vs[4].c_str());
@@ -172,15 +173,23 @@ namespace OpenBabel
             ifs.getline(buffer,BUFF_SIZE);	// -----------------
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
+            int nbAtomRead = 0;
             while (vs.size() >= 3)
               {
                 atom = mol.GetAtom(atoi(vs[0].c_str()));
-                atom->SetPartialCharge(atof(vs[2].c_str()));
-
+                ++nbAtomRead;
+                if (atom)
+                  atom->SetPartialCharge(atof(vs[2].c_str()));
                 if (!ifs.getline(buffer,BUFF_SIZE))
                   break;
                 tokenize(vs,buffer);
               }
+            if (nbAtomRead != mol.NumAtoms())
+            {
+              std::cerr << "Error: a Standard Nuclear Orientation paragraph contains " << mol.NumAtoms()
+                 << " whereas the following Mulliken paragraph contains " << nbAtomRead << " atoms\n";
+              return false;
+            }
           }
         else if (strstr(buffer, "ISOTROPIC") != NULL
                  && strstr(buffer, "ATOM") != NULL) // NMR summary

@@ -125,6 +125,7 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
       {
         if( lineBuffer.find( "[Atoms]" ) != string::npos ||
             lineBuffer.find( "[ATOMS]" ) != string::npos ) {
+          unsigned int ecpLines = 0;
           double factor = 1.; // Angstrom
           if( lineBuffer.find( "AU" ) != string::npos ) factor = BOHR_TO_ANGSTROM; // Bohr
           while( getline( ifs, lineBuffer ) )
@@ -135,13 +136,28 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
               string atomName;
               int atomId;
               int atomicNumber;
+              int valenceCharge;
               double x, y, z;
-              is >> atomName >> atomId >> atomicNumber >> x >> y >> z;
+              is >> atomName >> atomId >> valenceCharge >> x >> y >> z;
               OBAtom* atom = pmol->NewAtom();
               if( !atom ) break;
+              atomicNumber = OBElements::GetAtomicNum(atomName.c_str());
               atom->SetAtomicNum( atomicNumber );
               atom->SetVector( x * factor, y * factor, z * factor );
+              if (atomicNumber-valenceCharge!=0){
+                OBPairData* ecpData = new OBPairData();
+                ecpData->SetAttribute("ecp");
+                std::ostringstream os;
+                os << atomicNumber-valenceCharge;
+                ecpData->SetValue(os.str());
+                atom->SetData(ecpData);
+                ++ecpLines;
+              }
             }
+          if (ecpLines!=0){
+              cerr << "WARNING: element number given in 3rd column does not agree with element name on " << ecpLines << " lines." << endl
+                   << "         Difference between expected nuclear charge and given element number saved to atom property 'ecp'." << endl;
+          }
         } // "[Atoms]" || "[ATOMS]"
         if ( lineBuffer.find( "[GEOMETRIES] (XYZ)" ) != string::npos ) {
           while( getline( ifs, lineBuffer ) ) {
@@ -192,7 +208,7 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
                 coordinates.push_back(point);
 
                 if (createAtoms) {
-                  int atomicNum = etab.GetAtomicNum(vs[0].c_str());
+                  int atomicNum = OBElements::GetAtomicNum(vs[0].c_str());
                   //set atomic number, or '0' if the atom type is not recognized
                   if (atomicNum == 0) {
                     // Sometimes people call this an XYZ file, but it's actually Unichem
@@ -249,7 +265,7 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
                 is >> atomName >> x >> y >> z;
                 OBAtom* atom = pmol->NewAtom();
                 if( !atom ) break;
-                atom->SetAtomicNum( etab.GetAtomicNum(atomName.c_str()));
+                atom->SetAtomicNum( OBElements::GetAtomicNum(atomName.c_str()));
                 // Vibrational equilibrium geometry is mandated to be
                 // in Bohr.
                 atom->SetVector( x * BOHR_TO_ANGSTROM,
@@ -351,7 +367,7 @@ bool OBMoldenFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     FOR_ATOMS_OF_MOL(atom, mol)
       {
         snprintf(buffer, BUFF_SIZE, "%2s%6d%3d%13.6f%13.6f%13.6f\n",
-                etab.GetSymbol(atom->GetAtomicNum()),
+                OBElements::GetSymbol(atom->GetAtomicNum()),
 		i++,
                 atom->GetAtomicNum(),
                 atom->GetX(),
@@ -380,7 +396,7 @@ bool OBMoldenFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       FOR_ATOMS_OF_MOL(atom, mol)
         {
           snprintf(buffer, BUFF_SIZE, "%2s%13.6f%13.6f%13.6f\n",
-                  etab.GetSymbol(atom->GetAtomicNum()),
+                  OBElements::GetSymbol(atom->GetAtomicNum()),
                   atom->GetX()*ANGSTROM_TO_BOHR,
                   atom->GetY()*ANGSTROM_TO_BOHR,
                   atom->GetZ()*ANGSTROM_TO_BOHR);

@@ -127,7 +127,7 @@ int main(int argc,char **argv)
   if ((conv.Read(&mol, &ifs)) && ! mol.Empty())
   {
       OBPointGroup obPG;
-      double temperature, DeltaHf0, DeltaHfT, DeltaGfT, DeltaSfT, S0T, CVT, CPT;
+      double temperature, DeltaHf0, DeltaHfT, DeltaGfT, DeltaSfT, S0T, CVT, CPT, ZPVE;
       std::vector<double> Scomponents;
       
       obPG.Setup(&mol);
@@ -153,7 +153,8 @@ int main(int argc,char **argv)
                                   &S0T,
                                   &CVT,
                                   &CPT,
-                                  Scomponents))
+                                  Scomponents,
+                                  &ZPVE))
       {
           double Rgas  = 1.9872041; // cal/mol K
           printf("DeltaHform(0K)  %10g  %s\n", DeltaHf0*unit_factor, e_unit.c_str());

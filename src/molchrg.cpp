@@ -20,6 +20,7 @@ GNU General Public License for more details.
 
 #include <openbabel/mol.h>
 #include <openbabel/molchrg.h>
+#include <openbabel/elements.h>
 
 using namespace std;
 namespace OpenBabel
@@ -104,14 +105,14 @@ namespace OpenBabel
 
             if (_gsv[src->GetIdx()]->chi >= _gsv[dst->GetIdx()]->chi)
               {
-                if (dst->IsHydrogen())
+                if (dst->GetAtomicNum() == OBElements::Hydrogen)
                   denom = double(OB_GASTEIGER_DENOM);
                 else
                   denom = _gsv[dst->GetIdx()]->denom;
               }
             else
               {
-                if (src->IsHydrogen())
+                if (src->GetAtomicNum() == OBElements::Hydrogen)
                   denom = double(OB_GASTEIGER_DENOM);
                 else
                   denom = _gsv[src->GetIdx()]->denom;

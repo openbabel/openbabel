@@ -217,9 +217,6 @@ bool GROFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     // Get atom
     atom  = pmol->NewAtom();
 
-    // Needed for -h to work with molecules with implicit hydrogens
-    atom->ForceImplH();
-
     tempstr.assign(line,0,5);
     stringstream(tempstr) >> resid;
 
@@ -284,7 +281,7 @@ bool GROFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     res->SetAtomID(atom, atomtype);
 
     // For determining the element this doesn't work:
-    // atom->SetAtomicNum(etab.GetAtomicNum(atom->GetType()));
+    // atom->SetAtomicNum(OBElements::GetAtomicNum(atom->GetType()));
     //
     // So the element simbol should be found while reading in the file. It
     // could be possible to provide an option for external atomtype<->element
@@ -307,7 +304,7 @@ bool GROFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     } else {
       element.assign(atomtype,0,1);
     }
-    atom->SetAtomicNum(etab.GetAtomicNum(element.data()));
+    atom->SetAtomicNum(OBElements::GetAtomicNum(element.data()));
   }
 
   // Get periodic box

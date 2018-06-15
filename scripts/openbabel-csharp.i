@@ -108,7 +108,7 @@
 		else if(index == 2)
 			return z();
 		else
-			throw new IndexOutOfRangeException("Largest allowable index is 2");		
+			throw new System.IndexOutOfRangeException("Largest allowable index is 2");		
 		}
 	}
 	
@@ -132,7 +132,30 @@
 		get{return new OBVector3(0,0,0);}
 	}
 %}
-  
+%typemap(cscode) OpenBabel::matrix3x3
+%{
+  	public static OBVector3 Mul(OBMatrix3x3 m, OBVector3 v)
+  	{
+    		return new OBVector3(v.x()*m.Get(0,0) + v.y()*m.Get(0,1) + v.z()*m.Get(0,2), v.x()*m.Get(1,0) + v.y()*m.Get(1,1) + v.z()*m.Get(1,2), v.x()*m.Get(2,0) + v.y()*m.Get(2,1) + v.z()*m.Get(2,2));
+  	}
+	public static OBMatrix3x3 Mul(OBMatrix3x3 A, OBMatrix3x3 B)
+	{
+		OBMatrix3x3 result = new OBMatrix3x3();
+	    
+		result.Set(0,0, A.Get(0,0)*B.Get(0,0) + A.Get(0,1)*B.Get(1,0) + A.Get(0,2)*B.Get(2,0));
+		result.Set(0,1, A.Get(0,0)*B.Get(0,1) + A.Get(0,1)*B.Get(1,1) + A.Get(0,2)*B.Get(2,1));
+		result.Set(0,2, A.Get(0,0)*B.Get(0,2) + A.Get(0,1)*B.Get(1,2) + A.Get(0,2)*B.Get(2,2));
+		
+		result.Set(1,0, A.Get(1,0)*B.Get(0,0) + A.Get(1,1)*B.Get(1,0) + A.Get(1,2)*B.Get(2,0));
+		result.Set(1,1, A.Get(1,0)*B.Get(0,1) + A.Get(1,1)*B.Get(1,1) + A.Get(1,2)*B.Get(2,1));
+		result.Set(1,2, A.Get(1,0)*B.Get(0,2) + A.Get(1,1)*B.Get(1,2) + A.Get(1,2)*B.Get(2,2));
+		
+		result.Set(2,0, A.Get(2,0)*B.Get(0,0) + A.Get(2,1)*B.Get(1,0) + A.Get(2,2)*B.Get(2,0));
+		result.Set(2,1, A.Get(2,0)*B.Get(0,1) + A.Get(2,1)*B.Get(1,1) + A.Get(2,2)*B.Get(2,1));
+		result.Set(2,2, A.Get(2,0)*B.Get(0,2) + A.Get(2,1)*B.Get(1,2) + A.Get(2,2)*B.Get(2,2));
+		return(result);
+	}
+%}
 //simplified public Downcast method
 //this is defined up here because something
 //lower down in the file interferes with it
@@ -151,7 +174,7 @@
       System.Reflection.MethodInfo castMethod = typeof(OBGenericData).GetMethod(castMethodName, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
       
       if(castMethod == null)
-        throw new InvalidCastException("No explicit downcast is defined for " + derivedType);
+        throw new System.InvalidCastException("No explicit downcast is defined for " + derivedType);
       
       return (DType)castMethod.Invoke(this,null);
    }
@@ -163,13 +186,12 @@
 %{
   public override DType Downcast<DType>()
   {
-      throw new NotImplementedException("Downcast<DTYPE> is not implemented in " + "CSCLASS");
+      throw new System.NotImplementedException("Downcast<DTYPE> is not implemented in " + "CSCLASS");
    }
 %}
 %enddef
 DISABLE_DOWNCAST(AliasData);
 DISABLE_DOWNCAST(OBAngleData);
-DISABLE_DOWNCAST(OBAtomClassData);
 DISABLE_DOWNCAST(OBChiralData);
 DISABLE_DOWNCAST(OBCommentData);
 DISABLE_DOWNCAST(OBConformerData);
@@ -215,9 +237,9 @@ DISABLE_DOWNCAST(OBVirtualBond);
 %typemap(cstype) TYPE * "NAME"
 %typemap(csout, excode=SWIGEXCODE) TYPE * 
 {
-	IntPtr cPtr = $imcall;$excode
+	System.IntPtr cPtr = $imcall;$excode
 	$csclassname ret = null;
-	if (cPtr != IntPtr.Zero)
+	if (cPtr != System.IntPtr.Zero)
 	{
         ret = new $csclassname(cPtr,true);
 	}
@@ -236,7 +258,7 @@ set
 %typemap(csvarout, excode=SWIGEXCODE2) TYPE * %{
 get
 {
-    IntPtr cPtr = $imcall;$excode;
+    System.IntPtr cPtr = $imcall;$excode;
     $csclassname tmp = new $csclassname(cPtr,true);$excode
     return NAME.frompointer(tmp);
 } %}
@@ -638,7 +660,6 @@ using System.Runtime.InteropServices;
 #include <openbabel/data.h>
 #include <openbabel/parsmart.h>
 #include <openbabel/alias.h>
-#include <openbabel/atomclass.h>
 
 #include <openbabel/kinetics.h>
 //OBReaction can't be mapped properly
@@ -730,8 +751,10 @@ using System.Runtime.InteropServices;
 %include <openbabel/math/transform3d.h>
 %warnfilter(516) OpenBabel::SpaceGroup; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/math/spacegroup.h>
+%warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
+%include <openbabel/bitvec.h>
 
-# CloneData should be used instead of the following method
+// CloneData should be used instead of the following method
 %ignore OpenBabel::OBBase::SetData;
 %warnfilter(516) OpenBabel::OBBase; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/base.h>
@@ -794,7 +817,6 @@ using System.Runtime.InteropServices;
 
 //why is AliasData not supported?
 CAST_GENERICDATA_TO(AngleData);
-CAST_GENERICDATA_TO(AtomClassData);
 CAST_GENERICDATA_TO(ChiralData);
 CAST_GENERICDATA_TO(CommentData);
 CAST_GENERICDATA_TO(ConformerData);
@@ -839,6 +861,7 @@ namespace std { class stringbuf {}; }
 %include <openbabel/format.h>
 %ignore OpenBabel::OBConversion::FindFormat(const char *);
 %ignore OpenBabel::OBConversion::FormatFromExt(const char *);
+%ignore OpenBabel::OBConversion::FormatFromExt(const char *, bool &);
 %include <openbabel/obconversion.h>
 %include <openbabel/residue.h>
 %include <openbabel/internalcoord.h>
@@ -853,12 +876,11 @@ namespace std { class stringbuf {}; }
 %include <openbabel/parsmart.h>
 %warnfilter(516) OpenBabel::AliasData; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/alias.h>
-%include <openbabel/atomclass.h>
 %ignore OpenBabel::FptIndex;
 %include <openbabel/fingerprint.h>
 %include <openbabel/descriptor.h>
 
-# Ignore shadowed methods
+// Ignore shadowed methods
 %ignore OpenBabel::OBForceField::VectorSubtract(const double *const, const double *const, double *);
 %ignore OpenBabel::OBForceField::VectorMultiply(const double *const, const double, double *);
 %warnfilter(516) OpenBabel::OBForceField; // Ignoring std::string methods in favour of char* ones
@@ -866,9 +888,6 @@ namespace std { class stringbuf {}; }
 
 %include <openbabel/builder.h>
 %include <openbabel/op.h>
-
-%warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
-%include <openbabel/bitvec.h>
 
 %include <openbabel/rotor.h>
 %ignore OpenBabel::Swab;
@@ -882,13 +901,13 @@ namespace std { class stringbuf {}; }
 //SWIG_SHARED_PTR_TYPEMAPS(OBMolSharedPtr, ,OpenBabel::OBMol)
 //%include <openbabel/reaction.h>
 
-# The following %ignores avoid warning messages due to shadowed classes.
-# This does not imply a loss of functionality as (in this case)
-# the shadowed class is identical (from the point of view of SWIG) to
-# the shadowing class.
-# This is because C++ references (&) are transformed by SWIG back into
-# pointers, so that OBAtomIter(OBMol &) would be treated the same as
-# OBAtomIter(OBMol *).
+// The following %ignores avoid warning messages due to shadowed classes.
+// This does not imply a loss of functionality as (in this case)
+// the shadowed class is identical (from the point of view of SWIG) to
+// the shadowing class.
+// This is because C++ references (&) are transformed by SWIG back into
+// pointers, so that OBAtomIter(OBMol &) would be treated the same as
+// OBAtomIter(OBMol *).
 
 %ignore OBAtomAtomIter(OBAtom &);
 %ignore OBAtomBondIter(OBAtom &);
@@ -975,8 +994,8 @@ WRAPITERATOR(OBMolBondBFSIter,OpenBabel::OBMolBondBFSIter,OBBond);
 WRAPITERATOR(OBMolAngleIter,OpenBabel::OBMolAngleIter,VectorUInt);
 WRAPITERATOR(OBAtomAtomIter,OpenBabel::OBAtomAtomIter,OBAtom)
 WRAPITERATOR(OBAtomBondIter,OpenBabel::OBAtomBondIter,OBBond);
-WRAPITERATOR(OBMolRingIter,OpenBabel::OBRingIter,OBRing);
-WRAPITERATOR(OBMolTorsionIter,OpenBabel::OBTorsionIter,VectorUInt);
+WRAPITERATOR(OBMolRingIter,OpenBabel::OBMolRingIter,OBRing);
+WRAPITERATOR(OBMolTorsionIter,OpenBabel::OBMolTorsionIter,VectorUInt);
 WRAPITERATOR(OBResidueIter,OpenBabel::OBResidueIter,OBResidue);
 WRAPITERATOR(OBResidueAtomIter,OpenBabel::OBResidueAtomIter,OBAtom);
 WRAPITERATOR(OBMolPairIter,OpenBabel::OBMolPairIter,VectorUInt)

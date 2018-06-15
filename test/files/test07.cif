@@ -1,0 +1,99 @@
+#------------------------------------------------------------------------------
+#$Date: 2016-02-16 14:49:47 +0200 (Tue, 16 Feb 2016) $
+#$Revision: 176465 $
+#$URL: svn://www.crystallography.net/cod/cif/9/00/06/9000684.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/. The original data for this entry
+# were provided the American Mineralogist Crystal Structure Database,
+# http://rruff.geo.arizona.edu/AMS/amcsd.php
+#
+# The file may be used within the scientific community so long as
+# proper attribution is given to the journal article from which the
+# data were obtained.
+#
+data_9000684
+loop_
+_publ_author_name
+'Hazen, R. M.'
+'Finger, L. W.'
+_publ_section_title
+;
+ Crystal structure and compressibility of zircon at high pressure
+ crystal No. 1, 1 atm - before P
+;
+_journal_name_full               'American Mineralogist'
+_journal_page_first              196
+_journal_page_last               201
+_journal_volume                  64
+_journal_year                    1979
+_chemical_formula_sum            'O4 Si Zr'
+_chemical_name_mineral           Zircon
+_space_group_IT_number           141
+_symmetry_space_group_name_Hall  '-I 4bd 2'
+_symmetry_space_group_name_H-M   'I 41/a m d :2'
+_cell_angle_alpha                90
+_cell_angle_beta                 90
+_cell_angle_gamma                90
+_cell_length_a                   6.6042
+_cell_length_b                   6.6042
+_cell_length_c                   5.9796
+_cell_volume                     260.803
+_exptl_crystal_density_diffrn    4.668
+_cod_original_sg_symbol_H-M      'I 41/a m d'
+_cod_original_formula_sum        'Zr Si O4'
+_cod_database_code               9000684
+loop_
+_symmetry_equiv_pos_as_xyz
+x,y,z
+1/2+x,1/2+y,1/2+z
+1/4-y,3/4-x,1/4+z
+3/4-y,1/4-x,3/4+z
+1/4+y,3/4+x,1/4-z
+3/4+y,1/4+x,3/4-z
+1/4+y,3/4-x,1/4-z
+3/4+y,1/4-x,3/4-z
+1/4-y,3/4+x,1/4+z
+3/4-y,1/4+x,3/4+z
+1/2+x,-y,1/2+z
++x,1/2-y,+z
+1/2-x,y,1/2-z
+-x,1/2+y,-z
+1/2+x,y,1/2-z
++x,1/2+y,-z
+1/2-x,-y,1/2+z
+-x,1/2-y,+z
+1/4+y,1/4+x,3/4+z
+3/4+y,3/4+x,1/4+z
+1/4-y,1/4-x,3/4-z
+3/4-y,3/4-x,1/4-z
+1/4-y,1/4+x,3/4-z
+3/4-y,3/4+x,1/4-z
+1/4+y,1/4-x,3/4+z
+3/4+y,3/4-x,1/4+z
+-x,y,z
+1/2-x,1/2+y,1/2+z
+x,-y,-z
+1/2+x,1/2-y,1/2-z
+-x,-y,-z
+1/2-x,1/2-y,1/2-z
+loop_
+_atom_site_aniso_label
+_atom_site_aniso_U_11
+_atom_site_aniso_U_22
+_atom_site_aniso_U_33
+_atom_site_aniso_U_12
+_atom_site_aniso_U_13
+_atom_site_aniso_U_23
+Zr 0.00378 0.00378 0.00292 0.00000 0.00000 0.00000
+Si 0.00422 0.00422 0.00336 0.00000 0.00000 0.00000
+O 0.01061 0.00486 0.00362 0.00000 0.00000 -0.00120
+loop_
+_atom_site_label
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+Zr 0.00000 0.75000 0.12500
+Si 0.00000 0.25000 0.37500
+O 0.00000 0.06600 0.19510

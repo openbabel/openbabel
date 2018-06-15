@@ -105,8 +105,8 @@ namespace OpenBabel
         break;
       case SPACE_GROUP_HM:
         {
-          std::string linestr=std::string(line);
-          std::string::size_type idx=linestr.find(',');
+          string linestr = std::string(line);
+          std::string::size_type idx = linestr.find(',');
           if (idx != std::string::npos)
             {
               std::string alt = linestr.substr(0, idx);
@@ -115,7 +115,7 @@ namespace OpenBabel
               std::string stripped_HM=RemoveWhiteSpaceUnderscore(alt);
               if (stripped_HM.length() > 0 && _SpaceGroups.sgbn[stripped_HM] == NULL)
                 _SpaceGroups.sgbn[stripped_HM] = group;
-              group->SetHMName(linestr.substr(idx+1));
+              group->SetHMName(linestr.substr(idx+1, std::string::npos).c_str());
             }
           else
             group->SetHMName(line);
@@ -140,7 +140,7 @@ namespace OpenBabel
   }
 
   SpaceGroup::SpaceGroup():
-    m_HM(""),m_Hall(""),m_id(0),m_OriginAlternative(0)
+    HEXAGONAL_ORIGIN(10), m_HM(""),m_Hall(""),m_id(0),m_OriginAlternative(0)
   {
   }
 
@@ -151,15 +151,21 @@ namespace OpenBabel
       delete *i;
   }
 
-  void SpaceGroup::SetHMName(const std::string &name)
+  void SpaceGroup::SetHMName(const char *name_in)
   {
-    std::string::size_type idx=name.find(':');
+    string name = std::string(name_in);
+    std::string::size_type idx = name.find(':');
     if (idx != std::string::npos)
       {
-        m_OriginAlternative = atoi (name.c_str () + idx + 1);
-        m_HM = name.substr (0, idx);
-	  } else
-        m_HM = name;
+        std::string origin = name.substr(idx + 1, std::string::npos);
+        if (origin == "H")
+          {
+            m_OriginAlternative = HEXAGONAL_ORIGIN;
+          } else {
+            m_OriginAlternative = atoi (origin.c_str());
+          }
+      }
+    m_HM = name;
   }
 
   /*!
@@ -431,7 +437,7 @@ namespace OpenBabel
             if (stripped_HM.length() > 0 && _SpaceGroups.sgbn[nm] == NULL)
               _SpaceGroups.sgbn[nm] = this;
 		  }
-        if ((m_OriginAlternative & (1 == 0)) && (_SpaceGroups.sgbn[m_HM] == NULL))
+        if (((m_OriginAlternative & 1) == 0) && (_SpaceGroups.sgbn[m_HM] == NULL))
           _SpaceGroups.sgbn[m_HM] = this;
 	  }
     // Also use the HM symbol stripped from whitespaces as key
@@ -552,8 +558,10 @@ namespace OpenBabel
         _SpaceGroups.sgbn.find(stripped_hm)!=_SpaceGroups.sgbn.end() &&
         (found = _SpaceGroups.sgbn[stripped_hm]))
       {
-        if (*found == *group)
+        if (*found == *group){
+          found = _SpaceGroups.sgbn[found->GetHallName()];
           return found;
+        }
         if (group->m_transforms.size())
           {// If transforms (symmetry operations) are listed, make sure they match the tabulated ones
             list<const SpaceGroup*>::const_iterator i, end = _SpaceGroups.sgbi[found->m_id - 1].end();

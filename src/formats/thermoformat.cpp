@@ -98,9 +98,8 @@ bool ThermoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     for(i=0;i<toks.size();i+=2)
     {
       OBAtom atom;
-      atom.SetAtomicNum(etab.GetAtomicNum(toks[i].c_str()));
+      atom.SetAtomicNum(OBElements::GetAtomicNum(toks[i].c_str()));
       elnum = atoi(toks[i+1].c_str());
-      atom.ForceNoH();
       for(;elnum>0;--elnum)
         pmol->AddAtom(atom);
     }
@@ -117,8 +116,7 @@ bool ThermoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         if(elname[1]==' ')
           elname[1]=0;
         OBAtom atom;
-        atom.SetAtomicNum(etab.GetAtomicNum(elname));
-        atom.ForceNoH();
+        atom.SetAtomicNum(OBElements::GetAtomicNum(elname));
         for(;elnum>0;--elnum)
           pmol->AddAtom(atom);
       }
@@ -165,7 +163,7 @@ bool ThermoFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   }
   ostream &ofs = *pConv->GetOutStream();
   unsigned int i;
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && (_MSC_VER < 1900)
   unsigned oldf = _set_output_format(_TWO_DIGIT_EXPONENT);
 #endif
   string formula = pmol->GetSpacedFormula();
@@ -207,7 +205,9 @@ bool ThermoFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   ofs << "                   4\n";
 
 #ifdef _MSC_VER
+#if _MSC_VER < 1900
   _set_output_format(oldf);
+#endif
 #endif
 
   return true;

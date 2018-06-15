@@ -153,7 +153,6 @@ namespace OpenBabel
 
     int chainNum = 1;
     char buffer[BUFF_SIZE];
-    OBBitVec bs;
     string line, key, value;
     OBPairData *dp;
 
@@ -219,7 +218,6 @@ namespace OpenBabel
             << endl << buffer << endl;
           obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obError);
         }
-        if (EQn(buffer,"ATOM",4)) {bs.SetBitOn(mol.NumAtoms());}
         continue;
       }
       if ((EQn(buffer,"REMARK",6)) || (EQn(buffer,"USER",4)))
@@ -288,7 +286,7 @@ namespace OpenBabel
       return(false);
     }
 
-    resdat.AssignBonds(mol,bs);
+    resdat.AssignBonds(mol);
     /*assign hetatm bonds based on distance*/
 
     mol.EndModify();
@@ -321,7 +319,7 @@ namespace OpenBabel
     bool het=false;
 
     OBResidue *res;
-    strncpy(type_name, etab.GetSymbol(atom->GetAtomicNum()), sizeof(type_name));
+    strncpy(type_name, OBElements::GetSymbol(atom->GetAtomicNum()), sizeof(type_name));
     type_name[sizeof(type_name) - 1] = '\0';
     //two char. elements are on position 13 and 14 one char. start at 14
 
@@ -342,7 +340,7 @@ namespace OpenBabel
       the_chain = res->GetChain();
 
       //two char. elements are on position 13 and 14 one char. start at 14
-      if (strlen(etab.GetSymbol(atom->GetAtomicNum())) == 1)
+      if (strlen(OBElements::GetSymbol(atom->GetAtomicNum())) == 1)
       {
         if (strlen(type_name) < 4)
         {
@@ -368,15 +366,15 @@ namespace OpenBabel
       res_num = 1;
     }
 
-    element_name = etab.GetSymbol(atom->GetAtomicNum());
+    element_name = OBElements::GetSymbol(atom->GetAtomicNum());
     char element_name_final[3];
     element_name_final[2] = '\0';
 
-    if (atom->IsHydrogen()) {element_name_final[0]='H'; element_name_final[1]='D';}
-    else if ((atom->IsCarbon()) && (atom->IsAromatic())) {element_name_final[0]='A'; element_name_final[1]=' ';}
-    else if (atom->IsOxygen())  {element_name_final[0]='O'; element_name_final[1]='A';}
-    else if ((atom->IsNitrogen()) && (atom->IsHbondAcceptor())) {element_name_final[0]='N'; element_name_final[1]='A';}
-    else if ((atom->IsSulfur()) && (atom->IsHbondAcceptor())) {element_name_final[0]='S'; element_name_final[1]='A';}
+    if (atom->GetAtomicNum() == OBElements::Hydrogen) {element_name_final[0]='H'; element_name_final[1]='D';}
+    else if ((atom->GetAtomicNum() == OBElements::Carbon) && (atom->IsAromatic())) {element_name_final[0]='A'; element_name_final[1]=' ';}
+    else if (atom->GetAtomicNum() == OBElements::Oxygen)  {element_name_final[0]='O'; element_name_final[1]='A';}
+    else if ((atom->GetAtomicNum() == OBElements::Nitrogen) && (atom->IsHbondAcceptor())) {element_name_final[0]='N'; element_name_final[1]='A';}
+    else if ((atom->GetAtomicNum() == OBElements::Sulfur) && (atom->IsHbondAcceptor())) {element_name_final[0]='S'; element_name_final[1]='A';}
     else
     {
       if (!isalnum(element_name[0])) {element_name_final[0]=' ';}
@@ -436,34 +434,22 @@ namespace OpenBabel
         best_root_atom=i;
       }
     }
-    vector <unsigned int> bonds_to_delete;
-    {
-      OBMol  mol_pieces = mol;
-      for (OBBondIterator it=mol_pieces.BeginBonds(); it != mol_pieces.EndBonds(); it++)
-      {
-        if (IsRotBond_PDBQT((*it)))
-        {
-          bonds_to_delete.push_back((*it)->GetIdx());
-        }
-      }
 
-      if (bonds_to_delete.size() != 0) //checks there is something to delete
+    vector <OBBond*> bonds_to_delete;
+    OBMol mol_pieces = mol;
+    for (OBBondIterator it=mol_pieces.BeginBonds(); it != mol_pieces.EndBonds(); it++)
+    {
+      if (IsRotBond_PDBQT((*it)))
       {
-        vector <unsigned int>::iterator itb=bonds_to_delete.end();
-        --itb;
-        for (OBBondIterator it=mol_pieces.EndBonds(); true; )
-        {
-          it--;
-          if ( (*it)->GetIdx() == (*itb) )
-          {
-            mol_pieces.DeleteBond((*it), true);
-            if (itb == bonds_to_delete.begin()) {break;}
-            else {--itb;}
-          }
-        }
+        bonds_to_delete.push_back(*it);
       }
-      mol_pieces.ContigFragList(rigid_fragments);
     }
+    for (vector<OBBond*>::iterator bit = bonds_to_delete.begin(); bit != bonds_to_delete.end(); ++bit)
+    {
+      mol_pieces.DeleteBond(*bit, true);
+    }
+    mol_pieces.ContigFragList(rigid_fragments);
+
     return best_root_atom;
   }
 
@@ -676,13 +662,68 @@ namespace OpenBabel
     return count;
   }
 
+  static bool IsImide(OBBond* querybond)
+  {
+    if (querybond->GetBO() != 2)
+      return(false);
+
+    OBAtom* bgn = querybond->GetBeginAtom();
+    OBAtom* end = querybond->GetEndAtom();
+    if ((bgn->GetAtomicNum() == 6 && end->GetAtomicNum() == 7) ||
+      (bgn->GetAtomicNum() == 7 && end->GetAtomicNum() == 6))
+      return(true);
+
+    return(false);
+  }
+
+  static unsigned int TotalNumberOfBonds(OBAtom* atom)
+  {
+    return atom->GetImplicitHCount() + atom->GetValence();
+  }
+
+  static bool IsAmidine(OBBond* querybond)
+  {
+    OBAtom *c, *n;
+    c = n = NULL;
+
+    // Look for C-N bond
+    OBAtom* bgn = querybond->GetBeginAtom();
+    OBAtom* end = querybond->GetEndAtom();
+    if (bgn->GetAtomicNum() == 6 && end->GetAtomicNum() == 7)
+    {
+      c = bgn;
+      n = end;
+    }
+    if (bgn->GetAtomicNum() == 7 && end->GetAtomicNum() == 6)
+    {
+      c = end;
+      n =bgn;
+    }
+    if (!c || !n) return(false);
+    if (querybond->GetBondOrder() != 1) return(false);
+    if (TotalNumberOfBonds(n) != 3) return false; // must be a degree 3 nitrogen
+
+    // Make sure C is attached to =N
+    OBBond *bond;
+    vector<OBBond*>::iterator i;
+    for (bond = c->BeginBond(i); bond; bond = c->NextBond(i))
+    {
+      if (IsImide(bond)) return(true);
+    }
+
+    // Return
+    return(false);
+  }
+
 
   /////////////////////////////////////////////////////////////////////////
   bool IsRotBond_PDBQT(OBBond * the_bond)
   //identifies a bond as rotatable if it is a single bond, not amide, not in a ring,
   //and if both atoms it connects have at least one other atom bounded to them
   {
-    if ( !the_bond->IsSingle() || the_bond->IsAmide() || the_bond->IsAmidine() || the_bond->IsInRing() ) {return false;}
+    if ( the_bond->GetBondOrder() != 1 || the_bond->IsAromatic() || 
+         the_bond->IsAmide() || IsAmidine(the_bond) || the_bond->IsInRing() )
+      return false;
     if ( ((the_bond->GetBeginAtom())->GetValence() == 1) || ((the_bond->GetEndAtom())->GetValence() == 1) ) {return false;}
     return true;
   }
@@ -787,6 +828,10 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol & mol = *pmol;
 
+    if(!mol.HasAromaticPerceived()) { //need aromaticity for correct atom typing
+      aromtyper.AssignAromaticFlags(mol);
+    }
+
     if (pConv->IsOption("b",OBConversion::OUTOPTIONS)) {mol.ConnectTheDots(); mol.PerceiveBondOrders();}
     vector <OBMol> all_pieces;
     if ( ((pConv->IsOption("c",OBConversion::OUTOPTIONS)!=NULL) && (pConv->IsOption("r",OBConversion::OUTOPTIONS)!=NULL))
@@ -806,7 +851,7 @@ namespace OpenBabel
       bool residue=false;
       string res_name="";
       string res_chain="";
-      unsigned int res_num=1;
+      int res_num=1;
       if (pConv->IsOption("s",OBConversion::OUTOPTIONS))
       {
         residue=true;
@@ -818,6 +863,7 @@ namespace OpenBabel
       }
 
       all_pieces.at(i).SetAutomaticPartialCharge(false);
+      all_pieces.at(i).SetAromaticPerceived(); //retain aromatic flags in fragments
       if (!(pConv->IsOption("h",OBConversion::OUTOPTIONS))) {
       	DeleteHydrogens(all_pieces.at(i));
 			}
@@ -864,7 +910,7 @@ namespace OpenBabel
             for (bondAtomNum=0; bondAtomNum < 2; bondAtomNum++)
             {
               memset(type_name, 0, sizeof(type_name));
-              strncpy(type_name, etab.GetSymbol(rotBondTable[rotBondId][bondAtomNum]->GetAtomicNum()), sizeof(type_name));
+              strncpy(type_name, OBElements::GetSymbol(rotBondTable[rotBondId][bondAtomNum]->GetAtomicNum()), sizeof(type_name));
               if (strlen(type_name) > 1)
                 type_name[1] = toupper(type_name[1]);
               if ((res = rotBondTable[rotBondId][bondAtomNum]->GetResidue()) != 0)
@@ -959,6 +1005,7 @@ namespace OpenBabel
 
       bool preserve_original_index = (pConv->IsOption("p",OBConversion::OUTOPTIONS));
       if (!flexible) {preserve_original_index=false;} //no need to relabel if we are preserving the original order anyway
+
       if (!OutputTree(pConv, all_pieces.at(i), ofs, tree, rotatable_bonds, false, preserve_original_index) )
 //      if (!OutputTree(mol, ofs, tree, rotatable_bonds, false, preserve_original_index) )
       {
@@ -1096,13 +1143,12 @@ namespace OpenBabel
     string zstr = sbuf.substr(40,8);
     vector3 v(atof(xstr.c_str()),atof(ystr.c_str()),atof(zstr.c_str()));
     atom.SetVector(v);
-    atom.ForceImplH();
 
     // useful for debugging unknown atom types (e.g., PR#1577238)
-    //    cout << mol.NumAtoms() + 1  << " : '" << element << "'" << " " << etab.GetAtomicNum(element.c_str()) << endl;
+    //    cout << mol.NumAtoms() + 1  << " : '" << element << "'" << " " << OBElements::GetAtomicNum(element.c_str()) << endl;
 
 
-    atom.SetAtomicNum(etab.GetAtomicNum(element.c_str()));
+    atom.SetAtomicNum(OBElements::GetAtomicNum(element.c_str()));
 
     if ( (! scharge.empty()) && "     " != scharge )
     {

@@ -1,15 +1,10 @@
-# Please ensure that any changes remain compliant with 2.4.8.
+# Please ensure that any changes remain compliant with 2.8.10.
 if(NOT EMBED_OPENBABEL)
-  cmake_minimum_required(VERSION 2.4.8)
+  cmake_minimum_required(VERSION 2.8.10)
 endif()
 
 project(openbabel)
 set(CMAKE_MODULE_PATH ${openbabel_SOURCE_DIR}/cmake/modules)
-
-# Allow loose loop constructs, i.e. no matching in if/else/endif or loops.
-# Note that this is true by default in CMake 2.6.0, but we currently only
-# require CMake 2.4.8 - remove this when the CMake requirement is bumped.
-set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS 1)
 
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
@@ -20,13 +15,12 @@ if(COMMAND cmake_policy)
 endif()
 
 include (CheckCXXCompilerFlag)
-include (MacroEnsureVersion)
 
 # Version numbering - should be bumped for each release
 # Note that for "beta" releases, we should start at x.90.0 -- we've
 # had too many 1.100.1 releases. :-)
 set(BABEL_MAJ_VER   2)
-set(BABEL_MIN_VER   3)
+set(BABEL_MIN_VER   4)
 set(BABEL_PATCH_VER 90)
 
 # This should be phased out in preference for just using the target name
@@ -116,6 +110,7 @@ if(BUILD_SHARED)
   set(BUILD_TYPE SHARED)
   set(PLUGIN_TYPE MODULE)
   add_definitions(-DUSING_DYNAMIC_LIBS)
+  set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 else()
   set(BUILD_TYPE STATIC)
   set(PLUGIN_TYPE STATIC)
@@ -238,16 +233,21 @@ check_type_size(clock_t CLOCK_T)
 
 # Get the GCC version - from KDE4 cmake files
 if(CMAKE_COMPILER_IS_GNUCXX)
-  exec_program(${CMAKE_C_COMPILER} ARGS --version OUTPUT_VARIABLE _gcc_version_info)
-  string(REGEX MATCH "[345]\\.[0-9]\\.[0-9]" _gcc_version "${_gcc_version_info}")
-  # gcc on mac just reports: "gcc (GCC) 3.3 20030304 ..." without the
-  # patch level, handle this here:
-  if (NOT _gcc_version)
-    string (REGEX REPLACE ".*\\(GCC\\).* ([34]\\.[0-9]) .*" "\\1.0" _gcc_version "${_gcc_version_info}")
-  endif ()
-  macro_ensure_version("4.0.0" "${_gcc_version}" GCC_IS_NEWER_THAN_4_0)
-  macro_ensure_version("4.1.0" "${_gcc_version}" GCC_IS_NEWER_THAN_4_1)
-  macro_ensure_version("4.2.0" "${_gcc_version}" GCC_IS_NEWER_THAN_4_2)
+  if(NOT(${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 4.0.0))
+    set(GCC_IS_NEWER_THAN_4_0 TRUE)
+  else()
+    set(GCC_IS_NEWER_THAN_4_0 FALSE)
+  endif()
+  if(NOT(${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 4.1.0))
+    set(GCC_IS_NEWER_THAN_4_1 TRUE)
+  else()
+    set(GCC_IS_NEWER_THAN_4_1 FALSE)
+  endif()
+  if(NOT(${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 4.2.0))
+    set(GCC_IS_NEWER_THAN_4_2 TRUE)
+  else()
+    set(GCC_IS_NEWER_THAN_4_2 FALSE)
+  endif()
 endif()
 
 if(UNIX)
@@ -382,6 +382,7 @@ if(${CMAKE_CXX_COMPILER_ID} MATCHES Intel AND UNIX)
 
   # define WITH_SSE2 to enable the SSE2 instruction set.
   # Available on Pentium 4, Athlon 64, and newer CPUs.
+  # TODO: Remove this? Should be handled by -march=native and only enabled if OPTIMIZE_NATIVE is ON
   if(CMAKE_SIZEOF_VOID_P EQUAL 8 OR WITH_SSE2)
     message(STATUS "Enabling the SSE2 instruction set")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse2")
@@ -415,18 +416,15 @@ if(UNIX AND BUILD_SHARED)
   endif()
 endif()
 
-# this is adapted from KDE's FindKDE4Internal.cmake : default the build type to
-# "release with debug info".
-#
-# We will define two other build types: Debug and Release.
-# These names are case-insensitive i.e. you can do -DCMAKE_BUILD_TYPE=debug
+# Three build types are available: Release, Debug, RelWithDebInfo.
+# We default to Release.
 if(NOT CMAKE_BUILD_TYPE)
-   set(CMAKE_BUILD_TYPE RelWithDebInfo)
+   set(CMAKE_BUILD_TYPE Release)
 endif()
 
 #define various build types
 if(CMAKE_COMPILER_IS_GNUCXX)
-  set (CMAKE_CXX_FLAGS_RELEASE        "${CMAKE_CXX_FLAGS_RELEASE} -O2 -DNDEBUG")
+  set (CMAKE_CXX_FLAGS_RELEASE        "${CMAKE_CXX_FLAGS_RELEASE} -O3 -DNDEBUG")
   set (CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -O2 -g")
   set (CMAKE_CXX_FLAGS_DEBUG          "${CMAKE_CXX_FLAGS_DEBUG} -D_GLIBCXX_DEBUG -g3 -fno-inline")
 endif()
@@ -462,6 +460,35 @@ else()
 endif()
 #cjh
 
+option(WITH_JSON "Build JSON support" ON)
+option(OPENBABEL_USE_SYSTEM_RAPIDJSON "Use the system rapidjson if available." ON)
+if(WITH_JSON)
+  set(RAPIDJSON_VERSION_MIN 1.1.0)
+  # First try find system rapidjson
+  if(OPENBABEL_USE_SYSTEM_RAPIDJSON)
+    find_package(RapidJSON ${RAPIDJSON_VERSION_MIN})
+  endif()
+  # Otherwise download rapidjson to openbabel source directory
+  if (NOT RAPIDJSON_FOUND OR RAPIDJSON_VERSION VERSION_LESS ${RAPIDJSON_VERSION_MIN})
+    set(RAPIDJSON_VERSION 1.1.0)
+    if(NOT EXISTS "${openbabel_SOURCE_DIR}/external/rapidjson-${RAPIDJSON_VERSION}")
+      file(DOWNLOAD "https://github.com/Tencent/rapidjson/archive/v${RAPIDJSON_VERSION}.tar.gz"
+        "${openbabel_SOURCE_DIR}/external/rapidjson-${RAPIDJSON_VERSION}.tar.gz" STATUS status)
+      execute_process(COMMAND ${CMAKE_COMMAND} -E tar zxf
+        ${openbabel_SOURCE_DIR}/external/rapidjson-${RAPIDJSON_VERSION}.tar.gz
+        WORKING_DIRECTORY ${openbabel_SOURCE_DIR}/external)
+      message(STATUS "Downloaded RapidJSON to ${openbabel_SOURCE_DIR}/external/rapidjson-${RAPIDJSON_VERSION}.")
+    endif()
+    set(RAPIDJSON_FOUND TRUE)
+    set(RAPIDJSON_INCLUDE_DIRS ${openbabel_SOURCE_DIR}/external/rapidjson-${RAPIDJSON_VERSION}/include)
+  endif()
+  if(RAPIDJSON_FOUND)
+    message(STATUS "JSON formats will be supported. Using RapidJSON ${RAPIDJSON_VERSION} at ${RAPIDJSON_INCLUDE_DIRS}")
+    add_definitions(-DHAVE_RADPIJSON)
+    include_directories(${RAPIDJSON_INCLUDE_DIRS})
+  endif()
+endif()
+
 find_package(Cairo)
 if(CAIRO_FOUND)
   message(STATUS "Cairo found. PNG output will be supported.")
@@ -470,13 +497,23 @@ else(CAIRO_FOUND)
 endif(CAIRO_FOUND)
 
 # Should we enable optimizations for the native CPU architecture?
-# (this will speed up similarity calculations and maybe those involving Eigen)
-if(NOT MSVC)
-  option(OPTIMIZE_NATIVE "Optimize for native CPU architecture. Turn off if compiling for distribution/reuse on other machines." OFF)
-  if(OPTIMIZE_NATIVE)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
-    message(STATUS "Optimizing code for this machine's CPU architecture. Use -DOPTIMIZE_NATIVE=OFF if compiling for distribution/reuse on other machines.")
+# (this will speed up JSON handling, similarity calculations and maybe those involving Eigen)
+option(OPTIMIZE_NATIVE "Optimize for native CPU architecture. Turn off if compiling for distribution/reuse on other machines." OFF)
+if(OPTIMIZE_NATIVE)
+  include(OptimizeNative)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${NATIVE_FLAGS}")
+  # Tell rapidjson which extensions are available
+  if(HAVE_SSE2)
+    add_definitions(-DRAPIDJSON_SSE2)
   endif()
+  if(HAVE_SSE4_2)
+    add_definitions(-DRAPIDJSON_SSE42)
+  endif()
+  if(HAVE_NEON)
+    add_definitions(-DRAPIDJSON_NEON)
+  endif()
+  add_definitions(-DOPTIMIZE_NATIVE)
+  message(STATUS "Optimizing code for this machine's CPU architecture. Use -DOPTIMIZE_NATIVE=OFF if compiling for distribution/reuse on other machines.")
 endif()
 
 add_subdirectory(include)
@@ -510,13 +547,6 @@ if(ENABLE_TESTS)
   include(CTest)
   enable_testing()
   add_subdirectory(test)
-endif()
-
-# To build the JSON formats, you need to provide an import library for MSVC
-if(MSVC)
-  if (NOT JSON_LIBRARY)
-    message(STATUS "JSON formats will NOT be built. To build, specify the location of the jsoncpp library with -DJSON_LIBRARY")
-  endif()
 endif()
 
 # Should the language bindings be regenereted?

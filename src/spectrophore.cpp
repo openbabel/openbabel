@@ -30,13 +30,13 @@ namespace OpenBabel
 
 OBSpectrophore::OBSpectrophore(void)
 :  _resolution(3.0)
-,  _beginProbe(0)
-,  _endProbe(0)
-,  _numberOfProbes(0)
 ,  _property(NULL)
 ,  _radii(NULL)
 ,  _oricoor(NULL)
 ,  _coor(NULL)
+,  _beginProbe(0)
+,  _endProbe(0)
+,  _numberOfProbes(0)
 {
    SetAccuracy(OBSpectrophore::AngStepSize20);
    SetStereo(OBSpectrophore::NoStereoSpecificProbes);
@@ -47,14 +47,14 @@ OBSpectrophore::OBSpectrophore(void)
 
 OBSpectrophore::OBSpectrophore(const OBSpectrophore& s)
 :  _resolution(s._resolution)
-,  _beginProbe(s._beginProbe)
-,  _endProbe(s._endProbe)
-,  _numberOfProbes(s._numberOfProbes)
-,  _spectro(s._spectro)
 ,  _property(NULL)
 ,  _radii(NULL)
 ,  _oricoor(NULL)
 ,  _coor(NULL)
+,  _beginProbe(s._beginProbe)
+,  _endProbe(s._endProbe)
+,  _numberOfProbes(s._numberOfProbes)
+,  _spectro(s._spectro)
 {
    SetAccuracy(s.GetAccuracy());
    SetStereo(s.GetStereo());
@@ -1885,14 +1885,12 @@ OBSpectrophore::_luDecompose(double** A, std::vector<int>& I, unsigned int dim)
 void
 OBSpectrophore::_luSolve(double** A, std::vector<int>& I, double* B, unsigned int dim)
 {
-   unsigned int i, k;
-
-   for (i = 0; i < dim; ++i) _swapRows(B, i, I[i]);
+   for (unsigned int i = 0; i < dim; ++i) _swapRows(B, i, I[i]);
 
    // forward substitution pass
-   for (k = 0; k < dim; ++k)
+   for (unsigned int k = 0; k < dim; ++k)
    {
-      for (i = k+1; i < dim; ++i)
+      for (unsigned int i = k+1; i < dim; ++i)
       {
          B[i] -= A[i][k] * B[k];
       }
@@ -1902,7 +1900,7 @@ OBSpectrophore::_luSolve(double** A, std::vector<int>& I, double* B, unsigned in
    for (int i = dim - 1; i >= 0; --i)
    {
       B[i] /= A[i][i];
-      for (k = 0; k < i; ++k)
+      for (int k = 0; k < i; ++k)
       {
          B[k] -= A[k][i] * B[i];
       }

@@ -52,12 +52,6 @@ namespace OpenBabel
 #define OB_TORUP_BOND     (1<<5)
   //! The "down" bond in a double bond cis/trans isomer (i.e., "/" in SMILES) <-- same
 #define OB_TORDOWN_BOND   (1<<6)
-  //! A Kekule single bond
-#define OB_KSINGLE_BOND   (1<<7)
-  //! A Kekule double bond
-#define OB_KDOUBLE_BOND   (1<<8)
-  //! A Kekule triple bond
-#define OB_KTRIPLE_BOND   (1<<9)
   //! A bond which "closes" a ring when walking the molecular graph
 #define OB_CLOSURE_BOND   (1<<10)
   // 11-16 currently unused
@@ -137,12 +131,6 @@ namespace OpenBabel
       void SetLength(double length);
       //! Set the main bond information (i.e., when creating a bond)
       void Set(int index, OBAtom* begin,OBAtom* end,int order,int flags);
-      //! \deprecated Use SetBondOrder() instead
-      void SetKSingle();
-      //! \deprecated Use SetBondOrder() instead
-      void SetKDouble();
-      //! \deprecated Use SetBondOrder() instead
-      void SetKTriple();
       //! Mark that this bond is aromatic. Does not update atoms or validate.
       void SetAromatic()    { SetFlag(OB_AROMATIC_BOND); }
       /**
@@ -181,11 +169,6 @@ namespace OpenBabel
       void UnsetDown()      { UnsetFlag(OB_TORDOWN_BOND); }
       //! Clear all aromaticity information for the bond
       void UnsetAromatic()  { UnsetFlag(OB_AROMATIC_BOND);}
-      //! Clear all Kekule information for the bond
-      void UnsetKekule()
-        {
-          _flags &= (~(OB_KSINGLE_BOND|OB_KDOUBLE_BOND|OB_KTRIPLE_BOND));
-        }
       //@}
 
       //! \name Bond data request methods
@@ -255,10 +238,11 @@ namespace OpenBabel
       //! \return Is the bond a rotatable bond?
       /**  Currently, this function classifies any bond with at least one heavy
            atom, no sp-hybrid atoms (e.g., a triple bond somewhere) not in a ring
-           as a potential rotor. No other bond typing is attempted.
+           as a potential rotor if includeRingsBonds is false.  If true, rotors in
+           rings with more than 3 atoms may be included. No other bond typing is attempted.
            For more detailed rotor detection, check the OBRotorList and
            OBRotorRules classes **/
-      bool IsRotor();
+      bool IsRotor(bool includeRingBonds=false);
       /** \return Is the bond an amide link (i.e., between a carbonyl C and a N)?
            No distinction is made between primary, secondary, and tertiary amides. **/
       bool IsPeriodic();
@@ -273,28 +257,10 @@ namespace OpenBabel
       //! \return Is the bond a teriary amide (i.e., between a carbonyl C and a NH0)?
       //!  \since version 2.3.
       bool IsTertiaryAmide();
-      //! \return Is the bond an amidine link (i.e., between an imide C and a N)?
-      //! \since version 2.4
-      bool IsAmidine();
       //! \return Is the bond an ester link (i.e., between a carbonyl C and an O)?
       bool IsEster();
       //! \return Is the bond a carbonyl C=O?
       bool IsCarbonyl();
-      //! \return Is the bond an imide C=N?
-      //! \since version 2.4
-      bool IsImide();
-      //! \return Is the bond a single bond?
-      bool IsSingle();
-      //! \return Is the bond is a double bond?
-      bool IsDouble();
-      //! \return Is the bond is a triple bond?
-      bool IsTriple();
-      //! \deprecated Use IsSingle() instead
-      bool IsKSingle();
-      //! \deprecated Use IsDouble() instead
-      bool IsKDouble();
-      //! \deprecated Use IsTriple() instead
-      bool IsKTriple();
       //! \return Does this bond "close" a ring when walking the molecular graph?
       bool IsClosure();
       /** \return Whether this is the "upper" bond in a double bond cis/trans

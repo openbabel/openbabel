@@ -472,7 +472,7 @@ bool YOBFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   //  bool hetatom;
   char buffer[32],/*resname[4],*/atomname[5];
-  char double1[8]={0,0,0,0,0,0,-16,0x3f};
+  unsigned char double1[8]={0,0,0,0,0,0,0xf0,0x3f};
   //   char *str;
   int i,j,/*m,q,*/pos;
   int /*resno,chainNum,link,linktype,*/atoms,element,links/*,chain*/;
@@ -500,7 +500,7 @@ bool YOBFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   mem_set(buffer,0,8);
   for (i=0;i<4;i++)
   { for (j=0;j<4;j++)
-    { if (i==j) ofs.write(double1,8);
+    { if (i==j) ofs.write((char*)double1,8);
       else ofs.write(buffer,8); } }
   storeint32le(buffer,MOB_INFOEND);
   storeint32le(&buffer[4],MOB_INFOENDSIZE);
@@ -561,7 +561,7 @@ bool YOBFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       str_copy(&buffer[8],(char*)res->GetName().c_str());
       snprintf(&buffer[12], 4, "%4d",res->GetNum()); }
     else
-    { str_copy(&buffer[4],etab.GetSymbol(element));
+    { str_copy(&buffer[4],OBElements::GetSymbol(element));
       str_copy(&buffer[8],"UNK    1"); }
     for (j=4;j<16;j++) if (!buffer[j]) buffer[j]=' ';
     ofs.write(buffer,16); }

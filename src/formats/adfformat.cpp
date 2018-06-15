@@ -1,5 +1,6 @@
 //
 // Copyright (C) 2010 David C. Lonie
+// Copyright (C) 2018 Patrick Avery
 //
 // Molekel - Molecular Visualization Program
 // Copyright (C) 2006, 2007 Swiss National Supercomputing Centre (CSCS)
@@ -124,7 +125,7 @@ namespace OpenBabel {
             while (strstr(buffer, "----") == NULL && vs.size() >= 8)
               {
                 atom = mol.NewAtom();
-                atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str())); // atom number, then symbol
+                atom->SetAtomicNum(OBElements::GetAtomicNum(vs[1].c_str())); // atom number, then symbol
                 // columns 2, 3, 4 = coordinates in bohr
                 x = atof((char*)vs[5].c_str());
                 y = atof((char*)vs[6].c_str());
@@ -316,7 +317,7 @@ namespace OpenBabel {
     FOR_ATOMS_OF_MOL(atom, mol)
       {
         snprintf(buffer, BUFF_SIZE, "%-3s%15.5f%15.5f%15.5f\n",
-                 etab.GetSymbol(atom->GetAtomicNum()),
+                 OBElements::GetSymbol(atom->GetAtomicNum()),
                  atom->GetX(),
                  atom->GetY(),
                  atom->GetZ());
@@ -351,6 +352,284 @@ namespace OpenBabel {
 
     ofs << endl; // one final blank line
 
+    return true;
+  }
+
+  class ADFBandFormat : public OBMoleculeFormat
+  {
+  public:
+    //Register this format type ID
+    ADFBandFormat()
+    {
+      OBConversion::RegisterFormat("adfband",this);
+    }
+
+    virtual const char* Description() //required
+    {
+      return "ADF Band output format\n";
+    };
+
+    virtual const char* SpecificationURL()
+    {return "https://www.scm.com/product/band_periodicdft/";}; //optional
+
+    //Flags() can return be any the following combined by | or be omitted if none apply
+    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
+    virtual unsigned int Flags()
+    {
+      return READONEONLY | NOTWRITABLE;
+    };
+
+    /// The "API" interface functions
+    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+  };
+  //***
+
+  //Make an instance of the format class
+  ADFBandFormat theADFBandFormat;
+
+  /////////////////////////////////////////////////////////////////
+  bool ADFBandFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  {
+    OBMol* pmol = pOb->CastAndClear<OBMol>();
+    if (!pmol)
+      return false;
+
+    //Define some references so we can use the old parameter names
+    istream &ifs = *pConv->GetInStream();
+    OBMol &mol = *pmol;
+    const char* title = pConv->GetTitle();
+
+    char buffer[BUFF_SIZE];
+    vector<string> vs;
+
+    // This will remain as 1.0 if we have units of Angstroms
+    double lengthConversion = 1.0;
+
+    mol.BeginModify();
+
+    while (ifs.getline(buffer, BUFF_SIZE)) {
+      if (strstr(buffer, "length Bohr") || strstr(buffer, "length BOHR") ||
+          strstr(buffer, "length bohr")) {
+        // We have units of Bohr!
+        lengthConversion = BOHR_TO_ANGSTROM;
+      }
+      else if (strstr(buffer,
+                      "G E O M E T R Y    I N    X - Y - Z    F O R M A T")) {
+        // We need to clear the atoms before proceeding. Since this comes
+        // before all the other data, we can just clear the whole molecule
+        mol.Clear();
+        mol.BeginModify();
+
+        ifs.getline(buffer, BUFF_SIZE); // ===========
+        ifs.getline(buffer, BUFF_SIZE); // *blank line*
+        while (ifs.getline(buffer, BUFF_SIZE)) {
+          tokenize(vs, buffer);
+          if (vs.size() < 4 || vs[0] == "VEC1")
+            break;
+
+          OBAtom* atom = mol.NewAtom();
+          atom->SetAtomicNum(OBElements::GetAtomicNum(vs[0].c_str()));
+          double x = atof(vs[1].c_str()) * lengthConversion;
+          double y = atof(vs[2].c_str()) * lengthConversion;
+          double z = atof(vs[3].c_str()) * lengthConversion;
+          atom->SetVector(x, y, z);
+        }
+      }
+      else if (strstr(buffer, "REAL SPACE LATTICE VECTORS")) {
+        ifs.getline(buffer, BUFF_SIZE); // ------------
+
+        std::vector<vector3> vectors;
+        for (int i = 0; i < 3; ++i) {
+          ifs.getline(buffer, BUFF_SIZE);
+          tokenize(vs, buffer);
+          if (vs.size() < 5)
+            break;
+
+          // These are in Bohrs
+          double x = atof(vs[1].c_str()) * BOHR_TO_ANGSTROM;
+          double y = atof(vs[2].c_str()) * BOHR_TO_ANGSTROM;
+          double z = atof(vs[3].c_str()) * BOHR_TO_ANGSTROM;
+          vectors.push_back(vector3(x, y, z));
+        }
+
+        while (vectors.size() < 3)
+          vectors.push_back(vector3(0.0, 0.0, 0.0));
+
+        // Build unit cell
+        OBUnitCell* cell = new OBUnitCell;
+        cell->SetData(vectors[0], vectors[1], vectors[2]);
+        cell->SetSpaceGroup(1);
+        pmol->SetData(cell);
+      }
+      else if (strstr(buffer, "E N E R G Y   A N A L Y S I S")) {
+        // Final bond energy line looks like this:
+        //  Final bond energy (LDA)                                      -1.09942745     -29.9169     -689.90
+        while (ifs.getline(buffer, BUFF_SIZE)) {
+          if (strstr(buffer, "Final bond energy")) {
+            tokenize(vs, buffer);
+
+            // Line should be of size 7
+            if (vs.size() != 7)
+              break;
+
+            // Units of the final column should be in kcal/mol
+            mol.SetEnergy(atof(vs[6].c_str()));
+            break;
+          }
+        }
+      }
+    }
+
+    if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file
+      mol.EndModify();
+      return false;
+    }
+
+    mol.EndModify();
+
+    mol.SetTitle(title);
+    return true;
+  }
+
+  class ADFDftbFormat : public OBMoleculeFormat
+  {
+  public:
+    //Register this format type ID
+    ADFDftbFormat()
+    {
+      OBConversion::RegisterFormat("adfdftb",this);
+    }
+
+    virtual const char* Description() //required
+    {
+      return "ADF DFTB output format\n";
+    };
+
+    virtual const char* SpecificationURL()
+    {return "https://www.scm.com/product/dftb/";}; //optional
+
+    //Flags() can return be any the following combined by | or be omitted if none apply
+    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
+    virtual unsigned int Flags()
+    {
+      return READONEONLY | NOTWRITABLE;
+    };
+
+    /// The "API" interface functions
+    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+  };
+  //***
+
+  //Make an instance of the format class
+  ADFDftbFormat theADFDftbFormat;
+
+  /////////////////////////////////////////////////////////////////
+  bool ADFDftbFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  {
+    OBMol* pmol = pOb->CastAndClear<OBMol>();
+    if (!pmol)
+      return false;
+
+    //Define some references so we can use the old parameter names
+    istream &ifs = *pConv->GetInStream();
+    OBMol &mol = *pmol;
+    const char* title = pConv->GetTitle();
+
+    char buffer[BUFF_SIZE];
+    vector<string> vs;
+
+    mol.BeginModify();
+
+    while (ifs.getline(buffer, BUFF_SIZE)) {
+      if (strcmp(buffer, "Geometry") == 0) {
+        // We need to clear the atoms before proceeding. Since this comes
+        // before all the other data, we can just clear the whole molecule
+        mol.Clear();
+        mol.BeginModify();
+
+        ifs.getline(buffer, BUFF_SIZE); // ------------
+        ifs.getline(buffer, BUFF_SIZE); // Atoms
+        ifs.getline(buffer, BUFF_SIZE);
+
+        // Make sure it is the correct line
+        if (strstr(buffer, "Index") && strstr(buffer, "Symbol")) {
+          double lengthConversion = 1.0;
+          // Check the units
+          if (strstr(buffer, "bohr"))
+            lengthConversion = BOHR_TO_ANGSTROM;
+
+          while (ifs.getline(buffer, BUFF_SIZE)) {
+            tokenize(vs, buffer);
+            // Should be of size 5
+            if (vs.size() < 5)
+              break;
+
+            OBAtom* atom = mol.NewAtom();
+            atom->SetAtomicNum(OBElements::GetAtomicNum(vs[1].c_str()));
+            double x = atof(vs[2].c_str()) * lengthConversion;
+            double y = atof(vs[3].c_str()) * lengthConversion;
+            double z = atof(vs[4].c_str()) * lengthConversion;
+            atom->SetVector(x, y, z);
+          }
+        }
+
+        // Now read the lattice vectors
+        ifs.getline(buffer, BUFF_SIZE);
+        if (strstr(buffer, "Lattice vectors")) {
+          double lengthConversion = 1.0;
+          // Check the units
+          if (strstr(buffer, "bohr"))
+            lengthConversion = BOHR_TO_ANGSTROM;
+
+          std::vector<vector3> vectors;
+          for (short i = 0; i < 3; ++i) {
+            ifs.getline(buffer, BUFF_SIZE);
+            tokenize(vs, buffer);
+            if (vs.size() != 4)
+              break;
+
+            double x = atof(vs[1].c_str()) * lengthConversion;
+            double y = atof(vs[2].c_str()) * lengthConversion;
+            double z = atof(vs[3].c_str()) * lengthConversion;
+            vectors.push_back(vector3(x, y, z));
+          }
+
+          while (vectors.size() < 3)
+            vectors.push_back(vector3(0.0, 0.0, 0.0));
+
+          // Build unit cell
+          OBUnitCell* cell = new OBUnitCell;
+          cell->SetData(vectors[0], vectors[1], vectors[2]);
+          cell->SetSpaceGroup(1);
+          pmol->SetData(cell);
+        }
+      }
+      else if (strcmp(buffer, "Energies") == 0) {
+        // Final energy line looks like this:
+        // Total Energy (eV)                   -220.34976964
+        while (ifs.getline(buffer, BUFF_SIZE)) {
+          if (strstr(buffer, "Total Energy (eV)")) {
+            tokenize(vs, buffer);
+
+            // Line should be of size 4
+            if (vs.size() != 4)
+              break;
+
+            mol.SetEnergy(atof(vs[3].c_str()) * EV_TO_KCAL_PER_MOL);
+            break;
+          }
+        }
+      }
+    }
+
+    if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file
+      mol.EndModify();
+      return false;
+    }
+
+    mol.EndModify();
+
+    mol.SetTitle(title);
     return true;
   }
 
@@ -410,13 +689,6 @@ public:
     { return false; }
 
 private:
-    ///Maps atom name to atomic number.
-    int GetAtomicNumber( const string& name ) const
-    {
-        int iso;
-        return etab.GetAtomicNum( name.c_str(), iso );
-    }
-
     ///Utility function that eats all the remaining characters on the current and next line.
     void eol( istream& is ) const { string s; getline( is, s ); getline( is, s ); }
 
@@ -613,7 +885,7 @@ bool OBT41Format::ReadASCII( OBBase* pOb, OBConversion* pConv )
       for (unsigned int i = 0; i != numAtoms; ++i)
       {
           ifs >> buf; cout << buf << endl;
-          atoms.push_back( GetAtomicNumber( buf ) );
+          atoms.push_back( OBElements::GetAtomicNum( buf.c_str() ) );
       }
       if( atoms.size() != numAtoms )
       {

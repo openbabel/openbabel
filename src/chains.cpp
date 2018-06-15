@@ -32,6 +32,7 @@ GNU General Public License for more details.
 
 #include <openbabel/mol.h>
 #include <openbabel/chains.h>
+#include <openbabel/elements.h>
 
 using namespace std;
 
@@ -876,7 +877,7 @@ namespace OpenBabel
       atom = mol.GetAtom(i+1); // WARNING: ATOM INDEX ISSUE
 
       if (atomids[i] == -1) {
-        symbol = etab.GetSymbol(atom->GetAtomicNum());
+        symbol = OBElements::GetSymbol(atom->GetAtomicNum());
         if ( symbol[1] ) {
           buffer[0] = symbol[0];
           buffer[1] = (char) toupper(symbol[1]);
@@ -887,7 +888,7 @@ namespace OpenBabel
         buffer[2] = ' ';
         buffer[3] = ' ';
         buffer[4] = '\0';
-      } else if (atom->IsHydrogen()) {
+      } else if (atom->GetAtomicNum() == OBElements::Hydrogen) {
         if (hcounts[i]) {
           snprintf(buffer, BUFF_SIZE, "H%.2s%c", ChainsAtomName[atomids[i]]+2, hcounts[i]+'0');
           if (buffer[1] == ' ') {
@@ -1064,12 +1065,12 @@ namespace OpenBabel
 
     // find un-connected atoms (e.g., HOH oxygen atoms)
     for (atom = mol.BeginAtom(a) ; atom ; atom = mol.NextAtom(a)) {
-      if (atom->IsHydrogen() || atom->GetHvyValence() != 0)
+      if (atom->GetAtomicNum() == OBElements::Hydrogen || atom->GetHvyValence() != 0)
         continue;
 
       unsigned int idx = atom->GetIdx() - 1;
 
-      if (atom->IsOxygen()) {
+      if (atom->GetAtomicNum() == OBElements::Oxygen) {
         resids[idx]   = 1;
         hetflags[idx] = true;
       }
@@ -1096,12 +1097,12 @@ namespace OpenBabel
     vector<OBAtom *>::iterator a;
     for (atom = mol.BeginAtom(a) ; atom ; atom = mol.NextAtom(a)) {
       idx = atom->GetIdx() - 1;
-      if (!hetflags[idx] && chains[idx] == ' ' && !atom->IsHydrogen()) {
+      if (!hetflags[idx] && chains[idx] == ' ' && atom->GetAtomicNum() != OBElements::Hydrogen) {
         size = RecurseChain(mol, idx, 'A' + count);
 
         // size = number of heavy atoms in residue chain
         if (size < 4) { // small ligand, probably
-          if (size == 1 && atom->IsOxygen())
+          if (size == 1 && atom->GetAtomicNum() == OBElements::Oxygen)
             resid = 1; /* HOH */
           else
             resid = 2; /* Unknown ligand */
@@ -1142,7 +1143,7 @@ namespace OpenBabel
     atom = mol.GetAtom(i + 1);
 
     // ignore hydrogens
-    if (atom->IsHydrogen() )
+    if (atom->GetAtomicNum() == OBElements::Hydrogen )
       return 0;
 
     result    = 1;
@@ -1216,7 +1217,10 @@ namespace OpenBabel
   {
     static OBAtom *neighbour[6];
     Template *pep;
-    OBAtom *na,*nb,*nc,*nd;
+    OBAtom *na = (OBAtom*)0;
+    OBAtom *nb = (OBAtom*)0;
+    OBAtom *nc = (OBAtom*)0;
+    OBAtom *nd = (OBAtom*)0;
     OBAtom *atom, *nbr;
     bool change, result;
     int i, count;
@@ -1249,7 +1253,7 @@ namespace OpenBabel
               {
                 count = 0;
                 for (nbr = atom->BeginNbrAtom(b) ; nbr ; nbr = atom->NextNbrAtom(b))
-                  if (!nbr->IsHydrogen())
+                  if (nbr->GetAtomicNum() != OBElements::Hydrogen)
                     neighbour[count++] = nbr;
 
                 if (count >= 1)
@@ -1353,7 +1357,9 @@ namespace OpenBabel
   void OBChainsParser::TracePeptideChain(OBMol &mol, unsigned int i, int r)
   {
     unsigned int neighbour[4];
-    unsigned int na,nb,nc;
+    unsigned int na = 0;
+    unsigned int nb = 0;
+    unsigned int nc = 0;
     OBAtom *atom, *nbr;
     int count;
     int j,k;
@@ -1373,7 +1379,7 @@ namespace OpenBabel
 
     count = 0;
     for (nbr = atom->BeginNbrAtom(b) ; nbr ; nbr = atom->NextNbrAtom(b))
-      if (!nbr->IsHydrogen())
+      if (nbr->GetAtomicNum() != OBElements::Hydrogen)
         neighbour[count++] = nbr->GetIdx()-1;
 
     resnos[idx] = r;
@@ -1570,7 +1576,7 @@ namespace OpenBabel
           atom = mol.GetAtom(curr+1); // WARNING, potential atom index issue
           for (nbr = atom->BeginNbrAtom(b); nbr; nbr = atom->NextNbrAtom(b))
             {
-              if (nbr->IsHydrogen())
+              if (nbr->GetAtomicNum() == OBElements::Hydrogen)
                 continue;
 
               j = nbr->GetIdx() - 1;
@@ -1665,7 +1671,7 @@ namespace OpenBabel
     count = 0;
     atom  = mol.GetAtom(i + 1);
     for (nbr = atom->BeginNbrAtom(b) ; nbr ; nbr = atom->NextNbrAtom(b))
-      if (!nbr->IsHydrogen())
+      if (nbr->GetAtomicNum() != OBElements::Hydrogen)
         neighbour[count++] = nbr->GetIdx() - 1;
 
     resnos[i] = r;
@@ -1816,7 +1822,7 @@ namespace OpenBabel
     vector<OBBond*>::iterator b;
 
     for(atom = mol.BeginAtom(a); atom ; atom = mol.NextAtom(a))
-      if(atom->IsHydrogen())
+      if(atom->GetAtomicNum() == OBElements::Hydrogen)
         {
           nbr = atom->BeginNbrAtom(b);
           if (nbr != NULL)
@@ -1836,7 +1842,7 @@ namespace OpenBabel
     /* Second Pass */
 
     for(atom = mol.BeginAtom(a) ; atom ; atom = mol.NextAtom(a))
-      if (atom->IsHydrogen())
+      if (atom->GetAtomicNum() == OBElements::Hydrogen)
         {
           nbr = atom->BeginNbrAtom(b);
           if (nbr != NULL && hcounts[nbr->GetIdx()-1] == 1)

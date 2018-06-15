@@ -20,8 +20,10 @@ GNU General Public License for more details.
 #include <openbabel/builder.h>
 #include <openbabel/parsmart.h>
 #include <openbabel/mcdlutil.h>
-#include <openbabel/atomclass.h>
 #include <openbabel/shared_ptr.h>
+#include <openbabel/elements.h>
+
+#define MARK_UNUSED(x) (void)(x)
 
 using namespace std;
 namespace OpenBabel
@@ -45,7 +47,7 @@ namespace OpenBabel
     Tries the following in turn until one is sucessful:
     1) If starts with number treat as isotope+element e.g. 2H
     2) Looks up alias in superatom.txt e.g. COOH Pr
-    3) If of the form Rn stored as a * atom with OBAtomClassData
+    3) If of the form Rn stored as a * atom with Atom Class data
     Returns false if none are successful.
     */
 
@@ -56,13 +58,14 @@ namespace OpenBabel
       int iso;
       std::string el;
       ss >> iso >>el;
-      if(etab.GetAtomicNum(el.c_str())>0)
+      unsigned int elemno = OBElements::GetAtomicNum(el.c_str());
+      if(elemno > 0)
       {
         OBAtom* pAtom = mol.GetAtom(atomindex);
         if(!pAtom)
           return false;
         pAtom->SetIsotope(iso);
-        pAtom->SetAtomicNum(etab.GetAtomicNum(el.c_str(),iso));
+        pAtom->SetAtomicNum(elemno);
         return true;
       }
     }
@@ -81,13 +84,11 @@ namespace OpenBabel
       else
         n = atoi(_alias.c_str()+1);
 
-      OBAtomClassData* pac = static_cast<OBAtomClassData*>(mol.GetData("Atom Class"));
-      if(!pac)
-      {
-        pac = new OBAtomClassData;
-        mol.SetData(pac);
-      }
-      pac->Add(atomindex, n);
+      OBPairInteger *atomclass = new OBPairInteger();
+      atomclass->SetAttribute("Atom Class");
+      atomclass->SetValue(n);
+      mol.GetAtom(atomindex)->SetData(atomclass);
+
       if(atomindex <= mol.NumAtoms()) //needed for Rn aliases in mdlformat
         mol.GetAtom(atomindex)->SetAtomicNum(0);
 
@@ -387,6 +388,10 @@ OpGenAlias theOpGenAlias("genalias"); //Global instance
 /////////////////////////////////////////////////////////////////
 bool OpGenAlias::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*)
 {
+  // Mark variables as unused to avoid warnings
+  MARK_UNUSED(OptionText);
+  MARK_UNUSED(pmap);
+
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   if(!pmol)
     return false;

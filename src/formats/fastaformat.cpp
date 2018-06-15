@@ -350,7 +350,7 @@ namespace OpenBabel
     for (ResidueAtomRecord * atom_rec = res_rec->atom; atom_rec->symbol[0]; ++ atom_rec)
       {
         OBAtom * atom = pmol->NewAtom();
-        atom->SetAtomicNum(etab.GetAtomicNum(atom_rec->symbol));
+        atom->SetAtomicNum(OBElements::GetAtomicNum(atom_rec->symbol));
         atom->SetType(atom_rec->symbol);
         double theta = offset_Theta + atom_rec->Theta;
         atom->SetVector(offset_x + atom_rec->x, atom_rec->r * cos(theta), atom_rec->r * sin(theta));

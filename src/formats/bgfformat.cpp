@@ -118,7 +118,7 @@ namespace OpenBabel
         atom->SetType(tmp);
 
         CleanAtomType(tmptyp);
-        atom->SetAtomicNum(etab.GetAtomicNum(tmptyp));
+        atom->SetAtomicNum(OBElements::GetAtomicNum(tmptyp));
 
         atom->SetVector(x,y,z);
       }
@@ -200,8 +200,6 @@ namespace OpenBabel
     char buffer[BUFF_SIZE];
     char elmnt_typ[8], dreid_typ[8], atm_sym[16], max_val_str[8];
 
-    mol.Kekulize();
-
     ofs << "BIOGRF 200\n";
     snprintf(buffer, BUFF_SIZE, "DESCRP %s\n",mol.GetTitle());
     ofs << buffer;
@@ -226,7 +224,7 @@ namespace OpenBabel
 
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       {
-        strncpy(elmnt_typ,etab.GetSymbol(atom->GetAtomicNum()), 7); // make sure to null-terminate
+        strncpy(elmnt_typ,OBElements::GetSymbol(atom->GetAtomicNum()), 7); // make sure to null-terminate
         elmnt_typ[sizeof(elmnt_typ) - 1] = '0';
         ToUpper(elmnt_typ);
 

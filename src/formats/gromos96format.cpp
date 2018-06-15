@@ -137,7 +137,7 @@ namespace OpenBabel
           }
         else
           {
-            strncpy(type_name,etab.GetSymbol(atom->GetAtomicNum()), 16);
+            strncpy(type_name,OBElements::GetSymbol(atom->GetAtomicNum()), 16);
             strcpy(res_name,"UNK");
             res_num = "1";
           }

@@ -96,7 +96,7 @@ bool AmberPrepFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             coord->_tor = atof(vs[9].c_str());
             internals.push_back(coord);
 
-            atom->SetAtomicNum(etab.GetAtomicNum(vs[1].c_str()));
+            atom->SetAtomicNum(OBElements::GetAtomicNum(vs[1].c_str()));
 
             if (!ifs.getline(buffer,BUFF_SIZE))
                 break;

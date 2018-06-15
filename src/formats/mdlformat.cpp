@@ -33,7 +33,7 @@ GNU General Public License for more details.
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/alias.h>
 #include <openbabel/tokenst.h>
-#include <openbabel/atomclass.h>
+#include <openbabel/kekulize.h>
 
 #include "mdlvalence.h"
 
@@ -86,8 +86,17 @@ namespace OpenBabel
                " a  write atomclass if available\n"
                " m  write no properties\n"
                " w  use wedge and hash bonds from input (2D only)\n"
+               " v  always specify the valence in the valence field\n"
+               "      The default behavior is to only specify the valence if it\n"
+               "      is not consistent with the MDL valence model.\n"
+               "      So, for CH4 we don't specify it, but we do for CH3.\n"
+               "      This option may be useful to preserve the correct number of\n"
+               "      implicit hydrogens if a downstream tool does not correctly\n"
+               "      implement the MDL valence model (but does honor the valence\n"
+               "      field).\n"
                " S  do not store cis/trans stereochemistry in 0D MOL files\n"
                " A  output in Alias form, e.g. Ph, if present\n"
+               " E  add an ASCII depiction of the molecule as a property\n"
                " H  use HYD extension (always on if mol contains zero-order bonds)\n\n";
       }
 
@@ -200,6 +209,28 @@ namespace OpenBabel
     64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,87,88,89,90,91,
     92,93,94,95,96,97,98,99,100,101,102,103};
     return std::find(metals, metals+78, atom->GetAtomicNum())!=metals+78;
+  }
+
+  static void SetAtomicNumAndIsotope(OBAtom *patom, const char* symbol)
+  {
+    const char* p = symbol;
+    switch (p[0]) {
+    case 'D':
+      if (p[1] == '\0') {
+        patom->SetIsotope(2);
+        patom->SetAtomicNum(1);
+        return;
+      }
+      break;
+    case 'T':
+      if (p[1] == '\0') {
+        patom->SetIsotope(3);
+        patom->SetAtomicNum(1);
+        return;
+      }
+      break;
+    }
+    patom->SetAtomicNum(OBElements::GetAtomicNum(symbol));
   }
 
   /////////////////////////////////////////////////////////////////
@@ -359,6 +390,7 @@ namespace OpenBabel
         "the file may contains Atom Lists, which are ignored\n",
         obWarning);
 
+    std::map<OBAtom*, int> specified_valence;
     mol.BeginModify();
     if(line.find("V3000") != string::npos) {
       // V3000
@@ -374,7 +406,7 @@ namespace OpenBabel
       //
       // Atom Block
       //
-      int massdiff, charge, stereo, isotope;
+      int massdiff, charge, stereo;
       vector<int> massDiffs, charges;
       Parity parity;
       for (i = 0; i < natoms; ++i) {
@@ -393,7 +425,7 @@ namespace OpenBabel
         // 36..38   ccc = charge  ('M  CHG' and 'M  RAD' lines take precedence)
         // 39..41   sss = atom stereo parity (ignored)
         //          ... = query/reaction related
-        // 48..50   vvv = valence (ignored unless 15, which means 0)
+        // 48..50   vvv = valence (0 means use implicit valence, while 15 means valence of 0)
         massdiff = charge = 0;
         parity = NotStereo;
         if (line.size() < 34) {
@@ -417,14 +449,19 @@ namespace OpenBabel
         Trim(symbol);
         if(symbol[0]!='R' || TestForAlias(symbol, patom, aliases))
         {
-          isotope = 0;
-          patom->SetAtomicNum(etab.GetAtomicNum(symbol, isotope));
-          if (isotope != 0) // e.g. 'D' or 'T' atom symbol
-            patom->SetIsotope(isotope);
+          SetAtomicNumAndIsotope(patom, symbol.c_str());
         }
         // mass difference
-        if (line.size() >= 35)
+        if (line.size() >= 35) {
           massdiff = ReadIntField(line.substr(34, 2).c_str());
+          if (massdiff < -3 || massdiff > 4) {
+            obErrorLog.ThrowError(__FUNCTION__, "Invalid value for mass difference. It should be between -3 and 4.\n" + line, obWarning);
+            massdiff = 0;
+          } else if (massdiff != 0 && patom->GetIsotope() != 0) {
+            obErrorLog.ThrowError(__FUNCTION__, "Ignoring mass difference field for explicit hydrogen isotope.\n" + line, obWarning);
+            massdiff = 0;
+          }
+        }
         massDiffs.push_back(massdiff);
         // charge
         if (line.size() >= 38)
@@ -451,28 +488,20 @@ namespace OpenBabel
         parities.push_back(parity);
 
         // valence
-        bool forceNoH = false;
         if (line.size() >= 50) {
           int valence = ReadIntField(line.substr(48, 3).c_str());
-          if(valence!=0) // Now no H with any value
-            forceNoH = true;
+          if (valence != 0)
+            specified_valence[patom] = valence == 15 ? 0 : valence;
         }
-        if (forceNoH)
-          patom->ForceNoH(); // There are no additional implicit Hs
-        else
-          patom->ForceImplH(); // There could be additional implicit Hs
-                               // - if we don't set this, then the presence of a single explicit H
-                               //   will cause AssignSpinMultiplicity to assume no additional implicit Hs
 
         if (line.size() >= 62) {
           int aclass = ReadIntField(line.substr(60, 3).c_str());
           if (aclass != 0) {
-            OBAtomClassData *pac;
-            if (!mol.HasData("Atom Class")) {
-              pac = new OBAtomClassData;
-              mol.SetData(pac);
-            } else pac = (OBAtomClassData*)mol.GetData("Atom Class");
-            pac->Add(patom->GetIdx(),aclass);
+            OBPairInteger *pac = new OBPairInteger();
+            pac->SetAttribute("Atom Class");
+            pac->SetValue(aclass);
+            pac->SetOrigin(fileformatInput);
+            patom->SetData(pac);
           }
         }
 
@@ -485,6 +514,7 @@ namespace OpenBabel
       // Bond Block
       //
       stereo = 0;
+      bool needs_kekulization = false; // Have we have found an aromatic bond?
       unsigned int begin, end, order, flag;
       for (i = 0;i < nbonds; ++i) {
         flag = 0;
@@ -507,6 +537,11 @@ namespace OpenBabel
           begin = ReadUIntField(line.substr(0, 3).c_str());
           end   = ReadUIntField(line.substr(3, 3).c_str());
           order = ReadUIntField((line.substr(6, 3)).c_str());
+          if (order == 4) {
+            flag |= OBBond::Aromatic;
+            order = 1;
+            needs_kekulization = true;
+          }
         }
         if (begin == 0 || end == 0 || order == 0 || begin > mol.NumAtoms() || end > mol.NumAtoms()) {
           errorMsg << "WARNING: Problems reading a MDL file\n";
@@ -515,8 +550,6 @@ namespace OpenBabel
           obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
           return false;
         }
-
-        order = (order == 4) ? 5 : order;
         if (line.size() >= 12) {  //handle wedge/hash data
           stereo = ReadUIntField((line.substr(9, 3)).c_str());
           if (stereo) {
@@ -550,6 +583,31 @@ namespace OpenBabel
           obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
           return false;
         }
+      }
+
+      // Kekulization is neccessary if an aromatic bond is present
+      if (needs_kekulization) {
+        mol.SetAromaticPerceived();
+        // First of all, set the atoms at the ends of the aromatic bonds to also
+        // be aromatic. This information is required for OBKekulize.
+        FOR_BONDS_OF_MOL(bond, mol) {
+          if (bond->IsAromatic()) {
+            bond->GetBeginAtom()->SetAromatic();
+            bond->GetEndAtom()->SetAromatic();
+          }
+        }
+        bool ok = OBKekulize(&mol);
+        if (!ok) {
+          stringstream errorMsg;
+          errorMsg << "Failed to kekulize aromatic bonds in MOL file";
+          std::string title = mol.GetTitle();
+          if (!title.empty())
+            errorMsg << " (title is " << title << ")";
+          errorMsg << endl;
+          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+          // return false; Should we return false for a kekulization failure?
+        }
+        mol.UnsetAromaticPerceived();
       }
 
       //
@@ -591,7 +649,8 @@ namespace OpenBabel
 
         if ((line.substr(0, 6) != "M  CHG") && (line.substr(0, 6) != "M  RAD") &&
             (line.substr(0, 6) != "M  ISO") && (line.substr(0, 6) != "M  ZCH") &&
-            (line.substr(0, 6) != "M  HYD") && (line.substr(0, 6) != "M  ZBO"))
+            (line.substr(0, 6) != "M  HYD") && (line.substr(0, 6) != "M  ZBO") &&
+            (line.substr(0, 6) != "M  RGP"))
           continue;
         unsigned int n = 0;
         if (line.size() >= 9)
@@ -641,6 +700,17 @@ namespace OpenBabel
               // Save HYD counts to hydMap, and use to set implicit valence later on
               hydMap[number] = value;
               foundHYD = true;
+            } else if (line.substr(3, 3) == "RGP") {
+              // Numbered R groups were already added to AliasData as R#. Now we
+              // need to correct these to R1, etc.
+              if (!at->HasData(AliasDataType))
+                obErrorLog.ThrowError(__FUNCTION__, "Invalid line: M RGP must only refer to pseudoatoms\n" + line, obWarning);
+              else {
+                AliasData* ad = static_cast<AliasData*>(at->GetData(AliasDataType));
+                char buffer[6];
+                snprintf(buffer, 6, "R%d", value);
+                ad->SetAlias(buffer);
+              }
             }
           }
         }
@@ -652,7 +722,7 @@ namespace OpenBabel
         FOR_ATOMS_OF_MOL (a, mol) {
           int massDifference = massDiffs.at(a->GetIndex());
           if (massDifference)
-            a->SetIsotope((int)(etab.GetMass(a->GetAtomicNum()) + massDifference));
+            a->SetIsotope((int)(OBElements::GetMass(a->GetAtomicNum()) + massDifference + 0.5));
         }
 
       // If no CHG, RAD, ZBO, ZCH or HYD properties are found, use the charges from the atom block
@@ -669,14 +739,6 @@ namespace OpenBabel
             case 7: a->SetFormalCharge(-3); break;
           }
         }
-    }
-
-    //Expand aliases
-    for(vector<pair<AliasData*,OBAtom*> >::iterator iter=aliases.begin();iter!=aliases.end();++iter)
-    {
-      AliasData* ad = (*iter).first;
-      unsigned atomnum = (*iter).second->GetIdx();
-      ad->Expand(mol, atomnum); //Make chemically meaningful, if possible.
     }
 
     // Set up the updown map we are going to use to derive stereo info
@@ -706,31 +768,64 @@ namespace OpenBabel
         expval += bond->GetBondOrder();
         count++;
       }
-      if (foundZBO || foundZCH || foundHYD) {
+      if (foundZBO || foundZCH || foundHYD) { // TODO: Fix this
         // Use HYD count to SetImplicitValence if present, otherwise HYDValence model
         HYDMap::const_iterator hyd = hydMap.find(atom->GetIdx());
         if (hyd == hydMap.end()) {
           unsigned int impval = HYDValence(elem, charge, expval);
-          atom->SetImplicitValence(impval-(expval-count));
+          int nimpval = impval - expval;
+          atom->SetImplicitHCount(nimpval > 0 ? nimpval : 0);
         } else {
-          atom->SetImplicitValence(atom->GetValence() + hyd->second);
+          atom->SetImplicitHCount(hyd->second); // TODO: I have no idea
         }
       } else {
-        unsigned int impval = MDLValence(elem, charge, expval);
-        atom->SetImplicitValence(impval-(expval-count));
+        // By testing with Symyx Draw (Accelrys Draw 4.0), if the
+        // valence field is specified then the M RAD is ignored for
+        // the purposes of setting hydrogen count.
+        // So, if the valence field was specified use that, otherwise
+        // use the implicit valence adjusted by any M RAD.
+        std::map<OBAtom*, int>::const_iterator mit = specified_valence.find(&*atom);
+        unsigned int impval;
+        if (mit != specified_valence.end()) {
+          impval = mit->second;
+          if (impval < expval) {
+            errorMsg << "WARNING: Problem interpreting the valence field of an atom\n"
+              "The valence field specifies a valence " << impval << " that is\n"
+              "less than the observed explicit valence " << expval << ".\n";
+            obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+          }
+        }
+        else {
+          impval = MDLValence(elem, charge, expval);
+          // adjust for M RAD
+          int mult = atom->GetSpinMultiplicity();
+          int delta;
+          switch (mult) {
+          case 0:
+            delta = 0; break;
+          case 1: case 3: //carbene
+            delta = 2; break;
+          case 2: //radical
+            delta = 1; break;
+          default: // >= 4, CH, Catom
+            delta = mult - 1;
+          }
+          impval -= delta;
+        }
+        int numH = impval - expval;
+        atom->SetImplicitHCount(numH > 0 ? numH : 0);
       }
     }
 
-    // I think SetImplicitValencePerceived needs to be set before AssignSpinMultiplicity
-    // because in rare instances AssignSpinMultiplicity calls GetImplicitValence which
-    // would reset the implicit valence of all atoms using atomtyper, overriding HYDValence
-    // TODO: Is this also an issue with MDLValence?
-    if (foundZBO || foundZCH || foundHYD) {
-      mol.SetImplicitValencePerceived();
+    //Expand aliases (implicit hydrogens already set on these as read from SMILES)
+    for (vector<pair<AliasData*, OBAtom*> >::iterator iter = aliases.begin(); iter != aliases.end(); ++iter)
+    {
+      AliasData* ad = (*iter).first;
+      unsigned atomnum = (*iter).second->GetIdx();
+      ad->Expand(mol, atomnum); //Make chemically meaningful, if possible.
     }
-    mol.AssignSpinMultiplicity();
+
     mol.EndModify();
-    mol.SetImplicitValencePerceived();
 
     if (comment.length()) {
       OBCommentData *cd = new OBCommentData;
@@ -794,6 +889,84 @@ namespace OpenBabel
     return true;
   }
 
+  static void GenerateAsciiDepiction(OBMol* pmol)
+  {
+    OBConversion obconv;
+    bool ok = obconv.SetOutFormat("ascii");
+    if (!ok)
+      return;
+    obconv.AddOption("w", obconv.OUTOPTIONS, "78");
+    obconv.AddOption("a", obconv.OUTOPTIONS, "2.0");
+    std::string ascii = obconv.WriteString(pmol);
+
+    // Add a "." as prefix to each line as otherwise OB
+    // will strip leading spaces on reading
+    std::string mod = ".";
+    const char* p = ascii.c_str();
+    unsigned int lastNonBlank = 0;
+    while (*p) {
+      mod += *p++;
+      if (*p) {
+        if (*p != ' ' && *p != '\n')
+          lastNonBlank = mod.size(); // We will trim up to the last non-blank
+        if (*(p - 1) == '\n')
+          mod += '.';
+      }
+    }
+
+    OBPairData* pd;
+    if (pmol->HasData("ASCII depiction"))
+      pd = (OBPairData*)pmol->GetData("ASCII depiction");
+    else {
+      pd = new OBPairData();
+      pmol->SetData(pd);
+      pd->SetAttribute("ASCII depiction");
+    }
+    pd->SetValue(mod.substr(0, lastNonBlank+1));
+
+  }
+
+  // If this atom should be considered an RGroup Alias this function
+  // returns 0 or a positive integer, but -1 otherwise
+  static int GetNumberedRGroup(OBMol* pmol, OBAtom* atom)
+  {
+    if (atom->GetAtomicNum() == 0) { // Must be a pseudoatom
+      if(atom->HasData(AliasDataType)) {
+        // must have an alias Rn or Rnn
+        AliasData* ad = static_cast<AliasData*>(atom->GetData(AliasDataType));
+        if(!ad->IsExpanded()) { //do nothing with an expanded alias
+          std::string alias = ad->GetAlias();
+          const char* p = alias.c_str();
+          // Rn or Rnn
+          if (p[0]=='R' && (isdigit(p[1]) && (p[2]=='\0' || (isdigit(p[2]) && p[3]=='\0'))))
+            return atoi(p+1);
+        }
+      }
+      else {
+        //Atoms with no AliasData, but 0 atomicnum and atomclass==n are given an alias Rn
+        OBGenericData *data = atom->GetData("Atom Class");
+        if (data) {
+          OBPairInteger* acdata = dynamic_cast<OBPairInteger*>(data); // Could replace with C-style cast if willing to live dangerously
+          if (acdata) {
+            int ac = acdata->GetGenericValue();
+            if (ac >= 0) // Allow 0, why not?
+              return ac;
+          }
+        }
+      }
+    }
+    return -1;
+  }
+
+  // Return the element symbol, unless it's a pseudoatom
+  // in which case return * or R# if it can be identified as an R Group
+  static const char* AtomSymbol(OBMol* pmol, OBAtom* atom)
+  {
+    if (atom->GetAtomicNum())
+      return OBElements::GetSymbol(atom->GetAtomicNum());
+    return (GetNumberedRGroup(pmol, atom) == -1) ? "* " : "R#";
+  }
+
   /////////////////////////////////////////////////////////////////
   bool MDLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
@@ -813,6 +986,10 @@ namespace OpenBabel
         obErrorLog.ThrowError(__FUNCTION__, "No 2D or 3D coordinates exist. Stereochemical information will"
                    " be stored using an Open Babel extension. To generate 2D or 3D coordinates instead use --gen2D or --gen3D.", obWarning, onceOnly);
     }
+
+    bool alwaysSpecifyValence = pConv->IsOption("v");
+    bool writeAtomClass = pConv->IsOption("a");
+
 
     // Make a copy of mol (origmol) then ConvertZeroBonds() in mol
     // TODO: Do we need to worry about modifying mol? (It happens anyway in Kekulize etc?)
@@ -874,14 +1051,6 @@ namespace OpenBabel
         return false;
       }
 
-      // Check to see if there are any untyped aromatic bonds (GetBO == 5)
-      // These must be kekulized first
-      FOR_BONDS_OF_MOL(b, mol) {
-        if (b->GetBO() == 5) {
-          mol.Kekulize();
-          break;
-        }
-      }
       // Find which double bonds have unspecified chirality
       set<OBBond*> unspec_ctstereo = GetUnspecifiedCisTrans(mol);
 
@@ -939,12 +1108,6 @@ namespace OpenBabel
                mol.NumAtoms(), mol.NumBonds(), chiralFlag);
       ofs << buff;
 
-      OBAtomClassData *pac;
-      if (mol.HasData("Atom Class") && pConv->IsOption("a"))
-        pac = (OBAtomClassData*)mol.GetData("Atom Class");
-      else
-        pac = NULL;
-
       OBAtom *atom;
       vector<OBAtom*>::iterator i;
       unsigned int aclass = 0;
@@ -964,19 +1127,34 @@ namespace OpenBabel
         if (parity.find(atom) != parity.end())
           stereo = parity[atom];
 
-        int valence = 0; //Only non-zero when RAD value would be >=4 (outside spec)
-        //or an unbonded metal
-        if (atom->GetSpinMultiplicity()>=4 || (IsMetal(atom) && atom->GetValence()==0))
-          valence = atom->GetValence()==0 ? 15 : atom->GetValence();
-
-        if (pac && pac->HasClass(atom->GetIdx()))
-          aclass = pac->GetClass(atom->GetIdx());
+        
+        int expval = atom->BOSum();
+        int impval = MDLValence(atom->GetAtomicNum(), atom->GetFormalCharge(), expval);
+        int actual_impval = expval + atom->GetImplicitHCount();
+        int valence;
+        int spin = atom->GetSpinMultiplicity(); // the spin condition below is used for "M  RAD"
+        if (!alwaysSpecifyValence && actual_impval == impval && (spin == 0 || spin >= 4))
+          valence = 0;
         else
-          aclass = 0; // 0 implies no class specified (see the OpenSMILES spec)
+          valence = actual_impval == 0 ? 15 : actual_impval;
+
+        aclass = 0;
+        if (writeAtomClass) {
+          OBGenericData *data = atom->GetData("Atom Class");
+          if (data) {
+            OBPairInteger* acdata = dynamic_cast<OBPairInteger*>(data); // Could replace with C-style cast if willing to live dangerously
+            if (acdata) {
+              int ac = acdata->GetGenericValue();
+              if (ac > 0) {
+                aclass = (unsigned int)ac;
+              }
+            }
+          }
+        }
 
         snprintf(buff, BUFF_SIZE, "%10.4f%10.4f%10.4f %-3s%2d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d",
           atom->GetX(), atom->GetY(), atom->GetZ(),
-          atom->GetAtomicNum() ? etab.GetSymbol(atom->GetAtomicNum()) : "* ",
+          AtomSymbol(pmol, atom),
           0,charge,stereo,0,0,valence,0,0,0,aclass,0,0);
         ofs << buff << endl;
       }
@@ -1035,6 +1213,7 @@ namespace OpenBabel
       vector<OBAtom*>::iterator itr;
       vector<pair<int,int> > zchs, hyds;
       vector<pair<int,int> >::iterator zitr;
+      vector<pair<int, int> > numberedRGroups;
       for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) {
         if(atom->GetSpinMultiplicity()>0 && atom->GetSpinMultiplicity()<4)
           rads.push_back(atom);
@@ -1049,24 +1228,25 @@ namespace OpenBabel
           if (foundZBO && origatom->GetFormalCharge() != atom->GetFormalCharge()) {
             zchs.push_back(make_pair(origatom->GetIdx(), origatom->GetFormalCharge()));
           }
-          int hcount = atom->ExplicitHydrogenCount() + atom->ImplicitHydrogenCount();
+          int hcount = atom->ExplicitHydrogenCount() + atom->GetImplicitHCount();
           int autohcount = HYDValence(origatom->GetAtomicNum(), origatom->GetFormalCharge(), origatom->BOSum())
                              - origatom->BOSum() + atom->ExplicitHydrogenCount();
           if (hcount != autohcount) {
-            hyds.push_back(make_pair(origatom->GetIdx(), atom->ImplicitHydrogenCount()));
+            hyds.push_back(make_pair(origatom->GetIdx(), atom->GetImplicitHCount()));
           }
         }
 
-        if(atom->HasData(AliasDataType)) {
-          AliasData* ad = static_cast<AliasData*>(atom->GetData(AliasDataType));
-          if(!ad->IsExpanded()) //do nothing with an expanded alias
-            ofs << "A  " << setw(3) << right << atom->GetIdx() << '\n' << ad->GetAlias() << endl;
-        } else if (atom->GetAtomicNum()==0) {
-          //Atoms with no AliasData, but 0 atomicnum and atomclass==n are given an alias Rn
-          OBAtomClassData* pac = static_cast<OBAtomClassData*>(mol.GetData("Atom Class"));
-          if(pac && pac->HasClass(atom->GetIdx()))
-            ofs << "A  " << setw(3) << right << atom->GetIdx() << '\n'
-                << 'R' << pac->GetClass(atom->GetIdx()) << endl;
+        // A numbered R group is a special case of an alias and is handled differently
+        int rgroupIdx = GetNumberedRGroup(pmol, atom);
+        if (rgroupIdx == -1) {
+          if (atom->HasData(AliasDataType)) {
+            AliasData* ad = static_cast<AliasData*>(atom->GetData(AliasDataType));
+            if(!ad->IsExpanded()) //do nothing with an expanded alias
+              ofs << "A  " << setw(3) << right << atom->GetIdx() << '\n' << ad->GetAlias() << endl;
+          }
+        }
+        else {
+          numberedRGroups.push_back(make_pair(atom->GetIdx(), rgroupIdx));
         }
       }
 
@@ -1136,12 +1316,26 @@ namespace OpenBabel
         }
         ofs << endl;
       }
+      if(numberedRGroups.size()) {
+        int counter = 0;
+        for (zitr=numberedRGroups.begin(); zitr != numberedRGroups.end(); ++zitr, counter++) {
+          if (counter % 8 == 0) {
+            if (counter > 0) ofs << endl;
+            ofs << "M  RGP" << setw(3) << min(static_cast<unsigned long int>(numberedRGroups.size() - counter), static_cast<unsigned long int>(8));
+          }
+          ofs << setw(4) << zitr->first << setw(4) << zitr->second;
+        }
+        ofs << endl;
+      }
     }
     ofs << "M  END" << endl;
 
     //For SD files only, write properties unless option m
     if(pConv->IsOption("sd") && !pConv->IsOption("m"))
     {
+      if (pConv->IsOption("E"))
+        GenerateAsciiDepiction(pmol);
+
       vector<OBGenericData*>::iterator k;
       vector<OBGenericData*> vdata = mol.GetData();
       for (k = vdata.begin();k != vdata.end();k++)
@@ -1265,10 +1459,7 @@ namespace OpenBabel
           }
         else
           {
-          int iso=0;
-          atom.SetAtomicNum(etab.GetAtomicNum(type,iso));
-          if(iso)
-            atom.SetIsotope(iso);
+          SetAtomicNumAndIsotope(&atom, type);
           atom.SetType(type); //takes a char not a const char!
           //mapping vs[7] not implemented
 
@@ -1416,18 +1607,6 @@ namespace OpenBabel
   //////////////////////////////////////////////////////////
   bool MDLFormat::WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv)
   {
-    // Check to see if there are any untyped aromatic bonds (GetBO == 5)
-    // These must be kekulized first
-    FOR_BONDS_OF_MOL(b, mol)
-      {
-        if (b->GetBO() == 5)
-          {
-            mol.Kekulize();
-            break;
-          }
-      }
-
-
     ofs << "  0  0  0     0  0            999 V3000" << endl; //line 4
     ofs << "M  V30 BEGIN CTAB" <<endl;
     ofs << "M  V30 COUNTS " << mol.NumAtoms() << " " << mol.NumBonds()
@@ -1441,7 +1620,7 @@ namespace OpenBabel
       {
         ofs     << "M  V30 "
                 << index++ << " "
-                << etab.GetSymbol(atom->GetAtomicNum()) << " "
+                << OBElements::GetSymbol(atom->GetAtomicNum()) << " "
                 << atom->GetX() << " "
                 << atom->GetY() << " "
                 << atom->GetZ()
@@ -1468,7 +1647,7 @@ namespace OpenBabel
                 vector<OBBond*>::iterator i;
                 for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
                   {
-                    if (nbr->IsHydrogen()){Hid=nbr->GetIdx();continue;}
+                    if (nbr->GetAtomicNum() == OBElements::Hydrogen){Hid=nbr->GetIdx();continue;}
                     nbr_atms.push_back(nbr->GetIdx());
                   }
                 sort(nbr_atms.begin(),nbr_atms.end());
@@ -1660,11 +1839,11 @@ namespace OpenBabel
 
           unsigned long maxref = OBStereo::NoRef;
           // Search for an explicit Hydrogen in the cfg refs...
-          if (cfg.from != OBStereo::ImplicitRef && mol.GetAtomById(cfg.from)->IsHydrogen())
+          if (cfg.from != OBStereo::ImplicitRef && mol.GetAtomById(cfg.from)->GetAtomicNum() == OBElements::Hydrogen)
             maxref = cfg.from;
           else
             for (OBStereo::RefIter ref_it = refs.begin(); ref_it != refs.end(); ++ref_it)
-              if ((*ref_it) != OBStereo::ImplicitRef && mol.GetAtomById(*ref_it)->IsHydrogen())
+              if ((*ref_it) != OBStereo::ImplicitRef && mol.GetAtomById(*ref_it)->GetAtomicNum() == OBElements::Hydrogen)
                 maxref = *ref_it;
           // ...otherwise, find the maximum ref (note that ImplicitRef will be max if present)
           if (maxref == OBStereo::NoRef)
@@ -1700,7 +1879,7 @@ namespace OpenBabel
       OBStereo::Refs refs;
       unsigned long towards = OBStereo::ImplicitRef;
       FOR_NBORS_OF_ATOM(nbr, mol.GetAtomById(i)) {
-        if (!nbr->IsHydrogen())
+        if (nbr->GetAtomicNum() != OBElements::Hydrogen)
           refs.push_back(nbr->GetId());
         else
           towards = nbr->GetId(); // Look towards the H
@@ -1787,11 +1966,11 @@ namespace OpenBabel
 
   bool MDLFormat::TestForAlias(const string& symbol, OBAtom* at, vector<pair<AliasData*,OBAtom*> >& aliases)
   {
-  /*If symbol is R R' R'' R¢ R¢¢ or Rn Rnn where n is an digit
+  /*If symbol is R R' R'' R# R¢ R¢¢ or Rn Rnn where n is an digit
     the atom is added to the alias list and the atomic number set to zero. Returns false.
     Otherwise, e.g Rh or Ru, returns true.
   */
-    if(symbol.size()==1 || isdigit(symbol[1]) || symbol[1]=='\'' || symbol[1]=='¢')
+    if(symbol.size()==1 || isdigit(symbol[1]) || symbol[1]=='\'' || symbol[1]=='¢' || symbol[1]=='#')
     {
       AliasData* ad = new AliasData();
       ad->SetAlias(symbol);

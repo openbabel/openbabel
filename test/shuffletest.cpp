@@ -59,7 +59,7 @@ void compareMolecules(OBMol *mol1, OBMol *mol2)
     OB_ASSERT( a1->GetValence() == a2->GetValence() );
     OB_ASSERT( a1->GetHvyValence() == a2->GetHvyValence() );
     OB_ASSERT( a1->GetHeteroValence() == a2->GetHeteroValence() );
-    OB_ASSERT( a1->GetImplicitValence() == a2->GetImplicitValence() );
+    OB_ASSERT( a1->GetImplicitHCount() == a2->GetImplicitHCount() );
   }
 
 }
@@ -267,7 +267,7 @@ int shuffletest(int argc, char* argv[])
 
     OB_ASSERT( doShuffleTest("CC(=O)O.N=C\\1/C=C/C(=C(/c2ccc(N)cc2)\\c2ccc(N)c(C)c2)/C=C1") );
     OB_ASSERT( doShuffleTest("CCNc1ccc(cc1)/C(=C/1\\C=C/C(=N)/C=C1)/c1ccc(N(CC)CC)c(C)c1") );
-    OB_ASSERT( doShuffleTest("C[C@H]1CCCCN1/C=C/1\\C(=O)O[C@@](C)(C)OC1=O") );
+    OB_ASSERT( doShuffleTest("C[C@H]1CCCCN1/C=C/1\\C(=O)O[C@@](C)(CC)OC1=O") );
     OB_ASSERT( doShuffleTest("N=C\\1/C=C/C(=C(\\c2ccc(N)cc2)/c2ccc(N)c(C)c2)/C=C1") );
     OB_ASSERT( doShuffleTest("N=C\\1/C=C/C(=N\\Cc2ccc(N)cc2)/C=C1") );
 
@@ -283,7 +283,7 @@ int shuffletest(int argc, char* argv[])
     OB_ASSERT( doShuffleTest("[14cH]1[14cH][14cH][14cH][14cH][14cH]1") );
 
 
-    OB_ASSERT( doShuffleTestOnMultiFile("stereo/error2.smi") );
+    OB_ASSERT( doShuffleTestOnMultiFile("stereo/error2.smi") ); // FYI, kekulization error somewhere in here
 
     OB_ASSERT( doShuffleTest("F[Po@SP1](Cl)(Br)I") );
     OB_ASSERT( doShuffleTest("F[Po@SP2](Br)(Cl)I") );

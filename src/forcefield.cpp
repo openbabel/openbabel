@@ -28,6 +28,7 @@ GNU General Public License for more details.
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/rotamer.h>
 #include <openbabel/rotor.h>
+#include <openbabel/elements.h>
 
 using namespace std;
 
@@ -1340,7 +1341,7 @@ namespace OpenBabel
 
     char num_rotors_to_permute, num_permutations;
     if (permute)
-      num_rotors_to_permute = std::min<size_t> (4, vrotors.size());
+      num_rotors_to_permute = (char)std::min<size_t> (4, vrotors.size());
     else
       num_rotors_to_permute = 1; // i.e. just use the original order
     num_permutations = factorial[num_rotors_to_permute];
@@ -1825,7 +1826,7 @@ namespace OpenBabel
       }
     }
 
-    _current_conformer = best_conformer + 1; // Initial coords are stored in _vconf[0]
+    _current_conformer = best_conformer; // Initial coords are stored in _vconf[0]
     _mol.SetConformer(_current_conformer);
     SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
   }
@@ -1990,8 +1991,8 @@ namespace OpenBabel
               self_consistent = false;
             }
 
-            if (l_ac < (l_ab - u_bc)) {// l_ac >= l_ab - u_bc
-              l_ac = l_ab - u_bc;
+            if (l_ac < (l_ab - l_bc)) {// l_ac >= l_ab - l_bc
+              l_ac = l_ab - l_bc;
       	      self_consistent = false;
             }
 
@@ -4386,7 +4387,7 @@ namespace OpenBabel
             FOR_ATOMS_OF_MOL (a, _mol) {
               if (a->GetIdx() == atom->GetIdx())
                 continue;
-              if (a->IsHydrogen())
+              if (a->GetAtomicNum() == OBElements::Hydrogen)
                 continue;
 
               distance = sqrt(coord.distSq(a->GetVector()));

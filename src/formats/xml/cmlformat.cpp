@@ -20,7 +20,7 @@ GNU General Public License for more details.
 #include <openbabel/kinetics.h>
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
-#include <openbabel/atomclass.h>
+#include <openbabel/obfunctions.h>
 #include <openbabel/xml.h>
 #include <float.h>
 #ifdef HAVE_SHARED_POINTER
@@ -55,7 +55,6 @@ namespace OpenBabel
 			OBConversion::RegisterOptionParam("N", this, 1);
 			OBConversion::RegisterOptionParam("m", this);
 			OBConversion::RegisterOptionParam("x", this);
-			OBConversion::RegisterOptionParam("h", this);
 			OBConversion::RegisterOptionParam("c", this);
 			OBConversion::RegisterOptionParam("p", this);
 			OBConversion::RegisterOptionParam("2", this, 0, OBConversion::INOPTIONS);
@@ -99,11 +98,16 @@ namespace OpenBabel
         "    atomRefs4 (for atomParity)\n"
         "  - On <bond>: atomRefs2, order, CML1: atomRef, atomRef1, atomRef2\n\n"
 
+        "Atom classes are also read and written. This is done using a specially\n"
+        "formed atom id. When reading, if the atom id is of the form aN_M (where\n"
+        "N and M are positive integers), then M is interpreted as the atom class.\n"
+        "Such atom ids are automatically generated when writing an atom with an\n"
+        "atom class.\n\n"
+
         "Write Options for CML: -x[flags] (e.g. -x1ac)\n"
         "  1  write CML1 (rather than CML2)\n"
         "  a  write array format for atoms and bonds\n"
         "  A  write aromatic bonds as such, not Kekule form\n"
-        "  h  use hydrogenCount for all hydrogens\n"
         "  m  write metadata\n"
         "  x  omit XML and namespace declarations\n"
         "  c  continuous output: no formatting\n"
@@ -181,7 +185,7 @@ namespace OpenBabel
     map<string,int> AtomMap; //key=atom id, value= ob atom index
     cmlArray AtomArray;
     cmlArray BondArray;
-    map<int, int> HCounts;
+    vector<int> HCounts; // for each atom, either -1 or the value of the hydrogenCount
     vector< pair<string,string> > cmlBondOrAtom; //for cml1 only
     vector< pair<string,string> > molWideData;
     bool inBondArray; //for cml1 only
@@ -540,11 +544,6 @@ namespace OpenBabel
           if(!ParseFormula(RawFormula, _pmol))
             obErrorLog.ThrowError(_pmol->GetTitle(),"Error in formula", obError);
 
-        //ensure unbonded atoms are seen as such
-        if(_pmol->NumBonds()==0)
-          FOR_ATOMS_OF_MOL(a, *_pmol)
-            a->ForceNoH();
-
         _pmol->AssignSpinMultiplicity();
         _pmol->EndModify();
         return (--_embedlevel>=0); //false to stop parsing if no further embedded mols
@@ -568,10 +567,47 @@ namespace OpenBabel
 
   /////////////////////////////////////////////////////////
 
+  static unsigned int GetAtomicNumAndIsotope(const char* symbol, int *isotope)
+  {
+    const char* p = symbol;
+    switch (p[0]) {
+    case 'D':
+      if (p[1] == '\0') {
+        *isotope = 2;
+        return 1;
+      }
+      break;
+    case 'T':
+      if (p[1] == '\0') {
+        *isotope = 3;
+        return 1;
+      }
+      break;
+    }
+    return OBElements::GetAtomicNum(symbol);
+  }
+
+  static const char* FindStartOfAtomClass(const char* atomid)
+  {
+    // Try to find a match to 'a' followed by a number followed by _ followed by at least one digit
+    if (atomid[0] != 'a')
+      return (const char*)0; // Needs to start with 'a'
+    const char *p = atomid + 1;
+    while(*p >= '0' && *p <= '9')
+      p++;
+    if (p == atomid + 1)
+      return (const char*)0; // No digits
+    if (*p != '_')
+      return (const char*)0;
+    p++;
+    if (*p >= '0' && *p <= '9')
+      return p;
+    return (const char*)0;
+  }
+
   ///Interprets atoms from AtomArray and writes then to an OBMol
   bool CMLFormat::DoAtoms()
   {
-    OBAtomClassData aclass;
     int dim=0; //dimension of molecule
     bool use2d = _pxmlConv->IsOption("2", OBConversion::INOPTIONS);
 
@@ -583,6 +619,7 @@ namespace OpenBabel
         OBAtom* pAtom = _pmol->NewAtom();
         nAtoms++;
         int nhvy = nAtoms;
+        int hcount = -1; // default value which may be overridden by hydrogenCount below
 
         double x=0,y=0,z=0;
         bool using3=false, using2=false, usingFract=false;
@@ -600,15 +637,21 @@ namespace OpenBabel
                   obErrorLog.ThrowError(GetMolID(),"The atom id " + value + " is not unique", obWarning);
                 AtomMap[value] = nhvy;//nAtoms;
 
-                //If the id begins with "aa", "ab", etc, the number that follows  is taken as an atom class
-                if(value[0]=='a' && value[1]>='a' && value[1]<='z')
-                  aclass.Add(nAtoms, atoi(value.c_str()+2));
+                //If the id ends with "_NUMBER", then NUMBER is taken as an atom class
+                const char* atomclass = FindStartOfAtomClass(value.c_str());
+                if (atomclass) {
+                  OBPairInteger *pi = new OBPairInteger();
+                  pi->SetAttribute("Atom Class");
+                  pi->SetValue(atoi(atomclass));
+                  pi->SetOrigin(fileformatInput);
+                  pAtom->SetData(pi);
+                }
                 continue;
               }
             else if(attrname=="elementType")
               {
                 int atno, iso=0;
-                atno=etab.GetAtomicNum(value.c_str(),iso);
+                atno = GetAtomicNumAndIsotope(value.c_str(), &iso);
                 pAtom->SetAtomicNum(atno);
                 if(iso)
                   pAtom->SetIsotope(iso);
@@ -673,7 +716,7 @@ namespace OpenBabel
               {
                 //Actually adding H atoms to the structure is deferred until the explicit
                 //structure is complete, because hydrogenCount may include explicit H, bug#3014855
-                HCounts[nAtoms] = atoi(value.c_str());
+                hcount = atoi(value.c_str());
 
                /* int nhvy = nAtoms;
                   int i;
@@ -753,6 +796,9 @@ namespace OpenBabel
 
           } //each attribute
 
+          //Save hydrogen count
+          HCounts.push_back(hcount);
+
           //Save atom coordinates
           if(using3 || usingFract)
             dim=3;
@@ -774,9 +820,6 @@ namespace OpenBabel
           else
             pAtom->SetVector(x, y, z);
       }//each atom
-
-    if(aclass.size()>0)
-      _pmol->SetData((new OBAtomClassData(aclass)));
 
     _pmol->SetDimension(dim);
     return true;
@@ -902,38 +945,28 @@ namespace OpenBabel
   bool CMLFormat::DoHCounts()
   {
     //Add extra H atoms so that each atom has the value of its attribute hydrogenCount
-    map<int,int>::iterator iter;
-    for(iter=HCounts.begin();iter!=HCounts.end();++iter)
+    FOR_ATOMS_OF_MOL(atom, _pmol)
     {
-      int idx = iter->first;
-      int explH = _pmol->GetAtom(idx)->ExplicitHydrogenCount(false); //excludes H isotopes
-      if(explH > iter->second)
+      int hcount = HCounts[atom->GetIdx() - 1];
+      if (hcount == -1)
+      {
+        OBAtomAssignTypicalImplicitHydrogens(&*atom);
+        continue;
+      }
+
+      int explH = atom->ExplicitHydrogenCount(); // includes H isotopes
+      if(explH > hcount)
       {
         map<string,int>::iterator it;
         for(it=AtomMap.begin();it!=AtomMap.end();++it)
-          if(it->second == idx)
+          if(it->second == atom->GetIdx())
             break;
         stringstream ss;
         ss << "In atom " << it->first << " the number of explicit hydrogens exceeds the hydrogenCount attribute.";
-          obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
-          return false;
+        obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
+        return false;
       }
-
-      if(iter->second == 0)
-        //ensure no Hs are ever added
-        _pmol->GetAtom(idx)->ForceNoH();
-
-      else
-      {
-        //add extra hydrogens
-        for(unsigned i=0;i<iter->second - explH;++i)
-        {
-          OBAtom* hatom = _pmol->NewAtom();
-          hatom->SetAtomicNum(1);
-          hatom->SetType("H");
-          _pmol->AddBond(idx, _pmol->NumAtoms(), 1);
-        }
-      }
+      atom->SetImplicitHCount(hcount - explH);
     }
     return true;
   }
@@ -1026,14 +1059,14 @@ namespace OpenBabel
                     OBAtom* pAt2 = pDBond->GetEndAtom();
                     FOR_NBORS_OF_ATOM(a1,pAt1)
                       {
-                        if(!a1->IsHydrogen() && &*a1!=pAt2)
+                        if (a1->GetAtomicNum() != OBElements::Hydrogen && &*a1 != pAt2)
                           break;
                         pbond1 = _pmol->GetBond(pAt1->GetIdx(),a1->GetIdx());
                       }
 
                     FOR_NBORS_OF_ATOM(a2,pAt2)
                       {
-                        if(!a2->IsHydrogen() && &*a2!=pAt1)
+                        if (a2->GetAtomicNum() != OBElements::Hydrogen && &*a2 != pAt1)
                           break;
                         pbond2 = _pmol->GetBond(pAt2->GetIdx(),a2->GetIdx());
                       }
@@ -1166,14 +1199,13 @@ namespace OpenBabel
           return false;
         int n=atoi(iNumber->c_str());
         int atno, iso=0;
-        atno=etab.GetAtomicNum(iSymbol++->c_str(),iso);
+        atno = GetAtomicNumAndIsotope(iSymbol++->c_str(), &iso);
         if(atno<=0 || n<=0)
           return false;
         int i;
         for(i=0;i<n;++i)
           {
             OBAtom* pAtom = pmol->NewAtom();
-            pAtom->ForceNoH();
             pAtom->SetAtomicNum(atno);
             if(iso)
               pAtom->SetIsotope(iso);
@@ -1411,13 +1443,7 @@ namespace OpenBabel
 
     OBMol &mol = *pmol;
 
-    int numbonds = mol.NumBonds(); //Capture this before deleting Hs
-    bool UseHydrogenCount=false;
-    if(_pxmlConv->IsOption("h"))
-      {
-        pmol->DeleteHydrogens();
-        UseHydrogenCount=true;
-      }
+    int numbonds = mol.NumBonds();
 
     bool UseFormulaWithNoBonds=false; //before 2.3.1 was true;
 
@@ -1509,7 +1535,7 @@ namespace OpenBabel
             vector<OBAtom*>::iterator i;
             for (patom = mol.BeginAtom(i);patom;patom = mol.NextAtom(i))
               {
-               string el(etab.GetSymbol(patom->GetAtomicNum()));
+               string el(OBElements::GetSymbol(patom->GetAtomicNum()));
                 if(el=="Xx")
                   el="R";
 
@@ -1517,7 +1543,7 @@ namespace OpenBabel
                 int spin = patom->GetSpinMultiplicity();
                 int isotope =patom->GetIsotope();
 
-                int hcount=patom->ImplicitHydrogenCount() + patom->ExplicitHydrogenCount(); //includes H isotopes
+                int hcount=patom->GetImplicitHCount() + patom->ExplicitHydrogenCount(); //includes H isotopes
 
                 X = patom->GetX();
                 Y = patom->GetY();
@@ -1574,8 +1600,7 @@ namespace OpenBabel
                         if(spin)
                           xmlTextWriterWriteFormatAttribute(writer(), C_SPINMULTIPLICITY,"%d", spin);
 
-                        if(UseHydrogenCount && hcount)
-                          xmlTextWriterWriteFormatAttribute(writer(), C_HYDROGENCOUNT,"%d", hcount);
+                        xmlTextWriterWriteFormatAttribute(writer(), C_HYDROGENCOUNT,"%d", hcount);
 
                         if(patom->HasData("label"))
                             xmlTextWriterWriteFormatAttribute(writer(), C_LABEL,"%s",
@@ -1647,13 +1672,10 @@ namespace OpenBabel
                             xmlTextWriterEndElement(writer());
                           }
 
-                        if(UseHydrogenCount && hcount)
-                          {
-                            xmlTextWriterStartElementNS(writer(), prefix, C_INTEGER, NULL);
-                            xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "hydrogenCount");
-                            xmlTextWriterWriteFormatString(writer(),"%d", hcount);
-                            xmlTextWriterEndElement(writer());
-                          }
+                        xmlTextWriterStartElementNS(writer(), prefix, C_INTEGER, NULL);
+                        xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "hydrogenCount");
+                        xmlTextWriterWriteFormatString(writer(),"%d", hcount);
+                        xmlTextWriterEndElement(writer());
 
                         if(dim==2 || dim==3)
                           {
@@ -1697,8 +1719,7 @@ namespace OpenBabel
                     if(anySpin)
                       xmlTextWriterWriteFormatAttribute(writer(), C_SPINMULTIPLICITY,"%s", spn.str().c_str());
 
-                    if(UseHydrogenCount)
-                      xmlTextWriterWriteFormatAttribute(writer(), C_HYDROGENCOUNT,"%s", hct.str().c_str());
+                    xmlTextWriterWriteFormatAttribute(writer(), C_HYDROGENCOUNT,"%s", hct.str().c_str());
 
                     if(dim==2)
                       {
@@ -1733,13 +1754,10 @@ namespace OpenBabel
                         xmlTextWriterEndElement(writer());
                       }
 
-                    if(UseHydrogenCount)
-                      {
-                        xmlTextWriterStartElementNS(writer(), prefix, C_INTEGERARRAY, NULL);
-                        xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "hydrogenCount");
-                        xmlTextWriterWriteFormatString(writer(),"%s", hct.str().c_str());
-                        xmlTextWriterEndElement(writer());
-                      }
+                    xmlTextWriterStartElementNS(writer(), prefix, C_INTEGERARRAY, NULL);
+                    xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "hydrogenCount");
+                    xmlTextWriterWriteFormatString(writer(),"%s", hct.str().c_str());
+                    xmlTextWriterEndElement(writer());
 
                     if(dim==2 || dim==3)
                       {
@@ -1945,31 +1963,26 @@ namespace OpenBabel
   void CMLFormat::MakeAtomIds(OBMol& mol, vector<string>& atomIDs)
   {
     /* If there is no atom class data for the atom, the id is a followed by the atom index.
-       If there is atom class data then it is aa followed by the atom class.
-       If a subsequent atom has the same atom class, its id is ab followed
-       by the atom class, and so on. */
+       If there is atom class data, an underscore is appended followed by the atom class.
+     */
 
     stringstream ss;
-    map<int,char> acmap; //key=atom calss; value=last letter used as second in id
-    OBAtomClassData* pac = static_cast<OBAtomClassData*>(mol.GetData("Atom Class"));
     atomIDs.push_back("Error"); //atom idex stats at 1. atomIDs[0] is not used
     for (unsigned int idx=1; idx<=mol.NumAtoms(); ++idx)
     {
       ss.str("");
-      ss << 'a';
-      if(pac && pac->HasClass(idx))
+      ss << 'a' << idx;
+      OBGenericData* pac = mol.GetAtom(idx)->GetData("Atom Class");
+      if(pac)
       {
-        int ac = pac->GetClass(idx);
-        char ch2='a'; //default 2nd char
-        if(acmap.count(ac)>0)
-          ch2 = acmap[ac]+1;
-        if(ch2>'z')
-          obErrorLog.ThrowError(_pmol->GetTitle(),"CML: too many atoms with same atom class." , obError);
-        ss << ch2 << ac;
-        acmap[ac] = ch2;
+        OBPairInteger* acdata = dynamic_cast<OBPairInteger*>(pac);
+        if (acdata) {
+          int ac = acdata->GetGenericValue();
+          if (ac >= 0) { // Allow 0, why not?
+            ss << '_' << ac;
+          }
+        }
       }
-      else
-        ss << idx;
       atomIDs.push_back(ss.str());
     }
   }

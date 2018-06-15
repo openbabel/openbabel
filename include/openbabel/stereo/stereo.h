@@ -233,7 +233,7 @@ namespace OpenBabel {
      *
      * @note This method does nothing if i equals j.
      */
-    static void Permutate(Refs &refs, int i, int j);
+    static void Permutate(Refs &refs, unsigned int i, unsigned int j);
     /**
      * Get @p refs with element @p i and @p j permutated.
      *
@@ -245,7 +245,7 @@ namespace OpenBabel {
      *
      * @note This method does nothing if @p i equals @p j.
      */
-    static Refs Permutated(const Refs &refs, int i, int j);
+    static Refs Permutated(const Refs &refs, unsigned int i, unsigned int j);
     //@}
 
   };

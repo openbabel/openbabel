@@ -243,17 +243,17 @@ namespace OpenBabel
  class OBAPI OBVirtualBond : public OBGenericData
   {
   protected:
-    int _bgn;
-    int _end;
-    int _ord;
+    unsigned int _bgn;
+    unsigned int _end;
+    unsigned int _ord;
     int _stereo;
   public:
     OBVirtualBond();
     virtual OBGenericData* Clone(OBBase* /*parent*/) const{return new OBVirtualBond(*this);}
-    OBVirtualBond(int,int,int,int stereo=0);
-    int GetBgn()    {      return(_bgn);    }
-    int GetEnd()    {      return(_end);    }
-    int GetOrder()  {      return(_ord);    }
+    OBVirtualBond(unsigned int, unsigned int, unsigned int,int stereo=0);
+    unsigned int GetBgn()    {      return(_bgn);    }
+    unsigned int GetEnd()    {      return(_end);    }
+    unsigned int GetOrder()  {      return(_ord);    }
     int GetStereo() {      return(_stereo); }
   };
 
@@ -996,11 +996,11 @@ namespace OpenBabel
 
     //! \brief Convenience function for common cases of closed-shell calculations -- pass the energies and symmetries
     //! This method will fill the OBOrbital objects for you
-    void LoadClosedShellOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, int alphaHOMO);
+    void LoadClosedShellOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, unsigned int alphaHOMO);
     //! \brief Convenience function to load alpha orbitals in an open-shell calculation
-    void LoadAlphaOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, int alphaHOMO);
+    void LoadAlphaOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, unsigned int alphaHOMO);
     //! \brief Convenience function to load beta orbitals in an open-shell calculation
-    void LoadBetaOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, int betaHOMO);
+    void LoadBetaOrbitals(std::vector<double> energies, std::vector<std::string> symmetries, unsigned int betaHOMO);
 
   protected:
     std::vector<OBOrbital> _alphaOrbitals; //!< List of orbitals. In case of unrestricted calculations, this contains the alpha spin-orbitals
@@ -1171,7 +1171,7 @@ namespace OpenBabel
 
     int NumPoints() 
     { 
-      return _points.size(); 
+      return (int)_points.size();
     }
     
     void AddPoint(double x,double y,double z, double V) 
@@ -1200,7 +1200,33 @@ namespace OpenBabel
       ++i;
       return((i == _points.end()) ? (OBFreeGridPoint*)NULL : (OBFreeGridPoint*)*i);
     }
+    
+    void Clear();
 
+  };
+  
+  class OBAPI OBPcharge: public OBGenericData
+  {
+  protected:
+    std::vector<double> _PartialCharge;
+  public:
+    OBPcharge(){};
+    ~OBPcharge(){};
+
+    int NumPartialCharges() 
+    { 
+      return _PartialCharge.size(); 
+    }
+    
+    void AddPartialCharge(std::vector<double> q)
+    {
+      _PartialCharge = q;
+    }
+
+    std::vector<double> GetPartialCharge()
+    {
+        return _PartialCharge;
+    }
   };
 
  //! A standard iterator over vectors of OBGenericData (e.g., inherited from OBBase)

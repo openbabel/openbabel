@@ -3,6 +3,7 @@ conformersearch.h - Conformer searching using genetic algorithm.
 
 Copyright (C) 2010 Tim Vandermeersch
 Some portions Copyright (C) 2012 Materials Design, Inc.
+Some portions Copyright (C) 2016 Torsten Sachse
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
@@ -336,6 +337,11 @@ namespace OpenBabel {
       }
 
       /**
+      * Set whether or not you want rotors to be printed prior to the conformer search.
+      */
+      void PrintRotors(bool printrotors) { m_printrotors = printrotors; }
+
+      /**
        * Perform conformer search using a genetic algorithm.
        */
       void Search();
@@ -363,10 +369,10 @@ namespace OpenBabel {
       void SetNbNiches (int value) {nb_niches = value;}
       
       /* @brief Get niches radius, for dynamic niche sharing.*/
-      int GetNicheRadius () {return niche_radius;}
+      double GetNicheRadius () {return niche_radius;}
       
       /* @brief Set niches radius, for dynamic niche sharing.*/
-      void SetNicheRadius (int value) {niche_radius = value;}
+      void SetNicheRadius (double value) {niche_radius = value;}
       
       /* @brief Get the alpha sharing parameter */
       double GetAlphaSharing () {return alpha_share;}
@@ -442,9 +448,9 @@ namespace OpenBabel {
       OBRandom unique_generator; //!< A unique random number generator for the whole algo
       bool use_sharing;		//!< Wether to use sharing or not.
       double alpha_share;	//!< The alpha parameter in sharing function
-      int sigma_share;		//!< The sigma parameter in sharing function
+      double sigma_share;		//!< The sigma parameter in sharing function
       int nb_niches;		//!< The number of dynamic niches to be found
-      int niche_radius;		//!< A pre-determined niche radius, for dynamic niche sharing.
+      double niche_radius;		//!< A pre-determined niche radius, for dynamic niche sharing.
       double p_crossover;	//!< Crossover probability
       double niche_mating;	//!< Probability of forcing the second parent in the first parent
       int local_opt_rate;       //!< Perform a random local optimization every local_opt_rate generations. Disabled if set to 
@@ -452,6 +458,7 @@ namespace OpenBabel {
       OBMol         m_mol; //!< The molecule with starting coordinates
       OBRotorList   m_rotorList; //!< The OBRotorList for the molecule
       RotorKeys     m_rotorKeys; //!< The current population
+      bool          m_printrotors; //!< Wheter or not to print all rotors that are found instead of performing the conformer search
 
       OBConformerFilter *m_filter;
       OBConformerScore  *m_score;

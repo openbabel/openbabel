@@ -58,7 +58,7 @@ if (PYTHON_BINDINGS)
     endif(PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND)
 
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR RUN_SWIG)
-    message(STATUS "Warning: Python bindings NOT found. Generate using -DRUN_SWIG.")
+    message(STATUS "Warning: Python bindings NOT found. Generate using -DRUN_SWIG=ON.")
 
   endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR RUN_SWIG)
 endif (PYTHON_BINDINGS)
@@ -79,16 +79,6 @@ if (DO_PYTHON_BINDINGS)
       else(WIN32)
         add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
             COMMAND ${SWIG_EXECUTABLE} -python -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${eigen_define} -outdir ${openbabel_SOURCE_DIR}/scripts/python ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
-              COMMAND ${CMAKE_COMMAND} -E echo "import sys" > ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "if sys.platform.find('linux'\) != -1:" >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "  try:" >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "    import dl" >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "  except ImportError:" >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "    import DLFCN as dl" >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "  sys.setdlopenflags(sys.getdlopenflags() | dl.RTLD_GLOBAL)" >> ob.py
-              COMMAND cat ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E copy ob.py ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
-              COMMAND ${CMAKE_COMMAND} -E remove ob.py
               MAIN_DEPENDENCY openbabel-python.i
               VERBATIM
               )
@@ -96,10 +86,22 @@ if (DO_PYTHON_BINDINGS)
     endif(RUN_SWIG)
 
     add_library(bindings_python MODULE ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp)
-    if(BINDINGS_ONLY)
-        target_link_libraries(bindings_python ${PYTHON_LIBRARIES} ${BABEL_SYSTEM_LIBRARY})
+
+    if(APPLE)
+      # Don't link against Python library on Mac
+      set_target_properties(bindings_python PROPERTIES LINK_FLAGS "-undefined dynamic_lookup")
+      if(BINDINGS_ONLY)
+        target_link_libraries(bindings_python ${BABEL_SYSTEM_LIBRARY})
+      else()
+        target_link_libraries(bindings_python ${BABEL_LIBRARY})
+      endif()
     else()
+      # Link against Python library on Linux and Windows
+      if(BINDINGS_ONLY)
+        target_link_libraries(bindings_python ${PYTHON_LIBRARIES} ${BABEL_SYSTEM_LIBRARY})
+      else()
         target_link_libraries(bindings_python ${PYTHON_LIBRARIES} ${BABEL_LIBRARY})
+      endif()
     endif()
 
     if(NOT WIN32)
@@ -131,6 +133,25 @@ if (DO_PYTHON_BINDINGS)
             OUTPUT_NAME _openbabel
             PREFIX ""
             SUFFIX .pyd )
+        execute_process(
+          COMMAND
+          ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_python_lib(1,0,prefix='${CMAKE_INSTALL_PREFIX}'))"
+          OUTPUT_VARIABLE PYTHON_INSTDIR
+          OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
+        if(NOT BINDINGS_ONLY)
+            add_dependencies(bindings_python openbabel)
+        endif()
+
+        install(TARGETS bindings_python
+                LIBRARY DESTINATION ${PYTHON_INSTDIR}
+                COMPONENT bindings_python)
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
+                DESTINATION ${PYTHON_INSTDIR}
+                COMPONENT bindings_python)
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/pybel.py
+                DESTINATION ${PYTHON_INSTDIR}
+                COMPONENT bindings_python)
         add_custom_command(TARGET bindings_python POST_BUILD
           COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py ${openbabel_BINARY_DIR}/bin/${CMAKE_CFG_INTDIR}
           )
@@ -163,7 +184,7 @@ if (JAVA_BINDINGS)
     endif()
 
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp OR RUN_SWIG)
-    message(STATUS "Warning: Java bindings NOT found. Generate using -DRUN_SWIG.")
+    message(STATUS "Warning: Java bindings NOT found. Generate using -DRUN_SWIG=ON.")
 
   endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp OR RUN_SWIG)
 endif (JAVA_BINDINGS)
@@ -225,7 +246,7 @@ if (R_BINDINGS)
 
 
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp OR RUN_SWIG)
-	  message(STATUS "Warning: R bindings NOT found. Generate using -DRUN_SWIG.")
+	  message(STATUS "Warning: R bindings NOT found. Generate using -DRUN_SWIG=ON.")
 
   endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp OR RUN_SWIG)
 endif (R_BINDINGS)
@@ -298,7 +319,7 @@ if (PERL_BINDINGS)
     endif(PERL_LIBRARY)
 
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp OR RUN_SWIG)
-    message(STATUS "Warning: Perl bindings NOT found. Generate using -DRUN_SWIG.")
+    message(STATUS "Warning: Perl bindings NOT found. Generate using -DRUN_SWIG=ON.")
 
   endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/perl/openbabel-perl.cpp OR RUN_SWIG)
 endif (PERL_BINDINGS)
@@ -363,7 +384,7 @@ if (RUBY_BINDINGS)
     endif (RUBY_LIBRARY)
 
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp OR RUN_SWIG)
-    message(STATUS "Warning: Ruby bindings NOT found. Generate using -DRUN_SWIG.")
+    message(STATUS "Warning: Ruby bindings NOT found. Generate using -DRUN_SWIG=ON.")
 
   endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/ruby/openbabel-ruby.cpp OR RUN_SWIG)
 endif (RUBY_BINDINGS)
@@ -421,7 +442,7 @@ if (CSHARP_BINDINGS)
     endif (CSHARP_EXECUTABLE)
 
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp OR RUN_SWIG)
-    message(STATUS "Warning: Csharp bindings NOT found. Generate using -DRUN_SWIG.")
+    message(STATUS "Warning: Csharp bindings NOT found. Generate using -DRUN_SWIG=ON.")
   endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp OR RUN_SWIG)
 endif (CSHARP_BINDINGS)
 
@@ -429,15 +450,20 @@ if (DO_CSHARP_BINDINGS)
 
     if (RUN_SWIG)
       set(PLATFORM_TYPE "")
-      if (WIN32) # We need to enforce 32-bit .NET dlls or it won't load
-          set(PLATFORM_TYPE "/platform:x86")
-      endif (WIN32)
+      if (WIN32) # i.e. any Windows
+          if (CMAKE_GENERATOR MATCHES Win64$)
+              set(PLATFORM_TYPE "/platform:anycpu")
+          else()
+              set(PLATFORM_TYPE "/platform:x86")
+          endif()
+      endif(WIN32)
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp ${openbabel_SOURCE_DIR}/scripts/csharp/OBDotNet.dll
-          COMMAND ${CMAKE_COMMAND} -E remove_directory ${openbabel_SOURCE_DIR}/scripts/csharp
-          COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_SOURCE_DIR}/scripts/csharp
-          COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/windows-vc2008/Distribution/OBDotNetAssemblyInfo.cs ${openbabel_SOURCE_DIR}/scripts/csharp
-          COMMAND ${SWIG_EXECUTABLE} -csharp -c++ -small -O -templatereduce -namespace OpenBabel -outdir ${openbabel_SOURCE_DIR}/scripts/csharp -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp ${openbabel_SOURCE_DIR}/scripts/openbabel-csharp.i
-          COMMAND ${CMAKE_COMMAND} -E chdir ${openbabel_SOURCE_DIR}/scripts/csharp ${CSHARP_EXECUTABLE} /target:library ${PLATFORM_TYPE} /keyfile:${openbabel_SOURCE_DIR}/windows-vc2008/Distribution/obdotnet.snk /optimize /out:${openbabel_SOURCE_DIR}/scripts/csharp/OBDotNet.dll *.cs
+          COMMAND ${CMAKE_COMMAND} -E remove_directory ${openbabel_SOURCE_DIR}/scripts/csharp/src
+          COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_SOURCE_DIR}/scripts/csharp/src
+          COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/csharp/OBDotNetAssemblyInfo.cs ${openbabel_SOURCE_DIR}/scripts/csharp/src
+          COMMAND ${SWIG_EXECUTABLE} -csharp -c++ -small -O -templatereduce -namespace OpenBabel -outdir ${openbabel_SOURCE_DIR}/scripts/csharp/src -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp ${openbabel_SOURCE_DIR}/scripts/openbabel-csharp.i
+          COMMAND ${CMAKE_COMMAND} -E chdir ${openbabel_SOURCE_DIR}/scripts/csharp/src ${CSHARP_EXECUTABLE} /target:library ${PLATFORM_TYPE} /keyfile:${openbabel_SOURCE_DIR}/scripts/csharp/obdotnet.snk /optimize /out:${openbabel_BINARY_DIR}/bin/${CMAKE_CFG_INTDIR}/OBDotNet.dll *.cs
+          COMMAND ${CMAKE_COMMAND} -E remove_directory ${openbabel_SOURCE_DIR}/scripts/csharp/src
           MAIN_DEPENDENCY openbabel-csharp.i
           WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts
       )
@@ -491,7 +517,7 @@ if (PHP_BINDINGS)
     endif(PHP_CONFIG_EXECUTABLE)
 
   else (EXISTS ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp OR RUN_SWIG)
-    message(STATUS "Warning: PHP bindings NOT found. Generate using -DRUN_SWIG.")
+    message(STATUS "Warning: PHP bindings NOT found. Generate using -DRUN_SWIG=ON.")
   endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp OR RUN_SWIG)
 endif (PHP_BINDINGS)
 

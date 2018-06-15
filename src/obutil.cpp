@@ -681,7 +681,7 @@ namespace OpenBabel
 
   void qtrfit (double *r,double *f,int size, double u[3][3])
   {
-    register int i;
+    int i;
     double xxyx, xxyy, xxyz;
     double xyyx, xyyy, xyyz;
     double xzyx, xzyy, xzyz;
@@ -794,7 +794,7 @@ namespace OpenBabel
    */
   int SolveQuadratic(double A,double B,double C)
   {
-    register double Descr, Temp, TwoA;
+    double Descr, Temp, TwoA;
 
     if( IsZero(A) )
       return( SolveLinear(B,C) );
@@ -839,9 +839,9 @@ namespace OpenBabel
 
   int SolveCubic(double A,double B,double C,double D)
   {
-    register double TwoA, ThreeA, BOver3A;
-    register double Temp, POver3, QOver2;
-    register double Desc, Rho, Psi;
+    double TwoA, ThreeA, BOver3A;
+    double Temp, POver3, QOver2;
+    double Desc, Rho, Psi;
 
 
     if( IsZero(A) )

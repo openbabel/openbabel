@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
 #include <openbabel/builder.h>
+#include <openbabel/elements.h>
 
 #include <openbabel/stereo/stereo.h>
 #include <openbabel/stereo/cistrans.h>
@@ -474,7 +475,7 @@ namespace OpenBabel {
         float uBounds = _d->GetUpperBounds(path[a] - 1, path[d] - 1) - DIST14_TOL;
 
         bc = _mol.GetBond(path[b], path[c]);
-        if (bc->IsDouble() || bc->IsAromatic()) {
+        if (bc->IsAromatic() || bc->GetBondOrder() == 2) {
           uBounds = lBounds + DIST14_TOL;
           // Correct non-ring neighbors too -- these should be out of the ring
           FOR_NBORS_OF_ATOM(nbr, _mol.GetAtom(path[b])) {
@@ -492,7 +493,7 @@ namespace OpenBabel {
                                _d->GetUpperBounds(nbr->GetIdx() - 1, path[a] - 1) - DIST14_TOL);
           }
 
-        } else if (bc->IsSingle()) {
+        } else if (bc->GetBondOrder() == 1) {
           // Could be anywhere from pure-cis to halfway to trans
           uBounds = _d->GetAvgBounds(path[a] - 1, path[d] - 1);
 
@@ -638,7 +639,7 @@ namespace OpenBabel {
       // For neighbors of d
       //  Actually depends on stereo of bond C-D
       cd = _mol.GetBond(c, d);
-      if (cd && cd->IsDouble()) {
+      if (cd && cd->GetBondOrder() == 2 && !cd->IsAromatic()) {
         stereo = GetCisTransStereo(cd);
       }
       FOR_NBORS_OF_ATOM(e, d) {
@@ -675,7 +676,7 @@ namespace OpenBabel {
       //  Now depends on stereo of bond a-b
       stereo = NULL; // reset
       ab = _mol.GetBond(a, b);
-      if (ab && ab->IsDouble()) {
+      if (ab && ab->GetBondOrder() == 2 && !ab->IsAromatic()) {
         stereo = GetCisTransStereo(ab);
       }
       FOR_NBORS_OF_ATOM(z, a) {
@@ -782,11 +783,11 @@ namespace OpenBabel {
           }
 
           // Triangle rule: length can't be shorter than the difference between the legs
-          if (l_bc < (l_ab - u_ac)) {
-            l_bc = l_ab - u_ac;
+          if (l_bc < (l_ab - l_ac)) {
+            l_bc = l_ab - l_ac;
             _d->SetLowerBounds(b, c, l_bc);
-          } else if (l_bc < (l_ac - u_ab)) {
-            l_bc = l_ac - u_ab;
+          } else if (l_bc < (l_ac - l_ab)) {
+            l_bc = l_ac - l_ab;
             _d->SetLowerBounds(b, c, l_bc);
           }
 
@@ -811,12 +812,12 @@ namespace OpenBabel {
 
     for (unsigned int i = 0; i < N; ++i) {
       a = _mol.GetAtom(i+1);
-      aRad = etab.GetVdwRad(a->GetAtomicNum());
+      aRad = OBElements::GetVdwRad(a->GetAtomicNum());
 
       for (unsigned int j = i + 1; j < N; ++j)
         {
           b = _mol.GetAtom(j + 1);
-          bRad = etab.GetVdwRad(b->GetAtomicNum());
+          bRad = OBElements::GetVdwRad(b->GetAtomicNum());
           minDist = aRad + bRad;
           if (minDist < 1.0f)
             minDist = 1.0f;
@@ -1189,7 +1190,7 @@ namespace OpenBabel {
 
     for (unsigned int i = 1; i <= _mol.NumAtoms(); ++i) {
       a = _mol.GetAtom(i);
-      aRad = etab.GetVdwRad(a->GetAtomicNum());
+      aRad = OBElements::GetVdwRad(a->GetAtomicNum());
       for (unsigned int j = i + 1; j <= _mol.NumAtoms(); ++j) {
           b = _mol.GetAtom(j);
 
@@ -1207,7 +1208,7 @@ namespace OpenBabel {
           if (_mol.GetBond(a, b))
             continue;
 
-          bRad = etab.GetVdwRad(b->GetAtomicNum());
+          bRad = OBElements::GetVdwRad(b->GetAtomicNum());
           minDist = aRad + bRad - 2.5;
           if (minDist < 0.8)
             minDist = 0.8;
