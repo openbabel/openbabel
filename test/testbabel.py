@@ -19,7 +19,7 @@ import re
 import sys
 import unittest
 
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, check_output, STDOUT
 
 def run_exec(*args):
     """Run one of OpenBabel's executables
@@ -102,7 +102,7 @@ class BaseTest(unittest.TestCase):
                          "Number of molecules converted is %d "
                          "but should be %d" % (conversion_no, N))
 
-class testOBabel(BaseTest):
+class TestOBabel(BaseTest):
     """A series of tests relating to the obabel executable"""
 
     def testNoInput(self):
@@ -239,6 +239,20 @@ TORSDOF 5
 '''
         output, error = run_exec(pdb, "obabel -ipdb -opdbqt")
         self.assertEqual(output, pdbqt)        
+
+    def testMissingPlugins(self):
+        libdir = os.environ.pop("BABEL_LIBDIR", None)
+        os.environ["BABEL_LIBDIR"] = ""
+
+        obabel = executable("obabel")
+        msg = check_output('%s -:C -osmi' % obabel, shell=True, stderr=STDOUT, universal_newlines=True)
+        if libdir:
+            os.environ["BABEL_LIBDIR"] = libdir
+        else:
+            os.environ.pop("BABEL_LIBDIR")
+
+        self.assertTrue('BABEL_LIBDIR' in msg)
+
 
 if __name__ == "__main__":
     unittest.main()
