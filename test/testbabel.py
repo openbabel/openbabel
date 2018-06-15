@@ -243,6 +243,8 @@ TORSDOF 5
         msg = check_output('%s -:C -osmi' % obabel, shell=True, stderr=STDOUT, universal_newlines=True)
         if libdir:
             os.environ["BABEL_LIBDIR"] = libdir
+        else:
+            os.environ.pop("BABEL_LIBDIR")
 
         self.assertTrue('BABEL_LIBDIR' in msg)
 
