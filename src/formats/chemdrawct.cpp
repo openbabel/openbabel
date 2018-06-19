@@ -164,7 +164,6 @@ namespace OpenBabel
     while(strlen(buffer) == 0 && !ifs.eof() );
     ifs.seekg(ipos);
 
-
     mol.EndModify();
     return(true);
   }
