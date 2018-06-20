@@ -81,27 +81,27 @@ bool TurbomoleFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       UnitConv=1;
 
 
-    char buff[BUFF_SIZE];
+    char buffer[BUFF_SIZE];
     do
     {
-        ifs.getline(buff,BUFF_SIZE);
+        ifs.getline(buffer,BUFF_SIZE);
 	if (ifs.peek() == EOF || !ifs.good())
 	  return false;
     }
-    while(strncmp(buff,"$coord",6));
+    while(strncmp(buffer,"$coord",6));
 
     mol.BeginModify();
     OBAtom atom;
     while(!(!ifs))
     {
-        ifs.getline(buff,BUFF_SIZE);
-        if(*buff=='$')
+        ifs.getline(buffer,BUFF_SIZE);
+        if(*buffer=='$')
             break;
-        if(*buff=='#')
+        if(*buffer=='#')
             continue;
         float x,y,z;
         char atomtype[8];
-        if(sscanf(buff,"%f %f %f %7s",&x,&y,&z,atomtype)!=4)
+        if(sscanf(buffer,"%f %f %f %7s",&x,&y,&z,atomtype)!=4)
             return false;
 
         atom.SetVector(x*UnitConv, y*UnitConv, z*UnitConv);
@@ -112,8 +112,8 @@ bool TurbomoleFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             return false;
         atom.Clear();
     }
-    while(!(!ifs) && strncmp(buff,"$end",4))
-        ifs.getline(buff,BUFF_SIZE);
+    while(!(!ifs) && strncmp(buffer,"$end",4))
+        ifs.getline(buffer,BUFF_SIZE);
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
@@ -121,9 +121,14 @@ bool TurbomoleFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       mol.PerceiveBondOrders();
 
     // clean out remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() &&
-	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
-      ifs.getline(buff,BUFF_SIZE);
+    std::streampos ipos;
+    do
+    {
+      ipos = ifs.tellg();
+      ifs.getline(buffer,BUFF_SIZE);
+    }
+    while(strlen(buffer) == 0 && !ifs.eof() );
+    ifs.seekg(ipos);
 
     mol.EndModify();
     return true;
@@ -158,19 +163,19 @@ bool TurbomoleFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
     ofs << "$coord" <<endl;
 
-    char buff[BUFF_SIZE];
+    char buffer[BUFF_SIZE];
     OBAtom *atom;
     vector<OBAtom*>::iterator i;
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
     {
       char symb[8];
       strcpy(symb,OBElements::GetSymbol(atom->GetAtomicNum()));
-        snprintf(buff, BUFF_SIZE, "%20.14f  %20.14f  %20.14f      %s",
+        snprintf(buffer, BUFF_SIZE, "%20.14f  %20.14f  %20.14f      %s",
                 atom->GetX()/UnitConv,
                 atom->GetY()/UnitConv,
                 atom->GetZ()/UnitConv,
                 strlwr(symb) );
-        ofs << buff << endl;
+        ofs << buffer << endl;
     }
     ofs << "$end" << endl;
 
