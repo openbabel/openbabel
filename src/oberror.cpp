@@ -182,18 +182,23 @@ namespace OpenBabel
       switch(err.GetLevel()){
         case obError:
           *_outputStream << color::red << err;
+	  *_outputStream << color::Reset;
           break;          
         case obWarning:
           *_outputStream << color::yellow << err;
+	  *_outputStream << color::Reset;
           break;          
         case obInfo:
           *_outputStream << color::blue << err;
+	  *_outputStream << color::Reset;
           break;          
         case obAuditMsg:
           *_outputStream << color::magenta << err;
+	  *_outputStream << color::Reset;
           break;          
         case obDebug:
           *_outputStream << color::cyan << err;
+	  *_outputStream << color::Reset;
           break;
       }      
     }
