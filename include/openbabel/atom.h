@@ -102,6 +102,8 @@ namespace OpenBabel
       int  GetFlag() const    {  return(_flags);  }
       //! Sets the bitwise @p flag
       void SetFlag(int flag)  { _flags |= flag;   }
+      //! Unsets the bitwise @p flag
+      void UnsetFlag(int flag) { _flags &= (~(flag)); }
       //! \return True of the atom has the @p flag
       bool HasFlag(int flag)  {  return((_flags & flag) ? true : false); }
 
@@ -186,7 +188,7 @@ namespace OpenBabel
           _flags &= ~(OB_CHIRAL_ATOM);
         }
       //! Mark an atom as belonging to at least one ring
-      void SetInRing()         { SetFlag(OB_RING_ATOM); }
+      void SetInRing(bool set=true)         { if(set) SetFlag(OB_RING_ATOM); else UnsetFlag(OB_RING_ATOM); }
       //! Mark an atom as being chiral with unknown stereochemistry
       void SetChiral()         { SetFlag(OB_CHIRAL_ATOM); }
       //! Clear the internal coordinate pointer

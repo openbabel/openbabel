@@ -110,6 +110,17 @@ class TestSuite(PythonBindings):
             for bit in ecfp0:
                 self.assertTrue(bit in ecfp2)
 
+    def testOldRingInformationIsWipedOnReperception(self):
+        """Previously, the code that identified ring atoms and bonds
+        did not set the flags of non-ring atoms. This meant that no
+        matter what you did to the structure, once a ring-atom, always a
+        ring atom."""
+        mol = pybel.readstring("smi", "c1ccccc1")
+        atom = mol.atoms[0].OBAtom
+        self.assertTrue(atom.IsInRing()) # trigger perception
+        mol.OBMol.DeleteAtom(mol.atoms[-1].OBAtom)
+        self.assertFalse(atom.IsInRing()) # this used to return True
+
     def testOBMolSeparatePreservesAromaticity(self):
         """If the original molecule had aromaticity perceived,
         then the fragments should also.
