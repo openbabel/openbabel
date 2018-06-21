@@ -1052,9 +1052,9 @@ namespace OpenBabel
               for (k = j->begin(); k != j->end(); ++k)
                 if (vfrag.BitIsSet(*k)) {
                   alreadydone += 1;
-                  if (alreadydone > 1) break;
+                  if (alreadydone >= 1) break;
                 }
-              if (alreadydone > 1) continue;
+              if (alreadydone >= 1) continue;
 
               for (k = j->begin(); k != j->end(); ++k)
                 vfrag.SetBitOn(*k); // Set vfrag for all atoms of fragment
