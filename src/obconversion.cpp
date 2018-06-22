@@ -607,7 +607,6 @@ namespace OpenBabel {
       	  Index--;
       }
     }
-    clog << color::Reset;
     //Put AddChemObject() into non-queue mode
     Count= -1;
     EndNumber=StartNumber=0; pOb1=NULL;//leave tidy
@@ -1270,8 +1269,6 @@ namespace OpenBabel {
                                 std::vector<std::string>& OutputFileList)
   { 
     OBConversion::OutFilename = OutputFileName; //ready for 2.4.0
-    init::color();
-    clog << color::bold;
     istream* pIs=NULL;
     ostream* pOs=NULL;
     ifstream is;
@@ -1694,7 +1691,6 @@ Additional options :
     //of the specified class (or the output format if not specified).
     //Get the last word on the first line of the description which should
     //be "molecules", "reactions", etc and remove the s if only one object converted
-    init::color();
     if(!pFormat)
       pFormat = pOutFormat;
     string objectname(pFormat->TargetClassDescription());
@@ -1706,7 +1702,7 @@ Additional options :
     pos = objectname.rfind(' ');
     if(pos==std::string::npos)
       pos=0;
-    std::clog << color::dim << count << objectname.substr(pos) << " converted" << color::Reset << endl;
+    std::clog << ANSI_COLOR_DIM << count << objectname.substr(pos) << " converted" << ANSI_COLOR_RESET << endl;
   }
 
   void OBConversion::CopyOptions(OBConversion* pSourceConv, Option_type typ)
