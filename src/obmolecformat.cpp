@@ -19,6 +19,7 @@ GNU General Public License for more details.
 #include <openbabel/obmolecformat.h>
 #include <openbabel/obiter.h>
 #include <iterator>
+#include <color.h>
 
 using namespace std;
 namespace OpenBabel
@@ -129,8 +130,11 @@ namespace OpenBabel
 
   bool OBMoleculeFormat::WriteChemObjectImpl(OBConversion* pConv, OBFormat* pFormat)
   {
-    if(pConv->IsOption("C",OBConversion::GENOPTIONS))
+    clog << ANSI_COLOR_BOLD;
+    if(pConv->IsOption("C",OBConversion::GENOPTIONS)){
+      clog << ANSI_COLOR_RESET;
       return OutputDeferredMols(pConv);
+    }
     if(pConv->IsOption("j",OBConversion::GENOPTIONS)
         || pConv->IsOption("join",OBConversion::GENOPTIONS))
       {
@@ -140,6 +144,7 @@ namespace OpenBabel
         bool ret=pFormat->WriteMolecule(_jmol,pConv);
         pConv->SetOutputIndex(1);
         delete _jmol;
+	clog << ANSI_COLOR_RESET;
         return ret;
       }
 
@@ -174,6 +179,7 @@ namespace OpenBabel
     if(pReact)
       ret = OutputMolsFromReaction(pReact, pConv, pFormat);
 #endif
+    clog << ANSI_COLOR_RESET;
     delete pOb;
     return ret;
   }
