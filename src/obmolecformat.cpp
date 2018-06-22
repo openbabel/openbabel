@@ -130,7 +130,7 @@ namespace OpenBabel
 
   bool OBMoleculeFormat::WriteChemObjectImpl(OBConversion* pConv, OBFormat* pFormat)
   {
-    clog << ANSI_COLOR_BOLD;
+
     if(pConv->IsOption("C",OBConversion::GENOPTIONS)){
       clog << ANSI_COLOR_RESET;
       return OutputDeferredMols(pConv);
@@ -141,10 +141,11 @@ namespace OpenBabel
         //arrives here at the end of a file
         if(!pConv->IsLast())
           return true;
+	clog << ANSI_COLOR_BOLD;
         bool ret=pFormat->WriteMolecule(_jmol,pConv);
+	clog << ANSI_COLOR_RESET;
         pConv->SetOutputIndex(1);
         delete _jmol;
-	clog << ANSI_COLOR_RESET;
         return ret;
       }
 
@@ -168,18 +169,23 @@ namespace OpenBabel
         ret=true;
 
         ret = DoOutputOptions(pOb, pConv);
-
-        if(ret)
+	
+        if(ret){
+	  clog << ANSI_COLOR_BOLD;  
           ret = pFormat->WriteMolecule(pmol,pConv);
+	  clog << ANSI_COLOR_RESET;
+	}
     }
 
 #ifdef HAVE_SHARED_POINTER
     //If sent a OBReaction* (rather than a OBMol*) output the consituent molecules
     OBReaction* pReact = dynamic_cast<OBReaction*> (pOb);
-    if(pReact)
+    if(pReact){
+      clog << ANSI_COLOR_BOLD; 
       ret = OutputMolsFromReaction(pReact, pConv, pFormat);
 #endif
-    clog << ANSI_COLOR_RESET;
+      clog << ANSI_COLOR_RESET;
+    }
     delete pOb;
     return ret;
   }
@@ -192,10 +198,12 @@ namespace OpenBabel
       pOb->SetTitle(ss.str().c_str());
     }
 
+    
     OBMol* pmol = dynamic_cast<OBMol*> (pOb);
     if(pmol) {
       if(pConv->IsOption("writeconformers", OBConversion::GENOPTIONS)) {
         //The last conformer is written in the calling function
+	clog << ANSI_COLOR_BOLD;
         int c = 0;
         for (; c < pmol->NumConformers()-1; ++c) {
           pmol->SetConformer(c);
@@ -203,8 +211,10 @@ namespace OpenBabel
             break;
         }
         pmol->SetConformer(c);
+	clog << ANSI_COLOR_RESET;
       }
-    }
+    } 
+
     return true;
   }
 
@@ -388,6 +398,7 @@ namespace OpenBabel
     lastitr = IMols.end();
     --lastitr;
     pConv->SetOneObjectOnly(false);
+
     for(itr=IMols.begin();itr!=IMols.end();++itr,++i)
       {
         if(!(itr->second)->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS), pConv))
@@ -395,9 +406,9 @@ namespace OpenBabel
         pConv->SetOutputIndex(i);
         if(itr==lastitr)
           pConv->SetOneObjectOnly(); //to set IsLast
-
+	clog << ANSI_COLOR_BOLD;
         ret = pConv->GetOutFormat()->WriteMolecule(itr->second, pConv);
-
+        clog << ANSI_COLOR_RESET;
         delete itr->second; //always delete OBMol object
         itr->second = NULL; // so can be deleted in DeleteDeferredMols()
         if (!ret) break;
@@ -441,6 +452,7 @@ namespace OpenBabel
     if((pFormat->Flags() & WRITEONEONLY) && mols.size()>1)
     {
       stringstream ss;
+      clog << ANSI_COLOR_RESET; 
       ss << "There are " << mols.size() << " molecules to be output,"
          << "but this format is for single molecules only";
       obErrorLog.ThrowError(__FUNCTION__, ss.str(), obWarning);
@@ -454,8 +466,10 @@ namespace OpenBabel
         //Have to do set these manually because not using "Convert" interface
         pConv->SetLast(i==mols.size()-1);
         pConv->SetOutputIndex(pConv->GetOutputIndex()+1);
+        clog << ANSI_COLOR_BOLD;
         ok = pFormat->WriteMolecule(
           mols[i]->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS), pConv),pConv);
+	clog << ANSI_COLOR_RESET;
       }
     }
     return ok;
