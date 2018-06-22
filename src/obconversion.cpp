@@ -603,10 +603,11 @@ namespace OpenBabel {
     //Output is always occurs at the end with the --OutputAtEnd option
     bool oae = IsOption("OutputAtEnd",GENOPTIONS)!=NULL;
     if(pOutFormat && (!oae || m_IsLast)){
-      if((oae || pOb1) && !pOutFormat->WriteChemObject(this) && clog << color::Reset){
+      if((oae || pOb1) && !pOutFormat->WriteChemObject(this)){
       	  Index--;
       }
     }
+    clog << color::Reset;
     //Put AddChemObject() into non-queue mode
     Count= -1;
     EndNumber=StartNumber=0; pOb1=NULL;//leave tidy
