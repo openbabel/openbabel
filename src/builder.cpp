@@ -70,52 +70,63 @@ namespace OpenBabel
       //
       \endcode
   **/
-  std::vector<std::pair<OBSmartsPattern*, std::vector<vector3> > > OBBuilder::_fragments;
+  std::vector<std::string> OBBuilder::_fragments;
+  std::map<std::string, int> OBBuilder::_fragments_index;
+  std::map<std::string, std::vector<vector3> > OBBuilder::_fragments_cache;
 
   void OBBuilder::LoadFragments()  {
     // open data/fragments.txt
     ifstream ifs;
-    if (OpenDatafile(ifs, "platinum-fragment.txt").length() == 0) {
-      obErrorLog.ThrowError(__FUNCTION__, "Cannot open rotation-fragments.txt", obError);
+    if (OpenDatafile(ifs, "fragment-index.txt").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open fragment-index.txt", obError);
       return;
     }
 
-    // Set the locale for number parsing to avoid locale issues: PR#1785463
-    // TODO: Use OpenDatafile()
-    obLocale.SetLocale();
+    std::string smiles;
+    int index;
+    while(ifs >> smiles >> index) {
+      _fragments.push_back(smiles);
+      _fragments_index[smiles] = index;
+    }
+    cout << "LoadFragments finished." << endl;
+  }
 
-    char buffer[BUFF_SIZE];
-    vector<string> vs;
-    OBSmartsPattern *sp = NULL;
-    vector<vector3> coords;
-    while (ifs.getline(buffer, BUFF_SIZE)) {
-      if (buffer[0] == '#') // skip comment line (at the top)
-        continue;
-
-      tokenize(vs, buffer);
-
-      if (vs.size() == 1) { // SMARTS pattern
-        if (sp != NULL)
-          _fragments.push_back(pair<OBSmartsPattern*, vector<vector3> > (sp, coords));
-
-        coords.clear();
-        sp = new OBSmartsPattern;
-        if (!sp->Init(vs[0])) {
-          delete sp;
-          sp = NULL;
-          obErrorLog.ThrowError(__FUNCTION__, " Could not parse SMARTS from contribution data file", obInfo);
-        }
-      } else if (vs.size() == 4) { // XYZ coordinates
-        vector3 coord(atof(vs[1].c_str()), atof(vs[2].c_str()), atof(vs[3].c_str()));
-        coords.push_back(coord);
-      }
-
+  std::vector<vector3> OBBuilder::GetFragmentCoord(std::string smiles) {
+    cout << "Fragment search:" << smiles << endl;
+    if (_fragments_cache.count(smiles) > 0) {
+      cout << "In cache" << endl;
+      return _fragments_cache[smiles];
     }
 
-    _fragments.push_back(pair<OBSmartsPattern*, vector<vector3> > (sp, coords));
+    std::vector<vector3> coords;
+    if (_fragments_index.count(smiles) == 0) {
+      cout << "Not in DB" << endl;
+      return coords;
+    }
 
-    // return the locale to the original one
-    obLocale.RestoreLocale();
+    ifstream ifs;
+    if (OpenDatafile(ifs, "platinum-fragment.txt").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open platinum-index.txt", obError);
+      return coords;
+    }
+
+    cout << "seekg(" << _fragments_index[smiles] << ")" << endl;
+    ifs.clear();
+    ifs.seekg(_fragments_index[smiles]);
+    char buffer[BUFF_SIZE];
+    vector<string> vs;
+    while (ifs.getline(buffer, BUFF_SIZE)) {
+      //cout << "getline: " <<  buffer << endl;
+      tokenize(vs, buffer);
+      if (vs.size() == 4) { // XYZ coordinates
+        vector3 coord(atof(vs[1].c_str()), atof(vs[2].c_str()), atof(vs[3].c_str()));
+        cout << coord.GetX() << ", " << coord.GetY() << ", " << coord.GetZ() << endl;
+        coords.push_back(coord);
+      } else if (vs.size() == 1) { // SMARTS pattern
+        break;
+      }
+    }
+    return coords;
   }
 
   vector3 GetCorrectedBondVector(OBAtom *atom1, OBAtom *atom2, int bondOrder = 1)
@@ -975,7 +986,6 @@ namespace OpenBabel
                     // These atoms have coordinates, but the fragment still has
                     // to be rotated and translated.
     vector3 molvec, moldir;
-    vector<pair<OBSmartsPattern*, vector<vector3 > > >::iterator i;
     vector<vector<int> >::iterator j;
     vector<int>::iterator k, k2;
     vector<vector3>::iterator l;
@@ -1026,12 +1036,7 @@ namespace OpenBabel
 
     // Separate each disconnected fragments as different molecules
     vector<OBMol> fragments = mol_copy.Separate(); 
-    vector<string> fragment_smiles;
     vector<OBMol>::iterator f;
-    // Store canonical SMILES of fragments
-    for(f = fragments.begin(); f != fragments.end(); ++f) {
-      fragment_smiles.push_back(conv.WriteString(&(*f), true));
-    }
 
     //datafile is read only on first use of Build()
     if(_fragments.empty())
@@ -1040,44 +1045,43 @@ namespace OpenBabel
     // Need to implement some code to skip too big fragments
 
     // Loop through the fragment database and assign the coordinates
+    std::vector<std::string>::iterator i;
+    OBSmartsPattern sp;
     for (i = _fragments.begin(); i != _fragments.end(); ++i) {
-      vector<string>::iterator f;
-      for(f = fragment_smiles.begin(); f != fragment_smiles.end(); ++f) {
-        if(*f == i->first->GetSMARTS()) { // if fragment is in database
-          if (i->first != NULL && i->first->Match(mol)) { // for all matches
-            mlist = i->first->GetUMapList();
-            for (j = mlist.begin(); j != mlist.end(); ++j) {
-              // Have any atoms of this match already been added?
-              int alreadydone = 0;
-              for (k = j->begin(); k != j->end(); ++k)
-                if (vfrag.BitIsSet(*k)) {
-                  alreadydone += 1;
-                  if (alreadydone >= 1) break;
-                }
-              if (alreadydone >= 1) continue;
+      sp.Init(*i);
+      if (sp.Match(mol)) { // for all matches
+        mlist = sp.GetUMapList();
+        for (j = mlist.begin(); j != mlist.end(); ++j) {
+          // Have any atoms of this match already been added?
+          int alreadydone = 0;
+          for (k = j->begin(); k != j->end(); ++k)
+            if (vfrag.BitIsSet(*k)) {
+              alreadydone += 1;
+              if (alreadydone >= 1) break;
+            }
+          if (alreadydone >= 1) continue;
 
-              for (k = j->begin(); k != j->end(); ++k)
-                vfrag.SetBitOn(*k); // Set vfrag for all atoms of fragment
+          for (k = j->begin(); k != j->end(); ++k)
+            vfrag.SetBitOn(*k); // Set vfrag for all atoms of fragment
 
-              int counter;
-              for (k = j->begin(), counter=0; k != j->end(); ++k, ++counter) { // for all atoms of the fragment
-                // set coordinates for atoms
-                OBAtom *atom = workMol.GetAtom(*k);
-                atom->SetVector(i->second[counter]);
-              }
+          int counter;
+          std::vector<vector3> coords = GetFragmentCoord(*i);
+          for (k = j->begin(), counter=0; k != j->end(); ++k, ++counter) { // for all atoms of the fragment
+            // set coordinates for atoms
+            OBAtom *atom = workMol.GetAtom(*k);
+            atom->SetVector(coords[counter]);
+          }
 
-              // add the bonds for the fragment
-              int index2;
-              for (k = j->begin(); k != j->end(); ++k) {
-                OBAtom *atom1 = mol.GetAtom(*k);
-                for (k2 = j->begin(); k2 != j->end(); ++k2) {
-                  int index2 = *k2;
-                  OBAtom *atom2 = mol.GetAtom(index2);
-                  OBBond *bond = atom1->GetBond(atom2);
-                  if (bond != NULL) {
-                    workMol.AddBond(*bond);
-                  }
-                }
+          // add the bonds for the fragment
+          int index2;
+          for (k = j->begin(); k != j->end(); ++k) {
+            OBAtom *atom1 = mol.GetAtom(*k);
+            for (k2 = j->begin(); k2 != j->end(); ++k2) {
+              int index2 = *k2;
+              OBAtom *atom2 = mol.GetAtom(index2);
+              OBBond *bond = atom1->GetBond(atom2);
+              if (bond != NULL) {
+                workMol.AddBond(*bond);
               }
             }
           }
