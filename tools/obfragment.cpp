@@ -4,7 +4,7 @@ obfragment - Generate coordinate database of ring fragments
 Copyright (C) 2007 Geoffrey R. Hutchison
  
 This file is part of the Open Babel project.
-For more information, see <http://openbabel.org/>
+For more information, see <http://openbabel.sourceforge.net/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -39,6 +39,7 @@ extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
 #include <fstream>
 #include <sstream>
 #include <iterator>
+#include <algorithm>
 #include <queue>
 #include <map>
 
@@ -46,8 +47,8 @@ using namespace std;
 using namespace OpenBabel;
 
 class UnionFind {
-  vector<int> table;
-  int root(int x) {
+  mutable vector<int> table;
+  int root(int x) const {
     return table[x] < 0 ? x : table[x] = root(table[x]);
   }
 public:
@@ -64,6 +65,9 @@ public:
   bool isRoot(int x) const {
     return table[x] < 0;
   }
+  bool isSame(int x, int y) const {
+    return root(x) == root(y);
+  }
 };
 
 int main(int argc, char *argv[])
@@ -71,25 +75,19 @@ int main(int argc, char *argv[])
   // turn off slow sync with C-style output (we don't use it anyway).
   std::ios::sync_with_stdio(false);
 
-  OBConversion conv, conv_sdf;
+  OBConversion conv;
   conv.SetOptions("O", conv.OUTOPTIONS);
   OBFormat *inFormat, *canFormat;
-  OBMol mol;
   ifstream ifs;
-  vector<OBMol> fragments;
-  unsigned int fragmentCount = 0; // track how many in library -- give a running count
-  map<string, int> index; // index of cansmi
-  string currentCAN, currentSMARTS;
-  unsigned int size;
+  OBMol mol;
   OBAtom *atom;
   OBBond *bond;
   char buffer[BUFF_SIZE];
   map<string, vector<OBMol> > fragment_list;
+  vector<pair<int, string> > fragment_count;
 
   canFormat = conv.FindFormat("can"); // Canonical SMILES format
   conv.SetOutFormat(canFormat);
-  canFormat = conv.FindFormat("sdf");
-  conv_sdf.SetOutFormat(canFormat);
 
   if (argc < 2)
   {
@@ -121,7 +119,7 @@ int main(int argc, char *argv[])
       conv.Read(&mol, &ifs);
       mol.DeleteHydrogens();
 
-      size = mol.NumAtoms();
+      unsigned int size = mol.NumAtoms();
       OBBitVec atomsToCopy(size+1);
       for (unsigned int i = 1; i <= size; ++i) {
         atom = mol.GetAtom(i);
@@ -139,7 +137,7 @@ int main(int argc, char *argv[])
 
       OBMol mol_copy;
       mol.CopySubstructure(mol_copy, &atomsToCopy, &bondsToExclude);
-      fragments = mol_copy.Separate(); // Copies each disconnected fragment as a separate
+      vector<OBMol> fragments = mol_copy.Separate(); // Copies each disconnected fragment as a separate
       for (unsigned int i = 0; i < fragments.size(); ++i)
       {
         if (fragments[i].NumAtoms() < 3) // too small to care
@@ -159,26 +157,36 @@ int main(int argc, char *argv[])
     ifs.close();
     ifs.clear();
   } // while reading files
+
+
+  // sort fragments by the number of molecules
+  for (map<string, vector<OBMol> >::iterator i = fragment_list.begin(); i != fragment_list.end(); i++) {
+    fragment_count.push_back(make_pair<int, string>(i->second[0].NumAtoms(), i->first));
+  }
+  sort(fragment_count.rbegin(), fragment_count.rend());
  
-  map<string, vector<OBMol> >::iterator i;
-  for (i = fragment_list.begin(); i != fragment_list.end(); i++) {
+  for (vector<pair<int, string> >::iterator i = fragment_count.begin(); i != fragment_count.end(); i++) {
     // OK, now retrieve the canonical SMILES ordering for the fragment
-    UnionFind uf(i->second.size());
-    cout << i->first << ": " << i->second.size() << endl;
+    vector<OBMol>& fragments = fragment_list[i->second];
+    UnionFind uf(fragments.size());
     vector<OBMol>::iterator j, j2;
-    for (j = i->second.begin(); j != i->second.end(); j++) {
-      for (j2 = i->second.begin(); j2 != i->second.end(); j2++) {
-        //if(j == j2) continue;
+    for (j = fragments.begin(); j != fragments.end(); j++) {
+      for (j2 = j, j2++; j2 != fragments.end(); j2++) {
+        if(uf.isSame(j - fragments.begin(), j2 - fragments.begin())) {
+          continue;
+        }
         OBAlign aln(*j, *j2);
         aln.Align();
-        if (aln.GetRMSD() < 2.0) {
-          uf.unite(j - i->second.begin(), j2 - i->second.begin());
+        if (aln.GetRMSD() < 5.0) {
+          uf.unite(j - fragments.begin(), j2 - fragments.begin());
         }
       }
     }
-    for (size_t idx = 0; idx < i->second.size(); idx++) {
+    vector<OBMol> t;
+    for (size_t idx = 0; idx < fragments.size(); idx++) {
       if (uf.isRoot(idx)) {
-        OBPairData *pd = dynamic_cast<OBPairData*>(i->second[idx].GetData("SMILES Atom Order"));
+        t.push_back(fragments[idx]);
+        OBPairData *pd = dynamic_cast<OBPairData*>(fragments[idx].GetData("SMILES Atom Order"));
         istringstream iss(pd->GetValue());
         vector<unsigned int> canonical_order;
         canonical_order.clear();
@@ -187,17 +195,17 @@ int main(int argc, char *argv[])
             back_inserter<vector<unsigned int> >(canonical_order));
 
         // Write out an XYZ-style file with the CANSMI as the title
-        cout << i->first << '\n'; // endl causes a flush
+        cout << i->second << '\n'; // endl causes a flush
 
         unsigned int order;
         OBAtom *atom;
 
-        i->second[idx].Center(); // Translate to the center of all coordinates
-        i->second[idx].ToInertialFrame(); // Translate all conformers to the inertial frame-of-reference.
+        fragments[idx].Center(); // Translate to the center of all coordinates
+        fragments[idx].ToInertialFrame(); // Translate all conformers to the inertial frame-of-reference.
 
         for (unsigned int index = 0; index < canonical_order.size(); ++index) {
           order = canonical_order[index];
-          atom = i->second[idx].GetAtom(order);
+          atom = fragments[idx].GetAtom(order);
 
           snprintf(buffer, BUFF_SIZE, "%d %9.3f %9.3f %9.3f\n",
               atom->GetAtomicNum(),

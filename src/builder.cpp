@@ -75,7 +75,7 @@ namespace OpenBabel
   void OBBuilder::LoadFragments()  {
     // open data/fragments.txt
     ifstream ifs;
-    if (OpenDatafile(ifs, "rotation-fragments.txt").length() == 0) {
+    if (OpenDatafile(ifs, "platinum-fragment.txt").length() == 0) {
       obErrorLog.ThrowError(__FUNCTION__, "Cannot open rotation-fragments.txt", obError);
       return;
     }
@@ -105,8 +105,8 @@ namespace OpenBabel
           sp = NULL;
           obErrorLog.ThrowError(__FUNCTION__, " Could not parse SMARTS from contribution data file", obInfo);
         }
-      } else if (vs.size() == 3) { // XYZ coordinates
-        vector3 coord(atof(vs[0].c_str()), atof(vs[1].c_str()), atof(vs[2].c_str()));
+      } else if (vs.size() == 4) { // XYZ coordinates
+        vector3 coord(atof(vs[1].c_str()), atof(vs[2].c_str()), atof(vs[3].c_str()));
         coords.push_back(coord);
       }
 
