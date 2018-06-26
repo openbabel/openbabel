@@ -173,12 +173,13 @@ namespace OpenBabel
     if (!_logging)
       return;
     
-    init::color();
- 
     //Output error message if level sufficiently high and, if onceOnly set, it has not been logged before
     if (err.GetLevel() <= _outputLevel &&
       (qualifier!=onceOnly || find(_messageList.begin(), _messageList.end(), err)==_messageList.end()))
     {
+      init::color();
+      *_outputStream << color::bold;
+
       switch(err.GetLevel()){
         case obError:
           *_outputStream << color::red << err;
