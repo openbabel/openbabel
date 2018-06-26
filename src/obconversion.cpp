@@ -42,7 +42,6 @@ GNU General Public License for more details.
 #include <limits>
 #include <typeinfo>
 #include <iterator>
-#include <color.h>
 #include <stdlib.h>
 
 #include <openbabel/obconversion.h>
@@ -1702,7 +1701,7 @@ Additional options :
     pos = objectname.rfind(' ');
     if(pos==std::string::npos)
       pos=0;
-    std::clog << ANSI_COLOR_DIM << count << objectname.substr(pos) << " converted" << ANSI_COLOR_RESET << endl;
+    std::clog << count << objectname.substr(pos) << " converted" << endl;
   }
 
   void OBConversion::CopyOptions(OBConversion* pSourceConv, Option_type typ)

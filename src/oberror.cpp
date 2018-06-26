@@ -170,11 +170,11 @@ namespace OpenBabel
 
   void OBMessageHandler::ThrowError(OBError err, errorQualifier qualifier)
   {
-    init::color();
-    
     if (!_logging)
       return;
-
+    
+    init::color();
+ 
     //Output error message if level sufficiently high and, if onceOnly set, it has not been logged before
     if (err.GetLevel() <= _outputLevel &&
       (qualifier!=onceOnly || find(_messageList.begin(), _messageList.end(), err)==_messageList.end()))
@@ -182,25 +182,21 @@ namespace OpenBabel
       switch(err.GetLevel()){
         case obError:
           *_outputStream << color::red << err;
-	  *_outputStream << color::Reset;
           break;          
         case obWarning:
           *_outputStream << color::yellow << err;
-	  *_outputStream << color::Reset;
           break;          
         case obInfo:
           *_outputStream << color::blue << err;
-	  *_outputStream << color::Reset;
           break;          
         case obAuditMsg:
           *_outputStream << color::magenta << err;
-	  *_outputStream << color::Reset;
           break;          
         case obDebug:
           *_outputStream << color::cyan << err;
-	  *_outputStream << color::Reset;
           break;
-      }      
+      }     
+      *_outputStream << color::Reset; 
     }
 
     _messageList.push_back(err);
