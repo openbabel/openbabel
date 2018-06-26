@@ -365,9 +365,11 @@ int main(int argc,char *argv[])
  
   cout << color::bold; 
   int count = Conv.FullConvert(FileList, OutputFileName, OutputFileList);
-  cout << color::Reset << endl; 
+  cout << color::Reset << flush; 
 
+  clog << color::dim;
   Conv.ReportNumberConverted(count);
+  clog << color::Reset;
 
   if(OutputFileList.size()>1)
     {
