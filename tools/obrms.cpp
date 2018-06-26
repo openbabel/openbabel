@@ -39,6 +39,7 @@
 #endif
 
 #include <sstream>
+#include <memory>
 #include <boost/unordered_map.hpp>
 #include <boost/program_options.hpp>
 #include <boost/iostreams/filter/gzip.hpp>
@@ -74,8 +75,8 @@ class AtomDistanceSorter
 class Matcher
 {
 	const OBMol& ref;
-	OBQuery *query;
-	OBIsomorphismMapper *mapper;
+	std::shared_ptr<OBQuery> query;
+	std::shared_ptr<OBIsomorphismMapper> mapper;
 
 	class MapRMSDFunctor: public OBIsomorphismMapper::Functor
 	{
@@ -171,20 +172,12 @@ class Matcher
 	};
 
 public:
-	Matcher(OBMol& mol) :
-			ref(mol), query(NULL), mapper(NULL)
+	Matcher(OBMol& mol) : ref(mol)
 	{
-		query = CompileMoleculeQuery(&mol);
-		mapper = OBIsomorphismMapper::GetInstance(query);
+		query = std::shared_ptr<OBQuery>(CompileMoleculeQuery(&mol));
+		mapper = std::shared_ptr<OBIsomorphismMapper>(OBIsomorphismMapper::GetInstance(query.get()));
 	}
 
-	~Matcher()
-	{
-		if (query)
-			delete query;
-		if (mapper)
-			delete mapper;
-	}
 
 	//computes a correspondence between the ref mol and test (exhaustively)
 	//and returns the rmsd; returns infinity if unmatchable
@@ -229,6 +222,7 @@ int main(int argc, char **argv)
 {
 	bool firstOnly = false;
 	bool minimize = false;
+	bool separate = false;
 	bool help = false;
 	string fileRef;
 	string fileTest;
@@ -242,6 +236,7 @@ int main(int argc, char **argv)
 	("firstonly,f", bool_switch(&firstOnly),
 			"use only the first structure in the reference file")
 	("minimize,m", bool_switch(&minimize), "compute minimum RMSD")
+  ("separate,s", bool_switch(&separate), "separate reference file into constituent molecules and report best RMSD")
 	("out", value<string>(&fileOut), "re-oriented test structure output")
 	("help", bool_switch(&help), "produce help message");
 
@@ -340,8 +335,20 @@ int main(int argc, char **argv)
 
 	while (refconv.Read(&molref, &ifsref))
 	{
-		processMol(molref);
-		Matcher matcher(molref); // create the matcher
+	  vector<OBMol> refmols;
+	  if(separate) {
+	    refmols = molref.Separate();
+	  } else {
+	    refmols.push_back(molref);
+	  }
+
+	  vector<Matcher> matchers;
+	  for(unsigned i = 0, n = refmols.size(); i < n; i++) {
+	    processMol(refmols[i]);
+	    Matcher matcher(refmols[i]); // create the matcher
+	    matchers.push_back(matcher);
+	  }
+
 		OBMol moltest;
 		while (testconv.Read(&moltest, &ifstest))
 		{
@@ -350,9 +357,13 @@ int main(int argc, char **argv)
 
 			processMol(moltest);
 
-			double rmsd = matcher.computeRMSD(moltest, minimize);
+			double bestRMSD = HUGE_VAL;
+			for(unsigned i = 0, n = matchers.size(); i < n; i++) {
+			  double rmsd = matchers[i].computeRMSD(moltest, minimize);
+			  if(rmsd < bestRMSD) bestRMSD = rmsd;
+			}
 
-			cout << "RMSD " << molref.GetTitle() << ":" <<  moltest.GetTitle() << " " << rmsd << "\n";
+			cout << "RMSD " << molref.GetTitle() << ":" <<  moltest.GetTitle() << " " << bestRMSD << "\n";
 			
 			if(out)
 			{
