@@ -21,6 +21,8 @@ GNU General Public License for more details.
 
 #include <openbabel/slater_integrals.h>
 
+#pragma warning(disable : 4146) // warning C4146: unary minus operator applied to unsigned type, result still unsigned
+
 double DSlater_3S_3S(double r, double xi, double xj)
 {
     double S, rxi, rxj;
