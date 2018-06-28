@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include <math.h>
 #include <stdio.h>
 
+#include <openbabel/obutil.h>
 #include <openbabel/gaussian_integrals.h>
 
 static double sqr(double x)
