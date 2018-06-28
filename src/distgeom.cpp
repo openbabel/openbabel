@@ -39,6 +39,7 @@ using namespace std;
 
 #pragma warning(disable : 4244) // warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
 #pragma warning(disable : 4305) // warning C4305: '*=' : truncation from 'double' to 'float'
+#pragma warning(disable : 4146) // warning C4146: unary minus operator applied to unsigned type, result still unsigned
 
 namespace OpenBabel {
 
