@@ -19,7 +19,7 @@ set (cpptests
      cistrans graphsym gzip
      implicitH lssr isomorphism multicml regressions rotor shuffle smiles spectrophore
      squareplanar stereo stereoperception tautomer tetrahedral
-     tetranonplanar tetraplanar uniqueid
+     tetranonplanar tetraplanar uniqueid coulomb
     )
 set (automorphism_parts 1 2 3 4 5 6 7 8 9 10)
 set (builder_parts 1 2 3 4 5)
@@ -48,6 +48,7 @@ set (tetrahedral_parts 1 2 3 4 5)
 set (tetranonplanar_parts 1)
 set (tetraplanar_parts 1)
 set (uniqueid_parts 1 2)
+set (coulomb_parts 1 2 3 4 5 6 7 8 9 10 11)
 
 if (EIGEN2_FOUND OR EIGEN3_FOUND)
   set(cpptests

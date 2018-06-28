@@ -19,6 +19,23 @@ set(charges ${charges}
 )
 endif()
 
+set(coulombintegrals_srcs
+  coulombintegrals/slater_integrals.cpp
+  coulombintegrals/gaussian_integrals.cpp
+  coulombintegrals/Slater_1S_1S.cpp
+  coulombintegrals/Slater_1S_2S.cpp
+  coulombintegrals/Slater_1S_3S.cpp
+  coulombintegrals/Slater_2S_2S.cpp
+  coulombintegrals/Slater_2S_3S.cpp
+  coulombintegrals/Slater_3S_3S.cpp
+  coulombintegrals/DSlater_1S_1S.cpp
+  coulombintegrals/DSlater_1S_2S.cpp
+  coulombintegrals/DSlater_1S_3S.cpp
+  coulombintegrals/DSlater_2S_2S.cpp
+  coulombintegrals/DSlater_2S_3S.cpp
+  coulombintegrals/DSlater_3S_3S.cpp
+)
+
 set(depict_srcs
   depict/depict.cpp
   depict/svgpainter.cpp
@@ -207,6 +224,7 @@ set(openbabel_library_srcs
   ${math_srcs}
   ${stereo_srcs}
   ${headers}
+  ${coulombintegrals_srcs}
   "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h"
   )
 
