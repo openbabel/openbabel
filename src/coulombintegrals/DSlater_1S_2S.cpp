@@ -21,6 +21,8 @@ GNU General Public License for more details.
 
 #include <openbabel/slater_integrals.h>
 
+namespace OpenBabel
+{
 double DSlater_1S_2S(double r, double xi, double xj)
 {
     double S, rxi, rxj;
@@ -195,3 +197,4 @@ double DSlater_2S_1S(double r, double xi, double xj)
     return DSlater_1S_2S(r, xj, xi);
 }
 
+} // end namespace openbabel

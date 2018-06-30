@@ -23,10 +23,8 @@ GNU General Public License for more details.
 
 #include <cmath>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+namespace OpenBabel
+{
 /*! \brief 
  * Compute the Slater overlap integral between two 1S Slater Orbitals.
  * \param[in] r  distance in nm
@@ -304,9 +302,6 @@ double Nuclear_SS(double r,int i, double xi);
  * \return    Integral value
  */  
 double DNuclear_SS(double r,int i, double xi);
+} // end namespace OpenBabel
 
-#ifdef __cplusplus
-}
 #endif /*SLATER_INTEGRALS_H*/
-
-#endif

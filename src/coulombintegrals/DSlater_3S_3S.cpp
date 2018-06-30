@@ -23,6 +23,8 @@ GNU General Public License for more details.
 
 #pragma warning(disable : 4146) // warning C4146: unary minus operator applied to unsigned type, result still unsigned
 
+namespace OpenBabel
+{
 double DSlater_3S_3S(double r, double xi, double xj)
 {
     double S, rxi, rxj;
@@ -643,3 +645,4 @@ double DSlater_3S_3S(double r, double xi, double xj)
     return S;
 }
 
+} // end namescpace openbabel

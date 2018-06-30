@@ -20,6 +20,8 @@ GNU General Public License for more details.
 
 #include <openbabel/slater_integrals.h>
 
+namespace OpenBabel
+{
 double DSlater_1S_3S(double r, double xi, double xj)
 {
     double S, rxi, rxj;
@@ -308,3 +310,4 @@ double DSlater_3S_1S(double r, double xi, double xj)
     return DSlater_1S_3S(r, xj, xi);
 }
 
+} //end namespace openbabel

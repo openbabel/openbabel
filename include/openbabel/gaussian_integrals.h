@@ -23,10 +23,8 @@ GNU General Public License for more details.
 
 #include <cmath>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+namespace OpenBabel
+{
 /*! \brief 
  * Compute the Coulomb overlap integral between two gaussian distributed charges.
  * The widths xi and xj may both be zero.
@@ -70,10 +68,6 @@ double Nuclear_GG(double r,double xi);
  * \return    Integral value
  */   
 double DNuclear_GG(double r,double xi);
-
-#ifdef __cplusplus
-}
+} // end namespace OpenBabel
 
 #endif /*GAUSSIAN_INTEGRALS_H*/
-
-#endif

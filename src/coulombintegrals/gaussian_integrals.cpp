@@ -24,6 +24,9 @@ GNU General Public License for more details.
 #include <openbabel/obutil.h>
 #include <openbabel/gaussian_integrals.h>
 
+namespace OpenBabel
+{
+
 static double sqr(double x)
 {
     return x*x;
@@ -153,3 +156,5 @@ double DCoulomb_GG(double r, double zi, double zj)
         return DNuclear_GG(r, zeff);
     }
 }
+
+} // end namespace openbabel

@@ -29,6 +29,8 @@ using namespace std;
 
 #define SLATER_MAX 3
 
+namespace OpenBabel
+{
 typedef double t_slater_SS_func (double r, double xi, double xj);
 typedef double t_slater_NS_func (double r, double xi);
 
@@ -292,4 +294,4 @@ double DNuclear_SS(double r, int i, double xi)
     }
 }
 
-
+} // end namespace openbabel
