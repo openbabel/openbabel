@@ -38,10 +38,10 @@ enum CoulombTestType{
     eForce 
 };
 
-int test_Slater(double r, int  i, int  j, 
-                double  xi, double  xj, 
-                double ref_value, int test_number, 
-                CoulombTestType ctt)
+static int test_Slater(double r, int  i, int  j, 
+                       double  xi, double  xj, 
+                       double ref_value, int test_number, 
+                       CoulombTestType ctt)
 {
     double test_value = 0;
     if (ctt == eEnergy)
@@ -63,9 +63,9 @@ int test_Slater(double r, int  i, int  j,
 }
 
 
-int test_Gaussian(double r, double  xi, double  xj, 
-                  double ref_value, int test_number, 
-                  CoulombTestType ctt)
+static int test_Gaussian(double r, double  xi, double  xj, 
+                         double ref_value, int test_number, 
+                         CoulombTestType ctt)
 {
     double test_value = 0;
     if (ctt == eEnergy)
