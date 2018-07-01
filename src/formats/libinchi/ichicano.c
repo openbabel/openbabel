@@ -176,8 +176,7 @@ long InchiTimeMsecDiff( inchiTime *TickEnd, inchiTime *TickStart )
         FillMaxMinClock( );
         if ( !TickEnd || !TickStart )
             return 0;
-        if ( (TickEnd->clockTime >= 0 && TickStart->clockTime >= 0) ||
-             (TickEnd->clockTime <= 0 && TickStart->clockTime <= 0)) {
+        if ( (TickEnd->clockTime <= 0 && TickStart->clockTime <= 0)) {
             delta = TickEnd->clockTime - TickStart->clockTime;
         } else
         if ( TickEnd->clockTime >= HalfMaxPositiveClock &&
@@ -257,8 +256,7 @@ int bInchiTimeIsOver( inchiTime *TickStart )
         if ( !TickStart )
             return 0;
         clockCurrTime = InchiClock();
-        if ( (clockCurrTime >= 0 && TickStart->clockTime >= 0) ||
-             (clockCurrTime <= 0 && TickStart->clockTime <= 0)) {
+        if ( (clockCurrTime <= 0 && TickStart->clockTime <= 0)) {
             return (clockCurrTime > TickStart->clockTime);
         } else
         if ( clockCurrTime >= HalfMaxPositiveClock &&
