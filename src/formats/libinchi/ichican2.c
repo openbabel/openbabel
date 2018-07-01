@@ -3071,9 +3071,9 @@ L8: /* here nu is discrete: check rho for being a bettere leaf or isomorphism */
     /*if ( !lab || qzb_rho < 0 || !QZFIX_OK(qzb_rho_fix) )*/
     if ( !lab || ((qzb_rho < 0) && ( !pzb_rho_fix || qzb_rho_fix > 0 )) )
         goto L6;
-    if ( pzb_rho_fix && kLeast_rho_fix && 0 == qzb_rho_fix ) {
+    if ( pzb_rho_fix && MAX_LAYERS > 0 && 0 == qzb_rho_fix ) {
         /* check for the rejection condition: Lambda > zb_rho_fix */
-        if ( kLeast_rho_fix ) {
+        if ( MAX_LAYERS > 0 ) {
             int qzb_rho_fix_alt;
             qzb_rho_fix     = CtFullCompareLayers( kLeast_rho_fix );
             /* for debug only */
@@ -3111,7 +3111,7 @@ L8: /* here nu is discrete: check rho for being a bettere leaf or isomorphism */
     /* !!! we should never come here if G(nu) != G(rho): CtPartCompare must be enough !!! */
     
     /* if ( G(nu) > G(rho) ) goto L9; */
-    if ( kLeast_rho ) {
+    if ( MAX_LAYERS > 0 ) {
         int cur_qzb_alt;
         qzb_rho =     CtFullCompareLayers( kLeast_rho );
         /* for debug only */
