@@ -81,6 +81,14 @@ class TestSuite(PythonBindings):
             hasbracket = "[" in roundtrip
             self.assertEqual(hasbracket, needsbracket)
 
+    def testAromaticityPreservedOnAtomDeletion(self):
+        """Ensure that aromaticity is preserved on atom deleteion"""
+        mol = pybel.readstring("smi", "c1ccccc1").OBMol
+        mol.DeleteAtom(mol.GetFirstAtom())
+        self.assertTrue(mol.GetFirstAtom().IsAromatic())
+        mol.UnsetAromaticPerceived()
+        self.assertFalse(mol.GetFirstAtom().IsAromatic())
+
     def testSmilesAtomOrder(self):
         """Ensure that SMILES atom order is written correctly"""
         data = [("CC", "1 2"),
