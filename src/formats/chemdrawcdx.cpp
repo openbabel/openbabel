@@ -114,7 +114,7 @@ private:
 };
 
 //**************************************************************
-class ChemDrawBinaryXFormat : OBFormat
+class ChemDrawBinaryXFormat : OBMoleculeFormat
 {
 public:
   //Register this format type ID in the constructor
@@ -153,11 +153,6 @@ public:
   virtual unsigned int Flags()
   {
     return READBINARY|NOTWRITABLE;
-  };
-
-  virtual bool ReadChemObject(OBConversion* pConv)
-  {
-    return ReadMolecule(NULL, pConv);
   }
 
   ////////////////////////////////////////////////////
@@ -197,7 +192,7 @@ private:
 Each fragment goes into a new OBMol on the heap.
 The CDX id and OBMol* are added to _molmap.
 When a reaction is found, the reactant/product/agent CDX ids are looked up in molmap,
-made into a shared_ptr and added to an OBReaction (made by deleting pOb if it is a OBMol
+and added to an OBReaction (made by deleting pOb if it is a OBMol
 and assigning pOb to a new OBReaction. The OBMol is marked as Used.
 When the reaction is complete it is output via AddChemObject().
 At the end, any OBMol in the map not marked as Used is output as an OBMol.
