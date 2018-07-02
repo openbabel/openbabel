@@ -20,15 +20,8 @@ GNU General Public License for more details.
 
 #include "obtest.h"
 
-#include <openbabel/obutil.h>
-#include <openbabel/babelconfig.h>
 #include <openbabel/slater_integrals.h>
 #include <openbabel/gaussian_integrals.h>
-
-#include <iostream>
-#include <string>
-#include <vector>
-#include <algorithm>
 
 using namespace std;
 using namespace OpenBabel;
@@ -52,13 +45,13 @@ static int test_Slater(double r, int  i, int  j,
     if (IsNear(test_value, ref_value, 1e-10))
     {
         cout << "ok Slater test " << test_number << endl;
-        return 0;
+        return(0);
     }
     else
     {
         cout << "not ok Slater test " << test_number  << endl;
         cout << "Test value: " << test_value << "Ref Value: " << ref_value << endl;
-        return -1;
+        return(-1);
     }
 }
 
@@ -76,13 +69,13 @@ static int test_Gaussian(double r, double  xi, double  xj,
     if (IsNear(test_value, ref_value, 1e-10))
     {
         cout << "ok Slater test " << test_number << endl;
-        return 0;
+        return(0);
     }
     else
     {
       cout << "not ok Slater test " << test_number  << endl;
       cout << "Test value: " << test_value << "Ref Value: " << ref_value << endl;
-      return -1;
+      return(-1);
     }
 }
 
