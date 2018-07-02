@@ -17,9 +17,6 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************************/
-#ifdef WIN32
-#define USING_OBDLL
-#endif
 
 #include "obtest.h"
 
