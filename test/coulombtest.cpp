@@ -18,8 +18,12 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************************/
 
-#include "obtest.h"
+// used to set import/export for Cygwin DLLs
+#ifdef WIN32
+#define USING_OBDLL
+#endif
 
+#include "obtest.h"
 #include <openbabel/slater_integrals.h>
 #include <openbabel/gaussian_integrals.h>
 
