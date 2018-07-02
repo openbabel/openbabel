@@ -172,7 +172,6 @@ set(openbabel_srcs
   transform.cpp
   typer.cpp
   obmolecformat.cpp
-  ${coulombintegrals_srcs}
 )
 if(EIGEN2_FOUND OR EIGEN3_FOUND)
   set(openbabel_srcs ${openbabel_srcs}
@@ -224,7 +223,7 @@ set(openbabel_library_srcs
   ${depict_srcs}
   ${math_srcs}
   ${stereo_srcs}
-  #${coulombintegrals_srcs}
+  ${coulombintegrals_srcs}
   ${headers}
   "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h"
   )
