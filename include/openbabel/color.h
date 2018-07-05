@@ -4,11 +4,12 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
+#include <sstream>
 extern "C" {
 #include <unistd.h>
 }
 #include <stdio.h>
- 
+
 #define ANSI_COLOR_RED     "\x1b[31m"
 #define ANSI_COLOR_GREEN   "\x1b[32m"
 #define ANSI_COLOR_YELLOW  "\x1b[33m"
@@ -56,6 +57,13 @@ namespace color {
     };
 }
 
+struct streamstate {
+    std::string coutstate;
+    std::string cerrstate;
+    std::string clogstate;
+};
+extern streamstate state;
+bool update(std::ostream &os,int v);
 
 namespace {
     bool isAllowed = false;
@@ -76,16 +84,16 @@ namespace {
         return false;
     }
     std::ostream &operator<<(std::ostream &os, color::style v)
-    {
-        return isAllowed ? os << "\e[" << static_cast<int>(v) << "m" : os;
+    {   
+        return isAllowed && update(os,static_cast<int>(v))? os << "\e[" << static_cast<int>(v) << "m" : os;
     }
     std::ostream &operator<<(std::ostream &os, color::fg v)
-    {
-        return isAllowed ? os << "\e[" << static_cast<int>(v) << "m" : os;
+    {   
+        return isAllowed && update(os,static_cast<int>(v))? os << "\e[" << static_cast<int>(v) << "m" : os;
     }
     std::ostream &operator<<(std::ostream &os, color::bg v)
-    {
-        return isAllowed ? os << "\e[" << static_cast<int>(v) << "m" : os;
+    {   
+        return isAllowed && update(os,static_cast<int>(v))? os << "\e[" << static_cast<int>(v) << "m" : os;
     }
     namespace init {
         void color()

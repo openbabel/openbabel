@@ -25,7 +25,7 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 
-#include <color.h>
+#include <openbabel/color.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -362,10 +362,10 @@ int main(int argc,char *argv[])
             OutputFileName.insert(pos,"*");
         }
     }
- 
+
   cout << color::bold; 
   int count = Conv.FullConvert(FileList, OutputFileName, OutputFileList);
-  cout << color::Reset << flush; 
+  cout << color::Reset;
 
   clog << color::dim;
   Conv.ReportNumberConverted(count);

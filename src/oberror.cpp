@@ -24,7 +24,7 @@ General Public License for more details.
 #include <algorithm>
 
 #include <openbabel/oberror.h>
-#include <color.h>
+#include <openbabel/color.h>
 
 using namespace std;
 

@@ -114,6 +114,7 @@ set(openbabel_srcs
   chains.cpp
   chargemodel.cpp
   chiral.cpp
+  color.cpp
   data.cpp
   data_utilities.cpp
   descriptor.cpp
