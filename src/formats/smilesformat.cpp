@@ -156,15 +156,12 @@ namespace OpenBabel {
         "     concatenate SMILES strings to generate new molecules.\n\n"
         "  g  <atomno> Specify the first atom\n"
         "     This atom will be used to begin the SMILES string.\n"
-        "  l  <atomno> Specify the last atom and adjust any implicit hydrogen count\n"
+        "  l  <atomno> Specify the last atom and adjust for concatenation\n"
         "     The output will be rearranged so that any additional\n"
         "     SMILES added to the end will be attached to this atom. If the atom\n"
         "     would normally have a hydrogen count specified, the number\n"
         "     of hydrogens will be reduced by one. This makes it easy to\n"
         "     concatenate SMILES strings to generate new molecules.\n\n"
-        "  m  <atomno> Specify the last atom\n"
-        "     The output will be rearranged so that any additional\n"
-        "     SMILES added to the end will be attached to this atom.\n\n"
         "  T  <max seconds> Specify the canonicalization timeout\n"
         "     Canonicalization can take a while for symmetric molecules and a\n"
         "     timeout is used. The default is 5 seconds.\n\n"
@@ -2291,7 +2288,6 @@ namespace OpenBabel {
     OBAtom* _endatom;
     OBAtom* _startatom;
     bool _startatom_adjustvalence;
-    bool _endatom_adjustvalence;
 
     OutOptions &options;
 
@@ -2368,7 +2364,6 @@ namespace OpenBabel {
 
     _endatom = NULL;
     _startatom = NULL;
-    _endatom_adjustvalence = false; 
     _startatom_adjustvalence = false;
     
   }
@@ -2784,7 +2779,7 @@ namespace OpenBabel {
 
     // Add extra hydrogens.
     int hcount = numImplicitHs;
-    if (hcount > 0 && ((_endatom_adjustvalence && atom == _endatom) || (_startatom_adjustvalence && atom == _startatom)))
+    if (hcount > 0 && (atom == _endatom || (_startatom_adjustvalence && atom == _startatom)))
       hcount--; // Leave a free valence for attachment
     if (hcount > 0) {
       if (options.smarts && stereo == (const char*)0) {
@@ -3349,7 +3344,7 @@ namespace OpenBabel {
     // and we cannot concatenate another SMILES string without creating a 5-valent C.
 
     bool is_chiral = AtomIsChiral(atom);
-    if (is_chiral && (!_endatom_adjustvalence || atom!=_endatom) && (!_startatom_adjustvalence || atom!=_startatom)) {
+    if (is_chiral && atom!=_endatom && (!_startatom_adjustvalence || atom!=_startatom)) {
 
       // If there's a parent node, it's the first atom in the ordered neighbor-vector
       // used for chirality.
@@ -3764,22 +3759,12 @@ namespace OpenBabel {
     symmetry_classes.reserve(mol.NumAtoms());
     canonical_order.reserve(mol.NumAtoms());
 
-    // Remember the desired endatom, if specified. This can be done via either 'l' or 'm'
-    // - 'l' takes precedence over 'm'
+    // Remember the desired endatom, if specified.
     const char* pp = _pconv->IsOption("l");
     unsigned int atom_idx  = pp ? atoi(pp) : 0;
-    if (atom_idx >= 1 && atom_idx <= mol.NumAtoms()) {
+    if (atom_idx >= 1 && atom_idx <= mol.NumAtoms())
       _endatom = mol.GetAtom(atom_idx);
-      _endatom_adjustvalence = true;
-    }
-    if (!_endatom) {
-      pp = _pconv->IsOption("m");
-      atom_idx = pp ? atoi(pp) : 0;
-      if (atom_idx >= 1 && atom_idx <= mol.NumAtoms()) {
-        _endatom = mol.GetAtom(atom_idx);
-        // By default, _endatom_adjustvalence = false;
-      }
-    }
+
     // Was a start atom specified? This can be done via either 'f' or 'g'
     // - 'f' takes precedence over 'g'
     pp = _pconv->IsOption("f");

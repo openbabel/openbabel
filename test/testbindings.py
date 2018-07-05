@@ -54,6 +54,24 @@ class PybelWrapper(PythonBindings):
 
 class TestSuite(PythonBindings):
 
+    def testSettingFirstAndLastAtom(self):
+        """Test options for specifying first/last atom in SMILES"""
+        # Some basic tests of 'f', 'g' and 'l'
+        data = [("I[14CH2]F",
+                 [({"f": 2}, "[14CH](I)F"),
+                  ({"g": 2}, "[14CH2](I)F"),
+                  ({"l": 2}, "I[14CH](F)")]),
+                ("F[C@@H](Cl)Br",
+                 [({"f": 2}, "C(F)(Cl)Br"),
+                  ({"g": 2}, "[C@H](F)(Cl)Br"),
+                  ({"l": 2}, "FC(Cl)(Br)")]),
+                 ]
+        for smi, testcases in data:
+            mol = pybel.readstring("smi", smi)
+            for options, output in testcases:
+                myoutput = mol.write("smi", opt=options).rstrip()
+                self.assertEqual(output, myoutput)
+
     def testInChIIsotopes(self):
         """Ensure that we correctly set and read isotopes in InChIs"""
         with open(os.path.join(here, "inchi", "inchi_isotopes.txt")) as inp:
