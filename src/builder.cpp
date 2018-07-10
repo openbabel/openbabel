@@ -88,19 +88,15 @@ namespace OpenBabel
       _fragments.push_back(smiles);
       _fragments_index[smiles] = index;
     }
-    cout << "LoadFragments finished." << endl;
   }
 
   std::vector<vector3> OBBuilder::GetFragmentCoord(std::string smiles) {
-    cout << "Fragment search:" << smiles << endl;
     if (_fragments_cache.count(smiles) > 0) {
-      cout << "In cache" << endl;
       return _fragments_cache[smiles];
     }
 
     std::vector<vector3> coords;
     if (_fragments_index.count(smiles) == 0) {
-      cout << "Not in DB" << endl;
       return coords;
     }
 
@@ -110,17 +106,14 @@ namespace OpenBabel
       return coords;
     }
 
-    cout << "seekg(" << _fragments_index[smiles] << ")" << endl;
     ifs.clear();
     ifs.seekg(_fragments_index[smiles]);
     char buffer[BUFF_SIZE];
     vector<string> vs;
     while (ifs.getline(buffer, BUFF_SIZE)) {
-      //cout << "getline: " <<  buffer << endl;
       tokenize(vs, buffer);
       if (vs.size() == 4) { // XYZ coordinates
         vector3 coord(atof(vs[1].c_str()), atof(vs[2].c_str()), atof(vs[3].c_str()));
-        cout << coord.GetX() << ", " << coord.GetY() << ", " << coord.GetZ() << endl;
         coords.push_back(coord);
       } else if (vs.size() == 1) { // SMARTS pattern
         break;
