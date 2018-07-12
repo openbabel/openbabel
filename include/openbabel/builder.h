@@ -157,6 +157,7 @@ namespace OpenBabel
 
     private:
       //! used to hold the fragments loaded in the constructor
+      static std::map<std::string, double> _torsion;
       static std::vector<std::string> _fragments;
       static std::map<std::string, int> _fragments_index;
       static std::map<std::string, std::vector<vector3> > _fragments_cache;

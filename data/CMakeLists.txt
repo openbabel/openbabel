@@ -52,6 +52,7 @@ set(to_install
     svgformat.script
     templates.sdf
     torlib.txt
+    torsion.txt
     types.txt
     UFF.prm
 )

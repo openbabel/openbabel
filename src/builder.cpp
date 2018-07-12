@@ -70,6 +70,7 @@ namespace OpenBabel
       //
       \endcode
   **/
+  std::map<std::string, double> OBBuilder::_torsion;
   std::vector<std::string> OBBuilder::_fragments;
   std::map<std::string, int> OBBuilder::_fragments_index;
   std::map<std::string, std::vector<vector3> > OBBuilder::_fragments_cache;
@@ -87,6 +88,15 @@ namespace OpenBabel
     while(ifs >> smiles >> index) {
       _fragments.push_back(smiles);
       _fragments_index[smiles] = index;
+    }
+
+    if (OpenDatafile(ifs, "torsion.txt").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open torsion.txt", obError);
+      return;
+    }
+    double angle;
+    while(ifs >> smiles >> angle) {
+      _torsion[smiles] = angle;
     }
   }
 
@@ -1158,6 +1168,44 @@ namespace OpenBabel
       beginIdx = b->GetBeginAtomIdx();
       endIdx = b->GetEndAtomIdx();
       workMol.AddBond(beginIdx, endIdx, b->GetBO(), b->GetFlags());
+    }
+
+    FOR_BONDS_OF_MOL(bond, mol) {
+      if(bond->IsRotor()) {
+        OBBitVec atomsToCopy;
+        OBAtom *atom = bond->GetBeginAtom();
+        FOR_NBORS_OF_ATOM(a, &*atom) {
+          atomsToCopy.SetBitOn(a->GetIdx());
+        }
+        atom = bond->GetEndAtom();
+        FOR_NBORS_OF_ATOM(a, &*atom) {
+          atomsToCopy.SetBitOn(a->GetIdx());
+        }
+        OBMol mol_copy;
+        mol.CopySubstructure(mol_copy, &atomsToCopy);
+        string smiles = conv.WriteString(&mol_copy, true);
+        
+        if(_torsion.count(smiles) > 0) {
+          OBAtom* b = bond->GetBeginAtom();
+          OBAtom* c = bond->GetEndAtom();
+          OBAtom* a = NULL;
+          FOR_NBORS_OF_ATOM(t, &*b) {
+            a = &*t;
+            if(a != c)
+              break;
+          }
+          OBAtom* d = NULL;
+          FOR_NBORS_OF_ATOM(t, &*c) {
+            d = &*t;
+            if(d != b)
+              break;
+          }
+          double angle = _torsion[smiles] * DEG_TO_RAD;
+          mol.SetTorsion(a, b, c, d, angle);
+        } else {
+          ; // Do something
+        }
+      }
     }
 
     // We may have to change these success check
