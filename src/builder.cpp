@@ -804,6 +804,8 @@ namespace OpenBabel
     }
     //
     // translate fragment
+    //for(vector<OBMol>::iterator f=fragments.begin(); f!=fragments.end(); f++) {
+    //
     //
     for (unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
       if (fragment.BitIsSet(i)) {
@@ -1017,6 +1019,9 @@ namespace OpenBabel
     workMol.SetHybridizationPerceived();
 
 
+    // I think just deleting rotable bond and separate is enough, 
+    // but it did not work.
+
     // Get fragments using CopySubstructure
     // Copy all atoms
     OBBitVec atomsToCopy;
@@ -1038,27 +1043,22 @@ namespace OpenBabel
 
     // Separate each disconnected fragments as different molecules
     vector<OBMol> fragments = mol_copy.Separate(); 
-    vector<OBMol>::iterator f;
 
     //datafile is read only on first use of Build()
     if(_fragments.empty())
       LoadFragments();
 
-    // Need to implement some code to skip too big fragments
-
-    // Loop through the fragment database and assign the coordinates
-    std::vector<std::string>::iterator i;
-    OBSmartsPattern *sp = NULL;
-    for (i = _fragments.begin(); i != _fragments.end(); ++i) {
-      sp = new OBSmartsPattern;
-      if (!sp->Init(*i)) {
-        delete sp;
-        sp = NULL;
+    for(vector<OBMol>::iterator f=fragments.begin(); f!=fragments.end(); f++) {
+      std::string fragment_smiles = conv.WriteString(&*f, true);
+      if (_fragments_index.count(fragment_smiles) == 0) 
+        continue;
+      OBSmartsPattern sp;
+      if (!sp.Init(fragment_smiles)) {
         obErrorLog.ThrowError(__FUNCTION__, " Could not parse SMARTS from contribution data file", obInfo);
         continue;
       }
-      if (sp->Match(mol)) { // for all matches
-        mlist = sp->GetUMapList();
+      if (sp.Match(mol)) { // for all matches
+        mlist = sp.GetUMapList();
         for (j = mlist.begin(); j != mlist.end(); ++j) {
           // Have any atoms of this match already been added?
           int alreadydone = 0;
@@ -1073,7 +1073,7 @@ namespace OpenBabel
             vfrag.SetBitOn(*k); // Set vfrag for all atoms of fragment
 
           int counter;
-          std::vector<vector3> coords = GetFragmentCoord(*i);
+          std::vector<vector3> coords = GetFragmentCoord(fragment_smiles);
           for (k = j->begin(), counter=0; k != j->end(); ++k, ++counter) { // for all atoms of the fragment
             // set coordinates for atoms
             OBAtom *atom = workMol.GetAtom(*k);
@@ -1095,9 +1095,7 @@ namespace OpenBabel
           }
         }
       }
-      delete sp;
-    } // for all _fragments
-
+    } // for all fragments
 
     // iterate over all atoms to place them in 3D space
     FOR_DFS_OF_MOL (a, mol) {
@@ -1176,6 +1174,7 @@ namespace OpenBabel
       workMol.AddBond(beginIdx, endIdx, b->GetBO(), b->GetFlags());
     }
 
+    /*
     FOR_BONDS_OF_MOL(bond, mol) {
       if(bond->IsRotor()) {
         OBBitVec atomsToCopy;
@@ -1213,6 +1212,7 @@ namespace OpenBabel
         }
       }
     }
+    */
 
     // We may have to change these success check
     // correct the chirality
