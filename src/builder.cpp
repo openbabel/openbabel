@@ -37,7 +37,6 @@ GNU General Public License for more details.
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/squareplanar.h>
-
 /* OBBuilder::GetNewBondVector():
  * - is based on OBAtom::GetNewBondVector()
  * - but: when extending a long chain all the bonds are trans
@@ -1049,11 +1048,17 @@ namespace OpenBabel
 
     // Loop through the fragment database and assign the coordinates
     std::vector<std::string>::iterator i;
-    OBSmartsPattern sp;
+    OBSmartsPattern *sp = NULL;
     for (i = _fragments.begin(); i != _fragments.end(); ++i) {
-      sp.Init(*i);
-      if (sp.Match(mol)) { // for all matches
-        mlist = sp.GetUMapList();
+      sp = new OBSmartsPattern;
+      if (!sp->Init(*i)) {
+        delete sp;
+        sp = NULL;
+        obErrorLog.ThrowError(__FUNCTION__, " Could not parse SMARTS from contribution data file", obInfo);
+        continue;
+      }
+      if (sp->Match(mol)) { // for all matches
+        mlist = sp->GetUMapList();
         for (j = mlist.begin(); j != mlist.end(); ++j) {
           // Have any atoms of this match already been added?
           int alreadydone = 0;
@@ -1090,6 +1095,7 @@ namespace OpenBabel
           }
         }
       }
+      delete sp;
     } // for all _fragments
 
 
