@@ -202,11 +202,11 @@ END
         pdbqt = '''REMARK  Name = 
 REMARK  5 active torsions:
 REMARK  status: ('A' for Active; 'I' for Inactive)
-REMARK    1  A    between atoms: _1  and  _2
-REMARK    2  A    between atoms: _2  and  _3
-REMARK    3  A    between atoms: _2  and  _5
-REMARK    4  A    between atoms: _5  and  _6
-REMARK    5  A    between atoms: _11  and  _12
+REMARK    1  A    between atoms: N_1  and  CA_2
+REMARK    2  A    between atoms: CA_2  and  C_3
+REMARK    3  A    between atoms: CA_2  and  CB_5
+REMARK    4  A    between atoms: CB_5  and  CG_6
+REMARK    5  A    between atoms: CZ_11  and  OH_12
 REMARK                            x       y       z     vdW  Elec       q    Type
 REMARK                         _______ _______ _______ _____ _____    ______ ____
 ROOT
