@@ -14,6 +14,7 @@ set(to_install
     eem2015hn.txt
     eqeqIonizations.txt
     fragments.txt
+    fragment-index.txt
     gaff.dat
     gaff.prm
     ghemical.prm
@@ -39,6 +40,7 @@ set(to_install
     mr.txt
     patterns.txt
     phmodel.txt
+    platinum-fragment.txt
     plugindefines.txt
     psa.txt
     qeq.txt
@@ -50,6 +52,7 @@ set(to_install
     svgformat.script
     templates.sdf
     torlib.txt
+    torsion.txt
     types.txt
     UFF.prm
 )

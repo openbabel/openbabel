@@ -37,7 +37,6 @@ GNU General Public License for more details.
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/squareplanar.h>
-
 /* OBBuilder::GetNewBondVector():
  * - is based on OBAtom::GetNewBondVector()
  * - but: when extending a long chain all the bonds are trans
@@ -70,52 +69,66 @@ namespace OpenBabel
       //
       \endcode
   **/
-  std::vector<std::pair<OBSmartsPattern*, std::vector<vector3> > > OBBuilder::_fragments;
+  std::map<std::string, double> OBBuilder::_torsion;
+  std::vector<std::string> OBBuilder::_fragments;
+  std::map<std::string, int> OBBuilder::_fragments_index;
+  std::map<std::string, std::vector<vector3> > OBBuilder::_fragments_cache;
 
   void OBBuilder::LoadFragments()  {
     // open data/fragments.txt
     ifstream ifs;
-    if (OpenDatafile(ifs, "fragments.txt").length() == 0) {
-      obErrorLog.ThrowError(__FUNCTION__, "Cannot open fragments.txt", obError);
+    if (OpenDatafile(ifs, "fragment-index.txt").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open fragment-index.txt", obError);
       return;
     }
 
-    // Set the locale for number parsing to avoid locale issues: PR#1785463
-    // TODO: Use OpenDatafile()
-    obLocale.SetLocale();
-
-    char buffer[BUFF_SIZE];
-    vector<string> vs;
-    OBSmartsPattern *sp = NULL;
-    vector<vector3> coords;
-    while (ifs.getline(buffer, BUFF_SIZE)) {
-      if (buffer[0] == '#') // skip comment line (at the top)
-        continue;
-
-      tokenize(vs, buffer);
-
-      if (vs.size() == 1) { // SMARTS pattern
-        if (sp != NULL)
-          _fragments.push_back(pair<OBSmartsPattern*, vector<vector3> > (sp, coords));
-
-        coords.clear();
-        sp = new OBSmartsPattern;
-        if (!sp->Init(vs[0])) {
-          delete sp;
-          sp = NULL;
-          obErrorLog.ThrowError(__FUNCTION__, " Could not parse SMARTS from contribution data file", obInfo);
-        }
-      } else if (vs.size() == 3) { // XYZ coordinates
-        vector3 coord(atof(vs[0].c_str()), atof(vs[1].c_str()), atof(vs[2].c_str()));
-        coords.push_back(coord);
-      }
-
+    std::string smiles;
+    int index;
+    while(ifs >> smiles >> index) {
+      _fragments.push_back(smiles);
+      _fragments_index[smiles] = index;
     }
 
-    _fragments.push_back(pair<OBSmartsPattern*, vector<vector3> > (sp, coords));
+    if (OpenDatafile(ifs, "torsion.txt").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open torsion.txt", obError);
+      return;
+    }
+    double angle;
+    while(ifs >> smiles >> angle) {
+      _torsion[smiles] = angle;
+    }
+  }
 
-    // return the locale to the original one
-    obLocale.RestoreLocale();
+  std::vector<vector3> OBBuilder::GetFragmentCoord(std::string smiles) {
+    if (_fragments_cache.count(smiles) > 0) {
+      return _fragments_cache[smiles];
+    }
+
+    std::vector<vector3> coords;
+    if (_fragments_index.count(smiles) == 0) {
+      return coords;
+    }
+
+    ifstream ifs;
+    if (OpenDatafile(ifs, "platinum-fragment.txt").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open platinum-index.txt", obError);
+      return coords;
+    }
+
+    ifs.clear();
+    ifs.seekg(_fragments_index[smiles]);
+    char buffer[BUFF_SIZE];
+    vector<string> vs;
+    while (ifs.getline(buffer, BUFF_SIZE)) {
+      tokenize(vs, buffer);
+      if (vs.size() == 4) { // XYZ coordinates
+        vector3 coord(atof(vs[1].c_str()), atof(vs[2].c_str()), atof(vs[3].c_str()));
+        coords.push_back(coord);
+      } else if (vs.size() == 1) { // SMARTS pattern
+        break;
+      }
+    }
+    return coords;
   }
 
   vector3 GetCorrectedBondVector(OBAtom *atom1, OBAtom *atom2, int bondOrder = 1)
@@ -791,6 +804,8 @@ namespace OpenBabel
     }
     //
     // translate fragment
+    //for(vector<OBMol>::iterator f=fragments.begin(); f!=fragments.end(); f++) {
+    //
     //
     for (unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
       if (fragment.BitIsSet(i)) {
@@ -975,11 +990,13 @@ namespace OpenBabel
                     // These atoms have coordinates, but the fragment still has
                     // to be rotated and translated.
     vector3 molvec, moldir;
-    vector<pair<OBSmartsPattern*, vector<vector3 > > >::iterator i;
     vector<vector<int> >::iterator j;
-    vector<int>::iterator k, k2, k3;
+    vector<int>::iterator k, k2;
     vector<vector3>::iterator l;
     vector<vector<int> > mlist; // match list for fragments
+
+    OBConversion conv;
+    conv.SetOutFormat("can"); // Canonical SMILES
 
     // Trigger hybridisation perception now so it will be copied to workMol
     mol.GetFirstAtom()->GetHyb();
@@ -991,109 +1008,94 @@ namespace OpenBabel
     if (workMol.GetDimension() == 2)
       workMol.SetDimension(0);
 
-    // Count the number of ring atoms.
-    unsigned int ratoms = 0;
-    FOR_ATOMS_OF_MOL(a, mol)
-      if (a->IsInRing()) {
-        ratoms++;
-        if (_keeprings) // Mark these as fragments
-          vfrag.SetBitOn(a->GetIdx());
-      }
-
-    if (_keeprings) {
-      // Delete all non-ring bonds
-      std::vector<OBBond*> for_deletion;
-      FOR_BONDS_OF_MOL(b, workMol)
-        if (!b->IsInRing())
-          for_deletion.push_back(&(*b));
-      for(std::vector<OBBond*>::iterator it=for_deletion.begin(); it!=for_deletion.end(); ++it) {
-        workMol.DeleteBond(*it);
-      }
-    }
-    else
-      // Delete all bonds in the working molecule
-      // (we will add them back at the end)
-      while (workMol.NumBonds())
-        workMol.DeleteBond(workMol.GetBond(0));
+    // Delete all bonds in the working molecule
+    // (we will add them back at the end)
+    while (workMol.NumBonds())
+      workMol.DeleteBond(workMol.GetBond(0));
 
     // Deleting the bonds unsets HybridizationPerceived. To prevent our
     // perceived values being reperceived (incorrectly), we must set
     // this flag again.
     workMol.SetHybridizationPerceived();
 
-    if (ratoms && !_keeprings) {
-      //datafile is read only on first use of Build()
-      if(_fragments.empty())
-        LoadFragments();
 
-      // Skip all fragments that are too big to match
-      // Note: It would be faster to compare to the size of the largest
-      //       isolated ring system instead of comparing to ratoms
-      for (i = _fragments.begin();i != _fragments.end() && i->first->NumAtoms() > ratoms;++i);
+    // I think just deleting rotable bond and separate is enough, 
+    // but it did not work.
 
-      // Loop through  the remaining fragments and assign the coordinates from
-      // the first (most complex) fragment.
-      // Stop if there are no unassigned ring atoms (ratoms).
-      for (;i != _fragments.end() && ratoms;++i) {
+    // Get fragments using CopySubstructure
+    // Copy all atoms
+    OBBitVec atomsToCopy;
+    FOR_ATOMS_OF_MOL(atom, mol) {
+      atomsToCopy.SetBitOn(atom->GetIdx());
+    }
 
-        if (i->first != NULL && i->first->Match(mol)) {
-          mlist = i->first->GetUMapList();
+    // Exclude rotatable bonds
+    OBBitVec bondsToExclude;
+    FOR_BONDS_OF_MOL(bond, mol) {
+      if (bond->IsRotor()) {
+        bondsToExclude.SetBitOn(bond->GetIdx());
+      }
+    }
 
-          for (j = mlist.begin();j != mlist.end();++j) { // for all matches
+    // Generate fragments by copy
+    OBMol mol_copy;
+    mol.CopySubstructure(mol_copy, &atomsToCopy, &bondsToExclude);
 
-            // Have any atoms of this match already been added?
-            int alreadydone = 0;
-            int match_idx = 0;
-            for (k = j->begin(); k != j->end(); ++k) // for all atoms of the fragment
-              if (vfrag.BitIsSet(*k)) {
-                alreadydone += 1;
-                if (alreadydone > 1) break;
-                match_idx = *k;
-              }
-            bool spiro = false;
-            if (alreadydone > 1) // At least two atoms of the found match have already been added
-              continue;
-            else if (alreadydone == 1) {
-              spiro = IsSpiroAtom(mol.GetAtom(match_idx)->GetId(), mol);
-              if (!spiro) continue;
+    // Separate each disconnected fragments as different molecules
+    vector<OBMol> fragments = mol_copy.Separate(); 
+
+    //datafile is read only on first use of Build()
+    if(_fragments.empty())
+      LoadFragments();
+
+    for(vector<OBMol>::iterator f=fragments.begin(); f!=fragments.end(); f++) {
+      std::string fragment_smiles = conv.WriteString(&*f, true);
+      if (_fragments_index.count(fragment_smiles) == 0) 
+        continue;
+      OBSmartsPattern sp;
+      if (!sp.Init(fragment_smiles)) {
+        obErrorLog.ThrowError(__FUNCTION__, " Could not parse SMARTS from contribution data file", obInfo);
+        continue;
+      }
+      if (sp.Match(mol)) { // for all matches
+        mlist = sp.GetUMapList();
+        for (j = mlist.begin(); j != mlist.end(); ++j) {
+          // Have any atoms of this match already been added?
+          int alreadydone = 0;
+          for (k = j->begin(); k != j->end(); ++k)
+            if (vfrag.BitIsSet(*k)) {
+              alreadydone += 1;
+              if (alreadydone >= 1) break;
             }
+          if (alreadydone >= 1) continue;
 
-            ratoms += alreadydone - static_cast<int> (j->size()); // Update the number of available ring atoms
-            for (k = j->begin(); k != j->end(); ++k)
-              vfrag.SetBitOn(*k); // Set vfrag for all atoms of fragment
+          for (k = j->begin(); k != j->end(); ++k)
+            vfrag.SetBitOn(*k); // Set vfrag for all atoms of fragment
 
-            if (spiro) {
-              vector<int> match_indices(1); // In future, it could be of longer length
-              match_indices[0] = match_idx;
-              ConnectFrags(mol, workMol, *j, i->second, match_indices);
-            }
-            else {
-              int counter;
-              for (k = j->begin(), counter=0; k != j->end(); ++k, ++counter) { // for all atoms of the fragment
-                // set coordinates for atoms
-                OBAtom *atom = workMol.GetAtom(*k);
-                atom->SetVector(i->second[counter]);
-              }
-            }
+          int counter;
+          std::vector<vector3> coords = GetFragmentCoord(fragment_smiles);
+          for (k = j->begin(), counter=0; k != j->end(); ++k, ++counter) { // for all atoms of the fragment
+            // set coordinates for atoms
+            OBAtom *atom = workMol.GetAtom(*k);
+            atom->SetVector(coords[counter]);
+          }
 
-            // add the bonds for the fragment
-            int index2;
-            for (k = j->begin(); k != j->end(); ++k) {
-              OBAtom *atom1 = mol.GetAtom(*k);
-
-              for (k2 = j->begin(); k2 != j->end(); ++k2) {
-                index2 = *k2;
-                OBAtom *atom2 = mol.GetAtom(index2);
-                OBBond *bond = atom1->GetBond(atom2);
-
-                if (bond != NULL)
-                  workMol.AddBond(*bond);
+          // add the bonds for the fragment
+          int index2;
+          for (k = j->begin(); k != j->end(); ++k) {
+            OBAtom *atom1 = mol.GetAtom(*k);
+            for (k2 = j->begin(); k2 != j->end(); ++k2) {
+              int index2 = *k2;
+              OBAtom *atom2 = mol.GetAtom(index2);
+              OBBond *bond = atom1->GetBond(atom2);
+              if (bond != NULL) {
+                workMol.AddBond(*bond);
               }
             }
           }
         }
       }
-    } // if (ratoms)
+    } // for all fragments
 
     // iterate over all atoms to place them in 3D space
     FOR_DFS_OF_MOL (a, mol) {
@@ -1172,6 +1174,47 @@ namespace OpenBabel
       workMol.AddBond(beginIdx, endIdx, b->GetBO(), b->GetFlags());
     }
 
+    /*
+    FOR_BONDS_OF_MOL(bond, mol) {
+      if(bond->IsRotor()) {
+        OBBitVec atomsToCopy;
+        OBAtom *atom = bond->GetBeginAtom();
+        FOR_NBORS_OF_ATOM(a, &*atom) {
+          atomsToCopy.SetBitOn(a->GetIdx());
+        }
+        atom = bond->GetEndAtom();
+        FOR_NBORS_OF_ATOM(a, &*atom) {
+          atomsToCopy.SetBitOn(a->GetIdx());
+        }
+        OBMol mol_copy;
+        mol.CopySubstructure(mol_copy, &atomsToCopy);
+        string smiles = conv.WriteString(&mol_copy, true);
+        
+        if(_torsion.count(smiles) > 0) {
+          OBAtom* b = bond->GetBeginAtom();
+          OBAtom* c = bond->GetEndAtom();
+          OBAtom* a = NULL;
+          FOR_NBORS_OF_ATOM(t, &*b) {
+            a = &*t;
+            if(a != c)
+              break;
+          }
+          OBAtom* d = NULL;
+          FOR_NBORS_OF_ATOM(t, &*c) {
+            d = &*t;
+            if(d != b)
+              break;
+          }
+          double angle = _torsion[smiles] * DEG_TO_RAD;
+          mol.SetTorsion(a, b, c, d, angle);
+        } else {
+          ; // Do something
+        }
+      }
+    }
+    */
+
+    // We may have to change these success check
     // correct the chirality
     bool success = CorrectStereoBonds(workMol);
     // we only succeed if we corrected all stereochemistry
