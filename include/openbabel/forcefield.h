@@ -503,21 +503,6 @@ namespace OpenBabel
       }
     }
 
-    /*! Get the pointer to the gradients
-     */
-    virtual vector3 GetGradient(OBAtom *a, int /*terms*/ = OBFF_ENERGY)
-    {
-      const int coordIdx = (a->GetIdx() - 1) * 3;
-      return _gradientPtr + coordIdx;
-    }
-
-    /*! Get the pointer to the gradients
-     */
-    double* GetGradientPtr()
-    {
-      return _gradientPtr;
-    }
-
     /*! Set all gradients to zero
      */
     virtual void ClearGradients()
@@ -880,6 +865,21 @@ namespace OpenBabel
       //_elepairs.SetRangeOn(0, _numpairs-1);
     }
     //@}
+
+    /*! Get the pointer to the gradients
+     */
+    virtual vector3 GetGradient(OBAtom *a, int /*terms*/ = OBFF_ENERGY)
+    {
+      const int coordIdx = (a->GetIdx() - 1) * 3;
+      return _gradientPtr + coordIdx;
+    }
+
+    /*! Get the pointer to the gradients
+     */
+    double* GetGradientPtr()
+    {
+      return _gradientPtr;
+    }
 
     /////////////////////////////////////////////////////////////////////////
     // Energy Evaluation                                                   //

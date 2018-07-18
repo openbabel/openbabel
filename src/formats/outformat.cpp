@@ -113,7 +113,19 @@ namespace OpenBabel
         break;
       } else if (strstr(buffer,"Amsterdam Density Functional") != NULL) {
         // ADF output
-        formatName = "adfout";
+        // Determine the kind of ADF output
+        while (ifs.getline(buffer, BUFF_SIZE)) {
+          if (strstr(buffer, "|     A D F     |") != NULL) {
+            formatName = "adfout";
+            break;
+          } else if (strstr(buffer, "|     B A N D     |") != NULL) {
+            formatName = "adfband";
+            break;
+          } else if (strstr(buffer, "|     D F T B     |") != NULL) {
+            formatName = "adfdftb";
+            break;
+          }
+        }
         break;
       } else if (strstr(buffer,"Northwest Computational Chemistry") != NULL) {
         // NWChem output

@@ -692,7 +692,7 @@ namespace OpenBabel {
             const OBBitVec &_fragment, std::vector<StereoCenter> &_stereoCenters,
             std::vector<FullCode> &_identityCodes, Orbits &_orbits, OBBitVec &_mcr,
             bool _onlyOne) : symmetry_classes(_symmetry_classes), fragment(_fragment),
-          stereoCenters(_stereoCenters), onlyOne(_onlyOne),
+          onlyOne(_onlyOne), stereoCenters(_stereoCenters),
           code(_symmetry_classes.size()), identityCodes(_identityCodes),
           backtrackDepth(0), orbits(_orbits), mcr(_mcr)
       {
@@ -1133,7 +1133,7 @@ namespace OpenBabel {
     /**
      * Update the minimum cell representations (mcr).
      */
-    static void UpdateMcr(OBBitVec &mcr, Orbits &orbits, OBMol *mol, const std::vector<unsigned int> &bestLabels)
+    static void UpdateMcr(OBBitVec &mcr, Orbits &orbits, const std::vector<unsigned int> &bestLabels)
     {
       //print_orbits("UpdateMcr", orbits);
 
@@ -1219,7 +1219,7 @@ namespace OpenBabel {
           }
 
         if (fullcode.code == bestCode.code) {
-          UpdateMcr(state.mcr, state.orbits, mol, bestCode.labels);
+          UpdateMcr(state.mcr, state.orbits, bestCode.labels);
           FindOrbits(state.orbits, mol, fullcode.labels, bestCode.labels);
         } else if (fullcode > bestCode) {
           // if fullcode is greater than bestCode, we have found a new greatest code

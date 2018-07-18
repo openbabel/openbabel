@@ -382,6 +382,7 @@ if(${CMAKE_CXX_COMPILER_ID} MATCHES Intel AND UNIX)
 
   # define WITH_SSE2 to enable the SSE2 instruction set.
   # Available on Pentium 4, Athlon 64, and newer CPUs.
+  # TODO: Remove this? Should be handled by -march=native and only enabled if OPTIMIZE_NATIVE is ON
   if(CMAKE_SIZEOF_VOID_P EQUAL 8 OR WITH_SSE2)
     message(STATUS "Enabling the SSE2 instruction set")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse2")
@@ -459,6 +460,35 @@ else()
 endif()
 #cjh
 
+option(WITH_JSON "Build JSON support" ON)
+option(OPENBABEL_USE_SYSTEM_RAPIDJSON "Use the system rapidjson if available." ON)
+if(WITH_JSON)
+  set(RAPIDJSON_VERSION_MIN 1.1.0)
+  # First try find system rapidjson
+  if(OPENBABEL_USE_SYSTEM_RAPIDJSON)
+    find_package(RapidJSON ${RAPIDJSON_VERSION_MIN})
+  endif()
+  # Otherwise download rapidjson to openbabel source directory
+  if (NOT RAPIDJSON_FOUND OR RAPIDJSON_VERSION VERSION_LESS ${RAPIDJSON_VERSION_MIN})
+    set(RAPIDJSON_VERSION 1.1.0)
+    if(NOT EXISTS "${openbabel_SOURCE_DIR}/external/rapidjson-${RAPIDJSON_VERSION}")
+      file(DOWNLOAD "https://github.com/Tencent/rapidjson/archive/v${RAPIDJSON_VERSION}.tar.gz"
+        "${openbabel_SOURCE_DIR}/external/rapidjson-${RAPIDJSON_VERSION}.tar.gz" STATUS status)
+      execute_process(COMMAND ${CMAKE_COMMAND} -E tar zxf
+        ${openbabel_SOURCE_DIR}/external/rapidjson-${RAPIDJSON_VERSION}.tar.gz
+        WORKING_DIRECTORY ${openbabel_SOURCE_DIR}/external)
+      message(STATUS "Downloaded RapidJSON to ${openbabel_SOURCE_DIR}/external/rapidjson-${RAPIDJSON_VERSION}.")
+    endif()
+    set(RAPIDJSON_FOUND TRUE)
+    set(RAPIDJSON_INCLUDE_DIRS ${openbabel_SOURCE_DIR}/external/rapidjson-${RAPIDJSON_VERSION}/include)
+  endif()
+  if(RAPIDJSON_FOUND)
+    message(STATUS "JSON formats will be supported. Using RapidJSON ${RAPIDJSON_VERSION} at ${RAPIDJSON_INCLUDE_DIRS}")
+    add_definitions(-DHAVE_RADPIJSON)
+    include_directories(${RAPIDJSON_INCLUDE_DIRS})
+  endif()
+endif()
+
 find_package(Cairo)
 if(CAIRO_FOUND)
   message(STATUS "Cairo found. PNG output will be supported.")
@@ -467,13 +497,23 @@ else(CAIRO_FOUND)
 endif(CAIRO_FOUND)
 
 # Should we enable optimizations for the native CPU architecture?
-# (this will speed up similarity calculations and maybe those involving Eigen)
-if(NOT MSVC)
-  option(OPTIMIZE_NATIVE "Optimize for native CPU architecture. Turn off if compiling for distribution/reuse on other machines." OFF)
-  if(OPTIMIZE_NATIVE)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
-    message(STATUS "Optimizing code for this machine's CPU architecture. Use -DOPTIMIZE_NATIVE=OFF if compiling for distribution/reuse on other machines.")
+# (this will speed up JSON handling, similarity calculations and maybe those involving Eigen)
+option(OPTIMIZE_NATIVE "Optimize for native CPU architecture. Turn off if compiling for distribution/reuse on other machines." OFF)
+if(OPTIMIZE_NATIVE)
+  include(OptimizeNative)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${NATIVE_FLAGS}")
+  # Tell rapidjson which extensions are available
+  if(HAVE_SSE2)
+    add_definitions(-DRAPIDJSON_SSE2)
   endif()
+  if(HAVE_SSE4_2)
+    add_definitions(-DRAPIDJSON_SSE42)
+  endif()
+  if(HAVE_NEON)
+    add_definitions(-DRAPIDJSON_NEON)
+  endif()
+  add_definitions(-DOPTIMIZE_NATIVE)
+  message(STATUS "Optimizing code for this machine's CPU architecture. Use -DOPTIMIZE_NATIVE=OFF if compiling for distribution/reuse on other machines.")
 endif()
 
 add_subdirectory(include)
@@ -507,13 +547,6 @@ if(ENABLE_TESTS)
   include(CTest)
   enable_testing()
   add_subdirectory(test)
-endif()
-
-# To build the JSON formats, you need to provide an import library for MSVC
-if(MSVC)
-  if (NOT JSON_LIBRARY)
-    message(STATUS "JSON formats will NOT be built. To build, specify the location of the jsoncpp library with -DJSON_LIBRARY")
-  endif()
 endif()
 
 # Should the language bindings be regenereted?

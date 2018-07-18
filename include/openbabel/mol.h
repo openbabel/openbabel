@@ -378,7 +378,11 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! Mark that ring types have been perceived (see OBRingTyper for details)
     void   SetRingTypesPerceived()   { SetFlag(OB_RINGTYPES_MOL);   }
     //! Mark that chains and residues have been perceived (see OBChainsParser)
-    void   SetChainsPerceived()      { SetFlag(OB_CHAINS_MOL);      }
+    void   SetChainsPerceived(bool is_perceived=true)
+    {
+      if (is_perceived)      SetFlag(OB_CHAINS_MOL);
+      else                 UnsetFlag(OB_CHAINS_MOL);
+    }
     //! Mark that chirality has been perceived
     void   SetChiralityPerceived()   { SetFlag(OB_CHIRALITY_MOL);   }
     //! Mark that partial charges have been assigned
@@ -394,6 +398,7 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     void   SetFlags(int flags)       { _flags = flags;              }
 
     void   UnsetAromaticPerceived()  { _flags &= (~(OB_AROMATIC_MOL));   }
+    //! Mark that chains perception will need to be run again if required
     void   UnsetSSSRPerceived()  { _flags &= (~(OB_SSSR_MOL));   }
     //! Mark that Largest Set of Smallest Rings will need to be run again if required (see OBRing class)
     void   UnsetLSSRPerceived()  { _flags &= (~(OB_LSSR_MOL));   }
@@ -471,11 +476,16 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! If @p threshold is not specified or is zero, remove all but the largest
     //! contiguous fragment. If @p threshold is non-zero, remove any fragments with fewer
     //! than @p threshold atoms.
-    bool StripSalts(int threshold=0);
+    bool StripSalts(unsigned int threshold=0);
     //! Copies each disconnected fragment as a separate OBMol
     std::vector<OBMol> Separate(int StartIndex=1);
     //! Iterative component of Separate to copy one fragment at a time
     bool GetNextFragment( OpenBabel::OBMolAtomDFSIter& iter, OBMol& newMol );
+    // docs in mol.cpp
+    bool CopySubstructure(OBMol& newmol, OBBitVec *includeatoms, OBBitVec *excludebonds = (OBBitVec*)0,
+      unsigned int correctvalence=1,
+      std::vector<unsigned int> *atomorder=(std::vector<unsigned int>*)0,
+      std::vector<unsigned int> *bondorder=(std::vector<unsigned int>*)0);
     //! Converts the charged form of coordinate bonds, e.g.[N+]([O-])=O to N(=O)=O
     bool ConvertDativeBonds();
     //! Converts 5-valent N and P only. Return true if conversion occurred.
@@ -605,8 +615,8 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! Add a new set of coordinates @p f as a new conformer
     void    AddConformer(double *f)    {  _vconf.push_back(f);    }
     //! Set the molecule's current conformer to @p i
-    //! Does nothing if @p i is less than 0 or i is larger than NumConformers()
-    void    SetConformer(int i);
+    //! Does nothing if @p i is larger than NumConformers()
+    void    SetConformer(unsigned int i);
     //! Copy the conformer @p nconf into the array @p c
     //! \warning Does no checking to see if @p c is large enough
     void    CopyConformer(double* c,int nconf);

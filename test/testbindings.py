@@ -5,7 +5,7 @@ in the build folder with:
 "C:\Program Files\CMake 2.6\bin\ctest.exe" -C CTestTestfile.cmake
                                            -R pybindtest -VV
 
-The runtime directory is ${CMAKE_SRC_DIR}/test. 
+The runtime directory is ${CMAKE_SRC_DIR}/test.
 
 You could also "chdir" into build and run the test file directly:
 python ../../test/testbindings.py
@@ -47,12 +47,47 @@ class TestPythonBindings(PythonBindings):
         conv.SetInFormat("smi")
         conv.ReadString(mol, "CC(=O)Cl")
         self.assertAlmostEqual(mol.GetMolWt(), 78.5, 1)
-    
+
 class PybelWrapper(PythonBindings):
     def testDummy(self):
         self.assertTrue(pybel is not None, "Failed to import the Pybel module")
 
 class TestSuite(PythonBindings):
+
+    def testInChIIsotopes(self):
+        """Ensure that we correctly set and read isotopes in InChIs"""
+        with open(os.path.join(here, "inchi", "inchi_isotopes.txt")) as inp:
+            for line in inp:
+                if line.startswith("#"): continue
+                smi, inchi = line.rstrip().split("\t")
+                minchi = pybel.readstring("smi", smi).write("inchi").rstrip()
+                self.assertEqual(minchi, inchi)
+                msmi = pybel.readstring("inchi", minchi).write("smi").rstrip()
+                self.assertEqual(msmi, smi)
+
+    def testAsterisk(self):
+        """Ensure that asterisk in SMILES is bracketed when needed
+        and not otherwise"""
+        smis = [ # these don't need brackets for *
+                "*", "*C", "C*C",
+                # these do need brackets for *
+                "[*+]", "[*-]", "[*H]",
+                "*[H]", # this one is written as [*H]
+                "[1*]", "[*@@](F)(Cl)(Br)I", "[*:1]"]
+
+        for smi in smis:
+            needsbracket = "[" in smi
+            roundtrip = pybel.readstring("smi", smi).write("smi", opt={"a":True})
+            hasbracket = "[" in roundtrip
+            self.assertEqual(hasbracket, needsbracket)
+
+    def testAromaticityPreservedOnAtomDeletion(self):
+        """Ensure that aromaticity is preserved on atom deleteion"""
+        mol = pybel.readstring("smi", "c1ccccc1").OBMol
+        mol.DeleteAtom(mol.GetFirstAtom())
+        self.assertTrue(mol.GetFirstAtom().IsAromatic())
+        mol.UnsetAromaticPerceived()
+        self.assertFalse(mol.GetFirstAtom().IsAromatic())
 
     def testSmilesAtomOrder(self):
         """Ensure that SMILES atom order is written correctly"""
@@ -66,6 +101,63 @@ class TestSuite(PythonBindings):
         mol = pybel.readstring("smi", "CC")
         mol.write("can")
         self.assertFalse("SMILES Atom Order" in mol.data)
+
+    def testECFP(self):
+        data = [
+                ("CC", 1, 2),
+                ("CCC", 2, 4),
+                ("CC(C)C", 2, 4),
+                ("CC(C)(C)C", 2, 4),
+                ]
+        for smi, numA, numB in data:
+            mol = pybel.readstring("smi", smi)
+            ecfp0 = mol.calcfp("ecfp0").bits
+            self.assertEqual(len(ecfp0), numA)
+            ecfp2 = mol.calcfp("ecfp2").bits
+            self.assertEqual(len(ecfp2), numB)
+            for bit in ecfp0:
+                self.assertTrue(bit in ecfp2)
+
+    def testOldRingInformationIsWipedOnReperception(self):
+        """Previously, the code that identified ring atoms and bonds
+        did not set the flags of non-ring atoms. This meant that no
+        matter what you did to the structure, once a ring-atom, always a
+        ring atom."""
+        mol = pybel.readstring("smi", "c1ccccc1")
+        atom = mol.atoms[0].OBAtom
+        self.assertTrue(atom.IsInRing()) # trigger perception
+        mol.OBMol.DeleteAtom(mol.atoms[-1].OBAtom)
+        self.assertFalse(atom.IsInRing()) # this used to return True
+
+    def testOBMolSeparatePreservesAromaticity(self):
+        """If the original molecule had aromaticity perceived,
+        then the fragments should also.
+        """
+        smi = "C.c1ccccc1"
+        # Two passes: One with aromaticity perceived on the orig mol and
+        #             one without
+        for N in range(2):
+            obmol = pybel.readstring("smi", smi).OBMol
+            # Aromaticity is perceived during the last step of reading SMILES
+            # so let's unset it here for the first pass
+            if N == 0:
+                obmol.UnsetAromaticPerceived()
+            else:
+                self.assertTrue(obmol.HasAromaticPerceived())
+
+            # After separation, is aromaticity the same as the parent?
+            mols = obmol.Separate()
+            if N == 0:
+                self.assertFalse(mols[1].HasAromaticPerceived())
+            else:
+                self.assertTrue(mols[1].HasAromaticPerceived())
+
+            atom = mols[1].GetAtom(1)
+            atom.SetImplicitHCount(0) # mess up the structure
+            if N == 0:
+                self.assertFalse(atom.IsAromatic())
+            else:
+                self.assertTrue(atom.IsAromatic())
 
     def testAtomMapsAfterCopying(self):
         """Copying a molecule should copy the atom maps"""
@@ -101,6 +193,65 @@ class TestSuite(PythonBindings):
         mol.removeh()
         self.assertEqual(mol.write("smi", opt={"a":True}).rstrip(), "C[NH:2]")
 
+    def testSquarePlanar(self):
+        """Tighten up the parsing of SP stereochemistry in SMILES"""
+        good = [
+                "C[S@SP1](Cl)(Br)I",
+                "C[S@SP2](Cl)(Br)I",
+                "C[S@SP3](Cl)(Br)I",
+                ]
+        bad = [ # raises error
+                "C[S@SP0](Cl)(Br)I",
+                "C[S@SP4](Cl)(Br)I",
+                "C[S@@SP1](Cl)(Br)I",
+                "C[S@SP11](Cl)(Br)I",
+                "C[S@SO1](Cl)(Br)I",
+              ]
+        alsobad = [ # just a warning
+                "C[S@SP1](Cl)(Br)(F)I",
+                "C[S@SP1](Cl)(Br)(F)1CCCC1",
+                ]
+        for smi in good:
+            mol = pybel.readstring("smi", smi)
+            self.assertTrue(mol.OBMol.GetData(ob.StereoData))
+        for smi in bad:
+            self.assertRaises(IOError, pybel.readstring, "smi", smi)
+        for smi in alsobad:
+            mol = pybel.readstring("smi", smi)
+            self.assertTrue(mol.OBMol.GetData(ob.StereoData))
+
+    def testFFGradients(self):
+        """Support public access of FF gradients"""
+        xyz = """3
+water
+O          1.02585       -0.07579        0.08189
+H          1.99374       -0.04667        0.04572
+H          0.74700        0.50628       -0.64089
+"""
+        mol = pybel.readstring("xyz", xyz)
+        ff = pybel._forcefields["mmff94"]
+
+        self.assertTrue(ff.Setup(mol.OBMol))
+        for atom in mol.atoms:
+            # this should throw an AttributeError if not available
+            grad = ff.GetGradient(atom.OBAtom)
+            self.assertNotEqual(0.0, grad.GetX())
+            self.assertNotEqual(0.0, grad.GetY())
+            self.assertNotEqual(0.0, grad.GetZ())
+
+    def testFuzzingTestCases(self):
+        """Ensure that fuzzing testcases do not cause crashes"""
+
+        # rejected as invalid smiles
+        smis = [r"\0", "&0", "=&",
+                "[H][S][S][S@S00]0[S][S@S00H](0[S@S00][S])0n"]
+        for smi in smis:
+            self.assertRaises(IOError, pybel.readstring, "smi", smi)
+
+        smis = ["c0C[C@H](B)00O0"] # warning and stereo ignored
+        for smi in smis:
+            pybel.readstring("smi", smi)
+
     def testImplicitCisDblBond(self):
         """Ensure that dbl bonds in rings of size 8 or less are always
         implicitly cis"""
@@ -116,11 +267,57 @@ class TestSuite(PythonBindings):
         roundtrip = pybel.readstring("smi", ringsmi).write("smi")
         self.assertTrue("/" in roundtrip)
 
+    def testKekulizationOfHypervalents(self):
+        # We should support hypervalent aromatic S and N (the latter
+        # as we write them)
+        data = [("Cs1(=O)ccccn1",
+                 "CS1(=O)=NC=CC=C1"),
+                ("n1c2-c(c3cccc4cccc2c34)n(=N)c2ccccc12",
+                 "n1c2-c(c3cccc4cccc2c34)n(=N)c2ccccc12")]
+        for inp, out in data:
+            mol = pybel.readstring("smi", inp)
+            self.assertEqual(out, mol.write("smi").rstrip())
+
     def testKekulizationOfcn(self):
         """We were previously not reading 'cn' correctly, or at least how
         Daylight would"""
         mol = pybel.readstring("smi", "cn")
         self.assertEqual("C=N", mol.write("smi").rstrip())
+
+    def testReadingMassDifferenceInMolfiles(self):
+        """Previously we were rounding incorrectly when reading the mass diff"""
+        template = """
+ OpenBabel02181811152D
+
+  1  0  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 %2s %2d  0  0  0  0  0  0  0  0  0  0  0
+M  END
+"""
+        # Positive test cases:
+        # These are the BIOVIA Draw answers for the first 50 elements for
+        # a mass diff of 1
+        answers = [2,5,8,10,12,13,15,17,20,21,24,25,28,29,32,33,36,41,40,41,46,49,52,53,56,57,60,60,65,66,71,74,76,80,81,85,86,89,90,92,94,97,99,102,104,107,109,113,116,120,123]
+        for idx, answer in enumerate(answers):
+            elem = idx + 1
+            molfile = template % (ob.GetSymbol(elem), 1)
+            mol = pybel.readstring("mol", molfile).OBMol
+            iso = mol.GetAtom(1).GetIsotope()
+            self.assertEqual(answer, iso)
+
+        # Also test D and T - BIOVIA Draw ignores the mass diff
+        for elem, answer in zip("DT", [2, 3]):
+            molfile = template % (elem, 1)
+            mol = pybel.readstring("mol", molfile).OBMol
+            iso = mol.GetAtom(1).GetIsotope()
+            self.assertEqual(answer, iso)
+
+        # Negative test cases:
+        # Test error message for out-of-range values
+        for value in [5, -4]:
+            molfile = template % ("C", value)
+            mol = pybel.readstring("mol", molfile).OBMol
+            iso = mol.GetAtom(1).GetIsotope()
+            self.assertEqual(0, iso)
 
     def testInvalidCharsInSmiles(self):
         """Check that inserting a comma in a SMILES string in various positions
@@ -152,7 +349,7 @@ class TestSuite(PythonBindings):
         self.assertEqual("C1=CC=CC#C1", mol.write("smi").rstrip())
 
     def testSmilesParsingOfAllElements(self):
-        smi = "[*][H][He][Li][Be][B][C][N][O][F][Ne][Na][Mg][Al][Si][P][S][Cl][Ar][K][Ca][Sc][Ti][V][Cr][Mn][Fe][Co][Ni][Cu][Zn][Ga][Ge][As][Se][Br][Kr][Rb][Sr][Y][Zr][Nb][Mo][Tc][Ru][Rh][Pd][Ag][Cd][In][Sn][Sb][Te][I][Xe][Cs][Ba][La][Ce][Pr][Nd][Pm][Sm][Eu][Gd][Tb][Dy][Ho][Er][Tm][Yb][Lu][Hf][Ta][W][Re][Os][Ir][Pt][Au][Hg][Tl][Pb][Bi][Po][At][Rn][Fr][Ra][Ac][Th][Pa][U][Np][Pu][Am][Cm][Bk][Cf][Es][Fm][Md][No][Lr][Rf][Db][Sg][Bh][Hs][Mt][Ds][Rg][Cn][Nh][Fl][Mc][Lv][Ts][Og]"
+        smi = "*[H][He][Li][Be][B][C][N][O][F][Ne][Na][Mg][Al][Si][P][S][Cl][Ar][K][Ca][Sc][Ti][V][Cr][Mn][Fe][Co][Ni][Cu][Zn][Ga][Ge][As][Se][Br][Kr][Rb][Sr][Y][Zr][Nb][Mo][Tc][Ru][Rh][Pd][Ag][Cd][In][Sn][Sb][Te][I][Xe][Cs][Ba][La][Ce][Pr][Nd][Pm][Sm][Eu][Gd][Tb][Dy][Ho][Er][Tm][Yb][Lu][Hf][Ta][W][Re][Os][Ir][Pt][Au][Hg][Tl][Pb][Bi][Po][At][Rn][Fr][Ra][Ac][Th][Pa][U][Np][Pu][Am][Cm][Bk][Cf][Es][Fm][Md][No][Lr][Rf][Db][Sg][Bh][Hs][Mt][Ds][Rg][Cn][Nh][Fl][Mc][Lv][Ts][Og]"
         roundtrip = pybel.readstring("smi", smi).write("smi").rstrip()
         self.assertEqual(roundtrip, smi.replace("[O]", "O").replace("[S]", "S"))
         # aromatic
@@ -192,6 +389,35 @@ class TestSuite(PythonBindings):
         mol = pybel.readstring("smi", "[C]")
         mol.atoms[0].OBAtom.SetIsotope(65535)
         self.assertEqual(mol.write("smi").rstrip(), "[C]")
+
+    def testOBMolSeparatePreservesAtomOrder(self):
+        """Originally Separate() preserved DFS order rather
+        than atom order"""
+        # First test
+        smi = "C123.F3.Cl2.Br1"
+        mol = pybel.readstring("smi", smi)
+        atomicnums = [atom.OBAtom.GetAtomicNum() for atom in mol]
+        mols = mol.OBMol.Separate()
+        new_atomicnums = [atom.OBAtom.GetAtomicNum() for atom in pybel.Molecule(mols[0])]
+        for x, y in zip(atomicnums, new_atomicnums):
+            self.assertEqual(x, y) # check that the atoms have not been permuted
+        # Second test
+        xyz = """6
+examples/water_dimer.xyz
+O          0.12908       -0.26336        0.64798
+H          0.89795        0.28805        0.85518
+H          0.10833       -0.20468       -0.33302
+O          0.31020        0.07569       -2.07524
+H          0.64083       -0.57862       -2.71449
+H         -0.26065        0.64232       -2.62218
+"""
+        mol = pybel.readstring("xyz", xyz)
+        mols = mol.OBMol.Separate()
+        allatoms = pybel.Molecule(mols[0]).atoms + pybel.Molecule(mols[1]).atoms
+        for idx, atom in enumerate(allatoms):
+            xcoord = atom.OBAtom.GetX()
+            orig_xcoord = mol.OBMol.GetAtom(idx+1).GetX()
+            self.assertEqual(xcoord, orig_xcoord)
 
     def testStereoRefsAfterAddingOBMols(self):
         """The stereo ref for an implicit H ref was being set to 0"""
@@ -291,6 +517,250 @@ class AcceptStereoAsGiven(PythonBindings):
         cistrans = r"C/C=C(\C)/C"
         out = pybel.readstring("smi", cistrans, opt={"S": True}).write("smi")
         self.assertFalse("/" in out)
+
+class OBMolCopySubstructure(PythonBindings):
+    """Tests for copying a component of an OBMol"""
+
+    def createBitVec(self, size, bits):
+        bv = ob.OBBitVec(size)
+        for bit in bits:
+            bv.SetBitOn(bit)
+        return bv
+
+    def testBasic(self):
+        mol = pybel.readstring("smi", "ICBr")
+        bv = self.createBitVec(4, (1, 3))
+        nmol = ob.OBMol()
+        ok = mol.OBMol.CopySubstructure(nmol, bv, None, 0)
+        self.assertTrue(ok)
+        self.assertEqual(pybel.Molecule(nmol).write("smi").rstrip(), "[I].[Br]")
+        bv = self.createBitVec(4, (2,))
+        ok = mol.OBMol.CopySubstructure(nmol, bv, None, 0)
+        self.assertTrue(ok)
+        self.assertEqual(pybel.Molecule(nmol).write("smi").rstrip(), "[I].[Br].[CH2]")
+
+        mol = pybel.readstring("smi", "CCC")
+        bv = self.createBitVec(4, (1,))
+        bondv = self.createBitVec(2, (1,))
+        nmol = ob.OBMol()
+        ok = mol.OBMol.CopySubstructure(nmol, bv, bondv, 0)
+        self.assertTrue(ok)
+
+    def testNonexistentAtom(self):
+        mol = pybel.readstring("smi", "ICBr")
+        bv = self.createBitVec(10, (9,))
+        nmol = ob.OBMol()
+        ok = mol.OBMol.CopySubstructure(nmol, bv)
+        self.assertFalse(ok)
+
+    def testOptions(self):
+        mol = pybel.readstring("smi", "ICBr")
+        bv = self.createBitVec(4, (1, 3))
+        ans = ["[I].[Br]", "I.Br", "I*.Br*"]
+        ans_atomorder = [[1, 3], [1, 3], [1, 3, 2, 2]]
+        ans_bondorder = [ [], [], [0, 1] ]
+        for option in range(3):
+            nmol = ob.OBMol()
+            atomorder = ob.vectorUnsignedInt()
+            bondorder = ob.vectorUnsignedInt()
+            ok = mol.OBMol.CopySubstructure(nmol, bv, None, option, atomorder, bondorder)
+            self.assertTrue(ok)
+            self.assertEqual(pybel.Molecule(nmol).write("smi").rstrip(), ans[option])
+            self.assertEqual(ans_atomorder[option], list(atomorder))
+            self.assertEqual(ans_bondorder[option], list(bondorder))
+
+    def testSpecifyBonds(self):
+        mol = pybel.readstring("smi", "ICBr")
+        bv = self.createBitVec(4, (1, 2, 3))
+        bondbv = self.createBitVec(2, (1,))
+        ans = ["I[CH2].[Br]", "IC.Br", "IC*.Br*"]
+        ans_atomorder = [[1, 2, 3], [1, 2, 3], [1, 2, 3, 3, 2]]
+        ans_bondorder = [ [0], [0], [0, 1, 1] ]
+        for option in range(3):
+            nmol = ob.OBMol()
+            atomorder = ob.vectorUnsignedInt()
+            bondorder = ob.vectorUnsignedInt()
+            ok = mol.OBMol.CopySubstructure(nmol, bv, bondbv, option, atomorder, bondorder)
+            self.assertTrue(ok)
+            self.assertEqual(pybel.Molecule(nmol).write("smi").rstrip(), ans[option])
+            self.assertEqual(ans_atomorder[option], list(atomorder))
+            self.assertEqual(ans_bondorder[option], list(bondorder))
+
+    def testSpecifyAtomsAndBonds(self):
+        # Now copy just a subset of atoms too
+        mol = pybel.readstring("smi", "ICBr")
+        bv = self.createBitVec(4, (1, 3))
+        bondbv = self.createBitVec(2, (1,))
+        ans = ["[I].[Br]", "I.Br", "I*.Br*"]
+        for option in range(3):
+            nmol = ob.OBMol()
+            ok = mol.OBMol.CopySubstructure(nmol, bv, bondbv, option)
+            self.assertTrue(ok)
+            self.assertEqual(pybel.Molecule(nmol).write("smi").rstrip(), ans[option])
+
+    def testBondOrders(self):
+        mol = pybel.readstring("smi", "O=C=O")
+        bv = self.createBitVec(3, (2, 3))
+        bondbv = self.createBitVec(2, (1,))
+        ans = ["[C].[O]", "C.O", "C(=*)=*.O=*"]
+        for option in range(3):
+            nmol = ob.OBMol()
+            ok = mol.OBMol.CopySubstructure(nmol, bv, bondbv, option)
+            self.assertTrue(ok)
+            self.assertEqual(pybel.Molecule(nmol).write("smi").rstrip(), ans[option])
+        ans = ["[C]=O", "C=O", "C(=O)=*"]
+        for option in range(3):
+            nmol = ob.OBMol()
+            ok = mol.OBMol.CopySubstructure(nmol, bv, None, option)
+            self.assertTrue(ok)
+            self.assertEqual(pybel.Molecule(nmol).write("smi").rstrip(), ans[option])
+
+    def testStereo(self):
+        data = [
+                ("FC[C@@](Br)(Cl)I",
+                    [((2, 3, 4, 5, 6), None, "C[C@@](Br)(Cl)I"),
+                    ((2, 3, 4, 5), None, "CC(Br)Cl"),
+                    ((1, 2, 3, 4, 5, 6), (4,), "FCC(Br)Cl.I")]
+                ),
+                ("[C@@H](Br)(Cl)I",
+                    [((1, 2, 3), None, "C(Br)Cl"),
+                    ((1, 2, 3, 4), (2,), "C(Br)Cl.I")]
+                ),
+                ("C[C@@H]1CO1",
+                    [((2, 3, 4), None, "C1CO1"),]
+                ),
+                ("F/C=C/I",
+                    [
+                     ((1, 2, 3, 4), None, "F/C=C/I"),
+                     ((1, 2, 3), None, "FC=C"),
+                     ((1, 2, 3, 4), (0,), "F.C=CI"),
+                     ((1, 2, 3, 4), (1,), "FC.CI")]
+                ),
+               ]
+        for smi, d in data:
+            mol = pybel.readstring("smi", smi)
+            for a, b, ans in d:
+                nmol = ob.OBMol()
+                bv = self.createBitVec(7, a)
+                bondbv = None if b is None else self.createBitVec(5, b)
+                ok = mol.OBMol.CopySubstructure(nmol, bv, bondbv)
+                self.assertTrue(ok)
+                if "@" not in ans and "/" not in ans:
+                    self.assertFalse(nmol.GetData(ob.StereoData))
+                self.assertEqual(pybel.Molecule(nmol).write("smi").rstrip(),
+                                 ans)
+
+    def testResidueCopying(self):
+        smi = "C[C@@H](C(=O)N[C@@H](CS)C(=O)O)N" # H-Ala-Cys-OH
+        mol = pybel.readstring("smi", smi).OBMol
+        ob.cvar.chainsparser.PerceiveChains(mol)
+        mol.SetChainsPerceived()
+        residues = list(ob.OBResidueIter(mol))
+        self.assertEqual(len(residues), 2)
+
+        # Copy just the Cys N
+        bv = self.createBitVec(mol.NumAtoms() + 1, (5,))
+        nmol = ob.OBMol()
+        mol.CopySubstructure(nmol, bv)
+        self.assertEqual(len(list(ob.OBResidueIter(nmol))), 1)
+        pdb = pybel.Molecule(nmol).write("pdb")
+        atoms = [line for line in pdb.split("\n") if line.startswith("ATOM")]
+        self.assertEqual(len(atoms), 1)
+        cysN = "ATOM      1  N   CYS A   2"
+        self.assertTrue(atoms[0].startswith(cysN))
+
+        # Copy the Cys N and Ca
+        bv = self.createBitVec(mol.NumAtoms() + 1, (5, 6))
+        nmol.Clear()
+        mol.CopySubstructure(nmol, bv)
+        self.assertEqual(len(list(ob.OBResidueIter(nmol))), 1)
+        pdb = pybel.Molecule(nmol).write("pdb")
+        atoms = [line for line in pdb.split("\n") if line.startswith("ATOM")]
+        self.assertEqual(len(atoms), 2)
+        self.assertTrue(atoms[0].startswith(cysN))
+        cysCa = "ATOM      2  CA  CYS A   2"
+        self.assertTrue(atoms[1].startswith(cysCa))
+
+        # Copy the Ala C and Cys N
+        bv = self.createBitVec(mol.NumAtoms() + 1, (3, 5))
+        nmol.Clear()
+        mol.CopySubstructure(nmol, bv)
+        self.assertEqual(len(list(ob.OBResidueIter(nmol))), 2)
+        pdb = pybel.Molecule(nmol).write("pdb")
+        atoms = [line for line in pdb.split("\n") if line.startswith("ATOM")]
+        self.assertEqual(len(atoms), 2)
+        alaC = "ATOM      1  C   ALA A   1"
+        self.assertTrue(atoms[0].startswith(alaC))
+        cysN = "ATOM      2  N   CYS A   2"
+        self.assertTrue(atoms[1].startswith(cysN))
+
+class AtomClass(PythonBindings):
+    """Tests to ensure that refactoring the atom class handling retains
+    functionality"""
+
+    def testSMILES(self):
+        mol = pybel.readstring("smi", "C[CH3:6]")
+        atom = mol.OBMol.GetAtom(2)
+        data = atom.GetData("Atom Class")
+        self.assertTrue(data)
+        self.assertEqual(6, ob.toPairInteger(data).GetGenericValue())
+
+        atom.DeleteData("Atom Class")
+        ac = ob.obpairtemplateint()
+        ac.SetAttribute("Atom Class")
+        ac.SetValue(2)
+        mol.OBMol.GetAtom(1).CloneData(ac)
+        out = mol.write("smi", opt={"a":True, "n":True, "nonewline":True})
+        self.assertEqual("[CH3:2]C", out)
+
+    def testMOL(self):
+        """Roundtrip thru MOL file"""
+        smi = "C[CH3:6]"
+        mol = pybel.readstring("smi", smi)
+        molfile = mol.write("mol", opt={"a":True})
+        molb = pybel.readstring("mol", molfile)
+        out = mol.write("smi", opt={"a":True, "n":True, "nonewline":True})
+        self.assertEqual(smi, out)
+
+    def testRGroup(self):
+        """[*:1] is converted to R1 in MOL file handling"""
+        smi = "[*:6]C"
+        mol = pybel.readstring("smi", smi)
+        molfile = mol.write("mol")
+        self.assertTrue("M  RGP  1   1   6" in molfile)
+        molb = pybel.readstring("mol", molfile)
+        out = mol.write("smi", opt={"a":True, "n":True, "nonewline":True})
+        self.assertEqual(smi, out)
+
+    def testCML(self):
+        """OB stores atom classes using _NN at the end of atom ids"""
+        smis = ["[CH3:6]C", "[CH3:6][OH:6]",
+                "O"+"[CH2:2]"*27+"O"
+                ]
+        for smi in smis:
+            mol = pybel.readstring("smi", smi)
+            cml = mol.write("cml")
+            molb = pybel.readstring("mol", cml)
+            out = mol.write("smi", opt={"a":True, "n":True, "nonewline":True})
+            self.assertEqual(smi, out)
+
+    def testTinkerXYZ(self):
+        """Atom classes are written out as the atom types (though
+        not currently read)"""
+        smi = "[CH4:23]"
+        mol = pybel.readstring("smi", smi)
+        xyz = mol.write("txyz", opt={"c": True})
+        lines = xyz.split("\n")
+        broken = lines[1].split()
+        self.assertEqual("23", broken[-1].rstrip())
+
+    def testDeleteHydrogens(self):
+        """Don't suppress a hydrogen with an atom class"""
+        smi = "C([H])([H])([H])[H:1]"
+        mol = pybel.readstring("smi", smi)
+        mol.OBMol.DeleteHydrogens()
+        nsmi = mol.write("smi", opt={"a": True, "h": True})
+        self.assertEqual("C[H:1]", nsmi.rstrip())
 
 if __name__ == "__main__":
     unittest.main()

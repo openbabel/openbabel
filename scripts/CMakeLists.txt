@@ -79,13 +79,6 @@ if (DO_PYTHON_BINDINGS)
       else(WIN32)
         add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
             COMMAND ${SWIG_EXECUTABLE} -python -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${eigen_define} -outdir ${openbabel_SOURCE_DIR}/scripts/python ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
-              COMMAND ${CMAKE_COMMAND} -E echo "import sys" > ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "if sys.platform.find('linux'\) != -1:" >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "  import ctypes" >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E echo "  sys.setdlopenflags(sys.getdlopenflags() | ctypes.RTLD_GLOBAL)" >> ob.py
-              COMMAND cat ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py >> ob.py
-              COMMAND ${CMAKE_COMMAND} -E copy ob.py ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
-              COMMAND ${CMAKE_COMMAND} -E remove ob.py
               MAIN_DEPENDENCY openbabel-python.i
               VERBATIM
               )
@@ -93,10 +86,22 @@ if (DO_PYTHON_BINDINGS)
     endif(RUN_SWIG)
 
     add_library(bindings_python MODULE ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp)
-    if(BINDINGS_ONLY)
-        target_link_libraries(bindings_python ${PYTHON_LIBRARIES} ${BABEL_SYSTEM_LIBRARY})
+
+    if(APPLE)
+      # Don't link against Python library on Mac
+      set_target_properties(bindings_python PROPERTIES LINK_FLAGS "-undefined dynamic_lookup")
+      if(BINDINGS_ONLY)
+        target_link_libraries(bindings_python ${BABEL_SYSTEM_LIBRARY})
+      else()
+        target_link_libraries(bindings_python ${BABEL_LIBRARY})
+      endif()
     else()
+      # Link against Python library on Linux and Windows
+      if(BINDINGS_ONLY)
+        target_link_libraries(bindings_python ${PYTHON_LIBRARIES} ${BABEL_SYSTEM_LIBRARY})
+      else()
         target_link_libraries(bindings_python ${PYTHON_LIBRARIES} ${BABEL_LIBRARY})
+      endif()
     endif()
 
     if(NOT WIN32)

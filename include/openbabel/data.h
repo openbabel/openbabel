@@ -34,7 +34,6 @@ namespace OpenBabel
 
   class OBAtom;
   class OBMol;
-  class OBBitVec;
 
   /** \class OBGlobalDataBase data.h <openbabel/data.h>
       \brief Base data table class, handles reading data files
@@ -260,8 +259,7 @@ namespace OpenBabel
       bool LookupType(const std::string &,std::string&,int&);
       //! Assign bond orders, atom types and residues for the supplied OBMol
       //! based on the residue information assigned to atoms
-      //! \deprecated second OBBitVec argument is ignored
-      bool AssignBonds(OBMol &,OBBitVec &);
+      bool AssignBonds(OBMol &);
     };
 
 } // end namespace OpenBabel

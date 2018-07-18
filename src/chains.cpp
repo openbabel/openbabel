@@ -1048,6 +1048,8 @@ namespace OpenBabel
     SetResidueInformation(mol, nukeSingleResidue);
     CleanupMol();
 
+    mol.SetChainsPerceived();
+
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::PerceiveChains", obAuditMsg);
 
@@ -1217,7 +1219,10 @@ namespace OpenBabel
   {
     static OBAtom *neighbour[6];
     Template *pep;
-    OBAtom *na,*nb,*nc,*nd;
+    OBAtom *na = (OBAtom*)0;
+    OBAtom *nb = (OBAtom*)0;
+    OBAtom *nc = (OBAtom*)0;
+    OBAtom *nd = (OBAtom*)0;
     OBAtom *atom, *nbr;
     bool change, result;
     int i, count;
@@ -1354,7 +1359,9 @@ namespace OpenBabel
   void OBChainsParser::TracePeptideChain(OBMol &mol, unsigned int i, int r)
   {
     unsigned int neighbour[4];
-    unsigned int na,nb,nc;
+    unsigned int na = 0;
+    unsigned int nb = 0;
+    unsigned int nc = 0;
     OBAtom *atom, *nbr;
     int count;
     int j,k;

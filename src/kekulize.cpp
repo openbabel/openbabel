@@ -66,18 +66,17 @@ namespace OpenBabel
     return atom->GetImplicitHCount() + atom->GetValence();
   }
 
-  static bool IsSpecialCase(OBAtom* atom, OBAtom* nbr)
+  static bool IsSpecialCase(OBAtom* atom)
   {
-    switch (nbr->GetAtomicNum()) {
-    case 8:
+    switch(atom->GetAtomicNum()) {
+    case 7:
+      // Any exo-cyclic double bond from a N
       // e.g. pyridine N-oxide as the double bond form
-      if (atom->GetAtomicNum() == 7 && TotalNumberOfBonds(atom) == 3 &&
-          atom->GetFormalCharge() == 0)
+      if (TotalNumberOfBonds(atom) == 3 && atom->GetFormalCharge() == 0)
         return true;
       break;
-    case 16:
-      // ?? TODO ??
-      if (TotalNumberOfBonds(atom) == 4)
+    case 16: // e.g. Cs1(=O)ccccn1
+      if (TotalNumberOfBonds(atom) == 4 && atom->GetFormalCharge() == 0)
         return true;
       break;
     }
@@ -97,7 +96,7 @@ namespace OpenBabel
       case 0: case 1:
         continue;
       case 2:
-        if (IsSpecialCase(atom, nbr))
+        if (IsSpecialCase(atom))
           return true;
         return false;
       default: // bond order > 2
@@ -367,7 +366,7 @@ namespace OpenBabel
       m_path.push_back(idx);
       needs_dbl_bond->SetBitOff(m_path[0]);
       // Flip all of the bond orders on the path from double<-->single
-      for (int i = 0; i < m_path.size()-1; ++i) {
+      for (unsigned int i = 0; i < m_path.size()-1; ++i) {
         OBBond *bond = m_mol->GetBond(m_path[i], m_path[i + 1]);
         if (i % 2 == 0)
           doubleBonds->SetBitOn(bond->GetIdx());

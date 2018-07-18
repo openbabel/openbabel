@@ -16,7 +16,6 @@ GNU General Public License for more details.
 
 #include <openbabel/obmolecformat.h>
 #include <openbabel/forcefield.h>
-#include <openbabel/atomclass.h>
 
 using namespace std;
 namespace OpenBabel
@@ -36,7 +35,10 @@ namespace OpenBabel
       return
         "Tinker XYZ format\n"
         "The cartesian XYZ file format used by the molecular mechanics package TINKER.\n"
-        "By default, the MM2 atom types are used for writiting files.\n\n"
+        "By default, the MM2 atom types are used for writing files but MM3 atom types\n"
+        "are provided as an option. Another option provides the ability to take the\n"
+        "atom type from the atom class (e.g. as used in SMILES, or set via the API).\n\n"
+
         "Read Options e.g. -as\n"
         "  s  Generate single bonds only\n\n"
         "Write Options e.g. -xm\n"
@@ -100,7 +102,6 @@ namespace OpenBabel
     string str;
     double x,y,z;
     OBAtom *atom;
-    int atomicNum;
 
     for (int i = 1; i <= natoms; ++i)
     {
@@ -130,9 +131,14 @@ namespace OpenBabel
       mol.PerceiveBondOrders();
 
     // clean out remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() &&
-	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
+    std::streampos ipos;
+    do
+    {
+      ipos = ifs.tellg();
       ifs.getline(buffer,BUFF_SIZE);
+    }
+    while(strlen(buffer) == 0 && !ifs.eof() );
+    ifs.seekg(ipos);
 
     mol.EndModify();
     mol.SetTitle(title);
@@ -152,8 +158,6 @@ namespace OpenBabel
     bool mmffTypes = pConv->IsOption("m",OBConversion::OUTOPTIONS) != NULL;
     bool mm3Types = pConv->IsOption("3",OBConversion::OUTOPTIONS) != NULL;
     bool classTypes = pConv->IsOption("c", OBConversion::OUTOPTIONS) != NULL;
-    if (pmol->GetData("Atom Class") == NULL)
-      classTypes = false;
 
     unsigned int i;
     char buffer[BUFF_SIZE];
@@ -184,8 +188,6 @@ namespace OpenBabel
     OBAtom *atom;
     string str,str1;
     int atomType;
-    // we check above - if classTypes is set, this is non-null
-    OBAtomClassData* classes = (OBAtomClassData*) pmol->GetData("Atom Class");
     for(i = 1;i <= mol.NumAtoms(); i++)
       {
         atom = mol.GetAtom(i);
@@ -211,8 +213,15 @@ namespace OpenBabel
         }
         if (classTypes) {
           // Atom classes are set by the user, so use those
-          if (classes->GetClass(atom->GetIdx()))
-            atomType = classes->GetClass(atom->GetIdx());
+          OBGenericData *data = atom->GetData("Atom Class");
+          if (data) {
+            OBPairInteger* acdata = dynamic_cast<OBPairInteger*>(data); // Could replace with C-style cast if willing to live dangerously
+            if (acdata) {
+              int ac = acdata->GetGenericValue();
+              if (ac >= 0)
+                atomType = ac;
+            }
+          }
         }
 
         snprintf(buffer, BUFF_SIZE, "%6d %2s  %12.6f%12.6f%12.6f %5d",
@@ -238,7 +247,7 @@ namespace OpenBabel
 
   int SetMM3Type(OBAtom *atom)
   {
-    OBAtom *b, *c; // neighbors
+    OBAtom *b; // neighbor
     OBBondIterator i, j;
     int countNeighborO, countNeighborS, countNeighborN, countNeighborC;
     countNeighborO = countNeighborS = countNeighborN = countNeighborC = 0;

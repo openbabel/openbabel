@@ -21,7 +21,6 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
 #include <openbabel/chiral.h>
-#include <openbabel/atomclass.h>
 
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
@@ -274,7 +273,6 @@ namespace OpenBabel {
     vector<bool>            _bvisit;
     vector<int>             _hcount;
     vector<int> PosDouble; //for extension: lc atoms as conjugated double bonds
-    OBAtomClassData _classdata; // to hold atom class data like [C:2]
 
     struct StereoRingBond
     {
@@ -434,85 +432,97 @@ namespace OpenBabel {
     mol.BeginModify();
 
     for (_ptr=smiles.c_str();*_ptr;_ptr++)
+    {
+      switch(*_ptr)
       {
-        //cerr << " parsing " << _ptr << endl;
-
-        if (*_ptr<0 || isspace(*_ptr))
-          continue;
-        else if (isdigit(*_ptr) || *_ptr == '%') //ring open/close
-          {
-            if(!ParseRingBond(mol))
-              return false;
-            continue;
-          }
-        else if(*_ptr == '&') //external bond
-          {
-            ParseExternalBond(mol);
-            continue;
-          }
-        else
-          switch(*_ptr)
-            {
-            case '.':
-              _prev=0;
-              break;
-            case '(':
-              _vprev.push_back(_prev);
-              break;
-            case ')':
-              if(_vprev.empty()) //CM
-                return false;
-              _prev = _vprev.back();
-              _vprev.pop_back();
-              break;
-            case '[':
-              if (!ParseComplex(mol))
-                {
-                  mol.EndModify();
-                  mol.Clear();
-                  return(false);
-                }
-              break;
-            case '-':
-              _order = 1;
-              break;
-            case '=':
-              _order = 2;
-              break;
-            case '#':
-              _order = 3;
-              break;
-            case '$':
-              _order = 4;
-              break;
-            case ':':
-              _order = 0; // no-op
-              break;
-            case '/':
-              _order = 1;
-              _updown = BondDownChar;
-              break;
-            case '\\':
-              _order = 1;
-              _updown = BondUpChar;
-              break;
-            default:
-              if (!ParseSimple(mol))
-                {
-                  mol.EndModify();
-                  mol.Clear();
-                  return(false);
-                }
-            } // end switch
-      } // end for _ptr
+      case '\r':
+        if (*(_ptr+1) == '\0') // may have a terminating '\r' due to Windows line-endings
+          break;
+        return false;
+      case '0': case '1': case '2': case '3': case '4':
+      case '5': case '6': case '7': case '8': case '9':
+      case '%':  //ring open/close
+        if (_prev == 0)
+          return false;
+        if (!ParseRingBond(mol))
+          return false;
+        break;
+      case '&': //external bond
+        if (_prev == 0)
+          return false;
+        if (!ParseExternalBond(mol))
+          return false;
+        break;
+      case '.':
+        _prev=0;
+        break;
+      case '(':
+        _vprev.push_back(_prev);
+        break;
+      case ')':
+        if(_vprev.empty()) //CM
+          return false;
+        _prev = _vprev.back();
+        _vprev.pop_back();
+        break;
+      case '[':
+        if (!ParseComplex(mol))
+        {
+          mol.EndModify();
+          mol.Clear();
+          return false;
+        }
+        break;
+      case '-':
+        if (_prev == 0)
+          return false;
+        _order = 1;
+        break;
+      case '=':
+        if (_prev == 0)
+          return false;
+        _order = 2;
+        break;
+      case '#':
+        if (_prev == 0)
+          return false;
+        _order = 3;
+        break;
+      case '$':
+        if (_prev == 0)
+          return false;
+        _order = 4;
+        break;
+      case ':':
+        if (_prev == 0)
+          return false;
+        _order = 0; // no-op
+        break;
+      case '/':
+        if (_prev == 0)
+          return false;
+        _order = 1;
+        _updown = BondDownChar;
+        break;
+      case '\\':
+        if (_prev == 0)
+          return false;
+        _order = 1;
+        _updown = BondUpChar;
+        break;
+      default:
+        if (!ParseSimple(mol))
+        {
+          mol.EndModify();
+          mol.Clear();
+          return false;
+        }
+      } // end switch
+    } // end for _ptr
 
     // place dummy atoms for each unfilled external bond
     if(!_extbond.empty())
       CapExternalBonds(mol);
-
-    //Save atom class values in OBGenericData object if there are any
-    if(_classdata.size()>0)
-      mol.SetData(new OBAtomClassData(_classdata));
 
     // Check to see if we've balanced out all ring closures
     // They are removed from _rclose when matched
@@ -567,7 +577,7 @@ namespace OpenBabel {
         errorMsg << " (title is " << title << ")";
       errorMsg << endl;
       obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
-      // return false; Should we return false for a kekulization failure?
+      // return false; // Should we return false for a kekulization failure?
     }
 
     // Add the data stored inside the _tetrahedralMap to the atoms now after end
@@ -860,23 +870,23 @@ namespace OpenBabel {
     if (ChiralSearch != _squarePlanarMap.end() && ChiralSearch->second != NULL)
     {
       int insertpos = NumConnections(ChiralSearch->first) - 1;
-      if (insertpos < 0) {
+      switch(insertpos) {
+      case -1:
         if (ChiralSearch->second->refs[0] != OBStereo::NoRef)
           obErrorLog.ThrowError(__FUNCTION__, "Warning: Overwriting previous from reference id.", obWarning);
-
         (ChiralSearch->second)->refs[0] = id;
-        //cerr << "Adding " << id << " at Config.refs[0] to " << ChiralSearch->second << endl;
-      } else {
+        break;
+      case 0: case 1: case 2: case 3:
         if (ChiralSearch->second->refs[insertpos] != OBStereo::NoRef)
           obErrorLog.ThrowError(__FUNCTION__, "Warning: Overwriting previously set reference id.", obWarning);
-
         (ChiralSearch->second)->refs[insertpos] = id;
-        //cerr << "Adding " << id << " at " << insertpos << " to " << ChiralSearch->second << endl;
+        break;
+      default:
+        obErrorLog.ThrowError(__FUNCTION__, "Warning: Square planar stereo specified for atom with more than 4 connections.", obWarning);
+        break;
       }
     }
   }
-
-
 
   bool OBSmilesParser::ParseSimple(OBMol &mol)
   {
@@ -1665,7 +1675,7 @@ namespace OpenBabel {
           {
           case '@':
             _ptr++;
-            if (*_ptr == 'S') {
+            if (*_ptr == 'S' && _ptr[1] == 'P') { // @SP1/2/3
               // square planar atom found
               squarePlanarWatch = true;
               if (_squarePlanarMap.find(atom)==_squarePlanarMap.end()) // Prevent memory leak for malformed smiles (PR#3428432)
@@ -1673,12 +1683,17 @@ namespace OpenBabel {
               _squarePlanarMap[atom]->refs = OBStereo::Refs(4, OBStereo::NoRef);
               _squarePlanarMap[atom]->center = atom->GetId();
               _ptr += 2;
-              if (*_ptr == '1')
-                _squarePlanarMap[atom]->shape = OBStereo::ShapeU;
-              if (*_ptr == '2')
-                _squarePlanarMap[atom]->shape = OBStereo::Shape4;
-              if (*_ptr == '3')
-                _squarePlanarMap[atom]->shape = OBStereo::ShapeZ;
+              switch(*_ptr) {
+              case '1':
+                _squarePlanarMap[atom]->shape = OBStereo::ShapeU; break;
+              case '2':
+                _squarePlanarMap[atom]->shape = OBStereo::Shape4; break;
+              case '3':
+                _squarePlanarMap[atom]->shape = OBStereo::ShapeZ; break;
+              default:
+                obErrorLog.ThrowError(__FUNCTION__, "Square planar stereochemistry must be one of SP1, SP2 or SP3", obWarning);
+                return false;
+              }
             } else {
               // tetrahedral atom found
               chiralWatch=true;
@@ -1739,10 +1754,16 @@ namespace OpenBabel {
                 obErrorLog.ThrowError(__FUNCTION__,"The atom class following : must be a number", obWarning);
                 return false;
               }
-            while( isdigit(*_ptr) )
+            while( isdigit(*_ptr) && clval < 100000000)
               clval = clval*10 + ((*_ptr++)-'0');
             --_ptr;
-            _classdata.Add(atom->GetIdx(), clval);
+            { // a block is needed here to scope the OBPairInteger assignment
+              OBPairInteger *atomclass = new OBPairInteger();
+              atomclass->SetAttribute("Atom Class"); 
+              atomclass->SetValue(clval);
+              atomclass->SetOrigin(fileformatInput);
+              atom->SetData(atomclass);
+            }
             break;
 
           default:
@@ -1755,7 +1776,7 @@ namespace OpenBabel {
 
     if (charge) {
       atom->SetFormalCharge(charge);
-      if (abs(charge) > 10 || charge > element) { // if the charge is +/- 10 or more than the number of electrons
+      if (abs(charge) > 10 || (element && charge > element)) { // if the charge is +/- 10 or more than the number of electrons
         errorMsg << "Atom " << atom->GetIdx() << " had an unrealistic charge of " << charge 
                  << "." << endl;
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
@@ -2002,6 +2023,11 @@ namespace OpenBabel {
     int upDown, bondOrder;
     for (bond = _rclose.begin(); bond != _rclose.end(); ++bond) {
       if (bond->digit == digit) {
+        // Check for self-bonding, e.g. C11
+        if (bond->prev == _prev) {
+          obErrorLog.ThrowError(__FUNCTION__, "Invalid SMILES: Ring closures imply atom bonded to itself.", obWarning);
+          return false;
+        }
         upDown = (_updown > bond->updown) ? _updown : bond->updown;
         bondOrder = (_order > bond->order) ? _order : bond->order;
         // Check if this ring closure bond may be aromatic and set order accordingly
@@ -2037,21 +2063,22 @@ namespace OpenBabel {
         ChiralSearch = _tetrahedralMap.find(mol.GetAtom(bond->prev));
         if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL) {
           int insertpos = bond->numConnections - 1;
-          if (insertpos < 0) {
+          switch(insertpos) {
+          case -1:
             if (ChiralSearch->second->from != OBStereo::NoRef)
               obErrorLog.ThrowError(__FUNCTION__, "Warning: Overwriting previous from reference id.", obWarning);
-
             (ChiralSearch->second)->from = mol.GetAtom(_prev)->GetId();
-            // cerr << "Adding " << mol.GetAtom(_prev)->GetId() << " at Config.from to " << ChiralSearch->second << endl;
-          } else {
+            break;
+          case 0: case 1: case 2:
             if (ChiralSearch->second->refs[insertpos] != OBStereo::NoRef)
               obErrorLog.ThrowError(__FUNCTION__, "Warning: Overwriting previously set reference id.", obWarning);
-
             (ChiralSearch->second)->refs[insertpos] = mol.GetAtom(_prev)->GetId();
-            // cerr << "Adding " << mol.GetAtom(_prev)->GetId() << " at "
-            //     << insertpos << " to " << ChiralSearch->second << endl;
+            break;
+          default:
+            obErrorLog.ThrowError(__FUNCTION__, "Warning: Tetrahedral stereo specified for atom with more than 4 connections.", obWarning);
+            break;
           }
-       }
+        }
 
         //CM ensure neither atoms in ring closure is a radical centre
         OBAtom* patom = mol.GetAtom(_prev);
@@ -2219,12 +2246,13 @@ namespace OpenBabel {
   {
     bool isomeric;
     bool kekulesmi;
+    bool showatomclass;
     bool showexplicitH;
     bool smarts;
     const char* ordering; // This is a pointer to the string in the original map
-    OutOptions(bool _isomeric, bool _kekulesmi, bool _showexplicitH, bool _smarts,
+    OutOptions(bool _isomeric, bool _kekulesmi, bool _showatomclass, bool _showexplicitH, bool _smarts,
                const char* _ordering):
-      isomeric(_isomeric), kekulesmi(_kekulesmi), showexplicitH(_showexplicitH),
+      isomeric(_isomeric), kekulesmi(_kekulesmi), showatomclass(_showatomclass), showexplicitH(_showexplicitH),
       smarts(_smarts),
       ordering(_ordering)
       {}
@@ -2248,7 +2276,6 @@ namespace OpenBabel {
     OBMol* _pmol;
     OBStereoFacade *_stereoFacade;
     OBConversion* _pconv;
-    OBAtomClassData* _pac;
 
     OBAtom* _endatom;
     OBAtom* _startatom;
@@ -2320,7 +2347,6 @@ namespace OpenBabel {
     _uatoms.Clear();
     _ubonds.Clear();
     _vopen.clear();
-    _pac = NULL;
 
     _pmol = pmol;
     _stereoFacade = new OBStereoFacade(_pmol); // needs to be destroyed in dtor
@@ -2601,7 +2627,7 @@ namespace OpenBabel {
     if (atom->GetAtomicNum() != OBElements::Hydrogen && !options.showexplicitH) {
       FOR_NBORS_OF_ATOM(nbr, atom) {
         if (nbr->GetAtomicNum() == OBElements::Hydrogen && (!options.isomeric || nbr->GetIsotope() == 0) && nbr->GetValence() == 1 &&
-          nbr->GetFormalCharge() == 0 && (!_pconv->IsOption("a") || _pac == NULL || !_pac->HasClass(nbr->GetIdx())))
+          nbr->GetFormalCharge() == 0 && (!options.showatomclass || !nbr->GetData("Atom Class")))
           numExplicitHsToSuppress++;
       }
     }
@@ -2616,19 +2642,25 @@ namespace OpenBabel {
     else {
       numImplicitHs = atom->GetImplicitHCount() + numExplicitHsToSuppress;
       if (!bracketElement) {
-        int bosum = atom->BOSum() - numExplicitHsToSuppress;
-        unsigned int implicitValence = SmilesValence(element, bosum, false);
-        unsigned int defaultNumImplicitHs = implicitValence - bosum;
-        if (implicitValence == 0 // hypervalent
-           ||  numImplicitHs != defaultNumImplicitHs // undervalent
-           || (!options.kekulesmi && element != 6 && atom->IsAromatic() && numImplicitHs != 0) ) // aromatic nitrogen/phosphorus
-          bracketElement = true;
+        if (element == 0) { // asterisk is always hypervalent but we don't bracket it unless has Hs
+          if (numImplicitHs > 0)
+            bracketElement = true;
+        }
+        else {
+          int bosum = atom->BOSum() - numExplicitHsToSuppress;
+          unsigned int implicitValence = SmilesValence(element, bosum, false);
+          unsigned int defaultNumImplicitHs = implicitValence - bosum;
+          if (implicitValence == 0 // hypervalent
+             ||  numImplicitHs != defaultNumImplicitHs // undervalent
+             || (!options.kekulesmi && element != 6 && atom->IsAromatic() && numImplicitHs != 0) ) // aromatic nitrogen/phosphorus
+            bracketElement = true;
+        }
       }
     }
 
     if (atom->GetFormalCharge() != 0 // charged elements
       || (options.isomeric && atom->GetIsotope()) // isotopes
-      || (_pac && _pac->HasClass(atom->GetIdx())) ) // If the molecule has Atom Class data and -xa option set and atom has data
+      || (options.showatomclass && atom->HasData("Atom Class")) ) // If the molecule has Atom Class data and -xa option set and atom has data
       bracketElement = true;
 
     const char* stereo = (const char*)0;
@@ -2773,13 +2805,19 @@ namespace OpenBabel {
     }
 
     //atom class e.g. [C:2]
-    if (_pac) {
-      unsigned int ac = _pac->GetClass(atom->GetIdx());
-      if (ac != 0) {
-        buffer += ':';
-        char tchar[10];
-        snprintf(tchar, 10, "%d", ac);
-        buffer += tchar;
+    if (options.showatomclass) {
+      OBGenericData *data = atom->GetData("Atom Class");
+      if (data) {
+        OBPairInteger* acdata = dynamic_cast<OBPairInteger*>(data); // Could replace with C-style cast if willing to live dangerously
+        if (acdata) {
+          int ac = acdata->GetGenericValue();
+          if (ac >= 0) { // Allow 0, why not?
+            buffer += ':';
+            char tchar[12]; // maxint has 10 digits
+            snprintf(tchar, 12, "%d", ac);
+            buffer += tchar;
+          }
+        }
       }
     }
 
@@ -3710,10 +3748,6 @@ namespace OpenBabel {
     symmetry_classes.reserve(mol.NumAtoms());
     canonical_order.reserve(mol.NumAtoms());
 
-    //Pointer to Atom Class data set if -xa option and the molecule has any; NULL otherwise.
-    if(_pconv->IsOption("a"))
-      _pac = static_cast<OBAtomClassData*>(mol.GetData("Atom Class"));
-
     // Remember the desired endatom, if specified
     const char* pp = _pconv->IsOption("l");
     unsigned int atom_idx  = pp ? atoi(pp) : 0;
@@ -3928,6 +3962,7 @@ namespace OpenBabel {
     bool canonical = pConv->IsOption("c") != NULL;
 
     OutOptions options(!pConv->IsOption("i"), pConv->IsOption("k"),
+      pConv->IsOption("a"),
       pConv->IsOption("h"), pConv->IsOption("s"),
       pConv->IsOption("o"));
 
@@ -4175,6 +4210,7 @@ namespace OpenBabel {
 
     std::string buffer;
     OutOptions options(!pConv->IsOption("i"), pConv->IsOption("k"),
+      pConv->IsOption("a"),
       pConv->IsOption("h"), pConv->IsOption("s"),
       pConv->IsOption("o"));
     OBMol2Cansmi m2s(options);

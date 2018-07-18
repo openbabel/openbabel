@@ -46,7 +46,6 @@
 #include <openbabel/data.h>
 #include <openbabel/parsmart.h>
 #include <openbabel/alias.h>
-#include <openbabel/atomclass.h>
 
 #include <openbabel/kinetics.h>
 #include <openbabel/rotor.h>
@@ -65,6 +64,21 @@
 #include <openbabel/stereo/squareplanar.h>
 #include <openbabel/stereo/bindings.h>
 %}
+
+// Set and reset dlopenflags so that plugin loading works fine for "import _openbabel"
+%pythonbegin %{
+import sys
+if sys.platform.find("linux") != -1:
+    dlflags = sys.getdlopenflags()
+    import ctypes
+    sys.setdlopenflags(dlflags | ctypes.RTLD_GLOBAL)
+%}
+%pythoncode %{
+if sys.platform.find("linux") != -1:
+    sys.setdlopenflags(dlflags)
+%}
+
+
 // Ignore methods that require std::vector of OBAtom.
 %ignore OpenBabel::OBMol::FindChildren(std::vector< OBAtom * > &, OBAtom *, OBAtom *);
 %ignore OpenBabel::OBResidue::GetAtoms;
@@ -93,7 +107,6 @@ namespace std {
 %feature("ignore") vector< vector<T> >::back;
 %feature("ignore") vector< vector<T> >::begin;
 %feature("ignore") vector< vector<T> >::capacity;
-%feature("ignore") vector< vector<T> >::clear;
 %feature("ignore") vector< vector<T> >::empty;
 %feature("ignore") vector< vector<T> >::end;
 %feature("ignore") vector< vector<T> >::erase;
@@ -118,7 +131,6 @@ namespace std {
 %feature("ignore") vector<T>::back;
 %feature("ignore") vector<T>::begin;
 %feature("ignore") vector<T>::capacity;
-%feature("ignore") vector<T>::clear;
 %feature("ignore") vector<T>::empty;
 %feature("ignore") vector<T>::end;
 %feature("ignore") vector<T>::erase;
@@ -143,7 +155,6 @@ namespace std {
 %feature("ignore") vector< pair<T1, T2> >::back;
 %feature("ignore") vector< pair<T1, T2> >::begin;
 %feature("ignore") vector< pair<T1, T2> >::capacity;
-%feature("ignore") vector< pair<T1, T2> >::clear;
 %feature("ignore") vector< pair<T1, T2> >::empty;
 %feature("ignore") vector< pair<T1, T2> >::end;
 %feature("ignore") vector< pair<T1, T2> >::erase;
@@ -196,7 +207,6 @@ OpenBabel::AliasData *toAliasData(OpenBabel::OBGenericData *data) {
 }
 %}
 CAST_GENERICDATA_TO(AngleData)
-CAST_GENERICDATA_TO(AtomClassData)
 CAST_GENERICDATA_TO(ChiralData)
 CAST_GENERICDATA_TO(CommentData)
 CAST_GENERICDATA_TO(ConformerData)
@@ -205,6 +215,7 @@ CAST_GENERICDATA_TO(GridData)
 CAST_GENERICDATA_TO(MatrixData)
 CAST_GENERICDATA_TO(NasaThermoData)
 CAST_GENERICDATA_TO(PairData)
+CAST_GENERICDATA_TO(PairInteger)
 // CAST_GENERICDATA_TO(PairTemplate)
 CAST_GENERICDATA_TO(RateData)
 CAST_GENERICDATA_TO(RotamerList)
@@ -237,12 +248,15 @@ CAST_GENERICDATA_TO(SquarePlanarStereo)
 %include <openbabel/math/matrix3x3.h>
 %include <openbabel/math/transform3d.h>
 %include <openbabel/math/spacegroup.h>
+%warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
+%include <openbabel/bitvec.h>
 
 // CloneData should be used instead of the following method
 %ignore OpenBabel::OBBase::SetData;
 %include <openbabel/base.h>
 
 %include <openbabel/generic.h>
+%template(obpairtemplateint) OpenBabel::OBPairTemplate<int>;
 %include <openbabel/griddata.h>
 
 %include <openbabel/chains.h>
@@ -295,7 +309,6 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
 %include <openbabel/alias.h>
-%include <openbabel/atomclass.h>
 %ignore OpenBabel::FptIndex;
 %include <openbabel/fingerprint.h>
 %ignore OpenBabel::OBDescriptor::LessThan;
@@ -326,8 +339,6 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 
 %include <openbabel/stereo/stereo.h>
 
-%warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
-%include <openbabel/bitvec.h>
 // Ignore shadowed method
 %ignore OpenBabel::OBRotor::GetRotAtoms() const;
 %include <openbabel/rotor.h>

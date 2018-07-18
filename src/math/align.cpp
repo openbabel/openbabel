@@ -397,7 +397,7 @@ namespace OpenBabel
       VectorsToMatrix(&target_coords, mtarget);
 
       // Subtract the centroid of the non-H atoms
-      for (vector<vector3>::size_type i=0; i<mtarget.cols(); ++i)
+      for (unsigned int i=0; i<mtarget.cols(); ++i)
         mtarget.col(i) -= _target_centr;
 
       // Rotate

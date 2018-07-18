@@ -140,7 +140,7 @@ namespace OpenBabel
   }
 
   SpaceGroup::SpaceGroup():
-    m_HM(""),m_Hall(""),m_id(0),m_OriginAlternative(0), HEXAGONAL_ORIGIN(10)
+    HEXAGONAL_ORIGIN(10), m_HM(""),m_Hall(""),m_id(0),m_OriginAlternative(0)
   {
   }
 

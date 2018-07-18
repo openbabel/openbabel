@@ -152,7 +152,6 @@ namespace OpenBabel
 #define BE_DOWNUNSPEC   16
 
 
-  static int GetVectorBinding();
   static int CreateAtom(Pattern*,AtomExpr*,int,int vb=0);
 
   const int SmartsImplicitRef = -9999; // Used as a placeholder when recording atom nbrs for chiral atoms
@@ -292,11 +291,6 @@ namespace OpenBabel
   {
     return flag ? BuildAtomLeaf(AE_AROMELEM,elem)
                 : BuildAtomLeaf(AE_ALIPHELEM,elem);
-  }
-
-  static int IsInvalidAtom( AtomExpr *expr )
-  {
-    return !expr || expr->type==AE_FALSE;
   }
 
   /*================================*/
@@ -1490,7 +1484,7 @@ namespace OpenBabel
 
                 CreateBond(pat,bexpr,prev,stat->closure[index]);
                 pat->atom[prev].nbrs.push_back(stat->closure[index]);
-                for (int nbr_idx=0; nbr_idx < pat->atom[stat->closure[index]].nbrs.size(); ++nbr_idx) {
+                for (unsigned int nbr_idx=0; nbr_idx < pat->atom[stat->closure[index]].nbrs.size(); ++nbr_idx) {
                   if (pat->atom[stat->closure[index]].nbrs[nbr_idx] == -index)
                     pat->atom[stat->closure[index]].nbrs[nbr_idx] = prev;
                 }
@@ -1712,45 +1706,6 @@ namespace OpenBabel
 
     return ParseSMARTSString(ptr);
   }
-
-  /*================================*/
-  /*  SMARTS Pattern simplification */
-  /*================================*/
-
-  static AtomExpr *NotAtomExpr( AtomExpr *expr )
-  {
-    AtomExpr *result;
-
-    switch (expr->type)
-      {
-      case AE_TRUE:
-        expr->type = AE_FALSE;
-        return expr;
-      case AE_FALSE:
-        expr->type = AE_TRUE;
-        return expr;
-      case AE_AROMATIC:
-        expr->type = AE_ALIPHATIC;
-        return expr;
-      case AE_ALIPHATIC:
-        expr->type = AE_AROMATIC;
-        return expr;
-      case AE_CYCLIC:
-        expr->type = AE_ACYCLIC;
-        return expr;
-      case AE_ACYCLIC:
-        expr->type = AE_CYCLIC;
-        return expr;
-      
-      case AE_NOT:
-        result = expr->mon.arg;
-        expr->mon.arg = (AtomExpr*)0;
-        FreeAtomExpr(expr);
-        return result;
-      }
-    return BuildAtomNot(expr);
-  }
-
 
   //**********************************
   //********Pattern Matching**********

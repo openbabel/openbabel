@@ -192,7 +192,6 @@
 %enddef
 DISABLE_DOWNCAST(AliasData);
 DISABLE_DOWNCAST(OBAngleData);
-DISABLE_DOWNCAST(OBAtomClassData);
 DISABLE_DOWNCAST(OBChiralData);
 DISABLE_DOWNCAST(OBCommentData);
 DISABLE_DOWNCAST(OBConformerData);
@@ -661,7 +660,6 @@ using System.Runtime.InteropServices;
 #include <openbabel/data.h>
 #include <openbabel/parsmart.h>
 #include <openbabel/alias.h>
-#include <openbabel/atomclass.h>
 
 #include <openbabel/kinetics.h>
 //OBReaction can't be mapped properly
@@ -753,6 +751,8 @@ using System.Runtime.InteropServices;
 %include <openbabel/math/transform3d.h>
 %warnfilter(516) OpenBabel::SpaceGroup; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/math/spacegroup.h>
+%warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
+%include <openbabel/bitvec.h>
 
 // CloneData should be used instead of the following method
 %ignore OpenBabel::OBBase::SetData;
@@ -817,7 +817,6 @@ using System.Runtime.InteropServices;
 
 //why is AliasData not supported?
 CAST_GENERICDATA_TO(AngleData);
-CAST_GENERICDATA_TO(AtomClassData);
 CAST_GENERICDATA_TO(ChiralData);
 CAST_GENERICDATA_TO(CommentData);
 CAST_GENERICDATA_TO(ConformerData);
@@ -877,7 +876,6 @@ namespace std { class stringbuf {}; }
 %include <openbabel/parsmart.h>
 %warnfilter(516) OpenBabel::AliasData; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/alias.h>
-%include <openbabel/atomclass.h>
 %ignore OpenBabel::FptIndex;
 %include <openbabel/fingerprint.h>
 %include <openbabel/descriptor.h>
@@ -890,9 +888,6 @@ namespace std { class stringbuf {}; }
 
 %include <openbabel/builder.h>
 %include <openbabel/op.h>
-
-%warnfilter(503) OpenBabel::OBBitVec; // Not wrapping any of the overloaded operators
-%include <openbabel/bitvec.h>
 
 %include <openbabel/rotor.h>
 %ignore OpenBabel::Swab;

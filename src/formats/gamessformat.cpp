@@ -474,7 +474,10 @@ namespace OpenBabel {
         tokenize(vs, buffer);
         // atom number, atomic symbol, mulliken pop, charge
         while (vs.size() >= 4) {
-          atom = mol.GetAtom(atoi(vs[0].c_str()));
+          int atomNb = atoi(vs[0].c_str());
+          if (!atomNb)
+            break;
+          atom = mol.GetAtom(atomNb);
           atom->SetPartialCharge(atof(vs[3].c_str()));
 
           if (!ifs.getline(buffer, BUFF_SIZE))
@@ -545,14 +548,12 @@ namespace OpenBabel {
 
         ifs.getline(buffer, BUFF_SIZE);
         tokenize(vs, buffer);
-        unsigned int modeCount = vs.size() - 3;
+        int modeCount = vs.size() - 3;
         double massNormalization;
         vector<double> x, y, z;
         while (modeCount >= 1) {
           // 1/sqrt(atomic mass)
           atom = mol.GetAtom(atoi(vs[0].c_str()));
-          if (!atom)
-            break; // something is very wrong
           massNormalization = 1 / sqrt( atom->GetAtomicMass() );
 
           x.clear();

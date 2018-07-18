@@ -22,7 +22,6 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/rotamer.h>
 #include <openbabel/phmodel.h>
-#include <openbabel/atomclass.h>
 #include <openbabel/bondtyper.h>
 #include <openbabel/builder.h>
 #include <openbabel/kekulize.h>
@@ -1179,6 +1178,8 @@ namespace OpenBabel
   //!  It is calculated from the atomic spin multiplicity information
   //!  assuming the high-spin case (i.e. it simply sums the number of unpaired
   //!  electrons assuming no further pairing of spins.
+  //!  if it fails (gives singlet for odd number of electronic systems),
+  //!  then assign wrt parity of the total electrons.
   unsigned int OBMol::GetTotalSpinMultiplicity()
   {
     if (HasFlag(OB_TSPIN_MOL))
@@ -1192,13 +1193,17 @@ namespace OpenBabel
         OBAtom *atom;
         vector<OBAtom*>::iterator i;
         unsigned int unpaired_electrons = 0;
-
+        int chg = GetTotalCharge();
         for (atom = BeginAtom(i);atom;atom = NextAtom(i))
           {
             if (atom->GetSpinMultiplicity() > 1)
               unpaired_electrons += (atom->GetSpinMultiplicity() - 1);
+           chg += atom->GetAtomicNum();
           }
-        return (unpaired_electrons + 1);
+        if (chg % 2 != unpaired_electrons %2)
+          return ((abs(chg) % 2) + 1);
+        else
+          return (unpaired_electrons + 1);
       }
   }
 
@@ -1209,7 +1214,7 @@ namespace OpenBabel
   //All OBGenericData incl OBRotameterList is copied, CM 2006
   //OBChiralData for all atoms copied, TV 2008
   //Zeros all flags except OB_TCHARGE_MOL, OB_PCHARGE_MOL, OB_HYBRID_MOL
-  //OB_TSPIN_MOL and OB_PATTERN_STRUCTURE which are copied
+  //OB_TSPIN_MOL, OB_AROMATIC_MOL and OB_PATTERN_STRUCTURE which are copied
   {
     if (this == &source)
       return *this;
@@ -1251,6 +1256,9 @@ namespace OpenBabel
       this->SetFlag(OB_PCHARGE_MOL);
     if (src.HasFlag(OB_HYBRID_MOL))
       this->SetFlag(OB_HYBRID_MOL);
+    if (src.HasFlag(OB_AROMATIC_MOL))
+      this->SetFlag(OB_AROMATIC_MOL);
+
 
     //this->_flags = src.GetFlags(); //Copy all flags. Perhaps too drastic a change
 
@@ -1407,21 +1415,6 @@ namespace OpenBabel
       }
     }
 
-    // Copy the atom maps
-    OBAtomClassData* src_am = (OBAtomClassData*) src.GetData("Atom Class");
-    if (src_am != (OBAtomClassData*)0) {
-      OBAtomClassData* dst_am = (OBAtomClassData*) GetData("Atom Class");
-      if (dst_am == (OBAtomClassData*)0) {
-        dst_am = new OBAtomClassData();
-        SetData(dst_am);
-      }
-      FOR_ATOMS_OF_MOL(atom, src) {
-        unsigned int idx = atom->GetIdx();
-        if (src_am->HasClass(idx))
-          dst_am->Add(idx + prevatms, src_am->GetClass(idx));
-      }
-    }
-    
     // TODO: This is actually a weird situation (e.g., adding a 2D mol to 3D one)
     // We should do something to update the src coordinates if they're not 3D
     if(src.GetDimension()<_dimension)
@@ -1524,13 +1517,7 @@ namespace OpenBabel
       return;
 
     if (nukePerceivedData)
-      {
-        _flags = 0;
-        OBBond *bond;
-        vector<OBBond*>::iterator k;
-        for (bond = BeginBond(k);bond;bond = NextBond(k))
-          bond->SetInRing(false);
-      }
+      _flags = _flags & OB_AROMATIC_MOL; // wipe all but whether it has aromaticity perceived
     _c = NULL;
 
     if (Empty())
@@ -1828,7 +1815,7 @@ namespace OpenBabel
     return(true);
   }
 
-  bool OBMol::StripSalts(int threshold)
+  bool OBMol::StripSalts(unsigned int threshold)
   {
     vector<vector<int> > cfl;
     vector<vector<int> >::iterator i,max;
@@ -1884,10 +1871,10 @@ namespace OpenBabel
   }
 
   // Convenience function used by the DeleteHydrogens methods
-  static bool IsSuppressibleHydrogen(OBAtom *atom, OBAtomClassData *pac)
+  static bool IsSuppressibleHydrogen(OBAtom *atom)
   {
     if (atom->GetIsotope() == 0 && atom->GetHvyValence() == 1 && atom->GetFormalCharge() == 0
-        && (pac == NULL || !pac->HasClass(atom->GetIdx())))
+        && !atom->GetData("Atom Class"))
       return true;
     else
       return false;
@@ -1903,12 +1890,8 @@ namespace OpenBabel
                           "Ran OpenBabel::DeleteHydrogens -- polar",
                           obAuditMsg);
 
-    OBAtomClassData *pac = NULL;
-    if (this->HasData("Atom Class"))
-      pac = static_cast<OBAtomClassData*>(this->GetData("Atom Class"));
-
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if (atom->IsPolarHydrogen() && IsSuppressibleHydrogen(atom, pac))
+      if (atom->IsPolarHydrogen() && IsSuppressibleHydrogen(atom))
         delatoms.push_back(atom);
 
     if (delatoms.empty())
@@ -1938,12 +1921,8 @@ namespace OpenBabel
                           obAuditMsg);
 
 
-    OBAtomClassData *pac = NULL;
-    if (this->HasData("Atom Class"))
-      pac = static_cast<OBAtomClassData*>(this->GetData("Atom Class"));
-
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if (atom->IsNonPolarHydrogen() && IsSuppressibleHydrogen(atom, pac))
+      if (atom->IsNonPolarHydrogen() && IsSuppressibleHydrogen(atom))
         delatoms.push_back(atom);
 
     if (delatoms.empty())
@@ -1982,12 +1961,8 @@ namespace OpenBabel
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::DeleteHydrogens", obAuditMsg);
 
-    OBAtomClassData *pac = NULL;
-    if (this->HasData("Atom Class"))
-      pac = static_cast<OBAtomClassData*>(this->GetData("Atom Class"));
-
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if (atom->GetAtomicNum() == OBElements::Hydrogen && IsSuppressibleHydrogen(atom, pac))
+      if (atom->GetAtomicNum() == OBElements::Hydrogen && IsSuppressibleHydrogen(atom))
         delatoms.push_back(atom);
 
     UnsetHydrogensAdded();
@@ -2031,12 +2006,8 @@ namespace OpenBabel
     vector<OBBond*>::iterator k;
     vector<OBAtom*> delatoms;
 
-    OBAtomClassData *pac = NULL;
-    if (this->HasData("Atom Class"))
-      pac = static_cast<OBAtomClassData*>(this->GetData("Atom Class"));
-
     for (nbr = atom->BeginNbrAtom(k);nbr;nbr = atom->NextNbrAtom(k))
-      if (nbr->GetAtomicNum() == OBElements::Hydrogen && IsSuppressibleHydrogen(atom, pac))
+      if (nbr->GetAtomicNum() == OBElements::Hydrogen && IsSuppressibleHydrogen(atom))
         delatoms.push_back(nbr);
 
     if (delatoms.empty())
@@ -2051,26 +2022,6 @@ namespace OpenBabel
     UnsetSSSRPerceived();
     UnsetLSSRPerceived();
     return(true);
-  }
-
-  static void UpdateAtomMapsForAtomDeletion(OBMol* mol, unsigned int atomidx)
-  {
-    OBAtomClassData *pac = (OBAtomClassData*)mol->GetData("Atom Class");
-    if (pac != (OBAtomClassData*) 0) {
-      // Handle the deleted atom first
-      if (pac->HasClass(atomidx))
-        pac->Add(atomidx, 0);
-      // Now handle all of the atoms with indices >= deleted atom
-      FOR_ATOMS_OF_MOL(matom, mol) {
-        unsigned int midx = matom->GetIdx();
-        if (midx < atomidx) continue; // these ones are unaffected
-        if (pac->HasClass(midx+1)) {
-          unsigned int val = pac->GetClass(midx+1);
-          pac->Add(midx+1, 0); // wipe from old idx
-          pac->Add(midx, val); // assign map value to new idx
-        }
-      }
-    }
   }
 
   bool OBMol::DeleteHydrogen(OBAtom *atom)
@@ -2123,9 +2074,6 @@ namespace OpenBabel
     UnsetHydrogensAdded();
 
     DestroyAtom(atom);
-
-    // If the molecule has atom maps, these may need to be updated
-    UpdateAtomMapsForAtomDeletion(this, atomidx);
 
     UnsetSSSRPerceived();
     UnsetLSSRPerceived();
@@ -2448,7 +2396,7 @@ namespace OpenBabel
   }
 
   // Used by DeleteAtom below. Code based on StereoRefToImplicit
-  const void DeleteStereoOnAtom(OBMol& mol, OBStereo::Ref atomId)
+  static void DeleteStereoOnAtom(OBMol& mol, OBStereo::Ref atomId)
   {
     std::vector<OBGenericData*> vdata = mol.GetAllData(OBGenericDataType::StereoData);
     for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data) {
@@ -2512,9 +2460,6 @@ namespace OpenBabel
     // Delete any stereo objects involving this atom
     OBStereo::Ref id = atom->GetId();
     DeleteStereoOnAtom(*this, id);
-
-    // If the molecule has atom maps, these may need to be updated
-    UpdateAtomMapsForAtomDeletion(this, atom->GetIdx());
 
     if (destroyAtom)
       DestroyAtom(atom);
@@ -3732,9 +3677,9 @@ namespace OpenBabel
 
   }
 
-  void OBMol::SetConformer(int i)
+  void OBMol::SetConformer(unsigned int i)
   {
-    if (i >= 0 && i < _vconf.size())
+    if (i < _vconf.size())
       _c = _vconf[i];
   }
 
@@ -3838,7 +3783,7 @@ namespace OpenBabel
         OBBondIterator bi;
         for (bestbond = bond = patom->BeginBond(bi); bond; bond = patom->NextBond(bi))
         {
-          int bo = bond->GetBO();
+          unsigned int bo = bond->GetBO();
           if(bo>=2 && bo<=4)
           {
             bool het = IsNotCorH(bond->GetNbrAtom(patom));
@@ -3909,7 +3854,7 @@ namespace OpenBabel
         int bi = 0;
         if (bonds.size() > 1) {
           vector<int> scores(bonds.size());
-          for (int n = 0; n < bonds.size(); n++) {
+          for (unsigned int n = 0; n < bonds.size(); n++) {
             OBAtom *bgn = bonds[n]->GetBeginAtom();
             OBAtom *end = bonds[n]->GetEndAtom();
             int score = 0;
@@ -3931,7 +3876,7 @@ namespace OpenBabel
             }
             scores[n] = score;
           }
-          for (int n = 1; n < scores.size(); n++) {
+          for (unsigned int n = 1; n < scores.size(); n++) {
             if (scores[n] < scores[bi]) {
               bi = n;
             }
@@ -4037,16 +3982,140 @@ namespace OpenBabel
     return result;
   }
 
-  bool OBMol::GetNextFragment( OBMolAtomDFSIter& iter, OBMol& newmol ) {
-    if( ! iter ) return false;
+  //! \brief Copy part of a molecule to another molecule
+  /**
+  This function copies a substructure of a molecule to another molecule. The key
+  information needed is an OBBitVec indicating which atoms to include and (optionally)
+  an OBBitVec indicating which bonds to exclude. By default, only bonds joining
+  included atoms are copied.
+
+  When an atom is copied, but not all of its bonds are, by default hydrogen counts are
+  adjusted to account for the missing bonds. That is, given the SMILES "CF", if we
+  copy the two atoms but exclude the bond, we will end up with "C.F". This behavior
+  can be changed by specifiying a value other than 1 for the \p correctvalence parameter.
+  A value of 0 will yield "[C].[F]" while 2 will yield "C*.F*" (see \p correctvalence below
+  for more information).
+
+  Aromaticity is preserved as present in the original OBMol. If this is not desired,
+  the user should call OBMol::UnsetAromaticPerceived() on the new OBMol.
+
+  Stereochemistry is only preserved if the corresponding elements are wholly present in
+  the substructure. For example, all four atoms and bonds of a tetrahedral stereocenter
+  must be copied.
+
+  Residue information is preserved if the original OBMol is marked as having
+  its residues perceived. If this is not desired, either call
+  OBMol::SetChainsPerceived(false) in advance on the original OBMol to avoid copying
+  the residues (and then reset it afterwards), or else call it on the new OBMol so
+  that residue information will be reperceived (when requested).
+
+  Here is an example of using this method to copy ring systems to a new molecule.
+  Given the molecule represented by the SMILES string, "FC1CC1c2ccccc2I", we will
+  end up with a new molecule represented by the SMILES string, "C1CC1.c2ccccc2".
+  \code{.cpp}
+  OBBitVec atoms(mol.NumAtoms() + 1); // the maximum size needed
+  FOR_ATOMS_OF_MOL(atom, mol) {
+    if(atom->IsInRing())
+      atoms.SetBitOn(atom->Idx());
+  }
+  OBBitVec excludebonds(mol.NumBonds()); // the maximum size needed
+  FOR_BONDS_OF_MOL(bond, mol) {
+    if(!bond->IsInRing())
+      excludebonds.SetBitOn(bond->Idx());
+  }
+  OBMol newmol;
+  mol.CopySubstructure(&newmol, &atoms, &excludebonds);
+  \endcode
+
+  When used from Python, note that "None" may be used to specify an empty value for
+  the \p excludebonds parameter.
+
+  \remark Some alternatives to using this function, which may be preferred in some
+          instances due to efficiency or convenience are:
+          -# Copying the entire OBMol, and then deleting the unwanted parts
+          -# Modifiying the original OBMol, and then restoring it
+          -# Using the SMILES writer option -xf to specify fragment atom idxs
+
+  \return A boolean indicating success or failure. Currently failure is only reported
+          if one of the specified atoms is not present, or \p atoms is a NULL
+          pointer.
+
+  \param newmol   The molecule to which to add the substructure. Note that atoms are
+                  appended to this molecule.
+  \param atoms    An OBBitVec, indexed by atom Idx, specifying which atoms to copy
+  \param excludebonds  An OBBitVec, indexed by bond Idx, specifying a list of bonds
+                       to exclude. By default, all bonds between the specified atoms are
+                       included - this parameter overrides that.
+  \param correctvalence  A value of 0, 1 (default) or 2 that indicates how atoms with missing
+                         bonds are handled:
+                        0 - Leave the implicit hydrogen count unchanged;
+                        1 - Adjust the implicit hydrogen count to correct for
+                            the missing bonds;
+                        2 - Replace the missing bonds with bonds to dummy atoms
+  \param atomorder Record the Idxs of the original atoms. That is, the first element
+                   in this vector will be the Idx of the atom in the original OBMol
+                   that corresponds to the first atom in the new OBMol. Note that
+                   the information is appended to this vector.
+  \param bondorder Record the Idxs of the original bonds. See \p atomorder above.
+
+  **/
+
+  bool OBMol::CopySubstructure(OBMol& newmol, OBBitVec *atoms, OBBitVec *excludebonds, unsigned int correctvalence,
+                               std::vector<unsigned int> *atomorder, std::vector<unsigned int> *bondorder)
+  {
+    if (!atoms)
+      return false;
+
+    bool record_atomorder = atomorder != (std::vector<unsigned int>*)0;
+    bool record_bondorder = bondorder != (std::vector<unsigned int>*)0;
+    bool bonds_specified = excludebonds != (OBBitVec*)0;
 
     newmol.SetDimension(GetDimension());
+    // If the parent had aromaticity perceived, then retain that for the fragment
+    newmol.SetFlag(_flags & OB_AROMATIC_MOL);
+    // The fragment will preserve the "chains perceived" flag of the parent
+    newmol.SetFlag(_flags & OB_CHAINS_MOL);
+    // We will check for residues only if the parent has chains perceived already
+    bool checkresidues = HasChainsPerceived();
+
+    // Now add the atoms
     map<OBAtom*, OBAtom*> AtomMap;//key is from old mol; value from new mol
-    do { //for each atom in fragment
-      OBAtom* pnext = &*iter;
-      newmol.AddAtom(*pnext); //each subsequent atom with its bond
-      AtomMap[pnext] = newmol.GetAtom(newmol.NumAtoms());
-    }while((iter++).next());
+    for (int bit = atoms->FirstBit(); bit != atoms->EndBit(); bit = atoms->NextBit(bit)) {
+      OBAtom* atom = this->GetAtom(bit);
+      if (!atom)
+        return false;
+      newmol.AddAtom(*atom); // each subsequent atom
+      if (record_atomorder)
+        atomorder->push_back(bit);
+      AtomMap[&*atom] = newmol.GetAtom(newmol.NumAtoms());
+    }
+
+    //Add the residues
+    if (checkresidues) {
+      map<OBResidue*, OBResidue*> ResidueMap; // map from old->new
+      for (int bit = atoms->FirstBit(); bit != atoms->EndBit(); bit = atoms->NextBit(bit)) {
+        OBAtom* atom = this->GetAtom(bit);
+        OBResidue* res = atom->GetResidue();
+        if (!res) continue;
+        map<OBResidue*, OBResidue*>::iterator mit = ResidueMap.find(res);
+        OBResidue *newres;
+        if (mit == ResidueMap.end()) {
+          newres = newmol.NewResidue();
+          newres->SetName(res->GetName());
+          newres->SetNum(res->GetNumString());
+          newres->SetChain(res->GetChain());
+          newres->SetChainNum(res->GetChainNum());
+          ResidueMap[res] = newres;
+        } else {
+          newres = mit->second;
+        }
+        OBAtom* newatom = AtomMap[&*atom];
+        newres->AddAtom(newatom);
+        newres->SetAtomID(newatom, res->GetAtomID(atom));
+        newres->SetHetAtom(newatom, res->IsHetAtom(atom));
+        newres->SetSerialNum(newatom, res->GetSerialNum(atom));
+      }
+    }
 
     // Update Stereo
     std::vector<OBGenericData*>::iterator data;
@@ -4054,8 +4123,41 @@ namespace OpenBabel
     for (data = stereoData.begin(); data != stereoData.end(); ++data) {
       if (static_cast<OBStereoBase*>(*data)->GetType() == OBStereo::CisTrans) {
         OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
+
+        // Check that the entirety of this cistrans cfg occurs in this substructure
         OBCisTransStereo::Config cfg = ct->GetConfig();
-        if (AtomMap.find(GetAtomById(cfg.begin)) == AtomMap.end()) // This stereodata does not refer to this fragment
+        OBAtom* begin = GetAtomById(cfg.begin);
+        if (AtomMap.find(begin) == AtomMap.end())
+          continue;
+        OBAtom* end = GetAtomById(cfg.end);
+        if (AtomMap.find(end) == AtomMap.end())
+          continue;
+        bool skip_cfg = false;
+        if (bonds_specified) {
+          FOR_BONDS_OF_ATOM(bond, begin) {
+            if (excludebonds->BitIsOn(bond->GetIdx())) {
+              skip_cfg = true;
+              break;
+            }
+          }
+          if (skip_cfg)
+            continue;
+          FOR_BONDS_OF_ATOM(bond, end) {
+            if (excludebonds->BitIsOn(bond->GetIdx())) {
+              skip_cfg = true;
+              break;
+            }
+          }
+          if (skip_cfg)
+            continue;
+        }
+        for (OBStereo::RefIter ri = cfg.refs.begin(); ri != cfg.refs.end(); ++ri) {
+          if (*ri != OBStereo::ImplicitRef && AtomMap.find(GetAtomById(*ri)) == AtomMap.end()) {
+            skip_cfg = true;
+            break;
+          }
+        }
+        if (skip_cfg)
           continue;
 
         OBCisTransStereo::Config newcfg;
@@ -4063,7 +4165,7 @@ namespace OpenBabel
         newcfg.begin = cfg.begin == OBStereo::ImplicitRef ? OBStereo::ImplicitRef : AtomMap[GetAtomById(cfg.begin)]->GetId();
         newcfg.end = cfg.end == OBStereo::ImplicitRef ? OBStereo::ImplicitRef : AtomMap[GetAtomById(cfg.end)]->GetId();
         OBStereo::Refs refs;
-        for(OBStereo::RefIter ri=cfg.refs.begin(); ri!=cfg.refs.end(); ++ri) {
+        for (OBStereo::RefIter ri = cfg.refs.begin(); ri != cfg.refs.end(); ++ri) {
           OBStereo::Ref ref = *ri == OBStereo::ImplicitRef ? OBStereo::ImplicitRef : AtomMap[GetAtomById(*ri)]->GetId();
           refs.push_back(ref);
         }
@@ -4076,15 +4178,40 @@ namespace OpenBabel
       else if (static_cast<OBStereoBase*>(*data)->GetType() == OBStereo::Tetrahedral) {
         OBTetrahedralStereo *tet = dynamic_cast<OBTetrahedralStereo*>(*data);
         OBTetrahedralStereo::Config cfg = tet->GetConfig();
-        if (AtomMap.find(GetAtomById(cfg.center)) == AtomMap.end()) // This stereodata does not refer to this fragment
+
+        // Check that the entirety of this tet cfg occurs in this substructure
+        OBAtom *center = GetAtomById(cfg.center);
+        std::map<OBAtom*, OBAtom*>::iterator centerit = AtomMap.find(center);
+        if (centerit == AtomMap.end())
+          continue;
+        if (cfg.from != OBStereo::ImplicitRef && AtomMap.find(GetAtomById(cfg.from)) == AtomMap.end())
+          continue;
+        bool skip_cfg = false;
+        if (bonds_specified) {
+          FOR_BONDS_OF_ATOM(bond, center) {
+            if (excludebonds->BitIsOn(bond->GetIdx())) {
+              skip_cfg = true;
+              break;
+            }
+          }
+          if (skip_cfg)
+            continue;
+        }
+        for (OBStereo::RefIter ri = cfg.refs.begin(); ri != cfg.refs.end(); ++ri) {
+          if (*ri != OBStereo::ImplicitRef && AtomMap.find(GetAtomById(*ri)) == AtomMap.end()) {
+            skip_cfg = true;
+            break;
+          }
+        }
+        if (skip_cfg)
           continue;
 
         OBTetrahedralStereo::Config newcfg;
         newcfg.specified = cfg.specified;
-        newcfg.center = AtomMap[GetAtomById(cfg.center)]->GetId();
+        newcfg.center = centerit->second->GetId();
         newcfg.from = cfg.from == OBStereo::ImplicitRef ? OBStereo::ImplicitRef : AtomMap[GetAtomById(cfg.from)]->GetId();
         OBStereo::Refs refs;
-        for(OBStereo::RefIter ri=cfg.refs.begin(); ri!=cfg.refs.end(); ++ri) {
+        for (OBStereo::RefIter ri = cfg.refs.begin(); ri != cfg.refs.end(); ++ri) {
           OBStereo::Ref ref = *ri == OBStereo::ImplicitRef ? OBStereo::ImplicitRef : AtomMap[GetAtomById(*ri)]->GetId();
           refs.push_back(ref);
         }
@@ -4093,19 +4220,95 @@ namespace OpenBabel
         OBTetrahedralStereo *newtet = new OBTetrahedralStereo(this);
         newtet->SetConfig(newcfg);
         newmol.SetData(newtet);
+      }
+    }
+
+    // Options:
+    // 1. Bonds that do not connect atoms in the subset are ignored
+    // 2. As 1. but implicit Hs are added to replace them
+    // 3. As 1. but asterisks are added to replace them
+    FOR_BONDS_OF_MOL(bond, this) {
+      bool skipping_bond = bonds_specified && excludebonds->BitIsOn(bond->GetIdx());
+      map<OBAtom*, OBAtom*>::iterator posB = AtomMap.find(bond->GetBeginAtom());
+      map<OBAtom*, OBAtom*>::iterator posE = AtomMap.find(bond->GetEndAtom());
+      if (posB == AtomMap.end() && posE == AtomMap.end())
+        continue;
+
+      if (posB == AtomMap.end() || posE == AtomMap.end() || skipping_bond) {
+        switch(correctvalence) {
+        case 1:
+          if (posB == AtomMap.end() || (skipping_bond && posE != AtomMap.end()))
+            posE->second->SetImplicitHCount(posE->second->GetImplicitHCount() + bond->GetBondOrder());
+          if (posE == AtomMap.end() || (skipping_bond && posB != AtomMap.end()))
+            posB->second->SetImplicitHCount(posB->second->GetImplicitHCount() + bond->GetBondOrder());
+          break;
+        case 2: {
+            OBAtom *atomB, *atomE;
+            if (skipping_bond) {
+              for(int N=0; N<2; ++N) {
+                if (N==0) {
+                  if (posB != AtomMap.end()) {
+                    atomB = posB->second;
+                    atomE = newmol.NewAtom();
+                    if (record_atomorder)
+                      atomorder->push_back(bond->GetEndAtomIdx());
+                  }
+                } else if (posE != AtomMap.end()) {
+                  atomE = posE->second;
+                  atomB = newmol.NewAtom();
+                  if (record_atomorder)
+                    atomorder->push_back(bond->GetBeginAtomIdx());
+                }
+                newmol.AddBond(atomB->GetIdx(), atomE->GetIdx(),
+                  bond->GetBondOrder(), bond->GetFlags());
+                if (record_bondorder)
+                  bondorder->push_back(bond->GetIdx());
+              }
+            }
+            else {
+              atomB = (posB == AtomMap.end()) ? newmol.NewAtom() : posB->second;
+              atomE = (posE == AtomMap.end()) ? newmol.NewAtom() : posE->second;
+              if (record_atomorder) {
+                if (posB == AtomMap.end())
+                  atomorder->push_back(bond->GetBeginAtomIdx());
+                else
+                  atomorder->push_back(bond->GetEndAtomIdx());
+              }
+              newmol.AddBond(atomB->GetIdx(), atomE->GetIdx(),
+                bond->GetBondOrder(), bond->GetFlags());
+              if (record_bondorder)
+                bondorder->push_back(bond->GetIdx());
+            }
+          }
+          break;
+        default:
+          break;
         }
+      }
+      else {
+        newmol.AddBond((posB->second)->GetIdx(), posE->second->GetIdx(),
+                       bond->GetBondOrder(), bond->GetFlags());
+        if (record_bondorder)
+          bondorder->push_back(bond->GetIdx());
+      }
     }
 
-    FOR_BONDS_OF_MOL(b, this) {
-      map<OBAtom*, OBAtom*>::iterator pos;
-      pos = AtomMap.find(b->GetBeginAtom());
-      if(pos!=AtomMap.end() && AtomMap[b->GetEndAtom()])
-        //if bond belongs to current fragment make a similar one in new molecule
-        newmol.AddBond((pos->second)->GetIdx(), AtomMap[b->GetEndAtom()]->GetIdx(),
-                       b->GetBO(), b->GetFlags());
-    }
+    return true;
+  }
 
-    return( true );
+  bool OBMol::GetNextFragment( OBMolAtomDFSIter& iter, OBMol& newmol ) {
+    if( ! iter ) return false;
+
+    // We want to keep the atoms in their original order rather than use
+    // the DFS order so just record the information first
+    OBBitVec infragment(this->NumAtoms()+1);
+    do { //for each atom in fragment
+      infragment.SetBitOn(iter->GetIdx());
+    } while ((iter++).next());
+
+    bool ok = CopySubstructure(newmol, &infragment);
+
+    return ok;
   }
 
   // Put the specified molecular charge on a single atom (which is expected for InChIFormat).

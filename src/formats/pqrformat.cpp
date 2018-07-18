@@ -97,7 +97,6 @@ namespace OpenBabel
 
     int chainNum = 1;
     char buffer[BUFF_SIZE];
-    OBBitVec bs;
     vector<double> charges, radii;
     string line, key, value;
 
@@ -128,9 +127,6 @@ namespace OpenBabel
                 obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obError);
               }
 
-            if (EQn(buffer,"ATOM",4))
-              bs.SetBitOn(mol.NumAtoms());
-
             // Read in the partial charge and radius too
             charges.push_back( parseAtomCharge(buffer, mol) );
             radii.push_back( parseAtomRadius(buffer, mol) );
@@ -144,7 +140,7 @@ namespace OpenBabel
     }
 
     // Use residue definitions to assign bond orders
-    resdat.AssignBonds(mol,bs);
+    resdat.AssignBonds(mol);
 
     mol.EndModify();
 
@@ -176,9 +172,14 @@ namespace OpenBabel
     mol.SetPartialChargesPerceived();
 
     // clean out remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() &&
-          (ifs.peek() == '\n' || ifs.peek() == '\r'))
+    std::streampos ipos;
+    do
+    {
+      ipos = ifs.tellg();
       ifs.getline(buffer,BUFF_SIZE);
+    }
+    while(strlen(buffer) == 0 && !ifs.eof() );
+    ifs.seekg(ipos);
 
     return(true);
   }

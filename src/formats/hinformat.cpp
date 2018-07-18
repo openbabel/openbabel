@@ -135,9 +135,17 @@ namespace OpenBabel
       }
 
     // clean out remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() &&
-          (ifs.peek() == '\n' || ifs.peek() == '\r'))
+    // blank lines cleaning codes rewritten for avoiding peek() and tellg() bugs
+    // https://github.com/openbabel/openbabel/issues/1569
+    std::streampos ipos;
+    do
+    {
+      ipos = ifs.tellg();
       ifs.getline(buffer,BUFF_SIZE);
+    }
+    while(strlen(buffer) == 0 && !ifs.eof() );
+    ifs.seekg(ipos);
+
 
     mol.EndModify();
 

@@ -37,6 +37,22 @@ extern string GetInChI(istream& is);
 //Make an instance of the format class
 InChIFormat theInChIFormat;
 
+// The average molecular masses used by InChI are listed in util.c or the InChI Technical Manual Appendix 1
+const unsigned int MAX_AVG_MASS = 134;
+const unsigned int inchi_avg_mass[MAX_AVG_MASS+1] = {0, 1, 4, 7, 9, 11, 12, 14, 16, 19, 20, 23, 24, 27, 28, 31, 32, 35, 40, 39, 40, 45, 48,
+   51, 52, 55, 56, 59, 59, 64, 65, 70, 73, 75, 79, 80, 84, 85, 88, 89, 91, 93, 96, 98, 101, 103, 106, 108, 112, 115, 119, 122, 128,
+   127, 131, 133, 137, 139, 140, 141, 144, 145, 150, 152, 157, 159, 163, 165, 167, 169, 173, 175, 178, 181, 184, 186, 190, 192, 195,
+   197, 201, 204, 207, 209, 209, 210, 222, 223, 226, 227, 232, 231, 238, 237, 244, 243, 247, 247, 251, 252, 257, 258, 259, 260, 261,
+   268, 271, 267, 277, 276, 281, 280, 285};
+
+static unsigned int GetInChIAtomicMass(unsigned int atomicnum)
+{
+  if (atomicnum < MAX_AVG_MASS)
+    return inchi_avg_mass[atomicnum]; // the correct value
+  else // fallback to our internal values
+    return (unsigned int)(OBElements::GetMass(atomicnum) + 0.5);
+}
+
 /////////////////////////////////////////////////////////////////
 bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
@@ -119,10 +135,10 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBAtom* patom = pmol->GetAtom(i+1); //index starts at 1
     inchi_Atom* piat = &out.atom[i];
-    patom->SetAtomicNum(OBElements::GetAtomicNum(piat->elname));
+    unsigned int atomicnum = OBElements::GetAtomicNum(piat->elname);
+    patom->SetAtomicNum(atomicnum);
     if(piat->isotopic_mass)
-      patom->SetIsotope(piat->isotopic_mass - ISOTOPIC_SHIFT_FLAG +
-          (int)(OBElements::GetExactMass(patom->GetAtomicNum())+0.5));
+      patom->SetIsotope(piat->isotopic_mass - ISOTOPIC_SHIFT_FLAG + GetInChIAtomicMass(atomicnum));
 
     patom->SetSpinMultiplicity(piat->radical);
     patom->SetFormalCharge(piat->charge);
@@ -378,7 +394,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       if(patom->GetIsotope())
       {
         iat.isotopic_mass = ISOTOPIC_SHIFT_FLAG +
-          patom->GetIsotope() - (int)(OBElements::GetMass(patom->GetAtomicNum())+0.5);
+          patom->GetIsotope() - GetInChIAtomicMass(patom->GetAtomicNum());
       }
       else
         iat.isotopic_mass = 0 ;

@@ -6,3 +6,4 @@ scripts/python/openbabel.py
 scripts/java/openbabel.jar
 scripts/php/openbabel.php
 scripts/php/php_openbabel.h
+external
