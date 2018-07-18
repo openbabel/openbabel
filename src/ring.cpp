@@ -534,6 +534,13 @@ namespace OpenBabel
     mol.SetRingAtomsAndBondsPerceived(); // mol.SetFlag(OB_RINGFLAGS_MOL);
     mol.SetClosureBondsPerceived();      // mol.SetFlag(OB_CLOSURE_MOL);
 
+    FOR_ATOMS_OF_MOL(atom, mol)
+      atom->SetInRing(false);
+    FOR_BONDS_OF_MOL(bond, mol) {
+      bond->SetInRing(false);
+      bond->SetClosure(false);
+    }
+
     unsigned int bsize = mol.NumBonds()+1;
     unsigned char *bvisit = (unsigned char*)malloc(bsize);
     memset(bvisit,0,bsize);

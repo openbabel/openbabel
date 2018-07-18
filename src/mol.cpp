@@ -1516,14 +1516,10 @@ namespace OpenBabel
     if (_mod)
       return;
 
+    // wipe all but whether it has aromaticity perceived or is a reaction
     if (nukePerceivedData)
-      {
-        _flags = _flags & OB_REACTION_MOL; // wipe all but whether it's a reaction
-        OBBond *bond;
-        vector<OBBond*>::iterator k;
-        for (bond = BeginBond(k);bond;bond = NextBond(k))
-          bond->SetInRing(false);
-      }
+      _flags = _flags & (OB_AROMATIC_MOL|OB_REACTION_MOL);
+
     _c = NULL;
 
     if (Empty())
@@ -4187,7 +4183,10 @@ namespace OpenBabel
 
         // Check that the entirety of this tet cfg occurs in this substructure
         OBAtom *center = GetAtomById(cfg.center);
-        if (AtomMap.find(center) == AtomMap.end())
+        std::map<OBAtom*, OBAtom*>::iterator centerit = AtomMap.find(center);
+        if (centerit == AtomMap.end())
+          continue;
+        if (cfg.from != OBStereo::ImplicitRef && AtomMap.find(GetAtomById(cfg.from)) == AtomMap.end())
           continue;
         bool skip_cfg = false;
         if (bonds_specified) {
@@ -4211,7 +4210,7 @@ namespace OpenBabel
 
         OBTetrahedralStereo::Config newcfg;
         newcfg.specified = cfg.specified;
-        newcfg.center = AtomMap[GetAtomById(cfg.center)]->GetId();
+        newcfg.center = centerit->second->GetId();
         newcfg.from = cfg.from == OBStereo::ImplicitRef ? OBStereo::ImplicitRef : AtomMap[GetAtomById(cfg.from)]->GetId();
         OBStereo::Refs refs;
         for (OBStereo::RefIter ri = cfg.refs.begin(); ri != cfg.refs.end(); ++ri) {

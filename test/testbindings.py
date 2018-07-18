@@ -5,7 +5,7 @@ in the build folder with:
 "C:\Program Files\CMake 2.6\bin\ctest.exe" -C CTestTestfile.cmake
                                            -R pybindtest -VV
 
-The runtime directory is ${CMAKE_SRC_DIR}/test. 
+The runtime directory is ${CMAKE_SRC_DIR}/test.
 
 You could also "chdir" into build and run the test file directly:
 python ../../test/testbindings.py
@@ -47,7 +47,7 @@ class TestPythonBindings(PythonBindings):
         conv.SetInFormat("smi")
         conv.ReadString(mol, "CC(=O)Cl")
         self.assertAlmostEqual(mol.GetMolWt(), 78.5, 1)
-    
+
 class PybelWrapper(PythonBindings):
     def testDummy(self):
         self.assertTrue(pybel is not None, "Failed to import the Pybel module")
@@ -81,6 +81,14 @@ class TestSuite(PythonBindings):
             hasbracket = "[" in roundtrip
             self.assertEqual(hasbracket, needsbracket)
 
+    def testAromaticityPreservedOnAtomDeletion(self):
+        """Ensure that aromaticity is preserved on atom deleteion"""
+        mol = pybel.readstring("smi", "c1ccccc1").OBMol
+        mol.DeleteAtom(mol.GetFirstAtom())
+        self.assertTrue(mol.GetFirstAtom().IsAromatic())
+        mol.UnsetAromaticPerceived()
+        self.assertFalse(mol.GetFirstAtom().IsAromatic())
+
     def testSmilesAtomOrder(self):
         """Ensure that SMILES atom order is written correctly"""
         data = [("CC", "1 2"),
@@ -93,6 +101,33 @@ class TestSuite(PythonBindings):
         mol = pybel.readstring("smi", "CC")
         mol.write("can")
         self.assertFalse("SMILES Atom Order" in mol.data)
+
+    def testECFP(self):
+        data = [
+                ("CC", 1, 2),
+                ("CCC", 2, 4),
+                ("CC(C)C", 2, 4),
+                ("CC(C)(C)C", 2, 4),
+                ]
+        for smi, numA, numB in data:
+            mol = pybel.readstring("smi", smi)
+            ecfp0 = mol.calcfp("ecfp0").bits
+            self.assertEqual(len(ecfp0), numA)
+            ecfp2 = mol.calcfp("ecfp2").bits
+            self.assertEqual(len(ecfp2), numB)
+            for bit in ecfp0:
+                self.assertTrue(bit in ecfp2)
+
+    def testOldRingInformationIsWipedOnReperception(self):
+        """Previously, the code that identified ring atoms and bonds
+        did not set the flags of non-ring atoms. This meant that no
+        matter what you did to the structure, once a ring-atom, always a
+        ring atom."""
+        mol = pybel.readstring("smi", "c1ccccc1")
+        atom = mol.atoms[0].OBAtom
+        self.assertTrue(atom.IsInRing()) # trigger perception
+        mol.OBMol.DeleteAtom(mol.atoms[-1].OBAtom)
+        self.assertFalse(atom.IsInRing()) # this used to return True
 
     def testOBMolSeparatePreservesAromaticity(self):
         """If the original molecule had aromaticity perceived,
@@ -184,6 +219,25 @@ class TestSuite(PythonBindings):
         for smi in alsobad:
             mol = pybel.readstring("smi", smi)
             self.assertTrue(mol.OBMol.GetData(ob.StereoData))
+
+    def testFFGradients(self):
+        """Support public access of FF gradients"""
+        xyz = """3
+water
+O          1.02585       -0.07579        0.08189
+H          1.99374       -0.04667        0.04572
+H          0.74700        0.50628       -0.64089
+"""
+        mol = pybel.readstring("xyz", xyz)
+        ff = pybel._forcefields["mmff94"]
+
+        self.assertTrue(ff.Setup(mol.OBMol))
+        for atom in mol.atoms:
+            # this should throw an AttributeError if not available
+            grad = ff.GetGradient(atom.OBAtom)
+            self.assertNotEqual(0.0, grad.GetX())
+            self.assertNotEqual(0.0, grad.GetY())
+            self.assertNotEqual(0.0, grad.GetZ())
 
     def testFuzzingTestCases(self):
         """Ensure that fuzzing testcases do not cause crashes"""
@@ -688,6 +742,9 @@ class OBMolCopySubstructure(PythonBindings):
                 ("[C@@H](Br)(Cl)I",
                     [((1, 2, 3), None, "C(Br)Cl"),
                     ((1, 2, 3, 4), (2,), "C(Br)Cl.I")]
+                ),
+                ("C[C@@H]1CO1",
+                    [((2, 3, 4), None, "C1CO1"),]
                 ),
                 ("F/C=C/I",
                     [

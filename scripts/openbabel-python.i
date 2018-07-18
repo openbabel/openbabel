@@ -108,7 +108,6 @@ namespace std {
 %feature("ignore") vector< vector<T> >::back;
 %feature("ignore") vector< vector<T> >::begin;
 %feature("ignore") vector< vector<T> >::capacity;
-%feature("ignore") vector< vector<T> >::clear;
 %feature("ignore") vector< vector<T> >::empty;
 %feature("ignore") vector< vector<T> >::end;
 %feature("ignore") vector< vector<T> >::erase;
@@ -133,7 +132,6 @@ namespace std {
 %feature("ignore") vector<T>::back;
 %feature("ignore") vector<T>::begin;
 %feature("ignore") vector<T>::capacity;
-%feature("ignore") vector<T>::clear;
 %feature("ignore") vector<T>::empty;
 %feature("ignore") vector<T>::end;
 %feature("ignore") vector<T>::erase;
@@ -158,7 +156,6 @@ namespace std {
 %feature("ignore") vector< pair<T1, T2> >::back;
 %feature("ignore") vector< pair<T1, T2> >::begin;
 %feature("ignore") vector< pair<T1, T2> >::capacity;
-%feature("ignore") vector< pair<T1, T2> >::clear;
 %feature("ignore") vector< pair<T1, T2> >::empty;
 %feature("ignore") vector< pair<T1, T2> >::end;
 %feature("ignore") vector< pair<T1, T2> >::erase;

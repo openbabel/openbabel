@@ -132,8 +132,6 @@ namespace OpenBabel
     v3 += v2;
     v4 = v3 - v1;
 
-    cerr << "v3: " << v3 << " v4: " << v4 << endl;
-
     for ( i = 0 ; i < children.size() ; i++ )
       {
         v1 = mol->GetAtom(children[i])->GetVector();
@@ -520,18 +518,14 @@ namespace OpenBabel
 
   bool OBBond::IsInRing() const
   {
-    if (((OBBond*)this)->HasFlag(OB_RING_BOND))
-      return(true);
-
-    OBMol *mol = (OBMol*)((OBBond*)this)->GetParent();
+    OBMol *mol = ((OBBond*)this)->GetParent();
     if (!mol->HasRingAtomsAndBondsPerceived())
-      {
-        mol->FindRingAtomsAndBonds();
-        if (((OBBond*)this)->HasFlag(OB_RING_BOND))
-          return(true);
-      }
+      mol->FindRingAtomsAndBonds();
 
-    return(false);
+    if (((OBBond*)this)->HasFlag(OB_RING_BOND))
+      return true;
+
+    return false;
   }
 
   // Adapted from OBAtom::IsInRingSize()
