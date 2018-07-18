@@ -94,7 +94,7 @@ namespace OpenBabel {
     //! \returns 0 if not in the same ring, or the ring size otherwise
     int AreInSameRing(OBAtom *a, OBAtom *b);
     //! \brief Self-consistently smooth the bounds matrix using the triangle inequality
-    void TriangleSmooth(int iterations = 8);
+    void TriangleSmooth();
     //! \brief Set the lower bounds to retain VdW distances after all 1-X bounds are set
     void SetLowerBounds();
 
