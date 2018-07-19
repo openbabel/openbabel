@@ -1516,8 +1516,10 @@ namespace OpenBabel
     if (_mod)
       return;
 
+    // wipe all but whether it has aromaticity perceived or is a reaction
     if (nukePerceivedData)
-      _flags = _flags & OB_AROMATIC_MOL; // wipe all but whether it has aromaticity perceived
+      _flags = _flags & (OB_AROMATIC_MOL|OB_REACTION_MOL);
+
     _c = NULL;
 
     if (Empty())

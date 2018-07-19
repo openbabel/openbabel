@@ -154,26 +154,6 @@ class TestOBabel(BaseTest):
         output, error = run_exec("obabel %s -osmi" % self.getTestFile("102Uridine.smi"))
         self.assertTrue("%(100)" in output)
 
-    def testRoundtripThroughRXN(self):
-        self.canFindExecutable("obabel")
-        data = ["C>N>O", "C>>O", "C.N>>O", "C>>O.N",
-                "C>>O", ">>O", "C>>", ">N>", ">>"]
-        for rsmi in data:
-            output, error = run_exec("obabel -irsmi -:%s -orxn" % rsmi)
-            moutput, error = run_exec(output, "obabel -irxn -orsmi")
-            self.assertEqual(self.sort(moutput.rstrip()), self.sort(rsmi))
-        rsmi = "C>N>O"
-        ans = {"agent": "C>N>O",
-               "reactant": "C.N>>O",
-               "product": "C>>O.N",
-               "both": "C.N>>O.N",
-               "ignore": "C>>O"}
-        for option, result in ans.items():
-            output, error = run_exec("obabel -irsmi -:%s -orxn -xG %s" %
-                                     (rsmi, option))
-            moutput, error = run_exec(output, "obabel -irxn -orsmi")
-            self.assertEqual(self.sort(moutput.rstrip()), self.sort(result))
-            
     def testPDBQT(self):
         self.canFindExecutable("obabel")
         pdb = '''ATOM     77  N   TYR A   5      35.078  50.693  67.193  1.00  0.00           N  

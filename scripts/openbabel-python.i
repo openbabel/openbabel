@@ -26,6 +26,7 @@
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
 #include <openbabel/reaction.h>
+#include <openbabel/reactionfacade.h>
 #include <openbabel/residue.h>
 #include <openbabel/internalcoord.h>
 
@@ -216,6 +217,7 @@ CAST_GENERICDATA_TO(MatrixData)
 CAST_GENERICDATA_TO(NasaThermoData)
 CAST_GENERICDATA_TO(PairData)
 CAST_GENERICDATA_TO(PairInteger)
+CAST_GENERICDATA_TO(PairFloatingPoint)
 // CAST_GENERICDATA_TO(PairTemplate)
 CAST_GENERICDATA_TO(RateData)
 CAST_GENERICDATA_TO(RotamerList)
@@ -256,7 +258,8 @@ CAST_GENERICDATA_TO(SquarePlanarStereo)
 %include <openbabel/base.h>
 
 %include <openbabel/generic.h>
-%template(obpairtemplateint) OpenBabel::OBPairTemplate<int>;
+%template(OBPairInteger) OpenBabel::OBPairTemplate<int>;
+%template(OBPairFloatingPoint) OpenBabel::OBPairTemplate<float>;
 %include <openbabel/griddata.h>
 
 %include <openbabel/chains.h>
@@ -282,6 +285,7 @@ namespace std { class stringbuf {}; }
 %include <openbabel/atom.h>
 %include <openbabel/bond.h>
 %include <openbabel/reaction.h>
+%include <openbabel/reactionfacade.h>
 
 // Remove C++ iterators
 %pythoncode %{

@@ -25,6 +25,7 @@ GNU General Public License for more details.
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/stereo/squareplanar.h>
+#include <openbabel/reactionfacade.h>
 #include <openbabel/stereo/stereo.h>
 #include <openbabel/obfunctions.h>
 #include <openbabel/graphsym.h>
@@ -263,6 +264,7 @@ namespace OpenBabel {
     char _updown;
     int _order;
     int _prev;
+    int _rxnrole = 1;
     const char *_ptr;
     bool _preserve_aromaticity;
     vector<int>             _vprev;
@@ -326,7 +328,7 @@ namespace OpenBabel {
 
     istream &ifs = *pConv->GetInStream();
     string ln, smiles, title;
-    string::size_type pos, pos2;
+    string::size_type pos;
 
     //Ignore lines that start with #
     while(ifs && ifs.peek()=='#')
@@ -353,45 +355,7 @@ namespace OpenBabel {
     if (!pConv->IsOption("S", OBConversion::INOPTIONS))
       pmol->SetChiralityPerceived();
 
-    pos = smiles.find('>');
-    if(pos==string::npos)
-      return sp.SmiToMol(*pmol, smiles); //normal return
-
-    //Possibly a SMILES reaction
-    OBMol* pmol1 = new OBMol;
-    OBMol* pmol2 = new OBMol;
-    if(sp.SmiToMol(*pmol1, smiles.substr(0,pos))                  //reactant
-      && (pos2 = smiles.find('>', pos+1))!=string::npos)          //second >
-    {
-      if((pos2-pos==1                                             //no agent
-         || sp.SmiToMol(*pmol2, smiles.substr(pos+1,pos2-pos-1))) //agent
-         && sp.SmiToMol(*pmol, smiles.substr(pos2+1)))            //product
-      {
-        //Is a valid reaction. Output species
-        pmol1->SetDimension(0);
-        pmol1->SetTitle(title);
-        pmol2->SetTitle(title);
-        pmol->SetTitle(title);
-        pmol2->SetDimension(0);
-        if(pConv->AddChemObject(
-          pmol1->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS),pConv))<0)//using Read or ReadString or ReadFile
-        {
-          delete pmol2;
-          obErrorLog.ThrowError(__FUNCTION__, smiles +
-            " SmilesFormat accepts reactions only with the \"Convert\" (commandline) interface", obError);
-
-          return false; //Error
-        }
-        if(pmol2->NumAtoms())
-           pConv->AddChemObject(
-             pmol2->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS),pConv));
-        delete pmol2;
-        return true; //valid reaction return
-      }
-    }
-    delete pmol2;
-    obErrorLog.ThrowError(__FUNCTION__, smiles + " contained '>' but was not a acceptable reaction", obError);
-    return false;
+    return sp.SmiToMol(*pmol, smiles); //normal return
   }
 
   //////////////////////////////////////////////
@@ -404,7 +368,8 @@ namespace OpenBabel {
     chiralWatch=false;
     squarePlanarWatch = false;
 
-    if (!ParseSmiles(mol, s) || mol.NumAtoms() == 0)
+    // We allow the empty reaction (">>") but not the empty molecule ("")
+    if (!ParseSmiles(mol, s) || (!mol.IsReaction() && mol.NumAtoms() == 0))
       {
         mol.Clear();
         return(false);
@@ -455,6 +420,31 @@ namespace OpenBabel {
         break;
       case '.':
         _prev=0;
+        break;
+      case '>':
+        _prev = 0;
+        _rxnrole++;
+        if (_rxnrole == 2) {
+          mol.SetIsReaction();
+          // Handle all the reactant atoms
+          // - the remaining atoms will be handled on-the-fly
+          FOR_ATOMS_OF_MOL(atom, mol) {
+            OBPairInteger *pi = new OBPairInteger();
+            pi->SetAttribute("rxnrole");
+            pi->SetValue(1);
+            atom->SetData(pi);
+          }
+        }
+        else if (_rxnrole == 4) {
+          stringstream errorMsg;
+          errorMsg << "Too many greater-than signs in SMILES string";
+          std::string title = mol.GetTitle();
+          if (!title.empty())
+            errorMsg << " (title is " << title << ")";
+          errorMsg << endl;
+          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+          return false;
+        }
         break;
       case '(':
         _vprev.push_back(_prev);
@@ -535,6 +525,19 @@ namespace OpenBabel {
                << "ring bonds." << endl;
       obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
       return false; // invalid SMILES since rings aren't properly closed
+    }
+
+    // Check to see if we've the right number of '>' for reactions
+    if (_rxnrole > 1 && _rxnrole !=3) {
+      mol.EndModify();
+      stringstream errorMsg;
+      errorMsg << "Invalid reaction SMILES string: only a single '>' sign found (two required to be valid).";
+      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+      return false; // invalid SMILES since rings aren't properly closed
+    }
+    if (mol.IsReaction()) {
+      OBReactionFacade facade(&mol);
+      facade.AssignComponentIds();
     }
 
     // Apply the SMILES valence model
@@ -984,6 +987,13 @@ namespace OpenBabel {
 
     OBAtom *atom = mol.NewAtom();
     atom->SetAtomicNum(element);
+    if (_rxnrole > 1) { // Quick test for reaction
+      // Set reaction role
+      OBPairInteger *pi = new OBPairInteger();
+      pi->SetAttribute("rxnrole");
+      pi->SetValue(_rxnrole);
+      atom->SetData(pi);
+    }
 
     if (arom)
       atom->SetAromatic();
@@ -1788,6 +1798,13 @@ namespace OpenBabel {
     atom->SetIsotope(isotope);
     if (arom)
       atom->SetAromatic();
+    if (_rxnrole > 1) { // Quick test for reaction
+      // Set reaction role
+      OBPairInteger *pi = new OBPairInteger();
+      pi->SetAttribute("rxnrole");
+      pi->SetValue(_rxnrole);
+      atom->SetData(pi);
+    }
 
     if (_prev) //need to add bond
       {
@@ -3852,10 +3869,15 @@ namespace OpenBabel {
       }
     }
 
-    // OUTER LOOP: Handles dot-disconnected structures.  Finds the
-    // lowest unmarked canorder atom, and starts there to generate a SMILES.
+    // OUTER LOOP: Handles dot-disconnected structures and reactions.  Finds the
+    // lowest unmarked canorder atom in the current reaction role, and starts there
+    // to generate a SMILES.
     // Repeats until no atoms remain unmarked.
 
+    bool new_rxn_role = false; // flag to indicate whether we have started a new reaction role
+    bool isrxn = mol.IsReaction();
+    OBReactionFacade rxn(&mol);
+    unsigned int rxnrole = 1; // reactants
     while (1) {
       if (_pconv->IsOption("R"))
         _bcdigit = 0; // Reset the bond closure index for each disconnected component
@@ -3868,7 +3890,9 @@ namespace OpenBabel {
 
       // If we specified a startatom_idx & it's in this fragment, use it to start the fragment
       if (_startatom)
-        if (!_uatoms[_startatom->GetIdx()] && frag_atoms.BitIsOn(_startatom->GetIdx()))
+        if (!_uatoms[_startatom->GetIdx()] && 
+           frag_atoms.BitIsOn(_startatom->GetIdx()) && 
+           (!isrxn || rxn.GetRole(_startatom)==rxnrole))
           root_atom = _startatom;
 
       if (root_atom == NULL) {
@@ -3877,6 +3901,7 @@ namespace OpenBabel {
           if (//atom->GetAtomicNum() != OBElements::Hydrogen       // don't start with a hydrogen
               !_uatoms[idx]          // skip atoms already used (for fragments)
               && frag_atoms.BitIsOn(idx)// skip atoms not in this fragment
+              && (!isrxn || rxn.GetRole(atom)==rxnrole) // skip atoms not in this rxn role
               //&& !atom->IsChiral()    // don't use chiral atoms as root node
               && canonical_order[idx-1] < lowest_canorder) {
             root_atom = atom;
@@ -3900,24 +3925,37 @@ namespace OpenBabel {
         }
       }
 
-      // No atom found?  We've done all fragments.
-      if (root_atom == NULL)
-        break;
+      // No atom found?  If it's not a reaction, then we've done all fragments.
+      // If it is, then increment the rxn role and try again.
+      if (root_atom == NULL) {
+        if (mol.IsReaction()) {
+          rxnrole++;
+          if (rxnrole==4)
+            break;
+          buffer += '>';
+          new_rxn_role = true;
+          continue;
+        }
+        else
+          break;
+      }
 
       // Clear out closures in case structure is dot disconnected
       //      _atmorder.clear();
       _vopen.clear();
 
-      // Dot disconnected structure?
-      if (!buffer.empty())
+      // Dot disconnected structure or new rxn role?
+      if (new_rxn_role)
+        new_rxn_role = false;
+      else if (!buffer.empty())
         buffer += '.';
+
       root = new OBCanSmiNode (root_atom);
 
       BuildCanonTree(mol, frag_atoms, canonical_order, root);
       ToCansmilesString(root, buffer, frag_atoms, symmetry_classes, canonical_order);
       delete root;
     }
-
   }
 
   void OBMol2Cansmi::GetOutputOrder(std::string &outorder)
@@ -4118,7 +4156,7 @@ namespace OpenBabel {
         }
     }
 
-    if (pmol->NumAtoms() > 0) {
+    if (pmol->NumAtoms() > 0 || pmol->IsReaction()) {
       CreateCansmiString(*pmol, buffer, fragatoms, pConv);
     }
 
