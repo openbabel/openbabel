@@ -98,9 +98,11 @@ namespace OpenBabel
 #define OB_LSSR_MOL              (1<<20)
   //! SpinMultiplicities on atoms have been set in OBMol::AssignSpinMultiplicity()
 #define OB_ATOMSPIN_MOL          (1<<21)
+  //! Treat as reaction
+#define OB_REACTION_MOL          (1<<22)
   //! Molecule is repeating in a periodic unit cell
-#define OB_PERIODIC_MOL          (1<<22)
-  // flags 23-32 unspecified
+#define OB_PERIODIC_MOL          (1<<23)
+  // flags 24-32 unspecified
 #define OB_CURRENT_CONFORMER	 -1
 
 enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
@@ -397,6 +399,10 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     void   SetHydrogensAdded()       { SetFlag(OB_H_ADDED_MOL);     }
     void   SetCorrectedForPH()       { SetFlag(OB_PH_CORRECTED_MOL);}
     void   SetSpinMultiplicityAssigned(){ SetFlag(OB_ATOMSPIN_MOL);    }
+    void   SetIsReaction(bool val=true) {
+      if (val)  SetFlag(OB_REACTION_MOL);
+      else    UnsetFlag(OB_REACTION_MOL);
+    }
     //! Mark that distance calculations, etc., should apply periodic boundary conditions through the minimimum image convention.
     //! Does not automatically recalculate bonding.
     void   SetPeriodicMol(){ SetFlag(OB_PERIODIC_MOL);    }
@@ -605,6 +611,8 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     bool IsCorrectedForPH() { return(HasFlag(OB_PH_CORRECTED_MOL));     }
     //! Has total spin multiplicity been assigned?
     bool HasSpinMultiplicityAssigned() { return(HasFlag(OB_ATOMSPIN_MOL)); }
+    //! Does this OBMol represent a reaction?
+    bool IsReaction()                  { return HasFlag(OB_REACTION_MOL); }
     //! Is this molecule chiral?
     bool IsChiral();
     //! Is this molecule periodic? Should periodic boundary conditions be applied?

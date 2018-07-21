@@ -19,7 +19,7 @@ import re
 import sys
 import unittest
 
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, check_output, STDOUT
 
 def run_exec(*args):
     """Run one of OpenBabel's executables
@@ -102,7 +102,7 @@ class BaseTest(unittest.TestCase):
                          "Number of molecules converted is %d "
                          "but should be %d" % (conversion_no, N))
 
-class testOBabel(BaseTest):
+class TestOBabel(BaseTest):
     """A series of tests relating to the obabel executable"""
 
     def testNoInput(self):
@@ -154,26 +154,6 @@ class testOBabel(BaseTest):
         output, error = run_exec("obabel %s -osmi" % self.getTestFile("102Uridine.smi"))
         self.assertTrue("%(100)" in output)
 
-    def testRoundtripThroughRXN(self):
-        self.canFindExecutable("obabel")
-        data = ["C>N>O", "C>>O", "C.N>>O", "C>>O.N",
-                "C>>O", ">>O", "C>>", ">N>", ">>"]
-        for rsmi in data:
-            output, error = run_exec("obabel -irsmi -:%s -orxn" % rsmi)
-            moutput, error = run_exec(output, "obabel -irxn -orsmi")
-            self.assertEqual(self.sort(moutput.rstrip()), self.sort(rsmi))
-        rsmi = "C>N>O"
-        ans = {"agent": "C>N>O",
-               "reactant": "C.N>>O",
-               "product": "C>>O.N",
-               "both": "C.N>>O.N",
-               "ignore": "C>>O"}
-        for option, result in ans.items():
-            output, error = run_exec("obabel -irsmi -:%s -orxn -xG %s" %
-                                     (rsmi, option))
-            moutput, error = run_exec(output, "obabel -irxn -orsmi")
-            self.assertEqual(self.sort(moutput.rstrip()), self.sort(result))
-            
     def testPDBQT(self):
         self.canFindExecutable("obabel")
         pdb = '''ATOM     77  N   TYR A   5      35.078  50.693  67.193  1.00  0.00           N  
@@ -202,11 +182,11 @@ END
         pdbqt = '''REMARK  Name = 
 REMARK  5 active torsions:
 REMARK  status: ('A' for Active; 'I' for Inactive)
-REMARK    1  A    between atoms: _1  and  _2
-REMARK    2  A    between atoms: _2  and  _3
-REMARK    3  A    between atoms: _2  and  _5
-REMARK    4  A    between atoms: _5  and  _6
-REMARK    5  A    between atoms: _11  and  _12
+REMARK    1  A    between atoms: N_1  and  CA_2
+REMARK    2  A    between atoms: CA_2  and  C_3
+REMARK    3  A    between atoms: CA_2  and  CB_5
+REMARK    4  A    between atoms: CB_5  and  CG_6
+REMARK    5  A    between atoms: CZ_11  and  OH_12
 REMARK                            x       y       z     vdW  Elec       q    Type
 REMARK                         _______ _______ _______ _____ _____    ______ ____
 ROOT
@@ -239,6 +219,20 @@ TORSDOF 5
 '''
         output, error = run_exec(pdb, "obabel -ipdb -opdbqt")
         self.assertEqual(output, pdbqt)        
+
+    def testMissingPlugins(self):
+        libdir = os.environ.pop("BABEL_LIBDIR", None)
+        os.environ["BABEL_LIBDIR"] = ""
+
+        obabel = executable("obabel")
+        msg = check_output('%s -:C -osmi' % obabel, shell=True, stderr=STDOUT, universal_newlines=True)
+        if libdir:
+            os.environ["BABEL_LIBDIR"] = libdir
+        else:
+            os.environ.pop("BABEL_LIBDIR")
+
+        self.assertTrue('BABEL_LIBDIR' in msg)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -442,30 +442,11 @@ namespace OpenBabel
 
   OBResidue *OBAtom::GetResidue()
   {
-    return GetResidue(true); // default is to always perceive chains
-  }
+    OBMol *mol = this->GetParent();
+    if (!mol->HasChainsPerceived())
+      chainsparser.PerceiveChains(*mol);
 
-  OBResidue *OBAtom::GetResidue(bool perception)
-  {
-    if (_residue != NULL)
-      return _residue;
-    else if (perception && !((OBMol*)GetParent())->HasChainsPerceived())
-      {
-        ((OBMol*)GetParent())->SetChainsPerceived();
-        if ( chainsparser.PerceiveChains(*((OBMol*)GetParent())) )
-          return _residue;
-        else
-          {
-            if (_residue)
-              {
-                delete _residue;
-                _residue = NULL;
-              }
-            return NULL;
-          }
-      }
-    else
-      return NULL;
+    return _residue;
   }
 
   double OBAtom::GetAtomicMass() const

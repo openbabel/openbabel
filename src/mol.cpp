@@ -1541,19 +1541,10 @@ namespace OpenBabel
     if (_mod)
       return;
 
+    // wipe all but whether it has aromaticity perceived, is a reaction, or has periodic boundaries enabled
     if (nukePerceivedData)
-      {
-        bool periodic_structure = IsPeriodic();
-        _flags = 0;
-        if (periodic_structure)
-          {
-            SetPeriodicMol();
-          }
-        OBBond *bond;
-        vector<OBBond*>::iterator k;
-        for (bond = BeginBond(k);bond;bond = NextBond(k))
-          bond->SetInRing(false);
-      }
+      _flags = _flags & (OB_AROMATIC_MOL|OB_REACTION_MOL|OB_PERIODIC_MOL);
+
     _c = NULL;
 
     if (Empty())

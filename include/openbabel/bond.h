@@ -158,7 +158,7 @@ namespace OpenBabel
       /** \warning This is for internal use only. All closure bonds are marked
           automatically by lazy evaluation when requesting
           OBBond::IsClosure() **/
-      void SetClosure()     { SetFlag(OB_CLOSURE_BOND);  }
+      void SetClosure(bool set=true)     { if(set)SetFlag(OB_CLOSURE_BOND); else UnsetFlag(OB_CLOSURE_BOND);}
       //! Clear any indication of 2D "hash" notation from SetHash()
       void UnsetHash()      { UnsetFlag(OB_HASH_BOND);    }
       //! Clear any indication of 2D "wedge" notation from SetWedge()
