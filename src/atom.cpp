@@ -800,9 +800,9 @@ namespace OpenBabel
     return stereoFacade.HasTetrahedralStereo(_id);
   }
 
-  bool OBAtom::IsPeriodic()
+  bool OBAtom::IsPeriodic() const
   {
-    OBMol *mol = (OBMol*) GetParent();
+    OBMol *mol = (OBMol*)((OBAtom*)this)->GetParent();
     return mol->IsPeriodic();
   }
 

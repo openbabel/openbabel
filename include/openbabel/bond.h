@@ -210,9 +210,7 @@ namespace OpenBabel
       /** Length is given in Angstroms **/
       double  GetEquibLength() const;
       //! \return The current length of this bond in Angstroms
-      //! \todo What is the effect of removing the "const" declaration?
-      //! \todo It appears the problem is that GetLength is const, but OBAtom::GetDistance is not because GetVector is not.
-      double  GetLength();
+      double  GetLength() const;
       //! \return The index to the neighboring atom of @p ptr (i.e., the end if @p ptr is the start)
       /** \warning If @p ptr is not part of the bond, the beginning atom
           index will always be returned **/
@@ -245,7 +243,7 @@ namespace OpenBabel
       bool IsRotor(bool includeRingBonds=false);
       /** \return Is the bond an amide link (i.e., between a carbonyl C and a N)?
            No distinction is made between primary, secondary, and tertiary amides. **/
-      bool IsPeriodic();
+      bool IsPeriodic() const;
       //! \return Is the bond within a periodic unit cell?
       bool IsAmide();
       /** \return Is the bond a primary amide (i.e., between carbonyl C and a NH2)?

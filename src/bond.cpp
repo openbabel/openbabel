@@ -188,9 +188,10 @@ namespace OpenBabel
     return atom->GetImplicitHCount() + atom->GetValence();
   }
 
-  bool OBBond::IsPeriodic()
+  bool OBBond::IsPeriodic() const
   {
-    return ((OBMol*)GetParent())->IsPeriodic();
+    OBMol *mol = (OBMol*)((OBBond*)this)->GetParent();
+    return mol->IsPeriodic();
   }
 
    bool OBBond::IsAmide()
@@ -597,10 +598,10 @@ namespace OpenBabel
     return length;
   }
 
-  double OBBond::GetLength()
+  double OBBond::GetLength() const
   {
     double	d2;
-    OBAtom *begin, *end;
+    const OBAtom *begin, *end;
     begin = GetBeginAtom();
     end = GetEndAtom();
 
@@ -613,7 +614,9 @@ namespace OpenBabel
       }
     else
       {
-        return(begin->GetDistance(end));
+        OBMol *mol = (OBMol*)((OBBond*)this)->GetParent();
+        OBUnitCell *box = (OBUnitCell*)mol->GetData(OBGenericDataType::UnitCell);
+        return (box->MinimumImageCartesian(begin->GetVector() - end->GetVector())).length();
       }
   }
 

@@ -441,7 +441,7 @@ namespace OpenBabel
       //! \return Is this atom chiral?
       bool IsChiral();
       //! \return Is the atom part of a periodic unit cell?
-      bool IsPeriodic();
+      bool IsPeriodic() const;
       //! \return Is this atom an axial atom in a ring
       bool IsAxial();
       //! \deprecated
