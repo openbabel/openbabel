@@ -12,6 +12,7 @@ else(MINIMAL_BUILD)
         obfit
         obgen
         obminimize
+        obmm
         obprobe
         obprop
         obrotamer
