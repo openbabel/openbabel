@@ -870,76 +870,84 @@ namespace OpenBabel {
     // .. if it's invalid, we swap atom positions
     newcistrans = CisTransFrom3D(&_mol, ctSunits, false);
     std::vector<OBCisTransStereo*>::iterator origct, newct;
-    OBAtom *a, *b;
+    OBAtom *atom_a, *atom_b, *atom_c, *atom_o;
+    vector3 a, b, c, o;
     vector3 temp; // save an atomic position to allow swapping
     for (origct=cistrans.begin(), newct=newcistrans.begin(); origct!=cistrans.end(); ++origct, ++newct) {
       OBCisTransStereo::Config config = (*newct)->GetConfig(OBStereo::ShapeU);
       if ((*origct)->GetConfig(OBStereo::ShapeU) !=  config) {
-        // OK, they don't match, so let's swap two atoms
+        // OK, they don't match, so let's move four atoms
         // refs[0]            refs[3]
         //        \          /
         //         begin==end
         //        /          \
         // refs[1]            refs[2]
-        // .. so swap either [0] <-> [1] or [2]<->[3]
-        // .. here we'll swap the first pair.. we could pick either
-        if (config.refs[0] == OBStereo::ImplicitRef) {
-          b = _mol.GetAtomById(config.refs[1]);
-          a = _mol.GetAtomById(config.begin);
-          double distance = a->GetDistance(b); // the current bond distance
-          // so we figure out where the "H" would go
-          a->GetNewBondVector(temp, distance);
-          b->SetVector(temp); // and put "b" there
-        }
-        else if (config.refs[1] == OBStereo::ImplicitRef) {
-          b = _mol.GetAtomById(config.refs[0]);
-          a = _mol.GetAtomById(config.begin);
-          double distance = a->GetDistance(b); // the current bond distance
-          // so we figure out where the "H" would go
-          a->GetNewBondVector(temp, distance);
-          b->SetVector(temp); // and put "b" there
-        }
-        else {
-          a = _mol.GetAtomById(config.refs[0]);
-          b = _mol.GetAtomById(config.refs[1]);
+        // .. move atoms according to the gradient of volume of four atoms
+        if(config.refs.size() < 4) continue;
+        atom_o = _mol.GetAtomById(config.refs[0]);
+        atom_a = _mol.GetAtomById(config.refs[1]);
+        atom_b = _mol.GetAtomById(config.refs[2]);
+        atom_c = _mol.GetAtomById(config.refs[3]);
 
-          // don't just swap them - scale by lambda to damp out
-          vector3 delta = a->GetVector() - b->GetVector();
-          delta *= lambda;
-          a->SetVector(a->GetVector() + delta);
-          b->SetVector(b->GetVector() - delta);
+        if(atom_o == NULL || atom_a == NULL || atom_b == NULL || atom_c == NULL) {
+          cerr << "Failed to obtain four atoms" << endl;
+          continue;
         }
+
+        o = atom_o->GetVector();
+        a = atom_a->GetVector() - o;
+        b = atom_b->GetVector() - o;
+        c = atom_c->GetVector() - o;
+
+        vector3 delta_a;
+        delta_a.SetX(b.GetY()*c.GetZ() - b.GetZ()*c.GetY());
+        delta_a.SetY(b.GetZ()*c.GetX() - b.GetX()*c.GetZ());
+        delta_a.SetZ(b.GetX()*c.GetY() - b.GetY()*c.GetX());
+        vector3 delta_b;
+        delta_b.SetX(c.GetY()*a.GetZ() - c.GetZ()*a.GetY());
+        delta_b.SetY(c.GetZ()*a.GetX() - c.GetX()*a.GetZ());
+        delta_b.SetZ(c.GetX()*a.GetY() - c.GetY()*a.GetX());
+        vector3 delta_c;
+        delta_c.SetX(a.GetY()*b.GetZ() - a.GetZ()*b.GetY());
+        delta_c.SetY(a.GetZ()*b.GetX() - a.GetX()*b.GetZ());
+        delta_c.SetZ(a.GetX()*b.GetY() - a.GetY()*b.GetX());
+        vector3 delta_o;
+
+        delta_o.SetX(  a.GetZ() * (b.GetY() - c.GetY())
+                     + b.GetZ() * (c.GetY() - a.GetY())
+                     + c.GetZ() * (a.GetY() - b.GetY()));
+        delta_o.SetY(  a.GetX() * (b.GetZ() - c.GetZ())
+                     + b.GetX() * (c.GetZ() - a.GetZ())
+                     + c.GetX() * (a.GetZ() - b.GetZ()));
+        delta_o.SetZ(  a.GetY() * (b.GetX() - c.GetX())
+                     + b.GetY() * (c.GetX() - a.GetX())
+                     + c.GetY() * (a.GetX() - b.GetX()));
+
+        double current_volume =  a.GetX() * b.GetY() * c.GetZ()
+                               + b.GetX() * c.GetY() * a.GetZ()
+                               + c.GetX() * a.GetY() * b.GetZ()
+                               - a.GetX() * c.GetY() * c.GetZ()
+                               - b.GetX() * a.GetY() * c.GetZ()
+                               - c.GetX() * b.GetY() * a.GetZ();
+        double sign = current_volume > 0 ? -0.01 : 0.01;
+        atom_a->SetVector(atom_a->GetVector() + sign * lambda * delta_a);
+        atom_b->SetVector(atom_b->GetVector() + sign * lambda * delta_b);
+        atom_c->SetVector(atom_c->GetVector() + sign * lambda * delta_c);
+        atom_o->SetVector(atom_o->GetVector() + sign * lambda * delta_o);
+
+        o = atom_o->GetVector();
+        a = atom_a->GetVector() - o;
+        b = atom_b->GetVector() - o;
+        c = atom_c->GetVector() - o;
+        double fixed_volume =  a.GetX() * b.GetY() * c.GetZ()
+                               + b.GetX() * c.GetY() * a.GetZ()
+                               + c.GetX() * a.GetY() * b.GetZ()
+                               - a.GetX() * c.GetY() * c.GetZ()
+                               - b.GetX() * a.GetY() * c.GetZ()
+                               - c.GetX() * b.GetY() * a.GetZ();
+        cerr << "volume: " << current_volume << ", " << fixed_volume << endl;
+
       }
-    } // end checking cis-trans
-
-    // Check tetrahedral centers and swap if needed
-    newtetra = TetrahedralFrom3D(&_mol, tetSunits, false);
-    std::vector<OBTetrahedralStereo*>::iterator origth, newth;
-    for (origth=tetra.begin(), newth=newtetra.begin(); origth!=tetra.end(); ++origth, ++newth) {
-      OBTetrahedralStereo::Config config = (*newth)->GetConfig(OBStereo::Clockwise, OBStereo::ViewFrom);
-
-      if ( (*origth)->GetConfig(OBStereo::Clockwise, OBStereo::ViewFrom) != config ) {
-        a = b = NULL;
-        // find explicit atoms and swap them
-        for (unsigned int i = 0; i < 4; ++i) {
-          if (config.refs[i] ==  OBStereo::ImplicitRef)
-            continue;
-          if (a == NULL)
-            a = _mol.GetAtomById(config.refs[i]);
-          else {
-            b = _mol.GetAtomById(config.refs[i]);
-            break; // no need to loop anymore
-          }
-        }
-
-        if (a != NULL && b != NULL) { // should never happen, but let's be safe
-          // don't just swap them - scale by lambda to damp out
-          vector3 delta = a->GetVector() - b->GetVector();
-          delta *= lambda;
-          a->SetVector(a->GetVector() + delta);
-          b->SetVector(b->GetVector() - delta);
-        }
-      } // tetrahedral configuration is wrong
     } // looping through tetrahedral stereo centers
 
   } // done with CorrectStereoConstraints()
