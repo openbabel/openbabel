@@ -923,17 +923,18 @@ namespace OpenBabel {
                      + b.GetY() * (c.GetX() - a.GetX())
                      + c.GetY() * (a.GetX() - b.GetX()));
 
-        double current_volume =  a.GetX() * b.GetY() * c.GetZ()
+        double volume =  a.GetX() * b.GetY() * c.GetZ()
                                + b.GetX() * c.GetY() * a.GetZ()
                                + c.GetX() * a.GetY() * b.GetZ()
                                - a.GetX() * c.GetY() * c.GetZ()
                                - b.GetX() * a.GetY() * c.GetZ()
                                - c.GetX() * b.GetY() * a.GetZ();
-        double sign = current_volume > 0 ? -0.01 : 0.01;
-        atom_a->SetVector(atom_a->GetVector() + sign * lambda * delta_a);
-        atom_b->SetVector(atom_b->GetVector() + sign * lambda * delta_b);
-        atom_c->SetVector(atom_c->GetVector() + sign * lambda * delta_c);
-        atom_o->SetVector(atom_o->GetVector() + sign * lambda * delta_o);
+        double sign = volume > 0 ? -1 : 1;
+        double Z = delta_a.length() + delta_b.length() + delta_c.length() + delta_o.length();
+        atom_a->SetVector(atom_a->GetVector() + sign * lambda * delta_a / Z);
+        atom_b->SetVector(atom_b->GetVector() + sign * lambda * delta_b / Z);
+        atom_c->SetVector(atom_c->GetVector() + sign * lambda * delta_c / Z);
+        atom_o->SetVector(atom_o->GetVector() + sign * lambda * delta_o / Z);
 
         o = atom_o->GetVector();
         a = atom_a->GetVector() - o;
@@ -945,7 +946,7 @@ namespace OpenBabel {
                                - a.GetX() * c.GetY() * c.GetZ()
                                - b.GetX() * a.GetY() * c.GetZ()
                                - c.GetX() * b.GetY() * a.GetZ();
-        cerr << "volume: " << current_volume << ", " << fixed_volume << endl;
+        cerr << "volume: " << volume << " -> " << fixed_volume << ", Z: " << Z << endl;
 
       }
     } // looping through tetrahedral stereo centers
@@ -1118,6 +1119,8 @@ namespace OpenBabel {
       }
 
       finished = (CheckStereoConstraints() && CheckBounds());
+      if(finished)
+        cerr << "OK!" << endl;
 
       if (_d->debug && !finished)
         cerr << "Stereo unsatisfied, trying again" << endl;
@@ -1196,6 +1199,7 @@ namespace OpenBabel {
 
   bool OBDistanceGeometry::GetGeometry(OBMol &mol, bool useCurrentGeom)
   {
+    mol.AddHydrogens();
     if (!Setup(mol, useCurrentGeom))
       return false;
 
