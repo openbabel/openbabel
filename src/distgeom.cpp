@@ -656,9 +656,9 @@ namespace OpenBabel {
         uBounds = Calculate15DistAnyTrans(rAB, rBC, rCD, rDE, B, C, D);
 
         // Check stereochemistry
-        if (stereo && stereo->IsCis(b->GetIdx(), e->GetIdx()))
+        if (stereo && stereo->IsCis(b->GetId(), e->GetId()))
           uBounds = lBounds; // Must be cis
-        if (stereo && stereo->IsTrans(b->GetIdx(), e->GetIdx()))
+        if (stereo && stereo->IsTrans(b->GetId(), e->GetId()))
           lBounds = uBounds; // Must be trans
 
         // Correcting ring shapes -- should be mostly cisoid
@@ -693,9 +693,9 @@ namespace OpenBabel {
         uBounds = Calculate15DistAnyTrans(rAE, rAB, rBC, rCD, A, B, C);
 
         // Check stereochemistry
-        if (stereo && stereo->IsCis(z->GetIdx(), c->GetIdx()))
+        if (stereo && stereo->IsCis(z->GetId(), c->GetId()))
           uBounds = lBounds; // Must be cis
-        if (stereo && stereo->IsTrans(z->GetIdx(), c->GetIdx()))
+        if (stereo && stereo->IsTrans(z->GetId(), c->GetId()))
           lBounds = uBounds; // Must be trans
 
         // Correcting ring shapes -- should be mostly cisoid
