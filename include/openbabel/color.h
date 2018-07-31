@@ -88,7 +88,7 @@ namespace {
 
         return 0;
     }
-    bool isTerminal()
+    bool isTerminal(const std::ostream& stream)
     {
         FILE* std_stream = get_standard_stream(stream);
 

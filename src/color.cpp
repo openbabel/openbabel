@@ -17,4 +17,5 @@ bool update(std::ostream &os,int v){
     std::cout << state.coutstate;
     return true;
   }
+  return false;
 }
