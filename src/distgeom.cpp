@@ -696,7 +696,7 @@ namespace OpenBabel {
         // Check stereochemistry
         if (stereo && stereo->IsCis(z->GetId(), c->GetId()))
           uBounds = lBounds; // Must be cis
-        if (stereo && stereo->IsTrans(z->GetIdx(), c->GetId()))
+        if (stereo && stereo->IsTrans(z->GetId(), c->GetId()))
           lBounds = uBounds; // Must be trans
 
         // Correcting ring shapes -- should be mostly cisoid
