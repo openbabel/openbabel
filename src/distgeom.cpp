@@ -963,7 +963,18 @@ namespace OpenBabel {
     std::vector<OBTetrahedralStereo*> tetra, newtetra;
     std::vector<OBCisTransStereo*> cistrans, newcistrans;
     OBStereoUnitSet ctSunits, tetSunits;
-    //std::vector<OBGenericData*> vdata = _mol.GetAllData(OBGenericDataType::StereoData);
+    std::vector<OBGenericData*> vdata = _mol.GetAllData(OBGenericDataType::StereoData);
+    if(vdata.size() != _vdata.size()) {
+      cerr << "StereoData length is different!" << endl;
+      exit(EXIT_FAILURE);
+    }
+    for (std::vector<OBGenericData*>::iterator org_data = _vdata.begin(), data = vdata.begin();
+        org_data != _vdata.end() && data != vdata.end(); ++data, ++org_data) {
+      if(*data != *org_data) {
+        cerr << "StereoData is corrupted!" << endl;
+        exit(EXIT_FAILURE);
+      }
+    }
     OBStereo::Ref atom_id;
     OBStereo::Ref bond_id;
     for (std::vector<OBGenericData*>::iterator data = _vdata.begin(); data != _vdata.end(); ++data) {
