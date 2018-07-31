@@ -1,24 +1,35 @@
 #ifndef COLOR_H
 #define COLOR_H
 
+// the following snippet of code detects the current OS and
+// defines the appropriate macro that is used to wrap some
+// platform specific things
+#if defined(_WIN32) || defined(_WIN64)
+#   define COLOR_OS_WINDOWS
+#elif defined(__APPLE__)
+#   define COLOR_OS_MACOS
+#elif defined(__unix__) || defined(__unix)
+#   define COLOR_OS_LINUX
+#else
+#   error unsupported platform
+#endif
+
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
 #include <sstream>
-extern "C" {
-#include <unistd.h>
-}
-#include <stdio.h>
+#include <cstdio>
 
-#define ANSI_COLOR_RED     "\x1b[31m"
-#define ANSI_COLOR_GREEN   "\x1b[32m"
-#define ANSI_COLOR_YELLOW  "\x1b[33m"
-#define ANSI_COLOR_BLUE    "\x1b[34m"
-#define ANSI_COLOR_MAGENTA "\x1b[35m"
-#define ANSI_COLOR_CYAN    "\x1b[36m"
-#define ANSI_COLOR_RESET   "\x1b[0m"
-#define ANSI_COLOR_BOLD    "\x1b[1m"
-#define ANSI_COLOR_DIM     "\x1b[2m"
+#if defined(COLOR_OS_MACOS) || defined(COLOR_OS_LINUX)
+#   include <unistd.h>
+#elif defined(COLOR_OS_WINDOWS)
+#   include <io.h>
+#   include <windows.h>
+    #ifndef ENABLE_VIRTUAL_TERMINAL_PROCESSING
+    #define ENABLE_VIRTUAL_TERMINAL_PROCESSING 0x0004
+    #endif
+#endif
+
 
 namespace color {
 
@@ -67,9 +78,32 @@ bool update(std::ostream &os,int v);
 
 namespace {
     bool isAllowed = false;
+    inline
+    FILE* get_standard_stream(const std::ostream& stream)
+    {
+        if (&stream == &std::cout)
+            return stdout;
+        else if ((&stream == &std::cerr) || (&stream == &std::clog))
+            return stderr;
+
+        return 0;
+    }
     bool isTerminal()
     {
-        return isatty(STDERR_FILENO);
+        FILE* std_stream = get_standard_stream(stream);
+
+            // Unfortunately, fileno() ends with segmentation fault
+            // if invalid file descriptor is passed. So we need to
+            // handle this case gracefully and assume it's not a tty
+            // if standard stream is not detected, and 0 is returned.
+            if (!std_stream)
+                return false;
+
+        #if defined(COLOR_OS_MACOS) || defined(COLOR_OS_LINUX)
+            return ::isatty(fileno(std_stream));
+        #elif defined(COLOR_OS_WINDOWS)
+            return ::_isatty(_fileno(std_stream));
+        #endif    
     }
     bool supportsColor()
     {
@@ -83,23 +117,48 @@ namespace {
     	}
         return false;
     }
+namespace init {
+        int color()
+        {
+            #if defined(COLOR_OS_WINDOWS)
+                HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+                if (hOut == INVALID_HANDLE_VALUE)
+                {
+                    return GetLastError();
+                }
+
+                DWORD dwMode = 0;
+                if (!GetConsoleMode(hOut, &dwMode))
+                {
+                    return GetLastError();
+                }
+
+                dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+                if (!SetConsoleMode(hOut, dwMode))
+                {
+                    return GetLastError();
+                }
+            #endif
+                return 0;
+        }
+        void checkterm(std::ostream &s){
+            isAllowed = isTerminal(s);
+        }
+    }
     std::ostream &operator<<(std::ostream &os, color::style v)
-    {   
+    {
+        init::checkterm(os);   
         return isAllowed && update(os,static_cast<int>(v))? os << "\e[" << static_cast<int>(v) << "m" : os;
     }
     std::ostream &operator<<(std::ostream &os, color::fg v)
-    {   
+    {  
+	init::checkterm(os); 
         return isAllowed && update(os,static_cast<int>(v))? os << "\e[" << static_cast<int>(v) << "m" : os;
     }
     std::ostream &operator<<(std::ostream &os, color::bg v)
-    {   
+    {  
+	init::checkterm(os); 
         return isAllowed && update(os,static_cast<int>(v))? os << "\e[" << static_cast<int>(v) << "m" : os;
-    }
-    namespace init {
-        void color()
-        {
-            isAllowed = isTerminal() && supportsColor() ? true : false;
-        }
     }
 }
 #endif /* ifndef COLOR_H*/
