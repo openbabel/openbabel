@@ -74,6 +74,7 @@ namespace OpenBabel {
 
   private:
     OBMol                     _mol;
+    std::vector<OBGenericData*> _vdata;
     DistanceGeometryPrivate  *_d;    //!< Internal private data, including bounds matrix
 
     //! \brief Set the default upper bounds for the constraint matrix

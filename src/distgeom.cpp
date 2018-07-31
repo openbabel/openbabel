@@ -114,6 +114,7 @@ namespace OpenBabel {
 
     _mol = mol;
     _mol.SetDimension(3);
+    _vdata = _mol.GetAllData(OBGenericDataType::StereoData);
     _d = new DistanceGeometryPrivate(mol.NumAtoms());
 
     SetUpperBounds();
@@ -423,8 +424,8 @@ namespace OpenBabel {
     // OK, check and correct double bond cis/trans stereochemistry
     // Get CisTransStereos and make a vector of corresponding OBStereoUnits
     OBStereoUnitSet sgunits;
-    std::vector<OBGenericData*> vdata = _mol.GetAllData(OBGenericDataType::StereoData);
-    for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data)
+    //std::vector<OBGenericData*> vdata = _mol.GetAllData(OBGenericDataType::StereoData);
+    for (std::vector<OBGenericData*>::iterator data = _vdata.begin(); data != _vdata.end(); ++data)
       if (((OBStereoBase*)*data)->GetType() == OBStereo::CisTrans) {
         OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
         if (ct->GetConfig().specified) {
@@ -584,8 +585,8 @@ namespace OpenBabel {
     OBBond *bc;
 
     OBStereoUnitSet sgunits;
-    std::vector<OBGenericData*> vdata = _mol.GetAllData(OBGenericDataType::StereoData);
-    for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data)
+    //std::vector<OBGenericData*> vdata = _mol.GetAllData(OBGenericDataType::StereoData);
+    for (std::vector<OBGenericData*>::iterator data = _vdata.begin(); data != _vdata.end(); ++data)
       if (((OBStereoBase*)*data)->GetType() == OBStereo::CisTrans) {
         OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
         if (ct->GetConfig().specified) {
@@ -695,7 +696,7 @@ namespace OpenBabel {
         // Check stereochemistry
         if (stereo && stereo->IsCis(z->GetId(), c->GetId()))
           uBounds = lBounds; // Must be cis
-        if (stereo && stereo->IsTrans(z->GetId(), c->GetId()))
+        if (stereo && stereo->IsTrans(z->GetIdx(), c->GetId()))
           lBounds = uBounds; // Must be trans
 
         // Correcting ring shapes -- should be mostly cisoid
@@ -840,10 +841,10 @@ namespace OpenBabel {
     std::vector<OBCisTransStereo*> cistrans, newcistrans;
     std::vector<OBTetrahedralStereo*> tetra, newtetra;
     OBStereoUnitSet ctSunits, tetSunits;
-    std::vector<OBGenericData*> vdata = _mol.GetAllData(OBGenericDataType::StereoData);
+    //std::vector<OBGenericData*> vdata = _mol.GetAllData(OBGenericDataType::StereoData);
     OBStereo::Ref atom_id;
     OBStereo::Ref bond_id;
-    for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data) {
+    for (std::vector<OBGenericData*>::iterator data = _vdata.begin(); data != _vdata.end(); ++data) {
       // If it's cis-trans and specified
       if (((OBStereoBase*)*data)->GetType() == OBStereo::CisTrans) {
         OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
@@ -962,10 +963,10 @@ namespace OpenBabel {
     std::vector<OBTetrahedralStereo*> tetra, newtetra;
     std::vector<OBCisTransStereo*> cistrans, newcistrans;
     OBStereoUnitSet ctSunits, tetSunits;
-    std::vector<OBGenericData*> vdata = _mol.GetAllData(OBGenericDataType::StereoData);
+    //std::vector<OBGenericData*> vdata = _mol.GetAllData(OBGenericDataType::StereoData);
     OBStereo::Ref atom_id;
     OBStereo::Ref bond_id;
-    for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data) {
+    for (std::vector<OBGenericData*>::iterator data = _vdata.begin(); data != _vdata.end(); ++data) {
       // If it's cis-trans and specified
       if (((OBStereoBase*)*data)->GetType() == OBStereo::CisTrans) {
         OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
