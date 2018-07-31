@@ -29,6 +29,7 @@ GNU General Public License for more details.
 #include <openbabel/stereo/stereo.h>
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/stereo/tetrahedral.h>
+#include <openbabel/obconversion.h>
 
 using namespace std;
 
@@ -948,7 +949,6 @@ namespace OpenBabel {
                                - b.GetX() * a.GetY() * c.GetZ()
                                - c.GetX() * b.GetY() * a.GetZ();
         cerr << "volume: " << volume << " -> " << fixed_volume << ", Z: " << Z << endl;
-
       }
     } // looping through tetrahedral stereo centers
 
@@ -960,6 +960,9 @@ namespace OpenBabel {
     // First, gather the known, specified stereochemistry
     // Get TetrahedralStereos and make a vector of corresponding OBStereoUnits
     // Get CisTrans and make a vector of those too
+    OBConversion conv(&std::cin, &std::cerr);
+    conv.SetOutFormat("can");
+    conv.Write(&_mol);
     std::vector<OBTetrahedralStereo*> tetra, newtetra;
     std::vector<OBCisTransStereo*> cistrans, newcistrans;
     OBStereoUnitSet ctSunits, tetSunits;
