@@ -31,6 +31,9 @@ GNU General Public License for more details.
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/obconversion.h>
 
+#include <sstream>
+#include <string>
+
 using namespace std;
 
 #define DIST12_TOL   0.01f
@@ -956,75 +959,30 @@ namespace OpenBabel {
 
   bool OBDistanceGeometry::CheckStereoConstraints()
   {
-    // Check all stereo constraints
-    // First, gather the known, specified stereochemistry
-    // Get TetrahedralStereos and make a vector of corresponding OBStereoUnits
-    // Get CisTrans and make a vector of those too
-    OBConversion conv(&std::cin, &std::cerr);
-    conv.SetOutFormat("can");
-    conv.Write(&_mol);
-    std::vector<OBTetrahedralStereo*> tetra, newtetra;
-    std::vector<OBCisTransStereo*> cistrans, newcistrans;
-    OBStereoUnitSet ctSunits, tetSunits;
-    std::vector<OBGenericData*> vdata = _mol.GetAllData(OBGenericDataType::StereoData);
-    if(vdata.size() != _vdata.size()) {
-      cerr << "StereoData length is different!" << endl;
-      exit(EXIT_FAILURE);
-    }
-    for (std::vector<OBGenericData*>::iterator org_data = _vdata.begin(), data = vdata.begin();
-        org_data != _vdata.end() && data != vdata.end(); ++data, ++org_data) {
-      if(*data != *org_data) {
-        cerr << "StereoData is corrupted!" << endl;
-        exit(EXIT_FAILURE);
-      }
-    }
-    OBStereo::Ref atom_id;
-    OBStereo::Ref bond_id;
-    for (std::vector<OBGenericData*>::iterator data = _vdata.begin(); data != _vdata.end(); ++data) {
-      // If it's cis-trans and specified
-      if (((OBStereoBase*)*data)->GetType() == OBStereo::CisTrans) {
-        OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
-        if (ct->GetConfig().specified) {
-          cistrans.push_back(ct);
-          bond_id = _mol.GetBond(_mol.GetAtomById(ct->GetConfig().begin),
-                                 _mol.GetAtomById(ct->GetConfig().end))->GetId();
-          ctSunits.push_back(OBStereoUnit(OBStereo::CisTrans, bond_id));
-        }
-      }
+    // Check whether input SMILES and reconstructed SMILES are the same.
 
-      if (((OBStereoBase*)*data)->GetType() == OBStereo::Tetrahedral) {
-        OBTetrahedralStereo *th = dynamic_cast<OBTetrahedralStereo*>(*data);
-        if (th->GetConfig().specified) {
-          tetra.push_back(th);
-          atom_id = th->GetConfig().center;
-          tetSunits.push_back(OBStereoUnit(OBStereo::Tetrahedral, atom_id));
-        }
-      } // end tetrahedral
-    } // end for (i.e., saving the known, specified stereochemistry
+    // Input SMILES
+    OBConversion smi_input;
+    smi_input.SetOutFormat("can");
+    std::string str_smi_input = smi_input.WriteString(&_mol);
 
-    // We'll check cis/trans first
-    newcistrans = CisTransFrom3D(&_mol, ctSunits, false);
-    std::vector<OBCisTransStereo*>::iterator origct, newct;
-    for (origct=cistrans.begin(), newct=newcistrans.begin(); origct!=cistrans.end(); ++origct, ++newct) {
-      if ((*origct)->GetConfig(OBStereo::ShapeU)
-          !=  (*newct)->GetConfig(OBStereo::ShapeU)) {
-        // Wrong cis/trans stereochemistry
-        return false;
-      }
-    } // end checking cis-trans
+    // Reconstructed SMILES
+    // Firstly, get SDF of current molecule
+    std::stringstream ss_sdf;
+    OBConversion mol2sdf;
+    mol2sdf.SetOutStream(&ss_sdf);
+    mol2sdf.SetOutFormat("sdf");
+    mol2sdf.Write(&_mol);
 
-    // Perceive TetrahedralStereos from current geometry
-    newtetra = TetrahedralFrom3D(&_mol, tetSunits, false);
-    // Iterate through original and new stereo and validate
-    std::vector<OBTetrahedralStereo*>::iterator origth, newth;
-    for (origth=tetra.begin(), newth=newtetra.begin(); origth!=tetra.end(); ++origth, ++newth) {
-      if ( (*origth)->GetConfig(OBStereo::Clockwise, OBStereo::ViewFrom)
-           != (*newth)->GetConfig(OBStereo::Clockwise, OBStereo::ViewFrom) )
-        return false; // found an invalid center
-    }
+    // Next, get SMILES from the SDF
+    OBConversion sdf2smi;
+    sdf2smi.SetInStream(&ss_sdf);
+    sdf2smi.SetInAndOutFormats("sdf", "can");
+    OBMol mol_sdf;
+    sdf2smi.Read(&mol_sdf);
+    std::string str_smi = sdf2smi.WriteString(&mol_sdf);
 
-    // everything validated
-    return true;
+    return str_smi_input == str_smi;
   }
 
   Eigen::MatrixXf OBDistanceGeometry::GetBoundsMatrix()
@@ -1063,7 +1021,6 @@ namespace OpenBabel {
     float lBounds, uBounds, dist;
     bool finished = false;
     while (!finished) {
-
       for (unsigned int attempt = 0; attempt < 10; ++attempt) {
         // place atoms randomly inside the box
         FOR_ATOMS_OF_MOL(a, _mol) {
@@ -1072,8 +1029,7 @@ namespace OpenBabel {
           newPos = newPos*_d->maxBoxSize;
           a->SetVector(newPos);
         }
-        CorrectStereoConstraints();
-
+        //CorrectStereoConstraints();
         if (CheckStereoConstraints())
           break; // no need to continue
         else if (_d->debug)
@@ -1090,14 +1046,6 @@ namespace OpenBabel {
         lambda = 1.0 - damp*count; // damp the oscillations each cycle
         converged = true; // unless we swap atoms
         // either move atoms or correct stereo constraints
-        if (generator.NextFloat() > 0.9) {
-          // correct stereo contraints
-          if (!CheckStereoConstraints()) {
-            CorrectStereoConstraints(lambda);
-            converged = false;
-          }
-        } else {
-
         // remember atom indexes from 1
         for (i = 1; i <= _mol.NumAtoms(); ++i) {
           a = _mol.GetAtom(i);
@@ -1127,15 +1075,11 @@ namespace OpenBabel {
 
           } // end j
         } // end looping through all pairs
-        }
-
         if (converged)
           break; // no need to further iterate
       }
 
       finished = (CheckStereoConstraints() && CheckBounds());
-      if(finished)
-        cerr << "OK!" << endl;
 
       if (_d->debug && !finished)
         cerr << "Stereo unsatisfied, trying again" << endl;
