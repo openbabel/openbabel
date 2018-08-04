@@ -15,11 +15,13 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/reactionfacade.h>
 #include <openbabel/stereo/stereo.h>
+#include <openbabel/obfunctions.h>
 #include <openbabel/reaction.h>
 #include <openbabel/tokenst.h>
-#include <openbabel/text.h>
 #include <openbabel/alias.h>
+#include <openbabel/text.h>
 #include "chemdrawcdx.h"
 
 #include <iostream>
@@ -164,7 +166,7 @@ private:
   bool        DoFragment(CDXReader& cdxr, OBMol* pmol);
   bool        DoFragmentImpl(CDXReader& cdxr, OBMol* pmol,
          map<CDXObjectID, unsigned>& atommap, map<OBBond*, OBStereo::BondDirection>& updown);
-  bool        DoReaction(CDXReader& cdxr, OBReaction* pReact);
+  bool        DoReaction(CDXReader& cdxr, OBMol* pReact);
   std::string DoText(CDXReader& cdxr);
 
   std::vector<OBMol*> LookupMol(CDXObjectID id);
@@ -286,7 +288,8 @@ bool ChemDrawBinaryXFormat::TopLevelParse
 
     else if(tag == kCDXObj_ReactionStep && readReactions)
     {
-      OBReaction* pReact = new OBReaction;
+      OBMol* pReact = new OBMol;
+      pReact->SetIsReaction();
       ok = DoReaction(cdxr, pReact);
       // Output OBReaction and continue 
       if(pReact)
@@ -316,10 +319,11 @@ bool ChemDrawBinaryXFormat::TopLevelParse
   return true;
 }
 ///////////////////////////////////////////////////////////////////////
-bool ChemDrawBinaryXFormat::DoReaction(CDXReader& cdxr, OBReaction* pReact)
+bool ChemDrawBinaryXFormat::DoReaction(CDXReader& cdxr, OBMol* pReact)
 {
   CDXTag tag;
   CDXObjectID id;
+  OBReactionFacade facade(pReact);
   while( (tag = cdxr.ReadNext()) )
   {
     if(tag ==	kCDXProp_ReactionStep_Reactants)
@@ -332,20 +336,7 @@ bool ChemDrawBinaryXFormat::DoReaction(CDXReader& cdxr, OBReaction* pReact)
         for(unsigned i=0;i<molvec.size();++i)
           if(strcmp(molvec[i]->GetTitle(),"justplus"))
           {
-            // If there is a product with same ID,
-            // clone it since this will be deleted in WriteChemObject
-            if (_lastProdId && _lastProdId == id)
-            {
-              OBMol* pmol = new OBMol(*molvec[i]);
-              // Mark as used
-              pmol->SetFlags(molvec[i]->GetFlags());
-              pReact->AddReactant(obsharedptr<OBMol>(pmol));
-            }
-
-            else
-            {
-              pReact->AddReactant(obsharedptr<OBMol>(molvec[i]));
-            }
+            facade.AddComponent(molvec[i], REACTANT);
           }
       }
     }
@@ -359,7 +350,7 @@ bool ChemDrawBinaryXFormat::DoReaction(CDXReader& cdxr, OBReaction* pReact)
         for(unsigned i=0;i<molvec.size();++i)
           if(strcmp(molvec[i]->GetTitle(),"justplus"))
           {
-            pReact->AddProduct(obsharedptr<OBMol>(molvec[i]));
+            facade.AddComponent(molvec[i], PRODUCT);
             _lastProdId = id;
           }
       }
@@ -367,8 +358,8 @@ bool ChemDrawBinaryXFormat::DoReaction(CDXReader& cdxr, OBReaction* pReact)
     else if(tag==kCDXProp_ReactionStep_Arrows)
     {
       READ_INT32(cdxr.data(),id);
-      if(LookupGraphic(id)==equilArrow)
-        pReact->SetReversible();
+      //if(LookupGraphic(id)==equilArrow) // TODO? Store reversibility somehow?
+      //  pReact->SetReversible();
     }
   }
   return true;
@@ -461,13 +452,15 @@ bool ChemDrawBinaryXFormat::DoFragmentImpl(CDXReader& cdxr, OBMol* pmol,
        map<CDXObjectID, unsigned>& atommap, map<OBBond*, OBStereo::BondDirection>& updown)
 {
   CDXTag tag;
+  std::vector<OBAtom*> handleImplicitCarbons;
   while((tag = cdxr.ReadNext(objectsOnly)))
   {
     if(tag==kCDXObj_Node)
     {
       unsigned nodeID = cdxr.CurrentID();
       bool isAlias=false, hasElement=false;
-      UINT16 atnum=-1, spin=0;
+      bool hasNumHs = false;
+      UINT16 atnum=-1, spin=0, numHs=0;
       int x, y, charge=0, iso=0;
       string aliastext;
 
@@ -506,6 +499,8 @@ bool ChemDrawBinaryXFormat::DoFragmentImpl(CDXReader& cdxr, OBMol* pmol,
           READ_INT16(cdxr.data(),iso);
           break;
         case kCDXProp_Atom_NumHydrogens:
+          READ_INT16(cdxr.data(), numHs);
+          hasNumHs = true;
           break;
         case kCDXProp_Atom_CIPStereochemistry:
           break;
@@ -553,6 +548,10 @@ bool ChemDrawBinaryXFormat::DoFragmentImpl(CDXReader& cdxr, OBMol* pmol,
         if(atnum==0xffff)
           atnum = 6; //atoms are C by default
         pAtom->SetAtomicNum(atnum);
+        if (hasNumHs)
+          pAtom->SetImplicitHCount(numHs);
+        else if (atnum==6)
+          handleImplicitCarbons.push_back(pAtom);
         pAtom->SetFormalCharge(charge);
         pAtom->SetIsotope(iso);
         pAtom->SetSpinMultiplicity(spin);
@@ -621,6 +620,12 @@ bool ChemDrawBinaryXFormat::DoFragmentImpl(CDXReader& cdxr, OBMol* pmol,
       }
     }
   }
+  // Handle 'implicit carbons' by adjusting their valence with
+  // implicit hydrognes
+  for(vector<OBAtom*>::iterator vit=handleImplicitCarbons.begin();
+      vit!=handleImplicitCarbons.end(); ++vit)
+    OBAtomAssignTypicalImplicitHydrogens(*vit);
+
   return true;
 }
 
