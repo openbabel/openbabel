@@ -25,6 +25,54 @@ void test_Fix1912_PDBReading()
   OB_COMPARE(res->GetChain(), 'A');
 }
 
+std::string remove_slashr(const char* smi)
+{
+  // Remove \r if present to normalise across platforms
+  std::string ans;
+  const char *p = smi;
+  while (*p) {
+    if (*p != '\r')
+      ans += *p;
+    p++;
+  }
+  return ans;
+}
+
+struct CdxData {
+  const char* fname;
+  const char* smi;
+};
+
+// Some basic reading of ChemDraw files
+// Note that we don't correctly read radicals - TODO
+// Also, converting ChemDraw doesn't work with the Read() interface, only Convert()
+void test_ChemDraw_Basic()
+{
+  static const CdxData cdxData[] = {
+    { "ethanol.cdx", "CCO\t\n" },
+    // cyclohexane -> benzene reaction, plus another cyclohexane drawn on its own
+    { "molrxnmix.cdx", "C1CCCCC1>>c1ccccc1\t\nC1CCCCC1\t\n" },
+  };
+
+  ios_base::openmode imode = ios_base::in | ios_base::binary;
+  unsigned int size = sizeof(cdxData) / sizeof(CdxData);
+  OBConversion conv;
+  OB_REQUIRE(conv.SetInAndOutFormats("cdx", "smi"));
+  std::stringstream outs;
+  conv.SetOutStream(&outs);
+
+  for (int i=0; i<size; ++i) {
+    std::string fname = OBTestUtil::GetFilename(cdxData[i].fname);
+    std::ifstream ifs(fname.c_str(), imode);
+    OB_REQUIRE(ifs.good());
+    conv.SetInStream(&ifs);
+    outs.str("");
+    conv.Convert();
+    std::string out = outs.str();
+    OB_COMPARE(remove_slashr(out.c_str()), cdxData[i].smi);
+  }
+}
+
 // A basic test of functionality
 void test_OBChemTsfm()
 {
@@ -382,6 +430,9 @@ int regressionstest(int argc, char* argv[])
     break;
   case 227:
     test_OBChemTsfm();
+    break;
+  case 228:
+    test_ChemDraw_Basic();
     break;
   case 240:
     test_Fix1912_PDBReading();
