@@ -224,6 +224,7 @@ int main(int argc, char **argv)
 	bool minimize = false;
 	bool separate = false;
 	bool help = false;
+	bool docross = false;
 	string fileRef;
 	string fileTest;
 	string fileOut;
@@ -232,10 +233,11 @@ int main(int argc, char **argv)
 	desc.add_options()
 	("reference", value<string>(&fileRef)->required(),
 			"reference structure(s) file")
-	("test", value<string>(&fileTest)->required(), "test structure(s) file")
+	("test", value<string>(&fileTest), "test structure(s) file")
 	("firstonly,f", bool_switch(&firstOnly),
 			"use only the first structure in the reference file")
 	("minimize,m", bool_switch(&minimize), "compute minimum RMSD")
+	("cross,x", bool_switch(&docross), "compute all n^2 RMSD distances between molecules of reference file")
   ("separate,s", bool_switch(&separate), "separate reference file into constituent molecules and report best RMSD")
 	("out", value<string>(&fileOut), "re-oriented test structure output")
 	("help", bool_switch(&help), "produce help message");
@@ -263,6 +265,12 @@ int main(int argc, char **argv)
 		<< "Computes the heavy-atom RMSD of identical compound structures.\n";
 		cout << desc;
 		exit(0);
+	}
+
+	if(!docross && fileTest.size() == 0) {
+	  cerr << "Command line parse error: the option '--test' is required but missing\n";
+	  cerr << desc;
+	  exit(-1);
 	}
 
 	//open mols
@@ -310,22 +318,6 @@ int main(int argc, char **argv)
 		cerr << "Cannot read fixed molecule file: " << fileRef << endl;
 		exit(-1);
 	}
-
-	//check comparison file
-	std::ifstream uncompressed_test(fileTest.c_str());
-	iostreams::filtering_stream<iostreams::input> ifstest;
-	pos = fileTest.rfind(".gz");
-	if (pos != string::npos)
-	{
-		ifstest.push(iostreams::gzip_decompressor());
-	}
-	ifstest.push(uncompressed_test);
-
-	if (!ifstest || !uncompressed_test)
-	{
-		cerr << "Cannot read file: " << fileTest << endl;
-		exit(-1);
-	}
 	
 	std::ofstream out;
 	if(fileOut.size() > 0)
@@ -333,47 +325,88 @@ int main(int argc, char **argv)
 		out.open(fileOut.c_str());
 	}
 
-	while (refconv.Read(&molref, &ifsref))
-	{
-	  vector<OBMol> refmols;
-	  if(separate) {
-	    refmols = molref.Separate();
-	  } else {
-	    refmols.push_back(molref);
+
+	if(docross) {
+	  //load in the entire reference file
+    vector<OBMol> refmols;
+    while (refconv.Read(&molref, &ifsref))
+    {
+       processMol(molref);
+       refmols.push_back(molref);
+    }
+
+    for(unsigned i = 0, n = refmols.size() ; i < n; i++) {
+      OBMol& ref = refmols[i];
+      Matcher matcher(ref);
+      cout << ref.GetTitle();
+      for(unsigned j = 0; j < n; j++) {
+        OBMol& moltest = refmols[j];
+        double rmsd = matcher.computeRMSD(moltest, minimize);
+        cout << ", " << rmsd;
+      }
+      cout << "\n";
+    }
+
+	} else {
+
+	  //check comparison file
+	  std::ifstream uncompressed_test(fileTest.c_str());
+	  iostreams::filtering_stream<iostreams::input> ifstest;
+	  pos = fileTest.rfind(".gz");
+	  if (pos != string::npos)
+	  {
+	    ifstest.push(iostreams::gzip_decompressor());
+	  }
+	  ifstest.push(uncompressed_test);
+
+	  if (!ifstest || !uncompressed_test)
+	  {
+	    cerr << "Cannot read file: " << fileTest << endl;
+	    exit(-1);
 	  }
 
-	  vector<Matcher> matchers;
-	  for(unsigned i = 0, n = refmols.size(); i < n; i++) {
-	    processMol(refmols[i]);
-	    Matcher matcher(refmols[i]); // create the matcher
-	    matchers.push_back(matcher);
-	  }
+    while (refconv.Read(&molref, &ifsref))
+    {
+      vector<OBMol> refmols;
+      if(separate) {
+        refmols = molref.Separate();
+      } else {
+        refmols.push_back(molref);
+      }
 
-		OBMol moltest;
-		while (testconv.Read(&moltest, &ifstest))
-		{
-			if (moltest.Empty())
-				break;
+      vector<Matcher> matchers;
+      for(unsigned i = 0, n = refmols.size(); i < n; i++) {
+        processMol(refmols[i]);
+        Matcher matcher(refmols[i]); // create the matcher
+        matchers.push_back(matcher);
+      }
 
-			processMol(moltest);
+      OBMol moltest;
+      while (testconv.Read(&moltest, &ifstest))
+      {
+        if (moltest.Empty())
+          break;
 
-			double bestRMSD = HUGE_VAL;
-			for(unsigned i = 0, n = matchers.size(); i < n; i++) {
-			  double rmsd = matchers[i].computeRMSD(moltest, minimize);
-			  if(rmsd < bestRMSD) bestRMSD = rmsd;
-			}
+        processMol(moltest);
 
-			cout << "RMSD " << molref.GetTitle() << ":" <<  moltest.GetTitle() << " " << bestRMSD << "\n";
-			
-			if(out)
-			{
-				outconv.Write(&moltest, &out);
-			}
-			if (!firstOnly)
-			{
-				break;
-			}
-		}
+        double bestRMSD = HUGE_VAL;
+        for(unsigned i = 0, n = matchers.size(); i < n; i++) {
+          double rmsd = matchers[i].computeRMSD(moltest, minimize);
+          if(rmsd < bestRMSD) bestRMSD = rmsd;
+        }
+
+        cout << "RMSD " << molref.GetTitle() << ":" <<  moltest.GetTitle() << " " << bestRMSD << "\n";
+
+        if(out)
+        {
+          outconv.Write(&moltest, &out);
+        }
+        if (!firstOnly)
+        {
+          break;
+        }
+      }
+    }
 	}
 	return (0);
 }
