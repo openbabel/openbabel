@@ -1,6 +1,8 @@
 #ifndef COLOR_H
 #define COLOR_H
-
+#ifdef __cplusplus  
+extern "C" {
+#endif
 // the following snippet of code detects the current OS and
 // defines the appropriate macro that is used to wrap some
 // platform specific things
@@ -73,7 +75,7 @@ struct streamstate {
     std::string cerrstate;
     std::string clogstate;
 };
-extern "C" streamstate state;
+streamstate state;
 
 namespace {
     bool isAllowed = false;    
@@ -177,4 +179,7 @@ namespace init {
         return isAllowed && update(os,static_cast<int>(v))? os << "\e[" << static_cast<int>(v) << "m" : os;
     }
 }
+#ifdef __cplusplus  
+}
+#endif
 #endif /* ifndef COLOR_H*/
