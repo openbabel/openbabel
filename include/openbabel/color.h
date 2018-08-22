@@ -1,8 +1,9 @@
 #ifndef COLOR_H
 #define COLOR_H
-#ifdef __cplusplus  
-extern "C" {
+#ifndef COLORS
+#define COLORS
 #endif
+
 // the following snippet of code detects the current OS and
 // defines the appropriate macro that is used to wrap some
 // platform specific things
@@ -69,13 +70,13 @@ namespace color {
         gray1    = 47
     };
 }
-
-struct streamstate {
+class COLORS streamstate {
+    public:
     std::string coutstate;
     std::string cerrstate;
     std::string clogstate;
 };
-streamstate state;
+COLORS extern streamstate state;
 
 namespace {
     bool isAllowed = false;    
