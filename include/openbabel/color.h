@@ -180,7 +180,4 @@ namespace init {
         return isAllowed && update(os,static_cast<int>(v))? os << "\e[" << static_cast<int>(v) << "m" : os;
     }
 }
-#ifdef __cplusplus  
-}
-#endif
 #endif /* ifndef COLOR_H*/
