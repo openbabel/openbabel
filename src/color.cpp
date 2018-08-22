@@ -1,5 +1,6 @@
+extern "C" {
 #include <openbabel/color.h>
-
+}
 streamstate state = {"","",""};
 
 // bool update(std::ostream &os,int v){
