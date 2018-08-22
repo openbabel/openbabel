@@ -73,7 +73,7 @@ struct streamstate {
     std::string cerrstate;
     std::string clogstate;
 };
-extern streamstate state;
+extern "C" streamstate state;
 
 namespace {
     bool isAllowed = false;    
