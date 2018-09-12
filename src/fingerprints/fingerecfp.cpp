@@ -169,7 +169,7 @@ static void ECFPPass(OpenBabel::OBMol &mol,
     if (atom->IsHydrogen())
       continue;
     OpenBabel::OBAtom* aptr = &(*atom);
-    unsigned int idx = aptr->GetIdx()-1;
+    unsigned int idx = aptr->GetIdx();
     AtomInfo *ptr = &ainfo[idx];
 
     std::vector<NborInfo> nbrs;
@@ -187,6 +187,7 @@ static void ECFPPass(OpenBabel::OBMol &mol,
       } else order = 4;
 
       unsigned int nidx = nptr->GetIdx();
+
       nbrs.push_back(NborInfo(order,ainfo[nidx].e[pass-1]));
       // for duplicate removal as described in paper (?)
       if (pass == 1)
@@ -227,7 +228,7 @@ static void ECFPFirstPass(OpenBabel::OBMol &mol,
     if (atom->IsHydrogen())
       continue;
     OpenBabel::OBAtom* aptr = &(*atom);
-    unsigned int idx = aptr->GetIdx()-1;
+    unsigned int idx = aptr->GetIdx();
     buffer[0] = aptr->GetHvyValence(); // degree of heavy atom connections
     buffer[1] = aptr->BOSum() - aptr->ExplicitHydrogenCount(); // valence of heavy atom connections
     buffer[2] = aptr->GetAtomicNum();
@@ -244,18 +245,18 @@ bool fingerprintECFP::GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int n
 {
 	OBMol* pmol = dynamic_cast<OBMol*>(pOb);
 	if(!pmol) return false;
-	fp.resize(1024/Getbitsperint());
+  fp.resize(0); // clear without deallocating memory
+  fp.resize(1024/Getbitsperint());
 
   _ss.str("");
 
   unsigned int pass;
 
-  fp.clear();
-
   unsigned int count = pmol->NumAtoms();
   if (count == 0) return true;
 
-  AtomInfo *ainfo = new AtomInfo[count];
+  // Access this using the Atom::Idx()
+  AtomInfo *ainfo = new AtomInfo[count+1];
 
   ECFPFirstPass(*pmol,ainfo);
   for (pass=1; pass<= _radius; pass++)
@@ -265,7 +266,7 @@ bool fingerprintECFP::GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int n
   FOR_ATOMS_OF_MOL(atom, pmol) {
     if (atom->IsHydrogen())
       continue;
-    unsigned int idx = atom->GetIdx()-1;
+    unsigned int idx = atom->GetIdx();
     if (_keepdups) {
       for (pass=0; pass<= _radius; pass++)
         fp.push_back(ainfo[idx].e[pass]);

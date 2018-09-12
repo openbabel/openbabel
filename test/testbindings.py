@@ -48,6 +48,21 @@ class TestPythonBindings(PythonBindings):
         conv.ReadString(mol, "CC(=O)Cl")
         self.assertAlmostEqual(mol.GetMolWt(), 78.5, 1)
 
+    def testECFP(self):
+        data = [
+                ("CC", 1, 2),
+                ("CCC", 2, 4),
+                ("CC(C)C", 2, 4),
+                ("CC(C)(C)C", 2, 4),
+                ]
+        for smi, numA, numB in data:
+            mol = pybel.readstring("smi", smi)
+            ecfp0 = mol.calcfp("ecfp0").bits
+            self.assertEqual(len(ecfp0), numA)
+            ecfp2 = mol.calcfp("ecfp2").bits
+            self.assertEqual(len(ecfp2), numB)
+            for bit in ecfp0:
+                self.assertTrue(bit in ecfp2)
     
 class PybelWrapper(PythonBindings):
     def testDummy(self):
