@@ -22,6 +22,7 @@ import os
 import re
 import sys
 import unittest
+import itertools
 
 here = sys.path[0]
 iswin = sys.platform.startswith("win")
@@ -461,6 +462,17 @@ H         -0.26065        0.64232       -2.62218
         self.assertEqual(elements, [6,6,6,6,6,6,6,8,17])
         bonds = list(ob.OBMolBondIter(mol.OBMol))
         self.assertEqual(len(bonds), 9)
+
+    def testProper2DofFragments(self):
+        """Check for proper handling of fragments in mcdl routines, see issue #1889"""
+        mol = pybel.readstring("smi", "[H+].CC[O-].CC[O-]")
+        mol.draw(show=False, update=True)
+        dists = [
+            abs(a.coords[0] - b.coords[0]) + abs(a.coords[1] - b.coords[1])
+            for a, b in itertools.combinations(mol.atoms, 2)
+        ]
+        mindist = min(dists)
+        self.assertTrue(mindist > 0.00001)
 
 class NewReactionHandling(PythonBindings):
 
