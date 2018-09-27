@@ -5983,7 +5983,7 @@ namespace OpenBabel {
       pf->fragID1=0;
       pf->fragID2=0;
       pf->fragID3=0;
-      pf->fragFirstAtomNo=nA+1;
+      pf->fragFirstAtomNo=nA; // Was nA+1, lead to off-by-one problems with fragments
       pf->fragmentCount=1;
       pf->fragWidth=xMax-xMin;
       pf->fragHeight=yMax-yMin;
