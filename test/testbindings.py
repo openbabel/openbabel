@@ -90,6 +90,16 @@ class TestSuite(PythonBindings):
         mol.UnsetAromaticPerceived()
         self.assertFalse(mol.GetFirstAtom().IsAromatic())
 
+    def testLPStereo(self):
+        """Ensure that nitrogen and sulfur can support LP stereo"""
+        data = ["[N@@](Cl)(Br)I", "Cl[N@@](Br)I",
+                "[S@@](Cl)(Br)I", "Cl[S@@](Br)I"]
+        for smi in data:
+            mol = pybel.readstring("smi", smi)
+            self.assertTrue(mol.OBMol.GetData(ob.StereoData))
+            nsmi = mol.write("smi").rstrip()
+            self.assertEqual(smi, nsmi)
+
     def testSmilesAtomOrder(self):
         """Ensure that SMILES atom order is written correctly"""
         data = [("CC", "1 2"),
