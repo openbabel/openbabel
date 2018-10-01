@@ -41,6 +41,16 @@ void test_OBChemTsfm()
   b.Apply(mol);
   out = conv.WriteString(&mol, true);
   OB_COMPARE(out, "ClC=CBr");
+
+  // Test for wrapping of unsigned integers
+  conv.ReadString(&mol, "ClC(=O)[O]");
+  start = "[#6]-[OD1:1]";
+  end = "[#6]-[O-1:1]";
+  OBChemTsfm c;
+  c.Init(start, end);
+  c.Apply(mol);
+  out = conv.WriteString(&mol, true);
+  OB_COMPARE(out, "ClC(=O)[OH255-]");  // we would expect "ClC(=O)[O-]"
 }
 
 // Open Babel was previously disappearing triple bonds when provided with SMILES
