@@ -450,12 +450,19 @@ namespace OpenBabel
   **/
 
   OBMolBondBFSIter::OBMolBondBFSIter(OBMol *mol, int StartIndex):
-    _parent(mol), _ptr(_parent->GetBond(StartIndex))
+    _parent(mol)
   {
-    if (!_ptr) return;
+    unsigned int numbonds = _parent->NumBonds();
+    if (numbonds == 0) {
+      _ptr = 0; // mark as invalid
+      return;
+    }
+    _ptr = _parent->GetBond(StartIndex);
+    if (!_ptr)
+      return;
     
-    _notVisited.Resize(_parent->NumBonds());
-    _notVisited.SetRangeOn(0, _parent->NumBonds() - 1);
+    _notVisited.Resize(numbonds);
+    _notVisited.SetRangeOn(0, numbonds - 1);
     
     _notVisited.SetBitOff(_ptr->GetIdx());
 
@@ -482,17 +489,24 @@ namespace OpenBabel
   }
 
   OBMolBondBFSIter::OBMolBondBFSIter(OBMol &mol, int StartIndex):
-    _parent(&mol), _ptr(_parent->GetBond(StartIndex))
+    _parent(&mol)
   {
-    if (!_ptr) return;
+    unsigned int numbonds = _parent->NumBonds();
+    if (numbonds == 0) {
+      _ptr = 0; // mark as invalid
+      return;
+    }
+    _ptr = _parent->GetBond(StartIndex);
+    if (!_ptr)
+      return;
 
-    _notVisited.Resize(_parent->NumBonds());
-    _notVisited.SetRangeOn(0, _parent->NumBonds() - 1);
+    _notVisited.Resize(numbonds);
+    _notVisited.SetRangeOn(0, numbonds - 1);
     
     _notVisited.SetBitOff(_ptr->GetIdx());
 
     // Set up storage for the depths
-    _depth.resize(_parent->NumBonds(), 0);
+    _depth.resize(numbonds, 0);
     _depth[_ptr->GetIdx()] = 1;
 
     for( OBAtomBondIter b(_ptr->GetBeginAtom()); b; ++b )
