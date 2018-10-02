@@ -41,6 +41,24 @@ void test_OBChemTsfm()
   b.Apply(mol);
   out = conv.WriteString(&mol, true);
   OB_COMPARE(out, "ClC=CBr");
+
+  conv.ReadString(&mol, "ClC(=O)[O]");
+  start = "[#6]-[OD1:1]";
+  end = "[#6]-[O-1:1]";
+  OBChemTsfm c;
+  c.Init(start, end);
+  c.Apply(mol);
+  out = conv.WriteString(&mol, true);
+  OB_COMPARE(out, "ClC(=O)[O-]");
+
+  conv.ReadString(&mol, "Cl[C]CBr");
+  start = "Cl[C:1]-[C:2]";
+  end = "[C:1]=[C:2]";
+  OBChemTsfm d;
+  d.Init(start, end);
+  d.Apply(mol);
+  out = conv.WriteString(&mol, true);
+  OB_COMPARE(out, "Cl[C]=CBr");
 }
 
 // Open Babel was previously disappearing triple bonds when provided with SMILES
