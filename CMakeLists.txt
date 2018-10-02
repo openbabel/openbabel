@@ -231,6 +231,12 @@ check_library_exists(dl dlopen "" HAVE_LIBDL)
 set(CMAKE_EXTRA_INCLUDE_FILES time.h)
 check_type_size(clock_t CLOCK_T)
 
+# Cygwin may be missing an XDR function: https://www.gnu.org/software/gnulib/manual/html_node/xdrstdio_005fcreate.html
+if(CYGWIN)
+  set(HAVE_RPC_XDR_H FALSE)
+  message(STATUS "Disabling rpc/xdr.h for Cygwin")
+endif()
+
 # Get the GCC version - from KDE4 cmake files
 if(CMAKE_COMPILER_IS_GNUCXX)
   if(NOT(${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 4.0.0))
