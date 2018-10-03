@@ -316,9 +316,12 @@ namespace OpenBabel
           for (j = _vchrg.begin();j != _vchrg.end();++j)
             if (j->first < (signed)i->size()) { //goof proofing
               OBAtom *atom = mol.GetAtom((*i)[j->first]);
-              unsigned int old_charge = atom->GetFormalCharge();
+              int old_charge = atom->GetFormalCharge();
               atom->SetFormalCharge(j->second);
-              atom->SetImplicitHCount(atom->GetImplicitHCount() + (j->second - old_charge));
+              int new_hcount = atom->GetImplicitHCount() + (j->second - old_charge);
+              if (new_hcount < 0)
+                new_hcount = 0;
+              atom->SetImplicitHCount(new_hcount);
             }
       }
 
@@ -340,7 +343,10 @@ namespace OpenBabel
               bond->SetBondOrder(j->second);
               for (int k = 0; k < 2; ++k) {
                 OBAtom* atom = k == 0 ? bond->GetBeginAtom() : bond->GetEndAtom();
-                atom->SetImplicitHCount(atom->GetImplicitHCount() - (j->second - old_bond_order));
+                int new_hcount = atom->GetImplicitHCount() - (j->second - old_bond_order);
+                if (new_hcount < 0)
+                  new_hcount = 0;
+                atom->SetImplicitHCount(new_hcount);
               }
             }
       }
