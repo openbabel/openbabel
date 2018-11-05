@@ -3,6 +3,12 @@ if(MINIMAL_BUILD)
         babel
   )
 else(MINIMAL_BUILD)
+  find_package(Boost COMPONENTS program_options iostreams)
+  if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
+  endif()
+
+
   set(tools
         babel
         obabel
@@ -44,7 +50,7 @@ if(BUILD_SHARED)
                     ARCHIVE DESTINATION lib${LIB_SUFFIX}
     )
   endforeach(tool)
-  TARGET_LINK_LIBRARIES(obrms boost_iostreams boost_program_options)
+  TARGET_LINK_LIBRARIES(obrms ${Boost_IOSTREAMS_LIBRARY} ${Boost_PROGRAM_OPTIONS_LIBRARY})
 
   if(NOT MINIMAL_BUILD)
     # obspectrophore -- requires getopt

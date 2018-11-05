@@ -362,6 +362,11 @@ else()
 endif()
 message(STATUS "Use ${OB_SHARED_PTR_IMPLEMENTATION} in ${OB_SHARED_PTR_HEADER}")
 
+find_package(Boost COMPONENTS program_options iostreams)
+  if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
+ endif()
+
 # Intel C++ Compiler
 # Note: Windows version uses different options!
 if(${CMAKE_CXX_COMPILER_ID} MATCHES Intel AND UNIX)
