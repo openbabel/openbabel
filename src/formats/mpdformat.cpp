@@ -60,7 +60,7 @@ namespace OpenBabel
 "             Similarity Searching Using Atom Environments, Information-Based\n"
 "             Feature Selection, and a Naive Bayesian Classifier.**\n"
 "             *J. Chem. Inf. Comput. Sci.* **2004**, *44*, 170-178.\n"
-"             [`Link <http://dx.doi.org/10.1021/ci034207y>`_]\n\n"
+"             [`Link <https://doi.org/10.1021/ci034207y>`_]\n\n"
 
            " Write Options: e.g. -xnc\n"
            "  n prefix molecule names with name of file \n"
@@ -70,7 +70,7 @@ namespace OpenBabel
 
     virtual const char* SpecificationURL()
     {
-      return "http://dx.doi.org/10.1021/ci034207y";
+      return "https://doi.org/10.1021/ci034207y";
     }; //optional
 
 

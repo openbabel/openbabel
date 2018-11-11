@@ -5816,7 +5816,7 @@ CH3Br and 2.25 for CH3I, in contrast, the old parameters give 1.31 and
 
 3. New van der Waals parameters have been suggested by David Mobley for
 c1, cg and ch atom types. The justification of the changes is discussed at
-http://dx.doi.org/10.1021/ct800409d
+https://doi.org/10.1021/ct800409d
 
 4. We have performed B3LYP/6-31G* optimization for 15 thousands marketed
 or experimental drugs/bio-actives. Reliable bond length and bond angle
