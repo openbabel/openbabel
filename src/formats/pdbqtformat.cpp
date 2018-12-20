@@ -296,6 +296,8 @@ namespace OpenBabel
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS)) {mol.ConnectTheDots(); mol.PerceiveBondOrders();}
 
+    mol.SetChainsPerceived();
+
     // clean out remaining blank lines
     std::streampos ipos;
     do

@@ -1027,6 +1027,7 @@ namespace OpenBabel
 
      pmol->EndModify();
      }
+   pmol->SetChainsPerceived();
    return (pmol->NumAtoms() > 0 ? true : false);
  }
 
