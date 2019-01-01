@@ -12,6 +12,19 @@
 using namespace std;
 using namespace OpenBabel;
 
+void test_Fix1912_PDBReading()
+{
+  // Reading from a PDB file should set the residues
+  // and mark chains as perceived
+  OBMolPtr mol = OBTestUtil::ReadFile("00T_ideal_het.pdb");
+  OB_ASSERT(mol->HasChainsPerceived());
+  OBAtom* atom = mol->GetAtom(1);
+  OBResidue* res = atom->GetResidue();
+  OB_REQUIRE(res != (OBResidue*)0);
+  OB_COMPARE(res->GetAtomID(atom), " N19");
+  OB_COMPARE(res->GetChain(), 'A');
+}
+
 // A basic test of functionality
 void test_OBChemTsfm()
 {
@@ -369,6 +382,9 @@ int regressionstest(int argc, char* argv[])
     break;
   case 227:
     test_OBChemTsfm();
+    break;
+  case 240:
+    test_Fix1912_PDBReading();
     break;
     //case N:
   //  YOUR_TEST_HERE();
