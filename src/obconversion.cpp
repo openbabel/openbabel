@@ -994,11 +994,17 @@ namespace OpenBabel {
     {
       StreamState savedOut;
       savedOut.pushOutput(*this);
+      // Set/reset the Index to 1 so that any initialization
+      // code in the formatters will be executed.
+      int oldIndex = Index;
+      Index = 1;
 
       SetOutStream(&newStream, false);
       Write(pOb);
-
       savedOut.popOutput(*this);
+
+      // Restore the Index
+      Index = oldIndex;
     }
 
     temp = newStream.str();
@@ -1034,6 +1040,9 @@ namespace OpenBabel {
       }
 
     SetOutStream(ofs, true);
+    // Set/reset the Index so that any initialization code
+    // in the formatters will be executed.
+    Index = 1;
     return Write(pOb);
   }
 
