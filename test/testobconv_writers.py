@@ -135,6 +135,17 @@ def get_converter(test_case, output_format, options=None):
         conv.SetOutputIndex(1)
     return conv
 
+def save_to_pasteboard(text):
+    # This test suite was developed on a Mac.
+    # This code copies the text to the paste buffer,
+    # which I can then use as the expected text.
+    import subprocess
+    p = subprocess.Popen(["pbcopy"],
+                         stdin=subprocess.PIPE)
+    p.stdin.write(text.encode("utf8"))
+    p.stdin.close()
+    p.wait()
+
 def test_write_string(test_case, mol, conv, expected_output, normalize):
     output = conv.WriteString(mol)
     ### Debugging output
@@ -143,15 +154,7 @@ def test_write_string(test_case, mol, conv, expected_output, normalize):
         print(output)
         print("===")
     if 0:
-        # This test suite was developed on a Mac.
-        # This code copies the text to the paste buffer,
-        # which I can then use as the expected text.
-        import subprocess
-        p = subprocess.Popen(["pbcopy"],
-                             stdin=subprocess.PIPE)
-        p.stdin.write(output.encode("utf8"))
-        p.stdin.close()
-        p.wait()
+        save_to_pasteboard(text)
 
     # Apply normalizations to both sides
     if normalize is not None:
@@ -190,6 +193,9 @@ def test_write_file(test_case, mol, conv, expected_output, normalize):
     finally:
         temp_file_object.close()
 
+    if 0:
+        save_to_pasteboard(output)
+        
     if normalize is not None:
         output = normalize(output)
         expected_output = normalize(expected_output)
@@ -212,6 +218,34 @@ def test_binary_write_file(test_case, mol, conv, expected_output, normalize):
     
     test_case.assertEqual(output, expected_output)
 
+def test_write_multi_file(test_case, mols, conv, expected_output, normalize):
+    temp_file_object = tempfile.NamedTemporaryFile()
+    temp_filename = temp_file_object.name
+    n = len(mols)
+    test_case.assertGreater(n, 0, "must have at least one molecule")
+    last = n-1
+    
+    try:
+        for i, mol in enumerate(mols):
+            conv.SetLast(i == last)
+            if i == 0:
+                test_case.assertTrue(conv.WriteFile(mol, temp_filename))
+            else:
+                test_case.assertTrue(conv.Write(mol))
+        with open(temp_filename) as f:
+            output = f.read()
+    finally:
+        temp_file_object.close()
+
+    if 0:
+        save_to_pasteboard(output)
+        
+    if normalize is not None:
+        output = normalize(output)
+        expected_output = normalize(expected_output)
+    test_case.assertMultiLineEqual(output, expected_output)
+    
+
 class WriteMixin(object):
     def assertWriters(self, output_format, expected_output, options=None, mol=None, normalize=None):
         mol = get_mol(self, mol)
@@ -228,6 +262,15 @@ class WriteMixin(object):
         mol = get_mol(self, mol)
         conv = get_converter(self, output_format, options)
         test_write_file(self, mol, conv, expected_output, normalize)
+
+    # Write 1 or more molecule to a file
+    def assertWriteMultiFile(self, output_format, expected_output, options=None, mols=None, normalize=None):
+        if mols is None:
+            # Get two of the default molecules
+            mols = [get_mol(self, None), get_mol(self, None)]
+            
+        conv = get_converter(self, output_format, options)
+        test_write_multi_file(self, mols, conv, expected_output, normalize)
         
     def assertBinaryWriters(self, output_format, expected_output, options=None, mol=None, normalize=None):
         mol = get_mol(self, mol)
@@ -805,6 +848,58 @@ class TestCML(unittest.TestCase, WriteMixin):
  </bondArray>
 </molecule>
 """)
+
+    def test_multimol_default(self):
+        # Write two phenols.
+        # When there are 2 or more molecules then each molecule
+        # is wrapped in a <cml> element.
+        self.assertWriteMultiFile("cml", """\
+<?xml version="1.0"?>
+<cml xmlns="http://www.xml-cml.org/schema">
+ <molecule id="phenol">
+  <atomArray>
+   <atom id="a1" elementType="C" hydrogenCount="1" x2="1.584600" y2="-0.024900"/>
+   <atom id="a2" elementType="C" hydrogenCount="1" x2="1.570300" y2="0.975500"/>
+   <atom id="a3" elementType="C" hydrogenCount="1" x2="2.429500" y2="1.488200"/>
+   <atom id="a4" elementType="C" hydrogenCount="1" x2="3.303100" y2="1.000400"/>
+   <atom id="a5" elementType="C" hydrogenCount="1" x2="3.317500" y2="-0.000000"/>
+   <atom id="a6" elementType="C" hydrogenCount="0" x2="0.000000" y2="0.000000"/>
+   <atom id="a7" elementType="O" hydrogenCount="1" x2="-1.000500" y2="0.005100"/>
+  </atomArray>
+  <bondArray>
+   <bond atomRefs2="a1 a6" order="2"/>
+   <bond atomRefs2="a1 a2" order="1"/>
+   <bond atomRefs2="a2 a3" order="2"/>
+   <bond atomRefs2="a3 a4" order="1"/>
+   <bond atomRefs2="a4 a5" order="2"/>
+   <bond atomRefs2="a5 a6" order="1"/>
+   <bond atomRefs2="a6 a7" order="1"/>
+  </bondArray>
+ </molecule>
+ <molecule id="phenol">
+  <atomArray>
+   <atom id="a1" elementType="C" hydrogenCount="1" x2="1.584600" y2="-0.024900"/>
+   <atom id="a2" elementType="C" hydrogenCount="1" x2="1.570300" y2="0.975500"/>
+   <atom id="a3" elementType="C" hydrogenCount="1" x2="2.429500" y2="1.488200"/>
+   <atom id="a4" elementType="C" hydrogenCount="1" x2="3.303100" y2="1.000400"/>
+   <atom id="a5" elementType="C" hydrogenCount="1" x2="3.317500" y2="-0.000000"/>
+   <atom id="a6" elementType="C" hydrogenCount="0" x2="0.000000" y2="0.000000"/>
+   <atom id="a7" elementType="O" hydrogenCount="1" x2="-1.000500" y2="0.005100"/>
+  </atomArray>
+  <bondArray>
+   <bond atomRefs2="a1 a6" order="2"/>
+   <bond atomRefs2="a1 a2" order="1"/>
+   <bond atomRefs2="a2 a3" order="2"/>
+   <bond atomRefs2="a3 a4" order="1"/>
+   <bond atomRefs2="a4 a5" order="2"/>
+   <bond atomRefs2="a5 a6" order="1"/>
+   <bond atomRefs2="a6 a7" order="1"/>
+  </bondArray>
+ </molecule>
+</cml>
+""")
+        
+
 
 ## # cmlr -- CML Reaction format
 ## XXX I don't know why the result is the empty string
@@ -1390,6 +1485,43 @@ class TestFPS(unittest.TestCase, WriteMixin):
 0000000000000000000002000000000000000000000000000000000000000000000000000000000000000008000000000000020000000000000000000000000008000000000000000000000002000000008000000000000040080000000000000000000000000002000000000000000000020000000000200800000000000000\tphenol
 """, normalize=normalize_fps)
 
+    def test_multimol_default(self):
+        # Test that the header is written once, rather than once per molecule.
+        phenol = get_mol(self, None)
+        ethane = get_mol(self, "CC ethane")
+        temp_file_object = tempfile.NamedTemporaryFile(suffix=".fps")
+        filename = temp_file_object.name
+        
+        conv = get_converter(self, "fps")
+        self.assertTrue(conv.WriteFile(phenol, filename))
+        self.assertEqual(conv.GetOutputIndex(), 1)
+        self.assertTrue(conv.Write(ethane))
+        self.assertEqual(conv.GetOutputIndex(), 2)
+        conv.CloseOutFile()
+        
+        with open(filename) as f:
+            # Ensure there is a header
+            line = f.readline()
+            self.assertEqual(line[:5], "#FPS1", line)
+            # Skip the rest of the header
+            ids = []
+            for line in f:
+                if line[:1] != "#":
+                    break
+            else:
+                self.fail("Reached end of file too early, after: %r" % (line,))
+            while 1:
+                self.assertNotEqual(line[:1], "#", "Second header?: %r" % (line,))
+                self.assertEqual(line.count("\t"), 1, "Wrong number of fields?: %r" % (line,))
+                hex_fp, id = line.rstrip("\n").split("\t", 1)
+                ids.append(id)
+                line = f.readline()
+                if not line:
+                    break
+
+            self.assertEqual(ids, ["phenol", "ethane"])
+        
+        
     def test_MACCS(self):
         self.assertWriters(self.fmt, """\
 #FPS1
