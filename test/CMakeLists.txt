@@ -249,7 +249,14 @@ endif(NOT MINGW AND NOT CYGWIN)
 if (PYTHON_BINDINGS)
   include(UsePythonTest)
   set(pybindtests
-      bindings _pybel example roundtrip cdjsonformat pcjsonformat)
+      bindings
+      _pybel
+      example 
+      obconv_writers
+      cdjsonformat
+      pcjsonformat
+      roundtrip
+      )
   foreach(pybindtest ${pybindtests})
     SET_SOURCE_FILES_PROPERTIES(test${pybindtest}.py PROPERTIES
         PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
