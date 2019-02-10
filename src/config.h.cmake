@@ -156,11 +156,6 @@
 #cmakedefine OB_SHARED_PTR_HEADER <@OB_SHARED_PTR_HEADER@>
 
 #if defined(WIN32)
- #ifndef HAVE_ISFINITE
-  #define isfinite _finite
-  #define HAVE_ISFINITE 1
- #endif
-
  #ifndef HAVE_SNPRINTF
   #define snprintf _snprintf
   #define HAVE_SNPRINTF 1
