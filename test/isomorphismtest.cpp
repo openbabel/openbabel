@@ -248,6 +248,28 @@ void testAutomorphismPreMapping()
   OB_ASSERT( aut.size() == 2 );
 }
 
+// https://github.com/openbabel/openbabel/issues/1929
+void testIsomorphism9()
+{
+  cout << "testIsomorphism9" << endl;
+  OBMol mol;
+  OBConversion conv;
+  conv.SetInFormat("smi");
+  conv.ReadString(&mol, "Cc1onc(C)c1");
+
+  OBQuery *query = CompileMoleculeQuery(&mol);
+  OBIsomorphismMapper *mapper = OBIsomorphismMapper::GetInstance(query);
+  OBIsomorphismMapper::Mapping map;
+  mapper->MapFirst(&mol, map);
+
+  OBIsomorphismMapper::Mapping::const_iterator iter;
+  for (iter=map.begin(); iter!=map.end(); ++iter)
+    OB_ASSERT( iter->first == iter->second);
+
+  delete query;
+  delete mapper;
+}
+
 int isomorphismtest(int argc, char* argv[])
 {
   int defaultchoice = 1;
@@ -293,6 +315,9 @@ int isomorphismtest(int argc, char* argv[])
     break;
   case 8:
     testAutomorphismPreMapping();
+    break;
+  case 9:
+    testIsomorphism9();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
