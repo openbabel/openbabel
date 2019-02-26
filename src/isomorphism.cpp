@@ -169,6 +169,10 @@ namespace OpenBabel {
        */
       bool matchCandidate(State &state, OBQueryAtom *queryAtom, OBAtom *queriedAtom)
       {
+        // check that the atom matches (see Matches in query.h for info on how it does the match)
+        if (!queryAtom->Matches(queriedAtom))
+          return false;
+
         // add the neighbors to the paths
         state.queryPath.push_back(queryAtom->GetIndex());
         state.queriedPath.push_back(queriedAtom->GetIndex());

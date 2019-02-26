@@ -1,8 +1,10 @@
 #include "obtest.h"
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
+#include <openbabel/query.h>
 #include <openbabel/phmodel.h>
 #include <openbabel/elements.h>
+#include <openbabel/isomorphism.h>
 
 #include <iostream>
 #include <string>
@@ -23,6 +25,24 @@ void test_Fix1912_PDBReading()
   OB_REQUIRE(res != (OBResidue*)0);
   OB_COMPARE(res->GetAtomID(atom), " N19");
   OB_COMPARE(res->GetChain(), 'A');
+}
+
+// PR#1929
+// The Isomorphism Mapper was ignoring atomic number during the mapping.
+// It turned out that it was not testing atom equivalences, and so it
+// could create mappings that swapped atomic number.
+void test_PR1929_Isomorphism()
+{
+  OBMol mol;
+  OBConversion conv;
+  conv.SetInFormat("smi");
+  conv.ReadString(&mol, "Cc1onc(C)c1");
+  OBQuery* query = CompileMoleculeQuery(&mol);
+  OBIsomorphismMapper *mapper = OBIsomorphismMapper::GetInstance(query);
+  OBIsomorphismMapper::Mappings maps;
+  mapper->MapAll(&mol, maps);
+  OB_ASSERT(maps.size() == 1);
+  delete query;
 }
 
 // A basic test of functionality
@@ -382,6 +402,9 @@ int regressionstest(int argc, char* argv[])
     break;
   case 227:
     test_OBChemTsfm();
+    break;
+  case 230:
+    test_PR1929_Isomorphism();
     break;
   case 240:
     test_Fix1912_PDBReading();
