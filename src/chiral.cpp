@@ -276,7 +276,7 @@ namespace OpenBabel
   //! <em>Logical and Combinatorial Algorithms for Drug Design</em>. \n
   //! For an example see:
   //! Walters, W. P., Yalkowsky, S. H., \em JCICS, 1996, 36(5), 1015-1017.
-  //! <a href="http://dx.doi.org/10.1021/ci950278o">DOI: 10.1021/ci950278o</a>
+  //! <a href="https://doi.org/10.1021/ci950278o">DOI: 10.1021/ci950278o</a>
   void GraphPotentials(OBMol &mol, std::vector<double> &pot)
   {
     double det;

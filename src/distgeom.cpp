@@ -741,7 +741,7 @@ namespace OpenBabel {
   //! Implements the smoothing described by
   //! Dress, AWM, Havel TF; Discrete Applied Mathematics (1988) v. 19 pp. 129-144
   //! "Shortest Path Problems and Molecular Conformation"
-  //! http://dx.doi.org/10.1016/0166-218X(88)90009-1
+  //! https://doi.org/10.1016/0166-218X(88)90009-1
   void OBDistanceGeometry::TriangleSmooth(int iterations)
   {
     int a, b, c;
