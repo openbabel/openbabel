@@ -259,10 +259,14 @@ void testIsomorphism9()
 
   OBQuery *query = CompileMoleculeQuery(&mol);
   OBIsomorphismMapper *mapper = OBIsomorphismMapper::GetInstance(query);
-  OBIsomorphismMapper::Mapping map;
-  mapper->MapFirst(&mol, map);
+  OBIsomorphismMapper::Mappings maps;
+  mapper->MapAll(&mol, maps);
 
+  OB_ASSERT(maps.size() == 1);
+
+  OBIsomorphismMapper::Mapping map;
   OBIsomorphismMapper::Mapping::const_iterator iter;
+  map = maps[0];
   for (iter=map.begin(); iter!=map.end(); ++iter)
     OB_ASSERT( iter->first == iter->second);
 
