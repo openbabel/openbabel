@@ -1107,14 +1107,14 @@ namespace OpenBabel
 
     for(vector<OBMol>::iterator f = fragments.begin(); f != fragments.end(); ++f) {
       std::string fragment_smiles = conv.WriteString(&*f, true);
+      bool isMatchRigid = false;
       // if rigid fragment is in database
       if (_rigid_fragments_index.count(fragment_smiles) > 0) {
         OBSmartsPattern sp;
         if (!sp.Init(fragment_smiles)) {
           obErrorLog.ThrowError(__FUNCTION__, " Could not parse SMARTS from fragment", obInfo);
-          continue;
-        }
-        if (sp.Match(mol)) { // for all matches
+        } else if (sp.Match(mol)) { // for all matches
+          isMatchRigid = true;
           mlist = sp.GetUMapList();
           for (j = mlist.begin(); j != mlist.end(); ++j) {
             // Have any atoms of this match already been added?
@@ -1150,7 +1150,8 @@ namespace OpenBabel
             }
           }
         }
-      } else {    // if rigid fragment is not in database
+      }
+      if(!isMatchRigid) {    // if rigid fragment is not in database
         // Count the number of ring atoms.
         unsigned int ratoms = 0;
         FOR_ATOMS_OF_MOL(a, mol) {
@@ -1158,8 +1159,8 @@ namespace OpenBabel
             ratoms++;
           }
         }
+        if (ratoms < 3) continue; // Smallest ring fragment has 3 atoms
 
-        if (ratoms == 0) continue;
         vector<pair<OBSmartsPattern*, vector<vector3 > > >::iterator i;
         // Skip all fragments that are too big to match
         // Note: It would be faster to compare to the size of the largest
