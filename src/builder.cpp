@@ -840,14 +840,28 @@ namespace OpenBabel
     a->AddBond(bond);
     b->AddBond(bond);
     //
-    // Set the dihedral between the two fragments (for the moment, only handle double bonds)
+    // Set the dihedral between the two fragments
     //
     // For example, if a double bond is coming off a ring, then the dihedral
     // should be 180, e.g. for I/C=C\1/NC1 (don't worry about whether cis or trans
     // at this point - this will be corrected later)
     //
-    if(bondOrder==2 && a->GetHyb()==2 && b->GetHyb()==2 && nbr_a && nbr_b)
+    if (bondOrder == 2 && a->GetHyb() == 2 && b->GetHyb() == 2 && nbr_a &&
+        nbr_b)
       mol.SetTorsion(nbr_a, a, b, nbr_b, 180 * DEG_TO_RAD);
+
+    // another special case is a single bond between two sp2 carbons - twist
+    // e.g. biphenyl
+    if (bondOrder == 1 && a->GetHyb() == 2 && b->GetHyb() == 2 && nbr_a &&
+        nbr_b)
+      mol.SetTorsion(nbr_a, a, b, nbr_b, 45.0 * DEG_TO_RAD);
+
+    // another special case is building dihedrals between two rings
+    //  twist it a little bit (e.g., Platinum 00J_2XIR_A)
+    if (bondOrder == 1 && ((nbr_a && nbr_a->IsInRing() && b->IsInRing()) ||
+                           (nbr_b && nbr_b->IsInRing() && a->IsInRing())))
+      mol.SetTorsion(nbr_a, a, b, nbr_b, 60.0 * DEG_TO_RAD);
+    // TODO - other inter-fragment dihedrals here
 
     return true;
   }
@@ -1019,7 +1033,7 @@ namespace OpenBabel
     workMol.SetHybridizationPerceived();
 
 
-    // I think just deleting rotable bond and separate is enough, 
+    // I think just deleting rotable bond and separate is enough,
     // but it did not work.
 
     // Get fragments using CopySubstructure
@@ -1042,7 +1056,7 @@ namespace OpenBabel
     mol.CopySubstructure(mol_copy, &atomsToCopy, &bondsToExclude);
 
     // Separate each disconnected fragments as different molecules
-    vector<OBMol> fragments = mol_copy.Separate(); 
+    vector<OBMol> fragments = mol_copy.Separate();
 
     //datafile is read only on first use of Build()
     if(_fragments.empty())
@@ -1050,7 +1064,7 @@ namespace OpenBabel
 
     for(vector<OBMol>::iterator f=fragments.begin(); f!=fragments.end(); f++) {
       std::string fragment_smiles = conv.WriteString(&*f, true);
-      if (_fragments_index.count(fragment_smiles) == 0) 
+      if (_fragments_index.count(fragment_smiles) == 0)
         continue;
       OBSmartsPattern sp;
       if (!sp.Init(fragment_smiles)) {
@@ -1189,7 +1203,7 @@ namespace OpenBabel
         OBMol mol_copy;
         mol.CopySubstructure(mol_copy, &atomsToCopy);
         string smiles = conv.WriteString(&mol_copy, true);
-        
+
         if(_torsion.count(smiles) > 0) {
           OBAtom* b = bond->GetBeginAtom();
           OBAtom* c = bond->GetEndAtom();
