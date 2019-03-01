@@ -1,0 +1,96 @@
+@CulgiVersion: 13.0.0
+# Culgi Object File
+
+moleculekeys
+	name
+	id
+end_moleculekeys
+
+atomkeys
+	index
+	name
+	element_type
+	force_field_type
+	charge
+	fixed
+	x
+	y
+	z
+	velocity_x
+	velocity_y
+	velocity_z
+	velocity_const_x
+	velocity_const_y
+	velocity_const_z
+end_atomkeys
+
+bondkeys
+	atom1_index
+	atom2_index
+	bond_order
+end_bondkeys
+
+formalqkeys
+	atom_index
+	formal_charge
+end_formalqkeys
+
+molecule	culgi_04	0
+atom	0	C1	C	C	0	0	-0.621	-0.7277	1.1186	0	0	0	0	0	0
+atom	1	C2	C	C	0	0	-0.0101	-1.6408	0.0538	0	0	0	0	0	0
+atom	2	C3	C	C	0	0	-0.2207	-3.1025	0.4538	0	0	0	0	0	0
+atom	3	H1	H	H	0	0	-1.282	-3.2832	0.6244	0	0	0	0	0	0
+atom	4	C4	C	C	0	0	0.2707	-4.0015	-0.6514	0	0	0	0	0	0
+atom	5	O1	O	O	0	0	1.3565	-4.5249	-0.5667	0	0	0	0	0	0
+atom	6	C5	C	C	0	0	-0.4104	0.7341	0.7187	0	0	0	0	0	0
+atom	7	N1	N	N	0	0	-0.9954	1.6085	1.7383	0	0	0	0	0	0
+atom	8	C6	C	C	0	0	-0.9279	2.974	1.5935	0	0	0	0	0	0
+atom	9	N2	N	N	0	0	-0.3116	3.519	0.4921	0	0	0	0	0	0
+atom	10	H2	H	H	0	0	-0.1387	-0.9149	2.078	0	0	0	0	0	0
+atom	11	H3	H	H	0	0	-1.6885	-0.9311	1.2028	0	0	0	0	0	0
+atom	12	H4	H	H	0	0	-0.4924	-1.4535	-0.9055	0	0	0	0	0	0
+atom	13	H5	H	H	0	0	1.0574	-1.4373	-0.0302	0	0	0	0	0	0
+atom	14	H6	H	H	0	0	0.3545	-4.3269	2.0058	0	0	0	0	0	0
+atom	15	H7	H	H	0	0	1.5158	-3.2259	1.5528	0	0	0	0	0	0
+atom	16	H8	H	H	0	0	0.6571	0.9376	0.6346	0	0	0	0	0	0
+atom	17	H9	H	H	0	0	-0.8927	0.9214	-0.2407	0	0	0	0	0	0
+atom	18	H10	H	H	0	0	-1.4303	1.224	2.5153	0	0	0	0	0	0
+atom	19	H11	H	H	0	0	-1.4515	4.7274	2.4881	0	0	0	0	0	0
+atom	20	H12	H	H	0	0	0.0758	2.9401	-0.183	0	0	0	0	0	0
+atom	21	H13	H	H	0	0	-0.2639	4.4824	0.39	0	0	0	0	0	0
+atom	22	O2	O	O	0	0	-0.4977	-4.2208	-1.7298	0	0	0	0	0	0
+atom	23	N3	N	N	0	0	0.5181	-3.3688	1.7006	0	0	0	0	0	0
+atom	24	H14	H	H	0	0	0.1919	-2.7244	2.4304	0	0	0	0	0	0
+atom	25	N4	N	N	0	0	-1.4759	3.7094	2.5501	0	0	0	0	0	0
+atom	26	H15	H	H	0	0	-1.925	3.2546	3.3537	0	0	0	0	0	0
+bond	0	1	1
+bond	0	6	1
+bond	0	10	1
+bond	0	11	1
+bond	1	2	1
+bond	1	12	1
+bond	1	13	1
+bond	2	3	1
+bond	2	4	1
+bond	2	23	1
+bond	4	5	2
+bond	4	22	1
+bond	6	7	1
+bond	6	16	1
+bond	6	17	1
+bond	7	8	1
+bond	7	18	1
+bond	8	9	1
+bond	8	25	2
+bond	9	20	1
+bond	9	21	1
+bond	14	23	1
+bond	15	23	1
+bond	19	25	1
+bond	23	24	1
+bond	25	26	1
+formalq	22	-1
+formalq	23	1
+formalq	25	1
+end_molecule
+
