@@ -12,6 +12,67 @@
 using namespace std;
 using namespace OpenBabel;
 
+void test_Fix1912_PDBReading()
+{
+  // Reading from a PDB file should set the residues
+  // and mark chains as perceived
+  OBMolPtr mol = OBTestUtil::ReadFile("00T_ideal_het.pdb");
+  OB_ASSERT(mol->HasChainsPerceived());
+  OBAtom* atom = mol->GetAtom(1);
+  OBResidue* res = atom->GetResidue();
+  OB_REQUIRE(res != (OBResidue*)0);
+  OB_COMPARE(res->GetAtomID(atom), " N19");
+  OB_COMPARE(res->GetChain(), 'A');
+}
+
+std::string remove_slashr(const char* smi)
+{
+  // Remove \r if present to normalise across platforms
+  std::string ans;
+  const char *p = smi;
+  while (*p) {
+    if (*p != '\r')
+      ans += *p;
+    p++;
+  }
+  return ans;
+}
+
+struct CdxData {
+  const char* fname;
+  const char* smi;
+};
+
+// Some basic reading of ChemDraw files
+// Note that we don't correctly read radicals - TODO
+// Also, converting ChemDraw doesn't work with the Read() interface, only Convert()
+void test_ChemDraw_Basic()
+{
+  static const CdxData cdxData[] = {
+    { "ethanol.cdx", "CCO\t\n" },
+    // cyclohexane -> benzene reaction, plus another cyclohexane drawn on its own
+    { "molrxnmix.cdx", "C1CCCCC1>>c1ccccc1\t\nC1CCCCC1\t\n" },
+  };
+
+  ios_base::openmode imode = ios_base::in | ios_base::binary;
+  unsigned int size = sizeof(cdxData) / sizeof(CdxData);
+  OBConversion conv;
+  OB_REQUIRE(conv.SetInAndOutFormats("cdx", "smi"));
+  std::stringstream outs;
+  conv.SetOutStream(&outs);
+
+  for (int i=0; i<size; ++i) {
+    std::string fname = OBTestUtil::GetFilename(cdxData[i].fname);
+    std::ifstream ifs(fname.c_str(), imode);
+    OB_REQUIRE(ifs.good());
+    conv.SetInStream(&ifs);
+    outs.str("");
+    conv.Convert();
+    std::string out = outs.str();
+    OB_COMPARE(remove_slashr(out.c_str()), cdxData[i].smi);
+  }
+}
+
 // A basic test of functionality
 void test_OBChemTsfm()
 {
@@ -41,6 +102,24 @@ void test_OBChemTsfm()
   b.Apply(mol);
   out = conv.WriteString(&mol, true);
   OB_COMPARE(out, "ClC=CBr");
+
+  conv.ReadString(&mol, "ClC(=O)[O]");
+  start = "[#6]-[OD1:1]";
+  end = "[#6]-[O-1:1]";
+  OBChemTsfm c;
+  c.Init(start, end);
+  c.Apply(mol);
+  out = conv.WriteString(&mol, true);
+  OB_COMPARE(out, "ClC(=O)[O-]");
+
+  conv.ReadString(&mol, "Cl[C]CBr");
+  start = "Cl[C:1]-[C:2]";
+  end = "[C:1]=[C:2]";
+  OBChemTsfm d;
+  d.Init(start, end);
+  d.Apply(mol);
+  out = conv.WriteString(&mol, true);
+  OB_COMPARE(out, "Cl[C]=CBr");
 }
 
 // Open Babel was previously disappearing triple bonds when provided with SMILES
@@ -351,6 +430,12 @@ int regressionstest(int argc, char* argv[])
     break;
   case 227:
     test_OBChemTsfm();
+    break;
+  case 228:
+    test_ChemDraw_Basic();
+    break;
+  case 240:
+    test_Fix1912_PDBReading();
     break;
     //case N:
   //  YOUR_TEST_HERE();

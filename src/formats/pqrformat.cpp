@@ -170,6 +170,7 @@ namespace OpenBabel
 
     }
     mol.SetPartialChargesPerceived();
+    mol.SetChainsPerceived();
 
     // clean out remaining blank lines
     std::streampos ipos;

@@ -50,6 +50,19 @@ namespace OpenBabel {
   const char BondUpChar = '\\';
   const char BondDownChar = '/';
 
+  // This function return true for sulfur and nitrogen
+  // (I'm not sure that is the right approach, longterm)
+  static bool CanHaveLonePair(unsigned int elem)
+  {
+    switch (elem) {
+    case OBElements::Nitrogen:
+    case OBElements::Sulfur:
+      return true;
+    default:
+      return false;
+    }
+  }
+
   //Base class for SMIFormat and CANSIFormat with most of the functionality
   class SMIBaseFormat : public OBMoleculeFormat
   {
@@ -603,7 +616,7 @@ namespace OpenBabel {
 
           // We have remembered where to insert the lone pair in the _chiralLonePair map
           map<unsigned int, char>::iterator m_it = _chiralLonePair.find(atom->GetIdx());
-          if (atom->GetAtomicNum() == 16 && m_it != _chiralLonePair.end()) { // Sulfur
+          if (CanHaveLonePair(atom->GetAtomicNum()) && m_it != _chiralLonePair.end()) {
             ts->refs[2] = ts->refs[1]; ts->refs[1] = ts->refs[0];
             if (m_it->second == 0) { // Insert in the 'from' position
               ts->refs[0] = ts->from;
@@ -1819,7 +1832,7 @@ namespace OpenBabel {
 
         if(chiralWatch) { // if tetrahedral atom, set previous as from atom
           _tetrahedralMap[atom]->from = mol.GetAtom(_prev)->GetId();
-          if (element == 16) // Handle chiral lone pair as in X[S@@](Y)Z
+          if (CanHaveLonePair(element)) // Handle chiral lone pair as in X[S@@](Y)Z
             _chiralLonePair[mol.NumAtoms()] = 1; // First of the refs
 
           //cerr <<"NB7: line 1622: Added atom ref "<<_prev<<" at " << 0 << " to "<<_mapcd[atom]<<endl;
@@ -1835,7 +1848,7 @@ namespace OpenBabel {
     else
       {
         // Handle chiral lone pair as in [S@@](X)(Y)Z
-        if (chiralWatch && element == 16) // Handle chiral lone pair (only S at the moment)
+        if (chiralWatch && CanHaveLonePair(element)) // Handle chiral lone pair (only S at the moment)
           _chiralLonePair[mol.NumAtoms()] = 0; // 'from' atom
       }
 
@@ -3411,7 +3424,7 @@ namespace OpenBabel {
 
       // Handle a chiral lone-pair on a sulfur, by inserting a NULL OBAtom* at the
       // appropriate location
-      if (chiral_neighbors.size() == 3 && atom->GetAtomicNum() == 16) // Handle sulfur
+      if (chiral_neighbors.size() == 3 && CanHaveLonePair(atom->GetAtomicNum())) // Handle sulfur
         chiral_neighbors.insert(chiral_neighbors.begin() + lonepair_location, static_cast<OBAtom*> (NULL));
 
     }

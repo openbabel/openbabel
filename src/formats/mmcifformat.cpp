@@ -498,6 +498,9 @@ namespace OpenBabel
    CIFasymmap asym_map;
    string last_asym_id = "";
    unsigned next_asym_no = 0;
+   bool has_residue_information = false;
+
+   pmol->SetChainsPerceived(); // avoid perception if we are setting residues
 
    bool wrap_coords = pConv->IsOption("w",OBConversion::INOPTIONS);
 
@@ -609,8 +612,6 @@ namespace OpenBabel
                  (* colx) = CIFTagID::unread_CIFDataName;
              use_fract = 0;
              }
-           if (use_residue == 2)
-             pmol->SetChainsPerceived();
            size_t column_idx = 0;
            OBAtom * atom = 0;
            double x = 0.0, y = 0.0, z = 0.0;
@@ -799,6 +800,7 @@ namespace OpenBabel
                atom->SetVector(x, y, z);
                if (use_residue == 2)
                  {
+                 has_residue_information = true;
                  CIFResidueID res_id(chain_num, residue_num);
                  CIFResidueMap::const_iterator resx = ResidueMap.find(res_id);
                  OBResidue * res;
@@ -1031,6 +1033,8 @@ namespace OpenBabel
 
      pmol->EndModify();
      }
+   if (has_residue_information)
+     pmol->SetChainsPerceived();
    return (pmol->NumAtoms() > 0 ? true : false);
  }
 

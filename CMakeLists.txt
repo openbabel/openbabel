@@ -32,9 +32,7 @@ if(EMBED_OPENBABEL)
 else()
   set(BABEL_VERSION  "${BABEL_MAJ_VER}.${BABEL_MIN_VER}.${BABEL_PATCH_VER}")
 endif()
-set(BABEL_DATAROOTDIR "${CMAKE_INSTALL_PREFIX}/share"
-    CACHE PATH "Install dir for arch independent data")
-set(BABEL_DATADIR  "${BABEL_DATAROOTDIR}/openbabel")
+set(BABEL_DATADIR  "${CMAKE_INSTALL_PREFIX}/share/openbabel")
 
 option(ENABLE_VERSIONED_FORMATS
   "Enable versioning of the format plugin directory" ON)
@@ -230,6 +228,12 @@ check_library_exists(dl dlopen "" HAVE_LIBDL)
 
 set(CMAKE_EXTRA_INCLUDE_FILES time.h)
 check_type_size(clock_t CLOCK_T)
+
+# Cygwin may be missing an XDR function: https://www.gnu.org/software/gnulib/manual/html_node/xdrstdio_005fcreate.html
+if(CYGWIN)
+  set(HAVE_RPC_XDR_H FALSE)
+  message(STATUS "Disabling rpc/xdr.h for Cygwin")
+endif()
 
 # Get the GCC version - from KDE4 cmake files
 if(CMAKE_COMPILER_IS_GNUCXX)

@@ -3732,7 +3732,7 @@ namespace OpenBabel
   void OBMol::CopyConformer(double *c,int idx)
   {
     //    obAssert(!_vconf.empty() && (unsigned)idx < _vconf.size());
-    memcpy((char*)_vconf[idx],(char*)c,sizeof(double)*3*NumAtoms());
+    memcpy((char*)c, (char*)_vconf[idx], sizeof(double)*3*NumAtoms());
   }
 
   // void OBMol::CopyConformer(double *c,int idx)

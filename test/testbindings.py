@@ -22,6 +22,7 @@ import os
 import re
 import sys
 import unittest
+import itertools
 
 here = sys.path[0]
 iswin = sys.platform.startswith("win")
@@ -88,6 +89,16 @@ class TestSuite(PythonBindings):
         self.assertTrue(mol.GetFirstAtom().IsAromatic())
         mol.UnsetAromaticPerceived()
         self.assertFalse(mol.GetFirstAtom().IsAromatic())
+
+    def testLPStereo(self):
+        """Ensure that nitrogen and sulfur can support LP stereo"""
+        data = ["[N@@](Cl)(Br)I", "Cl[N@@](Br)I",
+                "[S@@](Cl)(Br)I", "Cl[S@@](Br)I"]
+        for smi in data:
+            mol = pybel.readstring("smi", smi)
+            self.assertTrue(mol.OBMol.GetData(ob.StereoData))
+            nsmi = mol.write("smi").rstrip()
+            self.assertEqual(smi, nsmi)
 
     def testSmilesAtomOrder(self):
         """Ensure that SMILES atom order is written correctly"""
@@ -461,6 +472,55 @@ H         -0.26065        0.64232       -2.62218
         self.assertEqual(elements, [6,6,6,6,6,6,6,8,17])
         bonds = list(ob.OBMolBondIter(mol.OBMol))
         self.assertEqual(len(bonds), 9)
+
+    def testProper2DofFragments(self):
+        """Check for proper handling of fragments in mcdl routines, see issue #1889"""
+        mol = pybel.readstring("smi", "[H+].CC[O-].CC[O-]")
+        mol.draw(show=False, update=True)
+        dists = [
+            abs(a.coords[0] - b.coords[0]) + abs(a.coords[1] - b.coords[1])
+            for a, b in itertools.combinations(mol.atoms, 2)
+        ]
+        mindist = min(dists)
+        self.assertTrue(mindist > 0.00001)
+
+    def testRegressionBenzene2D(self):
+        """Check that benzene is given a correct layout, see #1900"""
+        mol = pybel.readstring("smi", "c1ccccc1")
+        mol.draw(show=False, update=True)
+        benzmol = """
+ OpenBabel10161813072D
+
+  6  6  0  0  0  0  0  0  0  0999 V2000
+   -0.8660   -0.5000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7321   -0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7321    1.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8660    1.5000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0000    1.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  2  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+M  END
+"""
+        self.assertEqual(mol.write("mol")[24:], benzmol[24:])
+
+    def testTemplates(self):
+        """Check for regressions to #1851"""
+        smis = [
+            "O=C(C1=CN=CS1)N1C2CCC1CN(CC1CC3CCC1O3)C2",
+            "O=C(CC1CC1)N1C2CCC1CC(NC(=O)C13CCC(CC1)CC3)C2",
+            "O=C([C@@H]1C[C@H]1C1CCC1)N1C2CCC1CN(C(=O)C13CCN(CC1)C3)C2",
+            "O=C(CCN1C=CN=C1)N1C2CCC1CN(CC1CC3CCC1C3)C2"
+            ]
+        for s in smis:
+            mol = pybel.readstring("smi", s)
+            mol.draw(show=False, update=True)
+        assert(True) # Segfaults before...
+
 
 class NewReactionHandling(PythonBindings):
 

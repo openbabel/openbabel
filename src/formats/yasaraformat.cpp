@@ -372,6 +372,7 @@ bool YOBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   struct atomid id;
   OBAtom *dstatom;
   OBResidue *res;
+  bool has_residue_info = false;
 
   /* VERIFY FILE FORMAT */
   ifs.read(buffer,8);
@@ -404,6 +405,7 @@ bool YOBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     dstatom->SetVector(pos);
     if (!mob_hasres(srcatom,&id))
     { /* NEW RESIDUE FOUND */
+      has_residue_info = true;
       resstart=srcatom;
       reslen=mob_reslen(resstart,atoms-i);
       mob_getid(&id,srcatom);
@@ -453,6 +455,8 @@ bool YOBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
   mol.EndModify();
   if (charged) mol.SetPartialChargesPerceived();
+  if (has_residue_info)
+    mol.SetChainsPerceived();
   if (!mol.NumAtoms()) return(false);
   return(true); }
 

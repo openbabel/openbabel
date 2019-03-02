@@ -355,6 +355,7 @@ bool GROFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       pmol->PerceiveBondOrders();
     }
   }
+  pmol->SetChainsPerceived();
 
   /* For multi-molecule formats, leave the input stream at the start of the
      next molecule, ready for this routine to be called again.
