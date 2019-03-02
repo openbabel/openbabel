@@ -1,6 +1,6 @@
 file(GLOB man_1 *.1)
-install(FILES ${man_1} DESTINATION "${BABEL_DATAROOTDIR}/man/man1")
-install(FILES splash.png DESTINATION "${BABEL_DATADIR}/${BABEL_VERSION}")
+install(FILES ${man_1} DESTINATION share/man/man1)
+install(FILES splash.png DESTINATION share/openbabel/${BABEL_VERSION})
 
 OPTION(BUILD_DOCS "Build Open Babel documentation" OFF)
 IF(BUILD_DOCS)
