@@ -112,13 +112,13 @@ if (DO_PYTHON_BINDINGS)
         endif()
 
         install(TARGETS bindings_python
-                LIBRARY DESTINATION ${PYTHON_INSTDIR}
+                LIBRARY DESTINATION ${PYTHON_INSTDIR}/openbabel
                 COMPONENT bindings_python)
         install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel.py
-                DESTINATION ${PYTHON_INSTDIR}
+                DESTINATION ${PYTHON_INSTDIR}/openbabel
                 COMPONENT bindings_python)
         install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/pybel.py
-                DESTINATION ${PYTHON_INSTDIR}
+                DESTINATION ${PYTHON_INSTDIR}/openbabel
                 COMPONENT bindings_python)
     else(NOT WIN32)
         set_target_properties(bindings_python PROPERTIES
@@ -136,16 +136,16 @@ if (DO_PYTHON_BINDINGS)
         endif()
 
         install(TARGETS bindings_python
-                LIBRARY DESTINATION ${PYTHON_INSTDIR}
+                LIBRARY DESTINATION ${PYTHON_INSTDIR}/openbabel
                 COMPONENT bindings_python)
         install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/__init__.py
-                DESTINATION ${PYTHON_INSTDIR}
+                DESTINATION ${PYTHON_INSTDIR}/openbabel
                 COMPONENT bindings_python)
         install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel.py
-                DESTINATION ${PYTHON_INSTDIR}
+                DESTINATION ${PYTHON_INSTDIR}/openbabel
                 COMPONENT bindings_python)
         install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/pybel.py
-                DESTINATION ${PYTHON_INSTDIR}
+                DESTINATION ${PYTHON_INSTDIR}/openbabel
                 COMPONENT bindings_python)
         add_custom_command(TARGET bindings_python POST_BUILD
           COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py ${openbabel_BINARY_DIR}/bin/${CMAKE_CFG_INTDIR}
