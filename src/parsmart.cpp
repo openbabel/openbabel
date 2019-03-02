@@ -1713,11 +1713,13 @@ namespace OpenBabel
 
   bool OBSmartsPattern::Init(const char *buffer)
   {
-	  if (_buffer != NULL)
-		  delete[] _buffer;
-	  _buffer = new char[strlen(buffer) + 1];
+    if (_buffer != NULL)
+      delete[] _buffer;
+    _buffer = new char[strlen(buffer) + 1];
     strcpy(_buffer,buffer);
 
+    if (_pat != NULL)
+      FreePattern(_pat);
     _pat = ParseSMARTSRecord(_buffer);
     _str = _buffer;
 
@@ -1726,15 +1728,17 @@ namespace OpenBabel
 
   bool OBSmartsPattern::Init(const std::string &s)
   {
-	if (_buffer != NULL)
-		delete[] _buffer;
-	_buffer = new char[s.length() + 1];
-	strcpy(_buffer, s.c_str());
+    if (_buffer != NULL)
+      delete[] _buffer;
+    _buffer = new char[s.length() + 1];
+    strcpy(_buffer, s.c_str());
 
-	_pat = ParseSMARTSRecord(_buffer);
-	_str = s;
+    if (_pat != NULL)
+      FreePattern(_pat);
+    _pat = ParseSMARTSRecord(_buffer);
+    _str = s;
 
-	return (_pat != (Pattern*) NULL);
+    return (_pat != (Pattern*) NULL);
   }
 
   OBSmartsPattern::~OBSmartsPattern()
