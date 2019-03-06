@@ -114,6 +114,9 @@ if (DO_PYTHON_BINDINGS)
         install(TARGETS bindings_python
                 LIBRARY DESTINATION ${PYTHON_INSTDIR}/openbabel
                 COMPONENT bindings_python)
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/__init__.py
+                DESTINATION ${PYTHON_INSTDIR}/openbabel
+                COMPONENT bindings_python)
         install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel.py
                 DESTINATION ${PYTHON_INSTDIR}/openbabel
                 COMPONENT bindings_python)
