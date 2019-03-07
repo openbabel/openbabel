@@ -76,7 +76,9 @@ if (DO_PYTHON_BINDINGS)
               VERBATIM
               )
     endif(RUN_SWIG)
-
+    
+    configure_file(${openbabel_SOURCE_DIR}/scripts/python/openbabel/__init__.py.in
+                   ${openbabel_SOURCE_DIR}/scripts/python/openbabel/__init__.py)
     add_library(bindings_python MODULE ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel-python.cpp)
 
     if(APPLE)

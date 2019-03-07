@@ -2,6 +2,8 @@ import sys
 import warnings
 from . import openbabel
 
+__version__ = "${BABEL_VERSION}"
+
 _thismodule = sys.modules[__name__]
 
 class OBProxy(object):
