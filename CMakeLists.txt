@@ -8,7 +8,7 @@ set(CMAKE_MODULE_PATH ${openbabel_SOURCE_DIR}/cmake/modules)
 
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
-  cmake_policy(SET CMP0005 OLD) # add_definitions need updating to set to NEW
+  cmake_policy(SET CMP0005 NEW)
   if(POLICY CMP0042)
     cmake_policy(SET CMP0042 OLD)
   endif()
@@ -277,7 +277,7 @@ if(NOT MSVC)
 
   set(OB_MODULE_PATH "${CMAKE_INSTALL_PREFIX}/${OB_PLUGIN_INSTALL_DIR}"
       CACHE PATH "Set to system install for bindings only build")
-  add_definitions(-DOB_MODULE_PATH="\\"${OB_MODULE_PATH}\\"")
+  add_definitions(-DOB_MODULE_PATH=${OB_MODULE_PATH})
 
   # Add some visibility support when using GCC
   # note: Altough MinGW g++ 4.4 passes this test, visibility can't be used
