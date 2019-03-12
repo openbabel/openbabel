@@ -1667,8 +1667,11 @@ namespace OpenBabel
           if (bond->IsPeriodic()) {
               OBUnitCell *box = (OBUnitCell*)pmol->GetData(OBGenericDataType::UnitCell);
               vector3 begin, end_orig, end_expected, uc_direction;
+              // Use consistent coordinates with the X Y Z written in the _atom_site_* loop earlier
               begin = box->CartesianToFractional(bond->GetBeginAtom()->GetVector());
+              begin = box->WrapFractionalCoordinate(begin);
               end_orig = box->CartesianToFractional(bond->GetEndAtom()->GetVector());
+              end_orig = box->WrapFractionalCoordinate(end_orig);
               end_expected = box->UnwrapFractionalNear(end_orig, begin);
 
               // To get the signs right, consider the example {0, 0.7}.  We want -1 as the periodic direction.
