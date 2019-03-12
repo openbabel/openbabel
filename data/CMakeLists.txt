@@ -13,8 +13,6 @@ set(to_install
     eem2015hm.txt
     eem2015hn.txt
     eqeqIonizations.txt
-    fragments.txt
-    fragment-index.txt
     gaff.dat
     gaff.prm
     ghemical.prm
@@ -40,11 +38,13 @@ set(to_install
     mr.txt
     patterns.txt
     phmodel.txt
-    platinum-fragment.txt
     plugindefines.txt
     psa.txt
     qeq.txt
     resdata.txt
+    rigid-fragments.txt
+    rigid-fragments-index.txt
+    ring-fragments.txt
     ringtyp.txt
     SMARTS_InteLigand.txt
     space-groups.txt
