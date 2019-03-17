@@ -554,8 +554,6 @@ private:
     radicalflag=0;
     netradical=0;
 
-  //pmol->FindChiralCenters();
-  test=pmol->IsChiral();  //Instead of above lines...
   netcharge=pmol->GetTotalCharge();
   netradical=pmol->GetTotalSpinMultiplicity()-1;
 

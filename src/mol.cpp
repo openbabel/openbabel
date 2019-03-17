@@ -2831,19 +2831,6 @@ namespace OpenBabel
     return(false);
   }
 
-  bool OBMol::IsChiral()
-  {
-    OBAtom *atom;
-    vector<OBAtom*>::iterator i;
-
-    for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if ((atom->GetAtomicNum() == OBElements::Carbon || atom->GetAtomicNum() == OBElements::Nitrogen) && atom->GetHvyValence() > 2 && atom->IsChiral())
-        return(true);
-
-    return(false);
-  }
-
-
   void OBMol::SetCoordinates(double *newCoords)
   {
     bool noCptr = (_c == NULL); // did we previously have a coordinate ptr

@@ -231,11 +231,13 @@ namespace OpenBabel
     WriteAngles(ofs, mol);
     ofs << "\n" << "\n" << "TORSION ANGLES" << "\n";
     WriteTorsions(ofs, mol);
+/* // TODO: Should be written to use current stereo
     if (mol.IsChiral())
       {
         ofs << "\n" << "\n" << "CHIRAL ATOMS" << "\n";
         WriteChiral(ofs, mol);
       }
+*/
     if (mol.HasData(OBGenericDataType::CommentData))
       {
         ofs << "\n" << "\n" << "COMMENTS" << "\n";
