@@ -967,6 +967,27 @@ namespace OpenBabel
     return (GetNumberedRGroup(pmol, atom) == -1) ? "* " : "R#";
   }
 
+  static bool GetChiralFlagFromGenericData(OBMol &mol)
+  {
+    OBGenericData*  gd = mol.GetData("MOL Chiral Flag");
+    if (gd)
+    {
+      int iflag = atoi(((OBPairData*)gd)->GetValue().c_str());
+      if (iflag == 0)
+       return false;
+      else if (iflag == 1)
+        return true;
+      else
+      {
+        stringstream errorMsg;
+        errorMsg << "WARNING: The Chiral Flag should be either 0 or 1. The value of "
+          << iflag << " will be ignored.\n";
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+      }
+    }
+    return false;
+  }
+
   /////////////////////////////////////////////////////////////////
   bool MDLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
@@ -1081,29 +1102,8 @@ namespace OpenBabel
       // ... = obsolete
       // mmm = no longer supported (default=999)
       //                         aaabbblllfffcccsssxxxrrrpppiiimmmvvvvvv
-      bool chiralFlag = false;
-      int iflag = -1;
-      OBGenericData*  gd = mol.GetData("MOL Chiral Flag");
-      if (gd)
-      {
-        iflag = atoi(((OBPairData*) gd)->GetValue().c_str());
-        if (iflag == 0)
-          chiralFlag = false;
-        else if (iflag == 1)
-          chiralFlag = true;
-        else
-        {
-          stringstream errorMsg;
-          errorMsg << "WARNING: The Chiral Flag should be either 0 or 1. The value of "
-                   << iflag << " will be ignored.\n";
-          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
-        }
-      }
+      bool chiralFlag = GetChiralFlagFromGenericData(mol);
 
-      if (iflag < 0 || iflag > 1)
-      {
-        chiralFlag = mol.IsChiral();
-      }
       snprintf(buff, BUFF_SIZE, "%3d%3d  0  0%3d  0  0  0  0  0999 V2000\n",
                mol.NumAtoms(), mol.NumBonds(), chiralFlag);
       ofs << buff;
@@ -1585,10 +1585,12 @@ namespace OpenBabel
   //////////////////////////////////////////////////////////
   bool MDLFormat::WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv)
   {
+    bool chiralFlag = GetChiralFlagFromGenericData(mol);
+
     ofs << "  0  0  0     0  0            999 V3000" << endl; //line 4
     ofs << "M  V30 BEGIN CTAB" <<endl;
     ofs << "M  V30 COUNTS " << mol.NumAtoms() << " " << mol.NumBonds()
-        << " 0 0 " << mol.IsChiral() << endl;
+        << " 0 0 " << chiralFlag << endl;
 
     ofs << "M  V30 BEGIN ATOM" <<endl;
     OBAtom *atom;
