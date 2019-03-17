@@ -525,7 +525,6 @@ private:
     std::vector <int>  bondStereoList;
     std::vector <int>  atomStereoList;
     std::vector <int>  anumStereo;
-    bool test;//, testParity;
     string as1,as2,as3,as4;
     string linestereo;
     OBAtom *atom;
