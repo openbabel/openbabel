@@ -24,7 +24,6 @@ GNU General Public License for more details.
 #include <openbabel/elements.h>
 #include <openbabel/bond.h>
 
-#include <openbabel/chiral.h>
 #include <openbabel/mcdlutil.h>
 #include <cstdlib>
 

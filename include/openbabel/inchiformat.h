@@ -31,7 +31,6 @@ GNU General Public License for more details.
 #include <vector>
 #include <cstdlib>
 #include <algorithm>
-#include "openbabel/chiral.h"
 
 using namespace std;
 namespace OpenBabel
