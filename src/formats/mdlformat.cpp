@@ -1503,10 +1503,6 @@ namespace OpenBabel
             }
           }
         if(!mol.AddAtom(atom)) return false;
-        /*
-        if(chiralWatch)
-          _mapcd[mol.GetAtom(mol.NumAtoms())]= new OBChiralData; // fill the map with chrial data for each chiral atom
-        */
         atom.Clear();
       }
     return true;
@@ -1549,24 +1545,6 @@ namespace OpenBabel
               }
           }
         if (!mol.AddBond(obstart,obend,order,flag)) return false;
-
-        /*
-        // after adding a bond to atom "obstart"
-        // search to see if atom is bonded to a chiral atom
-        map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
-        ChiralSearch = _mapcd.find(mol.GetAtom(obstart));
-        if (ChiralSearch!=_mapcd.end())
-          {
-            (ChiralSearch->second)->AddAtomRef(obend, input);
-          }
-        // after adding a bond to atom "obend"
-        // search to see if atom is bonded to a chiral atom
-        ChiralSearch = _mapcd.find(mol.GetAtom(obend));
-        if (ChiralSearch!=_mapcd.end())
-          {
-            (ChiralSearch->second)->AddAtomRef(obstart, input);
-          }
-        */
       }
     return true;
   }
@@ -1629,57 +1607,6 @@ namespace OpenBabel
           ofs << " CHG=" << atom->GetFormalCharge();
         if(atom->GetSpinMultiplicity()!=0)
           ofs << " RAD=" << atom->GetSpinMultiplicity();
-        /*
-        if(atom->IsChiral())
-          {
-            // MOLV3000 uses 1234 unless an H then 123H
-
-            OBChiralData* cd=(OBChiralData*)atom->GetData(OBGenericDataType::ChiralData);
-            if(!cd){ //if no Chiral Data Set, need to make one!
-              cd=new OBChiralData;
-              atom->SetData(cd);
-            }
-            if (atom->GetHvyValence()==3)
-              {
-                OBAtom *nbr;
-                int Hid = (mol.NumAtoms()+1) ;// max Atom ID +1
-                vector<unsigned int> nbr_atms;
-                vector<OBBond*>::iterator i;
-                for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
-                  {
-                    if (nbr->GetAtomicNum() == OBElements::Hydrogen){Hid=nbr->GetIdx();continue;}
-                    nbr_atms.push_back(nbr->GetIdx());
-                  }
-                sort(nbr_atms.begin(),nbr_atms.end());
-                nbr_atms.push_back(Hid);
-                cd->SetAtom4Refs(nbr_atms,output);
-              }
-            else if (atom->GetHvyValence()==4)
-              {
-                vector<unsigned int> nbr_atms;
-                int n;
-                for(n=1;n<5;n++)nbr_atms.push_back(n);
-                cd->SetAtom4Refs(nbr_atms,output);
-              }
-            double vol=0;
-            if (mol.HasNonZeroCoords())
-              {
-                vol=CalcSignedVolume(mol,atom);
-                if (vol > 0.0)atom->SetClockwiseStereo();
-                else if(vol < 0.0)atom->SetAntiClockwiseStereo();
-                CorrectChirality(mol,atom,calcvolume,output);
-              }
-            else {
-              CorrectChirality(mol,atom); // will set the stereochem based on input/output atom4refs
-            }
-
-            int cfg=3; // if we don't know, then it's unspecified
-            if(atom->IsClockwise())cfg=1;
-            else if(atom->IsAntiClockwise())cfg=2;
-
-            ofs << " CFG=" << cfg;
-          }
-        */
         if(atom->GetIsotope()!=0)
           ofs << " MASS=" << atom->GetIsotope();
         ofs << endl;

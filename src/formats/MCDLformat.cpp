@@ -19,7 +19,6 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
-#include <openbabel/chiral.h>
 #include <openbabel/mcdlutil.h>
 
 using namespace std;
