@@ -6,7 +6,6 @@ else(MINIMAL_BUILD)
   set(tools
         babel
         obabel
-        obchiral
         obconformer
         obenergy
         obfit
