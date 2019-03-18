@@ -42,9 +42,6 @@ GNU General Public License for more details.
 #define M_PI 3.14159265358979323846
 #endif
 
-// For backwards compatibility. Will be removed in the future
-#include <openbabel/rand.h>
-
 namespace OpenBabel
 {
 

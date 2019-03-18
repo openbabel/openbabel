@@ -28,6 +28,7 @@ GNU General Public License for more details.
 #include <openbabel/builder.h>
 #include <openbabel/elements.h>
 #include <openbabel/generic.h>
+#include "rand.h"
 
 #include <openbabel/stereo/stereo.h>
 #include <openbabel/stereo/cistrans.h>

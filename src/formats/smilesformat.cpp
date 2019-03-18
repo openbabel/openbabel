@@ -36,6 +36,8 @@ GNU General Public License for more details.
 #include <openbabel/graphsym.h>
 #include <openbabel/kekulize.h>
 #include <openbabel/canon.h>
+#include "../rand.h"
+#include "../rand.cpp"
 
 #include "smilesvalence.h"
 

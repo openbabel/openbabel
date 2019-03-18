@@ -41,7 +41,6 @@ using namespace std;
 using namespace OpenBabel;
 
 OBRotorList rl;
-OBRandom generator;
 
 int main(int argc,char *argv[])
 {

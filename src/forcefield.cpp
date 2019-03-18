@@ -34,6 +34,7 @@ GNU General Public License for more details.
 #include <openbabel/grid.h>
 #include <openbabel/griddata.h>
 #include <openbabel/elements.h>
+#include "rand.h"
 
 using namespace std;
 
