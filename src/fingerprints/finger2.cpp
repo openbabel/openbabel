@@ -158,7 +158,7 @@ void fingerprint2::getFragments(vector<int> levels, vector<int> curfrag,
 	curfrag.push_back(patom->GetAtomicNum());
 	levels[patom->GetIdx()-1] = level;
 
-	vector<OBEdgeBase*>::iterator itr;
+	vector<OBBond*>::iterator itr;
 	OBBond *pnewbond;
 //	PrintFpt(curfrag,(int)patom);
 	for (pnewbond = patom->BeginBond(itr);pnewbond;pnewbond = patom->NextBond(itr))

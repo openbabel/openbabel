@@ -97,7 +97,7 @@ int ringtest(int argc, char* argv[])
   vector<int> vi;
   OBMol mol;
   vector<string>::iterator i;
-  vector<OBEdgeBase*>::iterator j;
+  vector<OBBond*>::iterator j;
   vector<OBNodeBase*>::iterator k;
   vector<OBRing*>::iterator m;
   OBConversion conv(&mifs, &cout);
@@ -218,7 +218,7 @@ void GenerateRingReference()
   OBBond *bond;
   char buffer[BUFF_SIZE];
   vector<OBRing*> vr;
-  vector<OBEdgeBase*>::iterator i;
+  vector<OBBond*>::iterator i;
   vector<OBNodeBase*>::iterator j;
   vector<OBRing*>::iterator k;
   OBMol mol;
