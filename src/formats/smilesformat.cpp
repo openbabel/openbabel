@@ -2724,22 +2724,22 @@ namespace OpenBabel {
           (vector<pair<int,pair<OBAtom *,OBBond *> > > *)((OBMol*)atom->GetParent())->GetData("extBonds");
         vector<pair<int,pair<OBAtom *,OBBond *> > >::iterator externalBond;
 
-        if (externalBonds)
+        if (externalBonds) // TODO: This code has bit-rotted and needs some love
           for(externalBond = externalBonds->begin();externalBond != externalBonds->end();++externalBond) {
             if (externalBond->second.first == atom) {
               external = true;
               buffer += '&';
               OBBond *bond = externalBond->second.second;
-              if (bond->IsUp()) {
-                if ( (bond->GetBeginAtom())->HasDoubleBond() ||
-                     (bond->GetEndAtom())->HasDoubleBond() )
-                  buffer += '\\';
-              }
-              if (bond->IsDown()) {
-                if ( (bond->GetBeginAtom())->HasDoubleBond() ||
-                     (bond->GetEndAtom())->HasDoubleBond() )
-                  buffer += '/';
-              }
+              //if (bond->IsUp()) {
+              //  if ( (bond->GetBeginAtom())->HasDoubleBond() ||
+              //       (bond->GetEndAtom())->HasDoubleBond() )
+              //    buffer += '\\';
+              //}
+              //if (bond->IsDown()) {
+              //  if ( (bond->GetBeginAtom())->HasDoubleBond() ||
+              //       (bond->GetEndAtom())->HasDoubleBond() )
+              //    buffer += '/';
+              //}
               if (bond->GetBO() == 2 && !bond->IsAromatic()) // TODO: need to check for kekulesmi
                 buffer += '=';
               if (bond->GetBO() == 2 && bond->IsAromatic())
@@ -4029,8 +4029,6 @@ namespace OpenBabel {
       OBBond *bond;
       vector<OBBond*>::iterator bi;
       for (bond = mol.BeginBond(bi); bond; bond = mol.NextBond(bi)) {
-        bond->UnsetUp();
-        bond->UnsetDown();
         bond->UnsetHash();
         bond->UnsetWedge();
       }
