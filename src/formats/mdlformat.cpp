@@ -972,6 +972,18 @@ namespace OpenBabel
     return (GetNumberedRGroup(pmol, atom) == -1) ? "* " : "R#";
   }
 
+  static bool OldIsChiral(OBMol &mol)
+  {
+    FOR_ATOMS_OF_MOL(atom, mol) {
+      if ((atom->GetAtomicNum() == OBElements::Carbon || atom->GetAtomicNum() == OBElements::Nitrogen)
+          && atom->GetHvyValence() > 2
+          && atom->IsChiral())
+        return true;
+    }
+
+    return false;
+  }
+
   static bool GetChiralFlagFromGenericData(OBMol &mol)
   {
     OBGenericData*  gd = mol.GetData("MOL Chiral Flag");
@@ -989,6 +1001,19 @@ namespace OpenBabel
           << iflag << " will be ignored.\n";
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
       }
+    }
+
+    return OldIsChiral(mol); // TODO: Remove this in favor of the following code
+
+    // Return true if and only if it has a specified tet stereocenter
+    std::vector<OBGenericData *> stereoData = mol.GetAllData(OBGenericDataType::StereoData);
+    std::vector<OBGenericData*>::iterator data;
+    for (data = stereoData.begin(); data != stereoData.end(); ++data) {
+      OBStereo::Type type = ((OBStereoBase*)*data)->GetType();
+      if (type != OBStereo::Tetrahedral) continue;
+      OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
+      if (ts->GetConfig().specified)
+        return true;
     }
     return false;
   }
