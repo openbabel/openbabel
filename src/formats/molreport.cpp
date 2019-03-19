@@ -139,7 +139,7 @@ namespace OpenBabel
                  bond->GetIdx(),
                  bond->GetBeginAtomIdx(),
                  bond->GetEndAtomIdx(),
-                 bond->GetBO());
+                 bond->GetBondOrder());
         ofs << buffer << "\n";
       }
 

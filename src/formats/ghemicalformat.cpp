@@ -235,7 +235,7 @@ namespace OpenBabel
     char bond_char;
     FOR_BONDS_OF_MOL(bond, mol)
     {
-      switch(bond->GetBO())
+      switch(bond->GetBondOrder())
       {
         case 1 :
           bond_char = 'S';

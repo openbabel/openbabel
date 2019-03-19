@@ -689,14 +689,14 @@ virtual const char* Description() //required
 
     if(idx>=patternMol.NumBonds())
       return;
-    if(patternMol.GetBond(idx)->GetBO()==4)
+    if(patternMol.GetBond(idx)->GetBondOrder()==4)
     {
-      patternMol.GetBond(idx)->SetBO(1);
+      patternMol.GetBond(idx)->SetBondOrder(1);
       patternMols.push_back(patternMol);
       AddPattern(patternMols, patternMol,idx+1);
 
       patternMols.push_back(patternMol);
-      patternMols.back().GetBond(idx)->SetBO(5);
+      patternMols.back().GetBond(idx)->SetBondOrder(5);
     }
     AddPattern(patternMols, patternMol,idx+1);
   }

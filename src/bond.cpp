@@ -91,11 +91,6 @@ namespace OpenBabel
     SetFlag(flags);
   }
 
-  void OBBond::SetBO(int order)
-  {
-    SetBondOrder(order);
-  }
-
   void OBBond::SetBondOrder(int order)
   {
     _order = (char)order;
@@ -345,7 +340,7 @@ namespace OpenBabel
 
     if (!a1 || !a2)
       return(false);
-    if (GetBO() != 1)
+    if (GetBondOrder() != 1)
       return(false);
 
     OBBond *bond;
@@ -376,7 +371,7 @@ namespace OpenBabel
 
     if (!a1 || !a2)
       return(false);
-    if (GetBO() != 1)
+    if (GetBondOrder() != 1)
       return(false);
 
     OBBond *bond;
@@ -408,7 +403,7 @@ namespace OpenBabel
 
     if (!a1 || !a2)
       return(false);
-    if (GetBO() != 1)
+    if (GetBondOrder() != 1)
       return(false);
 
     OBBond *bond;
@@ -441,7 +436,7 @@ namespace OpenBabel
 
     if (!a1 || !a2)
       return(false);
-    if (GetBO() != 1)
+    if (GetBondOrder() != 1)
       return(false);
 
     OBBond *bond;
@@ -455,7 +450,7 @@ namespace OpenBabel
 
   bool OBBond::IsCarbonyl()
   {
-    if (GetBO() != 2)
+    if (GetBondOrder() != 2)
       return(false);
 
     if ((_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 8) ||

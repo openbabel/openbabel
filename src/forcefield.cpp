@@ -958,7 +958,7 @@ namespace OpenBabel
         return true;
     }
     FOR_BONDS_OF_MOL (bond, _mol) {
-      if (bond->GetBO() != (mol.GetBond(bond->GetIdx()))->GetBO())
+      if (bond->GetBondOrder() != (mol.GetBond(bond->GetIdx()))->GetBondOrder())
         return true;
       if (bond->GetBeginAtom()->GetAtomicNum()
           != (mol.GetBond(bond->GetIdx()))->GetBeginAtom()->GetAtomicNum()

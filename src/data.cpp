@@ -515,12 +515,12 @@ namespace OpenBabel
           {
             OBBond *bond;
             bond = (OBBond*)*(a1->BeginBonds());
-            if (bond->GetBO() == 2)
+            if (bond->GetBondOrder() == 2)
               {
                 a1->SetType("O2");
                 a1->SetHyb(2);
               }
-            else if (bond->GetBO() == 1)
+            else if (bond->GetBondOrder() == 1)
               {
                 // Leave the protonation/deprotonation to phmodel.txt
                 a1->SetType("O3");

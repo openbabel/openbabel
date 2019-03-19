@@ -128,7 +128,7 @@ namespace OpenBabel
     vector<OBBond*>::iterator j;
     for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
       {
-        switch (bond->GetBO())
+        switch (bond->GetBondOrder())
           {
           case 1:
             strcpy(bstr,"single");

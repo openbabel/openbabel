@@ -700,7 +700,7 @@ namespace OpenBabel
         else if (bond->IsAmide())
           strcpy(label,"am");
         else
-          snprintf(label,BUFF_SIZE,"%d",bond->GetBO());
+          snprintf(label,BUFF_SIZE,"%d",bond->GetBondOrder());
 
         snprintf(buffer, BUFF_SIZE,"%6d %5d %5d   %2s",
                  bond->GetIdx()+1,bond->GetBeginAtomIdx(),bond->GetEndAtomIdx(),

@@ -1815,7 +1815,7 @@ namespace OpenBabel
         vector<OBBond*>::iterator ib;
         for (pbond = mol.BeginBond(ib);pbond;pbond = mol.NextBond(ib))
           {
-            int bo = pbond->GetBO();
+            int bo = pbond->GetBondOrder();
 
             if(!arrayform)
               {
@@ -1936,7 +1936,7 @@ namespace OpenBabel
           {
             for (pbond = mol.BeginBond(ib);pbond;pbond = mol.NextBond(ib))
               {
-                if(pbond->GetBO()==2 || pbond->IsWedge() || pbond->IsHash())
+                if(pbond->GetBondOrder()==2 || pbond->IsWedge() || pbond->IsHash())
                   WriteBondStereo(pbond, atomIds);
               }
           }

@@ -421,7 +421,7 @@ namespace OpenBabel
       if (bond->IsAromatic())
         sstream <<"1.5";
       else
-        sstream << bond->GetBO() << ".0";
+        sstream << bond->GetBondOrder() << ".0";
       outlabel = sstream.str();
       ofs << outlabel << endl;
     }

@@ -152,7 +152,7 @@ void fingerprint2::getFragments(vector<int> levels, vector<int> curfrag,
 	int bo=0;
 	if(pbond)
 	{
-		bo = pbond->IsAromatic() ? 5 : pbond->GetBO();
+		bo = pbond->IsAromatic() ? 5 : pbond->GetBondOrder();
 
 //		OBAtom* pprevat = pbond->GetNbrAtom(patom);
 //		if(patom->GetFormalCharge() && (patom->GetFormalCharge() == -pprevat->GetFormalCharge()))
@@ -178,7 +178,7 @@ void fingerprint2::getFragments(vector<int> levels, vector<int> curfrag,
 			{
 				//If complete ring (last bond is back to starting atom) add bond at front
 				//and save in ringset
-				curfrag[0] = pnewbond->IsAromatic() ? 5 : pnewbond->GetBO();
+				curfrag[0] = pnewbond->IsAromatic() ? 5 : pnewbond->GetBondOrder();
 				ringset.insert(curfrag);
  				curfrag[0] = 0;
 			}

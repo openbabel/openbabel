@@ -549,7 +549,7 @@ bool YOBFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     //printf("Babel atom %d with %d links:\n",i,links);
     for (linkedatom=srcatom->BeginNbrAtom(iter);linkedatom;linkedatom=srcatom->NextNbrAtom(iter))
     { storeint32le(buffer,linkedatom->GetIdx()-1);
-      bondorder=(*iter)->GetBO();
+      bondorder=(*iter)->GetBondOrder();
       //printf("  Order %d\n",bondorder);
       if (bondorder==4) bondorder=MOB_LINKQUADRUPLE;
       else if (bondorder==5) bondorder=MOB_LINKRESONANCE50;

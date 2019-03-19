@@ -2746,13 +2746,13 @@ namespace OpenBabel {
                      (bond->GetEndAtom())->HasDoubleBond() )
                   buffer += '/';
               }
-              if (bond->GetBO() == 2 && !bond->IsAromatic()) // TODO: need to check for kekulesmi
+              if (bond->GetBondOrder() == 2 && !bond->IsAromatic()) // TODO: need to check for kekulesmi
                 buffer += '=';
-              if (bond->GetBO() == 2 && bond->IsAromatic())
+              if (bond->GetBondOrder() == 2 && bond->IsAromatic())
                 buffer += ':';
-              if (bond->GetBO() == 3)
+              if (bond->GetBondOrder() == 3)
                 buffer += '#';
-              if (bond->GetBO() == 4)
+              if (bond->GetBondOrder() == 4)
                 buffer += '$';
               char tmp[10];
               snprintf(tmp, 10, "%d", externalBond->first);
@@ -3239,7 +3239,7 @@ namespace OpenBabel {
       bond1 = *bi;
       _ubonds.SetBitOn(bond1->GetIdx());
       int digit = GetUnusedIndex();
-      int bo = (bond1->IsAromatic())? 1 : bond1->GetBO();  // CJ: why was this line added?  bo is never used?
+      int bo = (bond1->IsAromatic())? 1 : bond1->GetBondOrder();  // CJ: why was this line added?  bo is never used?
       _vopen.push_back(OBBondClosureInfo(bond1->GetNbrAtom(atom), atom, bond1, digit, true));
       vp_closures.push_back(OBBondClosureInfo(bond1->GetNbrAtom(atom), atom, bond1, digit, true));
     }
@@ -3453,7 +3453,7 @@ namespace OpenBabel {
             buffer += bs;	// append "/" or "\"
           else
           {
-            switch (bci->bond->GetBO())
+            switch (bci->bond->GetBondOrder())
             {
             case 1:
               if (!bci->bond->IsAromatic() && bci->bond->IsInRing() && bci->bond->GetBeginAtom()->IsAromatic() && bci->bond->GetEndAtom()->IsAromatic())
@@ -3503,7 +3503,7 @@ namespace OpenBabel {
       if (i+1 < node->Size() || node->GetAtom() == _endatom)
         buffer += '(';
 
-      switch (bond->GetBO()) {
+      switch (bond->GetBondOrder()) {
       case 1:
         char cc[2];
         cc[0] = GetCisTransBondSymbol(bond, node);

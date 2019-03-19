@@ -448,7 +448,7 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     xmlTextWriterWriteFormatAttribute(writer(), C_BEGIN , "%d", patom->GetIdx() + _offset);
 	patom = pbond->GetEndAtom();
     xmlTextWriterWriteFormatAttribute(writer(), C_END , "%d", patom->GetIdx() + _offset);
-	n = pbond->GetBO();
+	n = pbond->GetBondOrder();
     if (n != 1)
     {
       xmlTextWriterWriteFormatAttribute(writer(), C_ORDER , "%d", n);

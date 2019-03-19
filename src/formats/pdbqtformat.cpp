@@ -680,7 +680,7 @@ namespace OpenBabel
 
   static bool IsImide(OBBond* querybond)
   {
-    if (querybond->GetBO() != 2)
+    if (querybond->GetBondOrder() != 2)
       return(false);
 
     OBAtom* bgn = querybond->GetBeginAtom();
