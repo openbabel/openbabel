@@ -2243,14 +2243,14 @@ namespace OpenBabel
           return bond->IsAromatic();
         case BE_RING:
           return bond->IsInRing();
-        case BE_UP:
-          return bond->IsUp();
-        case BE_DOWN:
-          return bond->IsDown();
-        case BE_UPUNSPEC: // up or unspecified (i.e., not down)
-          return !bond->IsDown();
-        case BE_DOWNUNSPEC: // down or unspecified (i.e., not up)
-          return !bond->IsUp();
+        //case BE_UP:
+        //  return bond->IsUp();
+        //case BE_DOWN:
+        //  return bond->IsDown();
+        //case BE_UPUNSPEC: // up or unspecified (i.e., not down)
+        //  return !bond->IsDown();
+        //case BE_DOWNUNSPEC: // down or unspecified (i.e., not up)
+        //  return !bond->IsUp();
         default:
           return false;
         }
