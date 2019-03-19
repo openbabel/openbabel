@@ -20,12 +20,17 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/atom.h>
-#include <openbabel/stereo/stereo.h>
+#include <openbabel/bond.h>
 #include <openbabel/mol.h>
+#include <openbabel/obiter.h>
 #include <openbabel/molchrg.h>
+#include <openbabel/ring.h>
 #include <openbabel/phmodel.h>
 #include <openbabel/builder.h>
 #include <openbabel/elements.h>
+#include <openbabel/chains.h>
+#include <openbabel/obutil.h>
+#include <openbabel/residue.h>
 
 #include <openbabel/math/matrix3x3.h>
 
@@ -99,7 +104,8 @@ namespace OpenBabel
   extern OBAromaticTyper  aromtyper;
   extern OBAtomTyper      atomtyper;
   extern OBPhModel        phmodel;
-
+  extern OBTypeTable      ttab;
+  
   //
   // OBAtom member functions
   //

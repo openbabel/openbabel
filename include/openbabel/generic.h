@@ -1192,7 +1192,7 @@ namespace OpenBabel
 
     int NumPartialCharges() 
     { 
-      return _PartialCharge.size(); 
+      return (int)_PartialCharge.size(); 
     }
     
     void AddPartialCharge(std::vector<double> q)

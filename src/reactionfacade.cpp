@@ -18,12 +18,18 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/obiter.h>
+#include <openbabel/generic.h>
+#include <openbabel/oberror.h>
 #include <openbabel/reactionfacade.h>
 
 #include <set>
 
 namespace OpenBabel
 {
+  extern OBMessageHandler obErrorLog;
+
   class OBReactionFacadePrivate
   {
   public:

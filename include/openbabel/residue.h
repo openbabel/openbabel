@@ -179,8 +179,6 @@ namespace OpenBabel {
     //    std::vector<OBGenericData*> _vdata; //!< Custom data
   }; // OBResidue
 
-  //! A standard iterator over a vector of residues
-  typedef std::vector<OBResidue*>::iterator OBResidueIterator;
 
   ///////////////////////////////////////////////////////////////////////////////
   // Global Definitions

@@ -20,11 +20,15 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/mol.h>
+#include <openbabel/bond.h>
+#include <openbabel/ring.h>
 #include <openbabel/rotamer.h>
 #include <openbabel/phmodel.h>
 #include <openbabel/bondtyper.h>
+#include <openbabel/obiter.h>
 #include <openbabel/builder.h>
 #include <openbabel/kekulize.h>
+#include <openbabel/internalcoord.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/obfunctions.h>
 #include <openbabel/elements.h>

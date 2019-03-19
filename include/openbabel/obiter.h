@@ -28,9 +28,9 @@ GNU General Public License for more details.
 #include <stack>
 #include <queue>
 
+
 namespace OpenBabel
 {
-
   class OBMol;
   class OBAtom;
   class OBBond;

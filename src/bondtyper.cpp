@@ -18,6 +18,9 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/oberror.h>
 #include <openbabel/bondtyper.h>
 #include <openbabel/elements.h>
 
@@ -28,6 +31,8 @@ using namespace std;
 
 namespace OpenBabel
 {
+  extern OBMessageHandler obErrorLog;
+
 
   //! Global OBBondTyper for perception of bond order assignment.
   OBBondTyper  bondtyper;

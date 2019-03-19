@@ -25,6 +25,7 @@
 #define OB_ISOMORPHISM_H
 
 #include <openbabel/mol.h>
+#include <openbabel/bitvec.h>
 
 namespace OpenBabel {
 

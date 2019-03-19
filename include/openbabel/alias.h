@@ -21,6 +21,8 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
+  class OBSmartsPattern;
+
 // This macro is used in DLL builds. If it has not
 // been set in babelconfig.h, define it as nothing.
 #ifndef OBCOMMON
