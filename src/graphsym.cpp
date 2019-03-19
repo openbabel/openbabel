@@ -175,7 +175,7 @@ namespace OpenBabel {
     OBBond *bond;
     OBAtom *nbr;
 
-    vector<OBEdgeBase*>::iterator bi;
+    vector<OBBond*>::iterator bi;
     for (bond = atom->BeginBond(bi); bond; bond = atom->NextBond(bi)) {
       nbr = bond->GetNbrAtom(atom);
       if (_frag_atoms.BitIsSet(nbr->GetIdx()) && nbr->GetAtomicNum() != OBElements::Hydrogen) {
@@ -215,7 +215,7 @@ namespace OpenBabel {
     OBAtom *atom, *atom1;
     OBBond *bond;
     vector<OBNodeBase*>::iterator ai;
-    vector<OBEdgeBase*>::iterator j;
+    vector<OBBond*>::iterator j;
 
     next.Clear();
 
@@ -352,7 +352,7 @@ namespace OpenBabel {
   {
     int m,id;
     OBAtom *atom, *nbr;
-    vector<OBEdgeBase*>::iterator nbr_iter;
+    vector<OBBond*>::iterator nbr_iter;
     vector<unsigned int>::iterator k;
     vector<pair<OBAtom*,unsigned int> >::iterator vp_iter;
 
@@ -406,7 +406,7 @@ namespace OpenBabel {
   {
     int m,id;
     OBAtom *atom, *nbr;
-    vector<OBEdgeBase*>::iterator nbr_iter;
+    vector<OBBond*>::iterator nbr_iter;
     vector<unsigned int>::iterator k;
     vector<pair<OBAtom*,unsigned int> >::iterator vp_iter;
 

@@ -36,9 +36,6 @@ namespace OpenBabel
   class OBAtom;
   class OBRing;
 
-  //! OBEdgeBase is declared for backwards-compatibility with 2.0 and earlier code
-  typedef OBBond OBEdgeBase;
-
   //BOND Property Macros (flags)
   //! An aromatic bond (regardless of bond order)
 #define OB_AROMATIC_BOND  (1<<1)

@@ -3053,7 +3053,7 @@ namespace OpenBabel {
                                     vector<unsigned int> &canonical_order,
                                     OBCanSmiNode *node)
   {
-    vector<OBEdgeBase*>::iterator i;
+    vector<OBBond*>::iterator i;
     OBAtom *nbr, *atom;
     vector<OBAtom *> sort_nbrs;
     vector<OBAtom *>::iterator ai;
@@ -3197,7 +3197,7 @@ namespace OpenBabel {
     vector<OBBondClosureInfo> vp_closures;
     vector<OBBond*> vbonds;
     vector<OBBond*>::iterator bi;
-    vector<OBEdgeBase*>::iterator i;
+    vector<OBBond*>::iterator i;
     OBBond *bond1, *bond2;
     OBAtom *nbr1, *nbr2;
     int nbr1_canorder, nbr2_canorder;
@@ -4026,8 +4026,7 @@ namespace OpenBabel {
       // Not isomeric - be sure there are no Z coordinates, clear
       // all stereo-center and cis/trans information.
       OBBond *bond;
-      vector<OBEdgeBase*>::iterator bi;
-      vector<OBNodeBase*>::iterator ai;
+      vector<OBBond*>::iterator bi;
       for (bond = mol.BeginBond(bi); bond; bond = mol.NextBond(bi)) {
         bond->UnsetUp();
         bond->UnsetDown();

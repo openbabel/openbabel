@@ -221,7 +221,7 @@ void GenerateRingReference()
   OBBond *bond;
   char buffer[BUFF_SIZE];
   vector<OBRing*> vr;
-  vector<OBEdgeBase*>::iterator i;
+  vector<OBBond*>::iterator i;
   vector<OBNodeBase*>::iterator j;
   vector<OBRing*>::iterator k;
   OBMol mol;
