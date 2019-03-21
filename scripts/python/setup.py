@@ -28,22 +28,12 @@ def find_version():
         raise Exception('Could not find openbabel/__init__.py. Did you run CMake?')
 
 
-class PkgConfigError(Exception):
-    pass
-
-
 def pkgconfig(package, option):
     """Wrapper around pkg-config command line tool."""
     try:
-        p = subprocess.Popen(['pkg-config', option, package],
-                             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                             universal_newlines=True)
-        stdout, stderr = p.communicate()
-        if stderr:
-            raise PkgConfigError('package %s could not be found by pkg-config' % package)
-        return stdout.strip()
-    except OSError:
-        raise PkgConfigError('pkg-config could not be found')
+        return subprocess.check_output(['pkg-config', option, package]).strip()
+    except subprocess.CalledProcessError:
+        raise Exception('Failed to run pkg-config')
 
 
 def locate_ob():
@@ -55,7 +45,7 @@ def locate_ob():
         include_dirs = pkgconfig('openbabel-2.0', '--variable=pkgincludedir')
         library_dirs = pkgconfig('openbabel-2.0', '--variable=libdir')
         print('Open Babel location automatically determined by pkg-config:')
-    except PkgConfigError as e:
+    except Exception as e:
         print('Warning: %s.\nGuessing Open Babel location:' % e)
         include_dirs = '/usr/local/include/openbabel-2.0'
         library_dirs = '/usr/local/lib'
