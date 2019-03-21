@@ -8,7 +8,6 @@
 
 
 #include <openbabel/obutil.h>
-#include <openbabel/rand.h>
 #include <openbabel/math/vector3.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/math/transform3d.h>
@@ -207,7 +206,6 @@ CAST_GENERICDATA_TO(VirtualBond)
 %import <openbabel/babelconfig.h>
 
 %include <openbabel/data.h>
-%include <openbabel/rand.h>
 %include <openbabel/obutil.h>
 %include <openbabel/math/vector3.h>
 %warnfilter(503) OpenBabel::matrix3x3; // Not wrapping any of the overloaded operators

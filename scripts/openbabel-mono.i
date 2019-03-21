@@ -19,7 +19,6 @@
 //renamed these because all public methods of a C# class should start with
 //a capital letter. As swig for c# matures this may become uneccesary.
 %rename(DistSq) OpenBabel::vector3::distSq(const vector3 &) const;
-%rename(RandomUnitVector) OpenBabel::vector3::randomUnitVector(OBRandom *);
 %rename(RandomUnitVector) OpenBabel::vector3::randomUnitVector();
 %rename(Normalize) OpenBabel::vector3::normalize();
 //changed this name slightly to match DistSq(vector3)
@@ -151,7 +150,6 @@ WRAP_ARRAY(double,double_array)
 #endif
 
 #include <openbabel/obutil.h>
-#include <openbabel/rand.h>
 #include <openbabel/math/vector3.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/math/transform3d.h>
@@ -247,7 +245,6 @@ SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(OBBond, OpenBabel::OBBond*);
 %import <openbabel/babelconfig.h>
 
 %include <openbabel/data.h>
-%include <openbabel/rand.h>
 %include <openbabel/obutil.h>
 %include <openbabel/math/vector3.h>
 %include <openbabel/math/matrix3x3.h>

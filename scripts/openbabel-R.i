@@ -8,7 +8,6 @@
 
 
 #include <openbabel/obutil.h>
-#include <openbabel/rand.h>
 #include <openbabel/math/vector3.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/math/transform3d.h>
@@ -259,7 +258,6 @@ CAST_GENERICDATA_TO(VirtualBond)
 
 %warnfilter(516) OpenBabel::OBElementTable; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/data.h>
-%include <openbabel/rand.h>
 %include <openbabel/obutil.h>
 %warnfilter(516) OpenBabel::vector3; // Using the const x(), y() and z() in favour of the non-const
 %include <openbabel/math/vector3.h>
