@@ -13,12 +13,24 @@ from setuptools import setup, Extension
 
 __author__ = 'Noel O\'Boyle'
 __email__ = 'openbabel-discuss@lists.sourceforge.net'
-__version__ = '2.4.0'
 __license__ = 'GPL'
 
 
 # Path to the directory that contains this setup.py file.
 base_dir = os.path.abspath(os.path.dirname(__file__))
+
+
+def find_version():
+    """Extract the current version from the __init__.py file (which is created by CMake)."""
+    try:
+        with open(os.path.join(base_dir, 'openbabel', '__init__.py')) as fp:
+            for line in fp:
+                version_match = re.match(r'^__version__ = "(.+?)"$', line)
+                if version_match:
+                    return version_match.group(1)
+            raise Exception('Could not find version string in openbabel/__init__.py.')
+    except IOError:
+        raise Exception('Could not find openbabel/__init__.py. Did you run CMake?')
 
 
 class PkgConfigError(Exception):
@@ -108,7 +120,7 @@ obextension = Extension('_openbabel', ['openbabel-python.i'], libraries=['openba
 
 setup(
     name='openbabel',
-    version=__version__,
+    version=find_version(),
     author=__author__,
     author_email=__email__,
     license=__license__,
