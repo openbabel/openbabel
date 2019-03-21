@@ -17,18 +17,8 @@ __version__ = '2.4.0'
 __license__ = 'GPL'
 
 
-if os.path.exists('README.rst'):
-    long_description = open('README.rst').read()
-else:
-    long_description = '''
-        The Open Babel package provides a Python wrapper to the Open Babel C++
-        chemistry library. Open Babel is a chemical toolbox designed to speak
-        the many languages of chemical data. It's an open, collaborative
-        project allowing anyone to search, convert, analyze, or store data from
-        molecular modeling, chemistry, solid-state materials, biochemistry, or
-        related areas. It provides a broad base of chemical functionality for
-        custom development.
-    '''
+# Path to the directory that contains this setup.py file.
+base_dir = os.path.abspath(os.path.dirname(__file__))
 
 
 class PkgConfigError(Exception):
@@ -124,7 +114,7 @@ setup(
     license=__license__,
     url='http://openbabel.org/',
     description='Python interface to the Open Babel chemistry library',
-    long_description=long_description,
+    long_description=open(os.path.join(base_dir, 'README.rst')).read(),
     zip_safe=False,
     cmdclass={'build': CustomBuild, 'build_ext': CustomBuildExt, 'install': CustomInstall, 'sdist': CustomSdist},
     py_modules=['openbabel', 'pybel'],
