@@ -38,8 +38,12 @@ def run_exec(*args):
     else:
         raise Exception("One or two arguments expected")
 
-    broken = commandline.encode().split()
-    exe = executable(broken[0].decode())
+    if sys.platform.startswith("win"):
+        broken = commandline.split()
+        exe = executable(broken[0])
+    else:
+        broken = commandline.encode().split()
+        exe = executable(broken[0].decode())
     # Note that bufsize = -1 means default buffering
     # Without this, it's unbuffered and it takes 10x longer on MacOSX
     if text:
@@ -218,9 +222,11 @@ ENDBRANCH   1   9
 TORSDOF 5
 '''
         output, error = run_exec(pdb, "obabel -ipdb -opdbqt")
-        self.assertEqual(output, pdbqt)        
+        self.assertEqual(output.replace("\r", ""), pdbqt.replace("\r", ""))
 
     def testMissingPlugins(self):
+        if sys.platform.startswith("win32"):
+            return
         libdir = os.environ.pop("BABEL_LIBDIR", None)
         os.environ["BABEL_LIBDIR"] = ""
 
