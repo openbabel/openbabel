@@ -11,11 +11,6 @@ from setuptools.command.install import install
 from setuptools import setup, Extension
 
 
-__author__ = 'Noel O\'Boyle'
-__email__ = 'openbabel-discuss@lists.sourceforge.net'
-__license__ = 'GPL'
-
-
 # Path to the directory that contains this setup.py file.
 base_dir = os.path.abspath(os.path.dirname(__file__))
 
@@ -121,9 +116,9 @@ obextension = Extension('_openbabel', ['openbabel-python.i'], libraries=['openba
 setup(
     name='openbabel',
     version=find_version(),
-    author=__author__,
-    author_email=__email__,
-    license=__license__,
+    author='Noel O\'Boyle',
+    author_email='openbabel-discuss@lists.sourceforge.net',
+    license='GPL-2.0',
     url='http://openbabel.org/',
     description='Python interface to the Open Babel chemistry library',
     long_description=open(os.path.join(base_dir, 'README.rst')).read(),
