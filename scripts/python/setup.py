@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import os
+import re
 import subprocess
 import sys
 from distutils.command.build import build
@@ -78,8 +79,9 @@ class CustomSdist(sdist):
     def make_release_tree(self, base_dir, files):
         sdist.make_release_tree(self, base_dir, files)
         link = 'hard' if hasattr(os, 'link') else None
-        self.copy_file('../stereo.i', base_dir, link=link)
-        self.copy_file('../openbabel-python.i', base_dir, link=link)
+        pkg_dir = os.path.join(base_dir, 'openbabel')
+        self.copy_file(os.path.join('..', 'stereo.i'), pkg_dir, link=link)
+        self.copy_file(os.path.join('..', 'openbabel-python.i'), pkg_dir, link=link)
 
 
 class CustomBuildExt(build_ext):
@@ -107,7 +109,9 @@ class CustomBuildExt(build_ext):
             sys.exit(1)
 
 
-obextension = Extension('_openbabel', ['openbabel-python.i'], libraries=['openbabel'])
+obextension = Extension(
+    'openbabel._openbabel', [os.path.join('openbabel', 'openbabel-python.i')], libraries=['openbabel']
+)
 
 
 setup(
@@ -121,7 +125,7 @@ setup(
     long_description=open(os.path.join(base_dir, 'README.rst')).read(),
     zip_safe=False,
     cmdclass={'build': CustomBuild, 'build_ext': CustomBuildExt, 'install': CustomInstall, 'sdist': CustomSdist},
-    py_modules=['openbabel', 'pybel'],
+    packages=['openbabel'],
     ext_modules=[obextension],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
