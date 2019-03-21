@@ -11,6 +11,12 @@ from setuptools.command.install import install
 from setuptools import setup, Extension
 
 
+# Range of Open Babel versions that these Python bindings are compatible with.
+# A warning is displayed when compiling against an Open Babel outside this range.
+min_ob_version = '2.3.0'
+max_ob_version = '2.4.90'
+
+
 # Path to the directory that contains this setup.py file.
 base_dir = os.path.abspath(os.path.dirname(__file__))
 
@@ -40,8 +46,9 @@ def locate_ob():
     """Try use pkgconfig to locate Open Babel, otherwise guess default location."""
     try:
         version = pkgconfig('openbabel-2.0', '--modversion')
-        if not StrictVersion(version) >= StrictVersion('2.3.0'):
-            print('Warning: Open Babel 2.3.0 or later is required. Your version (%s) may not be compatible.' % version)
+        if not StrictVersion(min_ob_version) <= StrictVersion(version) <= StrictVersion(max_ob_version):
+            print('Warning: Open Babel %s - %s is required. Your version (%s) may not be compatible.' 
+                    % (min_ob_version, max_ob_version, version))
         include_dirs = pkgconfig('openbabel-2.0', '--variable=pkgincludedir')
         library_dirs = pkgconfig('openbabel-2.0', '--variable=libdir')
         print('Open Babel location automatically determined by pkg-config:')
