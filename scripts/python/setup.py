@@ -12,18 +12,12 @@ from setuptools.command.install import install
 from setuptools import setup, Extension
 
 
-# Range of Open Babel versions that these Python bindings are compatible with.
-# A warning is displayed when compiling against an Open Babel outside this range.
-min_ob_version = '2.3.0'
-max_ob_version = '2.4.90'
-
-
 # Path to the directory that contains this setup.py file.
 base_dir = os.path.abspath(os.path.dirname(__file__))
 
 
 def find_version():
-    """Extract the current version from the __init__.py file (which is created by CMake)."""
+    """Extract the current version of these python bindings from the __init__.py file."""
     try:
         with open(os.path.join(base_dir, 'openbabel', '__init__.py')) as fp:
             for line in fp:
@@ -32,7 +26,7 @@ def find_version():
                     return version_match.group(1)
             raise Exception('Could not find version string in openbabel/__init__.py.')
     except IOError:
-        raise Exception('Could not find openbabel/__init__.py. Did you run CMake?')
+        raise Exception('Could not find openbabel/__init__.py.')
 
 
 def pkgconfig(package, option):
@@ -46,10 +40,12 @@ def pkgconfig(package, option):
 def locate_ob():
     """Try use pkgconfig to locate Open Babel, otherwise guess default location."""
     try:
-        version = pkgconfig('openbabel-2.0', '--modversion')
-        if not StrictVersion(min_ob_version) <= StrictVersion(version) <= StrictVersion(max_ob_version):
-            print('Warning: Open Babel %s - %s is required. Your version (%s) may not be compatible.' 
-                    % (min_ob_version, max_ob_version, version))
+        # Warn if the (major, minor) version of the installed OB doesn't match these python bindings
+        ob_ver = StrictVersion(pkgconfig('openbabel-2.0', '--modversion'))
+        py_ver = StrictVersion(find_version())
+        if not ob_ver.version[:2] == py_ver.version[:2]:
+            print('Warning: Open Babel %s.%s.x is required. Your version (%s) may not be compatible.' 
+                    % (py_ver.version[0], py_ver.version[1], ob_ver))
         include_dirs = pkgconfig('openbabel-2.0', '--variable=pkgincludedir')
         library_dirs = pkgconfig('openbabel-2.0', '--variable=libdir')
         print('Open Babel location automatically determined by pkg-config:')
