@@ -1,10 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import os
 import subprocess
 import sys
 from distutils.command.build import build
 from distutils.command.sdist import sdist
 from distutils.errors import DistutilsExecError
+from distutils.spawn import find_executable
 from distutils.version import StrictVersion
 from setuptools.command.build_ext import build_ext
 from setuptools.command.install import install
@@ -13,7 +14,7 @@ from setuptools import setup, Extension
 
 __author__ = 'Noel O\'Boyle'
 __email__ = 'openbabel-discuss@lists.sourceforge.net'
-__version__ = '2.4.0'
+__version__ = '2.4.1'
 __license__ = 'GPL'
 
 
@@ -52,15 +53,15 @@ def pkgconfig(package, option):
 def locate_ob():
     """Try use pkgconfig to locate Open Babel, otherwise guess default location."""
     try:
-        version = pkgconfig('openbabel-2.0', '--modversion')
+        version = pkgconfig('openbabel', '--modversion')
         if not StrictVersion(version) >= StrictVersion('2.3.0'):
             print('Warning: Open Babel 2.3.0 or later is required. Your version (%s) may not be compatible.' % version)
-        include_dirs = pkgconfig('openbabel-2.0', '--variable=pkgincludedir')
+        include_dirs = pkgconfig('openbabel', '--variable=pkgincludedir')
         library_dirs = pkgconfig('openbabel-2.0', '--variable=libdir')
         print('Open Babel location automatically determined by pkg-config:')
     except PkgConfigError as e:
         print('Warning: %s.\nGuessing Open Babel location:' % e)
-        include_dirs = '/usr/local/include/openbabel-2.0'
+        include_dirs = '/usr/include/openbabel-2.0'
         library_dirs = '/usr/local/lib'
     return include_dirs, library_dirs
 
@@ -90,6 +91,16 @@ class CustomSdist(sdist):
 
 class CustomBuildExt(build_ext):
     """Custom build_ext to set SWIG options and print a better error message."""
+    def find_swig(self):
+        """Get swig version from several option"""
+        swig_executable = None
+        for executable in ["swig", "swig3.0"]:
+            swig_executable = find_executable(executable)
+        if swig_executable is None:
+            raise OSError("Unable to find SWIG version")
+        print("Found SWIG: %s" % swig_executable)
+        return swig_executable
+
     def finalize_options(self):
         # Setting include_dirs, library_dirs, swig_opts here instead of in Extension constructor allows them to be
         # overridden using -I and -L command line options to python setup.py build_ext.
@@ -111,7 +122,6 @@ class CustomBuildExt(build_ext):
                   '  python setup.py build_ext -I/usr/local/include/openbabel-2.0 -L/usr/local/lib\n'
                   '  python setup.py install')
             sys.exit(1)
-
 
 obextension = Extension('_openbabel', ['openbabel-python.i'], libraries=['openbabel'])
 
