@@ -131,8 +131,10 @@ namespace OpenBabel
 
   bool OBMoleculeFormat::WriteChemObjectImpl(OBConversion* pConv, OBFormat* pFormat)
   {
-    if(pConv->IsOption("C",OBConversion::GENOPTIONS))
+
+    if(pConv->IsOption("C",OBConversion::GENOPTIONS)){
       return OutputDeferredMols(pConv);
+    }
     if(pConv->IsOption("j",OBConversion::GENOPTIONS)
         || pConv->IsOption("join",OBConversion::GENOPTIONS))
       {
@@ -165,17 +167,19 @@ namespace OpenBabel
         ret=true;
 
         ret = DoOutputOptions(pOb, pConv);
-
-        if(ret)
+	
+        if(ret){
           ret = pFormat->WriteMolecule(pmol,pConv);
+	}
     }
 
 #ifdef HAVE_SHARED_POINTER
     //If sent a OBReaction* (rather than a OBMol*) output the consituent molecules
     OBReaction* pReact = dynamic_cast<OBReaction*> (pOb);
-    if(pReact)
+    if(pReact){
       ret = OutputMolsFromReaction(pReact, pConv, pFormat);
 #endif
+    }
     delete pOb;
     return ret;
   }
@@ -188,6 +192,7 @@ namespace OpenBabel
       pOb->SetTitle(ss.str().c_str());
     }
 
+    
     OBMol* pmol = dynamic_cast<OBMol*> (pOb);
     if(pmol) {
       if(pConv->IsOption("writeconformers", OBConversion::GENOPTIONS)) {
@@ -200,7 +205,8 @@ namespace OpenBabel
         }
         pmol->SetConformer(c);
       }
-    }
+    } 
+
     return true;
   }
 
@@ -384,6 +390,7 @@ namespace OpenBabel
     lastitr = IMols.end();
     --lastitr;
     pConv->SetOneObjectOnly(false);
+
     for(itr=IMols.begin();itr!=IMols.end();++itr,++i)
       {
         if(!(itr->second)->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS), pConv))
@@ -391,9 +398,7 @@ namespace OpenBabel
         pConv->SetOutputIndex(i);
         if(itr==lastitr)
           pConv->SetOneObjectOnly(); //to set IsLast
-
         ret = pConv->GetOutFormat()->WriteMolecule(itr->second, pConv);
-
         delete itr->second; //always delete OBMol object
         itr->second = NULL; // so can be deleted in DeleteDeferredMols()
         if (!ret) break;

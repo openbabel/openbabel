@@ -42,7 +42,6 @@ GNU General Public License for more details.
 #include <limits>
 #include <typeinfo>
 #include <iterator>
-
 #include <stdlib.h>
 
 #include <openbabel/obconversion.h>
@@ -600,13 +599,13 @@ namespace OpenBabel {
 
     //Output last object
     m_IsLast= !MoreFilesToCome;
-
     //Output is always occurs at the end with the --OutputAtEnd option
     bool oae = IsOption("OutputAtEnd",GENOPTIONS)!=NULL;
-    if(pOutFormat && (!oae || m_IsLast))
-      if((oae || pOb1) && !pOutFormat->WriteChemObject(this))
-        Index--;
-
+    if(pOutFormat && (!oae || m_IsLast)){
+      if((oae || pOb1) && !pOutFormat->WriteChemObject(this)){
+      	  Index--;
+      }
+    }
     //Put AddChemObject() into non-queue mode
     Count= -1;
     EndNumber=StartNumber=0; pOb1=NULL;//leave tidy
@@ -1267,9 +1266,8 @@ namespace OpenBabel {
   */
   int OBConversion::FullConvert(std::vector<std::string>& FileList, std::string& OutputFileName,
                                 std::vector<std::string>& OutputFileList)
-  {
+  { 
     OBConversion::OutFilename = OutputFileName; //ready for 2.4.0
-
     istream* pIs=NULL;
     ostream* pOs=NULL;
     ifstream is;

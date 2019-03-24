@@ -25,6 +25,7 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 
+#include <openbabel/color.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -56,6 +57,7 @@ static char *program_name;
 
 int main(int argc,char *argv[])
 {
+  init::color();
   OBConversion Conv(&cin, &cout); //default input and output are console 
 
   OBFormat* pInFormat = NULL;
@@ -361,9 +363,13 @@ int main(int argc,char *argv[])
         }
     }
 
+  cout << color::bold; 
   int count = Conv.FullConvert(FileList, OutputFileName, OutputFileList);
- 
+  cout << color::Reset;
+
+  clog << color::dim;
   Conv.ReportNumberConverted(count);
+  clog << color::Reset;
 
   if(OutputFileList.size()>1)
     {

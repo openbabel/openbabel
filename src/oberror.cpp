@@ -24,6 +24,7 @@ General Public License for more details.
 #include <algorithm>
 
 #include <openbabel/oberror.h>
+#include <openbabel/color.h>
 
 using namespace std;
 
@@ -47,17 +48,24 @@ namespace OpenBabel
   {
     string tmp = "==============================\n";
 
-    if (_level == obError)
-      tmp += "*** Open Babel Error ";
-    else if (_level == obWarning)
-      tmp += "*** Open Babel Warning ";
-    else if (_level == obInfo)
-      tmp += "*** Open Babel Information ";
-    else if (_level == obAuditMsg)
-      tmp += "*** Open Babel Audit Log ";
-    else
-      tmp += "*** Open Babel Debugging Message ";
-
+    switch(_level){
+      case obError:
+        tmp += "*** Open Babel Error ";
+        break;
+      case obWarning:
+        tmp += "*** Open Babel Warning ";
+        break;
+      case obInfo:
+        tmp += "*** Open Babel Information ";
+        break;
+      case obAuditMsg:
+        tmp += "*** Open Babel Audit Log ";
+        break;
+      case obDebug:
+        tmp += "*** Open Babel Debugging Message ";
+        break;
+    }
+    
     if (_method.length() != 0)
       {
         tmp += " in " + _method + string("\n  ");
@@ -164,12 +172,32 @@ namespace OpenBabel
   {
     if (!_logging)
       return;
-
+    
     //Output error message if level sufficiently high and, if onceOnly set, it has not been logged before
     if (err.GetLevel() <= _outputLevel &&
       (qualifier!=onceOnly || find(_messageList.begin(), _messageList.end(), err)==_messageList.end()))
     {
-      *_outputStream << err;
+      init::color();
+      *_outputStream << color::bold;
+
+      switch(err.GetLevel()){
+        case obError:
+          *_outputStream << color::red << err;
+          break;          
+        case obWarning:
+          *_outputStream << color::yellow << err;
+          break;          
+        case obInfo:
+          *_outputStream << color::blue << err;
+          break;          
+        case obAuditMsg:
+          *_outputStream << color::magenta << err;
+          break;          
+        case obDebug:
+          *_outputStream << color::cyan << err;
+          break;
+      }     
+      *_outputStream << color::Reset; 
     }
 
     _messageList.push_back(err);
