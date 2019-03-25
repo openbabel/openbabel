@@ -28,12 +28,12 @@ here = sys.path[0]
 iswin = sys.platform.startswith("win")
 
 try:
-    import openbabel as ob
+    from openbabel import openbabel as ob
 except ImportError:
     ob = None
 
 try:
-    import pybel
+    from openbabel import pybel
 except ImportError:
     pybel = None
 

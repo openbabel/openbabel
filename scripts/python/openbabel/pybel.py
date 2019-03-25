@@ -21,8 +21,6 @@ Global variables:
 import sys
 import os.path
 import tempfile
-import json
-import uuid
 import xml.etree.ElementTree as ET
 
 if sys.platform[:4] == "java":
@@ -50,7 +48,7 @@ elif sys.platform[:3] == "cli":
     _obfuncs = ob.openbabel_csharp
     _obconsts = ob.openbabel_csharp
 else:
-    import openbabel as ob
+    from . import openbabel as ob
     _obfuncs = _obconsts = ob
     try:
         import Tkinter as tk
@@ -414,7 +412,7 @@ class Molecule(object):
         if ipython_3d:
             return None
 
-        # Open babel returns a nested svg, which IPython unpacks and treats as
+        # Open Babel returns a nested svg, which IPython unpacks and treats as
         # two SVGs, messing with the display location. This parses out the
         # inner svg before handing over to IPython.
         namespace = "http://www.w3.org/2000/svg"
