@@ -38,10 +38,7 @@ namespace OpenBabel
   }
   DoubleType;
 
-  void DoubleMultiply( unsigned int,unsigned int,DoubleType*);
-  void DoubleAdd( DoubleType*,unsigned int);
-  unsigned int DoubleModulus( DoubleType*,unsigned int);
-
+  
   //! \class OBRandom rand.h <openbabel/rand.h>
   //! \brief Random number generator
   /**
