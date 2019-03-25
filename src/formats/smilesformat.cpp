@@ -36,8 +36,6 @@ GNU General Public License for more details.
 #include <openbabel/graphsym.h>
 #include <openbabel/kekulize.h>
 #include <openbabel/canon.h>
-#include "../rand.h"
-#include "../rand.cpp"
 
 #include "smilesvalence.h"
 
@@ -3569,21 +3567,12 @@ namespace OpenBabel {
    *    molecule, and use those to test the canonicalizer.
    ***************************************************************************/
 
-  static int timeseed = 0;
-
   void RandomLabels(OBMol *pMol, OBBitVec &frag_atoms,
       vector<unsigned int> &symmetry_classes,
       vector<unsigned int> &labels)
   {
     int natoms = pMol->NumAtoms();
     OBBitVec used(natoms);
-
-    if (!timeseed) {
-      OBRandom rand;
-      rand.TimeSeed();
-      timeseed = 1;
-    }
-
 
     FOR_ATOMS_OF_MOL(atom, *pMol) {
       if (frag_atoms.BitIsOn(atom->GetIdx())) {
