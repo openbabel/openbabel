@@ -1179,12 +1179,12 @@ namespace OpenBabel
     }
 
   };
-  //! \class OBXrayORCAData generic.h <openbabel/generic.h>
-  //! \brief Used to hold information about Xray absorption and emission spectra
-  class OBAPI OBXrayORCAData: public OBGenericData
+  //! \class OBOrcaSpecData generic.h <openbabel/generic.h>
+  //! \brief Used to hold information about absorption and emission spectra calculated by Orca
+  class OBAPI OBOrcaSpecData: public OBGenericData
   {
   protected:
-    bool _bXRayData;
+    bool _bOrcaSpecData;
     //! Wavelengths (nm)
     std::vector<double>  _vAbsWavelengths;
     std::vector<double>  _vEmWavelengths;
@@ -1205,28 +1205,28 @@ namespace OpenBabel
     std::vector<double>  _vEmM2;
     std::vector<double>  _vEmQ2;
 
-    //! Xray absorption spectrum - electric dipole
+    //! Absorption spectrum - electric dipole
     std::vector<double>  _vAbsEDipole;
 
-    //! Xray absorption spectrum - velosity
+    //! Absorption spectrum - velosity
     std::vector<double>  _vAbsVelocity;
 
-    //! Xray emission spectrum - electric dipole
+    //! Emission spectrum - electric dipole
     std::vector<double>  _vEmEDipole;
 
-    //! Xray emission spectrum - velosity
+    //! Emission spectrum - velosity
     std::vector<double>  _vEmVelocity;
 
 
   public:
-    OBXrayORCAData(): OBGenericData("ORCASpectraData", OBGenericDataType::CustomData0) {}
-    virtual ~OBXrayORCAData() {}
+    OBOrcaSpecData(): OBGenericData("OrcaSpectraData", OBGenericDataType::CustomData0) {}
+    virtual ~OBOrcaSpecData() {}
     virtual OBGenericData* Clone(OBBase*) const
-         {return new OBXrayORCAData(*this);}
+         {return new OBOrcaSpecData(*this);}
 
-    OBXrayORCAData & operator=(const OBXrayORCAData &);
+    OBOrcaSpecData & operator=(const OBOrcaSpecData &);
 
-    void SetXRayData (const bool &);
+    void SetSpecData (const bool &);
 
     void SetData(const std::vector<double> & wavelengths,
                  const std::vector<double> & forces);
@@ -1248,8 +1248,8 @@ namespace OpenBabel
     void SetEmM2(const std::vector<double> &);
     void SetEmQ2(const std::vector<double> &);
 
-    bool GetXRayData () const
-    { return this->_bXRayData; }
+    bool GetSpecData () const
+    { return this->_bOrcaSpecData; }
     std::vector<double> GetAbsWavelengths() const
       { return this->_vAbsWavelengths; }
     std::vector<double> GetEmWavelengths() const
