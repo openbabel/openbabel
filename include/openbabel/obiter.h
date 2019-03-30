@@ -21,7 +21,6 @@ GNU General Public License for more details.
 #define OB_OBITER_H
 
 #include <openbabel/babelconfig.h>
-#include <openbabel/base.h>
 #include <openbabel/bitvec.h>
 
 #include <vector>

@@ -1,5 +1,6 @@
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
 #include <openbabel/oberror.h>
 
 using namespace std;

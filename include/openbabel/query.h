@@ -24,12 +24,14 @@
 #ifndef OB_QUERY_H
 #define OB_QUERY_H
 
-#include <openbabel/mol.h>
+#include <openbabel/bond.h> // TODO: Move OBBond code out of this header
+#include <openbabel/bitvec.h>
 #include <openbabel/tokenst.h>
 
 namespace OpenBabel {
 
   class OBQueryBond;
+  class OBMol;
 
   ///@addtogroup substructure Substructure Searching
   ///@{

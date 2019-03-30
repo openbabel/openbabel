@@ -22,6 +22,8 @@ GNU General Public License for more details.
 #include <iomanip>
 
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
 #include <openbabel/parsmart.h>
 #include <openbabel/stereo/stereo.h>
 #include <openbabel/stereo/tetrahedral.h>

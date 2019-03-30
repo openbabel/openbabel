@@ -23,6 +23,10 @@ GNU General Public License for more details.
 #include <set>
 
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/ring.h>
+#include <openbabel/obiter.h>
 #include <openbabel/generic.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/elements.h>

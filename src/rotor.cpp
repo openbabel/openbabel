@@ -20,6 +20,10 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/mol.h>
+#include <openbabel/bond.h>
+#include <openbabel/ring.h>
+#include <openbabel/obiter.h>
+#include <openbabel/oberror.h>
 #include <openbabel/rotor.h>
 #include <openbabel/graphsym.h>
 #include <openbabel/elements.h>
@@ -29,6 +33,11 @@ GNU General Public License for more details.
 
 // private data headers with default parameters
 #include "torlib.h"
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 
 using namespace std;
 namespace OpenBabel

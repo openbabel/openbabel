@@ -23,6 +23,9 @@
  **********************************************************************/
 
 #include <openbabel/query.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/obiter.h>
 #include <openbabel/obconversion.h>
 
 using namespace std;

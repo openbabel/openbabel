@@ -25,7 +25,10 @@ GNU General Public License for more details.
 #include <openbabel/data.h>
 #include <openbabel/data_utilities.h>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
 #include <openbabel/locale.h>
+#include <openbabel/oberror.h>
 #include <openbabel/elements.h>
 
 // data headers with default parameters

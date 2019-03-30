@@ -17,6 +17,7 @@ GNU General Public License for more details.
 #include <openbabel/alias.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/op.h>
+#include <openbabel/mol.h>
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
 #include <openbabel/builder.h>

@@ -18,6 +18,9 @@ GNU General Public License for more details.
 
 #include <openbabel/tautomer.h>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
 #include <openbabel/graphsym.h>
 #include <openbabel/canon.h>
 #include <openbabel/obconversion.h>

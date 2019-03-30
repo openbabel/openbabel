@@ -34,6 +34,7 @@ namespace OpenBabel
   class OBMol;
   class OBAtom;
   class OBBond;
+  class vector3;
 
   // class introduction in ring.cpp
   class OBAPI OBRing

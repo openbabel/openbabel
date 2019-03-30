@@ -1,4 +1,7 @@
+#include <openbabel/mol.h>
 #include <openbabel/isomorphism.h>
+#include <openbabel/obiter.h>
+#include <openbabel/oberror.h>
 #include <openbabel/query.h>
 #include <openbabel/graphsym.h>
 #include <ctime>

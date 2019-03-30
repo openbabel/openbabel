@@ -23,6 +23,9 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <openbabel/spectrophore.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/obiter.h>
 
 namespace OpenBabel
 {

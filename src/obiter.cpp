@@ -21,6 +21,9 @@ GNU General Public License for more details.
 #include <vector>
 
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/generic.h>
 #include <openbabel/obiter.h>
 
 using namespace std;

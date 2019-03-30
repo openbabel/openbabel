@@ -18,7 +18,6 @@ GNU General Public License for more details.
 #ifndef OB_INCHIFORMAT_H
 #define OB_INCHIFORMAT_H
 #include <openbabel/babelconfig.h>
-#include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/obmolecformat.h>
 

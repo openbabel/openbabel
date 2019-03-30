@@ -19,15 +19,20 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 
+#include <set>
+
 #include <openbabel/forcefield.h>
 
 #include <openbabel/mol.h>
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
+#include <openbabel/ring.h>
 #include <openbabel/obiter.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/rotamer.h>
 #include <openbabel/rotor.h>
+#include <openbabel/grid.h>
+#include <openbabel/griddata.h>
 #include <openbabel/elements.h>
 
 using namespace std;

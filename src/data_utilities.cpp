@@ -26,6 +26,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/data_utilities.h>
 #include <openbabel/mol.h>
+#include <openbabel/generic.h>
 #include <openbabel/locale.h>
 
 namespace OpenBabel {

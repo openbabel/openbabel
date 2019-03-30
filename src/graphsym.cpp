@@ -25,6 +25,11 @@
 #include <openbabel/graphsym.h>
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/ring.h>
+#include <openbabel/obiter.h>
+#include <openbabel/generic.h>
 
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/stereo/tetrahedral.h>
@@ -138,7 +143,7 @@ namespace OpenBabel {
     OBBond *bond;
     OBAtom *nbr;
 
-    vector<OBEdgeBase*>::iterator bi;
+    vector<OBBond*>::iterator bi;
     for (bond = atom->BeginBond(bi); bond; bond = atom->NextBond(bi)) {
       nbr = bond->GetNbrAtom(atom);
       if (_frag_atoms.BitIsSet(nbr->GetIdx()) && nbr->GetAtomicNum() != OBElements::Hydrogen)

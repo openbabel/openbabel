@@ -18,6 +18,10 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/ring.h>
+#include <openbabel/obiter.h>
 #include <openbabel/rotamer.h>
 
 #define OB_TITLE_SIZE     254
@@ -569,6 +573,11 @@ namespace OpenBabel
       } // for rotors
 
     return true;
+  }
+
+  void OBRotamerList::SetBaseCoordinateSets(OBMol& mol)
+  {
+    SetBaseCoordinateSets(mol.GetConformers(), mol.NumAtoms());
   }
 
   //Copies the coordinates in bc, NOT the pointers, into the object

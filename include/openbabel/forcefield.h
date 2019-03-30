@@ -21,20 +21,18 @@ GNU General Public License for more details.
 
 #include <vector>
 #include <string>
-#include <map>
 
-#include <list>
-#include <set>
 #include <openbabel/babelconfig.h>
-#include <openbabel/base.h>
-#include <openbabel/mol.h>
+#include <openbabel/mol.h>  // TODO: Move OBMol code out of the header (use OBMol*)
+#include <openbabel/atom.h> // TODO: Move OBAtom code out of the header
 #include <openbabel/plugin.h>
-#include <openbabel/grid.h>
-#include <openbabel/griddata.h>
+#include <openbabel/bitvec.h>
 #include <float.h>
 
 namespace OpenBabel
 {
+  class OBGridData;
+
   // log levels
 #define OBFF_LOGLVL_NONE	0   //!< no output
 #define OBFF_LOGLVL_LOW		1   //!< SteepestDescent progress... (no output from Energy())
