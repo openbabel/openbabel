@@ -17,6 +17,13 @@ GNU General Public License for more details.
 #include <openbabel/data.h>
 #include <openbabel/data_utilities.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
+#include <openbabel/generic.h>
+
 #include <openbabel/pointgroup.h>
 
 using namespace std;
