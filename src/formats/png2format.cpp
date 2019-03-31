@@ -13,6 +13,7 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
 #include <openbabel/op.h>
 #include <openbabel/depict/depict.h>
 #include <openbabel/depict/cairopainter.h>
