@@ -27,6 +27,11 @@ GNU General Public License for more details.
 #include <iomanip>
 #include <map>
 #include <algorithm>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
 #include <openbabel/obmolecformat.h>
 #include <openbabel/stereo/stereo.h>
 #include <openbabel/stereo/cistrans.h>
@@ -1966,11 +1971,11 @@ namespace OpenBabel
 
   bool MDLFormat::TestForAlias(const string& symbol, OBAtom* at, vector<pair<AliasData*,OBAtom*> >& aliases)
   {
-  /*If symbol is R R' R'' R# R¢ R¢¢ or Rn Rnn where n is an digit
+  /*If symbol is R R' R'' R# Rï¿½ Rï¿½ï¿½ or Rn Rnn where n is an digit
     the atom is added to the alias list and the atomic number set to zero. Returns false.
     Otherwise, e.g Rh or Ru, returns true.
   */
-    if(symbol.size()==1 || isdigit(symbol[1]) || symbol[1]=='\'' || symbol[1]=='¢' || symbol[1]=='#')
+    if(symbol.size()==1 || isdigit(symbol[1]) || symbol[1]=='\'' || symbol[1]=='ï¿½' || symbol[1]=='#')
     {
       AliasData* ad = new AliasData();
       ad->SetAlias(symbol);

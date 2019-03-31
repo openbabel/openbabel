@@ -44,9 +44,9 @@ using namespace std;
 
 namespace OpenBabel
 {
-
-  OBTypeTable      ttab;
-  OBResidueData    resdat;
+  // Initialize the globals (declared in data.h)
+  OBTypeTable ttab;
+  OBResidueData resdat;
 
   OBAtomicHeatOfFormationTable::OBAtomicHeatOfFormationTable(void)
   {

@@ -719,22 +719,6 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
   // Replace the last extension in str with a new one (docs in obutil.cpp)
   OBAPI std::string NewExtension(std::string&,char*);
 
-  ////global definitions
-  ////! Global OBTypeTable for translating between different atom types
-  ////! (e.g., Sybyl <-> MM2)
-  //EXTERN  OBTypeTable      ttab;
-  ////! Global OBAromaticTyper for detecting aromatic atoms and bonds
-  //EXTERN  OBAromaticTyper  aromtyper;
-  ////! Global OBAtomTyper for marking internal valence, hybridization,
-  ////!  and atom types (for internal and external use)
-  //EXTERN  OBAtomTyper      atomtyper;
-  //! Global OBChainsParser for detecting macromolecular chains and residues
-  EXTERN  OBChainsParser   chainsparser;
-  ////! Global OBMessageHandler error handler
-  //OBERROR extern  OBMessageHandler obErrorLog;
-  ////! Global OBResidueData biomolecule residue database
-  //EXTERN  OBResidueData    resdat;
-
   //! \brief Nested namespace for max_value templates
   namespace detail {
     //! \struct max_value mol.h <openbabel/mol.h>

@@ -144,6 +144,9 @@ static char ChainsResName[RESIDMAX][4] = {
 namespace OpenBabel
 {
   extern OBMessageHandler obErrorLog;
+
+
+  // Initialize the global chainsparser - declared in chains.h
   OBChainsParser chainsparser;
 
   //////////////////////////////////////////////////////////////////////////////

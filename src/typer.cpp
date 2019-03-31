@@ -38,7 +38,7 @@ using namespace std;
 
 namespace OpenBabel
 {
-
+  // Initialize globals declared in typer.h
   OBAromaticTyper  aromtyper;
   OBAtomTyper      atomtyper;
 

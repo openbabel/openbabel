@@ -17,6 +17,9 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/obmolecformat.h>
 
@@ -28,6 +31,7 @@ GNU General Public License for more details.
 #include <openbabel/inchiformat.h>
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
+#include <openbabel/elements.h>
 
 using namespace std;
 namespace OpenBabel

@@ -31,6 +31,7 @@ GNU General Public License for more details.
 #include <openbabel/chains.h>
 #include <openbabel/obutil.h>
 #include <openbabel/residue.h>
+#include <openbabel/chains.h>
 
 #include <openbabel/math/matrix3x3.h>
 
@@ -40,9 +41,10 @@ extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
 
 using namespace std;
 
+
 namespace OpenBabel
 {
-
+  EXTERN OBChainsParser chainsparser;
   /** \class OBAtom atom.h <openbabel/atom.h>
       \brief Atom class
 
@@ -104,7 +106,7 @@ namespace OpenBabel
   extern OBAromaticTyper  aromtyper;
   extern OBAtomTyper      atomtyper;
   extern OBPhModel        phmodel;
-  extern OBTypeTable      ttab;
+  EXTERN OBTypeTable      ttab;
   
   //
   // OBAtom member functions
