@@ -13,6 +13,9 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
 #include <openbabel/fingerprint.h>
 #include <openbabel/obiter.h>
 #include <openbabel/elements.h>

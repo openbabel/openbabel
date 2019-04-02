@@ -25,7 +25,10 @@ GNU General Public License for more details.
 #include <vector>
 #include <utility>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/oberror.h>
 #include <openbabel/parsmart.h>
+#include <openbabel/bitvec.h>
 #include <openbabel/groupcontrib.h>
 #include <openbabel/locale.h>
 #include <openbabel/elements.h>
