@@ -16,8 +16,19 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/elements.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/generic.h>
+
 #include <openbabel/math/spacegroup.h>
 
 #include <sstream>
