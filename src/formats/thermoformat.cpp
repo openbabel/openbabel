@@ -21,6 +21,10 @@ GNU General Public License for more details.
 #include <string>
 #include <iomanip>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/elements.h>
+
 #include <openbabel/kinetics.h>
 
 using namespace std;

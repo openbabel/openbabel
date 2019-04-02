@@ -17,6 +17,9 @@ GNU General Public License for more details.
 #include <string>
 #include <algorithm>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/elements.h>
+
 #include <openbabel/obconversion.h>
 #include <openbabel/reactionfacade.h>
 #include <openbabel/obmolecformat.h>

@@ -32,6 +32,11 @@ typedef short int16;
 typedef unsigned short uint16;
 
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/elements.h>
+#include <openbabel/bond.h>
+
 
 #define mem_alloc malloc
 #define mem_free free
