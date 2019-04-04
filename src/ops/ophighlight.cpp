@@ -16,6 +16,9 @@ GNU General Public License for more details.
 #include <openbabel/parsmart.h>
 #include <openbabel/obconversion.h>
 #include<openbabel/op.h>
+#include <openbabel/generic.h>
+#include <openbabel/bond.h>
+#include <openbabel/mol.h>
 
 namespace OpenBabel
 {

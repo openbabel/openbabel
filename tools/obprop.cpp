@@ -28,6 +28,8 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/descriptor.h>
 #include <openbabel/obconversion.h>
+#include <openbabel/obiter.h>
+#include <openbabel/residue.h>
 #ifndef _MSC_VER
   #include <unistd.h>
 #endif

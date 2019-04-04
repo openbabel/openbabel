@@ -64,6 +64,9 @@
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/stereo/squareplanar.h>
 #include <openbabel/stereo/bindings.h>
+
+#include <openbabel/chains.h>
+#include <openbabel/obiter.h>
 %}
 
 // Set and reset dlopenflags so that plugin loading works fine for "import _openbabel"

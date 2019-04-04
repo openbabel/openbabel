@@ -29,6 +29,7 @@
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/obutil.h>
+#include <openbabel/parsmart.h>
 
 using namespace std;
 using namespace OpenBabel;

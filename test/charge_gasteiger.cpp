@@ -13,6 +13,8 @@
 #include <openbabel/obconversion.h>
 #include <openbabel/chargemodel.h>
 #include <openbabel/obutil.h>
+#include <openbabel/atom.h>
+#include <openbabel/obiter.h>
 
 using namespace std;
 using namespace OpenBabel;
