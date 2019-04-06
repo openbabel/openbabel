@@ -184,7 +184,7 @@ namespace OpenBabel
     };
 
   //! Global OBMessageHandler error handler
-  EXTERN  OBMessageHandler obErrorLog;
+  OBERROR extern  OBMessageHandler obErrorLog;
 
   //! \class obLogBuf oberror.h <openbabel/oberror.h>
   //! \brief A minimal streambuf derivative to wrap calls to cerr into calls to OBMessageHandler as needed
