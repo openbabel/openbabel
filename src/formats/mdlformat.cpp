@@ -1975,7 +1975,7 @@ namespace OpenBabel
     the atom is added to the alias list and the atomic number set to zero. Returns false.
     Otherwise, e.g Rh or Ru, returns true.
   */
-    if(symbol.size()==1 || isdigit(symbol[1]) || symbol[1]=='\'' || symbol[1]=='�' || symbol[1]=='#')
+    if(symbol.size()==1 || isdigit(symbol[1]) || symbol[1]=='\'' || symbol[1]=='\xa2' || symbol[1]=='#')
     {
       AliasData* ad = new AliasData();
       ad->SetAlias(symbol);
