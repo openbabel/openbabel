@@ -20,7 +20,8 @@ GNU General Public License for more details.
 #ifdef WIN32
 #pragma warning (disable : 4786)
 #endif
-
+#include <cstdlib>
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <openbabel/babelconfig.h>

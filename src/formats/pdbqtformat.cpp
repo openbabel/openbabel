@@ -31,7 +31,8 @@ GNU General Public License for more details.
 #include <openbabel/obiter.h>
 #include <openbabel/typer.h>
 
-
+#include <algorithm>
+#include <cstdlib>
 #include <vector>
 #include <map>
 #include <set>

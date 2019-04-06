@@ -24,6 +24,7 @@ GNU General Public License for more details.
 
 #include <sstream>
 #include <iomanip>
+#include <cstdlib>
 
 #define notFound string::npos
 

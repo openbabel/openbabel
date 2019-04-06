@@ -30,6 +30,7 @@ GNU General Public License for more details.
 #ifndef _MSC_VER
   #include <unistd.h>
 #endif
+#include <cstdlib>
 
 using namespace std;
 using namespace OpenBabel;

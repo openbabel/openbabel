@@ -20,6 +20,7 @@ GNU General Public License for more details.
 
 #include <ctype.h>
 #include <iomanip>
+#include <cstring>
 
 #include <openbabel/mol.h>
 #include <openbabel/atom.h>

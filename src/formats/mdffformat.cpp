@@ -26,6 +26,8 @@ GNU General Public License for more details.
 #include <locale> // For isalpha(int)
 #include <map>
 #include <stdexcept>
+#include <cstdlib>
+#include <algorithm>
 
 #ifdef _MSC_VER
 #define INFINITY (DBL_MAX+DBL_MAX)

@@ -19,6 +19,7 @@ GNU General Public License for more details.
 #include <openbabel/elements.h>
 #include <openbabel/generic.h>
 #include <openbabel/obiter.h>
+#include <cstdlib>
 
 #include <openbabel/math/matrix3x3.h>
 

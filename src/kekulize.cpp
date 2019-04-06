@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #include <openbabel/bond.h>
 #include <openbabel/obiter.h>
 #include <openbabel/kekulize.h>
+#include <cstdlib>
 
 namespace OpenBabel
 {

@@ -22,6 +22,7 @@ GNU General Public License for more details.
 #include <openbabel/elements.h>
 
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 namespace OpenBabel

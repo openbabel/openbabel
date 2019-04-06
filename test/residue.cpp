@@ -27,7 +27,7 @@ GNU General Public License for more details.
 #include <openbabel/obiter.h>
 #include <openbabel/chains.h>
 #include <openbabel/residue.h>
-
+#include <cstdlib>
 #include <stdio.h>
 #include <iostream>
 

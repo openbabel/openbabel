@@ -28,6 +28,8 @@ GNU General Public License for more details.
 
 #include "forcefieldgaff.h"
 
+#include <cstdlib>
+
 using namespace std;
 
 namespace OpenBabel

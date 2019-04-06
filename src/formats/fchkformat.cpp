@@ -14,6 +14,8 @@ GNU General Public License for more details.
 #include <numeric>
 #include <typeinfo>
 #include <functional>
+#include <cstdlib>
+#include <algorithm>
 
 // No diagnoalization yet. Perhaps for 2.2 -GRH
 // #include <eigen/matrix.h>

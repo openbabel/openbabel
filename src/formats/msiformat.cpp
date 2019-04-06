@@ -17,6 +17,7 @@ GNU General Public License for more details.
 #include <openbabel/atom.h>
 #include <openbabel/elements.h>
 #include <openbabel/generic.h>
+#include <cstdlib>
 
 
 #include <sstream>

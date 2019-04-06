@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #include <openbabel/kekulize.h>
 #include <openbabel/generic.h>
 #include <iomanip>
+#include <cstdlib>
 
 using namespace std;
 namespace OpenBabel

@@ -15,6 +15,7 @@
 #include <openbabel/obutil.h>
 #include <openbabel/atom.h>
 #include <openbabel/obiter.h>
+#include <cstdlib>
 
 using namespace std;
 using namespace OpenBabel;

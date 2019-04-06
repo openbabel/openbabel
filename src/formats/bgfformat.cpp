@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include <openbabel/elements.h>
 #include <openbabel/data.h>
 #include <openbabel/generic.h>
+#include <cstdlib>
 
 
 using namespace std;

@@ -25,6 +25,7 @@ GNU General Public License for more details.
 #include <openbabel/op.h>
 #include <openbabel/depict/depict.h>
 #include <openbabel/depict/asciipainter.h>
+#include <cstdlib>
 
 using namespace std;
 

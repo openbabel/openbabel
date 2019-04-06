@@ -19,6 +19,8 @@ GNU General Public License for more details.
 #include <openbabel/depict/cairopainter.h>
 #include <openbabel/alias.h>
 
+#include <cstdlib>
+
 using namespace std;
 
 

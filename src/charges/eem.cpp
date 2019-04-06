@@ -18,6 +18,7 @@ GNU General Public License for more details.
 
 #include <string>
 #include <vector>
+#include <cstdlib>
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/chargemodel.h>

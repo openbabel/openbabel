@@ -33,6 +33,8 @@ GNU General Public License for more details.
 #include "openbabel/kinetics.h"
 #include "openbabel/obmolecformat.h"
 
+#include <cstdlib>
+
 using namespace std;
 
 namespace OpenBabel

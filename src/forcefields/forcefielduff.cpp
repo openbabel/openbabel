@@ -27,6 +27,7 @@ GNU General Public License for more details.
 #include <openbabel/bond.h>
 #include <openbabel/parsmart.h>
 
+#include <cstdlib>
 
 #include "forcefielduff.h"
 

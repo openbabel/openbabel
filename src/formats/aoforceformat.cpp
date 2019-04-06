@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include <openbabel/obiter.h>
 #include <openbabel/elements.h>
 #include <openbabel/generic.h>
+#include <cstdlib>
 
 namespace OpenBabel {
 

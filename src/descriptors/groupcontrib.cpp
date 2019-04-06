@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <vector>
 #include <utility>
+#include <cstdlib>
 #include <openbabel/mol.h>
 #include <openbabel/atom.h>
 #include <openbabel/oberror.h>

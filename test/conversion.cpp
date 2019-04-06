@@ -27,6 +27,7 @@ GNU General Public License for more details.
 
 #include <stdio.h>
 #include <iostream>
+#include <cstdlib>
 
 using namespace std;
 using namespace OpenBabel;

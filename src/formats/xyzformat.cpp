@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include <openbabel/obiter.h>
 
 #include <sstream>
+#include <cstdlib>
 
 using namespace std;
 namespace OpenBabel

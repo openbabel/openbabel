@@ -27,6 +27,7 @@ GNU General Public License for more details.
 #include <openbabel/parsmart.h>
 #include <openbabel/obutil.h>
 
+#include <cstdlib>
 
 using namespace std;
 

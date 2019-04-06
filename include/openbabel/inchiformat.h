@@ -29,6 +29,8 @@ GNU General Public License for more details.
 #endif
 #include <set>
 #include <vector>
+#include <cstdlib>
+#include <algorithm>
 #include "openbabel/chiral.h"
 
 using namespace std;

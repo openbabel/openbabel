@@ -18,7 +18,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <openbabel/babelconfig.h>
-#include <list>
+#include <algorithm>
 
 #include <openbabel/mol.h>
 #include <openbabel/atom.h>

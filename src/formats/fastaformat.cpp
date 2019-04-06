@@ -27,6 +27,7 @@ GNU General Public License for more details.
 
 #include <map>
 #include <string>
+#include <cstdlib>
 
 using namespace std;
 namespace OpenBabel

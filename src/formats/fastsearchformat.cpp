@@ -24,6 +24,8 @@ GNU General Public License for more details.
 #include <openbabel/elements.h>
 #include <openbabel/bond.h>
 #include <openbabel/obutil.h>
+#include <cstdlib>
+#include <algorithm>
 
 
 using namespace std;

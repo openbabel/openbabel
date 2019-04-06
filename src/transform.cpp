@@ -24,6 +24,8 @@ GNU General Public License for more details.
 #include <openbabel/op.h>
 #include <openbabel/parsmart.h>
 
+#include <cstdlib>
+
 using namespace std;
 namespace OpenBabel
 {

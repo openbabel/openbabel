@@ -22,6 +22,7 @@ GNU General Public License for more details.
 
 #include <sstream>
 #include <map>
+#include <cstdlib>
 
 using namespace std;
 namespace OpenBabel

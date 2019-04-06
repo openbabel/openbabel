@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #include <openbabel/data.h>
 #include <openbabel/obiter.h>
 #include <openbabel/bond.h>
+#include <cstdlib>
 
 
 using namespace std;

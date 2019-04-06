@@ -26,6 +26,7 @@ GNU General Public License for more details.
 #include <openbabel/obconversion.h>
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
+#include <cstdlib>
 
 #include <stdio.h>
 #include <iostream>

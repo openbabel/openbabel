@@ -22,6 +22,8 @@ GNU General Public License for more details.
   #include <openbabel/reaction.h>
 #endif
 
+#include <algorithm>
+
 using namespace std;
 namespace OpenBabel
 {

@@ -25,6 +25,7 @@ GNU General Public License for more details.
 #include <openbabel/elements.h>
 #include <openbabel/obmolecformat.h>
 #include <stdio.h>
+#include <cstdlib>
 
 using namespace std;
 namespace OpenBabel

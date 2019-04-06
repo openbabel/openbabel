@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #include <openbabel/generic.h>
 
 #include <openbabel/forcefield.h>
+#include <cstdlib>
 
 using namespace std;
 namespace OpenBabel

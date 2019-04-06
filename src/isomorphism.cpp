@@ -6,6 +6,7 @@
 #include <openbabel/graphsym.h>
 #include <ctime>
 #include <cassert>
+#include <algorithm>
 
 #define DEBUG 0
 

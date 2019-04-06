@@ -15,6 +15,7 @@ GNU General Public License for more details.
 #include <vector>
 #include <string>
 #include <iomanip>
+#include <cstdlib>
 
 #include <openbabel/obmolecformat.h>
 #include <openbabel/mol.h>

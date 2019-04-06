@@ -26,6 +26,8 @@ GNU General Public License for more details.
 #include <locale> // For isalpha(int)
 #include <functional>
 #include <iostream>
+#include <algorithm>
+#include <cstdlib>
 
 #define EV_TO_KCAL_PER_MOL 23.060538
 

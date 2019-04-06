@@ -21,6 +21,8 @@ GNU General Public License for more details.
 #define USING_OBDLL
 #endif
 
+#include <cstdlib>
+
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/mol.h>

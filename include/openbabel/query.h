@@ -197,11 +197,7 @@ namespace OpenBabel {
   class OBAPI OBQuery
   {
     public:
-      ~OBQuery()
-      {
-        std::for_each(m_atoms.begin(),m_atoms.end(), DeleteObject());
-        std::for_each(m_bonds.begin(),m_bonds.end(), DeleteObject());
-      }
+      ~OBQuery();
       /**
        * @return The number of atoms in the query.
        */

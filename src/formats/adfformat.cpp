@@ -40,6 +40,7 @@
 #include <openbabel/obiter.h>
 #include <openbabel/elements.h>
 #include <openbabel/generic.h>
+#include <cstdlib>
 
 
 #include <openbabel/griddata.h>

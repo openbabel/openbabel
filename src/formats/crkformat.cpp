@@ -18,7 +18,7 @@ GNU General Public License for more details.
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
 #include <openbabel/elements.h>
-
+#include <cstdlib>
 
 #include <sstream>
 

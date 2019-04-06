@@ -41,7 +41,7 @@ GNU General Public License for more details.
 #include <openbabel/rotamer.h>
 //#include <unistd.h>
 #include <openbabel/obconversion.h>
-
+#include <cstdlib>
 using namespace std;
 using namespace OpenBabel;
 

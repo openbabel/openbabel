@@ -26,6 +26,8 @@ GNU General Public License for more details.
 #include <openbabel/oberror.h>
 #include <openbabel/phmodel.h>
 
+#include <cstdlib>
+
 // private data header with default parameters
 #include "phmodeldata.h"
 

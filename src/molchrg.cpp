@@ -26,6 +26,8 @@ GNU General Public License for more details.
 #include <openbabel/molchrg.h>
 #include <openbabel/elements.h>
 
+#include <cstring>
+
 using namespace std;
 namespace OpenBabel
 {

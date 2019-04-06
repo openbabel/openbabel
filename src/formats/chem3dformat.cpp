@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #include <openbabel/atom.h>
 #include <openbabel/elements.h>
 #include <openbabel/data.h>
+#include <cstdlib>
 
 
 using namespace std;

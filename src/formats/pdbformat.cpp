@@ -26,6 +26,8 @@ GNU General Public License for more details.
 
 #include <vector>
 #include <map>
+#include <cstdlib>
+#include <algorithm>
 
 #include <sstream>
 

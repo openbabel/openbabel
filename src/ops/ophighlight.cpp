@@ -19,6 +19,7 @@ GNU General Public License for more details.
 #include <openbabel/generic.h>
 #include <openbabel/bond.h>
 #include <openbabel/mol.h>
+#include <algorithm>
 
 namespace OpenBabel
 {

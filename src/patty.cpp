@@ -23,6 +23,9 @@ GNU General Public License for more details.
 #include <openbabel/oberror.h>
 #include <openbabel/patty.h>
 
+#include <cstring>
+#include <cstdlib>
+
 // Simple programmable atom typer
 // WPW - 070199
 // Usage is in sample main below

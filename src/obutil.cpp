@@ -25,6 +25,8 @@ GNU General Public License for more details.
 #include <openbabel/obutil.h>
 #include <openbabel/internalcoord.h>
 
+#include <cstring>
+
 #ifdef HAVE_CONIO_H
 #include <conio.h>
 #endif

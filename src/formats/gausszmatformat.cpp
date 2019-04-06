@@ -22,6 +22,8 @@ GNU General Public License for more details.
 #include <openbabel/internalcoord.h>
 #include <openbabel/generic.h>
 
+#include <cstdlib>
+
 //Possible replacement for strcasestr. See end of file
 const char *_strcasestr(const char *s, const char *pattern);
 

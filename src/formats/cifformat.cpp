@@ -28,6 +28,7 @@ GNU General Public License for more details.
 #include <openbabel/bond.h>
 #include <openbabel/obiter.h>
 #include <openbabel/generic.h>
+#include <cstdlib>
 
 #include <openbabel/math/spacegroup.h>
 

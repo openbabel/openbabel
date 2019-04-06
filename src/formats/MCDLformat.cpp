@@ -26,6 +26,7 @@ GNU General Public License for more details.
 
 #include <openbabel/chiral.h>
 #include <openbabel/mcdlutil.h>
+#include <cstdlib>
 
 using namespace std;
 namespace OpenBabel

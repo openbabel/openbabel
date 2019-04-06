@@ -23,6 +23,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <sstream>
+#include <cstdlib>
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>

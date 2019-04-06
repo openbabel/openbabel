@@ -35,6 +35,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/obconversion.h>
 #include <typeinfo>
+#include <cstdlib>
 
 namespace OpenBabel {
 

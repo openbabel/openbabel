@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #include <openbabel/atom.h>
 #include <openbabel/elements.h>
 #include <openbabel/data.h>
+#include <cstdlib>
 
 
 #define LAYER_DEPTH 2 // cannot increase past 2 without adding more *nbr atom pointers and loops

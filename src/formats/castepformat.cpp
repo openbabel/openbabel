@@ -21,6 +21,8 @@ GNU General Public License for more details.
 #include <openbabel/elements.h>
 #include <openbabel/generic.h>
 
+#include <cstdlib>
+
 #define EV_TO_KCAL_PER_MOL 23.060538
 #define GPA_A3_TO_KCAL_PER_MOL 0.14383639
 

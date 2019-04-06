@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include <openbabel/generic.h>
 #include <openbabel/internalcoord.h>
 #include <openbabel/math/matrix3x3.h>
+#include <cstdlib>
 
 using namespace std;
 namespace OpenBabel

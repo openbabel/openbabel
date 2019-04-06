@@ -36,6 +36,7 @@ typedef unsigned short uint16;
 #include <openbabel/atom.h>
 #include <openbabel/elements.h>
 #include <openbabel/bond.h>
+#include <cstdlib>
 
 
 #define mem_alloc malloc
