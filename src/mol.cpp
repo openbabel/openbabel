@@ -1906,8 +1906,8 @@ namespace OpenBabel
 
     DecrementMod();
 
-    UnsetSSSRPerceived();
-    UnsetLSSRPerceived();
+    SetSSSRPerceived(false);
+    SetLSSRPerceived(false);
     return(true);
   }
 
@@ -1949,8 +1949,8 @@ namespace OpenBabel
 
     DecrementMod();
 
-    UnsetSSSRPerceived();
-    UnsetLSSRPerceived();
+    SetSSSRPerceived(false);
+    SetLSSRPerceived(false);
     return(true);
   }
 
@@ -1967,7 +1967,7 @@ namespace OpenBabel
       if (atom->GetAtomicNum() == OBElements::Hydrogen && IsSuppressibleHydrogen(atom))
         delatoms.push_back(atom);
 
-    UnsetHydrogensAdded();
+    SetHydrogensAdded(false);
 
     if (delatoms.empty())
       return(true);
@@ -1995,8 +1995,8 @@ namespace OpenBabel
 
     DecrementMod();
 
-    UnsetSSSRPerceived();
-    UnsetLSSRPerceived();
+    SetSSSRPerceived(false);
+    SetLSSRPerceived(false);
     return(true);
   }
 
@@ -2020,9 +2020,9 @@ namespace OpenBabel
       DeleteHydrogen((OBAtom*)*i);
     DecrementMod();
 
-    UnsetHydrogensAdded();
-    UnsetSSSRPerceived();
-    UnsetLSSRPerceived();
+    SetHydrogensAdded(false);
+    SetSSSRPerceived(false);
+    SetLSSRPerceived(false);
     return(true);
   }
 
@@ -2073,12 +2073,12 @@ namespace OpenBabel
     for (idx=1,atomi = BeginAtom(i);atomi;atomi = NextAtom(i),++idx)
       atomi->SetIdx(idx);
 
-    UnsetHydrogensAdded();
+    SetHydrogensAdded(false);
 
     DestroyAtom(atom);
 
-    UnsetSSSRPerceived();
-    UnsetLSSRPerceived();
+    SetSSSRPerceived(false);
+    SetLSSRPerceived(false);
     return(true);
   }
 
@@ -2466,8 +2466,8 @@ namespace OpenBabel
     if (destroyAtom)
       DestroyAtom(atom);
 
-    UnsetSSSRPerceived();
-    UnsetLSSRPerceived();
+    SetSSSRPerceived(false);
+    SetLSSRPerceived(false);
     return(true);
   }
 
@@ -2482,8 +2482,8 @@ namespace OpenBabel
     if (destroyResidue)
       DestroyResidue(residue);
 
-    UnsetSSSRPerceived();
-    UnsetLSSRPerceived();
+    SetSSSRPerceived(false);
+    SetLSSRPerceived(false);
     return(true);
   }
 
@@ -2508,8 +2508,8 @@ namespace OpenBabel
     if (destroyBond)
       DestroyBond(bond);
 
-    UnsetSSSRPerceived();
-    UnsetLSSRPerceived();
+    SetSSSRPerceived(false);
+    SetLSSRPerceived(false);
     return(true);
   }
 
@@ -3347,7 +3347,7 @@ namespace OpenBabel
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
         // return false; Should we return false for a kekulization failure?
       }
-      this->UnsetAromaticPerceived();
+      this->SetAromaticPerceived(false);
     }
 
     // Quick pass.. eliminate inter-ring sulfur atom multiple bonds
@@ -3999,7 +3999,7 @@ namespace OpenBabel
   for more information).
 
   Aromaticity is preserved as present in the original OBMol. If this is not desired,
-  the user should call OBMol::UnsetAromaticPerceived() on the new OBMol.
+  the user should call OBMol::SetAromaticPerceived(false) on the new OBMol.
 
   Stereochemistry is only preserved if the corresponding elements are wholly present in
   the substructure. For example, all four atoms and bonds of a tetrahedral stereocenter

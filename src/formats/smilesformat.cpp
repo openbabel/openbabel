@@ -661,7 +661,7 @@ namespace OpenBabel {
     }
 
     if (!_preserve_aromaticity)
-      mol.UnsetAromaticPerceived();
+      mol.SetAromaticPerceived(false);
 
     CreateCisTrans(mol);
 

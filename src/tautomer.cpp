@@ -620,7 +620,7 @@ namespace OpenBabel {
         FOR_BONDS_OF_MOL (bond, mol)
           if (bondTypes[bond->GetIdx()] == Unassigned)
             bond->SetBondOrder(1);
-        mol->UnsetAromaticPerceived();
+        mol->SetAromaticPerceived(false);
         
         std::vector<unsigned int> symmetryClasses;
         OBGraphSym gs(mol);
