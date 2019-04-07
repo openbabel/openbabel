@@ -56,10 +56,20 @@ namespace OpenBabel
 #define OB_AROMATIC_ATOM  (1<<3)
   //! Atom is in a ring
 #define OB_RING_ATOM      (1<<4)
+  //! Atom has clockwise SMILES chiral stereochemistry (i.e., "@@")
+#define OB_CSTEREO_ATOM   (1<<5)
+  //! Atom has anticlockwise SMILES chiral stereochemistry (i.e., "@")
+#define OB_ACSTEREO_ATOM  (1<<6)
   //! Atom is an electron donor
 #define OB_DONOR_ATOM     (1<<7)
   //! Atom is an electron acceptor
 #define OB_ACCEPTOR_ATOM  (1<<8)
+  //! Atom is chiral
+#define OB_CHIRAL_ATOM    (1<<9)
+  //! Atom has + chiral volume
+#define OB_POS_CHIRAL_ATOM (1<<10)
+  //! Atom has - chiral volume
+#define OB_NEG_CHIRAL_ATOM (1<<11)
 
   // Class OBAtom
   // class introduction in atom.cpp
@@ -160,8 +170,27 @@ namespace OpenBabel
       void SetAromatic()                  { SetFlag(OB_AROMATIC_ATOM); }
       //! Clear aromatic information from the atom
       void UnsetAromatic()                { _flags &= (~(OB_AROMATIC_ATOM)); }
+      //! \deprecated
+      void SetClockwiseStereo()           { SetFlag(OB_CSTEREO_ATOM|OB_CHIRAL_ATOM); }
+      //! \deprecated
+      void SetAntiClockwiseStereo()       { SetFlag(OB_ACSTEREO_ATOM|OB_CHIRAL_ATOM); }
+      //! \deprecated
+      void SetPositiveStereo() { SetFlag(OB_POS_CHIRAL_ATOM|OB_CHIRAL_ATOM); }
+      //! \deprecated
+      void SetNegativeStereo() { SetFlag(OB_NEG_CHIRAL_ATOM|OB_CHIRAL_ATOM); }
+      //! \deprecated
+      void UnsetStereo()
+        {
+          _flags &= ~(OB_ACSTEREO_ATOM);
+          _flags &= ~(OB_CSTEREO_ATOM);
+          _flags &= ~(OB_POS_CHIRAL_ATOM);
+          _flags &= ~(OB_NEG_CHIRAL_ATOM);
+          _flags &= ~(OB_CHIRAL_ATOM);
+        }
       //! Mark an atom as belonging to at least one ring
       void SetInRing(bool set=true)         { if(set) SetFlag(OB_RING_ATOM); else UnsetFlag(OB_RING_ATOM); }
+      //! Mark an atom as being chiral with unknown stereochemistry
+      void SetChiral()         { SetFlag(OB_CHIRAL_ATOM); }
       //! Clear the internal coordinate pointer
       void ClearCoordPtr()     { _c = NULL; _cidx=0; }
       //@}
@@ -413,6 +442,18 @@ namespace OpenBabel
       bool IsChiral();
       //! \return Is this atom an axial atom in a ring
       bool IsAxial();
+      //! \deprecated
+      bool IsClockwise()         { return(HasFlag(OB_CSTEREO_ATOM));  }
+      //! \deprecated
+      bool IsAntiClockwise()     { return(HasFlag(OB_ACSTEREO_ATOM)); }
+      //! \deprecated
+      bool IsPositiveStereo() { return(HasFlag(OB_POS_CHIRAL_ATOM)); }
+      //! \deprecated
+      bool IsNegativeStereo() { return(HasFlag(OB_NEG_CHIRAL_ATOM)); }
+      //! \deprecated
+      bool HasChiralitySpecified() { return(HasFlag(OB_CSTEREO_ATOM|OB_ACSTEREO_ATOM)); }
+      //! \deprecated
+      bool HasChiralVolume() { return(HasFlag(OB_POS_CHIRAL_ATOM|OB_NEG_CHIRAL_ATOM)); }
       //! \return Is this atom a hydrogen-bond acceptor  (considering also atom surrounding)
       bool IsHbondAcceptor();
       //! \return Is this atom a hydrogen-bond acceptor (old function)?

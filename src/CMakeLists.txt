@@ -113,6 +113,7 @@ set(openbabel_srcs
   canon.cpp
   chains.cpp
   chargemodel.cpp
+  chiral.cpp
   data.cpp
   data_utilities.cpp
   descriptor.cpp

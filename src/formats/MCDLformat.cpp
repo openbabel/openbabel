@@ -19,6 +19,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/chiral.h>
 #include <openbabel/mcdlutil.h>
 
 using namespace std;
@@ -525,6 +526,7 @@ private:
     std::vector <int>  bondStereoList;
     std::vector <int>  atomStereoList;
     std::vector <int>  anumStereo;
+    bool test;//, testParity;
     string as1,as2,as3,as4;
     string linestereo;
     OBAtom *atom;
@@ -547,6 +549,8 @@ private:
     radicalflag=0;
     netradical=0;
 
+  //pmol->FindChiralCenters();
+  test=pmol->IsChiral();  //Instead of above lines...
   netcharge=pmol->GetTotalCharge();
   netradical=pmol->GetTotalSpinMultiplicity()-1;
 
