@@ -186,19 +186,6 @@ namespace OpenBabel
 
   ////////////////////////////////////////////////////////////////
 
-  static bool OldIsChiral(OBMol &mol)
-  {
-    FOR_ATOMS_OF_MOL(atom, mol) {
-      if ((atom->GetAtomicNum() == OBElements::Carbon || atom->GetAtomicNum() == OBElements::Nitrogen)
-        && atom->GetHvyValence() > 2
-        && atom->IsChiral())
-        return true;
-    }
-
-    return false;
-  }
-
-
   bool ReportFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
@@ -238,7 +225,7 @@ namespace OpenBabel
     WriteAngles(ofs, mol);
     ofs << "\n" << "\n" << "TORSION ANGLES" << "\n";
     WriteTorsions(ofs, mol);
-    if (OldIsChiral(mol)) // TODO: Replace with this current stereo approach
+    if (mol.IsChiral())
       {
         ofs << "\n" << "\n" << "CHIRAL ATOMS" << "\n";
         WriteChiral(ofs, mol);

@@ -30,6 +30,7 @@ GNU General Public License for more details.
 #endif
 #include <set>
 #include <vector>
+#include "openbabel/chiral.h"
 
 using namespace std;
 namespace OpenBabel

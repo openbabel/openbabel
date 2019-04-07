@@ -111,7 +111,8 @@ class OBConversion; //used only as pointer
       //! Symmetry data -- point and space groups, transforms, etc. i.e., OBSymmetryData
       SymmetryData =      15,
 
-      // 16 - Value unused, formerly ChiralData
+      //! Arbitrary chiral information (atom, bond, molecule, etc.) i.e., OBChiralData
+      ChiralData =        16,
 
       //! Atomic and molecular occupation data (e.g., for crystal structures)
       OccupationData =    17,
