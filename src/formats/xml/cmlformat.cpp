@@ -2015,33 +2015,34 @@ namespace OpenBabel
       xmlTextWriterStartElementNS(writer(), prefix, C_BONDSTEREO, NULL);
     else
     {
+      return; // TODO: This code has bit-rotted
       //double bond stereo
       int ud1=0, ud2=0;
       int idx1=0, idx2=0;
       OBAtom* patomA = pbond->GetBeginAtom();
-      FOR_BONDS_OF_ATOM(b1,patomA)
-        {
-          if(b1->IsUp() || b1->IsDown() )
-            {
-              idx1=(b1->GetNbrAtom(patomA))->GetIdx();
-              ud1 = b1->IsDown() ? -1 : 1;
-              // Conjugated double bonds have to be treated differently, see comments
-              // in OBMol2Smi::GetCisTransBondSymbol(). Reverse symbol for other than first double bond.
-              if((b1->GetNbrAtom(patomA))->HasDoubleBond())
-                ud1 = -ud1;
-              break;
-            }
-        }
+      //FOR_BONDS_OF_ATOM(b1,patomA)
+      //  {
+      //    if(b1->IsUp() || b1->IsDown() )
+      //      {
+      //        idx1=(b1->GetNbrAtom(patomA))->GetIdx();
+      //        ud1 = b1->IsDown() ? -1 : 1;
+      //        // Conjugated double bonds have to be treated differently, see comments
+      //        // in OBMol2Smi::GetCisTransBondSymbol(). Reverse symbol for other than first double bond.
+      //        if((b1->GetNbrAtom(patomA))->HasDoubleBond())
+      //          ud1 = -ud1;
+      //        break;
+      //      }
+      //  }
       OBAtom* patomB = pbond->GetEndAtom();
-      FOR_BONDS_OF_ATOM(b2,patomB)
-        {
-          if(b2->IsUp() || b2->IsDown() )
-            {
-              idx2=(b2->GetNbrAtom(patomB))->GetIdx();
-              ud2 = b2->IsDown() ? -1 : 1;
-              break;
-            }
-        }
+      //FOR_BONDS_OF_ATOM(b2,patomB)
+      //  {
+      //    if(b2->IsUp() || b2->IsDown() )
+      //      {
+      //        idx2=(b2->GetNbrAtom(patomB))->GetIdx();
+      //        ud2 = b2->IsDown() ? -1 : 1;
+      //        break;
+      //      }
+      //  }
       if(!ud1 || !ud2)
         return;
 

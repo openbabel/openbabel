@@ -36,9 +36,6 @@ namespace OpenBabel
   class OBAtom;
   class OBRing;
 
-  //! OBEdgeBase is declared for backwards-compatibility with 2.0 and earlier code
-  typedef OBBond OBEdgeBase;
-
   //BOND Property Macros (flags)
   //! An aromatic bond (regardless of bond order)
 #define OB_AROMATIC_BOND  (1<<1)
@@ -48,18 +45,12 @@ namespace OpenBabel
 #define OB_HASH_BOND      (1<<3)
   //! A bond in a ring
 #define OB_RING_BOND      (1<<4)
-  //! The "upper" bond in a double bond cis/trans isomer (i.e., "\" in SMILES) <-- this was wrong (/), obsolete anyway
-#define OB_TORUP_BOND     (1<<5)
-  //! The "down" bond in a double bond cis/trans isomer (i.e., "/" in SMILES) <-- same
-#define OB_TORDOWN_BOND   (1<<6)
   //! A bond which "closes" a ring when walking the molecular graph
 #define OB_CLOSURE_BOND   (1<<10)
   // 11-16 currently unused
-
 #define OB_WEDGE_OR_HASH_BOND     (1<<11)
-#define OB_CIS_OR_TRANS_BOND     (1<<12)
 
-  //class OBBondPrivate;
+
   class OBAPI OBBond: public OBBase
   {
     protected:
@@ -148,10 +139,6 @@ namespace OpenBabel
        * Z direction from the beginning to end atoms)
        */
       void SetWedgeOrHash() { SetFlag(WedgeOrHash); }
-      //! Mark that this bond has an "up" torsion for double-bond stereochem (i.e., "/" in SMILES notation
-      void SetUp()          { SetFlag(OB_TORUP_BOND); UnsetFlag(OB_TORDOWN_BOND); }
-      //! Mark that this bond has an "down" torsion for double-bond stereochem (i.e., "\" in SMILES notation
-      void SetDown()        { SetFlag(OB_TORDOWN_BOND); UnsetFlag(OB_TORUP_BOND);   }
       //! Mark that this bond is in a ring. Primarily for internal use.
       void SetInRing(bool set=true) { if(set)SetFlag(OB_RING_BOND); else UnsetFlag(OB_RING_BOND);}
       //! Mark that this bond indicates a ring closure when walking the molecule
@@ -163,11 +150,6 @@ namespace OpenBabel
       void UnsetHash()      { UnsetFlag(OB_HASH_BOND);    }
       //! Clear any indication of 2D "wedge" notation from SetWedge()
       void UnsetWedge()     { UnsetFlag(OB_WEDGE_BOND);   }
-      //! Clear any indication of "/" double bond stereochemistry from SetUp()
-      void UnsetUp()        { UnsetFlag(OB_TORUP_BOND);   }
-      //! Clear any indication of "\" double bond stereochemistry from SetDown()
-      void UnsetDown()      { UnsetFlag(OB_TORDOWN_BOND); }
-      //! Clear all aromaticity information for the bond
       void UnsetAromatic()  { UnsetFlag(OB_AROMATIC_BOND);}
       //@}
 
@@ -259,12 +241,6 @@ namespace OpenBabel
       bool IsCarbonyl();
       //! \return Does this bond "close" a ring when walking the molecular graph?
       bool IsClosure();
-      /** \return Whether this is the "upper" bond in a double bond cis/trans
-          isomer (i.e., "/" in SMILES) **/
-      bool IsUp()    {    return(HasFlag(OB_TORUP_BOND));    }
-      /** \return Whether this is the "lower" bond in a double bond cis/trans
-          isomer (i.e., "\" in SMILES) **/
-      bool IsDown()  {    return(HasFlag(OB_TORDOWN_BOND));  }
       /** \return Whether this bond is a "wedge" in 2D representations
           (i.e., goes in a positive Z direction from the beginning to end atoms) **/
       bool IsWedge() {    return(HasFlag(OB_WEDGE_BOND));    }

@@ -20,7 +20,6 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
-#include <openbabel/chiral.h>
 
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
@@ -2725,22 +2724,22 @@ namespace OpenBabel {
           (vector<pair<int,pair<OBAtom *,OBBond *> > > *)((OBMol*)atom->GetParent())->GetData("extBonds");
         vector<pair<int,pair<OBAtom *,OBBond *> > >::iterator externalBond;
 
-        if (externalBonds)
+        if (externalBonds) // TODO: This code has bit-rotted and needs some love
           for(externalBond = externalBonds->begin();externalBond != externalBonds->end();++externalBond) {
             if (externalBond->second.first == atom) {
               external = true;
               buffer += '&';
               OBBond *bond = externalBond->second.second;
-              if (bond->IsUp()) {
-                if ( (bond->GetBeginAtom())->HasDoubleBond() ||
-                     (bond->GetEndAtom())->HasDoubleBond() )
-                  buffer += '\\';
-              }
-              if (bond->IsDown()) {
-                if ( (bond->GetBeginAtom())->HasDoubleBond() ||
-                     (bond->GetEndAtom())->HasDoubleBond() )
-                  buffer += '/';
-              }
+              //if (bond->IsUp()) {
+              //  if ( (bond->GetBeginAtom())->HasDoubleBond() ||
+              //       (bond->GetEndAtom())->HasDoubleBond() )
+              //    buffer += '\\';
+              //}
+              //if (bond->IsDown()) {
+              //  if ( (bond->GetBeginAtom())->HasDoubleBond() ||
+              //       (bond->GetEndAtom())->HasDoubleBond() )
+              //    buffer += '/';
+              //}
               if (bond->GetBO() == 2 && !bond->IsAromatic()) // TODO: need to check for kekulesmi
                 buffer += '=';
               if (bond->GetBO() == 2 && bond->IsAromatic())
@@ -3046,7 +3045,7 @@ namespace OpenBabel {
                                     vector<unsigned int> &canonical_order,
                                     OBCanSmiNode *node)
   {
-    vector<OBEdgeBase*>::iterator i;
+    vector<OBBond*>::iterator i;
     OBAtom *nbr, *atom;
     vector<OBAtom *> sort_nbrs;
     vector<OBAtom *>::iterator ai;
@@ -3190,7 +3189,7 @@ namespace OpenBabel {
     vector<OBBondClosureInfo> vp_closures;
     vector<OBBond*> vbonds;
     vector<OBBond*>::iterator bi;
-    vector<OBEdgeBase*>::iterator i;
+    vector<OBBond*>::iterator i;
     OBBond *bond1, *bond2;
     OBAtom *nbr1, *nbr2;
     int nbr1_canorder, nbr2_canorder;
@@ -4028,11 +4027,8 @@ namespace OpenBabel {
       // Not isomeric - be sure there are no Z coordinates, clear
       // all stereo-center and cis/trans information.
       OBBond *bond;
-      vector<OBEdgeBase*>::iterator bi;
-      vector<OBNodeBase*>::iterator ai;
+      vector<OBBond*>::iterator bi;
       for (bond = mol.BeginBond(bi); bond; bond = mol.NextBond(bi)) {
-        bond->UnsetUp();
-        bond->UnsetDown();
         bond->UnsetHash();
         bond->UnsetWedge();
       }
