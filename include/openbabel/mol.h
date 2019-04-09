@@ -389,7 +389,11 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! Mark that ring types have been perceived (see OBRingTyper for details)
     void   SetRingTypesPerceived()   { SetFlag(OB_RINGTYPES_MOL);   }
     //! Mark that chains and residues have been perceived (see OBChainsParser)
-    void   SetChainsPerceived()      { SetFlag(OB_CHAINS_MOL);      }
+    void   SetChainsPerceived(bool is_perceived=true)
+    {
+      if (is_perceived)      SetFlag(OB_CHAINS_MOL);
+      else                 UnsetFlag(OB_CHAINS_MOL);
+    }
     //! Mark that chirality has been perceived
     void   SetChiralityPerceived()   { SetFlag(OB_CHIRALITY_MOL);   }
     //! Mark that partial charges have been assigned
@@ -405,6 +409,7 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     void   SetFlags(int flags)       { _flags = flags;              }
 
     void   UnsetAromaticPerceived()  { _flags &= (~(OB_AROMATIC_MOL));   }
+    //! Mark that chains perception will need to be run again if required
     void   UnsetSSSRPerceived()  { _flags &= (~(OB_SSSR_MOL));   }
     //! Mark that Largest Set of Smallest Rings will need to be run again if required (see OBRing class)
     void   UnsetLSSRPerceived()  { _flags &= (~(OB_LSSR_MOL));   }

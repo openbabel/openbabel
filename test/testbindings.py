@@ -54,6 +54,17 @@ class PybelWrapper(PythonBindings):
 
 class TestSuite(PythonBindings):
 
+    def testInChIIsotopes(self):
+        """Ensure that we correctly set and read isotopes in InChIs"""
+        with open(os.path.join(here, "inchi", "inchi_isotopes.txt")) as inp:
+            for line in inp:
+                if line.startswith("#"): continue
+                smi, inchi = line.rstrip().split("\t")
+                minchi = pybel.readstring("smi", smi).write("inchi").rstrip()
+                self.assertEqual(minchi, inchi)
+                msmi = pybel.readstring("inchi", minchi).write("smi").rstrip()
+                self.assertEqual(msmi, smi)
+
     def testAsterisk(self):
         """Ensure that asterisk in SMILES is bracketed when needed
         and not otherwise"""
@@ -82,6 +93,36 @@ class TestSuite(PythonBindings):
         mol = pybel.readstring("smi", "CC")
         mol.write("can")
         self.assertFalse("SMILES Atom Order" in mol.data)
+
+    def testOBMolSeparatePreservesAromaticity(self):
+        """If the original molecule had aromaticity perceived,
+        then the fragments should also.
+        """
+        smi = "C.c1ccccc1"
+        # Two passes: One with aromaticity perceived on the orig mol and
+        #             one without
+        for N in range(2):
+            obmol = pybel.readstring("smi", smi).OBMol
+            # Aromaticity is perceived during the last step of reading SMILES
+            # so let's unset it here for the first pass
+            if N == 0:
+                obmol.UnsetAromaticPerceived()
+            else:
+                self.assertTrue(obmol.HasAromaticPerceived())
+
+            # After separation, is aromaticity the same as the parent?
+            mols = obmol.Separate()
+            if N == 0:
+                self.assertFalse(mols[1].HasAromaticPerceived())
+            else:
+                self.assertTrue(mols[1].HasAromaticPerceived())
+
+            atom = mols[1].GetAtom(1)
+            atom.SetImplicitHCount(0) # mess up the structure
+            if N == 0:
+                self.assertFalse(atom.IsAromatic())
+            else:
+                self.assertTrue(atom.IsAromatic())
 
     def testAtomMapsAfterCopying(self):
         """Copying a molecule should copy the atom maps"""

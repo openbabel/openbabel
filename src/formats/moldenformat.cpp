@@ -125,6 +125,7 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
       {
         if( lineBuffer.find( "[Atoms]" ) != string::npos ||
             lineBuffer.find( "[ATOMS]" ) != string::npos ) {
+          unsigned int ecpLines = 0;
           double factor = 1.; // Angstrom
           if( lineBuffer.find( "AU" ) != string::npos ) factor = BOHR_TO_ANGSTROM; // Bohr
           while( getline( ifs, lineBuffer ) )
@@ -135,13 +136,28 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
               string atomName;
               int atomId;
               int atomicNumber;
+              int valenceCharge;
               double x, y, z;
-              is >> atomName >> atomId >> atomicNumber >> x >> y >> z;
+              is >> atomName >> atomId >> valenceCharge >> x >> y >> z;
               OBAtom* atom = pmol->NewAtom();
               if( !atom ) break;
+              atomicNumber = OBElements::GetAtomicNum(atomName.c_str());
               atom->SetAtomicNum( atomicNumber );
               atom->SetVector( x * factor, y * factor, z * factor );
+              if (atomicNumber-valenceCharge!=0){
+                OBPairData* ecpData = new OBPairData();
+                ecpData->SetAttribute("ecp");
+                std::ostringstream os;
+                os << atomicNumber-valenceCharge;
+                ecpData->SetValue(os.str());
+                atom->SetData(ecpData);
+                ++ecpLines;
+              }
             }
+          if (ecpLines!=0){
+              cerr << "WARNING: element number given in 3rd column does not agree with element name on " << ecpLines << " lines." << endl
+                   << "         Difference between expected nuclear charge and given element number saved to atom property 'ecp'." << endl;
+          }
         } // "[Atoms]" || "[ATOMS]"
         if ( lineBuffer.find( "[GEOMETRIES] (XYZ)" ) != string::npos ) {
           while( getline( ifs, lineBuffer ) ) {
