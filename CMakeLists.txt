@@ -26,7 +26,7 @@ else()
         message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Multi-threaded applications may experience race conditions.")
 endif()
 
-include (MacroEnsureVersion)
+#include (MacroEnsureVersion)
 
 # Version numbering - should be bumped for each release
 # Note that for "beta" releases, we should start at x.90.0 -- we've
