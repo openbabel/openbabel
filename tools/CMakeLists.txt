@@ -25,15 +25,8 @@ else(MINIMAL_BUILD)
     set(tools
         ${tools}
         obdistgen
-       )
-      find_package(Boost COMPONENTS program_options iostreams)
-      if(Boost_FOUND)
-        include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
-        set(tools
-            ${tools}
-            obrms
-           )        
-      endif()       
+        obrms
+       )    
   endif()
 endif(MINIMAL_BUILD)
 
@@ -65,10 +58,6 @@ if(BUILD_SHARED)
                     LIBRARY DESTINATION lib${LIB_SUFFIX}
                     ARCHIVE DESTINATION lib${LIB_SUFFIX}
     )
-
-    if(Boost_FOUND)
-        TARGET_LINK_LIBRARIES(obrms ${Boost_IOSTREAMS_LIBRARY} ${Boost_PROGRAM_OPTIONS_LIBRARY})    
-    endif(NOT Boost_FOUND)
     
     # obgrep -- requires getopt
     if (NOT GETOPT_FOUND)
