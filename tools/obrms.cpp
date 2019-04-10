@@ -35,19 +35,11 @@
 #include <openbabel/isomorphism.h>
 #include <openbabel/shared_ptr.h>
 
-#ifndef _MSC_VER
-#include <unistd.h>
-#endif
+#include "getopt.h"
 
 #include <sstream>
-#include <boost/unordered_map.hpp>
-#include <boost/program_options.hpp>
-#include <boost/iostreams/filter/gzip.hpp>
-#include <boost/iostreams/filtering_stream.hpp>
 
 using namespace std;
-using namespace boost;
-using namespace boost::program_options;
 using namespace OpenBabel;
 
 class AtomDistanceSorter
@@ -148,7 +140,7 @@ class Matcher
 
 				qtrfit(refcoord, testcoord, N, rmatrix);
 				rotate_coords(testcoord, rmatrix, N);
-				
+
 				for (unsigned i = 0; i < N; i++)
 				{
 					//with minimize on, change coordinates
@@ -228,68 +220,76 @@ int main(int argc, char **argv)
 	string fileRef;
 	string fileTest;
 	string fileOut;
-	
-	program_options::options_description desc("Allowed options");
-	desc.add_options()
-	("reference", value<string>(&fileRef)->required(),
-			"reference structure(s) file")
-	("test", value<string>(&fileTest), "test structure(s) file")
-	("firstonly,f", bool_switch(&firstOnly),
-			"use only the first structure in the reference file")
-	("minimize,m", bool_switch(&minimize), "compute minimum RMSD")
-	("cross,x", bool_switch(&docross), "compute all n^2 RMSD distances between molecules of reference file")
-  ("separate,s", bool_switch(&separate), "separate reference file into constituent molecules and report best RMSD")
-	("out", value<string>(&fileOut), "re-oriented test structure output")
-	("help", bool_switch(&help), "produce help message");
 
-	positional_options_description pd;
-	pd.add("reference", 1).add("test", 1);
-
-	variables_map vm;
-	try
-	{
-		store(
-				command_line_parser(argc, argv).options(desc).positional(pd).run(),
-				vm);
-		notify(vm);
-	} catch (boost::program_options::error& e)
-	{
-		std::cerr << "Command line parse error: " << e.what() << '\n' << desc
-				<< '\n';
-		exit(-1);
+	const char *helpmsg =
+	 "obrms: Computes the heavy-atom RMSD of identical compound structures.\n"
+	  "Usage: obrms reference_file [test_file]\n"
+	  "Options:\n"
+    "\t -o, --out        re-oriented test structure output\n"
+	  "\t -f, --firstonly  use only the first structure in the test file\n"
+	  "\t -m, --minimize   compute minimum RMSD\n"
+	  "\t -x, --cross      compute all n^2 RMSDs between molecules of reference file\n"
+	  "\t -s, --separate   separate reference file into constituent molecules and report best RMSD\n"
+	  "\t -h, --help       help message\n";
+	struct option long_options[] = {
+	    {"firstonly", no_argument, 0, 'f'},
+	    {"minimize", no_argument, 0, 'm'},
+	    {"cross", no_argument, 0, 'x'},
+	    {"separate", no_argument, 0, 's'},
+	    {"out", required_argument, 0, 'o'},
+	    {"help", no_argument, 0, 'h'}
+	};
+	int option_index = 0;
+	int c = 0;
+	while ((c = getopt_long(argc, argv, "hfmxso:", long_options, &option_index) ) > 0) {
+	  switch(c) {
+	    case 'o':
+	      fileOut = optarg;
+	      break;
+	    case 'f':
+	      firstOnly = true;
+	      break;
+	    case 'm':
+	      minimize = true;
+	      break;
+	    case 'x':
+	      docross = true;
+	      break;
+	    case 's':
+	      separate = true;
+	      break;
+	    case 'h':
+	      cout << helpmsg;
+	      exit(0);
+	      break;
+	    default:
+	      cerr << "Unrecognized option: " << c << "\n";
+	      exit(-1);
+	  }
 	}
 
-	if (help)
-	{
-		cout
-		<< "Computes the heavy-atom RMSD of identical compound structures.\n";
-		cout << desc;
-		exit(0);
+	if(optind < argc) {
+	  fileRef = argv[optind];
+	  optind++;
+	}
+	if(optind < argc) {
+	  fileTest = argv[optind];
+	  optind++;
+	}
+
+	if(optind < argc) {
+	  cerr << "Unrecognized argument: " << argv[optind];
+	  exit(-1);
 	}
 
 	if(!docross && fileTest.size() == 0) {
-	  cerr << "Command line parse error: the option '--test' is required but missing\n";
-	  cerr << desc;
+    cerr << helpmsg;
+	  cerr << "Command line parse error: test file is required but missing\n";
 	  exit(-1);
 	}
 
 	//open mols
-	OBConversion refconv;
-	OBFormat *refFormat = refconv.FormatFromExt(fileRef);
-	if (!refFormat || !refconv.SetInFormat(refFormat)
-			|| !refconv.SetOutFormat("SMI"))
-	{
-		cerr << "Cannot read reference molecule format!" << endl;
-		exit(-1);
-	}
-
-	OBConversion testconv;
-	OBFormat *testFormat = testconv.FormatFromExt(fileTest);
-	if (!testFormat || !testconv.SetInAndOutFormats(testFormat, testFormat))
-	{
-		cerr << "Cannot read reference molecule format!" << endl;
-		exit(-1);
-	}
+	OBConversion refconv(fileRef);
 
 	OBConversion outconv;
 	OBFormat *outFormat = outconv.FormatFromExt(fileOut);
@@ -301,24 +301,7 @@ int main(int argc, char **argv)
 			exit(-1);
 		}
 	}
-	
-	//read reference
-	OBMol molref;
-	std::ifstream uncompressed_inmol(fileRef.c_str());
-	iostreams::filtering_stream<iostreams::input> ifsref;
-	string::size_type pos = fileRef.rfind(".gz");
-	if (pos != string::npos)
-	{
-		ifsref.push(iostreams::gzip_decompressor());
-	}
-	ifsref.push(uncompressed_inmol);
 
-	if (!ifsref || !uncompressed_inmol)
-	{
-		cerr << "Cannot read fixed molecule file: " << fileRef << endl;
-		exit(-1);
-	}
-	
 	std::ofstream out;
 	if(fileOut.size() > 0)
 	{
@@ -326,10 +309,13 @@ int main(int argc, char **argv)
 	}
 
 
+  //read reference
+  OBMol molref;
+
 	if(docross) {
 	  //load in the entire reference file
     vector<OBMol> refmols;
-    while (refconv.Read(&molref, &ifsref))
+    while (refconv.Read(&molref))
     {
        processMol(molref);
        refmols.push_back(molref);
@@ -350,22 +336,7 @@ int main(int argc, char **argv)
 	} else {
 
 	  //check comparison file
-	  std::ifstream uncompressed_test(fileTest.c_str());
-	  iostreams::filtering_stream<iostreams::input> ifstest;
-	  pos = fileTest.rfind(".gz");
-	  if (pos != string::npos)
-	  {
-	    ifstest.push(iostreams::gzip_decompressor());
-	  }
-	  ifstest.push(uncompressed_test);
-
-	  if (!ifstest || !uncompressed_test)
-	  {
-	    cerr << "Cannot read file: " << fileTest << endl;
-	    exit(-1);
-	  }
-
-    while (refconv.Read(&molref, &ifsref))
+    while (refconv.Read(&molref))
     {
       vector<OBMol> refmols;
       if(separate) {
@@ -381,8 +352,9 @@ int main(int argc, char **argv)
         matchers.push_back(matcher);
       }
 
+      OBConversion testconv(fileTest);
       OBMol moltest;
-      while (testconv.Read(&moltest, &ifstest))
+      while (testconv.Read(&moltest))
       {
         if (moltest.Empty())
           break;
@@ -401,10 +373,8 @@ int main(int argc, char **argv)
         {
           outconv.Write(&moltest, &out);
         }
-        if (!firstOnly)
-        {
+        if (firstOnly)
           break;
-        }
       }
     }
 	}
