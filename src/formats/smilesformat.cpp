@@ -277,7 +277,7 @@ namespace OpenBabel {
     char _updown;
     int _order;
     int _prev;
-    int _rxnrole = 1;
+    int _rxnrole;
     const char *_ptr;
     bool _preserve_aromaticity;
     vector<int>             _vprev;
@@ -306,7 +306,7 @@ namespace OpenBabel {
 
   public:
 
-    OBSmilesParser(bool preserve_aromaticity=false): _preserve_aromaticity(preserve_aromaticity) { }
+    OBSmilesParser(bool preserve_aromaticity=false): _preserve_aromaticity(preserve_aromaticity), _rxnrole(1) { }
     ~OBSmilesParser() { }
 
     bool SmiToMol(OBMol&,const string&);
@@ -661,7 +661,7 @@ namespace OpenBabel {
     }
 
     if (!_preserve_aromaticity)
-      mol.UnsetAromaticPerceived();
+      mol.SetAromaticPerceived(false);
 
     CreateCisTrans(mol);
 

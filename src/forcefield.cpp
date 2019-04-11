@@ -828,7 +828,7 @@ namespace OpenBabel
       if (_mol.NumAtoms() && _constraints.Size())
         _constraints.Setup(_mol);
 
-      _mol.UnsetSSSRPerceived();
+      _mol.SetSSSRPerceived(false);
       _mol.DeleteData(OBGenericDataType::TorsionData); // bug #1954233
 
       if (!SetTypes()) {
@@ -885,7 +885,7 @@ namespace OpenBabel
       if (_mol.NumAtoms() && _constraints.Size())
         _constraints.Setup(_mol);
 
-      _mol.UnsetSSSRPerceived();
+      _mol.SetSSSRPerceived(false);
       _mol.DeleteData(OBGenericDataType::TorsionData); // bug #1954233
 
       if (!SetTypes()) {

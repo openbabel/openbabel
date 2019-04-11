@@ -540,6 +540,7 @@ namespace OpenBabel
       default:
         break;
       }
+    pmol->SetChainsPerceived();
     return (pmol->NumAtoms() > 0 ? true : false);
   }
 

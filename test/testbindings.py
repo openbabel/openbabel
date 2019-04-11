@@ -28,12 +28,12 @@ here = sys.path[0]
 iswin = sys.platform.startswith("win")
 
 try:
-    import openbabel as ob
+    from openbabel import openbabel as ob
 except ImportError:
     ob = None
 
 try:
-    import pybel
+    from openbabel import pybel
 except ImportError:
     pybel = None
 
@@ -87,7 +87,7 @@ class TestSuite(PythonBindings):
         mol = pybel.readstring("smi", "c1ccccc1").OBMol
         mol.DeleteAtom(mol.GetFirstAtom())
         self.assertTrue(mol.GetFirstAtom().IsAromatic())
-        mol.UnsetAromaticPerceived()
+        mol.SetAromaticPerceived(False)
         self.assertFalse(mol.GetFirstAtom().IsAromatic())
 
     def testLPStereo(self):
@@ -152,7 +152,7 @@ class TestSuite(PythonBindings):
             # Aromaticity is perceived during the last step of reading SMILES
             # so let's unset it here for the first pass
             if N == 0:
-                obmol.UnsetAromaticPerceived()
+                obmol.SetAromaticPerceived(False)
             else:
                 self.assertTrue(obmol.HasAromaticPerceived())
 
@@ -483,6 +483,44 @@ H         -0.26065        0.64232       -2.62218
         ]
         mindist = min(dists)
         self.assertTrue(mindist > 0.00001)
+
+    def testRegressionBenzene2D(self):
+        """Check that benzene is given a correct layout, see #1900"""
+        mol = pybel.readstring("smi", "c1ccccc1")
+        mol.draw(show=False, update=True)
+        benzmol = """
+ OpenBabel10161813072D
+
+  6  6  0  0  0  0  0  0  0  0999 V2000
+   -0.8660   -0.5000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7321   -0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7321    1.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8660    1.5000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0000    1.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  2  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+M  END
+"""
+        self.assertEqual(mol.write("mol")[24:], benzmol[24:])
+
+    def testTemplates(self):
+        """Check for regressions to #1851"""
+        smis = [
+            "O=C(C1=CN=CS1)N1C2CCC1CN(CC1CC3CCC1O3)C2",
+            "O=C(CC1CC1)N1C2CCC1CC(NC(=O)C13CCC(CC1)CC3)C2",
+            "O=C([C@@H]1C[C@H]1C1CCC1)N1C2CCC1CN(C(=O)C13CCN(CC1)C3)C2",
+            "O=C(CCN1C=CN=C1)N1C2CCC1CN(CC1CC3CCC1C3)C2"
+            ]
+        for s in smis:
+            mol = pybel.readstring("smi", s)
+            mol.draw(show=False, update=True)
+        assert(True) # Segfaults before...
+
 
 class NewReactionHandling(PythonBindings):
 

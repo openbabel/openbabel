@@ -18,7 +18,7 @@ try:
     except ImportError:
         cinfony = None
     try:
-        import pybel
+        from openbabel import pybel
         rdkit = cdk = None
     except ImportError:
         pybel = None

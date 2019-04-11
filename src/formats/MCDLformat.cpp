@@ -46,7 +46,7 @@ public:
 "            Language (MCDL): Composition, Connectivity and\n"
 "            Supplementary Modules.**\n"
 "            *J. Chem. Inf. Comput. Sci.*, **2004**, *41*, 1491-1499.\n"
-"            [`Link <http://dx.doi.org/10.1021/ci000108y>`_]\n\n"
+"            [`Link <https://doi.org/10.1021/ci000108y>`_]\n\n"
 
 "Here's an example conversion from SMILES to MCDL::\n\n"
 "  obabel -:\"CC(=O)Cl\" -omcdl\n"
