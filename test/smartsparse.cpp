@@ -24,8 +24,15 @@
 #include <openbabel/babelconfig.h>
 
 #include <fstream>
+#include <iostream>
 
 #include <openbabel/parsmart.h>
+#include <openbabel/obutil.h>
+
+#ifndef BUFF_SIZE
+#define BUFF_SIZE 32768
+#endif
+
 
 using namespace std;
 using namespace OpenBabel;

@@ -22,6 +22,11 @@ GNU General Public License for more details.
 #include <openbabel/fingerprint.h>
 #include <openbabel/op.h>
 #include <openbabel/elements.h>
+#include <openbabel/bond.h>
+#include <openbabel/obutil.h>
+#include <cstdlib>
+#include <algorithm>
+
 
 using namespace std;
 namespace OpenBabel {

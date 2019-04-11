@@ -20,8 +20,6 @@ GNU General Public License for more details.
 #ifndef OB_REACTIONFACADE_H
 #define OB_REACTIONFACADE_H
 
-#include <openbabel/babelconfig.h>
-
 namespace OpenBabel
 {
   class OBMol;

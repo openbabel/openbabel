@@ -22,7 +22,17 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/elements.h>
+#include <openbabel/generic.h>
+#include <openbabel/bond.h>
+#include <openbabel/data.h>
+#include <openbabel/obiter.h>
+#include <openbabel/typer.h>
 
+#include <algorithm>
+#include <cstdlib>
 #include <vector>
 #include <map>
 #include <set>

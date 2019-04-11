@@ -15,9 +15,16 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/elements.h>
+#include <openbabel/obiter.h>
 #include <openbabel/builder.h>
 #include <openbabel/kekulize.h>
+#include <openbabel/generic.h>
 #include <iomanip>
+#include <cstdlib>
 
 using namespace std;
 namespace OpenBabel

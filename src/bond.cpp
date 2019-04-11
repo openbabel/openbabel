@@ -19,6 +19,9 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/elements.h>
+#include <openbabel/oberror.h>
+#include <openbabel/obutil.h>
+#include <openbabel/ring.h>
 #include <openbabel/bond.h>
 #include <openbabel/mol.h>
 #include <climits>
@@ -35,6 +38,7 @@ namespace OpenBabel
   };
 
   extern OBAromaticTyper  aromtyper;
+  extern OBMessageHandler obErrorLog;
 
   /** \class OBBond bond.h <openbabel/bond.h>
       \brief Bond class

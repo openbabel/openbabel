@@ -25,7 +25,7 @@
 #ifdef WIN32
 #define USING_OBDLL
 #endif
-
+#include <cstdlib>
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
 #include <openbabel/parsmart.h>

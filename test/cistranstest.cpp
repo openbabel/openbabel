@@ -6,6 +6,7 @@
 #include <openbabel/obconversion.h>
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/elements.h>
+#include <openbabel/atom.h>
 
 using namespace std;
 using namespace OpenBabel;

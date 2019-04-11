@@ -22,9 +22,20 @@ GNU General Public License for more details.
 
 #include <openbabel/parsmart.h>
 #include <openbabel/typer.h>
+#include <openbabel/bitvec.h>
+
+#ifdef UNUSED
+#elif (__GNUC__ == 4)
+# define UNUSED(x) UNUSED_ ## x __attribute__((unused))
+#elif defined(__LCLINT__)
+# define UNUSED(x) /*@unused@*/ x
+#else
+# define UNUSED(x) x
+#endif
 
 namespace OpenBabel
 {
+  class OBRing;
 
 #ifndef SQUARE
 #define SQUARE(x) ((x)*(x))

@@ -35,32 +35,24 @@ GNU General Public License for more details.
 #include <string>
 #include <map>
 
-// Currently includes many headers for 2.x backwards compatibility
-// \deprecated -- this will be cleaned up in 3.0 efforts
-//      to improve compile time significantly.
-// Only include necessary headers and class declaration stubs.
-#include <openbabel/atom.h>
-#include <openbabel/bond.h>
 #include <openbabel/base.h>
-#include <openbabel/data.h>
-#include <openbabel/chains.h>
-#include <openbabel/math/vector3.h>
-#include <openbabel/bitvec.h>
-#include <openbabel/residue.h>
-#include <openbabel/ring.h>
-#include <openbabel/generic.h>
-#include <openbabel/typer.h>
-#include <openbabel/oberror.h>
-#include <openbabel/obiter.h>
-#include <openbabel/internalcoord.h>
 
 namespace OpenBabel
 {
-
   class OBAtom;
   class OBBond;
+  class OBResidue;
+  class OBRing;
   class OBInternalCoord;
   class OBConversion; //used only as a pointer
+  class vector3;
+  class OBBitVec;
+  class OBMolAtomDFSIter;
+  class OBChainsParser;
+
+  typedef std::vector<OBAtom*>::iterator OBAtomIterator;
+  typedef std::vector<OBBond*>::iterator OBBondIterator;
+  typedef std::vector<OBResidue*>::iterator OBResidueIterator;
 
   // Class OBMol
   //MOL Property Macros (flags) -- 32+ bits
@@ -713,22 +705,6 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
   OBAPI void InternalToCartesian(std::vector<OBInternalCoord*>&,OBMol&);
   // Replace the last extension in str with a new one (docs in obutil.cpp)
   OBAPI std::string NewExtension(std::string&,char*);
-
-  //global definitions
-  //! Global OBTypeTable for translating between different atom types
-  //! (e.g., Sybyl <-> MM2)
-  EXTERN  OBTypeTable      ttab;
-  //! Global OBAromaticTyper for detecting aromatic atoms and bonds
-  EXTERN  OBAromaticTyper  aromtyper;
-  //! Global OBAtomTyper for marking internal valence, hybridization,
-  //!  and atom types (for internal and external use)
-  EXTERN  OBAtomTyper      atomtyper;
-  //! Global OBChainsParser for detecting macromolecular chains and residues
-  EXTERN  OBChainsParser   chainsparser;
-  //! Global OBMessageHandler error handler
-  OBERROR extern  OBMessageHandler obErrorLog;
-  //! Global OBResidueData biomolecule residue database
-  EXTERN  OBResidueData    resdat;
 
   //! \brief Nested namespace for max_value templates
   namespace detail {

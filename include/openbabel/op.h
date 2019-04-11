@@ -23,11 +23,11 @@ General Public License for more details.
 #include <string>
 #include <map>
 #include <openbabel/plugin.h>
-#include <openbabel/base.h>
 
 namespace OpenBabel
 {
   class OBConversion; //used only as a pointer
+  class OBBase;
 
 // Class introduction below
 class OBAPI OBOp : public OBPlugin

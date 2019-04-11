@@ -19,8 +19,12 @@
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
 
+ // This include is not necessary for VS2017
+#if defined(_MSC_VER) && _MSC_VER <= 1910
 #include <rpc/types.h>
+#endif
 #include <rpc/xdr.h>
 #include <vector>
 
@@ -608,8 +612,8 @@ namespace OpenBabel
 
   int XTCFormat::xdr3dfcoord(XDR *xdrs, float *fp, int *size, float *precision) {
     int *ip = NULL;
-    int oldsize;
-    int *buf;
+    int oldsize = 0;
+    int *buf = 0;
 
     int minint[3], maxint[3], mindiff, *lip, diff;
     int lint1, lint2, lint3, oldlint1, oldlint2, oldlint3, smallidx;

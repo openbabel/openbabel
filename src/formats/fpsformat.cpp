@@ -17,7 +17,12 @@ GNU General Public License for more details.
 #include <iomanip>
 
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/elements.h>
+
 #include <openbabel/fingerprint.h>
+#include <cstdlib>
 
 using namespace std;
 namespace OpenBabel

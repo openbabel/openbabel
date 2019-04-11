@@ -20,12 +20,15 @@ GNU General Public License for more details.
 #ifdef WIN32
 #pragma warning (disable : 4786)
 #endif
-
+#include <cstdlib>
 #include <openbabel/babelconfig.h>
 #include <openbabel/data.h>
 #include <openbabel/data_utilities.h>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
 #include <openbabel/locale.h>
+#include <openbabel/oberror.h>
 #include <openbabel/elements.h>
 
 // data headers with default parameters
@@ -41,9 +44,9 @@ using namespace std;
 
 namespace OpenBabel
 {
-
-  OBTypeTable      ttab;
-  OBResidueData    resdat;
+  // Initialize the globals (declared in data.h)
+  OBTypeTable ttab;
+  OBResidueData resdat;
 
   OBAtomicHeatOfFormationTable::OBAtomicHeatOfFormationTable(void)
   {

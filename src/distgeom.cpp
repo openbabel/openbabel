@@ -23,8 +23,11 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
+#include <openbabel/ring.h>
+#include <openbabel/obiter.h>
 #include <openbabel/builder.h>
 #include <openbabel/elements.h>
+#include <openbabel/generic.h>
 
 #include <openbabel/stereo/stereo.h>
 #include <openbabel/stereo/cistrans.h>

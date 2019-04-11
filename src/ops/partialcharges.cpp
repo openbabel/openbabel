@@ -19,6 +19,8 @@ GNU General Public License for more details.
 
 #include<openbabel/op.h>
 #include<openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/obiter.h>
 #include<openbabel/chargemodel.h>
 #include <openbabel/obconversion.h>
 

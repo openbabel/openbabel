@@ -183,7 +183,8 @@ namespace OpenBabel
       std::streambuf        *_filterStreamBuf;
     };
 
-  OBERROR extern OBMessageHandler obErrorLog;
+  //! Global OBMessageHandler error handler
+  OBERROR extern  OBMessageHandler obErrorLog;
 
   //! \class obLogBuf oberror.h <openbabel/oberror.h>
   //! \brief A minimal streambuf derivative to wrap calls to cerr into calls to OBMessageHandler as needed

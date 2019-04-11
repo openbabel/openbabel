@@ -5,6 +5,7 @@
 #include <openbabel/isomorphism.h>
 #include <openbabel/query.h>
 #include <openbabel/elements.h>
+#include <openbabel/obiter.h>
 
 using namespace std;
 using namespace OpenBabel;

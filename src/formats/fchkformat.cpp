@@ -14,6 +14,8 @@ GNU General Public License for more details.
 #include <numeric>
 #include <typeinfo>
 #include <functional>
+#include <cstdlib>
+#include <algorithm>
 
 // No diagnoalization yet. Perhaps for 2.2 -GRH
 // #include <eigen/matrix.h>
@@ -21,6 +23,13 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
+#include <openbabel/generic.h>
+
 #include <openbabel/math/matrix3x3.h>
 
 #define BOHR2ANGSTROM 0.5291772083

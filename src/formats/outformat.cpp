@@ -14,6 +14,11 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/generic.h>
+
+#ifndef BUFF_SIZE
+#define BUFF_SIZE 32768
+#endif
 
 #include <sstream>
 

@@ -1,6 +1,9 @@
 #include "obtest.h"
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
+#include <openbabel/ring.h>
+#include <openbabel/atom.h>
+#include <openbabel/obiter.h>
 
 #include <iostream>
 #include <string>

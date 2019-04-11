@@ -16,14 +16,14 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <openbabel/babelconfig.h>
-#include <openbabel/mol.h>
 #include <openbabel/phmodel.h>
+#include <openbabel/mol.h>
 #include <openbabel/op.h>
 #include <vector>
 
 namespace OpenBabel
 {
-
+  class OBMol;
   /** \class OpTransform optransform.h <openbabel/optransform.h>
       \brief Applies molecular reactions/transforms (OBChemTsfm class) read from a datafile
       \since version 2.2

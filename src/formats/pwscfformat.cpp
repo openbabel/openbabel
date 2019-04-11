@@ -14,6 +14,14 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
+#include <openbabel/generic.h>
+#include <cstdlib>
+
 
 #define RYDBERG_TO_KCAL_PER_MOL 313.755026
 #define RYDBERG_TO_ELECTRON_VOLT 13.60569193

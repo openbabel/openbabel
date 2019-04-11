@@ -26,7 +26,13 @@
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/ring.h>
+#include <openbabel/obutil.h>
+#include <openbabel/obiter.h>
 #include <openbabel/graphsym.h>
+#include <openbabel/math/matrix3x3.h>
 #include <openbabel/canon.h>
 #include <openbabel/oberror.h>
 #include <openbabel/elements.h>

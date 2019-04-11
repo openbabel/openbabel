@@ -22,6 +22,11 @@ GNU General Public License for more details.
 
 #include <openbabel/mol.h> // implements some OBMol methods
 #include <openbabel/ring.h>
+#include <openbabel/bond.h>
+#include <openbabel/atom.h>
+#include <openbabel/obiter.h>
+#include <openbabel/generic.h>
+#include <openbabel/oberror.h>
 #include <openbabel/elements.h>
 
 using namespace std;
@@ -99,7 +104,7 @@ namespace OpenBabel
     OBRing *ring;
     vector<OBRing*>::iterator j;
 
-    //get Frèrejacque taking int account multiple possible spanning graphs
+    //get Frï¿½rejacque taking int account multiple possible spanning graphs
     int frj = DetermineFRJ(*this);
     if (frj)
       {

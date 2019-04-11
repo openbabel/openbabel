@@ -26,12 +26,17 @@ GNU General Public License for more details.
 
 #include <list>
 #include <set>
-#include <openbabel/base.h>
-#include <openbabel/mol.h>
+
 #include <openbabel/stereo/stereo.h>
 
 namespace OpenBabel
 {
+  class OBMol;
+  class OBAtom;
+  class OBSmartsPattern;
+  class vector3;
+  class OBBitVec;
+
   //! \class OBBuilder builder.h <openbabel/builder.h>
   //! \brief Class to build 3D structures
   class OBAPI OBBuilder {

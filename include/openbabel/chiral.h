@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #define OB_CHIRAL_H
 
 #include <vector>
+#include <openbabel/generic.h>
 #include <openbabel/matrix.h>
 
 namespace OpenBabel

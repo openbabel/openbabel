@@ -21,6 +21,13 @@ GNU General Public License for more details.
 #include <openbabel/locale.h>
 
 #include "forcefieldghemical.h"
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/oberror.h>
+#include <openbabel/parsmart.h>
+#include <openbabel/obutil.h>
+
+#include <cstdlib>
 
 using namespace std;
 

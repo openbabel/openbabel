@@ -4,6 +4,8 @@
 #include <openbabel/obconversion.h>
 #include <openbabel/graphsym.h>
 #include <algorithm>
+#include <openbabel/atom.h>
+#include <openbabel/obiter.h>
 
 using namespace std;
 using namespace OpenBabel;
