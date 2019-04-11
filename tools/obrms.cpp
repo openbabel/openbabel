@@ -87,8 +87,8 @@ class Matcher
 		bool operator()(OBIsomorphismMapper::Mapping &map)
 		{
 			unsigned N = map.size();
-			double refcoord[N * 3];
-			double testcoord[N * 3];
+			double *refcoord = (double*)alloca(sizeof(double)*N * 3);
+			double *testcoord = (double*)alloca(sizeof(double)*N * 3);
 
 			for (unsigned i = 0; i < N; i++)
 			{
