@@ -8,7 +8,6 @@ set(CMAKE_MODULE_PATH ${openbabel_SOURCE_DIR}/cmake/modules)
 
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
-  cmake_policy(SET CMP0005 OLD) # add_definitions need updating to set to NEW
   if(POLICY CMP0042)
     cmake_policy(SET CMP0042 OLD)
   endif()
@@ -273,9 +272,7 @@ if(NOT MSVC)
     }
    " SCANDIR_NEEDS_CONST)
 
-  set(OB_MODULE_PATH "${CMAKE_INSTALL_PREFIX}/${OB_PLUGIN_INSTALL_DIR}"
-      CACHE PATH "Set to system install for bindings only build")
-  add_definitions(-DOB_MODULE_PATH="\\"${OB_MODULE_PATH}\\"")
+  set(OB_MODULE_PATH "${CMAKE_INSTALL_PREFIX}/${OB_PLUGIN_INSTALL_DIR}")
 
   # Add some visibility support when using GCC
   # note: Altough MinGW g++ 4.4 passes this test, visibility can't be used
@@ -412,8 +409,7 @@ if(UNIX AND BUILD_SHARED)
   if(APPLE)
     set(CMAKE_INSTALL_NAME_DIR ${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR})
   else()
-    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}"
-        CACHE PATH "Set sane rpath")
+    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}")
     set(CMAKE_SKIP_BUILD_RPATH FALSE)
     set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)

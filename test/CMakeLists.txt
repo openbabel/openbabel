@@ -1,5 +1,5 @@
 # define TESTDATADIR for tests that need input files
-add_definitions(-DTESTDATADIR="\\"${CMAKE_SOURCE_DIR}/test/files/\\"")
+add_definitions(-DTESTDATADIR="${CMAKE_SOURCE_DIR}/test/files/")
 
 # define FORMATDIR for location of format plugin binaries
 if(BINDINGS_ONLY)
@@ -7,7 +7,7 @@ if(BINDINGS_ONLY)
 else()
   set(FORMATDIR "${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/")
 endif()
-add_definitions(-DFORMATDIR="\\"${FORMATDIR}/\\"")
+add_definitions(-DFORMATDIR="${FORMATDIR}/")
 
 ###########################################################
 #  new tests using obtest.h

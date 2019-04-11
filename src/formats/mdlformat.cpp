@@ -612,7 +612,7 @@ namespace OpenBabel
           obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
           // return false; Should we return false for a kekulization failure?
         }
-        mol.UnsetAromaticPerceived();
+        mol.SetAromaticPerceived(false);
       }
 
       //

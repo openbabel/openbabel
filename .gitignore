@@ -1,8 +1,8 @@
 *.py[cod]
 build
 nbproject
-scripts/*/*.cpp
-scripts/python/openbabel.py
+scripts/**/*.cpp
+scripts/python/openbabel/openbabel.py
 scripts/java/openbabel.jar
 scripts/php/openbabel.php
 scripts/php/php_openbabel.h

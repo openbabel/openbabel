@@ -28,12 +28,12 @@ here = sys.path[0]
 iswin = sys.platform.startswith("win")
 
 try:
-    import openbabel as ob
+    from openbabel import openbabel as ob
 except ImportError:
     ob = None
 
 try:
-    import pybel
+    from openbabel import pybel
 except ImportError:
     pybel = None
 
@@ -87,7 +87,7 @@ class TestSuite(PythonBindings):
         mol = pybel.readstring("smi", "c1ccccc1").OBMol
         mol.DeleteAtom(mol.GetFirstAtom())
         self.assertTrue(mol.GetFirstAtom().IsAromatic())
-        mol.UnsetAromaticPerceived()
+        mol.SetAromaticPerceived(False)
         self.assertFalse(mol.GetFirstAtom().IsAromatic())
 
     def testLPStereo(self):
@@ -152,7 +152,7 @@ class TestSuite(PythonBindings):
             # Aromaticity is perceived during the last step of reading SMILES
             # so let's unset it here for the first pass
             if N == 0:
-                obmol.UnsetAromaticPerceived()
+                obmol.SetAromaticPerceived(False)
             else:
                 self.assertTrue(obmol.HasAromaticPerceived())
 
