@@ -61,6 +61,10 @@ namespace OpenBabel
   //! Atom is an electron acceptor
 #define OB_ACCEPTOR_ATOM  (1<<8)
 
+#define SET_OR_UNSET_FLAG(X) \
+  if (value) SetFlag(X); \
+  else     UnsetFlag(X);
+
   // Class OBAtom
   // class introduction in atom.cpp
  #define OBATOM_TYPE_LEN 6
@@ -157,11 +161,9 @@ namespace OpenBabel
       //! Attach an OBMol @p ptr as the parent container for this atom
       void SetParent(OBMol *ptr)          { _parent=ptr; }
       //! Mark atom as being aromatic
-      void SetAromatic()                  { SetFlag(OB_AROMATIC_ATOM); }
-      //! Clear aromatic information from the atom
-      void UnsetAromatic()                { _flags &= (~(OB_AROMATIC_ATOM)); }
+      void SetAromatic(bool value=true)                  { SET_OR_UNSET_FLAG(OB_AROMATIC_ATOM); }
       //! Mark an atom as belonging to at least one ring
-      void SetInRing(bool set=true)         { if(set) SetFlag(OB_RING_ATOM); else UnsetFlag(OB_RING_ATOM); }
+      void SetInRing(bool value=true)         { SET_OR_UNSET_FLAG(OB_RING_ATOM); }
       //! Clear the internal coordinate pointer
       void ClearCoordPtr()     { _c = NULL; _cidx=0; }
       //@}

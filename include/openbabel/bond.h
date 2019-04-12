@@ -50,6 +50,10 @@ namespace OpenBabel
   // 11-16 currently unused
 #define OB_WEDGE_OR_HASH_BOND     (1<<11)
 
+#define SET_OR_UNSET_FLAG(X) \
+  if (value) SetFlag(X); \
+  else     UnsetFlag(X);
+
 
   class OBAPI OBBond: public OBBase
   {
@@ -120,34 +124,28 @@ namespace OpenBabel
       //! Set the main bond information (i.e., when creating a bond)
       void Set(int index, OBAtom* begin,OBAtom* end,int order,int flags);
       //! Mark that this bond is aromatic. Does not update atoms or validate.
-      void SetAromatic()    { SetFlag(OB_AROMATIC_BOND); }
+      void SetAromatic(bool value=true)    { SET_OR_UNSET_FLAG(OB_AROMATIC_BOND); }
       /**
        * Mark that this bond has 2D "wedge" notation (i.e., goes in a positive
        * Z direction from the beginning to end atoms)
        */
-      void SetWedge() { SetFlag(Wedge); }
+      void SetWedge(bool value=true) { SET_OR_UNSET_FLAG(Wedge); }
       /**
        * Mark that this bond has 2D "hash" notation (i.e., goes in a negative
        * Z direction from the beginning to end atoms)
        */
-      void SetHash() { SetFlag(Hash); }
+      void SetHash(bool value=true) { SET_OR_UNSET_FLAG(Hash); }
       /**
-       * Mark that this bond has 2D "wedge" notation (i.e., goes in a positive
-       * Z direction from the beginning to end atoms)
+       * Set the WedgeOrHash flag on a bond (??)
        */
-      void SetWedgeOrHash() { SetFlag(WedgeOrHash); }
+      void SetWedgeOrHash(bool value=true) { SET_OR_UNSET_FLAG(WedgeOrHash); }
       //! Mark that this bond is in a ring. Primarily for internal use.
-      void SetInRing(bool set=true) { if(set)SetFlag(OB_RING_BOND); else UnsetFlag(OB_RING_BOND);}
+      void SetInRing(bool value=true) { SET_OR_UNSET_FLAG(OB_RING_BOND); }
       //! Mark that this bond indicates a ring closure when walking the molecule
       /** \warning This is for internal use only. All closure bonds are marked
           automatically by lazy evaluation when requesting
           OBBond::IsClosure() **/
-      void SetClosure(bool set=true)     { if(set)SetFlag(OB_CLOSURE_BOND); else UnsetFlag(OB_CLOSURE_BOND);}
-      //! Clear any indication of 2D "hash" notation from SetHash()
-      void UnsetHash()      { UnsetFlag(OB_HASH_BOND);    }
-      //! Clear any indication of 2D "wedge" notation from SetWedge()
-      void UnsetWedge()     { UnsetFlag(OB_WEDGE_BOND);   }
-      void UnsetAromatic()  { UnsetFlag(OB_AROMATIC_BOND);}
+      void SetClosure(bool value=true)     { SET_OR_UNSET_FLAG(OB_CLOSURE_BOND); }
       //@}
 
       //! \name Bond data request methods

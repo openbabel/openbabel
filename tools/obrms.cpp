@@ -194,13 +194,13 @@ static void processMol(OBMol& mol)
 	for (OBAtomIterator aitr = mol.BeginAtoms(); aitr != mol.EndAtoms(); aitr++)
 	{
 		OBAtom *a = *aitr;
-		a->UnsetAromatic();
+		a->SetAromatic(false);
 		a->SetInRing();
 	}
 	for (OBBondIterator bitr = mol.BeginBonds(); bitr != mol.EndBonds(); bitr++)
 	{
 		OBBond *b = *bitr;
-		b->UnsetAromatic();
+		b->SetAromatic(false);
 		b->SetBondOrder(1);
 		b->SetInRing();
 	}

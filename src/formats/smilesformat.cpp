@@ -586,7 +586,7 @@ namespace OpenBabel {
     FOR_BONDS_OF_MOL(bond, mol) {
       if (bond->IsAromatic() && !bond->IsInRing()) {
         if (bond->GetBeginAtom()->IsInRing() && bond->GetEndAtom()->IsInRing())
-          bond->UnsetAromatic();
+          bond->SetAromatic(false);
       }
     }
 
@@ -4028,8 +4028,8 @@ namespace OpenBabel {
       OBBond *bond;
       vector<OBBond*>::iterator bi;
       for (bond = mol.BeginBond(bi); bond; bond = mol.NextBond(bi)) {
-        bond->UnsetHash();
-        bond->UnsetWedge();
+        bond->SetHash(false);
+        bond->SetWedge(false);
       }
     }
 
