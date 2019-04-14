@@ -57,6 +57,9 @@
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/stereo/squareplanar.h>
 #include <openbabel/stereo/bindings.h>
+
+#include <openbabel/chains.h>
+#include <openbabel/obiter.h>
 %}
 
 #ifdef HAVE_EIGEN

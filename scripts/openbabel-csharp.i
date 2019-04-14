@@ -668,6 +668,8 @@ using System.Runtime.InteropServices;
 #include <openbabel/rotor.h>
 #include <openbabel/rotamer.h>
 
+#include <openbabel/chains.h>
+#include <openbabel/obiter.h>
 %}
 
 //ignore some currently unsupported operators

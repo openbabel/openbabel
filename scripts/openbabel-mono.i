@@ -183,6 +183,8 @@ WRAP_ARRAY(double,double_array)
 #include <openbabel/kinetics.h>
 #include <openbabel/rotamer.h>
 
+#include <openbabel/chains.h>
+#include <openbabel/obiter.h>
 %}
 
 %module VecMath
