@@ -34,6 +34,7 @@
 #include <openbabel/query.h>
 #include <openbabel/isomorphism.h>
 #include <openbabel/shared_ptr.h>
+#include <openbabel/obutil.h>
 
 #include "getopt.h"
 
