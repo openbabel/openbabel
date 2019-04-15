@@ -43,6 +43,8 @@
 #include <openbabel/rotor.h>
 #include <openbabel/rotamer.h>
 
+#include <openbabel/chains.h>
+#include <openbabel/obiter.h>
 %}
 
 %include "std_list.i"

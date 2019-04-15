@@ -52,6 +52,9 @@
 #include <openbabel/isomorphism.h>
 #include <openbabel/query.h>
 #include <openbabel/canon.h>
+
+#include <openbabel/chains.h>
+#include <openbabel/obiter.h>
 %}
 
 #ifdef HAVE_EIGEN
