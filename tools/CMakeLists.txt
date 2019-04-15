@@ -25,8 +25,7 @@ else(MINIMAL_BUILD)
     set(tools
         ${tools}
         obdistgen
-        obrms
-       )
+    )
   endif()
 endif(MINIMAL_BUILD)
 
@@ -46,31 +45,25 @@ if(BUILD_SHARED)
   endforeach(tool)
 
   if(NOT MINIMAL_BUILD)
-    # obspectrophore -- requires getopt
-    if (NOT GETOPT_FOUND)
-      add_executable(obspectrophore obspectrophore.cpp getopt.c)
-    else(NOT GETOPT_FOUND)
-      add_executable(obspectrophore obspectrophore.cpp)
-    endif(NOT GETOPT_FOUND)
-    target_link_libraries(obspectrophore ${BABEL_LIBRARY})
-    install(TARGETS obspectrophore
-                    RUNTIME DESTINATION bin
-                    LIBRARY DESTINATION lib${LIB_SUFFIX}
-                    ARCHIVE DESTINATION lib${LIB_SUFFIX}
-    )
-
-    # obgrep -- requires getopt
-    if (NOT GETOPT_FOUND)
-      add_executable(obgrep obgrep.cpp getopt.c)
-    else(NOT GETOPT_FOUND)
-      add_executable(obgrep obgrep.cpp)
-    endif(NOT GETOPT_FOUND)
-      target_link_libraries(obgrep ${BABEL_LIBRARY})
-      install(TARGETS obgrep
+    # obgrep, obrms, obspectrophore -- require getopt
+    set(toolnames obgrep obspectrophore)
+    if(EIGEN3_FOUND)
+      set(toolnames ${toolnames} obrms)
+    endif()
+    foreach(tool ${toolnames})
+      if (NOT GETOPT_FOUND)
+        add_executable(${tool} ${tool}.cpp getopt.c)
+      else(NOT GETOPT_FOUND)
+        add_executable(${tool} ${tool}.cpp)
+      endif(NOT GETOPT_FOUND)
+      target_link_libraries(${tool} ${BABEL_LIBRARY})
+      install(TARGETS ${tool}
                       RUNTIME DESTINATION bin
                       LIBRARY DESTINATION lib${LIB_SUFFIX}
                       ARCHIVE DESTINATION lib${LIB_SUFFIX}
       )
+    endforeach()
+
   endif(NOT MINIMAL_BUILD)
 
 else(BUILD_SHARED)
