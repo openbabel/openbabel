@@ -349,7 +349,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
           continue;
 
         iat.neighbor[nbonds]      = pbond->GetNbrAtomIdx(patom)-1;
-        int bo = pbond->GetBO();
+        int bo = pbond->GetBondOrder();
         if(bo==5)
           bo=4;
         iat.bond_type[nbonds]     = bo;

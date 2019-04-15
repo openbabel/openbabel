@@ -1241,7 +1241,7 @@ namespace OpenBabel
 
       // get the position for the new atom, this is done with GetNewBondVector
       if (prev != NULL) {
-        int bondType = a->GetBond(prev)->GetBO();
+        int bondType = a->GetBond(prev)->GetBondOrder();
         if (a->GetBond(prev)->IsAromatic())
           bondType = -1;
 
@@ -1283,7 +1283,7 @@ namespace OpenBabel
     FOR_BONDS_OF_MOL(b, mol) {
       beginIdx = b->GetBeginAtomIdx();
       endIdx = b->GetEndAtomIdx();
-      workMol.AddBond(beginIdx, endIdx, b->GetBO(), b->GetFlags());
+      workMol.AddBond(beginIdx, endIdx, b->GetBondOrder(), b->GetFlags());
     }
 
     /*

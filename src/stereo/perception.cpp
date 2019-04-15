@@ -114,7 +114,7 @@ namespace OpenBabel {
   {
     std::vector<OBBond*>::iterator ib;
     for (OBBond *bond = mol->BeginBond(ib); bond; bond = mol->NextBond(ib))
-      if (bond->GetBO() == 2) {
+      if (bond->GetBondOrder() == 2) {
         return true;
       }
     return false;
@@ -770,7 +770,7 @@ namespace OpenBabel {
       if (bond->IsInRing() && bond->IsAromatic())
         continue; // Exclude C=C in phenyl rings for example
 
-      if (bond->GetBO() == 2) {
+      if (bond->GetBondOrder() == 2) {
         OBAtom *begin = bond->GetBeginAtom();
         OBAtom *end = bond->GetEndAtom();
         if (!begin || !end)

@@ -114,9 +114,6 @@ namespace OpenBabel
       void SetIdx(int idx)        {          _idx = idx;        }
       void SetId(unsigned long id) { _id = id; }
       //! Set the bond order to @p order (i.e., 1 = single, 2 = double, 5 = aromatic)
-      /** \deprecated Use SetBondOrder() instead. **/
-      void SetBO(int order);
-      //! Set the bond order to @p order (i.e., 1 = single, 2 = double, 5 = aromatic)
       void SetBondOrder(int order);
       //! Set the beginning atom of this bond to @p begin. Does not update @p begin.
       void SetBegin(OBAtom *begin){          _bgn = begin;      }
@@ -176,9 +173,6 @@ namespace OpenBabel
       //! \return The unique bond index in a molecule.
       unsigned int     GetIdx()           const { return(_idx);  }
       unsigned long GetId()           const { return _id; }
-      //! \return The bond order for the bond
-      /** \deprecated Use GetBondOrder() as this method may be removed. **/
-      unsigned int     GetBO()            const { return(_order); }
       //! \return The bond order for the bond
       unsigned int     GetBondOrder()     const { return(_order); }
       //! \return The set of property flags defined for this bond.

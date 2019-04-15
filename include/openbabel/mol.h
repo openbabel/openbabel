@@ -181,7 +181,7 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! Add a new bond to the molecule with the specified parameters
     //! \param beginIdx  the atom index of the "start" atom
     //! \param endIdx    the atom index of the "end" atom
-    //! \param order     the bond order (see OBBond::GetBO())
+    //! \param order     the bond order (see OBBond::GetBondOrder())
     //! \param flags     any bond flags such as stereochemistry (default = none)
     //! \param insertpos the position index to insert the bond (default = none)
     //! \return Whether the new bond creation was successful

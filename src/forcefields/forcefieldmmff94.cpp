@@ -1403,7 +1403,7 @@ namespace OpenBabel
             prev_rj = index;
             continue;
           }
-          if (ringbond->GetBO() == 2) {
+          if (ringbond->GetBondOrder() == 2) {
             pi_electrons += 2;
             prev_rj = index;
             n++;
@@ -1434,7 +1434,7 @@ namespace OpenBabel
           if (!ringbond) {
             continue;
           }
-          if (ringbond->GetBO() == 2)
+          if (ringbond->GetBondOrder() == 2)
             pi_electrons++;
         }
 
@@ -1450,7 +1450,7 @@ namespace OpenBabel
       // is the bond from the first to the last atom double?
       ringbond = _mol.GetBond(first_rj, index);
       if (ringbond) {
-        if (ringbond->GetBO() == 2)
+        if (ringbond->GetBondOrder() == 2)
           pi_electrons += 2;
       }
 
@@ -2355,7 +2355,7 @@ namespace OpenBabel
               // (e.g. by MOE, noticed by Paolo Tosco)
               int ndab = 0;
               FOR_BONDS_OF_ATOM(bond2, &*nbr) {
-                if (bond2->GetBO() == 2 || bond2->GetBO() == 5)
+                if (bond2->GetBondOrder() == 2 || bond2->GetBondOrder() == 5)
                   ndab++;
               }
               if (ndab + nbr->GetValence() == 5)

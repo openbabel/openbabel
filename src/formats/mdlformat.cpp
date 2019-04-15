@@ -1198,7 +1198,7 @@ namespace OpenBabel
 
             ofs << setw(3) << atom->GetIdx(); // begin atom number
             ofs << setw(3) << nbr->GetIdx(); // end atom number
-            ofs << setw(3) << bond->GetBO(); // bond type
+            ofs << setw(3) << bond->GetBondOrder(); // bond type
             ofs << setw(3) << stereo; // bond stereo
             ofs << "  0  0  0" << endl;
 
@@ -1706,7 +1706,7 @@ namespace OpenBabel
                 bond = (OBBond*) *j;
                 ofs << "M  V30 "
                     << index++ << " "
-                    << bond->GetBO() << " "
+                    << bond->GetBondOrder() << " "
                     << bond->GetBeginAtomIdx() << " "
                     << bond->GetEndAtomIdx();
                 //@todo do the following stereo chemistry properly

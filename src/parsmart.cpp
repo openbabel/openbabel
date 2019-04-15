@@ -2230,15 +2230,15 @@ namespace OpenBabel
         case BE_ANY:
           return true;
         case BE_DEFAULT:
-          return bond->GetBO()==1 || bond->IsAromatic();
+          return bond->GetBondOrder()==1 || bond->IsAromatic();
         case BE_SINGLE:
-          return bond->GetBO()==1 && !bond->IsAromatic();
+          return bond->GetBondOrder()==1 && !bond->IsAromatic();
         case BE_DOUBLE:
-          return bond->GetBO()==2 && !bond->IsAromatic();
+          return bond->GetBondOrder()==2 && !bond->IsAromatic();
         case BE_TRIPLE:
-          return bond->GetBO() == 3;
+          return bond->GetBondOrder() == 3;
         case BE_QUAD:
-          return bond->GetBO() == 4;
+          return bond->GetBondOrder() == 4;
         case BE_AROM:
           return bond->IsAromatic();
         case BE_RING:

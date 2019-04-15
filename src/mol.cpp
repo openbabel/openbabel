@@ -1374,7 +1374,7 @@ namespace OpenBabel
       bond->SetId(NoId);//Need to remove ID which relates to source mol rather than this mol
       AddBond(bond->GetBeginAtomIdx() + prevatms,
               bond->GetEndAtomIdx() + prevatms,
-              bond->GetBO(), bond->GetFlags());
+              bond->GetBondOrder(), bond->GetFlags());
     }
 
     // Now update all copied residues too
@@ -2593,7 +2593,7 @@ namespace OpenBabel
   {
     if(!AddBond(bond.GetBeginAtomIdx(),
                    bond.GetEndAtomIdx(),
-                   bond.GetBO(),
+                   bond.GetBondOrder(),
                    bond.GetFlags()))
       return false;
     //copy the bond's generic data
@@ -3448,7 +3448,7 @@ namespace OpenBabel
                   }
               }
             if (c)
-              (atom->GetBond(c))->SetBO(3);
+              (atom->GetBond(c))->SetBondOrder(3);
           }
         // Possible sp2-hybrid atoms
         else if ( (atom->GetHyb() == 2 || atom->GetValence() == 1)
@@ -3514,7 +3514,7 @@ namespace OpenBabel
                   }
               } // loop through neighbors
             if (c)
-              (atom->GetBond(c))->SetBO(2);
+              (atom->GetBond(c))->SetBondOrder(2);
           }
       } // pass 6
 
@@ -3750,7 +3750,7 @@ namespace OpenBabel
                 else
                   ++chg2;
                 pNbratom->SetFormalCharge(chg2);
-                pbond->SetBO(pbond->GetBO()+1);
+                pbond->SetBondOrder(pbond->GetBondOrder()+1);
               }
           }
       }
@@ -3789,7 +3789,7 @@ namespace OpenBabel
         OBBondIterator bi;
         for (bestbond = bond = patom->BeginBond(bi); bond; bond = patom->NextBond(bi))
         {
-          unsigned int bo = bond->GetBO();
+          unsigned int bo = bond->GetBondOrder();
           if(bo>=2 && bo<=4)
           {
             bool het = IsNotCorH(bond->GetNbrAtom(patom));
