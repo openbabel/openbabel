@@ -25,8 +25,6 @@ GNU General Public License for more details.
 #include <math.h>
 #include <iostream>
 
-#include <openbabel/rand.h>
-
 #ifndef RAD_TO_DEG
 #define RAD_TO_DEG (180.0/M_PI)
 #endif
@@ -39,7 +37,6 @@ namespace OpenBabel
 {
 
   class matrix3x3; // declared in math/matrix3x3.h
-  class OBRandom; // declared in rand.h
 
   // class introduction in vector3.cpp
   class OBAPI vector3
@@ -213,7 +210,7 @@ namespace OpenBabel
     vector3& operator*= ( const matrix3x3 &);
 
     //! Create a random unit vector
-    void randomUnitVector(OBRandom *oeRand= NULL);
+    void randomUnitVector();
 
     //  Member Functions
 

@@ -48,19 +48,6 @@ namespace OpenBabel
 
   */
 
-  /*! The axis of the rotation will be uniformly distributed on
-    the unit sphere and the angle will be uniformly distributed in
-    the interval 0..360 degrees. */
-  void matrix3x3::randomRotation(OBRandom &rnd)
-  {
-    double rotAngle;
-    vector3 v1;
-
-    v1.randomUnitVector(&rnd);
-    rotAngle = 360.0 * rnd.NextFloat();
-    this->RotAboutAxisByAngle(v1,rotAngle);
-  }
-
   void matrix3x3::SetupRotMat(double phi,double theta,double psi)
   {
     double p  = phi * DEG_TO_RAD;
