@@ -237,7 +237,7 @@ namespace OpenBabel
       // first, make begin.GetIdx < end.GetIdx
       OBBond* bond;
       OBAtom *atom;
-      vector<OBEdgeBase*>::iterator j;
+      vector<OBBond*>::iterator j;
       vector<OBNodeBase*>::iterator i;
       OBAtom *bgn, *end;
       for (bond = mol.BeginBond(j); bond; bond = mol.NextBond(j))

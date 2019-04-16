@@ -22,6 +22,7 @@ GNU General Public License for more details.
 #include <openbabel/obiter.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/generic.h>
 
 #include "inchi_api.h"
 #include <sstream>

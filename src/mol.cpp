@@ -1216,7 +1216,6 @@ namespace OpenBabel
   //Conformers are now copied also, MM 2/7/01
   //Residue information are copied, MM 4-27-01
   //All OBGenericData incl OBRotameterList is copied, CM 2006
-  //OBChiralData for all atoms copied, TV 2008
   //Zeros all flags except OB_TCHARGE_MOL, OB_PCHARGE_MOL, OB_HYBRID_MOL
   //OB_TSPIN_MOL, OB_AROMATIC_MOL and OB_PATTERN_STRUCTURE which are copied
   {
@@ -1327,15 +1326,6 @@ namespace OpenBabel
         OBGenericData* pCopiedData = (*itr)->Clone(this);
         SetData(pCopiedData);
       }
-
-    // copy chiral data for all atoms
-    FOR_ATOMS_OF_MOL (atom, src) {
-      if (atom->HasData(OBGenericDataType::ChiralData)) {
-        OBChiralData* cd = (OBChiralData*) atom->GetData(OBGenericDataType::ChiralData);
-        OBGenericData* pCopiedData = cd->Clone(NULL); // parent not used in OBChiralData::Clone()
-        GetAtom(atom->GetIdx())->SetData(pCopiedData);
-      }
-    }
 
     if (src.HasChiralityPerceived())
       SetChiralityPerceived();
@@ -2840,19 +2830,6 @@ namespace OpenBabel
       }
     return(false);
   }
-
-  bool OBMol::IsChiral()
-  {
-    OBAtom *atom;
-    vector<OBAtom*>::iterator i;
-
-    for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if ((atom->GetAtomicNum() == OBElements::Carbon || atom->GetAtomicNum() == OBElements::Nitrogen) && atom->GetHvyValence() > 2 && atom->IsChiral())
-        return(true);
-
-    return(false);
-  }
-
 
   void OBMol::SetCoordinates(double *newCoords)
   {

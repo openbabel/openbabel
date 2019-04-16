@@ -64,7 +64,7 @@ namespace OpenBabel
 #define OB_AROMATIC_MOL          (1<<3)
   //! Atom typing has been performed. See OBAtomTyper
 #define OB_ATOMTYPES_MOL         (1<<4)
-  //! Chirality detection has been performed. See OBMol::IsChiral
+  //! Chirality detection has been performed.
 #define OB_CHIRALITY_MOL         (1<<5)
   //! Partial charges have been set or percieved
 #define OB_PCHARGE_MOL           (1<<6)
@@ -516,9 +516,6 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     void FindLSSR();
     //! Find all ring atoms and bonds. Does not need to call FindSSSR().
     void FindRingAtomsAndBonds();
-    //! Find all chiral atom centers. See OBAtom::IsChiral() for more details
-    //! \deprecated See FindStereogenicUnits
-    void FindChiralCenters() { IsChiral(); }
     // documented in mol.cpp -- locates all atom indexes which can reach 'end'
     void FindChildren(std::vector<int> & children,int bgnIdx,int endIdx);
     // documented in mol.cpp -- locates all atoms which can reach 'end'
@@ -587,8 +584,6 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     bool HasSpinMultiplicityAssigned() { return(HasFlag(OB_ATOMSPIN_MOL)); }
     //! Does this OBMol represent a reaction?
     bool IsReaction()                  { return HasFlag(OB_REACTION_MOL); }
-    //! Is this molecule chiral?
-    bool IsChiral();
     //! Are there any atoms in this molecule?
     bool Empty()                       { return(_natoms == 0);          }
     //@}
