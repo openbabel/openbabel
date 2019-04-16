@@ -500,7 +500,7 @@ namespace OpenBabel
      */
     bool HasFixedBonds()
     {
-      return !_fixedbonds.Empty();
+      return !_fixedbonds.IsEmpty();
     }
     //! Rotates each bond to zero and 180 degrees and tests
     //! if the 2 conformers are duplicates.  if so - the symmetric torsion
@@ -629,7 +629,7 @@ namespace OpenBabel
      */
     bool HasFixedAtoms()
     {
-      return(!_fixedatoms.Empty());
+      return(!_fixedatoms.IsEmpty());
     }
     //! Has no effect
     //! \deprecated Currently has no effect

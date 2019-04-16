@@ -3016,7 +3016,7 @@ namespace OpenBabel {
                   used |= nbr->GetIdx();
                 }
           }
-        if (next.Empty())
+        if (next.IsEmpty())
           break;
         curr = next;
       }
@@ -3085,7 +3085,7 @@ namespace OpenBabel {
       //  _uatoms.SetBitOn(nbr->GetIdx());        // mark suppressed hydrogen, so it won't be considered
       //  continue;                               // later when looking for more fragments.
       //}
-      if (_uatoms[idx] || !frag_atoms.BitIsOn(idx))
+      if (_uatoms[idx] || !frag_atoms.BitIsSet(idx))
         continue;
 
       OBBond *nbr_bond = atom->GetBond(nbr);
@@ -3209,13 +3209,13 @@ namespace OpenBabel {
     for (bond1 = atom->BeginBond(i); bond1; bond1 = atom->NextBond(i)) {
 
       // Is this a ring-closure neighbor?
-      if (_ubonds.BitIsOn(bond1->GetIdx()))
+      if (_ubonds.BitIsSet(bond1->GetIdx()))
         continue;
       nbr1 = bond1->GetNbrAtom(atom);
       // Skip hydrogens before checking canonical_order
       // PR#1999348
       if (   (nbr1->GetAtomicNum() == OBElements::Hydrogen && IsSuppressedHydrogen(nbr1))
-             || !frag_atoms.BitIsOn(nbr1->GetIdx()))
+             || !frag_atoms.BitIsSet(nbr1->GetIdx()))
         continue;
 
       nbr1_canorder = canonical_order[nbr1->GetIdx()-1];
@@ -3549,7 +3549,7 @@ namespace OpenBabel {
                       vector<unsigned int> &labels)
   {
     FOR_ATOMS_OF_MOL(atom, *pMol) {
-      if (frag_atoms->BitIsOn(atom->GetIdx())) {
+      if (frag_atoms->BitIsSet(atom->GetIdx())) {
         labels.push_back(atom->GetIdx() - 1);
         symmetry_classes.push_back(atom->GetIdx() - 1);
       }
@@ -3577,9 +3577,9 @@ namespace OpenBabel {
     OBBitVec used(natoms);
 
     FOR_ATOMS_OF_MOL(atom, *pMol) {
-      if (frag_atoms.BitIsOn(atom->GetIdx())) {
+      if (frag_atoms.BitIsSet(atom->GetIdx())) {
         int r = rand() % natoms;
-        while (used.BitIsOn(r)) {
+        while (used.BitIsSet(r)) {
           r = (r + 1) % natoms;         // find an unused number
         }
         used.SetBitOn(r);
@@ -3902,7 +3902,7 @@ namespace OpenBabel {
       // If we specified a startatom_idx & it's in this fragment, use it to start the fragment
       if (_startatom)
         if (!_uatoms[_startatom->GetIdx()] && 
-           frag_atoms.BitIsOn(_startatom->GetIdx()) && 
+           frag_atoms.BitIsSet(_startatom->GetIdx()) && 
            (!isrxn || rxn.GetRole(_startatom)==rxnrole))
           root_atom = _startatom;
 
@@ -3911,7 +3911,7 @@ namespace OpenBabel {
           int idx = atom->GetIdx();
           if (//atom->GetAtomicNum() != OBElements::Hydrogen       // don't start with a hydrogen
               !_uatoms[idx]          // skip atoms already used (for fragments)
-              && frag_atoms.BitIsOn(idx)// skip atoms not in this fragment
+              && frag_atoms.BitIsSet(idx)// skip atoms not in this fragment
               && (!isrxn || rxn.GetRole(atom)==rxnrole) // skip atoms not in this rxn role
               //&& !atom->IsChiral()    // don't use chiral atoms as root node
               && canonical_order[idx-1] < lowest_canorder) {
@@ -4039,7 +4039,7 @@ namespace OpenBabel {
       // a chiral center, or it's something like [H][H]).
       FOR_ATOMS_OF_MOL(iatom, mol) {
         OBAtom *atom = &(*iatom);
-        if (frag_atoms.BitIsOn(atom->GetIdx()) && atom->GetAtomicNum() == OBElements::Hydrogen
+        if (frag_atoms.BitIsSet(atom->GetIdx()) && atom->GetAtomicNum() == OBElements::Hydrogen
           && (!options.isomeric || m2s.IsSuppressedHydrogen(atom))) {
           frag_atoms.SetBitOff(atom->GetIdx());
         }

@@ -2721,7 +2721,7 @@ namespace OpenBabel
       if (HasGroups()) {
         bool validBond = false;
         for (unsigned int i=0; i < _intraGroup.size(); ++i) {
-          if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx())) {
+          if (_intraGroup[i].BitIsSet(a->GetIdx()) && _intraGroup[i].BitIsSet(b->GetIdx())) {
             validBond = true;
             break;
           }
@@ -2817,8 +2817,8 @@ namespace OpenBabel
       if (HasGroups()) {
         bool validAngle = false;
         for (unsigned int i=0; i < _intraGroup.size(); ++i) {
-          if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) &&
-              _intraGroup[i].BitIsOn(c->GetIdx())) {
+          if (_intraGroup[i].BitIsSet(a->GetIdx()) && _intraGroup[i].BitIsSet(b->GetIdx()) &&
+              _intraGroup[i].BitIsSet(c->GetIdx())) {
             validAngle = true;
             break;
           }
@@ -3115,8 +3115,8 @@ namespace OpenBabel
       if (HasGroups()) {
         bool validTorsion = false;
         for (unsigned int i=0; i < _intraGroup.size(); ++i) {
-          if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) &&
-              _intraGroup[i].BitIsOn(c->GetIdx()) && _intraGroup[i].BitIsOn(d->GetIdx())) {
+          if (_intraGroup[i].BitIsSet(a->GetIdx()) && _intraGroup[i].BitIsSet(b->GetIdx()) &&
+              _intraGroup[i].BitIsSet(c->GetIdx()) && _intraGroup[i].BitIsSet(d->GetIdx())) {
             validTorsion = true;
             break;
           }
@@ -3398,8 +3398,8 @@ namespace OpenBabel
           if (HasGroups()) {
             bool validOOP = false;
             for (unsigned int i=0; i < _intraGroup.size(); ++i) {
-              if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) &&
-                  _intraGroup[i].BitIsOn(c->GetIdx()) && _intraGroup[i].BitIsOn(d->GetIdx())) {
+              if (_intraGroup[i].BitIsSet(a->GetIdx()) && _intraGroup[i].BitIsSet(b->GetIdx()) &&
+                  _intraGroup[i].BitIsSet(c->GetIdx()) && _intraGroup[i].BitIsSet(d->GetIdx())) {
                 validOOP = true;
                 break;
               }
@@ -3501,18 +3501,18 @@ namespace OpenBabel
       if (HasGroups()) {
         bool validVDW = false;
         for (unsigned int i=0; i < _interGroup.size(); ++i) {
-          if (_interGroup[i].BitIsOn(a->GetIdx()) && _interGroup[i].BitIsOn(b->GetIdx())) {
+          if (_interGroup[i].BitIsSet(a->GetIdx()) && _interGroup[i].BitIsSet(b->GetIdx())) {
             validVDW = true;
             break;
           }
         }
         if (!validVDW) {
           for (unsigned int i=0; i < _interGroups.size(); ++i) {
-            if (_interGroups[i].first.BitIsOn(a->GetIdx()) && _interGroups[i].second.BitIsOn(b->GetIdx())) {
+            if (_interGroups[i].first.BitIsSet(a->GetIdx()) && _interGroups[i].second.BitIsSet(b->GetIdx())) {
               validVDW = true;
               break;
             }
-            if (_interGroups[i].first.BitIsOn(b->GetIdx()) && _interGroups[i].second.BitIsOn(a->GetIdx())) {
+            if (_interGroups[i].first.BitIsSet(b->GetIdx()) && _interGroups[i].second.BitIsSet(a->GetIdx())) {
               validVDW = true;
               break;
             }
@@ -3634,18 +3634,18 @@ namespace OpenBabel
       if (HasGroups()) {
         bool validEle = false;
         for (unsigned int i=0; i < _interGroup.size(); ++i) {
-          if (_interGroup[i].BitIsOn(a->GetIdx()) && _interGroup[i].BitIsOn(b->GetIdx())) {
+          if (_interGroup[i].BitIsSet(a->GetIdx()) && _interGroup[i].BitIsSet(b->GetIdx())) {
             validEle = true;
             break;
           }
         }
         if (!validEle) {
           for (unsigned int i=0; i < _interGroups.size(); ++i) {
-            if (_interGroups[i].first.BitIsOn(a->GetIdx()) && _interGroups[i].second.BitIsOn(b->GetIdx())) {
+            if (_interGroups[i].first.BitIsSet(a->GetIdx()) && _interGroups[i].second.BitIsSet(b->GetIdx())) {
               validEle = true;
               break;
             }
-            if (_interGroups[i].first.BitIsOn(b->GetIdx()) && _interGroups[i].second.BitIsOn(a->GetIdx())) {
+            if (_interGroups[i].first.BitIsSet(b->GetIdx()) && _interGroups[i].second.BitIsSet(a->GetIdx())) {
               validEle = true;
               break;
             }

@@ -185,7 +185,7 @@ namespace OpenBabel
       // Fix the binding pocket atoms
       OBFFConstraints constraints;
       FOR_ATOMS_OF_MOL (a, mol) {
-      if (pocket.BitIsOn(a->GetIdx())
+      if (pocket.BitIsSet(a->GetIdx())
       constraints.AddAtomConstraint(a->GetIdx());
       }
 
@@ -2184,21 +2184,21 @@ namespace OpenBabel
       if (HasGroups()) {
         bool isIncludedPair = false;
         for (size_t i=0; i < _interGroup.size(); ++i) {
-          if (_interGroup[i].BitIsOn(a->GetIdx()) &&
-              _interGroup[i].BitIsOn(b->GetIdx())) {
+          if (_interGroup[i].BitIsSet(a->GetIdx()) &&
+              _interGroup[i].BitIsSet(b->GetIdx())) {
             isIncludedPair = true;
             break;
           }
         }
         if (!isIncludedPair) {
           for (size_t i=0; i < _interGroups.size(); ++i) {
-            if (_interGroups[i].first.BitIsOn(a->GetIdx()) &&
-                _interGroups[i].second.BitIsOn(b->GetIdx())) {
+            if (_interGroups[i].first.BitIsSet(a->GetIdx()) &&
+                _interGroups[i].second.BitIsSet(b->GetIdx())) {
               isIncludedPair = true;
               break;
             }
-            if (_interGroups[i].first.BitIsOn(b->GetIdx()) &&
-                _interGroups[i].second.BitIsOn(a->GetIdx())) {
+            if (_interGroups[i].first.BitIsSet(b->GetIdx()) &&
+                _interGroups[i].second.BitIsSet(a->GetIdx())) {
               isIncludedPair = true;
               break;
             }
