@@ -251,11 +251,6 @@ namespace OpenBabel
       //! \return the OBBond object between this atom and that supplied,
       //! or NULL if the two atoms are not bonded
       OBBond    *GetBond(OBAtom *);
-      //! \return a pointer to the "next" atom (by atom index) in the
-      //!    parent OBMol, or NULL if no such atom exists.
-      //! \deprecated Use any of the other iterator methods. This
-      //!    method will be removed in the future.
-      OBAtom    *GetNextAtom();
       //@}
 
       //! \name Iterator methods
