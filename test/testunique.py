@@ -14,7 +14,6 @@ In both cases, the test file is run directly from the source folder,
 and so you can quickly develop the tests and try them out.
 """
 
-import os
 import unittest
 
 from testbabel import run_exec, BaseTest
@@ -52,6 +51,6 @@ C([2H])([2H])([2H])[2H]	deuteromethane"""
             output, error = run_exec(self.smiles,
                                      "babel -ismi -osmi --unique %s" % param[0])
             self.assertConverted(error, param[1])
-        
+
 if __name__ == "__main__":
     unittest.main()

@@ -62,8 +62,8 @@ class TestToolkit(myTestCase):
     def testattributes(self):
         """Test attributes like informats, descs and so on"""
         informats, outformats = self.toolkit.informats, self.toolkit.outformats
-        self.assertNotEqual(len(self.toolkit.informats.keys()), 0)
-        self.assertNotEqual(len(self.toolkit.outformats.keys()), 0)
+        self.assertNotEqual(len(list(self.toolkit.informats.keys())), 0)
+        self.assertNotEqual(len(list(self.toolkit.outformats.keys())), 0)
         self.assertNotEqual(len(self.toolkit.descs), 0)
         self.assertNotEqual(len(self.toolkit.forcefields), 0)
         self.assertNotEqual(len(self.toolkit.fps), 0)
@@ -279,7 +279,7 @@ M  END
     def testMDglobalaccess(self):
         """Check out the keys"""
         data = self.head[0].data
-        self.assertFalse(data.has_key('Noel'))
+        self.assertFalse('Noel' in data)
         self.assertEqual(len(data), len(self.datakeys))
         for key in data:
             self.assertEqual(key in self.datakeys, True)
@@ -289,9 +289,9 @@ M  END
     def testMDdelete(self):
         """Delete some keys"""
         data = self.head[0].data
-        self.assertTrue(data.has_key('NSC'))
+        self.assertTrue('NSC' in data)
         del data['NSC']
-        self.assertFalse(data.has_key('NSC'))
+        self.assertFalse('NSC' in data)
         data.clear()
         self.assertEqual(len(data), 0)
 

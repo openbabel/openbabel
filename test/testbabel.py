@@ -71,9 +71,8 @@ def log(text):
 
     The log file (log.txt) is created in build/test
     """
-    output = open("log.txt", "a")
-    print >> output, text
-    output.close()
+    with open("log.txt", "a") as output:
+        output.write(text + "\n")
 
 class BaseTest(unittest.TestCase):
     """A base class for test classes that adds additional
@@ -269,7 +268,7 @@ TORSDOF 5
                 'O=[S@@](c1nc2c([nH]1)cccc2)Cc1nccc(c1C)OCC(F)(F)F',
                 'C#C[C@]1(O)CC[C@@H]2[C@]1(C)CC[C@H]1[C@H]2CCc2c1ccc(c2)O',
                 ]
-        for cofname, CAN in zip(listCOFnames, listCANexpected): 
+        for cofname, CAN in zip(listCOFnames, listCANexpected):
             coffilename = cofname + '.cof'
             if(cofname == 'culgi_06'):
                 cofname = 'mol24' # Special case: 'internal name' not the same as file name

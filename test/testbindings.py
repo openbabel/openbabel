@@ -19,7 +19,6 @@ and so you can quickly develop the tests and try them out.
 """
 
 import os
-import re
 import sys
 import unittest
 import itertools

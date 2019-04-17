@@ -16,7 +16,7 @@ and so you can quickly develop the tests and try them out.
 
 import unittest
 
-from testbabel import run_exec, executable, log, BaseTest
+from testbabel import run_exec, executable, BaseTest
 
 class TestKekuleAssignment(BaseTest):
     """A series of tests relating to aromaticity/kekule"""
