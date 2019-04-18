@@ -282,6 +282,14 @@ class Outputfile(object):
         self.obConversion.CloseOutFile()
         self.filename = None
 
+    def __enter__(self):
+        """Called by with statement, returns itself"""
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        """Called by with statement, closes itself"""
+        self.close()
+
 
 class Molecule(object):
     """Represent a Pybel Molecule.
