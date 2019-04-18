@@ -232,10 +232,9 @@ M  END
     def testRFoutputfile(self):
         """Test the Outputfile class"""
         self.assertRaises(ValueError, self.toolkit.Outputfile, "noel", "testoutput.txt")
-        outputfile = self.toolkit.Outputfile("sdf", "testoutput.txt")
-        for mol in self.head:
-            outputfile.write(mol)
-        outputfile.close()
+        with self.toolkit.Outputfile("sdf", "testoutput.txt") as outputfile:
+            for mol in self.head:
+                outputfile.write(mol)
         self.assertRaises(IOError, outputfile.write, mol)
         self.assertRaises(IOError, self.toolkit.Outputfile, "sdf", "testoutput.txt")
         input = open("testoutput.txt", "r")
