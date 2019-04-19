@@ -39,7 +39,7 @@ using namespace std;
 
 /// @warning seems that every position in cube files has always to be
 /// multiplied by this constant even if according to:
-/// reference: http://www.gaussian.com/g_ur/u_cubegen.htm
+/// reference: https://www.gaussian.com/cubegen/
 /// <Num points along first axis> > 0 means that the values
 /// are already in Angstroms.
 static const double BOHR_TO_ANGSTROM = 0.529177249;
@@ -76,7 +76,7 @@ namespace OpenBabel
     // I couldn't find it but close enough.
     virtual const char* SpecificationURL()
     {
-        return "http://www.gaussian.com/g_ur/u_cubegen.htm";
+        return "https://www.gaussian.com/cubegen/";
     }
 
     // Return MIME type, NULL in this case.

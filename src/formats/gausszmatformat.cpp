@@ -57,7 +57,7 @@ namespace OpenBabel
     };
 
     virtual const char* SpecificationURL()
-    { return "http://www.gaussian.com/";};
+    { return "https://www.gaussian.com/zmat/"; };
 
     virtual const char* GetMIMEType()
     { return "chemical/x-gaussian-input"; };
@@ -86,7 +86,7 @@ namespace OpenBabel
     const char *keywords = pConv->IsOption("k",OBConversion::OUTOPTIONS);
     const char *keywordsEnable = pConv->IsOption("k",OBConversion::GENOPTIONS);
     const char *keywordFile = pConv->IsOption("f",OBConversion::OUTOPTIONS);
-    string defaultKeywords = "#Put Keywords Here, check Charge and Multiplicity.";
+    string defaultKeywords = "!Put Keywords Here, check Charge and Multiplicity.\n#";
 
     if(keywords) {
       defaultKeywords = keywords;
