@@ -190,8 +190,6 @@ namespace OpenBabel
       //! \return the index into a pointer-driven array as used by
       //!   GetCoordPtr() or SetCoordPtr()
       unsigned int GetCoordinateIdx() const { return((int)_cidx); }
-      //! \deprecated Use GetCoordinateIdx() instead
-      unsigned int GetCIdx()          const { return((int)_cidx); }
       //! \return The current number of explicit connections
       unsigned int GetValence() const { return (unsigned int)_vbond.size(); }
       //! \return The hybridization of this atom: 1 for sp, 2 for sp2, 3 for sp3, 4 for sq. planar, 5 for trig. bipy, 6 for octahedral
@@ -253,11 +251,6 @@ namespace OpenBabel
       //! \return the OBBond object between this atom and that supplied,
       //! or NULL if the two atoms are not bonded
       OBBond    *GetBond(OBAtom *);
-      //! \return a pointer to the "next" atom (by atom index) in the
-      //!    parent OBMol, or NULL if no such atom exists.
-      //! \deprecated Use any of the other iterator methods. This
-      //!    method will be removed in the future.
-      OBAtom    *GetNextAtom();
       //@}
 
       //! \name Iterator methods

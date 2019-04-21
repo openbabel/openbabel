@@ -442,12 +442,6 @@ namespace OpenBabel
     _isotope = iso;
   }
 
-  OBAtom *OBAtom::GetNextAtom()
-  {
-    OBMol *mol = (OBMol*)GetParent();
-    return(((unsigned)GetIdx() == mol->NumAtoms())? NULL : mol->GetAtom(GetIdx()+1));
-  }
-
   OBResidue *OBAtom::GetResidue()
   {
     OBMol *mol = this->GetParent();

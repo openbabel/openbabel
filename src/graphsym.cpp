@@ -222,7 +222,7 @@ namespace OpenBabel {
     for (atom = _pmol->BeginAtom(ai); atom; atom = _pmol->NextAtom(ai)) {
 
       int idx = atom->GetIdx();
-      if (!_frag_atoms.BitIsOn(idx)) {     // Not in this fragment?
+      if (!_frag_atoms.BitIsSet(idx)) {     // Not in this fragment?
         gtd[idx-1] = OBGraphSym::NoSymmetryClass;
         continue;
       }
@@ -236,13 +236,13 @@ namespace OpenBabel {
         next.Clear();
         for (natom = curr.NextBit(-1);natom != curr.EndBit();natom = curr.NextBit(natom)) {
           atom1 = _pmol->GetAtom(natom);
-          if (!_frag_atoms.BitIsOn(atom1->GetIdx()))
+          if (!_frag_atoms.BitIsSet(atom1->GetIdx()))
             continue;
           for (bond = atom1->BeginBond(j);bond;bond = atom1->NextBond(j)) {
             int nbr_idx = bond->GetNbrAtomIdx(atom1);
-            if (   _frag_atoms.BitIsOn(nbr_idx)
-                && !used.BitIsOn(nbr_idx)
-                && !curr.BitIsOn(nbr_idx)
+            if (   _frag_atoms.BitIsSet(nbr_idx)
+                && !used.BitIsSet(nbr_idx)
+                && !curr.BitIsSet(nbr_idx)
                 && bond->GetNbrAtom(atom1)->GetAtomicNum() != OBElements::Hydrogen)
               next.SetBitOn(nbr_idx);
           }
@@ -316,12 +316,12 @@ namespace OpenBabel {
     for (i=0, atom = _pmol->BeginAtom(ai); atom; atom = _pmol->NextAtom(ai)) {
       //    vid[i] = 0;
       vid[i] = OBGraphSym::NoSymmetryClass;
-      if (_frag_atoms.BitIsOn(atom->GetIdx())) {
+      if (_frag_atoms.BitIsSet(atom->GetIdx())) {
         vid[i] =
           v[i]                                                    // 10 bits: graph-theoretical distance
           | (GetHvyValence(atom)                <<10)  //  4 bits: heavy valence
           | (((atom->IsAromatic()) ? 1 : 0)                <<14)  //  1 bit:  aromaticity
-          | (((ring_atoms.BitIsOn(atom->GetIdx())) ? 1 : 0)<<15)  //  1 bit:  ring atom
+          | (((ring_atoms.BitIsSet(atom->GetIdx())) ? 1 : 0)<<15)  //  1 bit:  ring atom
           | (atom->GetAtomicNum()                          <<16)  //  7 bits: atomic number
           | (GetHvyBondSum(atom)               <<23)  //  4 bits: heavy bond sum
           | ((7 + atom->GetFormalCharge())                 <<27); //  4 bits: formal charge
@@ -386,7 +386,7 @@ namespace OpenBabel {
       vector<unsigned int> vtmp;
       for (nbr = atom->BeginNbrAtom(nbr_iter); nbr; nbr = atom->NextNbrAtom(nbr_iter)) {
         int idx = nbr->GetIdx();
-        if (_frag_atoms.BitIsOn(idx))
+        if (_frag_atoms.BitIsSet(idx))
           vtmp.push_back(vp1[idx2index[idx]].second);
       }
 
@@ -564,7 +564,7 @@ namespace OpenBabel {
     std::vector<std::pair<OBAtom*, unsigned int> > symmetry_classes;
     for (atom = _pmol->BeginAtom(j); atom; atom = _pmol->NextAtom(j)) {
       int idx = atom->GetIdx();
-      if (_frag_atoms.BitIsOn(idx))
+      if (_frag_atoms.BitIsSet(idx))
         symmetry_classes.push_back(pair<OBAtom*, unsigned int> (atom, vgi[idx-1]));
       //else
       //  symmetry_classes.push_back(pair<OBAtom*, unsigned int> (atom, OBGraphSym::NoSymmetryClass));
@@ -633,7 +633,7 @@ namespace OpenBabel {
     std::vector<std::pair<OBAtom*, unsigned int> > symmetry_classes;
     for (OBAtom *atom = _pmol->BeginAtom(j); atom; atom = _pmol->NextAtom(j)) {
       int idx = atom->GetIdx();
-      if (_frag_atoms.BitIsOn(idx))
+      if (_frag_atoms.BitIsSet(idx))
         symmetry_classes.push_back(pair<OBAtom*, unsigned int> (atom, symClasses[idx-1]));
     }
 

@@ -118,8 +118,6 @@ namespace OpenBabel
       /// Return the number of bits which are set to 1 in the vector
       unsigned CountBits() const;
 
-      /// \deprecated Use IsEmpty() instead.
-      bool Empty() const   { return(IsEmpty()); }
 	  /// Are there no bits set to 1 in this vector?
       bool IsEmpty() const;
       /// Reserve space for \p size_in_bits bits
@@ -160,10 +158,6 @@ namespace OpenBabel
 			}
           return rtn;
         }
-      /// \deprecated Use BitIsSet(unsigned bit_offset) instead.
-      bool BitIsOn(int bit_offset) const
-        { return BitIsSet((unsigned)bit_offset); }
-
       /// Sets the bits listed as bit offsets
 	  void FromVecInt(const std::vector<int> & bit_offsets);
       /// Sets the bits listed as a string of integers

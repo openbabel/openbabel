@@ -646,12 +646,12 @@ namespace OpenBabel
 
   bool OBRing::IsMember(OBAtom *a)
   {
-    return(_pathset.BitIsOn(a->GetIdx()));
+    return(_pathset.BitIsSet(a->GetIdx()));
   }
 
   bool OBRing::IsMember(OBBond *b)
   {
-    return((_pathset.BitIsOn(b->GetBeginAtomIdx()))&&(_pathset.BitIsOn(b->GetEndAtomIdx())));
+    return((_pathset.BitIsSet(b->GetBeginAtomIdx()))&&(_pathset.BitIsSet(b->GetEndAtomIdx())));
   }
 
   OBRing::OBRing(vector<int> &path,int size) : _path(path)
@@ -726,7 +726,7 @@ namespace OpenBabel
                 }
           }
 
-        if (next.Empty())
+        if (next.IsEmpty())
           break;
         curr = next;
         level++;

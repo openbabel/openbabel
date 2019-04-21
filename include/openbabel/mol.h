@@ -151,15 +151,6 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
       }
     }
 
-    //! Create a new OBAtom pointer. Does no bookkeeping
-    //! \deprecated Use NewAtom instead, which ensures internal connections
-    virtual OBAtom *CreateAtom(void);
-    //! Create a new OBBond pointer. Does no bookkeeping
-    //! \deprecated Use NewBond instead, which ensures internal connections
-    virtual OBBond *CreateBond(void);
-    //! Create a new OBResidue pointer. Does no bookkeeping
-    //! \deprecated Use NewResidue instead, which ensures internal connections
-    virtual OBResidue *CreateResidue(void);
     //! Free an OBAtom pointer if defined. Does no bookkeeping
     //! \see DeleteAtom which ensures internal connections
     virtual void DestroyAtom(OBAtom*);

@@ -1013,7 +1013,7 @@ _insertioncode=src._insertioncode;
         vector<OBBond*>::iterator b;
         for (bond = atom->BeginBond(b) ; bond ; bond = atom->NextBond(b))
           {
-            if (!idxs.BitIsOn(bond->GetIdx()))
+            if (!idxs.BitIsSet(bond->GetIdx()))
               {
                 if (!exterior)
                   {
