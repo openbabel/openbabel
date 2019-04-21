@@ -80,8 +80,8 @@ namespace OpenBabel
 
     virtual const char* SpecificationURL()
     {
-      return "";
-    }; //optional
+      return "http://manual.gromacs.org/documentation/current/reference-manual/file-formats.html#g96";
+    }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

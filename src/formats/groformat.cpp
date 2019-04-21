@@ -98,8 +98,10 @@ public:
   };
 
   //Optional URL where the file format is specified
-  virtual const char* SpecificationURL(){return
-     "http://manual.gromacs.org/current/online/gro.html";};
+  virtual const char* SpecificationURL()
+  {
+    return "http://manual.gromacs.org/documentation/current/reference-manual/file-formats.html#gro";
+  }
 
   /* This optional function is for formats which can contain more than one
      molecule. It is used to quickly position the input stream after the nth

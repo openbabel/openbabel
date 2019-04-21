@@ -85,7 +85,9 @@ namespace OpenBabel
     };
 
     virtual const char* SpecificationURL()
-    { return "http://www.gromacs.org/documentation/reference/online/xtc.html"; }; //optional
+    {
+      return "http://manual.gromacs.org/documentation/current/reference-manual/file-formats.html#xtc";
+    }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
