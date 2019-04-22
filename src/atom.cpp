@@ -502,7 +502,7 @@ namespace OpenBabel
   }
 
 
-  unsigned int OBAtom::GetHvyValence() const
+  unsigned int OBAtom::GetHvyDegree() const
   {
     unsigned int count=0;
 
@@ -515,7 +515,7 @@ namespace OpenBabel
     return(count);
   }
 
-  unsigned int OBAtom::GetHeteroValence() const
+  unsigned int OBAtom::GetHeteroDegree() const
   {
     unsigned int count=0;
     OBBond *bond;
@@ -594,7 +594,7 @@ namespace OpenBabel
   {
     if (GetAtomicNum() != OBElements::Oxygen)
       return(false);
-    if (GetHvyValence() != 1)
+    if (GetHvyDegree() != 1)
       return(false);
 
     OBAtom *atom;
@@ -623,7 +623,7 @@ namespace OpenBabel
   {
     if (GetAtomicNum() != OBElements::Oxygen)
       return(false);
-    if (GetHvyValence() != 1)
+    if (GetHvyDegree() != 1)
       return(false);
     OBAtom *atom;
     OBBond *bond;
@@ -650,7 +650,7 @@ namespace OpenBabel
   {
     if (GetAtomicNum() != OBElements::Oxygen)
       return(false);
-    if (GetHvyValence() != 1)
+    if (GetHvyDegree() != 1)
       return(false);
 
     OBAtom *atom;
@@ -684,7 +684,7 @@ namespace OpenBabel
   {
     if (atm->GetAtomicNum() != OBElements::Oxygen)
       return(false);
-    if (atm->GetHvyValence() != 1){
+    if (atm->GetHvyDegree() != 1){
       //cerr << "sulfone> O valence is not 1\n";
       return(false);
       }
@@ -727,7 +727,7 @@ namespace OpenBabel
   {
     if (GetAtomicNum() != OBElements::Oxygen)
       return(false);
-    if (GetHvyValence() != 1)
+    if (GetHvyDegree() != 1)
       return(false);
 
     OBAtom *atom;
@@ -948,7 +948,7 @@ namespace OpenBabel
     for (bond = ((OBAtom*)this)->BeginBond(i);bond;bond = ((OBAtom*)this)->NextBond(i))
       {
         atom = bond->GetNbrAtom((OBAtom*)this);
-        if (atom->GetAtomicNum() == OBElements::Oxygen && atom->GetHvyValence() == 1)
+        if (atom->GetAtomicNum() == OBElements::Oxygen && atom->GetHvyDegree() == 1)
           count++;
       }
 
@@ -965,14 +965,14 @@ namespace OpenBabel
     for (bond = ((OBAtom*)this)->BeginBond(i);bond;bond = ((OBAtom*)this)->NextBond(i))
       {
         atom = bond->GetNbrAtom((OBAtom*)this);
-        if (atom->GetAtomicNum() == OBElements::Sulfur && atom->GetHvyValence() == 1)
+        if (atom->GetAtomicNum() == OBElements::Sulfur && atom->GetHvyDegree() == 1)
           count++;
       }
 
     return(count);
   }
 
-  unsigned int OBAtom::BOSum() const
+  unsigned int OBAtom::GetExplicitValence() const
   {
     unsigned int bosum = 0;
     
@@ -981,6 +981,11 @@ namespace OpenBabel
       bosum += bond->GetBondOrder();
 
     return bosum;
+  }
+
+  unsigned int OBAtom::GetTotalValence() const
+  {
+    return GetExplicitValence() + _imph;
   }
 
   unsigned int OBAtom::ExplicitHydrogenCount(bool ExcludeIsotopes) const
@@ -1033,7 +1038,7 @@ namespace OpenBabel
       int S = SHELL[N];
       int V = VALENCE[N];
       int C = GetFormalCharge();
-      int B = GetImplicitHCount() + BOSum();
+      int B = GetImplicitHCount() + GetExplicitValence();
       // TODO: Do we actually want to divide by 2 here? (counting pairs instead of single)
       counts.first = (S - V - B + C) / 2;  // Acid: Number of electrons pairs desired
       counts.second = (V - B - C) / 2;     // Base: Number of electrons pairs available
@@ -1242,13 +1247,13 @@ namespace OpenBabel
     //if (hyb == GetHyb()) return(true);
     if (GetAtomicNum() == 1)
       return(false);
-    if (hyb == 0 && GetHvyValence() > 1)
+    if (hyb == 0 && GetHvyDegree() > 1)
       return(false);
-    if (hyb == 1 && GetHvyValence() > 2)
+    if (hyb == 1 && GetHvyDegree() > 2)
       return(false);
-    if (hyb == 2 && GetHvyValence() > 3)
+    if (hyb == 2 && GetHvyDegree() > 3)
       return(false);
-    if (hyb == 3 && GetHvyValence() > 4)
+    if (hyb == 3 && GetHvyDegree() > 4)
       return(false);
 
     OBMol *mol = (OBMol*)GetParent();
@@ -1298,7 +1303,7 @@ namespace OpenBabel
           ((OBBond*) *i)->SetLength(this, length);
         }
 
-    if (GetValence() > 1)
+    if (GetExplicitDegree() > 1)
       {
         double angle;
         matrix3x3 m;
@@ -1549,7 +1554,7 @@ namespace OpenBabel
         impval = 1;
       }
 
-    int hcount = impval-GetHvyValence();
+    int hcount = impval-GetHvyDegree();
     if (hcount)
       {
         int k;
@@ -1721,8 +1726,8 @@ namespace OpenBabel
       return true;
     if (_ele == 7) {
       // N+ ions and sp2 hybrid N with 3 valences should not be Hbond acceptors
-      if (!((GetValence() == 4 && GetHyb() == 3)
-            || (GetValence() == 3 && GetHyb() == 2)))
+      if (!((GetExplicitDegree() == 4 && GetHyb() == 3)
+            || (GetExplicitDegree() == 3 && GetHyb() == 2)))
             return true;
     }
     // Changes from Paolo Tosco
@@ -1812,8 +1817,8 @@ namespace OpenBabel
     };
     if (_ele == 7) {
       // N+ ions and sp2 hybrid N with 3 valences should not be Hbond acceptors
-      if (!((GetValence() == 4 && GetHyb() == 3)
-        || (GetValence() == 3 && GetHyb() == 2)))
+      if (!((GetExplicitDegree() == 4 && GetHyb() == 3)
+        || (GetExplicitDegree() == 3 && GetHyb() == 2)))
         return true;
     };
     // Changes from Paolo Tosco

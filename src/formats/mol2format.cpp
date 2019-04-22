@@ -85,7 +85,7 @@ namespace OpenBabel
   {
     if (queryatom->GetAtomicNum() != OBElements::Sulfur)
       return(false);
-    if (queryatom->GetHvyValence() != 1)
+    if (queryatom->GetHvyDegree() != 1)
       return(false);
 
     OBAtom *atom = NULL;
@@ -111,7 +111,7 @@ namespace OpenBabel
 
   static unsigned int TotalNumberOfBonds(OBAtom* atom)
   {
-    return atom->GetImplicitHCount() + atom->GetValence();
+    return atom->GetImplicitHCount() + atom->GetExplicitDegree();
   }
   static bool IsOxygenOrSulfur(OBAtom *atom)
   {

@@ -176,14 +176,14 @@ namespace OpenBabel
 
     // not just an -OH or -NH2, etc.
     // maybe we want to add this as an option
-    //    rotatable = rotatable && ((_bgn->IsHeteroatom() || _bgn->GetHvyValence() > 1)
-    //                               && (_end->IsHeteroatom() || _end->GetHvyValence() > 1) );
-    return (_bgn->GetHvyValence() > 1 && _end->GetHvyValence() > 1);
+    //    rotatable = rotatable && ((_bgn->IsHeteroatom() || _bgn->GetHvyDegree() > 1)
+    //                               && (_end->IsHeteroatom() || _end->GetHvyDegree() > 1) );
+    return (_bgn->GetHvyDegree() > 1 && _end->GetHvyDegree() > 1);
   }
   
   static unsigned int TotalNumberOfBonds(OBAtom* atom)
   {
-    return atom->GetImplicitHCount() + atom->GetValence();
+    return atom->GetImplicitHCount() + atom->GetExplicitDegree();
   }
 
    bool OBBond::IsAmide()
@@ -239,7 +239,7 @@ namespace OpenBabel
       if (TotalNumberOfBonds(n) != 3) return false; // must be a degree 3 nitrogen
 
       // Make sure that N is connected to one non-H
-      if (n->GetHvyValence() != 1) return(false);
+      if (n->GetHvyDegree() != 1) return(false);
 
       // Make sure C is attached to =O
       OBBond *bond;
@@ -273,7 +273,7 @@ namespace OpenBabel
       if (TotalNumberOfBonds(n) != 3) return false; // must be a degree 3 nitrogen
 
       // Make sure that N is connected to two non-H atoms
-      if (n->GetHvyValence() != 2) return(false);
+      if (n->GetHvyDegree() != 2) return(false);
 
       // Make sure C is attached to =O
       OBBond *bond;
@@ -307,7 +307,7 @@ namespace OpenBabel
       if (TotalNumberOfBonds(n) != 3) return false; // must be a degree 3 nitrogen
 
       // Make sure that N is connected to three non-H atoms
-      if (n->GetHvyValence() != 3) return(false);
+      if (n->GetHvyDegree() != 3) return(false);
 
       // Make sure C is attached to =O
       OBBond *bond;
@@ -378,7 +378,7 @@ namespace OpenBabel
     vector<OBBond*>::iterator i;
     for (bond = a1->BeginBond(i);bond;bond = a1->NextBond(i))
       if (bond->IsCarbonyl())
-        if (a2->GetHvyValence() == 2)
+        if (a2->GetHvyDegree() == 2)
           return(true);
 
     return(false);
@@ -410,7 +410,7 @@ namespace OpenBabel
     vector<OBBond*>::iterator i;
     for (bond = a1->BeginBond(i);bond;bond = a1->NextBond(i))
       if (bond->IsCarbonyl())
-        if (a2->GetHvyValence() == 3)
+        if (a2->GetHvyDegree() == 3)
           return(true);
 
     return(false);
@@ -482,8 +482,8 @@ namespace OpenBabel
     vector<OBBond*>::iterator i,j;
     // We concentrate on sp2 atoms with valence up to 3 and ignore the rest (like sp1 or S,P)
     // As this is called from PerceiveBondOrders, GetHyb() may still be undefined.
-    if (_bgn->GetHyb()==1 || _bgn->GetValence()>3||
-        _end->GetHyb()==1 || _end->GetValence()>3)
+    if (_bgn->GetHyb()==1 || _bgn->GetExplicitDegree()>3||
+        _end->GetHyb()==1 || _end->GetExplicitDegree()>3)
       return(true);
 
     for (nbrStart = static_cast<OBAtom*>(_bgn)->BeginNbrAtom(i); nbrStart;

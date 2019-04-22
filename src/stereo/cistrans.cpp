@@ -245,10 +245,10 @@ namespace OpenBabel {
         // b atom not found, could be a deleted hydrogen...
         if (a->IsConnected(begin)) {
           // a is connected to begin. if this is the atom missing a hydrogen, return false
-          if (begin->GetValence() == 2)
+          if (begin->GetExplicitDegree() == 2)
             return true;
           // check if the end atom really is missing an atom
-          if (end->GetValence() != 2) {
+          if (end->GetExplicitDegree() != 2) {
             obErrorLog.ThrowError(__FUNCTION__,
                 "OBCisTransStereo::IsOnSameAtom : id2 is not valid and is not a missing hydrogen.", obError);
             return false;
@@ -258,10 +258,10 @@ namespace OpenBabel {
               "OBCisTransStereo::IsOnSameAtom : Atom with id2 doesn't exist anymore, must be a (deleted) hydrogen.", obInfo);
         } else if (a->IsConnected(end)) {
           // a is connected to end. again, if this is the atom missing a hydrogen, return false
-          if (end->GetValence() == 2)
+          if (end->GetExplicitDegree() == 2)
             return true;
           // check if the begin atom really is missing an atom
-          if (begin->GetValence() != 2) {
+          if (begin->GetExplicitDegree() != 2) {
             obErrorLog.ThrowError(__FUNCTION__,
                 "OBCisTransStereo::IsOnSameAtom : id2 is not valid and is not a missing hydrogen.", obError);
             return true;
@@ -279,10 +279,10 @@ namespace OpenBabel {
         // a atom not found, could be a deleted hydrogen...
         if (b->IsConnected(begin)) {
           // b is connected to begin. if this is the atom missing a hydrogen, return false
-          if (begin->GetValence() == 2)
+          if (begin->GetExplicitDegree() == 2)
             return true;
           // check if the end atom really is missing an atom
-          if (end->GetValence() != 2) {
+          if (end->GetExplicitDegree() != 2) {
             obErrorLog.ThrowError(__FUNCTION__,
                 "OBCisTransStereo::IsOnSameAtom : id1 is not valid and is not a missing hydrogen.", obError);
             return true;
@@ -292,10 +292,10 @@ namespace OpenBabel {
               "OBCisTransStereo::IsOnSameAtom : Atom with id1 doesn't exist, must be a (deleted) hydrogen.", obInfo);
         } else if (b->IsConnected(end)) {
           // a is connected to end. again, if this is the atom missing a hydrogen, return false
-          if (end->GetValence() == 2)
+          if (end->GetExplicitDegree() == 2)
             return true;
           // check if the begin atom really is missing an atom
-          if (begin->GetValence() != 2) {
+          if (begin->GetExplicitDegree() != 2) {
             obErrorLog.ThrowError(__FUNCTION__,
                 "OBCisTransStereo::IsOnSameAtom : id1 is not valid and is not a missing hydrogen.", obError);
             return true;
@@ -324,7 +324,7 @@ namespace OpenBabel {
           obErrorLog.ThrowError(__FUNCTION__, "OBCisTransStereo::IsOnSameAtom : invalid stereochemistry!", obError);
           return true;
         }
-        if ((begin->GetValence() != 2) || (end->GetValence() != 2)) {
+        if ((begin->GetExplicitDegree() != 2) || (end->GetExplicitDegree() != 2)) {
           obErrorLog.ThrowError(__FUNCTION__, "OBCisTransStereo::IsOnSameAtom : invalid stereochemistry!", obError);
           return true;
         }

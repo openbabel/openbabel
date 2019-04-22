@@ -1334,7 +1334,7 @@ namespace OpenBabel
     FOR_ATOMS_OF_MOL(atom, *mol) {
 
       if ((atom->GetAtomicNum() == 7 || atom->GetAtomicNum() == 15)
-          && atom->BOSum() == 4) {
+          && atom->GetExplicitValence() == 4) {
         // check if we should make a positive charge?
         // i.e., 4 non-metal neighbors
         bool nonMetalNeighbors = true;
@@ -1361,7 +1361,7 @@ namespace OpenBabel
         continue;
 
       // If we're connected to anything besides H2O, keep going
-      if (atom->GetValence() != 0) {
+      if (atom->GetExplicitDegree() != 0) {
         int nonWaterBonds = 0;
         FOR_NBORS_OF_ATOM(neighbor, &*atom) {
           if (!CIFisWaterOxygen(&*neighbor)) {

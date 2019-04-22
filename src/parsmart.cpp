@@ -35,7 +35,7 @@ namespace OpenBabel
 {
   static unsigned int TotalNumberOfBonds(OBAtom* atom)
   {
-    return atom->GetImplicitHCount() + atom->GetValence();
+    return atom->GetImplicitHCount() + atom->GetExplicitDegree();
   }
 
   /*! \class OBSmartsPattern parsmart.h <openbabel/parsmart.h>
@@ -2146,7 +2146,7 @@ namespace OpenBabel
         case AE_CONNECT:
           return expr->leaf.value == (int)TotalNumberOfBonds(atom);
         case AE_DEGREE:
-          return expr->leaf.value == (int)atom->GetValence();
+          return expr->leaf.value == (int)atom->GetExplicitDegree();
         case AE_IMPLICIT:
           return expr->leaf.value == (int)atom->GetImplicitHCount();
         case AE_RINGS:
@@ -2154,7 +2154,7 @@ namespace OpenBabel
         case AE_SIZE:
           return atom->IsInRingSize(expr->leaf.value);
         case AE_VALENCE:
-          return expr->leaf.value == (int)(atom->BOSum() + atom->GetImplicitHCount());
+          return expr->leaf.value == (int)(atom->GetExplicitValence() + atom->GetImplicitHCount());
         case AE_CHIRAL:
           // always return true (i.e. accept the match) and check later
           return true;

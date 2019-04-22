@@ -66,7 +66,7 @@ namespace OpenBabel
 
   static unsigned int TotalNumberOfBonds(OBAtom* atom)
   {
-    return atom->GetImplicitHCount() + atom->GetValence();
+    return atom->GetImplicitHCount() + atom->GetExplicitDegree();
   }
 
   static bool IsSpecialCase(OBAtom* atom)

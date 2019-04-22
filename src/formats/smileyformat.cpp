@@ -469,8 +469,8 @@ namespace OpenBabel
 
       // Check that both atoms on the double bond have at least one
       // other neighbor, but not more than two other neighbors;
-      int v1 = source->GetValence();
-      int v2 = target->GetValence();
+      int v1 = source->GetExplicitDegree();
+      int v2 = target->GetExplicitDegree();
       if (v1 < 2 || v1 > 3 || v2 < 2 || v2 > 3)
         continue;
 

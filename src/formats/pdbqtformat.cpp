@@ -694,7 +694,7 @@ namespace OpenBabel
 
   static unsigned int TotalNumberOfBonds(OBAtom* atom)
   {
-    return atom->GetImplicitHCount() + atom->GetValence();
+    return atom->GetImplicitHCount() + atom->GetExplicitDegree();
   }
 
   static bool IsAmidine(OBBond* querybond)
@@ -740,7 +740,7 @@ namespace OpenBabel
     if ( the_bond->GetBondOrder() != 1 || the_bond->IsAromatic() || 
          the_bond->IsAmide() || IsAmidine(the_bond) || the_bond->IsInRing() )
       return false;
-    if ( ((the_bond->GetBeginAtom())->GetValence() == 1) || ((the_bond->GetEndAtom())->GetValence() == 1) ) {return false;}
+    if ( ((the_bond->GetBeginAtom())->GetExplicitDegree() == 1) || ((the_bond->GetEndAtom())->GetExplicitDegree() == 1) ) {return false;}
     return true;
   }
 
