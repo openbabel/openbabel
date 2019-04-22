@@ -368,7 +368,7 @@ namespace OpenBabel
     if (spin)
       return spin == 2 ? TWO_DOT : ONE_DOT;
 
-    unsigned int actualvalence = atom->GetExplicitValence() + atom->GetImplicitHCount();
+    unsigned int actualvalence = atom->GetTotalValence();
     unsigned int typicalvalence = GetTypicalValence(atom->GetAtomicNum(), actualvalence, atom->GetFormalCharge());
     int diff = typicalvalence - actualvalence;
     if (diff <= 0)

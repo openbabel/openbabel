@@ -181,11 +181,6 @@ namespace OpenBabel
     return (_bgn->GetHvyDegree() > 1 && _end->GetHvyDegree() > 1);
   }
   
-  static unsigned int TotalNumberOfBonds(OBAtom* atom)
-  {
-    return atom->GetImplicitHCount() + atom->GetExplicitDegree();
-  }
-
    bool OBBond::IsAmide()
    {
       OBAtom *c,*n;
@@ -204,7 +199,7 @@ namespace OpenBabel
       }
       if (!c || !n) return(false);
       if (GetBondOrder() != 1) return(false);
-      if (TotalNumberOfBonds(n) != 3) return false; // must be a degree 3 nitrogen
+      if (n->GetTotalDegree() != 3) return false; // must be a degree 3 nitrogen
 
       // Make sure C is attached to =O
       OBBond *bond;
@@ -236,7 +231,7 @@ namespace OpenBabel
       }
       if (!c || !n) return(false);
       if (GetBondOrder() != 1) return(false);
-      if (TotalNumberOfBonds(n) != 3) return false; // must be a degree 3 nitrogen
+      if (n->GetTotalDegree() != 3) return false; // must be a degree 3 nitrogen
 
       // Make sure that N is connected to one non-H
       if (n->GetHvyDegree() != 1) return(false);
@@ -270,7 +265,7 @@ namespace OpenBabel
       }
       if (!c || !n) return(false);
       if (GetBondOrder() != 1) return(false);
-      if (TotalNumberOfBonds(n) != 3) return false; // must be a degree 3 nitrogen
+      if (n->GetTotalDegree() != 3) return false; // must be a degree 3 nitrogen
 
       // Make sure that N is connected to two non-H atoms
       if (n->GetHvyDegree() != 2) return(false);
@@ -304,7 +299,7 @@ namespace OpenBabel
       }
       if (!c || !n) return(false);
       if (GetBondOrder() != 1) return(false);
-      if (TotalNumberOfBonds(n) != 3) return false; // must be a degree 3 nitrogen
+      if (n->GetTotalDegree() != 3) return false; // must be a degree 3 nitrogen
 
       // Make sure that N is connected to three non-H atoms
       if (n->GetHvyDegree() != 3) return(false);

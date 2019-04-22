@@ -153,11 +153,6 @@ namespace OpenBabel {
     return(count);
   }
 
-  static unsigned int TotalNumberOfBonds(OBAtom* atom)
-  {
-    return atom->GetImplicitHCount() + atom->GetExplicitDegree();
-  }
-
   /**
    * Sums the bond order over the bonds from this atom to other atoms
    * in the fragment.  Single = 1, double = 2, triple = 3, aromatic = 1.6,
@@ -185,7 +180,7 @@ namespace OpenBabel {
           count += (float)bond->GetBondOrder();
       }
     }
-    if (atom->GetAtomicNum() == 7 && atom->IsAromatic() && TotalNumberOfBonds(atom) == 3) {
+    if (atom->GetAtomicNum() == 7 && atom->IsAromatic() && atom->GetTotalDegree() == 3) {
       count += 1.0f;         // [nH] - add another bond
     }
     return(int(count + 0.5));     // round to nearest int

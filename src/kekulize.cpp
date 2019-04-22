@@ -64,22 +64,17 @@ namespace OpenBabel
     std::vector<unsigned int> m_path;
   };
 
-  static unsigned int TotalNumberOfBonds(OBAtom* atom)
-  {
-    return atom->GetImplicitHCount() + atom->GetExplicitDegree();
-  }
-
   static bool IsSpecialCase(OBAtom* atom)
   {
     switch(atom->GetAtomicNum()) {
     case 7:
       // Any exo-cyclic double bond from a N
       // e.g. pyridine N-oxide as the double bond form
-      if (TotalNumberOfBonds(atom) == 3 && atom->GetFormalCharge() == 0)
+      if (atom->GetTotalDegree() == 3 && atom->GetFormalCharge() == 0)
         return true;
       break;
     case 16: // e.g. Cs1(=O)ccccn1
-      if (TotalNumberOfBonds(atom) == 4 && atom->GetFormalCharge() == 0)
+      if (atom->GetTotalDegree() == 4 && atom->GetFormalCharge() == 0)
         return true;
       break;
     }
@@ -109,7 +104,7 @@ namespace OpenBabel
 
     // Is it one of the cases where we know that it only has single bonds?
     int chg = atom->GetFormalCharge();
-    int deg = TotalNumberOfBonds(atom);
+    int deg = atom->GetTotalDegree();
     switch (atom->GetAtomicNum()) {
     case 6:
       if (deg == 3 && (chg == 1 || chg == -1))

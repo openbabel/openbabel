@@ -109,10 +109,6 @@ namespace OpenBabel
     return(true);
   }
 
-  static unsigned int TotalNumberOfBonds(OBAtom* atom)
-  {
-    return atom->GetImplicitHCount() + atom->GetExplicitDegree();
-  }
   static bool IsOxygenOrSulfur(OBAtom *atom)
   {
     switch (atom->GetAtomicNum()) {
@@ -437,7 +433,7 @@ namespace OpenBabel
 
     if (has_explicit_hydrogen) {
       FOR_ATOMS_OF_MOL(atom, mol) {
-        unsigned int total_valence = TotalNumberOfBonds(&*atom);
+        unsigned int total_valence = atom->GetTotalDegree();
         switch (atom->GetAtomicNum()) {
         case 8:
           if (total_valence != 1) continue;
@@ -464,7 +460,7 @@ namespace OpenBabel
       FOR_ATOMS_OF_MOL(atom, mol) {
         OBAtom* oxygenOrSulfur = &*atom;
         // Look first for a terminal O/S
-        if (!IsOxygenOrSulfur(oxygenOrSulfur) || TotalNumberOfBonds(oxygenOrSulfur) != 1) continue;
+        if (!IsOxygenOrSulfur(oxygenOrSulfur) || oxygenOrSulfur->GetTotalDegree() != 1) continue;
         OBAtomBondIter bitA(oxygenOrSulfur);
         OBBond *bondA = &*bitA;
         if (!bondA->IsAromatic()) continue;
@@ -477,7 +473,7 @@ namespace OpenBabel
         FOR_BONDS_OF_ATOM(bitB, carbon) {
           if (&*bitB == bondA || !bitB->IsAromatic()) continue;
           OBAtom* nbr = bitB->GetNbrAtom(carbon);
-          if (IsOxygenOrSulfur(nbr) && TotalNumberOfBonds(nbr) == 1) {
+          if (IsOxygenOrSulfur(nbr) && nbr->GetTotalDegree() == 1) {
             otherOxygenOrSulfur = nbr;
             bondB = &*bitB;
           }

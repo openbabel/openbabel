@@ -692,11 +692,6 @@ namespace OpenBabel
     return(false);
   }
 
-  static unsigned int TotalNumberOfBonds(OBAtom* atom)
-  {
-    return atom->GetImplicitHCount() + atom->GetExplicitDegree();
-  }
-
   static bool IsAmidine(OBBond* querybond)
   {
     OBAtom *c, *n;
@@ -717,7 +712,7 @@ namespace OpenBabel
     }
     if (!c || !n) return(false);
     if (querybond->GetBondOrder() != 1) return(false);
-    if (TotalNumberOfBonds(n) != 3) return false; // must be a degree 3 nitrogen
+    if (n->GetTotalDegree() != 3) return false; // must be a degree 3 nitrogen
 
     // Make sure C is attached to =N
     OBBond *bond;
