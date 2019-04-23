@@ -22,7 +22,7 @@ class TestSym(BaseTest):
     """A series of tests relating to fastsearch functionality"""
 
     def setUp(self):
-        self.canFindExecutable("babel")
+        self.canFindExecutable("obabel")
 
     def testSingleHit(self):
         """PR#2955101 - Difficulty reading from a fastsearch index"""
@@ -42,15 +42,15 @@ c12[C]3([C@H]4([N@@](CCc1c1ccccc1[nH]2)C[C@H](C=C4CC)C3))C(=O)OC"""
         outputfile.write(smiles)
         outputfile.close()
 
-        output, error = run_exec("babel ten.smi ten.fs")
+        output, error = run_exec("obabel ten.smi -O ten.fs")
         self.canFindFile("ten.fs")
         self.assertConverted(error, 10)
 
         query = "Nc2nc(c1ccccc1)nc3ccccc23"
-        output, error = run_exec("babel ten.fs -ifs -s %s -osmi" % query)
+        output, error = run_exec("obabel ten.fs -ifs -s %s -osmi" % query)
         self.assertConverted(error, 1)
 
-        output, error = run_exec("babel ten.fs -ifs -s %s -at 0.5 -aa -osmi" % query)
+        output, error = run_exec("obabel ten.fs -ifs -s %s -at 0.5 -aa -osmi" % query)
         self.assertConverted(error, 1)
 
 
