@@ -140,7 +140,7 @@ class Matcher
 				}
 
 				qtrfit(refcoord, testcoord, N, rmatrix);
-				rotate_coords(testcoord, rmatrix, N);
+				rotate_coords(testcoord, rmatrix, N); 
 
 				for (unsigned i = 0; i < N; i++)
 				{
@@ -227,7 +227,7 @@ int main(int argc, char **argv)
 	  "Usage: obrms reference_file [test_file]\n"
 	  "Options:\n"
     "\t -o, --out        re-oriented test structure output\n"
-	  "\t -f, --firstonly  use only the first structure in the test file\n"
+	  "\t -f, --firstonly  use only the first structure in the reference file\n"
 	  "\t -m, --minimize   compute minimum RMSD\n"
 	  "\t -x, --cross      compute all n^2 RMSDs between molecules of reference file\n"
 	  "\t -s, --separate   separate reference file into constituent molecules and report best RMSD\n"
@@ -374,9 +374,11 @@ int main(int argc, char **argv)
         {
           outconv.Write(&moltest, &out);
         }
-        if (firstOnly)
+        if (!firstOnly) //one test molecule will be read for each reference molecule
           break;
       }
+      if(firstOnly) //done with first reference mol
+        break;
     }
 	}
 	return (0);
