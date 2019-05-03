@@ -122,7 +122,9 @@ namespace OpenBabel
     OBPairData *dp;
 
     mol.SetTitle(title);
-    mol.SetChainsPerceived(); // It's a PDB file, we read all chain/res info.
+    // We need to prevent chains perception routines from running while
+    // we are adding residues from the PDB file
+    mol.SetChainsPerceived();
 
     mol.BeginModify();
     while (ifs.good() && ifs.getline(buffer,BUFF_SIZE))
@@ -223,21 +225,28 @@ namespace OpenBabel
     vector<OBGenericData*> vbonds = mol.GetAllData(OBGenericDataType::VirtualBondData);
     mol.DeleteData(vbonds);
 
-
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
 
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
 
+    // EndModify() blows away the chains perception flag so we set it again here
+    mol.SetChainsPerceived();
+
     // Guess how many hydrogens are present on each atom based on typical valencies
     FOR_ATOMS_OF_MOL(matom, mol)
       OBAtomAssignTypicalImplicitHydrogens(&*matom);
 
     // clean out remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() &&
-          (ifs.peek() == '\n' || ifs.peek() == '\r'))
+    std::streampos ipos;
+    do
+    {
+      ipos = ifs.tellg();
       ifs.getline(buffer,BUFF_SIZE);
+    }
+    while(strlen(buffer) == 0 && !ifs.eof() );
+    ifs.seekg(ipos);
 
     return(true);
   }

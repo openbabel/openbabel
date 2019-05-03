@@ -67,6 +67,7 @@ namespace OpenBabel
 
       //! Load fragment info from file, if is it has not already been done
       void LoadFragments();
+      std::vector<vector3> GetFragmentCoord(std::string smiles);
 
       /*! Get the position for a new neighbour on atom.
        *  \param atom Atom for which we want a new neighbour location.
@@ -156,7 +157,11 @@ namespace OpenBabel
 
     private:
       //! used to hold the fragments loaded in the constructor
-      static std::vector<std::pair<OBSmartsPattern*, std::vector<vector3> > > _fragments;
+      //static std::map<std::string, double> _torsion;
+      static std::vector<std::string> _rigid_fragments;
+      static std::vector<std::pair<OBSmartsPattern*, std::vector<vector3> > > _ring_fragments;
+      static std::map<std::string, int> _rigid_fragments_index;
+      static std::map<std::string, std::vector<vector3> > _rigid_fragments_cache;
       //! Connect a ring fragment to an already matched fragment. Currently only
       //  supports the case where the fragments overlap at a spiro atom only.
       static void ConnectFrags(OBMol &mol, OBMol &workmol, std::vector<int> match, std::vector<vector3> coords,

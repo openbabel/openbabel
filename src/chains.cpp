@@ -1048,6 +1048,8 @@ namespace OpenBabel
     SetResidueInformation(mol, nukeSingleResidue);
     CleanupMol();
 
+    mol.SetChainsPerceived();
+
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::PerceiveChains", obAuditMsg);
 

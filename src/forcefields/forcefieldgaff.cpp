@@ -1428,7 +1428,7 @@ namespace OpenBabel
     // Trigger calculation of Gasteiger charges
     // Note that the Gastegier charge calculation checks for the values of particular atom types
     _mol.SetAutomaticPartialCharge(true);
-    _mol.UnsetPartialChargesPerceived();
+    _mol.SetPartialChargesPerceived(false);
     // Trigger partial charge calculation
     FOR_ATOMS_OF_MOL(atom, _mol) {
       atom->GetPartialCharge();

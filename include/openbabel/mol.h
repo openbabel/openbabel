@@ -109,7 +109,14 @@ namespace OpenBabel
 #define OB_LSSR_MOL              (1<<20)
   //! SpinMultiplicities on atoms have been set in OBMol::AssignSpinMultiplicity()
 #define OB_ATOMSPIN_MOL          (1<<21)
+  //! Treat as reaction
+#define OB_REACTION_MOL          (1<<22)
   // flags 22-32 unspecified
+
+#define SET_OR_UNSET_FLAG(X) \
+  if (value) SetFlag(X); \
+  else     UnsetFlag(X);
+
 #define OB_CURRENT_CONFORMER	 -1
 
 enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
@@ -137,9 +144,6 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     std::vector<OBResidue*>       _residue;     //!< Residue information (if applicable)
     std::vector<OBInternalCoord*> _internals;   //!< Internal Coordinates (if applicable)
     unsigned short int            _mod;	        //!< Number of nested calls to BeginModify()
-
-    bool  HasFlag(int flag)    { return((_flags & flag) ? true : false); }
-    void  SetFlag(int flag)    { _flags |= flag; }
 
   public:
 
@@ -377,46 +381,38 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     { _autoPartialCharge=val; }
 
     //! Mark that aromaticity has been perceived for this molecule (see OBAromaticTyper)
-    void   SetAromaticPerceived()    { SetFlag(OB_AROMATIC_MOL);    }
+    void   SetAromaticPerceived(bool value = true)    { SET_OR_UNSET_FLAG(OB_AROMATIC_MOL);    }
     //! Mark that Smallest Set of Smallest Rings has been run (see OBRing class)
-    void   SetSSSRPerceived()        { SetFlag(OB_SSSR_MOL);        }
+    void   SetSSSRPerceived(bool value = true)        { SET_OR_UNSET_FLAG(OB_SSSR_MOL);        }
     //! Mark that Largest Set of Smallest Rings has been run (see OBRing class)
-    void   SetLSSRPerceived()        { SetFlag(OB_LSSR_MOL);        }
+    void   SetLSSRPerceived(bool value = true)        { SET_OR_UNSET_FLAG(OB_LSSR_MOL);        }
     //! Mark that rings have been perceived (see OBRing class for details)
-    void   SetRingAtomsAndBondsPerceived(){SetFlag(OB_RINGFLAGS_MOL);}
+    void   SetRingAtomsAndBondsPerceived(bool value = true) { SET_OR_UNSET_FLAG(OB_RINGFLAGS_MOL); }
     //! Mark that atom types have been perceived (see OBAtomTyper for details)
-    void   SetAtomTypesPerceived()   { SetFlag(OB_ATOMTYPES_MOL);   }
+    void   SetAtomTypesPerceived(bool value = true)   { SET_OR_UNSET_FLAG(OB_ATOMTYPES_MOL);   }
     //! Mark that ring types have been perceived (see OBRingTyper for details)
-    void   SetRingTypesPerceived()   { SetFlag(OB_RINGTYPES_MOL);   }
+    void   SetRingTypesPerceived(bool value = true)   { SET_OR_UNSET_FLAG(OB_RINGTYPES_MOL);   }
     //! Mark that chains and residues have been perceived (see OBChainsParser)
-    void   SetChainsPerceived(bool is_perceived=true)
-    {
-      if (is_perceived)      SetFlag(OB_CHAINS_MOL);
-      else                 UnsetFlag(OB_CHAINS_MOL);
-    }
+    void   SetChainsPerceived(bool value = true)      { SET_OR_UNSET_FLAG(OB_CHAINS_MOL);      }
     //! Mark that chirality has been perceived
-    void   SetChiralityPerceived()   { SetFlag(OB_CHIRALITY_MOL);   }
+    void   SetChiralityPerceived(bool value = true)   { SET_OR_UNSET_FLAG(OB_CHIRALITY_MOL);   }
     //! Mark that partial charges have been assigned
-    void   SetPartialChargesPerceived(){ SetFlag(OB_PCHARGE_MOL);   }
+    void   SetPartialChargesPerceived(bool value = true) { SET_OR_UNSET_FLAG(OB_PCHARGE_MOL);  }
     //! Mark that hybridization of all atoms has been assigned
-    void   SetHybridizationPerceived() { SetFlag(OB_HYBRID_MOL);    }
+    void   SetHybridizationPerceived(bool value = true)  { SET_OR_UNSET_FLAG(OB_HYBRID_MOL);   }
     //! Mark that ring closure bonds have been assigned by graph traversal
-    void   SetClosureBondsPerceived(){ SetFlag(OB_CLOSURE_MOL);     }
+    void   SetClosureBondsPerceived(bool value = true)   { SET_OR_UNSET_FLAG(OB_CLOSURE_MOL);  }
     //! Mark that explicit hydrogen atoms have been added
-    void   SetHydrogensAdded()       { SetFlag(OB_H_ADDED_MOL);     }
-    void   SetCorrectedForPH()       { SetFlag(OB_PH_CORRECTED_MOL);}
-    void   SetSpinMultiplicityAssigned(){ SetFlag(OB_ATOMSPIN_MOL);    }
-    void   SetFlags(int flags)       { _flags = flags;              }
-
-    void   UnsetAromaticPerceived()  { _flags &= (~(OB_AROMATIC_MOL));   }
-    //! Mark that chains perception will need to be run again if required
-    void   UnsetSSSRPerceived()  { _flags &= (~(OB_SSSR_MOL));   }
-    //! Mark that Largest Set of Smallest Rings will need to be run again if required (see OBRing class)
-    void   UnsetLSSRPerceived()  { _flags &= (~(OB_LSSR_MOL));   }
-    void   UnsetRingTypesPerceived()  { _flags &= (~(OB_RINGTYPES_MOL));   }
-    void   UnsetPartialChargesPerceived(){ _flags &= (~(OB_PCHARGE_MOL));}
-    void   UnsetHydrogensAdded()       { UnsetFlag(OB_H_ADDED_MOL);     }
-    void   UnsetFlag(int flag)       { _flags &= (~(flag));              }
+    void   SetHydrogensAdded(bool value = true) { SET_OR_UNSET_FLAG(OB_H_ADDED_MOL); }
+    void   SetCorrectedForPH(bool value = true) { SET_OR_UNSET_FLAG(OB_PH_CORRECTED_MOL); }
+    void   SetSpinMultiplicityAssigned(bool value = true) { SET_OR_UNSET_FLAG(OB_ATOMSPIN_MOL); }
+    //! The OBMol is a pattern, not a complete molecule. Left unchanged by Clear().
+    void   SetIsPatternStructure(bool value = true) { SET_OR_UNSET_FLAG(OB_PATTERN_STRUCTURE); }
+    void   SetIsReaction(bool value = true)               { SET_OR_UNSET_FLAG(OB_REACTION_MOL) };
+    bool   HasFlag(int flag)   { return (_flags & flag) ? true : false; }
+    void   SetFlag(int flag)   { _flags |= flag; }
+    void   UnsetFlag(int flag) { _flags &= (~(flag)); }
+    void   SetFlags(int flags) { _flags = flags; }
     //@}
 
     //! \name Molecule modification methods
@@ -492,6 +488,11 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     std::vector<OBMol> Separate(int StartIndex=1);
     //! Iterative component of Separate to copy one fragment at a time
     bool GetNextFragment( OpenBabel::OBMolAtomDFSIter& iter, OBMol& newMol );
+    // docs in mol.cpp
+    bool CopySubstructure(OBMol& newmol, OBBitVec *includeatoms, OBBitVec *excludebonds = (OBBitVec*)0,
+      unsigned int correctvalence=1,
+      std::vector<unsigned int> *atomorder=(std::vector<unsigned int>*)0,
+      std::vector<unsigned int> *bondorder=(std::vector<unsigned int>*)0);
     //! Converts the charged form of coordinate bonds, e.g.[N+]([O-])=O to N(=O)=O
     bool ConvertDativeBonds();
     //! Converts 5-valent N and P only. Return true if conversion occurred.
@@ -514,9 +515,6 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! Assumes all the hydrogen is explicitly included in the molecule.
     //! \since version 2.4
     bool AssignTotalChargeToAtoms(int charge);
-
-    //! The OBMol is a pattern, not a complete molecule. Left unchanged by Clear().
-    void   SetIsPatternStructure()       { SetFlag(OB_PATTERN_STRUCTURE);}
 
     //! \return the center of the supplied conformer @p nconf
     //! \see Center() to actually center all conformers at the origin
@@ -606,6 +604,8 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     bool IsCorrectedForPH() { return(HasFlag(OB_PH_CORRECTED_MOL));     }
     //! Has total spin multiplicity been assigned?
     bool HasSpinMultiplicityAssigned() { return(HasFlag(OB_ATOMSPIN_MOL)); }
+    //! Does this OBMol represent a reaction?
+    bool IsReaction()                  { return HasFlag(OB_REACTION_MOL); }
     //! Is this molecule chiral?
     bool IsChiral();
     //! Are there any atoms in this molecule?

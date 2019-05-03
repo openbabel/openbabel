@@ -18,6 +18,7 @@ General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/plugin.h>
+#include <openbabel/oberror.h>
 
 #include <iterator>
 
@@ -45,7 +46,6 @@ int OBPlugin::AllPluginsLoaded = 0;
 void OBPlugin::LoadAllPlugins()
 {
   int count = 0;
-
 #if  defined(USING_DYNAMIC_LIBS)
   // Depending on availability, look successively in
   // FORMATFILE_DIR, executable directory or current directory
@@ -59,6 +59,7 @@ void OBPlugin::LoadAllPlugins()
 
   vector<string> files;
   if(!DLHandler::findFiles(files,DLHandler::getFormatFilePattern(),TargetDir)) {
+    obErrorLog.ThrowError(__FUNCTION__, "Unable to find OpenBabel plugins. Try setting the BABEL_LIBDIR environment variable.", obError);
     return;
   }
 
@@ -68,6 +69,8 @@ void OBPlugin::LoadAllPlugins()
       count++;
   }
   if(!count) {
+    string error = "No valid OpenBabel plugs found in "+TargetDir;
+    obErrorLog.ThrowError(__FUNCTION__, error, obError);
     return;
   }
 #else

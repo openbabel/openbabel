@@ -521,18 +521,14 @@ namespace OpenBabel
 
   bool OBBond::IsInRing() const
   {
-    if (((OBBond*)this)->HasFlag(OB_RING_BOND))
-      return(true);
-
-    OBMol *mol = (OBMol*)((OBBond*)this)->GetParent();
+    OBMol *mol = ((OBBond*)this)->GetParent();
     if (!mol->HasRingAtomsAndBondsPerceived())
-      {
-        mol->FindRingAtomsAndBonds();
-        if (((OBBond*)this)->HasFlag(OB_RING_BOND))
-          return(true);
-      }
+      mol->FindRingAtomsAndBonds();
 
-    return(false);
+    if (((OBBond*)this)->HasFlag(OB_RING_BOND))
+      return true;
+
+    return false;
   }
 
   // Adapted from OBAtom::IsInRingSize()

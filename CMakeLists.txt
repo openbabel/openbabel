@@ -8,7 +8,6 @@ set(CMAKE_MODULE_PATH ${openbabel_SOURCE_DIR}/cmake/modules)
 
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
-  cmake_policy(SET CMP0005 OLD) # add_definitions need updating to set to NEW
   if(POLICY CMP0042)
     cmake_policy(SET CMP0042 OLD)
   endif()
@@ -44,9 +43,7 @@ if(EMBED_OPENBABEL)
 else()
   set(BABEL_VERSION  "${BABEL_MAJ_VER}.${BABEL_MIN_VER}.${BABEL_PATCH_VER}")
 endif()
-set(BABEL_DATAROOTDIR "${CMAKE_INSTALL_PREFIX}/share"
-    CACHE PATH "Install dir for arch independent data")
-set(BABEL_DATADIR  "${BABEL_DATAROOTDIR}/openbabel")
+set(BABEL_DATADIR  "${CMAKE_INSTALL_PREFIX}/share/openbabel")
 
 option(ENABLE_VERSIONED_FORMATS
   "Enable versioning of the format plugin directory" ON)
@@ -243,6 +240,12 @@ check_library_exists(dl dlopen "" HAVE_LIBDL)
 set(CMAKE_EXTRA_INCLUDE_FILES time.h)
 check_type_size(clock_t CLOCK_T)
 
+# Cygwin may be missing an XDR function: https://www.gnu.org/software/gnulib/manual/html_node/xdrstdio_005fcreate.html
+if(CYGWIN)
+  set(HAVE_RPC_XDR_H FALSE)
+  message(STATUS "Disabling rpc/xdr.h for Cygwin")
+endif()
+
 # Get the GCC version - from KDE4 cmake files
 if(CMAKE_COMPILER_IS_GNUCXX)
   if(NOT(${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 4.0.0))
@@ -281,9 +284,7 @@ if(NOT MSVC)
     }
    " SCANDIR_NEEDS_CONST)
 
-  set(OB_MODULE_PATH "${CMAKE_INSTALL_PREFIX}/${OB_PLUGIN_INSTALL_DIR}"
-      CACHE PATH "Set to system install for bindings only build")
-  add_definitions(-DOB_MODULE_PATH="\\"${OB_MODULE_PATH}\\"")
+  set(OB_MODULE_PATH "${CMAKE_INSTALL_PREFIX}/${OB_PLUGIN_INSTALL_DIR}")
 
   # Add some visibility support when using GCC
   # note: Altough MinGW g++ 4.4 passes this test, visibility can't be used
@@ -425,8 +426,7 @@ if(UNIX AND BUILD_SHARED)
   if(APPLE)
     set(CMAKE_INSTALL_NAME_DIR ${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR})
   else()
-    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}"
-        CACHE PATH "Set sane rpath")
+    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}")
     set(CMAKE_SKIP_BUILD_RPATH FALSE)
     set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)

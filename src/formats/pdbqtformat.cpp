@@ -296,12 +296,18 @@ namespace OpenBabel
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS)) {mol.ConnectTheDots(); mol.PerceiveBondOrders();}
 
+    mol.SetChainsPerceived();
+
     // clean out remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() &&
-      (ifs.peek() == '\n' || ifs.peek() == '\r'))
+    std::streampos ipos;
+    do
     {
+      ipos = ifs.tellg();
       ifs.getline(buffer,BUFF_SIZE);
     }
+    while(strlen(buffer) == 0 && !ifs.eof() );
+    ifs.seekg(ipos);
+
     mol.SetPartialChargesPerceived();
     return(true);
   }
@@ -916,13 +922,14 @@ namespace OpenBabel
               if ((res = rotBondTable[rotBondId][bondAtomNum]->GetResidue()) != 0)
               {
                 snprintf(type_name,5,"%s",(char*)res->GetAtomID(rotBondTable[rotBondId][bondAtomNum]).c_str());
-                end=0;
+                // AtomIDs may start with space if read from a PDB file (rather than perceived)
+                end = isspace(type_name[0]) ? 1 : 0;
                 // Use sizeof() - 1 to ensure there's room for the NULL termination!
                 while (end < sizeof(type_name) - 1 && type_name[end] && !isspace(type_name[end]))
                   end++;
                 type_name[end] = '\0';
               }
-              snprintf(buffer, BUFF_SIZE, "%s_%d", type_name,
+              snprintf(buffer, BUFF_SIZE, "%s_%d", type_name + (isspace(type_name[0]) ? 1 : 0),
                 rotBondTable[rotBondId][bondAtomNum]->GetIdx());
               ofs << buffer;
               if (bondAtomNum == 0)

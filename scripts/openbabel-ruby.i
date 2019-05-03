@@ -1,4 +1,5 @@
 %module OpenBabel
+%include "std_string.i"
 
 // These fields are renamed to valid constant names
 %rename(U1MA) OpenBabel::OBResidueIndex::_1MA;
@@ -14,23 +15,28 @@
 #define USING_OBDLL
 #endif
 
-
 #include <openbabel/obutil.h>
 #include <openbabel/rand.h>
 #include <openbabel/math/vector3.h>
 #include <openbabel/math/matrix3x3.h>
+#include <openbabel/math/transform3d.h>
+#include <openbabel/math/spacegroup.h>
+
 #include <openbabel/generic.h>
 #include <openbabel/griddata.h>
+#include <openbabel/elements.h>
 
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
+#include <openbabel/reaction.h>
 #include <openbabel/residue.h>
 #include <openbabel/internalcoord.h>
 
 #include <openbabel/ring.h>
 #include <openbabel/obconversion.h>
+#include <openbabel/obfunctions.h>
 #include <openbabel/oberror.h>
 #include <openbabel/plugin.h>
 #include <openbabel/fingerprint.h>
@@ -49,15 +55,27 @@
 #include <openbabel/kinetics.h>
 #include <openbabel/rotor.h>
 #include <openbabel/rotamer.h>
+#include <openbabel/spectrophore.h>
 
-#include <openbabel/bondtyper.h>
+#include <openbabel/chargemodel.h>
 #include <openbabel/phmodel.h>
+#include <openbabel/graphsym.h>
+#include <openbabel/isomorphism.h>
+#include <openbabel/query.h>
+#include <openbabel/canon.h>
 
+#include <openbabel/stereo/tetrahedral.h>
+#include <openbabel/stereo/cistrans.h>
+#include <openbabel/stereo/squareplanar.h>
+#include <openbabel/stereo/bindings.h>
+
+#include <openbabel/kekulize.h>
 %}
 
 %include "std_map.i"
 %include "std_vector.i"
-%include "std_string.i"
+%include "std_list.i"
+%include "std_pair.i"
 
 namespace std {
 
@@ -154,6 +172,9 @@ CAST_GENERICDATA_TO(UnitCell)
 CAST_GENERICDATA_TO(VectorData)
 CAST_GENERICDATA_TO(VibrationData)
 CAST_GENERICDATA_TO(VirtualBond)
+CAST_GENERICDATA_TO(TetrahedralStereo)
+CAST_GENERICDATA_TO(CisTransStereo)
+CAST_GENERICDATA_TO(SquarePlanarStereo)
 
 // These methods are renamed to valid method names
 %rename(inc)   *::operator++;
@@ -270,3 +291,17 @@ namespace std { class stringbuf {}; }
 %ignore *::operator=;
 
 %include <openbabel/obiter.h>
+
+%include <openbabel/chargemodel.h>
+%include <openbabel/phmodel.h>
+%include <openbabel/graphsym.h>
+%include <openbabel/isomorphism.h>
+%include <openbabel/query.h>
+%include <openbabel/canon.h>
+
+%include <openbabel/stereo/stereo.h>
+
+%include <openbabel/kekulize.h>
+%include <openbabel/obfunctions.h>
+
+%include "stereo.i"

@@ -1,5 +1,5 @@
 # define TESTDATADIR for tests that need input files
-add_definitions(-DTESTDATADIR="\\"${CMAKE_SOURCE_DIR}/test/files/\\"")
+add_definitions(-DTESTDATADIR="${CMAKE_SOURCE_DIR}/test/files/")
 
 # define FORMATDIR for location of format plugin binaries
 if(BINDINGS_ONLY)
@@ -7,7 +7,7 @@ if(BINDINGS_ONLY)
 else()
   set(FORMATDIR "${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/")
 endif()
-add_definitions(-DFORMATDIR="\\"${FORMATDIR}/\\"")
+add_definitions(-DFORMATDIR="${FORMATDIR}/")
 
 ###########################################################
 #  new tests using obtest.h
@@ -16,7 +16,7 @@ add_definitions(-DFORMATDIR="\\"${FORMATDIR}/\\"")
 ################ Add new tests here
 set (cpptests
      automorphism builder canonconsistent canonfragment canonstable carspacegroup cifspacegroup
-     cistrans graphsym gzip
+     cistrans conversion graphsym gzip
      implicitH lssr isomorphism multicml regressions rotor shuffle smiles spectrophore
      squareplanar stereo stereoperception tautomer tetrahedral
      tetranonplanar tetraplanar uniqueid
@@ -27,15 +27,16 @@ set (canonconsistent_parts  1 2 3)
 set (canonfragment_parts 1)
 set (canonstable_parts 1)
 set (carspacegroup_parts 1 2 3 4)
-set (cifspacegroup_parts 1 2 3 4 5 6 7 8 9 10 11)
+set (cifspacegroup_parts 1 2 3 4 5 6 7 8 9 10 11 12)
 set (cistrans_parts 1 2 3 4 5 6 7 8 9)
+set (conversion_parts 1)
 set (graphsym_parts 1 2 3 4 5)
 set (gzip_parts 1)
 set (implicitH_parts 1)
 set (lssr_parts 1 2 3 4 5)
-set (isomorphism_parts 1 2 3 4 5 6 7 8)
+set (isomorphism_parts 1 2 3 4 5 6 7 8 9)
 set (multicml_parts 1)
-set (regressions_parts 1 221 222 223 224 225 226 227)
+set (regressions_parts 1 221 222 223 224 225 226 227 228 240)
 set (rotor_parts 1 2 3 4)
 set (shuffle_parts 1 2 3 4 5)
 set (smiles_parts 1 2 3)

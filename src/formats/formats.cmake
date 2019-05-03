@@ -94,6 +94,7 @@ set(formats_misc
       chemdrawct
       chemtoolformat
       cifformat
+      cofformat
       crkformat
       cssrformat
       dlpolyformat
