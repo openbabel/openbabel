@@ -26,7 +26,13 @@
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/ring.h>
+#include <openbabel/obutil.h>
+#include <openbabel/obiter.h>
 #include <openbabel/graphsym.h>
+#include <openbabel/math/matrix3x3.h>
 #include <openbabel/canon.h>
 #include <openbabel/oberror.h>
 #include <openbabel/elements.h>
@@ -108,7 +114,7 @@ namespace OpenBabel {
   {
     std::vector<OBBond*>::iterator ib;
     for (OBBond *bond = mol->BeginBond(ib); bond; bond = mol->NextBond(ib))
-      if (bond->GetBO() == 2) {
+      if (bond->GetBondOrder() == 2) {
         return true;
       }
     return false;
@@ -201,13 +207,13 @@ namespace OpenBabel {
   bool isUnitInFragment(OBMol *mol, const OBStereoUnit &unit, const OBBitVec &fragment)
   {
     if (unit.type == OBStereo::Tetrahedral) {
-      if (fragment.BitIsOn(unit.id))
+      if (fragment.BitIsSet(unit.id))
         return true;
     } else if(unit.type == OBStereo::CisTrans) {
       OBBond *bond = mol->GetBondById(unit.id);
       OBAtom *begin = bond->GetBeginAtom();
       OBAtom *end = bond->GetEndAtom();
-      if (fragment.BitIsOn(begin->GetId()) || fragment.BitIsOn(end->GetId()))
+      if (fragment.BitIsSet(begin->GetId()) || fragment.BitIsSet(end->GetId()))
         return true;
     }
     return false;
@@ -764,7 +770,7 @@ namespace OpenBabel {
       if (bond->IsInRing() && bond->IsAromatic())
         continue; // Exclude C=C in phenyl rings for example
 
-      if (bond->GetBO() == 2) {
+      if (bond->GetBondOrder() == 2) {
         OBAtom *begin = bond->GetBeginAtom();
         OBAtom *end = bond->GetEndAtom();
         if (!begin || !end)
@@ -1085,13 +1091,13 @@ namespace OpenBabel {
             OBBitVec ligand = getFragment(ligandAtom, begin);
             for (OBStereoUnitSet::iterator u2 = units.begin(); u2 != units.end(); ++u2) {
               if ((*u2).type == OBStereo::Tetrahedral) {
-                if (ligand.BitIsOn((*u2).id))
+                if (ligand.BitIsSet((*u2).id))
                   beginValid = true;
               } else if((*u2).type == OBStereo::CisTrans) {
                 OBBond *bond = mol->GetBondById((*u2).id);
                 OBAtom *begin = bond->GetBeginAtom();
                 OBAtom *end = bond->GetEndAtom();
-                if (ligand.BitIsOn(begin->GetId()) || ligand.BitIsOn(end->GetId()))
+                if (ligand.BitIsSet(begin->GetId()) || ligand.BitIsSet(end->GetId()))
                   beginValid = true;
               }
             }
@@ -1122,13 +1128,13 @@ namespace OpenBabel {
             OBBitVec ligand = getFragment(ligandAtom, end);
             for (OBStereoUnitSet::iterator u2 = units.begin(); u2 != units.end(); ++u2) {
               if ((*u2).type == OBStereo::Tetrahedral) {
-                if (ligand.BitIsOn((*u2).id))
+                if (ligand.BitIsSet((*u2).id))
                   endValid = true;
               } else if((*u2).type == OBStereo::CisTrans) {
                 OBBond *bond = mol->GetBondById((*u2).id);
                 OBAtom *begin = bond->GetBeginAtom();
                 OBAtom *end = bond->GetEndAtom();
-                if (ligand.BitIsOn(begin->GetId()) || ligand.BitIsOn(end->GetId()))
+                if (ligand.BitIsSet(begin->GetId()) || ligand.BitIsSet(end->GetId()))
                   endValid = true;
               }
             }
@@ -1560,11 +1566,11 @@ namespace OpenBabel {
     std::vector<unsigned int> ringIndices;
     for (OBStereoUnitSet::const_iterator u2 = units.begin(); u2 != units.end(); ++u2) {
       if ((*u2).type == OBStereo::Tetrahedral) {
-        if (ligand.BitIsOn((*u2).id)) {
+        if (ligand.BitIsSet((*u2).id)) {
           if ((*u2).para) {
             OBAtom *paraAtom = mol->GetAtomById((*u2).id);
             for (std::size_t ringIdx = 0; ringIdx < mergedRings.size(); ++ringIdx) {
-              if (mergedRings.at(ringIdx).BitIsOn(paraAtom->GetIdx()))
+              if (mergedRings.at(ringIdx).BitIsSet(paraAtom->GetIdx()))
                 if (std::find(ringIndices.begin(), ringIndices.end(), ringIdx) == ringIndices.end())
                   ringIndices.push_back(ringIdx);
             }
@@ -1575,10 +1581,10 @@ namespace OpenBabel {
         OBBond *bond = mol->GetBondById((*u2).id);
         OBAtom *begin = bond->GetBeginAtom();
         OBAtom *end = bond->GetEndAtom();
-        if (ligand.BitIsOn(begin->GetId()) || ligand.BitIsOn(end->GetId())) {
+        if (ligand.BitIsSet(begin->GetId()) || ligand.BitIsSet(end->GetId())) {
           if ((*u2).para) {
             for (std::size_t ringIdx = 0; ringIdx < mergedRings.size(); ++ringIdx) {
-              if (mergedRings.at(ringIdx).BitIsOn(begin->GetIdx()) || mergedRings.at(ringIdx).BitIsOn(end->GetIdx())) {
+              if (mergedRings.at(ringIdx).BitIsSet(begin->GetIdx()) || mergedRings.at(ringIdx).BitIsSet(end->GetIdx())) {
                 if (std::find(ringIndices.begin(), ringIndices.end(), ringIdx) == ringIndices.end()) {
                   ringIndices.push_back(ringIdx);
                 }

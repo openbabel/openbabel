@@ -15,6 +15,10 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/elements.h>
 #include <openbabel/reactionfacade.h>
 #include <openbabel/stereo/stereo.h>
 #include <openbabel/obfunctions.h>

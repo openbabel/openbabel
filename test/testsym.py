@@ -17,7 +17,7 @@ and so you can quickly develop the tests and try them out.
 import os
 import unittest
 
-from testbabel import run_exec, executable, log, BaseTest
+from testbabel import run_exec, BaseTest
 
 class TestSym(BaseTest):
     """Base class for a series of tests relating to symmetry"""
@@ -95,7 +95,7 @@ class TestCisTransSym(TestSym):
         self.inchi = "InChI=1S/C4H4BrCl/c5-3-1-2-4-6/h1-4H/b3-1-,4-2+"
         self.smiles = [
                 "C(=C\C=C/Br)/Cl",
-                "Cl/C=C/C=C\Br", 
+                "Cl/C=C/C=C\Br",
                 "Br/C=C\C=C\Cl",
                 "C(=C\Cl)/C=C\Br",
                 "C(=C\C=C\Cl)\Br",
@@ -136,7 +136,7 @@ class TestRingBondCisTransSym(TestSym):
 
 class TestConversions(BaseTest):
     """A series of tests relating to file format conversions and symmetry"""
-    
+
     def setUp(self):
         self.canFindExecutable("babel")
         self.data = [
@@ -154,7 +154,7 @@ class TestConversions(BaseTest):
 (r"I/C=C\1/NC1", r"I/C=C/1\CN1", "InChI=1S/C3H4IN/c4-1-3-2-5-3/h1,5H,2H2/b3-1+"),
 (r"I/C=C/1\NC1", r"I/C=C\1/CN1", "InChI=1S/C3H4IN/c4-1-3-2-5-3/h1,5H,2H2/b3-1-"),
 ]
-        
+
     def testSMILEStoInChI(self):
         # Tests interconversions between the SMILES on the left versus
         # the InChI on the right.
@@ -164,7 +164,7 @@ class TestConversions(BaseTest):
             self.assertEqual(output.rstrip(), inchi)
             output, error = run_exec(inchi, "babel -iinchi -ocan")
             self.assertEqual(output.rstrip(), can)
-            
+
     def parseMDL(self, text):
         lines = text.split("\n")
         broken = lines[3].split()
@@ -186,7 +186,7 @@ class TestConversions(BaseTest):
             output, error = run_exec(smi, "obabel -ismi --gen2d -omdl")
             output, error = run_exec(output.rstrip(), "obabel -imdl -ocan")
             self.assertEqual(can, output.rstrip())
-        
+
     def testSMILESto3DMDL(self):
         """Test interconversion between SMILES and 3D MDL"""
         data = [
@@ -247,10 +247,10 @@ class TestConversions(BaseTest):
 
             smiles, can = self.data[i][0:2]
             output, error = run_exec(smiles, "babel -ismi -oxyz --gen3d")
-            
+
             canoutput, error = run_exec(output, "babel -ixyz -ocan")
             self.assertEqual(canoutput.rstrip(), can)
-            
+
             sdfoutput, error = run_exec(output, "babel -ixyz -osdf")
             atoms, bonds = self.parseMDL(sdfoutput)
             parities = [atom['parity'] for atom in atoms]
@@ -266,7 +266,7 @@ class TestConversions(BaseTest):
         # The following file was created using RDKit starting from
         # the SMILES strings in data[x][0] below.
         filename = self.getTestFile("testsym_2Dtests.sdf")
-        
+
         output, error = run_exec("babel -isdf %s -ocan" % filename)
         for i, smiles in enumerate(output.rstrip().split("\n")):
             self.assertEqual(smiles.rstrip(), self.data[i][1])
@@ -302,7 +302,7 @@ class TestConversions(BaseTest):
         finaloutput, error = run_exec(output, "obabel -isdf -ocan")
         for line in finaloutput.rstrip().split("\n"):
             result, correct_answer = line.split()
-            self.assertEqual(result, correct_answer) 
+            self.assertEqual(result, correct_answer)
 
     def testSMILESto0DMDL(self):
         """Test interconversion between SMILES and 0D MDL"""
@@ -339,7 +339,7 @@ class TestStereoConversion(BaseTest):
         test_inchi = 'InChI=1S/C10H10/c1-2-3-7-10-8-5-4-6-9-10/h2-9H,1H2/b7-3+'
         output, error = run_exec(test_inchi, "babel -iinchi -osmi")
         self.assertEqual(output.rstrip(), "C=C/C=C/c1ccccc1")
-        
+
         test_smiles = "C=C\C=C/c1ccccc1"
         output, error = run_exec(test_smiles, "babel -ismi -oinchi")
         self.assertEqual(output.rstrip(), "InChI=1S/C10H10/c1-2-3-7-10-8-5-4-6-9-10/h2-9H,1H2/b7-3-")
@@ -359,6 +359,6 @@ class TestStereoConversion(BaseTest):
         self.assertEqual(output.rstrip(), smi)
 
 del TestSym # remove base class to avoid tests
-        
+
 if __name__ == "__main__":
     unittest.main()

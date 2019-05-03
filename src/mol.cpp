@@ -20,11 +20,15 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/mol.h>
+#include <openbabel/bond.h>
+#include <openbabel/ring.h>
 #include <openbabel/rotamer.h>
 #include <openbabel/phmodel.h>
 #include <openbabel/bondtyper.h>
+#include <openbabel/obiter.h>
 #include <openbabel/builder.h>
 #include <openbabel/kekulize.h>
+#include <openbabel/internalcoord.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/obfunctions.h>
 #include <openbabel/elements.h>
@@ -41,7 +45,11 @@ namespace OpenBabel
 {
 
   extern bool SwabInt;
-
+  extern THREAD_LOCAL OBPhModel  phmodel;
+  extern THREAD_LOCAL OBAromaticTyper  aromtyper;
+  extern THREAD_LOCAL OBAtomTyper      atomtyper;
+  extern THREAD_LOCAL OBBondTyper      bondtyper;
+  
   /** \class OBMol mol.h <openbabel/mol.h>
       \brief Molecule Class
 
@@ -219,10 +227,10 @@ namespace OpenBabel
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::SetTorsion", obAuditMsg);
 
-    tor.push_back(a->GetCIdx());
-    tor.push_back(b->GetCIdx());
-    tor.push_back(c->GetCIdx());
-    tor.push_back(d->GetCIdx());
+    tor.push_back(a->GetCoordinateIdx());
+    tor.push_back(b->GetCoordinateIdx());
+    tor.push_back(c->GetCoordinateIdx());
+    tor.push_back(d->GetCoordinateIdx());
 
     FindChildren(atoms, b->GetIdx(), c->GetIdx());
     int j;
@@ -325,7 +333,7 @@ namespace OpenBabel
         curr.Clear();
         frag.Clear();
         for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-          if (!used.BitIsOn(atom->GetIdx()))
+          if (!used.BitIsSet(atom->GetIdx()))
             {
               curr.SetBitOn(atom->GetIdx());
               break;
@@ -339,7 +347,7 @@ namespace OpenBabel
               {
                 atom = GetAtom(j);
                 for (bond = atom->BeginBond(k);bond;bond = atom->NextBond(k))
-                  if (!used.BitIsOn(bond->GetNbrAtomIdx(atom)))
+                  if (!used.BitIsSet(bond->GetNbrAtomIdx(atom)))
                     next.SetBitOn(bond->GetNbrAtomIdx(atom));
               }
 
@@ -460,7 +468,7 @@ namespace OpenBabel
         curr.Clear();
         frag.Clear();
         for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-          if (!used.BitIsOn(atom->GetIdx()))
+          if (!used.BitIsSet(atom->GetIdx()))
             {
               curr.SetBitOn(atom->GetIdx());
               break;
@@ -474,7 +482,7 @@ namespace OpenBabel
               {
                 atom = GetAtom(j);
                 for (bond = atom->BeginBond(k);bond;bond = atom->NextBond(k))
-                  if (!used.BitIsOn(bond->GetNbrAtomIdx(atom)))
+                  if (!used.BitIsSet(bond->GetNbrAtomIdx(atom)))
                     next.SetBitOn(bond->GetNbrAtomIdx(atom));
               }
 
@@ -484,7 +492,7 @@ namespace OpenBabel
             curr = next;
           }
 
-        if (lf.Empty() || lf.CountBits() < frag.CountBits())
+        if (lf.IsEmpty() || lf.CountBits() < frag.CountBits())
           lf = frag;
       }
   }
@@ -519,7 +527,7 @@ namespace OpenBabel
                   used |= nbr->GetIdx();
                 }
           }
-        if (next.Empty())
+        if (next.IsEmpty())
           break;
         curr = next;
       }
@@ -545,7 +553,7 @@ namespace OpenBabel
           {
             atom = GetAtom(i);
             FOR_BONDS_OF_ATOM (bond, atom)
-              if (!used.BitIsOn(bond->GetNbrAtomIdx(atom)))
+              if (!used.BitIsSet(bond->GetNbrAtomIdx(atom)))
                 next.SetBitOn(bond->GetNbrAtomIdx(atom));
           }
 
@@ -603,7 +611,7 @@ namespace OpenBabel
               {
                 atom1 = GetAtom(natom);
                 for (bond = atom1->BeginBond(j);bond;bond = atom1->NextBond(j))
-                  if (!used.BitIsOn(bond->GetNbrAtomIdx(atom1)) && !curr.BitIsOn(bond->GetNbrAtomIdx(atom1)))
+                  if (!used.BitIsSet(bond->GetNbrAtomIdx(atom1)) && !curr.BitIsSet(bond->GetNbrAtomIdx(atom1)))
                     if (bond->GetNbrAtom(atom1)->GetAtomicNum() != OBElements::Hydrogen)
                       next.SetBitOn(bond->GetNbrAtomIdx(atom1));
               }
@@ -1201,7 +1209,6 @@ namespace OpenBabel
   //Conformers are now copied also, MM 2/7/01
   //Residue information are copied, MM 4-27-01
   //All OBGenericData incl OBRotameterList is copied, CM 2006
-  //OBChiralData for all atoms copied, TV 2008
   //Zeros all flags except OB_TCHARGE_MOL, OB_PCHARGE_MOL, OB_HYBRID_MOL
   //OB_TSPIN_MOL, OB_AROMATIC_MOL and OB_PATTERN_STRUCTURE which are copied
   {
@@ -1313,15 +1320,6 @@ namespace OpenBabel
         SetData(pCopiedData);
       }
 
-    // copy chiral data for all atoms
-    FOR_ATOMS_OF_MOL (atom, src) {
-      if (atom->HasData(OBGenericDataType::ChiralData)) {
-        OBChiralData* cd = (OBChiralData*) atom->GetData(OBGenericDataType::ChiralData);
-        OBGenericData* pCopiedData = cd->Clone(NULL); // parent not used in OBChiralData::Clone()
-        GetAtom(atom->GetIdx())->SetData(pCopiedData);
-      }
-    }
-
     if (src.HasChiralityPerceived())
       SetChiralityPerceived();
 
@@ -1359,7 +1357,7 @@ namespace OpenBabel
       bond->SetId(NoId);//Need to remove ID which relates to source mol rather than this mol
       AddBond(bond->GetBeginAtomIdx() + prevatms,
               bond->GetEndAtomIdx() + prevatms,
-              bond->GetBO(), bond->GetFlags());
+              bond->GetBondOrder(), bond->GetFlags());
     }
 
     // Now update all copied residues too
@@ -1535,21 +1533,6 @@ namespace OpenBabel
     DeleteData(OBGenericDataType::TorsionData);
   }
 
-  OBAtom *OBMol::CreateAtom(void)
-  {
-    return new OBAtom;
-  }
-
-  OBBond *OBMol::CreateBond(void)
-  {
-    return new OBBond;
-  }
-
-  OBResidue *OBMol::CreateResidue(void)
-  {
-    return new OBResidue;
-  }
-
   void OBMol::DestroyAtom(OBAtom *atom)
   {
     if (atom)
@@ -1601,7 +1584,7 @@ namespace OpenBabel
     if (_atomIds.at(id))
       return (OBAtom*)NULL;
 
-    OBAtom *obatom = CreateAtom();
+    OBAtom *obatom = new OBAtom;
     obatom->SetIdx(_natoms+1);
     obatom->SetParent(this);
 
@@ -1654,7 +1637,7 @@ namespace OpenBabel
 
   OBResidue *OBMol::NewResidue()
   {
-    OBResidue *obresidue = CreateResidue();
+    OBResidue *obresidue = new OBResidue;
     obresidue->SetIdx(_residue.size());
     _residue.push_back(obresidue);
     return(obresidue);
@@ -1682,7 +1665,7 @@ namespace OpenBabel
     if (_bondIds.at(id))
       return (OBBond*)NULL;
 
-    OBBond *pBond = CreateBond();
+    OBBond *pBond = new OBBond;
     pBond->SetParent(this);
     pBond->SetIdx(_nbonds);
 
@@ -1722,7 +1705,7 @@ namespace OpenBabel
         id = _atomIds.size();
     }
 
-    OBAtom *obatom = CreateAtom();
+    OBAtom *obatom = new OBAtom;
     *obatom = atom;
     obatom->SetIdx(_natoms+1);
     obatom->SetParent(this);
@@ -1794,7 +1777,7 @@ namespace OpenBabel
   {
     BeginModify();
 
-    OBResidue *obresidue = CreateResidue();
+    OBResidue *obresidue = new OBResidue;
     *obresidue = residue;
 
     obresidue->SetIdx(_residue.size());
@@ -2038,7 +2021,7 @@ namespace OpenBabel
     int idx;
     if (atomidx != NumAtoms())
       {
-        idx = atom->GetCIdx();
+        idx = atom->GetCoordinateIdx();
         int size = NumAtoms()-atom->GetIdx();
         vector<double*>::iterator k;
         for (k = _vconf.begin();k != _vconf.end();++k)
@@ -2511,7 +2494,7 @@ namespace OpenBabel
     if ((unsigned)first <= NumAtoms() && (unsigned)second <= NumAtoms())
       //atoms exist and bond doesn't
       {
-        OBBond *bond = CreateBond();
+        OBBond *bond = new OBBond;
         if (!bond)
           {
             //EndModify();
@@ -2576,7 +2559,7 @@ namespace OpenBabel
   {
     if(!AddBond(bond.GetBeginAtomIdx(),
                    bond.GetEndAtomIdx(),
-                   bond.GetBO(),
+                   bond.GetBondOrder(),
                    bond.GetFlags()))
       return false;
     //copy the bond's generic data
@@ -2824,19 +2807,6 @@ namespace OpenBabel
     return(false);
   }
 
-  bool OBMol::IsChiral()
-  {
-    OBAtom *atom;
-    vector<OBAtom*>::iterator i;
-
-    for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if ((atom->GetAtomicNum() == OBElements::Carbon || atom->GetAtomicNum() == OBElements::Nitrogen) && atom->GetHvyValence() > 2 && atom->IsChiral())
-        return(true);
-
-    return(false);
-  }
-
-
   void OBMol::SetCoordinates(double *newCoords)
   {
     bool noCptr = (_c == NULL); // did we previously have a coordinate ptr
@@ -2914,7 +2884,7 @@ namespace OpenBabel
       {
         c = GetConformer(j);
         for (k=0,i = va.begin();i != va.end(); ++i,++k)
-          memcpy((char*)&ctmp[k*3],(char*)&c[((OBAtom*)*i)->GetCIdx()],sizeof(double)*3);
+          memcpy((char*)&ctmp[k*3],(char*)&c[((OBAtom*)*i)->GetCoordinateIdx()],sizeof(double)*3);
         memcpy((char*)c,(char*)ctmp,sizeof(double)*3*NumAtoms());
       }
 
@@ -3431,7 +3401,7 @@ namespace OpenBabel
                   }
               }
             if (c)
-              (atom->GetBond(c))->SetBO(3);
+              (atom->GetBond(c))->SetBondOrder(3);
           }
         // Possible sp2-hybrid atoms
         else if ( (atom->GetHyb() == 2 || atom->GetValence() == 1)
@@ -3497,7 +3467,7 @@ namespace OpenBabel
                   }
               } // loop through neighbors
             if (c)
-              (atom->GetBond(c))->SetBO(2);
+              (atom->GetBond(c))->SetBondOrder(2);
           }
       } // pass 6
 
@@ -3733,7 +3703,7 @@ namespace OpenBabel
                 else
                   ++chg2;
                 pNbratom->SetFormalCharge(chg2);
-                pbond->SetBO(pbond->GetBO()+1);
+                pbond->SetBondOrder(pbond->GetBondOrder()+1);
               }
           }
       }
@@ -3772,7 +3742,7 @@ namespace OpenBabel
         OBBondIterator bi;
         for (bestbond = bond = patom->BeginBond(bi); bond; bond = patom->NextBond(bi))
         {
-          unsigned int bo = bond->GetBO();
+          unsigned int bo = bond->GetBondOrder();
           if(bo>=2 && bo<=4)
           {
             bool het = IsNotCorH(bond->GetNbrAtom(patom));
@@ -4124,7 +4094,7 @@ namespace OpenBabel
         bool skip_cfg = false;
         if (bonds_specified) {
           FOR_BONDS_OF_ATOM(bond, begin) {
-            if (excludebonds->BitIsOn(bond->GetIdx())) {
+            if (excludebonds->BitIsSet(bond->GetIdx())) {
               skip_cfg = true;
               break;
             }
@@ -4132,7 +4102,7 @@ namespace OpenBabel
           if (skip_cfg)
             continue;
           FOR_BONDS_OF_ATOM(bond, end) {
-            if (excludebonds->BitIsOn(bond->GetIdx())) {
+            if (excludebonds->BitIsSet(bond->GetIdx())) {
               skip_cfg = true;
               break;
             }
@@ -4178,7 +4148,7 @@ namespace OpenBabel
         bool skip_cfg = false;
         if (bonds_specified) {
           FOR_BONDS_OF_ATOM(bond, center) {
-            if (excludebonds->BitIsOn(bond->GetIdx())) {
+            if (excludebonds->BitIsSet(bond->GetIdx())) {
               skip_cfg = true;
               break;
             }
@@ -4217,7 +4187,7 @@ namespace OpenBabel
     // 2. As 1. but implicit Hs are added to replace them
     // 3. As 1. but asterisks are added to replace them
     FOR_BONDS_OF_MOL(bond, this) {
-      bool skipping_bond = bonds_specified && excludebonds->BitIsOn(bond->GetIdx());
+      bool skipping_bond = bonds_specified && excludebonds->BitIsSet(bond->GetIdx());
       map<OBAtom*, OBAtom*>::iterator posB = AtomMap.find(bond->GetBeginAtom());
       map<OBAtom*, OBAtom*>::iterator posE = AtomMap.find(bond->GetEndAtom());
       if (posB == AtomMap.end() && posE == AtomMap.end())

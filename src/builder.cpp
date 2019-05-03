@@ -335,15 +335,14 @@ namespace OpenBabel
         v1 = bond1 + bond2;
         v1 = v1.normalize();
 
-        if (atom->GetHyb() == 2)
-          newbond = v1;
+        newbond = v1; //default
         if (atom->GetHyb() == 3) {
           v2 = cross(bond1, bond2); // find the perpendicular
           v2.normalize();
           newbond = bond1 - v2 * tan(DEG_TO_RAD*(180.0 - 109.471));
           newbond = v2 + v1 * (sqrt(2.0) / 2.0); // used to be tan(70.53 degrees/2) which is sqrt(2.0) / 2.0
         }
-        if (atom->GetHyb() == 5 || atom->GetHyb() == 4) {
+        else if (atom->GetHyb() == 5 || atom->GetHyb() == 4) {
           /* add the first equatorial atom, orthogonally to bond1 (and bond2 = -bond1) */
           /* is atom order correct?  I don't think it matters, but I might have to ask a chemist
            * whether PClF4 would be more likely to have an equatorial or axial Cl-P bond */
@@ -358,7 +357,7 @@ namespace OpenBabel
           v1 = v1.normalize();
           newbond = v1;
         }
-        if (atom->GetHyb() == 6) {
+        else if (atom->GetHyb() == 6) {
           v2 = cross(bond1, bond2);
           newbond = v2;
         }
@@ -1241,7 +1240,7 @@ namespace OpenBabel
 
       // get the position for the new atom, this is done with GetNewBondVector
       if (prev != NULL) {
-        int bondType = a->GetBond(prev)->GetBO();
+        int bondType = a->GetBond(prev)->GetBondOrder();
         if (a->GetBond(prev)->IsAromatic())
           bondType = -1;
 
@@ -1283,7 +1282,7 @@ namespace OpenBabel
     FOR_BONDS_OF_MOL(b, mol) {
       beginIdx = b->GetBeginAtomIdx();
       endIdx = b->GetEndAtomIdx();
-      workMol.AddBond(beginIdx, endIdx, b->GetBO(), b->GetFlags());
+      workMol.AddBond(beginIdx, endIdx, b->GetBondOrder(), b->GetFlags());
     }
 
     /*

@@ -16,8 +16,11 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
-
+#include <cstdlib>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/oberror.h>
 #include <openbabel/bondtyper.h>
 #include <openbabel/elements.h>
 
@@ -28,6 +31,8 @@ using namespace std;
 
 namespace OpenBabel
 {
+  extern OBMessageHandler obErrorLog;
+
 
   //! Global OBBondTyper for perception of bond order assignment.
 #if __cplusplus >= 201103L
@@ -140,7 +145,7 @@ namespace OpenBabel
                     b1 = a1->GetBond(a2);
 
                     if (!b1) continue;
-                    b1->SetBO(assignments[j+2]);
+                    b1->SetBondOrder(assignments[j+2]);
                   } // bond order assignments
               } // each match
           } // current pattern matches
@@ -169,7 +174,7 @@ namespace OpenBabel
                 b1 = a1->GetBond(a2);
 
                 if (!b1 ) continue;
-                b1->SetBO(2);
+                b1->SetBondOrder(2);
               }
             }
           }
@@ -196,7 +201,7 @@ namespace OpenBabel
                 b1 = a1->GetBond(a2);
 
                 if (!b1 ) continue;
-                b1->SetBO(2);
+                b1->SetBondOrder(2);
               }
             }
           }
@@ -229,8 +234,8 @@ namespace OpenBabel
               b1 = a1->GetBond(a2);
               b2 = a2->GetBond(a3);
               if (!b1 || !b2) continue;
-              b1->SetBO(2);
-              b2->SetBO(2);
+              b1->SetBondOrder(2);
+              b2->SetBondOrder(2);
 
             }
 
@@ -258,7 +263,7 @@ namespace OpenBabel
                 b1 = a1->GetBond(a2);
 
                 if (!b1 ) continue;
-                b1->SetBO(2);
+                b1->SetBondOrder(2);
               }
             }
           }

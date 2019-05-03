@@ -20,12 +20,18 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/atom.h>
-#include <openbabel/stereo/stereo.h>
+#include <openbabel/bond.h>
 #include <openbabel/mol.h>
+#include <openbabel/obiter.h>
 #include <openbabel/molchrg.h>
+#include <openbabel/ring.h>
 #include <openbabel/phmodel.h>
 #include <openbabel/builder.h>
 #include <openbabel/elements.h>
+#include <openbabel/chains.h>
+#include <openbabel/obutil.h>
+#include <openbabel/residue.h>
+#include <openbabel/chains.h>
 
 #include <openbabel/math/matrix3x3.h>
 
@@ -35,9 +41,10 @@ extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
 
 using namespace std;
 
+
 namespace OpenBabel
 {
-
+  EXTERN OBChainsParser chainsparser;
   /** \class OBAtom atom.h <openbabel/atom.h>
       \brief Atom class
 
@@ -96,19 +103,11 @@ namespace OpenBabel
       \endcode
   */
 
-#if __cplusplus >= 201103L
-  thread_local //this is required for correct multi-threading
-#endif
-  extern OBAromaticTyper  aromtyper;
-#if __cplusplus >= 201103L
-  thread_local //this is required for correct multi-threading
-#endif
-  extern OBAtomTyper      atomtyper;
-#if __cplusplus >= 201103L
-  thread_local //this is required for correct multi-threading
-#endif
-  extern OBPhModel        phmodel;
-
+  extern THREAD_LOCAL OBAromaticTyper  aromtyper;
+  extern THREAD_LOCAL OBAtomTyper      atomtyper;
+  extern THREAD_LOCAL OBPhModel        phmodel;
+  EXTERN OBTypeTable      ttab;
+  
   //
   // OBAtom member functions
   //
@@ -279,7 +278,7 @@ namespace OpenBabel
     for (a1 = BeginNbrAtom(i);a1;a1 = NextNbrAtom(i))
       if (includePandS || (a1->GetAtomicNum() != OBElements::Phosphorus && a1->GetAtomicNum() != OBElements::Sulfur))
         for (a2 = a1->BeginNbrAtom(j);a2;a2 = a1->NextNbrAtom(j))
-          if (a2 != this && ((*j)->GetBO() == 2 || (*j)->GetBO() == 3 || (*j)->GetBO() == 5))
+          if (a2 != this && ((*j)->GetBondOrder() == 2 || (*j)->GetBondOrder() == 3 || (*j)->GetBondOrder() == 5))
             return(true);
 
     return(false);
@@ -290,7 +289,7 @@ namespace OpenBabel
     OBBond *bond;
     OBBondIterator i;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
-      if (bond->GetBO() == order)
+      if (bond->GetBondOrder() == order)
         return(true);
 
     return(false);
@@ -302,7 +301,7 @@ namespace OpenBabel
     OBBond *bond;
     OBBondIterator i;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
-      if (bond->GetBO() == order)
+      if (bond->GetBondOrder() == order)
         count++;
 
     return(count);
@@ -314,8 +313,8 @@ namespace OpenBabel
     OBBond *bond;
     OBBondIterator i;
     for(bond = BeginBond(i); bond; bond = NextBond(i))
-      if(bond->GetBO() > highest)
-        highest = bond->GetBO();
+      if(bond->GetBondOrder() > highest)
+        highest = bond->GetBondOrder();
 
     return(highest);
   }
@@ -325,7 +324,7 @@ namespace OpenBabel
     OBBond *bond;
     OBBondIterator i;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
-      if (bond->GetBO() != 1)
+      if (bond->GetBondOrder() != 1)
         return(true);
 
     return(false);
@@ -441,12 +440,6 @@ namespace OpenBabel
   void OBAtom::SetIsotope(unsigned int iso)
   {
     _isotope = iso;
-  }
-
-  OBAtom *OBAtom::GetNextAtom()
-  {
-    OBMol *mol = (OBMol*)GetParent();
-    return(((unsigned)GetIdx() == mol->NumAtoms())? NULL : mol->GetAtom(GetIdx()+1));
   }
 
   OBResidue *OBAtom::GetResidue()
@@ -573,7 +566,7 @@ namespace OpenBabel
       {
         nbratom = bond->GetNbrAtom(atom);
         for (abbond = nbratom->BeginBond(j);abbond;abbond = nbratom->NextBond(j))
-          if (abbond->GetBO() == 2 &&
+          if (abbond->GetBondOrder() == 2 &&
               (((abbond->GetNbrAtom(nbratom))->GetAtomicNum() == 8) ||
                ((abbond->GetNbrAtom(nbratom))->GetAtomicNum() == 16)))
             return(true);
@@ -591,7 +584,7 @@ namespace OpenBabel
     OBBondIterator i;
 
     for (atom = BeginNbrAtom(i);atom;atom = NextNbrAtom(i))
-      if (atom->GetAtomicNum() == OBElements::Oxygen && !(*i)->IsInRing() && (*i)->GetBO() == 2)
+      if (atom->GetAtomicNum() == OBElements::Oxygen && !(*i)->IsInRing() && (*i)->GetBondOrder() == 2)
         return(true);
 
     return(false);
@@ -1298,9 +1291,9 @@ namespace OpenBabel
           length = br1 + br2;
           if ((*i)->IsAromatic())
             length *= 0.93;
-          else if ((*i)->GetBO() == 2)
+          else if ((*i)->GetBondOrder() == 2)
             length *= 0.91;
-          else if ((*i)->GetBO() == 3)
+          else if ((*i)->GetBondOrder() == 3)
             length *= 0.87;
           ((OBBond*) *i)->SetLength(this, length);
         }

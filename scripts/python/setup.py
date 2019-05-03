@@ -44,7 +44,7 @@ def locate_ob():
         ob_ver = StrictVersion(pkgconfig('openbabel-2.0', '--modversion'))
         py_ver = StrictVersion(find_version())
         if not ob_ver.version[:2] == py_ver.version[:2]:
-            print('Warning: Open Babel %s.%s.x is required. Your version (%s) may not be compatible.' 
+            print('Warning: Open Babel %s.%s.x is required. Your version (%s) may not be compatible.'
                     % (py_ver.version[0], py_ver.version[1], ob_ver))
         include_dirs = pkgconfig('openbabel-2.0', '--variable=pkgincludedir')
         library_dirs = pkgconfig('openbabel-2.0', '--variable=libdir')

@@ -31,7 +31,11 @@ GNU General Public License for more details.
 #include <map>
 
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
 #include <openbabel/chains.h>
+#include <openbabel/oberror.h>
+#include <openbabel/obiter.h>
 #include <openbabel/elements.h>
 
 using namespace std;
@@ -139,7 +143,10 @@ static char ChainsResName[RESIDMAX][4] = {
 
 namespace OpenBabel
 {
+  extern OBMessageHandler obErrorLog;
 
+
+  // Initialize the global chainsparser - declared in chains.h
   OBChainsParser chainsparser;
 
   //////////////////////////////////////////////////////////////////////////////

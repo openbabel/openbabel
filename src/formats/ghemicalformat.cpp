@@ -15,6 +15,14 @@
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/elements.h>
+#include <openbabel/obiter.h>
+#include <openbabel/generic.h>
+#include <openbabel/bond.h>
+#include <cstdlib>
+
 
 using namespace std;
 namespace OpenBabel
@@ -227,7 +235,7 @@ namespace OpenBabel
     char bond_char;
     FOR_BONDS_OF_MOL(bond, mol)
     {
-      switch(bond->GetBO())
+      switch(bond->GetBondOrder())
       {
         case 1 :
           bond_char = 'S';

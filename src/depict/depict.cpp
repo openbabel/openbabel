@@ -18,7 +18,10 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <openbabel/mol.h>
+#include <openbabel/bond.h>
+#include <openbabel/ring.h>
 #include <openbabel/alias.h>
+#include <openbabel/generic.h>
 #include <openbabel/depict/depict.h>
 #include <openbabel/depict/painter.h>
 #include <openbabel/elements.h>
@@ -344,7 +347,7 @@ namespace OpenBabel
       else
         painter->SetPenColor(bondColor);
 
-      DrawRingBond(begin, end, center, ringBond->GetBO());
+      DrawRingBond(begin, end, center, ringBond->GetBondOrder());
       drawnBonds.SetBitOn(ringBond->GetId());
     }
   }
@@ -521,7 +524,7 @@ namespace OpenBabel
           if (!ct->GetConfig().specified)
             crossed_dbl_bond = true;
         }
-        d->DrawSimpleBond(begin, end, bond->GetBO(), crossed_dbl_bond);
+        d->DrawSimpleBond(begin, end, bond->GetBondOrder(), crossed_dbl_bond);
       }
     }
 

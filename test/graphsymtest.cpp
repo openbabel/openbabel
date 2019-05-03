@@ -5,6 +5,8 @@
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/graphsym.h>
+#include <openbabel/atom.h>
+#include <openbabel/obiter.h>
 
 #include <openbabel/canon.h>
 

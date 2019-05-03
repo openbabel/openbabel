@@ -15,6 +15,13 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
+
+#include <cstdlib>
 
 using namespace std;
 namespace OpenBabel
@@ -193,7 +200,7 @@ namespace OpenBabel
         ofs << buffer;
         for (bond = atom->BeginBond(j); bond; bond = atom->NextBond(j))
           {
-            switch(bond->GetBO())
+            switch(bond->GetBondOrder())
               {
               case 1 :
                 bond_char = 's';

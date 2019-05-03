@@ -35,10 +35,13 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/parsmart.h>
 #include <openbabel/obconversion.h>
+#include <openbabel/math/vector3.h>
+#include <openbabel/generic.h>
+#include <openbabel/atom.h>
 #ifndef _MSC_VER
   #include <unistd.h>
 #endif
-
+#include <cstdlib>
 
 using namespace std;
 using namespace OpenBabel;

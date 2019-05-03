@@ -38,10 +38,7 @@ namespace OpenBabel
   }
   DoubleType;
 
-  OBAPI void DoubleMultiply( unsigned int,unsigned int,DoubleType*);
-  OBAPI void DoubleAdd( DoubleType*,unsigned int);
-  OBAPI unsigned int DoubleModulus( DoubleType*,unsigned int);
-
+  
   //! \class OBRandom rand.h <openbabel/rand.h>
   //! \brief Random number generator
   /**
@@ -65,7 +62,7 @@ namespace OpenBabel
      generator.Seed(10246);// Use a specific initial seed value for reproducing sequence
      \endcode
    **/
-  class OBAPI OBRandom
+  class OBRandom
   {
     DoubleType d;
     unsigned int m,a,c;

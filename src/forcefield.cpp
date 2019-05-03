@@ -19,16 +19,22 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 
+#include <set>
+
 #include <openbabel/forcefield.h>
 
 #include <openbabel/mol.h>
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
+#include <openbabel/ring.h>
 #include <openbabel/obiter.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/rotamer.h>
 #include <openbabel/rotor.h>
+#include <openbabel/grid.h>
+#include <openbabel/griddata.h>
 #include <openbabel/elements.h>
+#include "rand.h"
 
 using namespace std;
 
@@ -179,7 +185,7 @@ namespace OpenBabel
       // Fix the binding pocket atoms
       OBFFConstraints constraints;
       FOR_ATOMS_OF_MOL (a, mol) {
-      if (pocket.BitIsOn(a->GetIdx())
+      if (pocket.BitIsSet(a->GetIdx())
       constraints.AddAtomConstraint(a->GetIdx());
       }
 
@@ -953,7 +959,7 @@ namespace OpenBabel
         return true;
     }
     FOR_BONDS_OF_MOL (bond, _mol) {
-      if (bond->GetBO() != (mol.GetBond(bond->GetIdx()))->GetBO())
+      if (bond->GetBondOrder() != (mol.GetBond(bond->GetIdx()))->GetBondOrder())
         return true;
       if (bond->GetBeginAtom()->GetAtomicNum()
           != (mol.GetBond(bond->GetIdx()))->GetBeginAtom()->GetAtomicNum()
@@ -2178,21 +2184,21 @@ namespace OpenBabel
       if (HasGroups()) {
         bool isIncludedPair = false;
         for (size_t i=0; i < _interGroup.size(); ++i) {
-          if (_interGroup[i].BitIsOn(a->GetIdx()) &&
-              _interGroup[i].BitIsOn(b->GetIdx())) {
+          if (_interGroup[i].BitIsSet(a->GetIdx()) &&
+              _interGroup[i].BitIsSet(b->GetIdx())) {
             isIncludedPair = true;
             break;
           }
         }
         if (!isIncludedPair) {
           for (size_t i=0; i < _interGroups.size(); ++i) {
-            if (_interGroups[i].first.BitIsOn(a->GetIdx()) &&
-                _interGroups[i].second.BitIsOn(b->GetIdx())) {
+            if (_interGroups[i].first.BitIsSet(a->GetIdx()) &&
+                _interGroups[i].second.BitIsSet(b->GetIdx())) {
               isIncludedPair = true;
               break;
             }
-            if (_interGroups[i].first.BitIsOn(b->GetIdx()) &&
-                _interGroups[i].second.BitIsOn(a->GetIdx())) {
+            if (_interGroups[i].first.BitIsSet(b->GetIdx()) &&
+                _interGroups[i].second.BitIsSet(a->GetIdx())) {
               isIncludedPair = true;
               break;
             }

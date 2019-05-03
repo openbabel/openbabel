@@ -76,7 +76,7 @@ class TestPcJsonFormat(PybelWrapper):
         mols = list(pybel.readfile("pcjson", os.path.join(filedir, 'CID_6857552_2D.json')))
         self.assertEqual(len(mols), 1)
         self.assertEqual(mols[0].OBMol.NumBonds(), 13)
-        self.assertEqual([mols[0].OBMol.GetBond(i).GetBO() for i in range(0, 13)], [1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1])
+        self.assertEqual([mols[0].OBMol.GetBond(i).GetBondOrder() for i in range(0, 13)], [1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1])
 
     def test_write_cid(self):
         """Test writing a PubChem compound CID."""

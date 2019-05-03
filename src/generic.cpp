@@ -23,6 +23,10 @@ GNU General Public License for more details.
 #include <set>
 
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/ring.h>
+#include <openbabel/obiter.h>
 #include <openbabel/generic.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/elements.h>
@@ -1315,124 +1319,6 @@ namespace OpenBabel
     return(true);
   }
 
-  //
-  // Member functions for OBChiralDarta
-  //
-  bool OBChiralData::SetAtom4Refs(std::vector<unsigned int> atom4refs, atomreftype t)
-  {
-    if (atom4refs.size() != 4)
-      {
-        obErrorLog.ThrowError(__FUNCTION__, "Incorrect number of atoms atom4refs, should be 4", obDebug);
-        return(false);
-      }
-    switch(t){
-    case input: _atom4refs = atom4refs;break;
-    case output:_atom4refo = atom4refs;break;
-    case calcvolume:_atom4refc = atom4refs;break;
-    default:
-      obErrorLog.ThrowError(__FUNCTION__, "AtomRefType called is invalid", obDebug);
-      return(false);
-    }
-    return (true);
-  }
-
-  int OBChiralData::AddAtomRef(unsigned int atomref, atomreftype t)
-  {
-    switch(t){
-    case input: _atom4refs.push_back(atomref);break;
-    case output: _atom4refo.push_back(atomref);break;
-    case calcvolume:_atom4refc.push_back(atomref);break;
-    default:
-      obErrorLog.ThrowError(__FUNCTION__, "AtomRefType called is invalid", obDebug);
-      return(false);
-    }
-
-    return (_atom4refs.size());
-  }
-
-  unsigned int OBChiralData::GetAtomRef(int a, atomreftype t)
-  {
-    switch(t){
-    case input: return(_atom4refs[a]);break;
-    case output: return(_atom4refo[a]);break;
-    case calcvolume: return(_atom4refc[a]);break;
-    default:
-      obErrorLog.ThrowError(__FUNCTION__, "AtomRefType called is invalid", obDebug);
-      return(false);
-    }
-  }
-  std::vector<unsigned int> OBChiralData::GetAtom4Refs(atomreftype t) const
-  {
-    switch (t){
-    case output:
-      return(_atom4refo);
-      break;
-    case input:
-      return(_atom4refs);
-      break;
-    case calcvolume:
-      return(_atom4refc);
-      break;
-    default:
-      obErrorLog.ThrowError(__FUNCTION__, "AtomRefType called is invalid", obDebug);
-      return(_atom4refo);
-    }
-  }
-
-  unsigned int OBChiralData::GetSize(atomreftype t) const
-  {
-    switch (t)
-      {
-      case output:
-        return(unsigned int)_atom4refo.size();
-        break;
-      case input:
-        return(unsigned int)_atom4refs.size();
-        break;
-      case calcvolume:
-        return(unsigned int)_atom4refc.size();
-      default:
-        obErrorLog.ThrowError(__FUNCTION__, "AtomRefType called is invalid", obDebug);
-        return(0);
-      }
-  }
-
-  // Chiral data is a perceived data type. We might read in some chiral info
-  // but this class derives and converts from whatever is read
-  OBChiralData::OBChiralData()
-    : OBGenericData("ChiralData", OBGenericDataType::ChiralData, perceived)
-  {  }
-
-  OBChiralData::OBChiralData(const OBChiralData &src)
-    : OBGenericData(src)
-  {
-    _atom4refs = src._atom4refs;
-    _atom4refo = src._atom4refo;
-    _atom4refc = src._atom4refc;
-    parity     = src.parity;
-  }
-
-  OBChiralData & OBChiralData::operator=(const OBChiralData &src)
-  {
-    if(this == &src)
-      return(*this);
-
-    _source = src._source;
-
-    _atom4refs = src._atom4refs;
-    _atom4refo = src._atom4refo;
-    _atom4refc = src._atom4refc;
-    parity=src.parity;
-    return(*this);
-  }
-
-  void OBChiralData::Clear()
-  {
-    _atom4refs.clear();
-    parity=0;
-    _atom4refo.clear();
-    _atom4refc.clear();
-  }
 
 //
 //member functions for OBDOSData class

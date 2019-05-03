@@ -33,7 +33,10 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
 #include <openbabel/parsmart.h>
+#include <openbabel/obutil.h>
+#include <openbabel/generic.h>
 #include <openbabel/obconversion.h>
 #ifndef _MSC_VER
   #include <unistd.h>

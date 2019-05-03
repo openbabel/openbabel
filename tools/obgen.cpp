@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #endif
 
 #include <list>
+#include <algorithm>
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/base.h>

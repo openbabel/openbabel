@@ -20,8 +20,11 @@ GNU General Public License for more details.
 
 #include <ctype.h>
 #include <iomanip>
+#include <cstring>
 
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
 #include <openbabel/parsmart.h>
 #include <openbabel/stereo/stereo.h>
 #include <openbabel/stereo/tetrahedral.h>
@@ -2227,27 +2230,27 @@ namespace OpenBabel
         case BE_ANY:
           return true;
         case BE_DEFAULT:
-          return bond->GetBO()==1 || bond->IsAromatic();
+          return bond->GetBondOrder()==1 || bond->IsAromatic();
         case BE_SINGLE:
-          return bond->GetBO()==1 && !bond->IsAromatic();
+          return bond->GetBondOrder()==1 && !bond->IsAromatic();
         case BE_DOUBLE:
-          return bond->GetBO()==2 && !bond->IsAromatic();
+          return bond->GetBondOrder()==2 && !bond->IsAromatic();
         case BE_TRIPLE:
-          return bond->GetBO() == 3;
+          return bond->GetBondOrder() == 3;
         case BE_QUAD:
-          return bond->GetBO() == 4;
+          return bond->GetBondOrder() == 4;
         case BE_AROM:
           return bond->IsAromatic();
         case BE_RING:
           return bond->IsInRing();
-        case BE_UP:
-          return bond->IsUp();
-        case BE_DOWN:
-          return bond->IsDown();
-        case BE_UPUNSPEC: // up or unspecified (i.e., not down)
-          return !bond->IsDown();
-        case BE_DOWNUNSPEC: // down or unspecified (i.e., not up)
-          return !bond->IsUp();
+        //case BE_UP:
+        //  return bond->IsUp();
+        //case BE_DOWN:
+        //  return bond->IsDown();
+        //case BE_UPUNSPEC: // up or unspecified (i.e., not down)
+        //  return !bond->IsDown();
+        //case BE_DOWNUNSPEC: // down or unspecified (i.e., not up)
+        //  return !bond->IsUp();
         default:
           return false;
         }

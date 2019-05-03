@@ -19,6 +19,11 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/ring.h>
+#include <openbabel/obiter.h>
+#include <openbabel/oberror.h>
 #include <openbabel/typer.h>
 #include <openbabel/elements.h>
 
@@ -33,6 +38,7 @@ using namespace std;
 
 namespace OpenBabel
 {
+  // Initialize globals declared in typer.h
   THREAD_LOCAL OBAromaticTyper  aromtyper;
   THREAD_LOCAL OBAtomTyper      atomtyper;
 

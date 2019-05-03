@@ -22,4 +22,4 @@ before_script:
 
 script:
  - make -j2
- - if [ ${RUN_CTEST} = 'true' ]; then ctest -j 2; fi
+ - if [ ${RUN_CTEST} = 'true' ]; then ctest -j 2 --output-on-failure; fi

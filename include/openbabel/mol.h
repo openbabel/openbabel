@@ -43,35 +43,26 @@ GNU General Public License for more details.
 #include <string>
 #include <map>
 
-// Currently includes many headers for 2.x backwards compatibility
-// \deprecated -- this will be cleaned up in 3.0 efforts
-//      to improve compile time significantly.
-// Only include necessary headers and class declaration stubs.
-#include <openbabel/atom.h>
-#include <openbabel/bond.h>
 #include <openbabel/base.h>
-#include <openbabel/data.h>
-#include <openbabel/chains.h>
-#include <openbabel/math/vector3.h>
-#include <openbabel/bitvec.h>
-#include <openbabel/residue.h>
-#include <openbabel/ring.h>
-#include <openbabel/generic.h>
-#include <openbabel/typer.h>
-#include <openbabel/oberror.h>
-#include <openbabel/obiter.h>
-#include <openbabel/internalcoord.h>
 
 
 namespace OpenBabel
 {
-
   class OBAtom;
   class OBBond;
+  class OBResidue;
+  class OBRing;
   class OBInternalCoord;
   class OBConversion; //used only as a pointer
-  class OBBondTyper;
-  class OBPhModel;
+
+  class vector3;
+  class OBBitVec;
+  class OBMolAtomDFSIter;
+  class OBChainsParser;
+
+  typedef std::vector<OBAtom*>::iterator OBAtomIterator;
+  typedef std::vector<OBBond*>::iterator OBBondIterator;
+  typedef std::vector<OBResidue*>::iterator OBResidueIterator;
 
   // Class OBMol
   //MOL Property Macros (flags) -- 32+ bits
@@ -83,7 +74,7 @@ namespace OpenBabel
 #define OB_AROMATIC_MOL          (1<<3)
   //! Atom typing has been performed. See OBAtomTyper
 #define OB_ATOMTYPES_MOL         (1<<4)
-  //! Chirality detection has been performed. See OBMol::IsChiral
+  //! Chirality detection has been performed.
 #define OB_CHIRALITY_MOL         (1<<5)
   //! Partial charges have been set or percieved
 #define OB_PCHARGE_MOL           (1<<6)
@@ -170,15 +161,6 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
       }
     }
 
-    //! Create a new OBAtom pointer. Does no bookkeeping
-    //! \deprecated Use NewAtom instead, which ensures internal connections
-    virtual OBAtom *CreateAtom(void);
-    //! Create a new OBBond pointer. Does no bookkeeping
-    //! \deprecated Use NewBond instead, which ensures internal connections
-    virtual OBBond *CreateBond(void);
-    //! Create a new OBResidue pointer. Does no bookkeeping
-    //! \deprecated Use NewResidue instead, which ensures internal connections
-    virtual OBResidue *CreateResidue(void);
     //! Free an OBAtom pointer if defined. Does no bookkeeping
     //! \see DeleteAtom which ensures internal connections
     virtual void DestroyAtom(OBAtom*);
@@ -200,7 +182,7 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! Add a new bond to the molecule with the specified parameters
     //! \param beginIdx  the atom index of the "start" atom
     //! \param endIdx    the atom index of the "end" atom
-    //! \param order     the bond order (see OBBond::GetBO())
+    //! \param order     the bond order (see OBBond::GetBondOrder())
     //! \param flags     any bond flags such as stereochemistry (default = none)
     //! \param insertpos the position index to insert the bond (default = none)
     //! \return Whether the new bond creation was successful
@@ -535,9 +517,6 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     void FindLSSR();
     //! Find all ring atoms and bonds. Does not need to call FindSSSR().
     void FindRingAtomsAndBonds();
-    //! Find all chiral atom centers. See OBAtom::IsChiral() for more details
-    //! \deprecated See FindStereogenicUnits
-    void FindChiralCenters() { IsChiral(); }
     // documented in mol.cpp -- locates all atom indexes which can reach 'end'
     void FindChildren(std::vector<int> & children,int bgnIdx,int endIdx);
     // documented in mol.cpp -- locates all atoms which can reach 'end'
@@ -606,8 +585,6 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     bool HasSpinMultiplicityAssigned() { return(HasFlag(OB_ATOMSPIN_MOL)); }
     //! Does this OBMol represent a reaction?
     bool IsReaction()                  { return HasFlag(OB_REACTION_MOL); }
-    //! Is this molecule chiral?
-    bool IsChiral();
     //! Are there any atoms in this molecule?
     bool Empty()                       { return(_natoms == 0);          }
     //@}
@@ -724,26 +701,6 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
   OBAPI void InternalToCartesian(std::vector<OBInternalCoord*>&,OBMol&);
   // Replace the last extension in str with a new one (docs in obutil.cpp)
   OBAPI std::string NewExtension(std::string&,char*);
-
-  //global definitions
-  //! Global OBTypeTable for translating between different atom types
-  //! (e.g., Sybyl <-> MM2)
-  EXTERN  OBTypeTable      ttab;
-  //! Global OBAromaticTyper for detecting aromatic atoms and bonds
-	THREAD_LOCAL EXTERN  OBAromaticTyper  aromtyper;
-  //! Global OBAtomTyper for marking internal valence, hybridization,
-  //!  and atom types (for internal and external use)
-	THREAD_LOCAL EXTERN  OBAtomTyper      atomtyper;
-  //! Global OBBondTyper
-	THREAD_LOCAL EXTERN  OBBondTyper      bondtyper;
-  //! Global OBPhModel for assigning formal charges and hydrogen addition rules
-	THREAD_LOCAL EXTERN OBPhModel        phmodel;
-  //! Global OBChainsParser for detecting macromolecular chains and residues
-  EXTERN  OBChainsParser   chainsparser;
-  //! Global OBMessageHandler error handler
-  OBERROR extern  OBMessageHandler obErrorLog;
-  //! Global OBResidueData biomolecule residue database
-  EXTERN  OBResidueData    resdat;
 
   //! \brief Nested namespace for max_value templates
   namespace detail {

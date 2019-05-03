@@ -18,6 +18,11 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/xml.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
 #include <algorithm>
 #include <vector>
 
@@ -443,7 +448,7 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     xmlTextWriterWriteFormatAttribute(writer(), C_BEGIN , "%d", patom->GetIdx() + _offset);
 	patom = pbond->GetEndAtom();
     xmlTextWriterWriteFormatAttribute(writer(), C_END , "%d", patom->GetIdx() + _offset);
-	n = pbond->GetBO();
+	n = pbond->GetBondOrder();
     if (n != 1)
     {
       xmlTextWriterWriteFormatAttribute(writer(), C_ORDER , "%d", n);

@@ -20,7 +20,14 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
-#include <openbabel/chiral.h>
+
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
+#include <openbabel/generic.h>
+
 
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
@@ -2725,29 +2732,29 @@ namespace OpenBabel {
           (vector<pair<int,pair<OBAtom *,OBBond *> > > *)((OBMol*)atom->GetParent())->GetData("extBonds");
         vector<pair<int,pair<OBAtom *,OBBond *> > >::iterator externalBond;
 
-        if (externalBonds)
+        if (externalBonds) // TODO: This code has bit-rotted and needs some love
           for(externalBond = externalBonds->begin();externalBond != externalBonds->end();++externalBond) {
             if (externalBond->second.first == atom) {
               external = true;
               buffer += '&';
               OBBond *bond = externalBond->second.second;
-              if (bond->IsUp()) {
-                if ( (bond->GetBeginAtom())->HasDoubleBond() ||
-                     (bond->GetEndAtom())->HasDoubleBond() )
-                  buffer += '\\';
-              }
-              if (bond->IsDown()) {
-                if ( (bond->GetBeginAtom())->HasDoubleBond() ||
-                     (bond->GetEndAtom())->HasDoubleBond() )
-                  buffer += '/';
-              }
-              if (bond->GetBO() == 2 && !bond->IsAromatic()) // TODO: need to check for kekulesmi
+              //if (bond->IsUp()) {
+              //  if ( (bond->GetBeginAtom())->HasDoubleBond() ||
+              //       (bond->GetEndAtom())->HasDoubleBond() )
+              //    buffer += '\\';
+              //}
+              //if (bond->IsDown()) {
+              //  if ( (bond->GetBeginAtom())->HasDoubleBond() ||
+              //       (bond->GetEndAtom())->HasDoubleBond() )
+              //    buffer += '/';
+              //}
+              if (bond->GetBondOrder() == 2 && !bond->IsAromatic()) // TODO: need to check for kekulesmi
                 buffer += '=';
-              if (bond->GetBO() == 2 && bond->IsAromatic())
+              if (bond->GetBondOrder() == 2 && bond->IsAromatic())
                 buffer += ':';
-              if (bond->GetBO() == 3)
+              if (bond->GetBondOrder() == 3)
                 buffer += '#';
-              if (bond->GetBO() == 4)
+              if (bond->GetBondOrder() == 4)
                 buffer += '$';
               char tmp[10];
               snprintf(tmp, 10, "%d", externalBond->first);
@@ -3009,7 +3016,7 @@ namespace OpenBabel {
                   used |= nbr->GetIdx();
                 }
           }
-        if (next.Empty())
+        if (next.IsEmpty())
           break;
         curr = next;
       }
@@ -3046,7 +3053,7 @@ namespace OpenBabel {
                                     vector<unsigned int> &canonical_order,
                                     OBCanSmiNode *node)
   {
-    vector<OBEdgeBase*>::iterator i;
+    vector<OBBond*>::iterator i;
     OBAtom *nbr, *atom;
     vector<OBAtom *> sort_nbrs;
     vector<OBAtom *>::iterator ai;
@@ -3078,7 +3085,7 @@ namespace OpenBabel {
       //  _uatoms.SetBitOn(nbr->GetIdx());        // mark suppressed hydrogen, so it won't be considered
       //  continue;                               // later when looking for more fragments.
       //}
-      if (_uatoms[idx] || !frag_atoms.BitIsOn(idx))
+      if (_uatoms[idx] || !frag_atoms.BitIsSet(idx))
         continue;
 
       OBBond *nbr_bond = atom->GetBond(nbr);
@@ -3190,7 +3197,7 @@ namespace OpenBabel {
     vector<OBBondClosureInfo> vp_closures;
     vector<OBBond*> vbonds;
     vector<OBBond*>::iterator bi;
-    vector<OBEdgeBase*>::iterator i;
+    vector<OBBond*>::iterator i;
     OBBond *bond1, *bond2;
     OBAtom *nbr1, *nbr2;
     int nbr1_canorder, nbr2_canorder;
@@ -3202,13 +3209,13 @@ namespace OpenBabel {
     for (bond1 = atom->BeginBond(i); bond1; bond1 = atom->NextBond(i)) {
 
       // Is this a ring-closure neighbor?
-      if (_ubonds.BitIsOn(bond1->GetIdx()))
+      if (_ubonds.BitIsSet(bond1->GetIdx()))
         continue;
       nbr1 = bond1->GetNbrAtom(atom);
       // Skip hydrogens before checking canonical_order
       // PR#1999348
       if (   (nbr1->GetAtomicNum() == OBElements::Hydrogen && IsSuppressedHydrogen(nbr1))
-             || !frag_atoms.BitIsOn(nbr1->GetIdx()))
+             || !frag_atoms.BitIsSet(nbr1->GetIdx()))
         continue;
 
       nbr1_canorder = canonical_order[nbr1->GetIdx()-1];
@@ -3234,7 +3241,7 @@ namespace OpenBabel {
       bond1 = *bi;
       _ubonds.SetBitOn(bond1->GetIdx());
       int digit = GetUnusedIndex();
-      int bo = (bond1->IsAromatic())? 1 : bond1->GetBO();  // CJ: why was this line added?  bo is never used?
+      int bo = (bond1->IsAromatic())? 1 : bond1->GetBondOrder();  // CJ: why was this line added?  bo is never used?
       _vopen.push_back(OBBondClosureInfo(bond1->GetNbrAtom(atom), atom, bond1, digit, true));
       vp_closures.push_back(OBBondClosureInfo(bond1->GetNbrAtom(atom), atom, bond1, digit, true));
     }
@@ -3448,7 +3455,7 @@ namespace OpenBabel {
             buffer += bs;	// append "/" or "\"
           else
           {
-            switch (bci->bond->GetBO())
+            switch (bci->bond->GetBondOrder())
             {
             case 1:
               if (!bci->bond->IsAromatic() && bci->bond->IsInRing() && bci->bond->GetBeginAtom()->IsAromatic() && bci->bond->GetEndAtom()->IsAromatic())
@@ -3498,7 +3505,7 @@ namespace OpenBabel {
       if (i+1 < node->Size() || node->GetAtom() == _endatom)
         buffer += '(';
 
-      switch (bond->GetBO()) {
+      switch (bond->GetBondOrder()) {
       case 1:
         char cc[2];
         cc[0] = GetCisTransBondSymbol(bond, node);
@@ -3542,7 +3549,7 @@ namespace OpenBabel {
                       vector<unsigned int> &labels)
   {
     FOR_ATOMS_OF_MOL(atom, *pMol) {
-      if (frag_atoms->BitIsOn(atom->GetIdx())) {
+      if (frag_atoms->BitIsSet(atom->GetIdx())) {
         labels.push_back(atom->GetIdx() - 1);
         symmetry_classes.push_back(atom->GetIdx() - 1);
       }
@@ -3562,8 +3569,6 @@ namespace OpenBabel {
    *    molecule, and use those to test the canonicalizer.
    ***************************************************************************/
 
-  static int timeseed = 0;
-
   void RandomLabels(OBMol *pMol, OBBitVec &frag_atoms,
       vector<unsigned int> &symmetry_classes,
       vector<unsigned int> &labels)
@@ -3571,17 +3576,10 @@ namespace OpenBabel {
     int natoms = pMol->NumAtoms();
     OBBitVec used(natoms);
 
-    if (!timeseed) {
-      OBRandom rand;
-      rand.TimeSeed();
-      timeseed = 1;
-    }
-
-
     FOR_ATOMS_OF_MOL(atom, *pMol) {
-      if (frag_atoms.BitIsOn(atom->GetIdx())) {
+      if (frag_atoms.BitIsSet(atom->GetIdx())) {
         int r = rand() % natoms;
-        while (used.BitIsOn(r)) {
+        while (used.BitIsSet(r)) {
           r = (r + 1) % natoms;         // find an unused number
         }
         used.SetBitOn(r);
@@ -3904,7 +3902,7 @@ namespace OpenBabel {
       // If we specified a startatom_idx & it's in this fragment, use it to start the fragment
       if (_startatom)
         if (!_uatoms[_startatom->GetIdx()] && 
-           frag_atoms.BitIsOn(_startatom->GetIdx()) && 
+           frag_atoms.BitIsSet(_startatom->GetIdx()) && 
            (!isrxn || rxn.GetRole(_startatom)==rxnrole))
           root_atom = _startatom;
 
@@ -3913,7 +3911,7 @@ namespace OpenBabel {
           int idx = atom->GetIdx();
           if (//atom->GetAtomicNum() != OBElements::Hydrogen       // don't start with a hydrogen
               !_uatoms[idx]          // skip atoms already used (for fragments)
-              && frag_atoms.BitIsOn(idx)// skip atoms not in this fragment
+              && frag_atoms.BitIsSet(idx)// skip atoms not in this fragment
               && (!isrxn || rxn.GetRole(atom)==rxnrole) // skip atoms not in this rxn role
               //&& !atom->IsChiral()    // don't use chiral atoms as root node
               && canonical_order[idx-1] < lowest_canorder) {
@@ -4028,11 +4026,8 @@ namespace OpenBabel {
       // Not isomeric - be sure there are no Z coordinates, clear
       // all stereo-center and cis/trans information.
       OBBond *bond;
-      vector<OBEdgeBase*>::iterator bi;
-      vector<OBNodeBase*>::iterator ai;
+      vector<OBBond*>::iterator bi;
       for (bond = mol.BeginBond(bi); bond; bond = mol.NextBond(bi)) {
-        bond->UnsetUp();
-        bond->UnsetDown();
         bond->UnsetHash();
         bond->UnsetWedge();
       }
@@ -4044,7 +4039,7 @@ namespace OpenBabel {
       // a chiral center, or it's something like [H][H]).
       FOR_ATOMS_OF_MOL(iatom, mol) {
         OBAtom *atom = &(*iatom);
-        if (frag_atoms.BitIsOn(atom->GetIdx()) && atom->GetAtomicNum() == OBElements::Hydrogen
+        if (frag_atoms.BitIsSet(atom->GetIdx()) && atom->GetAtomicNum() == OBElements::Hydrogen
           && (!options.isomeric || m2s.IsSuppressedHydrogen(atom))) {
           frag_atoms.SetBitOff(atom->GetIdx());
         }

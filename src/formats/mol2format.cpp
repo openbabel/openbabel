@@ -15,13 +15,20 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
+#include <openbabel/generic.h>
 #include <openbabel/kekulize.h>
 #include <openbabel/obfunctions.h>
+#include <openbabel/data.h>
+#include <cstdlib>
 
 using namespace std;
 namespace OpenBabel
 {
-
   //The routine WriteSmiOrderedMol2() in the original mol2.cpp is presumably
   //another output format, but was not made available in version 100.1.2, nor
   //is it here.
@@ -683,7 +690,6 @@ namespace OpenBabel
     ofs << "@<TRIPOS>BOND" << endl;
     OBBond *bond;
     vector<OBBond*>::iterator j;
-    OBSmartsPattern pat;
     string s1, s2;
     for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
       {
@@ -694,7 +700,7 @@ namespace OpenBabel
         else if (bond->IsAmide())
           strcpy(label,"am");
         else
-          snprintf(label,BUFF_SIZE,"%d",bond->GetBO());
+          snprintf(label,BUFF_SIZE,"%d",bond->GetBondOrder());
 
         snprintf(buffer, BUFF_SIZE,"%6d %5d %5d   %2s",
                  bond->GetIdx()+1,bond->GetBeginAtomIdx(),bond->GetEndAtomIdx(),

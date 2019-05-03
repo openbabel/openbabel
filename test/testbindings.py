@@ -19,7 +19,6 @@ and so you can quickly develop the tests and try them out.
 """
 
 import os
-import re
 import sys
 import unittest
 import itertools
@@ -243,6 +242,8 @@ H          0.74700        0.50628       -0.64089
         ff = pybel._forcefields["mmff94"]
 
         self.assertTrue(ff.Setup(mol.OBMol))
+        energy = ff.Energy() # note: calling GetGradient w/o calling Energy()
+                             #       just returns random numbers
         for atom in mol.atoms:
             # this should throw an AttributeError if not available
             grad = ff.GetGradient(atom.OBAtom)

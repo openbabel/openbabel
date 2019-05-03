@@ -24,7 +24,6 @@ GNU General Public License for more details.
 #include <vector>
 
 #include <openbabel/babelconfig.h>
-#include <openbabel/mol.h>
 
 /*==========================*/
 /*  SMARTS Data Structures  */
@@ -32,6 +31,10 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
+  class OBMol;
+  class OBAtom;
+  class OBBond;
+  class OBBitVec;
 
   // mark this so that SWIG will not attempt to wrap for scripting languages
 

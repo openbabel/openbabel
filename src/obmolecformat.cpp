@@ -17,8 +17,12 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
-#include <openbabel/obiter.h>
-#include <iterator>
+#include <openbabel/mol.h>
+#ifdef HAVE_SHARED_POINTER
+  #include <openbabel/reaction.h>
+#endif
+
+#include <algorithm>
 
 using namespace std;
 namespace OpenBabel

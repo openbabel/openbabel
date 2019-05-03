@@ -31,6 +31,7 @@ Compile with tools/obabel.cpp rather than tools/babel.cpp
 #include <stdio.h>
 #include <openbabel/op.h>
 #include <openbabel/mol.h>
+#include <openbabel/bond.h>
 #include <openbabel/forcefield.h>
 #include <openbabel/conformersearch.h>
 #include <openbabel/generic.h>

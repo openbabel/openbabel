@@ -17,8 +17,12 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/generic.h>
 
 #include "inchi_api.h"
 #include <sstream>
@@ -28,6 +32,7 @@ GNU General Public License for more details.
 #include <openbabel/inchiformat.h>
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
+#include <openbabel/elements.h>
 
 using namespace std;
 namespace OpenBabel
@@ -345,7 +350,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
           continue;
 
         iat.neighbor[nbonds]      = pbond->GetNbrAtomIdx(patom)-1;
-        int bo = pbond->GetBO();
+        int bo = pbond->GetBondOrder();
         if(bo==5)
           bo=4;
         iat.bond_type[nbonds]     = bo;

@@ -19,6 +19,10 @@ GNU General Public License for more details.
 #include <iomanip>
 #include <typeinfo>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/elements.h>
+#include <openbabel/generic.h>
+
 #include <openbabel/obconversion.h>
 #include <openbabel/obmolecformat.h>
 #include <openbabel/reactionfacade.h>

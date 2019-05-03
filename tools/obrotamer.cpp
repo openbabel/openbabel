@@ -28,6 +28,8 @@ GNU General Public License for more details.
 #include <openbabel/rotamer.h>
 #include <openbabel/rotor.h>
 #include <openbabel/obutil.h>
+#include "../src/rand.h"
+#include "../src/rand.cpp"
 
 #include <stdio.h>
 #include <iostream>

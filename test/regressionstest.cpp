@@ -3,6 +3,10 @@
 #include <openbabel/obconversion.h>
 #include <openbabel/phmodel.h>
 #include <openbabel/elements.h>
+#include <openbabel/atom.h>
+#include <openbabel/obiter.h>
+#include <openbabel/bond.h>
+#include <openbabel/generic.h>
 
 #include <iostream>
 #include <string>

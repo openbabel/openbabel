@@ -15,8 +15,13 @@ GNU General Public License for more details.
 #include <vector>
 #include <string>
 #include <iomanip>
+#include <cstdlib>
 
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/elements.h>
+
 #include <openbabel/fingerprint.h>
 
 using namespace std;

@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #define OB_TYPER_H
 
 #include <openbabel/babelconfig.h>
+#include <openbabel/mol.h>
 
 #include <vector>
 #include <string>
@@ -60,6 +61,10 @@ public:
     void AssignTypes(OBMol&);
 };
 
+//! Global OBAtomTyper for marking internal valence, hybridization,
+//!  and atom types (for internal and external use)
+THREAD_LOCAL EXTERN OBAtomTyper      atomtyper;
+
 // class introduction in typer.cpp
 class OBAPI OBAromaticTyper
 {
@@ -70,6 +75,9 @@ public:
     //! Assign aromaticity flag to atoms and bonds
     void AssignAromaticFlags(OBMol &);
 };
+
+//! Global OBAromaticTyper for detecting aromatic atoms and bonds
+THREAD_LOCAL EXTERN OBAromaticTyper  aromtyper;
 
 // class introduction in typer.cpp
 class OBAPI OBRingTyper : public OBGlobalDataBase

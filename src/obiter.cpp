@@ -21,6 +21,9 @@ GNU General Public License for more details.
 #include <vector>
 
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/generic.h>
 #include <openbabel/obiter.h>
 
 using namespace std;
@@ -632,7 +635,7 @@ namespace OpenBabel
          // The variable b behaves like OBBond* when used with -> and * but
          // but needs to be explicitly converted when appearing as a parameter
          // in a function call - use &*b
-         bondOrderSum +=  b->GetBO();
+         bondOrderSum +=  b->GetBondOrder();
       }
       \endcode
   **/
@@ -780,7 +783,7 @@ namespace OpenBabel
          // The variable b behaves like OBBond* when used with -> and * but
          // but needs to be explicitly converted when appearing as a parameter
          // in a function call - use &*b
-         if (b->GetBO() == 3)
+         if (b->GetBondOrder() == 3)
             tripleBondCount++;
       }
       \endcode

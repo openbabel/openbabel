@@ -15,6 +15,13 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/elements.h>
+#include <openbabel/data.h>
+#include <cstdlib>
+
 
 using namespace std;
 namespace OpenBabel
@@ -199,7 +206,7 @@ namespace OpenBabel
 
     for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
       {
-        switch(bond->GetBO())
+        switch(bond->GetBondOrder())
           {
           case 1 :
             strcpy(bond_string,"SINGLE");

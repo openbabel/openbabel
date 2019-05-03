@@ -25,6 +25,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 
+#include <cstdlib>
 #include <fstream>
 #include <openbabel/obutil.h>
 

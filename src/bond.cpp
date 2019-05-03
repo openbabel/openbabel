@@ -19,6 +19,9 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/elements.h>
+#include <openbabel/oberror.h>
+#include <openbabel/obutil.h>
+#include <openbabel/ring.h>
 #include <openbabel/bond.h>
 #include <openbabel/mol.h>
 #include <climits>
@@ -34,10 +37,8 @@ namespace OpenBabel
       OBBondPrivate() {}
   };
 
-#if __cplusplus >= 201103L
-  thread_local //this is required for correct multi-threading
-#endif
-  extern OBAromaticTyper  aromtyper;
+  extern THREAD_LOCAL OBAromaticTyper  aromtyper;
+  extern OBMessageHandler obErrorLog;
 
   /** \class OBBond bond.h <openbabel/bond.h>
       \brief Bond class
@@ -88,11 +89,6 @@ namespace OpenBabel
     SetEnd(end);
     SetBondOrder(order);
     SetFlag(flags);
-  }
-
-  void OBBond::SetBO(int order)
-  {
-    SetBondOrder(order);
   }
 
   void OBBond::SetBondOrder(int order)
@@ -344,7 +340,7 @@ namespace OpenBabel
 
     if (!a1 || !a2)
       return(false);
-    if (GetBO() != 1)
+    if (GetBondOrder() != 1)
       return(false);
 
     OBBond *bond;
@@ -375,7 +371,7 @@ namespace OpenBabel
 
     if (!a1 || !a2)
       return(false);
-    if (GetBO() != 1)
+    if (GetBondOrder() != 1)
       return(false);
 
     OBBond *bond;
@@ -407,7 +403,7 @@ namespace OpenBabel
 
     if (!a1 || !a2)
       return(false);
-    if (GetBO() != 1)
+    if (GetBondOrder() != 1)
       return(false);
 
     OBBond *bond;
@@ -440,7 +436,7 @@ namespace OpenBabel
 
     if (!a1 || !a2)
       return(false);
-    if (GetBO() != 1)
+    if (GetBondOrder() != 1)
       return(false);
 
     OBBond *bond;
@@ -454,7 +450,7 @@ namespace OpenBabel
 
   bool OBBond::IsCarbonyl()
   {
-    if (GetBO() != 2)
+    if (GetBondOrder() != 2)
       return(false);
 
     if ((_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 8) ||

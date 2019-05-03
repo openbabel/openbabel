@@ -32,6 +32,13 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/locale.h>
 #include <openbabel/elements.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/ring.h>
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 
 #include <iomanip>
 #include "forcefieldmmff94.h"
@@ -1396,7 +1403,7 @@ namespace OpenBabel
             prev_rj = index;
             continue;
           }
-          if (ringbond->GetBO() == 2) {
+          if (ringbond->GetBondOrder() == 2) {
             pi_electrons += 2;
             prev_rj = index;
             n++;
@@ -1427,7 +1434,7 @@ namespace OpenBabel
           if (!ringbond) {
             continue;
           }
-          if (ringbond->GetBO() == 2)
+          if (ringbond->GetBondOrder() == 2)
             pi_electrons++;
         }
 
@@ -1443,7 +1450,7 @@ namespace OpenBabel
       // is the bond from the first to the last atom double?
       ringbond = _mol.GetBond(first_rj, index);
       if (ringbond) {
-        if (ringbond->GetBO() == 2)
+        if (ringbond->GetBondOrder() == 2)
           pi_electrons += 2;
       }
 
@@ -2348,7 +2355,7 @@ namespace OpenBabel
               // (e.g. by MOE, noticed by Paolo Tosco)
               int ndab = 0;
               FOR_BONDS_OF_ATOM(bond2, &*nbr) {
-                if (bond2->GetBO() == 2 || bond2->GetBO() == 5)
+                if (bond2->GetBondOrder() == 2 || bond2->GetBondOrder() == 5)
                   ndab++;
               }
               if (ndab + nbr->GetValence() == 5)
@@ -2714,7 +2721,7 @@ namespace OpenBabel
       if (HasGroups()) {
         bool validBond = false;
         for (unsigned int i=0; i < _intraGroup.size(); ++i) {
-          if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx())) {
+          if (_intraGroup[i].BitIsSet(a->GetIdx()) && _intraGroup[i].BitIsSet(b->GetIdx())) {
             validBond = true;
             break;
           }
@@ -2810,8 +2817,8 @@ namespace OpenBabel
       if (HasGroups()) {
         bool validAngle = false;
         for (unsigned int i=0; i < _intraGroup.size(); ++i) {
-          if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) &&
-              _intraGroup[i].BitIsOn(c->GetIdx())) {
+          if (_intraGroup[i].BitIsSet(a->GetIdx()) && _intraGroup[i].BitIsSet(b->GetIdx()) &&
+              _intraGroup[i].BitIsSet(c->GetIdx())) {
             validAngle = true;
             break;
           }
@@ -3108,8 +3115,8 @@ namespace OpenBabel
       if (HasGroups()) {
         bool validTorsion = false;
         for (unsigned int i=0; i < _intraGroup.size(); ++i) {
-          if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) &&
-              _intraGroup[i].BitIsOn(c->GetIdx()) && _intraGroup[i].BitIsOn(d->GetIdx())) {
+          if (_intraGroup[i].BitIsSet(a->GetIdx()) && _intraGroup[i].BitIsSet(b->GetIdx()) &&
+              _intraGroup[i].BitIsSet(c->GetIdx()) && _intraGroup[i].BitIsSet(d->GetIdx())) {
             validTorsion = true;
             break;
           }
@@ -3391,8 +3398,8 @@ namespace OpenBabel
           if (HasGroups()) {
             bool validOOP = false;
             for (unsigned int i=0; i < _intraGroup.size(); ++i) {
-              if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) &&
-                  _intraGroup[i].BitIsOn(c->GetIdx()) && _intraGroup[i].BitIsOn(d->GetIdx())) {
+              if (_intraGroup[i].BitIsSet(a->GetIdx()) && _intraGroup[i].BitIsSet(b->GetIdx()) &&
+                  _intraGroup[i].BitIsSet(c->GetIdx()) && _intraGroup[i].BitIsSet(d->GetIdx())) {
                 validOOP = true;
                 break;
               }
@@ -3494,18 +3501,18 @@ namespace OpenBabel
       if (HasGroups()) {
         bool validVDW = false;
         for (unsigned int i=0; i < _interGroup.size(); ++i) {
-          if (_interGroup[i].BitIsOn(a->GetIdx()) && _interGroup[i].BitIsOn(b->GetIdx())) {
+          if (_interGroup[i].BitIsSet(a->GetIdx()) && _interGroup[i].BitIsSet(b->GetIdx())) {
             validVDW = true;
             break;
           }
         }
         if (!validVDW) {
           for (unsigned int i=0; i < _interGroups.size(); ++i) {
-            if (_interGroups[i].first.BitIsOn(a->GetIdx()) && _interGroups[i].second.BitIsOn(b->GetIdx())) {
+            if (_interGroups[i].first.BitIsSet(a->GetIdx()) && _interGroups[i].second.BitIsSet(b->GetIdx())) {
               validVDW = true;
               break;
             }
-            if (_interGroups[i].first.BitIsOn(b->GetIdx()) && _interGroups[i].second.BitIsOn(a->GetIdx())) {
+            if (_interGroups[i].first.BitIsSet(b->GetIdx()) && _interGroups[i].second.BitIsSet(a->GetIdx())) {
               validVDW = true;
               break;
             }
@@ -3627,18 +3634,18 @@ namespace OpenBabel
       if (HasGroups()) {
         bool validEle = false;
         for (unsigned int i=0; i < _interGroup.size(); ++i) {
-          if (_interGroup[i].BitIsOn(a->GetIdx()) && _interGroup[i].BitIsOn(b->GetIdx())) {
+          if (_interGroup[i].BitIsSet(a->GetIdx()) && _interGroup[i].BitIsSet(b->GetIdx())) {
             validEle = true;
             break;
           }
         }
         if (!validEle) {
           for (unsigned int i=0; i < _interGroups.size(); ++i) {
-            if (_interGroups[i].first.BitIsOn(a->GetIdx()) && _interGroups[i].second.BitIsOn(b->GetIdx())) {
+            if (_interGroups[i].first.BitIsSet(a->GetIdx()) && _interGroups[i].second.BitIsSet(b->GetIdx())) {
               validEle = true;
               break;
             }
-            if (_interGroups[i].first.BitIsOn(b->GetIdx()) && _interGroups[i].second.BitIsOn(a->GetIdx())) {
+            if (_interGroups[i].first.BitIsSet(b->GetIdx()) && _interGroups[i].second.BitIsSet(a->GetIdx())) {
               validEle = true;
               break;
             }

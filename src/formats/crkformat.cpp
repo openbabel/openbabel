@@ -14,6 +14,11 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/elements.h>
+#include <cstdlib>
 
 #include <sstream>
 
@@ -450,7 +455,7 @@ namespace OpenBabel
         OBBond *bnd=mol.GetBond(m);
 
         int from=bnd->GetBeginAtom()->GetIdx(),to=bnd->GetEndAtom()->GetIdx();
-        double order=bnd->GetBO();
+        double order=bnd->GetBondOrder();
         if (bnd->IsAromatic())
           order=1.5;
         int style=0;
