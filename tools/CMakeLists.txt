@@ -50,7 +50,6 @@ if(BUILD_SHARED)
                     ARCHIVE DESTINATION lib${LIB_SUFFIX}
     )
   endforeach(tool)
-  TARGET_LINK_LIBRARIES(obrms ${Boost_IOSTREAMS_LIBRARY} ${Boost_PROGRAM_OPTIONS_LIBRARY})
 
   if(NOT MINIMAL_BUILD)
     # obgrep, obrms, obspectrophore -- require getopt
