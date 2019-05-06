@@ -61,6 +61,12 @@ public:
     void AssignTypes(OBMol&);
 };
 
+#ifndef THREAD_LOCAL
+# define THREAD_LOCAL
+#endif
+#ifndef EXTERN
+#error EXTERN
+#endif
 //! Global OBAtomTyper for marking internal valence, hybridization,
 //!  and atom types (for internal and external use)
 THREAD_LOCAL EXTERN OBAtomTyper      atomtyper;

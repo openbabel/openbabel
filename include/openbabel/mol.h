@@ -28,7 +28,9 @@ GNU General Public License for more details.
 #  define EXTERN extern
 #endif
 #ifndef THREAD_LOCAL
-# if (__cplusplus >= 201103L) && !defined(SWIG)
+#ifdef SWIG
+# define THREAD_LOCAL
+# elif (__cplusplus >= 201103L) 
 //this is required for correct multi-threading
 #  define THREAD_LOCAL thread_local
 # else
