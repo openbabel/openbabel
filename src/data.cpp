@@ -499,7 +499,7 @@ namespace OpenBabel
     skipres = ""; // don't skip any residues right now
     for (a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i))
       {
-        if (a1->GetAtomicNum() == OBElements::Oxygen && !a1->GetValence())
+        if (a1->GetAtomicNum() == OBElements::Oxygen && !a1->GetExplicitDegree())
           {
             a1->SetType("O3");
             continue;
@@ -511,7 +511,7 @@ namespace OpenBabel
           }
 
         //***valence rule for O-
-        if (a1->GetAtomicNum() == OBElements::Oxygen && a1->GetValence() == 1)
+        if (a1->GetAtomicNum() == OBElements::Oxygen && a1->GetExplicitDegree() == 1)
           {
             OBBond *bond;
             bond = (OBBond*)*(a1->BeginBonds());

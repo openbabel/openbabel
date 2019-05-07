@@ -159,7 +159,7 @@ namespace OpenBabel
         for (j = _mlist.begin();j != _mlist.end();++j) {
           if (tmpmol.GetAtom((*j)[0])->GetAtomicNum() == OBElements::Hydrogen)
             continue;
-          int Hcount = tmpmol.GetAtom((*j)[0])->GetValence() - tmpmol.GetAtom((*j)[0])->GetHvyValence();
+          int Hcount = tmpmol.GetAtom((*j)[0])->GetExplicitDegree() - tmpmol.GetAtom((*j)[0])->GetHvyDegree();
           hydrogenValues[(*j)[0] - 1] = i->second * Hcount;
           seenHydrogen.SetBitOn((*j)[0]);
           if (_debug)
@@ -182,7 +182,7 @@ namespace OpenBabel
         debugMessage << index+1 << " = " << atomValues[index] << " ";
         if (!seenHeavy.BitIsSet(index + 1)) debugMessage << "un";
         debugMessage << "matched...";
-        int Hcount = tmpmol.GetAtom(index + 1)->GetValence() - tmpmol.GetAtom(index + 1)->GetHvyValence();
+        int Hcount = tmpmol.GetAtom(index + 1)->GetExplicitDegree() - tmpmol.GetAtom(index + 1)->GetHvyDegree();
         debugMessage << "   " << Hcount << " hydrogens = " << hydrogenValues[index] << " ";
         if (!seenHydrogen.BitIsSet(index + 1)) debugMessage << "un";
         debugMessage << "matched\n";

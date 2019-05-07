@@ -777,8 +777,8 @@ namespace OpenBabel {
       // Note: In theory, we could relax the second requirement but we would
       //       need to change the data structure we use to store cis/trans
       //       stereo to only store 2 refs instead of 4
-      int v1 = a1->GetValence();
-      int v2 = a2->GetValence();
+      int v1 = a1->GetExplicitDegree();
+      int v2 = a2->GetExplicitDegree();
       if (v1 < 2 || v1 > 3 || v2 < 2 || v2 > 3) {
         continue;
       }
@@ -2151,7 +2151,7 @@ namespace OpenBabel {
   // to insert an atom ID into atom4refs
   int OBSmilesParser::NumConnections(OBAtom *atom, bool isImplicitRef)
   {
-    int val = atom->GetValence();
+    int val = atom->GetExplicitDegree();
     // The implicit H is not included in "val" so we need to adjust by 1
     if (isImplicitRef)
       return val+1;
@@ -2663,7 +2663,7 @@ namespace OpenBabel {
     // Don't suppress any explicit Hs attached if the atom is an H itself (e.g. [H][H]) or -xh was specified
     if (atom->GetAtomicNum() != OBElements::Hydrogen && !options.showexplicitH) {
       FOR_NBORS_OF_ATOM(nbr, atom) {
-        if (nbr->GetAtomicNum() == OBElements::Hydrogen && (!options.isomeric || nbr->GetIsotope() == 0) && nbr->GetValence() == 1 &&
+        if (nbr->GetAtomicNum() == OBElements::Hydrogen && (!options.isomeric || nbr->GetIsotope() == 0) && nbr->GetExplicitDegree() == 1 &&
           nbr->GetFormalCharge() == 0 && (!options.showatomclass || !nbr->GetData("Atom Class")))
           numExplicitHsToSuppress++;
       }
@@ -2684,7 +2684,7 @@ namespace OpenBabel {
             bracketElement = true;
         }
         else {
-          int bosum = atom->BOSum() - numExplicitHsToSuppress;
+          int bosum = atom->GetExplicitValence() - numExplicitHsToSuppress;
           unsigned int implicitValence = SmilesValence(element, bosum, false);
           unsigned int defaultNumImplicitHs = implicitValence - bosum;
           if (implicitValence == 0 // hypervalent
@@ -3286,7 +3286,7 @@ namespace OpenBabel {
   {
     if (atom->GetIsotope() != 0)          // Deuterium or Tritium
       return false;
-    if (atom->GetValence() != 1)          // not exactly one bond
+    if (atom->GetExplicitDegree() != 1)          // not exactly one bond
       return false;
 
     FOR_NBORS_OF_ATOM(nbr, atom) {
@@ -3301,7 +3301,7 @@ namespace OpenBabel {
    * FUNCTION: GetSmilesValence
    *
    * DESCRIPTION:
-   *       This is like GetHvyValence(), but it returns the "valence" of an
+   *       This is like GetHvyDegree(), but it returns the "valence" of an
    *       atom as it appears in the SMILES string.  In particular, hydrogens
    *       count if they will appear explicitly -- see IsSuppressedHydrogen()
    *       above.
@@ -3312,15 +3312,15 @@ namespace OpenBabel {
     int count = 0;
 
     if (atom->GetAtomicNum() == OBElements::Hydrogen)
-      return atom->GetValence();
+      return atom->GetExplicitDegree();
 
     if (options.showexplicitH)
-      return atom->GetValence();
+      return atom->GetExplicitDegree();
 
     FOR_NBORS_OF_ATOM(nbr, atom) {
       if (nbr->GetAtomicNum() != OBElements::Hydrogen
             || nbr->GetIsotope() != 0
-            || nbr->GetValence() != 1)
+            || nbr->GetExplicitDegree() != 1)
         count++;
     }
     return(count);
@@ -3922,13 +3922,13 @@ namespace OpenBabel {
         // For Inchified or Universal SMILES, if the start atom is an [O-] attached to atom X, choose any =O attached to X instead.
         //          Ditto for [S-] and =S.
         if ((_pconv->IsOption("I") || universal_smiles)
-             && root_atom && root_atom->GetFormalCharge()==-1  && root_atom->GetValence() == 1
+             && root_atom && root_atom->GetFormalCharge()==-1  && root_atom->GetExplicitDegree() == 1
              && root_atom->HasSingleBond() && (root_atom->GetAtomicNum() == OBElements::Oxygen || root_atom->GetAtomicNum() == OBElements::Sulfur)) {
           OBBondIterator bi = root_atom->BeginBonds();
           OBAtom* central = root_atom->BeginNbrAtom(bi);
           FOR_NBORS_OF_ATOM(nbr, central) {
             if (root_atom == &*nbr) continue;
-            if (nbr->GetAtomicNum() == root_atom->GetAtomicNum() && nbr->GetValence() == 1 && nbr->HasDoubleBond()) {
+            if (nbr->GetAtomicNum() == root_atom->GetAtomicNum() && nbr->GetExplicitDegree() == 1 && nbr->HasDoubleBond()) {
               root_atom = &*nbr;
               break;
             }

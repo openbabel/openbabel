@@ -192,16 +192,22 @@ namespace OpenBabel
       //! \return the index into a pointer-driven array as used by
       //!   GetCoordPtr() or SetCoordPtr()
       unsigned int GetCoordinateIdx() const { return((int)_cidx); }
-      //! \return The current number of explicit connections
-      unsigned int GetValence() const { return (unsigned int)_vbond.size(); }
+      //! \return The number of explicit bonds to this atom
+      unsigned int GetExplicitDegree() const { return (unsigned int)_vbond.size(); }
+      //! \return The total number of bonds to this atom including bonds to implicit hydrogens
+      unsigned int GetTotalDegree() const { return (unsigned int)(_vbond.size() + _imph); }
+      //! \return The sum of the bond orders of the explicit bonds to this atom
+      unsigned int GetExplicitValence() const;
+      //! \return The sum of the bond orders of all bonds to this atom including bonds to implicit hydrogens
+      unsigned int GetTotalValence() const;
       //! \return The hybridization of this atom: 1 for sp, 2 for sp2, 3 for sp3, 4 for sq. planar, 5 for trig. bipy, 6 for octahedral
       unsigned int GetHyb()             const;
       //! \return The number of implicit hydrogens attached to this atom
       unsigned char GetImplicitHCount() const { return _imph; };
       //! \return The number of non-hydrogens connected to this atom
-      unsigned int GetHvyValence()      const;
+      unsigned int GetHvyDegree()      const;
       //! \return The number of heteroatoms connected to an atom
-      unsigned int GetHeteroValence()   const;
+      unsigned int GetHeteroDegree()   const;
       //! \return the atomic type (e.g., for molecular mechanics)
       char        *GetType();
 
@@ -351,8 +357,6 @@ namespace OpenBabel
       double	  SmallestBondAngle();
       //! \return The average angle of bonds to this atom
       double	  AverageBondAngle();
-      //! \return The sum of the bond orders of the bonds to the atom (i.e. double bond = 2...)
-      unsigned int  BOSum()                 const;
       /** Lewis acid/base vacancies for this atom
        *  \return A pair of integers, where first is acid count and second is base count
        *  \since version 2.3

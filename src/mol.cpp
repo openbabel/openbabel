@@ -647,7 +647,7 @@ namespace OpenBabel
     for (i=0,atom = BeginAtom(j);atom;atom = NextAtom(j),++i)
       {
         vid[i] =  (unsigned int)v[i];
-        vid[i] += (unsigned int)(atom->GetHvyValence()*100);
+        vid[i] += (unsigned int)(atom->GetHvyDegree()*100);
         vid[i] += (unsigned int)(((atom->IsAromatic()) ? 1 : 0)*1000);
         vid[i] += (unsigned int)(((atom->IsInRing()) ? 1 : 0)*10000);
         vid[i] += (unsigned int)(atom->GetAtomicNum()*100000);
@@ -1854,7 +1854,7 @@ namespace OpenBabel
   // Convenience function used by the DeleteHydrogens methods
   static bool IsSuppressibleHydrogen(OBAtom *atom)
   {
-    if (atom->GetIsotope() == 0 && atom->GetHvyValence() == 1 && atom->GetFormalCharge() == 0
+    if (atom->GetIsotope() == 0 && atom->GetHvyDegree() == 1 && atom->GetFormalCharge() == 0
         && !atom->GetData("Atom Class"))
       return true;
     else
@@ -2544,7 +2544,7 @@ namespace OpenBabel
           }
         else
           {
-            if (insertpos >= static_cast<int>(bgn->GetValence()))
+            if (insertpos >= static_cast<int>(bgn->GetExplicitDegree()))
               bgn->AddBond(bond);
             else //need to insert the bond for the connectivity order to be preserved
               {    //otherwise stereochemistry gets screwed up
@@ -2954,7 +2954,7 @@ namespace OpenBabel
         (atom->GetVector()).Get(&c[j*3]);
         pair<OBAtom*,double> entry(atom, atom->GetVector().z());
         zsortedAtoms.push_back(entry);
-        bondCount.push_back(atom->GetValence());
+        bondCount.push_back(atom->GetExplicitDegree());
       }
     sort(zsortedAtoms.begin(), zsortedAtoms.end(), SortAtomZ);
 
@@ -3032,7 +3032,7 @@ namespace OpenBabel
     BeginModify(); //prevent needless re-perception in DeleteBond
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       {
-        while (atom->BOSum() > static_cast<unsigned int>(OBElements::GetMaxBonds(atom->GetAtomicNum()))
+        while (atom->GetExplicitValence() > static_cast<unsigned int>(OBElements::GetMaxBonds(atom->GetAtomicNum()))
                || atom->SmallestBondAngle() < 45.0)
           {
             bond = atom->BeginBond(l);
@@ -3152,7 +3152,7 @@ namespace OpenBabel
         // special case for imines
         if (atom->GetAtomicNum() == OBElements::Nitrogen
             && atom->ExplicitHydrogenCount() == 1
-            && atom->GetValence() == 2
+            && atom->GetExplicitDegree() == 2
             && angle > 109.5)
           atom->SetHyb(2);
 
@@ -3192,7 +3192,7 @@ namespace OpenBabel
                     // if an aromatic ring atom has valence 3, it is already set
                     // to sp2 because the average angles should be 120 anyway
                     // so only look for valence 2
-                    if (b->GetValence() == 2)
+                    if (b->GetExplicitDegree() == 2)
                       b->SetHyb(2);
                   }
               }
@@ -3212,7 +3212,7 @@ namespace OpenBabel
                 for (unsigned int ringAtom = 0; ringAtom != path.size(); ++ringAtom)
                   {
                     b = GetAtom(path[ringAtom]);
-                    if (b->GetValence() == 2 || b->GetValence() == 3)
+                    if (b->GetExplicitDegree() == 2 || b->GetExplicitDegree() == 3)
                       b->SetHyb(2);
                   }
               }
@@ -3231,7 +3231,7 @@ namespace OpenBabel
             openNbr = false;
             for (b = atom->BeginNbrAtom(j); b; b = atom->NextNbrAtom(j))
               {
-                if (b->GetHyb() < 3 || b->GetValence() == 1)
+                if (b->GetHyb() < 3 || b->GetExplicitDegree() == 1)
                   {
                     openNbr = true;
                     break;
@@ -3364,11 +3364,11 @@ namespace OpenBabel
         atom = sortedAtoms[iter].first;
         // Debugging statement
         //        cout << " atom->Hyb " << atom->GetAtomicNum() << " " << atom->GetIdx() << " " << atom->GetHyb()
-        //             << " BO: " << atom->BOSum() << endl;
+        //             << " BO: " << atom->GetExplicitValence() << endl;
 
         // Possible sp-hybrids
-        if ( (atom->GetHyb() == 1 || atom->GetValence() == 1)
-             && atom->BOSum() + 2  <= static_cast<unsigned int>(OBElements::GetMaxBonds(atom->GetAtomicNum()))
+        if ( (atom->GetHyb() == 1 || atom->GetExplicitDegree() == 1)
+             && atom->GetExplicitValence() + 2  <= static_cast<unsigned int>(OBElements::GetMaxBonds(atom->GetAtomicNum()))
              )
           {
 
@@ -3376,7 +3376,7 @@ namespace OpenBabel
             // (and pick the one with highest electronegativity first)
             // *or* pick a neighbor that's a terminal atom
             if (atom->HasNonSingleBond() ||
-                (atom->GetAtomicNum() == 7 && atom->BOSum() + 2 > 3))
+                (atom->GetAtomicNum() == 7 && atom->GetExplicitValence() + 2 > 3))
               continue;
 
             maxElNeg = 0.0;
@@ -3385,19 +3385,19 @@ namespace OpenBabel
             for (b = atom->BeginNbrAtom(j); b; b = atom->NextNbrAtom(j))
               {
                 currentElNeg = OBElements::GetElectroNeg(b->GetAtomicNum());
-                if ( (b->GetHyb() == 1 || b->GetValence() == 1)
-                     && b->BOSum() + 2 <= static_cast<unsigned int>(OBElements::GetMaxBonds(b->GetAtomicNum()))
+                if ( (b->GetHyb() == 1 || b->GetExplicitDegree() == 1)
+                     && b->GetExplicitValence() + 2 <= static_cast<unsigned int>(OBElements::GetMaxBonds(b->GetAtomicNum()))
                      && (currentElNeg > maxElNeg ||
                          (IsApprox(currentElNeg,maxElNeg, 1.0e-6)
                           && (atom->GetBond(b))->GetLength() < shortestBond)) )
                   {
                     if (b->HasNonSingleBond() ||
-                        (b->GetAtomicNum() == 7 && b->BOSum() + 2 > 3))
+                        (b->GetAtomicNum() == 7 && b->GetExplicitValence() + 2 > 3))
                       continue;
 
                     // Test terminal bonds against expected triple bond lengths
                     bondLength = (atom->GetBond(b))->GetLength();
-                    if (atom->GetValence() == 1 || b->GetValence() == 1) {
+                    if (atom->GetExplicitDegree() == 1 || b->GetExplicitDegree() == 1) {
                       testLength = CorrectedBondRad(atom->GetAtomicNum(), atom->GetHyb())
                         + CorrectedBondRad(b->GetAtomicNum(), b->GetHyb());
                       if (bondLength > 0.9 * testLength)
@@ -3413,12 +3413,12 @@ namespace OpenBabel
               (atom->GetBond(c))->SetBondOrder(3);
           }
         // Possible sp2-hybrid atoms
-        else if ( (atom->GetHyb() == 2 || atom->GetValence() == 1)
-                  && atom->BOSum() + 1 <= static_cast<unsigned int>(OBElements::GetMaxBonds(atom->GetAtomicNum())) )
+        else if ( (atom->GetHyb() == 2 || atom->GetExplicitDegree() == 1)
+                  && atom->GetExplicitValence() + 1 <= static_cast<unsigned int>(OBElements::GetMaxBonds(atom->GetAtomicNum())) )
           {
             // as above
             if (atom->HasNonSingleBond() ||
-                (atom->GetAtomicNum() == 7 && atom->BOSum() + 1 > 3))
+                (atom->GetAtomicNum() == 7 && atom->GetExplicitValence() + 1 > 3))
               continue;
 
             // Don't build multiple bonds to ring sulfurs
@@ -3436,13 +3436,13 @@ namespace OpenBabel
             for (b = atom->BeginNbrAtom(j); b; b = atom->NextNbrAtom(j))
               {
                 currentElNeg = OBElements::GetElectroNeg(b->GetAtomicNum());
-                if ( (b->GetHyb() == 2 || b->GetValence() == 1)
-                     && b->BOSum() + 1 <= static_cast<unsigned int>(OBElements::GetMaxBonds(b->GetAtomicNum()))
+                if ( (b->GetHyb() == 2 || b->GetExplicitDegree() == 1)
+                     && b->GetExplicitValence() + 1 <= static_cast<unsigned int>(OBElements::GetMaxBonds(b->GetAtomicNum()))
                      && (GetBond(atom, b))->IsDoubleBondGeometry()
                      && (currentElNeg > maxElNeg || (IsApprox(currentElNeg,maxElNeg, 1.0e-6)) ) )
                   {
                     if (b->HasNonSingleBond() ||
-                        (b->GetAtomicNum() == 7 && b->BOSum() + 1 > 3))
+                        (b->GetAtomicNum() == 7 && b->GetExplicitValence() + 1 > 3))
                       continue;
 
                     if (b->IsInRing() && b->GetAtomicNum() == 16) {
@@ -3454,7 +3454,7 @@ namespace OpenBabel
 
                     // Test terminal bonds against expected double bond lengths
                     bondLength = (atom->GetBond(b))->GetLength();
-                    if (atom->GetValence() == 1 || b->GetValence() == 1) {
+                    if (atom->GetExplicitDegree() == 1 || b->GetExplicitDegree() == 1) {
                       testLength = CorrectedBondRad(atom->GetAtomicNum(), atom->GetHyb())
                         + CorrectedBondRad(b->GetAtomicNum(), b->GetHyb());
                       if (bondLength > 0.93 * testLength)
@@ -3743,7 +3743,7 @@ namespace OpenBabel
     for (patom = BeginAtom(ai);patom;patom = NextAtom(ai)) //all atoms
     {
       if(patom->GetAtomicNum() == OBElements::Nitrogen // || patom->GetAtomicNum() == OBElements::Phosphorus) not phosphorus!
-        && (patom->BOSum()==5 || (patom->BOSum()==4 && patom->GetFormalCharge()==0)))
+        && (patom->GetExplicitValence()==5 || (patom->GetExplicitValence()==4 && patom->GetFormalCharge()==0)))
       {
         // Find the bond to be modified. Prefer a bond to a hetero-atom,
         // and the highest order bond if there is a choice.
@@ -4294,7 +4294,7 @@ namespace OpenBabel
       if (atomicnum == 1)
         continue;
       int charge = atom->GetFormalCharge();
-      unsigned bosum = atom->BOSum();
+      unsigned bosum = atom->GetExplicitValence();
       unsigned int totalValence = bosum + atom->GetImplicitHCount();
       unsigned int typicalValence = GetTypicalValence(atomicnum, bosum, charge);
       int diff = typicalValence - totalValence;

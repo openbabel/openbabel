@@ -252,7 +252,7 @@ namespace OpenBabel
             snprintf(buffer, BUFF_SIZE, " %5d %1d",nbr->GetIdx(),(*j)->GetBondOrder());
             ofs << buffer;
           }
-        for (k=atom->GetValence();k < 6;k++)
+        for (k=atom->GetExplicitDegree();k < 6;k++)
           {
             snprintf(buffer, BUFF_SIZE," %5d %1d",0,0);
             ofs << buffer;

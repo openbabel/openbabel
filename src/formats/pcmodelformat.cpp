@@ -212,7 +212,7 @@ namespace OpenBabel
         ofs << "AT " << atom->GetIdx() << "," << type << ":";
         ofs << atom->GetX() << "," << atom->GetY() << "," << atom->GetZ();
 
-        if (atom->GetValence() > 0)
+        if (atom->GetExplicitDegree() > 0)
           {
             ofs << " B";
             for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))

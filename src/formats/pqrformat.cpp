@@ -570,7 +570,7 @@ namespace OpenBabel
     for (i = 1; i <= mol.NumAtoms(); i ++)
       {
         atom = mol.GetAtom(i);
-        if (atom->GetValence() == 0)
+        if (atom->GetExplicitDegree() == 0)
           continue; // no need to write a CONECT record -- no bonds
 
         snprintf(buffer, BUFF_SIZE, "CONECT%5d", i);
@@ -591,7 +591,7 @@ namespace OpenBabel
           }
 
         // Add trailing spaces
-        int remainingValence = atom->GetValence() % 4;
+        int remainingValence = atom->GetExplicitDegree() % 4;
         for (int count = 0; count < (4 - remainingValence); count++) {
           snprintf(buffer, BUFF_SIZE, "     ");
           ofs << buffer;

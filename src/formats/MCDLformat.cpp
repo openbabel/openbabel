@@ -568,7 +568,7 @@ private:
     aCharge[i-1]=atom->GetFormalCharge();
     aRadical[i-1]=atom->GetSpinMultiplicity();
     aSymb[i-1]=OBElements::GetSymbol(atom->GetAtomicNum());
-    nConn[i-1]=atom->GetHvyValence();
+    nConn[i-1]=atom->GetHvyDegree();
     aNumber[i-1]=i-1;
   };
   for (i=1; i<=nbStore; i++) {

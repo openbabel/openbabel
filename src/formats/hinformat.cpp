@@ -196,7 +196,7 @@ namespace OpenBabel
                 atom->GetX(),
                 atom->GetY(),
                 atom->GetZ(),
-                atom->GetValence());
+                atom->GetExplicitDegree());
         ofs << buffer;
         for (bond = atom->BeginBond(j); bond; bond = atom->NextBond(j))
           {
