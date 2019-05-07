@@ -1048,8 +1048,8 @@ namespace OpenBabel
   {
     // Remove any existing wedge and hash bonds
     FOR_BONDS_OF_MOL(b,mol)  {
-      b->UnsetWedge();
-      b->UnsetHash();
+      b->SetWedge(false);
+      b->SetHash(false);
     }
 
     std::map<OBBond*, enum OBStereo::BondDirection> updown;

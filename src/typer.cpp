@@ -617,9 +617,9 @@ namespace OpenBabel
 
     //unset all aromatic flags
     for (atom = mol.BeginAtom(i); atom; atom = mol.NextAtom(i))
-      atom->UnsetAromatic();
+      atom->SetAromatic(false);
     for (bond = mol.BeginBond(j); bond; bond = mol.NextBond(j))
-      bond->UnsetAromatic();
+      bond->SetAromatic(false);
 
     // New code using lookups instead of SMARTS patterns
     FOR_ATOMS_OF_MOL(atom, mol) {

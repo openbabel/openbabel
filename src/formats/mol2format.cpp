@@ -485,10 +485,10 @@ namespace OpenBabel
         if (!otherOxygenOrSulfur) continue;
 
         // Now set as C(=O)O
-        bondA->UnsetAromatic();
+        bondA->SetAromatic(false);
         oxygenOrSulfur->SetFormalCharge(-1);
 
-        bondB->UnsetAromatic();
+        bondB->SetAromatic(false);
         bondB->SetBondOrder(2);
       }
 

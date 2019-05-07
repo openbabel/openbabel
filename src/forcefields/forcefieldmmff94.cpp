@@ -2664,9 +2664,9 @@ namespace OpenBabel
     // mark all atoms and bonds as non-aromatic
     _mol.SetAromaticPerceived();
     FOR_BONDS_OF_MOL (bond, _mol)
-      bond->UnsetAromatic();
+      bond->SetAromatic(false);
     FOR_ATOMS_OF_MOL (atom, _mol)
-      atom->UnsetAromatic();
+      atom->SetAromatic(false);
 
     // It might be needed to run this function more than once...
     bool done = true;
