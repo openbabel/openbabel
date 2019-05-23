@@ -955,7 +955,7 @@ namespace OpenBabel
         return true;
       if (atom->GetAtomicNum() != (mol.GetAtom(atom->GetIdx()))->GetAtomicNum())
         return true;
-      if (atom->GetValence() != (mol.GetAtom(atom->GetIdx()))->GetValence())
+      if (atom->GetExplicitDegree() != (mol.GetAtom(atom->GetIdx()))->GetExplicitDegree())
         return true;
     }
     FOR_BONDS_OF_MOL (bond, _mol) {

@@ -761,7 +761,7 @@ namespace OpenBabel
     for (i = 1; i <= mol.NumAtoms(); i ++)
       {
         atom = mol.GetAtom(i);
-        if (atom->GetValence() == 0)
+        if (atom->GetExplicitDegree() == 0)
           continue; // no need to write a CONECT record -- no bonds
 
         // Write out up to 4 real bonds per line PR#1711154

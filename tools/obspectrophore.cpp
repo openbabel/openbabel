@@ -186,6 +186,7 @@ int main(int argc,char **argv)
 			std::cerr << count;
 			std::cerr << " (counting starts at 0)!";
 			std::cerr << std::endl;
+			exit(1);
 		}
 		else
 		{

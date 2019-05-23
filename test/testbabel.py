@@ -19,7 +19,7 @@ import re
 import sys
 import unittest
 
-from subprocess import Popen, PIPE, check_output, STDOUT
+from subprocess import CalledProcessError, Popen, PIPE, check_output, STDOUT
 
 def run_exec(*args):
     """Run one of OpenBabel's executables
@@ -230,7 +230,9 @@ TORSDOF 5
         os.environ["BABEL_LIBDIR"] = ""
 
         obabel = executable("obabel")
-        msg = check_output('%s -:C -osmi' % obabel, shell=True, stderr=STDOUT, universal_newlines=True)
+        with self.assertRaises(CalledProcessError) as cm:
+            check_output('%s -:C -osmi' % obabel, shell=True, stderr=STDOUT, universal_newlines=True)
+        msg = cm.exception.output
         if libdir:
             os.environ["BABEL_LIBDIR"] = libdir
         else:

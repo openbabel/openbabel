@@ -162,7 +162,7 @@ namespace OpenBabel {
     if (!Fe || !C)
       return false;
 
-    if (Fe->GetValence() < 10)
+    if (Fe->GetExplicitDegree() < 10)
       return false;
 
     return C->HasDoubleBond() && C->IsInRing();

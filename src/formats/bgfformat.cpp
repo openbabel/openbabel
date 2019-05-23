@@ -265,7 +265,7 @@ namespace OpenBabel
     OBAtom *nbr;
     vector<OBBond*>::iterator j;
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-      if (atom->GetValence())
+      if (atom->GetExplicitDegree())
         {
           snprintf(buffer,BUFF_SIZE,"CONECT%6d",atom->GetIdx());
           ofs << buffer;

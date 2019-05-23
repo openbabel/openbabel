@@ -627,15 +627,15 @@ namespace OpenBabel
         OBAtom *atom = mol->GetAtom(*i);
         switch (atom->GetAtomicNum()) {
         case OBElements::Sulfur:
-          if (atom->GetValence() == 2)
+          if (atom->GetExplicitDegree() == 2)
             return (*i);
           break;
         case OBElements::Oxygen:
-          if (atom->GetValence() == 2)
+          if (atom->GetExplicitDegree() == 2)
             return (*i);
           break;
         case OBElements::Nitrogen:
-          if (atom->BOSum() == atom->GetValence())
+          if (atom->GetExplicitValence() == atom->GetExplicitDegree())
             return (*i);
           break;
         }

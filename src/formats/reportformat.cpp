@@ -196,7 +196,7 @@ namespace OpenBabel
   {
     FOR_ATOMS_OF_MOL(atom, mol) {
       if ((atom->GetAtomicNum() == OBElements::Carbon || atom->GetAtomicNum() == OBElements::Nitrogen)
-        && atom->GetHvyValence() > 2
+        && atom->GetHvyDegree() > 2
         && atom->IsChiral())
         return true;
     }

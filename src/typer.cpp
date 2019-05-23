@@ -207,7 +207,7 @@ namespace OpenBabel
     // check all atoms to make sure *some* hybridization is assigned
     for (atom = mol.BeginAtom(k);atom;atom = mol.NextAtom(k))
       if (atom->GetHyb() == 0) {
-        switch (atom->GetValence()) {
+        switch (atom->GetExplicitDegree()) {
           case 0:
           case 1:
           case 2:
@@ -220,7 +220,7 @@ namespace OpenBabel
             atom->SetHyb(3);
             break;
           default:
-            atom->SetHyb(atom->GetValence());
+            atom->SetHyb(atom->GetExplicitDegree());
         }
       }
   }
@@ -398,8 +398,8 @@ namespace OpenBabel
 
     unsigned int elem = atm->GetAtomicNum();
     int chg = atm->GetFormalCharge();
-    unsigned int deg = atm->GetValence() + atm->GetImplicitHCount();
-    unsigned int val = atm->BOSum() + atm->GetImplicitHCount();
+    unsigned int deg = atm->GetExplicitDegree() + atm->GetImplicitHCount();
+    unsigned int val = atm->GetExplicitValence() + atm->GetImplicitHCount();
 
     switch (elem) {
     case OBElements::Carbon:
@@ -617,9 +617,9 @@ namespace OpenBabel
 
     //unset all aromatic flags
     for (atom = mol.BeginAtom(i); atom; atom = mol.NextAtom(i))
-      atom->UnsetAromatic();
+      atom->SetAromatic(false);
     for (bond = mol.BeginBond(j); bond; bond = mol.NextBond(j))
-      bond->UnsetAromatic();
+      bond->SetAromatic(false);
 
     // New code using lookups instead of SMARTS patterns
     FOR_ATOMS_OF_MOL(atom, mol) {
@@ -860,7 +860,7 @@ namespace OpenBabel
 
             for (nbr = atom->BeginNbrAtom(l);nbr;nbr = atom->NextNbrAtom(l))
               {
-                // we can get this from atom->GetHvyValence()
+                // we can get this from atom->GetHvyDegree()
                 // but we need to find neighbors in rings too
                 // so let's save some time
                 if (nbr->GetAtomicNum() != OBElements::Hydrogen)

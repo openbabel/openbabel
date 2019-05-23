@@ -305,7 +305,7 @@ namespace OpenBabel
                      mol_typ,atom->GetIdx(),atom->GetType());
             obErrorLog.ThrowError(__FUNCTION__, buffer, obInfo);
             atnum = atom->GetAtomicNum();
-            type_num = atnum * 10 + atom->GetValence();
+            type_num = atnum * 10 + atom->GetExplicitDegree();
             snprintf(type_name, sizeof(type_num), "%d",type_num);
           }
         strncpy(ele_type, OBElements::GetSymbol(atom->GetAtomicNum()), sizeof(ele_type));
