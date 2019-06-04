@@ -109,6 +109,16 @@ if (DO_PYTHON_BINDINGS)
           OUTPUT_VARIABLE PYTHON_INSTDIR
           OUTPUT_STRIP_TRAILING_WHITESPACE
         )
+	#workaround for https://bugs.launchpad.net/ubuntu/+source/python3-defaults/+bug/1814653
+	if(NOT ${PYTHON_INSTDIR} MATCHES "python[0-9].[0-9]")
+	  execute_process(
+           COMMAND
+           ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_python_lib(1,1,prefix='${CMAKE_INSTALL_PREFIX}'))"
+           OUTPUT_VARIABLE PYTHON_INSTDIR
+           OUTPUT_STRIP_TRAILING_WHITESPACE
+          )
+          set(PYTHON_INSTDIR "${PYTHON_INSTDIR}/dist-packages")
+	endif()
         if(NOT BINDINGS_ONLY)
             add_dependencies(bindings_python openbabel)
         endif()
