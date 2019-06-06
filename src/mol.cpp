@@ -1217,7 +1217,7 @@ namespace OpenBabel
   //Residue information are copied, MM 4-27-01
   //All OBGenericData incl OBRotameterList is copied, CM 2006
   //Zeros all flags except OB_TCHARGE_MOL, OB_PCHARGE_MOL, OB_HYBRID_MOL
-  //OB_TSPIN_MOL, OB_AROMATIC_MOL and OB_PATTERN_STRUCTURE which are copied
+  //OB_TSPIN_MOL, OB_AROMATIC_MOL, OB_CHAINS_MOL and OB_PATTERN_STRUCTURE which are copied
   {
     if (this == &source)
       return *this;
@@ -1261,7 +1261,8 @@ namespace OpenBabel
       this->SetFlag(OB_HYBRID_MOL);
     if (src.HasFlag(OB_AROMATIC_MOL))
       this->SetFlag(OB_AROMATIC_MOL);
-
+    if (src.HasFlag(OB_CHAINS_MOL))
+      this->SetFlag(OB_CHAINS_MOL);
 
     //this->_flags = src.GetFlags(); //Copy all flags. Perhaps too drastic a change
 
