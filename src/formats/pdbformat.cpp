@@ -895,7 +895,6 @@ namespace OpenBabel
     /* insertion code */
     char insertioncode = sbuf.substr(27-6-1,1)[0];
     if (' '==insertioncode) insertioncode=0;
-
     /* element */
     string element = "  ";
     if (sbuf.size() > 71)

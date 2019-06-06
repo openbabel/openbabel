@@ -329,6 +329,7 @@ namespace OpenBabel
     char type_name[10], padded_name[10];
     char the_res[10];
     char the_chain = ' ';
+    char the_icode = ' ';
     const char *element_name;
     string element_name_string;
     int res_num;
@@ -350,10 +351,11 @@ namespace OpenBabel
 
     if ( (res = atom->GetResidue()) != 0 )
     {
-//			het = res->IsHetAtom(atom);
       snprintf(the_res,4,"%s",(char*)res->GetName().c_str());
       snprintf(type_name,5,"%s",(char*)res->GetAtomID(atom).c_str());
       the_chain = res->GetChain();
+      the_icode = res->GetInsertionCode();
+      if(the_icode == 0) the_icode = ' ';
 
       //two char. elements are on position 13 and 14 one char. start at 14
       if (strlen(OBElements::GetSymbol(atom->GetAtomicNum())) == 1)
@@ -400,13 +402,14 @@ namespace OpenBabel
     }
 
     double charge = atom->GetPartialCharge();
-    snprintf(buffer, BUFF_SIZE, "%s%5d %-4s %-3s %c%4d    %8.3f%8.3f%8.3f  0.00  0.00    %+5.3f %.2s",
+    snprintf(buffer, BUFF_SIZE, "%s%5d %-4s %-3s %c%4d%c   %8.3f%8.3f%8.3f  0.00  0.00    %+5.3f %.2s",
       het?"HETATM":"ATOM  ",
       index,
       type_name,
       the_res,
       the_chain,
       res_num,
+      the_icode,
       atom->GetX(),
       atom->GetY(),
       atom->GetZ(),
@@ -846,8 +849,8 @@ namespace OpenBabel
     if (pConv->IsOption("b",OBConversion::OUTOPTIONS)) {mol.ConnectTheDots(); mol.PerceiveBondOrders();}
     vector <OBMol> all_pieces;
     if ( ((pConv->IsOption("c",OBConversion::OUTOPTIONS)!=NULL) && (pConv->IsOption("r",OBConversion::OUTOPTIONS)!=NULL))
-			|| (pConv->IsOption("n",OBConversion::OUTOPTIONS))
-		)
+      || (pConv->IsOption("n",OBConversion::OUTOPTIONS))
+    )
     {
       mol.SetAutomaticPartialCharge(false);
       all_pieces.push_back(mol);
@@ -876,8 +879,8 @@ namespace OpenBabel
       all_pieces.at(i).SetAutomaticPartialCharge(false);
       all_pieces.at(i).SetAromaticPerceived(); //retain aromatic flags in fragments
       if (!(pConv->IsOption("h",OBConversion::OUTOPTIONS))) {
-      	DeleteHydrogens(all_pieces.at(i));
-			}
+        DeleteHydrogens(all_pieces.at(i));
+      }
 
       int model_num = 0;
       char buffer[BUFF_SIZE];
@@ -941,7 +944,7 @@ namespace OpenBabel
                 ofs << "  and  ";
             }
             delete [] rotBondTable[rotBondId];
-	    ofs << endl;
+            ofs << endl;
           }
           delete [] rotBondTable;
         }
@@ -1019,7 +1022,6 @@ namespace OpenBabel
       if (!flexible) {preserve_original_index=false;} //no need to relabel if we are preserving the original order anyway
 
       if (!OutputTree(pConv, all_pieces.at(i), ofs, tree, rotatable_bonds, false, preserve_original_index) )
-//      if (!OutputTree(mol, ofs, tree, rotatable_bonds, false, preserve_original_index) )
       {
         stringstream errorMsg;
         errorMsg << "WARNING: Problems writing a PDBQT file\n"
