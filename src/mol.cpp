@@ -1281,7 +1281,6 @@ namespace OpenBabel
             res = NewResidue();
             src_res = src.GetResidue(k);
             *res = *src_res; //does not copy atoms
-
             for (src_atom=src_res->BeginAtom(ii) ; src_atom ; src_atom=src_res->NextAtom(ii))
               {
                 atom = GetAtom(src_atom->GetIdx());
@@ -4074,10 +4073,7 @@ namespace OpenBabel
         OBResidue *newres;
         if (mit == ResidueMap.end()) {
           newres = newmol.NewResidue();
-          newres->SetName(res->GetName());
-          newres->SetNum(res->GetNumString());
-          newres->SetChain(res->GetChain());
-          newres->SetChainNum(res->GetChainNum());
+          *newres = *res;
           ResidueMap[res] = newres;
         } else {
           newres = mit->second;
