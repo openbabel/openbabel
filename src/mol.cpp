@@ -1280,10 +1280,8 @@ namespace OpenBabel
           {
             res = NewResidue();
             src_res = src.GetResidue(k);
-            res->SetName(src_res->GetName());
-            res->SetNum(src_res->GetNumString());
-            res->SetChain(src_res->GetChain());
-            res->SetChainNum(src_res->GetChainNum());
+            *res = *src_res; //does not copy atoms
+
             for (src_atom=src_res->BeginAtom(ii) ; src_atom ; src_atom=src_res->NextAtom(ii))
               {
                 atom = GetAtom(src_atom->GetIdx());
@@ -2239,12 +2237,19 @@ namespace OpenBabel
                 aname = "H";
 
                 // Add the new H atom to the appropriate residue list
-                atom->GetResidue()->AddAtom(h);
+                OBResidue *res = atom->GetResidue();
+                res->AddAtom(h);
 
                 // Give the new atom a pointer back to the residue
-                h->SetResidue(atom->GetResidue());
+                h->SetResidue(res);
 
-                atom->GetResidue()->SetAtomID(h,aname);
+                res->SetAtomID(h,aname);
+                
+                //hydrogen should inherit hetatm status of heteroatom (default is false)
+                if(res->IsHetAtom(atom)) 
+                  {
+                    res->SetHetAtom(h, true);
+                  }
 
               }
 
