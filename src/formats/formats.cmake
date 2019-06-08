@@ -45,6 +45,7 @@ set(formats_compchem
       gulpformat
       hinformat
       jaguarformat
+      maeformat
       molproformat
       mopacformat
       nwchemformat
