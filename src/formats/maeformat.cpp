@@ -139,7 +139,7 @@ void MAEFormat::checkEOF(OBConversion* pConv)
     if(m_next_mae == nullptr) {
         // At the end of the data, set the stream there so obconversion
         // stops iterating
-        pConv->GetInStream()->setf(ios::eofbit);
+        pConv->GetInStream()->setstate(ios::eofbit);
     } else if(pConv->GetInStream()->eof()) {
         // maeparser is done reading/buffering, but has data left to process
         // (additional molecules in its buffer), so move the input stream away
@@ -339,4 +339,3 @@ bool MAEFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 }
 
 } //namespace OpenBabel
-

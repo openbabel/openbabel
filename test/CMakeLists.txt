@@ -19,7 +19,7 @@ set (cpptests
      cistrans conversion graphsym gzip
      implicitH lssr isomorphism multicml regressions rotor shuffle smiles spectrophore
      squareplanar stereo stereoperception tautomer tetrahedral
-     tetranonplanar tetraplanar uniqueid maereader
+     tetranonplanar tetraplanar uniqueid
     )
 set (automorphism_parts 1 2 3 4 5 6 7 8 9 10)
 set (builder_parts 1 2 3 4 5)
@@ -35,7 +35,6 @@ set (gzip_parts 1)
 set (implicitH_parts 1)
 set (lssr_parts 1 2 3 4 5)
 set (isomorphism_parts 1 2 3 4 5 6 7 8 9)
-set (maereader_parts 1 2)
 set (multicml_parts 1)
 set (regressions_parts 1 221 222 223 224 225 226 227 228 240)
 set (rotor_parts 1 2 3 4)
@@ -55,6 +54,12 @@ if (EIGEN2_FOUND OR EIGEN3_FOUND)
   set(cpptests
       align ${cpptests})
   set (align_parts 1 2 3 4 5)
+endif ()
+
+if (WITH_MAEPARSER)
+    set(cpptests ${cpptests}
+        maereader)
+    set (maereader_parts 1 2)
 endif ()
 
 set(origtests

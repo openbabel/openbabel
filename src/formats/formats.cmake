@@ -45,7 +45,6 @@ set(formats_compchem
       gulpformat
       hinformat
       jaguarformat
-      maeformat
       molproformat
       mopacformat
       nwchemformat
@@ -57,6 +56,12 @@ set(formats_compchem
       xsfformat
       zindoformat
   )
+
+if(WITH_MAEPARSER)
+    set(formats_compchem ${formats_compchem}
+        maeformat
+       )
+endif()
 
 
 if(MSVC OR HAVE_REGEX_H)
