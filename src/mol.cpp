@@ -1263,7 +1263,6 @@ namespace OpenBabel
       this->SetFlag(OB_AROMATIC_MOL);
     if (src.HasFlag(OB_CHAINS_MOL))
       this->SetFlag(OB_CHAINS_MOL);
-
     //this->_flags = src.GetFlags(); //Copy all flags. Perhaps too drastic a change
 
 
