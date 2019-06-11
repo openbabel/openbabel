@@ -841,7 +841,7 @@ _insertioncode=0;
     _atomid   = src._atomid;
     _hetatm   = src._hetatm;
     _sernum   = src._sernum;
-_insertioncode=src._insertioncode;
+    _insertioncode=src._insertioncode;
 
   }
 
@@ -872,7 +872,7 @@ _insertioncode=src._insertioncode;
         _atomid   = src._atomid;
         _hetatm   = src._hetatm;
         _sernum   = src._sernum;
-   _insertioncode = src._insertioncode;
+        _insertioncode = src._insertioncode;
       }
 
     return(*this);
