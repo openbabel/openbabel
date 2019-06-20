@@ -822,6 +822,10 @@ namespace OpenBabel
       }
     }
 
+    //alias expansion may need to look at coordinate array, so call
+    //endmodify to set mol->_c
+    mol.EndModify();
+
     //Expand aliases (implicit hydrogens already set on these as read from SMILES)
     for (vector<pair<AliasData*, OBAtom*> >::iterator iter = aliases.begin(); iter != aliases.end(); ++iter)
     {
@@ -829,8 +833,6 @@ namespace OpenBabel
       unsigned atomnum = (*iter).second->GetIdx();
       ad->Expand(mol, atomnum); //Make chemically meaningful, if possible.
     }
-
-    mol.EndModify();
 
     if (comment.length()) {
       OBCommentData *cd = new OBCommentData;
