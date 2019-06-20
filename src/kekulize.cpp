@@ -193,8 +193,9 @@ namespace OpenBabel
     // to give all of these atoms a single double bond.
     needs_dbl_bond = new OBBitVec(atomArraySize); // defaults to all False
     FOR_ATOMS_OF_MOL(atom, m_mol) {
-      if (NeedsDoubleBond(&*atom))
+      if (NeedsDoubleBond(&*atom)) {
         needs_dbl_bond->SetBitOn(atom->GetIdx());
+      }
     }
     // Make a copy of needs_dbl_bond, to restrict the traversal in BackTrack()
     kekule_system = new OBBitVec(*needs_dbl_bond);
@@ -409,8 +410,9 @@ namespace OpenBabel
   {
     Kekulizer kekulizer(mol);
     bool success = kekulizer.GreedyMatch();
-    if (!success)
+    if (!success) {
       success = kekulizer.BackTrack();
+    }
 
     kekulizer.AssignDoubleBonds();
 

@@ -460,6 +460,29 @@ namespace OpenBabel
         }
       }
     }
+    if(read_until(ifs, "@<TRIPOS>UNITY_ATOM_ATTR"))
+    { //read in formal charge information, must be done before Kekulization
+        int aid = 0, num = 0;
+        while (ifs.peek() != '@' && ifs.getline(buffer,BUFF_SIZE))
+        {
+          sscanf(buffer,"%d %d",&aid, &num);
+          for(int i = 0; i < num; i++) 
+          {
+            if (!ifs.getline(buffer,BUFF_SIZE))
+              return(false);
+            if(strncmp(buffer, "charge", 6) == 0)
+            {
+              int charge = 0;
+              sscanf(buffer,"%*s %d",&charge);
+              if(aid <= mol.NumAtoms()) 
+              {
+                OBAtom *atom = mol.GetAtom(aid);
+                atom->SetFormalCharge(charge);
+              }
+            }
+          }
+        }
+    }
 
     // Kekulization is neccessary if an aromatic bond is present
     if (needs_kekulization) {
@@ -487,6 +510,7 @@ namespace OpenBabel
             bondB = &*bitB;
           }
         }
+        if(otherOxygenOrSulfur->GetFormalCharge() != 0) continue; //formal charge already set on one
         if (!otherOxygenOrSulfur) continue;
 
         // Now set as C(=O)O
@@ -549,29 +573,6 @@ namespace OpenBabel
     if (hasPartialCharges)
       mol.SetPartialChargesPerceived();
 
-    if(read_until(ifs, "@<TRIPOS>UNITY_ATOM_ATTR"))
-    { //read in formal charge information
-        int aid = 0, num = 0;
-        while (ifs.peek() != '@' && ifs.getline(buffer,BUFF_SIZE))
-        {
-          sscanf(buffer,"%d %d",&aid, &num);
-          for(int i = 0; i < num; i++) 
-          {
-            if (!ifs.getline(buffer,BUFF_SIZE))
-              return(false);
-            if(strncmp(buffer, "charge", 6) == 0)
-            {
-              int charge = 0;
-              sscanf(buffer,"%*s %d",&charge);
-              if(aid <= mol.NumAtoms()) 
-              {
-                OBAtom *atom = mol.GetAtom(aid);
-                atom->SetFormalCharge(charge);
-              }
-            }
-          }
-        }
-    }
     /* Disabled due to PR#3048758 -- seekg is very slow with gzipped mol2
     // continue untill EOF or untill next molecule record
     streampos pos;
