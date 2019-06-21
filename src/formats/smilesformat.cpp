@@ -2792,8 +2792,8 @@ namespace OpenBabel {
       if (iso >= 10000) // max 4 characters
         obErrorLog.ThrowError(__FUNCTION__, "Isotope value larger than 9999. Ignoring value.", obWarning);
       else {
-        char iso[5]; // 4 characters plus null
-        sprintf(iso, "%d", atom->GetIsotope());
+        char iso[8]; // 7 characters plus null
+        snprintf(iso, 8, "%u", atom->GetIsotope());
         buffer += iso;
       }
     }
