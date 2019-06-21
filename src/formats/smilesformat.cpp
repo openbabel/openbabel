@@ -2803,8 +2803,13 @@ namespace OpenBabel {
       if (atom->GetAtomicNum() == OBElements::Hydrogen && options.smarts)
         buffer += "#1";
       else {
-        const char* symbol = OBElements::GetSymbol(atom->GetAtomicNum());
-        if (!options.kekulesmi && atom->IsAromatic()) { // aromatic atom
+        unsigned int elem = atom->GetAtomicNum();
+        const char* symbol = OBElements::GetSymbol(elem);
+        if (*symbol == '\0') {
+          char atomnum[8];  // '#' plus 3 digits plus null
+          snprintf(atomnum, 8, "#%u", elem);
+          buffer += atomnum;
+        } else if (!options.kekulesmi && atom->IsAromatic()) { // aromatic atom
           buffer += symbol[0] + ('a' - 'A');
           if (symbol[1])
             buffer += symbol[1];
