@@ -137,6 +137,9 @@ namespace OpenBabel {
   
       double value(const TVector &x);
       void gradient(const TVector &x, TVector &grad);
+
+      static double calcValue(OBDistanceGeometry* owner, const TVector &x);
+      static void calcGradient(OBDistanceGeometry* owner, const TVector &x, TVector &grad);
   };
   class DistGeomFuncInclude4D : public cppoptlib::Problem<double> {
     OBDistanceGeometry* const owner;
