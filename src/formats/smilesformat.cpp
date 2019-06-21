@@ -3,6 +3,7 @@ Copyright (C) 2005-2007 by Craig A. James, eMolecules Inc.
 Some portions Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2008 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
+Some portions Copyright (C) 2019 by NextMove Software.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -1674,6 +1675,20 @@ namespace OpenBabel {
         else
           return false;
         break;
+
+      case '#':
+        if (_ptr[1]>='1' && _ptr[1]<='9') {
+          element = _ptr[1]-'0';
+          if (_ptr[2]>='0' && _ptr[2]<='9') {
+            element = 10*element + (_ptr[2]-'0');
+            if (_ptr[3]>='0' && _ptr[3]<='9') {
+              element = 10*element + (_ptr[3]-'0');
+              _ptr += 3;
+            } else _ptr += 2;
+          } else _ptr++;
+          break;
+        }
+        /* fall through to default */
 
       default:
         {
