@@ -81,6 +81,7 @@ namespace OpenBabel {
     bool SetBoundsMatrix(const Eigen::MatrixXf bounds);
     float GetUpperBounds(int i, int j);
     float GetLowerBounds(int i, int j);
+    unsigned int GetDimension() {return dim;};
     std::vector<TetrahedralInfo>  _stereo;       //!< Internal private data, including stereo info
   private:
     OBMol                     _mol;

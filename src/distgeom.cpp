@@ -103,9 +103,7 @@ namespace OpenBabel {
     }
 
     Eigen::MatrixXf bounds, preMet;
-    bool debug;
-    double maxBoxSize;
-  };
+    bool debug; double maxBoxSize; };
 
   class TetrahedralInfo {
     int c;
@@ -154,12 +152,10 @@ namespace OpenBabel {
     if (_d != NULL)
       delete _d;
     // TODO: add IsSetupNeeded() like OBForceField to prevent duplication of work
-    //
 
     dim = 4;
     _mol = mol;
 
-    //_mol.DeleteHydrogens();
     _mol.SetDimension(3);
     _vdata = _mol.GetAllData(OBGenericDataType::StereoData);
     _d = new DistanceGeometryPrivate(mol.NumAtoms());
@@ -216,7 +212,7 @@ namespace OpenBabel {
         if(config.winding == OBStereo::Clockwise) {
           TetrahedralInfo ti(config.center, nbrs, -100.0, -5.0);
           _stereo.push_back(ti);
-        } else {
+        } else if(config.winding == OBStereo::AntiClockwise) {
           TetrahedralInfo ti(config.center, nbrs, 5.0, 100.0);
           _stereo.push_back(ti);
         }
@@ -1152,7 +1148,6 @@ namespace OpenBabel {
         T(j, i) = v;
       }
     }
-    unsigned int dim = 4;
     Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> es(T);
     Eigen::VectorXd eigVals = es.eigenvalues();
     Eigen::MatrixXd eigVecs = es.eigenvectors();
@@ -1172,10 +1167,9 @@ namespace OpenBabel {
     Eigen::MatrixXd distMat2(N, N);
     for (size_t i = 0; i < N; i++) {
       for (size_t j = 0; j < N; j++) {
-        distMat2(i, j) = sqrt(pow(_coord(i*dim + 0)-_coord(j*dim + 0), 2.0)
-                         + pow(_coord(i*dim + 1)-_coord(j*dim + 1), 2.0)
-                         + pow(_coord(i*dim + 2)-_coord(j*dim + 2), 2.0)
-                         + pow(_coord(i*dim + 3)-_coord(j*dim + 3), 2.0));
+        for(size_t k = 0; k < dim; k++)
+          distMat2(i, j) += pow(_coord(i*dim + k)-_coord(j*dim + k), 2.0);
+        distMat2(i, j) = sqrt(distMat2(i, j));
       }
     }
     return true;
@@ -1190,7 +1184,6 @@ namespace OpenBabel {
       a->SetVector(v);
     }
     DistGeomFunc f(this);
-
 
     cppoptlib::BfgsSolver<DistGeomFunc> solver;
     solver.minimize(f, _coord);
@@ -1211,7 +1204,6 @@ namespace OpenBabel {
       a->SetVector(v);
     }
     DistGeomFuncInclude4D f(this);
-
 
     cppoptlib::BfgsSolver<DistGeomFuncInclude4D> solver;
     solver.minimize(f, _coord);
@@ -1245,9 +1237,8 @@ namespace OpenBabel {
     for (unsigned int trial = 0; trial < maxIter; trial++) {
       generateInitialCoords();
       firstMinimization();
-      minimizeFourthDimension();
-      CheckStereoConstraints();
-      if(CheckStereoConstraints() && CheckBounds()) {
+      if (dim == 4) minimizeFourthDimension();
+      if (CheckStereoConstraints() && CheckBounds()) {
         success = true;
         break;
       }
@@ -1256,7 +1247,6 @@ namespace OpenBabel {
     }
     if(!success) {
       obErrorLog.ThrowError(__FUNCTION__, "Distance Geometry failed.", obWarning);
-      exit(EXIT_FAILURE);
     }
   }
 
@@ -1349,7 +1339,7 @@ namespace OpenBabel {
 
   double DistGeomFuncInclude4D::value(const TVector &x) {
     double ret = DistGeomFunc::calcValue(owner, x);
-    const size_t dim = 4;
+    const size_t dim = owner->GetDimension();
     const size_t size = x.size()/dim;
     for(size_t i=0; i<size; ++i) {
       ret += pow(x[i*dim+3], 2.0);
@@ -1358,17 +1348,16 @@ namespace OpenBabel {
   }
 
   double DistGeomFunc::calcValue(OBDistanceGeometry* owner, const TVector &x) {
-    unsigned int dim = 4;
+    unsigned int dim = owner->GetDimension();
     const size_t size = x.size()/dim;
     double ret = 0.0;
     // calculate distance error
     for(size_t i=0; i<size; ++i) {
         for(size_t j=0; j<size; ++j) {
             double v = 0.0;
-            double d2 = pow(x[i*dim]-x[j*dim], 2.0) 
-                + pow(x[i*dim+1]-x[j*dim+1], 2.0)
-                + pow(x[i*dim+2]-x[j*dim+2], 2.0)
-                + pow(x[i*dim+3]-x[j*dim+3], 2.0);
+            double d2 = 0;
+            for(size_t k=0; k<dim; k++)
+              d2 += pow(x[i*dim+k]-x[j*dim+k], 2.0);
             double d = sqrt(d2);
             double ub = owner->GetUpperBounds(i, j);
             double lb = owner->GetLowerBounds(i, j);
@@ -1392,7 +1381,6 @@ namespace OpenBabel {
       if(vol < lb) ret += (vol - lb) * (vol - lb);
       else if(vol > ub) ret += (vol - ub) * (vol - ub);
     }
-
     return ret;
   }
 
@@ -1401,7 +1389,7 @@ namespace OpenBabel {
   }
   void DistGeomFuncInclude4D::gradient(const TVector &x, TVector &grad) {
     DistGeomFunc::calcGradient(owner, x, grad);
-    unsigned int dim = 4;
+    unsigned int dim = owner->GetDimension();
     unsigned int N = x.size() / dim;
     for(size_t i=0; i<N; ++i) {
       grad[i * dim + 3] += 2.0 * x[i * dim + 3];
@@ -1410,7 +1398,7 @@ namespace OpenBabel {
 
   void DistGeomFunc::calcGradient(OBDistanceGeometry* owner,
                                   const TVector &x, TVector &grad) {
-    unsigned int dim = 4;
+    unsigned int dim = owner->GetDimension();
     // clear gradient
     for (size_t i=0; i<grad.rows(); i++) {
       grad[i] = 0;
@@ -1422,10 +1410,9 @@ namespace OpenBabel {
         double preFactor = 0.0;
         double ub = owner->GetUpperBounds(i, j);
         double lb = owner->GetLowerBounds(i, j);
-        double d2 = pow(x[i*dim]-x[j*dim], 2.0) 
-                   + pow(x[i*dim+1]-x[j*dim+1], 2.0)
-                   + pow(x[i*dim+2]-x[j*dim+2], 2.0)
-                   + pow(x[i*dim+3]-x[j*dim+3], 2.0);
+        double d2 = 0;
+        for(size_t k=0; k<dim; k++)
+          d2 += pow(x[i*dim+k]-x[j*dim+k], 2.0);
         double d = sqrt(d2);
         if (d > ub) {
           double u2 = ub * ub;
