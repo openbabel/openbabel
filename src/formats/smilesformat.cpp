@@ -1677,12 +1677,18 @@ namespace OpenBabel {
         break;
 
       case '#':
-        if (_ptr[1]>='1' && _ptr[1]<='9') {
+        if (_ptr[1]>='0' && _ptr[1]<='9') {
           element = _ptr[1]-'0';
           if (_ptr[2]>='0' && _ptr[2]<='9') {
             element = 10*element + (_ptr[2]-'0');
             if (_ptr[3]>='0' && _ptr[3]<='9') {
               element = 10*element + (_ptr[3]-'0');
+              if (element > 255) {
+                std::string err = "Element number must be <= 255)";
+                obErrorLog.ThrowError(__FUNCTION__,
+                  err, obError);
+                return false;
+              }
               _ptr += 3;
             } else _ptr += 2;
           } else _ptr++;
