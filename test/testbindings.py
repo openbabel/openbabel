@@ -466,11 +466,12 @@ H         -0.26065        0.64232       -2.62218
 
     def testElementsSpecifiedByAtomicNumberInSmiles(self):
         smis = [
-                ("[#6H4]", "C"),
+                ("[#100]", "[Fm]"),
                 ("[#255]", None),
                 ("[254#255]", None),
+                ("[#6]", -1),
                 ("[#256]", -1),
-                ("[#0]", "*")
+                ("[#10a]", -1)
                ]
 
         for smi, rt in smis:
