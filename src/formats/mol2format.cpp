@@ -42,10 +42,10 @@ namespace OpenBabel
       OBConversion::RegisterFormat("mol2",this, "chemical/x-mol2");
       OBConversion::RegisterFormat("ml2",this);
       OBConversion::RegisterFormat("sy2",this);
-      OBConversion::RegisterOptionParam("c", NULL, 0, OBConversion::INOPTIONS);
-      OBConversion::RegisterOptionParam("c", NULL, 0, OBConversion::OUTOPTIONS);
-      OBConversion::RegisterOptionParam("l", NULL, 0, OBConversion::OUTOPTIONS);
-      OBConversion::RegisterOptionParam("nof", NULL, 0, OBConversion::OUTOPTIONS);
+      OBConversion::RegisterOptionParam("c", this, 0, OBConversion::INOPTIONS);
+      OBConversion::RegisterOptionParam("c", this, 0, OBConversion::OUTOPTIONS);
+      OBConversion::RegisterOptionParam("l", this, 0, OBConversion::OUTOPTIONS);
+      OBConversion::RegisterOptionParam("u", this, 0, OBConversion::OUTOPTIONS);
     }
 
     virtual const char* Description() //required
@@ -57,7 +57,7 @@ namespace OpenBabel
         "Write Options e.g. -xl\n"
         "  l               Output ignores residue information (only ligands)\n\n"
         "  c               Write UCSF Dock scores saved in comments preceeding molecules\n\n"
-        "  nof             Do not write formal charge information in UNITY records\n\n";
+        "  u               Do not write formal charge information in UNITY records\n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -603,7 +603,7 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
     bool ligandsOnly = pConv->IsOption("l", OBConversion::OUTOPTIONS)!=NULL;
-    bool skipFormalCharge = pConv->IsOption("f", OBConversion::OUTOPTIONS)!=NULL;
+    bool skipFormalCharge = pConv->IsOption("u", OBConversion::OUTOPTIONS)!=NULL;
 
     //The old code follows....
     string str,str1;
