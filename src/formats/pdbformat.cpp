@@ -228,7 +228,7 @@ namespace OpenBabel
 
     if (!mol.NumAtoms()) { // skip the rest of this processing
       mol.EndModify();
-      return(false);
+      return(true); //empty molecules are not invalid
     }
 
     resdat.AssignBonds(mol);
