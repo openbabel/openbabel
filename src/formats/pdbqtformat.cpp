@@ -39,8 +39,6 @@ GNU General Public License for more details.
 
 #include <sstream>
 
-#include <iostream>
-
 using namespace std;
 namespace OpenBabel
 {
