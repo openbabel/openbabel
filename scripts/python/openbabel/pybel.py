@@ -755,12 +755,18 @@ class Atom(object):
         return self.OBAtom.GetFormalCharge()
 
     @property
-    def heavyvalence(self):
-        return self.OBAtom.GetHvyValence()
+    def heavydegree(self):
+        return self.OBAtom.GetHvyDegree()
+    
+    #Keep legacy names
+    heavyvalence = heavydegree
 
     @property
-    def heterovalence(self):
-        return self.OBAtom.GetHeteroValence()
+    def heterodegree(self):
+        return self.OBAtom.GetHeteroDegree()
+    
+    #keep legacy names
+    heterovalence = heterodegree
 
     @property
     def hyb(self):
@@ -796,7 +802,7 @@ class Atom(object):
 
     @property
     def valence(self):
-        return self.OBAtom.GetValence()
+        return self.OBAtom.GetExplicitDegree()
 
     @property
     def vector(self):
