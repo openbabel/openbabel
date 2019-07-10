@@ -764,7 +764,7 @@ class Atom(object):
     
     @property
     def heavyvalence(self):
-        raise AttributeError("This property has been renamed. Used Atom.heavydegree instead.")
+        raise AttributeError("This property has been renamed. Use Atom.heavydegree instead.")
 
     @property
     def heterodegree(self):
@@ -772,7 +772,7 @@ class Atom(object):
     
     @property
     def heterovalence(self):
-        raise AttributeError("This property has been renamed. Used Atom.heterodegree instead.")
+        raise AttributeError("This property has been renamed. Use Atom.heterodegree instead.")
 
     @property
     def hyb(self):
@@ -808,7 +808,7 @@ class Atom(object):
 
     @property
     def valence(self):
-        raise AttributeError("This property has been renamed. Used Atom.degree instead.")
+        raise AttributeError("This property has been renamed. Use Atom.degree instead.")
 
     @property
     def vector(self):
