@@ -2955,10 +2955,16 @@ namespace OpenBabel
 
     for (j = 0, atom = BeginAtom(i) ; atom ; atom = NextAtom(i), ++j)
       {
+        bondCount.push_back(atom->GetExplicitDegree());
+        //don't consider atoms with a full valance already
+        //this is both for correctness (trust existing bonds) and performance
+        if(atom->GetExplicitValence() >= OBElements::GetMaxBonds(atom->GetAtomicNum()))
+          continue;        
+        if(atom->GetAtomicNum() == 7 && atom->GetFormalCharge() == 0 && atom->GetExplicitValence() >= 3)
+          continue; 
         (atom->GetVector()).Get(&c[j*3]);
         pair<OBAtom*,double> entry(atom, atom->GetVector().z());
         zsortedAtoms.push_back(entry);
-        bondCount.push_back(atom->GetExplicitDegree());
       }
     sort(zsortedAtoms.begin(), zsortedAtoms.end(), SortAtomZ);
 
