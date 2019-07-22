@@ -39,7 +39,7 @@
 # Sulfones
 [#16D4]([#8D1])([#8D1])([*!#8])([*!#8]) 	0 1 2 0 2 2 0 3 1 0 4 1
 # Sulfates
-[#16D4]([#8D1])([#8D1])([#8-,#8])([#8-,#8])	0 1 2 0 2 2 0 3 1 0 4 1
+[#16D4]([#8D1])([#8D1])([#8-,#8D1])([#8-,#8D1])	0 1 2 0 2 2 0 3 1 0 4 1
 # Thiosulfates
 [#16D4]([#16D1])([#8D1])([#8-,#8])([#8-,#8])	0 1 2 0 2 2 0 3 1 0 4 1
 # Sulfoxides
@@ -74,8 +74,8 @@
 [#6D3^2]([#8D1])([#8])*		0 1 2 0 2 1 0 3 1
 # Carbon dioxide
 [#8D1][#6D2^1][#8D1]		0 1 2 1 2 2
-# Amide C(=O)N
-[#6D3^2]([#8D1])([#7])*		0 1 2 0 2 1 0 3 1
+# Amide C(=O)N  - no negative charge on O (2aix_u1k.sdf)
+[#6D3^2]([#8D1;!-])([#7])*		0 1 2 0 2 1 0 3 1
 # Seleninic acid Se(=O)OH
 [#34D3^2]([#8D1])([#8])*		0 1 2 0 2 1 0 3 1
 # Thioacid / Thioester C(=O)S
@@ -83,7 +83,8 @@
 # dithioacid / dithioester C(=S)S
 [#6D3^2]([#16D1])([#16])*		0 1 2 0 2 1 0 3 1
 # thioamide C(=S)N
-[#6D3^2]([#16D1])([#7])*		0 1 2 0 2 1 0 3 1
+# avoid aromatics (pdb_ligands_sdf/1yry_msg.sdf)
+[CD3^2]([#16D1])([N])*		0 1 2 0 2 1 0 3 1
 
 # allene C=C=C
 # (this is problematic -- need to make sure the center carbon is sp)

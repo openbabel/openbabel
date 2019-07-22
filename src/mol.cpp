@@ -3327,21 +3327,13 @@ namespace OpenBabel
     }
 
     // Quick pass.. eliminate inter-ring sulfur atom multiple bonds
-    for (atom = BeginAtom(i); atom; atom = NextAtom(i)) {
-      // Don't build multiple bonds to ring sulfurs
-      //  except thiopyrylium
-      if (atom->IsInRing() && atom->GetAtomicNum() == 16) {
-        if (_totalCharge > 1 && atom->GetFormalCharge() == 0)
-          atom->SetFormalCharge(+1);
-        else {
-          // remove any ring bonds with multiple bond order
-          FOR_BONDS_OF_ATOM(bond, &*atom) {
-            if (bond->IsInRing() && bond->GetBondOrder() > 1)
-              bond->SetBondOrder(1);
-          }
-        }
-      }
-    }
+    // dkoes - I have removed this code - if double bonds are set,
+    // we should trust them.  See pdb_ligands_sdf/4iph_1fj.sdf for
+    // a case where the charge isn't set, but we break the molecule
+    // if we remove the double bond.  Also, the previous code was
+    // fragile - relying on the total mol charge being set.  If we
+    // are going to do anything, we should "perceive" a formal charge
+    // in the case of a ring sulfur with a double bond (thiopyrylium)
 
     // Pass 6: Assign remaining bond types, ordered by atom electronegativity
     vector<pair<OBAtom*,double> > sortedAtoms;
