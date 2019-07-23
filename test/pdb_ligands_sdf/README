@@ -5,3 +5,8 @@ Then all but the first ligand was removed:
 for i in *.sdf; do sed '/\$\$\$\$/q' $i -i; done
 
 The pdb/lig identifiers used are in pdbs.txt
+
+2c2t_39b.sdf was removed because the molecule is just crazy.
+
+Exactly identical files are removed using 
+./print_redundant.py | xargs git rm
